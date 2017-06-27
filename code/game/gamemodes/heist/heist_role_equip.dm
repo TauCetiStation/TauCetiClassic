@@ -4,7 +4,7 @@ var/global/raider_tick = 1
 /mob/living/carbon/human/proc/equip_raider()
 
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate(src)
-	R.set_frequency(SYND_FREQ) //Same frequency as the syndicate team in Nuke mode.
+	R.set_frequency(SYND_FREQ) // Same frequency as the syndicate team in Nuke mode.
 	equip_to_slot_or_del(R, slot_l_ear)
 
 	switch(raider_tick)
@@ -20,7 +20,7 @@ var/global/raider_tick = 1
 			equip_to_slot_or_del(new /obj/item/clothing/under/pirate(src), slot_w_uniform)
 			equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(src), slot_shoes)
 			equip_to_slot_or_del(new /obj/item/clothing/head/bandana(src), slot_head)
-			//equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(src), slot_glasses)
+			// equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch(src), slot_glasses)
 			equip_to_slot_or_del(new /obj/item/weapon/melee/energy/sword/pirate(src), slot_r_hand)
 
 	equip_to_slot_or_del(new /obj/item/device/price_tool(src), slot_l_store)
@@ -90,7 +90,7 @@ var/global/raider_tick = 1
 /obj/item/projectile/bullet/weakbullet/nl_rifle/on_hit(atom/target, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		S.take_bodypart_damage(20)//+10=30
+		S.take_bodypart_damage(20)// +10=30
 		S.emp_act(2)
 	else if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
@@ -104,7 +104,7 @@ var/global/raider_tick = 1
 /obj/item/projectile/bullet/weakbullet/nl_pistol/on_hit(atom/target, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		S.take_bodypart_damage(10)//+10=20
+		S.take_bodypart_damage(10)// +10=20
 		S.emp_act(2)
 	else if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target

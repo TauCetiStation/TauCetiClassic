@@ -1,5 +1,5 @@
 
-//Either pass the mob you wish to ban in the 'banned_mob' attribute, or the banckey, banip and bancid variables. If both are passed, the mob takes priority! If a mob is not passed, banckey is the minimum that needs to be passed! banip and bancid are optional.
+// Either pass the mob you wish to ban in the 'banned_mob' attribute, or the banckey, banip and bancid variables. If both are passed, the mob takes priority! If a mob is not passed, banckey is the minimum that needs to be passed! banip and bancid are optional.
 /datum/admins/proc/DB_ban_record(bantype, mob/banned_mob, duration = -1, reason, job = "", rounds = 0, banckey = null, banip = null, bancid = null)
 
 	if(!check_rights(R_BAN))
@@ -134,7 +134,7 @@
 		return
 
 	var/ban_id
-	var/ban_number = 0 //failsafe
+	var/ban_number = 0 // failsafe
 
 	var/DBQuery/query = dbcon.NewQuery(sql)
 	query.Execute()
@@ -169,10 +169,10 @@
 	var/DBQuery/query = dbcon.NewQuery("SELECT ckey, duration, reason FROM erro_ban WHERE id = [banid]")
 	query.Execute()
 
-	var/eckey = usr.ckey	//Editing admin ckey
-	var/pckey				//(banned) Player ckey
-	var/duration			//Old duration
-	var/reason				//Old reason
+	var/eckey = usr.ckey	// Editing admin ckey
+	var/pckey				// (banned) Player ckey
+	var/duration			// Old duration
+	var/reason				// Old reason
 
 	if(query.NextRow())
 		pckey = query.item[1]
@@ -230,7 +230,7 @@
 	if(!dbcon.IsConnected())
 		return
 
-	var/ban_number = 0 //failsafe
+	var/ban_number = 0 // failsafe
 
 	var/pckey
 	var/DBQuery/query = dbcon.NewQuery(sql)
@@ -351,10 +351,10 @@
 
 		if(adminckey || playerckey || playerip || playercid || dbbantype)
 
-			var/blcolor = "#ffeeee" //banned light
-			var/bdcolor = "#ffdddd" //banned dark
-			var/ulcolor = "#eeffee" //unbanned light
-			var/udcolor = "#ddffdd" //unbanned dark
+			var/blcolor = "#ffeeee" // banned light
+			var/bdcolor = "#ffdddd" // banned dark
+			var/ulcolor = "#eeffee" // unbanned light
+			var/udcolor = "#ddffdd" // unbanned dark
 
 			output += "<table width='90%' bgcolor='#e3e3e3' cellpadding='5' cellspacing='0' align='center'>"
 			output += "<tr>"
@@ -434,7 +434,7 @@
 					if("PERMABAN")
 						typedesc = "<font color='red'><b>PERMABAN</b></font>"
 					if("TEMPBAN")
-						typedesc = "<b>TEMPBAN</b><br><font size='2'>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
+						typedesc = "<b>TEMPBAN</b><br><font size='2'>([duration] minutes [(unbanned) ? "" : "(<a href=\"byond:// ?src=\ref[src];dbbanedit=duration;dbbanid=[banid]\">Edit</a>))"]<br>Expires [expiration]</font>"
 					if("JOB_PERMABAN")
 						typedesc = "<b>JOBBAN</b><br><font size='2'>([job])"
 					if("JOB_TEMPBAN")
@@ -445,14 +445,14 @@
 				output += "<td align='center'><b>[ckey]</b></td>"
 				output += "<td align='center'>[bantime]</td>"
 				output += "<td align='center'><b>[ackey]</b></td>"
-				output += "<td align='center'>[(unbanned) ? "" : "<b><a href=\"byond://?src=\ref[src];dbbanedit=unban;dbbanid=[banid]\">Unban</a></b>"]</td>"
+				output += "<td align='center'>[(unbanned) ? "" : "<b><a href=\"byond:// ?src=\ref[src];dbbanedit=unban;dbbanid=[banid]\">Unban</a></b>"]</td>"
 				output += "</tr>"
 				output += "<tr bgcolor='[dcolor]'>"
 				output += "<td align='center' colspan='2' bgcolor=''><b>IP:</b> [ip]</td>"
 				output += "<td align='center' colspan='3' bgcolor=''><b>CID:</b> [cid]</td>"
 				output += "</tr>"
 				output += "<tr bgcolor='[lcolor]'>"
-				output += "<td align='center' colspan='5'><b>Reason: [(unbanned) ? "" : "(<a href=\"byond://?src=\ref[src];dbbanedit=reason;dbbanid=[banid]\">Edit</a>)"]</b> <cite>\"[sanitize_alt(reason)]\"</cite></td>"
+				output += "<td align='center' colspan='5'><b>Reason: [(unbanned) ? "" : "(<a href=\"byond:// ?src=\ref[src];dbbanedit=reason;dbbanid=[banid]\">Edit</a>)"]</b> <cite>\"[sanitize_alt(reason)]\"</cite></td>"
 				output += "</tr>"
 				if(edits)
 					output += "<tr bgcolor='[dcolor]'>"
@@ -473,7 +473,7 @@
 
 	usr << browse(output,"window=lookupbans;size=900x700")
 
-//Version of DB_ban_record that can be used without holder.
+// Version of DB_ban_record that can be used without holder.
 /proc/DB_ban_record_2(bantype, mob/banned_mob, duration = -1, reason, job = "", rounds = 0, banckey = null, banip = null, bancid = null)
 	establish_db_connection()
 	if(!dbcon.IsConnected())

@@ -1,4 +1,4 @@
-//Skrell space gear. Sleek like a wetsuit.
+// Skrell space gear. Sleek like a wetsuit.
 /obj/item/clothing/head/helmet/space/skrell
 	name = "Skrellian helmet"
 	desc = "Smoothly contoured and polished to a shine. Still looks like a fishbowl."
@@ -35,12 +35,12 @@
 	item_state = "skrell_suit_black"
 	item_color = "skrell_suit_black"
 
-//Unathi space gear. Huge and restrictive.
+// Unathi space gear. Huge and restrictive.
 /obj/item/clothing/head/helmet/space/unathi
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 50)
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	var/up = 0 //So Unathi helmets play nicely with the weldervision check.
+	var/up = 0 // So Unathi helmets play nicely with the weldervision check.
 	species_restricted = list(UNATHI)
 
 /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
@@ -205,7 +205,7 @@
 		canremove = 1
 		to_chat(user, "You relax your deathgrip on the flooring.")
 	else
-		//make sure these can only be used when equipped.
+		// make sure these can only be used when equipped.
 		if(!ishuman(user))
 			return
 		var/mob/living/carbon/human/H = user
@@ -216,11 +216,11 @@
 
 		flags |= NOSLIP
 		magpulse = 1
-		canremove = 0	//kinda hard to take off magclaws when you are gripping them tightly.
+		canremove = 0	// kinda hard to take off magclaws when you are gripping them tightly.
 		to_chat(user, "You dig your claws deeply into the flooring, bracing yourself.")
 		to_chat(user, "It would be hard to take off the [src] without relaxing your grip first.")
 
-//In case they somehow come off while enabled.
+// In case they somehow come off while enabled.
 /obj/item/clothing/shoes/magboots/vox/dropped(mob/user)
 	..()
 	if(src.magpulse)
@@ -232,4 +232,4 @@
 /obj/item/clothing/shoes/magboots/vox/examine(mob/user)
 	..()
 	if (magpulse)
-		to_chat(user, "It would be hard to take these off without relaxing your grip first.")//theoretically this message should only be seen by the wearer when the claws are equipped.
+		to_chat(user, "It would be hard to take these off without relaxing your grip first.")// theoretically this message should only be seen by the wearer when the claws are equipped.

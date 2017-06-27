@@ -50,7 +50,7 @@ Notes:
 		return 0
 
 	if (!init)
-		//Initialize some vars
+		// Initialize some vars
 		init = 1
 		owner << output(list2params(list(world.icon_size, control)), "[control]:tooltip.init")
 
@@ -64,13 +64,13 @@ Notes:
 	else if (!title && content)
 		content = "<p>[content]</p>"
 
-	//Make our dumb param object
+	// Make our dumb param object
 	params = {"{ "cursor": "[params]", "screenLoc": "[thing.screen_loc]" }"}
 
-	//Send stuff to the tooltip
+	// Send stuff to the tooltip
 	owner << output(list2params(list(params, owner.view, "[title][content]", theme, special)), "[control]:tooltip.update")
 
-	//If a hide() was hit while we were showing, run hide() again to avoid stuck tooltips
+	// If a hide() was hit while we were showing, run hide() again to avoid stuck tooltips
 	showing = 0
 	if (queueHide)
 		hide()
@@ -93,9 +93,9 @@ Notes:
 /* TG SPECIFIC CODE */
 
 
-//Open a tooltip for user, at a location based on params
-//Theme is a CSS class in tooltip.html, by default this wrapper chooses a CSS class based on the user's UI_style (Midnight, Plasmafire, Retro)
-//Includes sanity.checks
+// Open a tooltip for user, at a location based on params
+// Theme is a CSS class in tooltip.html, by default this wrapper chooses a CSS class based on the user's UI_style (Midnight, Plasmafire, Retro)
+// Includes sanity.checks
 /proc/openToolTip(mob/user = null, atom/movable/tip_src = null, params = null, title = "", content = "", theme = "")
 	if(istype(user))
 		if(user.client && user.client.tooltips)
@@ -103,11 +103,11 @@ Notes:
 				theme = lowertext(user.client.prefs.UI_style)
 			if(!theme)
 				theme = "default"
-			user.client.tooltips.show(tip_src, params,title,content,theme)
+			user.client.tooltips.show(tip_src, params, title, content, theme)
 
 
-//Arbitrarily close a user's tooltip
-//Includes sanity checks.
+// Arbitrarily close a user's tooltip
+// Includes sanity checks.
 /proc/closeToolTip(mob/user)
 	if(istype(user))
 		if(user.client && user.client.tooltips)

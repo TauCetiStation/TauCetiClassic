@@ -15,7 +15,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	image/halimage
 	image/halbody
 	obj/halitem
-	hal_screwyhud = 0 //1 - critical, 2 - dead, 3 - oxygen indicator, 4 - toxin indicator
+	hal_screwyhud = 0 // 1 - critical, 2 - dead, 3 - oxygen indicator, 4 - toxin indicator
 	handling_hal = 0
 	hal_crit = 0
 
@@ -27,17 +27,17 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		var/halpick = rand(1,100)
 		switch(halpick)
 			if(0 to 15)
-				//Screwy HUD
-				//src << "Screwy HUD"
+				// Screwy HUD
+				// src << "Screwy HUD"
 				hal_screwyhud = pick(1,2,3,3,4,4)
 				spawn(rand(100,250))
 					hal_screwyhud = 0
 			if(16 to 25)
-				//Strange items
-				//src << "Traitor Items"
+				// Strange items
+				// src << "Traitor Items"
 				if(!halitem)
 					halitem = new
-					var/list/slots_free = list(ui_lhand,ui_rhand)
+					var/list/slots_free = list(ui_lhand, ui_rhand)
 					if(l_hand) slots_free -= ui_lhand
 					if(r_hand) slots_free -= ui_rhand
 					if(istype(src,/mob/living/carbon/human))
@@ -50,29 +50,29 @@ Gunshots/explosions/opening doors/less rare audio (done)
 						halitem.layer = ABOVE_HUD_LAYER
 						halitem.plane = ABOVE_HUD_PLANE
 						switch(rand(1,6))
-							if(1) //revolver
+							if(1) // revolver
 								halitem.icon = 'icons/obj/gun.dmi'
 								halitem.icon_state = "revolver"
 								halitem.name = "Revolver"
-							if(2) //c4
+							if(2) // c4
 								halitem.icon = 'icons/obj/assemblies.dmi'
 								halitem.icon_state = "plastic-explosive0"
 								halitem.name = "Mysterious Package"
 								if(prob(25))
 									halitem.icon_state = "c4small_1"
-							if(3) //sword
+							if(3) // sword
 								halitem.icon = 'icons/obj/weapons.dmi'
 								halitem.icon_state = "sword1"
 								halitem.name = "Sword"
-							if(4) //stun baton
+							if(4) // stun baton
 								halitem.icon = 'icons/obj/weapons.dmi'
 								halitem.icon_state = "stunbaton"
 								halitem.name = "Stun Baton"
-							if(5) //emag
+							if(5) // emag
 								halitem.icon = 'icons/obj/card.dmi'
 								halitem.icon_state = "emag"
 								halitem.name = "Cryptographic Sequencer"
-							if(6) //flashbang
+							if(6) // flashbang
 								halitem.icon = 'icons/obj/grenade.dmi'
 								halitem.icon_state = "flashbang1"
 								halitem.name = "Flashbang"
@@ -82,36 +82,36 @@ Gunshots/explosions/opening doors/less rare audio (done)
 								client.screen -= halitem
 							halitem = null
 			if(26 to 40)
-				//Flashes of danger
-				//src << "Danger Flash"
+				// Flashes of danger
+				// src << "Danger Flash"
 				if(!halimage)
 					var/list/possible_points = list()
-					for(var/turf/simulated/floor/F in view(src,world.view))
+					for(var/turf/simulated/floor/F in view(src, world.view))
 						possible_points += F
 					if(possible_points.len)
 						var/turf/simulated/floor/target = pick(possible_points)
 
 						switch(rand(1,3))
 							if(1)
-								//src << "Space"
+								// src << "Space"
 								halimage = image('icons/turf/space.dmi',target,"[rand(1,25)]",TURF_LAYER)
 							if(2)
-								//src << "Fire"
+								// src << "Fire"
 								halimage = image('icons/effects/fire.dmi',target,"1",TURF_LAYER)
 							if(3)
-								//src << "C4"
+								// src << "C4"
 								halimage = image('icons/obj/assemblies.dmi',target,"plastic-explosive2",OBJ_LAYER+0.01)
 
 
 						if(client) client.images += halimage
-						spawn(rand(10,50)) //Only seen for a brief moment.
+						spawn(rand(10,50)) // Only seen for a brief moment.
 							if(client) client.images -= halimage
 							halimage = null
 
 
 			if(41 to 65)
-				//Strange audio
-				//src << "Strange Audio"
+				// Strange audio
+				// src << "Strange Audio"
 				switch(rand(1,12))
 					if(1)
 						src << 'sound/machines/airlock/airlockToggle.ogg'
@@ -133,20 +133,20 @@ Gunshots/explosions/opening doors/less rare audio (done)
 					if(8)
 						src << 'sound/machines/windowdoor.ogg'
 					if(9)
-						//To make it more realistic, I added two gunshots (enough to kill)
+						// To make it more realistic, I added two gunshots (enough to kill)
 						src << 'sound/weapons/Gunshot.ogg'
 						spawn(rand(10,30))
 							src << 'sound/weapons/Gunshot.ogg'
 					if(10)
 						src << 'sound/weapons/smash.ogg'
 					if(11)
-						//Same as above, but with tasers.
+						// Same as above, but with tasers.
 						src << 'sound/weapons/Taser.ogg'
 						spawn(rand(10,30))
 							src << 'sound/weapons/Taser.ogg'
-				//Rare audio
+				// Rare audio
 					if(12)
-//These sounds are (mostly) taken from Hidden: Source
+// These sounds are (mostly) taken from Hidden: Source
 						var/list/creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',\
 							'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',\
 							'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',\
@@ -154,11 +154,11 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
 						src << pick(creepyasssounds)
 			if(66 to 70)
-				//Flashes of danger
-				//src << "Danger Flash"
+				// Flashes of danger
+				// src << "Danger Flash"
 				if(!halbody)
 					var/list/possible_points = list()
-					for(var/turf/simulated/floor/F in view(src,world.view))
+					for(var/turf/simulated/floor/F in view(src, world.view))
 						possible_points += F
 					if(possible_points.len)
 						var/turf/simulated/floor/target = pick(possible_points)
@@ -173,11 +173,11 @@ Gunshots/explosions/opening doors/less rare audio (done)
 	//							halbody = image('xcomalien.dmi',target,"chryssalid",TURF_LAYER)
 
 						if(client) client.images += halbody
-						spawn(rand(50,80)) //Only seen for a brief moment.
+						spawn(rand(50,80)) // Only seen for a brief moment.
 							if(client) client.images -= halbody
 							halbody = null
 			if(71 to 72)
-				//Fake death
+				// Fake death
 //				src.sleeping_willingly = 1
 				src.sleeping = 20
 				hal_crit = 1
@@ -214,10 +214,10 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/fake_attacker/attackby(obj/item/weapon/P, mob/user)
 	user.do_attack_animation(src)
-	step_away(src,my_target,2)
-	for(var/mob/M in oviewers(world.view,my_target))
+	step_away(src, my_target,2)
+	for(var/mob/M in oviewers(world.view, my_target))
 		to_chat(M, "\red <B>[my_target] flails around wildly.</B>")
-	my_target.show_message("\red <B>[src] has been attacked by [my_target] </B>", 1) //Lazy.
+	my_target.show_message("\red <B>[src] has been attacked by [my_target] </B>", 1) // Lazy.
 
 	src.health -= P.force
 
@@ -226,7 +226,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/fake_attacker/Crossed(var/mob/M, somenumber)
 	if(M == my_target)
-		step_away(src,my_target,2)
+		step_away(src, my_target,2)
 		if(prob(30))
 			for(var/mob/O in oviewers(world.view , my_target))
 				to_chat(O, "\red <B>[my_target] stumbles around.</B>")
@@ -237,7 +237,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(my_target)
 			my_target.hallucinations -= src
 		qdel(src)
-	step_away(src,my_target,2)
+	step_away(src, my_target,2)
 	spawn attack_loop()
 
 
@@ -247,16 +247,16 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 	if(src.dir == NORTH)
 		qdel(src.currentimage)
-		src.currentimage = new /image(up,src)
+		src.currentimage = new /image(up, src)
 	else if(src.dir == SOUTH)
 		qdel(src.currentimage)
-		src.currentimage = new /image(down,src)
+		src.currentimage = new /image(down, src)
 	else if(src.dir == EAST)
 		qdel(src.currentimage)
-		src.currentimage = new /image(right,src)
+		src.currentimage = new /image(right, src)
 	else if(src.dir == WEST)
 		qdel(src.currentimage)
-		src.currentimage = new /image(left,src)
+		src.currentimage = new /image(left, src)
 	my_target << currentimage
 
 
@@ -266,9 +266,9 @@ Gunshots/explosions/opening doors/less rare audio (done)
 		if(src.health < 0)
 			collapse()
 			continue
-		if(get_dist(src,my_target) > 1)
-			src.dir = get_dir(src,my_target)
-			step_towards(src,my_target)
+		if(get_dist(src, my_target) > 1)
+			src.dir = get_dir(src, my_target)
+			step_towards(src, my_target)
 			updateimage()
 		else
 			if(prob(15))
@@ -290,7 +290,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 							fake_blood(my_target)
 
 		if(prob(15))
-			step_away(src,my_target,2)
+			step_away(src, my_target,2)
 
 /obj/effect/fake_attacker/proc/collapse()
 	collapse = 1
@@ -330,13 +330,13 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 		if(H.stat || H.lying) continue
 //		possible_clones += H
 		clone = H
-		break	//changed the code a bit. Less randomised, but less work to do. Should be ok, world.contents aren't stored in any particular order.
+		break	// changed the code a bit. Less randomised, but less work to do. Should be ok, world.contents aren't stored in any particular order.
 
 //	if(!possible_clones.len) return
 //	clone = pick(possible_clones)
 	if(!clone)	return
 
-	//var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(outside_range(target))
+	// var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(outside_range(target))
 	var/obj/effect/fake_attacker/F = new/obj/effect/fake_attacker(target.loc)
 	if(clone.l_hand)
 		if(!(locate(clone.l_hand) in non_fakeattack_weapons))
@@ -353,9 +353,9 @@ var/list/non_fakeattack_weapons = list(/obj/item/weapon/gun/projectile, /obj/ite
 	target.hallucinations += F
 
 
-	F.left = image(clone,dir = WEST)
-	F.right = image(clone,dir = EAST)
-	F.up = image(clone,dir = NORTH)
-	F.down = image(clone,dir = SOUTH)
+	F.left = image(clone, dir = WEST)
+	F.right = image(clone, dir = EAST)
+	F.up = image(clone, dir = NORTH)
+	F.down = image(clone, dir = SOUTH)
 
 	F.updateimage()

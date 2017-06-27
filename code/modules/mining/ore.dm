@@ -6,7 +6,7 @@
 	var/datum/geosample/geologic_data
 	var/oretag
 	var/points = 0
-	var/refined_type = null //What this ore defaults to being refined into
+	var/refined_type = null // What this ore defaults to being refined into
 
 /obj/item/weapon/ore/uranium
 	name = "pitchblende"
@@ -98,7 +98,7 @@
 /obj/item/weapon/ore/New()
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8
-	if(src.z == ZLEVEL_ASTEROID) score["oremined"]++ //When ore spawns, increment score.  Only include ore spawned on mining asteroid.
+	if(src.z == ZLEVEL_ASTEROID) score["oremined"]++ // When ore spawns, increment score.  Only include ore spawned on mining asteroid.
 
 /obj/item/weapon/ore/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/device/core_sampler))

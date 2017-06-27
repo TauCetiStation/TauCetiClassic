@@ -8,7 +8,7 @@
 	var/skipeyes = 0
 	var/skipface = 0
 
-	//exosuits and helmets obscure our view and stuff.
+	// exosuits and helmets obscure our view and stuff.
 	if(wear_suit)
 		skipgloves = wear_suit.flags_inv & HIDEGLOVES
 		skipsuitstorage = wear_suit.flags_inv & HIDESUITSTORAGE
@@ -25,7 +25,7 @@
 		skipface |= wear_mask.flags_inv & HIDEFACE
 
 	// crappy hacks because you can't do \his[src] etc. I'm sorry this proc is so unreadable, blame the text macros :<
-	var/t_He = "It" //capitalised for use at the start of each line.
+	var/t_He = "It" // capitalised for use at the start of each line.
 	var/t_his = "its"
 	var/t_him = "it"
 	var/t_has = "has"
@@ -33,7 +33,7 @@
 
 	var/msg = "<span class='info'>*---------*\nThis is "
 
-	if( skipjumpsuit && skipface ) //big suits/masks/helmets make it hard to tell their gender
+	if( skipjumpsuit && skipface ) // big suits/masks/helmets make it hard to tell their gender
 		t_He = "They"
 		t_his = "their"
 		t_him = "them"
@@ -52,9 +52,9 @@
 
 	msg += "<EM>[src.name]</EM>!\n"
 
-	//uniform
+	// uniform
 	if(w_uniform && !skipjumpsuit)
-		//Ties
+		// Ties
 		var/tie_msg
 		if(istype(w_uniform,/obj/item/clothing/under))
 			var/obj/item/clothing/under/U = w_uniform
@@ -68,7 +68,7 @@
 		else
 			msg += "[t_He] [t_is] wearing [bicon(w_uniform)] \a [w_uniform][tie_msg].\n"
 
-	//head
+	// head
 	if(head)
 		if(head.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] [(head.blood_color != "#030303") ? "blood" : "oil"]-stained [head.name] on [t_his] head!</span>\n"
@@ -77,7 +77,7 @@
 		else
 			msg += "[t_He] [t_is] wearing [bicon(head)] \a [head] on [t_his] head.\n"
 
-	//suit/armour
+	// suit/armour
 	if(wear_suit)
 		if(wear_suit.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(wear_suit)] [wear_suit.gender==PLURAL?"some":"a"] [(wear_suit.blood_color != "#030303") ? "blood" : "oil"]-stained [wear_suit.name]!</span>\n"
@@ -86,14 +86,14 @@
 		else
 			msg += "[t_He] [t_is] wearing [bicon(wear_suit)] \a [wear_suit].\n"
 
-		//suit/armour storage
+		// suit/armour storage
 		if(s_store && !skipsuitstorage)
 			if(s_store.blood_DNA)
 				msg += "<span class='warning'>[t_He] [t_is] carrying [bicon(s_store)] [s_store.gender==PLURAL?"some":"a"] [(s_store.blood_color != "#030303") ? "blood" : "oil"]-stained [s_store.name] on [t_his] [wear_suit.name]!</span>\n"
 			else
 				msg += "[t_He] [t_is] carrying [bicon(s_store)] \a [s_store] on [t_his] [wear_suit.name].\n"
 
-	//back
+	// back
 	if(back)
 		if(back.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] [bicon(back)] [back.gender==PLURAL?"some":"a"] [(back.blood_color != "#030303") ? "blood" : "oil"]-stained [back] on [t_his] back.</span>\n"
@@ -102,7 +102,7 @@
 		else
 			msg += "[t_He] [t_has] [bicon(back)] \a [back] on [t_his] back.\n"
 
-	//left hand
+	// left hand
 	if(l_hand && !(l_hand.flags&ABSTRACT))
 		if(l_hand.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] holding [bicon(l_hand)] [l_hand.gender==PLURAL?"some":"a"] [(l_hand.blood_color != "#030303") ? "blood" : "oil"]-stained [l_hand.name] in [t_his] left hand!</span>\n"
@@ -111,7 +111,7 @@
 		else
 			msg += "[t_He] [t_is] holding [bicon(l_hand)] \a [l_hand] in [t_his] left hand.\n"
 
-	//right hand
+	// right hand
 	if(r_hand && !(r_hand.flags&ABSTRACT))
 		if(r_hand.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] holding [bicon(r_hand)] [r_hand.gender==PLURAL?"some":"a"] [(r_hand.blood_color != "#030303") ? "blood" : "oil"]-stained [r_hand.name] in [t_his] right hand!</span>\n"
@@ -120,7 +120,7 @@
 		else
 			msg += "[t_He] [t_is] holding [bicon(r_hand)] \a [r_hand] in [t_his] right hand.\n"
 
-	//gloves
+	// gloves
 	if(gloves && !skipgloves)
 		if(gloves.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] [bicon(gloves)] [gloves.gender==PLURAL?"some":"a"] [(gloves.blood_color != "#030303") ? "blood" : "oil"]-stained [gloves.name] on [t_his] hands!</span>\n"
@@ -131,18 +131,18 @@
 	else if(blood_DNA)
 		msg += "<span class='warning'>[t_He] [t_has] [(hand_blood_color != "#030303") ? "blood" : "oil"]-stained hands!</span>\n"
 
-	//handcuffed?
+	// handcuffed?
 	if(handcuffed)
 		if(istype(handcuffed, /obj/item/weapon/handcuffs/cable))
 			msg += "<span class='warning'>[t_He] [t_is] [bicon(handcuffed)] restrained with cable!</span>\n"
 		else
 			msg += "<span class='warning'>[t_He] [t_is] [bicon(handcuffed)] handcuffed!</span>\n"
 
-	//buckled
+	// buckled
 	if(buckled)
 		msg += "<span class='warning'>[t_He] [t_is] [bicon(buckled)] buckled to [buckled]!</span>\n"
 
-	//belt
+	// belt
 	if(belt)
 		if(belt.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] [bicon(belt)] [belt.gender==PLURAL?"some":"a"] [(belt.blood_color != "#030303") ? "blood" : "oil"]-stained [belt.name] about [t_his] waist!</span>\n"
@@ -151,7 +151,7 @@
 		else
 			msg += "[t_He] [t_has] [bicon(belt)] \a [belt] about [t_his] waist.\n"
 
-	//shoes
+	// shoes
 	if(shoes && !skipshoes)
 		if(shoes.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(shoes)] [shoes.gender==PLURAL?"some":"a"] [(shoes.blood_color != "#030303") ? "blood" : "oil"]-stained [shoes.name] on [t_his] feet!</span>\n"
@@ -162,7 +162,7 @@
 	else if(feet_blood_DNA)
 		msg += "<span class='warning'>[t_He] [t_has] [(feet_blood_color != "#030303") ? "blood" : "oil"]-stained feet!</span>\n"
 
-	//mask
+	// mask
 	if(wear_mask && !skipmask)
 		if(wear_mask.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] [bicon(wear_mask)] [wear_mask.gender==PLURAL?"some":"a"] [(wear_mask.blood_color != "#030303") ? "blood" : "oil"]-stained [wear_mask.name] on [t_his] face!</span>\n"
@@ -171,7 +171,7 @@
 		else
 			msg += "[t_He] [t_has] [bicon(wear_mask)] \a [wear_mask] on [t_his] face.\n"
 
-	//eyes
+	// eyes
 	if(glasses && !skipeyes)
 		if(glasses.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] [(glasses.blood_color != "#030303") ? "blood" : "oil"]-stained [glasses] covering [t_his] eyes!</span>\n"
@@ -180,19 +180,19 @@
 		else
 			msg += "[t_He] [t_has] [bicon(glasses)] \a [glasses] covering [t_his] eyes.\n"
 
-	//left ear
+	// left ear
 	if(l_ear && !skipears)
 		msg += "[t_He] [t_has] [bicon(l_ear)] \a [l_ear] on [t_his] left ear.\n"
 
-	//right ear
+	// right ear
 	if(r_ear && !skipears)
 		msg += "[t_He] [t_has] [bicon(r_ear)] \a [r_ear] on [t_his] right ear.\n"
 
-	//ID
+	// ID
 	if(wear_id)
 		msg += "[t_He] [t_is] wearing [bicon(wear_id)] \a [wear_id].\n"
 
-	//Jitters
+	// Jitters
 	if(is_jittery)
 		if(jitteriness >= 300)
 			msg += "<span class='warning'><B>[t_He] [t_is] convulsing violently!</B></span>\n"
@@ -201,7 +201,7 @@
 		else if(jitteriness >= 100)
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
-	//splints
+	// splints
 	for(var/bodypart in list(BP_L_LEG , BP_R_LEG , BP_L_ARM , BP_R_ARM))
 		var/obj/item/organ/external/BP = bodyparts_by_name[bodypart]
 		if(BP && BP.status & ORGAN_SPLINTED)
@@ -213,7 +213,7 @@
 	if(SMALLSIZE in mutations)
 		msg += "[t_He] [t_is] small halfling!\n"
 
-	var/distance = get_dist(user,src)
+	var/distance = get_dist(user, src)
 	if(istype(user, /mob/dead/observer) || user.stat == DEAD) // ghosts can see anything
 		distance = 1
 	if (src.stat)
@@ -343,8 +343,8 @@
 			else
 				wound_flavor_text["[BP.name]"] = ""
 
-	//Handles the text strings being added to the actual description.
-	//If they have something that covers the limb, and it is not missing, put flavortext.  If it is covered but bleeding, add other flavortext.
+	// Handles the text strings being added to the actual description.
+	// If they have something that covers the limb, and it is not missing, put flavortext.  If it is covered but bleeding, add other flavortext.
 	var/display_chest = 0
 	var/display_shoes = 0
 	var/display_gloves = 0
@@ -352,7 +352,7 @@
 		msg += wound_flavor_text["head"]
 	else if(is_bleeding["head"])
 		msg += "<span class='warning'>[src] has blood running down [t_his] face!</span>\n"
-	if(wound_flavor_text["chest"] && !w_uniform && !skipjumpsuit) //No need.  A missing chest gibs you.
+	if(wound_flavor_text["chest"] && !w_uniform && !skipjumpsuit) // No need.  A missing chest gibs you.
 		msg += wound_flavor_text["chest"]
 	else if(is_bleeding["chest"])
 		display_chest = 1
@@ -463,10 +463,10 @@
 		msg += "<span class='info'>[t_He] is busy with something!</span><br>"
 	if (pose)
 		if( findtext(pose,".",lentext(pose)) == 0 && findtext(pose,"!",lentext(pose)) == 0 && findtext(pose,"?",lentext(pose)) == 0 )
-			pose = addtext(pose,".") //Makes sure all emotes end with a period.
+			pose = addtext(pose,".") // Makes sure all emotes end with a period.
 		msg += "\n[t_He] is [pose]"
 
-	//someone here, but who?
+	// someone here, but who?
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
 		if(H.species && H.species.name != ABDUCTOR)
@@ -476,7 +476,7 @@
 					return
 	to_chat(user, msg)
 
-//Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
+// Helper procedure. Called by /mob/living/carbon/human/examine() and /mob/living/carbon/human/Topic() to determine HUD access to security and medical records.
 /proc/hasHUD(mob/M, hudtype)
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M

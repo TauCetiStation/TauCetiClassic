@@ -1,6 +1,6 @@
 // Organs.
 
-//THIS CODE IS GOOD, BUT FOR US THIS IS USELESS!!!
+// THIS CODE IS GOOD, BUT FOR US THIS IS USELESS!!!
 
 // Alien organs
 /datum/export/organ/alien/get_cost(O, contr = 0, emag = 0)

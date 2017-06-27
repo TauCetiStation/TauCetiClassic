@@ -1,8 +1,8 @@
-//Procedures in this file: Putting items in body cavity. Implant removal. Items removal.
+// Procedures in this file: Putting items in body cavity. Implant removal. Items removal.
 
-//////////////////////////////////////////////////////////////////
-//					ITEM PLACEMENT SURGERY						//
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////// /
+//					ITEM PLACEMENT SURGERY						// 
+///////////////////////////////////////////////////////////////// /
 
 /datum/surgery_step/cavity
 	priority = 1
@@ -129,7 +129,7 @@
 	if (tool.w_class > get_max_wclass(BP)/2 && prob(50) && BP.sever_artery())
 		to_chat(user, "\red You tear some blood vessels trying to fit such a big object in this cavity.")
 		BP.owner.custom_pain("You feel something rip in your [BP.name]!", 1)
-	if(istype(tool, /obj/item/gland))	//Abductor surgery integration
+	if(istype(tool, /obj/item/gland))	// Abductor surgery integration
 		if(target_zone != BP_CHEST)
 			return
 		else
@@ -149,9 +149,9 @@
 	"\red Your hand slips, scraping tissue inside [target]'s [BP.name] with \the [tool]!")
 	BP.createwound(CUT, 20)
 
-//////////////////////////////////////////////////////////////////
-//					IMPLANT/ITEM REMOVAL SURGERY						//
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////// /
+//					IMPLANT/ITEM REMOVAL SURGERY						// 
+///////////////////////////////////////////////////////////////// /
 
 /datum/surgery_step/cavity/implant_removal
 	allowed_tools = list(
@@ -204,7 +204,7 @@
 
 			target.hud_updateflag |= 1 << IMPLOYAL_HUD
 
-			//Handle possessive brain borers.
+			// Handle possessive brain borers.
 			if(istype(obj,/mob/living/simple_animal/borer))
 				var/mob/living/simple_animal/borer/worm = obj
 				if(worm.controlling)

@@ -10,7 +10,7 @@
 	Class: FunctionCall
 	Represents a call to a function.
 */
-//
+// 
 	FunctionCall
 		var
 			func_name
@@ -21,7 +21,7 @@
 	Class: FunctionDefinition
 	Defines a function.
 */
-//
+// 
 	FunctionDefinition
 		var
 			func_name
@@ -39,7 +39,7 @@
 	See Also:
 	- <VariableDeclaration>
 */
-//
+// 
 	VariableAssignment
 		var
 			node
@@ -55,7 +55,7 @@
 	See Also:
 	- <VariableAssignment>
 */
-//
+// 
 	VariableDeclaration
 		var
 			node
@@ -66,20 +66,20 @@
 /*
 	Class: IfStatement
 */
-//
+// 
 	IfStatement
 		var
 			node
 				BlockDefinition
 					block
-					else_block //may be null
+					else_block // may be null
 				expression/cond
 
 /*
 	Class: WhileLoop
 	Loops while a given condition is true.
 */
-//
+// 
 	WhileLoop
 		var
 			node
@@ -102,21 +102,21 @@
 	Class: BreakStatement
 	Ends a loop.
 */
-//
+// 
 	BreakStatement
 
 /*
 	Class: ContinueStatement
 	Skips to the next iteration of a loop.
 */
-//
+// 
 	ContinueStatement
 
 /*
 	Class: ReturnStatement
 	Ends the function and returns a value.
 */
-//
+// 
 	ReturnStatement
 		var
 			node/expression/value

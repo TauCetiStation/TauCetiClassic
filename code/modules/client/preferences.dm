@@ -1,10 +1,10 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 var/list/preferences_datums = list()
 
 var/const/MAX_SAVE_SLOTS = 10
 
-//used for alternate_option
+// used for alternate_option
 #define GET_RANDOM_JOB 0
 #define BE_ASSISTANT 1
 #define RETURN_TO_LOBBY 2
@@ -12,12 +12,12 @@ var/const/MAX_SAVE_SLOTS = 10
 #define MAX_GEAR_COST 5
 /datum/preferences
 	var/client/parent
-	//doohickeys for savefiles
+	// doohickeys for savefiles
 	var/path
-	var/default_slot = 1				//Holder so it doesn't default to slot 1, rather the last one used
+	var/default_slot = 1				// Holder so it doesn't default to slot 1, rather the last one used
 	var/savefile_version = 0
 
-	//non-preference stuff
+	// non-preference stuff
 	var/warns = 0
 	var/warnbans = 0
 	var/permamuted = 0
@@ -26,13 +26,13 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/last_id
 	var/menu_type = "general"
 	var/submenu_type = "body"
-	var/list/ignore_question = list()		//For roles which getting player_saves with question system
+	var/list/ignore_question = list()		// For roles which getting player_saves with question system
 
-	//account data
+	// account data
 	var/list/cid_list = list()
 	var/ignore_cid_warning = 0
 
-	//game-preferences
+	// game-preferences
 	var/UI_style = "White"
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
@@ -40,51 +40,51 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
-	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
+	var/lastchangelog = ""              // Saved changlog filesize to detect if there was a change
 
-	//antag preferences
+	// antag preferences
 	var/list/be_role = list()
 	var/uplinklocation = "PDA"
 
-	//character preferences
-	var/real_name						//our character's name
-	var/be_random_name = 0				//whether we are a random name every round
-	var/gender = MALE					//gender of character (well duh)
-	var/age = 30						//age of character
-	var/b_type = "A+"					//blood type (not-chooseable)
-	var/underwear = 1					//underwear type
-	var/undershirt = 1					//undershirt type
-	var/socks = 1						//socks type
-	var/backbag = 2						//backpack type
-	var/h_style = "Bald"				//Hair type
-	var/r_hair = 0						//Hair color
-	var/g_hair = 0						//Hair color
-	var/b_hair = 0						//Hair color
-	var/f_style = "Shaved"				//Face hair type
-	var/r_facial = 0					//Face hair color
-	var/g_facial = 0					//Face hair color
-	var/b_facial = 0					//Face hair color
-	var/s_tone = 0						//Skin tone
-	var/r_skin = 0						//Skin color
-	var/g_skin = 0						//Skin color
-	var/b_skin = 0						//Skin color
-	var/r_eyes = 0						//Eye color
-	var/g_eyes = 0						//Eye color
-	var/b_eyes = 0						//Eye color
+	// character preferences
+	var/real_name						// our character's name
+	var/be_random_name = 0				// whether we are a random name every round
+	var/gender = MALE					// gender of character (well duh)
+	var/age = 30						// age of character
+	var/b_type = "A+"					// blood type (not-chooseable)
+	var/underwear = 1					// underwear type
+	var/undershirt = 1					// undershirt type
+	var/socks = 1						// socks type
+	var/backbag = 2						// backpack type
+	var/h_style = "Bald"				// Hair type
+	var/r_hair = 0						// Hair color
+	var/g_hair = 0						// Hair color
+	var/b_hair = 0						// Hair color
+	var/f_style = "Shaved"				// Face hair type
+	var/r_facial = 0					// Face hair color
+	var/g_facial = 0					// Face hair color
+	var/b_facial = 0					// Face hair color
+	var/s_tone = 0						// Skin tone
+	var/r_skin = 0						// Skin color
+	var/g_skin = 0						// Skin color
+	var/b_skin = 0						// Skin color
+	var/r_eyes = 0						// Eye color
+	var/g_eyes = 0						// Eye color
+	var/b_eyes = 0						// Eye color
 	var/species = HUMAN
-	var/language = "None"				//Secondary language
+	var/language = "None"				// Secondary language
 
-	//Some faction information.
-	var/home_system = "None"            //System of birth.
-	var/citizenship = "None"            //Current home system.
-	var/faction = "None"                //Antag faction/general associated faction.
-	var/religion = "None"               //Religious association.
+	// Some faction information.
+	var/home_system = "None"            // System of birth.
+	var/citizenship = "None"            // Current home system.
+	var/faction = "None"                // Antag faction/general associated faction.
+	var/religion = "None"               // Religious association.
 	var/nanotrasen_relation = "Neutral"
 
-	//Mob preview
+	// Mob preview
 	var/icon/preview_icon = null
 
-	//Jobs, uses bitflags
+	// Jobs, uses bitflags
 	var/job_civilian_high = 0
 	var/job_civilian_med = 0
 	var/job_civilian_low = 0
@@ -97,7 +97,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/job_engsec_med = 0
 	var/job_engsec_low = 0
 
-	//Keeps track of preferrence for not getting any wanted jobs
+	// Keeps track of preferrence for not getting any wanted jobs
 	var/alternate_option = 0
 
 	// maps each organ to either null(intact), "cyborg" or "amputated"
@@ -122,7 +122,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/volume = 100
 	var/parallax = PARALLAX_HIGH
 
-	//custom loadout
+	// custom loadout
 	var/list/gear = list()
 	var/gear_tab = "General"
 
@@ -154,14 +154,14 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(path)
 		dat += "<div class='main_menu'>"
 		dat += "Slot: <b>[real_name]</b> - "
-		dat += "[menu_type=="load_slot"?"<b>Load slot</b>":"<a href=\"byond://?src=\ref[user];preference=load_slot\">Load slot</a>"] - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=save\">Save slot</a> - "
-		dat += "<a href=\"byond://?src=\ref[user];preference=reload\">Reload slot</a><br>"
-		dat += "[menu_type=="general"?"<b>General</b>":"<a href=\"byond://?src=\ref[user];preference=general\">General</a>"] - "
-		dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond://?src=\ref[user];preference=occupation\">Occupation</a>"] - "
-		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond://?src=\ref[user];preference=roles\">Roles</a>"] - "
-		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond://?src=\ref[user];preference=glob\">Global</a>"] - "
-		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond://?src=\ref[user];preference=loadout\">Loadout</a>"]"
+		dat += "[menu_type=="load_slot"?"<b>Load slot</b>":"<a href=\"byond:// ?src=\ref[user];preference=load_slot\">Load slot</a>"] - "
+		dat += "<a href=\"byond:// ?src=\ref[user];preference=save\">Save slot</a> - "
+		dat += "<a href=\"byond:// ?src=\ref[user];preference=reload\">Reload slot</a><br>"
+		dat += "[menu_type=="general"?"<b>General</b>":"<a href=\"byond:// ?src=\ref[user];preference=general\">General</a>"] - "
+		dat += "[menu_type=="occupation"?"<b>Occupation</b>":"<a href=\"byond:// ?src=\ref[user];preference=occupation\">Occupation</a>"] - "
+		dat += "[menu_type=="roles"?"<b>Roles</b>":"<a href=\"byond:// ?src=\ref[user];preference=roles\">Roles</a>"] - "
+		dat += "[menu_type=="glob"?"<b>Global</b>":"<a href=\"byond:// ?src=\ref[user];preference=glob\">Global</a>"] - "
+		dat += "[menu_type=="loadout"?"<b>Loadout</b>":"<a href=\"byond:// ?src=\ref[user];preference=loadout\">Loadout</a>"]"
 		dat += "<br><a href='?src=\ref[user];preference=close\'><b><font color='#FF4444'>Close</font></b></a>"
 		dat += "</div>"
 	else
@@ -251,7 +251,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	if(config.humans_need_surnames)
 		var/firstspace = findtext(real_name, " ")
 		var/name_length = length(real_name)
-		if(!firstspace)	//we need a surname
+		if(!firstspace)	// we need a surname
 			real_name += " [pick(last_names)]"
 		else if(firstspace == name_length)
 			real_name += "[pick(last_names)]"
@@ -318,7 +318,7 @@ var/const/MAX_SAVE_SLOTS = 10
 		else continue
 
 
-	//Disabilities
+	// Disabilities
 	if(disabilities & DISABILITY_NEARSIGHTED)
 		character.disabilities|=NEARSIGHTED
 	if(disabilities & DISABILITY_EPILEPTIC)
@@ -346,7 +346,7 @@ var/const/MAX_SAVE_SLOTS = 10
 		W.add_fingerprint(character)
 
 	if(underwear > underwear_m.len || underwear < 1)
-		underwear = 0 //I'm sure this is 100% unnecessary, but I'm paranoid... sue me. //HAH NOW NO MORE MAGIC CLONING UNDIES
+		underwear = 0 // I'm sure this is 100% unnecessary, but I'm paranoid... sue me. // HAH NOW NO MORE MAGIC CLONING UNDIES
 	character.underwear = underwear
 
 	if(undershirt > undershirt_t.len || undershirt < 1)
@@ -359,12 +359,12 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.socks = socks
 
 	if(backbag > 4 || backbag < 1)
-		backbag = 1 //Same as above
+		backbag = 1 // Same as above
 	character.backbag = backbag
 
-	//Debugging report to track down a bug, which randomly assigned the plural gender to people.
+	// Debugging report to track down a bug, which randomly assigned the plural gender to people.
 	if(character.gender in list(PLURAL, NEUTER))
-		if(isliving(src)) //Ghosts get neuter by default
+		if(isliving(src)) // Ghosts get neuter by default
 			message_admins("[character] ([character.ckey]) has spawned with their gender as plural or neuter. Please notify coders.")
 			character.gender = MALE
 

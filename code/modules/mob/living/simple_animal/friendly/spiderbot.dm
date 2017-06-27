@@ -11,7 +11,7 @@
 	var/obj/item/weapon/stock_parts/cell/cell = null
 	var/obj/machinery/camera/camera = null
 	var/obj/item/device/mmi/mmi = null
-	var/list/req_access = list(access_robotics) //Access needed to pop out the brain.
+	var/list/req_access = list(access_robotics) // Access needed to pop out the brain.
 
 	name = "Spider-bot"
 	desc = "A skittering robotic friend!"
@@ -19,7 +19,7 @@
 	icon_state = "spiderbot-chassis"
 	icon_living = "spiderbot-chassis"
 	icon_dead = "spiderbot-smashed"
-	universal_speak = 1 //Temp until these are rewritten.
+	universal_speak = 1 // Temp until these are rewritten.
 
 	wander = 0
 
@@ -37,9 +37,9 @@
 	ventcrawler = 2
 
 	var/emagged = 0
-	var/obj/item/held_item = null //Storage for single item they can hold.
-	speed = -1                    //Spiderbots gotta go fast.
-	//pass_flags = PASSTABLE      //Maybe griefy?
+	var/obj/item/held_item = null // Storage for single item they can hold.
+	speed = -1                    // Spiderbots gotta go fast.
+	// pass_flags = PASSTABLE      // Maybe griefy?
 	small = 1
 	speak_emote = list("beeps","clicks","chirps")
 
@@ -47,7 +47,7 @@
 
 	if(istype(O, /obj/item/device/mmi) || istype(O, /obj/item/device/mmi/posibrain))
 		var/obj/item/device/mmi/B = O
-		if(src.mmi) //There's already a brain in it.
+		if(src.mmi) // There's already a brain in it.
 			to_chat(user, "\red There's already a brain in [src]!")
 			return
 		if(!B.brainmob)
@@ -160,7 +160,7 @@
 		src.ckey = M.brainmob.ckey
 		src.name = "Spider-bot ([M.brainmob.name])"
 
-/mob/living/simple_animal/spiderbot/proc/explode() //When emagged.
+/mob/living/simple_animal/spiderbot/proc/explode() // When emagged.
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
 			M.show_message("\red [src] makes an odd warbling noise, fizzles, and explodes.")
@@ -219,7 +219,7 @@
 	src.Destroy()
 	return
 
-//copy paste from alien/larva, if that func is updated please update this one alsoghost
+// copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/spiderbot/verb/hide()
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
@@ -232,7 +232,7 @@
 		layer = MOB_LAYER
 		to_chat(src, text("\blue You have stopped hiding."))
 
-//Cannibalized from the parrot mob. ~Zuhayr
+// Cannibalized from the parrot mob. ~Zuhayr
 
 /mob/living/simple_animal/spiderbot/verb/drop_held_item()
 	set name = "Drop held item"

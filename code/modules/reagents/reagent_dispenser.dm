@@ -22,7 +22,7 @@
 		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
 	..()
 
-/obj/structure/reagent_dispensers/verb/set_APTFT() //set amount_per_transfer_from_this
+/obj/structure/reagent_dispensers/verb/set_APTFT() // set amount_per_transfer_from_this
 	set name = "Set transfer amount"
 	set category = "Object"
 	set src in view(1)
@@ -54,7 +54,7 @@
 		qdel(src)
 
 
-//Dispensers
+// Dispensers
 /obj/structure/reagent_dispensers/watertank
 	name = "watertank"
 	desc = "A watertank."
@@ -201,7 +201,7 @@
 	return ..()
 
 /obj/structure/reagent_dispensers/fueltank/tesla_act()
-	..() //extend the zap
+	..() // extend the zap
 	explode()
 
 /obj/structure/reagent_dispensers/fueltank/Move()

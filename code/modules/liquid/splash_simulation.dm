@@ -8,7 +8,7 @@ var/list/datum/puddle/puddles = list()
 	var/list/obj/effect/liquid/liquid_objects = list()
 
 /datum/puddle/process()
-	//world << "DEBUG: Puddle process!"
+	// world << "DEBUG: Puddle process!"
 	for(var/obj/effect/liquid/L in liquid_objects)
 		L.spread()
 
@@ -71,20 +71,20 @@ var/list/datum/puddle/puddles = list()
 
 /obj/effect/liquid/proc/spread()
 
-	//world << "DEBUG: liquid spread!"
+	// world << "DEBUG: liquid spread!"
 	var/surrounding_volume = 0
 	var/list/spread_directions = list(1,2,4,8)
 	var/turf/loc_turf = loc
 	for(var/direction in spread_directions)
-		var/turf/T = get_step(src,direction)
+		var/turf/T = get_step(src, direction)
 		if(!T)
 			spread_directions.Remove(direction)
-			//world << "ERROR: Map edge!"
-			continue //Map edge
-		if(!loc_turf.can_leave_liquid(direction)) //Check if this liquid can leave the tile in the direction
+			// world << "ERROR: Map edge!"
+			continue // Map edge
+		if(!loc_turf.can_leave_liquid(direction)) // Check if this liquid can leave the tile in the direction
 			spread_directions.Remove(direction)
 			continue
-		if(!T.can_accept_liquid(turn(direction,180))) //Check if this liquid can enter the tile
+		if(!T.can_accept_liquid(turn(direction,180))) // Check if this liquid can enter the tile
 			spread_directions.Remove(direction)
 			continue
 		var/obj/effect/liquid/L = locate(/obj/effect/liquid) in T
@@ -92,33 +92,33 @@ var/list/datum/puddle/puddles = list()
 			if(L.volume >= src.volume)
 				spread_directions.Remove(direction)
 				continue
-			surrounding_volume += L.volume //If liquid already exists, add it's volume to our sum
+			surrounding_volume += L.volume // If liquid already exists, add it's volume to our sum
 		else
-			var/obj/effect/liquid/NL = new(T) //Otherwise create a new object which we'll spread to.
+			var/obj/effect/liquid/NL = new(T) // Otherwise create a new object which we'll spread to.
 			NL.controller = src.controller
 			controller.liquid_objects.Add(NL)
 
 	if(!spread_directions.len)
-		//world << "ERROR: No candidate to spread to."
-		return //No suitable candidate to spread to
+		// world << "ERROR: No candidate to spread to."
+		return // No suitable candidate to spread to
 
-	var/average_volume = (src.volume + surrounding_volume) / (spread_directions.len + 1) //Average amount of volume on this and the surrounding tiles.
-	var/volume_difference = src.volume - average_volume //How much more/less volume this tile has than the surrounding tiles.
-	if(volume_difference <= (spread_directions.len*LIQUID_TRANSFER_THRESHOLD)) //If we have less than the threshold excess liquid - then there is nothing to do as other tiles will be giving us volume.or the liquid is just still.
-		//world << "ERROR: transfer volume lower than THRESHOLD!"
+	var/average_volume = (src.volume + surrounding_volume) / (spread_directions.len + 1) // Average amount of volume on this and the surrounding tiles.
+	var/volume_difference = src.volume - average_volume // How much more/less volume this tile has than the surrounding tiles.
+	if(volume_difference <= (spread_directions.len*LIQUID_TRANSFER_THRESHOLD)) // If we have less than the threshold excess liquid - then there is nothing to do as other tiles will be giving us volume.or the liquid is just still.
+		// world << "ERROR: transfer volume lower than THRESHOLD!"
 		return
 
 	var/volume_per_tile = volume_difference / spread_directions.len
 
 	for(var/direction in spread_directions)
-		var/turf/T = get_step(src,direction)
+		var/turf/T = get_step(src, direction)
 		if(!T)
-			//world << "ERROR: Map edge 2!"
-			continue //Map edge
+			// world << "ERROR: Map edge 2!"
+			continue // Map edge
 		var/obj/effect/liquid/L = locate(/obj/effect/liquid) in T
 		if(L)
-			src.volume -= volume_per_tile //Remove the volume from this tile
-			L.new_volume = L.new_volume + volume_per_tile //Add it to the volume to the other tile
+			src.volume -= volume_per_tile // Remove the volume from this tile
+			L.new_volume = L.new_volume + volume_per_tile // Add it to the volume to the other tile
 
 /obj/effect/liquid/proc/apply_calculated_effect()
 	volume += new_volume
@@ -136,7 +136,7 @@ var/list/datum/puddle/puddles = list()
 	return ..()
 
 /obj/effect/liquid/proc/update_icon2()
-	//icon_state = num2text( max(1,min(7,(floor(volume),10)/10)) )
+	// icon_state = num2text( max(1,min(7,(floor(volume),10)/10)) )
 
 	switch(volume)
 		if(0 to 0.1)

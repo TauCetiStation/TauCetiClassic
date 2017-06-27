@@ -22,7 +22,7 @@ var/datum/subsystem/nanoui/SSnano
 /datum/subsystem/nanoui/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = processing.Copy()
-	//cache for sanic speed (lists are references anyways)
+	// cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)

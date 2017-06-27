@@ -114,9 +114,9 @@
 		return "[output] [temp]"
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/Topic(href,href_list)
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/Topic(href, href_list)
 	..()
-	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
+	var/datum/topic_input/filter = new /datum/topic_input(href, href_list)
 	if(filter.get("eject"))
 		go_out()
 	if(filter.get("view_stats"))
@@ -192,14 +192,14 @@
 	return output
 
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/inject_reagent(datum/reagent/R,obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/SG)
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/inject_reagent(datum/reagent/R, obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/SG)
 	if(!R || !occupant || !SG || !(SG in chassis.equipment))
 		return 0
 	var/to_inject = min(R.volume, inject_amount)
 	if(to_inject && occupant.reagents.get_reagent_amount(R.id) + to_inject <= inject_amount*4)
 		occupant_message("Injecting [occupant] with [to_inject] units of [R.name].")
 		log_message("Injecting [occupant] with [to_inject] units of [R.name].")
-		SG.reagents.trans_id_to(occupant,R.id,to_inject)
+		SG.reagents.trans_id_to(occupant, R.id, to_inject)
 		update_equip_info()
 	return
 
@@ -290,7 +290,7 @@
 	occupant_message(message)
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/Topic(href,href_list)
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/Topic(href, href_list)
 	..()
 	if(href_list["toggle"])
 		set_ready_state(!equip_ready)
@@ -385,7 +385,7 @@
 	PN.cables += NC
 	NC.mergeConnectedNetworks(NC.d2)
 
-	//NC.mergeConnectedNetworksOnTurf()
+	// NC.mergeConnectedNetworksOnTurf()
 	last_piece = NC
 	return 1
 
@@ -399,10 +399,10 @@
 	var/list/known_reagents
 	var/list/processed_reagents
 	var/max_syringes = 10
-	var/max_volume = 75 //max reagent volume
-	var/synth_speed = 5 //[num] reagent units per cycle
+	var/max_volume = 75 // max reagent volume
+	var/synth_speed = 5 // [num] reagent units per cycle
 	energy_drain = 10
-	var/mode = 0 //0 - fire syringe, 1 - analyze reagents.
+	var/mode = 0 // 0 - fire syringe, 1 - analyze reagents.
 	var/datum/global_iterator/mech_synth/synth
 	range = MELEE|RANGED
 	equip_cooldown = 10
@@ -447,7 +447,7 @@
 		return
 	if(istype(target,/obj/item/weapon/reagent_containers/syringe))
 		return load_syringe(target)
-	if(istype(target,/obj/item/weapon/storage))//Loads syringes from boxes
+	if(istype(target,/obj/item/weapon/storage))// Loads syringes from boxes
 		for(var/obj/item/weapon/reagent_containers/syringe/S in target.contents)
 			load_syringe(S)
 		return
@@ -471,11 +471,11 @@
 	playsound(chassis, 'sound/items/syringeproj.ogg', 50, 1)
 	log_message("Launched [S] from [src], targeting [target].")
 	spawn(-1)
-		src = null //if src is deleted, still process the syringe
+		src = null // if src is deleted, still process the syringe
 		for(var/i=0, i<6, i++)
 			if(!S)
 				break
-			if(step_towards(S,trg))
+			if(step_towards(S, trg))
 				var/list/mobs = new
 				for(var/mob/living/carbon/M in S.loc)
 					mobs += M
@@ -502,9 +502,9 @@
 	return 1
 
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/Topic(href,href_list)
+/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/Topic(href, href_list)
 	..()
-	var/datum/topic_input/filter = new (href,href_list)
+	var/datum/topic_input/filter = new (href, href_list)
 	if(filter.get("toggle_mode"))
 		mode = !mode
 		update_equip_info()
@@ -575,7 +575,7 @@
 		inputs += "<input type=\"hidden\" name=\"src\" value=\"\ref[src]\">"
 		inputs += "<input type=\"hidden\" name=\"select_reagents\" value=\"1\">"
 		inputs += "<input id=\"submit\" type=\"submit\" value=\"Apply settings\">"
-	var/output = {"<form action="byond://" method="get">
+	var/output = {"<form action="byond:// " method="get">
 						[r_list || "No known reagents"]
 						[inputs]
 						</form>
@@ -601,15 +601,15 @@
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/load_syringe(obj/item/weapon/reagent_containers/syringe/S)
 	if(syringes.len<max_syringes)
-		if(get_dist(src,S) >= 2)
+		if(get_dist(src, S) >= 2)
 			occupant_message("The syringe is too far away.")
 			return 0
-		for(var/obj/structure/D in S.loc)//Basic level check for structures in the way (Like grilles and windows)
-			if(!(D.CanPass(S,src.loc)))
+		for(var/obj/structure/D in S.loc)// Basic level check for structures in the way (Like grilles and windows)
+			if(!(D.CanPass(S, src.loc)))
 				occupant_message("Unable to load syringe.")
 				return 0
-		for(var/obj/machinery/door/D in S.loc)//Checks for doors
-			if(!(D.CanPass(S,src.loc)))
+		for(var/obj/machinery/door/D in S.loc)// Checks for doors
+			if(!(D.CanPass(S, src.loc)))
 				occupant_message("Unable to load syringe.")
 				return 0
 		S.reagents.trans_to(src, S.reagents.total_volume)
@@ -622,7 +622,7 @@
 	return 0
 
 /obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/analyze_reagents(atom/A)
-	if(get_dist(src,A) >= 4)
+	if(get_dist(src, A) >= 4)
 		occupant_message("The object is too far away.")
 		return 0
 	if(!A.reagents || istype(A,/mob))
@@ -630,13 +630,13 @@
 		return 0
 	occupant_message("Analyzing reagents...")
 	for(var/datum/reagent/R in A.reagents.reagent_list)
-		if(accessible_reagents.Find(R.id) != 0 && add_known_reagent(R.id,R.name))
+		if(accessible_reagents.Find(R.id) != 0 && add_known_reagent(R.id, R.name))
 			occupant_message("Reagent analyzed, identified as [R.name] and added to database.")
 			send_byjax(chassis.occupant,"msyringegun.browser","reagents_form",get_reagents_form())
 	occupant_message("Analyzis complete.")
 	return 1
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/add_known_reagent(r_id,r_name)
+/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/proc/add_known_reagent(r_id, r_name)
 	set_ready_state(0)
 	do_after_cooldown()
 	if(!(r_id in known_reagents))
@@ -673,6 +673,6 @@
 		S.critfail()
 	var/amount = S.synth_speed / S.processed_reagents.len
 	for(var/reagent in S.processed_reagents)
-		S.reagents.add_reagent(reagent,amount)
+		S.reagents.add_reagent(reagent, amount)
 		S.chassis.use_power(energy_drain)
 	return 1

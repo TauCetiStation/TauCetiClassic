@@ -1,12 +1,12 @@
 
-//---- Noticeboard
+// ---- Noticeboard
 
 /obj/structure/noticeboard/anomaly
 	notices = 5
 	icon_state = "nboard05"
 
 /obj/structure/noticeboard/anomaly/New()
-	//add some memos
+	// add some memos
 	var/obj/item/weapon/stamp/rd/S = new
 
 	var/obj/item/weapon/paper/P = new
@@ -39,7 +39,7 @@
 	S.stamp_paper(P)
 	contents += P
 
-//---- Bookcase
+// ---- Bookcase
 
 /obj/structure/bookcase/manuals/xenoarchaeology
 	name = "Xenoarchaeology Manuals bookcase"
@@ -54,7 +54,7 @@
 		new /obj/item/weapon/book/manual/stasis(src)
 		update_icon()
 
-//---- Lockers and closets
+// ---- Lockers and closets
 
 /obj/structure/closet/secure_closet/xenoarchaeologist
 	name = "Xenoarchaeologist Locker"
@@ -102,7 +102,7 @@
 		new /obj/item/weapon/storage/bag/fossils(src)
 		return
 
-//---- Isolation room air alarms
+// ---- Isolation room air alarms
 
 /obj/machinery/alarm/isolation
 	name = "Isolation room air control"

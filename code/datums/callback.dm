@@ -8,9 +8,9 @@
 		Also proc strings are strongly advised against because they don't compile error if the proc stops existing
 		See the note on proc typepath shortcuts
 	INVOKING THE CALLBACK:
-		var/result = C.Invoke(args, to, add) //additional args are added after the ones given when the callback was created
+		var/result = C.Invoke(args, to, add) // additional args are added after the ones given when the callback was created
 		OR
-		var/result = C.InvokeAsync(args, to, add) //Sleeps will not block, returns . on the first sleep (then continues on in the "background" after the sleep/block ends), otherwise operates normally.
+		var/result = C.InvokeAsync(args, to, add) // Sleeps will not block, returns . on the first sleep (then continues on in the "background" after the sleep/block ends), otherwise operates normally.
 		OR
 		INVOKE_ASYNC(<CALLBACK args>) to immediately create and call InvokeAsync
 	PROC TYPEPATH SHORTCUTS (these operate on paths, not types, so to these shortcuts, datum is NOT a parent of atom, etc...)
@@ -52,7 +52,7 @@
 
 	if (length(args))
 		if (length(arguments))
-			calling_arguments = calling_arguments + args //not += so that it creates a new list so the arguments list stays clean
+			calling_arguments = calling_arguments + args // not += so that it creates a new list so the arguments list stays clean
 		else
 			calling_arguments = args
 
@@ -60,7 +60,7 @@
 		return call(delegate)(arglist(calling_arguments))
 	return call(object, delegate)(arglist(calling_arguments))
 
-//copy and pasted because fuck proc overhead
+// copy and pasted because fuck proc overhead
 /datum/callback/proc/InvokeAsync(...)
 	set waitfor = FALSE
 	if (!object)
@@ -70,7 +70,7 @@
 
 	if (length(args))
 		if (length(arguments))
-			calling_arguments = calling_arguments + args //not += so that it creates a new list so the arguments list stays clean
+			calling_arguments = calling_arguments + args // not += so that it creates a new list so the arguments list stays clean
 		else
 			calling_arguments = args
 

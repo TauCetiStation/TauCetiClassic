@@ -1,4 +1,4 @@
-//Also contains /obj/structure/closet/body_bag because I doubt anyone would think to look for bodybags in /object/structures
+// Also contains /obj/structure/closet/body_bag because I doubt anyone would think to look for bodybags in /object/structures
 
 /obj/item/bodybag
 	name = "body bag"
@@ -37,7 +37,7 @@
 				src.overlays += image(src.icon, "bodybag_label")
 			else
 				src.name = "body bag"
-		//..() //Doesn't need to run the parent. Since when can fucking bodybags be welded shut? -Agouri
+		// ..() // Doesn't need to run the parent. Since when can fucking bodybags be welded shut? -Agouri
 			return
 		else if(istype(W, /obj/item/weapon/wirecutters))
 			to_chat(user, "You cut the tag off the bodybag")

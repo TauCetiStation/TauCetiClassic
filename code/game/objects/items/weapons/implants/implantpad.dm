@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/item/weapon/implantpad
 	name = "implantpad"
@@ -60,10 +60,10 @@
 					dat += src.case.imp.get_data()
 					if(istype(src.case.imp, /obj/item/weapon/implant/tracking))
 						dat += {"ID (1-100):
-						<A href='byond://?src=\ref[src];tracking_id=-10'>-</A>
-						<A href='byond://?src=\ref[src];tracking_id=-1'>-</A> [case.imp:id]
-						<A href='byond://?src=\ref[src];tracking_id=1'>+</A>
-						<A href='byond://?src=\ref[src];tracking_id=10'>+</A><BR>"}
+						<A href='byond:// ?src=\ref[src];tracking_id=-10'>-</A>
+						<A href='byond:// ?src=\ref[src];tracking_id=-1'>-</A> [case.imp:id]
+						<A href='byond:// ?src=\ref[src];tracking_id=1'>+</A>
+						<A href='byond:// ?src=\ref[src];tracking_id=10'>+</A><BR>"}
 			else
 				dat += "The implant casing is empty."
 		else

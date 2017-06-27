@@ -13,7 +13,7 @@
 	brute_dam_coeff = 0.5
 	var/protection_percent = 60
 
-	var/land_speed = 10 //if 0 it can't go on turf
+	var/land_speed = 10 // if 0 it can't go on turf
 	var/space_speed = 1
 	var/bike_icon = "bike"
 	var/obj/item/weapon/key/spacebike/key
@@ -138,7 +138,7 @@
 
 
 /obj/vehicle/space/spacebike/Move(var/turf/destination)
-	//these things like space, not turf. Dragging shouldn't weigh you down.
+	// these things like space, not turf. Dragging shouldn't weigh you down.
 	if(istype(destination,/turf/space) || pulledby)
 		if(!space_speed)
 			return 0

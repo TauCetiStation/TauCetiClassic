@@ -1,5 +1,5 @@
 
-//chemistry stuff here so that it can be easily viewed/modified
+// chemistry stuff here so that it can be easily viewed/modified
 datum
 	reagent
 		tungsten
@@ -21,32 +21,32 @@ datum
 			id = "ground_rock"
 			description = "A fine dust made of ground up rock."
 			reagent_state = SOLID
-			color = "#A0522D"   //rgb: 160, 82, 45, brown
+			color = "#A0522D"   // rgb: 160, 82, 45, brown
 
 		density_separated_sample
 			name = "Density separated sample"
 			id = "density_separated_sample"
 			description = "A watery paste used in chemical analysis, there are some chunks floating in it."
 			reagent_state = LIQUID
-			color = "#DEB887"   //rgb: 222, 184, 135, light brown
+			color = "#DEB887"   // rgb: 222, 184, 135, light brown
 
 		analysis_sample
 			name = "Analysis liquid"
 			id = "analysis_sample"
 			description = "A watery paste used in chemical analysis."
 			reagent_state = LIQUID
-			color = "#F5FFFA"   //rgb: 245, 255, 250, almost white
+			color = "#F5FFFA"   // rgb: 245, 255, 250, almost white
 
 		chemical_waste
 			name = "Chemical Waste"
 			id = "chemical_waste"
 			description = "A viscous, toxic liquid left over from many chemical processes."
 			reagent_state = LIQUID
-			color = "#ADFF2F"   //rgb: 173, 255, 47, toxic green
+			color = "#ADFF2F"   // rgb: 173, 255, 47, toxic green
 
 datum
 	chemical_reaction
-		lithiumsodiumtungstate	//LiNa2WO4, not the easiest chem to mix
+		lithiumsodiumtungstate	// LiNa2WO4, not the easiest chem to mix
 			name = "Lithium Sodium Tungstate"
 			id = "lithiumsodiumtungstate"
 			result = "lithiumsodiumtungstate"

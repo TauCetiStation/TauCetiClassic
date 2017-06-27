@@ -1,4 +1,4 @@
-//Look Sir, free head!
+// Look Sir, free head!
 /mob/living/simple_animal/head
 	name = "CommandBattle AI"
 	desc = "A standard borg shell on its chest crude marking saying CommandBattle AI MK4 : Head."
@@ -22,7 +22,7 @@
 	"you are just overly retarded",
 	"Whiteman said what?!",)
 	var/list/comments = list("Man have you seen those furry cats?,I mean who in the right mind would like something like that?",
-	"They call me abusive,I just like the truth",
+	"They call me abusive, I just like the truth",
 	"Beeboop, im a robit",
 	"Gooogooooll, break ya bones",
 	"Crab say what?",
@@ -45,7 +45,7 @@
 		Die()
 	else if(health > maxHealth)
 		health = maxHealth
-	for(var/mob/A in viewers(world.view,src))
+	for(var/mob/A in viewers(world.view, src))
 		if(A.ckey)
 			say_something(A)
 /mob/living/simple_animal/head/proc/say_something(mob/A)

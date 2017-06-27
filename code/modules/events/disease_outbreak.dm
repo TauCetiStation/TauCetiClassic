@@ -25,8 +25,8 @@
 		if(H.stat == DEAD || foundAlready)
 			continue
 
-		if(virus_type == /datum/disease/dnaspread)		//Dnaspread needs strain_data set to work.
-			if((!H.dna) || (H.sdisabilities & BLIND))	//A blindness disease would be the worst.
+		if(virus_type == /datum/disease/dnaspread)		// Dnaspread needs strain_data set to work.
+			if((!H.dna) || (H.sdisabilities & BLIND))	// A blindness disease would be the worst.
 				continue
 			var/datum/disease/dnaspread/D = new
 			D.strain_data["name"] = H.real_name

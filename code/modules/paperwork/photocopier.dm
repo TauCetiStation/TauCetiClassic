@@ -8,12 +8,12 @@
 	idle_power_usage = 30
 	active_power_usage = 200
 	power_channel = EQUIP
-	var/obj/item/weapon/paper/copy = null	//what's in the copier!
+	var/obj/item/weapon/paper/copy = null	// what's in the copier!
 	var/obj/item/weapon/photo/photocopy = null
 	var/obj/item/weapon/paper_bundle/bundle = null
-	var/copies = 1	//how many copies to print!
-	var/toner = 30 //how much toner is left! woooooo~
-	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
+	var/copies = 1	// how many copies to print!
+	var/toner = 30 // how much toner is left! woooooo~
+	var/maxcopies = 10	// how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 
 /obj/machinery/photocopier/attack_ai(mob/user)
 	return attack_hand(user)
@@ -26,16 +26,16 @@
 
 	var/dat = "Photocopier<BR><BR>"
 	if(copy || photocopy || bundle)
-		dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><BR>"
+		dat += "<a href='byond:// ?src=\ref[src];remove=1'>Remove Paper</a><BR>"
 		if(toner)
-			dat += "<a href='byond://?src=\ref[src];copy=1'>Copy</a><BR>"
+			dat += "<a href='byond:// ?src=\ref[src];copy=1'>Copy</a><BR>"
 			dat += "Printing: [copies] copies."
-			dat += "<a href='byond://?src=\ref[src];min=1'>-</a> "
-			dat += "<a href='byond://?src=\ref[src];add=1'>+</a><BR><BR>"
+			dat += "<a href='byond:// ?src=\ref[src];min=1'>-</a> "
+			dat += "<a href='byond:// ?src=\ref[src];add=1'>+</a><BR><BR>"
 	else if(toner)
 		dat += "Please insert paper to copy.<BR><BR>"
 	if(istype(user,/mob/living/silicon))
-		dat += "<a href='byond://?src=\ref[src];aipic=1'>Print photo from database</a><BR><BR>"
+		dat += "<a href='byond:// ?src=\ref[src];aipic=1'>Print photo from database</a><BR><BR>"
 	dat += "Current toner level: [toner]"
 	if(!toner)
 		dat +="<BR>Please insert a new toner cartridge!"
@@ -211,13 +211,13 @@
 
 /obj/machinery/photocopier/proc/copy(obj/item/weapon/paper/copy)
 	var/obj/item/weapon/paper/P = new(loc)
-	if(toner > 10)	//lots of toner, make it dark
+	if(toner > 10)	// lots of toner, make it dark
 		P.info = "<font color = #101010>"
-	else			//no toner? shitty copies for you!
+	else			// no toner? shitty copies for you!
 		P.info = "<font color = #808080>"
 	var/copied = html_decode(copy.info)
-	copied = replacetext(copied, "<font face=\"[P.deffont]\" color=", "<font face=\"[P.deffont]\" nocolor=")	//state of the art techniques in action
-	copied = replacetext(copied, "<font face=\"[P.crayonfont]\" color=", "<font face=\"[P.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+	copied = replacetext(copied, "<font face=\"[P.deffont]\" color=", "<font face=\"[P.deffont]\" nocolor=")	// state of the art techniques in action
+	copied = replacetext(copied, "<font face=\"[P.crayonfont]\" color=", "<font face=\"[P.crayonfont]\" nocolor=")	// This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
 	P.info += copied
 	P.info += "</font>"
 	P.name = copy.name // -- Doohl
@@ -228,7 +228,7 @@
 	P.offset_x = LAZYCOPY(copy.offset_x)
 	P.offset_y = LAZYCOPY(copy.offset_y)
 	var/image/img
-	for (var/i in 1 to copy.overlays.len)        //Iterates through stamps gray and puts a matching overlay onto the copy
+	for (var/i in 1 to copy.overlays.len)        // Iterates through stamps gray and puts a matching overlay onto the copy
 		if (findtext(copy.ico[i], "cap") || findtext(copy.ico[i], "cent"))
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-circle")
 		else if (findtext(copy.ico[i], "deny"))
@@ -248,11 +248,11 @@
 	var/icon/I = icon(photocopy.icon, photocopy.icon_state)
 	var/icon/img = icon(photocopy.img)
 	var/icon/tiny = icon(photocopy.tiny)
-	if(toner > 10)	//plenty of toner, go straight greyscale
-		I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))		//I'm not sure how expensive this is, but given the many limitations of photocopying, it shouldn't be an issue.
+	if(toner > 10)	// plenty of toner, go straight greyscale
+		I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))		// I'm not sure how expensive this is, but given the many limitations of photocopying, it shouldn't be an issue.
 		img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 		tiny.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
-	else			//not much toner left, lighten the photo
+	else			// not much toner left, lighten the photo
 		I.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
 		img.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
 		tiny.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(100,100,100))
@@ -262,7 +262,7 @@
 	p.name = photocopy.name
 	p.desc = photocopy.desc
 	p.scribble = photocopy.scribble
-	toner -= 5	//photos use a lot of ink!
+	toner -= 5	// photos use a lot of ink!
 	if(toner < 0)
 		toner = 0
 	return p

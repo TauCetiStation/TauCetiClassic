@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /*Composed of 7 parts
 3 Particle emitters
@@ -127,7 +127,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/structure/particle_accelerator/attackby(obj/item/W, mob/user)
 	if(istool(W))
-		if(src.process_tool_hit(W,user))
+		if(src.process_tool_hit(W, user))
 			return
 	..()
 	return
@@ -214,7 +214,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 		return 0
 	var/temp_state = src.construction_state
 
-	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
+	switch(src.construction_state)// TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
 			if(iswrench(O))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -235,7 +235,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 						"You add some wires.")
 					temp_state++
 		if(2)
-			if(iswirecutter(O))//TODO:Shock user if its on?
+			if(iswirecutter(O))// TODO:Shock user if its on?
 				user.visible_message("[user.name] removes some wires from the [src.name].", \
 					"You remove some wires.")
 				temp_state--
@@ -248,11 +248,11 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 				user.visible_message("[user.name] opens the [src.name]'s access panel.", \
 					"You open the access panel.")
 				temp_state--
-	if(temp_state == src.construction_state)//Nothing changed
+	if(temp_state == src.construction_state)// Nothing changed
 		return 0
 	else
 		src.construction_state = temp_state
-		if(src.construction_state < 3)//Was taken apart, update state
+		if(src.construction_state < 3)// Was taken apart, update state
 			update_state()
 		update_icon()
 		return 1
@@ -320,7 +320,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 
 /obj/machinery/particle_accelerator/attackby(obj/item/W, mob/user)
 	if(istool(W))
-		if(src.process_tool_hit(W,user))
+		if(src.process_tool_hit(W, user))
 			return
 	..()
 	return
@@ -364,7 +364,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 	if(!ismob(user) || !isobj(O))
 		return 0
 	var/temp_state = src.construction_state
-	switch(src.construction_state)//TODO:Might be more interesting to have it need several parts rather than a single list of steps
+	switch(src.construction_state)// TODO:Might be more interesting to have it need several parts rather than a single list of steps
 		if(0)
 			if(iswrench(O))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
@@ -385,7 +385,7 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 						"You add some wires.")
 					temp_state++
 		if(2)
-			if(iswirecutter(O))//TODO:Shock user if its on?
+			if(iswirecutter(O))// TODO:Shock user if its on?
 				user.visible_message("[user.name] removes some wires from the [src.name].", \
 					"You remove some wires.")
 				temp_state--
@@ -399,10 +399,10 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 					"You open the access panel.")
 				temp_state--
 				active = 0
-	if(temp_state == src.construction_state)//Nothing changed
+	if(temp_state == src.construction_state)// Nothing changed
 		return 0
 	else
-		if(src.construction_state < 3)//Was taken apart, update state
+		if(src.construction_state < 3)// Was taken apart, update state
 			update_state()
 			if(use_power)
 				use_power = 0

@@ -59,15 +59,15 @@ Thus, the two variables affect pump operation are set in New():
 	var/output_starting_pressure = air2.return_pressure()
 
 	if( (target_pressure - output_starting_pressure) < 0.01)
-		//No need to pump gas if target is already reached!
+		// No need to pump gas if target is already reached!
 		return 1
 
-	//Calculate necessary moles to transfer using PV=nRT
+	// Calculate necessary moles to transfer using PV=nRT
 	if((air1.total_moles() > 0) && (air1.temperature>0))
 		var/pressure_delta = target_pressure - output_starting_pressure
 		var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
 
-		//Actually transfer the gas
+		// Actually transfer the gas
 		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 		air2.merge(removed)
 
@@ -79,7 +79,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	return 1
 
-//Radio remote control
+// Radio remote control
 
 /obj/machinery/atmospherics/binary/pump/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
@@ -92,7 +92,7 @@ Thus, the two variables affect pump operation are set in New():
 		return 0
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = 1 // radio signal
 	signal.source = src
 
 	signal.data = list(
@@ -140,7 +140,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	if("status" in signal.data)
 		addtimer(CALLBACK(src, .proc/broadcast_status), 2)
-		return //do not update_icon
+		return // do not update_icon
 
 	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 	update_icon()
@@ -158,7 +158,7 @@ Thus, the two variables affect pump operation are set in New():
 	interact(user)
 	return
 
-/obj/machinery/atmospherics/binary/pump/Topic(href,href_list)
+/obj/machinery/atmospherics/binary/pump/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return

@@ -2,14 +2,14 @@
 	name = "airlock electronics"
 	icon = 'icons/obj/doors/door_electronics.dmi'
 	icon_state = "door_electronics"
-	w_class = 2.0 //It should be tiny! -Agouri
+	w_class = 2.0 // It should be tiny! -Agouri
 	m_amt = 50
 	g_amt = 50
 
 	req_access = list(access_engine)
 
 	var/list/conf_access = null
-	var/one_access = 0 //if set to 1, door would receive req_one_access instead of req_access
+	var/one_access = 0 // if set to 1, door would receive req_one_access instead of req_access
 	var/last_configurator = null
 	var/locked = 1
 	var/broken = FALSE

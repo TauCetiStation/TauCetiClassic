@@ -10,7 +10,7 @@
 	var/on = 0
 
 	var/current_temperature = T20C
-	var/current_heat_capacity = 50000 //totally random
+	var/current_heat_capacity = 50000 // totally random
 
 /obj/machinery/atmospherics/unary/cold_sink/update_icon()
 	if(node)
@@ -34,7 +34,7 @@
 		var/combined_energy = current_temperature*current_heat_capacity + air_heat_capacity*air_contents.temperature
 		air_contents.temperature = combined_energy/combined_heat_capacity
 
-	//todo: have current temperature affected. require power to bring down current temperature again
+	// todo: have current temperature affected. require power to bring down current temperature again
 
 	if(abs(old_temperature-air_contents.temperature) > 1)
 		network.update = 1

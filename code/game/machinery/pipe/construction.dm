@@ -33,7 +33,7 @@ Buildable meters
 	name = "pipe"
 	desc = "A pipe."
 	var/pipe_type = 0
-	//var/pipe_dir = 0
+	// var/pipe_dir = 0
 	var/pipename
 	force = 7
 	icon = 'icons/obj/pipe-item.dmi'
@@ -102,12 +102,12 @@ Buildable meters
 	else
 		src.pipe_type = pipe_type
 		src.dir = dir
-	//src.pipe_dir = get_pipe_dir()
+	// src.pipe_dir = get_pipe_dir()
 	update()
 	src.pixel_x = rand(-5, 5)
 	src.pixel_y = rand(-5, 5)
 
-//update the name and icon of the pipe item depending on the type
+// update the name and icon of the pipe item depending on the type
 
 /obj/item/pipe/proc/update()
 	var/list/nlist = list( \
@@ -169,7 +169,7 @@ Buildable meters
 	)
 	icon_state = islist[pipe_type + 1]
 
-//called when a turf is attacked with a pipe item
+// called when a turf is attacked with a pipe item
 // place the pipe on the turf, setting pipe level to 1 (underfloor) if the turf is not intact
 
 // rotate the pipe item clockwise
@@ -191,7 +191,7 @@ Buildable meters
 			dir = 4
 	else if (pipe_type == PIPE_MANIFOLD4W)
 		dir = 2
-	//src.pipe_dir = get_pipe_dir()
+	// src.pipe_dir = get_pipe_dir()
 	return
 
 /obj/item/pipe/Move()
@@ -227,14 +227,14 @@ Buildable meters
 		)
 			return dir|flip
 		if(PIPE_SIMPLE_BENT, PIPE_INSULATED_BENT, PIPE_HE_BENT)
-			return dir //dir|acw
-		if(PIPE_CONNECTOR,PIPE_UVENT,PIPE_SCRUBBER,PIPE_HEAT_EXCHANGE)
+			return dir // dir|acw
+		if(PIPE_CONNECTOR, PIPE_UVENT, PIPE_SCRUBBER, PIPE_HEAT_EXCHANGE)
 			return dir
 		if(PIPE_MANIFOLD4W, PIPE_OMNI_MIXER, PIPE_OMNI_FILTER)
 			return dir|flip|cw|acw
 		if(PIPE_MANIFOLD)
 			return flip|cw|acw
-		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER,PIPE_MTVALVE)
+		if(PIPE_GAS_FILTER, PIPE_GAS_MIXER, PIPE_MTVALVE)
 			return dir|flip|cw
 		if(PIPE_GAS_FILTER_M, PIPE_GAS_MIXER_M)
 			return dir|flip|acw
@@ -244,7 +244,7 @@ Buildable meters
 			return flip
 	return 0
 
-/obj/item/pipe/proc/get_pdir() //endpoints for regular pipes
+/obj/item/pipe/proc/get_pdir() // endpoints for regular pipes
 
 	var/flip = turn(dir, 180)
 //	var/cw = turn(dir, -90)
@@ -253,7 +253,7 @@ Buildable meters
 	if (!(pipe_type in list(PIPE_HE_STRAIGHT, PIPE_HE_BENT, PIPE_JUNCTION)))
 		return get_pipe_dir()
 	switch(pipe_type)
-		if(PIPE_HE_STRAIGHT,PIPE_HE_BENT)
+		if(PIPE_HE_STRAIGHT, PIPE_HE_BENT)
 			return 0
 		if(PIPE_JUNCTION)
 			return flip
@@ -261,7 +261,7 @@ Buildable meters
 
 // return the h_dir (heat-exchange pipes) from the type and the dir
 
-/obj/item/pipe/proc/get_hdir() //endpoints for h/e pipes
+/obj/item/pipe/proc/get_hdir() // endpoints for h/e pipes
 
 //	var/flip = turn(dir, 180)
 //	var/cw = turn(dir, -90)
@@ -281,7 +281,7 @@ Buildable meters
 
 /obj/item/pipe/attackby(obj/item/weapon/W, mob/user)
 	..()
-	//*
+	// *
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!isturf(src.loc))
@@ -301,7 +301,7 @@ Buildable meters
 			return 1
 	// no conflicts found
 
-	var/pipefailtext = "<span class='red'>There's nothing to connect this pipe section to!</span>" //with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment
+	var/pipefailtext = "<span class='red'>There's nothing to connect this pipe section to!</span>" // with how the pipe code works, at least one end needs to be connected to something, otherwise the game deletes the segment
 
 	switch(pipe_type)
 		if(PIPE_SIMPLE_STRAIGHT, PIPE_SIMPLE_BENT)
@@ -326,8 +326,8 @@ Buildable meters
 			P.dir = src.dir
 			P.initialize_directions = 0
 			P.initialize_directions_he = pipe_dir
-			//var/turf/T = P.loc
-			//P.level = T.intact ? 2 : 1
+			// var/turf/T = P.loc
+			// P.level = T.intact ? 2 : 1
 			P.initialize()
 			if (QDELETED(P))
 				to_chat(usr, pipefailtext)
@@ -351,12 +351,12 @@ Buildable meters
 				C.node.initialize()
 			C.build_network()
 
-		if(PIPE_MANIFOLD)		//manifold
+		if(PIPE_MANIFOLD)		// manifold
 			var/obj/machinery/atmospherics/pipe/manifold/M = new( src.loc )
 			M.color = color
 			M.dir = dir
 			M.initialize_directions = pipe_dir
-			//M.New()
+			// M.New()
 			var/turf/T = M.loc
 			M.level = T.intact ? 2 : 1
 			M.initialize()
@@ -371,12 +371,12 @@ Buildable meters
 				M.node3.initialize()
 			M.build_network()
 
-		if(PIPE_MANIFOLD4W)		//4-way manifold
+		if(PIPE_MANIFOLD4W)		// 4-way manifold
 			var/obj/machinery/atmospherics/pipe/manifold4w/M = new( src.loc )
 			M.color = color
 			M.dir = dir
 			M.initialize_directions = pipe_dir
-			//M.New()
+			// M.New()
 			var/turf/T = M.loc
 			M.level = T.intact ? 2 : 1
 			M.initialize()
@@ -398,8 +398,8 @@ Buildable meters
 			P.dir = src.dir
 			P.initialize_directions = src.get_pdir()
 			P.initialize_directions_he = src.get_hdir()
-			//var/turf/T = P.loc
-			//P.level = T.intact ? 2 : 1
+			// var/turf/T = P.loc
+			// P.level = T.intact ? 2 : 1
 			P.initialize()
 			if (QDELETED(P))
 				to_chat(usr, pipefailtext)
@@ -410,7 +410,7 @@ Buildable meters
 				P.node2.initialize()
 			P.build_network()
 
-		if(PIPE_UVENT)		//unary vent
+		if(PIPE_UVENT)		// unary vent
 			var/obj/machinery/atmospherics/unary/vent_pump/V = new( src.loc )
 			V.dir = dir
 			V.initialize_directions = pipe_dir
@@ -424,7 +424,7 @@ Buildable meters
 			V.build_network()
 
 
-		if(PIPE_MVALVE)		//manual valve
+		if(PIPE_MVALVE)		// manual valve
 			var/obj/machinery/atmospherics/valve/V = new( src.loc)
 			V.dir = dir
 			V.initialize_directions = pipe_dir
@@ -439,7 +439,7 @@ Buildable meters
 				V.node2.initialize()
 			V.build_network()
 
-		if(PIPE_PUMP)		//gas pump
+		if(PIPE_PUMP)		// gas pump
 			var/obj/machinery/atmospherics/binary/pump/P = new(src.loc)
 			P.dir = dir
 			P.initialize_directions = pipe_dir
@@ -454,7 +454,7 @@ Buildable meters
 				P.node2.initialize()
 			P.build_network()
 
-		if(PIPE_GAS_FILTER)		//gas filter
+		if(PIPE_GAS_FILTER)		// gas filter
 			var/obj/machinery/atmospherics/trinary/filter/P = new(src.loc)
 			P.dir = dir
 			P.initialize_directions = pipe_dir
@@ -471,7 +471,7 @@ Buildable meters
 				P.node3.initialize()
 			P.build_network()
 
-		if(PIPE_GAS_MIXER)		//gas mixer
+		if(PIPE_GAS_MIXER)		// gas mixer
 			var/obj/machinery/atmospherics/trinary/mixer/P = new(src.loc)
 			P.dir = dir
 			P.initialize_directions = pipe_dir
@@ -488,7 +488,7 @@ Buildable meters
 				P.node3.initialize()
 			P.build_network()
 
-		if(PIPE_GAS_FILTER_M)		//gas filter mirrored
+		if(PIPE_GAS_FILTER_M)		// gas filter mirrored
 			var/obj/machinery/atmospherics/trinary/filter/m_filter/P = new(src.loc)
 			P.dir = dir
 			P.initialize_directions = pipe_dir
@@ -505,7 +505,7 @@ Buildable meters
 				P.node3.initialize()
 			P.build_network()
 
-		if(PIPE_GAS_MIXER_T)		//gas mixer-t
+		if(PIPE_GAS_MIXER_T)		// gas mixer-t
 			var/obj/machinery/atmospherics/trinary/mixer/t_mixer/P = new(src.loc)
 			P.dir = dir
 			P.initialize_directions = pipe_dir
@@ -522,7 +522,7 @@ Buildable meters
 				P.node3.initialize()
 			P.build_network()
 
-		if(PIPE_GAS_MIXER_M)		//gas mixer mirrored
+		if(PIPE_GAS_MIXER_M)		// gas mixer mirrored
 			var/obj/machinery/atmospherics/trinary/mixer/m_mixer/P = new(src.loc)
 			P.dir = dir
 			P.initialize_directions = pipe_dir
@@ -539,7 +539,7 @@ Buildable meters
 				P.node3.initialize()
 			P.build_network()
 
-		if(PIPE_SCRUBBER)		//scrubber
+		if(PIPE_SCRUBBER)		// scrubber
 			var/obj/machinery/atmospherics/unary/vent_scrubber/S = new(src.loc)
 			S.dir = dir
 			S.initialize_directions = pipe_dir
@@ -568,7 +568,7 @@ Buildable meters
 				P.node2.initialize()
 			P.build_network()
 
-		if(PIPE_MTVALVE)		//manual t-valve
+		if(PIPE_MTVALVE)		// manual t-valve
 			var/obj/machinery/atmospherics/tvalve/V = new(src.loc)
 			V.dir = dir
 			V.initialize_directions = pipe_dir
@@ -594,7 +594,7 @@ Buildable meters
 				C.node.initialize()
 			C.build_network()
 
-		if(PIPE_PASSIVE_GATE)		//passive gate
+		if(PIPE_PASSIVE_GATE)		// passive gate
 			var/obj/machinery/atmospherics/binary/passive_gate/P = new(src.loc)
 			P.dir = dir
 			P.initialize_directions = pipe_dir
@@ -609,7 +609,7 @@ Buildable meters
 				P.node2.initialize()
 			P.build_network()
 
-		if(PIPE_VOLUME_PUMP)		//volume pump
+		if(PIPE_VOLUME_PUMP)		// volume pump
 			var/obj/machinery/atmospherics/binary/volume_pump/P = new(src.loc)
 			P.dir = dir
 			P.initialize_directions = pipe_dir
@@ -658,7 +658,7 @@ Buildable meters
 	qdel(src)	// remove the pipe item
 
 	return
-	 //TODO: DEFERRED
+	 // TODO: DEFERRED
 
 // ensure that setterm() is called for a newly connected pipeline
 
@@ -684,7 +684,7 @@ Buildable meters
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You have fastened the meter to the pipe.</span>")
 	qdel(src)
-//not sure why these are necessary
+// not sure why these are necessary
 #undef PIPE_SIMPLE_STRAIGHT
 #undef PIPE_SIMPLE_BENT
 #undef PIPE_HE_STRAIGHT
@@ -707,4 +707,4 @@ Buildable meters
 #undef PIPE_GAS_FILTER_M
 #undef PIPE_GAS_MIXER_T
 #undef PIPE_GAS_MIXER_M
-//#undef PIPE_MANIFOLD4W
+// #undef PIPE_MANIFOLD4W

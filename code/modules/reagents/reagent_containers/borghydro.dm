@@ -11,11 +11,11 @@
 	var/mode = 1
 	var/charge_cost = 50
 	var/charge_tick = 0
-	var/recharge_time = 5 //Time it takes for shots to recharge (in seconds)
+	var/recharge_time = 5 // Time it takes for shots to recharge (in seconds)
 
 	var/list/datum/reagents/reagent_list = list()
 	var/list/reagent_ids = list("tricordrazine", "inaprovaline", "spaceacillin")
-	//var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "anti_toxin", "inaprovaline", "spaceacillin")
+	// var/list/reagent_ids = list("dexalin", "kelotane", "bicaridine", "anti_toxin", "inaprovaline", "spaceacillin")
 
 /obj/item/weapon/reagent_containers/borghypo/surgeon
 	reagent_ids = list("bicaridine", "inaprovaline", "dexalin")
@@ -35,7 +35,7 @@
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/item/weapon/reagent_containers/borghypo/process() //Every [recharge_time] seconds, recharge some reagents for the cyborg
+/obj/item/weapon/reagent_containers/borghypo/process() // Every [recharge_time] seconds, recharge some reagents for the cyborg
 	charge_tick++
 	if(charge_tick < recharge_time) return 0
 	charge_tick = 0
@@ -44,10 +44,10 @@
 		var/mob/living/silicon/robot/R = src.loc
 		if(R && R.cell)
 			var/datum/reagents/RG = reagent_list[mode]
-			if(RG.total_volume < RG.maximum_volume) 	//Don't recharge reagents and drain power if the storage is full.
-				R.cell.use(charge_cost) 					//Take power from borg...
-				RG.add_reagent(reagent_ids[mode], 5)		//And fill hypo with reagent.
-	//update_icon()
+			if(RG.total_volume < RG.maximum_volume) 	// Don't recharge reagents and drain power if the storage is full.
+				R.cell.use(charge_cost) 					// Take power from borg...
+				RG.add_reagent(reagent_ids[mode], 5)		// And fill hypo with reagent.
+	// update_icon()
 	return 1
 
 // Purely for testing purposes I swear~
@@ -86,12 +86,12 @@
 	return
 
 /obj/item/weapon/reagent_containers/borghypo/attack_self(mob/user)
-	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)		//Change the mode
+	playsound(src.loc, 'sound/effects/pop.ogg', 50, 0)		// Change the mode
 	mode++
 	if(mode > reagent_list.len)
 		mode = 1
 
-	charge_tick = 0 //Prevents wasted chems/cell charge if you're cycling through modes.
+	charge_tick = 0 // Prevents wasted chems/cell charge if you're cycling through modes.
 	var/datum/reagent/R = chemical_reagents_list[reagent_ids[mode]]
 	to_chat(user, "\blue Synthesizer is now producing '[R.name]'.")
 	return

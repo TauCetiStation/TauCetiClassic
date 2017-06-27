@@ -1,5 +1,5 @@
-/var/const/meteor_wave_delay = 625 //minimum wait between waves in tenths of seconds
-//set to at least 100 unless you want evarr ruining every round
+/var/const/meteor_wave_delay = 625 // minimum wait between waves in tenths of seconds
+// set to at least 100 unless you want evarr ruining every round
 
 /var/const/meteors_in_wave = 50
 /var/const/meteors_in_small_wave = 10
@@ -27,29 +27,29 @@
 	var/endy
 	var/turf/pickedstart
 	var/turf/pickedgoal
-	var/max_i = 10//number of tries to spawn meteor.
+	var/max_i = 10// number of tries to spawn meteor.
 
 	do
 		switch(pick(1,2,3,4))
-			if(1) //NORTH
+			if(1) // NORTH
 				starty = world.maxy-(TRANSITIONEDGE+1)
 				startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
 				endy = TRANSITIONEDGE
 				endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
-			if(2) //EAST
+			if(2) // EAST
 				starty = rand((TRANSITIONEDGE+1),world.maxy-(TRANSITIONEDGE+1))
 				startx = world.maxx-(TRANSITIONEDGE+1)
 				endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
 				endx = TRANSITIONEDGE
-			if(3) //SOUTH
+			if(3) // SOUTH
 				starty = (TRANSITIONEDGE+1)
 				startx = rand((TRANSITIONEDGE+1), world.maxx-(TRANSITIONEDGE+1))
 				endy = world.maxy-TRANSITIONEDGE
 				endx = rand(TRANSITIONEDGE, world.maxx-TRANSITIONEDGE)
-			if(4) //WEST
+			if(4) // WEST
 				starty = rand((TRANSITIONEDGE+1), world.maxy-(TRANSITIONEDGE+1))
 				startx = (TRANSITIONEDGE+1)
-				endy = rand(TRANSITIONEDGE,world.maxy-TRANSITIONEDGE)
+				endy = rand(TRANSITIONEDGE, world.maxy-TRANSITIONEDGE)
 				endx = world.maxx-TRANSITIONEDGE
 
 		pickedstart = locate(startx, starty, ZLEVEL_STATION)
@@ -92,7 +92,7 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 
 /obj/effect/meteor/Destroy()
-	walk(src,0) //this cancels the walk_towards() proc
+	walk(src,0) // this cancels the walk_towards() proc
 	return ..()
 
 /obj/effect/meteor/Bump(atom/A)
@@ -101,8 +101,8 @@
 		playsound(src.loc, 'sound/effects/meteorimpact.ogg', 40, 1)
 	if (--src.hits <= 0)
 
-		//Prevent meteors from blowing up the singularity's containment.
-		//Changing emitter and generator ex_act would result in them being bomb and C4 proof.
+		// Prevent meteors from blowing up the singularity's containment.
+		// Changing emitter and generator ex_act would result in them being bomb and C4 proof.
 		if(!istype(A,/obj/machinery/power/emitter) && \
 			!istype(A,/obj/machinery/field_generator) && \
 			prob(15))
@@ -125,12 +125,12 @@
 	return
 
 /obj/effect/meteor/big/Bump(atom/A)
-	//Prevent meteors from blowing up the singularity's containment.
-	//Changing emitter and generator ex_act would result in them being bomb and C4 proof
+	// Prevent meteors from blowing up the singularity's containment.
+	// Changing emitter and generator ex_act would result in them being bomb and C4 proof
 	if(!istype(A,/obj/machinery/power/emitter) && \
 		!istype(A,/obj/machinery/field_generator))
 		if(--src.hits <= 0)
-			qdel(src) //Dont blow up singularity containment if we get stuck there.
+			qdel(src) // Dont blow up singularity containment if we get stuck there.
 
 	if (A)
 		for(var/mob/M in player_list)

@@ -15,16 +15,16 @@
 			if (istype(W, /obj/item/device/pda))
 				var/obj/item/device/pda/pda = W
 				W = pda.id
-			if (!W:access) //no access
+			if (!W:access) // no access
 				to_chat(user, "The access level of [W:registered_name]\'s card is not high enough. ")
 				return
 
 			var/list/cardaccess = W:access
-			if(!istype(cardaccess, /list) || !cardaccess.len) //no access
+			if(!istype(cardaccess, /list) || !cardaccess.len) // no access
 				to_chat(user, "The access level of [W:registered_name]\'s card is not high enough. ")
 				return
 
-			if(!(access_heads in W:access)) //doesn't have this access
+			if(!(access_heads in W:access)) // doesn't have this access
 				to_chat(user, "The access level of [W:registered_name]\'s card is not high enough. ")
 				return 0
 

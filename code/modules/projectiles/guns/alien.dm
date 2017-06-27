@@ -1,6 +1,6 @@
-//Vox pinning weapon.
+// Vox pinning weapon.
 
-//Ammo.
+// Ammo.
 /obj/item/weapon/spike
 	name = "alloy spike"
 	desc = "It's about a foot of weird silver metal with a wicked point."
@@ -12,7 +12,7 @@
 	icon_state = "metal-rod"
 	item_state = "bolt"
 
-//Launcher.
+// Launcher.
 /obj/item/weapon/spikethrower
 
 	name = "Vox spike thrower"
@@ -25,7 +25,7 @@
 	var/obj/item/weapon/spike/spike
 	var/fire_force = 30
 
-	//Going to make an effort to get this compatible with the threat targetting system.
+	// Going to make an effort to get this compatible with the threat targetting system.
 	var/tmp/list/mob/living/target
 	var/tmp/mob/living/last_moved_mob
 
@@ -62,10 +62,10 @@
 /obj/item/weapon/spikethrower/afterattack(atom/A, mob/living/user, flag, params)
 	if(flag) return
 	if(user && user.client && user.client.gun_mode && !(A in target))
-		//TODO: Make this compatible with targetting (prolly have to actually make it a gun subtype, ugh.)
-		//PreFire(A,user,params)
+		// TODO: Make this compatible with targetting (prolly have to actually make it a gun subtype, ugh.)
+		// PreFire(A, user, params)
 	else
-		Fire(A,user,params)
+		Fire(A, user, params)
 
 /obj/item/weapon/spikethrower/attack(mob/living/M, mob/living/user, def_zone)
 
@@ -76,10 +76,10 @@
 	if (spikes > 0)
 		if(user.a_intent == "hurt")
 			user.visible_message("\red <b> \The [user] fires \the [src] point blank at [M]!</b>")
-			Fire(M,user)
+			Fire(M, user)
 			return
 		else if(target && M in target)
-			Fire(M,user)
+			Fire(M, user)
 			return
 	else
 		return ..()
@@ -107,7 +107,7 @@
 		return
 
 	if(!spike)
-		spike = new(src) //Create a spike.
+		spike = new(src) // Create a spike.
 		spike.add_fingerprint(user)
 		spikes--
 
@@ -117,13 +117,13 @@
 	spike = null
 	update_icon()
 
-//This gun only functions for armalis. The on-sprite is too huge to render properly on other sprites.
+// This gun only functions for armalis. The on-sprite is too huge to render properly on other sprites.
 /obj/item/weapon/gun/energy/noisecannon
 
 	name = "alien heavy cannon"
 	desc = "It's some kind of enormous alien weapon, as long as a man is tall."
 
-	icon = 'icons/obj/gun.dmi' //Actual on-sprite is handled by icon_override.
+	icon = 'icons/obj/gun.dmi' // Actual on-sprite is handled by icon_override.
 	icon_state = "noisecannon"
 	item_state = "noisecannon"
 	recoil = 1
@@ -146,14 +146,14 @@
 		to_chat(user, "\red \The [src] is far too large for you to pick up.")
 		return
 /*
-/obj/item/weapon/gun/energy/noisecannon/load_into_chamber() //Does not have ammo.
+/obj/item/weapon/gun/energy/noisecannon/load_into_chamber() // Does not have ammo.
 	in_chamber = new projectile_type(src)
 	return 1 */
 
 /obj/item/weapon/gun/energy/noisecannon/update_icon()
 	return
 
-//Projectile.
+// Projectile.
 /obj/item/ammo_casing/energy/sonic
 	projectile_type = /obj/item/projectile/energy/sonic
 	select_name = "distortion"
@@ -173,5 +173,5 @@
 	stun = 5
 
 /obj/item/projectile/energy/sonic/proc/split()
-	//TODO: create two more projectiles to either side of this one, fire at targets to the side of target turf.
+	// TODO: create two more projectiles to either side of this one, fire at targets to the side of target turf.
 	return

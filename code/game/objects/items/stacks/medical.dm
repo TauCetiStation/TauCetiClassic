@@ -78,7 +78,7 @@
 					if(W.current_stage <= W.max_bleeding_stage)
 						user.visible_message("<span class='notice'>\The [user] bandages [W.desc] on [M]'s [BP.name].</span>", \
 											"<span class='notice'>You bandage [W.desc] on [M]'s [BP.name].</span>")
-						//H.add_side_effect("Itch")
+						// H.add_side_effect("Itch")
 					else if (istype(W,/datum/wound/bruise))
 						user.visible_message("<span class='notice'>\The [user] places bruise patch over [W.desc] on [M]'s [BP.name].</span>", \
 											"<span class='notice'>You place bruise patch over [W.desc] on [M]'s [BP.name].</span>" )
@@ -96,8 +96,8 @@
 				H.update_bandage()
 				use(used)
 		else
-			if(can_operate(H))        //Checks if mob is lying down on table for surgery
-				if(do_surgery(H,user,src))
+			if(can_operate(H))        // Checks if mob is lying down on table for surgery
+				if(do_surgery(H, user, src))
 					return
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
@@ -137,8 +137,8 @@
 				BP.salve()
 				use(1)
 		else
-			if(can_operate(H))        //Checks if mob is lying down on table for surgery
-				if(do_surgery(H,user,src))
+			if(can_operate(H))        // Checks if mob is lying down on table for surgery
+				if(do_surgery(H, user, src))
 					return
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
@@ -213,8 +213,8 @@
 				H.update_bandage()
 				use(used)
 		else
-			if(can_operate(H))        //Checks if mob is lying down on table for surgery
-				if(do_surgery(H,user,src))
+			if(can_operate(H))        // Checks if mob is lying down on table for surgery
+				if(do_surgery(H, user, src))
 					return
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")
@@ -254,8 +254,8 @@
 				BP.salve()
 				use(1)
 		else
-			if(can_operate(H))        //Checks if mob is lying down on table for surgery
-				if (do_surgery(H,user,src))
+			if(can_operate(H))        // Checks if mob is lying down on table for surgery
+				if (do_surgery(H, user, src))
 					return
 			else
 				to_chat(user, "<span class='notice'>The [BP.name] is cut open, you'll need more than a bandage!</span>")

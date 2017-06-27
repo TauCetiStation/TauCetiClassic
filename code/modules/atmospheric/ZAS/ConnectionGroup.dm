@@ -69,10 +69,10 @@ Class Procs:
 
 /connection_edge/proc/add_connection(connection/c)
 	coefficient++
-	//world << "Connection added: [type] Coefficient: [coefficient]"
+	// world << "Connection added: [type] Coefficient: [coefficient]"
 
 /connection_edge/proc/remove_connection(connection/c)
-	//world << "Connection removed: [type] Coefficient: [coefficient-1]"
+	// world << "Connection removed: [type] Coefficient: [coefficient-1]"
 	coefficient--
 	if(coefficient <= 0)
 		erase()
@@ -81,34 +81,34 @@ Class Procs:
 
 /connection_edge/proc/erase()
 	SSair.remove_edge(src)
-	//world << "[type] Erased."
+	// world << "[type] Erased."
 
 /connection_edge/proc/tick()
 
 /connection_edge/proc/flow(list/movable, differential, repelled)
 	for(var/atom/movable/M in movable)
 
-		//If they're already being tossed, don't do it again.
+		// If they're already being tossed, don't do it again.
 		if(M.last_airflow > world.time - (ismob(src) ? vsc.airflow_mob_delay : vsc.airflow_delay))
 			continue
 		if(M.airflow_speed)
 			continue
 
-		//Check for knocking people over
+		// Check for knocking people over
 		if(ismob(M) && differential > vsc.airflow_stun_pressure)
 			if(M:status_flags & GODMODE)
 				continue
 			M:airflow_stun()
 
 		if(M.check_airflow_movable(differential))
-			//Check for things that are in range of the midpoint turfs.
+			// Check for things that are in range of the midpoint turfs.
 			var/list/close_turfs = list()
 			for(var/turf/U in connecting_turfs)
-				if(get_dist(M,U) < world.view)
+				if(get_dist(M, U) < world.view)
 					close_turfs += U
 			if(!close_turfs.len) continue
 
-			M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
+			M.airflow_dest = pick(close_turfs) // Pick a random midpoint to fly towards.
 
 			if(repelled)
 				if(M) M.RepelAirflowDest(differential/5)
@@ -128,8 +128,8 @@ Class Procs:
 	src.B = B
 	A.edges.Add(src)
 	B.edges.Add(src)
-	//id = edge_id(A,B)
-	//world << "New edge between [A] and [B]"
+	// id = edge_id(A, B)
+	// world << "New edge between [A] and [B]"
 
 /connection_edge/zone/add_connection(connection/c)
 	. = ..()
@@ -155,20 +155,20 @@ Class Procs:
 	if(A.invalid || B.invalid)
 		erase()
 		return
-	//world << "[id]: Tick [SSair.current_cycle]: \..."
+	// world << "[id]: Tick [SSair.current_cycle]: \..."
 	if(direct)
 		if(SSair.equivalent_pressure(A, B))
-			//world << "merged."
+			// world << "merged."
 			erase()
 			SSair.merge(A, B)
-			//world << "zones merged."
+			// world << "zones merged."
 			return
 
-	//SSair.equalize(A, B)
-	ShareRatio(A.air,B.air,coefficient)
+	// SSair.equalize(A, B)
+	ShareRatio(A.air, B.air, coefficient)
 	SSair.mark_zone_update(A)
 	SSair.mark_zone_update(B)
-	//world << "equalized."
+	// world << "equalized."
 
 	var/differential = A.air.return_pressure() - B.air.return_pressure()
 	if(abs(differential) < vsc.airflow_lightest_pressure) return
@@ -185,7 +185,7 @@ Class Procs:
 	flow(attracted, abs(differential), 0)
 	flow(repelled, abs(differential), 1)
 
-//Helper proc to get connections for a zone.
+// Helper proc to get connections for a zone.
 /connection_edge/zone/proc/get_connected_zone(zone/from)
 	if(A == from)
 		return B
@@ -200,8 +200,8 @@ Class Procs:
 	src.B = B
 	A.edges.Add(src)
 	air = B.return_air()
-	//id = 52*A.id
-	//world << "New edge from [A] to [B]."
+	// id = 52*A.id
+	// world << "New edge from [A] to [B]."
 
 /connection_edge/unsimulated/add_connection(connection/c)
 	. = ..()
@@ -224,9 +224,9 @@ Class Procs:
 	if(A.invalid)
 		erase()
 		return
-	//world << "[id]: Tick [SSair.current_cycle]: To [B]!"
-	//A.air.mimic(B, coefficient)
-	ShareSpace(A.air,air,dbg_out)
+	// world << "[id]: Tick [SSair.current_cycle]: To [B]!"
+	// A.air.mimic(B, coefficient)
+	ShareSpace(A.air, air, dbg_out)
 	SSair.mark_zone_update(A)
 
 	var/differential = A.air.return_pressure() - air.return_pressure()
@@ -239,11 +239,11 @@ Class Procs:
 var/list/sharing_lookup_table = list(0.30, 0.40, 0.48, 0.54, 0.60, 0.66)
 
 proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
-	//Shares a specific ratio of gas between mixtures using simple weighted averages.
+	// Shares a specific ratio of gas between mixtures using simple weighted averages.
 	var
-		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
+		// WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
 		ratio = sharing_lookup_table[6]
-		//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
+		// WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
 
 		size = max(1,A.group_multiplier)
 		share_size = max(1,B.group_multiplier)
@@ -269,10 +269,10 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 
 		temp_avg = (A.temperature * full_heat_capacity + B.temperature * s_full_heat_capacity) / (full_heat_capacity + s_full_heat_capacity)
 
-	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
-	if(sharing_lookup_table.len >= connecting_tiles) //6 or more interconnecting tiles will max at 42% of air moved per tick.
+	// WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
+	if(sharing_lookup_table.len >= connecting_tiles) // 6 or more interconnecting tiles will max at 42% of air moved per tick.
 		ratio = sharing_lookup_table[connecting_tiles]
-	//WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
+	// WOOT WOOT TOUCH THIS AND YOU ARE A RETARD
 
 	A.oxygen = max(0, (A.oxygen - oxy_avg) * (1-ratio) + oxy_avg )
 	A.nitrogen = max(0, (A.nitrogen - nit_avg) * (1-ratio) + nit_avg )
@@ -322,7 +322,7 @@ proc/ShareRatio(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
 		return 0
 
 proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
-	//A modified version of ShareRatio for spacing gas at the same rate as if it were going into a large airless room.
+	// A modified version of ShareRatio for spacing gas at the same rate as if it were going into a large airless room.
 	if(!unsimulated_tiles)
 		return 0
 
@@ -371,14 +371,14 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 			unsim_phoron += T.phoron
 			unsim_temperature += T.temperature/unsimulated_tiles.len
 
-		//These values require adjustment in order to properly represent a room of the specified size.
+		// These values require adjustment in order to properly represent a room of the specified size.
 		unsim_oxygen *= correction_ratio
 		unsim_co2 *= correction_ratio
 		unsim_nitrogen *= correction_ratio
 		unsim_phoron *= correction_ratio
 		tileslen = unsimulated_tiles.len
 
-	else //invalid input type
+	else // invalid input type
 		return 0
 
 	unsim_heat_capacity = HEAT_CAPACITY_CALCULATION(unsim_oxygen, unsim_co2, unsim_nitrogen, unsim_phoron)
@@ -405,7 +405,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 	if((full_heat_capacity + unsim_heat_capacity) > 0)
 		temp_avg = (A.temperature * full_heat_capacity + unsim_temperature * unsim_heat_capacity) / (full_heat_capacity + unsim_heat_capacity)
 
-	if(sharing_lookup_table.len >= tileslen) //6 or more interconnecting tiles will max at 42% of air moved per tick.
+	if(sharing_lookup_table.len >= tileslen) // 6 or more interconnecting tiles will max at 42% of air moved per tick.
 		ratio = sharing_lookup_table[tileslen]
 
 	if(dbg_output)
@@ -432,7 +432,7 @@ proc/ShareSpace(datum/gas_mixture/A, list/unsimulated_tiles, dbg_output)
 
 
 proc/ShareHeat(datum/gas_mixture/A, datum/gas_mixture/B, connecting_tiles)
-	//This implements a simplistic version of the Stefan-Boltzmann law.
+	// This implements a simplistic version of the Stefan-Boltzmann law.
 	var/energy_delta = ((A.temperature - B.temperature) ** 4) * 5.6704e-8 * connecting_tiles * 2.5
 	var/maximum_energy_delta = max(0, min(A.temperature * A.heat_capacity() * A.group_multiplier, B.temperature * B.heat_capacity() * B.group_multiplier))
 	if(maximum_energy_delta > abs(energy_delta))

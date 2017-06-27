@@ -1,6 +1,6 @@
-#define HEAT_DAMAGE_LEVEL_1 2 //Amount of damage applied when your body temperature just passes the 360.15k safety point
-#define HEAT_DAMAGE_LEVEL_2 4 //Amount of damage applied when your body temperature passes the 400K point
-#define HEAT_DAMAGE_LEVEL_3 8 //Amount of damage applied when your body temperature passes the 460K point
+#define HEAT_DAMAGE_LEVEL_1 2 // Amount of damage applied when your body temperature just passes the 360.15k safety point
+#define HEAT_DAMAGE_LEVEL_2 4 // Amount of damage applied when your body temperature passes the 400K point
+#define HEAT_DAMAGE_LEVEL_3 8 // Amount of damage applied when your body temperature passes the 460K point
 
 /mob/living/carbon/alien
 	name = "alien"
@@ -30,7 +30,7 @@
 	ventcrawler = 2
 
 /mob/living/carbon/alien/adjustToxLoss(amount)
-	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) //upper limit of max_plasma, lower limit of 0
+	storedPlasma = min(max(storedPlasma + amount,0),max_plasma) // upper limit of max_plasma, lower limit of 0
 	updatePlasmaDisplay()
 	return
 
@@ -55,13 +55,13 @@
 		health = maxHealth
 		stat = CONSCIOUS
 	else
-		//oxyloss is only used for suicide
-		//toxloss isn't used for aliens, its actually used as alien powers!!
+		// oxyloss is only used for suicide
+		// toxloss isn't used for aliens, its actually used as alien powers!!
 		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 
 /mob/living/carbon/alien/proc/handle_environment(datum/gas_mixture/environment)
 
-	//If there are alien weeds on the ground then heal if needed or give some plasma
+	// If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in loc)
 		if(health >= maxHealth)
 			adjustToxLoss(plasma_rate)
@@ -93,15 +93,15 @@
 	else
 		loc_temp = environment.temperature
 
-	//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Fire protection: [heat_protection] - Location: [loc] - src: [src]"
+	// world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Fire protection: [heat_protection] - Location: [loc] - src: [src]"
 
 	// Aliens are now weak to fire.
 
-	//After then, it reacts to the surrounding atmosphere based on your thermal protection
+	// After then, it reacts to the surrounding atmosphere based on your thermal protection
 	if(!on_fire) // If you're on fire, ignore local air temperature
 		if(loc_temp > bodytemperature)
-			//Place is hotter than we are
-			var/thermal_protection = heat_protection //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
+			// Place is hotter than we are
+			var/thermal_protection = heat_protection // This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 			if(thermal_protection < 1)
 				bodytemperature += (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
 		else
@@ -109,7 +109,7 @@
 
 	// +/- 50 degrees from 310.15K is the 'safe' zone, where no damage is dealt.
 	if(bodytemperature > 700)
-		//Body temperature is too hot.
+		// Body temperature is too hot.
 		throw_alert("alien_fire")
 		switch(bodytemperature)
 			if(700 to 850)
@@ -206,7 +206,7 @@
 
 /mob/living/carbon/alien/Stun(amount)
 	if(status_flags & CANSTUN)
-		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
+		stunned = max(max(stunned, amount),0) // can't go below 0, getting a low amount of stun doesn't lower your current stun
 	else
 		// add some movement delay
 		move_delay_add = min(move_delay_add + round(amount / 2), 10) // a maximum delay of 10
@@ -337,14 +337,14 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/swap_hand()
 	var/obj/item/item_in_hand = src.get_active_hand()
-	if(item_in_hand) //this segment checks if the item in your hand is twohanded.
+	if(item_in_hand) // this segment checks if the item in your hand is twohanded.
 		if(istype(item_in_hand,/obj/item/weapon/twohanded))
 			if(item_in_hand:wielded == 1)
 				to_chat(usr, "<span class='warning'>Your other hand is too busy holding the [item_in_hand.name]</span>")
 				return
 	src.hand = !( src.hand )
 	if(hud_used.l_hand_hud_object && hud_used.r_hand_hud_object)
-		if(hand)	//This being 1 means the left hand is in use
+		if(hand)	// This being 1 means the left hand is in use
 			hud_used.l_hand_hud_object.icon_state = "hand_l_active"
 			hud_used.r_hand_hud_object.icon_state = "hand_r_inactive"
 		else

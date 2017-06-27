@@ -85,8 +85,8 @@
 	if(..())
 		return 1
 
-	//Do we have a working jetpack
-	if(istype(back, /obj/item/weapon/tank/jetpack) && isturf(loc)) //Second check is so you can't use a jetpack in a mech
+	// Do we have a working jetpack
+	if(istype(back, /obj/item/weapon/tank/jetpack) && isturf(loc)) // Second check is so you can't use a jetpack in a mech
 		var/obj/item/weapon/tank/jetpack/J = back
 		if((movement_dir || J.stabilization_on) && J.allow_thrust(0.01, src))
 			return 1

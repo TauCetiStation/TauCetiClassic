@@ -1,4 +1,4 @@
-//Alium nests. Essentially beds with an unbuckle delay that only aliums can buckle mobs to.
+// Alium nests. Essentially beds with an unbuckle delay that only aliums can buckle mobs to.
 
 /obj/structure/stool/bed/nest
 	name = "alien nest"

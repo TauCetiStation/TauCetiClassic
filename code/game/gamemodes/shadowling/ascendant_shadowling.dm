@@ -5,7 +5,7 @@
 	icon_state = "shadowling_ascended"
 	icon_living = "shadowling_ascended"
 	speak_emote = list("telepathically thunders", "telepathically booms")
-	//force_threshold = INFINITY //Can't die by normal means
+	// force_threshold = INFINITY // Can't die by normal means
 	health = 100000
 	maxHealth = 100000
 	speed = 0
@@ -51,6 +51,6 @@
 	else
 		pixel_y = 1
 
-//mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(movement_dir = 0)//TG
+// mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(movement_dir = 0)// TG
 /mob/living/simple_animal/ascendant_shadowling/Process_Spacemove(movement_dir = 0)
-	return 1 //copypasta from carp code
+	return 1 // copypasta from carp code

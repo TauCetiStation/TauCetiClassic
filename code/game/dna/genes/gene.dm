@@ -16,7 +16,7 @@
 	// Probably won't get used but why the fuck not
 	var/desc="Oh god who knows what this does."
 
-	var/activation_prob=100 //#Z2
+	var/activation_prob=100 // #Z2
 
 	// Set in initialize()!
 	//  What gene activates this?
@@ -78,16 +78,16 @@
 	return 0
 
 
-/////////////////////
+//////////////////// /
 // BASIC GENES
-//
+// 
 // These just chuck in a mutation and display a message.
-//
+// 
 // Gene is activated:
 //  1. If mutation already exists in mob
 //  2. If the probability roll succeeds
 //  3. Activation is forced (done in domutcheck)
-/////////////////////
+//////////////////// /
 
 
 /datum/dna/gene/basic
@@ -97,7 +97,7 @@
 	var/mutation=0
 
 	// Activation probability
-	//var/activation_prob=45 //#Z2 not used here anymore, now in /datum/dna/gene
+	// var/activation_prob=45 // #Z2 not used here anymore, now in /datum/dna/gene
 
 	// Possible activation messages
 	var/list/activation_messages=list()
@@ -105,7 +105,7 @@
 	// Possible deactivation messages
 	var/list/deactivation_messages=list()
 
-/datum/dna/gene/basic/can_activate(mob/M,flags)
+/datum/dna/gene/basic/can_activate(mob/M, flags)
 	if(flags & MUTCHK_FORCED)
 		return 1
 	// Probability check

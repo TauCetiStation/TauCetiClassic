@@ -91,7 +91,7 @@ REAGENT SCANNER
 	user.visible_message("<span class='notice'> [user] has analyzed [M]'s vitals.","<span class='notice'> You have analyzed [M]'s vitals.")
 
 	if (!istype(M, /mob/living/carbon) || (ishuman(M) && (M:species.flags[IS_SYNTHETIC])))
-		//these sensors are designed for organic life
+		// these sensors are designed for organic life
 		user.show_message("\blue Analyzing Results for ERROR:\n&emsp; Overall Status: ERROR")
 		user.show_message("&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font>", 1)
 		user.show_message("&emsp; Damage Specifics: <font color='blue'>?</font> - <font color='green'>?</font> - <font color='#FFA500'>?</font> - <font color='red'>?</font>")
@@ -522,8 +522,8 @@ REAGENT SCANNER
 			if(!ectoplasm)
 				icon_state = "locnull"
 				return
-		dir = get_dir(src,ectoplasm)
-		switch(get_dist(src,ectoplasm))
+		dir = get_dir(src, ectoplasm)
+		switch(get_dist(src, ectoplasm))
 			if(0)
 				icon_state = "locon"
 			if(1 to 8)

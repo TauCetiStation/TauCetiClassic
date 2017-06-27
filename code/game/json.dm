@@ -1,19 +1,19 @@
 
 var/jsonpath = "/home/bay12/public_html"
 var/dmepath = "/home/bay12/git/taucetistation.dme"
-var/makejson = 1 //temp
+var/makejson = 1 // temp
 proc/makejson()
 
 	if(!makejson)
 		return
 	fdel("[jsonpath]/info.json")
-		//usr << "Error cant delete json"
-	//else
-		//usr << "Deleted json in public html"
+		// usr << "Error cant delete json"
+	// else
+		// usr << "Deleted json in public html"
 	fdel("info.json")
-		//usr << "error cant delete local json"
-	//else
-		//usr << "Deleted local json"
+		// usr << "error cant delete local json"
+	// else
+		// usr << "Deleted local json"
 	var/F = file("info.json")
 	if(!isfile(F))
 		return
@@ -41,7 +41,7 @@ proc/makejson()
 	to_chat(F, "{\"mode\":\"[mode]\",\"players\" : \"[players]\",\"playercount\" : \"[playerscount]\",\"admin\" : \"[admins]\",\"time\" : \"[time2text(world.realtime,"MM/DD - hh:mm")]\"}")
 	fcopy("info.json","[jsonpath]/info.json")
 
-/proc/switchmap(newmap,newpath)
+/proc/switchmap(newmap, newpath)
 	var/oldmap
 	var/obj/mapinfo/M = locate()
 
@@ -56,11 +56,11 @@ proc/makejson()
 	var/text = file2text(dmepath)
 	var/path = "#include \"maps/[oldmap].dmm\""
 	var/xpath = "#include \"maps/[newpath].dmm\""
-	var/loc = findtext(text,path,1,0)
+	var/loc = findtext(text, path,1,0)
 	if(!loc)
 		path = "#include \"maps\\[oldmap].dmm\""
 		xpath = "#include \"maps\\[newpath].dmm\""
-		loc = findtext(text,path,1,0)
+		loc = findtext(text, path,1,0)
 		if(!loc)
 			message_admins("Could not find '#include \"maps\\[oldmap].dmm\"' or '\"maps/[oldmap].dmm\"' in the bs12.dme. The mapinfo probably has an incorrect mapname var. Alternatively, could not find the .dme itself, at [dmepath].")
 			return
@@ -70,7 +70,7 @@ proc/makejson()
 	text += "\n[xpath]"
 	text += rest
 /*	for(var/A in lines)
-		if(findtext(A,path,1,0))
+		if(findtext(A, path,1,0))
 			lineloc = lines.Find(A,1,0)
 			lines[lineloc] = xpath
 			to_chat(world, "FOUND")*/
@@ -94,4 +94,4 @@ proc/GetMapInfo()
 client/proc/ChangeMap(X as text)
 	set name = "Change Map"
 	set category  = "Admin"
-	switchmap(X,X)
+	switchmap(X, X)

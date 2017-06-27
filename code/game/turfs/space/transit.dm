@@ -1,7 +1,7 @@
 /turf/space/transit
 	var/pushdirection // push things that get caught in the transit tile this direction
 
-//Overwrite because we dont want people building rods in space.
+// Overwrite because we dont want people building rods in space.
 /turf/space/transit/attackby(obj/O, mob/user)
 	return
 
@@ -9,7 +9,7 @@
 
 	pushdirection = SOUTH  // south because the space tile is scrolling south
 
-	//IF ANYONE KNOWS A MORE EFFICIENT WAY OF MANAGING THESE SPRITES, BE MY GUEST.
+	// IF ANYONE KNOWS A MORE EFFICIENT WAY OF MANAGING THESE SPRITES, BE MY GUEST.
 	shuttlespace_ns1
 		icon_state = "speedspace_ns_1"
 	shuttlespace_ns2

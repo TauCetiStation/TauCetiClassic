@@ -1,4 +1,4 @@
-//Hydroponics tank and base code
+// Hydroponics tank and base code
 /obj/item/weapon/watertank
 	name = "backpack water tank"
 	desc = "A S.U.N.S.H.I.N.E. brand watertank backpack with nozzle to water plants."
@@ -37,14 +37,14 @@
 		if(noz == null)
 			noz = make_noz()
 
-		//Detach the nozzle into the user's hands
+		// Detach the nozzle into the user's hands
 		if(!user.put_in_hands(noz))
 			on = 0
 			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
 			return
 		noz.loc = user
 	else
-		//Remove from their hands and put back "into" the tank
+		// Remove from their hands and put back "into" the tank
 		remove_noz()
 	return
 
@@ -113,7 +113,7 @@
 	icon_state = "mister"
 	item_state = "mister"
 	w_class = 4
-	throwforce = 0 //we shall not abuse
+	throwforce = 0 // we shall not abuse
 	amount_per_transfer_from_this = 50
 	possible_transfer_amounts = list(25,50,100)
 	volume = 500
@@ -125,7 +125,7 @@
 	..()
 	if(check_tank_exists(parent_tank))
 		tank = parent_tank
-		reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
+		reagents = tank.reagents	// This mister is really just a proxy for the tank's reagents
 		loc = tank
 	return
 
@@ -140,7 +140,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/spray/mister/proc/check_tank_exists(parent_tank)
-	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank))	//To avoid weird issues from admin spawns
+	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank))	// To avoid weird issues from admin spawns
 		if(ismob(loc))
 			var/mob/M = loc
 			M.unEquip(src)
@@ -150,11 +150,11 @@
 		return 1
 
 /obj/item/weapon/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
-	if(target.loc == loc || target == tank) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it putting it away
+	if(target.loc == loc || target == tank) // Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it putting it away
 		return
 	..()
 
-//Janitor tank
+// Janitor tank
 /obj/item/weapon/watertank/janitor
 	name = "backpack water tank"
 	desc = "A janitorial watertank backpack with nozzle to clean dirt and graffiti."

@@ -1,9 +1,9 @@
-//Previous code been here forever, adding new framework for portable generators
+// Previous code been here forever, adding new framework for portable generators
 
 
-//Baseline portable generator. Has all the default handling. Not intended to be used on it's own (since it generates unlimited power).
+// Baseline portable generator. Has all the default handling. Not intended to be used on it's own (since it generates unlimited power).
 /obj/machinery/power/port_gen
-	name = "Placeholder Generator"	//seriously, don't use this. It can't be anchored without VV magic.
+	name = "Placeholder Generator"	// seriously, don't use this. It can't be anchored without VV magic.
 	desc = "A portable generator for emergency backup power."
 	icon = 'icons/obj/power.dmi'
 	var/icon_state_on = "portgen1"
@@ -18,10 +18,10 @@
 	var/power_output = 1
 	var/consumption = 0
 
-/obj/machinery/power/port_gen/proc/HasFuel() //Placeholder for fuel check.
+/obj/machinery/power/port_gen/proc/HasFuel() // Placeholder for fuel check.
 	return 1
 
-/obj/machinery/power/port_gen/proc/UseFuel() //Placeholder for fuel use.
+/obj/machinery/power/port_gen/proc/UseFuel() // Placeholder for fuel use.
 	return
 
 /obj/machinery/power/port_gen/proc/DropFuel()
@@ -51,7 +51,7 @@
 	..()
 	to_chat(user, "<span class='notice'>The generator is [active ? "on" : "off"].</span>")
 
-//A power generator that runs on solid plasma sheets.
+// A power generator that runs on solid plasma sheets.
 /obj/machinery/power/port_gen/pacman
 	name = "P.A.C.M.A.N.-type Portable Generator"
 	var/sheets = 0

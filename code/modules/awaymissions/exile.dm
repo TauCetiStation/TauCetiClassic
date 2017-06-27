@@ -1,4 +1,4 @@
-//////Exile implants will allow you to use the station gate, but not return home. This will allow security to exile badguys/for badguys to exile their kill targets////////
+///// /Exile implants will allow you to use the station gate, but not return home. This will allow security to exile badguys/for badguys to exile their kill targets//////// 
 
 
 /obj/item/weapon/implanter/exile

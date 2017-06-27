@@ -1,6 +1,6 @@
-//
+// 
 // Abstract Class
-//
+// 
 
 /mob/living/simple_animal/hostile/mimic
 	name = "crate"
@@ -48,9 +48,9 @@
 
 
 
-//
+// 
 // Crate Mimic
-//
+// 
 
 
 // Aggro when you try to open them. Will also pickup loot when spawns and drop it when dies.
@@ -123,9 +123,9 @@
 			L.Weaken(2)
 			L.visible_message("<span class='danger'>\the [src] knocks down \the [L]!</span>")
 
-//
+// 
 // Copy Mimic
-//
+// 
 
 var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/cable, /obj/structure/window, /obj/item/projectile/magic/animate)
 

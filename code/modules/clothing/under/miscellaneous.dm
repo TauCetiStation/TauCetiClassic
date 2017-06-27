@@ -100,11 +100,11 @@
 	icon_state = "black"
 	item_state = "bl_suit"
 	item_color = "black"
-	w_class = 4//bulky item
+	w_class = 4// bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS //Needs gloves and shoes with cold protection to be fully protected.
+	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS // Needs gloves and shoes with cold protection to be fully protected.
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/under/acj
@@ -327,7 +327,7 @@
 	item_color = "gladiator"
 	body_parts_covered = LOWER_TORSO
 
-//dress
+// dress
 /obj/item/clothing/under/dress/
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
@@ -413,7 +413,7 @@
 	item_color = "plaid_purple"
 	flags = ONESIZEFITSALL
 
-//wedding stuff
+// wedding stuff
 /obj/item/clothing/under/wedding/
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
@@ -562,7 +562,7 @@
 	item_state = "dg_suit"
 	item_color = "centcom_old"
 
-//Mafia
+// Mafia
 /obj/item/clothing/under/mafia
 	name = "mafia outfit"
 	desc = "The business of the mafia is business."

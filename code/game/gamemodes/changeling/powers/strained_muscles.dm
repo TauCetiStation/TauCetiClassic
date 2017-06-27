@@ -5,7 +5,7 @@
 	genomecost = 3
 	req_human = 1
 	max_genetic_damage = 5
-	var/stacks = 0 //Increments every second; damage increases over time
+	var/stacks = 0 // Increments every second; damage increases over time
 	var/active = 0
 	var/mob/living/carbon/human/owner
 

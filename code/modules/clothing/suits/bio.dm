@@ -1,4 +1,4 @@
-//Biosuit complete with shoes (in the item sprite)
+// Biosuit complete with shoes (in the item sprite)
 /obj/item/clothing/head/bio_hood
 	name = "bio hood"
 	icon_state = "bio"
@@ -15,7 +15,7 @@
 	desc = "A suit that protects against biological contamination."
 	icon_state = "bio"
 	item_state = "bio_suit"
-	w_class = 4//bulky item
+	w_class = 4// bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
 	flags = THICKMATERIAL | PHORONGUARD
@@ -27,7 +27,7 @@
 	siemens_coefficient = 0.4
 
 
-//Standard biosuit, orange stripe
+// Standard biosuit, orange stripe
 /obj/item/clothing/head/bio_hood/general
 	icon_state = "bio_general"
 	body_parts_covered = HEAD|FACE|EYES
@@ -36,7 +36,7 @@
 	icon_state = "bio_general"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
-//Virology biosuit, green stripe
+// Virology biosuit, green stripe
 /obj/item/clothing/head/bio_hood/virology
 	icon_state = "bio_virology"
 
@@ -44,7 +44,7 @@
 	icon_state = "bio_virology"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
-//Security biosuit, grey with red stripe across the chest
+// Security biosuit, grey with red stripe across the chest
 /obj/item/clothing/head/bio_hood/security
 	icon_state = "bio_security"
 
@@ -52,7 +52,7 @@
 	icon_state = "bio_security"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
-//Janitor's biosuit, grey with purple arms
+// Janitor's biosuit, grey with purple arms
 /obj/item/clothing/head/bio_hood/janitor
 	icon_state = "bio_janitor"
 
@@ -61,7 +61,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
 
-//Scientist's biosuit, white with a pink-ish hue
+// Scientist's biosuit, white with a pink-ish hue
 /obj/item/clothing/head/bio_hood/scientist
 	icon_state = "bio_scientist"
 
@@ -69,7 +69,7 @@
 	icon_state = "bio_scientist"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
-//CMO's biosuit, blue stripe
+// CMO's biosuit, blue stripe
 /obj/item/clothing/suit/bio_suit/cmo
 	icon_state = "bio_cmo"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -78,7 +78,7 @@
 	icon_state = "bio_cmo"
 
 
-//Plague Dr mask can be found in clothing/masks/gasmask.dm
+// Plague Dr mask can be found in clothing/masks/gasmask.dm
 /obj/item/clothing/suit/bio_suit/plaguedoctorsuit
 	name = "Plague doctor suit"
 	desc = "It protected doctors from the Black Death, back then. You bet your arse it's gonna help you against viruses."

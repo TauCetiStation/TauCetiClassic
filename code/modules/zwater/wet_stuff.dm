@@ -1,4 +1,4 @@
-//NextGen mechanic to make items wet
+// NextGen mechanic to make items wet
 /obj/item/var/dry_inprocess = 0
 
 /obj/item/proc/make_wet(shower = 0)

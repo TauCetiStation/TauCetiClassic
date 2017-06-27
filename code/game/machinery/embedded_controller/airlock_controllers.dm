@@ -1,4 +1,4 @@
-//Advanced airlock controller for when you want a more versatile airlock controller - useful for turning simple access control rooms into airlocks
+// Advanced airlock controller for when you want a more versatile airlock controller - useful for turning simple access control rooms into airlocks
 /obj/machinery/embedded_controller/radio/advanced_airlock_controller
 	name = "Advanced Airlock Controller"
 
@@ -27,7 +27,7 @@
 
 /obj/machinery/embedded_controller/radio/advanced_airlock_controller/Topic(href, href_list)
 	var/clean = 0
-	switch(href_list["command"])	//anti-HTML-hacking checks
+	switch(href_list["command"])	// anti-HTML-hacking checks
 		if("cycle_ext")
 			clean = 1
 		if("cycle_int")
@@ -49,11 +49,11 @@
 	return 1
 
 
-//Airlock controller for airlock control - most airlocks on the station use this
+// Airlock controller for airlock control - most airlocks on the station use this
 /obj/machinery/embedded_controller/radio/airlock_controller
 	name = "Airlock Controller"
 	tag_secure = 1
-	layer = 3.3	//Above windows
+	layer = 3.3	// Above windows
 
 /obj/machinery/embedded_controller/radio/airlock_controller/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	var/data[0]
@@ -78,7 +78,7 @@
 
 /obj/machinery/embedded_controller/radio/airlock_controller/Topic(href, href_list)
 	var/clean = 0
-	switch(href_list["command"])	//anti-HTML-hacking checks
+	switch(href_list["command"])	// anti-HTML-hacking checks
 		if("cycle_ext")
 			clean = 1
 		if("cycle_int")
@@ -96,7 +96,7 @@
 	return 1
 
 
-//Access controller for door control - used in virology and the like
+// Access controller for door control - used in virology and the like
 /obj/machinery/embedded_controller/radio/access_controller
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_control_standby"
@@ -136,7 +136,7 @@
 
 /obj/machinery/embedded_controller/radio/access_controller/Topic(href, href_list)
 	var/clean = 0
-	switch(href_list["command"])	//anti-HTML-hacking checks
+	switch(href_list["command"])	// anti-HTML-hacking checks
 		if("cycle_ext_door")
 			clean = 1
 		if("cycle_int_door")

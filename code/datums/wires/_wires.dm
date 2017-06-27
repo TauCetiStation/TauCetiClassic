@@ -100,7 +100,7 @@ var/list/same_wires = list()
 	var/list/colors_to_pick = wire_colors.Copy() // Get a copy, not a reference.
 	var/list/indexes_to_pick = list()
 
-	//Generate our indexes
+	// Generate our indexes
 	for(var/i = 1; i < MAX_FLAG && i < (1 << wire_count); i += i)
 		indexes_to_pick += i
 	colors_to_pick.len = wire_count // Downsize it to our specifications.
@@ -211,9 +211,9 @@ var/list/same_wires = list()
 		usr.unset_machine(holder)
 
 
-////////////////////
+//////////////////// 
 // Overridable procs
-////////////////////
+//////////////////// 
 /**
  * Called when wires cut/mended.
  */
@@ -270,9 +270,9 @@ var/list/same_wires = list()
 	return (index & wires_status)
 
 
-//////////////////
+///////////////// /
 // Signaller Procs
-//////////////////
+///////////////// /
 /datum/wires/proc/is_signaler_attached(color)
 	if(signallers[color])
 		return TRUE
@@ -307,9 +307,9 @@ var/list/same_wires = list()
 			break
 
 
-//////////////////////////////
+///////////////////////////// /
 // Cut Wire Colour/Index procs
-//////////////////////////////
+///////////////////////////// /
 /datum/wires/proc/cut_wire_color(color)
 	var/index = get_index_by_color(color)
 	cut_wire_index(index)

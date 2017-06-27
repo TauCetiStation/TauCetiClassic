@@ -57,7 +57,7 @@ var/global/list/geoip_ckey_updated = list()
 
 	if(C.holder && (C.holder.rights & R_ADMIN))
 		status = "admin"
-		return 0//Lets save calls.
+		return 0// Lets save calls.
 
 	if(status != "updated")
 		holder = C.ckey
@@ -101,7 +101,7 @@ var/global/list/geoip_ckey_updated = list()
 	if(geoip_query_counter > 130)
 		return "limit reached"
 
-	var/list/vl = world.Export("http://ip-api.com/json/[addr]?fields=205599")
+	var/list/vl = world.Export("http:// ip-api.com/json/[addr]?fields=205599")
 	if (!("CONTENT" in vl) || vl["STATUS"] != "200 OK")
 		return "export fail"
 

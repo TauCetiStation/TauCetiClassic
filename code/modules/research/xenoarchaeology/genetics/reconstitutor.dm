@@ -1,4 +1,4 @@
-//gene sequence datum
+// gene sequence datum
 datum/genesequence
 	var/spawned_type
 	var/list/full_genome_sequence = list()
@@ -14,13 +14,13 @@ datum/genesequence
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
 	circuit = "/obj/item/weapon/circuitboard/reconstitutor"
-	req_access = list(access_heads) //Only used for record deletion right now.
-	var/obj/machinery/clonepod/pod1 = 1 //Linked cloning pod.
+	req_access = list(access_heads) // Only used for record deletion right now.
+	var/obj/machinery/clonepod/pod1 = 1 // Linked cloning pod.
 	var/temp = ""
-	var/menu = 1 //Which menu screen to display
+	var/menu = 1 // Which menu screen to display
 	var/list/records = list()
 	var/datum/dna2/record/active_record = null
-	var/obj/item/weapon/disk/data/diskette = null //Mostly so the geneticist can steal everything.
+	var/obj/item/weapon/disk/data/diskette = null // Mostly so the geneticist can steal everything.
 	var/loading = 0 // Nice loading text
 	var/list/undiscovered_genesequences = null
 	var/list/discovered_genesequences = list()
@@ -71,7 +71,7 @@ datum/genesequence
 					full = 1
 				if(SCANFOSSIL_RETVAL_SUCCESS)
 					numaccepted += 1
-					S.remove_from_storage(F, src) //This will move the item to this item's contents
+					S.remove_from_storage(F, src) // This will move the item to this item's contents
 					qdel(F)
 					updateDialog()
 		var/outmsg = "<span class='notice'>You empty all the fossils from [S] into [src].</span>"
@@ -118,17 +118,17 @@ datum/genesequence
 	dat += "<td></td>"
 	dat += "</tr>"
 
-	//WIP gene sequences
+	// WIP gene sequences
 	for(var/sequence_num = 1, sequence_num <= discovered_genesequences.len, sequence_num += 1)
 		var/datum/genesequence/cur_genesequence = discovered_genesequences[sequence_num]
 		dat += "<tr>"
 		var/num_correct = 0
 		for(var/curindex = 1, curindex <= 7, curindex++)
-			var/bgcolour = "#ffffff"//white ffffff, red ff0000
+			var/bgcolour = "#ffffff"// white ffffff, red ff0000
 
-			//background colour hints at correct positioning
+			// background colour hints at correct positioning
 			if(manually_placed_genomes[sequence_num][curindex])
-				//green background if slot is correctly filled
+				// green background if slot is correctly filled
 				if(manually_placed_genomes[sequence_num][curindex] == cur_genesequence.full_genome_sequence[curindex])
 					bgcolour = "#008000"
 					num_correct += 1
@@ -138,7 +138,7 @@ datum/genesequence
 						manually_placed_genomes[sequence_num] = new/list(7)
 						interact(user)
 						return
-				//yellow background if adjacent to correct slot
+				// yellow background if adjacent to correct slot
 				if(curindex > 1 && manually_placed_genomes[sequence_num][curindex] == cur_genesequence.full_genome_sequence[curindex - 1])
 					bgcolour = "#ffff00"
 				else if(curindex < 7 && manually_placed_genomes[sequence_num][curindex] == cur_genesequence.full_genome_sequence[curindex + 1])
@@ -149,10 +149,10 @@ datum/genesequence
 				this_genome_slot = "- - - - -"
 			dat += "<td><a href='?src=\ref[src];sequence_num=[sequence_num];insertpos=[curindex]' style='background-color:[bgcolour]'>[this_genome_slot]</a></td>"
 		dat += "<td><a href='?src=\ref[src];reset=1;sequence_num=[sequence_num]'>Reset</a></td>"
-		//dat += "<td><a href='?src=\ref[src];clone=1;sequence_num=[sequence_num]'>Clone</a></td>"
+		// dat += "<td><a href='?src=\ref[src];clone=1;sequence_num=[sequence_num]'>Clone</a></td>"
 		dat += "</tr>"
 
-	//completed gene sequences
+	// completed gene sequences
 	for(var/sequence_num = 1, sequence_num <= completed_genesequences.len, sequence_num += 1)
 		var/datum/genesequence/cur_genesequence = completed_genesequences[sequence_num]
 		dat += "<tr>"
@@ -183,7 +183,7 @@ datum/genesequence
 		return
 
 	if(href_list["insertpos"])
-		//world << "inserting gene for genesequence [href_list["insertgenome"]] at pos [text2num(href_list["insertpos"])]"
+		// world << "inserting gene for genesequence [href_list["insertgenome"]] at pos [text2num(href_list["insertpos"])]"
 		var/sequence_num = text2num(href_list["sequence_num"])
 		var/insertpos = text2num(href_list["insertpos"])
 
@@ -240,48 +240,48 @@ datum/genesequence
 			pod1.occupant = new cloned_genesequence.spawned_type(pod1)
 			pod1.locked = 1
 			pod1.icon_state = "pod_1"
-			//pod1.occupant.name = "[pod1.occupant.name] ([rand(0,999)])"
+			// pod1.occupant.name = "[pod1.occupant.name] ([rand(0,999)])"
 			pod1.biomass -= CLONE_BIOMASS
 	else
 		to_chat(usr, "<span class='red'>[bicon(src)] Unable to locate cloning pod!</span>")
 
 /obj/machinery/computer/reconstitutor/proc/scan_fossil(obj/item/weapon/fossil/scan_fossil)
-	//see whether we accept these kind of fossils
+	// see whether we accept these kind of fossils
 	if(accepted_fossil_types.len && !accepted_fossil_types.Find(scan_fossil.type))
 		return SCANFOSSIL_RETVAL_WRONGTYPE
 
-	//see whether we are going to discover a new sequence, new genome for existing sequence or nothing
+	// see whether we are going to discover a new sequence, new genome for existing sequence or nothing
 	var/new_genome_prob = discovered_genesequences.len * 50
 
 	if( (new_genome_prob >= 100 || prob(new_genome_prob)) && undiscovered_genomes.len)
-		//create a new genome for an existing gene sequence
+		// create a new genome for an existing gene sequence
 		var/newly_discovered_genome = pick(undiscovered_genomes)
 		undiscovered_genomes -= newly_discovered_genome
 		discovered_genomes.Add(newly_discovered_genome)
 
-		//chance to discover a second genome
+		// chance to discover a second genome
 		if(prob(75) && undiscovered_genomes.len)
 			newly_discovered_genome = pick(undiscovered_genomes)
 			undiscovered_genomes -= newly_discovered_genome
 			discovered_genomes.Add(newly_discovered_genome)
-			//chance to discover a third genome
+			// chance to discover a third genome
 			if(prob(50) && undiscovered_genomes.len)
 				newly_discovered_genome = pick(undiscovered_genomes)
 				undiscovered_genomes -= newly_discovered_genome
 				discovered_genomes.Add(newly_discovered_genome)
 
 	else if(undiscovered_genesequences.len)
-		//discover new gene sequence
+		// discover new gene sequence
 		var/datum/genesequence/newly_discovered_genesequence = pick(undiscovered_genesequences)
 		undiscovered_genesequences -= newly_discovered_genesequence
 		discovered_genesequences += newly_discovered_genesequence
-		//add genomes for new gene sequence to pool of discoverable genomes
+		// add genomes for new gene sequence to pool of discoverable genomes
 		undiscovered_genomes.Add(newly_discovered_genesequence.full_genome_sequence)
 		manually_placed_genomes.Add(null)
 		manually_placed_genomes[manually_placed_genomes.len] = new/list(7)
 
 	else
-		//there's no point scanning any more fossils, we've already discovered everything
+		// there's no point scanning any more fossils, we've already discovered everything
 		return SCANFOSSIL_RETVAL_NOMOREGENESEQ
 
 	return SCANFOSSIL_RETVAL_SUCCESS

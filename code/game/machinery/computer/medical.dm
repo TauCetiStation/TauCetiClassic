@@ -1,6 +1,6 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-/obj/machinery/computer/med_data//TODO:SANITY
+/obj/machinery/computer/med_data// TODO:SANITY
 	name = "Medical Records"
 	desc = "This can be used to check medical records."
 	icon_state = "medcomp"
@@ -51,7 +51,7 @@
 					if(!isnull(data_core.general))
 						for(var/datum/data/record/R in sortRecord(data_core.general))
 							dat += text("<A href='?src=\ref[];d_rec=\ref[]'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
-							//Foreach goto(132)
+							// Foreach goto(132)
 					dat += text("<HR><A href='?src=\ref[];screen=1'>Back</A>", src)
 				if(3.0)
 					dat += text("<B>Records Maintenance</B><HR>\n<A href='?src=\ref[];back=1'>Backup To Disk</A><BR>\n<A href='?src=\ref[];u_load=1'>Upload From disk</A><BR>\n<A href='?src=\ref[];del_all=1'>Delete All Records</A><BR>\n<BR>\n<A href='?src=\ref[];screen=1'>Back</A>", src, src, src, src)
@@ -107,9 +107,9 @@
 					var/bdat = null
 					for(var/obj/machinery/bot/medbot/M in machines)
 
-						if(M.z != src.z)	continue	//only find medibots on the same z-level as the computer
+						if(M.z != src.z)	continue	// only find medibots on the same z-level as the computer
 						var/turf/bl = get_turf(M)
-						if(bl)	//if it can't find a turf for the medibot, then it probably shouldn't be showing up
+						if(bl)	// if it can't find a turf for the medibot, then it probably shouldn't be showing up
 							bdat += "[M.name] - <b>\[[bl.x],[bl.y]\]</b> - [M.on ? "Online" : "Offline"]<br>"
 							if((!isnull(M.reagent_glass)) && M.use_beaker)
 								bdat += "Reservoir: \[[M.reagent_glass.reagents.total_volume]/[M.reagent_glass.reagents.maximum_volume]\]<br>"
@@ -218,9 +218,9 @@
 
 		if (href_list["del_all2"])
 			for(var/datum/data/record/R in data_core.medical)
-				//R = null
+				// R = null
 				qdel(R)
-				//Foreach goto(494)
+				// Foreach goto(494)
 			src.temp = "All records deleted."
 
 		if (href_list["field"])
@@ -386,7 +386,7 @@
 
 		if (href_list["del_r2"])
 			if (src.active2)
-				//src.active2 = null
+				// src.active2 = null
 				qdel(src.active2)
 
 		if (href_list["d_rec"])
@@ -399,7 +399,7 @@
 				if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
 					M = E
 				else
-					//Foreach continue //goto(2540)
+					// Foreach continue // goto(2540)
 			src.active1 = R
 			src.active2 = M
 			src.screen = 4
@@ -452,7 +452,7 @@
 				if ((lowertext(R.fields["name"]) == t1 || t1 == lowertext(R.fields["id"]) || t1 == lowertext(R.fields["b_dna"])))
 					src.active2 = R
 				else
-					//Foreach continue //goto(3229)
+					// Foreach continue // goto(3229)
 			if (!( src.active2 ))
 				src.temp = text("Could not locate record [].", t1)
 			else
@@ -460,7 +460,7 @@
 					if ((E.fields["name"] == src.active2.fields["name"] || E.fields["id"] == src.active2.fields["id"]))
 						src.active1 = E
 					else
-						//Foreach continue //goto(3334)
+						// Foreach continue // goto(3334)
 				src.screen = 4
 
 		if (href_list["print_p"])

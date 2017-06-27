@@ -1,33 +1,33 @@
-	//These are macros used to reduce on proc calls
+	// These are macros used to reduce on proc calls
 #define fetchElement(L, i) (associative) ? L[L[i]] : L[i]
 
-	//Minimum sized sequence that will be merged. Anything smaller than this will use binary-insertion sort.
-	//Should be a power of 2
+	// Minimum sized sequence that will be merged. Anything smaller than this will use binary-insertion sort.
+	// Should be a power of 2
 #define MIN_MERGE 32
 
-	//When we get into galloping mode, we stay there until both runs win less often than MIN_GALLOP consecutive times.
+	// When we get into galloping mode, we stay there until both runs win less often than MIN_GALLOP consecutive times.
 #define MIN_GALLOP 7
 
-	//This is a global instance to allow much of this code to be reused. The interfaces are kept seperately
+	// This is a global instance to allow much of this code to be reused. The interfaces are kept seperately
 var/datum/sortInstance/sortInstance = new()
 /datum/sortInstance
-	//The array being sorted.
+	// The array being sorted.
 	var/list/L
 
-	//The comparator proc-reference
+	// The comparator proc-reference
 	var/cmp = /proc/cmp_numeric_asc
 
-	//whether we are sorting list keys (0: L[i]) or associated values (1: L[L[i]])
+	// whether we are sorting list keys (0: L[i]) or associated values (1: L[L[i]])
 	var/associative = 0
 
-	//This controls when we get *into* galloping mode.  It is initialized	to MIN_GALLOP.
-	//The mergeLo and mergeHi methods nudge it higher for random data, and lower for highly structured data.
+	// This controls when we get *into* galloping mode.  It is initialized	to MIN_GALLOP.
+	// The mergeLo and mergeHi methods nudge it higher for random data, and lower for highly structured data.
 	var/minGallop = MIN_GALLOP
 
-	//Stores information regarding runs yet to be merged.
-	//Run i starts at runBase[i] and extends for runLen[i] elements.
-	//runBase[i] + runLen[i] == runBase[i+1]
-	//var/stackSize
+	// Stores information regarding runs yet to be merged.
+	// Run i starts at runBase[i] and extends for runLen[i] elements.
+	// runBase[i] + runLen[i] == runBase[i+1]
+	// var/stackSize
 	var/list/runBases = list()
 	var/list/runLens = list()
 
@@ -38,47 +38,47 @@ var/datum/sortInstance/sortInstance = new()
 
 		var/remaining = end - start
 
-		//If array is small, do a 'mini-TimSort' with no merges
+		// If array is small, do a 'mini-TimSort' with no merges
 		if(remaining < MIN_MERGE)
 			var/initRunLen = countRunAndMakeAscending(start, end)
 			binarySort(start, end, start+initRunLen)
 			return
 
-		//March over the array finding natural runs
-		//Extend any short natural runs to runs of length minRun
+		// March over the array finding natural runs
+		// Extend any short natural runs to runs of length minRun
 		var/minRun = minRunLength(remaining)
 
 		do
-				//identify next run
+				// identify next run
 			var/runLen = countRunAndMakeAscending(start, end)
 
-				//if run is short, extend to min(minRun, remaining)
+				// if run is short, extend to min(minRun, remaining)
 			if(runLen < minRun)
 				var/force = (remaining <= minRun) ? remaining : minRun
 
 				binarySort(start, start+force, start+runLen)
 				runLen = force
 
-				//add data about run to queue
+				// add data about run to queue
 			runBases.Add(start)
 			runLens.Add(runLen)
 
-				//maybe merge
+				// maybe merge
 			mergeCollapse()
 
-				//Advance to find next run
+				// Advance to find next run
 			start += runLen
 			remaining -= runLen
 
 		while(remaining > 0)
 
 
-			//Merge all remaining runs to complete sort
-		//ASSERT(start == end)
+			// Merge all remaining runs to complete sort
+		// ASSERT(start == end)
 		mergeForceCollapse();
-		//ASSERT(runBases.len == 1)
+		// ASSERT(runBases.len == 1)
 
-			//reset minGallop, for successive calls
+			// reset minGallop, for successive calls
 		minGallop = MIN_GALLOP
 
 		return L
@@ -91,36 +91,36 @@ var/datum/sortInstance/sortInstance = new()
 
 	If the initial part of the specified range is already sorted,
 	this method can take advantage of it: the method assumes that the
-	elements in range [lo,start) are already sorted
+	elements in range [lo, start) are already sorted
 
 	lo		the index of the first element in the range to be sorted
 	hi		the index after the last element in the range to be sorted
 	start	the index of the first element in the range that is	not already known to be sorted
 	*/
 	proc/binarySort(lo, hi, start)
-		//ASSERT(lo <= start && start <= hi)
+		// ASSERT(lo <= start && start <= hi)
 		if(start <= lo)
 			start = lo + 1
 
 		for(,start < hi, ++start)
-			var/pivot = fetchElement(L,start)
+			var/pivot = fetchElement(L, start)
 
-			//set left and right to the index where pivot belongs
+			// set left and right to the index where pivot belongs
 			var/left = lo
 			var/right = start
-			//ASSERT(left <= right)
+			// ASSERT(left <= right)
 
-			//[lo, left) elements <= pivot < [right, start) elements
-			//in other words, find where the pivot element should go using bisection search
+			// [lo, left) elements <= pivot < [right, start) elements
+			// in other words, find where the pivot element should go using bisection search
 			while(left < right)
-				var/mid = (left + right) >> 1	//round((left+right)/2)
-				if(call(cmp)(fetchElement(L,mid), pivot) > 0)
+				var/mid = (left + right) >> 1	// round((left+right)/2)
+				if(call(cmp)(fetchElement(L, mid), pivot) > 0)
 					right = mid
 				else
 					left = mid+1
 
-			//ASSERT(left == right)
-			moveElement(L, start, left)	//move pivot element to correct location in the sorted range
+			// ASSERT(left == right)
+			moveElement(L, start, left)	// move pivot element to correct location in the sorted range
 
 	/*
 	Returns the length of the run beginning at the specified position and reverses the run if it is back-to-front
@@ -135,19 +135,19 @@ var/datum/sortInstance/sortInstance = new()
 	reverse a descending sequence without violating stability.
 	*/
 	proc/countRunAndMakeAscending(lo, hi)
-		//ASSERT(lo < hi)
+		// ASSERT(lo < hi)
 
 		var/runHi = lo + 1
 		if(runHi >= hi)
 			return 1
 
-		var/last = fetchElement(L,lo)
-		var/current = fetchElement(L,runHi++)
+		var/last = fetchElement(L, lo)
+		var/current = fetchElement(L, runHi++)
 
 		if(call(cmp)(current, last) < 0)
 			while(runHi < hi)
 				last = current
-				current = fetchElement(L,runHi)
+				current = fetchElement(L, runHi)
 				if(call(cmp)(current, last) >= 0)
 					break
 				++runHi
@@ -155,28 +155,28 @@ var/datum/sortInstance/sortInstance = new()
 		else
 			while(runHi < hi)
 				last = current
-				current = fetchElement(L,runHi)
+				current = fetchElement(L, runHi)
 				if(call(cmp)(current, last) < 0)
 					break
 				++runHi
 
 		return runHi - lo
 
-	//Returns the minimum acceptable run length for an array of the specified length.
-	//Natural runs shorter than this will be extended with binarySort
+	// Returns the minimum acceptable run length for an array of the specified length.
+	// Natural runs shorter than this will be extended with binarySort
 	proc/minRunLength(n)
-		//ASSERT(n >= 0)
-		var/r = 0	//becomes 1 if any bits are shifted off
+		// ASSERT(n >= 0)
+		var/r = 0	// becomes 1 if any bits are shifted off
 		while(n >= MIN_MERGE)
 			r |= (n & 1)
 			n >>= 1
 		return n + r
 
-	//Examines the stack of runs waiting to be merged and merges adjacent runs until the stack invariants are reestablished:
+	// Examines the stack of runs waiting to be merged and merges adjacent runs until the stack invariants are reestablished:
 	//	runLen[i-3] > runLen[i-2] + runLen[i-1]
 	//	runLen[i-2] > runLen[i-1]
-	//This method is called each time a new run is pushed onto the stack.
-	//So the invariants are guaranteed to hold for i<stackSize upon entry to the method
+	// This method is called each time a new run is pushed onto the stack.
+	// So the invariants are guaranteed to hold for i<stackSize upon entry to the method
 	proc/mergeCollapse()
 		while(runBases.len >= 2)
 			var/n = runBases.len - 1
@@ -187,11 +187,11 @@ var/datum/sortInstance/sortInstance = new()
 			else if(runLens[n] <= runLens[n+1])
 				mergeAt(n)
 			else
-				break	//Invariant is established
+				break	// Invariant is established
 
 
-	//Merges all runs on the stack until only one remains.
-	//Called only once, to finalise the sort
+	// Merges all runs on the stack until only one remains.
+	// Called only once, to finalise the sort
 	proc/mergeForceCollapse()
 		while(runBases.len >= 2)
 			var/n = runBases.len - 1
@@ -200,46 +200,46 @@ var/datum/sortInstance/sortInstance = new()
 			mergeAt(n)
 
 
-	//Merges the two consecutive runs at stack indices i and i+1
-	//Run i must be the penultimate or antepenultimate run on the stack
-	//In other words, i must be equal to stackSize-2 or stackSize-3
+	// Merges the two consecutive runs at stack indices i and i+1
+	// Run i must be the penultimate or antepenultimate run on the stack
+	// In other words, i must be equal to stackSize-2 or stackSize-3
 	proc/mergeAt(i)
-		//ASSERT(runBases.len >= 2)
-		//ASSERT(i >= 1)
-		//ASSERT(i == runBases.len - 1 || i == runBases.len - 2)
+		// ASSERT(runBases.len >= 2)
+		// ASSERT(i >= 1)
+		// ASSERT(i == runBases.len - 1 || i == runBases.len - 2)
 
 		var/base1 = runBases[i]
 		var/base2 = runBases[i+1]
 		var/len1 = runLens[i]
 		var/len2 = runLens[i+1]
 
-		//ASSERT(len1 > 0 && len2 > 0)
-		//ASSERT(base1 + len1 == base2)
+		// ASSERT(len1 > 0 && len2 > 0)
+		// ASSERT(base1 + len1 == base2)
 
-		//Record the legth of the combined runs. If i is the 3rd last run now, also slide over the last run
-		//(which isn't involved in this merge). The current run (i+1) goes away in any case.
+		// Record the legth of the combined runs. If i is the 3rd last run now, also slide over the last run
+		// (which isn't involved in this merge). The current run (i+1) goes away in any case.
 		runLens[i] += runLens[i+1]
 		runLens.Cut(i+1, i+2)
 		runBases.Cut(i+1, i+2)
 
 
-		//Find where the first element of run2 goes in run1.
-		//Prior elements in run1 can be ignored (because they're already in place)
-		var/k = gallopRight(fetchElement(L,base2), base1, len1, 0)
-		//ASSERT(k >= 0)
+		// Find where the first element of run2 goes in run1.
+		// Prior elements in run1 can be ignored (because they're already in place)
+		var/k = gallopRight(fetchElement(L, base2), base1, len1, 0)
+		// ASSERT(k >= 0)
 		base1 += k
 		len1 -= k
 		if(len1 == 0)
 			return
 
-		//Find where the last element of run1 goes in run2.
-		//Subsequent elements in run2 can be ignored (because they're already in place)
-		len2 = gallopLeft(fetchElement(L,base1 + len1 - 1), base2, len2, len2-1)
-		//ASSERT(len2 >= 0)
+		// Find where the last element of run1 goes in run2.
+		// Subsequent elements in run2 can be ignored (because they're already in place)
+		len2 = gallopLeft(fetchElement(L, base1 + len1 - 1), base2, len2, len2-1)
+		// ASSERT(len2 >= 0)
 		if(len2 == 0)
 			return
 
-		//Merge remaining runs, using tmp array with min(len1, len2) elements
+		// Merge remaining runs, using tmp array with min(len1, len2) elements
 		if(len1 <= len2)
 			mergeLo(base1, len1, base2, len2)
 		else
@@ -258,13 +258,13 @@ var/datum/sortInstance/sortInstance = new()
 		Returns the index at which to insert element 'key'
 	*/
 	proc/gallopLeft(key, base, len, hint)
-		//ASSERT(len > 0 && hint >= 0 && hint < len)
+		// ASSERT(len > 0 && hint >= 0 && hint < len)
 
 		var/lastOffset = 0
 		var/offset = 1
-		if(call(cmp)(key, fetchElement(L,base+hint)) > 0)
+		if(call(cmp)(key, fetchElement(L, base+hint)) > 0)
 			var/maxOffset = len - hint
-			while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint+offset)) > 0)
+			while(offset < maxOffset && call(cmp)(key, fetchElement(L, base+hint+offset)) > 0)
 				lastOffset = offset
 				offset = (offset << 1) + 1
 
@@ -276,7 +276,7 @@ var/datum/sortInstance/sortInstance = new()
 
 		else
 			var/maxOffset = hint + 1
-			while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint-offset)) <= 0)
+			while(offset < maxOffset && call(cmp)(key, fetchElement(L, base+hint-offset)) <= 0)
 				lastOffset = offset
 				offset = (offset << 1) + 1
 
@@ -287,20 +287,20 @@ var/datum/sortInstance/sortInstance = new()
 			lastOffset = hint - offset
 			offset = hint - temp
 
-			//ASSERT(-1 <= lastOffset && lastOffset < offset && offset <= len)
+			// ASSERT(-1 <= lastOffset && lastOffset < offset && offset <= len)
 
-		//Now L[base+lastOffset] < key <= L[base+offset], so key belongs somewhere to the right of lastOffset but no farther than
-		//offset. Do a binary search with invariant L[base+lastOffset-1] < key <= L[base+offset]
+		// Now L[base+lastOffset] < key <= L[base+offset], so key belongs somewhere to the right of lastOffset but no farther than
+		// offset. Do a binary search with invariant L[base+lastOffset-1] < key <= L[base+offset]
 		++lastOffset
 		while(lastOffset < offset)
 			var/m = lastOffset + ((offset - lastOffset) >> 1)
 
-			if(call(cmp)(key, fetchElement(L,base+m)) > 0)
+			if(call(cmp)(key, fetchElement(L, base+m)) > 0)
 				lastOffset = m + 1
 			else
 				offset = m
 
-		//ASSERT(lastOffset == offset)
+		// ASSERT(lastOffset == offset)
 		return offset
 
 	/**
@@ -317,16 +317,16 @@ var/datum/sortInstance/sortInstance = new()
 	 * @return the int k,  0 <= k <= n such that a[b + k - 1] <= key < a[b + k]
 	 */
 	proc/gallopRight(key, base, len, hint)
-		//ASSERT(len > 0 && hint >= 0 && hint < len)
+		// ASSERT(len > 0 && hint >= 0 && hint < len)
 
 		var/offset = 1
 		var/lastOffset = 0
-		if(call(cmp)(key, fetchElement(L,base+hint)) < 0)	//key <= L[base+hint]
-			var/maxOffset = hint + 1	//therefore we want to insert somewhere in the range [base,base+hint] = [base+,base+(hint+1))
-			while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint-offset)) < 0)	//we are iterating backwards
+		if(call(cmp)(key, fetchElement(L, base+hint)) < 0)	// key <= L[base+hint]
+			var/maxOffset = hint + 1	// therefore we want to insert somewhere in the range [base, base+hint] = [base+,base+(hint+1))
+			while(offset < maxOffset && call(cmp)(key, fetchElement(L, base+hint-offset)) < 0)	// we are iterating backwards
 				lastOffset = offset
-				offset = (offset << 1) + 1	//1 3 7 15
-				//if(offset <= 0)	//int overflow, not an issue here since we are using floats
+				offset = (offset << 1) + 1	// 1 3 7 15
+				// if(offset <= 0)	// int overflow, not an issue here since we are using floats
 				//	offset = maxOffset
 
 			if(offset > maxOffset)
@@ -336,12 +336,12 @@ var/datum/sortInstance/sortInstance = new()
 			lastOffset = hint - offset
 			offset = hint - temp
 
-		else	//key > L[base+hint]
-			var/maxOffset = len - hint	//therefore we want to insert somewhere in the range (base+hint,base+len) = [base+hint+1, base+hint+(len-hint))
-			while(offset < maxOffset && call(cmp)(key, fetchElement(L,base+hint+offset)) >= 0)
+		else	// key > L[base+hint]
+			var/maxOffset = len - hint	// therefore we want to insert somewhere in the range (base+hint, base+len) = [base+hint+1, base+hint+(len-hint))
+			while(offset < maxOffset && call(cmp)(key, fetchElement(L, base+hint+offset)) >= 0)
 				lastOffset = offset
 				offset = (offset << 1) + 1
-				//if(offset <= 0)	//int overflow, not an issue here since we are using floats
+				// if(offset <= 0)	// int overflow, not an issue here since we are using floats
 				//	offset = maxOffset
 
 			if(offset > maxOffset)
@@ -350,31 +350,31 @@ var/datum/sortInstance/sortInstance = new()
 			lastOffset += hint
 			offset += hint
 
-		//ASSERT(-1 <= lastOffset && lastOffset < offset && offset <= len)
+		// ASSERT(-1 <= lastOffset && lastOffset < offset && offset <= len)
 
 		++lastOffset
 		while(lastOffset < offset)
 			var/m = lastOffset + ((offset - lastOffset) >> 1)
 
-			if(call(cmp)(key, fetchElement(L,base+m)) < 0)	//key <= L[base+m]
+			if(call(cmp)(key, fetchElement(L, base+m)) < 0)	// key <= L[base+m]
 				offset = m
-			else							//key > L[base+m]
+			else							// key > L[base+m]
 				lastOffset = m + 1
 
-		//ASSERT(lastOffset == offset)
+		// ASSERT(lastOffset == offset)
 
 		return offset
 
 
-	//Merges two adjacent runs in-place in a stable fashion.
-	//For performance this method should only be called when len1 <= len2!
+	// Merges two adjacent runs in-place in a stable fashion.
+	// For performance this method should only be called when len1 <= len2!
 	proc/mergeLo(base1, len1, base2, len2)
-		//ASSERT(len1 > 0 && len2 > 0 && base1 + len1 == base2)
+		// ASSERT(len1 > 0 && len2 > 0 && base1 + len1 == base2)
 
 		var/cursor1 = base1
 		var/cursor2 = base2
 
-		//degenerate cases
+		// degenerate cases
 		if(len2 == 1)
 			moveElement(L, cursor2, cursor1)
 			return
@@ -384,20 +384,20 @@ var/datum/sortInstance/sortInstance = new()
 			return
 
 
-		//Move first element of second run
+		// Move first element of second run
 		moveElement(L, cursor2++, cursor1++)
 		--len2
 
 		outer:
 			while(1)
-				var/count1 = 0	//# of times in a row that first run won
+				var/count1 = 0	// # of times in a row that first run won
 				var/count2 = 0	//	"	"	"	"	"	"  second run won
 
-				//do the straightfoward thin until one run starts winning consistently
+				// do the straightfoward thin until one run starts winning consistently
 
 				do
-					//ASSERT(len1 > 1 && len2 > 0)
-					if(call(cmp)(fetchElement(L,cursor2), fetchElement(L,cursor1)) < 0)
+					// ASSERT(len1 > 1 && len2 > 0)
+					if(call(cmp)(fetchElement(L, cursor2), fetchElement(L, cursor1)) < 0)
 						moveElement(L, cursor2++, cursor1++)
 						--len2
 
@@ -418,12 +418,12 @@ var/datum/sortInstance/sortInstance = new()
 				while((count1 | count2) < minGallop)
 
 
-				//one run is winning consistently so galloping may provide huge benifits
-				//so try galloping, until such time as the run is no longer consistently winning
+				// one run is winning consistently so galloping may provide huge benifits
+				// so try galloping, until such time as the run is no longer consistently winning
 				do
-					//ASSERT(len1 > 1 && len2 > 0)
+					// ASSERT(len1 > 1 && len2 > 0)
 
-					count1 = gallopRight(fetchElement(L,cursor2), cursor1, len1, 0)
+					count1 = gallopRight(fetchElement(L, cursor2), cursor1, len1, 0)
 					if(count1)
 						cursor1 += count1
 						len1 -= count1
@@ -437,7 +437,7 @@ var/datum/sortInstance/sortInstance = new()
 					if(--len2 == 0)
 						break outer
 
-					count2 = gallopLeft(fetchElement(L,cursor1), cursor2, len2, 0)
+					count2 = gallopLeft(fetchElement(L, cursor1), cursor2, len2, 0)
 					if(count2)
 						moveRange(L, cursor2, cursor1, count2)
 
@@ -462,21 +462,21 @@ var/datum/sortInstance/sortInstance = new()
 
 
 		if(len1 == 1)
-			//ASSERT(len2 > 0)
+			// ASSERT(len2 > 0)
 			moveElement(L, cursor1, cursor2+len2)
 
-		//else
-			//ASSERT(len2 == 0)
-			//ASSERT(len1 > 1)
+		// else
+			// ASSERT(len2 == 0)
+			// ASSERT(len1 > 1)
 
 
 	proc/mergeHi(base1, len1, base2, len2)
-		//ASSERT(len1 > 0 && len2 > 0 && base1 + len1 == base2)
+		// ASSERT(len1 > 0 && len2 > 0 && base1 + len1 == base2)
 
-		var/cursor1 = base1 + len1 - 1	//start at end of sublists
+		var/cursor1 = base1 + len1 - 1	// start at end of sublists
 		var/cursor2 = base2 + len2 - 1
 
-		//degenerate cases
+		// degenerate cases
 		if(len2 == 1)
 			moveElement(L, base2, base1)
 			return
@@ -490,13 +490,13 @@ var/datum/sortInstance/sortInstance = new()
 
 		outer:
 			while(1)
-				var/count1 = 0	//# of times in a row that first run won
+				var/count1 = 0	// # of times in a row that first run won
 				var/count2 = 0	//	"	"	"	"	"	"  second run won
 
-				//do the straightfoward thing until one run starts winning consistently
+				// do the straightfoward thing until one run starts winning consistently
 				do
-					//ASSERT(len1 > 0 && len2 > 1)
-					if(call(cmp)(fetchElement(L,cursor2), fetchElement(L,cursor1)) < 0)
+					// ASSERT(len1 > 0 && len2 > 1)
+					if(call(cmp)(fetchElement(L, cursor2), fetchElement(L, cursor1)) < 0)
 						moveElement(L, cursor1--, cursor2-- + 1)
 						--len1
 
@@ -516,16 +516,16 @@ var/datum/sortInstance/sortInstance = new()
 							break outer
 				while((count1 | count2) < minGallop)
 
-				//one run is winning consistently so galloping may provide huge benifits
-				//so try galloping, until such time as the run is no longer consistently winning
+				// one run is winning consistently so galloping may provide huge benifits
+				// so try galloping, until such time as the run is no longer consistently winning
 				do
-					//ASSERT(len1 > 0 && len2 > 1)
+					// ASSERT(len1 > 0 && len2 > 1)
 
-					count1 = len1 - gallopRight(fetchElement(L,cursor2), base1, len1, len1-1)	//should cursor1 be base1?
+					count1 = len1 - gallopRight(fetchElement(L, cursor2), base1, len1, len1-1)	// should cursor1 be base1?
 					if(count1)
 						cursor1 -= count1
 
-						moveRange(L, cursor1+1, cursor2+1, count1)	//cursor1+1 == cursor2 by definition
+						moveRange(L, cursor1+1, cursor2+1, count1)	// cursor1+1 == cursor2 by definition
 
 						cursor2 -= count1
 						len1 -= count1
@@ -538,7 +538,7 @@ var/datum/sortInstance/sortInstance = new()
 					if(--len2 == 1)
 						break outer
 
-					count2 = len2 - gallopLeft(fetchElement(L,cursor1), cursor1+1, len2, len2-1)
+					count2 = len2 - gallopLeft(fetchElement(L, cursor1), cursor1+1, len2, len2-1)
 					if(count2)
 						cursor2 -= count2
 						len2 -= count2
@@ -560,22 +560,22 @@ var/datum/sortInstance/sortInstance = new()
 				minGallop += 2	// Penalize for leaving gallop mode
 
 		if(len2 == 1)
-			//ASSERT(len1 > 0)
+			// ASSERT(len1 > 0)
 
 			cursor1 -= len1
 			moveRange(L, cursor1+1, cursor2+1, len1)
 
-		//else
-			//ASSERT(len1 == 0)
-			//ASSERT(len2 > 0)
+		// else
+			// ASSERT(len1 == 0)
+			// ASSERT(len2 > 0)
 
 
 	proc/mergeSort(start, end)
 		var/remaining = end - start
 
-		//If array is small, do an insertion sort
+		// If array is small, do an insertion sort
 		if(remaining < MIN_MERGE)
-			//var/initRunLen = countRunAndMakeAscending(start, end)
+			// var/initRunLen = countRunAndMakeAscending(start, end)
 			binarySort(start, end, start/*+initRunLen*/)
 			return
 
@@ -586,11 +586,11 @@ var/datum/sortInstance/sortInstance = new()
 
 			binarySort(start, start+runLen, start)
 
-			//add data about run to queue
+			// add data about run to queue
 			runBases.Add(start)
 			runLens.Add(runLen)
 
-			//Advance to find next run
+			// Advance to find next run
 			start += runLen
 			remaining -= runLen
 
@@ -605,7 +605,7 @@ var/datum/sortInstance/sortInstance = new()
 			else if(runLens[n] <= runLens[n+1])
 				mergeAt2(n)
 			else
-				break	//Invariant is established
+				break	// Invariant is established
 
 		while(runBases.len >= 2)
 			var/n = runBases.len - 1
@@ -622,30 +622,30 @@ var/datum/sortInstance/sortInstance = new()
 		var/end1 = cursor1+runLens[i]
 		var/end2 = cursor2+runLens[i+1]
 
-		var/val1 = fetchElement(L,cursor1)
-		var/val2 = fetchElement(L,cursor2)
+		var/val1 = fetchElement(L, cursor1)
+		var/val2 = fetchElement(L, cursor2)
 
 		while(1)
 			if(call(cmp)(val1,val2) < 0)
 				if(++cursor1 >= end1)
 					break
-				val1 = fetchElement(L,cursor1)
+				val1 = fetchElement(L, cursor1)
 			else
-				moveElement(L,cursor2,cursor1)
+				moveElement(L, cursor2,cursor1)
 
 				++cursor2
 				if(++cursor2 >= end2)
 					break
 				++end1
 				++cursor1
-				//if(++cursor1 >= end1)
+				// if(++cursor1 >= end1)
 				//	break
 
-				val2 = fetchElement(L,cursor2)
+				val2 = fetchElement(L, cursor2)
 
 
-		//Record the legth of the combined runs. If i is the 3rd last run now, also slide over the last run
-		//(which isn't involved in this merge). The current run (i+1) goes away in any case.
+		// Record the legth of the combined runs. If i is the 3rd last run now, also slide over the last run
+		// (which isn't involved in this merge). The current run (i+1) goes away in any case.
 		runLens[i] += runLens[i+1]
 		runLens.Cut(i+1, i+2)
 		runBases.Cut(i+1, i+2)

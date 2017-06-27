@@ -47,7 +47,7 @@
 
 
 /obj/item/borg/upgrade/flashproof/New()   // Why the fuck does the fabricator make a new instance of all the items?
-	//desc = "Sunglasses with duct tape." // Why?  D:
+	// desc = "Sunglasses with duct tape." // Why?  D:
 
 /obj/item/borg/upgrade/flashproof/action(mob/living/silicon/robot/R)
 	if(R.module)

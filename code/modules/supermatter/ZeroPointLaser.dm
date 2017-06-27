@@ -1,4 +1,4 @@
-//new supermatter lasers
+// new supermatter lasers
 
 /obj/machinery/zero_point_emitter
 	name = "Zero-point laser"
@@ -43,9 +43,9 @@
 
 /obj/machinery/zero_point_emitter/update_icon()
 	if (active && !(stat & (NOPOWER|BROKEN)))
-		icon_state = "laser"//"emitter_+a"
+		icon_state = "laser"// "emitter_+a"
 	else
-		icon_state = "laser"//"emitter"
+		icon_state = "laser"// "emitter"
 
 /obj/machinery/zero_point_emitter/attack_hand(mob/user)
 	src.add_fingerprint(user)
@@ -69,7 +69,7 @@
 		return 1
 
 
-/obj/machinery/zero_point_emitter/emp_act(severity)//Emitters are hardened but still might have issues
+/obj/machinery/zero_point_emitter/emp_act(severity)// Emitters are hardened but still might have issues
 	use_power(1000)
 /*	if((severity == 1)&&prob(1)&&prob(1))
 		if(src.active)
@@ -112,7 +112,7 @@
 			else // Any other
 				A.yo = -20
 				A.xo = 0
-		A.process()	//TODO: Carn: check this out
+		A.process()	// TODO: Carn: check this out
 
 
 /obj/machinery/zero_point_emitter/attackby(obj/item/W, mob/user)
@@ -183,7 +183,7 @@
 				src.locked = !src.locked
 				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 			else
-				src.locked = 0 //just in case it somehow gets locked
+				src.locked = 0 // just in case it somehow gets locked
 				to_chat(user, "\red The controls can only be locked when the [src] is online")
 		else
 			to_chat(user, "\red Access denied.")
@@ -214,8 +214,8 @@
 		var/i = text2num(href_list["input"])
 		var/d = i
 		var/new_power = energy + d
-		new_power = max(new_power,0.0001)	//lowest possible value
-		new_power = min(new_power,0.01)		//highest possible value
+		new_power = max(new_power,0.0001)	// lowest possible value
+		new_power = min(new_power,0.01)		// highest possible value
 		energy = new_power
 
 		for(var/obj/machinery/computer/lasercon/comp in machines)
@@ -230,8 +230,8 @@
 	else if( href_list["freq"] )
 		var/amt = text2num(href_list["freq"])
 		var/new_freq = frequency + amt
-		new_freq = max(new_freq,1)		//lowest possible value
-		new_freq = min(new_freq,20000)	//highest possible value
+		new_freq = max(new_freq,1)		// lowest possible value
+		new_freq = min(new_freq,20000)	// highest possible value
 		frequency = new_freq
 
 		for(var/obj/machinery/computer/lasercon/comp in machines)

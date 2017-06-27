@@ -1,4 +1,4 @@
-//todo: toothbrushes, and some sort of "toilet-filthinator" for the hos
+// todo: toothbrushes, and some sort of "toilet-filthinator" for the hos
 
 /obj/structure/toilet
 	name = "toilet"
@@ -7,10 +7,10 @@
 	icon_state = "toilet00"
 	density = 0
 	anchored = 1
-	var/open = 0			//if the lid is up
-	var/cistern = 0			//if the cistern bit is open
-	var/w_items = 0			//the combined w_class of all the items in the cistern
-	var/mob/living/swirlie = null	//the mob being given a swirlie
+	var/open = 0			// if the lid is up
+	var/cistern = 0			// if the cistern bit is open
+	var/w_items = 0			// the combined w_class of all the items in the cistern
+	var/mob/living/swirlie = null	// the mob being given a swirlie
 
 /obj/structure/toilet/New()
 	open = round(rand(0, 1))
@@ -152,7 +152,7 @@
 				H.adjustFireLoss(20)
 	busy = 0
 
-	if(!Adjacent(user)) return		//Person has moved away from the dryer
+	if(!Adjacent(user)) return		// Person has moved away from the dryer
 
 	for(var/mob/V in viewers(src, null))
 		V.show_message("\blue [user] dried their hands using \the [src].")
@@ -200,9 +200,9 @@
 
 	add_fingerprint(user)
 
-	if(emagged)		//Let's make it a little bit dangerous
+	if(emagged)		// Let's make it a little bit dangerous
 
-		if(istype(O, /obj/item/weapon/grab))	//Holding someone under dryer
+		if(istype(O, /obj/item/weapon/grab))	// Holding someone under dryer
 			var/obj/item/weapon/grab/G = O
 			if(isliving(G.affecting))
 				var/mob/living/GM = G.affecting
@@ -216,7 +216,7 @@
 					GM.adjustFireLoss(10)
 					sleep(60)
 					busy = 0
-					if(!Adjacent(user) || !Adjacent(GM)) return		//User or target has moved
+					if(!Adjacent(user) || !Adjacent(GM)) return		// User or target has moved
 					GM.adjustFireLoss(25)
 					user.visible_message("<span class='danger'>[GM.name] skins are burning under the [src]!</span>")
 					return
@@ -245,9 +245,9 @@
 	sleep(60)
 	busy = 0
 
-	if(user.loc != location) return				//User has moved
-	if(!I) return 								//Item's been destroyed while drying
-	if(user.get_active_hand() != I) return		//Person has switched hands or the item in their hands
+	if(user.loc != location) return				// User has moved
+	if(!I) return 								// Item's been destroyed while drying
+	if(user.get_active_hand() != I) return		// Person has switched hands or the item in their hands
 
 	O.wet = 0
 	user.visible_message( \
@@ -264,12 +264,12 @@
 	use_power = 0
 	var/on = 0
 	var/obj/effect/mist/mymist = null
-	var/ismist = 0				//needs a var so we can make it linger~
-	var/watertemp = "normal"	//freezing, normal, or boiling
-	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
+	var/ismist = 0				// needs a var so we can make it linger~
+	var/watertemp = "normal"	// freezing, normal, or boiling
+	var/mobpresent = 0		// true if there is a mob on the shower's loc, this is to ease process()
 	var/is_payed = 0
 
-//add heat controls? when emagged, you can freeze to death in it?
+// add heat controls? when emagged, you can freeze to death in it?
 
 /obj/effect/mist
 	name = "mist"
@@ -324,11 +324,11 @@
 					if(D)
 						var/transaction_amount = 150
 						if(transaction_amount <= D.money)
-							//transfer the money
+							// transfer the money
 							D.money -= transaction_amount
 							station_account.money += transaction_amount
 
-							//create entries in the two account transaction logs
+							// create entries in the two account transaction logs
 							var/datum/transaction/T = new()
 							T.target_name = "[station_account.owner_name] (via [src.name])"
 							T.purpose = "Purchase of shower use"
@@ -357,8 +357,8 @@
 		else
 			to_chat(usr, "[bicon(src)]Is payed, you may turn it on now.</span>")
 
-/obj/machinery/shower/update_icon()	//this is terribly unreadable, but basically it makes the shower mist up
-	overlays.Cut()					//once it's been on for a while, in addition to handling the water overlay.
+/obj/machinery/shower/update_icon()	// this is terribly unreadable, but basically it makes the shower mist up
+	overlays.Cut()					// once it's been on for a while, in addition to handling the water overlay.
 	if(mymist)
 		qdel(mymist)
 
@@ -394,25 +394,25 @@
 		mobpresent -= 1
 	..()
 
-//Yes, showers are super powerful as far as washing goes.
+// Yes, showers are super powerful as far as washing goes.
 /obj/machinery/shower/proc/wash(atom/movable/O)
 	if(!on) return
 
 	if(isliving(O))
 		var/mob/living/L = O
 		L.ExtinguishMob()
-		L.fire_stacks = -20 //Douse ourselves with water to avoid fire more easily
+		L.fire_stacks = -20 // Douse ourselves with water to avoid fire more easily
 		to_chat(L, "<span class='warning'>You've been drenched in water!</span>")
 	if(iscarbon(O))
 		var/mob/living/carbon/M = O
 		if(M.r_hand)
-			M.r_hand.make_wet(1) //<= wet
+			M.r_hand.make_wet(1) // <= wet
 			M.r_hand.clean_blood()
 		if(M.l_hand)
-			M.l_hand.make_wet(1) //<= wet
+			M.l_hand.make_wet(1) // <= wet
 			M.l_hand.clean_blood()
 		if(M.back)
-			M.back.make_wet(1) //<= wet
+			M.back.make_wet(1) // <= wet
 			if(M.back.clean_blood())
 				M.update_inv_back()
 		if(ishuman(M))
@@ -442,31 +442,31 @@
 				H.update_body()
 
 			if(H.head)
-				H.head.make_wet(1) //<= wet
+				H.head.make_wet(1) // <= wet
 				if(H.head.clean_blood())
 					H.update_inv_head()
 			if(H.wear_suit)
-				H.wear_suit.make_wet(1) //<= wet
+				H.wear_suit.make_wet(1) // <= wet
 				if(H.wear_suit.clean_blood())
 					H.update_inv_wear_suit()
 			else if(H.w_uniform)
-				H.w_uniform.make_wet(1) //<= wet
+				H.w_uniform.make_wet(1) // <= wet
 				if(H.w_uniform.clean_blood())
 					H.update_inv_w_uniform()
 			if(H.gloves && washgloves)
-				H.gloves.make_wet(1) //<= wet
+				H.gloves.make_wet(1) // <= wet
 				if(H.gloves.clean_blood())
 					H.update_inv_gloves()
 			if(H.shoes && washshoes)
-				H.shoes.make_wet(1) //<= wet
+				H.shoes.make_wet(1) // <= wet
 				if(H.shoes.clean_blood())
 					H.update_inv_shoes()
 			if(H.wear_mask && washmask)
-				H.wear_mask.make_wet(1) //<= wet
+				H.wear_mask.make_wet(1) // <= wet
 				if(H.wear_mask.clean_blood())
 					H.update_inv_wear_mask()
 			if(H.glasses && washglasses)
-				H.glasses.make_wet(1) //<= wet
+				H.glasses.make_wet(1) // <= wet
 				if(H.glasses.clean_blood())
 					H.update_inv_glasses()
 			if(H.l_ear && washears)
@@ -476,12 +476,12 @@
 				if(H.r_ear.clean_blood())
 					H.update_inv_ears()
 			if(H.belt)
-				H.belt.make_wet(1) //<= wet
+				H.belt.make_wet(1) // <= wet
 				if(H.belt.clean_blood())
 					H.update_inv_belt()
 			H.clean_blood(washshoes)
 		else
-			if(M.wear_mask)						//if the mob is not human, it cleans the mask without asking for bitflags
+			if(M.wear_mask)						// if the mob is not human, it cleans the mask without asking for bitflags
 				if(M.wear_mask.clean_blood())
 					M.update_inv_wear_mask()
 			M.clean_blood()
@@ -530,7 +530,7 @@
 
 /obj/item/weapon/bikehorn/rubberducky
 	name = "rubber ducky"
-	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~"	//thanks doohl
+	desc = "Rubber ducky you're so fine, you make bathtime lots of fuuun. Rubber ducky I'm awfully fooooond of yooooouuuu~"	// thanks doohl
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "rubberducky"
 	item_state = "rubberducky"
@@ -543,7 +543,7 @@
 	icon_state = "sink"
 	desc = "A sink used for washing one's hands and face."
 	anchored = 1
-	var/busy = 0 	//Something's being washed at the moment
+	var/busy = 0 	// Something's being washed at the moment
 
 /obj/structure/sink/attack_hand(mob/user)
 	if (ishuman(user))
@@ -571,7 +571,7 @@
 	sleep(40)
 	busy = 0
 
-	if(!Adjacent(user)) return		//Person has moved away from the sink
+	if(!Adjacent(user)) return		// Person has moved away from the sink
 
 	user.clean_blood()
 	if(ishuman(user))
@@ -620,9 +620,9 @@
 	sleep(40)
 	busy = 0
 
-	if(user.loc != location) return				//User has moved
-	if(!I) return 								//Item's been destroyed while washing
-	if(user.get_active_hand() != I) return		//Person has switched hands or the item in their hands
+	if(user.loc != location) return				// User has moved
+	if(!I) return 								// Item's been destroyed while washing
+	if(user.get_active_hand() != I) return		// Person has switched hands or the item in their hands
 
 	O.clean_blood()
 	O.make_wet()
@@ -636,7 +636,7 @@
 	icon_state = "sink_alt"
 
 
-/obj/structure/sink/puddle	//splishy splashy ^_^
+/obj/structure/sink/puddle	// splishy splashy ^_^
 	name = "puddle"
 	icon_state = "puddle"
 

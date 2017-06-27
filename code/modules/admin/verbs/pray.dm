@@ -2,7 +2,7 @@
 	set category = "IC"
 	set name = "Pray"
 
-	if(say_disabled)	//This is here to try to identify lag problems
+	if(say_disabled)	// This is here to try to identify lag problems
 		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
@@ -13,7 +13,7 @@
 		if(usr.client.prefs.muted & MUTE_PRAY)
 			to_chat(usr, "\red You cannot pray (muted).")
 			return
-		if(src.client.handle_spam_prevention(msg,MUTE_PRAY))
+		if(src.client.handle_spam_prevention(msg, MUTE_PRAY))
 			return
 
 	var/image/cross = image('icons/obj/storage.dmi',"bible")
@@ -24,8 +24,8 @@
 			to_chat(C, msg)
 	to_chat(usr, "Your prayers have been received by the gods.")
 
-	feedback_add_details("admin_verb","PR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	//log_admin("HELP: [key_name(src)]: [msg]")
+	feedback_add_details("admin_verb","PR") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+	// log_admin("HELP: [key_name(src)]: [msg]")
 
 /proc/Centcomm_announce(text , mob/Sender , iamessage)
 	var/msg = sanitize(copytext(text, 1, MAX_MESSAGE_LEN))

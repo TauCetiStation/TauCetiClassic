@@ -1,17 +1,17 @@
-//original code and idea from Alfie275 (luna era) and ISaidNo (goonservers) - with thanks
+// original code and idea from Alfie275 (luna era) and ISaidNo (goonservers) - with thanks
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// /
 // Xenoarchaeological finds
 
 /datum/find
-	var/find_type = 0				//random according to the digsite type
-	var/excavation_required = 0		//random 5-95%
-	var/view_range = 20				//how close excavation has to come to show an overlay on the turf
-	var/clearance_range = 3			//how close excavation has to come to extract the item
-									//if excavation hits var/excavation_required exactly, it's contained find is extracted cleanly without the ore
-	var/prob_delicate = 90			//probability it requires an active suspension field to not insta-crumble
-	var/dissonance_spread = 1		//proportion of the tile that is affected by this find
-									//used in conjunction with analysis machines to determine correct suspension field type
+	var/find_type = 0				// random according to the digsite type
+	var/excavation_required = 0		// random 5-95%
+	var/view_range = 20				// how close excavation has to come to show an overlay on the turf
+	var/clearance_range = 3			// how close excavation has to come to extract the item
+									// if excavation hits var/excavation_required exactly, it's contained find is extracted cleanly without the ore
+	var/prob_delicate = 90			// probability it requires an active suspension field to not insta-crumble
+	var/dissonance_spread = 1		// proportion of the tile that is affected by this find
+									// used in conjunction with analysis machines to determine correct suspension field type
 
 /datum/find/New(var/digsite, var/exc_req)
 	excavation_required = exc_req
@@ -19,10 +19,10 @@
 	clearance_range = rand(2,6)
 	dissonance_spread = rand(1500,2500) / 100
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// /
 // Strange rocks
 
-//have all strange rocks be cleared away using welders for now
+// have all strange rocks be cleared away using welders for now
 /obj/item/weapon/ore/strangerock
 	name = "Strange rock"
 	desc = "Seems to have some unusal strata evident throughout it."
@@ -35,7 +35,7 @@
 /obj/item/weapon/ore/strangerock/New(loc, var/inside_item_type = 0)
 	..(loc)
 
-	//method = rand(0,2)
+	// method = rand(0,2)
 	if(inside_item_type)
 		new/obj/item/weapon/archaeological_find(src, new_item_type = inside_item_type)
 		inside = locate() in contents
@@ -74,7 +74,7 @@
 		src.visible_message("<span class='warning'>[src] crumbles away, leaving some dust and gravel behind.</span>")
 		qdel(src)
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// /
 // Archaeological finds
 
 /obj/item/weapon/archaeological_find
@@ -87,7 +87,7 @@
 	if(new_item_type)
 		find_type = new_item_type
 	else
-		find_type = rand(1,35)	//update this when you add new find types
+		find_type = rand(1,35)	// update this when you add new find types
 
 	var/item_type = "object"
 	icon_state = "unknown[rand(1,4)]"
@@ -105,9 +105,9 @@
 	if(prob(5))
 		talkative = 1
 
-	//for all items here:
-	//icon_state
-	//item_state
+	// for all items here:
+	// icon_state
+	// item_state
 	switch(find_type)
 		if(1)
 			item_type = "bowl"
@@ -167,7 +167,7 @@
 			"It looks wickedly jagged",\
 			"There appear to be [pick("dark red","dark purple","dark green","dark blue")] stains along the edges")]."
 		if(7)
-			//assuming there are 10 types of coins
+			// assuming there are 10 types of coins
 			var/chance = 10
 			for(var/type in typesof(/obj/item/weapon/coin))
 				if(prob(chance))
@@ -275,7 +275,7 @@
 				new_item.icon = 'icons/obj/xenoarchaeology.dmi'
 				new_item.icon_state = icon_state
 		if(17)
-			//cultblade
+			// cultblade
 			apply_prefix = 0
 			new_item = new /obj/item/weapon/melee/cultblade(src.loc)
 			apply_material_decorations = 0
@@ -292,7 +292,7 @@
 			new_item.force = 10
 			item_type = new_item.name
 		if(20)
-			//arcane clothing
+			// arcane clothing
 			apply_prefix = 0
 			var/list/possible_spawns = list(/obj/item/clothing/head/culthood,
 			/obj/item/clothing/head/magus,
@@ -302,7 +302,7 @@
 			var/new_type = pick(possible_spawns)
 			new_item = new new_type(src.loc)
 		if(21)
-			//soulstone
+			// soulstone
 			apply_prefix = 0
 			new_item = new /obj/item/device/soulstone(src.loc)
 			item_type = new_item.name
@@ -335,7 +335,7 @@
 			new_item.force = 10
 			item_type = new_item.name
 		if(26)
-			//energy gun
+			// energy gun
 			var/spawn_type = pick(\
 			/obj/item/weapon/gun/energy/sniperrifle/rails,\
 			/obj/item/weapon/gun/tesla/rifle,\
@@ -345,9 +345,9 @@
 				var/obj/item/weapon/gun/energy/new_gun = new spawn_type(src.loc)
 				new_item = new_gun
 
-				//5% chance to explode when first fired
-				//10% chance to have an unchargeable cell
-				//15% chance to gain a random amount of starting energy, otherwise start with an empty cell
+				// 5% chance to explode when first fired
+				// 10% chance to have an unchargeable cell
+				// 15% chance to gain a random amount of starting energy, otherwise start with an empty cell
 				if(prob(5))
 					new_gun.power_supply.rigged = 1
 				if(prob(10))
@@ -359,17 +359,17 @@
 
 			item_type = "gun"
 		if(27)
-			//revolver
+			// revolver
 			var/obj/item/weapon/gun/projectile/revolver/new_gun = new /obj/item/weapon/gun/projectile/revolver(src.loc)
 			new_item = new_gun
 			new_item.icon_state = "gun[rand(1,4)]"
 			new_item.icon = 'icons/obj/xenoarchaeology.dmi'
 
-			//33% chance to be able to reload the gun with human ammunition
+			// 33% chance to be able to reload the gun with human ammunition
 			if(prob(66))
 				new_gun.magazine.caliber = "999"
 
-			//33% chance to fill it with a random amount of bullets
+			// 33% chance to fill it with a random amount of bullets
 			new_gun.magazine.max_ammo = rand(1,12)
 			if(prob(33))
 				var/num_bullets = rand(1,new_gun.magazine.max_ammo)
@@ -398,14 +398,14 @@
 
 			item_type = "gun"
 		if(28)
-			//completely unknown alien device
+			// completely unknown alien device
 			if(prob(50))
 				apply_image_decorations = 0
 		if(29)
-			//fossil bone/skull
-			//new_item = new /obj/item/weapon/fossil/base(src.loc)
+			// fossil bone/skull
+			// new_item = new /obj/item/weapon/fossil/base(src.loc)
 
-			//the replacement item propogation isn't working, and it's messy code anyway so just do it here
+			// the replacement item propogation isn't working, and it's messy code anyway so just do it here
 			var/list/candidates = list("/obj/item/weapon/fossil/bone"=9,"/obj/item/weapon/fossil/skull"=3,
 			"/obj/item/weapon/fossil/skull/horned"=2)
 			var/spawn_type = pickweight(candidates)
@@ -416,7 +416,7 @@
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 		if(30)
-			//fossil shell
+			// fossil shell
 			new_item = new /obj/item/weapon/fossil/shell(src.loc)
 			apply_prefix = 0
 			additional_desc = "A fossilised, pre-Stygian alien crustacean."
@@ -425,7 +425,7 @@
 			if(prob(10))
 				apply_image_decorations = 1
 		if(31)
-			//fossil plant
+			// fossil plant
 			new_item = new /obj/item/weapon/fossil/plant(src.loc)
 			item_type = new_item.name
 			additional_desc = "A fossilised shred of alien plant matter."
@@ -433,7 +433,7 @@
 			apply_material_decorations = 0
 			apply_prefix = 0
 		if(32)
-			//humanoid remains
+			// humanoid remains
 			apply_prefix = 0
 			item_type = "humanoid [pick("remains","skeleton")]"
 			icon = 'icons/effects/blood.dmi'
@@ -448,7 +448,7 @@
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 		if(33)
-			//robot remains
+			// robot remains
 			apply_prefix = 0
 			item_type = "[pick("mechanical","robotic","cyborg")] [pick("remains","chassis","debris")]"
 			icon = 'icons/effects/blood.dmi'
@@ -463,7 +463,7 @@
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 		if(34)
-			//xenos remains
+			// xenos remains
 			apply_prefix = 0
 			item_type = "alien [pick("remains","skeleton")]"
 			icon = 'icons/effects/blood.dmi'
@@ -479,7 +479,7 @@
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 		if(35)
-			//gas mask
+			// gas mask
 			if(prob(25))
 				new_item = new /obj/item/clothing/mask/gas/poltergeist(src.loc)
 			else
@@ -536,7 +536,7 @@
 	if(!desc)
 		desc = "This item is completely [pick("alien","bizarre")]."
 
-	//icon and icon_state should have already been set
+	// icon and icon_state should have already been set
 	if(new_item)
 		new_item.name = name
 		new_item.desc = src.desc

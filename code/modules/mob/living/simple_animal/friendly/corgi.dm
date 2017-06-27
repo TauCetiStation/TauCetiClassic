@@ -1,4 +1,4 @@
-//Corgi
+// Corgi
 /mob/living/simple_animal/corgi
 	name = "\improper corgi"
 	real_name = "corgi"
@@ -53,7 +53,7 @@
 	icon_living = "puppy"
 	icon_dead = "puppy_dead"
 
-//LISA! SQUEEEEEEEEE~
+// LISA! SQUEEEEEEEEE~
 /mob/living/simple_animal/corgi/Lisa
 	name = "Lisa"
 	real_name = "Lisa"
@@ -77,7 +77,7 @@
 			turns_since_scan = 0
 			var/alone = 1
 			var/ian = 0
-			//for(var/mob/M in oviewers(7, src))
+			// for(var/mob/M in oviewers(7, src))
 			for(var/mob/M in oview(src,7))
 				if(istype(M, /mob/living/carbon/ian))
 					if(M.client)
@@ -104,7 +104,7 @@
 
 /mob/living/simple_animal/corgi/borgi
 	name = "E-N"
-	real_name = "E-N"	//Intended to hold the name without altering it.
+	real_name = "E-N"	// Intended to hold the name without altering it.
 	desc = "It's a borgi."
 	icon_state = "borgi"
 	icon_living = "borgi"
@@ -159,7 +159,7 @@
 		if (target)
 			shootAt(target)
 
-	//spark for no reason
+	// spark for no reason
 	if(prob(5))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
@@ -172,6 +172,6 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	//respawnable_list += src
+	// respawnable_list += src
 	qdel(src)
 	return

@@ -6,13 +6,13 @@
 	anchored = 0
 	density = 1
 	flags = OPENCONTAINER
-	//copypaste sorry
-	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
+	// copypaste sorry
+	var/amount_per_transfer_from_this = 5 // shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/weapon/storage/bag/trash/mybag	= null
 	var/obj/item/weapon/mop/mymop = null
 	var/obj/item/weapon/reagent_containers/spray/myspray = null
 	var/obj/item/device/lightreplacer/myreplacer = null
-	var/signs = 0	//maximum capacity hardcoded below
+	var/signs = 0	// maximum capacity hardcoded below
 
 
 /obj/structure/janitorialcart/New()
@@ -33,11 +33,11 @@
 		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 
 	else if(istype(I, /obj/item/weapon/mop))
-		if(I.reagents.total_volume < I.reagents.maximum_volume)	//if it's not completely soaked we assume they want to wet it, otherwise store it
+		if(I.reagents.total_volume < I.reagents.maximum_volume)	// if it's not completely soaked we assume they want to wet it, otherwise store it
 			if(reagents.total_volume < 1)
 				to_chat(user, "[src] is out of water!</span>")
 			else
-				reagents.trans_to(I, 5)	//
+				reagents.trans_to(I, 5)	// 
 				to_chat(user, "<span class='notice'>You wet [I] in [src].</span>")
 				playsound(loc, 'sound/effects/slosh.ogg', 25, 1)
 				return
@@ -157,7 +157,7 @@
 		overlays += "cart_water"
 
 
-//old style retardo-cart
+// old style retardo-cart
 /obj/structure/stool/bed/chair/janicart
 	name = "janicart"
 	icon = 'icons/obj/vehicles.dmi'
@@ -165,10 +165,10 @@
 	anchored = 1
 	density = 1
 	flags = OPENCONTAINER
-	//copypaste sorry
-	var/amount_per_transfer_from_this = 5 //shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
+	// copypaste sorry
+	var/amount_per_transfer_from_this = 5 // shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 	var/obj/item/weapon/storage/bag/trash/mybag	= null
-	var/callme = "pimpin' ride"	//how do people refer to it?
+	var/callme = "pimpin' ride"	// how do people refer to it?
 
 
 /obj/structure/stool/bed/chair/janicart/New()
@@ -249,8 +249,8 @@
 
 	if(buckled_mob)
 		if(buckled_mob.loc != loc)
-			buckled_mob.buckled = null //Temporary, so Move() succeeds.
-			buckled_mob.buckled = src //Restoring
+			buckled_mob.buckled = null // Temporary, so Move() succeeds.
+			buckled_mob.buckled = src // Restoring
 
 	update_mob()
 

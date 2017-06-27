@@ -16,40 +16,40 @@
 	var/secured = 1
 	var/list/attached_overlays = null
 	var/obj/item/device/assembly_holder/holder = null
-	var/cooldown = 0//To prevent spam
+	var/cooldown = 0// To prevent spam
 	var/wires = WIRE_RECEIVE | WIRE_PULSE
 
-	var/const/WIRE_RECEIVE = 1			//Allows Pulsed(0) to call Activate()
-	var/const/WIRE_PULSE = 2				//Allows Pulse(0) to act on the holder
-	var/const/WIRE_PULSE_SPECIAL = 4		//Allows Pulse(0) to act on the holders special assembly
-	var/const/WIRE_RADIO_RECEIVE = 8		//Allows Pulsed(1) to call Activate()
-	var/const/WIRE_RADIO_PULSE = 16		//Allows Pulse(1) to send a radio message
+	var/const/WIRE_RECEIVE = 1			// Allows Pulsed(0) to call Activate()
+	var/const/WIRE_PULSE = 2				// Allows Pulse(0) to act on the holder
+	var/const/WIRE_PULSE_SPECIAL = 4		// Allows Pulse(0) to act on the holders special assembly
+	var/const/WIRE_RADIO_RECEIVE = 8		// Allows Pulsed(1) to call Activate()
+	var/const/WIRE_RADIO_PULSE = 16		// Allows Pulse(1) to send a radio message
 
-/obj/item/device/assembly/proc/activate()			//What the device does when turned on
+/obj/item/device/assembly/proc/activate()			// What the device does when turned on
 	return
 
-/obj/item/device/assembly/proc/pulsed(radio = 0)	//Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
+/obj/item/device/assembly/proc/pulsed(radio = 0)	// Called when another assembly acts on this one, var/radio will determine where it came from for wire calcs
 	return
 
-/obj/item/device/assembly/proc/pulse(radio = 0)	//Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
+/obj/item/device/assembly/proc/pulse(radio = 0)	// Called when this device attempts to act on another device, var/radio determines if it was sent via radio or direct
 	return
 
-/obj/item/device/assembly/proc/toggle_secure()	//Code that has to happen when the assembly is un\secured goes here
+/obj/item/device/assembly/proc/toggle_secure()	// Code that has to happen when the assembly is un\secured goes here
 	return
 
-/obj/item/device/assembly/proc/attach_assembly(obj/A, mob/user)	//Called when an assembly is attacked by another
+/obj/item/device/assembly/proc/attach_assembly(obj/A, mob/user)	// Called when an assembly is attacked by another
 	return
 
-/obj/item/device/assembly/proc/process_cooldown()	//Called via spawn(10) to have it count down the cooldown var
+/obj/item/device/assembly/proc/process_cooldown()	// Called via spawn(10) to have it count down the cooldown var
 	return
 
-/obj/item/device/assembly/proc/holder_movement()	//Called when the holder is moved
+/obj/item/device/assembly/proc/holder_movement()	// Called when the holder is moved
 	return
 
-/obj/item/device/assembly/interact(mob/user)	//Called when attack_self is called
+/obj/item/device/assembly/interact(mob/user)	// Called when attack_self is called
 	return
 
-/obj/item/device/assembly/hear_talk(mob/living/M, msg) //Called when someone speak
+/obj/item/device/assembly/hear_talk(mob/living/M, msg) // Called when someone speak
 	return
 
 /obj/item/device/assembly/proc/is_secured(mob/user)
@@ -80,7 +80,7 @@
 	if(holder && (wires & WIRE_PULSE_SPECIAL))
 		holder.process_activation(src, 0, 1)
 //	if(radio && (wires & WIRE_RADIO_PULSE))
-		//Not sure what goes here quite yet send signal?
+		// Not sure what goes here quite yet send signal?
 	return 1
 
 
@@ -99,7 +99,7 @@
 
 /obj/item/device/assembly/attach_assembly(obj/item/device/assembly/A, mob/user)
 	holder = new/obj/item/device/assembly_holder(get_turf(src))
-	if(holder.attach(A,src,user))
+	if(holder.attach(A, src, user))
 		to_chat(user, "\blue You attach \the [A] to \the [src]!")
 		return 1
 	return 0
@@ -109,7 +109,7 @@
 	if(isassembly(W))
 		var/obj/item/device/assembly/A = W
 		if((!A.secured) && (!secured))
-			attach_assembly(A,user)
+			attach_assembly(A, user)
 			return
 	if(isscrewdriver(W))
 		if(toggle_secure())
@@ -143,4 +143,4 @@
 
 
 /obj/item/device/assembly/interact(mob/user)
-	return //HTML MENU FOR WIRES GOES HERE
+	return // HTML MENU FOR WIRES GOES HERE

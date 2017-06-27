@@ -63,7 +63,7 @@
 /datum/craft_or_build/proc/can_build(mob/M, turf/here, turf/origin)
 	. = TRUE
 	if(busy || !using_this || !from_recipe)
-		return FALSE //return, no need to play red animation.
+		return FALSE // return, no need to play red animation.
 	else if(using_this.amount < from_recipe.req_amount)
 		. = FALSE
 		to_chat(M, "<span class='notice'>You haven't got enough [using_this.name] to build \the [from_recipe.title]!</span>")
@@ -73,7 +73,7 @@
 	else if(!istype(here, /turf/simulated/floor))
 		. = FALSE
 		to_chat(M, "<span class='warning'>\The [from_recipe.title] must be constructed on the floor!</span>")
-	else if(here.contents.len > 15) //we don't want for() thru tons of atoms.
+	else if(here.contents.len > 15) // we don't want for() thru tons of atoms.
 		. = FALSE
 	else if(!(origin.CanPass(null, here, 0, 0) && here.CanPass(null, origin, 0, 0)))
 		. = FALSE
@@ -97,7 +97,7 @@
 		busy = TRUE
 		playsound(M, 'sound/effects/grillehit.ogg', 50, 1)
 		b_overlay.alpha = 0
-		holo_build = new(over_this_saved) //Everyone will see what you trying to build.
+		holo_build = new(over_this_saved) // Everyone will see what you trying to build.
 		holo_build.anchored = TRUE
 		holo_build.unacidable = TRUE
 		holo_build.name = "Holo Object"
@@ -123,7 +123,7 @@
 		return
 
 	if(over_this_saved && get_dist(M, over_this_saved) <= 1)
-		playsound(M, 'sound/effects/grillehit.ogg', 50, 1)//Yes, 2nd time with timed recipe.
+		playsound(M, 'sound/effects/grillehit.ogg', 50, 1)// Yes, 2nd time with timed recipe.
 		var/atom/A = new from_recipe.result_type(over_this_saved)
 		A.dir = build_direction
 		using_this.amount -= from_recipe.req_amount

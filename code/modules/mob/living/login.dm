@@ -1,11 +1,11 @@
 
 /mob/living/Login()
 	..()
-	//Mind updates
-	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
-	mind.active = 1		//indicates that the mind is currently synced with a client
+	// Mind updates
+	mind_initialize()	// updates the mind (or creates and initializes one if one doesn't exist)
+	mind.active = 1		// indicates that the mind is currently synced with a client
 
-	//Round specific stuff like hud updates
+	// Round specific stuff like hud updates
 	if(ticker && ticker.mode)
 		switch(ticker.mode.name)
 			if("revolution")
@@ -33,15 +33,15 @@
 				if((mind in ticker.mode.thralls) || (mind in ticker.mode.shadows))
 					ticker.mode.update_all_shadows_icons()
 
-	//Vents
+	// Vents
 	if(ventcrawler)
 		to_chat(src, "<span class='notice'>You can ventcrawl! Use alt+click on vents to quickly travel about the station.</span>")
-	//Should update regardless of if we can ventcrawl, since we can end up in pipes in other ways.
+	// Should update regardless of if we can ventcrawl, since we can end up in pipes in other ways.
 	update_pipe_vision()
 
 	noob_notify(src)
 
-	//Jukebox
+	// Jukebox
 	client.media = new /datum/media_manager(src)
 	client.media.open()
 	client.media.update_music()

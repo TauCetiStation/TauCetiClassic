@@ -1,9 +1,9 @@
-//renwicks: fictional unit to describe shield strength
-//a small meteor hit will deduct 1 renwick of strength from that shield tile
-//light explosion range will do 1 renwick's damage
-//medium explosion range will do 2 renwick's damage
-//heavy explosion range will do 3 renwick's damage
-//explosion damage is cumulative. if a tile is in range of light, medium and heavy damage, it will take a hit from all three
+// renwicks: fictional unit to describe shield strength
+// a small meteor hit will deduct 1 renwick of strength from that shield tile
+// light explosion range will do 1 renwick's damage
+// medium explosion range will do 2 renwick's damage
+// heavy explosion range will do 3 renwick's damage
+// explosion damage is cumulative. if a tile is in range of light, medium and heavy damage, it will take a hit from all three
 
 /obj/machinery/shield_gen
 	name = "shield generator"
@@ -23,11 +23,11 @@
 	var/obj/machinery/shield_capacitor/owned_capacitor
 	var/target_field_strength = 10
 	var/time_since_fail = 100
-	var/energy_conversion_rate = 0.01	//how many renwicks per watt?
-	//
-	use_power = 1			//0 use nothing
-							//1 use idle power
-							//2 use active power
+	var/energy_conversion_rate = 0.01	// how many renwicks per watt?
+	// 
+	use_power = 1			// 0 use nothing
+							// 1 use idle power
+							// 2 use active power
 	idle_power_usage = 20
 	active_power_usage = 100
 
@@ -260,7 +260,7 @@
 		powered = 1
 		if(PN)
 			storedpower += shieldload
-			PN.newload += shieldload //uses powernet power.
+			PN.newload += shieldload // uses powernet power.
 			*/
 
 /obj/machinery/shield_gen/proc/toggle()
@@ -287,10 +287,10 @@
 		for(var/mob/M in view(5,src))
 			to_chat(M, "[bicon(src)] You hear heavy droning fade out.")
 
-//grab the border tiles in a circle around this machine
+// grab the border tiles in a circle around this machine
 /obj/machinery/shield_gen/proc/get_shielded_turfs()
 	var/list/out = list()
 	for(var/turf/T in range(field_radius, src))
-		if(get_dist(src,T) == field_radius)
+		if(get_dist(src, T) == field_radius)
 			out.Add(T)
 	return out

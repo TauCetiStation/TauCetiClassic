@@ -16,11 +16,11 @@
 	var/invuln = null
 	var/obj/item/device/camera_bug/bug = null
 	var/obj/item/weapon/camera_assembly/assembly = null
-	var/hidden = 0	//Hidden cameras will be unreachable for AI
+	var/hidden = 0	// Hidden cameras will be unreachable for AI
 
 	var/datum/wires/camera/wires = null
 
-	//OTHER
+	// OTHER
 	var/view_range = 7
 	var/short_range = 2
 
@@ -30,9 +30,9 @@
 
 /obj/machinery/camera/New()
 	..()
-	cameranet.cameras += src //Camera must be added to global list of all cameras no matter what...
-	var/list/open_networks = difflist(network,RESTRICTED_CAMERA_NETWORKS) //...but if all of camera's networks are restricted, it only works for specific camera consoles.
-	if(open_networks.len) //If there is at least one open network, chunk is available for AI usage.
+	cameranet.cameras += src // Camera must be added to global list of all cameras no matter what...
+	var/list/open_networks = difflist(network, RESTRICTED_CAMERA_NETWORKS) // ...but if all of camera's networks are restricted, it only works for specific camera consoles.
+	if(open_networks.len) // If there is at least one open network, chunk is available for AI usage.
 		cameranet.addCamera(src)
 	wires = new(src)
 	assembly = new(src)
@@ -122,8 +122,8 @@
 
 	// DECONSTRUCTION
 	if(isscrewdriver(W))
-		//user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
-		//if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
+		// user << "<span class='notice'>You start to [panel_open ? "close" : "open"] the camera's panel.</span>"
+		// if(toggle_panel(user)) // No delay because no one likes screwdrivers trying to be hip and have a duration cooldown
 		panel_open = !panel_open
 		user.visible_message("<span class='warning'>[user] screws the camera's panel [panel_open ? "open" : "closed"]!</span>",
 		"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
@@ -136,7 +136,7 @@
 		if(weld(W, user))
 			drop_assembly(1)
 			qdel(src)
-	else if(istype(W, /obj/item/device/analyzer) && panel_open) //XRay
+	else if(istype(W, /obj/item/device/analyzer) && panel_open) // XRay
 		if(!isXRay())
 			upgradeXRay()
 			qdel(W)
@@ -179,7 +179,7 @@
 		for(var/mob/living/silicon/ai/O in living_mob_list)
 			if(!O.client)
 				continue
-			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U.name]</a></b> holds \a [itemname] up to one of your cameras ...")
+			to_chat(O, "<b><a href='byond:// ?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U.name]</a></b> holds \a [itemname] up to one of your cameras ...")
 			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		for(var/mob/O in player_list)
 			if (O.client && O.client.eye == src)
@@ -197,7 +197,7 @@
 			to_chat(user, "<span class='notice'>Camera bugged.</span>")
 			src.bug = W
 			src.bug.bugged_cameras[src.c_tag] = src
-	else if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W, /obj/item/weapon/twohanded/dualsaber))//Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
+	else if(istype(W, /obj/item/weapon/melee/energy) || istype(W, /obj/item/weapon/pen/edagger) || istype(W, /obj/item/weapon/twohanded/dualsaber))// Putting it here last since it's a special case. I wonder if there is a better way to do these than type casting.
 		if(W:force > 3)
 			user.do_attack_animation(src)
 			disconnect_viewers()
@@ -280,12 +280,12 @@
 	return see
 
 /atom/proc/auto_turn()
-	//Automatically turns based on nearby walls.
+	// Automatically turns based on nearby walls.
 	var/turf/simulated/wall/T = null
 	for(var/i = 1, i <= 8; i += i)
 		T = get_ranged_target_turf(src, i, 1)
 		if(istype(T))
-			//If someone knows a better way to do this, let me know. -Giacom
+			// If someone knows a better way to do this, let me know. -Giacom
 			switch(i)
 				if(NORTH)
 					src.dir = SOUTH
@@ -297,8 +297,8 @@
 					src.dir = WEST
 			break
 
-//Return a working camera that can see a given mob
-//or null if none
+// Return a working camera that can see a given mob
+// or null if none
 /proc/seen_by_camera(mob/M)
 	for(var/obj/machinery/camera/C in oview(4, M))
 		if(C.can_use())	// check if camera disabled

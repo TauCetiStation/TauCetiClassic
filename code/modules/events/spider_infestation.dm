@@ -9,7 +9,7 @@
 
 /datum/event/spider_infestation/setup()
 	announceWhen = rand(announceWhen, announceWhen + 50)
-	spawncount = rand(8, 12)	//spiderlings only have a 50% chance to grow big and strong
+	spawncount = rand(8, 12)	// spiderlings only have a 50% chance to grow big and strong
 	sent_spiders_to_station = 0
 
 /datum/event/spider_infestation/announce()

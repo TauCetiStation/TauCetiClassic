@@ -9,7 +9,7 @@
 	var/obj/machinery/telepad/telepad = null
 	var/temp_msg = "Telescience control console initialized.<BR>Welcome."
 
-	// VARIABLES //
+	// VARIABLES // 
 	var/teles_left	// How many teleports left until it becomes uncalibrated
 	var/datum/projectile_data/last_tele_data = null
 	var/z_co = 1
@@ -119,7 +119,7 @@
 /obj/machinery/computer/telescience/interact(mob/user)
 	var/t
 	if(!telepad)
-		in_use = 0     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
+		in_use = 0     // Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
 		t += "<div class='statusDisplay'>No telepad located. <BR>Please add telepad data.</div><BR>"
 	else
 		if(inserted_gps)
@@ -158,7 +158,7 @@
 			t += "No teleport data found."
 		else
 			t += "Source Location: ([last_tele_data.src_x], [last_tele_data.src_y])<BR>"
-			//t += "Distance: [round(last_tele_data.distance, 0.1)]m<BR>"
+			// t += "Distance: [round(last_tele_data.distance, 0.1)]m<BR>"
 			t += "Time: [round(last_tele_data.time, 0.1)] secs<BR>"
 		t += "</div>"
 

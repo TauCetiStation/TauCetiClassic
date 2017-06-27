@@ -32,7 +32,7 @@
 /obj/item/weapon/implant/proc/islegal()
 	return 0
 
-/obj/item/weapon/implant/proc/meltdown()	//breaks it down, making implant unrecongizible
+/obj/item/weapon/implant/proc/meltdown()	// breaks it down, making implant unrecongizible
 	to_chat(imp_in, "\red You feel something melting inside [part ? "your [part.name]" : "you"]!")
 	if (part)
 		part.take_damage(burn = 15, used_weapon = "Electronics meltdown")
@@ -73,7 +73,7 @@ Implant Specifics:<BR>"}
 	return dat
 
 /obj/item/weapon/implant/tracking/emp_act(severity)
-	if (malfunction)	//no, dawg, you can't malfunction while you are malfunctioning
+	if (malfunction)	// no, dawg, you can't malfunction while you are malfunctioning
 		return
 	malfunction = MALFUNCTION_TEMPORARY
 
@@ -83,7 +83,7 @@ Implant Specifics:<BR>"}
 			if(prob(60))
 				meltdown()
 		if(2)
-			delay = rand(5*60*10,15*60*10)	//from 5 to 15 minutes of free time
+			delay = rand(5*60*10,15*60*10)	// from 5 to 15 minutes of free time
 
 	spawn(delay)
 		malfunction--
@@ -116,14 +116,14 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/dexplosive/activate(cause)
 	if((!cause) || (!src.imp_in))	return 0
-	explosion(src, -1, 0, 2, 3, 0)//This might be a bit much, dono will have to see.
+	explosion(src, -1, 0, 2, 3, 0)// This might be a bit much, dono will have to see.
 	if(src.imp_in)
 		src.imp_in.gib()
 
 /obj/item/weapon/implant/dexplosive/islegal()
 	return 0
 
-//BS12 Explosive
+// BS12 Explosive
 /obj/item/weapon/implant/explosive
 	name = "explosive implant"
 	desc = "A military grade micro bio-explosive. Highly dangerous."
@@ -151,7 +151,7 @@ Implant Specifics:<BR>"}
 /obj/item/weapon/implant/explosive/hear(msg)
 	var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
 	msg = sanitize_simple(msg, replacechars)
-	if(findtext(msg,phrase))
+	if(findtext(msg, phrase))
 		activate()
 		qdel(src)
 
@@ -168,14 +168,14 @@ Implant Specifics:<BR>"}
 
 		if(ishuman(imp_in))
 			if (elevel == "Localized Limb")
-				if(part) //For some reason, small_boom() didn't work. So have this bit of working copypaste.
+				if(part) // For some reason, small_boom() didn't work. So have this bit of working copypaste.
 					imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!")
 					playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
 					sleep(25)
 					if (istype(part,/obj/item/organ/external/chest) ||	\
 						istype(part,/obj/item/organ/external/groin) ||	\
 						istype(part,/obj/item/organ/external/head))
-						part.createwound(BRUISE, 60)	//mangle them instead
+						part.createwound(BRUISE, 60)	// mangle them instead
 						explosion(get_turf(imp_in), -1, -1, 2, 3)
 						qdel(src)
 					else
@@ -214,18 +214,18 @@ Implant Specifics:<BR>"}
 		return
 	malfunction = MALFUNCTION_TEMPORARY
 	switch (severity)
-		if (2.0)	//Weak EMP will make implant tear limbs off.
+		if (2.0)	// Weak EMP will make implant tear limbs off.
 			if (prob(50))
 				small_boom()
-		if (1.0)	//strong EMP will melt implant either making it go off, or disarming it
+		if (1.0)	// strong EMP will melt implant either making it go off, or disarming it
 			if (prob(70))
 				if (prob(50))
 					small_boom()
 				else
 					if (prob(50))
-						activate()		//50% chance of bye bye
+						activate()		// 50% chance of bye bye
 					else
-						meltdown()		//50% chance of implant disarming
+						meltdown()		// 50% chance of implant disarming
 	spawn (20)
 		malfunction--
 
@@ -238,12 +238,12 @@ Implant Specifics:<BR>"}
 		playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
 		spawn(25)
 			if (ishuman(imp_in) && part)
-				//No tearing off these parts since it's pretty much killing
-				//and you can't replace groins
+				// No tearing off these parts since it's pretty much killing
+				// and you can't replace groins
 				if (istype(part,/obj/item/organ/external/chest) ||	\
 					istype(part,/obj/item/organ/external/groin) ||	\
 					istype(part,/obj/item/organ/external/head))
-					part.createwound(BRUISE, 60)	//mangle them instead
+					part.createwound(BRUISE, 60)	// mangle them instead
 				else
 					part.droplimb(null, null, DROPLIMB_BLUNT)
 			explosion(get_turf(imp_in), -1, -1, 2, 3)
@@ -376,7 +376,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		STOP_PROCESSING(SSobj, src)
 		return
 
-	if(prob(1) && prob(25))//1/400
+	if(prob(1) && prob(25))// 1/400
 		switch(rand(1, 4))
 			if(1)
 				to_chat(M, "\italic You [pick("are sure", "think")] that NanoTrasen - is the best corporation in the whole Universe!")
@@ -458,7 +458,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		if("death")
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 			if(istype(t, /area/syndicate_station) || istype(t, /area/syndicate_mothership) || istype(t, /area/shuttle/syndicate_elite) )
-				//give the syndies a bit of stealth
+				// give the syndies a bit of stealth
 				a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
 			else
 				a.autosay("[mobname] has died in [t.name]!", "[mobname]'s Death Alarm")
@@ -475,16 +475,16 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			STOP_PROCESSING(SSobj, src)
 			qdel(a)
 
-/obj/item/weapon/implant/death_alarm/emp_act(severity)			//for some reason alarms stop going off in case they are emp'd, even without this
-	if (malfunction)		//so I'm just going to add a meltdown chance here
+/obj/item/weapon/implant/death_alarm/emp_act(severity)			// for some reason alarms stop going off in case they are emp'd, even without this
+	if (malfunction)		// so I'm just going to add a meltdown chance here
 		return
 	malfunction = MALFUNCTION_TEMPORARY
 
-	activate("emp")	//let's shout that this dude is dead
+	activate("emp")	// let's shout that this dude is dead
 	if(severity == 1)
-		if(prob(40))	//small chance of obvious meltdown
+		if(prob(40))	// small chance of obvious meltdown
 			meltdown()
-		else if (prob(60))	//but more likely it will just quietly die
+		else if (prob(60))	// but more likely it will just quietly die
 			malfunction = MALFUNCTION_PERMANENT
 		STOP_PROCESSING(SSobj, src)
 
@@ -546,7 +546,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	name = "cortical stack"
 	desc = "A fist-sized mass of biocircuits and chips."
 	icon_state = "implant_evil"
-	///////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////// 
 /obj/item/weapon/storage/internal/imp
 	name = "bluespace pocket"
 	max_combined_w_class = 6

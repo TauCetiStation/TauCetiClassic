@@ -1,5 +1,5 @@
-/////////////////////////// DNA HELPER-PROCS
-/proc/getleftblocks(input,blocknumber,blocksize)
+////////////////////////// / DNA HELPER-PROCS
+/proc/getleftblocks(input, blocknumber, blocksize)
 	var/string
 
 	if (blocknumber > 1)
@@ -8,15 +8,15 @@
 	else
 		return null
 
-/proc/getrightblocks(input,blocknumber,blocksize)
+/proc/getrightblocks(input, blocknumber, blocksize)
 	var/string
 	if (blocknumber < (length(input)/blocksize))
-		string = copytext(input,blocksize*blocknumber+1,length(input)+1)
+		string = copytext(input, blocksize*blocknumber+1,length(input)+1)
 		return string
 	else
 		return null
 
-/proc/getblockstring(input,block,subblock,blocksize,src,ui) // src is probably used here just for urls; ui is 1 when requesting for the unique identifier screen, 0 for structural enzymes screen
+/proc/getblockstring(input, block, subblock, blocksize, src, ui) // src is probably used here just for urls; ui is 1 when requesting for the unique identifier screen, 0 for structural enzymes screen
 	var/string
 	var/subpos = 1 // keeps track of the current sub block
 	var/blockpos = 1 // keeps track of the current block
@@ -29,7 +29,7 @@
 		if(subpos == subblock && blockpos == block) // if the current block/subblock is selected, mark it
 			pushstring = "</font color><b>[copytext(input, i, i+1)]</b><font color='blue'>"
 		else
-			if(ui) //This is for allowing block clicks to be differentiated
+			if(ui) // This is for allowing block clicks to be differentiated
 				pushstring = "<a href='?src=\ref[src];uimenuset=[num2text(blockpos)];uimenusubset=[num2text(subpos)]'>[copytext(input, i, i+1)]</a>"
 			else
 				pushstring = "<a href='?src=\ref[src];semenuset=[num2text(blockpos)];semenusubset=[num2text(subpos)]'>[copytext(input, i, i+1)]</a>"
@@ -46,12 +46,12 @@
 	return string
 
 
-/proc/getblock(input,blocknumber,blocksize)
+/proc/getblock(input, blocknumber, blocksize)
 	var/result
 	result = copytext(input ,(blocksize*blocknumber)-(blocksize-1),(blocksize*blocknumber)+1)
 	return result
 
-/proc/getblockbuffer(input,blocknumber,blocksize)
+/proc/getblockbuffer(input, blocknumber, blocksize)
 	var/result[3]
 	var/block = copytext(input ,(blocksize*blocknumber)-(blocksize-1),(blocksize*blocknumber)+1)
 	for(var/i = 1, i <= 3, i++)
@@ -74,7 +74,7 @@
 		temp1 = copytext(t,2,u+1)
 	return temp1
 
-/proc/miniscramble(input,rs,rd)
+/proc/miniscramble(input, rs, rd)
 	var/output
 	output = null
 	if (input == "C" || input == "D" || input == "E" || input == "F")
@@ -88,9 +88,9 @@
 	if (!output) output = "5"
 	return output
 
-//Instead of picking a value far from the input, this will pick values closer to it.
-//Sorry for the block of code, but it's more efficient then calling text2hex -> loop -> hex2text
-/proc/miniscrambletarget(input,rs,rd)
+// Instead of picking a value far from the input, this will pick values closer to it.
+// Sorry for the block of code, but it's more efficient then calling text2hex -> loop -> hex2text
+/proc/miniscrambletarget(input, rs, rd)
 	var/output = null
 	switch(input)
 		if("0")
@@ -113,20 +113,20 @@
 			output = pick(prob((rs*10)-(rd));"5",prob((rs*10));"6",prob((rs*10)+(rd));"7",prob((rs*10)+(rd));"8",prob((rs*10)+(rd));"9",prob((rs*10));"A",prob((rs*10)-(rd));"B")
 		if("9")
 			output = pick(prob((rs*10)-(rd));"6",prob((rs*10));"7",prob((rs*10)+(rd));"8",prob((rs*10)+(rd));"9",prob((rs*10)+(rd));"A",prob((rs*10));"B",prob((rs*10)-(rd));"C")
-		if("10")//A
+		if("10")// A
 			output = pick(prob((rs*10)-(rd));"7",prob((rs*10));"8",prob((rs*10)+(rd));"9",prob((rs*10)+(rd));"A",prob((rs*10)+(rd));"B",prob((rs*10));"C",prob((rs*10)-(rd));"D")
-		if("11")//B
+		if("11")// B
 			output = pick(prob((rs*10)-(rd));"8",prob((rs*10));"9",prob((rs*10)+(rd));"A",prob((rs*10)+(rd));"B",prob((rs*10)+(rd));"C",prob((rs*10));"D",prob((rs*10)-(rd));"E")
-		if("12")//C
+		if("12")// C
 			output = pick(prob((rs*10)-(rd));"9",prob((rs*10));"A",prob((rs*10)+(rd));"B",prob((rs*10)+(rd));"C",prob((rs*10)+(rd));"D",prob((rs*10));"E",prob((rs*10)-(rd));"F")
-		if("13")//D
+		if("13")// D
 			output = pick(prob((rs*10)-(rd));"A",prob((rs*10));"B",prob((rs*10)+(rd));"C",prob((rs*10)+(rd));"D",prob((rs*10)+(rd));"E",prob((rs*10));"F")
-		if("14")//E
+		if("14")// E
 			output = pick(prob((rs*10)-(rd));"B",prob((rs*10));"C",prob((rs*10)+(rd));"D",prob((rs*10)+(rd));"E",prob((rs*10)+(rd));"F")
-		if("15")//F
+		if("15")// F
 			output = pick(prob((rs*10)-(rd));"C",prob((rs*10));"D",prob((rs*10)+(rd));"E",prob((rs*10)+(rd));"F")
 
-	if(!input || !output) //How did this happen?
+	if(!input || !output) // How did this happen?
 		output = "8"
 
 	return output
@@ -159,16 +159,16 @@
 	else
 		return 0
 
-/proc/ismuton(block,mob/M)
+/proc/ismuton(block, mob/M)
 	return isblockon(getblock(M.dna.struc_enzymes, block,3),block)
 
 /proc/randmutb(mob/M)
 	if(!M)	return
 	var/num
 	var/newdna
-	num = pick(GLASSESBLOCK,COUGHBLOCK,FAKEBLOCK,NERVOUSBLOCK,CLUMSYBLOCK,TWITCHBLOCK,HEADACHEBLOCK,BLINDBLOCK,DEAFBLOCK,HALLUCINATIONBLOCK)
+	num = pick(GLASSESBLOCK, COUGHBLOCK, FAKEBLOCK, NERVOUSBLOCK, CLUMSYBLOCK, TWITCHBLOCK, HEADACHEBLOCK, BLINDBLOCK, DEAFBLOCK, HALLUCINATIONBLOCK)
 	M.dna.check_integrity()
-	newdna = setblock(M.dna.struc_enzymes,num,toggledblock(getblock(M.dna.struc_enzymes,num,3)),3)
+	newdna = setblock(M.dna.struc_enzymes, num, toggledblock(getblock(M.dna.struc_enzymes, num,3)),3)
 	M.dna.struc_enzymes = newdna
 	return
 
@@ -176,9 +176,9 @@
 	if(!M)	return
 	var/num
 	var/newdna
-	num = pick(HULKBLOCK,XRAYBLOCK,FIREBLOCK,TELEBLOCK,NOBREATHBLOCK,REMOTEVIEWBLOCK,REGENERATEBLOCK,INCREASERUNBLOCK,REMOTETALKBLOCK,MORPHBLOCK,BLENDBLOCK,NOPRINTSBLOCK,SHOCKIMMUNITYBLOCK,SMALLSIZEBLOCK)
+	num = pick(HULKBLOCK, XRAYBLOCK, FIREBLOCK, TELEBLOCK, NOBREATHBLOCK, REMOTEVIEWBLOCK, REGENERATEBLOCK, INCREASERUNBLOCK, REMOTETALKBLOCK, MORPHBLOCK, BLENDBLOCK, NOPRINTSBLOCK, SHOCKIMMUNITYBLOCK, SMALLSIZEBLOCK)
 	M.dna.check_integrity()
-	newdna = setblock(M.dna.struc_enzymes,num,toggledblock(getblock(M.dna.struc_enzymes,num,3)),3)
+	newdna = setblock(M.dna.struc_enzymes, num, toggledblock(getblock(M.dna.struc_enzymes, num,3)),3)
 	M.dna.struc_enzymes = newdna
 	return
 
@@ -204,11 +204,11 @@
 	var/newdna
 	num = rand(1,UNIDNASIZE)
 	M.dna.check_integrity()
-	newdna = setblock(M.dna.uni_identity,num,add_zero2(num2hex(rand(1,4095),1),3),3)
+	newdna = setblock(M.dna.uni_identity, num, add_zero2(num2hex(rand(1,4095),1),3),3)
 	M.dna.uni_identity = newdna
 	return
 
-/proc/toggledblock(hnumber) //unused
+/proc/toggledblock(hnumber) // unused
 	var/temp3
 	var/chtemp
 	temp3 = hex2num(hnumber)
@@ -218,9 +218,9 @@
 	else
 		chtemp = rand(1,2049)
 		return add_zero2(num2hex(chtemp,1),3)
-/////////////////////////// DNA HELPER-PROCS
+////////////////////////// / DNA HELPER-PROCS
 
-/////////////////////////// DNA MISC-PROCS
+////////////////////////// / DNA MISC-PROCS
 /proc/updateappearance(mob/M , structure)
 	if(istype(M, /mob/living/carbon/human))
 		M.dna.check_integrity()
@@ -241,13 +241,13 @@
 		else
 			H.gender = MALE
 
-		//Hair
+		// Hair
 		var/hairnum = hex2num(getblock(structure,13,3))
 		var/index = round(1 +(hairnum / 4096)*hair_styles_list.len)
 		if((0 < index) && (index <= hair_styles_list.len))
 			H.h_style = hair_styles_list[index]
 
-		//Facial Hair
+		// Facial Hair
 		var/beardnum = hex2num(getblock(structure,12,3))
 		index = round(1 +(beardnum / 4096)*facial_hair_styles_list.len)
 		if((0 < index) && (index <= facial_hair_styles_list.len))
@@ -285,47 +285,47 @@
 	if(HUSK in old_mutations)
 		M.mutations.Add(HUSK)
 
-	if(ismuton(NOBREATHBLOCK,M))
+	if(ismuton(NOBREATHBLOCK, M))
 		if(probinj(45,inj) || (NO_BREATH in old_mutations))
 			to_chat(M, "\blue You feel no need to breathe.")
 			M.mutations.Add(NO_BREATH)
-	if(ismuton(REMOTEVIEWBLOCK,M))
+	if(ismuton(REMOTEVIEWBLOCK, M))
 		if(probinj(45,inj) || (REMOTE_VIEW in old_mutations))
 			to_chat(M, "\blue Your mind expands")
 			M.mutations.Add(REMOTE_VIEW)
-	if(ismuton(REGENERATEBLOCK,M))
+	if(ismuton(REGENERATEBLOCK, M))
 		if(probinj(45,inj) || (REGEN in old_mutations))
 			to_chat(M, "\blue You feel strange")
 			M.mutations.Add(REGEN)
-	if(ismuton(INCREASERUNBLOCK,M))
+	if(ismuton(INCREASERUNBLOCK, M))
 		if(probinj(45,inj) || (RUN in old_mutations))
 			to_chat(M, "\blue You feel quick")
 			M.mutations.Add(RUN)
-	if(ismuton(REMOTETALKBLOCK,M))
+	if(ismuton(REMOTETALKBLOCK, M))
 		if(probinj(45,inj) || (REMOTE_TALK in old_mutations))
 			to_chat(M, "\blue You expand your mind outwards")
 			M.mutations.Add(REMOTE_TALK)
-	if(ismuton(MORPHBLOCK,M))
+	if(ismuton(MORPHBLOCK, M))
 		if(probinj(45,inj) || (MORPH in old_mutations))
 			M.mutations.Add(MORPH)
 			to_chat(M, "\blue Your skin feels strange")
-	if(ismuton(BLENDBLOCK,M))
+	if(ismuton(BLENDBLOCK, M))
 		if(probinj(45,inj) || (BLEND in old_mutations))
 			M.mutations.Add(BLEND)
 			to_chat(M, "\blue You feel alone")
-	if(ismuton(HALLUCINATIONBLOCK,M))
+	if(ismuton(HALLUCINATIONBLOCK, M))
 		if(probinj(45,inj) || (HALLUCINATE in old_mutations))
 			M.mutations.Add(HALLUCINATE)
 			to_chat(M, "\blue Your mind says 'Hello'")
-	if(ismuton(NOPRINTSBLOCK,M))
+	if(ismuton(NOPRINTSBLOCK, M))
 		if(probinj(45,inj) || (FINGERPRINTS in old_mutations))
 			M.mutations.Add(FINGERPRINTS)
 			to_chat(M, "\blue Your fingers feel numb")
-	if(ismuton(SHOCKIMMUNITYBLOCK,M))
+	if(ismuton(SHOCKIMMUNITYBLOCK, M))
 		if(probinj(45,inj) || (NO_SHOCK in old_mutations))
 			M.mutations.Add(NO_SHOCK)
 			to_chat(M, "\blue You feel strange")
-	if(ismuton(SMALLSIZEBLOCK,M))
+	if(ismuton(SMALLSIZEBLOCK, M))
 		if(probinj(45,inj) || (SMALLSIZE in old_mutations))
 			to_chat(M, "\blue Your skin feels rubbery")
 			M.mutations.Add(SMALLSIZE)
@@ -392,12 +392,12 @@
 			mut.check_mutation(M)
 	*/
 
-//////////////////////////////////////////////////////////// Monkey Block
+/////////////////////////////////////////////////////////// / Monkey Block
 	if (isblockon(getblock(M.dna.struc_enzymes, MONKEYBLOCK,3),MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
 	// human > monkey
 		var/mob/living/carbon/human/H = M
 		H.monkeyizing = 1
-		var/list/implants = list() //Try to preserve implants.
+		var/list/implants = list() // Try to preserve implants.
 		for(var/obj/item/weapon/implant/W in H)
 			implants += W
 			W.loc = null
@@ -424,7 +424,7 @@
 		if(H.species.primitive)
 			O = new H.species.primitive(src)
 		else
-			H.gib() //Trying to change the species of a creature with no primitive var set is messy.
+			H.gib() // Trying to change the species of a creature with no primitive var set is messy.
 			return
 
 		if(M)
@@ -449,9 +449,9 @@
 		O.loc = M.loc
 
 		if(M.mind)
-			M.mind.transfer_to(O)	//transfer our mind to the cute little monkey
+			M.mind.transfer_to(O)	// transfer our mind to the cute little monkey
 
-		if (connected) //inside dna thing
+		if (connected) // inside dna thing
 			var/obj/machinery/dna_scannernew/C = connected
 			O.loc = C
 			C.occupant = O
@@ -465,7 +465,7 @@
 		for (var/obj/item/weapon/implant/I in implants)
 			I.loc = O
 			I.implanted = O
-//		O.update_icon = 1	//queue a full icon update at next life() call
+//		O.update_icon = 1	// queue a full icon update at next life() call
 		qdel(M)
 		return
 
@@ -473,7 +473,7 @@
 	// monkey > human,
 		var/mob/living/carbon/monkey/Mo = M
 		Mo.monkeyizing = 1
-		var/list/implants = list() //Still preserving implants
+		var/list/implants = list() // Still preserving implants
 		for(var/obj/item/weapon/implant/W in Mo)
 			implants += W
 			W.loc = null
@@ -515,15 +515,15 @@
 			D.affected_mob = O
 			M.viruses -= D
 
-		//for(var/obj/T in M)
+		// for(var/obj/T in M)
 		//	qdel(T)
 
 		O.loc = M.loc
 
 		if(M.mind)
-			M.mind.transfer_to(O)	//transfer our mind to the human
+			M.mind.transfer_to(O)	// transfer our mind to the human
 
-		if (connected) //inside dna thing
+		if (connected) // inside dna thing
 			var/obj/machinery/dna_scannernew/C = connected
 			O.loc = C
 			C.occupant = O
@@ -541,7 +541,7 @@
 			else
 				O.real_name = randomname
 				i++
-		updateappearance(O,O.dna.uni_identity)
+		updateappearance(O, O.dna.uni_identity)
 		O.take_overall_damage(M.getBruteLoss(), M.getFireLoss())
 		O.adjustToxLoss(M.getToxLoss())
 		O.adjustOxyLoss(M.getOxyLoss())
@@ -549,11 +549,11 @@
 		for (var/obj/item/weapon/implant/I in implants)
 			I.loc = O
 			I.implanted = O
-//		O.update_icon = 1	//queue a full icon update at next life() call
+//		O.update_icon = 1	// queue a full icon update at next life() call
 		qdel(M)
 		return
-//////////////////////////////////////////////////////////// Monkey Block
+/////////////////////////////////////////////////////////// / Monkey Block
 	if(M)
-		M.update_icon = 1	//queue a full icon update at next life() call
+		M.update_icon = 1	// queue a full icon update at next life() call
 	return null
-/////////////////////////// DNA MISC-PROCS
+////////////////////////// / DNA MISC-PROCS

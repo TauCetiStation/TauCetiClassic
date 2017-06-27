@@ -143,9 +143,9 @@
 			return 0
 	var/obj/item/weapon/tank/jetpack/carbondioxide/jet = new(R.module)
 	R.module.modules += jet
-	/*for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules) //we really need this?
+	/*for(var/obj/item/weapon/tank/jetpack/carbondioxide in R.module.modules) // we really need this?
 		R.internals = jet*/
-	//R.icon_state="Miner+j"
+	// R.icon_state="Miner+j"
 	return 1
 
 

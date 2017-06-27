@@ -2,9 +2,9 @@
 var/global/media_receivers=list()
 
 
-///////////////////////
+/////////////////////// 
 // RECEIVERS
-///////////////////////
+/////////////////////// 
 
 /obj/machinery/media/receiver
 	var/media_frequency = 1015 // 123.4 MHz
@@ -33,7 +33,7 @@ var/global/media_receivers=list()
 		// Pick a random broadcast in that frequency.
 		var/obj/machinery/media/transmitter/B = pick(media_transmitters[freq])
 		if(B.media_crypto == media_crypto) // Crypto-key check, if needed.
-			receive_broadcast(B.media_url,B.media_start_time)
+			receive_broadcast(B.media_url, B.media_start_time)
 
 /obj/machinery/media/receiver/proc/disconnect_frequency()
 	var/list/receivers=list()

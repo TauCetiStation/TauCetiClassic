@@ -39,7 +39,7 @@
 		return STATUS_INTERACTIVE	// interactive (green visibility)
 	return STATUS_DISABLED			// no updates, completely disabled (red visibility)
 
-//allowed() proc in robot already does everything that block below contains.
+// allowed() proc in robot already does everything that block below contains.
 /*/mob/living/silicon/robot/syndicate/can_use_topic(src_object)
 	. = ..()
 	if(. != STATUS_INTERACTIVE)
@@ -55,7 +55,7 @@
 	return STATUS_UPDATE*/
 
 /mob/living/silicon/ai/can_use_topic(src_object)
-	//if(!client || check_unable(1))
+	// if(!client || check_unable(1))
 	if(!client)
 		return STATUS_CLOSE
 	// Prevents the AI from using Topic on admin levels (by for example viewing through the court/thunderdome cameras)
@@ -70,8 +70,8 @@
 
 	// If we're installed in a chassi, rather than transfered to an inteliCard or other container, then check if we have camera view
 	if(is_in_chassis())
-		//stop AIs from leaving windows open and using then after they lose vision
-		//apc_override is needed here because AIs use their own APC when powerless
+		// stop AIs from leaving windows open and using then after they lose vision
+		// apc_override is needed here because AIs use their own APC when powerless
 		if(cameranet && !cameranet.checkTurfVis(get_turf(src_object)))
 			return apc_override ? STATUS_INTERACTIVE : STATUS_CLOSE
 		return STATUS_INTERACTIVE
@@ -87,7 +87,7 @@
 		return STATUS_UPDATE					// update only (orange visibility)
 	return STATUS_INTERACTIVE
 
-//Some atoms such as vehicles might have special rules for how mobs inside them interact with NanoUI.
+// Some atoms such as vehicles might have special rules for how mobs inside them interact with NanoUI.
 /atom/proc/contents_nano_distance(src_object, mob/living/user)
 	return user.shared_living_nano_distance(src_object)
 

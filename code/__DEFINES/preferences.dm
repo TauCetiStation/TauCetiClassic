@@ -1,4 +1,4 @@
-//Preference toggles
+// Preference toggles
 #define SOUND_ADMINHELP	1
 #define SOUND_MIDI		2
 #define SOUND_AMBIENCE	4
@@ -9,7 +9,7 @@
 
 #define TOGGLES_DEFAULT (SOUND_ADMINHELP|SOUND_MIDI|SOUND_AMBIENCE|SOUND_LOBBY|SHOW_ANIMATIONS|SHOW_PROGBAR)
 
-//Chat toggles
+// Chat toggles
 #define CHAT_OOC		1
 #define CHAT_DEAD		2
 #define CHAT_GHOSTEARS	4
@@ -26,11 +26,11 @@
 #define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_GHOSTEARS|CHAT_GHOSTSIGHT|CHAT_PRAYER|CHAT_RADIO|CHAT_GHOSTRADIO|CHAT_GHOSTNPC|CHAT_ATTACKLOGS|CHAT_LOOC|CHAT_CKEY)
 
 
-#define PARALLAX_INSANE -1 //for show offs
-#define PARALLAX_HIGH    0 //default.
+#define PARALLAX_INSANE -1 // for show offs
+#define PARALLAX_HIGH    0 // default.
 #define PARALLAX_MED     1
 #define PARALLAX_LOW     2
-#define PARALLAX_DISABLE 3 //this option must be the highest number
+#define PARALLAX_DISABLE 3 // this option must be the highest number
 
 #define PARALLAX_DELAY_DEFAULT world.tick_lag
 #define PARALLAX_DELAY_MED     1

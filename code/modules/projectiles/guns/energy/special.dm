@@ -59,7 +59,7 @@
 	origin_tech = "materials=2;biotech=3;powerstorage=3"
 	modifystate = 1
 	var/charge_tick = 0
-	var/mode = 0 //0 = mutate, 1 = yield boost
+	var/mode = 0 // 0 = mutate, 1 = yield boost
 
 	New()
 		..()
@@ -92,9 +92,9 @@
 	w_class = 4
 	ammo_type = list(/obj/item/ammo_casing/energy/meteor)
 	cell_type = "/obj/item/weapon/stock_parts/cell/potato"
-	clumsy_check = 0 //Admin spawn only, might as well let clowns use it.
+	clumsy_check = 0 // Admin spawn only, might as well let clowns use it.
 	var/charge_tick = 0
-	var/recharge_time = 5 //Time it takes for shots to recharge (in ticks)
+	var/recharge_time = 5 // Time it takes for shots to recharge (in ticks)
 
 	New()
 		..()
@@ -212,7 +212,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
 		to_chat(usr, "You are unable to focus down the scope of the rifle.")
 		return
-	//if(!zoom && global_hud.darkMask[1] in usr.client.screen)
+	// if(!zoom && global_hud.darkMask[1] in usr.client.screen)
 	//	usr << "Your welding equipment gets in the way of you looking down the scope"
 	//	return
 	if(!zoom && usr.get_active_hand() != src)
@@ -243,7 +243,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	fire_delay = 20
 	w_class = 3.0
 
-//Tesla Cannon
+// Tesla Cannon
 /obj/item/weapon/gun/tesla
 	name = "Tesla Cannon"
 	desc = "Cannon which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
@@ -317,7 +317,7 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	return 0
 
 /obj/item/weapon/gun/tesla/proc/los_check(mob/A, mob/B)
-	for(var/X in getline(A,B))
+	for(var/X in getline(A, B))
 		var/turf/T = X
 		if(T.density)
 			return 0

@@ -23,13 +23,13 @@
 	to_chat(world, "<B>There is a \red SPACE WIZARD\black on the station. You can't let him achieve his objective!</B>")
 
 
-/datum/game_mode/wizard/can_start()//This could be better, will likely have to recode it later
+/datum/game_mode/wizard/can_start()// This could be better, will likely have to recode it later
 	if(!..())
 		return 0
 	var/datum/mind/wizard = pick(antag_candidates)
 	wizards += wizard
 	modePlayer += wizard
-	wizard.assigned_role = "MODE" //So they aren't chosen for other jobs.
+	wizard.assigned_role = "MODE" // So they aren't chosen for other jobs.
 	wizard.special_role = "Wizard"
 	wizard.original = wizard.current
 	if(wizardstart.len == 0)
@@ -48,7 +48,7 @@
 	for(var/datum/mind/wizard in wizards)
 		if(!config.objectives_disabled)
 			forge_wizard_objectives(wizard)
-		//learn_basic_spells(wizard.current)
+		// learn_basic_spells(wizard.current)
 		equip_wizard(wizard.current)
 		name_wizard(wizard.current)
 		greet_wizard(wizard)
@@ -108,7 +108,7 @@
 
 
 /datum/game_mode/proc/name_wizard(mob/living/carbon/human/wizard_mob)
-	//Allows the wizard to choose a custom name or go with a random one. Spawn 0 so it does not lag the round starting.
+	// Allows the wizard to choose a custom name or go with a random one. Spawn 0 so it does not lag the round starting.
 	var/wizard_name_first = pick(wizard_first)
 	var/wizard_name_second = pick(wizard_second)
 	var/randomname = "[wizard_name_first] [wizard_name_second]"
@@ -153,7 +153,7 @@
 	if (!istype(wizard_mob))
 		return
 
-	//So zards properly get their items when they are admin-made.
+	// So zards properly get their items when they are admin-made.
 	qdel(wizard_mob.wear_suit)
 	qdel(wizard_mob.head)
 	qdel(wizard_mob.shoes)
@@ -274,9 +274,9 @@
 		text += "<HR>"
 	return text
 
-//OTHER PROCS
+// OTHER PROCS
 
-//To batch-remove wizard spells. Linked to mind.dm.
+// To batch-remove wizard spells. Linked to mind.dm.
 /mob/proc/spellremove(mob/M)
 	for(var/obj/effect/proc_holder/spell/spell_to_remove in src.spell_list)
 		qdel(spell_to_remove)
@@ -286,7 +286,7 @@
 /*Checks if the wizard can cast spells.
 Made a proc so this is not repeated 14 (or more) times.*/
 /mob/proc/casting()
-//Removed the stat check because not all spells require clothing now.
+// Removed the stat check because not all spells require clothing now.
 	if(!istype(usr:wear_suit, /obj/item/clothing/suit/wizrobe))
 		to_chat(usr, "I don't feel strong enough without my robe.")
 		return 0

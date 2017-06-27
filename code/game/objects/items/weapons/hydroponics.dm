@@ -11,15 +11,15 @@
 /*
  * SeedBag
  */
-//uncomment when this is updated to match storage update
+// uncomment when this is updated to match storage update
 /*
 /obj/item/weapon/seedbag
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "seedbag"
 	name = "Seed Bag"
 	desc = "A small satchel made for organizing seeds."
-	var/mode = 1;  //0 = pick one at a time, 1 = pick all on tile
-	var/capacity = 500; //the number of seeds it can carry.
+	var/mode = 1;  // 0 = pick one at a time, 1 = pick all on tile
+	var/capacity = 500; // the number of seeds it can carry.
 	slot_flags = SLOT_BELT
 	w_class = 1
 	var/list/item_quants = list()
@@ -44,7 +44,7 @@
 	if (istype(O, /obj/item/weapon/seedbag))
 		var/obj/item/weapon/seedbag/S = O
 		if (S.mode == 1)
-			for (var/obj/item/seeds/G in locate(src.x,src.y,src.z))
+			for (var/obj/item/seeds/G in locate(src.x, src.y, src.z))
 				if (S.contents.len < S.capacity)
 					S.contents += G;
 					if(S.item_quants[G.name])
@@ -80,10 +80,10 @@
 				var/N = item_quants[O]
 				dat += "<FONT color = 'blue'><B>[capitalize(O)]</B>:"
 				dat += " [N] </font>"
-				dat += "<a href='byond://?src=\ref[src];vend=[O]'>Vend</A>"
+				dat += "<a href='byond:// ?src=\ref[src];vend=[O]'>Vend</A>"
 				dat += "<br>"
 
-		dat += "<br><a href='byond://?src=\ref[src];unload=1'>Unload All</A>"
+		dat += "<br><a href='byond:// ?src=\ref[src];unload=1'>Unload All</A>"
 		dat += "</TT>"
 	user << browse("<HEAD><TITLE>Seedbag Supplies</TITLE></HEAD><TT>[dat]</TT>", "window=seedbag")
 	onclose(user, "seedbag")
@@ -151,7 +151,7 @@
 		to_chat(usr, "All the leaves have fallen off the nettle from violent whacking.")
 		qdel(src)
 
-/obj/item/weapon/grown/nettle/changePotency(newValue) //-QualityVan
+/obj/item/weapon/grown/nettle/changePotency(newValue) // -QualityVan
 	potency = newValue
 	force = round((5+potency/5), 1)
 
@@ -196,7 +196,7 @@
 		to_chat(usr, "All the leaves have fallen off the deathnettle from violent whacking.")
 		qdel(src)
 
-/obj/item/weapon/grown/deathnettle/changePotency(newValue) //-QualityVan
+/obj/item/weapon/grown/deathnettle/changePotency(newValue) // -QualityVan
 	potency = newValue
 	force = round((5+potency/2.5), 1)
 

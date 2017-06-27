@@ -17,8 +17,8 @@
 			pixel_x = get_standard_pixel_x_offset()
 			final_pixel_y = get_standard_pixel_y_offset(lying_current)
 			final_pixel_x = get_standard_pixel_x_offset(lying_current)
-			if((dir & (EAST|WEST)) && !buckled) //Facing east or west
-				final_dir = pick(NORTH, SOUTH) //So you fall on your side rather than your face or ass
+			if((dir & (EAST|WEST)) && !buckled) // Facing east or west
+				final_dir = pick(NORTH, SOUTH) // So you fall on your side rather than your face or ass
 	else
 		if(lying != lying_prev)
 			lying_prev = lying

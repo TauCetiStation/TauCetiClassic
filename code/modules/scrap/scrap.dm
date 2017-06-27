@@ -6,7 +6,7 @@
 	density = 0
 	icon_state = "small"
 	icon = 'icons/obj/structures/scrap/base.dmi'
-	var/obj/item/weapon/storage/internal/updating/loot	//the visible loot
+	var/obj/item/weapon/storage/internal/updating/loot	// the visible loot
 	var/loot_min = 3
 	var/loot_max = 5
 	var/list/loot_list = list(
@@ -20,9 +20,9 @@
 	)
 	var/dig_amount = 7
 	var/parts_icon = 'icons/obj/structures/scrap/trash.dmi'
-	var/base_min = 5	//min and max number of random pieces of base icon
+	var/base_min = 5	// min and max number of random pieces of base icon
 	var/base_max = 8
-	var/base_spread = 12 //limits on pixel offsets of base pieces
+	var/base_spread = 12 // limits on pixel offsets of base pieces
 	var/list/ways = list("pokes around", "digs through", "rummages through", "goes through","picks through")
 	var/list/diggers = list()
 
@@ -49,7 +49,7 @@
 		qdel(item)
 	return ..()
 
-//stupid shard copypaste
+// stupid shard copypaste
 /obj/structure/scrap/Crossed(AM as mob|obj)
 	if(ismob(AM))
 		var/mob/M = AM
@@ -72,7 +72,7 @@
 /obj/structure/scrap/proc/shuffle_loot()
 	loot.close_all()
 	for(var/A in loot)
-		loot.remove_from_storage(A,src)
+		loot.remove_from_storage(A, src)
 	if(contents.len)
 		contents = shuffle(contents)
 		var/num = rand(1,loot_min)
@@ -86,8 +86,8 @@
 	update_icon()
 
 /obj/structure/scrap/proc/randomize_image(image/I)
-	I.pixel_x = rand(-base_spread,base_spread)
-	I.pixel_y = rand(-base_spread,base_spread)
+	I.pixel_x = rand(-base_spread, base_spread)
+	I.pixel_y = rand(-base_spread, base_spread)
 	var/matrix/M = matrix()
 	M.Turn(pick(0,90.180,270))
 	I.transform = M
@@ -96,15 +96,15 @@
 /obj/structure/scrap/update_icon(rebuild_base=0)
 	if(rebuild_base)
 		overlays.Cut()
-		var/num = rand(base_min,base_max)
+		var/num = rand(base_min, base_max)
 		for(var/i=1 to num)
-			var/image/I = image(parts_icon,pick(icon_states(parts_icon)))
+			var/image/I = image(parts_icon, pick(icon_states(parts_icon)))
 			I.color = pick("#996633", "#663300", "#666666", "")
 			overlays |= randomize_image(I)
 
 	underlays.Cut()
 	for(var/obj/O in loot.contents)
-		var/image/I = image(O.icon,O.icon_state)
+		var/image/I = image(O.icon, O.icon_state)
 		I.color = O.color
 		underlays |= randomize_image(I)
 

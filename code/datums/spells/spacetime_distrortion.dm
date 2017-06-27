@@ -62,7 +62,7 @@
 	var/obj/effect/cross_action/spacetime_dist/linked_dist
 	var/busy = FALSE
 	var/sound
-	var/walks_left = 50 //prevents the game from hanging in extreme cases (such as minigun fire)
+	var/walks_left = 50 // prevents the game from hanging in extreme cases (such as minigun fire)
 	var/static/list/guitar_notes = null
 
 /obj/effect/cross_action/spacetime_dist/New()

@@ -9,12 +9,12 @@
 		hear_sleep(message)
 		return
 
-	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
+	// non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
 	if (language && (language.flags & NONVERBAL))
 		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
 			message = stars(message)
 
-	if(!say_understands(speaker,language))
+	if(!say_understands(speaker, language))
 		if(isanimal(speaker))
 			var/mob/living/simple_animal/S = speaker
 			message = pick(S.speak)
@@ -43,7 +43,7 @@
 			return
 		if(speaker_name != speaker.real_name && speaker.real_name)
 			speaker_name = "[speaker.real_name] ([speaker_name])"
-		track = "<a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a> "
+		track = "<a href='byond:// ?src=\ref[src];track=\ref[speaker]'>(F)</a> "
 		if((client.prefs.chat_toggles & CHAT_GHOSTEARS) && speaker in view(src))
 			message = "<b>[message]</b>"
 
@@ -66,18 +66,18 @@
 	if(!client)
 		return
 
-	if(sleeping || stat==1) //If unconscious or sleeping
+	if(sleeping || stat==1) // If unconscious or sleeping
 		hear_sleep(message)
 		return
 
 	var/track = null
 
-	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
+	// non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
 	if (language && (language.flags & NONVERBAL))
 		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
 			message = stars(message)
 
-	if(!say_understands(speaker,language))
+	if(!say_understands(speaker, language))
 		if(isanimal(speaker))
 			var/mob/living/simple_animal/S = speaker
 			message = pick(S.speak)
@@ -110,7 +110,7 @@
 
 	if(istype(src, /mob/living/silicon/ai) && !hard_to_hear)
 		var/jobname // the mob's "job"
-		var/mob/living/carbon/human/impersonating //The crewmember being impersonated, if any.
+		var/mob/living/carbon/human/impersonating // The crewmember being impersonated, if any.
 
 		if (ishuman(speaker))
 			var/mob/living/carbon/human/H = speaker
@@ -141,19 +141,19 @@
 
 		if(changed_voice)
 			if(impersonating)
-				track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[impersonating]'>[speaker_name] ([jobname])</a>"
+				track = "<a href='byond:// ?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[impersonating]'>[speaker_name] ([jobname])</a>"
 			else
 				track = "[speaker_name] ([jobname])"
 		else
-			track = "<a href='byond://?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[speaker]'>[speaker_name] ([jobname])</a>"
+			track = "<a href='byond:// ?src=\ref[src];trackname=[html_encode(speaker_name)];track=\ref[speaker]'>[speaker_name] ([jobname])</a>"
 
 	if(istype(src, /mob/dead/observer))
-		if(speaker_name != speaker.real_name && !isAI(speaker)) //Announce computer and various stuff that broadcasts doesn't use it's real name but AI's can't pretend to be other mobs.
+		if(speaker_name != speaker.real_name && !isAI(speaker)) // Announce computer and various stuff that broadcasts doesn't use it's real name but AI's can't pretend to be other mobs.
 			speaker_name = "[speaker.real_name] ([speaker_name])"
 		if(isAI(speaker))
 			var/mob/living/silicon/ai/S = speaker
 			speaker = S.eyeobj
-		track = "[speaker_name] <a href='byond://?src=\ref[src];track=\ref[speaker]'>(F)</a>"
+		track = "[speaker_name] <a href='byond:// ?src=\ref[src];track=\ref[speaker]'>(F)</a>"
 
 	var/formatted
 	if(language)

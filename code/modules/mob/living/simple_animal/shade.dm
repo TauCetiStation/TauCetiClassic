@@ -41,7 +41,7 @@
 			return
 
 
-	attackby(obj/item/O, mob/user)  //Marker -Agouri
+	attackby(obj/item/O, mob/user)  // Marker -Agouri
 		if(istype(O, /obj/item/device/soulstone))
 			O.transfer_soul("SHADE", src, user)
 		else

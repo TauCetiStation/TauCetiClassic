@@ -162,11 +162,11 @@
 		for(var/atom/movable/A as mob|obj in src.loc)
 			if (!( A.anchored ))
 				A.loc = src.connected
-			//Foreach goto(26)
+			// Foreach goto(26)
 		src.connected.connected = null
 		src.connected.update()
 		add_fingerprint(user)
-		//SN src = null
+		// SN src = null
 		qdel(src)
 		return
 	return
@@ -251,7 +251,7 @@
 /obj/structure/crematorium/attack_hand(mob/user)
 //	if (cremating) AWW MAN! THIS WOULD BE SO MUCH MORE FUN ... TO WATCH
 //		user.show_message("\red Uh-oh, that was a bad idea.", 1)
-//		//usr << "Uh-oh, that was a bad idea."
+//		// usr << "Uh-oh, that was a bad idea."
 //		src:loc:poison += 20000000
 //		src:loc:firelevel = src:loc:poison
 //		return
@@ -317,11 +317,11 @@
 	return
 
 /obj/structure/crematorium/proc/cremate(atom/A, mob/user)
-//	for(var/obj/machinery/crema_switch/O in src) //trying to figure a way to call the switch, too drunk to sort it out atm
+//	for(var/obj/machinery/crema_switch/O in src) // trying to figure a way to call the switch, too drunk to sort it out atm
 //		if(var/on == 1)
 //		return
 	if(cremating)
-		return //don't let you cremate something twice or w/e
+		return // don't let you cremate something twice or w/e
 
 	if(contents.len <= 0)
 		for (var/mob/M in viewers(src))
@@ -342,15 +342,15 @@
 		for(var/mob/living/M in contents)
 			if (M.stat!=2)
 				M.emote("scream",,, 1)
-			//Logging for this causes runtimes resulting in the cremator locking up. Commenting it out until that's figured out.
-			//M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[user]/[user.ckey]</b>" //No point in this when the mob's about to be deleted
-			//user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
-			//log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
+			// Logging for this causes runtimes resulting in the cremator locking up. Commenting it out until that's figured out.
+			// M.attack_log += "\[[time_stamp()]\] Has been cremated by <b>[user]/[user.ckey]</b>" // No point in this when the mob's about to be deleted
+			// user.attack_log +="\[[time_stamp()]\] Cremated <b>[M]/[M.ckey]</b>"
+			// log_attack("\[[time_stamp()]\] <b>[user]/[user.ckey]</b> cremated <b>[M]/[M.ckey]</b>")
 			M.death(1)
 			M.ghostize(bancheck = TRUE)
 			qdel(M)
 
-		for(var/obj/O in contents) //obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
+		for(var/obj/O in contents) // obj instead of obj/item so that bodybags and ashes get destroyed. We dont want tons and tons of ash piling up
 			qdel(O)
 
 		new /obj/effect/decal/cleanable/ash(src)
@@ -383,11 +383,11 @@
 		for(var/atom/movable/A as mob|obj in src.loc)
 			if (!( A.anchored ))
 				A.loc = src.connected
-			//Foreach goto(26)
+			// Foreach goto(26)
 		src.connected.connected = null
 		src.connected.update()
 		add_fingerprint(user)
-		//SN src = null
+		// SN src = null
 		qdel(src)
 		return
 	return
@@ -404,7 +404,7 @@
 		for(var/mob/B in viewers(user, 3))
 			if ((B.client && !( B.blinded )))
 				to_chat(B, text("<span class='rose'>[] stuffs [] into []!</span>", user, O, src))
-			//Foreach goto(99)
+			// Foreach goto(99)
 	return
 
 /obj/machinery/crema_switch/attack_hand(mob/user)

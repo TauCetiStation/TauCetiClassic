@@ -1,6 +1,6 @@
 
 
-///jar
+// /jar
 
 /obj/item/weapon/reagent_containers/food/drinks/jar
 	name = "empty jar"

@@ -4,7 +4,7 @@
 	var/datum/gas_mixture/air
 
 	var/list/obj/machinery/atmospherics/pipe/members
-	var/list/obj/machinery/atmospherics/pipe/edges //Used for building networks
+	var/list/obj/machinery/atmospherics/pipe/edges // Used for building networks
 
 	var/datum/pipe_network/network
 
@@ -31,20 +31,20 @@
 
 	return ..()
 
-/datum/pipeline/process()//This use to be called called from the pipe networks
+/datum/pipeline/process()// This use to be called called from the pipe networks
 
-	//Check to see if pressure is within acceptable limits
+	// Check to see if pressure is within acceptable limits
 	var/pressure = air.return_pressure()
 	if(pressure > alert_pressure)
 		for(var/obj/machinery/atmospherics/pipe/member in members)
 			if(!member.check_pressure(pressure))
-				break //Only delete 1 pipe per process
+				break // Only delete 1 pipe per process
 
-	//Allow for reactions
-	//air.react() //Should be handled by pipe_network now
+	// Allow for reactions
+	// air.react() // Should be handled by pipe_network now
 
 /datum/pipeline/proc/temporarily_store_air()
-	//Update individual gas_mixtures by volume ratio
+	// Update individual gas_mixtures by volume ratio
 
 	for(var/obj/machinery/atmospherics/pipe/member in members)
 		member.air_temporary = new
@@ -133,8 +133,8 @@
 	if(!network)
 		network = new /datum/pipe_network()
 		network.build_network(src, null)
-			//technically passing these parameters should not be allowed
-			//however pipe_network.build_network(..) and pipeline.network_extend(...)
+			// technically passing these parameters should not be allowed
+			// however pipe_network.build_network(..) and pipeline.network_extend(...)
 			//		were setup to properly handle this case
 
 	return network
@@ -146,11 +146,11 @@
 	air_sample.volume = mingle_volume
 
 	if(istype(target) && target.zone && !iscatwalk(target))
-		//Have to consider preservation of group statuses
+		// Have to consider preservation of group statuses
 		var/datum/gas_mixture/turf_copy = new
 
 		turf_copy.copy_from(target.zone.air)
-		turf_copy.volume = target.zone.air.volume //Copy a good representation of the turf from parent group
+		turf_copy.volume = target.zone.air.volume // Copy a good representation of the turf from parent group
 
 		equalize_gases(list(air_sample, turf_copy))
 		air.merge(air_sample)
@@ -164,7 +164,7 @@
 
 		equalize_gases(list(air_sample, turf_air))
 		air.merge(air_sample)
-		//turf_air already modified by equalize_gases()
+		// turf_air already modified by equalize_gases()
 
 	if(network)
 		network.update = 1
@@ -237,9 +237,9 @@
 		network.update = 1
 
 /proc/equalize_gases(datum/gas_mixture/list/gases)
-	//Perfectly equalize all gases members instantly
+	// Perfectly equalize all gases members instantly
 
-	//Calculate totals from individual components
+	// Calculate totals from individual components
 	var/total_volume = 0
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
@@ -273,13 +273,13 @@
 
 	if(total_volume > 0)
 
-		//Calculate temperature
+		// Calculate temperature
 		var/temperature = 0
 
 		if(total_heat_capacity > 0)
 			temperature = total_thermal_energy/total_heat_capacity
 
-		//Update individual gas_mixtures by volume ratio
+		// Update individual gas_mixtures by volume ratio
 		for(var/datum/gas_mixture/gas in gases)
 			gas.oxygen = total_oxygen*gas.volume/total_volume
 			gas.nitrogen = total_nitrogen*gas.volume/total_volume

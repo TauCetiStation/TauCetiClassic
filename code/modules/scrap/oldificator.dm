@@ -39,7 +39,7 @@
 	if(prob(40))
 		rigged = 1
 		if(prob(80))
-			charge = maxcharge  //make it BOOM hard
+			charge = maxcharge  // make it BOOM hard
 	..()
 /obj/item/weapon/stock_parts/make_old()
 	var/degrade = pick(0,1,1,1,2)

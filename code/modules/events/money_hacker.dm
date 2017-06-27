@@ -53,14 +53,14 @@
 /datum/event/money_hacker/end()
 	var/message
 	if(affected_account && !affected_account)
-		//hacker wins
+		// hacker wins
 		message = "The hack attempt has succeeded."
 
-		//subtract the money
+		// subtract the money
 		var/lost = affected_account.money * 0.8 + (rand(2,4) - 2) / 10
 		affected_account.money -= lost
 
-		//create a taunting log entry
+		// create a taunting log entry
 		var/datum/transaction/T = new()
 		T.target_name = pick("","yo brotha from anotha motha","el Presidente","chieF smackDowN")
 		T.purpose = pick("Ne$ ---ount fu%ds init*&lisat@*n","PAY BACK YOUR MUM","Funds withdrawal","pWnAgE","l33t hax","liberationez")
@@ -76,7 +76,7 @@
 		affected_account.transaction_log.Add(T)
 
 	else
-		//crew wins
+		// crew wins
 		message = "The attack has ceased, the affected accounts can now be brought online."
 
 	var/my_department = "[station_name()] firewall subroutines"

@@ -1,7 +1,7 @@
-//Solar tracker
+// Solar tracker
 
-//Machine that tracks the sun and reports it's direction to the solar controllers
-//As long as this is working, solar panels on same powernet will track automatically
+// Machine that tracks the sun and reports it's direction to the solar controllers
+// As long as this is working, solar panels on same powernet will track automatically
 
 /obj/machinery/power/tracker
 	name = "solar tracker"
@@ -37,7 +37,7 @@
 /obj/machinery/power/tracker/proc/set_angle(angle)
 	sun_angle = angle
 
-	//set icon dir to show sun illumination
+	// set icon dir to show sun illumination
 	dir = turn(NORTH, -angle - 22.5)	// 22.5 deg bias ensures, e.g. 67.5-112.5 is EAST
 
 	// check we can draw power

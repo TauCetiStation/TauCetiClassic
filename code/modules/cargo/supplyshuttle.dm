@@ -1,4 +1,4 @@
-//Config stuff
+// Config stuff
 var/list/mechtoys = list(
 	/obj/item/toy/prize/ripley,
 	/obj/item/toy/prize/fireripley,
@@ -23,12 +23,12 @@ var/list/mechtoys = list(
 	icon_state = "shuttle3"
 	requires_power = 0
 
-//SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
+// SUPPLY PACKS MOVED TO /code/defines/obj/supplypacks.dm
 
-/obj/structure/plasticflaps //HOW DO YOU CALL THOSE THINGS ANYWAY
+/obj/structure/plasticflaps // HOW DO YOU CALL THOSE THINGS ANYWAY
 	name = "\improper plastic flaps"
 	desc = "Completely impassable - or are they?"
-	icon = 'icons/obj/stationobjs.dmi' //Change this.
+	icon = 'icons/obj/stationobjs.dmi' // Change this.
 	icon_state = "plasticflaps"
 	density = 0
 	anchored = 1
@@ -51,12 +51,12 @@ var/list/mechtoys = list(
 		return prob(60)
 
 	var/obj/structure/stool/bed/B = A
-	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob)//if it's a bed/chair and someone is buckled, it will not pass
+	if (istype(A, /obj/structure/stool/bed) && B.buckled_mob)// if it's a bed/chair and someone is buckled, it will not pass
 		return 0
 
 	else if(istype(A, /mob/living)) // You Shall Not Pass!
 		var/mob/living/M = A
-		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/slime) && !istype(M, /mob/living/simple_animal/mouse) && !istype(M, /mob/living/silicon/robot/drone))  //If your not laying down, or a small creature, no pass.
+		if(!M.lying && !istype(M, /mob/living/carbon/monkey) && !istype(M, /mob/living/carbon/slime) && !istype(M, /mob/living/simple_animal/mouse) && !istype(M, /mob/living/silicon/robot/drone))  // If your not laying down, or a small creature, no pass.
 			return 0
 	return ..()
 
@@ -71,17 +71,17 @@ var/list/mechtoys = list(
 			if (prob(5))
 				qdel(src)
 
-/obj/structure/plasticflaps/mining //A specific type for mining that doesn't allow airflow because of them damn crates
+/obj/structure/plasticflaps/mining // A specific type for mining that doesn't allow airflow because of them damn crates
 	name = "\improper Airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps."
 
-/obj/structure/plasticflaps/mining/New() //set the turf below the flaps to block air
+/obj/structure/plasticflaps/mining/New() // set the turf below the flaps to block air
 	var/turf/T = get_turf(loc)
 	if(T)
 		T.blocks_air = 1
 	..()
 
-/obj/structure/plasticflaps/mining/Destroy() //lazy hack to set the turf to allow air to pass if it's a simulated floor
+/obj/structure/plasticflaps/mining/Destroy() // lazy hack to set the turf to allow air to pass if it's a simulated floor
 	var/turf/T = get_turf(loc)
 	if(T)
 		if(istype(T, /turf/simulated/floor))

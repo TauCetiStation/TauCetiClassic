@@ -10,7 +10,7 @@
 			. = contents[contents.len]
 			contents.len--
 
-		Top() //returns the item on the top of the stack without removing it
+		Top() // returns the item on the top of the stack without removing it
 			if(!contents.len) return null
 			return contents[contents.len]
 

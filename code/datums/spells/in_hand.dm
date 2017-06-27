@@ -74,10 +74,10 @@
 	if(user.is_busy())
 		return FALSE
 	if(can_powerup && power_of_spell < max_power)
-		if(!do_after(user, 10, null, user,TRUE))
+		if(!do_after(user, 10, null, user, TRUE))
 			return FALSE
 		power_of_spell++
-		//to_chat(user, "<span class'notice'>[src] power has grown up!</span>") much text, so informative, very spam, wow! but i'l leave that anyway.
+		// to_chat(user, "<span class'notice'>[src] power has grown up!</span>") much text, so informative, very spam, wow! but i'l leave that anyway.
 		update_icon()
 		return TRUE
 
@@ -136,7 +136,7 @@
 	explosion(get_turf(target), 1)
 	return ..()
 
-//////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////// 
 
 /obj/effect/proc_holder/spell/in_hand/tesla
 	name = "Lightning Bolt"
@@ -213,7 +213,7 @@
 	damage_type = BURN
 	nodamage = 0
 
-//////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////// 
 
 /obj/effect/proc_holder/spell/in_hand/res_touch
 	name = "Resurrection Touch"
@@ -282,7 +282,7 @@
 
 	to_chat(L, "<span class='notice'>You rise with a start, you're alive!!!</span>")
 
-//////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////// 
 
 /obj/effect/proc_holder/spell/in_hand/heal
 	name = "Heal"

@@ -4,7 +4,7 @@
 	icon = 'code/modules/holidays/new_year/presents.dmi'
 	icon_state = "gift1"
 
-	var/bad_chance = 5	//Chance of having bad gift
+	var/bad_chance = 5	// Chance of having bad gift
 	var/list/gifts = list(/obj/item/weapon/reagent_containers/food/snacks/cookie	  = 3,
 						/obj/item/weapon/reagent_containers/food/snacks/chocolatebar  = 3,
 						/obj/item/clothing/head/santahat				= 3,
@@ -93,21 +93,21 @@
 	pixel_y = rand(-6,6)
 
 /obj/item/weapon/present/attack_self(mob/user, key)
-	var/p_warns							//player warns
-	var/giftselect = pickweight(gifts)	//almost random pick from gift list
+	var/p_warns							// player warns
+	var/giftselect = pickweight(gifts)	// almost random pick from gift list
 	var/present
 	var/client/C = user.client
 
-	//Checks for warnbans and increase chance of bad gift
+	// Checks for warnbans and increase chance of bad gift
 	if(C.prefs.warnbans)
 		p_warns = C.prefs.warnbans
-		bad_chance = p_warns * 20	//5 warnbans = 100% bad chance
+		bad_chance = p_warns * 20	// 5 warnbans = 100% bad chance
 
 	user.drop_item()
 	user.visible_message("<span class='notice'>[user] carefully open [src].</span>","<span class='notice'>You carefully open [src].</span>")
 	playsound(src, 'sound/items/crumple.ogg', 40, 1, 1)
 
-	//For absolutely bad players we have special presents ;D
+	// For absolutely bad players we have special presents ;D
 	if(bad_chance >= 100)
 		new /obj/item/weapon/ore/coal/special(src.loc)
 		new /obj/item/weapon/ore/coal/special(src.loc)
@@ -134,7 +134,7 @@
 
 /obj/item/weapon/present/special/attack_self(mob/user, key)
 	. = ..()
-	//Free whitelist adding. It could be OP, but it's fucking New Year, why not?
+	// Free whitelist adding. It could be OP, but it's fucking New Year, why not?
 	var/client/C = user.client
 	if(!C.prefs.warnbans)
 		if(prob(1))

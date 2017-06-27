@@ -9,17 +9,17 @@
 	anchored = 1.0
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
-	var/amt_silver = 0 //amount of silver
-	var/amt_gold = 0   //amount of gold
+	var/amt_silver = 0 // amount of silver
+	var/amt_gold = 0   // amount of gold
 	var/amt_diamond = 0
 	var/amt_iron = 0
 	var/amt_phoron = 0
 	var/amt_uranium = 0
 	var/amt_clown = 0
 	var/amt_platinum = 0
-	var/newCoins = 0   //how many coins the machine made in it's last load
+	var/newCoins = 0   // how many coins the machine made in it's last load
 	var/processing = 0
-	var/chosen = "metal" //which material will be used to make coins
+	var/chosen = "metal" // which material will be used to make coins
 	var/coinsToProduce = 10
 
 
@@ -60,7 +60,7 @@
 				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/platinum))
 				amt_platinum += 100 * O.amount
-				qdel(O) //Commented out for now. -Durandan
+				qdel(O) // Commented out for now. -Durandan
 
 
 /obj/machinery/mineral/mint/attack_hand(user)
@@ -110,14 +110,14 @@
 			dat += text("chosen")
 		else
 			dat += text("<A href='?src=\ref[src];choose=clown'>Choose</A>")
-	dat += text("<br><font color='#888888'><b>Platinum inserted: </b>[amt_platinum]</font> ")//I don't even know these color codes, so fuck it.
+	dat += text("<br><font color='#888888'><b>Platinum inserted: </b>[amt_platinum]</font> ")// I don't even know these color codes, so fuck it.
 	if (chosen == "platinum")
 		dat += text("chosen")
 	else
 		dat += text("<A href='?src=\ref[src];choose=platinum'>Choose</A>")
 
 	dat += text("<br><br>Will produce [coinsToProduce] [chosen] coins if enough materials are available.<br>")
-	//dat += text("The dial which controls the number of conins to produce seems to be stuck. A technician has already been dispatched to fix this.")
+	// dat += text("The dial which controls the number of conins to produce seems to be stuck. A technician has already been dispatched to fix this.")
 	dat += text("<A href='?src=\ref[src];chooseAmt=-10'>-10</A> ")
 	dat += text("<A href='?src=\ref[src];chooseAmt=-5'>-5</A> ")
 	dat += text("<A href='?src=\ref[src];chooseAmt=-1'>-1</A> ")

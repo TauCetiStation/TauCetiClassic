@@ -26,7 +26,7 @@
 /proc/hsl2rgb(h, s, l)
 	return
 
-/proc/isloyal(A) //Checks to see if the person contains a loyalty implant, then checks that the implant is actually inside of them
+/proc/isloyal(A) // Checks to see if the person contains a loyalty implant, then checks that the implant is actually inside of them
 	for(var/obj/item/weapon/implant/loyalty/L in A)
 		if(L.implanted)
 			return 1
@@ -181,8 +181,8 @@ proc/slur(phrase)
 			if(lletter=="s")	newletter="ch"
 			if(lletter=="a")	newletter="ah"
 			if(lletter=="c")	newletter="k"
-			if(lletter=="�")	newletter="�" //246->249
-			if(lletter=="�")	newletter="�" //229->232
+			if(lletter=="�")	newletter="�" // 246->249
+			if(lletter=="�")	newletter="�" // 229->232
 		switch(rand(1,15))
 			if(1 to 4)
 				newletter = "[lowertext_plus(newletter)]"
@@ -196,25 +196,25 @@ proc/slur(phrase)
 /proc/stutter(text)
 	text = html_decode(text)
 	var/t = ""
-	var/lenght = length(text)//length of the entire word
+	var/lenght = length(text)// length of the entire word
 	var/alphabet[0]
-	//alphabet.Add("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z")
-	//alphabet.Add("á","â","ã","ä","æ","ç","é","ê","ë","ì","í","ï","ð","ñ","ò","ô","õ","ö","÷","ø","ù")
+	// alphabet.Add("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z")
+	// alphabet.Add("á","â","ã","ä","æ","ç","é","ê","ë","ì","í","ï","ð","ñ","ò","ô","õ","ö","÷","ø","ù")
 	alphabet.Add(98,99,100,102,103,104,105,106,107,108,109,110,112,113,114,115,116,118,119,120,121,122)
 	alphabet.Add(225,226,227,228,230,231,233,234,235,236,237,239,240,241,242,244,245,246,247,248,249)
 	var/letter
 	var/lcase_letter
 	var/tletter
 	var/p = 1
-	while(p <= lenght)//while P, which starts at 1 is less or equal to N which is the length.
-		letter = copytext(text, p, p + 1)//copies text from a certain distance. In this case, only one letter at a time.
+	while(p <= lenght)// while P, which starts at 1 is less or equal to N which is the length.
+		letter = copytext(text, p, p + 1)// copies text from a certain distance. In this case, only one letter at a time.
 		tletter = letter
 		lcase_letter = text2ascii(letter)
 		if((lcase_letter >= 65 && lcase_letter <=90) || (lcase_letter >= 192 && lcase_letter <=223))
 			tletter = ascii2text(lcase_letter + 32)
 		if (prob(80) && (text2ascii(tletter) in alphabet))
 			if (prob(10))
-				letter = text("[letter]-[letter]-[letter]-[letter]")//replaces the current letter with this instead.
+				letter = text("[letter]-[letter]-[letter]-[letter]")// replaces the current letter with this instead.
 			else
 				if (prob(20))
 					letter = text("[letter]-[letter]-[letter]")
@@ -223,13 +223,13 @@ proc/slur(phrase)
 						letter = null
 					else
 						letter = text("[letter]-[letter]")
-		t = text("[t][letter]")//since the above is ran through for each letter, the text just adds up back to the original word.
-		p++//for each letter p is increased to find where the next letter will be.
-	//return sanitize(copytext(t,1,MAX_MESSAGE_LEN))
+		t = text("[t][letter]")// since the above is ran through for each letter, the text just adds up back to the original word.
+		p++// for each letter p is increased to find where the next letter will be.
+	// return sanitize(copytext(t,1,MAX_MESSAGE_LEN))
 	return copytext(t,1,MAX_MESSAGE_LEN)
 
 
-/proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
+/proc/Gibberish(t, p)// t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
 	/* Turn text into complete gibberish! */
 	var/returntext = ""
 	for(var/i = 1, i <= length(t), i++)
@@ -295,7 +295,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	spawn()
 		strength *= 32
 		for(var/i=0; i<duration, i++)
-			animate(M.client, pixel_x = rand(-strength,strength), pixel_y = rand(-strength,strength), time = 2)
+			animate(M.client, pixel_x = rand(-strength, strength), pixel_y = rand(-strength, strength), time = 2)
 			sleep(2)
 		animate(M.client, pixel_x = 0, pixel_y = 0, time = 0)
 
@@ -319,7 +319,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 
 	return 0
 
-//converts intent-strings into numbers and back
+// converts intent-strings into numbers and back
 var/list/intents = list("help","disarm","grab","hurt")
 /proc/intent_numeric(argument)
 	if(istext(argument))
@@ -335,7 +335,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 			if(2)			return "grab"
 			else			return "hurt"
 
-//change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
+// change a mob's act-intent. Input the intent as a string such as "help" or use "right"/"left
 /mob/verb/a_intent_change(input as text)
 	set name = "a-intent"
 	set hidden = 1
@@ -377,7 +377,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 		var/turf/targetturf = get_turf(M)
 		if((targetturf.z == sourceturf.z))
 			M.show_message("<span class='info'>[bicon(broadcast_source)] [message]</span>", 1)
-	for(var/mob/dead/observer/G in player_list) //Ghosts? Why not.
+	for(var/mob/dead/observer/G in player_list) // Ghosts? Why not.
 		G.show_message("<span class='info'>[bicon(broadcast_source)] [message]</span>", 1)
 
 /mob/living/proc/assess_perp(obj/access_obj, check_access, auth_weapons, check_records, check_arrest)
@@ -395,7 +395,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 	if(threatcount == SAFE_PERP)
 		return SAFE_PERP
 
-	//Agent cards lower threatlevel.
+	// Agent cards lower threatlevel.
 	var/obj/item/weapon/card/id/id = null
 	if(wear_id)
 		id = wear_id.GetID()

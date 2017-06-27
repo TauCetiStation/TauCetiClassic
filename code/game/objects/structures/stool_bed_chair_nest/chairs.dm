@@ -1,9 +1,9 @@
-/obj/structure/stool/bed/chair	//YES, chairs are a type of bed, which are a type of stool. This works, believe me.	-Pete
+/obj/structure/stool/bed/chair	// YES, chairs are a type of bed, which are a type of stool. This works, believe me.	-Pete
 	name = "chair"
 	desc = "You sit in this. Either by will or force."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "chair"
-	buckle_lying = 0 //force people to sit up in chairs when buckled
+	buckle_lying = 0 // force people to sit up in chairs when buckled
 	var/can_flipped = 0
 	var/flipped = 0
 	var/flip_angle = 0
@@ -91,7 +91,7 @@
 
 /obj/structure/stool/bed/chair/New()
 	..()
-	spawn(3)	//sorry. i don't think there's a better way to do this.
+	spawn(3)	// sorry. i don't think there's a better way to do this.
 		handle_rotation()
 	return
 
@@ -113,9 +113,9 @@
 
 /obj/structure/stool/bed/chair/attack_hand()
 	if(can_flip(usr))
-		var/flip_time = 20	//2 sec without someone
+		var/flip_time = 20	// 2 sec without someone
 		if(!isnull(buckled_mob))
-			flip_time = 60	//6 sec with
+			flip_time = 60	// 6 sec with
 		if(!flipped)
 			usr.visible_message("<span class='notice'>[usr] flips \the [src] down.</span>","<span class='notice'>You flips \the [src] down.")
 			flip()
@@ -145,7 +145,7 @@
 		rotate()
 	return
 
-/obj/structure/stool/bed/chair/handle_rotation()	//making this into a seperate proc so office chairs can call it on Move()
+/obj/structure/stool/bed/chair/handle_rotation()	// making this into a seperate proc so office chairs can call it on Move()
 	if(src.dir == NORTH)
 		src.layer = FLY_LAYER
 	else
@@ -189,7 +189,7 @@
 
 	if(!flipped)
 		M.TurnTo(0,new_angle)
-		flip_angle = new_angle	//save our angle for future flip
+		flip_angle = new_angle	// save our angle for future flip
 		if(new_angle==90)
 			offset_y = -4
 			offset_x = 2
@@ -197,7 +197,7 @@
 			offset_y = -4
 			offset_x = -2
 		flipped = 1
-		anchored = 0		//can be pulled
+		anchored = 0		// can be pulled
 		buckle_movable = 0
 		playsound(src.loc, 'sound/items/chair_fall.ogg', 25, 1)
 	else

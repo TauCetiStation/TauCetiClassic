@@ -27,7 +27,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 
 	var/CONTAMINATION_LOSS = 0.075
 	var/CONTAMINATION_LOSS_NAME = "Contamination Loss"
-	var/CONTAMINATION_LOSS_DESC = "How much toxin damage is dealt from contaminated clothing." //Per tick?  ASK ARYN
+	var/CONTAMINATION_LOSS_DESC = "How much toxin damage is dealt from contaminated clothing." // Per tick?  ASK ARYN
 
 	var/PHORON_HALLUCINATION = 1
 	var/PHORON_HALLUCINATION_NAME = "Phoron Hallucination"
@@ -42,13 +42,13 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 
 
 /obj/item/proc/can_contaminate()
-	//Clothing and backpacks can be contaminated.
+	// Clothing and backpacks can be contaminated.
 	if(flags & PHORONGUARD) return 0
-	else if(istype(src,/obj/item/weapon/storage/backpack)) return 0 //Cannot be washed :(
+	else if(istype(src,/obj/item/weapon/storage/backpack)) return 0 // Cannot be washed :(
 	else if(istype(src,/obj/item/clothing)) return 1
 
 /obj/item/proc/contaminate()
-	//Do a contamination overlay? Temporary measure to keep contamination less deadly than it was.
+	// Do a contamination overlay? Temporary measure to keep contamination less deadly than it was.
 	if(!contaminated)
 		contaminated = 1
 		overlays += contamination_overlay
@@ -62,33 +62,33 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 /mob/proc/contaminate()
 
 /mob/living/carbon/human/contaminate()
-	//See if anything can be contaminated.
+	// See if anything can be contaminated.
 
 	if(!pl_suit_protected())
 		suit_contamination()
 
 	if(!pl_head_protected())
 		if(prob(1))
-			suit_contamination() //Phoron can sometimes get through such an open suit.
+			suit_contamination() // Phoron can sometimes get through such an open suit.
 
-//Cannot wash backpacks currently.
+// Cannot wash backpacks currently.
 //	if(istype(back,/obj/item/weapon/storage/backpack))
 //		back.contaminate()
 
 /mob/proc/pl_effects()
 
 /mob/living/carbon/human/pl_effects()
-	//Handles all the bad things phoron can do.
+	// Handles all the bad things phoron can do.
 
-	//Contamination
+	// Contamination
 	if(vsc.plc.CLOTH_CONTAMINATION)
 		contaminate()
 
-	//Anything else requires them to not be dead.
+	// Anything else requires them to not be dead.
 	if(stat >= DEAD || (species && species.flags[BIOHAZZARD_IMMUNE]))
 		return
 
-	//Burn skin if exposed.
+	// Burn skin if exposed.
 	if(vsc.plc.SKIN_BURNS)
 		if(!pl_head_protected() || !pl_suit_protected())
 			burn_skin(0.25)
@@ -96,7 +96,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 				to_chat(src, "\red Your skin burns!")
 			updatehealth()
 
-	//Burn eyes if exposed.
+	// Burn eyes if exposed.
 	if(vsc.plc.EYE_BURNS)
 		if(!head)
 			if(!wear_mask)
@@ -112,7 +112,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 					if(!(wear_mask.flags & MASKCOVERSEYES))
 						burn_eyes()
 
-	//Genetic Corruption
+	// Genetic Corruption
 	if(vsc.plc.GENETIC_CORRUPTION)
 		if(!(pl_head_protected() & pl_suit_protected()))
 			if(rand(1,10000) < vsc.plc.GENETIC_CORRUPTION)
@@ -125,9 +125,9 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 					randmuti(src)
 
 				to_chat(src, "\red High levels of phoron cause you to spontaneously mutate.")
-				domutcheck(src,null)
+				domutcheck(src, null)
 
-	//Hallucination
+	// Hallucination
 	if(vsc.plc.PHORON_HALLUCINATION)
 		if(!(pl_head_protected() & pl_suit_protected()))
 			if(hallucination < 25)
@@ -135,7 +135,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 
 
 /mob/living/carbon/human/proc/burn_eyes()
-	//The proc that handles eye burning.
+	// The proc that handles eye burning.
 	if(prob(20))
 		to_chat(src, "\red Your eyes burn!")
 	var/obj/item/organ/internal/eyes/IO = organs_by_name[O_EYES]
@@ -146,7 +146,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 		eye_blind += 20
 
 /mob/living/carbon/human/proc/pl_head_protected()
-	//Checks if the head is adequately sealed.
+	// Checks if the head is adequately sealed.
 	if(head)
 		if(vsc.plc.PHORONGUARD_ONLY)
 			if(head.flags & PHORONGUARD)
@@ -156,17 +156,17 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	return 0
 
 /mob/living/carbon/human/proc/pl_suit_protected()
-	//Checks if the suit is adequately sealed.
+	// Checks if the suit is adequately sealed.
 	if(wear_suit)
 		if(vsc.plc.PHORONGUARD_ONLY)
 			if(wear_suit.flags & PHORONGUARD) return 1
 		else
 			if(wear_suit.flags_inv & HIDEJUMPSUIT) return 1
-		//should check HIDETAIL as well, but for the moment tails are not a part that can be damaged separately
+		// should check HIDETAIL as well, but for the moment tails are not a part that can be damaged separately
 	return 0
 
 /mob/living/carbon/human/proc/suit_contamination()
-	//Runs over the things that can be contaminated and does so.
+	// Runs over the things that can be contaminated and does so.
 	if(w_uniform) w_uniform.contaminate()
 	if(shoes) shoes.contaminate()
 	if(gloves) gloves.contaminate()
@@ -174,7 +174,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 
 turf/Entered(obj/item/I)
 	. = ..()
-	//Items that are in phoron, but not on a mob, can still be contaminated.
+	// Items that are in phoron, but not on a mob, can still be contaminated.
 	if(istype(I) && vsc.plc.CLOTH_CONTAMINATION)
 		var/datum/gas_mixture/env = return_air(1)
 		if(!env)

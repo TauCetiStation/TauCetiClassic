@@ -1,12 +1,12 @@
-/mob/living/carbon/slime/emote(act,m_type=1,message = null)
+/mob/living/carbon/slime/emote(act, m_type=1,message = null)
 
 
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
-		//param = copytext(act, t1 + 1, length(act) + 1)
+		// param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
+	if(findtext(act,"s",-1) && !findtext(act,"_",-2))// Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
 
 	var/regenerate_icons
@@ -19,7 +19,7 @@
 				if (client.prefs.muted & MUTE_IC)
 					to_chat(src, "\red You cannot send IC messages (muted).")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if (src.client.handle_spam_prevention(message, MUTE_IC))
 					return
 			if (stat)
 				return
@@ -61,7 +61,7 @@
 			message = "<B>The [src.name]</B> vibrates!"
 			m_type = 1
 
-		if("noface") //mfw I have no face
+		if("noface") // mfw I have no face
 			mood = null
 			regenerate_icons = 1
 
@@ -85,7 +85,7 @@
 			mood = "angry"
 			regenerate_icons = 1
 
-		if ("help") //This is an exception
+		if ("help") // This is an exception
 			to_chat(src, "Help for slime emotes. You can use these emotes with say \"*emote\":\n\nbounce, jiggle, light, moan, shiver, sway, twitch, vibrate. \n\nYou may also change your face with: \n\nsmile, :3, pout, frown, scowl, noface")
 		else
 			to_chat(src, "<span class='notice'>Unusable emote '[act]'. Say *help for a list.</span>")
@@ -93,11 +93,11 @@
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)
-				//Foreach goto(703)
+				// Foreach goto(703)
 		else
 			for(var/mob/O in hearers(src, null))
 				O.show_message(message, m_type)
-				//Foreach goto(746)
+				// Foreach goto(746)
 
 	if (regenerate_icons)
 		regenerate_icons()

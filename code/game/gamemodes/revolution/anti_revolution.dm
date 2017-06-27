@@ -20,15 +20,15 @@
 	var/list/datum/mind/brig_targets = list()
 	var/list/datum/mind/demote_targets = list()
 
-///////////////////////////
-//Announces the game type//
-///////////////////////////
+////////////////////////// /
+// Announces the game type// 
+////////////////////////// /
 /datum/game_mode/anti_revolution/announce()
 	to_chat(world, "<B>The current game mode is - Anti-Revolution!</B>")
 	to_chat(world, "<B>Looks like CentComm has given a few new orders..</B>")
 
 ///////////////////////////////////////////////////////////////////////////////
-//Gets the round setup, cancelling if there's not enough players at the start//
+// Gets the round setup, cancelling if there's not enough players at the start// 
 ///////////////////////////////////////////////////////////////////////////////
 /datum/game_mode/anti_revolution/pre_setup()
 	for(var/mob/new_player/player in world) if(player.mind)
@@ -104,9 +104,9 @@
 
 	head_mind.current.verbs += /mob/proc/ResignFromHeadPosition
 
-//////////////////////////////////////
-//Checks if the revs have won or not//
-//////////////////////////////////////
+////////////////////////////////////// 
+// Checks if the revs have won or not// 
+////////////////////////////////////// 
 /datum/game_mode/anti_revolution/check_win()
 	if(check_head_victory())
 		finished = 1
@@ -115,7 +115,7 @@
 	return
 
 ///////////////////////////////
-//Checks if the round is over//
+// Checks if the round is over// 
 ///////////////////////////////
 /datum/game_mode/anti_revolution/check_finished()
 	if(finished != 0)
@@ -124,9 +124,9 @@
 		return 0
 
 
-//////////////////////////
-//Checks for crew victory//
-//////////////////////////
+////////////////////////// 
+// Checks for crew victory// 
+////////////////////////// 
 /datum/game_mode/anti_revolution/proc/check_crew_victory()
 	for(var/datum/mind/head_mind in heads)
 		var/turf/T = get_turf(head_mind.current)
@@ -135,9 +135,9 @@
 				return 0
 	return 1
 
-/////////////////////////////
-//Checks for a head victory//
-/////////////////////////////
+///////////////////////////// 
+// Checks for a head victory// 
+///////////////////////////// 
 /datum/game_mode/anti_revolution/proc/check_head_victory()
 	for(var/datum/mind/head_mind in heads)
 		for(var/datum/objective/objective in head_mind.objectives)
@@ -176,7 +176,7 @@
 
 	to_chat(world, "<FONT size = 2><B>Their objectives were: </B></FONT>")
 	for(var/datum/mind/head_mind in heads)
-		if(head_mind.objectives.len)//If the traitor had no objectives, don't need to process this.
+		if(head_mind.objectives.len)// If the traitor had no objectives, don't need to process this.
 			var/count = 1
 			for(var/datum/objective/objective in head_mind.objectives)
 				if(objective.check_completion())

@@ -12,7 +12,7 @@
 	origin_tech = "combat=5;powerstorage=3;syndicate=3"
 	var/fisto_setting = 1
 	var/gasperfist = 3
-	var/obj/item/weapon/tank/tank = null //Tank used for the gauntlet's piston-ram.
+	var/obj/item/weapon/tank/tank = null // Tank used for the gauntlet's piston-ram.
 
 
 /obj/item/weapon/melee/powerfist/examine(mob/user)

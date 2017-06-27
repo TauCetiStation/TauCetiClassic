@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 // Recruiting observers to play as pAIs
 
@@ -68,7 +68,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 					candidate.savefile_save(usr)
 				if("load")
 					candidate.savefile_load(usr)
-					//In case people have saved unsanitized stuff.
+					// In case people have saved unsanitized stuff.
 					// TODO:CYRILLIC
 					if(candidate.name)
 						candidate.name = sanitize(copytext(candidate.name,1,MAX_NAME_LEN))
@@ -168,28 +168,28 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 
 			<table>
 				<tr class="d0">
-					<th rowspan="2"><a href='byond://?src=\ref[src];option=name;new=1;candidate=\ref[candidate]'>Name</a>:</th>
+					<th rowspan="2"><a href='byond:// ?src=\ref[src];option=name;new=1;candidate=\ref[candidate]'>Name</a>:</th>
 					<td class="desc">[candidate.name]&nbsp;</td>
 				</tr>
 				<tr class="d1">
 					<td>What you plan to call yourself. Suggestions: Any character name you would choose for a station character OR an AI.</td>
 				</tr>
 				<tr class="d0">
-					<th rowspan="2"><a href='byond://?src=\ref[src];option=desc;new=1;candidate=\ref[candidate]'>Description</a>:</th>
+					<th rowspan="2"><a href='byond:// ?src=\ref[src];option=desc;new=1;candidate=\ref[candidate]'>Description</a>:</th>
 					<td class="desc">[candidate.description]&nbsp;</td>
 				</tr>
 				<tr class="d1">
 					<td>What sort of pAI you typically play; your mannerisms, your quirks, etc. This can be as sparse or as detailed as you like.</td>
 				</tr>
 				<tr class="d0">
-					<th rowspan="2"><a href='byond://?src=\ref[src];option=role;new=1;candidate=\ref[candidate]'>Preferred Role</a>:</th>
+					<th rowspan="2"><a href='byond:// ?src=\ref[src];option=role;new=1;candidate=\ref[candidate]'>Preferred Role</a>:</th>
 					<td class="desc">[candidate.role]&nbsp;</td>
 				</tr>
 				<tr class="d1">
 					<td>Do you like to partner with sneaky social ninjas? Like to help security hunt down thugs? Enjoy watching an engineer's back while he saves the station yet again? This doesn't have to be limited to just station jobs. Pretty much any general descriptor for what you'd like to be doing works here.</td>
 				</tr>
 				<tr class="d0">
-					<th rowspan="2"><a href='byond://?src=\ref[src];option=ooc;new=1;candidate=\ref[candidate]'>OOC Comments</a>:</th>
+					<th rowspan="2"><a href='byond:// ?src=\ref[src];option=ooc;new=1;candidate=\ref[candidate]'>OOC Comments</a>:</th>
 					<td class="desc">[candidate.comments]&nbsp;</td>
 				</tr>
 				<tr class="d1">
@@ -200,17 +200,17 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			<table>
 				<tr>
 					<td class="button">
-						<a href='byond://?src=\ref[src];option=save;new=1;candidate=\ref[candidate]' class="button">Save Personality</a>
+						<a href='byond:// ?src=\ref[src];option=save;new=1;candidate=\ref[candidate]' class="button">Save Personality</a>
 					</td>
 				</tr>
 				<tr>
 					<td class="button">
-						<a href='byond://?src=\ref[src];option=load;new=1;candidate=\ref[candidate]' class="button">Load Personality</a>
+						<a href='byond:// ?src=\ref[src];option=load;new=1;candidate=\ref[candidate]' class="button">Load Personality</a>
 					</td>
 				</tr>
 			</table><br>
 			<table>
-				<td class="button"><a href='byond://?src=\ref[src];option=submit;new=1;candidate=\ref[candidate]' class="button"><b><font size="4px">Submit Personality</font></b></a></td>
+				<td class="button"><a href='byond:// ?src=\ref[src];option=submit;new=1;candidate=\ref[candidate]' class="button"><b><font size="4px">Submit Personality</font></b></a></td>
 			</table><br>
 
 		<body>
@@ -232,7 +232,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 		var/dat = ""
 
 		dat += {"
-			<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">
+			<!DOCTYPE HTML PUBLIC \"-// W3C// DTD HTML 4.01 Transitional// EN\" \"http:// www.w3.org/TR/html4/loose.dtd\">
 			<html>
 				<head>
 					<style>
@@ -321,7 +321,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 						</tr>
 					</table>
 					<table class="download">
-						<td class="download"><a href='byond://?src=\ref[src];download=1;candidate=\ref[c];device=\ref[p]' class="button"><b>Download [c.name]</b></a>
+						<td class="download"><a href='byond:// ?src=\ref[src];download=1;candidate=\ref[c];device=\ref[p]' class="button"><b>Download [c.name]</b></a>
 						</td>
 					</table>
 					<br>
@@ -361,7 +361,7 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 			asked.Add(C.key)
 			asked[C.key] = world.time
 			var/response = alert(C, "Someone is requesting a pAI personality. Would you like to play as a personal AI?", "pAI Request", "No", "Yes", "Never for this round")
-			if(!C)	return		//handle logouts that happen whilst the alert is waiting for a response.
+			if(!C)	return		// handle logouts that happen whilst the alert is waiting for a response.
 			if(response == "Yes")
 				recruitWindow(C.mob)
 			else if (response == "Never for this round")

@@ -32,7 +32,7 @@
 	if(!melee_can_hit)
 		return
 	else if(istype(target, /mob))
-		step_away(target,src,15)
+		step_away(target, src,15)
 	return
 
 /obj/mecha/combat/honker/get_stats_part()
@@ -77,7 +77,7 @@
 						[js_dropdowns]
 						function ticker() {
 						    setInterval(function(){
-						        window.location='byond://?src=\ref[src]&update_content=1';
+						        window.location='byond:// ?src=\ref[src]&update_content=1';
 						        document.body.style.color = get_rand_color_string();
 						      document.body.style.background = get_rand_color_string();
 						    }, 1000);
@@ -137,7 +137,7 @@
 
 
 /obj/mecha/combat/honker/mechstep(direction)
-	var/result = step(src,direction)
+	var/result = step(src, direction)
 	if(result)
 		if(!squeak)
 			playsound(src, "clownstep", 70, 1)

@@ -54,7 +54,7 @@ var/savefile/Banlist
 				return .
 	return 0
 
-/proc/UpdateTime() //No idea why i made this a proc.
+/proc/UpdateTime() // No idea why i made this a proc.
 	CMinutes = (world.realtime / 10) / 60
 	return 1
 
@@ -154,9 +154,9 @@ var/savefile/Banlist
 		return 0
 	else
 		var/timeleftstring
-		if (exp >= 1440) //1440 = 1 day in minutes
+		if (exp >= 1440) // 1440 = 1 day in minutes
 			timeleftstring = "[round(exp / 1440, 0.1)] Days"
-		else if (exp >= 60) //60 = 1 hour in minutes
+		else if (exp >= 60) // 60 = 1 hour in minutes
 			timeleftstring = "[round(exp / 60, 0.1)] Hours"
 		else
 			timeleftstring = "[exp] Minutes"
@@ -165,7 +165,7 @@ var/savefile/Banlist
 /datum/admins/proc/unbanpanel()
 	var/count = 0
 	var/dat
-	//var/dat = "<HR><B>Unban Player:</B> \blue(U) = Unban , (E) = Edit Ban\green (Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >"
+	// var/dat = "<HR><B>Unban Player:</B> \blue(U) = Unban , (E) = Edit Ban\green (Total<HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >"
 	Banlist.cd = "/base"
 	for (var/A in Banlist.dir)
 		count++
@@ -188,7 +188,7 @@ var/savefile/Banlist
 	dat = "<HR><B>Bans:</B> <FONT COLOR=blue>(U) = Unban , (E) = Edit Ban</FONT> - <FONT COLOR=green>([count] Bans)</FONT><HR><table border=1 rules=all frame=void cellspacing=0 cellpadding=3 >[dat]"
 	usr << browse(dat, "window=unbanp;size=875x400")
 
-//////////////////////////////////// DEBUG ////////////////////////////////////
+/////////////////////////////////// / DEBUG /////////////////////////////////// /
 
 /proc/CreateBans()
 

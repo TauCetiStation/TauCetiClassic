@@ -63,10 +63,10 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab
 	name = "Telekinetic Grab"
 	desc = "Magic."
-	icon = 'icons/obj/magic.dmi'//Needs sprites
+	icon = 'icons/obj/magic.dmi'// Needs sprites
 	icon_state = "2"
 	flags = NOBLUDGEON | ABSTRACT
-	//item_state = null
+	// item_state = null
 	w_class = 10.0
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
@@ -85,7 +85,7 @@ var/const/tk_maxrange = 15
 	return
 
 
-	//stops TK grabs being equipped anywhere but into hands
+	// stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
 	if( (slot == slot_l_hand) || (slot== slot_r_hand) )	return
 	qdel(src)
@@ -96,7 +96,7 @@ var/const/tk_maxrange = 15
 	if(focus)
 		focus.attack_self_tk(user)
 
-/obj/item/tk_grab/afterattack(atom/target, mob/living/user, proximity, params)//TODO: go over this
+/obj/item/tk_grab/afterattack(atom/target, mob/living/user, proximity, params)// TODO: go over this
 	if(!target || !user)	return
 	if(last_throw+3 > world.time)	return
 	if(!host || host != user)
@@ -109,7 +109,7 @@ var/const/tk_maxrange = 15
 		return
 
 	var/d = get_dist(user, target)
-	if(focus) d = max(d,get_dist(user,focus)) // whichever is further
+	if(focus) d = max(d, get_dist(user, focus)) // whichever is further
 	switch(d)
 		if(0)
 			;
@@ -137,7 +137,7 @@ var/const/tk_maxrange = 15
 		var/obj/item/I = focus
 		var/resolved = target.attackby(I, user, params)
 		if(!resolved && target && I)
-			I.afterattack(target,user,1) // for splashing with beakers
+			I.afterattack(target, user,1) // for splashing with beakers
 
 
 	else
@@ -151,7 +151,7 @@ var/const/tk_maxrange = 15
 
 
 /obj/item/tk_grab/proc/focus_object(obj/target, mob/living/user)
-	if(!istype(target,/obj))	return//Cant throw non objects atm might let it do mobs later
+	if(!istype(target,/obj))	return// Cant throw non objects atm might let it do mobs later
 	if(target.anchored || !isturf(target.loc))
 		qdel(src)
 		return
@@ -163,7 +163,7 @@ var/const/tk_maxrange = 15
 
 /obj/item/tk_grab/proc/apply_focus_overlay()
 	if(!focus)	return
-	var/obj/effect/overlay/O = new /obj/effect/overlay(locate(focus.x,focus.y,focus.z))
+	var/obj/effect/overlay/O = new /obj/effect/overlay(locate(focus.x, focus.y, focus.z))
 	O.name = "sparkles"
 	O.anchored = 1
 	O.density = 0
@@ -179,7 +179,7 @@ var/const/tk_maxrange = 15
 /obj/item/tk_grab/update_icon()
 	overlays.Cut()
 	if(focus && focus.icon && focus.icon_state)
-		overlays += icon(focus.icon,focus.icon_state)
+		overlays += icon(focus.icon, focus.icon_state)
 	return
 
 /*Not quite done likely needs to use something thats not get_step_to
@@ -195,7 +195,7 @@ var/const/tk_maxrange = 15
 		return 1
 */
 
-//equip_to_slot_or_del(obj/item/W, slot, del_on_fail = 1)
+// equip_to_slot_or_del(obj/item/W, slot, del_on_fail = 1)
 /*
 		if(istype(user, /mob/living/carbon))
 			if(user:mutations & TK && get_dist(source, user) <= 7)

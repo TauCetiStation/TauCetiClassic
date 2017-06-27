@@ -9,7 +9,7 @@ Usage: Place the proc within the proc it shares it's name with, silencer_attackb
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "silencer"
 	w_class = 2
-	var/oldsound = 0 //Stores the true sound the gun made before it was silenced
+	var/oldsound = 0 // Stores the true sound the gun made before it was silenced
 
 /obj/item/weapon/gun/projectile/proc/silencer_attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/silencer))

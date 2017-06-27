@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 obj/machinery/recharger
 	name = "recharger"
@@ -91,7 +91,7 @@ obj/machinery/recharger/process()
 		if(istype(charging, /obj/item/weapon/gun/energy))
 			var/obj/item/weapon/gun/energy/E = charging
 			if(E.power_supply.charge < E.power_supply.maxcharge)
-				//E.power_supply.give(E.power_supply.chargerate * recharge_coeff)
+				// E.power_supply.give(E.power_supply.chargerate * recharge_coeff)
 				E.power_supply.give(100 * recharge_coeff)
 				icon_state = "recharger1"
 				use_power(250 * recharge_coeff)
@@ -100,7 +100,7 @@ obj/machinery/recharger/process()
 			return
 		if(istype(charging, /obj/item/weapon/melee/baton))
 			var/obj/item/weapon/melee/baton/B = charging
-			//if(B.bcell.give(B.bcell.chargerate * recharge_coeff))
+			// if(B.bcell.give(B.bcell.chargerate * recharge_coeff))
 			if(B.charges < initial(B.charges))
 				B.charges++
 				icon_state = "recharger1"
@@ -121,7 +121,7 @@ obj/machinery/recharger/process()
 			var/obj/item/ammo_box/magazine/l10mag/M = charging
 			if (M.stored_ammo.len < M.max_ammo)
 				M.stored_ammo += new M.ammo_type(M)
-				if(prob(80)) //double charging speed
+				if(prob(80)) // double charging speed
 					if (M.stored_ammo.len < M.max_ammo)
 						M.stored_ammo += new M.ammo_type(M)
 				update_icon()
@@ -145,7 +145,7 @@ obj/machinery/recharger/emp_act(severity)
 		B.charges = 0
 	..(severity)
 
-obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
+obj/machinery/recharger/update_icon()	// we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		icon_state = "rechargeroff"
 	else if(panel_open)
@@ -195,7 +195,7 @@ obj/machinery/recharger/wallcharger/process()
 			var/obj/item/ammo_box/magazine/l10mag/M = charging
 			if (M.stored_ammo.len < M.max_ammo)
 				M.stored_ammo += new M.ammo_type(M)
-				if(prob(80)) //double charging speed
+				if(prob(80)) // double charging speed
 					if (M.stored_ammo.len < M.max_ammo)
 						M.stored_ammo += new M.ammo_type(M)
 				update_icon()

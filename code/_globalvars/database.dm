@@ -33,13 +33,13 @@ var/forum_authenticated_group = "10"
 var/fileaccess_timer = 0
 var/custom_event_msg = null
 
-//Database connections
-//A connection is established on world creation. Ideally, the connection dies when the server restarts (After feedback logging.).
-var/DBConnection/dbcon = new()	//Feedback database (New database)
-var/DBConnection/dbcon_old = new()	//Tgstation database (Old database) - See the files in the SQL folder for information what goes where.
+// Database connections
+// A connection is established on world creation. Ideally, the connection dies when the server restarts (After feedback logging.).
+var/DBConnection/dbcon = new()	// Feedback database (New database)
+var/DBConnection/dbcon_old = new()	// Tgstation database (Old database) - See the files in the SQL folder for information what goes where.
 
-//
+// 
 // Xeno/role whitelist database ( code/modules/admin/whitelist.dm )
-//
+// 
 var/list/role_whitelist   // cache of all ckeys and their roles
 var/list/whitelisted_roles = list("unathi", "tajaran", "skrell", "diona", "machine", "ian") // Case important, everything must be in lowercase.

@@ -1,4 +1,4 @@
-//Food items that are eaten normally and don't leave anything behind.
+// Food items that are eaten normally and don't leave anything behind.
 /obj/item/weapon/reagent_containers/food/snacks/glowstick
 	name = "glowstick"
 	desc = ""
@@ -6,7 +6,7 @@
 	icon = 'icons/obj/glowsticks.dmi'
 	icon_state = null
 	item_state = null
-	action_button_name = null	//just pull it manually, neckbeard.
+	action_button_name = null	// just pull it manually, neckbeard.
 	slot_flags = SLOT_BELT
 	light_power = 2
 	var/on = 0
@@ -51,20 +51,20 @@
 	else
 		update_brightness(null)
 
-	//Placeholder for effect that trigger on eating that aren't tied to reagents.
+	// Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/On_Consume(mob/M)
 	if(!usr)	return
 	if(!reagents.total_volume)
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
 		M.visible_message("<span class='notice'>[M] finishes eating \the [src].</span>")
-		usr.drop_from_inventory(src)	//so icons update :[
+		usr.drop_from_inventory(src)	// so icons update :[
 		qdel(src)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attack_self(mob/user)
 	// Usual checks
-	if(!liquid_fuel)	//it shouldn't happen but if it will we have save from runtime errors
+	if(!liquid_fuel)	// it shouldn't happen but if it will we have save from runtime errors
 		to_chat(user, "<span class='info'>[src] is defective.</span>")
 		return
 	if(!liquid_fuel.volume)
@@ -74,7 +74,7 @@
 		return
 
 	if(!isturf(user.loc))
-		to_chat(user, "<span class='info'>You cannot turn the light on while in this [user.loc].</span>")//To prevent some lighting anomalities.
+		to_chat(user, "<span class='info'>You cannot turn the light on while in this [user.loc].</span>")// To prevent some lighting anomalities.
 		return
 	on = !on
 	update_brightness(user)
@@ -85,17 +85,17 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/attack(mob/M, mob/user, def_zone)
 	var/datum/reagent/luminophore = locate(/datum/reagent/luminophore) in reagents.reagent_list
-	if(!luminophore)	//it shouldn't happen but if it will we have save from runtime errors
+	if(!luminophore)	// it shouldn't happen but if it will we have save from runtime errors
 		to_chat(user, "<span class='info'>[src] is defective.</span>")
 		return
 	if(!luminophore.volume)
 		to_chat(user, "<span class='rose'>None of chemicals left in [src]!</span>")
 		return 0
 
-	if(!CanEat(user, M, src, "eat")) return	//tc code
+	if(!CanEat(user, M, src, "eat")) return	// tc code
 
 	if(istype(M, /mob/living/carbon))
-		if(M == user)								//If you're eating it yourself
+		if(M == user)								// If you're eating it yourself
 			if(istype(M,/mob/living/carbon/human))
 				var/mob/living/carbon/human/H = M
 				if(H.species.flags[IS_SYNTHETIC])
@@ -108,7 +108,7 @@
 					to_chat(H, "<span class='rose'>They have a monitor for a head, where do you think you're going to put that?</span>")
 					return
 
-			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
+			if(!istype(M, /mob/living/carbon/slime))		// If you're feeding it to someone else.
 
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", 1)
@@ -126,7 +126,7 @@
 				to_chat(user, "<span class='warning'>This creature does not seem to have a mouth!</span>")
 				return
 
-		if(reagents)								//Handle ingestion of the reagent.
+		if(reagents)								// Handle ingestion of the reagent.
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 			if(reagents.total_volume)
 				var/datum/reagent/my_reagent = locate(/datum/reagent/luminophore) in reagents.reagent_list

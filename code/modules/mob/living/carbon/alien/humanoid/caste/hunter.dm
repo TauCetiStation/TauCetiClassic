@@ -47,7 +47,7 @@
 			healths.icon_state = "health7"
 
 
-//Hunter verbs
+// Hunter verbs
 /*
 /mob/living/carbon/alien/humanoid/hunter/verb/invis()
 	set name = "Invisibility (50)"
@@ -65,14 +65,14 @@
 			for(var/mob/O in oviewers(src, null))
 				O.show_message(text("\red <B>[src] fades into the surroundings!</B>"), 1)
 			spawn(250)
-				if(!isnull(src))//Don't want the game to runtime error when the mob no-longer exists.
+				if(!isnull(src))// Don't want the game to runtime error when the mob no-longer exists.
 					alien_invis = 0.0
 					update_icons()
 					to_chat(src, "\green You are no longer invisible.")
 	return
 */
 
-//Hunter verbs
+// Hunter verbs
 
 
 /mob/living/carbon/alien/humanoid/hunter/proc/toggle_leap(message = 1)
@@ -100,17 +100,17 @@
 		to_chat(src, "<span class='alertalien'>You are too fatigued to pounce right now!</span>")
 		return
 
-	if(leaping) //Leap while you leap, so you can leap while you leap
+	if(leaping) // Leap while you leap, so you can leap while you leap
 		return
 
 	if((istype(src.loc, /turf/space)) || (istype(A.loc, /turf/space)))
 		to_chat(src, "<span class='alertalien'>It is unsafe to leap without gravity!</span>")
-		//It's also extremely buggy visually, so it's balance+bugfix
+		// It's also extremely buggy visually, so it's balance+bugfix
 		return
 	if(lying)
 		return
 
-	else //Maybe uses plasma in the future, although that wouldn't make any sense...
+	else // Maybe uses plasma in the future, although that wouldn't make any sense...
 		stop_pulling()
 		leaping = TRUE
 		update_icons()

@@ -7,7 +7,7 @@
 	anchored = 1
 
 /obj/structure/dresser/attack_hand(mob/user)
-	if(!Adjacent(user))//no tele-grooming
+	if(!Adjacent(user))// no tele-grooming
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user

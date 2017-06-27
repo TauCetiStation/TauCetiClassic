@@ -2,10 +2,10 @@
 var/global/normal_ooc_colour = "#002eb8"
 
 /client/verb/ooc(msg as text)
-	set name = "OOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
+	set name = "OOC" // Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set category = "OOC"
 
-	if(say_disabled)	//This is here to try to identify lag problems
+	if(say_disabled)	// This is here to try to identify lag problems
 		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
@@ -32,9 +32,9 @@ var/global/normal_ooc_colour = "#002eb8"
 		if(!dooc_allowed && (mob.stat == DEAD))
 			to_chat(usr, "\red OOC for dead mobs has been turned off.")
 			return
-		if(handle_spam_prevention(msg,MUTE_OOC))
+		if(handle_spam_prevention(msg, MUTE_OOC))
 			return
-		if(findtext(msg, "byond://"))
+		if(findtext(msg, "byond:// "))
 			to_chat(src, "<B>Advertising other servers is not allowed.</B>")
 			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
@@ -46,12 +46,12 @@ var/global/normal_ooc_colour = "#002eb8"
 	if(holder && !holder.fakekey)
 		display_colour = "#704F80"
 		if(holder.rights & R_DEBUG && !(holder.rights & R_ADMIN))
-			display_colour = "#1b521f"	//dark green
+			display_colour = "#1b521f"	// dark green
 		else if(holder.rights & R_ADMIN)
 			if(config.allow_admin_ooccolor)
 				display_colour = src.prefs.ooccolor
 			else
-				display_colour = "#b82e00"	//orange
+				display_colour = "#b82e00"	// orange
 
 	for(var/client/C in clients)
 		if(C.prefs.chat_toggles & CHAT_OOC)
@@ -87,11 +87,11 @@ var/global/normal_ooc_colour = "#002eb8"
 	normal_ooc_colour = newColor
 
 /client/verb/looc(msg as text)
-	set name = "LOOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
+	set name = "LOOC" // Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
 	set desc = "Local OOC, seen only by those in view."
 	set category = "OOC"
 
-	if(say_disabled)	//This is here to try to identify lag problems
+	if(say_disabled)	// This is here to try to identify lag problems
 		to_chat(usr, "<span class='red'>Speech is currently admin-disabled.</span>")
 		return
 
@@ -117,9 +117,9 @@ var/global/normal_ooc_colour = "#002eb8"
 		if(prefs.muted & MUTE_OOC)
 			to_chat(src, "<span class='red'>You cannot use OOC (muted).</span>")
 			return
-		if(handle_spam_prevention(msg,MUTE_OOC))
+		if(handle_spam_prevention(msg, MUTE_OOC))
 			return
-		if(findtext(msg, "byond://"))
+		if(findtext(msg, "byond:// "))
 			to_chat(src, "<B>Advertising other servers is not allowed.</B>")
 			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
 			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
@@ -144,7 +144,7 @@ var/global/normal_ooc_colour = "#002eb8"
 			continue
 		var/client/C = M.client
 		if (C in admins)
-			continue //they are handled after that
+			continue // they are handled after that
 
 		if(C.prefs.chat_toggles & CHAT_LOOC)
 			if(is_fake_key && C.holder)

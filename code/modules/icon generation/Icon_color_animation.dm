@@ -1,12 +1,12 @@
-//----------------------------------------
-//
+// ----------------------------------------
+// 
 //   Return a copy of the provided icon,
 //  after calling MapColors on it. The
 //  color values are linearily interpolated
 //  between the pairs provided, based on
 //  the ratio argument.
-//
-//----------------------------------------
+// 
+// ----------------------------------------
 
 /proc/MapColors_interpolate(icon/input, ratio,
 							rr1, rg1, rb1, ra1, rr2, rg2, rb2, ra2,
@@ -30,18 +30,18 @@
 
 
 
-//----------------------------------------
-//
+// ----------------------------------------
+// 
 //   Extension of the above that takes a
 //  list of lists of color values, rather
 //  than a large number of arguments.
-//
-//----------------------------------------
+// 
+// ----------------------------------------
 
 /proc/MapColors_interpolate_list(icon/I, ratio, list/colors)
 	var/list/c[10]
 
-	//Provide default values for any missing colors (without altering the original list
+	// Provide default values for any missing colors (without altering the original list
 	for(var/i = 1, i <= 10, i++)
 		c[i] = list(0, 0, 0, (i == 7 || i == 8)? 255 : 0)
 
@@ -66,21 +66,21 @@
 
 
 
-//----------------------------------------
-//
+// ----------------------------------------
+// 
 //   Take the source image, and return an animated
 //  version, that transitions between the provided
 //  color mappings, according to the provided
 //  pattern.
-//
+// 
 //   Colors should be in a format suitable for
 //  MapColors_interpolate_list, and frames should
 //  be a list of 'frames', where each frame is itself
 //  a list, element 1 being the ratio of the first
 //  color to the second, and element 2 being how
 //  long the frame lasts, in tenths of a second.
-//
-//----------------------------------------
+// 
+// ----------------------------------------
 
 /proc/generate_color_animation(icon/icon, list/colors, list/frames)
 	var/icon/out = icon('icons/effects/uristrunes.dmi', "")

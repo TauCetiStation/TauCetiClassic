@@ -6,26 +6,26 @@
 	anchored = 1
 	density = 1
 	layer = 6
-	//light_range = 6
-	unacidable = 1 //Don't comment this out.
+	// light_range = 6
+	unacidable = 1 // Don't comment this out.
 	var/current_size = 1
 	var/allowed_size = 1
-	var/contained = 1 //Are we going to move around?
-	var/energy = 100 //How strong are we?
-	var/dissipate = 1 //Do we lose energy over time?
+	var/contained = 1 // Are we going to move around?
+	var/energy = 100 // How strong are we?
+	var/dissipate = 1 // Do we lose energy over time?
 	var/dissipate_delay = 10
 	var/dissipate_track = 0
-	var/dissipate_strength = 1 //How much energy do we lose?
-	var/move_self = 1 //Do we move on our own?
-	var/grav_pull = 4 //How many tiles out do we pull?
-	var/consume_range = 0 //How many tiles out do we eat
-	var/event_chance = 15 //Prob for event each tick
-	var/target = null //its target. moves towards the target if it has one
-	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
+	var/dissipate_strength = 1 // How much energy do we lose?
+	var/move_self = 1 // Do we move on our own?
+	var/grav_pull = 4 // How many tiles out do we pull?
+	var/consume_range = 0 // How many tiles out do we eat
+	var/event_chance = 15 // Prob for event each tick
+	var/target = null // its target. moves towards the target if it has one
+	var/last_failed_movement = 0// Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 
 /obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
-	//CARN: admin-alert for chuckle-fuckery.
+	// CARN: admin-alert for chuckle-fuckery.
 	admin_investigate_setup()
 
 	src.energy = starting_energy
@@ -51,7 +51,7 @@
 
 /obj/singularity/Move(atom/newloc, direct)
 	if(current_size >= STAGE_FIVE || check_turfs_in(direct))
-		last_failed_movement = 0//Reset this because we moved
+		last_failed_movement = 0// Reset this because we moved
 		return ..()
 	else
 		last_failed_movement = direct
@@ -87,7 +87,7 @@
 	if(current_size >= STAGE_TWO)
 		move()
 		pulse()
-		if(prob(event_chance))//Chance for it to run a special event TODO:Come up with one or two more that fit
+		if(prob(event_chance))// Chance for it to run a special event TODO:Come up with one or two more that fit
 			event()
 
 	eat()
@@ -96,7 +96,7 @@
 
 	return
 
-/obj/singularity/attack_ai() //to prevent ais from gibbing themselves when they click on one.
+/obj/singularity/attack_ai() // to prevent ais from gibbing themselves when they click on one.
 	return
 
 /obj/singularity/proc/admin_investigate_setup()
@@ -131,7 +131,7 @@
 			dissipate_delay = 10
 			dissipate_track = 0
 			dissipate_strength = 1
-		if(STAGE_TWO)//1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them
+		if(STAGE_TWO)// 1 to 3 does not check for the turfs if you put the gens right next to a 1x1 then its going to eat them
 			current_size = STAGE_TWO
 			icon = 'icons/effects/96x96.dmi'
 			icon_state = "singularity_s3"
@@ -166,7 +166,7 @@
 				dissipate_delay = 10
 				dissipate_track = 0
 				dissipate_strength = 10
-		if(STAGE_FIVE)//this one also lacks a check for gens because it eats everything
+		if(STAGE_FIVE)// this one also lacks a check for gens because it eats everything
 			current_size = STAGE_FIVE
 			icon = 'icons/effects/288x288.dmi'
 			icon_state = "singularity_s9"
@@ -174,7 +174,7 @@
 			pixel_y = -128
 			grav_pull = 10
 			consume_range = 4
-			dissipate = 0 //It cant go smaller due to e loss
+			dissipate = 0 // It cant go smaller due to e loss
 	if(current_size == allowed_size)
 		investigate_log("<font color='red'>grew to size [current_size]</font>","singulo")
 		return 1
@@ -187,7 +187,7 @@
 	if(energy <= 0)
 		qdel(src)
 		return 0
-	switch(energy)//Some of these numbers might need to be changed up later -Mport
+	switch(energy)// Some of these numbers might need to be changed up later -Mport
 		if(1 to 199)
 			allowed_size = STAGE_ONE
 		if(200 to 499)
@@ -221,7 +221,7 @@
 			CHECK_TICK
 	return
 
-/obj/singularity/Process_Spacemove() //The singularity stops drifting for no man!
+/obj/singularity/Process_Spacemove() // The singularity stops drifting for no man!
 	return 1
 
 /obj/singularity/proc/consume(atom/A)
@@ -239,7 +239,7 @@
 		movement_dir = force_move
 
 	if(target && prob(60))
-		movement_dir = get_dir(src,target) //moves to a singulo beacon, if there is one
+		movement_dir = get_dir(src, target) // moves to a singulo beacon, if there is one
 
 	step(src, movement_dir)
 
@@ -252,7 +252,7 @@
 			if(STAGE_ONE)
 				steps = 1
 			if(STAGE_TWO)
-				steps = 3//Yes this is right
+				steps = 3// Yes this is right
 			if(STAGE_THREE)
 				steps = 3
 			if(STAGE_FOUR)
@@ -264,7 +264,7 @@
 	var/list/turfs = list()
 	var/turf/T = src.loc
 	for(var/i = 1 to steps)
-		T = get_step(T,direction)
+		T = get_step(T, direction)
 	if(!isturf(T))
 		return 0
 	turfs.Add(T)
@@ -284,7 +284,7 @@
 			return 0
 		turfs.Add(T2)
 	for(var/k = 1 to steps-1)
-		T = get_step(T,dir3)
+		T = get_step(T, dir3)
 		if(!isturf(T))
 			return 0
 		turfs.Add(T)
@@ -313,9 +313,9 @@
 /obj/singularity/proc/event()
 	var/numb = pick(1,2,3,4,5,6)
 	switch(numb)
-		if(1)//EMP
+		if(1)// EMP
 			emp_area()
-		if(2,3)//Stun mobs who lack optic scanners
+		if(2,3)// Stun mobs who lack optic scanners
 			mezzer()
 		else
 			return 0
@@ -323,7 +323,7 @@
 
 /obj/singularity/proc/mezzer()
 	for(var/mob/living/carbon/M in oviewers(8, src))
-		if(istype(M, /mob/living/carbon/brain)) //Ignore brains
+		if(istype(M, /mob/living/carbon/brain)) // Ignore brains
 			continue
 
 		if(M.stat == CONSCIOUS)

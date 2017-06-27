@@ -1,11 +1,11 @@
-/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
+/mob/Destroy()// This makes sure that mobs with clients/keys are not just deleted from the game.
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
 	ghostize(bancheck = TRUE)
 	return ..()
 /*
-/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
+/mob/Destroy()// This makes sure that mobs with clients/keys are not just deleted from the game.
 	mob_list -= src
 	dead_mob_list -= src
 	living_mob_list -= src
@@ -47,19 +47,19 @@
 
 	usr.show_message(t, 1)
 
-/mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+/mob/proc/show_message(msg, type, alt, alt_type)// Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
 	if(!client)
 		return
 
 	if(type)
-		if((type & 1) && ((sdisabilities & BLIND) || blinded || paralysis) )//Vision related
+		if((type & 1) && ((sdisabilities & BLIND) || blinded || paralysis) )// Vision related
 			if(!alt)
 				return
 			else
 				msg = alt
 				type = alt_type
-		if((type & 2) && ((sdisabilities & DEAF) || ear_deaf))//Hearing related
+		if((type & 2) && ((sdisabilities & DEAF) || ear_deaf))// Hearing related
 			if (!alt)
 				return
 			else
@@ -204,7 +204,7 @@
 			if(L.master == src)
 				var/list/temp = list(  )
 				temp += L.container
-				//L = null
+				// L = null
 				qdel(L)
 				return temp
 			else
@@ -239,7 +239,7 @@
 	var/master = "<PRE>"
 	for(var/t in typesof(/area))
 		master += text("[]\n", t)
-		//Foreach goto(26)
+		// Foreach goto(26)
 	src << browse(master)
 	return
 */
@@ -293,7 +293,7 @@
 /mob/proc/warn_flavor_changed()
 	if(flavor_text && flavor_text != "") // don't spam people that don't use it!
 		to_chat(src, "<h2 class='alert'>OOC Warning:</h2>")
-		to_chat(src, "<span class='alert'>Your flavor text is likely out of date! <a href='byond://?src=\ref[src];flavor_change=1'>Change</a></span>")
+		to_chat(src, "<span class='alert'>Your flavor text is likely out of date! <a href='byond:// ?src=\ref[src];flavor_change=1'>Change</a></span>")
 
 /mob/proc/print_flavor_text()
 	if(flavor_text && flavor_text != "")
@@ -301,9 +301,9 @@
 		if(lentext(msg) <= 40)
 			return "\blue [msg]"
 		else
-			return "\blue [copytext(msg, 1, 37)]... <a href='byond://?src=\ref[src];flavor_more=1'>More...</a>"
+			return "\blue [copytext(msg, 1, 37)]... <a href='byond:// ?src=\ref[src];flavor_more=1'>More...</a>"
 
-//mob verbs are faster than object verbs. See http://www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
+// mob verbs are faster than object verbs. See http:// www.byond.com/forum/?post=1326139&page=2#comment8198716 for why this isn't atom/verb/examine()
 /mob/verb/examinate(atom/A as mob|obj|turf in view())
 	set name = "Examine"
 	set category = "IC"
@@ -377,7 +377,7 @@
 			pluralcheck = " [deathtimeminutes] minutes and"
 		var/deathtimeseconds = round((deathtime - deathtimeminutes * 600) / 10, 1)
 
-		if(deathtime < config.deathtime_required && !(client.holder && (client.holder.rights & R_ADMIN)))	//Holders with R_ADMIN can give themselvs respawn, so it doesn't matter
+		if(deathtime < config.deathtime_required && !(client.holder && (client.holder.rights & R_ADMIN)))	// Holders with R_ADMIN can give themselvs respawn, so it doesn't matter
 			to_chat(usr, "You have been dead for[pluralcheck] [deathtimeseconds] seconds.")
 			to_chat(usr, "You must wait 30 minutes to respawn!")
 			return
@@ -404,7 +404,7 @@
 		return
 
 	M.key = key
-//	M.Login()	//wat
+//	M.Login()	// wat
 	return
 
 /mob/verb/observe()
@@ -486,9 +486,9 @@
 	if(istype(M, /mob/living/silicon/ai)) return
 	show_inv(usr)
 
-//this and stop_pulling really ought to be /mob/living procs
+// this and stop_pulling really ought to be /mob/living procs
 /mob/proc/start_pulling(atom/movable/AM)
-	if(!AM || !src || src == AM || !isturf(AM.loc))	//if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
+	if(!AM || !src || src == AM || !isturf(AM.loc))	// if there's no person pulling OR the person is pulling themself OR the object being pulled is inside something: abort!
 		return
 	if(!AM.anchored)
 		AM.add_fingerprint(src)
@@ -599,7 +599,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			client.pixel_y = amplitude * cos(0.008 * dizziness * world.time)
 
 		sleep(1)
-	//endwhile - reset the pixel offsets to zero
+	// endwhile - reset the pixel offsets to zero
 	is_dizzy = FALSE
 	if(client)
 		client.pixel_x = 0
@@ -631,7 +631,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 		pixel_y = rand(-amplitude/3, amplitude/3)
 
 		sleep(1)
-	//endwhile - reset the pixel offsets to zero
+	// endwhile - reset the pixel offsets to zero
 	is_jittery = FALSE
 	pixel_x = initial(pixel_x)
 	pixel_y = initial(pixel_y)
@@ -748,13 +748,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 			canmove = FALSE
 			break
 
-	//Temporarily moved here from the various life() procs
-	//I'm fixing stuff incrementally so this will likely find a better home.
-	//It just makes sense for now. ~Carn
+	// Temporarily moved here from the various life() procs
+	// I'm fixing stuff incrementally so this will likely find a better home.
+	// It just makes sense for now. ~Carn
 
 	if(!no_transform && lying != lying_prev)
 		update_transform()
-	if(update_icon)	//forces a full overlay update
+	if(update_icon)	// forces a full overlay update
 		update_icon = FALSE
 		regenerate_icons()
 	return canmove
@@ -791,7 +791,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return facedir(SOUTH)
 
 
-/mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
+/mob/proc/IsAdvancedToolUser()// This might need a rename but it should replace the can this mob use things check
 	return 0
 
 // ========== STUN ==========
@@ -805,13 +805,13 @@ note dizziness decrements automatically in the mob's Life() proc.
 		return
 
 	if(status_flags & CANSTUN || ignore_canstun)
-		stunned = max(max(stunned, amount), 0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
+		stunned = max(max(stunned, amount), 0) // can't go below 0, getting a low amount of stun doesn't lower your current stun
 		if(updating)
 			update_canmove()
 	else
 		stunned = 0
 
-/mob/proc/SetStunned(amount, updating = 1, ignore_canstun = 0, lock = null) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
+/mob/proc/SetStunned(amount, updating = 1, ignore_canstun = 0, lock = null) // if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
 	if(!isnull(lock))
 		if(lock)
 			status_flags |= LOCKSTUN
@@ -982,7 +982,7 @@ mob/proc/yank_out_object()
 	else
 		visible_message("<span class='warning'><b>[usr] rips [selection] out of [src]'s body.</b></span>","<span class='warning'><b>[usr] rips [selection] out of your body.</b></span>")
 	valid_objects = get_visible_implants(0)
-	if(valid_objects.len == 1) //Yanking out last object - removing verb.
+	if(valid_objects.len == 1) // Yanking out last object - removing verb.
 		src.verbs -= /mob/proc/yank_out_object
 		clear_alert("embeddedobject")
 
@@ -991,7 +991,7 @@ mob/proc/yank_out_object()
 		var/mob/living/carbon/human/H = src
 		var/obj/item/organ/external/BP
 
-		for(var/obj/item/organ/external/limb in H.bodyparts) //Grab the organ holding the implant.
+		for(var/obj/item/organ/external/limb in H.bodyparts) // Grab the organ holding the implant.
 			for(var/obj/item/weapon/O in limb.implants)
 				if(O == selection)
 					BP = limb
@@ -1029,7 +1029,7 @@ mob/proc/yank_out_object()
 
 /mob/proc/AddSpell(obj/effect/proc_holder/spell/spell)
 	spell_list += spell
-	mind.spell_list += spell	//Connect spell to the mind for transfering action buttons between mobs
+	mind.spell_list += spell	// Connect spell to the mind for transfering action buttons between mobs
 	if(!spell.action)
 		spell.action = new/datum/action/spell_action
 		spell.action.target = spell
@@ -1072,7 +1072,7 @@ mob/proc/yank_out_object()
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = A
 
-//You can buckle on mobs if you're next to them since most are dense
+// You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M)
 	if(M.buckled)
 		return 0
@@ -1086,13 +1086,13 @@ mob/proc/yank_out_object()
 			return 0
 	return ..()
 
-//Default buckling shift visual for mobs
+// Default buckling shift visual for mobs
 /mob/post_buckle_mob(mob/living/M)
-	if(M == buckled_mob) //post buckling
+	if(M == buckled_mob) // post buckling
 		M.pixel_y = initial(M.pixel_y) + 9
 		if(M.layer < layer)
 			M.layer = layer + 0.1
-	else //post unbuckling
+	else // post unbuckling
 		M.layer = initial(M.layer)
 		M.plane = initial(M.plane)
 		M.pixel_y = initial(M.pixel_y)

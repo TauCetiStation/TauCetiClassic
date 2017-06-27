@@ -12,7 +12,7 @@
 		newAnomaly = new /obj/effect/anomaly/bluespace(T)
 
 /datum/event/anomaly/anomaly_bluespace/end()
-	if(newAnomaly.loc)//If it hasn't been neutralized, it's time to warp half the station away jeez
+	if(newAnomaly.loc)// If it hasn't been neutralized, it's time to warp half the station away jeez
 		var/turf/T = pick(get_area_turfs(impact_area))
 		if(T)
 				// Calculate new position (searches through beacons in world)
@@ -54,7 +54,7 @@
 							var/mob/M = A
 							if(M.client)
 								var/obj/blueeffect = new /obj(src)
-								blueeffect.screen_loc = "WEST,SOUTH to EAST,NORTH"
+								blueeffect.screen_loc = "WEST, SOUTH to EAST, NORTH"
 								blueeffect.icon = 'icons/effects/effects.dmi'
 								blueeffect.icon_state = "shieldsparkles"
 								blueeffect.layer = FLASH_LAYER

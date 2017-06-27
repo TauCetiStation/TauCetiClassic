@@ -5,15 +5,15 @@
 	layer = 2.1
 	anchored = 1
 
-	New(location,main = "#FFFFFF",shade = "#000000",var/type = "rune", var/e_name = "rune", var/override_color = 0)
+	New(location, main = "#FFFFFF",shade = "#000000",var/type = "rune", var/e_name = "rune", var/override_color = 0)
 		..()
 		loc = location
 
-		//name = type
+		// name = type
 		name = e_name
 		desc = "A [type] drawn in crayon."
 		if(type == "poseur tag")
-			gang_name() //Generate gang names so they get removed from the pool
+			gang_name() // Generate gang names so they get removed from the pool
 			type = pick(gang_name_pool)
 		icon_state = type
 
@@ -26,8 +26,8 @@
 		var/icon/mainOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]",2.1)
 		var/icon/shadeOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]s",2.1)
 
-		mainOverlay.Blend(main,ICON_ADD)
-		shadeOverlay.Blend(shade,ICON_ADD)
+		mainOverlay.Blend(main, ICON_ADD)
+		shadeOverlay.Blend(shade, ICON_ADD)
 
 		overlays += mainOverlay
 		overlays += shadeOverlay
@@ -38,7 +38,7 @@
 
 
 /obj/effect/decal/cleanable/crayon/gang
-	layer = 3.6 //Harder to hide
+	layer = 3.6 // Harder to hide
 	var/gang
 
 /obj/effect/decal/cleanable/crayon/gang/New(location, var/type, var/e_name = "gang tag")

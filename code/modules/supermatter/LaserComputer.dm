@@ -1,11 +1,11 @@
-//The laser control computer
-//Used to control the lasers
+// The laser control computer
+// Used to control the lasers
 /obj/machinery/computer/lasercon
 	name = "Laser control computer"
 	var/list/lasers = new/list
 	icon_state = "atmos"
 	var/id
-	//var/advanced = 0
+	// var/advanced = 0
 
 /obj/machinery/computer/lasercon
 	New()
@@ -82,8 +82,8 @@
 		var/d = i
 		for(var/obj/machinery/zero_point_emitter/laser in lasers)
 			var/new_power = laser.energy + d
-			new_power = max(new_power,0.0001)	//lowest possible value
-			new_power = min(new_power,0.01)		//highest possible value
+			new_power = max(new_power,0.0001)	// lowest possible value
+			new_power = min(new_power,0.01)		// highest possible value
 			laser.energy = new_power
 	else if(href_list["online"])
 		var/obj/machinery/zero_point_emitter/laser = href_list["online"]
@@ -92,8 +92,8 @@
 		var/amt = text2num(href_list["freq"])
 		for(var/obj/machinery/zero_point_emitter/laser in lasers)
 			var/new_freq = laser.frequency + amt
-			new_freq = max(new_freq,1)		//lowest possible value
-			new_freq = min(new_freq,20000)	//highest possible value
+			new_freq = max(new_freq,1)		// lowest possible value
+			new_freq = min(new_freq,20000)	// highest possible value
 			laser.frequency = new_freq
 
 	src.updateDialog()
@@ -103,7 +103,7 @@
 	if(!(stat & (NOPOWER|BROKEN)) )
 		use_power(250)
 
-	//src.updateDialog()
+	// src.updateDialog()
 */
 
 /*

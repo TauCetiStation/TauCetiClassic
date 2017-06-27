@@ -23,7 +23,7 @@
 	user.dna = chosen_dna.Clone()
 
 	var/list/implants = list()
-	for (var/obj/item/weapon/implant/I in user) //Still preserving implants
+	for (var/obj/item/weapon/implant/I in user) // Still preserving implants
 		implants += I
 
 	user.monkeyizing = 1

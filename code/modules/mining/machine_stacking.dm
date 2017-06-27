@@ -112,7 +112,7 @@
 					S.loc = output.loc
 			else
 				O.loc = output.loc
-	//Output amounts that are past stack_amt.
+	// Output amounts that are past stack_amt.
 	for(var/sheet in stack_storage)
 		if(stack_storage[sheet] >= stack_amt)
 			var/stacktype = stack_paths[sheet]

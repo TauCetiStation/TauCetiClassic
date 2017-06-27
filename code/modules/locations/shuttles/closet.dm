@@ -16,7 +16,7 @@
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/storage/toolbox/emergency(src)
 
-/obj/structure/closet/medical_wall/erokez //wall mounted medical closet
+/obj/structure/closet/medical_wall/erokez // wall mounted medical closet
 	name = "first-aid closet"
 	desc = "It's wall-mounted storage unit for first aid supplies."
 	icon = 'code/modules/locations/shuttles/closet.dmi'

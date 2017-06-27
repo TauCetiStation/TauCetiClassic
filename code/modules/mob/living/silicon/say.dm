@@ -12,8 +12,8 @@
 #define IS_ROBOT 2
 #define IS_PAI 3
 
-/mob/living/silicon/say_understands(other,datum/language/speaking = null)
-	//These only pertain to common. Languages are handled by mob/say_understands()
+/mob/living/silicon/say_understands(other, datum/language/speaking = null)
+	// These only pertain to common. Languages are handled by mob/say_understands()
 	if (!speaking)
 		if (iscarbon(other) && !isIAN(other))
 			return 1
@@ -31,7 +31,7 @@
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (src.client.handle_spam_prevention(message, MUTE_IC))
 			return*/
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -42,7 +42,7 @@
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))
 
-	var/bot_type = 0			//Let's not do a fuck ton of type checks, thanks.
+	var/bot_type = 0			// Let's not do a fuck ton of type checks, thanks.
 	if(istype(src, /mob/living/silicon/ai))
 		bot_type = IS_AI
 	else if(istype(src, /mob/living/silicon/robot))
@@ -50,18 +50,18 @@
 	else if(istype(src, /mob/living/silicon/pai))
 		bot_type = IS_PAI
 
-	var/mob/living/silicon/ai/AI = src		//and let's not declare vars over and over and over for these guys.
+	var/mob/living/silicon/ai/AI = src		// and let's not declare vars over and over and over for these guys.
 	var/mob/living/silicon/robot/R = src
 	var/mob/living/silicon/pai/P = src
 
 
-	//Must be concious to speak
+	// Must be concious to speak
 	if (stat)
 		return
 
 	var/verb = say_quote(message)
 
-	//parse radio key and consume it
+	// parse radio key and consume it
 	var/message_mode = parse_message_mode(message, "general")
 	if (message_mode)
 		if (message_mode == "general")
@@ -78,7 +78,7 @@
 			to_chat(usr, "\red Not enough power to transmit message.")
 			return
 
-	//parse language key and consume it
+	// parse language key and consume it
 	var/datum/language/speaking = parse_language(message)
 	if (speaking)
 		verb = speaking.speech_verb
@@ -91,10 +91,10 @@
 					return AI.holopad_talk(message, verb, speaking)
 				if(IS_ROBOT)
 					log_say("[key_name(src)] : [message]")
-					R.radio.talk_into(src,message,message_mode,verb,speaking)
+					R.radio.talk_into(src, message, message_mode, verb, speaking)
 				if(IS_PAI)
 					log_say("[key_name(src)] : [message]")
-					P.radio.talk_into(src,message,message_mode,verb,speaking)
+					P.radio.talk_into(src, message, message_mode, verb, speaking)
 			return 1
 
 		if("binary")
@@ -121,13 +121,13 @@
 						return
 					else
 						log_say("[key_name(src)] : [message]")
-						AI.aiRadio.talk_into(src,message,null,verb,speaking)
+						AI.aiRadio.talk_into(src, message, null, verb, speaking)
 				if(IS_ROBOT)
 					log_say("[key_name(src)] : [message]")
-					R.radio.talk_into(src,message,null,verb,speaking)
+					R.radio.talk_into(src, message, null, verb, speaking)
 				if(IS_PAI)
 					log_say("[key_name(src)] : [message]")
-					P.radio.talk_into(src,message,null,verb,speaking)
+					P.radio.talk_into(src, message, null, verb, speaking)
 			return 1
 
 		else
@@ -139,18 +139,18 @@
 							return
 						else
 							log_say("[key_name(src)] : [message]")
-							AI.aiRadio.talk_into(src,message,message_mode,verb,speaking)
+							AI.aiRadio.talk_into(src, message, message_mode, verb, speaking)
 					if(IS_ROBOT)
 						log_say("[key_name(src)] : [message]")
-						R.radio.talk_into(src,message,message_mode,verb,speaking)
+						R.radio.talk_into(src, message, message_mode, verb, speaking)
 					if(IS_PAI)
 						log_say("[key_name(src)] : [message]")
-						P.radio.talk_into(src,message,message_mode,verb,speaking)
+						P.radio.talk_into(src, message, message_mode, verb, speaking)
 				return 1
 
-	return ..(html_decode(message),speaking,verb)
+	return ..(html_decode(message),speaking, verb)
 
-//For holopads only. Usable by AI.
+// For holopads only. Usable by AI.
 /mob/living/silicon/ai/proc/holopad_talk(message, verb, datum/language/speaking)
 
 	log_say("[key_name(src)] : [message]")
@@ -161,27 +161,27 @@
 		return
 
 	var/obj/machinery/hologram/holopad/T = src.holo
-	if(T && T.hologram && T.master == src)//If there is a hologram and its master is the user.
+	if(T && T.hologram && T.master == src)// If there is a hologram and its master is the user.
 
-		//Human-like, sorta, heard by those who understand humans.
+		// Human-like, sorta, heard by those who understand humans.
 		var/rendered_a
-		//Speach distorted, heard by those who do not understand AIs.
+		// Speach distorted, heard by those who do not understand AIs.
 		var/message_stars = stars(message)
 		var/rendered_b
 
 		if(speaking)
 			rendered_a = "<span class='game say'><span class='name'>[name]</span> [speaking.format_message(message, verb)]</span>"
 			rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> [speaking.format_message(message_stars, verb)]</span>"
-			to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> [speaking.format_message(message, verb)]</span></i>")//The AI can "hear" its own message.
+			to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> [speaking.format_message(message, verb)]</span></i>")// The AI can "hear" its own message.
 		else
 			rendered_a = "<span class='game say'><span class='name'>[name]</span> [verb], <span class='message'>\"[sanitize_plus_chat(message)]\"</span></span>"
 			rendered_b = "<span class='game say'><span class='name'>[voice_name]</span> [verb], <span class='message'>\"[message_stars]\"</span></span>"
-			to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> [verb], <span class='message'><span class='body'>\"[sanitize_plus_chat(message)]\"</span></span></span></i>")//The AI can "hear" its own message.
+			to_chat(src, "<i><span class='game say'>Holopad transmitted, <span class='name'>[real_name]</span> [verb], <span class='message'><span class='body'>\"[sanitize_plus_chat(message)]\"</span></span></span></i>")// The AI can "hear" its own message.
 
-		for(var/mob/M in hearers(T.loc))//The location is the object, default distance.
-			if(M.say_understands(src))//If they understand AI speak. Humans and the like will be able to.
+		for(var/mob/M in hearers(T.loc))// The location is the object, default distance.
+			if(M.say_understands(src))// If they understand AI speak. Humans and the like will be able to.
 				M.show_message(rendered_a, 2)
-			else//If they do not.
+			else// If they do not.
 				M.show_message(rendered_b, 2)
 		/*Radios "filter out" this conversation channel so we don't need to account for them.
 		This is another way of saying that we won't bother dealing with them.*/
@@ -207,11 +207,11 @@
 	for (var/mob/living/S in living_mob_list)
 		if(S.robot_talk_understand && (S.robot_talk_understand == robot_talk_understand)) // This SHOULD catch everything caught by the one below, but I'm not going to change it.
 			if(istype(S , /mob/living/silicon/ai))
-				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
+				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond:// ?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
 				S.show_message(renderedAI, 2)
 			else
 				var/mob/living/silicon/robot/borg = S
-				//if(istype(borg) && borg.is_component_functioning("comms"))
+				// if(istype(borg) && borg.is_component_functioning("comms"))
 				//	var/datum/robot_component/RC = borg.get_component("comms")
 				//	if(!borg.use_power(RC.active_usage))
 				if(!istype(borg) || !borg.is_component_functioning("comms"))
@@ -221,7 +221,7 @@
 
 		else if (S.binarycheck())
 			if(istype(S , /mob/living/silicon/ai))
-				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond://?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
+				var/renderedAI = "<i><span class='game say'>Robotic Talk, <a href='byond:// ?src=\ref[S];track2=\ref[S];track=\ref[src];trackname=[html_encode(src.name)]'><span class='name'>[name]</span></a> <span class='message'>[verb], \"[message]\"</span></span></i>"
 				S.show_message(renderedAI, 2)
 			else
 				S.show_message(rendered, 2)
@@ -246,7 +246,7 @@
 	rendered = "<i><span class='game say'>Robotic Talk, <span class='name'>[name]</span> <span class='message'>[verb], \"[message]\"</span></span></i>"
 
 	for (var/mob/M in dead_mob_list)
-		if(!istype(M,/mob/new_player) && !istype(M,/mob/living/carbon/brain)) //No meta-evesdropping
+		if(!istype(M,/mob/new_player) && !istype(M,/mob/living/carbon/brain)) // No meta-evesdropping
 			M.show_message(rendered, 2)
 
 #undef IS_AI

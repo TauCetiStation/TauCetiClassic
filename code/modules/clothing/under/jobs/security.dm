@@ -142,7 +142,7 @@
 	item_color = "hos_corporate"
 	flags = ONESIZEFITSALL
 
-//Jensen cosplay gear
+// Jensen cosplay gear
 /obj/item/clothing/under/rank/head_of_security/jensen
 	desc = "You never asked for anything that stylish."
 	name = "head of security's jumpsuit"

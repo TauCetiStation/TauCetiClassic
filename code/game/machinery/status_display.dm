@@ -50,7 +50,7 @@
 
 /obj/machinery/status_display/Destroy()
 	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
+		radio_controller.remove_object(src, frequency)
 	return ..()
 
 /obj/machinery/status_display/process()
@@ -69,20 +69,20 @@
 // set what is displayed
 
 /obj/machinery/status_display/proc/update()
-	if(friendc && mode != 4)	//Makes all status displays except supply shuttle timer display the eye -- Urist
+	if(friendc && mode != 4)	// Makes all status displays except supply shuttle timer display the eye -- Urist
 		set_picture("ai_friend")
 		return
 
-	if(mode == 3 && overlays.len)	//Why we must update diplay if picture is already set?
+	if(mode == 3 && overlays.len)	// Why we must update diplay if picture is already set?
 		return
 
 	if(overlays.len && !friendc || mode == 4)
 		overlays.Cut()
 
 	switch(mode)
-		if(0)				//blank
+		if(0)				// blank
 			remove_display()
-		if(1)				//emergency shuttle timer
+		if(1)				// emergency shuttle timer
 			if(SSshuttle.online)
 				var/line1
 				var/line2 = get_shuttle_timer()
@@ -95,7 +95,7 @@
 				update_display(line1, line2)
 			else
 				remove_display()
-		if(2)				//custom messages
+		if(2)				// custom messages
 			var/line1
 			var/line2
 
@@ -240,7 +240,7 @@
 
 /obj/machinery/ai_status_display/proc/update()
 
-	if(mode==0) //Blank
+	if(mode==0) // Blank
 		overlays.Cut()
 		return
 

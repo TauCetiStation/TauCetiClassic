@@ -53,6 +53,6 @@
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
 		to_chat(user, "\red You overload \the [src]'s voice synthesizer.")
 		emagged = 1
-		insults = rand(1, 3)//to prevent dickflooding
+		insults = rand(1, 3)// to prevent dickflooding
 		return
 	return

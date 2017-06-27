@@ -1,4 +1,4 @@
-//goat
+// goat
 /mob/living/simple_animal/hostile/retaliate/goat
 	name = "goat"
 	desc = "Not known for their pleasant disposition."
@@ -32,7 +32,7 @@
 /mob/living/simple_animal/hostile/retaliate/goat/Life()
 	. = ..()
 	if(.)
-		//chance to go crazy and start wacking stuff
+		// chance to go crazy and start wacking stuff
 		if(!enemies.len && prob(1))
 			Retaliate()
 
@@ -82,7 +82,7 @@
 			to_chat(user, "\red The udder is dry. Wait a bit longer...")
 	else
 		..()
-//cow
+// cow
 /mob/living/simple_animal/cow
 	name = "cow"
 	desc = "Known for their milk, just don't tip them over."
@@ -233,13 +233,13 @@ var/global/chicken_count = 0
 	chicken_count -= 1
 
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) //feedin' dem chickens
+	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) // feedin' dem chickens
 		if(!stat && eggsleft < 8)
 			user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","\blue You feed [O] to [name]! It clucks happily.")
 			user.drop_item()
 			qdel(O)
 			eggsleft += rand(1, 4)
-			//world << eggsleft
+			// world << eggsleft
 		else
 			to_chat(user, "\blue [name] doesn't seem hungry!")
 	else

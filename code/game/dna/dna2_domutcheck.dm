@@ -1,4 +1,4 @@
-//#Z2 A whole new system
+// #Z2 A whole new system
 // (Re-)Apply mutations.
 // TODO: Turn into a /mob proc, change inj to a bitflag for various forms of differing behavior.
 // M: Mob to mess with
@@ -17,8 +17,8 @@
 		// into domutation so domutcheck and genemutcheck can both use it.
 		/*
 		// Sanity checks, don't skip.
-		if(!gene.can_activate(M,flags))
-			//testing("[M] - Failed to activate [gene.name] (can_activate fail).")
+		if(!gene.can_activate(M, flags))
+			// testing("[M] - Failed to activate [gene.name] (can_activate fail).")
 			continue
 
 		// Current state
@@ -35,14 +35,14 @@
 			// Gene active (or ALWAYS ACTIVATE)
 			if(gene_active || (gene.flags & GENE_ALWAYS_ACTIVATE))
 //				testing("[gene.name] activated!")
-				gene.activate(M,connected,flags)
+				gene.activate(M, connected, flags)
 				if(M)
 					M.active_genes |= gene.type
 					M.update_icon = 1
 			// If Gene is NOT active:
 			else
 //				testing("[gene.name] deactivated!")
-				gene.deactivate(M,connected,flags)
+				gene.deactivate(M, connected, flags)
 				if(M)
 					M.active_genes -= gene.type
 					M.update_icon = 1
@@ -64,8 +64,8 @@
 		return 0
 
 	// Sanity checks, don't skip.
-	if(!gene.can_activate(M,flags))
-		//testing("[M] - Failed to activate [gene.name] (can_activate fail).")
+	if(!gene.can_activate(M, flags))
+		// testing("[M] - Failed to activate [gene.name] (can_activate fail).")
 		return 0
 
 	// Current state
@@ -81,23 +81,23 @@
 	if(changed)
 		// Gene active (or ALWAYS ACTIVATE)
 		if(gene_active || (gene.flags & GENE_ALWAYS_ACTIVATE))
-			if( (!forced && !prob(gene.activation_prob)) || (gene.flags & GENE_ALWAYS_ACTIVATE)) //#Z2
-				//testing("We failed for [gene] [gene.activation_prob] percent chance activation!")
+			if( (!forced && !prob(gene.activation_prob)) || (gene.flags & GENE_ALWAYS_ACTIVATE)) // #Z2
+				// testing("We failed for [gene] [gene.activation_prob] percent chance activation!")
 				return
 			/*if(forced)
 				testing("[gene.name] percent chance was [gene.activation_prob], but gene mutation was forced!")
 			else
-				testing("[gene.name] percent chance was [gene.activation_prob] and passed!") //##Z2
+				testing("[gene.name] percent chance was [gene.activation_prob] and passed!") // ##Z2
 			*/
-			//testing("[gene.name] activated!")
-			gene.activate(M,connected,flags)
+			// testing("[gene.name] activated!")
+			gene.activate(M, connected, flags)
 			if(M)
 				M.active_genes |= gene.type
 				M.update_icon = 1
 		// If Gene is NOT active:
 		else
-			//testing("[gene.name] deactivated!")
-			gene.deactivate(M,connected,flags)
+			// testing("[gene.name] deactivated!")
+			gene.deactivate(M, connected, flags)
 			if(M)
 				M.active_genes -= gene.type
 				M.update_icon = 1

@@ -7,12 +7,12 @@
 	var/area_name
 
 	var/tag_color = "blue"
-	var/cooldown = 300	//half a minute
+	var/cooldown = 300	// half a minute
 
 	var/last_activation = 0
 
 /obj/effect/landmark/antigrief_alarm/New()
-	//todo: check if we have alive db. qdel if not.
+	// todo: check if we have alive db. qdel if not.
 	var/area/A = get_area(src)
 	area_name = A.name
 	return
@@ -26,7 +26,7 @@
 	if(!M.client || !config.antigrief_alarm_level || (world.time - last_activation < cooldown))
 		return
 
-	//check if it's first-day player or first-round, and current alarm level
+	// check if it's first-day player or first-round, and current alarm level
 	if(((M.client.player_age == 0) && (config.antigrief_alarm_level == 2)) || (!isnum(M.client.player_age) && config.antigrief_alarm_level))
 		if(issilicon(M) || iscarbon(M))
 			last_activation = world.time

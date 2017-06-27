@@ -62,7 +62,7 @@
 	if(user.zone_sel.selecting != O_EYES && user.zone_sel.selecting != BP_HEAD)
 		return ..()
 
-	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
+	if (src.icon_state == "forkloaded") // This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
 		if(M == user)
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\blue [] eats a delicious forkful of omelette!", user), 1)
@@ -76,13 +76,13 @@
 	else
 		if((CLUMSY in user.mutations) && prob(50))
 			M = user
-		return eyestab(M,user)
+		return eyestab(M, user)
 
 /obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
 	if(!proximity) return
-	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
-	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
+	// I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
+	// So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(istype(target,/obj/effect/decal/cleanable))
 		user.visible_message("<span class='warning'>[user] begins to clean \the [target.name].</span>","<span class='notice'>You begin to clean \the [target.name].</span>")
 		if(do_after(user, 60, target = target))
@@ -104,7 +104,7 @@
 	if(user.zone_sel.selecting != O_EYES && user.zone_sel.selecting != BP_HEAD)
 		return ..()
 
-	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
+	if (src.icon_state == "forkloaded") // This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
 		if(M == user)
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\blue [] eats a delicious forkful of omelette!", user), 1)
@@ -118,7 +118,7 @@
 	else
 		if((CLUMSY in user.mutations) && prob(50))
 			M = user
-		return eyestab(M,user)
+		return eyestab(M, user)
 
 /*
  * Knives
@@ -232,7 +232,7 @@
 	throw_speed = 2
 	throw_range = 7
 	w_class = 3.0
-	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") //I think the rollingpin attackby will end up ignoring this anyway.
+	attack_verb = list("bashed", "battered", "bludgeoned", "thrashed", "whacked") // I think the rollingpin attackby will end up ignoring this anyway.
 
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
@@ -311,11 +311,11 @@
 			spawn()
 				for(var/i = 1, i <= rand(1,2), i++)
 					if(I)
-						step(I, pick(NORTH,SOUTH,EAST,WEST))
+						step(I, pick(NORTH, SOUTH, EAST, WEST))
 						sleep(rand(2,4))
 
 
-	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
+	if((CLUMSY in user.mutations) && prob(50))              // What if he's a clown?
 		to_chat(M, "\red You accidentally slam yourself with the [src]!")
 		M.Weaken(1)
 		user.take_bodypart_damage(2)
@@ -323,18 +323,18 @@
 			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 			return
 		else
-			playsound(M, 'sound/items/trayhit2.ogg', 50, 1) //sound playin'
-			return //it always returns, but I feel like adding an extra return just for safety's sakes. EDIT; Oh well I won't :3
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1) // sound playin'
+			return // it always returns, but I feel like adding an extra return just for safety's sakes. EDIT; Oh well I won't :3
 
 	var/mob/living/carbon/human/H = M      ///////////////////////////////////// /Let's have this ready for later.
 
 
-	if(!(user.zone_sel.selecting == (O_EYES || BP_HEAD))) //////////////hitting anything else other than the eyes
+	if(!(user.zone_sel.selecting == (O_EYES || BP_HEAD))) ////////////// hitting anything else other than the eyes
 		if(prob(33))
 			src.add_blood(H)
 			var/turf/location = H.loc
 			if (istype(location, /turf/simulated))
-				location.add_blood(H)     ///Plik plik, the sound of blood
+				location.add_blood(H)     // /Plik plik, the sound of blood
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
@@ -351,7 +351,7 @@
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 			return
 		else
-			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  //we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  // we applied the damage, we played the sound, we showed the appropriate messages. Time to return and stop the proc
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 			return
@@ -370,7 +370,7 @@
 			if (H.glasses && prob(33))
 				H.glasses.add_blood(H)
 			var/turf/location = H.loc
-			if (istype(location, /turf/simulated))     //Addin' blood! At least on the floor and item :v
+			if (istype(location, /turf/simulated))     // Addin' blood! At least on the floor and item :v
 				location.add_blood(H)
 
 		if(prob(50))
@@ -378,7 +378,7 @@
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 		else
-			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  //sound playin'
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  // sound playin'
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 		if(prob(10))
@@ -389,7 +389,7 @@
 			M.take_bodypart_damage(5)
 			return
 
-	else //No eye or head protection, tough luck!
+	else // No eye or head protection, tough luck!
 		to_chat(M, "\red You get slammed in the face with the tray!")
 		if(prob(33))
 			src.add_blood(M)
@@ -402,7 +402,7 @@
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] in the face with the tray!</B>", user, M), 1)
 		else
-			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  //sound playin' again
+			playsound(M, 'sound/items/trayhit2.ogg', 50, 1)  // sound playin' again
 			for(var/mob/O in viewers(M, null))
 				O.show_message(text("\red <B>[] slams [] in the face with the tray!</B>", user, M), 1)
 		if(prob(30))
@@ -416,7 +416,7 @@
 				return
 			return
 
-/obj/item/weapon/tray/var/cooldown = 0	//shield bash cooldown. based on world.time
+/obj/item/weapon/tray/var/cooldown = 0	// shield bash cooldown. based on world.time
 
 /obj/item/weapon/tray/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/kitchen/rollingpin))
@@ -472,7 +472,7 @@
 /obj/item/weapon/tray/dropped(mob/user)
 
 	var/mob/living/M
-	for(M in src.loc) //to handle hand switching
+	for(M in src.loc) // to handle hand switching
 		return
 
 	var/foundtable = 0
@@ -490,7 +490,7 @@
 			spawn()
 				for(var/i = 1, i <= rand(1,2), i++)
 					if(I)
-						step(I, pick(NORTH,SOUTH,EAST,WEST))
+						step(I, pick(NORTH, SOUTH, EAST, WEST))
 						sleep(rand(2,4))
 
 ///////////////////NEW//////////////////////
@@ -546,9 +546,9 @@
 	desc = "It has the shape of a sucker imprinted into it."
 	icon_state = "mould_loli"
 
-/////////////////////////////////////////////////////////////////////////////////////////
-//Enough with the violent stuff, here's what happens if you try putting food on it
-/////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////// 
+// Enough with the violent stuff, here's what happens if you try putting food on it
+//////////////////////////////////////////////////////////////////////////////////////////// /
 
 /*/obj/item/weapon/tray/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/kitchen/utensil/fork))

@@ -18,7 +18,7 @@
 			to_chat(user, "\red [target] is full.")
 			return
 
-		if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food)) //You can inject humans and food but you cant remove the shit.
+		if(!target.is_open_container() && !ismob(target) && !istype(target,/obj/item/weapon/reagent_containers/food)) // You can inject humans and food but you cant remove the shit.
 			to_chat(user, "\red You cannot directly fill this object.")
 			return
 

@@ -2,19 +2,19 @@
 	if(achievements.len)
 		completions += "<br>[achievement_declare_completion()]"
 
-	//Print a list of antagonists to the server log
+	// Print a list of antagonists to the server log
 	var/list/total_antagonists = list()
-	//Look into all mobs in world, dead or alive
+	// Look into all mobs in world, dead or alive
 	for(var/datum/mind/Mind in minds)
 		var/temprole = Mind.special_role
-		if(temprole)							//if they are an antagonist of some sort.
-			if(temprole in total_antagonists)	//If the role exists already, add the name to it
+		if(temprole)							// if they are an antagonist of some sort.
+			if(temprole in total_antagonists)	// If the role exists already, add the name to it
 				total_antagonists[temprole] += ", [Mind.name]([Mind.key])"
 			else
-				total_antagonists.Add(temprole) //If the role doesnt exist in the list, create it and add the mob
+				total_antagonists.Add(temprole) // If the role doesnt exist in the list, create it and add the mob
 				total_antagonists[temprole] += ": [Mind.name]([Mind.key])"
 
-	//Now print them all into the log!
+	// Now print them all into the log!
 	log_game("Antagonists at round end were...")
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
@@ -57,7 +57,7 @@
 		dmgscore = 0
 		var/turf/location = get_turf(E.loc)
 		if(location in escape_zone) // Escapee Scores
-			//for (var/obj/item/weapon/card/id/C1 in get_contents_in_object(E, /obj/item/weapon/card/id))
+			// for (var/obj/item/weapon/card/id/C1 in get_contents_in_object(E, /obj/item/weapon/card/id))
 			//	cashscore += C1.money
 
 			for (var/obj/item/weapon/spacecash/C2 in get_contents_in_object(E, /obj/item/weapon/spacecash))
@@ -108,7 +108,7 @@
 */
 		if (score["nuked"])
 			for (var/obj/machinery/nuclearbomb/NUKE in machines)
-				//if (NUKE.r_code == "Nope") continue
+				// if (NUKE.r_code == "Nope") continue
 				if (NUKE.detonated == 0)
 					continue
 				var/turf/T = NUKE.loc
@@ -164,7 +164,7 @@
 		if (istype(M, /obj/effect/decal/cleanable/vomit))
 			score["mess"] += 1
 
-	//Research Levels
+	// Research Levels
 	var/research_levels = 0
 	for(var/obj/machinery/r_n_d/server/core/C in machines)
 		for(var/datum/tech/T in C.files.known_tech)
@@ -174,20 +174,20 @@
 		score["researchdone"] += research_levels
 
 	// Bonus Modifiers
-	//var/traitorwins = score["traitorswon"]
+	// var/traitorwins = score["traitorswon"]
 	var/rolesuccess = score["roleswon"] * 250
-	var/deathpoints = score["deadcrew"] * 250 //done
+	var/deathpoints = score["deadcrew"] * 250 // done
 	var/researchpoints = score["researchdone"] * 30
 	var/eventpoints = score["eventsendured"] * 50
-	var/escapoints = score["escapees"] * 25 //done
-	var/harvests = score["stuffharvested"] //done
+	var/escapoints = score["escapees"] * 25 // done
+	var/harvests = score["stuffharvested"] // done
 	var/shipping = score["stuffshipped"] * 75
-	var/mining = score["oremined"] //done
-	var/meals = score["meals"] * 5 //done, but this only counts cooked meals, not drinks served
+	var/mining = score["oremined"] // done
+	var/meals = score["meals"] * 5 // done, but this only counts cooked meals, not drinks served
 	var/power = score["powerloss"] * 30
 	var/messpoints
 	if (score["mess"] != 0)
-		messpoints = score["mess"] //done
+		messpoints = score["mess"] // done
 	var/plaguepoints = score["disease"] * 30
 
 	// Mode Specific
@@ -235,7 +235,7 @@
 	if (score["deadaipenalty"])
 		score["crewscore"] -= 250
 	score["crewscore"] -= power
-	//if (score["crewscore"] != 0) // Dont divide by zero!
+	// if (score["crewscore"] != 0) // Dont divide by zero!
 	//	while (traitorwins > 0)
 	//		score["crewscore"] /= 2
 	//		traitorwins -= 1
@@ -284,7 +284,7 @@
 			break // Should only need one go-round, probably
 		var/nukedpenalty = 0
 		for(var/obj/machinery/nuclearbomb/NUKE in world)
-			//if (NUKE.r_code == "Nope") continue
+			// if (NUKE.r_code == "Nope") continue
 			if (NUKE.detonated == 0)
 				continue
 			var/turf/T = NUKE.loc
@@ -403,7 +403,7 @@
 	for(var/i in 1 to end_icons.len)
 		src << browse_rsc(end_icons[i],"logo_[i].png")
 
-	if(!endgame_info_logged)//so the End Round info only gets logged on the first player.
+	if(!endgame_info_logged)// so the End Round info only gets logged on the first player.
 		endgame_info_logged = 1
 		log_game(dat)
 

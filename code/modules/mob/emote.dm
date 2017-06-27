@@ -22,17 +22,17 @@
 	if (message)
 		log_emote("[name]/[key] : [message]")
 
- //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
+ // Hearing gasp and such every five seconds is not good emotes were not global for a reason.
  // Maybe some people are okay with that.
 
 		for(var/mob/M in player_list)
 			if(!M.client)
-				continue //skip monkeys and leavers
+				continue // skip monkeys and leavers
 			if(istype(M, /mob/new_player))
 				continue
-			if(findtext(message," snores.")) //Because we have so many sleeping people.
+			if(findtext(message," snores.")) // Because we have so many sleeping people.
 				break
-			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
+			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src, null)))
 				M.show_message(message)
 
 

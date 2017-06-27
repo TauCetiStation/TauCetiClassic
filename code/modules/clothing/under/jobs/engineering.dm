@@ -1,4 +1,4 @@
-//Contains: Engineering department jumpsuits
+// Contains: Engineering department jumpsuits
 /obj/item/clothing/under/rank/chief_engineer
 	desc = "It's a high visibility jumpsuit given to those engineers insane enough to achieve the rank of \"Chief engineer\". It has minor radiation shielding."
 	name = "chief engineer's jumpsuit"

@@ -1,13 +1,13 @@
 /mob/living/silicon/robot/Life()
 	set invisibility = 0
-	//set background = 1
+	// set background = 1
 
 	if (src.monkeyizing)
 		return
 
 	src.blinded = null
 
-	//Status updates, death etc.
+	// Status updates, death etc.
 	clamp_values()
 	handle_regular_status_updates()
 	handle_actions()
@@ -15,7 +15,7 @@
 	if(client)
 		handle_regular_hud_updates()
 		update_items()
-	if (src.stat != DEAD) //still using power
+	if (src.stat != DEAD) // still using power
 		add_ingame_age()
 		use_power()
 		process_killswitch()
@@ -77,11 +77,11 @@
 	if(src.resting)
 		Weaken(5)
 
-	if(health < config.health_threshold_dead && src.stat != DEAD) //die only once
+	if(health < config.health_threshold_dead && src.stat != DEAD) // die only once
 		death()
 
-	if (src.stat != DEAD) //Alive.
-		if (src.paralysis || src.stunned || src.weakened || !src.has_power) //Stunned etc.
+	if (src.stat != DEAD) // Alive.
+		if (src.paralysis || src.stunned || src.weakened || !src.has_power) // Stunned etc.
 			src.stat = UNCONSCIOUS
 			if (src.stunned > 0)
 				AdjustStunned(-1)
@@ -93,10 +93,10 @@
 			else
 				src.blinded = 0
 
-		else	//Not stunned.
+		else	// Not stunned.
 			src.stat = CONSCIOUS
 
-	else //Dead.
+	else // Dead.
 		src.blinded = 1
 		src.stat = DEAD
 
@@ -130,7 +130,7 @@
 		src.confused--
 		src.confused = max(0, src.confused)
 
-	//update the state of modules and components here
+	// update the state of modules and components here
 	if (src.stat != CONSCIOUS)
 		uneq_all()
 

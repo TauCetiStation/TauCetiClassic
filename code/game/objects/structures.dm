@@ -103,7 +103,7 @@
 		climbers.Cut(1,2)
 
 	for(var/mob/living/M in get_turf(src))
-		if(M.lying) return //No spamming this on people.
+		if(M.lying) return // No spamming this on people.
 		M.Weaken(5)
 		to_chat(M, "<span class='red'>You topple as \the [src] moves under you!</span>")
 

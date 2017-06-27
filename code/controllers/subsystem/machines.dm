@@ -27,7 +27,7 @@ var/datum/subsystem/machines/SSmachine
 		if(!PC.powernet)
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(PC)
-			propagate_network(PC,PC.powernet)
+			propagate_network(PC, PC.powernet)
 
 /datum/subsystem/machines/New()
 	NEW_SS_GLOBAL(SSmachine)
@@ -40,10 +40,10 @@ var/datum/subsystem/machines/SSmachine
 /datum/subsystem/machines/fire(resumed = 0)
 	if (!resumed)
 		for(var/datum/powernet/Powernet in powernets)
-			Powernet.reset() //reset the power state.
+			Powernet.reset() // reset the power state.
 		src.currentrun = processing.Copy()
 
-	//cache for sanic speed (lists are references anyways)
+	// cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
 	var/seconds = wait * 0.1
@@ -52,7 +52,7 @@ var/datum/subsystem/machines/SSmachine
 		currentrun.len--
 		if(thing && thing.process(seconds) != PROCESS_KILL)
 			if(thing:use_power)
-				thing:auto_use_power() //add back the power state
+				thing:auto_use_power() // add back the power state
 		else
 			processing -= thing
 			if (thing)
@@ -66,7 +66,7 @@ var/datum/subsystem/machines/SSmachine
 		if(!PC.powernet)
 			var/datum/powernet/NewPN = new()
 			NewPN.add_cable(PC)
-			propagate_network(PC,PC.powernet)
+			propagate_network(PC, PC.powernet)
 
 /datum/subsystem/machines/Recover()
 	if (istype(SSmachine.processing))

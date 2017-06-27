@@ -19,8 +19,8 @@
 			to_chat(user, "\red That was stupid of you.")
 		if(Connected_Flamethrower)
 			Connected_Flamethrower.unequip(user)
-			//explosion(get_turf(src),-1,0,2)
-			//NAPALM GRENADE CODE HERE
+			// explosion(get_turf(src),-1,0,2)
+			// NAPALM GRENADE CODE HERE
 		src.reagents.reaction(get_turf(src), TOUCH)
 		spawn(5)
 		src.reagents.clear_reagents()
@@ -83,8 +83,8 @@
 
 	var/throw_amount = 25
 	var/thrown_amount = 25
-	var/lit = 0	//allways lit
-	var/operating = 0//cooldown
+	var/lit = 0	// allways lit
+	var/operating = 0// cooldown
 	var/turf/previousturf = null
 	var/obj/item/weapon/weldpack/M2_fuelback/Connected_tank = null
 
@@ -103,7 +103,7 @@
 		var/mob/M = location
 		if(M.l_hand == src || M.r_hand == src)
 			location = M.loc
-	if(isturf(location)) //start a fire if possible
+	if(isturf(location)) // start a fire if possible
 		location.hotspot_expose(700, 2)
 	return
 
@@ -158,7 +158,7 @@
 
 
 
-//Called from turf.dm turf/dblclick
+// Called from turf.dm turf/dblclick
 /obj/item/weapon/flamethrower_M2/proc/flame_turf(turflist)
 	if(!lit || operating)	return
 
@@ -168,7 +168,7 @@
 			break
 		if(!previousturf && length(turflist)>1)
 			previousturf = get_turf(src)
-			continue	//so we don't burn the tile we be standin on
+			continue	// so we don't burn the tile we be standin on
 		ignite_turf(T)
 		sleep(1)
 	if(Connected_tank.reagents.total_volume < throw_amount)
@@ -187,5 +187,5 @@
 
 
 /obj/item/weapon/flamethrower_M2/proc/ignite_turf(turf/target)
-	new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(target,throw_amount/50,get_dir(loc,target))
+	new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(target, throw_amount/50,get_dir(loc, target))
 	return

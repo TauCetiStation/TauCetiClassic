@@ -1,4 +1,4 @@
-//NEVER USE THIS IT SUX	-PETETHEGOAT
+// NEVER USE THIS IT SUX	-PETETHEGOAT
 
 var/global/list/cached_icons = list()
 
@@ -36,7 +36,7 @@ var/global/list/cached_icons = list()
 		..()
 		reagents.add_reagent("paint_[paint_type]", volume)
 
-	on_reagent_change() //Until we have a generic "paint", this will give new colours to all paints in the can
+	on_reagent_change() // Until we have a generic "paint", this will give new colours to all paints in the can
 		var/mixedcolor = mix_color_from_reagents(reagents.reagent_list)
 		for(var/datum/reagent/paint/P in reagents.reagent_list)
 			P.color = mixedcolor
@@ -186,7 +186,7 @@ datum/reagent/paint
 		var/ind = "[initial(T.icon)][color]"
 		if(!cached_icons[ind])
 			var/icon/overlay = new/icon(initial(T.icon))
-			overlay.Blend(color,ICON_MULTIPLY)
+			overlay.Blend(color, ICON_MULTIPLY)
 			overlay.SetIntensity(1.4)
 			T.icon = overlay
 			cached_icons[ind] = T.icon

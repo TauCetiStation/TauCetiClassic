@@ -16,8 +16,8 @@
 		for(var/mob/living/carbon/M in hear(7, get_turf(src)))
 			bang(get_turf(src), M)
 
-		for(var/obj/effect/blob/B in hear(8,get_turf(src)))       		//Blob damage here
-			var/damage = round(30/(get_dist(B,get_turf(src))+1))
+		for(var/obj/effect/blob/B in hear(8,get_turf(src)))       		// Blob damage here
+			var/damage = round(30/(get_dist(B, get_turf(src))+1))
 			B.health -= damage
 			B.update_icon()
 
@@ -29,7 +29,7 @@
 		to_chat(M, "\red <B>BANG</B>")
 		playsound(src.loc, 'sound/effects/bang.ogg', 50, 1, 5)
 
-//Checking for protections
+// Checking for protections
 		var/eye_safety = 0
 		var/ear_safety = 0
 		if(iscarbon(M))
@@ -42,7 +42,7 @@
 				if(istype(M:head, /obj/item/clothing/head/helmet))
 					ear_safety += 1
 
-//Flashing everyone
+// Flashing everyone
 		if(eye_safety < 1)
 			M.flash_eyes()
 			M.Stun(2)
@@ -50,7 +50,7 @@
 
 
 
-//Now applying sound
+// Now applying sound
 		if((get_dist(M, T) <= 2 || src.loc == M.loc || src.loc == M))
 			if(ear_safety > 0)
 				M.Stun(2)
@@ -75,7 +75,7 @@
 			M.ear_damage += rand(0, 1)
 			M.ear_deaf = max(M.ear_deaf,5)
 
-//This really should be in mob not every check
+// This really should be in mob not every check
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
@@ -103,9 +103,9 @@
 	opacity = 0
 	icon_state = "sparks"
 
-////////////////////
-//Clusterbang
-////////////////////
+//////////////////// 
+// Clusterbang
+//////////////////// 
 /obj/item/weapon/grenade/clusterbuster
 	desc = "Use of this weapon may constiute a war crime in your area, consult your local captain."
 	name = "clusterbang"
@@ -118,15 +118,15 @@
 	var/numspawned = rand(4,8)
 	var/again = 0
 
-	for(var/more = numspawned,more > 0,more--)
+	for(var/more = numspawned, more > 0,more--)
 		if(prob(35))
 			again++
 			numspawned--
 
 	while(again)
-		new /obj/item/weapon/grenade/clusterbuster/segment(loc, payload)//Creates 'segments' that launches a few more payloads
+		new /obj/item/weapon/grenade/clusterbuster/segment(loc, payload)// Creates 'segments' that launches a few more payloads
 		again--
-	new /obj/effect/payload_spawner(loc, payload, numspawned)//Launches payload
+	new /obj/effect/payload_spawner(loc, payload, numspawned)// Launches payload
 
 	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 
@@ -134,7 +134,7 @@
 
 
 //////////////////////
-//Clusterbang segment
+// Clusterbang segment
 //////////////////////
 /obj/item/weapon/grenade/clusterbuster/segment
 	desc = "A smaller segment of a clusterbang. Better run."
@@ -147,7 +147,7 @@
 	icon_state = "clusterbang_segment_active"
 	payload = payload_type
 	active = 1
-	walk_away(src,loc,rand(1,4))
+	walk_away(src, loc, rand(1,4))
 	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
 
 /obj/item/weapon/grenade/clusterbuster/segment/prime()
@@ -156,13 +156,13 @@
 	qdel(src)
 
 //////////////////////////////////
-//The payload spawner effect
-/////////////////////////////////
+// The payload spawner effect
+//////////////////////////////// /
 /obj/effect/payload_spawner/New(turf/newloc, type, numspawned)
 	for(var/loop = numspawned ,loop > 0, loop--)
 		var/obj/item/weapon/grenade/P = new type(loc)
 		P.active = 1
-		walk_away(P,loc,rand(1,4))
+		walk_away(P, loc, rand(1,4))
 		addtimer(CALLBACK(P, /obj/item/weapon/grenade.proc/prime), rand(15,60))
 	qdel(src)
 

@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/larva/emote(act,m_type=1,message = null)
+/mob/living/carbon/alien/larva/emote(act, m_type=1,message = null)
 
 	var/param = null
 	if (findtext(act, "-", 1, null))
@@ -6,7 +6,7 @@
 		param = copytext(act, t1 + 1, length(act) + 1)
 		act = copytext(act, 1, t1)
 
-	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
+	if(findtext(act,"s",-1) && !findtext(act,"_",-2))// Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 
@@ -18,7 +18,7 @@
 				if (client.prefs.muted & MUTE_IC)
 					to_chat(src, "\red You cannot send IC messages (muted).")
 					return
-				if (src.client.handle_spam_prevention(message,MUTE_IC))
+				if (src.client.handle_spam_prevention(message, MUTE_IC))
 					return
 			if (stat)
 				return
@@ -74,7 +74,7 @@
 			message = "<B>The [src.name]</B> nods its head."
 			m_type = 1
 //		if("sit")
-//			message = "<B>The [src.name]</B> sits down." //Larvan can't sit down, /N
+//			message = "<B>The [src.name]</B> sits down." // Larvan can't sit down, /N
 //			m_type = 1
 		if("sway")
 			message = "<B>The [src.name]</B> sways around dizzily."
@@ -119,9 +119,9 @@
 		if (m_type & 1)
 			for(var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)
-				//Foreach goto(703)
+				// Foreach goto(703)
 		else
 			for(var/mob/O in hearers(src, null))
 				O.show_message(message, m_type)
-				//Foreach goto(746)
+				// Foreach goto(746)
 	return

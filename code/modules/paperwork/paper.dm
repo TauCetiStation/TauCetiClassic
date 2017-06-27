@@ -18,14 +18,14 @@
 	body_parts_covered = HEAD
 	attack_verb = list("bapped")
 
-	var/info		//What's actually written on the paper.
-	var/info_links	//A different version of the paper which includes html links at fields and EOF
-	var/stamp_text		//The (text for the) stamp_text on the paper.
-	var/fields		//Amount of user created fields
+	var/info		// What's actually written on the paper.
+	var/info_links	// A different version of the paper which includes html links at fields and EOF
+	var/stamp_text		// The (text for the) stamp_text on the paper.
+	var/fields		// Amount of user created fields
 	var/list/stamped
-	var/list/ico      //Icons and
-	var/list/offset_x //offsets stored for later
-	var/list/offset_y //usage by the photocopier
+	var/list/ico      // Icons and
+	var/list/offset_x // offsets stored for later
+	var/list/offset_y // usage by the photocopier
 	var/rigged = 0
 	var/spam_flag = 0
 	var/crumpled = 0
@@ -34,7 +34,7 @@
 	var/const/signfont = "Times New Roman"
 	var/const/crayonfont = "Comic Sans MS"
 
-//lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
+// lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
 
 /obj/item/weapon/paper/New()
 	..()
@@ -121,8 +121,8 @@
 	if(!proximity) return
 	if(istype(src, /obj/item/weapon/paper/talisman)) return
 	if(istype(src, /obj/item/weapon/paper/crumpled/bloody)) return
-	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
-	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
+	// I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
+	// So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
 	if(istype(target,/obj/effect/decal/cleanable/blood))
 		qdel(src)
 		var/obj/item/weapon/paper/CB = new /obj/item/weapon/paper/crumpled/bloody()
@@ -148,9 +148,9 @@
 
 /obj/item/weapon/paper/attack_ai(mob/living/silicon/ai/user)
 	var/dist
-	if(istype(user) && user.camera) //is AI
+	if(istype(user) && user.camera) // is AI
 		dist = get_dist(src, user.camera)
-	else //cyborg or AI not seeing through a camera
+	else // cyborg or AI not seeing through a camera
 		dist = get_dist(src, user)
 	if(crumpled==1)
 		return
@@ -176,7 +176,7 @@
 			else
 				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
 								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick.</span>")
-				if(do_after(user, 10, target = H))	//user needs to keep their active hand, H does not.
+				if(do_after(user, 10, target = H))	// user needs to keep their active hand, H does not.
 					user.visible_message("<span class='notice'>[user] wipes [H]'s lipstick off with \the [src].</span>", \
 										 "<span class='notice'>You wipe off [H]'s lipstick.</span>")
 					H.lip_style = null
@@ -205,7 +205,7 @@
 			else
 				iend = findtext(info, "</span>", istart)
 
-			//textindex = istart+26
+			// textindex = istart+26
 			textindex = iend
 			break
 
@@ -222,7 +222,7 @@
 /obj/item/weapon/paper/proc/updateinfolinks()
 	info_links = info
 	var/i = 0
-	for(i=1,i<=fields,i++)
+	for(i=1,i<=fields, i++)
 		addtofield(i, "<font face=\"[deffont]\"><A href='?src=\ref[src];write=[i]'>write</A></font>", 1)
 	info_links = info_links + "<font face=\"[deffont]\"><A href='?src=\ref[src];write=end'>write</A></font>"
 
@@ -295,7 +295,7 @@
 
 //	t = replacetext(t, "#", "") // Junk converted to nothing!
 
-//Count the fields
+// Count the fields
 	var/laststart = 1
 	while(1)
 		var/i = findtext(t, "<span class=\"paper_field\">", laststart)
@@ -329,7 +329,7 @@
 	</BODY></HTML>"}, "window=paper_help")
 
 
-/obj/item/weapon/proc/burnpaper(obj/item/weapon/lighter/P, mob/user) //weapon, to use this in paper_bundle and photo
+/obj/item/weapon/proc/burnpaper(obj/item/weapon/lighter/P, mob/user) // weapon, to use this in paper_bundle and photo
 	var/list/burnable = list(/obj/item/weapon/paper,
                           /obj/item/weapon/paper_bundle,
                           /obj/item/weapon/photo)
@@ -368,8 +368,8 @@
 
 	if(href_list["write"])
 		var/id = href_list["write"]
-		//var/t = strip_html_simple(input(usr, "What text do you wish to add to " + (id=="end" ? "the end of the paper" : "field "+id) + "?", "[name]", null),8192) as message
-		//var/t =  strip_html_simple(input("Enter what you want to write:", "Write", null, null)  as message, MAX_MESSAGE_LEN)
+		// var/t = strip_html_simple(input(usr, "What text do you wish to add to " + (id=="end" ? "the end of the paper" : "field "+id) + "?", "[name]", null),8192) as message
+		// var/t =  strip_html_simple(input("Enter what you want to write:", "Write", null, null)  as message, MAX_MESSAGE_LEN)
 		var/t =  input("Enter what you want to write:", "Write", null, null)  as message
 		var/obj/item/i = usr.get_active_hand() // Check to see if he still got that darn pen, also check if he's using a crayon or pen.
 		var/iscrayon = 0
@@ -388,13 +388,13 @@
 
 		// check for exploits
 		for(var/bad in paper_blacklist)
-			if(findtext(t,bad))
+			if(findtext(t, bad))
 				to_chat(usr, "\blue You think to yourself, \"Hm.. this is only paper...\"")
 				log_admin("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
 				message_admins("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
 				return
 
-		//t = replacetext(t, "\n", "<BR>")
+		// t = replacetext(t, "\n", "<BR>")
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 
 		if(isIAN(usr))
@@ -479,10 +479,10 @@
 
 	else if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		if ( istype(P, /obj/item/weapon/pen/robopen) && P:mode == 2 )
-			P:RenamePaper(user,src)
+			P:RenamePaper(user, src)
 		else
 			show_content(user, forceshow = TRUE, infolinks = TRUE)
-		//openhelp(user)
+		// openhelp(user)
 		add_fingerprint(user)
 		return
 

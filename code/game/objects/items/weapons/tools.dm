@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /* Tools!
  * Note: Multitools are /obj/item/device
@@ -34,8 +34,8 @@
 	icon_state = "drill_bolt"
 	item_state = "drill"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
-	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
-	force = 8 //might or might not be too high, subject to change
+	origin_tech = "materials=2;engineering=2" // done for balance reasons, making them high value for research, but harder to get
+	force = 8 // might or might not be too high, subject to change
 	throwforce = 8
 	attack_verb = list("drilled", "screwed", "jabbed")
 	action_button_name = "Change mode"
@@ -90,7 +90,7 @@
 		return ..()
 	if((CLUMSY in user.mutations) && prob(50))
 		M = user
-	return eyestab(M,user)
+	return eyestab(M, user)
 
 /obj/item/weapon/screwdriver/power
 	name = "Hand Drill"
@@ -98,11 +98,11 @@
 	icon_state = "drill_screw"
 	item_state = "drill"
 	materials = list(MAT_METAL=150, MAT_SILVER=50)
-	origin_tech = "materials=2;engineering=2" //done for balance reasons, making them high value for research, but harder to get
-	force = 8 //might or might not be too high, subject to change
+	origin_tech = "materials=2;engineering=2" // done for balance reasons, making them high value for research, but harder to get
+	force = 8 // might or might not be too high, subject to change
 	throwforce = 8
 	throw_speed = 2
-	throw_range = 3//it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
+	throw_range = 3// it's heavier than a screw driver/wrench, so it does more damage, but can't be thrown as far
 	attack_verb = list("drilled", "screwed", "jabbed","whacked")
 	hitsound = 'sound/items/drill_hit.ogg'
 	action_button_name = "Change mode"
@@ -182,24 +182,24 @@
 	slot_flags = SLOT_BELT
 	action_button_name = "Switch Welding tool"
 
-	//Amount of OUCH when it's thrown
+	// Amount of OUCH when it's thrown
 	force = 3.0
 	throwforce = 5.0
 	throw_speed = 1
 	throw_range = 5
 	w_class = 2.0
 
-	//Cost to make in the autolathe
+	// Cost to make in the autolathe
 	m_amt = 70
 	g_amt = 30
 
-	//R&D tech level
+	// R&D tech level
 	origin_tech = "engineering=1"
 
-	//Welding tool specific stuff
-	var/welding = 0 	//Whether or not the welding tool is off(0), on(1) or currently welding(2)
-	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
-	var/max_fuel = 20 	//The max amount of fuel the welder can hold
+	// Welding tool specific stuff
+	var/welding = 0 	// Whether or not the welding tool is off(0), on(1) or currently welding(2)
+	var/status = 1 		// Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
+	var/max_fuel = 20 	// The max amount of fuel the welder can hold
 
 /obj/item/weapon/weldingtool/New()
 //	var/random_fuel = min(rand(10,20),max_fuel)
@@ -257,9 +257,9 @@
 
 /obj/item/weapon/weldingtool/process()
 	switch(welding)
-		//If off
+		// If off
 		if(0)
-			if(src.icon_state != "welder") //Check that the sprite is correct, if it isnt, it means toggle() was not called
+			if(src.icon_state != "welder") // Check that the sprite is correct, if it isnt, it means toggle() was not called
 				src.force = 3
 				src.damtype = "brute"
 				src.icon_state = initial(src.icon_state)
@@ -267,9 +267,9 @@
 			set_light(0)
 			STOP_PROCESSING(SSobj, src)
 			return
-		//Welders left on now use up fuel, but lets not have them run out quite that fast
+		// Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
-			if(src.icon_state != "welder1") //Check that the sprite is correct, if it isnt, it means toggle() was not called
+			if(src.icon_state != "welder1") // Check that the sprite is correct, if it isnt, it means toggle() was not called
 				src.force = 15
 				src.damtype = "fire"
 				src.icon_state = initial(src.icon_state) + "1"
@@ -278,15 +278,15 @@
 			light_color = "#dbe2ff"
 			set_light(2)
 
-		//If you're actually actively welding, use fuel faster.
-		//Is this actually used or set anywhere? - Nodrak
+		// If you're actually actively welding, use fuel faster.
+		// Is this actually used or set anywhere? - Nodrak
 		if(2)
 			if(prob(75))
 				remove_fuel(1)
 
 
-	//I'm not sure what this does. I assume it has to do with starting fires...
-	//...but it doesnt check to see if the welder is on or not.
+	// I'm not sure what this does. I assume it has to do with starting fires...
+	// ...but it doesnt check to see if the welder is on or not.
 	var/turf/location = src.loc
 	if(istype(location, /mob/))
 		var/mob/M = location
@@ -298,12 +298,12 @@
 
 /obj/item/weapon/weldingtool/afterattack(obj/O, mob/user, proximity)
 	if(!proximity) return
-	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && !src.welding)
+	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src, O) <= 1 && !src.welding)
 		O.reagents.trans_to(src, max_fuel)
 		to_chat(user, "<span class='notice'>Welder refueled")
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
-	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.welding)
+	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src, O) <= 1 && src.welding)
 		message_admins("[key_name_admin(user)] triggered a fueltank explosion. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 		log_game("[key_name(user)] triggered a fueltank explosion.")
 		to_chat(user, "<span class='rose'>That was stupid of you.</span>")
@@ -316,7 +316,7 @@
 		if (istype(location, /turf))
 			location.hotspot_expose(700, 50, 1, src)
 
-			if(isliving(O))				//Welding can ignite mobs, splashed with fuel
+			if(isliving(O))				// Welding can ignite mobs, splashed with fuel
 				var/mob/living/L = O
 				L.IgniteMob()
 		if(isturf(O))
@@ -334,12 +334,12 @@
 	toggle()
 	return
 
-//Returns the amount of fuel in the welder
+// Returns the amount of fuel in the welder
 /obj/item/weapon/weldingtool/proc/get_fuel()
 	return reagents.get_reagent_amount("fuel")
 
 
-//Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
+// Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob. This should probably be renamed to use()
 /obj/item/weapon/weldingtool/proc/remove_fuel(amount = 1, mob/M = null)
 	if(!welding || !check_fuel())
 		return 0
@@ -354,14 +354,14 @@
 			to_chat(M, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 		return 0
 
-//Returns whether or not the welding tool is currently on.
+// Returns whether or not the welding tool is currently on.
 /obj/item/weapon/weldingtool/proc/isOn()
 	return src.welding
 
-//Sets the welding state of the welding tool. If you see W.welding = 1 anywhere, please change it to W.setWelding(1)
-//so that the welding tool updates accordingly
+// Sets the welding state of the welding tool. If you see W.welding = 1 anywhere, please change it to W.setWelding(1)
+// so that the welding tool updates accordingly
 /obj/item/weapon/weldingtool/proc/setWelding(temp_welding)
-	//If we're turning it on
+	// If we're turning it on
 	if(temp_welding > 0)
 		if (remove_fuel(1))
 			to_chat(usr, "<span class='info'>The [src] switches on.</span>")
@@ -373,7 +373,7 @@
 			to_chat(usr, "<span class='info'>Need more fuel!</span>")
 			src.welding = 0
 			return
-	//Otherwise
+	// Otherwise
 	else
 		to_chat(usr, "<span class='info'>The [src] switches off.</span>")
 		src.force = 3
@@ -381,7 +381,7 @@
 		src.icon_state = initial(src.icon_state)
 		src.welding = 0
 
-//Turns off the welder if there is no more fuel (does this really need to be its own proc?)
+// Turns off the welder if there is no more fuel (does this really need to be its own proc?)
 /obj/item/weapon/weldingtool/proc/check_fuel()
 	if((get_fuel() <= 0) && welding)
 		toggle(1)
@@ -389,7 +389,7 @@
 	return 1
 
 
-//Toggles the welder off and on
+// Toggles the welder off and on
 /obj/item/weapon/weldingtool/proc/toggle(message = 0)
 	if(!status)	return
 	if(!usr) return
@@ -420,8 +420,8 @@
 	else
 		usr.update_inv_r_hand()
 
-//Decides whether or not to damage a player's eyes based on what they're wearing as protection
-//Note: This should probably be moved to mob
+// Decides whether or not to damage a player's eyes based on what they're wearing as protection
+// Note: This should probably be moved to mob
 /obj/item/weapon/weldingtool/proc/eyecheck(mob/user)
 	if(!iscarbon(user))	return 1
 	var/safety = user:eyecheck()
@@ -495,7 +495,7 @@
 
 
 
-/obj/item/weapon/weldingtool/experimental/proc/fuel_gen()//Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
+/obj/item/weapon/weldingtool/experimental/proc/fuel_gen()// Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
 	var/gen_amount = ((world.time-last_gen)/25)
 	reagents += (gen_amount)
 	if(reagents > max_fuel)

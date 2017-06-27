@@ -9,7 +9,7 @@
 	w_class = 3
 	var/charges = 10
 	var/status = 0
-	var/mob/foundmob = "" //Used in throwing proc.
+	var/mob/foundmob = "" // Used in throwing proc.
 	var/agony = 60
 
 	origin_tech = "combat=2"
@@ -60,7 +60,7 @@
 
 	if(user.a_intent == "hurt")
 		if(!..()) return
-		//H.apply_effect(5, WEAKEN, 0)
+		// H.apply_effect(5, WEAKEN, 0)
 		H.visible_message("<span class='danger'>[M] has been beaten with the [src] by [user]!</span>")
 
 		playsound(src.loc, "swing_hit", 50, 1, -1)
@@ -70,10 +70,10 @@
 		return
 	else
 		user.do_attack_animation(M)
-		//H.apply_effect(10, STUN, 0)
-		//H.apply_effect(10, WEAKEN, 0)
-		//H.apply_effect(10, STUTTER, 0)
-		H.apply_effect(agony,AGONY,0)
+		// H.apply_effect(10, STUN, 0)
+		// H.apply_effect(10, WEAKEN, 0)
+		// H.apply_effect(10, STUTTER, 0)
+		H.apply_effect(agony, AGONY,0)
 		user.lastattacked = M
 		H.lastattacker = user
 		if(isrobot(src.loc))
@@ -102,10 +102,10 @@
 		if(istype(hit_atom, /mob/living))
 			var/mob/living/carbon/human/H = hit_atom
 			if(status)
-				//H.apply_effect(10, STUN, 0)
-				//H.apply_effect(10, WEAKEN, 0)
-				//H.apply_effect(10, STUTTER, 0)
-				H.apply_effect(agony,AGONY,0)
+				// H.apply_effect(10, STUN, 0)
+				// H.apply_effect(10, WEAKEN, 0)
+				// H.apply_effect(10, STUTTER, 0)
+				H.apply_effect(agony, AGONY,0)
 				charges--
 
 				for(var/mob/M in player_list) if(M.key == src.fingerprintslast)

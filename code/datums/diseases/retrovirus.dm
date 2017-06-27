@@ -32,12 +32,12 @@
 		if(1)
 			if(restcure)
 /*
-				if(affected_mob.sleeping && prob(30))  //removed until sleeping is fixed
+				if(affected_mob.sleeping && prob(30))  // removed until sleeping is fixed
 					to_chat(affected_mob, "\blue You feel better.")
 					cure()
 					return
 */
-				if(affected_mob.lying && prob(30))  //changed FROM prob(20) until sleeping is fixed
+				if(affected_mob.lying && prob(30))  // changed FROM prob(20) until sleeping is fixed
 					to_chat(affected_mob, "\blue You feel better.")
 					cure()
 					return
@@ -50,12 +50,12 @@
 		if(2)
 			if(restcure)
 /*
-				if(affected_mob.sleeping && prob(20))  //removed until sleeping is fixed
+				if(affected_mob.sleeping && prob(20))  // removed until sleeping is fixed
 					to_chat(affected_mob, "\blue You feel better.")
 					cure()
 					return
 */
-				if(affected_mob.lying && prob(20))  //changed FROM prob(10) until sleeping is fixed
+				if(affected_mob.lying && prob(20))  // changed FROM prob(10) until sleeping is fixed
 					to_chat(affected_mob, "\blue You feel better.")
 					cure()
 					return
@@ -71,12 +71,12 @@
 		if(3)
 			if(restcure)
 /*
-				if(affected_mob.sleeping && prob(20))  //removed until sleeping is fixed
+				if(affected_mob.sleeping && prob(20))  // removed until sleeping is fixed
 					to_chat(affected_mob, "\blue You feel better.")
 					cure()
 					return
 */
-				if(affected_mob.lying && prob(20))  //changed FROM prob(10) until sleeping is fixed
+				if(affected_mob.lying && prob(20))  // changed FROM prob(10) until sleeping is fixed
 					to_chat(affected_mob, "\blue You feel better.")
 					cure()
 					return
@@ -92,12 +92,12 @@
 		if(4)
 			if(restcure)
 /*
-				if(affected_mob.sleeping && prob(10))  //removed until sleeping is fixed
+				if(affected_mob.sleeping && prob(10))  // removed until sleeping is fixed
 					to_chat(affected_mob, "\blue You feel better.")
 					cure()
 					return
 */
-				if(affected_mob.lying && prob(5))  //changed FROM prob(5) until sleeping is fixed
+				if(affected_mob.lying && prob(5))  // changed FROM prob(5) until sleeping is fixed
 					to_chat(affected_mob, "\blue You feel better.")
 					cure()
 					return

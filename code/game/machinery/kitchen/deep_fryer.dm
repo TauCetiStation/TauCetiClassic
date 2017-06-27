@@ -8,8 +8,8 @@
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 5
-	var/on = FALSE	//Is it deep frying already?
-	var/obj/item/frying = null	//What's being fried RIGHT NOW?
+	var/on = FALSE	// Is it deep frying already?
+	var/obj/item/frying = null	// What's being fried RIGHT NOW?
 	var/fry_time = 0.0
 
 

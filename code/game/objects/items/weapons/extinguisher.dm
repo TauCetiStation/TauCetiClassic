@@ -17,7 +17,7 @@
 	var/last_use = 1.0
 	var/safety = 1
 	var/sprite_name = "fire_extinguisher"
-	var/spray_amount = 1	//units of liquid per particle
+	var/spray_amount = 1	// units of liquid per particle
 	var/spray_range = 4
 
 /obj/item/weapon/extinguisher/mini
@@ -25,7 +25,7 @@
 	desc = "A light and compact fibreglass-framed model fire extinguisher."
 	icon_state = "miniFE0"
 	item_state = "miniFE"
-	hitsound = null	//it is much lighter, after all.
+	hitsound = null	// it is much lighter, after all.
 	throwforce = 2
 	w_class = 2.0
 	force = 3.0
@@ -52,9 +52,9 @@
 	return
 
 /obj/item/weapon/extinguisher/afterattack(atom/target, mob/user , flag)
-	//TODO; Add support for reagents in water.
+	// TODO; Add support for reagents in water.
 
-	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src,target) <= 1)
+	if( istype(target, /obj/structure/reagent_dispensers/watertank) && get_dist(src, target) <= 1)
 		var/obj/O = target
 		O.reagents.trans_to(src, 50)
 		to_chat(user, "<span class='notice'>[src] is now refilled.</span>")
@@ -73,7 +73,7 @@
 
 		playsound(src.loc, 'sound/effects/extinguish.ogg', 75, 1, -3)
 
-		var/direction = get_dir(src,target)
+		var/direction = get_dir(src, target)
 
 		if(usr.buckled && isobj(usr.buckled) && !usr.buckled.anchored )
 			spawn(0)
@@ -108,10 +108,10 @@
 			user.newtonian_move(turn(direction, 180))
 
 		var/turf/T = get_turf(target)
-		var/turf/T1 = get_step(T,turn(direction, 90))
-		var/turf/T2 = get_step(T,turn(direction, -90))
+		var/turf/T1 = get_step(T, turn(direction, 90))
+		var/turf/T2 = get_step(T, turn(direction, -90))
 
-		var/list/the_targets = list(T,T1,T2)
+		var/list/the_targets = list(T, T1,T2)
 
 		for(var/a in 0 to spray_range)
 			spawn(0)
@@ -125,7 +125,7 @@
 				src.reagents.trans_to(W, spray_amount)
 
 				for(var/b in 0 to spray_range)
-					step_towards(W,my_target)
+					step_towards(W, my_target)
 					if(!W) return
 					if(!W.reagents) break
 					W.reagents.reaction(get_turf(W))
@@ -133,7 +133,7 @@
 						if(!W) return
 						if(!W.reagents) break
 						W.reagents.reaction(atm)
-						if(isliving(atm)) //For extinguishing mobs on fire
+						if(isliving(atm)) // For extinguishing mobs on fire
 							var/mob/living/M = atm
 							M.ExtinguishMob()
 					if(W.loc == my_target) break

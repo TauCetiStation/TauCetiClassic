@@ -4,7 +4,7 @@
 	helptext = "We cannot be tracked by camera while using this skill. However, humans looking at us will find us... uncanny. We must constantly expend chemicals to maintain our form like this."
 	genomecost = 1
 
-//Prevents AIs tracking you but makes you easily detectable to the human-eye.
+// Prevents AIs tracking you but makes you easily detectable to the human-eye.
 /obj/effect/proc_holder/changeling/digitalcamo/sting_action(mob/user)
 
 	if(user.digitalcamo)

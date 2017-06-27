@@ -89,7 +89,7 @@
 	max_damage = 50
 
 
-//A fixed and much cleaner implementation of /tg/'s special snowflake code.
+// A fixed and much cleaner implementation of /tg/'s special snowflake code.
 /datum/robot_component/actuator/is_powered()
 	return (installed == 1) && (brute_damage + electronics_damage < max_damage)
 

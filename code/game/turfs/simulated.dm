@@ -6,15 +6,15 @@
 	var/thermite = 0
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
-	var/to_be_destroyed = 0 //Used for fire, if a melting temperature was reached, it will be destroyed
-	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
+	var/to_be_destroyed = 0 // Used for fire, if a melting temperature was reached, it will be destroyed
+	var/max_fire_temperature_sustained = 0 // The max temperature of the fire which it was subjected to
 	var/dirt = 0
 
 /turf/simulated/New()
 	..()
 	levelupdate()
 
-/turf/simulated/proc/AddTracks(mob/M,bloodDNA,comingdir,goingdir,bloodcolor="#A10808")
+/turf/simulated/proc/AddTracks(mob/M, bloodDNA, comingdir, goingdir, bloodcolor="#A10808")
 	var/typepath
 	if(ishuman(M))
 		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints
@@ -26,11 +26,11 @@
 	var/obj/effect/decal/cleanable/blood/tracks/tracks = locate(typepath) in src
 	if(!tracks)
 		tracks = new typepath(src)
-	tracks.AddTracks(bloodDNA,comingdir,goingdir,bloodcolor)
+	tracks.AddTracks(bloodDNA, comingdir, goingdir, bloodcolor)
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
-		to_chat(usr, "\red Movement is admin-disabled.")//This is to identify lag problems
+		to_chat(usr, "\red Movement is admin-disabled.")// This is to identify lag problems
 		return
 
 	if (istype(A, /mob/living/simple_animal/hulk))
@@ -54,7 +54,7 @@
 		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 
-			//Footstep sound
+			// Footstep sound
 			if(istype(H:shoes, /obj/item/clothing/shoes) && !H.buckled)
 				var/obj/item/clothing/shoes/O = H.shoes
 
@@ -91,10 +91,10 @@
 				M.track_blood--
 
 		if (bloodDNA)
-			src.AddTracks(M,bloodDNA,M.dir,0,bloodcolor) // Coming
-			var/turf/simulated/from = get_step(M,reverse_direction(M.dir))
+			src.AddTracks(M, bloodDNA, M.dir,0,bloodcolor) // Coming
+			var/turf/simulated/from = get_step(M, reverse_direction(M.dir))
 			if(istype(from) && from)
-				from.AddTracks(M,bloodDNA,0,M.dir,bloodcolor) // Going
+				from.AddTracks(M, bloodDNA,0,M.dir, bloodcolor) // Going
 
 			bloodDNA = null
 
@@ -113,7 +113,7 @@
 						M.inertia_dir = 0
 						return
 
-			if(2) //lube                //can cause infinite loops - needs work
+			if(2) // lube                // can cause infinite loops - needs work
 				M.stop_pulling()
 				step(M, M.dir)
 				spawn(1) step(M, M.dir)
@@ -140,7 +140,7 @@
 
 	..()
 
-//returns 1 if made bloody, returns 0 otherwise
+// returns 1 if made bloody, returns 0 otherwise
 /turf/simulated/add_blood(mob/living/carbon/human/M)
 	if (!..())
 		return 0
@@ -149,14 +149,14 @@
 		if(!B.blood_DNA[M.dna.unique_enzymes])
 			B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 			B.virus2 = virus_copylist(M.virus2)
-		return 1 //we bloodied the floor
+		return 1 // we bloodied the floor
 
 
 
-	//if there isn't a blood decal already, make one.
+	// if there isn't a blood decal already, make one.
 	var/obj/effect/decal/cleanable/blood/newblood = new /obj/effect/decal/cleanable/blood(src)
 
-	//Species-specific blood.
+	// Species-specific blood.
 	if(M.species)
 		newblood.basecolor = M.species.blood_color
 	else
@@ -166,7 +166,7 @@
 	newblood.virus2 = virus_copylist(M.virus2)
 	newblood.update_icon()
 
-	return 1 //we bloodied the floor
+	return 1 // we bloodied the floor
 
 
 // Only adds blood on the floor -- Skie
@@ -183,7 +183,7 @@
 		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
 		var/mob/living/carbon/human/H = M
 
-		//Species-specific blood.
+		// Species-specific blood.
 		if(H.species)
 			this.basecolor = H.species.blood_color
 		else
@@ -199,7 +199,7 @@
 	else if( istype(M, /mob/living/silicon/robot ))
 		new /obj/effect/decal/cleanable/blood/oil(src)
 
-//Wet floor procs.
+// Wet floor procs.
 /turf/simulated/proc/make_wet_floor(severity = WATER_FLOOR)
 	if(wet < severity)
 		wet = severity

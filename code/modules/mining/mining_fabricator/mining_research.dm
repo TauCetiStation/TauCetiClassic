@@ -1,7 +1,7 @@
 
-//------------SPACE SUIT------------
+// ------------SPACE SUIT------------
 
-//Cheap
+// Cheap
 /datum/design/space_suit_cheap
 	name = "Budget spacesuit"
 	id = "space_suit_cheap"
@@ -20,7 +20,7 @@
 	construction_time = 50
 	category = list("Spacesuit")
 
-//Common buble
+// Common buble
 /datum/design/space_suit
 	name = "Space suit"
 	id = "space_suit"
@@ -41,7 +41,7 @@
 	construction_time = 100
 	category = list("Spacesuit")
 
-//Mining buble
+// Mining buble
 /datum/design/space_suit_mining
 	name = "Mining Space suit"
 	id = "space_suit_mining"
@@ -62,7 +62,7 @@
 	construction_time = 400
 	category = list("Spacesuit")
 
-//Engineering rig
+// Engineering rig
 /datum/design/space_suit_engineering
 	name = "engineering hardsuit"
 	id = "space_suit_engineering"
@@ -83,7 +83,7 @@
 	construction_time = 600
 	category = list("Spacesuit")
 
-//Atmospherics rig (bs12)
+// Atmospherics rig (bs12)
 /datum/design/space_suit_atmospherics
 	name = "atmospherics hardsuit"
 	id = "space_suit_atmospherics"
@@ -104,7 +104,7 @@
 	construction_time = 400
 	category = list("Spacesuit")
 
-//Medical rig
+// Medical rig
 /datum/design/space_suit_medical
 	name = "medical hardsuit"
 	id = "space_suit_medical"
@@ -125,7 +125,7 @@
 	construction_time = 400
 	category = list("Spacesuit")
 
-//Mining rig
+// Mining rig
 /datum/design/space_suit_mining_rig
 	name = "mining hardsuit"
 	id = "space_suit_mining_rig"
@@ -146,7 +146,7 @@
 	construction_time = 600
 	category = list("Spacesuit")
 
-//Security rig
+// Security rig
 /datum/design/space_suit_security
 	name = "security hardsuit"
 	id = "space_suit_security"
@@ -167,9 +167,9 @@
 	construction_time = 1600
 	category = list("Spacesuit")
 
-//------------TOOLS------------
-//other in rnd
-//pickaxe
+// ------------TOOLS------------
+// other in rnd
+// pickaxe
 /datum/design/pickaxe
 	name = "pickaxe"
 	id = "pickaxe"
@@ -179,7 +179,7 @@
 	construction_time = 100
 	category = list("Tools")
 
-//shovel
+// shovel
 /datum/design/shovel
 	name = "shovel"
 	id = "shovel"
@@ -189,7 +189,7 @@
 	construction_time = 50
 	category = list("Tools")
 
-//geo_hud
+// geo_hud
 /datum/design/geo_hud
 	name = "Geological Optical Scanner"
 	id = "geo_hud"
@@ -199,7 +199,7 @@
 	construction_time = 50
 	category = list("Tools")
 
-//mine_flashlight
+// mine_flashlight
 /datum/design/mine_flashlight
 	name = "Mining flashlight"
 	id = "mine_flashlight"
@@ -250,7 +250,7 @@
 	category = list("Tools")
 
 
-//------------SUPPORT------------Support
+// ------------SUPPORT------------Support
 
 /datum/design/mine_radio
 	name = "The supply radio headset"

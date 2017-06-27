@@ -149,7 +149,7 @@
 	for(var/obj/item/I in L.get_equipped_items())
 		if(L.unEquip(I))
 			I.forceMove(loc)
-			if(prob(15)) //saved by ripped cloth
+			if(prob(15)) // saved by ripped cloth
 				return
 
 	// Start shredding meat

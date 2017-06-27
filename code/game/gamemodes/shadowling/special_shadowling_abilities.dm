@@ -1,4 +1,4 @@
-//In here: Hatch and Ascendance
+// In here: Hatch and Ascendance
 var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "Noaey'gief", "Mii`mahza", "Amerziox", "Gyrg-mylin", "Kanet'pruunance", "Vigistaezian")
 /mob/living/carbon/human/proc/shadowling_hatch()
 	set category = "Shadowling Evolution"
@@ -22,7 +22,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 								"<span class='shadowling'>You remove any equipment which would hinder your hatching and begin regurgitating the resin which will protect you.</span>")
 
 			usr.Stun(34)
-			for(var/obj/item/I in usr) //drops all items
+			for(var/obj/item/I in usr) // drops all items
 				usr.drop_from_inventory(I)
 			usr.regenerate_icons()
 
@@ -31,10 +31,10 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			var/turf/shadowturf = get_turf(usr)
 			for(F in orange(1, usr))
 				new /obj/effect/alien/resin/wall/shadowling(F)
-			//for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf) //extremely hacky
+			// for(var/obj/structure/alien/resin/wall/shadowling/R in shadowturf) // extremely hacky
 			for(var/obj/effect/alien/resin/wall/shadowling/R in shadowturf)
 				qdel(R)
-				//new /obj/structure/alien/weeds/node(shadowturf) //Dim lighting in the chrysalis -- removes itself with the chrysalis
+				// new /obj/structure/alien/weeds/node(shadowturf) // Dim lighting in the chrysalis -- removes itself with the chrysalis
 				new /obj/structure/alien/weeds/node(shadowturf)
 
 			usr.visible_message("<span class='warning'>A chrysalis forms around [usr], sealing them inside.</span>", \
@@ -145,7 +145,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 					M.visible_message("<span class='userdanger'>[M] trembles minutely as they collapse, black smoke pouring from their disintegrating face.</span>", \
 									  "<span class='userdanger'>It's time! Your masters are ascending! Your last thoughts are happy as your body is drained of life.</span>")
 
-					ticker.mode.thralls -= M.mind //To prevent message spam
+					ticker.mode.thralls -= M.mind // To prevent message spam
 					M.death(0)
 
 			to_chat(usr, "<span class='userdanger'>Drawing upon your thralls, you find the strength needed to finish and rend apart the final barriers to godhood.</b></span>")
@@ -176,7 +176,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			A.name = usr.real_name
 			if(A.real_name)
 				A.real_name = usr.real_name
-			usr.invisibility = 60 //This is pretty bad, but is also necessary for the shuttle call to function properly
+			usr.invisibility = 60 // This is pretty bad, but is also necessary for the shuttle call to function properly
 			usr.flags |= GODMODE
 			usr.notransform = 1
 			sleep(50)

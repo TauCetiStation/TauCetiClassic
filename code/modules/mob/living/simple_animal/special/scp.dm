@@ -1,4 +1,4 @@
-//SCP173 sprite by Lagoon Sadness - lagoon-sadnes.deviantart.com/art/SCP-173-RPG-sprite-sheet-502690979
+// SCP173 sprite by Lagoon Sadness - lagoon-sadnes.deviantart.com/art/SCP-173-RPG-sprite-sheet-502690979
 /mob/living/simple_animal/special/scp173
 	name = "friend"
 	real_name = "friend"
@@ -44,13 +44,13 @@
 
 	var/life_cicle = 0
 	var/next_cicle = 10
-	var/activated = 0 //So, it wont start its massacre right away and can be delayed for event or what ever...
+	var/activated = 0 // So, it wont start its massacre right away and can be delayed for event or what ever...
 
 /mob/living/var/scp_mark = 0
 /turf/var/scp_was_here = 0
 
 /mob/living/simple_animal/special/scp173/New()
-	for(var/mob/living/simple_animal/special/scp173/SA in world) //only 1 can exist at the same time
+	for(var/mob/living/simple_animal/special/scp173/SA in world) // only 1 can exist at the same time
 		if(SA && SA != src)
 			qdel(src)
 			return
@@ -59,7 +59,7 @@
 /mob/living/simple_animal/special/scp173/Life()
 	if(!activated) return
 
-	if(istype(src.loc, /obj/structure/closet)) //Nope.avi
+	if(istype(src.loc, /obj/structure/closet)) // Nope.avi
 		var/obj/structure/closet/C = src.loc
 		C.dump_contents()
 		qdel(C)
@@ -93,18 +93,18 @@
 					Light.update(0)
 				else
 					L.set_light(0)
-			for(var/obj/effect/glowshroom/G in T.contents) //Very small radius
+			for(var/obj/effect/glowshroom/G in T.contents) // Very small radius
 				qdel(G)
 			for(var/mob/living/carbon/human/H in T.contents)
 				for(var/obj/item/F in H)
 					F.set_light(0)
-					if(istype(F, /obj/item/device/flashlight)) //More survival!
+					if(istype(F, /obj/item/device/flashlight)) // More survival!
 						var/obj/item/device/flashlight/FL = F
 						if(FL.on)
 							H.drop_from_inventory(FL)
-							if(prob(45)) //Poooof
+							if(prob(45)) // Poooof
 								qdel(FL)
-				H.set_light(0) //This is required with the object-based lighting
+				H.set_light(0) // This is required with the object-based lighting
 			for(var/mob/living/silicon/robot/R in T.contents)
 				R.set_light(0)
 
@@ -159,7 +159,7 @@
 /mob/living/simple_animal/special/scp173/death()
 	return
 
- //Only singularity can harm us! Praise the lord singulo!
+ // Only singularity can harm us! Praise the lord singulo!
 /mob/living/simple_animal/special/scp173/gib()
 	return
 /mob/living/simple_animal/special/scp173/dust()
@@ -193,7 +193,7 @@
 	return
 
 /mob/living/simple_animal/special/scp173/Process_Spacemove(movement_dir = 0)
-	return 1 //copypasta from carp code
+	return 1 // copypasta from carp code
 
 /mob/living/simple_animal/special/scp173/attackby(obj/item/O, mob/user)
 	to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")

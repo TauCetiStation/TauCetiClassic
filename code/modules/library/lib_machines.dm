@@ -188,11 +188,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			dat += "<h3>Checked Out Books</h3><BR>"
 			for(var/datum/borrowbook/b in checkouts)
 				var/timetaken = world.time - b.getdate
-				//timetaken *= 10
+				// timetaken *= 10
 				timetaken /= 600
 				timetaken = round(timetaken)
 				var/timedue = b.duedate - world.time
-				//timedue *= 10
+				// timedue *= 10
 				timedue /= 600
 				if(timedue <= 0)
 					timedue = "<font color=red><b>(OVERDUE)</b> [timedue]</font>"
@@ -337,7 +337,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		buffer_mob = sanitize_alt(copytext(input("Enter the recipient's name:") as text|null,1,MAX_NAME_LEN))
 	if(href_list["checkout"])
 		var/datum/borrowbook/b = new /datum/borrowbook
-		b.bookname = sanitize_alt(buffer_book)//����� ��, TODO:CYRILLIC
+		b.bookname = sanitize_alt(buffer_book)// ����� ��, TODO:CYRILLIC
 		b.mobname = sanitize_alt(buffer_mob)
 		b.getdate = world.time
 		b.duedate = world.time + (checkoutperiod * 600)

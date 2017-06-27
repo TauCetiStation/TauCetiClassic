@@ -89,7 +89,7 @@
 	return
 
 
-/////////////////Juggernaut///////////////
+///////////////// Juggernaut////////////// /
 /mob/living/simple_animal/construct/armoured
 	name = "Juggernaut"
 	real_name = "Juggernaut"
@@ -150,7 +150,7 @@
 	return (..(P))
 
 
-////////////////////////Wraith/////////////////////////////////////////////
+/////////////////////// /Wraith//////////////////////////////////////////// /
 /mob/living/simple_animal/construct/wraith
 	name = "Wraith"
 	real_name = "Wraith"
@@ -169,7 +169,7 @@
 	construct_spells = list(/obj/effect/proc_holder/spell/targeted/ethereal_jaunt/shift)
 
 
-/////////////////////////////Artificer/////////////////////////
+///////////////////////////// Artificer/////////////////////////
 /mob/living/simple_animal/construct/builder
 	name = "Artificer"
 	real_name = "Artificer"
@@ -193,7 +193,7 @@
 							/obj/effect/proc_holder/spell/aoe_turf/conjure/soulstone)
 
 
-/////////////////////////////Behemoth/////////////////////////
+///////////////////////////// Behemoth/////////////////////////
 /mob/living/simple_animal/construct/behemoth
 	name = "Behemoth"
 	real_name = "Behemoth"
@@ -230,7 +230,7 @@
 		visible_message("<span class='red'>[user] gently taps [src] with [O].</span>")
 
 
-/////////////////////////////////////Harvester construct/////////////////////////////////
+/////////////////////////////////////Harvester construct//////////////////////////////// /
 /mob/living/simple_animal/construct/harvester
 	name = "Harvester"
 	real_name = "Harvester"

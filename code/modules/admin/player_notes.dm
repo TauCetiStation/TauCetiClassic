@@ -1,8 +1,8 @@
-//This stuff was originally intended to be integrated into the ban-system I was working on
-//but it's safe to say that'll never be finished. So I've merged it into the current player panel.
-//enjoy				~Carn
+// This stuff was originally intended to be integrated into the ban-system I was working on
+// but it's safe to say that'll never be finished. So I've merged it into the current player panel.
+// enjoy				~Carn
 /*
-#define NOTESFILE "data/player_notes.sav"	//where the player notes are saved
+#define NOTESFILE "data/player_notes.sav"	// where the player notes are saved
 
 datum/admins/proc/notes_show(ckey)
 	usr << browse("<head><title>Player Notes</title></head><body>[notes_gethtml(ckey)]</body>","window=player_notes;size=700x400")
@@ -28,9 +28,9 @@ datum/admins/proc/notes_gethtml(ckey)
 	return
 
 
-//handles adding notes to the end of a ckey's buffer
-//originally had seperate entries such as var/by to record who left the note and when
-//but the current bansystem is a heap of dung.
+// handles adding notes to the end of a ckey's buffer
+// originally had seperate entries such as var/by to record who left the note and when
+// but the current bansystem is a heap of dung.
 /proc/notes_add(ckey, note)
 	if(!ckey)
 		ckey = ckey(input(usr,"Who would you like to add notes for?","Enter a ckey",null) as text|null)
@@ -43,11 +43,11 @@ datum/admins/proc/notes_gethtml(ckey)
 	var/savefile/notesfile = new(NOTESFILE)
 	if(!notesfile)	return
 	notesfile.cd = "/[ckey]"
-	notesfile.eof = 1		//move to the end of the buffer
+	notesfile.eof = 1		// move to the end of the buffer
 	to_chat(notesfile, "[time2text(world.realtime,"DD-MMM-YYYY")] | [note][(usr && usr.ckey)?" ~[usr.ckey]":""]")
 	return
 
-//handles removing entries from the buffer, or removing the entire directory if no start_index is given
+// handles removing entries from the buffer, or removing the entire directory if no start_index is given
 /proc/notes_remove(ckey, start_index, end_index)
 	var/savefile/notesfile = new(NOTESFILE)
 	if(!notesfile)	return
@@ -70,7 +70,7 @@ datum/admins/proc/notes_gethtml(ckey)
 				continue
 			noteslist += temp
 
-		notesfile.eof = -2		//Move to the start of the buffer and then erase.
+		notesfile.eof = -2		// Move to the start of the buffer and then erase.
 
 		for( var/note in noteslist )
 			to_chat(notesfile, note)
@@ -83,7 +83,7 @@ datum/admins/proc/notes_gethtml(ckey)
 #undef NOTESFILE
 */
 
-//Hijacking this file for BS12 playernotes functions. I like this ^ one systemm alright, but converting sounds too bothersome~ Chinsky.
+// Hijacking this file for BS12 playernotes functions. I like this ^ one systemm alright, but converting sounds too bothersome~ Chinsky.
 
 /proc/notes_add(key, note, mob/usr)
 	if (!key || !note)
@@ -91,13 +91,13 @@ datum/admins/proc/notes_gethtml(ckey)
 
 	note = sanitize_alt(note)
 
-	//Loading list of notes for this key
+	// Loading list of notes for this key
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
 	info >> infos
 	if(!infos) infos = list()
 
-	//Overly complex timestamp creation
+	// Overly complex timestamp creation
 	var/modifyer = "th"
 	switch(time2text(world.timeofday, "DD"))
 		if("01","21","31")
@@ -120,7 +120,7 @@ datum/admins/proc/notes_gethtml(ckey)
 		P.author = "Adminbot"
 		P.rank = "Friendly Robot"
 	P.content = note
-	P.timestamp = "[copytext(full_date,1,day_loc)][day_string][copytext(full_date,day_loc+2)]"
+	P.timestamp = "[copytext(full_date,1,day_loc)][day_string][copytext(full_date, day_loc+2)]"
 
 	infos += P
 	info << infos
@@ -130,7 +130,7 @@ datum/admins/proc/notes_gethtml(ckey)
 
 	del(info) // savefile, so NOT qdel
 
-	//Updating list of keys with notes on them
+	// Updating list of keys with notes on them
 	var/savefile/note_list = new("data/player_notes.sav")
 	var/list/note_keys
 	note_list >> note_keys

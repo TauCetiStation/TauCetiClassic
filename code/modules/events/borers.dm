@@ -1,4 +1,4 @@
-//Cortical borer spawn event - care of RobRichards1997 with minor editing by Zuhayr.
+// Cortical borer spawn event - care of RobRichards1997 with minor editing by Zuhayr.
 
 /datum/event/borer_infestation
 	oneShot = 1
@@ -7,7 +7,7 @@
 	announceWhen = 400
 
 	var/spawncount = 1
-	var/successSpawn = 0        //So we don't make a command report if nothing gets spawned.
+	var/successSpawn = 0        // So we don't make a command report if nothing gets spawned.
 
 /datum/event/borer_infestation/setup()
 	announceWhen = rand(announceWhen, announceWhen + 50)
@@ -22,7 +22,7 @@
 	var/list/vents = list()
 	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in machines)
 		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded && temp_vent.network)
-			//Stops cortical borers getting stuck in small networks. See: Security, Virology
+			// Stops cortical borers getting stuck in small networks. See: Security, Virology
 			if(temp_vent.network.normal_members.len > 50)
 				vents += temp_vent
 

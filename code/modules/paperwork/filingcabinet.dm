@@ -23,7 +23,7 @@
 	icon_state = "chestdrawer"
 
 
-/obj/structure/filingcabinet/filingcabinet	//not changing the path to avoid unecessary map issues, but please don't name stuff like this in the future -Pete
+/obj/structure/filingcabinet/filingcabinet	// not changing the path to avoid unecessary map issues, but please don't name stuff like this in the future -Pete
 	icon_state = "tallcabinet"
 
 
@@ -87,8 +87,8 @@
 	if(href_list["retrieve"])
 		usr << browse("", "window=filingcabinet") // Close the menu
 
-		//var/retrieveindex = text2num(href_list["retrieve"])
-		var/obj/item/P = locate(href_list["retrieve"])//contents[retrieveindex]
+		// var/retrieveindex = text2num(href_list["retrieve"])
+		var/obj/item/P = locate(href_list["retrieve"])// contents[retrieveindex]
 		if(P && in_range(src, usr))
 			usr.put_in_hands(P)
 			updateUsrDialog()
@@ -122,8 +122,8 @@
 				counter++
 			P.info += "</TT>"
 			P.name = "Security Record ([G.fields["name"]])"
-			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
-						//before the records have been generated, so we do this inside the loop.
+			virgin = 0	// tabbing here is correct- it's possible for people to try and use it
+						// before the records have been generated, so we do this inside the loop.
 	..()
 
 /obj/structure/filingcabinet/security/attack_hand()
@@ -158,8 +158,8 @@
 				counter++
 			P.info += "</TT>"
 			P.name = "Medical Record ([G.fields["name"]])"
-			virgin = 0	//tabbing here is correct- it's possible for people to try and use it
-						//before the records have been generated, so we do this inside the loop.
+			virgin = 0	// tabbing here is correct- it's possible for people to try and use it
+						// before the records have been generated, so we do this inside the loop.
 	..()
 
 /obj/structure/filingcabinet/medical/attack_hand()

@@ -119,7 +119,7 @@
 	sunfrac = cos(p_angle) ** 2
 
 
-/obj/machinery/power/solar/process()//TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
+/obj/machinery/power/solar/process()// TODO: remove/add this from machines to save on processing as needed ~Carn PRIORITY
 	if(stat & BROKEN)	return
 	if(!control)	return
 
@@ -184,9 +184,9 @@
 	return
 
 
-//
+// 
 // Solar Assembly - For construction of solar arrays.
-//
+// 
 
 /obj/item/solar_assembly
 	name = "solar panel assembly"
@@ -254,9 +254,9 @@
 			return 1
 	..()
 
-//
+// 
 // Solar Control Computer
-//
+// 
 
 /obj/machinery/power/solar_control
 	name = "solar panel control"
@@ -372,7 +372,7 @@
 	if(stat & (NOPOWER | BROKEN))
 		return
 
-	//use_power(250)
+	// use_power(250)
 	if(track==1 && nexttime < world.time && trackdir*trackrate)
 		// Increments nexttime using itself and not world.time to prevent drift
 		nexttime = nexttime + 6000/trackrate
@@ -513,7 +513,7 @@
 /obj/machinery/power/solar_control/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			//SN src = null
+			// SN src = null
 			qdel(src)
 			return
 		if(2.0)
@@ -531,9 +531,9 @@
 		src.density = 0
 
 
-//
+// 
 // MISC
-//
+// 
 
 /obj/item/weapon/paper/solar
 	name = "paper- 'Going green! Setup your own solar array instructions.'"

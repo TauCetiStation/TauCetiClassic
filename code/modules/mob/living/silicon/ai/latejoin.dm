@@ -41,7 +41,7 @@ var/global/list/empty_playable_ai_cores = list()
 /mob/living/silicon/ai/proc/perform_wipe_core()
 	empty_playable_ai_cores += new /obj/structure/AIcore/deactivated(loc)
 	global_announcer.autosay("[src] has been moved to intelligence storage.", "Artificial Intelligence Oversight")
-	//Handle job slot/tater cleanup.
+	// Handle job slot/tater cleanup.
 	if(mind)
 		var/job = mind.assigned_role
 		SSjob.FreeRole(job)

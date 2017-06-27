@@ -1,4 +1,4 @@
-//This dm file includes some food processing machines:
+// This dm file includes some food processing machines:
 // - I.   Mill
 // - II.  Fermenter
 // - III. Still
@@ -40,14 +40,14 @@
 		return
 
 	progress++
-	if(progress < 10)	//Edit this value to make milling faster or slower
-		return	//Not done yet.
+	if(progress < 10)	// Edit this value to make milling faster or slower
+		return	// Not done yet.
 
 	switch(milled_item.type)
-		if(/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)	//Wheat becomes flour
+		if(/obj/item/weapon/reagent_containers/food/snacks/grown/wheat)	// Wheat becomes flour
 			var/obj/item/weapon/reagent_containers/food/condiment/flour/F = new(src)
 			output += F
-		if(/obj/item/weapon/reagent_containers/food/condiment/flour)	//Flour is still flour
+		if(/obj/item/weapon/reagent_containers/food/condiment/flour)	// Flour is still flour
 			var/obj/item/weapon/reagent_containers/food/condiment/flour/F = new(src)
 			output += F
 		else
@@ -113,11 +113,11 @@
 	water_level--
 
 	progress++
-	if(progress < 10)	//Edit this value to make milling faster or slower
-		return	//Not done yet.
+	if(progress < 10)	// Edit this value to make milling faster or slower
+		return	// Not done yet.
 
 	switch(fermenting_item.type)
-		if(/obj/item/weapon/reagent_containers/food/condiment/flour)	//Flour is still flour
+		if(/obj/item/weapon/reagent_containers/food/condiment/flour)	// Flour is still flour
 			var/obj/item/weapon/reagent_containers/food/drinks/bottle/beer/B = new(src)
 			output += B
 		else
@@ -174,11 +174,11 @@
 		return
 
 	progress++
-	if(progress < 10)	//Edit this value to make distilling faster or slower
-		return	//Not done yet.
+	if(progress < 10)	// Edit this value to make distilling faster or slower
+		return	// Not done yet.
 
 	switch(destilling_item.type)
-		if(/obj/item/weapon/reagent_containers/food/drinks/bottle/beer)	//Flour is still flour
+		if(/obj/item/weapon/reagent_containers/food/drinks/bottle/beer)	// Flour is still flour
 			var/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/V = new(src)
 			output += V
 		else
@@ -260,8 +260,8 @@
 		return
 
 	progress++
-	if(progress < 10)	//Edit this value to make milling faster or slower
-		return	//Not done yet.
+	if(progress < 10)	// Edit this value to make milling faster or slower
+		return	// Not done yet.
 
 	var/transfer_enzymes = spinning_item.reagents.get_reagent_amount("enzyme")
 

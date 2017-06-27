@@ -16,7 +16,7 @@
 	var/icon_off = "smartfridge-off"
 	var/icon_panel = "smartfridge-panel"
 	var/list/item_quants = list()
-	var/ispowered = 1 //starts powered
+	var/ispowered = 1 // starts powered
 	var/isbroken = 0
 	var/seconds_electrified = 0;
 	var/shoot_inventory = 0
@@ -100,7 +100,7 @@
 /obj/machinery/smartfridge/secure/medbay
 	name = "\improper Refrigerated Medicine Storage"
 	desc = "A refrigerated storage unit for storing medicine and chemicals."
-	icon_state = "smartfridge" //To fix the icon in the map editor.
+	icon_state = "smartfridge" // To fix the icon in the map editor.
 	icon_on = "smartfridge_chem"
 	req_one_access_txt = "5;33"
 
@@ -234,7 +234,7 @@
 					to_chat(user, "<span class='notice'>\The [src] is full.</span>")
 					return 1
 				else
-					P.remove_from_storage(G,src)
+					P.remove_from_storage(G, src)
 					if(item_quants[G.name])
 						item_quants[G.name]++
 					else
@@ -352,7 +352,7 @@
 		return 0
 
 	for (var/O in item_quants)
-		if(item_quants[O] <= 0) //Try to use a record that actually has something to dump.
+		if(item_quants[O] <= 0) // Try to use a record that actually has something to dump.
 			continue
 
 		item_quants[O]--

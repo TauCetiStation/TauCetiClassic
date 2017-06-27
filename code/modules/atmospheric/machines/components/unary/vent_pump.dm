@@ -17,15 +17,15 @@
 	var/id_tag = null
 
 	var/on = 0
-	var/pump_direction = 1 //0 = siphoning, 1 = releasing
+	var/pump_direction = 1 // 0 = siphoning, 1 = releasing
 
 	var/external_pressure_bound = EXTERNAL_PRESSURE_BOUND
 	var/internal_pressure_bound = INTERNAL_PRESSURE_BOUND
 
 	var/pressure_checks = PRESSURE_CHECKS
-	//1: Do not pass external_pressure_bound
-	//2: Do not pass internal_pressure_bound
-	//3: Do not pass either
+	// 1: Do not pass external_pressure_bound
+	// 2: Do not pass internal_pressure_bound
+	// 3: Do not pass either
 
 	// Used when handling incoming radio signals requesting default settings
 	var/external_pressure_bound_default = EXTERNAL_PRESSURE_BOUND
@@ -60,7 +60,7 @@
 	if (!id_tag)
 		assign_uid()
 		id_tag = num2text(uid)
-	if(ticker && ticker.current_state == 3)//if the game is running
+	if(ticker && ticker.current_state == 3)// if the game is running
 		src.initialize()
 		src.broadcast_status()
 	..()
@@ -92,7 +92,7 @@
 		return
 	if (!node)
 		on = 0
-	//broadcast_status() // from now air alarm/control computer should request update purposely --rastaf0
+	// broadcast_status() // from now air alarm/control computer should request update purposely --rastaf0
 	if(!on)
 		return 0
 
@@ -102,7 +102,7 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/environment_pressure = environment.return_pressure()
 
-	if(pump_direction) //internal -> external
+	if(pump_direction) // internal -> external
 		var/pressure_delta = 10000
 
 		if(pressure_checks&1)
@@ -121,7 +121,7 @@
 				if(network)
 					network.update = 1
 
-	else //external -> internal
+	else // external -> internal
 		var/pressure_delta = 10000
 		if(pressure_checks&1)
 			pressure_delta = min(pressure_delta, (environment_pressure - external_pressure_bound))
@@ -133,7 +133,7 @@
 				var/transfer_moles = pressure_delta*air_contents.volume/(environment.temperature * R_IDEAL_GAS_EQUATION)
 
 				var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
-				if (isnull(removed)) //in space
+				if (isnull(removed)) // in space
 					return
 
 				air_contents.merge(removed)
@@ -143,20 +143,20 @@
 
 	return 1
 
-//Radio remote control
+// Radio remote control
 
 /obj/machinery/atmospherics/unary/vent_pump/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
-		radio_connection = radio_controller.add_object(src, frequency,radio_filter_in)
+		radio_connection = radio_controller.add_object(src, frequency, radio_filter_in)
 
 /obj/machinery/atmospherics/unary/vent_pump/proc/broadcast_status()
 	if(!radio_connection)
 		return 0
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = 1 // radio signal
 	signal.source = src
 
 	signal.data = list(
@@ -186,7 +186,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/initialize()
 	..()
 
-	//some vents work his own spesial way
+	// some vents work his own spesial way
 	radio_filter_in = frequency==1439?(RADIO_FROM_AIRALARM):null
 	radio_filter_out = frequency==1439?(RADIO_TO_AIRALARM):null
 	if(frequency)
@@ -195,7 +195,7 @@
 /obj/machinery/atmospherics/unary/vent_pump/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	//log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/unary/vent_pump/receive_signal([signal.debug_print()])")
+	// log_admin("DEBUG \[[world.timeofday]\]: /obj/machinery/atmospherics/unary/vent_pump/receive_signal([signal.debug_print()])")
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
 		return 0
 
@@ -266,14 +266,14 @@
 
 	if(signal.data["status"] != null)
 		addtimer(CALLBACK(src, .proc/broadcast_status), 2)
-		return //do not update_icon
+		return // do not update_icon
 
-		//log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
+		// log_admin("DEBUG \[[world.timeofday]\]: vent_pump/receive_signal: unknown command \"[signal.data["command"]]\"\n[signal.debug_print()]")
 	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 	update_icon()
 	return
 
-/obj/machinery/atmospherics/unary/vent_pump/hide(i) //to make the little pipe section invisible, the icon changes.
+/obj/machinery/atmospherics/unary/vent_pump/hide(i) // to make the little pipe section invisible, the icon changes.
 	if(welded)
 		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]weld"
 		return

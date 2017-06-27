@@ -2,7 +2,7 @@
 	name = "ore detector"
 	desc = "A complex device used to locate ore deep underground."
 	icon = 'icons/obj/device.dmi'
-	icon_state = "forensic0-old" //GET A BETTER SPRITE.
+	icon_state = "forensic0-old" // GET A BETTER SPRITE.
 	item_state = "electronic"
 	var/range = 2
 	var/speed = 50

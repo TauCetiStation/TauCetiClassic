@@ -1,4 +1,4 @@
-//Due to how large this one is it gets its own file
+// Due to how large this one is it gets its own file
 /datum/job/chaplain
 	title = "Chaplain"
 	flag = CHAPLAIN
@@ -14,7 +14,7 @@
 
 /datum/job/chaplain/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
-	var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(H) //BS12 EDIT
+	var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible(H) // BS12 EDIT
 	H.equip_to_slot_or_del(B, slot_l_hand)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chaplain(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
@@ -54,7 +54,7 @@
 				B.name = "Toolbox Manifesto"
 			if("homosexuality")
 				B.name = "Guys Gone Wild"
-			//if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks")
+			// if("lol", "wtf", "gay", "penis", "ass", "poo", "badmin", "shitmin", "deadmin", "cock", "cocks")
 			//	B.name = pick("Woodys Got Wood: The Aftermath", "War of the Cocks", "Sweet Bro and Hella Jef: Expanded Edition")
 			//	H.setBrainLoss(100) // starts off retarded as fuck
 			if("science")

@@ -1,7 +1,7 @@
 
 
 
-//endless reagents!
+// endless reagents!
 /obj/item/weapon/reagent_containers/glass/replenishing
 	var/spawning_id
 
@@ -15,7 +15,7 @@
 
 
 
-//a talking gas mask!
+// a talking gas mask!
 /obj/item/clothing/mask/gas/poltergeist
 	var/list/heard_talk = list()
 	var/last_twitch = 0
@@ -39,8 +39,8 @@
 
 
 
-//a vampiric statuette
-//todo: cult integration
+// a vampiric statuette
+// todo: cult integration
 /obj/item/weapon/vampiric
 	name = "statuette"
 	icon_state = "statuette"
@@ -59,7 +59,7 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/vampiric/process()
-	//see if we've identified anyone nearby
+	// see if we've identified anyone nearby
 	if(world.time - last_bloodcall > bloodcall_interval && nearby_mobs.len)
 		var/mob/living/carbon/human/M = pop(nearby_mobs)
 		if(M in view(7,src) && M.health > 20)
@@ -67,7 +67,7 @@
 				bloodcall(M)
 				nearby_mobs.Add(M)
 
-	//suck up some blood to gain power
+	// suck up some blood to gain power
 	if(world.time - last_eat > eat_interval)
 		var/obj/effect/decal/cleanable/blood/B = locate() in range(2,src)
 		if(B)
@@ -79,7 +79,7 @@
 				charges += 1
 				playsound(src.loc, 'sound/effects/splat.ogg', 50, 1, -3)
 
-	//use up stored charges
+	// use up stored charges
 	if(charges >= 10)
 		charges -= 10
 		new /obj/effect/spider/eggcluster(pick(view(1,src)))
@@ -102,7 +102,7 @@
 			src.visible_message("\red [bicon(src)] [src]'s eyes glow ruby red for a moment!")
 			charges -= 0.1
 
-	//check on our shadow wights
+	// check on our shadow wights
 	if(shadow_wights.len)
 		wight_check_index++
 		if(wight_check_index > shadow_wights.len)
@@ -136,7 +136,7 @@
 		B.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 		M.vessel.remove_reagent("blood",rand(25,50))
 
-//animated blood 2 SPOOKY
+// animated blood 2 SPOOKY
 /obj/effect/decal/cleanable/blood/splatter/animated
 	var/turf/target_turf
 	var/loc_last_process
@@ -148,12 +148,12 @@
 
 /obj/effect/decal/cleanable/blood/splatter/animated/process()
 	if(target_turf && src.loc != target_turf)
-		step_towards(src,target_turf)
+		step_towards(src, target_turf)
 		if(src.loc == loc_last_process)
 			target_turf = null
 		loc_last_process = src.loc
 
-		//leave some drips behind
+		// leave some drips behind
 		if(prob(50))
 			var/obj/effect/decal/cleanable/blood/drip/D = new(src.loc)
 			D.blood_DNA = src.blood_DNA.Copy()
@@ -194,7 +194,7 @@
 			'sound/hallucinations/turn_around1.ogg',\
 			'sound/hallucinations/turn_around2.ogg',\
 			), 50, 1, -3)
-			M.sleeping = max(M.sleeping,rand(5,10))
+			M.sleeping = max(M.sleeping, rand(5,10))
 			src.loc = null
 	else
 		STOP_PROCESSING(SSobj, src)

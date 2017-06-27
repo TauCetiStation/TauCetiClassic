@@ -28,15 +28,15 @@
 	user.set_machine(src)
 	var/dat
 	if (src.temp)
-		dat = "[src.temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
+		dat = "[src.temp]<BR><BR><A href='byond:// ?src=\ref[src];temp=1'>Clear</A>"
 	else
 		dat = {"
 <B>Persistent Signal Locator</B><HR>
 Frequency:
-<A href='byond://?src=\ref[src];freq=-10'>-</A>
-<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(src.frequency)]
-<A href='byond://?src=\ref[src];freq=2'>+</A>
-<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+<A href='byond:// ?src=\ref[src];freq=-10'>-</A>
+<A href='byond:// ?src=\ref[src];freq=-2'>-</A> [format_frequency(src.frequency)]
+<A href='byond:// ?src=\ref[src];freq=2'>+</A>
+<A href='byond:// ?src=\ref[src];freq=10'>+</A><BR>
 
 <A href='?src=\ref[src];refresh=1'>Refresh</A>"}
 	user << browse(dat, "window=radio")
@@ -47,8 +47,8 @@ Frequency:
 	..()
 	if (usr.stat || usr.restrained())
 		return
-	var/turf/current_location = get_turf(usr)//What turf is the user on?
-	if(!current_location||current_location.z==2)//If turf was not found or they're on z level 2.
+	var/turf/current_location = get_turf(usr)// What turf is the user on?
+	if(!current_location||current_location.z==2)// If turf was not found or they're on z level 2.
 		to_chat(usr, "The [src] is malfunctioning.")
 		return
 	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))))
@@ -100,7 +100,7 @@ Frequency:
 									direct = "weak"
 							src.temp += "[W.id]-[dir2text(get_dir(sr, tr))]-[direct]<BR>"
 
-				src.temp += "<B>You are at \[[sr.x],[sr.y],[sr.z]\]</B> in orbital coordinates.<BR><BR><A href='byond://?src=\ref[src];refresh=1'>Refresh</A><BR>"
+				src.temp += "<B>You are at \[[sr.x],[sr.y],[sr.z]\]</B> in orbital coordinates.<BR><BR><A href='byond:// ?src=\ref[src];refresh=1'>Refresh</A><BR>"
 			else
 				src.temp += "<B><FONT color='red'>Processing Error:</FONT></B> Unable to locate orbital position.<BR>"
 		else
@@ -136,8 +136,8 @@ Frequency:
 	origin_tech = "magnets=1;bluespace=3"
 
 /obj/item/weapon/hand_tele/attack_self(mob/user)
-	var/turf/current_location = get_turf(user)//What turf is the user on?
-	if(!current_location||current_location.z==2||current_location.z>=7)//If turf was not found or they're on z level 2 or >7 which does not currently exist.
+	var/turf/current_location = get_turf(user)// What turf is the user on?
+	if(!current_location||current_location.z==2||current_location.z>=7)// If turf was not found or they're on z level 2 or >7 which does not currently exist.
 		to_chat(user, "<span class='notice'>\The [src] is malfunctioning.</span>")
 		return
 	var/list/L = list(  )
@@ -149,7 +149,7 @@ Frequency:
 				L["[com.id] (Inactive)"] = com.target
 	var/list/turfs = list(	)
 	for(var/turf/T in orange(10))
-		if(T.x>world.maxx-8 || T.x<8)	continue	//putting them at the edge is dumb
+		if(T.x>world.maxx-8 || T.x<8)	continue	// putting them at the edge is dumb
 		if(T.y>world.maxy-8 || T.y<8)	continue
 		turfs += T
 	if(turfs.len)
@@ -157,7 +157,7 @@ Frequency:
 	var/t1 = input(user, "Please select a teleporter to lock in on.", "Hand Teleporter") in L
 	if ((user.get_active_hand() != src || user.stat || user.restrained()))
 		return
-	var/count = 0	//num of portals from this teleport in world
+	var/count = 0	// num of portals from this teleport in world
 	for(var/obj/effect/portal/PO in world)
 		if(PO.creator == src)	count++
 	if(count >= 3)

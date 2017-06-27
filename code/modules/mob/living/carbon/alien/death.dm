@@ -7,7 +7,7 @@
 	if(!gibbed)
 		update_canmove()
 
-	tod = worldtime2text() //weasellos time of death patch
+	tod = worldtime2text() // weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 	living_mob_list -= src
 
@@ -22,7 +22,7 @@
 	if(!gibbed)
 		update_canmove()
 
-	tod = worldtime2text() //weasellos time of death patch
+	tod = worldtime2text() // weasellos time of death patch
 	if(mind)	mind.store_memory("Time of death: [tod]", 0)
 	living_mob_list -= src
 
@@ -40,7 +40,7 @@
 		update_canmove()
 		update_icons()
 
-	tod = worldtime2text() //weasellos time of death patch
+	tod = worldtime2text() // weasellos time of death patch
 	if(mind) 	mind.store_memory("Time of death: [tod]", 0)
 
 	return ..(gibbed)

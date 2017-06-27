@@ -23,7 +23,7 @@
 	icon_state = "pedalgen"
 	anchored = 0
 	density = 0
-	//copypaste sorry
+	// copypaste sorry
 	var/obj/machinery/power/dynamo/Generator = null
 	var/pedaled = 0
 
@@ -47,7 +47,7 @@
 
 
 /obj/structure/stool/bed/chair/pedalgen/attackby(obj/item/W, mob/user)
-	if(default_unfasten_wrench(user,W))
+	if(default_unfasten_wrench(user, W))
 		if(anchored)
 			Generator.loc = src.loc
 			Generator.connect_to_network()
@@ -117,8 +117,8 @@
 
 	if(buckled_mob)
 		if(buckled_mob.loc != loc)
-			buckled_mob.buckled = null //Temporary, so Move() succeeds.
-			buckled_mob.buckled = src //Restoring
+			buckled_mob.buckled = null // Temporary, so Move() succeeds.
+			buckled_mob.buckled = src // Restoring
 		update_mob(buckled_mob)
 
 

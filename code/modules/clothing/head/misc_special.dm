@@ -49,7 +49,7 @@
 			flags_inv &= ~(HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE)
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push the [src] up out of your face.")
-		usr.update_inv_head()	//so our mob-overlays update
+		usr.update_inv_head()	// so our mob-overlays update
 
 
 /*
@@ -62,8 +62,8 @@
 	flags = HEADCOVERSEYES
 	var/onfire = 0.0
 	var/status = 0
-	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
-	var/processing = 0 //I dont think this is used anywhere.
+	var/fire_resist = T0C+1300	// this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
+	var/processing = 0 // I dont think this is used anywhere.
 	body_parts_covered = EYES
 
 /obj/item/clothing/head/cakehat/process()
@@ -121,19 +121,19 @@
 /obj/item/clothing/head/pumpkinhead
 	name = "carved pumpkin"
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
-	icon_state = "hardhat0_pumpkin"//Could stand to be renamed
+	icon_state = "hardhat0_pumpkin"// Could stand to be renamed
 	item_state = "hardhat0_pumpkin"
 	item_color = "pumpkin"
 	flags = HEADCOVERSEYES | HEADCOVERSMOUTH | BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|EYES
-	var/brightness_on = 2 //luminosity when on
+	var/brightness_on = 2 // luminosity when on
 	var/on = 0
 	w_class = 3
 
 	attack_self(mob/user)
 		if(!isturf(user.loc))
-			to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
+			to_chat(user, "You cannot turn the light on while in this [user.loc]")// To prevent some lighting anomalities.
 			return
 		on = !on
 		icon_state = "hardhat[on]_[item_color]"

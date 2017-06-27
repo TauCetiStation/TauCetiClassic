@@ -1,4 +1,4 @@
-//var/list/uplink_items = list()
+// var/list/uplink_items = list()
 
 /proc/get_uplink_items(obj/item/device/uplink/uplink)
 	// If not already initialized..
@@ -50,9 +50,9 @@
 	var/cost = 0
 	var/last = 0 // Appear last
 	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
-	var/list/excludefrom = list()//Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
-	var/list/uplink_types = list() //Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
-	var/list/excludefrom_uplinks = list() //Empty list does nothing. Alias you will need to state the type of uplink, where the object won't be available.
+	var/list/excludefrom = list()// Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
+	var/list/uplink_types = list() // Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
+	var/list/excludefrom_uplinks = list() // Empty list does nothing. Alias you will need to state the type of uplink, where the object won't be available.
 
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
@@ -104,9 +104,9 @@
 	return 0
 
 /*
-//
+// 
 //	UPLINK ITEMS
-//
+// 
 */
 
 // DANGEROUS WEAPONS
@@ -268,7 +268,7 @@
 	cost = 36
 	gamemodes = list(/datum/game_mode/nuclear)
 
-//for refunding the syndieborg teleporter
+// for refunding the syndieborg teleporter
 /datum/uplink_item/dangerous/syndieborg/spawn_item()
 	var/obj/item/weapon/antag_spawner/borg_tele/T = ..()
 	if(istype(T))
@@ -575,7 +575,7 @@
 	name = "Bag of C-4 explosives"
 	desc = "Because sometimes quantity is quality. Contains 5 C-4 plastic explosives."
 	item = /obj/item/weapon/storage/backpack/dufflebag/c4
-	cost = 4 //10% discount!
+	cost = 4 // 10% discount!
 
 /datum/uplink_item/device_tools/military_belt
 	name = "Military Belt"

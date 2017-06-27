@@ -7,9 +7,9 @@
 	req_access = list(access_engine_equip)
 	circuit = "/obj/item/weapon/circuitboard/drone_control"
 
-	//Used when pinging drones.
+	// Used when pinging drones.
 	var/drone_call_area = "Engineering"
-	//Used to enable or disable drone fabrication.
+	// Used to enable or disable drone fabrication.
 	var/obj/machinery/drone_fabricator/dronefab
 
 /obj/machinery/computer/drone_control/attack_ai(mob/user)
@@ -58,7 +58,7 @@
 
 	if (href_list["setarea"])
 
-		//Probably should consider using another list, but this one will do.
+		// Probably should consider using another list, but this one will do.
 		var/t_area = input("Select the area to ping.", "Set Target Area", null) as null|anything in tagger_locations
 
 		if(!t_area)
@@ -112,7 +112,7 @@
 		if(!dronefab)
 			return FALSE
 
-		if(get_dist(src,dronefab) > 3)
+		if(get_dist(src, dronefab) > 3)
 			dronefab = null
 			to_chat(usr, "\red Unable to locate drone fabricator.")
 			return

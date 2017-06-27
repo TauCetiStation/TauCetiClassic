@@ -57,7 +57,7 @@
 
 			var/mob/living/M = AM
 			if(M.mind)
-				for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/T in M.mind.spell_list) //People who can stop time are immune to timestop
+				for(var/obj/effect/proc_holder/spell/aoe_turf/conjure/timestop/T in M.mind.spell_list) // People who can stop time are immune to timestop
 					immune |= M
 			if(M in immune)
 				continue

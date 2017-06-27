@@ -236,7 +236,7 @@
 	cold_protection = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
 
-//Blue suit jacket toggle
+// Blue suit jacket toggle
 /obj/item/clothing/suit/suit/verb/toggle()
 	set name = "Toggle Jacket Buttons"
 	set category = "Object"
@@ -258,8 +258,8 @@
 		return
 	usr.update_inv_wear_suit()
 
-//pyjamas
-//originally intended to be pinstripes >.>
+// pyjamas
+// originally intended to be pinstripes >.>
 
 /obj/item/clothing/under/bluepyjamas
 	name = "blue pyjamas"
@@ -275,7 +275,7 @@
 	item_state = "red_pyjamas"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
-//coats
+// coats
 /*
 /obj/item/clothing/suit/leathercoat
 	name = "leather coat"
@@ -302,7 +302,7 @@
 	icon_state = "serif_coat"
 	item_state = "det_suit"
 
-//stripper
+// stripper
 /obj/item/clothing/under/stripper
 	body_parts_covered = 0
 
@@ -349,7 +349,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
-//swimsuit
+// swimsuit
 /obj/item/clothing/under/swimsuit/
 	siemens_coefficient = 1
 	body_parts_covered = 0
@@ -434,7 +434,7 @@
 		src.icon_state += "_open"
 		to_chat(usr, "You unbutton your jacket.")
 		src.is_button_up = 0
-	usr.update_inv_wear_suit()	//so our overlays update
+	usr.update_inv_wear_suit()	// so our overlays update
 
 /obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger
 	name = "Field jacket desert"
@@ -484,7 +484,7 @@
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
 
-//Mafia
+// Mafia
 /obj/item/clothing/suit/browntrenchcoat
 	name = "brown trench coat"
 	desc = "It makes you stand out. Just the opposite of why it's typically worn. Nice try trying to blend in while wearing it."

@@ -1,4 +1,4 @@
-//*************-Pad-*************//
+// *************-Pad-*************// 
 
 /obj/machinery/abductor/pad
 	name = "alien telepad"
@@ -45,7 +45,7 @@
 /obj/machinery/abductor/pad/proc/Warp(mob/living/target)
 	if(target)
 
-		//prevent from teleporting victim though the grab on neck
+		// prevent from teleporting victim though the grab on neck
 		if(istype(target.get_active_hand(), /obj/item/weapon/grab))
 			var/obj/item/weapon/grab/G = target.get_active_hand()
 			if(G.state >= GRAB_PASSIVE)
@@ -67,12 +67,12 @@
 	for(var/mob/living/target in loc)
 		TeleportToArea(target, teleport_target)
 		spawn(0)
-			anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
+			anim(target.loc, target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 
 /obj/machinery/abductor/pad/proc/Retrieve(mob/living/target)
 	if(!target)
 		return
 	flick("alien-pad", src)
 	spawn(0)
-		anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
+		anim(target.loc, target,'icons/mob/mob.dmi',,"uncloak",,target.dir)
 	Warp(target)

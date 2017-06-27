@@ -70,18 +70,18 @@ log transactions
 /obj/machinery/atm/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card))
 		if(emagged > 0)
-			//prevent inserting id into an emagged ATM
+			// prevent inserting id into an emagged ATM
 			to_chat(user, "\red [bicon(src)] CARD READER ERROR. This system has been compromised!")
 			return
 		else if(istype(I,/obj/item/weapon/card/emag))
-			//short out the machine, shoot sparks, spew money!
+			// short out the machine, shoot sparks, spew money!
 			emagged = 1
 			spark_system.start()
 			spawn_money(rand(100,500),src.loc)
-			//we don't want to grief people by locking their id in an emagged ATM
+			// we don't want to grief people by locking their id in an emagged ATM
 			release_held_id(user)
 
-			//display a message to the user
+			// display a message to the user
 			var/response = pick("Initiating withdraw. Have a nice day!", "CRITICAL ERROR: Activating cash chamber panic siphon.","PIN Code accepted! Emptying account balance.", "Jackpot!")
 			to_chat(user, "\red [bicon(src)] The [src] beeps: \"[response]\"")
 			return
@@ -95,14 +95,14 @@ log transactions
 				authenticated_account = null
 	else if(authenticated_account)
 		if(istype(I,/obj/item/weapon/spacecash))
-			//consume the money
+			// consume the money
 			authenticated_account.money += I:worth
 			if(prob(50))
 				playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
 			else
 				playsound(loc, 'sound/items/polaroid2.ogg', 50, 1)
 
-			//create a transaction log entry
+			// create a transaction log entry
 			var/datum/transaction/T = new()
 			T.target_name = authenticated_account.owner_name
 			T.purpose = "Credit deposit"
@@ -122,9 +122,9 @@ log transactions
 	if(istype(user, /mob/living/silicon))
 		to_chat(user, "\red [bicon(src)] Artificial unit recognized. Artificial units do not currently receive monetary compensation, as per NanoTrasen regulation #1005.")
 		return
-	if(get_dist(src,user) <= 1)
+	if(get_dist(src, user) <= 1)
 
-		//js replicated from obj/machinery/computer/card
+		// js replicated from obj/machinery/computer/card
 		var/dat = "<h1>NanoTrasen Automatic Teller Machine</h1>"
 		dat += "For all your monetary needs!<br>"
 		dat += "<i>This terminal is</i> [machine_id]. <i>Report this code when contacting NanoTrasen IT Support</i><br/>"
@@ -238,7 +238,7 @@ log transactions
 							to_chat(usr, "[bicon(src)]<span class='info'>Funds transfer successful.</span>")
 							authenticated_account.money -= transfer_amount
 
-							//create an entry in the account transaction log
+							// create an entry in the account transaction log
 							var/datum/transaction/T = new()
 							T.target_name = "Account #[target_account_number]"
 							T.purpose = transfer_purpose
@@ -274,11 +274,11 @@ log transactions
 						number_incorrect_tries++
 						if(previous_account_number == tried_account_num)
 							if(number_incorrect_tries > max_pin_attempts)
-								//lock down the atm
+								// lock down the atm
 								ticks_left_locked_down = 30
 								playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
 
-								//create an entry in the account transaction log
+								// create an entry in the account transaction log
 								var/datum/money_account/failed_account = get_account(tried_account_num)
 								if(failed_account)
 									var/datum/transaction/T = new()
@@ -300,7 +300,7 @@ log transactions
 						ticks_left_timeout = 120
 						view_screen = NO_SCREEN
 
-						//create a transaction log entry
+						// create a transaction log entry
 						var/datum/transaction/T = new()
 						T.target_name = authenticated_account.owner_name
 						T.purpose = "Remote terminal access"
@@ -320,13 +320,13 @@ log transactions
 					if(amount <= authenticated_account.money)
 						playsound(src, 'sound/machines/chime.ogg', 50, 1)
 
-						//remove the money
+						// remove the money
 						authenticated_account.money -= amount
 
-						//	spawn_money(amount,src.loc)
-						spawn_ewallet(amount,src.loc)
+						//	spawn_money(amount, src.loc)
+						spawn_ewallet(amount, src.loc)
 
-						//create an entry in the account transaction log
+						// create an entry in the account transaction log
 						var/datum/transaction/T = new()
 						T.target_name = authenticated_account.owner_name
 						T.purpose = "Credit withdrawal"
@@ -348,7 +348,7 @@ log transactions
 					R.info += "<i>Date and time:</i> [worldtime2text()], [current_date_string]<br><br>"
 					R.info += "<i>Service terminal ID:</i> [machine_id]<br>"
 
-					//stamp the paper
+					// stamp the paper
 					var/obj/item/weapon/stamp/centcomm/S = new
 					S.stamp_paper(R, "This paper has been stamped by the Automatic Teller Machine.")
 
@@ -385,7 +385,7 @@ log transactions
 						R.info += "</tr>"
 					R.info += "</table>"
 
-					//stamp the paper
+					// stamp the paper
 					var/obj/item/weapon/stamp/centcomm/S = new
 					S.stamp_paper(R, "This paper has been stamped by the Automatic Teller Machine.")
 
@@ -396,7 +396,7 @@ log transactions
 
 			if("insert_card")
 				if(!held_card)
-					//this might happen if the user had the browser window open when somebody emagged it
+					// this might happen if the user had the browser window open when somebody emagged it
 					if(emagged > 0)
 						to_chat(usr, "\red [bicon(src)] The ATM card reader rejected your ID because this machine has been sabotaged!")
 					else
@@ -409,11 +409,11 @@ log transactions
 					release_held_id(usr)
 			if("logout")
 				authenticated_account = null
-				//usr << browse(null,"window=atm")
+				// usr << browse(null,"window=atm")
 
 	updateUsrDialog()
 
-//stolen wholesale and then edited a bit from newscasters, which are awesome and by Agouri
+// stolen wholesale and then edited a bit from newscasters, which are awesome and by Agouri
 /obj/machinery/atm/proc/scan_user(mob/living/carbon/human/human_user)
 	if(!authenticated_account)
 		if(human_user.wear_id)
@@ -428,7 +428,7 @@ log transactions
 				if(authenticated_account)
 					to_chat(human_user, "\blue [bicon(src)] Access granted. Welcome user '[authenticated_account.owner_name].'")
 
-					//create a transaction log entry
+					// create a transaction log entry
 					var/datum/transaction/T = new()
 					T.target_name = authenticated_account.owner_name
 					T.purpose = "Remote terminal access"

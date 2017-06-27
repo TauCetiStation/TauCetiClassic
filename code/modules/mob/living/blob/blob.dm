@@ -9,7 +9,7 @@
 	var/ghost_name = "Unknown"
 	var/creating_blob = 0
 	faction = "blob"
-	use_me = 0 //Blobs can't emote
+	use_me = 0 // Blobs can't emote
 
 
 	New()
@@ -19,16 +19,16 @@
 
 
 	say(var/message)
-		return//No talking for you
+		return// No talking for you
 
 
-	emote(act,m_type=1,message = null)
+	emote(act, m_type=1,message = null)
 		return
 
 
 	Life()
 		set invisibility = 0
-		//set background = 1
+		// set background = 1
 
 		clamp_values()
 		UpdateDamage()
@@ -85,7 +85,7 @@
 		creating_blob = 0
 		return
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
-	if(!B)//We are on a blob
+	if(!B)// We are on a blob
 		to_chat(usr, "There is no blob here!")
 		creating_blob = 0
 		return
@@ -124,7 +124,7 @@
 		to_chat(usr, "Unable to use this blob, find a normal one.")
 		creating_blob = 0
 		return
-	for(var/obj/effect/blob/blob in orange(2))//Not right next to nodes/cores
+	for(var/obj/effect/blob/blob in orange(2))// Not right next to nodes/cores
 		if(istype(B,/obj/effect/blob/node))
 			to_chat(usr, "There is a node nearby, move away from it!")
 			creating_blob = 0
@@ -186,7 +186,7 @@
 	return
 
 
-///mob/proc/Blobize()
+// /mob/proc/Blobize()
 /client/proc/Blobcount()
 	set category = "Debug"
 	set name = "blobreport"
@@ -203,7 +203,7 @@
 	return
 
 
-/client/proc/Blobize()//Mostly stolen from the respawn command
+/client/proc/Blobize()// Mostly stolen from the respawn command
 	set category = "Debug"
 	set name = "Ghostblob"
 	set desc = "Ghost into blobthing."
@@ -228,13 +228,13 @@
 				G_found = G
 				break
 
-	if(!G_found)//If a ghost was not found.
+	if(!G_found)// If a ghost was not found.
 		alert("There is no active key like that in the game or the person is not currently a ghost. Aborting command.")
 		return
 
 	if(G_found.client)
 		G_found.client.screen.len = null
-	var/mob/living/blob/B = new/mob/living/blob(locate(0,0,1))//temp area also just in case should do this better but tired
+	var/mob/living/blob/B = new/mob/living/blob(locate(0,0,1))// temp area also just in case should do this better but tired
 	if(blob_cores.len > 0)
 		var/obj/effect/blob/core/core = pick(blob_cores)
 		if(core)

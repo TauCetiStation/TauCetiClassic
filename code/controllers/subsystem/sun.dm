@@ -44,7 +44,7 @@ var/datum/subsystem/sun/SSsun
 
 	nexttime = nexttime + 600	// 600 world.time ticks = 1 minute
 
-	// now calculate and cache the (dx,dy) increments for line drawing
+	// now calculate and cache the (dx, dy) increments for line drawing
 	var/s = sin(angle)
 	var/c = cos(angle)
 

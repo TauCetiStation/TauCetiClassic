@@ -1,6 +1,6 @@
-//--------------------------------------------
+// --------------------------------------------
 // Gas mixer - omni variant
-//--------------------------------------------
+// --------------------------------------------
 /obj/machinery/atmospherics/omni/mixer
 	name = "omni gas mixer"
 	icon_state = "map_mixer"
@@ -8,7 +8,7 @@
 	var/list/inputs = new()
 	var/datum/omni_port/output
 
-	//setup tags for initial concentration values (must be decimal)
+	// setup tags for initial concentration values (must be decimal)
 	var/tag_north_con 
 	var/tag_south_con
 	var/tag_east_con
@@ -39,7 +39,7 @@
 						P.concentration = tag_west_con
 						con += max(0, tag_west_con)
 
-		//mappers who are bad at maths will be punished (total concentration must be 100%)
+		// mappers who are bad at maths will be punished (total concentration must be 100%)
 		if(con != 1)
 			tag_north_con = null
 			tag_south_con = null
@@ -80,7 +80,7 @@
 /obj/machinery/atmospherics/omni/mixer/error_check()
 	if(!output || !inputs)
 		return 1
-	if(inputs.len < 2 || inputs.len > 3) //requires 2 or 3 inputs ~otherwise why are you using a mixer?
+	if(inputs.len < 2 || inputs.len > 3) // requires 2 or 3 inputs ~otherwise why are you using a mixer?
 		return 1
 
 	return 0
@@ -95,10 +95,10 @@
 
 
 	if(output_pressure >= target_pressure * 0.999)
-		//No need to mix if target is already full! - 0.1% margin of error so we minimize processing minor gas volumes
+		// No need to mix if target is already full! - 0.1% margin of error so we minimize processing minor gas volumes
 		return 1
 
-	//Calculate necessary moles to transfer using PV=nRT
+	// Calculate necessary moles to transfer using PV=nRT
 
 	var/pressure_delta = target_pressure - output_pressure
 
@@ -182,7 +182,7 @@
 	if(portData.len)
 		data["ports"] = portData
 	if(output)
-		data["set_pressure"] = round(target_pressure*10)		//because nanoui can't handle rounded decimals.
+		data["set_pressure"] = round(target_pressure*10)		// because nanoui can't handle rounded decimals.
 
 	return data
 
@@ -202,7 +202,7 @@
 			if(configuring)
 				on = 0
 
-	//only allows config changes when in configuring mode ~otherwise you'll get weird pressure stuff going on
+	// only allows config changes when in configuring mode ~otherwise you'll get weird pressure stuff going on
 	if(configuring && !on)
 		switch(href_list["command"])
 			if("set_pressure")
@@ -275,21 +275,21 @@
 		else
 			remain_con -= P.concentration
 
-	//return if no adjustable ports
+	// return if no adjustable ports
 	if(non_locked < 1)
 		return
 
 	var/new_con = (input(usr,"Enter a new concentration (0-[round(remain_con * 100, 0.5)])%","Concentration control", min(remain_con, old_con)*100) as num) / 100
 
-	//cap it between 0 and the max remaining concentration
+	// cap it between 0 and the max remaining concentration
 	new_con = between(0, new_con, remain_con)
 
-	//new_con = min(remain_con, new_con)
+	// new_con = min(remain_con, new_con)
 
-	//clamp remaining concentration so we don't go into negatives
+	// clamp remaining concentration so we don't go into negatives
 	remain_con = max(0, remain_con - new_con)
 
-	//distribute remaining concentration between unlocked ports evenly
+	// distribute remaining concentration between unlocked ports evenly
 	remain_con /= max(1, non_locked)
 
 	for(var/datum/omni_port/P in inputs)

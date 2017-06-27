@@ -68,7 +68,7 @@
 		to_chat(user, "<span class='warning'>The biogenerator is currently processing.</span>")
 	else if(istype(O, /obj/item/weapon/storage/bag/plants))
 		var/obj/item/weapon/storage/bag/plants/P = O
-		P.close(user) //Принудительно закрываем окно инвентаря сумки, во избежание бага
+		P.close(user) // Принудительно закрываем окно инвентаря сумки, во избежание бага
 		var/i = 0
 		for(var/obj/item/weapon/reagent_containers/food/snacks/grown/G in contents)
 			i++
@@ -152,7 +152,7 @@
 			dat += "<h3>Leather:</h3>"
 			dat += "<div class='statusDisplay'>"
 			dat += "Wallet: <A href='?src=\ref[src];action=create;item=wallet'>Make</A> ([100/efficiency])<BR>"
-			//dat += "Book bag: <A href='?src=\ref[src];action=create;item=bkbag'>Make</A> ([200/efficiency])<BR>"
+			// dat += "Book bag: <A href='?src=\ref[src];action=create;item=bkbag'>Make</A> ([200/efficiency])<BR>"
 			dat += "Plant bag: <A href='?src=\ref[src];action=create;item=ptbag'>Make</A> ([200/efficiency])<BR>"
 			dat += "Mining satchel: <A href='?src=\ref[src];action=create;item=mnbag'>Make</A> ([200/efficiency])<BR>"
 			dat += "Botanical gloves: <A href='?src=\ref[src];action=create;item=gloves'>Make</A> ([250/efficiency])<BR>"
@@ -176,7 +176,7 @@
 /obj/machinery/biogenerator/proc/activate()
 	if (usr.stat != CONSCIOUS)
 		return
-	if (src.stat != CONSCIOUS) //NOPOWER etc
+	if (src.stat != CONSCIOUS) // NOPOWER etc
 		return
 	if(src.processing)
 		to_chat(usr, "<span class='warning'>The biogenerator is in the process of working.</span>")
@@ -233,7 +233,7 @@
 		if("rh")
 			if (check_cost(25/efficiency)) return 0
 			else new/obj/item/nutrient/rh(src.loc)
-		if("ez5") //It's not an elegant method, but it's safe and easy. -Cheridan
+		if("ez5") // It's not an elegant method, but it's safe and easy. -Cheridan
 			if (check_cost(50/efficiency)) return 0
 			else
 				new/obj/item/nutrient/ez(src.loc)
@@ -260,7 +260,7 @@
 		if("wallet")
 			if (check_cost(100/efficiency)) return 0
 			else new/obj/item/weapon/storage/wallet(src.loc)
-		//if("bkbag")
+		// if("bkbag")
 		//	if (check_cost(200/efficiency)) return 0
 		//	else new/obj/item/weapon/storage/bag/books(src.loc)
 		if("ptbag")

@@ -1,6 +1,6 @@
 
 /*
-	apply_damage(a,b,c)
+	apply_damage(a, b,c)
 	args
 	a:damage - How much damage to take
 	b:damage_type - What type of damage to take, brute, burn
@@ -58,7 +58,7 @@
 		if(AGONY)
 			halloss += effect // Useful for objects that cause "subdual" damage. PAIN!
 		if(IRRADIATE)
-			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm.", "Your clothes feel warm."))/100),0)//Rads auto check armor
+			radiation += max(effect * ((100-run_armor_check(null, "rad", "Your clothes feel warm.", "Your clothes feel warm."))/100),0)// Rads auto check armor
 		if(STUTTER)
 			if(status_flags & CANSTUN) // stun is usually associated with stutter
 				stuttering = max(stuttering,(effect * blocked))

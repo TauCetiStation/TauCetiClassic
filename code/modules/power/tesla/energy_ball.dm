@@ -78,10 +78,10 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 
 
 /obj/singularity/energy_ball/proc/move_the_basket_ball(move_amount)
-	//we face the last thing we zapped, so this lets us favor that direction a bit
+	// we face the last thing we zapped, so this lets us favor that direction a bit
 	var/first_move = dir
 	for(var/i in 0 to move_amount)
-		var/move_dir = pick(alldirs + first_move) //give the first move direction a bit of favoring.
+		var/move_dir = pick(alldirs + first_move) // give the first move direction a bit of favoring.
 		var/turf/T = get_step(src, move_dir)
 		if(can_move(T))
 			loc = T
@@ -111,7 +111,7 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 	var/obj/singularity/energy_ball/EB = new(loc)
 
 	EB.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
-	var/icon/I = icon(icon,icon_state,dir)
+	var/icon/I = icon(icon, icon_state, dir)
 
 	var/orbitsize = (I.Width() + I.Height()) * pick(0.4, 0.5, 0.6, 0.7, 0.8)
 	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
@@ -170,14 +170,14 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 			if((dist < closest_dist || !closest_tesla_coil) && !C.being_shocked)
 				closest_dist = dist
 
-				//we use both of these to save on istype and typecasting overhead later on
-				//while still allowing common code to run before hand
+				// we use both of these to save on istype and typecasting overhead later on
+				// while still allowing common code to run before hand
 				closest_tesla_coil = C
 				closest_atom = C
 
 
 		else if(closest_tesla_coil)
-			continue //no need checking these other things
+			continue // no need checking these other things
 
 		else if(istype(A, /obj/machinery/power/grounding_rod))
 			var/dist = get_dist(source, A)
@@ -221,15 +221,15 @@ var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 				closest_dist = dist
 
 
-	//Alright, we've done our loop, now lets see if was anything interesting in range
+	// Alright, we've done our loop, now lets see if was anything interesting in range
 	if(closest_atom)
-		//common stuff
+		// common stuff
 		source.Beam(closest_atom, icon_state="lightning[rand(1,12)]", icon='icons/effects/effects.dmi', time=5, beam_layer=LIGHTING_LAYER+1)
 		var/zapdir = get_dir(source, closest_atom)
 		if(zapdir)
 			. = zapdir
 
-	//per type stuff:
+	// per type stuff:
 	if(closest_tesla_coil)
 		closest_tesla_coil.tesla_act(power)
 

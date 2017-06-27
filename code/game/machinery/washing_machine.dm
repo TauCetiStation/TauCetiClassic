@@ -5,20 +5,20 @@
 	density = 1
 	anchored = 1.0
 	var/state = 1
-	//1 = empty, open door
-	//2 = empty, closed door
-	//3 = full, open door
-	//4 = full, closed door
-	//5 = running
-	//6 = blood, open door
-	//7 = blood, closed door
-	//8 = blood, running
+	// 1 = empty, open door
+	// 2 = empty, closed door
+	// 3 = full, open door
+	// 4 = full, closed door
+	// 5 = running
+	// 6 = blood, open door
+	// 7 = blood, closed door
+	// 8 = blood, running
 	var/panel = 0
-	//0 = closed
-	//1 = open
-	var/hacked = 1 //Bleh, screw hacking, let's have it hacked by default.
-	//0 = not hacked
-	//1 = hacked
+	// 0 = closed
+	// 1 = open
+	var/hacked = 1 // Bleh, screw hacking, let's have it hacked by default.
+	// 0 = not hacked
+	// 1 = hacked
 	var/gibs_ready = 0
 	var/obj/crayon
 
@@ -27,14 +27,14 @@
 	set category = "Object"
 	set src in oview(1)
 
-	if(!istype(usr, /mob/living)) //ew ew ew usr, but it's the only way to check.
+	if(!istype(usr, /mob/living)) // ew ew ew usr, but it's the only way to check.
 		return
 
 	if( state != 4 )
 		to_chat(usr, "The washing machine cannot run in this state.")
 		return
 
-	if( locate(/mob,contents) )
+	if( locate(/mob, contents) )
 		state = 8
 	else
 		state = 5
@@ -48,7 +48,7 @@
 		I.decontaminate()
 		I.wet = 0
 
-	//Tanning!
+	// Tanning!
 	for(var/obj/item/stack/sheet/hairlesshide/HH in contents)
 		var/obj/item/stack/sheet/wetleather/WL = new(src)
 		WL.amount = HH.amount
@@ -80,59 +80,59 @@
 			var/new_desc = "The colors are a bit dodgy."
 			for(var/T in typesof(/obj/item/clothing/under))
 				var/obj/item/clothing/under/J = new T
-				//world << "DEBUG: [color] == [J.color]"
+				// world << "DEBUG: [color] == [J.color]"
 				if(wash_color == J.item_color)
 					new_jumpsuit_icon_state = J.icon_state
 					new_jumpsuit_item_state = J.item_state
 					new_jumpsuit_name = J.name
 					qdel(J)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
+					// world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
 				qdel(J)
 			for(var/T in typesof(/obj/item/clothing/gloves))
 				var/obj/item/clothing/gloves/G = new T
-				//world << "DEBUG: [color] == [J.color]"
+				// world << "DEBUG: [color] == [J.color]"
 				if(wash_color == G.item_color)
 					new_glove_icon_state = G.icon_state
 					new_glove_item_state = G.item_state
 					new_glove_name = G.name
 					qdel(G)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
+					// world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
 				qdel(G)
 			for(var/T in typesof(/obj/item/clothing/shoes))
 				var/obj/item/clothing/shoes/S = new T
-				//world << "DEBUG: [color] == [J.color]"
+				// world << "DEBUG: [color] == [J.color]"
 				if(wash_color == S.item_color)
 					new_shoe_icon_state = S.icon_state
 					new_shoe_name = S.name
 					qdel(S)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
+					// world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
 				qdel(S)
 			for(var/T in typesof(/obj/item/weapon/bedsheet))
 				var/obj/item/weapon/bedsheet/B = new T
-				//world << "DEBUG: [color] == [J.color]"
+				// world << "DEBUG: [color] == [J.color]"
 				if(wash_color == B.item_color)
 					new_sheet_icon_state = B.icon_state
 					new_sheet_name = B.name
 					qdel(B)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
+					// world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
 				qdel(B)
 			for(var/T in typesof(/obj/item/clothing/head/soft))
 				var/obj/item/clothing/head/soft/H = new T
-				//world << "DEBUG: [color] == [J.color]"
+				// world << "DEBUG: [color] == [J.color]"
 				if(wash_color == H.item_color)
 					new_softcap_icon_state = H.icon_state
 					new_softcap_name = H.name
 					qdel(H)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
+					// world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
 				qdel(H)
 			if(new_jumpsuit_icon_state && new_jumpsuit_item_state && new_jumpsuit_name)
 				for(var/obj/item/clothing/under/J in contents)
-					//world << "DEBUG: YUP! FOUND IT!"
+					// world << "DEBUG: YUP! FOUND IT!"
 					J.item_state = new_jumpsuit_item_state
 					J.icon_state = new_jumpsuit_icon_state
 					J.item_color = wash_color
@@ -140,7 +140,7 @@
 					J.desc = new_desc
 			if(new_glove_icon_state && new_glove_item_state && new_glove_name)
 				for(var/obj/item/clothing/gloves/G in contents)
-					//world << "DEBUG: YUP! FOUND IT!"
+					// world << "DEBUG: YUP! FOUND IT!"
 					G.item_state = new_glove_item_state
 					G.icon_state = new_glove_icon_state
 					G.item_color = wash_color
@@ -148,7 +148,7 @@
 					G.desc = new_desc
 			if(new_shoe_icon_state && new_shoe_name)
 				for(var/obj/item/clothing/shoes/S in contents)
-					//world << "DEBUG: YUP! FOUND IT!"
+					// world << "DEBUG: YUP! FOUND IT!"
 					if (istype(S,/obj/item/clothing/shoes/orange))
 						var/obj/item/clothing/shoes/orange/L = S
 						if (L.chained)
@@ -159,14 +159,14 @@
 					S.desc = new_desc
 			if(new_sheet_icon_state && new_sheet_name)
 				for(var/obj/item/weapon/bedsheet/B in contents)
-					//world << "DEBUG: YUP! FOUND IT!"
+					// world << "DEBUG: YUP! FOUND IT!"
 					B.icon_state = new_sheet_icon_state
 					B.item_color = wash_color
 					B.name = new_sheet_name
 					B.desc = new_desc
 			if(new_softcap_icon_state && new_softcap_name)
 				for(var/obj/item/clothing/head/soft/H in contents)
-					//world << "DEBUG: YUP! FOUND IT!"
+					// world << "DEBUG: YUP! FOUND IT!"
 					H.icon_state = new_softcap_icon_state
 					H.item_color = wash_color
 					H.name = new_softcap_name
@@ -175,7 +175,7 @@
 		crayon = null
 
 
-	if( locate(/mob,contents) )
+	if( locate(/mob, contents) )
 		state = 7
 		gibs_ready = 1
 	else
@@ -227,7 +227,7 @@
 		istype(W,/obj/item/clothing/suit) || \
 		istype(W,/obj/item/weapon/bedsheet))
 
-		//YES, it's hardcoded... saves a var/can_be_washed for every single clothing item.
+		// YES, it's hardcoded... saves a var/can_be_washed for every single clothing item.
 		if ( istype(W,/obj/item/clothing/suit/space ) )
 			to_chat(user, "This item does not fit.")
 			return
@@ -264,7 +264,7 @@
 		if ( istype(W,/obj/item/clothing/head/helmet ) )
 			to_chat(user, "This item does not fit.")
 			return
-		if(!W.canremove) //if "can't drop" item
+		if(!W.canremove) // if "can't drop" item
 			to_chat(user, "<span class='notice'>\The [W] is stuck to your hand, you cannot put it in the washing machine!</span>")
 			return
 
@@ -304,8 +304,8 @@
 		if(7)
 			if(gibs_ready)
 				gibs_ready = 0
-				if(locate(/mob,contents))
-					var/mob/M = locate(/mob,contents)
+				if(locate(/mob, contents))
+					var/mob/M = locate(/mob, contents)
 					M.gib()
 			for(var/atom/movable/O in contents)
 				O.loc = src.loc

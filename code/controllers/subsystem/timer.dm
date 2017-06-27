@@ -1,11 +1,11 @@
-#define BUCKET_LEN (world.fps*1*60) //how many ticks should we keep in the bucket. (1 minutes worth)
+#define BUCKET_LEN (world.fps*1*60) // how many ticks should we keep in the bucket. (1 minutes worth)
 #define BUCKET_POS(timer) (round((timer.timeToRun - SStimer.head_offset) / world.tick_lag) + 1)
 var/datum/subsystem/timer/SStimer
 
 /datum/subsystem/timer
 	name = "Timer"
 
-	wait          = SS_WAIT_TIMER //SS_TICKER subsystem, so wait is in ticks
+	wait          = SS_WAIT_TIMER // SS_TICKER subsystem, so wait is in ticks
 	display_order = SS_DISPLAY_TIMER
 
 	flags = SS_FIRE_IN_LOBBY | SS_TICKER | SS_NO_INIT
@@ -13,16 +13,16 @@ var/datum/subsystem/timer/SStimer
 	var/list/datum/timedevent/processing
 	var/list/hashes
 
-	var/head_offset = 0 //world.time of the first entry in the the bucket.
-	var/practical_offset = 0 //index of the first non-empty item in the bucket.
-	var/bucket_resolution = 0 //world.tick_lag the bucket was designed for
-	var/bucket_count = 0 //how many timers are in the buckets
+	var/head_offset = 0 // world.time of the first entry in the the bucket.
+	var/practical_offset = 0 // index of the first non-empty item in the bucket.
+	var/bucket_resolution = 0 // world.tick_lag the bucket was designed for
+	var/bucket_count = 0 // how many timers are in the buckets
 
-	var/list/bucket_list //list of buckets, each bucket holds every timer that has to run that byond tick.
+	var/list/bucket_list // list of buckets, each bucket holds every timer that has to run that byond tick.
 
-	var/list/timer_id_dict //list of all active timers assoicated to their timer id (for easy lookup)
+	var/list/timer_id_dict // list of all active timers assoicated to their timer id (for easy lookup)
 
-	var/list/clienttime_timers //special snowflake timers that run on fancy pansy "client time"
+	var/list/clienttime_timers // special snowflake timers that run on fancy pansy "client time"
 
 
 /datum/subsystem/timer/New()
@@ -80,7 +80,7 @@ var/datum/subsystem/timer/SStimer
 			var/datum/callback/callBack = timer.callBack
 			if (!callBack)
 				qdel(timer)
-				bucket_resolution = null //force bucket recreation
+				bucket_resolution = null // force bucket recreation
 				CRASH("Invalid timer: timer.timeToRun=[timer.timeToRun]||QDELETED(timer)=[QDELETED(timer)]||world.time=[world.time]||head_offset=[head_offset]||practical_offset=[practical_offset]||timer.spent=[timer.spent]")
 
 			if (!timer.spent)
@@ -109,7 +109,7 @@ var/datum/subsystem/timer/SStimer
 /datum/subsystem/timer/proc/shift_buckets()
 	var/list/bucket_list = src.bucket_list
 	var/list/alltimers = list()
-	//collect the timers currently in the bucket
+	// collect the timers currently in the bucket
 	for (var/bucket_head in bucket_list)
 		if (!bucket_head)
 			continue
@@ -151,7 +151,7 @@ var/datum/subsystem/timer/SStimer
 		if (bucket_pos > BUCKET_LEN)
 			break
 
-		timers_to_remove += timer //remove it from the big list once we are done
+		timers_to_remove += timer // remove it from the big list once we are done
 		if (!timer.callBack || timer.spent)
 			continue
 		bucket_count++
@@ -185,9 +185,9 @@ var/datum/subsystem/timer/SStimer
 	var/timeToRun
 	var/hash
 	var/list/flags
-	var/spent = FALSE //set to true right before running.
+	var/spent = FALSE // set to true right before running.
 
-	//cicular doublely linked list
+	// cicular doublely linked list
 	var/datum/timedevent/next
 	var/datum/timedevent/prev
 
@@ -213,24 +213,24 @@ var/datum/subsystem/timer/SStimer
 		SStimer.clienttime_timers += src
 		return
 
-	//get the list of buckets
+	// get the list of buckets
 	var/list/bucket_list = SStimer.bucket_list
-	//calculate our place in the bucket list
+	// calculate our place in the bucket list
 	var/bucket_pos = BUCKET_POS(src)
-	//we are too far aways from needing to run to be in the bucket list, shift_buckets() will handle us.
+	// we are too far aways from needing to run to be in the bucket list, shift_buckets() will handle us.
 	if (bucket_pos > length(bucket_list))
 		SStimer.processing += src
 		return
-	//get the bucket for our tick
+	// get the bucket for our tick
 	var/datum/timedevent/bucket_head = bucket_list[bucket_pos]
 	SStimer.bucket_count++
-	//empty bucket, we will just add ourselves
+	// empty bucket, we will just add ourselves
 	if (!bucket_head)
 		bucket_list[bucket_pos] = src
 		if (bucket_pos < SStimer.practical_offset)
 			SStimer.practical_offset = bucket_pos
 		return
-	//other wise, lets do a simplified linked list add.
+	// other wise, lets do a simplified linked list add.
 	if (!bucket_head.prev)
 		bucket_head.prev = bucket_head
 	next = bucket_head

@@ -44,7 +44,7 @@ var/religion_name = null
 	return capitalize(name)
 
 /proc/system_name()
-	return "Tau Ceti" //Screw Nyx
+	return "Tau Ceti" // Screw Nyx
 
 /proc/station_name()
 	if (station_name)
@@ -64,26 +64,26 @@ var/religion_name = null
 	var/name = ""
 	var/return_name = ""
 
-	//Rare: Pre-Prefix
+	// Rare: Pre-Prefix
 	if (prob(10))
 		name = pick("Imperium", "Heretical", "Cuban", "Psychic", "Elegant", "Common", "Uncommon", "Rare", "Unique", "Houseruled", "Religious", "Atheist", "Traditional", "Houseruled", "Mad", "Super", "Ultra", "Secret", "Top Secret", "Deep", "Death", "Zybourne", "Central", "Main", "Government", "Uoi", "Fat", "Automated", "Experimental", "Augmented")
 		return_name = name + " "
 
 	// Prefix
 	switch(Holiday)
-		//get normal name
+		// get normal name
 		if(null,"",0)
 			name = pick("", "Stanford", "Dorf", "Alium", "Prefix", "Clowning", "Aegis", "Ishimura", "Scaredy", "Death-World", "Mime", "Honk", "Rogue", "MacRagge", "Ultrameens", "Safety", "Paranoia", "Explosive", "Neckbear", "Donk", "Muppet", "North", "West", "East", "South", "Slant-ways", "Widdershins", "Rimward", "Expensive", "Procreatory", "Imperial", "Unidentified", "Immoral", "Carp", "Ork", "Pete", "Control", "Nettle", "Aspie", "Class", "Crab", "Fist","Corrogated","Skeleton","Race", "Fatguy", "Gentleman", "Capitalist", "Communist", "Bear", "Beard", "Derp", "Space", "Spess", "Star", "Moon", "System", "Mining", "Neckbeard", "Research", "Supply", "Military", "Orbital", "Battle", "Science", "Asteroid", "Home", "Production", "Transport", "Delivery", "Extraplanetary", "Orbital", "Correctional", "Robot", "Hats", "Pizza")
 			if(name)
 				return_name += name + " "
 
-		//For special days like christmas, easter, new-years etc ~Carn
+		// For special days like christmas, easter, new-years etc ~Carn
 		if("Friday the 13th")
 			name = pick("Mike","Friday","Evil","Myers","Murder","Deathly","Stabby")
 			return_name += name + " "
 			random = 13
 		else
-			//get the first word of the Holiday and use that
+			// get the first word of the Holiday and use that
 			var/i = findtext(Holiday," ",1,0)
 			name = copytext(Holiday,1,i)
 			return_name += name + " "
@@ -168,9 +168,9 @@ var/gang_B_name = null
 			return gang_B_name
 
 
-//Traitors and traitor silicons will get these. Revs will not.
-var/syndicate_code_phrase//Code phrase for traitors.
-var/syndicate_code_response//Code response for traitors.
+// Traitors and traitor silicons will get these. Revs will not.
+var/syndicate_code_phrase// Code phrase for traitors.
+var/syndicate_code_response// Code response for traitors.
 
 	/*
 	Should be expanded.
@@ -186,56 +186,56 @@ var/syndicate_code_response//Code response for traitors.
 	/N
 	*/
 
-/proc/generate_code_phrase()//Proc is used for phrase and response in master_controller.dm
+/proc/generate_code_phrase()// Proc is used for phrase and response in master_controller.dm
 
-	var/code_phrase = ""//What is returned when the proc finishes.
-	var/words = pick(//How many words there will be. Minimum of two. 2, 4 and 5 have a lesser chance of being selected. 3 is the most likely.
+	var/code_phrase = ""// What is returned when the proc finishes.
+	var/words = pick(// How many words there will be. Minimum of two. 2, 4 and 5 have a lesser chance of being selected. 3 is the most likely.
 		50; 2,
 		200; 3,
 		50; 4,
 		25; 5
 	)
 
-	var/safety[] = list(1,2,3)//Tells the proc which options to remove later on.
+	var/safety[] = list(1,2,3)// Tells the proc which options to remove later on.
 	var/nouns[] = list("love","hate","anger","peace","pride","sympathy","bravery","loyalty","honesty","integrity","compassion","charity","success","courage","deceit","skill","beauty","brilliance","pain","misery","beliefs","dreams","justice","truth","faith","liberty","knowledge","thought","information","culture","trust","dedication","progress","education","hospitality","leisure","trouble","friendships", "relaxation")
 	var/drinks[] = list("vodka and tonic","gin fizz","bahama mama","manhattan","black Russian","whiskey soda","long island tea","margarita","Irish coffee"," manly dwarf","Irish cream","doctor's delight","Beepksy Smash","tequilla sunrise","brave bull","gargle blaster","bloody mary","whiskey cola","white Russian","vodka martini","martini","Cuba libre","kahlua","vodka","wine","moonshine")
-	var/locations[] = teleportlocs.len ? teleportlocs : drinks//if null, defaults to drinks instead.
+	var/locations[] = teleportlocs.len ? teleportlocs : drinks// if null, defaults to drinks instead.
 
 	var/names[] = list()
-	for(var/datum/data/record/t in data_core.general)//Picks from crew manifest.
+	for(var/datum/data/record/t in data_core.general)// Picks from crew manifest.
 		names += t.fields["name"]
 
-	var/maxwords = words//Extra var to check for duplicates.
+	var/maxwords = words// Extra var to check for duplicates.
 
-	for(words,words>0,words--)//Randomly picks from one of the choices below.
+	for(words, words>0,words--)// Randomly picks from one of the choices below.
 
-		if(words==1&&(1 in safety)&&(2 in safety))//If there is only one word remaining and choice 1 or 2 have not been selected.
-			safety = list(pick(1,2))//Select choice 1 or 2.
-		else if(words==1&&maxwords==2)//Else if there is only one word remaining (and there were two originally), and 1 or 2 were chosen,
-			safety = list(3)//Default to list 3
+		if(words==1&&(1 in safety)&&(2 in safety))// If there is only one word remaining and choice 1 or 2 have not been selected.
+			safety = list(pick(1,2))// Select choice 1 or 2.
+		else if(words==1&&maxwords==2)// Else if there is only one word remaining (and there were two originally), and 1 or 2 were chosen,
+			safety = list(3)// Default to list 3
 
-		switch(pick(safety))//Chance based on the safety list.
-			if(1)//1 and 2 can only be selected once each to prevent more than two specific names/places/etc.
-				switch(rand(1,2))//Mainly to add more options later.
+		switch(pick(safety))// Chance based on the safety list.
+			if(1)// 1 and 2 can only be selected once each to prevent more than two specific names/places/etc.
+				switch(rand(1,2))// Mainly to add more options later.
 					if(1)
 						if(names.len&&prob(70))
 							code_phrase += pick(names)
 						else
-							code_phrase += pick(pick(first_names_male,first_names_female))
+							code_phrase += pick(pick(first_names_male, first_names_female))
 							code_phrase += " "
 							code_phrase += pick(last_names)
 					if(2)
-						code_phrase += pick(joblist)//Returns a job.
+						code_phrase += pick(joblist)// Returns a job.
 				safety -= 1
 			if(2)
-				switch(rand(1,2))//Places or things.
+				switch(rand(1,2))// Places or things.
 					if(1)
 						code_phrase += pick(drinks)
 					if(2)
 						code_phrase += pick(locations)
 				safety -= 2
 			if(3)
-				switch(rand(1,3))//Nouns, adjectives, verbs. Can be selected more than once.
+				switch(rand(1,3))// Nouns, adjectives, verbs. Can be selected more than once.
 					if(1)
 						code_phrase += pick(nouns)
 					if(2)
@@ -250,7 +250,7 @@ var/syndicate_code_response//Code response for traitors.
 	return code_phrase
 
 /*
-//This proc tests the gen above.
+// This proc tests the gen above.
 /client/verb/test_code_phrase()
 	set name = "Generate Code Phrase"
 	set category = "Debug"
@@ -269,7 +269,7 @@ var/syndicate_code_response//Code response for traitors.
 		if(1)
 			syndicate_code_phrase += pick("I'm looking for","Have you seen","Maybe you've seen","I'm trying to find","I'm tracking")
 			syndicate_code_phrase += " "
-			syndicate_code_phrase += pick(pick(first_names_male,first_names_female))
+			syndicate_code_phrase += pick(pick(first_names_male, first_names_female))
 			syndicate_code_phrase += " "
 			syndicate_code_phrase += pick(last_names)
 			syndicate_code_phrase += "."
@@ -319,7 +319,7 @@ var/syndicate_code_response//Code response for traitors.
 				syndicate_code_response += pick("Try asking","Ask","Talk to","Go see","Follow","Hunt down")
 				syndicate_code_response += " "
 				if(prob(50))
-					syndicate_code_response += pick(pick(first_names_male,first_names_female))
+					syndicate_code_response += pick(pick(first_names_male, first_names_female))
 					syndicate_code_response += " "
 					syndicate_code_response += pick(last_names)
 				else

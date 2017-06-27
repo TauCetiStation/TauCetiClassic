@@ -8,14 +8,14 @@
 /obj/mecha/working/hoverpod/Process_Spacemove(movement_dir = 0)
 	return 1 // puts the hover in hoverpod
 
-//these three procs overriden to play different sounds
+// these three procs overriden to play different sounds
 /obj/mecha/working/hoverpod/mechturn(direction)
 	dir = direction
-	//playsound(src,'sound/machines/hiss.ogg',40,1)
+	// playsound(src,'sound/machines/hiss.ogg',40,1)
 	return 1
 
 /obj/mecha/working/hoverpod/mechstep(direction)
-	var/result = step(src,direction)
+	var/result = step(src, direction)
 	if(result)
 		playsound(src,'sound/machines/hiss.ogg',40,1)
 	return result

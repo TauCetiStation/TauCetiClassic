@@ -5,7 +5,7 @@
 	icon_state = "latticefull"
 	density = 0
 	anchored = 1.0
-	layer = 2.3 //under pipes
+	layer = 2.3 // under pipes
 	//	flags = CONDUCT
 
 /obj/structure/lattice/New()
@@ -54,7 +54,7 @@
 
 	if(istype(C, /obj/item/stack/tile/plasteel) || istype(C, /obj/item/stack/rods))
 		var/turf/T = get_turf(src)
-		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead
+		T.attackby(C, user) // BubbleWrap - hand this off to the underlying turf instead
 		return
 	if (istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = C
@@ -66,7 +66,7 @@
 	return
 
 /obj/structure/lattice/proc/updateOverlays()
-	//if(!(istype(src.loc, /turf/space)))
+	// if(!(istype(src.loc, /turf/space)))
 	//	qdel(src)
 	spawn(1)
 		overlays = list()

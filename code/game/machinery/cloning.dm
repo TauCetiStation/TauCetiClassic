@@ -1,10 +1,10 @@
-//Cloning revival method.
-//The pod handles the actual cloning while the computer manages the clone profiles
+// Cloning revival method.
+// The pod handles the actual cloning while the computer manages the clone profiles
 
-//Potential replacement for genetics revives or something I dunno (?)
+// Potential replacement for genetics revives or something I dunno (?)
 
 #define CLONE_BIOMASS 150
-#define CLONE_INITIAL_DAMAGE     190    //Clones in clonepods start with 190 cloneloss damage and 190 brainloss damage, thats just logical
+#define CLONE_INITIAL_DAMAGE     190    // Clones in clonepods start with 190 cloneloss damage and 190 brainloss damage, thats just logical
 
 
 /obj/machinery/clonepod
@@ -14,13 +14,13 @@
 	density = 1
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
-	req_access = list(access_genetics) //For premature unlocking.
-	var/heal_level = 90 //The clone is released once its health reaches this level.
+	req_access = list(access_genetics) // For premature unlocking.
+	var/heal_level = 90 // The clone is released once its health reaches this level.
 	var/locked = 0
-	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
-	var/mess = 0 //Need to clean out it if it's full of exploded clone.
-	var/attempting = 0 //One clone attempt at a time thanks
-	var/eject_wait = 0 //Don't eject them as soon as they are created fuckkk
+	var/obj/machinery/computer/cloning/connected = null // So we remember the connected clone machine.
+	var/mess = 0 // Need to clean out it if it's full of exploded clone.
+	var/attempting = 0 // One clone attempt at a time thanks
+	var/eject_wait = 0 // Don't eject them as soon as they are created fuckkk
 	var/biomass = CLONE_BIOMASS * 3
 	var/speed_coeff
 	var/efficiency
@@ -50,16 +50,16 @@
 	if(heal_level > 100)
 		heal_level = 100
 
-//The return of data disks?? Just for transferring between genetics machine/cloning machine.
-//TO-DO: Make the genetics machine accept them.
+// The return of data disks?? Just for transferring between genetics machine/cloning machine.
+// TO-DO: Make the genetics machine accept them.
 /obj/item/weapon/disk/data
 	name = "Cloning Data Disk"
 	icon = 'icons/obj/cloning.dmi'
-	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
+	icon_state = "datadisk0" // Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
 	w_class = 2.0
 	var/datum/dna2/record/buf=null
-	var/read_only = 0 //Well,it's still a floppy disk
+	var/read_only = 0 // Well, it's still a floppy disk
 
 /obj/item/weapon/disk/data/proc/Initialize()
 	buf = new
@@ -72,12 +72,12 @@
 /obj/item/weapon/disk/data/demo/New()
 	Initialize()
 	buf.types=DNA2_BUF_UE|DNA2_BUF_UI
-	//data = "066000033000000000AF00330660FF4DB002690"
-	//data = "0C80C80C80C80C80C8000000000000161FBDDEF" - Farmer Jeff
+	// data = "066000033000000000AF00330660FF4DB002690"
+	// data = "0C80C80C80C80C80C8000000000000161FBDDEF" - Farmer Jeff
 	buf.dna.real_name="God Emperor of Mankind"
 	buf.dna.unique_enzymes = md5(buf.dna.real_name)
 	buf.dna.UI=list(0x066,0x000,0x033,0x000,0x000,0x000,0xAF0,0x033,0x066,0x0FF,0x4DB,0x002,0x690)
-	//buf.dna.UI=list(0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x000,0x000,0x000,0x000,0x161,0xFBD,0xDEF) // Farmer Jeff
+	// buf.dna.UI=list(0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x0C8,0x000,0x000,0x000,0x000,0x161,0xFBD,0xDEF) // Farmer Jeff
 	buf.dna.UpdateUI()
 
 /obj/item/weapon/disk/data/monkey
@@ -94,17 +94,17 @@
 	buf.dna.SetSEValueRange(MONKEYBLOCK,0xDAC, 0xFFF)
 
 
-//Find a dead mob with a brain and client.
+// Find a dead mob with a brain and client.
 /proc/find_dead_player(find_key)
 	if (isnull(find_key))
 		return
 
 	var/mob/selected = null
 	for(var/mob/M in player_list)
-		//Dead people only thanks!
+		// Dead people only thanks!
 		if ((M.stat != DEAD) || (!M.client))
 			continue
-		//They need a brain!
+		// They need a brain!
 		if ((istype(M, /mob/living/carbon/human)) && (M:brain_op_stage >= 4.0))
 			continue
 
@@ -113,7 +113,7 @@
 			break
 	return selected
 
-//Disk stuff.
+// Disk stuff.
 /obj/item/weapon/disk/data/New()
 	..()
 	var/diskcolor = pick(0,1,2)
@@ -127,7 +127,7 @@
 	..()
 	to_chat(user, "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"].")
 
-//Health Tracker Implant
+// Health Tracker Implant
 
 /obj/item/weapon/implant/health
 	name = "health implant"
@@ -157,20 +157,20 @@
 		to_chat(user, "Current clone cycle is [round(completion)]% complete.")
 	return
 
-//Clonepod
+// Clonepod
 
-//Start growing a human clone in the pod!
+// Start growing a human clone in the pod!
 /obj/machinery/clonepod/proc/growclone(datum/dna2/record/R)
 	if(panel_open)
 		return 0
 	if(mess || attempting)
 		return 0
 	var/datum/mind/clonemind = locate(R.mind)
-	if(!istype(clonemind,/datum/mind))	//not a mind
+	if(!istype(clonemind,/datum/mind))	// not a mind
 		return 0
-	if( clonemind.current && clonemind.current.stat != DEAD )	//mind is associated with a non-dead body
+	if( clonemind.current && clonemind.current.stat != DEAD )	// mind is associated with a non-dead body
 		return 0
-	if(clonemind.active)	//somebody is using that mind
+	if(clonemind.active)	// somebody is using that mind
 		if( ckey(clonemind.key)!=R.ckey )
 			return 0
 	else
@@ -182,7 +182,7 @@
 					return 0
 
 
-	src.attempting = 1 //One at a time!!
+	src.attempting = 1 // One at a time!!
 	src.locked = 1
 
 	src.eject_wait = 1
@@ -192,17 +192,17 @@
 	var/mob/living/carbon/human/H = new /mob/living/carbon/human(src, R.dna.species)
 	occupant = H
 
-	if(!R.dna.real_name)	//to prevent null names
+	if(!R.dna.real_name)	// to prevent null names
 		R.dna.real_name = "clone ([rand(0,999)])"
 	H.real_name = R.dna.real_name
 
 	src.icon_state = "pod_1"
-	//Get the clone body ready
-	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE)     //Yeah, clones start with very low health, not with random, because why would they start with random health
+	// Get the clone body ready
+	H.adjustCloneLoss(CLONE_INITIAL_DAMAGE)     // Yeah, clones start with very low health, not with random, because why would they start with random health
 	H.adjustBrainLoss(CLONE_INITIAL_DAMAGE)
 	H.Paralyse(4)
 
-	//Here let's calculate their health so the pod doesn't immediately eject them!!!
+	// Here let's calculate their health so the pod doesn't immediately eject them!!!
 	H.updatehealth()
 
 	clonemind.transfer_to(H)
@@ -215,14 +215,14 @@
 		mode.update_icon(H)
 
 	if((H.mind in ticker.mode.revolutionaries) || (H.mind in ticker.mode.head_revolutionaries))
-		ticker.mode.update_all_rev_icons() //So the icon actually appears
+		ticker.mode.update_all_rev_icons() // So the icon actually appears
 	if((H.mind in ticker.mode.A_bosses) || ((H.mind in ticker.mode.A_gang) || (H.mind in ticker.mode.B_bosses)) || (H.mind in ticker.mode.B_gang))
 		ticker.mode.update_all_gang_icons()
 	if(H.mind in ticker.mode.syndicates)
 		ticker.mode.update_all_synd_icons()
 	if (H.mind in ticker.mode.cult)
 		ticker.mode.add_cultist(src.occupant.mind)
-		ticker.mode.update_all_cult_icons() //So the icon actually appears
+		ticker.mode.update_all_cult_icons() // So the icon actually appears
 
 	// -- End mode specific stuff
 
@@ -232,7 +232,7 @@
 	else
 		H.dna=R.dna
 	H.UpdateAppearance()
-	//if(efficiency > 2)
+	// if(efficiency > 2)
 	//	for(var/A in bad_se_blocks)
 	//		setblock(H.dna.struc_enzymes, A, construct_block(0,2))
 	if(efficiency > 5 && prob(20))
@@ -243,7 +243,7 @@
 	H.dna.UpdateUI()
 
 	H.f_style = "Shaved"
-	if(R.dna.species == HUMAN) //no more xenos losing ears/tentacles
+	if(R.dna.species == HUMAN) // no more xenos losing ears/tentacles
 		H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 
 	for(var/datum/language/L in R.languages)
@@ -252,10 +252,10 @@
 	src.attempting = 0
 	return 1
 
-//Grow clones to maturity then kick them out.  FREELOADERS
+// Grow clones to maturity then kick them out.  FREELOADERS
 /obj/machinery/clonepod/process()
 
-	if(stat & NOPOWER) //Autoeject if power is lost
+	if(stat & NOPOWER) // Autoeject if power is lost
 		if (src.occupant)
 			src.locked = 0
 			src.go_out()
@@ -263,7 +263,7 @@
 
 	if((src.occupant) && (src.occupant.loc == src))
 
-		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
+		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key)  // Autoeject corpses and suiciding dudes.
 			src.locked = 0
 			src.go_out()
 			src.connected_message("Clone Rejected: Deceased.")
@@ -272,26 +272,26 @@
 		else if(src.occupant.cloneloss > (100 - src.heal_level))
 			src.occupant.Paralyse(4)
 
-			 //Slowly get that clone healed and finished.
+			 // Slowly get that clone healed and finished.
 			src.occupant.adjustCloneLoss(-((speed_coeff/2)))
 
-			//Premature clones may have brain damage.
+			// Premature clones may have brain damage.
 			src.occupant.adjustBrainLoss(-((speed_coeff/2)))
 
-			//So clones don't die of oxyloss in a running pod.
+			// So clones don't die of oxyloss in a running pod.
 			if (src.occupant.reagents.get_reagent_amount("inaprovaline") < 30)
 				src.occupant.reagents.add_reagent("inaprovaline", 60)
 
-			//So clones will remain asleep for long enough to get them into cryo (Bay RP edit)
+			// So clones will remain asleep for long enough to get them into cryo (Bay RP edit)
 			if (src.occupant.reagents.get_reagent_amount("stoxin") < 10)
 				src.occupant.reagents.add_reagent("stoxin", 5)
 			if (src.occupant.reagents.get_reagent_amount("chloralhydrate") < 1)
 				src.occupant.reagents.add_reagent("chloralhydrate", 1)
 
-			//Also heal some oxyloss ourselves because inaprovaline is so bad at preventing it!!
+			// Also heal some oxyloss ourselves because inaprovaline is so bad at preventing it!!
 			src.occupant.adjustOxyLoss(-4)
 
-			use_power(7500) //This might need tweaking.
+			use_power(7500) // This might need tweaking.
 			return
 
 		else if((src.occupant.cloneloss <= (100 - src.heal_level)) && (!src.eject_wait) || src.occupant.health >= 100)
@@ -311,7 +311,7 @@
 
 	return
 
-//Let's unlock this early I guess.  Might be too early, needs tweaking.
+// Let's unlock this early I guess.  Might be too early, needs tweaking.
 /obj/machinery/clonepod/attackby(obj/item/weapon/W, mob/user)
 	if(!(occupant || mess || locked))
 		if(default_deconstruction_screwdriver(user, "[icon_state]_maintenance", "[initial(icon_state)]",W))
@@ -350,7 +350,7 @@
 	else
 		..()
 
-//Put messages in the connected computer's temp var for display.
+// Put messages in the connected computer's temp var for display.
 /obj/machinery/clonepod/proc/connected_message(message)
 	if ((isnull(src.connected)) || (!istype(src.connected, /obj/machinery/computer/cloning)))
 		return 0
@@ -378,7 +378,7 @@
 	if (src.locked)
 		return
 
-	if (src.mess) //Clean that mess and dump those gibs!
+	if (src.mess) // Clean that mess and dump those gibs!
 		src.mess = 0
 		gibs(src.loc)
 		src.icon_state = "pod_0"
@@ -402,8 +402,8 @@
 		src.occupant.client.perspective = MOB_PERSPECTIVE
 	src.occupant.loc = src.loc
 	src.icon_state = "pod_0"
-	src.eject_wait = 0 //If it's still set somehow.
-	domutcheck(src.occupant) //Waiting until they're out before possible monkeyizing.
+	src.eject_wait = 0 // If it's still set somehow.
+	domutcheck(src.occupant) // Waiting until they're out before possible monkeyizing.
 //	src.occupant.add_side_effect("Bad Stomach") // Give them an extra side-effect for free.
 	src.occupant = null
 
@@ -503,7 +503,7 @@
 	<br>
 	<font size=1>This technology produced under license from Thinktronic Systems, LTD.</font>"}
 
-//SOME SCRAPS I GUESS
+// SOME SCRAPS I GUESS
 /* EMP grenade/spell effect
 		if(istype(A, /obj/machinery/clonepod))
 			A:malfunction()

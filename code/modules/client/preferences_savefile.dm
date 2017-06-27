@@ -1,16 +1,16 @@
 #define SAVEFILE_VERSION_MIN	8
 #define SAVEFILE_VERSION_MAX	13
 
-//handles converting savefiles to new formats
-//MAKE SURE YOU KEEP THIS UP TO DATE!
-//If the sanity checks are capable of handling any issues. Only increase SAVEFILE_VERSION_MAX,
-//this will mean that savefile_version will still be over SAVEFILE_VERSION_MIN, meaning
-//this savefile update doesn't run everytime we load from the savefile.
-//This is mainly for format changes, such as the bitflags in toggles changing order or something.
-//if a file can't be updated, return 0 to delete it and start again
-//if a file was updated, return 1
+// handles converting savefiles to new formats
+// MAKE SURE YOU KEEP THIS UP TO DATE!
+// If the sanity checks are capable of handling any issues. Only increase SAVEFILE_VERSION_MAX,
+// this will mean that savefile_version will still be over SAVEFILE_VERSION_MIN, meaning
+// this savefile update doesn't run everytime we load from the savefile.
+// This is mainly for format changes, such as the bitflags in toggles changing order or something.
+// if a file can't be updated, return 0 to delete it and start again
+// if a file was updated, return 1
 /datum/preferences/proc/savefile_update()
-	if(savefile_version < 8)	//lazily delete everything + additional files so they can be saved in the new format
+	if(savefile_version < 8)	// lazily delete everything + additional files so they can be saved in the new format
 		for(var/ckey in preferences_datums)
 			var/datum/preferences/D = preferences_datums[ckey]
 			if(D == src)
@@ -20,13 +20,13 @@
 				break
 		return 0
 
-	if(savefile_version == SAVEFILE_VERSION_MAX)	//update successful.
+	if(savefile_version == SAVEFILE_VERSION_MAX)	// update successful.
 		save_preferences()
 		save_character()
 		return 1
 	return 0
 
-/datum/preferences/proc/load_path(ckey,filename="preferences.sav")
+/datum/preferences/proc/load_path(ckey, filename="preferences.sav")
 	if(!ckey)	return
 	path = "data/player_saves/[copytext(ckey,1,2)]/[ckey]/[filename]"
 	savefile_version = SAVEFILE_VERSION_MAX
@@ -42,19 +42,19 @@
 	S.cd = "/"
 
 	S["version"] >> savefile_version
-	//Conversion
+	// Conversion
 	if(!savefile_version || !isnum(savefile_version) || savefile_version < SAVEFILE_VERSION_MIN || savefile_version > SAVEFILE_VERSION_MAX)
-		if(!savefile_update())  //handles updates
+		if(!savefile_update())  // handles updates
 			savefile_version = SAVEFILE_VERSION_MAX
 			save_preferences()
 			save_character()
 			return 0
 
-	//Account data
+	// Account data
 	S["cid_list"]			>> cid_list
 	S["ignore_cid_warning"]	>> ignore_cid_warning
 
-	//General preferences
+	// General preferences
 	S["ooccolor"]			>> ooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
@@ -70,9 +70,9 @@
 	S["permamuted"]			>> permamuted
 	S["permamuted"]			>> muted
 
-	//Antag preferences
+	// Antag preferences
 	S["be_role"]			>> be_role
-	//Sanitize
+	// Sanitize
 	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, list("White", "Midnight","Orange","old"), initial(UI_style))
@@ -98,11 +98,11 @@
 
 	S["version"] << savefile_version
 
-	//Account data
+	// Account data
 	S["cid_list"]			<< cid_list
 	S["ignore_cid_warning"]	<< ignore_cid_warning
 
-	//general preferences
+	// general preferences
 	S["ooccolor"]			<< ooccolor
 	S["lastchangelog"]		<< lastchangelog
 	S["UI_style"]			<< UI_style
@@ -123,7 +123,7 @@
 		return 0
 	S.cd = dir
 
-	//Character
+	// Character
 	S["OOC_Notes"]			>> metadata
 	S["real_name"]			>> real_name
 	S["name_is_always_random"] >> be_random_name
@@ -132,7 +132,7 @@
 	S["species"]			>> species
 	S["language"]			>> language
 
-	//colors to be consolidated into hex strings (requires some work with dna code)
+	// colors to be consolidated into hex strings (requires some work with dna code)
 	S["hair_red"]			>> r_hair
 	S["hair_green"]			>> g_hair
 	S["hair_blue"]			>> b_hair
@@ -154,7 +154,7 @@
 	S["backbag"]			>> backbag
 	S["b_type"]				>> b_type
 
-	//Jobs
+	// Jobs
 	S["alternate_option"]	>> alternate_option
 	S["job_civilian_high"]	>> job_civilian_high
 	S["job_civilian_med"]	>> job_civilian_med
@@ -166,7 +166,7 @@
 	S["job_engsec_med"]		>> job_engsec_med
 	S["job_engsec_low"]		>> job_engsec_low
 
-	//Miscellaneous
+	// Miscellaneous
 	S["flavor_text"]		>> flavor_text
 	S["med_record"]			>> med_record
 	S["sec_record"]			>> sec_record
@@ -188,7 +188,7 @@
 	S["UI_style_color"]		>> UI_style_color
 	S["UI_style_alpha"]		>> UI_style_alpha
 
-	//Sanitize
+	// Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= reject_bad_name(real_name)
 	if(isnull(species)) species = HUMAN
@@ -292,7 +292,7 @@
 		return 0
 	S.cd = "/character[default_slot]"
 
-	//Character
+	// Character
 	S["OOC_Notes"]			<< metadata
 	S["real_name"]			<< real_name
 	S["name_is_always_random"] << be_random_name
@@ -321,7 +321,7 @@
 	S["backbag"]			<< backbag
 	S["b_type"]				<< b_type
 
-	//Jobs
+	// Jobs
 	S["alternate_option"]	<< alternate_option
 	S["job_civilian_high"]	<< job_civilian_high
 	S["job_civilian_med"]	<< job_civilian_med
@@ -333,7 +333,7 @@
 	S["job_engsec_med"]		<< job_engsec_med
 	S["job_engsec_low"]		<< job_engsec_low
 
-	//Miscellaneous
+	// Miscellaneous
 	S["flavor_text"]		<< flavor_text
 	S["med_record"]			<< med_record
 	S["sec_record"]			<< sec_record

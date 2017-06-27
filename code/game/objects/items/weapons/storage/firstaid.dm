@@ -34,7 +34,7 @@
 		new /obj/item/stack/medical/ointment( src )
 		new /obj/item/weapon/reagent_containers/pill/kelotane( src )
 		new /obj/item/weapon/reagent_containers/pill/kelotane( src )
-		new /obj/item/weapon/reagent_containers/pill/kelotane( src ) //Replaced ointment with these since they actually work --Errorage
+		new /obj/item/weapon/reagent_containers/pill/kelotane( src ) // Replaced ointment with these since they actually work --Errorage
 		return
 
 

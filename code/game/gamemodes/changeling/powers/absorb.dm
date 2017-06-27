@@ -24,7 +24,7 @@
 		return
 
 	var/mob/living/carbon/target = G.affecting
-	return changeling.can_absorb_dna(user,target)
+	return changeling.can_absorb_dna(user, target)
 
 /obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
@@ -59,26 +59,26 @@
 	changeling.absorb_dna(target)
 
 	if(user.nutrition < 400) user.nutrition = min((user.nutrition + target.nutrition), 400)
-	//Steal all of their languages!
+	// Steal all of their languages!
 	for(var/language in target.languages)
 		if(!(language in changeling.absorbed_languages))
 			changeling.absorbed_languages += language
 
 	user.changeling_update_languages(changeling.absorbed_languages)
 
-	//Steal their species!
+	// Steal their species!
 	if(target.species && !(target.species.name in changeling.absorbed_species))
 		changeling.absorbed_species += target.species.name
 
-	if(target.mind)//if the victim has got a mind
+	if(target.mind)// if the victim has got a mind
 
-		target.mind.show_memory(src, 0) //I can read your mind, kekeke. Output all their notes.
+		target.mind.show_memory(src, 0) // I can read your mind, kekeke. Output all their notes.
 
-		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
+		if(target.mind.changeling)// If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
 			changeling.absorbedcount += target.mind.changeling.absorbedcount
 			if(target.mind.changeling.absorbed_dna)
-				for(var/dna_data in target.mind.changeling.absorbed_dna)	//steal all their loot
+				for(var/dna_data in target.mind.changeling.absorbed_dna)	// steal all their loot
 					if(dna_data in changeling.absorbed_dna)
 						continue
 					changeling.absorbed_dna += dna_data
@@ -91,20 +91,20 @@
 
 	changeling.isabsorbing = 0
 	changeling.geneticpoints +=2
-	for(var/datum/reagent/blood/B in target.vessel.reagent_list) //We are vamplings, so we drink blood!
+	for(var/datum/reagent/blood/B in target.vessel.reagent_list) // We are vamplings, so we drink blood!
 		if(B.id == "blood")
 			B.volume = 0
 	target.death(0)
 	target.Drain()
 	return 1
 
-//Absorbs the target DNA.
+// Absorbs the target DNA.
 /datum/changeling/proc/absorb_dna(mob/living/carbon/T)
-	T.dna.real_name = T.real_name //Set this again, just to be sure that it's properly set.
-	absorbed_dna |= T.dna //And add the target DNA to our absorbed list.
-	absorbedcount++ //all that done, let's increment the objective counter.
+	T.dna.real_name = T.real_name // Set this again, just to be sure that it's properly set.
+	absorbed_dna |= T.dna // And add the target DNA to our absorbed list.
+	absorbedcount++ // all that done, let's increment the objective counter.
 
-//Checks if the target DNA is valid and absorbable.
+// Checks if the target DNA is valid and absorbable.
 /datum/changeling/proc/can_absorb_dna(mob/living/carbon/U, mob/living/carbon/T)
 	if(T)
 		if(!ishuman(T))
@@ -150,7 +150,7 @@
 		return
 
 	var/mob/living/carbon/target = G.affecting
-	return changeling.can_absorb_dna(user,target)
+	return changeling.can_absorb_dna(user, target)
 
 /obj/effect/proc_holder/changeling/absorbDNA/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
@@ -180,10 +180,10 @@
 	to_chat(target, "<span class='danger'>You have been absorbed by the changeling!</span>")
 
 //	changeling.absorb_dna(target)
-	target.dna.real_name = target.real_name //Set this again, just to be sure that it's properly set.
+	target.dna.real_name = target.real_name // Set this again, just to be sure that it's properly set.
 	changeling.absorbed_dna |= target.dna
 
-	//Steal all of their languages!
+	// Steal all of their languages!
 	for(var/language in target.languages)
 		if(!(language in changeling.absorbed_languages))
 			changeling.absorbed_languages += language
@@ -191,16 +191,16 @@
 	var/mob/living/carbon/C = src
 	C.changeling_update_languages(changeling.absorbed_languages)
 
-	//Steal their species!
+	// Steal their species!
 	if(target.species && !(target.species.name in changeling.absorbed_species))
 		changeling.absorbed_species += target.species.name
 
 	if(user.nutrition < 400) user.nutrition = min((user.nutrition + target.nutrition), 400)
-	if(target.mind)//if the victim has got a mind
-		target.mind.show_memory(src, 0) //I can read your mind, kekeke. Output all their notes.
-		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
+	if(target.mind)// if the victim has got a mind
+		target.mind.show_memory(src, 0) // I can read your mind, kekeke. Output all their notes.
+		if(target.mind.changeling)// If the target was a changeling, suck out their extra juice and objective points!
 			if(target.mind.changeling.absorbed_dna)
-				for(var/dna_data in target.mind.changeling.absorbed_dna)	//steal all their loot
+				for(var/dna_data in target.mind.changeling.absorbed_dna)	// steal all their loot
 					if(dna_data in changeling.absorbed_dna)
 						continue
 					changeling.absorbed_dna += dna_data

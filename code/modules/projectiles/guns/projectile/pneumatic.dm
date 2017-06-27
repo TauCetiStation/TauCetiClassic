@@ -25,7 +25,7 @@
 	tank_container = new(src)
 	tank_container.tag = "gas_tank_holder"
 
-/obj/item/weapon/storage/pneumatic/verb/set_pressure() //set amount of tank pressure.
+/obj/item/weapon/storage/pneumatic/verb/set_pressure() // set amount of tank pressure.
 
 	set name = "Set valve pressure"
 	set category = "Object"
@@ -35,7 +35,7 @@
 		pressure_setting = N
 		to_chat(usr, "You dial the pressure valve to [pressure_setting]%.")
 
-/obj/item/weapon/storage/pneumatic/verb/eject_tank() //Remove the tank.
+/obj/item/weapon/storage/pneumatic/verb/eject_tank() // Remove the tank.
 
 	set name = "Eject tank"
 	set category = "Object"
@@ -89,16 +89,16 @@
 		to_chat(user, "There's nothing in [src] to fire!")
 		return 0
 	else
-		spawn(0) Fire(target,user,params)
+		spawn(0) Fire(target, user, params)
 
 /obj/item/weapon/storage/pneumatic/attack(mob/living/M, mob/living/user, def_zone)
 	if (length(contents) > 0)
 		if(user.a_intent == "hurt")
 			user.visible_message("\red <b> \The [user] fires \the [src] point blank at [M]!</b>")
-			Fire(M,user)
+			Fire(M, user)
 			return
 		else
-			Fire(M,user)
+			Fire(M, user)
 			return
 
 /obj/item/weapon/storage/pneumatic/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
@@ -125,12 +125,12 @@
 		return 0
 
 	var/obj/item/object = contents[1]
-	var/speed = ((fire_pressure*tank.volume)/object.w_class)/force_divisor //projectile speed.
-	if(speed>80) speed = 80 //damage cap.
+	var/speed = ((fire_pressure*tank.volume)/object.w_class)/force_divisor // projectile speed.
+	if(speed>80) speed = 80 // damage cap.
 
 	user.visible_message("<span class='danger'>[user] fires [src] and launches [object] at [target]!</span>","<span class='danger'>You fire [src] and launch [object] at [target]!</span>")
 
-	src.remove_from_storage(object,user.loc)
+	src.remove_from_storage(object, user.loc)
 	object.throw_at(target, speed + 1, speed, user)
 
 	var/lost_gas_amount = tank.air_contents.total_moles*(pressure_setting/100)
@@ -142,7 +142,7 @@
 		cooldown = 0
 		to_chat(user, "[src]'s gauge informs you it's ready to be fired again.")
 
-//Constructable pneumatic cannon.
+// Constructable pneumatic cannon.
 
 /obj/item/weapon/cannonframe
 	name = "pneumatic cannon frame"

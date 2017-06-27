@@ -115,7 +115,7 @@
 	var/selected = null
 	var/board_stat = null
 	var/data = ""
-	var/base_url = "http://svn.slurm.us/public/spacestation13/misc/game_kit"
+	var/base_url = "http:// svn.slurm.us/public/spacestation13/misc/game_kit"
 	item_state = "sheet-metal"
 	w_class = 5.0
 */
@@ -140,7 +140,7 @@
 	throwforce = 0
 	w_class = 3.0
 	origin_tech = "materials=1"
-	var/breakouttime = 300	//Deciseconds = 30s = 0.5 minute
+	var/breakouttime = 300	// Deciseconds = 30s = 0.5 minute
 
 /obj/item/weapon/legcuffs/beartrap
 	name = "bear trap"
@@ -172,7 +172,7 @@
 					src.loc = H
 					H.update_inv_legcuffed()
 					to_chat(H, "<span class='danger'>You step on \the [src]!</span>")
-					feedback_add_details("handcuffs","B") //Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
+					feedback_add_details("handcuffs","B") // Yes, I know they're legcuffs. Don't change this, no need for an extra variable. The "B" is used to tell them apart.
 					for(var/mob/O in viewers(H, null))
 						if(O == H)
 							continue
@@ -189,7 +189,7 @@
 	name = "bola"
 	desc = "A restraining device designed to be thrown at the target. Upon connecting with said target, it will wrap around their legs, making it difficult for them to move quickly."
 	icon_state = "bola"
-	breakouttime = 35 //easy to apply, easy to break out of
+	breakouttime = 35 // easy to apply, easy to break out of
 	origin_tech = "engineering=3;combat=1"
 	var/weaken = 2
 
@@ -198,7 +198,7 @@
 	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
 
 /obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom)
-	if(!iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
+	if(!iscarbon(hit_atom))// if it gets caught or the target can't be cuffed,
 		return
 	var/mob/living/carbon/C = hit_atom
 	if(!C.legcuffed)
@@ -210,7 +210,7 @@
 		to_chat(C,"<span class='userdanger'>\The [src] ensnares you!</span>")
 		C.Weaken(weaken)
 
-/obj/item/weapon/legcuffs/bola/tactical//traitor variant
+/obj/item/weapon/legcuffs/bola/tactical// traitor variant
 	name = "reinforced bola"
 	desc = "A strong bola, made with a long steel chain. It looks heavy, enough so that it could trip somebody."
 	icon_state = "bola_r"
@@ -277,7 +277,7 @@
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !(H.dna && H.dna.mutantrace == "adamantine")) //specflags please..
+		if(!H.gloves && !(H.dna && H.dna.mutantrace == "adamantine")) // specflags please..
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
 			BP.take_damage(force / 2, null, damage_flags())
@@ -560,7 +560,7 @@
 	var/timer = 10
 	var/atom/target = null
 
-///////////////////////////////////////Stock Parts /////////////////////////////////
+////////////////////////////////////// /Stock Parts //////////////////////////////// /
 
 /obj/item/weapon/storage/part_replacer
 	name = "Rapid Part Exchange Device"
@@ -589,7 +589,7 @@
 			if(istype(T))
 				if(T.component_parts)
 					T.exchange_parts(user, src)
-					user.Beam(T,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
+					user.Beam(T, icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
 	return
 
 /obj/item/weapon/storage/part_replacer/bluespace
@@ -606,14 +606,14 @@
 	alt_sound = 'sound/items/PSHOOM_2.ogg'
 
 /obj/item/weapon/storage/part_replacer/proc/play_rped_sound()
-	//Plays the sound for RPED exhanging or installing parts.
+	// Plays the sound for RPED exhanging or installing parts.
 	if(alt_sound && prob(1))
 		playsound(src, alt_sound, 40, 1)
 	else
 		playsound(src, pshoom_or_beepboopblorpzingshadashwoosh, 40, 1)
 
-//Sorts stock parts inside an RPED by their rating.
-//Only use /obj/item/weapon/stock_parts/ with this sort proc!
+// Sorts stock parts inside an RPED by their rating.
+// Only use /obj/item/weapon/stock_parts/ with this sort proc!
 /proc/cmp_rped_sort(obj/item/weapon/stock_parts/A, obj/item/weapon/stock_parts/B)
 	return B.rating - A.rating
 
@@ -627,7 +627,7 @@
 		src.pixel_x = rand(-5.0, 5)
 		src.pixel_y = rand(-5.0, 5)
 
-//Rank 1
+// Rank 1
 
 /obj/item/weapon/stock_parts/console_screen
 	name = "console screen"
@@ -674,7 +674,7 @@
 	origin_tech = "materials=1"
 	m_amt = 80
 
-//Rank 2
+// Rank 2
 
 /obj/item/weapon/stock_parts/capacitor/adv
 	name = "advanced capacitor"
@@ -719,7 +719,7 @@
 	rating = 2
 	m_amt = 80
 
-//Rating 3
+// Rating 3
 
 /obj/item/weapon/stock_parts/capacitor/super
 	name = "super capacitor"
@@ -764,7 +764,7 @@
 	rating = 3
 	m_amt = 80
 
-//Rating 4
+// Rating 4
 
 /obj/item/weapon/stock_parts/capacitor/quadratic
 	name = "quadratic capacitor"
@@ -872,7 +872,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "ectoplasm"
 
-/obj/item/weapon/research//Makes testing much less of a pain -Sieve
+/obj/item/weapon/research// Makes testing much less of a pain -Sieve
 	name = "research"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "capacitor"

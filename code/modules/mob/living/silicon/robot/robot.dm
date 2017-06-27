@@ -16,20 +16,20 @@ var/list/robot_verbs_default = list(
 	var/used_power_this_tick = 0
 	var/sight_mode = 0
 	var/custom_name = ""
-	var/custom_sprite = 0 //Due to all the sprites involved, a var for our custom borgs may be best
-	var/crisis //Admin-settable for combat module use.
+	var/custom_sprite = 0 // Due to all the sprites involved, a var for our custom borgs may be best
+	var/crisis // Admin-settable for combat module use.
 	var/datum/wires/robot/wires = null
 
-//Hud stuff
+// Hud stuff
 
 	var/obj/screen/inv1 = null
 	var/obj/screen/inv2 = null
 	var/obj/screen/inv3 = null
 
-	var/shown_robot_modules = 0 //Used to determine whether they have the module menu shown or not
+	var/shown_robot_modules = 0 // Used to determine whether they have the module menu shown or not
 	var/obj/screen/robot_modules_background
 
-//3 Modules can be activated at any one time.
+// 3 Modules can be activated at any one time.
 	var/obj/item/weapon/robot_module/module = null
 	var/module_active = null
 	var/module_state_1 = null
@@ -55,29 +55,29 @@ var/list/robot_verbs_default = list(
 	var/has_power = 1
 	var/list/req_access = list(access_robotics)
 	var/ident = 0
-	//var/list/laws = list()
+	// var/list/laws = list()
 	var/viewalerts = 0
 	var/modtype = "Default"
 	var/lower_mod = 0
 	var/jetpack = 0
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail = null
-	var/datum/effect/effect/system/spark_spread/spark_system//So they can initialize sparks whenever/N
+	var/datum/effect/effect/system/spark_spread/spark_system// So they can initialize sparks whenever/N
 	var/jeton = 0
 	var/killswitch = 0
 	var/killswitch_time = 60
 	var/weapon_lock = 0
 	var/weaponlock_time = 120
-	var/lawupdate = 1 //Cyborgs will sync their laws with their AI by default
-	var/lawcheck[1] //For stating laws.
-	var/ioncheck[1] //Ditto.
-	var/lockcharge //Used when locking down a borg to preserve cell charge
-	var/speed = 0 //Cause sec borgs gotta go fast //No they dont!
+	var/lawupdate = 1 // Cyborgs will sync their laws with their AI by default
+	var/lawcheck[1] // For stating laws.
+	var/ioncheck[1] // Ditto.
+	var/lockcharge // Used when locking down a borg to preserve cell charge
+	var/speed = 0 // Cause sec borgs gotta go fast // No they dont!
 	var/scrambledcodes = 0 // Used to determine if a borg shows up on the robotics console.  Setting to one hides them.
-	var/tracking_entities = 0 //The number of known entities currently accessing the internal camera
+	var/tracking_entities = 0 // The number of known entities currently accessing the internal camera
 	var/braintype = "Cyborg"
 	var/pose
 
-/mob/living/silicon/robot/New(loc,var/syndie = 0,var/unfinished = 0)
+/mob/living/silicon/robot/New(loc, var/syndie = 0,var/unfinished = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -86,7 +86,7 @@ var/list/robot_verbs_default = list(
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
-	robot_modules_background.layer = HUD_LAYER	 //Objects that appear on screen are on layer 20, UI should be just below it.
+	robot_modules_background.layer = HUD_LAYER	 // Objects that appear on screen are on layer 20, UI should be just below it.
 	robot_modules_background.plane = HUD_PLANE
 	ident = rand(1, 999)
 	updatename("Default")
@@ -116,7 +116,7 @@ var/list/robot_verbs_default = list(
 			camera.status = 0
 
 	initialize_components()
-	//if(!unfinished)
+	// if(!unfinished)
 	// Create all the robot parts.
 	for(var/V in components) if(V != "power cell")
 		var/datum/robot_component/C = components[V]
@@ -166,11 +166,11 @@ var/list/robot_verbs_default = list(
 		rbPDA = new/obj/item/device/pda/ai/robot(src)
 	rbPDA.set_name_and_job(custom_name,"[modtype] [braintype]")
 
-//If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
-//Improved /N
+// If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
+// Improved /N
 /mob/living/silicon/robot/Destroy()
-	if(mmi)//Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
-		var/turf/T = get_turf(loc)//To hopefully prevent run time errors.
+	if(mmi)// Safety for when a cyborg gets dust()ed. Or there is no MMI inside.
+		var/turf/T = get_turf(loc)// To hopefully prevent run time errors.
 		if(T)	mmi.loc = T
 		if(mind)	mind.transfer_to(mmi.brainmob)
 		mmi = null
@@ -180,12 +180,12 @@ var/list/robot_verbs_default = list(
 	if(module)
 		return
 	var/list/modules = list("Standard", "Engineering", "Surgeon", "Crisis", "Miner", "Janitor", "Service", "Security", "Science")
-	if(crisis && security_level == SEC_LEVEL_RED) //Leaving this in until it's balanced appropriately.
+	if(crisis && security_level == SEC_LEVEL_RED) // Leaving this in until it's balanced appropriately.
 		to_chat(src, "\red Crisis mode active. Combat module available.")
 		modules+="Combat"
 	modtype = input("Please, select a module!", "Robot", null, null) in modules
 
-	var/module_sprites[0] //Used to store the associations between sprite names and sprite index.
+	var/module_sprites[0] // Used to store the associations between sprite names and sprite index.
 
 	if(module)
 		return
@@ -298,10 +298,10 @@ var/list/robot_verbs_default = list(
 			module_sprites["Kodiak"] = "kodiak-combat"
 			module.channels = list("Security" = 1)
 
-	//languages
+	// languages
 	module.add_languages(src)
 
-	//Custom_sprite check and entry
+	// Custom_sprite check and entry
 	if (custom_sprite == 1)
 		module_sprites["Custom"] = "[src.ckey]-[modtype]"
 
@@ -337,11 +337,11 @@ var/list/robot_verbs_default = list(
 	// if we've changed our name, we also need to update the display name for our PDA
 	setup_PDA()
 
-	//We also need to update name of internal camera.
+	// We also need to update name of internal camera.
 	if (camera)
 		camera.c_tag = changed_name
 
-	if(!custom_sprite) //Check for custom sprite
+	if(!custom_sprite) // Check for custom sprite
 		var/file = file2text("config/custom_sprites.txt")
 		var/lines = splittext(file, "\n")
 
@@ -354,7 +354,7 @@ var/list/robot_verbs_default = list(
 			if(Entry.len < 2)
 				continue;
 
-			if(Entry[1] == src.ckey && Entry[2] == src.real_name) //They're in the list? Custom sprite time, var and icon change required
+			if(Entry[1] == src.ckey && Entry[2] == src.real_name) // They're in the list? Custom sprite time, var and icon change required
 				custom_sprite = 1
 				icon = 'icons/mob/custom-synthetic.dmi'
 				if(icon_state == "robot")
@@ -537,7 +537,7 @@ var/list/robot_verbs_default = list(
 /mob/living/silicon/robot/meteorhit(obj/O)
 	for(var/mob/M in viewers(src, null))
 		M.show_message(text("\red [src] has been hit by [O]"), 1)
-		//Foreach goto(19)
+		// Foreach goto(19)
 	if (health > 0)
 		adjustBruteLoss(30)
 		if ((O.icon_state == "flaming"))
@@ -629,7 +629,7 @@ var/list/robot_verbs_default = list(
 				opened = 0
 				updateicon()
 			else if(wiresexposed && wires.is_all_cut())
-				//Cell is out, wires are exposed, remove MMI, produce damaged chassis, baleet original mob.
+				// Cell is out, wires are exposed, remove MMI, produce damaged chassis, baleet original mob.
 				if(istype(src, /mob/living/silicon/robot/syndicate))
 					return
 				if(!mmi)
@@ -695,7 +695,7 @@ var/list/robot_verbs_default = list(
 			C.installed = 1
 			C.wrapped = W
 			C.install()
-			//This will mean that removing and replacing a power cell will repair the mount, but I don't care at this point. ~Z
+			// This will mean that removing and replacing a power cell will repair the mount, but I don't care at this point. ~Z
 			C.brute_damage = 0
 			C.electronics_damage = 0
 
@@ -710,19 +710,19 @@ var/list/robot_verbs_default = list(
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && cell)	// radio
 		if(radio)
-			radio.attackby(W,user)//Push it to the radio to let it handle everything
+			radio.attackby(W, user)// Push it to the radio to let it handle everything
 		else
 			to_chat(user, "Unable to locate a radio.")
 		updateicon()
 
 	else if(istype(W, /obj/item/device/encryptionkey/) && opened)
-		if(radio)//sanityyyyyy
-			radio.attackby(W,user)//GTFO, you have your own procs
+		if(radio)// sanityyyyyy
+			radio.attackby(W, user)// GTFO, you have your own procs
 		else
 			to_chat(user, "Unable to locate a radio.")
 
 	else if (istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))			// trying to unlock the interface with an ID card
-		if(emagged)//still allow them to open the cover
+		if(emagged)// still allow them to open the cover
 			to_chat(user, "The interface seems slightly damaged")
 		if(opened)
 			to_chat(user, "You must close the cover to swipe an ID card.")
@@ -735,7 +735,7 @@ var/list/robot_verbs_default = list(
 				to_chat(user, "\red Access denied.")
 
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
-		if(!opened)//Cover is closed
+		if(!opened)// Cover is closed
 			if(locked)
 				if(prob(90))
 					var/obj/item/weapon/card/emag/emag = W
@@ -749,8 +749,8 @@ var/list/robot_verbs_default = list(
 				to_chat(user, "The cover is already unlocked.")
 			return
 
-		if(opened)//Cover is open
-			if(emagged)	return//Prevents the X has hit Y with Z message also you cant emag them twice
+		if(opened)// Cover is open
+			if(emagged)	return// Prevents the X has hit Y with Z message also you cant emag them twice
 			if(wiresexposed)
 				to_chat(user, "You must close the panel first")
 				return
@@ -872,8 +872,8 @@ var/list/robot_verbs_default = list(
 				M.do_attack_animation(src)
 				if (rand(1,100) <= 85)
 					Stun(7)
-					step(src,get_dir(M,src))
-					spawn(5) step(src,get_dir(M,src))
+					step(src, get_dir(M, src))
+					spawn(5) step(src, get_dir(M, src))
 					playsound(loc, 'sound/weapons/pierce.ogg', 50, 1, -1)
 					for(var/mob/O in viewers(src, null))
 						if ((O.client && !( O.blinded )))
@@ -982,32 +982,32 @@ var/list/robot_verbs_default = list(
 			user.put_in_active_hand(broken_device)
 
 /mob/living/silicon/robot/proc/allowed(mob/M)
-	//check if it doesn't require any access at all
+	// check if it doesn't require any access at all
 	if(check_access(null))
 		return 1
 	if(istype(M, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		//if they are holding or wearing a card that has access, that works
+		// if they are holding or wearing a card that has access, that works
 		if(check_access(H.get_active_hand()) || check_access(H.wear_id))
 			return 1
 	else if(istype(M, /mob/living/carbon/monkey))
 		var/mob/living/carbon/monkey/george = M
-		//they can only hold things :(
+		// they can only hold things :(
 		if(george.get_active_hand() && istype(george.get_active_hand(), /obj/item/weapon/card/id) && check_access(george.get_active_hand()))
 			return 1
 	return 0
 
 /mob/living/silicon/robot/proc/check_access(obj/item/weapon/card/id/I)
-	if(!istype(req_access, /list)) //something's very wrong
+	if(!istype(req_access, /list)) // something's very wrong
 		return 1
 
 	var/list/L = req_access
-	if(!L.len) //no requirements
+	if(!L.len) // no requirements
 		return 1
-	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) //not ID or no access
+	if(!I || !istype(I, /obj/item/weapon/card/id) || !I.access) // not ID or no access
 		return 0
 	for(var/req in req_access)
-		if(req in I.access) //have one of the required accesses
+		if(req in I.access) // have one of the required accesses
 			return 1
 	return 0
 
@@ -1021,7 +1021,7 @@ var/list/robot_verbs_default = list(
 	else
 		overlays -= "eyes"
 
-	if(opened && custom_sprite == 1) //Custom borgs also have custom panels, heh
+	if(opened && custom_sprite == 1) // Custom borgs also have custom panels, heh
 		if(wiresexposed)
 			overlays += "[src.ckey]-openpanel +w"
 		else if(cell)
@@ -1073,7 +1073,7 @@ var/list/robot_verbs_default = list(
 			icon_state = "droid-combat"
 		return
 
-//Call when target overlay should be added/removed
+// Call when target overlay should be added/removed
 /mob/living/silicon/robot/update_targeted()
 	if(!targeted_by && target_locked)
 		qdel(target_locked)
@@ -1211,7 +1211,7 @@ var/list/robot_verbs_default = list(
 	return
 
 /mob/living/silicon/robot/proc/radio_menu()
-	radio.interact(src)//Just use the radio's Topic() instead of bullshit special-snowflake code
+	radio.interact(src)// Just use the radio's Topic() instead of bullshit special-snowflake code
 
 
 /mob/living/silicon/robot/Move(a, b, flag)
@@ -1263,7 +1263,7 @@ var/list/robot_verbs_default = list(
 	lockcharge = 0
 	canmove = 1
 	scrambledcodes = 1
-	//Disconnect it's camera so it's not so easily tracked.
+	// Disconnect it's camera so it's not so easily tracked.
 	if(src.camera)
 		src.camera.clear_all_networks()
 		cameranet.removeCamera(src.camera)
@@ -1341,7 +1341,7 @@ var/list/robot_verbs_default = list(
 	else
 		to_chat(src, "Your icon has been set. You now require a module reset to change it.")
 
-/mob/living/silicon/robot/proc/sensor_mode() //Medical/Security HUD controller for borgs
+/mob/living/silicon/robot/proc/sensor_mode() // Medical/Security HUD controller for borgs
 	set name = "Set Sensor Augmentation"
 	set category = "Robot Commands"
 	set desc = "Augment visual feed with internal sensor overlays."

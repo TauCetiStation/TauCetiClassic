@@ -1,6 +1,6 @@
-//
+// 
 // Sheet Exports
-//
+// 
 
 /datum/export/stack
 	unit_name = "sheet"

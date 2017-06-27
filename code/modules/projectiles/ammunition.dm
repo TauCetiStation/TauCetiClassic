@@ -1,4 +1,4 @@
-//TG-stuff
+// TG-stuff
 /obj/item/ammo_casing
 	name = "bullet casing"
 	desc = "A bullet casing."
@@ -8,11 +8,11 @@
 	slot_flags = SLOT_BELT
 	throwforce = 1
 	w_class = 1.0
-	var/caliber = null							//Which kind of guns it can be loaded into
-	var/projectile_type = null					//The bullet type to create when New() is called
-	var/obj/item/projectile/BB = null 			//The loaded bullet
-	var/pellets = 0								//Pellets for spreadshot
-	var/variance = 0							//Variance for inaccuracy fundamental to the casing
+	var/caliber = null							// Which kind of guns it can be loaded into
+	var/projectile_type = null					// The bullet type to create when New() is called
+	var/obj/item/projectile/BB = null 			// The loaded bullet
+	var/pellets = 0								// Pellets for spreadshot
+	var/variance = 0							// Variance for inaccuracy fundamental to the casing
 
 /obj/item/ammo_casing/New()
 	..()
@@ -28,7 +28,7 @@
 	icon_state = "[initial(icon_state)][BB ? "-live" : ""]"
 	desc = "[initial(desc)][BB ? "" : " This one is spent."]"
 
-/obj/item/ammo_casing/proc/newshot() //For energy weapons and shotgun shells.
+/obj/item/ammo_casing/proc/newshot() // For energy weapons and shotgun shells.
 	if (!BB)
 		BB = new projectile_type(src)
 	return
@@ -49,11 +49,11 @@
 						to_chat(user, "\blue You inscribe \"[label_text]\" into \the [initial(BB.name)].")
 						BB.name = "[initial(BB.name)] \"[label_text]\""
 			else
-				to_chat(user, "\blue You can only inscribe a metal bullet.")//because inscribing beanbags is silly
+				to_chat(user, "\blue You can only inscribe a metal bullet.")// because inscribing beanbags is silly
 		else
 			to_chat(user, "\blue There is no bullet in the casing to inscribe anything into.")
 
-//Boxes of ammo
+// Boxes of ammo
 /obj/item/ammo_box
 	name = "ammo box (null_reference_exception)"
 	desc = "A box of ammo"
@@ -139,6 +139,6 @@
 			icon_state = "[initial(icon_state)]-[stored_ammo.len ? "[max_ammo]" : "0"]"
 	desc = "[initial(desc)] There are [stored_ammo.len] shell\s left!"
 
-//Behavior for magazines
+// Behavior for magazines
 /obj/item/ammo_box/magazine/proc/ammo_count()
 	return stored_ammo.len

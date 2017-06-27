@@ -18,7 +18,7 @@
 	var/range = 2
 
 /obj/item/device/assembly/prox_sensor/activate()
-	if(!..())	return 0//Cooldown check
+	if(!..())	return 0// Cooldown check
 	timing = !timing
 	update_icon()
 	return 0
@@ -61,7 +61,7 @@
 /obj/item/device/assembly/prox_sensor/process()
 	if(scanning)
 		var/turf/mainloc = get_turf(src)
-		for(var/mob/living/A in range(range,mainloc))
+		for(var/mob/living/A in range(range, mainloc))
 			if (A.move_speed < 12)
 				sense()
 
@@ -106,7 +106,7 @@
 	sense()
 	return
 
-/obj/item/device/assembly/prox_sensor/interact(mob/user)//TODO: Change this to the wires thingy
+/obj/item/device/assembly/prox_sensor/interact(mob/user)// TODO: Change this to the wires thingy
 	if(!secured)
 		user.show_message("\red The [name] is unsecured!")
 		return 0

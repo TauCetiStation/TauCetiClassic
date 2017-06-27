@@ -25,7 +25,7 @@
 	icon = 'code/game/gamemodes/events/cellular_biomass/alien.dmi'
 	light_color = "#710F8C"
 
-/obj/effect/cellular_biomass_controller/mine/alive() //die only if all walls are removed
+/obj/effect/cellular_biomass_controller/mine/alive() // die only if all walls are removed
 	if(!growth_queue)
 		return 0
 	if(!growth_queue.len)

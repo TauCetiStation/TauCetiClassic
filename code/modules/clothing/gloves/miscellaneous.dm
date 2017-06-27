@@ -29,7 +29,7 @@
 	heat_protection = HANDS
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 
-/obj/item/clothing/gloves/combat //Combined effect of SWAT gloves and insulated gloves
+/obj/item/clothing/gloves/combat // Combined effect of SWAT gloves and insulated gloves
 	desc = "These tactical gloves are somewhat fire and impact resistant."
 	name = "combat gloves"
 	icon_state = "black"
@@ -52,7 +52,7 @@
 	germ_level = 0
 
 /obj/item/clothing/gloves/latex/cmo
-	item_color = "medical"		//Exists for washing machines. Is not different from latex gloves in any way.
+	item_color = "medical"		// Exists for washing machines. Is not different from latex gloves in any way.
 
 /obj/item/clothing/gloves/botanic_leather
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
@@ -62,7 +62,7 @@
 	permeability_coefficient = 0.9
 	siemens_coefficient = 0.9
 
-/obj/item/clothing/gloves/security														//Sec gloves
+/obj/item/clothing/gloves/security														// Sec gloves
 	desc = "Heavily padded heavy-duty red security gloves."
 	name = "security gloves"
 	icon_state = "security_red"

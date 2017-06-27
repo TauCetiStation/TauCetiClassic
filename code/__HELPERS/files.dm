@@ -1,5 +1,5 @@
-//checks if a file exists and contains text
-//returns text as a string if these conditions are met
+// checks if a file exists and contains text
+// returns text as a string if these conditions are met
 /proc/return_file_text(filename)
 	if(fexists(filename) == 0)
 		error("File not found ([filename])")
@@ -12,7 +12,7 @@
 
 	return text
 
-//Sends resource files to client cache
+// Sends resource files to client cache
 /client/proc/getFiles()
 	for(var/file in args)
 		src << browse_rsc(file)
@@ -34,7 +34,7 @@
 				continue
 		path += choice
 
-		if(copytext(path,-1,0) != "/")		//didn't choose a directory, no need to iterate again
+		if(copytext(path,-1,0) != "/")		// didn't choose a directory, no need to iterate again
 			break
 
 	var/extension = copytext(path,-4,0)
@@ -44,7 +44,7 @@
 
 	return path
 
-#define FTPDELAY 200	//200 tick delay to discourage spam
+#define FTPDELAY 200	// 200 tick delay to discourage spam
 /*	This proc is a failsafe to prevent spamming of file requests.
 	It is just a timer that only permits a download every [FTPDELAY] ticks.
 	This can be changed by modifying FTPDELAY's value above.

@@ -1,11 +1,11 @@
-//This could either be split into the proper DM files or placed somewhere else all together, but it'll do for now -Nodrak
+// This could either be split into the proper DM files or placed somewhere else all together, but it'll do for now -Nodrak
 
 /*
 
 A list of items and costs is stored under the datum of every game mode, alongside the number of crystals, and the welcoming message.
 
 */
-//TG-stuff
+// TG-stuff
 /obj/item/device/uplink
 	var/welcome 					// Welcoming menu message
 	var/uses 						// Numbers of crystals
@@ -13,7 +13,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	var/list/purchase_log = list()
 	var/show_description = null
 	var/active = 0
-	var/uplink_type = "traitor" //0 - триторский аплинк, 1 - нюкерский
+	var/uplink_type = "traitor" // 0 - триторский аплинк, 1 - нюкерский
 	var/list/uplink_items = list()
 
 /obj/item/device/uplink/New()
@@ -21,7 +21,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 	welcome = ticker.mode.uplink_welcome
 	uses = ticker.mode.uplink_uses
 
-//Let's build a menu!
+// Let's build a menu!
 /obj/item/device/uplink/proc/generate_menu()
 	var/dat = "<B>[src.welcome]</B><BR>"
 	dat += "Tele-Crystals left: [src.uses]<BR>"
@@ -50,14 +50,14 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			if(item.cost > 0)
 				cost_text = "([item.cost])"
 			if(item.cost <= uses)
-				dat += "<A href='byond://?src=\ref[src];buy_item=[category]:[i];'>[item.name]</A> [cost_text] "
+				dat += "<A href='byond:// ?src=\ref[src];buy_item=[category]:[i];'>[item.name]</A> [cost_text] "
 			else
 				dat += "<font color='grey'><i>[item.name] [cost_text] </i></font>"
 			if(item.desc)
 				if(show_description == item.type)
-					dat += "<A href='byond://?src=\ref[src];show_desc=0'><font size=2>\[-\]</font></A><BR><font size=2>[desc]</font>"
+					dat += "<A href='byond:// ?src=\ref[src];show_desc=0'><font size=2>\[-\]</font></A><BR><font size=2>[desc]</font>"
 				else
-					dat += "<A href='byond://?src=\ref[src];show_desc=[item.type]'><font size=2>\[?\]</font></A>"
+					dat += "<A href='byond:// ?src=\ref[src];show_desc=[item.type]'><font size=2>\[?\]</font></A>"
 			dat += "<BR>"
 
 		// Break up the categories, if it isn't the last.
@@ -71,7 +71,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 /obj/item/device/uplink/interact(mob/user)
 	var/dat = "<body link='yellow' alink='white' bgcolor='#601414'><font color='white'>"
 	dat += src.generate_menu()
-	dat += "<A href='byond://?src=\ref[src];lock=1'>Lock</a>"
+	dat += "<A href='byond:// ?src=\ref[src];lock=1'>Lock</a>"
 	dat += "</font></body>"
 	user << browse(dat, "window=hidden")
 	onclose(user, "hidden")
@@ -163,7 +163,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			return 1
 	return 0
 
-//Refund proc for the borg teleporter (later I'll make a general refund proc if there is demand for it)
+// Refund proc for the borg teleporter (later I'll make a general refund proc if there is demand for it)
 /obj/item/device/radio/uplink/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/antag_spawner/borg_tele))
 		var/obj/item/weapon/antag_spawner/borg_tele/S = W
@@ -175,7 +175,7 @@ A list of items and costs is stored under the datum of every game mode, alongsid
 			to_chat(user, "<span class='notice'>This teleporter is already used.</span>")
 // PRESET UPLINKS
 // A collection of preset uplinks.
-//
+// 
 // Includes normal radio uplink, multitool uplink,
 // implant uplink (not the implant tool) and a preset headset uplink.
 

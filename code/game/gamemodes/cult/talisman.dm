@@ -21,7 +21,7 @@
 				if("ire", "ego", "nahlizet", "certum", "veri", "jatkaa", "balaq", "mgar", "karazet", "geeri")
 					call(/obj/effect/rune/proc/teleport)(imbue)
 				if("communicate")
-					//If the user cancels the talisman this var will be set to 0
+					// If the user cancels the talisman this var will be set to 0
 					delete = call(/obj/effect/rune/proc/communicate)()
 				if("deafen")
 					call(/obj/effect/rune/proc/deafen)()
@@ -48,7 +48,7 @@
 				call(/obj/effect/rune/proc/runestun)(T)
 				qdel(src)
 			else
-				..()   ///If its some other talisman, use the generic attack code, is this supposed to work this way?
+				..()   // /If its some other talisman, use the generic attack code, is this supposed to work this way?
 		else
 			..()
 

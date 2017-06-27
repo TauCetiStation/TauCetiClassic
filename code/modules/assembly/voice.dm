@@ -8,7 +8,7 @@
 	g_amt = 50
 
 	var/listening = 0
-	var/recorded = "" //the activation message
+	var/recorded = "" // the activation message
 
 
 /obj/item/device/assembly/voice/hear_talk(mob/living/M, msg)

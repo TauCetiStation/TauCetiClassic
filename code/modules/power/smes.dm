@@ -105,12 +105,12 @@
 		charge = c * 100
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user)
-	//opening using screwdriver
+	// opening using screwdriver
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
 		update_icon()
 		return
 
-	//changing direction using wrench
+	// changing direction using wrench
 	if(default_change_direction_wrench(user, I))
 		terminal = null
 		var/turf/T = get_step(src, dir)
@@ -127,27 +127,27 @@
 		update_icon()
 		return
 
-	//exchanging parts using the RPED
+	// exchanging parts using the RPED
 	if(exchange_parts(user, I))
 		return
 
 
-	//building and linking a terminal
+	// building and linking a terminal
 	if(istype(I, /obj/item/weapon/cable_coil))
-		var/dir = get_dir(user,src)
-		if(dir & (dir-1))//we don't want diagonal click
+		var/dir = get_dir(user, src)
+		if(dir & (dir-1))// we don't want diagonal click
 			return
 
-		if(terminal) //is there already a terminal ?
+		if(terminal) // is there already a terminal ?
 			to_chat(user, "<span class='warning'>This SMES already have a power terminal!</span>")
 			return
 
-		if(!panel_open) //is the panel open ?
+		if(!panel_open) // is the panel open ?
 			to_chat(user, "<span class='warning'>You must open the maintenance panel first!</span>")
 			return
 
 		var/turf/T = get_turf(user)
-		if(T.intact) //is the floor plating removed ?
+		if(T.intact) // is the floor plating removed ?
 			to_chat(user, "<span class='warning'>You must first remove the floor plating!</span>")
 			return
 
@@ -161,8 +161,8 @@
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		if(do_after(user, 20, target = src) && C.amount >= 10)
-			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
-			if (prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
+			var/obj/structure/cable/N = T.get_cable_node() // get the connecting node cable, if there's one
+			if (prob(50) && electrocute_mob(usr, N, N)) // animate the electrocution if uncautious and unlucky
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(5, 1, src)
 				s.start()
@@ -173,16 +173,16 @@
 				"[user.name] has built a power terminal.",\
 				"<span class='notice'>You build the power terminal.</span>")
 
-			//build the terminal and link it to the network
+			// build the terminal and link it to the network
 			make_terminal(T)
 			terminal.connect_to_network()
 		return
 
-	//disassembling the terminal
+	// disassembling the terminal
 	if(istype(I, /obj/item/weapon/wirecutters) && terminal && panel_open)
 		terminal.dismantle(user)
 
-	//crowbarring it !
+	// crowbarring it !
 	var/turf/T = get_turf(src)
 	if(default_deconstruction_crowbar(I))
 		message_admins("[src] has been deconstructed by [key_name_admin(user)] [ADMIN_QUE(user)] [ADMIN_FLW(user)] in ([T.x],[T.y],[T.z]) - [ADMIN_JMP(T)]")
@@ -210,7 +210,7 @@
 // wires will attach to this
 /obj/machinery/power/smes/make_terminal(turf/T)
 	terminal = new/obj/machinery/power/terminal(T)
-	terminal.dir = get_dir(T,src)
+	terminal.dir = get_dir(T, src)
 	terminal.master = src
 
 /obj/machinery/power/smes/disconnect_terminal()
@@ -251,7 +251,7 @@
 
 	if(stat & BROKEN)	return
 
-	//store machine state to see if we need to update the icon overlays
+	// store machine state to see if we need to update the icon overlays
 	var/last_disp = chargedisplay()
 	var/last_chrg = charging
 	var/last_onln = online
@@ -286,7 +286,7 @@
 				chargecount = 0
 
 	if(online)		// if outputting
-		lastout = min( charge/SMESRATE, output)		//limit output to that stored
+		lastout = min( charge/SMESRATE, output)		// limit output to that stored
 
 		charge -= lastout*SMESRATE		// reduce the storage (may be recovered in /restore() if excessive)
 
@@ -388,7 +388,7 @@
 	if(!.)
 		return
 
-	//world << "[href] ; [href_list[href]]"
+	// world << "[href] ; [href_list[href]]"
 
 	for(var/area/A in all_areas)
 		A.master.powerupdate = 3
@@ -407,7 +407,7 @@
 			if("min")
 				chargelevel = 0
 			if("max")
-				chargelevel = max_input		//30000
+				chargelevel = max_input		// 30000
 			if("set")
 				chargelevel = input(usr, "Enter new input level (0-[max_input])", "SMES Input Power Control", chargelevel) as num
 		chargelevel = max(0, min(max_input, chargelevel))	// clamp to range
@@ -417,7 +417,7 @@
 			if("min")
 				output = 0
 			if("max")
-				output = max_output		//30000
+				output = max_output		// 30000
 			if("set")
 				output = input(usr, "Enter new output level (0-[max_output])", "SMES Output Power Control", output) as num
 		output = max(0, min(max_output, output))	// clamp to range
@@ -427,7 +427,7 @@
 
 /obj/machinery/power/smes/proc/ion_act()
 	if(src.z == ZLEVEL_STATION)
-		if(prob(1)) //explosion
+		if(prob(1)) // explosion
 			to_chat(world, "\red SMES explosion in [src.loc.loc]")
 			for(var/mob/M in viewers(src))
 				M.show_message("\red The [src.name] is making strange noises!", 3, "\red You hear sizzling electronics.", 2)
@@ -439,7 +439,7 @@
 			explosion(src.loc, -1, 0, 1, 3, 0)
 			qdel(src)
 			return
-		if(prob(15)) //Power drain
+		if(prob(15)) // Power drain
 			to_chat(world, "\red SMES power drain in [src.loc.loc]")
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 			s.set_up(3, 1, src)
@@ -448,7 +448,7 @@
 				emp_act(1)
 			else
 				emp_act(2)
-		if(prob(5)) //smoke only
+		if(prob(5)) // smoke only
 			to_chat(world, "\red SMES smoke in [src.loc.loc]")
 			var/datum/effect/effect/system/smoke_spread/smoke = new /datum/effect/effect/system/smoke_spread()
 			smoke.set_up(3, 0, src.loc)

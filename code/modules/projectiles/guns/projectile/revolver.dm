@@ -39,7 +39,7 @@
 		to_chat(user, "<span class='notice'>[src] is empty.</span>")
 
 /obj/item/weapon/gun/projectile/revolver/get_ammo(countchambered = 0, countempties = 1)
-	var/boolets = 0 //mature var names for mature people
+	var/boolets = 0 // mature var names for mature people
 	if (chambered && countchambered)
 		boolets++
 	if (magazine)
@@ -61,7 +61,7 @@
 /obj/item/weapon/gun/projectile/revolver/detective/special_check(mob/living/carbon/human/M)
 	if(magazine.caliber == initial(magazine.caliber))
 		return 1
-	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
+	if(prob(70 - (magazine.ammo_count() * 10)))	// minimum probability of 10, maximum of 60
 		to_chat(M, "<span class='danger'>[src] blows up in your face!</span>")
 		M.take_bodypart_damage(0, 20)
 		M.drop_item()
@@ -77,7 +77,7 @@
 	var/mob/M = usr
 	var/input = stripped_input(M,"What do you want to name the gun?", ,"", MAX_NAME_LEN)
 
-	if(src && input && !M.stat && in_range(M,src))
+	if(src && input && !M.stat && in_range(M, src))
 		name = input
 		to_chat(M, "You name the gun [input]. Say hello to your new friend.")
 		return 1
@@ -88,7 +88,7 @@
 		if(magazine.caliber == "38")
 			to_chat(user, "<span class='notice'>You begin to reinforce the barrel of [src].</span>")
 			if(magazine.ammo_count())
-				afterattack(user, user)	//you know the drill
+				afterattack(user, user)	// you know the drill
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
 			if(do_after(user, 30, target = src))
@@ -101,7 +101,7 @@
 		else
 			to_chat(user, "<span class='notice'>You begin to revert the modifications to [src].</span>")
 			if(magazine.ammo_count())
-				afterattack(user, user)	//and again
+				afterattack(user, user)	// and again
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
 			if(do_after(user, 30, target = src))
@@ -114,7 +114,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/mateba
 	name = "mateba"
-	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	//>10mm hole >.357
+	desc = "When you absolutely, positively need a 10mm hole in the other guy. Uses .357 ammo."	// >10mm hole >.357
 	icon_state = "mateba"
 	origin_tech = "combat=2;materials=2"
 

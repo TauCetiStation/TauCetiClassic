@@ -26,7 +26,7 @@
 	// x, y modifiers to the center turf; (0, 0) is centered on the magnet, whereas (1, -1) is one tile right, one tile down
 	var/center_x = 0
 	var/center_y = 0
-	var/max_dist = 20 // absolute value of center_x,y cannot exceed this integer
+	var/max_dist = 20 // absolute value of center_x, y cannot exceed this integer
 
 /obj/machinery/magnetic_module/New()
 	..()

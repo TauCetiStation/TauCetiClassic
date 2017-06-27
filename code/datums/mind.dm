@@ -31,9 +31,9 @@
 
 /datum/mind
 	var/key
-	var/name				//replaces mob/var/original_name
+	var/name				// replaces mob/var/original_name
 	var/mob/living/current
-	var/mob/living/original	//TODO: remove.not used in any meaningful way ~Carn. First I'll need to tweak the way silicon-mobs handle minds.
+	var/mob/living/original	// TODO: remove.not used in any meaningful way ~Carn. First I'll need to tweak the way silicon-mobs handle minds.
 	var/active = 0
 
 	var/memory
@@ -41,8 +41,8 @@
 	var/assigned_role
 	var/special_role
 
-	var/protector_role = 0 //If we want force player to protect the station
-	var/hulkizing = 0 //Hulk before? If 1 - cannot activate hulk mutation anymore.
+	var/protector_role = 0 // If we want force player to protect the station
+	var/hulkizing = 0 // Hulk before? If 1 - cannot activate hulk mutation anymore.
 
 	var/role_alt_title
 
@@ -53,17 +53,17 @@
 
 	var/list/spell_list = list()
 
-	var/has_been_rev = 0//Tracks if this mind has been a rev or not
+	var/has_been_rev = 0// Tracks if this mind has been a rev or not
 
-	var/datum/faction/faction 			//associated faction
-	var/datum/changeling/changeling		//changeling holder
+	var/datum/faction/faction 			// associated faction
+	var/datum/changeling/changeling		// changeling holder
 
 	var/rev_cooldown = 0
 
 	// the world.time since the mob has been brigged, or -1 if not at all
 	var/brigged_since = -1
 
-	//put this here for easier tracking ingame
+	// put this here for easier tracking ingame
 	var/datum/money_account/initial_account
 	var/list/uplink_items_bought = list()
 	var/total_TC = 0
@@ -75,25 +75,25 @@
 /datum/mind/proc/transfer_to(mob/living/new_character)
 	if(!istype(new_character))
 		world.log << "## DEBUG: transfer_to(): Some idiot has tried to transfer_to() a non mob/living mob. Please inform Carn"
-	if(current)					//remove ourself from our old body's mind variable
+	if(current)					// remove ourself from our old body's mind variable
 //			if(changeling)
 //				current.remove_changeling_powers()
 //				current.verbs -= /datum/changeling/proc/EvolutionMenu
 		current.mind = null
-	if(new_character.mind)		//remove any mind currently in our new body's mind variable
+	if(new_character.mind)		// remove any mind currently in our new body's mind variable
 		new_character.mind.current = null
 
 	nanomanager.user_transferred(current, new_character) // transfer active NanoUI instances to new user
 
-	current = new_character		//link ourself to our new body
-	new_character.mind = src	//and link our new body to ourself
+	current = new_character		// link ourself to our new body
+	new_character.mind = src	// and link our new body to ourself
 	transfer_actions(new_character)
 
 //	if(changeling)
 //		new_character.make_changeling()
 
 	if(active)
-		new_character.key = key		//now transfer the key to link the client to our new body
+		new_character.key = key		// now transfer the key to link the client to our new body
 
 /datum/mind/proc/store_memory(new_text)
 	memory += "[new_text]<BR>"
@@ -113,7 +113,7 @@
 	ticker.mode.remove_gangster(src,0,1)
 	remove_objectives()
 
-/datum/mind/proc/remove_all_antag() //For the Lazy amongst us.
+/datum/mind/proc/remove_all_antag() // For the Lazy amongst us.
 	remove_gang()
 
 /datum/mind/proc/show_memory(mob/recipient)
@@ -465,7 +465,7 @@
 				text += ", <a href='?src=\ref[src];common=crystals'>[crystals]</a> crystals"
 			else
 				text += ", [crystals] crystals"
-		text += "." //hiel grammar
+		text += "." // hiel grammar
 		out += text
 
 	out += "<br>"
@@ -510,10 +510,10 @@
 			if (!objective) return
 			objective_pos = objectives.Find(objective)
 
-			//Text strings are easy to manipulate. Revised for simplicity.
-			var/temp_obj_type = "[objective.type]"//Convert path into a text string.
-			def_value = copytext(temp_obj_type, 19)//Convert last part of path into an objective keyword.
-			if(!def_value)//If it's a custom objective, it will be an empty string.
+			// Text strings are easy to manipulate. Revised for simplicity.
+			var/temp_obj_type = "[objective.type]"// Convert path into a text string.
+			def_value = copytext(temp_obj_type, 19)// Convert last part of path into an objective keyword.
+			if(!def_value)// If it's a custom objective, it will be an empty string.
 				def_value = "custom"
 
 		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "debrain", "protect", "prevent", "harm", "brig", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
@@ -523,10 +523,10 @@
 
 		switch (new_obj_type)
 			if ("assassinate","protect","debrain", "harm", "brig")
-				//To determine what to name the objective in explanation text.
-				var/objective_type_capital = uppertext(copytext(new_obj_type, 1,2))//Capitalize first letter.
-				var/objective_type_text = copytext(new_obj_type, 2)//Leave the rest of the text.
-				var/objective_type = "[objective_type_capital][objective_type_text]"//Add them together into a text string.
+				// To determine what to name the objective in explanation text.
+				var/objective_type_capital = uppertext(copytext(new_obj_type, 1,2))// Capitalize first letter.
+				var/objective_type_text = copytext(new_obj_type, 2)// Leave the rest of the text.
+				var/objective_type = "[objective_type_capital][objective_type_text]"// Add them together into a text string.
 
 				var/list/possible_targets = list("Free objective")
 				for(var/datum/mind/possible_target in ticker.minds)
@@ -551,7 +551,7 @@
 					new_objective = new objective_path
 					new_objective.owner = src
 					new_objective:target = new_target:mind
-					//Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
+					// Will display as special role if the target is set as MODE. Ninjas/commandos/nuke ops.
 					new_objective.explanation_text = "[objective_type] [new_target:real_name], the [new_target:mind:assigned_role=="MODE" ? (new_target:mind:special_role) : (new_target:mind:assigned_role)]."
 
 			if ("prevent")
@@ -590,7 +590,7 @@
 					def_num = objective.target_amount
 
 				var/target_number = input("Input target number:", "Objective", def_num) as num|null
-				if (isnull(target_number))//Ordinarily, you wouldn't need isnull. In this case, the value may already exist.
+				if (isnull(target_number))// Ordinarily, you wouldn't need isnull. In this case, the value may already exist.
 					return
 
 				switch(new_obj_type)
@@ -907,7 +907,7 @@
 				if(!(src in ticker.mode.wizards))
 					ticker.mode.wizards += src
 					special_role = "Wizard"
-					//ticker.mode.learn_basic_spells(current)
+					// ticker.mode.learn_basic_spells(current)
 					to_chat(current, "<B>\red You are the Space Wizard!</B>")
 					to_chat(current, "<font color=blue>Within the rules,</font> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 					log_admin("[key_name_admin(usr)] has wizard'ed [current].")
@@ -1142,11 +1142,11 @@
 						src = null
 						M = H.monkeyize()
 						src = M.mind
-						//world << "DEBUG: \"healthy\": M=[M], M.mind=[M.mind], src=[src]!"
+						// world << "DEBUG: \"healthy\": M=[M], M.mind=[M.mind], src=[src]!"
 					else if (istype(M) && length(M.viruses))
 						for(var/datum/disease/D in M.viruses)
 							D.cure(0)
-						sleep(0) //because deleting of virus is done through spawn(0)
+						sleep(0) // because deleting of virus is done through spawn(0)
 			if("infected")
 				if (usr.client.holder.rights & R_SPAWN)
 					var/mob/living/carbon/human/H = current
@@ -1167,11 +1167,11 @@
 						for(var/datum/disease/D in M.viruses)
 							if (istype(D,/datum/disease/jungle_fever))
 								D.cure(0)
-								sleep(0) //because deleting of virus is doing throught spawn(0)
+								sleep(0) // because deleting of virus is doing throught spawn(0)
 						log_admin("[key_name(usr)] attempting to humanize [key_name(current)]")
 						message_admins("\blue [key_name_admin(usr)] attempting to humanize [key_name_admin(current)]")
 						var/obj/item/weapon/dnainjector/m2h/m2h = new
-						var/obj/item/weapon/implant/mobfinder = new(M) //hack because humanizing deletes mind --rastaf0
+						var/obj/item/weapon/implant/mobfinder = new(M) // hack because humanizing deletes mind --rastaf0
 						src = null
 						m2h.inject(M)
 						src = mobfinder.loc:mind
@@ -1252,7 +1252,7 @@
 					current.drop_from_inventory(W)
 			if("takeuplink")
 				take_uplink()
-				memory = null//Remove any memory they may have had.
+				memory = null// Remove any memory they may have had.
 			if("crystals")
 				if (usr.client.holder.rights & R_FUN)
 					var/obj/item/device/uplink/hidden/suplink = find_syndicate_uplink()
@@ -1300,7 +1300,7 @@
 				qdel(t)
 
 		// remove wizards spells
-		//If there are more special powers that need removal, they can be procced into here./N
+		// If there are more special powers that need removal, they can be procced into here./N
 		current.spellremove(current)
 
 		// clear memory
@@ -1388,7 +1388,7 @@
 		ticker.mode.wizards += src
 		special_role = "Wizard"
 		assigned_role = "MODE"
-		//ticker.mode.learn_basic_spells(current)
+		// ticker.mode.learn_basic_spells(current)
 		if(!wizardstart.len)
 			current.loc = pick(latejoin)
 			to_chat(current, "HOT INSERTION, GO GO GO")
@@ -1575,10 +1575,10 @@
 	return
 
 /mob/proc/sync_mind()
-	mind_initialize()	//updates the mind (or creates and initializes one if one doesn't exist)
-	mind.active = 1		//indicates that the mind is currently synced with a client
+	mind_initialize()	// updates the mind (or creates and initializes one if one doesn't exist)
+	mind.active = 1		// indicates that the mind is currently synced with a client
 
-//Initialisation procs
+// Initialisation procs
 /mob/proc/mind_initialize()
 	if(mind)
 		mind.key = key
@@ -1592,26 +1592,26 @@
 	if(!mind.name)	mind.name = real_name
 	mind.current = src
 
-//HUMAN
+// HUMAN
 /mob/living/carbon/human/mind_initialize()
 	..()
 	if(!mind.assigned_role)
-		mind.assigned_role = "Test Subject"	//default
+		mind.assigned_role = "Test Subject"	// default
 
-//MONKEY
+// MONKEY
 /mob/living/carbon/monkey/mind_initialize()
 	..()
 
-//slime
+// slime
 /mob/living/carbon/slime/mind_initialize()
 	..()
 	mind.assigned_role = "slime"
 
-//XENO
+// XENO
 /mob/living/carbon/alien/mind_initialize()
 	..()
 	mind.assigned_role = "Alien"
-	//XENO HUMANOID
+	// XENO HUMANOID
 /mob/living/carbon/alien/humanoid/queen/mind_initialize()
 	..()
 	mind.special_role = "Queen"
@@ -1627,28 +1627,28 @@
 /mob/living/carbon/alien/humanoid/sentinel/mind_initialize()
 	..()
 	mind.special_role = "Sentinel"
-	//XENO LARVA
+	// XENO LARVA
 /mob/living/carbon/alien/larva/mind_initialize()
 	..()
 	mind.special_role = "Larva"
 
-//AI
+// AI
 /mob/living/silicon/ai/mind_initialize()
 	..()
 	mind.assigned_role = "AI"
 
-//BORG
+// BORG
 /mob/living/silicon/robot/mind_initialize()
 	..()
 	mind.assigned_role = "Cyborg"
 
-//PAI
+// PAI
 /mob/living/silicon/pai/mind_initialize()
 	..()
 	mind.assigned_role = "pAI"
 	mind.special_role = ""
 
-//Animals
+// Animals
 /mob/living/simple_animal/mind_initialize()
 	..()
 	mind.assigned_role = "Animal"
@@ -1681,11 +1681,11 @@
 	mind.assigned_role = "Armalis"
 	mind.special_role = "Vox Raider"
 
-mob/living/parasite/meme/mind_initialize() //Just in case
+mob/living/parasite/meme/mind_initialize() // Just in case
 	..()
 	mind.assigned_role = "meme"
 
-//BLOB
+// BLOB
 /mob/camera/blob/mind_initialize()
 	..()
 	mind.special_role = "Blob"

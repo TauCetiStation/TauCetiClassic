@@ -1,5 +1,5 @@
 #define MAX_THROWING_DIST 512 // 2 z-levels on default width
-#define MAX_TICKS_TO_MAKE_UP 3 //how many missed ticks will we attempt to make up for this run.
+#define MAX_TICKS_TO_MAKE_UP 3 // how many missed ticks will we attempt to make up for this run.
 var/datum/subsystem/throwing/SSthrowing
 
 /datum/subsystem/throwing
@@ -26,7 +26,7 @@ var/datum/subsystem/throwing/SSthrowing
 	if (!resumed)
 		src.currentrun = processing.Copy()
 
-	//cache for sanic speed (lists are references anyways)
+	// cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
 	while(length(currentrun))
@@ -72,26 +72,26 @@ var/datum/subsystem/throwing/SSthrowing
 		finialize()
 		return
 
-	if (dist_travelled && hit_check()) //to catch sneaky things moving on our tile while we slept
+	if (dist_travelled && hit_check()) // to catch sneaky things moving on our tile while we slept
 		finialize()
 		return
 
 	var/atom/step
 
-	//calculate how many tiles to move, making up for any missed ticks.
+	// calculate how many tiles to move, making up for any missed ticks.
 	var/tilestomove = round(min(((((world.time + world.tick_lag) - start_time) * speed) - (dist_travelled ? dist_travelled : -1)), speed * MAX_TICKS_TO_MAKE_UP) * (world.tick_lag * SSthrowing.wait))
 	while (tilestomove-- > 0)
 		if ((dist_travelled >= maxrange || AM.loc == target_turf) && has_gravity(AM, AM.loc))
 			finialize()
 			return
 
-		if (dist_travelled <= max(dist_x, dist_y)) //if we haven't reached the target yet we home in on it, otherwise we use the initial direction
+		if (dist_travelled <= max(dist_x, dist_y)) // if we haven't reached the target yet we home in on it, otherwise we use the initial direction
 			step = get_step(AM, get_dir(AM, target_turf))
 		else
 			step = get_step(AM, init_dir)
 
 		if (!pure_diagonal && !diagonals_first) // not a purely diagonal trajectory and we don't want all diagonal moves to be done first
-			if (diagonal_error >= 0 && max(dist_x,dist_y) - dist_travelled != 1) //we do a step forward unless we're right before the target
+			if (diagonal_error >= 0 && max(dist_x, dist_y) - dist_travelled != 1) // we do a step forward unless we're right before the target
 				step = get_step(AM, dx)
 			diagonal_error += (diagonal_error < 0) ? dist_x/2 : -dist_y
 
@@ -114,7 +114,7 @@ var/datum/subsystem/throwing/SSthrowing
 /datum/thrownthing/proc/finialize(hit = FALSE, atom/movable/AM)
 	set waitfor = 0
 	SSthrowing.processing -= thrownthing
-	//done throwing, either because it hit something or it finished moving
+	// done throwing, either because it hit something or it finished moving
 	if (!QDELETED(thrownthing) && thrownthing.throwing)
 		thrownthing.throwing = FALSE
 
@@ -125,7 +125,7 @@ var/datum/subsystem/throwing/SSthrowing
 			thrownthing.throw_impact(AM)
 		else
 			if (!hit)
-				for (var/thing in get_turf(thrownthing)) //looking for our target on the turf we land on.
+				for (var/thing in get_turf(thrownthing)) // looking for our target on the turf we land on.
 					var/atom/A = thing
 					if (A == target)
 						hit = TRUE

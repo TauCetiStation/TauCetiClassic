@@ -37,12 +37,12 @@
 					continue
 				G.attackby(NG, user)
 				to_chat(usr, "You add the newly-formed phoron glass to the stack. It now contains [NG.amount] sheets.")
-			//SN src = null
+			// SN src = null
 			qdel(src)
 			return
 	return ..()
 
-//legacy crystal
+// legacy crystal
 /obj/machinery/crystal
 	name = "Crystal"
 	icon = 'icons/obj/mining.dmi'
@@ -52,7 +52,7 @@
 	if(prob(50))
 		icon_state = "crystal2"
 
-//large finds
+// large finds
 				/*
 				/obj/machinery/syndicate_beacon
 				/obj/machinery/wish_granter
@@ -71,4 +71,4 @@
 				if(prob(10))
 					apply_image_decorations = 1
 				*/
-			//machinery type artifacts?
+			// machinery type artifacts?

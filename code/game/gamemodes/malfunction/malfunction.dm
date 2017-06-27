@@ -15,11 +15,11 @@
 	uplink_welcome = "Crazy AI Uplink Console:"
 	uplink_uses = 20
 
-	var/AI_win_timeleft = 1800 //started at 1800, in case I change this for testing round end.
+	var/AI_win_timeleft = 1800 // started at 1800, in case I change this for testing round end.
 	var/malf_mode_declared = 0
 	var/station_captured = 0
 	var/to_nuke_or_not_to_nuke = 0
-	var/apcs = 0 //Adding dis to track how many APCs the AI hacks. --NeoFite
+	var/apcs = 0 // Adding dis to track how many APCs the AI hacks. --NeoFite
 
 
 /datum/game_mode/malfunction/announce()
@@ -87,7 +87,7 @@
 
 /datum/game_mode/malfunction/process(seconds)
 	if (apcs >= APC_MIN_TO_MALDF_DECLARE && malf_mode_declared)
-		AI_win_timeleft -= (apcs / APC_MIN_TO_MALDF_DECLARE) * seconds //Victory timer now de-increments almost normally
+		AI_win_timeleft -= (apcs / APC_MIN_TO_MALDF_DECLARE) * seconds // Victory timer now de-increments almost normally
 	..()
 	if (AI_win_timeleft<=0)
 		check_win()
@@ -113,7 +113,7 @@
 		to_chat(AI, "Congratulations you have taken control of the station.")
 		to_chat(AI, "You may decide to blow up the station. You have 60 seconds to choose.")
 		to_chat(AI, "You should have a new verb in the Malfunction tab. If you dont - rejoin the game.")
-		AI.client.verbs += /datum/game_mode/malfunction/proc/ai_win	//We won't see verb, added to mob which is out of view, so we adding it to client.
+		AI.client.verbs += /datum/game_mode/malfunction/proc/ai_win	// We won't see verb, added to mob which is out of view, so we adding it to client.
 	spawn (600)
 		for(var/datum/mind/AI_mind in malf_ai)
 			var/mob/living/silicon/ai/AI = AI_mind.current
@@ -140,7 +140,7 @@
 			malf_mode_declared = 0
 		else
 			return 1
-	return ..() //check for shuttle and nuke
+	return ..() // check for shuttle and nuke
 
 
 /datum/game_mode/malfunction/Topic(href, href_list)

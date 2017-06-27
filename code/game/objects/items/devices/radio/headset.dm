@@ -122,7 +122,7 @@
 	ks2type = /obj/item/device/encryptionkey/heads/captain
 	grid = TRUE
 
-/obj/item/device/radio/headset/heads/ai_integrated //No need to care about icons, it should be hidden inside the AI anyway.
+/obj/item/device/radio/headset/heads/ai_integrated // No need to care about icons, it should be hidden inside the AI anyway.
 	name = "AI Subspace Transceiver"
 	desc = "Integrated AI radio transceiver."
 	icon = 'icons/obj/robot_component.dmi'
@@ -134,7 +134,7 @@
 
 /obj/item/device/radio/headset/heads/ai_integrated/receive_range(freq, level)
 	if (disabledAi)
-		return -1 //Transciever Disabled.
+		return -1 // Transciever Disabled.
 	return ..(freq, level, 1)
 
 /obj/item/device/radio/headset/heads/ai_integrated/emp_act()

@@ -80,7 +80,7 @@
 
 
 /obj/machinery/iv_drip/process()
-	//set background = 1
+	// set background = 1
 
 	if(src.attached)
 
@@ -126,7 +126,7 @@
 			if(T.vessel.get_reagent_amount("blood") < BLOOD_VOLUME_SAFE) if(prob(5))
 				visible_message("\The [src] beeps loudly.")
 
-			var/datum/reagent/B = T.take_blood(beaker,amount)
+			var/datum/reagent/B = T.take_blood(beaker, amount)
 
 			if (B)
 				beaker.reagents.reagent_list |= B

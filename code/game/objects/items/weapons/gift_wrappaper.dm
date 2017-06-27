@@ -52,7 +52,7 @@
 
 	to_chat(user, "\blue You cut open the present.")
 
-	for(var/mob/M in src) //Should only be one but whatever.
+	for(var/mob/M in src) // Should only be one but whatever.
 		M.loc = src.loc
 		if (M.client)
 			M.client.eye = M.client.mob
@@ -139,7 +139,7 @@
 				to_chat(user, "\blue You need more paper!")
 				return
 			else
-				if(istype(W, /obj/item/smallDelivery) || istype(W, /obj/item/weapon/gift)) //No gift wrapping gifts!
+				if(istype(W, /obj/item/smallDelivery) || istype(W, /obj/item/weapon/gift)) // No gift wrapping gifts!
 					return
 
 				src.amount -= a_used

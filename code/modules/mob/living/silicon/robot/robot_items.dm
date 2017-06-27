@@ -46,7 +46,7 @@
 
 	if ( isturf(target) || istype(target,/obj/structure/table) )
 		var foundtable = istype(target,/obj/structure/table/)
-		if ( !foundtable ) //it must be a turf!
+		if ( !foundtable ) // it must be a turf!
 			for(var/obj/structure/table/T in target)
 				foundtable = 1
 				break
@@ -73,7 +73,7 @@
 				spawn()
 					for(var/i = 1, i <= rand(1,2), i++)
 						if(I)
-							step(I, pick(NORTH,SOUTH,EAST,WEST))
+							step(I, pick(NORTH, SOUTH, EAST, WEST))
 							sleep(rand(2,4))
 		if ( droppedSomething )
 			if ( foundtable )
@@ -118,7 +118,7 @@
 // Copied over from paper's rename verb
 // see code\modules\paperwork\paper.dm line 62
 
-/obj/item/weapon/pen/robopen/proc/RenamePaper(mob/user,obj/paper)
+/obj/item/weapon/pen/robopen/proc/RenamePaper(mob/user, obj/paper)
 	if ( !user || !paper )
 		return
 	var/n_name = input(user, "What would you like to label the paper?", "Paper Labelling", null)  as text
@@ -126,14 +126,14 @@
 		return
 
 	n_name = copytext(n_name, 1, 32)
-	if(( get_dist(user,paper) <= 1  && user.stat == CONSCIOUS))
+	if(( get_dist(user, paper) <= 1  && user.stat == CONSCIOUS))
 		paper.name = "paper[(n_name ? text("- '[n_name]'") : null)]"
 	add_fingerprint(user)
 	return
 
-//TODO: Add prewritten forms to dispense when you work out a good way to store the strings.
+// TODO: Add prewritten forms to dispense when you work out a good way to store the strings.
 /obj/item/weapon/form_printer
-	//name = "paperwork printer"
+	// name = "paperwork printer"
 	name = "paper dispenser"
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper_bin1"
@@ -157,13 +157,13 @@
 	T.visible_message("\blue \The [src.loc] dispenses a sheet of crisp white paper.")
 	new /obj/item/weapon/paper(T)
 
-//Personal shielding for the combat module.
+// Personal shielding for the combat module.
 /obj/item/borg/combat/shield
 	name = "personal shielding"
 	desc = "A powerful experimental module that turns aside or absorbs incoming attacks at the cost of charge."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "shock"
-	var/shield_level = 0.5 //Percentage of damage absorbed by the shield.
+	var/shield_level = 0.5 // Percentage of damage absorbed by the shield.
 
 /obj/item/borg/combat/shield/verb/set_shield_level()
 	set name = "Set shield level"
@@ -199,7 +199,7 @@
 		uses -= 1
 		to_chat(user, "Bloodlust emitter sends a pulse.")
 	else
-		to_chat(user, "You have spent device's capabilities.")//To limit number of uses.
+		to_chat(user, "You have spent device's capabilities.")// To limit number of uses.
 		return 0
 	return 1
 

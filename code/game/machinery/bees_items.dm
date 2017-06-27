@@ -36,7 +36,7 @@
 		M = usr
 
 	while(caught_bees > 0)
-		//release a few super massive swarms
+		// release a few super massive swarms
 		while(caught_bees > 5)
 			var/mob/living/simple_animal/bee/B = new(src.loc)
 			B.feral = 5
@@ -45,7 +45,7 @@
 			B.icon_state = "bees_swarm"
 			caught_bees -= 6
 
-		//what's left over
+		// what's left over
 		var/mob/living/simple_animal/bee/B = new(src.loc)
 		B.strength = caught_bees
 		B.icon_state = "bees[B.strength]"

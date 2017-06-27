@@ -42,7 +42,7 @@
 	var/temperature = 100
 
 
-/obj/item/projectile/temp/on_hit(atom/target, blocked = 0)//These two could likely check temp protection on the mob
+/obj/item/projectile/temp/on_hit(atom/target, blocked = 0)// These two could likely check temp protection on the mob
 	if(istype(target, /mob/living))
 		var/mob/M = target
 		M.bodytemperature = temperature
@@ -71,9 +71,9 @@
 		loc = A.loc
 		return
 
-	sleep(-1) //Might not be important enough for a sleep(-1) but the sleep/spawn itself is necessary thanks to explosions and metoerhits
+	sleep(-1) // Might not be important enough for a sleep(-1) but the sleep/spawn itself is necessary thanks to explosions and metoerhits
 
-	if(src)//Do not add to this if() statement, otherwise the meteor won't delete them
+	if(src)// Do not add to this if() statement, otherwise the meteor won't delete them
 		if(A)
 
 			A.meteorhit(src)
@@ -99,7 +99,7 @@
 
 /obj/item/projectile/energy/floramut/on_hit(atom/target, blocked = 0)
 	var/mob/living/M = target
-//	if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //Plantmen possibly get mutated and damaged by the rays.
+//	if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") // Plantmen possibly get mutated and damaged by the rays.
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
@@ -109,14 +109,14 @@
 				for (var/mob/V in viewers(src))
 					V.show_message("\red [M] writhes in pain as \his vacuoles boil.", 3, "\red You hear the crunching of leaves.", 2)
 			if(prob(35))
-			//	for (var/mob/V in viewers(src)) //Public messages commented out to prevent possible metaish genetics experimentation and stuff. - Cheridan
+			//	for (var/mob/V in viewers(src)) // Public messages commented out to prevent possible metaish genetics experimentation and stuff. - Cheridan
 			//		V.show_message("\red [M] is mutated by the radiation beam.", 3, "\red You hear the snapping of twigs.", 2)
 				if(prob(80))
 					randmutb(M)
-					domutcheck(M,null)
+					domutcheck(M, null)
 				else
 					randmutg(M)
-					domutcheck(M,null)
+					domutcheck(M, null)
 			else
 				M.adjustFireLoss(rand(5,15))
 				M.show_message("\red The radiation beam singes you!")
@@ -141,8 +141,8 @@
 
 /obj/item/projectile/energy/florayield/on_hit(atom/target, blocked = 0)
 	var/mob/M = target
-//	if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") //These rays make plantmen fat.
-	if(ishuman(target)) //These rays make plantmen fat.
+//	if(ishuman(target) && M.dna && M.dna.mutantrace == "plant") // These rays make plantmen fat.
+	if(ishuman(target)) // These rays make plantmen fat.
 		var/mob/living/carbon/human/H = M
 		if((H.species.flags[IS_PLANT]) && (M.nutrition < 500))
 			M.nutrition += 30
@@ -208,7 +208,7 @@
 /obj/item/projectile/acid_special/on_hit(atom/target, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		S.take_bodypart_damage(damage)//+10=30
+		S.take_bodypart_damage(damage)// +10=30
 
 	if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
@@ -218,7 +218,7 @@
 		var/mob/living/carbon/human/H = target
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone) // We're checking the outside, buddy!
 		var/list/body_parts = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes) // What all are we checking?
-		for(var/bp in body_parts) //Make an unregulated var to pass around.
+		for(var/bp in body_parts) // Make an unregulated var to pass around.
 			if(istype(bp ,/obj/item/clothing)) // If it exists, and it's clothed
 				var/obj/item/clothing/C = bp // Then call an argument C to be that clothing!
 				if(C.body_parts_covered & BP.body_part) // Is that body part being targeted covered?
@@ -239,12 +239,12 @@
 					visible_message("\red The [target.name] gets absorbed by [H]'s [C.name]!")
 					return
 			else
-				continue //Does this thing we're shooting even exist?
+				continue // Does this thing we're shooting even exist?
 
 		var/obj/item/organ/external/organ = H.get_bodypart(check_zone(def_zone))
 		var/armorblock = H.run_armor_check(organ, "bio")
 		H.apply_damage(damage, damage_type, organ, armorblock, null, src)
-		H.apply_effects(stun,weaken,0,0,stutter,0,0,armorblock)
+		H.apply_effects(stun, weaken,0,0,stutter,0,0,armorblock)
 		H.flash_pain()
 		to_chat(H, "\red You feel the acid on your skin!")
 		return

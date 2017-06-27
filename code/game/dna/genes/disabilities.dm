@@ -1,10 +1,10 @@
-/////////////////////
+//////////////////// /
 // DISABILITY GENES
-//
+// 
 // These activate either a mutation, disability, or sdisability.
-//
+// 
 // Gene is always activated.
-/////////////////////
+//////////////////// /
 
 /datum/dna/gene/disability
 	name="DISABILITY"
@@ -24,7 +24,7 @@
 	// Yay, you're no longer growing 3 arms
 	var/deactivation_message=""
 
-/datum/dna/gene/disability/can_activate(mob/M,flags)
+/datum/dna/gene/disability/can_activate(mob/M, flags)
 	return 1 // Always set!
 
 /datum/dna/gene/disability/activate(mob/M, connected, flags)
@@ -36,8 +36,8 @@
 		M.sdisabilities|=sdisability
 	if(activation_message)
 		to_chat(M, "\red [activation_message]")
-	//else
-		//testing("[name] has no activation message.")
+	// else
+		// testing("[name] has no activation message.")
 
 /datum/dna/gene/disability/deactivate(mob/M, connected, flags)
 	if(mutation && (mutation in M.mutations))
@@ -48,8 +48,8 @@
 		M.sdisabilities-=sdisability
 	if(deactivation_message)
 		to_chat(M, "\red [deactivation_message]")
-	//else
-		//testing("[name] has no deactivation message.")
+	// else
+		// testing("[name] has no deactivation message.")
 
 // Note: Doesn't seem to do squat, at the moment.
 /datum/dna/gene/disability/hallucinate
@@ -60,13 +60,13 @@
 	New()
 		block=HALLUCINATIONBLOCK
 
-	OnMobLife(mob/living/carbon/human/M) //#Z2
+	OnMobLife(mob/living/carbon/human/M) // #Z2
 		if(!istype(M)) return
 		M.hallucination = 200
 
 	deactivate(mob/living/carbon/human/M, connected, flags)
-		..(M,connected,flags)
-		M.hallucination = 0 //##Z2
+		..(M, connected, flags)
+		M.hallucination = 0 // ##Z2
 
 /datum/dna/gene/disability/epilepsy
 	name="Epilepsy"
@@ -116,15 +116,15 @@
 	New()
 		block=BLINDBLOCK
 
-	OnMobLife(mob/living/carbon/human/M) //#Z2
+	OnMobLife(mob/living/carbon/human/M) // #Z2
 		if(!istype(M)) return
 		M.eye_blurry = 200
 		M.eye_blind = 200
 
 	deactivate(mob/living/carbon/human/M, connected, flags)
-		..(M,connected,flags)
+		..(M, connected, flags)
 		M.eye_blurry = 0
-		M.eye_blind = 0 //##Z2
+		M.eye_blind = 0 // ##Z2
 
 /datum/dna/gene/disability/deaf
 	name="Deafness"
@@ -134,13 +134,13 @@
 	New()
 		block=DEAFBLOCK
 
-	OnMobLife(mob/living/carbon/human/M) //#Z2
+	OnMobLife(mob/living/carbon/human/M) // #Z2
 		if(!istype(M)) return
 		M.ear_deaf = 200
 
 	deactivate(mob/living/carbon/human/M, connected, flags)
-		..(M,connected,flags)
-		M.ear_deaf = 0 //##Z2
+		..(M, connected, flags)
+		M.ear_deaf = 0 // ##Z2
 
 /datum/dna/gene/disability/nearsighted
 	name="Nearsightedness"

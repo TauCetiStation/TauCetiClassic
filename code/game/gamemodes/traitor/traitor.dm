@@ -6,8 +6,8 @@
 	name = "traitor"
 	config_tag = "traitor"
 	role_type = ROLE_TRAITOR
-	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
-	protected_jobs = list("Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
+	restricted_jobs = list("Cyborg")// They are part of the AI if he is traitor so are they, they use to get double chances
+	protected_jobs = list("Internal Affairs Agent", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")// AI", Currently out of the list as malf does not work for shit
 	required_players = 1
 	required_enemies = 1
 	required_players_secret = 1
@@ -19,8 +19,8 @@
 	uplink_welcome = "AntagCorp Portable Teleportation Relay:"
 	uplink_uses = 20
 
-	var/traitors_possible = 4 //hard limit on traitors if scaling is turned off
-	var/const/traitor_scaling_coeff = 7.0 //how much does the amount of players get divided by to determine traitors
+	var/traitors_possible = 4 // hard limit on traitors if scaling is turned off
+	var/const/traitor_scaling_coeff = 7.0 // how much does the amount of players get divided by to determine traitors
 
 
 /datum/game_mode/traitor/announce()
@@ -155,7 +155,7 @@
 
 /datum/game_mode/traitor/declare_completion()
 	..()
-	return//Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.
+	return// Traitors will be checked as part of check_extra_completion. Leaving this here as a reminder.
 
 /datum/game_mode/traitor/process()
 	// Make sure all objectives are processed regularly, so that objectives
@@ -172,7 +172,7 @@
 	killer.set_zeroth_law(law, law_borg)
 	to_chat(killer, "New law: 0. [law]")
 
-	//Begin code phrase.
+	// Begin code phrase.
 	to_chat(killer, "The Syndicate provided you with the following information on how to identify their agents:")
 	if(prob(80))
 		to_chat(killer, "\red Code Phrase: \black [syndicate_code_phrase]")
@@ -185,7 +185,7 @@
 	else
 		to_chat(killer, "Unfortunately, the Syndicate did not provide you with a code response.")
 	to_chat(killer, "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
-	//End code phrase.
+	// End code phrase.
 
 
 /datum/game_mode/proc/auto_declare_completion_traitor()
@@ -197,7 +197,7 @@
 			text += printplayerwithicon(traitor)
 
 			var/traitorwin = 1
-			if(traitor.objectives && traitor.objectives.len)//If the traitor had no objectives, don't need to process this.
+			if(traitor.objectives && traitor.objectives.len)// If the traitor had no objectives, don't need to process this.
 				var/count = 1
 				for(var/datum/objective/objective in traitor.objectives)
 					if(objective.check_completion())
@@ -247,7 +247,7 @@
 
 	// find a radio! toolbox(es), backpack, belt, headset
 	var/loc = ""
-	var/obj/item/R = locate() //Hide the uplink in a PDA if available, otherwise radio
+	var/obj/item/R = locate() // Hide the uplink in a PDA if available, otherwise radio
 
 	if(traitor_mob.client.prefs.uplinklocation == "Headset")
 		R = locate(/obj/item/device/radio) in traitor_mob.contents
@@ -312,8 +312,8 @@
 			to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
 			traitor_mob.mind.total_TC += R.hidden_uplink.uses
-	//Begin code phrase.
-	if(!safety)//If they are not a rev. Can be added on to.
+	// Begin code phrase.
+	if(!safety)// If they are not a rev. Can be added on to.
 		to_chat(traitor_mob, "The Syndicate provided you with the following information on how to identify other agents:")
 		if(prob(80))
 			to_chat(traitor_mob, "\red Code Phrase: \black [syndicate_code_phrase]")
@@ -326,7 +326,7 @@
 		else
 			to_chat(traitor_mob, "Unfortunately, the Syndicate did not provide you with a code response.")
 		to_chat(traitor_mob, "Use the code words in the order provided, during regular conversation, to identify other agents. Proceed with caution, however, as everyone is a potential foe.")
-	//End code phrase.
+	// End code phrase.
 
 	// Tell them about people they might want to contact.
 	var/mob/living/carbon/human/M = get_nt_opposed()

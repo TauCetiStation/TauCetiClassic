@@ -6,7 +6,7 @@
 	genomecost = 4
 	req_stat = UNCONSCIOUS
 
-//Starts healing you every second for 10 seconds. Can be used whilst unconscious.
+// Starts healing you every second for 10 seconds. Can be used whilst unconscious.
 /obj/effect/proc_holder/changeling/fleshmend/sting_action(mob/living/user)
 	to_chat(user, "<span class='notice'>We begin to heal rapidly.</span>")
 	spawn(0)

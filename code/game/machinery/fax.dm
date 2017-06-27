@@ -52,12 +52,12 @@ var/list/alldepartments = list("Central Command")
 	else
 		scan_name = "--------"
 
-	dat += "Confirm Identity: <a href='byond://?src=\ref[src];scan=1'>[scan_name]</a><br>"
+	dat += "Confirm Identity: <a href='byond:// ?src=\ref[src];scan=1'>[scan_name]</a><br>"
 
 	if(authenticated)
-		dat += "<a href='byond://?src=\ref[src];logout=1'>Log Out</a>"
+		dat += "<a href='byond:// ?src=\ref[src];logout=1'>Log Out</a>"
 	else
-		dat += "<a href='byond://?src=\ref[src];auth=1'>Log In</a>"
+		dat += "<a href='byond:// ?src=\ref[src];auth=1'>Log In</a>"
 
 	dat += "<hr>"
 
@@ -65,15 +65,15 @@ var/list/alldepartments = list("Central Command")
 		dat += "<b>Logged in to:</b> Central Command Quantum Entanglement Network<br><br>"
 
 		if(tofax)
-			dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><br><br>"
+			dat += "<a href='byond:// ?src=\ref[src];remove=1'>Remove Paper</a><br><br>"
 
 			if(sendcooldown)
 				dat += "<b>Transmitter arrays realigning. Please stand by.</b><br>"
 
 			else
-				dat += "<a href='byond://?src=\ref[src];send=1'>Send</a><br>"
+				dat += "<a href='byond:// ?src=\ref[src];send=1'>Send</a><br>"
 				dat += "<b>Currently sending:</b> [tofax.name]<br>"
-				dat += "<b>Sending to:</b> <a href='byond://?src=\ref[src];dept=1'>[dptdest]</a><br>"
+				dat += "<b>Sending to:</b> <a href='byond:// ?src=\ref[src];dept=1'>[dptdest]</a><br>"
 
 		else
 			if(sendcooldown)
@@ -86,7 +86,7 @@ var/list/alldepartments = list("Central Command")
 		dat += "Proper authentication is required to use this device.<br><br>"
 
 		if(tofax)
-			dat += "<a href ='byond://?src=\ref[src];remove=1'>Remove Paper</a><br>"
+			dat += "<a href ='byond:// ?src=\ref[src];remove=1'>Remove Paper</a><br>"
 
 	var/datum/browser/popup = new(user, "window=copier", "Fax Machine", 450, 300)
 	popup.set_content(dat)

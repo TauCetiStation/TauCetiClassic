@@ -1,6 +1,6 @@
-//improvised explosives//
+// improvised explosives// 
 
-//iedcasing assembly crafting//
+// iedcasing assembly crafting// 
 /obj/item/weapon/reagent_containers/food/drinks/cans/attackby(obj/item/I, mob/user)
         if(istype(I, /obj/item/device/assembly/igniter))
                 var/obj/item/device/assembly/igniter/G = I
@@ -32,14 +32,14 @@
 
 
 
-/obj/item/weapon/grenade/iedcasing/afterattack(atom/target, mob/user , flag) //Filling up the can
+/obj/item/weapon/grenade/iedcasing/afterattack(atom/target, mob/user , flag) // Filling up the can
 	if(assembled == 0)
 		if(istype(target, /obj/structure/reagent_dispensers/fueltank) && in_range(src, target))
 			if(target.reagents.total_volume < 50)
 				to_chat(user, "<span  class='notice'>There's not enough fuel left to work with.</span>")
 				return
 			var/obj/structure/reagent_dispensers/fueltank/F = target
-			F.reagents.remove_reagent("fuel", 50, 1)//Deleting 50 fuel from the welding fuel tank,
+			F.reagents.remove_reagent("fuel", 50, 1)// Deleting 50 fuel from the welding fuel tank,
 			assembled = 1
 			to_chat(user, "<span  class='notice'>You've filled the makeshift explosive with welding fuel.</span>")
 			playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
@@ -48,7 +48,7 @@
 			return
 
 
-/obj/item/weapon/grenade/iedcasing/attackby(obj/item/I, mob/user) //Wiring the can for ignition
+/obj/item/weapon/grenade/iedcasing/attackby(obj/item/I, mob/user) // Wiring the can for ignition
 	if(istype(I, /obj/item/weapon/cable_coil))
 		if(assembled == 1)
 			var/obj/item/weapon/cable_coil/C = I
@@ -62,7 +62,7 @@
 			active = 0
 			det_time = rand(30,80)
 
-/obj/item/weapon/grenade/iedcasing/attack_self(mob/user) //
+/obj/item/weapon/grenade/iedcasing/attack_self(mob/user) // 
 	if(!active)
 		if(clown_check(user))
 			to_chat(user, "<span class='warning'>You light the [name]!</span>")
@@ -82,8 +82,8 @@
 			spawn(det_time)
 				prime()
 
-/obj/item/weapon/grenade/iedcasing/prime() //Blowing that can up
-	//update_mob()
+/obj/item/weapon/grenade/iedcasing/prime() // Blowing that can up
+	// update_mob()
 	explosion(src.loc,-1,0,6)
 	qdel(src)
 

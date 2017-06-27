@@ -1,4 +1,4 @@
-#define DRYING_TIME 5 * 60*10                        //for 1 unit of depth in puddle (amount var)
+#define DRYING_TIME 5 * 60*10                        // for 1 unit of depth in puddle (amount var)
 
 var/global/list/image/splatter_cache=list()
 
@@ -31,7 +31,7 @@ var/global/list/image/splatter_cache=list()
 	update_icon()
 	remove_ex_blood()
 
-/obj/effect/decal/cleanable/blood/proc/remove_ex_blood() //removes existant blood on the turf
+/obj/effect/decal/cleanable/blood/proc/remove_ex_blood() // removes existant blood on the turf
 	if(istype(src, /obj/effect/decal/cleanable/blood/tracks))
 		return // We handle our own drying.
 
@@ -58,7 +58,7 @@ var/global/list/image/splatter_cache=list()
 		return
 	if(amount < 1)
 		return
-	if(!islist(blood_DNA))	//prevent from runtime errors connected with shitspawn
+	if(!islist(blood_DNA))	// prevent from runtime errors connected with shitspawn
 		blood_DNA = list()
 
 	var/hasfeet = TRUE
@@ -69,11 +69,11 @@ var/global/list/image/splatter_cache=list()
 		var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_FOOT]
 		if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
 			hasfeet = FALSE
-		if(perp.shoes && !perp.buckled)//Adding blood to shoes
+		if(perp.shoes && !perp.buckled)// Adding blood to shoes
 			var/obj/item/clothing/shoes/S = perp.shoes
 			if(istype(S))
 				S.blood_color = basecolor
-				S.track_blood = max(amount,S.track_blood)
+				S.track_blood = max(amount, S.track_blood)
 				if(!S.blood_overlay)
 					S.generate_blood_overlay()
 				if(!S.blood_DNA)
@@ -90,7 +90,7 @@ var/global/list/image/splatter_cache=list()
 
 	if (hasfeet && !skip) // Or feet
 		perp.feet_blood_color = basecolor
-		perp.track_blood = max(amount,perp.track_blood)
+		perp.track_blood = max(amount, perp.track_blood)
 		if(!perp.feet_blood_DNA)
 			perp.feet_blood_DNA = list()
 		perp.feet_blood_DNA |= blood_DNA.Copy()
@@ -204,7 +204,7 @@ var/global/list/image/splatter_cache=list()
 
 	var/icon/blood = new(base_icon,"[icon_state]",dir)
 	if(basecolor == "rainbow") basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
-	blood.Blend(basecolor,ICON_MULTIPLY)
+	blood.Blend(basecolor, ICON_MULTIPLY)
 
 	icon = blood
 	overlays.Cut()

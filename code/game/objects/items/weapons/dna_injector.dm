@@ -24,9 +24,9 @@
 		buf.dna=new
 		buf.types = datatype
 		buf.dna.ResetSE()
-		//testing("[name]: DNA2 SE blocks prior to SetValue: [english_list(buf.dna.SE)]")
+		// testing("[name]: DNA2 SE blocks prior to SetValue: [english_list(buf.dna.SE)]")
 		SetValue(src.value)
-		//testing("[name]: DNA2 SE blocks after SetValue: [english_list(buf.dna.SE)]")
+		// testing("[name]: DNA2 SE blocks after SetValue: [english_list(buf.dna.SE)]")
 
 /obj/item/weapon/dnainjector/attack_paw(mob/user)
 	return attack_hand(user)
@@ -47,9 +47,9 @@
 /obj/item/weapon/dnainjector/proc/SetState(on, selblock=0)
 	var/real_block=GetRealBlock(selblock)
 	if(buf.types&DNA2_BUF_SE)
-		return buf.dna.SetSEState(real_block,on)
+		return buf.dna.SetSEState(real_block, on)
 	else
-		return buf.dna.SetUIState(real_block,on)
+		return buf.dna.SetUIState(real_block, on)
 
 /obj/item/weapon/dnainjector/proc/GetValue(selblock=0)
 	var/real_block=GetRealBlock(selblock)
@@ -58,12 +58,12 @@
 	else
 		return buf.dna.GetUIValue(real_block)
 
-/obj/item/weapon/dnainjector/proc/SetValue(val,selblock=0)
+/obj/item/weapon/dnainjector/proc/SetValue(val, selblock=0)
 	var/real_block=GetRealBlock(selblock)
 	if(buf.types&DNA2_BUF_SE)
-		return buf.dna.SetSEValue(real_block,val)
+		return buf.dna.SetSEValue(real_block, val)
 	else
-		return buf.dna.SetUIValue(real_block,val)
+		return buf.dna.SetUIValue(real_block, val)
 
 /obj/item/weapon/dnainjector/proc/inject(mob/M, mob/user)
 	if(istype(M,/mob/living))
@@ -72,30 +72,30 @@
 
 	if (!(NOCLONE in M.mutations)) // prevents drained people from having their DNA changed
 		if (buf.types & DNA2_BUF_UI)
-			if (!block) //isolated block?
+			if (!block) // isolated block?
 				M.UpdateAppearance(buf.dna.UI.Copy())
-				if (buf.types & DNA2_BUF_UE) //unique enzymes? yes
+				if (buf.types & DNA2_BUF_UE) // unique enzymes? yes
 					M.real_name = buf.dna.real_name
 					M.name = buf.dna.real_name
 				uses--
 			else
-				M.dna.SetUIValue(block,src.GetValue())
+				M.dna.SetUIValue(block, src.GetValue())
 				M.UpdateAppearance()
 				uses--
 		if (buf.types & DNA2_BUF_SE)
-			if (!block) //isolated block?
+			if (!block) // isolated block?
 				M.dna.SE = buf.dna.SE.Copy()
 				M.dna.UpdateSE()
 			else
-				M.dna.SetSEValue(block,src.GetValue())
-			domutcheck(M, null, block!=null, 0) //#Z2 We go thru chance check
+				M.dna.SetSEValue(block, src.GetValue())
+			domutcheck(M, null, block!=null, 0) // #Z2 We go thru chance check
 			uses--
 
 			if(M && prob(5 + M.dna_inject_count))
 				M.dna_inject_count = 0
 				trigger_side_effect(M)
-	if(user)//If the user still exists. Their mob may not.
-		if(M)//Runtime fix: If the mob doesn't exist, mob.name doesnt work. - Nodrak
+	if(user)// If the user still exists. Their mob may not.
+		if(M)// Runtime fix: If the mob doesn't exist, mob.name doesnt work. - Nodrak
 			user.show_message(text("\red You inject [M.name]"))
 		else
 			user.show_message(text("\red You finish the injection."))
@@ -103,13 +103,13 @@
 /obj/item/weapon/dnainjector/attack(mob/M, mob/user)
 	if (!istype(M))
 		return
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey") //#Z2
+	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey") // #Z2
 		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
-	if (!(istype(user, /mob/living/carbon/human/))) //#Z2 If our monkey/whatever not with name monkey.
+	if (!(istype(user, /mob/living/carbon/human/))) // #Z2 If our monkey/whatever not with name monkey.
 		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
-	if (HULK in user.mutations) //#Z2
+	if (HULK in user.mutations) // #Z2
 		to_chat(user, "\red You don't have the dexterity to do this!")
 		return
 
@@ -134,7 +134,7 @@
 
 				if (buf.types & DNA2_BUF_SE)
 					if(block)// Isolated injector
-						//testing("Isolated block [block] injector with contents: [GetValue()]")
+						// testing("Isolated block [block] injector with contents: [GetValue()]")
 						if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human)  )
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
@@ -142,7 +142,7 @@
 						else
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name]")
 					else
-						//testing("DNA injector with contents: [english_list(buf.dna.SE)]")
+						// testing("DNA injector with contents: [english_list(buf.dna.SE)]")
 						if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human) )
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 							log_attack("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
@@ -162,14 +162,14 @@
 
 				for(var/mob/O in viewers(M, null))
 					O.show_message(text("\red [] has been injected with [] by [].", M, src, user), 1)
-					//Foreach goto(192)
+					// Foreach goto(192)
 				if (!(istype(M, /mob/living/carbon/human) || istype(M, /mob/living/carbon/monkey)))
 					to_chat(user, "\red Apparently it didn't work.")
 					return
 
 				if (buf.types & DNA2_BUF_SE)
 					if(block)// Isolated injector
-						//testing("Isolated block [block] injector with contents: [GetValue()]")
+						// testing("Isolated block [block] injector with contents: [GetValue()]")
 						if (GetState() && block == MONKEYBLOCK && istype(M, /mob/living/carbon/human)  )
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the Isolated [name] \red(MONKEY) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name] (MONKEY)")
@@ -177,7 +177,7 @@
 						else
 							log_attack("[key_name(user)] injected [key_name(M)] with the Isolated [name]")
 					else
-						//testing("DNA injector with contents: [english_list(buf.dna.SE)]")
+						// testing("DNA injector with contents: [english_list(buf.dna.SE)]")
 						if (GetState(MONKEYBLOCK) && istype(M, /mob/living/carbon/human))
 							message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name] \red(MONKEY) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 							log_game("[key_name(user)] injected [key_name(M)] with the [name] (MONKEY)")
@@ -188,7 +188,7 @@
 //					message_admins("[key_name_admin(user)] injected [key_name_admin(M)] with the [name]")
 					log_game("[key_name(user)] injected [key_name(M)] with the [name]")
 				inuse = 1
-				inject(M, user)//Now we actually do the heavy lifting.
+				inject(M, user)// Now we actually do the heavy lifting.
 				/*
 				A user injecting themselves could mean their own transformation and deletion of mob.
 				I don't have the time to figure out how this code works so this will do for now.
@@ -204,7 +204,7 @@
 	desc = "This will make you big and strong, but give you a bad skin condition."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 2
+	// block = 2
 	New()
 		block = HULKBLOCK
 		..()
@@ -214,7 +214,7 @@
 	desc = "Cures green skin."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 2
+	// block = 2
 	New()
 		block = HULKBLOCK
 		..()
@@ -224,7 +224,7 @@
 	desc = "Finally you can see what the Captain does."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 8
+	// block = 8
 	New()
 		block = XRAYBLOCK
 		..()
@@ -234,7 +234,7 @@
 	desc = "It will make you see harder."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 8
+	// block = 8
 	New()
 		block = XRAYBLOCK
 		..()
@@ -244,7 +244,7 @@
 	desc = "Gives you fire."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 10
+	// block = 10
 	New()
 		block = FIREBLOCK
 		..()
@@ -254,7 +254,7 @@
 	desc = "Cures fire."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 10
+	// block = 10
 	New()
 		block = FIREBLOCK
 		..()
@@ -264,7 +264,7 @@
 	desc = "Super brain man!"
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 12
+	// block = 12
 	New()
 		block = TELEBLOCK
 		..()
@@ -274,7 +274,7 @@
 	desc = "Will make you not able to control your mind."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 12
+	// block = 12
 	New()
 		block = TELEBLOCK
 		..()
@@ -284,7 +284,7 @@
 	desc = "Hold your breath and count to infinity."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 2
+	// block = 2
 	New()
 		block = NOBREATHBLOCK
 		..()
@@ -294,7 +294,7 @@
 	desc = "Hold your breath and count to 100."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 2
+	// block = 2
 	New()
 		block = NOBREATHBLOCK
 		..()
@@ -304,7 +304,7 @@
 	desc = "Stare into the distance for a reason."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 2
+	// block = 2
 	New()
 		block = REMOTEVIEWBLOCK
 		..()
@@ -314,7 +314,7 @@
 	desc = "Cures green skin."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 2
+	// block = 2
 	New()
 		block = REMOTEVIEWBLOCK
 		..()
@@ -324,7 +324,7 @@
 	desc = "Healthy but hungry."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 2
+	// block = 2
 	New()
 		block = REGENERATEBLOCK
 		..()
@@ -334,7 +334,7 @@
 	desc = "Sickly but sated."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 2
+	// block = 2
 	New()
 		block = REGENERATEBLOCK
 		..()
@@ -344,7 +344,7 @@
 	desc = "Running Man."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 2
+	// block = 2
 	New()
 		block = INCREASERUNBLOCK
 		..()
@@ -354,7 +354,7 @@
 	desc = "Walking Man."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 2
+	// block = 2
 	New()
 		block = INCREASERUNBLOCK
 		..()
@@ -364,7 +364,7 @@
 	desc = "A total makeover."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 2
+	// block = 2
 	New()
 		block = MORPHBLOCK
 		..()
@@ -374,7 +374,7 @@
 	desc = "Cures identity crisis."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 2
+	// block = 2
 	New()
 		block = MORPHBLOCK
 		..()
@@ -385,7 +385,7 @@
 	desc = "Feels a bit chilly."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 2
+	// block = 2
 	New()
 		block = COLDBLOCK
 		..()
@@ -395,7 +395,7 @@
 	desc = "Feels room-temperature."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 2
+	// block = 2
 	New()
 		block = COLDBLOCK
 		..()
@@ -406,7 +406,7 @@
 	desc = "Better than a pair of budget insulated gloves."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 2
+	// block = 2
 	New()
 		block = NOPRINTSBLOCK
 		..()
@@ -416,7 +416,7 @@
 	desc = "Not quite as good as a pair of budget insulated gloves."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 2
+	// block = 2
 	New()
 		block = NOPRINTSBLOCK
 		..()
@@ -426,7 +426,7 @@
 	desc = "Better than a pair of real insulated gloves."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 2
+	// block = 2
 	New()
 		block = SHOCKIMMUNITYBLOCK
 		..()
@@ -436,7 +436,7 @@
 	desc = "Not quite as good as a pair of real insulated gloves."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 2
+	// block = 2
 	New()
 		block = SHOCKIMMUNITYBLOCK
 		..()
@@ -446,7 +446,7 @@
 	desc = "Makes you shrink."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 2
+	// block = 2
 	New()
 		block = SMALLSIZEBLOCK
 		..()
@@ -456,7 +456,7 @@
 	desc = "Makes you grow. But not too much."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 2
+	// block = 2
 	New()
 		block = SMALLSIZEBLOCK
 		..()
@@ -467,7 +467,7 @@
 	desc = "Toss away those glasses!"
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 1
+	// block = 1
 	New()
 		block = GLASSESBLOCK
 		..()
@@ -477,7 +477,7 @@
 	desc = "Will make you need dorkish glasses."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 1
+	// block = 1
 	New()
 		block = GLASSESBLOCK
 		..()
@@ -487,7 +487,7 @@
 	desc = "Shake shake shake the room!"
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 3
+	// block = 3
 	New()
 		block = HEADACHEBLOCK
 		..()
@@ -497,7 +497,7 @@
 	desc = "Will fix you up from shaking the room."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 3
+	// block = 3
 	New()
 		block = HEADACHEBLOCK
 		..()
@@ -507,7 +507,7 @@
 	desc = "Will stop that awful noise."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 5
+	// block = 5
 	New()
 		block = COUGHBLOCK
 		..()
@@ -517,7 +517,7 @@
 	desc = "Will bring forth a sound of horror from your throat."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 5
+	// block = 5
 	New()
 		block = COUGHBLOCK
 		..()
@@ -527,7 +527,7 @@
 	desc = "Makes clumsy minions."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 6
+	// block = 6
 	New()
 		block = CLUMSYBLOCK
 		..()
@@ -537,7 +537,7 @@
 	desc = "Cleans up confusion."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 6
+	// block = 6
 	New()
 		block = CLUMSYBLOCK
 		..()
@@ -547,7 +547,7 @@
 	desc = "Will cure tourrets."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 7
+	// block = 7
 	New()
 		block = TWITCHBLOCK
 		..()
@@ -557,7 +557,7 @@
 	desc = "Gives you a nasty case off tourrets."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 7
+	// block = 7
 	New()
 		block = TWITCHBLOCK
 		..()
@@ -567,7 +567,7 @@
 	desc = "Makes you s-s-stuttterrr."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 9
+	// block = 9
 	New()
 		block = NERVOUSBLOCK
 		..()
@@ -577,7 +577,7 @@
 	desc = "Fixes that speaking impairment."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 9
+	// block = 9
 	New()
 		block = NERVOUSBLOCK
 		..()
@@ -587,7 +587,7 @@
 	desc = "Makes you not see anything."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 11
+	// block = 11
 	New()
 		block = BLINDBLOCK
 		..()
@@ -597,7 +597,7 @@
 	desc = "ITS A MIRACLE!!!"
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 11
+	// block = 11
 	New()
 		block = BLINDBLOCK
 		..()
@@ -607,7 +607,7 @@
 	desc = "Sorry, what did you say?"
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 13
+	// block = 13
 	New()
 		block = DEAFBLOCK
 		..()
@@ -617,7 +617,7 @@
 	desc = "Will make you hear once more."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 13
+	// block = 13
 	New()
 		block = DEAFBLOCK
 		..()
@@ -627,7 +627,7 @@
 	desc = "What you see isn't always what you get."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 2
+	// block = 2
 	New()
 		block = HALLUCINATIONBLOCK
 		..()
@@ -637,7 +637,7 @@
 	desc = "What you see is what you get."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 2
+	// block = 2
 	New()
 		block = HALLUCINATIONBLOCK
 		..()
@@ -647,7 +647,7 @@
 	desc = "Will make you a flea bag."
 	datatype = DNA2_BUF_SE
 	value = 0xFFF
-	//block = 14
+	// block = 14
 	New()
 		block = MONKEYBLOCK
 		..()
@@ -657,7 +657,7 @@
 	desc = "Will make you...less hairy."
 	datatype = DNA2_BUF_SE
 	value = 0x001
-	//block = 14
+	// block = 14
 	New()
 		block = MONKEYBLOCK
 		..()

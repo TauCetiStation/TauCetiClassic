@@ -77,7 +77,7 @@
 			if(isscrewdriver(W))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
-				var/input = strip_html(input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13"))
+				var/input = strip_html(input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security, Secret ", "Set Network", "SS13"))
 				if(!input)
 					to_chat(usr, "No input found please hang up and try your call again.")
 					return
@@ -98,8 +98,8 @@
 				C.auto_turn()
 
 				C.replace_networks(uniquelist(tempnetwork))
-				tempnetwork = difflist(C.network,RESTRICTED_CAMERA_NETWORKS)
-				if(!tempnetwork.len)//Camera isn't on any open network - remove its chunk from AI visibility.
+				tempnetwork = difflist(C.network, RESTRICTED_CAMERA_NETWORKS)
+				if(!tempnetwork.len)// Camera isn't on any open network - remove its chunk from AI visibility.
 					cameranet.removeCamera(C)
 
 				C.c_tag = input

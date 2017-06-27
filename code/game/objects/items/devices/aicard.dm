@@ -10,7 +10,7 @@
 
 
 	attack(mob/living/silicon/ai/M, mob/user)
-		if(!istype(M, /mob/living/silicon/ai))//If target is not an AI.
+		if(!istype(M, /mob/living/silicon/ai))// If target is not an AI.
 			return ..()
 
 		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been carded with [src.name] by [user.name] ([user.ckey])</font>")
@@ -64,24 +64,24 @@
 				dat += "<b>AI nonfunctional</b>"
 			else
 				if (!src.flush)
-					dat += {"<A href='byond://?src=\ref[src];choice=Wipe'>Wipe AI</A>"}
+					dat += {"<A href='byond:// ?src=\ref[src];choice=Wipe'>Wipe AI</A>"}
 				else
 					dat += "<b>Wipe in progress</b>"
 				dat += "<br>"
-				dat += {"<a href='byond://?src=\ref[src];choice=Wireless'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</a>"}
+				dat += {"<a href='byond:// ?src=\ref[src];choice=Wireless'>[A.control_disabled ? "Enable" : "Disable"] Wireless Activity</a>"}
 				dat += "<br>"
 				dat += "Subspace Transceiver is: [A.aiRadio.disabledAi ? "Disabled" : "Enabled"]"
 				dat += "<br>"
-				dat += {"<a href='byond://?src=\ref[src];choice=Radio'>[A.aiRadio.disabledAi ? "Enable" : "Disable"] Subspace Transceiver</a>"}
+				dat += {"<a href='byond:// ?src=\ref[src];choice=Radio'>[A.aiRadio.disabledAi ? "Enable" : "Disable"] Subspace Transceiver</a>"}
 				dat += "<br>"
-				dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
+				dat += {"<a href='byond:// ?src=\ref[src];choice=Close'> Close</a>"}
 		user << browse(dat, "window=aicard")
 		onclose(user, "aicard")
 		return
 
 	Topic(href, href_list)
 		var/mob/U = usr
-		if (!in_range(src, U)||U.machine!=src)//If they are not in range of 1 or less or their machine is not the card (ie, clicked on something else).
+		if (!in_range(src, U)||U.machine!=src)// If they are not in range of 1 or less or their machine is not the card (ie, clicked on something else).
 			U << browse(null, "window=aicard")
 			U.unset_machine()
 			return
@@ -89,7 +89,7 @@
 		add_fingerprint(U)
 		U.set_machine(src)
 
-		switch(href_list["choice"])//Now we switch based on choice.
+		switch(href_list["choice"])// Now we switch based on choice.
 			if ("Close")
 				U << browse(null, "window=aicard")
 				U.unset_machine()

@@ -57,7 +57,7 @@
 	qdel(src)
 	return
 
-/mob/living/simple_animal/hostile/hivebot/tele//this still needs work
+/mob/living/simple_animal/hostile/hivebot/tele// this still needs work
 	name = "Beacon"
 	desc = "Some odd beacon thing."
 	icon = 'icons/mob/hivebot.dmi'
@@ -105,6 +105,6 @@
 	Life()
 		..()
 		if(stat == CONSCIOUS)
-			if(prob(2))//Might be a bit low, will mess with it likely
+			if(prob(2))// Might be a bit low, will mess with it likely
 				warpbots()
 

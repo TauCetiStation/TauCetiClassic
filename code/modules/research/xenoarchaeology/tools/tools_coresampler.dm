@@ -1,4 +1,4 @@
-//device to take core samples from mineral turfs - used for various types of analysis
+// device to take core samples from mineral turfs - used for various types of analysis
 
 /obj/item/weapon/storage/box/samplebags
 	name = "sample bag box"
@@ -11,7 +11,7 @@
 		..()
 		return
 
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////// /
 
 /obj/item/device/core_sampler
 	name = "core sampler"
@@ -20,7 +20,7 @@
 	icon_state = "sampler0"
 	item_state = "screwdriver_brown"
 	w_class = 1.0
-	//slot_flags = SLOT_BELT
+	// slot_flags = SLOT_BELT
 	var/sampled_turf = ""
 	var/num_stored_bags = 10
 	var/obj/item/weapon/evidencebag/filled_bag
@@ -61,7 +61,7 @@
 		else
 			icon_state = "sampler1"
 
-			//put in a rock sliver
+			// put in a rock sliver
 			var/obj/item/weapon/rocksliver/R = new
 			R.geological_data = geo_data
 

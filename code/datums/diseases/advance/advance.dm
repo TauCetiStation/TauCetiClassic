@@ -108,8 +108,8 @@ var/list/advance_cures = 	list(
 		var/id = "[GetDiseaseID()]"
 		if(resistance && !(id in affected_mob.resistances))
 			affected_mob.resistances[id] = id
-		affected_mob.viruses -= src		//remove the datum from the list
-	qdel(src)	//delete the datum to stop it processing
+		affected_mob.viruses -= src		// remove the datum from the list
+	qdel(src)	// delete the datum to stop it processing
 	return
 
 // Returns the advance disease with a different reference memory.
@@ -150,7 +150,7 @@ var/list/advance_cures = 	list(
 
 	if(!possible_symptoms.len)
 		return
-		//error("Advance Disease - We weren't able to get any possible symptoms in GenerateSymptoms([type_level_limit], [amount_get])")
+		// error("Advance Disease - We weren't able to get any possible symptoms in GenerateSymptoms([type_level_limit], [amount_get])")
 
 	// Random chance to get more than one symptom
 	var/number_of = amount_get
@@ -167,7 +167,7 @@ var/list/advance_cures = 	list(
 	return generated
 
 /datum/disease/advance/proc/Refresh(new_name = 0)
-	//world << "[src.name] \ref[src] - REFRESH!"
+	// world << "[src.name] \ref[src] - REFRESH!"
 	var/list/properties = GenerateProperties()
 	AssignProperties(properties)
 
@@ -180,7 +180,7 @@ var/list/advance_cures = 	list(
 	var/datum/disease/advance/A = archive_diseases[GetDiseaseID()]
 	AssignName(A.name)
 
-//Generate disease properties based on the effects. Returns an associated list.
+// Generate disease properties based on the effects. Returns an associated list.
 /datum/disease/advance/proc/GenerateProperties()
 
 	if(!symptoms || !symptoms.len)
@@ -232,7 +232,7 @@ var/list/advance_cures = 	list(
 			spread = "Blood"
 
 	spread_type = spread_id
-	//world << "Setting spread type to [spread_id]/[spread]"
+	// world << "Setting spread type to [spread_id]/[spread]"
 
 /datum/disease/advance/proc/SetSeverity(level_sev)
 
@@ -258,7 +258,7 @@ var/list/advance_cures = 	list(
 /datum/disease/advance/proc/GenerateCure(list/properties = list())
 	if(properties && properties.len)
 		var/res = Clamp(properties["resistance"] - (symptoms.len / 2), 1, advance_cures.len)
-		//world << "Res = [res]"
+		// world << "Res = [res]"
 		cure_id = advance_cures[res]
 
 		// Get the cure name from the cure_id
@@ -330,7 +330,7 @@ var/list/advance_cures = 	list(
 // Mix a list of advance diseases and return the mixed result.
 /proc/Advance_Mix(list/D_list)
 
-	//world << "Mixing!!!!"
+	// world << "Mixing!!!!"
 
 	var/list/diseases = list()
 
@@ -355,7 +355,7 @@ var/list/advance_cures = 	list(
 		D2.Mix(D1)
 
 	 // Should be only 1 entry left, but if not let's only return a single entry
-	//world << "END MIXING!!!!!"
+	// world << "END MIXING!!!!!"
 	var/datum/disease/advance/to_return = pick(diseases)
 	to_return.Refresh(1)
 	return to_return

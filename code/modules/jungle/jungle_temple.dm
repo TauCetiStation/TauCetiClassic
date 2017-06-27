@@ -1,4 +1,4 @@
-//randomly generated temples, indiana jones style (minus the cultists, probably)
+// randomly generated temples, indiana jones style (minus the cultists, probably)
 
 /area/jungle/temple_one
 	name = "temple"
@@ -39,9 +39,9 @@
 /obj/effect/landmark/door_spawner
 	name = "door spawner"
 
-//******//
-// Loot //
-//******//
+// ******// 
+// Loot // 
+// ******// 
 
 /obj/effect/landmark/glowshroom_spawn
 	icon_state = "x3"
@@ -79,7 +79,7 @@
 			if("treasure")
 				var/obj/structure/closet/crate/C = new(src.loc)
 				if(prob(33))
-					//coins
+					// coins
 
 					var/amount = rand(2,6)
 					var/list/possible_spawns = list()
@@ -87,10 +87,10 @@
 						possible_spawns += coin_type
 
 					var/coin_type = pick(possible_spawns)
-					for(var/i=0,i<amount,i++)
+					for(var/i=0,i<amount, i++)
 						new coin_type(C)
 				else if(prob(50))
-					//bars
+					// bars
 
 					var/amount = rand(2,6)
 					var/quantity = rand(10,50)
@@ -99,11 +99,11 @@
 						possible_spawns += bar_type
 
 					var/bar_type = pick(possible_spawns)
-					for(var/i=0,i<amount,i++)
+					for(var/i=0,i<amount, i++)
 						var/obj/item/stack/sheet/mineral/M = new bar_type(C)
 						M.amount = quantity
 				else
-					//credits
+					// credits
 
 					var/amount = rand(2,6)
 					var/list/possible_spawns = list()
@@ -111,7 +111,7 @@
 						possible_spawns += cash_type
 
 					var/cash_type = pick(possible_spawns)
-					for(var/i=0,i<amount,i++)
+					for(var/i=0,i<amount, i++)
 						new cash_type(C)
 			if("remains")
 				if(prob(50))
@@ -186,7 +186,7 @@
 					new /obj/item/weapon/tank/oxygen/red(C)
 					new /obj/item/clothing/mask/breath(C)
 			if("health")
-				//hopefully won't be necessary, but there were an awful lot of traps to get through...
+				// hopefully won't be necessary, but there were an awful lot of traps to get through...
 				var/obj/structure/closet/crate/medical/C = new(src.loc)
 				if(prob(50))
 					new /obj/item/weapon/storage/firstaid/regular(C)
@@ -197,7 +197,7 @@
 				if(prob(50))
 					new /obj/item/weapon/storage/firstaid/toxin(C)
 			if("snacks")
-				//you're come so far, you must be in need of refreshment
+				// you're come so far, you must be in need of refreshment
 				var/obj/structure/closet/crate/freezer/C = new(src.loc)
 				var/num = rand(2,6)
 				var/new_type = pick(
@@ -210,34 +210,34 @@
 				/obj/item/weapon/reagent_containers/food/snacks/meatball, \
 				/obj/item/weapon/reagent_containers/food/snacks/plump_pie, \
 				)
-				for(var/i=0,i<num,i++)
+				for(var/i=0,i<num, i++)
 					new new_type(C)
 			if("alien")
-				//ancient aliens
+				// ancient aliens
 				var/obj/structure/closet/acloset/C = new(src.loc)
 				if(prob(33))
-					//facehuggers
+					// facehuggers
 					var/num = rand(1,3)
-					for(var/i=0,i<num,i++)
+					for(var/i=0,i<num, i++)
 						new /obj/item/clothing/mask/facehugger(C)
 				/*else if(prob(50))
-					//something else very much alive and angry
+					// something else very much alive and angry
 					var/spawn_type = pick(/mob/living/simple_animal/hostile/alien, /mob/living/simple_animal/hostile/alien/drone, /mob/living/simple_animal/hostile/alien/sentinel)
 					new spawn_type(C)*/
 
-				//33% chance of nothing
+				// 33% chance of nothing
 
 			if("lights")
-				//flares, candles, matches
+				// flares, candles, matches
 				var/obj/structure/closet/crate/secure/gear/C = new(src.loc)
 				var/num = rand(2,6)
-				for(var/i=0,i<num,i++)
+				for(var/i=0,i<num, i++)
 					var/spawn_type = pick(/obj/item/device/flashlight/flare, /obj/item/trash/candle, /obj/item/candle/, /obj/item/weapon/storage/box/matches)
 					new spawn_type(C)
 			if("engineering")
 				var/obj/structure/closet/crate/secure/gear/C = new(src.loc)
 
-				//chance to have any combination of up to two electrical/mechanical toolboxes and one cell
+				// chance to have any combination of up to two electrical/mechanical toolboxes and one cell
 				if(prob(33))
 					new /obj/item/weapon/storage/toolbox/electrical(C)
 				else if(prob(50))
@@ -258,13 +258,13 @@
 				else if(prob(50))
 					new /obj/effect/decal/remains/xeno(src)
 			/*if("mimic")
-				//a guardian of the tomb!
+				// a guardian of the tomb!
 				new /mob/living/simple_animal/hostile/mimic/crate(src.loc)*/
 			if("viscerator")
-				//more tomb guardians!
+				// more tomb guardians!
 				var/num = rand(1,3)
 				var/obj/structure/closet/crate/secure/gear/C = new(src.loc)
-				for(var/i=0,i<num,i++)
+				for(var/i=0,i<num, i++)
 					new /mob/living/simple_animal/hostile/viscerator(C)
 
 		qdel(src)
@@ -274,9 +274,9 @@
 	icon_state = "grabbed"
 	low_probability = 1
 
-//********//
-// Traps! //
-//********//
+// ********// 
+// Traps! // 
+// ********// 
 
 /obj/effect/step_trigger/trap
 	name = "trap"
@@ -289,7 +289,7 @@
 		if( (trap_type == "phoron_gas" || trap_type == "n2_gas") && prob(10))
 			new /obj/effect/glowshroom(src.loc)
 
-		//hint that this tile is dangerous
+		// hint that this tile is dangerous
 		if(prob(90))
 			var/turf/T = get_turf(src)
 			T.desc = pick("There is a faint sheen of moisture over the top.","It looks a little unstable.","Something doesn't seem right.")
@@ -310,7 +310,7 @@
 			spawn(8)
 				myloc.overlays -= flicker
 				qdel(flicker)
-			//flick("sawblade",src)
+			// flick("sawblade",src)
 		if("poison_dart")
 			to_chat(M, "\red <b>You feel something small and sharp strike you!</b>")
 			M.apply_damage(rand(5,10), TOX)
@@ -321,7 +321,7 @@
 			spawn(8)
 				myloc.overlays -= flicker
 				qdel(flicker)
-			//flick("dart[rand(1,3)]",src)
+			// flick("dart[rand(1,3)]",src)
 		if("flame_burst")
 			to_chat(M, "\red <b>A jet of fire comes out of nowhere!</b>")
 			M.apply_damage(rand(5,10), BURN)
@@ -332,13 +332,13 @@
 			spawn(8)
 				myloc.overlays -= flicker
 				qdel(flicker)
-			//flick("flameburst",src)
+			// flick("flameburst",src)
 		if("phoron_gas")
-			//spawn a bunch of phoron
+			// spawn a bunch of phoron
 		if("n2_gas")
-			//spawn a bunch of sleeping gas
+			// spawn a bunch of sleeping gas
 		if("thrower")
-			//edited version of obj/effect/step_trigger/thrower
+			// edited version of obj/effect/step_trigger/thrower
 			var/throw_dir = pick(1,2,4,8)
 			M.visible_message("\red <b>The floor under [M] suddenly tips upward!</b>","\red <b>The floor tips upward under you!</b>")
 
@@ -369,7 +369,7 @@
 				step(M, throw_dir)
 				M.dir = predir
 
-//gives turf a different description, to try and trick players
+// gives turf a different description, to try and trick players
 /obj/effect/step_trigger/trap/fake
 	icon_state = "faketrap"
 	name = "fake trap"
@@ -382,7 +382,7 @@
 			T.desc = pick("It looks a little dustier than the surrounding tiles.","It is somewhat ornate.","It looks a little darker than the surrounding tiles.")
 		qdel(src)
 
-//50% chance of being a trap
+// 50% chance of being a trap
 /obj/effect/step_trigger/trap/fifty
 	icon_state = "trap"
 	name = "fifty fifty trap"

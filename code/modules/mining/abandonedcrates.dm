@@ -13,7 +13,7 @@
 
 /obj/structure/closet/crate/secure/loot/New()
 	..()
-	code = rand(min,max)
+	code = rand(min, max)
 	var/loot = rand(1,30)
 	switch(loot)
 		if(1)
@@ -58,10 +58,10 @@
 			new/obj/item/clothing/under/shorts(src)
 			new/obj/item/clothing/under/shorts/red(src)
 			new/obj/item/clothing/under/shorts/blue(src)
-		//Dummy crates start here.
+		// Dummy crates start here.
 		if(17 to 29)
 			return
-		//Dummy crates end here.
+		// Dummy crates end here.
 		if(30)
 			new/obj/item/weapon/melee/baton(src)
 

@@ -1,4 +1,4 @@
-// This file is a modified version of https://raw2.github.com/Baystation12/OldCode-BS12/master/code/TakePicture.dm
+// This file is a modified version of https:// raw2.github.com/Baystation12/OldCode-BS12/master/code/TakePicture.dm
 
 #define NANOMAP_ICON_SIZE 4
 #define NANOMAP_MAX_ICON_DIMENSION 1024
@@ -13,8 +13,8 @@
 #define NANOMAP_WATCHDOGTERMINATE 3
 
 
-//Call these procs to dump your world to a series of image files (!!)
-//NOTE: Does not explicitly support non 32x32 icons or stuff with large pixel_* values, so don't blame me if it doesn't work perfectly
+// Call these procs to dump your world to a series of image files (!!)
+// NOTE: Does not explicitly support non 32x32 icons or stuff with large pixel_* values, so don't blame me if it doesn't work perfectly
 
 /client/proc/nanomapgen_DumpImage()
 	set name = "Generate NanoUI Map"

@@ -50,6 +50,6 @@
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.zone_sel, mymob.healths, mymob.pullin) //, mymob.rest, mymob.sleep, mymob.mach )
+	mymob.client.screen += list( mymob.zone_sel, mymob.healths, mymob.pullin) // , mymob.rest, mymob.sleep, mymob.mach )
 	mymob.client.screen += src.adding + src.other
 	mymob.client.screen += mymob.client.void

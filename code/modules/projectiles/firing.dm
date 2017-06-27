@@ -28,7 +28,7 @@
 	if (!istype(targloc) || !istype(curloc) || !BB)
 		return 0
 	if(targloc == curloc)
-		if(target) //if the target is right on our location we go straight to bullet_act()
+		if(target) // if the target is right on our location we go straight to bullet_act()
 			target.bullet_act(BB, BB.def_zone)
 		qdel(BB)
 		BB = null

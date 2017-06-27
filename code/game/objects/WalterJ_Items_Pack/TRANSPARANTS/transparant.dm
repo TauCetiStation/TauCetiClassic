@@ -10,9 +10,9 @@
 	w_class = 4.0
 	throwforce = 5
 //	flags = NOSHIELD
-		//var/protest_text
+		// var/protest_text
  		//	var/protest_text_lenght = 100
- 	//var/image/inhand_blood_overlay
+ 	// var/image/inhand_blood_overlay
 	attack_verb = list("bashed", "pacified", "smashed", "opressed", "flapped")
 
 /obj/item/weapon/transparant/New()

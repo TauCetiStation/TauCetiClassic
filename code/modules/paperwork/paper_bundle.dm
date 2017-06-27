@@ -11,7 +11,7 @@
 	layer = 4
 	pressure_resistance = 1
 	attack_verb = list("bapped")
-	var/amount = 0 //Amount of items clipped to the paper
+	var/amount = 0 // Amount of items clipped to the paper
 	var/page = 1
 	var/screen = 0
 
@@ -61,13 +61,13 @@
 		qdel(W)
 	else
 		if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/toy/crayon))
-			usr << browse("", "window=[name]") //Closes the dialog
+			usr << browse("", "window=[name]") // Closes the dialog
 		P = src[page]
 		P.attackby(W, user)
 
 
 	update_icon()
-	attack_self(usr) //Update the browsed page.
+	attack_self(usr) // Update the browsed page.
 	add_fingerprint(usr)
 	return
 

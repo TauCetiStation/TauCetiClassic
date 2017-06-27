@@ -145,9 +145,9 @@
 		Topic("aiDisable=5", list("aiDisable"="5"), 1)
 	return
 
-//
+// 
 // Override AdjacentQuick for AltClicking
-//
+// 
 
 /mob/living/silicon/ai/TurfAdjacent(turf/T)
 	return (cameranet && cameranet.checkTurfVis(T))

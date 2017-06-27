@@ -6,7 +6,7 @@
 	genomecost = 1
 	req_stat = UNCONSCIOUS
 
-//Heals the things that the other regenerative abilities don't.
+// Heals the things that the other regenerative abilities don't.
 /obj/effect/proc_holder/changeling/panacea/sting_action(mob/living/carbon/user)
 
 	to_chat(user, "<span class='notice'>We cleanse impurities from our form.</span>")

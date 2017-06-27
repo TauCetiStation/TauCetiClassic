@@ -57,7 +57,7 @@ var/power_fail_event = 0
 		S.update_icon()
 		S.power_change()
 
-//This one can be called only by admin.
+// This one can be called only by admin.
 /proc/power_restore_quick(announce = 1)
 	if(announce)
 		command_alert("All SMESs on [station_name()] have been recharged. We apologize for the inconvenience.", "Power Systems Nominal")

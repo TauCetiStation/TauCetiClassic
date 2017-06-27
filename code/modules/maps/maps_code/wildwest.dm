@@ -96,7 +96,7 @@
 					F.icon_state = "faithless_dead"
 
 
-///////////////Meatgrinder//////////////
+////////////// /Meatgrinder////////////// 
 
 
 /obj/effect/meatgrinder
@@ -107,7 +107,7 @@
 	layer = 3
 	icon = 'icons/mob/critter.dmi'
 	icon_state = "blob"
-	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered
+	var/triggerproc = "explode" // name of the proc thats called when the mine is triggered
 	var/triggered = 0
 
 /obj/effect/meatgrinder/New()
@@ -124,7 +124,7 @@
 		for(var/mob/O in viewers(world.view, src.loc))
 			O << "<font color='red'>[M] triggered the \icon[src] [src]</font>"
 		triggered = 1
-		call(src,triggerproc)(M)
+		call(src, triggerproc)(M)
 
 /obj/effect/meatgrinder/proc/triggerrad1(mob)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -141,7 +141,7 @@
 	triggerproc = "triggerrad1"
 
 
-/////For the Wishgranter///////////
+///// For the Wishgranter/////////// 
 
 /mob/living/carbon/proc/immortality()
 	set category = "Immortality"

@@ -85,7 +85,7 @@
 	var/target = null
 	var/text = null
 
-	targets += getmobs() //Fill list, prompt user with list
+	targets += getmobs() // Fill list, prompt user with list
 	target = input("Select a creature!", "Speak to creature", null, null) as null|anything in targets
 	text = input("What would you like to say?", "Speak to creature", null, null)
 

@@ -1,11 +1,11 @@
 var/global/list/datum/pipe_network/pipe_networks = list()
 
 /datum/pipe_network
-	var/list/datum/gas_mixture/gases = list() //All of the gas_mixtures continuously connected in this network
+	var/list/datum/gas_mixture/gases = list() // All of the gas_mixtures continuously connected in this network
 
 	var/list/obj/machinery/atmospherics/normal_members = list()
 	var/list/datum/pipeline/line_members = list()
-		//membership roster to go through for updates and what not
+		// membership roster to go through for updates and what not
 
 	var/update = 1
 	var/datum/gas_mixture/air_transient = null
@@ -39,18 +39,18 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 	return ..()
 
 /datum/pipe_network/process()
-	//Equalize gases amongst pipe if called for
+	// Equalize gases amongst pipe if called for
 	if(update)
 		update = 0
-		reconcile_air() //equalize_gases(gases)
+		reconcile_air() // equalize_gases(gases)
 
-	//Give pipelines their process call for pressure checking and what not. Have to remove pressure checks for the time being as pipes dont radiate heat - Mport
-	//for(var/datum/pipeline/line_member in line_members)
+	// Give pipelines their process call for pressure checking and what not. Have to remove pressure checks for the time being as pipes dont radiate heat - Mport
+	// for(var/datum/pipeline/line_member in line_members)
 	//	line_member.process()
 
 /datum/pipe_network/proc/build_network(obj/machinery/atmospherics/start_normal, obj/machinery/atmospherics/reference)
-	//Purpose: Generate membership roster
-	//Notes: Assuming that members will add themselves to appropriate roster in network_expand()
+	// Purpose: Generate membership roster
+	// Notes: Assuming that members will add themselves to appropriate roster in network_expand()
 
 	if(!start_normal)
 		qdel(src)
@@ -82,7 +82,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 	return 1
 
 /datum/pipe_network/proc/update_network_gases()
-	//Go through membership roster and make sure gases is up to date
+	// Go through membership roster and make sure gases is up to date
 
 	gases = list()
 
@@ -94,9 +94,9 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 		gases += line_member.air
 
 /datum/pipe_network/proc/reconcile_air()
-	//Perfectly equalize all gases members instantly
+	// Perfectly equalize all gases members instantly
 
-	//Calculate totals from individual components
+	// Calculate totals from individual components
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
 
@@ -134,14 +134,14 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 		if(total_heat_capacity > 0)
 			air_transient.temperature = total_thermal_energy/total_heat_capacity
 
-			//Allow air mixture to react
+			// Allow air mixture to react
 			if(air_transient.react())
 				update = 1
 
 		else
 			air_transient.temperature = 0
 
-		//Update individual gas_mixtures by volume ratio
+		// Update individual gas_mixtures by volume ratio
 		for(var/datum/gas_mixture/gas in gases)
 			gas.oxygen = air_transient.oxygen*gas.volume/air_transient.volume
 			gas.nitrogen = air_transient.nitrogen*gas.volume/air_transient.volume

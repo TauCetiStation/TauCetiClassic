@@ -8,7 +8,7 @@
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "\red You cannot speak in IC (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (src.client.handle_spam_prevention(message, MUTE_IC))
 			return
 
 	message = sanitize(copytext(message, 1, MAX_MESSAGE_LEN))
@@ -121,18 +121,18 @@
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "\red You cannot speak in IC (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (src.client.handle_spam_prevention(message, MUTE_IC))
 			return
 
 	if (copytext(message, 1, 2) == "*")
 		return emote(copytext(message, 2))
 
-	if (copytext(message, 1, 2) == ";") //Brain borer hivemind.
+	if (copytext(message, 1, 2) == ";") // Brain borer hivemind.
 		return borer_speak(message)
 
 	if(!host)
 		to_chat(src, "You have no host to speak to.")
-		return //No host, no audible speech.
+		return // No host, no audible speech.
 
 	to_chat(src, "You drop words into [host]'s mind: \"[message]\"")
 	to_chat(host, "Your own thoughts speak: \"[message]\"")
@@ -212,7 +212,7 @@
 		to_chat(src, "You cannot do that in your current state.")
 		return
 
-	if(!host.organs_by_name[O_BRAIN]) //this should only run in admin-weirdness situations, but it's here non the less - RR
+	if(!host.organs_by_name[O_BRAIN]) // this should only run in admin-weirdness situations, but it's here non the less - RR
 		to_chat(src, "<span class='warning'>There is no brain here for us to command!</span>")
 		return
 
@@ -259,7 +259,7 @@
 
 	var/chem = input("Select a chemical to secrete.", "Chemicals") in list("bicaridine","tramadol","hyperzine","alkysine")
 
-	if(chemicals < 50 || !host || controlling || !src || stat) //Sanity check.
+	if(chemicals < 50 || !host || controlling || !src || stat) // Sanity check.
 		return
 
 	to_chat(src, "\red <B>You squirt a measure of [chem] from your reservoirs into [host]'s bloodstream.</B>")
@@ -413,7 +413,7 @@ mob/living/simple_animal/borer/proc/detatch()
 		to_chat(src, "They are no longer in range!")
 		return
 
-//copy paste from alien/larva, if that func is updated please update this one alsoghost
+// copy paste from alien/larva, if that func is updated please update this one alsoghost
 /mob/living/simple_animal/borer/verb/hide()
 	set name = "Hide"
 	set desc = "Allows to hide beneath tables or certain items. Toggled on or off."
@@ -426,7 +426,7 @@ mob/living/simple_animal/borer/proc/detatch()
 		layer = MOB_LAYER
 		to_chat(src, text("\blue You have stopped hiding."))
 
-//Procs for grabbing players.
+// Procs for grabbing players.
 mob/living/simple_animal/borer/proc/request_player()
 	for(var/mob/dead/observer/O in player_list)
 		if(jobban_isbanned(O, "Syndicate") || jobban_isbanned(O, ROLE_ALIEN))

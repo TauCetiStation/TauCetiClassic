@@ -6,11 +6,11 @@
  * ~ Zuhayr
  */
 
-//Used for logging people entering cryosleep and important items they are carrying.
+// Used for logging people entering cryosleep and important items they are carrying.
 var/global/list/frozen_crew = list()
 var/global/list/frozen_items = list()
 
-//Main cryopod console.
+// Main cryopod console.
 
 /obj/machinery/computer/cryopod
 	name = "cryogenic oversight console"
@@ -103,7 +103,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	build_path = /obj/machinery/computer/cryopod
 	origin_tech = "programming=3"
 
-//Decorative structures to go alongside cryopods.
+// Decorative structures to go alongside cryopods.
 /obj/structure/cryofeed
 
 	name = "\improper cryogenic feed"
@@ -113,7 +113,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	anchored = 1
 	density = 1
 
-	var/orient_right = null //Flips the sprite.
+	var/orient_right = null // Flips the sprite.
 
 /obj/structure/cryofeed/right
 	orient_right = 1
@@ -127,7 +127,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 		icon_state = "cryo_rear"
 	..()
 
-//Cryopods themselves.
+// Cryopods themselves.
 /obj/machinery/cryopod
 	name = "\improper cryogenic freezer"
 	desc = "A man-sized pod for entering suspended animation."
@@ -136,12 +136,12 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	density = 1
 	anchored = 1
 	req_one_access = list(access_heads, access_security)
-	var/storage = 1	//tc, criopods on centcomm
+	var/storage = 1	// tc, criopods on centcomm
 
 	var/orient_right = null      // Flips the sprite.
 	var/time_till_despawn = 9000 // 15 minutes-ish safe period before being despawned.
 	var/time_entered = 0         // Used to keep track of the safe period.
-	var/obj/item/device/radio/intercom/announce //
+	var/obj/item/device/radio/intercom/announce // 
 
 	// These items are preserved when the process() despawn proc occurs.
 	var/list/preserve_items = list(
@@ -172,26 +172,26 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 		icon_state = "cryosleeper_left"
 	..()
 
-//Lifted from Unity stasis.dm and refactored. ~Zuhayr
+// Lifted from Unity stasis.dm and refactored. ~Zuhayr
 /obj/machinery/cryopod/process()
 	if(occupant)
 
-		//Allow a ten minute gap between entering the pod and actually despawning.
+		// Allow a ten minute gap between entering the pod and actually despawning.
 		if(world.time - time_entered < time_till_despawn)
 			return
 
-		if(!occupant.client && occupant.stat != DEAD) //Occupant is living and has no client.
+		if(!occupant.client && occupant.stat != DEAD) // Occupant is living and has no client.
 
-			//Drop all items into the pod.
+			// Drop all items into the pod.
 			for(var/obj/item/W in occupant)
 				occupant.drop_from_inventory(W)
 				W.loc = src
 
-				if(W.contents.len) //Make sure we catch anything not handled by del() on the items.
+				if(W.contents.len) // Make sure we catch anything not handled by del() on the items.
 					for(var/obj/item/O in W.contents)
 						O.loc = src
 
-			//Delete all items not on the preservation list.
+			// Delete all items not on the preservation list.
 			var/list/items = contents
 			items -= occupant // Don't delete the occupant
 			items -= announce // or the autosay radio.
@@ -211,16 +211,16 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 					else
 						qdel(W)
 
-			//Update any existing objectives involving this mob.
+			// Update any existing objectives involving this mob.
 			for(var/datum/objective/O in all_objectives)
-				if(istype(O,/datum/objective/mutiny) && O.target == occupant.mind) //We don't want revs to get objectives that aren't for heads of staff. Letting them win or lose based on cryo is silly so we remove the objective.
-					qdel(O) //TODO: Update rev objectives on login by head (may happen already?) ~ Z
+				if(istype(O,/datum/objective/mutiny) && O.target == occupant.mind) // We don't want revs to get objectives that aren't for heads of staff. Letting them win or lose based on cryo is silly so we remove the objective.
+					qdel(O) // TODO: Update rev objectives on login by head (may happen already?) ~ Z
 				else if(O.target && istype(O.target, /datum/mind))
 					if(O.target == occupant.mind)
 						if(O.owner && O.owner.current)
 							to_chat(O.owner.current, "<span class='red'>You get the feeling your target is no longer within your reach. Time for Plan [pick(list("A","B","C","D","X","Y","Z"))]...</span>")
 						O.target = null
-						spawn(1) //This should ideally fire after the occupant is deleted.
+						spawn(1) // This should ideally fire after the occupant is deleted.
 							if(!O)
 								return
 							O.find_target()
@@ -229,7 +229,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 								O.owner.objectives -= O
 								qdel(O)
 
-			//Handle job slot/tater cleanup.
+			// Handle job slot/tater cleanup.
 			if(occupant && occupant.mind)
 				var/job = occupant.mind.assigned_role
 
@@ -266,12 +266,12 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 			else
 				icon_state = "cryosleeper_left"
 
-			//TODO: Check objectives/mode, update new targets if this mob is the target, spawn new antags?
+			// TODO: Check objectives/mode, update new targets if this mob is the target, spawn new antags?
 
-			//This should guarantee that ghosts don't spawn.
+			// This should guarantee that ghosts don't spawn.
 			occupant.ckey = null
 
-			//Make an announcement and log the person entering storage.
+			// Make an announcement and log the person entering storage.
 			if(storage)
 				frozen_crew += "[occupant.real_name]"
 
@@ -295,7 +295,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 		if(!ismob(grab.affecting))
 			return
 
-		var/willing = null //We don't want to allow people to be forced into despawning.
+		var/willing = null // We don't want to allow people to be forced into despawning.
 		var/mob/M = grab.affecting
 
 		if(M.client)
@@ -333,7 +333,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 				log_admin("[key_name_admin(M)] has entered a stasis pod.")
 				message_admins("\blue [key_name_admin(M)] has entered a stasis pod.")
 
-				//Despawning occurs when process() is called with an occupant without a client.
+				// Despawning occurs when process() is called with an occupant without a client.
 				add_fingerprint(M)
 
 /obj/machinery/cryopod/verb/eject()
@@ -419,6 +419,6 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 		icon_state = "cryosleeper_left"
 
 
-//Attacks/effects.
+// Attacks/effects.
 /obj/machinery/cryopod/blob_act()
-	return //Sorta gamey, but we don't really want these to be destroyed.
+	return // Sorta gamey, but we don't really want these to be destroyed.

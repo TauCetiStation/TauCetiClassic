@@ -107,7 +107,7 @@
 /obj/item/weapon/card/emag/afterattack(obj/item/weapon/O, mob/user)
 
 	for(var/type in devices)
-		if(istype(O,type))
+		if(istype(O, type))
 			uses--
 			break
 
@@ -126,7 +126,7 @@
 	desc = "A card used to provide ID and determine access across the station."
 	icon_state = "id"
 	item_state = "card-id"
-	var/mining_points = 0 //For redeeming at mining equipment lockers
+	var/mining_points = 0 // For redeeming at mining equipment lockers
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
 	slot_flags = SLOT_ID
@@ -135,9 +135,9 @@
 	var/dna_hash = "\[UNSET\]"
 	var/fingerprint_hash = "\[UNSET\]"
 
-	//alt titles are handled a bit weirdly in order to unobtrusively integrate into existing ID system
-	var/assignment = null	//can be alt title or the actual job
-	var/rank = null			//actual job
+	// alt titles are handled a bit weirdly in order to unobtrusively integrate into existing ID system
+	var/assignment = null	// can be alt title or the actual job
+	var/rank = null			// actual job
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
 /obj/item/weapon/card/id/New()
@@ -227,9 +227,9 @@
 
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
 	if(!src.registered_name)
-		//Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
+		// Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
 		var t = reject_bad_name(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name))
-		if(!t) //Same as mob/new_player/prefrences.dm
+		if(!t) // Same as mob/new_player/prefrences.dm
 			alert("Invalid name.")
 			return
 		src.registered_name = t
@@ -245,12 +245,12 @@
 		registered_user = user
 	else if(!registered_user || registered_user == user)
 
-		if(!registered_user) registered_user = user  //
+		if(!registered_user) registered_user = user  // 
 
 		switch(alert("Would you like to display the ID, or retitle it?","Choose.","Rename","Show"))
 			if("Rename")
 				var t = sanitize(copytext(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name),1,26))
-				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
+				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") // Same as mob/new_player/prefrences.dm
 					alert("Invalid name.")
 					return
 				src.registered_name = t

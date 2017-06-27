@@ -16,8 +16,8 @@
 /obj/machinery/power/generator_type2/New()
 	..()
 	spawn(5)
-		input1 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src,turn(dir, 90))
-		input2 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src,turn(dir, -90))
+		input1 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src, turn(dir, 90))
+		input2 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src, turn(dir, -90))
 		if(!input1 || !input2)
 			stat |= BROKEN
 		updateicon()
@@ -59,7 +59,7 @@
 		var/delta_temperature = hot_air.temperature - cold_air.temperature
 
 		if(delta_temperature > 1 && cold_air_heat_capacity > 0.01 && hot_air_heat_capacity > 0.01)
-			var/efficiency = (1 - cold_air.temperature/hot_air.temperature)*0.65 //65% of Carnot efficiency
+			var/efficiency = (1 - cold_air.temperature/hot_air.temperature)*0.65 // 65% of Carnot efficiency
 
 			var/energy_transfer = delta_temperature*hot_air_heat_capacity*cold_air_heat_capacity/(hot_air_heat_capacity+cold_air_heat_capacity)
 
@@ -69,7 +69,7 @@
 			hot_air.temperature = hot_air.temperature - energy_transfer/hot_air_heat_capacity
 			cold_air.temperature = cold_air.temperature + heat/cold_air_heat_capacity
 
-			//world << "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]"
+			// world << "POWER: [lastgen] W generated at [efficiency*100]% efficiency and sinks sizes [cold_air_heat_capacity], [hot_air_heat_capacity]"
 
 			if(input1.network)
 				input1.network.update = 1

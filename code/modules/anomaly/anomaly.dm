@@ -32,5 +32,5 @@
 	newAnomaly.anomalyEffect()
 
 /datum/event/anomaly/end()
-	if(newAnomaly)//If it hasn't been neutralized, it's time to blow up.
+	if(newAnomaly)// If it hasn't been neutralized, it's time to blow up.
 		qdel(newAnomaly)

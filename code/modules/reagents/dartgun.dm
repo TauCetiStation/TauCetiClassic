@@ -24,9 +24,9 @@
 	desc = "A small gas-powered dartgun, capable of delivering chemical cocktails swiftly across short distances."
 	icon_state = "dartgun-empty"
 
-	var/list/beakers = list() //All containers inside the gun.
-	var/list/mixing = list() //Containers being used for mixing.
-	var/obj/item/weapon/dart_cartridge/cartridge = null //Container of darts.
+	var/list/beakers = list() // All containers inside the gun.
+	var/list/mixing = list() // Containers being used for mixing.
+	var/obj/item/weapon/dart_cartridge/cartridge = null // Container of darts.
 	var/max_beakers = 3
 	var/dart_reagent_amount = 15
 	var/container_type = /obj/item/weapon/reagent_containers/glass/beaker
@@ -131,7 +131,7 @@
 	if(mixing.len)
 		var/mix_amount = dart_reagent_amount/mixing.len
 		for(var/obj/item/weapon/reagent_containers/glass/beaker/B in mixing)
-			B.reagents.trans_to(dart,mix_amount)
+			B.reagents.trans_to(dart, mix_amount)
 
 	return dart
 
@@ -160,13 +160,13 @@
 		for(var/i=0, i<6, i++)
 			if(!D) break
 			if(D.loc == trg) break
-			step_towards(D,trg)
+			step_towards(D, trg)
 
 			if(D)
 				for(var/mob/living/carbon/M in D.loc)
 					if(!istype(M,/mob/living/carbon)) continue
 					if(M == user) continue
-					//Syringe gun attack logging by Yvarov
+					// Syringe gun attack logging by Yvarov
 					var/R
 					if(D.reagents)
 						for(var/datum/reagent/A in D.reagents.reagent_list)
@@ -275,7 +275,7 @@
 
 /obj/item/weapon/gun/dartgun/Fire(atom/target, mob/living/user, params, reflex = 0)
 	if(cartridge)
-		spawn(0) fire_dart(target,user)
+		spawn(0) fire_dart(target, user)
 	else
 		to_chat(usr, "\red [src] is empty.")
 

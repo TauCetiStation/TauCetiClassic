@@ -6,14 +6,14 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "mflash1"
 	var/id = null
-	var/range = 2 //this is roughly the size of brig cell
+	var/range = 2 // this is roughly the size of brig cell
 	var/disable = 0
-	var/last_flash = 0 //Don't want it getting spammed like regular flashes
-	var/strength = 10 //How weakened targets are when flashed.
+	var/last_flash = 0 // Don't want it getting spammed like regular flashes
+	var/strength = 10 // How weakened targets are when flashed.
 	var/base_state = "mflash"
 	anchored = 1
 
-/obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
+/obj/machinery/flasher/portable // Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
 	icon_state = "pflash1"
@@ -24,7 +24,7 @@
 
 /*
 /obj/machinery/flasher/New()
-	sleep(4)					//<--- What the fuck are you doing? D=
+	sleep(4)					// <--- What the fuck are you doing? D=
 	src.sd_SetLuminosity(2)
 */
 /obj/machinery/flasher/power_change()
@@ -37,7 +37,7 @@
 		icon_state = "[base_state]1-p"
 //		src.sd_SetLuminosity(0)
 
-//Don't want to render prison breaks impossible
+// Don't want to render prison breaks impossible
 /obj/machinery/flasher/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wirecutters))
 		add_fingerprint(user)
@@ -47,7 +47,7 @@
 		if (!src.disable)
 			user.visible_message("\red [user] has connected the [src]'s flashbulb!", "\red You connect the [src]'s flashbulb!")
 
-//Let the AI trigger them directly.
+// Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
 	if (src.anchored)
 		return src.flash()
@@ -75,7 +75,7 @@
 			if(!H.eyecheck() <= 0)
 				continue
 
-		if (istype(O, /mob/living/carbon/alien))//So aliens don't get flashed (they have no external eyes)/N
+		if (istype(O, /mob/living/carbon/alien))// So aliens don't get flashed (they have no external eyes)/N
 			continue
 
 		O.Weaken(strength)

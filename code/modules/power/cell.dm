@@ -36,7 +36,7 @@
 		return 0
 
 	if(maxcharge < amount)	return 0
-	var/power_used = min(maxcharge-charge,amount)
+	var/power_used = min(maxcharge-charge, amount)
 	if(crit_fail)	return 0
 	if(!prob(reliability))
 		minor_fault++
@@ -64,7 +64,7 @@
 		var/obj/item/clothing/gloves/space_ninja/SNG = H.gloves
 		if(!istype(SNG) || !SNG.candrain || !SNG.draining) return
 
-		SNG.drain("CELL",src,H.wear_suit)
+		SNG.drain("CELL",src, H.wear_suit)
 	return
 
 /obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user)
@@ -94,7 +94,7 @@
  * */
 	if (charge==0)
 		return
-	var/devastation_range = -1 //round(charge/11000)
+	var/devastation_range = -1 // round(charge/11000)
 	var/heavy_impact_range = round(sqrt(charge)/58)
 	var/light_impact_range = round(sqrt(charge)/27)
 	var/flash_range = light_impact_range
@@ -102,7 +102,7 @@
 		rigged = 0
 		corrupt()
 		return
-	//explosion(T, 0, 1, 2, 2)
+	// explosion(T, 0, 1, 2, 2)
 
 	log_admin("LOG: Rigged power cell explosion, last touched by [fingerprintslast]")
 	message_admins("LOG: Rigged power cell explosion, last touched by [fingerprintslast]")
@@ -120,7 +120,7 @@
 	charge /= 2
 	maxcharge /= 2
 	if (prob(10))
-		rigged = 1 //broken batterys are dangerous
+		rigged = 1 // broken batterys are dangerous
 
 /obj/item/weapon/stock_parts/cell/emp_act(severity)
 	charge -= 1000 / severity
@@ -174,7 +174,7 @@
 			return min(rand(50,160),rand(50,160))
 		if (200000 to 1000000-1)
 			return min(rand(25,80),rand(25,80))
-		if (100000 to 200000-1)//Ave powernet
+		if (100000 to 200000-1)// Ave powernet
 			return min(rand(20,60),rand(20,60))
 		if (50000 to 100000-1)
 			return min(rand(15,40),rand(15,40))

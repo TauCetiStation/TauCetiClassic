@@ -11,7 +11,7 @@
 		dotheblobbaby()
 	spawn(3000)
 		blobevent = 0
-	spawn(rand(1000, 2000)) //Delayed announcements to keep the crew on their toes.
+	spawn(rand(1000, 2000)) // Delayed announcements to keep the crew on their toes.
 		command_alert("Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert")
 		for(var/mob/M in player_list)
 			if(!isnewplayer(M))

@@ -1,5 +1,5 @@
 /**********************Ore Redemption Unit**************************/
-//Turns all the various mining machines into a single unit to speed up mining and establish a point system
+// Turns all the various mining machines into a single unit to speed up mining and establish a point system
 
 /obj/machinery/mineral/ore_redemption
 	name = "ore redemption machine"
@@ -15,7 +15,7 @@
 	var/obj/machinery/mineral/output = null
 	var/stk_types = list()
 	var/stk_amt   = list()
-	var/stack_list[0] //Key: Type.  Value: Instance of type.
+	var/stack_list[0] // Key: Type.  Value: Instance of type.
 	var/obj/item/weapon/card/id/inserted_id
 	var/points = 0
 	var/ore_pickup_rate = 15
@@ -59,13 +59,13 @@
 /obj/machinery/mineral/ore_redemption/proc/process_sheet(obj/item/weapon/ore/O)
 	var/obj/item/stack/sheet/mineral/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
-		if(!(processed_sheet in stack_list)) //It's the first of this sheet added
+		if(!(processed_sheet in stack_list)) // It's the first of this sheet added
 			var/obj/item/stack/sheet/mineral/s = new processed_sheet(src,0)
 			s.amount = 0
 			stack_list[processed_sheet] = s
 		var/obj/item/stack/sheet/mineral/storage = stack_list[processed_sheet]
-		storage.amount += sheet_per_ore //Stack the sheets
-		qdel(O) //... garbage collect
+		storage.amount += sheet_per_ore // Stack the sheets
+		qdel(O) // ... garbage collect
 
 /obj/machinery/mineral/ore_redemption/process()
 	var/turf/T = get_turf(get_step(src, input_dir))
@@ -121,7 +121,7 @@
 		var/obj/item/stack/sheet/mineral/M = O.refined_type
 		points += O.points * point_upgrade
 		return M
-	qdel(O)//No refined type? Purge it.
+	qdel(O)// No refined type? Purge it.
 	return
 
 /obj/machinery/mineral/ore_redemption/attack_hand(user)
@@ -146,7 +146,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		s = stack_list[O]
 		if(s.amount > 0)
 			if(O == stack_list[1])
-				dat += "<br>"		//just looks nicer
+				dat += "<br>"		// just looks nicer
 			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
 	dat += text("<br><div class='statusDisplay'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
@@ -192,7 +192,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 				to_chat(usr, "<span class='warning'>No valid ID.</span>")
 
 	if(href_list["release"])
-		if(check_access(inserted_id) || allowed(usr)) //Check the ID inside, otherwise check the user.
+		if(check_access(inserted_id) || allowed(usr)) // Check the ID inside, otherwise check the user.
 			if(!(text2path(href_list["release"]) in stack_list)) return
 			var/obj/item/stack/sheet/mineral/inp = stack_list[text2path(href_list["release"])]
 			var/obj/item/stack/sheet/mineral/out = new inp.type()
@@ -222,14 +222,14 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			empty_content()
 			qdel(src)
 
-//empty the redemption machine by stacks of at most max_amount (50 at this time) size
+// empty the redemption machine by stacks of at most max_amount (50 at this time) size
 /obj/machinery/mineral/ore_redemption/proc/empty_content()
 	var/obj/item/stack/sheet/mineral/s
 
 	for(var/O in stack_list)
 		s = stack_list[O]
 		while(s.amount > s.max_amount)
-			new s.type(loc,s.max_amount)
+			new s.type(loc, s.max_amount)
 			s.use(s.max_amount)
 		s.loc = loc
 		s.layer = initial(s.layer)
@@ -458,7 +458,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	throw_range = 5
 	origin_tech = "bluespace=2"
 
-	var/chosen_beacon = null	//Let's do some targeting
+	var/chosen_beacon = null	// Let's do some targeting
 
 /obj/item/device/wormhole_jaunter/attack_self(mob/user)
 	var/turf/device_turf = get_turf(user)
@@ -478,7 +478,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		if(!chosen_beacon)
 			chosen_beacon = pick(L)
 		var/obj/effect/portal/wormhole/jaunt_tunnel/J = new /obj/effect/portal/wormhole/jaunt_tunnel(get_turf(src), chosen_beacon)
-		spawn(100) qdel(J)	//Portal will disappear after 10 sec
+		spawn(100) qdel(J)	// Portal will disappear after 10 sec
 		J.target = chosen_beacon
 		try_move_adjacent(J)
 		playsound(src,'sound/effects/sparks4.ogg',50,1)
@@ -602,7 +602,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 /obj/item/clothing/mask/facehugger/toy/Die()
 	return
 
-/obj/item/clothing/mask/facehugger/toy/New()//to prevent deleting it if aliums are disabled
+/obj/item/clothing/mask/facehugger/toy/New()// to prevent deleting it if aliums are disabled
 	return
 
 /**********************Mining drone**********************/
@@ -725,7 +725,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	for(O in src.loc)
 		O.loc = src
 	for(var/dir in alldirs)
-		var/turf/T = get_step(src,dir)
+		var/turf/T = get_step(src, dir)
 		for(O in T)
 			O.loc = src
 	return

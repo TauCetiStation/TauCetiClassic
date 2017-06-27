@@ -25,7 +25,7 @@ var/datum/subsystem/objects/SSobj
 	color_windows_init()
 	populate_gear_list()
 
-	global_announcer = new(null) //Doh...
+	global_announcer = new(null) // Doh...
 
 	for(var/thing in world)
 		var/atom/A = thing
@@ -41,7 +41,7 @@ var/datum/subsystem/objects/SSobj
 /datum/subsystem/objects/fire(resumed = 0)
 	if (!resumed)
 		src.currentrun = processing.Copy()
-	//cache for sanic speed (lists are references anyways)
+	// cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)

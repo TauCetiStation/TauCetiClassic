@@ -1,4 +1,4 @@
-//Alphabetical order of civilian jobs.
+// Alphabetical order of civilian jobs.
 
 /obj/item/clothing/under/rank/bartender
 	desc = "It looks like it could use some more flair."
@@ -9,7 +9,7 @@
 	flags = ONESIZEFITSALL
 
 
-/obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
+/obj/item/clothing/under/rank/captain // Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
 	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
 	name = "captain's jumpsuit"
 	icon_state = "captain"

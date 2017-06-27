@@ -8,8 +8,8 @@ var/list/swing_hit_sound = list('sound/weapons/genhit1.ogg', 'sound/weapons/genh
 var/list/hiss_sound = list('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg')
 var/list/page_sound = list('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
 var/list/fracture_sound = list('sound/effects/bonebreak1.ogg','sound/effects/bonebreak2.ogg','sound/effects/bonebreak3.ogg','sound/effects/bonebreak4.ogg')
-//var/list/gun_sound = list('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
-//var/list/footsteps_sound = list('sound/effects/footsteps.ogg','sound/effects/footsteps2.ogg')
+// var/list/gun_sound = list('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
+// var/list/footsteps_sound = list('sound/effects/footsteps.ogg','sound/effects/footsteps2.ogg')
 var/list/footsteps_sound = list('sound/effects/tile1.wav','sound/effects/tile2.wav','sound/effects/tile3.wav','sound/effects/tile4.wav')
 
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, falloff, channel = 0, is_global)
@@ -43,8 +43,8 @@ var/const/FALLOFF_SOUNDS = 0.5
 	soundin = get_sfx(soundin)
 
 	var/sound/S = sound(soundin)
-	S.wait = 0 //No queue
-	//S.channel = 0 //Any channel
+	S.wait = 0 // No queue
+	// S.channel = 0 // Any channel
 	S.channel = channel
 	S.volume = vol
 	S.environment = -1
@@ -58,12 +58,12 @@ var/const/FALLOFF_SOUNDS = 0.5
 		// 3D sounds, the technology is here!
 		var/turf/T = get_turf(src)
 
-		//sound volume falloff with distance
+		// sound volume falloff with distance
 		var/distance = get_dist(T, turf_source)
 
-		S.volume -= max(distance - world.view, 0) * 2 //multiplicative falloff to add on top of natural audio falloff.
+		S.volume -= max(distance - world.view, 0) * 2 // multiplicative falloff to add on top of natural audio falloff.
 
-		//sound volume falloff with pressure
+		// sound volume falloff with pressure
 		var/pressure_factor = 1.0
 
 		var/datum/gas_mixture/hearer_env = T.return_air()
@@ -74,16 +74,16 @@ var/const/FALLOFF_SOUNDS = 0.5
 
 			if (pressure < ONE_ATMOSPHERE)
 				pressure_factor = max((pressure - SOUND_MINIMUM_PRESSURE)/(ONE_ATMOSPHERE - SOUND_MINIMUM_PRESSURE), 0)
-		else //in space
+		else // in space
 			pressure_factor = 0
 
 		if (distance <= 1)
-			pressure_factor = max(pressure_factor, 0.15)	//hearing through contact
+			pressure_factor = max(pressure_factor, 0.15)	// hearing through contact
 
 		S.volume *= pressure_factor
 
 		if (S.volume <= 0)
-			return	//no volume means no sound
+			return	// no volume means no sound
 
 		var/dx = turf_source.x - T.x // Hearing from the right/left
 		S.x = dx
@@ -102,7 +102,7 @@ var/const/FALLOFF_SOUNDS = 0.5
 		src << sound(ticker.login_music, repeat = 0, wait = 0, volume = 85, channel = 1) // MAD JAMS
 
 /proc/get_rand_frequency()
-	return rand(32000, 55000) //Frequency stuff only works with 45kbps oggs.
+	return rand(32000, 55000) // Frequency stuff only works with 45kbps oggs.
 
 /proc/get_sfx(soundin)
 	if(istext(soundin))
@@ -119,5 +119,5 @@ var/const/FALLOFF_SOUNDS = 0.5
 			if ("hiss") soundin = pick(hiss_sound)
 			if ("pageturn") soundin = pick(page_sound)
 			if ("fracture") soundin = pick(fracture_sound)
-			//if ("gunshot") soundin = pick(gun_sound)
+			// if ("gunshot") soundin = pick(gun_sound)
 	return soundin

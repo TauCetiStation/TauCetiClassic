@@ -181,9 +181,9 @@
 	if (src.amount > 1)
 		return FALSE
 
-	//with 1.5*, a shallow cut will be able to carry at most 30 damage,
-	//37.5 for a deep cut
-	//52.5 for a flesh wound, etc.
+	// with 1.5*, a shallow cut will be able to carry at most 30 damage,
+	// 37.5 for a deep cut
+	// 52.5 for a flesh wound, etc.
 	var/max_wound_damage = 1.5 * damage_list[1]
 	if (src.damage + damage > max_wound_damage)
 		return FALSE
@@ -203,10 +203,10 @@
 
 /** WOUND DEFINITIONS **/
 
-//Note that the MINIMUM damage before a wound can be applied should correspond to
-//the damage amount for the stage with the same name as the wound.
-//e.g. /datum/wound/cut/deep should only be applied for 15 damage and up,
-//because in it's stages list, "deep cut" = 15.
+// Note that the MINIMUM damage before a wound can be applied should correspond to
+// the damage amount for the stage with the same name as the wound.
+// e.g. /datum/wound/cut/deep should only be applied for 15 damage and up,
+// because in it's stages list, "deep cut" = 15.
 /proc/get_wound_type(type = CUT, damage)
 	switch(type)
 		if(CUT)
@@ -249,7 +249,7 @@
 					return /datum/wound/burn/large
 				if(0 to 15)
 					return /datum/wound/burn/moderate
-	return null //no wound
+	return null // no wound
 
 /** CUTS **/
 /datum/wound/cut

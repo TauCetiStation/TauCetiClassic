@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 var/global/list/autolathe_recipes = list( \
 		/* screwdriver removed*/ \
@@ -241,10 +241,10 @@ var/global/list/autolathe_recipes_hidden = list( \
 		amount = stack.amount
 		if (m_amt)
 			amount = min(amount, round((max_m_amount-src.m_amount)/m_amt))
-			flick("autolathe_o",src)//plays metal insertion animation
+			flick("autolathe_o",src)// plays metal insertion animation
 		if (g_amt)
 			amount = min(amount, round((max_g_amount-src.g_amount)/g_amt))
-			flick("autolathe_r",src)//plays glass insertion animation
+			flick("autolathe_r",src)// plays glass insertion animation
 		stack.use(amount)
 	else
 		usr.remove_from_mob(I)
@@ -279,7 +279,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 
 	if(href_list["make"])
 		var/coeff = 2 ** prod_coeff
-		var/turf/T = get_step(src.loc, get_dir(src,usr))
+		var/turf/T = get_step(src.loc, get_dir(src, usr))
 
 		// critical exploit fix start -walter0o
 		var/obj/item/template = null

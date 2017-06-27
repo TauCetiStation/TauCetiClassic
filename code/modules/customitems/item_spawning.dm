@@ -1,8 +1,8 @@
-//switch this out to use a database at some point
-//list of ckey/ real_name and item paths
-//gives item to specific people when they join if it can
-//for multiple items just add mutliple entries, unless i change it to be a listlistlist
-//yes, it has to be an item, you can't pick up nonitems
+// switch this out to use a database at some point
+// list of ckey/ real_name and item paths
+// gives item to specific people when they join if it can
+// for multiple items just add mutliple entries, unless i change it to be a listlistlist
+// yes, it has to be an item, you can't pick up nonitems
 
 /var/list/custom_items = list()
 
@@ -26,10 +26,10 @@
 
 				var/obj/item/Item = new path()
 				if(istype(Item,/obj/item/weapon/card/id))
-					//id card needs to replace the original ID
+					// id card needs to replace the original ID
 					var/obj/item/weapon/card/id/I = Item
 					for(var/obj/item/weapon/card/id/C in M)
-						//default settings
+						// default settings
 						I.name = "[M.real_name]'s ID Card ([M.mind.role_alt_title ? M.mind.role_alt_title : M.mind.assigned_role])"
 						I.registered_name = M.real_name
 						I.access = C.access
@@ -37,11 +37,11 @@
 						I.blood_type = C.blood_type
 						I.dna_hash = C.dna_hash
 						I.fingerprint_hash = C.fingerprint_hash
-						//I.pin = C.pin
+						// I.pin = C.pin
 
-						//replace old ID
+						// replace old ID
 						qdel(C)
-						ok = M.equip_to_slot_if_possible(I, slot_wear_id, 0)	//if 1, last argument deletes on fail
+						ok = M.equip_to_slot_if_possible(I, slot_wear_id, 0)	// if 1, last argument deletes on fail
 						break
 				else if(istype(Item,/obj/item/weapon/storage/belt))
 					var/obj/item/weapon/storage/belt/medical/fluff/nashi_belt/I = Item

@@ -15,7 +15,7 @@
 	if(!iscarbon(user))
 		to_chat(user,"<span class='userdanger'>Where is your hands?</span>")
 	var/list/hand_items = list(user.get_active_hand(), user.get_inactive_hand())
-	if(!marked_item) //linking item to the spell
+	if(!marked_item) // linking item to the spell
 		for(var/obj/item in hand_items)
 			if(item && item.flags & ABSTRACT)
 				continue
@@ -30,21 +30,21 @@
 				to_chat(user, "<span class='notice'>You must hold the desired item in your hands to mark it for recall.</span>")
 		return
 
-	else if(marked_item in hand_items) //unlinking item to the spell
+	else if(marked_item in hand_items) // unlinking item to the spell
 		to_chat(user, "<span class='notice'>You remove the mark on [marked_item] to use elsewhere.</span>")
 		name = initial(name)
 		marked_item = null
-	else if(marked_item && (QDELETED(marked_item) || !marked_item.loc)) //the item was destroyed at some point
+	else if(marked_item && (QDELETED(marked_item) || !marked_item.loc)) // the item was destroyed at some point
 		to_chat(user, "<span class='warning'>You sense your marked item has been destroyed!</span>")
 		name = initial(name)
 		marked_item = null
-	else	//Getting previously marked item
+	else	// Getting previously marked item
 		var/obj/item_to_retrieve = marked_item
 		while(isobj(item_to_retrieve.loc))
 			item_to_retrieve = item_to_retrieve.loc
-		if(ismob(item_to_retrieve.loc)) //If its on someone, properly drop it
+		if(ismob(item_to_retrieve.loc)) // If its on someone, properly drop it
 			var/mob/M = item_to_retrieve.loc
-			if(issilicon(M)) //Items in silicons warp the whole silicon
+			if(issilicon(M)) // Items in silicons warp the whole silicon
 				M.visible_message("<span class='warning'>[M] suddenly disappears!</span>")
 				M.forceMove(user.loc)
 				M.visible_message("<span class='caution'>[M] suddenly appears!</span>")

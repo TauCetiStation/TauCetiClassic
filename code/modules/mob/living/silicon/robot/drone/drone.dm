@@ -23,7 +23,7 @@
 	var/obj/item/stack/sheet/mineral/plastic/cyborg/stack_plastic = null
 	var/obj/item/weapon/matter_decompiler/decompiler = null
 
-	//Used for self-mailing.
+	// Used for self-mailing.
 	var/mail_destination = ""
 
 	holder_type = /obj/item/weapon/holder/drone
@@ -34,14 +34,14 @@
 	if(camera && "Robots" in camera.network)
 		camera.add_network("Engineering")
 
-	//They are unable to be upgraded, so let's give them a bit of a better battery.
+	// They are unable to be upgraded, so let's give them a bit of a better battery.
 	cell.maxcharge = 10000
 	cell.charge = 10000
 
 	// NO BRAIN.
 	mmi = null
 
-	//We need to screw with their HP a bit. They have around one fifth as much HP as a full borg.
+	// We need to screw with their HP a bit. They have around one fifth as much HP as a full borg.
 	for(var/V in components) if(V != "power cell")
 		var/datum/robot_component/C = components[V]
 		C.max_damage = 10
@@ -49,16 +49,16 @@
 	verbs -= /mob/living/silicon/robot/verb/Namepick
 	module = new /obj/item/weapon/robot_module/drone(src)
 
-	//Grab stacks.
+	// Grab stacks.
 	stack_metal = locate(/obj/item/stack/sheet/metal/cyborg) in src.module
 	stack_wood = locate(/obj/item/stack/sheet/wood/cyborg) in src.module
 	stack_glass = locate(/obj/item/stack/sheet/glass/cyborg) in src.module
 	stack_plastic = locate(/obj/item/stack/sheet/mineral/plastic/cyborg) in src.module
 
-	//Grab decompiler.
+	// Grab decompiler.
 	decompiler = locate(/obj/item/weapon/matter_decompiler) in src.module
 
-	//Some tidying-up.
+	// Some tidying-up.
 	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
 	updateicon()
 
@@ -69,7 +69,7 @@
 	aiCamera = new/obj/item/device/camera/siliconcam/drone_camera(src)
 	playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 0)
 
-//Redefining some robot procs...
+// Redefining some robot procs...
 /mob/living/silicon/robot/drone/updatename()
 	real_name = "maintenance drone ([rand(100,999)])"
 	name = real_name
@@ -88,8 +88,8 @@
 /mob/living/silicon/robot/drone/pick_module()
 	return
 
-//Drones can only use binary and say emotes. NOTHING else.
-//TBD, fix up boilerplate. ~ Z
+// Drones can only use binary and say emotes. NOTHING else.
+// TBD, fix up boilerplate. ~ Z
 /mob/living/silicon/robot/drone/say(var/message)
 
 	if (!message)
@@ -99,7 +99,7 @@
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (src.client.handle_spam_prevention(message, MUTE_IC))
 			return
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -141,7 +141,7 @@
 					if(M.client)
 						to_chat(M, "<b>[src]</b> transmits, \"[message]\"")
 
-//Drones cannot be upgraded with borg modules so we need to catch some items before they get used in ..().
+// Drones cannot be upgraded with borg modules so we need to catch some items before they get used in ..().
 /mob/living/silicon/robot/drone/attackby(obj/item/weapon/W, mob/user)
 
 	if(istype(W, /obj/item/borg/upgrade/))
@@ -191,7 +191,7 @@
 
 		if(stat == DEAD)
 
-			if(!config.allow_drone_spawn || emagged || health < -35) //It's dead, Dave.
+			if(!config.allow_drone_spawn || emagged || health < -35) // It's dead, Dave.
 				to_chat(user, "\red The interface is fried, and a distressing burned smell wafts from the robot's interior. You're not rebooting this one.")
 				return
 
@@ -223,9 +223,9 @@
 
 	..()
 
-//DRONE LIFE/DEATH
+// DRONE LIFE/DEATH
 
-//For some goddamn reason robots have this hardcoded. Redefining it for our fragile friends here.
+// For some goddamn reason robots have this hardcoded. Redefining it for our fragile friends here.
 /mob/living/silicon/robot/drone/updatehealth()
 	if(status_flags & GODMODE)
 		health = maxHealth
@@ -234,14 +234,14 @@
 	health = 15 - (getBruteLoss() + getFireLoss())
 	return
 
-//Easiest to check this here, then check again in the robot proc.
-//Standard robots use config for crit, which is somewhat excessive for these guys.
-//Drones killed by damage will gib.
+// Easiest to check this here, then check again in the robot proc.
+// Standard robots use config for crit, which is somewhat excessive for these guys.
+// Drones killed by damage will gib.
 /mob/living/silicon/robot/drone/handle_regular_status_updates()
 
 	if(health <= -10 && src.stat != DEAD)
 		timeofdeath = world.time
-		death() //Possibly redundant, having trouble making death() cooperate.
+		death() // Possibly redundant, having trouble making death() cooperate.
 		gib()
 		return
 	..()
@@ -254,7 +254,7 @@
 
 	..(gibbed)
 
-//CONSOLE PROCS
+// CONSOLE PROCS
 /mob/living/silicon/robot/drone/proc/law_resync()
 	if(stat != DEAD)
 		if(emagged)
@@ -278,7 +278,7 @@
 	clear_ion_laws()
 	laws = new /datum/ai_laws/drone
 
-//Reboot procs.
+// Reboot procs.
 
 /mob/living/silicon/robot/drone/proc/request_player()
 	for(var/mob/dead/observer/O in player_list)
@@ -293,7 +293,7 @@
 
 /mob/living/silicon/robot/drone/proc/question(client/C)
 	spawn(0)
-		if(!C || !C.mob || jobban_isbanned(C.mob, ROLE_DRONE) || role_available_in_minutes(C.mob, ROLE_DRONE))//Not sure if we need jobban check, since proc from above do that too.
+		if(!C || !C.mob || jobban_isbanned(C.mob, ROLE_DRONE) || role_available_in_minutes(C.mob, ROLE_DRONE))// Not sure if we need jobban check, since proc from above do that too.
 			return
 		var/response = alert(C, "Someone is attempting to reboot a maintenance drone. Would you like to play as one?", "Maintenance drone reboot", "No", "Yes", "Never for this round.")
 		if(!C || ckey)

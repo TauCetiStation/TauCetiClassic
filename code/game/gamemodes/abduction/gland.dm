@@ -18,7 +18,7 @@
 
 /obj/item/gland/proc/Start()
 	active = 1
-	next_activation  = world.time + rand(cooldown_low,cooldown_high)
+	next_activation  = world.time + rand(cooldown_low, cooldown_high)
 	START_PROCESSING(SSobj, src)
 
 /obj/item/gland/proc/Inject(mob/living/carbon/human/target)
@@ -31,13 +31,13 @@
 		STOP_PROCESSING(SSobj, src)
 		return
 	if(next_activation <= world.time)
-		//This gives a chance to transplant the gland active into someone else if you're fast
+		// This gives a chance to transplant the gland active into someone else if you're fast
 		if(!HostCheck())
 			active = 0
 			return
 		activate()
 		uses--
-		next_activation  = world.time + rand(cooldown_low,cooldown_high)
+		next_activation  = world.time + rand(cooldown_low, cooldown_high)
 	if(uses == 0)
 	 active = 0
 
@@ -45,7 +45,7 @@
 	return
 
 
-//HEAL
+// HEAL
 /obj/item/gland/heals
 	desc = "Heals the host."
 	cooldown_low = 200
@@ -60,7 +60,7 @@ obj/item/gland/heals/activate()
 	host.adjustFireLoss(-25)
 
 
-//SLIME
+// SLIME
 /obj/item/gland/slime
 	desc = "Host vomits slime."
 	cooldown_low = 600
@@ -84,7 +84,7 @@ obj/item/gland/slime/activate()
 	new/mob/living/simple_animal/slime(pos)
 
 
-//SLIME BOOM
+// SLIME BOOM
 /obj/item/gland/slime_boom
 	desc = "Explodes the host into slimes."
 	cooldown_low = 1200
@@ -107,7 +107,7 @@ obj/item/gland/slime/activate()
 	return
 
 
-//MINDSHOCK
+// MINDSHOCK
 /obj/item/gland/mindshock
 	desc = "Confuses everyone near host."
 	cooldown_low = 300
@@ -126,7 +126,7 @@ obj/item/gland/slime/activate()
 		H.confused += 20
 
 
-//POP
+// POP
 /obj/item/gland/pop
 	desc = "Changes host species."
 	cooldown_low = 900
@@ -139,7 +139,7 @@ obj/item/gland/slime/activate()
 	host.set_species_soft(pick(HUMAN , UNATHI , TAJARAN , DIONA , VOX))
 
 
-//VENTCRAWLING
+// VENTCRAWLING
 /obj/item/gland/ventcrawling
 	desc = "Gives the host ability to ventcrawl."
 	cooldown_low = 1800
@@ -153,7 +153,7 @@ obj/item/gland/slime/activate()
 	return
 
 
-//VIRAL
+// VIRAL
 /obj/item/gland/viral
 	desc = "Makes the host carrier of a virus."
 	cooldown_low = 1800
@@ -173,11 +173,11 @@ obj/item/gland/slime/activate()
 		if (H.species)
 			D.affected_species = list(H.species.name)
 
-	infect_virus2(host,D,1)
+	infect_virus2(host, D,1)
 
 
-//EMP
-/obj/item/gland/emp //TODO : Replace with something more interesting
+// EMP
+/obj/item/gland/emp // TODO : Replace with something more interesting
 	desc = "Makes the host emmit emp pulse."
 	cooldown_low = 900
 	cooldown_high = 1600
@@ -189,7 +189,7 @@ obj/item/gland/slime/activate()
 	empulse(get_turf(host), 2, 5, 1)
 
 
-//SPIDERMAN
+// SPIDERMAN
 /obj/item/gland/spiderman
 	desc = "Makes host produce spiders."
 	cooldown_low = 450
@@ -204,7 +204,7 @@ obj/item/gland/slime/activate()
 	new /obj/effect/spider/spiderling(host.loc)
 
 
-//EGG
+// EGG
 /obj/item/gland/egg
 	desc = "Makes the host lay eggs filled with acid."
 	cooldown_low = 300
@@ -219,7 +219,7 @@ obj/item/gland/slime/activate()
 	egg.desc += " It smells bad."
 
 
-//BLOODY
+// BLOODY
 /obj/item/gland/bloody
 	desc = "Sprays blood on everything in sight and deals damage to host."
 	cooldown_low = 200
@@ -233,9 +233,9 @@ obj/item/gland/slime/activate()
 	host.visible_message("<span class='danger'>[host]'s skin erupts with blood!</span>",\
 	"<span class='userdanger'>Blood pours from your skin!</span>")
 
-	for(var/turf/T in oview(2,host)) //Make this respect walls and such
+	for(var/turf/T in oview(2,host)) // Make this respect walls and such
 		T.add_blood(host)
-	for(var/mob/living/carbon/human/H in oview(3,host)) //Blood decals for simple animals would be neat. aka Carp with blood on it.
+	for(var/mob/living/carbon/human/H in oview(3,host)) // Blood decals for simple animals would be neat. aka Carp with blood on it.
 		if(H.wear_suit)
 			H.wear_suit.add_blood(host)
 			H.update_inv_wear_suit()
@@ -244,7 +244,7 @@ obj/item/gland/slime/activate()
 			H.update_inv_w_uniform()
 
 
-//BODYSNATCH
+// BODYSNATCH
 /obj/item/gland/bodysnatch
 	desc = "Turns host into a cocoon from with hatches body looking like the host."
 	cooldown_low = 1800

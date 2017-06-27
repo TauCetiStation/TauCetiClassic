@@ -57,7 +57,7 @@
 */
 		codepos				 = 1
 		line					 = 1
-		linepos 			 = 0 										 //column=codepos-linepos
+		linepos 			 = 0 										 // column=codepos-linepos
 		n_scriptOptions/nS_Options/options
 
 		commenting = 0
@@ -71,7 +71,7 @@
 	Default Value:
 	Whitespace
 */
-			ignore 			 = list(" ", "\t", "\n") //Don't add tokens for whitespace
+			ignore 			 = list(" ", "\t", "\n") // Don't add tokens for whitespace
 /*
 	Variable: end_stmt
 	A list of characters that end a statement. Each item may only be one character long.
@@ -108,12 +108,12 @@
 */
 	New(code, n_scriptOptions/nS_Options/options)
 		.=..()
-		ignore+= ascii2text(13) //Carriage return
+		ignore+= ascii2text(13) // Carriage return
 		delim += ignore + options.symbols + end_stmt + string_delim
 		src.options=options
 		LoadCode(code)
 
-	Scan() //Creates a list of tokens from source code
+	Scan() // Creates a list of tokens from source code
 		var/list/tokens=new
 		for(, src.codepos<=lentext(code), src.codepos++)
 
@@ -129,7 +129,7 @@
 			else if(end_stmt.Find(char))
 				tokens+=new /token/end(char, line, COL)
 			else if(string_delim.Find(char))
-				codepos++ //skip string delimiter
+				codepos++ // skip string delimiter
 				tokens+=ReadString(char)
 			else if(options.CanStartID(char))
 				tokens+=ReadWord()
@@ -155,21 +155,21 @@
 		ReadString(start)
 			var
 				buf
-			for(, codepos <= lentext(code), codepos++)//codepos to lentext(code))
+			for(, codepos <= lentext(code), codepos++)// codepos to lentext(code))
 				var/char=copytext(code, codepos, codepos+1)
 				switch(char)
-					if("\\")					//Backslash (\) encountered in string
-						codepos++       //Skip next character in string, since it was escaped by a backslash
+					if("\\")					// Backslash (\) encountered in string
+						codepos++       // Skip next character in string, since it was escaped by a backslash
 						char=copytext(code, codepos, codepos+1)
 						switch(char)
-							if("\\")      //Double backslash
+							if("\\")      // Double backslash
 								buf+="\\"
-							if("n")				//\n Newline
+							if("n")				// \n Newline
 								buf+="\n"
 							else
-								if(char==start) //\" Doublequote
+								if(char==start) // \" Doublequote
 									buf+=start
-								else				//Unknown escaped text
+								else				// Unknown escaped text
 									buf+=char
 					if("\n")
 						. = new/token/string(buf, line, COL)
@@ -178,10 +178,10 @@
 						linepos=codepos
 						break
 					else
-						if(char==start) //string delimiter found, end string
+						if(char==start) // string delimiter found, end string
 							break
 						else
-							buf+=char     //Just a normal character in a string
+							buf+=char     // Just a normal character in a string
 			if(!.) return new/token/string(buf, line, COL)
 
 /*
@@ -195,7 +195,7 @@
 			while(!delim.Find(char) && codepos<=lentext(code))
 				buf+=char
 				char=copytext(code, ++codepos, codepos+1)
-			codepos-- //allow main Scan() proc to read the delimiter
+			codepos-- // allow main Scan() proc to read the delimiter
 			if(options.keywords.Find(buf))
 				return new /token/keyword(buf, line, COL)
 			else
@@ -215,7 +215,7 @@
 				if(++codepos>lentext(code)) break
 				char=copytext(code, codepos, codepos+1)
 
-			codepos-- //allow main Scan() proc to read the next character
+			codepos-- // allow main Scan() proc to read the next character
 			return new /token/symbol(buf, line, COL)
 
 /*
@@ -237,7 +237,7 @@
 			if(isnull(text2num(buf)))
 				errors+=new/scriptError("Bad number: ", T)
 				T.value=0
-			codepos-- //allow main Scan() proc to read the next character
+			codepos-- // allow main Scan() proc to read the next character
 			return T
 
 /*
@@ -255,7 +255,7 @@
 					// 2: multi-line comment
 				expectedend = 0
 
-			if(charstring == "//" || charstring == "/*")
+			if(charstring == "// " || charstring == "/*")
 				if(charstring == "/*")
 					comm = 2 // starts a multi-line comment
 

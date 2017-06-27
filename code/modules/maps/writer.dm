@@ -23,11 +23,11 @@ dmm_suite{
 			)
 		}
 	save_map(var/turf/t1 as turf, var/turf/t2 as turf, var/map_name as text, var/flags as num){
-		//Check for illegal characters in file name... in a cheap way.
+		// Check for illegal characters in file name... in a cheap way.
 		if(!((ckeyEx(map_name)==map_name) && ckeyEx(map_name))){
 			CRASH("Invalid text supplied to proc save_map, invalid characters or empty string.")
 			}
-		//Check for valid turfs.
+		// Check for valid turfs.
 		if(!isturf(t1) || !isturf(t2)){
 			CRASH("Invalid arguments supplied to proc save_map, arguments were not turfs.")
 			}
@@ -40,19 +40,19 @@ dmm_suite{
 		return saved_map
 		}
 	write_map(var/turf/t1 as turf, var/turf/t2 as turf, var/flags as num){
-		//Check for valid turfs.
+		// Check for valid turfs.
 		if(!isturf(t1) || !isturf(t2)){
 			CRASH("Invalid arguments supplied to proc write_map, arguments were not turfs.")
 			}
-		var/turf/nw = locate(min(t1.x,t2.x),max(t1.y,t2.y),min(t1.z,t2.z))
-		var/turf/se = locate(max(t1.x,t2.x),min(t1.y,t2.y),max(t1.z,t2.z))
+		var/turf/nw = locate(min(t1.x, t2.x),max(t1.y, t2.y),min(t1.z, t2.z))
+		var/turf/se = locate(max(t1.x, t2.x),min(t1.y, t2.y),max(t1.z, t2.z))
 		var/list/templates[0]
 		var/template_buffer = {""}
 		var/dmm_text = {""}
 		for(var/pos_z=nw.z;pos_z<=se.z;pos_z++){
 			for(var/pos_y=nw.y;pos_y>=se.y;pos_y--){
 				for(var/pos_x=nw.x;pos_x<=se.x;pos_x++){
-					var/turf/test_turf = locate(pos_x,pos_y,pos_z)
+					var/turf/test_turf = locate(pos_x, pos_y, pos_z)
 					var/test_template = make_template(test_turf, flags)
 					var/template_number = templates.Find(test_template)
 					if(!template_number){
@@ -65,10 +65,10 @@ dmm_suite{
 				}
 			template_buffer += "."
 			}
-		var/key_length = round/*floor*/(log(letter_digits.len,templates.len-1)+1)
+		var/key_length = round/*floor*/(log(letter_digits.len, templates.len-1)+1)
 		var/list/keys[templates.len]
 		for(var/key_pos=1;key_pos<=templates.len;key_pos++){
-			keys[key_pos] = get_model_key(key_pos,key_length)
+			keys[key_pos] = get_model_key(key_pos, key_length)
 			dmm_text += {""[keys[key_pos]]" = ([templates[key_pos]])\n"}
 			}
 		var/z_level = 0
@@ -76,13 +76,13 @@ dmm_suite{
 			if(z_pos>=length(template_buffer)){break}
 			if(z_level){dmm_text+={"\n"}}
 			dmm_text += {"\n(1,1,[++z_level]) = {"\n"}
-			var/z_block = copytext(template_buffer,z_pos,findtext(template_buffer,".",z_pos))
+			var/z_block = copytext(template_buffer, z_pos, findtext(template_buffer,".",z_pos))
 			for(var/y_pos=1;TRUE;y_pos=findtext(z_block,";",y_pos)+1){
 				if(y_pos>=length(z_block)){break}
-				var/y_block = copytext(z_block,y_pos,findtext(z_block,";",y_pos))
+				var/y_block = copytext(z_block, y_pos, findtext(z_block,";",y_pos))
 				for(var/x_pos=1;TRUE;x_pos=findtext(y_block,",",x_pos)+1){
 					if(x_pos>=length(y_block)){break}
-					var/x_block = copytext(y_block,x_pos,findtext(y_block,",",x_pos))
+					var/x_block = copytext(y_block, x_pos, findtext(y_block,",",x_pos))
 					var/key_number = text2num(x_block)
 					var/temp_key = keys[key_number]
 					dmm_text += temp_key

@@ -8,8 +8,8 @@ var/datum/subsystem/vote/SSvote
 	flags = SS_FIRE_IN_LOBBY | SS_KEEP_TIMING | SS_NO_INIT
 
 	var/initiator = null
-	var/started_time = null			//Not counting for custom votes, because it will apply voting cooldown and this is bad...
-	var/voting_started_time = null	//...thats why we use separate var to count remaining vote time.
+	var/started_time = null			// Not counting for custom votes, because it will apply voting cooldown and this is bad...
+	var/voting_started_time = null	// ...thats why we use separate var to count remaining vote time.
 	var/time_remaining = 0
 	var/mode = null
 	var/question = null
@@ -20,7 +20,7 @@ var/datum/subsystem/vote/SSvote
 /datum/subsystem/vote/New()
 	NEW_SS_GLOBAL(SSvote)
 
-/datum/subsystem/vote/fire()	//called by master_controller
+/datum/subsystem/vote/fire()	// called by master_controller
 	if(mode)
 		time_remaining = round((voting_started_time + config.vote_period - world.time)/10)
 
@@ -48,7 +48,7 @@ var/datum/subsystem/vote/SSvote
 	voting.Cut()
 
 /datum/subsystem/vote/proc/get_result()
-	//get the highest number of votes
+	// get the highest number of votes
 	var/greatest_votes = 0
 	var/total_votes = 0
 	for(var/option in choices)
@@ -56,7 +56,7 @@ var/datum/subsystem/vote/SSvote
 		total_votes += votes
 		if(votes > greatest_votes)
 			greatest_votes = votes
-	//default-vote for everyone who didn't vote
+	// default-vote for everyone who didn't vote
 	if(!config.vote_no_default && choices.len)
 		var/non_voters = (clients.len - total_votes)
 		if(non_voters > 0)
@@ -73,7 +73,7 @@ var/datum/subsystem/vote/SSvote
 					choices[master_mode] += non_voters
 					if(choices[master_mode] >= greatest_votes)
 						greatest_votes = choices[master_mode]
-	//get all options with that many votes and return them in a list
+	// get all options with that many votes and return them in a list
 	. = list()
 	if(greatest_votes)
 		for(var/option in choices)
@@ -89,7 +89,7 @@ var/datum/subsystem/vote/SSvote
 			text += "<b>[sanitize_plus_chat(question)]</b>"
 		else
 			text += "<b>[capitalize(mode)] Vote</b>"
-		for(var/i=1,i<=choices.len,i++)
+		for(var/i=1,i<=choices.len, i++)
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
@@ -157,7 +157,7 @@ var/datum/subsystem/vote/SSvote
 		if(!(usr.ckey in voted))
 			if(vote && 1<=vote && vote<=choices.len)
 				voted += usr.ckey
-				choices[choices[vote]]++	//check this
+				choices[choices[vote]]++	// check this
 				return vote
 	return 0
 
@@ -244,7 +244,7 @@ var/datum/subsystem/vote/SSvote
 		else
 			. += "<h2>Vote: [capitalize(mode)]</h2>"
 		. += "Time Left: [time_remaining] s<hr><ul>"
-		for(var/i=1,i<=choices.len,i++)
+		for(var/i=1,i<=choices.len, i++)
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
@@ -258,7 +258,7 @@ var/datum/subsystem/vote/SSvote
 			. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
 	else
 		. += "<h2>Start a vote:</h2><hr><ul><li>"
-		//restart
+		// restart
 		if(admin || config.allow_vote_restart)
 			. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
 		else
@@ -266,7 +266,7 @@ var/datum/subsystem/vote/SSvote
 		if(admin)
 			. += "&emsp;(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
-		//crew transfer
+		// crew transfer
 		if(admin || config.allow_vote_mode)
 			. += "<a href='?src=\ref[src];vote=crew_transfer'>Crew Transfer</a>"
 		else
@@ -274,7 +274,7 @@ var/datum/subsystem/vote/SSvote
 		if(admin)
 			. += "\t(<a href='?src=\ref[src];vote=toggle_crew'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
-		//gamemode
+		// gamemode
 		if(admin || config.allow_vote_mode)
 			. += "<a href='?src=\ref[src];vote=gamemode'>GameMode</a>"
 		else
@@ -283,7 +283,7 @@ var/datum/subsystem/vote/SSvote
 			. += "\t(<a href='?src=\ref[src];vote=toggle_gamemode'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
 
 		. += "</li>"
-		//custom
+		// custom
 		if(admin)
 			. += "<li><a href='?src=\ref[src];vote=custom'>Custom</a></li>"
 		. += "</ul><hr>"
@@ -291,9 +291,9 @@ var/datum/subsystem/vote/SSvote
 	return .
 
 
-/datum/subsystem/vote/Topic(href,href_list[],hsrc)
+/datum/subsystem/vote/Topic(href, href_list[],hsrc)
 	if(!usr || !usr.client)
-		return	//not necessary but meh...just in-case somebody does something stupid
+		return	// not necessary but meh...just in-case somebody does something stupid
 	switch(href_list["vote"])
 		if("close")
 			voting -= usr.client

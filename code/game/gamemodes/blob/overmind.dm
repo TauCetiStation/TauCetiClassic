@@ -44,7 +44,7 @@
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (src.client.handle_spam_prevention(message, MUTE_IC))
 			return
 
 	if (stat)
@@ -60,8 +60,8 @@
 	if (!message)
 		return
 
-	//var/message_a = say_quote(message)
-	//ïðîáëåìêà êàê è ó àëèåíîâ, ìåðæèòü/îáíîâëÿòü
+	// var/message_a = say_quote(message)
+	// ïðîáëåìêà êàê è ó àëèåíîâ, ìåðæèòü/îáíîâëÿòü
 	var/message_a = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
 	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i></font>"
 
@@ -69,7 +69,7 @@
 		if(isovermind(M) || isobserver(M))
 			M.show_message(rendered, 2)
 
-/mob/camera/blob/emote(act,m_type=1,message = null)
+/mob/camera/blob/emote(act, m_type=1,message = null)
 	return
 
 /mob/camera/blob/blob_act()

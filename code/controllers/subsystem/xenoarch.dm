@@ -138,7 +138,7 @@ var/datum/subsystem/xenoarch/SSxenoarch
 	// Make sure we have some prefixes for the gene sequences
 	genome_prefixes = alphabet_uppercase.Copy()
 
-	//create plant gene sequences
+	// create plant gene sequences
 	while(spawn_types_plant.len && genome_prefixes.len)
 		var/datum/genesequence/new_sequence = new
 		new_sequence.spawned_type = pick_n_take(spawn_types_plant)

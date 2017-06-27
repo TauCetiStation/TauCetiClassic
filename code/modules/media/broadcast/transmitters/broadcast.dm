@@ -36,7 +36,7 @@
 
 	for(var/obj/machinery/media/source in sources)
 		// Hook into output
-		source.hookMediaOutput(src,exclusive=1) // Don't hook into the room media sources.
+		source.hookMediaOutput(src, exclusive=1) // Don't hook into the room media sources.
 		source.update_music() // Request music update
 
 /obj/machinery/media/transmitter/broadcast/proc/unhook_media_sources()
@@ -60,7 +60,7 @@
 /obj/machinery/media/transmitter/broadcast/attack_hand(mob/user)
 	update_multitool_menu(user)
 
-/obj/machinery/media/transmitter/broadcast/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
+/obj/machinery/media/transmitter/broadcast/multitool_menu(var/mob/user, var/obj/item/device/multitool/P)
 	// You need a multitool to use this, or be silicon
 	if(!issilicon(user))
 		// istype returns false if the value is null
@@ -113,7 +113,7 @@
 		disconnect_frequency()
 	update_icon()
 
-/obj/machinery/media/transmitter/broadcast/Topic(href,href_list)
+/obj/machinery/media/transmitter/broadcast/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -163,23 +163,23 @@
 
 				var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
-				//world << "got [transfer_moles] moles at [removed.temperature]"
+				// world << "got [transfer_moles] moles at [removed.temperature]"
 
 				if(removed)
 
 					var/heat_capacity = removed.heat_capacity()
-					//world << "heating ([heat_capacity])"
+					// world << "heating ([heat_capacity])"
 					if(heat_capacity) // Added check to avoid divide by zero (oshi-) runtime errors -- TLE
 						if(removed.temperature < MAX_TEMP + T0C)
 							removed.temperature = min(removed.temperature + heating_power/heat_capacity, 1000) // Added min() check to try and avoid wacky superheating issues in low gas scenarios -- TLE
 						else
 							removed.temperature = max(removed.temperature - heating_power/heat_capacity, TCMB)
 
-					//world << "now at [removed.temperature]"
+					// world << "now at [removed.temperature]"
 
 				env.merge(removed)
 
-				//world << "turf now at [env.temperature]"
+				// world << "turf now at [env.temperature]"
 /*
 		// Checks heat from the environment and applies any integrity damage
 		var/datum/gas_mixture/environment = loc.return_air()
@@ -191,7 +191,7 @@
 */
 /*
 /obj/machinery/media/transmitter/broadcast/linkWith(var/mob/user, var/obj/O, var/list/context)
-	if(istype(O,/obj/machinery/media) && !is_type_in_list(O,list(/obj/machinery/media/transmitter,/obj/machinery/media/receiver)))
+	if(istype(O,/obj/machinery/media) && !is_type_in_list(O, list(/obj/machinery/media/transmitter,/obj/machinery/media/receiver)))
 		if(sources.len)
 			unhook_media_sources()
 		sources.Add(O)
@@ -210,7 +210,7 @@
 	return 0
 
 /obj/machinery/media/transmitter/broadcast/canLink(var/obj/O, var/list/context)
-	return istype(O,/obj/machinery/media) && !is_type_in_list(O,list(/obj/machinery/media/transmitter,/obj/machinery/media/receiver))
+	return istype(O,/obj/machinery/media) && !is_type_in_list(O, list(/obj/machinery/media/transmitter,/obj/machinery/media/receiver))
 
 /obj/machinery/media/transmitter/broadcast/isLinkedWith(var/obj/O)
 	return O in sources

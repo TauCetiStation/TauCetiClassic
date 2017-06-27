@@ -1,36 +1,36 @@
-//I'm pretty sure that this is a recursive [s]descent[/s] ascent parser.
+// I'm pretty sure that this is a recursive [s]descent[/s] ascent parser.
 
 
 
-//Spec
+// Spec
 
 //////////
-//
+// 
 //	query				:	select_query | delete_query | update_query | call_query | explain
 //	explain				:	'EXPLAIN' query
-//
+// 
 //	select_query		:	'SELECT' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]
 //	delete_query		:	'DELETE' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]
 //	update_query		:	'UPDATE' select_list [('FROM' | 'IN') from_list] 'SET' assignments ['WHERE' bool_expression]
 //	call_query			:	'CALL' call_function ['ON' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]]
-//
+// 
 //	select_list			:	select_item [',' select_list]
 //	select_item			:	'*' | select_function | object_type
 //	select_function		:	count_function
 //	count_function		:	'COUNT' '(' '*' ')' | 'COUNT' '(' object_types ')'
-//
+// 
 //	from_list			:	from_item [',' from_list]
 //	from_item			:	'world' | object_type
-//
+// 
 //	call_function		:	<function name> ['(' [arguments] ')']
 //	arguments			:	expression [',' arguments]
-//
+// 
 //	object_type			:	<type path> | string
-//
+// 
 //	assignments			:	assignment, [',' assignments]
 //	assignment			:	<variable name> '=' expression
 //	variable			:	<variable name> | <variable name> '.' variable
-//
+// 
 //	bool_expression		:	expression comparitor expression  [bool_operator bool_expression]
 //	expression			:	( unary_expression | '(' expression ')' | value ) [binary_operator expression]
 //	unary_expression	:	unary_operator ( unary_expression | value | '(' expression ')' )
@@ -39,10 +39,10 @@
 //	unary_operator		:	'!' | '-' | '~'
 //	binary_operator		:	comparitor | '+' | '-' | '/' | '*' | '&' | '|' | '^'
 //	bool_operator		:	'AND' | '&&' | 'OR' | '||'
-//
+// 
 //	string				:	''' <some text> ''' | '"' <some text > '"'
 //	number				:	<some digits>
-//
+// 
 //////////
 
 /datum/SDQL_parser
@@ -100,7 +100,7 @@
 
 /datum/SDQL_parser/proc
 
-//query:	select_query | delete_query | update_query
+// query:	select_query | delete_query | update_query
 	query(i, list/node)
 		query_type = tokenl(i)
 
@@ -150,7 +150,7 @@
 		return i
 
 
-//delete_query:	'DELETE' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]
+// delete_query:	'DELETE' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]
 	delete_query(i, list/node)
 		var/list/select = list()
 		i = select_list(i + 1, select)
@@ -177,7 +177,7 @@
 		return i
 
 
-//update_query:	'UPDATE' select_list [('FROM' | 'IN') from_list] 'SET' assignments ['WHERE' bool_expression]
+// update_query:	'UPDATE' select_list [('FROM' | 'IN') from_list] 'SET' assignments ['WHERE' bool_expression]
 	update_query(i, list/node)
 		var/list/select = list()
 		i = select_list(i + 1, select)
@@ -213,7 +213,7 @@
 		return i
 
 
-//call_query:	'CALL' call_function ['ON' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]]
+// call_query:	'CALL' call_function ['ON' select_list [('FROM' | 'IN') from_list] ['WHERE' bool_expression]]
 	call_query(i, list/node)
 		var/list/func = list()
 		i = call_function(i + 1, func)
@@ -249,7 +249,7 @@
 		return i
 
 
-//select_list:	select_item [',' select_list]
+// select_list:	select_item [',' select_list]
 	select_list(i, list/node)
 		i = select_item(i, node)
 
@@ -259,7 +259,7 @@
 		return i
 
 
-//from_list:	from_item [',' from_list]
+// from_list:	from_item [',' from_list]
 	from_list(i, list/node)
 		i = from_item(i, node)
 
@@ -269,7 +269,7 @@
 		return i
 
 
-//assignments:	assignment, [',' assignments]
+// assignments:	assignment, [',' assignments]
 	assignments(i, list/node)
 		i = assignment(i, node)
 
@@ -279,7 +279,7 @@
 		return i
 
 
-//select_item:	'*' | select_function | object_type
+// select_item:	'*' | select_function | object_type
 	select_item(i, list/node)
 
 		if(token(i) == "*")
@@ -295,7 +295,7 @@
 		return i
 
 
-//from_item:	'world' | object_type
+// from_item:	'world' | object_type
 	from_item(i, list/node)
 
 		if(token(i) == "world")
@@ -308,7 +308,7 @@
 		return i
 
 
-//bool_expression:	expression [bool_operator bool_expression]
+// bool_expression:	expression [bool_operator bool_expression]
 	bool_expression(i, list/node)
 
 		var/list/bool = list()
@@ -323,7 +323,7 @@
 		return i
 
 
-//assignment:	<variable name> '=' expression
+// assignment:	<variable name> '=' expression
 	assignment(i, list/node)
 
 		node += token(i)
@@ -340,7 +340,7 @@
 		return i
 
 
-//variable:	<variable name> | <variable name> '.' variable
+// variable:	<variable name> | <variable name> '.' variable
 	variable(i, list/node)
 		var/list/L = list(token(i))
 		node[++node.len] = L
@@ -355,7 +355,7 @@
 		return i
 
 
-//object_type:	<type path> | string
+// object_type:	<type path> | string
 	object_type(i, list/node)
 
 		if(copytext(token(i), 1, 2) == "/")
@@ -367,7 +367,7 @@
 		return i + 1
 
 
-//comparitor:	'=' | '==' | '!=' | '<>' | '<' | '<=' | '>' | '>='
+// comparitor:	'=' | '==' | '!=' | '<>' | '<' | '<=' | '>' | '>='
 	comparitor(i, list/node)
 
 		if(token(i) in list("=", "==", "!=", "<>", "<", "<=", ">", ">="))
@@ -379,7 +379,7 @@
 		return i + 1
 
 
-//bool_operator:	'AND' | '&&' | 'OR' | '||'
+// bool_operator:	'AND' | '&&' | 'OR' | '||'
 	bool_operator(i, list/node)
 
 		if(tokenl(i) in list("and", "or", "&&", "||"))
@@ -391,7 +391,7 @@
 		return i + 1
 
 
-//string:	''' <some text> ''' | '"' <some text > '"'
+// string:	''' <some text> ''' | '"' <some text > '"'
 	string(i, list/node)
 
 		if(copytext(token(i), 1, 2) in list("'", "\""))
@@ -403,7 +403,7 @@
 		return i + 1
 
 
-//call_function:	<function name> ['(' [arguments] ')']
+// call_function:	<function name> ['(' [arguments] ')']
 	call_function(i, list/node)
 
 		parse_error("Sorry, function calls aren't available yet")
@@ -411,7 +411,7 @@
 		return i
 
 
-//select_function:	count_function
+// select_function:	count_function
 	select_function(i, list/node)
 
 		parse_error("Sorry, function calls aren't available yet")
@@ -419,7 +419,7 @@
 		return i
 
 
-//expression:	( unary_expression | '(' expression ')' | value ) [binary_operator expression]
+// expression:	( unary_expression | '(' expression ')' | value ) [binary_operator expression]
 	expression(i, list/node)
 
 		if(token(i) in unary_operators)
@@ -457,7 +457,7 @@
 		return i
 
 
-//unary_expression:	unary_operator ( unary_expression | value | '(' expression ')' )
+// unary_expression:	unary_operator ( unary_expression | value | '(' expression ')' )
 	unary_expression(i, list/node)
 
 		if(token(i) in unary_operators)
@@ -494,7 +494,7 @@
 		return i
 
 
-//binary_operator:	comparitor | '+' | '-' | '/' | '*' | '&' | '|' | '^'
+// binary_operator:	comparitor | '+' | '-' | '/' | '*' | '&' | '|' | '^'
 	binary_operator(i, list/node)
 
 		if(token(i) in (binary_operators + comparitors))
@@ -506,7 +506,7 @@
 		return i + 1
 
 
-//value:	variable | string | number | 'null'
+// value:	variable | string | number | 'null'
 	value(i, list/node)
 
 		if(token(i) == "null")

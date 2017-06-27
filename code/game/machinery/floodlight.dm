@@ -1,4 +1,4 @@
-//these are probably broken
+// these are probably broken
 
 /obj/machinery/floodlight
 	name = "Emergency Floodlight"

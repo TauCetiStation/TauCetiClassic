@@ -123,7 +123,7 @@
 	update_icon()
 
 /obj/item/weapon/storage/fancy/crayons/update_icon()
-	overlays = list() //resets list
+	overlays = list() // resets list
 	overlays += image('icons/obj/crayons.dmi',"crayonbox")
 	for(var/obj/item/toy/crayon/crayon in contents)
 		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
@@ -165,14 +165,14 @@
 	update_icon()
 
 /obj/item/weapon/storage/fancy/glowsticks/update_icon()
-	overlays = list() //resets list
+	overlays = list() // resets list
 	overlays += image('icons/obj/glowsticks.dmi',"sticksbox")
 	for(var/obj/item/weapon/reagent_containers/food/snacks/glowstick/glowstick in contents)
 		overlays += image('icons/obj/glowsticks.dmi',glowstick.colourName)
 
-////////////
-//CIG PACK//
-////////////
+/////////// /
+// CIG PACK// 
+/////////// /
 /obj/item/weapon/storage/fancy/cigarettes
 	name = "cigarette packet"
 	desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
@@ -191,7 +191,7 @@
 	flags |= NOREACT
 	for(var/i = 1 to storage_slots)
 		new /obj/item/clothing/mask/cigarette(src)
-	create_reagents(15 * storage_slots)//so people can inject cigarettes without opening a packet, now with being able to inject the whole one
+	create_reagents(15 * storage_slots)// so people can inject cigarettes without opening a packet, now with being able to inject the whole one
 
 /obj/item/weapon/storage/fancy/cigarettes/update_icon()
 	icon_state = "[initial(icon_state)][contents.len]"
@@ -267,7 +267,7 @@
 	item_state = "syringe_kit"
 	max_w_class = 3
 	can_hold = list("/obj/item/weapon/reagent_containers/glass/beaker/vial")
-	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
+	max_combined_w_class = 14 // The sum of the w_classes of all the items in this storage item.
 	storage_slots = 6
 	req_access = list(access_virology)
 

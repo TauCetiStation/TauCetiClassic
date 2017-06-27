@@ -48,7 +48,7 @@
 	var/holding_still = 0 // AI variable, cooloff-ish for how long it's going to stay in one place
 	var/target_patience = 0 // AI variable, cooloff-ish for how long it's going to follow its target
 
-	///////////TIME FOR SUBSPECIES
+	/////////// TIME FOR SUBSPECIES
 
 	var/colour = "grey"
 	var/primarytype = /mob/living/carbon/slime
@@ -89,7 +89,7 @@
 	..()
 
 /mob/living/carbon/slime/adult/New()
-	//verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
+	// verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
 	..()
 /mob/living/carbon/slime/Destroy()
 	Victim = null
@@ -102,15 +102,15 @@
 	return ..()
 /mob/living/carbon/slime/regenerate_icons()
 	overlays.len = 0
-	//var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
-	//icon_dead = "[icon_text] dead"
-	//if(stat != DEAD)
-		//icon_state = icon_text
+	// var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
+	// icon_dead = "[icon_text] dead"
+	// if(stat != DEAD)
+		// icon_state = icon_text
 	if(stat != DEAD)
 		if(mood)
 			overlays += image('icons/mob/slimes.dmi', icon_state = "aslime-[mood]")
-	//else
-		//icon_state = icon_dead
+	// else
+		// icon_state = icon_dead
 	..()
 
 /mob/living/carbon/slime/movement_delay()
@@ -169,8 +169,8 @@
 								Atkcool = 0
 
 /mob/living/carbon/slime/MobBump(mob/M)
-	if(ishuman(M)) //pushing humans
-		if(isslimeadult(src) && prob(10)) //only if we're adult, and 10% of the time
+	if(ishuman(M)) // pushing humans
+		if(isslimeadult(src) && prob(10)) // only if we're adult, and 10% of the time
 			return 0
 		else
 			return 1
@@ -253,7 +253,7 @@
 	if(shielded)
 		damage /= 4
 
-		//paralysis += 1
+		// paralysis += 1
 
 	show_message("\red The blob attacks you!")
 
@@ -326,7 +326,7 @@
 		updatehealth()
 
 /mob/living/carbon/slime/attack_paw(mob/living/carbon/monkey/M)
-	if(!(istype(M, /mob/living/carbon/monkey)))	return//Fix for aliens receiving double messages when attacking other aliens.
+	if(!(istype(M, /mob/living/carbon/monkey)))	return// Fix for aliens receiving double messages when attacking other aliens.
 
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")
@@ -346,7 +346,7 @@
 				return
 			if (health > 0)
 				attacked += 10
-				//playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
+				// playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[M.name] has attacked [src]!</B>"), 1)
@@ -391,7 +391,7 @@
 
 				Victim = null
 				anchored = 0
-				step_away(src,M)
+				step_away(src, M)
 
 			return
 
@@ -424,7 +424,7 @@
 
 				Victim = null
 				anchored = 0
-				step_away(src,M)
+				step_away(src, M)
 
 			return
 
@@ -434,7 +434,7 @@
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == "hurt")// Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
 					for(var/mob/O in viewers(src, null))
@@ -482,9 +482,9 @@
 							Discipline++
 					spawn(0)
 
-						step_away(src,M,15)
+						step_away(src, M,15)
 						sleep(3)
-						step_away(src,M,15)
+						step_away(src, M,15)
 
 
 				playsound(loc, "punch", 25, 1, -1)
@@ -583,9 +583,9 @@
 
 				spawn(0)
 
-					step_away(src,M,15)
+					step_away(src, M,15)
 					sleep(3)
-					step_away(src,M,15)
+					step_away(src, M,15)
 
 			else
 				drop_item()
@@ -728,7 +728,7 @@
 	name = "adamantine slime extract"
 	icon_state = "adamantine slime extract"
 
-//Zve added
+// Zve added
 /obj/item/slime_extract/bluespace
 	name = "bluespace slime extract"
 	icon_state = "bluespace slime extract"
@@ -749,7 +749,7 @@
 	name = "rainbow slime extract"
 	icon_state = "rainbow slime extract"
 
-////Pet Slime Creation///
+////Pet Slime Creation// /
 
 /obj/item/weapon/slimepotion
 	name = "docility potion"
@@ -758,10 +758,10 @@
 	icon_state = "bottle19"
 
 	attack(mob/living/carbon/slime/M, mob/user)
-		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+		if(!istype(M, /mob/living/carbon/slime))// If target is not a slime.
 			to_chat(user, "\red The potion only works on baby slimes!")
 			return ..()
-		if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
+		if(istype(M, /mob/living/carbon/slime/adult)) // Can't tame adults
 			to_chat(user, "\red Only baby slimes can be tamed!")
 			return..()
 		if(M.stat)
@@ -789,7 +789,7 @@
 	icon_state = "bottle19"
 
 	attack(mob/living/carbon/slime/adult/M, mob/user)
-		if(!istype(M, /mob/living/carbon/slime/adult))//If target is not a slime.
+		if(!istype(M, /mob/living/carbon/slime/adult))// If target is not a slime.
 			to_chat(user, "\red The potion only works on adult slimes!")
 			return ..()
 		if(M.stat)
@@ -818,10 +818,10 @@
 	icon_state = "bottle16"
 
 	attack(mob/living/carbon/slime/M, mob/user)
-		if(!istype(M, /mob/living/carbon/slime))//If target is not a slime.
+		if(!istype(M, /mob/living/carbon/slime))// If target is not a slime.
 			to_chat(user, "\red The steroid only works on baby slimes!")
 			return ..()
-		if(istype(M, /mob/living/carbon/slime/adult)) //Can't tame adults
+		if(istype(M, /mob/living/carbon/slime/adult)) // Can't tame adults
 			to_chat(user, "\red Only baby slimes can use the steroid!")
 			return..()
 		if(M.stat)
@@ -841,7 +841,7 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
 
-////////Adamantine Golem stuff I dunno where else to put it
+//////// Adamantine Golem stuff I dunno where else to put it
 
 /obj/item/clothing/under/golem
 	name = "adamantine skin"
@@ -918,7 +918,7 @@
 	desc = "A golem's thick outter shell."
 	icon_state = "golem"
 	item_state = "golem"
-	w_class = 4//bulky item
+	w_class = 4// bulky item
 	allowed = null
 
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
@@ -985,7 +985,7 @@
 	else
 		START_PROCESSING(SSobj, src)
 		last_ghost_click = world.time + 50
-		var/image/I = image('icons/mob/hud.dmi', src, "agolem_master") //If there is alot activated rune close by, we can see which is ours.
+		var/image/I = image('icons/mob/hud.dmi', src, "agolem_master") // If there is alot activated rune close by, we can see which is ours.
 		user.client.images += I
 		spirit = user
 		user.golem_rune = src
@@ -998,7 +998,7 @@
 		return
 
 	var/mob/living/carbon/human/golem/G = new(loc)
-	G.attack_log = spirit.attack_log //Preserve attack log, if there is any...
+	G.attack_log = spirit.attack_log // Preserve attack log, if there is any...
 	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"
 	G.key = spirit.key
 	G.my_master = user
@@ -1046,7 +1046,7 @@
 /mob/living/carbon/slime/getTrail()
 	return null
 
-//////////////////////////////Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them////////////////////////
+///////////////////////////// /Old shit from metroids/RoRos, and the old cores, would not take much work to re-add them/////////////////////// /
 
 /*
 // Basically this slime Core catalyzes reactions that normally wouldn't happen anywhere
@@ -1072,7 +1072,7 @@
 		R.my_atom = src
 		POWERFLAG = rand(1,10)
 		Uses = rand(7, 25)
-		//flags |= NOREACT
+		// flags |= NOREACT
 
 		spawn()
 			Life()
@@ -1101,7 +1101,7 @@
 	..()
 	reagents.add_reagent("nutriment", 4)
 	reagents.add_reagent("slimejelly", 1)
-	spawn(rand(1200,1500))//the egg takes a while to "ripen"
+	spawn(rand(1200,1500))// the egg takes a while to "ripen"
 		Grow()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Grow()
@@ -1123,7 +1123,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/process()
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
-	if (environment.phoron > MOLES_PHORON_VISIBLE)//phoron exposure causes the egg to hatch
+	if (environment.phoron > MOLES_PHORON_VISIBLE)// phoron exposure causes the egg to hatch
 		src.Hatch()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/attackby(obj/item/weapon/W, mob/user)

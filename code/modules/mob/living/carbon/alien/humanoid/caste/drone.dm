@@ -37,15 +37,15 @@
 		else
 			healths.icon_state = "health7"
 
-//Drones use the same base as generic humanoids.
-//Drone verbs
+// Drones use the same base as generic humanoids.
+// Drone verbs
 /mob/living/carbon/alien/humanoid/drone/verb/evolve() // -- TLE
 	set name = "Evolve (500)"
 	set desc = "Produce an interal egg sac capable of spawning children. Only one queen can exist at a time."
 	set category = "Alien"
 
 	if(!isturf(src.loc))
-		to_chat(src, "\red You cannot evolve when you are inside something.")//Silly aliens!
+		to_chat(src, "\red You cannot evolve when you are inside something.")// Silly aliens!
 		return
 
 	if(powerc(500))

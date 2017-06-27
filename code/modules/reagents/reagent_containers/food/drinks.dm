@@ -1,13 +1,13 @@
-////////////////////////////////////////////////////////////////////////////////
-/// Drinks.
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////// 
+// / Drinks.
+//////////////////////////////////////////////////////////////////////////////// 
 /obj/item/weapon/reagent_containers/food/drinks
 	name = "drink"
 	desc = "Yummy!"
 	icon = 'icons/obj/drinks.dmi'
 	icon_state = null
 	flags = OPENCONTAINER
-	var/gulp_size = 5 //This is now officially broken ... need to think of a nice way to fix it.
+	var/gulp_size = 5 // This is now officially broken ... need to think of a nice way to fix it.
 	possible_transfer_amounts = list(5,10,25)
 	volume = 50
 
@@ -65,7 +65,7 @@
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
 
-		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+		if(isrobot(user)) // Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
 			var/refill = R.get_master_reagent_id()
@@ -80,7 +80,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/afterattack(obj/target, mob/user, proximity)
 	if(!proximity) return
 
-	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+	if(istype(target, /obj/structure/reagent_dispensers)) // A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
 			to_chat(user, "<span class='warning'>[target] is empty.</span>")
@@ -93,7 +93,7 @@
 		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
-	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
+	else if(target.is_open_container()) // Something like a glass. Player probably wants to transfer TO it.
 		if(!reagents.total_volume)
 			to_chat(user, "<span class='warning'>[src] is empty.</span>")
 			return
@@ -113,7 +113,7 @@
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
-		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+		if(isrobot(user)) // Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			var/chargeAmount = max(30,4*trans)
 			bro.cell.use(chargeAmount)
@@ -139,15 +139,15 @@
 		else
 			to_chat(user, "<span class='notice'>\The [src] is full!</span>")
 
-////////////////////////////////////////////////////////////////////////////////
-/// Drinks. END
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////// 
+// / Drinks. END
+//////////////////////////////////////////////////////////////////////////////// 
 
 /obj/item/weapon/reagent_containers/food/drinks/golden_cup
 	desc = "A golden cup."
 	name = "golden cup"
 	icon_state = "golden_cup"
-	item_state = "" //nope :(
+	item_state = "" // nope :(
 	w_class = 4
 	force = 14
 	throwforce = 10
@@ -160,8 +160,8 @@
 	desc = "A golden cup. It will be presented to a winner of tournament 26 june and name of the winner will be graved on it."
 
 
-///////////////////////////////////////////////Drinks
-//Notes by Darem: Drinks are simply containers that start preloaded. Unlike condiments, the contents can be ingested directly
+/////////////////////////////////////////////// Drinks
+// Notes by Darem: Drinks are simply containers that start preloaded. Unlike condiments, the contents can be ingested directly
 //	rather then having to add it to something else first. They should only contain liquids. They have a default container size of 50.
 //	Formatting is the same as food.
 
@@ -271,8 +271,8 @@
 			icon_state = "water_cup_e"
 
 
-//////////////////////////drinkingglass and shaker//
-//Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
+////////////////////////// drinkingglass and shaker// 
+// Note by Darem: This code handles the mixing of drinks. New drinks go in three places: In Chemistry-Reagents.dm (for the drink
 //	itself), in Chemistry-Recipes.dm (for the reaction that changes the components into the drink), and here (for the drinking glass
 //	icon states.
 

@@ -4,13 +4,13 @@
 	var/list/drones_list = list()
 
 /datum/event/rogue_drone/start()
-	//spawn them at the same place as carp
+	// spawn them at the same place as carp
 	var/list/possible_spawns = list()
 	for(var/obj/effect/landmark/C in landmarks_list)
 		if(C.name == "carpspawn")
 			possible_spawns.Add(C)
 
-	//25% chance for this to be a false alarm
+	// 25% chance for this to be a false alarm
 	var/num
 	if(prob(25))
 		num = 0

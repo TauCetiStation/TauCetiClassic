@@ -4,7 +4,7 @@
 	icon_state = "durand"
 	initial_icon = "durand"
 	step_in = 4
-	dir_in = 1 //Facing North.
+	dir_in = 1 // Facing North.
 	health = 400
 	deflect_chance = 20
 	damage_absorption = list("brute"=0.5,"fire"=1.1,"bullet"=0.65,"laser"=0.85,"energy"=0.9,"bomb"=0.8)
@@ -24,7 +24,7 @@
 	return
 */
 
-/obj/mecha/combat/durand/relaymove(mob/user,direction)
+/obj/mecha/combat/durand/relaymove(mob/user, direction)
 	if(defence)
 		if(world.time - last_message > 20)
 			src.occupant_message("<font color='red'>Unable to move while in defence mode</font>")
@@ -85,7 +85,7 @@
 	icon_state = "vindicator"
 	initial_icon = "vindicator"
 	step_in = 4
-	dir_in = 1 //Facing North.
+	dir_in = 1 // Facing North.
 	health = 440
 	deflect_chance = 25
 	damage_absorption = list("brute"=0.5,"fire"=1.0,"bullet"=0.55,"laser"=0.75,"energy"=0.8,"bomb"=0.7)

@@ -13,15 +13,15 @@ var/list/airlock_overlays = list()
 	icon_state = "closed"
 	explosion_resistance = 15
 
-	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
+	var/aiControlDisabled = 0 // If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/hackProof = 0 // if 1, this door can't be hacked by the AI
-	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
-	var/secondsBackupPowerLost = 0 //The number of seconds until power is restored.
+	var/secondsMainPowerLost = 0 // The number of seconds until power is restored.
+	var/secondsBackupPowerLost = 0 // The number of seconds until power is restored.
 	var/spawnPowerRestoreRunning = 0
 	var/welded = null
 	var/locked = 0
 	var/lights = 1 // bolt lights show by default
-	secondsElectrified = 0 //How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
+	secondsElectrified = 0 // How many seconds remain until the door is no longer electrified. -1 if it is permanently electrified until someone fixes it.
 	var/aiDisabledIdScanner = 0
 	var/aiHacking = 0
 	var/obj/machinery/door/airlock/closeOther = null
@@ -34,16 +34,16 @@ var/list/airlock_overlays = list()
 	var/safe = 1
 	normalspeed = 1
 	var/obj/item/weapon/airlock_electronics/electronics = null
-	var/hasShocked = 0 //Prevents multiple shocks from happening
-	var/pulseProof = 0 //#Z1 AI hacked this door after previous pulse?
+	var/hasShocked = 0 // Prevents multiple shocks from happening
+	var/pulseProof = 0 // #Z1 AI hacked this door after previous pulse?
 	var/shockedby = list()
 	var/close_timer_id = null
 	var/datum/wires/airlock/wires = null
 
-	var/inner_material = null //material of inner filling; if its an airlock with glass, this should be set to "glass"
+	var/inner_material = null // material of inner filling; if its an airlock with glass, this should be set to "glass"
 	var/overlays_file = 'icons/obj/doors/airlocks/station/overlays.dmi'
 
-	var/image/old_frame_overlay //keep those in order to prevent unnecessary updating
+	var/image/old_frame_overlay // keep those in order to prevent unnecessary updating
 	var/image/old_filling_overlay
 	var/image/old_lights_overlay
 	var/image/old_panel_overlay
@@ -84,7 +84,7 @@ var/list/airlock_overlays = list()
 	else
 		return PROCESS_KILL
 
-/obj/machinery/door/airlock/bumpopen(mob/living/user) //Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
+/obj/machinery/door/airlock/bumpopen(mob/living/user) // Airlocks now zap you when you 'bump' them open when they're electrified. --NeoFite
 	if(!issilicon(usr))
 		if(src.isElectrified())
 			if(!src.justzap)
@@ -194,12 +194,12 @@ var/list/airlock_overlays = list()
 	if(!hasPower())		// unpowered, no shock
 		return 0
 	if(hasShocked)
-		return 0	//Already shocked someone recently?
+		return 0	// Already shocked someone recently?
 	if(!prob(prb))
-		return 0 //you lucked out, no shock for you
+		return 0 // you lucked out, no shock for you
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(5, 1, src)
-	s.start() //sparks always.
+	s.start() // sparks always.
 	if(electrocute_mob(user, get_area(src), src))
 		hasShocked = 1
 		sleep(10)
@@ -355,11 +355,11 @@ var/list/airlock_overlays = list()
 			icon_state = "closed"
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
-//#Z1
+// #Z1
 	if(src.isWireCut(AIRLOCK_WIRE_AI_CONTROL))
 		to_chat(user, "Airlock AI control wire is cut. Please call the engineer or engiborg to fix this problem.")
 		return
-//##Z1
+// ##Z1
 	if(!(src.canAIControl()) || IsAdminGhost(usr))
 		if(src.canAIHack())
 			src.hack(user)
@@ -367,7 +367,7 @@ var/list/airlock_overlays = list()
 		else
 			to_chat(user, "Airlock AI control has been blocked with a firewall. Unable to hack.")
 
-	//Separate interface for the AI.
+	// Separate interface for the AI.
 	user.set_machine(src)
 	var/t1 = text("<B>Airlock Control</B><br>\n")
 	if(src.secondsMainPowerLost > 0)
@@ -471,15 +471,15 @@ var/list/airlock_overlays = list()
 	user << browse(t1, "window=airlock")
 	onclose(user, "airlock")
 
-//aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 11 lift access override
-//aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door, 11 lift access override
+// aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 11 lift access override
+// aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door, 11 lift access override
 
 
 /obj/machinery/door/airlock/proc/hack(mob/user)
 	if(src.aiHacking==0)
 		src.aiHacking=1
 		spawn(20)
-			//TODO: Make this take a minute
+			// TODO: Make this take a minute
 			to_chat(user, "Airlock AI control has been blocked. Beginning fault-detection.")
 			sleep(50)
 			if(src.canAIControl())
@@ -490,7 +490,7 @@ var/list/airlock_overlays = list()
 				to_chat(user, "We've lost our connection! Unable to hack airlock.")
 				src.aiHacking=0
 				return
-			to_chat(user, "Fault confirmed: airlock control wire disabled.")//#Z1
+			to_chat(user, "Fault confirmed: airlock control wire disabled.")// #Z1
 			sleep(20)
 			to_chat(user, "Attempting to hack into airlock. This may take some time.")
 			sleep(200)
@@ -514,15 +514,15 @@ var/list/airlock_overlays = list()
 				return
 			to_chat(user, "Transfer complete. Forcing airlock to execute program.")
 			sleep(50)
-			//disable blocked control
-//#Z1
-			//src.aiControlDisabled = 2
+			// disable blocked control
+// #Z1
+			// src.aiControlDisabled = 2
 			src.aiControlDisabled = 0
 			src.pulseProof = 1
-//##Z1
+// ##Z1
 			to_chat(user, "Receiving control information from airlock.")
 			sleep(10)
-			//bring up airlock dialog
+			// bring up airlock dialog
 			src.aiHacking = 0
 			if (user)
 				src.attack_ai(user)
@@ -565,7 +565,7 @@ var/list/airlock_overlays = list()
 	da.anchored = 0
 	var/target = da.loc
 	for(var/i in 1 to 4)
-		target = get_turf(get_step(target,user.dir))
+		target = get_turf(get_step(target, user.dir))
 	da.throw_at(target, 200, 100, spin = FALSE)
 	if(mineral)
 		da.change_mineral_airlock_type(mineral)
@@ -600,7 +600,7 @@ var/list/airlock_overlays = list()
 		to_chat(user, "<span class='userdanger'> The door is bolted and you need more aggressive force to get thru!</span>")
 		return
 	var/passed = FALSE
-	for(var/I in get_step(user,user.dir))
+	for(var/I in get_step(user, user.dir))
 		if(I == src)
 			passed = TRUE
 			break
@@ -619,8 +619,8 @@ var/list/airlock_overlays = list()
 			var/turf/simulated/floor/tile = target
 			tile.break_tile()
 		for(var/i in 1 to 2)
-			if(!step(user,cur_dir))
-				for(var/mob/living/L in get_step(user,cur_dir))
+			if(!step(user, cur_dir))
+				for(var/mob/living/L in get_step(user, cur_dir))
 					L.adjustBruteLoss(rand(20,60))
 				break
 		playsound(src,'sound/weapons/thudswoosh.ogg', 50, 1)
@@ -668,9 +668,9 @@ var/list/airlock_overlays = list()
 		return
 
 	if((istype(usr, /mob/living/silicon) && src.canAIControl()) || IsAdminGhost(usr))
-		//AI
-		//aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 8 door safties, 9 door speed, 11 lift access override
-		//aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door,  8 door safties, 9 door speed, 11 lift access override
+		// AI
+		// aiDisable - 1 idscan, 2 disrupt main power, 3 disrupt backup power, 4 drop door bolts, 5 un-electrify door, 7 close door, 8 door safties, 9 door speed, 11 lift access override
+		// aiEnable - 1 idscan, 4 raise door bolts, 5 electrify door for 30 seconds, 6 electrify door indefinitely, 7 open door,  8 door safties, 9 door speed, 11 lift access override
 		if(href_list["aiDisable"])
 			var/code = text2num(href_list["aiDisable"])
 			switch (code)
@@ -904,7 +904,7 @@ var/list/airlock_overlays = list()
 	else if(istype(C, /obj/item/weapon/crowbar) || istype(C, /obj/item/weapon/twohanded/fireaxe) )
 		var/beingcrowbarred = null
 		if(istype(C, /obj/item/weapon/crowbar) )
-			beingcrowbarred = 1 //derp, Agouri
+			beingcrowbarred = 1 // derp, Agouri
 		else
 			beingcrowbarred = 0
 		if( beingcrowbarred && (operating == -1 || density && welded && operating != 1 && src.p_open && !hasPower() && !src.locked) )
@@ -951,7 +951,7 @@ var/list/airlock_overlays = list()
 			to_chat(user, "<span class='notice'>The airlock's bolts prevent it from being forced.</span>")
 		else if( !welded && !operating )
 			if(density)
-				if(beingcrowbarred == 0) //being fireaxe'd
+				if(beingcrowbarred == 0) // being fireaxe'd
 					var/obj/item/weapon/twohanded/fireaxe/F = C
 					if(F:wielded)
 						spawn(0)	open(1)
@@ -969,7 +969,7 @@ var/list/airlock_overlays = list()
 				else
 					spawn(0)	close(1)
 
-	else if(istype(C, /obj/item/weapon/airlock_painter)) 		//airlock painter
+	else if(istype(C, /obj/item/weapon/airlock_painter)) 		// airlock painter
 		change_paintjob(C, user)
 	else
 		..()
@@ -1118,8 +1118,8 @@ var/list/airlock_overlays = list()
 	desc = "Just a bunch of garbage."
 	var/ticker = 0
 	var/icon/door = icon('icons/effects/effects.dmi',"Sliced")
-	//light_power = 1
-	//light_color = "#cc0000"
+	// light_power = 1
+	// light_color = "#cc0000"
 
 
 /obj/structure/door_scrap/attackby(obj/O, mob/user)

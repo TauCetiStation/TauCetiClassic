@@ -23,15 +23,15 @@
 	qdel(src)
 	return
 
-/obj/structure/sign/attackby(obj/item/tool, mob/user)	//deconstruction
+/obj/structure/sign/attackby(obj/item/tool, mob/user)	// deconstruction
 	if(istype(tool, /obj/item/weapon/screwdriver) && !istype(src, /obj/structure/sign/double))
 		to_chat(user, "You unfasten the sign with your [tool].")
 		var/obj/item/sign/S = new(src.loc)
 		S.name = name
 		S.desc = desc
 		S.icon_state = icon_state
-		//var/icon/I = icon('icons/obj/decals.dmi', icon_state)
-		//S.icon = I.Scale(24, 24)
+		// var/icon/I = icon('icons/obj/decals.dmi', icon_state)
+		// S.icon = I.Scale(24, 24)
 		S.sign_state = icon_state
 		qdel(src)
 	else ..()
@@ -40,10 +40,10 @@
 	name = "sign"
 	desc = ""
 	icon = 'icons/obj/decals.dmi'
-	w_class = 3		//big
+	w_class = 3		// big
 	var/sign_state = ""
 
-/obj/item/sign/attackby(obj/item/tool, mob/user)	//construction
+/obj/item/sign/attackby(obj/item/tool, mob/user)	// construction
 	if(istype(tool, /obj/item/weapon/screwdriver) && isturf(user.loc))
 		var/direction = input("In which direction?", "Select direction.") in list("North", "East", "South", "West", "Cancel")
 		if(direction == "Cancel") return
@@ -150,7 +150,7 @@
 	desc = "This plaque commemorates the fall of the Atmos FEA division. For all the charred, dizzy, and brittle men who have died in its hands."
 	icon_state = "atmosplaque"
 
-/obj/structure/sign/double/maltesefalcon	//The sign is 64x32, so it needs two tiles. ;3
+/obj/structure/sign/double/maltesefalcon	// The sign is 64x32, so it needs two tiles. ;3
 	name = "The Maltese Falcon"
 	desc = "The Maltese Falcon, Space Bar and Grill."
 
@@ -160,7 +160,7 @@
 /obj/structure/sign/double/maltesefalcon/right
 	icon_state = "maltesefalcon-right"
 
-/obj/structure/sign/science			//These 3 have multiple types, just var-edit the icon_state to whatever one you want on the map
+/obj/structure/sign/science			// These 3 have multiple types, just var-edit the icon_state to whatever one you want on the map
 	name = "\improper SCIENCE!"
 	desc = "A warning sign which reads 'SCIENCE!'."
 	icon_state = "science1"

@@ -1,5 +1,5 @@
 
-//changes: rad protection up to 100 from 20/50 respectively
+// changes: rad protection up to 100 from 20/50 respectively
 /obj/item/clothing/suit/bio_suit/anomaly
 	name = "Anomaly suit"
 	desc = "A sealed bio suit capable of insulating against exotic alien energies."

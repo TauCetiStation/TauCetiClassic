@@ -20,7 +20,7 @@
 	name = "alien thing"
 	desc = "theres something alien about this."
 	icon = 'icons/mob/xenomorph.dmi'
-//	unacidable = 1 //Aliens won't ment their own.
+//	unacidable = 1 // Aliens won't ment their own.
 
 
 /*
@@ -37,12 +37,12 @@
 	layer = 3.14
 	var/health = 250
 	var/resintype = null
-	//var/mob/living/affecting = null
+	// var/mob/living/affecting = null
 
 /obj/effect/alien/resin/wall
 		name = "resin wall"
 		desc = "Purple slime solidified into a wall."
-		icon_state = "wall0" //same as resin, but consistency ho!
+		icon_state = "wall0" // same as resin, but consistency ho!
 		resintype = "wall"
 
 /obj/effect/alien/resin/membrane
@@ -143,7 +143,7 @@
 
 /obj/effect/alien/resin/attack_alien()
 	usr.do_attack_animation(src)
-	if (islarva(usr) || isfacehugger(usr))//Safety check for larva. /N
+	if (islarva(usr) || isfacehugger(usr))// Safety check for larva. /N
 		return
 	to_chat(usr, "\green You claw at the [name].")
 	for(var/mob/O in oviewers(src))
@@ -247,7 +247,7 @@
 		W.updateWeedOverlays()
 
 /obj/structure/alien/weeds/proc/Life()
-	//set background = 1
+	// set background = 1
 	var/turf/U = get_turf(src)
 
 	if (istype(U, /turf/space))
@@ -361,7 +361,7 @@
 	if(isturf(target)) // Turf take twice as long to take down.
 		target_strength = 8
 	else if(istype(target, /obj/machinery/atmospherics/unary/vent_pump))
-		target_strength = 2 //Its just welded, what??
+		target_strength = 2 // Its just welded, what??
 	else
 		target_strength = 4
 	tick()
@@ -403,13 +403,13 @@
 /*
  * Egg
  */
-/var/const //for the status var
+/var/const // for the status var
 	BURST = 0
 	BURSTING = 1
 	GROWING = 2
 	GROWN = 3
 
-	MIN_GROWTH_TIME = 1800 //time it takes to grow a hugger
+	MIN_GROWTH_TIME = 1800 // time it takes to grow a hugger
 	MAX_GROWTH_TIME = 3000
 
 /obj/effect/alien/egg
@@ -420,12 +420,12 @@
 	anchored = 1
 
 	var/health = 100
-	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
+	var/status = GROWING // can be GROWING, GROWN or BURST; all mutually exclusive
 	var/used = 0
 
 	New()
 		..()
-		spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
+		spawn(rand(MIN_GROWTH_TIME, MAX_GROWTH_TIME))
 			Grow()
 
 	attack_paw(user)

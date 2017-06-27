@@ -1,4 +1,4 @@
-//Common
+// Common
 /obj/machinery/abductor
 	var/team = 0
 
@@ -17,7 +17,7 @@
 		return H.scientist
 	return 0
 
-//*************-Console-*************//
+// *************-Console-*************// 
 
 /obj/machinery/abductor/console
 	name = "abductor console"
@@ -118,11 +118,11 @@
 	else if(href_list["dispense"])
 		switch(href_list["dispense"])
 			if("injector")
-				Dispense(/obj/item/weapon/lazarus_injector/alien,cost=4)
+				Dispense(/obj/item/weapon/lazarus_injector/alien, cost=4)
 			if("pistol")
-				Dispense(/obj/item/weapon/gun/energy/decloner/alien,cost=3)
+				Dispense(/obj/item/weapon/gun/energy/decloner/alien, cost=3)
 			if("baton")
-				Dispense(/obj/item/weapon/abductor_baton,cost=2)
+				Dispense(/obj/item/weapon/abductor_baton, cost=2)
 			if("helmet")
 				Dispense(/obj/item/clothing/head/helmet/abductor)
 			if("silencer")
@@ -197,7 +197,7 @@
 	entry.icon_state = target.icon_state
 	entry.overlays = target.overlays.Copy()
 	entry.overlays_standing = target.get_overlays_copy()
-	for(var/i=1,i<=disguises.len,i++)
+	for(var/i=1,i<=disguises.len, i++)
 		var/datum/icon_snapshot/temp = disguises[i]
 		if(temp.name == entry.name)
 			disguises[i] = entry
@@ -218,7 +218,7 @@
 	else
 		..()
 
-/obj/machinery/abductor/console/proc/Dispense(item,cost=1)
+/obj/machinery/abductor/console/proc/Dispense(item, cost=1)
 	if(experiment && experiment.points >= cost)
 		experiment.points-=cost
 		src.visible_message("Incoming supply!")

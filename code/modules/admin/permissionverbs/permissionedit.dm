@@ -116,13 +116,13 @@
 				to_chat(usr, "<span class='alert'>Error: Topic 'editrights': Invalid rank</span>")
 				return
 	if(D)
-		D.disassociate()								//remove adminverbs and unlink from client
-		D.rank = new_rank								//update the rank
-		D.rights = rights								//update the rights based on admin_ranks (default: 0)
+		D.disassociate()								// remove adminverbs and unlink from client
+		D.rank = new_rank								// update the rank
+		D.rights = rights								// update the rights based on admin_ranks (default: 0)
 	else
 		D = new /datum/admins(new_rank, rights, adm_ckey)
-	var/client/C = directory[adm_ckey]						//find the client with the specified ckey (if they are logged in)
-	D.associate(C)											//link up with the client and add verbs
+	var/client/C = directory[adm_ckey]						// find the client with the specified ckey (if they are logged in)
+	D.associate(C)											// link up with the client and add verbs
 	db_admin_rank_modification(adm_ckey, new_rank)
 	message_admins("[key_name_admin(usr)] edited the admin rank of [adm_ckey] to [new_rank]")
 	log_admin("[key_name(usr)] edited the admin rank of [adm_ckey] to [new_rank]")

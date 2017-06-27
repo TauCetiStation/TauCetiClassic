@@ -6,7 +6,7 @@
 
 /obj/screen/plane_master/New()
 	if(blend_mode == BLEND_MULTIPLY)
-		//What is this? Read http://www.byond.com/forum/?post=2141928
+		// What is this? Read http:// www.byond.com/forum/?post=2141928
 		var/image/backdrop = image('icons/mob/screen_gen.dmi', "black")
 		backdrop.transform = matrix(200, 0, 0, 0, 200, 0)
 		backdrop.layer = BACKGROUND_LAYER

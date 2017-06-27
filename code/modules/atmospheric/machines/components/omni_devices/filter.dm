@@ -1,6 +1,6 @@
-//--------------------------------------------
+// --------------------------------------------
 // Gas filter - omni variant
-//--------------------------------------------
+// --------------------------------------------
 /obj/machinery/atmospherics/omni/filter
 	name = "omni gas filter"
 	icon_state = "map_filter"
@@ -39,7 +39,7 @@
 /obj/machinery/atmospherics/omni/filter/error_check()
 	if(!input || !output || !filters)
 		return 1
-	if(filters.len < 1 || filters.len > 2) //requires 1 or 2 filters ~otherwise why are you using a filter?
+	if(filters.len < 1 || filters.len > 2) // requires 1 or 2 filters ~otherwise why are you using a filter?
 		return 1
 
 	return 0
@@ -52,7 +52,7 @@
 	if(!input || !output)
 		return
 
-	var/datum/gas_mixture/output_air = output.air	//BYOND doesn't like referencing "output.air.return_pressure()" so we need to make a direct reference
+	var/datum/gas_mixture/output_air = output.air	// BYOND doesn't like referencing "output.air.return_pressure()" so we need to make a direct reference
 	var/datum/gas_mixture/input_air = input.air		// it's completely happy with them if they're in a loop though i.e. "P.air.return_pressure()"... *shrug*
 
 	var/output_pressure = output_air.return_pressure()
@@ -163,7 +163,7 @@
 	if(portData.len)
 		data["ports"] = portData
 	if(output)
-		data["set_pressure"] = round(target_pressure*10)		//because nanoui can't handle rounded decimals.
+		data["set_pressure"] = round(target_pressure*10)		// because nanoui can't handle rounded decimals.
 
 	return data
 
@@ -176,7 +176,7 @@
 		if(ATM_CO2)
 			return "Carbon Dioxide"
 		if(ATM_P)
-			return "Phoron" //*cough* Plasma *cough*
+			return "Phoron" // *cough* Plasma *cough*
 		if(ATM_N2O)
 			return "Nitrous Oxide"
 		else
@@ -197,7 +197,7 @@
 			if(configuring)
 				on = 0
 
-	//only allows config changes when in configuring mode ~otherwise you'll get weird pressure stuff going on
+	// only allows config changes when in configuring mode ~otherwise you'll get weird pressure stuff going on
 	if(configuring && !on)
 		switch(href_list["command"])
 			if("set_pressure")
@@ -234,7 +234,7 @@
 			return null
 
 /obj/machinery/atmospherics/omni/filter/proc/switch_filter(dir, mode)
-	//check they aren't trying to disable the input or output ~this can only happen if they hack the cached tmpl file
+	// check they aren't trying to disable the input or output ~this can only happen if they hack the cached tmpl file
 	for(var/datum/omni_port/P in ports)
 		if(P.dir == dir)
 			if(P.mode == ATM_INPUT || P.mode == ATM_OUTPUT)

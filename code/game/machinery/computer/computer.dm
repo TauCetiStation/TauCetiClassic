@@ -6,7 +6,7 @@
 	use_power = 1
 	idle_power_usage = 300
 	active_power_usage = 300
-	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
+	var/obj/item/weapon/circuitboard/circuit = null // if circuit==null, computer can't disassembly
 	var/processing = 0
 
 	var/light_range_on = 1.5
@@ -102,7 +102,7 @@
 
 
 /obj/machinery/computer/proc/set_broken()
-	if(circuit) //no circuit, no breaking
+	if(circuit) // no circuit, no breaking
 		stat |= BROKEN
 		update_icon()
 	return

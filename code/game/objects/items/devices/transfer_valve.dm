@@ -35,7 +35,7 @@
 
 		update_icon()
 		nanomanager.update_uis(src) // update all UIs attached to src
-//TODO: Have this take an assemblyholder
+// TODO: Have this take an assemblyholder
 	else if(isassembly(item))
 		var/obj/item/device/assembly/A = item
 		if(A.secured)
@@ -49,7 +49,7 @@
 		A.loc = src
 		to_chat(user, "<span class='notice'>You attach the [item] to the valve controls and secure it.</span>")
 		A.holder = src
-		A.toggle_secure()	//this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
+		A.toggle_secure()	// this calls update_icon(), which calls update_icon() on the holder (i.e. the bomb).
 
 		bombers += "[key_name(user)] attached a [item] to a transfer valve."
 		message_admins("[key_name_admin(user)] attached a [item] to a transfer valve. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
@@ -66,7 +66,7 @@
 
 /obj/item/device/transfer_valve/hear_talk(mob/living/M, msg)
 	if(!attached_device)	return
-	attached_device.hear_talk(M,msg)
+	attached_device.hear_talk(M, msg)
 	return
 
 /obj/item/device/transfer_valve/attack_self(mob/user)
@@ -92,7 +92,7 @@
 		// open the new ui window
 		ui.open()
 		// auto update every Master Controller tick
-		//ui.set_auto_update(1)
+		// ui.set_auto_update(1)
 
 /obj/item/device/transfer_valve/Topic(href, href_list)
 	..()

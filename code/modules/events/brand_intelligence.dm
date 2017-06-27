@@ -1,6 +1,6 @@
 /datum/event/brand_intelligence
 	announceWhen	= 21
-	endWhen			= 1000	//Ends when all vending machines are subverted anyway.
+	endWhen			= 1000	// Ends when all vending machines are subverted anyway.
 	oneShot			= 1
 
 	var/list/obj/machinery/vending/vendingMachines = list()
@@ -28,7 +28,7 @@
 
 
 /datum/event/brand_intelligence/tick()
-	if(!vendingMachines.len || !originMachine || originMachine.shut_up)	//if every machine is infected, or if the original vending machine is missing or has it's voice switch flipped
+	if(!vendingMachines.len || !originMachine || originMachine.shut_up)	// if every machine is infected, or if the original vending machine is missing or has it's voice switch flipped
 		end()
 		kill()
 		return

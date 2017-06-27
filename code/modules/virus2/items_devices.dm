@@ -1,4 +1,4 @@
-///////////////ANTIBODY SCANNER///////////////
+////////////// /ANTIBODY SCANNER////////////// /
 
 /obj/item/device/antibody_scanner
 	name = "\improper Antibody Scanner"
@@ -33,7 +33,7 @@
 /obj/item/device/antibody_scanner/proc/report(text, mob/user)
 	to_chat(user, "\blue [bicon(src)] \The [src] beeps, \"[text]\"")
 
-///////////////VIRUS DISH///////////////
+////////////// /VIRUS DISH////////////// /
 
 /obj/item/weapon/virusdish
 	name = "virus containment/growth dish"
@@ -53,7 +53,7 @@
 	src.virus2.makerandom()
 	growth = rand(5, 50)
 
-/obj/item/weapon/virusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
+/obj/item/weapon/virusdish/attackby(obj/item/weapon/W, mob/living/carbon/user)
 	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
 		return
 	..()
@@ -65,7 +65,7 @@
 			for(var/mob/living/carbon/target in view(1, get_turf(src)))
 				if(airborne_can_reach(get_turf(src), get_turf(target)))
 					if(get_infection_chance(target))
-						infect_virus2(target,src.virus2)
+						infect_virus2(target, src.virus2)
 		qdel(src)
 
 /obj/item/weapon/virusdish/examine(mob/user)
@@ -80,7 +80,7 @@
 	icon_state = "implantcase-b"
 	desc = "The bacteria in the dish are completely dead."
 
-/obj/item/weapon/ruinedvirusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
+/obj/item/weapon/ruinedvirusdish/attackby(obj/item/weapon/W, mob/living/carbon/user)
 	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
 		return ..()
 
@@ -88,7 +88,7 @@
 		to_chat(user, "\The [src] shatters!")
 		qdel(src)
 
-///////////////GNA DISK///////////////
+////////////// /GNA DISK////////////// /
 
 /obj/item/weapon/diseasedisk
 	name = "blank GNA disk"

@@ -1,4 +1,4 @@
-//Regular rig suits
+// Regular rig suits
 /obj/item/clothing/head/helmet/space/rig
 	name = "hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment."
@@ -8,13 +8,13 @@
 
 	action_button_name = "Toggle Helmet Light"
 	allowed = list(/obj/item/device/flashlight)
-	var/brightness_on = 4 //luminosity when on
+	var/brightness_on = 4 // luminosity when on
 	var/on = 0
-	item_color = "engineering" //Determines used sprites: rig[on]-[color] and rig[on]-[color]2 (lying down sprite)
+	item_color = "engineering" // Determines used sprites: rig[on]-[color] and rig[on]-[color]2 (lying down sprite)
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
-	//Species-specific stuff.
+	// Species-specific stuff.
 	species_restricted = list("exclude" , UNATHI , TAJARAN , SKRELL , DIONA , VOX)
 	sprite_sheets_refit = list(
 		UNATHI = 'icons/mob/species/unathi/helmet.dmi',
@@ -29,7 +29,7 @@
 
 /obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
 	if(!isturf(user.loc))
-		to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
+		to_chat(user, "You cannot turn the light on while in this [user.loc]")// To prevent some lighting anomalities.
 		return
 	on = !on
 	icon_state = "rig[on]-[item_color]"
@@ -67,11 +67,11 @@
 		)
 	var/magpulse = 0
 
-	//Breach thresholds, should ideally be inherited by most (if not all) hardsuits.
+	// Breach thresholds, should ideally be inherited by most (if not all) hardsuits.
 	breach_threshold = 18
 	can_breach = 1
 
-	//Component/device holders.
+	// Component/device holders.
 	var/obj/item/weapon/stock_parts/gloves = null     // Basic capacitor allows insulation, upgrades allow shock gloves etc.
 
 	var/attached_boots = 1                            // Can't wear boots if some are attached
@@ -142,7 +142,7 @@
 		if(H.head)
 			to_chat(H, "\red You cannot deploy your helmet while wearing another helmet.")
 			return
-		//TODO: Species check, skull damage for forcing an unfitting helmet on?
+		// TODO: Species check, skull damage for forcing an unfitting helmet on?
 		helmet.loc = H
 		H.equip_to_slot(helmet, slot_head)
 		helmet.canremove = 0
@@ -191,7 +191,7 @@
 
 		if(target_zone == BP_HEAD)
 
-			//Installing a component into or modifying the contents of the helmet.
+			// Installing a component into or modifying the contents of the helmet.
 			if(!attached_helmet)
 				to_chat(user, "\The [src] does not have a helmet mount.")
 				return
@@ -218,7 +218,7 @@
 
 		else if(target_zone == BP_L_LEG || target_zone == BP_R_LEG || target_zone == BP_L_FOOT || target_zone == BP_R_FOOT)
 
-			//Installing a component into or modifying the contents of the feet.
+			// Installing a component into or modifying the contents of the feet.
 			if(!attached_boots)
 				to_chat(user, "\The [src] does not have boot mounts.")
 				return
@@ -242,7 +242,7 @@
 			else
 				return ..()
 
-		else //wat
+		else // wat
 			return ..()
 
 	..()
@@ -251,7 +251,7 @@
 	..()
 	to_chat(user, "Its mag-pulse traction system appears to be [magpulse ? "enabled" : "disabled"].")
 
-//Engineering rig
+// Engineering rig
 /obj/item/clothing/head/helmet/space/rig/engineering
 	name = "engineering hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
@@ -270,7 +270,7 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
 	siemens_coefficient = 0
 
-//Chief Engineer's rig
+// Chief Engineer's rig
 /obj/item/clothing/head/helmet/space/rig/engineering/chief
 	name = "advanced hardsuit helmet"
 	desc = "An advanced helmet designed for work in a hazardous, low pressure environment. Shines with a high polish."
@@ -293,7 +293,7 @@
 	sprite_sheets_refit = list(SKRELL = 'icons/mob/species/skrell/suit.dmi')
 	sprite_sheets_obj = list(SKRELL = 'icons/obj/clothing/species/skrell/suits.dmi')
 
-//Mining rig
+// Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
 	name = "mining hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has reinforced plating."
@@ -311,7 +311,7 @@
 	breach_threshold = 26
 
 
-//Syndicate rig
+// Syndicate rig
 /obj/item/clothing/head/helmet/space/rig/syndi
 	name = "blood-red hardsuit helmet"
 	desc = "An advanced helmet designed for work in special operations. Property of Gorlex Marauders."
@@ -348,14 +348,14 @@
 	species_restricted = list("exclude" , UNATHI , TAJARAN , SKRELL , VOX)
 	breach_threshold = 28
 
-//Wizard Rig
+// Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard
 	name = "gem-encrusted hardsuit helmet"
 	desc = "A bizarre gem-encrusted helmet that radiates magical energies."
 	icon_state = "rig0-wiz"
 	item_state = "wiz_helm"
 	item_color = "wiz"
-	unacidable = 1 //No longer shall our kind be foiled by lone chemists with spray bottles!
+	unacidable = 1 // No longer shall our kind be foiled by lone chemists with spray bottles!
 	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
 
 /obj/item/clothing/suit/space/rig/wizard
@@ -367,7 +367,7 @@
 	unacidable = 1
 	armor = list(melee = 40, bullet = 33, laser = 33,energy = 33, bomb = 33, bio = 100, rad = 66)
 
-//Medical Rig
+// Medical Rig
 /obj/item/clothing/head/helmet/space/rig/medical
 	name = "medical hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has minor radiation shielding."
@@ -384,7 +384,7 @@
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/firstaid,/obj/item/device/healthanalyzer,/obj/item/stack/medical)
 	armor = list(melee = 30, bullet = 5, laser = 10,energy = 5, bomb = 25, bio = 100, rad = 50)
 
-	//Security
+	// Security
 /obj/item/clothing/head/helmet/space/rig/security
 	name = "security hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
@@ -403,7 +403,7 @@
 	breach_threshold = 20
 	slowdown = 1.4
 
-//Atmospherics Rig (BS12)
+// Atmospherics Rig (BS12)
 /obj/item/clothing/head/helmet/space/rig/atmos
 	desc = "A special helmet designed for work in a hazardous, low pressure environments. Has improved thermal protection and minor radiation shielding."
 	name = "atmospherics hardsuit helmet"

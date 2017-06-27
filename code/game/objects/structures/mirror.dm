@@ -1,4 +1,4 @@
-//wip wip wup
+// wip wip wup
 /obj/structure/mirror
 	name = "mirror"
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
@@ -179,7 +179,7 @@
 			*/
 
 		if("gender")
-			if(!(H.gender in list("male", "female"))) //blame the patriarchy
+			if(!(H.gender in list("male", "female"))) // blame the patriarchy
 				return
 
 			if(H.gender == "male")
@@ -202,11 +202,11 @@
 		if("hair")
 			var/hairchoice = alert(H, "Hair style or hair color?", "Change Hair", "Style", "Color")
 
-			if(hairchoice == "Style") //So you just want to use a mirror then?
+			if(hairchoice == "Style") // So you just want to use a mirror then?
 				var/userloc = H.loc
-				//see code/modules/mob/new_player/preferences.dm at approx line 545 for comments!
-				//this is largely copypasted from there.
-				//handle facial hair (if necessary)
+				// see code/modules/mob/new_player/preferences.dm at approx line 545 for comments!
+				// this is largely copypasted from there.
+				// handle facial hair (if necessary)
 				if(H.gender == MALE)
 					var/list/species_facial_hair = list()
 					if(H.species)
@@ -218,10 +218,10 @@
 						species_facial_hair = facial_hair_styles_list
 					var/new_style = input(user, "Select a facial hair style", "Grooming")  as null|anything in species_facial_hair
 					if(userloc != H.loc)
-						return	//no tele-grooming
+						return	// no tele-grooming
 					if(new_style)
 						H.f_style = new_style
-				//handle normal hair
+				// handle normal hair
 				var/list/species_hair = list()
 				if(H.species)
 					for(var/i in hair_styles_list)
@@ -232,7 +232,7 @@
 					species_hair = hair_styles_list
 				var/new_style = input(user, "Select a hair style", "Grooming")  as null|anything in species_hair
 				if(userloc != H.loc)
-					return	//no tele-grooming
+					return	// no tele-grooming
 				if(new_style)
 					H.h_style = new_style
 				H.update_hair()

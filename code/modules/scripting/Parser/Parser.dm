@@ -128,7 +128,7 @@
 
 	proc
 		CheckToken(val, type, err=1, skip=1)
-			if(curToken.value!=val || !istype(curToken,type))
+			if(curToken.value!=val || !istype(curToken, type))
 				if(err)
 					errors+=new/scriptError/ExpectedToken(val, curToken)
 				return 0
@@ -168,8 +168,8 @@
 				return
 			var/node/statement/FunctionCall/stmt=new
 			stmt.func_name=curToken.value
-			NextToken() //skip function name
-			if(!CheckToken("(", /token/symbol)) //Check for and skip open parenthesis
+			NextToken() // skip function name
+			if(!CheckToken("(", /token/symbol)) // Check for and skip open parenthesis
 				return
 			var/loops = 0
 			for()
@@ -182,7 +182,7 @@
 					return
 				if(istype(curToken, /token/symbol) && curToken.value==")")
 					curBlock.statements+=stmt
-					NextToken() //Skip close parenthesis
+					NextToken() // Skip close parenthesis
 					return
 				var/node/expression/P=ParseParamExpression()
 				stmt.parameters+=P

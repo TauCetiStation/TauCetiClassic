@@ -13,18 +13,18 @@
 
 /obj/item/clothing/suit/space/shadowling
 	name = "chitin shell"
-	desc = "Dark, semi-transparent shell. Protects against vacuum, but not against the light of the stars." //Still takes damage from spacewalking but is immune to space itself
+	desc = "Dark, semi-transparent shell. Protects against vacuum, but not against the light of the stars." // Still takes damage from spacewalking but is immune to space itself
 	icon_state = "shadowling_armor"
 	item_state = "golem"
-	body_parts_covered = FULL_BODY //Shadowlings are immune to space
+	body_parts_covered = FULL_BODY // Shadowlings are immune to space
 	cold_protection = FULL_BODY
-	//min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
+	// min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
 	flags = ABSTRACT | DROPDEL | THICKMATERIAL
 	slowdown = 0
 	unacidable = 1
-	heat_protection = null //You didn't expect a light-sensitive creature to have heat resistance, did you?
+	heat_protection = null // You didn't expect a light-sensitive creature to have heat resistance, did you?
 	max_heat_protection_temperature = null
 	canremove = 0
 	siemens_coefficient = 0.2
@@ -87,9 +87,9 @@
 	alpha = 0
 	darkness_view = 3
 	var/vision = 1
-	//invis_view = 2
-	//invisa_view = 2
-	//flash_protect = 2
+	// invis_view = 2
+	// invisa_view = 2
+	// flash_protect = 2
 	unacidable = 1
 	flags = ABSTRACT | DROPDEL
 	canremove = 0
@@ -110,11 +110,11 @@
 		if(src.vision)
 			src.vision = !src.vision
 			src.icon_state = "ling_vision_on"
-			//usr << ""
+			// usr << ""
 		else
 			src.vision = !src.vision
 			src.icon_state = "ling_vision_off"
-			//usr << ""
+			// usr << ""
 
 		usr.update_inv_glasses()
 
@@ -127,7 +127,7 @@
 	icon_state = "shadow_portal"
 
 /obj/structure/shadow_vortex/New()
-	//src.audible_message("<span class='warning'><b>\The [src] lets out a dismaying screech as dimensional barriers are torn apart!</span>")
+	// src.audible_message("<span class='warning'><b>\The [src] lets out a dismaying screech as dimensional barriers are torn apart!</span>")
 	playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
 	sleep(100)
 	qdel(src)
@@ -136,7 +136,7 @@
 	..()
 	if(ismob(td))
 		to_chat(td, "<span class='userdanger'><font size=3>You enter the rift. Sickening chimes begin to jangle in your ears. \
-		All around you is endless blackness. After you see something moving, you realize it isn't entirely lifeless.</font></span>") //A bit of spooking before they die
+		All around you is endless blackness. After you see something moving, you realize it isn't entirely lifeless.</font></span>") // A bit of spooking before they die
 		var/mob/M = td
 		M.ghostize()
 	playsound(loc, 'sound/effects/EMPulse.ogg', 25, 1)

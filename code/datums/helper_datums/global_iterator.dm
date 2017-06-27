@@ -57,9 +57,9 @@ Data storage vars:
 	var/result
 	var/state = 0
 
-	New(list/arguments=null,autostart=1)
+	New(list/arguments=null, autostart=1)
 		delay = delay>0?(delay):1
-		if(forbid_garbage) //prevents garbage collection with tag != null
+		if(forbid_garbage) // prevents garbage collection with tag != null
 			tag = "\ref[src]"
 		set_process_args(arguments)
 		if(autostart)
@@ -74,7 +74,7 @@ Data storage vars:
 				stop()
 				return 0
 			result = process(arglist(arg_list))
-			for(var/sleep_time=delay;sleep_time>0;sleep_time--) //uhh, this is ugly. But I see no other way to terminate sleeping proc. Such disgrace.
+			for(var/sleep_time=delay;sleep_time>0;sleep_time--) // uhh, this is ugly. But I see no other way to terminate sleeping proc. Such disgrace.
 				if(!control_switch)
 					return 0
 				sleep(1)
@@ -86,7 +86,7 @@ Data storage vars:
 		if(arguments)
 			if(!set_process_args(arguments))
 				return 0
-		if(!state_check()) //the main loop is sleeping, wait for it to terminate.
+		if(!state_check()) // the main loop is sleeping, wait for it to terminate.
 			return
 		control_switch = 1
 		spawn()
@@ -97,7 +97,7 @@ Data storage vars:
 		if(!active())
 			return
 		control_switch = 0
-		spawn(-1) //report termination error but don't wait for state_check().
+		spawn(-1) // report termination error but don't wait for state_check().
 			state_check()
 		return 1
 

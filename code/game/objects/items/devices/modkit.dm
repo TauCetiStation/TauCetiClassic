@@ -17,10 +17,10 @@
 	var/list/forbidden_type = list()
 
 /obj/item/device/modkit/afterattack(obj/O, mob/user)
-	if(get_dist(src,O)>1)
+	if(get_dist(src, O)>1)
 		return
 	if (!target_species)
-		return	//it shouldn't be null, okay?
+		return	// it shouldn't be null, okay?
 
 	if(!parts)
 		to_chat(user, "<span class='warning'>This kit has no parts for this modification left.</span>")

@@ -43,7 +43,7 @@
 
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 
-	if(!B)//We are on a blob
+	if(!B)// We are on a blob
 		to_chat(src, "There is no blob here!")
 		return
 
@@ -73,7 +73,7 @@
 
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 
-	if(!B)//We are on a blob
+	if(!B)// We are on a blob
 		to_chat(src, "There is no blob here!")
 		return
 
@@ -109,7 +109,7 @@
 
 	var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 
-	if(!B)//We are on a blob
+	if(!B)// We are on a blob
 		to_chat(src, "There is no blob here!")
 		return
 

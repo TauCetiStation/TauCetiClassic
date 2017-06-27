@@ -41,7 +41,7 @@
 		set src = usr.loc
 		var/perspective = input("Select a perspective type.",
                       "Client perspective",
-                      occupant.client.perspective) in list(MOB_PERSPECTIVE,EYE_PERSPECTIVE)
+                      occupant.client.perspective) in list(MOB_PERSPECTIVE, EYE_PERSPECTIVE)
 		to_chat(world, "[perspective]")
 		occupant.client.perspective = perspective
 		return
@@ -58,7 +58,7 @@
 		return
 */
 
-//TODO - Check documentation for client.eye and client.perspective...
+// TODO - Check documentation for client.eye and client.perspective...
 /obj/item/clothing/glasses/hud/health/mech
 	name = "Integrated Medical Hud"
 

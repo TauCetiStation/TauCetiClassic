@@ -1,16 +1,16 @@
-//Meant for simple animals to drop lootable human bodies.
+// Meant for simple animals to drop lootable human bodies.
 
-//If someone can do this in a neater way, be my guest-Kor
+// If someone can do this in a neater way, be my guest-Kor
 
-//This has to be seperate from the Away Mission corpses, because New() doesn't work for those, and initialize() doesn't work for these.
+// This has to be seperate from the Away Mission corpses, because New() doesn't work for those, and initialize() doesn't work for these.
 
-//To do: Allow corpses to appear mangled, bloody, etc. Allow customizing the bodies appearance (they're all bald and white right now).
+// To do: Allow corpses to appear mangled, bloody, etc. Allow customizing the bodies appearance (they're all bald and white right now).
 
 
 /obj/effect/landmark/mobcorpse
 	name = "Unknown"
-	var/mobname = "Unknown"  //Unused now but it'd fuck up maps to remove it now
-	var/corpseuniform = null //Set this to an object path to have the slot filled with said object on the corpse.
+	var/mobname = "Unknown"  // Unused now but it'd fuck up maps to remove it now
+	var/corpseuniform = null // Set this to an object path to have the slot filled with said object on the corpse.
 	var/corpsesuit = null
 	var/corpseshoes = null
 	var/corpsegloves = null
@@ -22,18 +22,18 @@
 	var/corpsepocket1 = null
 	var/corpsepocket2 = null
 	var/corpseback = null
-	var/corpseid = 0     //Just set to 1 if you want them to have an ID
+	var/corpseid = 0     // Just set to 1 if you want them to have an ID
 	var/corpseidjob = null // Needs to be in quotes, such as "Clown" or "Chef." This just determines what the ID reads as, not their access
-	var/corpseidaccess = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
-	var/corpseidicon = null //For setting it to be a gold, silver, centcomm etc ID
+	var/corpseidaccess = null // This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
+	var/corpseidicon = null // For setting it to be a gold, silver, centcomm etc ID
 
 /obj/effect/landmark/mobcorpse/New()
 	createCorpse()
 
-/obj/effect/landmark/mobcorpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
+/obj/effect/landmark/mobcorpse/proc/createCorpse() // Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
 	M.real_name = src.name
-	M.stat = DEAD //Kills the new mob
+	M.stat = DEAD // Kills the new mob
 	if(src.corpseuniform)
 		M.equip_to_slot_or_del(new src.corpseuniform(M), slot_w_uniform)
 	if(src.corpsesuit)
@@ -82,7 +82,7 @@
 
 
 
-//List of different corpse types
+// List of different corpse types
 
 /obj/effect/landmark/mobcorpse/syndicatesoldier
 	name = "Syndicate Operative"

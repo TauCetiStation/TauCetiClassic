@@ -54,7 +54,7 @@ for reference:
 */
 
 
-//Barricades, maybe there will be a metal one later...
+// Barricades, maybe there will be a metal one later...
 /obj/structure/barricade/wooden
 	name = "wooden barricade"
 	desc = "This space is blocked off by a wooden barricade."
@@ -123,7 +123,7 @@ for reference:
 			qdel(src)
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
+	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)// So bullets will fly over and stuff.
 		if(air_group || (height==0))
 			return 1
 		if(istype(mover) && mover.checkpass(PASSTABLE))
@@ -132,13 +132,13 @@ for reference:
 			return 0
 
 
-//Actual Deployable machinery stuff
+// Actual Deployable machinery stuff
 
 /obj/machinery/deployable
 	name = "deployable"
 	desc = "deployable"
 	icon = 'icons/obj/objects.dmi'
-	req_access = list(access_security)//I'm changing this until these are properly tested./N
+	req_access = list(access_security)// I'm changing this until these are properly tested./N
 
 /obj/machinery/deployable/barrier
 	name = "deployable barrier"
@@ -247,7 +247,7 @@ for reference:
 			src.explode()
 		return
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)//So bullets will fly over and stuff.
+	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)// So bullets will fly over and stuff.
 		if(air_group || (height==0))
 			return 1
 		if(istype(mover) && mover.checkpass(PASSTABLE))

@@ -43,7 +43,7 @@
 		update_nearby_tiles()
 		return ..()
 
-	proc/update_nearby_tiles(need_rebuild) //Copypasta from airlock code
+	proc/update_nearby_tiles(need_rebuild) // Copypasta from airlock code
 		if(!SSair)
 			return 0
 		SSair.mark_for_update(get_turf(src))
@@ -81,7 +81,7 @@
 
 
 	meteorhit()
-	//world << "glass at [x],[y],[z] Mhit"
+	// world << "glass at [x],[y],[z] Mhit"
 		deflate(1)
 
 	attack_paw(mob/user)
@@ -92,12 +92,12 @@
 		return
 
 
-	proc/attack_generic(mob/user, damage = 0)	//used by attack_alien, attack_animal, and attack_slime
+	proc/attack_generic(mob/user, damage = 0)	// used by attack_alien, attack_animal, and attack_slime
 		health -= damage
 		if(health <= 0)
 			user.visible_message("<span class='danger'>[user] tears open [src]!</span>")
 			deflate(1)
-		else	//for nicer text~
+		else	// for nicer text~
 			user.visible_message("<span class='danger'>[user] tears at [src]!</span>")
 
 	attack_alien(mob/user)
@@ -143,7 +143,7 @@
 			src.transfer_fingerprints_to(R)
 			qdel(src)
 		else
-			//user << "\blue You slowly deflate the inflatable wall."
+			// user << "\blue You slowly deflate the inflatable wall."
 			visible_message("[src] slowly deflates.")
 			spawn(50)
 				var/obj/item/inflatable/R = new /obj/item/inflatable(loc)
@@ -155,7 +155,7 @@
 		set category = "Object"
 		set src in oview(1)
 
-		if(isobserver(usr)) //to stop ghosts from deflating
+		if(isobserver(usr)) // to stop ghosts from deflating
 			return
 
 		deflate()
@@ -167,7 +167,7 @@
 	icon_state = "folded_door"
 	inflatable_type = /obj/structure/inflatable/door
 
-/obj/structure/inflatable/door //Based on mineral door code
+/obj/structure/inflatable/door // Based on mineral door code
 	name = "inflatable door"
 	density = 1
 	anchored = 1
@@ -180,20 +180,20 @@
 	var/open_state = "door_open"
 	var/closed_state = "door_closed"
 
-	var/state = 0 //closed, 1 == open
+	var/state = 0 // closed, 1 == open
 	var/isSwitchingStates = 0
 
-	//Bumped(atom/user)
+	// Bumped(atom/user)
 	//	..()
 	//	if(!state)
 	//		return TryToSwitchState(user)
 	//	return
 
-	attack_ai(mob/user) //those aren't machinery, they're just big fucking slabs of a mineral
-		if(isAI(user)) //so the AI can't open it
+	attack_ai(mob/user) // those aren't machinery, they're just big fucking slabs of a mineral
+		if(isAI(user)) // so the AI can't open it
 			return
-		else if(isrobot(user)) //but cyborgs can
-			if(get_dist(user,src) <= 1) //not remotely though
+		else if(isrobot(user)) // but cyborgs can
+			if(get_dist(user, src) <= 1) // not remotely though
 				return TryToSwitchState(user)
 
 	attack_paw(mob/user)
@@ -213,7 +213,7 @@
 		if(isSwitchingStates) return
 		if(ismob(user))
 			var/mob/M = user
-			if(world.time - user.last_bumped <= 60) return //NOTE do we really need that?
+			if(world.time - user.last_bumped <= 60) return // NOTE do we really need that?
 			if(M.client)
 				if(iscarbon(M))
 					var/mob/living/carbon/C = M
@@ -233,8 +233,8 @@
 
 	proc/Open()
 		isSwitchingStates = 1
-		//playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
-		flick(opening_state,src)
+		// playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
+		flick(opening_state, src)
 		sleep(10)
 		density = 0
 		opacity = 0
@@ -244,8 +244,8 @@
 
 	proc/Close()
 		isSwitchingStates = 1
-		//playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
-		flick(closing_state,src)
+		// playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
+		flick(closing_state, src)
 		sleep(10)
 		density = 1
 		opacity = 0
@@ -267,7 +267,7 @@
 			src.transfer_fingerprints_to(R)
 			qdel(src)
 		else
-			//user << "\blue You slowly deflate the inflatable wall."
+			// user << "\blue You slowly deflate the inflatable wall."
 			visible_message("[src] slowly deflates.")
 			spawn(50)
 				var/obj/item/inflatable/door/R = new /obj/item/inflatable/door(loc)

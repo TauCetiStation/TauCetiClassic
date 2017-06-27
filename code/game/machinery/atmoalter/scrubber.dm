@@ -100,14 +100,14 @@
 			environment = loc.return_air()
 		var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles()
 
-		//Take a gas sample
+		// Take a gas sample
 		var/datum/gas_mixture/removed
 		if(holding)
 			removed = environment.remove(transfer_moles)
 		else
 			removed = loc.remove_air(transfer_moles)
 
-		//Filter it
+		// Filter it
 		if (removed)
 			var/datum/gas_mixture/filtered_out = new
 
@@ -132,14 +132,14 @@
 						removed.trace_gases -= trace_gas
 						filtered_out.trace_gases += trace_gas
 
-		//Remix the resulting gases
+		// Remix the resulting gases
 			air_contents.merge(filtered_out)
 
 			if(holding)
 				environment.merge(removed)
 			else
 				loc.assume_air(removed)
-		//src.update_icon()
+		// src.update_icon()
 	src.updateDialog()
 	return
 

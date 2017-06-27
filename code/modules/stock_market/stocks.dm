@@ -1,6 +1,6 @@
 #define OPTIMISM_MAX 2
 #define OPTIMISM_MIN -2
-#define PERFORMANCE_MAX 2.5 //250% performance, YAY!
+#define PERFORMANCE_MAX 2.5 // 250% performance, YAY!
 #define PERFORMANCE_MIN 0.5
 
 /datum/stock
@@ -53,7 +53,7 @@
 	addEvent(E)
 
 /datum/stock/proc/affectPublicOpinion(boost)
-	changeOptimism(rand(0, 100) * 0.003 * boost) //0.003 = 0.01*0.3 (for balance)
+	changeOptimism(rand(0, 100) * 0.003 * boost) // 0.003 = 0.01*0.3 (for balance)
 
 /datum/stock/proc/generateIndustry()
 	if (findtext(name, "Farms"))

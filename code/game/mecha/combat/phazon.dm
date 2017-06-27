@@ -4,7 +4,7 @@
 	icon_state = "phazon"
 	initial_icon = "phazon"
 	step_in = 1
-	dir_in = 1 //Facing North.
+	dir_in = 1 // Facing North.
 	step_energy_drain = 3
 	health = 200
 	deflect_chance = 30
@@ -13,7 +13,7 @@
 	infra_luminosity = 3
 	wreckage = /obj/effect/decal/mecha_wreckage/phazon
 	add_req_access = 1
-	//operation_req_access = list()
+	// operation_req_access = list()
 	internal_damage_threshold = 25
 	force = 15
 	var/phasing = 0
@@ -34,7 +34,7 @@
 		if(can_move)
 			can_move = 0
 			flick("phazon-phase", src)
-			src.loc = get_step(src,src.dir)
+			src.loc = get_step(src, src.dir)
 			src.use_power(phasing_energy_drain)
 			sleep(step_in*3)
 			can_move = 1
@@ -42,7 +42,7 @@
 		. = ..()
 	return
 
-/obj/mecha/combat/phazon/click_action(atom/target,mob/user)
+/obj/mecha/combat/phazon/click_action(atom/target, mob/user)
 	if(phasing)
 		src.occupant_message("Unable to interact with objects while phasing")
 		return

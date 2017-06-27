@@ -48,7 +48,7 @@
 
 	if(istype(W,/obj/item/device/assembly_holder) && (!stage || stage==1) && path != 2)
 		var/obj/item/device/assembly_holder/det = W
-		if(istype(det.a_left,det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
+		if(istype(det.a_left, det.a_right.type) || (!isigniter(det.a_left) && !isigniter(det.a_right)))
 			to_chat(user, "<span class='red'>Assembly must contain one igniter.</span>")
 			return
 		if(!det.secured)
@@ -134,7 +134,7 @@
 /obj/item/weapon/grenade/chem_grenade/prime()
 	if(!stage || stage<2) return
 
-	//if(prob(reliability))
+	// if(prob(reliability))
 	var/has_reagents = 0
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		if(G.reagents.total_volume) has_reagents = 1
@@ -150,7 +150,7 @@
 	for(var/obj/item/weapon/reagent_containers/glass/G in beakers)
 		G.reagents.trans_to(src, G.reagents.total_volume)
 
-	if(src.reagents.total_volume) //The possible reactions didnt use up all reagents.
+	if(src.reagents.total_volume) // The possible reactions didnt use up all reagents.
 		var/datum/effect/effect/system/steam_spread/steam = new /datum/effect/effect/system/steam_spread()
 		steam.set_up(10, 0, get_turf(src))
 		steam.attach(src)
@@ -160,14 +160,14 @@
 			if( A == src ) continue
 			src.reagents.reaction(A, 1, 10)
 
-	if(istype(loc, /mob/living/carbon))		//drop dat grenade if it goes off in your hand
+	if(istype(loc, /mob/living/carbon))		// drop dat grenade if it goes off in your hand
 		var/mob/living/carbon/C = loc
 		C.drop_from_inventory(src)
 		C.throw_mode_off()
 
-	invisibility = INVISIBILITY_MAXIMUM //Why am i doing this?
-	spawn(50)		   //To make sure all reagents can work
-		qdel(src)	   //correctly before deleting the grenade.
+	invisibility = INVISIBILITY_MAXIMUM // Why am i doing this?
+	spawn(50)		   // To make sure all reagents can work
+		qdel(src)	   // correctly before deleting the grenade.
 
 /obj/item/weapon/grenade/chem_grenade/Crossed(atom/movable/AM as mob|obj)
 	if (detonator)
@@ -175,7 +175,7 @@
 
 /obj/item/weapon/grenade/chem_grenade/hear_talk(mob/living/M, msg)
 	if (detonator)
-		detonator.hear_talk(M,msg)
+		detonator.hear_talk(M, msg)
 
 /obj/item/weapon/grenade/chem_grenade/on_found(mob/finder)
 	if(detonator)

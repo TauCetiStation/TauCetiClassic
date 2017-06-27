@@ -1,4 +1,4 @@
-//CONTAINS: Evidence bags and fingerprint cards
+// CONTAINS: Evidence bags and fingerprint cards
 
 /obj/item/weapon/evidencebag
 	name = "evidence bag"
@@ -23,7 +23,7 @@
 	if(istype(I, /obj/item/weapon/storage/box/evidence))
 		return
 
-	if(istype(I, /obj/item/device/core_sampler)) //core sampler interacts with evidence bags in another way
+	if(istype(I, /obj/item/device/core_sampler)) // core sampler interacts with evidence bags in another way
 		return
 
 	if(I.w_class > 3)
@@ -34,14 +34,14 @@
 		to_chat(user, "<span class='notice'>[src] already has something inside it.</span>")
 		return ..()
 
-	if(!isturf(I.loc)) //If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
-		if(istype(I.loc,/obj/item/weapon/storage))	//in a container.
+	if(!isturf(I.loc)) // If it isn't on the floor. Do some checks to see if it's in our hands or a box. Otherwise give up.
+		if(istype(I.loc,/obj/item/weapon/storage))	// in a container.
 			var/obj/item/weapon/storage/U = I.loc
 			user.client.screen -= I
 			U.contents.Remove(I)
-		else if(user.l_hand == I)					//in a hand
+		else if(user.l_hand == I)					// in a hand
 			user.drop_l_hand()
-		else if(user.r_hand == I)					//in a hand
+		else if(user.r_hand == I)					// in a hand
 			user.drop_r_hand()
 		else
 			return

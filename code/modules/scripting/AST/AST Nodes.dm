@@ -10,7 +10,7 @@
 	met).
 
 	Articles:
-	- <http://en.wikipedia.org/wiki/Abstract_syntax_tree>
+	- <http:// en.wikipedia.org/wiki/Abstract_syntax_tree>
 */
 var
 	const
@@ -27,16 +27,16 @@ var
 	OOP_UNARY			- Unary Operators
 	OOP_GROUP			- Parentheses
 */
-		OOP_OR      = 							1   //||
-		OOP_AND     = OOP_OR			+ 1   	//&&
-		OOP_BIT     = OOP_AND			+ 1   //&, |
-		OOP_EQUAL   = OOP_BIT			+ 1   //==, !=
-		OOP_COMPARE = OOP_EQUAL		+ 1   //>, <, >=, <=
-		OOP_ADD     = OOP_COMPARE	+ 1 	//+, -
-		OOP_MULTIPLY= OOP_ADD			+ 1   //*, /, %
-		OOP_POW     = OOP_MULTIPLY+ 1		//^
-		OOP_UNARY   = OOP_POW			+ 1   //!
-		OOP_GROUP   = OOP_UNARY		+ 1   //()
+		OOP_OR      = 							1   // ||
+		OOP_AND     = OOP_OR			+ 1   	// &&
+		OOP_BIT     = OOP_AND			+ 1   // &, |
+		OOP_EQUAL   = OOP_BIT			+ 1   // ==, !=
+		OOP_COMPARE = OOP_EQUAL		+ 1   // >, <, >=, <=
+		OOP_ADD     = OOP_COMPARE	+ 1 	// +, -
+		OOP_MULTIPLY= OOP_ADD			+ 1   // *, /, %
+		OOP_POW     = OOP_MULTIPLY+ 1		// ^
+		OOP_UNARY   = OOP_POW			+ 1   // !
+		OOP_GROUP   = OOP_UNARY		+ 1   // ()
 
 /*
 	Class: node
@@ -85,7 +85,7 @@ var
 	Class: FunctionCall
 */
 /node/expression/FunctionCall
-	//Function calls can also be expressions or statements.
+	// Function calls can also be expressions or statements.
 	var
 		func_name
 		node/identifier/object
@@ -111,7 +111,7 @@ var
 /node/expression/value/variable
 	var
 		node
-			object		//Either a node/identifier or another node/expression/value/variable which points to the object
+			object		// Either a node/identifier or another node/expression/value/variable which points to the object
 		node/identifier
 			id
 

@@ -1,6 +1,6 @@
 /mob/living/carbon/slime/Life()
 	set invisibility = 0
-	//set background = 1
+	// set background = 1
 
 	if (src.monkeyizing)
 		return
@@ -8,7 +8,7 @@
 	..()
 
 	if(stat != DEAD)
-		//Chemicals in the body
+		// Chemicals in the body
 		handle_chemicals_in_body()
 
 		handle_nutrition()
@@ -26,20 +26,20 @@
 		environment = loc.return_air()
 
 
-	//Apparently, the person who wrote this code designed it so that
-	//blinded get reset each cycle and then get activated later in the
-	//code. Very ugly. I dont care. Moving this stuff here so its easy
-	//to find it.
+	// Apparently, the person who wrote this code designed it so that
+	// blinded get reset each cycle and then get activated later in the
+	// code. Very ugly. I dont care. Moving this stuff here so its easy
+	// to find it.
 	src.blinded = null
 
 	// Basically just deletes any screen objects :<
 	regular_hud_updates()
 
-	//Handle temperature/pressure differences between body and environment
+	// Handle temperature/pressure differences between body and environment
 	if(environment)
 		handle_environment(environment)
 
-	//Status updates, death etc.
+	// Status updates, death etc.
 	handle_regular_status_updates()
 
 
@@ -164,10 +164,10 @@
 		adjustToxLoss(rand(10,20))
 		return
 
-	//var/environment_heat_capacity = environment.heat_capacity()
+	// var/environment_heat_capacity = environment.heat_capacity()
 	var/loc_temp = T0C
 	if(istype(get_turf(src), /turf/space))
-		//environment_heat_capacity = loc:heat_capacity
+		// environment_heat_capacity = loc:heat_capacity
 		var/turf/heat_turf = get_turf(src)
 		loc_temp = heat_turf.temperature
 	else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
@@ -197,7 +197,7 @@
 		bodytemperature += 0.1*(environment.temperature - bodytemperature)*environment_heat_capacity/(environment_heat_capacity + 270000)
 
 	*/
-	//Account for massive pressure differences
+	// Account for massive pressure differences
 
 	if(bodytemperature < (T0C + 5)) // start calculating temperature damage etc
 		if(bodytemperature <= (T0C - 40)) // stun temperature
@@ -214,13 +214,13 @@
 
 	updatehealth()
 
-	return //TODO: DEFERRED
+	return // TODO: DEFERRED
 
 
 /mob/living/carbon/slime/proc/adjust_body_temperature(current, loc_temp, boost)
 	var/temperature = current
-	var/difference = abs(current-loc_temp)	//get difference
-	var/increments// = difference/10			//find how many increments apart they are
+	var/difference = abs(current-loc_temp)	// get difference
+	var/increments// = difference/10			// find how many increments apart they are
 	if(difference > 50)
 		increments = difference/5
 	else
@@ -241,7 +241,7 @@
 
 	src.updatehealth()
 
-	return //TODO: DEFERRED
+	return // TODO: DEFERRED
 
 
 /mob/living/carbon/slime/proc/handle_regular_status_updates()
@@ -261,7 +261,7 @@
 	else if(src.health < config.health_threshold_crit)
 		// if(src.health <= 20 && prob(1)) spawn(0) emote("gasp")
 
-		//if(!src.rejuv) src.oxyloss++
+		// if(!src.rejuv) src.oxyloss++
 		if(!src.reagents.has_reagent("inaprovaline")) src.adjustOxyLoss(10)
 
 		if(src.stat != DEAD)	src.stat = UNCONSCIOUS
@@ -280,7 +280,7 @@
 		src.blinded = 1
 
 	else
-		if (src.paralysis || src.stunned || src.weakened || (status_flags && FAKEDEATH)) //Stunned etc.
+		if (src.paralysis || src.stunned || src.weakened || (status_flags && FAKEDEATH)) // Stunned etc.
 			if (src.stunned > 0)
 				AdjustStunned(-1)
 				src.stat = CONSCIOUS
@@ -361,7 +361,7 @@
 						M.tame = tame
 						M.rabid = rabid
 						M.Discipline = Discipline
-						if(i != 1) step_away(M,src)
+						if(i != 1) step_away(M, src)
 					else
 						var/mutations = pick("one","two","three","four")
 						switch(mutations)
@@ -372,7 +372,7 @@
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
+								if(i != 1) step_away(M, src)
 							if("two")
 								var/mob/living/carbon/slime/M = new mutationtwo(loc)
 								M.powerlevel = round(powerlevel/4)
@@ -380,7 +380,7 @@
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
+								if(i != 1) step_away(M, src)
 							if("three")
 								var/mob/living/carbon/slime/M = new mutationthree(loc)
 								M.powerlevel = round(powerlevel/4)
@@ -388,7 +388,7 @@
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
+								if(i != 1) step_away(M, src)
 							if("four")
 								var/mob/living/carbon/slime/M = new mutationfour(loc)
 								M.powerlevel = round(powerlevel/4)
@@ -396,7 +396,7 @@
 								M.tame = tame
 								M.rabid = rabid
 								M.Discipline = Discipline
-								if(i != 1) step_away(M,src)
+								if(i != 1) step_away(M, src)
 
 				qdel(src)
 
@@ -477,7 +477,7 @@
 					if(issilicon(L) && (rabid || attacked)) // They can't eat silicons, but they can glomp them in defence
 						targets += L // Possible target found!
 
-					if(istype(L, /mob/living/carbon/human)) //Ignore slime(wo)men
+					if(istype(L, /mob/living/carbon/human)) // Ignore slime(wo)men
 						var/mob/living/carbon/human/H = L
 						if(H.dna)
 							if(H.dna.mutantrace == "slime")
@@ -534,12 +534,12 @@
 			spawn()
 				AIprocess()
 
-//TG slime speech & mood port.
+// TG slime speech & mood port.
 /mob/living/carbon/slime/proc/handle_mood()
 	var/newmood = ""
 	if (rabid || attacked)
 		newmood = "angry"
-	//else if (docile)
+	// else if (docile)
 	//	newmood = ":3"
 	else if (Target)
 		newmood = "mischevous"
@@ -559,7 +559,7 @@
 		regenerate_icons()
 
 /mob/living/carbon/slime/proc/handle_speech()
-	//Speech understanding starts here
+	// Speech understanding starts here
 	var/to_say
 	if (speech_buffer.len > 0)
 		var/who = speech_buffer[1] // Who said it?
@@ -689,7 +689,7 @@
 						to_say = "No... I won't stay..."
 		speech_buffer = list()
 
-	//Speech starts here
+	// Speech starts here
 	if (to_say)
 		say (to_say)
 	else if(prob(1))
@@ -759,7 +759,7 @@
 			say (pick(phrases))
 
 /mob/living/carbon/slime/proc/will_hunt(var/hunger = -1) // Check for being stopped from feeding and chasing
-	//if (docile)	return 0
+	// if (docile)	return 0
 	if (hunger == 2 || rabid || attacked) return 1
 	if (Leader) return 0
 	if (holding_still) return 0

@@ -125,7 +125,7 @@
 						var/s = (time_diff - 4*m) * 15
 						if(!s) s = "00"
 						html += "Last seen near [outstring] ([m]:[s] minute\s ago)<br>"
-					if( C && (C.bug == src)) //Checks to see if the camera has a bug
+					if( C && (C.bug == src)) // Checks to see if the camera has a bug
 						html += "<a href='?src=\ref[src];emp=\ref[C]'>\[Disable\]</a>"
 				else
 					html += "Not yet seen."
@@ -257,8 +257,8 @@
 			var/mob/M = tracking
 			if(istype(M))
 				if(!(tracked_name == "Unknown" && findtext(tracking.name,"Unknown"))) // we saw then disguised before
-					if(!(tracked_name == M.real_name && findtext(tracking.name,M.real_name))) // or they're still ID'd
-						src.updateSelfDialog()//But if it's neither of those cases
+					if(!(tracked_name == M.real_name && findtext(tracking.name, M.real_name))) // or they're still ID'd
+						src.updateSelfDialog()// But if it's neither of those cases
 						return // you won't find em on the cameras
 			else
 				src.updateSelfDialog()
@@ -271,7 +271,7 @@
 		var/list/target_region = view(tracking)
 
 		for(var/obj/machinery/camera/C in (target_region & tracking_cams))
-			if(!can_see(C,tracking)) // target may have xray, that doesn't make them visible to cameras
+			if(!can_see(C, tracking)) // target may have xray, that doesn't make them visible to cameras
 				continue
 			if(C.can_use())
 				last_found = C.c_tag

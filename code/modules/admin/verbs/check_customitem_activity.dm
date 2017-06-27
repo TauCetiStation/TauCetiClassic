@@ -24,7 +24,7 @@ var/inactive_keys = "None<br>"
 	usr << browse(dat, "window=inactive_customitems;size=600x480")
 
 /proc/populate_inactive_customitems_list(client/C)
-	//set background = 1
+	// set background = 1
 
 	if(checked_for_inactives)
 		return
@@ -33,7 +33,7 @@ var/inactive_keys = "None<br>"
 	if(!dbcon.IsConnected())
 		return
 
-	//grab all ckeys associated with custom items
+	// grab all ckeys associated with custom items
 	var/list/ckeys_with_customitems = list()
 
 	var/file = file2text("config/custom_items.txt")
@@ -52,19 +52,19 @@ var/inactive_keys = "None<br>"
 		if(!ckeys_with_customitems.Find(cur_key))
 			ckeys_with_customitems.Add(cur_key)
 
-	//run a query to get all ckeys inactive for over 2 months
+	// run a query to get all ckeys inactive for over 2 months
 	var/list/inactive_ckeys = list()
 	if(ckeys_with_customitems.len)
 		var/DBQuery/query_inactive = dbcon.NewQuery("SELECT ckey, lastseen FROM erro_player WHERE datediff(Now(), lastseen) > 60")
 		query_inactive.Execute()
 		while(query_inactive.NextRow())
 			var/cur_ckey = query_inactive.item[1]
-			//if the ckey has a custom item attached, output it
+			// if the ckey has a custom item attached, output it
 			if(ckeys_with_customitems.Find(cur_ckey))
 				ckeys_with_customitems.Remove(cur_ckey)
 				inactive_ckeys[cur_ckey] = "last seen on [query_inactive.item[2]]"
 
-	//if there are ckeys left over, check whether they have a database entry at all
+	// if there are ckeys left over, check whether they have a database entry at all
 	if(ckeys_with_customitems.len)
 		for(var/cur_ckey in ckeys_with_customitems)
 			var/DBQuery/query_inactive = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ckey = '[cur_ckey]'")

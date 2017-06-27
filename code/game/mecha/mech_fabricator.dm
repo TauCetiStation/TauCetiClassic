@@ -50,7 +50,7 @@
 /obj/machinery/mecha_part_fabricator/New()
 	..()
 	New_parts()
-	files = new /datum/research(src) //Setup the research data holder.
+	files = new /datum/research(src) // Setup the research data holder.
 
 /obj/machinery/mecha_part_fabricator/proc/New_parts()
 	component_parts = list()
@@ -65,18 +65,18 @@
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	var/T = 0
 
-	//maximum stocking amount (max 412000)
+	// maximum stocking amount (max 412000)
 	for(var/obj/item/weapon/stock_parts/matter_bin/M in component_parts)
 		T += M.rating
 	res_max_amount = (187000+(T * 37500))
 
-	//ressources adjustment coefficient (1 -> 0.88 -> 0.75)
+	// ressources adjustment coefficient (1 -> 0.88 -> 0.75)
 	T = -1
 	for(var/obj/item/weapon/stock_parts/micro_laser/Ma in component_parts)
 		T += Ma.rating
 	resource_coeff = round(initial(resource_coeff) - (initial(resource_coeff)*(T))/8,0.01)
 
-	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
+	// building time adjustment coefficient (1 -> 0.8 -> 0.6)
 	T = -1
 	for(var/obj/item/weapon/stock_parts/manipulator/Ml in component_parts)
 		T += Ml.rating
@@ -86,10 +86,10 @@
 	if(istype(I, /obj/item/device/pda))
 		var/obj/item/device/pda/pda = I
 		I = pda.id
-	if(!istype(I) || !I.access) //not ID or no access
+	if(!istype(I) || !I.access) // not ID or no access
 		return 0
 	for(var/req in req_access)
-		if(!(req in I.access)) //doesn't have this access
+		if(!(req in I.access)) // doesn't have this access
 			return 0
 	return 1
 
@@ -131,7 +131,7 @@
 	var/output
 	for(var/c in D.materials)
 		if(c in resources)
-			output += "[i?" | ":null][get_resource_cost_w_coeff(D,c)] [material2name(c)]"
+			output += "[i?" | ":null][get_resource_cost_w_coeff(D, c)] [material2name(c)]"
 			i++
 	return output
 
@@ -148,7 +148,7 @@
 /obj/machinery/mecha_part_fabricator/proc/remove_resources(datum/design/D)
 	for(var/resource in D.materials)
 		if(resource in resources)
-			resources[resource] -= get_resource_cost_w_coeff(D,resource)
+			resources[resource] -= get_resource_cost_w_coeff(D, resource)
 
 /obj/machinery/mecha_part_fabricator/proc/check_resources(datum/design/D)
 	for(var/R in D.materials)
@@ -175,8 +175,8 @@
 	var/I = new D.build_path(location)
 	if(istype(I, /obj/item))
 		var/obj/item/Item = I
-		Item.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
-		Item.materials[MAT_GLASS] = get_resource_cost_w_coeff(D,MAT_GLASS)
+		Item.materials[MAT_METAL] = get_resource_cost_w_coeff(D, MAT_METAL)
+		Item.materials[MAT_GLASS] = get_resource_cost_w_coeff(D, MAT_GLASS)
 	visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"\The [I] is complete.\"")
 	being_built = null
 
@@ -254,13 +254,13 @@
 			var/diff
 			switch(T.id)
 				if("materials")
-					//one materials level is 1/32, so that max level is 0.75 coefficient
+					// one materials level is 1/32, so that max level is 0.75 coefficient
 					diff = round(initial(resource_coeff_tech) - (initial(resource_coeff_tech)*(T.level-1))/32,0.01)
 					if(resource_coeff_tech>diff)
 						resource_coeff_tech = diff
 						output+="Production efficiency increased.<br>"
 				if("programming")
-					//one materials level is 1/40, so that max level is 0.8 coefficient
+					// one materials level is 1/40, so that max level is 0.8 coefficient
 					diff = round(initial(time_coeff_tech) - (initial(time_coeff_tech)*(T.level-1))/40,0.1)
 					if(time_coeff_tech>diff)
 						time_coeff_tech = diff
@@ -271,7 +271,7 @@
 /obj/machinery/mecha_part_fabricator/proc/sync()
 	temp = "Updating local R&D database..."
 	updateUsrDialog()
-	sleep(30) //only sleep if called by user
+	sleep(30) // only sleep if called by user
 
 	for(var/obj/machinery/computer/rdconsole/RDC in oview(5,src))
 		if(!RDC.sync)
@@ -282,7 +282,7 @@
 			files.AddDesign2Known(D)
 		files.RefreshResearch()
 		temp = "Processed equipment designs.<br>"
-		//check if the tech coefficients have changed
+		// check if the tech coefficients have changed
 		temp += update_tech()
 		temp += "<a href='?src=\ref[src];clear_temp=1'>Return</a>"
 
@@ -297,7 +297,7 @@
 /obj/machinery/mecha_part_fabricator/proc/get_resource_cost_w_coeff(datum/design/D, resource, roundto = 1)
 	return round(D.materials[resource]*resource_coeff*resource_coeff_tech, roundto)
 
-/obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
+/obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) // aran
 	return round(initial(D.construction_time)*time_coeff*time_coeff_tech, roundto)
 
 /obj/machinery/mecha_part_fabricator/proc/operation_allowed(mob/M)
@@ -311,7 +311,7 @@
 			if(src.check_access(ID))
 				return 1
 	visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"Access denied.\"")
-	//M << "<font color='red'>You don't have required permissions to use [src]</font>"
+	// M << "<font color='red'>You don't have required permissions to use [src]</font>"
 	return 0
 
 /obj/machinery/mecha_part_fabricator/attack_hand(mob/user)
@@ -385,7 +385,7 @@
 	if(!.)
 		return
 
-	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
+	var/datum/topic_input/filter = new /datum/topic_input(href, href_list)
 	if(href_list["part_set"])
 		var/tpart_set = filter.getStr("part_set")
 		if(tpart_set)
@@ -439,7 +439,7 @@
 		var/new_index = index + filter.getNum("queue_move")
 		if(isnum(index) && isnum(new_index) && IsInteger(index) && IsInteger(new_index))
 			if(IsInRange(new_index,1,queue.len))
-				queue.Swap(index,new_index)
+				queue.Swap(index, new_index)
 		return update_queue_on_page()
 
 	if(href_list["clear_queue"])
@@ -464,10 +464,10 @@
 	if(href_list["remove_mat"] && href_list["material"])
 		var/amount = text2num(href_list["remove_mat"])
 		var/material = href_list["material"]
-		if(amount < 0 || amount > resources[material]) //href protection
+		if(amount < 0 || amount > resources[material]) // href protection
 			return FALSE
 
-		var/removed = remove_material(material,amount)
+		var/removed = remove_material(material, amount)
 		if(removed == -1)
 			temp = "Not enough [material2name(material)] to produce a sheet."
 		else
@@ -484,7 +484,7 @@
 	processing_queue = FALSE
 
 /obj/machinery/mecha_part_fabricator/proc/remove_material(mat_string, amount)
-	if(resources[mat_string] < MINERAL_MATERIAL_AMOUNT) //not enough mineral for a sheet
+	if(resources[mat_string] < MINERAL_MATERIAL_AMOUNT) // not enough mineral for a sheet
 		return -1
 	var/type
 	switch(mat_string)
@@ -513,8 +513,8 @@
 		resources[mat_string] -= 50 * MINERAL_MATERIAL_AMOUNT
 
 	var/total_amount = round(resources[mat_string]/MINERAL_MATERIAL_AMOUNT)
-	if(total_amount)//if there's still enough material for sheets
-		var/obj/item/stack/sheet/res = new type(get_turf(src),min(amount,total_amount))
+	if(total_amount)// if there's still enough material for sheets
+		var/obj/item/stack/sheet/res = new type(get_turf(src),min(amount, total_amount))
 		resources[mat_string] -= res.amount*MINERAL_MATERIAL_AMOUNT
 		result += res.amount
 
@@ -566,13 +566,13 @@
 		if(being_built)
 			to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
 			return
-		if(res_max_amount - resources[material] < MINERAL_MATERIAL_AMOUNT) //overstuffing the fabricator
+		if(res_max_amount - resources[material] < MINERAL_MATERIAL_AMOUNT) // overstuffing the fabricator
 			to_chat(user, "<span class='warning'>\The [src] [material2name(material)] storage is full!</span>")
 			return
 		var/obj/item/stack/sheet/stack = W
 		var/sname = "[stack.name]"
 		if(resources[material] < res_max_amount)
-			overlays += "fab-load-[material2name(material)]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
+			overlays += "fab-load-[material2name(material)]"// loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
 
 			var/transfer_amount = min(stack.amount, round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
@@ -580,7 +580,7 @@
 			to_chat(user, "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>")
 			sleep(10)
 			updateUsrDialog()
-			overlays -= "fab-load-[material2name(material)]" //No matter what the overlay shall still be deleted
+			overlays -= "fab-load-[material2name(material)]" // No matter what the overlay shall still be deleted
 		else
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return

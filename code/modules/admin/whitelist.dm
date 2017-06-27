@@ -297,7 +297,7 @@
 	if(role == "human")
 		return TRUE
 
-	switch(role) //We don't use separate whitelist for languages, lets transform lang name to their race name.
+	switch(role) // We don't use separate whitelist for languages, lets transform lang name to their race name.
 		if("sinta'unathi")
 			role = "unathi"
 		if("siik'maas","siik'tajr")

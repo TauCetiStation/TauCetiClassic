@@ -22,9 +22,9 @@
  * - /turf/proc/reachableAdjacentTurfs : returns reachable turfs in cardinal directions (uses simulated_only)
  */
 
-/////////////////
-//PathNode object
-/////////////////
+///////////////// 
+// PathNode object
+///////////////// 
 
 /PathNode
 	var/turf/source       // Turf associated with the PathNode
@@ -48,7 +48,7 @@
 	f = g + h
 
 //////////
-//A* procs
+// A* procs
 //////////
 
 /**
@@ -67,7 +67,7 @@
  * Wrapper that returns an empty list if A* failed to find a path
  */
 /proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
-	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent, id, exclude, simulated_only)
 	if(!path)
 		path = list()
 	return path
@@ -97,7 +97,7 @@
 	var/PathNode/cur      // Current processed turf
 
 	// Initialization
-	open.Insert(new /PathNode(start,null,0,call(start,dist)(end),0))
+	open.Insert(new /PathNode(start, null,0,call(start, dist)(end),0))
 
 	// Then run the main loop
 	while(!open.IsEmpty() && !path)
@@ -107,7 +107,7 @@
 		// If we only want to get near the target, check if we're close enough
 		var/closeenough
 		if(mintargetdist)
-			closeenough = call(cur.source,dist)(end) <= mintargetdist
+			closeenough = call(cur.source, dist)(end) <= mintargetdist
 
 		// If too many steps, abandon that path
 		if(maxnodedepth && (cur.nt > maxnodedepth))
@@ -125,17 +125,17 @@
 			break
 
 		// Get adjacents turfs using the adjacent proc, checking for access with id
-		var/list/L = call(cur.source,adjacent)(caller,id, simulated_only)
+		var/list/L = call(cur.source, adjacent)(caller, id, simulated_only)
 		for(var/turf/T in L)
 			if(T == exclude || (T in closed))
 				continue
 
-			var/newg = cur.g + call(cur.source,dist)(T)
+			var/newg = cur.g + call(cur.source, dist)(T)
 
 			var/PathNode/P = pnodelist[T]
 			if(!P)
 				// Is not already in open list, so add it
-				var/PathNode/newnode = new /PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1)
+				var/PathNode/newnode = new /PathNode(T, cur, newg, call(T, dist)(end),cur.nt+1)
 				open.Insert(newnode)
 				pnodelist[T] = newnode
 			else

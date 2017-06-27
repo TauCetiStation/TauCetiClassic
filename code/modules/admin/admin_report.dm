@@ -14,7 +14,7 @@ datum/admin_report/var
 	offender_cid // store the cid of the offender
 
 datum/report_topic_handler
-	Topic(href,href_list)
+	Topic(href, href_list)
 		..()
 		var/client/C = locate(href_list["client"])
 		if(href_list["action"] == "show_reports")

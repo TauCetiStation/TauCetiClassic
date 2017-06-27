@@ -21,7 +21,7 @@
 
 /obj/item/blueprints/attack_self(mob/M)
 	if (!istype(M,/mob/living/carbon/human))
-		to_chat(M, "This stack of blue paper means nothing to you.")//monkeys cannot into projecting
+		to_chat(M, "This stack of blue paper means nothing to you.")// monkeys cannot into projecting
 		return
 	interact()
 	return
@@ -89,15 +89,15 @@ move an amendment</a> to the drawing.</p>
 		/area/tdome,
 		/area/syndicate_station,
 		/area/wizard_station
-		// /area/derelict //commented out, all hail derelict-rebuilders!
+		// /area/derelict // commented out, all hail derelict-rebuilders!
 	)
 	for (var/type in SPECIALS)
-		if ( istype(A,type) )
+		if ( istype(A, type) )
 			return AREA_SPECIAL
 	return AREA_STATION
 
 /obj/item/blueprints/proc/create_area()
-	//world << "DEBUG: create_area"
+	// world << "DEBUG: create_area"
 	var/res = detect_room(get_turf_loc(usr))
 	if(!istype(res,/list))
 		switch(res)
@@ -112,7 +112,7 @@ move an amendment</a> to the drawing.</p>
 				return
 	var/list/turf/turfs = res
 	var/str = trim(stripped_input(usr,"New area name:","Blueprint Editing", "", MAX_NAME_LEN))
-	if(!str || !length(str)) //cancel
+	if(!str || !length(str)) // cancel
 		return
 	if(length(str) > 50)
 		to_chat(usr, "\red Name too long.")
@@ -120,9 +120,9 @@ move an amendment</a> to the drawing.</p>
 	var/area/A = new
 	A.name = str
 	A.tag="[A.type]_[md5(str)]" // without this dynamic light system ruin everithing
-	//var/ma
-	//ma = A.master ? "[A.master]" : "(null)"
-	//world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
+	// var/ma
+	// ma = A.master ? "[A.master]" : "(null)"
+	// world << "DEBUG: create_area: <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
 	A.power_equip = 0
 	A.power_light = 0
 	A.power_environ = 0
@@ -133,29 +133,29 @@ move an amendment</a> to the drawing.</p>
 	A.always_unpowered = 0
 
 	spawn(5)
-		//ma = A.master ? "[A.master]" : "(null)"
-		//world << "DEBUG: create_area(5): <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
+		// ma = A.master ? "[A.master]" : "(null)"
+		// world << "DEBUG: create_area(5): <br>A.name=[A.name]<br>A.tag=[A.tag]<br>A.master=[ma]"
 		interact()
 	return
 
 
 /obj/item/blueprints/proc/move_turfs_to_area(list/turf/turfs, area/A)
 	A.contents.Add(turfs)
-		//oldarea.contents.Remove(usr.loc) // not needed
-		//T.loc = A //error: cannot change constant value
+		// oldarea.contents.Remove(usr.loc) // not needed
+		// T.loc = A // error: cannot change constant value
 
 
 /obj/item/blueprints/proc/edit_area()
 	var/area/A = get_area()
-	//world << "DEBUG: edit_area"
+	// world << "DEBUG: edit_area"
 	var/prevname = "[A.name]"
 	var/str = trim(stripped_input(usr,"New area name:","Blueprint Editing", prevname, MAX_NAME_LEN))
-	if(!str || !length(str) || str==prevname) //cancel
+	if(!str || !length(str) || str==prevname) // cancel
 		return
 	if(length(str) > 50)
 		to_chat(usr, "\red Text too long.")
 		return
-	set_area_machinery_title(A,str,prevname)
+	set_area_machinery_title(A, str, prevname)
 	for(var/area/RA in A.related)
 		RA.name = str
 	to_chat(usr, "\blue You set the area '[prevname]' title to '[str]'.")
@@ -164,25 +164,25 @@ move an amendment</a> to the drawing.</p>
 
 
 
-/obj/item/blueprints/proc/set_area_machinery_title(area/A,title,oldtitle)
+/obj/item/blueprints/proc/set_area_machinery_title(area/A, title, oldtitle)
 	if (!oldtitle) // or replacetext goes to infinite loop
 		return
 	for(var/area/RA in A.related)
 		for(var/obj/machinery/alarm/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
+			M.name = replacetext(M.name, oldtitle, title)
 		for(var/obj/machinery/power/apc/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
+			M.name = replacetext(M.name, oldtitle, title)
 		for(var/obj/machinery/atmospherics/unary/vent_scrubber/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
+			M.name = replacetext(M.name, oldtitle, title)
 		for(var/obj/machinery/atmospherics/unary/vent_pump/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
+			M.name = replacetext(M.name, oldtitle, title)
 		for(var/obj/machinery/door/M in RA)
-			M.name = replacetext(M.name,oldtitle,title)
-	//TODO: much much more. Unnamed airlocks, cameras, etc.
+			M.name = replacetext(M.name, oldtitle, title)
+	// TODO: much much more. Unnamed airlocks, cameras, etc.
 
 /obj/item/blueprints/proc/check_tile_is_border(turf/T2,dir)
 	if (istype(T2, /turf/space))
-		return BORDER_SPACE //omg hull breach we all going to die here
+		return BORDER_SPACE // omg hull breach we all going to die here
 	if (istype(T2, /turf/simulated/shuttle))
 		return BORDER_SPACE
 	if (get_area_type(T2.loc)!=AREA_SPACE)
@@ -195,7 +195,7 @@ move an amendment</a> to the drawing.</p>
 	for (var/obj/structure/window/W in T2)
 		if(turn(dir,180) == W.dir)
 			return BORDER_BETWEEN
-		if (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST))
+		if (W.dir in list(NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST))
 			return BORDER_2NDTILE
 	for(var/obj/machinery/door/window/D in T2)
 		if(turn(dir,180) == D.dir)
@@ -215,12 +215,12 @@ move an amendment</a> to the drawing.</p>
 	while(pending.len)
 		if (found.len+pending.len > 300)
 			return ROOM_ERR_TOOLARGE
-		var/turf/T = pending[1] //why byond havent list::pop()?
+		var/turf/T = pending[1] // why byond havent list::pop()?
 		pending -= T
 		for (var/dir in cardinal)
 			var/skip = 0
 			for (var/obj/structure/window/W in T)
-				if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
+				if(dir == W.dir || (W.dir in list(NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST)))
 					skip = 1; break
 			if (skip) continue
 			for(var/obj/machinery/door/window/D in T)
@@ -228,17 +228,17 @@ move an amendment</a> to the drawing.</p>
 					skip = 1; break
 			if (skip) continue
 
-			var/turf/NT = get_step(T,dir)
+			var/turf/NT = get_step(T, dir)
 			if (!isturf(NT) || (NT in found) || (NT in pending))
 				continue
 
-			switch(check_tile_is_border(NT,dir))
+			switch(check_tile_is_border(NT, dir))
 				if(BORDER_NONE)
 					pending+=NT
 				if(BORDER_BETWEEN)
-					//do nothing, may be later i'll add 'rejected' list as optimization
+					// do nothing, may be later i'll add 'rejected' list as optimization
 				if(BORDER_2NDTILE)
-					found+=NT //tile included to new area, but we dont seek more
+					found+=NT // tile included to new area, but we dont seek more
 				if(BORDER_SPACE)
 					return ROOM_ERR_SPACE
 		found+=T

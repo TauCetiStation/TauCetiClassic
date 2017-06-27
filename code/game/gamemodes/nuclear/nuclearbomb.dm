@@ -21,7 +21,7 @@ var/bomb_set
 	var/removal_stage = 0 // 0 is no removal, 1 is covers removed, 2 is covers open,
 	                      // 3 is sealant open, 4 is unwrenched, 5 is removed from bolts.
 	use_power = 0
-	var/detonated = 0 //used for scoreboard.
+	var/detonated = 0 // used for scoreboard.
 	var/lastentered = ""
 
 
@@ -29,7 +29,7 @@ var/bomb_set
 /obj/machinery/nuclearbomb/New()
 	..()
 	poi_list |= src
-	r_code = "[rand(10000, 99999.0)]"//Creates a random code upon object spawn.
+	r_code = "[rand(10000, 99999.0)]"// Creates a random code upon object spawn.
 	wires = new(src)
 
 /obj/machinery/nuclearbomb/Destroy()
@@ -39,7 +39,7 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
-		bomb_set = 1 //So long as there is one nuke timing, it means one nuke is armed.
+		bomb_set = 1 // So long as there is one nuke timing, it means one nuke is armed.
 		timeleft = max(timeleft - 2, 0) // 2 seconds per process()
 		playsound(loc, 'sound/items/timer.ogg', 30, 0)
 		if (src.timeleft <= 0)
@@ -160,7 +160,7 @@ var/bomb_set
 					if(do_after(user,75,target = src))
 						if(!src || !user) return
 						user.visible_message("[user] finishes hitting [src].", "You can now get inside the [src]. Use screwdriver to open control panel")
-						//anchored = 0
+						// anchored = 0
 						removal_stage = 5
 				return
 			/*if(0)
@@ -352,7 +352,7 @@ var/bomb_set
 						src.icon_state = "nuclearbomb2"
 					if(!src.safety)
 						set_security_level("delta")
-						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
+						bomb_set = 1// There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 					else
 						bomb_set = 0
 				else
@@ -366,7 +366,7 @@ var/bomb_set
 					bomb_set = 0
 		if (href_list["anchor"])
 
-			//if(removal_stage == 5)
+			// if(removal_stage == 5)
 			//	src.anchored = 0
 			//	visible_message("\red \The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.")
 			//	return
@@ -426,9 +426,9 @@ var/bomb_set
 		if(ticker.mode && ticker.mode.name == "nuclear emergency")
 			var/obj/machinery/computer/syndicate_station/syndie_location = locate(/obj/machinery/computer/syndicate_station)
 			if(syndie_location)
-				ticker.mode:syndies_didnt_escape = (syndie_location.z > ZLEVEL_STATION ? 0 : 1)	//muskets will make me change this, but it will do for now
+				ticker.mode:syndies_didnt_escape = (syndie_location.z > ZLEVEL_STATION ? 0 : 1)	// muskets will make me change this, but it will do for now
 			ticker.mode:nuke_off_station = off_station
-		ticker.station_explosion_cinematic(off_station,null)
+		ticker.station_explosion_cinematic(off_station, null)
 		if(ticker.mode)
 			ticker.mode.explosion_in_progress = 0
 			if(ticker.mode.name == "nuclear emergency")
@@ -436,10 +436,10 @@ var/bomb_set
 			else
 				to_chat(world, "<B>The station was destoyed by the nuclear blast!</B>")
 
-			ticker.mode.station_was_nuked = (off_station<2)	//offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
-															//kinda shit but I couldn't  get permission to do what I wanted to do.
+			ticker.mode.station_was_nuked = (off_station<2)	// offstation==1 is a draw. the station becomes irradiated and needs to be evacuated.
+															// kinda shit but I couldn't  get permission to do what I wanted to do.
 
-			if(!ticker.mode.check_finished())//If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
+			if(!ticker.mode.check_finished())// If the mode does not deal with the nuke going off so just reboot because everyone is stuck as is
 				to_chat(world, "<B>Resetting in 45 seconds!</B>")
 
 				feedback_set_details("end_error","nuke - unhandled ending")
@@ -452,7 +452,7 @@ var/bomb_set
 				return
 	return
 
-//==========DAT FUKKEN DISK===============
+// ==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk
 	icon = 'icons/obj/items.dmi'
 	w_class = 1
@@ -479,9 +479,9 @@ var/bomb_set
 	if(blobstart.len > 0)
 		var/turf/targetturf = get_turf(pick(blobstart))
 		var/turf/diskturf = get_turf(src)
-		forceMove(targetturf) //move the disc, so ghosts remain orbitting it even if it's "destroyed"
+		forceMove(targetturf) // move the disc, so ghosts remain orbitting it even if it's "destroyed"
 		message_admins("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[diskturf.x];Y=[diskturf.y];Z=[diskturf.z]'>JMP</a>). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[targetturf.x];Y=[targetturf.y];Z=[targetturf.z]'>JMP</a>).")
 		log_game("[src] has been destroyed in ([diskturf.x], [diskturf.y] ,[diskturf.z]). Moving it to ([targetturf.x], [targetturf.y], [targetturf.z]).")
 	else
 		throw EXCEPTION("Unable to find a blobstart landmark")
-	return QDEL_HINT_LETMELIVE //Cancel destruction regardless of success
+	return QDEL_HINT_LETMELIVE // Cancel destruction regardless of success

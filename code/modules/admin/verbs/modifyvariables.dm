@@ -1,9 +1,9 @@
 var/list/forbidden_varedit_object_types = list(
-		/datum/admins,                     //Admins editing their own admin-power object? Yup, sounds like a good idea.
+		/datum/admins,                     // Admins editing their own admin-power object? Yup, sounds like a good idea.
 		/datum/configuration,
-		/obj/machinery/blackbox_recorder,  //Prevents people messing with feedback gathering
-		/datum/feedback_variable,          //Prevents people messing with feedback gathering
-		/datum/timedevent,                 //Nope.avi
+		/obj/machinery/blackbox_recorder,  // Prevents people messing with feedback gathering
+		/datum/feedback_variable,          // Prevents people messing with feedback gathering
+		/datum/timedevent,                 // Nope.avi
 		/datum/craft_or_build,
 		/datum/stack_recipe
 	)
@@ -16,9 +16,9 @@ var/list/forbidden_varedit_object_types = list(
 		to_chat(src, "Game hasn't started yet.")
 	else
 		src.modify_variables(ticker)
-		feedback_add_details("admin_verb","ETV") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		feedback_add_details("admin_verb","ETV") // If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-/client/proc/mod_list_add_ass() //haha
+/client/proc/mod_list_add_ass() // haha
 
 	var/class = "text"
 	if(src.holder && src.holder.marked_datum)
@@ -116,7 +116,7 @@ var/list/forbidden_varedit_object_types = list(
 	switch(alert("Would you like to associate a var with the list entry?",,"Yes","No"))
 		if("Yes")
 			L += var_value
-			L[var_value] = mod_list_add_ass() //haha
+			L[var_value] = mod_list_add_ass() // haha
 		if("No")
 			L += var_value
 
@@ -220,7 +220,7 @@ var/list/forbidden_varedit_object_types = list(
 	if(holder.marked_datum && class == "marked datum ([holder.marked_datum.type])")
 		class = "marked datum"
 
-	switch(class) //Spits a runtime error if you try to modify an entry in the contents list. Dunno how to fix it, yet.
+	switch(class) // Spits a runtime error if you try to modify an entry in the contents list. Dunno how to fix it, yet.
 
 		if("list")
 			mod_list(variable)
@@ -268,7 +268,7 @@ var/list/forbidden_varedit_object_types = list(
 	var/list/fully_locked = list("player_next_age_tick", "resize_rev")
 
 	for(var/p in forbidden_varedit_object_types)
-		if( istype(O,p) )
+		if( istype(O, p) )
 			to_chat(usr, "\red It is forbidden to edit this object's variables.")
 			return
 
@@ -474,10 +474,10 @@ var/list/forbidden_varedit_object_types = list(
 			else if(variable=="stat")
 				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
 				if(var_new == null) return
-				if((O.vars[variable] == 2) && (var_new < 2))//Bringing the dead back to life
+				if((O.vars[variable] == 2) && (var_new < 2))// Bringing the dead back to life
 					dead_mob_list -= O
 					living_mob_list += O
-				if((O.vars[variable] < 2) && (var_new == 2))//Kill him
+				if((O.vars[variable] < 2) && (var_new == 2))// Kill him
 					living_mob_list -= O
 					dead_mob_list += O
 				O.vars[variable] = var_new

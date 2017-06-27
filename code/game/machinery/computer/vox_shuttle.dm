@@ -2,7 +2,7 @@
 #define VOX_SHUTTLE_COOLDOWN 1200
 #define VOX_CAN_USE(A) (ishuman(A) && A.can_speak(all_languages["Vox-pidgin"])) // human and know vox language.
 
-//Copied from Syndicate shuttle.
+// Copied from Syndicate shuttle.
 var/global/vox_shuttle_location
 var/global/announce_vox_departure = FALSE // Stealth systems - give an announcement or not.
 
@@ -91,7 +91,7 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 	return attack_hand(user)
 
 /obj/machinery/computer/vox_station/attack_ai(mob/user)
-	to_chat(user, "<span class='red'><b>W�r#nING</b>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%..</span>")//Totally not stolen from ninja.
+	to_chat(user, "<span class='red'><b>W�r#nING</b>: #%@!!WȆ|_4�54@ \nUn�B88l3 T� L�-�o-L�CaT2 ##$!�RN�0..%..</span>")// Totally not stolen from ninja.
 	return
 
 /obj/machinery/computer/vox_station/attack_paw(mob/user)

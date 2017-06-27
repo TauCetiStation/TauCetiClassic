@@ -10,7 +10,7 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
 /obj/structure/bigDelivery/Destroy()
-	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
+	if(wrapped) // sometimes items can disappear. For example, bombs. --rastaf0
 		wrapped.loc = (get_turf(loc))
 		if(istype(wrapped, /obj/structure/closet))
 			var/obj/structure/closet/O = wrapped
@@ -21,7 +21,7 @@
 	return ..()
 
 /obj/structure/bigDelivery/attack_hand(mob/user)
-	if(wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
+	if(wrapped) // sometimes items can disappear. For example, bombs. --rastaf0
 		wrapped.loc = (get_turf(src.loc))
 		if(istype(wrapped, /obj/structure/closet))
 			var/obj/structure/closet/O = wrapped
@@ -57,7 +57,7 @@
 	var/sortTag = ""
 
 /obj/item/smallDelivery/attack_self(mob/user)
-	if (src.wrapped) //sometimes items can disappear. For example, bombs. --rastaf0
+	if (src.wrapped) // sometimes items can disappear. For example, bombs. --rastaf0
 		wrapped.loc = user.loc
 		if(ishuman(user))
 			user.put_in_hands(wrapped)
@@ -97,7 +97,7 @@
 
 /obj/item/weapon/packageWrap/afterattack(obj/target, mob/user, proximity)
 	if(!proximity) return
-	if(!istype(target))	//this really shouldn't be necessary (but it is).	-Pete
+	if(!istype(target))	// this really shouldn't be necessary (but it is).	-Pete
 		return
 	if(istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
 	|| istype(target, /obj/item/weapon/gift) || istype(target, /obj/item/weapon/evidencebag))
@@ -106,7 +106,7 @@
 		return
 	if(target in user)
 		return
-	if(user in target) //no wrapping closets that you are inside - it's not physically possible
+	if(user in target) // no wrapping closets that you are inside - it's not physically possible
 		return
 
 	user.attack_log += text("\[[time_stamp()]\] <font color='blue'>Has used [src.name] on \ref[target]</font>")
@@ -115,7 +115,7 @@
 	if (istype(target, /obj/item))
 		var/obj/item/O = target
 		if (src.amount > 1)
-			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))	//Aaannd wrap it up!
+			var/obj/item/smallDelivery/P = new /obj/item/smallDelivery(get_turf(O.loc))	// Aaannd wrap it up!
 			if(!istype(O.loc, /turf))
 				if(user.client)
 					user.client.screen -= O
@@ -233,7 +233,7 @@
 /obj/machinery/disposal/deliveryChute/update()
 	return
 
-/obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) //Go straight into the chute
+/obj/machinery/disposal/deliveryChute/Bumped(atom/movable/AM) // Go straight into the chute
 	if(istype(AM, /obj/item/projectile) || istype(AM, /obj/effect))	return
 	switch(dir)
 		if(NORTH)

@@ -65,7 +65,7 @@
 	if(!produce_drones || !config.allow_drone_spawn || count_drones() >= config.max_maint_drones)
 		return
 
-	if(!player) //|| !istype(player.mob,/mob/dead))
+	if(!player) // || !istype(player.mob,/mob/dead))
 		return
 
 	visible_message("\The [src] churns and grinds as it lurches into motion, disgorging a shiny new drone after a few moments.")
@@ -89,7 +89,7 @@
 		return
 
 	if (usr != src)
-		return 0 //something is terribly wrong
+		return 0 // something is terribly wrong
 
 	if (!src.stat)
 		return
@@ -131,7 +131,7 @@
 
 	var/response = alert(src, "Are you -sure- you want to become a maintenance drone?","Are you sure you want to beep?","Beep!","Nope!")
 	if(response != "Beep!")
-		return  //Hit the wrong key...again.
+		return  // Hit the wrong key...again.
 
 	dronize()
 

@@ -22,7 +22,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 								// refID's are associated with the time at which they time out and need to be manually del()
 								// we do this so we aren't constantly locating them and preventing them from being gc'd
 
-	var/list/tobequeued = list()	//We store the references of things to be added to the queue seperately so we can spread out GC overhead over a few ticks
+	var/list/tobequeued = list()	// We store the references of things to be added to the queue seperately so we can spread out GC overhead over a few ticks
 
 	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
 								// the types are stored as strings
@@ -56,8 +56,8 @@ var/datum/subsystem/garbage_collector/SSgarbage
 	if (state == SS_RUNNING)
 		HandleQueue()
 
-//If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
-//Don't attempt to optimize, not worth the effort.
+// If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
+// Don't attempt to optimize, not worth the effort.
 /datum/subsystem/garbage_collector/proc/HandleToBeQueued()
 	var/list/tobequeued = src.tobequeued
 	var/starttime = world.time
@@ -167,17 +167,17 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		if(!D)
 			return
 		switch(hint)
-			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
+			if (QDEL_HINT_QUEUE)		// qdel should queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
-			if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
+			if (QDEL_HINT_LETMELIVE)	// qdel should let the object live after calling destory.
 				return
-			if (QDEL_HINT_IWILLGC)		//functionally the same as the above. qdel should assume the object will gc on its own, and not check it.
+			if (QDEL_HINT_IWILLGC)		// functionally the same as the above. qdel should assume the object will gc on its own, and not check it.
 				return
-			if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete using a hard reference to save time from the locate()
+			if (QDEL_HINT_HARDDEL)		// qdel should assume this object won't gc, and queue a hard delete using a hard reference to save time from the locate()
 				SSgarbage.HardQueue(D)
-			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
+			if (QDEL_HINT_HARDDEL_NOW)	// qdel should assume this object won't gc, and hard del it post haste.
 				del(D)
-			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
+			if (QDEL_HINT_FINDREFERENCE)// qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
 				#ifdef TESTING
 				D.find_references()
@@ -205,7 +205,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		qdel(timer)
 	return QDEL_HINT_QUEUE
 
-/datum/var/gc_destroyed //Time when this object was destroyed.
+/datum/var/gc_destroyed // Time when this object was destroyed.
 
 #ifdef TESTING
 /client/var/running_find_references
@@ -223,7 +223,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			testing("CANCELLED search for references to a [usr.client.running_find_references].")
 			usr.client.running_find_references = null
 			running_find_references = null
-			//restart the garbage collector
+			// restart the garbage collector
 			SSgarbage.can_fire = 1
 			SSgarbage.next_fire = world.time + world.tick_lag
 			return
@@ -232,7 +232,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			running_find_references = null
 			return
 
-	//this keeps the garbage collector from failing to collect objects being searched for in here
+	// this keeps the garbage collector from failing to collect objects being searched for in here
 	SSgarbage.can_fire = 0
 
 	if(usr && usr.client)
@@ -259,7 +259,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		usr.client.running_find_references = null
 	running_find_references = null
 
-	//restart the garbage collector
+	// restart the garbage collector
 	SSgarbage.can_fire = 1
 	SSgarbage.next_fire = world.time + world.tick_lag
 

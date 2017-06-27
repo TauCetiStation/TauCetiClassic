@@ -102,7 +102,7 @@
 
 
 /obj/machinery/mecha_part_fabricator/mining_fabricator/remove_material(mat_string, amount)
-	if(resources[mat_string] < MINERAL_MATERIAL_AMOUNT) //not enough mineral for a sheet
+	if(resources[mat_string] < MINERAL_MATERIAL_AMOUNT) // not enough mineral for a sheet
 		return -1
 	var/type
 	switch(mat_string)
@@ -133,8 +133,8 @@
 		resources[mat_string] -= 50 * MINERAL_MATERIAL_AMOUNT
 
 	var/total_amount = round(resources[mat_string]/MINERAL_MATERIAL_AMOUNT)
-	if(total_amount)//if there's still enough material for sheets
-		var/obj/item/stack/sheet/res = new type(get_turf(src),min(amount,total_amount))
+	if(total_amount)// if there's still enough material for sheets
+		var/obj/item/stack/sheet/res = new type(get_turf(src),min(amount, total_amount))
 		resources[mat_string] -= res.amount*MINERAL_MATERIAL_AMOUNT
 		result += res.amount
 
@@ -187,13 +187,13 @@
 		if(being_built)
 			to_chat(user, "<span class='warning'>\The [src] is currently processing! Please wait until completion.</span>")
 			return
-		if(res_max_amount - resources[material] < MINERAL_MATERIAL_AMOUNT) //overstuffing the fabricator
+		if(res_max_amount - resources[material] < MINERAL_MATERIAL_AMOUNT) // overstuffing the fabricator
 			to_chat(user, "<span class='warning'>\The [src] [material2name(material)] storage is full!</span>")
 			return
 		var/obj/item/stack/sheet/stack = W
 		var/sname = "[stack.name]"
 		if(resources[material] < res_max_amount)
-			overlays += "fab-load-[material2name(material)]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
+			overlays += "fab-load-[material2name(material)]"// loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
 
 			var/transfer_amount = min(stack.amount, round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
@@ -201,7 +201,7 @@
 			to_chat(user, "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>")
 			sleep(10)
 			updateUsrDialog()
-			overlays -= "fab-load-[material2name(material)]" //No matter what the overlay shall still be deleted
+			overlays -= "fab-load-[material2name(material)]" // No matter what the overlay shall still be deleted
 		else
 			to_chat(user, "<span class='warning'>\The [src] cannot hold any more [sname] sheet\s!</span>")
 		return

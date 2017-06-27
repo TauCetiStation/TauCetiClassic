@@ -4,7 +4,7 @@
 	helptext = "Grants us night vision and thermal vision. It may be toggled on or off."
 	chemical_cost = 0
 	genomecost = 3
-	var/active = 0 //Whether or not vision is enhanced
+	var/active = 0 // Whether or not vision is enhanced
 	req_stat = UNCONSCIOUS
 
 /obj/effect/proc_holder/changeling/augmented_eyesight/sting_action(mob/living/user)

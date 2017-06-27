@@ -28,7 +28,7 @@
 	..()
 
 	if(stat == CONSCIOUS)
-		//if we're strong enough, sting some people
+		// if we're strong enough, sting some people
 		var/mob/living/carbon/human/M = target_mob
 		var/sting_prob = 40 // Bees will always try to sting.
 		if(M in view(src,1)) // Can I see my target?
@@ -45,16 +45,16 @@
 					to_chat(M, "\red You have been stung!")
 					M.flash_pain()
 
-		//if we're chasing someone, get a little bit angry
+		// if we're chasing someone, get a little bit angry
 		if(target_mob && prob(5))
 			feral++
 
-		//calm down a little bit
+		// calm down a little bit
 		if(feral > 0)
 			if(prob(feral * 20))
 				feral -= 1
 		else
-			//if feral is less than 0, we're becalmed by smoke or steam
+			// if feral is less than 0, we're becalmed by smoke or steam
 			if(feral < 0)
 				feral += 1
 
@@ -62,7 +62,7 @@
 				target_mob = null
 				target_turf = null
 			if(strength > 5)
-				//calm down and spread out a little
+				// calm down and spread out a little
 				var/mob/living/simple_animal/bee/B = new(get_turf(pick(orange(src,1))))
 				B.strength = rand(1,5)
 				src.strength -= B.strength
@@ -73,11 +73,11 @@
 					B.parent = src.parent
 					src.parent.owned_bee_swarms.Add(B)
 
-		//make some noise
+		// make some noise
 		if(prob(0.5))
 			src.visible_message("\blue [pick("Buzzzz.","Hmmmmm.","Bzzz.")]")
 
-		//smoke, water and steam calms us down
+		// smoke, water and steam calms us down
 		var/calming = 0
 		var/list/calmers = list(/obj/effect/effect/smoke/chem, \
 		/obj/effect/effect/water, \
@@ -111,7 +111,7 @@
 				if(strength > 5)
 					icon_state = "bees_swarm"
 			else if(prob(10))
-				//make the other swarm of bees stronger, then move away
+				// make the other swarm of bees stronger, then move away
 				var/total_bees = B.strength + src.strength
 				if(total_bees < 10)
 					B.strength = min(5, total_bees)
@@ -141,15 +141,15 @@
 
 		if(target_turf)
 			if(AStar(src, target_turf, /turf/proc/Distance, 1))
-				Move(get_step(src, get_dir(src,target_turf)))
+				Move(get_step(src, get_dir(src, target_turf)))
 				if (prob(0.1))
 					src.visible_message("\blue The bees swarm after [target_mob]!")
 			if(src.loc == target_turf)
 				target_turf = null
 				wander = 1
 		else
-			//find some flowers, harvest
-			//angry bee swarms don't hang around
+			// find some flowers, harvest
+			// angry bee swarms don't hang around
 			if(feral > 0)
 				turns_per_move = rand(1,3)
 			else if(feral < 0)
@@ -172,7 +172,7 @@
 		else if(strength <= 5)
 			icon_state = "bees[strength]"
 
-	//debugging
+	// debugging
 	/*icon_state = "[strength]"
 	if(strength > 5)
 		icon_state = "unknown"*/

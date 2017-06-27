@@ -28,10 +28,10 @@
 	var/const/prob_right_sab_target_l = 25 // lower bound on probability of naming right sabotage target
 	var/const/prob_right_sab_target_h = 50 // upper bound on probability of naming right sabotage target
 
-	var/const/prob_right_killer_l = 25 //lower bound on probability of naming the right operative
-	var/const/prob_right_killer_h = 50 //upper bound on probability of naming the right operative
-	var/const/prob_right_objective_l = 25 //lower bound on probability of determining the objective correctly
-	var/const/prob_right_objective_h = 50 //upper bound on probability of determining the objective correctly
+	var/const/prob_right_killer_l = 25 // lower bound on probability of naming the right operative
+	var/const/prob_right_killer_h = 50 // upper bound on probability of naming the right operative
+	var/const/prob_right_objective_l = 25 // lower bound on probability of determining the objective correctly
+	var/const/prob_right_objective_h = 50 // upper bound on probability of determining the objective correctly
 
 /datum/game_mode/meme/announce()
 	to_chat(world, "<B>The current game mode is - Meme!</B>")
@@ -43,21 +43,21 @@
 
 	// for every 10 players, get 1 meme, and for each meme, get a host
 	// also make sure that there's at least one meme and one host
-	//recommended_enemies = max(src.num_players() / 20 * 2, 2)
+	// recommended_enemies = max(src.num_players() / 20 * 2, 2)
 
 	if(antag_candidates.len < 1)
-		//log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.") // We need no spam anymore, it works for a long time.
+		// log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.") // We need no spam anymore, it works for a long time.
 		return 0 // not enough candidates for meme
 
 	/*if(possible_memes.len < 2)
 		log_admin("MODE FAILURE: MEME. NOT ENOUGH MEME CANDIDATES.")
 		return 0 not enough candidates for meme*/
 
-	//testing("[player_list.len] cur players")
+	// testing("[player_list.len] cur players")
 
-	//var/meme_limit = Clamp((num_players()/20), 1, 3)
+	// var/meme_limit = Clamp((num_players()/20), 1, 3)
 	var/meme_limit = Clamp((player_list.len/13), 1, 3)
-	//testing("Current meme limit is [meme_limit]")
+	// testing("Current meme limit is [meme_limit]")
 	var/i = 0
 
 	while(antag_candidates.len > meme_limit)
@@ -82,22 +82,22 @@
 		return 0 // not enough candidates for meme
 
 	while(antag_candidates.len >= 1)
-		//for(var/mob/new_player/player in player_list)
+		// for(var/mob/new_player/player in player_list)
 		var/datum/mind/meme = pick(antag_candidates)
 		antag_candidates.Remove(meme)
 
-		//var/datum/mind/first_host = pick(possible_memes)
-		//possible_memes.Remove(first_host)
+		// var/datum/mind/first_host = pick(possible_memes)
+		// possible_memes.Remove(first_host)
 
 		modePlayer += meme
-		//modePlayer += first_host
+		// modePlayer += first_host
 		memes += meme
-		//first_hosts += first_host
+		// first_hosts += first_host
 
 		// so that we can later know which host belongs to which meme
-		//assigned_hosts[meme.key] = first_host
+		// assigned_hosts[meme.key] = first_host
 
-		meme.assigned_role = "MODE" //So they aren't chosen for other jobs.
+		meme.assigned_role = "MODE" // So they aren't chosen for other jobs.
 		meme.special_role = "Meme"
 
 	return 1

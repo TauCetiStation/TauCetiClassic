@@ -1,13 +1,13 @@
-/////////////////////////////////////////////
-//Guest pass ////////////////////////////////
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
+// Guest pass //////////////////////////////// 
+//////////////////////////////////////////// /
 /obj/item/weapon/card/id/guest
 	name = "guest pass"
 	desc = "Allows temporary access to station areas."
 	icon_state = "guest"
 	light_color = "#0099ff"
 
-	var/temp_access = list() //to prevent agent cards stealing access as permanent
+	var/temp_access = list() // to prevent agent cards stealing access as permanent
 	var/expiration_time = 0
 	var/reason = "NOT SPECIFIED"
 
@@ -36,9 +36,9 @@
 	to_chat(usr, "<span class='notice'>Issuing reason: [reason].</span>")
 	return
 
-/////////////////////////////////////////////
-//Guest pass terminal////////////////////////
-/////////////////////////////////////////////
+//////////////////////////////////////////// /
+// Guest pass terminal/////////////////////// /
+//////////////////////////////////////////// /
 
 /obj/machinery/computer/guestpass
 	name = "guest pass terminal"
@@ -82,7 +82,7 @@
 	user.set_machine(src)
 	var/dat
 
-	if (mode == 1) //Logs
+	if (mode == 1) // Logs
 		dat += "<h3>Activity log</h3><br>"
 		for (var/entry in internal_log)
 			dat += "[entry]<br><hr>"
@@ -164,8 +164,8 @@
 				var/dat = "<h3>Activity log of guest pass terminal #[uid]</h3><br>"
 				for (var/entry in internal_log)
 					dat += "[entry]<br><hr>"
-				//usr << "Printing the log, standby..."
-				//sleep(50)
+				// usr << "Printing the log, standby..."
+				// sleep(50)
 				var/obj/item/weapon/paper/P = new/obj/item/weapon/paper( loc )
 				P.name = "activity log"
 				P.info = dat

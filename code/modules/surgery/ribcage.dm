@@ -1,7 +1,7 @@
-//Procedures in this file: Generic ribcage opening steps, Removing alien embryo, Fixing organs.
-//////////////////////////////////////////////////////////////////
-//				GENERIC	RIBCAGE SURGERY							//
-//////////////////////////////////////////////////////////////////
+// Procedures in this file: Generic ribcage opening steps, Removing alien embryo, Fixing organs.
+///////////////////////////////////////////////////////////////// /
+//				GENERIC	RIBCAGE SURGERY							// 
+///////////////////////////////////////////////////////////////// /
 /datum/surgery_step/ribcage
 	priority = 2
 	can_infect = 1
@@ -153,9 +153,9 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.open = 1
 
-//////////////////////////////////////////////////////////////////
-//					ALIEN EMBRYO SURGERY						//
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////// /
+//					ALIEN EMBRYO SURGERY						// 
+///////////////////////////////////////////////////////////////// /
 /datum/surgery_step/ribcage/remove_embryo
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100,	\
@@ -189,9 +189,9 @@
 		A.loc = A.loc.loc
 
 
-//////////////////////////////////////////////////////////////////
-//				CHEST INTERNAL ORGAN SURGERY					//
-//////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////// /
+//				CHEST INTERNAL ORGAN SURGERY					// 
+///////////////////////////////////////////////////////////////// /
 /datum/surgery_step/ribcage/fix_chest_internal
 	allowed_tools = list(
 	/obj/item/stack/medical/advanced/bruise_pack= 100,		\
@@ -274,7 +274,7 @@
 		if(IO && IO.damage > 0)
 			IO.take_damage(dam_amt,0)
 
-/datum/surgery_step/ribcage/fix_chest_internal_robot //For artificial organs
+/datum/surgery_step/ribcage/fix_chest_internal_robot // For artificial organs
 	allowed_tools = list(
 	/obj/item/stack/nanopaste = 100,		\
 	/obj/item/weapon/bonegel = 30, 		\

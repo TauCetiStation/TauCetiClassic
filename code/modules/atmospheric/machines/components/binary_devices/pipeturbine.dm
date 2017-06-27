@@ -1,4 +1,4 @@
-#define ADIABATIC_EXPONENT 0.667 //Actually adiabatic exponent - 1.
+#define ADIABATIC_EXPONENT 0.667 // Actually adiabatic exponent - 1.
 
 /obj/machinery/atmospherics/pipeturbine
 	name = "turbine"
@@ -140,7 +140,7 @@
 
 	src.dir = turn(src.dir, 90)
 
-//Goddamn copypaste from binary base class because atmospherics machinery API is not damn flexible
+// Goddamn copypaste from binary base class because atmospherics machinery API is not damn flexible
 /obj/machinery/atmospherics/pipeturbine/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node1)
 		network1 = new_network
@@ -161,13 +161,13 @@
 	var/node2_connect = turn(dir, -90)
 	var/node1_connect = turn(dir, 90)
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node1_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node1 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node2_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node2 = target
 			break
 
@@ -232,7 +232,7 @@
 	anchored = 0
 	density = 1
 
-	var/kin_to_el_ratio = 0.1	//How much kinetic energy will be taken from turbine and converted into electricity
+	var/kin_to_el_ratio = 0.1	// How much kinetic energy will be taken from turbine and converted into electricity
 	var/obj/machinery/atmospherics/pipeturbine/turbine
 
 /obj/machinery/power/turbinemotor/New()
@@ -242,7 +242,7 @@
 /obj/machinery/power/turbinemotor/proc/updateConnection()
 	turbine = null
 	if(src.loc && anchored)
-		turbine = locate(/obj/machinery/atmospherics/pipeturbine) in get_step(src,dir)
+		turbine = locate(/obj/machinery/atmospherics/pipeturbine) in get_step(src, dir)
 		if (turbine.stat & (BROKEN) || !turbine.anchored || turn(turbine.dir,180) != dir)
 			turbine = null
 

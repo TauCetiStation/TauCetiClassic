@@ -1,4 +1,4 @@
-//CLOTH RANDOM
+// CLOTH RANDOM
 /obj/random/cloth/masks
 	name = "random mask"
 	desc = "This is a random mask."

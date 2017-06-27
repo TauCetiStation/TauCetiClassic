@@ -1,5 +1,5 @@
 /obj/machinery/atmospherics/binary/passive_gate
-	//Tries to achieve target pressure at output (like a normal pump) except
+	// Tries to achieve target pressure at output (like a normal pump) except
 	//	Uses no power but can not transfer gases from a low pressure area to a high pressure area
 	icon = 'icons/obj/atmospherics/passive_gate.dmi'
 	icon_state = "intact_off"
@@ -36,19 +36,19 @@
 	var/output_starting_pressure = air2.return_pressure()
 	var/input_starting_pressure = air1.return_pressure()
 
-	if(output_starting_pressure >= min(target_pressure,input_starting_pressure-10))
-		//No need to pump gas if target is already reached or input pressure is too low
-		//Need at least 10 KPa difference to overcome friction in the mechanism
+	if(output_starting_pressure >= min(target_pressure, input_starting_pressure-10))
+		// No need to pump gas if target is already reached or input pressure is too low
+		// Need at least 10 KPa difference to overcome friction in the mechanism
 		return 1
 
-	//Calculate necessary moles to transfer using PV = nRT
+	// Calculate necessary moles to transfer using PV = nRT
 	if((air1.total_moles() > 0) && (air1.temperature>0))
 		var/pressure_delta = min(target_pressure - output_starting_pressure, (input_starting_pressure - output_starting_pressure)/2)
-		//Can not have a pressure delta that would cause output_pressure > input_pressure
+		// Can not have a pressure delta that would cause output_pressure > input_pressure
 
 		var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
 
-		//Actually transfer the gas
+		// Actually transfer the gas
 		var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 		air2.merge(removed)
 
@@ -59,7 +59,7 @@
 			network2.update = 1
 
 
-//Radio remote control
+// Radio remote control
 
 /obj/machinery/atmospherics/binary/passive_gate/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
@@ -72,7 +72,7 @@
 		return 0
 
 	var/datum/signal/signal = new
-	signal.transmission_method = 1 //radio signal
+	signal.transmission_method = 1 // radio signal
 	signal.source = src
 
 	signal.data = list(
@@ -120,7 +120,7 @@
 
 	if("status" in signal.data)
 		addtimer(CALLBACK(src, .proc/broadcast_status), 2)
-		return //do not update_icon
+		return // do not update_icon
 
 	addtimer(CALLBACK(src, .proc/broadcast_status), 2)
 	update_icon()
@@ -139,7 +139,7 @@
 	interact(user)
 	return
 
-/obj/machinery/atmospherics/binary/passive_gate/Topic(href,href_list)
+/obj/machinery/atmospherics/binary/passive_gate/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return

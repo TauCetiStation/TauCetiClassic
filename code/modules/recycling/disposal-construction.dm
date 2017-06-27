@@ -249,7 +249,7 @@
 						P.dpdir = dpdir
 						P.updateicon()
 
-						//Needs some special treatment ;)
+						// Needs some special treatment ;)
 						if(ptype==9 || ptype==10)
 							var/obj/structure/disposalpipe/sortjunction/SortP = P
 							SortP.updatedir()

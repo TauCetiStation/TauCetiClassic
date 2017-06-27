@@ -40,7 +40,7 @@
 			if(Robot.mmi)	qdel(Robot.mmi)
 		else
 			for(var/obj/item/W in M)
-				if(istype(W, /obj/item/weapon/implant))	//TODO: Carn. give implants a dropped() or something
+				if(istype(W, /obj/item/weapon/implant))	// TODO: Carn. give implants a dropped() or something
 					qdel(W)
 					continue
 				W.layer = initial(W.layer)
@@ -50,7 +50,7 @@
 
 		var/mob/living/new_mob
 
-		//var/randomize = pick("monkey","robot","slime","xeno","human") No xeno for now.
+		// var/randomize = pick("monkey","robot","slime","xeno","human") No xeno for now.
 		var/randomize = pick("monkey","robot","slime","human")
 		switch(randomize)
 			if("monkey")
@@ -63,12 +63,12 @@
 				new_mob.job = "Cyborg"
 				var/mob/living/silicon/robot/Robot = new_mob
 				Robot.mmi = new /obj/item/device/mmi(new_mob)
-				Robot.mmi.transfer_identity(M)	//Does not transfer key/client.
+				Robot.mmi.transfer_identity(M)	// Does not transfer key/client.
 			if("slime")
 				if(prob(50))		new_mob = new /mob/living/carbon/slime/adult(M.loc)
 				else				new_mob = new /mob/living/carbon/slime(M.loc)
 				new_mob.universal_speak = 1
-			//if("xeno")
+			// if("xeno")
 			//	var/alien_caste = pick("Hunter","Sentinel","Drone","Larva")
 			//	switch(alien_caste)
 			//		if("Hunter")	new_mob = new /mob/living/carbon/alien/humanoid/hunter(M.loc)
@@ -87,7 +87,7 @@
 				new_mob.name += " [pick(last_names)]"
 				new_mob.real_name = new_mob.name
 
-				var/datum/preferences/A = new()	//Randomize appearance for the human
+				var/datum/preferences/A = new()	// Randomize appearance for the human
 				A.randomize_appearance_for(new_mob)
 	/*		if("animal")
 				if(prob(50))
@@ -229,5 +229,5 @@
 			teleammount++
 			do_teleport(stuff, stuff, 10)
 			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
-			smoke.set_up(max(round(10 - teleammount),1), 0, stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
+			smoke.set_up(max(round(10 - teleammount),1), 0, stuff.loc) // Smoke drops off if a lot of stuff is moved for the sake of sanity
 			smoke.start()*/

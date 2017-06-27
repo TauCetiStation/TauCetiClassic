@@ -1,6 +1,6 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-//Few global vars to track the blob
+// Few global vars to track the blob
 var/list/blobs = list()
 var/list/blob_cores = list()
 var/list/blob_nodes = list()
@@ -26,7 +26,7 @@ var/list/blob_nodes = list()
 	var/players_per_core = 30
 	var/blob_point_rate = 3
 
-	//var/blobwincount = 350 //default value
+	// var/blobwincount = 350 // default value
 	var/blobwincount = 500
 
 	var/list/infected_crew = list()
@@ -37,7 +37,7 @@ var/list/blob_nodes = list()
 	blobwincount = initial(blobwincount) * cores_to_spawn
 
 	for(var/datum/mind/player in antag_candidates)
-		for(var/job in restricted_jobs)//Removing robots from the list
+		for(var/job in restricted_jobs)// Removing robots from the list
 			if(player.assigned_role == job)
 				antag_candidates -= player
 

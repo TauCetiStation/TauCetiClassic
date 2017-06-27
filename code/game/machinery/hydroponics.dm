@@ -7,22 +7,22 @@
 	density = 1
 	anchored = 1
 	var/waterlevel = 100 // The amount of water in the tray (max 100)
-	var/maxwater = 100		//The maximum amount of water in the tray
+	var/maxwater = 100		// The maximum amount of water in the tray
 	var/nutrilevel = 10 // The amount of nutrient in the tray (max 10)
-	var/maxnutri = 10		//The maximum nutrient of water in the tray
+	var/maxnutri = 10		// The maximum nutrient of water in the tray
 	var/pestlevel = 0 // The amount of pests in the tray (max 10)
 	var/weedlevel = 0 // The amount of weeds in the tray (max 10)
-	var/yieldmod = 1 //Modifier to yield
-	var/mutmod = 1 //Modifier to mutation chance
+	var/yieldmod = 1 // Modifier to yield
+	var/mutmod = 1 // Modifier to mutation chance
 	var/toxic = 0 // Toxicity in the tray?
 	var/age = 0 // Current age
 	var/dead = 0 // Is it dead?
 	var/health = 0 // Its health.
 	var/lastproduce = 0 // Last time it was harvested
-	var/lastcycle = 0 //Used for timing of cycles.
+	var/lastcycle = 0 // Used for timing of cycles.
 	var/cycledelay = 200 // About 10 seconds / cycle
 	var/planted = 0 // Is it occupied?
-	var/harvest = 0 //Ready to harvest?
+	var/harvest = 0 // Ready to harvest?
 	var/obj/item/seeds/myseed = null // The currently planted seed
 	var/rating = 1
 	var/unwrenchable = 1
@@ -81,19 +81,19 @@
 		default_deconstruction_crowbar(I, 1)
 	..()
 
-/obj/machinery/hydroponics/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
+/obj/machinery/hydroponics/bullet_act(obj/item/projectile/Proj) // Works with the Somatoray to modify plant variables.
 	if(!planted)
 		..()
 		return
 	if(istype(Proj ,/obj/item/projectile/energy/floramut))
 		mutate()
 	else if(istype(Proj ,/obj/item/projectile/energy/florayield))
-		if(myseed.yield == 0)//Oh god don't divide by zero you'll doom us all.
+		if(myseed.yield == 0)// Oh god don't divide by zero you'll doom us all.
 			adjustSYield(1 * rating)
-			//world << "Yield increased by 1, from 0, to a total of [myseed.yield]"
-		else if(prob(1/(myseed.yield * myseed.yield) *100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
+			// world << "Yield increased by 1, from 0, to a total of [myseed.yield]"
+		else if(prob(1/(myseed.yield * myseed.yield) *100))// This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 			adjustSYield(1 * rating)
-			//world << "Yield increased by 1, to a total of [myseed.yield]"
+			// world << "Yield increased by 1, to a total of [myseed.yield]"
 	else
 		..()
 		return
@@ -120,7 +120,7 @@
 			age += 1 * HYDRO_SPEED_MULTIPLIER
 			needs_update = 1
 
-//Nutrients//////////////////////////////////////////////////////////////
+// Nutrients////////////////////////////////////////////////////////////// 
 			// Nutrients deplete slowly
 			if(prob(50))
 				adjustNutri(-1 / rating * HYDRO_SPEED_MULTIPLIER)
@@ -129,7 +129,7 @@
 			if(nutrilevel <= 0 && myseed.plant_type != 1)
 				adjustHealth(-rand(1,3) * HYDRO_SPEED_MULTIPLIER)
 
-//Water//////////////////////////////////////////////////////////////////
+// Water///////////////////////////////////////////////////////////////// /
 			// Drink random amount of water
 			adjustWater(-rand(1,6) / rating * HYDRO_SPEED_MULTIPLIER)
 
@@ -142,10 +142,10 @@
 			// Sufficient water level and nutrient level = plant healthy
 			else if(waterlevel > 10 && nutrilevel > 0)
 				adjustHealth(rand(1,2) / rating * HYDRO_SPEED_MULTIPLIER)
-				if(prob(5))  //5 percent chance the weed population will increase
+				if(prob(5))  // 5 percent chance the weed population will increase
 					adjustWeeds(1 / rating * HYDRO_SPEED_MULTIPLIER)
 
-//Toxins/////////////////////////////////////////////////////////////////
+// Toxins///////////////////////////////////////////////////////////////// 
 
 			// Too much toxins cause harm, but when the plant drinks the contaiminated water, the toxins disappear slowly
 			if(toxic >= 40 && toxic < 80)
@@ -155,7 +155,7 @@
 				adjustHealth(-3)
 				adjustToxic(-rand(1,10) / rating * HYDRO_SPEED_MULTIPLIER)
 
-//Pests & Weeds//////////////////////////////////////////////////////////
+// Pests & Weeds//////////////////////////////////////////////////////////
 
 			else if(pestlevel >= 5)
 				adjustHealth(-1 / rating * HYDRO_SPEED_MULTIPLIER)
@@ -165,7 +165,7 @@
 				adjustHealth(-1 / rating * HYDRO_SPEED_MULTIPLIER)
 
 
-//Health & Age///////////////////////////////////////////////////////////
+// Health & Age/////////////////////////////////////////////////////////// 
 
 			// Plant dies if health <= 0
 			if(health <= 0)
@@ -206,23 +206,23 @@
 	if (mutmod == 0)
 		return
 	if (mutmod == 1)
-		if(prob(80))		//80%
+		if(prob(80))		// 80%
 			mutate()
-		else if(prob(75))	//15%
+		else if(prob(75))	// 15%
 			hardmutate()
 		return
 	if (mutmod == 2)
-		if(prob(50))		//50%
+		if(prob(50))		// 50%
 			mutate()
-		else if(prob(50))	//25%
+		else if(prob(50))	// 25%
 			hardmutate()
-		else if(prob(50))	//12.5%
+		else if(prob(50))	// 12.5%
 			mutatespecie()
 		return
 	return
 
 obj/machinery/hydroponics/update_icon()
-	//Refreshes the icon and sets the luminosity
+	// Refreshes the icon and sets the luminosity
 	overlays.Cut()
 
 	UpdateDescription()
@@ -239,7 +239,7 @@ obj/machinery/hydroponics/update_icon()
 		else if(age < myseed.maturation)
 			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages ) // Make sure it won't crap out due to HERPDERP 6 stages only
 			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[round(t_growthstate)]")
-			lastproduce = age //Cheating by putting this here, it means that it isn't instantly ready to harvest
+			lastproduce = age // Cheating by putting this here, it means that it isn't instantly ready to harvest
 		else
 			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]") // Same
 		I.layer = MOB_LAYER + 0.1
@@ -312,11 +312,11 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 /obj/machinery/hydroponics/proc/mutate(lifemut = 2, endmut = 5, productmut = 1, yieldmut = 2, potmut = 25) // Mutates the current seed
 	if(!planted)
 		return
-	adjustSLife(rand(-lifemut,lifemut))
-	adjustSEnd(rand(-endmut,endmut))
-	adjustSProduct(rand(-productmut,productmut))
-	adjustSYield(rand(-yieldmut,yieldmut))
-	adjustSPot(rand(-potmut,potmut))
+	adjustSLife(rand(-lifemut, lifemut))
+	adjustSEnd(rand(-endmut, endmut))
+	adjustSProduct(rand(-productmut, productmut))
+	adjustSYield(rand(-yieldmut, yieldmut))
+	adjustSPot(rand(-potmut, potmut))
 	return
 
 
@@ -386,14 +386,14 @@ obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent in
 		visible_message("The pests seem to behave oddly...")
 		for(var/i=0, i<3, i++)
 			new /obj/effect/spider/spiderling(loc)
-			//S.grow_as = /mob/living/simple_animal/hostile/giant_spider/hunter
+			// S.grow_as = /mob/living/simple_animal/hostile/giant_spider/hunter
 	else
 		to_chat(usr, "The pests seem to behave oddly, but quickly settle down...")
 
 
 obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 
-	//Called when mob user "attacks" it with object O
+	// Called when mob user "attacks" it with object O
 	if(istype(O, /obj/item/nutrient))
 		var/obj/item/nutrient/myNut = O
 		user.remove_from_mob(O)
@@ -423,10 +423,10 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/weapon/reagent_containers/pill))
 			visible_message("<span class='notice'>[user] composts [reagent_source], spreading it through [target].</span>")
-			reagent_source.reagents.trans_to(S,reagent_source.reagents.total_volume)
+			reagent_source.reagents.trans_to(S, reagent_source.reagents.total_volume)
 			qdel(reagent_source)
 		else
-			reagent_source.reagents.trans_to(S,reagent_source.amount_per_transfer_from_this)
+			reagent_source.reagents.trans_to(S, reagent_source.amount_per_transfer_from_this)
 			if(istype(reagent_source, /obj/item/weapon/reagent_containers/syringe/))
 				var/obj/item/weapon/reagent_containers/syringe/syr = reagent_source
 				visible_message("<span class='notice'>[user] injects [target] with [syr].</span>")
@@ -630,7 +630,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 
 	else if (istype(O, /obj/item/device/analyzer/plant_analyzer))
 		if(planted && myseed)
-			to_chat(user, "*** <B>[myseed.plantname]</B> ***")//Carn: now reports the plants growing, not the seeds.
+			to_chat(user, "*** <B>[myseed.plantname]</B> ***")// Carn: now reports the plants growing, not the seeds.
 			to_chat(user, "-Plant Age: \blue [age]")
 			to_chat(user, "-Plant Endurance: \blue [myseed.endurance]")
 			to_chat(user, "-Plant Lifespan: \blue [myseed.lifespan]")
@@ -675,7 +675,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	else if (istype(O, /obj/item/weapon/storage/bag/plants))
 		attack_hand(user)
 		var/obj/item/weapon/storage/bag/plants/S = O
-		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in locate(user.x,user.y,user.z))
+		for (var/obj/item/weapon/reagent_containers/food/snacks/grown/G in locate(user.x, user.y, user.z))
 			if(!S.can_be_inserted(G))
 				return
 			S.handle_item_insertion(G, 1)
@@ -746,7 +746,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 		update_icon()
 
 /obj/machinery/hydroponics/attack_hand(mob/user)
-	if(istype(usr,/mob/living/silicon))		//How does AI know what plant is?
+	if(istype(usr,/mob/living/silicon))		// How does AI know what plant is?
 		return
 	if(harvest)
 		if(!(user in range(1,src)))
@@ -776,15 +776,15 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 /obj/item/seeds/proc/getYield()
 	var/obj/machinery/hydroponics/parent = loc
 	if (parent.yieldmod == 0)
-		return min(yield, 1)//1 if above zero, 0 otherwise
+		return min(yield, 1)// 1 if above zero, 0 otherwise
 	return (yield * parent.yieldmod)
 
 /obj/item/seeds/proc/harvest(mob/user = usr)
 	var/produce = text2path(productname)
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/obj/machinery/hydroponics/parent = loc // for ease of access
 	var/t_amount = 0
 	var/list/result = list()
-	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc //needed for TK
+	var/output_loc = parent.Adjacent(user) ? user.loc : parent.loc // needed for TK
 	while(t_amount < getYield())
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/t_prod = new produce(output_loc, potency)
 		result.Add(t_prod) // User gets a consumable
@@ -807,7 +807,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	return result
 
 /obj/item/seeds/grassseed/harvest(mob/user = usr)
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/obj/machinery/hydroponics/parent = loc // for ease of access
 	var/t_yield = round(yield*parent.yieldmod)
 
 	if(t_yield > 0)
@@ -818,7 +818,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 
 /obj/item/seeds/gibtomato/harvest(mob/user = usr)
 	var/produce = text2path(productname)
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/obj/machinery/hydroponics/parent = loc // for ease of access
 	var/t_amount = 0
 
 	while ( t_amount < (yield * parent.yieldmod ))
@@ -839,7 +839,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 
 /obj/item/seeds/nettleseed/harvest(mob/user = usr)
 	var/produce = text2path(productname)
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/obj/machinery/hydroponics/parent = loc // for ease of access
 	var/t_amount = 0
 
 	while ( t_amount < (yield * parent.yieldmod ))
@@ -857,9 +857,9 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 
 	parent.update_tray()
 
-/obj/item/seeds/deathnettleseed/harvest(mob/user = usr) //isn't a nettle subclass yet, so
+/obj/item/seeds/deathnettleseed/harvest(mob/user = usr) // isn't a nettle subclass yet, so
 	var/produce = text2path(productname)
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/obj/machinery/hydroponics/parent = loc // for ease of access
 	var/t_amount = 0
 
 	while ( t_amount < (yield * parent.yieldmod ))
@@ -879,7 +879,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 
 /obj/item/seeds/eggyseed/harvest(mob/user = usr)
 	var/produce = text2path(productname)
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/obj/machinery/hydroponics/parent = loc // for ease of access
 	var/t_amount = 0
 
 	while ( t_amount < (yield * parent.yieldmod ))
@@ -903,7 +903,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 		dead = 0
 	update_icon()
 
-/// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///
+// / Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.// /
 /obj/machinery/hydroponics/proc/adjustNutri(adjustamt)
 	nutrilevel += adjustamt
 	nutrilevel = max(nutrilevel, 0)
@@ -914,7 +914,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	waterlevel = max(waterlevel, 0)
 	waterlevel = min(waterlevel, maxwater)
 	if(adjustamt>0)
-		adjustToxic(-round(adjustamt/4))//Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
+		adjustToxic(-round(adjustamt/4))// Toxicity dilutation code. The more water you put in, the lesser the toxin concentration.
 
 /obj/machinery/hydroponics/proc/adjustHealth(adjustamt)
 	if(planted && !dead)
@@ -937,8 +937,8 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	weedlevel = max(weedlevel, 0)
 	pestlevel = min(pestlevel, 10)
 
-/// Seed Setters ///
-/obj/machinery/hydroponics/proc/adjustSYield(adjustamt)//0,10
+// / Seed Setters // /
+/obj/machinery/hydroponics/proc/adjustSYield(adjustamt)// 0,10
 	if(myseed.yield != -1) // Unharvestable shouldn't suddenly turn harvestable
 		myseed.yield += adjustamt
 		myseed.yield = max(myseed.yield, 0)
@@ -946,29 +946,29 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 		if(myseed.yield <= 0 && myseed.plant_type == 2)
 			myseed.yield = 1 // Mushrooms always have a minimum yield of 1.
 
-/obj/machinery/hydroponics/proc/adjustSLife(adjustamt)//10,100
+/obj/machinery/hydroponics/proc/adjustSLife(adjustamt)// 10,100
 	myseed.lifespan += adjustamt
 	myseed.lifespan = max(myseed.lifespan, 10)
 	myseed.lifespan = min(myseed.lifespan, 100)
 
-/obj/machinery/hydroponics/proc/adjustSEnd(adjustamt)//10,100
+/obj/machinery/hydroponics/proc/adjustSEnd(adjustamt)// 10,100
 	myseed.endurance += adjustamt
 	myseed.endurance = max(myseed.endurance, 10)
 	myseed.endurance = min(myseed.endurance, 100)
 
-/obj/machinery/hydroponics/proc/adjustSProduct(adjustamt)//2,10
+/obj/machinery/hydroponics/proc/adjustSProduct(adjustamt)// 2,10
 	myseed.production += adjustamt
 	myseed.production = max(myseed.endurance, 2)
 	myseed.production = min(myseed.endurance, 10)
 
-/obj/machinery/hydroponics/proc/adjustSPot(adjustamt)//0,100
-	if(myseed.potency != -1) //Not all plants have a potency
+/obj/machinery/hydroponics/proc/adjustSPot(adjustamt)// 0,100
+	if(myseed.potency != -1) // Not all plants have a potency
 		myseed.potency += adjustamt
 		myseed.potency = max(myseed.potency, 0)
 		myseed.potency = min(myseed.potency, 100)
 
 ///////////////////////////////////////////////////////////////////////////////
-/obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
+/obj/machinery/hydroponics/soil // Not actually hydroponics at all! Honk!
 	name = "soil"
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "soil"

@@ -67,7 +67,7 @@
 			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push the visor up on")
-		usr.update_inv_head()	//so our mob-overlays update
+		usr.update_inv_head()	// so our mob-overlays update
 
 /obj/item/clothing/head/helmet/bulletproof
 	name = "bulletproof helmet"

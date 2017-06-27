@@ -59,6 +59,6 @@
 		if(!C) return
 
 		if(rock.finds && rock.finds.len || rock.artifact_find)
-			C.images += image(hudMineral,rock,"hudanomaly")
+			C.images += image(hudMineral, rock,"hudanomaly")
 		else if (rock.mineral)
-			C.images += image(hudMineral,rock,"hud[rock.mineral.ore_type]")
+			C.images += image(hudMineral, rock,"hud[rock.mineral.ore_type]")

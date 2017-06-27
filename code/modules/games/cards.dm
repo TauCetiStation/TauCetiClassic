@@ -116,7 +116,7 @@
 	H.concealed = 1
 	H.update_icon()
 	usr.visible_message("\The [usr] deals a card to \the [M].")
-	H.throw_at(get_step(M,M.dir),10,1,H)
+	H.throw_at(get_step(M, M.dir),10,1,H)
 
 /obj/item/weapon/hand/attackby(obj/O, mob/user)
 	if(istype(O,/obj/item/weapon/hand))
@@ -171,7 +171,7 @@
 	H.concealed = 0
 	H.update_icon()
 	usr.visible_message("\The [usr] plays \the [discarding].")
-	H.loc = get_step(usr,usr.dir)
+	H.loc = get_step(usr, usr.dir)
 
 	if(!cards.len)
 		qdel(src)

@@ -92,7 +92,7 @@
 
 
 
-//Tier 3
+// Tier 3
 
 /mob/living/carbon/slime/darkblue
 	colour = "dark blue"

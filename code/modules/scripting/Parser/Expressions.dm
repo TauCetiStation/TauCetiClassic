@@ -55,7 +55,7 @@
 				if(/token/accessor)
 					var
 						token/accessor/A=T
-						node/expression/value/variable/E//=new(A.member)
+						node/expression/value/variable/E// =new(A.member)
 						datum/stack/S = new()
 					while(istype(A.object, /token/accessor))
 						S.Push(A)
@@ -92,13 +92,13 @@
 	- <GetUnaryOperator()>
 */
 		GetOperator(O, type=/node/expression/operator, L[])
-			if(istype(O, type)) return O		//O is already the desired type
-			if(istype(O, /token)) O=O:value //sets O to text
-			if(istext(O))										//sets O to path
+			if(istype(O, type)) return O		// O is already the desired type
+			if(istype(O, /token)) O=O:value // sets O to text
+			if(istext(O))										// sets O to path
 				if(L.Find(O)) O=L[O]
 				else return null
-			if(ispath(O))O=new O						//catches path from last check
-			else return null								//Unknown type
+			if(ispath(O))O=new O						// catches path from last check
+			else return null								// Unknown type
 			return O
 
 /*
@@ -136,8 +136,8 @@
 			if(!istype(O))
 				errors+=new/scriptError("Error reducing expression - invalid operator.")
 				return
-			//Take O and assign its operands, popping one or two values from the val stack
-			//depending on whether O is a binary or unary operator.
+			// Take O and assign its operands, popping one or two values from the val stack
+			// depending on whether O is a binary or unary operator.
 			if(istype(O, /node/expression/operator/binary))
 				var/node/expression/operator/binary/B=O
 				B.exp2=val.Pop()
@@ -172,8 +172,8 @@
 	- The <expecting>  variable helps distinguish unary operators from binary operators (for cases like the - operator, which can be either).
 
 	Articles:
-	- <http://epaperpress.com/oper/>
-	- <http://en.wikipedia.org/wiki/Shunting-yard_algorithm>
+	- <http:// epaperpress.com/oper/>
+	- <http:// en.wikipedia.org/wiki/Shunting-yard_algorithm>
 
 	See Also:
 	- <ParseFunctionExpression()>
@@ -193,21 +193,21 @@
 					break
 
 
-				if(index>tokens.len)																						//End of File
+				if(index>tokens.len)																						// End of File
 					errors+=new/scriptError/EndOfFile()
 					break
 				var/token/ntok
 				if(index+1<=tokens.len)
 					ntok=tokens[index+1]
 
-				if(istype(curToken, /token/symbol) && curToken.value=="(")			//Parse parentheses expression
+				if(istype(curToken, /token/symbol) && curToken.value=="(")			// Parse parentheses expression
 					if(expecting!=VALUE)
 						errors+=new/scriptError/ExpectedToken("operator", curToken)
 						NextToken()
 						continue
 					val.Push(ParseParenExpression())
-				else if(istype(curToken, /token/symbol))												//Operator found.
-					var/node/expression/operator/curOperator											//Figure out whether it is unary or binary and get a new instance.
+				else if(istype(curToken, /token/symbol))												// Operator found.
+					var/node/expression/operator/curOperator											// Figure out whether it is unary or binary and get a new instance.
 					if(src.expecting==OPERATOR)
 						curOperator=GetBinaryOperator(curToken)
 						if(!curOperator)
@@ -216,18 +216,18 @@
 							continue
 					else
 						curOperator=GetUnaryOperator(curToken)
-						if(!curOperator) 																						//given symbol isn't a unary operator
+						if(!curOperator) 																						// given symbol isn't a unary operator
 							errors+=new/scriptError/ExpectedToken("expression", curToken)
 							NextToken()
 							continue
 
-					if(opr.Top() && Precedence(opr.Top(), curOperator)==REDUCE)		//Check order of operations and reduce if necessary
+					if(opr.Top() && Precedence(opr.Top(), curOperator)==REDUCE)		// Check order of operations and reduce if necessary
 						Reduce(opr, val)
 						continue
 					opr.Push(curOperator)
 					src.expecting=VALUE
 				else if(ntok && ntok.value=="(" && istype(ntok, /token/symbol)\
-											&& istype(curToken, /token/word))								//Parse function call
+											&& istype(curToken, /token/word))								// Parse function call
 					var/token/preToken=curToken
 					var/old_expect=src.expecting
 					var/fex=ParseFunctionExpression()
@@ -236,7 +236,7 @@
 						NextToken()
 						continue
 					val.Push(fex)
-				else if(istype(curToken, /token/keyword)) 										//inline keywords
+				else if(istype(curToken, /token/keyword)) 										// inline keywords
 					var/n_Keyword/kw=options.keywords[curToken.value]
 					kw=new kw(inline=1)
 					if(kw)
@@ -244,7 +244,7 @@
 							return
 					else
 						errors+=new/scriptError/BadToken(curToken)
-				else if(istype(curToken, /token/end)) 													//semicolon found where it wasn't expected
+				else if(istype(curToken, /token/end)) 													// semicolon found where it wasn't expected
 					errors+=new/scriptError/BadToken(curToken)
 					NextToken()
 					continue
@@ -257,9 +257,9 @@
 					src.expecting=OPERATOR
 				NextToken()
 
-			while(opr.Top()) Reduce(opr, val) 																//Reduce the value stack completely
-			.=val.Pop()                       																//Return what should be the last value on the stack
-			if(val.Top())                     																//
+			while(opr.Top()) Reduce(opr, val) 																// Reduce the value stack completely
+			.=val.Pop()                       																// Return what should be the last value on the stack
+			if(val.Top())                     																// 
 				var/node/N=val.Pop()
 				errors+=new/scriptError("Error parsing expression. Unexpected value left on stack: [N.ToString()].")
 				return null
@@ -274,8 +274,8 @@
 		ParseFunctionExpression()
 			var/node/expression/FunctionCall/exp=new
 			exp.func_name=curToken.value
-			NextToken() //skip function name
-			NextToken() //skip open parenthesis, already found
+			NextToken() // skip function name
+			NextToken() // skip open parenthesis, already found
 			var/loops = 0
 
 			for()
@@ -286,8 +286,8 @@
 				if(istype(curToken, /token/symbol) && curToken.value==")")
 					return exp
 				exp.parameters+=ParseParamExpression()
-				if(curToken.value==","&&istype(curToken, /token/symbol))NextToken()	//skip comma
-				if(istype(curToken, /token/end))																		//Prevents infinite loop...
+				if(curToken.value==","&&istype(curToken, /token/symbol))NextToken()	// skip comma
+				if(istype(curToken, /token/end))																		// Prevents infinite loop...
 					errors+=new/scriptError/ExpectedToken(")")
 					return exp
 

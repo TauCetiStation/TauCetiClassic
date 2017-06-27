@@ -1,5 +1,5 @@
-//Defines for atom layers and planes
-//KEEP THESE IN A NICE ACSCENDING ORDER, PLEASE
+// Defines for atom layers and planes
+// KEEP THESE IN A NICE ACSCENDING ORDER, PLEASE
 
 #define CLICKCATCHER_PLANE -99
 
@@ -11,7 +11,7 @@
 #define LIGHTING_PLANE 15
 #define LIGHTING_LAYER 15
 
-//HUD layer defines
+// HUD layer defines
 
 #define FULLSCREEN_PLANE 18
 #define FLASH_LAYER 18

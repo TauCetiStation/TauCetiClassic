@@ -81,7 +81,7 @@ field_generator power level display
 
 /obj/machinery/field_generator/attack_hand(mob/user)
 	if(state == FG_WELDED)
-		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
+		if(get_dist(src, user) <= 1)// Need to actually touch the thing to turn it on
 			if(active != FG_OFFLINE)
 				to_chat(user, "<span class='red'>You are unable to turn off the [src] once it is online.</span>")
 				return
@@ -219,24 +219,24 @@ field_generator power level display
 	if(var_power)
 		return TRUE
 
-	if((G && G == src) || (failsafe >= 8))  //Loopin, set fail
+	if((G && G == src) || (failsafe >= 8))  // Loopin, set fail
 		return FALSE
 	else
 		failsafe++
 
-	if(power >= draw)  //We have enough power
+	if(power >= draw)  // We have enough power
 		power -= draw
 		return TRUE
-	else  //Need more power
+	else  // Need more power
 		draw -= power
 		power = 0
 		for(var/thing in connected_gens)
 			var/obj/machinery/field_generator/FG = thing
-			if(FG == last)  //We just asked you
+			if(FG == last)  // We just asked you
 				continue
-			if(G)  //Another gen is askin for power and we dont have it
-				return FG.draw_power(draw, failsafe, G, src)  //Can you take the load
-			else  //We are askin another for power
+			if(G)  // Another gen is askin for power and we dont have it
+				return FG.draw_power(draw, failsafe, G, src)  // Can you take the load
+			else  // We are askin another for power
 				return FG.draw_power(draw, failsafe, src, src)
 
 /obj/machinery/field_generator/proc/start_fields()
@@ -319,16 +319,16 @@ field_generator power level display
 	clean_up = FALSE
 	update_icon()
 
-	//This is here to help fight the "hurr durr, release singulo cos nobody will notice before the
-	//singulo eats the evidence". It's not fool-proof but better than nothing.
-	//I want to avoid using global variables.
+	// This is here to help fight the "hurr durr, release singulo cos nobody will notice before the
+	// singulo eats the evidence". It's not fool-proof but better than nothing.
+	// I want to avoid using global variables.
 	addtimer(CALLBACK(src, .proc/warn_admins), 1)
 
 /obj/machinery/field_generator/proc/warn_admins()
-	var/temp = TRUE //stops spam
+	var/temp = TRUE // stops spam
 	for(var/obj/singularity/O in machines)
 		if(O.last_warning && temp)
-			if((world.time - O.last_warning) > 50) //to stop message-spam
+			if((world.time - O.last_warning) > 50) // to stop message-spam
 				temp = FALSE
 				message_admins("<span class='danger'>A singulo exists and a containment field has failed. [ADMIN_JMP(O)]</span>")
 				investigate_log("has <font color='red'>failed</font> whilst a singulo exists.","singulo")

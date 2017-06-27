@@ -1,5 +1,5 @@
 /////////////////////////
-////// Mecha Parts //////
+///// / Mecha Parts ///// /
 /////////////////////////
 
 /obj/item/mecha_parts
@@ -64,7 +64,7 @@
 	icon_state = "ripley_r_leg"
 	origin_tech = "programming=2;materials=2;engineering=2"
 
-///////// Gygax
+//////// / Gygax
 
 /obj/item/mecha_parts/chassis/gygax
 	name = "Gygax Chassis"
@@ -113,7 +113,7 @@
 	origin_tech = "materials=6;combat=4;engineering=5"
 
 
-//////////// Durand
+/////////// / Durand
 
 /obj/item/mecha_parts/chassis/durand
 	name = "Durand Chassis"
@@ -263,7 +263,7 @@
 	icon_state = "phazon_r_leg"
 	origin_tech = "materials=5;bluespace=3;magnets=3"
 
-///////// Odysseus
+//////// / Odysseus
 
 
 /obj/item/mecha_parts/chassis/odysseus
@@ -314,7 +314,7 @@
 	origin_tech = "materials=3;engineering=3"*/
 
 
-///////// Circuitboards
+//////// / Circuitboards
 
 /obj/item/weapon/circuitboard/mecha
 	name = "Exosuit Circuit board"
@@ -428,7 +428,7 @@
 		name = "Circuit board (Odysseus Central Control module)"
 		icon_state = "mainboard"
 
-////////////Vindicator
+/////////// /Vindicator
 
 /obj/item/mecha_parts/chassis/vindicator
 	name = "Vindicator Chassis"
@@ -472,7 +472,7 @@
 	icon_state = "vindicator_armour"
 	origin_tech = "materials=5;combat=4;engineering=5"
 
-///////// Gygax Ultra
+//////// / Gygax Ultra
 
 /obj/item/mecha_parts/chassis/ultra
 	name = "Gygax Ultra Chassis"

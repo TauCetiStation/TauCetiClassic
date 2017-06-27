@@ -1,12 +1,12 @@
-/////////////////////////////////////////
+///////////////////////////////////////// 
 // SLEEPER CONSOLE
-/////////////////////////////////////////
+///////////////////////////////////////// 
 
 /obj/machinery/sleep_console
 	name = "Sleeper Console"
 	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "sleeperconsole"
-	anchored = 1 //About time someone fixed this.
+	anchored = 1 // About time someone fixed this.
 	density = 0
 	light_color = "#7BF9FF"
 
@@ -82,7 +82,7 @@
 			A.blob_act()
 		qdel(src)
 
-/obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
+/obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)// Stop putting hostile mobs in things guise
 	if(M.environment_smash)
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 		qdel(src)
@@ -205,7 +205,7 @@
 		dat += "Sleeper Unoccupied"
 	else
 		dat += "[occupant.name] => "
-		switch(occupant.stat)	//obvious, see what their status is
+		switch(occupant.stat)	// obvious, see what their status is
 			if(0)
 				dat += "<span class='good'>Conscious</span>"
 			if(1)
@@ -263,7 +263,7 @@
 			if(C)
 				dat += "<BR><span class='linkOff'>Inject [C.name]</span>"
 
-	var/datum/browser/popup = new(user, "sleeper", "Sleeper Console", 520, 540)	//Set up the popup browser window
+	var/datum/browser/popup = new(user, "sleeper", "Sleeper Console", 520, 540)	// Set up the popup browser window
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.set_content(dat)
 	popup.open()

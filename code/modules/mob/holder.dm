@@ -1,4 +1,4 @@
-//Helper object for picking dionaea (and other creatures) up.
+// Helper object for picking dionaea (and other creatures) up.
 /obj/item/weapon/holder
 	name = "holder"
 	desc = "You shouldn't ever see this."
@@ -28,13 +28,13 @@
 
 /obj/item/weapon/holder/attackby(obj/item/weapon/W, mob/user)
 	for(var/mob/M in src.contents)
-		M.attackby(W,user)
+		M.attackby(W, user)
 
 /obj/item/weapon/holder/proc/show_message(message, m_type)
 	for(var/mob/living/M in contents)
-		M.show_message(message,m_type)
+		M.show_message(message, m_type)
 
-//Mob procs and vars for scooping up
+// Mob procs and vars for scooping up
 /mob/living/var/holder_type
 
 /mob/living/proc/get_scooped(mob/living/carbon/grabber)
@@ -51,7 +51,7 @@
 	LAssailant = grabber
 	return
 
-//Mob specific holders.
+// Mob specific holders.
 
 /obj/item/weapon/holder/diona
 

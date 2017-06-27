@@ -1,5 +1,5 @@
 
-//Not to be confused with /obj/item/weapon/reagent_containers/food/drinks/bottle
+// Not to be confused with /obj/item/weapon/reagent_containers/food/drinks/bottle
 
 /obj/item/weapon/reagent_containers/glass/bottle
 	name = "bottle"
@@ -82,7 +82,7 @@
 
 	New()
 		..()
-		reagents.add_reagent("chloralhydrate", 15)		//Intentionally low since it is so strong. Still enough to knock someone out.
+		reagents.add_reagent("chloralhydrate", 15)		// Intentionally low since it is so strong. Still enough to knock someone out.
 
 /obj/item/weapon/reagent_containers/glass/bottle/antitoxin
 	name = "anti-toxin bottle"
@@ -215,7 +215,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/gbs
 	name = "GBS culture bottle"
-	desc = "A small bottle. Contains Gravitokinetic Bipotential SADS+ culture in synthblood medium."//Or simply - General BullShit
+	desc = "A small bottle. Contains Gravitokinetic Bipotential SADS+ culture in synthblood medium."// Or simply - General BullShit
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 5
@@ -230,7 +230,7 @@
 
 /obj/item/weapon/reagent_containers/glass/bottle/fake_gbs
 	name = "GBS culture bottle"
-	desc = "A small bottle. Contains Gravitokinetic Bipotential SADS- culture in synthblood medium."//Or simply - General BullShit
+	desc = "A small bottle. Contains Gravitokinetic Bipotential SADS- culture in synthblood medium."// Or simply - General BullShit
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	New()
@@ -241,7 +241,7 @@
 /*
 /obj/item/weapon/reagent_containers/glass/bottle/rhumba_beat
 	name = "Rhumba Beat culture bottle"
-	desc = "A small bottle. Contains The Rhumba Beat culture in synthblood medium."//Or simply - General BullShit
+	desc = "A small bottle. Contains The Rhumba Beat culture in synthblood medium."// Or simply - General BullShit
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle3"
 	amount_per_transfer_from_this = 5

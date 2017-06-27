@@ -22,14 +22,14 @@
 	var/poweralm = 1
 	var/party = null
 	var/lightswitch = 1
-	var/valid_territory = 1 //If it's a valid territory for gangs to claim
+	var/valid_territory = 1 // If it's a valid territory for gangs to claim
 
 	var/eject = null
 
 	var/debug = 0
-	var/powerupdate = 10	//We give everything 10 ticks to settle out it's power usage.
+	var/powerupdate = 10	// We give everything 10 ticks to settle out it's power usage.
 	var/requires_power = 1
-	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
+	var/always_unpowered = 0	// this gets overriden to 1 for space in area/New()
 
 	var/power_equip = 1
 	var/power_light = 1
@@ -48,7 +48,7 @@
 	var/area/master				// master area used for power calcluations
 								// (original area before splitting due to sd_DAL)
 	var/list/related			// the other areas of the same type as this
-	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
+	var/list/all_doors = list()		// Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
 	var/air_doors_activated = 0
 
 
@@ -108,7 +108,7 @@ var/list/ghostteleportlocs = list()
 /area/proc/poweralert(state, obj/source)
 	if (state != poweralm)
 		poweralm = state
-		if(istype(source))	//Only report power alarms on the z-level where the source is located.
+		if(istype(source))	// Only report power alarms on the z-level where the source is located.
 			var/list/cameras = list()
 			for (var/area/RA in related)
 				for (var/obj/machinery/camera/C in RA)
@@ -132,7 +132,7 @@ var/list/ghostteleportlocs = list()
 	return
 
 /area/proc/atmosalert(danger_level)
-	//Check all the alarms before lowering atmosalm. Raising is perfectly fine.
+	// Check all the alarms before lowering atmosalm. Raising is perfectly fine.
 	for (var/area/RA in related)
 		for (var/obj/machinery/alarm/AA in RA)
 			if ( !(AA.stat & (NOPOWER|BROKEN)) && !AA.shorted)
@@ -140,7 +140,7 @@ var/list/ghostteleportlocs = list()
 
 	if(danger_level != atmosalm)
 		if (danger_level < 1 && atmosalm >= 1)
-			//closing the doors on red and opening on green provides a bit of hysteresis that will hopefully prevent fire doors from opening and closing repeatedly due to noise
+			// closing the doors on red and opening on green provides a bit of hysteresis that will hopefully prevent fire doors from opening and closing repeatedly due to noise
 			air_doors_open()
 
 		if (danger_level < 2 && atmosalm >= 2)
@@ -194,11 +194,11 @@ var/list/ghostteleportlocs = list()
 
 
 /area/proc/firealert()
-	if(name == "Space") //no fire alarms in space
+	if(name == "Space") // no fire alarms in space
 		return
 	if( !fire )
 		fire = 1
-		master.fire = 1		//used for firedoor checks
+		master.fire = 1		// used for firedoor checks
 		mouse_opacity = 0
 		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
@@ -219,7 +219,7 @@ var/list/ghostteleportlocs = list()
 /area/proc/firereset()
 	if(fire)
 		fire = 0
-		master.fire = 0		//used for firedoor checks
+		master.fire = 0		// used for firedoor checks
 		mouse_opacity = 0
 		for(var/obj/machinery/door/firedoor/D in all_doors)
 			if(!D.blocked)
@@ -236,7 +236,7 @@ var/list/ghostteleportlocs = list()
 			a.cancelAlarm("Fire", src, src)
 
 /area/proc/partyalert()
-	if(name == "Space") //no parties in space!!!
+	if(name == "Space") // no parties in space!!!
 		return
 	if(!party)
 		party = 1
@@ -337,7 +337,7 @@ var/list/ghostteleportlocs = list()
 	if(!L.ckey)
 		return
 
-	//Jukebox
+	// Jukebox
 	if(!L.lastarea)
 		L.lastarea = get_area(L.loc)
 	var/area/newarea = get_area(L.loc)
@@ -408,7 +408,7 @@ var/list/ghostteleportlocs = list()
 		var/mob/living/carbon/human/H = mob
 		if((istype(H.shoes, /obj/item/clothing/shoes/magboots) && (H.shoes.flags & NOSLIP)))
 			return
-		if((istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP))) //Humans in rig with turn on magboots
+		if((istype(H.wear_suit, /obj/item/clothing/suit/space/rig) && (H.wear_suit.flags & NOSLIP))) // Humans in rig with turn on magboots
 			return
 
 		if(H.m_intent == "run")

@@ -52,7 +52,7 @@
 		side_effects += M
 
 /mob/living/carbon/human/proc/handle_medical_side_effects()
-	//Going to handle those things only every few ticks.
+	// Going to handle those things only every few ticks.
 	if(life_tick % 15 != 0)
 		return 0
 

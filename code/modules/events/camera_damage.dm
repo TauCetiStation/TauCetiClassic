@@ -5,7 +5,7 @@
 
 	var/severity_range = rand(0,15)
 
-	for(var/obj/machinery/camera/cam in range(severity_range,C))
+	for(var/obj/machinery/camera/cam in range(severity_range, C))
 		if(is_valid_camera(cam))
 			cam.toggle_cam(TRUE)
 			if(prob(5))

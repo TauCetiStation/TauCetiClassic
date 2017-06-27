@@ -1,4 +1,4 @@
-//Floorbot assemblies
+// Floorbot assemblies
 /obj/item/weapon/toolbox_tiles
 	desc = "It's a toolbox with tiles sticking out the top."
 	name = "tiles and toolbox"
@@ -23,7 +23,7 @@
 	w_class = 3.0
 	var/created_name = "Floorbot"
 
-//Floorbot
+// Floorbot
 /obj/machinery/bot/floorbot
 	name = "Floorbot"
 	desc = "A little floor repairing robot, he looks so excited!"
@@ -34,7 +34,7 @@
 	anchored = 0
 	health = 25
 	maxhealth = 25
-	//weight = 1.0E7
+	// weight = 1.0E7
 	var/amount = 10
 	var/repairing = 0
 	var/improvefloors = 0
@@ -159,7 +159,7 @@
 	src.updateUsrDialog()
 
 /obj/machinery/bot/floorbot/process()
-	//set background = 1
+	// set background = 1
 
 	if(!src.on)
 		return
@@ -367,7 +367,7 @@
 	if (prob(50))
 		new /obj/item/robot_parts/l_arm(Tsec)
 
-	while (amount)//Dumps the tiles into the appropriate sized stacks
+	while (amount)// Dumps the tiles into the appropriate sized stacks
 		if(amount >= 16)
 			var/obj/item/stack/tile/plasteel/T = new (Tsec)
 			T.amount = 16

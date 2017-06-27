@@ -15,24 +15,24 @@
 
 /obj/machinery/optable/New()
 	..()
-	for(dir in list(NORTH,EAST,SOUTH,WEST))
+	for(dir in list(NORTH, EAST, SOUTH, WEST))
 		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
 		if (computer)
 			computer.table = src
 			break
-//	spawn(100) //Wont the MC just call this process() before and at the 10 second mark anyway?
+//	spawn(100) // Wont the MC just call this process() before and at the 10 second mark anyway?
 //		process()
 
 /obj/machinery/optable/ex_act(severity)
 
 	switch(severity)
 		if(1.0)
-			//SN src = null
+			// SN src = null
 			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
-				//SN src = null
+				// SN src = null
 				qdel(src)
 				return
 		if(3.0)
@@ -127,7 +127,7 @@
 		to_chat(usr, "<span class='rose'>The table is already occupied!</span>")
 		return
 
-	take_victim(usr,usr)
+	take_victim(usr, usr)
 
 /obj/machinery/optable/attackby(obj/item/weapon/W, mob/living/carbon/user)
 	if(isrobot(user))
@@ -135,7 +135,7 @@
 
 	if (istype(W, /obj/item/weapon/grab))
 		if(iscarbon(W:affecting))
-			take_victim(W:affecting,usr)
+			take_victim(W:affecting, usr)
 			qdel(W)
 			return
 	user.drop_item()

@@ -601,12 +601,12 @@
 	species = "glowshroom"
 	plantname = "Glowshrooms"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom"
-	lifespan = 120 //ten times that is the delay
+	lifespan = 120 // ten times that is the delay
 	endurance = 30
 	maturation = 15
 	production = 1
-	yield = 3 //-> spread
-	potency = 30 //-> brightness
+	yield = 3 // -> spread
+	potency = 30 // -> brightness
 	oneharvest = 1
 	growthstages = 4
 	plant_type = 2
@@ -1036,11 +1036,11 @@
 
 /obj/item/seeds/cocoapodseed
 	name = "pack of cocoa pod seeds"
-	desc = "These seeds grow into cacao trees. They look fattening." //SIC: cocoa is the seeds. The tress ARE spelled cacao.
+	desc = "These seeds grow into cacao trees. They look fattening." // SIC: cocoa is the seeds. The tress ARE spelled cacao.
 	icon_state = "seed-cocoapod"
 	mypath = "/obj/item/seeds/cocoapodseed"
 	species = "cocoapod"
-	plantname = "Cocao Tree" //SIC: see above
+	plantname = "Cocao Tree" // SIC: see above
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod"
 	lifespan = 20
 	endurance = 15
@@ -1162,7 +1162,7 @@
 	reagents = R
 	R.my_atom = src
 
-/obj/item/weapon/grown/proc/changePotency(newValue) //-QualityVan
+/obj/item/weapon/grown/proc/changePotency(newValue) // -QualityVan
 	potency = newValue
 
 /obj/item/weapon/grown/log
@@ -1250,7 +1250,7 @@
 
 /obj/item/weapon/grown/nettle/New()
 	..()
-	spawn(5)	//So potency can be set in the proc that creates these crops
+	spawn(5)	// So potency can be set in the proc that creates these crops
 		reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
 		reagents.add_reagent("sacid", round(potency, 1))
 		force = round((5+potency/5), 1)
@@ -1273,7 +1273,7 @@
 
 /obj/item/weapon/grown/deathnettle/New()
 	..()
-	spawn(5)	//So potency can be set in the proc that creates these crops
+	spawn(5)	// So potency can be set in the proc that creates these crops
 		reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
 		reagents.add_reagent("pacid", round(potency, 1))
 		force = round((5+potency/2.5), 1)

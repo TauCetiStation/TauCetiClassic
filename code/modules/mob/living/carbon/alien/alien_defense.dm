@@ -15,7 +15,7 @@ This is what happens, when we attack aliens.
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == "hurt")// Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
 
@@ -58,18 +58,18 @@ This is what happens, when we attack aliens.
 		if ("hurt")
 			var/damage = rand(1, 9)
 			if (prob(90))
-				if (HULK in M.mutations)//HULK SMASH
+				if (HULK in M.mutations)// HULK SMASH
 					damage += 14
 					spawn(0)
 						Weaken(damage) // Why can a hulk knock an alien out but not knock out a human? Damage is robust enough.
-						step_away(src,M,15)
+						step_away(src, M,15)
 						sleep(3)
-						step_away(src,M,15)
+						step_away(src, M,15)
 				playsound(loc, "punch", 25, 1, -1)
 				for(var/mob/O in viewers(src, null))
 					if ((O.client && !( O.blinded )))
 						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
-				if (damage > 9||prob(5))//Regular humans have a very small chance of weakening an alien.
+				if (damage > 9||prob(5))// Regular humans have a very small chance of weakening an alien.
 					Weaken(1,5)
 					for(var/mob/O in viewers(M, null))
 						if ((O.client && !( O.blinded )))
@@ -84,7 +84,7 @@ This is what happens, when we attack aliens.
 
 		if ("disarm")
 			if (!lying)
-				if (prob(5))//Very small chance to push an alien down.
+				if (prob(5))// Very small chance to push an alien down.
 					Weaken(2)
 					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 					for(var/mob/O in viewers(src, null))
@@ -105,7 +105,7 @@ This is what happens, when we attack aliens.
 	return
 
 /mob/living/carbon/alien/attack_paw(mob/living/carbon/monkey/M)
-	if(!ismonkey(M))	return//Fix for aliens receiving double messages when attacking other aliens.
+	if(!ismonkey(M))	return// Fix for aliens receiving double messages when attacking other aliens.
 
 	if (!ticker)
 		to_chat(M, "You cannot attack people before the game has started.")

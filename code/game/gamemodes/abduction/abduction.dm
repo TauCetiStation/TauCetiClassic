@@ -32,9 +32,9 @@
 /datum/game_mode/abduction/pre_setup()
 	var/abductor_scaling_coeff = 15	////how many players per abductor team
 
-	abductor_teams = max(1, min(max_teams,round(num_players()/abductor_scaling_coeff)))
+	abductor_teams = max(1, min(max_teams, round(num_players()/abductor_scaling_coeff)))
 	var/possible_teams = max(1,round(antag_candidates.len / 2))
-	abductor_teams = min(abductor_teams,possible_teams)
+	abductor_teams = min(abductor_teams, possible_teams)
 
 	abductors.len = 2*abductor_teams
 	scientists.len = abductor_teams
@@ -48,15 +48,15 @@
 
 	return 1
 
-/datum/game_mode/abduction/proc/make_abductor_team(team_number,preset_agent=null,preset_scientist=null)
-	//Team Name
-	team_names[team_number] = "Mothership [pick(possible_changeling_IDs)]" //TODO Ensure unique and actual alieny names
+/datum/game_mode/abduction/proc/make_abductor_team(team_number, preset_agent=null, preset_scientist=null)
+	// Team Name
+	team_names[team_number] = "Mothership [pick(possible_changeling_IDs)]" // TODO Ensure unique and actual alieny names
 	abduction_teams += team_names[team_number]
-	//Team Objective
+	// Team Objective
 	var/datum/objective/experiment/team_objective = new
 	team_objective.team = team_number
 	team_objectives[team_number] = team_objective
-	//Team Members
+	// Team Members
 	if(antag_candidates.len >= 2)
 		var/datum/mind/scientist = pick(antag_candidates)
 		antag_candidates -= scientist
@@ -80,7 +80,7 @@
 	return 0
 
 /datum/game_mode/abduction/post_setup()
-	//Spawn Team
+	// Spawn Team
 	var/list/obj/effect/landmark/abductor/agent_landmarks = new
 	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
 	agent_landmarks.len = max_teams
@@ -108,9 +108,9 @@
 		H.real_name = team_name + " Agent"
 		H.mind.name = H.real_name
 		H.flavor_text = ""
-		equip_common(H,team_number)
-		equip_agent(H,team_number)
-		greet_agent(agent,team_number)
+		equip_common(H, team_number)
+		equip_agent(H, team_number)
+		greet_agent(agent, team_number)
 		H.regenerate_icons()
 
 		scientist = scientists[team_number]
@@ -123,14 +123,14 @@
 		H.real_name = team_name + " Scientist"
 		H.mind.name = H.real_name
 		H.flavor_text = ""
-		equip_common(H,team_number)
-		equip_scientist(H,team_number)
-		greet_scientist(scientist,team_number)
+		equip_common(H, team_number)
+		equip_scientist(H, team_number)
+		greet_scientist(scientist, team_number)
 		H.regenerate_icons()
 
 	return ..()
 
-//Used for create antag buttons
+// Used for create antag buttons
 /datum/game_mode/abduction/proc/post_setup_team(team_number)
 	var/list/obj/effect/landmark/abductor/agent_landmarks = new
 	var/list/obj/effect/landmark/abductor/scientist_landmarks = new
@@ -158,9 +158,9 @@
 	H.agent = 1
 	H.team = team_number
 	H.real_name = team_name + " Agent"
-	equip_common(H,team_number)
-	equip_agent(H,team_number)
-	greet_agent(agent,team_number)
+	equip_common(H, team_number)
+	equip_agent(H, team_number)
+	greet_agent(agent, team_number)
 	H.regenerate_icons()
 
 	scientist = scientists[team_number]
@@ -171,13 +171,13 @@
 	H.scientist = 1
 	H.team = team_number
 	H.real_name = team_name + " Scientist"
-	equip_common(H,team_number)
-	equip_scientist(H,team_number)
-	greet_scientist(scientist,team_number)
+	equip_common(H, team_number)
+	equip_scientist(H, team_number)
+	greet_scientist(scientist, team_number)
 	H.regenerate_icons()
 
 
-/datum/game_mode/abduction/proc/greet_agent(datum/mind/abductor,team_number)
+/datum/game_mode/abduction/proc/greet_agent(datum/mind/abductor, team_number)
 	abductor.objectives += team_objectives[team_number]
 	var/team_name = team_names[team_number]
 
@@ -191,7 +191,7 @@
 		obj_count++
 	return
 
-/datum/game_mode/abduction/proc/greet_scientist(datum/mind/abductor,team_number)
+/datum/game_mode/abduction/proc/greet_scientist(datum/mind/abductor, team_number)
 	abductor.objectives += team_objectives[team_number]
 	var/team_name = team_names[team_number]
 	to_chat(abductor.current, "<span class='info'><B>You are a <font color='red'>scientist</font> of [team_name]!</B></span>")
@@ -203,13 +203,13 @@
 		obj_count++
 	return
 
-/datum/game_mode/abduction/proc/equip_common(mob/living/carbon/human/agent,team_number)
+/datum/game_mode/abduction/proc/equip_common(mob/living/carbon/human/agent, team_number)
 	var/radio_freq = SYND_FREQ
 	var/obj/item/device/radio/R = new /obj/item/device/radio/headset/syndicate/alt(agent)
 	R.set_frequency(radio_freq)
 	agent.equip_to_slot_or_del(R, slot_l_ear)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(agent), slot_shoes)
-	agent.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(agent), slot_w_uniform) //they're greys gettit
+	agent.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(agent), slot_w_uniform) // they're greys gettit
 	agent.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(agent), slot_back)
 
 /datum/game_mode/abduction/proc/get_team_console(team)
@@ -220,7 +220,7 @@
 			break
 	return console
 
-/datum/game_mode/abduction/proc/equip_agent(mob/living/carbon/human/agent,team_number)
+/datum/game_mode/abduction/proc/equip_agent(mob/living/carbon/human/agent, team_number)
 	if(!team_number)
 		team_number = agent.team
 
@@ -234,7 +234,7 @@
 	agent.equip_to_slot_or_del(new /obj/item/device/abductor/silencer(agent), slot_in_backpack)
 	agent.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/abductor(agent), slot_head)
 
-/datum/game_mode/abduction/proc/equip_scientist(mob/living/carbon/human/scientist,team_number)
+/datum/game_mode/abduction/proc/equip_scientist(mob/living/carbon/human/scientist, team_number)
 	if(!team_number)
 		team_number = scientist.team
 
@@ -303,7 +303,7 @@
 			text += "<BR><FONT size = 4, color = #800080><b>[team_name] members:</B></FONT>"
 
 			for(var/datum/mind/abductor in abductors)
-				if(findtext(abductor.name,team_name))
+				if(findtext(abductor.name, team_name))
 					text += printplayerwithicon(abductor)
 
 					var/count = 1
@@ -336,7 +336,7 @@
 		text += "<BR><HR>"
 	return text
 
-//Landmarks
+// Landmarks
 // TODO: Split into seperate landmarks for prettier ships
 /obj/effect/landmark/abductor
 	var/team = 1

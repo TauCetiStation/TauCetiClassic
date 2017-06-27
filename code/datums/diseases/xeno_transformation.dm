@@ -1,4 +1,4 @@
-//Xenomicrobes
+// Xenomicrobes
 
 /datum/disease/xeno_transformation
 	name = "Xenomorph Transformation"

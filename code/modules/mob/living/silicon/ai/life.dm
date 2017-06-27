@@ -1,8 +1,8 @@
 /mob/living/silicon/ai/Life()
 	if (src.stat == DEAD)
 		return
-	else //I'm not removing that shitton of tabs, unneeded as they are. -- Urist
-		//Being dead doesn't mean your temperature never changes
+	else // I'm not removing that shitton of tabs, unneeded as they are. -- Urist
+		// Being dead doesn't mean your temperature never changes
 		var/turf/T = get_turf(src)
 
 		if (src.stat!=0)
@@ -37,23 +37,23 @@
 			// Gain Power
 			adjustOxyLoss(-1)
 
-		//stage = 1
-		//if (istype(src, /mob/living/silicon/ai)) // Are we not sure what we are?
+		// stage = 1
+		// if (istype(src, /mob/living/silicon/ai)) // Are we not sure what we are?
 		var/blind = 0
-		//stage = 2
+		// stage = 2
 		var/area/loc = null
 		if (istype(T, /turf))
-			//stage = 3
+			// stage = 3
 			loc = T.loc
 			if (istype(loc, /area))
-				//stage = 4
+				// stage = 4
 				if (!loc.master.power_equip && !istype(src.loc,/obj/item))
-					//stage = 5
+					// stage = 5
 					blind = 1
 
-		if (!blind)	//lol? if(!blind)	#if(src.blind.layer)    <--something here is clearly wrong :P
-					//I'll get back to this when I find out  how this is -supposed- to work ~Carn //removed this shit since it was confusing as all hell --39kk9t
-			//stage = 4.5
+		if (!blind)	// lol? if(!blind)	#if(src.blind.layer)    <--something here is clearly wrong :P
+					// I'll get back to this when I find out  how this is -supposed- to work ~Carn // removed this shit since it was confusing as all hell --39kk9t
+			// stage = 4.5
 			src.sight |= SEE_TURFS
 			src.sight |= SEE_MOBS
 			src.sight |= SEE_OBJS
@@ -61,16 +61,16 @@
 			src.see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 
-			//Congratulations!  You've found a way for AI's to run without using power!
-			//Todo:  Without snowflaking up master_controller procs find a way to make AI use_power but only when APC's clear the area usage the tick prior
+			// Congratulations!  You've found a way for AI's to run without using power!
+			// Todo:  Without snowflaking up master_controller procs find a way to make AI use_power but only when APC's clear the area usage the tick prior
 			//       since mobs are in master_controller before machinery.  We also have to do it in a manner where we don't reset the entire area's need to update
 			//	 the power usage.
-			//
+			// 
 			//	 We can probably create a new machine that resides inside of the AI contents that uses power using the idle_usage of 1000 and nothing else and
 			//       be fine.
 /*
 			var/area/home = get_area(src)
-			if(!home)	return//something to do with malf fucking things up I guess. <-- aisat is gone. is this still necessary? ~Carn
+			if(!home)	return// something to do with malf fucking things up I guess. <-- aisat is gone. is this still necessary? ~Carn
 			if(home.powered(EQUIP))
 				home.use_power(1000, EQUIP)
 */
@@ -85,7 +85,7 @@
 				return
 		else
 
-			//stage = 6
+			// stage = 6
 			src.sight = src.sight&~SEE_TURFS
 			src.sight = src.sight&~SEE_MOBS
 			src.sight = src.sight&~SEE_OBJS
@@ -100,9 +100,9 @@
 //							world << "DEBUG CODE TIME! [loc] is the area the AI is sucking power from"
 					if (!is_special_character(src))
 						src.set_zeroth_law("")
-					//src.clear_supplied_laws() // Don't reset our laws.
-					//var/time = time2text(world.realtime,"hh:mm:ss")
-					//lawchanges.Add("[time] <b>:</b> [src.name]'s noncore laws have been reset due to power failure")
+					// src.clear_supplied_laws() // Don't reset our laws.
+					// var/time = time2text(world.realtime,"hh:mm:ss")
+					// lawchanges.Add("[time] <b>:</b> [src.name]'s noncore laws have been reset due to power failure")
 					spawn(20)
 						to_chat(src, "Backup battery online. Scanners, camera, and radio interface offline. Beginning fault-detection.")
 						sleep(50)
@@ -129,7 +129,7 @@
 									theAPC = something
 									break
 */
-						var/PRP //like ERP with the code, at least this stuff is no more 4x sametext
+						var/PRP // like ERP with the code, at least this stuff is no more 4x sametext
 						for (PRP=1, PRP<=4, PRP++)
 							var/area/AIarea = get_area(src)
 							for(var/area/A in AIarea.master.related)
@@ -162,7 +162,7 @@
 									sleep(50)
 									to_chat(src, "Receiving control information from APC.")
 									sleep(2)
-									//bring up APC dialog
+									// bring up APC dialog
 									apc_override = 1
 									theAPC.attack_ai(src)
 									apc_override = 0

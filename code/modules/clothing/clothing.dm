@@ -1,11 +1,11 @@
 
 /obj/item/clothing
 	name = "clothing"
-	var/list/species_restricted = null //Only these species can wear this kit.
+	var/list/species_restricted = null // Only these species can wear this kit.
 	var/equip_time = 0
 	var/equipping = 0
 	var/rig_restrict_helmet = 0 // Stops the user from equipping a rig helmet without attaching it to the suit first.
-	var/gang //Is this a gang outfit?
+	var/gang // Is this a gang outfit?
 
 	/*
 		Sprites used when the clothing item is refit. This is done by setting icon_override.
@@ -17,10 +17,10 @@
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 
-//BS12: Species-restricted clothing check.
+// BS12: Species-restricted clothing check.
 /obj/item/clothing/mob_can_equip(M, slot)
 
-	//if we can't equip the item anyway, don't bother with species_restricted (cuts down on spam)
+	// if we can't equip the item anyway, don't bother with species_restricted (cuts down on spam)
 	if (!..())
 		return 0
 
@@ -41,34 +41,34 @@
 				if(H.species.name in species_restricted)
 					wearable = 1
 
-			if(!wearable && (slot != 15 && slot != 16)) //Pockets.
+			if(!wearable && (slot != 15 && slot != 16)) // Pockets.
 				to_chat(M, "\red Your species cannot wear [src].")
 				return 0
 
 	return 1
 
 /obj/item/clothing/proc/refit_for_species(target_species)
-	//Set species_restricted list
+	// Set species_restricted list
 	switch(target_species)
-		if(HUMAN , SKRELL)	//humanoid bodytypes
+		if(HUMAN , SKRELL)	// humanoid bodytypes
 			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX)
 		else
 			species_restricted = list(target_species)
 
-	//Set icon
+	// Set icon
 	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
 		icon_override = sprite_sheets_refit[target_species]
 	else
 		icon_override = initial(icon_override)
 
-	//Set icon
+	// Set icon
 	if (sprite_sheets_obj && (target_species in sprite_sheets_obj))
 		icon = sprite_sheets_obj[target_species]
 	else
 		icon = initial(icon)
 
 /obj/item/clothing/head/helmet/refit_for_species(target_species)
-	//Set species_restricted list
+	// Set species_restricted list
 	switch(target_species)
 		if(SKRELL)
 			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX)
@@ -77,19 +77,19 @@
 		else
 			species_restricted = list(target_species)
 
-	//Set icon
+	// Set icon
 	if (sprite_sheets_refit && (target_species in sprite_sheets_refit))
 		icon_override = sprite_sheets_refit[target_species]
 	else
 		icon_override = initial(icon_override)
 
-	//Set icon
+	// Set icon
 	if (sprite_sheets_obj && (target_species in sprite_sheets_obj))
 		icon = sprite_sheets_obj[target_species]
 	else
 		icon = initial(icon)
 
-//Ears: headsets, earmuffs and tiny objects
+// Ears: headsets, earmuffs and tiny objects
 /obj/item/clothing/ears
 	name = "ears"
 	w_class = 1.0
@@ -151,7 +151,7 @@
 	item_state = "earmuffs"
 	slot_flags = SLOT_EARS | SLOT_TWOEARS
 
-//Glasses
+// Glasses
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
@@ -159,7 +159,7 @@
 	flags = GLASSESCOVERSEYES
 	slot_flags = SLOT_EYES
 	var/vision_flags = 0
-	var/darkness_view = 0//Base human is 2
+	var/darkness_view = 0// Base human is 2
 	var/invisa_view = 0
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/eyes.dmi')
 /*
@@ -168,15 +168,15 @@ SEE_MOBS  // can see all mobs, no matter what
 SEE_OBJS  // can see all objs, no matter what
 SEE_TURFS // can see all turfs (and areas), no matter what
 SEE_PIXELS// if an object is located on an unlit area, but some of its pixels are
-          // in a lit area (via pixel_x,y or smooth movement), can see those pixels
+          // in a lit area (via pixel_x, y or smooth movement), can see those pixels
 BLIND     // can't see anything
 */
 
 
-//Gloves
+// Gloves
 /obj/item/clothing/gloves
 	name = "gloves"
-	gender = PLURAL //Carn: for grammarically correct text-parsing
+	gender = PLURAL // Carn: for grammarically correct text-parsing
 	w_class = 2.0
 	icon = 'icons/obj/clothing/gloves.dmi'
 	siemens_coefficient = 0.9
@@ -191,7 +191,7 @@ BLIND     // can't see anything
 
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
-		//why is this not part of the powercell code?
+		// why is this not part of the powercell code?
 		cell.charge -= 1000 / severity
 		if (cell.charge < 0)
 			cell.charge = 0
@@ -203,7 +203,7 @@ BLIND     // can't see anything
 /obj/item/clothing/gloves/proc/Touch(atom/A, proximity)
 	return 0 // return 1 to cancel attack_hand()
 
-//Head
+// Head
 /obj/item/clothing/head
 	name = "head"
 	icon = 'icons/obj/clothing/hats.dmi'
@@ -214,7 +214,7 @@ BLIND     // can't see anything
 	var/blockTracking = 0
 
 
-//Mask
+// Mask
 /obj/item/clothing/mask
 	name = "mask"
 	icon = 'icons/obj/clothing/masks.dmi'
@@ -225,12 +225,12 @@ BLIND     // can't see anything
 /obj/item/clothing/mask/proc/speechModification(message)
 	return message
 
-//Shoes
+// Shoes
 /obj/item/clothing/shoes
 	name = "shoes"
 	icon = 'icons/obj/clothing/shoes.dmi'
 	desc = "Comfortable-looking shoes."
-	gender = PLURAL //Carn: for grammarically correct text-parsing
+	gender = PLURAL // Carn: for grammarically correct text-parsing
 	siemens_coefficient = 0.9
 	body_parts_covered = FEET
 	slot_flags = SLOT_FEET
@@ -239,10 +239,10 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
 	species_restricted = list("exclude" , UNATHI , TAJARAN)
-	var/footstep = 1	//used for squeeks whilst walking(tc)
+	var/footstep = 1	// used for squeeks whilst walking(tc)
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/shoes.dmi')
 
-//Cutting shoes
+// Cutting shoes
 /obj/item/clothing/shoes/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
 		switch(clipped_status)
@@ -266,7 +266,7 @@ BLIND     // can't see anything
 /obj/item/proc/negates_gravity()
 	return 0
 
-//Suit
+// Suit
 /obj/item/clothing/suit
 	icon = 'icons/obj/clothing/suits.dmi'
 	name = "suit"
@@ -280,8 +280,8 @@ BLIND     // can't see anything
 	w_class = 3
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/suit.dmi')
 
-//Spacesuit
-//Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
+// Spacesuit
+// Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!
 /obj/item/clothing/head/helmet/space
 	name = "space helmet"
@@ -305,7 +305,7 @@ BLIND     // can't see anything
 	desc = "A suit that protects against low pressure environments. \"NSS EXODUS\" is written in large block letters on the back."
 	icon_state = "space"
 	item_state = "s_suit"
-	w_class = 4//bulky item
+	w_class = 4// bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
 	flags = THICKMATERIAL | PHORONGUARD
@@ -321,7 +321,7 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude" , DIONA , VOX)
 
-	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
+	var/list/supporting_limbs // If not-null, automatically splints breaks. Checked when removing the suit.
 
 /obj/item/clothing/suit/space/equipped(mob/M)
 	check_limb_support()
@@ -352,7 +352,7 @@ BLIND     // can't see anything
 		BP.status &= ~ORGAN_SPLINTED
 	supporting_limbs = list()
 
-//Under clothing
+// Under clothing
 /obj/item/clothing/under
 	icon = 'icons/obj/clothing/uniforms.dmi'
 	name = "under"
@@ -361,7 +361,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_ICLOTHING
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	w_class = 3
-	var/has_sensor = 1//For the crew computer 2 = unable to change mode
+	var/has_sensor = 1// For the crew computer 2 = unable to change mode
 	var/sensor_mode = 0
 		/*
 		1 = Report living/dead
@@ -393,7 +393,7 @@ BLIND     // can't see anything
 	..()
 
 /obj/item/clothing/under/attack_hand(mob/user)
-	//only forward to the attached accessory if the clothing is equipped (not in a storage)
+	// only forward to the attached accessory if the clothing is equipped (not in a storage)
 	if(hastie && src.loc == user)
 		hastie.attack_hand(user)
 		return
@@ -407,11 +407,11 @@ BLIND     // can't see anything
 		if (istype(hastie, /obj/item/clothing/tie/storage))
 			hastie.attack_hand(user)
 
-//This is to ensure people can take off suits when there is an attached accessory
+// This is to ensure people can take off suits when there is an attached accessory
 /obj/item/clothing/under/MouseDrop(obj/over_object as obj)
 	if (ishuman(usr) || ismonkey(usr))
 		var/mob/M = usr
-		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
+		// makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
 		if (!(src.loc == usr))
 			return
 		if (!over_object)

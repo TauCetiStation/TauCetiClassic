@@ -21,7 +21,7 @@
 	throw_speed = 7
 	throw_range = 15
 	m_amt = 10
-	var/colour = "black"	//what colour the ink is!
+	var/colour = "black"	// what colour the ink is!
 	pressure_resistance = 2
 
 
@@ -51,10 +51,10 @@
 
 
 /obj/item/weapon/pen/sleepypen/New()
-	var/datum/reagents/R = new/datum/reagents(30) //Used to be 300
+	var/datum/reagents/R = new/datum/reagents(30) // Used to be 300
 	reagents = R
 	R.my_atom = src
-	R.add_reagent("chloralhydrate", 22)	//Used to be 100 sleep toxin//30 Chloral seems to be fatal, reducing it to 22./N
+	R.add_reagent("chloralhydrate", 22)	// Used to be 100 sleep toxin// 30 Chloral seems to be fatal, reducing it to 22./N
 	..()
 	return
 
@@ -65,7 +65,7 @@
 		return
 
 	if(reagents.total_volume)
-		if(M.reagents) reagents.trans_to(M, 50) //used to be 150
+		if(M.reagents) reagents.trans_to(M, 50) // used to be 150
 	return
 
 
@@ -100,7 +100,7 @@
 
 /obj/item/weapon/pen/edagger
 	origin_tech = "combat=3;syndicate=1"
-	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") //these wont show up if the pen is off
+	attack_verb = list("slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut") // these wont show up if the pen is off
 	var/on = 0
 
 /obj/item/weapon/pen/edagger/attack_self(mob/living/user)
@@ -132,6 +132,6 @@
 		item_state = "edagger"
 	else
 		clean_blood()
-		icon_state = initial(icon_state) //looks like a normal pen when off.
+		icon_state = initial(icon_state) // looks like a normal pen when off.
 		item_state = initial(item_state)
 

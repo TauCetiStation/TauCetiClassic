@@ -22,10 +22,10 @@ obj/structure/windoor_assembly
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/created_name = null
 
-	//Vars to help with the icon's name
-	var/facing = "l"	//Does the windoor open to the left or right?
-	var/secure = 0		//Whether or not this creates a secure windoor
-	var/state = "01"	//How far the door assembly has progressed
+	// Vars to help with the icon's name
+	var/facing = "l"	// Does the windoor open to the left or right?
+	var/secure = 0		// Whether or not this creates a secure windoor
+	var/state = "01"	// How far the door assembly has progressed
 
 obj/structure/windoor_assembly/New(dir=NORTH)
 	..()
@@ -43,7 +43,7 @@ obj/structure/windoor_assembly/Destroy()
 /obj/structure/windoor_assembly/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
-	if(get_dir(loc, target) == dir) //Make sure looking at appropriate border
+	if(get_dir(loc, target) == dir) // Make sure looking at appropriate border
 		if(air_group) return 0
 		return !density
 	else
@@ -59,7 +59,7 @@ obj/structure/windoor_assembly/Destroy()
 
 
 /obj/structure/windoor_assembly/attackby(obj/item/W, mob/user)
-	//I really should have spread this out across more states but thin little windoors are hard to sprite.
+	// I really should have spread this out across more states but thin little windoors are hard to sprite.
 	switch(state)
 		if("01")
 			if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
@@ -79,7 +79,7 @@ obj/structure/windoor_assembly/Destroy()
 					to_chat(user, "\blue You need more welding fuel to dissassemble the windoor assembly.")
 					return
 
-			//Wrenching an unsecure assembly anchors it in place. Step 4 complete
+			// Wrenching an unsecure assembly anchors it in place. Step 4 complete
 			if(istype(W, /obj/item/weapon/wrench) && !anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user.visible_message("[user] secures the windoor assembly to the floor.", "You start to secure the windoor assembly to the floor.")
@@ -94,7 +94,7 @@ obj/structure/windoor_assembly/Destroy()
 					else
 						src.name = "Anchored Windoor Assembly"
 
-			//Unwrenching an unsecure assembly un-anchors it. Step 4 undone
+			// Unwrenching an unsecure assembly un-anchors it. Step 4 undone
 			else if(istype(W, /obj/item/weapon/wrench) && anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 				user.visible_message("[user] unsecures the windoor assembly to the floor.", "You start to unsecure the windoor assembly to the floor.")
@@ -109,7 +109,7 @@ obj/structure/windoor_assembly/Destroy()
 					else
 						src.name = "Windoor Assembly"
 
-			//Adding plasteel makes the assembly a secure windoor assembly. Step 2 (optional) complete.
+			// Adding plasteel makes the assembly a secure windoor assembly. Step 2 (optional) complete.
 			else if(istype(W, /obj/item/stack/rods) && !secure)
 				var/obj/item/stack/rods/R = W
 				if(R.amount < 4)
@@ -129,7 +129,7 @@ obj/structure/windoor_assembly/Destroy()
 					else
 						src.name = "Secure Windoor Assembly"
 
-			//Adding cable to the assembly. Step 5 complete.
+			// Adding cable to the assembly. Step 5 complete.
 			else if(istype(W, /obj/item/weapon/cable_coil) && anchored)
 				user.visible_message("[user] wires the windoor assembly.", "You start to wire the windoor assembly.")
 
@@ -150,7 +150,7 @@ obj/structure/windoor_assembly/Destroy()
 
 		if("02")
 
-			//Removing wire from the assembly. Step 5 undone.
+			// Removing wire from the assembly. Step 5 undone.
 			if(istype(W, /obj/item/weapon/wirecutters) && !src.electronics)
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 				user.visible_message("[user] cuts the wires from the airlock assembly.", "You start to cut the wires from airlock assembly.")
@@ -167,7 +167,7 @@ obj/structure/windoor_assembly/Destroy()
 					else
 						src.name = "Anchored Windoor Assembly"
 
-			//Adding airlock electronics for access. Step 6 complete.
+			// Adding airlock electronics for access. Step 6 complete.
 			else if(istype(W, /obj/item/weapon/airlock_electronics))
 				var/obj/item/weapon/airlock_electronics/AE = W
 				if(!AE.broken)
@@ -186,7 +186,7 @@ obj/structure/windoor_assembly/Destroy()
 					else
 						AE.loc = src.loc
 
-			//Screwdriver to remove airlock electronics. Step 6 undone.
+			// Screwdriver to remove airlock electronics. Step 6 undone.
 			else if(istype(W, /obj/item/weapon/screwdriver))
 				if(!electronics)
 					return
@@ -213,7 +213,7 @@ obj/structure/windoor_assembly/Destroy()
 				return
 
 
-			//Crowbar to complete the assembly, Step 7 complete.
+			// Crowbar to complete the assembly, Step 7 complete.
 			else if(istype(W, /obj/item/weapon/crowbar))
 				if(!src.electronics)
 					to_chat(usr, "\red The assembly is missing electronics.")
@@ -227,7 +227,7 @@ obj/structure/windoor_assembly/Destroy()
 					if(!src.loc || !src.electronics)
 						return
 
-					density = 1 //Shouldn't matter but just incase
+					density = 1 // Shouldn't matter but just incase
 					to_chat(user, "\blue You finish the windoor!")
 
 					if(secure)
@@ -280,11 +280,11 @@ obj/structure/windoor_assembly/Destroy()
 			else
 				..()
 
-	//Update to reflect changes(if applicable)
+	// Update to reflect changes(if applicable)
 	update_icon()
 
 
-//Rotates the windoor assembly clockwise
+// Rotates the windoor assembly clockwise
 /obj/structure/windoor_assembly/verb/revrotate()
 	set name = "Rotate Windoor Assembly"
 	set category = "Object"
@@ -294,7 +294,7 @@ obj/structure/windoor_assembly/Destroy()
 		to_chat(usr, "It is fastened to the floor; therefore, you can't rotate it!")
 		return 0
 	if(src.state != "01")
-		update_nearby_tiles(need_rebuild=1) //Compel updates before
+		update_nearby_tiles(need_rebuild=1) // Compel updates before
 
 	src.dir = turn(src.dir, 270)
 
@@ -305,7 +305,7 @@ obj/structure/windoor_assembly/Destroy()
 	update_icon()
 	return
 
-//Flips the windoor assembly, determines whather the door opens to the left or the right
+// Flips the windoor assembly, determines whather the door opens to the left or the right
 /obj/structure/windoor_assembly/verb/flip()
 	set name = "Flip Windoor Assembly"
 	set category = "Object"

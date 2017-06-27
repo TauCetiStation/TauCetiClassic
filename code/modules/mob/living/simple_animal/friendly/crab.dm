@@ -1,4 +1,4 @@
-//Look Sir, free crabs!
+// Look Sir, free crabs!
 /mob/living/simple_animal/crab
 	name = "crab"
 	desc = "A hard-shelled crustacean. Seems quite content to lounge around all the time."
@@ -23,9 +23,9 @@
 
 /mob/living/simple_animal/crab/Life()
 	..()
-	//CRAB movement
+	// CRAB movement
 	if(!ckey && !stat)
-		if(isturf(src.loc) && !resting && !buckled)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		if(isturf(src.loc) && !resting && !buckled)		// This is so it only moves if it's not inside a closet, gentics machine, etc.
 			turns_since_move++
 			if(turns_since_move >= turns_per_move)
 				var/east_vs_west = pick(4, 8)
@@ -34,7 +34,7 @@
 					turns_since_move = 0
 	regenerate_icons()
 
-//COFFEE! SQUEEEEEEEEE!
+// COFFEE! SQUEEEEEEEEE!
 /mob/living/simple_animal/crab/Coffee
 	name = "Coffee"
 	real_name = "Coffee"
@@ -43,7 +43,7 @@
 	response_disarm = "gently pushes aside"
 	response_harm   = "stomps"
 
-//LOOK AT THIS - ..()??
+// LOOK AT THIS - ..()??
 /*/mob/living/simple_animal/crab/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/wirecutters))
 		if(prob(50))
@@ -82,9 +82,9 @@
 /mob/living/simple_animal/crab/Topic(href, href_list)
 	if(usr.stat) return
 
-	//Removing from inventory
+	// Removing from inventory
 	if(href_list["remove_inv"])
-		if(get_dist(src,usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(get_dist(src, usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
 			return
 		var/remove_from = href_list["remove_inv"]
 		switch(remove_from)
@@ -110,11 +110,11 @@
 					to_chat(usr, "\red There is nothing to remove from its [remove_from].")
 					return
 
-		//show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
+		// show_inv(usr) // Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
 
-	//Adding things to inventory
+	// Adding things to inventory
 	else if(href_list["add_inv"])
-		if(get_dist(src,usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
+		if(get_dist(src, usr) > 1 || !(ishuman(usr) || ismonkey(usr) || isrobot(usr) ||  isalienadult(usr)))
 			return
 		var/add_to = href_list["add_inv"]
 		if(!usr.get_active_hand())
@@ -130,9 +130,9 @@
 					if(!item_to_add)
 						return
 
-					//Corgis are supposed to be simpler, so only a select few objects can actually be put
-					//to be compatible with them. The objects are below.
-					//Many  hats added, Some will probably be removed, just want to see which ones are popular.
+					// Corgis are supposed to be simpler, so only a select few objects can actually be put
+					// to be compatible with them. The objects are below.
+					// Many  hats added, Some will probably be removed, just want to see which ones are popular.
 
 					var/list/allowed_types = list(
 						/obj/item/clothing/head/helmet,
@@ -173,7 +173,7 @@
 					src.inventory_head = item_to_add
 					regenerate_icons()
 
-					//Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a HAT is removed.
+					// Various hats and items (worn on his head) change Ian's behaviour. His attributes are reset when a HAT is removed.
 
 
 					switch(inventory_head && inventory_head.type)
@@ -235,8 +235,8 @@
 					if(!item_to_add)
 						return
 
-					//Corgis are supposed to be simpler, so only a select few objects can actually be put
-					//to be compatible with them. The objects are below.
+					// Corgis are supposed to be simpler, so only a select few objects can actually be put
+					// to be compatible with them. The objects are below.
 
 					var/list/allowed_types = list(
 						/obj/item/clothing/suit/armor/vest,
@@ -252,7 +252,7 @@
 					src.inventory_mask = item_to_add
 					regenerate_icons()
 
-		//show_inv(usr) //Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
+		// show_inv(usr) // Commented out because changing Ian's  name and then calling up his inventory opens a new inventory...which is annoying.
 	else
 		..()
 
@@ -268,12 +268,12 @@
 	emote_hear = list("clicks with fury", "clicks angrily")
 	emote_see = list("clacks")
 	speak_chance = 1
-	turns_per_move = 15//Gotta go fast
-	maxHealth = 100//So they don't die as quickly
+	turns_per_move = 15// Gotta go fast
+	maxHealth = 100// So they don't die as quickly
 	health = 100
 	melee_damage_lower = 3
-	melee_damage_upper = 10//Kill them. Kill them all
-	if(inventory_head)//Drops inventory so it doesn't have to be dealt with
+	melee_damage_upper = 10// Kill them. Kill them all
+	if(inventory_head)// Drops inventory so it doesn't have to be dealt with
 		inventory_head.loc = src.loc
 		inventory_head = null
 	if(inventory_mask)

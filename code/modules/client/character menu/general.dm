@@ -1,10 +1,10 @@
 /datum/preferences/proc/ShowGeneral(mob/user)
-	. =  "<table cellspacing='0' width='100%'>"	//Main body table start
+	. =  "<table cellspacing='0' width='100%'>"	// Main body table start
 	. += 	"<tr>"
 	. += 		"<td width='340px' height='320px' style='padding-left:25px'>"
 
-	//General
-	. += 			"<table width='100%' cellpadding='5' cellspacing='0'>"	//General table start
+	// General
+	. += 			"<table width='100%' cellpadding='5' cellspacing='0'>"	// General table start
 	. += 				"<tr valign='top'>"
 	. += 					"<td colspan='2'>"
 	. += 						"<b>Name:</b> "
@@ -23,40 +23,40 @@
 	. += 					"</td>"
 	. += 				"</tr>"
 
-	//Character setup menu
+	// Character setup menu
 	. += 				"<tr>"
 	. += 					"<td>"
 	. += 						"<center>"
 	. += 						"<b>Character setup</b>"
 	. += 						"<br>"
-	. += 						"[submenu_type=="body"?"<b>Body</b>":"<a href=\"byond://?src=\ref[user];preference=body\">Body</a>"] - "
-	. += 						"[submenu_type=="organs"?"<b>Organs</b>":"<a href=\"byond://?src=\ref[user];preference=organs\">Organs</a>"] - "
-	. += 						"[submenu_type=="appearance"?"<b>Appearance</b>":"<a href=\"byond://?src=\ref[user];preference=appearance\">Appearance</a>"] - "
-	. += 						"[submenu_type=="disabil_menu"?"<b>Disabilities</b>":"<a href=\"byond://?src=\ref[user];preference=disabil_menu\">Disabilities</a>"] - "
-	. += 						"[submenu_type=="gear"?"<b>Gear</b>":"<a href=\"byond://?src=\ref[user];preference=gear\">Gear</a>"]"
+	. += 						"[submenu_type=="body"?"<b>Body</b>":"<a href=\"byond:// ?src=\ref[user];preference=body\">Body</a>"] - "
+	. += 						"[submenu_type=="organs"?"<b>Organs</b>":"<a href=\"byond:// ?src=\ref[user];preference=organs\">Organs</a>"] - "
+	. += 						"[submenu_type=="appearance"?"<b>Appearance</b>":"<a href=\"byond:// ?src=\ref[user];preference=appearance\">Appearance</a>"] - "
+	. += 						"[submenu_type=="disabil_menu"?"<b>Disabilities</b>":"<a href=\"byond:// ?src=\ref[user];preference=disabil_menu\">Disabilities</a>"] - "
+	. += 						"[submenu_type=="gear"?"<b>Gear</b>":"<a href=\"byond:// ?src=\ref[user];preference=gear\">Gear</a>"]"
 	. += 						"</center>"
 	. += 						"<br>"
-	. += 						"<table border width='100%' background='opacity7.png' bordercolor='5A6E7D' cellspacing='0'>"	//Submenu table start
+	. += 						"<table border width='100%' background='opacity7.png' bordercolor='5A6E7D' cellspacing='0'>"	// Submenu table start
 	. += 							"<tr valign='top'>"
 	. += 								"<td height='180px'>"
 
-	switch(submenu_type)	//Submenu
-		//Body
+	switch(submenu_type)	// Submenu
+		// Body
 		if("body")
 			. += "Body: <a href='?_src_=prefs;preference=all;task=random'>&reg;</a>"
-			. += "<br>Species: <a href='byond://?src=\ref[user];preference=species;task=input'>[species]</a>"
-			. += "<br>Secondary Language: <a href='byond://?src=\ref[user];preference=language;task=input'>[language]</a>"
-			. += "<br>Blood Type: <a href='byond://?src=\ref[user];preference=b_type;task=input'>[b_type]</a>"
+			. += "<br>Species: <a href='byond:// ?src=\ref[user];preference=species;task=input'>[species]</a>"
+			. += "<br>Secondary Language: <a href='byond:// ?src=\ref[user];preference=language;task=input'>[language]</a>"
+			. += "<br>Blood Type: <a href='byond:// ?src=\ref[user];preference=b_type;task=input'>[b_type]</a>"
 			. += "<br>Skin Tone: <a href='?_src_=prefs;preference=s_tone;task=input'>[-s_tone + 35]/220</a>"
 
-		//Organs
+		// Organs
 		if("organs")
-			. += "Limbs & Internal Organs: <a href='byond://?src=\ref[user];preference=organs;task=input'>Adjust</a>"
+			. += "Limbs & Internal Organs: <a href='byond:// ?src=\ref[user];preference=organs;task=input'>Adjust</a>"
 
-			//(display limbs below)
+			// (display limbs below)
 			var/ind = 0
 			for(var/name in organ_data)
-				//world << "[ind] \ [organ_data.len]"
+				// world << "[ind] \ [organ_data.len]"
 				var/status = organ_data[name]
 				var/organ_name = parse_zone(name)
 				switch(name)
@@ -95,7 +95,7 @@
 					switch(organ_name)
 						if("heart")
 							. += "<li>Pacemaker-assisted [organ_name]</li>"
-						if("voicebox") //on adding voiceboxes for speaking skrell/similar replacements
+						if("voicebox") // on adding voiceboxes for speaking skrell/similar replacements
 							. += "<li>Surgically altered [organ_name]</li>"
 						if("eyes")
 							. += "<li>Retinal overlayed [organ_name]</li>"
@@ -104,7 +104,7 @@
 			if(!ind)
 				. += "<br>\[...\]"
 
-		//Appearance
+		// Appearance
 		if("appearance")
 			. += "<b>Hair</b>"
 			. += "<br><a href='?_src_=prefs;preference=hair;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_hair, 2)][num2hex(g_hair, 2)][num2hex(b_hair)]'><tr><td width='20' height='15'></td></tr></table></font>"
@@ -117,18 +117,18 @@
 			. += "<b>Body Color</b>"
 			. += "<br><a href='?_src_=prefs;preference=skin;task=input'>Change Color</a> <font face='fixedsys' size='3' color='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin, 2)]'><table border cellspacing='0' style='display:inline;' bgcolor='#[num2hex(r_skin, 2)][num2hex(g_skin, 2)][num2hex(b_skin)]'><tr><td width='20' height='15'></td></tr></table></font>"
 
-		//Adjustment
+		// Adjustment
 		if("disabil_menu")
 			. += "<b>Disabilities:</b>"
 			. += "<br>"
-			. += ShowDisabilityState(user,DISABILITY_NEARSIGHTED,"Needs Glasses")
-			. += ShowDisabilityState(user,DISABILITY_COUGHING,"Coughing")
-			. += ShowDisabilityState(user,DISABILITY_EPILEPTIC,"Seizures")
-			. += ShowDisabilityState(user,DISABILITY_TOURETTES,"Twitching")
-			. += ShowDisabilityState(user,DISABILITY_NERVOUS,"Nervousness")
-			. += ShowDisabilityState(user,DISABILITY_FATNESS,"Fatness")
+			. += ShowDisabilityState(user, DISABILITY_NEARSIGHTED,"Needs Glasses")
+			. += ShowDisabilityState(user, DISABILITY_COUGHING,"Coughing")
+			. += ShowDisabilityState(user, DISABILITY_EPILEPTIC,"Seizures")
+			. += ShowDisabilityState(user, DISABILITY_TOURETTES,"Twitching")
+			. += ShowDisabilityState(user, DISABILITY_NERVOUS,"Nervousness")
+			. += ShowDisabilityState(user, DISABILITY_FATNESS,"Fatness")
 
-		//Gear
+		// Gear
 		if("gear")
 			. += "<b>Gear:</b><br>"
 			if(gender == MALE)
@@ -141,25 +141,25 @@
 
 	. += 								"</td>"
 	. += 							"</tr>"
-	. += 						"</table>"	//Submenu table end
+	. += 						"</table>"	// Submenu table end
 	. += 					"</td>"
 	. += 				"</tr>"
 
-	. += 			"</table>"	//General table end
+	. += 			"</table>"	// General table end
 	. += 		"</td>"
 
 	. += 		"<td width='300px' height='300px' valign='top'>"
-	. += 			"<table width='100%' cellpadding='5'>"	//Backstory table start
+	. += 			"<table width='100%' cellpadding='5'>"	// Backstory table start
 	. += 				"<tr>"
 	. += 					"<td>"
 
-	//Backstory
+	// Backstory
 	. += 						"<b>Background information:</b>"
 	. += 						"<br>Nanotrasen Relation: <a href ='?_src_=prefs;preference=nt_relation;task=input'>[nanotrasen_relation]</a>"
-	. += 						"<br>Home system</b>: <a href='byond://?src=\ref[user];preference=home_system;task=input'>[home_system]</a>"
-	. += 						"<br>Citizenship</b>: <a href='byond://?src=\ref[user];preference=citizenship;task=input'>[citizenship]</a>"
-	. += 						"<br>Faction: <a href='byond://?src=\ref[user];preference=faction;task=input'>[faction]</a>"
-	. += 						"<br>Religion: <a href='byond://?src=\ref[user];preference=religion;task=input'>[religion]</a>"
+	. += 						"<br>Home system</b>: <a href='byond:// ?src=\ref[user];preference=home_system;task=input'>[home_system]</a>"
+	. += 						"<br>Citizenship</b>: <a href='byond:// ?src=\ref[user];preference=citizenship;task=input'>[citizenship]</a>"
+	. += 						"<br>Faction: <a href='byond:// ?src=\ref[user];preference=faction;task=input'>[faction]</a>"
+	. += 						"<br>Religion: <a href='byond:// ?src=\ref[user];preference=religion;task=input'>[religion]</a>"
 	. += 						"<br>"
 
 	if(jobban_isbanned(user, "Records"))
@@ -167,25 +167,25 @@
 	else
 		. += 					"<br><b>Records:</b>"
 		. += 					"<br>Medical Records:"
-		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=med_record\">[length(med_record)>0?"[sanitize_popup(copytext(med_record, 1, 3))]...":"\[...\]"]</a>"
+		. += 					" <a href=\"byond:// ?src=\ref[user];preference=records;task=med_record\">[length(med_record)>0?"[sanitize_popup(copytext(med_record, 1, 3))]...":"\[...\]"]</a>"
 		. += 					"<br>Security Records:"
-		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=sec_record\">[length(sec_record)>0?"[sanitize_popup(copytext(sec_record, 1, 3))]...":"\[...\]"]</a>"
+		. += 					" <a href=\"byond:// ?src=\ref[user];preference=records;task=sec_record\">[length(sec_record)>0?"[sanitize_popup(copytext(sec_record, 1, 3))]...":"\[...\]"]</a>"
 		. += 					"<br>Employment Records:"
-		. += 					" <a href=\"byond://?src=\ref[user];preference=records;task=gen_record\">[length(gen_record)>0?"[sanitize_popup(copytext(gen_record, 1, 3))]...":"\[...\]"]</a>"
+		. += 					" <a href=\"byond:// ?src=\ref[user];preference=records;task=gen_record\">[length(gen_record)>0?"[sanitize_popup(copytext(gen_record, 1, 3))]...":"\[...\]"]</a>"
 
 	. += 						"<br><br>"
 
 	. += 						"<b>Flavor:</b>"
-	. += 						" <a href='byond://?src=\ref[user];preference=flavor_text;task=input'>[length(flavor_text)>0?"[sanitize_popup(copytext(flavor_text, 1, 3))]...":"\[...\]"]</a>"
+	. += 						" <a href='byond:// ?src=\ref[user];preference=flavor_text;task=input'>[length(flavor_text)>0?"[sanitize_popup(copytext(flavor_text, 1, 3))]...":"\[...\]"]</a>"
 	. += 					"</td>"
 	. += 				"</tr>"
-	. += 			"</table>"	//Backstory table end
+	. += 			"</table>"	// Backstory table end
 	. += 		"</td>"
 	. += 	"</tr>"
-	. += "</table>"	//Main body table end
+	. += "</table>"	// Main body table end
 
 
-/datum/preferences/proc/ShowDisabilityState(mob/user,flag,label)
+/datum/preferences/proc/ShowDisabilityState(mob/user, flag, label)
 	return "[label]: <a href=\"?_src_=prefs;task=input;preference=disabilities;disability=[flag]\">[disabilities & flag ? "<b>Yes</b>" : "No"]</a><br>"
 
 /datum/preferences/proc/process_link_general(mob/user, list/href_list)
@@ -194,7 +194,7 @@
 			if(href_list["task"] == "input")
 				var/dflag=text2num(href_list["disability"])
 				if(dflag >= 0)
-					disabilities ^= text2num(href_list["disability"]) //MAGIC
+					disabilities ^= text2num(href_list["disability"]) // MAGIC
 
 		if("records")
 			switch(href_list["task"])
@@ -254,7 +254,7 @@
 				if("bag")
 					backbag = rand(1,4)
 				if("all")
-					randomize_appearance_for()	//no params needed
+					randomize_appearance_for()	// no params needed
 		if("input")
 			switch(href_list["preference"])
 				if("name")
@@ -274,14 +274,14 @@
 					var/prev_species = species
 					var/whitelisted = 0
 
-					if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
+					if(config.usealienwhitelist) // If we're using the whitelist, make sure to check it!
 						for(var/S in whitelisted_species)
-							if(is_alien_whitelisted(user,S))
+							if(is_alien_whitelisted(user, S))
 								new_species += S
 								whitelisted = 1
 						if(!whitelisted)
 							alert(user, "You cannot change your species as you need to be whitelisted. If you wish to be whitelisted contact an admin in-game, on the forums, or on IRC.")
-					else //Not using the whitelist? Aliens for everyone!
+					else // Not using the whitelist? Aliens for everyone!
 						new_species = whitelisted_species
 
 					species = input("Please select a species", "Character Generation", null) in new_species
@@ -295,7 +295,7 @@
 					var/list/new_languages = list("None")
 					var/datum/species/S = all_species[species]
 
-					//I don't understant, how it works(and does not), so..
+					// I don't understant, how it works(and does not), so..
 					if(config.usealienwhitelist)
 						for(var/L in all_languages)
 							var/datum/language/lang = all_languages[L]
@@ -571,8 +571,8 @@
 					f_style = random_facial_hair_style(gender, species)
 					h_style = random_hair_style(gender, species)
 
-				if("disabilities")				//please note: current code only allows nearsightedness as a disability
-					disabilities = !disabilities//if you want to add actual disabilities, code that selects them should be here
+				if("disabilities")				// please note: current code only allows nearsightedness as a disability
+					disabilities = !disabilities// if you want to add actual disabilities, code that selects them should be here
 
 				if("randomslot")
 					randomslot = !randomslot

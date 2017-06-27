@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 
 /obj/structure/closet/crate
 	name = "crate"
@@ -8,7 +8,7 @@
 	icon_opened = "crateopen"
 	icon_closed = "crate"
 	climbable = 1
-//	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	//???
+//	mouse_drag_pointer = MOUSE_ACTIVE_POINTER	// ???
 	var/rigged = 0
 
 /obj/structure/closet/crate/can_open()
@@ -56,7 +56,7 @@
 			break
 		if(O.density || O.anchored || istype(O,/obj/structure/closet))
 			continue
-		if(istype(O, /obj/structure/stool/bed)) //This is only necessary because of rollerbeds and swivel chairs.
+		if(istype(O, /obj/structure/stool/bed)) // This is only necessary because of rollerbeds and swivel chairs.
 			var/obj/structure/stool/bed/B = O
 			if(B.buckled_mob)
 				continue
@@ -74,7 +74,7 @@
 		user.drop_item()
 		if(W)
 			W.forceMove(src.loc)
-	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))	//OOP? Doesn't heard.
+	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))	// OOP? Doesn't heard.
 		return
 	else if(istype(W, /obj/item/weapon/cable_coil))
 		if(rigged)
@@ -189,7 +189,7 @@
 		overlays.Cut()
 		overlays += emag
 		overlays += sparks
-		spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
+		spawn(6) overlays -= sparks // Tried lots of stuff but nothing works right. so i have to use this *sadface*
 		playsound(src.loc, "sparks", 60, 1)
 		src.locked = 0
 		src.broken = 1
@@ -212,7 +212,7 @@
 			overlays.Cut()
 			overlays += emag
 			overlays += sparks
-			spawn(6) overlays -= sparks //Tried lots of stuff but nothing works right. so i have to use this *sadface*
+			spawn(6) overlays -= sparks // Tried lots of stuff but nothing works right. so i have to use this *sadface*
 			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 			src.locked = 0
 	if(!opened && prob(20/severity))
@@ -359,7 +359,7 @@
 			newgas.temperature = target_temp
 		return newgas
 
-/obj/structure/closet/crate/freezer/rations //Fpr use in the escape shuttle
+/obj/structure/closet/crate/freezer/rations // Fpr use in the escape shuttle
 	desc = "A crate of emergency rations."
 	name = "Emergency Rations"
 
@@ -458,7 +458,7 @@
 
 /obj/structure/closet/crate/large/close()
 	. = ..()
-	if (.)//we can hold up to one large item
+	if (.)// we can hold up to one large item
 		var/found = 0
 		for(var/obj/structure/S in src.loc)
 			if(S == src)
@@ -486,7 +486,7 @@
 
 /obj/structure/closet/crate/secure/large/close()
 	. = ..()
-	if (.)//we can hold up to one large item
+	if (.)// we can hold up to one large item
 		var/found = 0
 		for(var/obj/structure/S in src.loc)
 			if(S == src)
@@ -502,7 +502,7 @@
 					break
 	return
 
-//fluff variant
+// fluff variant
 /obj/structure/closet/crate/secure/large/reinforced
 	desc = "A hefty, reinforced metal crate with an electronic locking system."
 	icon_state = "largermetal"
@@ -517,7 +517,7 @@
 	icon_closed = "hydrocrate"
 
 /obj/structure/closet/crate/hydroponics/prespawned
-	//This exists so the prespawned hydro crates spawn with their contents.
+	// This exists so the prespawned hydro crates spawn with their contents.
 
 	New()
 		..()

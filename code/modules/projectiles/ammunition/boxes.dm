@@ -128,7 +128,7 @@
 	ammo_type = "/obj/item/ammo_casing/a762"
 	max_ammo = 0
 	multiple_sprites = 1 */
-//TG-stuff
+// TG-stuff
 /obj/item/ammo_box/a357
 	name = "ammo box (.357)"
 	desc = "A box of .357 ammo"

@@ -1,4 +1,4 @@
-//This is an uguu head restoration surgery TOTALLY not yoinked from chinsky's limb reattacher
+// This is an uguu head restoration surgery TOTALLY not yoinked from chinsky's limb reattacher
 
 
 /datum/surgery_step/head

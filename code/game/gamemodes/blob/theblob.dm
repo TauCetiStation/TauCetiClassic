@@ -1,4 +1,4 @@
-//I will need to recode parts of this but I am way too tired atm
+// I will need to recode parts of this but I am way too tired atm
 /obj/effect/blob
 	name = "blob"
 	icon = 'icons/mob/blob.dmi'
@@ -25,7 +25,7 @@
 
 /obj/effect/blob/Destroy()
 	blobs -= src
-	if(isturf(loc)) //Necessary because Expand() is retarded and spawns a blob and then deletes it
+	if(isturf(loc)) // Necessary because Expand() is retarded and spawns a blob and then deletes it
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 	return ..()
 
@@ -64,23 +64,23 @@
 		health_timestamp = world.time + 10 // 1 seconds
 
 
-/obj/effect/blob/proc/Pulse(pulse = 0, origin_dir = 0)//Todo: Fix spaceblob expand
+/obj/effect/blob/proc/Pulse(pulse = 0, origin_dir = 0)// Todo: Fix spaceblob expand
 
-	//set background = 1
+	// set background = 1
 
 	PulseAnimation()
 
 	RegenHealth()
 
-	if(run_action())//If we can do something here then we dont need to pulse more
+	if(run_action())// If we can do something here then we dont need to pulse more
 		return
 
 	if(pulse > 30)
-		return//Inf loop check
+		return// Inf loop check
 
-	//Looking for another blob to pulse
+	// Looking for another blob to pulse
 	var/list/dirs = list(1,2,4,8)
-	dirs.Remove(origin_dir)//Dont pulse the guy who pulsed us
+	dirs.Remove(origin_dir)// Dont pulse the guy who pulsed us
 	for(var/i = 1 to 4)
 		if(!dirs.len)	break
 		var/dirn = pick(dirs)
@@ -88,9 +88,9 @@
 		var/turf/T = get_step(src, dirn)
 		var/obj/effect/blob/B = (locate(/obj/effect/blob) in T)
 		if(!B)
-			expand(T)//No blob here so try and expand
+			expand(T)// No blob here so try and expand
 			return
-		B.Pulse((pulse+1),get_dir(src.loc,T))
+		B.Pulse((pulse+1),get_dir(src.loc, T))
 		return
 	return
 
@@ -114,15 +114,15 @@
 	if(!T)	return 0
 	var/obj/effect/blob/normal/B = new /obj/effect/blob/normal(src.loc, min(src.health, 30))
 	B.density = 1
-	if(T.Enter(B,src))//Attempt to move into the tile
+	if(T.Enter(B, src))// Attempt to move into the tile
 		B.density = initial(B.density)
 		B.loc = T
 	else
-		T.blob_act()//If we cant move in hit the turf
-		B.loc = null //So we don't play the splat sound, see Destroy()
+		T.blob_act()// If we cant move in hit the turf
+		B.loc = null // So we don't play the splat sound, see Destroy()
 		qdel(B)
 
-	for(var/atom/A in T)//Hit everything in the turf
+	for(var/atom/A in T)// Hit everything in the turf
 		A.blob_act()
 	return 1
 

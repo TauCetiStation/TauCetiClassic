@@ -25,7 +25,7 @@
 
 	msg += "<EM>[src.name]</EM>!\n"
 
-	//head
+	// head
 	if(head)
 		if(head.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] [(head.blood_color != "#030303") ? "blood" : "oil"]-stained [head.name] on [t_his] head!</span>\n"
@@ -34,7 +34,7 @@
 		else
 			msg += "[t_He] [t_is] wearing [bicon(head)] \a [head] on [t_his] head.\n"
 
-	//back
+	// back
 	if(back)
 		if(back.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_has] [bicon(back)] [back.gender==PLURAL?"some":"a"] [(back.blood_color != "#030303") ? "blood" : "oil"]-stained [back] on [t_his] back.</span>\n"
@@ -43,7 +43,7 @@
 		else
 			msg += "[t_He] [t_has] [bicon(back)] \a [back] on [t_his] back.\n"
 
-	//hand (err.. mouth!)
+	// hand (err.. mouth!)
 	if(!skipface && mouth && !(mouth.flags&ABSTRACT)) // Yesh, hide hand if face is obscured. Err, i mean mouth!
 		if(mouth.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] holding [bicon(mouth)] [mouth.gender==PLURAL?"some":"a"] [(mouth.blood_color != "#030303") ? "blood" : "oil"]-stained [mouth.name] in [t_his] mouth!</span>\n"
@@ -52,22 +52,22 @@
 		else
 			msg += "[t_He] [t_is] holding [bicon(mouth)] \a [mouth] in [t_his] mouth.\n"
 
-	//handcuffed?
+	// handcuffed?
 	if(handcuffed)
 		if(istype(handcuffed, /obj/item/weapon/handcuffs/cable))
 			msg += "<span class='warning'>[t_He] [t_is] [bicon(handcuffed)] restrained with cable!</span>\n"
 		else
 			msg += "<span class='warning'>[t_He] [t_is] [bicon(handcuffed)] handcuffed!</span>\n"
 
-	//buckled
+	// buckled
 	if(buckled)
 		msg += "<span class='warning'>[t_He] [t_is] [bicon(buckled)] buckled to [buckled]!</span>\n"
 
-	//ID
+	// ID
 	if(neck)
 		msg += "[t_He] [t_is] wearing [bicon(neck)] \a [neck] on [t_his] neck.\n"
 
-	var/distance = get_dist(user,src)
+	var/distance = get_dist(user, src)
 	if(isobserver(user) || user.stat == DEAD) // ghosts can see anything
 		distance = 1
 

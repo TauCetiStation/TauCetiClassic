@@ -29,15 +29,15 @@
 	var/turf/T0 = get_turf(neighbor)
 	if(T0 == src)
 		return 1
-	if(get_dist(src,T0) > 1)
+	if(get_dist(src, T0) > 1)
 		return 0
 
 	if(T0.x == x || T0.y == y)
 		// Check for border blockages
-		return T0.ClickCross(get_dir(T0,src), border_only = 1) && src.ClickCross(get_dir(src,T0), border_only = 1, target_atom = target)
+		return T0.ClickCross(get_dir(T0,src), border_only = 1) && src.ClickCross(get_dir(src, T0), border_only = 1, target_atom = target)
 
 	// Not orthagonal
-	var/in_dir = get_dir(neighbor,src) // eg. northwest (1+8)
+	var/in_dir = get_dir(neighbor, src) // eg. northwest (1+8)
 	var/d1 = in_dir&(in_dir-1)		// eg west		(1+8)&(8) = 8
 	var/d2 = in_dir - d1			// eg north		(1+8) - 8 = 1
 
@@ -49,7 +49,7 @@
 		if(!T1 || T1.density || !T1.ClickCross(get_dir(T1,T0) | get_dir(T1,src), border_only = 0))
 			continue // couldn't enter or couldn't leave T1
 
-		if(!src.ClickCross(get_dir(src,T1), border_only = 1, target_atom = target))
+		if(!src.ClickCross(get_dir(src, T1), border_only = 1, target_atom = target))
 			continue // could not enter src
 
 		return 1 // we don't care about our own density
@@ -65,7 +65,7 @@ Quick adjacency (to turf):
 	if(T0 == src)
 		return 1
 
-	if(get_dist(src,T0) > 1)
+	if(get_dist(src, T0) > 1)
 		return 0
 
 	return 1
@@ -83,7 +83,7 @@ Quick adjacency (to turf):
 	if(!isturf(loc)) return 0
 	for(var/turf/T in locs)
 		if(isnull(T)) continue
-		if(T.Adjacent(neighbor,src)) return 1
+		if(T.Adjacent(neighbor, src)) return 1
 	return 0
 
 // This is necessary for storage items not on your person.
@@ -91,7 +91,7 @@ Quick adjacency (to turf):
 	if(neighbor == loc) return 1
 	if(istype(loc,/obj/item))
 		if(recurse > 0)
-			return loc.Adjacent(neighbor,recurse - 1)
+			return loc.Adjacent(neighbor, recurse - 1)
 		return 0
 	return ..()
 
@@ -109,7 +109,7 @@ Quick adjacency (to turf):
 			if( O.dir & target_dir || O.dir&(O.dir-1) ) // full tile windows are just diagonals mechanically
 				var/obj/structure/window/W = target_atom
 				if(istype(W))
-					if(!W.is_fulltile())	//exception for breaking full tile windows on top of single pane windows
+					if(!W.is_fulltile())	// exception for breaking full tile windows on top of single pane windows
 						return 0
 				else
 					return 0

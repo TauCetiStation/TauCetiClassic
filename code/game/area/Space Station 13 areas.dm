@@ -16,9 +16,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /*-----------------------------------------------------------------------------*/
 
- /////////
- //SPACE//
- /////////
+ //////// /
+ // SPACE// 
+ //////// /
 
 /area/space
 	name = "Space"
@@ -31,9 +31,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	valid_territory = 0
 
 
-//These are shuttle areas, they must contain two areas in a subgroup if you want to move a shuttle from one
-//place to another. Look at escape shuttle for example.
-//All shuttles show now be under shuttle since we have smooth-wall code.
+// These are shuttle areas, they must contain two areas in a subgroup if you want to move a shuttle from one
+// place to another. Look at escape shuttle for example.
+// All shuttles show now be under shuttle since we have smooth-wall code.
 
 /area/shuttle
 	requires_power = 0
@@ -113,7 +113,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "shuttle"
 	parallax_movedir = WEST
 
-/area/shuttle/escape_pod5 //Pod 4 was lost to meteors
+/area/shuttle/escape_pod5 // Pod 4 was lost to meteors
 	name = "Escape Pod Five"
 	music = "music/escape.ogg"
 
@@ -244,7 +244,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Arrival Shuttle Dock"
 
 
-//SYNDICATES
+// SYNDICATES
 
 /area/syndicate_mothership
 	name = "Syndicate Mothership"
@@ -260,7 +260,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "syndie-elite"
 
 
-//EXTRA
+// EXTRA
 
 /area/asteroid					// -- TLE
 	name = "Asteroid"
@@ -298,9 +298,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "purple"
 
 
-//ENEMY
+// ENEMY
 
-//names are used
+// names are used
 /area/syndicate_station
 	name = "Syndicate Station"
 	icon_state = "yellow"
@@ -385,19 +385,19 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	requires_power = 0
 
 
-//PRISON
+// PRISON
 /area/prison/solitary
 	name = "Solitary Confinement"
 	icon_state = "brig"
 
 
-//STATION13
+// STATION13
 
 /area/atmos
  	name = "Atmospherics"
  	icon_state = "atmos"
 
-//Maintenance
+// Maintenance
 /area/maintenance
 	valid_territory = 0
 
@@ -441,7 +441,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Waste Disposal"
 	icon_state = "disposal"
 
-//Hallway
+// Hallway
 
 /area/hallway/primary/fore
 	name = "Fore Primary Hallway"
@@ -475,7 +475,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Pod bay"
 	icon_state = "escape"
 
-//Command
+// Command
 
 /area/bridge
 	name = "Bridge"
@@ -507,7 +507,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Messaging Server Room"
 	icon_state = "server"
 
-//Crew
+// Crew
 
 /area/crew_quarters
 	name = "Dormitories"
@@ -631,7 +631,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Holodeck - Space"
 
 
-//Engineering
+// Engineering
 
 /area/engine
 	icon_state = "engine"
@@ -654,7 +654,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "engine_control"
 
 
-//Solars
+// Solars
 
 /area/solar
 	requires_power = 0
@@ -701,14 +701,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Robotics Lab"
 	icon_state = "ass_line"
 
-/area/assembly/assembly_line //Derelict Assembly Line
+/area/assembly/assembly_line // Derelict Assembly Line
 	name = "Assembly Line"
 	icon_state = "ass_line"
 	power_equip = 0
 	power_light = 0
 	power_environ = 0
 
-//Teleporter
+// Teleporter
 
 /area/teleporter
 	name = "Teleporter"
@@ -725,13 +725,13 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "teleporter"
 	music = "signal"
 
-//MedBay
+// MedBay
 
 /area/medical
 	name = "Medbay"
 	icon_state = "medbay"
 
-//Medbay is a large area, these additional areas help level out APC load.
+// Medbay is a large area, these additional areas help level out APC load.
 /area/medical/hallway
 	icon_state = "medbay2"
 	music = 'sound/ambience/signal.ogg'
@@ -814,7 +814,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Emergency Treatment Centre"
 	icon_state = "exam_room"
 
-//Security
+// Security
 
 /area/security/main
 	name = "Security Office"
@@ -916,7 +916,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "hydro"
 
 
-//rnd (Research and Development
+// rnd (Research and Development
 
 /area/rnd/lab
 	name = "Research and Development"
@@ -957,7 +957,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	music = 'sound/ambience/server.ogg'
 
 
-//Storage
+// Storage
 
 /area/storage/tools
 	name = "Auxiliary Tool Storage"
@@ -984,7 +984,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "auxstorage"
 
 
-//DJSTATION
+// DJSTATION
 
 /area/djstation
 	name = "Ruskie DJ Station"
@@ -995,7 +995,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "DJ"
 
 
-//DERELICT
+// DERELICT
 
 /area/derelict
 	name = "Derelict Station"
@@ -1058,14 +1058,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "engine"
 
 
-//Construction
+// Construction
 
 /area/construction
 	name = "Construction Area"
 	icon_state = "yellow"
 
 
-//AI
+// AI
 
 /area/ai_monitored/storage/eva
 	name = "EVA Storage"
@@ -1107,7 +1107,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "tcomsatcomp"
 
 
-//tc areas
+// tc areas
 
 /area/mine/dwarf
 	name = "Dwarf"
@@ -1254,7 +1254,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	S.status = SOUND_UPDATE
 	process()
 
-/area/awaymission/beach/Entered(atom/movable/Obj,atom/OldLoc)
+/area/awaymission/beach/Entered(atom/movable/Obj, atom/OldLoc)
 	if(ismob(Obj))
 		if(Obj:client)
 			mysound.status = SOUND_UPDATE
@@ -1291,7 +1291,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 		return
 	target << sound
 
-/////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////// /
 /*
  Lists of areas to be used with is_type_in_list.
  Used in gamemodes code at the moment. --rastaf0
@@ -1310,7 +1310,7 @@ var/list/centcom_areas = list (
 	/area/shuttle/specops/centcom,
 )
 
-//SPACE STATION 13
+// SPACE STATION 13
 var/list/the_station_areas = list (
 	/area/shuttle/arrival,
 	/area/shuttle/escape/station,
@@ -1343,9 +1343,9 @@ var/list/the_station_areas = list (
 	/area/rnd,
 	/area/storage,
 	/area/construction,
-	/area/ai_monitored/storage/eva, //do not try to simplify to "/area/ai_monitored" --rastaf0
+	/area/ai_monitored/storage/eva, // do not try to simplify to "/area/ai_monitored" --rastaf0
 	/area/ai_monitored/storage/secure,
-	/area/turret_protected/ai_upload, //do not try to simplify to "/area/turret_protected" --rastaf0
+	/area/turret_protected/ai_upload, // do not try to simplify to "/area/turret_protected" --rastaf0
 	/area/turret_protected/ai
 )
 
@@ -1371,7 +1371,7 @@ var/list/the_station_areas = list (
 	S.status = SOUND_UPDATE
 	process()
 
-/area/beach/Entered(atom/movable/Obj,atom/OldLoc)
+/area/beach/Entered(atom/movable/Obj, atom/OldLoc)
 	if(ismob(Obj))
 		if(Obj:client)
 			mysound.status = SOUND_UPDATE

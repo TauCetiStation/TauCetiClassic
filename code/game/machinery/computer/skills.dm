@@ -1,6 +1,6 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-/obj/machinery/computer/skills//TODO:SANITY
+/obj/machinery/computer/skills// TODO:SANITY
 	name = "Employment Records"
 	desc = "Used to view personnel's employment records."
 	icon_state = "medlaptop"
@@ -18,7 +18,7 @@
 	var/can_change_id = 0
 	var/list/Perp
 	var/tempname = null
-	//Sorting Variables
+	// Sorting Variables
 	var/sortBy = "name"
 	var/order = 1 // -1 = Descending - 1 = Ascending
 
@@ -37,7 +37,7 @@
 /obj/machinery/computer/skills/attack_paw(mob/user)
 	return attack_hand(user)
 
-//Someone needs to break down the dat += into chunks instead of long ass lines.
+// Someone needs to break down the dat += into chunks instead of long ass lines.
 /obj/machinery/computer/skills/attack_hand(mob/user)
 	if(..())
 		return
@@ -175,7 +175,7 @@ What a mess.*/
 			// New sorting order!
 				sortBy = href_list["sort"]
 				order = initial(order)
-//BASIC FUNCTIONS
+// BASIC FUNCTIONS
 		if("Clear Screen")
 			temp = null
 
@@ -220,7 +220,7 @@ What a mess.*/
 					authenticated = scan.registered_name
 					rank = scan.assignment
 					screen = 1
-//RECORD FUNCTIONS
+// RECORD FUNCTIONS
 		if("Search Records")
 			var/t1 = input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text
 			if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || !in_range(src, usr)))
@@ -229,11 +229,11 @@ What a mess.*/
 			t1 = lowertext(t1)
 			var/list/components = splittext(t1, " ")
 			if(components.len > 5)
-				return //Lets not let them search too greedily.
+				return // Lets not let them search too greedily.
 			for(var/datum/data/record/R in data_core.general)
 				var/temptext = R.fields["name"] + " " + R.fields["id"] + " " + R.fields["fingerprint"] + " " + R.fields["rank"]
 				for(var/i = 1, i<=components.len, i++)
-					if(findtext(temptext,components[i]))
+					if(findtext(temptext, components[i]))
 						var/prelist = new/list(2)
 						prelist[1] = R
 						Perp += prelist
@@ -287,7 +287,7 @@ What a mess.*/
 				P.info += "</TT>"
 				P.name = "Employment Record ([active1.fields["name"]])"
 				printing = null
-//RECORD DELETE
+// RECORD DELETE
 		if ("Delete All Records")
 			temp = ""
 			temp += "Are you sure you wish to delete all Employment records?<br>"
@@ -306,13 +306,13 @@ What a mess.*/
 				temp = "<h5>Are you sure you wish to delete the record (ALL)?</h5>"
 				temp += "<a href='?src=\ref[src];choice=Delete Record (ALL) Execute'>Yes</a><br>"
 				temp += "<a href='?src=\ref[src];choice=Clear Screen'>No</a>"
-//RECORD CREATE
+// RECORD CREATE
 		if ("New Record (General)")
 			if(PDA_Manifest.len)
 				PDA_Manifest.Cut()
 			active1 = CreateGeneralRecord()
 
-//FIELD FUNCTIONS
+// FIELD FUNCTIONS
 		if ("Edit Field")
 			var/a1 = active1
 			switch(href_list["field"])
@@ -348,7 +348,7 @@ What a mess.*/
 						active1.fields["age"] = t1
 				if("rank")
 					var/list/L = list( "Head of Personnel", "Captain", "AI" )
-					//This was so silly before the change. Now it actually works without beating your head against the keyboard. /N
+					// This was so silly before the change. Now it actually works without beating your head against the keyboard. /N
 					if ((istype(active1, /datum/data/record) && L.Find(rank)))
 						temp = "<h5>Rank:</h5>"
 						temp += "<ul>"
@@ -364,8 +364,8 @@ What a mess.*/
 							return FALSE
 						active1.fields["species"] = t1
 
-//TEMPORARY MENU FUNCTIONS
-		else//To properly clear as per clear screen.
+// TEMPORARY MENU FUNCTIONS
+		else// To properly clear as per clear screen.
 			temp=null
 			switch(href_list["choice"])
 				if ("Change Rank")

@@ -118,14 +118,14 @@
 
 /obj/item/device/assembly_holder/hear_talk(mob/living/M, msg, verb, datum/language/speaking)
 	if(a_left)
-		a_left.hear_talk(M,msg,verb,speaking)
+		a_left.hear_talk(M, msg, verb, speaking)
 	if(a_right)
-		a_right.hear_talk(M,msg,verb,speaking)
+		a_right.hear_talk(M, msg, verb, speaking)
 
 	return
 
 
-/obj/item/device/assembly_holder/attack_hand()//Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
+/obj/item/device/assembly_holder/attack_hand()// Perhapse this should be a holder_pickup proc instead, can add if needbe I guess
 	if(a_left && a_right)
 		a_left.holder_movement()
 		a_right.holder_movement()
@@ -160,7 +160,7 @@
 		if(!a_left || !a_right)
 			to_chat(user, "\red Assembly part missing!")
 			return
-		if(istype(a_left,a_right.type))//If they are the same type it causes issues due to window code
+		if(istype(a_left, a_right.type))// If they are the same type it causes issues due to window code
 			switch(alert("Which side would you like to use?",,"Left","Right"))
 				if("Left")	a_left.attack_self(user)
 				if("Right")	a_right.attack_self(user)
@@ -196,7 +196,7 @@
 		master.receive_signal()
 	return 1
 
-//********-Timer
+// ********-Timer
 /obj/item/device/assembly_holder/timer_igniter
 	name = "timer-igniter assembly"
 

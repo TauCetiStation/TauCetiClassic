@@ -35,14 +35,14 @@
 #define ARCHAEO_REMAINS_XENO 34
 #define ARCHAEO_GASMASK 35
 #define MAX_ARCHAEO 35
-//eggs
-//droppings
-//footprints
-//alien clothing
+// eggs
+// droppings
+// footprints
+// alien clothing
 
-//DNA sampling from fossils, or a new archaeo type specifically for it?
+// DNA sampling from fossils, or a new archaeo type specifically for it?
 
-//descending order of likeliness to spawn
+// descending order of likeliness to spawn
 #define DIGSITE_GARDEN 1
 #define DIGSITE_ANIMAL 2
 #define DIGSITE_HOUSE 3
@@ -124,7 +124,7 @@
 			return "carbon"
 	return "phoron"
 
-//see /turf/simulated/mineral/New() in code/modules/mining/mine_turfs.dm
+// see /turf/simulated/mineral/New() in code/modules/mining/mine_turfs.dm
 /proc/get_random_digsite_type()
 	return pick(100;DIGSITE_GARDEN,95;DIGSITE_ANIMAL,90;DIGSITE_HOUSE,85;DIGSITE_TECHNICAL,80;DIGSITE_TEMPLE,75;DIGSITE_WAR)
 

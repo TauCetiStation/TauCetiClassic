@@ -115,7 +115,7 @@
 						new /obj/structure/falserwall (src.loc)
 						qdel(src)
 					else
-						if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
+						if (src.icon_state == "reinforced") // I cant believe someone would actually write this line of code...
 							if(S.amount < 1) return ..()
 							to_chat(user, "\blue Now finalising reinforced wall.")
 							if(do_after(user, 50, target = src))
@@ -166,7 +166,7 @@
 
 		else if(istype(W, /obj/item/pipe))
 			var/obj/item/pipe/P = W
-			if (P.pipe_type in list(0, 1, 5))	//simple pipes, simple bends, and simple manifolds.
+			if (P.pipe_type in list(0, 1, 5))	// simple pipes, simple bends, and simple manifolds.
 				user.drop_item()
 				P.loc = src.loc
 				to_chat(user, "\blue You fit the pipe into the [src]!")
@@ -242,7 +242,7 @@
 		if(prob(40))
 			qdel(src)
 
-	bullet_act(obj/item/projectile/Proj) //No beam check- How else will you destroy the cult girder with silver bullets?????
+	bullet_act(obj/item/projectile/Proj) // No beam check- How else will you destroy the cult girder with silver bullets?????
 		health -= Proj.damage
 		..()
 		if(health <= 0)

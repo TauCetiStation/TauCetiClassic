@@ -34,7 +34,7 @@
 			M.client.screen += D
 			H.cl = M.client
 
-/obj/effect/bmode//Cleaning up the tree a bit
+/obj/effect/bmode// Cleaning up the tree a bit
 	density = 1
 	anchored = 1
 	layer = ABOVE_HUD_LAYER
@@ -51,7 +51,7 @@
 
 /obj/effect/bmode/builddir
 	icon_state = "build"
-	screen_loc = "NORTH,WEST"
+	screen_loc = "NORTH, WEST"
 	Click()
 		switch(dir)
 			if(NORTH)
@@ -69,7 +69,7 @@
 /obj/effect/bmode/buildhelp
 	icon = 'icons/misc/buildmode.dmi'
 	icon_state = "buildhelp"
-	screen_loc = "NORTH,WEST+1"
+	screen_loc = "NORTH, WEST+1"
 	Click()
 		switch(master.cl.buildmode)
 			if(1)
@@ -106,7 +106,7 @@
 
 /obj/effect/bmode/buildquit
 	icon_state = "buildquit"
-	screen_loc = "NORTH,WEST+3"
+	screen_loc = "NORTH, WEST+3"
 
 	Click()
 		togglebuildmode(master.cl.mob)
@@ -124,7 +124,7 @@
 
 /obj/effect/bmode/buildmode
 	icon_state = "buildmode1"
-	screen_loc = "NORTH,WEST+2"
+	screen_loc = "NORTH, WEST+2"
 	var/varholder = "name"
 	var/valueholder = "derp"
 	var/objholder = /obj/structure/closet
@@ -255,7 +255,7 @@
 				if(isobj(object)) qdel(object)
 
 		if(3)
-			if(pa.Find("left")) //I cant believe this shit actually compiles.
+			if(pa.Find("left")) // I cant believe this shit actually compiles.
 				if(object.vars.Find(holder.buildmode.varholder))
 					log_admin("[key_name(usr)] modified [object.name]'s [holder.buildmode.varholder] to [holder.buildmode.valueholder]")
 					object.vars[holder.buildmode.varholder] = holder.buildmode.valueholder

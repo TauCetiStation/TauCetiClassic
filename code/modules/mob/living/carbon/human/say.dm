@@ -9,7 +9,7 @@
 			to_chat(src, "\red You cannot speak in IC (Muted).")
 			return
 
-	//Meme stuff
+	// Meme stuff
 	if((!speech_allowed && usr == src) || (src.miming))
 		to_chat(usr, "\red You can't speak.")
 		return
@@ -17,13 +17,13 @@
 	message =  trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))
 
 	if(stat == DEAD)
-		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
+		if(fake_death) // Our changeling with fake_death status must not speak in dead chat!!
 			return
 		return say_dead(message)
 
 	var/message_mode = parse_message_mode(message, "headset")
 
-	if (istype(wear_mask, /obj/item/clothing/mask/muzzle) && message_mode != "changeling")  //Todo:  Add this to speech_problem_flag checks.
+	if (istype(wear_mask, /obj/item/clothing/mask/muzzle) && message_mode != "changeling")  // Todo:  Add this to speech_problem_flag checks.
 		return
 
 	if(copytext(message,1,2) == "*")
@@ -32,14 +32,14 @@
 	if(name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"
 
-	//parse the radio code and consume it
+	// parse the radio code and consume it
 	if (message_mode)
 		if (message_mode == "headset")
-			message = copytext(message,2)	//it would be really nice if the parse procs could do this for us.
+			message = copytext(message,2)	// it would be really nice if the parse procs could do this for us.
 		else
 			message = copytext(message,3)
 
-	//parse the language code and consume it or use default racial language if forced.
+	// parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
 	if (speaking)
 		message = copytext(message,2+length(speaking.key))
@@ -52,7 +52,7 @@
 				message = replacetext(message, "Р", pick(list("Ррр" , "Рр")))
 			if(UNATHI)
 				message = replacetext(message, "с", pick(list("ссс" , "сс")))
-				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
+				// И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
 				message = replacetext(message, "С", pick(list("Ссс" , "Сс")))
 			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
@@ -65,11 +65,11 @@
 							continue
 						else
 							to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
-							//return - technically you can add more aliens to a team
+							// return - technically you can add more aliens to a team
 				for(var/mob/M in dead_mob_list)
 					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
 					if(!isobserver(M) && (M.stat != DEAD))
-						to_chat(M, "<hr><span class='warning'>Если вы видите это сообщение, значит что-то сломалось. Пожалуйста, свЯжитесь со мной <b>SpaiR</b> на форуме (http://tauceti.ru/forums/index.php?action=profile;u=1929) или попросите кого-нибудь менЯ позвать. Пожалуйста, <u>запомните</u> что произошло в раунде, эта информациЯ очень <b>важна</b>. Чтобы сообщение исчезло попросите админа достать вас из тела и поместить обратно или сами уйдите в обсерверы.</span><hr>")
+						to_chat(M, "<hr><span class='warning'>Если вы видите это сообщение, значит что-то сломалось. Пожалуйста, свЯжитесь со мной <b>SpaiR</b> на форуме (http:// tauceti.ru/forums/index.php?action=profile;u=1929) или попросите кого-нибудь менЯ позвать. Пожалуйста, <u>запомните</u> что произошло в раунде, эта информациЯ очень <b>важна</b>. Чтобы сообщение исчезло попросите админа достать вас из тела и поместить обратно или сами уйдите в обсерверы.</span><hr>")
 				log_say("Abductor: [name]/[key] : [sm]")
 				return ""
 
@@ -77,7 +77,7 @@
 
 	var/ending = copytext(message, length(message))
 	if (speaking)
-		//If we've gotten this far, keep going!
+		// If we've gotten this far, keep going!
 		verb = speaking.get_spoken_verb(ending)
 	else
 		if(ending=="!")
@@ -87,7 +87,7 @@
 
 	if(speech_problem_flag)
 		var/list/handle_r = handle_speech_problems(message, message_mode)
-		//var/list/handle_r = handle_speech_problems(message)
+		// var/list/handle_r = handle_speech_problems(message)
 		message = handle_r[1]
 		verb = handle_r[2]
 		speech_problem_flag = handle_r[3]
@@ -101,11 +101,11 @@
 		if("headset")
 			if(l_ear && istype(l_ear,/obj/item/device/radio))
 				var/obj/item/device/radio/R = l_ear
-				R.talk_into(src,message,null,verb,speaking)
+				R.talk_into(src, message, null, verb, speaking)
 				used_radios += l_ear
 			else if(r_ear && istype(r_ear,/obj/item/device/radio))
 				var/obj/item/device/radio/R = r_ear
-				R.talk_into(src,message,null,verb,speaking)
+				R.talk_into(src, message, null, verb, speaking)
 				used_radios += r_ear
 
 		if("right ear")
@@ -118,7 +118,7 @@
 				R = r_hand
 				has_radio = 1
 			if(has_radio)
-				R.talk_into(src,message,null,verb,speaking)
+				R.talk_into(src, message, null, verb, speaking)
 				used_radios += R
 
 
@@ -132,7 +132,7 @@
 				R = l_hand
 				has_radio = 1
 			if(has_radio)
-				R.talk_into(src,message,null,verb,speaking)
+				R.talk_into(src, message, null, verb, speaking)
 				used_radios += R
 
 		if("intercom")
@@ -156,10 +156,10 @@
 			if(message_mode)
 				if(message_mode in (radiochannels | "department"))
 					if(l_ear && istype(l_ear,/obj/item/device/radio))
-						l_ear.talk_into(src,message, message_mode, verb, speaking)
+						l_ear.talk_into(src, message, message_mode, verb, speaking)
 						used_radios += l_ear
 					else if(r_ear && istype(r_ear,/obj/item/device/radio))
-						r_ear.talk_into(src,message, message_mode, verb, speaking)
+						r_ear.talk_into(src, message, message_mode, verb, speaking)
 						used_radios += r_ear
 
 	var/sound/speech_sound
@@ -168,17 +168,17 @@
 		speech_sound = sound('sound/voice/shriek1.ogg')
 		sound_vol = 50
 
-	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = 0)	//ohgod we should really be passing a datum here.
+	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = 0)	// ohgod we should really be passing a datum here.
 
-/mob/living/carbon/human/say_understands(mob/other,datum/language/speaking = null)
+/mob/living/carbon/human/say_understands(mob/other, datum/language/speaking = null)
 
-	if(has_brain_worms()) //Brain worms translate everything. Even mice and alien speak.
+	if(has_brain_worms()) // Brain worms translate everything. Even mice and alien speak.
 		return 1
 
-	//These only pertain to common. Languages are handled by mob/say_understands()
+	// These only pertain to common. Languages are handled by mob/say_understands()
 	if (!speaking)
 		if (istype(other, /mob/living/carbon/monkey/diona))
-			if(other.languages.len >= 2)			//They've sucked down some blood and can speak common now.
+			if(other.languages.len >= 2)			// They've sucked down some blood and can speak common now.
 				return 1
 		if (istype(other, /mob/living/silicon))
 			return 1
@@ -187,8 +187,8 @@
 		if (istype(other, /mob/living/carbon/slime))
 			return 1
 
-	//This is already covered by mob/say_understands()
-	//if (istype(other, /mob/living/simple_animal))
+	// This is already covered by mob/say_understands()
+	// if (istype(other, /mob/living/simple_animal))
 	//	if((other.universal_speak && !speaking) || src.universal_speak || src.universal_understand)
 	//		return 1
 	//	return 0
@@ -247,7 +247,7 @@
 
 
 
-//mob/living/carbon/human/proc/handle_speech_problems(message)
+// mob/living/carbon/human/proc/handle_speech_problems(message)
 /mob/living/carbon/human/proc/handle_speech_problems(message, message_mode)
 	var/list/returns[3]
 	var/verb = "says"

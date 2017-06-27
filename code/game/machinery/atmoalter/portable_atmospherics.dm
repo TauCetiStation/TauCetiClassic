@@ -28,8 +28,8 @@
 				update_icon()
 
 	process()
-		if(!connected_port) //only react when pipe_network will ont it do it for you
-			//Allow for reactions
+		if(!connected_port) // only react when pipe_network will ont it do it for you
+			// Allow for reactions
 			air_contents.react()
 		else
 			update_icon()
@@ -44,21 +44,21 @@
 	proc
 
 		connect(obj/machinery/atmospherics/portables_connector/new_port)
-			//Make sure not already connected to something else
+			// Make sure not already connected to something else
 			if(connected_port || !new_port || new_port.connected_device)
 				return 0
 
-			//Make sure are close enough for a valid connection
+			// Make sure are close enough for a valid connection
 			if(new_port.loc != loc)
 				return 0
 
-			//Perform the connection
+			// Perform the connection
 			connected_port = new_port
 			connected_port.connected_device = src
 
-			anchored = 1 //Prevent movement
+			anchored = 1 // Prevent movement
 
-			//Actually enforce the air sharing
+			// Actually enforce the air sharing
 			var/datum/pipe_network/network = connected_port.return_network(src)
 			if(network && !network.gases.Find(air_contents))
 				network.gases += air_contents

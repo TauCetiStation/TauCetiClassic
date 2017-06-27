@@ -1,4 +1,4 @@
-//#define AMAP
+// #define AMAP
 
 /obj/machinery/computer/security/verb/station_map()
 	set name = ".map"
@@ -30,7 +30,7 @@
 		imap += icon('icons/misc/imap.dmi', "blank")
 		imap += icon('icons/misc/imap.dmi', "blank")
 
-	//world << "[icount] images in list"
+	// world << "[icount] images in list"
 
 
 	for(var/wx = 1 ; wx <= world.maxx; wx++)
@@ -125,7 +125,7 @@
 			if(!colour2 && !T.density)
 				var/datum/gas_mixture/environment = T.return_air()
 				var/turf_total = environment.total_moles()
-				//var/turf_total = T.co2 + T.oxygen + T.poison + T.sl_gas + T.n2
+				// var/turf_total = T.co2 + T.oxygen + T.poison + T.sl_gas + T.n2
 
 
 				var/t1 = turf_total / MOLES_CELLSTANDARD * 150
@@ -146,12 +146,12 @@
 			var/rx = ((wx*2+xoff)%32) + 1
 			var/ry = ((wy*2+yoff)%32) + 1
 
-			//world << "trying [ix],[iy] : [ix+icx*iy]"
+			// world << "trying [ix],[iy] : [ix+icx*iy]"
 			var/icon/I = imap[1+(ix + icx*iy)*2]
 			var/icon/I2 = imap[2+(ix + icx*iy)*2]
 
 
-			//world << "icon: [bicon(i)]"
+			// world << "icon: [bicon(i)]"
 
 			I.DrawBox(colour, rx, ry, rx+1, ry+1)
 
@@ -168,7 +168,7 @@
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
-		//world<<"[bicon(i)] at [H.screen_loc]"
+		// world<<"[bicon(i)] at [H.screen_loc]"
 
 		H.name = (i==0)?"maprefresh":"map"
 
@@ -183,7 +183,7 @@
 		qdel(I)
 		qdel(J)
 		H.icon = HI
-		H.layer = ABOVE_HUD_LAYER //it was 25 before ?
+		H.layer = ABOVE_HUD_LAYER // it was 25 before ?
 		H.plane = ABOVE_HUD_PLANE
 		usr.mapobjs += H
 #else
@@ -258,7 +258,7 @@
 							else
 								colour = rgb(255,128,128)
 
-						//if(istype(AM, /obj/effect/blob))
+						// if(istype(AM, /obj/effect/blob))
 						//	colour = rgb(255,0,255)
 
 				var/area/A = T.loc
@@ -281,11 +281,11 @@
 			var/rx = ((wx*2+xoff)%32) + 1
 			var/ry = ((wy*2+yoff)%32) + 1
 
-			//world << "trying [ix],[iy] : [ix+icx*iy]"
+			// world << "trying [ix],[iy] : [ix+icx*iy]"
 			var/icon/I = imap[1+(ix + icx*iy)]
 
 
-			//world << "icon: [bicon(i)]"
+			// world << "icon: [bicon(i)]"
 
 			I.DrawBox(colour, rx, ry, rx, ry)
 
@@ -300,7 +300,7 @@
 
 		H.screen_loc = "[5 + i%icx],[6+ round(i/icx)]"
 
-		//world<<"[bicon(i)] at [H.screen_loc]"
+		// world<<"[bicon(i)] at [H.screen_loc]"
 
 		H.name = (i==0)?"maprefresh":"map"
 

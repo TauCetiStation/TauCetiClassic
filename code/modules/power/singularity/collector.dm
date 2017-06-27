@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector
@@ -86,7 +86,7 @@ var/global/list/rad_collectors = list()
 				src.locked = !src.locked
 				to_chat(user, "The controls are now [src.locked ? "locked." : "unlocked."]")
 			else
-				src.locked = 0 //just in case it somehow gets locked
+				src.locked = 0 // just in case it somehow gets locked
 				to_chat(user, "\red The controls can only be locked when the [src] is active")
 		else
 			to_chat(user, "\red Access denied!")

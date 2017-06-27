@@ -109,7 +109,7 @@
 	return 1
 
 
-//Chemist is a medical job damnit	//YEAH FUCK YOU SCIENCE	-Pete	//Guys, behave -Erro
+// Chemist is a medical job damnit	// YEAH FUCK YOU SCIENCE	-Pete	// Guys, behave -Erro
 /datum/job/chemist
 	title = "Chemist"
 	flag = CHEMIST

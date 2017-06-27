@@ -110,7 +110,7 @@ var/lastMove = 0
 	for(var/obj/machinery/door/airlock/external/D in velocity)
 		if(D.tag == "velocity_1")
 			D.close()
-			spawn(10) //incase someone messing with door.
+			spawn(10) // incase someone messing with door.
 				if(D && D.density)
 					D.bolt()
 
@@ -129,7 +129,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/proc/open_doors(area/A, arrival)
 	switch(arrival)
-		if(0) //Velocity
+		if(0) // Velocity
 			var/area/velocity = locate(/area/centcom/arrival)
 			for(var/obj/machinery/door/airlock/external/D in velocity)
 				if(D.tag == "velocity_1")
@@ -139,7 +139,7 @@ var/lastMove = 0
 				spawn(0)
 					D.locked = 0
 					D.open()
-		if(2) //Station
+		if(2) // Station
 			var/area/station = locate(/area/hallway/secondary/entry)
 			for(var/obj/machinery/door/airlock/external/D in station)
 				if(D.tag == "arrival_1")

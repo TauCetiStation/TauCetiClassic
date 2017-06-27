@@ -1,6 +1,6 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-/obj/machinery/constructable_frame //Made into a seperate type to make future revisions easier.
+/obj/machinery/constructable_frame // Made into a seperate type to make future revisions easier.
 	name = "machine frame"
 	icon = 'icons/obj/stock_parts.dmi'
 	icon_state = "box_0"
@@ -173,10 +173,10 @@
 				var/list/added_components = list()
 				var/list/part_list = list()
 
-				//Assemble a list of current parts, then sort them by their rating!
+				// Assemble a list of current parts, then sort them by their rating!
 				for(var/obj/item/weapon/stock_parts/co in replacer)
 					part_list += co
-				//Sort the parts. This ensures that higher tier items are applied first.
+				// Sort the parts. This ensures that higher tier items are applied first.
 				part_list = sortTim(part_list, /proc/cmp_rped_sort)
 
 				for(var/path in req_components)
@@ -221,7 +221,7 @@
 				return 0
 
 
-//Machine Frame Circuit Boards
+// Machine Frame Circuit Boards
 /*Common Parts: Parts List: Ignitor, Timer, Infra-red laser, Infra-red sensor, t_scanner, Capacitor, Valve, sensor unit,
 micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 Note: Once everything is added to the public areas, will add m_amt and g_amt to circuit boards since autolathe won't be able
@@ -248,7 +248,7 @@ to destroy them and players will be able to make replacements.
 		build_path = pick(names)
 		name = "circuit board ([names[build_path]] Vendor)"
 		to_chat(user, "<span class='notice'>You set the board to [names[build_path]].</span>")
-		req_components = list(text2path("/obj/item/weapon/vending_refill/[copytext("[build_path]", 24)]") = 3)       //Never before has i used a method as horrible as this one, im so sorry
+		req_components = list(text2path("/obj/item/weapon/vending_refill/[copytext("[build_path]", 24)]") = 3)       // Never before has i used a method as horrible as this one, im so sorry
 
 /obj/item/weapon/circuitboard/smes
 	name = "circuit board (SMES)"
@@ -474,7 +474,7 @@ obj/item/weapon/circuitboard/biogenerator
 							/obj/item/weapon/stock_parts/matter_bin = 1,
 							/obj/item/weapon/stock_parts/manipulator = 1)
 
-//obj/item/weapon/circuitboard/recycler
+// obj/item/weapon/circuitboard/recycler
 //	name = "circuit board (Recycler)"
 //	build_path = /obj/machinery/recycler
 //	board_type = "machine"

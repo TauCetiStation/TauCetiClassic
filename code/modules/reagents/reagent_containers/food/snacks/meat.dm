@@ -30,7 +30,7 @@
 
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
-	//same as plain meat
+	// same as plain meat
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	name = "meat"

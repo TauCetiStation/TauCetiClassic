@@ -1,7 +1,7 @@
 
 var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump, /obj/machinery/atmospherics/unary/vent_scrubber)
 
-//VENTCRAWLING
+// VENTCRAWLING
 
 /mob/living/proc/handle_ventcrawl(atom/A)
 	if(!ventcrawler || !Adjacent(A))
@@ -39,8 +39,8 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 				break
 
 	if(vent_found)
-		//var/obj/machinery/atmospherics/unary/vent_found = vent_found
-		//if(vent_found.node.parent && (vent_found.node.parent.members.len || vent_found.node.parent.normal_members))
+		// var/obj/machinery/atmospherics/unary/vent_found = vent_found
+		// if(vent_found.node.parent && (vent_found.node.parent.members.len || vent_found.node.parent.normal_members))
 		if(vent_found.network && (vent_found.node:parent.members.len || vent_found.network.normal_members))
 			visible_message("<span class='notice'>[src] begins climbing into the ventilation system...</span>" ,"<span class='notice'>You begin climbing into the ventilation system...</span>")
 
@@ -50,7 +50,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 			if(!client)
 				return
 
-			if(iscarbon(src) && contents.len && ventcrawler < 2)//It must have atleast been 1 to get this far
+			if(iscarbon(src) && contents.len && ventcrawler < 2)// It must have atleast been 1 to get this far
 				for(var/obj/item/I in contents)
 					var/failed = 0
 					if(istype(I, /obj/item/weapon/implant))
@@ -72,19 +72,19 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/unary/starting_machine)
 	if(!starting_machine)
 		return
-	//if(vent_found.network && (vent_found.network.normal_members.len || vent_found.network.normal_members))
-	//var/list/temp0
-	//var/list/temp1
-	//var/list/temp2
-	//for(temp0 in starting_machine.network.line_members)
+	// if(vent_found.network && (vent_found.network.normal_members.len || vent_found.network.normal_members))
+	// var/list/temp0
+	// var/list/temp1
+	// var/list/temp2
+	// for(temp0 in starting_machine.network.line_members)
 	//	if(!temp1)
 	//		temp1 = temp0
 	//	else if(!temp2)
 	//		temp2 = temp0
-	//if(temp1 && temp2)
+	// if(temp1 && temp2)
 	//	temp1 += temp2
 	var/list/totalMembers = starting_machine.node:parent.members + starting_machine.network.normal_members
-	//var/list/totalMembers = temp1 + starting_machine.network.normal_members
+	// var/list/totalMembers = temp1 + starting_machine.network.normal_members
 	for(var/atom/A in totalMembers)
 		var/image/new_image = image(A, A.loc, dir = A.dir, layer = ABOVE_HUD_PLANE)
 		new_image.plane = ABOVE_HUD_PLANE
@@ -103,7 +103,7 @@ var/list/ventcrawl_machinery = list(/obj/machinery/atmospherics/unary/vent_pump,
 
 
 
-//OOP
+// OOP
 /atom/proc/update_pipe_vision()
 	return
 

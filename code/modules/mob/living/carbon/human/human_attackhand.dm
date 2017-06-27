@@ -10,11 +10,11 @@
 
 	..()
 
-	if((M != src) && check_shields(0, M.name, get_dir(M,src)))
+	if((M != src) && check_shields(0, M.name, get_dir(M, src)))
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
 
-	if(M.wear_suit && istype(M.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))	//When abductor will hit someone from stelth he will reveal himself
+	if(M.wear_suit && istype(M.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))	// When abductor will hit someone from stelth he will reveal himself
 		for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(M.wear_suit))
 			if(V.stealth_active)
 				V.DeactivateStealth()
@@ -23,7 +23,7 @@
 		M.do_attack_animation(src)
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
-			if(M.a_intent == "hurt")//Stungloves. Any contact will stun the alien.
+			if(M.a_intent == "hurt")// Stungloves. Any contact will stun the alien.
 				if(G.cell.charge >= 2500)
 					G.cell.use(2500)
 					G.update_icon()
@@ -120,7 +120,7 @@
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 			if(buckled)
 				to_chat(M, "<span class='notice'>You cannot grab [src], \he is buckled in!</span>")
-			if(!G)	//the grab will delete itself in New if affecting is anchored
+			if(!G)	// the grab will delete itself in New if affecting is anchored
 				return
 			M.put_in_active_hand(G)
 			grabbed_by += G
@@ -139,7 +139,7 @@
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [pick(attack.attack_verb)]ed by [M.name] ([M.ckey])</font>")
 			msg_admin_attack("[key_name(M)] [pick(attack.attack_verb)]ed [key_name(src)]")
 
-			var/damage = rand(0, 5)//BS12 EDIT
+			var/damage = rand(0, 5)// BS12 EDIT
 			if(!damage)
 				playsound(loc, attack.miss_sound, 25, 1, -1)
 				visible_message("\red <B>[M] tried to [pick(attack.attack_verb)] [src]!</B>")
@@ -155,7 +155,7 @@
 			playsound(loc, attack.attack_sound, 25, 1, -1)
 
 			visible_message("\red <B>[M] [pick(attack.attack_verb)]ed [src]!</B>")
-			//Rearranged, so claws don't increase weaken chance.
+			// Rearranged, so claws don't increase weaken chance.
 			if(damage >= 5 && prob(50))
 				visible_message("\red <B>[M] has weakened [src]!</B>")
 				apply_effect(2, WEAKEN, armor_block)
@@ -193,7 +193,7 @@
 					for(var/turf/T in view())
 						turfs += T
 					var/turf/target = pick(turfs)
-					return W.afterattack(target,src)
+					return W.afterattack(target, src)
 
 			var/randn = rand(1, 100)
 			if (randn <= 25)
@@ -209,13 +209,13 @@
 			var/talked = 0	// BubbleWrap
 
 			if(randn <= 60)
-				//BubbleWrap: Disarming breaks a pull
+				// BubbleWrap: Disarming breaks a pull
 				if(pulling)
 					visible_message("\red <b>[M] has broken [src]'s grip on [pulling]!</B>")
 					talked = 1
 					stop_pulling()
 
-				//BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
+				// BubbleWrap: Disarming also breaks a grab - this will also stop someone being choked, won't it?
 				if(istype(l_hand, /obj/item/weapon/grab))
 					var/obj/item/weapon/grab/lgrab = l_hand
 					if(lgrab.affecting)
@@ -230,9 +230,9 @@
 						talked = 1
 					spawn(1)
 						qdel(rgrab)
-				//End BubbleWrap
+				// End BubbleWrap
 
-				if(!talked)	//BubbleWrap
+				if(!talked)	// BubbleWrap
 					if( (l_hand && l_hand.flags & ABSTRACT) || (r_hand && r_hand.flags & ABSTRACT) )
 						return
 					else
@@ -279,7 +279,7 @@
 /mob/living/carbon/human/proc/do_apply_pressure(mob/living/user, target_zone, obj/item/organ/external/BP)
 	BP.applied_pressure = user
 
-	//apply pressure as long as they stay still and keep grabbing
+	// apply pressure as long as they stay still and keep grabbing
 	do_mob(user, src, INFINITY, target_zone, progress = 0)
 
 	BP.applied_pressure = null

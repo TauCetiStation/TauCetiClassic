@@ -17,7 +17,7 @@ var/datum/subsystem/air/SSair
 	flags = SS_BACKGROUND
 
 	var/current_cycle = 0
-	var/next_id       = 1 //Used to keep track of zone UIDs.
+	var/next_id       = 1 // Used to keep track of zone UIDs.
 
 	var/cost_pipenets   = 0
 	var/cost_tiles_curr = 0
@@ -276,8 +276,8 @@ var/datum/subsystem/air/SSair
 	var/space = !istype(B)
 
 	if(!space)
-		if(min(A.zone.contents.len, B.zone.contents.len) < 14 || (direct && (equivalent_pressure(A.zone,B.zone) || current_cycle == 0)))
-			merge(A.zone,B.zone)
+		if(min(A.zone.contents.len, B.zone.contents.len) < 14 || (direct && (equivalent_pressure(A.zone, B.zone) || current_cycle == 0)))
+			merge(A.zone, B.zone)
 			return
 
 	var/a_to_b = get_dir(A, B)
@@ -296,7 +296,7 @@ var/datum/subsystem/air/SSair
 		if(A.zone == B.zone)
 			return
 
-	var/connection/c = new /connection(A,B)
+	var/connection/c = new /connection(A, B)
 
 	A.connections.place(c, a_to_b)
 	B.connections.place(c, b_to_a)
@@ -329,14 +329,14 @@ var/datum/subsystem/air/SSair
 		for(var/connection_edge/zone/edge in A.edges)
 			if(edge.contains_zone(B))
 				return edge
-		var/connection_edge/edge = new/connection_edge/zone(A,B)
+		var/connection_edge/edge = new/connection_edge/zone(A, B)
 		edges += edge
 		return edge
 	else
 		for(var/connection_edge/unsimulated/edge in A.edges)
 			if(has_same_air(edge.B, B))
 				return edge
-		var/connection_edge/edge = new/connection_edge/unsimulated(A,B)
+		var/connection_edge/edge = new/connection_edge/unsimulated(A, B)
 		edges += edge
 		return edge
 

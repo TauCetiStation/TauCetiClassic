@@ -67,7 +67,7 @@
 
 // This code makes the light be queued for update when it is moved.
 // Entered() should handle it, however Exited() can do it if it is being moved to nullspace (as there would be no Entered() call in that situation).
-/atom/Entered(atom/movable/Obj, atom/OldLoc) //Implemented here because forceMove() doesn't call Move()
+/atom/Entered(atom/movable/Obj, atom/OldLoc) // Implemented here because forceMove() doesn't call Move()
 	. = ..()
 
 	if(Obj && OldLoc != src)

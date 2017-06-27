@@ -1,5 +1,5 @@
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// /
 // Large finds - (Potentially) active alien machinery from the dawn of time
 
 /datum/artifact_find
@@ -25,7 +25,7 @@
 	150;/obj/structure/crystal,\
 	1000;/obj/machinery/artifact)
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// /
 // Boulders - sometimes turn up after excavating turf - excavate further to try and find large xenoarch finds
 
 /obj/structure/boulder
@@ -69,27 +69,27 @@
 	if (istype(W, /obj/item/weapon/pickaxe))
 		var/obj/item/weapon/pickaxe/P = W
 
-		if(last_act + P.digspeed > world.time)//prevents message spam
+		if(last_act + P.digspeed > world.time)// prevents message spam
 			return
 		last_act = world.time
 
 		to_chat(user, "<span class='warning'>You start [P.drill_verb] [src].</span>")
 
-		if(!do_after(user,P.digspeed,target = src))
+		if(!do_after(user, P.digspeed, target = src))
 			return
 
 		to_chat(user, "<span class='notice'>You finish [P.drill_verb] [src].</span>")
 		excavation_level += P.excavation_amount
 
 		if(excavation_level > 100)
-			//failure
+			// failure
 			user.visible_message("<span class='danger'>[src] suddenly crumbles away.</span>",\
 			"<span class='danger'>[src] has disintegrated under your onslaught, any secrets it was holding are long gone.</span>")
 			qdel(src)
 			return
 
 		if(prob(excavation_level))
-			//success
+			// success
 			if(artifact_find)
 				var/spawn_type = artifact_find.artifact_find_type
 				var/obj/O = new spawn_type(get_turf(src))
@@ -108,14 +108,14 @@
 	if(ishuman(AM))
 		var/mob/living/carbon/human/H = AM
 		if((istype(H.l_hand,/obj/item/weapon/pickaxe)) && (!H.hand))
-			attackby(H.l_hand,H)
+			attackby(H.l_hand, H)
 		else if((istype(H.r_hand,/obj/item/weapon/pickaxe)) && H.hand)
-			attackby(H.r_hand,H)
+			attackby(H.r_hand, H)
 
 	else if(isrobot(AM))
 		var/mob/living/silicon/robot/R = AM
 		if(istype(R.module_active,/obj/item/weapon/pickaxe))
-			attackby(R.module_active,R)
+			attackby(R.module_active, R)
 
 	else if(istype(AM,/obj/mecha))
 		var/obj/mecha/M = AM

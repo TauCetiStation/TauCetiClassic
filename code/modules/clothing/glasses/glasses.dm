@@ -2,12 +2,12 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
-	//w_class = 2.0
-	//flags = GLASSESCOVERSEYES
-	//slot_flags = SLOT_EYES
-	//var/vision_flags = 0
-	//var/darkness_view = 0//Base human is 2
-	//var/invisa_view = 0
+	// w_class = 2.0
+	// flags = GLASSESCOVERSEYES
+	// slot_flags = SLOT_EYES
+	// var/vision_flags = 0
+	// var/darkness_view = 0// Base human is 2
+	// var/invisa_view = 0
 	var/prescription = 0
 	body_parts_covered = EYES
 	var/toggleable = 0
@@ -182,7 +182,7 @@
 	desc = "Covers the eyes, preventing sight."
 	icon_state = "blindfold"
 	item_state = "blindfold"
-	//vision_flags = BLIND  	// This flag is only supposed to be used if it causes permanent blindness, not temporary because of glasses
+	// vision_flags = BLIND  	// This flag is only supposed to be used if it causes permanent blindness, not temporary because of glasses
 
 /obj/item/clothing/glasses/sunglasses/prescription
 	name = "prescription sunglasses"
@@ -232,7 +232,7 @@
 				M.disabilities &= ~NEARSIGHTED
 	..()
 
-/obj/item/clothing/glasses/thermal/syndi	//These are now a traitor item, concealed as mesons.	-Pete
+/obj/item/clothing/glasses/thermal/syndi	// These are now a traitor item, concealed as mesons.	-Pete
 	name = "Optical Meson Scanner"
 	desc = "Used for seeing walls, floors, and stuff through anything."
 	icon_state = "meson"
@@ -242,7 +242,7 @@
 	name = "Thermoncle"
 	desc = "A monocle thermal."
 	icon_state = "thermoncle"
-	flags = null //doesn't protect eyes because it's a monocle, duh
+	flags = null // doesn't protect eyes because it's a monocle, duh
 	body_parts_covered = 0
 	toggleable = 1
 	off_state = "thermoncle_off"

@@ -4,16 +4,16 @@
 /datum/dna/gene/monkey/New()
 	block=MONKEYBLOCK
 
-/datum/dna/gene/monkey/can_activate(mob/M,flags)
+/datum/dna/gene/monkey/can_activate(mob/M, flags)
 	return istype(M, /mob/living/carbon/human) || istype(M,/mob/living/carbon/monkey)
 
 /datum/dna/gene/monkey/activate(mob/living/M, connected, flags)
 	if(!istype(M,/mob/living/carbon/human))
-		//testing("Cannot monkey-ify [M], type is [M.type].")
+		// testing("Cannot monkey-ify [M], type is [M.type].")
 		return
 	var/mob/living/carbon/human/H = M
 	H.monkeyizing = 1
-	var/list/implants = list() //Try to preserve implants.
+	var/list/implants = list() // Try to preserve implants.
 	for(var/obj/item/weapon/implant/W in H)
 		implants += W
 		W.loc = null
@@ -40,7 +40,7 @@
 	if(H.species.primitive)
 		O = new H.species.primitive(src)
 	else
-		H.gib() //Trying to change the species of a creature with no primitive var set is messy.
+		H.gib() // Trying to change the species of a creature with no primitive var set is messy.
 		return
 
 	if(M)
@@ -65,9 +65,9 @@
 	O.loc = M.loc
 
 	if(M.mind)
-		M.mind.transfer_to(O)	//transfer our mind to the cute little monkey
+		M.mind.transfer_to(O)	// transfer our mind to the cute little monkey
 
-	if (connected) //inside dna thing
+	if (connected) // inside dna thing
 		var/obj/machinery/dna_scannernew/C = connected
 		O.loc = C
 		C.occupant = O
@@ -81,17 +81,17 @@
 	for (var/obj/item/weapon/implant/I in implants)
 		I.loc = O
 		I.implanted = O
-//		O.update_icon = 1	//queue a full icon update at next life() call
+//		O.update_icon = 1	// queue a full icon update at next life() call
 	qdel(M)
 	return
 
 /datum/dna/gene/monkey/deactivate(mob/living/M, connected, flags)
 	if(!istype(M,/mob/living/carbon/monkey))
-		//testing("Cannot humanize [M], type is [M.type].")
+		// testing("Cannot humanize [M], type is [M.type].")
 		return
 	var/mob/living/carbon/monkey/Mo = M
 	Mo.monkeyizing = 1
-	var/list/implants = list() //Still preserving implants
+	var/list/implants = list() // Still preserving implants
 	for(var/obj/item/weapon/implant/W in Mo)
 		implants += W
 		W.loc = null
@@ -135,15 +135,15 @@
 		D.affected_mob = O
 		M.viruses -= D
 
-	//for(var/obj/T in M)
+	// for(var/obj/T in M)
 	//	qdel(T)
 
 	O.loc = M.loc
 
 	if(M.mind)
-		M.mind.transfer_to(O)	//transfer our mind to the human
+		M.mind.transfer_to(O)	// transfer our mind to the human
 
-	if (connected) //inside dna thing
+	if (connected) // inside dna thing
 		var/obj/machinery/dna_scannernew/C = connected
 		O.loc = C
 		C.occupant = O
@@ -169,6 +169,6 @@
 	for (var/obj/item/weapon/implant/I in implants)
 		I.loc = O
 		I.implanted = O
-//		O.update_icon = 1	//queue a full icon update at next life() call
+//		O.update_icon = 1	// queue a full icon update at next life() call
 	qdel(M)
 	return

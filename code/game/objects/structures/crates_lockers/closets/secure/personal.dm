@@ -58,7 +58,7 @@
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/weapon/W, mob/user)
 	if (src.opened)
 		if (istype(W, /obj/item/weapon/grab))
-			src.MouseDrop_T(W:affecting, user)      //act like they were dragged onto the closet
+			src.MouseDrop_T(W:affecting, user)      // act like they were dragged onto the closet
 		user.drop_item()
 		if (W) W.forceMove(src.loc)
 	else if(istype(W, /obj/item/weapon/card/id))
@@ -68,7 +68,7 @@
 		var/obj/item/weapon/card/id/I = W
 		if(!I || !I.registered_name)	return
 		if(src.allowed(user) || !src.registered_name || (istype(I) && (src.registered_name == I.registered_name)))
-			//they can open all lockers, or nobody owns this, or they own this locker
+			// they can open all lockers, or nobody owns this, or they own this locker
 			src.locked = !( src.locked )
 			if(src.locked)	src.icon_state = src.icon_locked
 			else	src.icon_state = src.icon_closed

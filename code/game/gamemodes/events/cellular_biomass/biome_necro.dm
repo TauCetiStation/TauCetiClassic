@@ -1,8 +1,8 @@
 /obj/effect/cellular_biomass_controller/necro
-	grow_speed = 4           //lower this value to speed up growth. 1 will process without cooldown.
-	core_grow_chance = 5     //chance to spawn light core
-	living_grow_chance = 25   //chance to spawn lair or mob
-	mark_grow_chance = 0    //chance to spawn decoration
+	grow_speed = 4           // lower this value to speed up growth. 1 will process without cooldown.
+	core_grow_chance = 5     // chance to spawn light core
+	living_grow_chance = 25   // chance to spawn lair or mob
+	mark_grow_chance = 0    // chance to spawn decoration
 	walls_type =     /obj/structure/cellular_biomass/wall/necro
 	insides_type =   /obj/structure/cellular_biomass/grass/necro
 	living_type =     /obj/structure/cellular_biomass/lair/necro
@@ -55,7 +55,7 @@
 
 /obj/structure/cellular_biomass/lair/necro/New()
 	new /mob/living/simple_animal/hostile/cellular/necro/(src.loc)
-	qdel(src) //glitches are self-replicating, no need for lair
+	qdel(src) // glitches are self-replicating, no need for lair
 
 /mob/living/simple_animal/hostile/cellular/necro/
 	name = "Twisted creature"

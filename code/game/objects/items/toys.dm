@@ -39,7 +39,7 @@
 
 /obj/item/toy/balloon/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
-	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
+	if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src, A) <= 1)
 		A.reagents.trans_to(src, 10)
 		to_chat(user, "\blue You fill the balloon with the contents of [A].")
 		src.desc = "A translucent balloon with some form of liquid sloshing around in it."
@@ -240,7 +240,7 @@
 			for(var/i=0, i<6, i++)
 				if (D)
 					if(D.loc == trg) break
-					step_towards(D,trg)
+					step_towards(D, trg)
 
 					for(var/mob/living/M in D.loc)
 						if(!istype(M,/mob/living)) continue
@@ -369,13 +369,13 @@
 	icon_state = "crayonred"
 	w_class = 1.0
 	attack_verb = list("attacked", "coloured")
-	var/colour = "#FF0000" //RGB
-	var/shadeColour = "#220000" //RGB
-	var/uses = 30 //0 for unlimited uses
+	var/colour = "#FF0000" // RGB
+	var/shadeColour = "#220000" // RGB
+	var/uses = 30 // 0 for unlimited uses
 	var/instant = 0
-	var/colourName = "red" //for updateIcon purposes
+	var/colourName = "red" // for updateIcon purposes
 	var/list/validSurfaces = list(/turf/simulated/floor)
-	var/gang = 0 //For marking territory
+	var/gang = 0 // For marking territory
 	var/edible = 1
 
 	suicide_act(mob/user)
@@ -403,7 +403,7 @@
 		qdel(src)
 
 /obj/item/toy/snappop/Crossed(H as mob|obj)
-	if((ishuman(H))) //i guess carp and shit shouldn't set them off
+	if((ishuman(H))) // i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
 		if(M.m_intent == "run")
 			to_chat(M, "\red You step on the snap pop!")
@@ -444,7 +444,7 @@
 	else if (locate (/obj/structure/table, src.loc))
 		return
 
-	else if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
+	else if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src, A) <= 1)
 		A.reagents.trans_to(src, 10)
 		to_chat(user, "\blue You refill your flower!")
 		return
@@ -468,7 +468,7 @@
 
 		spawn(0)
 			for(var/i=0, i<1, i++)
-				step_towards(D,A)
+				step_towards(D, A)
 				D.reagents.reaction(get_turf(D))
 				for(var/atom/T in get_turf(D))
 					D.reagents.reaction(T)
@@ -504,7 +504,7 @@
 	icon_state = "ripleytoy"
 	var/cooldown = 0
 
-//all credit to skasi for toy mech fun ideas
+// all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user)
 	if(cooldown < world.time - 8)
 		to_chat(user, "<span class='notice'>You play with [src].</span>")
@@ -598,7 +598,7 @@
 	slot_flags = SLOT_BACK
 */
 
-//This should really be somewhere else but I don't know where. w/e
+// This should really be somewhere else but I don't know where. w/e
 /obj/item/weapon/inflatable_duck
 	name = "inflatable duck"
 	desc = "No bother to sink or swim when you can just float!"
@@ -820,7 +820,7 @@ Owl & Griffin toys
 	var/cooldown = 0
 
 /obj/item/toy/owl/attack_self(mob/user)
-	if(!cooldown) //for the sanity of everyone
+	if(!cooldown) // for the sanity of everyone
 		var/message = pick("You won't get away this time, Griffin!", "Stop right there, criminal!", "Hoot! Hoot!", "I am the night!")
 		to_chat(user, "<span class='notice'>You pull the string on the [src].</span>")
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
@@ -839,7 +839,7 @@ Owl & Griffin toys
 	var/cooldown = 0
 
 /obj/item/toy/griffin/attack_self(mob/user)
-	if(!cooldown) //for the sanity of everyone
+	if(!cooldown) // for the sanity of everyone
 		var/message = pick("You can't stop me, Owl!", "My plan is flawless! The vault is mine!", "Caaaawwww!", "You will never catch me!")
 		to_chat(user, "<span class='notice'>You pull the string on the [src].</span>")
 		playsound(user, 'sound/machines/click.ogg', 20, 1)
@@ -862,9 +862,9 @@ Owl & Griffin toys
 
 /obj/item/toy/nuke/attack_self(mob/user)
 	if (cooldown < world.time)
-		cooldown = world.time + 1800 //3 minutes
+		cooldown = world.time + 1800 // 3 minutes
 		user.visible_message("<span class='warning'>[user] presses a button on [src].</span>", "<span class='notice'>You activate [src], it plays a loud noise!</span>", "<span class='italics'>You hear the click of a button.</span>")
-		spawn(5) //gia said so
+		spawn(5) // gia said so
 			icon_state = "nuketoy"
 			playsound(src, 'sound/machines/Alarm.ogg', 50, 0)
 			sleep(135)
@@ -902,7 +902,7 @@ Owl & Griffin toys
 	item_state = "carp_plushie"
 	w_class = 2
 	attack_verb = list("bitten", "eaten", "fin slapped")
-//	burn_state = 0 //Burnable
+//	burn_state = 0 // Burnable
 	var/bitesound = 'sound/weapons/bite.ogg'
 
 // Attack mob
@@ -1213,7 +1213,7 @@ Owl & Griffin toys
 /obj/item/toy/prize/poly
 	icon_state = "poly_classic"
 
-//all credit to skasi for toy mech fun ideas
+// all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/poly/attack_self(mob/user)
 	if(cooldown < world.time - 8)
 		to_chat(user, "<span class='notice'>You play with [src].</span>")

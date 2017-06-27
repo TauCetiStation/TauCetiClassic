@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /***************************************************************
 **						Design Datums						  **
@@ -31,20 +31,20 @@ other types of metals and chemistry for reagents).
 - Add the AUTOLATHE tag to
 */
 
-datum/design						//Datum for object designs, used in construction
-	var/name = "Name"				//Name of the created object.
-	var/desc = "Desc"				//Description of the created object.
-	var/id = "id"					//ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols
-	var/list/req_tech = list()		//IDs of that techs the object originated from and the minimum level requirements.
-	var/reliability = 100			//Reliability of the device.
-	var/build_type = null			//Flag as to what kind machine the design is built in. See defines.
-	var/list/materials = list()		//List of materials. Format: "id" = amount.
-	var/construction_time			//Amount of time required for building the object
-	var/build_path = null			//The file path of the object that gets created
-	var/list/category = null		//Primarily used for Mech Fabricators, but can be used for anything
+datum/design						// Datum for object designs, used in construction
+	var/name = "Name"				// Name of the created object.
+	var/desc = "Desc"				// Description of the created object.
+	var/id = "id"					// ID of the created object for easy refernece. Alphanumeric, lower-case, no symbols
+	var/list/req_tech = list()		// IDs of that techs the object originated from and the minimum level requirements.
+	var/reliability = 100			// Reliability of the device.
+	var/build_type = null			// Flag as to what kind machine the design is built in. See defines.
+	var/list/materials = list()		// List of materials. Format: "id" = amount.
+	var/construction_time			// Amount of time required for building the object
+	var/build_path = null			// The file path of the object that gets created
+	var/list/category = null		// Primarily used for Mech Fabricators, but can be used for anything
 
-//A proc to calculate the reliability of a design based on tech levels and innate modifiers.
-//Input: A list of /datum/tech; Output: The new reliabilty.
+// A proc to calculate the reliability of a design based on tech levels and innate modifiers.
+// Input: A list of /datum/tech; Output: The new reliabilty.
 datum/design/proc/CalcReliability(list/temp_techs)
 	var/new_reliability
 	for(var/datum/tech/T in temp_techs)
@@ -55,7 +55,7 @@ datum/design/proc/CalcReliability(list/temp_techs)
 	return
 
 
-///////////////////Computer Boards///////////////////////////////////
+///////////////////Computer Boards/////////////////////////////////// 
 
 datum/design/seccamera
 	name = "Circuit Design (Security)"
@@ -254,7 +254,7 @@ datum/design/arcademachine
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/arcade
-	//category = list("Misc. Machinery")
+	// category = list("Misc. Machinery")
 
 datum/design/powermonitor
 	name = "Circuit Design (Power Monitor)"
@@ -381,11 +381,11 @@ datum/design/aifixer
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/libraryconsole
-	//category = list("Computer Boards")
+	// category = list("Computer Boards")
 
-///////////////////////////////////
+/////////////////////////////////// 
 //////////AI Module Disks//////////
-///////////////////////////////////
+/////////////////////////////////// 
 datum/design/safeguard_module
 	name = "AI Module(Safeguard)"
 	desc = "Allows for the construction of a Safeguard AI Module."
@@ -505,9 +505,9 @@ datum/design/tyrant_module
 
 
 
-///////////////////////////////////
-/////Subspace Telecomms////////////
-///////////////////////////////////
+/////////////////////////////////// 
+///// Subspace Telecomms/////////// /
+/////////////////////////////////// 
 datum/design/subspace_receiver
 	name = "Circuit Design (Subspace Receiver)"
 	desc = "Allows for the construction of Subspace Receiver equipment."
@@ -572,9 +572,9 @@ datum/design/subspace_broadcaster
 	build_path = /obj/item/weapon/circuitboard/telecomms/broadcaster
 
 
-///////////////////////////////////
-/////Non-Board Computer Stuff//////
-///////////////////////////////////
+/////////////////////////////////// 
+///// Non-Board Computer Stuff///// /
+/////////////////////////////////// 
 
 datum/design/intellicard
 	name = "Intellicard AI Transportation System"
@@ -604,9 +604,9 @@ datum/design/posibrain
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 500, MAT_DIAMOND = 100, MAT_PHORON = 500)
 	build_path = /obj/item/device/mmi/posibrain
 
-///////////////////////////////////
+/////////////////////////////////// 
 //////////Mecha Module Disks///////
-///////////////////////////////////
+/////////////////////////////////// 
 
 datum/design/ripley_main
 	name = "Circuit Design (APLU \"Ripley\" Central Control module)"
@@ -784,7 +784,7 @@ datum/design/RPED
 	req_tech = list("engineering" = 3,
 					"materials" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000) //hardcore
+	materials = list(MAT_METAL = 10000, MAT_GLASS = 5000) // hardcore
 	build_path = /obj/item/weapon/storage/part_replacer
 
 /datum/design/BS_RPED
@@ -793,18 +793,18 @@ datum/design/RPED
 	id = "bs_rped"
 	req_tech = list("engineering" = 3, "materials" = 5, "programming" = 3, "bluespace" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 15000, MAT_GLASS = 5000, MAT_SILVER = 2500) //hardcore
+	materials = list(MAT_METAL = 15000, MAT_GLASS = 5000, MAT_SILVER = 2500) // hardcore
 	build_path = /obj/item/weapon/storage/part_replacer/bluespace
 	category = list("Stock Parts")
 
-	//Tier1
+	// Tier1
 datum/design/basic_capacitor
 	name = "Basic Capacitor"
 	desc = "A stock part used in the construction of various devices."
 	id = "basic_capacitor"
 	req_tech = list("powerstorage" = 1)
 	build_type = PROTOLATHE | AUTOLATHE
-	materials = list(MAT_METAL = 400, MAT_GLASS = 400) //2000 material per sheet.
+	materials = list(MAT_METAL = 400, MAT_GLASS = 400) // 2000 material per sheet.
 	build_path = /obj/item/weapon/stock_parts/capacitor
 
 datum/design/basic_sensor
@@ -843,7 +843,7 @@ datum/design/basic_matter_bin
 	materials = list(MAT_METAL = 640)
 	build_path = /obj/item/weapon/stock_parts/matter_bin
 
-	//Tier 2
+	// Tier 2
 datum/design/adv_capacitor
 	name = "Advanced Capacitor"
 	desc = "A stock part used in the construction of various devices."
@@ -891,7 +891,7 @@ datum/design/adv_matter_bin
 	materials = list(MAT_METAL = 640, MAT_SILVER = 300)
 	build_path = /obj/item/weapon/stock_parts/matter_bin/adv
 
-	//Tier 3
+	// Tier 3
 datum/design/super_capacitor
 	name = "Super Capacitor"
 	desc = "A stock part used in the construction of various devices."
@@ -944,7 +944,7 @@ datum/design/super_matter_bin
 	reliability = 75
 	build_path = /obj/item/weapon/stock_parts/matter_bin/super
 
-	//Tier 4
+	// Tier 4
 /datum/design/quadratic_capacitor
 	name = "Quadratic Capacitor"
 	desc = "A stock part used in the construction of various devices."
@@ -1074,7 +1074,7 @@ datum/design/subspace_transmitter
 	build_path = /obj/item/weapon/stock_parts/subspace/transmitter
 
 ////////////////////////////////////////
-//////////////////Power/////////////////
+///////////////// /Power///////////////// 
 ////////////////////////////////////////
 
 datum/design/basic_cell
@@ -1147,7 +1147,7 @@ datum/design/light_replacer
 	build_path = /obj/item/device/lightreplacer
 
 ////////////////////////////////////////
-//////////////MISC Boards///////////////
+////////////// MISC Boards////////////// /
 ////////////////////////////////////////
 
 datum/design/smes
@@ -1167,7 +1167,7 @@ datum/design/smes
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/space_heater
-	//category = list("Engineering Machinery")
+	// category = list("Engineering Machinery")
 
 datum/design/teleport_station
 	name = "Teleportation Station Board"
@@ -1249,7 +1249,7 @@ datum/design/hydroponics
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/gibber
-	//category = list ("Misc. Machinery")
+	// category = list ("Misc. Machinery")
 
 /datum/design/smartfridge
 	name = "Machine Design (Smartfridge Board)"
@@ -1259,7 +1259,7 @@ datum/design/hydroponics
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/smartfridge
-	//category = list ("Misc. Machinery")
+	// category = list ("Misc. Machinery")
 
 /datum/design/monkey_recycler
 	name = "Machine Design (Monkey Recycler Board)"
@@ -1269,7 +1269,7 @@ datum/design/hydroponics
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/monkey_recycler
-	//category = list("Misc. Machinery")
+	// category = list("Misc. Machinery")
 
 /datum/design/seed_extractor
 	name = "Machine Design (Seed Extractor Board)"
@@ -1279,7 +1279,7 @@ datum/design/hydroponics
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/seed_extractor
-	//category = list("Misc. Machinery")
+	// category = list("Misc. Machinery")
 
 /datum/design/processor
 	name = "Machine Design (Processor Board)"
@@ -1289,9 +1289,9 @@ datum/design/hydroponics
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/processor
-	//category = list("Misc. Machinery")
+	// category = list("Misc. Machinery")
 
-//datum/design/recycler
+// datum/design/recycler
 //	name = "Machine Design (Recycler Board)"
 //	desc = "The circuit board for a recycler."
 //	id = "recycler"
@@ -1309,7 +1309,7 @@ datum/design/hydroponics
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/holopad
-	//category = list("Misc. Machinery")
+	// category = list("Misc. Machinery")
 
 /datum/design/deepfryer
 	name = "Deep Fryer Board"
@@ -1373,7 +1373,7 @@ datum/design/chem_dispenser
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/chem_master
-	//category = list("Medical Machinery")
+	// category = list("Medical Machinery")
 
 datum/design/destructive_analyzer
 	name = "Destructive Analyzer Board"
@@ -1495,7 +1495,7 @@ datum/design/cyborgrecharger
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/tesla_coil
-	//category = list("Misc. Machinery")
+	// category = list("Misc. Machinery")
 
 /datum/design/grounding_rod
 	name = "Machine Design (Grounding Rod Board)"
@@ -1505,11 +1505,11 @@ datum/design/cyborgrecharger
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/grounding_rod
-	//category = list("Misc. Machinery")
+	// category = list("Misc. Machinery")
 
-/////////////////////////////////////////
-////////////Power Stuff//////////////////
-/////////////////////////////////////////
+///////////////////////////////////////// 
+/////////// /Power Stuff///////////////// /
+///////////////////////////////////////// 
 
 datum/design/pacman
 	name = "PACMAN-type Generator Board"
@@ -1542,9 +1542,9 @@ datum/design/mrspacman
 	build_path = /obj/item/weapon/circuitboard/pacman/mrs
 
 
-/////////////////////////////////////////
-////////////Medical Tools////////////////
-/////////////////////////////////////////
+///////////////////////////////////////// 
+/////////// /Medical Tools////////////////
+///////////////////////////////////////// 
 
 datum/design/mass_spectrometer
 	name = "Mass-Spectrometer"
@@ -1761,9 +1761,9 @@ datum/design/scalpel_manager
 	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500, MAT_SILVER = 1500, MAT_GOLD = 1500, MAT_DIAMOND = 750)
 	build_path = /obj/item/weapon/scalpel/manager
 
-/////////////////////////////////////////
-/////////////////Weapons/////////////////
-/////////////////////////////////////////
+///////////////////////////////////////// 
+///////////////// Weapons///////////////// 
+///////////////////////////////////////// 
 
 datum/design/nuclear_gun
 	name = "Advanced Energy Gun"
@@ -1832,7 +1832,7 @@ datum/design/largecrossbow
 */
 datum/design/temp_gun
 	name = "Temperature Gun"
-	desc = "A gun that shoots temperature bullet energythings to change temperature."//Change it if you want
+	desc = "A gun that shoots temperature bullet energythings to change temperature."// Change it if you want
 	id = "temp_gun"
 	req_tech = list("combat" = 3, "materials" = 4, "powerstorage" = 3, "magnets" = 2)
 	build_type = PROTOLATHE
@@ -1920,9 +1920,9 @@ datum/design/phoronpistol
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000, MAT_PHORON = 3000)
 	build_path = /obj/item/weapon/gun/energy/toxgun
-/////////////////////////////////////////
-/////////////////Mining//////////////////
-/////////////////////////////////////////
+///////////////////////////////////////// 
+///////////////// Mining///////////////// /
+///////////////////////////////////////// 
 
 datum/design/jackhammer
 	name = "Sonic Jackhammer"
@@ -1942,7 +1942,7 @@ datum/design/drill
 	id = "drill"
 	req_tech = list("materials" = 2, "powerstorage" = 3, "engineering" = 2)
 	build_type = PROTOLATHE | MINEFAB
-	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000) //expensive, but no need for miners.
+	materials = list(MAT_METAL = 6000, MAT_GLASS = 1000) // expensive, but no need for miners.
 	build_path = /obj/item/weapon/pickaxe/drill
 	construction_time=100
 	category = list("Tools")
@@ -1976,7 +1976,7 @@ datum/design/drill_diamond
 	id = "drill_diamond"
 	req_tech = list("materials" = 6, "powerstorage" = 4, "engineering" = 4)
 	build_type = PROTOLATHE | MINEFAB
-	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_DIAMOND = 3750) //Yes, a whole diamond is needed.
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_DIAMOND = 3750) // Yes, a whole diamond is needed.
 	reliability = 79
 	build_path = /obj/item/weapon/pickaxe/drill/diamond_drill
 	construction_time=100
@@ -2016,9 +2016,9 @@ datum/design/scaner_adv
 	construction_time=450
 	category = list("Tools")
 
-/////////////////////////////////////////
-//////////////Blue Space/////////////////
-/////////////////////////////////////////
+///////////////////////////////////////// 
+////////////// Blue Space///////////////// 
+///////////////////////////////////////// 
 
 datum/design/beacon
 	name = "Tracking Beacon"
@@ -2055,13 +2055,13 @@ datum/design/bluespace_crystal
 	id = "minerbag_holding"
 	req_tech = list("bluespace" = 4, "materials" = 3, "engineering" = 4)
 	build_type = PROTOLATHE | MINEFAB
-	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 500) //quite cheap, for more convenience
+	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 500) // quite cheap, for more convenience
 	build_path = /obj/item/weapon/storage/bag/ore/holding
 	category = list("Tools")
 
-/////////////////////////////////////////
-/////////////////HUDs////////////////////
-/////////////////////////////////////////
+///////////////////////////////////////// 
+///////////////// HUDs//////////////////// 
+///////////////////////////////////////// 
 
 datum/design/health_hud
 	name = "Health Scanner HUD"
@@ -2090,9 +2090,9 @@ datum/design/mining_hud
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/hud/mining
 
-/////////////////////////////////////////
-//////////////////Test///////////////////
-/////////////////////////////////////////
+///////////////////////////////////////// 
+///////////////// /Test///////////////////
+///////////////////////////////////////// 
 
 	/*	test
 			name = "Test Design"
@@ -2104,7 +2104,7 @@ datum/design/mining_hud
 			build_path = /obj/item/weapon/banhammer */
 
 ////////////////////////////////////////
-//Disks for transporting design datums//
+// Disks for transporting design datums// 
 ////////////////////////////////////////
 
 /obj/item/weapon/disk/design_disk
@@ -2123,9 +2123,9 @@ datum/design/mining_hud
 	src.pixel_y = rand(-5.0, 5)
 
 
-/////////////////////////////////////////
-//////////////Borg Upgrades//////////////
-/////////////////////////////////////////
+///////////////////////////////////////// 
+////////////// Borg Upgrades////////////// 
+///////////////////////////////////////// 
 datum/design/borg_syndicate_module
 	name = "Borg Illegal Weapons Upgrade"
 	desc = "Allows for the construction of illegal upgrades for cyborgs"
@@ -2137,9 +2137,9 @@ datum/design/borg_syndicate_module
 	construction_time = 120
 	category = list("Cyborg Upgrade Modules")
 
-/////////////////////////////////////////
-/////////////PDA and Radio stuff/////////
-/////////////////////////////////////////
+///////////////////////////////////////// 
+/////////////PDA and Radio stuff//////// /
+///////////////////////////////////////// 
 datum/design/standart_encrypt
 	name = "Standard Encryption Key"
 	desc = "An encyption key for a radio headset.  Contains cypherkeys."
@@ -2332,7 +2332,7 @@ datum/design/cart_captain
 	build_path = /obj/item/weapon/cartridge/captain
 
 ///////////////////////////////
-/////////////New stuff/////////
+/////////////New stuff//////// /
 ///////////////////////////////
 datum/design/beacon_warp
 	name = "Medical Tracking Beacon"
@@ -2410,9 +2410,9 @@ datum/design/spraycan
 	build_path = /obj/item/clothing/shoes/magboots
 	category = list("Equipment")
 
-/////////////////////////////////////////
-////////////Janitor Designs//////////////
-/////////////////////////////////////////
+///////////////////////////////////////// 
+/////////// /Janitor Designs////////////// 
+///////////////////////////////////////// 
 
 datum/design/advmop
 	name = "Advanced Mop"

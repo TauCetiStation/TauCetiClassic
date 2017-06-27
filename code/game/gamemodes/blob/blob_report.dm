@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
 /datum/game_mode/blob/send_intercept(var/report = 1)
 	var/intercepttext = ""
@@ -61,7 +61,7 @@
 	var/door = 0
 	var/grille = 0
 	var/mach = 0
-	var/num_territories = 1//Number of total valid territories for gang mode
+	var/num_territories = 1// Number of total valid territories for gang mode
 
 
 	proc/count(count_territories)
@@ -102,12 +102,12 @@
 
 		if(count_territories)
 			var/list/valid_territories = list()
-			for(var/area/A in all_areas) //First, collect all area types on the station zlevel
+			for(var/area/A in all_areas) // First, collect all area types on the station zlevel
 				if(A.z == ZLEVEL_STATION)
 					if(!(A.type in valid_territories) && A.valid_territory)
 						valid_territories |= A.type
 			if(valid_territories.len)
-				num_territories = valid_territories.len //Add them all up to make the total number of area types
+				num_territories = valid_territories.len // Add them all up to make the total number of area types
 			else
 				to_chat(world, "ERROR: NO VALID TERRITORIES")
 

@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /*
 	Class: Token
@@ -31,7 +31,7 @@
 		New(object, member, l=0, c=0)
 			src.object=object
 			src.member=member
-			src.value="[object].[member]" //for debugging only
+			src.value="[object].[member]" // for debugging only
 			src.line=l
 			src.column=c
 

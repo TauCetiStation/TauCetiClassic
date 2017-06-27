@@ -3,7 +3,7 @@
 	name = "bomb"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x"
-	var/btype = 0  //0 = radio, 1= prox, 2=time
+	var/btype = 0  // 0 = radio, 1= prox, 2=time
 	var/explosive = 1	// 0= firebomb
 	var/btemp = 500	// bomb temperature (degC)
 	var/active = 0
@@ -82,7 +82,7 @@
 
 			p3.air_contents.temperature = btemp + T0C
 			p2.secured = 1
-		//bombvest
+		// bombvest
 		if(3)
 			var/obj/item/clothing/suit/armor/a_i_a_ptank/R = new /obj/item/clothing/suit/armor/a_i_a_ptank(src.loc)
 			var/obj/item/weapon/tank/phoron/p4 = new /obj/item/weapon/tank/phoron(R)

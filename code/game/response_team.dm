@@ -1,5 +1,5 @@
-//STRIKE TEAMS
-//Thanks to Kilakk for the admin-button portion of this code.
+// STRIKE TEAMS
+// Thanks to Kilakk for the admin-button portion of this code.
 
 var/list/response_team_members = list()
 var/global/send_emergency_team = 0 // Used for automagic response teams
@@ -63,9 +63,9 @@ var/can_call_ert
 
 
 		for (var/obj/effect/landmark/L in landmarks_list) if (L.name == "Commando")
-			L.name = null//Reserving the place.
+			L.name = null// Reserving the place.
 			var/new_name = input(usr, "Pick a name","Name") as null|text
-			if(!new_name)//Somebody changed his mind, place is available again.
+			if(!new_name)// Somebody changed his mind, place is available again.
 				L.name = "Commando"
 				return
 			var/leader_selected = isemptylist(response_team_members)
@@ -158,8 +158,8 @@ var/can_call_ert
 	var/mob/living/carbon/human/M = new(null)
 	response_team_members |= M
 
-	//todo: god damn this.
-	//make it a panel, like in character creation
+	// todo: god damn this.
+	// make it a panel, like in character creation
 	var/new_facial = input("Please select facial hair color.", "Character Generation") as color
 	if(new_facial)
 		M.r_facial = hex2num(copytext(new_facial, 2, 4))
@@ -195,7 +195,7 @@ var/can_call_ert
 		hairs.Add(H.name) // add hair name to hairs
 		qdel(H) // delete the hair after it's all done
 
-//hair
+// hair
 	var/new_hstyle = input(usr, "Select a hair style", "Grooming")  as null|anything in hair_styles_list
 	if(new_hstyle)
 		M.h_style = new_hstyle
@@ -211,7 +211,7 @@ var/can_call_ert
 			M.gender = MALE
 		else
 			M.gender = FEMALE
-	//M.rebuild_appearance()
+	// M.rebuild_appearance()
 	M.update_hair()
 	M.update_body()
 	M.check_dna(M)
@@ -220,26 +220,26 @@ var/can_call_ert
 	M.name = commando_name
 	M.age = !leader_selected ? rand(23,35) : rand(35,45)
 
-	M.dna.ready_dna(M)//Creates DNA.
+	M.dna.ready_dna(M)// Creates DNA.
 
-	//Creates mind stuff.
+	// Creates mind stuff.
 	M.mind = new
 	M.mind.current = M
 	M.mind.original = M
 	M.mind.assigned_role = "MODE"
 	M.mind.special_role = "Response Team"
 	if(!(M.mind in ticker.minds))
-		ticker.minds += M.mind//Adds them to regular mind list.
+		ticker.minds += M.mind// Adds them to regular mind list.
 	M.loc = spawn_location
 	M.equip_strike_team(leader_selected)
 	return M
 
 /mob/living/carbon/human/proc/equip_strike_team(leader_selected = 0)
 
-	//Special radio setup
+	// Special radio setup
 	equip_to_slot_or_del(new /obj/item/device/radio/headset/ert(src), slot_l_ear)
 
-	//Replaced with new ERT uniform
+	// Replaced with new ERT uniform
 	equip_to_slot_or_del(new /obj/item/clothing/under/ert(src), slot_w_uniform)
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), slot_shoes)
 	equip_to_slot_or_del(new /obj/item/clothing/gloves/swat(src), slot_gloves)

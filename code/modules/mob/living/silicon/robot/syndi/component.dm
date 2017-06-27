@@ -11,7 +11,7 @@
 	name = "armour plating (Class V)"
 	max_damage = 180
 
-//Combat Components (+75% HP)
+// Combat Components (+75% HP)
 /datum/robot_component/actuator/combat
 	name = "actuator"
 	max_damage = 88

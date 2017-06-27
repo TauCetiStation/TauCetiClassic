@@ -38,7 +38,7 @@
 		return
 	var/response = alert(C, "Syndicate requesting a personality for a syndicate borg. Would you like to play as one?", "Syndicate borg request", "Yes", "No")
 	if(!C)
-		return		//handle logouts that happen whilst the alert is waiting for a respons.
+		return		// handle logouts that happen whilst the alert is waiting for a respons.
 	if(response == "Yes")
 		requested_candidates += C
 

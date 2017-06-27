@@ -24,7 +24,7 @@
 
 /obj/item/device/assembly/infra/activate()
 	if(!..())
-		return 0//Cooldown check
+		return 0// Cooldown check
 	on = !on
 	update_icon()
 	return 1
@@ -52,7 +52,7 @@
 		holder.update_icon()
 	return
 
-/obj/item/device/assembly/infra/process()//Old code
+/obj/item/device/assembly/infra/process()// Old code
 	if(!on)
 		if(first)
 			qdel(first)
@@ -111,7 +111,7 @@
 	log_game("[src] activated  @ location ([T.x],[T.y],[T.z])")
 	return
 
-/obj/item/device/assembly/infra/interact(mob/user)//TODO: change this this to the wire control panel
+/obj/item/device/assembly/infra/interact(mob/user)// TODO: change this this to the wire control panel
 	if(is_secured(user))
 		user.set_machine(src)
 		var/dat = "<TT><B>Infrared Laser</B>\n<B>Status</B>: [on ? "<A href='?src=\ref[src];state=0'>On</A>" : "<A href='?src=\ref[src];state=1'>Off</A>"]<BR>\n<B>Visibility</B>: [visible ? "<A href='?src=\ref[src];visible=0'>Visible</A>" : "<A href='?src=\ref[src];visible=1'>Invisible</A>"]<BR>\n</TT>"
@@ -153,7 +153,7 @@
 	if(usr)
 		attack_self(usr)
 
-/obj/item/device/assembly/infra/verb/rotate()//This could likely be better
+/obj/item/device/assembly/infra/verb/rotate()// This could likely be better
 	set name = "Rotate Infrared Laser"
 	set category = "Object"
 	set src in usr

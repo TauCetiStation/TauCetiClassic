@@ -10,15 +10,15 @@
 	var/imprinted = "empty"
 
 
-//////////////////////////////Capturing////////////////////////////////////////////////////////
+///////////////////////////// /Capturing//////////////////////////////////////////////////////// 
 
 	attack(mob/living/carbon/human/M, mob/user)
-		if(!istype(M, /mob/living/carbon/human))//If target is not a human.
+		if(!istype(M, /mob/living/carbon/human))// If target is not a human.
 			return ..()
 		if(istype(M, /mob/living/carbon/human/dummy))
 			return..()
 
-		if(M.has_brain_worms()) //Borer stuff - RR
+		if(M.has_brain_worms()) // Borer stuff - RR
 			to_chat(user, "<span class='warning'>This being is corrupted by an alien intelligence and cannot be soul trapped.</span>")
 			return..()
 
@@ -29,14 +29,14 @@
 		transfer_soul("VICTIM", M, user)
 		return
 
-	/*attack(mob/living/simple_animal/shade/M, mob/user)//APPARENTLY THEY NEED THEIR OWN SPECIAL SNOWFLAKE CODE IN THE LIVING ANIMAL DEFINES
-		if(!istype(M, /mob/living/simple_animal/shade))//If target is not a shade
+	/*attack(mob/living/simple_animal/shade/M, mob/user)// APPARENTLY THEY NEED THEIR OWN SPECIAL SNOWFLAKE CODE IN THE LIVING ANIMAL DEFINES
+		if(!istype(M, /mob/living/simple_animal/shade))// If target is not a shade
 			return ..()
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to capture the soul of [M.name] ([M.ckey])</font>")
 
 		transfer_soul("SHADE", M, user)
 		return*/
-///////////////////Options for using captured souls///////////////////////////////////////
+///////////////////Options for using captured souls////////////////////////////////////// /
 
 	attack_self(mob/user)
 		if (!in_range(src, user))
@@ -45,9 +45,9 @@
 		var/dat = "<TT><B>Soul Stone</B><BR>"
 		for(var/mob/living/simple_animal/shade/A in src)
 			dat += "Captured Soul: [A.name]<br>"
-			dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Summon Shade</A>"}
+			dat += {"<A href='byond:// ?src=\ref[src];choice=Summon'>Summon Shade</A>"}
 			dat += "<br>"
-			dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
+			dat += {"<a href='byond:// ?src=\ref[src];choice=Close'> Close</a>"}
 		user << browse(dat, "window=aicard")
 		onclose(user, "aicard")
 		return
@@ -65,7 +65,7 @@
 		add_fingerprint(U)
 		U.set_machine(src)
 
-		switch(href_list["choice"])//Now we switch based on choice.
+		switch(href_list["choice"])// Now we switch based on choice.
 			if ("Close")
 				U << browse(null, "window=aicard")
 				U.unset_machine()
@@ -81,7 +81,7 @@
 					src.icon_state = "soulstone"
 		attack_self(U)
 
-///////////////////////////Transferring to constructs/////////////////////////////////////////////////////
+////////////////////////// /Transferring to constructs///////////////////////////////////////////////////// 
 /obj/structure/constructshell
 	name = "empty shell"
 	icon = 'icons/obj/wizard.dmi'
@@ -90,10 +90,10 @@
 
 /obj/structure/constructshell/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/device/soulstone))
-		O.transfer_soul("CONSTRUCT",src,user)
+		O.transfer_soul("CONSTRUCT",src, user)
 
 
-////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
+////////////////////////////Proc for moving soul in and out off stone////////////////////////////////////// 
 
 
 /obj/item/proc/transfer_soul(choice, target, mob/U).
@@ -115,7 +115,7 @@
 						else
 							for(var/obj/item/W in T)
 								T.drop_from_inventory(W)
-							new /obj/effect/decal/remains/human(T.loc) //Spawns a skeleton
+							new /obj/effect/decal/remains/human(T.loc) // Spawns a skeleton
 							T.invisibility = 101
 							var/atom/movable/overlay/animation = new /atom/movable/overlay( T.loc )
 							animation.icon_state = "blank"
@@ -124,9 +124,9 @@
 							flick("dust-h", animation)
 							qdel(animation)
 							var/mob/living/simple_animal/shade/S = new /mob/living/simple_animal/shade( T.loc )
-							S.loc = C //put shade in stone
-							S.status_flags |= GODMODE //So they won't die inside the stone somehow
-							S.canmove = 0//Can't move out of the soul stone
+							S.loc = C // put shade in stone
+							S.status_flags |= GODMODE // So they won't die inside the stone somehow
+							S.canmove = 0// Can't move out of the soul stone
 							S.name = "Shade of [T.real_name]"
 							S.real_name = "Shade of [T.real_name]"
 							if (T.client)
@@ -151,7 +151,7 @@
 					if(T.name != C.imprinted)
 						to_chat(U, "\red <b>Capture failed!</b>: \black The soul stone has already been imprinted with [C.imprinted]'s mind!")
 					else
-						T.loc = C //put shade in stone
+						T.loc = C // put shade in stone
 						T.status_flags |= GODMODE
 						T.canmove = 0
 						T.health = T.maxHealth

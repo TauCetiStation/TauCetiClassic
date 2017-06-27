@@ -1,5 +1,5 @@
 //////////////////////////////////////////////
-////////////Santa suit & hat//////////////////
+/////////// /Santa suit & hat///////////////// /
 //////////////////////////////////////////////
 
 /obj/item/clothing/head/santahat
@@ -14,11 +14,11 @@
 	desc = "Festive!"
 	icon_state = "santa"
 	item_state = "santa"
-	allowed = list(/obj/item) //for stuffing exta special presents
+	allowed = list(/obj/item) // for stuffing exta special presents
 
 
 //////////////////////////////////////////////
-////////////Winter suits//////////////////////
+/////////// /Winter suits//////////////////////
 //////////////////////////////////////////////
 
 /obj/item/clothing/proc/can_use(mob/user) // Checking if mob can use the object eg restrained and other
@@ -27,7 +27,7 @@
 			return 1
 	return 0
 
-/obj/item/clothing/suit/wintercoat/attack_self() //Refactored function for using coat's hood by clicking on it
+/obj/item/clothing/suit/wintercoat/attack_self() // Refactored function for using coat's hood by clicking on it
 
 	if(!can_use(usr))
 		return 0
@@ -43,7 +43,7 @@
 
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		H.update_hair(0)	//only human type has hair
+		H.update_hair(0)	// only human type has hair
 	usr.update_inv_head(0)
 	usr.update_inv_wear_suit()
 

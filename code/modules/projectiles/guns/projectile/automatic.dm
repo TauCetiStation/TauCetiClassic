@@ -1,7 +1,7 @@
-/obj/item/weapon/gun/projectile/automatic //Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
+/obj/item/weapon/gun/projectile/automatic // Hopefully someone will find a way to make these fire in bursts or something. --Superxpdude
 	name = "submachine gun"
 	desc = "A lightweight, fast firing gun. Uses 9mm rounds."
-	icon_state = "saber"	//ugly
+	icon_state = "saber"	// ugly
 	w_class = 3.0
 	origin_tech = "combat=4;materials=2"
 	mag_type = /obj/item/ammo_box/magazine/msmg9mm
@@ -72,7 +72,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/silencer))
-		return silencer_attackby(I,user)
+		return silencer_attackby(I, user)
 	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
@@ -102,7 +102,7 @@
 	update_icon()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/mob_can_equip(M, slot)
-	//Cannot equip wielded items.
+	// Cannot equip wielded items.
 	if(wielded)
 		to_chat(M, "<span class='warning'>Unwield the [initial(name)] first!</span>")
 		return 0
@@ -110,7 +110,7 @@
 	return ..()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/dropped(mob/user)
-	//handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
+	// handles unwielding a twohanded weapon when dropped as well as clearing up the offhand
 	if(user)
 		var/obj/item/weapon/gun/projectile/automatic/l6_saw/O = user.get_inactive_hand()
 		if(istype(O))
@@ -133,7 +133,7 @@
 				update_icon()
 				return
 		if("Change grip")
-			if(wielded) //Trying to unwield it
+			if(wielded) // Trying to unwield it
 				unwield()
 				to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
 				if(user.hand)
@@ -146,7 +146,7 @@
 					O.unwield()
 				return
 
-			else //Trying to wield it
+			else // Trying to wield it
 				if(user.get_inactive_hand())
 					to_chat(user, "<span class='warning'>You need your other hand to be empty</span>")
 					return
@@ -168,7 +168,7 @@
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? ceil(get_ammo(0) / 12.5) * 25 : "-empty"]"
 
-/obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/living/user, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
+/obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/living/user, flag, params) // what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!wielded)
 		to_chat(user, "<span class='notice'>You need wield [src] in both hands before firing!</span>")
 		return
@@ -181,11 +181,11 @@
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_hand(mob/user)
 	if(loc != user)
 		..()
-		return	//let them pick it up
+		return	// let them pick it up
 	if(!cover_open || (cover_open && !magazine))
 		..()
 	else if(cover_open && magazine)
-		//drop the mag
+		// drop the mag
 		magazine.update_icon()
 		magazine.loc = get_turf(src.loc)
 		user.put_in_hands(magazine)
@@ -210,9 +210,9 @@
 	origin_tech = "combat=5;materials=1;syndicate=2"
 	mag_type = /obj/item/ammo_box/magazine/tommygunm45
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
-	//can_suppress = 0
- 	//burst_size = 4
- 	//fire_delay = 1
+	// can_suppress = 0
+ 	// burst_size = 4
+ 	// fire_delay = 1
 
 /* The thing I found with guns in ss13 is that they don't seem to simulate the rounds in the magazine in the gun.
    Afaik, since projectile.dm features a revolver, this would make sense since the magazine is part of the gun.
@@ -223,7 +223,7 @@
 
 /* Where Ausops failed, I have not. -SirBayer */
 
-//=================NEW GUNS=================\\
+// =================NEW GUNS=================\\
 
 /obj/item/weapon/gun/projectile/automatic/l10c
 	name = "L10-c"
@@ -254,7 +254,7 @@
 	if(magazine && magazine.ammo_count())
 		playsound(user, 'sound/weapons/guns/l10c-unload.ogg', 70, 1)
 	if(chambered)
-		var/obj/item/ammo_casing/AC = chambered //Find chambered round
+		var/obj/item/ammo_casing/AC = chambered // Find chambered round
 		qdel(AC)
 		chambered = null
 		magazine.stored_ammo += new magazine.ammo_type(magazine)

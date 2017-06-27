@@ -247,7 +247,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /*
  * Platinum
  */
-//Valuable resource, cargo can sell it.
+// Valuable resource, cargo can sell it.
 /obj/item/stack/sheet/mineral/platinum
 	name = "platinum"
 	icon_state = "sheet-adamantine"
@@ -258,7 +258,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /*
  * Mhydrogen
  */
-//Extremely valuable to Research.
+// Extremely valuable to Research.
 /obj/item/stack/sheet/mineral/mhydrogen
 	name = "metallic hydrogen"
 	icon_state = "sheet-mythril"
@@ -269,7 +269,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 /*
  * Tritium
  */
-//Fuel for MRSPACMAN generator.
+// Fuel for MRSPACMAN generator.
 /obj/item/stack/sheet/mineral/tritium
 	name = "tritium"
 	icon_state = "sheet-silver"

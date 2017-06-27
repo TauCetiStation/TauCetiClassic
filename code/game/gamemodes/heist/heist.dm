@@ -1,17 +1,17 @@
-/obj/effect/landmark/heist/aurora //used to locate shuttle.
+/obj/effect/landmark/heist/aurora // used to locate shuttle.
 	name = "Aurora"
 	icon_state = "x3"
 
-/obj/effect/landmark/heist/mob_loot //fulton - locate where to drop mobs.
+/obj/effect/landmark/heist/mob_loot // fulton - locate where to drop mobs.
 	name = "mob loot"
 	icon_state = "x3"
 
-/obj/effect/landmark/heist/obj_loot //fulton - locate where to drop objs.
+/obj/effect/landmark/heist/obj_loot // fulton - locate where to drop objs.
 	name = "obj loot"
 	icon_state = "x3"
 
 /datum/game_mode/
-	var/list/datum/mind/raiders = list()  //Antags.
+	var/list/datum/mind/raiders = list()  // Antags.
 
 /datum/game_mode/heist
 	name = "heist"
@@ -24,8 +24,8 @@
 
 	votable = 0
 
-	var/list/raid_objectives = list()     //Raid objectives.
-	var/list/obj/cortical_stacks = list() //Stacks for 'leave nobody behind' objective.
+	var/list/raid_objectives = list()     // Raid objectives.
+	var/list/obj/cortical_stacks = list() // Stacks for 'leave nobody behind' objective.
 
 /datum/game_mode/heist/announce()
 	to_chat(world, "<B>The current game mode is - Heist!</B>")
@@ -41,7 +41,7 @@
 
 	var/raider_num = 0
 
-	//Check that we have enough vox.
+	// Check that we have enough vox.
 	if(antag_candidates.len < required_enemies)
 		return 0
 	else if(antag_candidates.len < recommended_enemies)
@@ -49,7 +49,7 @@
 	else
 		raider_num = recommended_enemies
 
-	//Grab candidates randomly until we have enough.
+	// Grab candidates randomly until we have enough.
 	while(raider_num > 0)
 		var/datum/mind/new_raider = pick(antag_candidates)
 		raiders += new_raider
@@ -66,7 +66,7 @@
 
 /datum/game_mode/heist/post_setup()
 
-	//Build a list of spawn points.
+	// Build a list of spawn points.
 	var/list/turf/raider_spawn = list()
 
 	for(var/obj/effect/landmark/L in landmarks_list)
@@ -75,14 +75,14 @@
 			qdel(L)
 			continue
 
-	//Generate objectives for the group.
+	// Generate objectives for the group.
 	if(!config.objectives_disabled)
 		raid_objectives = forge_vox_objectives()
 
 	var/index = 1
 	var/captain = 1
 
-	//Spawn the vox!
+	// Spawn the vox!
 	for(var/datum/mind/raider in raiders)
 
 		if(index > raider_spawn.len)
@@ -91,8 +91,8 @@
 		raider.current.loc = raider_spawn[index]
 		index++
 
-		//var/sounds = rand(2,8)
-		//var/i = 0
+		// var/sounds = rand(2,8)
+		// var/i = 0
 		var/newname = ""
 
 		if(captain)
@@ -117,14 +117,14 @@
 		vox.name = vox.real_name
 		raider.name = vox.name
 		vox.age = rand(17,85)
-		//vox.dna.mutantrace = "vox"
-		//vox.set_species(VOX)
+		// vox.dna.mutantrace = "vox"
+		// vox.set_species(VOX)
 		vox.languages = list() // Removing language from chargen.
 		vox.flavor_text = ""
 		vox.add_language("Gutter")
 		vox.h_style = "Skinhead"
 		vox.f_style = "Shaved"
-		//for(var/obj/item/organ/external/BP in vox.bodyparts)
+		// for(var/obj/item/organ/external/BP in vox.bodyparts)
 		//	BP.status &= ~(ORGAN_DESTROYED | ORGAN_ROBOT)
 		vox.equip_raider()
 		vox.regenerate_icons()
@@ -181,7 +181,7 @@
 
 /datum/game_mode/heist/declare_completion()
 
-	//No objectives, go straight to the feedback.
+	// No objectives, go straight to the feedback.
 	if(!(raid_objectives.len)) return ..()
 
 	completion_text += "<B>Heist mode resume:</B><BR>"
@@ -192,11 +192,11 @@
 
 	var/success = raid_objectives.len
 
-	//Decrease success for failed objectives.
+	// Decrease success for failed objectives.
 	for(var/datum/objective/O in raid_objectives)
 		if(!(O.check_completion())) success--
 
-	//Set result by objectives.
+	// Set result by objectives.
 	if(success == raid_objectives.len)
 		win_type = "Major"
 		win_group = "Raider"
@@ -207,7 +207,7 @@
 		win_type = "Minor"
 		win_group = "Crew"
 
-	//Now we modify that result by the state of the pirate crew.
+	// Now we modify that result by the state of the pirate crew.
 	if(!is_raider_crew_alive())
 		win_type = "Major"
 		win_group = "Crew"
@@ -252,7 +252,7 @@
 datum/game_mode/proc/auto_declare_completion_heist()
 	var/text =""
 	if(raiders.len)
-		var/loot_savefile = "data/pirate_loot.sav" //loot statistics
+		var/loot_savefile = "data/pirate_loot.sav" // loot statistics
 		var/savefile/S = new /savefile(loot_savefile)
 		if(S)
 			S.cd = "/"
@@ -274,7 +274,7 @@ datum/game_mode/proc/auto_declare_completion_heist()
 		text += printlogo("raider", "raiders")
 		for(var/datum/mind/raider in raiders)
 			if(raider.current)
-				var/icon/flat = getFlatIcon(raider.current,exact=1)
+				var/icon/flat = getFlatIcon(raider.current, exact=1)
 				end_icons += flat
 				var/tempstate = end_icons.len
 				text += {"<br><img src="logo_[tempstate].png"> <b>[raider.key]</b> was <b>[raider.name]</b> ("}

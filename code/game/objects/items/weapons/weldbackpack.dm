@@ -8,7 +8,7 @@
 	var/max_fuel = 350
 
 /obj/item/weapon/weldpack/New()
-	var/datum/reagents/R = new/datum/reagents(max_fuel) //Lotsa refills
+	var/datum/reagents/R = new/datum/reagents(max_fuel) // Lotsa refills
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
@@ -35,12 +35,12 @@
 	return
 
 /obj/item/weapon/weldpack/afterattack(obj/O, mob/user)
-	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.reagents.total_volume < max_fuel)
+	if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src, O) <= 1 && src.reagents.total_volume < max_fuel)
 		O.reagents.trans_to(src, max_fuel)
 		to_chat(user, "\blue You crack the cap off the top of the pack and fill it back up again from the tank.")
 		playsound(src.loc, 'sound/effects/refill.ogg', 50, 1, -6)
 		return
-	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src,O) <= 1 && src.reagents.total_volume == max_fuel)
+	else if (istype(O, /obj/structure/reagent_dispensers/fueltank) && get_dist(src, O) <= 1 && src.reagents.total_volume == max_fuel)
 		to_chat(user, "\blue The pack is already full!")
 		return
 

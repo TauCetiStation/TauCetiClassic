@@ -1,6 +1,6 @@
 #define SYNDICATE_SHUTTLE_MOVE_TIME 215
 #define SYNDICATE_SHUTTLE_COOLDOWN 200
-#define SYNDICATE_CHALLENGE_TIMER 15000 //20 minutes
+#define SYNDICATE_CHALLENGE_TIMER 15000 // 20 minutes
 
 /obj/machinery/computer/syndicate_station
 	name = "syndicate shuttle terminal"

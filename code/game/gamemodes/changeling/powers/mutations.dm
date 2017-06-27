@@ -1,4 +1,4 @@
-//Parent to shields and blades because muh copypasted code.
+// Parent to shields and blades because muh copypasted code.
 /obj/effect/proc_holder/changeling/weapon
 	name = "Organic Weapon"
 	desc = "Go tell a coder if you see this."
@@ -34,7 +34,7 @@
 	user.put_in_active_hand(W)
 	return W
 
-//Parent to space suits and armor.
+// Parent to space suits and armor.
 /obj/effect/proc_holder/changeling/suit
 	name = "Organic Suit"
 	desc = "Go tell a coder if you see this."
@@ -67,10 +67,10 @@
 		if(blood_on_castoff)
 			var/turf/simulated/T = get_turf(H)
 			if(istype(T))
-				T.add_blood(H) //So real blood decals
-				playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) //So real sounds
+				T.add_blood(H) // So real blood decals
+				playsound(H.loc, 'sound/effects/splat.ogg', 50, 1) // So real sounds
 
-		changeling.geneticdamage += genetic_damage //Casting off a space suit leaves you weak for a few seconds.
+		changeling.geneticdamage += genetic_damage // Casting off a space suit leaves you weak for a few seconds.
 		changeling.chem_recharge_slowdown -= recharge_slowdown
 		return
 	..(H, target)
@@ -115,7 +115,7 @@
 	canremove = 0
 	w_class = 5.0
 	force = 25
-	throwforce = 0 //Just to be on the safe side
+	throwforce = 0 // Just to be on the safe side
 	throw_range = 0
 	throw_speed = 0
 
@@ -137,12 +137,12 @@
 
 	else if(istype(target, /obj/machinery/computer))
 		var/obj/machinery/computer/C = target
-		C.attack_alien(user) //muh copypasta
+		C.attack_alien(user) // muh copypasta
 
 	else if(istype(target, /obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = target
 
-		if(!A.requiresID() || A.allowed(user)) //This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
+		if(!A.requiresID() || A.allowed(user)) // This is to prevent stupid shit like hitting a door with an arm blade, the door opening because you have acces and still getting a "the airlocks motors resist our efforts to force it" message.
 			return
 
 		if(A.hasPower())
@@ -154,7 +154,7 @@
 			return
 
 		else
-			//user.say("Heeeeeeeeeerrre's Johnny!")
+			// user.say("Heeeeeeeeeerrre's Johnny!")
 			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
 			A.open(1)
 

@@ -19,7 +19,7 @@
 
 	New()
 		..()
-		//src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+		// src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
 		air_contents.adjust((6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C))
 		return
 
@@ -57,7 +57,7 @@
 	trace_gas.moles = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 
 	src.air_contents.trace_gases += trace_gas
-	//
+	// 
 	air_contents.update_values()
 
 	return
@@ -81,7 +81,7 @@
 
 	src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
 	src.air_contents.nitrogen = (6*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
-	//
+	// 
 	src.air_contents.update_values()
 
 	return
@@ -96,14 +96,14 @@
 	icon_state = "phoron"
 	item_state = "plasma"
 	flags = CONDUCT
-	slot_flags = null	//they have no straps!
+	slot_flags = null	// they have no straps!
 
 
 /obj/item/weapon/tank/phoron/New()
 	..()
 
 	src.air_contents.phoron = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
-	//
+	// 
 	src.air_contents.update_values()
 	return
 
@@ -131,7 +131,7 @@
 	w_class = 2.0
 	force = 4.0
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
-	volume = 2 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
+	volume = 2 // Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
 
 
 /obj/item/weapon/tank/emergency_oxygen/New()
@@ -170,7 +170,7 @@
 	..()
 
 	src.air_contents.nitrogen = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
-	//
+	// 
 	src.air_contents.update_values()
 	return
 

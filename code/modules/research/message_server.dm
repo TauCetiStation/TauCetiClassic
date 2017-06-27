@@ -1,9 +1,9 @@
 var/global/list/obj/machinery/message_server/message_servers = list()
 
 /datum/data_pda_msg
-	var/recipient = "Unspecified" //name of the person
-	var/sender = "Unspecified" //name of the sender
-	var/message = "Blank" //transferred message
+	var/recipient = "Unspecified" // name of the person
+	var/sender = "Unspecified" // name of the sender
+	var/message = "Blank" // transferred message
 
 /datum/data_pda_msg/New(var/param_rec = "",var/param_sender = "",var/param_message = "")
 
@@ -15,9 +15,9 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 		message = param_message
 
 /datum/data_rc_msg
-	var/rec_dpt = "Unspecified" //name of the person
-	var/send_dpt = "Unspecified" //name of the sender
-	var/message = "Blank" //transferred message
+	var/rec_dpt = "Unspecified" // name of the person
+	var/send_dpt = "Unspecified" // name of the sender
+	var/message = "Blank" // transferred message
 	var/stamp = "Unstamped"
 	var/id_auth = "Unauthenticated"
 	var/priority = "Normal"
@@ -71,7 +71,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	return ..()
 
 /obj/machinery/message_server/proc/GenerateKey()
-	//Feel free to move to Helpers.
+	// Feel free to move to Helpers.
 	var/newKey
 	newKey += pick("the", "if", "of", "as", "in", "a", "you", "from", "to", "an", "too", "little", "snow", "dead", "drunk", "rosebud", "duck", "al", "le")
 	newKey += pick("diamond", "beer", "mushroom", "assistant", "clown", "captain", "twinkie", "security", "nuke", "small", "big", "escape", "yellow", "gloves", "monkey", "engine", "nuclear", "ai")
@@ -79,7 +79,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	return newKey
 
 /obj/machinery/message_server/process()
-	//if(decryptkey == "password")
+	// if(decryptkey == "password")
 	//	decryptkey = generateKey()
 	if(active && (stat & (BROKEN|NOPOWER)))
 		active = 0
@@ -88,10 +88,10 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	return
 
 /obj/machinery/message_server/proc/send_pda_message(recipient = "",sender = "",message = "")
-	pda_msgs += new/datum/data_pda_msg(recipient,sender,message)
+	pda_msgs += new/datum/data_pda_msg(recipient, sender, message)
 
 /obj/machinery/message_server/proc/send_rc_message(recipient = "",sender = "",message = "",stamp = "", id_auth = "", priority = 1)
-	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
+	rc_msgs += new/datum/data_rc_msg(recipient, sender, message, stamp, id_auth)
 
 /obj/machinery/message_server/attack_hand(user)
 //	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."
@@ -117,7 +117,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	var/value
 	var/details
 
-/datum/feedback_variable/New(var/param_variable,var/param_value = 0)
+/datum/feedback_variable/New(var/param_variable, var/param_value = 0)
 	variable = param_variable
 	value = param_value
 
@@ -166,7 +166,7 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	return details
 
 /datum/feedback_variable/proc/get_parsed()
-	return list(variable,value,details)
+	return list(variable, value, details)
 
 var/obj/machinery/blackbox_recorder/blackbox
 
@@ -179,7 +179,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
-	var/list/messages = list()		//Stores messages of non-standard frequencies
+	var/list/messages = list()		// Stores messages of non-standard frequencies
 	var/list/messages_admin = list()
 
 	var/list/msg_common = list()
@@ -195,7 +195,7 @@ var/obj/machinery/blackbox_recorder/blackbox
 
 	var/list/datum/feedback_variable/feedback = new()
 
-	//Only one can exsist in the world!
+	// Only one can exsist in the world!
 /obj/machinery/blackbox_recorder/New()
 	if(blackbox)
 		if(istype(blackbox,/obj/machinery/blackbox_recorder))
@@ -263,14 +263,14 @@ var/obj/machinery/blackbox_recorder/blackbox
 	feedback_add_details("radio_usage","RC-[rc_msg_amt]")
 
 
-	feedback_set_details("round_end","[time2text(world.realtime)]") //This one MUST be the last one that gets set.
+	feedback_set_details("round_end","[time2text(world.realtime)]") // This one MUST be the last one that gets set.
 
 
-//This proc is only to be called at round end.
+// This proc is only to be called at round end.
 /obj/machinery/blackbox_recorder/proc/save_all_data_to_sql()
 	if(!feedback) return
 
-	round_end_data_gathering() //round_end time logging and some other data processing
+	round_end_data_gathering() // round_end time logging and some other data processing
 	establish_db_connection()
 	if(!dbcon.IsConnected()) return
 	var/round_id
@@ -296,7 +296,7 @@ proc/sql_sanitize_text(text)
 	text = replacetext(text, "&", "")
 	return text
 
-proc/feedback_set(variable,value)
+proc/feedback_set(variable, value)
 	if(!blackbox) return
 
 	variable = sql_sanitize_text(variable)
@@ -307,7 +307,7 @@ proc/feedback_set(variable,value)
 
 	FV.set_value(value)
 
-proc/feedback_inc(variable,value)
+proc/feedback_inc(variable, value)
 	if(!blackbox) return
 
 	variable = sql_sanitize_text(variable)
@@ -318,7 +318,7 @@ proc/feedback_inc(variable,value)
 
 	FV.inc(value)
 
-proc/feedback_dec(variable,value)
+proc/feedback_dec(variable, value)
 	if(!blackbox) return
 
 	variable = sql_sanitize_text(variable)
@@ -329,7 +329,7 @@ proc/feedback_dec(variable,value)
 
 	FV.dec(value)
 
-proc/feedback_set_details(variable,details)
+proc/feedback_set_details(variable, details)
 	if(!blackbox) return
 
 	variable = sql_sanitize_text(variable)
@@ -341,7 +341,7 @@ proc/feedback_set_details(variable,details)
 
 	FV.set_details(details)
 
-proc/feedback_add_details(variable,details)
+proc/feedback_add_details(variable, details)
 	if(!blackbox) return
 
 	variable = sql_sanitize_text(variable)

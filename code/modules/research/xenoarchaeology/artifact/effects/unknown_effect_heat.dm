@@ -1,5 +1,5 @@
 
-//inverse of /datum/artifact_effect/cold, the two effects split up for neatness' sake
+// inverse of /datum/artifact_effect/cold, the two effects split up for neatness' sake
 /datum/artifact_effect/heat
 	effecttype = "heat"
 	var/target_temp

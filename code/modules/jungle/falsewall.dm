@@ -1,4 +1,4 @@
-//simplified copy of /obj/structure/falsewall
+// simplified copy of /obj/structure/falsewall
 
 /obj/effect/landmark/falsewall_spawner
 	name = "falsewall spawner"
@@ -20,11 +20,11 @@
 		if(prob(95))
 			desc = pick("Something seems slightly off about it.","")
 
-		var/junction = 0 //will be used to determine from which side the wall is connected to other walls
+		var/junction = 0 // will be used to determine from which side the wall is connected to other walls
 
 		for(var/turf/unsimulated/wall/W in orange(src,1))
-			if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
-				junction |= get_dir(src,W)
+			if(abs(src.x-W.x)-abs(src.y-W.y)) // doesn't count diagonal walls
+				junction |= get_dir(src, W)
 
 		closed_wall_dir = junction
 		density = 1

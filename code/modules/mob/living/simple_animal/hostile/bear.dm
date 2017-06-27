@@ -1,4 +1,4 @@
-//Space bears!
+// Space bears!
 /mob/living/simple_animal/hostile/bear
 	name = "space bear"
 	desc = "RawrRawr!!"
@@ -23,7 +23,7 @@
 	melee_damage_lower = 20
 	melee_damage_upper = 30
 
-	//Space bears aren't affected by atmos.
+	// Space bears aren't affected by atmos.
 	min_oxy = 0
 	max_oxy = 0
 	min_tox = 0
@@ -37,7 +37,7 @@
 
 	faction = "russian"
 
-//SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
+// SPACE BEARS! SQUEEEEEEEE~     OW! FUCK! IT BIT MY HAND OFF!!
 /mob/living/simple_animal/hostile/bear/Hudson
 	name = "Hudson"
 	desc = ""
@@ -60,9 +60,9 @@
 		if(HOSTILE_STANCE_TIRED)
 			stop_automated_movement = 1
 			stance_step++
-			if(stance_step >= 10) //rests for 10 ticks
+			if(stance_step >= 10) // rests for 10 ticks
 				if(target && target in ListTargets(10))
-					stance = HOSTILE_STANCE_ATTACK //If the mob he was chasing is still nearby, resume the attack, otherwise go idle.
+					stance = HOSTILE_STANCE_ATTACK // If the mob he was chasing is still nearby, resume the attack, otherwise go idle.
 				else
 					stance = HOSTILE_STANCE_IDLE
 
@@ -71,29 +71,29 @@
 			var/found_mob = 0
 			if(target && target in ListTargets(10))
 				if(CanAttack(target))
-					stance_step = max(0, stance_step) //If we have not seen a mob in a while, the stance_step will be negative, we need to reset it to 0 as soon as we see a mob again.
+					stance_step = max(0, stance_step) // If we have not seen a mob in a while, the stance_step will be negative, we need to reset it to 0 as soon as we see a mob again.
 					stance_step++
 					found_mob = 1
-					src.dir = get_dir(src,target)	//Keep staring at the mob
+					src.dir = get_dir(src, target)	// Keep staring at the mob
 
-					if(stance_step in list(1,4,7)) //every 3 ticks
+					if(stance_step in list(1,4,7)) // every 3 ticks
 						var/action = pick( list( "growls at [target]", "stares angrily at [target]", "prepares to attack [target]", "closely watches [target]" ) )
 						if(action)
 							custom_emote(1,action)
 			if(!found_mob)
 				stance_step--
 
-			if(stance_step <= -20) //If we have not found a mob for 20-ish ticks, revert to idle mode
+			if(stance_step <= -20) // If we have not found a mob for 20-ish ticks, revert to idle mode
 				stance = HOSTILE_STANCE_IDLE
-			if(stance_step >= 7)   //If we have been staring at a mob for 7 ticks,
+			if(stance_step >= 7)   // If we have been staring at a mob for 7 ticks,
 				stance = HOSTILE_STANCE_ATTACK
 
 		if(HOSTILE_STANCE_ATTACKING)
-			if(stance_step >= 20)	//attacks for 20 ticks, then it gets tired and needs to rest
+			if(stance_step >= 20)	// attacks for 20 ticks, then it gets tired and needs to rest
 				custom_emote(1, "is worn out and needs to rest" )
 				stance = HOSTILE_STANCE_TIRED
 				stance_step = 0
-				walk(src, 0) //This stops the bear's walking
+				walk(src, 0) // This stops the bear's walking
 				return
 
 
@@ -113,7 +113,7 @@
 	..()
 
 /mob/living/simple_animal/hostile/bear/Process_Spacemove(movement_dir = 0)
-	return	//No drifting in space for space bears!
+	return	// No drifting in space for space bears!
 
 /mob/living/simple_animal/hostile/bear/FindTarget()
 	. = ..()

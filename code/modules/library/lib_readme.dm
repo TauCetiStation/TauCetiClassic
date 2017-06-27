@@ -1,8 +1,8 @@
-//*******************************
-//
+// *******************************
+// 
 //	Library SQL Configuration
-//
-//*******************************
+// 
+// *******************************
 
 // Deprecated! See global.dm for new SQL config vars -- TLE
 /*
@@ -13,8 +13,8 @@
 #define SQL_PASS ""
 */
 
-//*******************************
-// Requires Dantom.DB library ( http://www.byond.com/developer/Dantom/DB )
+// *******************************
+// Requires Dantom.DB library ( http:// www.byond.com/developer/Dantom/DB )
 
 
 /*
@@ -29,7 +29,7 @@
 
    Written by TLE for /tg/station 13
    Feel free to use this as you like. Some credit would be cool.
-   Check us out at http://nanotrasen.com/ if you're so inclined.
+   Check us out at http:// nanotrasen.com/ if you're so inclined.
 */
 
 // CONTAINS:

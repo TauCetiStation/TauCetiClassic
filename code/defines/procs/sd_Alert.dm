@@ -84,7 +84,7 @@ Version 1 changes (from version 0):
 		spawn(duration)
 			if(T) qdel(T)
 			return
-	T.Display(message,title,buttons,default,unfocus,size,table,style,select,flags)
+	T.Display(message, title, buttons, default, unfocus, size, table, style, select, flags)
 	. = T.Response()
 
 /sd_alert
@@ -101,14 +101,14 @@ Version 1 changes (from version 0):
 	target = who
 	src.tag = tag
 
-/sd_alert/Topic(href,params[])
+/sd_alert/Topic(href, params[])
 	if(usr.client != target) return
 	response = params["clk"]
 
-/sd_alert/proc/Display(message,title,list/buttons,default,unfocus,size,table,style,select,flags)
+/sd_alert/proc/Display(message, title, list/buttons, default, unfocus, size, table, style, select, flags)
 	if(unfocus)
 		spawn()
-			target << browse(null,null)
+			target << browse(null, null)
 	if(istext(buttons))
 		buttons = list(buttons)
 	if(!default)
@@ -117,13 +117,13 @@ Version 1 changes (from version 0):
 		validation = buttons.Copy()
 
 	var/html = {"<head><title>[title]</title>[style]<script>\
-	function c(x) {document.location.href='BYOND://?src=\ref[src];'+x;}\
+	function c(x) {document.location.href='BYOND:// ?src=\ref[src];'+x;}\
 	</script></head><body onLoad="fcs.focus();"\
 	[(flags&SD_ALERT_SCROLL)?"":" scroll=no"]><table [table]><tr>\
 	<td>[message]</td></tr><tr><th>"}
 
 	if(select || (flags & SD_ALERT_SELECT_MULTI))	// select style choices
-		html += {"<FORM ID=fcs ACTION='BYOND://?' METHOD=GET>\
+		html += {"<FORM ID=fcs ACTION='BYOND:// ?' METHOD=GET>\
 			<INPUT TYPE=HIDDEN NAME=src VALUE='\ref[src]'>
 			<SELECT NAME=clk SIZE=[select]\
 			[(flags & SD_ALERT_SELECT_MULTI)?" MULTIPLE":""]>"}

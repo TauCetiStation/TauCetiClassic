@@ -16,7 +16,7 @@
 	..()
 	health = rand(150,300)
 	my_effect = new /datum/artifact_effect/tesla(src)
-	my_effect.trigger = 13 //TRIGGER_NEAR
+	my_effect.trigger = 13 // TRIGGER_NEAR
 	desc = "A blue strange crystal"
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "ano120"
@@ -56,7 +56,7 @@
 	if(damage < 0)
 		damage =0
 	health = health - damage
-	tesla_zap(src,round(damage/10),round(damage/5)*25000)
+	tesla_zap(src, round(damage/10),round(damage/5)*25000)
 	empulse(src, round(damage/10),round(damage/5))
 	if(health < 0)
 		Destroy()

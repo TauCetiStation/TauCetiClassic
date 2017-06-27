@@ -89,7 +89,7 @@
 
 
 obj/machinery/power/port_gen/riteg/proc/Pulse_radiation()
-	for(var/mob/living/l in range(rad_range,src))
+	for(var/mob/living/l in range(rad_range, src))
 		l.show_message("<span class=\"warning\">You feel warm</span>", 2)
 		var/rads = rad_cooef * sqrt( 1 / (get_dist(l, src) + 1) )
 		l.apply_effect(rads, IRRADIATE)

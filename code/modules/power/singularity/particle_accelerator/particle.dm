@@ -1,15 +1,15 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+// This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
 
 /obj/effect/accelerated_particle
 	name = "Accelerated Particles"
 	desc = "Small things moving very fast."
 	icon = 'icons/obj/machines/particle_accelerator2.dmi'
-	icon_state = "particle"//Need a new icon for this
+	icon_state = "particle"// Need a new icon for this
 	anchored = 1
 	density = 1
 	var/movement_range = 10
-	var/energy = 10		//energy in eV
-	var/mega_energy = 0	//energy in MeV
+	var/energy = 10		// energy in eV
+	var/mega_energy = 0	// energy in MeV
 	var/frequency = 1
 	var/ionizing = 0
 	var/particle_type
@@ -61,30 +61,30 @@
 /obj/effect/accelerated_particle/proc/toxmob(mob/living/M)
 	var/radiation = (energy*2)
 /*			if(istype(M,/mob/living/carbon/human))
-		if(M:wear_suit) //TODO: check for radiation protection
+		if(M:wear_suit) // TODO: check for radiation protection
 			radiation = round(radiation/2,1)
 	if(istype(M,/mob/living/carbon/monkey))
-		if(M:wear_suit) //TODO: check for radiation protection
+		if(M:wear_suit) // TODO: check for radiation protection
 			radiation = round(radiation/2,1)*/
 	M.apply_effect((radiation*3),IRRADIATE,0)
 	M.updatehealth()
-	//M << "\red You feel odd."
+	// M << "\red You feel odd."
 	return
 
 
 /obj/effect/accelerated_particle/proc/move(lag)
 	if(target)
 		if(movetotarget)
-			if(!step_towards(src,target))
-				src.loc = get_step(src, get_dir(src,target))
-			if(get_dist(src,target) < 1)
+			if(!step_towards(src, target))
+				src.loc = get_step(src, get_dir(src, target))
+			if(get_dist(src, target) < 1)
 				movetotarget = 0
 		else
-			if(!step(src, get_step_away(src,source)))
-				src.loc = get_step(src, get_step_away(src,source))
+			if(!step(src, get_step_away(src, source)))
+				src.loc = get_step(src, get_step_away(src, source))
 	else
-		if(!step(src,dir))
-			src.loc = get_step(src,dir)
+		if(!step(src, dir))
+			src.loc = get_step(src, dir)
 	movement_range--
 	if(movement_range <= 0)
 		qdel(src)
