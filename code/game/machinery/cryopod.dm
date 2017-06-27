@@ -242,10 +242,6 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 					if(ticker.mode.name == "AutoTraitor")
 						var/datum/game_mode/traitor/autotraitor/current_mode = ticker.mode
 						current_mode.possible_traitors.Remove(occupant)*/
-				if(!occupant.mind.objectives.len && ticker.mode.name == "AutoTraitor")
-					var/datum/game_mode/traitor/autotraitor/current_mode = ticker.mode
-					if(current_mode.possible_traitors && current_mode.possible_traitors.len)
-						current_mode.possible_traitors -= occupant
 
 			// Delete them from datacore.
 
