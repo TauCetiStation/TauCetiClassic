@@ -340,9 +340,9 @@
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/datum/gas_mixture/breath
 
-	// HACK NEED CHANGING LATER
-	if(health < config.health_threshold_crit && !reagents.has_reagent("inaprovaline"))
-		losebreath++
+	//First, check if we can breathe at all
+	if(handle_drowning() || health < config.health_threshold_crit && !reagents.has_reagent("inaprovaline"))
+		losebreath = max(2, losebreath + 1)
 
 	if(losebreath>0) //Suffocating so do not take a breath
 		losebreath--
@@ -651,7 +651,7 @@
 		bodytemperature += temp_adj
 	return 1
 
-/mob/living/carbon/human/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		return
 

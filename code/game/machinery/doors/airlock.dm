@@ -1044,6 +1044,9 @@ var/list/airlock_overlays = list()
 
 		for(var/obj/structure/window/W in T)
 			W.ex_act(2)
+
+		for(var/obj/effect/fluid/F in T)
+			qdel(F)
 	..()
 
 /obj/machinery/door/airlock/proc/autoclose()
@@ -1160,6 +1163,6 @@ var/list/airlock_overlays = list()
 		STOP_PROCESSING(SSobj, src)
 		return
 	ticker++
-	var/spot = (locate(/obj/effect/decal/cleanable/water) in src.loc)
+	var/spot = (locate(/obj/effect/fluid) in src.loc)
 	if((spot))
 		ticker +=10

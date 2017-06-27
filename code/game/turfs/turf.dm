@@ -339,3 +339,12 @@
 	if(isliving(AM))
 		var/mob/living/L = AM
 		L.turf_collision(src)
+
+/turf/proc/update_icon()
+	if(is_flooded(absolute = 1))
+		if(!(locate(/obj/effect/flood) in contents))
+			new /obj/effect/flood(src)
+	else
+		if(locate(/obj/effect/flood) in contents)
+			for(var/obj/effect/flood/F in contents)
+				qdel(F)

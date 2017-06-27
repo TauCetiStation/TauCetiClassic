@@ -101,10 +101,7 @@
 
 	amount = min(amount, reagents.total_volume)
 	reagents.remove_reagent("water",amount)
-
-	create_water(src)
-
-
+	spawn_fluid(loc, amount * 50)
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"

@@ -492,7 +492,7 @@
 		var/turf/tile = loc
 		loc.clean_blood()
 		for(var/obj/effect/E in tile)
-			if((istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay)) && !istype(E, /obj/effect/decal/cleanable/water))
+			if((istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay)) && !istype(E, /obj/effect/fluid))
 				qdel(E)
 
 /obj/machinery/shower/process()
@@ -504,7 +504,7 @@
 	else
 		is_payed--
 
-	create_water(src)
+	spawn_fluid(loc, 15)
 
 	if(!mobpresent) return
 

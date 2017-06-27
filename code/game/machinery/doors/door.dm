@@ -354,15 +354,12 @@
 /obj/machinery/door/proc/requiresID()
 	return 1
 
-/obj/machinery/door/proc/update_nearby_tiles(need_rebuild)
-	if(!SSair)
-		return 0
+/obj/machinery/door/update_nearby_tiles(need_rebuild)
+	. = ..()
 
-	for(var/turf/simulated/turf in locs)
-		update_heat_protection(turf)
-		SSair.mark_for_update(turf)
-
-	return 1
+	if(.)
+		for(var/turf/simulated/turf in locs)
+			update_heat_protection(turf)
 
 /obj/machinery/door/proc/update_heat_protection(turf/simulated/source)
 	if(istype(source))

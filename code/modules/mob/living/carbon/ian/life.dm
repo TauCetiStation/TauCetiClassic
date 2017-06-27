@@ -190,8 +190,8 @@
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	var/datum/gas_mixture/breath
-	if(health < 0)
-		losebreath++
+	if(handle_drowning() || health < 0)
+		losebreath = max(2, losebreath + 1)
 	if(losebreath > 0) //Suffocating so do not take a breath
 		losebreath--
 		if (prob(75)) //High chance of gasping for air
@@ -464,7 +464,7 @@
 			if(V.antigen & src.antibodies)
 				V.dead = TRUE
 
-/mob/living/carbon/ian/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/ian/handle_environment(datum/gas_mixture/environment)
 	if(!environment)
 		return
 

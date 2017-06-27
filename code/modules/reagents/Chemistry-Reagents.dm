@@ -215,10 +215,10 @@ datum
 			custom_metabolism = 0.01
 
 			reaction_turf(var/turf/simulated/T, var/volume)
+				spawn_fluid(T, volume) // so if will spawn even in space, just for pure visuals
 				if (!istype(T)) return
 				src = null
 				if(volume >= 3)
-					create_water(T)
 					T.make_wet_floor(WATER_FLOOR)
 
 				for(var/mob/living/carbon/slime/M in T)

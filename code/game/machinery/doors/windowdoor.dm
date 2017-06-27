@@ -14,14 +14,6 @@
 	door_open_sound  = 'sound/machines/windowdoor.ogg'
 	door_close_sound = 'sound/machines/windowdoor.ogg'
 
-/obj/machinery/door/window/update_nearby_tiles(need_rebuild)
-	if(!SSair)
-		return 0
-
-	SSair.mark_for_update(get_turf(src))
-
-	return 1
-
 /obj/machinery/door/window/New()
 	..()
 
