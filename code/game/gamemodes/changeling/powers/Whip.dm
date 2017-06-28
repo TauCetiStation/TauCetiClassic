@@ -3,7 +3,7 @@
 	desc = "We reform one of our arms into whip."
 	helptext = "Can snatch, knock down, and damage in range depending on your intent, requires a lot of chemical for each use. Cannot be used while in lesser form."
 	chemical_cost = 20
-	genomecost = 8
+	genomecost = 5
 	genetic_damage = 12
 	req_human = 1
 	max_genetic_damage = 10
@@ -36,12 +36,10 @@
 		return
 	if(next_click > world.time)
 		return
-	if(!use_charge(user, 8))
+	if(!use_charge(user, 4))
 		return
 	next_click = world.time + 20
-	var/turf/T = get_turf(src)
-	var/turf/U = get_turf(A)
-	var/obj/item/projectile/changeling_whip/LE = new /obj/item/projectile/changeling_whip(T)
+	var/obj/item/projectile/changeling_whip/LE = new /obj/item/projectile/changeling_whip(get_turf(src))
 	if(user.a_intent == "grab")
 		LE.grabber = 1
 	else if(user.a_intent == "disarm" && prob(65))
@@ -49,15 +47,7 @@
 	else if(user.a_intent == "hurt")
 		LE.damage = 30
 	LE.host = user
-	LE.firer = user
-	LE.def_zone = check_zone(user.zone_sel.selecting)
-	LE.starting = T
-	LE.original = A
-	LE.current = T
-	LE.yo = U.y - T.y
-	LE.xo = U.x - T.x
-	spawn( 1 )
-		LE.process()
+	LE.Fire(A, user)
 
 /obj/item/projectile/changeling_whip
 	name = "Whip"
@@ -78,13 +68,18 @@
 /obj/item/projectile/changeling_whip/on_hit(atom/target, blocked = 0)
 	..()
 	var/atom/movable/T = target
-	var/grab_chance = iscarbon(T) ? 50 : 90
+	var/grab_chance
+	if(iscarbon(T))
+		var/mob/living/carbon/C = T
+		grab_chance = 60 - (C.getarmor(def_zone, "melee") * 0.7)
+	else
+		grab_chance = 90
 	if(grabber && !T.anchored && prob(grab_chance))
-		T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
+		T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T, grab_chance))
 
-/obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
+/obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T, grab_chance)
 	if(in_range(T, host) && !host.get_inactive_hand() && !host.lying)
-		if(iscarbon(T))
+		if(grab_chance < 90)
 			var/obj/item/weapon/grab/G = new(host,T)
 			host.put_in_inactive_hand(G)
 			G.state = GRAB_AGGRESSIVE

@@ -36,7 +36,7 @@
 /obj/effect/proc_holder/changeling/strained_muscles/process()
 	if(active)
 		stacks++
-		if(stacks >= 30)
+		if(stacks >= 15)
 			to_chat(owner,"<span class='danger'>We collapse in exhaustion.</span>")
 			owner.Weaken(3)
 			owner.emote("gasp")
@@ -48,10 +48,10 @@
 			to_chat(owner,"<span class='notice'>Our muscles relax without the energy to strengthen them.</span>")
 			owner.Weaken(2)
 			owner.mind.changeling.strained_muscles = 0
-		if(stacks == 10)
+		if(stacks == 7)
 			to_chat(owner,"<span class='warning'>Our legs are really starting to hurt...</span>")
-		if(stacks > 10)
-			owner.apply_effect(5,AGONY)
+		if(stacks > 7)
+			owner.apply_effect(10,AGONY)
 	else if(stacks)
 		stacks -= 0.25
 	else

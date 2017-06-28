@@ -3,7 +3,7 @@
 	desc = "Our skin pigmentation rapidly changes to suit our current environment."
 	helptext = "Allows us to become invisible after a few seconds of standing still. Can be toggled on and off."
 	genomecost = 2
-	chemical_cost = 15
+	chemical_cost = 0
 	req_human = 1
 	max_genetic_damage = 50
 	var/active = 0
