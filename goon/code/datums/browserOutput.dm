@@ -92,7 +92,7 @@ var/list/chatResources = list(
 		ehjax_send(data = data)
 
 /datum/chatOutput/proc/doneLoading()
-	if(loaded || !owner) // !owner means - something gone wrong and client does not exist by the time chat called this proc.
+	if(loaded)
 		return
 
 	loaded = TRUE
