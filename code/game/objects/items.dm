@@ -234,7 +234,7 @@
 	if (!user || anchored)
 		return
 
-	if(isalien(user)) // -- TLE
+	if(isalien(user) && !istype(user, /mob/living/carbon/alien/humanoid/queen/maid)) // -- TLE
 		var/mob/living/carbon/alien/A = user
 
 		if(!A.has_fine_manipulation || w_class >= 4)
