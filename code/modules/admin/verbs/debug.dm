@@ -570,6 +570,24 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		return
 	//log_admin("[key_name(src)] has alienized [M.key].")
 	var/list/dresspacks = list(
+		"The Punisher",
+		"Space Asshole",
+		"Diehard",
+		"Hitler",
+		"Warhammer",
+		"Pink Guy",
+		"Baldej",
+		"Ostap Bender",
+		"Genrich Gimmler",
+		"Dennis",
+		"Brat",
+		"WalkDeath",
+		"Robert",
+		"DeadSpace",
+		"Kadgar",
+		"Border",
+		"Chigorin",
+		"Oldm",
 		"strip",
 		"standard space gear",
 		"tournament standard red",
@@ -669,6 +687,252 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle/destroyer(M), slot_r_hand)
 			M.equip_to_slot_or_del(new /obj/item/weapon/kitchenknife(M), slot_l_hand)
 			M.equip_to_slot_or_del(new /obj/item/weapon/grenade/smokebomb(M), slot_r_store)
+
+		if("The Punisher")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/pants/track(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/hos/jensen(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/a28(M), slot_r_hand)
+			M.equip_to_slot_or_del(new /obj/item/ammo_box/a357(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/deagle(M), slot_l_hand)
+
+			M.equip_to_slot_or_del(new /obj/item/weapon/switchblade(M), slot_r_store)
+			M.undershirt = 10
+			M.fully_replace_character_name(M.real_name,"Frank Castle")
+			M.h_style = "Hedgehog Hair"
+
+			var/obj/item/weapon/storage/belt/security/tactical/T = new(M)
+			T.contents += new /obj/item/ammo_box/magazine/m556
+			T.contents += new /obj/item/ammo_box/magazine/m50
+			M.equip_to_slot_or_del(T, slot_belt)
+
+		if("Space Asshole")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate/tacticool(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/fire/firefighter(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/utility/full(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/device/radio(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/pickaxe/hammer(M), slot_r_hand)
+
+			M.fully_replace_character_name(M.real_name,"Chris 'Space Asshole' Remo")
+
+			M.r_facial = 153
+			M.g_facial = 102
+			M.b_facial = 0
+			M.s_tone = -30
+
+			M.h_style = "Skinhead"
+			M.f_style = "Goatee"
+
+
+		if("Diehard")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/pants/tan(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/sec_pistol/acm38(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/leather(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/det_suit/fluff/leatherjack(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/acm38_38/lethal(M), slot_r_store)
+			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/acm38_38/lethal(M), slot_l_store)
+
+			M.fully_replace_character_name(M.real_name,"John McClane")
+
+
+		if("Hitler")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/really_black(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/goodman_jacket(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/luger(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/pill/cyanide(M), slot_r_store)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/fedora/black(M), slot_l_hand)
+
+			M.fully_replace_character_name(M.real_name,"Adolf Hitler")
+
+			M.h_style = "Flow Hair"
+			M.f_style = "Square Mustache"
+
+		if("Warhammer")
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/cap(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate/combat(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/green/dark(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/warden(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/belt/security/tactical(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/weapon/switchblade(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/lasercannon(M), slot_r_hand)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/box/donkpockets(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/small_firstaid_kit/combat(M), slot_in_backpack)
+
+
+			M.fully_replace_character_name(M.real_name,"Arvin Larn")
+
+			M.h_style = "Skinhead"
+
+		if("Pink Guy")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/pink(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/luchador/pink(M), slot_wear_mask)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boxing/pink(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/wrestling/pink(M), slot_gloves)
+
+			M.fully_replace_character_name(M.real_name,"Pink Guy")
+			M.h_style = "Short Hair"
+
+
+		if("Baldej")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/pants/jeans(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo/fluff/naples_1(M), slot_r_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/staff/broom(M), slot_r_hand)
+
+			M.fully_replace_character_name(M.real_name,"Ruslan Gittelman")
+			M.h_style = "Short Hair"
+			M.undershirt = 19
+
+		if("Ostap Bender")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/redcoat(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/goodman_jacket(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/cap(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/greenscarf(M), slot_wear_mask)
+
+			var/obj/item/weapon/storage/briefcase/L = new(M)
+			L.contents += new /obj/item/weapon/spacecash/c1000
+			L.contents += new /obj/item/weapon/spacecash/c1000
+			L.contents += new /obj/item/weapon/spacecash/c1000
+			L.contents += new /obj/item/weapon/spacecash/c1000
+			L.contents += new /obj/item/weapon/spacecash/c1000
+			L.contents += new /obj/item/weapon/spacecash/c1000
+
+			M.equip_to_slot_or_del(L, slot_r_hand)
+
+			M.fully_replace_character_name(M.real_name,"Ostap Bender")
+
+
+		if("Genrich Gimmler")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/navy(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/serifcoat(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/Nazi_Officer_Cap(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/boots/German(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/regular(M), slot_glasses)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/luger(M), slot_l_store)
+
+			var/obj/item/weapon/storage/belt/security/German/L = new(M)
+			L.contents += new /obj/item/ammo_box/magazine/m9pmm
+			L.contents += new /obj/item/ammo_box/magazine/m9pmm
+			L.contents += new /obj/item/ammo_box/magazine/m9pmm
+
+			M.equip_to_slot_or_del(L, slot_belt)
+
+			M.fully_replace_character_name(M.real_name,"Genrich Gimmler")
+
+		if("Dennis")
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/chaplain_hoodie/brown(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/chaplain_hood/brown(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/footwraps(M), slot_shoes)
+			M.r_hair = 153
+			M.g_hair = 102
+			M.b_hair = 51
+			M.h_style = "Messy"
+			M.fully_replace_character_name(M.real_name,"Dennis")
+
+		if("Brat")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/pants/black(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/goodman_jacket(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/fancy/cigarettes(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/lighter(M), slot_r_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/revolver/doublebarrel/dungeon/sawn_off(M), slot_r_hand)
+
+			M.h_style = "Short Hair"
+			M.fully_replace_character_name(M.real_name,"Danila Bagrov")
+
+		if("WalkDeath")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/pants/blackjeans(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/red(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/western/cowboy(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/eyepatch/fluff(M), slot_glasses)
+
+			M.h_style = "Curls"
+			M.fully_replace_character_name(M.real_name,"Carl Grimes")
+
+		if("Robert")
+			M.equip_to_slot_or_del(new /obj/item/weapon/bedsheet/brown(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/johnny(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/chaplain_hoodie/brown(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/weapon/claymore(M), slot_r_hand)
+
+			M.r_hair = 153
+			M.g_hair = 102
+			M.b_hair = 51
+			M.h_style = "Skinhead"
+			M.fully_replace_character_name(M.real_name,"Robert II, Count of Flanders")
+
+			for(var/obj/item/carried_item in M.contents)
+				carried_item.add_blood(M)
+
+
+		if("DeadSpace")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/black(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/mining(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/engineering/chief (M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/workboots (M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/weapon/pickaxe/plasmacutter(M), slot_r_hand)
+
+			M.fully_replace_character_name(M.real_name,"Isaac Clarke")
+
+			M.h_style = "Short Hair"
+			M.f_style = "Goatee"
+
+		if("Kadgar")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/purple(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe/psypurple(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/wizard/amp(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/marisa(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/weapon/spellbook(M), slot_l_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/book/tome/old(M), slot_r_store)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/magic/staff/doorcreation(M), slot_r_hand)
+
+			M.r_hair = 221
+			M.g_hair = 221
+			M.b_hair = 221
+			M.h_style = "Short Hair 2"
+			M.fully_replace_character_name(M.real_name,"Kadgar")
+
+		if("Border")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/mecha_operator(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/device/debugger(M), slot_l_store)
+
+
+			M.r_hair = 102
+			M.g_hair = 51
+			M.b_hair = 0
+			M.h_style = "Hitop"
+			M.fully_replace_character_name(M.real_name,"Rhys")
+
+			for(var/obj/item/organ/external/ext in M.bodyparts)
+				if(istype(ext,/obj/item/organ/external/r_arm))
+					ext.robotize()
+
+		if("Oldm")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/indiana(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/leather(M), slot_shoes)
+
+			M.fully_replace_character_name(M.real_name,"John Oldman")
+
+			M.h_style = "Short Hair"
+
+		if("Chigorin")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/psych/turtleneck(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/slippers_worn(M), slot_shoes)
+
+			M.fully_replace_character_name(M.real_name,"Gennadiy Gorin")
+
+			M.r_hair = 178
+			M.g_hair = 178
+			M.b_hair = 178
+			M.h_style = "Cut Hair"
 
 
 		if ("tournament gangster") //gangster are supposed to fight each other. --rastaf0
