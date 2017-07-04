@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 14
+#define SAVEFILE_VERSION_MAX 15
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -36,11 +36,14 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	return SAVEFILE_UP_TO_DATE
 
-//datum/preferences/proc/update_preferences(current_version, savefile/S)
+datum/preferences/proc/update_preferences(current_version, savefile/S)
 	/* JUST AN EXAMPLE for future updates.
 	if(current_version < 10)
 		toggles |= MEMBER_PUBLIC
 	*/
+	if(current_version < 15)
+		S["warns"]    << null
+		S["warnbans"] << null
 
 //datum/preferences/proc/update_character(current_version, savefile/S)
 	/* JUST AN EXAMPLE
@@ -79,8 +82,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["chat_toggles"]		>> chat_toggles
 	S["toggles"]			>> toggles
 	S["ghost_orbit"]		>> ghost_orbit
-	S["warns"]				>> warns
-	S["warnbans"]			>> warnbans
 	S["randomslot"]			>> randomslot
 	S["UI_style_color"]		>> UI_style_color
 	S["UI_style_alpha"]		>> UI_style_alpha
@@ -92,8 +93,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
-	//if(needs_update >= 0)
-	//	update_preferences(needs_update, S) // needs_update = savefile_version if we need an update (positive integer)
+	if(needs_update >= 0)
+		update_preferences(needs_update, S) // needs_update = savefile_version if we need an update (positive integer)
 
 	//Sanitize
 	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
@@ -134,8 +135,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["toggles"]			<< toggles
 	S["chat_toggles"]		<< chat_toggles
 	S["ghost_orbit"]		<< ghost_orbit
-	S["warns"]				<< warns
-	S["warnbans"]			<< warnbans
 	S["randomslot"]			<< randomslot
 	S["permamuted"]			<< permamuted
 	return 1
