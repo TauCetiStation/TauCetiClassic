@@ -248,7 +248,7 @@
 		to_chat(user, "<span class='danger'> You beat yourself in the head with [src].</span>")
 		user.take_bodypart_damage(5)
 	if(emp_cooldown >= world.time)
-		to_chat(user,"<span class='userdanger'>[src] is recalibrating!</span>")
+		to_chat(user, "<span class='userdanger'>[src] is recalibrating!</span>")
 		return
 	active = !active
 	if(active)
@@ -261,7 +261,7 @@
 	force = 10
 	icon_state = "eshield[active]"
 	w_class = 4
-	playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
+	playsound(loc, 'sound/weapons/saberon.ogg', 50, 1)
 	to_chat(user, "<span class='notice'> [src] is now active.</span>")
 	update_icon()
 

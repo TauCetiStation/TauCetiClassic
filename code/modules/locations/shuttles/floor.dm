@@ -30,5 +30,5 @@ turf/space/shuttle
 
 /turf/simulated/shuttle/floor/nukeops
 	name = "floor"
-	icon = 'code/modules/locations/shuttles/nukeops.dmi'
+	icon = 'code/modules/locations/shuttles/nukeops2.dmi'
 	icon_state = "floor1"

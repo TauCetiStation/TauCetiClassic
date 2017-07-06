@@ -79,6 +79,7 @@
 		user.put_in_hands(magazine)
 		magazine.update_icon()
 		magazine = null
+		update_icon()
 		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
 		return 1
 	else

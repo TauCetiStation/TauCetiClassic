@@ -7,11 +7,14 @@
 	anchored = 1
 	var/active = 0
 	var/hacked = FALSE
+	var/static/obj/transit_loc = null
 
 /obj/machinery/gateway/initialize()
 	update_icon()
 	if(dir == 2)
 		density = 0
+	if(!transit_loc)
+		transit_loc = locate(/obj/effect/landmark/gateway_transit)
 
 /obj/machinery/gateway/update_icon()
 	icon_state = active ? "on" : "off"
@@ -33,7 +36,7 @@
 	var/list/linked = list()
 	var/ready = 0				//have we got all the parts for a gateway?
 	var/wait = 0				//this just grabs world.time at world start
-	var/blocked = TRUE
+	var/blocked = TRUE			// used in gateway_locker to allow/disallow entering to gateway while hacked
 	var/obj/machinery/gateway/centeraway/awaygate = null
 
 /obj/machinery/gateway/centerstation/initialize()
@@ -142,18 +145,14 @@ obj/machinery/gateway/centerstation/process()
 
 			if(!allowed)
 				return
-		if(M.buckled_mob)
-			M.unbuckle_mob()
-		playsound(src, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
-		M.forceMove(get_step(awaygate.loc, SOUTH))
-		playsound(awaygate, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
 		M.dir = SOUTH
+		enter_to_transit(M, get_step(awaygate.loc, SOUTH))
 		return
 	else
 		var/obj/effect/landmark/dest = pick(awaydestinations)
 		if(dest)
-			M.forceMove(dest.loc)
 			M.dir = SOUTH
+			enter_to_transit(M, dest.loc)
 			use_power(5000)
 		return
 
@@ -250,10 +249,8 @@ obj/machinery/gateway/centerstation/process()
 			if(E.imp_in == M)//Checking that it's actually implanted vs just in their pocket
 				to_chat(M, "The station gate has detected your exile implant and is blocking your entry.")
 				return
-	playsound(src, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
-	M.forceMove(get_step(stationgate.loc, SOUTH))
-	playsound(stationgate, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
 	M.dir = SOUTH
+	enter_to_transit(M, get_step(stationgate.loc, SOUTH))
 
 
 /obj/machinery/gateway/centeraway/attackby(obj/item/device/W, mob/user)
@@ -265,3 +262,34 @@ obj/machinery/gateway/centerstation/process()
 			to_chat(user, "<span class='notice'> <b>Recalibration successful!</b>:</span> This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
 			calibrated = 1
 			return
+
+/obj/machinery/gateway/proc/enter_to_transit(atom/movable/entered, turf/target)
+	playsound(src, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
+	entered.freeze_movement = TRUE
+	entered.forceMove(transit_loc.loc)
+	if(isliving(entered))
+		var/mob/living/M = entered
+		M.Stun(10, 1, 1, 1)
+		var/obj/screen/cinematic = new /obj/screen{icon='icons/effects/gateway_entry.dmi'; icon_state="entry"; layer=21; mouse_opacity=0; screen_loc="1,0"; } (src)
+		if(M.client)
+			M.client.screen += cinematic
+			M.playsound_local(M.loc, 'sound/machines/gateway/gateway_transit.ogg', 100, 2)
+		addtimer(CALLBACK(src, .proc/exit_from_transit, entered, target, cinematic), 100)
+	else
+		addtimer(CALLBACK(src, .proc/exit_from_transit, entered, target), 100)
+
+/obj/machinery/gateway/proc/exit_from_transit(atom/movable/entered, turf/target, obj/screen/cinematic)
+	if(isliving(entered))
+		var/mob/living/M = entered
+		if(M.client)
+			cinematic.icon_state = "exit"
+			flick("exit", cinematic)
+			sleep(12)
+			M.client.screen -= cinematic
+		qdel(cinematic)
+		M.AdjustStunned(-10, 1, 1, 0)
+	entered.freeze_movement = FALSE
+	entered.forceMove(target)
+	playsound(target, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
+
+/obj/effect/landmark/gateway_transit

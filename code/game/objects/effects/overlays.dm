@@ -52,8 +52,8 @@
 	anchored = 1
 
 /obj/effect/overlay/droppod_open
-	layer = 3.5
-	plane = 3.5
+	layer = 4
+	plane = 4
 	anchored = 1
 	icon = 'icons/obj/structures/droppod.dmi'
 	icon_state = "panel_opening"

@@ -214,20 +214,18 @@
 	if(capped)
 		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
-	if(ishuman(target))
-		if(uses-10 > 0)
-			uses = uses - 10
-			var/mob/living/carbon/human/C = target
-			user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
-			C.lip_style = "spray_face"
-			C.lip_color = colour
-			C.update_body()
-			if(C.client)
-				C.eye_blurry = max(C.eye_blurry, 3)
-				C.eye_blind = max(C.eye_blind, 1)
-				//if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS. Need fix
-				//	C.confused = max(C.confused, 3)
-				//	C.Weaken(3)
+	if(iscarbon(target) && uses - 10 > 0)
+		uses = uses - 10
+		var/mob/living/carbon/C = target
+		user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
+		if(C.client)
+			C.eye_blurry = max(C.eye_blurry, 3)
+			C.eye_blind = max(C.eye_blind, 1)
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			H.lip_style = "spray_face"
+			H.lip_color = colour
+			H.update_body()
 	else if(istype(target, /obj/machinery/nuclearbomb))
 		var/obj/machinery/nuclearbomb/N = target
 		var/choice = input(user, "Spraycan options") as null|anything in list("fish", "peace", "shark", "nuke", "nt", "heart", "woman", "smile")

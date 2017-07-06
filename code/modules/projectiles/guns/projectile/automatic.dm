@@ -504,3 +504,4 @@
 /obj/item/weapon/gun/projectile/automatic/a74/attackby(obj/item/A, mob/user)
 	if(..())
 		playsound(user, 'sound/weapons/guns/ak74_reload.ogg', 50, 1)
+	update_icon()

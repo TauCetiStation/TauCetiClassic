@@ -39,7 +39,7 @@
 /obj/structure/droppod/New()
 	..()
 	if(!initial_eyeobj_location)
-		initial_eyeobj_location = locate(/obj/effect/landmark/droppod)
+		initial_eyeobj_location = locate(/obj/effect/landmark/droppod) in landmark_list
 	if(!Panel)
 		Panel = image("icon" = 'icons/obj/structures/droppod.dmi', "icon_state" = "drop_panel", "layer" = layer + 0.3)
 		Panel.plane = Panel.layer
@@ -49,7 +49,7 @@
 	verbs -= /obj/structure/droppod/verb/Nuclear
 
 /obj/structure/droppod/Destroy()
-	var/turf = get_turf(loc)
+	var/turf/turf = get_turf(loc)
 	if(flags & STATE_AIMING && flags & ADVANCED_AIMING_INSTALLED)
 		CancelAdvancedAiming(1)
 		if(prob(50))
@@ -71,6 +71,7 @@
 	for(var/obj/item/X in stored_items)
 		X.loc = turf
 	stored_items.Cut()
+	new /obj/effect/decal/droppod_wreckage(turf)
 	return ..()
 
 /obj/structure/droppod/ex_act()
@@ -114,8 +115,8 @@
 	/area/tcommsat/chamber, /area/turret_protected/ai_upload, /area/crew_quarters/captain, /area/bridge, /area/bridge/meeting_room, /area/teleporter, /area/security/nuke_storage,
 	/area/crew_quarters/heads, /area/security/armoury, /area/security/warden, /area/turret_protected/aisat_interior,/area/security/main, /area/security/brig, /area/security/range,
 	/area/security/hos,	/area/security/prison, /area/security/execution, /area/security/forensic_office, /area/security/detectives_office, /area/server, /area/comms, /area/tcommsat/computer)
-		areas = teleportlocs
 	if(!areas)
+		areas = teleportlocs
 		for(var/i in areas)
 			if(is_type_in_list(areas[i], black_list_areas))
 				areas -= i
@@ -135,7 +136,7 @@
 		var/passed = FALSE
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
-			if(stored_dna == H.dna.unique_enzymes)
+			if(stored_dna != H.dna.unique_enzymes)
 				passed = TRUE
 		if(!passed)
 			to_chat(usr, "<span class='warning'>The interface is blocked down with Dna key!</span>")
@@ -150,7 +151,8 @@
 		usr.forceMove(src)
 		mob_overlay = image(usr.icon, usr.icon_state)
 		mob_overlay.overlays = usr.overlays
-		mob_overlay.pixel_y = 21
+		mob_overlay.pixel_x = 1
+		mob_overlay.pixel_y = 27
 		overlays += mob_overlay
 		intruder = usr
 		verbs -= /obj/structure/droppod/verb/move_inside
@@ -338,10 +340,10 @@
 	icon_state = "dropod_flying"
 	var/initial_x = pixel_x
 	var/initial_y = pixel_y
-	animate(src, pixel_y = 500, pixel_x = rand(-150, 150), time = 20)
+	animate(src, pixel_y = 500, pixel_x = rand(-150, 150), time = 20, easing = SINE_EASING)
 	sleep(25)
 	loc = AimTarget
-	animate(src, pixel_y = initial_y, pixel_x = initial_x, time = 20)
+	animate(src, pixel_y = initial_y, pixel_x = initial_x, time = 20, easing = CUBIC_EASING)
 	addtimer(CALLBACK(src, .proc/perform_drop), 20)
 
 /obj/structure/droppod/proc/perform_drop()
@@ -372,6 +374,7 @@
 /obj/structure/droppod/attackby(obj/item/O, mob/living/carbon/user)
 	if(flags & IS_LOCKED)
 		to_chat(user, "<span class ='userdanger'>[src] is lock down!</span>")
+		return
 
 	if(istype(O, /obj/item/weapon/screwdriver))
 		if(flags & ADVANCED_AIMING_INSTALLED)
@@ -692,6 +695,15 @@
 			uses++ // this allow only to return to the base.
 	else if(uses == 2)
 		uses--
+
+/obj/effect/decal/droppod_wreckage
+	name = "Drop Pod wreckage"
+	desc = "Remains of some unfortunate Pod. Completely unrepairable."
+	icon = 'icons/obj/structures/droppod.dmi'
+	icon_state = "crashed_droppod"
+	density = 1
+	anchored = 0
+	opacity = 0
 
 /obj/item/device/drop_caller
 	name = "Drop Pod inititalizer"
