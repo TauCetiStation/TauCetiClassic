@@ -27,6 +27,7 @@
 #define MAX_LINE_SIZE    50
 #define MAX_LINES_COUNT  150
 #define MAX_REPEAT_COUNT 10
+#define MAX_TEMPO_RATE   600
 
 /**
  * Method called before playing of every note, so it's some kinde of
@@ -136,6 +137,7 @@
 
 	if(in_range(instrument, usr) && isliving(usr) && !issilicon(usr))
 		if(href_list["newsong"])
+			playing = FALSE
 			song_lines.len = 0
 
 		else if(href_list["show_help"])
@@ -148,12 +150,12 @@
 			if(playing)
 				return
 
-			var/temp_num = input("How many times do you want to repeat this piece? (max: [MAX_REPEAT_COUNT])") as num|null
+			var/repeat_num = input("How many times do you want to repeat this piece? (max: [MAX_REPEAT_COUNT])") as num|null
 
 			if(!in_range(instrument, usr))
 				return
 
-			repeat = Clamp(temp_num, 0, MAX_REPEAT_COUNT)
+			repeat = Clamp(repeat_num, 0, MAX_REPEAT_COUNT)
 
 		else if(href_list["change_tempo"])
 			var/new_tempo = input("Enter new tempo: ", "Change tempo", song_tempo) as num|null
@@ -161,7 +163,7 @@
 			if(!in_range(instrument, usr))
 				return
 
-			song_tempo = max(1, new_tempo)
+			song_tempo = Clamp(new_tempo, 1, MAX_TEMPO_RATE)
 
 		else if(href_list["play"])
 			playing = TRUE
@@ -203,7 +205,9 @@
 			if(!in_range(instrument, usr))
 				return
 
-			parse_song_text(song_text)
+			if(song_text)
+				parse_song_text(song_text)
+				playing = FALSE
 
 		interact(usr)
 
@@ -269,7 +273,7 @@
 	var/list/lines = splittext(song_text, "\n")
 
 	if(copytext(lines[1], 1, 5) == "BPM:")
-		song_tempo = text2num(copytext(lines[1], 5))
+		song_tempo = Clamp(text2num(copytext(lines[1], 5)), 1, MAX_TEMPO_RATE)
 		lines.Cut(1, 2)
 
 	if(lines.len > MAX_LINES_COUNT)
@@ -287,3 +291,4 @@
 #undef MAX_LINE_SIZE
 #undef MAX_LINES_COUNT
 #undef MAX_REPEAT_COUNT
+#undef MAX_TEMPO_RATE
