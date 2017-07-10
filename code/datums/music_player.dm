@@ -275,9 +275,9 @@
 	if(lines.len > MAX_LINES_COUNT)
 		lines.Cut(MAX_LINES_COUNT + 1)
 
-	for(var/line in lines)
-		if(lentext(line) > 50)
-			line = copytext(line, 1, 50)
+	for(var/line_num in 1 to lines.len)
+		if(lentext(lines[line_num]) > MAX_LINE_SIZE)
+			lines[line_num] = copytext(lines[line_num], 1, MAX_LINE_SIZE)
 
 	song_lines = lines
 
