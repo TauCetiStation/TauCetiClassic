@@ -226,6 +226,12 @@
 
 		for(var/line in song_lines)
 			for(var/beat in splittext(lowertext(line), ","))
+
+				// Some browsers may delete last space on line when copying text in buffer,
+				// so it result into runtime error in case like that `A5-F5-D5, `
+				if(!beat)
+					beat = " "
+
 				var/list/notes = splittext(beat, "/")
 
 				for(var/note in splittext(notes[1], "-"))
