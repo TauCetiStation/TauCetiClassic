@@ -333,9 +333,6 @@
 	else if(href_list["warn"])
 		usr.client.warn(href_list["warn"])
 
-	else if(href_list["unwarn"])
-		usr.client.unwarn(href_list["unwarn"])
-
 	else if(href_list["unbane"])
 		if(!check_rights(R_BAN))	return
 
@@ -2759,14 +2756,14 @@
 		var/add = input("Add Player Info") as null|text
 		if(!add) return
 
-		notes_add(key,add,usr)
+		notes_add(key, add, usr.client)
 		show_player_info(key)
 
 	if(href_list["remove_player_info"])
 		var/key = href_list["remove_player_info"]
 		var/index = text2num(href_list["remove_index"])
 
-		notes_del(key, index)
+		notes_del(key, index, usr.client)
 		show_player_info(key)
 
 	if(href_list["notes"])

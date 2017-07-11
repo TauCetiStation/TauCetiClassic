@@ -61,7 +61,6 @@ var/global/floorIsLava = 0
 		<b>Related accounts by IP and cid</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
-		<A href='?_src_=holder;unwarn=[M.ckey]'>UNWarn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
 		<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> |
 		<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A>
@@ -265,8 +264,6 @@ var/global/floorIsLava = 0
 	dat += "<body>"
 
 	//Display player age and player warn bans
-	var/datum/preferences/D
-	var/p_warns
 	var/p_age
 	var/p_ingame_age
 	for(var/client/C in clients)
@@ -274,10 +271,7 @@ var/global/floorIsLava = 0
 			p_age = C.player_age
 			p_ingame_age = C.player_ingame_age
 
-			D = C.prefs
-			p_warns = D.warnbans
-	dat +="<span style='color:#000000; font-weight: bold'>Player age: [p_age] / In-game age: [p_ingame_age]</span><br>"
-	dat +="<span style='color:#000000'>Player warnbans: [p_warns]</span><hr>"
+	dat +="<span style='color:#000000; font-weight: bold'>Player age: [p_age] / In-game age: [p_ingame_age]</span><hr>"
 
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
