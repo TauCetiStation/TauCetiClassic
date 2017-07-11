@@ -155,9 +155,10 @@ var/datum/subsystem/vote/SSvote
 			return 0
 		if(!(usr.ckey in voted))
 			if(vote && 1<=vote && vote<=choices.len)
-				voted += usr.ckey
+				voted[usr.ckey] = choices[vote]
 				choices[choices[vote]]++	//check this
 				return vote
+
 	return 0
 
 /datum/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
@@ -250,8 +251,9 @@ var/datum/subsystem/vote/SSvote
 			. += "<li><a href='?src=\ref[src];vote=[i]'>[sanitize_alt(choices[i])]</a>"
 			if(mode == "custom" || admin)
 				. += "([votes] votes)"
+			if(choices[i] == voted[C.ckey])
+				. += " [html_decode("&#10003")]" // Checkmark
 			. += "</li>"
-
 		. += "</ul><hr>"
 		if(admin)
 			. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
