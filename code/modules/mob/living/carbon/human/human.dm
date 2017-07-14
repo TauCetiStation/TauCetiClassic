@@ -14,6 +14,7 @@
 	var/agent = 0
 	var/team = 0
 	var/metadata
+	var/seer = 0 // used in cult datum /cult/seer
 
 	throw_range = 2
 
