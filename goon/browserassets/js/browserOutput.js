@@ -98,7 +98,7 @@ function linkify(text) {
 }
 //da
 function emojify(text) {
-	var rex = /:[^(\s|:)]+:/g; 
+	var rex = /:[^(\s|:)]+:/g;
 	return text.replace(rex, function ($0) {
 		return '<i class="em em-'+$0.substring(1, $0.length-1)+'">'+$0+'</i>';
 	});
@@ -793,25 +793,27 @@ $(function() {
 	});
 
 	$('#saveLog').click(function(e) {
-		$.ajax({
-			type: 'GET',
-			url: 'browserOutput.css',
-			success: function(styleData) {
-				var win;
+		// Supported only under IE 10+.
+		if (window.Blob) {
+			$.ajax({
+				type: 'GET',
+				url: 'browserOutput.css',
+				success: function(styleData) {
+					var chatLogHtml = '<head><title>Chat Log</title><style>' + styleData + '</style></head><body>' + $messages.html() + '</body>';
 
-				try {
-					win = window.open('', 'Chat Log', 'toolbar=no, location=no, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, width=780, height=600, top=' + (screen.height/2 - 635/2) + ', left=' + (screen.width/2 - 780/2));
-				} catch (e) {
-					return;
-				}
+					var currentData = new Date();
+					var formattedDate = (currentData.getMonth() + 1) + '.' + currentData.getDate() + '.' + currentData.getFullYear();
+					var formattedTime = currentData.getHours() + '-' + currentData.getMinutes();
 
-				if (win) {
-					win.document.head.innerHTML = '<title>Chat Log</title>';
-					win.document.head.innerHTML += '<style>' + styleData + '</style>';
-					win.document.body.innerHTML = $messages.html();
+					var blobObject = new Blob([chatLogHtml]);
+					var fileName = 'TauCeti ChatLog (' + formattedDate + ' ' + formattedTime + ').html';
+
+					window.navigator.msSaveBlob(blobObject, fileName);
 				}
-			}
-		});
+			});
+		} else {
+			output('<span class="big red">This function does not supported on your version of Internet Explorer (9 or less). Please, update to the latest version.</span>', 'internal');
+		}
 	});
 
 	$('#highlightTerm').click(function(e) {
