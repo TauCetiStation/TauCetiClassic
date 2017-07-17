@@ -18,11 +18,12 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	var/list/runewords=list("ire","ego","nahlizet","certum","veri","jatkaa","mgar","balaq", "karazet", "geeri") ///"orkan" and "allaq" removed.
 	for (var/word in engwords)
 		cultwords[word] = pick_n_take(runewords)
-	var/list/temp = typecacheof(/datum/cult)
-	for(var/type in temp)
-		var/datum/cult/dat = new type()
-		cult_datums[dat.word1 + dat.word2 + dat.word3] = dat.type
-		qdel(dat)
+	for(var/type in  subtypesof(/datum/cult))
+		var/datum/cult/dat = type
+		var/word1 = initial(dat.word1)
+		var/word2 = initial(dat.word2)
+		var/word3 = initial(dat.word3)
+		cult_datums[word1 + word2 + word3] = type
 
 /obj/effect/rune
 	name = "blood"
@@ -71,14 +72,13 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 
 /obj/effect/rune/Destroy()
 	if(power)
-		qdel(power)
-		power = null
+		QDEL_NULL(power)
 	return ..()
 
 /obj/effect/rune/examine(mob/user)
-	..()
-	if(iscultist(user) && power)
-		to_chat(user, "A spell circle drawn in blood. It reads: <i>[cultwords[power.word1]] [cultwords[power.word2]] [cultwords[power.word3]]</i>.")
+	to_chat(user, "[bicon(src)] That's some <span class='danger'>[name]</span>")
+	if(iscultist(user) || isobserver(user))
+		to_chat(user, "A spell circle drawn in blood. It reads: <i>[desc]</i>.")
 	else if(issilicon(user))
 		to_chat(user, "It's thick and gooey. Perhaps it's the chef's cooking?") // blood desc
 	else
@@ -261,9 +261,8 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	if(istype(M, /mob/dead))
 		M.invisibility = 0
 		user.visible_message( \
-			"<span class='red'> [user] drags the ghost to our plan of reality!</span>", \
-			"<span class='red'>red You drag the ghost to our plan of reality!</span>" \
-		)
+			"<span class='userdanger'> [user] drags the ghost to our plan of reality!</span>", \
+			"<span class='userdanger'>You drag the ghost to our plan of reality!</span>")
 		return
 	if(!istype(M))
 		return
@@ -273,7 +272,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		return
 	M.adjustBruteLoss(rand(5, 20)) //really lucky - 5 hits for a crit
 	M.visible_message("<span class='danger'>[user] beats [M] with the arcane tome!</span>")
-	to_chat(M, "<span class='danger' You feel searing heat inside!</span>")
+	to_chat(M, "<span class='danger'You feel searing heat inside!</span>")
 
 
 /obj/item/weapon/book/tome/attack_self(mob/living/carbon/human/user)
@@ -286,7 +285,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		to_chat(user, "This book is completely blank!")
 		return
 	if (!isturf(user.loc))
-		to_chat(user, "<span class='userdanger'> You do not have enough space to write a proper rune.</span>")
+		to_chat(user, "<span class='userdanger'>You do not have enough space to write a proper rune.</span>")
 		return
 
 	if (length(cult_runes) >= CULT_RUNES_LIMIT + length(ticker.mode.cult)) //including the useless rune at the secret room, shouldn't count against the limit of 25 runes - Urist
@@ -362,6 +361,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 			var/type = cult_datums[words[w1] + words[w2] + words[w3]]
 			if(ispath(type))
 				R.power = new type(R)
+		R.desc = "[w1], [w2], [w3]" // for examine
 		R.check_icon(w1, w2, w3)
 		R.blood_DNA = list()
 		R.blood_DNA[user.dna.unique_enzymes] = user.dna.b_type

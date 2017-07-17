@@ -47,10 +47,8 @@
 	..()
 
 /obj/item/weapon/nullrod/Destroy()
-	if(isprocessing)
-		STOP_PROCESSING(SSobj, src)
-	qdel(power)
-	power = null
+	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(power)
 	return ..()
 
 /obj/item/weapon/nullrod/dropped(mob/user)
@@ -66,8 +64,8 @@
 	for(var/A in range(6, turf))
 		if(iscultist(A) || is_type_in_typecache(A, scum))
 			set_light(3)
-			sleep(2)
-			set_light(0)
+			addtimer(CALLBACK(src, .atom/proc/set_light, 0), 20)
+			return
 
 /obj/item/weapon/nullrod/attack(mob/M, mob/living/user) //Paste from old-code to decult with a null rod.
 	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")

@@ -18,10 +18,13 @@
 		to_chat(user, "A spell circle drawn in blood. It reads: <i>[power.word1] [power.word2] [power.word3]</i>.")
 
 /obj/item/weapon/paper/talisman/attack(mob/living/T, mob/living/user)
-	if(iscultist(user) && istype(power, /datum/cult/stun))
-		user.adjustBruteLoss(5)
-		power.talisman_reaction(user, T)
-		return
+	if(iscultist(user))
+		if(istype(power, /datum/cult/stun))
+			user.adjustBruteLoss(5)
+			power.talisman_reaction(user, T)
+			return
+		else if(istype(power, /datum/cult/armor) && ishuman(T) && iscultist(T))
+			power.action(T)
 	return ..()
 
 /obj/item/weapon/paper/talisman/supply

@@ -9,10 +9,13 @@ var/list/cult_runes = list()
 
 /datum/cult/New(holder)
 	..()
-	if(holder)
-		src.holder = holder
-		if(istype(holder, /obj/effect/rune))
-			cult_runes += src
+	if(!holder)
+		qdel(src)
+		CRASH("someone stupid tried to create datum without holder")
+		return
+	src.holder = holder
+	if(istype(holder, /obj/effect/rune))
+		cult_runes += src
 
 /datum/cult/Destroy()
 	cult_runes -= src
@@ -61,8 +64,8 @@ var/list/cult_runes = list()
 		user.say(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.", "Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
 	else
 		user.whisper(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.",\
-		"Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
-		holder.visible_message("<span class='danger'>The markings pulse with a small burst of light,\
+			"Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
+	holder.visible_message("<span class='danger'>The markings pulse with a small burst of light, \
 		then fall dark.</span>","<span class='danger'>You hear a faint fizzle.</span>")
 
 
@@ -97,10 +100,12 @@ var/list/cult_runes = list()
 		qdel(holder)
 		return FALSE
 	else if(length)
-		user.visible_message("<span class='red'>[user] disappears in a flash of red light!</span>", \
-		"<span class='cult'>You feel as your body gets dragged through the dimension of Nar-Sie!</span>", \
-		"<span class='userdanger'>You hear a sickening crunch and sloshing of viscera.</span>")
+		user.visible_message("<span class='userdanger'>[user] disappears in a flash of red light!</span>", \
+			"<span class='cult'>You feel as your body gets dragged through the dimension of Nar-Sie!</span>", \
+			"<span class='userdanger'>You hear a sickening crunch and sloshing of viscera.</span>")
+		playsound(user,'sound/magic/Teleport_diss.ogg', 100, 2)
 		user.forceMove(get_turf(pick(allrunesloc)))
+		playsound(user,'sound/magic/Teleport_app.ogg', 100, 2)
 		holder_reaction(user)
 	else
 		fizzle(user)
@@ -132,7 +137,7 @@ var/list/cult_runes = list()
 		qdel(holder)
 		return
 	else if(length)
-		var/turf/teleport_turf = get_turf(pick(allrunesloc))
+		var/obj/teleport_holder = pick(allrunesloc)
 		var/passed = FALSE
 		for(var/obj/O in holder.loc)
 			var/with_mob = FALSE
@@ -142,12 +147,14 @@ var/list/cult_runes = list()
 				break
 			if(!with_mob && !O.anchored && !O.freeze_movement)
 				O.visible_message("<span class='danger'>The [O] suddenly disappears!</span>")
-				O.forceMove(teleport_turf)
+				O.forceMove(teleport_holder.loc)
 				O.visible_message("<span class='danger'>The [O] suddenly appears!</span>")
 		if(passed)
+			playsound(holder, 'sound/magic/SummonItems_generic.ogg', 100, 1)
+			playsound(teleport_holder, 'sound/magic/SummonItems_generic.ogg', 100, 1)
 			user.visible_message("<span class='userdanger'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
-			"<span class='cult'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
-			"<span class='userdanger'>You smell ozone.</span>")
+				"<span class='cult'>You feel air moving from the rune - like as it was swapped with somewhere else.</span>", \
+				"<span class='userdanger'>You smell ozone.</span>")
 
 /datum/cult/tome_summon
 	word1 = "see"
@@ -162,9 +169,9 @@ var/list/cult_runes = list()
 
 /datum/cult/tome_summon/action(mob/living/carbon/user)
 	holder_reaction(user)
-	user.visible_message("<span class='red'>Rune disappears with a flash of red light, and in its place now a book lies.</span>", \
-	"<span class='red'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a book.</span>", \
-	"<span class='red'>You hear a pop and smell ozone.</span>")
+	user.visible_message("<span class='userdanger'>Rune disappears with a flash of red light, and in its place now a book lies.</span>", \
+		"<span class='userdanger'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a book.</span>", \
+		"<span class='userdanger'>You hear a pop and smell ozone.</span>")
 	new /obj/item/weapon/book/tome(get_turf(holder))
 	qdel(holder)
 
@@ -180,20 +187,20 @@ var/list/cult_runes = list()
 			continue
 		user.say("Mah[pick("'","`")]weyh pleggh at e'ntrath!")
 		M.visible_message("<span class='userdanger'>[M] writhes in pain as the markings below him glow a bloody red.</span>", \
-		"<span class='cult'>AAAAAAHHHH!</span>", \
-		"<span class='userdanger'>You hear an anguished scream.</span>")
+			"<span class='cult'>AAAAAAHHHH!</span>", \
+			"<span class='userdanger'>You hear an anguished scream.</span>")
 		if(alert(M, "Do you wanna to gave your soul to the Geometr?",,"Yes", "No") == "Yes")
 			to_chat(M, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth.\
-			The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>")
+				The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>")
 			if(is_convertable_to_cult(M.mind) && !jobban_isbanned(M, ROLE_CULTIST) && !jobban_isbanned(M, "Syndicate") && role_available_in_minutes(M, ROLE_CULTIST))
 				ticker.mode.add_cultist(M.mind)
 				M.mind.special_role = "Cultist"
 				to_chat(M, "<span class='cult'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark \
-				One above all else. Bring It back.</span>")
+					One above all else. Bring It back.</span>")
 				return
 			else
 				to_chat(M, "<span class='userdanger'>And you were able to force it out of your mind. You now know the truth, there's something horrible out there,\
-				stop it and its minions at all costs.</span>")
+					stop it and its minions at all costs.</span>")
 				return
 		else
 			to_chat(user, "<span class='userdanger'>Filthy heretic has rejected your gift!</span>")
@@ -261,7 +268,7 @@ var/list/cult_runes = list()
 /datum/cult/emp/action(mob/living/carbon/user)
 	var/emp_power = holder_reaction(user)
 	var/turf/turf = get_turf(holder)
-	playsound(turf, 'sound/items/Welder2.ogg', 25, 1)
+	playsound(holder, 'sound/items/Welder2.ogg', 25, 1)
 	turf.hotspot_expose(700,125)
 	empulse(turf, (emp_power - 2), emp_power)
 	qdel(holder)
@@ -271,7 +278,12 @@ var/list/cult_runes = list()
 	word2 = "blood"
 	word3 = "self"
 	only_rune = TRUE
-	var/static/list/bhunger = list()
+
+/proc/drain_dot(mob/living/debtor, loop_value) //recursive proc to Imitate "damage over time" mechanics
+	if(loop_value > 0 && debtor && debtor.stat != DEAD)
+		debtor.take_overall_damage(3, 0)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/drain_dot, debtor, --loop_value), 20)
+	return
 
 /datum/cult/drain/action(mob/living/carbon/user)
 	var/drain = 0
@@ -281,31 +293,28 @@ var/list/cult_runes = list()
 				var/bdrain = rand(1, 25)
 				to_chat(C, "<span class='userdanger'>You feel weakened.</span>")
 				C.take_overall_damage(bdrain, 0)
+				playsound(D.holder, 'sound/magic/transfer_blood.ogg', 100, 2)
 				drain += bdrain
 	if(!drain)
 		return fizzle(user)
 	user.say ("Yu[pick("'","`")]gular faras desdae. Havas mithum javara. Umathar uf'kal thenar!")
 	user.visible_message("<span class='userdanger'>Blood flows from the rune into [user]!</span>", \
-	"<span class='cult'>The blood starts flowing from the rune and into your frail mortal body. You feel... empowered.</span>", \
-	"<span class='userdanger'>You hear a liquid flowing.</span>")
+		"<span class='cult'>The blood starts flowing from the rune and into your frail mortal body. You feel... empowered.</span>", \
+		"<span class='userdanger'>You hear a liquid flowing.</span>")
 	if(drain >= 40)
 		user.visible_message("<span class='userdanger'>[user]'s eyes give off eerie red glow!</span>", \
-		"<span class='cult'>...but it wasn't nearly enough. You crave, crave for more. The hunger consumes you from within.</span>", \
-		"<span class='userdanger'>You hear a heartbeat.</span>")
-		bhunger[user] += drain
-		while(bhunger[user]-- > 0)
-			user.take_overall_damage(3, 0)
-			sleep(20)
+			"<span class='cult'>...but it wasn't nearly enough. You crave, crave for more. The hunger consumes you from within.</span>", \
+			"<span class='userdanger'>You hear a heartbeat.</span>")
+		drain_dot(user, drain)
 		return
-	if(bhunger[user] > 0)
-		bhunger[user] = max(bhunger[user] - 1.2 * drain, 0)
 	if(prob(drain * 1.5) && ishuman(user))
 		var/mob/living/carbon/human/H = user
-		for(var/obj/item/organ/external/External in H.bodyparts)
-			if(External.status & ORGAN_BROKEN || External.status & ORGAN_SPLINTED || External.status & ORGAN_DESTROYED || External.status & ORGAN_DEAD || External.status & ORGAN_ARTERY_CUT)
-				External.rejuvenate()
+		for(var/obj/item/organ/external/BP in H.bodyparts)
+			if(BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED | ORGAN_DESTROYED | ORGAN_DEAD | ORGAN_ARTERY_CUT))
+				BP.rejuvenate()
+				to_chat(user, "<span class=cult'>You were honored by Nar-Sie. You can feel his power in your [BP]</span>")
 				break
-	user.heal_overall_damage(5 * drain, 2 * drain)
+	user.heal_overall_damage(1.2 * drain, drain)
 
 /datum/cult/seer
 	word1 = "see"
@@ -377,22 +386,23 @@ var/list/cult_runes = list()
 		return fizzle(user)
 
 	corpse_to_raise.revive()
+	playsound(holder, 'sound/magic/cult_revive.ogg', 100, 2)
 	ticker.mode.add_cultist(corpse_to_raise.mind) // all checks in proc add_cultist, No reason to worry
 
 
 	user.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
 	corpse_to_raise.visible_message("<span class='cult'>[corpse_to_raise]'s eyes glow with a faint red as he stands up, slowly starting to breathe again.</span>", \
-	"<span class='cult'>Life... I'm alive again...</span>", \
-	"<span class='cult'>You hear a faint, slightly familiar whisper.</span>")
+		"<span class='cult'>Life... I'm alive again...</span>", \
+		"<span class='cult'>You hear a faint, slightly familiar whisper.</span>")
 	body_to_sacrifice.visible_message("<span class='cult'>[body_to_sacrifice] is torn apart, a black smoke swiftly dissipating from his remains!</span>", \
-	"<span class='cult'>You feel as your blood boils, tearing you apart.</span>", \
-	"<span class='cult'>You hear a thousand voices, all crying in pain.</span>")
+		"<span class='cult'>You feel as your blood boils, tearing you apart.</span>", \
+		"<span class='cult'>You hear a thousand voices, all crying in pain.</span>")
 	body_to_sacrifice.gib()
 
-	to_chat(corpse_to_raise, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth.\
-	The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>")
+	to_chat(corpse_to_raise, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. \
+		The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>")
 	to_chat(corpse_to_raise, "<span class='cult'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark \
-	One above all else. Bring It back.</span>")
+		One above all else. Bring It back.</span>")
 
 /datum/cult/obscure
 	word1 = "hide"
@@ -408,7 +418,7 @@ var/list/cult_runes = list()
 /datum/cult/obscure/talisman_reaction(mob/living/carbon/user)
 	user.whisper("Kla[pick("'","`")]atu barada nikt'o!")
 	user.visible_message("<span class='danger'>Dust emanates from [user]'s hands for a moment.</span>", \
-	"<span class='cult'>Your talisman turns into gray dust, veiling the surrounding runes.</span>")
+		"<span class='cult'>Your talisman turns into gray dust, veiling the surrounding runes.</span>")
 
 /datum/cult/obscure/action(mob/living/carbon/user, radius = 4)
 	var/finded = FALSE
@@ -434,7 +444,7 @@ var/list/cult_runes = list()
 	if(isprocessing)
 		STOP_PROCESSING(SSobj, src)
 		to_chat(ghost, "<span class='cult'>The astral cord that ties your body and your spirit has been severed. \
-		You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>")
+			You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>")
 		ghost.can_reenter_corpse = FALSE
 		ghost = null
 		ajourned = null
@@ -450,7 +460,7 @@ var/list/cult_runes = list()
 		if(!ajourned || QDELETED(ajourned))
 			STOP_PROCESSING(SSobj, src)
 			to_chat(ghost, "<span class='cult'>The astral cord that ties your body and your spirit has been severed. \
-			You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>")
+				You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>")
 			ghost.can_reenter_corpse = FALSE
 			ghost = null
 			ajourned = null
@@ -471,12 +481,13 @@ var/list/cult_runes = list()
 	if(!istype(user) || user.loc != holder.loc)
 		return fizzle(user)
 	user.say("Fwe[pick("'","`")]sh mah erl nyag r'ya!")
-	user.visible_message("<span class='red'>[user]'s eyes glow blue as \he freezes in place, absolutely motionless.</span>", \
-	"<span class='red'>The shadow that is your spirit separates itself from your body. You are now in the realm beyond.\
-	While this is a great sight, being here strains your mind and body. Hurry...</span>", \
-	"<span class='red'>You hear only complete silence for a moment.</span>")
+	user.visible_message("<span class='userdanger'>[user]'s eyes glow blue as \he freezes in place, absolutely motionless.</span>", \
+		"<span class='userdanger'>The shadow that is your spirit separates itself from your body. You are now in the realm beyond.\
+		While this is a great sight, being here strains your mind and body. Hurry...</span>", \
+		"<span class='userdanger'>You hear only complete silence for a moment.</span>")
 	ajourned = user
 	ghost = user.ghostize(TRUE)
+	playsound(holder, 'sound/effects/ghost.ogg', 100, 2)
 	START_PROCESSING(SSobj, src)
 
 /datum/cult/manifest
@@ -491,8 +502,8 @@ var/list/cult_runes = list()
 	if(isprocessing)
 		for(var/mob/living/L in dummies)
 			L.visible_message("<span class='userdanger'>[L] slowly dissipates into dust and bones.</span>", \
-			"<span class='userdanger'>You feel pain, as bonds formed between your soul and this homunculus break.</span>", \
-			"<span class='userdanger'>You hear faint rustle.</span>")
+				"<span class='userdanger'>You feel pain, as bonds formed between your soul and this homunculus break.</span>", \
+				"<span class='userdanger'>You hear faint rustle.</span>")
 			L.dust()
 		dummies.Cut()
 		guider = null
@@ -501,19 +512,21 @@ var/list/cult_runes = list()
 
 /datum/cult/manifest/process()
 	var/amount_of_dummies = length(dummies)
-	if(guider.loc == holder.loc && !guider.stat && guider.client && amount_of_dummies > 0)
+	if(guider && guider.loc == holder.loc && !guider.stat && guider.client && amount_of_dummies > 0)
 		guider.take_bodypart_damage(2 * amount_of_dummies, 0)
 	else
 		for(var/mob/living/L in dummies)
 			L.visible_message("<span class='userdanger'>[L] slowly dissipates into dust and bones.</span>", \
-			"<span class='userdanger'>You feel pain, as bonds formed between your soul and this homunculus break.</span>", \
-			"<span class='userdanger'>You hear faint rustle.</span>")
+				"<span class='userdanger'>You feel pain, as bonds formed between your soul and this homunculus break.</span>", \
+				"<span class='userdanger'>You hear faint rustle.</span>")
 			L.dust()
 		dummies.Cut()
 		guider = null
 		STOP_PROCESSING(SSobj, src)
 
 /datum/cult/manifest/action(mob/living/carbon/human/user)
+	if(guider && guider != user)
+		return fizzle(user)
 	if(user.loc != holder.loc)
 		return fizzle(user)
 	var/mob/dead/observer/ghost
@@ -524,12 +537,12 @@ var/list/cult_runes = list()
 		break
 	if(!ghost || jobban_isbanned(ghost, ROLE_CULTIST) || jobban_isbanned(ghost, "Syndicate") || !role_available_in_minutes(ghost, ROLE_CULTIST))
 		return fizzle(user)
-
+	playsound(holder, 'sound/magic/manifest.ogg', 100, 2)
 	user.say("Gal'h'rfikk harfrandid mud[pick("'","`")]gib!")
 	var/mob/living/carbon/human/dummy/D = new(holder.loc) // in soultstone code we have block for type dummy
 	user.visible_message("<span class='userdanger'>A shape forms in the center of the rune. A shape of... a man.</span>", \
-	"<span class='cult'>A shape forms in the center of the rune. A shape of... a man.</span>", \
-	"<span class='userdanger'>You hear liquid flowing.</span>")
+		"<span class='cult'>A shape forms in the center of the rune. A shape of... a man.</span>", \
+		"<span class='userdanger'>You hear liquid flowing.</span>")
 	D.real_name = "Unknown"
 	var/chose_name = FALSE
 	for(var/obj/item/weapon/paper/P in holder.loc)
@@ -551,8 +564,8 @@ var/list/cult_runes = list()
 	D.mind.special_role = "Cultist"
 	dummies += D
 	to_chat(D, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth. \
-	The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.	Assist your new compatriots in their \
-	dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back</span>")
+		The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.	Assist your new compatriots in their \
+		dark dealings. Their goal is yours, and yours is theirs. You serve the Dark One above all else. Bring It back</span>")
 	guider = user
 	START_PROCESSING(SSobj, src)
 
@@ -574,8 +587,8 @@ var/list/cult_runes = list()
 
 /datum/cult/reveal/talisman_reaction(mob/living/carbon/user)
 	user.whisper("Nikt[pick("'","`")]o barada kla'atu!")
-	holder.visible_message("<span class='red'>Red dust emanates from [usr]'s hands for a moment.</span>",\
-	"<span class='red'>Your talisman turns into red dust, revealing the surrounding runes.</span>")
+	holder.visible_message("<span class='userdanger'>Red dust emanates from [usr]'s hands for a moment.</span>",\
+		"<span class='userdanger'>Your talisman turns into red dust, revealing the surrounding runes.</span>")
 	qdel(holder)
 
 /datum/cult/reveal/action(mob/living/carbon/user, radius = 6)
@@ -599,9 +612,9 @@ var/list/cult_runes = list()
 	user.take_bodypart_damage(2, 0)
 	if(holder.density)
 		holder.density = FALSE
-		to_chat(user, "<span class='red'>Your blood flows into the rune, and you feel that the very space over the rune thickens.</span>")
+		to_chat(user, "<span class='userdanger'>Your blood flows into the rune, and you feel that the very space over the rune thickens.</span>")
 	else
-		to_chat(user, "<span class='red'>Your blood flows into the rune, and you feel as the rune releases its grasp on space.</span>")
+		to_chat(user, "<span class='userdanger'>Your blood flows into the rune, and you feel as the rune releases its grasp on space.</span>")
 		holder.density = TRUE
 
 /datum/cult/freedom
@@ -675,8 +688,8 @@ var/list/cult_runes = list()
 		if(!P.info)
 			newtalisman = P
 			break
-	if (!newtalisman)
-		to_chat(user, "<span class='userdanger'>The blank is tainted. It is unsuitable.</span>")
+	if(!newtalisman)
+		to_chat(user, "<span class='cult'>The blank is tainted. It is unsuitable.</span>")
 		return fizzle(user)
 
 	for(var/obj/effect/rune/R in get_turf(user))
@@ -684,7 +697,7 @@ var/list/cult_runes = list()
 			continue
 		if(R.power)
 			if(R.power.only_rune)
-				to_chat(user, "<span class='userdanger'>The power in that rune is too powerful for talisman.</span>")
+				to_chat(user, "<span class='cult'>The power in that rune is too powerful for talisman.</span>")
 				return fizzle(user)
 
 			var/obj/item/weapon/paper/talisman/talisman = new(get_turf(newtalisman))
@@ -697,7 +710,10 @@ var/list/cult_runes = list()
 			qdel(R)
 			holder.visible_message("<span class='userdanger'>The runes turn into dust, which then forms into an arcane image on the paper.</span>")
 			user.say("H'drak v[pick("'","`")]loso, mir'kanas verbot!")
-			break
+			return
+		to_chat(user, "<span class='cult'>There is no power to transfer.</span>")
+		return fizzle(user)
+	return fizzle(user)
 
 /datum/cult/sacrifice
 	word1 = "hell"
@@ -740,6 +756,9 @@ var/list/cult_runes = list()
 			for(var/mob/living/silicon/ai/A in target)
 				victims[A] = 70
 				break
+	if(length(victims) < 1)
+		return fizzle(user)
+	playsound(holder, 'sound/magic/disintegrate.ogg', 100, 2)
 
 	for(var/mob/H in victims)
 		if(sacrifice_target && sacrifice_target == H.mind)
@@ -769,12 +788,6 @@ var/list/cult_runes = list()
 	word3 = "technology"
 	var/busy = FALSE
 
-/datum/cult/communicate/holder_reaction(mob/living/user, input)
-	for(var/datum/mind/H in ticker.mode.cult)
-		if(H.current)
-			to_chat(H.current, "<span class='cult'>Acolyte [user.real_name]: [input]</span>")
-	return ..()
-
 /datum/cult/communicate/rune_reaction(mob/living/user, input)
 	user.say("O bidai nabora se[pick("'","`")]sma!")
 	user.say("[input]")
@@ -794,6 +807,10 @@ var/list/cult_runes = list()
 	if(!input)
 		busy = FALSE
 		return fizzle(user)
+	for(var/datum/mind/H in ticker.mode.cult)
+		if(H.current)
+			to_chat(H.current, "<span class='cult'>Acolyte [user.real_name]: [input]</span>")
+	playsound(holder, 'sound/magic/message.ogg', 50, 1)
 	holder_reaction(user, input)
 
 /datum/cult/summon
@@ -826,8 +843,8 @@ var/list/cult_runes = list()
 		C.say("N'ath reth sh'yro eth d[pick("'","`")]rekkathnor!")
 		C.take_overall_damage(90 / acolytes_amount, 0)
 	user.visible_message("<span class='userdanger'>Rune disappears with a flash of red light, and in its place now a body lies.</span>", \
-	"<span class='cult'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a body.</span>", \
-	"<span class='cult'>You hear a pop and smell ozone.</span>")
+		"<span class='cult'>You are blinded by the flash of red light! After you're able to see again, you see that now instead of the rune there's a body.</span>", \
+		"<span class='cult'>You hear a pop and smell ozone.</span>")
 	qdel(holder)
 
 /datum/cult/deafen
@@ -849,8 +866,9 @@ var/list/cult_runes = list()
 	var/list/affected = nearest_heretics()
 	if(length(affected) < 1)
 		return
-	var/deafness_modifier = max(holder_reaction(user) / length(affected), 5)
+	var/deafness_modifier = max(5, holder_reaction(user) / length(affected))
 	for(var/mob/living/carbon/C in affected)
+		C.playsound_local(get_turf(C), 'sound/effects/ear_ring_single.ogg', 100, 2)
 		C.ear_deaf += deafness_modifier
 		to_chat(C, "<span class='userdanger'>The world around you suddenly becomes quiet.</span>")
 		if(prob(1))
@@ -992,7 +1010,7 @@ var/list/cult_runes = list()
 			user.Paralyse(7)
 			D.Paralyse(7)
 			ticker.mode.update_all_cult_icons()
-			break
+			return
 
 /datum/cult/armor
 	word1 = "hell"
@@ -1014,4 +1032,5 @@ var/list/cult_runes = list()
 	user.equip_to_slot_or_del(new /obj/item/clothing/shoes/cult(user), slot_shoes)
 	user.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/cultpack(user), slot_back)
 	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
+	playsound(holder, 'sound/magic/cult_equip.ogg', 100, 2)
 	qdel(holder)
