@@ -661,12 +661,13 @@ var/list/turret_icons
 	use_power(reqpower * (2 * (emagged || lethal)) * (2 * emagged))
 
 	A.original = target
+	A.def_zone = ran_zone()
 	A.current = T
 	A.starting = T
 	A.fake = TRUE
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	A.process()
+	INVOKE_ASYNC(A, /obj/item/projectile/process)
 
 	if(emagged || lethal)
 		playsound(loc, eshot_sound, 75, 1)
