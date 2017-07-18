@@ -703,7 +703,7 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer")
+	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "HAL")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
 	for (var/obj/machinery/M in machines) //change status
 		if(istype(M, /obj/machinery/ai_status_display))
