@@ -272,6 +272,9 @@
 	var/turf/T = get_turf(src)
 	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) || (locate(/obj/structure/plasticflaps) in T))
 		return FALSE
+	for(var/obj/item/weapon/grab/G in grabbed_by)
+		if(G.state >= GRAB_NECK)
+			return FALSE
 	return TRUE
 
 /mob/living/carbon/var/crawl_getup = FALSE
@@ -486,11 +489,11 @@
 	set name = "Sleep"
 	set category = "IC"
 
-	if(usr.sleeping)
+	if(sleeping)
 		to_chat(usr, "<span class='rose'>You are already sleeping")
 		return
 	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
-		usr.sleeping = 20 //Short nap
+		sleeping = 20 //Short nap
 
 /mob/living/carbon/slip(slipped_on, stun_duration=4, weaken_duration=2)
 	if(buckled || sleeping || weakened || paralysis || stunned || resting || crawling)
