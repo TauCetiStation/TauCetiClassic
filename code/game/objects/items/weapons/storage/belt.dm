@@ -25,6 +25,11 @@
 		"/obj/item/device/analyzer",
 		"/obj/item/taperoll/engineering")
 
+/obj/item/weapon/storage/belt/update_icon()
+	overlays.Cut() //resets list
+	for(var/obj/item/I in contents)
+		if(!(I.name in contents))
+			overlays += I.name
 
 /obj/item/weapon/storage/belt/utility/full/New()
 	..()
@@ -34,6 +39,7 @@
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/weapon/cable_coil(src, 30, pick(COLOR_RED, COLOR_YELLOW, COLOR_ORANGE))
+	update_icon()
 
 
 /obj/item/weapon/storage/belt/utility/atmostech/New()
@@ -44,8 +50,6 @@
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
 	new /obj/item/device/t_scanner(src)
-
-
 
 /obj/item/weapon/storage/belt/medical
 	name = "medical belt"
