@@ -14,11 +14,8 @@ var/list/cult_runes = list()
 		CRASH("someone stupid tried to create datum without holder")
 		return
 	src.holder = holder
-	if(istype(holder, /obj/effect/rune))
-		cult_runes += src
 
 /datum/cult/Destroy()
-	cult_runes -= src
 	holder = null
 	return ..()
 
@@ -85,15 +82,14 @@ var/list/cult_runes = list()
 	qdel(holder)
 
 /datum/cult/teleport/action(mob/living/carbon/user)
-	var/list/allrunesloc = list()
-	for(var/datum/cult/teleport/datum in cult_runes)
-		if(datum == src)
+	var/list/allrunes = list()
+	for(var/obj/effect/rune/R in cult_runes)
+		if(!istype(R.power, type) || R.power == src)
 			continue
-		var/turf/turf = get_turf(datum.holder)
-		if(datum.word3 == src.word3 && turf.z != ZLEVEL_CENTCOMM)
-			allrunesloc += datum.holder
+		if(R.power.word3 == src.word3 && R.loc.z != ZLEVEL_CENTCOMM)
+			allrunes += R
 
-	var/length = length(allrunesloc)
+	var/length = length(allrunes)
 	if(length >= 5)
 		to_chat(user, "<span class='userdanger'>You feel pain, as rune disappears in reality shift caused by too much wear of space-time fabric.</span>")
 		user.take_overall_damage(5, 0)
@@ -104,7 +100,7 @@ var/list/cult_runes = list()
 			"<span class='cult'>You feel as your body gets dragged through the dimension of Nar-Sie!</span>", \
 			"<span class='userdanger'>You hear a sickening crunch and sloshing of viscera.</span>")
 		playsound(user,'sound/magic/Teleport_diss.ogg', 100, 2)
-		user.forceMove(get_turf(pick(allrunesloc)))
+		user.forceMove(get_turf(pick(allrunes)))
 		playsound(user,'sound/magic/Teleport_app.ogg', 100, 2)
 		holder_reaction(user)
 	else
@@ -120,24 +116,23 @@ var/list/cult_runes = list()
 	src.word3 = word3
 
 /datum/cult/item_port/action(mob/living/carbon/user)
-	var/list/allrunesloc = list()
+	var/list/allrunes = list()
 	var/list/acolytes = nearest_cultists(1, "Sas[pick("'","`")]so c'arta forbici tarem!")
 	if(length(acolytes) < 3)
 		return fizzle(user)
-	for(var/datum/cult/item_port/datum in cult_runes)
-		if(datum == src)
+	for(var/obj/effect/rune/R in cult_runes)
+		if(!istype(R.power, type) || R.power == src)
 			continue
-		var/turf/turf = get_turf(datum.holder)
-		if(turf.z != ZLEVEL_CENTCOMM && datum.word3 == src.word3)
-			allrunesloc += datum.holder
-	var/length = length(allrunesloc)
+		if(R.loc.z != ZLEVEL_CENTCOMM && R.power.word3 == src.word3)
+			allrunes += R
+	var/length = length(allrunes)
 	if(length >= 5)
 		to_chat(user, "<span class='cult'>You feel pain, as rune disappears in reality shift caused by too much wear of space-time fabric.</span>")
 		user.take_overall_damage(5, 0)
 		qdel(holder)
 		return
 	else if(length)
-		var/obj/teleport_holder = pick(allrunesloc)
+		var/obj/teleport_holder = pick(allrunes)
 		var/passed = FALSE
 		for(var/obj/O in holder.loc)
 			var/with_mob = FALSE
@@ -287,13 +282,15 @@ var/list/cult_runes = list()
 
 /datum/cult/drain/action(mob/living/carbon/user)
 	var/drain = 0
-	for(var/datum/cult/drain/D in cult_runes)
-		for(var/mob/living/carbon/C in D.holder.loc)
+	for(var/obj/effect/rune/R in cult_runes)
+		if(!istype(R.power, type))
+			continue
+		for(var/mob/living/carbon/C in R.loc)
 			if(C.stat != DEAD && C != user)
 				var/bdrain = rand(1, 25)
 				to_chat(C, "<span class='userdanger'>You feel weakened.</span>")
 				C.take_overall_damage(bdrain, 0)
-				playsound(D.holder, 'sound/magic/transfer_blood.ogg', 100, 2)
+				playsound(R, 'sound/magic/transfer_blood.ogg', 100, 2)
 				drain += bdrain
 	if(!drain)
 		return fizzle(user)
@@ -370,9 +367,10 @@ var/list/cult_runes = list()
 		to_chat(user, "<span class='cult'>You require a restless spirit which clings to this world. Beckon their prescence with the sacred chants of Nar-Sie.</span>")
 		return fizzle(user)
 
-
-	for(var/datum/cult/raise in cult_runes)
-		for(var/mob/living/carbon/human/H in raise.holder.loc)
+	for(var/obj/effect/rune/R in cult_runes)
+		if(!istype(R.power, type) || R.power == src)
+			continue
+		for(var/mob/living/carbon/human/H in R.loc)
 			if(H.stat == DEAD)
 				continue
 			if(sacrifice_target && sacrifice_target == H.mind)
@@ -703,8 +701,6 @@ var/list/cult_runes = list()
 			var/obj/item/weapon/paper/talisman/talisman = new(get_turf(newtalisman))
 			talisman.power = R.power
 			talisman.power.holder = talisman
-
-			cult_runes -= R.power
 			R.power = null
 			qdel(newtalisman)
 			qdel(R)
@@ -712,7 +708,7 @@ var/list/cult_runes = list()
 			user.say("H'drak v[pick("'","`")]loso, mir'kanas verbot!")
 			return
 		to_chat(user, "<span class='cult'>There is no power to transfer.</span>")
-		return fizzle(user)
+		break
 	return fizzle(user)
 
 /datum/cult/sacrifice
@@ -989,10 +985,10 @@ var/list/cult_runes = list()
 		return fizzle(user)
 	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	var/bdam = rand(2, 10)
-	for(var/datum/cult/brainswap/dat in cult_runes)
-		if(dat == src)
+	for(var/obj/effect/rune/R in cult_runes)
+		if(!istype(R.power, type) || R.power == src)
 			continue
-		for(var/mob/living/carbon/D in dat.holder.loc)
+		for(var/mob/living/carbon/D in R.loc)
 			if(!(D.type in compatible_mobs))
 				to_chat(user, "Their mind isn't compatible with yours.")
 				continue

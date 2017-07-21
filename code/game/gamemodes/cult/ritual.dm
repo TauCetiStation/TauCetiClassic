@@ -34,6 +34,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	unacidable = 1
 	layer = TURF_LAYER
 	var/datum/cult/power
+	var/image/blood_overlay
 // travel self [word] - Teleport to random [rune with word destination matching]
 // travel other [word] - Portal to rune with word destination matching - kinda doesnt work. At least the icon. No idea why.
 // see blood Hell - Create a new tome
@@ -63,23 +64,27 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 // join hide technology - stun rune. Rune color: bright pink.
 /obj/effect/rune/New()
 	..()
-	var/image/blood = image('icons/effects/blood.dmi', src, "mfloor[rand(1, 7)]", 2)
-	blood.override = 1
-	blood.color = "#a10808"
-	for(var/mob/living/silicon/S in mob_list)
-		if(S.client)
-			S.client.images += blood
+	cult_runes += src
+	blood_overlay = image('icons/effects/blood.dmi', src, "mfloor[rand(1, 7)]", 2)
+	blood_overlay.override = 1
+	blood_overlay.color = "#a10808"
+	for(var/mob/living/silicon/S in player_list) // we hold mobs in this lists only with clients
+		S.client.images += blood_overlay
 
 /obj/effect/rune/Destroy()
 	if(power)
 		QDEL_NULL(power)
+	QDEL_NULL(blood_overlay)
+	cult_runes -= src
 	return ..()
 
 /obj/effect/rune/examine(mob/user)
-	to_chat(user, "[bicon(src)] That's some <span class='danger'>[name]</span>")
 	if(iscultist(user) || isobserver(user))
+		to_chat(user, "[bicon(src)] That's <span class='cult'>cult rune!</span>")
 		to_chat(user, "A spell circle drawn in blood. It reads: <i>[desc]</i>.")
-	else if(issilicon(user))
+		return
+	to_chat(user, "[bicon(src)] That's some <span class='danger'>[name]</span>")
+	if(issilicon(user))
 		to_chat(user, "It's thick and gooey. Perhaps it's the chef's cooking?") // blood desc
 	else
 		to_chat(user, "A strange collection of symbols drawn in blood.")
