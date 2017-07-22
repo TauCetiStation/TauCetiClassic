@@ -251,7 +251,7 @@ datum/genesequence
 		return SCANFOSSIL_RETVAL_WRONGTYPE
 
 	//see whether we are going to discover a new sequence, new genome for existing sequence or nothing
-	var/new_genome_prob = discovered_genesequences.len * 50
+	var/new_genome_prob = discovered_genesequences.len * 70
 
 	if( (new_genome_prob >= 100 || prob(new_genome_prob)) && undiscovered_genomes.len)
 		//create a new genome for an existing gene sequence
@@ -260,12 +260,17 @@ datum/genesequence
 		discovered_genomes.Add(newly_discovered_genome)
 
 		//chance to discover a second genome
-		if(prob(99) && undiscovered_genomes.len)
+		if(prob(70) && undiscovered_genomes.len)
 			newly_discovered_genome = pick(undiscovered_genomes)
 			undiscovered_genomes -= newly_discovered_genome
 			discovered_genomes.Add(newly_discovered_genome)
 			//chance to discover a third genome
-			if(prob(75) && undiscovered_genomes.len)
+			if(prob(55) && undiscovered_genomes.len)
+				newly_discovered_genome = pick(undiscovered_genomes)
+				undiscovered_genomes -= newly_discovered_genome
+				discovered_genomes.Add(newly_discovered_genome)
+							//chance to discover a 4 genome
+			if(prob(30) && undiscovered_genomes.len)
 				newly_discovered_genome = pick(undiscovered_genomes)
 				undiscovered_genomes -= newly_discovered_genome
 				discovered_genomes.Add(newly_discovered_genome)
