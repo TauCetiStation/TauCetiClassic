@@ -48,7 +48,7 @@
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
-			O.unwield()
+			user.drop_from_inventory(O)
 	return	unwield()
 
 /obj/item/weapon/twohanded/update_icon()
@@ -58,7 +58,7 @@
 	unwield()
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
-	if( istype(user,/mob/living/carbon/monkey) )
+	if(istype(user,/mob/living/carbon/monkey))
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return
 
@@ -75,8 +75,8 @@
 			playsound(src.loc, unwieldsound, 50, 1)
 
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
-		if(O && istype(O))
-			O.unwield()
+		if(istype(O))
+			user.drop_from_inventory(O)
 		return
 
 	else //Trying to wield it
@@ -104,12 +104,13 @@
 	w_class = 5.0
 	icon_state = "offhand"
 	name = "offhand"
+	flags = ABSTRACT
 
-	unwield()
-		qdel(src)
+/obj/item/weapon/twohanded/offhand/unwield()
+	qdel(src)
 
-	wield()
-		qdel(src)
+/obj/item/weapon/twohanded/offhand/wield()
+	qdel(src)
 
 /*
  * Fireaxe
@@ -134,20 +135,14 @@
 /obj/item/weapon/twohanded/fireaxe/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	..()
-	if(A && wielded && (istype(A,/obj/structure/window) || istype(A,/obj/structure/grille))) //destroys windows and grilles in one hit
+	if(A && wielded) //destroys windows and grilles in one hit
 		if(istype(A,/obj/structure/window)) //should just make a window.Break() proc but couldn't bother with it
 			var/obj/structure/window/W = A
-
-			new /obj/item/weapon/shard( W.loc )
-			if(W.reinf) new /obj/item/stack/rods( W.loc)
-
-			if (W.dir == SOUTHWEST)
-				new /obj/item/weapon/shard( W.loc )
-				if(W.reinf) new /obj/item/stack/rods( W.loc)
+			W.shatter()
 		else if(istype(A,/obj/structure/grille))
 			var/obj/structure/grille/G = A
 			new /obj/item/stack/rods(G.loc)
-		qdel(A)
+			qdel(A)
 
 
 /*
@@ -179,7 +174,23 @@
 
 /obj/item/weapon/twohanded/dualsaber/New()
 	reflect_chance = rand(50,85)
-	item_color = pick("red", "blue", "green", "purple")
+	item_color = pick("red", "blue", "green", "purple","yellow","pink","black")
+	switch(item_color)
+		if("red")
+			light_color = "#ff0000"
+		if("blue")
+			light_color = "#0000b2"
+		if("green")
+			light_color = "#00ff00"
+		if("purple")
+			light_color = "#551a8b"
+			light_power = 2
+		if("yellow")
+			light_color = "#ffff00"
+		if("pink")
+			light_color = "#ff00ff"
+		if("black")
+			light_color = "#aeaeae"
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)
@@ -192,7 +203,7 @@
 	..()
 	if((CLUMSY in user.mutations) && (wielded) &&prob(40))
 		to_chat(user, "\red You twirl around a bit before losing your balance and impaling yourself on the [src].")
-		user.take_organ_damage(20,25)
+		user.take_bodypart_damage(20, 25)
 		return
 	if((wielded) && prob(50))
 		spawn(0)
@@ -200,22 +211,15 @@
 				user.dir = i
 				sleep(1)
 
-/obj/item/weapon/twohanded/dualsaber/IsShield()
+/obj/item/weapon/twohanded/dualsaber/Get_shield_chance()
 	if(wielded)
-		return 1
+		return 70
 	else
 		return 0
 
 /obj/item/weapon/twohanded/dualsaber/IsReflect(def_zone, hol_dir, hit_dir)
 	if(wielded && prob(reflect_chance))
-		if(hol_dir == NORTH && (hit_dir in list(SOUTH, SOUTHEAST, SOUTHWEST)))
-			return TRUE
-		else if(hol_dir == SOUTH && (hit_dir in list(NORTH, NORTHEAST, NORTHWEST)))
-			return TRUE
-		else if(hol_dir == EAST && (hit_dir in list(WEST, NORTHWEST, SOUTHWEST)))
-			return TRUE
-		else if(hol_dir == WEST && (hit_dir in list(EAST, NORTHEAST, SOUTHEAST)))
-			return TRUE
+		return is_the_opposite_dir(hol_dir, hit_dir)
 	return FALSE
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user)
@@ -224,6 +228,7 @@
 			hacked = 1
 			to_chat(user,"<span class='warning'>2XRNBW_ENGAGE</span>")
 			item_color = "rainbow"
+			light_color = ""
 			update_icon()
 		else
 			to_chat(user,"<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
@@ -231,15 +236,15 @@
 		return ..()
 
 /obj/item/weapon/twohanded/dualsaber/afterattack(obj/O, mob/user, proximity)
-	if(!istype(O,/obj/machinery/door/airlock))
+	if(!istype(O,/obj/machinery/door/airlock) || src.slicing)
 		return
-	if(O.density && src.wielded && proximity)
+	if(O.density && src.wielded && proximity && in_range(user, O))
 		user.visible_message("<span class='danger'>[user] start slicing the [O] </span>")
 		playsound(user.loc, 'sound/items/Welder2.ogg', 100, 1, -1)
 		src.slicing = 1
 		var/obj/machinery/door/airlock/D = O
 		var/obj/effect/I = new /obj/effect/overlay/slice(D.loc)
-		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1))
+		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1) && in_range(user, O))
 			sleep(6)
 			var/obj/structure/door_scrap/S = new /obj/structure/door_scrap(D.loc)
 			var/iconpath = D.icon
@@ -247,6 +252,8 @@
 			IC.Blend(S.door, ICON_OVERLAY, 1, 1)
 			IC.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
 			S.icon = IC
+			S.name = D.name
+			S.name += " remains"
 			qdel(D)
 			qdel(IC)
 			playsound(user.loc, 'sound/weapons/blade1.ogg', 100, 1, -1)
@@ -263,3 +270,13 @@
 		return
 	else
 		..()
+
+/obj/item/weapon/twohanded/dualsaber/unwield()
+	set_light(0)
+	w_class = initial(w_class)
+	return ..()
+
+/obj/item/weapon/twohanded/dualsaber/wield()
+	set_light(2)
+	w_class = 5
+	return ..()

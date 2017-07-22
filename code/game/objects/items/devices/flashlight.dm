@@ -47,7 +47,7 @@
 
 /obj/item/device/flashlight/attack(mob/living/M, mob/living/user)
 	add_fingerprint(user)
-	if(on && user.zone_sel.selecting == "eyes")
+	if(on && user.zone_sel.selecting == O_EYES)
 
 		if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
@@ -167,7 +167,7 @@
 		turn_off()
 		if(!fuel)
 			src.icon_state = "[initial(icon_state)]-empty"
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0
@@ -194,7 +194,7 @@
 		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
 		src.force = on_damage
 		src.damtype = "fire"
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/slime
 	gender = PLURAL
@@ -219,7 +219,7 @@
 	return //Bio-luminescence does not toggle.
 
 /obj/item/device/flashlight/emp
-	origin_tech = "magnets=3;syndicate=´1"
+	origin_tech = "magnets=3;syndicate=1"
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0
@@ -227,10 +227,10 @@
 
 /obj/item/device/flashlight/emp/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/emp/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/device/flashlight/emp/process()
@@ -242,7 +242,7 @@
 	return 1
 
 /obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && user.zone_sel.selecting == "eyes") // call original attack proc only if aiming at the eyes
+	if(on && user.zone_sel.selecting == O_EYES) // call original attack proc only if aiming at the eyes
 		..()
 	return
 

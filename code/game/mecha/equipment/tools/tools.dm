@@ -248,7 +248,7 @@
 				var/list/the_targets = list(T,T1,T2)
 				spawn(0)
 					for(var/a in 1 to 5)
-						var/obj/effect/effect/water/W = PoolOrNew(/obj/effect/effect/water, get_turf(chassis))
+						var/obj/effect/effect/water/W = new /obj/effect/effect/water(get_turf(chassis))
 						if(!W)	return
 						var/turf/my_target = pick(the_targets)
 						var/datum/reagents/R = new/datum/reagents(5)
@@ -452,8 +452,7 @@
 	P.name = "wormhole"
 	do_after_cooldown()
 	src = null
-	spawn(rand(150,300))
-		qdel(P)
+	QDEL_IN(P, rand(150,300))
 	return
 
 
@@ -645,7 +644,7 @@
 		chassis.log_append_to_last("Armor saved.")
 		if(istype(A, /mob/living))
 			var/mob/living/M = A
-			M.take_organ_damage(10)
+			M.take_bodypart_damage(10)
 	else if(istype(A, /obj))
 		var/obj/O = A
 		if(O.throwforce)

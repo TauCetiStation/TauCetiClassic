@@ -72,11 +72,12 @@
 
 
 /mob/living/simple_animal/mouse/proc/splat()
-	src.health = 0
-	src.stat = DEAD
-	src.icon_dead = "mouse_[body_color]_splat"
-	src.icon_state = "mouse_[body_color]_splat"
+	health = 0
+	stat = DEAD
+	icon_dead = "mouse_[body_color]_splat"
+	icon_state = "mouse_[body_color]_splat"
 	layer = MOB_LAYER
+	timeofdeath = world.time
 	if(client)
 		client.time_died_as_mouse = world.time
 

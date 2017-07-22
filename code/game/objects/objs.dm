@@ -23,12 +23,12 @@
 /obj/item/proc/is_used_on(obj/O, mob/user)
 
 /obj/process()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return 0
 
 /obj/Destroy()
 	if(!istype(src, /obj/machinery))
-		SSobj.processing.Remove(src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
+		STOP_PROCESSING(SSobj, src) // TODO: Have a processing bitflag to reduce on unnecessary loops through the processing lists
 	nanomanager.close_uis(src)
 	return ..()
 
@@ -52,7 +52,7 @@
 
 /obj/singularity_act()
 	ex_act(1.0)
-	if(src && !qdeleted(src))
+	if(src && !QDELETED(src))
 		qdel(src)
 	return 2
 
@@ -111,6 +111,15 @@
 
 		if(!ai_in_use && !is_in_use)
 			in_use = 0
+
+/obj/proc/damage_flags()
+	. = 0
+	if(has_edge(src))
+		. |= DAM_EDGE
+	if(is_sharp(src))
+		. |= DAM_SHARP
+		if(damtype == BURN)
+			. |= DAM_LASER
 
 /obj/proc/interact(mob/user)
 	return
@@ -182,7 +191,7 @@
 					to_chat(user, "You can't [eatverb] [food] through [Head]")
 				else
 					to_chat(user, "You can't feed [Feeded] with [food] through [Head]")
-				return 0
+				return FALSE
 		if(Feeded.wear_mask)
 			var/obj/item/Mask = Feeded.wear_mask
 			if(Mask.flags & MASKCOVERSMOUTH)
@@ -190,5 +199,19 @@
 					to_chat(user, "You can't [eatverb] [food] through [Mask]")
 				else
 					to_chat(user, "You can't feed [Feeded] with [food] through [Mask]")
-				return 0
-		return 1
+				return FALSE
+		return TRUE
+	if(isIAN(mob))
+		var/mob/living/carbon/ian/dumdum = mob
+		if(dumdum.head)
+			var/obj/item/Head = dumdum.head
+			if(Head.flags & HEADCOVERSMOUTH)
+				if (dumdum == user)
+					to_chat(user, "You can't [eatverb] [food] through [Head]")
+				else
+					to_chat(user, "You can't feed [dumdum] with [food] through [Head]")
+				return FALSE
+		return TRUE
+
+/obj/proc/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+	return !density

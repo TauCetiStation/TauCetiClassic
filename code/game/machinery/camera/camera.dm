@@ -18,15 +18,9 @@
 	var/obj/item/weapon/camera_assembly/assembly = null
 	var/hidden = 0	//Hidden cameras will be unreachable for AI
 
-	// WIRES
-	var/wires = 63 // 0b111111
-	var/list/IndexToFlag = list()
-	var/list/IndexToWireColor = list()
-	var/list/WireColorToIndex = list()
-	var/list/WireColorToFlag = list()
+	var/datum/wires/camera/wires = null
 
 	//OTHER
-
 	var/view_range = 7
 	var/short_range = 2
 
@@ -40,7 +34,7 @@
 	var/list/open_networks = difflist(network,RESTRICTED_CAMERA_NETWORKS) //...but if all of camera's networks are restricted, it only works for specific camera consoles.
 	if(open_networks.len) //If there is at least one open network, chunk is available for AI usage.
 		cameranet.addCamera(src)
-	WireColorToFlag = randomCameraWires()
+	wires = new(src)
 	assembly = new(src)
 	assembly.state = 4
 	/* // Use this to look for cameras that have the same c_tag.
@@ -59,9 +53,8 @@
 
 /obj/machinery/camera/Destroy()
 	disconnect_viewers()
-	if(assembly)
-		qdel(assembly)
-		assembly = null
+	QDEL_NULL(wires)
+	QDEL_NULL(assembly)
 	if(bug)
 		bug.bugged_cameras -= c_tag
 		if(bug.current == src)
@@ -111,10 +104,8 @@
 	src.view_range = num
 	cameranet.updateVisibility(src, 0)
 
-/obj/machinery/camera/proc/shock(mob/living/user)
-	if(!istype(user))
-		return
-	user.electrocute_act(10, src)
+/obj/machinery/camera/attack_hand(mob/user)
+	wires.interact(user)
 
 /obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user)
 	if(!istype(user))
@@ -139,9 +130,9 @@
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
 	else if((iswirecutter(W) || ismultitool(W)) && panel_open)
-		interact(user)
+		attack_hand(user)
 
-	else if(iswelder(W) && canDeconstruct())
+	else if(iswelder(W) && wires.is_deconstructable())
 		if(weld(W, user))
 			drop_assembly(1)
 			qdel(src)
@@ -188,10 +179,7 @@
 		for(var/mob/living/silicon/ai/O in living_mob_list)
 			if(!O.client)
 				continue
-			if(U.name == "Unknown")
-				to_chat(O, "<b>[U]</b> holds \a [itemname] up to one of your cameras ...")
-			else
-				to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U]</a></b> holds \a [itemname] up to one of your cameras ...")
+			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U.name]</a></b> holds \a [itemname] up to one of your cameras ...")
 			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
 		for(var/mob/O in player_list)
 			if (O.client && O.client.eye == src)
@@ -220,8 +208,7 @@
 			playsound(loc, "sparks", 50, 1)
 			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [W]!</span>")
 			drop_assembly()
-			pick(new /obj/item/weapon/cable_coil(loc),
-                 new /obj/item/weapon/cable_coil/cut(loc))
+			new /obj/item/weapon/cable_coil/cut/red(loc)
 			qdel(src)
 	else
 		..()

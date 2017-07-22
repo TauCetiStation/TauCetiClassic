@@ -13,7 +13,7 @@
 	var/toggleable = 0
 	var/off_state = "degoggles"
 	var/active = 1
-	var/activation_sound = 'sound/effects/glasses_switch.ogg'
+	var/activation_sound = 'sound/items/buttonclick.ogg'
 
 /obj/item/clothing/glasses/attack_self(mob/user)
 	if(toggleable)
@@ -94,6 +94,12 @@
 	toggleable = 1
 	action_button_name = "Toggle Goggles"
 	vision_flags = SEE_OBJS
+
+/obj/item/clothing/glasses/aviator
+	name = "Aviator glasses"
+	desc = "Stylish glasses with orange lenses"
+	icon_state = "orange_aviators"
+	item_state = "orange_aviators"
 
 /obj/item/clothing/glasses/regular
 	name = "Prescription Glasses"
@@ -238,7 +244,9 @@
 	icon_state = "thermoncle"
 	flags = null //doesn't protect eyes because it's a monocle, duh
 	body_parts_covered = 0
-	toggleable = 0
+	toggleable = 1
+	off_state = "thermoncle_off"
+	action_button_name = "Toggle Monocle"
 
 /obj/item/clothing/glasses/thermal/eyepatch
 	name = "Optical Thermal Eyepatch"
@@ -247,6 +255,7 @@
 	item_state = "eyepatch"
 	body_parts_covered = 0
 	toggleable = 0
+	action_button_name = null
 
 /obj/item/clothing/glasses/thermal/jensen
 	name = "Optical Thermal Implants"
@@ -260,6 +269,7 @@
 	icon_state = "hos_shades"
 	item_state = "hos_shades"
 	toggleable = 0
+	action_button_name = null
 
 /obj/item/clothing/glasses/rosas_eyepatch
 	name = "WhiteEyepatch"
@@ -286,6 +296,7 @@
 	icon_state = "garm"
 	item_state = "garm"
 	toggleable = 0
+	action_button_name = null
 
 /obj/item/clothing/glasses/sunglasses/sechud/gar
 	name = "Gar HUDSunglasses"

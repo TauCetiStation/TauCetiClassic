@@ -182,7 +182,7 @@
 	..()
 
 	if(statpanel("Status"))
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(isslimeadult(src))
 			stat(null, "Health: [round((health / 200) * 100)]%")
 			stat(null, "Nutrition: [nutrition]/1200")
 			if(amount_grown >= 10)
@@ -451,9 +451,9 @@
 			help_shake_act(M)
 
 		if ("grab")
-			if (M == src)
+			if (M == src || M.lying)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
 
@@ -542,9 +542,9 @@
 						O.show_message(text("\red <B>[] has attempted to lunge at [name]!</B>", M), 1)
 
 		if ("grab")
-			if (M == src)
+			if (M == src || M.lying)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
 
@@ -599,10 +599,6 @@
 
 /mob/living/carbon/slime/restrained()
 	return 0
-
-
-mob/living/carbon/slime/var/co2overloadtime = null
-mob/living/carbon/slime/var/temperature_resistance = T0C+75
 
 
 /mob/living/carbon/slime/show_inv(mob/user)
@@ -856,6 +852,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	has_sensor = 0
 	canremove = 0
 	unacidable = 1
+	flags = ABSTRACT | DROPDEL
+
 
 /obj/item/clothing/shoes/golem
 	name = "golem's feet"
@@ -863,8 +861,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon_state = "golem"
 	item_state = null
 	canremove = 0
-	flags = NOSLIP
-	slowdown = SHOES_SLOWDOWN+2
+	flags = ABSTRACT | DROPDEL | NOSLIP
 	unacidable = 1
 
 
@@ -876,15 +873,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	canremove = 0
 	siemens_coefficient = 0
 	unacidable = 1
-
-/obj/item/clothing/mask/gas/golem
-	name = "golem's face"
-	desc = "The imposing face of an adamantine golem."
-	icon_state = "golem"
-	item_state = "golem"
-	canremove = 0
-	siemens_coefficient = 0
-	unacidable = 1
+	flags = ABSTRACT | DROPDEL
 	flags_inv = 0
 
 
@@ -896,6 +885,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	siemens_coefficient = 0
 	canremove = 0
 	unacidable = 1
+	flags = ABSTRACT | DROPDEL
 
 
 /obj/item/clothing/head/helmet/space/golem
@@ -913,6 +903,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
+	flags = ABSTRACT | DROPDEL
 	flags_inv = 0
 	slowdown = 0
 	unacidable = 1
@@ -936,6 +927,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
+	flags = ABSTRACT | DROPDEL
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
 	slowdown = 0
 	unacidable = 1
@@ -991,7 +983,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		user.golem_rune = null
 		to_chat(user, "<span class='notice'>You are no longer queued for golem role.</span>")
 	else
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 		last_ghost_click = world.time + 50
 		var/image/I = image('icons/mob/hud.dmi', src, "agolem_master") //If there is alot activated rune close by, we can see which is ours.
 		user.client.images += I
@@ -1005,18 +997,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		to_chat(user, "The rune fizzles uselessly. There is no spirit nearby.")
 		return
 
-	var/mob/living/carbon/human/G = new /mob/living/carbon/human
-	G.dna.mutantrace = "adamantine"
-	G.update_mutantrace()
-	G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
-	G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)
-	G.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem(G), slot_head)
-	G.equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem(G), slot_wear_suit)
-	G.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(G), slot_shoes)
-	G.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem(G), slot_wear_mask)
-	G.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(G), slot_gloves)
-	G.status_flags &= ~(CANSTUN|CANWEAKEN|CANPARALYSE)
-	G.forceMove(loc)
+	var/mob/living/carbon/human/golem/G = new(loc)
 	G.attack_log = spirit.attack_log //Preserve attack log, if there is any...
 	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"
 	G.key = spirit.key
@@ -1045,7 +1026,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		spirit = null
 		result = 0
 	if(!result)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	update_icon()
 	return result
 
@@ -1126,11 +1107,11 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Grow()
 	grown = 1
 	icon_state = "slime egg-grown"
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	var/turf/T = get_turf(src)
 	src.visible_message("\blue The [name] pulsates and quivers!")
 	spawn(rand(50,100))

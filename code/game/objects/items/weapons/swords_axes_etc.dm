@@ -18,18 +18,18 @@
 /*
  * Sword
  */
-/obj/item/weapon/melee/energy/sword/IsShield()
+/obj/item/weapon/melee/energy/sword/Get_shield_chance()
 	if(active)
-		return 1
+		return 40
 	return 0
 
 /obj/item/weapon/melee/energy/sword/New()
-	item_color = pick("red","blue","green","purple")
+	item_color = pick("red","blue","green","purple","yellow","pink","black")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red You accidentally cut yourself with [src].")
-		user.take_organ_damage(5,5)
+		user.take_bodypart_damage(5, 5)
 	active = !active
 	if (active)
 		force = 30
@@ -59,6 +59,7 @@
 	add_fingerprint(user)
 	return
 
+
 /*
  * Classic Baton
  */
@@ -77,9 +78,9 @@
 		user.Weaken(3 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.apply_damage(2*force, BRUTE, "head")
+			H.apply_damage(2 * force, BRUTE, BP_HEAD)
 		else
-			user.take_organ_damage(2*force)
+			user.take_bodypart_damage(2 * force)
 		return
 /*this is already called in ..()
 	src.add_fingerprint(user)
@@ -170,9 +171,9 @@
 			user.Weaken(3 * force)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				H.apply_damage(2*force, BRUTE, "head")
+				H.apply_damage(2 * force, BRUTE, BP_HEAD)
 			else
-				user.take_organ_damage(2*force)
+				user.take_bodypart_damage(2 * force)
 			return
 		if(..())
 			playsound(src.loc, "swing_hit", 50, 1, -1)
@@ -186,26 +187,32 @@
  */
 //Most of the other special functions are handled in their own files.
 
-/obj/item/weapon/melee/energy/sword/green
-	New()
-		item_color = "green"
+/obj/item/weapon/melee/energy/sword/green/New()
+	item_color = "green"
 
-/obj/item/weapon/melee/energy/sword/red
-	New()
-		item_color = "red"
+/obj/item/weapon/melee/energy/sword/red/New()
+	item_color = "red"
+
+/obj/item/weapon/melee/energy/sword/blue/New()
+	item_color = "blue"
+
+/obj/item/weapon/melee/energy/sword/purple/New()
+	item_color = "purple"
+
+/obj/item/weapon/melee/energy/sword/yellow/New()
+	item_color = "yellow"
+
+/obj/item/weapon/melee/energy/sword/pink/New()
+	item_color = "pink"
+
+/obj/item/weapon/melee/energy/sword/black/New()
+	item_color = "black"
+
 
 /obj/item/weapon/melee/energy/blade/New()
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-	return
-
-/obj/item/weapon/melee/energy/blade/dropped()
-	qdel(src)
-	return
-
-/obj/item/weapon/melee/energy/blade/proc/throw_held()
-	qdel(src)
 	return
 
 /*
@@ -231,16 +238,16 @@
 /*
  * Energy Shield
  */
-/obj/item/weapon/shield/energy/IsShield()
+/obj/item/weapon/shield/energy/Get_shield_chance()
 	if(active)
-		return 1
+		return block_chance
 	else
 		return 0
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red You beat yourself in the head with [src].")
-		user.take_organ_damage(5)
+		user.take_bodypart_damage(5)
 	active = !active
 	if (active)
 		force = 10

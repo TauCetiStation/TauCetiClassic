@@ -131,7 +131,7 @@
 
 
 /obj/machinery/computer/pod/old
-	icon_state = "old"
+	icon_state = "oldcomp"
 	name = "DoorMex Control Computer"
 	title = "Door Controls"
 

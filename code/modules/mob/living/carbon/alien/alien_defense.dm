@@ -39,7 +39,7 @@ This is what happens, when we attack aliens.
 				help_shake_act(M)
 
 		if ("grab")
-			if (M == src || anchored)
+			if (M == src || anchored || M.lying)
 				return
 			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
@@ -133,6 +133,10 @@ This is what happens, when we attack aliens.
 	return
 
 /mob/living/carbon/alien/attack_animal(mob/living/simple_animal/M)
+	if(istype(M,/mob/living/simple_animal/headcrab))
+		var/mob/living/simple_animal/headcrab/crab = M
+		crab.Infect(src)
+		return
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else

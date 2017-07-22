@@ -155,7 +155,6 @@
 /obj/machinery/recharge_station/close_machine()
 	if(!panel_open)
 		for(var/mob/living/silicon/robot/R in loc)
-			R.stop_pulling()
 			if(R.client)
 				R.client.eye = src
 				R.client.perspective = EYE_PERSPECTIVE
@@ -204,7 +203,7 @@
 			if(R.module)
 				R.module.respawn_consumable(R)
 			if(repairs)
-				R.heal_organ_damage(repairs, repairs - 1)
+				R.heal_bodypart_damage(repairs, repairs - 1)
 			if(!R.cell)
 				return
 			else if(R.cell.charge >= R.cell.maxcharge)

@@ -27,7 +27,7 @@ datum/gear/zippo
 	path = /obj/item/weapon/lighter/zippo
 	cost = 2
 
-/datum/gear/gear/paicard
+/datum/gear/paicard
 	display_name = "PAI device"
 	path = /obj/item/device/paicard
 	cost = 2
@@ -35,3 +35,7 @@ datum/gear/zippo
 /datum/gear/briefcase
 	display_name = "Briefcase"
 	path = /obj/item/weapon/storage/briefcase
+
+/datum/gear/electriccig
+	display_name = "Electronic cigarette"
+	path = /obj/item/clothing/mask/fluff/electriccig

@@ -51,11 +51,6 @@
 /proc/strip_html(t,limit=MAX_MESSAGE_LEN)
 	return copytext((sanitize(strip_html_simple(t))),1,limit)
 
-//Runs byond's sanitization proc along-side strip_html_simple
-//I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' that html_encode() would cause
-/proc/adminscrub(t,limit=MAX_MESSAGE_LEN)
-	return copytext((html_encode(strip_html_simple(t))),1,limit)
-
 
 //Returns null if there is any bad text in the string
 /proc/reject_bad_text(text, max_length=512)
@@ -142,10 +137,7 @@
 //checks text for html tags
 //if tag is not in whitelist (var/list/paper_tag_whitelist in global.dm)
 //relpaces < with &lt;
-//hm, better use pencode + sanitize()
-proc/checkhtml(t)
-	t = sanitize_simple(t, list("&#"="."))
-
+/proc/checkhtml(t)
 	var/p = findtext(t,"<",1)
 	while (p)	//going through all the tags
 		var/start = p++

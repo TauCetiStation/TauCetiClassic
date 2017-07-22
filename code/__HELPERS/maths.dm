@@ -9,9 +9,6 @@ var/const/Sqrt2	= 1.41421356
 	var/a = arccos(x / sqrt(x*x + y*y))
 	return y >= 0 ? a : -a
 
-/proc/Ceiling(x)
-	return -round(-x)
-
 // cotangent
 /proc/Cot(x)
 	return 1 / Tan(x)
@@ -71,12 +68,12 @@ var/const/Sqrt2	= 1.41421356
 	return sum / values
 
 var/normal_next
-/proc/NormalDistr(mean = 0, stddev = 1) //because gaussian() looks... strange. This is Box–Muller transform
+/proc/NormalDistr(mean = 0, stddev = 1) //because gaussian() looks... strange. This is Box-Muller transform
 	if(normal_next != null)
 		. = mean + normal_next * stddev
 		normal_next = null
 	else
-		var/R1 = sqrt(-2.0 * log(rand(0, ACCURACY) / ACCURACY))
+		var/R1 = sqrt(-2.0 * log(rand(1, ACCURACY) / ACCURACY))
 		var/R2 = 360 * (rand(0, ACCURACY) / ACCURACY) //because BYOND's cos() and sin() accepts degrees
 		. = mean + (R1 * cos(R2)) * stddev
 		normal_next = R1 * sin(R2)

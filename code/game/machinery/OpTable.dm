@@ -51,11 +51,6 @@
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		qdel(src)
-	if (!( locate(/obj/machinery/optable, user.loc) ))
-		step(user, get_dir(user, src))
-		if (user.loc == src.loc)
-			user.layer = TURF_LAYER
-			visible_message("<span class='notice'>The monkey hides under the table!</span>")
 	return
 
 /obj/machinery/optable/attack_hand(mob/user)

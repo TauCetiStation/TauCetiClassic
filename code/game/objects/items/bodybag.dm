@@ -61,8 +61,7 @@
 			if(contents.len)	return 0
 			visible_message("[usr] folds up the [src.name]")
 			new item_path(get_turf(src))
-			spawn(0)
-				qdel(src)
+			qdel(src)
 			return
 
 /obj/structure/closet/bodybag/update_icon()

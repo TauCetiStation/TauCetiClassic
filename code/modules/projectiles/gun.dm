@@ -54,8 +54,7 @@
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
 	if(recoil)
-		spawn()
-			shake_camera(user, recoil + 1, recoil)
+		shake_camera(user, recoil + 1, recoil)
 
 	if(silenced)
 		playsound(user, fire_sound, 10, 1)
@@ -92,7 +91,7 @@
 			return
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.species.name == "Shadowling")
+			if(H.species.name == SHADOWLING)
 				to_chat(H, "<span class='notice'>Your fingers don't fit in the trigger guard!</span>")
 				return
 
@@ -113,7 +112,7 @@
 				if(going_to_explode)
 					explosion(user.loc, 0, 0, 1, 1)
 					to_chat(H, "<span class='danger'>[src] blows up in your face.</span>")
-					H.take_organ_damage(0,20)
+					H.take_bodypart_damage(0, 20)
 					H.drop_item()
 					qdel(src)
 					return
@@ -163,7 +162,13 @@
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
 	//Suicide handling.
-	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot)
+	if (M == user && user.zone_sel.selecting == O_MOUTH && !mouthshoot)
+		if(isrobot(user))
+			to_chat(user, "<span class='notice'>You have tried to commit suicide, but couldn't do it.</span>")
+			return
+		if(istype(src, /obj/item/weapon/gun/magic/staff))
+			to_chat(user, "<span class='notice'>Get rid of the habit of holding different sticks in your mouth.</span>")
+			return
 		mouthshoot = 1
 		M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
 		if(!do_after(user, 40, target = user))
@@ -190,7 +195,7 @@
 
 			chambered.BB.on_hit(M)
 			if (chambered.BB.damage_type != HALLOSS)
-				user.apply_damage(chambered.BB.damage*2.5, chambered.BB.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [chambered.BB]", sharp=1)
+				user.apply_damage(chambered.BB.damage * 2.5, chambered.BB.damage_type, BP_HEAD, null, chambered.BB.damage_flags(), "Point blank shot in the mouth with \a [chambered.BB]")
 				user.death()
 			else
 				to_chat(user, "<span class = 'notice'>Ow...</span>")

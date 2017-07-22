@@ -98,7 +98,7 @@
 
 		M.Weaken(10)
 
-	if(master && wires & 1)
+	if(master && !wires.is_index_cut(RADIO_WIRE_SIGNAL))
 		master.receive_signal()
 	return
 

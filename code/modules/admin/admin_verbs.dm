@@ -31,8 +31,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/getserverlog,			/*allows us to fetch server logs (diary) for other days*/
 	/client/proc/get_whitelist, 			//Whitelist
 	/client/proc/add_to_whitelist,
-	/client/proc/get_alienwhitelist,
-	/client/proc/add_to_alienwhitelist,
+	/datum/admins/proc/whitelist_panel,
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
 	/client/proc/Getmob,				/*teleports a mob to our location*/
 	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
@@ -117,7 +116,8 @@ var/list/admin_verbs_fun = list(
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
-	/client/proc/respawn_character
+	/client/proc/respawn_character,
+	/datum/admins/proc/spawn_fluid_verb
 	)
 var/list/admin_verbs_server = list(
 	/client/proc/Set_Holiday,
@@ -157,12 +157,14 @@ var/list/admin_verbs_debug = list(
 	/client/proc/investigate_show,
 	/client/proc/reload_admins,
 	/client/proc/reload_mentors,
+	/client/proc/reload_nanoui_resources,
 //	/client/proc/remake_distribution_map,
 //	/client/proc/show_distribution_map,
 	/client/proc/enable_debug_verbs,
 	/*/client/proc/callproc,*/
 //	/proc/machine_upgrade,
-	/client/proc/toggledebuglogs
+	/client/proc/toggledebuglogs,
+	/client/proc/view_runtimes
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -210,9 +212,8 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
 	/client/proc/get_whitelist, 			//Whitelist
-	/client/proc/get_alienwhitelist,
 	/client/proc/add_to_whitelist,
-	/client/proc/add_to_alienwhitelist,
+	/datum/admins/proc/whitelist_panel,
 	/client/proc/gsw_add,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
@@ -478,93 +479,29 @@ var/list/admin_verbs_hideable = list(
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-#define MAX_WARNS 3
-#define AUTOBANTIME 15
-
 /client/proc/warn(warned_ckey)
-	var/reason = "Autobanning due to too many formal warnings"
 	if(!check_rights(R_ADMIN))
 		return
+	
+	warned_ckey = ckey(warned_ckey)
+	
+	var/reason = input(usr, "Reason?", "Warn Reason","") as text|null
 
-	if(!warned_ckey || !istext(warned_ckey))	return
-	/*if(warned_ckey in admin_datums)
-		to_chat(usr, "<font color='red'>Error: warn(): You can't warn admins.</font>")
-		return*/
-
-	var/datum/preferences/D
+	if(!warned_ckey || !reason)
+		return
+	
+	notes_add(warned_ckey, "ADMINWARN: " + reason, src)
+	
 	var/client/C = directory[warned_ckey]
-	if(C)	D = C.prefs
-	else	D = preferences_datums[warned_ckey]
-
-	if(!D)
-		to_chat(src, "<font color='red'>Error: warn(): No such ckey found.</font>")
-		return
-
-	if(++D.warns >= MAX_WARNS)					//uh ohhhh...you'reee iiiiin trouuuubble O:)
-		var/bantime = (++D.warnbans * AUTOBANTIME)
-		D.warns = 1
-		ban_unban_log_save("[ckey] warned [warned_ckey], resulting in a [bantime] minute autoban.")
-		if(C)
-			log_admin("[src.key] has warned [C.key] resulting in a [bantime] minute ban.")
-			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] resulting in a [bantime] minute ban.")
-			send2slack_logs(key_name(src),  "has warned [key_name_admin(C)] resulting in a [bantime] minute ban.", "(WARNBAN)")
-			to_chat(C, "<font color='red'><BIG><B>You have been autobanned due to a warning by [ckey].</B></BIG><br>This is a temporary ban, it will be removed in [bantime] minutes.")
-		else
-			log_admin("[src.key] has warned [warned_ckey] resulting in a [bantime] minute ban.")
-			message_admins("[key_name_admin(src)] has warned [warned_ckey] resulting in a [bantime] minute ban.")
-			send2slack_logs(key_name(src),  "has warned [warned_ckey] resulting in a [bantime] minute ban.", "(WARNBAN)")
-		AddBan(warned_ckey, D.last_id, "Autobanning due to too many formal warnings", ckey, 1, bantime)
-		holder.DB_ban_record(BANTYPE_TEMP, null, bantime, reason, , ,warned_ckey)
-		feedback_inc("ban_warn",1)
-		D.save_preferences()
-		del(C)
-	else
-		if(C)
-			to_chat(C, "<font color='red'><BIG><B>You have been formally warned by an administrator.</B></BIG><br>Further warnings will result in an autoban.</font>")
-			log_admin("[src.key] has warned [C.key]")
-			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)]. They have [MAX_WARNS-D.warns] strikes remaining. And have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
-		else
-			log_admin("[src.key] has warned [C.key]")
-			message_admins("[key_name_admin(src)] has warned [warned_ckey] (DC). They have [MAX_WARNS-D.warns] strikes remaining. And have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
-		D.save_preferences()
-	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/unwarn(warned_ckey)
-	if(!check_rights(R_ADMIN))
-		return
-
-	if(!warned_ckey || !istext(warned_ckey))	return
-	/*if(warned_ckey in admin_datums)
-		to_chat(usr, "<font color='red'>Error: warn(): You can't warn admins.</font>")
-		return*/
-
-	var/datum/preferences/D
-	var/client/C = directory[warned_ckey]
-	if(C)	D = C.prefs
-	else	D = preferences_datums[warned_ckey]
-
-	if(!D)
-		to_chat(src, "<font color='red'>Error: unwarn(): No such ckey found.</font>")
-		return
-
-	if(D.warns == 0)
-		to_chat(src, "<font color='red'>Error: unwarn(): You can't unwarn someone with 0 warnings, you big dummy.</font>")
-		return
-
-	D.warns-=1
-	var/strikesleft = MAX_WARNS-D.warns
+	reason = sanitize(reason)
+	
 	if(C)
-		to_chat(C, "<font color='red'><BIG><B>One of your warnings has been removed.</B></BIG><br>You currently have [strikesleft] strike\s left</font>")
-		log_admin("[src.key] has unwarned [C.key]")
-		message_admins("[key_name_admin(src)] has unwarned [key_name_admin(C)]. They have [strikesleft] strike(s) remaining, and have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
-	else
-		log_admin("[src.key] has unwarned [warned_ckey] (DC)")
-		message_admins("[key_name_admin(src)] has unwarned [warned_ckey] (DC). They have [strikesleft] strike(s) remaining, and have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
-	D.save_preferences()
-	feedback_add_details("admin_verb","UNWARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		to_chat(C, "<span class='alert'><span class='reallybig bold'>You have been formally warned by an administrator.</span><br>Reason: [reason].</span>")
+	
+	log_admin("[src.key] has warned [warned_ckey] with reason: [reason]")
+	message_admins("[key_name_admin(src)] has warned [C ? key_name_admin(C) : warned_ckey] with reason: [reason].")
 
-#undef MAX_WARNS
-#undef AUTOBANTIME
+	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_bomb() // Some admin dickery that can probably be done better -- TLE
 	set category = "Special Verbs"
@@ -895,6 +832,7 @@ var/list/admin_verbs_hideable = list(
 
 	to_chat(T, "<span class='notice'><b><font size=3>Man up and deal with it.</font></b></span>")
 	to_chat(T, "<span class='notice'>Move on.</span>")
+	T << 'sound/voice/ManUp1.ogg'
 
 	log_admin("[key_name(usr)] told [key_name(T)] to man up and deal with it.")
 	message_admins("\blue [key_name_admin(usr)] told [key_name(T)] to man up and deal with it.")

@@ -67,7 +67,7 @@
 					updatehealth()
 
 
-	proc/handle_environment(datum/gas_mixture/environment)
+	handle_environment(datum/gas_mixture/environment)
 		if(!environment)
 			return
 		var/environment_heat_capacity = environment.heat_capacity()

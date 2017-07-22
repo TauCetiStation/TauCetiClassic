@@ -77,7 +77,7 @@
 		M.regenerate_icons()
 	return
 
-/obj/item/clothing/suit/armor/abductor/vest/IsShield()
+/obj/item/clothing/suit/armor/abductor/vest/Get_shield_chance()
 	DeactivateStealth()
 	return 0
 
@@ -88,7 +88,7 @@
 /obj/item/clothing/suit/armor/abductor/vest/proc/IsAbductor(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.species.name != "Abductor")
+		if(H.species.name != ABDUCTOR)
 			return 0
 		return 1
 	return 0
@@ -131,19 +131,19 @@
 		M.update_canmove()
 //		M.adjustStaminaLoss(-75)
 		combat_cooldown = 0
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
 	combat_cooldown++
 	if(combat_cooldown == initial(combat_cooldown))
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 
 //SCIENCE TOOL
 /obj/item/device/abductor/proc/IsAbductor(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.species.name != "Abductor")
+		if(H.species.name != ABDUCTOR)
 			return 0
 		return 1
 	return 0
@@ -301,7 +301,7 @@
 			imp_in.buckled.unbuckle_mob()
 		home.Retrieve(imp_in)
 		cooldown = 0
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		to_chat(imp_in, "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>")
 	return
@@ -310,7 +310,7 @@
 	if(cooldown < initial(cooldown))
 		cooldown++
 		if(cooldown == initial(cooldown))
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 
 
 //ALIEN DECLONER
@@ -322,7 +322,7 @@
 	item_state = "alienpistol"
 
 /obj/item/weapon/gun/energy/decloner/alien/special_check(mob/living/carbon/human/M)
-	if(M.species.name != "Abductor")
+	if(M.species.name != ABDUCTOR)
 		to_chat(M, "<span class='notice'>You can't figure how this works.</span>")
 		return 0
 	return 1
@@ -374,7 +374,7 @@
 	var/mob/living/carbon/human/H = user
 	if(!H.species)
 		return 0
-	if(H.species.name != "Abductor")
+	if(H.species.name != ABDUCTOR)
 		return 0
 	return 1
 
@@ -443,7 +443,7 @@
 	var/mob/living/carbon/human/H = user
 	if(!H.species)
 		return 0
-	if(H.species.name != "Abductor")
+	if(H.species.name != ABDUCTOR)
 		return 0
 	return 1
 
@@ -558,6 +558,7 @@
 	name = "hard-light energy field"
 	desc = "A hard-light field restraining the hands."
 	icon_state = "handcuffAlien"
+	flags = DROPDEL // no CONDUCT
 	origin_tech = "materials=5;combat=4;powerstorage=5"
 	breakouttime = 450
 

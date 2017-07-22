@@ -49,7 +49,7 @@
 		var/area/A = control_area
 		if(A && istype(A))
 			A.turret_controls -= src
-	..()
+	return ..()
 
 /obj/machinery/turretid/initialize()
 	if(!control_area)
@@ -75,14 +75,17 @@
 		to_chat(user, "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>")
 		return 1
 
-	if(locked && !issilicon(user))
+	if(locked && !issilicon(user) && !IsAdminGhost(user))
 		to_chat(user, "<span class='notice'>Access denied.</span>")
 		return 1
 
 	return 0
 
+/obj/machinery/turretid/is_operational()
+	return !(stat & (NOPOWER|BROKEN))
+
 /obj/machinery/turretid/is_operational_topic()
-	return !(stat & NOPOWER)
+	return is_operational()
 
 /obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN)
@@ -105,13 +108,13 @@
 	return ..()
 
 /obj/machinery/turretid/attack_ai(mob/user as mob)
-	if(isLocked(user))
+	if(!is_operational() || isLocked(user))
 		return
 
 	interact(user)
 
 /obj/machinery/turretid/attack_hand(mob/user as mob)
-	if(isLocked(user))
+	if(!is_operational() || isLocked(user))
 		return
 
 	interact(user)
@@ -255,10 +258,11 @@
 
 		enabled=0
 		updateTurrets()
-
-		spawn(rand(60,600))
-			if(!enabled)
-				enabled=1
-				updateTurrets()
+		addtimer(CALLBACK(src, .proc/emp_act_post), rand(60,600))
 
 	..()
+
+/obj/machinery/turretid/proc/emp_act_post()
+	if(!enabled)
+		enabled=1
+		updateTurrets()

@@ -134,19 +134,17 @@
 	volume = 2 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
 
 
-	New()
-		..()
-		src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
-		//
-		src.air_contents.update_values()
+/obj/item/weapon/tank/emergency_oxygen/New()
+	..()
+	src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C)
+	src.air_contents.update_values()
+	return
 
-		return
+/obj/item/weapon/tank/emergency_oxygen/examine(mob/user)
+	..()
+	if((src in range(0, user)) && (air_contents.oxygen < 0.2))
+		to_chat(user, "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")
 
-
-	examine(mob/user)
-		..()
-		if((src in range(0, user)) && (air_contents.oxygen < 0.2))
-			to_chat(user, "<span class='danger'>The meter on the [src.name] indicates you are almost out of air!</span>")
 
 /obj/item/weapon/tank/emergency_oxygen/engi
 	name = "extended-capacity emergency oxygen tank"

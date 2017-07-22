@@ -281,6 +281,8 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
 		body += "<option value>---</option>"
 		body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
+	if(isatom(D))
+		body += "<option value='?_src_=vars;delthis=\ref[D]'>Delete this object</option>"
 	if(isobj(D))
 		body += "<option value='?_src_=vars;delall=\ref[D]'>Delete all of type</option>"
 	if(isobj(D) || ismob(D) || isturf(D))
@@ -353,7 +355,7 @@ body
 		html += "[name] = <span class='value'>null</span>"
 
 	else if (istext(value))
-		html += "[name] = <span class='value'>\"[value]\"</span>"
+		html += "[name] = <span class='value'>\"[sanitize_popup(value)]\"</span>"
 
 	else if (isicon(value))
 		#ifdef VARSICON
@@ -401,6 +403,9 @@ body
 					index++
 				html += "</ul>"
 
+	else if (isnum(value) && findtext(name, "flags")) // flag variables may not always have flags in name, but i don't know any other way to detect them, so better than nothing.
+		html += "(<a href='?_src_=vars;view_flags=[value]'>F</a>) [name] = <span class='value'>[value]</span>"
+
 	else
 		html += "[name] = <span class='value'>[value]</span>"
 
@@ -416,6 +421,11 @@ body
 		if(!check_rights(R_DEBUG|R_ADMIN))	return
 
 		debug_variables(locate(href_list["Vars"]))
+
+	else if(href_list["view_flags"])
+		if(!check_rights(R_DEBUG | R_VAREDIT))
+			return
+		view_flags_variables(href_list["view_flags"])
 
 	//~CARN: for renaming mobs (updates their name, real_name, mind.name, their ID/PDA and datacore records).
 	else if(href_list["rename"])
@@ -571,6 +581,11 @@ body
 
 		if(usr.client)
 			usr.client.cmd_assume_direct_control(M)
+
+	else if(href_list["delthis"])
+		//Rights check are in cmd_admin_delete() proc
+		var/atom/A = locate(href_list["delthis"])
+		cmd_admin_delete(A)
 
 	else if(href_list["delall"])
 		if(!check_rights(R_DEBUG|R_SERVER))	return
@@ -873,11 +888,9 @@ body
 			to_chat(usr, "This can only be done on mobs with clients")
 			return
 
-		nanomanager.send_resources(H.client)
+		H.client.reload_nanoui_resources()
 
 		to_chat(usr, "Resource files sent")
-		to_chat(H, "Your NanoUI Resource files have been refreshed")
-
 		log_admin("[key_name(usr)] resent the NanoUI resource files to [key_name(H)] ")
 
 
@@ -946,3 +959,26 @@ body
 		src.debug_variables(DAT)
 
 	return
+
+/client/proc/view_flags_variables(N)
+	if(!usr.client || !usr.client.holder)
+		return
+
+	if(isnull(N))
+		return
+
+	if(!isnum(N))
+		N = text2num(N)
+
+	var/dat = "<html><head><title>Bit Flags list</title></head>"
+
+	var/i = 1
+	do
+		if(i & N)
+			dat += "<b>[i]</b> = <font color='#FF0000'>TRUE</font><br>"
+		else
+			dat += "<b>[i]</b> = FALSE<br>"
+		i *= 2
+	while(i < ~0)
+
+	usr << browse(dat, "window=bit_flags")

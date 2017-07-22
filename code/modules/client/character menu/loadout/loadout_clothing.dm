@@ -23,6 +23,16 @@
 	path = /obj/item/clothing/suit/poncho
 	cost = 1
 
+/datum/gear/suit/ian_shirt
+	display_name = "Ian Shirt"
+	path = /obj/item/clothing/suit/ianshirt
+	cost = 1
+
+/datum/gear/suit/nerd_shirt
+	display_name = "Nerd Shirt"
+	path = /obj/item/clothing/suit/nerdshirt
+	cost = 1
+
 /datum/gear/suit/unathi_robe
 	display_name = "Roughspun robe"
 	path = /obj/item/clothing/suit/unathi/robe
@@ -35,6 +45,16 @@
 /datum/gear/suit/wcoat
 	display_name = "Waistcoat"
 	path = /obj/item/clothing/suit/wcoat
+	cost = 1
+
+/datum/gear/suit/kung
+	display_name = "Kung jacket"
+	path = /obj/item/clothing/suit/fluff/kung
+	cost = 1
+
+/datum/gear/suit/serifcoat
+	display_name = "Serif coat"
+	path = /obj/item/clothing/suit/serifcoat
 	cost = 1
 
 
@@ -86,3 +106,8 @@
 /datum/gear/under/kilt
 	display_name = "Kilt"
 	path = /obj/item/clothing/under/kilt
+
+/datum/gear/under/kung
+	display_name = "Kung under"
+	path = /obj/item/clothing/under/fluff/kung
+	cost = 1

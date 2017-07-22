@@ -125,3 +125,14 @@ CREATE TABLE `erro_privacy` (
   `option` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+CREATE TABLE `whitelist` (
+  `ckey` VARCHAR(32) NOT NULL,
+  `role` VARCHAR(32) NOT NULL,
+  `ban` INT NOT NULL,
+  `reason` TEXT NOT NULL,
+  `addby` VARCHAR(32) NOT NULL,
+  `addtm` DATETIME NOT NULL,
+  `editby` VARCHAR(32) NOT NULL,
+  `edittm` DATETIME NOT NULL)
+ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;

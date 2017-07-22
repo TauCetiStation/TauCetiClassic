@@ -248,7 +248,7 @@
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(synd_mob), slot_w_uniform)
 	synd_mob.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(synd_mob), slot_shoes)
 	if(synd_mob.backbag == 2) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(synd_mob), slot_back)
-	if(synd_mob.backbag == 3) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(synd_mob), slot_back)
+	if(synd_mob.backbag == 3) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(synd_mob), slot_back)
 	if(synd_mob.backbag == 4) synd_mob.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(synd_mob), slot_back)
 	synd_mob.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m12mm(synd_mob), slot_in_backpack)
 	synd_mob.equip_to_slot_or_del(new /obj/item/device/radio/uplink(synd_mob), slot_in_backpack)
@@ -263,11 +263,11 @@
 	if(synd_mob.species)
 		var/race = synd_mob.species.name
 
-		if(race == "Unathi")
+		if(race == UNATHI)
 			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/unathi(synd_mob), slot_in_backpack)
-		else if(race == "Tajaran")
+		else if(race == TAJARAN)
 			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/tajaran(synd_mob), slot_in_backpack)
-		else if(race == "Skrell")
+		else if(race == SKRELL)
 			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/skrell(synd_mob), slot_in_backpack)
 	//	else
 	//		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/syndi/human(synd_mob), slot_wear_suit)

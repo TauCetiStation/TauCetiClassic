@@ -42,13 +42,13 @@
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = "glowshroomf"
 
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 	set_light(round(potency/10))
 	lastTick = world.timeofday
 
 /obj/effect/glowshroom/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/glowshroom/process()

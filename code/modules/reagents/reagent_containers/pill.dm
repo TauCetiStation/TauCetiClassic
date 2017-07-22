@@ -37,12 +37,12 @@
 			qdel(src)
 		return 1
 
-	else if(istype(M, /mob/living/carbon/human) )
-
-		var/mob/living/carbon/human/H = M
-		if(H.species.flags[IS_SYNTHETIC])
-			to_chat(H, "\red They have a monitor for a head, where do you think you're going to put that?")
-			return
+	else
+		if(istype(M, /mob/living/carbon/human) )
+			var/mob/living/carbon/human/H = M
+			if(H.species.flags[IS_SYNTHETIC])
+				to_chat(H, "\red They have a monitor for a head, where do you think you're going to put that?")
+				return
 
 		for(var/mob/O in viewers(world.view, user))
 			O.show_message("\red [user] attempts to force [M] to swallow [src].", 1)

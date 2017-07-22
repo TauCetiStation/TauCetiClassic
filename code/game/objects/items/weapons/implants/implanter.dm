@@ -43,9 +43,9 @@
 					src.imp.implanted = 1
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/datum/organ/external/affected = H.get_organ(user.zone_sel.selecting)
-						affected.implants += src.imp
-						imp.part = affected
+						var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+						BP.implants += src.imp
+						imp.part = BP
 
 						H.hud_updateflag |= 1 << IMPLOYAL_HUD
 
@@ -129,3 +129,11 @@
 			S.remove_from_storage(A)
 		A.loc.contents.Remove(A)
 		update()
+
+/obj/item/weapon/implanter/storage
+	name = "implanter (storage)"
+	icon_state = "cimplanter1"
+
+/obj/item/weapon/implanter/storage/New()
+	imp = new /obj/item/weapon/implant/storage(src)
+	..()

@@ -192,23 +192,20 @@
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
-	if(isanimal(M))
-		if(iscorgi(M))
-			if(bitecount == 0 || prob(50))
-				M.emote("nibbles away at the [src]")
-			bitecount++
-			if(bitecount >= 5)
-				var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
-				if(sattisfaction_text)
-					M.emote("[sattisfaction_text]")
-				qdel(src)
-		if(ismouse(M))
-			var/mob/living/simple_animal/mouse/N = M
-			to_chat(N, text("<span class='notice'>You nibble away at [src].</span>"))
-			if(prob(50))
-				N.visible_message("[N] nibbles away at [src].</span>", "")
-			//N.emote("nibbles away at the [src]")
-			N.health = min(N.health + 1, N.maxHealth)
+	if(iscorgi(M) || isIAN(M))
+		if(bitecount == 0 || prob(50))
+			M.visible_message("<b>[M]</b> nibbles away at the [src]")
+		bitecount++
+		if(bitecount >= 5)
+			var/sattisfaction_text = pick("burps from enjoyment", "yaps for more", "woofs twice", "looks at the area where the [src] was")
+			M.visible_message("<b>[M]</b> [sattisfaction_text]")
+			qdel(src)
+	if(ismouse(M))
+		var/mob/living/simple_animal/mouse/N = M
+		to_chat(N, text("<span class='notice'>You nibble away at [src].</span>"))
+		if(prob(50))
+			N.visible_message("<b>[N]</b> nibbles away at [src].", "")
+		N.health = min(N.health + 1, N.maxHealth)
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -272,7 +269,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
 	desc = "Nougat, love it or hate it."
-	icon_state = "candy"
 	filling_color = "#7D5F46"
 
 	New()
@@ -468,31 +464,31 @@
 	icon_state = "egg"
 	filling_color = "#FDFFD1"
 
-	New()
+/obj/item/weapon/reagent_containers/food/snacks/egg/New()
+	..()
+	reagents.add_reagent("nutriment", 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
+	..()
+	new /obj/effect/decal/cleanable/egg_smudge(loc)
+	reagents.reaction(hit_atom, TOUCH)
+	visible_message("<span class='rose'>\The [src.name] has been squashed.</span>", "<span class='rose'>You hear a smack.</span>")
+	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W, mob/user)
+	if(istype( W, /obj/item/toy/crayon ))
+		var/obj/item/toy/crayon/C = W
+		var/clr = C.colourName
+
+		if(!(clr in list("blue","green","mime","orange","purple","rainbow","red","yellow")))
+			to_chat(usr, "<span class='info'>The egg refuses to take on this color!</span>")
+			return
+
+		to_chat(usr, "<span class='notice'>You color \the [src] [clr].</span>")
+		icon_state = "egg-[clr]"
+		item_color = clr
+	else
 		..()
-		reagents.add_reagent("nutriment", 1)
-
-	throw_impact(atom/hit_atom)
-		..()
-		new/obj/effect/decal/cleanable/egg_smudge(src.loc)
-		src.reagents.reaction(hit_atom, TOUCH)
-		src.visible_message("<span class='rose'>[src.name] has been squashed.</span>","<span class='rose'>You hear a smack.</span>")
-		qdel(src)
-
-	attackby(obj/item/weapon/W, mob/user)
-		if(istype( W, /obj/item/toy/crayon ))
-			var/obj/item/toy/crayon/C = W
-			var/clr = C.colourName
-
-			if(!(clr in list("blue","green","mime","orange","purple","rainbow","red","yellow")))
-				to_chat(usr, "<span class='info'>The egg refuses to take on this color!</span>")
-				return
-
-			to_chat(usr, "<span class='notice'>You color \the [src] [clr].</span>")
-			icon_state = "egg-[clr]"
-			item_color = clr
-		else
-			..()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/blue
 	icon_state = "egg-blue"
@@ -1566,17 +1562,17 @@
 		surprise.transform *= 0.6
 		surprise.add_blood(M)
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/external/E = H.get_organ("chest")
-		E.fracture()
-		for (var/datum/organ/internal/I in E.internal_organs)
-			I.take_damage(rand(I.min_bruised_damage, I.min_broken_damage+1))
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
+		BP.fracture()
+		for (var/obj/item/organ/internal/IO in BP.bodypart_organs)
+			IO.take_damage(rand(IO.min_bruised_damage, IO.min_broken_damage + 1))
 
-		if (!E.hidden && prob(60)) //set it snuggly
-			E.hidden = surprise
-			E.cavity = 0
+		if (!BP.hidden && prob(60)) //set it snuggly
+			BP.hidden = surprise
+			BP.cavity = 0
 		else 		//someone is having a bad day
-			E.createwound(CUT, 30)
-			E.embed(surprise)
+			BP.createwound(CUT, 30)
+			BP.embed(surprise)
 	else if (ismonkey(M))
 		M.visible_message("<span class='danger'>[M] suddenly tears in half!</span>")
 		var/mob/living/carbon/monkey/ook = new monkey_type(M.loc)
@@ -1611,7 +1607,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/farwacube
 	name = "farwa cube"
-	monkey_type =/mob/living/carbon/monkey/tajara
+	monkey_type = /mob/living/carbon/monkey/tajara
 
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/stokcube
@@ -1620,16 +1616,16 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/stokcube
 	name = "stok cube"
-	monkey_type =/mob/living/carbon/monkey/unathi
+	monkey_type = /mob/living/carbon/monkey/unathi
 
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/neaeracube
 	name = "neaera cube"
-	monkey_type ="skrell"
+	monkey_type = /mob/living/carbon/monkey/skrell
 
 /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped/neaeracube
 	name = "neaera cube"
-	monkey_type =/mob/living/carbon/monkey/skrell
+	monkey_type = /mob/living/carbon/monkey/skrell
 
 
 /obj/item/weapon/reagent_containers/food/snacks/spellburger
@@ -3737,32 +3733,39 @@
 // CANDYBARS! :3
 ///////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/candy/candybar/rice
+/obj/item/weapon/reagent_containers/food/snacks/candy/candybar
+	name = "candy bar"
+	desc = "Nougat, love it or hate it."
+	icon_state = "candy"
+	trash = /obj/item/trash/candy
+	filling_color = "#7D5F46"
+
+/obj/item/weapon/reagent_containers/food/snacks/candy/rice
 	name = "Asteroid Crunch Bar"
 	desc = "Crunchy rice deposits in delicious chocolate! A favorite of miners galaxy-wide."
 	icon_state = "asteroidcrunch"
 	trash = /obj/item/trash/candy
 	filling_color = "#7D5F46"
 
-/obj/item/weapon/reagent_containers/food/snacks/candy/candybar/toffee
+/obj/item/weapon/reagent_containers/food/snacks/candy/yumbaton
 	name = "Yum-baton Bar"
 	desc = "Chocolate and toffee in the shape of a baton. Security sure knows how to pound these down!"
 	icon_state = "yumbaton"
 	filling_color = "#7D5F46"
 
-/obj/item/weapon/reagent_containers/food/snacks/candy/candybar/caramel
+/obj/item/weapon/reagent_containers/food/snacks/candy/malper
 	name = "Malper Bar"
 	desc = "A chocolate syringe filled with a caramel injection. Just what the doctor ordered!"
 	icon_state = "malper"
 	filling_color = "#7D5F46"
 
-/obj/item/weapon/reagent_containers/food/snacks/candy/candybar/caramel_nougat
+/obj/item/weapon/reagent_containers/food/snacks/candy/caramel_nougat
 	name = "Toxins Test Bar"
 	desc = "An explosive combination of chocolate, caramel, and nougat. Research has never been so tasty!"
 	icon_state = "toxinstest"
 	filling_color = "#7D5F46"
 
-/obj/item/weapon/reagent_containers/food/snacks/candy/candybar/nougat
+/obj/item/weapon/reagent_containers/food/snacks/candy/toolerone
 	name = "Tool-erone Bar"
 	desc = "Chocolate-covered nougat, shaped like a wrench. Great for an engineer on the go!"
 	icon_state = "toolerone"

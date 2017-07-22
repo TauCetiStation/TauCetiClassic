@@ -39,7 +39,7 @@
 /mob/living/carbon/human/tajaran/price = 50000
 /mob/living/simple_animal/price = 50
 /mob/living/simple_animal/corgi/price = 225
-/mob/living/simple_animal/corgi/Ian/price = 65000
+/mob/living/carbon/ian/price = 65000
 /mob/living/simple_animal/cat/Runtime/price = 55000
 
 /obj/item/ammo_casing/price = 10
@@ -234,7 +234,7 @@
 /obj/item/weapon/gun/energy/ionrifle/price = 5860
 /obj/item/weapon/gun/energy/kinetic_accelerator/price = 2760
 /obj/item/weapon/gun/energy/laser/price = 4380
-/obj/item/weapon/gun/energy/laser/captain/price = 13500
+/obj/item/weapon/gun/energy/laser/selfcharging/captain/price = 13500
 /obj/item/weapon/gun/energy/laser/retro/price = 5430
 /obj/item/weapon/gun/energy/lasercannon/price = 6600
 /obj/item/weapon/gun/energy/sniperrifle/price = 5700

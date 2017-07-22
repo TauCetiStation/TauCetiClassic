@@ -3,27 +3,24 @@
 // A mob that the AI controls to look around the station with.
 // It streams chunks as it moves around, which will show it what the AI can and cannot see.
 
-/mob/aiEye
+/mob/camera/aiEye
 	name = "Inactive AI Eye"
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "eye"
 	alpha = 127
 	var/list/visibleCameraChunks = list()
 	var/mob/living/silicon/ai/ai = null
-	density = 0
-	status_flags = GODMODE  // You can't damage it.
-	see_in_dark = 7
 	invisibility = INVISIBILITY_AI_EYE
 	var/image/ghostimage = null
 
-/mob/aiEye/New()
+/mob/camera/aiEye/New()
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage //so ghosts can see the AI eye when they disable darkness
 	ghost_sightless_images |= ghostimage //so ghosts can see the AI eye when they disable ghost sight
 	updateallghostimages()
 	..()
 
-/mob/aiEye/Destroy()
+/mob/camera/aiEye/Destroy()
 	if (ghostimage)
 		ghost_darkness_images -= ghostimage
 		ghost_sightless_images -= ghostimage
@@ -33,16 +30,16 @@
 	return ..()
 
 // Movement code. Returns 0 to stop air movement from moving it.
-/mob/aiEye/Move()
+/mob/camera/aiEye/Move()
 	return 0
 
 // Hide popout menu verbs
-/mob/aiEye/examinate(atom/A as mob|obj|turf in view())
+/mob/camera/aiEye/examinate(atom/A as mob|obj|turf in view())
 	set popup_menu = 0
 	set src = usr.contents
 	return 0
 
-/mob/aiEye/point()
+/mob/camera/aiEye/pointed()
 	set popup_menu = 0
 	set src = usr.contents
 	return 0
@@ -50,7 +47,7 @@
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
-/mob/aiEye/setLoc(T)
+/mob/camera/aiEye/setLoc(T)
 	if(ai)
 		if(!isturf(ai.loc))
 			return
@@ -64,7 +61,7 @@
 		if(ai.holo)
 			ai.holo.move_hologram()
 
-/mob/aiEye/proc/getLoc()
+/mob/camera/aiEye/proc/getLoc()
 
 	if(ai)
 		if(!isturf(ai.loc) || !ai.client)
@@ -76,7 +73,7 @@
 // The AI's "eye". Described on the top of the page.
 
 /mob/living/silicon/ai
-	var/mob/aiEye/eyeobj = new()
+	var/mob/camera/aiEye/eyeobj = new()
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1

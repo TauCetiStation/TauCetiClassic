@@ -47,20 +47,18 @@
 	var/shoot_inventory = 0 //Fire items at customers! We're broken!
 	var/shut_up = 1 //Stop spouting those godawful pitches!
 	var/extended_inventory = 0 //can we access the hidden inventory?
-	var/wires = 15
 	var/obj/item/weapon/coin/coin
-	var/const/WIRE_EXTEND = 1
-	var/const/WIRE_SCANID = 2
-	var/const/WIRE_SHOCK = 3
-	var/const/WIRE_SHOOTINV = 4
 	var/obj/item/weapon/vending_refill/refill_canister = null		//The type of refill canisters used by this machine.
 
 	var/check_accounts = 1		// 1 = requires PIN and checks accounts.  0 = You slide an ID, it vends, SPACE COMMUNISM!
 	var/obj/item/weapon/spacecash/ewallet/ewallet
+	var/datum/wires/vending/wires = null
+	var/scan_id = TRUE
 
 
 /obj/machinery/vending/New()
 	..()
+	wires = new(src)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
 	spawn(4)
@@ -82,8 +80,8 @@
 	return
 
 /obj/machinery/vending/Destroy()
-	qdel(coin)
-	coin = null
+	QDEL_NULL(wires)
+	QDEL_NULL(coin)
 	return ..()
 
 /obj/machinery/vending/ex_act(severity)
@@ -156,7 +154,7 @@
 	else
 		var/tmp_charges = refill.charges
 		for(var/datum/data/vending_product/machine_content in machine)
-			var/restock = Ceiling(((machine_content.max_amount - machine_content.amount)/to_restock)*tmp_charges)
+			var/restock = ceil(((machine_content.max_amount - machine_content.amount) / to_restock) * tmp_charges)
 			if(restock > refill.charges)
 				restock = refill.charges
 			machine_content.amount += restock
@@ -220,7 +218,7 @@
 					stat &= ~NOPOWER
 					set_light(light_range_on, light_power_on)
 
-	else if(currently_vending && istype(W, /obj/item/device/pda) && W.GetID()) //ѕда с картой
+	else if(currently_vending && istype(W, /obj/item/device/pda) && W.GetID())
 		var/obj/item/weapon/card/I = W.GetID()
 		scan_card(I)
 
@@ -279,7 +277,8 @@
 	..()
 
 /obj/machinery/vending/proc/scan_card(obj/item/weapon/card/I)
-	if(!currently_vending) return
+	if(!currently_vending)
+		return
 	if (istype(I, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = I
 		visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
@@ -287,47 +286,50 @@
 			if(vendor_account)
 				var/datum/money_account/D = get_account(C.associated_account_number)
 				var/attempt_pin = 0
-				if(D.security_level > 0)
-					attempt_pin = input("Enter pin code", "Vendor transaction") as num
-				if(attempt_pin)
-					D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
 				if(D)
-					var/transaction_amount = currently_vending.price
-					if(transaction_amount <= D.money)
+					if(D.security_level > 0)
+						attempt_pin = input("Enter pin code", "Vendor transaction") as num
+					if(attempt_pin)
+						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
+					if(D)
+						var/transaction_amount = currently_vending.price
+						if(transaction_amount <= D.money)
 
-						//transfer the money
-						D.money -= transaction_amount
-						vendor_account.money += transaction_amount
+							//transfer the money
+							D.money -= transaction_amount
+							vendor_account.money += transaction_amount
 
-						//create entries in the two account transaction logs
-						var/datum/transaction/T = new()
-						T.target_name = "[vendor_account.owner_name] (via [src.name])"
-						T.purpose = "Purchase of [currently_vending.product_name]"
-						if(transaction_amount > 0)
-							T.amount = "([transaction_amount])"
-						else
+							//create entries in the two account transaction logs
+							var/datum/transaction/T = new()
+							T.target_name = "[vendor_account.owner_name] (via [src.name])"
+							T.purpose = "Purchase of [currently_vending.product_name]"
+							if(transaction_amount > 0)
+								T.amount = "([transaction_amount])"
+							else
+								T.amount = "[transaction_amount]"
+							T.source_terminal = src.name
+							T.date = current_date_string
+							T.time = worldtime2text()
+							D.transaction_log.Add(T)
+							//
+							T = new()
+							T.target_name = D.owner_name
+							T.purpose = "Purchase of [currently_vending.product_name]"
 							T.amount = "[transaction_amount]"
-						T.source_terminal = src.name
-						T.date = current_date_string
-						T.time = worldtime2text()
-						D.transaction_log.Add(T)
-						//
-						T = new()
-						T.target_name = D.owner_name
-						T.purpose = "Purchase of [currently_vending.product_name]"
-						T.amount = "[transaction_amount]"
-						T.source_terminal = src.name
-						T.date = current_date_string
-						T.time = worldtime2text()
-						vendor_account.transaction_log.Add(T)
+							T.source_terminal = src.name
+							T.date = current_date_string
+							T.time = worldtime2text()
+							vendor_account.transaction_log.Add(T)
 
-						// Vend the item
-						src.vend(src.currently_vending, usr)
-						currently_vending = null
+							// Vend the item
+							src.vend(src.currently_vending, usr)
+							currently_vending = null
+						else
+							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
 					else
-						to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
+						to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
 				else
-					to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
+					to_chat(usr, "[bicon(src)]<span class='warning'>Unable to find your money account!</span>")
 			else
 				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access account. Check security settings and try again.</span>")
 		else
@@ -344,13 +346,17 @@
 	return attack_hand(user)
 
 /obj/machinery/vending/attack_hand(mob/user)
+	if(wires.interact(user))
+		return
+
 	if(stat & (BROKEN|NOPOWER))
 		return
-	user.set_machine(src)
 
 	if(src.seconds_electrified != 0)
 		if(src.shock(user, 100))
 			return
+
+	user.set_machine(src)
 
 	var/vendorname = (src.name)  //import the machine's name
 
@@ -400,33 +406,6 @@
 	if (ewallet)
 		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.worth : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
 
-	if(panel_open)
-		var/list/vendwires = list(
-			"Violet" = 1,
-			"Orange" = 2,
-			"Goldenrod" = 3,
-			"Green" = 4,
-		)
-		dat += "<br><hr><br><B>Access Panel</B><br>"
-		for(var/wiredesc in vendwires)
-			var/is_uncut = src.wires & APCWireColorToFlag[vendwires[wiredesc]]
-			dat += "[wiredesc] wire: "
-			if(!is_uncut)
-				dat += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Mend</a>"
-			else
-				dat += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Cut</a> "
-				dat += "<a href='?src=\ref[src];pulsewire=[vendwires[wiredesc]]'>Pulse</a> "
-			dat += "<br>"
-
-		dat += "<br>"
-		dat += "The orange light is [(src.seconds_electrified == 0) ? "off" : "on"].<BR>"
-		dat += "The red light is [src.shoot_inventory ? "off" : "blinking"].<BR>"
-		dat += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
-		dat += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
-
-		if (product_slogans != "")
-			dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a>"
-
 	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 500)
 	popup.set_content(dat)
 	popup.open()
@@ -470,8 +449,8 @@
 				to_chat(usr, "\red The vending machine refuses to interface with you, as you are not in its target demographic!")
 				return FALSE
 
-		if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
-			to_chat(usr, "\red Access denied.")//Unless emagged of course
+		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
+			to_chat(usr, "<span class='warning'>Access denied.</span>")//Unless emagged of course
 			flick(src.icon_deny,src)
 			return FALSE
 
@@ -500,35 +479,11 @@
 		src.updateUsrDialog()
 		return
 
-	else if ((href_list["cutwire"]) && (src.panel_open))
-		var/twire = text2num(href_list["cutwire"])
-		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-			to_chat(usr, "You need wirecutters!")
-			return FALSE
-		if (src.isWireColorCut(twire))
-			src.mend(twire)
-		else
-			src.cut(twire)
-
-	else if ((href_list["pulsewire"]) && (src.panel_open))
-		var/twire = text2num(href_list["pulsewire"])
-		if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-			to_chat(usr, "You need a multitool!")
-			return FALSE
-		if (src.isWireColorCut(twire))
-			to_chat(usr, "You can't pulse a cut wire.")
-			return FALSE
-		else
-			src.pulse(twire)
-
-	else if ((href_list["togglevoice"]) && (src.panel_open))
-		src.shut_up = !src.shut_up
-
 	src.updateUsrDialog()
 
 /obj/machinery/vending/proc/vend(datum/data/vending_product/R, mob/user)
-	if ((!src.allowed(user)) && (!src.emagged) && (src.wires & WIRE_SCANID)) //For SECURE VENDING MACHINES YEAH
-		to_chat(user, "\red Access denied.")//Unless emagged of course
+	if (!allowed(user) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
+		to_chat(user, "<span class='warning'>Access denied.</span>")//Unless emagged of course
 		flick(src.icon_deny,src)
 		return
 	src.vend_ready = 0 //One thing at a time!!
@@ -657,55 +612,9 @@
 		break
 	if (!throw_item)
 		return 0
-	spawn(0)
-		throw_item.throw_at(target, 16, 3, src)
-	src.visible_message("\red <b>[src] launches [throw_item.name] at [target.name]!</b>")
+	throw_item.throw_at(target, 16, 3)
+	visible_message("<span class='danger'>[src] launches [throw_item.name] at [target.name]!</span>")
 	return 1
-
-/obj/machinery/vending/proc/isWireColorCut(wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	return ((src.wires & wireFlag) == 0)
-
-/obj/machinery/vending/proc/isWireCut(wireIndex)
-	var/wireFlag = APCIndexToFlag[wireIndex]
-	return ((src.wires & wireFlag) == 0)
-
-/obj/machinery/vending/proc/cut(wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	var/wireIndex = APCWireColorToIndex[wireColor]
-	src.wires &= ~wireFlag
-	switch(wireIndex)
-		if(WIRE_EXTEND)
-			src.extended_inventory = 0
-		if(WIRE_SHOCK)
-			src.seconds_electrified = -1
-		if (WIRE_SHOOTINV)
-			if(!src.shoot_inventory)
-				src.shoot_inventory = 1
-
-
-/obj/machinery/vending/proc/mend(wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	var/wireIndex = APCWireColorToIndex[wireColor] //not used in this function
-	src.wires |= wireFlag
-	switch(wireIndex)
-//		if(WIRE_SCANID)
-		if(WIRE_SHOCK)
-			src.seconds_electrified = 0
-		if (WIRE_SHOOTINV)
-			src.shoot_inventory = 0
-
-/obj/machinery/vending/proc/pulse(wireColor)
-	var/wireIndex = APCWireColorToIndex[wireColor]
-	switch(wireIndex)
-		if(WIRE_EXTEND)
-			src.extended_inventory = !src.extended_inventory
-//		if (WIRE_SCANID)
-		if (WIRE_SHOCK)
-			src.seconds_electrified = 30
-		if (WIRE_SHOOTINV)
-			src.shoot_inventory = !src.shoot_inventory
-
 
 /obj/machinery/vending/proc/shock(mob/user, prb)
 	if(stat & (BROKEN|NOPOWER))		// unpowered, no shock
@@ -803,11 +712,11 @@
 	product_ads = "The healthiest!;Award-winning chocolate bars!;Mmm! So good!;Oh my god it's so juicy!;Have a snack.;Snacks are good for you!;Have some more Getmore!;Best quality snacks straight from mars.;We love chocolate!;Try our new jerky!"
 	icon_state = "snack"
 	light_color = "#d00023"
-	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,/obj/item/weapon/reagent_containers/food/snacks/chips =6,
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 6,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 6,/obj/item/weapon/reagent_containers/food/snacks/chips =6,
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
-	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy = 1,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 5,/obj/item/weapon/reagent_containers/food/snacks/chips = 1,
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 1,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 5,/obj/item/weapon/reagent_containers/food/snacks/chips = 1,
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 2,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 1,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 1,
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 1)
 	refill_canister = /obj/item/weapon/vending_refill/snack
@@ -959,7 +868,10 @@
 	vend_delay = 15
 	vend_reply = "Have an enchanted evening!"
 	product_ads = "FJKLFJSD;AJKFLBJAKL;1234 LOONIES LOL!;>MFW;Kill them fuckers!;GET DAT FUKKEN DISK;HONK!;EI NATH;Destroy the station!;Admin conspiracies since forever!;Space-time bending hardware!"
-	products = list(/obj/item/clothing/head/wizard = 1,/obj/item/clothing/suit/wizrobe = 1,/obj/item/clothing/head/wizard/red = 1,/obj/item/clothing/suit/wizrobe/red = 1,/obj/item/clothing/shoes/sandal = 1,/obj/item/weapon/staff = 2, /obj/item/device/modkit/wizard/skrell = 1, /obj/item/device/modkit/wizard/unathi = 1, /obj/item/device/modkit/wizard/tajaran = 1)
+	products = list(/obj/item/clothing/head/wizard = 1,/obj/item/clothing/suit/wizrobe = 1,/obj/item/clothing/head/wizard/red = 1,
+	/obj/item/clothing/suit/wizrobe/red = 1,/obj/item/clothing/shoes/sandal = 1,/obj/item/weapon/staff = 2, /obj/item/device/modkit/wizard/skrell = 1,
+	 /obj/item/device/modkit/wizard/unathi = 1, /obj/item/device/modkit/wizard/tajaran = 1, /obj/item/clothing/head/wizard/redhood = 1, /obj/item/clothing/head/wizard/bluehood = 1,
+	 /obj/item/clothing/suit/wizrobe/wiz_blue = 1, /obj/item/clothing/suit/wizrobe/wiz_red = 1)
 	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/wizarditis = 1)	//No one can get to the machine to hack it anyways; for the lulz - Microwave
 
 /obj/machinery/vending/dinnerware
@@ -1040,7 +952,7 @@
 	icon_state = "robotics"
 	icon_deny = "robotics-deny"
 	req_access_txt = "29"
-	products = list(/obj/item/weapon/cable_coil = 2,/obj/item/device/flash = 4,
+	products = list(/obj/item/weapon/cable_coil/random = 2,/obj/item/device/flash = 4,
 					/obj/item/weapon/stock_parts/cell/high = 5, /obj/item/device/assembly/prox_sensor = 3,/obj/item/device/assembly/signaler = 3,/obj/item/device/healthanalyzer = 3,
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 2)
 	//everything after the power cell had no amounts, I improvised.  -Sayu
@@ -1058,7 +970,7 @@
 	/obj/item/clothing/suit/jacket=4, /obj/item/clothing/suit/jacket/puffer/vest=4, /obj/item/clothing/suit/jacket/puffer=4,
 	/obj/item/clothing/under/suit_jacket/navy=2,/obj/item/clothing/under/suit_jacket/really_black=2,/obj/item/clothing/under/suit_jacket/burgundy=2,
 	/obj/item/clothing/under/suit_jacket/charcoal=2, /obj/item/clothing/under/suit_jacket/white=2,/obj/item/clothing/under/kilt=2,/obj/item/clothing/under/overalls=2,
-	/obj/item/clothing/under/suit_jacket/really_black=4,/obj/item/clothing/under/pants/jeans=6,/obj/item/clothing/under/pants/classicjeans=4,
+	/obj/item/clothing/under/suit_jacket/really_black=4,/obj/item/clothing/under/suit_jacket/rouge =4,/obj/item/clothing/under/pants/jeans=6,/obj/item/clothing/under/pants/classicjeans=4,
 	/obj/item/clothing/under/pants/camo = 2,/obj/item/clothing/under/pants/blackjeans=4,/obj/item/clothing/under/pants/khaki=4,
 	/obj/item/clothing/under/pants/white=4,/obj/item/clothing/under/pants/red=2,/obj/item/clothing/under/pants/black=4,
 	/obj/item/clothing/under/pants/tan=4,/obj/item/clothing/under/pants/blue=2,/obj/item/clothing/under/pants/track=2,
@@ -1076,7 +988,7 @@
 	/obj/item/clothing/suit/jacket=299, /obj/item/clothing/suit/jacket/puffer/vest=239, /obj/item/clothing/suit/jacket/puffer=219,
 	/obj/item/clothing/under/suit_jacket/navy=119,/obj/item/clothing/under/suit_jacket/really_black=119,/obj/item/clothing/under/suit_jacket/burgundy=119,
 	/obj/item/clothing/under/suit_jacket/charcoal=119, /obj/item/clothing/under/suit_jacket/white=119,/obj/item/clothing/under/kilt=85,/obj/item/clothing/under/overalls=85,
-	/obj/item/clothing/under/suit_jacket/really_black=142,/obj/item/clothing/under/pants/jeans=142,/obj/item/clothing/under/pants/classicjeans=142,
+	/obj/item/clothing/under/suit_jacket/really_black=142,/obj/item/clothing/under/suit_jacket/rouge =248,/obj/item/clothing/under/pants/jeans=142,/obj/item/clothing/under/pants/classicjeans=142,
 	/obj/item/clothing/under/pants/camo = 142,/obj/item/clothing/under/pants/blackjeans=142,/obj/item/clothing/under/pants/khaki=142,
 	/obj/item/clothing/under/pants/white=142,/obj/item/clothing/under/pants/red=142,/obj/item/clothing/under/pants/black=142,
 	/obj/item/clothing/under/pants/tan=142,/obj/item/clothing/under/pants/blue=142,/obj/item/clothing/under/pants/track=142,
@@ -1170,5 +1082,6 @@
 					/obj/item/clothing/suit/space/santa = 5, /obj/item/clothing/head/helmet/space/santahat = 5, /obj/item/weapon/storage/backpack/santabag = 5, /obj/item/clothing/mask/fakemoustache = 5,
 					/obj/item/clothing/mask/gas/sexyclown = 5, /obj/item/clothing/mask/gas/sexymime = 5, /obj/item/clothing/mask/horsehead = 5, /obj/item/clothing/suit/apron = 5, /obj/item/clothing/suit/apron/overalls = 5,
 					/obj/item/clothing/suit/chickensuit = 5, /obj/item/clothing/head/chicken = 5, /obj/item/clothing/under/fluff/tian_dress = 5, /obj/item/clothing/under/fluff/wyatt_1 = 5,
-					/obj/item/clothing/under/fluff/olddressuniform = 5, /obj/item/clothing/under/fluff/jumpsuitdown = 5, /obj/item/clothing/under/fluff/jane_sidsuit = 5, /obj/item/clothing/under/sundress = 5)
+					/obj/item/clothing/under/fluff/olddressuniform = 5, /obj/item/clothing/under/fluff/jumpsuitdown = 5, /obj/item/clothing/under/fluff/jane_sidsuit = 5, /obj/item/clothing/under/sundress = 5,
+					/obj/item/clothing/under/roman = 3, /obj/item/clothing/shoes/roman = 3, /obj/item/clothing/head/helmet/roman = 2, /obj/item/clothing/head/helmet/roman/legionaire = 1)
 	prices = list(/obj/item/clothing/head/xenos = 100, /obj/item/clothing/suit/xenos = 200, /obj/item/clothing/suit/monkeysuit = 200)

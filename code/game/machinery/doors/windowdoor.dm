@@ -14,14 +14,6 @@
 	door_open_sound  = 'sound/machines/windowdoor.ogg'
 	door_close_sound = 'sound/machines/windowdoor.ogg'
 
-/obj/machinery/door/window/update_nearby_tiles(need_rebuild)
-	if(!SSair)
-		return 0
-
-	SSair.mark_for_update(get_turf(src))
-
-	return 1
-
 /obj/machinery/door/window/New()
 	..()
 
@@ -57,7 +49,7 @@
 		new /obj/item/weapon/shard(src.loc)
 		new /obj/item/weapon/shard(src.loc)
 		new /obj/item/stack/rods(src.loc, 2)
-		new /obj/item/weapon/cable_coil(src.loc, 2)
+		new /obj/item/weapon/cable_coil/red(src.loc, 2)
 		var/obj/item/weapon/airlock_electronics/ae
 		if(!electronics)
 			ae = new/obj/item/weapon/airlock_electronics( src.loc )
@@ -146,6 +138,9 @@
 		return !density
 	else
 		return 1
+
+/obj/machinery/door/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+	return !density || (dir != to_dir) || (check_access(ID) && hasPower())
 
 /obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
@@ -274,6 +269,14 @@
 		change_paintjob(I, user)
 		return
 
+	if( istype(I,/obj/item/weapon/changeling_hammer))
+		var/obj/item/weapon/changeling_hammer/W = I
+		if(W.use_charge(user,6))
+			visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
+			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+			shatter()
+		return
+
 	//Emags and ninja swords? You may pass.
 	if (density && ((istype(I, /obj/item/weapon/card/emag) && hasPower()) || istype(I, /obj/item/weapon/melee/energy/blade)))
 		flick("[src.base_state]spark", src)
@@ -302,12 +305,12 @@
 			return
 
 		if(istype(I, /obj/item/weapon/crowbar))
-			if(p_open && !src.density && !src.operating)
+			if(p_open && !src.density)
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 				user.visible_message("<span class='warning'>[user] removes the electronics from the [src.name].</span>", \
 									 "You start to remove electronics from the [src.name].")
 				if(do_after(user,40,target=src))
-					if(src.p_open && !src.density && !src.operating && src.loc)
+					if(src.p_open && !src.density && src.loc)
 						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
 						switch(base_state)
 							if("left")

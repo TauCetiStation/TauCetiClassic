@@ -3,11 +3,11 @@
 	desc = "A heads-up display that provides important info in (almost) real time."
 	flags = null //doesn't protect eyes because it's a monocle, duh
 	origin_tech = "magnets=3;biotech=2"
+	var/fixtime = 0
 	var/list/icon/current = list() //the current hud icons
 
 /obj/item/clothing/glasses/hud/proc/process_hud(mob/M)
 	return
-
 
 
 /obj/item/clothing/glasses/hud/health
@@ -18,7 +18,8 @@
 
 
 /obj/item/clothing/glasses/hud/health/process_hud(mob/M)
-	process_med_hud(M, 1)
+	check_integrity()
+	process_med_hud(M, 1, crit_fail = crit_fail)
 
 /obj/item/clothing/glasses/hud/security
 	name = "Security HUD"
@@ -30,10 +31,24 @@
 /obj/item/clothing/glasses/hud/security/jensenshades
 	name = "Augmented shades"
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
-	icon_state = "jensenshades"
-	item_state = "jensenshades"
+	icon_state = "hos_shades"
+	item_state = "hos_shades"
 	vision_flags = SEE_MOBS
 	invisa_view = 3
 
 /obj/item/clothing/glasses/hud/security/process_hud(mob/M)
-	process_sec_hud(M, 1)
+	check_integrity()
+	process_sec_hud(M, 1, crit_fail = crit_fail)
+
+/obj/item/clothing/glasses/hud/broken/process_hud(mob/M)
+	process_broken_hud(M, 1)
+
+/obj/item/clothing/glasses/hud/proc/check_integrity()
+	if(crit_fail)
+		if(fixtime < world.time)
+			crit_fail=0
+
+/obj/item/clothing/glasses/hud/emp_act(severity)
+	if(!crit_fail)
+		crit_fail = 1
+		fixtime = world.time + 900 / severity

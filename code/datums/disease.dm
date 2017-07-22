@@ -140,7 +140,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 	if(isturf(source.loc))
 		for(var/mob/living/carbon/M in oview(check_range, source))
 			if(isturf(M.loc))
-				if(AStar(source.loc, M.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, check_range))
+				if(AStar(source, M.loc, /turf/proc/Distance, check_range))
 					M.contract_disease(src, 0, 1, force_spread)
 
 	return
@@ -148,7 +148,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 /datum/disease/process()
 	if(!holder)
-		SSdisease.processing -= src
+		STOP_PROCESSING(SSdisease, src)
 		return
 	if(prob(65))
 		spread(holder)
@@ -190,7 +190,7 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 /datum/disease/New(var/process=1, var/datum/disease/D)//process = 1 - adding the object to global list. List is processed by master controller.
 	cure_list = list(cure_id) // to add more cures, add more vars to this list in the actual disease's New()
 	if(process)				 // Viruses in list are considered active.
-		SSdisease.processing += src
+		START_PROCESSING(SSdisease, src)
 	initial_spread = spread
 
 /datum/disease/proc/IsSame(datum/disease/D)
@@ -200,8 +200,3 @@ var/list/diseases = typesof(/datum/disease) - /datum/disease
 
 /datum/disease/proc/Copy(process = 0)
 	return new type(process, src)
-
-/*
-/datum/disease/Destroy()
-	SSdisease.processing.Remove(src)
-*/

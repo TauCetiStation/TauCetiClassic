@@ -33,24 +33,29 @@
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W,/obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/CC = W
-		if(CC.amount < 5)
-			to_chat(user, "\b There is not enough wire in this coil. You need 5 lengths.")
+
+		var/list/resources_to_use = list()
+		resources_to_use[W] = 5
+		resources_to_use[src] = 1
+		if(!use_multi(user, resources_to_use))
 			return
-		CC.use(5)
+
 		to_chat(user, "\blue You attach wire to the [name].")
 		new /obj/item/stack/light_w(user.loc)
-		src.use(1)
 	else if(istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/V  = W
+
+		var/list/resources_to_use = list()
+		resources_to_use[W] = 1
+		resources_to_use[src] = 1
+		if(!use_multi(user, resources_to_use))
+			return
+
 		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 		RG.add_fingerprint(user)
 		RG.add_to_stacks(user)
-		V.use(1)
 		var/obj/item/stack/sheet/glass/G = src
 		src = null
 		var/replace = (user.get_inactive_hand() == G)
-		G.use(1)
 		if (!G && !RG && replace)
 			user.put_in_hands(RG)
 	else
@@ -95,34 +100,39 @@
 				if(!found)
 					dir_to_set = direction
 					break
+
+			if(!src.use(1))
+				to_chat(user, "\red You need more glass to do that.")
+				return 1
+
 			var/obj/structure/window/W
 			W = new created_window(user.loc)
 			W.dir = dir_to_set
 			W.ini_dir = W.dir
 			W.anchored = 0
-			src.use(1)
 		if("Full Window")
 			if(!src)
 				return 1
 			if(src.loc != user)
-				return 1
-			if(src.amount < 2)
-				to_chat(user, "\red You need more glass to do that.")
 				return 1
 			var/step = get_step(user, user.dir)
 			var/turf/T = get_turf(step)
 			if(T.density || (locate(/obj/structure/window) in step))
 				to_chat(user, "\red There is something in the way.")
 				return 1
+
+			if(!src.use(2))
+				to_chat(user, "\red You need more glass to do that.")
+				return 1
+
 			var/obj/structure/window/W
 			W = new created_window(step)
 			W.dir = SOUTHWEST
 			W.ini_dir = SOUTHWEST
 			W.anchored = 0
-			src.use(2)
 	return 0
 
-/obj/item/stack/sheet/glass/throw_at(atom/target, range, speed, mob/user)
+/obj/item/stack/sheet/glass/after_throw(datum/callback/callback)
 	..()
 	playsound(src, "shatter", 70, 1)
 	new /obj/item/weapon/shard(loc)
@@ -132,7 +142,7 @@
 	else
 		qdel(src)
 
-/obj/item/stack/sheet/rglass/throw_at(atom/target, range, speed, mob/user)
+/obj/item/stack/sheet/rglass/after_throw(datum/callback/callback)
 	..()
 	playsound(src, "shatter", 70, 1)
 	new /obj/item/weapon/shard(loc)
@@ -204,26 +214,29 @@
 					dir_to_set = direction
 					break
 
+			if(!src.use(1))
+				to_chat(user, "\red You need more glass to do that.")
+				return 1
+
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced(user.loc)
 			W.state = 0
 			W.dir = dir_to_set
 			W.ini_dir = W.dir
 			W.anchored = 0
-			src.use(1)
 
 		if("Full Window")
 			if(!src)
 				return 1
 			if(src.loc != user)
 				return 1
-			if(src.amount < 2)
-				to_chat(user, "\red You need more glass to do that.")
-				return 1
 			var/step = get_step(user, user.dir)
 			var/turf/T = get_turf(step)
 			if(T.density || (locate(/obj/structure/window) in step))
 				to_chat(user, "\red There is something in the way.")
+				return 1
+			if(!src.use(2))
+				to_chat(user, "\red You need more glass to do that.")
 				return 1
 			var/obj/structure/window/W
 			W = new /obj/structure/window/reinforced(step)
@@ -232,7 +245,6 @@
 			W.ini_dir = SOUTHWEST
 			W.state = 0
 			W.anchored = 0
-			src.use(2)
 
 		if("Windoor")
 			if(!src || src.loc != user)
@@ -246,7 +258,7 @@
 				to_chat(user, "\red There is already a windoor in that location.")
 				return 1
 
-			if(src.amount < 5)
+			if(!src.use(5))
 				to_chat(user, "\red You need more glass to do that.")
 				return 1
 
@@ -254,7 +266,6 @@
 			WD = new /obj/structure/windoor_assembly(user.loc)
 			WD.state = "01"
 			WD.anchored = 0
-			src.use(5)
 			switch(user.dir)
 				if(SOUTH)
 					WD.dir = SOUTH
@@ -278,15 +289,11 @@
  * Glass shards - TODO: Move this into code/game/object/item/weapons
  */
 /obj/item/weapon/shard/Bump()
-
-	spawn(0)
-		if(prob(20))
-			src.force = 15
-		else
-			src.force = 4
-		..()
-		return
-	return
+	if(prob(20))
+		force = 15
+	else
+		force = 4
+	..()
 
 /obj/item/weapon/shard/New()
 
@@ -334,11 +341,11 @@
 				return
 
 			if(!H.shoes && (!H.wear_suit || !(H.wear_suit.body_parts_covered & FEET)))
-				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
-				if(affecting.status & ORGAN_ROBOT)
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_FOOT , BP_R_FOOT)]
+				if(BP.status & ORGAN_ROBOT)
 					return
 				H.Weaken(3)
-				affecting.take_damage(5, 0)
+				BP.take_damage(5, 0)
 				H.updatehealth()
 	..()
 
@@ -363,15 +370,18 @@
 /obj/item/stack/sheet/glass/phoronglass/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/stack/rods))
-		var/obj/item/stack/rods/V  = W
+		var/list/resources_to_use = list()
+		resources_to_use[W] = 1
+		resources_to_use[src] = 1
+		if(!use_multi(user, resources_to_use))
+			return
+
 		var/obj/item/stack/sheet/glass/phoronrglass/RG = new (user.loc)
 		RG.add_fingerprint(user)
 		RG.add_to_stacks(user)
-		V.use(1)
 		var/obj/item/stack/sheet/glass/G = src
 		src = null
 		var/replace = (user.get_inactive_hand() == G)
-		G.use(1)
 		if (!G && !RG && replace)
 			user.put_in_hands(RG)
 	else

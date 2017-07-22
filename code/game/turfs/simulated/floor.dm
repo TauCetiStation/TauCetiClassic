@@ -143,7 +143,7 @@ var/list/wood_icons = list("wood","wood-broken")
 		else if(prob(50))
 			ReplaceWithLattice()
 
-turf/simulated/floor/proc/update_icon()
+/turf/simulated/floor/update_icon()
 	if(lava)
 		return
 	else if(is_plasteel_floor())
@@ -227,6 +227,7 @@ turf/simulated/floor/proc/update_icon()
 		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
 			if(air)
 				update_visuals(air)*/
+	..()
 
 /turf/simulated/floor/return_siding_icon_state()
 	..()
@@ -542,9 +543,9 @@ turf/simulated/floor/proc/update_icon()
 			if (R.amount >= 2)
 				to_chat(user, "\blue Reinforcing the floor...")
 				if(do_after(user, 30, target = src) && R && R.amount >= 2 && is_plating())
-					ChangeTurf(/turf/simulated/floor/engine)
-					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
-					R.use(2)
+					if (R.use(2))
+						ChangeTurf(/turf/simulated/floor/engine)
+						playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					return
 			else
 				to_chat(user, "\red You need more rods.")
@@ -561,6 +562,8 @@ turf/simulated/floor/proc/update_icon()
 			if(!broken && !burnt)
 				var/obj/item/stack/tile/T = C
 				floor_type = T.type
+				if(!T.use(1))
+					return
 				intact = 1
 				if(istype(T,/obj/item/stack/tile/light))
 					var/obj/item/stack/tile/light/L = T
@@ -576,7 +579,6 @@ turf/simulated/floor/proc/update_icon()
 						if(istype(get_step(src,direction),/turf/simulated/floor))
 							var/turf/simulated/floor/FF = get_step(src,direction)
 							FF.update_icon() //so siding gets updated properly
-				T.use(1)
 				update_icon()
 				levelupdate()
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)

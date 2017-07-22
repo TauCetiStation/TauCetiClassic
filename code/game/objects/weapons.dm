@@ -2,11 +2,6 @@
 	name = "weapon"
 	icon = 'icons/obj/weapons.dmi'
 
-/obj/item/weapon/Bump(mob/M as mob)
-	spawn(0)
-		..()
-	return
-
 /obj/item/weapon/throwing_star
 	name = "throwing star"
 	desc = "An ancient weapon still used to this day due to it's ease of lodging itself into victim's body parts"

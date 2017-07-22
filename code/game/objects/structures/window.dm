@@ -69,11 +69,13 @@
 		index = 0
 		while(index < 2)
 			new shardtype(loc) //todo pooling?
-			if(reinf) PoolOrNew(/obj/item/stack/rods, loc)
+			if(reinf)
+				new /obj/item/stack/rods(loc)
 			index++
 	else
 		new shardtype(loc) //todo pooling?
-		if(reinf) PoolOrNew(/obj/item/stack/rods, loc)
+		if(reinf)
+			new /obj/item/stack/rods(loc)
 	qdel(src)
 	return
 
@@ -122,6 +124,13 @@
 	else
 		return 1
 
+/obj/structure/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+	if(!density)
+		return TRUE
+	if((dir == SOUTHWEST) || (dir == to_dir))
+		return FALSE
+
+	return TRUE
 
 /obj/structure/window/CheckExit(atom/movable/O, target)
 	if(istype(O) && O.checkpass(PASSGLASS))
@@ -253,6 +262,11 @@
 					A.attack_log += "\[[time_stamp()]\] <font color='red'>Crushes [M.name] against \the [src]([M.ckey])</font>"
 					msg_admin_attack("[key_name(A)] crushes [key_name(M)] against \the [src]")
 			return
+	if(istype(W,/obj/item/weapon/changeling_hammer))
+		var/obj/item/weapon/changeling_hammer/C = W
+		if(C.use_charge(user))
+			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+			shatter()
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(reinf && state >= 1)
 			state = 3 - state
@@ -386,15 +400,6 @@
 	dir = ini_dir
 	update_nearby_tiles(need_rebuild=1)
 
-
-//This proc has to do with airgroups and atmos, it has nothing to do with smoothwindows, that's update_nearby_tiles().
-/obj/structure/window/proc/update_nearby_tiles(need_rebuild)
-	if(!SSair)
-		return 0
-	SSair.mark_for_update(get_turf(src))
-
-	return 1
-
 //checks if this window is full-tile one
 /obj/structure/window/proc/is_fulltile()
 	if(dir & (dir - 1))
@@ -429,7 +434,7 @@
 		icon_state = "[basestate][junction]"
 
 		var/ratio = health / maxhealth
-		ratio = Ceiling(ratio*4) * 25
+		ratio = ceil(ratio * 4) * 25
 
 		overlays -= crack_overlay
 		if(ratio > 75)

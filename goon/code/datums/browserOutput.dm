@@ -8,6 +8,7 @@ var/list/chatResources = list(
 	"goon/browserassets/css/fonts/fontawesome-webfont.ttf",
 	"goon/browserassets/css/fonts/fontawesome-webfont.woff",
 	"goon/browserassets/css/font-awesome.css",
+	"goon/browserassets/css/emojib64.css",
 	"goon/browserassets/css/browserOutput.css"
 )
 
@@ -183,14 +184,17 @@ var/list/chatResources = list(
 	if (isicon(obj))
 		if (!bicon_cache["\ref[obj]"]) // Doesn't exist yet, make it.
 			bicon_cache["\ref[obj]"] = icon2base64(obj)
-
 		return "<img [class] src='data:image/png;base64,[bicon_cache["\ref[obj]"]]'>"
 
 	// Either an atom or somebody fucked up and is gonna get a runtime, which I'm fine with.
 	var/atom/A = obj
 	var/key = "[istype(A.icon, /icon) ? "\ref[A.icon]" : A.icon]:[A.icon_state]"
 	if (!bicon_cache[key]) // Doesn't exist, make it.
-		var/icon/I = icon(A.icon, A.icon_state, SOUTH, 1)
+		var/icon/I
+		if(!A.icon || !A.icon_state || !(A.icon_state in icon_states(A.icon))) // fixes freeze when client uses examine or anything else, when there is something wrong with icon data.
+			I = icon('icons/misc/buildmode.dmi', "buildhelp")                  // there is no logic with this icon choice, i just like it.
+		else
+			I = icon(A.icon, A.icon_state, SOUTH, 1)
 		if (ishuman(obj)) // Shitty workaround for a BYOND issue.
 			var/icon/temp = I
 			I = icon()

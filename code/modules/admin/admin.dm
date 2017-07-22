@@ -54,13 +54,13 @@ var/global/floorIsLava = 0
 		<a href='?src=\ref[src];traitor=\ref[M]'>TP</a> -
 		<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a> -
 		<a href='?src=\ref[src];subtlemessage=\ref[M]'>SM</a> -
-		<a href='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</a>\] </b><br>
+		<a href='?src=\ref[src];adminplayerobservefollow=\ref[M]'>FLW</a>\] </b><br>
 		<b>Mob type</b> = [M.type]<br><br>
 		<b>GeoIP:</b> <A href='?src=\ref[src];geoip=\ref[M]'>Get</A> |
-		<b>List of CIDs:</b> <A href='?src=\ref[src];cid_list=\ref[M]'>Get</A> (<A href='?src=\ref[src];cid_ignore=\ref[M]'>Ignore Warning</A>)<br><br>
+		<b>List of CIDs:</b> <A href='?src=\ref[src];cid_list=\ref[M]'>Get</A> (<A href='?src=\ref[src];cid_ignore=\ref[M]'>Ignore Warning</A>)<br>
+		<b>Related accounts by IP and cid</b>: <A href='?src=\ref[src];related_accounts=\ref[M]'>Get</A><br><br>
 		<A href='?src=\ref[src];boot2=\ref[M]'>Kick</A> |
 		<A href='?_src_=holder;warn=[M.ckey]'>Warn</A> |
-		<A href='?_src_=holder;unwarn=[M.ckey]'>UNWarn</A> |
 		<A href='?src=\ref[src];newban=\ref[M]'>Ban</A> |
 		<A href='?src=\ref[src];jobban2=\ref[M]'>Jobban</A> |
 		<A href='?src=\ref[src];notes=show;mob=\ref[M]'>Notes</A>
@@ -92,7 +92,7 @@ var/global/floorIsLava = 0
 	if (M.client)
 		if(!isnewplayer(M))
 			body += "<br><br>"
-			body += "<b>Transformation:</b>"
+			body += "<b>Transformations:</b>"
 			body += "<br>"
 
 			//Monkey
@@ -114,15 +114,15 @@ var/global/floorIsLava = 0
 				body += {"<A href='?src=\ref[src];makeai=\ref[M]'>Make AI</A> |
 					<A href='?src=\ref[src];makerobot=\ref[M]'>Make Robot</A> |
 					<A href='?src=\ref[src];makealien=\ref[M]'>Make Alien</A> |
-					<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A>
+					<A href='?src=\ref[src];makeslime=\ref[M]'>Make slime</A> |
 					<A href='?src=\ref[src];makeblob=\ref[M]'>Make Blob</A> |
 				"}
 
 			//Simple Animals
 			if(isanimal(M))
-				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Re-Animalize</A> | "
+				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Re-Animalize</A> "
 			else
-				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Animalize</A> | "
+				body += "<A href='?src=\ref[src];makeanimal=\ref[M]'>Animalize</A> "
 
 			// DNA2 - Admin Hax
 			if(M.dna && iscarbon(M))
@@ -144,7 +144,7 @@ var/global/floorIsLava = 0
 				body += "</tr></table>"
 
 			body += {"<br><br>
-				<b>Rudimentary transformation:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>
+				<b>Rudimentary transformations:</b><font size=2><br>These transformations only create a new mob type and copy stuff over. They do not take into account MMIs and similar mob-specific things. The buttons in 'Transformations' are preferred, when possible.</font><br>
 				<A href='?src=\ref[src];simplemake=observer;mob=\ref[M]'>Observer</A> |
 				\[ Alien: <A href='?src=\ref[src];simplemake=drone;mob=\ref[M]'>Drone</A>,
 				<A href='?src=\ref[src];simplemake=hunter;mob=\ref[M]'>Hunter</A>,
@@ -152,14 +152,13 @@ var/global/floorIsLava = 0
 				<A href='?src=\ref[src];simplemake=sentinel;mob=\ref[M]'>Sentinel</A>,
 				<A href='?src=\ref[src];simplemake=larva;mob=\ref[M]'>Larva</A> \]
 				<A href='?src=\ref[src];simplemake=human;mob=\ref[M]'>Human</A>
-				\[ slime: <A href='?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>,
+				\[ Slime: <A href='?src=\ref[src];simplemake=slime;mob=\ref[M]'>Baby</A>,
 				<A href='?src=\ref[src];simplemake=adultslime;mob=\ref[M]'>Adult</A> \]
 				<A href='?src=\ref[src];simplemake=monkey;mob=\ref[M]'>Monkey</A> |
 				<A href='?src=\ref[src];simplemake=robot;mob=\ref[M]'>Cyborg</A> |
 				<A href='?src=\ref[src];simplemake=cat;mob=\ref[M]'>Cat</A> |
 				<A href='?src=\ref[src];simplemake=runtime;mob=\ref[M]'>Runtime</A> |
 				<A href='?src=\ref[src];simplemake=corgi;mob=\ref[M]'>Corgi</A> |
-				<A href='?src=\ref[src];simplemake=ian;mob=\ref[M]'>Ian</A> |
 				<A href='?src=\ref[src];simplemake=crab;mob=\ref[M]'>Crab</A> |
 				<A href='?src=\ref[src];simplemake=coffee;mob=\ref[M]'>Coffee</A> |
 				\[ Construct: <A href='?src=\ref[src];simplemake=constructarmoured;mob=\ref[M]'>Armoured</A> ,
@@ -265,8 +264,6 @@ var/global/floorIsLava = 0
 	dat += "<body>"
 
 	//Display player age and player warn bans
-	var/datum/preferences/D
-	var/p_warns
 	var/p_age
 	var/p_ingame_age
 	for(var/client/C in clients)
@@ -274,10 +271,7 @@ var/global/floorIsLava = 0
 			p_age = C.player_age
 			p_ingame_age = C.player_ingame_age
 
-			D = C.prefs
-			p_warns = D.warnbans
-	dat +="<span style='color:#000000; font-weight: bold'>Player age: [p_age] / In-game age: [p_ingame_age]</span><br>"
-	dat +="<span style='color:#000000'>Player warnbans: [p_warns]</span><hr>"
+	dat +="<span style='color:#000000; font-weight: bold'>Player age: [p_age] / In-game age: [p_ingame_age]</span><hr>"
 
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
@@ -296,7 +290,7 @@ var/global/floorIsLava = 0
 				I.rank = "N/A"
 				update_file = 1
 			dat += "<font color=#008800>[I.content]</font> <i>by [I.author] ([I.rank])</i> on <i><font color=blue>[I.timestamp]</i></font> "
-			if(I.author == usr.key || I.author == "Adminbot")
+			if(I.author == usr.key || I.author == "Adminbot" || check_rights(R_PERMISSIONS, FALSE))
 				dat += "<A href='?src=\ref[src];remove_player_info=[key];remove_index=[i]'>Remove</A>"
 			dat += "<br><br>"
 		if(update_file)
@@ -627,6 +621,8 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=prison_break'>Trigger a Prison Break</A><BR>
 			<A href='?src=\ref[src];secretsfun=virus'>Trigger a Virus Outbreak</A><BR>
 			<A href='?src=\ref[src];secretsfun=immovable'>Spawn an Immovable Rod</A><BR>
+			<A href='?src=\ref[src];secretsfun=spawnguns'>Give guns to crew</A><BR>
+			<A href='?src=\ref[src];secretsfun=spawnspells'>Give spells to crew</A><BR>
 			<A href='?src=\ref[src];secretsfun=lightsout'>Toggle a "lights out" event</A><BR>
 			<A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
 			<A href='?src=\ref[src];secretsfun=spacevines'>Spawn Space-Vines</A><BR>
@@ -641,9 +637,6 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=power'>Make all areas powered</A><BR>
 			<A href='?src=\ref[src];secretsfun=unpower'>Make all areas unpowered</A><BR>
 			<A href='?src=\ref[src];secretsfun=quickpower'>Power all SMES</A><BR>
-			<A href='?src=\ref[src];secretsfun=toggleprisonstatus'>Toggle Prison Shuttle Status(Use with S/R)</A><BR>
-			<A href='?src=\ref[src];secretsfun=activateprison'>Send Prison Shuttle</A><BR>
-			<A href='?src=\ref[src];secretsfun=deactivateprison'>Return Prison Shuttle</A><BR>
 			<A href='?src=\ref[src];secretsfun=prisonwarp'>Warp all Players to Prison</A><BR>
 			<A href='?src=\ref[src];secretsfun=tripleAI'>Triple AI mode (needs to be used in the lobby)</A><BR>
 			<A href='?src=\ref[src];secretsfun=traitor_all'>Everyone is the traitor</A><BR>
@@ -723,11 +716,12 @@ var/global/floorIsLava = 0
 		return
 
 	var/message = input("Global message to send:", "Admin Announce", null, null)  as message
-	message = sanitize(message, list("ÿ"=LETTER_255))
 
 	if(message)
 		if(!check_rights(R_SERVER,0))
-			message = adminscrub(message,500)
+			message = strip_html(message,500)
+		else
+			message = sanitize(message, list("ÿ"=LETTER_255))
 		to_chat(world, "\blue <b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n &emsp; [message]")
 		log_admin("Announce: [key_name(usr)] : [message]")
 	feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -1203,18 +1197,39 @@ var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
 /proc/move_admin_shuttle()
 	var/area/fromArea
 	var/area/toArea
+	var/static/moving = FALSE
+
+	if(moving)
+		return
+	moving = TRUE
+
 	if (admin_shuttle_location == 1)
 		fromArea = locate(/area/shuttle/administration/station)
 		toArea = locate(/area/shuttle/administration/centcom)
+
+		SSshuttle.undock_act(fromArea)
+		SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_admin")
 	else
 		fromArea = locate(/area/shuttle/administration/centcom)
 		toArea = locate(/area/shuttle/administration/station)
+
+		SSshuttle.undock_act(fromArea)
+		SSshuttle.undock_act(/area/centcom/specops, "centcomm_admin")
+
 	fromArea.move_contents_to(toArea)
+
 	if (admin_shuttle_location)
 		admin_shuttle_location = 0
+
+		SSshuttle.dock_act(toArea)
+		SSshuttle.dock_act(/area/centcom/specops, "centcomm_admin")
 	else
 		admin_shuttle_location = 1
-	return
+
+		SSshuttle.dock_act(toArea)
+		SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_admin")
+
+	moving = FALSE
 
 /**********************Centcom Ferry**************************/
 
@@ -1223,18 +1238,39 @@ var/ferry_location = 0 // 0 = centcom , 1 = station
 /proc/move_ferry()
 	var/area/fromArea
 	var/area/toArea
+	var/static/moving = FALSE
+
+	if(moving)
+		return
+	moving = TRUE
+
 	if (ferry_location == 1)
 		fromArea = locate(/area/shuttle/transport1/station)
 		toArea = locate(/area/shuttle/transport1/centcom)
+
+		SSshuttle.undock_act(fromArea)
+		SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_ferry")
 	else
 		fromArea = locate(/area/shuttle/transport1/centcom)
 		toArea = locate(/area/shuttle/transport1/station)
+
+		SSshuttle.undock_act(fromArea)
+		SSshuttle.undock_act(/area/centcom/evac, "centcomm_ferry")
+
 	fromArea.move_contents_to(toArea)
+
 	if (ferry_location)
 		ferry_location = 0
+
+		SSshuttle.dock_act(toArea)
+		SSshuttle.dock_act(/area/centcom/evac, "centcomm_ferry")
 	else
 		ferry_location = 1
-	return
+
+		SSshuttle.dock_act(toArea)
+		SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_ferry")
+
+	moving = FALSE
 
 /**********************Alien ship**************************/
 

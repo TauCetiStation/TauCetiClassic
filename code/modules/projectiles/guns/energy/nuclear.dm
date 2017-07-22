@@ -47,11 +47,11 @@
 
 /obj/item/weapon/gun/energy/gun/nuclear/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 
 /obj/item/weapon/gun/energy/gun/nuclear/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 
@@ -85,7 +85,7 @@
 			to_chat(M, "\red You feel a wave of heat wash over you.")
 			M.apply_effect(300, IRRADIATE)
 		crit_fail = 1 //break the gun so it stops recharging
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		update_icon()
 	return 0
 
@@ -94,7 +94,7 @@
 		overlays += "nucgun-whee"
 		return
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = Ceiling(ratio*4) * 25
+	ratio = ceil(ratio * 4) * 25
 	overlays += "nucgun-[ratio]"
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/update_reactor()

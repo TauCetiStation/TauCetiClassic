@@ -181,19 +181,18 @@ Please contact me on #coderbus IRC. ~Carn x
 
 
 //DAMAGE OVERLAYS
-/mob/living/carbon/human/UpdateDamageIcon(datum/organ/external/O)
-	remove_damage_overlay(O.limb_layer)
-	if(species.damage_mask)
-		var/image/standing = image("icon"='icons/mob/human_races/damage_overlays.dmi', "icon_state"="[O.icon_name]_[O.damage_state]", "layer"=-DAMAGE_LAYER)
+/mob/living/carbon/human/UpdateDamageIcon(obj/item/organ/external/BP)
+	remove_damage_overlay(BP.limb_layer)
+	if(species.damage_mask && !(BP.status & ORGAN_DESTROYED))
+		var/image/standing = image("icon" = 'icons/mob/human_races/damage_overlays.dmi', "icon_state" = "[BP.body_zone]_[BP.damage_state]", "layer" = -DAMAGE_LAYER)
 		standing.color = species.blood_color
-		overlays_damage[O.limb_layer]	= standing
-		apply_damage_overlay(O.limb_layer)
+		overlays_damage[BP.limb_layer] = standing
+		apply_damage_overlay(BP.limb_layer)
 
 
 //BASE MOB SPRITE
 /mob/living/carbon/human/proc/update_body()
 	remove_overlay(BODY_LAYER)
-
 	var/list/standing	= list()
 
 	var/husk_color_mod = rgb(96,88,80)
@@ -215,16 +214,16 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/icon/stand_icon = new(species.icon_template ? species.icon_template : 'icons/mob/human.dmi',"blank")
 
 	var/icon_key = "[species.race_key][g][s_tone]"
-	for(var/datum/organ/external/part in organs)
+	for(var/obj/item/organ/external/BP in bodyparts)
 
-		if(istype(part,/datum/organ/external/head) && !(part.status & ORGAN_DESTROYED))
+		if(istype(BP, /obj/item/organ/external/head) && !(BP.status & ORGAN_DESTROYED))
 			has_head = 1
 
-		if(part.status & ORGAN_DESTROYED)
+		if(BP.status & ORGAN_DESTROYED)
 			icon_key = "[icon_key]0"
-		else if(part.status & ORGAN_ROBOT)
+		else if(BP.status & ORGAN_ROBOT)
 			icon_key = "[icon_key]2"
-		else if(part.status & ORGAN_DEAD) //Do we even have necrosis in our current code? ~Z
+		else if(BP.status & ORGAN_DEAD) //Do we even have necrosis in our current code? ~Z
 			icon_key = "[icon_key]3"
 		else
 			icon_key = "[icon_key]1"
@@ -243,54 +242,54 @@ Please contact me on #coderbus IRC. ~Carn x
 	//BEGIN CACHED ICON GENERATION.
 
 		var/race_icon =   species.icobase
-		var/deform_icon = species.icobase
+		var/deform_icon = species.deform
 
 		//Robotic limbs are handled in get_icon() so all we worry about are missing or dead limbs.
 		//No icon stored, so we need to start with a basic one.
-		var/datum/organ/external/chest = get_organ("chest")
-		base_icon = chest.get_icon(race_icon,deform_icon,g,fat)
+		var/obj/item/organ/external/chest = get_bodypart(BP_CHEST)
+		base_icon = chest.get_icon(race_icon, deform_icon, g, fat)
 
 		if(chest.status & ORGAN_DEAD)
 			base_icon.ColorTone(necrosis_color_mod)
 			base_icon.SetIntensity(0.7)
 
-		for(var/datum/organ/external/part in organs)
+		for(var/obj/item/organ/external/BP in (bodyparts - chest))
 
 			var/icon/temp //Hold the bodypart icon for processing.
 
-			if(part.status & ORGAN_DESTROYED)
+			if(BP.status & ORGAN_DESTROYED)
 				continue
 
-			if (istype(part, /datum/organ/external/groin) || istype(part, /datum/organ/external/head))
-				temp = part.get_icon(race_icon,deform_icon,g)
+			if (istype(BP, /obj/item/organ/external/groin) || istype(BP, /obj/item/organ/external/head))
+				temp = BP.get_icon(race_icon, deform_icon, g)
 			else
-				temp = part.get_icon(race_icon,deform_icon)
+				temp = BP.get_icon(race_icon, deform_icon)
 
-			if(part.status & ORGAN_DEAD)
+			if(BP.status & ORGAN_DEAD)
 				temp.ColorTone(necrosis_color_mod)
 				temp.SetIntensity(0.7)
 
 			//That part makes left and right legs drawn topmost and lowermost when human looks WEST or EAST
 			//And no change in rendering for other parts (they icon_position is 0, so goes to 'else' part)
-			if(part.icon_position&(LEFT|RIGHT))
+			if(BP.icon_position & (LEFT | RIGHT))
 
 				var/icon/temp2 = new('icons/mob/human.dmi',"blank")
 
 				temp2.Insert(new/icon(temp,dir=NORTH),dir=NORTH)
 				temp2.Insert(new/icon(temp,dir=SOUTH),dir=SOUTH)
 
-				if(!(part.icon_position & LEFT))
+				if(!(BP.icon_position & LEFT))
 					temp2.Insert(new/icon(temp,dir=EAST),dir=EAST)
 
-				if(!(part.icon_position & RIGHT))
+				if(!(BP.icon_position & RIGHT))
 					temp2.Insert(new/icon(temp,dir=WEST),dir=WEST)
 
 				base_icon.Blend(temp2, ICON_OVERLAY)
 
-				if(part.icon_position & LEFT)
+				if(BP.icon_position & LEFT)
 					temp2.Insert(new/icon(temp,dir=EAST),dir=EAST)
 
-				if(part.icon_position & RIGHT)
+				if(BP.icon_position & RIGHT)
 					temp2.Insert(new/icon(temp,dir=WEST),dir=WEST)
 
 				base_icon.Blend(temp2, ICON_UNDERLAY)
@@ -341,8 +340,14 @@ Please contact me on #coderbus IRC. ~Carn x
 	if((undershirt > 0) && (undershirt < undershirt_t.len) && species.flags[HAS_UNDERWEAR])
 		if(!fat)
 			stand_icon.Blend(new /icon('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
-
 	standing	+= image("icon"=stand_icon, "layer"=-BODY_LAYER)
+
+	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
+		if(!fat && bodyparts_by_name[BP_R_FOOT] && bodyparts_by_name[BP_L_FOOT]) //shit
+			var/obj/item/organ/external/rfoot = bodyparts_by_name[BP_R_FOOT]
+			var/obj/item/organ/external/lfoot = bodyparts_by_name[BP_L_FOOT]
+			if(!(rfoot.status & ORGAN_DESTROYED) && !(lfoot.status & ORGAN_DESTROYED))
+				standing += image("icon"='icons/mob/human_socks.dmi', "icon_state"="socks[socks]_s", "layer"=-BODY_LAYER)
 
 	if(has_head)
 		//Eyes
@@ -357,9 +362,9 @@ Please contact me on #coderbus IRC. ~Carn x
 			standing	+= lips
 
 	update_tail_showing()
-
 	overlays_standing[BODY_LAYER] = standing
 	apply_overlay(BODY_LAYER)
+
 
 
 //HAIR OVERLAY
@@ -367,8 +372,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	//Reset our hair
 	remove_overlay(HAIR_LAYER)
 
-	var/datum/organ/external/head/head_organ = get_organ("head")
-	if(!head_organ || (head_organ.status & ORGAN_DESTROYED))
+	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
+	if(!BP || (BP.status & ORGAN_DESTROYED))
 		return
 
 	//masks and helmets can obscure our hair.
@@ -376,23 +381,23 @@ Please contact me on #coderbus IRC. ~Carn x
 		return
 
 	//base icons
-	var/list/standing	= list()
+	var/list/standing = list()
 
 	if(f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[f_style]
 		if(facial_hair_style && facial_hair_style.species_allowed && (species.name in facial_hair_style.species_allowed))
-			var/image/facial_s = image("icon"=facial_hair_style.icon, "icon_state"="[facial_hair_style.icon_state]_s", "layer"=-HAIR_LAYER)
+			var/image/facial_s = image("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s", "layer" = -HAIR_LAYER)
 			if(facial_hair_style.do_colouration)
-				facial_s.color = rgb(r_facial, g_facial, b_facial)
-			standing	+= facial_s
+				facial_s.color = RGB_CONTRAST(r_facial, g_facial, b_facial)
+			standing += facial_s
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
 		var/datum/sprite_accessory/hair_style = hair_styles_list[h_style]
 		if(hair_style && hair_style.species_allowed && (species.name in hair_style.species_allowed))
-			var/image/hair_s = image("icon"=hair_style.icon, "icon_state"="[hair_style.icon_state]_s", "layer"=-HAIR_LAYER)
+			var/image/hair_s = image("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s", "layer" = -HAIR_LAYER)
 			if(hair_style.do_colouration)
-				hair_s.color = rgb(r_hair,g_hair,b_hair)
-			standing	+= hair_s
+				hair_s.color = RGB_CONTRAST(r_hair, g_hair, b_hair)
+			standing += hair_s
 
 	if(standing.len)
 		overlays_standing[HAIR_LAYER]	= standing
@@ -429,7 +434,7 @@ Please contact me on #coderbus IRC. ~Carn x
 			if(TK)
 				standing.underlays	+= "telekinesishead[fat]_s"
 			*/
-			if(LASER)
+			if(LASEREYES)
 				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="lasereyes_s", "layer"=-MUTATIONS_LAYER)
 	if(standing.len)
 		overlays_standing[MUTATIONS_LAYER]	= standing
@@ -448,15 +453,14 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(dna)
 		switch(dna.mutantrace)
 			if("slime")
-				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="[dna.mutantrace][fat]_[gender]_[species.name]_s", "layer"=-MUTANTRACE_LAYER)
-			if("golem","shadow","adamantine")
-				standing	+= image("icon"='icons/effects/genetics.dmi', "icon_state"="[dna.mutantrace][fat]_[gender]_s", "layer"=-MUTANTRACE_LAYER)
-			if("shadowling")
-				var/image/eyes = image("icon"='icons/mob/shadowling.dmi', "icon_state"="[dna.mutantrace]_ms_s", "layer"=GLASSES_LAYER)
-				var/image/body = image("icon"='icons/mob/shadowling.dmi', "icon_state"="[dna.mutantrace]_s", "layer"=-MUTANTRACE_LAYER)
-				eyes.plane = LIGHTING_PLANE + 1
-				standing	+= eyes
-				standing	+= body
+				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_[species.name]_s", -MUTANTRACE_LAYER)
+			if("golem" , "shadow")
+				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_s", -MUTANTRACE_LAYER)
+
+	if(species.name == SHADOWLING && head)
+		var/image/eyes = image('icons/mob/shadowling.dmi', null, "[dna.mutantrace]_ms_s", LIGHTING_LAYER + 1)
+		eyes.plane = LIGHTING_PLANE + 1
+		standing += eyes
 
 	if(!dna || !(dna.mutantrace == "golem"))
 		update_body()
@@ -517,8 +521,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	update_inv_pockets()
 	update_surgery()
 	update_bandage()
-	for(var/datum/organ/external/O in organs)
-		UpdateDamageIcon(O)
+	for(var/obj/item/organ/external/BP in bodyparts)
+		UpdateDamageIcon(BP)
 	update_icons()
 	update_transform()
 	//Hud Stuff
@@ -813,8 +817,8 @@ Please contact me on #coderbus IRC. ~Carn x
 				overlays_standing[HEAD_LAYER]	= null
 
 		update_inv_shoes()
-		update_tail_showing()
 
+	update_tail_showing()
 	update_collar()
 
 	apply_overlay(SUIT_LAYER)
@@ -960,10 +964,10 @@ Please contact me on #coderbus IRC. ~Carn x
 
 	if(species.tail && species.flags[HAS_TAIL])
 		if(!wear_suit || !(wear_suit.flags_inv & HIDETAIL) && !istype(wear_suit, /obj/item/clothing/suit/space))
-			var/icon/tail_s = new/icon("icon"='icons/effects/species.dmi', "icon_state"="[species.tail]_s")
-			tail_s.Blend(rgb(r_skin, g_skin, b_skin), ICON_ADD)
+			var/image/tail_s = image("icon" = 'icons/effects/species.dmi', "icon_state" = "[species.tail]_s")
+			tail_s.color = RGB_CONTRAST(r_skin, g_skin, b_skin)
 
-			overlays_standing[TAIL_LAYER]	= image("icon"=tail_s, "layer"=-TAIL_LAYER)
+			overlays_standing[TAIL_LAYER] = image("icon" = tail_s, "layer" = -TAIL_LAYER)
 
 	apply_overlay(TAIL_LAYER)
 
@@ -987,26 +991,25 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/proc/update_surgery()
 	remove_overlay(SURGERY_LAYER)
 
-	var/list/standing	= list()
-	for(var/datum/organ/external/O in organs)
-		if(O.open)
-			standing += image("icon"='icons/mob/surgery.dmi', "icon_state"="[O.name][round(O.open)]", "layer"=-SURGERY_LAYER)
+	var/list/standing = list()
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.open)
+			standing += image("icon" = 'icons/mob/surgery.dmi', "icon_state" = "[BP.body_zone][round(BP.open)]", "layer" = -SURGERY_LAYER)
 
 	if(standing.len)
 		overlays_standing[SURGERY_LAYER] = standing
 
 	apply_overlay(SURGERY_LAYER)
 
-
 /mob/living/carbon/human/proc/update_bandage()
 	remove_overlay(BANDAGE_LAYER)
 
-	var/list/standing	= list()
-	for(var/datum/organ/external/E in organs)
-		if(E.wounds.len)
-			for(var/datum/wound/W in E.wounds)
+	var/list/standing = list()
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP.wounds.len)
+			for(var/datum/wound/W in BP.wounds)
 				if(W.bandaged)
-					standing += image("icon"='icons/mob/bandages.dmi', "icon_state"="[E.name]", "layer"=-BANDAGE_LAYER)
+					standing += image("icon" = 'icons/mob/bandages.dmi', "icon_state" = "[BP.body_zone]", "layer" = -BANDAGE_LAYER)
 
 	if(standing.len)
 		overlays_standing[BANDAGE_LAYER] = standing

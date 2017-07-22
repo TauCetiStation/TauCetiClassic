@@ -80,7 +80,7 @@
 					to_chat(user, "\blue You remove the cables.")
 					state = 2
 					icon_state = "2"
-					var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( loc )
+					var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil/red(loc)
 					A.amount = 5
 
 			if(istype(P, /obj/item/stack/sheet/rglass))
@@ -291,7 +291,7 @@ That prevents a few funky behaviors.
 								C.name = "inteliCard"
 								C.overlays.Cut()
 								A.loc = T
-								T.occupant = A
+								T.occupier = A
 								A.control_disabled = 1
 								if (A.stat == DEAD)
 									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
@@ -302,25 +302,25 @@ That prevents a few funky behaviors.
 								to_chat(A, "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
 								to_chat(U, "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 						else
-							if(!C.contents.len && T.occupant && !T.active)
-								C.name = "inteliCard - [T.occupant.name]"
+							if(!C.contents.len && T.occupier && !T.active)
+								C.name = "inteliCard - [T.occupier.name]"
 								T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
-								if (T.occupant.stat == DEAD)
+								if (T.occupier.stat == DEAD)
 									C.icon_state = "aicard-404"
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
 								else
 									C.icon_state = "aicard-full"
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
-								to_chat(T.occupant, "You have been downloaded to a mobile storage device. Still no remote access.")
-								to_chat(U, "\blue <b>Transfer successful</b>: \black [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
-								T.occupant.loc = C
-								T.occupant.cancel_camera()
-								T.occupant = null
+								to_chat(T.occupier, "You have been downloaded to a mobile storage device. Still no remote access.")
+								to_chat(U, "\blue <b>Transfer successful</b>: \black [T.occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+								T.occupier.loc = C
+								T.occupier.cancel_camera()
+								T.occupier = null
 							else if (C.contents.len)
 								to_chat(U, "\red <b>ERROR</b>: \black Artificial intelligence detected on terminal.")
 							else if (T.active)
 								to_chat(U, "\red <b>ERROR</b>: \black Reconstruction in progress.")
-							else if (!T.occupant)
+							else if (!T.occupier)
 								to_chat(U, "\red <b>ERROR</b>: \black Unable to locate artificial intelligence.")
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src

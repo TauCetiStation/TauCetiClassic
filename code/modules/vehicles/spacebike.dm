@@ -49,16 +49,20 @@
 	..()
 	to_chat(user, "It has number [id].")
 
-/obj/vehicle/space/spacebike/load(atom/movable/C)
-	var/mob/living/M = C
-	if(!istype(C)) return 0
-	if(M.buckled || M.restrained() || !Adjacent(M) || !M.Adjacent(src))
-		return 0
-	return ..(M)
+/obj/vehicle/space/spacebike/load(mob/living/M)
+	if(!istype(M))
+		return FALSE
+	if(M.buckled || M.incapacitated() || M.lying || !Adjacent(M) || !M.Adjacent(src))
+		return FALSE
+	return ..()
 
-/obj/vehicle/space/spacebike/MouseDrop_T(atom/movable/C, mob/user)
-	if(!load(C))
-		to_chat(user, "<span class='warning'>You were unable to load \the [C] onto \the [src].</span>")
+/obj/vehicle/space/spacebike/MouseDrop_T(mob/living/M, mob/living/user)
+	if(!istype(user) || !istype(M))
+		return
+	if(user.incapacitated() || user.lying)
+		return
+	if(!load(M))
+		to_chat(user, "<span class='warning'>You were unable to load \the [M] onto \the [src].</span>")
 		return
 
 /obj/vehicle/space/spacebike/attack_hand(mob/user)
@@ -121,12 +125,12 @@
 			L.apply_effects(8,5)
 			L.lying = 1
 			var/damage = rand(5,15)
-			L.apply_damage(2*damage, BRUTE, "head")
-			L.apply_damage(2*damage, BRUTE, "chest")
-			L.apply_damage(0.5*damage, BRUTE, "l_leg")
-			L.apply_damage(0.5*damage, BRUTE, "r_leg")
-			L.apply_damage(0.5*damage, BRUTE, "l_arm")
-			L.apply_damage(0.5*damage, BRUTE, "r_arm")
+			L.apply_damage(2*damage, BRUTE, BP_HEAD)
+			L.apply_damage(2*damage, BRUTE, BP_CHEST)
+			L.apply_damage(0.5*damage, BRUTE, BP_L_LEG)
+			L.apply_damage(0.5*damage, BRUTE, BP_R_LEG)
+			L.apply_damage(0.5*damage, BRUTE, BP_L_ARM)
+			L.apply_damage(0.5*damage, BRUTE, BP_R_ARM)
 	..()
 
 /obj/vehicle/space/spacebike/relaymove(mob/user, direction)
@@ -148,6 +152,8 @@
 /obj/vehicle/space/spacebike/can_move()
 	. = ..()
 	if(kickstand)
+		return 0
+	if(buckled_mob && (buckled_mob.stat || buckled_mob.lying))
 		return 0
 
 /obj/vehicle/space/spacebike/turn_on()

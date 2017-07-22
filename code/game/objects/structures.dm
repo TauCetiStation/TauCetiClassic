@@ -10,10 +10,16 @@
 /obj/structure/ex_act(severity)
 	switch(severity)
 		if(1.0)
+			for(var/atom/movable/AM in contents)
+				AM.forceMove(loc)
+				AM.ex_act(severity++)
 			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
+				for(var/atom/movable/AM in contents)
+					AM.forceMove(loc)
+					AM.ex_act(severity++)
 				qdel(src)
 				return
 		if(3.0)
@@ -110,25 +116,25 @@
 				M.adjustBruteLoss(damage)
 				return
 
-			var/datum/organ/external/affecting
+			var/obj/item/organ/external/BP
 
 			switch(pick(list("ankle","wrist","head","knee","elbow")))
 				if("ankle")
-					affecting = H.get_organ(pick("l_foot", "r_foot"))
+					BP = H.bodyparts_by_name[pick(BP_L_FOOT , BP_R_FOOT)]
 				if("knee")
-					affecting = H.get_organ(pick("l_leg", "r_leg"))
+					BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 				if("wrist")
-					affecting = H.get_organ(pick("l_hand", "r_hand"))
+					BP = H.bodyparts_by_name[pick(BP_L_HAND , BP_R_HAND)]
 				if("elbow")
-					affecting = H.get_organ(pick("l_arm", "r_arm"))
+					BP = H.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
 				if("head")
-					affecting = H.get_organ("head")
+					BP = H.bodyparts_by_name[BP_HEAD]
 
-			if(affecting)
-				to_chat(M, "<span class='red'>You land heavily on your [affecting.display_name]!</span>")
-				affecting.take_damage(damage, 0)
-				if(affecting.parent)
-					affecting.parent.add_autopsy_data("Misadventure", damage)
+			if(BP)
+				to_chat(M, "<span class='red'>You land heavily on your [BP.name]!</span>")
+				BP.take_damage(damage, 0)
+				if(BP.parent)
+					BP.parent.add_autopsy_data("Misadventure", damage)
 			else
 				to_chat(H, "<span class='red'>You land heavily!</span>")
 				H.adjustBruteLoss(damage)

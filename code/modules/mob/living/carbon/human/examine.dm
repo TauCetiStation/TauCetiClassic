@@ -202,10 +202,10 @@
 			msg += "<span class='warning'>[t_He] [t_is] twitching ever so slightly.</span>\n"
 
 	//splints
-	for(var/organ in list("l_leg","r_leg","l_arm","r_arm"))
-		var/datum/organ/external/o = get_organ(organ)
-		if(o && o.status & ORGAN_SPLINTED)
-			msg += "<span class='warning'>[t_He] [t_has] a splint on [t_his] [o.display_name]!</span>\n"
+	for(var/bodypart in list(BP_L_LEG , BP_R_LEG , BP_L_ARM , BP_R_ARM))
+		var/obj/item/organ/external/BP = bodyparts_by_name[bodypart]
+		if(BP && BP.status & ORGAN_SPLINTED)
+			msg += "<span class='warning'>[t_He] [t_has] a splint on [t_his] [BP.name]!</span>\n"
 
 	if(suiciding)
 		msg += "<span class='warning'>[t_He] appears to have commited suicide... there is no hope of recovery.</span>\n"
@@ -252,37 +252,45 @@
 	var/list/wound_flavor_text = list()
 	var/list/is_destroyed = list()
 	var/list/is_bleeding = list()
-	for(var/datum/organ/external/temp in organs)
-		if(temp)
-			if(temp.status & ORGAN_DESTROYED)
-				is_destroyed["[temp.display_name]"] = 1
-				wound_flavor_text["[temp.display_name]"] = "<span class='warning'><b>[t_He] is missing [t_his] [temp.display_name].</b></span>\n"
+	var/applying_pressure = ""
+
+	for(var/obj/item/organ/external/BP in bodyparts)
+		if(BP)
+			if(BP.status & ORGAN_DESTROYED)
+				is_destroyed["[BP.name]"] = 1
+				wound_flavor_text["[BP.name]"] = "<span class='warning'><b>[t_He] is missing [t_his] [BP.name].</b></span>\n"
 				continue
-			if(temp.status & ORGAN_ROBOT)
-				if(!(temp.brute_dam + temp.burn_dam))
+			if(BP.applied_pressure)
+				if(BP.applied_pressure == src)
+					applying_pressure = "<span class='info'>[t_He] is applying pressure to [t_his] [BP.name].</span><br>"
+				else
+					applying_pressure = "<span class='info'>[BP.applied_pressure] is applying pressure to [t_his] [BP.name].</span><br>"
+			if(BP.status & ORGAN_ROBOT)
+				if(!(BP.brute_dam + BP.burn_dam))
 					if(!species.flags[IS_SYNTHETIC])
-						wound_flavor_text["[temp.display_name]"] = "<span class='warning'>[t_He] has a robot [temp.display_name]!</span>\n"
+						wound_flavor_text["[BP.name]"] = "<span class='warning'>[t_He] has a robot [BP.name]!</span>\n"
 						continue
 				else
-					wound_flavor_text["[temp.display_name]"] = "<span class='warning'>[t_He] has a robot [temp.display_name], it has"
-				if(temp.brute_dam) switch(temp.brute_dam)
-					if(0 to 20)
-						wound_flavor_text["[temp.display_name]"] += " some dents"
-					if(21 to INFINITY)
-						wound_flavor_text["[temp.display_name]"] += pick(" a lot of dents"," severe denting")
-				if(temp.brute_dam && temp.burn_dam)
-					wound_flavor_text["[temp.display_name]"] += " and"
-				if(temp.burn_dam) switch(temp.burn_dam)
-					if(0 to 20)
-						wound_flavor_text["[temp.display_name]"] += " some burns"
-					if(21 to INFINITY)
-						wound_flavor_text["[temp.display_name]"] += pick(" a lot of burns"," severe melting")
-				if(wound_flavor_text["[temp.display_name]"])
-					wound_flavor_text["[temp.display_name]"] += "!</span>\n"
-			else if(temp.wounds.len > 0)
+					wound_flavor_text["[BP.name]"] = "<span class='warning'>[t_He] has a robot [BP.name], it has"
+				if(BP.brute_dam)
+					switch(BP.brute_dam)
+						if(0 to 20)
+							wound_flavor_text["[BP.name]"] += " some dents"
+						if(21 to INFINITY)
+							wound_flavor_text["[BP.name]"] += pick(" a lot of dents"," severe denting")
+				if(BP.brute_dam && BP.burn_dam)
+					wound_flavor_text["[BP.name]"] += " and"
+				if(BP.burn_dam)
+					switch(BP.burn_dam)
+						if(0 to 20)
+							wound_flavor_text["[BP.name]"] += " some burns"
+						if(21 to INFINITY)
+							wound_flavor_text["[BP.name]"] += pick(" a lot of burns"," severe melting")
+				if(wound_flavor_text["[BP.name]"])
+					wound_flavor_text["[BP.name]"] += "!</span>\n"
+			else if(BP.wounds.len > 0)
 				var/list/wound_descriptors = list()
-				for(var/datum/wound/W in temp.wounds)
-					if(W.internal && !temp.open) continue // can't see internal wounds
+				for(var/datum/wound/W in BP.wounds)
 					var/this_wound_desc = W.desc
 					if(W.damage_type == BURN && W.salved) this_wound_desc = "salved [this_wound_desc]"
 					if(W.bleeding()) this_wound_desc = "bleeding [this_wound_desc]"
@@ -326,14 +334,14 @@
 						else if(flavor_text.len > 1 && text > 1)
 							flavor_text_string += ","
 						flavor_text_string += flavor_text[text]
-					flavor_text_string += " on [t_his] [temp.display_name].</span><br>"
-					wound_flavor_text["[temp.display_name]"] = flavor_text_string
+					flavor_text_string += " on [t_his] [BP.name].</span><br>"
+					wound_flavor_text["[BP.name]"] = flavor_text_string
 				else
-					wound_flavor_text["[temp.display_name]"] = ""
-				if(temp.status & ORGAN_BLEEDING)
-					is_bleeding["[temp.display_name]"] = 1
+					wound_flavor_text["[BP.name]"] = ""
+				if(BP.status & ORGAN_BLEEDING)
+					is_bleeding["[BP.name]"] = 1
 			else
-				wound_flavor_text["[temp.display_name]"] = ""
+				wound_flavor_text["[BP.name]"] = ""
 
 	//Handles the text strings being added to the actual description.
 	//If they have something that covers the limb, and it is not missing, put flavortext.  If it is covered but bleeding, add other flavortext.
@@ -394,7 +402,7 @@
 	for(var/implant in get_visible_implants(1))
 		msg += "<span class='warning'><b>[src] has \a [implant] sticking out of their flesh!</b></span>\n"
 	if(digitalcamo)
-		msg += "[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.\n"
+		msg += "<span class='warning'>[t_He] [t_is] moving [t_his] body in an unnatural and blatantly inhuman manner.</span>\n"
 	if(mind && mind.changeling && mind.changeling.isabsorbing)
 		msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
 
@@ -448,7 +456,11 @@
 
 	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 
-	msg += "*---------*</span>"
+	msg += "*---------*</span><br>"
+	if(applying_pressure)
+		msg += applying_pressure
+	else if(busy_with_action)
+		msg += "<span class='info'>[t_He] is busy with something!</span><br>"
 	if (pose)
 		if( findtext(pose,".",lentext(pose)) == 0 && findtext(pose,"!",lentext(pose)) == 0 && findtext(pose,"?",lentext(pose)) == 0 )
 			pose = addtext(pose,".") //Makes sure all emotes end with a period.
@@ -457,7 +469,7 @@
 	//someone here, but who?
 	if(istype(user, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		if(H.species && H.species.name != "Abductor")
+		if(H.species && H.species.name != ABDUCTOR)
 			for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(wear_suit))
 				if(V.stealth_active)
 					to_chat(H, "<span class='notice'>You can't focus your eyes on [src].</span>")

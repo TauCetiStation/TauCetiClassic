@@ -23,7 +23,6 @@
 	anchored = 1
 	density = 1
 	var/obj/machinery/compressor/compressor
-	directwired = 1
 	var/turf/simulated/outturf
 	var/lastgen
 	var/productivity = 1
@@ -54,7 +53,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 5)
+	component_parts += new /obj/item/weapon/cable_coil/red(null, 5)
 	RefreshParts()
 	gas_contained = new
 	inturf = get_step(src, dir)
@@ -145,7 +144,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-	component_parts += new /obj/item/weapon/cable_coil(src, 5)
+	component_parts += new /obj/item/weapon/cable_coil/red(src, 5)
 	RefreshParts()
 
 	outturf = get_step(src, dir)

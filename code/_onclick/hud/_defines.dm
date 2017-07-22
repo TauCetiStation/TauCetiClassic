@@ -120,3 +120,12 @@
 //Mecha
 #define ui_iarrowleft "SOUTH-1,EAST-3"
 #define ui_iarrowright "SOUTH-1,EAST-1"
+
+//Ian
+#define ui_ian_ability "CENTER:20,SOUTH+1:5"
+#define ui_ian_mouth   "CENTER:20,SOUTH:5"
+#define ui_ian_back    "CENTER-1:18,SOUTH:5"
+#define ui_ian_neck    "CENTER-2:16,SOUTH:5"
+#define ui_ian_head    "CENTER-3:14,SOUTH:5"
+#define ui_stamina     "EAST-1:28,CENTER:5"
+#define ui_ian_pselect "EAST-4:22,SOUTH:5"

@@ -80,13 +80,12 @@
 
 /obj/item/weapon/pen/paralysis/attack(mob/living/M, mob/user)
 	..()
-	if(!(istype(M,/mob)))
+
+	if(!istype(M))
 		return
 
-	if(M.can_inject(user,1))
-		if(reagents.total_volume)
-			if(M.reagents) reagents.trans_to(M, 50)
-	return
+	if(reagents.total_volume && M.reagents && M.try_inject(user, TRUE, TRUE, TRUE))
+		reagents.trans_to(M, 50)
 
 
 /obj/item/weapon/pen/paralysis/New()

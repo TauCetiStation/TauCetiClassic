@@ -45,7 +45,7 @@
 				emagged = 1
 				src.overlays += image('icons/obj/storage.dmi', icon_sparking)
 				sleep(6)
-				src.overlays = null
+				overlays.Cut()
 				overlays += image('icons/obj/storage.dmi', icon_locking)
 				locked = 0
 				if(istype(W, /obj/item/weapon/melee/energy/blade))
@@ -151,7 +151,7 @@
 	name = "secure briefcase"
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "secure"
-	item_state = "sec-case"
+	item_state = "secure-r"
 	desc = "A large briefcase with a digital locking system."
 	force = 8.0
 	throw_speed = 1
@@ -176,41 +176,24 @@
 		src.add_fingerprint(user)
 		return
 
-	//I consider this worthless but it isn't my code so whatever.  Remove or uncomment.
-	/*attack(mob/M, mob/living/user)
-		if ((CLUMSY in user.mutations) && prob(50))
-			to_chat(user, "\red The [src] slips out of your hand and hits your head.")
-			user.take_organ_damage(10)
-			user.Paralyse(2)
-			return
+/obj/item/weapon/storage/secure/briefcase/attackby(var/obj/item/weapon/W, var/mob/user)
+	..()
+	update_icon()
 
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
+/obj/item/weapon/storage/secure/briefcase/Topic(href, href_list)
+	..()
+	update_icon()
 
-		log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
+/obj/item/weapon/storage/secure/briefcase/update_icon()
+	if(!locked || emagged)
+		item_state = "secure-g"
+	else
+		item_state = "secure-r"
 
-		var/t = user:zone_sel.selecting
-		if (t == "head")
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.stat < 2 && H.health < 50 && prob(90))
-				// ******* Check
-					if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
-						to_chat(H, "\red The helmet protects you from being hit hard in the head!")
-						return
-					var/time = rand(2, 6)
-					if (prob(75))
-						H.Paralyse(time)
-					else
-						H.Stun(time)
-					if(H.stat != DEAD)	H.stat = UNCONSCIOUS
-					for(var/mob/O in viewers(H, null))
-						O.show_message(text("\red <B>[] has been knocked unconscious!</B>", H), 1, "\red You hear someone fall.", 2)
-				else
-					to_chat(H, text("\red [] tried to knock you unconcious!",user))
-					H.eye_blurry += 3
-
-		return*/
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_l_hand()
+		M.update_inv_r_hand()
 
 //Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/weapon/storage/secure/briefcase/syndie

@@ -6,7 +6,7 @@
 	icon_state = "implant"
 	var/implanted = null
 	var/mob/imp_in = null
-	var/datum/organ/external/part = null
+	var/obj/item/organ/external/part = null
 	item_color = "b"
 	var/allow_reagents = 0
 	var/malfunction = 0
@@ -33,7 +33,7 @@
 	return 0
 
 /obj/item/weapon/implant/proc/meltdown()	//breaks it down, making implant unrecongizible
-	to_chat(imp_in, "\red You feel something melting inside [part ? "your [part.display_name]" : "you"]!")
+	to_chat(imp_in, "\red You feel something melting inside [part ? "your [part.name]" : "you"]!")
 	if (part)
 		part.take_damage(burn = 15, used_weapon = "Electronics meltdown")
 	else
@@ -169,18 +169,18 @@ Implant Specifics:<BR>"}
 		if(ishuman(imp_in))
 			if (elevel == "Localized Limb")
 				if(part) //For some reason, small_boom() didn't work. So have this bit of working copypaste.
-					imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!")
+					imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!")
 					playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
 					sleep(25)
-					if (istype(part,/datum/organ/external/chest) ||	\
-						istype(part,/datum/organ/external/groin) ||	\
-						istype(part,/datum/organ/external/head))
+					if (istype(part,/obj/item/organ/external/chest) ||	\
+						istype(part,/obj/item/organ/external/groin) ||	\
+						istype(part,/obj/item/organ/external/head))
 						part.createwound(BRUISE, 60)	//mangle them instead
 						explosion(get_turf(imp_in), -1, -1, 2, 3)
 						qdel(src)
 					else
 						explosion(get_turf(imp_in), -1, -1, 2, 3)
-						part.droplimb(1)
+						part.droplimb(null, null, DROPLIMB_BLUNT)
 						qdel(src)
 			if (elevel == "Destroy Body")
 				explosion(get_turf(T), -1, 0, 1, 6)
@@ -234,18 +234,18 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/explosive/proc/small_boom()
 	if (ishuman(imp_in) && part)
-		imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.display_name]" : ""]!")
+		imp_in.visible_message("\red Something beeps inside [imp_in][part ? "'s [part.name]" : ""]!")
 		playsound(loc, 'sound/items/countdown.ogg', 75, 1, -3)
 		spawn(25)
 			if (ishuman(imp_in) && part)
 				//No tearing off these parts since it's pretty much killing
 				//and you can't replace groins
-				if (istype(part,/datum/organ/external/chest) ||	\
-					istype(part,/datum/organ/external/groin) ||	\
-					istype(part,/datum/organ/external/head))
+				if (istype(part,/obj/item/organ/external/chest) ||	\
+					istype(part,/obj/item/organ/external/groin) ||	\
+					istype(part,/obj/item/organ/external/head))
 					part.createwound(BRUISE, 60)	//mangle them instead
 				else
-					part.droplimb(1)
+					part.droplimb(null, null, DROPLIMB_BLUNT)
 			explosion(get_turf(imp_in), -1, -1, 2, 3)
 			qdel(src)
 
@@ -356,16 +356,16 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			"\red Suddenly the horrible pain strikes your body! Your mind is in complete disorder! Blood pulses and starts burning! The pain is impossible!!!")
 		H.adjustBrainLoss(80)
 
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	return 1
 
 /obj/item/weapon/implant/loyalty/New()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/implant/loyalty/process()
 	if (!implanted)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 
 	var/mob/M = imp_in
@@ -373,7 +373,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	if(!M)	return
 
 	if(M.stat == DEAD || isnull(M))
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 
 	if(prob(1) && prob(25))//1/400
@@ -462,7 +462,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 				a.autosay("[mobname] has died in Space!", "[mobname]'s Death Alarm")
 			else
 				a.autosay("[mobname] has died in [t.name]!", "[mobname]'s Death Alarm")
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 			qdel(a)
 		if ("emp")
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
@@ -472,7 +472,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 		else
 			var/obj/item/device/radio/headset/a = new /obj/item/device/radio/headset(null)
 			a.autosay("[mobname] has died-zzzzt in-in-in...", "[mobname]'s Death Alarm")
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 			qdel(a)
 
 /obj/item/weapon/implant/death_alarm/emp_act(severity)			//for some reason alarms stop going off in case they are emp'd, even without this
@@ -486,14 +486,14 @@ the implant may become unstable and either pre-maturely inject the subject or si
 			meltdown()
 		else if (prob(60))	//but more likely it will just quietly die
 			malfunction = MALFUNCTION_PERMANENT
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 	spawn(20)
 		malfunction--
 
 /obj/item/weapon/implant/death_alarm/implanted(mob/source)
 	mobname = source.real_name
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	return 1
 
 /obj/item/weapon/implant/compressed
@@ -546,3 +546,38 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	name = "cortical stack"
 	desc = "A fist-sized mass of biocircuits and chips."
 	icon_state = "implant_evil"
+	///////////////////////////////////////////////////////////
+/obj/item/weapon/storage/internal/imp
+	name = "bluespace pocket"
+	max_combined_w_class = 6
+	max_w_class = 3
+	storage_slots = 2
+	cant_hold = list(/obj/item/weapon/disk/nuclear)
+
+/obj/item/weapon/implant/storage
+	name = "storage implant"
+	desc = "Stores up to two big items in a bluespace pocket."
+	icon_state = "implant_evil"
+	origin_tech = "materials=2;magnets=4;bluespace=5;syndicate=4"
+	action_button_name = "Bluespace pocket"
+	var/obj/item/weapon/storage/internal/imp/storage
+
+/obj/item/weapon/implant/storage/New()
+	..()
+	storage = new /obj/item/weapon/storage/internal/imp(src)
+
+/obj/item/weapon/implant/storage/ui_action_click()
+	storage.open(imp_in)
+
+/obj/item/weapon/implant/storage/proc/removed()
+	storage.close_all()
+	for(var/obj/item/I in storage)
+		storage.remove_from_storage(I, get_turf(src))
+
+/obj/item/weapon/implant/storage/Destroy()
+	removed()
+	qdel(storage)
+	return ..()
+
+/obj/item/weapon/implant/storage/islegal()
+	return 0

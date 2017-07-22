@@ -43,7 +43,7 @@
 
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red The rod slips out of your hand and hits your head.")
-		user.take_organ_damage(10)
+		user.take_bodypart_damage(10)
 		user.Paralyse(20)
 		return
 
@@ -103,12 +103,16 @@
 	w_class = 3
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 
-	IsShield()
-		return 1
+	Get_shield_chance()
+		return 50
 
 	suicide_act(mob/user)
 		to_chat(viewers(user), "\red <b>[user] is falling on the [src.name]! It looks like \he's trying to commit suicide.</b>")
 		return(BRUTELOSS)
+
+/obj/item/weapon/claymore/light
+	force = 20
+	can_embed = 0
 
 /obj/item/weapon/claymore/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
@@ -132,8 +136,8 @@
 		to_chat(viewers(user), "\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>")
 		return(BRUTELOSS)
 
-/obj/item/weapon/katana/IsShield()
-		return 1
+/obj/item/weapon/katana/Get_shield_chance()
+		return 50
 
 /obj/item/weapon/katana/attack(mob/living/carbon/M, mob/living/carbon/user)
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)

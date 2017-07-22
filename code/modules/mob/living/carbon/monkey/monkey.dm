@@ -10,7 +10,7 @@
 	ventcrawler = 1
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
-	var/greaterform = "Human"                  // Used when humanizing a monkey.
+	var/greaterform = HUMAN                  // Used when humanizing a monkey.
 	icon_state = "monkey1"
 	//var/uni_append = "12C4E2"                // Small appearance modifier for different species.
 	var/list/uni_append = list(0x12C,0x4E2)    // Same as above for DNA2.
@@ -87,21 +87,21 @@
 
 	..()
 	dna.mutantrace = "lizard"
-	greaterform = "Unathi"
+	greaterform = UNATHI
 	add_language("Sinta'unathi")
 
 /mob/living/carbon/monkey/skrell/New()
 
 	..()
 	dna.mutantrace = "skrell"
-	greaterform = "Skrell"
+	greaterform = SKRELL
 	add_language("Skrellian")
 
 /mob/living/carbon/monkey/tajara/New()
 
 	..()
 	dna.mutantrace = "tajaran"
-	greaterform = "Tajaran"
+	greaterform = TAJARAN
 	add_language("Siik'tajr")
 
 /mob/living/carbon/monkey/diona/New()
@@ -110,7 +110,7 @@
 	alien = 1
 	gender = NEUTER
 	dna.mutantrace = "plant"
-	greaterform = "Diona"
+	greaterform = DIONA
 	add_language("Rootspeak")
 
 /mob/living/carbon/monkey/diona/movement_delay()
@@ -205,7 +205,7 @@
 					G.cell.use(2500)
 					apply_effects(0,0,0,0,5,0,0,150)
 
-					var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 					s.set_up(3, 1, src)
 					s.start()
 
@@ -249,10 +249,10 @@
 						O.show_message(text("\red <B>[] has attempted to punch [name]!</B>", M), 1)
 		else
 			if (M.a_intent == "grab")
-				if (M == src || anchored)
+				if (M == src || anchored || M.lying)
 					return
 
-				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 				M.put_in_active_hand(G)
 
@@ -319,9 +319,9 @@
 						O.show_message(text("\red <B>[] has attempted to lunge at [name]!</B>", M), 1)
 
 		if ("grab")
-			if (M == src)
+			if (M == src || anchored || M.lying)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
 
@@ -431,22 +431,15 @@
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
-		if(client && mind)
-			if(mind.changeling)
-				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Genetic Damage Time", mind.changeling.geneticdamage)
-				stat("Absorbed DNA", mind.changeling.absorbedcount)
-	return
+		CHANGELING_STATPANEL_STATS(null)
 
+	CHANGELING_STATPANEL_POWERS(null)
 
 /mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"
 	set category = "IC"
 	internal = null
 	return
-
-/mob/living/carbon/monkey/var/co2overloadtime = null
-/mob/living/carbon/monkey/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/monkey/emp_act(severity)
 	if(wear_id) wear_id.emp_act(severity)

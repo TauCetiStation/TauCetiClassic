@@ -119,6 +119,8 @@ obj/machinery/gateway/centerstation/process()
 	if(!active)		return
 	if(!awaygate)	return
 	if(awaygate.calibrated)
+		if(M.buckled_mob)
+			M.unbuckle_mob()
 		M.forceMove(get_step(awaygate.loc, SOUTH))
 		M.dir = SOUTH
 		return

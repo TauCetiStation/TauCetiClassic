@@ -287,12 +287,12 @@
 	for(var/obj/holo_obj in holographic_objs)
 		holo_obj.alpha *= 0.8 //give holodeck objs a slight transparency
 
-	addtimer(src, "initEnv", 30, TRUE)
+	addtimer(CALLBACK(src, .proc/initEnv), 30, TIMER_UNIQUE)
 
 /obj/machinery/computer/HolodeckControl/proc/initEnv()
 	for(var/obj/effect/landmark/L in linkedholodeck)
 		if(L.name=="Atmospheric Test Start")
-			addtimer(src, "startFire", 20, FALSE, L)
+			addtimer(CALLBACK(src, .proc/startFire, L), 20)
 
 		if(L.name=="Holocarp Spawn")
 			holographic_mobs += new /mob/living/simple_animal/hostile/carp/holodeck(L.loc)

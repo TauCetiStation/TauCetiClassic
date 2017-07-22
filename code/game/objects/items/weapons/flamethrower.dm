@@ -34,7 +34,7 @@
 
 /obj/item/weapon/flamethrower/process()
 	if(!lit)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 
 	var/turf/location = loc
@@ -80,7 +80,7 @@
 		if(ptank)
 			ptank.loc = T
 			ptank = null
-		PoolOrNew(/obj/item/stack/rods, T)
+		new /obj/item/stack/rods(T)
 		qdel(src)
 		return
 
@@ -165,7 +165,7 @@
 		if(!status)	return
 		lit = !lit
 		if(lit)
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 	if(href_list["amount"])
 		throw_amount = throw_amount + text2num(href_list["amount"])
 		throw_amount = max(50, min(5000, throw_amount))
@@ -193,8 +193,6 @@
 		if(!previousturf && length(turflist)>1)
 			previousturf = get_turf(src)
 			continue	//so we don't burn the tile we be standin on
-		if(previousturf && LinkBlocked(previousturf, T))
-			break
 		ignite_turf(T)
 		sleep(1)
 	previousturf = null

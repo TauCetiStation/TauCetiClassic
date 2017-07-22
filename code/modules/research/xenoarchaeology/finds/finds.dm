@@ -37,9 +37,8 @@
 
 	//method = rand(0,2)
 	if(inside_item_type)
-		inside = new/obj/item/weapon/archaeological_find(src, new_item_type = inside_item_type)
-		if(!inside)
-			inside = locate() in contents
+		new/obj/item/weapon/archaeological_find(src, new_item_type = inside_item_type)
+		inside = locate() in contents
 
 /*/obj/item/weapon/ore/strangerock/ex_act(var/severity)
 	if(severity && prob(30))
@@ -94,14 +93,13 @@
 	icon_state = "unknown[rand(1,4)]"
 	var/additional_desc = ""
 	var/obj/item/weapon/new_item
-	var/source_material = ""
+	var/source_material = pick("cordite","quadrinium","steel","titanium","aluminium","ferritic-alloy","plasteel","duranium")
 	var/apply_material_decorations = 1
 	var/apply_image_decorations = 0
 	var/material_descriptor = ""
 	var/apply_prefix = 1
 	if(prob(40))
 		material_descriptor = pick("rusted ","dusty ","archaic ","fragile ")
-	source_material = pick("cordite","quadrinium","steel","titanium","aluminium","ferritic-alloy","plasteel","duranium")
 
 	var/talkative = 0
 	if(prob(5))
@@ -319,7 +317,7 @@
 			apply_material_decorations = 0
 		if(23)
 			apply_prefix = 0
-			new_item = PoolOrNew(/obj/item/stack/rods, src.loc)
+			new_item = new /obj/item/stack/rods(src.loc)
 			apply_image_decorations = 0
 			apply_material_decorations = 0
 		if(24)
@@ -339,15 +337,13 @@
 		if(26)
 			//energy gun
 			var/spawn_type = pick(\
-			/obj/item/weapon/gun/energy/laser/practice,\
-			/obj/item/weapon/gun/energy/laser,\
-			/obj/item/weapon/gun/energy/xray,\
-			/obj/item/weapon/gun/energy/laser/captain)
+			/obj/item/weapon/gun/energy/sniperrifle/rails,\
+			/obj/item/weapon/gun/tesla/rifle,\
+			/obj/item/weapon/gun/energy/laser/scatter/alien,\
+			/obj/item/weapon/gun/energy/laser/selfcharging/alien)
 			if(spawn_type)
 				var/obj/item/weapon/gun/energy/new_gun = new spawn_type(src.loc)
 				new_item = new_gun
-				new_item.icon_state = "egun[rand(1,6)]"
-				new_gun.desc = "This is an antique energy weapon, you're not sure if it will fire or not."
 
 				//5% chance to explode when first fired
 				//10% chance to have an unchargeable cell
@@ -547,12 +543,10 @@
 
 		if(talkative)
 			new_item.talking_atom = new()
-			talking_atom.holder_atom = new_item
-			talking_atom.init()
+			talking_atom.init(new_item)
 
 		qdel(src)
 
 	else if(talkative)
 		src.talking_atom = new()
-		talking_atom.holder_atom = src
-		talking_atom.init()
+		talking_atom.init(src)

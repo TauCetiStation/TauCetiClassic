@@ -1,3 +1,4 @@
+/* disabled due to pirate gamemode switching back to vox, leaving this for reference.
 var/global/raider_tick = 1
 
 /mob/living/carbon/human/proc/equip_raider()
@@ -38,7 +39,7 @@ var/global/raider_tick = 1
 	equip_to_slot_or_del(W, slot_wear_id)
 
 	raider_tick = 2
-	return 1
+	return 1*/
 
 /obj/item/weapon/gun/projectile/automatic/a28/nonlethal
 	name = "A28 assault rifle NL"
@@ -89,7 +90,7 @@ var/global/raider_tick = 1
 /obj/item/projectile/bullet/weakbullet/nl_rifle/on_hit(atom/target, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		S.take_organ_damage(20)//+10=30
+		S.take_bodypart_damage(20)//+10=30
 		S.emp_act(2)
 	else if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target
@@ -103,7 +104,7 @@ var/global/raider_tick = 1
 /obj/item/projectile/bullet/weakbullet/nl_pistol/on_hit(atom/target, blocked = 0)
 	if(issilicon(target))
 		var/mob/living/silicon/S = target
-		S.take_organ_damage(10)//+10=20
+		S.take_bodypart_damage(10)//+10=20
 		S.emp_act(2)
 	else if(istype(target,/obj/mecha))
 		var/obj/mecha/M = target

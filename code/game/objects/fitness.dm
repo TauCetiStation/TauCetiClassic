@@ -7,8 +7,11 @@
 	anchored = 1
 
 /obj/structure/stacklifter/attack_hand(mob/user)
+	if(!user.Adjacent(src))
+		return
 	var/mob/living/carbon/human/gymnast = user
-
+	if(!istype(gymnast) || gymnast.lying)
+		return
 	if(in_use)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
@@ -52,8 +55,11 @@
 	anchored = 1
 
 /obj/structure/weightlifter/attack_hand(mob/user)
+	if(!user.Adjacent(src))
+		return
 	var/mob/living/carbon/human/gymnast = user
-
+	if(!istype(gymnast) || gymnast.lying)
+		return
 	if(in_use)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
@@ -67,7 +73,7 @@
 		user.Stun(4)
 		user.loc = src.loc
 		var/image/W = image('icons/obj/fitness.dmi',"fitnessweight-w")
-		W.layer = OBJ_LAYER
+		W.layer = MOB_LAYER + 1
 		overlays += W
 		var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 		user.visible_message("<B>[user] is [bragmessage]!</B>")
@@ -95,5 +101,4 @@
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnessweight"
 		overlays -= W
-
 		to_chat(user, "[finishmessage]")
