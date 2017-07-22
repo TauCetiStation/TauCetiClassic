@@ -260,12 +260,12 @@ datum/genesequence
 		discovered_genomes.Add(newly_discovered_genome)
 
 		//chance to discover a second genome
-		if(prob(75) && undiscovered_genomes.len)
+		if(prob(99) && undiscovered_genomes.len)
 			newly_discovered_genome = pick(undiscovered_genomes)
 			undiscovered_genomes -= newly_discovered_genome
 			discovered_genomes.Add(newly_discovered_genome)
 			//chance to discover a third genome
-			if(prob(50) && undiscovered_genomes.len)
+			if(prob(75) && undiscovered_genomes.len)
 				newly_discovered_genome = pick(undiscovered_genomes)
 				undiscovered_genomes -= newly_discovered_genome
 				discovered_genomes.Add(newly_discovered_genome)
