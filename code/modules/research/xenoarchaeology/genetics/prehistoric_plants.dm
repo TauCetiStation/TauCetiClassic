@@ -6,21 +6,21 @@
 	mypath = "/obj/item/seeds/telriis"
 	species = "telriis"
 	plantname = "Telriis grass"
-	productname = "/obj/item/weapon/telriis_clump"
+	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/telriis_clump"
 	lifespan = 50		//number of ticks
 	endurance = 50		//
 	maturation = 5		//ticks to full growth stage
 	production = 5		//ticks till ready to harvest
 	yield = 4			//number produced when harvest
 	potency = 5
-	plant_type = 1		//1=weed, 2=shroom, 0=normal
+	plant_type = 0		//1=weed, 2=shroom, 0=normal
 	growthstages = 4
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/telriis_clump
 	name = "telriis grass"
 	desc = "A clump of telriis grass, not recommended for consumption by sentients."
-	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "telriisclump"
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "ghostchilipepper"
 	New(var/loc, var/potency)
 		..()
 		reagents.add_reagent("pwine", potency * 5)
@@ -42,14 +42,14 @@
 	production = 9
 	yield = 2
 	potency = 5
-	plant_type = 2
+	plant_type = 0
 	growthstages = 4
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/thaadrabloom
+/obj/item/weapon/reagent_containers/food/snacks/grown/thaadra
 	name = "thaa'dra bloom"
 	desc = "Looks chewy, might be good to eat."
-	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "thaadrabloom"
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "berrypilefarart"
 	New(var/loc, var/potency)
 		..()
 		reagents.add_reagent("frostoil", potency * 1.5 + 5)
@@ -76,8 +76,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/jurlmah
 	name = "jurl'mah pod"
 	desc = "Bulbous and veiny, it appears to pulse slightly as you look at it."
-	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "jurlmahpod"
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "oat"
 	New(var/loc, var/potency)
 		..()
 		reagents.add_reagent("serotrotium", potency)
@@ -104,8 +104,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/amauri
 	name = "amauri fruit"
 	desc = "It is small, round and hard. Its skin is a thick dark purple."
-	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "amaurifruit"
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "geranium"
 	New(var/loc, var/potency)
 		..()
 		reagents.add_reagent("zombiepowder", potency * 10)
@@ -133,8 +133,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/gelthi
 	name = "gelthi berries"
 	desc = "They feel fluffy and slightly warm to the touch."
-	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "gelthiberries"
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "rubbery"
 	New(var/loc, var/potency)
 		..()
 		//this may prove a little strong
@@ -163,8 +163,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/vale
 	name = "vale leaves"
 	desc = "Small, curly leaves covered in a soft pale fur."
-	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "valeleaves"
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "tea_aspera_leaves"
 	New(var/loc, var/potency)
 		..()
 		reagents.add_reagent("paracetamol", potency * 5)
@@ -192,8 +192,8 @@
 /obj/item/weapon/reagent_containers/food/snacks/grown/surik
 	name = "surik fruit"
 	desc = "Multiple layers of blue skin peeling away to reveal a spongey core, vaguely resembling an ear."
-	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "surikfruit"
+	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon_state = "soybeansOld"
 	New(var/loc, var/potency)
 		..()
 		reagents.add_reagent("impedrezene", potency * 3)

@@ -19,6 +19,48 @@
 	emote_see = list("paws the ground","shakes its mane","stomps")
 	emote_hear = list("snuffles")
 
+/mob/living/simple_animal/hostile/oldsoldier
+	name = "soldier"
+	desc = "It looks like it's from the past."
+	faction = "soldier"
+	icon_state = "native3"
+	icon_living = "native3"
+	icon_dead = "native3_dead"
+	icon = 'code/modules/jungle/jungle.dmi'
+	move_to_delay = 2
+	maxHealth = 150
+	health = 150
+	speed = 1
+	melee_damage_lower = 5
+	melee_damage_upper = 15
+	attacktext = "smashes"
+	cold_damage_per_tick = 0
+	speak_chance = 10
+	speak = list("Conscript reporting","The apocalypse has begun!","Your mind is clear")
+	emote_see = list("looks around","angrily laughs","steps")
+	emote_hear = list("breathes")
+
+/mob/living/simple_animal/hostile/overseer
+	name = "overseer"
+	desc = "It seems he knows what you want to say."
+	faction = "overseer"
+	icon_state = "native1"
+	icon_living = "native1"
+	icon_dead = "native1_dead"
+	icon = 'code/modules/jungle/jungle.dmi'
+	move_to_delay = 2
+	maxHealth = 50
+	health = 50
+	speed = 1
+	melee_damage_lower = 1
+	melee_damage_upper = 5
+	attacktext = "slams"
+	cold_damage_per_tick = 0
+	speak_chance = 20
+	speak = list("Station cycle will never end","Its just a game","They are watching!")
+	emote_see = list("looks around")
+	emote_hear = list("snuffles")
+
 /mob/living/simple_animal/hostile/diyaab
 	name = "diyaab"
 	desc = "A small pack animal. Although omnivorous, it will hunt meat on occasion."

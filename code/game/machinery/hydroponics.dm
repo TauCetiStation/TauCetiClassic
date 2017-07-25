@@ -231,17 +231,22 @@ obj/machinery/hydroponics/update_icon()
 		var/image/I
 		if(dead)
 			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-dead")
+			I = image('icons/obj/hydroponics/growing2.dmi', icon_state = "[myseed.species]-dead")
 		else if(harvest)
 			if(myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
 				I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]")
+				I = image('icons/obj/hydroponics/growing2.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]")
 			else
 				I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-harvest")
+				I = image('icons/obj/hydroponics/growing2.dmi', icon_state = "[myseed.species]-harvest")
 		else if(age < myseed.maturation)
 			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages ) // Make sure it won't crap out due to HERPDERP 6 stages only
 			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[round(t_growthstate)]")
+			I = image('icons/obj/hydroponics/growing2.dmi', icon_state = "[myseed.species]-grow[round(t_growthstate)]")
 			lastproduce = age //Cheating by putting this here, it means that it isn't instantly ready to harvest
 		else
 			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]") // Same
+			I = image('icons/obj/hydroponics/growing2.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]")
 		I.layer = MOB_LAYER + 0.1
 		overlays += I
 
@@ -981,27 +986,40 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 
 	UpdateDescription()
 
+
 	if(planted)
+		var/image/I
 		if(dead)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-dead")
+			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-dead")
+			I = image('icons/obj/hydroponics/growing2.dmi', icon_state = "[myseed.species]-dead")
 		else if(harvest)
 			if(myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
-				overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[myseed.growthstages]")
+				I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]")
+				I = image('icons/obj/hydroponics/growing2.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]")
 			else
-				overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-harvest")
+				I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-harvest")
+				I = image('icons/obj/hydroponics/growing2.dmi', icon_state = "[myseed.species]-harvest")
 		else if(age < myseed.maturation)
-			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages )
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[round(t_growthstate)]")
-			lastproduce = age
+			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages ) // Make sure it won't crap out due to HERPDERP 6 stages only
+			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[round(t_growthstate)]")
+			I = image('icons/obj/hydroponics/growing2.dmi', icon_state = "[myseed.species]-grow[round(t_growthstate)]")
+			lastproduce = age //Cheating by putting this here, it means that it isn't instantly ready to harvest
 		else
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[myseed.growthstages]")
+			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]") // Same
+			I = image('icons/obj/hydroponics/growing2.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]")
+		I.layer = MOB_LAYER + 0.1
+		overlays += I
 
-	if(!luminosity)
-		if(istype(myseed,/obj/item/seeds/glowshroom))
-			set_light(round(myseed.potency/10))
+	if(istype(myseed,/obj/item/seeds/glowshroom))
+		set_light(round(myseed.potency/10))
 	else
 		set_light(0)
+
 	return
+
+
+
+
 
 /obj/machinery/hydroponics/soil/attackby(obj/item/O, mob/user)
 	..()
