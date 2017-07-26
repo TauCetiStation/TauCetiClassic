@@ -667,7 +667,7 @@ var/list/turret_icons
 	A.fake = TRUE
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	INVOKE_ASYNC(A, /obj/item/projectile/process)
+	A.process()
 
 	if(emagged || lethal)
 		playsound(loc, eshot_sound, 75, 1)

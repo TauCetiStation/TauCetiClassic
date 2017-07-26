@@ -725,7 +725,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 // Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
 // We need speed out of this proc, thats why using incapacitated() helper here is a bad idea.
 /mob/proc/update_canmove(no_transform = FALSE)
-
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 
 	lying = (ko || crawling || resting) && !captured && !buckled && !pinned.len
@@ -757,8 +756,14 @@ note dizziness decrements automatically in the mob's Life() proc.
 		drop_r_hand()
 
 	for(var/obj/item/weapon/grab/G in grabbed_by)
-		if(G.state >= GRAB_AGGRESSIVE)
+		if(G.state == GRAB_AGGRESSIVE)
 			canmove = FALSE
+			break
+		if(G.state == GRAB_NECK && (G.assailant.zone_sel.selecting == BP_R_LEG || G.assailant.zone_sel.selecting == BP_L_LEG))
+			lying = FALSE
+			canmove = FALSE
+			anchored = FALSE
+			density = TRUE
 			break
 
 	//Temporarily moved here from the various life() procs

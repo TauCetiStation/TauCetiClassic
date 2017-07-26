@@ -272,9 +272,6 @@
 	var/turf/T = get_turf(src)
 	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) || (locate(/obj/structure/plasticflaps) in T))
 		return FALSE
-	for(var/obj/item/weapon/grab/G in grabbed_by)
-		if(G.state >= GRAB_NECK)
-			return FALSE
 	return TRUE
 
 /mob/living/carbon/var/crawl_getup = FALSE
@@ -310,6 +307,11 @@
 		if(!crawl_can_use())
 			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
 			return
+		else
+			for(var/obj/item/weapon/grab/G in grabbed_by)
+				if(G.state >= GRAB_NECK)
+					to_chat(src, "<span class='notice'>You can't crawl while grabbed by someone!</span>")
+					return
 		layer = 3.9
 
 	pass_flags ^= PASSCRAWL
@@ -490,9 +492,9 @@
 	set category = "IC"
 
 	if(sleeping)
-		to_chat(usr, "<span class='rose'>You are already sleeping")
+		to_chat(src, "<span class='rose'>You are already sleeping</span>")
 		return
-	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
+	if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 		sleeping = 20 //Short nap
 
 /mob/living/carbon/slip(slipped_on, stun_duration=4, weaken_duration=2)
