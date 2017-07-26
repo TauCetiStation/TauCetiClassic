@@ -279,7 +279,7 @@
 	set name = "Crawl"
 	set category = "IC"
 
-	if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
+	if( stat || weakened || stunned || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
 		return
 	if(crawl_getup)
 		return
@@ -307,11 +307,6 @@
 		if(!crawl_can_use())
 			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
 			return
-		else
-			for(var/obj/item/weapon/grab/G in grabbed_by)
-				if(G.state >= GRAB_NECK)
-					to_chat(src, "<span class='notice'>You can't crawl while grabbed by someone!</span>")
-					return
 		layer = 3.9
 
 	pass_flags ^= PASSCRAWL
