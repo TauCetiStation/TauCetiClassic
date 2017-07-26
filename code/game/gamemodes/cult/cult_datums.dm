@@ -8,11 +8,11 @@ var/list/cult_runes = list()
 	var/only_rune = FALSE
 
 /datum/cult/New(holder)
-	..()
 	if(!holder)
 		qdel(src)
 		CRASH("someone stupid tried to create datum without holder")
 		return
+	..()
 	src.holder = holder
 
 /datum/cult/Destroy()
@@ -102,9 +102,8 @@ var/list/cult_runes = list()
 		playsound(user,'sound/magic/Teleport_diss.ogg', 100, 2)
 		user.forceMove(get_turf(pick(allrunes)))
 		playsound(user,'sound/magic/Teleport_app.ogg', 100, 2)
-		holder_reaction(user)
-	else
-		fizzle(user)
+		return holder_reaction(user)
+	fizzle(user)
 
 /datum/cult/item_port
 	word1 = "travel"
@@ -175,8 +174,12 @@ var/list/cult_runes = list()
 	word2 = "blood"
 	word3 = "self"
 	only_rune = TRUE
+	var/in_use = FALSE
 
 /datum/cult/convert/action(mob/living/carbon/user)
+	if(in_use)
+		to_chat(user, "<span class='cult'>This Rune is in use now!</span>")
+		return fizzle(user)
 	for(var/mob/living/carbon/M in get_turf(holder))
 		if(iscultist(M) || M.stat == DEAD)
 			continue
@@ -184,6 +187,7 @@ var/list/cult_runes = list()
 		M.visible_message("<span class='userdanger'>[M] writhes in pain as the markings below him glow a bloody red.</span>", \
 			"<span class='cult'>AAAAAAHHHH!</span>", \
 			"<span class='userdanger'>You hear an anguished scream.</span>")
+		in_use = TRUE
 		if(alert(M, "Do you wanna to gave your soul to the Geometr?",,"Yes", "No") == "Yes")
 			to_chat(M, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth.\
 				The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>")
@@ -192,15 +196,13 @@ var/list/cult_runes = list()
 				M.mind.special_role = "Cultist"
 				to_chat(M, "<span class='cult'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark \
 					One above all else. Bring It back.</span>")
-				return
 			else
 				to_chat(M, "<span class='userdanger'>And you were able to force it out of your mind. You now know the truth, there's something horrible out there,\
 					stop it and its minions at all costs.</span>")
-				return
 		else
 			to_chat(user, "<span class='userdanger'>Filthy heretic has rejected your gift!</span>")
 		break
-
+	in_use = FALSE
 	return fizzle(user)
 
 /datum/cult/tearreality
@@ -274,11 +276,10 @@ var/list/cult_runes = list()
 	word3 = "self"
 	only_rune = TRUE
 
-/proc/drain_dot(mob/living/debtor, loop_value) //recursive proc to Imitate "damage over time" mechanics
-	if(loop_value > 0 && debtor && debtor.stat != DEAD)
-		debtor.take_overall_damage(3, 0)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/drain_dot, debtor, --loop_value), 20)
-	return
+/mob/living/carbon/proc/drain_dot(loop_value) //recursive proc to Imitate "damage over time" mechanics
+	if(loop_value > 0 && src && stat != DEAD)
+		take_overall_damage(3, 0)
+		addtimer(CALLBACK(src, .proc/drain_dot, --loop_value), 20)
 
 /datum/cult/drain/action(mob/living/carbon/user)
 	var/drain = 0
@@ -302,7 +303,7 @@ var/list/cult_runes = list()
 		user.visible_message("<span class='userdanger'>[user]'s eyes give off eerie red glow!</span>", \
 			"<span class='cult'>...but it wasn't nearly enough. You crave, crave for more. The hunger consumes you from within.</span>", \
 			"<span class='userdanger'>You hear a heartbeat.</span>")
-		drain_dot(user, drain)
+		user.drain_dot(drain)
 		return
 	if(prob(drain * 1.5) && ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -758,7 +759,8 @@ var/list/cult_runes = list()
 
 	for(var/mob/H in victims)
 		if(sacrifice_target && sacrifice_target == H.mind)
-			sacrificed += H.mind
+			var/datum/game_mode/cult/cur_mode = ticker.mode // we checked our mode earlier
+			cur_mode.sacrificed += H.mind
 			if(isrobot(H))
 				H.dust() //To prevent the MMI from remaining
 			else
