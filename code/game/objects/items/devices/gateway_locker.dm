@@ -13,6 +13,7 @@
 /obj/item/device/gateway_locker/attack_self(mob/user)
 	if(!stationgate)
 		return
+	playsound(loc, 'sound/machines/twobeep.ogg', 50, 2)
 	if(used)
 		stationgate.blocked = !stationgate.blocked
 		to_chat(user, "<span class='warning'>You [stationgate.blocked ? "dis" :""]allowed entering [stationgate]!</span>")

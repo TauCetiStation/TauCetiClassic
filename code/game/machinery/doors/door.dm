@@ -133,12 +133,8 @@
 /obj/machinery/door/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
-	if(src.operating || isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
-	src.add_fingerprint(user)
-	if(!Adjacent(user))
-		user = null
-	if(!src.requiresID())
-		user = null
+	if(src.operating)
+		return
 	if(src.density && hasPower() && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
 		update_icon(AIRLOCK_EMAG)
 		sleep(6)
@@ -146,6 +142,12 @@
 			update_icon(AIRLOCK_CLOSED)
 		operating = -1
 		return 1
+	if(isrobot(user))
+		return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
+	if(!Adjacent(user))
+		user = null
+	if(!src.requiresID())
+		user = null
 	if(src.allowed(user))
 		if(src.density)
 			open()

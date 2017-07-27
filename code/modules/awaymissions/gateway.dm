@@ -14,7 +14,7 @@
 	if(dir == 2)
 		density = 0
 	if(!transit_loc)
-		transit_loc = locate(/obj/effect/landmark/gateway_transit)
+		transit_loc = locate(/obj/effect/landmark/gateway_transit) in landmarks_list
 
 /obj/machinery/gateway/update_icon()
 	icon_state = active ? "on" : "off"
@@ -293,3 +293,7 @@ obj/machinery/gateway/centerstation/process()
 	playsound(target, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)
 
 /obj/effect/landmark/gateway_transit
+
+/obj/effect/landmark/gateway_transit/Crossed(atom/movable/AM)
+	if(!AM.freeze_movement)
+		qdel(AM) // THIS IS BLUESPACE FELLAS

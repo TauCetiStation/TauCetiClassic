@@ -16,7 +16,7 @@
 
 /obj/machinery/computer/syndicate_station/New()
 	..()
-	var/obj/O = locate(/obj/effect/landmark/syndi_shuttle)
+	var/obj/O = locate(/obj/effect/landmark/syndi_shuttle) in landmarks_list
 	curr_location = get_area(O)
 
 
@@ -120,6 +120,7 @@
 			passed = TRUE
 			break
 	if(passed)
+		playsound(loc, 'sound/machines/twobeep.ogg', 50, 2)
 		qdel(src)
 		return
 	to_chat(user, "<span class='userdanger'>The Shuttle has been already unlocked!</span>")

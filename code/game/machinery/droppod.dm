@@ -39,7 +39,7 @@
 /obj/structure/droppod/New()
 	..()
 	if(!initial_eyeobj_location)
-		initial_eyeobj_location = locate(/obj/effect/landmark/droppod) in landmark_list
+		initial_eyeobj_location = locate(/obj/effect/landmark/droppod) in landmarks_list
 	if(!Panel)
 		Panel = image("icon" = 'icons/obj/structures/droppod.dmi', "icon_state" = "drop_panel", "layer" = layer + 0.3)
 		Panel.plane = Panel.layer

@@ -41,6 +41,15 @@
 /obj/item/weapon/melee/energy/sword/cyborg
 	var/hitcost = 500
 
+/obj/item/weapon/melee/energy/sword/cyborg/attack_self(mob/living/user)
+	..()
+	if(istype(user, /mob/living/silicon/robot/syndicate))
+		var/mob/living/silicon/robot/syndicate/S = user
+		if(active)
+			S.overlays += S.sword_overlay
+		else
+			S.overlays -= S.sword_overlay
+
 /obj/item/weapon/melee/energy/sword/cyborg/attack(mob/M, mob/living/silicon/robot/R)
 	if(R.cell)
 		var/obj/item/weapon/stock_parts/cell/C = R.cell

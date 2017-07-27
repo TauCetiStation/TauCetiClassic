@@ -48,7 +48,3 @@
 /obj/structure/object_wall/cargo
 	icon = 'code/modules/locations/shuttles/cargo.dmi'
 	icon_state = "0,5"
-
-/obj/structure/object_wall/nukeops
-	icon = 'code/modules/locations/shuttles/nukeops2.dmi'
-	icon_state = "5,0"
