@@ -255,7 +255,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(usr.stat == DEAD)
 		to_chat(usr, "You can't do that because you are dead!")
 		return
-	toff =! toff
+	toff = !toff
 	to_chat(usr, "<span class='notice'>PDA sender/receiver toggled [(toff ? "Off" : "On")]!</span>")
 
 
@@ -266,7 +266,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(usr.stat == DEAD)
 		to_chat(usr, "You can't do that because you are dead!")
 		return
-	message_silent =! message_silent
+	message_silent = !message_silent
 	to_chat(usr, "<span class='notice'>PDA ringer toggled [(message_silent ? "Off" : "On")]!</span>")
 
 

@@ -28,6 +28,19 @@ var/obj/screen/robot_inventory
 		using.layer = ABOVE_HUD_LAYER
 		using.plane = ABOVE_HUD_PLANE
 		adding += using
+		var/list/screens = list("PDA - Send Message" = "pda_send", "PDA - Show Message Log" = "pda_log",\
+		"Pda - Ringtone" = "ringtone", "Pda - Toggle" = "toggleringer")
+		var/screen_position = 2
+		for(var/name in screens)
+			var/obj/screen/ousing = new /obj/screen()
+			ousing.name = name
+			ousing.icon = 'icons/mob/screen1_robot.dmi'
+			ousing.icon_state = screens[name]
+			ousing.layer = ABOVE_HUD_LAYER
+			ousing.plane = ABOVE_HUD_PLANE
+			ousing.screen_loc = "SOUTH+[screen_position]:6,WEST"
+			screen_position++
+			other += ousing
 
 //Show foto screens
 		using = new /obj/screen()
@@ -38,6 +51,18 @@ var/obj/screen/robot_inventory
 		using.layer = ABOVE_HUD_LAYER
 		using.plane = ABOVE_HUD_PLANE
 		adding += using
+		screens = list("Take Image" = "takephoto", "View Images" = "photos", "Delete Image" = "deletthis")
+		screen_position = 2
+		for(var/name in screens)
+			var/obj/screen/ousing = new /obj/screen()
+			ousing.name = name
+			ousing.icon = 'icons/mob/screen1_robot.dmi'
+			ousing.icon_state = screens[name]
+			ousing.layer = ABOVE_HUD_LAYER
+			ousing.plane = ABOVE_HUD_PLANE
+			ousing.screen_loc = "SOUTH+[screen_position]:6,WEST+1"
+			screen_position++
+			other += ousing
 
 //Namepick
 		using = new /obj/screen()
@@ -245,7 +270,7 @@ var/obj/screen/robot_inventory
 	mymob.client.screen = list()
 
 	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.hands, mymob.healths, mymob.pullin, mymob.gun_setting_icon, robot_inventory) //, mymob.rest, mymob.sleep, mymob.mach )
-	mymob.client.screen += src.adding + src.other
+	mymob.client.screen += src.adding
 	mymob.client.screen += mymob.client.void
 
 	return
@@ -330,28 +355,15 @@ var/obj/screen/robot_inventory
 		return
 	var/list/screens
 	if(screen_type)
-		screens = list("Take Image" = "takephoto", "View Images" = "photos", "Delete Image" = "deletthis")
+		screens = list("Take Image", "View Images", "Delete Image")
 	else
-		screens = list("PDA - Send Message" = "pda_send", "PDA - Show Message Log" = "pda_log",\
-		"Pda - Ringtone" = "ringtone", "Pda - Toggle" = "toggleringer")
+		screens = list("PDA - Send Message", "PDA - Show Message Log", "Pda - Ringtone", "Pda - Toggle")
 	var/mob/living/silicon/robot/R = mymob
 	if(toggled)
-		var/screen_position = 2
-		for(var/name in screens)
-			var/obj/screen/using = new /obj/screen()
-			using.name = name
-			using.icon = 'icons/mob/screen1_robot.dmi'
-			using.icon_state = screens[name]
-			using.layer = ABOVE_HUD_LAYER
-			using.plane = ABOVE_HUD_PLANE
-			using.screen_loc = "SOUTH+[screen_position]:6,WEST+[screen_type]"
-			screen_position++
-			R.client.screen += using
-
+		for(var/obj/screen/using in other)
+			if(using.name in screens)
+				R.client.screen += using
 	else
-		for(var/obj/screen/using in R.client.screen)
+		for(var/obj/screen/using in other)
 			if(using.name in screens)
 				R.client.screen -= using
-				screens -= screens[screens[using.name]]
-				qdel(using)
-				continue
