@@ -1174,7 +1174,7 @@
 	chassis.occupant_message("<span class='notice'>You succesfully selected target!</span>")
 	chassis.loc = pick(L)
 	uses--
-	chassis.state = TRUE // to prevent moving in drop phase.
+	chassis.freeze_movement = TRUE // to prevent moving in drop phase.
 	chassis.density = FALSE
 	chassis.opacity = FALSE
 	var/initial_x = chassis.pixel_x
@@ -1195,7 +1195,7 @@
 	for(var/turf/simulated/floor/T in RANGE_TURFS(1, chassis))
 		T.break_tile_to_plating()
 	playsound(loc, 'sound/effects/drop_land.ogg', 100, 2)
-	chassis.state = FALSE
+	chassis.freeze_movement = FALSE
 	chassis.density = TRUE
 	chassis.opacity = TRUE
 	aiming = FALSE

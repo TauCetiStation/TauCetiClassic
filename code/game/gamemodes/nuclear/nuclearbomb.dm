@@ -490,7 +490,7 @@ var/bomb_set
 			loc = D
 			D.icon_state = "dropod_opened_n"
 			visible_message("<span class='notice'>[usr] put [src] into [D]!</span>","<span class='notice'>You succesfully put [src] into [D]!</span>")
-			D.verbs += /obj/structure/droppod/verb/Nuclear
+			D.verbs += /obj/structure/droppod/proc/Nuclear
 
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk

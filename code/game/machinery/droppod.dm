@@ -45,15 +45,14 @@
 		Panel.plane = Panel.layer
 	if(!allowed_areas)
 		allowed_areas = new
-	verbs -= /obj/structure/droppod/verb/Eject_items_verb
-	verbs -= /obj/structure/droppod/verb/Nuclear
 
 /obj/structure/droppod/Destroy()
 	var/turf/turf = get_turf(loc)
-	if(flags & STATE_AIMING && flags & ADVANCED_AIMING_INSTALLED)
-		CancelAdvancedAiming(1)
+	if(flags & ADVANCED_AIMING_INSTALLED)
 		if(prob(50))
 			new /obj/item/device/camera_bug(loc)
+		if(flags & STATE_AIMING)
+			CancelAdvancedAiming(1)
 	if(intruder)
 		overlays -= mob_overlay
 		qdel(mob_overlay)
@@ -415,14 +414,14 @@
 			qdel(O)
 		else if(length(stored_items) < 7)
 			if(stored_items.len == 1)
-				verbs += /obj/structure/droppod/verb/Eject_items_verb
+				verbs += /obj/structure/droppod/proc/Eject_items_cmd
 			O.loc = src
 			stored_items += O
 			to_chat(user, "<span class ='notice'>You put [O] at [src]</span>")
 		else
 			to_chat(user, "<span class ='danger'>When you tried to shove an [O], the [src] spat it out!</span>")
 
-/obj/structure/droppod/verb/Eject_items_verb()
+/obj/structure/droppod/proc/Eject_items_cmd()
 	set category = "Drop Pod"
 	set name = "Eject Items"
 	set src in orange(1)
@@ -439,9 +438,9 @@
 	for(var/obj/item/X in stored_items)
 		X.loc = turf
 		stored_items -= X
-	verbs -= /obj/structure/droppod/verb/Eject_items_verb
+	verbs -= /obj/structure/droppod/proc/Eject_items_cmd
 
-/obj/structure/droppod/verb/Nuclear()
+/obj/structure/droppod/proc/Nuclear()
 	set category = "Drop Pod"
 	set name = "Nuclear Bomb"
 	set src in orange(1)
@@ -456,7 +455,7 @@
 	Stored_Nuclear.loc = get_turf(loc)
 	icon_state = "dropod_opened"
 	Stored_Nuclear = null
-	verbs -= /obj/structure/droppod/verb/Nuclear
+	verbs -= /obj/structure/droppod/proc/Nuclear
 
 /********Damage system********/
 
@@ -496,47 +495,47 @@
 
 /obj/structure/droppod/proc/get_stats_html()
 	var/output = {"<html>
-						<head><title>[name] data</title>
-						<style>
-						body {color: #00ff00; background: #000000; font-family:"Lucida Console",monospace; font-size: 12px;}
-						hr {border: 1px solid #0f0; color: #0f0; background-color: #0f0;}
-						a {padding:2px 5px;;color:#0f0;}
-						.wr {margin-bottom: 5px;}
-						.header {cursor:pointer;}
-						.open, .closed {background: #32CD32; color:#000; padding:1px 2px;}
-						.links a {margin-bottom: 2px;padding-top:3px;}
-						.visible {display: block;}
-						.hidden {display: none;}
-						</style>
-						<script language='javascript' type='text/javascript'>
-						[js_byjax]
-						[js_dropdowns]
-						function ticker() {
-						    setInterval(function(){
-						        window.location='byond://?src=\ref[src]&update_content=1';
-						    }, 1000);
-						}
+				<head><title>[name] data</title>
+				<style>
+				body {color: #00ff00; background: #000000; font-family:"Lucida Console",monospace; font-size: 12px;}
+				hr {border: 1px solid #0f0; color: #0f0; background-color: #0f0;}
+				a {padding:2px 5px;;color:#0f0;}
+				.wr {margin-bottom: 5px;}
+				.header {cursor:pointer;}
+				.open, .closed {background: #32CD32; color:#000; padding:1px 2px;}
+				.links a {margin-bottom: 2px;padding-top:3px;}
+				.visible {display: block;}
+				.hidden {display: none;}
+				</style>
+				<script language='javascript' type='text/javascript'>
+				[js_byjax]
+				[js_dropdowns]
+				function ticker() {
+				    setInterval(function(){
+				        window.location='byond://?src=\ref[src]&update_content=1';
+				    }, 1000);
+				}
 
-						window.onload = function() {
-							dropdowns();
-							ticker();
-						}
-						</script>
-						</head>
-						<body>
-						<div id='content'>
-						[get_stat()]
-						</div>
-						<div id='commands'>
-						[get_commands()]
-						</div>
-						<hr>
-						<div id='eq_list'>
-						[get_stored_items_list()]
-						</div>
-						</body>
-						</html>
-					 "}
+				window.onload = function() {
+					dropdowns();
+					ticker();
+				}
+				</script>
+				</head>
+				<body>
+				<div id='content'>
+				[get_stat()]
+				</div>
+				<div id='commands'>
+				[get_commands()]
+				</div>
+				<hr>
+				<div id='eq_list'>
+				[get_stored_items_list()]
+				</div>
+				</body>
+				</html>
+			 "}
 	return output
 
 
@@ -554,25 +553,25 @@
 	if(flags & STATE_AIMING && flags & ADVANCED_AIMING_INSTALLED)
 		select_target = TRUE
 	var/output = {"<div class='wr'>
-						<div class='header'>Commands</div>
-						<div class='links'>
-						<a href='?src=\ref[src];start_aiming=1'>Aim</a><br>
-						[select_target ? "<a href='?src=\ref[src];select_target=1'>Select Target</a><br>" : null]</a><br>
-						<a href='?src=\ref[src];locked=1'>Pod is [(flags & IS_LOCKED) ? "lock down" : "open"]</a><br>
-						[ishuman(intruder) ? "<a href='?src=\ref[src];set_dna=1'>[stored_dna ? "un" : ""]set Dna</a><br>" : null]</a><br>
-						</div>
-						</div>
-						<hr>
-						<div class='wr'>
-						<div class='header'>Storage</div>
-						<div class='links'>
-						<a href='?src=\ref[src];eject_items=1'>Eject Items</span><br>
-						[Stored_Nuclear ? "<a href='?src=\ref[src];nuclear=1'>Eject Nuclear</a><br>" : null]</a><br>
-						[second_intruder ? "<a href='?src=\ref[src];eject_passenger=1'>Eject Passenger</a><br>" : null]</a><br>
-						</div>
-						</div>
-						<a href='?src=\ref[src];eject=1'><span id='eject'>Eject</span></a><br>
-						"}
+				<div class='header'>Commands</div>
+				<div class='links'>
+				<a href='?src=\ref[src];start_aiming=1'>Aim</a><br>
+				[select_target ? "<a href='?src=\ref[src];select_target=1'>Select Target</a><br>" : null]</a><br>
+				<a href='?src=\ref[src];locked=1'>Pod is [(flags & IS_LOCKED) ? "lock down" : "open"]</a><br>
+				[ishuman(intruder) ? "<a href='?src=\ref[src];set_dna=1'>[stored_dna ? "un" : ""]set Dna</a><br>" : null]</a><br>
+				</div>
+				</div>
+				<hr>
+				<div class='wr'>
+				<div class='header'>Storage</div>
+				<div class='links'>
+				<a href='?src=\ref[src];eject_items=1'>Eject Items</span><br>
+				[Stored_Nuclear ? "<a href='?src=\ref[src];nuclear=1'>Eject Nuclear</a><br>" : null]</a><br>
+				[second_intruder ? "<a href='?src=\ref[src];eject_passenger=1'>Eject Passenger</a><br>" : null]</a><br>
+				</div>
+				</div>
+				<a href='?src=\ref[src];eject=1'><span id='eject'>Eject</span></a><br>
+				"}
 	return output
 
 /obj/structure/droppod/proc/get_stat()
@@ -662,8 +661,8 @@
 	if(!Challenge)
 		if(world.time < SYNDICATE_CHALLENGE_TIMER)
 			to_chat(intruder, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least \
-		 	[round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
-		 	more minutes to allow them to prepare.</span>")
+		 		[round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
+		 		more minutes to allow them to prepare.</span>")
 			return
 	else
 		Challenge.Dropod_used = TRUE
@@ -716,12 +715,11 @@
 	if(!iscarbon(user))
 		return
 	playsound(src, 'sound/effects/drop_start.ogg', 100, 2)
-	var/turf/turf = get_turf(user)
-	var/obj/spawn_drop = new drop_type(turf)
+	var/obj/spawn_drop = new drop_type(get_turf(user))
 	spawn_drop.pixel_x = rand(-150, 150)
 	spawn_drop.pixel_y = 500
 	animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, turf, 'sound/effects/drop_land.ogg', 100, 2), 20)
+	addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
 	qdel(src)
 
 /obj/item/device/drop_caller/Legitimate
@@ -748,7 +746,7 @@
 		spawn_drop.pixel_x = rand(-150, 150)
 		spawn_drop.pixel_y = 500
 		animate(spawn_drop, pixel_y = 0, pixel_x = 0, time = 20)
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, chosen_place.loc, 'sound/effects/drop_land.ogg', 100, 2), 20)
+		addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, spawn_drop, 'sound/effects/drop_land.ogg', 100, 2), 20)
 		qdel(src)
 
 /obj/effect/landmark/droppod_spawn
