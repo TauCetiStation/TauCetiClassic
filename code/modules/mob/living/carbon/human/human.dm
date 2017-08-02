@@ -509,10 +509,13 @@
 		src << browse(null, t1)
 
 	if ((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) //if game hasn't started, can't make an equip_e
+		var/obj/item/item = usr.get_active_hand()
+		if(!item || (item.flags & (ABSTRACT | DROPDEL)))
+			return
 		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 		O.source = usr
 		O.target = src
-		O.item = usr.get_active_hand()
+		O.item = item
 		O.s_loc = usr.loc
 		O.t_loc = loc
 		O.place = href_list["item"]
