@@ -192,6 +192,7 @@
 	name = "Arcane Barrage"
 	spell_type = /obj/effect/proc_holder/spell/in_hand/arcane_barrage
 	log_name = "AB"
+	cost = 3
 
 /datum/spellbook_entry/barnyard
 	name = "Barnyard Curse"
