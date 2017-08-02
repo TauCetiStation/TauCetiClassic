@@ -97,6 +97,17 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		to_chat(user, "<span class='notice'>You disrupt the vile magic with the deadening field of the null rod!</span>")
 		qdel(src)
 
+/obj/effect/rune/attack_ghost(mob/dead/observer/user)
+	if(!istype(power, /datum/cult/teleport) && !istype(power, /datum/cult/item_port))
+		return ..()
+	var/list/allrunes = list()
+	for(var/obj/effect/rune/R in cult_runes)
+		if(!istype(R.power, power.type) || R == src)
+			continue
+		if(R.power.word3 == power.word3 && R.loc.z != ZLEVEL_CENTCOMM)
+			allrunes += R
+	if(length(allrunes) > 0)
+		user.forceMove(get_turf(pick(allrunes)))
 
 /obj/effect/rune/attack_hand(mob/living/user)
 	if(!iscultist(user))

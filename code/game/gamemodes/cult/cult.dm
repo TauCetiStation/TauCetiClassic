@@ -149,6 +149,9 @@
 	if (!where)
 		to_chat(mob, "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately.")
 	else
+		var/obj/item/weapon/paper/talisman/T2 = new(mob)
+		T2.power = new /datum/cult/communicate(T2)
+		mob.equip_in_one_of_slots(T2, slots)
 		to_chat(mob, "You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others.")
 		mob.update_icons()
 		return 1
