@@ -56,7 +56,7 @@
 
 
 /obj/item/weapon/paper/talisman/supply/Topic(href, href_list)
-	if (!src || usr.stat || usr.incapacitated() || !in_range(src, usr))
+	if (!src || usr.incapacitated() || !in_range(src, usr))
 		return
 	if (href_list["rune"])
 		switch(href_list["rune"])

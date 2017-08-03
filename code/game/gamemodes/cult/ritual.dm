@@ -18,7 +18,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	var/list/runewords=list("ire","ego","nahlizet","certum","veri","jatkaa","mgar","balaq", "karazet", "geeri") ///"orkan" and "allaq" removed.
 	for (var/word in engwords)
 		cultwords[word] = pick_n_take(runewords)
-	for(var/type in  subtypesof(/datum/cult))
+	for(var/type in subtypesof(/datum/cult))
 		var/datum/cult/dat = type
 		var/word1 = initial(dat.word1)
 		var/word2 = initial(dat.word2)
@@ -72,8 +72,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		S.client.images += blood_overlay
 
 /obj/effect/rune/Destroy()
-	if(power)
-		QDEL_NULL(power)
+	QDEL_NULL(power)
 	QDEL_NULL(blood_overlay)
 	cult_runes -= src
 	return ..()
