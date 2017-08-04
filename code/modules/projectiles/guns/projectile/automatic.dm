@@ -43,8 +43,6 @@
 	origin_tech = "combat=5;materials=2;syndicate=8"
 	mag_type = /obj/item/ammo_box/magazine/m12mm
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
-	var/icon/silencer_icon = icon('icons/obj/gun.dmi', "c20r-silencer")
-	var/icon/magazine_icon
 
 
 /obj/item/weapon/gun/projectile/automatic/c20r/New()
@@ -81,10 +79,11 @@
 	..()
 	overlays.Cut()
 	if(magazine)
-		magazine_icon =	icon('icons/obj/gun.dmi', "mag-[ceil(get_ammo(0) / 4) * 4]")
-		overlays |= magazine_icon
+		var/image/magazine_icon = image('icons/obj/gun.dmi', "mag-[ceil(get_ammo(0) / 4) * 4]")
+		overlays += magazine_icon
 	if(silenced)
-		overlays |= silencer_icon
+		var/image/silencer_icon = image('icons/obj/gun.dmi', "c20r-silencer")
+		overlays += silencer_icon
 	icon_state = "c20r[chambered ? "" : "-e"]"
 	return
 

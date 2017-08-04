@@ -314,5 +314,5 @@
 
 /obj/item/weapon/reagent_containers/glass/bucket/full/New()
 	..()
-	reagents.add_reagent("water", 70)
+	reagents.add_reagent("water", volume)
 	update_icon()

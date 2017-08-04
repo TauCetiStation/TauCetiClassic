@@ -231,7 +231,7 @@
 		var/choice = input(user, "Spraycan options") as null|anything in list("fish", "peace", "shark", "nuke", "nt", "heart", "woman", "smile")
 		if(N.Spray)
 			N.overlays -= N.Spray
-		N.Spray = icon('icons/effects/Nuke_sprays.dmi', choice)
+		N.Spray = image('icons/effects/Nuke_sprays.dmi', choice)
 		N.overlays += N.Spray
 	playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 	..()
