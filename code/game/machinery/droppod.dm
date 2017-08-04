@@ -355,7 +355,7 @@
 	AimTarget = null
 	uses--
 	icon_state = Stored_Nuclear ? "dropod_opened_n" : "dropod_opened"
-	overlays -= image(icon, "drop_panel", "layer" = layer + 0.3)
+	overlays -= image(icon, "drop_panel", "layer" = initial(layer) + 0.3)
 	new /obj/effect/overlay/droppod_open(loc)
 	sleep(50)
 	if(uses <= 0)
@@ -622,10 +622,10 @@
 		if(flags & IS_LOCKED)
 			flags &= ~IS_LOCKED
 			to_chat(intruder, "<span class='notice'>You unblocked [src].</span>")
-			overlays -= image(icon, "drop_panel", "layer" = layer + 0.3)
+			overlays -= image(icon, "drop_panel", "layer" = initial(layer) + 0.3)
 		else
 			flags |= IS_LOCKED
-			overlays += image(icon, "drop_panel", "layer" = layer + 0.3)
+			overlays += image(icon, "drop_panel", "layer" = initial(layer) + 0.3)
 			to_chat(intruder, "<span class='notice'>You blocked [src].</span>")
 		send_byjax(intruder, "droppod.browser", "commands", get_commands())
 		return
