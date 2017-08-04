@@ -215,7 +215,7 @@
 		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
 	if(iscarbon(target) && uses - 10 > 0)
-		uses = uses - 10
+		uses -= 10
 		var/mob/living/carbon/C = target
 		user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
 		if(C.client)
@@ -229,10 +229,12 @@
 	else if(istype(target, /obj/machinery/nuclearbomb))
 		var/obj/machinery/nuclearbomb/N = target
 		var/choice = input(user, "Spraycan options") as null|anything in list("fish", "peace", "shark", "nuke", "nt", "heart", "woman", "smile")
-		if(N.Spray)
-			N.overlays -= N.Spray
-		N.Spray = image('icons/effects/Nuke_sprays.dmi', choice)
-		N.overlays += N.Spray
+		if(!choice)
+			return
+		uses -= 5
+		N.overlays -= image('icons/effects/Nuke_sprays.dmi', N.spray_icon_state)
+		N.overlays += image('icons/effects/Nuke_sprays.dmi', choice)
+		N.spray_icon_state = choice
 	playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 	..()
 

@@ -24,8 +24,7 @@ var/bomb_set
 	use_power = 0
 	var/detonated = 0 //used for scoreboard.
 	var/lastentered = ""
-	var/image/Spray
-
+	var/spray_icon_state
 
 /obj/machinery/nuclearbomb/New()
 	..()

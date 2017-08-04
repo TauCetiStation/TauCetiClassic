@@ -33,16 +33,12 @@
 	var/static/datum/droppod_allowed/allowed_areas
 
 	var/static/initial_eyeobj_location = null
-	var/static/image/Panel
 	var/image/mob_overlay
 
 /obj/structure/droppod/New()
 	..()
 	if(!initial_eyeobj_location)
 		initial_eyeobj_location = locate(/obj/effect/landmark/droppod) in landmarks_list
-	if(!Panel)
-		Panel = image("icon" = 'icons/obj/structures/droppod.dmi', "icon_state" = "drop_panel", "layer" = layer + 0.3)
-		Panel.plane = Panel.layer
 	if(!allowed_areas)
 		allowed_areas = new
 
@@ -359,7 +355,7 @@
 	AimTarget = null
 	uses--
 	icon_state = Stored_Nuclear ? "dropod_opened_n" : "dropod_opened"
-	overlays -= Panel
+	overlays -= image(icon, "drop_panel", "layer" = layer + 0.3)
 	new /obj/effect/overlay/droppod_open(loc)
 	sleep(50)
 	if(uses <= 0)
@@ -626,10 +622,10 @@
 		if(flags & IS_LOCKED)
 			flags &= ~IS_LOCKED
 			to_chat(intruder, "<span class='notice'>You unblocked [src].</span>")
-			overlays -= Panel
+			overlays -= image(icon, "drop_panel", "layer" = layer + 0.3)
 		else
 			flags |= IS_LOCKED
-			overlays += Panel
+			overlays += image(icon, "drop_panel", "layer" = layer + 0.3)
 			to_chat(intruder, "<span class='notice'>You blocked [src].</span>")
 		send_byjax(intruder, "droppod.browser", "commands", get_commands())
 		return
