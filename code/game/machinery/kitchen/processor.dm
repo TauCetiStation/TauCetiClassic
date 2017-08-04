@@ -130,6 +130,10 @@
 		return P
 	return 0
 
+/obj/machinery/processor/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_hand(user)
+
 /obj/machinery/processor/attackby(obj/item/O, mob/user)
 	if(src.processing)
 		to_chat(user, "\red The processor is in the process of processing.")

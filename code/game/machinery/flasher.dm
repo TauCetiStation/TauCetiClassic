@@ -55,7 +55,6 @@
 		return
 
 /obj/machinery/flasher/attack_ghost(mob/user)
-	user.handle_inquisitive_ghost_click(src)
 	if(IsAdminGhost(user))
 		attack_ai(user)
 
@@ -136,7 +135,6 @@
 	return src.attack_hand(user)
 
 /obj/machinery/flasher_button/attack_ghost(mob/user)
-	user.handle_inquisitive_ghost_click(src)
 	if(IsAdminGhost(user))
 		attack_hand(user)
 

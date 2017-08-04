@@ -296,7 +296,7 @@ Class Procs:
 /obj/machinery/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/attack_ghost(mob/user, donotexam = FALSE)
+/obj/machinery/attack_ghost(mob/user)
 	..()
 	return attack_hand(user)
 

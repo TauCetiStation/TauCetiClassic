@@ -17,7 +17,6 @@
 	return
 
 /obj/machinery/igniter/attack_ghost(mob/user)
-	user.handle_inquisitive_ghost_click(src)
 	if(IsAdminGhost(user))
 		attack_hand(user)
 
@@ -95,7 +94,6 @@
 		return
 
 /obj/machinery/sparker/attack_ghost(mob/user)
-	user.handle_inquisitive_ghost_click(src)
 	if(IsAdminGhost(user))
 		attack_ai()
 
@@ -132,7 +130,6 @@
 	return attack_hand(user)
 
 /obj/machinery/ignition_switch/attack_ghost(mob/user)
-	user.handle_inquisitive_ghost_click(src)
 	if(IsAdminGhost(user))
 		attack_hand(user)
 

@@ -51,7 +51,6 @@
 	return attack_hand(user)
 
 /obj/machinery/holosign_switch/attack_ghost(mob/user)
-	user.handle_inquisitive_ghost_click(src)
 	if(IsAdminGhost(user))
 		attack_hand(user)
 

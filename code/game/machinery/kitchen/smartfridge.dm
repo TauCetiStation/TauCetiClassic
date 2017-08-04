@@ -274,7 +274,7 @@
 		return
 	if(!ispowered)
 		return
-	if(!issilicon(user) && seconds_electrified)
+	if(!issilicon(user) && !isobserver(user) && seconds_electrified)
 		if(shock(user, 100))
 			return
 

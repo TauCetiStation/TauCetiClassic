@@ -82,12 +82,16 @@
 /obj/machinery/gibber/attack_paw(mob/user)
 	return src.attack_hand(user)
 
+/obj/machinery/gibber/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_hand(user)
+
 /obj/machinery/gibber/container_resist()
 	go_out()
 	return
 
 /obj/machinery/gibber/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
+	if(..())
 		return
 	if(operating)
 		to_chat(user, "<span class='danger'>The gibber is locked and running, wait for it to finish.</span>")

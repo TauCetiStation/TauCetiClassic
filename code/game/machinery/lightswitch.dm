@@ -46,11 +46,14 @@
 /obj/machinery/light_switch/attack_paw(mob/user)
 	src.attack_hand(user)
 
+/obj/machinery/flasher/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_hand(user)
+
 /obj/machinery/light_switch/attack_hand(mob/user)
-	if(isobserver(user) && !IsAdminGhost(user))
+	if(..())
 		return
 
-	src.add_fingerprint(usr)
 	on = !on
 	playsound(src, 'sound/items/buttonclick.ogg', 20, 1, 1)
 

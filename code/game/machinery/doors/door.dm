@@ -130,9 +130,6 @@
 	..()
 
 /obj/machinery/door/attack_ghost(mob/user)
-	if(user.client.inquisitive_ghost)
-		user.examinate(src)
-
 	if(IsAdminGhost(user))
 		if(density)
 			open()

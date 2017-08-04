@@ -80,8 +80,7 @@
 	return
 
 /obj/machinery/cell_charger/attack_ghost(mob/user)
-	if(user.client.inquisitive_ghost)
-		user.examinate(src)
+	return
 
 /obj/machinery/cell_charger/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))

@@ -85,7 +85,7 @@
 					attack_hand(M)
 					continue
 				if(isobserver(M)) //ghosts and synths must use their own attack_ procs
-					attack_ghost(M, TRUE)
+					attack_ghost(M)
 					continue
 				if(isAI(M) || isrobot(M)) //VERY rare AI can be placed near to something
 					//with custom attack_ai
@@ -96,13 +96,13 @@
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
 					is_in_use = TRUE
-					src.attack_ai(usr)
+					attack_ai(usr)
 
 		if (isobserver(usr))
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src)
 					is_in_use = TRUE
-					src.attack_ghost(usr, TRUE)
+					attack_ghost(usr)
 
 		// check for TK users
 
@@ -111,7 +111,7 @@
 				if(!(usr in nearby))
 					if(usr.client && usr.machine==src)
 						is_in_use = 1
-						src.attack_hand(usr)
+						attack_hand(usr)
 		in_use = is_in_use
 
 /obj/proc/updateDialog()
