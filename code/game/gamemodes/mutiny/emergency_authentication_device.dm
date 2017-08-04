@@ -36,7 +36,16 @@
 		else
 			return "Inactive"
 
+/obj/machinery/emergency_authentication_device/attack_ghost(mob/user)
+	if(!IsAdminGhost())
+		examine(user)
+		return
+	..()
+
 /obj/machinery/emergency_authentication_device/attack_hand(mob/user)
+	if(..())
+		return
+
 	if(activated)
 		to_chat(user, "\blue \The [src] is already active!")
 		return

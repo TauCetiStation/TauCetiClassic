@@ -56,23 +56,20 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if ( (get_dist(src, user) > 1 ))
-		if (!istype(user, /mob/living/silicon))
+		if (!issilicon(user) && !isobserver(user))
 			to_chat(user, text("Too far away."))
 			user.unset_machine()
 			user << browse(null, "window=ai_slipper")
 			return
 
 	user.set_machine(src)
-	var/loc = src.loc
-	if (istype(loc, /turf))
-		loc = loc:loc
-	if (!istype(loc, /area))
-		to_chat(user, text("Turret badly positioned - loc.loc is [].", loc))
+	var/area/area = get_area(src)
+	if (!istype(area))
+		to_chat(user, text("Turret badly positioned - area is [].", area))
 		return
-	var/area/area = loc
 	var/t = "<TT><B>AI Liquid Dispenser</B> ([area.name])<HR>"
 
-	if(src.locked && !issilicon_allowed(user))
+	if(src.locked && !issilicon_allowed(user) && !isobserver(user))
 		t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 	else
 		t += text("Dispenser [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.disabled?"deactivated":"activated", src, src.disabled?"Enable":"Disable")
@@ -86,7 +83,7 @@
 	. = ..()
 	if(!.)
 		return
-	if (src.locked && !issilicon_allowed(usr))
+	if (src.locked && !issilicon_allowed(usr) && !isobserver(usr))
 		to_chat(usr, "Control panel is locked!")
 		return FALSE
 	if (href_list["toggleOn"])

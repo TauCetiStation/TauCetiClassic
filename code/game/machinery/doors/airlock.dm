@@ -353,8 +353,8 @@ var/list/airlock_overlays = list()
 			update_icon(AIRLOCK_CLOSED)
 			icon_state = "closed"
 
-/obj/machinery/door/airlock/attack_ghost(mob/user)
-	if(user.client.inquisitive_ghost)
+/obj/machinery/door/airlock/attack_ghost(mob/user, donotexam = FALSE)
+	if(user.client.inquisitive_ghost && !donotexam)
 		user.examinate(src)
 	
 	//Separate interface for ghosts.

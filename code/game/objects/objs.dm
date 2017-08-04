@@ -81,7 +81,17 @@
 		for(var/mob/M in nearby)
 			if ((M.client && M.machine == src))
 				is_in_use = TRUE
-				src.attack_hand(M)
+				if(ishuman(M)) //most users is humans, so check this first
+					attack_hand(M)
+					continue
+				if(isobserver(M)) //ghosts and synths must use their own attack_ procs
+					attack_ghost(M, TRUE)
+					continue
+				if(isAI(M) || isrobot(M)) //VERY rare AI can be placed near to something
+					//with custom attack_ai
+					attack_ai(M)
+					continue
+				attack_hand(M)
 		if (isAI(usr) || isrobot(usr))
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
@@ -92,7 +102,7 @@
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src)
 					is_in_use = TRUE
-					src.attack_hand(usr)
+					src.attack_ghost(usr, TRUE)
 
 		// check for TK users
 

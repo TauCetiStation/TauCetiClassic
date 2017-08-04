@@ -236,13 +236,10 @@ var/bomb_set
 
 /obj/machinery/nuclearbomb/attack_hand(mob/user)
 	if (src.extended)
-		if (!ishuman(user))
+		if (!ishuman(user) && !isobserver(user))
 			to_chat(usr, "\red You don't have the dexterity to do this!")
 			return 1
 
-		if (!ishuman(user))
-			to_chat(usr, "\red You don't have the dexterity to do this!")
-			return 1
 		user.set_machine(src)
 		var/dat = text("<TT><B>Nuclear Fission Explosive</B><BR>\nAuth. Disk: <A href='?src=\ref[];auth=1'>[]</A><HR>", src, (src.auth ? "++++++++++" : "----------"))
 		if (src.auth)

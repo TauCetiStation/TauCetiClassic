@@ -156,6 +156,9 @@
 
 	return
 
+/obj/machinery/dominator/attack_ghost(mob/user)
+	user.examinate(src)
+
 /obj/machinery/dominator/attack_hand(mob/user)
 	if(operating)
 		user.examinate(src)
