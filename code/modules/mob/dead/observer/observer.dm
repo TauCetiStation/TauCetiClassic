@@ -31,6 +31,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/seedarkness = 1
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
+	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
+
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = SEE_INVISIBLE_OBSERVER
@@ -85,6 +87,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
+	QDEL_NULL(adminMulti)
 	return ..()
 
 //this is called when a ghost is drag clicked to something.

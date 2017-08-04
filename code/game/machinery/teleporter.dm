@@ -431,18 +431,25 @@
 			to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
 			return
 
-/obj/machinery/teleport/station/attack_paw()
-	src.attack_hand()
+/obj/machinery/teleport/station/attack_paw(mob/user)
+	attack_hand(user)
 
-/obj/machinery/teleport/station/attack_ai()
-	src.attack_hand()
+/obj/machinery/teleport/station/attack_ai(mob/user)
+	attack_hand(user)
+
+/obj/machinery/teleport/station/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_hand(user)
 
 /obj/machinery/teleport/station/attack_hand(mob/user)
+	if(..())
+		return
+
 	if(!panel_open)
 		toggle(user)
 
 /obj/machinery/teleport/station/proc/toggle(mob/user)
-	if(stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
+	if(!teleporter_hub || !teleporter_console)
 		return
 	if (teleporter_console.target)
 		src.engaged = !src.engaged

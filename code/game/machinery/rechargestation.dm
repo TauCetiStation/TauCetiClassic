@@ -110,11 +110,15 @@
 	open_machine()
 	..(severity)
 
-/obj/machinery/recharge_station/attack_paw(user)
+/obj/machinery/recharge_station/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/recharge_station/attack_ai(user)
+/obj/machinery/recharge_station/attack_ai(mob/user)
 	return attack_hand(user)
+
+/obj/machinery/recharge_station/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_hand(user)
 
 /obj/machinery/recharge_station/attackby(obj/item/P, mob/user)
 	if(open)
@@ -127,12 +131,12 @@
 	default_deconstruction_crowbar(P)
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
-	if(..())	return
-	if(construct_op == 0)
+	if(..())
+		return
+	if(!construct_op)
 		toggle_open()
 	else
 		to_chat(user, "The recharger can't be closed in this state.")
-	add_fingerprint(user)
 
 /obj/machinery/recharge_station/proc/toggle_open()
 	if(open)

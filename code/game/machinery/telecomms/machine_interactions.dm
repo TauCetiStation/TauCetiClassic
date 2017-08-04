@@ -99,19 +99,17 @@
 	attack_hand(user)
 
 /obj/machinery/telecomms/attack_hand(mob/user)
+	if(..())
+		return
 
-	// You need a multitool to use this, or be silicon
-	if(!issilicon(user))
+	// You need a multitool to use this, or be silicon/ghost
+	if(!issilicon(user) && !isobserver(user))
 		// istype returns false if the value is null
 		if(!istype(user.get_active_hand(), /obj/item/device/multitool))
 			return
 
-	if(stat & (BROKEN|NOPOWER))
-		return
-
 	var/obj/item/device/multitool/P = get_multitool(user)
 
-	user.set_machine(src)
 	var/dat
 	dat = "<font face = \"Courier\"><HEAD><TITLE>[src.name]</TITLE></HEAD><center><H3>[src.name] Access</H3></center>"
 	dat += "<br>[temp]<br>"
@@ -123,7 +121,8 @@
 			dat += "<br>Identification String: <a href='?src=\ref[src];input=id'>NULL</a>"
 		dat += "<br>Network: <a href='?src=\ref[src];input=network'>[network]</a>"
 		dat += "<br>Prefabrication: [autolinkers.len ? "TRUE" : "FALSE"]"
-		if(hide) dat += "<br>Shadow Link: ACTIVE</a>"
+		if(hide)
+			dat += "<br>Shadow Link: ACTIVE</a>"
 
 		//Show additional options for certain machines.
 		dat += Options_Menu()
@@ -163,7 +162,7 @@
 	dat += "</font>"
 	temp = ""
 	user << browse(dat, "window=tcommachine;size=520x500;can_resize=0")
-	onclose(user, "dormitory")
+	onclose(user, "tcommachine")
 
 
 // Off-Site Relays
@@ -191,7 +190,7 @@
 
 	var/obj/item/device/multitool/P = null
 	// Let's double check
-	if(!issilicon(user) && istype(user.get_active_hand(), /obj/item/device/multitool))
+	if(!issilicon(user) && !isobserver(user) && istype(user.get_active_hand(), /obj/item/device/multitool))
 		P = user.get_active_hand()
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
@@ -199,6 +198,11 @@
 	else if(isrobot(user) && in_range(user, src))
 		if(istype(user.get_active_hand(), /obj/item/device/multitool))
 			P = user.get_active_hand()
+	else if(isobserver(user))
+		var/mob/dead/observer/O = user
+		if(!O.adminMulti)
+			O.adminMulti = new(O)
+		P = O.adminMulti
 	return P
 
 // Additional Options for certain machines. Use this when you want to add an option to a specific machine.
@@ -277,7 +281,7 @@
 
 
 /obj/machinery/telecomms/Topic(href, href_list)
-	if(!issilicon(usr))
+	if(!issilicon(usr) && !isobserver(usr))
 		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
 			return FALSE
 
@@ -386,7 +390,7 @@
 	updateUsrDialog()
 
 /obj/machinery/telecomms/proc/canAccess(mob/user)
-	if(issilicon(user) || in_range(user, src))
+	if(issilicon(user) || isobserver(user) || in_range(user, src))
 		return 1
 	return 0
 

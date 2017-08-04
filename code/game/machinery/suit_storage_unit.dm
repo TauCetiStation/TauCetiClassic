@@ -102,8 +102,6 @@
 	var/dat
 	if(..())
 		return
-	if(stat & NOPOWER)
-		return
 	if(src.panelopen) //The maintenance panel is open. Time for some shady stuff
 		dat+= "<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>"
 		dat+= "<Font color ='black'><B>Maintenance panel controls</B></font><HR>"

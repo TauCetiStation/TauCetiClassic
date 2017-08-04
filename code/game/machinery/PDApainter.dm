@@ -60,18 +60,20 @@
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
+/obj/machinery/pdapainter/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_hand(user)
 
 /obj/machinery/pdapainter/attack_hand(mob/user)
-	..()
-
-	src.add_fingerprint(user)
+	if(..())
+		return
 
 	if(storedpda)
 		var/obj/item/device/pda/P
 		P = input(user, "Select your color!", "PDA Painting") as null|anything in colorlist
 		if(!P)
 			return
-		if(!in_range(src, user))
+		if(!in_range(src, user) && !issilicon(user) && !isobserver(user))
 			return
 
 		storedpda.icon = 'icons/obj/pda.dmi'

@@ -281,6 +281,12 @@
 		..()
 	update_icon()
 
+/obj/machinery/washing_machine/attack_ai(mob/user)
+	return
+
+/obj/machinery/washing_machine/attack_ghost(mob/user)
+	return
+
 /obj/machinery/washing_machine/attack_hand(mob/user)
 	switch(state)
 		if(1)

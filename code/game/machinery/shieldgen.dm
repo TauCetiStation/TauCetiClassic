@@ -220,8 +220,15 @@
 				malfunction = 1
 	checkhp()
 
+/obj/machinery/shieldgen/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_hand(user)
+
 /obj/machinery/shieldgen/attack_hand(mob/user)
-	if(locked)
+	if(..())
+		return
+
+	if(locked && !isobserver(user))
 		to_chat(user, "The machine is locked, you are unable to use it.")
 		return
 	if(is_open)
@@ -241,7 +248,6 @@
 			src.shields_up()
 		else
 			to_chat(user, "The device must first be secured to the floor.")
-	return
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/card/emag))
@@ -357,11 +363,17 @@
 //		message_admins("[PN.load]", 1)
 //		use_power(250) //uses APC power
 
+/obj/machinery/shieldwallgen/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_hand(user)
+
 /obj/machinery/shieldwallgen/attack_hand(mob/user)
+	if(..())
+		return
 	if(state != 1)
 		to_chat(user, "\red The shield generator needs to be firmly secured to the floor first.")
 		return 1
-	if(src.locked && !istype(user, /mob/living/silicon))
+	if(src.locked && !issilicon(user) && !isobserver(user))
 		to_chat(user, "\red The controls are locked!")
 		return 1
 	if(power != 1)
@@ -382,7 +394,6 @@
 		user.visible_message("[user] turned the shield generator on.", \
 			"You turn on the shield generator.", \
 			"You hear heavy droning.")
-	src.add_fingerprint(user)
 
 /obj/machinery/shieldwallgen/process()
 	spawn(100)
