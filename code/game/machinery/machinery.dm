@@ -289,22 +289,23 @@ Class Procs:
 		// For some reason attack_robot doesn't work
 		// This is to stop robots from using cameras to remotely control machines.
 		if(user.client && user.client.eye == user)
-			return src.attack_hand(user)
+			return attack_hand(user)
 	else
-		return src.attack_hand(user)
+		return attack_hand(user)
 
 /obj/machinery/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
+
+/obj/machinery/attack_ghost(mob/user)
+	..()
+	return attack_hand(user)
 
 /obj/machinery/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
-	if((user.lying || user.stat) && !IsAdminGhost(user))
+	if((user.lying || user.stat) && !isobserver(user))
 		return 1
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) || \
-			istype(user, /mob/living/carbon/alien/humanoid/queen) ))
+	if ( !(ishuman(user) || issilicon(user) || ismonkey(user) || isalienqueen(user) || isobserver(user)) )
 		to_chat(usr, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return 1
 /*

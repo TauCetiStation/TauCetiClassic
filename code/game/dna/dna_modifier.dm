@@ -209,7 +209,7 @@
 		qdel(G)
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)
-	if(..())
+	if(..() || (isobserver(user) && !IsAdminGhost(user)))
 		return
 	toggle_open(user)
 

@@ -18,12 +18,12 @@ var/list/ai_verbs_default = list(
 
 //Not sure why this is necessary...
 /proc/AutoUpdateAI(obj/subject)
-	var/is_in_use = 0
+	var/is_in_use = FALSE
 	if (subject!=null)
 		for(var/A in ai_list)
 			var/mob/living/silicon/ai/M = A
 			if ((M.client && M.machine == subject))
-				is_in_use = 1
+				is_in_use = TRUE
 				subject.attack_ai(M)
 	return is_in_use
 
