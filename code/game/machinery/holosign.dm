@@ -45,21 +45,24 @@
 	active_power_usage = 4
 
 /obj/machinery/holosign_switch/attack_ai(mob/user)
-	return src.attack_hand(user)
-/
-obj/machinery/holosign_switch/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
+
+/obj/machinery/holosign_switch/attack_paw(mob/user)
+	return attack_hand(user)
+
+/obj/machinery/holosign_switch/attack_ghost(mob/user)
+	user.handle_inquisitive_ghost_click(src)
+	if(IsAdminGhost(user))
+		attack_hand(user)
 
 /obj/machinery/holosign_switch/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/holosign_switch/attack_hand(mob/user)
-	src.add_fingerprint(usr)
-	if(stat & (NOPOWER|BROKEN))
+	if(..())
 		return
-	add_fingerprint(user)
 
 	use_power(5)
 

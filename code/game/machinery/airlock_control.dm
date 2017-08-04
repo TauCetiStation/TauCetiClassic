@@ -227,6 +227,10 @@
 	else
 		icon_state = "access_button_off"
 
+/obj/machinery/access_button/attack_ghost(mob/user)
+	user.handle_inquisitive_ghost_click(src)
+	if(IsAdminGhost(user))
+		attack_hand(user)
 
 /obj/machinery/access_button/attack_hand(mob/user)
 	add_fingerprint(usr)

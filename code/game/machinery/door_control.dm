@@ -31,9 +31,12 @@
 	return src.attack_hand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user)
-	src.add_fingerprint(usr)
+	if(..())
+		return
+
 	playsound(src, 'sound/items/buttonswitch.ogg', 20, 1, 1)
-	if(stat & (NOPOWER|BROKEN))
+
+	if(isobserver(user) && !IsAdminGhost(user))
 		return
 
 	if(!allowed(user))
@@ -114,13 +117,11 @@
 	return src.attack_hand(user)
 
 /obj/machinery/driver_button/attack_hand(mob/user)
+	if(..())
+		return
 
-	src.add_fingerprint(usr)
-	if(stat & (NOPOWER|BROKEN))
+	if(active || (isobserver(user) && !IsAdminGhost(user)))
 		return
-	if(active)
-		return
-	add_fingerprint(user)
 
 	use_power(5)
 

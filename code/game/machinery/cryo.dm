@@ -111,7 +111,7 @@
 		open_machine()
 		add_fingerprint(usr)
 	else
-		if(isobserver(usr))
+		if(isobserver(usr) && !IsAdminGhost(usr))
 			return
 		open_machine()
 
@@ -140,7 +140,7 @@
   * @return nothing
   */
 /obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main")
-	if(user == occupant || user.stat || panel_open)
+	if(user == occupant || (user.stat && !isobserver(user)) || panel_open)
 		return
 
 	// this is the data which will be sent to the ui

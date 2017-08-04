@@ -741,12 +741,12 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	else if(dead)
 		planted = 0
 		dead = 0
-		to_chat(usr, text("You remove the dead plant from the [src]."))
+		to_chat(user, text("You remove the dead plant from the [src]."))
 		qdel(myseed)
 		update_icon()
 
 /obj/machinery/hydroponics/attack_hand(mob/user)
-	if(istype(usr,/mob/living/silicon))		//How does AI know what plant is?
+	if(issilicon(user) || isobserver(user)) //How does AI/ghosts know what plant is?
 		return
 	if(harvest)
 		if(!(user in range(1,src)))

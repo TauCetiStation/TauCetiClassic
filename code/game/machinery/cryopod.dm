@@ -27,11 +27,8 @@ var/global/list/frozen_items = list()
 	attack_hand()
 
 obj/machinery/computer/cryopod/attack_hand(mob/user = usr)
-	if(stat & (NOPOWER|BROKEN))
+	if(..())
 		return
-
-	user.set_machine(src)
-	add_fingerprint(usr)
 
 	var/dat
 

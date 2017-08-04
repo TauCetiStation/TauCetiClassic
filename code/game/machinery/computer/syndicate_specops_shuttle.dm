@@ -99,9 +99,6 @@ var/syndicate_elite_shuttle_timeleft = 0
 	if(syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return 0
 	else return 1
 
-/obj/machinery/computer/syndicate_elite_shuttle/attackby(I, user)
-	return attack_hand(user)
-
 /obj/machinery/computer/syndicate_elite_shuttle/attack_ai(mob/user)
 	return attack_hand(user)
 
@@ -115,11 +112,11 @@ var/syndicate_elite_shuttle_timeleft = 0
 		return attack_hand(user)
 
 /obj/machinery/computer/syndicate_elite_shuttle/attack_hand(mob/user)
-	if(!allowed(user))
-		to_chat(user, "\red Access Denied.")
+	if(..())
 		return
 
-	if(..())
+	if(!allowed(user))
+		to_chat(user, "\red Access Denied.")
 		return
 
 	user.set_machine(src)

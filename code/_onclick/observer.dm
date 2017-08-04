@@ -38,10 +38,14 @@
 	// Not all of them require checking, see below
 	A.attack_ghost(src)
 
+/mob/dead/observer/handle_inquisitive_ghost_click(atom/target_atom)
+	if(client.inquisitive_ghost)
+		examinate(target_atom)
+
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you
 /atom/proc/attack_ghost(mob/user, donotexam = FALSE)
-	if(user.client.inquisitive_ghost && !donotexam)
-		user.examinate(src)
+	if(!donotexam)
+		user.handle_inquisitive_ghost_click()
 
 // ---------------------------------------
 // And here are some good things for free:

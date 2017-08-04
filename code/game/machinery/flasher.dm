@@ -48,11 +48,16 @@
 			user.visible_message("\red [user] has connected the [src]'s flashbulb!", "\red You connect the [src]'s flashbulb!")
 
 //Let the AI trigger them directly.
-/obj/machinery/flasher/attack_ai()
+/obj/machinery/flasher/attack_ai(mob/user)
 	if (src.anchored)
 		return src.flash()
 	else
 		return
+
+/obj/machinery/flasher/attack_ghost(mob/user)
+	user.handle_inquisitive_ghost_click(src)
+	if(IsAdminGhost(user))
+		attack_ai(user)
 
 /obj/machinery/flasher/proc/flash()
 	if (!(powered()))
@@ -130,11 +135,13 @@
 /obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/flasher_button/attack_hand(mob/user)
+/obj/machinery/flasher_button/attack_ghost(mob/user)
+	user.handle_inquisitive_ghost_click(src)
+	if(IsAdminGhost(user))
+		attack_hand(user)
 
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(active)
+/obj/machinery/flasher_button/attack_hand(mob/user)
+	if(..() || active)
 		return
 
 	use_power(5)
@@ -143,7 +150,7 @@
 	icon_state = "launcheract"
 
 	for(var/obj/machinery/flasher/M in machines)
-		if(M.id == src.id)
+		if(M.id == id)
 			spawn()
 				M.flash()
 

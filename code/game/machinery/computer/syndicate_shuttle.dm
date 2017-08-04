@@ -42,6 +42,9 @@
 	return 1
 
 /obj/machinery/computer/syndicate_station/attack_hand(mob/user)
+	if(..())
+		return
+
 	if(!allowed(user))
 		to_chat(user, "\red Access Denied")
 		return

@@ -31,6 +31,11 @@
 			src.visible_message("<span class='warning'>[src] shuts down due to lack of power!</span>")
 			return
 
+/obj/machinery/floodlight/attack_ghost(mob/user)
+	user.handle_inquisitive_ghost_click(src)
+	if(IsAdminGhost(user))
+		attack_hand(user)
+
 /obj/machinery/floodlight/attack_hand(mob/user)
 	if(open && cell)
 		if(ishuman(user))
@@ -43,7 +48,7 @@
 		cell.add_fingerprint(user)
 		cell.updateicon()
 
-		src.cell = null
+		cell = null
 		to_chat(user, "You remove the power cell")
 		updateicon()
 		return

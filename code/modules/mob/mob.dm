@@ -1113,6 +1113,9 @@ mob/proc/yank_out_object()
 /mob/proc/can_unbuckle(mob/user)
 	return 1
 
+/mob/proc/handle_inquisitive_ghost_click() //For ghosts
+	return
+
 /*
 /mob/living/on_varedit(modified_var)
 	switch(modified_var)

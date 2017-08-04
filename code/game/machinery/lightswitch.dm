@@ -47,6 +47,8 @@
 	src.attack_hand(user)
 
 /obj/machinery/light_switch/attack_hand(mob/user)
+	if(isobserver(user) && !IsAdminGhost(user))
+		return
 
 	src.add_fingerprint(usr)
 	on = !on
