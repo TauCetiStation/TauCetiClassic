@@ -20,9 +20,8 @@
 		scanscrubbers()
 
 /obj/machinery/computer/area_atmos/attack_hand(mob/user)
-	if(..(user))
+	if(..())
 		return
-	src.add_fingerprint(usr)
 	var/dat = {"
 	<html>
 		<head>

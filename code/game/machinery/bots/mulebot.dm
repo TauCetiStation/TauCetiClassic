@@ -165,6 +165,10 @@
 	user.set_machine(src)
 	interact(user, 1)
 
+/obj/machinery/bot/mulebot/attack_ghost(mob/user)
+	user.set_machine(src)
+	interact(user, 1)
+
 /obj/machinery/bot/mulebot/attack_hand(mob/user)
 	. = ..()
 	if(.)

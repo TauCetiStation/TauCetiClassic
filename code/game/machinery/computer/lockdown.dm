@@ -63,12 +63,11 @@
 	attack_hand(user)
 
 /obj/machinery/computer/lockdown/attack_hand(mob/user)
-	add_fingerprint(user)
-	if(stat & (BROKEN|NOPOWER))
+	if(..())
 		return
 
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!istype(user, /mob/living/silicon))
+		if (!issilicon(user) && !isobserver(user))
 			user.machine = null
 			user << browse(null, "window=lockdown")
 			return
