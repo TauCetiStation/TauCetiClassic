@@ -183,7 +183,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 /obj/machinery/autolathe/interact(mob/user)
 	if(..())
 		return
-	if (shocked && isliving(user))
+	if (shocked && !issilicon(user) && !isobserver(user))
 		shock(user,50)
 	if (disabled)
 		to_chat(user, "\red You press the button, but nothing happens.")

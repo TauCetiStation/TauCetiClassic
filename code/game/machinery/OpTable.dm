@@ -53,9 +53,6 @@
 		qdel(src)
 	return
 
-/obj/machinery/optable/attack_ghost(mob/user)
-	return
-
 /obj/machinery/optable/attack_hand(mob/user)
 	if (HULK in usr.mutations)
 		to_chat(usr, text("<span class='notice'>You destroy the table.</span>"))

@@ -66,12 +66,6 @@
 	if(..())
 		return
 
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!issilicon(user) && !isobserver(user))
-			user.machine = null
-			user << browse(null, "window=lockdown")
-			return
-
 	var/t = "<B>Lockdown Control</B><BR>"
 	t += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"

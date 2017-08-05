@@ -151,7 +151,6 @@
 			turn_on()
 	
 	else if(src.locked && !issilicon(usr) && !isobserver(usr))
-		updateUsrDialog()
 		return
 
 	else if(href_list["adj_threshold"])

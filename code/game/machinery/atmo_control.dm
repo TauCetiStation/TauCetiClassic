@@ -97,7 +97,6 @@
 	if(..())
 		return
 	user << browse(return_text(),"window=computer")
-	user.set_machine(src)
 	onclose(user, "computer")
 
 /obj/machinery/computer/general_air_control/process()

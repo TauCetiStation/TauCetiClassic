@@ -463,33 +463,20 @@
 //END HACKING//
 ///////////////
 
-/obj/machinery/alarm/attack_ai(mob/user)
-	return interact(user)
-
 /obj/machinery/alarm/attack_hand(mob/user)
-	. = ..()
-	if (.)
+	if(..())
 		return
 	return interact(user)
 
 /obj/machinery/alarm/interact(mob/user)
-	user.set_machine(src)
-
 	if(buildstage != 2)
 		return
 
-	if (get_dist(src, user) > 1)
-		if (!issilicon(user) && !isobserver(user))
-			user.machine = null
-			user << browse(null, "window=air_alarm")
-			user << browse(null, "window=AAlarmwires")
-			return
 
-
-		else if (issilicon(user) && aidisabled)
-			to_chat(user, "AI control for this Air Alarm interface has been disabled.")
-			user << browse(null, "window=air_alarm")
-			return
+	if(issilicon(user) && aidisabled)
+		to_chat(user, "AI control for this Air Alarm interface has been disabled.")
+		user << browse(null, "window=air_alarm")
+		return
 
 	if(wires.interact(user))
 		return
@@ -1207,7 +1194,7 @@ FIRE ALARM
 			update_icon()
 
 /obj/machinery/firealarm/attack_hand(mob/user)
-	if((user.stat && !isobserver(user)) || stat & (NOPOWER|BROKEN))
+	if(..())
 		return
 
 	if (buildstage != 2)
@@ -1389,17 +1376,17 @@ Code shamelessly copied from apc_frame
 	return attack_hand(user)
 
 /obj/machinery/partyalarm/attack_hand(mob/user)
-	if((user.stat && !isobserver(user)) || stat & (NOPOWER|BROKEN))
+	if(..())
 		return
-
-	user.machine = src
+	
 	var/area/A = get_area(src)
-	ASSERT(isarea(A))
+	if(!istype(A))
+		return
 	if(A.master)
 		A = A.master
 	var/d1
 	var/d2
-	if (istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
+	if (ishuman(user) || issilicon(user) || isobserver(user))
 
 		if (A.party)
 			d1 = text("<A href='?src=\ref[];reset=1'>No Party :(</A>", src)
