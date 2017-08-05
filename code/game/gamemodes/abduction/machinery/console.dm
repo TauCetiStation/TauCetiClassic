@@ -31,7 +31,7 @@
 	var/obj/machinery/abductor/experiment/experiment
 	var/obj/machinery/abductor/pad/pad
 	var/list/datum/icon_snapshot/disguises = list()
-	var/show_price_list = TRUE
+	var/show_price_list = FALSE
 	var/list/price_list = list(
 							"heal injector" =4,
 							"decloner"		=3,

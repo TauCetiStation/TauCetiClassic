@@ -5,8 +5,9 @@
 	desc = "Used to upload laws to the AI."
 	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/aiupload
+	ghost_must_be_admin = TRUE
 	var/mob/living/silicon/ai/current = null
-	var/opened = 0
+	var/opened = FALSE
 
 	light_color = "#FFFFFF"
 
@@ -38,7 +39,7 @@
 
 
 /obj/machinery/computer/aiupload/attack_hand(mob/user)
-	if(..() || (isobserver(user) && !IsAdminGhost(user)))
+	if(..())
 		return
 
 	src.current = select_active_ai(user)
@@ -56,6 +57,7 @@
 	desc = "Used to upload laws to Cyborgs."
 	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/borgupload
+	ghost_must_be_admin = TRUE
 	var/mob/living/silicon/robot/current = null
 
 
@@ -67,7 +69,7 @@
 
 
 /obj/machinery/computer/borgupload/attack_hand(mob/user)
-	if(..() || (isobserver(user) && !IsAdminGhost(user)))
+	if(..())
 		return
 
 	src.current = freeborg()

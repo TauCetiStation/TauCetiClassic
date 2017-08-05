@@ -2,8 +2,9 @@
 	name = "scrap stacking machine"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "stacker"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
+	ghost_must_be_admin = TRUE
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 	var/list/stack_storage[0]
@@ -26,10 +27,6 @@
 			scrap_amount -= stack_amt
 	else
 		AM.forceMove(src.loc)
-
-/obj/machinery/scrap/stacking_machine/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/scrap/stacking_machine/attack_hand(mob/user)
 	if(scrap_amount < 1)

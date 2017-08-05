@@ -7,13 +7,14 @@
 	power_channel = ENVIRON
 	var/id = null
 	var/range = 10
-	var/normaldoorcontrol = 0
+	var/normaldoorcontrol = FALSE
 	var/desiredstate = 0 // Zero is closed, 1 is open.
 	var/specialfunctions = 1
 	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
+	ghost_must_be_admin = TRUE
 
 /obj/machinery/door_control/attack_ai(mob/user)
 	attack_hand(user)
@@ -35,9 +36,6 @@
 		return
 
 	playsound(src, 'sound/items/buttonswitch.ogg', 20, 1, 1)
-
-	if(isobserver(user) && !IsAdminGhost(user))
-		return
 
 	if(!allowed(user))
 		to_chat(user, "\red Access Denied")
@@ -117,10 +115,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/driver_button/attack_hand(mob/user)
-	if(..())
-		return
-
-	if(active || (isobserver(user) && !IsAdminGhost(user)))
+	if(..() || active)
 		return
 
 	use_power(5)

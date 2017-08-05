@@ -45,6 +45,7 @@
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
+	ghost_must_be_admin = TRUE
 	var/damage_coeff
 	var/scan_level
 	var/precision_coeff
@@ -208,7 +209,7 @@
 		qdel(G)
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)
-	if(..() || (isobserver(user) && !IsAdminGhost(user)))
+	if(..())
 		return
 	toggle_open(user)
 

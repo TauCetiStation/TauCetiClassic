@@ -4,11 +4,12 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	layer = 2.9
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 50
+	ghost_must_be_admin = TRUE
 	var/grinded = 0
 	var/required_grind = 5
 	var/cube_production = 1
@@ -31,10 +32,6 @@
 	cube_production = cubes_made
 	required_grind = req_grind
 	desc = "A machine used for recycling dead monkeys into monkey cubes. It currently produces [cubes_made] cube(s) for every [required_grind] monkey(s) inserted."
-
-/obj/machinery/monkey_recycler/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/monkey_recycler/attackby(obj/item/O, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "grinder_open", "grinder", O))

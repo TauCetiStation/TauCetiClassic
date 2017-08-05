@@ -4,14 +4,15 @@
 	name = "Emergency Floodlight"
 	icon = 'icons/obj/machines/floodlight.dmi'
 	icon_state = "flood00"
-	density = 1
-	var/on = 0
+	density = TRUE
+	var/on = FALSE
 	var/obj/item/weapon/stock_parts/cell/high/cell = null
 	var/use = 5
-	var/unlocked = 0
-	var/open = 0
+	var/unlocked = FALSE
+	var/open = FALSE
 	var/brightness_on = 7
 	light_power = 2
+	ghost_must_be_admin = TRUE
 
 /obj/machinery/floodlight/New()
 	src.cell = new(src)
@@ -30,10 +31,6 @@
 			set_light(0)
 			src.visible_message("<span class='warning'>[src] shuts down due to lack of power!</span>")
 			return
-
-/obj/machinery/floodlight/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/floodlight/attack_hand(mob/user)
 	if(open && cell)

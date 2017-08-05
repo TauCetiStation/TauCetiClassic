@@ -5,23 +5,24 @@
 	desc = "It is a heavy duty industrial laser."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	req_access = list(access_engine_equip)
 
 	use_power = 0
 	idle_power_usage = 10
 	active_power_usage = 300
+	ghost_must_be_admin = TRUE
 
-	var/active = 0
-	var/powered = 0
+	var/active = FALSE
+	var/powered = FALSE
 	var/fire_delay = 100
 	var/maximum_fire_delay = 100
 	var/minimum_fire_delay = 20
 	var/last_shot = 0
 	var/shot_number = 0
 	var/state = 0
-	var/locked = 0
+	var/locked = FALSE
 
 /obj/machinery/power/emitter/New()
 	..()
@@ -74,10 +75,6 @@
 		icon_state = "emitter_+a"
 	else
 		icon_state = "emitter"
-
-/obj/machinery/power/emitter/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/power/emitter/attack_hand(mob/user)
 	if(..())

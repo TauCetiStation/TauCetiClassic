@@ -2,11 +2,12 @@
 	name = "cyborg recharging station"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
-	density = 0
-	anchored = 1.0
+	density = FALSE
+	anchored = TRUE
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 50
+	ghost_must_be_admin = TRUE
 	var/max_internal_charge = 15000 		// Two charged borgs in a row with default cell
 	var/current_internal_charge = 15000 	// Starts charged, to prevent power surges on round start
 	var/charging_cap_active = 25000			// Active Cap - When cyborg is inside
@@ -14,8 +15,8 @@
 	var/icon_update_tick = 0				// Used to update icon only once every 10 ticks
 	var/construct_op = 0
 	var/circuitboard = "/obj/item/weapon/circuitboard/cyborgrecharger"
-	var/locked = 1
-	var/open = 1
+	var/locked = TRUE
+	var/open = TRUE
 	req_access = list(access_robotics)
 	var/recharge_speed
 	var/repairs
@@ -115,10 +116,6 @@
 
 /obj/machinery/recharge_station/attack_ai(mob/user)
 	return attack_hand(user)
-
-/obj/machinery/recharge_station/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/recharge_station/attackby(obj/item/P, mob/user)
 	if(open)

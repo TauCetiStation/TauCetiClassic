@@ -209,16 +209,15 @@
 	name = "access button"
 
 	layer = 3.3	//Above windows
-	anchored = 1
+	anchored = TRUE
 	power_channel = ENVIRON
+	ghost_must_be_admin = TRUE
 
 	var/master_tag
 	frequency = 1449
 	var/command = "cycle"
 
-
-
-	var/on = 1
+	var/on = TRUE
 
 
 /obj/machinery/access_button/update_icon()
@@ -226,10 +225,6 @@
 		icon_state = "access_button_standby"
 	else
 		icon_state = "access_button_off"
-
-/obj/machinery/access_button/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/access_button/attack_hand(mob/user)
 	add_fingerprint(usr)

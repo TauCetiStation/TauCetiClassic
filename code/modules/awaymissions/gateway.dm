@@ -24,13 +24,14 @@
 
 //this is da important part wot makes things go
 /obj/machinery/gateway/centerstation
-	density = 1
+	density = TRUE
 	icon_state = "offcenter"
 	use_power = 1
+	ghost_must_be_admin = TRUE
 
 	//warping vars
 	var/list/linked = list()
-	var/ready = 0				//have we got all the parts for a gateway?
+	var/ready = FALSE			//have we got all the parts for a gateway?
 	var/wait = 0				//this just grabs world.time at world start
 	var/obj/machinery/gateway/centeraway/awaygate = null
 
@@ -102,10 +103,6 @@ obj/machinery/gateway/centerstation/process()
 	active = 0
 	update_icon()
 
-/obj/machinery/gateway/centerstation/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
-
 /obj/machinery/gateway/centerstation/attack_hand(mob/user)
 	if(!ready)
 		detect()
@@ -145,9 +142,10 @@ obj/machinery/gateway/centerstation/process()
 
 
 /obj/machinery/gateway/centeraway
-	density = 1
+	density = TRUE
 	icon_state = "offcenter"
 	use_power = 0
+	ghost_must_be_admin = TRUE
 	var/calibrated = 1
 	var/list/linked = list()	//a list of the connected gateway chunks
 	var/ready = 0
@@ -206,10 +204,6 @@ obj/machinery/gateway/centerstation/process()
 		G.update_icon()
 	active = 0
 	update_icon()
-
-/obj/machinery/gateway/centeraway/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/gateway/centeraway/attack_hand(mob/user)
 	if(!ready)

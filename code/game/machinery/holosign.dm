@@ -38,21 +38,18 @@
 	icon_state = "light1"
 	desc = "A remote control switch for holosign."
 	var/id = null
-	var/active = 0
-	anchored = 1.0
+	var/active = FALSE
+	anchored = TRUE
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
+	ghost_must_be_admin = TRUE
 
 /obj/machinery/holosign_switch/attack_ai(mob/user)
 	return attack_hand(user)
 
 /obj/machinery/holosign_switch/attack_paw(mob/user)
 	return attack_hand(user)
-
-/obj/machinery/holosign_switch/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/holosign_switch/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/detective_scanner))

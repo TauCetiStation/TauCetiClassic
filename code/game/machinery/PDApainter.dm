@@ -3,8 +3,9 @@
 	desc = "A PDA painting machine. To use, simply insert your PDA and choose the desired preset paint scheme."
 	icon = 'icons/obj/machines/pdapainter.dmi'
 	icon_state = "pdapainter"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
+	ghost_must_be_admin = TRUE
 	var/obj/item/device/pda/storedpda = null
 	var/list/colorlist = list()
 	var/list/tc_pda_list = list(/obj/item/device/pda/forensic)
@@ -59,10 +60,6 @@
 			playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 			anchored = !anchored
 			to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
-
-/obj/machinery/pdapainter/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/pdapainter/attack_hand(mob/user)
 	if(..())

@@ -48,15 +48,16 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	icon = 'icons/obj/machines/research.dmi'
 	icon_state = "server"
 	name = "Messaging Server"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
+	ghost_must_be_admin = TRUE
 
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
-	var/active = 1
+	var/active = TRUE
 	var/decryptkey = "password"
 
 /obj/machinery/message_server/New()
@@ -92,10 +93,6 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 
 /obj/machinery/message_server/proc/send_rc_message(recipient = "",sender = "",message = "",stamp = "", id_auth = "", priority = 1)
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
-
-/obj/machinery/message_server/attack_ghost(user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/message_server/attack_hand(user)
 //	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."

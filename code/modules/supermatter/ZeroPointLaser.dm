@@ -5,20 +5,21 @@
 	desc = "A super-powerful laser."
 	icon = 'icons/obj/engine.dmi'
 	icon_state = "laser"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	req_access = list(access_research)
 
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 300
+	ghost_must_be_admin = TRUE
 
-	var/active = 0
+	var/active = FALSE
 	var/fire_delay = 100
 	var/last_shot = 0
 	var/shot_number = 0
 	var/state = 0
-	var/locked = 0
+	var/locked = FALSE
 
 	var/energy = 0.0001
 	frequency = 1
@@ -46,10 +47,6 @@
 		icon_state = "laser"//"emitter_+a"
 	else
 		icon_state = "laser"//"emitter"
-
-/obj/machinery/zero_point_emitter/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/zero_point_emitter/attack_hand(mob/user)
 	src.add_fingerprint(user)

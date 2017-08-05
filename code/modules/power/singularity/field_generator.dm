@@ -29,6 +29,7 @@ field_generator power level display
 	anchored = FALSE
 	density = TRUE
 	use_power = 0
+	ghost_must_be_admin = TRUE
 
 	var/var_edit_start = FALSE
 	var/var_power      = FALSE
@@ -78,10 +79,6 @@ field_generator power level display
 		calc_power()
 		update_icon()
 	return
-
-/obj/machinery/field_generator/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/field_generator/attack_hand(mob/user)
 	if(..())

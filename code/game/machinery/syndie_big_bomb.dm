@@ -17,17 +17,18 @@
 	icon_state = "syndicate-bomb-inactive"
 	desc = "A large and menacing device. Can be bolted down with a wrench."
 
-	anchored = 0
-	density = 0
+	anchored = FALSE
+	density = FALSE
 	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
-	unacidable = 1
+	unacidable = TRUE
+	ghost_must_be_admin = TRUE
 
 	var/datum/wires/syndicatebomb/wires = null
 	var/timer = 60
-	var/open_panel = 0 	//are the wires exposed?
-	var/active = 0		//is the bomb counting down?
-	var/defused = 0		//is the bomb capable of exploding?
-	var/degutted = 0	//is the bomb even a bomb anymore?
+	var/open_panel = FALSE	//are the wires exposed?
+	var/active = FALSE		//is the bomb counting down?
+	var/defused = FALSE		//is the bomb capable of exploding?
+	var/degutted = FALSE	//is the bomb even a bomb anymore?
 
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
@@ -106,10 +107,6 @@
 			to_chat(user, "<span class='notice'>While a double strength bomb would surely be a thing of terrible beauty, there's just no room for it.</span>")
 	else
 		..()
-
-/obj/machinery/syndicatebomb/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/syndicatebomb/attack_hand(mob/user)
 	if(degutted)

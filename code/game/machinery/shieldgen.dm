@@ -126,22 +126,23 @@
 
 
 /obj/machinery/shieldgen
-		name = "Emergency shield projector"
-		desc = "Used to seal minor hull breaches."
-		icon = 'icons/obj/objects.dmi'
-		icon_state = "shieldoff"
-		density = 1
-		opacity = 0
-		anchored = 0
-		pressure_resistance = 2*ONE_ATMOSPHERE
-		req_access = list(access_engine)
-		var/const/max_health = 100
-		var/health = max_health
-		var/active = 0
-		var/malfunction = 0 //Malfunction causes parts of the shield to slowly dissapate
-		var/list/deployed_shields = list()
-		var/is_open = 0 //Whether or not the wires are exposed
-		var/locked = 0
+	name = "Emergency shield projector"
+	desc = "Used to seal minor hull breaches."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shieldoff"
+	density = TRUE
+	opacity = FALSE
+	anchored = FALSE
+	pressure_resistance = 2*ONE_ATMOSPHERE
+	ghost_must_be_admin = TRUE
+	req_access = list(access_engine)
+	var/const/max_health = 100
+	var/health = max_health
+	var/active = FALSE
+	var/malfunction = FALSE //Malfunction causes parts of the shield to slowly dissapate
+	var/list/deployed_shields = list()
+	var/is_open = FALSE //Whether or not the wires are exposed
+	var/locked = FALSE
 
 /obj/machinery/shieldgen/Destroy()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
@@ -219,10 +220,6 @@
 				src.health *= 0.3 //chop off a third of the health
 				malfunction = 1
 	checkhp()
-
-/obj/machinery/shieldgen/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/shieldgen/attack_hand(mob/user)
 	if(..())
@@ -315,26 +312,27 @@
 ////FIELD GEN START //shameless copypasta from fieldgen, powersink, and grille
 #define maxstoredpower 500
 /obj/machinery/shieldwallgen
-		name = "Shield Generator"
-		desc = "A shield generator."
-		icon = 'icons/obj/stationobjs.dmi'
-		icon_state = "Shield_Gen"
-		anchored = 0
-		density = 1
-		req_access = list(access_teleporter)
-		var/active = 0
-		var/power = 0
-		var/state = 0
-		var/steps = 0
-		var/last_check = 0
-		var/check_delay = 10
-		var/recalc = 0
-		var/locked = 1
-		var/destroyed = 0
-		var/obj/structure/cable/attached		// the attached cable
-		var/storedpower = 0
-		flags = CONDUCT
-		use_power = 0
+	name = "Shield Generator"
+	desc = "A shield generator."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "Shield_Gen"
+	anchored = FALSE
+	density = TRUE
+	req_access = list(access_teleporter)
+	var/active = FALSE
+	var/power = 0
+	var/state = 0
+	var/steps = 0
+	var/last_check = 0
+	var/check_delay = 10
+	var/recalc = 0
+	var/locked = TRUE
+	var/destroyed = FALSE
+	var/obj/structure/cable/attached		// the attached cable
+	var/storedpower = 0
+	flags = CONDUCT
+	use_power = 0
+	ghost_must_be_admin = TRUE
 
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)
@@ -362,10 +360,6 @@
 			PN.newload += shieldload //uses powernet power.
 //		message_admins("[PN.load]", 1)
 //		use_power(250) //uses APC power
-
-/obj/machinery/shieldwallgen/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user)
 	if(..())

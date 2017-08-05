@@ -3,13 +3,14 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "processor"
 	layer = 2.9
-	density = 1
-	anchored = 1
-	var/broken = 0
-	var/processing = 0
+	density = TRUE
+	anchored = TRUE
+	var/broken = FALSE
+	var/processing = FALSE
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 50
+	ghost_must_be_admin = TRUE
 	var/rating_speed = 1
 	var/rating_amount = 1
 
@@ -129,10 +130,6 @@
 			continue
 		return P
 	return 0
-
-/obj/machinery/processor/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/processor/attackby(obj/item/O, mob/user)
 	if(src.processing)

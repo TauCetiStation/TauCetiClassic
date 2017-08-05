@@ -117,10 +117,11 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "beacon"
 
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
+	ghost_must_be_admin = TRUE
 
 	var/active = 0 //It doesn't use up power, so use_power wouldn't really suit it
 	var/icontype = "beacon"
@@ -153,10 +154,6 @@
 
 /obj/machinery/singularity_beacon/attack_ai(mob/user)
 	return
-
-/obj/machinery/singularity_beacon/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/singularity_beacon/attack_hand(mob/user)
 	if(stat & SCREWED)

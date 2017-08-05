@@ -115,7 +115,8 @@ Class Procs:
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
-
+	var/ghost_must_be_admin = 0	// 0 - every ghost can see interface (and admins can also interact)
+								// 1 - only admins in ghost form can interact
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
@@ -297,7 +298,8 @@ Class Procs:
 	return attack_hand(user)
 
 /obj/machinery/attack_ghost(mob/user)
-	..()
+	if(ghost_must_be_admin && !IsAdminGhost(user))
+		return 1
 	return attack_hand(user)
 
 /obj/machinery/attack_hand(mob/user)
