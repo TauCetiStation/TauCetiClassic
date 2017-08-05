@@ -290,7 +290,7 @@
 			for (var/atom/movable/G in src.loc)
 				G.clean_blood()
 		else
-			is_payed = 0 // Р•СЃР»Рё РёРіСЂРѕРє РІС‹РєР»СЋС‡РёР» СЂР°РЅСЊС€Рµ РІСЂРµРјРµРЅРё - РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕРµ Р°РЅРЅСѓР»РёСЂРѕРІР°РЅРёРµ РїР»Р°С‚С‹.
+			is_payed = 0 // Если игрок выключил раньше времени - принудительное аннулирование платы.
 	else
 		to_chat(M, "You didn't pay for that. Swipe a card against [src].")
 

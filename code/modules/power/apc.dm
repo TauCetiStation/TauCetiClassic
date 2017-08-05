@@ -595,12 +595,11 @@
 /obj/machinery/power/apc/attack_hand(mob/user)
 //	if (!can_use(user)) This already gets called in interact() and in topic()
 //		return
-	if(!user)
+	if(..())
 		return
-	src.add_fingerprint(user)
 
 	//Synthetic human mob goes here.
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == "grab")
 			if(emagged || (stat & BROKEN))
@@ -630,7 +629,7 @@
 				to_chat(user, "There is no charge to draw from that APC.")
 			return
 
-	if(usr == user && opened && (!issilicon(user)))
+	if(usr == user && opened && !issilicon(user) && !isobserver(user))
 		if(cell)
 			user.put_in_hands(cell)
 			cell.add_fingerprint(user)
@@ -705,7 +704,7 @@
 		"chargingStatus" = charging,
 		"totalLoad" = lastused_equip + lastused_light + lastused_environ,
 		"coverLocked" = coverlocked,
-		"siliconUser" = istype(user, /mob/living/silicon),
+		"siliconUser" = issilicon(user) | isobserver(user),
 		"malfStatus" = get_malf_status(user),
 
 		"powerChannels" = list(
@@ -861,12 +860,12 @@
 		return FALSE
 
 	else if (href_list["overload"])
-		if( istype(usr, /mob/living/silicon) && !src.aidisabled )
+		if( (issilicon(usr) && !src.aidisabled) || isobserver(usr) )
 			src.overload_lighting()
 
 	else if (href_list["malfhack"])
 		var/mob/living/silicon/ai/malfai = usr
-		if( istype(malfai, /mob/living/silicon/ai) && !src.aidisabled )
+		if( issilicon(usr) && !src.aidisabled )
 			if (malfai.malfhacking)
 				to_chat(malfai, "You are already hacking an APC.")
 				return FALSE

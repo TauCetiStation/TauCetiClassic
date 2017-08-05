@@ -407,10 +407,11 @@
 			//Foreach goto(99)
 	return
 
-/obj/machinery/crema_switch/attack_hand(mob/user)
-	if(isobserver(user) && !IsAdminGhost(user))
-		return
+/obj/machinery/crema_switch/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_hand(user)
 
+/obj/machinery/crema_switch/attack_hand(mob/user)
 	if(allowed(user))
 		for (var/obj/structure/crematorium/C in world)
 			if (C.id == id)

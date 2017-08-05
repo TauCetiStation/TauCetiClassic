@@ -33,10 +33,13 @@ var/global/list/rad_collectors = list()
 			P.air_contents.adjust(tx = -0.001*drainratio)
 	return
 
+/obj/machinery/power/rad_collector/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_hand(user)
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
 	if(anchored)
-		if(!src.locked)
+		if(!src.locked || isobserver(user))
 			toggle_power()
 			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 			"You turn the [src.name] [active? "on":"off"].")

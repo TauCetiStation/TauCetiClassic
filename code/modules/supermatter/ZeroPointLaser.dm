@@ -47,10 +47,14 @@
 	else
 		icon_state = "laser"//"emitter"
 
+/obj/machinery/zero_point_emitter/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_hand(user)
+
 /obj/machinery/zero_point_emitter/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	if(state == 2)
-		if(!src.locked)
+		if(!src.locked || isobserver(user))
 			if(src.active==1)
 				src.active = 0
 				to_chat(user, "You turn off the [src].")

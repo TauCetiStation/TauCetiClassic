@@ -102,6 +102,9 @@ obj/machinery/gateway/centerstation/process()
 	active = 0
 	update_icon()
 
+/obj/machinery/gateway/centerstation/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_hand(user)
 
 /obj/machinery/gateway/centerstation/attack_hand(mob/user)
 	if(!ready)
@@ -204,6 +207,9 @@ obj/machinery/gateway/centerstation/process()
 	active = 0
 	update_icon()
 
+/obj/machinery/gateway/centeraway/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_hand(user)
 
 /obj/machinery/gateway/centeraway/attack_hand(mob/user)
 	if(!ready)

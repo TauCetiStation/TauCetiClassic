@@ -75,25 +75,29 @@
 	else
 		icon_state = "emitter"
 
+/obj/machinery/power/emitter/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_hand(user)
 
 /obj/machinery/power/emitter/attack_hand(mob/user)
-	src.add_fingerprint(user)
+	if(..())
+		return
 	if(state == 2)
 		if(!powernet)
 			to_chat(user, "The emitter isn't connected to a wire.")
 			return 1
-		if(!src.locked)
-			if(src.active==1)
-				src.active = 0
+		if(!locked || isobserver(user))
+			if(active)
+				active = 0
 				to_chat(user, "You turn off the [src].")
 				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 				log_game("Emitter turned off by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='red'>off</font> by [user.key]","singulo")
 			else
-				src.active = 1
+				active = 1
 				to_chat(user, "You turn on the [src].")
-				src.shot_number = 0
-				src.fire_delay = maximum_fire_delay
+				shot_number = 0
+				fire_delay = maximum_fire_delay
 				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 				log_game("Emitter turned on by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")

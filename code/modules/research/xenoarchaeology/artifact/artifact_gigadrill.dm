@@ -10,6 +10,10 @@
 	density = 1
 	layer = 3.1		//to go over ores
 
+/obj/machinery/giga_drill/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_hand(user)
+
 /obj/machinery/giga_drill/attack_hand(mob/user)
 	if(active)
 		active = 0

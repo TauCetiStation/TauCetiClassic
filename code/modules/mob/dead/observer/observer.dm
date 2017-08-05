@@ -718,3 +718,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		client.images |= ghost_darkness_images
 		if (ghostimage)
 			client.images -= ghostimage //remove ourself
+
+/mob/dead/observer/IsAdvancedToolUser()
+	return IsAdminGhost(src)

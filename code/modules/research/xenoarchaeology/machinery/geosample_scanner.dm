@@ -116,7 +116,7 @@
 
 /obj/machinery/radiocarbon_spectrometer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 
-	if(user.stat)
+	if(user.stat && !isobserver(user))
 		return
 
 	// this is the data which will be sent to the ui

@@ -30,7 +30,7 @@
 	FG.turn_off()
 
 /obj/machinery/containment_field/attack_hand(mob/user)
-	if(get_dist(src, user) <= 1)
+	if(get_dist(src, user) <= 1 && !isobserver(user))
 		shock(user)
 
 /obj/machinery/containment_field/blob_act()

@@ -139,6 +139,9 @@
 		I.loc = src.loc
 	return
 
+/obj/machinery/conveyor/attack_ghost(mob/user)
+	return
+
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user)
 	user.Move_Pulled(src)
