@@ -99,6 +99,8 @@
 		reset_current()
 		usr.check_eye(current)
 
+/obj/machinery/computer/security/attack_ghost(mob/user)
+	return
 
 /obj/machinery/computer/security/attack_hand(mob/user)
 	if (src.z > ZLEVEL_EMPTY)

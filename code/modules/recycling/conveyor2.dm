@@ -197,13 +197,14 @@
 	icon_state = "switch-off"
 	var/position = 0			// 0 off, -1 reverse, 1 forward
 	var/last_pos = -1			// last direction setting
-	var/operated = 1			// true if just operated
+	var/operated = TRUE			// true if just operated
 	var/convdir = 0				// 0 is two way switch, 1 and -1 means one way
 
 	var/id = "" 				// must match conveyor IDs to control them
 
 	var/list/conveyors		// the list of converyors that are controlled by this switch
-	anchored = 1
+	anchored = TRUE
+	ghost_must_be_admin = TRUE
 
 
 
