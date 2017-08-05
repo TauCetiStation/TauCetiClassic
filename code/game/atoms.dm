@@ -205,10 +205,9 @@
 			src.fingerprintslast = M.key
 	return
 
-/atom/proc/add_fingerprint(mob/living/M, ignoregloves = 0)
-	if(isnull(M)) return
-	if(isAI(M)) return
-	if(isnull(M.key)) return
+/atom/proc/add_fingerprint(mob/M, ignoregloves = 0)
+	if(!M || !M.key || isAI(M)) //AI's clicks already calls add_hiddenprint from ClickOn() proc
+		return
 	if (ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
