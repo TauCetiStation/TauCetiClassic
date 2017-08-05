@@ -112,9 +112,9 @@ Please contact me on #coderbus IRC. ~Carn x
 #define SURGERY_LAYER			23		//bs12 specific.
 #define BANDAGE_LAYER			22
 #define UNIFORM_LAYER			21
-#define TAIL_LAYER				20		//bs12 specific. this hack is probably gonna come back to haunt me
-#define ID_LAYER				19
-#define SHOES_LAYER				18
+#define ID_LAYER				20
+#define SHOES_LAYER				19
+#define TAIL_LAYER				18		//bs12 specific. this hack is probably gonna come back to haunt me
 #define GLOVES_LAYER			17
 #define EARS_LAYER				16
 #define SUIT_LAYER				15
