@@ -11,9 +11,6 @@
 		cast()
 	return 1
 
-/obj/effect/proc_holder/spell/in_hand/cast_check(skipcharge = 0, mob/user = usr)
-	return (!user.lying && ..())
-
 /obj/effect/proc_holder/spell/in_hand/cast(mob/living/carbon/human/user = usr)
 	if(!istype(user) || user.lying)
 		return

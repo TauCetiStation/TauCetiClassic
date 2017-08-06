@@ -137,13 +137,10 @@
 		unset_machine()
 		src << browse(null, t1)
 	if ((href_list["item"] && !( usr.stat ) && !( usr.restrained() ) && in_range(src, usr) ))
-		var/obj/item/item = usr.get_active_hand()
-		if(!item || (item.flags & (ABSTRACT | DROPDEL)))
-			return
 		var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
 		O.source = usr
 		O.target = src
-		O.item = item
+		O.item = usr.get_active_hand()
 		O.s_loc = usr.loc
 		O.t_loc = loc
 		O.place = href_list["item"]

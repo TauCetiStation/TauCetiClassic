@@ -37,8 +37,8 @@
 			un_equip_or_action(usr, remove_from)
 	else if(href_list["add_inv"])
 		var/add_to = href_list["add_inv"]
-		var/obj/item/item_to_add = usr.get_active_hand()
-		if(!item_to_add || (item_to_add.flags & (ABSTRACT | DROPDEL)))
+		var/item_to_add = usr.get_active_hand()
+		if(!item_to_add)
 			to_chat(usr, "<span class='red'>You have nothing in your hand to put on its [add_to].</span>")
 			return
 		if(get_slot_ref(add_to))
