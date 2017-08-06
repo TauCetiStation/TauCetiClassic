@@ -89,6 +89,12 @@
 	src.in_camera_mode = 1
 	to_chat(usr, "<B>Camera Mode activated</B>")
 
+/obj/item/device/camera/siliconcam/proc/take_image()
+	toggle_camera_mode()
+
+/obj/item/device/camera/siliconcam/proc/view_images()
+	viewpictures()
+
 /obj/item/device/camera/siliconcam/ai_camera/printpicture(mob/user, datum/picture/P)
 	injectaialbum(P)
 	to_chat(usr, "<span class='unconscious'>Image recorded</span>")
@@ -96,43 +102,11 @@
 /obj/item/device/camera/siliconcam/robot_camera/printpicture(mob/user, datum/picture/P)
 	injectmasteralbum(P)
 
-/obj/item/device/camera/siliconcam/ai_camera/proc/take_image()
-	toggle_camera_mode()
-
-/obj/item/device/camera/siliconcam/ai_camera/proc/view_images()
-	viewpictures()
-
 /obj/item/device/camera/siliconcam/ai_camera/verb/delete_images()
 	set category = "AI Commands"
 	set name = "Delete Image"
 	set desc = "Delete image."
 	set src in usr
-
-	deletepicture(src)
-
-/obj/item/device/camera/siliconcam/robot_camera/verb/take_image()
-	set category ="Robot Commands"
-	set name = "Take Image"
-	set desc = "Takes an image."
-	set src in usr
-
-	toggle_camera_mode()
-
-/obj/item/device/camera/siliconcam/robot_camera/verb/view_images()
-	set category ="Robot Commands"
-	set name = "View Images"
-	set desc = "View images."
-	set src in usr
-
-	viewpictures()
-
-/obj/item/device/camera/siliconcam/robot_camera/verb/delete_images()
-	set category = "Robot Commands"
-	set name = "Delete Image"
-	set desc = "Delete a local image."
-	set src in usr
-
-	// Explicitly only allow deletion from the local camera
 	deletepicture(src)
 
 obj/item/device/camera/siliconcam/proc/getsource()

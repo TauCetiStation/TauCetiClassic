@@ -214,13 +214,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 // Special AI/pAI PDAs that cannot explode.
-/obj/item/device/pda/ai
+/obj/item/device/pda/silicon
 	icon_state = "NONE"
 	ttone = "data"
 	detonate = 0
 
 
-/obj/item/device/pda/ai/proc/set_name_and_job(newname, newjob, newrank)
+/obj/item/device/pda/silicon/proc/set_name_and_job(newname, newjob, newrank)
 	owner = newname
 	ownjob = newjob
 	if(newrank)
@@ -231,7 +231,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 //AI verb and proc for sending PDA messages.
-/obj/item/device/pda/ai/verb/cmd_send_pdamesg()
+/obj/item/device/pda/silicon/verb/cmd_send_pdamesg()
 	set category = "AI Commands"
 	set name = "Send Message"
 	set src in usr
@@ -248,7 +248,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		create_message(usr, selected)
 
 
-/obj/item/device/pda/ai/verb/cmd_toggle_pda_receiver()
+/obj/item/device/pda/silicon/verb/cmd_toggle_pda_receiver()
 	set category = "AI Commands"
 	set name = "Toggle Sender/Receiver"
 	set src in usr
@@ -259,18 +259,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	to_chat(usr, "<span class='notice'>PDA sender/receiver toggled [(toff ? "Off" : "On")]!</span>")
 
 
-/obj/item/device/pda/ai/verb/cmd_toggle_pda_silent()
+/obj/item/device/pda/silicon/verb/cmd_toggle_pda_silent()
 	set category = "AI Commands"
 	set name = "Toggle Ringer"
 	set src in usr
 	if(usr.stat == DEAD)
 		to_chat(usr, "You can't do that because you are dead!")
 		return
-	message_silent=!message_silent
+	message_silent = !message_silent
 	to_chat(usr, "<span class='notice'>PDA ringer toggled [(message_silent ? "Off" : "On")]!</span>")
 
 
-/obj/item/device/pda/ai/verb/cmd_show_message_log()
+/obj/item/device/pda/silicon/verb/cmd_show_message_log()
 	set category = "AI Commands"
 	set name = "Show Message Log"
 	set src in usr
@@ -288,36 +288,29 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	usr << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 
 
-/obj/item/device/pda/ai/can_use()
+/obj/item/device/pda/silicon/can_use()
 	return 1
 
 
-/obj/item/device/pda/ai/attack_self(mob/user)
+/obj/item/device/pda/silicon/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
 	return
 
 //Special PDA for robots
-/obj/item/device/pda/ai/robot/cmd_send_pdamesg()
+
+/obj/item/device/pda/silicon/robot/cmd_toggle_pda_receiver()
 	set category = "Robot Commands"
-	set hidden = 0
+	set hidden = 1
 	..()
 
-/obj/item/device/pda/ai/robot/cmd_toggle_pda_receiver()
+/obj/item/device/pda/silicon/robot/cmd_toggle_pda_silent()
 	set category = "Robot Commands"
+	set hidden = 1
 	..()
 
-/obj/item/device/pda/ai/robot/cmd_toggle_pda_silent()
-	set category = "Robot Commands"
-	..()
-
-/obj/item/device/pda/ai/robot/cmd_show_message_log()
-	set category = "Robot Commands"
-	set hidden = 0
-	..()
-
-/obj/item/device/pda/ai/pai
+/obj/item/device/pda/silicon/pai
 	ttone = "assist"
 
 
@@ -1003,9 +996,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			var/who = src.owner
 			if(prob(50))
 				who = P.owner
-			for(var/mob/living/silicon/ai/ai in mob_list)
+			for(var/mob/living/silicon/ai/ai in ai_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
-				if(ai.aiPDA != P && ai.aiPDA != src)
+				if(ai.pda != P && ai.pda != src)
 					ai.show_message("<i>Intercepted message from <b>[who]</b>: [sanitize_chat(t)]</i>")
 
 		nanomanager.update_user_uis(U, src) // Update the sending user's PDA UI so that they can see the new message
