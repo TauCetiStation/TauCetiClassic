@@ -98,7 +98,7 @@
 	desc = "We reform one of our arms into a deadly blade."
 	helptext = "Cannot be used while in lesser form."
 	chemical_cost = 20
-	genomecost = 2
+	genomecost = 5
 	genetic_damage = 10
 	req_human = 1
 	max_genetic_damage = 10

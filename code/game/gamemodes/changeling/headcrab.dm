@@ -5,12 +5,13 @@
 	desc = "We sacrifice our current body in a moment of need, placing us in control of a vessel."
 	helptext = "We will be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us."
 	chemical_cost = 20
-	genomecost = 1
+	genomecost = 3
 	req_human = 1
 	req_stat = DEAD
 	max_genetic_damage = 10
 
 /obj/effect/proc_holder/changeling/headcrab/sting_action(mob/user)
+	user.mind.changeling.purchasedpowers -= src
 	var/datum/mind/M = user.mind
 	for(var/mob/living/carbon/human/H in range(2,user))
 		to_chat(H,"<span class='userdanger'>You are blinded by a shower of blood!</span>")
@@ -29,6 +30,7 @@
 	if(ismob(user))
 		playsound(user, 'sound/effects/blobattack.ogg', 100, 1)
 		user.gib()
+
 	else
 		qdel(user)
 	return 1

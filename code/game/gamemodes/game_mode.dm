@@ -28,6 +28,10 @@
 	var/list/protected_jobs = list()	// Jobs that can't be traitors because
 	var/required_players = 0
 	var/required_players_secret = 0 //Minimum number of players for that game mode to be chose in Secret
+	var/required_security = 0
+	var/required_security_secret = 0 //Minimum number of players on security positions for that game mode to be chose in Secret
+	var/required_heads = 0
+	var/required_heads_secret = 0 //Minimum number of players on command positions for that game mode to be chose in Secret
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
@@ -101,6 +105,32 @@ Implants;
 			return 1
 	else
 		if(playerC >= required_players)
+			return 1
+	return 0
+
+	var/playerS = 0
+	for(var/mob/new_player/player in player_list)
+		if(player.mind.assigned_role in security_positions)
+			playerS++
+
+	if(master_mode=="secret")
+		if(playerS >= required_security_secret)
+			return 1
+	else
+		if(playerS >= required_security)
+			return 1
+	return 0
+
+	var/playerH = 0
+	for(var/mob/new_player/player in player_list)
+		if(player.mind.assigned_role in command_positions)
+			playerH++
+
+	if(master_mode=="secret")
+		if(playerH >= required_heads_secret)
+			return 1
+	else
+		if(playerH >= required_heads)
 			return 1
 	return 0
 

@@ -22,10 +22,12 @@
 	name = "cult"
 	config_tag = "cult"
 	role_type = ROLE_CULTIST
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Forensic Technician", "Head of Security", "Captain")
 	protected_jobs = list()
 	required_players = 5
-	required_players_secret = 15
+	required_players_secret = 30
+	required_security = 3
+	required_security_secret = 4
 
 	required_enemies = 3
 	recommended_enemies = 4

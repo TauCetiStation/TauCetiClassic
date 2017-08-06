@@ -7,8 +7,11 @@
 	name = "nuclear emergency"
 	config_tag = "nuclear"
 	role_type = ROLE_OPERATIVE
+	restricted_jobs = list("Security Officer", "Warden", "Detective", "Forensic Technician", "Head of Security",)
 	required_players = 15
-	required_players_secret = 15
+	required_players_secret = 30
+	required_security = 3
+	required_security_secret = 4
 	required_enemies = 1
 	recommended_enemies = 5
 
@@ -67,6 +70,15 @@
 
 
 /datum/game_mode/nuclear/pre_setup()
+
+	if(config.protect_roles_from_antagonist)
+		restricted_jobs += protected_jobs
+
+	for(var/datum/mind/player in antag_candidates)
+		for(var/job in restricted_jobs)
+			if(player.assigned_role == job)
+				antag_candidates -= player
+
 	return 1
 
 
