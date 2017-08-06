@@ -374,6 +374,11 @@ BLIND     // can't see anything
 	var/basecolor
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/uniform.dmi')
 
+/obj/item/clothing/under/emp_act(severity)
+	..()
+	if(hastie)
+		hastie.emp_act(severity)
+
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
 	if(hastie)
 		hastie.attackby(I, user)

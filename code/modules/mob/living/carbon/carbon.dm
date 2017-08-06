@@ -279,7 +279,7 @@
 	set name = "Crawl"
 	set category = "IC"
 
-	if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
+	if( stat || weakened || stunned || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
 		return
 	if(crawl_getup)
 		return
@@ -486,11 +486,11 @@
 	set name = "Sleep"
 	set category = "IC"
 
-	if(usr.sleeping)
-		to_chat(usr, "<span class='rose'>You are already sleeping")
+	if(sleeping)
+		to_chat(src, "<span class='rose'>You are already sleeping</span>")
 		return
-	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
-		usr.sleeping = 20 //Short nap
+	if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
+		sleeping = 20 //Short nap
 
 /mob/living/carbon/slip(slipped_on, stun_duration=4, weaken_duration=2)
 	if(buckled || sleeping || weakened || paralysis || stunned || resting || crawling)
