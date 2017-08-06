@@ -378,6 +378,13 @@
 	icon_state = "vest_brown"
 	item_color = "vest_brown"
 	slots = 5
+
+/obj/item/clothing/tie/storage/syndi_vest
+	name = "suspicious webbing vest"
+	desc = "A villainous red synthcotton vest with lots of pockets to unload your hands."
+	icon_state = "syndi_vest"
+	item_color = "syndi_vest"
+	slots = 5
 /*
 	Holobadges are worn on the belt or neck, and can be used to show that the holder is an authorized
 	Security agent - the user details can be imprinted on the badge with a Security-access ID card,

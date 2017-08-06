@@ -259,6 +259,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Syndicate Elite Squad"
 	icon_state = "syndie-elite"
 
+/area/syndicate_mothership/droppod_garage
+	name = "Drop pod garage"
 
 //EXTRA
 

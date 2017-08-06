@@ -6,6 +6,7 @@ var/bomb_set
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb0"
 	density = 1
+	can_buckle = 1
 	var/deployable = 0.0
 	var/extended = 0.0
 	var/lighthack = 0
@@ -23,8 +24,7 @@ var/bomb_set
 	use_power = 0
 	var/detonated = 0 //used for scoreboard.
 	var/lastentered = ""
-
-
+	var/spray_icon_state
 
 /obj/machinery/nuclearbomb/New()
 	..()
@@ -389,7 +389,6 @@ var/bomb_set
 		return ..()
 	return
 
-
 #define NUKERANGE 80
 /obj/machinery/nuclearbomb/proc/explode()
 	if (src.safety)
@@ -451,6 +450,46 @@ var/bomb_set
 				world.Reboot()
 				return
 	return
+
+/obj/machinery/nuclearbomb/MouseDrop_T(mob/living/M, mob/living/user)
+	if(!ishuman(M) || !ishuman(user))
+		return
+	if(buckled_mob)
+		do_after(usr, 30, 1, src)
+		unbuckle_mob()
+	else if(do_after(usr, 30, 1, src))
+		M.loc = loc
+		..()
+
+/obj/machinery/nuclearbomb/post_buckle_mob(mob/living/M)
+	..()
+	if(M == buckled_mob)
+		M.pixel_y = 10
+	else
+		M.pixel_y = 0
+
+/obj/machinery/nuclearbomb/bullet_act(obj/item/projectile/Proj)
+	if(buckled_mob)
+		buckled_mob.bullet_act(Proj)
+		if(buckled_mob.weakened || buckled_mob.health < 0 || buckled_mob.halloss > 80)
+			unbuckle_mob()
+	return ..()
+
+/obj/machinery/nuclearbomb/MouseDrop(over_object, src_location, over_location)
+	..()
+	if(!istype(over_object, /obj/structure/droppod))
+		return
+	if(!in_range(src, usr) || !ishuman(usr) || !in_range(src, over_object))
+		return
+	var/obj/structure/droppod/D = over_object
+	if(!timing && !auth && !buckled_mob)
+		visible_message("<span class='notice'>[usr] start putting [src] into [D]!</span>","<span class='notice'>You start putting [src] into [D]!</span>")
+		if(do_after(usr, 100, 1, src) && !timing && !auth && !buckled_mob)
+			D.Stored_Nuclear = src
+			loc = D
+			D.icon_state = "dropod_opened_n"
+			visible_message("<span class='notice'>[usr] put [src] into [D]!</span>","<span class='notice'>You succesfully put [src] into [D]!</span>")
+			D.verbs += /obj/structure/droppod/proc/Nuclear
 
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk

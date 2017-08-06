@@ -269,12 +269,6 @@
 			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/tajaran(synd_mob), slot_in_backpack)
 		else if(race == SKRELL)
 			synd_mob.equip_to_slot_or_del(new /obj/item/device/modkit/syndie/skrell(synd_mob), slot_in_backpack)
-	//	else
-	//		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/syndi/human(synd_mob), slot_wear_suit)
-	//		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/syndi/human(synd_mob), slot_head)
-//	else
-//		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/suit/space/rig/syndi/human(synd_mob), slot_wear_suit)
-//		synd_mob.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/rig/syndi/human(synd_mob), slot_head)
 
 	var/obj/item/weapon/implant/dexplosive/E = new/obj/item/weapon/implant/dexplosive(synd_mob)
 	E.imp_in = synd_mob

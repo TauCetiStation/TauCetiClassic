@@ -193,7 +193,8 @@
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
-	icon_state = "swat"
+	icon_state = "mask_syndi"
+	item_state = "mask_syndi"
 	siemens_coefficient = 0.7
 
 /obj/item/clothing/mask/gas/voice

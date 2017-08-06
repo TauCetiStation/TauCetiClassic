@@ -3,24 +3,27 @@
 // A mob that the AI controls to look around the station with.
 // It streams chunks as it moves around, which will show it what the AI can and cannot see.
 
-/mob/camera/aiEye
+/mob/camera/Eye
 	name = "Inactive AI Eye"
 	icon = 'icons/mob/AI.dmi'
 	icon_state = "eye"
 	alpha = 127
 	var/list/visibleCameraChunks = list()
-	var/mob/living/silicon/ai/ai = null
+	var/mob/living/master = null
 	invisibility = INVISIBILITY_AI_EYE
 	var/image/ghostimage = null
 
-/mob/camera/aiEye/New()
+/mob/camera/Eye/ai
+	var/mob/living/silicon/ai/ai = null
+
+/mob/camera/Eye/New()
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage //so ghosts can see the AI eye when they disable darkness
 	ghost_sightless_images |= ghostimage //so ghosts can see the AI eye when they disable ghost sight
 	updateallghostimages()
 	..()
 
-/mob/camera/aiEye/Destroy()
+/mob/camera/Eye/Destroy()
 	if (ghostimage)
 		ghost_darkness_images -= ghostimage
 		ghost_sightless_images -= ghostimage
@@ -30,16 +33,16 @@
 	return ..()
 
 // Movement code. Returns 0 to stop air movement from moving it.
-/mob/camera/aiEye/Move()
+/mob/camera/Eye/Move()
 	return 0
 
 // Hide popout menu verbs
-/mob/camera/aiEye/examinate(atom/A as mob|obj|turf in view())
+/mob/camera/Eye/examinate(atom/A as mob|obj|turf in view())
 	set popup_menu = 0
 	set src = usr.contents
 	return 0
 
-/mob/camera/aiEye/pointed()
+/mob/camera/Eye/pointed()
 	set popup_menu = 0
 	set src = usr.contents
 	return 0
@@ -47,33 +50,30 @@
 // Use this when setting the aiEye's location.
 // It will also stream the chunk that the new loc is in.
 
-/mob/camera/aiEye/setLoc(T)
-	if(ai)
-		if(!isturf(ai.loc))
-			return
+/mob/camera/Eye/setLoc(T)
+	if(master)
 		T = get_turf(T)
 		loc = T
 		cameranet.visibility(src)
-		if(ai.client)
-			ai.client.eye = src
+		if(master.client)
+			master.client.eye = src
 		update_parallax_contents()
-		//Holopad
-		if(ai.holo)
-			ai.holo.move_hologram()
+		return 1
 
-/mob/camera/aiEye/proc/getLoc()
+/mob/camera/Eye/ai/setLoc(T)
+	if(..() && ai && ai.holo && isturf(ai.loc))
+		ai.holo.move_hologram()
 
-	if(ai)
-		if(!isturf(ai.loc) || !ai.client)
-			return
-		return ai.eyeobj.loc
+/mob/camera/Eye/proc/getLoc()
+	if(isturf(loc))
+		return loc
 
 // AI MOVEMENT
 
 // The AI's "eye". Described on the top of the page.
 
 /mob/living/silicon/ai
-	var/mob/camera/aiEye/eyeobj = new()
+	var/mob/camera/Eye/ai/eyeobj = new()
 	var/sprint = 10
 	var/cooldown = 0
 	var/acceleration = 1
@@ -82,13 +82,15 @@
 // Intiliaze the eye by assigning it's "ai" variable to us. Then set it's loc to us.
 /mob/living/silicon/ai/New()
 	..()
+	eyeobj.master = src
 	eyeobj.ai = src
 	eyeobj.name = "[src.name] (AI Eye)" // Give it a name
 	spawn(5)
-		eyeobj.loc = src.loc
+		eyeobj.loc = loc
 
 /mob/living/silicon/ai/Destroy()
 	if(eyeobj)
+		eyeobj.master = null
 		eyeobj.ai = null
 		qdel(eyeobj) // No AI, no Eye
 		eyeobj = null
@@ -141,13 +143,14 @@
 	cameraFollow = null
 	unset_machine()
 
-	if(src.eyeobj && src.loc)
-		src.eyeobj.loc = src.loc
+	if(eyeobj && loc)
+		eyeobj.loc = loc
 	else
 		to_chat(src, "ERROR: Eyeobj not found. Creating new eye...")
-		src.eyeobj = new(src.loc)
-		src.eyeobj.ai = src
-		src.eyeobj.name = "[src.name] (AI Eye)" // Give it a name
+		eyeobj = new(src.loc)
+		eyeobj.master = src
+		eyeobj.ai = src
+		eyeobj.name = "[src.name] (AI Eye)" // Give it a name
 
 	if(client && client.eye)
 		client.eye = src
