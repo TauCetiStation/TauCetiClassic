@@ -53,6 +53,7 @@
 	Gate.stationgate = stationgate
 	stationgate.awaygate = Gate
 	Gate.stationgate.wait = 0
+	to_chat(user, "<span class='userdanger'>You Hacked Station Gate! Now you can allow and disallow entering to him to the crew.</span>")
 
 /obj/effect/landmark/syndie_gateway
 

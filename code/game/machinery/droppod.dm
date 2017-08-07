@@ -51,8 +51,7 @@
 			CancelAdvancedAiming(1)
 	if(intruder)
 		overlays -= mob_overlay
-		qdel(mob_overlay)
-		mob_overlay = null
+		QDEL_NULL(mob_overlay)
 		intruder << browse(null, "window=droppod")
 		intruder.forceMove(turf)
 		intruder = null
@@ -280,14 +279,13 @@
 
 
 /obj/structure/droppod/proc/CancelAdvancedAiming(deleting = 0)
+	QDEL_NULL(eyeobj)
 	if(intruder && intruder.client)
 		for(var/image/I in intruder.client.images)
 			if(I.icon_state == "black") // deleting interferences
 				intruder.client.images -= I
 		intruder.client.adminobs = FALSE
 		intruder.reset_view(deleting ? loc : src)
-	qdel(eyeobj)
-	eyeobj = null
 	flags &= ~STATE_AIMING
 
 /********Droping********/
