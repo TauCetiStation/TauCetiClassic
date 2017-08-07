@@ -44,11 +44,9 @@
 
 /obj/structure/droppod/Destroy()
 	var/turf/turf = get_turf(loc)
-	if(flags & ADVANCED_AIMING_INSTALLED)
-		if(prob(50))
-			new /obj/item/device/camera_bug(loc)
-		if(flags & STATE_AIMING)
-			CancelAdvancedAiming(1)
+	if(flags & ADVANCED_AIMING_INSTALLED && prob(50))
+		new /obj/item/device/camera_bug(loc)
+	CancelAdvancedAiming(1) // just to be sure
 	if(intruder)
 		overlays -= mob_overlay
 		QDEL_NULL(mob_overlay)
@@ -130,7 +128,7 @@
 		var/passed = FALSE
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
-			if(stored_dna != H.dna.unique_enzymes)
+			if(stored_dna == H.dna.unique_enzymes)
 				passed = TRUE
 		if(!passed)
 			to_chat(usr, "<span class='warning'>The interface is blocked down with Dna key!</span>")
@@ -160,11 +158,9 @@
 		to_chat(intruder, "<span class='danger'>Unlock Pod first!</span>")
 		return
 	intruder << browse(null, "window=droppod")
-	if(flags & STATE_AIMING && flags & ADVANCED_AIMING_INSTALLED)
-		CancelAdvancedAiming()
+	CancelAdvancedAiming() // just to be sure
 	overlays -= mob_overlay
-	qdel(mob_overlay)
-	mob_overlay = null
+	QDEL_NULL(mob_overlay)
 	icon_state = Stored_Nuclear ? "dropod_opened_n" : "dropod_opened"
 	intruder.forceMove(get_turf(loc))
 	intruder = null
