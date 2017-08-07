@@ -375,10 +375,12 @@
 		if(flags & ADVANCED_AIMING_INSTALLED)
 			if(flags & STATE_AIMING)
 				CancelAdvancedAiming()
-		to_chat(user, "<span class ='notice'>You yank out advanced aim system from [src]!</span>")
-		new /obj/item/device/camera_bug(user.loc)
-		flags &= ~ADVANCED_AIMING_INSTALLED
-		AimTarget = null
+			to_chat(user, "<span class ='notice'>You yank out advanced aim system from [src]!</span>")
+			new /obj/item/device/camera_bug(user.loc)
+			flags &= ~ADVANCED_AIMING_INSTALLED
+			AimTarget = null
+		else
+			to_chat(user, "<span class ='notice'>Advanced aiming system does not installed in [src]!</span>")
 
 	else if(istype(O, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = O
