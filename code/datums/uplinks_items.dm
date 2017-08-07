@@ -689,47 +689,6 @@
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
-/datum/uplink_item/device_tools/droppod
-	name = "Drop Pod"
-	desc = "A two-seater pod, that can fall into station, aim system can be upgraded with camera bug and simple Drop System."
-	item = /obj/item/device/drop_caller/Syndi
-	cost = 15
-	gamemodes = list(/datum/game_mode/nuclear)
-	uplink_types = list("nuclear")
-
-/datum/uplink_item/device_tools/drop_aim
-	name = "Simple Drop System"
-	desc = "A simple drop system, which can be installed in pods to increase accuracy of droping"
-	item =  /obj/item/weapon/simple_drop_system
-	cost = 10
-	gamemodes = list(/datum/game_mode/nuclear)
-	uplink_types = list("nuclear")
-
-/datum/uplink_item/device_tools/Drop_system
-	name = "Exosuit Drop System"
-	desc = "A module for exosuit, that allow you launching at Long distances"
-	item = /obj/item/mecha_parts/mecha_equipment/Drop_system
-	cost = 15
-	gamemodes = list(/datum/game_mode/nuclear)
-	uplink_types = list("nuclear")
-
-/datum/uplink_item/device_tools/gateway_locker
-	name = "Gateway Locker"
-	desc = "Device, capable to hack station Gateway. You will have two minutes to prepare after initialization.\
-	After Hack, you can switch entering through gateway."
-	item = /obj/item/device/gateway_locker
-	cost = 10
-	gamemodes = list(/datum/game_mode/nuclear)
-	uplink_types = list("nuclear")
-
-/datum/uplink_item/device_tools/shuttle_unlocker
-	name = "Shuttle Unlocker"
-	desc = "An unlocker of the Shuttle, which Parked near your base. In Bonus aboard, will be some aids and instruments. Caution. You'll have to buy spacesuit's in addition."
-	item = /obj/item/device/syndi_shuttle_unlocker
-	cost = 30
-	gamemodes = list(/datum/game_mode/nuclear)
-	uplink_types = list("nuclear")
-
 /datum/uplink_item/device_tools/traitor_caller
 	name = "Traitor Caller"
 	desc = "Allows you to request an additional agent selected from the stealthy traitors."

@@ -102,31 +102,5 @@
 	name = "Syndicate Shuttle (Computer Board)"
 	build_path = /obj/machinery/computer/syndicate_station
 
-/obj/item/device/syndi_shuttle_unlocker
-	name = "Shuttle Unlocker"
-	icon = 'icons/obj/device.dmi'
-	icon_state = "recaller"
-	item_state = "walkietalkie"
-
-/obj/item/device/syndi_shuttle_unlocker/attack_self(mob/user)
-	var/area/cur_area = get_area(user)
-	if(!istype(cur_area, /area/syndicate_mothership))
-		to_chat(user, "<span class='userdanger'>Return to base to unlock shuttle!</span>")
-	var/passed = FALSE
-	for(var/obj/machinery/door/poddoor/shutters/syndi/shutter in cur_area)
-		if(shutter.tag == "Syndicate_shuttle")
-			to_chat(user, "<span class='notice'>The Shuttle has been unlocked!</span>")
-			qdel(shutter)
-			passed = TRUE
-			break
-	if(passed)
-		playsound(loc, 'sound/machines/twobeep.ogg', 50, 2)
-		qdel(src)
-		return
-	to_chat(user, "<span class='userdanger'>The Shuttle has been already unlocked!</span>")
-
-/obj/effect/landmark/blockway
-	density = 1
-
 #undef SYNDICATE_SHUTTLE_MOVE_TIME
 #undef SYNDICATE_SHUTTLE_COOLDOWN
