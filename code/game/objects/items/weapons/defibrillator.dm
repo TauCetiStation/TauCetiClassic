@@ -53,16 +53,24 @@
 		charges--
 
 	attack(mob/M, mob/user)
-		if(charged == 2 && istype(M,/mob/living/carbon))
+		if(charged == 2 && iscarbon(M))
 			var/mob/living/carbon/C = M
 			playsound(src, 'sound/items/defib_zap.ogg', 50, 1, 1)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if(H.get_siemens_coefficient_organ(H.get_bodypart(BP_CHEST)) <= 0)
+					user.visible_message("[user] shocks [M] with [src], but charge is dissipated by clothing.", "You tries to shock [M] with [src], but charge is dissipated by clothing.</span>", "You hear electricity zaps flesh.")
+					user.attack_log += "\[[time_stamp()]\]<font color='red'> Tried to shock [M.name] ([M.ckey]) with [src.name]</font>"
+					msg_admin_attack("[user.name] ([user.ckey]) tried to shock [M.name] ([M.ckey]) with [src.name] [ADMIN_FLW(user)]")
+					discharge()
+					return
 			user.visible_message("[user] shocks [M] with [src].", "You shock [M] with [src].</span>", "You hear electricity zaps flesh.")
 			user.attack_log += "\[[time_stamp()]\]<font color='red'> Shock [M.name] ([M.ckey]) with [src.name]</font>"
-			msg_admin_attack("[user.name] ([user.ckey]) shock [M.name] ([M.ckey]) with [src.name] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			msg_admin_attack("[user.name] ([user.ckey]) shock [M.name] ([M.ckey]) with [src.name] [ADMIN_FLW(user)]")
 
 			if((world.time - C.timeofdeath) < 3600 || C.stat != DEAD)	//if he is dead no more than 6 minutes
 				if(!(NOCLONE in C.mutations))
-					if(C.health<=config.health_threshold_crit || prob(10))
+					if(C.health <= config.health_threshold_crit || prob(10))
 						var/suff = min(C.getOxyLoss(), 20)
 						C.adjustOxyLoss(-suff)
 					else
