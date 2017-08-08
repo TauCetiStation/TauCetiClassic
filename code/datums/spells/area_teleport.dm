@@ -33,7 +33,7 @@
 	else
 		return FALSE
 
-/obj/effect/proc_holder/spell/targeted/area_teleport/cast(list/targets,area/thearea)
+/obj/effect/proc_holder/spell/targeted/area_teleport/cast(list/targets, area/thearea)
 	for(var/mob/living/target in targets)
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
@@ -49,4 +49,18 @@
 		if(!L.len)
 			to_chat(usr, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
 			return
-		target.forceMove(pick(L))
+		var/turf/T = pick(L)
+		target.forceMove(T)
+		handle_teleport_grab(T, target)
+
+/obj/proc/handle_teleport_grab(atom/T, mob/living/U)
+	var/atom/teleport_place
+	if(isturf(T))
+		teleport_place = locate(T.x + rand(-1,1), T.y + rand(-1,1), T.z)
+	else
+		teleport_place = T
+	for(var/obj/item/weapon/grab/G in list(U.get_active_hand(), U.get_inactive_hand()))
+		if(G.state >= GRAB_NECK)
+			G.affecting.forceMove(teleport_place)
+			return G.affecting
+	return null
