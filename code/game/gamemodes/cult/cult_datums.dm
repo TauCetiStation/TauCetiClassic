@@ -190,13 +190,27 @@ var/list/cult_runes = list()
 		if(alert(M, "Do you wanna to gave your soul to the Geometr?",,"Yes", "No") == "Yes")
 			to_chat(M, "<span class='cult'>Your blood pulses. Your head throbs. The world goes red. All at once you are aware of a horrible, horrible truth.\
 				The veil of reality has been ripped away and in the festering wound left behind something sinister takes root.</span>")
-			if(is_convertable_to_cult(M.mind) && !jobban_isbanned(M, ROLE_CULTIST) && !jobban_isbanned(M, "Syndicate") && role_available_in_minutes(M, ROLE_CULTIST))
+
+			var/passed = TRUE
+			if(!is_convertable_to_cult(M.mind))
+				passed = FALSE
+				to_chat(user, "<span class='cult'The mind of [M] Resists!</span>")
+				to_chat(M, "<span class='userdanger'Your Mind Resists!</span>")
+			else if(jobban_isbanned(M, ROLE_CULTIST) || jobban_isbanned(M, "Syndicate"))
+				passed = FALSE
+				to_chat(user, "<span class='cult'Your god forbade recruitment of [M]!</span>")
+
+			else if(role_available_in_minutes(M, ROLE_CULTIST)) //why the fuck this proc is not called NOT AVAILABLE
+				passed = FALSE
+				to_chat(user, "<span class='cult'This soul is too young for your God!</span>")
+
+			if(passed)
 				ticker.mode.add_cultist(M.mind)
 				M.mind.special_role = "Cultist"
 				to_chat(M, "<span class='cult'>Assist your new compatriots in their dark dealings. Their goal is yours, and yours is theirs. You serve the Dark \
 					One above all else. Bring It back.</span>")
 			else
-				to_chat(M, "<span class='userdanger'>And you were able to force it out of your mind. You now know the truth, there's something horrible out there,\
+				to_chat(M, "<span class='userdanger'>And you were able to force it out of your mind. You now know the truth, there's something horrible out there, \
 					stop it and its minions at all costs.</span>")
 		else
 			to_chat(user, "<span class='userdanger'>Filthy heretic has rejected your gift!</span>")
@@ -533,7 +547,7 @@ var/list/cult_runes = list()
 			continue
 		ghost = O
 		break
-	if(!ghost || jobban_isbanned(ghost, ROLE_CULTIST) || jobban_isbanned(ghost, "Syndicate") || !role_available_in_minutes(ghost, ROLE_CULTIST))
+	if(!ghost || jobban_isbanned(ghost, ROLE_CULTIST) || jobban_isbanned(ghost, "Syndicate") || role_available_in_minutes(ghost, ROLE_CULTIST))
 		return fizzle(user)
 	playsound(holder, 'sound/magic/manifest.ogg', 100, 2)
 	user.say("Gal'h'rfikk harfrandid mud[pick("'","`")]gib!")
