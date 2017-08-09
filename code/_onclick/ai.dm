@@ -35,6 +35,8 @@
 	if(control_disabled || stat)
 		return
 
+	A.add_hiddenprint(src)
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
@@ -67,7 +69,6 @@
 		RestrainedClickOn(A)
 	else
 	*/
-	A.add_hiddenprint(src)
 	A.attack_ai(src)
 
 /*
