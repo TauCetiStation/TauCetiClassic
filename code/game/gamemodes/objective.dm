@@ -874,7 +874,7 @@ datum/objective/meme_attune
 			target = "plasteel"
 			target_amount = 100
 		if(4)
-			target = "phoron"
+			target = "solid phoron"
 			target_amount = 100
 		if(5)
 			target = "silver"
