@@ -68,31 +68,7 @@
 		var/datum/intruder_tools/T = locate(href_list["buy"])
 		if(!stored_uplink || !stored_uplink.hidden_uplink || stored_uplink.hidden_uplink.uses < T.cost)
 			return
-		if(istype(T, /datum/intruder_tools/shuttle_unlocker)) // if we get more suchlike actions, just add to datums Inherited proc which will be called from here
-			var/area/cur_area = get_area(src)
-			if(!istype(cur_area, /area/syndicate_mothership))
-				to_chat(usr, "<span class='userdanger'>If you see this, Please, Notify nearest coder or mapper about wrong place of this station!</span>")
-				return
-
-			var/passed = FALSE
-			for(var/obj/machinery/door/poddoor/shutters/syndi/shutter in cur_area)
-				if(shutter.tag == "Syndicate_shuttle")
-					to_chat(usr, "<span class='notice'>The Shuttle has been unlocked!</span>")
-					qdel(shutter)
-					passed = TRUE
-					break
-			if(passed)
-				playsound(src, 'sound/machines/twobeep.ogg', 50, 2)
-			else
-				to_chat(usr, "<span class='userdanger'>If you see this, Please, Notify nearest coder or mapper about this failure with shutter!</span>")
-				updateUsrDialog()
-				return
-		stored_uplink.hidden_uplink.uses -= T.cost
-		if(T.item)
-			new T.item(get_turf(src))
-		if(T.delete_dat_after_buying)
-			tools -= T
-			qdel(T)
+		T.buy(src, usr)
 
 	else if(href_list["desc"])
 		var/datum/intruder_tools/T = locate(href_list["desc"])
@@ -110,11 +86,37 @@
 	var/item = null
 	var/cost = 0
 
+/datum/intruder_tools/proc/buy(obj/machinery/computer/intruder_station/console, mob/living/user)
+	console.stored_uplink.hidden_uplink.uses -= cost
+	if(item)
+		new item(get_turf(console))
+	if(delete_dat_after_buying)
+		console.tools -= src
+		qdel(src)
+
 /datum/intruder_tools/shuttle_unlocker
 	name = "Shuttle Unlocker"
-	desc = "An unlocker of the Shuttle, which Parked near your base. In Bonus aboard, will be some aids and instruments. Caution. You'll have to buy spacesuit's in addition."
+	desc = "An unlocker of the Shuttle, which Parked near your base. In Bonus aboard, will be tactical aid and instruments. Caution. You'll have to buy spacesuit's in addition."
 	delete_dat_after_buying = TRUE
 	cost = 30
+
+/datum/intruder_tools/shuttle_unlocker/buy(obj/machinery/computer/intruder_station/console, mob/living/user)
+	var/area/cur_area = get_area(console)
+	if(!istype(cur_area, /area/syndicate_mothership))
+		to_chat(user, "<span class='userdanger'>If you see this, Please, Notify nearest coder or mapper about wrong place of this station!</span>")
+		return
+
+	for(var/obj/machinery/door/poddoor/shutters/syndi/shutter in cur_area)
+		if(shutter.tag == "Syndicate_shuttle")
+			to_chat(user, "<span class='notice'>The Shuttle has been unlocked!</span>")
+			qdel(shutter)
+			playsound(console, 'sound/machines/twobeep.ogg', 50, 2)
+			for(var/datum/intruder_tools/gateway_locker/D in console.tools)
+				console.tools -= D
+				qdel(D)
+			return ..()
+
+	to_chat(user, "<span class='userdanger'>If you see this, Please, Notify nearest coder or mapper about this failure with shutter!</span>")
 
 /datum/intruder_tools/gateway_locker
 	name = "Gateway Locker"
@@ -122,7 +124,13 @@
 	After Hack, you can switch entering through gateway."
 	item = /obj/item/device/gateway_locker
 	delete_dat_after_buying = TRUE
-	cost = 10
+	cost = 15
+
+/datum/intruder_tools/gateway_locker/buy(obj/machinery/computer/intruder_station/console, mob/living/user)
+	..()
+	for(var/datum/intruder_tools/shuttle_unlocker/D in console.tools)
+		console.tools -= D
+		qdel(D)
 
 /datum/intruder_tools/Drop_system
 	name = "Exosuit Drop System"
@@ -134,16 +142,29 @@
 	name = "Drop Pod"
 	desc = "A two-seater pod, that can fall into station, aim system can be upgraded with camera bug and simple Drop System."
 	item = /obj/item/device/drop_caller/Syndi
-	cost = 15
+	cost = 12
 
 /datum/intruder_tools/drop_aim
 	name = "Simple Drop System"
 	desc = "A simple drop system, which can be installed in pods to increase accuracy of droping"
 	item =  /obj/item/weapon/simple_drop_system
-	cost = 10
+	cost = 8
 
 /datum/intruder_tools/camera_bug
 	name = "Camera Bug"
 	desc = "Can be attached to Drop Pod to reach exemplary accuracy and allow to return to the base."
 	item = /obj/item/device/camera_bug
 	cost = 2
+
+/datum/intruder_tools/rig
+	name = "Syndi Rig"
+	desc = "The red syndicate space rig with additional armor plating.\
+	 Nanotrasen crewmembers are trained to report red space suit sightings."
+	item = /obj/item/weapon/storage/box/syndie_kit/rig
+	cost = 8
+
+/datum/intruder_tools/armor
+	name = "Syndi Assault Armor"
+	desc = "The red syndicate heavy armor with additional armor plating and helmet to it."
+	item = /obj/item/weapon/storage/box/syndie_kit/armor
+	cost = 4
