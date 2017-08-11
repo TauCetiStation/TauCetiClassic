@@ -200,7 +200,7 @@ var/list/cult_runes = list()
 				passed = FALSE
 				to_chat(user, "<span class='cult'Your god forbade recruitment of [M]!</span>")
 
-			else if(role_available_in_minutes(M, ROLE_CULTIST)) //why the fuck this proc is not called NOT AVAILABLE
+			else if(role_available_in_minutes(M, ROLE_CULTIST))
 				passed = FALSE
 				to_chat(user, "<span class='cult'This soul is too young for your God!</span>")
 
