@@ -76,7 +76,7 @@
 		if(!M.unEquip(src))
 			return
 		src.add_fingerprint(usr)
-		M.put_in_any_hand_if_possible(src)
+		M.put_in_hands(src)
 
 
 /obj/item/weapon/defibrillator/attackby(obj/item/I, mob/user, params)
@@ -184,7 +184,7 @@
 
 /obj/item/weapon/defibrillator/compact/combat
 	name = "combat defibrillator"
-	desc = "A belt-equipped blood-red defibrillator that can be rapidly deployed. Does not have the restrictions or safeties of conventional defibrillators and can revive through space suits."
+	desc = "A belt-equipped blood-red defibrillator that can be rapidly deployed. Does not have the restrictions or safeties of conventional defibrillators and can revive through almost all space suits."
 	paddles = /obj/item/weapon/twohanded/shockpaddles/linked/combat
 	charge_time = 0.5 SECONDS
 
@@ -298,7 +298,6 @@
 	return TRUE
 
 /obj/item/weapon/twohanded/shockpaddles/attack(mob/M, mob/living/user, def_zone)
-	to_chat(world, def_zone)
 	var/mob/living/carbon/human/H = M
 	if(!istype(H) || !can_use(user, M))
 		return
@@ -556,11 +555,11 @@
 */
 
 /obj/item/weapon/twohanded/shockpaddles/standalone
-	desc = "A pair of shockpaddles powered by an experimental miniaturized reactor" //Inspired by the advanced e-gun
+	desc = "A pair of shockpaddles with integrated capacitor" //Good old defib
 	var/charges = 10
 
 /obj/item/weapon/twohanded/shockpaddles/standalone/check_charge(var/charge_amt)
-	return (charges)
+	return charges
 
 /obj/item/weapon/twohanded/shockpaddles/standalone/checked_use(var/charge_amt)
 	if(charges)
@@ -570,7 +569,7 @@
 
 /obj/item/weapon/twohanded/shockpaddles/standalone/traitor
 	name = "defibrillator paddles"
-	desc = "A pair of unusual looking paddles powered by an experimental miniaturized reactor. It possesses both the ability to penetrate armor and to deliver powerful shocks."
+	desc = "A pair of unusual looking paddles with integrated capacitor. It possesses both the ability to penetrate almost all armor and to deliver powerful shocks."
 	combat = TRUE
 	safety = FALSE
 	charge_time = 1 SECONDS
@@ -580,7 +579,7 @@
 /obj/item/weapon/twohanded/offhand/shockpaddles
 	icon = 'icons/obj/defibrillator.dmi'
 	icon_state = "defibpaddleso"
-	item_state = "defibpaddleso"
+	item_state = "defibpaddles"
 
 /obj/item/weapon/twohanded/offhand/shockpaddles/New(mob/user)
 	..()
