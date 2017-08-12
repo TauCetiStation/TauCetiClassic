@@ -1705,15 +1705,34 @@ datum/design/noreactbeaker
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = list("Misc")
 
-datum/design/defibrillators
+datum/design/defibrillators_back
 	name = "Defibrillators"
 	desc = "Defibrillators to revive people."
-	id = "defibrillators"
-	req_tech = list("combat" = 2,"biotech" = 2)
+	id = "defibrillators_back"
+	req_tech = list("biotech" = 3, "powerstorage" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
 	reliability = 76
 	build_path = /obj/item/weapon/defibrillator
+
+datum/design/defibrillators_belt
+	name = "Compact defibrillators"
+	desc = "Defibrillators to revive people."
+	id = "defibrillators_compact"
+	req_tech = list("biotech" = 3, "powerstorage" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
+	reliability = 76
+	build_path = /obj/item/weapon/defibrillator/compact
+
+datum/design/defibrillators_standalone
+	name = "Standalone defibrillators"
+	desc = "Defibrillators to revive people."
+	id = "defibrillators_standalone"
+	req_tech = list("biotech" = 4, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000)
+	build_path = /obj/item/weapon/twohanded/shockpaddles/standalone
 
 /datum/design/sensor_device
 	name = "Handheld Crew Monitor"

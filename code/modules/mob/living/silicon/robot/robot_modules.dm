@@ -151,6 +151,7 @@
 		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
 		src.modules += new /obj/item/weapon/extinguisher/mini(src)
+		src.modules += new /obj/item/weapon/twohanded/shockpaddles/robot(src)
 
 		src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 
