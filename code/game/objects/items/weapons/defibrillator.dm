@@ -240,6 +240,14 @@
 	icon_state = "defibpaddles[wielded]"
 	if(cooldown)
 		icon_state = "defibpaddles[wielded]_cooldown"
+	if(wielded)
+		if(!ishuman(loc))
+			return
+		var/mob/living/carbon/human/H = loc
+		var/obj/item/weapon/twohanded/offhand/shockpaddles/second_paddle = H.get_inactive_hand()
+		if(!istype(second_paddle))
+			return
+		second_paddle.icon_state = cooldown ? "defibpaddleso_cooldown" : "defibpaddleso"
 
 /obj/item/weapon/twohanded/shockpaddles/proc/can_use(mob/user, mob/M)
 	if(busy)
@@ -290,6 +298,7 @@
 	return TRUE
 
 /obj/item/weapon/twohanded/shockpaddles/attack(mob/M, mob/living/user, def_zone)
+	to_chat(world, def_zone)
 	var/mob/living/carbon/human/H = M
 	if(!istype(H) || !can_use(user, M))
 		return
@@ -359,6 +368,13 @@
 	H.apply_effect(4, STUN, 0)
 	H.apply_effect(4, WEAKEN, 0)
 	H.apply_effect(4, STUTTER, 0)
+	if(H.jitteriness <= 100)
+		H.make_jittery(150)
+	else
+		H.make_jittery(50)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+	s.set_up(3, 1, H)
+	s.start()
 	if(H.stat == DEAD)
 		H.stat = UNCONSCIOUS
 		return_to_body_dialog(H)
@@ -370,12 +386,8 @@
 		var/obj/effect/fluid/F = locate() in T
 		if(F)
 			F.electrocute_act(150)
-		else if(istype(loc, /mob/living))
-			var/mob/living/L = loc
-			L.Weaken(6)
-			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-			s.set_up(3, 1, src)
-			s.start()
+		else
+			user.Weaken(6)
 
 	make_announcement("pings, \"Resuscitation successful.\"", "notice")
 	playsound(get_turf(src), 'sound/items/defib_success.ogg', 50, 0)

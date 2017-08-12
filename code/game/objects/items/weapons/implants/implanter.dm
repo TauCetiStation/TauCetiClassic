@@ -19,8 +19,8 @@
 	return
 
 
-/obj/item/weapon/implanter/attack(mob/M, mob/user)
-	if (!istype(M, /mob/living/carbon))
+/obj/item/weapon/implanter/attack(mob/M, mob/user, def_zone)
+	if (!iscarbon(M))
 		return
 	if (user && src.imp)
 		for (var/mob/O in viewers(M, null))
@@ -43,7 +43,7 @@
 					src.imp.implanted = 1
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+						var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 						BP.implants += src.imp
 						imp.part = BP
 

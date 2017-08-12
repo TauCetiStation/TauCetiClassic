@@ -162,7 +162,7 @@
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
 	//Suicide handling.
-	if (M == user && user.zone_sel.selecting == O_MOUTH && !mouthshoot)
+	if (M == user && def_zone == O_MOUTH && !mouthshoot)
 		if(isrobot(user))
 			to_chat(user, "<span class='notice'>You have tried to commit suicide, but couldn't do it.</span>")
 			return

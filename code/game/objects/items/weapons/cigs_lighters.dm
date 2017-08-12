@@ -451,11 +451,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 
-/obj/item/weapon/lighter/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/weapon/lighter/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M, /mob))
 		return
 	M.IgniteMob()	//Lighters can ignite mobs splashed with fuel
-	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == O_MOUTH && lit)
+	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && def_zone == O_MOUTH && lit)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
 		if(M == user)
 			cig.attackby(src, user)

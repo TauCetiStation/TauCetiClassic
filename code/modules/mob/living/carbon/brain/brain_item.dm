@@ -44,20 +44,20 @@
 	else
 		to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later..")
 
-/obj/item/brain/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!istype(M, /mob))
-		return
+/obj/item/brain/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+	if(!ishuman(M))
+		return ..()
 
 	add_fingerprint(user)
 
-	if(!(user.zone_sel.selecting == BP_HEAD) || !istype(M, /mob/living/carbon/human))
+	if(!(def_zone == BP_HEAD))
 		return ..()
 
 	if(	!(locate(/obj/machinery/optable, M.loc) && M.resting) && ( !(locate(/obj/structure/table/, M.loc) && M.lying) && prob(50) ) )
 		return ..()
 
 	var/mob/living/carbon/human/H = M
-	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+	if(ishuman(M) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		to_chat(user, "\blue You're going to need to remove their head cover first.")
 		return

@@ -83,10 +83,10 @@
 	src.pixel_x = rand(-4, 4)
 	return
 
-/obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M) || user.a_intent == "help")
 		return ..()
-	if(user.zone_sel.selecting != O_EYES && user.zone_sel.selecting != BP_HEAD)
+	if(def_zone != O_EYES && def_zone != BP_HEAD)
 		return ..()
 	if((CLUMSY in user.mutations) && prob(50))
 		M = user
@@ -542,12 +542,12 @@
 	qdel(src)
 	user.put_in_active_hand(cutjaws)
 
-/obj/item/weapon/weldingtool/attack(mob/M, mob/user)
+/obj/item/weapon/weldingtool/attack(mob/M, mob/user, def_zone)
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 
-		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 		if(!BP)
 			return
 		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")
