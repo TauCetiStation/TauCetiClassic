@@ -661,6 +661,7 @@ var/list/turret_icons
 	use_power(reqpower * (2 * (emagged || lethal)) * (2 * emagged))
 
 	A.original = target
+	A.def_zone = ran_zone()
 	A.current = T
 	A.starting = T
 	A.fake = TRUE

@@ -57,7 +57,10 @@
 	P.starting = P.loc
 	P.current = P.loc
 	P.firer = chassis.occupant
-	P.def_zone = check_zone(chassis.occupant.zone_sel.selecting)
+	if(isbrain(chassis.occupant))
+		P.def_zone = ran_zone()
+	else
+		P.def_zone = check_zone(chassis.occupant.zone_sel.selecting)
 	P.yo = aimloc.y - P.loc.y
 	P.xo = aimloc.x - P.loc.x
 	P.process()

@@ -295,3 +295,18 @@
 				"\blue You draw \the [holstered], pointing it at the ground.")
 			usr.put_in_hands(holstered)
 		holstered = null
+
+/obj/item/clothing/suit/armor/syndiassault
+	name = "Assault Armor"
+	icon_state = "assaultarmor"
+	item_state = "assaultarmor"
+	gas_transfer_coefficient = 0.01
+	permeability_coefficient = 0.01
+	flags = THICKMATERIAL
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
+	slowdown = 0.5
+	armor = list(melee = 50, bullet = 70, laser = 50,energy = 70, bomb = 50, bio = 0, rad = 50)
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
+	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+	flags_pressure = STOPS_LOWPRESSUREDMAGE

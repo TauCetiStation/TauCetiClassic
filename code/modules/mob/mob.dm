@@ -759,6 +759,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 	for(var/obj/item/weapon/grab/G in grabbed_by)
 		if(G.state >= GRAB_AGGRESSIVE)
 			canmove = FALSE
+			if(G.state == GRAB_NECK && G.assailant.zone_sel.selecting == BP_CHEST)
+				lying = FALSE
+				density = TRUE
 			break
 
 	//Temporarily moved here from the various life() procs

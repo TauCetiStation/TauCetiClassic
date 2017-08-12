@@ -48,15 +48,26 @@
 						O.anchored = initial(O.anchored)
 			else
 				occupant_message("<font color='red'>Not enough room in cargo compartment.</font>")
-		else
-			if(istype(target, /obj/structure/scrap))
-				var/obj/structure/scrap/pile = target
-				playsound(target, 'sound/effects/metal_creaking.ogg', 50, 1)
-				if(do_after_cooldown(pile))
-					occupant_message("<font color='red'>You squeeze the [pile.name] into compact shape.</font>")
-					pile.make_cube()
+		else if(istype(target, /obj/structure/scrap))
+			var/obj/structure/scrap/pile = target
+			playsound(target, 'sound/effects/metal_creaking.ogg', 50, 1)
+			if(do_after_cooldown(pile))
+				occupant_message("<font color='red'>You squeeze the [pile.name] into compact shape.</font>")
+				pile.make_cube()
 			else
 				occupant_message("<font color='red'>[target] is firmly secured.</font>")
+		else if(istype(target, /obj/structure/droppod))
+			var/obj/structure/droppod/Drop = target
+			if(Drop.flags & STATE_DROPING || Drop.intruder || Drop.second_intruder)
+				return
+			var/T = chassis.loc
+			if(do_after_cooldown(Drop) && T == chassis.loc && src == chassis.selected\
+			&& !Drop.intruder && !Drop.second_intruder && !(Drop.flags & STATE_DROPING) && !(Drop.flags & STATE_AIMING))
+				cargo_holder.cargo += Drop
+				Drop.loc = chassis
+				occupant_message("<font color='blue'>[target] succesfully loaded.</font>")
+				log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
+				return 1
 
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target
@@ -1101,3 +1112,90 @@
 	var/new_icon = "ripley"  //What base icon will the new mech use?
 	var/removable = null     //Can the kit be removed?
 	var/list/allowed_types = list() //Types of mech that the kit will work on.
+
+
+/********Mecha Drop System********/
+/obj/item/mecha_parts/mecha_equipment/Drop_system
+	name = "Drop System"
+	desc = "Allow to drop mech from skies."
+	icon_state = "tesla"
+	origin_tech = "magnets=4"
+	equip_cooldown = 10
+	energy_drain = 2500
+	range = 0
+	var/uses = 1
+	var/aiming = FALSE
+	var/static/datum/droppod_allowed/allowed_areas
+
+/obj/item/mecha_parts/mecha_equipment/Drop_system/New()
+	..()
+	if(!allowed_areas)
+		allowed_areas = new
+
+/obj/item/mecha_parts/mecha_equipment/Drop_system/Topic(href, href_list)
+	..()
+	if(href_list["start_drop"])
+		if(!aiming && uses)
+			Select()
+			log_message("Select Drop Point.")
+		else
+			chassis.occupant_message("<span class='notice'>You cannot drop for now!</span>")
+	return
+
+/obj/item/mecha_parts/mecha_equipment/Drop_system/get_equip_info()
+	if(!chassis)
+		return
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[name] - <a href='?src=\ref[src];start_drop=1'>Start Drop</a>"
+
+/obj/item/mecha_parts/mecha_equipment/Drop_system/proc/Select() // little copypaste from droppod code
+	if(aiming)
+		return
+	aiming = TRUE
+	var/A
+	A = input("Select Area for Droping Pod", "Select", A) in allowed_areas.areas
+	var/area/thearea = allowed_areas.areas[A]
+	var/list/L = list()
+	for(var/turf/T in get_area_turfs(thearea.type))
+		if(!T.density && !istype(T, /turf/space) && !T.obscured)
+			L+=T
+	if(isemptylist(L))
+		chassis.occupant_message("<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
+		aiming = FALSE
+		return
+	if(!Challenge)
+		if(world.time < SYNDICATE_CHALLENGE_TIMER)
+			chassis.occupant_message("<span class='warning'>You've issued a combat challenge to the station! \
+			You've got to give them at least [round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
+			time more minutes to allow them to prepare.</span>")
+			aiming = FALSE
+			return
+	else
+		Challenge.Dropod_used = TRUE
+	chassis.occupant_message("<span class='notice'>You succesfully selected target!</span>")
+	chassis.loc = pick(L)
+	uses--
+	chassis.freeze_movement = TRUE // to prevent moving in drop phase.
+	chassis.density = FALSE
+	chassis.opacity = FALSE
+	var/initial_x = chassis.pixel_x
+	var/initial_y = chassis.pixel_y
+	playsound(src, 'sound/effects/drop_start.ogg', 100, 2)
+	chassis.pixel_x = rand(-150, 150)
+	chassis.pixel_y = 500
+	animate(chassis, pixel_y = initial_y, pixel_x = initial_x, time = 20)
+	addtimer(CALLBACK(src, .proc/perform_drop), 20)
+
+
+/obj/item/mecha_parts/mecha_equipment/Drop_system/proc/perform_drop()
+	for(var/atom/movable/T in loc)
+		if(T != src && T != chassis.occupant && !(istype(T, /obj/structure/window) || istype(T, /obj/machinery/door/airlock) || istype(T, /obj/machinery/door/poddoor)))
+			T.ex_act(1)
+	for(var/mob/living/M in oviewers(6, src))
+		shake_camera(M, 2, 2)
+	for(var/turf/simulated/floor/T in RANGE_TURFS(1, chassis))
+		T.break_tile_to_plating()
+	playsound(loc, 'sound/effects/drop_land.ogg', 100, 2)
+	chassis.freeze_movement = FALSE
+	chassis.density = TRUE
+	chassis.opacity = TRUE
+	aiming = FALSE

@@ -1,8 +1,3 @@
-/mob/living/silicon/robot/verb/cmd_show_laws()
-	set category = "Robot Commands"
-	set name = "Show Laws"
-	show_laws()
-
 /mob/living/silicon/robot/show_laws(everyone = 0)
 	laws_sanity_check()
 	var/who
@@ -156,9 +151,7 @@
 					sleep(10)
 				number++
 
-/mob/living/silicon/robot/verb/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
-	set category = "Robot Commands"
-	set name = "State Laws"
+/mob/living/silicon/robot/checklaws() //Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew. --NeoFite
 	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
 
 	if (src.laws.zeroth)

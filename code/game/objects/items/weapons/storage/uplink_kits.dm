@@ -183,3 +183,11 @@
 	for(var/i = 1 to 3)
 		new /obj/item/cardboard_cutout(src)
 	new /obj/item/toy/crayon/rainbow (src)
+
+/obj/item/weapon/storage/box/syndie_kit/rig
+	name = "box (J)"
+
+/obj/item/weapon/storage/box/syndie_kit/rig/New()
+	..()
+	new /obj/item/clothing/suit/space/rig/syndi(src)
+	new /obj/item/clothing/head/helmet/space/rig/syndi(src)

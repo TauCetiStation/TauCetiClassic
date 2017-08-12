@@ -6,10 +6,6 @@
 	for(var/mob/living/M in mob_list)
 		if(M.digitalcamo && M.digitaldisguise)
 			client.images += M.digitaldisguise
-	for(var/obj/effect/rune/rune in world)
-		var/image/blood = image(loc = rune)
-		blood.override = 1
-		client.images += blood
 	regenerate_icons()
 
 	if(stat != DEAD)
@@ -17,4 +13,3 @@
 			O.mode = 1
 			O.emotion = "Neutral"
 	src.view_core()
-	return

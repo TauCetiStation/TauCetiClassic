@@ -7,6 +7,7 @@
 	immune_to_ssd = 1
 	var/list/hud_list[9]
 	var/list/speech_synthesizer_langs = list()	//which languages can be vocalized by the speech synthesizer
+	var/obj/item/device/pda/silicon/pda = null
 
 
 
@@ -20,6 +21,12 @@
 	#define MED_HUD 2 //Medical HUD mode
 
 /mob/living/silicon/proc/show_laws()
+	return
+
+/mob/living/silicon/proc/checklaws()
+	return
+
+/mob/living/silicon/proc/show_alerts()
 	return
 
 /mob/living/silicon/drop_item()

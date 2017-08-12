@@ -55,12 +55,6 @@ var/global/raider_tick = 1
 	icon_state = "silenced_pistol_nl"
 	mag_type = /obj/item/ammo_box/magazine/sm45/nonlethal
 
-/obj/item/weapon/gun/projectile/automatic/a28/nonlethal/update_icon()
-	src.overlays = 0
-	update_magazine()
-	icon_state = "a28w[chambered ? "" : "-e"]"
-	return
-
 /obj/item/ammo_box/magazine/m556/nonlethal
 	name = "A28 magazine (.556NL)"
 	ammo_type = /obj/item/ammo_casing/a556/nonlethal

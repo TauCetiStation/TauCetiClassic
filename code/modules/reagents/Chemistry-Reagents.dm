@@ -1829,10 +1829,10 @@ datum
 			description = "A powerful sedative."
 			reagent_state = SOLID
 			color = "#000067" // rgb: 0, 0, 103
-			toxpwr = 1
+			toxpwr = 0
 			custom_metabolism = 0.1 //Default 0.2
 			overdose = 15
-			overdose_dam = 5
+			overdose_dam = 6
 
 			on_mob_life(mob/living/M)
 				if(!..())
