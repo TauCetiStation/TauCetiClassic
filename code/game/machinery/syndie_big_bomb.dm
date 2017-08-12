@@ -115,11 +115,11 @@
 		if(open_panel)
 			wires.interact(user)
 		else if(!active)
-			settings()
+			settings(user)
 		else
 			to_chat(user, "<span class='notice'>The bomb is bolted to the floor!</span>")
 	else if(!active)
-		settings()
+		settings(user)
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
 	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
