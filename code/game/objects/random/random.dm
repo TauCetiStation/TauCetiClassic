@@ -5,7 +5,6 @@
 	icon_state = "rup"
 	var/spawn_nothing_percentage = 0 // this variable determines the likelyhood that this random object will not spawn anything
 
-
 // creates a new object and deletes itself
 /obj/random/New()
 	..()
@@ -23,3 +22,13 @@
 /obj/random/proc/spawn_item()
 	var/build_path = item_to_spawn()
 	return (new build_path(src.loc))
+
+/obj/randomcatcher
+	name = "Random Catcher Object"
+	desc = "You should not see this."
+	icon = 'icons/misc/mark.dmi'
+	icon_state = "rup"
+
+/obj/randomcatcher/proc/get_item(var/type)
+	new type(src)
+	. = pick(src.contents)

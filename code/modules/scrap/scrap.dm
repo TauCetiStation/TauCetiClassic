@@ -1,9 +1,14 @@
+var/global/list/scrap_base_cache = list()
+
+
 /obj/structure/scrap
 	name = "scrap pile"
 	desc = "Pile of industrial debris. It could use a shovel and pair of hands in gloves. "
 	anchored = 1
 	opacity = 0
 	density = 0
+	var/loot_generated = 0
+	var/icontype = "general"
 	icon_state = "small"
 	icon = 'icons/obj/structures/scrap/base.dmi'
 	var/obj/item/weapon/storage/internal/updating/loot	//the visible loot
@@ -31,6 +36,13 @@
 	src.forceMove(container)
 
 /obj/structure/scrap/New()
+	update_icon(1)
+	..()
+
+/obj/structure/scrap/proc/try_make_loot()
+	if(loot_generated)
+		return
+	loot_generated = 1
 	var/amt = rand(loot_min, loot_max)
 	for(var/x = 1 to amt)
 		var/loot_path = pick(loot_list)
@@ -40,8 +52,6 @@
 	loot = new(src)
 	loot.max_w_class = 5
 	shuffle_loot()
-	update_icon(1)
-	..()
 
 /obj/structure/scrap/Destroy()
 	diggers.Cut()
@@ -70,6 +80,7 @@
 	..()
 
 /obj/structure/scrap/proc/shuffle_loot()
+	try_make_loot()
 	loot.close_all()
 	for(var/A in loot)
 		loot.remove_from_storage(A,src)
@@ -95,18 +106,22 @@
 
 /obj/structure/scrap/update_icon(rebuild_base=0)
 	if(rebuild_base)
-		overlays.Cut()
-		var/num = rand(base_min,base_max)
-		for(var/i=1 to num)
-			var/image/I = image(parts_icon,pick(icon_states(parts_icon)))
-			I.color = pick("#996633", "#663300", "#666666", "")
-			overlays |= randomize_image(I)
-
-	underlays.Cut()
-	for(var/obj/O in loot.contents)
-		var/image/I = image(O.icon,O.icon_state)
-		I.color = O.color
-		underlays |= randomize_image(I)
+		var/ID = rand(32)
+		if(!scrap_base_cache["[icontype][icon_state][ID]"])
+			var/num = rand(base_min,base_max)
+			var/image/base_icon = image(icon, icon_state = icon_state)
+			for(var/i=1 to num)
+				var/image/I = image(parts_icon,pick(icon_states(parts_icon)))
+				I.color = pick("#996633", "#663300", "#666666", "")
+				base_icon.overlays += randomize_image(I)
+			scrap_base_cache["[icontype][icon_state][ID]"] = base_icon
+		overlays += scrap_base_cache["[icontype][icon_state][ID]"]
+	if(loot_generated)
+		underlays.Cut()
+		for(var/obj/O in loot.contents)
+			var/image/I = image(O.icon,O.icon_state)
+			I.color = O.color
+			underlays |= randomize_image(I)
 
 /obj/structure/scrap/proc/hurt_hand(mob/user)
 	if(prob(50))
@@ -131,6 +146,7 @@
 /obj/structure/scrap/attack_hand(mob/user)
 	if(hurt_hand(user))
 		return
+	try_make_loot()
 	loot.open(user)
 	..(user)
 
@@ -175,6 +191,7 @@
 	base_spread = 16
 
 /obj/structure/scrap/medical
+	icontype = "medical"
 	name = "medical refuse pile"
 	desc = "Pile of medical refuse. They sure don't cut expenses on these. "
 	parts_icon = 'icons/obj/structures/scrap/medical_trash.dmi'
@@ -188,6 +205,7 @@
 	)
 
 /obj/structure/scrap/vehicle
+	icontype = "vehicle"
 	name = "industrial debris pile"
 	desc = "Pile of used machinery. You could use tools from this to build something."
 	parts_icon = 'icons/obj/structures/scrap/vehicle.dmi'
@@ -203,6 +221,7 @@
 	)
 
 /obj/structure/scrap/food
+	icontype = "food"
 	name = "food trash pile"
 	desc = "Pile of thrown away food. Someone sure have lots of spare food while children on Mars are starving."
 	parts_icon = 'icons/obj/structures/scrap/food_trash.dmi'
@@ -217,6 +236,7 @@
 	)
 
 /obj/structure/scrap/guns
+	icontype = "guns"
 	name = "gun refuse pile"
 	desc = "Pile of military supply refuse. Who thought it was a clever idea to throw that out?"
 	parts_icon = 'icons/obj/structures/scrap/guns_trash.dmi'
@@ -233,6 +253,7 @@
 	)
 
 /obj/structure/scrap/science
+	icontype = "science"
 	name = "scientific trash pile"
 	desc = "Pile of refuse from research department."
 	parts_icon = 'icons/obj/structures/scrap/science.dmi'
@@ -241,6 +262,7 @@
 	)
 
 /obj/structure/scrap/cloth
+	icontype = "cloth"
 	name = "cloth pile"
 	desc = "Pile of second hand clothing for charity."
 	parts_icon = 'icons/obj/structures/scrap/cloth.dmi'
@@ -249,6 +271,7 @@
 	)
 
 /obj/structure/scrap/syndie
+	icontype = "syndie"
 	name = "strange pile"
 	desc = "Pile of left magbots, broken teleports and phoron tanks, jetpacks, random stations blueprints, soap, burned rcds, and meat with orange fur?"
 	parts_icon = 'icons/obj/structures/scrap/syndie.dmi'
@@ -266,6 +289,7 @@
 
 
 /obj/structure/scrap/poor
+	icontype = "poor"
 	name = "mixed rubbish"
 	desc = "Pile of mixed rubbish. Useless and rotten, mostly."
 	parts_icon = 'icons/obj/structures/scrap/all_mixed.dmi'

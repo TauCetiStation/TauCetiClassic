@@ -153,7 +153,7 @@ RCD
 						if(do_after(user, 50, target = A))
 							if(!useResource(5, user)) return 0
 							activate()
-							A:ChangeTurf(/turf/space)
+							A:BreakToBase()
 							return 1
 					return 0
 

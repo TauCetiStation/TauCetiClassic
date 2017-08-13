@@ -152,7 +152,7 @@
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(basetype)
 			return
 		if(2.0)
 			if(prob(75))

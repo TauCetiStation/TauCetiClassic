@@ -136,13 +136,18 @@
 	icon_state = "medicalbelt"
 /obj/random/cloth/storage/item_to_spawn()
 	return pick(\
-			prob(2);/obj/item/weapon/storage/belt/security/German, \
-			prob(8);/obj/item/weapon/storage/belt/security, \
-			prob(8);/obj/item/weapon/storage/belt/medical, \
-			prob(8);/obj/item/weapon/storage/belt/utility, \
-			prob(2);/obj/item/weapon/storage/belt/champion/alt, \
-			prob(8);/obj/item/weapon/storage/belt/archaeology,\
-			prob(4);/obj/item/weapon/storage/backpack/medbag,\
+			prob(69);/obj/random/cloth/backpack, \
+			prob(34);/obj/random/cloth/belt\
+			)
+
+
+/obj/random/cloth/backpack
+	name = "random storage"
+	desc = "This is a random storage."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "medicalbelt"
+/obj/random/cloth/backpack/item_to_spawn()
+	return pick(\
 			prob(10);/obj/item/weapon/storage/backpack/alt,\
 			prob(10);/obj/item/weapon/storage/backpack/cultpack,\
 			prob(10);/obj/item/weapon/storage/backpack/clown,\
@@ -152,6 +157,23 @@
 			prob(10);/obj/item/weapon/storage/backpack/industrial,\
 			prob(8);/obj/item/weapon/storage/backpack/security\
 			)
+
+/obj/random/cloth/belt
+	name = "random storage"
+	desc = "This is a random storage."
+	icon = 'icons/obj/clothing/belts.dmi'
+	icon_state = "medicalbelt"
+/obj/random/cloth/belt/item_to_spawn()
+	return pick(\
+			prob(2);/obj/item/weapon/storage/belt/security/German, \
+			prob(8);/obj/item/weapon/storage/belt/security, \
+			prob(8);/obj/item/weapon/storage/belt/medical, \
+			prob(8);/obj/item/weapon/storage/belt/utility, \
+			prob(2);/obj/item/weapon/storage/belt/champion/alt, \
+			prob(8);/obj/item/weapon/storage/belt/archaeology\
+			)
+
+
 
 
 /obj/random/cloth/randomhead
