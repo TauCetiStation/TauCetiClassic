@@ -8,6 +8,8 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroomf"
 	layer = 2.1
+	light_power = 0.5
+	light_color = "#80b82e"
 	var/endurance = 30
 	var/potency = 30
 	var/delay = 1200
@@ -44,7 +46,7 @@
 
 	START_PROCESSING(SSobj, src)
 
-	set_light(round(potency/10))
+	set_light(round(potency/10), light_power, light_color)
 	lastTick = world.timeofday
 
 /obj/effect/glowshroom/Destroy()

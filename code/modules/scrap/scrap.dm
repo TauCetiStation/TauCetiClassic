@@ -4,6 +4,7 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap
 	name = "scrap pile"
 	desc = "Pile of industrial debris. It could use a shovel and pair of hands in gloves. "
+	appearance_flags = TILE_BOUND
 	anchored = 1
 	opacity = 0
 	density = 0
@@ -106,7 +107,7 @@ var/global/list/scrap_base_cache = list()
 
 /obj/structure/scrap/update_icon(rebuild_base=0)
 	if(rebuild_base)
-		var/ID = rand(32)
+		var/ID = rand(40)
 		if(!scrap_base_cache["[icontype][icon_state][ID]"])
 			var/num = rand(base_min,base_max)
 			var/image/base_icon = image(icon, icon_state = icon_state)

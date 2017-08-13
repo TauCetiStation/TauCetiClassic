@@ -11,7 +11,7 @@
 	var/turf/A
 	for (var/newdir in alldirs)
 		A = get_step(src, newdir)
-		if(!A.density && !(/obj/structure/scrap in A.contents))
+		if(!A.density && !locate(/obj/structure/scrap in A.contents))
 			new /obj/random/scrap/dense_weighted(A)
 
 
@@ -29,16 +29,21 @@
 		var/list/makesparse = new/list()
 		makescrap += src
 		for(var/i = 0 to size)
-			makescrap += get_step(pick(makescrap), pick(alldirs))
+			makescrap |= get_step(pick(makescrap), pick(alldirs))
 		for(var/turf/T in makescrap)
 			for(var/todir in cardinal)
-				makesparse += get_step(T, todir)
+				makesparse |= get_step(T, todir)
+		makesparse -= makescrap
 		for(var/turf/T in makescrap)
-			if(!(/obj/structure/scrap in T.contents))
+			if(!locate(/obj/structure/scrap in T.contents))
 				new /obj/random/scrap/dense_weighted(T)
 		for(var/turf/T in makesparse)
-			if(!(/obj/structure/scrap in T.contents))
+			if(!locate(/obj/structure/scrap in T.contents))
 				new /obj/random/scrap/sparse_weighted(T)
 		return
+	if(prob(1))
+		new /obj/effect/landmark/junkyard_bum(src)
+		return
 	if(prob(10))
-		new /obj/random/scrap/sparse_weighted(src)
+		if(!locate(/obj/structure/scrap in contents))
+			new /obj/random/scrap/sparse_weighted(src)

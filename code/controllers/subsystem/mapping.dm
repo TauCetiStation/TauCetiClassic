@@ -32,7 +32,6 @@ var/datum/subsystem/mapping/SSmapping
 
 /datum/subsystem/mapping/proc/populate_junkyard()
 	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
-	/turf/simulated/mineral/airfull/junkyard
 	for(var/thing in turfs_to_init)
 		var/turf/T = thing
 		if(istype(T, /turf/simulated/mineral/airfull/junkyard))
