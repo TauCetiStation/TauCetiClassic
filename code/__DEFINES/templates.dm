@@ -1,0 +1,8 @@
+#define TEMPLATE_GENERIC "0"
+#define TEMPLATE_SHELTER "1"
+#define TEMPLATE_HOLO    "2"
+#define TEMPLATE_DEPT    "3"
+
+
+#define TEMPLATE_DEPT_GENERIC "0"
+#define TEMPLATE_DEPT_ENGINE  "1"

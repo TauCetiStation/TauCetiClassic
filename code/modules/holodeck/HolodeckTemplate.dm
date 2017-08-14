@@ -2,6 +2,7 @@
 #define HOLO_SIZE_Y 10
 
 /datum/map_template/holoscene
+	template_type = TEMPLATE_HOLO
 	var/list/holo_objs = list()
 	var/list/holo_mobs = list()
 	var/special_atmo = FALSE

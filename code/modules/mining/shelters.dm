@@ -1,4 +1,5 @@
 /datum/map_template/shelter
+	template_type = TEMPLATE_SHELTER
 	var/description
 	var/blacklisted_turfs
 	var/whitelisted_turfs

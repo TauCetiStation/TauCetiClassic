@@ -94,7 +94,7 @@
 
 	if(href_list["program"])
 		var/prog = href_list["program"]
-		if(holoscene_templates.Find(prog))
+		if(map_templates_categorized[TEMPLATE_HOLO][prog])
 			loadIdProgram(prog)
 
 	else if(href_list["AIoverride"])
@@ -241,7 +241,7 @@
 	return 1
 
 /obj/machinery/computer/HolodeckControl/proc/loadIdProgram(id = "turnoff")
-	current_scene = holoscene_templates[id]
+	current_scene = map_templates_categorized[TEMPLATE_HOLO][id]
 	loadProgram()
 
 /obj/machinery/computer/HolodeckControl/proc/loadProgram()

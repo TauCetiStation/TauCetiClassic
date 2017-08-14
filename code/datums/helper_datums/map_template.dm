@@ -6,6 +6,7 @@
 	var/mapfile = null
 	var/loaded = 0 // Times loaded this round
 	var/id = null
+	var/template_type = TEMPLATE_GENERIC
 	var/list/loaded_stuff = list()
 
 /datum/map_template/New(path = null, map = null, rename = null)
@@ -104,41 +105,19 @@
 	return block(placement, locate(placement.x+width-1, placement.y+height-1, placement.z))
 
 
-/proc/preloadTemplates(path = "maps/templates/") //see master controller setup
-	//var/list/filelist = flist(path)
-	//for(var/map in filelist)
-	//	var/datum/map_template/T = new /datum/map_template(path = "[path][map]", rename = "[map]")
-	//	map_templates[T.name] = T
-
-	preloadShelterTemplates()
-	preloadHolodeckTemplates()
-	preloadEngineTemplates()
-
-/proc/preloadHolodeckTemplates()
-	for(var/item in subtypesof(/datum/map_template/holoscene))
-		var/datum/map_template/holoscene/holoscene_type = item
-		if(!(initial(holoscene_type.mappath)))
+/proc/preload_templates()
+	for(var/item in subtypesof(/datum/map_template))
+		var/datum/map_template/template_type = item
+		if(!(initial(template_type.mappath)))
 			continue
-		var/datum/map_template/holoscene/S = new holoscene_type()
-		holoscene_templates[S.id()] = S
+		var/datum/map_template/S = new template_type()
 		map_templates[S.id()] = S
-
-
-/proc/preloadShelterTemplates()
-	for(var/item in subtypesof(/datum/map_template/shelter))
-		var/datum/map_template/shelter/shelter_type = item
-		if(!(initial(shelter_type.mappath)))
-			continue
-		var/datum/map_template/shelter/S = new shelter_type()
-		shelter_templates[S.id()] = S
-		map_templates[S.id()] = S
-
-
-/proc/preloadEngineTemplates()
-	for(var/item in subtypesof(/datum/map_template/engine))
-		var/datum/map_template/engine/engine_type = item
-		if(!(initial(engine_type.mappath)))
-			continue
-		var/datum/map_template/engine/S = new engine_type()
-		engine_templates[S.id()] = S
-		map_templates[S.id()] = S
+		if(!map_templates_categorized[S.template_type])
+			map_templates_categorized[S.template_type] = list()
+		if(S.template_type == TEMPLATE_DEPT)
+			var/datum/map_template/department/DT = S
+			if(!map_templates_categorized[DT.template_type][DT.dept_type])
+				map_templates_categorized[DT.template_type][DT.dept_type] = list()
+			map_templates_categorized[DT.template_type][DT.dept_type][DT.id()] = DT
+		else
+			map_templates_categorized[S.template_type][S.id()] = S
