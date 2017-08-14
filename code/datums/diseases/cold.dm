@@ -5,7 +5,7 @@
 	cure = "Rest & Spaceacillin"
 	cure_id = "spaceacillin"
 	agent = "XY-rhinovirus"
-	affected_species = list("Human", "Monkey")
+	affected_species = list(HUMAN , MONKEY)
 	permeability_mod = 0.5
 	desc = "If left untreated the subject will contract the flu."
 	severity = "Minor"

@@ -18,7 +18,14 @@
 			return
 
 	attackby(obj/item/W, mob/user)
-		if(istype(W, /obj/item/weapon/wrench) && state == 0)
+		if(istype (W,/obj/item/weapon/changeling_hammer))
+			var/obj/item/weapon/changeling_hammer/C = W
+			visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
+			user.do_attack_animation(src)
+			if(C.use_charge(user, 1) && prob(40))
+				playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+				qdel(src)
+		else if(istype(W, /obj/item/weapon/wrench) && state == 0)
 			if(anchored && !istype(src,/obj/structure/girder/displaced))
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 				to_chat(user, "\blue Now disassembling the girder")

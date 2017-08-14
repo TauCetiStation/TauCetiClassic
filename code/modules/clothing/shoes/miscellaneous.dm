@@ -29,6 +29,7 @@
 	name = "combat boots"
 	desc = "When you REALLY want to turn up the heat"
 	icon_state = "swat"
+	item_state = "jackboots"
 	armor = list(melee = 80, bullet = 10, laser = 10,energy = 25, bomb = 50, bio = 10, rad = 0)
 	flags = NOSLIP
 	siemens_coefficient = 0.6
@@ -179,4 +180,11 @@
 	name = "work boots"
 	icon_state = "workboots"
 	item_color = "workboots"
+	item_state = "b_shoes"  // need sprites for this
 	clipped_status = CLIPPABLE
+
+/obj/item/clothing/shoes/roman
+	name = "roman sandals"
+	desc = "Sandals with buckled leather straps on it."
+	icon_state = "roman"
+	item_state = "roman"

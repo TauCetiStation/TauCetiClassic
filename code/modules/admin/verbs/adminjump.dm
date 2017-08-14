@@ -7,10 +7,12 @@
 		return
 
 	if(config.allow_admin_jump)
-		usr.forceMove(pick(get_area_turfs(A)))
-		log_admin("[key_name(usr)] jumped to [A]")
-		message_admins("[key_name_admin(usr)] jumped to [A]")
-		feedback_add_details("admin_verb","JA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		if(src.mob)
+			var/mob/AM = src.mob
+			AM.forceMove(pick(get_area_turfs(A)))
+			log_admin("[key_name(usr)] jumped to [A]")
+			message_admins("[key_name_admin(usr)] jumped to [A]")
+			feedback_add_details("admin_verb","JA") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		alert("Admin jumping disabled")
 
@@ -21,10 +23,12 @@
 		to_chat(src, "Only administrators may use this command.")
 		return
 	if(config.allow_admin_jump)
-		usr.forceMove(T)
-		log_admin("[key_name(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
-		message_admins("[key_name_admin(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
-		feedback_add_details("admin_verb","JT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		if(src.mob)
+			var/mob/A = src.mob
+			A.forceMove(T)
+			log_admin("[key_name(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
+			message_admins("[key_name_admin(usr)] jumped to [T.x],[T.y],[T.z] in [T.loc]")
+			feedback_add_details("admin_verb","JT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		alert("Admin jumping disabled")
 	return
@@ -87,10 +91,12 @@
 			to_chat(src, "No keys found.")
 			return
 		var/mob/M = selection:mob
-		usr.forceMove(M.loc)
-		log_admin("[key_name(usr)] jumped to [key_name(M)]")
-		message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]")
-		feedback_add_details("admin_verb","JK") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		if(src.mob)
+			var/mob/A = src.mob
+			A.forceMove(M.loc)
+			log_admin("[key_name(usr)] jumped to [key_name(M)]")
+			message_admins("[key_name_admin(usr)] jumped to [key_name_admin(M)]")
+			feedback_add_details("admin_verb","JK") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	else
 		alert("Admin jumping disabled")
 

@@ -361,22 +361,17 @@
 					m_type = 2
 
 		if ("point")
-			if (!src.restrained())
-				var/mob/M = null
+			if (!restrained())
+				var/atom/target = null
 				if (param)
-					for (var/atom/A as mob|obj|turf|area in view(null, null))
+					for (var/atom/A as mob|obj|turf in oview())
 						if (param == A.name)
-							M = A
+							target = A
 							break
-
-				if (!M)
-					message = "<B>[src]</B> points."
+				if (!target)
+					message = "<span class='notice'><b>[src]</b> points.</span>"
 				else
-					M.point()
-
-				if (M)
-					message = "<B>[src]</B> points to [M]."
-				else
+					pointed(target)
 			m_type = 1
 
 		if ("raise")

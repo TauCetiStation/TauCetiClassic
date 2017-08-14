@@ -127,7 +127,7 @@
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				state = 1
 				icon_state = "box_0"
-				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( src.loc )
+				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil/red(src.loc)
 				A.amount = 5
 
 		if(3)

@@ -1,4 +1,11 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+// ===================================
+// GLOBAL MACRO HELPERS
+// ===================================
+
+// A = thing to stop | B = thing to hit. | finialize() calls A.throw_impact(B)
+#define STOP_THROWING(A, B) if(A.throwing) {var/datum/thrownthing/TT = SSthrowing.processing[A]; if(TT) {TT.finialize(null, B);}}
+
+// ===================================
 
 /*
  * A large number of misc global procs.
@@ -150,44 +157,6 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return destination
 
-
-
-/proc/LinkBlocked(turf/A, turf/B)
-	if(A == null || B == null) return 1
-	var/adir = get_dir(A,B)
-	var/rdir = get_dir(B,A)
-	if((adir & (NORTH|SOUTH)) && (adir & (EAST|WEST)))	//	diagonal
-		var/iStep = get_step(A,adir&(NORTH|SOUTH))
-		if(!LinkBlocked(A,iStep) && !LinkBlocked(iStep,B)) return 0
-
-		var/pStep = get_step(A,adir&(EAST|WEST))
-		if(!LinkBlocked(A,pStep) && !LinkBlocked(pStep,B)) return 0
-		return 1
-
-	if(DirBlocked(A,adir)) return 1
-	if(DirBlocked(B,rdir)) return 1
-	return 0
-
-/proc/DirBlocked(turf/loc,dir)
-	for(var/obj/structure/window/D in loc)
-		if(!D.density)			continue
-		if(D.dir == SOUTHWEST)	return 1
-		if(D.dir == dir)		return 1
-
-	for(var/obj/machinery/door/D in loc)
-		if(!D.density)			continue
-		if(istype(D, /obj/machinery/door/window))
-			if((dir & SOUTH) && (D.dir & (EAST|WEST)))		return 1
-			if((dir & EAST ) && (D.dir & (NORTH|SOUTH)))	return 1
-		else return 1	// it's a real, air blocking door
-	return 0
-
-/proc/TurfBlockedNonWindow(turf/loc)
-	for(var/obj/O in loc)
-		if(O.density && !istype(O, /obj/structure/window))
-			return 1
-	return 0
-
 /proc/sign(x)
 	return x!=0?x/abs(x):0
 
@@ -333,9 +302,9 @@ Turf and target are seperate in case you want to teleport some distance from a t
 					A.eyeobj.name = "[newname] (AI Eye)"
 
 				// Set ai pda name
-				if(A.aiPDA)
-					A.aiPDA.owner = newname
-					A.aiPDA.name = newname + " (" + A.aiPDA.ownjob + ")"
+				if(A.pda)
+					A.pda.owner = newname
+					A.pda.name = newname + " (" + A.pda.ownjob + ")"
 
 
 		fully_replace_character_name(oldname,newname)
@@ -397,7 +366,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	for(var/mob/M in mobs)
 		if(skip_mindless && (!M.mind && !M.ckey))
-			if(!isbot(M) && !istype(M, /mob/camera/))
+			if(!isbot(M) && !istype(M, /mob/camera))
 				continue
 		if(M.client && M.client.holder && M.client.holder.fakekey) //stealthmins
 			continue
@@ -434,35 +403,34 @@ Turf and target are seperate in case you want to teleport some distance from a t
 
 	return pois
 
-//Orders mobs by type then by name
+
+#define ADD_TO_MOBLIST(type) \
+	for(var##type/M in sortmob) {moblist += M}
+
+/**
+ * Orders mobs by type then by name.
+ */
 /proc/sortmobs()
 	var/list/moblist = list()
 	var/list/sortmob = sortAtom(mob_list)
-	for(var/mob/living/silicon/ai/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/silicon/pai/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/silicon/robot/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/human/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/brain/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/alien/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/dead/observer/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/new_player/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/monkey/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/carbon/slime/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/living/simple_animal/M in sortmob)
-		moblist.Add(M)
-	for(var/mob/camera/M in sortmob)
-		moblist.Add(M)
+
+	ADD_TO_MOBLIST(/mob/camera)
+	ADD_TO_MOBLIST(/mob/living/silicon/ai)
+	ADD_TO_MOBLIST(/mob/living/silicon/pai)
+	ADD_TO_MOBLIST(/mob/living/silicon/robot)
+	ADD_TO_MOBLIST(/mob/living/carbon/human)
+	ADD_TO_MOBLIST(/mob/living/carbon/brain)
+	ADD_TO_MOBLIST(/mob/living/carbon/alien)
+	ADD_TO_MOBLIST(/mob/dead/observer)
+	ADD_TO_MOBLIST(/mob/new_player)
+	ADD_TO_MOBLIST(/mob/living/carbon/monkey)
+	ADD_TO_MOBLIST(/mob/living/carbon/slime)
+	ADD_TO_MOBLIST(/mob/living/carbon/ian)
+	ADD_TO_MOBLIST(/mob/living/simple_animal)
+
 	return moblist
+
+#undef ADD_TO_MOBLIST
 
 //E = MC^2
 /proc/convert2energy(M)
@@ -870,7 +838,7 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 						if (length(O.client_mobs_in_contents))
 							O.update_parallax_contents()
 					for(var/mob/M in T)
-						if(!istype(M,/mob) || istype(M, /mob/aiEye) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
+						if(!istype(M,/mob) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
 						M.loc = X
 						M.update_parallax_contents()
 
@@ -999,7 +967,7 @@ proc/DuplicateObject(obj/original, perfectcopy = 0 , sameloc = 0)
 
 					for(var/mob/M in T)
 
-						if(!istype(M,/mob) || istype(M, /mob/aiEye) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
+						if(!istype(M,/mob) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
 						mobs += M
 
 					for(var/mob/M in mobs)
@@ -1087,20 +1055,25 @@ proc/get_mob_with_client_list()
 
 
 /proc/parse_zone(zone)
-	if(zone == "r_hand") return "right hand"
-	else if (zone == "l_hand") return "left hand"
-	else if (zone == "l_arm") return "left arm"
-	else if (zone == "r_arm") return "right arm"
-	else if (zone == "l_leg") return "left leg"
-	else if (zone == "r_leg") return "right leg"
-	else if (zone == "l_foot") return "left foot"
-	else if (zone == "r_foot") return "right foot"
-	else if (zone == "l_hand") return "left hand"
-	else if (zone == "r_hand") return "right hand"
-	else if (zone == "l_foot") return "left foot"
-	else if (zone == "r_foot") return "right foot"
-	else return zone
-
+	switch(zone)
+		if(BP_L_ARM)
+			return "left arm"
+		if(BP_L_HAND)
+			return "left hand"
+		if(BP_R_ARM)
+			return "right arm"
+		if(BP_R_HAND)
+			return "right hand"
+		if(BP_L_LEG)
+			return "left leg"
+		if(BP_L_FOOT)
+			return "left foot"
+		if(BP_R_LEG)
+			return "right leg"
+		if(BP_R_FOOT)
+			return "right foot"
+		else
+			return zone
 
 /proc/get(atom/loc, type)
 	while(loc)
@@ -1168,7 +1141,7 @@ var/global/list/common_tools = list(
 		return 1
 	return 0
 
-proc/is_hot(obj/item/W)
+/proc/is_hot(obj/item/W)
 	switch(W.type)
 		if(/obj/item/weapon/weldingtool)
 			var/obj/item/weapon/weldingtool/WT = W
@@ -1200,33 +1173,49 @@ proc/is_hot(obj/item/W)
 
 	return 0
 
-//Whether or not the given item counts as sharp in terms of dealing damage
+// Whether or not the given item counts as sharp in terms of dealing damage
 /proc/is_sharp(obj/O)
-	if (!O) return 0
-	if (O.sharp) return 1
-	if (O.edge) return 1
+	if(!O)
+		return 0
+	if(O.sharp)
+		return 1
+	if(O.edge)
+		return 1
 	return 0
 
-//Whether or not the given item counts as cutting with an edge in terms of removing limbs
+// Whether or not the given item counts as cutting with an edge in terms of removing limbs
 /proc/has_edge(obj/O)
-	if (!O) return 0
-	if (O.edge) return 1
+	if(!O)
+		return 0
+	if(O.edge)
+		return 1
 	return 0
 
-//Returns 1 if the given item is capable of popping things like balloons, inflatable barriers, or cutting police tape.
-/proc/can_puncture(obj/item/W)		// For the record, WHAT THE HELL IS THIS METHOD OF DOING IT?
-	if(!W) return 0
-	if(W.sharp) return 1
-	return ( \
-		W.sharp													  || \
-		istype(W, /obj/item/weapon/screwdriver)                   || \
-		istype(W, /obj/item/weapon/pen)                           || \
-		istype(W, /obj/item/weapon/weldingtool)					  || \
-		istype(W, /obj/item/weapon/lighter/zippo)				  || \
-		istype(W, /obj/item/weapon/match)            		      || \
-		istype(W, /obj/item/clothing/mask/cigarette) 		      || \
-		istype(W, /obj/item/weapon/shovel) \
-	)
+// For items that can puncture e.g. thick plastic but aren't necessarily sharp
+// Returns 1 if the given item is capable of popping things like balloons, inflatable barriers, or cutting police tape.
+/obj/item/proc/can_puncture()
+	return sharp
+
+/obj/item/weapon/screwdriver/can_puncture()
+	return TRUE
+
+/obj/item/weapon/pen/can_puncture()
+	return TRUE
+
+/obj/item/weapon/weldingtool/can_puncture()
+	return TRUE
+
+/obj/item/weapon/lighter/zippo/can_puncture()
+	return TRUE
+
+/obj/item/weapon/match/can_puncture()
+	return TRUE
+
+/obj/item/clothing/mask/cigarette/can_puncture()
+	return TRUE
+
+/obj/item/weapon/shovel/can_puncture()
+	return TRUE
 
 /proc/is_surgery_tool(obj/item/W)
 	return (	\
@@ -1270,45 +1259,41 @@ proc/is_hot(obj/item/W)
 /*
 Checks if that loc and dir has a item on the wall
 */
-var/list/WALLITEMS = list(
-	"/obj/machinery/power/apc", "/obj/machinery/alarm", "/obj/item/device/radio/intercom",
-	"/obj/structure/extinguisher_cabinet", "/obj/structure/reagent_dispensers/peppertank",
-	"/obj/machinery/status_display", "/obj/machinery/requests_console", "/obj/machinery/light_switch", "/obj/effect/sign",
-	"/obj/machinery/newscaster", "/obj/machinery/firealarm", "/obj/structure/noticeboard", "/obj/machinery/door_control",
-	"/obj/machinery/computer/security/telescreen", "/obj/machinery/embedded_controller/radio/simple_vent_controller",
-	"/obj/item/weapon/storage/secure/safe", "/obj/machinery/door_timer", "/obj/machinery/flasher", "/obj/machinery/keycard_auth",
-	"/obj/structure/mirror", "/obj/structure/closet/fireaxecabinet", "/obj/machinery/computer/security/telescreen/entertainment"
-	)
+var/list/WALLITEMS = typecacheof(list(
+	/obj/machinery/power/apc, /obj/machinery/alarm, /obj/item/device/radio/intercom,
+	/obj/structure/extinguisher_cabinet, /obj/structure/reagent_dispensers/peppertank,
+	/obj/machinery/status_display, /obj/machinery/requests_console, /obj/machinery/light_switch,
+	/obj/machinery/newscaster, /obj/machinery/firealarm, /obj/structure/noticeboard, /obj/machinery/door_control,
+	/obj/machinery/computer/security/telescreen,
+	/obj/item/weapon/storage/secure/safe, /obj/machinery/door_timer, /obj/machinery/flasher, /obj/machinery/keycard_auth,
+	/obj/structure/mirror, /obj/structure/closet/fireaxecabinet, /obj/machinery/computer/security/telescreen/entertainment
+))
 /proc/gotwallitem(loc, dir)
 	for(var/obj/O in loc)
-		for(var/item in WALLITEMS)
-			if(istype(O, text2path(item)))
-				//Direction works sometimes
-				if(O.dir == dir)
-					return 1
-
-				//Some stuff doesn't use dir properly, so we need to check pixel instead
-				switch(dir)
-					if(SOUTH)
-						if(O.pixel_y > 10)
-							return 1
-					if(NORTH)
-						if(O.pixel_y < -10)
-							return 1
-					if(WEST)
-						if(O.pixel_x > 10)
-							return 1
-					if(EAST)
-						if(O.pixel_x < -10)
-							return 1
+		if(is_type_in_typecache(O, WALLITEMS))
+			if(O.dir == dir)
+				return 1
+			//Some stuff doesn't use dir properly, so we need to check pixel instead
+			switch(dir)
+				if(SOUTH)
+					if(O.pixel_y > 10)
+						return 1
+				if(NORTH)
+					if(O.pixel_y < -10)
+						return 1
+				if(WEST)
+					if(O.pixel_x > 10)
+						return 1
+				if(EAST)
+					if(O.pixel_x < -10)
+						return 1
 
 
 	//Some stuff is placed directly on the wallturf (signs)
 	for(var/obj/O in get_step(loc, dir))
-		for(var/item in WALLITEMS)
-			if(istype(O, text2path(item)))
-				if(O.pixel_x == 0 && O.pixel_y == 0)
-					return 1
+		if(is_type_in_typecache(O, WALLITEMS))
+			if(O.pixel_x == 0 && O.pixel_y == 0)
+				return 1
 	return 0
 
 /proc/format_text(text)
@@ -1437,67 +1422,6 @@ var/mob/dview/dview_mob = new
 		c_dist++
 	return L
 
-
-//This is just so you can stop an orbit.
-//orbit() can run without it (swap orbiting for A)
-//but then you can never stop it and that's just silly.
-/atom/movable/var/atom/orbiting = null
-//A: atom to orbit
-//radius: range to orbit at, radius of the circle formed by orbiting
-//clockwise: whether you orbit clockwise or anti clockwise
-//rotation_speed: how fast to rotate
-//rotation_segments: the resolution of the orbit circle, less = a more block circle, this can be used to produce hexagons (6 segments) triangles (3 segments), and so on, 36 is the best default.
-//pre_rotation: Chooses to rotate src 90 degress towards the orbit dir (clockwise/anticlockwise), useful for things to go "head first" like ghosts
-//lockinorbit: Forces src to always be on A's turf, otherwise the orbit cancels when src gets too far away (eg: ghosts)
-
-/atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE, lockinorbit = FALSE)
-	if(!istype(A))
-		return
-
-	if(orbiting)
-		stop_orbit()
-
-	orbiting = A
-	var/matrix/initial_transform = matrix(transform)
-	var/lastloc = loc
-
-	//Head first!
-	if(pre_rotation)
-		var/matrix/M = matrix(transform)
-		var/pre_rot = 90
-		if(!clockwise)
-			pre_rot = -90
-		M.Turn(pre_rot)
-		transform = M
-
-	if(istype(A, /atom/movable))
-		var/atom/movable/mov = A
-		mov.update_parallax_contents() //does it really necessery
-
-	var/matrix/shift = matrix(transform)
-	shift.Translate(0,radius)
-	transform = shift
-
-	SpinAnimation(rotation_speed, -1, clockwise, rotation_segments)
-
-	//we stack the orbits up client side, so we can assign this back to normal server side without it breaking the orbit
-	transform = initial_transform
-	while(orbiting && orbiting == A && A.loc)
-		var/targetloc = get_turf(A)
-		if(!lockinorbit && loc != lastloc && loc != targetloc)
-			break
-		loc = targetloc
-		lastloc = loc
-		sleep(0.6)
-
-	if(orbiting == A) //make sure we haven't started orbiting something else.
-		orbiting = null
-		SpinAnimation(0,0)
-
-
-/atom/movable/proc/stop_orbit()
-	orbiting = null
-
 /proc/get_closest_atom(type, list, source)
 	var/closest_atom
 	var/closest_distance
@@ -1524,9 +1448,9 @@ var/mob/dview/dview_mob = new
 	spawn()
 		//if limb names will ever be changed or procs that use names of limbs,
 		//you must adjust names of body_parts according to the current that server uses or mobs will be missing some icon_states.
-		var/list/body_parts = list("head","torso","l_arm","l_hand","r_arm","r_hand","groin","l_leg","l_foot","r_leg","r_foot")
+		var/list/body_parts = list(BP_CHEST , BP_GROIN , BP_HEAD , BP_L_ARM , BP_R_ARM , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG , BP_L_FOOT , BP_R_FOOT)
 		//Same rules for damage states.. must be exactly same as other code uses...
-		var/list/damage_states = list("01","10","11","12","13","02","20","21","22","23","03","30","31","32","33")
+		var/list/damage_states = list("01" , "10" , "11" , "12" , "13" , "02" , "20" , "21" , "22" , "23" , "03" , "30" , "31" , "32" , "33")
 
 		var/icon/master = new()
 		var/total = body_parts.len * damage_states.len
@@ -1670,17 +1594,29 @@ var/mob/dview/dview_mob = new
 
 	return L
 
+//Increases delay as the server gets more overloaded,
+//as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful
+#define DELTA_CALC max(((max(world.tick_usage, world.cpu) / 100) * max(Master.sleep_delta,1)), 1)
+
 //Key thing that stops lag. Cornerstone of performance in ss13, Just sitting here, in unsorted.dm.
 /proc/stoplag()
-	. = 1
-	sleep(world.tick_lag)
-#if DM_VERSION >= 510
-	if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, still not enough tick, sleep for more.
-		. += 2
-		sleep(world.tick_lag*2)
-		if (world.tick_usage > TICK_LIMIT_TO_RUN) //woke up, STILL not enough tick, sleep for more.
-			. += 4
-			sleep(world.tick_lag*4)
-			//you might be thinking of adding more steps to this, or making it use a loop and a counter var
-			//	not worth it.
-#endif
+	. = 0
+	var/i = 1
+	do
+		. += round(i * DELTA_CALC)
+		sleep(i*world.tick_lag * DELTA_CALC)
+		i *= 2
+	while (world.tick_usage > min(TICK_LIMIT_TO_RUN, CURRENT_TICKLIMIT))
+
+#undef DELTA_CALC
+
+/proc/is_the_opposite_dir(hol_dir, hit_dir)
+	if(hol_dir == NORTH && (hit_dir in list(SOUTH, SOUTHEAST, SOUTHWEST)))
+		return TRUE
+	else if(hol_dir == SOUTH && (hit_dir in list(NORTH, NORTHEAST, NORTHWEST)))
+		return TRUE
+	else if(hol_dir == EAST && (hit_dir in list(WEST, NORTHWEST, SOUTHWEST)))
+		return TRUE
+	else if(hol_dir == WEST && (hit_dir in list(EAST, NORTHEAST, SOUTHEAST)))
+		return TRUE
+	return FALSE

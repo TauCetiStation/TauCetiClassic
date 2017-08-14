@@ -53,9 +53,12 @@
 				atmos_machines += A
 				continue
 
-	SSobj.setup_template_objects(atoms)
-	SSmachine.setup_template_powernets(cables)
-	SSair.setup_template_machinery(atmos_machines)
+	if(SSobj.init_done)
+		SSobj.setup_template_objects(atoms)
+	if(SSmachine.init_done)
+		SSmachine.setup_template_powernets(cables)
+	if(SSair.init_done)
+		SSair.setup_template_machinery(atmos_machines)
 
 /datum/map_template/proc/load(turf/T, centered = FALSE)
 	if(centered)
@@ -110,46 +113,6 @@
 	preloadShelterTemplates()
 	preloadHolodeckTemplates()
 	preloadEngineTemplates()
-	//preloadRuinTemplates()		//This all can be usefull, but not now
-	//preloadShuttleTemplates()
-
-/*
-/proc/preloadRuinTemplates()
-	// Still supporting bans by filename
-	var/list/banned = list()
-//	generateMapList("config/lavaRuinBlacklist.txt")
-//	banned += generateMapList("config/spaceRuinBlacklist.txt")
-
-	for(var/item in subtypesof(/datum/map_template/ruin))
-		var/datum/map_template/ruin/ruin_type = item
-		// screen out the abstract subtypes
-		if(!initial(ruin_type.id))
-			continue
-		var/datum/map_template/ruin/R = new ruin_type()
-
-		if(banned.Find(R.mappath))
-			continue
-
-		map_templates[R.name] = R
-		ruins_templates[R.name] = R
-
-		if(istype(R, /datum/map_template/ruin/lavaland))
-			lava_ruins_templates[R.name] = R
-		else if(istype(R, /datum/map_template/ruin/space))
-			space_ruins_templates[R.name] = R
-
-
-/proc/preloadShuttleTemplates()
-	for(var/item in subtypesof(/datum/map_template/shuttle))
-		var/datum/map_template/shuttle/shuttle_type = item
-		if(!(initial(shuttle_type.suffix)))
-			continue
-
-		var/datum/map_template/shuttle/S = new shuttle_type()
-
-		shuttle_templates[S.shuttle_id] = S
-		map_templates[S.shuttle_id] = S
-*/
 
 /proc/preloadHolodeckTemplates()
 	for(var/item in subtypesof(/datum/map_template/holoscene))

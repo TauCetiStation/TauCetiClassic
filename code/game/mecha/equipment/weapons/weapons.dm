@@ -57,6 +57,10 @@
 	P.starting = P.loc
 	P.current = P.loc
 	P.firer = chassis.occupant
+	if(isbrain(chassis.occupant))
+		P.def_zone = ran_zone()
+	else
+		P.def_zone = check_zone(chassis.occupant.zone_sel.selecting)
 	P.yo = aimloc.y - P.loc.y
 	P.xo = aimloc.x - P.loc.x
 	P.process()
@@ -223,7 +227,7 @@
 	name = "Ultra AC 2"
 	icon_state = "mecha_uac2"
 	equip_cooldown = 10
-	projectile = /obj/item/projectile/bullet/weakbullet
+	projectile = /obj/item/projectile/bullet/midbullet
 	fire_sound = 'sound/weapons/Gunshot.ogg'
 	projectiles = 300
 	projectiles_per_shot = 3
@@ -236,7 +240,7 @@
 	var/missile_range = 30
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/Fire(atom/movable/AM, atom/target, turf/aimloc)
-	AM.throw_at(target,missile_range, missile_speed, chassis)
+	AM.throw_at(target, missile_range, missile_speed, spin = FALSE)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/explosive
 	name = "SRM-8 Missile Rack"
@@ -258,13 +262,13 @@
 	var/primed = null
 	throwforce = 15
 
-	throw_impact(atom/hit_atom)
-		if(primed)
-			explosion(hit_atom, 0, 0, 2, 4)
-			qdel(src)
-		else
-			..()
-		return
+/obj/item/missile/throw_impact(atom/hit_atom)
+	if(primed)
+		explosion(hit_atom, 0, 0, 2, 4)
+		qdel(src)
+	else
+		..()
+	return
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang
 	name = "SGL-6 Grenade Launcher"
@@ -280,8 +284,7 @@
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/Fire(atom/movable/AM, atom/target, turf/aimloc)
 	..()
 	var/obj/item/weapon/grenade/flashbang/F = AM
-	spawn(det_time)
-		F.prime()
+	addtimer(CALLBACK(F, /obj/item/weapon/grenade/flashbang.proc/prime), det_time)
 
 /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/missile_rack/flashbang/clusterbang//Because I am a heartless bastard -Sieve
 	name = "SOP-6 Grenade Launcher"

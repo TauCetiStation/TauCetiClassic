@@ -59,12 +59,12 @@
 			if(H.species.flags[IS_SYNTHETIC])
 				return
 			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
-				var/datum/organ/external/affecting = H.get_organ(pick("l_foot", "r_foot"))
-				if(affecting.status & ORGAN_ROBOT)
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_FOOT , BP_R_FOOT)]
+				if(BP.status & ORGAN_ROBOT)
 					return
 				to_chat(M, "<span class='danger'>You step on the sharp debris!</span>")
 				H.Weaken(3)
-				affecting.take_damage(5, 0)
+				BP.take_damage(5, 0)
 				H.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
 				H.updatehealth()
 	..()
@@ -117,14 +117,13 @@
 			return 0
 		if(victim.gloves)
 			return 0
-		var/def_zone = pick("l_hand", "r_hand")
-		var/datum/organ/external/affected_organ = victim.get_organ(check_zone(def_zone))
-		if(!affected_organ)
+		var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_HAND , BP_R_HAND)]
+		if(!BP)
 			return 0
-		if(affected_organ.status & ORGAN_ROBOT)
+		if(BP.status & ORGAN_ROBOT)
 			return 0
 		to_chat(user, "<span class='danger'>Ouch! You cut yourself while picking through \the [src].</span>")
-		affected_organ.take_damage(5, 0, 1, 1, used_weapon = "Sharp debris")
+		BP.take_damage(5, null, DAM_SHARP | DAM_EDGE, "Sharp debris")
 		victim.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
 		return 1
 	return 0
@@ -249,6 +248,23 @@
 		/obj/random/cloth/random_cloth
 	)
 
+/obj/structure/scrap/syndie
+	name = "strange pile"
+	desc = "Pile of left magbots, broken teleports and phoron tanks, jetpacks, random stations blueprints, soap, burned rcds, and meat with orange fur?"
+	parts_icon = 'icons/obj/structures/scrap/syndie.dmi'
+	loot_min = 2
+	loot_max = 4
+	loot_list = list(
+		/obj/random/syndie/fullhouse,
+		/obj/random/syndie/fullhouse,
+		/obj/random/syndie/fullhouse,
+		/obj/item/weapon/reagent_containers/food/snacks/meat,
+		/obj/item/weapon/reagent_containers/food/snacks/meat/corgi,
+		/obj/item/brain,
+		/obj/item/weapon/tank/phoron
+	)
+
+
 /obj/structure/scrap/poor
 	name = "mixed rubbish"
 	desc = "Pile of mixed rubbish. Useless and rotten, mostly."
@@ -315,7 +331,7 @@
 	density = 1
 	icon_state = "big"
 	loot_min = 10
-	loot_max = 20
+	loot_max = 15
 	dig_amount = 15
 	base_min = 9
 	base_max = 14
@@ -338,8 +354,20 @@
 	opacity = 1
 	density = 1
 	icon_state = "big"
-	loot_min = 10
-	loot_max = 20
+	loot_min = 8
+	loot_max = 14
+	dig_amount = 15
+	base_min = 9
+	base_max = 14
+	base_spread = 16
+
+/obj/structure/scrap/syndie/large
+	name = "large strange pile"
+	opacity = 1
+	density = 1
+	icon_state = "big"
+	loot_min = 4
+	loot_max = 12
 	dig_amount = 15
 	base_min = 9
 	base_max = 14

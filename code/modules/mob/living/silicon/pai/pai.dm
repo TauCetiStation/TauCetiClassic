@@ -36,8 +36,6 @@
 	var/screen				// Which screen our main window displays
 	var/subscreen			// Which specific function of the main screen is being displayed
 
-	var/obj/item/device/pda/ai/pai/pda = null
-
 	var/secHUD = 0			// Toggles whether the Security HUD is active or not
 	var/medHUD = 0			// Toggles whether the Medical  HUD is active or not
 
@@ -78,11 +76,6 @@
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
 		pda.toff = 1
 	..()
-
-/mob/living/silicon/pai/Login()
-	..()
-	usr << browse_rsc('html/paigrid.png')			// Go ahead and cache the interface resources as early as possible
-
 
 /mob/living/silicon/pai/Stat()
 	..()

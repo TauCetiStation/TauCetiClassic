@@ -103,7 +103,7 @@ steam.start() -- spawns the effect
 			spawn(0)
 				if(holder)
 					src.location = get_turf(holder)
-				var/obj/effect/effect/steam/steam = PoolOrNew(/obj/effect/effect/steam, src.location)
+				var/obj/effect/effect/steam/steam = new /obj/effect/effect/steam(src.location)
 				var/direction
 				if(src.cardinals)
 					direction = pick(cardinal)
@@ -112,8 +112,7 @@ steam.start() -- spawns the effect
 				for(i=0, i<pick(1,2,3), i++)
 					sleep(5)
 					step(steam,direction)
-				spawn(20)
-					qdel(steam)
+				QDEL_IN(steam, 20)
 
 /////////////////////////////////////////////
 //SPARK SYSTEM (like steam system)
@@ -135,8 +134,7 @@ steam.start() -- spawns the effect
 	var/turf/T = src.loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
-	spawn (100)
-		qdel(src)
+	QDEL_IN(src, 100)
 	return
 
 /obj/effect/effect/sparks/Destroy()
@@ -173,7 +171,7 @@ steam.start() -- spawns the effect
 			spawn(0)
 				if(holder)
 					src.location = get_turf(holder)
-				var/obj/effect/effect/sparks/sparks = PoolOrNew(/obj/effect/effect/sparks, src.location)
+				var/obj/effect/effect/sparks/sparks = new /obj/effect/effect/sparks(src.location)
 				src.total_sparks++
 				var/direction
 				if(src.cardinals)
@@ -183,12 +181,12 @@ steam.start() -- spawns the effect
 				for(i=0, i<pick(1,2,3), i++)
 					sleep(5)
 					step(sparks,direction)
-				spawn(20)
-					if(sparks)
-						qdel(sparks)
-					src.total_sparks--
+				addtimer(CALLBACK(src, .proc/delete_sparks, sparks), 20)
 
-
+/datum/effect/effect/system/spark_spread/proc/delete_sparks(obj/effect/effect/sparks/sparks)
+	if(sparks)
+		qdel(sparks)
+	total_sparks--
 
 /////////////////////////////////////////////
 //// SMOKE SYSTEMS
@@ -213,8 +211,7 @@ steam.start() -- spawns the effect
 
 /obj/effect/effect/smoke/New()
 	..()
-	spawn (time_to_live)
-		qdel(src)
+	QDEL_IN(src, time_to_live)
 	return
 
 /obj/effect/effect/smoke/Crossed(mob/living/carbon/M as mob )
@@ -338,7 +335,7 @@ steam.start() -- spawns the effect
 		spawn(0)
 			if(holder)
 				src.location = get_turf(holder)
-			var/obj/effect/effect/smoke/smoke = PoolOrNew(smoke_type, src.location)
+			var/obj/effect/effect/smoke/smoke = new smoke_type(src.location)
 			src.total_smoke++
 			var/direction = src.direction
 			if(!direction)
@@ -397,13 +394,11 @@ steam.start() -- spawns the effect
 		var/turf/T = get_turf(src.holder)
 		if(T != src.oldposition)
 			if(!has_gravity(T))
-				var/obj/effect/effect/ion_trails/I = PoolOrNew(/obj/effect/effect/ion_trails, src.oldposition)
+				var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails(src.oldposition)
 				I.dir = src.holder.dir
 				flick("ion_fade", I)
 				I.icon_state = "blank"
-				spawn( 20 )
-					if(I)
-						qdel(I)
+				QDEL_IN(I, 20)
 			src.oldposition = T
 		spawn(2)
 			if(src.on)
@@ -437,7 +432,7 @@ steam.start() -- spawns the effect
 			src.processing = 0
 			spawn(0)
 				if(src.number < 3)
-					var/obj/effect/effect/steam/I = PoolOrNew(/obj/effect/effect/steam, src.oldposition)
+					var/obj/effect/effect/steam/I = new /obj/effect/effect/steam(src.oldposition)
 					src.number++
 					src.oldposition = get_turf(holder)
 					I.dir = src.holder.dir
@@ -487,7 +482,7 @@ steam.start() -- spawns the effect
 		process()
 		checkReagents()
 	spawn(120)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		sleep(30)
 
 		if(metal)
@@ -527,7 +522,7 @@ steam.start() -- spawns the effect
 		if(F)
 			continue
 
-		F = PoolOrNew(/obj/effect/effect/foam, list(T, metal))
+		F = new /obj/effect/effect/foam(T, metal)
 		F.amount = amount
 		if(!metal)
 			F.create_reagents(10)
@@ -540,10 +535,7 @@ steam.start() -- spawns the effect
 /obj/effect/effect/foam/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(!metal && prob(max(0, exposed_temperature - 475)))
 		flick("[icon_state]-disolve", src)
-
-		spawn(5)
-			qdel(src)
-
+		QDEL_IN(src, 5)
 
 /obj/effect/effect/foam/Crossed(var/atom/movable/AM)
 	if(metal)
@@ -598,7 +590,7 @@ steam.start() -- spawns the effect
 				F.amount += amount
 				return
 
-			F = PoolOrNew(/obj/effect/effect/foam, list(src.location, metal))
+			F = new /obj/effect/effect/foam(src.location, metal)
 			F.amount = amount
 
 			if(!metal)			// don't carry other chemicals if a metal foam
@@ -693,15 +685,6 @@ steam.start() -- spawns the effect
 		if(air_group) return 0
 		return !density
 
-
-	proc/update_nearby_tiles(need_rebuild)
-		if(!SSair)
-			return 0
-
-		SSair.mark_for_update(get_turf(src))
-
-		return 1
-
 /datum/effect/effect/system/reagents_explosion
 	var/amount 						// TNT equivalent
 	var/flashing = 0			// does explosion creates flash effect?
@@ -721,7 +704,7 @@ steam.start() -- spawns the effect
 
 	start()
 		if (amount <= 2)
-			var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 			s.set_up(2, 1, location)
 			s.start()
 
@@ -733,26 +716,26 @@ steam.start() -- spawns the effect
 					M.Weaken(rand(1,5))
 			return
 		else
-			var/devastation = -1
-			var/heavy = -1
-			var/light = -1
-			var/flash = -1
+			var/devastation = 0
+			var/heavy = 0
+			var/light = 0
+			var/flash = 0
 
 			// Clamp all values to MAX_EXPLOSION_RANGE
 			if (round(amount/12) > 0)
-				devastation = min (MAX_EXPLOSION_RANGE, devastation + round(amount/12))
+				devastation = min (MAX_EXPLOSION_RANGE, round(amount/12))
 
 			if (round(amount/6) > 0)
-				heavy = min (MAX_EXPLOSION_RANGE, heavy + round(amount/6))
+				heavy = min (MAX_EXPLOSION_RANGE, round(amount/6))
 
 			if (round(amount/3) > 0)
-				light = min (MAX_EXPLOSION_RANGE, light + round(amount/3))
+				light = min (MAX_EXPLOSION_RANGE, round(amount/3))
 
 			if (flash && flashing_factor)
 				flash += (round(amount/4) * flashing_factor)
 
-			for(var/mob/M in viewers(8, location))
-				to_chat(M, "\red The solution violently explodes.")
+			for(var/mob/M in viewers(world.view, location))
+				to_chat(M, "<span class='red'>The solution violently explodes.</span>")
 
 			explosion(location, devastation, heavy, light, flash)
 

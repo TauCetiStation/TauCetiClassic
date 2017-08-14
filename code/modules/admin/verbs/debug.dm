@@ -628,6 +628,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"mime",
 		"clown"
 		)
+	var/list/dresspacks_without_money = list(
+		"strip",
+		"blue wizard",
+		"red wizard",
+		"marisa wizard"
+		)
 	var/dresscode = input("Select dress for [M]", "Robust quick dress shop") as null|anything in dresspacks
 	if (isnull(dresscode))
 		return
@@ -645,7 +651,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/space/globose(M), slot_wear_suit)
 			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/globose(M), slot_head)
-			var /obj/item/weapon/tank/jetpack/J = new /obj/item/weapon/tank/jetpack/oxygen(M)
+			var/obj/item/weapon/tank/jetpack/J = new /obj/item/weapon/tank/jetpack/oxygen(M)
 			M.equip_to_slot_or_del(J, slot_back)
 			J.toggle()
 			M.equip_to_slot_or_del(new /obj/item/clothing/mask/breath(M), slot_wear_mask)
@@ -810,7 +816,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_l_ear)
-			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/device/flashlight(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
 			var/obj/item/weapon/card/id/syndicate/W = new(M)
@@ -841,7 +847,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_l_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/clipboard(M), slot_belt)
 
-			var/obj/item/weapon/card/id/W = new(M)
+			var/obj/item/weapon/card/id/centcom/W = new(M)
 			W.assignment = "NanoTrasen Navy Representative"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.icon_state = "centcom"
@@ -912,7 +918,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 
-			var/obj/item/weapon/card/id/W = new(M)
+			var/obj/item/weapon/card/id/ert/W = new(M)
 			W.assignment = "Emergency Response Team"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.icon_state = "centcom"
@@ -935,7 +941,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(M), slot_r_store)
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 
-			var/obj/item/weapon/card/id/W = new(M)
+			var/obj/item/weapon/card/id/centcom/W = new(M)
 			W.assignment = "Special Operations Officer"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.icon_state = "centcom"
@@ -1020,9 +1026,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
 			L.imp_in = M
 			L.implanted = 1
-			var/datum/organ/external/affected = M.organs_by_name["head"]
-			affected.implants += L
-			L.part = affected
+			var/obj/item/organ/external/BP = M.bodyparts_by_name[BP_HEAD]
+			BP.implants += L
+			L.part = BP
 		if("hop")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_personnel(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), slot_shoes)
@@ -1072,9 +1078,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
 			L.imp_in = M
 			L.implanted = 1
-			var/datum/organ/external/affected = M.organs_by_name["head"]
-			affected.implants += L
-			L.part = affected
+			var/obj/item/organ/external/BP = M.bodyparts_by_name[BP_HEAD]
+			BP.implants += L
+			L.part = BP
 		if("cmo")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_medical_officer(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), slot_shoes)
@@ -1545,9 +1551,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
 			L.imp_in = M
 			L.implanted = 1
-			var/datum/organ/external/affected = M.organs_by_name["head"]
-			affected.implants += L
-			L.part = affected
+			var/obj/item/organ/external/BP = M.bodyparts_by_name[BP_HEAD]
+			BP.implants += L
+			L.part = BP
 		if("assistant")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
@@ -1643,6 +1649,15 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
+	if(!(dresscode in dresspacks_without_money) && M.mind)
+		if(M.mind.initial_account)
+			if(M.mind.initial_account.owner_name != M.real_name)
+				qdel(M.mind.initial_account)
+				M.mind.initial_account = null
+				create_random_account_and_store_in_mind(M)
+			//else do nothing
+		else
+			create_random_account_and_store_in_mind(M)
 
 	M.regenerate_icons()
 
@@ -1665,7 +1680,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	for(var/obj/machinery/field_generator/F in machines)
 		if(F.anchored)
-			F.Varedit_start = 1
+			F.var_edit_start = 1
 	spawn(30)
 		for(var/obj/machinery/the_singularitygen/G in machines)
 			if(G.anchored)
@@ -1724,51 +1739,43 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(!M.loc.loc)
 			continue
 
-		if(istype(M.loc.loc,/area/engine/engine_room))
-			if(istype(M,/obj/machinery/power/rad_collector))
-				var/obj/machinery/power/rad_collector/Rad = M
-				Rad.anchored = 1
-				Rad.connect_to_network()
+		if(istype(M,/obj/machinery/power/rad_collector))
+			var/obj/machinery/power/rad_collector/Rad = M
+			Rad.anchored = 1
+			Rad.connect_to_network()
 
-				var/obj/item/weapon/tank/phoron/Phoron = new/obj/item/weapon/tank/phoron(Rad)
+			var/obj/item/weapon/tank/phoron/Phoron = new/obj/item/weapon/tank/phoron(Rad)
 
-				Phoron.air_contents.phoron = 29.1154	//This is a full tank if you filled it from a canister
-				Rad.P = Phoron
+			Phoron.air_contents.phoron = 29.1154	//This is a full tank if you filled it from a canister
+			Rad.P = Phoron
 
-				Phoron.loc = Rad
+			Phoron.loc = Rad
 
-				if(!Rad.active)
-					Rad.toggle_power()
-				Rad.update_icon()
+			if(!Rad.active)
+				Rad.toggle_power()
+			Rad.update_icon()
 
-			else if(istype(M,/obj/machinery/atmospherics/binary/pump))	//Turning on every pump.
-				var/obj/machinery/atmospherics/binary/pump/Pump = M
-				if(Pump.name == "Engine Feed" && response == "Setup Completely")
-					found_the_pump = 1
-					Pump.air2.nitrogen = 3750	//The contents of 2 canisters.
-					Pump.air2.temperature = 50
-					Pump.air2.update_values()
-				Pump.on=1
-				Pump.target_pressure = 4500
-				Pump.update_icon()
+		else if(istype(M,/obj/machinery/atmospherics/binary/pump))	//Turning on every pump.
+			var/obj/machinery/atmospherics/binary/pump/Pump = M
+			if(Pump.name == "Engine Feed" && response == "Setup Completely")
+				found_the_pump = 1
+				Pump.air2.nitrogen = 3750	//The contents of 2 canisters.
+				Pump.air2.temperature = 50
+				Pump.air2.update_values()
+			Pump.on=1
+			Pump.target_pressure = 4500
+			Pump.update_icon()
 
-			else if(istype(M,/obj/machinery/power/supermatter))
-				SM = M
-				spawn(50)
-					SM.power = 320
+		else if(istype(M,/obj/machinery/power/supermatter))
+			SM = M
+			spawn(50)
+				SM.power = 320
 
-			else if(istype(M,/obj/machinery/power/smes))	//This is the SMES inside the engine room.  We don't need much power.
-				var/obj/machinery/power/smes/SMES = M
-				SMES.chargemode = 1
-				SMES.chargelevel = 200000
-				SMES.output = 75000
-
-		else if(istype(M.loc.loc,/area/engine/engine_smes))	//Set every SMES to charge and spit out 300,000 power between the 4 of them.
-			if(istype(M,/obj/machinery/power/smes))
-				var/obj/machinery/power/smes/SMES = M
-				SMES.chargemode = 1
-				SMES.chargelevel = 200000
-				SMES.output = 75000
+		else if(istype(M,/obj/machinery/power/smes))	//This is the SMES inside the engine room.  We don't need much power.
+			var/obj/machinery/power/smes/SMES = M
+			SMES.chargemode = 1
+			SMES.chargelevel = 200000
+			SMES.output = 75000
 
 	if(!found_the_pump && response == "Setup Completely")
 		to_chat(src, "\red Unable to locate air supply to fill up with coolant, adding some coolant around the supermatter")
@@ -1826,3 +1833,30 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			log_admin("[key_name(src)] has toggled [saved_key]'s HULK block on!")
 	else
 		alert("Invalid mob")
+
+/client/proc/reload_nanoui_resources()
+	set category = "Debug"
+	set name = "Reload NanoUI Resources"
+	set desc = "Force the client to redownload NanoUI Resources"
+
+	// Close open NanoUIs.
+	nanomanager.close_user_uis(usr)
+
+	// Re-load the assets.
+	var/datum/asset/assets = get_asset_datum(/datum/asset/nanoui)
+	assets.register()
+
+	// Clear the user's cache so they get resent.
+	usr.client.cache = list()
+
+	to_chat(usr, "Your NanoUI Resource files have been refreshed")
+
+/client/proc/view_runtimes()
+	set category = "Debug"
+	set name = "View Runtimes"
+	set desc = "Open the runtime Viewer"
+
+	if(!check_rights(R_DEBUG))
+		return
+
+	error_cache.show_to(src)

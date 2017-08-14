@@ -3,6 +3,7 @@
 
 /obj/machinery/computer/syndicate_station
 	name = "syndicate shuttle terminal"
+	circuit = /obj/item/weapon/circuitboard/computer/syndicate_shuttle
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "syndishuttle"
 	light_color = "#a91515"
@@ -11,9 +12,12 @@
 	var/moving = 0
 	var/lastMove = 0
 
+/obj/effect/landmark/syndi_shuttle
 
 /obj/machinery/computer/syndicate_station/New()
-	curr_location= locate(/area/syndicate_station/start)
+	..()
+	var/obj/O = locate(/obj/effect/landmark/syndi_shuttle) in landmarks_list
+	curr_location = get_area(O)
 
 
 /obj/machinery/computer/syndicate_station/proc/syndicate_move_to(area/destination)
@@ -66,6 +70,14 @@
 	. = ..()
 	if(!. || !allowed(usr))
 		return
+	if(!Challenge)
+		if(world.time < SYNDICATE_CHALLENGE_TIMER)
+			to_chat(usr, "<span class='warning'>You've issued a combat challenge to the station! You've got to give them at least \
+		 	[round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
+		 	more minutes to allow them to prepare.</span>")
+			return
+	else
+		Challenge.shuttle_moved = TRUE
 
 	if(href_list["syndicate"])
 		syndicate_move_to(/area/syndicate_station/start)
@@ -85,3 +97,36 @@
 		syndicate_move_to(/area/syndicate_station/mining)
 
 	updateUsrDialog()
+
+/obj/item/weapon/circuitboard/computer/syndicate_shuttle
+	name = "Syndicate Shuttle (Computer Board)"
+	build_path = /obj/machinery/computer/syndicate_station
+
+/obj/item/device/syndi_shuttle_unlocker
+	name = "Shuttle Unlocker"
+	icon = 'icons/obj/device.dmi'
+	icon_state = "recaller"
+	item_state = "walkietalkie"
+
+/obj/item/device/syndi_shuttle_unlocker/attack_self(mob/user)
+	var/area/cur_area = get_area(user)
+	if(!istype(cur_area, /area/syndicate_mothership))
+		to_chat(user, "<span class='userdanger'>Return to base to unlock shuttle!</span>")
+	var/passed = FALSE
+	for(var/obj/machinery/door/poddoor/shutters/syndi/shutter in cur_area)
+		if(shutter.tag == "Syndicate_shuttle")
+			to_chat(user, "<span class='notice'>The Shuttle has been unlocked!</span>")
+			qdel(shutter)
+			passed = TRUE
+			break
+	if(passed)
+		playsound(loc, 'sound/machines/twobeep.ogg', 50, 2)
+		qdel(src)
+		return
+	to_chat(user, "<span class='userdanger'>The Shuttle has been already unlocked!</span>")
+
+/obj/effect/landmark/blockway
+	density = 1
+
+#undef SYNDICATE_SHUTTLE_MOVE_TIME
+#undef SYNDICATE_SHUTTLE_COOLDOWN

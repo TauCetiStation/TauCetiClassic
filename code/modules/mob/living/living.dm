@@ -50,12 +50,6 @@
 				to_chat(src, "<span class='danger'>You fail to push [M]'s fat ass out of the way.</span>")
 			return 1
 
-	//Leaping mobs just land on the tile, no pushing, no anything.
-	if(status_flags & LEAPING)
-		loc = M.loc
-		status_flags &= ~LEAPING
-		return 1
-
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
 	if((M.a_intent == "help" || M.restrained()) && (a_intent == "help" || restrained()) && M.canmove && canmove && !M.buckled && !M.buckled_mob) // mutual brohugs all around!
@@ -195,11 +189,10 @@
 		if (COLD_RESISTANCE in src.mutations) //fireproof
 			return 0
 		var/mob/living/carbon/human/H = src	//make this damage method divide the damage to be done among all the body parts, then burn each body part for that much damage. will have better effect then just randomly picking a body part
-		var/divided_damage = (burn_amount)/(H.organs.len)
+		var/divided_damage = burn_amount / H.bodyparts.len
 		var/extradam = 0	//added to when organ is at max dam
-		for(var/datum/organ/external/affecting in H.organs)
-			if(!affecting)	continue
-			affecting.take_damage(0, divided_damage+extradam)	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
+		for(var/obj/item/organ/external/BP in H.bodyparts)
+			BP.take_damage(0, divided_damage + extradam)	//TODO: fix the extradam stuff. Or, ebtter yet...rewrite this entire proc ~Carn
 		H.updatehealth()
 		return 1
 	else if(istype(src, /mob/living/carbon/monkey))
@@ -233,86 +226,99 @@
 	return temperature
 
 
-// ++++ROCKDTBEN++++ MOB PROCS -- Ask me before touching.
-// Stop! ... Hammertime! ~Carn
-// I touched them without asking... I'm soooo edgy ~Erro (added nodamage checks)
+// ==================================
+// ========== DAMAGE PROCS ==========
+// ==================================
 
+// ========== BRUTE ==========
 /mob/living/proc/getBruteLoss()
 	return bruteloss
 
 /mob/living/proc/adjustBruteLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	bruteloss = min(max(bruteloss + amount, 0),(maxHealth*2))
+	if(status_flags & GODMODE)
+		return
+	bruteloss = Clamp(bruteloss + amount, 0, maxHealth * 2)
 
+// ========== OXY ==========
 /mob/living/proc/getOxyLoss()
 	return oxyloss
 
 /mob/living/proc/adjustOxyLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	oxyloss = min(max(oxyloss + amount, 0),(maxHealth*2))
+	if(status_flags & GODMODE)
+		return
+	oxyloss = Clamp(oxyloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setOxyLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	oxyloss = amount
+	if(status_flags & GODMODE)
+		return
+	oxyloss = Clamp(amount, 0, maxHealth * 2)
 
+// ========== TOX ==========
 /mob/living/proc/getToxLoss()
 	return toxloss
 
 /mob/living/proc/adjustToxLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	toxloss = min(max(toxloss + amount, 0),(maxHealth*2))
+	if(status_flags & GODMODE)
+		return
+	toxloss = Clamp(toxloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setToxLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	toxloss = amount
+	if(status_flags & GODMODE)
+		return
+	toxloss = Clamp(amount, 0, maxHealth * 2)
 
+// ========== FIRE ==========
 /mob/living/proc/getFireLoss()
 	return fireloss
 
 /mob/living/proc/adjustFireLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	fireloss = min(max(fireloss + amount, 0),(maxHealth*2))
+	if(status_flags & GODMODE)
+		return
+	fireloss = Clamp(fireloss + amount, 0, maxHealth * 2)
 
+// ========== CLONE ==========
 /mob/living/proc/getCloneLoss()
 	return cloneloss
 
 /mob/living/proc/adjustCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	cloneloss = min(max(cloneloss + amount, 0),(maxHealth*2))
+	if(status_flags & GODMODE)
+		return
+	cloneloss = Clamp(cloneloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setCloneLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	cloneloss = amount
+	if(status_flags & GODMODE)
+		return
+	cloneloss = Clamp(amount, 0, maxHealth * 2)
 
+// ========== BRAIN ==========
 /mob/living/proc/getBrainLoss()
 	return brainloss
 
 /mob/living/proc/adjustBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	brainloss = min(max(brainloss + amount, 0),(maxHealth*2))
+	if(status_flags & GODMODE)
+		return
+	brainloss = Clamp(brainloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setBrainLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	brainloss = amount
+	if(status_flags & GODMODE)
+		return
+	brainloss = Clamp(amount, 0, maxHealth * 2)
 
+// ========== PAIN ==========
 /mob/living/proc/getHalLoss()
 	return halloss
 
 /mob/living/proc/adjustHalLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	halloss = min(max(halloss + amount, 0),(maxHealth*2))
+	if(status_flags & GODMODE)
+		return
+	halloss = Clamp(halloss + amount, 0, maxHealth * 2)
 
 /mob/living/proc/setHalLoss(amount)
-	if(status_flags & GODMODE)	return 0	//godmode
-	halloss = amount
+	if(status_flags & GODMODE)
+		return
+	halloss = Clamp(amount, 0, maxHealth * 2)
 
-/mob/living/proc/getMaxHealth()
-	return maxHealth
-
-/mob/living/proc/setMaxHealth(newMaxHealth)
-	maxHealth = newMaxHealth
-
-// ++++ROCKDTBEN++++ MOB PROCS //END
+// ============================================================
 
 
 /mob/proc/get_contents()
@@ -384,48 +390,37 @@
 /mob/living/singularity_pull(S)
 	step_towards(src,S)
 
-/mob/living/proc/can_inject()
-	return 1
+/mob/living/proc/try_inject()
+	return TRUE
 
-/mob/living/proc/get_organ_target()
-	var/mob/shooter = src
-	var/t = shooter:zone_sel.selecting
-	if ((t in list( "eyes", "mouth" )))
-		t = "head"
-	var/datum/organ/external/def_zone = ran_zone(t)
-	return def_zone
-
-
-// heal ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/heal_organ_damage(brute, burn)
+// heal ONE bodypart, bodypart gets randomly selected from damaged ones.
+/mob/living/proc/heal_bodypart_damage(brute, burn)
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
 	src.updatehealth()
 
-// damage ONE external organ, organ gets randomly selected from damaged ones.
-/mob/living/proc/take_organ_damage(brute, burn)
+// damage ONE bodypart, bodypart gets randomly selected from damaged ones.
+/mob/living/proc/take_bodypart_damage(brute, burn)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	src.updatehealth()
 
-// heal MANY external organs, in random order
+// heal MANY bodyparts, in random order
 /mob/living/proc/heal_overall_damage(brute, burn)
 	adjustBruteLoss(-brute)
 	adjustFireLoss(-burn)
 	src.updatehealth()
 
-// damage MANY external organs, in random order
+// damage MANY bodyparts, in random order
 /mob/living/proc/take_overall_damage(brute, burn, used_weapon = null)
 	if(status_flags & GODMODE)	return 0	//godmode
 	adjustBruteLoss(brute)
 	adjustFireLoss(burn)
 	src.updatehealth()
 
-/mob/living/proc/restore_all_organs()
+/mob/living/proc/restore_all_bodyparts()
 	return
-
-
 
 /mob/living/proc/revive()
 	rejuvenate()
@@ -455,9 +450,6 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		C.shock_stage=0
 
 	// shut down ongoing problems
 	radiation = 0
@@ -468,6 +460,11 @@
 	ExtinguishMob()
 	fire_stacks = 0
 
+	if(pinned.len)
+		for(var/obj/O in pinned)
+			O.forceMove(loc)
+		pinned.Cut()
+
 	// fix blindness and deafness
 	blinded = 0
 	eye_blind = 0
@@ -476,13 +473,17 @@
 	ear_damage = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
 
-	// restore all of a human's blood
-	if(ishuman(src))
-		var/mob/living/carbon/human/human_mob = src
-		human_mob.restore_blood()
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		C.shock_stage = 0
 
-	// fix all of our organs
-	restore_all_organs()
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.restore_blood()
+			H.full_prosthetic = null
+
+	restore_all_bodyparts()
+	cure_all_viruses()
 
 	// remove the character from the list of the dead
 	if(stat == DEAD)
@@ -504,7 +505,18 @@
 		mutations.Remove(HUSK)
 	regenerate_icons()
 	update_health_hud()
-	return
+
+/mob/living/carbon/human/rejuvenate()
+	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
+	BP.disfigured = FALSE
+
+	for (var/obj/item/weapon/organ/head/H in world) // damn son, where'd you get this?
+		if(H.brainmob)
+			if(H.brainmob.real_name == src.real_name)
+				if(H.brainmob.mind)
+					H.brainmob.mind.transfer_to(src)
+					qdel(H)
+	..()
 
 /mob/living/proc/update_health_hud()
 	hud_updateflag |= 1 << HEALTH_HUD
@@ -513,6 +525,32 @@
 /mob/living/proc/UpdateDamageIcon()
 	return
 
+/mob/living/proc/cure_all_viruses()
+	for(var/datum/disease/virus in viruses)
+		virus.cure()
+
+/mob/living/carbon/cure_all_viruses()
+	for(var/ID in virus2)
+		var/datum/disease2/disease/V = virus2[ID]
+		V.cure(src)
+
+	..()
+
+/mob/living/proc/remove_any_mutations()
+	dna.ResetSE()
+	for(var/datum/dna/gene/gene in dna_genes)
+		if(!gene.block)
+			continue
+		genemutcheck(src, gene.block, null, MUTCHK_FORCED)
+
+/mob/living/carbon/human/remove_any_mutations()
+	var/needs_update = mutations.len > 0
+
+	..()
+
+	// Might need to update appearance for hulk etc.
+	if(needs_update)
+		update_mutations()
 
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
@@ -650,12 +688,12 @@
 					TH.basecolor = initial(TH.basecolor)
 					TH.update_icon()
 			if(!TH.amount)
-				SSobj.processing.Remove(TH)
+				STOP_PROCESSING(SSobj, TH)
 				TH.name = initial(TH.name)
 				TH.desc = initial(TH.desc)
 				TH.amount = initial(TH.amount)
 				TH.drytime = world.time + DRYING_TIME * (TH.amount+1)
-				SSobj.processing |= TH
+				START_PROCESSING(SSobj, TH)
 			if((!(newdir in TH.existing_dirs) || trail_type == "trails_1") && TH.existing_dirs.len <= 16) //maximum amount of overlays is 16 (all light & heavy directions filled)
 				TH.existing_dirs += newdir
 				TH.overlays.Add(image('icons/effects/blood.dmi',trail_type,dir = newdir))
@@ -664,6 +702,13 @@
 
 /mob/living/proc/getTrail() //silicon and simple_animals don't get blood trails
 	return null
+
+/mob/living/carbon/getTrail()
+	return "trails_1"
+
+/mob/living/carbon/human/getTrail()
+	if(!species.flags[NO_BLOOD] && round(vessel.get_reagent_amount("blood")) > 0)
+		return ..()
 
 /mob/living/verb/resist()
 	set name = "Resist"
@@ -731,9 +776,8 @@
 
 	//resisting grabs (as if it helps anyone...)
 	if (!L.stat && !L.restrained())
-		if(L.stunned || L.weakened)
+		if(L.stunned > 2 || L.weakened)
 			return
-
 		var/resisting = 0
 		for(var/obj/O in L.requests)
 			L.requests.Remove(O)
@@ -749,7 +793,7 @@
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				if(GRAB_NECK)
-					if(prob(10))
+					if(prob(5 - L.stunned * 2))
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s headlock!</span>")
 						qdel(G)
 		if(resisting)
@@ -841,12 +885,10 @@
 							var/datum/effect/effect/system/spark_spread/S = new
 							S.set_up(4,0,CM.loc)
 							S.start()
-							CM.drop_from_inventory(CM.handcuffed)
-							qdel(HC)
 						else
 							CM.visible_message("<span class='danger'>[CM] manages to remove the handcuffs!</span>", \
 								"<span class='notice'>You successfully remove \the [CM.handcuffed].</span>")
-							CM.drop_from_inventory(CM.handcuffed)
+						CM.drop_from_inventory(CM.handcuffed)
 
 		else if(CM.legcuffed && (CM.last_special <= world.time))
 			if(!CM.canmove && !CM.resting)	return
@@ -887,28 +929,18 @@
 							var/datum/effect/effect/system/spark_spread/S = new
 							S.set_up(4,0,CM.loc)
 							S.start()
-							CM.drop_from_inventory(CM.legcuffed)
-							CM.legcuffed = null
-							CM.update_inv_legcuffed()
-							qdel(HC)
 						else
 							CM.visible_message("<span class='danger'>[CM] manages to remove the legcuffs!</span>", \
 								"<span class='notice'>You successfully remove \the [CM.legcuffed].</span>")
-							CM.drop_from_inventory(CM.legcuffed)
-							CM.legcuffed = null
-							CM.update_inv_legcuffed()
+						CM.drop_from_inventory(CM.legcuffed)
 
 /mob/living/verb/lay_down()
 	set name = "Rest"
 	set category = "IC"
 
-	if(issilicon(usr))
+	if(isrobot(usr))
 		var/mob/living/silicon/robot/R = usr
-		for(var/V in R.components)
-			if(V == "power cell") continue
-			var/datum/robot_component/C = R.components[V]
-			if(C.installed)
-				C.toggled = !C.toggled
+		R.toggle_all_components()
 		to_chat(R, "<span class='notice'>You toggle all your components.</span>")
 		return
 
@@ -944,6 +976,9 @@
 
 /mob/living/proc/has_eyes()
 	return 1
+
+/mob/living/proc/slip(slipped_on, stun_duration=4, weaken_duration=2)
+	return FALSE
 
 //-TG Port for smooth standing/lying animations
 /mob/living/proc/get_standard_pixel_x_offset(lying_current = 0)
@@ -1011,14 +1046,12 @@
 /mob/living/Stat()
 	..()
 	if(statpanel("Status"))
-		if(ticker)
-			if(ticker.mode)
-				if(istype(ticker.mode, /datum/game_mode/gang))
-					var/datum/game_mode/gang/mode = ticker.mode
-					if(isnum(mode.A_timer))
-						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
-					if(isnum(mode.B_timer))
-						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
+		if(ticker.mode && ticker.mode.config_tag == "gang")
+			var/datum/game_mode/gang/mode = ticker.mode
+			if(isnum(mode.A_timer))
+				stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
+			if(isnum(mode.B_timer))
+				stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
 
 /mob/living/update_gravity(has_gravity)
 	if(!ticker)
@@ -1053,7 +1086,7 @@
 	floating = 0
 
 /mob/living/proc/harvest(mob/living/user)
-	if(qdeleted(src))
+	if(QDELETED(src))
 		return
 	if(butcher_results)
 		if(butcher_results.len)

@@ -71,3 +71,6 @@
 		else
 			to_chat(src, "<span class='notice'>We already have an alive queen.</span>")
 	return
+
+/mob/living/carbon/alien/humanoid/drone/movement_delay()
+	return(1 + move_delay_add + config.alien_delay)

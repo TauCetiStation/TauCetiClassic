@@ -73,7 +73,7 @@ obj/structure/windoor_assembly/Destroy()
 						to_chat(user, "\blue You dissasembled the windoor assembly!")
 						new /obj/item/stack/sheet/rglass(get_turf(src), 5)
 						if(secure)
-							PoolOrNew(/obj/item/stack/rods, list(get_turf(src), 4))
+							new /obj/item/stack/rods(get_turf(src), 4)
 						qdel(src)
 				else
 					to_chat(user, "\blue You need more welding fuel to dissassemble the windoor assembly.")
@@ -137,7 +137,8 @@ obj/structure/windoor_assembly/Destroy()
 					if(!src || !src.anchored || src.state != "01")
 						return
 					var/obj/item/weapon/cable_coil/CC = W
-					CC.use(1)
+					if(!CC.use(1))
+						return
 					to_chat(user, "\blue You wire the windoor!")
 					src.state = "02"
 					if(src.secure)
@@ -159,7 +160,7 @@ obj/structure/windoor_assembly/Destroy()
 						return
 
 					to_chat(user, "\blue You cut the windoor wires.!")
-					new/obj/item/weapon/cable_coil(get_turf(user), 1)
+					new /obj/item/weapon/cable_coil/random(get_turf(user), 1)
 					src.state = "01"
 					if(src.secure)
 						src.name = "Secure Anchored Windoor Assembly"
@@ -319,11 +320,3 @@ obj/structure/windoor_assembly/Destroy()
 
 	update_icon()
 	return
-
-/obj/structure/windoor_assembly/proc/update_nearby_tiles(need_rebuild)
-	if(!SSair)
-		return 0
-
-	SSair.mark_for_update(get_turf(src))
-
-	return 1

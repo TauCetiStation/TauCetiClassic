@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/emplosion
 	name = "Emplosion"
 	desc = "This spell emplodes an area."
-
+	sound = 'sound/magic/Disable_Tech.ogg'
 	var/emp_heavy = 2
 	var/emp_light = 3
 

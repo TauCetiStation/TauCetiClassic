@@ -15,16 +15,16 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
 	//Species-specific stuff.
-	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Diona","Vox")
+	species_restricted = list("exclude" , UNATHI , TAJARAN , SKRELL , DIONA , VOX)
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/mob/species/unathi/helmet.dmi',
-		"Tajaran" = 'icons/mob/species/tajaran/helmet.dmi',
-		"Skrell" = 'icons/mob/species/skrell/helmet.dmi',
+		UNATHI = 'icons/mob/species/unathi/helmet.dmi',
+		TAJARAN = 'icons/mob/species/tajaran/helmet.dmi',
+		SKRELL = 'icons/mob/species/skrell/helmet.dmi',
 		)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/obj/clothing/species/unathi/hats.dmi',
-		"Tajaran" = 'icons/obj/clothing/species/tajaran/hats.dmi',
-		"Skrell" = 'icons/obj/clothing/species/skrell/hats.dmi',
+		UNATHI = 'icons/obj/clothing/species/unathi/hats.dmi',
+		TAJARAN = 'icons/obj/clothing/species/tajaran/hats.dmi',
+		SKRELL = 'icons/obj/clothing/species/skrell/hats.dmi',
 		)
 
 /obj/item/clothing/head/helmet/space/rig/attack_self(mob/user)
@@ -54,16 +54,16 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
-	species_restricted = list("exclude","Unathi","Tajaran","Diona","Vox")
+	species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX)
 	sprite_sheets_refit = list(
-		"Unathi" = 'icons/mob/species/unathi/suit.dmi',
-		"Tajaran" = 'icons/mob/species/tajaran/suit.dmi',
-		"Skrell" = 'icons/mob/species/skrell/suit.dmi',
+		UNATHI = 'icons/mob/species/unathi/suit.dmi',
+		TAJARAN = 'icons/mob/species/tajaran/suit.dmi',
+		SKRELL = 'icons/mob/species/skrell/suit.dmi',
 		)
 	sprite_sheets_obj = list(
-		"Unathi" = 'icons/obj/clothing/species/unathi/suits.dmi',
-		"Tajaran" = 'icons/obj/clothing/species/tajaran/suits.dmi',
-		"Skrell" = 'icons/obj/clothing/species/skrell/suits.dmi',
+		UNATHI = 'icons/obj/clothing/species/unathi/suits.dmi',
+		TAJARAN = 'icons/obj/clothing/species/tajaran/suits.dmi',
+		SKRELL = 'icons/obj/clothing/species/skrell/suits.dmi',
 		)
 	var/magpulse = 0
 
@@ -189,7 +189,7 @@
 
 		var/target_zone = user.zone_sel.selecting
 
-		if(target_zone == "head")
+		if(target_zone == BP_HEAD)
 
 			//Installing a component into or modifying the contents of the helmet.
 			if(!attached_helmet)
@@ -216,7 +216,7 @@
 			else
 				return ..()
 
-		else if(target_zone == "l_leg" || target_zone == "r_leg" || target_zone == "l_foot" || target_zone == "r_foot")
+		else if(target_zone == BP_L_LEG || target_zone == BP_R_LEG || target_zone == BP_L_FOOT || target_zone == BP_R_FOOT)
 
 			//Installing a component into or modifying the contents of the feet.
 			if(!attached_boots)
@@ -279,8 +279,8 @@
 	item_color = "chief"
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	sprite_sheets = null
-	sprite_sheets_refit = list("Skrell" = 'icons/mob/species/skrell/helmet.dmi')
-	sprite_sheets_obj = list("Skrell" = 'icons/obj/clothing/species/skrell/hats.dmi')
+	sprite_sheets_refit = list(SKRELL = 'icons/mob/species/skrell/helmet.dmi')
+	sprite_sheets_obj = list(SKRELL = 'icons/obj/clothing/species/skrell/hats.dmi')
 
 /obj/item/clothing/suit/space/rig/engineering/chief
 	icon_state = "rig-chief"
@@ -290,8 +290,8 @@
 	slowdown = 1
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	sprite_sheets = null
-	sprite_sheets_refit = list("Skrell" = 'icons/mob/species/skrell/suit.dmi')
-	sprite_sheets_obj = list("Skrell" = 'icons/obj/clothing/species/skrell/suits.dmi')
+	sprite_sheets_refit = list(SKRELL = 'icons/mob/species/skrell/suit.dmi')
+	sprite_sheets_obj = list(SKRELL = 'icons/obj/clothing/species/skrell/suits.dmi')
 
 //Mining rig
 /obj/item/clothing/head/helmet/space/rig/mining
@@ -316,11 +316,11 @@
 	name = "blood-red hardsuit helmet"
 	desc = "An advanced helmet designed for work in special operations. Property of Gorlex Marauders."
 	icon_state = "rig0-syndie"
-	item_state = "syndie_helm"
-	item_color = "syndie"
+	item_color = "syndie" // used for adjust helmet
 	armor = list(melee = 60, bullet = 65, laser = 55,energy = 45, bomb = 50, bio = 100, rad = 60)
 	var/obj/machinery/camera/camera
-	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
+	var/up = 0
+	species_restricted = list("exclude" , UNATHI , TAJARAN , SKRELL , VOX)
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
 	if(camera)
@@ -332,10 +332,39 @@
 		camera.c_tag = user.name
 		to_chat(user, "\blue User scanned as [camera.c_tag]. Camera activated.")
 
+/obj/item/clothing/head/helmet/space/rig/syndi/verb/toggle()
+	set category = "Object"
+	set name = "Adjust helmet"
+	set src in usr
+
+	if(usr.canmove && !usr.stat && !usr.restrained())
+		if(up)
+			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
+			item_color = initial(item_color)
+			to_chat(usr, "You closed helmet")
+		else
+			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
+			item_color += "-up"
+			to_chat(usr, "You opened helmet")
+		icon_state = "rig[on]-[item_color]"
+		up = !up
+		usr.update_inv_head()
+
 /obj/item/clothing/head/helmet/space/rig/syndi/examine(mob/user)
 	..()
 	if(src in view(1, user))
 		to_chat(user, "This helmet has a built-in camera. It's [camera ? "" : "in"]active.")
+
+/obj/item/clothing/head/helmet/space/rig/syndi/attackby(obj/item/W, mob/living/carbon/human/user)
+	if(!istype(user) || user.species.flags[IS_SYNTHETIC])
+		return
+	if(!istype(W, /obj/item/weapon/reagent_containers/pill))
+		return
+	if(up && user.head == src)
+		var/obj/item/weapon/reagent_containers/pill/P = W
+		P.reagents.trans_to_ingest(user, W.reagents.total_volume)
+		to_chat(user, "<span class='notice'>[src] consumes [W] and injected reagents to you!</span>")
+		qdel(W)
 
 /obj/item/clothing/suit/space/rig/syndi
 	icon_state = "rig-syndie"
@@ -345,8 +374,8 @@
 	slowdown = 1.4
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
-	species_restricted = list("exclude","Unathi","Tajaran","Skrell","Vox")
 	breach_threshold = 28
+	species_restricted = list("exclude" , UNATHI , TAJARAN , SKRELL , VOX)
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard

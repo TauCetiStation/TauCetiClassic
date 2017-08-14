@@ -193,9 +193,8 @@
 	origin_tech = "engineering=3;combat=1"
 	var/weaken = 2
 
-/obj/item/weapon/legcuffs/bola/throw_at(atom/target, mob/thrower)
-	if(!..())
-		return
+/obj/item/weapon/legcuffs/bola/after_throw(datum/callback/callback)
+	..()
 	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
 
 /obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom)
@@ -280,9 +279,8 @@
 		var/mob/living/carbon/human/H = user
 		if(!H.gloves && !(H.dna && H.dna.mutantrace == "adamantine")) //specflags please..
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
-			var/organ = (H.hand ? "l_" : "r_") + "hand"
-			var/datum/organ/external/affecting = H.get_organ(organ)
-			affecting.take_damage(force / 2)
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
+			BP.take_damage(force / 2, null, damage_flags())
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
 		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")

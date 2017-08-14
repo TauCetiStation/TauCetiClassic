@@ -93,7 +93,8 @@
 		if(do_after(user, 40, target = src))
 			if(!src)
 				return
-			coil.use(1)
+			if(!coil.use(1))
+				return
 			state = ASSEMBLY_WIRED
 			to_chat(user, "<span class='notice'>You wire the airlock!</span>")
 
@@ -105,7 +106,7 @@
 			if(!src)
 				return
 			to_chat(user, "<span class='notice'>You cut the airlock wires!</span>")
-			new /obj/item/weapon/cable_coil(loc, 1)
+			new /obj/item/weapon/cable_coil/random(loc, 1)
 			state = ASSEMBLY_SECURED
 
 	else if(istype(W, /obj/item/weapon/airlock_electronics) && state == ASSEMBLY_WIRED)
@@ -151,7 +152,8 @@
 					user.visible_message("[user] adds [S.name] to the [src].", "You start to install [S.name] into the [src].")
 					if(do_after(user, 40, target = src))
 						to_chat(user, "<span class='notice'>You installed reinforced glass windows into the [src]!</span>")
-						S.use(1)
+						if(!S.use(1))
+							return
 						set_glass(TRUE)
 				else
 					to_chat(user, "<span class='notice'>You can't insert glass into [src].</span>")

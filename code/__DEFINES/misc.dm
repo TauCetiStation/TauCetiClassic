@@ -1,6 +1,9 @@
 //gets all subtypes of type
 #define subtypesof(typepath) ( typesof(typepath) - typepath )
 
+//number of deciseconds in a day
+#define MIDNIGHT_ROLLOVER 864000
+
 //singularity defines
 #define STAGE_ONE	1
 #define STAGE_TWO	3
@@ -181,9 +184,6 @@
 #define ABOVE_NORMAL_TURF_LAYER 2.08
 #define BELOW_MOB_LAYER 3.7
 
-//Timing subsystem
-#define GLOBAL_PROC	"some_magic_bullshit"
-
 //teleport checks
 #define TELE_CHECK_NONE 0
 #define TELE_CHECK_TURFS 1
@@ -197,3 +197,15 @@
 #define ASSEMBLY_SECURED       0
 #define ASSEMBLY_WIRED         1
 #define ASSEMBLY_NEAR_FINISHED 2
+
+//Wet floor states/severity
+#define WATER_FLOOR 1
+#define LUBE_FLOOR  2
+
+// (Bay12 = -2), but we don't have that projectile code, so...
+#define PROJECTILE_FORCE_MISS -1
+
+#define COORD(A) "([A.x],[A.y],[A.z])"
+
+//Error handler defines
+#define ERROR_USEFUL_LEN 2

@@ -25,16 +25,6 @@
 	if(!height || air_group) return 0
 	else return ..()
 
-//Looks like copy/pasted code... I doubt 'need_rebuild' is even used here - Nodrak
-/obj/machinery/shield/proc/update_nearby_tiles(need_rebuild)
-	if(!SSair)
-		return 0
-
-	SSair.mark_for_update(get_turf(src))
-
-	return 1
-
-
 /obj/machinery/shield/attackby(obj/item/weapon/W, mob/user)
 	if(!istype(W)) return
 
@@ -273,7 +263,8 @@
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
 		if(do_after(user, 30, target = src))
 			if(!src || !coil) return
-			coil.use(1)
+			if(!coil.use(1))
+				return
 			health = max_health
 			malfunction = 0
 			to_chat(user, "\blue You repair the [src]!")
@@ -334,8 +325,6 @@
 		var/recalc = 0
 		var/locked = 1
 		var/destroyed = 0
-		var/directwired = 1
-//		var/maxshieldload = 200
 		var/obj/structure/cable/attached		// the attached cable
 		var/storedpower = 0
 		flags = CONDUCT

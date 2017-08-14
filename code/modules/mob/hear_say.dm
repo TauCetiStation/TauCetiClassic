@@ -15,9 +15,12 @@
 			message = stars(message)
 
 	if(!say_understands(speaker,language))
-		if(istype(speaker,/mob/living/simple_animal))
+		if(isanimal(speaker))
 			var/mob/living/simple_animal/S = speaker
 			message = pick(S.speak)
+		else if(isIAN(speaker))
+			var/mob/living/carbon/ian/IAN = speaker
+			message = pick(IAN.speak)
 		else
 			if(language)
 				message = language.scramble(message)
@@ -75,9 +78,12 @@
 			message = stars(message)
 
 	if(!say_understands(speaker,language))
-		if(istype(speaker,/mob/living/simple_animal))
+		if(isanimal(speaker))
 			var/mob/living/simple_animal/S = speaker
 			message = pick(S.speak)
+		else if(isIAN(speaker))
+			var/mob/living/carbon/ian/IAN = speaker
+			message = pick(IAN.speak)
 		else
 			if(language)
 				message = language.scramble(message)

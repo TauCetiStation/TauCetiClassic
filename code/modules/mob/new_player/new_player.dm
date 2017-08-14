@@ -120,10 +120,7 @@
 			//client.prefs.update_preview_icon()
 			//observer.icon = client.prefs.preview_icon
 			observer.icon = 'icons/mob/mob.dmi'
-			if(client.holder)
-				observer.icon_state = "ghostking"
-			else
-				observer.icon_state = "ghost"
+			observer.icon_state = "ghost"
 			observer.alpha = 127
 
 			if(client.prefs.be_random_name)
@@ -142,7 +139,7 @@
 			to_chat(usr, "\red The round is either not ready, or has already finished...")
 			return
 
-		if(client.prefs.species != "Human")
+		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
 				to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
 				return 0
@@ -158,7 +155,7 @@
 			to_chat(usr, "\blue There is an administrative lock on entering the game!")
 			return
 
-		if(client.prefs.species != "Human")
+		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
 				to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
 				return 0
@@ -469,7 +466,7 @@
 	src << browse(null, "window=playersetup") //closes the player setup window
 
 /mob/new_player/proc/has_admin_rights()
-	return client.holder.rights & R_ADMIN
+	return (client && client.holder && (client.holder.rights & R_ADMIN))
 
 /mob/new_player/proc/is_species_whitelisted(datum/species/S)
 	if(!S)
@@ -482,12 +479,12 @@
 		chosen_species = all_species[client.prefs.species]
 
 	if(!chosen_species)
-		return "Human"
+		return HUMAN
 
 	if(is_species_whitelisted(chosen_species) || has_admin_rights())
 		return chosen_species.name
 
-	return "Human"
+	return HUMAN
 
 /mob/new_player/get_gender()
 	if(!client || !client.prefs) ..()

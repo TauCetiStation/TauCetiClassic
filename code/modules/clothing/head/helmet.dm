@@ -125,10 +125,16 @@
 	icon_state = "swathelm"
 	item_state = "helmet"
 	flags = HEADCOVERSEYES
-
 	armor = list(melee = 62, bullet = 60, laser = 50,energy = 35, bomb = 10, bio = 2, rad = 0)
 	flags_inv = HIDEEARS
 	siemens_coefficient = 0.7
+
+/obj/item/clothing/head/helmet/tactical/marinad
+	name = "marine helmet"
+	desc = "Spectrum alloy helmet. Lightweight and ready for action."
+	icon_state = "marinad"
+	item_state = "marinad_helmet"
+
 
 /obj/item/clothing/head/helmet/helmet_of_justice
 	name = "helmet of justice"
@@ -148,3 +154,16 @@
 	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
 	icon_state = "oldwardenhelm"
 	item_state = "helmet"
+
+/obj/item/clothing/head/helmet/roman
+	name = "roman helmet"
+	desc = "An ancient helmet made of bronze and leather."
+	armor = list(melee = 25, bullet = 0, laser = 25, energy = 10, bomb = 10, bio = 0, rad = 0)
+	icon_state = "roman"
+	item_state = "roman"
+
+/obj/item/clothing/head/helmet/roman/legionaire
+	name = "roman legionaire helmet"
+	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
+	icon_state = "roman_c"
+	item_state = "roman_c"

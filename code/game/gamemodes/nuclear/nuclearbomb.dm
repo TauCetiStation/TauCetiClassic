@@ -6,6 +6,7 @@ var/bomb_set
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb0"
 	density = 1
+	can_buckle = 1
 	var/deployable = 0.0
 	var/extended = 0.0
 	var/lighthack = 0
@@ -17,37 +18,24 @@ var/bomb_set
 	var/yes_code = 0.0
 	var/safety = 1.0
 	var/obj/item/weapon/disk/nuclear/auth = null
-	var/list/wires = list()
-	var/light_wire
-	var/safety_wire
-	var/timing_wire
+	var/datum/wires/nuclearbomb/wires = null
 	var/removal_stage = 0 // 0 is no removal, 1 is covers removed, 2 is covers open,
 	                      // 3 is sealant open, 4 is unwrenched, 5 is removed from bolts.
 	use_power = 0
 	var/detonated = 0 //used for scoreboard.
 	var/lastentered = ""
-
-
+	var/spray_icon_state
 
 /obj/machinery/nuclearbomb/New()
 	..()
 	poi_list |= src
 	r_code = "[rand(10000, 99999.0)]"//Creates a random code upon object spawn.
+	wires = new(src)
 
-	src.wires["Red"] = 0
-	src.wires["Blue"] = 0
-	src.wires["Green"] = 0
-	src.wires["Marigold"] = 0
-	src.wires["Fuschia"] = 0
-	src.wires["Black"] = 0
-	src.wires["Pearl"] = 0
-	var/list/w = list("Red","Blue","Green","Marigold","Black","Fuschia","Pearl")
-	src.light_wire = pick(w)
-	w -= src.light_wire
-	src.timing_wire = pick(w)
-	w -= src.timing_wire
-	src.safety_wire = pick(w)
-	w -= src.safety_wire
+/obj/machinery/nuclearbomb/Destroy()
+	QDEL_NULL(wires)
+	QDEL_NULL(auth)
+	return ..()
 
 /obj/machinery/nuclearbomb/process()
 	if (src.timing)
@@ -96,9 +84,8 @@ var/bomb_set
 
 		return
 	if (istype(O, /obj/item/weapon/wirecutters) || istype(O, /obj/item/device/multitool))
-		if (src.opened == 1)
-			nukehack_win(user)
-		return
+		if(wires.interact(user))
+			return
 
 	if (src.extended)
 		if (istype(O, /obj/item/weapon/disk/nuclear))
@@ -288,17 +275,6 @@ var/bomb_set
 		src.extended = 1
 	return
 
-obj/machinery/nuclearbomb/proc/nukehack_win(mob/user)
-	var/dat as text
-	dat += "<TT><B>Nuclear Fission Explosive</B><BR>\nNuclear Device Wires:</A><HR>"
-	for(var/wire in src.wires)
-		dat += text("[wire] Wire: <A href='?src=\ref[src];wire=[wire];act=wire'>[src.wires[wire] ? "Mend" : "Cut"]</A> <A href='?src=\ref[src];wire=[wire];act=pulse'>Pulse</A><BR>")
-	dat += text("<HR>The device is [src.timing ? "shaking!" : "still"]<BR>")
-	dat += text("The device is [src.safety ? "quiet" : "whirring"].<BR>")
-	dat += text("The lights are [src.lighthack ? "static" : "functional"].<BR>")
-	user << browse("<HTML><HEAD><TITLE>Bomb Defusion</TITLE></HEAD><BODY>[dat]</BODY></HTML>","window=nukebomb_hack")
-	onclose(user, "nukebomb_hack")
-
 /obj/machinery/nuclearbomb/verb/make_deployable()
 	set category = "Object"
 	set name = "Make Deployable"
@@ -325,55 +301,6 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user)
 	. = ..()
 	if(!.)
 		return
-	if(href_list["act"])
-		if(isdrone(src))
-			to_chat(usr, "Impossible.")
-			return FALSE
-		var/temp_wire = href_list["wire"]
-		if(href_list["act"] == "pulse")
-			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-				to_chat(usr, "You need a multitool!")
-			else
-				if(src.wires[temp_wire])
-					to_chat(usr, "You can't pulse a cut wire.")
-				else
-					if(src.light_wire == temp_wire)
-						src.lighthack = !src.lighthack
-						spawn(100)
-							src.lighthack = !src.lighthack
-					if(src.timing_wire == temp_wire)
-						if(src.timing)
-							explode()
-					if(src.safety_wire == temp_wire)
-						src.safety = !src.safety
-						spawn(100)
-							src.safety = !src.safety
-						if(src.safety == 1)
-							visible_message("\blue The [src] quiets down.")
-							if(!src.lighthack)
-								if (src.icon_state == "nuclearbomb2")
-									src.icon_state = "nuclearbomb1"
-						else
-							visible_message("\blue The [src] emits a quiet whirling noise!")
-		if(href_list["act"] == "wire")
-			if (!istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
-				to_chat(usr, "You need wirecutters!")
-			else
-				wires[temp_wire] = !wires[temp_wire]
-				if(src.safety_wire == temp_wire)
-					if(src.timing)
-						explode()
-				if(src.timing_wire == temp_wire)
-					if(!src.lighthack)
-						if (src.icon_state == "nuclearbomb2")
-							src.icon_state = "nuclearbomb1"
-					src.timing = 0
-					bomb_set = 0
-					if (get_security_level() == "delta")
-						set_security_level("red")
-				if(src.light_wire == temp_wire)
-					src.lighthack = !src.lighthack
-		nukehack_win(usr)
 
 	if (href_list["auth"])
 		if (src.auth)
@@ -462,7 +389,6 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user)
 		return ..()
 	return
 
-
 #define NUKERANGE 80
 /obj/machinery/nuclearbomb/proc/explode()
 	if (src.safety)
@@ -525,6 +451,46 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user)
 				return
 	return
 
+/obj/machinery/nuclearbomb/MouseDrop_T(mob/living/M, mob/living/user)
+	if(!ishuman(M) || !ishuman(user))
+		return
+	if(buckled_mob)
+		do_after(usr, 30, 1, src)
+		unbuckle_mob()
+	else if(do_after(usr, 30, 1, src))
+		M.loc = loc
+		..()
+
+/obj/machinery/nuclearbomb/post_buckle_mob(mob/living/M)
+	..()
+	if(M == buckled_mob)
+		M.pixel_y = 10
+	else
+		M.pixel_y = 0
+
+/obj/machinery/nuclearbomb/bullet_act(obj/item/projectile/Proj)
+	if(buckled_mob)
+		buckled_mob.bullet_act(Proj)
+		if(buckled_mob.weakened || buckled_mob.health < 0 || buckled_mob.halloss > 80)
+			unbuckle_mob()
+	return ..()
+
+/obj/machinery/nuclearbomb/MouseDrop(over_object, src_location, over_location)
+	..()
+	if(!istype(over_object, /obj/structure/droppod))
+		return
+	if(!in_range(src, usr) || !ishuman(usr) || !in_range(src, over_object))
+		return
+	var/obj/structure/droppod/D = over_object
+	if(!timing && !auth && !buckled_mob)
+		visible_message("<span class='notice'>[usr] start putting [src] into [D]!</span>","<span class='notice'>You start putting [src] into [D]!</span>")
+		if(do_after(usr, 100, 1, src) && !timing && !auth && !buckled_mob)
+			D.Stored_Nuclear = src
+			loc = D
+			D.icon_state = "dropod_opened_n"
+			visible_message("<span class='notice'>[usr] put [src] into [D]!</span>","<span class='notice'>You succesfully put [src] into [D]!</span>")
+			D.verbs += /obj/structure/droppod/proc/Nuclear
+
 //==========DAT FUKKEN DISK===============
 /obj/item/weapon/disk
 	icon = 'icons/obj/items.dmi'
@@ -540,7 +506,7 @@ obj/machinery/nuclearbomb/proc/nukehack_win(mob/user)
 /obj/item/weapon/disk/nuclear/New()
 	..()
 	poi_list |= src
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/disk/nuclear/process()
 	var/turf/disk_loc = get_turf(src)

@@ -7,7 +7,7 @@
 	var/state = 0
 
 	var/id_tag
-	var/frequency = 1439
+	frequency = 1439
 
 	var/on = 1
 	var/output = 3
@@ -20,7 +20,7 @@
 	// 16 for nitrogen concentration
 	// 32 for carbon dioxide concentration
 
-	var/datum/radio_frequency/radio_connection
+
 
 /obj/machinery/air_sensor/update_icon()
 	icon_state = "gsensor[on]"
@@ -59,10 +59,11 @@
 		radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 
-/obj/machinery/air_sensor/proc/set_frequency(new_frequency)
+/obj/machinery/air_sensor/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
+	if(frequency)
+		radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 /obj/machinery/air_sensor/initialize()
 	set_frequency(frequency)
@@ -86,11 +87,11 @@
 	light_color = "#78eeea"
 	circuit = /obj/item/weapon/circuitboard/air_management
 
-	var/frequency = 1439
+	frequency = 1439
 	var/list/sensors = list()
 
 	var/list/sensor_information = list()
-	var/datum/radio_frequency/radio_connection
+
 
 /obj/machinery/computer/general_air_control/attack_hand(mob/user)
 	if(..(user))
@@ -153,7 +154,7 @@
 
 	return output
 
-/obj/machinery/computer/general_air_control/proc/set_frequency(new_frequency)
+/obj/machinery/computer/general_air_control/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
@@ -226,8 +227,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 	if(href_list["adj_pressure"])
 		var/change = text2num(href_list["adj_pressure"])
 		pressure_setting = between(0, pressure_setting + change, 50 * ONE_ATMOSPHERE)
-		spawn(1)
-			src.updateUsrDialog()
+		addtimer(CALLBACK(src, .proc/updateUsrDialog), 1)
 		return
 
 	if(!radio_connection)
@@ -258,8 +258,7 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 	signal.data["sigtype"]="command"
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
-	spawn(5)
-		src.updateUsrDialog()
+	addtimer(CALLBACK(src, .proc/updateUsrDialog), 5)
 
 /obj/machinery/computer/general_air_control/fuel_injection
 	icon = 'icons/obj/computer.dmi'

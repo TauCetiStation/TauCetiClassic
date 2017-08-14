@@ -235,10 +235,9 @@
 	if(src.target && (src.target != null) && src.path.len == 0)
 		spawn(0)
 			if(!istype(src.target, /turf/))
-				src.path = AStar(src.loc, src.target.loc, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30, id=botcard)
+				src.path = get_path_to(src, src.target, /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = FALSE)
 			else
-				src.path = AStar(src.loc, src.target, /turf/proc/AdjacentTurfsSpace, /turf/proc/Distance, 0, 30, id=botcard)
-			if (!src.path) src.path = list()
+				src.path = get_path_to(src, src.target, /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = FALSE)
 			if(src.path.len == 0)
 				src.oldtarget = src.target
 				src.target = null

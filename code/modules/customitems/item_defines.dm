@@ -19,7 +19,7 @@
 
 	info = "<B>Organic Carrier AIA and Standard Cyborgification Agreement</B><BR>\n<BR>\nUnder the authority of Nanotrasen Synthetic Intelligence Division, this document hereby authorizes an accredited Roboticist of the NSS Exodus or a deputized authority to perform a regulation lobotomisation upon the person of one '<I>Sue Donem</I>' (hereafter referred to as the Subject) with intent to enact a live Artificial Intelligence Assimilation (AIA) or live Cyborgification proceedure.<BR>\n<BR>\nNo further station authorization is required, and the Subject waives all rights as a human under Nanotrasen internal and external legal protocol. This document is subject to amendment under Nanotrasen internal protocol \[REDACTED\].<BR>\n<BR>\nSigned: <I>Sue Donem</I><BR>\n"
 
-	stamps = (stamps=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the NanoTrasen Synthetic Intelligence Division rubber stamp.</i>"
+	stamp_text = (stamp_text=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the NanoTrasen Synthetic Intelligence Division rubber stamp.</i>"
 
 	var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 	stampoverlay.pixel_x = rand(-2, 2)
@@ -385,14 +385,6 @@
 	if (!( istype(M, /mob) ))
 		return
 	if (reagents.total_volume)
-		if (M == user && user.ckey == "nerezza") //Make sure this is being used by the right person, for the right reason (self injection)
-			visible_message("\blue [user] presses their \
-				penlight against their skin, quickly clicking the button once.", \
-				"\blue You press the disguised autoinjector against your skin and click the button. There's a sharp pain at the injection site that rapidly fades.", \
-				"You hear a rustle as someone moves nearby, then a sharp click.")
-		if (M != user && user.ckey == "nerezza") //Woah now, you better be careful partner
-			to_chat(user, "\blue You don't want to contaminate the autoinjector.")
-			return
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
@@ -478,7 +470,7 @@
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
 	item_color="white"
-	species_restricted = list("exclude","Unathi")
+	species_restricted = list("exclude" , UNATHI)
 
 /obj/item/clothing/gloves/fluff/walter_brooks_1 //botanistpower: Walter Brooks
 	name = "mittens"
@@ -627,7 +619,23 @@
 	item_state = "mantle-unathi"
 	body_parts_covered = 0
 
+/obj/item/clothing/suit/fluff/kung
+	name = "Kung jacket"
+	desc = "Leather jaket with an old security badge attached to it"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "kung_jacket_w"
+	item_state = "kung_jacket_w"
+	w_class = 3
+
+
 //////////// Uniforms ////////////
+
+/obj/item/clothing/under/fluff/kung
+	name = "Kung Jeans"
+	desc = "Pair of old jeans combined with a red tank-top"
+	icon_state = "kung_suit"
+	item_color = "kung_suit"
+	w_class = 3
 
 /obj/item/clothing/under/fluff/milo_hachert //Field Dress Uniform - Milo Hachert - Commissar_Drew
 	name = "field dress uniform"
@@ -915,6 +923,12 @@
 
 //////////// Shoes ////////////
 
+/obj/item/clothing/shoes/fluff/kung
+	name = "Kung shoes"
+	desc = "Pair of a high red shoes."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "kung_shoes_w"
+
 /obj/item/clothing/shoes/magboots/fluff/susan_harris_1 //sniperyeti: Susan Harris
 	name = "Susan's Magboots"
 	desc = "A colorful pair of magboots with the name Susan Harris clearly written on the back."
@@ -967,6 +981,13 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "retpoluniform"
 	item_color = "retpoluniform"
+
+/obj/item/clothing/head/det_hat/fluff/kung
+	name = "Kung headband"
+	desc = "Stripe of red cloth.You can wear it on your head."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "kung_headband_w"
+	item_state = "kung_headband_w"
 
 //////////// Weapons ////////////
 

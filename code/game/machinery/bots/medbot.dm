@@ -308,8 +308,7 @@
 
 	if(src.patient && src.path.len == 0 && (get_dist(src,src.patient) > 1))
 		spawn(0)
-			src.path = AStar(src.loc, get_turf(src.patient), /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 30,id=botcard)
-			if (!path) path = list()
+			src.path = get_path_to(src, get_turf(src.patient), /turf/proc/Distance_cardinal, 0, 30, id=botcard)
 			if(src.path.len == 0)
 				src.oldpatient = src.patient
 				src.patient = null
@@ -487,14 +486,14 @@
 	qdel(src)
 	return
 
-/obj/machinery/bot/medbot/Bump(M as mob|obj) //Leave no door unopened!
+/obj/machinery/bot/medbot/Bump(atom/M) //Leave no door unopened!
 	if ((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
 		var/obj/machinery/door/D = M
 		if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard) && !istype(D,/obj/machinery/door/poddoor))
 			D.open()
 			src.frustration = 0
 	else if ((istype(M, /mob/living/)) && (!src.anchored))
-		src.loc = M:loc
+		src.loc = M.loc
 		src.frustration = 0
 	return
 

@@ -35,8 +35,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/weapon/cable_coil/red(null, 1)
+	component_parts += new /obj/item/weapon/cable_coil/red(null, 1)
 	RefreshParts()
 
 /obj/machinery/clonepod/RefreshParts()
@@ -243,7 +243,7 @@
 	H.dna.UpdateUI()
 
 	H.f_style = "Shaved"
-	if(R.dna.species == "Human") //no more xenos losing ears/tentacles
+	if(R.dna.species == HUMAN) //no more xenos losing ears/tentacles
 		H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 
 	for(var/datum/language/L in R.languages)
@@ -262,6 +262,7 @@
 		return
 
 	if((src.occupant) && (src.occupant.loc == src))
+
 		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
 			src.locked = 0
 			src.go_out()

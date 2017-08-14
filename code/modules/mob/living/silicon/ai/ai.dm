@@ -45,7 +45,6 @@ var/list/ai_verbs_default = list(
 	var/ioncheck[1]
 	var/lawchannel = "Common" // Default channel on which to state laws
 	var/icon/holo_icon//Default is assigned when AI is created.
-	var/obj/item/device/pda/ai/aiPDA = null
 	var/obj/item/device/multitool/aiMulti = null
 	var/obj/item/device/radio/headset/heads/ai_integrated/aiRadio = null
 	var/custom_sprite = 0 //For our custom sprites
@@ -70,6 +69,7 @@ var/list/ai_verbs_default = list(
 	var/camera_light_on = 0	//Defines if the AI toggled the light on the camera it's looking through.
 	var/datum/trackable/track = null
 	var/last_announcement = ""
+	var/wipe_timer_id = 0
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	src.verbs |= ai_verbs_default
@@ -105,10 +105,10 @@ var/list/ai_verbs_default = list(
 	else
 		laws = new base_law_type
 
-	aiPDA = new/obj/item/device/pda/ai(src)
-	aiPDA.owner = name
-	aiPDA.ownjob = "AI"
-	aiPDA.name = name + " (" + aiPDA.ownjob + ")"
+	pda = new/obj/item/device/pda/silicon(src)
+	pda.owner = name
+	pda.ownjob = "AI"
+	pda.name = name + " (" + pda.ownjob + ")"
 
 	aiMulti = new(src)
 	aiRadio = new(src)
@@ -231,7 +231,7 @@ var/list/ai_verbs_default = list(
 		//if(icon_state == initial(icon_state))
 	var/icontype = ""
 	if (custom_sprite == 1) icontype = ("Custom")//automagically selects custom sprite if one is available
-	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Rainbow","Clown", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Static", "Triumvirate", "Triumvirate Static", "Soviet", "Trapped", "Heartline","No Pulse","President","BANNED","Helios","House","Yuki","Hiss!","Alter Ego","Urist","Totally Not A Malf","Fuzz","Goon","Database","Glitchman","AmericAI","NT","Gentoo")
+	else icontype = input("Select an icon!", "AI", null, null) in list("Monochrome", "Rainbow","Clown", "Blue", "Inverted", "Text", "Smiley", "Angry", "Dorf", "Matrix", "Bliss", "Firewall", "Green", "Red", "Static", "Triumvirate", "Triumvirate Static", "Soviet", "Trapped", "Heartline","No Pulse","President","BANNED","Helios","House","Yuki","Hiss!","Alter Ego","Urist","Totally Not A Malf","Fuzz","Goon","Database","Glitchman","AmericAI","NT","Gentoo","Hal 9000")
 	switch(icontype)
 		if("Custom") icon_state = "[src.ckey]-ai"
 		if("Rainbow") icon_state = "ai-clown"
@@ -273,6 +273,7 @@ var/list/ai_verbs_default = list(
 		if("AmericAI") icon_state = "ai-murica"
 		if("NT") icon_state = "ai-nanotrasen"
 		if("Gentoo") icon_state = "ai-gentoo"
+		if("Hal 9000") icon_state = "ai-hal"
 		else icon_state = "ai"
 	//else
 			//usr <<"You can only change your display once!"
@@ -289,7 +290,7 @@ var/list/ai_verbs_default = list(
 					stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALDF_DECLARE), 0)] seconds")
 
 
-/mob/living/silicon/ai/proc/ai_alerts()
+/mob/living/silicon/ai/show_alerts()
 
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	dat += "<A HREF='?src=\ref[src];mach_close=aialerts'>Close</A><BR><BR>"
@@ -316,10 +317,6 @@ var/list/ai_verbs_default = list(
 
 	viewalerts = 1
 	src << browse(dat, "window=aialerts&can_close=0")
-
-// this verb lets the ai see the stations manifest
-/mob/living/silicon/ai/proc/ai_roster()
-	show_station_manifest()
 
 /mob/living/silicon/ai/var/message_cooldown = 0
 /mob/living/silicon/ai/proc/ai_announcement()
@@ -449,7 +446,7 @@ var/list/ai_verbs_default = list(
 	if (href_list["switchcamera"])
 		switchCamera(locate(href_list["switchcamera"])) in cameranet.cameras
 	if (href_list["showalerts"])
-		ai_alerts()
+		show_alerts()
 	//Carn: holopad requests
 	if (href_list["jumptoholopad"])
 		var/obj/machinery/hologram/holopad/H = locate(href_list["jumptoholopad"])
@@ -622,14 +619,16 @@ var/list/ai_verbs_default = list(
 
 	queueAlarm("--- [class] alarm detected in [A.name]! ([(cameratext)? cameratext : "No Camera"])", class)
 
-	if (viewalerts) ai_alerts()
+	if(viewalerts)
+		show_alerts()
 
 /mob/living/silicon/ai/cancelAlarm(class, area/A, source)
 	var/has_alarm = ..()
 
 	if (!has_alarm)
 		queueAlarm(text("--- [] alarm in [] has been cleared.", class, A.name), class, 0)
-		if (viewalerts) ai_alerts()
+		if(viewalerts)
+			show_alerts()
 
 	return has_alarm
 
@@ -701,7 +700,7 @@ var/list/ai_verbs_default = list(
 	if(check_unable(AI_CHECK_WIRELESS))
 		return
 
-	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer")
+	var/list/ai_emotions = list("Very Happy", "Happy", "Neutral", "Unsure", "Confused", "Sad", "BSOD", "Blank", "Problems?", "Awesome", "Facepalm", "Friend Computer", "HAL")
 	var/emote = input("Please, select a status!", "AI Status", null, null) in ai_emotions
 	for (var/obj/machinery/M in machines) //change status
 		if(istype(M, /obj/machinery/ai_status_display))
@@ -748,7 +747,12 @@ var/list/ai_verbs_default = list(
 		"default",
 		"floating face",
 		"alien",
-		"carp"
+		"carp",
+		"queen",
+		"rommie",
+		"sonny",
+		"miku",
+		"medbot"
 		)
 		input = input("Please select a hologram:") as null|anything in icon_list
 		if(input)
@@ -762,6 +766,16 @@ var/list/ai_verbs_default = list(
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo3"))
 				if("carp")
 					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo4"))
+				if("queen")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo5"))
+				if("rommie")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo6"))
+				if("sonny")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo7"))
+				if("miku")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo8"))
+				if("medbot")
+					holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo9"))
 	return
 
 /*/mob/living/silicon/ai/proc/corereturn()
@@ -845,9 +859,6 @@ var/list/ai_verbs_default = list(
 	to_chat(src, "Accessing Subspace Transceiver control...")
 	if (src.aiRadio)
 		src.aiRadio.interact(src)
-
-/mob/living/silicon/ai/proc/sensor_mode()
-	toggle_sensor_mode()
 
 /mob/living/silicon/ai/proc/check_unable(flags = 0)
 	if(stat == DEAD)

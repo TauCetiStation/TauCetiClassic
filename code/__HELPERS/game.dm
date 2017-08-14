@@ -33,7 +33,7 @@
 	var/turf/loc = get_turf(O)
 	if(loc)
 		var/area/res = loc.loc
-		.= res
+		. = res
 
 /proc/get_area_name(N) //get area by its name
 	for(var/area/A in all_areas)
@@ -198,6 +198,21 @@
 		if(isobj(A) || ismob(A))
 			hear |= recursive_mob_check(A, hear, 3, 1, 0, 1)
 
+	return hear
+
+
+/proc/get_hearers_in_view(R, atom/source)
+	// Returns a list of hearers in view(R) from source (ignoring luminosity). Used in saycode.
+	var/turf/T = get_turf(source)
+	var/list/hear = list()
+
+	if(!T)
+		return hear
+
+	var/lum = T.luminosity
+	T.luminosity = 6
+	hear = get_mobs_in_view(R, T)
+	T.luminosity = lum
 	return hear
 
 
@@ -487,7 +502,11 @@ proc/isInSight(atom/A, atom/B)
 		var/player_assigned_role = (M.mind.assigned_role ? " ([M.mind.assigned_role])" : "")
 		var/player_byond_profile = "http://www.byond.com/members/[M.ckey]"
 
-		message_admins("<b>New player notify:</b> [M.ckey] join to the game as [M.mind.name][player_assigned_role] - <a href='[player_byond_profile]'>Byond Profile</a>, [M.ckey] ip: [M.lastKnownIP] [ADMIN_FLW(M)]")
+		var/msg = {"New player notify
+					Player '[M.ckey]' joined to the game as [M.mind.name][player_assigned_role] [ADMIN_FLW(M)] [ADMIN_PP(M)] [ADMIN_VV(M)]
+					Byond profile: <a href='[player_byond_profile]'>open</a>"}
+
+		message_admins(msg)
 
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)

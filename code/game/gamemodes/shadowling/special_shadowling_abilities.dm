@@ -35,7 +35,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			for(var/obj/effect/alien/resin/wall/shadowling/R in shadowturf)
 				qdel(R)
 				//new /obj/structure/alien/weeds/node(shadowturf) //Dim lighting in the chrysalis -- removes itself with the chrysalis
-				new /obj/effect/alien/weeds/node(shadowturf)
+				new /obj/structure/alien/weeds/node(shadowturf)
 
 			usr.visible_message("<span class='warning'>A chrysalis forms around [usr], sealing them inside.</span>", \
 								"<span class='shadowling'>You create your chrysalis and begin to contort within.</span>")
@@ -60,7 +60,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 			sleep(10)
 			playsound(usr.loc, 'sound/effects/ghost.ogg', 100, 1)
-			
+
 			usr.notransform = 0
 
 			to_chat(usr, "<i><b><font size=3>YOU LIVE!!!</i></b></font>")
@@ -68,7 +68,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			for(var/obj/effect/alien/resin/wall/shadowling/W in orange(usr, 1))
 				playsound(W, 'sound/effects/splat.ogg', 50, 1)
 				qdel(W)
-			for(var/obj/effect/alien/weeds/node/N in shadowturf)
+			for(var/obj/structure/alien/weeds/node/N in shadowturf)
 				qdel(N)
 			usr.visible_message("<span class='warning'>The chrysalis explodes in a shower of purple flesh and fluid!</span>")
 
@@ -81,18 +81,8 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 
 			H.underwear = 0
 			H.undershirt = 0
-			//M.faction |= "faithless"
 			H.faction = "faithless"
-
-			H.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling(usr), slot_w_uniform)
-			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling(usr), slot_shoes)
-			H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling(usr), slot_wear_suit)
-			H.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling(usr), slot_head)
-			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(usr), slot_gloves)
-			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(usr), slot_wear_mask)
-			H.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(usr), slot_glasses)
-			//hardset_dna(usr, null, null, null, null, /datum/species/shadow/ling) //can't be a shadowling without being a shadowling
-			H.set_species("Shadowling")
+			H.set_species(SHADOWLING)
 			H.dna.mutantrace = "shadowling"
 			H.update_mutantrace()
 			H.regenerate_icons()

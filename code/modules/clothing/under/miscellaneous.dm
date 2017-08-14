@@ -251,6 +251,14 @@
 	item_state = "white_suit"
 	item_color = "white_suit"
 
+/obj/item/clothing/under/suit_jacket/rouge
+	name = "rogue jacket"
+	desc = "A  suit and jacket with a jeans. For the bad guy!"
+	icon_state = "rogue_jacket"
+	item_state = "rogue_jacket"
+	item_color = "rogue_jacket"
+	flags = ONESIZEFITSALL
+
 /obj/item/clothing/under/blackskirt
 	name = "black skirt"
 	desc = "A black skirt, very fancy!"
@@ -638,3 +646,10 @@
 	item_state = "dg_suit"
 	item_color = "centcom"
 	displays_id = 0
+
+/obj/item/clothing/under/roman
+	name = "roman armor"
+	desc = "Ancient Roman armor. Made of metallic and leather straps."
+	icon_state = "roman"
+	item_state = "roman"
+	item_color = "roman"

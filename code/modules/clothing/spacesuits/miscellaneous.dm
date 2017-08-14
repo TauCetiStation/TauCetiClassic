@@ -31,6 +31,16 @@
 	flags = ONESIZEFITSALL
 	allowed = list(/obj/item) //for stuffing exta special presents
 
+/obj/item/clothing/head/helmet/space/syndiassault
+	name = "Assault helmet"
+	icon_state = "assaulthelmet_b"
+	item_state = "assaulthelmet_b"
+	armor = list(melee = 50, bullet = 60, laser = 45,energy = 50, bomb = 30, bio = 0, rad = 40)
+
+/obj/item/clothing/head/helmet/space/syndiassault/alternate
+	icon_state = "assaulthelmet"
+	item_state = "assaulthelmet"
+
 
 //Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate

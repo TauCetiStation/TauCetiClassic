@@ -58,27 +58,27 @@
 			for(var/name in organ_data)
 				//world << "[ind] \ [organ_data.len]"
 				var/status = organ_data[name]
-				var/organ_name = null
+				var/organ_name = parse_zone(name)
 				switch(name)
-					if("l_arm")
+					if(BP_L_ARM)
 						organ_name = "left arm"
-					if("r_arm")
+					if(BP_R_ARM)
 						organ_name = "right arm"
-					if("l_leg")
+					if(BP_L_LEG)
 						organ_name = "left leg"
-					if("r_leg")
+					if(BP_R_LEG)
 						organ_name = "right leg"
-					if("l_foot")
+					if(BP_L_FOOT)
 						organ_name = "left foot"
-					if("r_foot")
+					if(BP_R_FOOT)
 						organ_name = "right foot"
-					if("l_hand")
+					if(BP_L_HAND)
 						organ_name = "left hand"
-					if("r_hand")
+					if(BP_R_HAND)
 						organ_name = "right hand"
-					if("heart")
+					if(O_HEART)
 						organ_name = "heart"
-					if("eyes")
+					if(O_EYES)
 						organ_name = "eyes"
 
 				if(status == "cyborg")
@@ -136,6 +136,7 @@
 			else
 				. += "Underwear: <a href ='?_src_=prefs;preference=underwear;task=input'>[underwear_f[underwear]]</a><br>"
 			. += "Undershirt: <a href='?_src_=prefs;preference=undershirt;task=input'>[undershirt_t[undershirt]]</a><br>"
+			. += "Socks: <a href='?_src_=prefs;preference=socks;task=input'>[socks_t[socks]]</a><br>"
 			. += "Backpack Type: <a href ='?_src_=prefs;preference=bag;task=input'>[backbaglist[backbag]]</a>"
 
 	. += 								"</td>"
@@ -238,6 +239,8 @@
 					underwear = rand(1,underwear_m.len)
 				if("undershirt")
 					undershirt = rand(1,undershirt_t.len)
+				if("socks")
+					socks = rand(1,socks_t.len)
 				if("eyes")
 					r_eyes = rand(0,255)
 					g_eyes = rand(0,255)
@@ -267,7 +270,7 @@
 						age = max(min( round(text2num(new_age)), AGE_MAX),AGE_MIN)
 
 				if("species")
-					var/list/new_species = list("Human")
+					var/list/new_species = list(HUMAN)
 					var/prev_species = species
 					var/whitelisted = 0
 
@@ -320,7 +323,7 @@
 						b_type = new_b_type
 
 				if("hair")
-					if(species == "Human" || species == "Unathi" || species == "Tajaran" || species == "Skrell")
+					if(species == HUMAN || species == UNATHI || species == TAJARAN || species == SKRELL)
 						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
 						if(new_hair)
 							r_hair = hex2num(copytext(new_hair, 2, 4))
@@ -387,6 +390,12 @@
 					var/new_undershirt = input(user, "Choose your character's undershirt:", "Character Preference") as null|anything in undershirt_options
 					if (new_undershirt)
 						undershirt = undershirt_options.Find(new_undershirt)
+				if("socks")
+					var/list/socks_options
+					socks_options = socks_t
+					var/new_socks = input(user, "Choose your character's socks:", "Character Preference") as null|anything in socks_options
+					if(new_socks)
+						socks = socks_options.Find(new_socks)
 
 				if("eyes")
 					var/new_eyes = input(user, "Choose your character's eye colour:", "Character Preference") as color|null
@@ -396,14 +405,14 @@
 						b_eyes = hex2num(copytext(new_eyes, 6, 8))
 
 				if("s_tone")
-					if(species != "Human")
+					if(species != HUMAN)
 						return
 					var/new_s_tone = input(user, "Choose your character's skin-tone:\n(Light 1 - 220 Dark)", "Character Preference")  as num|null
 					if(new_s_tone)
 						s_tone = 35 - max(min( round(new_s_tone), 220),1)
 
 				if("skin")
-					if(species == "Unathi" || species == "Tajaran" || species == "Skrell")
+					if(species == UNATHI || species == TAJARAN || species == SKRELL)
 						var/new_skin = input(user, "Choose your character's skin colour: ", "Character Preference") as color|null
 						if(new_skin)
 							r_skin = hex2num(copytext(new_skin, 2, 4))
@@ -471,7 +480,7 @@
 						flavor_text = msg
 
 				if("organs")
-					var/menu_type = input(user, "Menu") as null|anything in list("Limbs", "Internal Organs")
+					var/menu_type = input(user, "Menu") as null|anything in list("Limbs", "Organs")
 					if(!menu_type) return
 
 					switch(menu_type)
@@ -484,29 +493,29 @@
 							var/third_limb = null  // if you try to unchange the hand, the arm should also change
 							switch(limb_name)
 								if("Left Leg")
-									limb = "l_leg"
-									second_limb = "l_foot"
+									limb = BP_L_LEG
+									second_limb = BP_L_FOOT
 								if("Right Leg")
-									limb = "r_leg"
-									second_limb = "r_foot"
+									limb = BP_R_LEG
+									second_limb = BP_R_FOOT
 								if("Left Arm")
-									limb = "l_arm"
-									second_limb = "l_hand"
+									limb = BP_L_ARM
+									second_limb = BP_L_HAND
 								if("Right Arm")
-									limb = "r_arm"
-									second_limb = "r_hand"
+									limb = BP_R_ARM
+									second_limb = BP_R_HAND
 								if("Left Foot")
-									limb = "l_foot"
-									third_limb = "l_leg"
+									limb = BP_L_FOOT
+									third_limb = BP_L_LEG
 								if("Right Foot")
-									limb = "r_foot"
-									third_limb = "r_leg"
+									limb = BP_R_FOOT
+									third_limb = BP_R_LEG
 								if("Left Hand")
-									limb = "l_hand"
-									third_limb = "l_arm"
+									limb = BP_L_HAND
+									third_limb = BP_L_ARM
 								if("Right Hand")
-									limb = "r_hand"
-									third_limb = "r_arm"
+									limb = BP_R_HAND
+									third_limb = BP_R_ARM
 
 							var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal","Amputated","Prothesis")
 							if(!new_state) return
@@ -525,16 +534,16 @@
 									if(second_limb)
 										organ_data[second_limb] = "cyborg"
 
-						if("Internal Organs")
+						if("Organs")
 							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
 							if(!organ_name) return
 
 							var/organ = null
 							switch(organ_name)
 								if("Heart")
-									organ = "heart"
+									organ = O_HEART
 								if("Eyes")
-									organ = "eyes"
+									organ = O_EYES
 
 							var/new_state = input(user, "What state do you wish the organ to be in?") as null|anything in list("Normal","Assisted","Mechanical")
 							if(!new_state) return

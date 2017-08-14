@@ -180,9 +180,6 @@
 	return
 
 /atom/proc/hitby(atom/movable/AM)
-	if(density)
-		AM.throwing = 0
-		AM.fly_speed = 0
 	return
 
 /atom/proc/add_hiddenprint(mob/living/M)
@@ -208,10 +205,9 @@
 			src.fingerprintslast = M.key
 	return
 
-/atom/proc/add_fingerprint(mob/living/M, ignoregloves = 0)
-	if(isnull(M)) return
-	if(isAI(M)) return
-	if(isnull(M.key)) return
+/atom/proc/add_fingerprint(mob/M, ignoregloves = 0)
+	if(!M || !M.key || isAI(M)) //AI's clicks already calls add_hiddenprint from ClickOn() proc
+		return
 	if (ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
@@ -411,6 +407,7 @@
 /atom/Stat()
 	. = ..()
 	sleep(1)
+	stoplag()
 
 //This will be called after the map and objects are loaded
 /atom/proc/initialize()

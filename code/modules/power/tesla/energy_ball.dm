@@ -1,7 +1,7 @@
 #define TESLA_DEFAULT_POWER 1738260
 #define TESLA_MINI_POWER 869130
 
-var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
+var/list/blacklisted_tesla_types = typecacheof(list(/obj/machinery/atmospherics,
 										/obj/machinery/power/emitter,
 										/obj/machinery/field_generator,
 										/mob/living/simple_animal,
@@ -14,14 +14,15 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 										/obj/structure/particle_accelerator/end_cap,
 										/obj/machinery/containment_field,
 										/obj/structure/disposalpipe,
-										/obj/machinery/gateway)
+										/obj/machinery/gateway))
 
 /obj/singularity/energy_ball
 	name = "energy ball"
 	desc = "An energy ball."
 	icon = 'icons/obj/tesla_engine/energy_ball.dmi'
 	icon_state = "energy_ball"
-	layer = LIGHTING_LAYER+1
+	layer = LIGHTING_LAYER + 1
+	plane = LIGHTING_PLANE + 1
 	pixel_x = -32
 	pixel_y = -32
 	current_size = STAGE_TWO
@@ -30,16 +31,16 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	contained = 0
 	density = 1
 	energy = 0
+
 	var/list/orbiting_balls = list()
 	var/produced_power
 	var/energy_to_raise = 32
 	var/energy_to_lower = -20
 
 /obj/singularity/energy_ball/Destroy()
-	if(orbiting && istype(orbiting, /obj/singularity/energy_ball))
-		var/obj/singularity/energy_ball/EB = orbiting
+	if(orbiting && istype(orbiting.orbiting, /obj/singularity/energy_ball))
+		var/obj/singularity/energy_ball/EB = orbiting.orbiting
 		EB.orbiting_balls -= src
-		orbiting = null
 
 	for(var/ball in orbiting_balls)
 		var/obj/singularity/energy_ball/EB = ball
@@ -91,18 +92,7 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 		energy_to_raise = energy_to_raise * 1.5
 
 		playsound(src.loc, 'sound/magic/lightning_chargeup.ogg', 100, 1, extrarange = 30)
-		spawn(100)
-			if (!loc)
-				return
-			var/obj/singularity/energy_ball/EB = new(loc)
-
-			EB.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
-			var/icon/I = icon(icon,icon_state,dir)
-
-			var/orbitsize = (I.Width() + I.Height()) * pick(0.4, 0.5, 0.6, 0.7, 0.8)
-			orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
-
-			EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
+		addtimer(CALLBACK(src, .proc/create_energy_ball), 100)
 
 	else if(energy < energy_to_lower && orbiting_balls.len)
 		energy_to_raise = energy_to_raise / 1.5
@@ -114,11 +104,25 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	else if(orbiting_balls.len)
 		energy -= orbiting_balls.len * 0.5
 
+/obj/singularity/energy_ball/proc/create_energy_ball()
+	if (!loc)
+		return
+
+	var/obj/singularity/energy_ball/EB = new(loc)
+
+	EB.transform *= pick(0.3, 0.4, 0.5, 0.6, 0.7)
+	var/icon/I = icon(icon,icon_state,dir)
+
+	var/orbitsize = (I.Width() + I.Height()) * pick(0.4, 0.5, 0.6, 0.7, 0.8)
+	orbitsize -= (orbitsize / world.icon_size) * (world.icon_size * 0.25)
+
+	EB.orbit(src, orbitsize, pick(FALSE, TRUE), rand(10, 25), pick(3, 4, 5, 6, 36))
+
 /obj/singularity/energy_ball/proc/eat_shield()
 	if(orbiting_balls.len)
 		for(var/obj/machinery/field_generator/FG in oview(src))
 			if(FG.active == 2)
-				FG.power = max(-200, FG.power - orbiting_balls.len * 3)//10 balls is a safe limit in standard setup. 11 - 50/50, but probably will end up bad. And 12 - release of tesla.
+				FG.power = max(0, FG.power - orbiting_balls.len * 3) // 5 balls - stable field work, 6 and more - 50/50.
 
 /obj/singularity/energy_ball/Bump(atom/A)
 	dust_mobs(A)
@@ -127,15 +131,17 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 	dust_mobs(A)
 
 /obj/singularity/energy_ball/orbit(obj/singularity/energy_ball/target)
-	if (istype(target))
+	if(istype(target))
 		target.orbiting_balls += src
 		poi_list -= src
-
 	. = ..()
 
-	if (istype(target))
-		target.orbiting_balls -= src
-	if (!loc)
+/obj/singularity/energy_ball/stop_orbit()
+	if(orbiting && istype(orbiting.orbiting, /obj/singularity/energy_ball))
+		var/obj/singularity/energy_ball/orbitingball = orbiting.orbiting
+		orbitingball.orbiting_balls -= src
+	..()
+	if(!loc && !QDELETED(src))
 		qdel(src)
 
 /obj/singularity/energy_ball/proc/dust_mobs(atom/A)
@@ -180,16 +186,17 @@ var/list/blacklisted_tesla_types = list(/obj/machinery/atmospherics,
 				closest_atom = A
 				closest_dist = dist
 
-		else if(closest_grounding_rod || is_type_in_list(A, blacklisted_tesla_types))
+		else if(closest_grounding_rod || is_type_in_typecache(A, blacklisted_tesla_types))
 			continue
 
-		else if(istype(A, /mob/living))
-			var/dist = get_dist(source, A)
+		else if(isliving(A))
 			var/mob/living/L = A
-			if((dist < closest_dist || !closest_mob) && L.stat != DEAD)
-				closest_mob = L
-				closest_atom = A
-				closest_dist = dist
+			if(!L.tesla_ignore)
+				var/dist = get_dist(source, A)
+				if((dist < closest_dist || !closest_mob) && L.stat != DEAD)
+					closest_mob = L
+					closest_atom = A
+					closest_dist = dist
 
 		else if(closest_mob)
 			continue

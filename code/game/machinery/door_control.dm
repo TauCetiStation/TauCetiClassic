@@ -10,51 +10,18 @@
 	var/normaldoorcontrol = 0
 	var/desiredstate = 0 // Zero is closed, 1 is open.
 	var/specialfunctions = 1
-	/*
-	Bitflag, 	1= open
-				2= idscan,
-				4= bolts
-				8= shock
-				16= door safties
-
-	*/
-
-	var/exposedwires = 0
-	var/wires = 3
-	/*
-	Bitflag,	1=checkID
-				2=Network Access
-	*/
-
 	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
 
 /obj/machinery/door_control/attack_ai(mob/user)
-	if(wires & 2)
-		return src.attack_hand(user)
-	else
-		to_chat(user, "Error, no route to host.")
+	attack_hand(user)
 
 /obj/machinery/door_control/attack_paw(mob/user)
 	return src.attack_hand(user)
 
 /obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user)
-	/* For later implementation
-	if (istype(W, /obj/item/weapon/screwdriver))
-	{
-		if(wiresexposed)
-			icon_state = "doorctrl0"
-			wiresexposed = 0
-
-		else
-			icon_state = "doorctrl-open"
-			wiresexposed = 1
-
-		return
-	}
-	*/
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
 	if(istype(W, /obj/item/weapon/card/emag))
@@ -69,7 +36,7 @@
 	if(stat & (NOPOWER|BROKEN))
 		return
 
-	if(!allowed(user) && (wires & 1))
+	if(!allowed(user))
 		to_chat(user, "\red Access Denied")
 		flick("doorctrl-denied",src)
 		return
@@ -103,7 +70,7 @@
 					if(specialfunctions & IDSCAN)
 						D.aiDisabledIdScanner = 0
 					if(specialfunctions & BOLTS)
-						if(!D.isWireCut(4) && D.hasPower())
+						if(!D.isAllPowerCut() && D.hasPower())
 							D.unbolt()
 					if(specialfunctions & SHOCK)
 						D.secondsElectrified = 0

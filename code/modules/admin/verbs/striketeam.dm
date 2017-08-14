@@ -72,6 +72,7 @@ var/global/sent_strike_team = 0
 				new_commando.internals.icon_state = "internal1"
 
 			//So they don't forget their code or mission.
+			create_random_account_and_store_in_mind(new_commando)
 			if(nuke_code)
 				new_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")
 			new_commando.mind.store_memory("<B>Mission:</B> \red [input].")

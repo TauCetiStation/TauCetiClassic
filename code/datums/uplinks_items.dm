@@ -147,7 +147,7 @@
 	name = "L6 Squad Automatic Weapon"
 	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62x51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
-	cost = 50
+	cost = 45
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -170,11 +170,11 @@
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
 
-/datum/uplink_item/dangerous/a28
-	name = "A28 Assault Rifle"
-	desc = "A bullpup automatic assault rifle. Great for range combat and fire suppresion. Uses 30-round magazine of 5.56mm ammunition."
-	item = /obj/item/weapon/gun/projectile/automatic/a28
-	cost = 24
+/datum/uplink_item/dangerous/a74
+	name = "A74 Assault Rifle"
+	desc = "A bullpup automatic assault rifle. Great for range combat and fire suppresion. Uses 30-round magazine of 7.74mm ammunition."
+	item = /obj/item/weapon/gun/projectile/automatic/a74
+	cost = 20
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -308,20 +308,11 @@
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
 
-/datum/uplink_item/ammo/a28standard
-	name = "Ammo-5.56mm"
-	desc = "A 30-round 5.56 magazine for use in the A28 assault rifle."
-	item = /obj/item/ammo_box/magazine/m556
+/datum/uplink_item/ammo/a74standart
+	name = "Ammo-7.74mm"
+	desc = "A 30-round 7.74 magazine for use in the A74 assault rifle."
+	item = /obj/item/ammo_box/magazine/a74mm
 	cost = 7
-	gamemodes = list(/datum/game_mode/nuclear)
-	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
-
-/datum/uplink_item/ammo/a28fire
-	name = "Ammo-5.56mm Incendiary"
-	desc = "A 30-round 5.56 Incendiary magazine for use in the A28 assault rifle."
-	item = /obj/item/ammo_box/magazine/m556/incendiary
-	cost = 8
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -607,7 +598,7 @@
 	name = "Syndicate Space Suit"
 	desc = "The red syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
 	item = /obj/item/weapon/storage/box/syndie_kit/space
-	cost = 5
+	cost = 4
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
@@ -690,14 +681,6 @@
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
-/datum/uplink_item/device_tools/teleporter
-	name = "Teleporter Circuit Board"
-	desc = "A printed circuit board that completes the teleporter onboard the mothership. Advise you test fire the teleporter before entering it, as malfunctions can occur."
-	item = /obj/item/weapon/circuitboard/teleporter
-	cost = 40
-	gamemodes = list(/datum/game_mode/nuclear)
-	uplink_types = list("nuclear")
-
 /datum/uplink_item/device_tools/shield
 	name = "Energy Shield"
 	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending against other attacks."
@@ -706,6 +689,63 @@
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
+/datum/uplink_item/device_tools/droppod
+	name = "Drop Pod"
+	desc = "A two-seater pod, that can fall into station, aim system can be upgraded with camera bug and simple Drop System."
+	item = /obj/item/device/drop_caller/Syndi
+	cost = 15
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/device_tools/drop_aim
+	name = "Simple Drop System"
+	desc = "A simple drop system, which can be installed in pods to increase accuracy of droping"
+	item =  /obj/item/weapon/simple_drop_system
+	cost = 10
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/device_tools/Drop_system
+	name = "Exosuit Drop System"
+	desc = "A module for exosuit, that allow you launching at Long distances"
+	item = /obj/item/mecha_parts/mecha_equipment/Drop_system
+	cost = 15
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/device_tools/gateway_locker
+	name = "Gateway Locker"
+	desc = "Device, capable to hack station Gateway. You will have two minutes to prepare after initialization.\
+	After Hack, you can switch entering through gateway."
+	item = /obj/item/device/gateway_locker
+	cost = 10
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/device_tools/shuttle_unlocker
+	name = "Shuttle Unlocker"
+	desc = "An unlocker of the Shuttle, which Parked near your base. In Bonus aboard, will be some aids and instruments. Caution. You'll have to buy spacesuit's in addition."
+	item = /obj/item/device/syndi_shuttle_unlocker
+	cost = 30
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/device_tools/traitor_caller
+	name = "Traitor Caller"
+	desc = "Allows you to request an additional agent selected from the stealthy traitors."
+	item = /obj/item/device/traitor_caller
+	cost = 55
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
+
+/datum/uplink_item/device_tools/rig
+	name = "Syndi Rig"
+	desc = "The red syndicate space rig with additional armor plating.\
+	 Nanotrasen crewmembers are trained to report red space suit sightings."
+	item = /obj/item/weapon/storage/box/syndie_kit/rig
+	cost = 8
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
 
 // IMPLANTS
 

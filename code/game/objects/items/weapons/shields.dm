@@ -1,5 +1,6 @@
 /obj/item/weapon/shield
 	name = "shield"
+	var/block_chance = 65
 
 /obj/item/weapon/shield/riot
 	name = "riot shield"
@@ -19,8 +20,8 @@
 	attack_verb = list("shoved", "bashed")
 	var/cooldown = 0 //shield bash cooldown. based on world.time
 
-	IsShield()
-		return 1
+	Get_shield_chance()
+		return block_chance
 
 	attackby(obj/item/weapon/W, mob/user)
 		if(istype(W, /obj/item/weapon/melee/baton))
@@ -42,21 +43,27 @@
 	throw_speed = 1
 	throw_range = 4
 	w_class = 2
+	block_chance = 30
 	origin_tech = "materials=4;magnets=3;syndicate=4"
 	attack_verb = list("shoved", "bashed")
 	var/active = 0
+	var/emp_cooldown = 0
 
 /obj/item/weapon/shield/energy/IsReflect(def_zone, hol_dir, hit_dir)
 	if(active)
-		if(hol_dir == NORTH && (hit_dir in list(SOUTH, SOUTHEAST, SOUTHWEST)))
-			return TRUE
-		else if(hol_dir == SOUTH && (hit_dir in list(NORTH, NORTHEAST, NORTHWEST)))
-			return TRUE
-		else if(hol_dir == EAST && (hit_dir in list(WEST, NORTHWEST, SOUTHWEST)))
-			return TRUE
-		else if(hol_dir == WEST && (hit_dir in list(EAST, NORTHEAST, SOUTHEAST)))
-			return TRUE
+		return is_the_opposite_dir(hol_dir, hit_dir)
 	return FALSE
+
+/obj/item/weapon/shield/energy/emp_act(severity)
+	if(active)
+		if(severity == 2 && prob(35))
+			active = !active
+			emp_cooldown = world.time + 200
+			turn_off()
+		else if(severity == 1)
+			active = !active
+			emp_cooldown = world.time + rand(200, 400)
+			turn_off()
 
 
 /obj/item/weapon/shield/riot/tele
@@ -70,12 +77,12 @@
 	throwforce = 3
 	throw_speed = 3
 	throw_range = 4
-	w_class = 3
+	block_chance = 50
 	var/active = 0
 
-/obj/item/weapon/shield/riot/tele/IsShield()
+/obj/item/weapon/shield/riot/tele/Get_shield_chance()
 	if(active)
-		return 1
+		return block_chance
 	return 0
 
 /obj/item/weapon/shield/riot/tele/attack_self(mob/living/user)
@@ -98,6 +105,12 @@
 		slot_flags = null
 		to_chat(user, "<span class='notice'>[src] can now be concealed.</span>")
 	add_fingerprint(user)
+
+/obj/item/weapon/shield/riot/roman
+	name = "roman shield"
+	desc = "Bears an inscription on the inside: <i>\"Romanes venio domus\"</i>."
+	icon_state = "roman_shield"
+	item_state = "roman_shield"
 
 /*
 /obj/item/weapon/cloaking_device

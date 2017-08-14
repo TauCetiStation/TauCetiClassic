@@ -38,7 +38,7 @@
 	if(!lighting_overlay)
 		var/area/A = loc
 		if(A.dynamic_lighting)
-			PoolOrNew(/atom/movable/lighting_overlay, src)
+			new /atom/movable/lighting_overlay(src)
 
 			for(var/LC in corners)
 				if(!LC)
@@ -91,10 +91,9 @@
 		reconsider_lights()
 
 /turf/change_area(area/old_area, area/new_area)
-	if(new_area.dynamic_lighting != old_area.dynamic_lighting)
+	if(SSlighting.init_done && new_area.dynamic_lighting != old_area.dynamic_lighting)
 		if(new_area.dynamic_lighting)
 			lighting_build_overlay()
-
 		else
 			lighting_clear_overlay()
 

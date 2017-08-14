@@ -34,7 +34,8 @@
 	Changing this around would probably require a good look-over the pre-existing code.
 	*/
 	var/obj/screen/zone_sel/zone_sel = null
-	var/obj/screen/leap_icon = null
+	var/obj/screen/leap/leap_icon = null
+	var/obj/screen/neurotoxin_icon = null
 	var/obj/screen/healthdoll = null
 
 	var/obj/screen/alien_plasma_display = null
@@ -72,8 +73,6 @@
 	var/sec_record = ""
 	var/gen_record = ""
 	var/blinded = null
-	var/bhunger = 0			//Carbon
-	var/ajourn = 0
 	var/druggy = 0			//Carbon
 	var/confused = 0		//Carbon
 	var/antitoxs = null
@@ -129,8 +128,6 @@
 	var/obj/item/weapon/tank/internal = null//Human/Monkey
 	var/obj/item/weapon/storage/s_active = null//Carbon
 	var/obj/item/clothing/mask/wear_mask = null//Carbon
-
-	var/seer = 0 //for cult//Carbon, probably Human
 
 	var/datum/hud/hud_used = null
 
@@ -197,11 +194,12 @@
 
 	var/update_icon = 0 //Set to 1 to trigger regenerate_icons() at the next life() call
 
-	var/status_flags = CANSTUN|CANWEAKEN|CANPARALYSE|CANPUSH	//bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
+	var/status_flags = MOB_STATUS_FLAGS_DEFAULT // bitflags defining which status effects can be inflicted (replaces canweaken, canstun, etc)
 
 	var/area/lastarea = null
 
 	var/digitalcamo = 0 // Can they be tracked by the AI?
+	var/image/digitaldisguise = null  //what does the AI see instead of them?
 
 	var/has_unlimited_silicon_privilege = 0 // Can they interact with station electronics
 
@@ -228,3 +226,4 @@
 	var/list/active_genes=list()
 
 	var/fake_death = 0 //New changeling statis
+	var/busy_with_action = FALSE // do_after() and do_mob() sets this to TRUE while in progress, use is_busy() before anything if you want to prevent user to do multiple actions.

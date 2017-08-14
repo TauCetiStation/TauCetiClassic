@@ -23,7 +23,7 @@
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
-		new /obj/item/weapon/storage/backpack/satchel_eng(src)
+		new /obj/item/weapon/storage/backpack/satchel/eng(src)
 	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/clothing/under/rank/miner(src)
 	new /obj/item/clothing/gloves/black(src)
@@ -617,7 +617,7 @@ obj/item/projectile/kinetic/New()
 				log_admin("[key_name(usr)] activated a bluespace capsule away from the mining level at [T.x], [T.y], [T.z]")
 			template.load(T, centered = TRUE)
 
-		PoolOrNew(/datum/effect/effect/system/smoke_spread, T)
+		new /datum/effect/effect/system/smoke_spread(T)
 		qdel(src)
 
 //Pod turfs and objects

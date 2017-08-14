@@ -21,7 +21,7 @@
 	var/locked = 0
 
 	var/energy = 0.0001
-	var/frequency = 1
+	frequency = 1
 
 	var/freq = 50000
 	var/id

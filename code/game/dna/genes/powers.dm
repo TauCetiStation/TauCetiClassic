@@ -46,27 +46,28 @@
 
 	OnMobLife(mob/living/carbon/human/M)
 		if(!istype(M)) return
-		var/datum/organ/external/head/H = M.organs_by_name["head"]
+		var/obj/item/organ/external/head/H = M.bodyparts_by_name[BP_HEAD]
 
-		if(H.disfigured) H.disfigured = 0
+		if(H.disfigured)
+			H.disfigured = FALSE
 
 		if(HUSK in M.mutations)
 			M.mutations.Remove(HUSK)
 			M.update_mutations()
 			M.UpdateAppearance()
 
-		var/datum/organ/external/chest/C = M.get_organ("chest")
-		for(var/datum/organ/internal/I in C.internal_organs)
-			if(I.damage > 0)
-				I.damage -= 0.25
+		var/obj/item/organ/external/chest/BP = M.bodyparts_by_name[BP_CHEST]
+		for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
+			if(IO.damage > 0)
+				IO.damage -= 0.25
 
 		if(M.getBrainLoss() > 24)
 			if(M.getBrainLoss() < 76) M.adjustBrainLoss(-0.25)
 		else
 			if(prob(20))
 				if(M.getOxyLoss() < 126) M.adjustOxyLoss(-1)
-				if(M.getBruteLoss() < 126) M.heal_organ_damage(1,0)
-				if(M.getFireLoss() < 126) M.heal_organ_damage(0,1)
+				if(M.getBruteLoss() < 126) M.heal_bodypart_damage(1,0)
+				if(M.getFireLoss() < 126) M.heal_bodypart_damage(0,1)
 				if(M.getToxLoss() < 126) M.adjustToxLoss(-1)
 				if(M.getCloneLoss() < 126) M.adjustCloneLoss(-1)
 			if(M.getBrainLoss()) M.adjustBrainLoss(-0.10)
@@ -230,7 +231,7 @@
 
 	..(M,connected,flags)
 
-	addtimer(src, "mutate_user", rand(600, 900), TRUE, M)
+	addtimer(CALLBACK(src, .proc/mutate_user, M), rand(600, 900), TIMER_UNIQUE)
 
 /datum/dna/gene/basic/hulk/proc/mutate_user(mob/M)
 	if(!M)

@@ -182,8 +182,6 @@
 		to_chat(src, "\blue [msg]")
 		return
 
-	send2adminirc("PlayerPM from [key_name(src)]: [html_decode(msg)]")
-
 	to_chat(src, "<font color='blue'>IRC PM to-<b>IRC-Admins</b>: [msg]</font>")
 
 	log_admin("PM: [key_name(src)]->IRC: [msg]")

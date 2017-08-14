@@ -11,10 +11,10 @@
  * effect/alien
  */
 
-#define WEED_NORTH_EDGING "north"
-#define WEED_SOUTH_EDGING "south"
-#define WEED_EAST_EDGING "east"
-#define WEED_WEST_EDGING "west"
+#define WEED_SOUTH_EDGING 1
+#define WEED_NORTH_EDGING 2
+#define WEED_WEST_EDGING  4
+#define WEED_EAST_EDGING  8
 
 /obj/effect/alien
 	name = "alien thing"
@@ -74,7 +74,7 @@
 		density = 0
 		var/turf/T = loc
 		qdel(src)
-		for (var/obj/effect/alien/weeds/W in range(1,T))
+		for (var/obj/structure/alien/weeds/W in range(1,T))
 			W.updateWeedOverlays()
 	return
 
@@ -158,27 +158,6 @@
 	return
 
 /obj/effect/alien/resin/attackby(obj/item/weapon/W, mob/user)
-	/*if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
-		var/obj/item/weapon/grab/G = W
-		if(isalien(user)&&(ishuman(G.affecting)||ismonkey(G.affecting)))
-		//Only aliens can stick humans and monkeys into resin walls. Also, the wall must not have a person inside already.
-			if(!affecting)
-				if(G.state<2)
-					to_chat(user, "\red You need a better grip to do that!")
-					return
-				G.affecting.loc = src
-				G.affecting.paralysis = 10
-				for(var/mob/O in viewers(world.view, src))
-					if (O.client)
-						to_chat(O, text("\green [] places [] in the resin wall!", G.assailant, G.affecting))
-				affecting=G.affecting
-				qdel(W)
-				spawn(0)
-					process()
-			else
-				to_chat(user, "\red This wall is already occupied.")
-		return */
-
 	var/aforce = W.force
 	health = max(0, health - aforce)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
@@ -198,19 +177,20 @@
  */
 #define NODERANGE 3
 
-/obj/effect/alien/weeds
+/obj/structure/alien/weeds
 	name = "resin floor"
 	desc = "A thick resin surface covers the floor."
+	icon = 'icons/mob/xenomorph.dmi'
 	icon_state = "weeds"
 
 	anchored = 1
 	density = 0
-	layer = 2
+	layer = 2.5
 	var/health = 15
-	var/obj/effect/alien/weeds/node/linked_node = null
+	var/obj/structure/alien/weeds/node/linked_node = null
 	var/static/list/weedImageCache
 
-/obj/effect/alien/weeds/node
+/obj/structure/alien/weeds/node
 	icon_state = "weednode"
 	name = "glowing resin"
 	desc = "Blue bioluminescence shines from beneath the surface."
@@ -219,71 +199,54 @@
 	var/node_range = NODERANGE
 	light_color = "#24C1FF"
 
-/obj/effect/alien/weeds/node/New()
+/obj/structure/alien/weeds/node/New()
 	..(src.loc, src)
-	for (var/obj/effect/alien/weeds/W in loc)
+	for (var/obj/structure/alien/weeds/W in loc)
 		if (W != src)
 			qdel(W)
 	set_light(2)
 
-/obj/effect/alien/weeds/New(pos, node)
+/obj/structure/alien/weeds/New(pos, node)
 	..()
 	if(istype(loc, /turf/space))
 		qdel(src)
 		return
 
 	linked_node = node
-	if(icon_state == "weeds")icon_state = pick("weeds", "weeds1", "weeds2")
+	if(icon_state == "weeds")
+		icon_state = pick("weeds", "weeds1", "weeds2")
+
+	if(!weedImageCache)
+		weedImageCache = list()
+		weedImageCache["[WEED_NORTH_EDGING]"] = image('icons/mob/xenomorph.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
+		weedImageCache["[WEED_SOUTH_EDGING]"] = image('icons/mob/xenomorph.dmi', "weeds_side_s", layer=2.11, pixel_y = 32)
+		weedImageCache["[WEED_EAST_EDGING]"]  = image('icons/mob/xenomorph.dmi', "weeds_side_e", layer=2.11, pixel_x = -32)
+		weedImageCache["[WEED_WEST_EDGING]"]  = image('icons/mob/xenomorph.dmi', "weeds_side_w", layer=2.11, pixel_x = 32)
+
 	fullUpdateWeedOverlays()
-	spawn(rand(150, 200))
-		if(src)
-			Life()
-	return
+	addtimer(CALLBACK(src, .proc/Life), rand(150, 200))
 
-/obj/effect/alien/weeds/node/Destroy()
-	var/turf/T = loc
-	loc = null
-	for (var/obj/effect/alien/weeds/W in range(1,T))
-		W.updateWeedOverlays()
+/obj/structure/alien/weeds/Destroy()
+	fullUpdateWeedOverlays()
 	linked_node = null
-	..()
+	return ..()
 
-/obj/effect/alien/weeds/proc/updateWeedOverlays()
-
+/obj/structure/alien/weeds/proc/updateWeedOverlays()
 	overlays.Cut()
 
-	if(!weedImageCache || !weedImageCache.len)
-		weedImageCache = list()
-		weedImageCache.len = 4
-		weedImageCache[WEED_NORTH_EDGING] = image('icons/mob/xenomorph.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
-		weedImageCache[WEED_SOUTH_EDGING] = image('icons/mob/xenomorph.dmi', "weeds_side_s", layer=2.11, pixel_y = 32)
-		weedImageCache[WEED_EAST_EDGING] = image('icons/mob/xenomorph.dmi', "weeds_side_e", layer=2.11, pixel_x = -32)
-		weedImageCache[WEED_WEST_EDGING] = image('icons/mob/xenomorph.dmi', "weeds_side_w", layer=2.11, pixel_x = 32)
+	for(var/dir in cardinal)
+		var/turf/T = get_step(src, dir)
+		var/obj/structure/alien/weeds = locate() in T
 
-	var/turf/N = get_step(src, NORTH)
-	var/turf/S = get_step(src, SOUTH)
-	var/turf/E = get_step(src, EAST)
-	var/turf/W = get_step(src, WEST)
+		if(!weeds || QDESTROYING(weeds))
+			if(istype(T, /turf/simulated/floor))
+				overlays += weedImageCache["[dir]"]
 
-	if(!locate(/obj/effect/alien) in N.contents)
-		if(istype(N, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_SOUTH_EDGING]
-	if(!locate(/obj/effect/alien) in S.contents)
-		if(istype(S, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_NORTH_EDGING]
-	if(!locate(/obj/effect/alien) in E.contents)
-		if(istype(E, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_WEST_EDGING]
-	if(!locate(/obj/effect/alien) in W.contents)
-		if(istype(W, /turf/simulated/floor))
-			overlays += weedImageCache[WEED_EAST_EDGING]
-
-
-/obj/effect/alien/weeds/proc/fullUpdateWeedOverlays()
-	for (var/obj/effect/alien/weeds/W in range(1,src))
+/obj/structure/alien/weeds/proc/fullUpdateWeedOverlays()
+	for(var/obj/structure/alien/weeds/W in range(1, src))
 		W.updateWeedOverlays()
 
-/obj/effect/alien/weeds/proc/Life()
+/obj/structure/alien/weeds/proc/Life()
 	//set background = 1
 	var/turf/U = get_turf(src)
 
@@ -294,28 +257,26 @@
 	if(!linked_node || (get_dist(linked_node, src) > linked_node.node_range) )
 		return
 
-	for(var/dirn in cardinal)
-		var/turf/T = get_step(src, dirn)
+	check_next_dir:
+		for(var/dirn in cardinal)
+			var/turf/T = get_step(src, dirn)
 
-		if (!istype(T) || T.density || locate(/obj/effect/alien/weeds) in T || istype(T.loc, /area/arrival) || istype(T, /turf/space))
-			continue
-
-		var/obj/structure/window/W = locate(/obj/structure/window) in T
-		var/obj/machinery/door/D = locate(/obj/machinery/door) in T
-
-		if(D)
-			if(D.density)
+			if (!istype(T) || T.density || locate(/obj/structure/alien/weeds) in T || istype(T, /turf/space))
 				continue
 
-		if(W)
-			if(W.density)
+			for(var/obj/machinery/door/D in T)
+				if(D.density)
+					continue check_next_dir
+
+			var/obj/structure/window/W = locate() in T
+
+			if(W && W.density)
 				continue
 
-		new /obj/effect/alien/weeds(T, linked_node)
+			new /obj/structure/alien/weeds(T, linked_node)
 
 
-/obj/effect/alien/weeds/ex_act(severity)
-	var/turf/T = loc
+/obj/structure/alien/weeds/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			qdel(src)
@@ -325,11 +286,8 @@
 		if(3.0)
 			if (prob(5))
 				qdel(src)
-	for (var/obj/effect/alien/weeds/W in range(1,T))
-		W.updateWeedOverlays()
-	return
 
-/obj/effect/alien/weeds/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/alien/weeds/attackby(obj/item/weapon/W, mob/user)
 	if(W.attack_verb.len)
 		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
@@ -348,22 +306,25 @@
 	healthcheck()
 
 
-/obj/effect/alien/weeds/temperature_expose(null, temperature, volume)
+/obj/structure/alien/weeds/temperature_expose(null, temperature, volume)
 	if(temperature > T0C+200)
 		health -= 1 * temperature
 		healthcheck()
 
-/obj/effect/alien/weeds/proc/healthcheck()
+/obj/structure/alien/weeds/proc/healthcheck()
 	if(health <= 0)
 		var/turf/T = loc
 		qdel(src)
-		for (var/obj/effect/alien/weeds/W in range(1,T))
+		for (var/obj/structure/alien/weeds/W in range(1,T))
 			W.updateWeedOverlays()
 
-/obj/effect/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+/obj/structure/alien/weeds/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 300)
 		health -= 5
 		healthcheck()
+
+/obj/structure/alien/weeds/bullet_act(obj/item/projectile/Proj)
+	return -1
 
 /*/obj/effect/alien/weeds/burn(fi_amount)
 	if (fi_amount > 18000)
@@ -473,6 +434,11 @@
 				if(GROWING)
 					to_chat(user, "\red The child is not developed yet.")
 					return
+				if(BURST)
+					to_chat(user, "You clear the hatched egg.")
+					playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+					qdel(src)
+					return
 		else
 			return attack_hand(user)
 
@@ -551,3 +517,8 @@
 	if(exposed_temperature > 500)
 		health -= 5
 		healthcheck()
+
+#undef WEED_SOUTH_EDGING
+#undef WEED_NORTH_EDGING
+#undef WEED_WEST_EDGING
+#undef WEED_EAST_EDGING

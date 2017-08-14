@@ -13,7 +13,6 @@
 
 	if(pull_debuff && !pulling)	//For cases when pulling was stopped by 'pulling = null'
 		pull_debuff = 0
-
 	update_gravity(mob_has_gravity())
 
 	handle_actions()
@@ -96,6 +95,9 @@
 	for(var/datum/action/A in actions)
 		if(A.button)
 			client.screen -= A.button
+		if(!A.target)
+			actions -= A
+			qdel(A)
 
 	if(hud_used.action_buttons_hidden)
 		if(!hud_used.hide_actions_toggle)

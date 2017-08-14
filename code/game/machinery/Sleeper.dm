@@ -29,17 +29,24 @@
 		list("anti_toxin", "ryetalyn" ,"dermaline", "arithrazine"),
 		list("dexalinp", "alkysine")
 	)
+	var/upgraded = FALSE
+
+/obj/machinery/sleeper/upgraded
+	upgraded = TRUE
 
 /obj/machinery/sleeper/New()
 	..()
-	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/sleeper(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	if(upgraded)
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin/bluespace(null)
+		component_parts += new /obj/item/weapon/stock_parts/manipulator/femto(null)
+	else
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+		component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/weapon/cable_coil/random(null, 1)
 	RefreshParts()
 
 /obj/machinery/sleeper/RefreshParts()

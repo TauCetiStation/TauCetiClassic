@@ -50,7 +50,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "cigoff"
 	name = "burnt match"
 	desc = "A match. This one has seen better days."
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 
 //////////////////
 //FINE SMOKABLES//
@@ -132,16 +132,18 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!src.lit)
 		src.lit = 1
 		damtype = "fire"
-		if(reagents.get_reagent_amount("phoron")) // the phoron explodes when exposed to fire
+
+		if(reagents.get_reagent_amount("phoron") || reagents.get_reagent_amount("fuel")) // the phoron (fuel also) explodes when exposed to fire
 			var/datum/effect/effect/system/reagents_explosion/e = new()
-			e.set_up(round(reagents.get_reagent_amount("phoron") / 2.5, 1), get_turf(src), 0, 0)
+			var/exploding_reagents = round(reagents.get_reagent_amount("phoron") / 2.5 + reagents.get_reagent_amount("fuel") / 5, 1)
+			e.set_up(exploding_reagents, get_turf(src), 0, 0)
 			e.start()
-			qdel(src)
-			return
-		if(reagents.get_reagent_amount("fuel")) // the fuel explodes, too, but much less violently
-			var/datum/effect/effect/system/reagents_explosion/e = new()
-			e.set_up(round(reagents.get_reagent_amount("fuel") / 5, 1), get_turf(src), 0, 0)
-			e.start()
+			if(ishuman(loc))
+				var/mob/living/carbon/human/H = loc
+				if(H.wear_mask == src)
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+					if(BP)
+						BP.take_damage(10 * exploding_reagents)
 			qdel(src)
 			return
 		flags &= ~NOREACT // allowing reagents to react after being lit
@@ -150,7 +152,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = icon_on
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 		if(ismob(loc))
 			var/mob/M = loc
 			M.update_inv_wear_mask()
@@ -199,7 +201,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		to_chat(M, "<span class='notice'>Your [name] goes out.</span>")
 		M.remove_from_mob(src)	//un-equip it so the overlays can update
 		M.update_inv_wear_mask(0)
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	qdel(src)
 
 ////////////
@@ -302,7 +304,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		item_state = icon_on
 		var/turf/T = get_turf(src)
 		T.visible_message(flavor_text)
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 		if(ismob(loc))
 			var/mob/M = loc
 			M.update_inv_wear_mask()
@@ -319,7 +321,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			icon_state = icon_off
 			item_state = icon_off
 			M.update_inv_wear_mask(0)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 	if(location)
 		location.hotspot_expose(700, 5)
@@ -331,7 +333,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		lit = 0
 		icon_state = icon_off
 		item_state = icon_off
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 	if(smoketime <= 0)
 		to_chat(user, "<span class='notice'>You refill the pipe with tobacco.</span>")
@@ -424,13 +426,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				else
 					to_chat(user, "<span class='warning'>You burn yourself while lighting the lighter.</span>")
 					if (user.l_hand == src)
-						user.apply_damage(2,BURN,"l_hand")
+						user.apply_damage(2, BURN, BP_L_HAND)
 					else
-						user.apply_damage(2,BURN,"r_hand")
+						user.apply_damage(2, BURN, BP_R_HAND)
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
 
 			set_light(2)
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 		else
 			lit = 0
 			icon_state = icon_off
@@ -443,7 +445,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				playsound(src, 'sound/items/lighter.ogg', 20, 1, 1)
 
 			set_light(0)
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 	else
 		return ..()
 	return
@@ -453,7 +455,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	if(!istype(M, /mob))
 		return
 	M.IgniteMob()	//Lighters can ignite mobs splashed with fuel
-	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == "mouth" && lit)
+	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == O_MOUTH && lit)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
 		if(M == user)
 			cig.attackby(src, user)

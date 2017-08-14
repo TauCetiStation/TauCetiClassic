@@ -1,10 +1,9 @@
 //PREASSURE_FLAGS BITMASK
-#define STOPS_PRESSUREDMAGE     1    //This flag is used on the flags variable for SUIT and HEAD items which stop pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
-                                     //To successfully stop you taking all pressure damage you must have both a suit and head item with this flag.
-                                     //Used against both, high and low pressure.
-#define STOPS_HIGHPRESSUREDMAGE 2
-#define STOPS_LOWPRESSUREDMAGE  4
+#define STOPS_HIGHPRESSUREDMAGE 1    //These flags is used on the flags_pressure variable for SUIT and HEAD items which stop (high/low/all) pressure damage. Note that the flag 1 was previous used as ONBACK, so it is possible for some code to use (flags & 1) when checking if something can be put on your back. Replace this code with (inv_flags & SLOT_BACK) if you see it anywhere
+#define STOPS_LOWPRESSUREDMAGE  2    //To successfully stop you taking all pressure damage you must have both a suit and head item with STOPS_PRESSUREDMAGE flag.
+#define STOPS_PRESSUREDMAGE     3    //Used against both, high and low pressure.
 
+#define NOLIMB           -1    // related to THICKMATERIAL check, thats why this is here.
 //FLAGS BITMASK
 #define NOBLUDGEON        2    // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 #define MASKINTERNALS     4    // Mask allows internals.
@@ -30,6 +29,7 @@
 #define BLOCK_GAS_SMOKE_EFFECT  2048    // Blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with ONESIZEFITSALL)
 #define ONESIZEFITSALL          2048
 #define PHORONGUARD             4096    // Does not get contaminated by phoron.
+#define DROPDEL                 8192    // When dropped, it calls qdel on itself
 
 #define	NOREACT  4096    //Reagents dont' react inside this container.
 
@@ -38,6 +38,7 @@
 #define NO_BREATHE         "no_breathe"
 #define NO_SCAN            "no_scan"
 #define NO_PAIN            "no_pain"
+#define NO_EMBED           "no_embed"
 #define HAS_SKIN_TONE      "has_skin_tone"
 #define HAS_SKIN_COLOR     "has_skin_color"
 #define HAS_LIPS           "has_lips"

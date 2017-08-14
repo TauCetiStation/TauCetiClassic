@@ -40,3 +40,8 @@
 /datum/gear/head/orangebandana
 	display_name = "Orange bandana"
 	path = /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
+
+/datum/gear/head/kung
+	display_name = "Kung bandana"
+	path = /obj/item/clothing/head/det_hat/fluff/kung
+	cost = 1
