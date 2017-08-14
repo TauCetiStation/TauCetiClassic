@@ -1156,6 +1156,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Mars"
 	icon_state = "away"
 
+/area/awaymission/junkyard
+	name = "Junkyard"
+	icon_state = "away"
+
 /area/awaymission/BMPship1
 	name = "Aft Block"
 	icon_state = "away1"
