@@ -2,20 +2,18 @@
 
 /datum/game_mode
 	var/list/datum/mind/cult = list()
-	var/list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hide")
-
 
 /proc/iscultist(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
 
 /proc/is_convertable_to_cult(datum/mind/mind)
 	if(!istype(mind))
-		return 0
-	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Chaplain")))
-		return 0
+		return FALSE
+	if(ishuman(mind.current) && (mind.assigned_role in list("Captain", "Chaplain")))
+		return FALSE
 	if(isloyal(mind.current))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
 
 /datum/game_mode/cult
@@ -159,17 +157,16 @@
 
 /datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, word)
 	if (!word)
-		if(startwords.len > 0)
-			word=pick(startwords)
-			startwords -= word
-	return ..(cult_mob,word)
+		if(length(startwords) > 0)
+			word = pick_n_take(startwords)
+	return ..(cult_mob, word)
 
 
 /datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, word)
 	if(!cultwords["travel"])
 		runerandom()
 	if (!word)
-		word=pick(allwords)
+		word = pick(cultwords)
 	var/wordexp = "[cultwords[word]] is [word]..."
 	to_chat(cult_mob, "<span class = 'cult'>You remember one thing from the dark teachings of your master... <b>[wordexp]</b></span>")
 	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
