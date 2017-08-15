@@ -8,7 +8,7 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroomf"
 	layer = 2.1
-	light_power = 0.5
+	light_power = 0.7
 	light_color = "#80b82e"
 	var/endurance = 30
 	var/potency = 30

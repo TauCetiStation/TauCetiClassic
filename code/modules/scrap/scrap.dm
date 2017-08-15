@@ -40,6 +40,16 @@ var/global/list/scrap_base_cache = list()
 	update_icon(1)
 	..()
 
+/obj/structure/scrap/ex_act()
+	if (prob(60))
+		new /obj/random/foods/food_trash(src.loc)
+	if (prob(30))
+		new /obj/random/materials/rods_scrap(src.loc)
+	var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
+	//todo: Scrap shots.
+	throw_at(target, 200, 4)
+
+
 /obj/structure/scrap/proc/try_make_loot()
 	if(loot_generated)
 		return
@@ -169,10 +179,15 @@ var/global/list/scrap_base_cache = list()
 		return 1
 
 /obj/structure/scrap/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/weapon/shovel) && !(user in diggers))
+	var/do_dig = 0
+	if(istype(W,/obj/item/weapon/shovel))
+		do_dig = 30
+	if(istype(W,/obj/item/stack/rods))
+		do_dig = 50
+	if(do_dig  && !(user in diggers))
 		user.do_attack_animation(src)
 		diggers += user
-		if(do_after(user, 30, target = src))
+		if(do_after(user, do_dig, target = src))
 			visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
 			shuffle_loot()
 			dig_out_lump(user.loc)

@@ -224,6 +224,12 @@
 	icon_state = "ironsand1"
 	basetype = /turf/simulated/floor/plating/ironsand
 
+/turf/simulated/floor/plating/ironsand/ex_act()
+	return 0
+
+/turf/simulated/floor/plating/ironsand/burn_tile()
+	return 0
+
 /turf/simulated/floor/plating/ironsand/New()
 	..()
 	icon_state = "ironsand[rand(1,15)]"

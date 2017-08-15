@@ -296,7 +296,8 @@
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
 				else if (W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
-
+		if(crit_fail && prob(25))
+			remove_from_storage(W, get_turf(src))
 		src.orient2hud(usr)
 		for(var/mob/M in can_see_contents())
 			show_to(M)

@@ -166,6 +166,34 @@
 	if(prob(75))
 		darkness_view = -1
 
+/obj/item/clothing/glasses/make_old()
+	..()
+	if(prob(75))
+		vision_flags = 0
+	if(prob(75))
+		darkness_view = -1
+
+/obj/item/weapon/storage/make_old()
+	..()
+	if(prob(75))
+		storage_slots = max(0, storage_slots - pick(2, 2, 2, 3, 3, 4))
+	if(prob(75))
+		max_combined_w_class = max_combined_w_class / 2
+
+/obj/item/weapon/flashlight/make_old()
+	..()
+	if(prob(70))
+		light_power = light_power / pick(1.5, 2, 2.5)
+	if(prob(70))
+		light_range = light_range / pick(1.5, 2, 2.5)
+	if(prob(70))
+		light_color = "#f4d577"
+	if(prob(15))
+		light_range = 0
+		light_power = 0
+
+
+
 /obj/item/clothing/glasses/sunglasses/sechud/make_old()
 	..()
 	if(hud && prob(75))
