@@ -20,8 +20,8 @@
 
 
 /obj/machinery/atmospherics/portables_connector/New()
-	initialize_directions = dir
 	..()
+	initialize_directions = dir
 
 /obj/machinery/atmospherics/portables_connector/remove_network(datum/pipe_network/old_network)
 	if(old_network == network)
@@ -84,6 +84,9 @@
 
 	return ..()
 
+/obj/machinery/atmospherics/portables_connector/get_nodes()
+	return list(node)
+	
 /obj/machinery/atmospherics/portables_connector/initialize()
 	if(node) return
 

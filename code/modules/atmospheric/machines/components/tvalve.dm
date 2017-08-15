@@ -38,9 +38,9 @@
 		icon_state = "tvalve[state]"
 
 /obj/machinery/atmospherics/tvalve/New()
-	initialize_directions()
 	..()
-
+	initialize_directions()
+	
 /obj/machinery/atmospherics/tvalve/proc/initialize_directions()
 	switch(dir)
 		if(NORTH)
@@ -120,6 +120,9 @@
 	node3 = null
 
 	return ..()
+
+/obj/machinery/atmospherics/tvalve/get_nodes()
+	return list(node1, node2, node3)
 
 /obj/machinery/atmospherics/tvalve/proc/go_to_side()
 

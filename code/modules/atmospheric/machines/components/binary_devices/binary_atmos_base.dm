@@ -70,6 +70,9 @@
 
 	return ..()
 
+/obj/machinery/atmospherics/binary/get_nodes()
+	return list(node1, node2)
+
 /obj/machinery/atmospherics/binary/initialize()
 	node1 = null
 	node2 = null

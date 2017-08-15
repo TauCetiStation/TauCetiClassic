@@ -1,4 +1,4 @@
-obj/machinery/atmospherics/trinary
+/obj/machinery/atmospherics/trinary
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
 	use_power = 1
@@ -15,7 +15,7 @@ obj/machinery/atmospherics/trinary
 	var/datum/pipe_network/network2
 	var/datum/pipe_network/network3
 
-obj/machinery/atmospherics/trinary/New()
+/obj/machinery/atmospherics/trinary/New()
 	..()
 	switch(dir)
 		if(NORTH)
@@ -34,7 +34,7 @@ obj/machinery/atmospherics/trinary/New()
 	air2.volume = 200
 	air3.volume = 200
 
-obj/machinery/atmospherics/trinary/remove_network(datum/pipe_network/old_network)
+/obj/machinery/atmospherics/trinary/remove_network(datum/pipe_network/old_network)
 	if(old_network == network1)
 		network1 = null
 
@@ -47,7 +47,7 @@ obj/machinery/atmospherics/trinary/remove_network(datum/pipe_network/old_network
 	return ..()
 
 // Housekeeping and pipe network stuff below
-obj/machinery/atmospherics/trinary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
+/obj/machinery/atmospherics/trinary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node1)
 		if(network1)
 			qdel(network1)
@@ -70,7 +70,7 @@ obj/machinery/atmospherics/trinary/network_expand(datum/pipe_network/new_network
 
 	return null
 
-obj/machinery/atmospherics/trinary/Destroy()
+/obj/machinery/atmospherics/trinary/Destroy()
 	if(node1)
 		node1.disconnect(src)
 		qdel(network1)
@@ -87,7 +87,10 @@ obj/machinery/atmospherics/trinary/Destroy()
 
 	return ..()
 
-obj/machinery/atmospherics/trinary/initialize()
+/obj/machinery/atmospherics/trinary/get_nodes()
+	return list(node1, node2, node3)
+
+/obj/machinery/atmospherics/trinary/initialize()
 	node1 = null
 	node2 = null
 	node3 = null
@@ -113,7 +116,7 @@ obj/machinery/atmospherics/trinary/initialize()
 
 	update_icon()
 
-obj/machinery/atmospherics/trinary/build_network()
+/obj/machinery/atmospherics/trinary/build_network()
 	if(!network1 && node1)
 		network1 = new /datum/pipe_network()
 		network1.normal_members += src
@@ -130,7 +133,7 @@ obj/machinery/atmospherics/trinary/build_network()
 		network3.build_network(node3, src)
 
 
-obj/machinery/atmospherics/trinary/return_network(obj/machinery/atmospherics/reference)
+/obj/machinery/atmospherics/trinary/return_network(obj/machinery/atmospherics/reference)
 	build_network()
 
 	if(reference==node1)
@@ -144,7 +147,7 @@ obj/machinery/atmospherics/trinary/return_network(obj/machinery/atmospherics/ref
 
 	return null
 
-obj/machinery/atmospherics/trinary/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
+/obj/machinery/atmospherics/trinary/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
 	if(network1 == old_network)
 		network1 = new_network
 	if(network2 == old_network)
@@ -154,7 +157,7 @@ obj/machinery/atmospherics/trinary/reassign_network(datum/pipe_network/old_netwo
 
 	return 1
 
-obj/machinery/atmospherics/trinary/return_network_air(datum/pipe_network/reference)
+/obj/machinery/atmospherics/trinary/return_network_air(datum/pipe_network/reference)
 	var/list/results = list()
 
 	if(network1 == reference)
@@ -166,7 +169,7 @@ obj/machinery/atmospherics/trinary/return_network_air(datum/pipe_network/referen
 
 	return results
 
-obj/machinery/atmospherics/trinary/disconnect(obj/machinery/atmospherics/reference)
+/obj/machinery/atmospherics/trinary/disconnect(obj/machinery/atmospherics/reference)
 	if(reference==node1)
 		qdel(network1)
 		node1 = null

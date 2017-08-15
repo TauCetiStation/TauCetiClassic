@@ -91,10 +91,9 @@
 		reconsider_lights()
 
 /turf/change_area(area/old_area, area/new_area)
-	if(new_area.dynamic_lighting != old_area.dynamic_lighting)
+	if(SSlighting.init_done && new_area.dynamic_lighting != old_area.dynamic_lighting)
 		if(new_area.dynamic_lighting)
 			lighting_build_overlay()
-
 		else
 			lighting_clear_overlay()
 

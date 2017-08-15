@@ -1,9 +1,10 @@
 // Subsystem defines.
 // All in one file so it's easier to see what everything is relative to.
 
-#define SS_INIT_FLUIDS    9
-#define SS_INIT_JOBS      8
-#define SS_INIT_MAPPING   7
+#define SS_INIT_FLUIDS    10
+#define SS_INIT_JOBS      9
+#define SS_INIT_MAPPING   8
+#define SS_INIT_TEMPLDEP  7
 #define SS_INIT_XENOARCH  6
 #define SS_INIT_OBJECT    5
 #define SS_INIT_MACHINES  4

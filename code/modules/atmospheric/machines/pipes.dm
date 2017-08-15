@@ -206,6 +206,9 @@
 
 /obj/machinery/atmospherics/pipe/simple/pipeline_expansion()
 	return list(node1, node2)
+	
+/obj/machinery/atmospherics/pipe/simple/get_nodes()
+	return list(node1, node2)
 
 /obj/machinery/atmospherics/pipe/simple/update_icon()
 	switch(pipe_color)
@@ -346,6 +349,7 @@
 	layer = 2.4 //under wires with their 2.44
 
 /obj/machinery/atmospherics/pipe/manifold/New()
+	..()
 	alpha = 255
 	switch(dir)
 		if(NORTH)
@@ -357,7 +361,7 @@
 		if(WEST)
 			initialize_directions = NORTH|EAST|SOUTH
 
-	..()
+	
 
 /obj/machinery/atmospherics/pipe/manifold/hide(i)
 	if(level == 1 && istype(loc, /turf/simulated))
@@ -365,6 +369,9 @@
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/manifold/pipeline_expansion()
+	return list(node1, node2, node3)
+	
+/obj/machinery/atmospherics/pipe/manifold/get_nodes()
 	return list(node1, node2, node3)
 
 /obj/machinery/atmospherics/pipe/manifold/process()
@@ -561,6 +568,9 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 /obj/machinery/atmospherics/pipe/manifold4w/pipeline_expansion()
 	return list(node1, node2, node3, node4)
 
+/obj/machinery/atmospherics/pipe/manifold4w/get_nodes()
+	return list(node1, node2, node3, node4)
+
 /obj/machinery/atmospherics/pipe/manifold4w/process()
 	if(!parent)
 		..()
@@ -745,6 +755,9 @@ obj/machinery/atmospherics/pipe/manifold4w/New()
 
 /obj/machinery/atmospherics/pipe/cap/pipeline_expansion()
 	return list(node)
+	
+/obj/machinery/atmospherics/pipe/cap/get_nodes()
+	return list(node)
 
 /obj/machinery/atmospherics/pipe/cap/process()
 	if(!parent)
@@ -815,8 +828,8 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	var/obj/machinery/atmospherics/node1
 
 /obj/machinery/atmospherics/pipe/tank/New()
-	initialize_directions = dir
 	..()
+	initialize_directions = dir
 
 /obj/machinery/atmospherics/pipe/tank/process()
 	if(!parent)
@@ -830,13 +843,12 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	name = "Pressure Tank (Carbon Dioxide)"
 
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide/New()
+	..()
 	air_temporary = new
 	air_temporary.volume = volume
 	air_temporary.temperature = T20C
 
 	air_temporary.carbon_dioxide = (25*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-	..()
 
 
 /////Phoron tank
@@ -845,13 +857,13 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	name = "Pressure Tank (Phoron)"
 
 /obj/machinery/atmospherics/pipe/tank/phoron/New()
+	..()
 	air_temporary = new
 	air_temporary.volume = volume
 	air_temporary.temperature = T20C
 
 	air_temporary.phoron = (25*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
-	..()
 
 
 /////Oxygen agent_b tank
@@ -860,6 +872,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	name = "Pressure Tank (Oxygen + Phoron)"
 
 /obj/machinery/atmospherics/pipe/tank/oxygen_agent_b/New()
+	..()
 	air_temporary = new
 	air_temporary.volume = volume
 	air_temporary.temperature = T0C
@@ -869,8 +882,6 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 
 	air_temporary.trace_gases += trace_gas
 
-	..()
-
 
 /////Oxygen tank
 /obj/machinery/atmospherics/pipe/tank/oxygen
@@ -878,13 +889,13 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	name = "Pressure Tank (Oxygen)"
 
 /obj/machinery/atmospherics/pipe/tank/oxygen/New()
+	..()
 	air_temporary = new
 	air_temporary.volume = volume
 	air_temporary.temperature = T20C
 
 	air_temporary.oxygen = (25*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
-	..()
 
 
 /////Nitrogen tank
@@ -893,13 +904,13 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	name = "Pressure Tank (Nitrogen)"
 
 /obj/machinery/atmospherics/pipe/tank/nitrogen/New()
+	..()
 	air_temporary = new
 	air_temporary.volume = volume
 	air_temporary.temperature = T20C
 
 	air_temporary.nitrogen = (25*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
-	..()
 
 
 /////Air tank
@@ -908,6 +919,7 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	name = "Pressure Tank (Air)"
 
 /obj/machinery/atmospherics/pipe/tank/air/New()
+	..()
 	air_temporary = new
 	air_temporary.volume = volume
 	air_temporary.temperature = T20C
@@ -915,7 +927,6 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	air_temporary.oxygen = (25*ONE_ATMOSPHERE*O2STANDARD)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 	air_temporary.nitrogen = (25*ONE_ATMOSPHERE*N2STANDARD)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
-	..()
 
 /obj/machinery/atmospherics/pipe/tank/Destroy()
 	if(node1)
@@ -925,6 +936,9 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	return ..()
 
 /obj/machinery/atmospherics/pipe/tank/pipeline_expansion()
+	return list(node1)
+	
+/obj/machinery/atmospherics/pipe/tank/get_nodes()
 	return list(node1)
 
 /obj/machinery/atmospherics/pipe/tank/update_icon()
@@ -1007,8 +1021,8 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	var/obj/machinery/atmospherics/node1
 
 /obj/machinery/atmospherics/pipe/vent/New()
-	initialize_directions = dir
 	..()
+	initialize_directions = dir
 
 /obj/machinery/atmospherics/pipe/vent/high_volume
 	name = "Larger vent"
@@ -1033,6 +1047,9 @@ obj/machinery/atmospherics/pipe/cap/update_icon()
 	return ..()
 
 /obj/machinery/atmospherics/pipe/vent/pipeline_expansion()
+	return list(node1)
+	
+/obj/machinery/atmospherics/pipe/vent/get_nodes()
 	return list(node1)
 
 /obj/machinery/atmospherics/pipe/vent/update_icon()

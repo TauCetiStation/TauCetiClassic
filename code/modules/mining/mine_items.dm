@@ -558,7 +558,7 @@ obj/item/projectile/kinetic/New()
 /obj/item/weapon/survivalcapsule/proc/get_template()
 	if(template)
 		return
-	template = shelter_templates[template_id]
+	template = map_templates_categorized[TEMPLATE_SHELTER][template_id]
 	if(!template)
 		qdel(src)
 

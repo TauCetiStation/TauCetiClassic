@@ -20,6 +20,9 @@ Pipelines + Other Objects -> Pipe network
 	if(QDELETED(src)) //comments on /vg/ imply that GC'd pipes still process
 		return PROCESS_KILL
 	build_network()
+	
+/obj/machinery/atmospherics/proc/get_nodes()
+	return null
 
 /obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	// Check to see if should be added to network. Add self if so and adjust variables appropriately.

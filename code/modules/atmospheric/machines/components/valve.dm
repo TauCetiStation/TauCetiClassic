@@ -37,12 +37,12 @@
 		icon_state = "valve[open]"
 
 /obj/machinery/atmospherics/valve/New()
+	..()
 	switch(dir)
 		if(NORTH || SOUTH)
 			initialize_directions = NORTH|SOUTH
 		if(EAST || WEST)
 			initialize_directions = EAST|WEST
-	..()
 
 /obj/machinery/atmospherics/valve/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 
@@ -90,6 +90,9 @@
 	node2 = null
 
 	return ..()
+	
+/obj/machinery/atmospherics/valve/get_nodes()
+	return list(node1, node2)
 
 /obj/machinery/atmospherics/valve/proc/open()
 

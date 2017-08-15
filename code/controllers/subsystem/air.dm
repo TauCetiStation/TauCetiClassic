@@ -223,8 +223,17 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
 	for(var/A in atmos_machines)
-		if(!istype(A, /obj/machinery/atmospherics/unary))
-			continue
+		var/obj/machinery/atmospherics/AM = A
+		for(var/obj/machinery/atmospherics/AM_node in AM.get_nodes())
+			if(!AM_node)
+				AM.initialize()
+				for(var/obj/machinery/atmospherics/AM_node_real in AM.get_nodes())
+					if(!AM_node_real) //Okay, this is possible
+						continue
+					if(!(AM in AM_node_real.get_nodes()))
+						AM_node_real.initialize()
+				break
+	
 		if(istype(A, /obj/machinery/atmospherics/unary/vent_pump))
 			var/obj/machinery/atmospherics/unary/vent_pump/T = A
 			T.broadcast_status()

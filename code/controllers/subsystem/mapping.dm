@@ -19,7 +19,7 @@ var/datum/subsystem/mapping/SSmapping
 	populate_distribution_map()
 
 	// Load templates
-	preloadTemplates()
+	preload_templates()
 	..()
 
 /datum/subsystem/mapping/proc/make_mining_asteroid_secrets()
