@@ -230,6 +230,9 @@
 /obj/machinery/power/supermatter/attack_ai(mob/user)
 	to_chat(user, "<span class = \"warning\">You attempt to interface with the control circuits but find they are not connected to your network.  Maybe in a future firmware update.</span>")
 
+/obj/machinery/power/supermatter/attack_ghost(mob/user)
+	return
+
 /obj/machinery/power/supermatter/attack_hand(mob/user)
 	user.visible_message("<span class=\"warning\">\The [user] reaches out and touches \the [src], inducing a resonance... \his body starts to glow and bursts into flames before flashing into ash.</span>",\
 		"<span class=\"danger\">You reach out and touch \the [src]. Everything starts burning and all you can hear is ringing. Your last thought is \"That was not a wise decision.\"</span>",\

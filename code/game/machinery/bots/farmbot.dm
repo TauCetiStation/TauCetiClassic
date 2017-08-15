@@ -109,7 +109,7 @@
 	dat += "<br>Fertilizer Storage: <A href='?src=\ref[src];eject=1'>\[[get_total_ferts()]/[Max_Fertilizers]\]</a>"
 
 	dat += "<br>Behaviour controls are [src.locked ? "locked" : "unlocked"]<hr>"
-	if(!src.locked)
+	if(!src.locked || issilicon(user) || isobserver(user))
 		dat += "<TT>Watering Controls:<br>"
 		dat += " Water Plants : <A href='?src=\ref[src];water=1'>[src.setting_water ? "Yes" : "No"]</A><BR>"
 		dat += " Refill Watertank : <A href='?src=\ref[src];refill=1'>[src.setting_refill ? "Yes" : "No"]</A><BR>"
@@ -135,22 +135,23 @@
 			turn_off()
 		else
 			turn_on()
-	else if((href_list["water"]) && (!src.locked))
-		setting_water = !setting_water
-	else if((href_list["refill"]) && (!src.locked))
-		setting_refill = !setting_refill
-	else if((href_list["fertilize"]) && (!src.locked))
-		setting_fertilize = !setting_fertilize
-	else if((href_list["weed"]) && (!src.locked))
-		setting_weed = !setting_weed
-	else if((href_list["ignoreWeed"]) && (!src.locked))
-		setting_ignoreWeeds = !setting_ignoreWeeds
-	else if((href_list["ignoreMush"]) && (!src.locked))
-		setting_ignoreMushrooms = !setting_ignoreMushrooms
-	else if (href_list["eject"] )
-		flick("farmbot_hatch",src)
-		for (var/obj/item/nutrient/fert in contents)
-			fert.loc = get_turf(src)
+	else if(!locked || issilicon(usr) || isobserver(usr))
+		if(href_list["water"])
+			setting_water = !setting_water
+		else if(href_list["refill"])
+			setting_refill = !setting_refill
+		else if(href_list["fertilize"])
+			setting_fertilize = !setting_fertilize
+		else if(href_list["weed"])
+			setting_weed = !setting_weed
+		else if(href_list["ignoreWeed"])
+			setting_ignoreWeeds = !setting_ignoreWeeds
+		else if(href_list["ignoreMush"])
+			setting_ignoreMushrooms = !setting_ignoreMushrooms
+		else if(href_list["eject"])
+			flick("farmbot_hatch",src)
+			for (var/obj/item/nutrient/fert in contents)
+				fert.loc = get_turf(src)
 
 	src.updateUsrDialog()
 

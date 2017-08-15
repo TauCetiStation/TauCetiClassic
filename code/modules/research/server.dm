@@ -139,7 +139,7 @@
 /obj/machinery/r_n_d/server/attack_hand(mob/user)
 	if (disabled)
 		return
-	if (shocked)
+	if (shocked && !issilicon(user) && !isobserver(user))
 		shock(user,50)
 	return
 

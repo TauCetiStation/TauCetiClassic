@@ -2,8 +2,9 @@
 	name = "scrap stacking machine"
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "stacker"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
+	ghost_must_be_admin = TRUE
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 	var/list/stack_storage[0]

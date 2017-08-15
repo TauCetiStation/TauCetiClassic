@@ -129,6 +129,12 @@
 		return
 	..()
 
+/obj/machinery/door/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		if(density)
+			open()
+		else
+			close()
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/device/detective_scanner))

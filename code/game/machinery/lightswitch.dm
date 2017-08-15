@@ -6,8 +6,9 @@
 	desc = "It turns lights on and off. What are you, simple?"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1.0
-	var/on = 1
+	anchored = TRUE
+	ghost_must_be_admin = TRUE
+	var/on = TRUE
 	var/area/area = null
 	var/otherarea = null
 	//	luminosity = 1
@@ -47,8 +48,9 @@
 	src.attack_hand(user)
 
 /obj/machinery/light_switch/attack_hand(mob/user)
+	if(..())
+		return
 
-	src.add_fingerprint(usr)
 	on = !on
 	playsound(src, 'sound/items/buttonclick.ogg', 20, 1, 1)
 

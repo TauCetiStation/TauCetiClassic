@@ -104,7 +104,7 @@
 		return 1
 
 	var/t = null
-	if (get_dist(usr, src) <= 3 || istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/dead))
+	if (get_dist(usr, src) <= 3 || issilicon(usr) || isobserver(usr))
 		t += status()
 	else
 		to_chat(usr, "\blue <B>You are too far away.</B>")

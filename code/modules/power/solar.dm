@@ -321,15 +321,9 @@
 	return
 
 
-/obj/machinery/power/solar_control/attack_ai(mob/user)
-	add_fingerprint(user)
-	if(stat & (BROKEN | NOPOWER)) return
-	interact(user)
-
-
 /obj/machinery/power/solar_control/attack_hand(mob/user)
-	add_fingerprint(user)
-	if(stat & (BROKEN | NOPOWER)) return
+	if(..())
+		return
 	interact(user)
 
 
@@ -396,11 +390,10 @@
 
 /obj/machinery/power/solar_control/interact(mob/user)
 	if(stat & (BROKEN | NOPOWER)) return
-	if ( (get_dist(src, user) > 1 ))
-		if (!istype(user, /mob/living/silicon))
-			user.unset_machine()
-			user << browse(null, "window=solcon")
-			return
+	if (get_dist(src, user) > 1 && !issilicon(user) && !isobserver(user))
+		user.unset_machine()
+		user << browse(null, "window=solcon")
+		return
 
 	add_fingerprint(user)
 	user.set_machine(src)

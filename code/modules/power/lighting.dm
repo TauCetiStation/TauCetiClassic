@@ -467,7 +467,10 @@
 
 /obj/machinery/light/attack_ai(mob/user)
 	src.flicker(1)
-	return
+
+/obj/machinery/light/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		flicker(1)
 
 // Aliens smash the bulb but do not get electrocuted./N
 /obj/machinery/light/attack_alien(mob/living/carbon/alien/humanoid/user)//So larva don't go breaking light bulbs.

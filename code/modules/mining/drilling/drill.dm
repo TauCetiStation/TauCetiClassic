@@ -311,11 +311,8 @@
 		return
 	..()
 
-/obj/machinery/mining/drill/attack_ai(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/mining/drill/attack_hand(mob/user)
-	if(!in_range(src, user))
+	if(!in_range(src, user) || issilicon(user) || isobserver(user))
 		return
 	if(wires_shocked)
 		shock(user)

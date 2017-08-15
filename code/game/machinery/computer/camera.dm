@@ -20,12 +20,12 @@
 	var/camera_cache = null
 
 /obj/machinery/computer/security/check_eye(mob/user)
-	if ((get_dist(user, src) > 1 || (user.incapacitated()) || user.blinded) && !istype(user, /mob/living/silicon))
+	if ((get_dist(user, src) > 1 || user.incapacitated() || user.blinded) && !issilicon(user) && !isobserver(user))
 		return null
-	if ( !current || !current.can_use() ) //camera doesn't work
+	if (!current || !current.can_use()) //camera doesn't work
 		reset_current()
 	var/list/viewing = viewers(src)
-	if((istype(user,/mob/living/silicon/robot)) && (!(viewing.Find(user))))
+	if(isrobot(user) && !viewing.Find(user))
 		return null
 	user.reset_view(current)
 	return 1
@@ -54,7 +54,7 @@
 				data["current"] = cam
 
 		var/list/camera_list = list("cameras" = cameras)
-		camera_cache=list2json(camera_list)
+		camera_cache = list2json(camera_list)
 	else
 		if(current)
 			data["current"] = current.nano_structure()
@@ -99,6 +99,8 @@
 		reset_current()
 		usr.check_eye(current)
 
+/obj/machinery/computer/security/attack_ghost(mob/user)
+	return
 
 /obj/machinery/computer/security/attack_hand(mob/user)
 	if (src.z > ZLEVEL_EMPTY)
@@ -107,7 +109,7 @@
 	if (!network)
 		world.log << "A computer lacks a network at [x],[y],[z]."
 		return
-	if (!(istype(network,/list)))
+	if (!istype(network, /list))
 		world.log << "The computer at [x],[y],[z] has a network that is not a list!"
 		return
 

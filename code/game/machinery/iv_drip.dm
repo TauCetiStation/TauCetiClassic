@@ -135,6 +135,9 @@
 				beaker.reagents.handle_reactions()
 				update_icon()
 
+/obj/machinery/iv_drip/attack_ghost(mob/user)
+	return
+
 /obj/machinery/iv_drip/attack_hand(mob/user)
 	if(src.beaker)
 		src.beaker.loc = get_turf(src)

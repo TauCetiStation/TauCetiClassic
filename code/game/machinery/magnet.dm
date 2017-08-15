@@ -244,9 +244,9 @@
 	return src.attack_hand(user)
 
 /obj/machinery/magnetic_controller/attack_hand(mob/user)
-	if(stat & (BROKEN|NOPOWER))
+	if(..())
 		return
-	user.set_machine(src)
+
 	var/dat = "<B>Magnetic Control Console</B><BR><BR>"
 	if(!autolink)
 		dat += {"

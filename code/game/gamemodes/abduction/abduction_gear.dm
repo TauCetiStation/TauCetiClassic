@@ -609,6 +609,9 @@
 
 	//exclusion any bugs with grab
 	var/mob/living/carbon/C = usr
+	if(!istype(C))
+		return
+
 	if(istype(C.get_active_hand(),/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = C.get_active_hand()
 		if(istype(C.l_hand, G))

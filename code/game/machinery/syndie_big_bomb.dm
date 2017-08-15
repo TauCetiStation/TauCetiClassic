@@ -17,17 +17,18 @@
 	icon_state = "syndicate-bomb-inactive"
 	desc = "A large and menacing device. Can be bolted down with a wrench."
 
-	anchored = 0
-	density = 0
+	anchored = FALSE
+	density = FALSE
 	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
-	unacidable = 1
+	unacidable = TRUE
+	ghost_must_be_admin = TRUE
 
 	var/datum/wires/syndicatebomb/wires = null
 	var/timer = 60
-	var/open_panel = 0 	//are the wires exposed?
-	var/active = 0		//is the bomb counting down?
-	var/defused = 0		//is the bomb capable of exploding?
-	var/degutted = 0	//is the bomb even a bomb anymore?
+	var/open_panel = FALSE	//are the wires exposed?
+	var/active = FALSE		//is the bomb counting down?
+	var/defused = FALSE		//is the bomb capable of exploding?
+	var/degutted = FALSE	//is the bomb even a bomb anymore?
 
 /obj/machinery/syndicatebomb/process()
 	if(active && !defused && (timer > 0)) 	//Tick Tock
@@ -114,19 +115,19 @@
 		if(open_panel)
 			wires.interact(user)
 		else if(!active)
-			settings()
+			settings(user)
 		else
 			to_chat(user, "<span class='notice'>The bomb is bolted to the floor!</span>")
 	else if(!active)
-		settings()
+		settings(user)
 
 /obj/machinery/syndicatebomb/proc/settings(mob/user)
-	var/newtime = input(usr, "Please set the timer.", "Timer", "[timer]") as num
+	var/newtime = input(user, "Please set the timer.", "Timer", "[timer]") as num
 	newtime = Clamp(newtime, 60, 60000)
-	if(in_range(src, usr) && isliving(usr)) //No running off and setting bombs from across the station
+	if(in_range(src, user) && isliving(user) || isobserver(user)) //No running off and setting bombs from across the station
 		timer = newtime
 		src.loc.visible_message("\blue [bicon(src)] timer set for [timer] seconds.")
-	if(alert(usr,"Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, usr) && isliving(usr))
+	if(alert(user, "Would you like to start the countdown now?",,"Yes","No") == "Yes" && in_range(src, user) && isliving(user))
 		if(defused || active || degutted)
 			if(degutted)
 				src.loc.visible_message("\blue [bicon(src)] Device error: Payload missing")
@@ -145,8 +146,8 @@
 
 			var/turf/bombturf = get_turf(src)
 			var/area/A = get_area(bombturf)
-			message_admins("[key_name(usr)]<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
-			log_game("[key_name(usr)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
+			message_admins("[key_name(user)]<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A> has primed a [name] for detonation at <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[bombturf.x];Y=[bombturf.y];Z=[bombturf.z]'>[A.name] (JMP)</a>.")
+			log_game("[key_name(user)] has primed a [name] for detonation at [A.name]([bombturf.x],[bombturf.y],[bombturf.z])")
 			START_PROCESSING(SSobj, src) //Ticking down
 
 /obj/machinery/syndicatebomb/proc/isWireCut(index)

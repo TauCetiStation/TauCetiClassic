@@ -153,7 +153,9 @@
 	healthcheck(110)
 
 /obj/machinery/dominator/attackby(I, user, params)
+	return
 
+/obj/machinery/dominator/attack_ghost(mob/user)
 	return
 
 /obj/machinery/dominator/attack_hand(mob/user)
