@@ -38,9 +38,9 @@
 		icon_state = "tvalve[state]"
 
 /obj/machinery/atmospherics/tvalve/New()
-	initialize_directions()
 	..()
-
+	initialize_directions()
+	
 /obj/machinery/atmospherics/tvalve/proc/initialize_directions()
 	switch(dir)
 		if(NORTH)
