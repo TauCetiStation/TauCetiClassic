@@ -142,7 +142,7 @@
 	name = "Drop Pod"
 	desc = "A two-seater pod, that can fall into station, aim system can be upgraded with camera bug and simple Drop System."
 	item = /obj/item/device/drop_caller/Syndi
-	cost = 12
+	cost = 14
 
 /datum/intruder_tools/drop_aim
 	name = "Simple Drop System"

@@ -144,7 +144,7 @@
 		mob_overlay = image(usr.icon, usr.icon_state)
 		mob_overlay.overlays = usr.overlays
 		mob_overlay.pixel_x = 1
-		mob_overlay.pixel_y = 27
+		mob_overlay.pixel_y = 25
 		overlays += mob_overlay
 		intruder = usr
 		verbs -= /obj/structure/droppod/verb/move_inside

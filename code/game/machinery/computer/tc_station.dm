@@ -148,7 +148,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 /obj/machinery/computer/telecrystals/boss/proc/getDangerous()//This scales the TC assigned with the round population.
 	..()
 	var/danger
-	var/active_players = length(player_list.len)
+	var/active_players = length(player_list)
 	var/agent_numbers = Clamp((active_players / 5), 2, 6)
 	storedcrystals = agent_numbers * TELECRYSTALS_PER_ONE_OPERATIVE + INITIAL_NUCLEAR_TELECRYSTALS
 	danger = active_players
@@ -217,7 +217,7 @@ var/list/possible_uplinker_IDs = list("Alfa","Bravo","Charlie","Delta","Echo","F
 			sanity++
 		logTransfer("[src] evenly distributed telecrystals.")
 
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 #undef INITIAL_NUCLEAR_TELECRYSTALS
 #undef TELECRYSTALS_PER_ONE_OPERATIVE
