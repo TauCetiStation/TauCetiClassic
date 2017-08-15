@@ -102,9 +102,8 @@ datum/supply_pack/New()
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
-					/obj/item/weapon/pen/paralysis,
-					/obj/item/weapon/grenade/chem_grenade/incendiary)
-	cost = 2000
+					/obj/item/weapon/pen/paralysis)
+	cost = 1750
 	crate_name = "Special Ops crate"
 	group = "Security"
 	hidden = TRUE
@@ -130,11 +129,8 @@ datum/supply_pack/New()
 	contains = list(/obj/item/weapon/flamethrower/full,
 					/obj/item/weapon/tank/phoron,
 					/obj/item/weapon/tank/phoron,
-					/obj/item/weapon/tank/phoron,
-					/obj/item/weapon/grenade/chem_grenade/incendiary,
-					/obj/item/weapon/grenade/chem_grenade/incendiary,
-					/obj/item/weapon/grenade/chem_grenade/incendiary)
-	cost = 2500
+					/obj/item/weapon/tank/phoron)
+	cost = 1750
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "Experimental weapons crate"
 	access = access_heads
