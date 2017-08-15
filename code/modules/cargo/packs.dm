@@ -683,20 +683,13 @@ datum/supply_pack/New()
 	access = access_ce
 
 /datum/supply_pack/teg
-	contains = list(/obj/machinery/power/generator)
+	contains = list(/obj/machinery/power/generator,
+					/obj/machinery/atmospherics/binary/circulator,
+					/obj/machinery/atmospherics/binary/circulator)
 	name = "Mark I Thermoelectric Generator"
 	cost = 7500
 	crate_type = /obj/structure/closet/crate/secure/large
 	crate_name = "Mk1 TEG crate"
-	group = "Engineering"
-	access = access_engine
-
-/datum/supply_pack/circulator
-	contains = list(/obj/machinery/atmospherics/binary/circulator)
-	name = "Binary atmospheric circulator"
-	cost = 6000
-	crate_type = /obj/structure/closet/crate/secure/large
-	crate_name = "Atmospheric circulator crate"
 	group = "Engineering"
 	access = access_engine
 
