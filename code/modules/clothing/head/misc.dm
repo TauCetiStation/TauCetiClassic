@@ -366,3 +366,8 @@
 	name = "captains beret"
 	desc = "A white beret adorned with the shield cobalt kite shield with an engraved sword�of the NanoTrasen security forces, worn only by those captaining a vessel of the NanoTrasen Navy."
 	icon_state = "centcomcaptain"
+
+/obj/item/clothing/head/angel_nimb
+	name = "Nimb"
+	desc = "Just a Nimb"
+	icon_state = "nimb"

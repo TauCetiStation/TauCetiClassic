@@ -878,3 +878,33 @@
 	icon_state = "capacitor"
 	desc = "A debug item for research."
 	origin_tech = "materials=8;engineering=8;phorontech=8;powerstorage=8;bluespace=8;biotech=8;combat=8;magnets=8;programming=8;syndicate=8"
+
+/obj/item/weapon/broom
+	name = "Broom"
+	desc = "This broom is made with the branches and leaves of a tree which secretes aromatic oils."
+	icon_state = "broom_sauna"
+
+/obj/item/weapon/broom/attack(mob/living/M, mob/living/user, def_zone)
+	if(wet - 5 < 0)
+		to_chat(user, "<span class='userdanger'>Soak this [src] first!</span>")
+		return
+	if(M == user)
+		to_chat(user, "<span class='userdanger'>You can't birching yourself!</span>")
+		return
+	if(!M.lying)
+		to_chat(user, "<span class='userdanger'>[M] Must be lie down first!</span>")
+		return
+	var/zone = parse_zone(check_zone(def_zone))
+	wet -= 5
+	user.visible_message("<span class='notice'>A [user] lightly Birching [M]'s [zone] with [src]!</span>",
+		"<span class='notice'>You lightly Birching [M]'s [zone] with [src]!</span>")
+	if(prob(5))
+		M.adjustBruteLoss(-5)
+		to_chat(M, "<span class='notice'>Your skin feel's extremely good!</span>")
+	if(prob(5))
+		M.adjustFireLoss(-5)
+		to_chat(M, "<span class='notice'>Your skin feel's extremely good!</span>")
+
+
+
+

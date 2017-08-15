@@ -97,7 +97,7 @@
 			if(S.clothless)
 				switch(target_zone)
 					if(BP_CHEST , BP_GROIN , BP_L_LEG , BP_R_LEG , BP_R_ARM , BP_L_ARM)
-						if(T.wear_suit || T.w_uniform)
+						if(T.wear_suit || (T.w_uniform && !istype(T.w_uniform, /obj/item/clothing/under/patient_gown)))
 							return 0
 					if(BP_R_FOOT , BP_L_FOOT)
 						if(T.shoes)

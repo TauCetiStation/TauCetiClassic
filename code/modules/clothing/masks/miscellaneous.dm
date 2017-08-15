@@ -36,6 +36,13 @@
 	flags_inv = HIDEFACE
 	body_parts_covered = 0
 
+/obj/item/clothing/mask/fake_face
+	name = "Fake Face"
+	desc = "Warning: this face not a fake."
+	icon_state = "fake_face"
+	flags_inv = HIDEFACE
+	body_parts_covered = 0
+
 /obj/item/clothing/mask/snorkel
 	name = "Snorkel"
 	desc = "For the Swimming Savant."
@@ -196,3 +203,15 @@
 	name = "skull bandana"
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
+
+/obj/item/clothing/mask/tie/collar
+	name = "Silver Collar"
+	desc = "A common collar with silver covering"
+	icon_state = "collar"
+	body_parts_covered = 0
+
+/obj/item/clothing/mask/tie/collar2
+	name = "Gold Collar"
+	desc = "A common collar with gold covering"
+	icon_state = "collar2"
+	body_parts_covered = 0
