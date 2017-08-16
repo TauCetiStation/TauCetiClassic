@@ -235,7 +235,7 @@
 	else
 		icon_state = "control_standby"
 		set_light(1.5, 1,"#003300")
-	if(!slave && control_area)
+	if(!slave && istype(control_area))
 		for(var/obj/machinery/turretid/tid in control_area.turret_controls)
 			tid.update_icon(TRUE)
 
