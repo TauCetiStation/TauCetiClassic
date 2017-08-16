@@ -183,8 +183,8 @@
 	return
 
 /atom/proc/add_hiddenprint(mob/living/M)
-	if(isnull(M)) return
-	if(isnull(M.key)) return
+	if(!M || !M.key)
+		return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna))
@@ -300,7 +300,7 @@
 	else
 		//Smudge up dem prints some
 		if(fingerprintslast != M.key)
-			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), M.real_name, M.key)
+			fingerprintshidden += text("\[[]\]Real name: [], Key: []", time_stamp(), M.real_name, M.key)
 			fingerprintslast = M.key
 
 	//Cleaning up shit.

@@ -138,7 +138,7 @@ var/list/alldepartments = list("Central Command")
 			else
 				scan.loc = src.loc
 				scan = null
-		else
+		else if(ishuman (usr))
 			var/obj/item/I = usr.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
 				usr.drop_item()

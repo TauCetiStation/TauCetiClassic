@@ -221,7 +221,7 @@
 
 /obj/machinery/power/turbine/interact(mob/user)
 
-	if ( !Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon)) )
+	if ( !Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && !issilicon(user) && !isobserver(user) )
 		user.machine = null
 		user << browse(null, "window=turbine")
 		return

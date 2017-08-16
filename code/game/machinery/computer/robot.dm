@@ -105,21 +105,15 @@
 		<A href='?src=\ref[src];temp=1'>Cancel</A>"}
 
 	else if (href_list["eject2"])
-		var/obj/item/weapon/card/id/I = usr.get_active_hand()
-		if (istype(I, /obj/item/device/pda))
-			var/obj/item/device/pda/pda = I
-			I = pda.id
-		if (istype(I))
-			if(src.check_access(I))
-				if (!status)
-					message_admins("\blue [key_name_admin(usr)] has initiated the global cyborg killswitch! <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>")
-					log_game("\blue [key_name(usr)] has initiated the global cyborg killswitch!")
-					src.status = 1
-					src.start_sequence()
-					src.temp = null
-
-			else
-				to_chat(usr, "\red Access Denied.")
+		if(allowed(usr))
+			if (!status)
+				message_admins("\blue [key_name_admin(usr)] has initiated the global cyborg killswitch! <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>")
+				log_game("\blue [key_name(usr)] has initiated the global cyborg killswitch!")
+				src.status = 1
+				src.start_sequence()
+				src.temp = null
+		else
+			to_chat(usr, "\red Access Denied.")
 
 	else if (href_list["stop"])
 		src.temp = {"

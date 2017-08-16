@@ -13,16 +13,8 @@
 	crew_monitor = new(src)
 	..()
 
-
-/obj/machinery/computer/crew/attack_ai(mob/user)
-	attack_hand(user)
-	ui_interact(user)
-
-
 /obj/machinery/computer/crew/attack_hand(mob/user)
 	if(..())
-		return
-	if(stat & (BROKEN|NOPOWER))
 		return
 	ui_interact(user)
 

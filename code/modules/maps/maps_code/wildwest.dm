@@ -27,7 +27,7 @@
 		user << "The Wish Granter lies silent."
 		return
 
-	else if(!istype(user, /mob/living/carbon/human))
+	else if(!ishuman(user))
 		user << "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's."
 		return
 

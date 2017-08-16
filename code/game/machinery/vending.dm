@@ -346,21 +346,16 @@
 	return attack_hand(user)
 
 /obj/machinery/vending/attack_hand(mob/user)
-	if(wires.interact(user))
+	if(..() || wires.interact(user))
 		return
 
-	if(stat & (BROKEN|NOPOWER))
-		return
-
-	if(src.seconds_electrified != 0)
-		if(src.shock(user, 100))
+	if(seconds_electrified && !issilicon(user) && !isobserver(user))
+		if(shock(user, 100))
 			return
 
-	user.set_machine(src)
+	var/vendorname = name  //import the machine's name
 
-	var/vendorname = (src.name)  //import the machine's name
-
-	if(src.currently_vending)
+	if(currently_vending)
 		var/dat
 		dat += "<b>You have selected [currently_vending.product_name].<br>Please swipe your ID to pay for the article.</b><br>"
 		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
@@ -373,17 +368,15 @@
 	dat += "<h3>Select an item</h3>"
 	dat += "<div class='statusDisplay'>"
 
-	if (src.product_records.len == 0)
+	if (product_records.len == 0)
 		dat += "<font color = 'red'>No product loaded!</font>"
 
 	else
-		var/list/display_records = src.product_records
-		if(src.extended_inventory)
-			display_records = src.product_records + src.hidden_records
-		if(src.coin)
-			display_records = src.product_records + src.coin_records
-		if(src.coin && src.extended_inventory)
-			display_records = src.product_records + src.hidden_records + src.coin_records
+		var/list/display_records = product_records
+		if(extended_inventory)
+			display_records += hidden_records
+		if(coin)
+			display_records += coin_records
 
 		dat += "<ul>"
 		for (var/datum/data/vending_product/R in display_records)
@@ -416,49 +409,48 @@
 	if(!.)
 		return
 
-	if(href_list["remove_coin"] && !istype(usr,/mob/living/silicon))
+	if(href_list["remove_coin"] && !issilicon(usr) && !isobserver(usr))
 		if(!coin)
 			to_chat(usr, "There is no coin in this machine.")
 			return FALSE
 
-		coin.loc = src.loc
+		coin.loc = loc
 		if(!usr.get_active_hand())
 			usr.put_in_hands(coin)
 		to_chat(usr, "\blue You remove the [coin] from the [src]")
 		coin = null
 
-	else if(href_list["remove_ewallet"] && !istype(usr,/mob/living/silicon))
+	else if(href_list["remove_ewallet"] && !issilicon(usr) && !isobserver(usr))
 		if (!ewallet)
 			to_chat(usr, "There is no charge card in this machine.")
 			return
-		ewallet.loc = src.loc
+		ewallet.loc = loc
 		if(!usr.get_active_hand())
 			usr.put_in_hands(ewallet)
 		to_chat(usr, "\blue You remove the [ewallet] from the [src]")
 		ewallet = null
 
-	else if ((href_list["vend"]) && (src.vend_ready) && (!currently_vending))
+	else if (href_list["vend"] && vend_ready && !currently_vending)
 
-		if(istype(usr,/mob/living/silicon))
-			if(istype(usr,/mob/living/silicon/robot))
-				var/mob/living/silicon/robot/R = usr
-				if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
-					to_chat(usr, "\red The vending machine refuses to interface with you, as you are not in its target demographic!")
-					return FALSE
-			else
+		if(isrobot(usr))
+			var/mob/living/silicon/robot/R = usr
+			if(!(R.module && istype(R.module,/obj/item/weapon/robot_module/butler) ))
 				to_chat(usr, "\red The vending machine refuses to interface with you, as you are not in its target demographic!")
 				return FALSE
+		else if(issilicon(usr))
+			to_chat(usr, "\red The vending machine refuses to interface with you, as you are not in its target demographic!")
+			return FALSE
 
 		if (!allowed(usr) && !emagged && scan_id) //For SECURE VENDING MACHINES YEAH
 			to_chat(usr, "<span class='warning'>Access denied.</span>")//Unless emagged of course
-			flick(src.icon_deny,src)
+			flick(src.icon_deny, src)
 			return FALSE
 
 		var/datum/data/vending_product/R = locate(href_list["vend"])
 		if (!R || !istype(R) || !R.product_path || R.amount <= 0)
 			return FALSE
 
-		if(R.price == null)
+		if(R.price == null || isobserver(usr)) //Centcomm buys somethin at himself? Nope, because they can just take this
 			src.vend(R, usr)
 		else
 			if (ewallet)
@@ -497,11 +489,9 @@
 				to_chat(user, "\blue You successfully pull the coin out before the [src] could swallow it.")
 			else
 				to_chat(user, "\blue You weren't able to pull the coin out fast enough, the machine ate it, string and all.")
-				qdel(coin)
-				coin = null
+				QDEL_NULL(coin)
 		else
-			qdel(coin)
-			coin = null
+			QDEL_NULL(coin)
 
 	R.amount--
 

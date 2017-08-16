@@ -27,8 +27,7 @@
 /obj/machinery/computer/aifixer/attack_hand(mob/user)
 	if(..())
 		return
-
-	user.set_machine(src)
+ 
 	var/dat = "<h3>AI System Integrity Restorer</h3><br><br>"
 
 	if (src.occupier)

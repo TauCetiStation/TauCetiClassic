@@ -162,7 +162,7 @@
 /obj/machinery/suspension_gen/attack_hand(mob/user)
 	if(!open)
 		interact(user)
-	else if(cell)
+	else if(cell && !isobserver(user))
 		cell.loc = loc
 		cell.add_fingerprint(user)
 		cell.updateicon()

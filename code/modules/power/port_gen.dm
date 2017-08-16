@@ -214,11 +214,10 @@
 	interact(user)
 
 /obj/machinery/power/port_gen/pacman/interact(mob/user)
-	if (get_dist(src, user) > 1 )
-		if (!istype(user, /mob/living/silicon/ai))
-			user.unset_machine(src)
-			user << browse(null, "window=port_gen")
-			return
+	if ((get_dist(src, user) > 1) && !issilicon(user) && !isobserver(user))
+		user.unset_machine(src)
+		user << browse(null, "window=port_gen")
+		return
 
 	user.set_machine(src)
 

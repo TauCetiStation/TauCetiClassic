@@ -67,6 +67,8 @@
 		else if (fry_time == 60)
 			visible_message("[src] emits an acrid smell!")
 
+/obj/machinery/deepfryer/attack_ghost(mob/user)
+	return
 
 /obj/machinery/deepfryer/attack_hand(mob/user)
 	if(frying)

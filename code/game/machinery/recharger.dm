@@ -1,6 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-obj/machinery/recharger
+/obj/machinery/recharger
 	name = "recharger"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
@@ -29,7 +29,7 @@ obj/machinery/recharger
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
 
-obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
+/obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 	if(istype(user,/mob/living/silicon))
 		return
 	if(is_type_in_list(G, allowed_items))
@@ -70,7 +70,13 @@ obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 			default_deconstruction_crowbar(G)
 			return
 
-obj/machinery/recharger/attack_hand(mob/user)
+/obj/machinery/recharger/attack_ai(mob/user)
+	return
+
+/obj/machinery/recharger/attack_ghost(mob/user)
+	return
+
+/obj/machinery/recharger/attack_hand(mob/user)
 	add_fingerprint(user)
 
 	if(charging)
@@ -80,10 +86,10 @@ obj/machinery/recharger/attack_hand(mob/user)
 		use_power = 1
 		update_icon()
 
-obj/machinery/recharger/attack_paw(mob/user)
+/obj/machinery/recharger/attack_paw(mob/user)
 	return attack_hand(user)
 
-obj/machinery/recharger/process()
+/obj/machinery/recharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return
 
@@ -130,7 +136,7 @@ obj/machinery/recharger/process()
 			else
 				icon_state = "recharger2"
 
-obj/machinery/recharger/emp_act(severity)
+/obj/machinery/recharger/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		..(severity)
 		return
@@ -145,7 +151,7 @@ obj/machinery/recharger/emp_act(severity)
 		B.charges = 0
 	..(severity)
 
-obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
+/obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		icon_state = "rechargeroff"
 	else if(panel_open)
@@ -155,12 +161,12 @@ obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to 
 	else
 		icon_state = "recharger0"
 
-obj/machinery/recharger/wallcharger
+/obj/machinery/recharger/wallcharger
 	name = "wall recharger"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "wrecharger0"
 
-obj/machinery/recharger/wallcharger/process()
+/obj/machinery/recharger/wallcharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return
 
@@ -204,7 +210,7 @@ obj/machinery/recharger/wallcharger/process()
 			else
 				icon_state = "wrecharger2"
 
-obj/machinery/recharger/wallcharger/update_icon()
+/obj/machinery/recharger/wallcharger/update_icon()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		icon_state = "wrechargeroff"
 	else if(panel_open)
