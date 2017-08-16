@@ -70,3 +70,16 @@ var/datum/subsystem/objects/SSobj
 		processing = SSobj.processing
 	if (istype(SSobj.drying))
 		drying = SSobj.drying
+
+/proc/GenerateGasOverlays()
+	plmaster = new /obj/effect/overlay()
+	plmaster.icon = 'icons/effects/tile_effects.dmi'
+	plmaster.icon_state = "plasma-purple"  //fuck phoron!
+	plmaster.layer = FLY_LAYER
+	plmaster.mouse_opacity = 0
+
+	slmaster = new /obj/effect/overlay()
+	slmaster.icon = 'icons/effects/tile_effects.dmi'
+	slmaster.icon_state = "sleeping_agent"
+	slmaster.layer = FLY_LAYER
+	slmaster.mouse_opacity = 0

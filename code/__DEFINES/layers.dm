@@ -21,3 +21,16 @@
 #define HUD_LAYER 19
 #define ABOVE_HUD_PLANE 20
 #define ABOVE_HUD_LAYER 20
+
+#define ABOVE_PLATING_PLANE          0//-20
+
+	#define PIPE_LAYER           2.4//5
+
+#define ABOVE_TURF_PLANE              0//-18 // For items which should appear above turfs but below other objects and hiding mobs, eg: wires & pipes
+
+	#define ABOVE_TILE_LAYER            2.1//4
+	#define EXPOSED_PIPE_LAYER          2.1//5
+
+#define EFFECTS_BELOW_LIGHTING_PLANE   14//-4 // For special effects.
+
+	#define FIRE_LAYER              3

@@ -1,9 +1,9 @@
 /obj/machinery/atmospherics/portables_connector
-	icon = 'icons/obj/atmospherics/portables_connector.dmi'
-	icon_state = "intact"
+	icon = 'icons/atmos/connector.dmi'
+	icon_state = "map_connector"
 
 	name = "Connector Port"
-	desc = "For connecting portables devices related to atmospherics control."
+	desc = "For connecting portable devices related to atmospherics control."
 
 	dir = SOUTH
 	initialize_directions = SOUTH
@@ -16,34 +16,26 @@
 
 	var/on = 0
 	use_power = 0
-	level = 0
+	level = 1
 
 
 /obj/machinery/atmospherics/portables_connector/New()
 	initialize_directions = dir
 	..()
 
-/obj/machinery/atmospherics/portables_connector/remove_network(datum/pipe_network/old_network)
-	if(old_network == network)
-		network = null
-
-	return ..()
-
 /obj/machinery/atmospherics/portables_connector/update_icon()
-	if(node)
-		icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
-		dir = get_dir(src, node)
-	else
-		icon_state = "exposed"
+	icon_state = "connector"
 
-	return
+/obj/machinery/atmospherics/portables_connector/update_underlays()
+	if(..())
+		underlays.Cut()
+		var/turf/T = get_turf(src)
+		if(!istype(T))
+			return
+		add_underlay(T, node, dir)
 
-/obj/machinery/atmospherics/portables_connector/hide(i) //to make the little pipe section invisible, the icon changes.
-	if(node)
-		icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
-		dir = get_dir(src, node)
-	else
-		icon_state = "exposed"
+/obj/machinery/atmospherics/portables_connector/hide(var/i)
+	update_underlays()
 
 /obj/machinery/atmospherics/portables_connector/process()
 	..()
@@ -59,8 +51,6 @@
 // Housekeeping and pipe network stuff below
 /obj/machinery/atmospherics/portables_connector/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node)
-		if(network)
-			qdel(network)
 		network = new_network
 
 	if(new_network.normal_members.Find(src))
@@ -71,30 +61,33 @@
 	return null
 
 /obj/machinery/atmospherics/portables_connector/Destroy()
+	loc = null
+
 	if(connected_device)
 		connected_device.disconnect()
-		connected_device = null
 
 	if(node)
 		node.disconnect(src)
 		qdel(network)
-		network = null
 
 	node = null
 
 	return ..()
 
-/obj/machinery/atmospherics/portables_connector/initialize()
+/obj/machinery/atmospherics/portables_connector/atmos_init()
+	..()
 	if(node) return
 
 	var/node_connect = dir
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
 		if(target.initialize_directions & get_dir(target,src))
-			node = target
-			break
+			if (check_connect_types(target,src))
+				node = target
+				break
 
 	update_icon()
+	update_underlays()
 
 /obj/machinery/atmospherics/portables_connector/build_network()
 	if(!network && node)
@@ -133,33 +126,31 @@
 		qdel(network)
 		node = null
 
+	update_underlays()
+
 	return null
 
 
-/obj/machinery/atmospherics/portables_connector/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/atmospherics/portables_connector/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (connected_device)
-		to_chat(user, "<span class='warning'>You cannot unwrench this [src], dettach [connected_device] first.</span>")
+		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], dettach \the [connected_device] first.</span>")
 		return 1
 	if (locate(/obj/machinery/portable_atmospherics, src.loc))
-		return 1
-	var/turf/T = src.loc
-	if (level==1 && isturf(T) && T.intact)
-		to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
 		return 1
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
+		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return 1
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-	if (do_after(user, 40, target = src))
+	if (do_after(user, 40, src))
 		user.visible_message( \
-			"[user] unfastens \the [src].", \
+			"<span class='notice'>\The [user] unfastens \the [src].</span>", \
 			"<span class='notice'>You have unfastened \the [src].</span>", \
-			"You hear ratchet.")
+			"You hear a ratchet.")
 		new /obj/item/pipe(loc, make_from=src)
 		qdel(src)

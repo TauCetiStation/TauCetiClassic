@@ -321,15 +321,15 @@ ________________________________________________________________________________
 				var/datum/gas_mixture/environment = T.return_air()
 
 				var/pressure = environment.return_pressure()
-				var/total_moles = environment.total_moles()
+				var/total_moles = environment.total_moles
 
 				dat += "Air Pressure: [round(pressure,0.1)] kPa"
 
 				if (total_moles)
-					var/o2_level = environment.oxygen/total_moles
-					var/n2_level = environment.nitrogen/total_moles
-					var/co2_level = environment.carbon_dioxide/total_moles
-					var/phoron_level = environment.phoron/total_moles
+					var/o2_level = environment.gas["oxygen"]/total_moles
+					var/n2_level = environment.gas["nitrogen"]/total_moles
+					var/co2_level = environment.gas["carbon_dioxide"]/total_moles
+					var/phoron_level = environment.gas["phoron"]/total_moles
 					var/unknown_level =  1-(o2_level+n2_level+co2_level+phoron_level)
 					dat += "<ul>"
 					dat += "<li>Nitrogen: [round(n2_level*100)]%</li>"

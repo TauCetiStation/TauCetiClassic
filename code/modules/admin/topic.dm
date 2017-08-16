@@ -2393,7 +2393,7 @@
 							var/obj/effect/decal/cleanable/mucus/N = O
 							if(N.virus2.len)
 								N.virus2.Cut()
-			if("restore_air")
+			/*if("restore_air")
 				var/turf/simulated/T = get_turf(usr)
 				if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/shuttle/floor))
 					T.zone.air.carbon_dioxide = 0
@@ -2408,7 +2408,7 @@
 					T.zone.air.total_moles = 101
 					message_admins("[key_name_admin(usr)] has restored air in [T.x] [T.y] [T.z] <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>.")
 				else
-					to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")
+					to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")*/
 			if("list_bombers")
 				var/dat = "<B>Bombing List<HR>"
 				for(var/l in bombers)

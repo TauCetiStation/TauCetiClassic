@@ -251,22 +251,30 @@
 		if(mode == HEATER_MODE_STANDBY)
 			return
 
-		var/transfer_moles = 0.25 * env.total_moles()
+		var/transfer_moles = 0.25 * env.total_moles
 		var/datum/gas_mixture/removed = env.remove(transfer_moles)
+
 		if(removed)
-			var/heat_capacity = removed.heat_capacity()
+			var/heat_capacity = removed.get_thermal_energy_change(targetTemperature)
 			var/requiredPower = abs(removed.temperature - targetTemperature) * heat_capacity
 			requiredPower = min(requiredPower, heatingPower)
 
 			if(requiredPower < 1)
 				return
 
-			if(heat_capacity)
-				var/deltaTemperature = requiredPower / heat_capacity
-				if(mode == HEATER_MODE_COOL)
-					deltaTemperature *= -1
-				if(deltaTemperature)
-					removed.temperature += deltaTemperature
+			if(heat_capacity > 0)	//heating air
+				heat_capacity = min( heat_capacity , heatingPower ) //limit by the power rating of the heater
+
+				removed.add_thermal_energy(heat_capacity)
+
+			else	//cooling air
+				heat_capacity = abs(heat_capacity)
+
+				//Assume the heat is being pumped into the hull which is fixed at 20 C
+				var/cop = removed.temperature/T20C	//coefficient of performance from thermodynamics -> power used = heat_transfer/cop
+				heat_capacity = min(heat_capacity, cop * heatingPower)	//limit heat transfer by available power
+
+				removed.add_thermal_energy(-heat_capacity)	//get the actual heat transfer
 
 			cell.use(requiredPower / efficiency)
 

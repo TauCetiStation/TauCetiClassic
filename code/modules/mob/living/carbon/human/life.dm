@@ -368,7 +368,7 @@
 					breath_moles = (ONE_ATMOSPHERE*BREATH_VOLUME/R_IDEAL_GAS_EQUATION*environment.temperature)
 				else*/
 					// Not enough air around, take a percentage of what's there to model this properly
-				breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+				breath_moles = environment.total_moles*BREATH_PERCENTAGE
 
 				breath = loc.remove_air(breath_moles)
 
@@ -376,17 +376,13 @@
 					var/obj/item/clothing/mask/gas/G = wear_mask
 					var/datum/gas_mixture/filtered = new
 
-					filtered.copy_from(breath)
-					filtered.phoron *= G.gas_filter_strength
-					for(var/datum/gas/gas in filtered.trace_gases)
-						gas.moles *= G.gas_filter_strength
-					filtered.update_values()
-					loc.assume_air(filtered)
+					for(var/g in  list("phoron", "sleeping_agent"))
+						if(breath.gas[g])
+							filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
+							breath.gas[g] -= filtered.gas[g]
 
-					breath.phoron *= 1 - G.gas_filter_strength
-					for(var/datum/gas/gas in breath.trace_gases)
-						gas.moles *= 1 - G.gas_filter_strength
 					breath.update_values()
+					filtered.update_values()
 
 				if(!is_lung_ruptured())
 					if(!breath || breath.total_moles < BREATH_MOLES / 5 || breath.total_moles > BREATH_MOLES * 5)
@@ -449,7 +445,7 @@
 	if(status_flags & GODMODE)
 		return
 
-	if(!breath || (breath.total_moles() == 0) || suiciding)
+	if(!breath || (breath.total_moles == 0) || suiciding)
 		if(suiciding)
 			adjustOxyLoss(2)//If you are suiciding, you should die a little bit faster
 			failed_last_breath = 1
@@ -474,52 +470,19 @@
 	var/SA_sleep_min = 5
 	var/inhaled_gas_used = 0
 
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = (breath.total_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
-	var/inhaling
-	var/exhaling
-	var/poison
-	var/no_exhale
+	var/inhaling = breath.gas[species.breath_type]
+	var/poison = breath.gas[species.poison_type]
+	var/exhaling = species.exhale_type ? breath.gas[species.exhale_type] : 0
 
-	switch(species.breath_type)
-		if("nitrogen")
-			inhaling = breath.nitrogen
-		if("phoron")
-			inhaling = breath.phoron
-		if("C02")
-			inhaling = breath.carbon_dioxide
-		else
-			inhaling = breath.oxygen
-
-	switch(species.poison_type)
-		if("oxygen")
-			poison = breath.oxygen
-		if("nitrogen")
-			poison = breath.nitrogen
-		if("C02")
-			poison = breath.carbon_dioxide
-		else
-			poison = breath.phoron
-
-	switch(species.exhale_type)
-		if("C02")
-			exhaling = breath.carbon_dioxide
-		if("oxygen")
-			exhaling = breath.oxygen
-		if("nitrogen")
-			exhaling = breath.nitrogen
-		if("phoron")
-			exhaling = breath.phoron
-		else
-			no_exhale = 1
-
-	var/inhale_pp = (inhaling/breath.total_moles())*breath_pressure
-	var/toxins_pp = (poison/breath.total_moles())*breath_pressure
-	var/exhaled_pp = (exhaling/breath.total_moles())*breath_pressure
+	var/inhale_pp = (inhaling/breath.total_moles)*breath_pressure
+	var/toxins_pp = (poison/breath.total_moles)*breath_pressure
+	var/exhaled_pp = (exhaling/breath.total_moles)*breath_pressure
 
 	if(inhale_pp < safe_pressure_min)
 		if(prob(20))
-			spawn(0) emote("gasp")
+			emote("gasp")
 		if(inhale_pp > 0)
 			var/ratio = inhale_pp/safe_pressure_min
 
@@ -542,77 +505,69 @@
 		inhaled_gas_used = inhaling/6
 		clear_alert("oxy")
 
-	switch(species.breath_type)
-		if("nitrogen")
-			breath.nitrogen -= inhaled_gas_used
+	breath.adjust_gas(species.breath_type, -inhaled_gas_used, update = 0) //update afterwards
+
+	if(species.exhale_type)
+		breath.adjust_gas_temp(species.exhale_type, inhaled_gas_used, bodytemperature, update = 0) //update afterwards
+
+		// CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2,
+		// this will hurt you, but only once per 4 ticks, instead of once per tick.
+
+		if(exhaled_pp > safe_exhaled_max)
+
+			// If it's the first breath with too much CO2 in it, lets start a counter,
+			// then have them pass out after 12s or so.
+			if(!co2overloadtime)
+				co2overloadtime = world.time
+
+			else if(world.time - co2overloadtime > 120)
+
+				// Lets hurt em a little, let them know we mean business
+				Paralyse(3)
+				adjustOxyLoss(3)
+
+				// They've been in here 30s now, lets start to kill them for their own good!
+				if(world.time - co2overloadtime > 300)
+					adjustOxyLoss(8)
+
+			// Lets give them some chance to know somethings not right though I guess.
+			if(prob(20))
+				spawn(0) emote("cough")
 		else
-			breath.oxygen -= inhaled_gas_used
-
-	if(!no_exhale)
-		switch(species.exhale_type)
-			if("oxygen")
-				breath.oxygen += inhaled_gas_used
-			if("nitrogen")
-				breath.nitrogen += inhaled_gas_used
-			if("phoron")
-				breath.phoron += inhaled_gas_used
-			if("carbon_dioxide")
-				breath.carbon_dioxide += inhaled_gas_used
-
-	// CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2,
-	// this will hurt you, but only once per 4 ticks, instead of once per tick.
-
-	if(exhaled_pp > safe_exhaled_max)
-		// If it's the first breath with too much CO2 in it, lets start a counter,
-		// then have them pass out after 12s or so.
-		if(!co2overloadtime)
-			co2overloadtime = world.time
-
-		else if(world.time - co2overloadtime > 120)
-
-			// Lets hurt em a little, let them know we mean business
-			Paralyse(3)
-			adjustOxyLoss(3)
-
-			// They've been in here 30s now, lets start to kill them for their own good!
-			if(world.time - co2overloadtime > 300)
-				adjustOxyLoss(8)
-
-		// Lets give them some chance to know somethings not right though I guess.
-		if(prob(20))
-			spawn(0) emote("cough")
-	else
-		co2overloadtime = 0
+			co2overloadtime = 0
 
 	// Too much poison in the air.
 	if(toxins_pp > safe_toxins_max)
 		var/ratio = (poison/safe_toxins_max) * 10
 		if(reagents)
 			reagents.add_reagent("toxin", Clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
+		breath.adjust_gas(species.poison_type, -poison/6, update = 0) //update after
 		throw_alert("tox_in_air")
 	else
 		clear_alert("tox_in_air")
 
 	// If there's some other shit in the air lets deal with it here.
-	if(breath.trace_gases.len)
-		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-			var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
+	if(breath.gas["sleeping_agent"])
+		var/SA_pp = (breath.gas["sleeping_agent"] / breath.total_moles) * breath_pressure
 
-			// Enough to make us paralysed for a bit
-			if(SA_pp > SA_para_min)
+		// Enough to make us paralysed for a bit
+		if(SA_pp > SA_para_min)
 
-				// 3 gives them one second to wake up and run away a bit!
-				Paralyse(3)
+			// 3 gives them one second to wake up and run away a bit!
+			Paralyse(3)
 
-				// Enough to make us sleep as well
-				if(SA_pp > SA_sleep_min)
-					sleeping = min(sleeping+2, 10)
+			// Enough to make us sleep as well
+			if(SA_pp > SA_sleep_min)
+				Sleeping(5)
 
-			// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-			else if(SA_pp > 0.15)
-				if(prob(20))
-					spawn(0) emote(pick("giggle", "laugh"))
-			SA.moles = 0
+		// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+		else if(SA_pp > 0.15)
+			if(prob(20))
+				emote(pick("giggle", "laugh"))
+
+		breath.adjust_gas("sleeping_agent", -breath.gas["sleeping_agent"]/6, update = 0) //update after
+
+	//handle_temperature_effects(breath)
 
 	// Hot air hurts :(
 	if( (breath.temperature < species.cold_level_1 || breath.temperature > species.heat_level_1))
@@ -642,13 +597,16 @@
 		else
 			temp_adj /= (BODYTEMP_HEAT_DIVISOR * 5)	//don't raise temperature as much as if we were directly exposed
 
-		var/relative_density = breath.total_moles() / (MOLES_CELLSTANDARD * BREATH_PERCENTAGE)
+		var/relative_density = breath.total_moles / (MOLES_CELLSTANDARD * BREATH_PERCENTAGE)
 		temp_adj *= relative_density
 
 		if (temp_adj > BODYTEMP_HEATING_MAX) temp_adj = BODYTEMP_HEATING_MAX
 		if (temp_adj < BODYTEMP_COOLING_MAX) temp_adj = BODYTEMP_COOLING_MAX
 		//world << "Breath: [breath.temperature], [src]: [bodytemperature], Adjusting: [temp_adj]"
 		bodytemperature += temp_adj
+
+	breath.update_values()
+
 	return 1
 
 /mob/living/carbon/human/handle_environment(datum/gas_mixture/environment)
@@ -669,7 +627,7 @@
 		else
 			loc_temp = environment.temperature
 
-		if(adjusted_pressure < species.warning_high_pressure && adjusted_pressure > species.warning_low_pressure && abs(loc_temp - bodytemperature) < 20 && bodytemperature < species.heat_level_1 && bodytemperature > species.cold_level_1 && environment.phoron < MOLES_PHORON_VISIBLE)
+		if(adjusted_pressure < species.warning_high_pressure && adjusted_pressure > species.warning_low_pressure && abs(loc_temp - bodytemperature) < 20 && bodytemperature < species.heat_level_1 && bodytemperature > species.cold_level_1)
 			clear_alert("pressure")
 			clear_alert("temp")
 			return // Temperatures are within normal ranges, fuck all this processing. ~Ccomp
@@ -687,7 +645,7 @@
 					temp_adj = (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
 
 			//Use heat transfer as proportional to the gas density. However, we only care about the relative density vs standard 101 kPa/20 C air. Therefore we can use mole ratios
-			var/relative_density = environment.total_moles() / MOLES_CELLSTANDARD
+			var/relative_density = (environment.total_moles/environment.volume) / (MOLES_CELLSTANDARD/CELL_VOLUME)
 			temp_adj *= relative_density
 
 			if (temp_adj > BODYTEMP_HEATING_MAX) temp_adj = BODYTEMP_HEATING_MAX
@@ -767,9 +725,11 @@
 		else
 			pressure_alert = -1*/
 //##Z2
-	if(environment.phoron > MOLES_PHORON_VISIBLE)
-		pl_effects()
-	return
+	//Check for contaminants before anything else because we don't want to skip it.
+	for(var/g in environment.gas)
+		if(gas_data.flags[g] & XGM_GAS_CONTAMINANT && environment.gas[g] > gas_data.overlay_limit[g] + 1)
+			pl_effects()
+			break
 
 ///FIRE CODE
 /mob/living/carbon/human/handle_fire()

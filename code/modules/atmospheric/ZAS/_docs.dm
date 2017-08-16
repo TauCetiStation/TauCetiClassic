@@ -26,5 +26,3 @@ Notes for people who used ZAS before:
 		var/zone/connected_zone = edge.get_connected_zone(zone)
 
 */
-
-//#define ZASDBG

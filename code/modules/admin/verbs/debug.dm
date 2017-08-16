@@ -144,11 +144,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	var/datum/gas_mixture/env = T.return_air()
 
-	var/t = ""
-	t+= "Nitrogen : [env.nitrogen]\n"
-	t+= "Oxygen : [env.oxygen]\n"
-	t+= "Phoron : [env.phoron]\n"
-	t+= "CO2: [env.carbon_dioxide]\n"
+	var/t = "<span class='notice'>Coordinates: [T.x],[T.y],[T.z]</span>\n"
+	t += "<span class='warning'>Temperature: [env.temperature]</span>\n"
+	t += "<span class='warning'>Pressure: [env.return_pressure()]kPa</span>\n"
+	for(var/g in env.gas)
+		t += "<span class='notice'>[g]: [env.gas[g]] / [env.gas[g] * R_IDEAL_GAS_EQUATION * env.temperature / env.volume]kPa</span>\n"
+
 
 	usr.show_message(t, 1)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -1704,7 +1705,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(Rad.anchored)
 			if(!Rad.P)
 				var/obj/item/weapon/tank/phoron/Phoron = new/obj/item/weapon/tank/phoron(Rad)
-				Phoron.air_contents.phoron = 70
+				Phoron.air_contents.gas["phoron"] = 70
 				Rad.drainratio = 0
 				Rad.P = Phoron
 				Phoron.loc = Rad
@@ -1746,7 +1747,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/tank/phoron/Phoron = new/obj/item/weapon/tank/phoron(Rad)
 
-			Phoron.air_contents.phoron = 29.1154	//This is a full tank if you filled it from a canister
+			Phoron.air_contents.gas["phoron"] = 29.1154	//This is a full tank if you filled it from a canister
 			Rad.P = Phoron
 
 			Phoron.loc = Rad
@@ -1759,10 +1760,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			var/obj/machinery/atmospherics/binary/pump/Pump = M
 			if(Pump.name == "Engine Feed" && response == "Setup Completely")
 				found_the_pump = 1
-				Pump.air2.nitrogen = 3750	//The contents of 2 canisters.
+				Pump.air2.gas["nitrogen"] = 3750	//The contents of 2 canisters.
 				Pump.air2.temperature = 50
 				Pump.air2.update_values()
-			Pump.on=1
+			//Pump.on=1
 			Pump.target_pressure = 4500
 			Pump.update_icon()
 
@@ -1780,7 +1781,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!found_the_pump && response == "Setup Completely")
 		to_chat(src, "\red Unable to locate air supply to fill up with coolant, adding some coolant around the supermatter")
 		var/turf/simulated/T = SM.loc
-		T.zone.air.nitrogen += 450
+		T.zone.air.gas["nitrogen"] += 450
 		T.zone.air.temperature = 50
 		T.zone.air.update_values()
 

@@ -1,17 +1,14 @@
 /turf/simulated/var/zone/zone
 /turf/simulated/var/open_directions
-/turf/simulated/var/gas_graphic
 
 /turf/var/needs_air_update = 0
 /turf/var/datum/gas_mixture/air
 
-/turf/simulated/proc/set_graphic(new_graphic)
-	if(isnum(new_graphic))
-		if(new_graphic == 1) new_graphic = plmaster
-		else if(new_graphic == 2) new_graphic = slmaster
-	if(gas_graphic) overlays -= gas_graphic
-	if(new_graphic) overlays += new_graphic
-	gas_graphic = new_graphic
+/turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
+	if(graphic_add && graphic_add.len)
+		overlays += graphic_add
+	if(graphic_remove && graphic_remove.len)
+		overlays -= graphic_remove
 
 /turf/proc/update_air_properties()
 	var/block = c_airblock(src)
@@ -19,7 +16,11 @@
 		//dbg(blocked)
 		return 1
 
+	#ifdef MULTIZAS
+	for(var/d = 1, d < 64, d *= 2)
+	#else
 	for(var/d = 1, d < 16, d *= 2)
+	#endif
 
 		var/turf/unsim = get_step(src, d)
 
@@ -45,24 +46,30 @@
 				SSair.connect(sim, src)
 
 /*
-	Simple heuristic for determining if removing the turf from it's zone may possibly partition the zone (A very bad thing).
+	Simple heuristic for determining if removing the turf from it's zone will not partition the zone (A very bad thing).
 	Instead of analyzing the entire zone, we only check the nearest 3x3 turfs surrounding the src turf.
-	This implementation may produce false positives but it (hopefully) will not produce any false negatives.
+	This implementation may produce false negatives but it (hopefully) will not produce any false postiives.
 */
 
 /turf/simulated/proc/can_safely_remove_from_zone()
-	if(!zone) return 0
+	if(!zone) return 1
 
 	var/check_dirs = get_zone_neighbours(src)
 	var/unconnected_dirs = check_dirs
 
-	for(var/dir in list(NORTHWEST, NORTHEAST, SOUTHEAST, SOUTHWEST))
+	#ifdef MULTIZAS
+	var/to_check = cornerdirsz
+	#else
+	var/to_check = cornerdirs
+	#endif
+
+	for(var/dir in to_check)
 
 		//for each pair of "adjacent" cardinals (e.g. NORTH and WEST, but not NORTH and SOUTH)
 		if((dir & check_dirs) == dir)
 			//check that they are connected by the corner turf
 			var/connected_dirs = get_zone_neighbours(get_step(src, dir))
-			if(connected_dirs && (dir & turn(connected_dirs, 180)) == dir)
+			if(connected_dirs && (dir & reverse_dir[connected_dirs]) == dir)
 				unconnected_dirs &= ~dir //they are, so unflag the cardinals in question
 
 	//it is safe to remove src from the zone if all cardinals are connected by corner turfs
@@ -72,27 +79,33 @@
 /turf/simulated/proc/get_zone_neighbours(turf/simulated/T)
 	. = 0
 	if(istype(T) && T.zone)
-		for(var/dir in cardinal)
+		#ifdef MULTIZAS
+		var/to_check = cardinalz
+		#else
+		var/to_check = cardinal
+		#endif
+		for(var/dir in to_check)
 			var/turf/simulated/other = get_step(T, dir)
 			if(istype(other) && other.zone == T.zone && !(other.c_airblock(T) & AIR_BLOCKED) && get_dist(src, other) <= 1)
 				. |= dir
 
 /turf/simulated/update_air_properties()
-	if(zone && zone.invalid)
-		c_copy_air()
+
+	if(zone && zone.invalid) //this turf's zone is in the process of being rebuilt
+		c_copy_air() //not very efficient :(
 		zone = null //Easier than iterating through the list at the zone.
 
 	var/s_block = c_airblock(src)
 	if(s_block & AIR_BLOCKED)
 		#ifdef ZASDBG
-		if(verbose)
-			to_chat(world, "Self-blocked.")
+		if(verbose) log_debug("Self-blocked.")
 		//dbg(blocked)
 		#endif
 		if(zone)
 			var/zone/z = zone
 
 			if(can_safely_remove_from_zone()) //Helps normal airlocks avoid rebuilding zones all the time
+				c_copy_air() //we aren't rebuilding, but hold onto the old air so it can be readded
 				z.remove(src)
 			else
 				z.rebuild()
@@ -103,7 +116,11 @@
 	open_directions = 0
 
 	var/list/postponed
+	#ifdef MULTIZAS
+	for(var/d = 1, d < 64, d *= 2)
+	#else
 	for(var/d = 1, d < 16, d *= 2)
+	#endif
 
 		var/turf/unsim = get_step(src, d)
 
@@ -114,8 +131,7 @@
 		if(block & AIR_BLOCKED)
 
 			#ifdef ZASDBG
-			if(verbose)
-				to_chat(world, "[d] is blocked.")
+			if(verbose) log_debug("[d] is blocked.")
 			//unsim.dbg(air_blocked, turn(180,d))
 			#endif
 
@@ -125,8 +141,7 @@
 		if(r_block & AIR_BLOCKED)
 
 			#ifdef ZASDBG
-			if(verbose)
-				to_chat(world, "[d] is blocked.")
+			if(verbose) log_debug("[d] is blocked.")
 			//dbg(air_blocked, d)
 			#endif
 
@@ -152,11 +167,13 @@
 				//Might have assigned a zone, since this happens for each direction.
 				if(!zone)
 
-					//if((block & ZONE_BLOCKED) || (r_block & ZONE_BLOCKED && !(s_block & ZONE_BLOCKED)))
-					if(((block & ZONE_BLOCKED) && !(r_block & ZONE_BLOCKED)) || (r_block & ZONE_BLOCKED && !(s_block & ZONE_BLOCKED)))
+					//We do not merge if
+					//    they are blocking us and we are not blocking them, or if
+					//    we are blocking them and not blocking ourselves - this prevents tiny zones from forming on doorways.
+					if(((block & ZONE_BLOCKED) && !(r_block & ZONE_BLOCKED)) || ((r_block & ZONE_BLOCKED) && !(s_block & ZONE_BLOCKED)))
 						#ifdef ZASDBG
-						if(verbose)
-							to_chat(world, "[d] is zone blocked.")
+						if(verbose) log_debug("[d] is zone blocked.")
+
 						//dbg(zone_blocked, d)
 						#endif
 
@@ -170,26 +187,22 @@
 
 						#ifdef ZASDBG
 						dbg(assigned)
-						if(verbose)
-							to_chat(world, "Added to [zone]")
+						if(verbose) log_debug("Added to [zone]")
 						#endif
 
 				else if(sim.zone != zone)
 
 					#ifdef ZASDBG
-					if(verbose)
-						to_chat(world, "Connecting to [sim.zone]")
+					if(verbose) log_debug("Connecting to [sim.zone]")
 					#endif
 
 					SSair.connect(src, sim)
 
 
 			#ifdef ZASDBG
-				else if(verbose)
-					to_chat(world, "[d] has same zone.")
+				else if(verbose) log_debug("[d] has same zone.")
 
-			else if(verbose)
-				to_chat(world, "[d] has invalid zone.")
+			else if(verbose) log_debug("[d] has invalid zone.")
 			#endif
 
 		else
@@ -219,29 +232,27 @@
 /turf/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
 	return 0
 
+/turf/proc/assume_gas(gasid, moles, temp = 0)
+	return 0
+
 /turf/return_air()
 	//Create gas mixture to hold data for passing
 	var/datum/gas_mixture/GM = new
 
-	GM.oxygen = oxygen
-	GM.carbon_dioxide = carbon_dioxide
-	GM.nitrogen = nitrogen
-	GM.phoron = phoron
-
+	GM.adjust_multi("oxygen", oxygen, "carbon_dioxide", carbon_dioxide, "nitrogen", nitrogen, "phoron", phoron)
 	GM.temperature = temperature
-	GM.update_values()
 
 	return GM
 
-/turf/remove_air(amount)
+/turf/remove_air(amount as num)
 	var/datum/gas_mixture/GM = new
 
 	var/sum = oxygen + carbon_dioxide + nitrogen + phoron
 	if(sum>0)
-		GM.oxygen = (oxygen/sum)*amount
-		GM.carbon_dioxide = (carbon_dioxide/sum)*amount
-		GM.nitrogen = (nitrogen/sum)*amount
-		GM.phoron = (phoron/sum)*amount
+		GM.gas["oxygen"] = (oxygen/sum)*amount
+		GM.gas["carbon_dioxide"] = (carbon_dioxide/sum)*amount
+		GM.gas["nitrogen"] = (nitrogen/sum)*amount
+		GM.gas["phoron"] = (phoron/sum)*amount
 
 	GM.temperature = temperature
 	GM.update_values()
@@ -252,7 +263,17 @@
 	var/datum/gas_mixture/my_air = return_air()
 	my_air.merge(giver)
 
-/turf/simulated/remove_air(amount)
+/turf/simulated/assume_gas(gasid, moles, temp = null)
+	var/datum/gas_mixture/my_air = return_air()
+
+	if(isnull(temp))
+		my_air.adjust_gas(gasid, moles)
+	else
+		my_air.adjust_gas_temp(gasid, moles, temp)
+
+	return 1
+
+/turf/simulated/remove_air(amount as num)
 	var/datum/gas_mixture/my_air = return_air()
 	return my_air.remove(amount)
 
@@ -274,7 +295,7 @@
 /turf/proc/make_air()
 	air = new/datum/gas_mixture
 	air.temperature = temperature
-	air.adjust(oxygen, carbon_dioxide, nitrogen, phoron)
+	air.adjust_multi("oxygen", oxygen, "carbon_dioxide", carbon_dioxide, "nitrogen", nitrogen, "phoron", phoron)
 	air.group_multiplier = 1
 	air.volume = CELL_VOLUME
 

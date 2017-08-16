@@ -1,10 +1,11 @@
 /obj/machinery/atmospherics/tvalve
-	icon = 'icons/obj/atmospherics/valve.dmi'
-	icon_state = "tvalve0"
+	icon = 'icons/atmos/tvalve.dmi'
+	icon_state = "map_tvalve0"
 
 	name = "manual switching valve"
 	desc = "A pipe valve."
 
+	level = 1
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
 	ghost_must_be_admin = TRUE
@@ -12,31 +13,39 @@
 	var/state = 0 // 0 = go straight, 1 = go to side
 
 	// like a trinary component, node1 is input, node2 is side output, node3 is straight output
-	var/obj/machinery/atmospherics/node1
-	var/obj/machinery/atmospherics/node2
 	var/obj/machinery/atmospherics/node3
 
 	var/datum/pipe_network/network_node1
 	var/datum/pipe_network/network_node2
 	var/datum/pipe_network/network_node3
 
-/obj/machinery/atmospherics/tvalve/remove_network(datum/pipe_network/old_network)
-	if(old_network == network_node1)
-		network_node1 = null
-
-	if(old_network == network_node2)
-		network_node2 = null
-
-	if(old_network == network_node3)
-		network_node3 = null
-
-	return ..()
+/obj/machinery/atmospherics/tvalve/bypass
+	icon_state = "map_tvalve1"
+	state = 1
 
 /obj/machinery/atmospherics/tvalve/update_icon(animation)
 	if(animation)
 		flick("tvalve[src.state][!src.state]",src)
 	else
 		icon_state = "tvalve[state]"
+
+/obj/machinery/atmospherics/tvalve/update_underlays()
+	if(..())
+		underlays.Cut()
+		var/turf/T = get_turf(src)
+		if(!istype(T))
+			return
+		add_underlay(T, node1, turn(dir, -180))
+
+		if(istype(src, /obj/machinery/atmospherics/tvalve/mirrored))
+			add_underlay(T, node2, turn(dir, 90))
+		else
+			add_underlay(T, node2, turn(dir, -90))
+
+		add_underlay(T, node3, dir)
+
+/obj/machinery/atmospherics/tvalve/hide(var/i)
+	update_underlays()
 
 /obj/machinery/atmospherics/tvalve/New()
 	initialize_directions()
@@ -55,32 +64,18 @@
 
 /obj/machinery/atmospherics/tvalve/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node1)
-		if(network_node1)
-			qdel(network_node1)
 		network_node1 = new_network
 		if(state)
-			if(network_node2)
-				qdel(network_node2)
 			network_node2 = new_network
 		else
-			if(network_node3)
-				qdel(network_node3)
 			network_node3 = new_network
 	else if(reference == node2)
-		if(network_node2)
-			qdel(network_node2)
 		network_node2 = new_network
 		if(state)
-			if(network_node1)
-				qdel(network_node1)
 			network_node1 = new_network
 	else if(reference == node3)
-		if(network_node3)
-			qdel(network_node3)
 		network_node3 = new_network
 		if(!state)
-			if(network_node1)
-				qdel(network_node1)
 			network_node1 = new_network
 
 	if(new_network.normal_members.Find(src))
@@ -106,6 +101,8 @@
 	return null
 
 /obj/machinery/atmospherics/tvalve/Destroy()
+	loc = null
+
 	if(node1)
 		node1.disconnect(src)
 		qdel(network_node1)
@@ -148,7 +145,8 @@
 
 /obj/machinery/atmospherics/tvalve/proc/go_straight()
 
-	if(!state)	return 0
+	if(!state)
+		return 0
 
 	state = 0
 	update_icon()
@@ -170,13 +168,10 @@
 
 	return 1
 
-/obj/machinery/atmospherics/tvalve/attack_ai(mob/user)
+/obj/machinery/atmospherics/tvalve/attack_ai(mob/user as mob)
 	return
 
-/obj/machinery/atmospherics/tvalve/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/atmospherics/tvalve/attack_hand(mob/user)
+/obj/machinery/atmospherics/tvalve/attack_hand(mob/user as mob)
 	src.add_fingerprint(usr)
 	update_icon(1)
 	sleep(10)
@@ -185,38 +180,15 @@
 	else
 		src.go_to_side()
 
-/obj/machinery/atmospherics/tvalve/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/wrench))
-		return ..()
-	if (istype(src, /obj/machinery/atmospherics/tvalve/digital))
-		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it's too complicated.</span>")
-		return 1
-	var/turf/T = src.loc
-	if (level==1 && isturf(T) && T.intact)
-		to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
-		return 1
-	var/datum/gas_mixture/int_air = return_air()
-	var/datum/gas_mixture/env_air = loc.return_air()
-	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
-		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
-		add_fingerprint(user)
-		return 1
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-	if (do_after(user, 40, target = src))
-		user.visible_message( \
-			"[user] unfastens \the [src].", \
-			"<span class='notice'>You have unfastened \the [src].</span>", \
-			"You hear ratchet.")
-		new /obj/item/pipe(loc, make_from=src)
-		qdel(src)
-
 /obj/machinery/atmospherics/tvalve/process()
 	..()
-	machines.Remove(src)
+	. = PROCESS_KILL
+	//machines.Remove(src)
+
 	return
 
-/obj/machinery/atmospherics/tvalve/initialize()
+/obj/machinery/atmospherics/tvalve/atmos_init()
+	..()
 	var/node1_dir
 	var/node2_dir
 	var/node3_dir
@@ -227,16 +199,22 @@
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
 		if(target.initialize_directions & get_dir(target,src))
-			node1 = target
-			break
+			if (check_connect_types(target,src))
+				node1 = target
+				break
 	for(var/obj/machinery/atmospherics/target in get_step(src,node2_dir))
 		if(target.initialize_directions & get_dir(target,src))
-			node2 = target
-			break
+			if (check_connect_types(target,src))
+				node2 = target
+				break
 	for(var/obj/machinery/atmospherics/target in get_step(src,node3_dir))
 		if(target.initialize_directions & get_dir(target,src))
-			node3 = target
-			break
+			if (check_connect_types(target,src))
+				node3 = target
+				break
+
+	update_icon()
+	update_underlays()
 
 /obj/machinery/atmospherics/tvalve/build_network()
 	if(!network_node1 && node1)
@@ -295,23 +273,35 @@
 		qdel(network_node3)
 		node2 = null
 
+	update_underlays()
+
 	return null
 
-/obj/machinery/atmospherics/tvalve/digital	// can be controlled by AI
+/obj/machinery/atmospherics/tvalve/digital		// can be controlled by AI
 	name = "digital switching valve"
 	desc = "A digitally controlled valve."
-	icon = 'icons/obj/atmospherics/digital_valve.dmi'
+	icon = 'icons/atmos/digital_tvalve.dmi'
 
-
+	frequency = 0
 	var/id = null
 
+/obj/machinery/atmospherics/tvalve/digital/bypass
+	icon_state = "map_tvalve1"
+	state = 1
 
-/obj/machinery/atmospherics/tvalve/digital/attack_ai(mob/user)
+/obj/machinery/atmospherics/tvalve/digital/update_icon()
+	..()
+	if(!powered())
+		icon_state = "tvalvenopower"
+
+/obj/machinery/atmospherics/tvalve/digital/attack_ai(mob/user as mob)
 	return src.attack_hand(user)
 
-/obj/machinery/atmospherics/tvalve/digital/attack_hand(mob/user)
+/obj/machinery/atmospherics/tvalve/digital/attack_hand(mob/user as mob)
+	if(!powered())
+		return
 	if(!src.allowed(user))
-		to_chat(user, "\red Access denied.")
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	..()
 
@@ -323,8 +313,10 @@
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
+
+
 /obj/machinery/atmospherics/tvalve/digital/initialize()
-	..()
+	. = ..()
 	if(frequency)
 		set_frequency(frequency)
 
@@ -347,8 +339,34 @@
 			else
 				go_to_side()
 
+/obj/machinery/atmospherics/tvalve/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+	if (!istype(W, /obj/item/weapon/wrench))
+		return ..()
+	if (istype(src, /obj/machinery/atmospherics/tvalve/digital))
+		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it's too complicated.</span>")
+		return 1
+	var/datum/gas_mixture/int_air = return_air()
+	var/datum/gas_mixture/env_air = loc.return_air()
+	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+		to_chat(user, "<span class='warnng'>You cannot unwrench \the [src], it too exerted due to internal pressure.</span>")
+		add_fingerprint(user)
+		return 1
+	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
+	if (do_after(user, 40, src))
+		user.visible_message( \
+			"<span class='notice'>\The [user] unfastens \the [src].</span>", \
+			"<span class='notice'>You have unfastened \the [src].</span>", \
+			"You hear a ratchet.")
+		new /obj/item/pipe(loc, make_from=src)
+		qdel(src)
+
 /obj/machinery/atmospherics/tvalve/mirrored
-	icon_state = "tvalvem0"
+	icon_state = "map_tvalvem0"
+
+/obj/machinery/atmospherics/tvalve/mirrored/bypass
+	icon_state = "map_tvalvem1"
+	state = 1
 
 /obj/machinery/atmospherics/tvalve/mirrored/initialize_directions()
 	switch(dir)
@@ -361,7 +379,8 @@
 		if(WEST)
 			initialize_directions = EAST|WEST|SOUTH
 
-/obj/machinery/atmospherics/tvalve/mirrored/initialize()
+/obj/machinery/atmospherics/tvalve/mirrored/atmos_init()
+	..()
 	var/node1_dir
 	var/node2_dir
 	var/node3_dir
@@ -383,6 +402,9 @@
 			node3 = target
 			break
 
+	update_icon()
+	update_underlays()
+
 /obj/machinery/atmospherics/tvalve/mirrored/update_icon(animation)
 	if(animation)
 		flick("tvalvem[src.state][!src.state]",src)
@@ -392,18 +414,28 @@
 /obj/machinery/atmospherics/tvalve/mirrored/digital		// can be controlled by AI
 	name = "digital switching valve"
 	desc = "A digitally controlled valve."
-	icon = 'icons/obj/atmospherics/digital_valve.dmi'
+	icon = 'icons/atmos/digital_tvalve.dmi'
 
 	frequency = 0
 	var/id = null
 
+/obj/machinery/atmospherics/tvalve/mirrored/digital/bypass
+	icon_state = "map_tvalvem1"
+	state = 1
 
-/obj/machinery/atmospherics/tvalve/mirrored/digital/attack_ai(mob/user)
-		return src.attack_hand(user)
+/obj/machinery/atmospherics/tvalve/mirrored/digital/update_icon()
+	..()
+	if(!powered())
+		icon_state = "tvalvemnopower"
 
-/obj/machinery/atmospherics/tvalve/mirrored/digital/attack_hand(mob/user)
+/obj/machinery/atmospherics/tvalve/mirrored/digital/attack_ai(mob/user as mob)
+	return src.attack_hand(user)
+
+/obj/machinery/atmospherics/tvalve/mirrored/digital/attack_hand(mob/user as mob)
+	if(!powered())
+		return
 	if(!src.allowed(user))
-		to_chat(user, "\red Access denied.")
+		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	..()
 
@@ -416,7 +448,7 @@
 		radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
 /obj/machinery/atmospherics/tvalve/mirrored/digital/initialize()
-	..()
+	. = ..()
 	if(frequency)
 		set_frequency(frequency)
 

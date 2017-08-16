@@ -1,3 +1,4 @@
+
 /obj/machinery/portable_atmospherics
 	name = "atmoalter"
 	use_power = 0
@@ -9,6 +10,7 @@
 	var/volume = 0
 	var/destroyed = 0
 
+	var/start_pressure = ONE_ATMOSPHERE
 	var/maximum_pressure = 90*ONE_ATMOSPHERE
 
 	New()
@@ -42,6 +44,14 @@
 		return null
 
 	proc
+
+		StandardAirMix()
+			return list(
+				"oxygen" = O2STANDARD * MolesForPressure(),
+				"nitrogen" = N2STANDARD *  MolesForPressure())
+
+		MolesForPressure(var/target_pressure = start_pressure)
+			return (target_pressure * air_contents.volume) / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
 		connect(obj/machinery/atmospherics/portables_connector/new_port)
 			//Make sure not already connected to something else
@@ -82,7 +92,7 @@
 			return 1
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/weapon/W, mob/user)
-	var/obj/icon = src
+	//var/obj/icon = src
 	if ((istype(W, /obj/item/weapon/tank) && !( src.destroyed )))
 		if (src.holding)
 			return
@@ -113,33 +123,9 @@
 				to_chat(user, "\blue Nothing happens.")
 				return
 
-	else if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
-		visible_message("\red [user] has used [W] on [bicon(icon)]")
-		if(air_contents)
-			var/pressure = air_contents.return_pressure()
-			var/total_moles = air_contents.total_moles()
-
-			to_chat(user, "\blue Results of analysis of [bicon(icon)]")
-			if (total_moles>0)
-				var/o2_concentration = air_contents.oxygen/total_moles
-				var/n2_concentration = air_contents.nitrogen/total_moles
-				var/co2_concentration = air_contents.carbon_dioxide/total_moles
-				var/phoron_concentration = air_contents.phoron/total_moles
-
-				var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
-
-				to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
-				to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
-				to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
-				to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
-				to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
-				if(unknown_concentration>0.01)
-					to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
-				to_chat(user, "\blue Temperature: [round(air_contents.temperature-T0C)]&deg;C")
-			else
-				to_chat(user, "\blue Tank is empty!")
-		else
-			to_chat(user, "\blue Tank is empty!")
+	else if ((istype(W, /obj/item/device/analyzer)) && Adjacent(user))
+		var/obj/item/device/analyzer/A = W
+		A.analyze_gases(src, user)
 		return
 
 	return

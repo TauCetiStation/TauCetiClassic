@@ -60,6 +60,7 @@
 	var/allow_regulate = 0 //Is thermoregulation enabled?
 
 	var/list/TLV = list()
+	var/list/trace_gas = list("sleeping_agent") //list of other gases that this air alarm is able to detect
 
 	var/danger_level = 0
 	var/pressure_dangerlevel = 0
@@ -226,14 +227,15 @@
 
 	var/partial_pressure = R_IDEAL_GAS_EQUATION*environment.temperature/environment.volume
 	var/environment_pressure = environment.return_pressure()
-	var/other_moles = 0.0
-	for(var/datum/gas/G in environment.trace_gases)
-		other_moles+=G.moles
+
+	var/other_moles = 0
+	for(var/g in trace_gas)
+		other_moles += environment.gas[g] //this is only going to be used in a partial pressure calc, so we don't need to worry about group_multiplier here.
 
 	pressure_dangerlevel = get_danger_level(environment_pressure, TLV["pressure"])
-	oxygen_dangerlevel = get_danger_level(environment.oxygen*partial_pressure, TLV["oxygen"])
-	co2_dangerlevel = get_danger_level(environment.carbon_dioxide*partial_pressure, TLV["carbon dioxide"])
-	phoron_dangerlevel = get_danger_level(environment.phoron*partial_pressure, TLV["phoron"])
+	oxygen_dangerlevel = get_danger_level(environment.gas["oxygen"]*partial_pressure, TLV["oxygen"])
+	co2_dangerlevel = get_danger_level(environment.gas["carbon_dioxide"]*partial_pressure, TLV["carbon dioxide"])
+	phoron_dangerlevel = get_danger_level(environment.gas["phoron"]*partial_pressure, TLV["phoron"])
 	temperature_dangerlevel = get_danger_level(environment.temperature, TLV["temperature"])
 	other_dangerlevel = get_danger_level(other_moles*partial_pressure, TLV["other"])
 
@@ -494,7 +496,7 @@
 /obj/machinery/alarm/proc/return_status()
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
-	var/total = environment.oxygen + environment.carbon_dioxide + environment.phoron + environment.nitrogen
+	var/total = environment.gas["oxygen"] + environment.gas["carbon_dioxide"] + environment.gas["phoron"] + environment.gas["nitrogen"]
 	var/output = "<b>Air Status:</b><br>"
 
 	if(total == 0)
@@ -516,21 +518,21 @@
 	var/pressure_dangerlevel = get_danger_level(environment_pressure, current_settings)
 
 	current_settings = TLV["oxygen"]
-	var/oxygen_dangerlevel = get_danger_level(environment.oxygen*partial_pressure, current_settings)
-	var/oxygen_percent = round(environment.oxygen / total * 100, 2)
+	var/oxygen_dangerlevel = get_danger_level(environment.gas["oxygen"]*partial_pressure, current_settings)
+	var/oxygen_percent = environment.gas["oxygen"] ? round(environment.gas["oxygen"] / total * 100, 2) : 0
 
 	current_settings = TLV["carbon dioxide"]
-	var/co2_dangerlevel = get_danger_level(environment.carbon_dioxide*partial_pressure, current_settings)
-	var/co2_percent = round(environment.carbon_dioxide / total * 100, 2)
+	var/co2_dangerlevel = get_danger_level(environment.gas["carbon_dioxide"]*partial_pressure, current_settings)
+	var/co2_percent = environment.gas["carbon_dioxide"] ? round(environment.gas["carbon_dioxide"] / total * 100, 2) : 0
 
 	current_settings = TLV["phoron"]
-	var/phoron_dangerlevel = get_danger_level(environment.phoron*partial_pressure, current_settings)
-	var/phoron_percent = round(environment.phoron / total * 100, 2)
+	var/phoron_dangerlevel = get_danger_level(environment.gas["phoron"]*partial_pressure, current_settings)
+	var/phoron_percent = environment.gas["phoron"] ? round(environment.gas["phoron"] / total * 100, 2) : 0
 
 	current_settings = TLV["other"]
-	var/other_moles = 0.0
-	for(var/datum/gas/G in environment.trace_gases)
-		other_moles+=G.moles
+	var/other_moles = 0
+	for(var/g in trace_gas)
+		other_moles += environment.gas[g] //this is only going to be used in a partial pressure calc, so we don't need to worry about group_multiplier here.
 	var/other_dangerlevel = get_danger_level(other_moles*partial_pressure, current_settings)
 
 	current_settings = TLV["temperature"]
@@ -1378,7 +1380,7 @@ Code shamelessly copied from apc_frame
 /obj/machinery/partyalarm/attack_hand(mob/user)
 	if(..())
 		return
-	
+
 	var/area/A = get_area(src)
 	if(!istype(A))
 		return

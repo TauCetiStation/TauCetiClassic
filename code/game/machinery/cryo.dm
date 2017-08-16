@@ -311,7 +311,7 @@
 		overlays += I
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/process_occupant()
-	if(air_contents.total_moles() < 10)
+	if(air_contents.total_moles < 10)
 		return
 	if(occupant)
 		if(occupant.stat == DEAD)
@@ -322,7 +322,7 @@
 		if(occupant.bodytemperature < T0C && occupant.health < 100)
 			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
 			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
-			if(air_contents.oxygen > 2)
+			if(air_contents.gas["oxygen"] > 2)
 				if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
 			else
 				occupant.adjustOxyLoss(-1)
@@ -341,7 +341,7 @@
 			beaker.reagents.reaction(occupant)
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/heat_gas_contents()
-	if(air_contents.total_moles() < 1)
+	if(air_contents.total_moles < 1)
 		return
 	var/air_heat_capacity = air_contents.heat_capacity()
 	var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
@@ -350,7 +350,7 @@
 		air_contents.temperature = combined_energy/combined_heat_capacity
 
 /obj/machinery/atmospherics/unary/cryo_cell/proc/expel_gas()
-	if(air_contents.total_moles() < 1)
+	if(air_contents.total_moles < 1)
 		return
 
 /obj/machinery/atmospherics/unary/cryo_cell/can_crawl_through()

@@ -109,9 +109,9 @@
 			for(var/obj/machinery/door/D2 in T1)
 				doors += D2
 			if(T1.parent)
-				air_master.groups_to_rebuild += T1.parent
+				SSair.groups_to_rebuild += T1.parent
 			else
-				air_master.tiles_to_update += T1
+				SSair.tiles_to_update += T1
 
 	for(var/obj/O in doors)
 		O:update_nearby_tiles(1)*/

@@ -9,13 +9,14 @@ var/global/vs_control/vsc = new
 	var/fire_firelevel_multiplier_NAME = "Fire - Firelevel Constant"
 	var/fire_firelevel_multiplier_DESC = "Multiplied by the equation for firelevel, affects mainly the extingiushing of fires."
 
-	var/fire_fuel_energy_release = 397000
+	//Note that this parameter and the phoron heat capacity have a significant impact on TTV yield.
+	var/fire_fuel_energy_release = 866000 //J/mol. Adjusted to compensate for fire energy release being fixed, was 397000
 	var/fire_fuel_energy_release_NAME = "Fire - Fuel energy release"
-	var/fire_fuel_energy_release_DESC = "The energy in joule released when burning one mol of a burnable substance."
+	var/fire_fuel_energy_release_DESC = "The energy in joule released when burning one mol of a burnable substance"
 
 
 	var/IgnitionLevel = 0.5
-	var/IgnitionLevel_DESC = "Determines point at which fire can ignite."
+	var/IgnitionLevel_DESC = "Determines point at which fire can ignite"
 
 	var/airflow_lightest_pressure = 20
 	var/airflow_lightest_pressure_NAME = "Airflow - Small Movement Threshold %"
@@ -25,47 +26,43 @@ var/global/vs_control/vsc = new
 	var/airflow_light_pressure_NAME = "Airflow - Medium Movement Threshold %"
 	var/airflow_light_pressure_DESC = "Percent of 1 Atm. at which items with the medium weight classes will move."
 
-	var/airflow_medium_pressure = 60
+	var/airflow_medium_pressure = 50
 	var/airflow_medium_pressure_NAME = "Airflow - Heavy Movement Threshold %"
 	var/airflow_medium_pressure_DESC = "Percent of 1 Atm. at which items with the largest weight classes will move."
 
-	var/airflow_heavy_pressure = 50
+	var/airflow_heavy_pressure = 65
 	var/airflow_heavy_pressure_NAME = "Airflow - Mob Movement Threshold %"
 	var/airflow_heavy_pressure_DESC = "Percent of 1 Atm. at which mobs will move."
 
-	var/airflow_dense_pressure = 150
+	var/airflow_dense_pressure = 85
 	var/airflow_dense_pressure_NAME = "Airflow - Dense Movement Threshold %"
 	var/airflow_dense_pressure_DESC = "Percent of 1 Atm. at which items with canisters and closets will move."
 
-	var/airflow_stun_pressure = 40
+	var/airflow_stun_pressure = 60
 	var/airflow_stun_pressure_NAME = "Airflow - Mob Stunning Threshold %"
 	var/airflow_stun_pressure_DESC = "Percent of 1 Atm. at which mobs will be stunned by airflow."
 
-	var/airflow_stun_cooldown = 30
+	var/airflow_stun_cooldown = 60
 	var/airflow_stun_cooldown_NAME = "Aiflow Stunning - Cooldown"
 	var/airflow_stun_cooldown_DESC = "How long, in tenths of a second, to wait before stunning them again."
 
-	var/airflow_stun = 3
+	var/airflow_stun = 1
 	var/airflow_stun_NAME = "Airflow Impact - Stunning"
 	var/airflow_stun_DESC = "How much a mob is stunned when hit by an object."
 
-	var/airflow_damage = 5
+	var/airflow_damage = 3
 	var/airflow_damage_NAME = "Airflow Impact - Damage"
 	var/airflow_damage_DESC = "Damage from airflow impacts."
 
-	var/airflow_speed_decay = 0.8
+	var/airflow_speed_decay = 1.5
 	var/airflow_speed_decay_NAME = "Airflow Speed Decay"
 	var/airflow_speed_decay_DESC = "How rapidly the speed gained from airflow decays."
 
-	var/airflow_delay = 20
+	var/airflow_delay = 30
 	var/airflow_delay_NAME = "Airflow Retrigger Delay"
 	var/airflow_delay_DESC = "Time in deciseconds before things can be moved by airflow again."
 
-	var/airflow_mob_delay = 10
-	var/airflow_mob_delay_NAME = "Airflow Retrigger Delay (Mob)"
-	var/airflow_mob_delay_DESC = "Time in deciseconds before mob can be moved by airflow again."
-
-	var/airflow_mob_slowdown = 3
+	var/airflow_mob_slowdown = 1
 	var/airflow_mob_slowdown_NAME = "Airflow Slowdown"
 	var/airflow_mob_slowdown_DESC = "Time in tenths of a second to add as a delay to each movement by a mob if they are fighting the pull of the airflow."
 
@@ -172,7 +169,7 @@ var/global/vs_control/vsc = new
 		vars[ch] = vw
 	if(how == "Toggle")
 		newvar = (newvar?"ON":"OFF")
-	to_chat(world, "\blue <b>[key_name(user)] changed the setting [display_description] to [newvar].</b>")
+	to_chat(world, "<span class='notice'><b>[key_name(user)] changed the setting [display_description] to [newvar].</b></span>")
 	if(ch in plc.settings)
 		ChangeSettingsDialog(user,plc.settings)
 	else
@@ -194,7 +191,7 @@ var/global/vs_control/vsc = new
 	for(var/V in plc.settings)
 		plc.Randomize(V)
 
-/vs_control/proc/SetDefault(mob/user)
+/vs_control/proc/SetDefault(var/mob/user)
 	var/list/setting_choices = list("Phoron - Standard", "Phoron - Low Hazard", "Phoron - High Hazard", "Phoron - Oh Shit!",\
 	"ZAS - Normal", "ZAS - Forgiving", "ZAS - Dangerous", "ZAS - Hellish", "ZAS/Phoron - Initial")
 	var/def = input(user, "Which of these presets should be used?") as null|anything in setting_choices
@@ -246,7 +243,7 @@ var/global/vs_control/vsc = new
 			airflow_stun_pressure = 60
 			airflow_stun_cooldown = 60
 			airflow_stun = 1
-			airflow_damage = 2
+			airflow_damage = 3
 			airflow_speed_decay = 1.5
 			airflow_delay = 30
 			airflow_mob_slowdown = 1
@@ -260,7 +257,7 @@ var/global/vs_control/vsc = new
 			airflow_stun_pressure = 150
 			airflow_stun_cooldown = 90
 			airflow_stun = 0.15
-			airflow_damage = 0.15
+			airflow_damage = 0.5
 			airflow_speed_decay = 1.5
 			airflow_delay = 50
 			airflow_mob_slowdown = 0
@@ -274,7 +271,7 @@ var/global/vs_control/vsc = new
 			airflow_stun_pressure = 50
 			airflow_stun_cooldown = 50
 			airflow_stun = 2
-			airflow_damage = 3
+			airflow_damage = 4
 			airflow_speed_decay = 1.2
 			airflow_delay = 25
 			airflow_mob_slowdown = 2
@@ -288,7 +285,7 @@ var/global/vs_control/vsc = new
 			airflow_stun_pressure = 40
 			airflow_stun_cooldown = 40
 			airflow_stun = 3
-			airflow_damage = 4
+			airflow_damage = 5
 			airflow_speed_decay = 1
 			airflow_delay = 20
 			airflow_mob_slowdown = 3
@@ -325,7 +322,7 @@ var/global/vs_control/vsc = new
 			plc.N2O_HALLUCINATION 			= initial(plc.N2O_HALLUCINATION)
 
 
-	to_chat(world, "\blue <b>[key_name(user)] changed the global phoron/ZAS settings to \"[def]\"</b>")
+	to_chat(world, "<span class='notice'><b>[key_name(user)] changed the global phoron/ZAS settings to \"[def]\"</b></span>")
 
 /pl_control/var/list/settings = list()
 

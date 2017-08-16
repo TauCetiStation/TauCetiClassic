@@ -209,7 +209,7 @@
 	if(!on_fire)
 		return 1
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.oxygen < 1)
+	if(G.get_by_flag(XGM_GAS_OXIDIZER) < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	for(var/obj/item/I in contents)
@@ -220,11 +220,20 @@
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)
-	location.hotspot_expose(700, 50, 1)
+	location.hotspot_expose(fire_burn_temperature(), 50, 1)
 
 /mob/living/fire_act()
 	adjust_fire_stacks(0.5)
 	IgniteMob()
+
+//Finds the effective temperature that the mob is burning at.
+/mob/living/proc/fire_burn_temperature()
+	if (fire_stacks <= 0)
+		return 0
+
+	//Scale quadratically so that single digit numbers of fire stacks don't burn ridiculously hot.
+	//lower limit of 700 K, same as matches and roughly the temperature of a cool flame.
+	return max(2.25*round(FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE*(fire_stacks/FIRE_MAX_FIRESUIT_STACKS)**2), 700)
 
 //Mobs on Fire end
 

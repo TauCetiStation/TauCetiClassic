@@ -1214,14 +1214,32 @@ datum/design/cryotube
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/cryo_tube
 
-datum/design/thermomachine
-	name = "Freezer/Heater Board"
-	desc = "The circuit board for a freezer/heater."
-	id = "thermomachine"
-	req_tech = list("programming" = 3, "phorontech" = 3)
+//datum/design/thermomachine
+//	name = "Freezer/Heater Board"
+//	desc = "The circuit board for a freezer/heater."
+//	id = "thermomachine"
+//	req_tech = list("programming" = 3, "phorontech" = 3)
+//	build_type = IMPRINTER
+//	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+//	build_path = /obj/item/weapon/circuitboard/thermomachine
+
+/datum/design/gas_heater
+	name = "gas heating system"
+	desc = "The circuit board for a heater."
+	id = "gasheater"
+	req_tech = list("powerstorage" = 2, "engineering" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/thermomachine
+	build_path = /obj/item/weapon/circuitboard/heater
+
+/datum/design/gas_cooler
+	name = "gas cooling system"
+	desc = "The circuit board for a freezer."
+	id = "gascooler"
+	req_tech = list("magnets" = 2, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/cooler
 
 datum/design/biogenerator
 	name = "Biogenerator Board"
