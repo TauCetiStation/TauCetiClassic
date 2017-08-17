@@ -655,7 +655,7 @@ var/list/airlock_overlays = list()
 		usr.unset_machine(src)
 		return FALSE
 
-	. = ..()
+	. = ..(href, href_list)
 	if(!.)
 		return
 
