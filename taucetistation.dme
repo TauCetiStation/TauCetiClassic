@@ -769,6 +769,7 @@
 #include "code\game\objects\random\random_mob.dm"
 #include "code\game\objects\random\random_science.dm"
 #include "code\game\objects\random\random_scrap.dm"
+#include "code\game\objects\random\random_structures.dm"
 #include "code\game\objects\random\random_syndie.dm"
 #include "code\game\objects\random\random_tools.dm"
 #include "code\game\objects\structures\barsign.dm"

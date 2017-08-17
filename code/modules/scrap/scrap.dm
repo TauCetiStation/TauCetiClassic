@@ -201,10 +201,17 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/MouseDrop(obj/over_object)
 	..(over_object)
 
-/obj/structure/scrap/proc/dig_out_lump(newloc = loc)
+/obj/structure/scrap/proc/dig_out_lump(newloc = loc, var/hard = 0)
 	src.dig_amount--
 	if(src.dig_amount <= 0)
 		visible_message("<span class='notice'>\The [src] is cleared out!</span>")
+		if(prob(33) && icon_state == "big" && !hard)
+			var/obj/randomcatcher/pack_generator = new /obj/randomcatcher/(get_turf(src))
+			var/obj/excavated_item = pack_generator.get_item(/obj/random/structures/structure_pack)
+			if(prob(66))
+				excavated_item.make_old()
+			excavated_item.loc = get_turf(src)
+			qdel(pack_generator)
 		qdel(src)
 		return 0
 	else

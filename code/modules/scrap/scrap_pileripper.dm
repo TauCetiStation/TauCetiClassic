@@ -51,7 +51,7 @@
 			break
 		if(istype(ripped_item, /obj/structure/scrap))
 			var/obj/structure/scrap/pile = ripped_item
-			while(pile.dig_out_lump(loc))
+			while(pile.dig_out_lump(loc, 1))
 				if(prob(20))
 					break
 			count++
