@@ -40,15 +40,48 @@ var/global/list/scrap_base_cache = list()
 	update_icon(1)
 	..()
 
-/obj/structure/scrap/ex_act()
-	if (prob(60))
-		new /obj/random/foods/food_trash(src.loc)
-	if (prob(30))
-		new /obj/random/materials/rods_scrap(src.loc)
-	var/atom/target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
-	//todo: Scrap shots.
-	throw_at(target, 200, 4)
 
+/obj/effect/scrapshot
+	name = "This thins shoots scrap everywhere with a delay"
+	desc = "no data"
+	invisibility = 101
+	anchored = 1
+	density = 0
+
+/obj/effect/scrapshot/New(var/turf/spawnloc, var/severity = 1)
+	..(spawnloc)
+	spawn(0)
+		switch(severity)
+			if(1)
+				for(var/i in 1 to 12)
+					var/projtype = pick(/obj/item/stack/rods, /obj/item/weapon/shard)
+					var/obj/item/projectile = new projtype(spawnloc)
+					projectile.throw_at(locate(spawnloc.x + rand(40) - 20, spawnloc.y + rand(40) - 20, spawnloc.z), 81, pick(1,3,80,80))
+			if(2)
+				for(var/i in 1 to 4)
+					var/projtype = pick(subtypesof(/obj/item/trash))
+					var/obj/item/projectile = new projtype(spawnloc)
+					projectile.throw_at(locate(spawnloc.x + rand(10) - 5, spawnloc.y + rand(10) - 5, spawnloc.z), 3, 1)
+	qdel(src)
+
+
+/obj/structure/scrap/ex_act(severity)
+	set waitfor = FALSE
+	if (prob(25))
+		new /obj/effect/effect/smoke(src.loc)
+	switch(severity)
+		if(1)
+			new /obj/effect/scrapshot(src.loc, 1)
+			dig_amount = 0
+		if(2)
+			new /obj/effect/scrapshot(src.loc, 2)
+			dig_amount = dig_amount / 3
+		if(3)
+			dig_amount = dig_amount / 2
+	if(dig_amount < 4)
+		qdel(src)
+	else
+		update_icon(1)
 
 /obj/structure/scrap/proc/try_make_loot()
 	if(loot_generated)

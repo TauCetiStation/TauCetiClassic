@@ -34,3 +34,10 @@
 	name = "neurotoxin"
 	desc = "Hi-s-s-s-s"
 	projectile_type = /obj/item/projectile/neurotoxin
+
+/obj/item/ammo_casing/scrapshot
+	name = "scrap shot"
+	desc = "Glass, rods and screws flying everywere."
+	projectile_type = /obj/item/projectile/bullet/scrap
+	pellets = 10
+	variance = 30
