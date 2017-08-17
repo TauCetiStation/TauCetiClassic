@@ -31,7 +31,6 @@
 	density = TRUE
 	icon_state = "offcenter"
 	use_power = 1
-	ghost_must_be_admin = TRUE
 
 	//warping vars
 	var/list/linked = list()
@@ -169,7 +168,6 @@ obj/machinery/gateway/centerstation/process()
 	density = TRUE
 	icon_state = "offcenter"
 	use_power = 0
-	ghost_must_be_admin = TRUE
 	var/calibrated = 1
 	var/list/linked = list()	//a list of the connected gateway chunks
 	var/ready = 0

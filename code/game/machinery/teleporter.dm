@@ -352,6 +352,7 @@
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 2000
+	ghost_must_be_admin = TRUE
 	var/obj/machinery/computer/teleporter/teleporter_console
 	var/obj/machinery/teleport/hub/teleporter_hub
 	var/list/linked_stations = list()
@@ -436,10 +437,6 @@
 
 /obj/machinery/teleport/station/attack_ai(mob/user)
 	attack_hand(user)
-
-/obj/machinery/teleport/station/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_hand(user)
 
 /obj/machinery/teleport/station/attack_hand(mob/user)
 	if(..())

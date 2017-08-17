@@ -134,7 +134,7 @@
 	return
 
 /obj/machinery/floodlight/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
+	if(user.client.machine_interactive_ghost && IsAdminGhost(user))
 		attack_ai(user)
 
 /obj/machinery/navbeacon/attack_hand(mob/user)

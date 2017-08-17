@@ -262,6 +262,7 @@
 	density = 0
 	anchored = 1
 	use_power = 0
+	ghost_must_be_admin = TRUE
 	var/on = 0
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~

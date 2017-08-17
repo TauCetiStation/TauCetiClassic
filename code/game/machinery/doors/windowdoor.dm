@@ -13,6 +13,7 @@
 	air_properties_vary_with_direction = 1
 	door_open_sound  = 'sound/machines/windowdoor.ogg'
 	door_close_sound = 'sound/machines/windowdoor.ogg'
+	ghost_must_be_admin = TRUE //currently not needed, but what if someone deleted allowed() in attack_hand() proc?
 
 /obj/machinery/door/window/New()
 	..()

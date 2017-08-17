@@ -66,6 +66,7 @@ var/global/loopModeNames=list(
 
 	anchored = 1
 	luminosity = 4 // Why was this 16
+	ghost_must_be_admin = TRUE
 
 	playing=0
 

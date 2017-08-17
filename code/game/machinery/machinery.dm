@@ -298,7 +298,7 @@ Class Procs:
 	return attack_hand(user)
 
 /obj/machinery/attack_ghost(mob/user)
-	if(ghost_must_be_admin && !IsAdminGhost(user))
+	if(!user.client.machine_interactive_ghost || (ghost_must_be_admin && !IsAdminGhost(user)))
 		return 1
 	return attack_hand(user)
 

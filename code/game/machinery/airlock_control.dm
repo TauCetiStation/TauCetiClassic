@@ -130,6 +130,7 @@
 
 	anchored = 1
 	power_channel = ENVIRON
+	ghost_must_be_admin = TRUE
 
 	var/id_tag
 	var/master_tag
