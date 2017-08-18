@@ -20,6 +20,7 @@
 	use_power = 1
 	idle_power_usage = 200
 	active_power_usage = 1000
+	ghost_must_be_admin = TRUE
 	var/on = 1
 	var/list/localareas = list()
 	var/effectiverange = 25

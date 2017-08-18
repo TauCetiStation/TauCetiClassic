@@ -19,6 +19,9 @@
 	var/selfdestructing = 0
 	var/charges = 1
 
+/obj/machinery/syndicate_beacon/attack_ghost(mob/user) //Not needed, but showing of truncated string is not good
+	return
+
 /obj/machinery/syndicate_beacon/attack_hand(mob/user)
 	usr.set_machine(src)
 	var/dat = "<font color=#005500><i>Scanning [pick("retina pattern", "voice print", "fingerprints", "dna sequence")]...<br>Identity confirmed,<br></i></font>"

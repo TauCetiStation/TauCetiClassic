@@ -355,7 +355,8 @@ var/list/airlock_overlays = list()
 
 /obj/machinery/door/airlock/attack_ghost(mob/user)
 	//Separate interface for ghosts.
-	show_unified_command_interface(user)
+	if(user.client.machine_interactive_ghost)
+		show_unified_command_interface(user)
 
 /obj/machinery/door/airlock/attack_ai(mob/user)
 //#Z1
