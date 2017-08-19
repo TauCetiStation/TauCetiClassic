@@ -516,7 +516,7 @@
 	var/turf/T = get_turf(src)
 	if(wreckage)
 		var/obj/effect/decal/mecha_wreckage/WR = new wreckage(T)
-		WR.reliability = rand(33) + 33
+		WR.reliability = rand(33) + 15
 		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
 			WR.salvage["crowbar"] += E.type
 		if(cell)

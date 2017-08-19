@@ -24,7 +24,7 @@
 													/obj/item/stack/sheet/plasteel
 													)
 							)
-	var/salvage_num = 7
+	var/salvage_num = 15
 
 /obj/effect/decal/mecha_wreckage/ex_act(severity)
 	if(severity == 1)
@@ -62,11 +62,13 @@
 
 /obj/effect/decal/mecha_wreckage/proc/detach_part(var/where)
 	var/obj/to_salvage = pick(salvage[where])
-	if(salvage)
-		var/obj/salvaged = new salvage(get_turf(src))
+	if(to_salvage)
+		var/obj/salvaged = new to_salvage(get_turf(src))
 		salvage[where] -= to_salvage
+		salvage[where] += /obj/item/stack/rods
 		if(!prob(reliability))
 			salvaged.make_old()
+
 		salvage_num--
 		return salvaged
 	return 0
@@ -95,6 +97,7 @@
 													/obj/item/stack/rods
 													),
 									"crowbar" = list(
+													/obj/item/mecha_parts/chassis/gygax,
 													/obj/item/mecha_parts/part/gygax_armour,
 													/obj/item/stack/sheet/metal,
 													/obj/item/stack/sheet/plasteel
@@ -129,6 +132,7 @@
 													/obj/item/stack/rods
 													),
 									"crowbar" = list(
+													/obj/item/mecha_parts/chassis/ultra,
 													/obj/item/mecha_parts/part/ultra_armour,
 													/obj/item/stack/sheet/metal,
 													/obj/item/stack/sheet/plasteel
@@ -153,12 +157,11 @@
 	icon_state = "ripley-broken"
 	salvage = list(
 									"welder" = list(
-													/obj/item/mecha_parts/part/odysseus_torso,
-													/obj/item/mecha_parts/part/odysseus_head,
-													/obj/item/mecha_parts/part/odysseus_left_arm,
-													/obj/item/mecha_parts/part/odysseus_right_arm,
-													/obj/item/mecha_parts/part/odysseus_left_leg,
-													/obj/item/mecha_parts/part/odysseus_right_leg,
+													/obj/item/mecha_parts/part/ripley_torso,
+													/obj/item/mecha_parts/part/ripley_left_arm,
+													/obj/item/mecha_parts/part/ripley_right_arm,
+													/obj/item/mecha_parts/part/ripley_left_leg,
+													/obj/item/mecha_parts/part/ripley_right_leg,
 													/obj/item/stack/sheet/metal,
 													/obj/item/stack/sheet/plasteel
 													),
@@ -169,6 +172,7 @@
 													/obj/item/stack/rods
 													),
 									"crowbar" = list(
+													/obj/item/mecha_parts/chassis/ripley,
 													/obj/item/stack/sheet/metal,
 													/obj/item/stack/sheet/plasteel
 													)
@@ -181,7 +185,8 @@
 /obj/effect/decal/mecha_wreckage/ripley/firefighter/New()
 	..()
 	salvage["crowbar"] += /obj/item/clothing/suit/fire
-
+	salvage["crowbar"] += /obj/item/mecha_parts/chassis/firefighter
+	salvage["crowbar"] -= /obj/item/mecha_parts/chassis/ripley
 /obj/effect/decal/mecha_wreckage/ripley/deathripley
 	name = "Death-Ripley wreckage"
 	icon_state = "deathripley-broken"
@@ -208,6 +213,7 @@
 													/obj/item/stack/rods
 													),
 									"crowbar" = list(
+													/obj/item/mecha_parts/chassis/honker,
 													/obj/item/clothing/mask/gas/clown_hat,
 													/obj/item/clothing/shoes/clown_shoes,
 													/obj/item/weapon/bikehorn,
@@ -240,6 +246,7 @@
 													/obj/item/stack/rods
 													),
 									"crowbar" = list(
+													/obj/item/mecha_parts/chassis/durand,
 													/obj/item/mecha_parts/part/durand_armour,
 													/obj/item/stack/sheet/metal,
 													/obj/item/stack/sheet/plasteel
@@ -270,6 +277,7 @@
 													/obj/item/stack/rods
 													),
 									"crowbar" = list(
+													/obj/item/mecha_parts/chassis/vindicator,
 													/obj/item/mecha_parts/part/vindicator_armour,
 													/obj/item/stack/sheet/metal,
 													/obj/item/stack/sheet/plasteel
@@ -302,6 +310,7 @@
 													/obj/item/stack/rods
 													),
 									"crowbar" = list(
+													/obj/item/mecha_parts/chassis/odysseus,
 													/obj/item/stack/sheet/metal,
 													/obj/item/stack/sheet/plasteel
 													)

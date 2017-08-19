@@ -29,6 +29,8 @@ var/global/list/scrap_base_cache = list()
 	var/base_min = 5	//min and max number of random pieces of base icon
 	var/base_max = 8
 	var/base_spread = 12 //limits on pixel offsets of base pieces
+	var/big_item_chance = 0
+	var/obj/big_item
 	var/list/ways = list("pokes around", "digs through", "rummages through", "goes through","picks through")
 	var/list/diggers = list()
 
@@ -83,10 +85,22 @@ var/global/list/scrap_base_cache = list()
 	else
 		update_icon(1)
 
+/obj/structure/scrap/proc/make_big_loot()
+	if(prob(big_item_chance))
+		var/obj/randomcatcher/CATCH = new /obj/randomcatcher(src)
+		big_item = CATCH.get_item(/obj/random/structures/structure_pack)
+		big_item.forceMove(src)
+		if(prob(66))
+			big_item.make_old()
+		qdel(CATCH)
+
+
 /obj/structure/scrap/proc/try_make_loot()
 	if(loot_generated)
 		return
 	loot_generated = 1
+	if(!big_item)
+		make_big_loot()
 	var/amt = rand(loot_min, loot_max)
 	for(var/x = 1 to amt)
 		var/loot_path = pick(loot_list)
@@ -101,6 +115,8 @@ var/global/list/scrap_base_cache = list()
 	diggers.Cut()
 	for (var/obj/item in loot)
 		qdel(item)
+	if(big_item)
+		qdel(big_item)
 	return ..()
 
 //stupid shard copypaste
@@ -132,7 +148,7 @@ var/global/list/scrap_base_cache = list()
 		contents = shuffle(contents)
 		var/num = rand(1,loot_min)
 		for(var/obj/item/O in contents)
-			if(O == loot)
+			if(O == loot || O == big_item)
 				continue
 			if(num == 0)
 				break
@@ -166,6 +182,10 @@ var/global/list/scrap_base_cache = list()
 			var/image/I = image(O.icon,O.icon_state)
 			I.color = O.color
 			underlays |= randomize_image(I)
+	if(big_item)
+		var/image/I = image(big_item.icon,big_item.icon_state)
+		I.color = big_item.color
+		underlays |= I
 
 /obj/structure/scrap/proc/hurt_hand(mob/user)
 	if(prob(50))
@@ -201,17 +221,13 @@ var/global/list/scrap_base_cache = list()
 /obj/structure/scrap/MouseDrop(obj/over_object)
 	..(over_object)
 
-/obj/structure/scrap/proc/dig_out_lump(newloc = loc, var/hard = 0)
+/obj/structure/scrap/proc/dig_out_lump(newloc = loc, var/hard_dig = 0)
 	src.dig_amount--
 	if(src.dig_amount <= 0)
 		visible_message("<span class='notice'>\The [src] is cleared out!</span>")
-		if(prob(33) && icon_state == "big" && !hard)
-			var/obj/randomcatcher/pack_generator = new /obj/randomcatcher/(get_turf(src))
-			var/obj/excavated_item = pack_generator.get_item(/obj/random/structures/structure_pack)
-			if(prob(66))
-				excavated_item.make_old()
-			excavated_item.loc = get_turf(src)
-			qdel(pack_generator)
+		if(!hard_dig && big_item)
+			big_item.forceMove(get_turf(src))
+			big_item = null
 		qdel(src)
 		return 0
 	else
@@ -230,7 +246,7 @@ var/global/list/scrap_base_cache = list()
 		if(do_after(user, do_dig, target = src))
 			visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
 			shuffle_loot()
-			dig_out_lump(user.loc)
+			dig_out_lump(user.loc, 0)
 		diggers -= user
 
 
@@ -368,6 +384,7 @@ var/global/list/scrap_base_cache = list()
 	dig_amount = 15
 	base_min = 9
 	base_max = 14
+	big_item_chance = 40
 
 /obj/structure/scrap/vehicle/large
 	name = "large industrial debris pile"
@@ -380,6 +397,7 @@ var/global/list/scrap_base_cache = list()
 	base_min = 9
 	base_max = 14
 	base_spread = 16
+	big_item_chance = 33
 
 /obj/structure/scrap/food/large
 	name = "large food trash pile"
@@ -392,6 +410,7 @@ var/global/list/scrap_base_cache = list()
 	base_min = 9
 	base_max = 14
 	base_spread = 16
+	big_item_chance = 33
 
 /obj/structure/scrap/medical/large
 	name = "large medical refuse pile"
@@ -404,6 +423,7 @@ var/global/list/scrap_base_cache = list()
 	base_min = 9
 	base_max = 14
 	base_spread = 16
+	big_item_chance = 33
 
 /obj/structure/scrap/guns/large
 	name = "large gun refuse pile"
@@ -416,6 +436,7 @@ var/global/list/scrap_base_cache = list()
 	base_min = 9
 	base_max = 14
 	base_spread = 16
+	big_item_chance = 33
 
 /obj/structure/scrap/science/large
 	name = "large scientific trash pile"
@@ -428,6 +449,7 @@ var/global/list/scrap_base_cache = list()
 	base_min = 9
 	base_max = 14
 	base_spread = 16
+	big_item_chance = 33
 
 /obj/structure/scrap/cloth/large
 	name = "large cloth pile"
@@ -440,6 +462,7 @@ var/global/list/scrap_base_cache = list()
 	base_min = 9
 	base_max = 14
 	base_spread = 16
+	big_item_chance = 33
 
 /obj/structure/scrap/syndie/large
 	name = "large strange pile"
@@ -452,6 +475,24 @@ var/global/list/scrap_base_cache = list()
 	base_min = 9
 	base_max = 14
 	base_spread = 16
+	big_item_chance = 33
+
+/obj/structure/scrap/poor/structure
+	name = "large mixed rubbish"
+	opacity = 1
+	density = 1
+	icon_state = "med"
+	loot_min = 3
+	loot_max = 6
+	dig_amount = 3
+	base_min = 3
+	base_max = 6
+	big_item_chance = 100
+
+/obj/structure/scrap/poor/structure/New()
+	make_big_loot()
+	..()
+
 
 /obj/item/weapon/storage/internal/updating/update_icon()
 	if(master_item)

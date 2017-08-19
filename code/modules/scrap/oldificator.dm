@@ -249,3 +249,5 @@
 	if(hud && prob(75))
 		hud = new /obj/item/clothing/glasses/hud/broken
 
+/obj/effect/decal/mecha_wreckage/make_old()
+	salvage_num = 8

@@ -221,7 +221,6 @@
 					prob(100);/obj/structure/stool/bed/roller,\
 					prob(100);/obj/machinery/portable_atmospherics/pump,\
 					prob(100);/obj/machinery/portable_atmospherics/scrubber,\
-					prob(100);/obj/machinery/icecream_vat,\
 					prob(100);/obj/structure/kitchenspike,\
 					prob(75);/obj/structure/janitorialcart,\
 					prob(40);/obj/machinery/power/grounding_rod,\
@@ -232,6 +231,7 @@
 					prob(30);/obj/machinery/flasher/portable,\
 					prob(20);/obj/machinery/cell_charger,\
 					prob(20);/obj/machinery/recharger,\
+					prob(15);/obj/machinery/icecream_vat,\
 					prob(15);/obj/structure/particle_accelerator/power_box,\
 					prob(15);/obj/structure/particle_accelerator/particle_emitter/right,\
 					prob(15);/obj/structure/particle_accelerator/particle_emitter/center,\
@@ -257,12 +257,14 @@
 
 /obj/random/structures/structure_pack/item_to_spawn()
 	return pick(\
-					prob(15);/obj/random/structures/misc,\
-					prob(8);/obj/random/structures/common_crates,\
-					prob(5);/obj/random/structures/proffessions_crates,\
-					prob(5);/obj/random/structures/critters_crate,\
-					prob(5);/obj/random/structures/generators,\
-					prob(5);/obj/random/structures/vendings,\
-					prob(2);/obj/random/structures/proffessions_heads_crates,\
-					prob(1);/obj/random/structures/rare_crates\
+					prob(100);/obj/random/structures/misc,\
+					prob(65);/obj/random/structures/common_crates,\
+					prob(33);/obj/random/structures/proffessions_crates,\
+					prob(33);/obj/random/structures/critters_crate,\
+					prob(33);/obj/random/structures/generators,\
+					prob(33);/obj/random/structures/vendings,\
+					prob(20);/obj/random/mecha/wreckage,\
+					prob(13);/obj/random/structures/proffessions_heads_crates,\
+					prob(7);/obj/random/structures/rare_crates,\
+					prob(2);/obj/random/mecha/working\
 				)
