@@ -962,7 +962,7 @@
 		GM.phoron += 100
 		GM.temperature = 1500+T0C //should be enough to start a fire
 		T.visible_message("The [src] suddenly disgorges a cloud of heated phoron.")
-		destroy()
+		qdel(src)
 	else
 		GM.phoron += 5
 		GM.temperature = istype(T) ? T.air.temperature : T20C
