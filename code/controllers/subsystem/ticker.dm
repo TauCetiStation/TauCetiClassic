@@ -363,7 +363,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/proc/equip_characters()
 	var/captainless=1
 	for(var/mob/living/carbon/human/player in player_list)
-		if(player && player.mind && player.mind.assigned_role)
+		if(player && player.mind && player.mind.assigned_role && player.mind.assigned_role != "default")
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
 			if(player.mind.assigned_role != "MODE")
