@@ -884,7 +884,9 @@
 	desc = "This broom is made with the branches and leaves of a tree which secretes aromatic oils."
 	icon_state = "broom_sauna"
 
-/obj/item/weapon/broom/attack(mob/living/M, mob/living/user, def_zone)
+/obj/item/weapon/broom/attack(mob/living/carbon/human/M, mob/living/user, def_zone)
+	if(!istype(M) || user.a_intent == "hurt")
+		return ..()
 	if(wet - 5 < 0)
 		to_chat(user, "<span class='userdanger'>Soak this [src] first!</span>")
 		return
@@ -894,16 +896,18 @@
 	if(!M.lying)
 		to_chat(user, "<span class='userdanger'>[M] Must be lie down first!</span>")
 		return
-	var/zone = parse_zone(check_zone(def_zone))
+
+	var/zone = check_zone(user.zone_sel.selecting)
+	var/obj/item/organ/external/BP = M.get_bodypart(zone)
+	for(var/obj/item/clothing/C in M.get_equipped_items())
+		if(C.body_parts_covered & BP.body_part)
+			to_chat(user, "<span class='userdanger'>Take off [M]'s clothes first!</span>")
+			return
+
+	zone = parse_zone(zone)
 	wet -= 5
 	user.visible_message("<span class='notice'>A [user] lightly Birching [M]'s [zone] with [src]!</span>",
 		"<span class='notice'>You lightly Birching [M]'s [zone] with [src]!</span>")
-	if(prob(5))
-		M.adjustBruteLoss(-5)
-		to_chat(M, "<span class='notice'>Your skin feel's extremely good!</span>")
-	if(prob(5))
-		M.adjustFireLoss(-5)
-		to_chat(M, "<span class='notice'>Your skin feel's extremely good!</span>")
 
 
 
