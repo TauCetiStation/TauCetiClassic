@@ -58,10 +58,10 @@
 		second_intruder = null
 	overlays.Cut()
 	if(Stored_Nuclear)
-		Stored_Nuclear.loc = turf
+		Stored_Nuclear.forceMove(turf)
 		Stored_Nuclear = null
 	for(var/obj/item/X in stored_items)
-		X.loc = turf
+		X.forceMove(turf)
 	stored_items.Cut()
 	new /obj/effect/decal/droppod_wreckage(turf)
 	return ..()
@@ -229,8 +229,11 @@
 	var/area/area_to_deploy = allowed_areas.areas[pick(allowed_areas.areas)]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(area_to_deploy.type))
-		if(!T.density && !istype(T, /turf/space))
+		if(!T.density && !istype(T, /turf/space) && !T.obscured)
 			L+=T
+	if(isemptylist(L))
+		to_chat(intruder, "<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
+		return
 	AimTarget = pick(L)
 	StartDrop()
 
@@ -389,7 +392,6 @@
 		return ..()
 
 	else
-		user.drop_from_inventory(O)
 		if(istype(O, /obj/item/weapon/simple_drop_system))
 			if(!(flags & POOR_AIMING))
 				to_chat(user, "<span class ='notice'>The [src] already has simple aiming system installed!</span>")
@@ -405,9 +407,12 @@
 			to_chat(user, "<span class ='notice'>You upgrade [src]'s Guidance system with [O], Now it has astonishing accuracy!</span>")
 			qdel(O)
 		else if(length(stored_items) < 7)
+			if(issilicon(user))
+				return
 			if(stored_items.len == 1)
 				verbs += /obj/structure/droppod/proc/Eject_items_cmd
-			O.loc = src
+			user.drop_from_inventory(O)
+			O.forceMove(src)
 			stored_items += O
 			to_chat(user, "<span class ='notice'>You put [O] at [src]</span>")
 		else
@@ -428,7 +433,7 @@
 /obj/structure/droppod/proc/Eject_items()
 	var/turf/turf = get_turf(loc)
 	for(var/obj/item/X in stored_items)
-		X.loc = turf
+		X.forceMove(turf)
 		stored_items -= X
 	verbs -= /obj/structure/droppod/proc/Eject_items_cmd
 
@@ -444,7 +449,7 @@
 
 /obj/structure/droppod/proc/EjectNuclear()
 	visible_message("<span class='notice'>[Stored_Nuclear] has been ejected from [src]!</span>")
-	Stored_Nuclear.loc = get_turf(loc)
+	Stored_Nuclear.forceMove(get_turf(loc))
 	icon_state = "dropod_opened"
 	Stored_Nuclear = null
 	verbs -= /obj/structure/droppod/proc/Nuclear
