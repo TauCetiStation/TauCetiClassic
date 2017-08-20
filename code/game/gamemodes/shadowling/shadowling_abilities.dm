@@ -258,7 +258,7 @@
 		user.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling, slot_w_uniform)
 		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling, slot_shoes)
 		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling, slot_wear_suit)
-		user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling, slot_head)
+		user.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/shadowling, slot_head)
 		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling, slot_gloves)
 		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling, slot_wear_mask)
 		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, slot_glasses)

@@ -16,10 +16,6 @@
 	desc = "Dark, semi-transparent shell. Protects against vacuum, but not against the light of the stars." //Still takes damage from spacewalking but is immune to space itself
 	icon_state = "shadowling_armor"
 	item_state = "golem"
-	body_parts_covered = FULL_BODY //Shadowlings are immune to space
-	cold_protection = FULL_BODY
-	//min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
-	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
 	flags = ABSTRACT | DROPDEL | THICKMATERIAL
 	slowdown = 0
@@ -64,16 +60,17 @@
 	canremove = 0
 
 
-/obj/item/clothing/head/shadowling
+/obj/item/clothing/head/helmet/space/shadowling
 	name = "chitin helm"
 	desc = "A helmet-like enclosure of the head."
 	icon_state = "shadowling_head"
 	item_state = null
 	origin_tech = null
 	unacidable = 1
-	flags = ABSTRACT | DROPDEL
+	flags = ABSTRACT | DROPDEL | THICKMATERIAL
 	canremove = 0
 	flags_inv = 0
+	cold_protection = HEAD|FACE|EYES //because before (this commit) chitin shell had FULL_BODY cold protection
 
 
 /obj/item/clothing/glasses/night/shadowling
