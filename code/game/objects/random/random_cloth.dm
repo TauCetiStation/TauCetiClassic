@@ -71,7 +71,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "tourist"
 /obj/random/cloth/under/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/under) - list(/obj/item/clothing/under/stripper/stripper_green, /obj/item/clothing/under/lawyer, /obj/item/clothing/under/color, /obj/item/clothing/under/shorts, /obj/item/clothing/under/swimsuit, /obj/item/clothing/under/shadowling, /obj/item/clothing/under/fluff, /obj/item/clothing/under/rank, /obj/item/clothing/under/pj, /obj/item/clothing/under/wedding, /obj/item/clothing/under/gimmick/rank ))
+	return pick(subtypesof(/obj/item/clothing/under) - list(/obj/item/clothing/under/stripper/stripper_green, /obj/item/clothing/under/lawyer, /obj/item/clothing/under/color, /obj/item/clothing/under/shorts, /obj/item/clothing/under/swimsuit, /obj/item/clothing/under/shadowling, /obj/item/clothing/under/fluff, /obj/item/clothing/under/rank, /obj/item/clothing/under/pj, /obj/item/clothing/under/wedding, /obj/item/clothing/under/gimmick/rank, /obj/item/clothing/under/bluepyjamas, /obj/item/clothing/under/acj))
 
 /obj/random/cloth/spacehelmet
 	name = "random spacehelmet"
@@ -119,7 +119,7 @@
 	icon = 'icons/obj/clothing/shoes.dmi'
 	icon_state = "material"
 /obj/random/cloth/shoes/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/shoes) - /obj/item/clothing/shoes/golem)
+	return pick(subtypesof(/obj/item/clothing/shoes) - list(/obj/item/clothing/shoes/golem, /obj/item/clothing/shoes/space_ninja))
 
 /obj/random/cloth/tie
 	name = "random tie"

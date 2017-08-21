@@ -31,6 +31,10 @@
 		var/removed_item = pick(contents)
 		contents -= removed_item
 		qdel(removed_item)
+	if(prob(75))
+		storage_slots = max(contents.len, max(0, storage_slots - pick(2, 2, 2, 3, 3, 4)))
+	if(prob(75))
+		max_combined_w_class = max_combined_w_class / 2
 	..()
 
 /obj/item/weapon/reagent_containers/make_old()
@@ -186,12 +190,10 @@
 	if(prob(75))
 		darkness_view = -1
 
-/obj/item/weapon/storage/make_old()
+/obj/item/device/flashlight/flare/make_old()
 	..()
 	if(prob(75))
-		storage_slots = max(0, storage_slots - pick(2, 2, 2, 3, 3, 4))
-	if(prob(75))
-		max_combined_w_class = max_combined_w_class / 2
+		fuel = rand(100,fuel)
 
 /obj/item/device/flashlight/make_old()
 	..()

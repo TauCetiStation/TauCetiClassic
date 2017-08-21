@@ -56,7 +56,7 @@
 /obj/effect/glowshroom/process()
 	if(!spreaded)
 		return
-
+	STOP_PROCESSING(SSobj, src)
 	if(((world.timeofday - lastTick) > delay) || ((world.timeofday - lastTick) < 0))
 		lastTick = world.timeofday
 		spreaded = 0

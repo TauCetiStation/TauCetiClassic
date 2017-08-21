@@ -368,8 +368,8 @@ var/global/list/scrap_base_cache = list()
 	loot_list = list(
 		/obj/random/misc/all,
 		/obj/random/misc/all,
-		/obj/random/misc/all,
-		/obj/random/misc/all,
+		/obj/random/misc/pack,
+		/obj/random/misc/pack,
 		/obj/item/weapon/shard,
 		/obj/random/materials/rods_scrap
 	)

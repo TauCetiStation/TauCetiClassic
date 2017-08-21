@@ -58,9 +58,11 @@
 
 
 /turf/simulated/floor/plating/ironsand/junkyard/surround_by_scrap()
+	if(prob(2))
+		new /obj/structure/scrap/poor/structure(src)
 	if(prob(4))
 		new /obj/effect/glowshroom(src)
-	if(prob(6))
+	if(prob(4))
 		new /obj/random/scrap/sparse_weighted(src)
 	if(prob(6))
 		var/decals_spawn = pick(/obj/effect/decal/cleanable/generic ,/obj/effect/decal/cleanable/ash, /obj/effect/decal/cleanable/molten_item, /obj/effect/decal/cleanable/vomit, /obj/effect/decal/cleanable/blood/oil)
