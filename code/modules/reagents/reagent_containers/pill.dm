@@ -68,9 +68,10 @@
 	return 0
 
 /obj/item/weapon/reagent_containers/pill/afterattack(obj/target, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 
-	if(target.is_open_container() != 0 && target.reagents)
+	if(target.is_open_container() && target.reagents)
 		if(!target.reagents.total_volume)
 			to_chat(user, "\red [target] is empty. Cant dissolve pill.")
 			return
