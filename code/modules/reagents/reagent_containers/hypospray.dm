@@ -23,16 +23,13 @@
 	reagents.add_reagent("tricordrazine", 30)
 	return
 
-/obj/item/weapon/reagent_containers/hypospray/attack(mob/M, mob/user)
+/obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
 		to_chat(user, "\red [src] is empty.")
 		return
-	if(!ismob(M))
+	if(!istype(M))
 		return
-	if(reagents.total_volume)
-		to_chat(user, "\blue You inject [M] with [src].")
-		to_chat(M, "\red You feel a tiny prick!")
-
+	if(reagents.total_volume && M.try_inject(user, TRUE, TRUE, TRUE, TRUE))
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 
