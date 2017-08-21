@@ -16,7 +16,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine
 	name = "Bicaridine autoinjector"
-	desc = "For physical injures."
+	desc = "For physical injuries."
 	icon_state = "autobrut"
 	volume = 20
 
@@ -41,7 +41,7 @@
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/tramadol
 	name = "Tramadol autoinjector"
-	desc = "Piankiller."
+	desc = "Painkiller."
 	icon_state = "autopainkiller"
 	volume = 15
 
