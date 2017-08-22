@@ -218,7 +218,6 @@
 	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
 	log_name = "TT"
 	category = "Offensive"
-	cost = 1
 
 /datum/spellbook_entry/item
 	name = "Buy Item"

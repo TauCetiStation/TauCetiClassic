@@ -25,10 +25,12 @@
 		var/obj/effect/dummy/spell_jaunt/holder = new(mobloc)
 		target.ExtinguishMob()			//This spell can extinguish mob
 		target.status_flags ^= GODMODE	//Protection from any kind of damage, caused you in astral world
-		var/mob/living/companion = handle_teleport_grab(holder, target)
-		if(companion)
-			companion.status_flags ^= GODMODE
-			companion.ExtinguishMob()
+		var/list/companions = handle_teleport_grab(holder, target)
+		if(companions)
+			for(var/M in companions)
+				var/mob/living/L = M
+				L.status_flags ^= GODMODE
+				L.ExtinguishMob()
 		var/image/I = image('icons/mob/blob.dmi', holder, "marker", LIGHTING_LAYER+1)
 		target.client.images += I
 		target.forceMove(holder)
@@ -65,8 +67,10 @@
 		target.client.images -= I
 		target.client.eye = target
 		target.status_flags ^= GODMODE	//Turn off this cheat
-		if(companion)
-			companion.status_flags ^= GODMODE
+		if(companions)
+			for(var/M in companions)
+				var/mob/living/L = M
+				L.status_flags ^= GODMODE
 		qdel(holder)
 
 /obj/effect/dummy/spell_jaunt

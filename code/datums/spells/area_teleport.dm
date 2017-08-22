@@ -59,8 +59,10 @@
 		teleport_place = locate(T.x + rand(-1,1), T.y + rand(-1,1), T.z)
 	else
 		teleport_place = T
+	var/list/returned = list()
 	for(var/obj/item/weapon/grab/G in list(U.get_active_hand(), U.get_inactive_hand()))
-		if(G.state >= GRAB_NECK)
-			G.affecting.forceMove(teleport_place)
-			return G.affecting
+		returned += G.affecting
+		G.affecting.forceMove(teleport_place)
+	if(length(returned))
+		return returned
 	return null
