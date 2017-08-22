@@ -46,6 +46,9 @@
 
 	return
 
+/obj/item/weapon/reagent_containers/hypospray/cmo //We need "another" hypo for CMO
+
+
 /obj/item/weapon/reagent_containers/hypospray/autoinjector
 	name = "autoinjector"
 	desc = "A rapid and safe way to administer small amounts of drugs by untrained or trained personnel."
