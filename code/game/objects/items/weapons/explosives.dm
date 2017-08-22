@@ -14,8 +14,11 @@
 	if(ismob(target))
 		var/mob/living/M = target
 		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [M.real_name] ([M.ckey])</font>"
-		msg_admin_attack("[user.real_name] ([user.ckey]) tried planting [name] on [M.real_name] ([M.ckey]) [ADMIN_JMP(user)] [ADMIN_FLW(user)]")
+		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [M.real_name] ([M.ckey]) [ADMIN_FLW(M)]")
 		user.visible_message("<span class ='red'> [user.name] is trying to plant some kind of explosive on [M.name]!</span>")
+	else
+		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target.name]</font>"
+		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [target.name] [ADMIN_JMP(target)]")
 
 	if(do_after(user, 50, target = target) && in_range(user, target))
 		user.drop_item()
