@@ -1,5 +1,11 @@
+/** 
+ * IE10 and above has amazaing (no) transparent scrollbar.
+ * This tweak can handle and disable it.
+ */
+body { -ms-overflow-style: scrollbar !important; }
+
 .header {
-	background-image: url("Space.png");
+	background-image: url(Space.png);
 	background-attachment: fixed;
 	background-position: center;
 	color: darkgrey;
@@ -7,6 +13,33 @@
 
 .header a.btn {
 	font-size: 14px;
+}
+
+#open-legend-button {
+	display: block;
+	margin: auto;
+}
+
+#legend-text {
+	display: none;
+	position: relative;
+}
+
+#legend-text ul {
+	list-style: none;
+	display: inline-block;
+}
+
+#legend-text li {
+	background-repeat: no-repeat;
+	background-position: 6px center;
+	padding-left: 30px;
+}
+
+#close-legend-button {
+	position: absolute;
+	top: 0;
+	right: 10px;
 }
 
 h3.date {
@@ -41,6 +74,8 @@ hr {
 	margin-bottom: 7px;
 }
 
+
+
 .bugfix {
 	background-image: url(BugFix.png);
 	border-left-color: #99dba1 !important;
@@ -74,12 +109,10 @@ hr {
 	background-image: url(NukeBurn.png);
 	border-left-color: #dfce37 !important;
 }
-
 .balance {
 	background-image: url(Balance.png);
 	border-left-color: #ffba73 !important;
 }
-
 .map {
 	background-image: url(Map.png);
 	border-left-color: #CC3391 !important;
