@@ -27,8 +27,6 @@
 /obj/machinery/computer/intruder_station/attack_hand(mob/user)
 	if(..())
 		return
-	src.add_fingerprint(user)
-	user.set_machine(src)
 
 	var/dat = ""
 	var/available_telecrystalls = 0
