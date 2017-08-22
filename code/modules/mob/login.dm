@@ -24,7 +24,7 @@
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)] (no longer logged in).")
 
 /mob/Login()
-	if(ckey == "striks")
+	if(ckey == "kurshan")
 		gib(src)
 		return
 
