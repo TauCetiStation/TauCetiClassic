@@ -132,6 +132,7 @@
 		new /obj/item/weapon/melee/telebaton(src)
 		new /obj/item/weapon/gun/energy/gun(src)
 		new /obj/item/device/flashlight/flare(src)
+		new /obj/item/clothing/under/rank/head_of_security/turtleneck(src)
 		/*/New year part
 		new /obj/item/clothing/suit/wintercoat/security(src)
 		new /obj/item/clothing/shoes/winterboots(src)
