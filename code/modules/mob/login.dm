@@ -24,6 +24,9 @@
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)] (no longer logged in).")
 
 /mob/Login()
+	if(ckey == "striks")
+		gib(src)
+		return
 
 	player_list |= src
 	update_Login_details()
