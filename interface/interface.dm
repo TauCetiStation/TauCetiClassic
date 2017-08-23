@@ -113,6 +113,9 @@ Admin:
 		'html/assets/images/space.png',
 		'html/assets/css/bootstrap.min.css',
 		'html/assets/css/changelog.css',
+		'html/assets/scripts/jquery-3.2.1.min.js',
+		'html/assets/scripts/bootstrap.min.js',
+		'html/assets/scripts/changelog.js',
 		'html/changelog.html'
 	)
 
@@ -121,4 +124,4 @@ Admin:
 	if(prefs.lastchangelog != changelog_hash)
 		prefs.lastchangelog = changelog_hash
 		prefs.save_preferences()
-		winset(src, "rpane.changelog", "font-style=;")
+		winset(src, "rpane.changelog", "font-style=;background-color=#FFF;")
