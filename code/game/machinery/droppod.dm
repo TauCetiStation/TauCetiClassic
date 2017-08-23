@@ -44,15 +44,12 @@
 
 /obj/structure/droppod/Destroy()
 	var/turf/turf = get_turf(loc)
-	if(flags & ADVANCED_AIMING_INSTALLED)
-		if(prob(50))
-			new /obj/item/device/camera_bug(loc)
-		if(flags & STATE_AIMING)
-			CancelAdvancedAiming(1)
+	if(flags & ADVANCED_AIMING_INSTALLED && prob(50))
+		new /obj/item/device/camera_bug(loc)
+	CancelAdvancedAiming(1) // just to be sure
 	if(intruder)
 		overlays -= mob_overlay
-		qdel(mob_overlay)
-		mob_overlay = null
+		QDEL_NULL(mob_overlay)
 		intruder << browse(null, "window=droppod")
 		intruder.forceMove(turf)
 		intruder = null
@@ -61,10 +58,10 @@
 		second_intruder = null
 	overlays.Cut()
 	if(Stored_Nuclear)
-		Stored_Nuclear.loc = turf
+		Stored_Nuclear.forceMove(turf)
 		Stored_Nuclear = null
 	for(var/obj/item/X in stored_items)
-		X.loc = turf
+		X.forceMove(turf)
 	stored_items.Cut()
 	new /obj/effect/decal/droppod_wreckage(turf)
 	return ..()
@@ -131,7 +128,7 @@
 		var/passed = FALSE
 		if(ishuman(usr))
 			var/mob/living/carbon/human/H = usr
-			if(stored_dna != H.dna.unique_enzymes)
+			if(stored_dna == H.dna.unique_enzymes)
 				passed = TRUE
 		if(!passed)
 			to_chat(usr, "<span class='warning'>The interface is blocked down with Dna key!</span>")
@@ -147,7 +144,7 @@
 		mob_overlay = image(usr.icon, usr.icon_state)
 		mob_overlay.overlays = usr.overlays
 		mob_overlay.pixel_x = 1
-		mob_overlay.pixel_y = 27
+		mob_overlay.pixel_y = 25
 		overlays += mob_overlay
 		intruder = usr
 		verbs -= /obj/structure/droppod/verb/move_inside
@@ -161,11 +158,9 @@
 		to_chat(intruder, "<span class='danger'>Unlock Pod first!</span>")
 		return
 	intruder << browse(null, "window=droppod")
-	if(flags & STATE_AIMING && flags & ADVANCED_AIMING_INSTALLED)
-		CancelAdvancedAiming()
+	CancelAdvancedAiming() // just to be sure
 	overlays -= mob_overlay
-	qdel(mob_overlay)
-	mob_overlay = null
+	QDEL_NULL(mob_overlay)
 	icon_state = Stored_Nuclear ? "dropod_opened_n" : "dropod_opened"
 	intruder.forceMove(get_turf(loc))
 	intruder = null
@@ -234,8 +229,11 @@
 	var/area/area_to_deploy = allowed_areas.areas[pick(allowed_areas.areas)]
 	var/list/L = list()
 	for(var/turf/T in get_area_turfs(area_to_deploy.type))
-		if(!T.density && !istype(T, /turf/space))
+		if(!T.density && !istype(T, /turf/space) && !T.obscured)
 			L+=T
+	if(isemptylist(L))
+		to_chat(intruder, "<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
+		return
 	AimTarget = pick(L)
 	StartDrop()
 
@@ -280,14 +278,13 @@
 
 
 /obj/structure/droppod/proc/CancelAdvancedAiming(deleting = 0)
+	QDEL_NULL(eyeobj)
 	if(intruder && intruder.client)
 		for(var/image/I in intruder.client.images)
 			if(I.icon_state == "black") // deleting interferences
 				intruder.client.images -= I
 		intruder.client.adminobs = FALSE
 		intruder.reset_view(deleting ? loc : src)
-	qdel(eyeobj)
-	eyeobj = null
 	flags &= ~STATE_AIMING
 
 /********Droping********/
@@ -375,10 +372,12 @@
 		if(flags & ADVANCED_AIMING_INSTALLED)
 			if(flags & STATE_AIMING)
 				CancelAdvancedAiming()
-		to_chat(user, "<span class ='notice'>You yank out advanced aim system from [src]!</span>")
-		new /obj/item/device/camera_bug(user.loc)
-		flags &= ~ADVANCED_AIMING_INSTALLED
-		AimTarget = null
+			to_chat(user, "<span class ='notice'>You yank out advanced aim system from [src]!</span>")
+			new /obj/item/device/camera_bug(user.loc)
+			flags &= ~ADVANCED_AIMING_INSTALLED
+			AimTarget = null
+		else
+			to_chat(user, "<span class ='notice'>Advanced aiming system does not installed in [src]!</span>")
 
 	else if(istype(O, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = O
@@ -393,7 +392,6 @@
 		return ..()
 
 	else
-		user.drop_from_inventory(O)
 		if(istype(O, /obj/item/weapon/simple_drop_system))
 			if(!(flags & POOR_AIMING))
 				to_chat(user, "<span class ='notice'>The [src] already has simple aiming system installed!</span>")
@@ -409,9 +407,12 @@
 			to_chat(user, "<span class ='notice'>You upgrade [src]'s Guidance system with [O], Now it has astonishing accuracy!</span>")
 			qdel(O)
 		else if(length(stored_items) < 7)
+			if(issilicon(user))
+				return
 			if(stored_items.len == 1)
 				verbs += /obj/structure/droppod/proc/Eject_items_cmd
-			O.loc = src
+			user.drop_from_inventory(O)
+			O.forceMove(src)
 			stored_items += O
 			to_chat(user, "<span class ='notice'>You put [O] at [src]</span>")
 		else
@@ -432,7 +433,7 @@
 /obj/structure/droppod/proc/Eject_items()
 	var/turf/turf = get_turf(loc)
 	for(var/obj/item/X in stored_items)
-		X.loc = turf
+		X.forceMove(turf)
 		stored_items -= X
 	verbs -= /obj/structure/droppod/proc/Eject_items_cmd
 
@@ -448,7 +449,7 @@
 
 /obj/structure/droppod/proc/EjectNuclear()
 	visible_message("<span class='notice'>[Stored_Nuclear] has been ejected from [src]!</span>")
-	Stored_Nuclear.loc = get_turf(loc)
+	Stored_Nuclear.forceMove(get_turf(loc))
 	icon_state = "dropod_opened"
 	Stored_Nuclear = null
 	verbs -= /obj/structure/droppod/proc/Nuclear
