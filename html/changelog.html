@@ -2,14 +2,14 @@
 <html>
  <head> 
   <title>Tau Ceti Station Changelogs</title> 
-  <base target="_blank">
+  <base target="_blank"> 
   <meta charset="utf-8"> 
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
   <link rel="stylesheet" href="bootstrap.min.css"> 
   <link rel="stylesheet" href="changelog.css"> 
-  <script defer src="jquery-3.2.1.min.js"></script>
-  <script defer src="bootstrap.min.js"></script>
-  <script defer src="changelog.js"></script>
+  <script defer src="jquery-3.2.1.min.js"></script> 
+  <script defer src="bootstrap.min.js"></script> 
+  <script defer src="changelog.js"></script> 
  </head> 
  <body> 
   <div class="header jumbotron text-center"> 
@@ -26,25 +26,25 @@
      <p class="bg-danger"><b>Нашли баг?</b> Пожалуйста, сообщите о нём на нашем <a href="https://github.com/TauCetiStation/TauCetiClassic/issues"><b>трекере</b></a>.</p> 
     </div> 
    </div> 
-   <hr>
-   <button id="open-legend-button" type="button" class="btn btn-info btn-xs">Показать Легенду</button>
-   <div id="legend-text">
-    <ul>
-	 <li class="bugfix">- фиксы</li>
-	 <li class="rscadd">- новый контент, фичи</li>
-	 <li class="rscdel">- удаление контента, откаты фичь</li>
-	 <li class="image">- респрайты, новые спрайты и прочие изменения с изображениями</li>
-	 <li class="sound">- звуки и всё, что с ними связано</li>
-	 <li class="spellcheck">- исправление ошибок в текстовой части игры</li>
-	 <li class="tweak">- небольшие правки и изменения</li>
-	 <li class="balance">- правки баланса</li>
-	 <li class="map">- карта и её изменение</li>
-	 <li class="performance">- вопросы, касающиеся производительности</li>
-	 <li class="experiment">- экспериментальные фичи/твики, которые могут быть отменены</li>
-	</ul>
-	<button id="close-legend-button" type="button" class="btn btn-danger btn-xs">X</button>
-	<hr>
-   </div>
+   <hr> 
+   <button id="open-legend-button" type="button" class="btn btn-info btn-xs">Показать Легенду</button> 
+   <div id="legend-text"> 
+    <ul> 
+     <li class="bugfix">- фиксы</li> 
+     <li class="rscadd">- новый контент, фичи</li> 
+     <li class="rscdel">- удаление контента, откаты фичь</li> 
+     <li class="image">- респрайты, новые спрайты и прочие изменения с изображениями</li> 
+     <li class="sound">- звуки и всё, что с ними связано</li> 
+     <li class="spellcheck">- исправление ошибок в текстовой части игры</li> 
+     <li class="tweak">- небольшие правки и изменения</li> 
+     <li class="balance">- правки баланса</li> 
+     <li class="map">- карта и её изменение</li> 
+     <li class="performance">- вопросы, касающиеся производительности</li> 
+     <li class="experiment">- экспериментальные фичи/твики, которые могут быть отменены</li> 
+    </ul> 
+    <button id="close-legend-button" type="button" class="btn btn-danger btn-xs">X</button> 
+    <hr> 
+   </div> 
    <!-- НЕ ИЗМЕНЯТЬ текст в этом элементе. Чейнджлоги генерируются АВТОМАТИЧЕСКИ! --> 
    <div id="changelogs"> 
     <div class="row" id="23.08.2017"> 
@@ -59,13 +59,21 @@
         <li class="balance">Теперь гейтвей снова перед самим взломом даёт полторы минуты экипажу на подготовку автоматическим сообщением в радиочате, Так же, чтобы пройти через него даже нюкерам, придётся разрешать или запрещать через устройство взлома.</li> 
         <li class="balance">Несколько занижены шансы рефлекта и блока у двойного энергомеча. Он разучился выполнять данные операции, пока режет дверь.</li> 
         <li class="balance">У пуль ППШа убран стан при попадании в голое тело. Занерфлен дамаг Калаша.</li> 
-        <li class="tweak">Апнуты спеллы телепорта и Джаунта. Теперь при агрессивном (красном) грабе, юз телепорта и джаунта будут брать с собой в путешествие жертву.</li>
+        <li class="tweak">Апнуты спеллы телепорта и Джаунта. Теперь при агрессивном (красном) грабе, юз телепорта и джаунта будут брать с собой в путешествие жертву.</li> 
        </ul> 
       </div> 
+      <div id="Raschert0">
+       <h4 class="author">Raschert0 обновил:</h4>
+       <ul class="changelog">
+        <li class="bugfix">Одноразовый автоиньектор можно было осушить и заново заправить шприцем.</li>
+        <li class="bugfix">При наполнении чего-либо в раковине не проверялось, открыта ли наполняемая ёмкость.</li>
+        <li class="bugfix">Капитанский пинпоинтер вместо гипоспрея искал автоиньектор.</li>
+       </ul>
+      </div>
      </div> 
     </div> 
     <div class="row" id="22.08.2017"> 
-     <div class="col-lg-12">
+     <div class="col-lg-12"> 
       <h3 class="date">22.08.2017</h3> 
       <div id="Tolerant"> 
        <h4 class="author">Tolerant обновил:</h4> 
