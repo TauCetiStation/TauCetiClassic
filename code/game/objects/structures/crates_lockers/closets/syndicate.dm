@@ -18,11 +18,6 @@
 	new /obj/item/clothing/gloves/combat(src)
 	new /obj/item/clothing/tie/storage/syndi_vest(src)
 	new /obj/item/clothing/mask/gas/syndicate(src)
-	new /obj/item/clothing/suit/armor/syndiassault(src)
-	if(prob(50))
-		new /obj/item/clothing/head/helmet/space/syndiassault(src)
-	else
-		new /obj/item/clothing/head/helmet/space/syndiassault/alternate(src)
 
 
 /obj/structure/closet/syndicate/nuclear

@@ -1349,7 +1349,7 @@
 	else
 		to_chat(usr, "<font color='purple'>Nothing of interest...</font>")
 
-/mob/living/carbon/try_inject(mob/living/user, error_msg, instant, stealth)
+/mob/living/carbon/try_inject(mob/living/user, error_msg, instant, stealth, pierce_armor)
 	if(istype(user))
 		if(user.is_busy())
 			return
@@ -1372,15 +1372,17 @@
 					to_chat(user, "<span class='warning'>[src] has no such body part, try to inject somewhere else.</span>")
 				return FALSE
 			if(THICKMATERIAL)
-				if(error_msg)
-					to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
-				return FALSE
-			if(PHORONGUARD)
-				if(user.a_intent == I_HURT)
+				if(!pierce_armor)
 					if(error_msg)
 						to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 					return FALSE
-				hunt_injection_port = TRUE
+			if(PHORONGUARD)
+				if(!pierce_armor)
+					if(user.a_intent == I_HURT)
+						if(error_msg)
+							to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+						return FALSE
+					hunt_injection_port = TRUE
 
 		if(isSynthetic(user.zone_sel.selecting))
 			if(error_msg)

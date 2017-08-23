@@ -206,7 +206,7 @@
 
 	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
-		winset(src, "rpane.changelog", "font-style=bold")
+		winset(src, "rpane.changelog", "font-style=bold;background-color=#B1E477")
 
 	if(!geoip)
 		geoip = new(src, address)

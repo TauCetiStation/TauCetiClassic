@@ -4,7 +4,6 @@
 	desc = "Younger brother of combat autoinjector."
 	icon_state = "stimpen"
 	volume = 10
-	amount_per_transfer_from_this = 10
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/combat/New()
 	..()
@@ -17,10 +16,9 @@
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine
 	name = "Bicaridine autoinjector"
-	desc = "For physical injures."
+	desc = "For physical injuries."
 	icon_state = "autobrut"
 	volume = 20
-	amount_per_transfer_from_this = 20
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/bicaridine/New()
 	..()
@@ -34,7 +32,6 @@
 	desc = "For burns."
 	icon_state = "autoburn"
 	volume = 15
-	amount_per_transfer_from_this = 15
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/dermaline/New()
 	..()
@@ -44,10 +41,9 @@
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/tramadol
 	name = "Tramadol autoinjector"
-	desc = "Piankiller."
+	desc = "Painkiller."
 	icon_state = "autopainkiller"
 	volume = 15
-	amount_per_transfer_from_this = 15
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/tramadol/New()
 	..()
@@ -61,7 +57,6 @@
 	desc = "Neutralizes many common toxins."
 	icon_state = "autoantitox"
 	volume = 20
-	amount_per_transfer_from_this = 20
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/antitox/New()
 	..()
@@ -75,7 +70,6 @@
 	desc = "It does not contain caffeine"
 	icon_state = "auto_minig_t2"
 	volume = 20
-	amount_per_transfer_from_this = 20
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_imp/New()
 	..()
@@ -91,7 +85,6 @@
 	desc = "Even more ore mined"
 	icon_state = "auto_minig_t3"
 	volume = 25
-	amount_per_transfer_from_this = 25
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack_adv/New()
 	..()

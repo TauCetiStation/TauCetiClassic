@@ -123,43 +123,22 @@ obj/machinery/gateway/centerstation/process()
 		return
 	if(awaygate.calibrated)
 		if(hacked && blocked)
-			var/allowed = FALSE
-
-			if(iscarbon(M))
-				var/mob/living/carbon/C = M
-				if(C.mind && C.mind.special_role == "Syndicate")
-					allowed = TRUE
-				else
-					to_chat(C, "<span class='danger'>Gateway Matter reacts strangely to your Touching</span>")
-			else if(istype(M, /mob/living/silicon/robot/syndicate))
-				allowed = TRUE
-			else if(istype(M, /obj/mecha))
-				var/obj/mecha/MECH = M
-				if(MECH.occupant && MECH.occupant.mind && MECH.occupant.mind.special_role == "Syndicate")
-					allowed = TRUE
-			else if(istype(M, /obj/machinery/nuclearbomb))
-				var/obj/machinery/nuclearbomb/N = M
-				if(!N.timing && !N.auth)
-					allowed = TRUE
-
-			if(!allowed)
-				return
+			if(ismob(M))
+				to_chat(M, "<span class='danger'>Gateway Matter reacts strangely to your Touching</span>")
+			return
 		M.dir = SOUTH
 		enter_to_transit(M, get_step(awaygate.loc, SOUTH))
-		return
 	else
 		var/obj/effect/landmark/dest = pick(awaydestinations)
 		if(dest)
 			M.dir = SOUTH
 			enter_to_transit(M, dest.loc)
 			use_power(5000)
-		return
 
 
 /obj/machinery/gateway/centerstation/attackby(obj/item/device/W, mob/user)
 	if(istype(W,/obj/item/device/multitool))
 		to_chat(user, "The gate is already calibrated, there is no work for you to do here.")
-		return
 
 /////////////////////////////////////Away////////////////////////
 
