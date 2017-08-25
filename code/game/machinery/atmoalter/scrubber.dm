@@ -1,4 +1,4 @@
-/obj/machinery/portable_atmospherics/scrubber
+/obj/machinery/portable_atmospherics/powered/scrubber
 	name = "Portable Air Scrubber"
 
 	icon = 'icons/obj/atmos.dmi'
@@ -10,12 +10,19 @@
 
 	volume = 750
 
+	power_rating = 7500 //7500 W ~ 10 HP
+	power_losses = 150
+
 	var/minrate = 0
 	var/maxrate = 10 * ONE_ATMOSPHERE
 
 	var/list/scrubbing_gas
 
-/obj/machinery/portable_atmospherics/powered/scrubber/Initialize()
+/obj/machinery/portable_atmospherics/powered/scrubber/New()
+	..()
+	cell = new/obj/item/weapon/stock_parts/cell/apc(src)
+
+/obj/machinery/portable_atmospherics/powered/scrubber/initialize()
 	. = ..()
 	if(!scrubbing_gas)
 		scrubbing_gas = list()
@@ -23,7 +30,7 @@
 			if(g != "oxygen" && g != "nitrogen")
 				scrubbing_gas += g
 
-/obj/machinery/portable_atmospherics/scrubber/emp_act(severity)
+/obj/machinery/portable_atmospherics/powered/scrubber/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
 		..(severity)
 		return
@@ -34,10 +41,10 @@
 
 	..(severity)
 
-/obj/machinery/portable_atmospherics/scrubber/update_icon()
+/obj/machinery/portable_atmospherics/powered/scrubber/update_icon()
 	src.overlays = 0
 
-	if(on)
+	if(on && cell && cell.charge)
 		icon_state = "pscrubber:1"
 	else
 		icon_state = "pscrubber:0"
@@ -50,12 +57,12 @@
 
 	return
 
-/obj/machinery/portable_atmospherics/scrubber/process()
+/obj/machinery/portable_atmospherics/powered/scrubber/process()
 	..()
 
-	//var/power_draw = -1
+	var/power_draw = -1
 
-	if(on)
+	if(on && cell && cell.charge)
 		var/datum/gas_mixture/environment
 		if(holding)
 			environment = holding.air_contents
@@ -64,63 +71,84 @@
 
 		var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles
 
-		scrub_gas(src, scrubbing_gas, environment, air_contents, transfer_moles, 7500)
+		power_draw = scrub_gas(src, scrubbing_gas, environment, air_contents, transfer_moles, power_rating)
+
+	if (power_draw < 0)
+		last_flow_rate = 0
+		last_power_draw = 0
+	else
+		power_draw = max(power_draw, power_losses)
+		cell.use(power_draw * CELLRATE)
+		last_power_draw = power_draw
+
+		update_connected_network()
+
+		//ran out of charge
+		if (!cell.charge)
+			power_change()
+			update_icon()
 
 	//src.update_icon()
 	src.updateDialog()
 
-/obj/machinery/portable_atmospherics/scrubber/attack_ai(mob/user)
+/obj/machinery/portable_atmospherics/powered/scrubber/attack_ai(mob/user)
 	src.add_hiddenprint(user)
 	return src.attack_hand(user)
 
-/obj/machinery/portable_atmospherics/scrubber/attack_paw(mob/user)
+/obj/machinery/portable_atmospherics/powered/scrubber/attack_ghost(var/mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/portable_atmospherics/scrubber/attack_hand(mob/user)
+/obj/machinery/portable_atmospherics/powered/scrubber/attack_paw(mob/user)
+	return src.attack_hand(user)
 
-	user.set_machine(src)
-	var/holding_text
-
-	if(holding)
-		holding_text = {"<BR><B>Tank Pressure</B>: [holding.air_contents.return_pressure()] KPa<BR>
-<A href='?src=\ref[src];remove_tank=1'>Remove Tank</A><BR>
-"}
-	var/output_text = {"<TT><B>[name]</B><BR>
-Pressure: [air_contents.return_pressure()] KPa<BR>
-Port Status: [(connected_port)?("Connected"):("Disconnected")]
-[holding_text]
-<BR>
-Power Switch: <A href='?src=\ref[src];power=1'>[on?("On"):("Off")]</A><BR>
-Power regulator: <A href='?src=\ref[src];volume_adj=-1000'>-</A> <A href='?src=\ref[src];volume_adj=-100'>-</A> <A href='?src=\ref[src];volume_adj=-10'>-</A> <A href='?src=\ref[src];volume_adj=-1'>-</A> [volume_rate] <A href='?src=\ref[src];volume_adj=1'>+</A> <A href='?src=\ref[src];volume_adj=10'>+</A> <A href='?src=\ref[src];volume_adj=100'>+</A> <A href='?src=\ref[src];volume_adj=1000'>+</A><BR>
-
-<HR>
-<A href='?src=\ref[user];mach_close=scrubber'>Close</A><BR>
-"}
-
-	user << browse(output_text, "window=scrubber;size=600x300")
-	onclose(user, "scrubber")
+/obj/machinery/portable_atmospherics/powered/scrubber/attack_hand(var/mob/user)
+	ui_interact(user)
 	return
 
-/obj/machinery/portable_atmospherics/scrubber/Topic(href, href_list)
+/obj/machinery/portable_atmospherics/powered/scrubber/ui_interact(mob/user, ui_key = "rcon", datum/nanoui/ui=null, force_open=1)
+	var/list/data[0]
+	data["portConnected"] = connected_port ? 1 : 0
+	data["tankPressure"] = round(air_contents.return_pressure() > 0 ? air_contents.return_pressure() : 0)
+	data["rate"] = round(volume_rate)
+	data["minrate"] = round(minrate)
+	data["maxrate"] = round(maxrate)
+	data["powerDraw"] = round(last_power_draw)
+	data["cellCharge"] = cell ? cell.charge : 0
+	data["cellMaxCharge"] = cell ? cell.maxcharge : 1
+	data["on"] = on ? 1 : 0
+
+	data["hasHoldingTank"] = holding ? 1 : 0
+	if (holding)
+		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.return_pressure() > 0 ? holding.air_contents.return_pressure() : 0))
+
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	if (!ui)
+		ui = new(user, src, ui_key, "portscrubber.tmpl", "Portable Scrubber", 480, 400)
+		ui.set_initial_data(data)
+		ui.open()
+		ui.set_auto_update(1)
+
+/obj/machinery/portable_atmospherics/powered/scrubber/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
 
 	if(href_list["power"])
 		on = !on
-	else if (href_list["remove_tank"])
+		. = 1
+	if (href_list["remove_tank"])
 		if(holding)
 			holding.forceMove(loc)
 			holding = null
-	else if (href_list["volume_adj"])
+		. = 1
+	if (href_list["volume_adj"])
 		var/diff = text2num(href_list["volume_adj"])
 		volume_rate = Clamp(volume_rate+diff, minrate, maxrate)
-
-	updateUsrDialog()
+		. = 1
 	update_icon()
 
 //Huge scrubber
-/obj/machinery/portable_atmospherics/scrubber/huge
+/obj/machinery/portable_atmospherics/powered/scrubber/huge
 	name = "Huge Air Scrubber"
 	icon_state = "scrubber:0"
 	anchored = 1
@@ -134,21 +162,22 @@ Power regulator: <A href='?src=\ref[src];volume_adj=-1000'>-</A> <A href='?src=\
 	var/global/gid = 1
 	var/id = 0
 
-/obj/machinery/portable_atmospherics/scrubber/huge/New()
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/New()
 	..()
+	cell = null
 
 	id = gid
 	gid++
 
 	name = "[name] (ID [id])"
 
-/obj/machinery/portable_atmospherics/scrubber/huge/attack_ghost(mob/user)
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/attack_ghost(mob/user)
 	return //Do not show anything
 
-/obj/machinery/portable_atmospherics/scrubber/huge/attack_hand(mob/user)
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/attack_hand(mob/user)
 	to_chat(usr, "\blue You can't directly interact with this machine. Use the area atmos computer.")
 
-/obj/machinery/portable_atmospherics/scrubber/huge/update_icon()
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/update_icon()
 	src.overlays = 0
 
 	if(on && !(stat & (NOPOWER|BROKEN)))
@@ -156,50 +185,63 @@ Power regulator: <A href='?src=\ref[src];volume_adj=-1000'>-</A> <A href='?src=\
 	else
 		icon_state = "scrubber:0"
 
-/obj/machinery/portable_atmospherics/scrubber/huge/power_change()
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/power_change()
 	var/old_stat = stat
 	..()
 	if (old_stat != stat)
 		update_icon()
 
-/obj/machinery/portable_atmospherics/scrubber/huge/process()
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/process()
 	if(!on || (stat & (NOPOWER|BROKEN)))
-	//	update_use_power(0)
-	//	last_flow_rate = 0
-	//	last_power_draw = 0
+		update_use_power(0)
+		last_flow_rate = 0
+		last_power_draw = 0
 		return 0
 
-	//var/power_draw = -1
+	var/power_draw = -1
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	var/transfer_moles = min(1, volume_rate/environment.volume)*environment.total_moles
 
-	scrub_gas(src, scrubbing_gas, environment, air_contents, transfer_moles, 100000)
+	power_draw = scrub_gas(src, scrubbing_gas, environment, air_contents, transfer_moles, active_power_usage)
 
-/obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/wrench))
+	if (power_draw < 0)
+		last_flow_rate = 0
+		last_power_draw = 0
+	else
+		use_power(power_draw)
+		update_connected_network()
+
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/attackby(var/obj/item/I as obj, var/mob/user as mob)
+	if(istype(I, /obj/item/weapon/wrench))
 		if(on)
-			to_chat(user, "\blue Turn it off first!")
+			to_chat(user, "<span class='warning'>Turn \the [src] off first!</span>")
 			return
 
 		anchored = !anchored
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		to_chat(user, "\blue You [anchored ? "wrench" : "unwrench"] \the [src].")
+		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 
 		return
 
+	//doesn't use power cells
+	if(istype(I, /obj/item/weapon/stock_parts/cell))
+		return
+	if (istype(I, /obj/item/weapon/screwdriver))
+		return
+
 	//doesn't hold tanks
-	if(istype(W, /obj/item/weapon/tank))
+	if(istype(I, /obj/item/weapon/tank))
 		return
 
 	..()
 
 
-/obj/machinery/portable_atmospherics/scrubber/huge/stationary
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary
 	name = "Stationary Air Scrubber"
 
-/obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		to_chat(user, "\blue The bolts are too tight for you to unscrew!")
 		return

@@ -370,6 +370,11 @@ update_flag
 				src.name = "Canister: [label]"
 	update_icon()
 
+/obj/machinery/portable_atmospherics/canister/CanUseTopic()
+	if(destroyed)
+		return STATUS_CLOSE
+	return ..()
+
 /obj/machinery/portable_atmospherics/canister/phoron/New()
 	..()
 
