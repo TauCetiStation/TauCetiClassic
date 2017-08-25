@@ -57,13 +57,17 @@ var/datum/controller/master/Master = new()
 
 /datum/controller/master/New()
 	// Highlander-style: there can only be one! Kill off the old and replace it with the new.
-	subsystems = list()
-	if(Master != src)
-		if(istype(Master))
+	var/list/_subsystems = list()
+	subsystems = _subsystems
+	if (Master != src)
+		if (istype(Master))
 			Recover()
 			qdel(Master)
 		else
-			init_subtypes(/datum/controller/subsystem, subsystems)
+			var/list/subsytem_types = subtypesof(/datum/controller/subsystem)
+			sortTim(subsytem_types, /proc/cmp_subsystem_init)
+			for(var/I in subsytem_types)
+				_subsystems += new I
 		Master = src
 
 /datum/controller/master/Destroy()
