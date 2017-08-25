@@ -304,16 +304,38 @@ REAGENT SCANNER
 
 	action_button_name = "Use Analyzer"
 
+	var/advanced_mode = 0
+
+/obj/item/device/analyzer/verb/verbosity(mob/user as mob)
+	set name = "Toggle Advanced Gas Analysis"
+	set category = "Object"
+	set src in usr
+
+	if (!user.incapacitated())
+		advanced_mode = !advanced_mode
+		to_chat(usr, "You toggle advanced gas analysis [advanced_mode ? "on" : "off"].")
+
 /obj/item/device/analyzer/attack_self(mob/user)
 
-	if (user.stat)
+	if (user.incapacitated())
 		return
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		to_chat(usr, "\red You don't have the dexterity to do this!")
 		return
 
-	analyze_gases(user.loc, user)
-	return
+	analyze_gases(user.loc, user,advanced_mode)
+	return 1
+
+/obj/item/device/analyzer/afterattack(obj/O, mob/user, proximity)
+	if(!proximity)
+		return
+	if (user.incapacitated())
+		return
+	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		to_chat(usr, "\red You don't have the dexterity to do this!")
+		return
+	if(istype(O) && O.simulated)
+		analyze_gases(O, user, advanced_mode)
 
 /obj/item/device/mass_spectrometer
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."

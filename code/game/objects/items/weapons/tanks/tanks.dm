@@ -82,9 +82,8 @@
 	if (istype(src.loc, /obj/item/assembly))
 		icon = src.loc
 
-	if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
-		var/obj/item/device/analyzer/A = W
-		A.analyze_gases(src, user)
+	if (istype(W, /obj/item/device/analyzer))
+		return
 	else if (istype(W,/obj/item/latexballon))
 		var/obj/item/latexballon/LB = W
 		LB.blow(src)
