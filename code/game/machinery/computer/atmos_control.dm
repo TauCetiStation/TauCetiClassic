@@ -60,6 +60,86 @@
 		return
 	return ..()
 
+// This is here for non nano support which this computer is actually uses for now.
+
+/obj/machinery/alarm/proc/return_status()
+	var/turf/location = get_turf(src)
+	var/datum/gas_mixture/environment = location.return_air()
+	var/total = environment.gas["oxygen"] + environment.gas["carbon_dioxide"] + environment.gas["phoron"] + environment.gas["nitrogen"]
+	var/output = "<b>Air Status:</b><br>"
+
+	if(total == 0)
+		output += "<font color='red'><b>Warning: Cannot obtain air sample for analysis.</b></font>"
+		return output
+
+	output += {"
+<style>
+.dl0 { color: green; }
+.dl1 { color: orange; }
+.dl2 { color: red; font-weght: bold;}
+</style>
+"}
+
+	var/partial_pressure = R_IDEAL_GAS_EQUATION*environment.temperature/environment.volume
+
+	var/list/current_settings = TLV["pressure"]
+	var/environment_pressure = environment.return_pressure()
+	var/pressure_dangerlevel = get_danger_level(environment_pressure, current_settings)
+
+	current_settings = TLV["oxygen"]
+	var/oxygen_dangerlevel = get_danger_level(environment.gas["oxygen"]*partial_pressure, current_settings)
+	var/oxygen_percent = environment.gas["oxygen"] ? round(environment.gas["oxygen"] / total * 100, 2) : 0
+
+	current_settings = TLV["carbon dioxide"]
+	var/co2_dangerlevel = get_danger_level(environment.gas["carbon_dioxide"]*partial_pressure, current_settings)
+	var/co2_percent = environment.gas["carbon_dioxide"] ? round(environment.gas["carbon_dioxide"] / total * 100, 2) : 0
+
+	current_settings = TLV["phoron"]
+	var/phoron_dangerlevel = get_danger_level(environment.gas["phoron"]*partial_pressure, current_settings)
+	var/phoron_percent = environment.gas["phoron"] ? round(environment.gas["phoron"] / total * 100, 2) : 0
+
+	current_settings = TLV["other"]
+	var/other_moles = 0
+	for(var/g in trace_gas)
+		other_moles += environment.gas[g] //this is only going to be used in a partial pressure calc, so we don't need to worry about group_multiplier here.
+	var/other_dangerlevel = get_danger_level(other_moles*partial_pressure, current_settings)
+
+	current_settings = TLV["temperature"]
+	var/temperature_dangerlevel = get_danger_level(environment.temperature, current_settings)
+
+	output += {"
+Pressure: <span class='dl[pressure_dangerlevel]'>[environment_pressure]</span>kPa<br>
+Oxygen: <span class='dl[oxygen_dangerlevel]'>[oxygen_percent]</span>%<br>
+Carbon dioxide: <span class='dl[co2_dangerlevel]'>[co2_percent]</span>%<br>
+Toxins: <span class='dl[phoron_dangerlevel]'>[phoron_percent]</span>%<br>
+"}
+	if (other_dangerlevel==2)
+		output += "Notice: <span class='dl2'>High Concentration of Unknown Particles Detected</span><br>"
+	else if (other_dangerlevel==1)
+		output += "Notice: <span class='dl1'>Low Concentration of Unknown Particles Detected</span><br>"
+
+	output += "Temperature: <span class='dl[temperature_dangerlevel]'>[environment.temperature]</span>K ([round(environment.temperature - T0C, 0.1)]C)<br>"
+
+	//'Local Status' should report the LOCAL status, damnit.
+	output += "Local Status: "
+	switch(max(pressure_dangerlevel,oxygen_dangerlevel,co2_dangerlevel,phoron_dangerlevel,other_dangerlevel,temperature_dangerlevel))
+		if(2)
+			output += "<span class='dl2'>DANGER: Internals Required</span><br>"
+		if(1)
+			output += "<span class='dl1'>Caution</span><br>"
+		if(0)
+			output += "<span class='dl0'>Optimal</span><br>"
+
+	output += "Area Status: "
+	if(alarm_area.atmosalm)
+		output += "<span class='dl1'>Atmos alert in area</span>"
+	else if (alarm_area.fire)
+		output += "<span class='dl1'>Fire alarm in area</span>"
+	else
+		output += "No alerts"
+
+	return output
+
 /obj/machinery/computer/atmoscontrol/proc/specific()
 	if(!current)
 		return ""

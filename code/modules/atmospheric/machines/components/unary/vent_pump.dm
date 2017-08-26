@@ -311,7 +311,7 @@
 			internal_pressure_bound = between(
 				0,
 				text2num(signal.data["set_internal_pressure"]),
-				ONE_ATMOSPHERE*50
+				MAX_PUMP_PRESSURE//ONE_ATMOSPHERE*50
 			)
 
 	if(signal.data["set_external_pressure"] != null)
