@@ -72,7 +72,6 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/Initialize(timeofday)
-	generateGasData()
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
