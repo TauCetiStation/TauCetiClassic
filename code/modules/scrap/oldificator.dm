@@ -58,7 +58,8 @@
 	air_contents.gas["carbon_dioxide"] *= new_vol
 	air_contents.gas["nitrogen"] *= new_vol
 	air_contents.gas["sleeping_agent"] *= new_vol
-	air_contents.gas["temperature"]  = 293
+	air_contents.temperature = 293
+	volume *= new_vol
 	air_contents.update_values()
 	..()
 

@@ -12,6 +12,10 @@
 	idle_power_usage = 2
 	active_power_usage = 5
 
+/obj/machinery/meter/New()
+	..()
+	initialize()
+
 /obj/machinery/meter/initialize()
 	. = ..()
 	if (!target)

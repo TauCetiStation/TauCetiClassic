@@ -172,12 +172,14 @@ Class Procs:
 
 /obj/machinery/proc/dropContents()
 	var/turf/T = get_turf(src)
-	T.contents += contents
-	if(occupant)
-		if(occupant.client)
-			occupant.client.eye = occupant
-			occupant.client.perspective = MOB_PERSPECTIVE
-		occupant = null
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(T)
+		if(isliving(AM))
+			var/mob/living/L = AM
+			if(L.client)
+				L.client.eye = L
+				L.client.perspective = MOB_PERSPECTIVE
+	occupant = null
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
 	state_open = 0
