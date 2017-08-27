@@ -21,11 +21,13 @@
 	var/weather_sound
 	var/weather_overlay
 	var/weather_color = null
+	var/weather_alpha = 255
 
 	var/end_message = "<span class='danger'>The wind relents its assault.</span>" //Displayed once the wather is over
 	var/end_duration = 300 //In deciseconds, how long the "wind-down" graphic will appear before vanishing entirely
 	var/end_sound
 	var/end_overlay
+
 
 	var/area_type = /area/space //Types of area to affect
 	var/list/impacted_areas = list() //Areas to be affected by the weather, calculated when the weather begins
@@ -127,6 +129,7 @@
 		N.layer = overlay_layer
 		N.icon = 'icons/effects/weather_effects.dmi'
 		N.color = weather_color
+		N.alpha = weather_alpha
 		switch(stage)
 			if(STARTUP_STAGE)
 				N.icon_state = telegraph_overlay
@@ -140,3 +143,4 @@
 				N.icon = 'icons/turf/areas.dmi'
 				N.layer = AREA_LAYER //Just default back to normal area stuff since I assume setting a var is faster than initial
 				N.set_opacity(FALSE)
+				N.alpha = initial(N.alpha)

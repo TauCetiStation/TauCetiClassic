@@ -1,5 +1,5 @@
 //Different types of weather.
-/*
+
 /datum/weather/floor_is_lava //The Floor is Lava: Makes all turfs damage anyone on them unless they're standing on a solid object.
 	name = "the floor is lava"
 	desc = "The ground turns into surprisingly cool lava, lightly damaging anything on the floor."
@@ -19,7 +19,7 @@
 	protected_areas = list(/area/space)
 	target_z = ZLEVEL_STATION
 
-	overlay_layer = 3.1 //Covers floors only
+	overlay_layer = 2.1 //Covers floors only
 	immunity_type = "lava"
 
 /datum/weather/floor_is_lava/impact(mob/living/L)
@@ -35,6 +35,7 @@
 
 
 
+
 /datum/weather/advanced_darkness //Advanced Darkness: Restricts the vision of all affected mobs to a single tile in the cardinal directions.
 	name = "advanced darkness"
 	desc = "Everything in the area is effectively blinded, unable to see more than a foot or so around itself."
@@ -45,7 +46,7 @@
 	weather_message = "<span class='userdanger'>This isn't your average everday darkness... this is <i>advanced</i> darkness!</span>"
 	weather_duration_lower = 300
 	weather_duration_upper = 300
-
+	overlay_layer = 10
 	end_message = "<span class='danger'>At last, the darkness recedes.</span>"
 	end_duration = 0
 
@@ -65,21 +66,22 @@
 			A.invisibility = INVISIBILITY_MAXIMUM
 			A.set_opacity(FALSE)
 
-*/
-/datum/weather/ash_storm //Ash Storms: Common happenings on lavaland. Heavily obscures vision and deals heavy fire damage to anyone caught outside.
-	name = "ash storm"
+
+/datum/weather/scrap_storm //Ash Storms: Common happenings on lavaland. Heavily obscures vision and deals heavy fire damage to anyone caught outside.
+	name = "scrap storm"
 	desc = "An intense atmospheric storm lifts ash off of the planet's surface and billows it down across the area, dealing intense fire damage to the unprotected."
 
-	telegraph_message = "<span class='boldwarning'>An eerie moan rises on the wind. Sheets of burning ash blacken the horizon. Seek shelter.</span>"
+	telegraph_message = "<span class='boldwarning'>An eerie moan rises on the wind. Sheets of sand blacken the horizon. Seek shelter.</span>"
 	telegraph_duration = 300
 	telegraph_sound = 'sound/ambience/ash_storm_windup.ogg'
 	telegraph_overlay = "light_ash"
 
-	weather_message = "<span class='userdanger'><i>Smoldering clouds of scorching ash billow down around you! Get inside!</i></span>"
+	weather_message = "<span class='userdanger'><i>Smoldering clouds of scorching trash billow down around you! Get inside!</i></span>"
 	weather_duration_lower = 600
 	weather_duration_upper = 1500
 	weather_sound = 'sound/ambience/ash_storm_start.ogg'
 	weather_overlay = "ash_storm"
+	weather_alpha = 200
 	overlay_layer = 10
 	end_message = "<span class='boldannounce'>The shrieking wind whips away the last of the ash and falls to its usual murmur. It should be safe to go outside now.</span>"
 	end_duration = 300
@@ -90,23 +92,37 @@
 	target_z = ZLEVEL_JUNKYARD
 
 	immunity_type = "ash"
-
+	var/list/tornados = list()
 	probability = 10
 
-/datum/weather/ash_storm/proc/is_ash_immune(mob/living/L)
+/datum/weather/scrap_storm/proc/is_scrap_immune(mob/living/L)
 	if(istype(L.loc, /obj/mecha)) //Mechs are immune
 		return TRUE
 	if(istype(L.loc, /mob/living) && L.loc != L) //Matryoshka check
-		return is_ash_immune(L.loc)
+		return is_scrap_immune(L.loc)
 	return FALSE //RIP you
 
-/datum/weather/ash_storm/impact(mob/living/L)
-	if(is_ash_immune(L))
+/datum/weather/scrap_storm/start()
+	..()
+	var/list/turfs = get_area_turfs(area_type)
+	for(var/i = 1 to 4)
+		var/turf/wheretospawn = pick(turfs)
+		if(!wheretospawn.density)
+			var/obj/singularity/scrap_ball/new_tornado = new /obj/singularity/scrap_ball(wheretospawn)
+			tornados += new_tornado
+
+/datum/weather/scrap_storm/end()
+	for(var/obj/singularity/scrap_ball/del_tornado in tornados)
+		qdel(del_tornado)
+	..()
+
+/datum/weather/scrap_storm/impact(mob/living/L)
+	if(is_scrap_immune(L))
 		return
-	L.take_overall_damage(0,4)
+	L.apply_effect(0.5,BRUTE,0)
+	L.apply_effect(1,AGONY,0)
 
-
-/datum/weather/ash_storm/emberfall //Emberfall: An ash storm passes by, resulting in harmless embers falling like snow. 10% to happen in place of an ash storm.
+/datum/weather/scrap_storm/emberfall //Emberfall: An ash storm passes by, resulting in harmless embers falling like snow. 10% to happen in place of an ash storm.
 	name = "emberfall"
 	desc = "A passing ash storm blankets the area in harmless embers."
 
@@ -114,7 +130,7 @@
 	weather_sound = 'sound/ambience/ash_storm_windup.ogg'
 	weather_overlay = "light_ash"
 
-	end_message = "<span class='notice'>The emberfall slows, stops. Another layer of hardened soot to the basalt beneath your feet.</span>"
+	end_message = "<span class='notice'>The emberfall slows, stops. Another layer of hardened soot to the ground beneath your feet.</span>"
 
 	aesthetic = TRUE
 
@@ -132,9 +148,10 @@
 	weather_duration_lower = 600
 	weather_duration_upper = 1500
 	weather_color = "green"
-	weather_overlay = "light_ash"
+	weather_overlay = "ash_storm"
+	weather_alpha = 40
 	weather_sound = 'sound/AI/radiation.ogg'
-
+	overlay_layer = 2.1
 	end_duration = 100
 	end_message = "<span class='notice'>The air seems to be cooling off again.</span>"
 

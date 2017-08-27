@@ -38,7 +38,6 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
-	var/lava = 0
 	var/broken = 0
 	var/burnt = 0
 	var/mineral = "metal"
@@ -144,9 +143,7 @@ var/list/wood_icons = list("wood","wood-broken")
 			ReplaceWithLattice()
 
 /turf/simulated/floor/update_icon()
-	if(lava)
-		return
-	else if(is_plasteel_floor())
+	if(is_plasteel_floor())
 		if(!broken && !burnt)
 			icon_state = icon_regular_floor
 	else if(is_plating())
