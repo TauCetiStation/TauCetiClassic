@@ -133,6 +133,10 @@
 /obj/machinery/navbeacon/attack_paw()
 	return
 
+/obj/machinery/floodlight/attack_ghost(mob/user)
+	if(user.client.machine_interactive_ghost && IsAdminGhost(user))
+		attack_ai(user)
+
 /obj/machinery/navbeacon/attack_hand(mob/user)
 	interact(user, 0)
 
@@ -186,7 +190,7 @@ Transponder Codes:<UL>"}
 
 /obj/machinery/navbeacon/Topic(href, href_list)
 	. = ..()
-	if(!. && open && !locked)
+	if(!. || ((!open || locked) && !issilicon(usr) && !isobserver(usr)))
 		return FALSE
 
 	if (href_list["freq"])

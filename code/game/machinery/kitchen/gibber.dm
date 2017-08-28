@@ -4,10 +4,10 @@
 	desc = "The name isn't descriptive enough?"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
-	density = 1
-	anchored = 1
-	var/operating = 0 //Is it on?
-	var/dirty = 0 // Does it need cleaning?
+	density = TRUE
+	anchored = TRUE
+	var/operating = FALSE //Is it on?
+	var/dirty = FALSE // Does it need cleaning?
 
 	var/gibtime = 80 // Time from starting until meat appears
 	var/gib_throw_dir // Direction to spit meat and gibs in.
@@ -16,6 +16,7 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 500
+	ghost_must_be_admin = TRUE
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
@@ -87,7 +88,7 @@
 	return
 
 /obj/machinery/gibber/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
+	if(..())
 		return
 	if(operating)
 		to_chat(user, "<span class='danger'>The gibber is locked and running, wait for it to finish.</span>")

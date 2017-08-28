@@ -122,7 +122,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 "<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
 
-	if(!locked || issilicon(user))
+	if(!locked || issilicon(user) || isobserver(user))
 		dat += text({"<BR>
 Check for Weapon Authorization: []<BR>
 Check Security Records: []<BR>

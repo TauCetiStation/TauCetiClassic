@@ -20,6 +20,22 @@
 	display_name = "Glasses, 3D"
 	path = /obj/item/clothing/glasses/threedglasses
 
-/datum/gear/eyes/glasses/aviator
-	display_name = "Aviator glasses"
-	path = /obj/item/clothing/glasses/aviator
+/datum/gear/eyes/glasses/aviator_orange
+	display_name = "Aviator orange glasses"
+	path = /obj/item/clothing/glasses/aviator_orange
+
+/datum/gear/eyes/glasses/aviator_black
+	display_name = "Aviator black glasses"
+	path = /obj/item/clothing/glasses/aviator_black
+
+/datum/gear/eyes/glasses/aviator_red
+	display_name = "Aviator red glasses"
+	path = /obj/item/clothing/glasses/aviator_red
+
+/datum/gear/eyes/glasses/aviator_mirror
+	display_name = "Aviator transparent glasses"
+	path = /obj/item/clothing/glasses/aviator_mirror
+
+/datum/gear/eyes/glasses/Jerusalem_Glasses
+	display_name = "Jerusalem Glasses"
+	path = /obj/item/clothing/glasses/jerusalem

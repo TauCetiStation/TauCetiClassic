@@ -6,6 +6,7 @@
 	light_color = "#b88b2e"
 	req_access = list(access_engine_equip)
 	circuit = "/obj/item/weapon/circuitboard/drone_control"
+	ghost_must_be_admin = TRUE //not needed, but better use this than show "Access denied"
 
 	//Used when pinging drones.
 	var/drone_call_area = "Engineering"

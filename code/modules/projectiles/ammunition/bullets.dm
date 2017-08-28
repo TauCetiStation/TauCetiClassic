@@ -199,4 +199,4 @@
 /obj/item/ammo_casing/a74
 	desc = "A 7.74mm bullet casing."
 	caliber = "7.74mm"
-	projectile_type = /obj/item/projectile/bullet/rifle2
+	projectile_type = /obj/item/projectile/bullet/rifle3

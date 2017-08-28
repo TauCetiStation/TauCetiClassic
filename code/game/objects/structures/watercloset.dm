@@ -262,6 +262,7 @@
 	density = 0
 	anchored = 1
 	use_power = 0
+	ghost_must_be_admin = TRUE
 	var/on = 0
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
@@ -290,7 +291,7 @@
 			for (var/atom/movable/G in src.loc)
 				G.clean_blood()
 		else
-			is_payed = 0 // Р•СЃР»Рё РёРіСЂРѕРє РІС‹РєР»СЋС‡РёР» СЂР°РЅСЊС€Рµ РІСЂРµРјРµРЅРё - РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕРµ Р°РЅРЅСѓР»РёСЂРѕРІР°РЅРёРµ РїР»Р°С‚С‹.
+			is_payed = 0 // Если игрок выключил раньше времени - принудительное аннулирование платы.
 	else
 		to_chat(M, "You didn't pay for that. Swipe a card against [src].")
 
@@ -584,7 +585,7 @@
 		to_chat(user, "\red Someone's already washing here.")
 		return
 
-	if (istype(O, /obj/item/weapon/reagent_containers))
+	if (istype(O, /obj/item/weapon/reagent_containers) && O.is_open_container())
 		var/obj/item/weapon/reagent_containers/RG = O
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		user.visible_message("\blue [user] fills \the [RG] using \the [src].","\blue You fill \the [RG] using \the [src].")

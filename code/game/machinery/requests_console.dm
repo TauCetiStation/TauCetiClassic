@@ -119,7 +119,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	return ..()
 
 /obj/machinery/requests_console/attack_hand(user)
-	if(..(user))
+	if(..())
 		return
 	var/dat
 	dat = text("<HEAD><TITLE>Requests Console</TITLE></HEAD><H3>[department] Requests Console</H3>")

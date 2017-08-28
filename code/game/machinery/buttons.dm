@@ -4,11 +4,12 @@
 	icon_state = "launcherbtt"
 	desc = "A remote control switch for a mass driver."
 	var/id = null
-	var/active = 0
-	anchored = 1.0
+	var/active = FALSE
+	anchored = TRUE
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
+	ghost_must_be_admin = TRUE
 
 /obj/machinery/ignition_switch
 	name = "ignition switch"
@@ -16,11 +17,12 @@
 	icon_state = "launcherbtt"
 	desc = "A remote control switch for a mounted igniter."
 	var/id = null
-	var/active = 0
-	anchored = 1.0
+	var/active = FALSE
+	anchored = TRUE
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
+	ghost_must_be_admin = TRUE
 
 /obj/machinery/flasher_button
 	name = "flasher button"
@@ -28,20 +30,22 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "launcherbtt"
 	var/id = null
-	var/active = 0
-	anchored = 1.0
+	var/active = FALSE
+	anchored = TRUE
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
+	ghost_must_be_admin = TRUE
 
 /obj/machinery/crema_switch
 	desc = "Burn baby burn!"
 	name = "crematorium igniter"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "crema_switch"
-	anchored = 1.0
+	anchored = TRUE
 	req_access = list(access_crematorium)
-	var/on = 0
+	ghost_must_be_admin = TRUE
+	var/on = FALSE
 	var/area/area = null
 	var/otherarea = null
 	var/id = 1

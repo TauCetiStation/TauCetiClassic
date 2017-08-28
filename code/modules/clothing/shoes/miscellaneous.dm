@@ -188,3 +188,10 @@
 	desc = "Sandals with buckled leather straps on it."
 	icon_state = "roman"
 	item_state = "roman"
+
+/obj/item/clothing/shoes/heels
+	name = "Heels"
+	icon_state = "high_shoes"
+
+/obj/item/clothing/shoes/heels/alternate
+	icon_state = "high_shoes2"

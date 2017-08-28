@@ -76,41 +76,56 @@
 
 /obj/proc/updateUsrDialog()
 	if(in_use)
-		var/is_in_use = 0
+		var/is_in_use = FALSE
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
 			if ((M.client && M.machine == src))
-				is_in_use = 1
-				src.attack_hand(M)
-		if (istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot) || IsAdminGhost(usr))
+				is_in_use = TRUE
+				if(ishuman(M)) //most users is humans, so check this first
+					attack_hand(M)
+					continue
+				if(isobserver(M)) //ghosts and synths must use their own attack_ procs
+					attack_ghost(M)
+					continue
+				if(isAI(M) || isrobot(M)) //VERY rare AI can be placed near to something
+					//with custom attack_ai
+					attack_ai(M)
+					continue
+				attack_hand(M)
+		if (isAI(usr) || isrobot(usr))
 			if (!(usr in nearby))
 				if (usr.client && usr.machine==src) // && M.machine == src is omitted because if we triggered this by using the dialog, it doesn't matter if our machine changed in between triggering it and this - the dialog is probably still supposed to refresh.
-					is_in_use = 1
-					src.attack_ai(usr)
+					is_in_use = TRUE
+					attack_ai(usr)
+
+		if (isobserver(usr))
+			if (!(usr in nearby))
+				if (usr.client && usr.machine==src)
+					is_in_use = TRUE
+					attack_ghost(usr)
 
 		// check for TK users
 
-		if (istype(usr, /mob/living/carbon/human))
+		if (ishuman(usr))
 			if(istype(usr.l_hand, /obj/item/tk_grab) || istype(usr.r_hand, /obj/item/tk_grab/))
 				if(!(usr in nearby))
 					if(usr.client && usr.machine==src)
 						is_in_use = 1
-						src.attack_hand(usr)
+						attack_hand(usr)
 		in_use = is_in_use
 
 /obj/proc/updateDialog()
 	// Check that people are actually using the machine. If not, don't update anymore.
 	if(in_use)
 		var/list/nearby = viewers(1, src)
-		var/is_in_use = 0
+		var/is_in_use = FALSE
 		for(var/mob/M in nearby)
 			if ((M.client && M.machine == src))
-				is_in_use = 1
+				is_in_use = TRUE
 				src.interact(M)
 		var/ai_in_use = AutoUpdateAI(src)
 
-		if(!ai_in_use && !is_in_use)
-			in_use = 0
+		in_use = is_in_use|ai_in_use
 
 /obj/proc/damage_flags()
 	. = 0

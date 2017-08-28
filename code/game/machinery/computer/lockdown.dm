@@ -63,15 +63,8 @@
 	attack_hand(user)
 
 /obj/machinery/computer/lockdown/attack_hand(mob/user)
-	add_fingerprint(user)
-	if(stat & (BROKEN|NOPOWER))
+	if(..())
 		return
-
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!istype(user, /mob/living/silicon))
-			user.machine = null
-			user << browse(null, "window=lockdown")
-			return
 
 	var/t = "<B>Lockdown Control</B><BR>"
 	t += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"

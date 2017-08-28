@@ -5,20 +5,21 @@
 	desc = "A super-powerful laser."
 	icon = 'icons/obj/engine.dmi'
 	icon_state = "laser"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	req_access = list(access_research)
 
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 300
+	ghost_must_be_admin = TRUE
 
-	var/active = 0
+	var/active = FALSE
 	var/fire_delay = 100
 	var/last_shot = 0
 	var/shot_number = 0
 	var/state = 0
-	var/locked = 0
+	var/locked = FALSE
 
 	var/energy = 0.0001
 	frequency = 1
@@ -50,7 +51,7 @@
 /obj/machinery/zero_point_emitter/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	if(state == 2)
-		if(!src.locked)
+		if(!src.locked || isobserver(user))
 			if(src.active==1)
 				src.active = 0
 				to_chat(user, "You turn off the [src].")

@@ -406,6 +406,11 @@
 	reagents = list("water" = 5, "rice" = 10)
 	result = /obj/item/weapon/reagent_containers/food/snacks/boiledrice
 
+/datum/recipe/microwave/sushi
+	reagents = list("rice" = 10)
+	items = list(/obj/item/weapon/reagent_containers/food/snacks/carpmeat)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sushi
+
 /datum/recipe/microwave/ricepudding
 	reagents = list("milk" = 5, "rice" = 10)
 	result = /obj/item/weapon/reagent_containers/food/snacks/ricepudding

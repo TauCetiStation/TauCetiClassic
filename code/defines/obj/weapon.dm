@@ -878,3 +878,37 @@
 	icon_state = "capacitor"
 	desc = "A debug item for research."
 	origin_tech = "materials=8;engineering=8;phorontech=8;powerstorage=8;bluespace=8;biotech=8;combat=8;magnets=8;programming=8;syndicate=8"
+
+/obj/item/weapon/broom
+	name = "Broom"
+	desc = "This broom is made with the branches and leaves of a tree which secretes aromatic oils."
+	icon_state = "broom_sauna"
+
+/obj/item/weapon/broom/attack(mob/living/carbon/human/M, mob/living/user, def_zone)
+	if(!istype(M) || user.a_intent == "hurt")
+		return ..()
+	if(wet - 5 < 0)
+		to_chat(user, "<span class='userdanger'>Soak this [src] first!</span>")
+		return
+	if(M == user)
+		to_chat(user, "<span class='userdanger'>You can't birching yourself!</span>")
+		return
+	if(!M.lying)
+		to_chat(user, "<span class='userdanger'>[M] Must be lie down first!</span>")
+		return
+
+	var/zone = check_zone(user.zone_sel.selecting)
+	var/obj/item/organ/external/BP = M.get_bodypart(zone)
+	for(var/obj/item/clothing/C in M.get_equipped_items())
+		if(C.body_parts_covered & BP.body_part)
+			to_chat(user, "<span class='userdanger'>Take off [M]'s clothes first!</span>")
+			return
+
+	zone = parse_zone(zone)
+	wet -= 5
+	user.visible_message("<span class='notice'>A [user] lightly Birching [M]'s [zone] with [src]!</span>",
+		"<span class='notice'>You lightly Birching [M]'s [zone] with [src]!</span>")
+
+
+
+

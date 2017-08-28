@@ -113,7 +113,7 @@
 	else
 		dat += "None Loaded"
 	dat += "<br>Behaviour controls are [src.locked ? "locked" : "unlocked"]<hr>"
-	if(!src.locked || issilicon(user))
+	if(!src.locked || issilicon(user) || isobserver(user))
 		dat += "<TT>Healing Threshold: "
 		dat += "<a href='?src=\ref[src];adj_threshold=-10'>--</a> "
 		dat += "<a href='?src=\ref[src];adj_threshold=-5'>-</a> "
@@ -149,8 +149,11 @@
 			turn_off()
 		else
 			turn_on()
+	
+	else if(src.locked && !issilicon(usr) && !isobserver(usr))
+		return
 
-	else if((href_list["adj_threshold"]) && (!src.locked || issilicon(usr)))
+	else if(href_list["adj_threshold"])
 		var/adjust_num = text2num(href_list["adj_threshold"])
 		src.heal_threshold += adjust_num
 		if(src.heal_threshold < 5)
@@ -158,7 +161,7 @@
 		if(src.heal_threshold > 75)
 			src.heal_threshold = 75
 
-	else if((href_list["adj_inject"]) && (!src.locked || issilicon(usr)))
+	else if(href_list["adj_inject"])
 		var/adjust_num = text2num(href_list["adj_inject"])
 		src.injection_amount += adjust_num
 		if(src.injection_amount < 5)
@@ -166,20 +169,17 @@
 		if(src.injection_amount > 15)
 			src.injection_amount = 15
 
-	else if((href_list["use_beaker"]) && (!src.locked || issilicon(usr)))
+	else if(href_list["use_beaker"])
 		src.use_beaker = !src.use_beaker
 
-	else if (href_list["eject"] && (!isnull(src.reagent_glass)))
-		if(!src.locked)
-			src.reagent_glass.loc = get_turf(src)
-			src.reagent_glass = null
-		else
-			to_chat(usr, "<span class='notice'>You cannot eject the beaker because the panel is locked.</span>")
+	else if (href_list["eject"] && reagent_glass)
+		src.reagent_glass.loc = get_turf(src)
+		src.reagent_glass = null
 
-	else if ((href_list["togglevoice"]) && (!src.locked || issilicon(usr)))
+	else if (href_list["togglevoice"])
 		src.shut_up = !src.shut_up
 
-	else if ((href_list["declaretreatment"]) && (!src.locked || issilicon(usr)))
+	else if (href_list["declaretreatment"])
 		src.declare_treatment = !src.declare_treatment
 
 	src.updateUsrDialog()

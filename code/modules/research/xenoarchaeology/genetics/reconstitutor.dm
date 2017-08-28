@@ -91,7 +91,7 @@ datum/genesequence
 	interact(user)
 
 /obj/machinery/computer/reconstitutor/interact(mob/user)
-	if(stat & (NOPOWER|BROKEN) || get_dist(src, user) > 1)
+	if(stat & (NOPOWER|BROKEN) || get_dist(src, user) > 1 && !issilicon(user) && !isobserver(user))
 		user.unset_machine(src)
 		return
 

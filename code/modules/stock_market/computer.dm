@@ -20,7 +20,6 @@
 /obj/machinery/computer/stockexchange/attack_hand(mob/user)
 	if(..())
 		return
-	user.set_machine(src)
 
 	var/css={"<style>
 .change {

@@ -37,7 +37,6 @@
 
 /obj/item/projectile/bullet/midbullet //.45 ACP
 	damage = 20
-	stoping_power = 5
 
 /obj/item/projectile/bullet/midbullet2 // 9x19
 	damage = 25
@@ -52,6 +51,10 @@
 
 /obj/item/projectile/bullet/rifle2
 	damage = 45
+	embed = 0
+
+/obj/item/projectile/bullet/rifle3
+	damage = 35
 	embed = 0
 
 /obj/item/projectile/bullet/heavy/a145

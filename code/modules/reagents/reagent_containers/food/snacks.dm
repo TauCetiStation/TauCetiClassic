@@ -1868,6 +1868,18 @@
 		reagents.add_reagent("nutriment", 2)
 		bitesize = 2
 
+/obj/item/weapon/reagent_containers/food/snacks/sushi
+	name = "Sushi"
+	desc = "This is the Japanese preparation and serving of specially prepared vinegared rice combined with varied ingredients such as chiefly seafood"
+	icon_state = "sushi"
+	filling_color = "#FFFBDB"
+
+	New()
+		..()
+		reagents.add_reagent("nutriment", 10)
+		bitesize = 2
+
+
 /obj/item/weapon/reagent_containers/food/snacks/ricepudding
 	name = "Rice Pudding"
 	desc = "Where's the Jam!"

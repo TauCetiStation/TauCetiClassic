@@ -100,12 +100,12 @@
 
 /obj/machinery/shield_gen/interact(mob/user)
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!istype(user, /mob/living/silicon))
+		if (!issilicon(user) && !isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=shield_generator")
 			return
 	var/t = "<B>Shield Generator Control Console</B><BR><br>"
-	if(locked)
+	if(locked && !isobserver(user))
 		t += "<i>Swipe your ID card to begin.</i>"
 	else
 		t += "[owned_capacitor ? "<font color=green>Charge capacitor connected.</font>" : "<font color=red>Unable to locate charge capacitor!</font>"]<br>"

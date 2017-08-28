@@ -222,7 +222,7 @@ BLIND     // can't see anything
 	body_parts_covered = FACE|EYES
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/masks.dmi')
 
-/obj/item/clothing/mask/proc/speechModification(message)
+/obj/item/clothing/proc/speechModification(message)
 	return message
 
 //Shoes

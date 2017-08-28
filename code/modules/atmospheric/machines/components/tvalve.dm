@@ -7,6 +7,7 @@
 
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
+	ghost_must_be_admin = TRUE
 
 	var/state = 0 // 0 = go straight, 1 = go to side
 

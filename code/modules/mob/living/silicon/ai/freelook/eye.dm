@@ -16,6 +16,10 @@
 /mob/camera/Eye/ai
 	var/mob/living/silicon/ai/ai = null
 
+/mob/camera/Eye/ai/Destroy()
+	ai = null
+	return ..()
+
 /mob/camera/Eye/New()
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage //so ghosts can see the AI eye when they disable darkness
@@ -30,6 +34,7 @@
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
+	master = null
 	return ..()
 
 // Movement code. Returns 0 to stop air movement from moving it.

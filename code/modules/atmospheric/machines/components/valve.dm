@@ -7,6 +7,7 @@
 
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
+	ghost_must_be_admin = TRUE
 
 	var/open = 0
 	var/openDuringInit = 0

@@ -29,6 +29,7 @@ field_generator power level display
 	anchored = FALSE
 	density = TRUE
 	use_power = 0
+	ghost_must_be_admin = TRUE
 
 	var/var_edit_start = FALSE
 	var/var_power      = FALSE
@@ -80,8 +81,10 @@ field_generator power level display
 	return
 
 /obj/machinery/field_generator/attack_hand(mob/user)
+	if(..())
+		return
 	if(state == FG_WELDED)
-		if(get_dist(src, user) <= 1)//Need to actually touch the thing to turn it on
+		if(get_dist(src, user) <= 1 || isobserver(user))//Need to actually touch the thing to turn it on
 			if(active != FG_OFFLINE)
 				to_chat(user, "<span class='red'>You are unable to turn off the [src] once it is online.</span>")
 				return
@@ -91,7 +94,6 @@ field_generator power level display
 					"<span class='notice'>You turn on the [src].</span>",
 					"<span class='notice'>You hear heavy droning.</span>")
 				turn_on()
-				add_fingerprint(user)
 				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
 	else
 		to_chat(user, "<span class='notice'>The [src] needs to be firmly secured to the floor first.</span>")

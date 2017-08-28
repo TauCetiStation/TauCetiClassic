@@ -165,6 +165,11 @@
 	user.set_machine(src)
 	interact(user, 1)
 
+/obj/machinery/bot/mulebot/attack_ghost(mob/user)
+	if(user.client.machine_interactive_ghost)
+		user.set_machine(src)
+		interact(user, 1)
+
 /obj/machinery/bot/mulebot/attack_hand(mob/user)
 	. = ..()
 	if(.)
