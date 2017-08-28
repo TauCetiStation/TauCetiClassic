@@ -86,6 +86,8 @@
 						user.visible_message("<span class='notice'>\The [user] places bandaid over [W.desc] on [M]'s [BP.name].</span>", \
 											"<span class='notice'>You place bandaid over [W.desc] on [M]'s [BP.name].</span>")
 					W.bandage()
+					if(crit_fail)
+						W.germ_level += pick(50, 80, 120)
 					used++
 				BP.update_damages()
 				if(used == amount)

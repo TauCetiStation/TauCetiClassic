@@ -166,7 +166,8 @@
 	if(!fuel || !on)
 		turn_off()
 		if(!fuel)
-			src.icon_state = "[initial(icon_state)]-empty"
+			icon_state = "[initial(icon_state)]-empty"
+			item_state = icon_state
 		STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/proc/turn_off()
@@ -194,6 +195,7 @@
 		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
 		src.force = on_damage
 		src.damtype = "fire"
+		item_state = icon_state
 		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/slime
