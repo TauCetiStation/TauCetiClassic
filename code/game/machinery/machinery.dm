@@ -109,6 +109,7 @@ Class Procs:
 	var/list/component_parts = null //list of all the parts used to build it, if made from certain kinds of frames.
 	var/uid
 	var/manual = 0
+	var/nanjector = 0
 	var/global/gl_uid = 1
 	var/panel_open = 0
 	var/state_open = 0

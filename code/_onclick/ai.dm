@@ -69,6 +69,9 @@
 		RestrainedClickOn(A)
 	else
 	*/
+	if (hcarp)
+		hcattack_ai(A)
+
 	A.attack_ai(src)
 
 /*
@@ -95,7 +98,11 @@
 /mob/living/silicon/ai/CtrlClickOn(atom/A)
 	A.AICtrlClick(src)
 /mob/living/silicon/ai/AltClickOn(atom/A)
-	A.AIAltClick(src)
+	if(active_module)
+		if(ismachinery(A))
+			module_handler(A)
+	else
+		A.AIAltClick(src)
 
 /*
 	The following criminally helpful code is just the previous code cleaned up;

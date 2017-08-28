@@ -42,6 +42,9 @@ var/list/ai_verbs_default = list(
 	//var/list/laws = list()
 	var/viewalerts = 0
 	var/lawcheck[1]
+	var/hcarp = 0
+	var/active_module = null
+	var/emag_recharge = 0
 	var/ioncheck[1]
 	var/lawchannel = "Common" // Default channel on which to state laws
 	var/icon/holo_icon//Default is assigned when AI is created.
@@ -73,6 +76,17 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	src.verbs |= ai_verbs_default
+
+/mob/living/silicon/ai/proc/hcattack_ai(var/atom/A)
+	if(isliving(A))
+		var/mob/living/L = A
+		if(get_dist(eyeobj, A) > 1)
+			return
+		eyeobj.visible_message("space carp nashes at [A]")
+		L.apply_damage(15, BRUTE, null, 1, null, sharp = 1, edge = 0)
+		for(var/mob/M in hearers(15, get_turf(eyeobj)))
+			M.playsound_local(get_turf(src.eyeobj), 'sound/weapons/bite.ogg', 100, falloff = 5)
+		playsound_local(get_turf(src), 'sound/weapons/bite.ogg', 30, falloff = 1)
 
 /mob/living/silicon/ai/proc/remove_ai_verbs()
 	src.verbs -= ai_verbs_default
