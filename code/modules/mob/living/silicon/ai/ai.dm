@@ -77,7 +77,7 @@ var/list/ai_verbs_default = list(
 /mob/living/silicon/ai/proc/add_ai_verbs()
 	src.verbs |= ai_verbs_default
 
-/mob/living/silicon/ai/proc/hcattack_ai(var/atom/A)
+/mob/living/silicon/ai/proc/hcattack_ai(atom/A)
 	if(isliving(A))
 		var/mob/living/L = A
 		if(get_dist(eyeobj, A) > 1)
@@ -889,6 +889,21 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/is_in_chassis()
 	return istype(loc, /turf)
+
+/mob/living/silicon/ai/proc/toggle_small_alt_click_module(new_mod_name)
+	var/datum/AI_Module/small/new_mod = current_modules[new_mod_name]
+	if(!new_mod)
+		to_chat(src, "ERROR: CAN'T FIND MODULE!")
+		return
+	if(new_mod.uses)
+		if(active_module != new_mod_name)
+			active_module = new_mod_name
+			to_chat(src, "[new_mod.module_name] module active. Alt+click to choose a machine to overload.")
+		else
+			active_module = null
+			to_chat(src, "[new_mod.module_name] module deactivated.")
+	else
+		to_chat(src, "[new_mod.module_name] module activation failed. Out of uses.")
 
 #undef AI_CHECK_WIRELESS
 #undef AI_CHECK_RADIO

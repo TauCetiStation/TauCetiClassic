@@ -106,13 +106,13 @@ var/const/HOLOPAD_MODE = 0
 				var/datum/game_mode/malfunction/malf = ticker.mode
 				if (malf.holhack == 1)
 					malfhack = 1
-			if(malfhack == 1)
-				create_holo(user)
-				src.visible_message("A holographic image of space carp flicks to life right before your eyes!")
+
+			create_holo(user)//Create one.
+
+			if(malfhack)
 				make_danger(user)
-			else
-				create_holo(user)//Create one.
-				src.visible_message("A holographic image of [user] flicks to life right before your eyes!")
+				
+			src.visible_message("A holographic image of [hologram.name] flicks to life right before your eyes!")
 		else
 			to_chat(user, "\red ERROR: \black Image feed in progress.")
 	else
@@ -144,20 +144,20 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.mouse_opacity = 0//So you can't click on it.
 	hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	hologram.anchored = 1//So space wind cannot drag it.
-	hologram.name = "[A.name] (Hologram)"//If someone decides to right click.
+	hologram.name = "[A.name]"//If someone decides to right click.
+	hologram.desc = "Hologram of [A.name]"
 	hologram.set_light(2)	//hologram lighting
 	set_light(2)			//pad lighting
 	icon_state = "holopad1"
 	A.holo = src
 	master = A//AI is the master.
 	use_power = 2//Active power usage.
-	return
 
-/obj/machinery/hologram/holopad/proc/make_danger(mob/living/silicon/ai/A, turf/T = loc)
+/obj/machinery/hologram/holopad/proc/make_danger(mob/living/silicon/ai/A)
 	hologram.icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo4"))
 	hologram.name = "space carp"
+	hologram.desc = "Hologram of cute space carp... Wait, WHAT?"
 	A.hcarp = 1
-	return
 
 /obj/machinery/hologram/holopad/proc/clear_holo()
 //	hologram.set_light(0)//Clear lighting.	//handled by the lighting controller when its ower is deleted
