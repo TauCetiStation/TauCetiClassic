@@ -119,6 +119,7 @@ Class Procs:
 			for(var/turf/U in connecting_turfs)
 				if(get_dist(AM, U) < world.view)
 					close_turfs += U
+				CHECK_TICK
 			if(!close_turfs.len)
 				continue
 
@@ -129,6 +130,7 @@ Class Procs:
 					AM.RepelAirflowDest(differential / 5)
 				else
 					AM.GotoAirflowDest(differential / 10)
+		CHECK_TICK
 
 
 

@@ -42,7 +42,7 @@
 #define SS_WAIT_NANOUI     10
 #define SS_WAIT_SHUTTLES   10
 #define SS_WAIT_VOTE       10
-#define SS_WAIT_AIR        20
+#define SS_WAIT_AIR        10
 #define SS_WAIT_DEFAULT    20
 #define SS_WAIT_SUN        600
 

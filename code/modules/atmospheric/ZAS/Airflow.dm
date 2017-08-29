@@ -102,6 +102,7 @@ Contains helper procs for airflow, handled in /connection_group.
 	return TRUE
 
 /atom/movable/proc/GotoAirflowDest(n)
+	set waitfor = FALSE
 	if(!airflow_dest)
 		return
 	if(airflow_speed < 0)
@@ -165,6 +166,7 @@ Contains helper procs for airflow, handled in /connection_group.
 
 
 /atom/movable/proc/RepelAirflowDest(n)
+	set waitfor = FALSE
 	if(!airflow_dest)
 		return
 	if(airflow_speed < 0)
