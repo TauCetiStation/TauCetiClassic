@@ -1,59 +1,66 @@
-/obj/machinery/clamp
+/obj/machinery/clamp // TODO test this properly, before implementing into the game.
 	name = "stasis clamp"
 	desc = "A magnetic clamp which can halt the flow of gas in a pipe, via a localised stasis field."
 	icon = 'icons/atmos/clamp.dmi'
 	icon_state = "pclamp0"
-	var/obj/machinery/atmospherics/pipe/simple/target = null
-	anchored = 1.0
-	var/open = 1
+	anchored = TRUE
 
+	var/obj/machinery/atmospherics/pipe/simple/target = null
+	var/open = TRUE
 	var/datum/pipe_network/network_node1
 	var/datum/pipe_network/network_node2
 
-/obj/machinery/clamp/New(loc, var/obj/machinery/atmospherics/pipe/simple/to_attach = null)
+/obj/machinery/clamp/New(loc, obj/machinery/atmospherics/pipe/simple/to_attach = null)
 	..()
+
 	if(istype(to_attach))
 		target = to_attach
 	else
 		target = locate(/obj/machinery/atmospherics/pipe/simple) in loc
+
 	if(target)
 		update_networks()
 		dir = target.dir
-	return 1
 
 /obj/machinery/clamp/proc/update_networks()
 	if(!target)
 		return
-	else
-		var/obj/machinery/atmospherics/pipe/node1 = target.node1
-		var/obj/machinery/atmospherics/pipe/node2 = target.node2
-		if(istype(node1))
-			var/datum/pipeline/P1 = node1.parent
-			network_node1 = P1.network
-		if(istype(node2))
-			var/datum/pipeline/P2 = node2.parent
-			network_node2 = P2.network
 
-/obj/machinery/clamp/attack_hand(var/mob/user)
+	var/obj/machinery/atmospherics/pipe/node1 = target.node1
+	var/obj/machinery/atmospherics/pipe/node2 = target.node2
+
+	if(istype(node1))
+		var/datum/pipeline/P1 = node1.parent
+		network_node1 = P1.network
+
+	if(istype(node2))
+		var/datum/pipeline/P2 = node2.parent
+		network_node2 = P2.network
+
+/obj/machinery/clamp/attack_hand(mob/user)
 	if(!target || !user)
 		return
+
 	if(!open)
 		open()
 	else
 		close()
+
 	to_chat(user, "<span class='notice'>You turn [open ? "off" : "on"] \the [src]</span>")
 
 /obj/machinery/clamp/Destroy()
 	if(!open)
-		spawn(-1) open()
+		open()
+
 	target = null
 	network_node1 = null
 	network_node2 = null
+
 	return ..()
 
 /obj/machinery/clamp/proc/open()
 	if(open)
-		return 0
+		return FALSE
 
 	target.build_network()
 
@@ -72,11 +79,11 @@
 	open = 1
 	icon_state = "pclamp0"
 	target.in_stasis = 0
-	return 1
+	return TRUE
 
 /obj/machinery/clamp/proc/close()
 	if(!open)
-		return 0
+		return FALSE
 
 	qdel(target.parent)
 
@@ -105,14 +112,11 @@
 //  P1.build_network()
 //  P2.build_network()
 
-
-
-
 	open = 0
 	icon_state = "pclamp1"
 	target.in_stasis = 1
 
-	return 1
+	return TRUE
 
 /obj/machinery/clamp/MouseDrop(obj/over_object as obj)
 	if(!usr)
@@ -122,10 +126,12 @@
 		to_chat(usr, "<span class='notice'>You begin to remove \the [src]...</span>")
 		if (do_after(usr, 30, src))
 			to_chat(usr, "<span class='notice'>You have removed \the [src].</span>")
-			var/obj/item/clamp/C = new/obj/item/clamp(src.loc)
-			C.forceMove(usr.loc)
+
+			var/obj/item/clamp/C = new
+
 			if(ishuman(usr))
 				usr.put_in_hands(C)
+
 			qdel(src)
 			return
 	else

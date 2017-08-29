@@ -18,7 +18,7 @@
 	var/power_setting = 100
 
 	var/set_temperature = T20C	//thermostat
-	var/heating = 0		//mainly for icon updates
+	var/heating = FALSE		//mainly for icon updates
 
 /obj/machinery/atmospherics/unary/heater/New()
 	..()
@@ -49,7 +49,7 @@
 	//copied from pipe construction code since heaters/freezers don't use fittings and weren't doing this check - this all really really needs to be refactored someday.
 	//check that there are no incompatible pipes/machinery in our own location
 	for(var/obj/machinery/atmospherics/M in src.loc)
-		if(M != src && (M.initialize_directions & node_connect) && M.check_connect_types(M,src))	// matches at least one direction on either type of pipe & same connection type
+		if(M != src && (M.initialize_directions & node_connect) && M.check_connect_types(M, src))	// matches at least one direction on either type of pipe & same connection type
 			node = null
 			break
 
@@ -64,14 +64,13 @@
 			icon_state = "heater"
 	else
 		icon_state = "heater_0"
-	return
 
 
 /obj/machinery/atmospherics/unary/heater/process()
 	..()
 
 	if(stat & (NOPOWER|BROKEN) || !use_power)
-		heating = 0
+		heating = FALSE
 		update_icon()
 		return
 
@@ -79,20 +78,20 @@
 		air_contents.add_thermal_energy(power_rating * HEATER_PERF_MULT)
 		use_power(power_rating)
 
-		heating = 1
-		network.update = 1
+		heating = TRUE
+		network.update = TRUE
 	else
-		heating = 0
+		heating = FALSE
 
 	update_icon()
 
-/obj/machinery/atmospherics/unary/heater/attack_ai(mob/user as mob)
+/obj/machinery/atmospherics/unary/heater/attack_ai(mob/user)
 	ui_interact(user)
 
-/obj/machinery/atmospherics/unary/heater/attack_hand(mob/user as mob)
+/obj/machinery/atmospherics/unary/heater/attack_hand(mob/user)
 	ui_interact(user)
 
-/obj/machinery/atmospherics/unary/heater/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+/obj/machinery/atmospherics/unary/heater/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["on"] = use_power ? 1 : 0
@@ -109,7 +108,7 @@
 	data["gasTemperatureClass"] = temp_class
 
 	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if(!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
@@ -156,11 +155,11 @@
 	air_contents.volume = max(initial(internal_volume) - 200, 0) + 200 * bin_rating
 	set_power_level(power_setting)
 
-/obj/machinery/atmospherics/unary/heater/proc/set_power_level(var/new_power_setting)
+/obj/machinery/atmospherics/unary/heater/proc/set_power_level(new_power_setting)
 	power_setting = new_power_setting
 	power_rating = max_power_rating * (power_setting/100)
 
-/obj/machinery/atmospherics/unary/heater/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/unary/heater/attackby(obj/item/O, mob/user)
 	if(default_deconstruction_screwdriver(user, O))
 		return
 	if(default_deconstruction_crowbar(user, O))

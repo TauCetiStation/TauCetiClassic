@@ -1,7 +1,7 @@
 /turf/simulated/var/zone/zone
 /turf/simulated/var/open_directions
 
-/turf/var/needs_air_update = 0
+/turf/var/needs_air_update = FALSE
 /turf/var/datum/gas_mixture/air
 
 /turf/simulated/proc/update_graphic(list/graphic_add = null, list/graphic_remove = null)
@@ -14,7 +14,7 @@
 	var/block = c_airblock(src)
 	if(block & AIR_BLOCKED)
 		//dbg(blocked)
-		return 1
+		return TRUE
 
 	#ifdef MULTIZAS
 	for(var/d = 1, d < 64, d *= 2)
@@ -52,7 +52,8 @@
 */
 
 /turf/simulated/proc/can_safely_remove_from_zone()
-	if(!zone) return 1
+	if(!zone)
+		return TRUE
 
 	var/check_dirs = get_zone_neighbours(src)
 	var/unconnected_dirs = check_dirs
@@ -98,7 +99,8 @@
 	var/s_block = c_airblock(src)
 	if(s_block & AIR_BLOCKED)
 		#ifdef ZASDBG
-		if(verbose) log_debug("Self-blocked.")
+		if(verbose)
+			log_debug("Self-blocked.")
 		//dbg(blocked)
 		#endif
 		if(zone)
@@ -110,7 +112,7 @@
 			else
 				z.rebuild()
 
-		return 1
+		return TRUE
 
 	var/previously_open = open_directions
 	open_directions = 0
@@ -131,7 +133,8 @@
 		if(block & AIR_BLOCKED)
 
 			#ifdef ZASDBG
-			if(verbose) log_debug("[d] is blocked.")
+			if(verbose)
+				log_debug("[d] is blocked.")
 			//unsim.dbg(air_blocked, turn(180,d))
 			#endif
 
@@ -141,7 +144,8 @@
 		if(r_block & AIR_BLOCKED)
 
 			#ifdef ZASDBG
-			if(verbose) log_debug("[d] is blocked.")
+			if(verbose)
+				log_debug("[d] is blocked.")
 			//dbg(air_blocked, d)
 			#endif
 
@@ -172,13 +176,15 @@
 					//    we are blocking them and not blocking ourselves - this prevents tiny zones from forming on doorways.
 					if(((block & ZONE_BLOCKED) && !(r_block & ZONE_BLOCKED)) || ((r_block & ZONE_BLOCKED) && !(s_block & ZONE_BLOCKED)))
 						#ifdef ZASDBG
-						if(verbose) log_debug("[d] is zone blocked.")
+						if(verbose)
+							log_debug("[d] is zone blocked.")
 
 						//dbg(zone_blocked, d)
 						#endif
 
 						//Postpone this tile rather than exit, since a connection can still be made.
-						if(!postponed) postponed = list()
+						if(!postponed)
+							postponed = list()
 						postponed.Add(sim)
 
 					else
@@ -187,28 +193,33 @@
 
 						#ifdef ZASDBG
 						dbg(assigned)
-						if(verbose) log_debug("Added to [zone]")
+						if(verbose)
+							log_debug("Added to [zone]")
 						#endif
 
 				else if(sim.zone != zone)
 
 					#ifdef ZASDBG
-					if(verbose) log_debug("Connecting to [sim.zone]")
+					if(verbose)
+						log_debug("Connecting to [sim.zone]")
 					#endif
 
 					SSair.connect(src, sim)
 
 
 			#ifdef ZASDBG
-				else if(verbose) log_debug("[d] has same zone.")
+				else if(verbose)
+					log_debug("[d] has same zone.")
 
-			else if(verbose) log_debug("[d] has invalid zone.")
+			else if(verbose)
+				log_debug("[d] has invalid zone.")
 			#endif
 
 		else
 
 			//Postponing connections to tiles until a zone is assured.
-			if(!postponed) postponed = list()
+			if(!postponed)
+				postponed = list()
 			postponed.Add(unsim)
 
 	if(!SSair.has_valid_zone(src)) //Still no zone, make a new one.
@@ -227,13 +238,14 @@
 		SSair.connect(src, T)
 
 /turf/proc/post_update_air_properties()
-	if(connections) connections.update_all()
+	if(connections)
+		connections.update_all()
 
 /turf/assume_air(datum/gas_mixture/giver) //use this for machines to adjust air
-	return 0
+	return FALSE
 
 /turf/proc/assume_gas(gasid, moles, temp = 0)
-	return 0
+	return FALSE
 
 /turf/return_air()
 	//Create gas mixture to hold data for passing
@@ -248,11 +260,11 @@
 	var/datum/gas_mixture/GM = new
 
 	var/sum = oxygen + carbon_dioxide + nitrogen + phoron
-	if(sum>0)
-		GM.gas["oxygen"] = (oxygen/sum)*amount
-		GM.gas["carbon_dioxide"] = (carbon_dioxide/sum)*amount
-		GM.gas["nitrogen"] = (nitrogen/sum)*amount
-		GM.gas["phoron"] = (phoron/sum)*amount
+	if(sum > 0)
+		GM.gas["oxygen"] = (oxygen / sum) * amount
+		GM.gas["carbon_dioxide"] = (carbon_dioxide / sum) * amount
+		GM.gas["nitrogen"] = (nitrogen / sum) * amount
+		GM.gas["phoron"] = (phoron / sum) * amount
 
 	GM.temperature = temperature
 	GM.update_values()
@@ -271,7 +283,7 @@
 	else
 		my_air.adjust_gas_temp(gasid, moles, temp)
 
-	return 1
+	return TRUE
 
 /turf/simulated/remove_air(amount as num)
 	var/datum/gas_mixture/my_air = return_air()
@@ -300,6 +312,7 @@
 	air.volume = CELL_VOLUME
 
 /turf/simulated/proc/c_copy_air()
-	if(!air) air = new/datum/gas_mixture
+	if(!air)
+		air = new/datum/gas_mixture
 	air.copy_from(zone.air)
 	air.group_multiplier = 1

@@ -3,32 +3,33 @@
 
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "psiphon:0"
-	density = 1
-
-	var/on = 0
-	var/direction_out = 0 //0 = siphoning, 1 = releasing
-	var/target_pressure = ONE_ATMOSPHERE
-
-	var/pressuremin = 0
-	var/pressuremax = 10 * ONE_ATMOSPHERE
+	density = TRUE
 
 	volume = 1000
 
 	power_rating = 7500 //7500 W ~ 10 HP
 	power_losses = 150
 
+	var/on = FALSE
+	var/direction_out = 0 //0 = siphoning, 1 = releasing
+	var/target_pressure = ONE_ATMOSPHERE
+
+	var/pressuremin = 0
+	var/pressuremax = 10 * ONE_ATMOSPHERE
+
 /obj/machinery/portable_atmospherics/powered/pump/filled
 	start_pressure = 90 * ONE_ATMOSPHERE
 
 /obj/machinery/portable_atmospherics/powered/pump/New()
 	..()
+
 	cell = new/obj/item/weapon/stock_parts/cell/apc(src)
 
 	var/list/air_mix = StandardAirMix()
-	src.air_contents.adjust_multi("oxygen", air_mix["oxygen"], "nitrogen", air_mix["nitrogen"])
+	air_contents.adjust_multi("oxygen", air_mix["oxygen"], "nitrogen", air_mix["nitrogen"])
 
 /obj/machinery/portable_atmospherics/powered/pump/update_icon()
-	src.overlays = 0
+	overlays.Cut()
 
 	if(on && cell && cell.charge)
 		icon_state = "psiphon:1"
@@ -40,8 +41,6 @@
 
 	if(connected_port)
 		overlays += "siphon-connector"
-
-	return
 
 /obj/machinery/portable_atmospherics/powered/pump/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))
@@ -105,21 +104,21 @@
 			power_change()
 			update_icon()
 
-	src.updateDialog()
+	updateDialog()
 
 /obj/machinery/portable_atmospherics/powered/pump/attack_ai(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/portable_atmospherics/powered/pump/attack_ghost(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/portable_atmospherics/powered/pump/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/portable_atmospherics/powered/pump/attack_hand(mob/user)
 	ui_interact(user)
 
-/obj/machinery/portable_atmospherics/powered/pump/ui_interact(mob/user, ui_key = "rcon", datum/nanoui/ui=null, force_open=1)
+/obj/machinery/portable_atmospherics/powered/pump/ui_interact(mob/user, ui_key = "rcon", datum/nanoui/ui)
 	var/list/data[0]
 	data["portConnected"] = connected_port ? 1 : 0
 	data["tankPressure"] = round(air_contents.return_pressure() > 0 ? air_contents.return_pressure() : 0)
@@ -136,7 +135,7 @@
 	if (holding)
 		data["holdingTank"] = list("name" = holding.name, "tankPressure" = round(holding.air_contents.return_pressure() > 0 ? holding.air_contents.return_pressure() : 0))
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		ui = new(user, src, ui_key, "portpump.tmpl", "Portable Pump", 480, 410)
 		ui.set_initial_data(data)
@@ -150,19 +149,19 @@
 
 	if(href_list["power"])
 		on = !on
-		. = 1
+		update_icon() // temp vars ~_~
+
 	if(href_list["direction"])
 		direction_out = !direction_out
-		. = 1
+		update_icon()
+
 	if (href_list["remove_tank"])
 		if(holding)
 			holding.forceMove(loc)
 			holding = null
-		. = 1
+		update_icon()
+
 	if (href_list["pressure_adj"])
 		var/diff = text2num(href_list["pressure_adj"])
-		target_pressure = min(10*ONE_ATMOSPHERE, max(0, target_pressure+diff))
-		. = 1
-
-	if(.)
+		target_pressure = min(10 * ONE_ATMOSPHERE, max(0, target_pressure+diff))
 		update_icon()

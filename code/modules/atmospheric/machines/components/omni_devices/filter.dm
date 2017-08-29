@@ -52,15 +52,15 @@
 
 /obj/machinery/atmospherics/omni/filter/error_check()
 	if(!input || !output || !filters)
-		return 1
+		return TRUE
 	if(filters.len < 1) //requires at least 1 filter ~otherwise why are you using a filter?
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /obj/machinery/atmospherics/omni/filter/process()
 	if(!..())
-		return 0
+		return FALSE
 
 	var/datum/gas_mixture/output_air = output.air	//BYOND doesn't like referencing "output.air.return_pressure()" so we need to make a direct reference
 	var/datum/gas_mixture/input_air = input.air		// it's completely happy with them if they're in a loop though i.e. "P.air.return_pressure()"... *shrug*
@@ -83,23 +83,23 @@
 		use_power(power_draw)
 
 		if(input.network)
-			input.network.update = 1
+			input.network.update = TRUE
 		if(output.network)
-			output.network.update = 1
+			output.network.update = TRUE
 		for(var/datum/omni_port/P in filters)
 			if(P.network)
-				P.network.update = 1
+				P.network.update = TRUE
 
-	return 1
+	return TRUE
 
-/obj/machinery/atmospherics/omni/filter/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+/obj/machinery/atmospherics/omni/filter/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
 	usr.set_machine(src)
 
 	var/list/data = new()
 
 	data = build_uidata()
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 
 	if (!ui)
 		ui = new(user, src, ui_key, "omni_filter.tmpl", "Omni Filter Control", 330, 330)
@@ -141,12 +141,12 @@
 	if(portData.len)
 		data["ports"] = portData
 	if(output)
-		data["set_flow_rate"] = round(set_flow_rate*10)		//because nanoui can't handle rounded decimals.
-		data["last_flow_rate"] = round(last_flow_rate*10)
+		data["set_flow_rate"] = round(set_flow_rate * 10)		//because nanoui can't handle rounded decimals.
+		data["last_flow_rate"] = round(last_flow_rate * 10)
 
 	return data
 
-/obj/machinery/atmospherics/omni/filter/proc/mode_send_switch(var/mode = ATM_NONE)
+/obj/machinery/atmospherics/omni/filter/proc/mode_send_switch(mode = ATM_NONE)
 	switch(mode)
 		if(ATM_O2)
 			return "Oxygen"
@@ -162,7 +162,9 @@
 			return null
 
 /obj/machinery/atmospherics/omni/filter/Topic(href, href_list)
-	if(!..()) return FALSE
+	if(!..())
+		return FALSE
+
 	switch(href_list["command"])
 		if("power")
 			if(!configuring)
@@ -178,7 +180,7 @@
 	if(configuring && !use_power)
 		switch(href_list["command"])
 			if("set_flow_rate")
-				var/new_flow_rate = input(usr,"Enter new flow rate limit (0-[max_flow_rate]L/s)","Flow Rate Control",set_flow_rate) as num
+				var/new_flow_rate = input(usr,"Enter new flow rate limit (0-[max_flow_rate]L/s)", "Flow Rate Control", set_flow_rate) as num
 				set_flow_rate = between(0, new_flow_rate, max_flow_rate)
 			if("switch_mode")
 				switch_mode(dir_flag(href_list["dir"]), mode_return_switch(href_list["mode"]))
@@ -190,7 +192,7 @@
 	nanomanager.update_uis(src)
 	return
 
-/obj/machinery/atmospherics/omni/filter/proc/mode_return_switch(var/mode)
+/obj/machinery/atmospherics/omni/filter/proc/mode_return_switch(mode)
 	switch(mode)
 		if("Oxygen")
 			return ATM_O2
@@ -211,7 +213,7 @@
 		else
 			return null
 
-/obj/machinery/atmospherics/omni/filter/proc/switch_filter(var/dir, var/mode)
+/obj/machinery/atmospherics/omni/filter/proc/switch_filter(dir, mode)
 	//check they aren't trying to disable the input or output ~this can only happen if they hack the cached tmpl file
 	for(var/datum/omni_port/P in ports)
 		if(P.dir == dir)
@@ -220,9 +222,10 @@
 
 	switch_mode(dir, mode)
 
-/obj/machinery/atmospherics/omni/filter/proc/switch_mode(var/port, var/mode)
+/obj/machinery/atmospherics/omni/filter/proc/switch_mode(port, mode)
 	if(mode == null || !port)
 		return
+
 	var/datum/omni_port/target_port = null
 	var/list/other_ports = new()
 
@@ -260,7 +263,7 @@
 		if(gasid)
 			filtering_outputs[gasid] = P.air
 
-/obj/machinery/atmospherics/omni/filter/proc/handle_port_change(var/datum/omni_port/P)
+/obj/machinery/atmospherics/omni/filter/proc/handle_port_change(datum/omni_port/P)
 	switch(P.mode)
 		if(ATM_NONE)
 			initialize_directions &= ~P.dir
@@ -268,4 +271,4 @@
 		else
 			initialize_directions |= P.dir
 			P.connect()
-	P.update = 1
+	P.update = TRUE

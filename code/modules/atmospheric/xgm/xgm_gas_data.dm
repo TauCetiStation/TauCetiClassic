@@ -16,7 +16,7 @@
 	//Flags.
 	var/list/flags = list()
 
-/decl/xgm_gas
+/datum/xgm_gas
 	var/id = ""
 	var/name = "Unnamed Gas"
 	var/specific_heat = 20	// J/(mol*K)
@@ -29,8 +29,9 @@
 
 /datum/subsystem/objects/proc/generateGasData()
 	gas_data = new
-	for(var/p in (typesof(/decl/xgm_gas) - /decl/xgm_gas))
-		var/decl/xgm_gas/gas = new p //avoid initial() because of potential New() actions
+
+	for(var/p in subtypesof(/datum/xgm_gas))
+		var/datum/xgm_gas/gas = new p //avoid initial() because of potential New() actions
 
 		if(gas.id in gas_data.gases)
 			error("Duplicate gas id `[gas.id]` in `[p]`")
@@ -39,8 +40,10 @@
 		gas_data.name[gas.id] = gas.name
 		gas_data.specific_heat[gas.id] = gas.specific_heat
 		gas_data.molar_mass[gas.id] = gas.molar_mass
-		if(gas.tile_overlay) gas_data.tile_overlay[gas.id] = image('icons/effects/tile_effects.dmi', gas.tile_overlay, FLY_LAYER)
-		if(gas.overlay_limit) gas_data.overlay_limit[gas.id] = gas.overlay_limit
+		if(gas.tile_overlay)
+			gas_data.tile_overlay[gas.id] = image('icons/effects/tile_effects.dmi', gas.tile_overlay, FLY_LAYER)
+		if(gas.overlay_limit)
+			gas_data.overlay_limit[gas.id] = gas.overlay_limit
 		gas_data.flags[gas.id] = gas.flags
 
-	return 1
+	return TRUE

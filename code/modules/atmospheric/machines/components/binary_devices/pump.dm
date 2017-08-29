@@ -58,7 +58,7 @@ Thus, the two variables affect pump operation are set in New():
 		add_underlay(T, node1, turn(dir, -180))
 		add_underlay(T, node2, dir)
 
-/obj/machinery/atmospherics/binary/pump/hide(var/i)
+/obj/machinery/atmospherics/binary/pump/hide(i)
 	update_underlays()
 
 /obj/machinery/atmospherics/binary/pump/process()
@@ -73,7 +73,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	if(pressure_delta > 0.01 && air1.temperature > 0)
 		//Figure out how much gas to transfer to meet the target pressure.
-		var/transfer_moles = calculate_transfer_moles(air1, air2, pressure_delta, (network2)? network2.volume : 0)
+		var/transfer_moles = calculate_transfer_moles(air1, air2, pressure_delta, (network2) ? network2.volume : 0)
 		power_draw = pump_gas(src, air1, air2, transfer_moles, power_rating)
 
 	if (power_draw >= 0)
@@ -86,7 +86,7 @@ Thus, the two variables affect pump operation are set in New():
 		if(network2)
 			network2.update = 1
 
-	return 1
+	return TRUE
 
 //Radio remote control
 
@@ -98,7 +98,7 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/binary/pump/proc/broadcast_status()
 	if(!radio_connection)
-		return 0
+		return FALSE
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -114,9 +114,9 @@ Thus, the two variables affect pump operation are set in New():
 
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
-	return 1
+	return TRUE
 
-/obj/machinery/atmospherics/binary/pump/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+/obj/machinery/atmospherics/binary/pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
 	if(stat & (BROKEN|NOPOWER))
 		return
 
@@ -125,15 +125,15 @@ Thus, the two variables affect pump operation are set in New():
 
 	data = list(
 		"on" = use_power,
-		"pressure_set" = round(target_pressure*100),	//Nano UI can't handle rounded non-integers, apparently.
+		"pressure_set" = round(target_pressure * 100),	//Nano UI can't handle rounded non-integers, apparently.
 		"max_pressure" = max_pressure_setting,
-		"last_flow_rate" = round(last_flow_rate*10),
+		"last_flow_rate" = round(last_flow_rate * 10),
 		"last_power_draw" = round(last_power_draw),
 		"max_power_draw" = power_rating,
 	)
 
 	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
 		// the ui does not exist, so we'll create a new() one
 		// for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
@@ -148,8 +148,8 @@ Thus, the two variables affect pump operation are set in New():
 		set_frequency(frequency)
 
 /obj/machinery/atmospherics/binary/pump/receive_signal(datum/signal/signal)
-	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return 0
+	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"] != "command"))
+		return FALSE
 
 	if(signal.data["power"])
 		if(text2num(signal.data["power"]))
@@ -164,32 +164,29 @@ Thus, the two variables affect pump operation are set in New():
 		target_pressure = between(
 			0,
 			text2num(signal.data["set_output_pressure"]),
-			ONE_ATMOSPHERE*50
+			ONE_ATMOSPHERE * 50
 		)
 
 	if(signal.data["status"])
-		spawn(2)
-			broadcast_status()
+		broadcast_status()
 		return //do not update_icon
 
-	spawn(2)
-		broadcast_status()
+	broadcast_status()
 	update_icon()
-	return
 
-/obj/machinery/atmospherics/binary/pump/attack_hand(user as mob)
+/obj/machinery/atmospherics/binary/pump/attack_hand(user)
 	if(..())
 		return
-	src.add_fingerprint(usr)
-	if(!src.allowed(user))
+	add_fingerprint(usr)
+	if(!allowed(user))
 		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	usr.set_machine(src)
 	ui_interact(user)
-	return
 
-/obj/machinery/atmospherics/binary/pump/Topic(href,href_list)
-	if(!..()) return FALSE
+/obj/machinery/atmospherics/binary/pump/Topic(href, href_list)
+	if(!..())
+		return FALSE
 
 	if(href_list["power"])
 		use_power = !use_power
@@ -200,32 +197,35 @@ Thus, the two variables affect pump operation are set in New():
 		if ("max")
 			target_pressure = max_pressure_setting
 		if ("set")
-			var/new_pressure = input(usr,"Enter new output pressure (0-[max_pressure_setting]kPa)","Pressure control",src.target_pressure) as num
-			src.target_pressure = between(0, new_pressure, max_pressure_setting)
+			var/new_pressure = input(usr,"Enter new output pressure (0-[max_pressure_setting]kPa)", "Pressure control", target_pressure) as num
+			target_pressure = between(0, new_pressure, max_pressure_setting)
 
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
+	update_icon()
 
-	src.update_icon()
-
-/obj/machinery/atmospherics/binary/pump/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/binary/pump/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && use_power)
 		to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first.</span>")
-		return 1
+		return TRUE
+
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
+
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
 		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
-		return 1
+		return TRUE
+
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
+
 	if (do_after(user, 40, src))
 		user.visible_message( \
 			"<span class='notice'>\The [user] unfastens \the [src].</span>", \
 			"<span class='notice'>You have unfastened \the [src].</span>", \
 			"You hear ratchet.")
-		new /obj/item/pipe(loc, make_from=src)
+		new /obj/item/pipe(loc, make_from = src)
 		qdel(src)

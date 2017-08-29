@@ -87,7 +87,7 @@
 
 		add_underlay(T, node3, dir)
 
-/obj/machinery/atmospherics/trinary/filter/hide(var/i)
+/obj/machinery/atmospherics/trinary/filter/hide(i)
 	update_underlays()
 
 /obj/machinery/atmospherics/trinary/filter/process()
@@ -100,42 +100,46 @@
 		return
 
 	//Figure out the amount of moles to transfer
-	var/transfer_moles = (set_flow_rate/air1.volume)*air1.total_moles
+	var/transfer_moles = (set_flow_rate / air1.volume) * air1.total_moles
 
 	var/power_draw = -1
 	if (transfer_moles > MINIMUM_MOLES_TO_FILTER)
 		power_draw = filter_gas(src, filtered_out, air1, air2, air3, transfer_moles, power_rating)
 
 		if(network2)
-			network2.update = 1
+			network2.update = TRUE
 
 		if(network3)
-			network3.update = 1
+			network3.update = TRUE
 
 		if(network1)
-			network1.update = 1
+			network1.update = TRUE
 
 	if (power_draw >= 0)
 		last_power_draw = power_draw
 		use_power(power_draw)
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/trinary/filter/initialize()
 	set_frequency(frequency)
 	. = ..()
 
-/obj/machinery/atmospherics/trinary/filter/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/trinary/filter/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
+
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
+
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
 		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
-		return 1
+		return TRUE
+
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
+
 	if (do_after(user, 40, src))
 		user.visible_message( \
 			"<span class='notice'>\The [user] unfastens \the [src].</span>", \
@@ -145,7 +149,7 @@
 		qdel(src)
 
 
-/obj/machinery/atmospherics/trinary/filter/attack_hand(user as mob) // -- TLE
+/obj/machinery/atmospherics/trinary/filter/attack_hand(user) // -- TLE
 	if(..())
 		return
 
@@ -189,13 +193,14 @@
 
 	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_filter")
 	onclose(user, "atmo_filter")
-	return
 
 /obj/machinery/atmospherics/trinary/filter/Topic(href, href_list) // -- TLE
 	if(!..())
 		return FALSE
+
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
+
 	if(href_list["filterset"])
 		filter_type = text2num(href_list["filterset"])
 
@@ -213,20 +218,15 @@
 				filtered_out += "sleeping_agent"
 
 	if (href_list["temp"])
-		src.temp = null
+		temp = null
 	if(href_list["set_flow_rate"])
-		var/new_flow_rate = input(usr,"Enter new flow rate (0-[air1.volume]L/s)","Flow Rate Control",src.set_flow_rate) as num
-		src.set_flow_rate = max(0, min(air1.volume, new_flow_rate))
+		var/new_flow_rate = input(usr,"Enter new flow rate (0-[air1.volume]L/s)", "Flow Rate Control", set_flow_rate) as num
+		set_flow_rate = max(0, min(air1.volume, new_flow_rate))
 	if(href_list["power"])
 		use_power=!use_power
-	src.update_icon()
-	src.updateUsrDialog()
-/*
-	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			src.attack_hand(M)
-*/
-	return
+
+	update_icon()
+	updateUsrDialog()
 
 /obj/machinery/atmospherics/trinary/filter/m_filter
 	icon_state = "mmap"
@@ -257,23 +257,24 @@ obj/machinery/atmospherics/trinary/filter/m_filter/New()
 /obj/machinery/atmospherics/trinary/filter/m_filter/atmos_init()
 	..()
 
-	if(node1 && node2 && node3) return
+	if(node1 && node2 && node3)
+		return
 
 	var/node1_connect = turn(dir, -180)
 	var/node2_connect = turn(dir, 90)
 	var/node3_connect = dir
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node1_connect))
 		if(target.initialize_directions & get_dir(target,src))
 			node1 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node2_connect))
 		if(target.initialize_directions & get_dir(target,src))
 			node2 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node3_connect))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node3_connect))
 		if(target.initialize_directions & get_dir(target,src))
 			node3 = target
 			break

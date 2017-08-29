@@ -245,9 +245,9 @@
 		other_moles += environment.gas[g] //this is only going to be used in a partial pressure calc, so we don't need to worry about group_multiplier here.
 
 	pressure_dangerlevel = get_danger_level(environment_pressure, TLV["pressure"])
-	oxygen_dangerlevel = get_danger_level(environment.gas["oxygen"]*partial_pressure, TLV["oxygen"])
-	co2_dangerlevel = get_danger_level(environment.gas["carbon_dioxide"]*partial_pressure, TLV["carbon dioxide"])
-	phoron_dangerlevel = get_danger_level(environment.gas["phoron"]*partial_pressure, TLV["phoron"])
+	oxygen_dangerlevel = get_danger_level(environment.gas["oxygen"] * partial_pressure, TLV["oxygen"])
+	co2_dangerlevel = get_danger_level(environment.gas["carbon_dioxide"] * partial_pressure, TLV["carbon dioxide"])
+	phoron_dangerlevel = get_danger_level(environment.gas["phoron"] * partial_pressure, TLV["phoron"])
 	temperature_dangerlevel = get_danger_level(environment.temperature, TLV["temperature"])
 	other_dangerlevel = get_danger_level(other_moles*partial_pressure, TLV["other"])
 
@@ -490,10 +490,11 @@
 	ui_interact(user)
 	wires.interact(user)
 
-/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, var/master_ui = null, var/datum/topic_state/custom_state)
+/obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, master_ui = null, datum/topic_state/custom_state)
 	var/data[0]
 	var/remote_connection = 0
 	var/remote_access = 0
+
 	if(custom_state)
 		var/list/href = custom_state.href_list(user)
 		remote_connection = href["remote_connection"]	// Remote connection means we're non-adjacent/connecting from another computer
@@ -512,7 +513,7 @@
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if(!ui)
-		ui = new(user, src, ui_key, "air_alarm.tmpl", src.name, 450, 625, master_ui = master_ui, custom_state = custom_state)
+		ui = new(user, src, ui_key, "air_alarm.tmpl", name, 450, 625, master_ui = master_ui, custom_state = custom_state)
 		ui.set_initial_data(data)
 		ui.open()
 		ui.set_auto_update(1)
@@ -549,12 +550,12 @@
 				if(!info)
 					continue
 				vents[++vents.len] = list(
-						"id_tag"	= id_tag,
+						"id_tag"    = id_tag,
 						"long_name" = sanitize(long_name),
-						"power"		= info["power"],
-						"checks"	= info["checks"],
-						"direction"	= info["direction"],
-						"external"	= info["external"]
+						"power"     = info["power"],
+						"checks"    = info["checks"],
+						"direction" = info["direction"],
+						"external"  = info["external"]
 					)
 			data["vents"] = vents
 		if(AALARM_SCREEN_SCRUB)
@@ -565,27 +566,27 @@
 				if(!info)
 					continue
 				scrubbers[++scrubbers.len] = list(
-						"id_tag"	= id_tag,
+						"id_tag"    = id_tag,
 						"long_name" = sanitize(long_name),
-						"power"		= info["power"],
-						"scrubbing"	= info["scrubbing"],
-						"panic"		= info["panic"],
-						"filters"	= list()
+						"power"     = info["power"],
+						"scrubbing" = info["scrubbing"],
+						"panic"     = info["panic"],
+						"filters"   = list()
 					)
-				scrubbers[scrubbers.len]["filters"] += list(list("name" = "Oxygen",			"command" = "o2_scrub",	"val" = info["filter_o2"]))
-				scrubbers[scrubbers.len]["filters"] += list(list("name" = "Nitrogen",		"command" = "n2_scrub",	"val" = info["filter_n2"]))
-				scrubbers[scrubbers.len]["filters"] += list(list("name" = "Carbon Dioxide", "command" = "co2_scrub","val" = info["filter_co2"]))
-				scrubbers[scrubbers.len]["filters"] += list(list("name" = "Toxin"	, 		"command" = "tox_scrub","val" = info["filter_phoron"]))
-				scrubbers[scrubbers.len]["filters"] += list(list("name" = "Nitrous Oxide",	"command" = "n2o_scrub","val" = info["filter_n2o"]))
+				scrubbers[scrubbers.len]["filters"] += list(list("name" = "Oxygen",         "command" = "o2_scrub",  "val" = info["filter_o2"]))
+				scrubbers[scrubbers.len]["filters"] += list(list("name" = "Nitrogen",       "command" = "n2_scrub",  "val" = info["filter_n2"]))
+				scrubbers[scrubbers.len]["filters"] += list(list("name" = "Carbon Dioxide", "command" = "co2_scrub", "val" = info["filter_co2"]))
+				scrubbers[scrubbers.len]["filters"] += list(list("name" = "Toxin",          "command" = "tox_scrub", "val" = info["filter_phoron"]))
+				scrubbers[scrubbers.len]["filters"] += list(list("name" = "Nitrous Oxide",  "command" = "n2o_scrub", "val" = info["filter_n2o"]))
 			data["scrubbers"] = scrubbers
 		if(AALARM_SCREEN_MODE)
 			var/modes[0]
-			modes[++modes.len] = list("name" = "Filtering - Scrubs out contaminants", 			"mode" = AALARM_MODE_SCRUBBING,		"selected" = mode == AALARM_MODE_SCRUBBING, 	"danger" = 0)
-			modes[++modes.len] = list("name" = "Replace Air - Siphons out air while replacing", "mode" = AALARM_MODE_REPLACEMENT,	"selected" = mode == AALARM_MODE_REPLACEMENT,	"danger" = 0)
-			modes[++modes.len] = list("name" = "Panic - Siphons air out of the room", 			"mode" = AALARM_MODE_PANIC,			"selected" = mode == AALARM_MODE_PANIC, 		"danger" = 1)
-			modes[++modes.len] = list("name" = "Cycle - Siphons air before replacing", 			"mode" = AALARM_MODE_CYCLE,			"selected" = mode == AALARM_MODE_CYCLE, 		"danger" = 1)
-			modes[++modes.len] = list("name" = "Fill - Shuts off scrubbers and opens vents", 	"mode" = AALARM_MODE_FILL,			"selected" = mode == AALARM_MODE_FILL, 			"danger" = 0)
-			modes[++modes.len] = list("name" = "Off - Shuts off vents and scrubbers", 			"mode" = AALARM_MODE_OFF,			"selected" = mode == AALARM_MODE_OFF, 			"danger" = 0)
+			modes[++modes.len] = list("name" = "Filtering - Scrubs out contaminants",           "mode" = AALARM_MODE_SCRUBBING,   "selected" = mode == AALARM_MODE_SCRUBBING,   "danger" = 0)
+			modes[++modes.len] = list("name" = "Replace Air - Siphons out air while replacing", "mode" = AALARM_MODE_REPLACEMENT, "selected" = mode == AALARM_MODE_REPLACEMENT, "danger" = 0)
+			modes[++modes.len] = list("name" = "Panic - Siphons air out of the room",           "mode" = AALARM_MODE_PANIC,       "selected" = mode == AALARM_MODE_PANIC,       "danger" = 1)
+			modes[++modes.len] = list("name" = "Cycle - Siphons air before replacing",          "mode" = AALARM_MODE_CYCLE,       "selected" = mode == AALARM_MODE_CYCLE,       "danger" = 1)
+			modes[++modes.len] = list("name" = "Fill - Shuts off scrubbers and opens vents",    "mode" = AALARM_MODE_FILL,        "selected" = mode == AALARM_MODE_FILL,        "danger" = 0)
+			modes[++modes.len] = list("name" = "Off - Shuts off vents and scrubbers",           "mode" = AALARM_MODE_OFF,         "selected" = mode == AALARM_MODE_OFF,         "danger" = 0)
 			data["modes"] = modes
 			data["mode"] = mode
 		if(AALARM_SCREEN_SENSORS)
@@ -600,19 +601,18 @@
 			for (var/g in gas_names)
 				thresholds[++thresholds.len] = list("name" = gas_names[g], "settings" = list())
 				selected = TLV[g]
-				for(var/i = 1, i <= 4, i++)
+				for (var/i in 1 to 4)
 					thresholds[thresholds.len]["settings"] += list(list("env" = g, "val" = i, "selected" = selected[i]))
 
 			selected = TLV["pressure"]
 			thresholds[++thresholds.len] = list("name" = "Pressure", "settings" = list())
-			for(var/i = 1, i <= 4, i++)
+			for (var/i in 1 to 4)
 				thresholds[thresholds.len]["settings"] += list(list("env" = "pressure", "val" = i, "selected" = selected[i]))
 
 			selected = TLV["temperature"]
 			thresholds[++thresholds.len] = list("name" = "Temperature", "settings" = list())
-			for(var/i = 1, i <= 4, i++)
+			for (var/i in 1 to 4)
 				thresholds[thresholds.len]["settings"] += list(list("env" = "temperature", "val" = i, "selected" = selected[i]))
-
 
 			data["thresholds"] = thresholds
 
@@ -710,17 +710,17 @@
 					var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
 					var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as null|num
 					if (isnull(newval))
-						return 1
-					if (newval<0)
+						return TRUE
+					if (newval < 0)
 						selected[threshold] = -1.0
-					else if (env=="temperature" && newval>5000)
+					else if (env == "temperature" && newval > 5000)
 						selected[threshold] = 5000
-					else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
-						selected[threshold] = 50*ONE_ATMOSPHERE
-					else if (env!="temperature" && env!="pressure" && newval>200)
+					else if (env == "pressure" && newval > 50 * ONE_ATMOSPHERE)
+						selected[threshold] = 50 * ONE_ATMOSPHERE
+					else if (env != "temperature" && env != "pressure" && newval > 200)
 						selected[threshold] = 200
 					else
-						newval = round(newval,0.01)
+						newval = round(newval, 0.01)
 						selected[threshold] = newval
 					if(threshold == 1)
 						if(selected[1] > selected[2])

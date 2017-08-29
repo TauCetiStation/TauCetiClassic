@@ -204,7 +204,7 @@
 			var/obj/location_as_object = loc
 			breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
 		else if(isturf(loc))
-			var/breath_moles = environment.total_moles*BREATH_PERCENTAGE
+			var/breath_moles = environment.total_moles * BREATH_PERCENTAGE
 			breath = loc.remove_air(breath_moles)
 
 			var/block = FALSE
@@ -242,14 +242,14 @@
 	var/SA_para_min = 0.5
 	var/SA_sleep_min = 5
 	var/oxygen_used = 0
-	var/breath_pressure = (breath.total_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = (breath.total_moles * R_IDEAL_GAS_EQUATION * breath.temperature) / BREATH_VOLUME
 
 	//Partial pressure of the O2 in our breath
-	var/O2_pp = (breath.gas["oxygen"]/breath.total_moles)*breath_pressure
+	var/O2_pp = (breath.gas["oxygen"] / breath.total_moles) * breath_pressure
 	// Same, but for the phoron
-	var/Toxins_pp = (breath.gas["phoron"]/breath.total_moles)*breath_pressure
+	var/Toxins_pp = (breath.gas["phoron"] / breath.total_moles) * breath_pressure
 	// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-	var/CO2_pp = (breath.gas["carbon_dioxide"]/breath.total_moles)*breath_pressure
+	var/CO2_pp = (breath.gas["carbon_dioxide"] / breath.total_moles) * breath_pressure
 
 	if(O2_pp < safe_oxygen_min) 			// Too little oxygen
 		if(prob(20))
@@ -265,8 +265,8 @@
 		oxygen_used = breath.gas["oxygen"] / 6
 		oxygen_alert = FALSE
 
-	breath.adjust_gas("oxygen", oxygen_used, update = 0)
-	breath.adjust_gas_temp("carbon_dioxide", oxygen_used, bodytemperature, update = 0) //update afterwards
+	breath.adjust_gas("oxygen", oxygen_used, update = FALSE)
+	breath.adjust_gas_temp("carbon_dioxide", oxygen_used, bodytemperature, update = FALSE) //update afterwards
 
 	if(CO2_pp > safe_co2_max)
 		if(!co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.

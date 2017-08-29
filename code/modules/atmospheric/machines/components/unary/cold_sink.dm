@@ -18,7 +18,7 @@
 	var/power_setting = 100
 
 	var/set_temperature = T20C		// Thermostat
-	var/cooling = 0
+	var/cooling = FALSE
 
 /obj/machinery/atmospherics/unary/freezer/New()
 	..()
@@ -47,7 +47,7 @@
 	//copied from pipe construction code since heaters/freezers don't use fittings and weren't doing this check - this all really really needs to be refactored someday.
 	//check that there are no incompatible pipes/machinery in our own location
 	for(var/obj/machinery/atmospherics/M in src.loc)
-		if(M != src && (M.initialize_directions & node_connect) && M.check_connect_types(M,src))	// matches at least one direction on either type of pipe & same connection type
+		if(M != src && (M.initialize_directions & node_connect) && M.check_connect_types(M, src))	// matches at least one direction on either type of pipe & same connection type
 			node = null
 			break
 
@@ -69,7 +69,7 @@
 /obj/machinery/atmospherics/unary/freezer/attack_hand(mob/user as mob)
 	ui_interact(user)
 
-/obj/machinery/atmospherics/unary/freezer/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+/obj/machinery/atmospherics/unary/freezer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["on"] = use_power ? 1 : 0
@@ -88,7 +88,7 @@
 	data["gasTemperatureClass"] = temp_class
 
 	// update the ui if it exists, returns null if no ui is passed/found
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if(!ui)
 		// the ui does not exist, so we'll create a new() one
         // for a list of parameters and their descriptions see the code docs in \code\modules\nano\nanoui.dm
@@ -122,12 +122,12 @@
 	..()
 
 	if(stat & (NOPOWER|BROKEN) || !use_power)
-		cooling = 0
+		cooling = FALSE
 		update_icon()
 		return
 
 	if(network && air_contents.temperature > set_temperature)
-		cooling = 1
+		cooling = TRUE
 
 		var/heat_transfer = max( -air_contents.get_thermal_energy_change(set_temperature - 5), 0 )
 
@@ -142,9 +142,9 @@
 
 		use_power(power_rating)
 
-		network.update = 1
+		network.update = TRUE
 	else
-		cooling = 0
+		cooling = FALSE
 
 	update_icon()
 
@@ -168,11 +168,11 @@
 	air_contents.volume = max(initial(internal_volume) - 200, 0) + 200 * bin_rating
 	set_power_level(power_setting)
 
-/obj/machinery/atmospherics/unary/freezer/proc/set_power_level(var/new_power_setting)
+/obj/machinery/atmospherics/unary/freezer/proc/set_power_level(new_power_setting)
 	power_setting = new_power_setting
-	power_rating = max_power_rating * (power_setting/100)
+	power_rating = max_power_rating * (power_setting / 100)
 
-/obj/machinery/atmospherics/unary/freezer/attackby(var/obj/item/O as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/unary/freezer/attackby(obj/item/O, mob/user)
 	if(default_deconstruction_screwdriver(user, O))
 		return
 	if(default_deconstruction_crowbar(user, O))

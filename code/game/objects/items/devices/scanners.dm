@@ -324,7 +324,7 @@ REAGENT SCANNER
 		return
 
 	analyze_gases(user.loc, user,advanced_mode)
-	return 1
+	return TRUE
 
 /obj/item/device/analyzer/afterattack(obj/O, mob/user, proximity)
 	if(!proximity)

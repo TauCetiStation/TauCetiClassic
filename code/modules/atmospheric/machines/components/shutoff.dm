@@ -21,11 +21,11 @@
 	hide(1)
 	..()
 
-/obj/machinery/atmospherics/valve/shutoff/attack_hand(mob/user as mob)
+/obj/machinery/atmospherics/valve/shutoff/attack_hand(mob/user)
 	..()
 	override_counter = 3
 
-/obj/machinery/atmospherics/valve/shutoff/hide(var/do_hide)
+/obj/machinery/atmospherics/valve/shutoff/hide(do_hide)
 	if(do_hide)
 		if(level == 1)
 			layer = PIPE_LAYER
@@ -39,10 +39,12 @@
 
 	if(!node1 || !node2)
 		return
+
 	var/datum/gas_mixture/node1_air = node1.return_air()
 	var/datum/gas_mixture/node2_air = node2.return_air()
 	var/node1_pressure = node1_air.return_pressure()
 	var/node2_pressure = node2_air.return_pressure()
+
 	if(node1_last_pressure && node2_last_pressure && !override_counter)
 		if(open)
 			if(((node1_pressure <= threshold) || (node2_pressure <= threshold)) && (!((node1_pressure >= node1_last_pressure) && (node2_pressure >= node2_last_pressure)))) //I'm not proud of this line. /BlueNexus
@@ -59,7 +61,6 @@
 
 	node1_last_pressure = node1_pressure
 	node2_last_pressure = node2_pressure
+
 	if(override_counter)
 		override_counter--
-
-	return

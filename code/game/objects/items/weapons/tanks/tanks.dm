@@ -22,27 +22,24 @@
 /obj/item/weapon/tank/New()
 	..()
 
-	src.air_contents = new /datum/gas_mixture()
-	src.air_contents.volume = volume //liters
-	src.air_contents.temperature = T20C
+	air_contents = new
+	air_contents.volume = volume //liters
+	air_contents.temperature = T20C
 
 	START_PROCESSING(SSobj, src)
-	return
 
 /obj/item/weapon/tank/Destroy()
-	if(air_contents)
-		qdel(air_contents)
-
+	QDEL_NULL(air_contents)
 	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/tank/examine(mob/user)
 	..()
-	var/obj/icon = src
+	var/obj/O = src
 	if (istype(src.loc, /obj/item/assembly))
-		icon = src.loc
+		O = src.loc
 	if (!in_range(src, usr))
-		if (icon == src)
+		if (O == src)
 			to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
 		return
 
@@ -66,11 +63,11 @@
 
 /obj/item/weapon/tank/blob_act()
 	if(prob(50))
-		var/turf/location = src.loc
-		if (!( istype(location, /turf) ))
+		var/turf/location = loc
+		if(!isturf(location))
 			qdel(src)
 
-		if(src.air_contents)
+		if(air_contents)
 			location.assume_air(air_contents)
 
 		qdel(src)
@@ -79,15 +76,15 @@
 	..()
 	//var/obj/icon = src
 
-	if (istype(src.loc, /obj/item/assembly))
-		icon = src.loc
+	//if (istype(src.loc, /obj/item/assembly))
+	//	icon = src.loc // wtf is this?
 
 	if (istype(W, /obj/item/device/analyzer))
 		return
 	else if (istype(W,/obj/item/latexballon))
 		var/obj/item/latexballon/LB = W
 		LB.blow(src)
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 
 	if(istype(W, /obj/item/device/assembly_holder))
 		bomb_assemble(W,user)

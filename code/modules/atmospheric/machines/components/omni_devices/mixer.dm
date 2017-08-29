@@ -84,23 +84,23 @@
 
 /obj/machinery/atmospherics/omni/mixer/error_check()
 	if(!output || !inputs)
-		return 1
+		return TRUE
 	if(inputs.len < 2) //requires at least 2 inputs ~otherwise why are you using a mixer?
-		return 1
+		return TRUE
 
 	//concentration must add to 1
-	var/total = 0
+	var/total = FALSE
 	for (var/datum/omni_port/P in inputs)
 		total += P.concentration
 
 	if (total != 1)
-		return 1
+		return TRUE
 
-	return 0
+	return FALSE
 
 /obj/machinery/atmospherics/omni/mixer/process()
 	if(!..())
-		return 0
+		return FALSE
 
 	//Figure out the amount of moles to transfer
 	var/transfer_moles = 0
@@ -109,7 +109,7 @@
 	var/transfer_moles_max = INFINITY
 
 	for (var/datum/omni_port/P in inputs)
-		transfer_moles += (set_flow_rate*P.concentration/P.air.volume)*P.air.total_moles
+		transfer_moles += (set_flow_rate * P.concentration / P.air.volume) * P.air.total_moles
 		transfer_moles_max = min(transfer_moles_max, calculate_transfer_moles(P.air, output.air, delta, (output && output.network && output.network.volume) ? output.network.volume : 0))
 	transfer_moles = between(0, transfer_moles, transfer_moles_max)
 
@@ -123,21 +123,21 @@
 
 		for(var/datum/omni_port/P in inputs)
 			if(P.concentration && P.network)
-				P.network.update = 1
+				P.network.update = TRUE
 
 		if(output.network)
-			output.network.update = 1
+			output.network.update = TRUE
 
-	return 1
+	return TRUE
 
-/obj/machinery/atmospherics/omni/mixer/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null, var/force_open = 1)
+/obj/machinery/atmospherics/omni/mixer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
 	usr.set_machine(src)
 
 	var/list/data = new()
 
 	data = build_uidata()
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 
 	if (!ui)
 		ui = new(user, src, ui_key, "omni_mixer.tmpl", "Omni Mixer Control", 360, 330)
@@ -173,13 +173,14 @@
 	if(portData.len)
 		data["ports"] = portData
 	if(output)
-		data["set_flow_rate"] = round(set_flow_rate*10)		//because nanoui can't handle rounded decimals.
-		data["last_flow_rate"] = round(last_flow_rate*10)
+		data["set_flow_rate"] = round(set_flow_rate * 10)		//because nanoui can't handle rounded decimals.
+		data["last_flow_rate"] = round(last_flow_rate * 10)
 
 	return data
 
 /obj/machinery/atmospherics/omni/mixer/Topic(href, href_list)
-	if(!..()) return FALSE
+	if(!..())
+		return FALSE
 
 	switch(href_list["command"])
 		if("power")
@@ -209,7 +210,7 @@
 	nanomanager.update_uis(src)
 	return
 
-/obj/machinery/atmospherics/omni/mixer/proc/switch_mode(var/port = NORTH, var/mode = ATM_NONE)
+/obj/machinery/atmospherics/omni/mixer/proc/switch_mode(port = NORTH, mode = ATM_NONE)
 	if(mode != ATM_INPUT && mode != ATM_OUTPUT)
 		switch(mode)
 			if("in")
@@ -244,12 +245,12 @@
 				else
 					initialize_directions |= P.dir
 					P.connect()
-			P.update = 1
+			P.update = TRUE
 
 	update_ports()
 	rebuild_mixing_inputs()
 
-/obj/machinery/atmospherics/omni/mixer/proc/change_concentration(var/port = NORTH)
+/obj/machinery/atmospherics/omni/mixer/proc/change_concentration(port = NORTH)
 	tag_north_con = null
 	tag_south_con = null
 	tag_east_con = null
@@ -271,7 +272,7 @@
 	if(non_locked < 1)
 		return
 
-	var/new_con = (input(usr,"Enter a new concentration (0-[round(remain_con * 100, 0.5)])%","Concentration control", min(remain_con, old_con)*100) as num) / 100
+	var/new_con = (input(usr,"Enter a new concentration (0-[round(remain_con * 100, 0.5)])%", "Concentration control", min(remain_con, old_con) * 100) as num) / 100
 
 	//cap it between 0 and the max remaining concentration
 	new_con = between(0, new_con, remain_con)
@@ -297,7 +298,7 @@
 	for(var/datum/omni_port/P in inputs)
 		mixing_inputs[P.air] = P.concentration
 
-/obj/machinery/atmospherics/omni/mixer/proc/con_lock(var/port = NORTH)
+/obj/machinery/atmospherics/omni/mixer/proc/con_lock(port = NORTH)
 	for(var/datum/omni_port/P in inputs)
 		if(P.dir == port)
 			P.con_lock = !P.con_lock

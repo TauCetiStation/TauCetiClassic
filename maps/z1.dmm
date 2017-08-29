@@ -5622,7 +5622,7 @@
 "cef" = (/obj/machinery/atmospherics/pipe/simple/visible/green,/turf/simulated/floor,/area/atmos)
 "ceg" = (/obj/machinery/computer/general_air_control/large_tank_control{frequency = 1441; input_tag = "n2o_in"; name = "Nitrous Oxide Supply Control"; output_tag = "n2o_out"; sensors = list("n2o_sensor" = "Tank")},/turf/simulated/floor{icon_state = "escape"; dir = 4},/area/atmos)
 "ceh" = (/obj/machinery/air_sensor{frequency = 1441; id_tag = "n2o_sensor"},/turf/simulated/floor/engine/n20,/area/atmos)
-"cei" = (/obj/machinery/portable_atmospherics/canister/sleeping_agent/roomfiller{valve_open = 1},/turf/simulated/floor/engine/n20,/area/atmos)
+"cei" = (/obj/machinery/portable_atmospherics/canister/sleeping_agent,/turf/simulated/floor/engine/n20,/area/atmos)
 "cej" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/engine/n20,/area/atmos)
 "cek" = (/obj/machinery/camera{c_tag = "Engineering East"},/obj/machinery/computer/security/telescreen{desc = "Used for watching the singularity chamber."; dir = 2; layer = 4; name = "Singularity Engine Telescreen"; network = list("Singularity"); pixel_x = 0; pixel_y = 30},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor,/area/engine/engineering)
 "cel" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/turf/simulated/floor{dir = 1; icon_state = "yellow"},/area/engine/engineering)

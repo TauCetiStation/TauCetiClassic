@@ -14,7 +14,7 @@
 //--------------------------------------------
 // Omni port datum
 //
-// Used by omni devices to manage connections 
+// Used by omni devices to manage connections
 //  to other atmospheric objects.
 //--------------------------------------------
 /datum/omni_port
@@ -29,19 +29,24 @@
 	var/obj/machinery/atmospherics/node
 	var/datum/pipe_network/network
 
-/datum/omni_port/New(var/obj/machinery/atmospherics/omni/M, var/direction = NORTH)
+/datum/omni_port/New(obj/machinery/atmospherics/omni/M, direction = NORTH)
 	..()
+
 	dir = direction
+
 	if(istype(M))
 		master = M
+
 	air = new
 	air.volume = 200
 
 /datum/omni_port/proc/connect()
 	if(node)
 		return
+
 	master.atmos_init()
 	master.build_network()
+
 	if(node)
 		node.atmos_init()
 		node.build_network()
@@ -59,7 +64,7 @@
 //returns a text string based on the direction flag input
 // if capitalize is true, it will return the string capitalized
 // otherwise it will return the direction string in lower case
-/proc/dir_name(var/dir, var/capitalize = 0)
+/proc/dir_name(dir, capitalize = FALSE)
 	var/string = null
 	switch(dir)
 		if(NORTH)
@@ -70,15 +75,15 @@
 			string = "East"
 		if(WEST)
 			string = "West"
-	
+
 	if(!capitalize && string)
 		string = lowertext(string)
-	
+
 	return string
 
 //returns a direction flag based on the string passed to it
 // case insensitive
-/proc/dir_flag(var/dir)
+/proc/dir_flag(dir)
 	dir = lowertext(dir)
 	switch(dir)
 		if("north")
@@ -92,18 +97,18 @@
 		else
 			return 0
 
-/proc/mode_to_gasid(var/mode)
+/proc/mode_to_gasid(mode)
 	switch(mode)
-		if(ATM_O2) 
+		if(ATM_O2)
 			return "oxygen"
-		if(ATM_N2) 
+		if(ATM_N2)
 			return "nitrogen"
-		if(ATM_CO2) 
+		if(ATM_CO2)
 			return "carbon_dioxide"
-		if(ATM_P) 
+		if(ATM_P)
 			return "phoron"
-		if(ATM_N2O) 
+		if(ATM_N2O)
 			return "sleeping_agent"
 		else
 			return null
-	
+

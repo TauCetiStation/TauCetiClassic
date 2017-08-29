@@ -1214,15 +1214,6 @@ datum/design/cryotube
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/cryo_tube
 
-//datum/design/thermomachine
-//	name = "Freezer/Heater Board"
-//	desc = "The circuit board for a freezer/heater."
-//	id = "thermomachine"
-//	req_tech = list("programming" = 3, "phorontech" = 3)
-//	build_type = IMPRINTER
-//	materials = list(MAT_GLASS = 2000, "sacid" = 20)
-//	build_path = /obj/item/weapon/circuitboard/thermomachine
-
 /datum/design/gas_heater
 	name = "gas heating system"
 	desc = "The circuit board for a heater."

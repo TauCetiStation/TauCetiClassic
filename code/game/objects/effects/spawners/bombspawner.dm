@@ -138,13 +138,11 @@
 
 	PT.air_contents.gas["phoron"] = 12
 	PT.air_contents.gas["carbon_dioxide"] = 8
-	PT.air_contents.total_moles = 12 + 8
-	PT.air_contents.temperature = PHORON_MINIMUM_BURN_TEMPERATURE+1
+	PT.air_contents.temperature = PHORON_MINIMUM_BURN_TEMPERATURE + 1
 	PT.air_contents.update_values()
 
 	OT.air_contents.gas["oxygen"] = 20
-	OT.air_contents.total_moles = 20
-	OT.air_contents.temperature = PHORON_MINIMUM_BURN_TEMPERATURE+1
+	OT.air_contents.temperature = PHORON_MINIMUM_BURN_TEMPERATURE + 1
 	OT.air_contents.update_values()
 
 	var/obj/item/device/assembly/S

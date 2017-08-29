@@ -3,7 +3,7 @@
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "yellow"
 	density = 1
-	var/health = 100.0
+	var/health = 100
 	flags = CONDUCT
 
 	var/valve_open = 0
@@ -72,30 +72,33 @@
 
 /obj/machinery/portable_atmospherics/canister/empty/New()
 	..()
-	name = 	initial(canister_type.name)
-	icon_state = 	initial(canister_type.icon_state)
-	canister_color = 	initial(canister_type.canister_color)
+	name = initial(canister_type.name)
+	icon_state = initial(canister_type.icon_state)
+	canister_color = initial(canister_type.canister_color)
 
 /obj/machinery/portable_atmospherics/canister/empty/air
 	icon_state = "grey"
 	canister_type = /obj/machinery/portable_atmospherics/canister/air
+
 /obj/machinery/portable_atmospherics/canister/empty/oxygen
 	icon_state = "blue"
 	canister_type = /obj/machinery/portable_atmospherics/canister/oxygen
+
 /obj/machinery/portable_atmospherics/canister/empty/phoron
 	icon_state = "orange"
 	canister_type = /obj/machinery/portable_atmospherics/canister/phoron
+
 /obj/machinery/portable_atmospherics/canister/empty/nitrogen
 	icon_state = "red"
 	canister_type = /obj/machinery/portable_atmospherics/canister/nitrogen
+
 /obj/machinery/portable_atmospherics/canister/empty/carbon_dioxide
 	icon_state = "black"
 	canister_type = /obj/machinery/portable_atmospherics/canister/carbon_dioxide
+
 /obj/machinery/portable_atmospherics/canister/empty/sleeping_agent
 	icon_state = "redws"
 	canister_type = /obj/machinery/portable_atmospherics/canister/sleeping_agent
-
-
 
 
 /obj/machinery/portable_atmospherics/canister/proc/check_change()
@@ -233,7 +236,7 @@ update_flag
 	healthcheck()
 	return
 
-/obj/machinery/portable_atmospherics/canister/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/portable_atmospherics/canister/bullet_act(obj/item/projectile/Proj)
 	if(!(Proj.damage_type == BRUTE || Proj.damage_type == BURN))
 		return
 
@@ -378,86 +381,69 @@ update_flag
 /obj/machinery/portable_atmospherics/canister/phoron/New()
 	..()
 
-	src.air_contents.adjust_gas("phoron", MolesForPressure())
-	src.update_icon()
-	return 1
+	air_contents.adjust_gas("phoron", MolesForPressure())
+	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/oxygen/New()
 	..()
 
-	src.air_contents.adjust_gas("oxygen", MolesForPressure())
-	src.update_icon()
-	return 1
+	air_contents.adjust_gas("oxygen", MolesForPressure())
+	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/oxygen/prechilled/New()
 	..()
 
-	src.air_contents.temperature = 80
-	src.update_icon()
-	return 1
+	air_contents.temperature = 80
+	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent/New()
 	..()
 
 	air_contents.adjust_gas("sleeping_agent", MolesForPressure())
-	src.update_icon()
-	return 1
-
-//Dirty way to fill room with gas. However it is a bit easier to do than creating some floor/engine/n2o -rastaf0
-/obj/machinery/portable_atmospherics/canister/sleeping_agent/roomfiller/New()
-	..()
-	air_contents.gas["sleeping_agent"] = 9*4000
-	spawn(10)
-		var/turf/simulated/location = src.loc
-		if (istype(src.loc))
-			while (!location.air)
-				sleep(10)
-			location.assume_air(air_contents)
-			air_contents = new
-	return 1
+	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/nitrogen/New()
 	..()
-	src.air_contents.adjust_gas("nitrogen", MolesForPressure())
-	src.update_icon()
-	return 1
+
+	air_contents.adjust_gas("nitrogen", MolesForPressure())
+	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/nitrogen/prechilled/New()
 	..()
-	src.air_contents.temperature = 80
-	src.update_icon()
-	return 1
+
+	air_contents.temperature = 80
+	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide/New()
 	..()
-	src.air_contents.adjust_gas("carbon_dioxide", MolesForPressure())
-	src.update_icon()
-	return 1
+
+	air_contents.adjust_gas("carbon_dioxide", MolesForPressure())
+	update_icon()
 
 
 /obj/machinery/portable_atmospherics/canister/air/New()
 	..()
-	var/list/air_mix = StandardAirMix()
-	src.air_contents.adjust_multi("oxygen", air_mix["oxygen"], "nitrogen", air_mix["nitrogen"])
 
-	src.update_icon()
-	return 1
+	var/list/air_mix = StandardAirMix()
+	air_contents.adjust_multi("oxygen", air_mix["oxygen"], "nitrogen", air_mix["nitrogen"])
+
+	update_icon()
 
 // Special types used for engine setup admin verb, they contain double amount of that of normal canister.
 /obj/machinery/portable_atmospherics/canister/nitrogen/engine_setup/New()
 	..()
-	src.air_contents.adjust_gas("nitrogen", MolesForPressure())
-	src.update_icon()
-	return 1
+
+	air_contents.adjust_gas("nitrogen", MolesForPressure())
+	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide/engine_setup/New()
 	..()
-	src.air_contents.adjust_gas("carbon_dioxide", MolesForPressure())
-	src.update_icon()
-	return 1
+
+	air_contents.adjust_gas("carbon_dioxide", MolesForPressure())
+	update_icon()
 
 /obj/machinery/portable_atmospherics/canister/phoron/engine_setup/New()
 	..()
-	src.air_contents.adjust_gas("phoron", MolesForPressure())
-	src.update_icon()
-	return 1
+
+	air_contents.adjust_gas("phoron", MolesForPressure())
+	update_icon()

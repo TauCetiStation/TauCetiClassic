@@ -13,7 +13,7 @@
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 15000	//15000 W ~ 20 HP
 
-	var/injecting = 0
+	var/injecting = FALSE
 
 	var/volume_rate = 50	//flow rate limit
 
@@ -65,26 +65,26 @@
 		use_power(power_draw)
 
 		if(network)
-			network.update = 1
+			network.update = TRUE
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/unary/outlet_injector/proc/inject()
 	if(injecting || (stat & NOPOWER))
-		return 0
+		return FALSE
 
 	var/datum/gas_mixture/environment = loc.return_air()
 	if (!environment)
-		return 0
+		return FALSE
 
-	injecting = 1
+	injecting = TRUE
 
 	if(air_contents.temperature > 0)
 		var/power_used = pump_gas(src, air_contents, environment, air_contents.total_moles, power_rating)
 		use_power(power_used)
 
 		if(network)
-			network.update = 1
+			network.update = TRUE
 
 	flick("inject", src)
 
@@ -96,7 +96,7 @@
 
 /obj/machinery/atmospherics/unary/outlet_injector/proc/broadcast_status()
 	if(!radio_connection)
-		return 0
+		return FALSE
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -112,7 +112,7 @@
 
 	radio_connection.post_signal(src, signal)
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/unary/outlet_injector/initialize()
 	. = ..()
@@ -120,7 +120,7 @@
 
 /obj/machinery/atmospherics/unary/outlet_injector/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return 0
+		return FALSE
 
 	if(signal.data["power"])
 		use_power = text2num(signal.data["power"])
@@ -129,7 +129,7 @@
 		use_power = !use_power
 
 	if(signal.data["inject"])
-		spawn inject()
+		inject()
 		return
 
 	if(signal.data["set_volume_rate"])
@@ -137,13 +137,11 @@
 		volume_rate = between(0, number, air_contents.volume)
 
 	if(signal.data["status"])
-		spawn(2)
-			broadcast_status()
+		broadcast_status()
 		return //do not update_icon
 
-	spawn(2)
-		broadcast_status()
+	broadcast_status()
 	update_icon()
 
-/obj/machinery/atmospherics/unary/outlet_injector/hide(var/i)
+/obj/machinery/atmospherics/unary/outlet_injector/hide(i)
 	update_underlays()

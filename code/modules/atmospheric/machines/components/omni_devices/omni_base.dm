@@ -69,10 +69,10 @@
 		use_power = 0
 
 	if((stat & (NOPOWER|BROKEN)) || !use_power)
-		return 0
-	return 1
+		return FALSE
+	return TRUE
 
-/obj/machinery/atmospherics/omni/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/omni/attackby(obj/item/weapon/W, mob/user)
 	if(!istype(W, /obj/item/weapon/wrench))
 		return ..()
 
@@ -80,10 +80,10 @@
 	for(var/datum/omni_port/P in ports)
 		int_pressure += P.air.return_pressure()
 	var/datum/gas_mixture/env_air = loc.return_air()
-	if ((int_pressure - env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+	if ((int_pressure - env_air.return_pressure()) > 2 * ONE_ATMOSPHERE)
 		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it is too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
-		return 1
+		return TRUE
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	if(do_after(user, 40, src))
@@ -94,7 +94,7 @@
 		new /obj/item/pipe(loc, make_from=src)
 		qdel(src)
 
-/obj/machinery/atmospherics/omni/attack_hand(user as mob)
+/obj/machinery/atmospherics/omni/attack_hand(user)
 	if(..())
 		return
 
@@ -157,7 +157,7 @@
 
 	update_icon()
 
-/obj/machinery/atmospherics/omni/proc/select_port_icons(var/datum/omni_port/P)
+/obj/machinery/atmospherics/omni/proc/select_port_icons(datum/omni_port/P)
 	if(!istype(P))
 		return
 
@@ -183,7 +183,7 @@
 		var/turf/T = get_turf(src)
 		if(!istype(T))
 			return
-		if(!T.is_plating() && istype(P.node, /obj/machinery/atmospherics/pipe) && P.node.level == 1 )
+		if(!T.is_plating() && istype(P.node, /obj/machinery/atmospherics/pipe) && P.node.level == 1)
 			//pipe_state = icon_manager.get_atmos_icon("underlay_down", P.dir, color_cache_name(P.node))
 			pipe_state = icon_manager.get_atmos_icon("underlay", P.dir, color_cache_name(P.node), "down")
 		else
@@ -194,17 +194,17 @@
 
 /obj/machinery/atmospherics/omni/update_underlays()
 	for(var/datum/omni_port/P in ports)
-		P.update = 1
+		P.update = TRUE
 	update_ports()
 
-/obj/machinery/atmospherics/omni/hide(var/i)
+/obj/machinery/atmospherics/omni/hide(i)
 	update_underlays()
 
 /obj/machinery/atmospherics/omni/proc/update_ports()
 	sort_ports()
 	update_port_icons()
 	for(var/datum/omni_port/P in ports)
-		P.update = 0
+		P.update = FALSE
 
 /obj/machinery/atmospherics/omni/proc/sort_ports()
 	return
@@ -226,8 +226,6 @@
 	return null
 
 /obj/machinery/atmospherics/omni/Destroy()
-	loc = null
-
 	for(var/datum/omni_port/P in ports)
 		if(P.node)
 			P.node.disconnect(src)
@@ -248,7 +246,7 @@
 					break
 
 	for(var/datum/omni_port/P in ports)
-		P.update = 1
+		P.update = TRUE
 
 	update_ports()
 
@@ -273,7 +271,7 @@
 		if(P.network == old_network)
 			P.network = new_network
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/omni/return_network_air(datum/pipe_network/reference)
 	var/list/results = list()
@@ -289,7 +287,7 @@
 		if(reference == P.node)
 			qdel(P.network)
 			P.node = null
-			P.update = 1
+			P.update = TRUE
 			break
 
 	update_ports()

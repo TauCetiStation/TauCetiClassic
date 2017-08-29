@@ -11,7 +11,7 @@
 	var/destroyed = 0
 
 	var/start_pressure = ONE_ATMOSPHERE
-	var/maximum_pressure = 90*ONE_ATMOSPHERE
+	var/maximum_pressure = 90 * ONE_ATMOSPHERE
 
 /obj/machinery/portable_atmospherics/New()
 	..()
@@ -19,20 +19,18 @@
 	air_contents.volume = volume
 	air_contents.temperature = T20C
 
-	return 1
-
 /obj/machinery/portable_atmospherics/Destroy()
 	QDEL_NULL(air_contents)
 	QDEL_NULL(holding)
-	. = ..()
+	return ..()
 
 /obj/machinery/portable_atmospherics/initialize()
 	. = ..()
-	spawn()
-		var/obj/machinery/atmospherics/portables_connector/port = locate() in loc
-		if(port)
-			connect(port)
-			update_icon()
+
+	var/obj/machinery/atmospherics/portables_connector/port = locate() in loc
+	if(port)
+		connect(port)
+		update_icon()
 
 /obj/machinery/portable_atmospherics/process()
 	if(!connected_port) //only react when pipe_network will ont it do it for you
@@ -46,7 +44,7 @@
 		"oxygen" = O2STANDARD * MolesForPressure(),
 		"nitrogen" = N2STANDARD *  MolesForPressure())
 
-/obj/machinery/portable_atmospherics/proc/MolesForPressure(var/target_pressure = start_pressure)
+/obj/machinery/portable_atmospherics/proc/MolesForPressure(target_pressure = start_pressure)
 	return (target_pressure * air_contents.volume) / (R_IDEAL_GAS_EQUATION * air_contents.temperature)
 
 /obj/machinery/portable_atmospherics/update_icon()
@@ -55,41 +53,41 @@
 /obj/machinery/portable_atmospherics/proc/connect(obj/machinery/atmospherics/portables_connector/new_port)
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
-		return 0
+		return FALSE
 
 	//Make sure are close enough for a valid connection
 	if(new_port.loc != loc)
-		return 0
+		return FALSE
 
 	//Perform the connection
 	connected_port = new_port
 	connected_port.connected_device = src
-	connected_port.on = 1 //Activate port updates
+	connected_port.on = TRUE //Activate port updates
 
-	anchored = 1 //Prevent movement
+	anchored = TRUE // Prevent movement
 
 	//Actually enforce the air sharing
 	var/datum/pipe_network/network = connected_port.return_network(src)
 	if(network && !network.gases.Find(air_contents))
 		network.gases += air_contents
-		network.update = 1
+		network.update = TRUE
 
-	return 1
+	return TRUE
 
 /obj/machinery/portable_atmospherics/proc/disconnect()
 	if(!connected_port)
-		return 0
+		return FALSE
 
 	var/datum/pipe_network/network = connected_port.return_network(src)
 	if(network)
 		network.gases -= air_contents
 
-	anchored = 0
+	anchored = FALSE
 
 	connected_port.connected_device = null
 	connected_port = null
 
-	return 1
+	return TRUE
 
 /obj/machinery/portable_atmospherics/proc/update_connected_network()
 	if(!connected_port)
@@ -97,20 +95,21 @@
 
 	var/datum/pipe_network/network = connected_port.return_network(src)
 	if (network)
-		network.update = 1
+		network.update = TRUE
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/weapon/W, mob/user)
 	if ((istype(W, /obj/item/weapon/tank) && !( src.destroyed )))
-		if (src.holding)
+		if (holding)
 			return
+
 		var/obj/item/weapon/tank/T = W
 		user.drop_item()
 		T.forceMove(src)
-		src.holding = T
+		holding = T
 		update_icon()
 		return
 
-	else if (istype(W, /obj/item/weapon/wrench))
+	if (istype(W, /obj/item/weapon/wrench))
 		if(connected_port)
 			disconnect()
 			to_chat(user, "<span class='notice'>You disconnect \the [src] from the port.</span>")
@@ -130,10 +129,8 @@
 				to_chat(user, "<span class='notice'>Nothing happens.</span>")
 				return
 
-	else if (istype(W, /obj/item/device/analyzer))
+	if (istype(W, /obj/item/device/analyzer)) // Incase someone do something with this.
 		return
-
-	return
 
 /obj/machinery/portable_atmospherics/return_air()
 	return air_contents
@@ -148,8 +145,8 @@
 	if(use_power) //using area power
 		return ..()
 	if(cell && cell.charge)
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/portable_atmospherics/powered/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/stock_parts/cell))

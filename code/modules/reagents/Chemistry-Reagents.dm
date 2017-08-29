@@ -1616,13 +1616,17 @@ datum
 				if((!O) || (!volume))	return 0
 				if(volume < 0) return 0
 				if(volume > 300) return 0
+
 				var/turf/simulated/T = get_turf(O)
-				if(!istype(T)) return
+				if(!istype(T))
+					return
 				T.assume_gas("phoron", volume, T20C)
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if(volume < 0) return
 				if(volume > 300) return
-				if(!istype(T)) return
+
+				if(!istype(T))
+					return
 				T.assume_gas("phoron", volume, T20C)
 			reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with plasma is stronger than fuel!
 				if(!istype(M, /mob/living))

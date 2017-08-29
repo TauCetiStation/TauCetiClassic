@@ -53,14 +53,14 @@ Pipelines + Other Objects -> Pipe network
 	else
 		layer = initial(layer)
 
-/obj/machinery/atmospherics/attackby(atom/A, mob/user as mob)
+/obj/machinery/atmospherics/attackby(atom/A, mob/user)
 	if(istype(A, /obj/item/device/pipe_painter))
 		return
 	if(istype(A, /obj/item/device/analyzer))
 		return
 	..()
 
-/obj/machinery/atmospherics/proc/add_underlay(var/turf/T, var/obj/machinery/atmospherics/node, var/direction, var/icon_connect_type)
+/obj/machinery/atmospherics/proc/add_underlay(turf/T, obj/machinery/atmospherics/node, direction, icon_connect_type)
 	if(node)
 		if(!T.is_plating() && node.level == 1 && istype(node, /obj/machinery/atmospherics/pipe))
 			//underlays += icon_manager.get_atmos_icon("underlay_down", direction, color_cache_name(node))
@@ -74,9 +74,9 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/update_underlays()
 	if(check_icon_cache())
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 obj/machinery/atmospherics/proc/check_connect_types(obj/machinery/atmospherics/atmos1, obj/machinery/atmospherics/atmos2)
 	return (atmos1.connect_types & atmos2.connect_types)
@@ -84,16 +84,16 @@ obj/machinery/atmospherics/proc/check_connect_types(obj/machinery/atmospherics/a
 /obj/machinery/atmospherics/proc/check_connect_types_construction(obj/machinery/atmospherics/atmos1, obj/item/pipe/pipe2)
 	return (atmos1.connect_types & pipe2.connect_types)
 
-/obj/machinery/atmospherics/proc/check_icon_cache(var/safety = 0)
+/obj/machinery/atmospherics/proc/check_icon_cache(safety = FALSE)
 	if(!istype(icon_manager))
 		if(!safety) //to prevent infinite loops
 			icon_manager = new()
 			check_icon_cache(1)
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
-/obj/machinery/atmospherics/proc/color_cache_name(var/obj/machinery/atmospherics/node)
+/obj/machinery/atmospherics/proc/color_cache_name(obj/machinery/atmospherics/node)
 	//Don't use this for standard pipes
 	if(!istype(node))
 		return null
@@ -160,9 +160,11 @@ obj/machinery/atmospherics/proc/check_connect_types(obj/machinery/atmospherics/a
 			user.remove_ventcrawl()
 			user.forceMove(src.loc)
 			user.visible_message("<span class='notice'>You hear something squeezing through the ducts...</span>","<span class='notice'>You climb out the ventilation system.")
-	user.canmove = 0
-	spawn(1)
-		user.canmove = 1
+	user.canmove = FALSE
+	INVOKE_ASYNC(user, /mob/living.proc/set_canmove, TRUE)
+
+/mob/living/proc/set_canmove(n)
+	canmove = n
 
 #undef VENT_SOUND_DELAY
 
@@ -176,9 +178,9 @@ obj/machinery/atmospherics/proc/check_connect_types(obj/machinery/atmospherics/a
 	if(istype(src, /obj/machinery/atmospherics/unary/vent_pump)) //We can't move in if its welded, right?
 		var/obj/machinery/atmospherics/unary/vent_pump/VP = src
 		if(VP.welded)
-			return 0
+			return FALSE
 
-	return 1
+	return TRUE
 
 //Find a connecting /obj/machinery/atmospherics in specified direction
 /obj/machinery/atmospherics/proc/findConnecting(direction)

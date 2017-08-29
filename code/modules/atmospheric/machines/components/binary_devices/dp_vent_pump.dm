@@ -54,7 +54,7 @@
 	air1.volume = ATMOS_DEFAULT_VOLUME_PUMP + 800
 	air2.volume = ATMOS_DEFAULT_VOLUME_PUMP + 800
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/update_icon(var/safety = 0)
+/obj/machinery/atmospherics/binary/dp_vent_pump/update_icon(safety = FALSE)
 	if(!check_icon_cache())
 		return
 
@@ -94,7 +94,7 @@
 			else
 				add_underlay(T, node2, dir)
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/hide(var/i)
+/obj/machinery/atmospherics/binary/dp_vent_pump/hide(i)
 	update_icon()
 	update_underlays()
 
@@ -105,7 +105,7 @@
 	last_flow_rate = 0
 
 	if(stat & (NOPOWER|BROKEN) || !use_power)
-		return 0
+		return FALSE
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -124,10 +124,10 @@
 					network1.update = 1
 		else //external -> internal
 			if (node2 && (environment.temperature || air2.temperature))
-				var/transfer_moles = calculate_transfer_moles(environment, air2, pressure_delta, (network2)? network2.volume : 0)
+				var/transfer_moles = calculate_transfer_moles(environment, air2, pressure_delta, (network2) ? network2.volume : 0)
 
 				//limit flow rate from turfs
-				transfer_moles = min(transfer_moles, environment.total_moles*air2.volume/environment.volume)	//group_multiplier gets divided out here
+				transfer_moles = min(transfer_moles, environment.total_moles * air2.volume/environment.volume)	//group_multiplier gets divided out here
 				power_draw = pump_gas(src, environment, air2, transfer_moles, power_rating)
 
 				if(power_draw >= 0 && network2)
@@ -137,7 +137,7 @@
 		last_power_draw = power_draw
 		use_power(power_draw)
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/proc/get_pressure_delta(datum/gas_mixture/environment)
 	var/pressure_delta = DEFAULT_PRESSURE_DELTA
@@ -167,7 +167,7 @@
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/proc/broadcast_status()
 	if(!radio_connection)
-		return 0
+		return FALSE
 
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
@@ -186,7 +186,7 @@
 	)
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/initialize()
 	. = ..()
@@ -199,7 +199,7 @@
 
 /obj/machinery/atmospherics/binary/dp_vent_pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
-		return 0
+		return FALSE
 	if(signal.data["power"])
 		use_power = text2num(signal.data["power"])
 
@@ -224,30 +224,28 @@
 		input_pressure_min = between(
 			0,
 			text2num(signal.data["set_input_pressure"]),
-			ONE_ATMOSPHERE*50
+			ONE_ATMOSPHERE * 50
 		)
 
 	if(signal.data["set_output_pressure"])
 		output_pressure_max = between(
 			0,
 			text2num(signal.data["set_output_pressure"]),
-			ONE_ATMOSPHERE*50
+			ONE_ATMOSPHERE * 50
 		)
 
 	if(signal.data["set_external_pressure"])
 		external_pressure_bound = between(
 			0,
 			text2num(signal.data["set_external_pressure"]),
-			ONE_ATMOSPHERE*50
+			ONE_ATMOSPHERE * 50
 		)
 
 	if(signal.data["status"])
-		spawn(2)
-			broadcast_status()
+		broadcast_status()
 		return //do not update_icon
 
-	spawn(2)
-		broadcast_status()
+	broadcast_status()
 	update_icon()
 
 #undef DEFAULT_PRESSURE_DELTA

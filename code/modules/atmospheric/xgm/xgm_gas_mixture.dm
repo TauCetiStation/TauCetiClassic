@@ -55,7 +55,7 @@
 			temperature = (temp * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
 
 	if (group_multiplier != 1)
-		gas[gasid] += moles/group_multiplier
+		gas[gasid] += moles / group_multiplier
 	else
 		gas[gasid] += moles
 
@@ -68,7 +68,7 @@
 	ASSERT(!(args.len % 2))
 
 	for(var/i = 1; i < args.len; i += 2)
-		adjust_gas(args[i], args[i+1], update = 0)
+		adjust_gas(args[i], args[i + 1], update = FALSE)
 
 	update_values()
 
@@ -78,7 +78,7 @@
 	ASSERT(!(args.len % 3))
 
 	for(var/i = 1; i < args.len; i += 3)
-		adjust_gas_temp(args[i], args[i + 1], args[i + 2], update = 0)
+		adjust_gas_temp(args[i], args[i + 1], args[i + 2], update = FALSE)
 
 	update_values()
 
@@ -94,9 +94,9 @@
 		var/giver_heat_capacity = giver.heat_capacity()
 		var/combined_heat_capacity = giver_heat_capacity + self_heat_capacity
 		if(combined_heat_capacity != 0)
-			temperature = (giver.temperature*giver_heat_capacity + temperature*self_heat_capacity)/combined_heat_capacity
+			temperature = (giver.temperature * giver_heat_capacity + temperature * self_heat_capacity) / combined_heat_capacity
 
-	if((group_multiplier != 1)||(giver.group_multiplier != 1))
+	if((group_multiplier != 1) || (giver.group_multiplier != 1))
 		for(var/g in giver.gas)
 			gas[g] += giver.gas[g] * giver.group_multiplier / group_multiplier
 	else
@@ -128,7 +128,7 @@
 	update_values()
 	sharer.update_values()
 
-	return 1
+	return TRUE
 
 
 //Returns the heat capacity of the gas mix based on the specific heat of the gases.
@@ -140,7 +140,7 @@
 
 
 //Adds or removes thermal energy. Returns the actual thermal energy change, as in the case of removing energy we can't go below TCMB.
-/datum/gas_mixture/proc/add_thermal_energy(var/thermal_energy)
+/datum/gas_mixture/proc/add_thermal_energy(thermal_energy)
 
 	if (total_moles == 0)
 		return 0
@@ -160,7 +160,7 @@
 
 
 //Technically vacuum doesn't have a specific entropy. Just use a really big number (infinity would be ideal) here so that it's easy to add gas to vacuum and hard to take gas out.
-#define SPECIFIC_ENTROPY_VACUUM		150000
+#define SPECIFIC_ENTROPY_VACUUM   150000
 
 
 //Returns the ideal gas specific entropy of the whole mix. This is the entropy per mole of /mixed/ gas.
@@ -185,14 +185,14 @@
 	So returning a constant/(partial pressure) would probably do what most players expect. Although the version I have implemented below is a bit more nuanced than simply 1/P in that it scales in a way
 	which is bit more realistic (natural log), and returns a fairly accurate entropy around room temperatures and pressures.
 */
-/datum/gas_mixture/proc/specific_entropy_gas(var/gasid)
+/datum/gas_mixture/proc/specific_entropy_gas(gasid)
 	if (!(gasid in gas) || gas[gasid] == 0)
 		return SPECIFIC_ENTROPY_VACUUM	//that gas isn't here
 
 	//group_multiplier gets divided out in volume/gas[gasid] - also, V/(m*T) = R/(partial pressure)
 	var/molar_mass = gas_data.molar_mass[gasid]
 	var/specific_heat = gas_data.specific_heat[gasid]
-	return R_IDEAL_GAS_EQUATION * ( log( (IDEAL_GAS_ENTROPY_CONSTANT*volume/(gas[gasid] * temperature)) * (molar_mass*specific_heat*temperature)**(2/3) + 1 ) +  15 )
+	return R_IDEAL_GAS_EQUATION * ( log( (IDEAL_GAS_ENTROPY_CONSTANT * volume / (gas[gasid] * temperature)) * (molar_mass * specific_heat * temperature) ** (2 / 3) + 1 ) +  15 )
 
 	//alternative, simpler equation
 	//var/partial_pressure = gas[gasid] * R_IDEAL_GAS_EQUATION * temperature / volume
@@ -300,49 +300,50 @@
 
 	update_values()
 
-	return 1
+	return TRUE
 
 
 //Checks if we are within acceptable range of another gas_mixture to suspend processing or merge.
 /datum/gas_mixture/proc/compare(const/datum/gas_mixture/sample, var/vacuum_exception = 0)
-	if(!sample) return 0
+	if(!sample)
+		return FALSE
 
 	if(vacuum_exception)
 		// Special case - If one of the two is zero pressure, the other must also be zero.
 		// This prevents suspending processing when an air-filled room is next to a vacuum,
 		// an edge case which is particually obviously wrong to players
 		if(total_moles == 0 && sample.total_moles != 0 || sample.total_moles == 0 && total_moles != 0)
-			return 0
+			return FALSE
 
 	var/list/marked = list()
 	for(var/g in gas)
 		if((abs(gas[g] - sample.gas[g]) > MINIMUM_AIR_TO_SUSPEND) && \
 		((gas[g] < (1 - MINIMUM_AIR_RATIO_TO_SUSPEND) * sample.gas[g]) || \
 		(gas[g] > (1 + MINIMUM_AIR_RATIO_TO_SUSPEND) * sample.gas[g])))
-			return 0
+			return FALSE
 		marked[g] = 1
 
 	if(abs(return_pressure() - sample.return_pressure()) > MINIMUM_PRESSURE_DIFFERENCE_TO_SUSPEND)
-		return 0
+		return FALSE
 
 	for(var/g in sample.gas)
 		if(!marked[g])
 			if((abs(gas[g] - sample.gas[g]) > MINIMUM_AIR_TO_SUSPEND) && \
 			((gas[g] < (1 - MINIMUM_AIR_RATIO_TO_SUSPEND) * sample.gas[g]) || \
 			(gas[g] > (1 + MINIMUM_AIR_RATIO_TO_SUSPEND) * sample.gas[g])))
-				return 0
+				return FALSE
 
 	if(total_moles > MINIMUM_AIR_TO_SUSPEND)
 		if((abs(temperature - sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && \
 		((temperature < (1 - MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature) || \
 		(temperature > (1 + MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature)))
-			return 0
+			return FALSE
 
-	return 1
+	return TRUE
 
 
 /datum/gas_mixture/proc/react()
-	zburn(null, force_burn=0, no_check=0) //could probably just call zburn() here with no args but I like being explicit.
+	zburn(null, force_burn = FALSE, no_check = FALSE) //could probably just call zburn() here with no args but I like being explicit.
 
 
 //Rechecks the gas_mixture and adjusts the graphic list if needed.
@@ -362,14 +363,14 @@
 					graphic_add = list()
 				graphic_add += gas_data.tile_overlay[g]
 
-	. = 0
+	. = FALSE
 	//Apply changes
 	if(graphic_add && graphic_add.len)
 		graphic += graphic_add
-		. = 1
+		. = TRUE
 	if(graphic_remove && graphic_remove.len)
 		graphic -= graphic_remove
-		. = 1
+		. = TRUE
 
 
 //Simpler version of merge(), adjusts gas amounts directly and doesn't account for temperature or group_multiplier.
@@ -378,7 +379,7 @@
 		gas[g] += right_side.gas[g]
 
 	update_values()
-	return 1
+	return TRUE
 
 
 //Simpler version of remove(), adjusts gas amounts directly and doesn't account for group_multiplier.
@@ -387,7 +388,7 @@
 		gas[g] -= right_side.gas[g]
 
 	update_values()
-	return 1
+	return TRUE
 
 
 //Multiply all gas amounts by a factor.
@@ -396,7 +397,7 @@
 		gas[g] *= factor
 
 	update_values()
-	return 1
+	return TRUE
 
 
 //Divide all gas amounts by a factor.
@@ -405,11 +406,11 @@
 		gas[g] /= factor
 
 	update_values()
-	return 1
+	return TRUE
 
 
 //Shares gas with another gas_mixture based on the amount of connecting tiles and a fixed lookup table.
-/datum/gas_mixture/proc/share_ratio(datum/gas_mixture/other, connecting_tiles, share_size = null, one_way = 0)
+/datum/gas_mixture/proc/share_ratio(datum/gas_mixture/other, connecting_tiles, share_size, one_way = FALSE)
 	var/static/list/sharing_lookup_table = list(0.30, 0.40, 0.48, 0.54, 0.60, 0.66)
 	//Shares a specific ratio of gas between mixtures using simple weighted averages.
 	var/ratio = sharing_lookup_table[6]
@@ -457,7 +458,7 @@
 
 //A wrapper around share_ratio for spacing gas at the same rate as if it were going into a large airless room.
 /datum/gas_mixture/proc/share_space(datum/gas_mixture/unsim_air)
-	return share_ratio(unsim_air, unsim_air.group_multiplier, max(1, max(group_multiplier + 3, 1) + unsim_air.group_multiplier), one_way = 1)
+	return share_ratio(unsim_air, unsim_air.group_multiplier, max(1, max(group_multiplier + 3, 1) + unsim_air.group_multiplier), one_way = TRUE)
 
 //Equalizes a list of gas mixtures.  Used for pipe networks.
 /proc/equalize_gases(datum/gas_mixture/list/gases)
@@ -497,7 +498,7 @@
 			gasmix.temperature = combined.temperature
 			gasmix.multiply(gasmix.volume)
 
-	return 1
+	return TRUE
 
 /datum/gas_mixture/proc/get_mass()
 	for(var/g in gas)
@@ -506,4 +507,4 @@
 /datum/gas_mixture/proc/specific_mass()
 	var/M = get_total_moles()
 	if(M)
-		return get_mass()/M
+		return get_mass() / M

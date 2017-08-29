@@ -30,7 +30,7 @@ var/global/list/rad_collectors = list()
 			investigate_log("<font color='red'>out of fuel</font>.","singulo")
 			eject()
 		else
-			P.air_contents.adjust_gas("phoron", -0.001*drainratio)
+			P.air_contents.adjust_gas("phoron", -0.001 * drainratio)
 	return
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
@@ -119,7 +119,7 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector/proc/receive_pulse(pulse_strength)
 	if(P && active)
 		var/power_produced = 0
-		power_produced = P.air_contents.gas["phoron"]*pulse_strength*20
+		power_produced = P.air_contents.gas["phoron"] * pulse_strength * 20
 		add_avail(power_produced)
 		last_power = power_produced
 		return

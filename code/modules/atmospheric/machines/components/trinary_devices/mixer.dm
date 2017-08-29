@@ -23,7 +23,7 @@
 	icon_state = "map_on"
 	use_power = 1
 
-/obj/machinery/atmospherics/trinary/mixer/update_icon(var/safety = 0)
+/obj/machinery/atmospherics/trinary/mixer/update_icon(safety = FALSE)
 	if(istype(src, /obj/machinery/atmospherics/trinary/mixer/m_mixer))
 		icon_state = "m"
 	else if(istype(src, /obj/machinery/atmospherics/trinary/mixer/t_mixer))
@@ -58,7 +58,7 @@
 
 		add_underlay(T, node3, dir)
 
-/obj/machinery/atmospherics/trinary/mixer/hide(var/i)
+/obj/machinery/atmospherics/trinary/mixer/hide(i)
 	update_underlays()
 
 /obj/machinery/atmospherics/trinary/mixer/New()
@@ -80,54 +80,62 @@
 		return
 
 	//Figure out the amount of moles to transfer
-	var/transfer_moles = (set_flow_rate*mixing_inputs[air1]/air1.volume)*air1.total_moles + (set_flow_rate*mixing_inputs[air1]/air2.volume)*air2.total_moles
+	var/transfer_moles = (set_flow_rate * mixing_inputs[air1] / air1.volume) * air1.total_moles + (set_flow_rate * mixing_inputs[air1] / air2.volume) * air2.total_moles
 
 	var/power_draw = -1
 	if (transfer_moles > MINIMUM_MOLES_TO_FILTER)
 		power_draw = mix_gas(src, mixing_inputs, air3, transfer_moles, power_rating)
 
 		if(network1 && mixing_inputs[air1])
-			network1.update = 1
+			network1.update = TRUE
 
 		if(network2 && mixing_inputs[air2])
-			network2.update = 1
+			network2.update = TRUE
 
 		if(network3)
-			network3.update = 1
+			network3.update = TRUE
 
 	if (power_draw >= 0)
 		last_power_draw = power_draw
 		use_power(power_draw)
 
-	return 1
+	return TRUE
 
-/obj/machinery/atmospherics/trinary/mixer/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/trinary/mixer/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
+
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
+
 	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
 		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
-		return 1
+		return TRUE
+
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
+
 	if (do_after(user, 40, src))
 		user.visible_message( \
 			"<span class='notice'>\The [user] unfastens \the [src].</span>", \
 			"<span class='notice'>You have unfastened \the [src].</span>", \
 			"You hear ratchet.")
-		new /obj/item/pipe(loc, make_from=src)
+		new /obj/item/pipe(loc, make_from = src)
 		qdel(src)
 
-/obj/machinery/atmospherics/trinary/mixer/attack_hand(user as mob)
+/obj/machinery/atmospherics/trinary/mixer/attack_hand(user)
 	if(..())
 		return
-	src.add_fingerprint(usr)
-	if(!src.allowed(user))
+
+	add_fingerprint(usr)
+
+	if(!allowed(user))
 		to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
+
 	usr.set_machine(src)
+
 	var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[use_power?"On":"Off"]</a><br>
 				<b>Set Flow Rate Limit: </b>
 				[set_flow_rate]L/s | <a href='?src=\ref[src];set_press=1'>Change</a>
@@ -151,27 +159,28 @@
 
 	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_mixer")
 	onclose(user, "atmo_mixer")
-	return
 
-/obj/machinery/atmospherics/trinary/mixer/Topic(href,href_list)
-	if(!..()) return FALSE
+/obj/machinery/atmospherics/trinary/mixer/Topic(href, href_list)
+	if(!..())
+		return FALSE
+
 	if(href_list["power"])
 		use_power = !use_power
 	if(href_list["set_press"])
 		var/max_flow_rate = min(air1.volume, air2.volume)
-		var/new_flow_rate = input(usr,"Enter new flow rate limit (0-[max_flow_rate]L/s)","Flow Rate Control",src.set_flow_rate) as num
-		src.set_flow_rate = max(0, min(max_flow_rate, new_flow_rate))
+		var/new_flow_rate = input(usr,"Enter new flow rate limit (0-[max_flow_rate]L/s)","Flow Rate Control", set_flow_rate) as num
+		set_flow_rate = max(0, min(max_flow_rate, new_flow_rate))
 	if(href_list["node1_c"])
 		var/value = text2num(href_list["node1_c"])
-		src.mixing_inputs[air1] = max(0, min(1, src.mixing_inputs[air1] + value))
-		src.mixing_inputs[air2] = 1.0 - mixing_inputs[air1]
+		mixing_inputs[air1] = max(0, min(1, mixing_inputs[air1] + value))
+		mixing_inputs[air2] = 1.0 - mixing_inputs[air1]
 	if(href_list["node2_c"])
 		var/value = text2num(href_list["node2_c"])
-		src.mixing_inputs[air2] = max(0, min(1, src.mixing_inputs[air2] + value))
-		src.mixing_inputs[air1] = 1.0 - mixing_inputs[air2]
-	src.update_icon()
-	src.updateUsrDialog()
-	return
+		mixing_inputs[air2] = max(0, min(1, mixing_inputs[air2] + value))
+		mixing_inputs[air1] = 1.0 - mixing_inputs[air2]
+
+	update_icon()
+	updateUsrDialog()
 
 obj/machinery/atmospherics/trinary/mixer/t_mixer
 	icon_state = "tmap"
@@ -199,24 +208,26 @@ obj/machinery/atmospherics/trinary/mixer/t_mixer/New()
 
 obj/machinery/atmospherics/trinary/mixer/t_mixer/atmos_init()
 	..()
-	if(node1 && node2 && node3) return
+
+	if(node1 && node2 && node3)
+		return
 
 	var/node1_connect = turn(dir, -90)
 	var/node2_connect = turn(dir, 90)
 	var/node3_connect = dir
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node1_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node1 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node2_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node2 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node3_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node3_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node3 = target
 			break
 
@@ -249,24 +260,25 @@ obj/machinery/atmospherics/trinary/mixer/m_mixer/New()
 
 obj/machinery/atmospherics/trinary/mixer/m_mixer/atmos_init()
 	..()
-	if(node1 && node2 && node3) return
+	if(node1 && node2 && node3)
+		return
 
 	var/node1_connect = turn(dir, -180)
 	var/node2_connect = turn(dir, 90)
 	var/node3_connect = dir
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node1_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node1 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node2_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node2 = target
 			break
 
-	for(var/obj/machinery/atmospherics/target in get_step(src,node3_connect))
-		if(target.initialize_directions & get_dir(target,src))
+	for(var/obj/machinery/atmospherics/target in get_step(src, node3_connect))
+		if(target.initialize_directions & get_dir(target, src))
 			node3 = target
 			break
 

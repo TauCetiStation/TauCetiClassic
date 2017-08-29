@@ -34,7 +34,7 @@
 			return
 		add_underlay(T, node, dir)
 
-/obj/machinery/atmospherics/portables_connector/hide(var/i)
+/obj/machinery/atmospherics/portables_connector/hide(i)
 	update_underlays()
 
 /obj/machinery/atmospherics/portables_connector/process()
@@ -42,11 +42,11 @@
 	if(!on)
 		return
 	if(!connected_device)
-		on = 0
+		on = FALSE
 		return
 	if(network)
-		network.update = 1
-	return 1
+		network.update = TRUE
+	return TRUE
 
 // Housekeeping and pipe network stuff below
 /obj/machinery/atmospherics/portables_connector/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
@@ -54,7 +54,7 @@
 		network = new_network
 
 	if(new_network.normal_members.Find(src))
-		return 0
+		return FALSE
 
 	new_network.normal_members += src
 
@@ -99,10 +99,10 @@
 /obj/machinery/atmospherics/portables_connector/return_network(obj/machinery/atmospherics/reference)
 	build_network()
 
-	if(reference==node)
+	if(reference == node)
 		return network
 
-	if(reference==connected_device)
+	if(reference == connected_device)
 		return network
 
 	return null
@@ -111,7 +111,7 @@
 	if(network == old_network)
 		network = new_network
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/portables_connector/return_network_air(datum/pipe_network/reference)
 	var/list/results = list()
@@ -122,7 +122,7 @@
 	return results
 
 /obj/machinery/atmospherics/portables_connector/disconnect(obj/machinery/atmospherics/reference)
-	if(reference==node)
+	if(reference == node)
 		qdel(network)
 		node = null
 
@@ -131,26 +131,30 @@
 	return null
 
 
-/obj/machinery/atmospherics/portables_connector/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/portables_connector/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (connected_device)
 		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], dettach \the [connected_device] first.</span>")
-		return 1
+		return TRUE
 	if (locate(/obj/machinery/portable_atmospherics, src.loc))
-		return 1
+		return TRUE
+
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
-	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+
+	if ((int_air.return_pressure()-env_air.return_pressure()) > 2 * ONE_ATMOSPHERE)
 		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
-		return 1
+		return TRUE
+
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
+
 	if (do_after(user, 40, src))
 		user.visible_message( \
 			"<span class='notice'>\The [user] unfastens \the [src].</span>", \
 			"<span class='notice'>You have unfastened \the [src].</span>", \
 			"You hear a ratchet.")
-		new /obj/item/pipe(loc, make_from=src)
+		new /obj/item/pipe(loc, make_from = src)
 		qdel(src)

@@ -62,7 +62,7 @@ Class Procs:
 
 /connection_edge/var/list/connecting_turfs = list()
 /connection_edge/var/direct = 0
-/connection_edge/var/sleeping = 1
+/connection_edge/var/sleeping = TRUE
 
 /connection_edge/var/coefficient = 0
 
@@ -71,7 +71,8 @@ Class Procs:
 
 /connection_edge/proc/add_connection(connection/c)
 	coefficient++
-	if(c.direct()) direct++
+	if(c.direct())
+		direct++
 //	log_debug("Connection added: [type] Coefficient: [coefficient]")
 
 
@@ -81,7 +82,8 @@ Class Procs:
 	coefficient--
 	if(coefficient <= 0)
 		erase()
-	if(c.direct()) direct--
+	if(c.direct())
+		direct--
 
 /connection_edge/proc/contains_zone(zone/Z)
 
@@ -95,29 +97,38 @@ Class Procs:
 /connection_edge/proc/recheck()
 
 /connection_edge/proc/flow(list/movable, differential, repelled)
-	for(var/i = 1; i <= movable.len; i++)
-		var/atom/movable/M = movable[i]
+	for(var/i in 1 to movable.len)
+		var/atom/movable/AM = movable[i]
 
 		//If they're already being tossed, don't do it again.
-		if(M.last_airflow > world.time - vsc.airflow_delay) continue
-		if(M.airflow_speed) continue
+		if(AM.last_airflow > world.time - vsc.airflow_delay)
+			continue
+		if(AM.airflow_speed)
+			continue
 
 		//Check for knocking people over
-		if(ismob(M) && differential > vsc.airflow_stun_pressure)
-			if(M:status_flags & GODMODE) continue
-			M:airflow_stun()
+		if(ismob(AM) && differential > vsc.airflow_stun_pressure)
+			var/mob/M = AM
+			if(M.status_flags & GODMODE)
+				continue
+			M.airflow_stun()
 
-		if(M.check_airflow_movable(differential))
+		if(AM.check_airflow_movable(differential))
 			//Check for things that are in range of the midpoint turfs.
 			var/list/close_turfs = list()
 			for(var/turf/U in connecting_turfs)
-				if(get_dist(M,U) < world.view) close_turfs += U
-			if(!close_turfs.len) continue
+				if(get_dist(AM, U) < world.view)
+					close_turfs += U
+			if(!close_turfs.len)
+				continue
 
-			M.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
+			AM.airflow_dest = pick(close_turfs) //Pick a random midpoint to fly towards.
 
-			if(repelled) spawn if(M) M.RepelAirflowDest(differential/5)
-			else spawn if(M) M.GotoAirflowDest(differential/10)
+			if(!QDELETED(AM))
+				if(repelled)
+					AM.RepelAirflowDest(differential / 5)
+				else
+					AM.GotoAirflowDest(differential / 10)
 
 
 
@@ -190,8 +201,10 @@ Class Procs:
 
 //Helper proc to get connections for a zone.
 /connection_edge/zone/proc/get_connected_zone(zone/from)
-	if(A == from) return B
-	else return A
+	if(A == from)
+		return B
+	else
+		return A
 
 /connection_edge/unsimulated/var/turf/B
 /connection_edge/unsimulated/var/datum/gas_mixture/air

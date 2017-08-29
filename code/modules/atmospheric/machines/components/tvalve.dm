@@ -25,7 +25,7 @@
 
 /obj/machinery/atmospherics/tvalve/update_icon(animation)
 	if(animation)
-		flick("tvalve[src.state][!src.state]",src)
+		flick("tvalve[src.state][!src.state]", src)
 	else
 		icon_state = "tvalve[state]"
 
@@ -44,7 +44,7 @@
 
 		add_underlay(T, node3, dir)
 
-/obj/machinery/atmospherics/tvalve/hide(var/i)
+/obj/machinery/atmospherics/tvalve/hide(i)
 	update_underlays()
 
 /obj/machinery/atmospherics/tvalve/New()
@@ -101,8 +101,6 @@
 	return null
 
 /obj/machinery/atmospherics/tvalve/Destroy()
-	loc = null
-
 	if(node1)
 		node1.disconnect(src)
 		qdel(network_node1)
@@ -121,7 +119,8 @@
 
 /obj/machinery/atmospherics/tvalve/proc/go_to_side()
 
-	if(state) return 0
+	if(state)
+		return FALSE
 
 	state = 1
 	update_icon()
@@ -137,16 +136,16 @@
 		network_node2 = network_node1
 
 	if(network_node1)
-		network_node1.update = 1
+		network_node1.update = TRUE
 	else if(network_node2)
-		network_node2.update = 1
+		network_node2.update = TRUE
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/tvalve/proc/go_straight()
 
 	if(!state)
-		return 0
+		return FALSE
 
 	state = 0
 	update_icon()
@@ -162,16 +161,16 @@
 		network_node3 = network_node1
 
 	if(network_node1)
-		network_node1.update = 1
+		network_node1.update = TRUE
 	else if(network_node3)
-		network_node3.update = 1
+		network_node3.update = TRUE
 
-	return 1
+	return TRUE
 
-/obj/machinery/atmospherics/tvalve/attack_ai(mob/user as mob)
+/obj/machinery/atmospherics/tvalve/attack_ai(mob/user)
 	return
 
-/obj/machinery/atmospherics/tvalve/attack_hand(mob/user as mob)
+/obj/machinery/atmospherics/tvalve/attack_hand(mob/user)
 	src.add_fingerprint(usr)
 	update_icon(1)
 	sleep(10)
@@ -198,18 +197,18 @@
 	node3_dir = dir
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
-		if(target.initialize_directions & get_dir(target,src))
-			if (check_connect_types(target,src))
+		if(target.initialize_directions & get_dir(target, src))
+			if (check_connect_types(target, src))
 				node1 = target
 				break
 	for(var/obj/machinery/atmospherics/target in get_step(src,node2_dir))
-		if(target.initialize_directions & get_dir(target,src))
-			if (check_connect_types(target,src))
+		if(target.initialize_directions & get_dir(target, src))
+			if (check_connect_types(target, src))
 				node2 = target
 				break
 	for(var/obj/machinery/atmospherics/target in get_step(src,node3_dir))
-		if(target.initialize_directions & get_dir(target,src))
-			if (check_connect_types(target,src))
+		if(target.initialize_directions & get_dir(target, src))
+			if (check_connect_types(target, src))
 				node3 = target
 				break
 
@@ -236,13 +235,13 @@
 /obj/machinery/atmospherics/tvalve/return_network(obj/machinery/atmospherics/reference)
 	build_network()
 
-	if(reference==node1)
+	if(reference == node1)
 		return network_node1
 
-	if(reference==node2)
+	if(reference == node2)
 		return network_node2
 
-	if(reference==node3)
+	if(reference == node3)
 		return network_node3
 
 	return null
@@ -255,21 +254,21 @@
 	if(network_node3 == old_network)
 		network_node3 = new_network
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/tvalve/return_network_air(datum/network/reference)
 	return null
 
 /obj/machinery/atmospherics/tvalve/disconnect(obj/machinery/atmospherics/reference)
-	if(reference==node1)
+	if(reference == node1)
 		qdel(network_node1)
 		node1 = null
 
-	else if(reference==node2)
+	else if(reference == node2)
 		qdel(network_node2)
 		node2 = null
 
-	else if(reference==node3)
+	else if(reference == node3)
 		qdel(network_node3)
 		node2 = null
 
@@ -322,7 +321,7 @@
 
 /obj/machinery/atmospherics/tvalve/digital/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id))
-		return 0
+		return FALSE
 
 	switch(signal.data["command"])
 		if("valve_open")
@@ -339,26 +338,30 @@
 			else
 				go_to_side()
 
-/obj/machinery/atmospherics/tvalve/attackby(var/obj/item/weapon/W as obj, var/mob/user as mob)
+/obj/machinery/atmospherics/tvalve/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (istype(src, /obj/machinery/atmospherics/tvalve/digital))
 		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it's too complicated.</span>")
-		return 1
+		return TRUE
+
 	var/datum/gas_mixture/int_air = return_air()
 	var/datum/gas_mixture/env_air = loc.return_air()
-	if ((int_air.return_pressure()-env_air.return_pressure()) > 2*ONE_ATMOSPHERE)
+
+	if ((int_air.return_pressure()-env_air.return_pressure()) > 2 * ONE_ATMOSPHERE)
 		to_chat(user, "<span class='warnng'>You cannot unwrench \the [src], it too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
-		return 1
+		return TRUE
+
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
+
 	if (do_after(user, 40, src))
 		user.visible_message( \
 			"<span class='notice'>\The [user] unfastens \the [src].</span>", \
 			"<span class='notice'>You have unfastened \the [src].</span>", \
 			"You hear a ratchet.")
-		new /obj/item/pipe(loc, make_from=src)
+		new /obj/item/pipe(loc, make_from = src)
 		qdel(src)
 
 /obj/machinery/atmospherics/tvalve/mirrored
@@ -381,6 +384,7 @@
 
 /obj/machinery/atmospherics/tvalve/mirrored/atmos_init()
 	..()
+
 	var/node1_dir
 	var/node2_dir
 	var/node3_dir
@@ -428,10 +432,10 @@
 	if(!powered())
 		icon_state = "tvalvemnopower"
 
-/obj/machinery/atmospherics/tvalve/mirrored/digital/attack_ai(mob/user as mob)
+/obj/machinery/atmospherics/tvalve/mirrored/digital/attack_ai(mob/user)
 	return src.attack_hand(user)
 
-/obj/machinery/atmospherics/tvalve/mirrored/digital/attack_hand(mob/user as mob)
+/obj/machinery/atmospherics/tvalve/mirrored/digital/attack_hand(mob/user)
 	if(!powered())
 		return
 	if(!src.allowed(user))
@@ -454,7 +458,7 @@
 
 /obj/machinery/atmospherics/tvalve/mirrored/digital/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id))
-		return 0
+		return FALSE
 
 	switch(signal.data["command"])
 		if("valve_open")

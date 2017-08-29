@@ -41,12 +41,12 @@ Class Procs:
 
 
 /zone/var/name
-/zone/var/invalid = 0
+/zone/var/invalid = FALSE
 /zone/var/list/contents = list()
 /zone/var/list/fire_tiles = list()
 /zone/var/list/fuel_objs = list()
 
-/zone/var/needs_update = 0
+/zone/var/needs_update = FALSE
 
 /zone/var/list/edges = list()
 
@@ -69,14 +69,19 @@ Class Procs:
 #endif
 
 	var/datum/gas_mixture/turf_air = T.return_air()
+
 	add_tile_air(turf_air)
 	T.zone = src
 	contents.Add(T)
+
 	if(T.fire)
 		var/obj/effect/decal/cleanable/liquid_fuel/fuel = locate() in T
 		fire_tiles.Add(T)
 		SSair.active_fire_zones |= src
-		if(fuel) fuel_objs += fuel
+
+		if(fuel)
+			fuel_objs += fuel
+
 	T.update_graphic(air.graphic)
 
 /zone/proc/remove(turf/simulated/T)
@@ -88,11 +93,14 @@ Class Procs:
 #endif
 	contents.Remove(T)
 	fire_tiles.Remove(T)
+
 	if(T.fire)
 		var/obj/effect/decal/cleanable/liquid_fuel/fuel = locate() in T
 		fuel_objs -= fuel
+
 	T.zone = null
 	T.update_graphic(graphic_remove = air.graphic)
+
 	if(contents.len)
 		air.group_multiplier = contents.len
 	else
@@ -121,7 +129,7 @@ Class Procs:
 			SSair.mark_for_update(T)
 
 /zone/proc/c_invalidate()
-	invalid = 1
+	invalid = TRUE
 	SSair.remove_zone(src)
 	#ifdef ZASDBG
 	for(var/turf/simulated/T in contents)
@@ -129,12 +137,13 @@ Class Procs:
 	#endif
 
 /zone/proc/rebuild()
-	if(invalid) return //Short circuit for explosions where rebuild is called many times over.
+	if(invalid)
+		return //Short circuit for explosions where rebuild is called many times over.
 	c_invalidate()
 	for(var/turf/simulated/T in contents)
 		T.update_graphic(graphic_remove = air.graphic) //we need to remove the overlays so they're not doubled when the zone is rebuilt
 		//T.dbg(invalid_zone)
-		T.needs_air_update = 0 //Reset the marker so that it will be added to the list.
+		T.needs_air_update = FALSE //Reset the marker so that it will be added to the list.
 		SSair.mark_for_update(T)
 
 /zone/proc/add_tile_air(datum/gas_mixture/tile_air)
@@ -142,8 +151,8 @@ Class Procs:
 	air.group_multiplier = 1
 	air.multiply(contents.len)
 	air.merge(tile_air)
-	air.divide(contents.len+1)
-	air.group_multiplier = contents.len+1
+	air.divide(contents.len + 1)
+	air.group_multiplier = contents.len + 1
 
 /zone/proc/tick()
 	if(air.temperature >= PHORON_FLASHPOINT && !(src in SSair.active_fire_zones) && air.check_combustability() && contents.len)
@@ -170,12 +179,14 @@ Class Procs:
 	to_chat(M, "Simulated: [contents.len] ([air.group_multiplier])")
 //	to_chat(M, "Unsimulated: [unsimulated_contents.len]")
 //	to_chat(M, "Edges: [edges.len]")
-	if(invalid) to_chat(M, "Invalid!")
+	if(invalid)
+		to_chat(M, "Invalid!")
 	var/zone_edges = 0
 	var/space_edges = 0
 	var/space_coefficient = 0
 	for(var/connection_edge/E in edges)
-		if(E.type == /connection_edge/zone) zone_edges++
+		if(E.type == /connection_edge/zone)
+			zone_edges++
 		else
 			space_edges++
 			space_coefficient += E.coefficient

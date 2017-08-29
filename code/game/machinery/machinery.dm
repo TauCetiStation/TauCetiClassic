@@ -398,9 +398,9 @@ Class Procs:
 
 /obj/machinery/proc/default_part_replacement(mob/user, obj/item/weapon/storage/part_replacer/R)
 	if(!istype(R))
-		return 0
+		return FALSE
 	if(!component_parts)
-		return 0
+		return FALSE
 	if(panel_open)
 		var/obj/item/weapon/circuitboard/CB = locate(/obj/item/weapon/circuitboard) in component_parts
 		var/P
@@ -423,9 +423,9 @@ Class Procs:
 			RefreshParts()
 	else
 		to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
-		for(var/var/obj/item/C in component_parts)
+		for(var/obj/item/C in component_parts)
 			to_chat(user, "<span class='notice'>    [C.name]</span>")
-	return 1
+	return TRUE
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
 	var/shouldplaysound = 0

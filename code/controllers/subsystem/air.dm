@@ -21,7 +21,7 @@ var/datum/subsystem/air/SSair
 	flags = SS_BACKGROUND
 
 	var/current_cycle = 0
-	var/next_id       = 1 //Used to keep track of zone UIDs.
+	var/next_id       = 1 // Used to keep track of zone UIDs.
 
 	var/cost_pipenets   = 0
 	var/cost_tiles_curr = 0
@@ -78,6 +78,8 @@ var/datum/subsystem/air/SSair
 	..()
 
 /datum/subsystem/air/fire(resumed = 0)
+	current_cycle++
+
 	var/timer = world.tick_usage
 
 	if (currentpart == SSAIR_PIPENETS || !resumed)
@@ -173,12 +175,14 @@ var/datum/subsystem/air/SSair
 	while (tiles_to_update.len)
 		var/turf/T = tiles_to_update[tiles_to_update.len]
 		tiles_to_update.len--
+
 		// Check if the turf is self-zone-blocked
 		if(T.c_airblock(T) & ZONE_BLOCKED)
 			deferred_tiles += T
 			if (MC_TICK_CHECK)
 				return
 			continue
+
 		T.update_air_properties()
 		T.post_update_air_properties()
 		T.needs_air_update = FALSE
@@ -194,6 +198,7 @@ var/datum/subsystem/air/SSair
 	while (deferred_tiles.len)
 		var/turf/T = deferred_tiles[deferred_tiles.len]
 		deferred_tiles.len--
+
 		T.update_air_properties()
 		T.post_update_air_properties()
 		T.needs_air_update = FALSE
@@ -312,6 +317,7 @@ var/datum/subsystem/air/SSair
 	ASSERT(isturf(A))
 	ASSERT(isturf(B))
 	#endif
+
 	var/ablock = A.c_airblock(B)
 	if(ablock == BLOCKED)
 		return BLOCKED
@@ -321,6 +327,7 @@ var/datum/subsystem/air/SSair
 	#ifdef ZASDBG
 	ASSERT(istype(T))
 	#endif
+
 	return istype(T) && T.zone && !T.zone.invalid
 
 /datum/subsystem/air/proc/merge(zone/A, zone/B)
@@ -331,6 +338,7 @@ var/datum/subsystem/air/SSair
 	ASSERT(!B.invalid)
 	ASSERT(A != B)
 	#endif
+
 	if(A.contents.len < B.contents.len)
 		A.c_merge(B)
 		mark_zone_update(B)
@@ -348,28 +356,34 @@ var/datum/subsystem/air/SSair
 	ASSERT(A != B)
 	#endif
 
-	var/block = SSair.air_blocked(A,B)
-	if(block & AIR_BLOCKED) return
+	var/block = SSair.air_blocked(A, B)
+	if(block & AIR_BLOCKED)
+		return
 
 	var/direct = !(block & ZONE_BLOCKED)
 	var/space = !istype(B)
 
 	if(!space)
-		if(min(A.zone.contents.len, B.zone.contents.len) < ZONE_MIN_SIZE || (direct && (equivalent_pressure(A.zone,B.zone) || current_cycle == 0)))
-			merge(A.zone,B.zone)
+		if(min(A.zone.contents.len, B.zone.contents.len) < ZONE_MIN_SIZE || (direct && (equivalent_pressure(A.zone, B.zone) || current_cycle == 0)))
+			merge(A.zone, B.zone)
 			return
 
-	var
-		a_to_b = get_dir(A,B)
-		b_to_a = get_dir(B,A)
+	var/a_to_b = get_dir(A,B)
+	var/b_to_a = get_dir(B,A)
 
-	if(!A.connections) A.connections = new
-	if(!B.connections) B.connections = new
+	if(!A.connections)
+		A.connections = new
+	if(!B.connections)
+		B.connections = new
 
-	if(A.connections.get(a_to_b)) return
-	if(B.connections.get(b_to_a)) return
+	if(A.connections.get(a_to_b))
+		return
+	if(B.connections.get(b_to_a))
+		return
+
 	if(!space)
-		if(A.zone == B.zone) return
+		if(A.zone == B.zone)
+			return
 
 
 	var/connection/c = new /connection(A,B)
@@ -377,42 +391,58 @@ var/datum/subsystem/air/SSair
 	A.connections.place(c, a_to_b)
 	B.connections.place(c, b_to_a)
 
-	if(direct) c.mark_direct()
+	if(direct)
+		c.mark_direct()
 
 /datum/subsystem/air/proc/mark_for_update(turf/T)
 	#ifdef ZASDBG
 	ASSERT(isturf(T))
 	#endif
-	if(T.needs_air_update) return
+
+	if(T.needs_air_update)
+		return
+
 	tiles_to_update |= T
+
 	#ifdef ZASDBG
 	T.overlays += mark
 	#endif
-	T.needs_air_update = 1
+
+	T.needs_air_update = TRUE
 
 /datum/subsystem/air/proc/mark_zone_update(zone/Z)
 	#ifdef ZASDBG
 	ASSERT(istype(Z))
 	#endif
-	if(Z.needs_update) return
+
+	if(Z.needs_update)
+		return
+
 	zones_to_update.Add(Z)
-	Z.needs_update = 1
+	Z.needs_update = TRUE
 
 /datum/subsystem/air/proc/mark_edge_sleeping(connection_edge/E)
 	#ifdef ZASDBG
 	ASSERT(istype(E))
 	#endif
-	if(E.sleeping) return
+
+	if(E.sleeping)
+		return
+
 	active_edges.Remove(E)
-	E.sleeping = 1
+	E.sleeping = TRUE
 
 /datum/subsystem/air/proc/mark_edge_active(connection_edge/E)
 	#ifdef ZASDBG
 	ASSERT(istype(E))
 	#endif
-	if(!E.sleeping) return
+
+	if(!E.sleeping)
+		return
+
 	active_edges.Add(E)
-	E.sleeping = 0
+	E.sleeping = FALSE
+
 	#ifdef ZASDBG
 	if(istype(E, /connection_edge/zone/))
 		var/connection_edge/zone/ZE = E
@@ -428,33 +458,44 @@ var/datum/subsystem/air/SSair
 
 	if(istype(B))
 		for(var/connection_edge/zone/edge in A.edges)
-			if(edge.contains_zone(B)) return edge
-		var/connection_edge/edge = new/connection_edge/zone(A,B)
+			if(edge.contains_zone(B))
+				return edge
+		var/connection_edge/edge = new/connection_edge/zone(A, B)
 		edges.Add(edge)
 		edge.recheck()
 		return edge
 	else
 		for(var/connection_edge/unsimulated/edge in A.edges)
-			if(has_same_air(edge.B,B)) return edge
-		var/connection_edge/edge = new/connection_edge/unsimulated(A,B)
+			if(has_same_air(edge.B, B))
+				return edge
+		var/connection_edge/edge = new/connection_edge/unsimulated(A, B)
 		edges.Add(edge)
 		edge.recheck()
 		return edge
 
-/datum/subsystem/air/proc/has_same_air(turf/A, turf/B)
-	if(A.oxygen != B.oxygen) return 0
-	if(A.nitrogen != B.nitrogen) return 0
-	if(A.phoron != B.phoron) return 0
-	if(A.carbon_dioxide != B.carbon_dioxide) return 0
-	if(A.temperature != B.temperature) return 0
-	return TRUE
-
 /datum/subsystem/air/proc/remove_edge(connection_edge/E)
 	edges -= E
-	if(!E.sleeping) active_edges.Remove(E)
+	if(!E.sleeping)
+		active_edges.Remove(E)
+
+/datum/subsystem/air/proc/has_same_air(turf/A, turf/B)
+	if(A.oxygen != B.oxygen)
+		return FALSE
+	if(A.nitrogen != B.nitrogen)
+		return FALSE
+	if(A.phoron != B.phoron)
+		return FALSE
+	if(A.carbon_dioxide != B.carbon_dioxide)
+		return FALSE
+	if(A.temperature != B.temperature)
+		return FALSE
+
+	return TRUE
 
 #undef SSAIR_PIPENETS
-#undef SSAIR_TILES
+#undef SSAIR_TILES_CUR
+#undef SSAIR_TILES_DEF
 #undef SSAIR_EDGES
-#undef SSAIR_FIRE
+#undef SSAIR_FIRE_ZONES
+#undef SSAIR_HOTSPOTS
 #undef SSAIR_ZONES

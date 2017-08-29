@@ -34,22 +34,22 @@
 
 		var/datum/gas_mixture/air_sample = return_air()
 
-		if(output&1)
-			signal.data["pressure"] = num2text(round(air_sample.return_pressure(),0.1),)
-		if(output&2)
-			signal.data["temperature"] = round(air_sample.temperature,0.1)
+		if(output & 1)
+			signal.data["pressure"] = num2text(round(air_sample.return_pressure(), 0.1))
+		if(output & 2)
+			signal.data["temperature"] = round(air_sample.temperature, 0.1)
 
-		if(output>4)
+		if(output > 4)
 			var/total_moles = air_sample.total_moles
 			if(total_moles > 0)
-				if(output&4)
-					signal.data["oxygen"] = round(100*air_sample.gas["oxygen"]/total_moles,0.1)
-				if(output&8)
-					signal.data["phoron"] = round(100*air_sample.gas["phoron"]/total_moles,0.1)
-				if(output&16)
-					signal.data["nitrogen"] = round(100*air_sample.gas["nitrogen"]/total_moles,0.1)
-				if(output&32)
-					signal.data["carbon_dioxide"] = round(100*air_sample.gas["carbon_dioxide"]/total_moles,0.1)
+				if(output & 4)
+					signal.data["oxygen"] = round(100 * air_sample.gas["oxygen"] / total_moles, 0.1)
+				if(output & 8)
+					signal.data["phoron"] = round(100 * air_sample.gas["phoron"] / total_moles, 0.1)
+				if(output & 16)
+					signal.data["nitrogen"] = round(100 * air_sample.gas["nitrogen"] / total_moles, 0.1)
+				if(output & 32)
+					signal.data["carbon_dioxide"] = round(100 * air_sample.gas["carbon_dioxide"] / total_moles, 0.1)
 			else
 				signal.data["oxygen"] = 0
 				signal.data["phoron"] = 0
@@ -229,54 +229,51 @@ Max Output Pressure: [output_pressure] kPa<BR>"}
 	if(href_list["adj_pressure"])
 		var/change = text2num(href_list["adj_pressure"])
 		pressure_setting = between(0, pressure_setting + change, MAX_PUMP_PRESSURE)
-		addtimer(CALLBACK(src, .proc/updateUsrDialog), 1)
+		updateUsrDialog()
 		return
 
 	if(href_list["adj_input_flow_rate"])
 		var/change = text2num(href_list["adj_input_flow_rate"])
 		input_flow_setting = between(0, input_flow_setting + change, ATMOS_DEFAULT_VOLUME_PUMP + 500) //default flow rate limit for air injectors
-		addtimer(CALLBACK(src, .proc/updateUsrDialog), 1)
+		updateUsrDialog()
 		return
 
 	if(!radio_connection)
 		return FALSE
+
 	var/datum/signal/signal = new
+
 	signal.transmission_method = 1 //radio signal
 	signal.source = src
+
 	if(href_list["in_refresh_status"])
 		input_info = null
 		signal.data = list ("tag" = input_tag, "status" = 1)
-		. = 1
 
 	if(href_list["in_toggle_injector"])
 		input_info = null
 		signal.data = list ("tag" = input_tag, "power_toggle" = 1)
-		. = 1
 
 	if(href_list["in_set_flowrate"])
 		input_info = null
 		signal.data = list ("tag" = input_tag, "set_volume_rate" = "[input_flow_setting]")
-		. = 1
 
 	if(href_list["out_refresh_status"])
 		output_info = null
 		signal.data = list ("tag" = output_tag, "status" = 1)
-		. = 1
 
 	if(href_list["out_toggle_power"])
 		output_info = null
 		signal.data = list ("tag" = output_tag, "power_toggle" = 1)
-		. = 1
 
 	if(href_list["out_set_pressure"])
 		output_info = null
 		signal.data = list ("tag" = output_tag, "set_internal_pressure" = "[pressure_setting]")
-		. = 1
 
-	signal.data["sigtype"]="command"
+	signal.data["sigtype"] = "command"
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
-	addtimer(CALLBACK(src, .proc/updateUsrDialog), 5)
+	updateUsrDialog()
 
 /obj/machinery/computer/general_air_control/fuel_injection
 	icon = 'icons/obj/computer.dmi'

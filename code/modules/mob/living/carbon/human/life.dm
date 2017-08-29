@@ -368,7 +368,7 @@
 					breath_moles = (ONE_ATMOSPHERE*BREATH_VOLUME/R_IDEAL_GAS_EQUATION*environment.temperature)
 				else*/
 					// Not enough air around, take a percentage of what's there to model this properly
-				breath_moles = environment.total_moles*BREATH_PERCENTAGE
+				breath_moles = environment.total_moles * BREATH_PERCENTAGE
 
 				breath = loc.remove_air(breath_moles)
 
@@ -470,15 +470,15 @@
 	var/SA_sleep_min = 5
 	var/inhaled_gas_used = 0
 
-	var/breath_pressure = (breath.total_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = (breath.total_moles * R_IDEAL_GAS_EQUATION * breath.temperature) / BREATH_VOLUME
 
 	var/inhaling = breath.gas[species.breath_type]
 	var/poison = breath.gas[species.poison_type]
 	var/exhaling = species.exhale_type ? breath.gas[species.exhale_type] : 0
 
-	var/inhale_pp = (inhaling/breath.total_moles)*breath_pressure
-	var/toxins_pp = (poison/breath.total_moles)*breath_pressure
-	var/exhaled_pp = (exhaling/breath.total_moles)*breath_pressure
+	var/inhale_pp = (inhaling / breath.total_moles) * breath_pressure
+	var/toxins_pp = (poison / breath.total_moles) * breath_pressure
+	var/exhaled_pp = (exhaling / breath.total_moles) * breath_pressure
 
 	if(inhale_pp < safe_pressure_min)
 		if(prob(20))
@@ -505,10 +505,10 @@
 		inhaled_gas_used = inhaling/6
 		clear_alert("oxy")
 
-	breath.adjust_gas(species.breath_type, -inhaled_gas_used, update = 0) //update afterwards
+	breath.adjust_gas(species.breath_type, -inhaled_gas_used, update = FALSE) //update afterwards
 
 	if(species.exhale_type)
-		breath.adjust_gas_temp(species.exhale_type, inhaled_gas_used, bodytemperature, update = 0) //update afterwards
+		breath.adjust_gas_temp(species.exhale_type, inhaled_gas_used, bodytemperature, update = FALSE) //update afterwards
 
 		// CO2 does not affect failed_last_breath. So if there was enough oxygen in the air but too much co2,
 		// this will hurt you, but only once per 4 ticks, instead of once per tick.
@@ -541,7 +541,7 @@
 		var/ratio = (poison/safe_toxins_max) * 10
 		if(reagents)
 			reagents.add_reagent("toxin", Clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
-		breath.adjust_gas(species.poison_type, -poison/6, update = 0) //update after
+		breath.adjust_gas(species.poison_type, -poison / 6, update = FALSE) //update after
 		throw_alert("tox_in_air")
 	else
 		clear_alert("tox_in_air")
@@ -565,7 +565,7 @@
 			if(prob(20))
 				emote(pick("giggle", "laugh"))
 
-		breath.adjust_gas("sleeping_agent", -breath.gas["sleeping_agent"]/6, update = 0) //update after
+		breath.adjust_gas("sleeping_agent", -breath.gas["sleeping_agent"] / 6, update = FALSE) //update after
 
 	//handle_temperature_effects(breath)
 
@@ -645,7 +645,7 @@
 					temp_adj = (1-thermal_protection) * ((loc_temp - bodytemperature) / BODYTEMP_HEAT_DIVISOR)
 
 			//Use heat transfer as proportional to the gas density. However, we only care about the relative density vs standard 101 kPa/20 C air. Therefore we can use mole ratios
-			var/relative_density = (environment.total_moles/environment.volume) / (MOLES_CELLSTANDARD/CELL_VOLUME)
+			var/relative_density = (environment.total_moles / environment.volume) / (MOLES_CELLSTANDARD / CELL_VOLUME)
 			temp_adj *= relative_density
 
 			if (temp_adj > BODYTEMP_HEATING_MAX) temp_adj = BODYTEMP_HEATING_MAX
