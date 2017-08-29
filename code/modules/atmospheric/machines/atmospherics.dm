@@ -49,10 +49,8 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/hide(var/do_hide)
 	if(do_hide && level == 1)
-		//plane = ABOVE_PLATING_PLANE
 		layer = PIPE_LAYER
 	else
-		//plane = initial(plane)
 		layer = initial(layer)
 
 /obj/machinery/atmospherics/attackby(atom/A, mob/user as mob)

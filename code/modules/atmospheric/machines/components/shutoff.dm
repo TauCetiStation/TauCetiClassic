@@ -28,12 +28,10 @@
 /obj/machinery/atmospherics/valve/shutoff/hide(var/do_hide)
 	if(do_hide)
 		if(level == 1)
-			//plane = ABOVE_PLATING_PLANE
 			layer = PIPE_LAYER
 		else if(level == 2)
 			..()
 	else
-		//plane = initial(plane)
 		layer = initial(layer)
 
 /obj/machinery/atmospherics/valve/shutoff/process()
