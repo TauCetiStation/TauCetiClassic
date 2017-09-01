@@ -54,8 +54,6 @@ Pipelines + Other Objects -> Pipe network
 		layer = initial(layer)
 
 /obj/machinery/atmospherics/attackby(atom/A, mob/user)
-	if(istype(A, /obj/item/device/pipe_painter))
-		return
 	if(istype(A, /obj/item/device/analyzer))
 		return
 	..()

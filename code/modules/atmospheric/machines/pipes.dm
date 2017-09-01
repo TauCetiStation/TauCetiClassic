@@ -73,9 +73,6 @@
 	if (istype(src, /obj/machinery/atmospherics/pipe/vent))
 		return ..()
 
-	if(istype(W,/obj/item/device/pipe_painter))
-		return FALSE
-
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 
@@ -1153,9 +1150,6 @@
 	return null
 
 /obj/machinery/atmospherics/pipe/tank/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/device/pipe_painter))
-		return
-
 	if(istype(W, /obj/item/device/analyzer))
 		return
 
