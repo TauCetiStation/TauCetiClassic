@@ -5401,7 +5401,7 @@
 "bZS" = (/obj/machinery/atmospherics/pipe/manifold/visible{dir = 8},/obj/machinery/meter,/turf/simulated/floor,/area/atmos)
 "bZT" = (/obj/machinery/atmospherics/trinary/filter/on{dir = 1; filter_type = 0; name = "Gas filter (Toxins tank)"},/turf/simulated/floor,/area/atmos)
 "bZU" = (/obj/machinery/atmospherics/pipe/simple/visible/green{dir = 4},/turf/simulated/floor{dir = 6; icon_state = "warning"},/area/atmos)
-"bZV" = (/obj/machinery/atmospherics/unary/outlet_injector/on{dir = 8; frequency = 1441; id = "n2o_in"; name = "N2O air injector"},/turf/simulated/floor/engine{carbon_dioxide = 0; name = "plasma floor"; nitrogen = 0; oxygen = 0; phoron = 70000},/area/atmos)
+"bZV" = (/obj/machinery/atmospherics/unary/outlet_injector/on{dir = 8; frequency = 1441; id = "tox_in"; name = "TOX air injector"},/turf/simulated/floor/engine{carbon_dioxide = 0; name = "plasma floor"; nitrogen = 0; oxygen = 0; phoron = 70000},/area/atmos)
 "bZW" = (/obj/machinery/hologram/holopad,/turf/simulated/floor{icon_state = "white"},/area/medical/virology)
 "bZX" = (/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 0; pixel_y = -32},/turf/simulated/floor{icon_state = "white"},/area/medical/virology)
 "bZY" = (/obj/structure/cable{icon_state = "1-2"; pixel_y = 0; d1 = 1; d2 = 2},/obj/machinery/atmospherics/binary/pump/on,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
