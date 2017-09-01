@@ -4,7 +4,7 @@
 /obj/machinery/atmospherics/unary/freezer
 	name = "gas cooling system"
 	desc = "Cools gas when connected to a pipe network."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "freezer_0"
 	density = 1
 	anchored = 1
@@ -54,7 +54,9 @@
 	update_icon()
 
 /obj/machinery/atmospherics/unary/freezer/update_icon()
-	if(node)
+	if(panel_open)
+		icon_state = "freezer-o"
+	else if(node)
 		if(use_power && cooling)
 			icon_state = "freezer_1"
 		else
@@ -173,11 +175,25 @@
 	power_rating = max_power_rating * (power_setting / 100)
 
 /obj/machinery/atmospherics/unary/freezer/attackby(obj/item/O, mob/user)
-	if(default_deconstruction_screwdriver(user, O))
+	if(default_deconstruction_screwdriver(user, "freezer-o", "freezer", O))
+		use_power = FALSE
+		update_icon()
 		return
-	if(default_deconstruction_crowbar(user, O))
+	if(default_deconstruction_crowbar(O))
 		return
-	if(default_part_replacement(user, O))
+	if(exchange_parts(user, O))
+		return
+	if(default_change_direction_wrench(user, O))
+		if(node)
+			node.disconnect(src)
+			disconnect(node)
+		initialize_directions = dir
+		atmos_init()
+		build_network()
+		if(node)
+			node.atmos_init()
+			node.build_network()
+			node.update_icon()
 		return
 
 	..()

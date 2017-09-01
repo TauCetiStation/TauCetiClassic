@@ -396,37 +396,6 @@ Class Procs:
 		return 1
 	return 0
 
-/obj/machinery/proc/default_part_replacement(mob/user, obj/item/weapon/storage/part_replacer/R)
-	if(!istype(R))
-		return FALSE
-	if(!component_parts)
-		return FALSE
-	if(panel_open)
-		var/obj/item/weapon/circuitboard/CB = locate(/obj/item/weapon/circuitboard) in component_parts
-		var/P
-		for(var/obj/item/weapon/stock_parts/A in component_parts)
-			for(var/T in CB.req_components)
-				if(ispath(A.type, T))
-					P = T
-					break
-			for(var/obj/item/weapon/stock_parts/B in R.contents)
-				if(istype(B, P) && istype(A, P))
-					if(B.rating > A.rating)
-						R.remove_from_storage(B, src)
-						R.handle_item_insertion(A, 1)
-						component_parts -= A
-						component_parts += B
-						B.loc = null
-						to_chat(user, "<span class='notice'>[A.name] replaced with [B.name].</span>")
-						break
-			update_icon()
-			RefreshParts()
-	else
-		to_chat(user, "<span class='notice'>Following parts detected in the machine:</span>")
-		for(var/obj/item/C in component_parts)
-			to_chat(user, "<span class='notice'>    [C.name]</span>")
-	return TRUE
-
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/weapon/storage/part_replacer/W)
 	var/shouldplaysound = 0
 	if(istype(W) && component_parts)

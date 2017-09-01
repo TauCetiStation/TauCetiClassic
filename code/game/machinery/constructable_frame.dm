@@ -350,6 +350,7 @@ to destroy them and players will be able to make replacements.
 /obj/item/weapon/circuitboard/heater
 	name = "circuit board (Heater)"
 	build_path = /obj/machinery/atmospherics/unary/heater
+	board_type = "machine"
 	origin_tech = "powerstorage=2;engineering=1)"
 	req_components = list(
 							/obj/item/weapon/cable_coil = 5,
@@ -359,6 +360,7 @@ to destroy them and players will be able to make replacements.
 /obj/item/weapon/circuitboard/cooler
 	name = "circuit board (Cooler)"
 	build_path = /obj/machinery/atmospherics/unary/freezer
+	board_type = "machine"
 	origin_tech = "magnets=2;engineering=2"
 	req_components = list(
 							/obj/item/weapon/cable_coil = 2,

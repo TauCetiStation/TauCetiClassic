@@ -6,7 +6,7 @@
 	var/leaking = 0
 	use_power = 0
 
-	var/alert_pressure = 170*ONE_ATMOSPHERE
+	var/alert_pressure = 170 * ONE_ATMOSPHERE
 	var/in_stasis = 0
 		//minimum pressure before check_pressure(...) should be called
 

@@ -4,7 +4,7 @@
 /obj/machinery/atmospherics/unary/heater
 	name = "gas heating system"
 	desc = "Heats gas when connected to a pipe network."
-	icon = 'icons/obj/Cryogenic2.dmi'
+	icon = 'icons/obj/Cryogenic3.dmi'
 	icon_state = "heater_0"
 	density = 1
 	anchored = 1
@@ -57,7 +57,9 @@
 
 
 /obj/machinery/atmospherics/unary/heater/update_icon()
-	if(node)
+	if(panel_open)
+		icon_state = "heater-o"
+	else if(node)
 		if(use_power && heating)
 			icon_state = "heater_1"
 		else
@@ -157,14 +159,28 @@
 
 /obj/machinery/atmospherics/unary/heater/proc/set_power_level(new_power_setting)
 	power_setting = new_power_setting
-	power_rating = max_power_rating * (power_setting/100)
+	power_rating = max_power_rating * (power_setting / 100)
 
 /obj/machinery/atmospherics/unary/heater/attackby(obj/item/O, mob/user)
-	if(default_deconstruction_screwdriver(user, O))
+	if(default_deconstruction_screwdriver(user, "heater-o", "heater", O))
+		use_power = FALSE
+		update_icon()
 		return
-	if(default_deconstruction_crowbar(user, O))
+	if(default_deconstruction_crowbar(O))
 		return
-	if(default_part_replacement(user, O))
+	if(exchange_parts(user, O))
+		return
+	if(default_change_direction_wrench(user, O))
+		if(node)
+			node.disconnect(src)
+			disconnect(node)
+		initialize_directions = dir
+		atmos_init()
+		build_network()
+		if(node)
+			node.atmos_init()
+			node.build_network()
+			node.update_icon()
 		return
 
 	..()
