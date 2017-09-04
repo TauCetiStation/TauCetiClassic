@@ -34,7 +34,7 @@
 	density = 1
 	opacity = 1
 	anchored = 1
-	layer = 3.14
+	layer = TURF_LAYER + 0.49
 	var/health = 250
 	var/resintype = null
 	//var/mob/living/affecting = null
