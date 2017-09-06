@@ -70,6 +70,10 @@
 	if (!mixing_inputs)
 		mixing_inputs = list(src.air1 = node1_concentration, src.air2 = node2_concentration)
 
+/obj/machinery/atmospherics/trinary/mixer/singularity_pull()
+	new /obj/item/pipe(loc, make_from = src)
+	qdel(src)
+
 /obj/machinery/atmospherics/trinary/mixer/process()
 	..()
 

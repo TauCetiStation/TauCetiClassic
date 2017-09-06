@@ -48,6 +48,9 @@
 	unregister_radio(src, frequency)
 	return ..()
 
+/obj/machinery/atmospherics/unary/vent_scrubber/singularity_pull()
+	new /obj/item/pipe(loc, make_from = src)
+	qdel(src)
 
 /obj/machinery/atmospherics/unary/vent_scrubber/update_icon(safety = FALSE)
 	if(!check_icon_cache())

@@ -23,6 +23,10 @@
 	initialize_directions = dir
 	..()
 
+/obj/machinery/atmospherics/portables_connector/singularity_pull()
+	new /obj/item/pipe(loc, make_from = src)
+	qdel(src)
+
 /obj/machinery/atmospherics/portables_connector/update_icon()
 	icon_state = "connector"
 

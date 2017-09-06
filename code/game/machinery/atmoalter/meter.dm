@@ -25,6 +25,10 @@
 	target = null
 	return ..()
 
+/obj/machinery/meter/singularity_pull()
+	new /obj/item/pipe_meter(loc)
+	qdel(src)
+
 /obj/machinery/meter/process()
 	if(!target)
 		icon_state = "meterX"

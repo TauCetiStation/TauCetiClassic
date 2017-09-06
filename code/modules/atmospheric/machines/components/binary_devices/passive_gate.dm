@@ -33,6 +33,10 @@
 	air1.volume = ATMOS_DEFAULT_VOLUME_PUMP * 2.5
 	air2.volume = ATMOS_DEFAULT_VOLUME_PUMP * 2.5
 
+/obj/machinery/atmospherics/binary/passive_gate/singularity_pull()
+	new /obj/item/pipe(loc, make_from = src)
+	qdel(src)
+
 /obj/machinery/atmospherics/binary/passive_gate/update_icon()
 	icon_state = (unlocked && flowing)? "on" : "off"
 

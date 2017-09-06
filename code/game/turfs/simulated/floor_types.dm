@@ -77,7 +77,8 @@
 		if(floor_type)
 			if(prob(30))
 				new floor_type(src)
-				make_plating()
+				ChangeTurf(/turf/simulated/floor)
+				make_plating() // why there is return for this floor type in that proc?
 		else if(prob(30))
 			ReplaceWithLattice()
 

@@ -51,6 +51,10 @@
 	initialize_directions()
 	..()
 
+/obj/machinery/atmospherics/tvalve/singularity_pull()
+	new /obj/item/pipe(loc, make_from = src)
+	qdel(src)
+
 /obj/machinery/atmospherics/tvalve/proc/initialize_directions()
 	switch(dir)
 		if(NORTH)

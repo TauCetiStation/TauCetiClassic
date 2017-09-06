@@ -10,6 +10,10 @@
 	var/obj/machinery/atmospherics/unary/heat_exchanger/partner = null
 	var/update_cycle
 
+/obj/machinery/atmospherics/unary/heat_exchanger/singularity_pull()
+	new /obj/item/pipe(loc, make_from = src)
+	qdel(src)
+
 /obj/machinery/atmospherics/unary/heat_exchanger/update_icon()
 	if(node)
 		icon_state = "intact"

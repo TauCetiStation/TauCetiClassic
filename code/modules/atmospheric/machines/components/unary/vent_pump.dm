@@ -87,6 +87,10 @@
 	unregister_radio(src, frequency)
 	return ..()
 
+/obj/machinery/atmospherics/unary/vent_pump/singularity_pull()
+	new /obj/item/pipe(loc, make_from = src)
+	qdel(src)
+
 /obj/machinery/atmospherics/unary/vent_pump/high_volume
 	name = "Large Air Vent"
 	power_channel = EQUIP

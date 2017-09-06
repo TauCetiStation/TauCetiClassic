@@ -57,6 +57,10 @@
 	air2.volume = ATMOS_DEFAULT_VOLUME_FILTER
 	air3.volume = ATMOS_DEFAULT_VOLUME_FILTER
 
+/obj/machinery/atmospherics/trinary/filter/singularity_pull()
+	new /obj/item/pipe(loc, make_from = src)
+	qdel(src)
+
 /obj/machinery/atmospherics/trinary/filter/update_icon()
 	if(istype(src, /obj/machinery/atmospherics/trinary/filter/m_filter))
 		icon_state = "m"

@@ -38,6 +38,10 @@ Thus, the two variables affect pump operation are set in New():
 	air1.volume = ATMOS_DEFAULT_VOLUME_PUMP
 	air2.volume = ATMOS_DEFAULT_VOLUME_PUMP
 
+/obj/machinery/atmospherics/binary/pump/singularity_pull()
+	new /obj/item/pipe(loc, make_from = src)
+	qdel(src)
+
 /obj/machinery/atmospherics/binary/pump/on
 	icon_state = "map_on"
 	use_power = 1

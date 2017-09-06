@@ -20,6 +20,10 @@
 		level = 1
 	..()
 
+/obj/machinery/atmospherics/pipe/singularity_pull()
+	new /obj/item/pipe(loc, make_from = src)
+	qdel(src)
+
 /obj/machinery/atmospherics/pipe/hides_under_flooring()
 	return level != 2
 

@@ -46,6 +46,10 @@
 
 	build_icons()
 
+/obj/machinery/atmospherics/omni/singularity_pull()
+	new /obj/item/pipe(loc, make_from = src)
+	qdel(src)
+
 /obj/machinery/atmospherics/omni/update_icon()
 	if(stat & NOPOWER)
 		overlays = overlays_off
