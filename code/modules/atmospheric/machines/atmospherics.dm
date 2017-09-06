@@ -47,7 +47,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/proc/atmos_init()
 	atmos_initalized = TRUE
 
-/obj/machinery/atmospherics/hide(var/do_hide)
+/obj/machinery/atmospherics/hide(do_hide)
 	if(do_hide && level == 1)
 		layer = PIPE_LAYER
 	else

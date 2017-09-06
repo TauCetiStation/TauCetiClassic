@@ -24,6 +24,15 @@ Contains helper procs for airflow, handled in /connection_group.
 /mob/living/silicon/airflow_stun()
 	return
 
+/mob/living/simple_animal/construct/airflow_stun()
+	return
+
+/mob/living/simple_animal/hulk/airflow_stun()
+	return
+
+/mob/living/simple_animal/special/scp173/airflow_stun()
+	return
+
 /mob/living/carbon/slime/airflow_stun()
 	return
 
@@ -96,10 +105,14 @@ Contains helper procs for airflow, handled in /connection_group.
 		return FALSE
 	if(buckled)
 		return FALSE
-	var/obj/item/shoes = get_equipped_item(slot_shoes)
-	if(istype(shoes) && (shoes.flags & NOSLIP))
-		return FALSE
 	return TRUE
+
+/mob/living/carbon/human/AirflowCanMove(n)
+	if(shoes && (shoes.flags & NOSLIP))
+		return FALSE
+	if(wear_suit && (wear_suit.flags & NOSLIP))
+		return FALSE
+	return ..()
 
 /atom/movable/proc/GotoAirflowDest(n)
 	set waitfor = FALSE
@@ -240,14 +253,6 @@ Contains helper procs for airflow, handled in /connection_group.
 	airflow_dest = null
 	airborne_acceleration = 0
 
-/mob/airflow_hit(atom/A)
-	for(var/mob/M in hearers(src))
-		M.show_message("<span class='danger'>\The [src] slams into \a [A]!</span>", 1, "<span class='danger'>You hear a loud slam!</span>", 2)
-	playsound(src.loc, "smash.ogg", 25, 1, -1)
-	var/weak_amt = istype(A,/obj/item) ? A:w_class : rand(1, 5) //Heheheh
-	Weaken(weak_amt)
-	. = ..()
-
 /obj/airflow_hit(atom/A)
 	for(var/mob/M in hearers(src))
 		M.show_message("<span class='danger'>\The [src] slams into \a [A]!</span>",1 , "<span class='danger'>You hear a loud slam!</span>", 2)
@@ -257,6 +262,23 @@ Contains helper procs for airflow, handled in /connection_group.
 /obj/item/airflow_hit(atom/A)
 	airflow_speed = 0
 	airflow_dest = null
+
+/mob/airflow_hit(atom/A)
+	for(var/mob/M in hearers(src))
+		M.show_message("<span class='danger'>\The [src] slams into \a [A]!</span>", 1, "<span class='danger'>You hear a loud slam!</span>", 2)
+	playsound(src.loc, "smash.ogg", 25, 1, -1)
+	var/weak_amt = istype(A,/obj/item) ? A:w_class : rand(1, 5) //Heheheh
+	Weaken(weak_amt)
+	. = ..()
+
+/mob/living/simple_animal/construct/airflow_hit(atom/A)
+	return
+
+/mob/living/simple_animal/hulk/airflow_hit(atom/A)
+	return
+
+/mob/living/simple_animal/special/scp173/airflow_hit(atom/A)
+	return
 
 /mob/living/carbon/human/airflow_hit(atom/A)
 //	for(var/mob/M in hearers(src))
