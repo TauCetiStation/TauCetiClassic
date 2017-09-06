@@ -84,7 +84,6 @@
 	if(initial_loc)
 		initial_loc.air_vent_info -= id_tag
 		initial_loc.air_vent_names -= id_tag
-	unregister_radio(src, frequency)
 	return ..()
 
 /obj/machinery/atmospherics/unary/vent_pump/singularity_pull()
@@ -269,7 +268,7 @@
 	radio_filter_in = frequency == 1439 ? (RADIO_FROM_AIRALARM) : null
 	radio_filter_out = frequency == 1439 ? (RADIO_TO_AIRALARM) : null
 	if(frequency)
-		radio_connection = register_radio(src, frequency, frequency, radio_filter_in)
+		set_frequency(frequency)
 		src.broadcast_status()
 
 /obj/machinery/atmospherics/unary/vent_pump/receive_signal(datum/signal/signal)

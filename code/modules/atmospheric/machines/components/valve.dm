@@ -47,18 +47,35 @@
 			initialize_directions = EAST|WEST
 	..()
 
+/obj/machinery/atmospherics/valve/Destroy()
+	if(node1)
+		node1.disconnect(src)
+		qdel(network_node1)
+	if(node2)
+		node2.disconnect(src)
+		qdel(network_node2)
+
+	node1 = null
+	node2 = null
+
+	return ..()
+
 /obj/machinery/atmospherics/valve/singularity_pull()
 	new /obj/item/pipe(loc, make_from = src)
 	qdel(src)
 
 /obj/machinery/atmospherics/valve/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node1)
+		qdel(network_node1)
 		network_node1 = new_network
 		if(open)
+			qdel(network_node2)
 			network_node2 = new_network
 	else if(reference == node2)
+		qdel(network_node2)
 		network_node2 = new_network
 		if(open)
+			qdel(network_node1)
 			network_node1 = new_network
 
 	if(new_network.normal_members.Find(src))
@@ -76,19 +93,6 @@
 
 	return null
 
-/obj/machinery/atmospherics/valve/Destroy()
-	if(node1)
-		node1.disconnect(src)
-		qdel(network_node1)
-	if(node2)
-		node2.disconnect(src)
-		qdel(network_node2)
-
-	node1 = null
-	node2 = null
-
-	return ..()
-
 /obj/machinery/atmospherics/valve/proc/open()
 	if(open)
 		return FALSE
@@ -96,7 +100,7 @@
 	open = TRUE
 	update_icon()
 
-	if(network_node1&&network_node2)
+	if(network_node1 && network_node2)
 		network_node1.merge(network_node2)
 		network_node2 = network_node1
 

@@ -19,9 +19,13 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 /datum/pipe_network/Destroy()
 	pipe_networks -= src
 	for(var/datum/pipeline/line_member in line_members)
-		line_member.network = null
+		if(line_member.network == src)
+			line_member.network = null
+		line_members -= line_member
 	for(var/obj/machinery/atmospherics/normal_member in normal_members)
 		normal_member.reassign_network(src, null)
+		normal_members -= normal_member
+
 	gases.Cut()  // Do not qdel the gases, we don't own them
 	return ..()
 
@@ -47,7 +51,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 	update_network_gases()
 
 	if((normal_members.len > 0) || (line_members.len > 0))
-		pipe_networks += src
+		pipe_networks |= src
 	else
 		qdel(src)
 
@@ -66,6 +70,7 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 		line_member.network = src
 
 	update_network_gases()
+	qdel(giver)
 	return TRUE
 
 /datum/pipe_network/proc/update_network_gases()

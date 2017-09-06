@@ -36,12 +36,15 @@
 // Housekeeping and pipe network stuff below
 /obj/machinery/atmospherics/trinary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node1)
+		qdel(network1)
 		network1 = new_network
 
 	else if(reference == node2)
+		qdel(network2)
 		network2 = new_network
 
 	else if (reference == node3)
+		qdel(network3)
 		network3 = new_network
 
 	if(new_network.normal_members.Find(src))

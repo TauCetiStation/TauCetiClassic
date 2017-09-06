@@ -23,6 +23,21 @@
 	initialize_directions = dir
 	..()
 
+/obj/machinery/atmospherics/portables_connector/Destroy()
+	loc = null
+
+	if(connected_device)
+		connected_device.disconnect()
+		connected_device = null
+
+	if(node)
+		node.disconnect(src)
+		qdel(network)
+
+	node = null
+
+	return ..()
+
 /obj/machinery/atmospherics/portables_connector/singularity_pull()
 	new /obj/item/pipe(loc, make_from = src)
 	qdel(src)
@@ -55,6 +70,7 @@
 // Housekeeping and pipe network stuff below
 /obj/machinery/atmospherics/portables_connector/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node)
+		qdel(network)
 		network = new_network
 
 	if(new_network.normal_members.Find(src))
@@ -64,23 +80,11 @@
 
 	return null
 
-/obj/machinery/atmospherics/portables_connector/Destroy()
-	loc = null
-
-	if(connected_device)
-		connected_device.disconnect()
-
-	if(node)
-		node.disconnect(src)
-		qdel(network)
-
-	node = null
-
-	return ..()
-
 /obj/machinery/atmospherics/portables_connector/atmos_init()
 	..()
-	if(node) return
+
+	if(node)
+		return
 
 	var/node_connect = dir
 

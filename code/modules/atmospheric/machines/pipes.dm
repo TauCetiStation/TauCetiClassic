@@ -20,6 +20,14 @@
 		level = 1
 	..()
 
+/obj/machinery/atmospherics/pipe/Destroy()
+	QDEL_NULL(parent)
+	if(air_temporary)
+		loc.assume_air(air_temporary)
+		air_temporary = null
+
+	return ..()
+
 /obj/machinery/atmospherics/pipe/singularity_pull()
 	new /obj/item/pipe(loc, make_from = src)
 	qdel(src)
@@ -63,13 +71,6 @@
 		parent.build_pipeline(src)
 
 	return parent.return_network(reference)
-
-/obj/machinery/atmospherics/pipe/Destroy()
-	QDEL_NULL(parent)
-	if(air_temporary)
-		loc.assume_air(air_temporary)
-
-	return ..()
 
 /obj/machinery/atmospherics/pipe/attackby(obj/item/weapon/W, mob/user)
 	if (istype(src, /obj/machinery/atmospherics/pipe/tank))

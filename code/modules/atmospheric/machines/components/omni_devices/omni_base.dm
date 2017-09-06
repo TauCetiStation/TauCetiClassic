@@ -224,6 +224,7 @@
 /obj/machinery/atmospherics/omni/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	for(var/datum/omni_port/P in ports)
 		if(reference == P.node)
+			qdel(P.network)
 			P.network = new_network
 			break
 

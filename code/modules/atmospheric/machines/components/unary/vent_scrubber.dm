@@ -45,7 +45,6 @@
 	if(initial_loc)
 		initial_loc.air_scrub_info -= id_tag
 		initial_loc.air_scrub_names -= id_tag
-	unregister_radio(src, frequency)
 	return ..()
 
 /obj/machinery/atmospherics/unary/vent_scrubber/singularity_pull()

@@ -16,11 +16,17 @@
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(network)
 
-	if(air && air.volume)
-		temporarily_store_air()
-		qdel(air)
+	if(air)
+		if(air.volume)
+			temporarily_store_air()
+		QDEL_NULL(air)
+
 	for(var/obj/machinery/atmospherics/pipe/P in members)
-		P.parent = null
+		if(P.parent == src)
+			P.parent = null
+		members -= P
+
+	edges.Cut()
 
 	return ..()
 
@@ -75,6 +81,7 @@
 						possible_expansions += item
 
 						volume += item.volume
+						qdel(item.parent)
 						item.parent = src
 
 						alert_pressure = min(alert_pressure, item.alert_pressure)
@@ -102,7 +109,7 @@
 
 	for(var/obj/machinery/atmospherics/pipe/edge in edges)
 		for(var/obj/machinery/atmospherics/result in edge.pipeline_expansion())
-			if(!istype(result,/obj/machinery/atmospherics/pipe) && (result!=reference))
+			if(!istype(result, /obj/machinery/atmospherics/pipe) && (result != reference))
 				result.network_expand(new_network, edge)
 
 
@@ -119,7 +126,7 @@
 	return network
 
 /datum/pipeline/proc/mingle_with_turf(turf/simulated/target, mingle_volume)
-	var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume/air.volume)
+	var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume / air.volume)
 	air_sample.volume = mingle_volume
 
 	if(istype(target) && target.zone)
@@ -148,7 +155,7 @@
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
 	var/total_heat_capacity = air.heat_capacity()
-	var/partial_heat_capacity = total_heat_capacity*(share_volume/air.volume)
+	var/partial_heat_capacity = total_heat_capacity * (share_volume / air.volume)
 
 	if(istype(target, /turf/simulated))
 		var/turf/simulated/modeled_location = target

@@ -20,6 +20,7 @@
 // Housekeeping and pipe network stuff below
 /obj/machinery/atmospherics/unary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node)
+		qdel(network)
 		network = new_network
 
 	if(new_network.normal_members.Find(src))
