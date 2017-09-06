@@ -29,8 +29,8 @@
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/tank/Destroy()
-	QDEL_NULL(air_contents)
 	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(air_contents)
 	return ..()
 
 /obj/item/weapon/tank/examine(mob/user)

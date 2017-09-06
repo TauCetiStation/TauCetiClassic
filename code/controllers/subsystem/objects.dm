@@ -14,7 +14,6 @@ var/datum/subsystem/objects/SSobj
 
 	var/list/processing = list()
 	var/list/currentrun = list()
-	var/list/drying = list()
 
 /datum/subsystem/objects/New()
 	NEW_SS_GLOBAL(SSobj)
@@ -47,18 +46,15 @@ var/datum/subsystem/objects/SSobj
 	while(currentrun.len)
 		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
-		if(thing)
-			thing.process(wait)
+
+		if(QDELETED(thing))
+			processing -= thing // not really necessary, since objects remove themself when qdel() happens.
 		else
-			SSobj.processing -= thing
+			thing.process()
+
 		if (MC_TICK_CHECK)
 			return
 
-	for(var/obj/item/dryingobj in SSobj.drying)
-		if(dryingobj && dryingobj.wet)
-			dryingobj.dry_process()
-		else
-			SSobj.drying -= dryingobj
 
 /datum/subsystem/objects/proc/setup_template_objects(list/objects)
 	for(var/A in objects)
@@ -68,5 +64,3 @@ var/datum/subsystem/objects/SSobj
 /datum/subsystem/objects/Recover()
 	if (istype(SSobj.processing))
 		processing = SSobj.processing
-	if (istype(SSobj.drying))
-		drying = SSobj.drying
