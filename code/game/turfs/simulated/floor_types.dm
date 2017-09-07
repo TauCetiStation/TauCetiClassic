@@ -86,11 +86,39 @@
 	name = "engraved floor"
 	icon_state = "cult"
 
+/turf/simulated/floor/engine/airmix
+	oxygen = MOLES_O2ATMOS
+	nitrogen = MOLES_N2ATMOS
+
+/turf/simulated/floor/engine/nitrogen
+	oxygen = 0
+	nitrogen = ATMOSTANK_NITROGEN
+
+/turf/simulated/floor/engine/oxygen
+	oxygen = ATMOSTANK_OXYGEN
+	nitrogen = 0
+
+/turf/simulated/floor/engine/phoron
+	oxygen = 0
+	nitrogen = 0
+	phoron = ATMOSTANK_PHORON
+
+/turf/simulated/floor/engine/carbon_dioxide
+	oxygen = 0
+	nitrogen = 0
+	carbon_dioxide = ATMOSTANK_CO2
 
 /turf/simulated/floor/engine/n20
-	New()
-		. = ..()
-		assume_gas("sleeping_agent", 2000, T20C)
+	oxygen = 0
+	nitrogen = 0
+
+/turf/simulated/floor/engine/n20/New()
+	..()
+
+	if(!air)
+		make_air()
+
+	air.adjust_gas("sleeping_agent", ATMOSTANK_NITROUSOXIDE)
 
 /turf/simulated/floor/engine/vacuum
 	name = "vacuum floor"
