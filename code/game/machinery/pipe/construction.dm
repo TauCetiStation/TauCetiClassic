@@ -822,6 +822,7 @@ Buildable meters
 
 			var/turf/T = V.loc
 			V.level = !T.is_plating() ? 2 : 1
+			V.initialize() // this must be removed, once atom initialization port occurs.
 			V.atmos_init()
 			V.build_network()
 
@@ -1038,6 +1039,7 @@ Buildable meters
 
 			var/turf/T = S.loc
 			S.level = !T.is_plating() ? 2 : 1
+			S.initialize() // this must be removed, once atom initialization port occurs.
 			S.atmos_init()
 			S.build_network()
 
