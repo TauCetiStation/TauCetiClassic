@@ -1,3 +1,6 @@
+// this define should be removed, if power module will ever be updated.
+#define TAUCETI_POWER_DRAW_MOD /10 // at the moment, we don't use Bay's machinery power drain rebalance, so for us atmos uses too much power and we need to devide return value
+
 // channel numbers for power
 #define EQUIP			1
 #define LIGHT			2

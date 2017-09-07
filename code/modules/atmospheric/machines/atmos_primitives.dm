@@ -7,9 +7,6 @@
 	In the case of free-flowing gas you can do things with gas and still use 0 power, hence the distinction between negative and non-negative return values.
 */
 
-// this define should be removed, if power module will ever be updated.
-#define TAUCETI_POWER_DRAW_MOD /10 // at the moment, we don't use Bay's machinery power drain rebalance, so for us atmos uses too much power and we need to devide return value
-
 /obj/machinery/atmospherics/var/last_flow_rate = 0
 /obj/machinery/atmospherics/var/last_power_draw = 0
 /obj/machinery/portable_atmospherics/var/last_flow_rate = 0

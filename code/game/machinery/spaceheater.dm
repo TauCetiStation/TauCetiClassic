@@ -17,7 +17,6 @@
 	var/targetTemperature = T20C
 	var/heatingPower = 40000
 	var/efficiency = 20000
-	var/temperatureTolerance = 1
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
 
@@ -228,61 +227,50 @@
 	if(!on || (stat & BROKEN))
 		return
 
-	if(cell && cell.charge > 0)
-		var/turf/simulated/L = loc
-		if(!istype(L))
-			if(mode != HEATER_MODE_STANDBY)
-				mode = HEATER_MODE_STANDBY
-				update_icon()
-			return
+	if(powered() || cell && cell.charge > 0)
+		var/datum/gas_mixture/env = loc.return_air()
+		if(env && abs(env.temperature - targetTemperature) <= 0.1)
+			mode = HEATER_MODE_STANDBY
+		else
+			var/transfer_moles = 0.25 * env.total_moles
+			var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
-		var/datum/gas_mixture/env = L.return_air()
+			if(removed)
+				var/heat_transfer = removed.get_thermal_energy_change(targetTemperature)
+				var/power_draw
+				if(heat_transfer > 0)	//heating air
+					heat_transfer = min( heat_transfer , heatingPower ) //limit by the power rating of the heater
 
-		var/newMode = HEATER_MODE_STANDBY
-		if(setMode != HEATER_MODE_COOL && env.temperature < targetTemperature - temperatureTolerance)
-			newMode = HEATER_MODE_HEAT
-		else if(setMode != HEATER_MODE_HEAT && env.temperature > targetTemperature + temperatureTolerance)
-			newMode = HEATER_MODE_COOL
+					removed.add_thermal_energy(heat_transfer)
+					power_draw = heat_transfer
+				else	//cooling air
+					heat_transfer = abs(heat_transfer)
 
-		if(mode != newMode)
-			mode = newMode
-			update_icon()
+					//Assume the heat is being pumped into the hull which is fixed at 20 C
+					var/cop = removed.temperature / T20C	//coefficient of performance from thermodynamics -> power used = heat_transfer/cop
+					heat_transfer = min(heat_transfer, cop * heatingPower)	//limit heat transfer by available power
 
-		if(mode == HEATER_MODE_STANDBY)
-			return
+					heat_transfer = removed.add_thermal_energy(-heat_transfer)	//get the actual heat transfer
 
-		var/transfer_moles = 0.25 * env.total_moles
-		var/datum/gas_mixture/removed = env.remove(transfer_moles)
+					power_draw = abs(heat_transfer) / cop
+				if(!powered())
+					cell.use(power_draw * CELLRATE)
+				else
+					use_power(power_draw TAUCETI_POWER_DRAW_MOD)
 
-		if(removed)
-			var/heat_capacity = removed.get_thermal_energy_change(targetTemperature)
-			var/requiredPower = abs(removed.temperature - targetTemperature) * heat_capacity
-			requiredPower = min(requiredPower, heatingPower)
+				if(heat_transfer > 0)
+					mode = HEATER_MODE_HEAT
+				else if(heat_transfer < 0)
+					mode = HEATER_MODE_COOL
+				else
+					mode = HEATER_MODE_STANDBY
 
-			if(requiredPower < 1)
-				return
-
-			if(heat_capacity > 0)	//heating air
-				heat_capacity = min( heat_capacity , heatingPower ) //limit by the power rating of the heater
-
-				removed.add_thermal_energy(heat_capacity)
-
-			else	//cooling air
-				heat_capacity = abs(heat_capacity)
-
-				//Assume the heat is being pumped into the hull which is fixed at 20 C
-				var/cop = removed.temperature/T20C	//coefficient of performance from thermodynamics -> power used = heat_transfer/cop
-				heat_capacity = min(heat_capacity, cop * heatingPower)	//limit heat transfer by available power
-
-				removed.add_thermal_energy(-heat_capacity)	//get the actual heat transfer
-
-			cell.use(requiredPower / efficiency)
-
-		env.merge(removed)
-
+			env.merge(removed)
 	else
 		on = FALSE
-		update_icon()
+		mode = HEATER_MODE_STANDBY
+		power_change()
+	update_icon()
 
 #undef HEATER_MODE_STANDBY
 #undef HEATER_MODE_HEAT
