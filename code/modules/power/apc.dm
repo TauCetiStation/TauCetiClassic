@@ -702,7 +702,7 @@
 		"powerCellStatus" = cell ? cell.percent() : null,
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
-		"totalLoad" = lastused_equip + lastused_light + lastused_environ,
+		"totalLoad" = lastused_equip + lastused_light + round(lastused_environ),
 		"coverLocked" = coverlocked,
 		"siliconUser" = issilicon(user) | isobserver(user),
 		"malfStatus" = get_malf_status(user),
@@ -730,7 +730,7 @@
 			),
 			list(
 				"title" = "Environment",
-				"powerLoad" = lastused_environ,
+				"powerLoad" = round(lastused_environ),
 				"status" = environ,
 				"topicParams" = list(
 					"auto" = list("env" = 3),

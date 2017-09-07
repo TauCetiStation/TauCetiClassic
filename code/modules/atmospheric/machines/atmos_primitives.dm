@@ -7,6 +7,8 @@
 	In the case of free-flowing gas you can do things with gas and still use 0 power, hence the distinction between negative and non-negative return values.
 */
 
+// this define should be removed, if power module will ever be updated.
+#define TAUCETI_POWER_DRAW_MOD /10 // at the moment, we don't use Bay's machinery power drain rebalance, so for us atmos uses too much power and we need to devide return value
 
 /obj/machinery/atmospherics/var/last_flow_rate = 0
 /obj/machinery/atmospherics/var/last_power_draw = 0
@@ -65,7 +67,7 @@
 
 	sink.merge(removed)
 
-	return power_draw
+	return power_draw TAUCETI_POWER_DRAW_MOD
 
 //Gas 'pumping' proc for the case where the gas flow is passive and driven entirely by pressure differences (but still one-way).
 /proc/pump_gas_passive(obj/machinery/M, datum/gas_mixture/source, datum/gas_mixture/sink, transfer_moles)
@@ -169,7 +171,7 @@
 	sink.update_values()
 	source.update_values()
 
-	return power_draw
+	return power_draw TAUCETI_POWER_DRAW_MOD
 
 //Generalized gas filtering proc.
 //Filtering is a bit different from scrubbing. Instead of selectively moving the targeted gas types from one gas mix to another, filtering splits
@@ -244,7 +246,7 @@
 
 	sink_clean.merge(removed)
 
-	return filtered_power_used + unfiltered_power_used
+	return (filtered_power_used + unfiltered_power_used) TAUCETI_POWER_DRAW_MOD
 
 //For omni devices. Instead filtering is an associative list mapping gasids to gas mixtures.
 //I don't like the copypasta, but I decided to keep both versions of gas filtering as filter_gas is slightly faster (doesn't create as many temporary lists, doesn't call update_values() as much)
@@ -322,7 +324,7 @@
 
 	sink_clean.merge(removed)
 
-	return power_draw
+	return power_draw TAUCETI_POWER_DRAW_MOD
 
 //Similar deal as the other atmos process procs.
 //mix_sources maps input gas mixtures to mix ratios. The mix ratios MUST add up to 1.
@@ -391,7 +393,7 @@
 
 		sink.merge(removed)
 
-	return total_power_draw
+	return total_power_draw TAUCETI_POWER_DRAW_MOD
 
 /*
 	Helper procs for various things.
