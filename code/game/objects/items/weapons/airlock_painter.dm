@@ -91,7 +91,6 @@
 
 	if(!istype(A, /obj/machinery/atmospherics/pipe) || \
 		istype(A, /obj/machinery/atmospherics/pipe/tank) || \
-		istype(A, /obj/machinery/atmospherics/pipe/vent) || \
 		istype(A, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) || \
 		!in_range(user, A))
 	{

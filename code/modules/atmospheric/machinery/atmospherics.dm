@@ -91,6 +91,14 @@ obj/machinery/atmospherics/proc/check_connect_types(obj/machinery/atmospherics/a
 
 	return TRUE
 
+/obj/machinery/atmospherics/proc/change_color(new_color)
+	//only pass valid pipe colors please ~otherwise your pipe will turn invisible
+	if(!pipe_color_check(new_color))
+		return
+
+	pipe_color = new_color
+	update_icon()
+
 /obj/machinery/atmospherics/proc/color_cache_name(obj/machinery/atmospherics/node)
 	//Don't use this for standard pipes
 	if(!istype(node))
