@@ -490,9 +490,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/proc/mousize()
 	//find a viable mouse candidate
 	var/mob/living/simple_animal/mouse/host
-	var/obj/machinery/atmospherics/unary/vent_pump/vent_found
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent_found
 	var/list/found_vents = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/v in machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in machines)
 		if(!v.welded && v.z == src.z)
 			found_vents.Add(v)
 	if(found_vents.len)

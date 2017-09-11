@@ -9,8 +9,8 @@
 	use_power = 1
 	idle_power_usage = 100 //Watts, I hope.  Just enough to do the computer and display things.
 
-	var/obj/machinery/atmospherics/binary/circulator/circ1
-	var/obj/machinery/atmospherics/binary/circulator/circ2
+	var/obj/machinery/atmospherics/components/binary/circulator/circ1
+	var/obj/machinery/atmospherics/components/binary/circulator/circ2
 
 	var/lastgen = 0
 	var/lastgenlev = -1
@@ -30,8 +30,8 @@
 	if(src.loc && anchored)
 		power_change()
 		if(src.dir & (EAST|WEST))
-			circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,EAST)
-			circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,WEST)
+			circ1 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,EAST)
+			circ2 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,WEST)
 
 			if(circ1 && circ2)
 				if(circ1.dir != SOUTH || circ2.dir != NORTH)
@@ -39,8 +39,8 @@
 					circ2 = null
 
 		else if(src.dir & (NORTH|SOUTH))
-			circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,NORTH)
-			circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,SOUTH)
+			circ1 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,NORTH)
+			circ2 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,SOUTH)
 
 			if(circ1 && circ2 && (circ1.dir != EAST || circ2.dir != WEST))
 				circ1 = null

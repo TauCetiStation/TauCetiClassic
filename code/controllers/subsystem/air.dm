@@ -269,12 +269,12 @@ var/datum/subsystem/air/SSair
 		A.atmos_init()
 		CHECK_TICK
 
-	for(var/obj/machinery/atmospherics/unary/AM in machines)
-		if(istype(AM, /obj/machinery/atmospherics/unary/vent_pump))
-			var/obj/machinery/atmospherics/unary/vent_pump/T = AM
+	for(var/obj/machinery/atmospherics/components/unary/AM in machines)
+		if(istype(AM, /obj/machinery/atmospherics/components/unary/vent_pump))
+			var/obj/machinery/atmospherics/components/unary/vent_pump/T = AM
 			T.broadcast_status()
-		else if(istype(AM, /obj/machinery/atmospherics/unary/vent_scrubber))
-			var/obj/machinery/atmospherics/unary/vent_scrubber/T = AM
+		else if(istype(AM, /obj/machinery/atmospherics/components/unary/vent_scrubber))
+			var/obj/machinery/atmospherics/components/unary/vent_scrubber/T = AM
 			T.broadcast_status()
 		CHECK_TICK
 
@@ -285,13 +285,13 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
 	for(var/A in atmos_machines)
-		if(!istype(A, /obj/machinery/atmospherics/unary))
+		if(!istype(A, /obj/machinery/atmospherics/components/unary))
 			continue
-		if(istype(A, /obj/machinery/atmospherics/unary/vent_pump))
-			var/obj/machinery/atmospherics/unary/vent_pump/T = A
+		if(istype(A, /obj/machinery/atmospherics/components/unary/vent_pump))
+			var/obj/machinery/atmospherics/components/unary/vent_pump/T = A
 			T.broadcast_status()
-		else if(istype(A, /obj/machinery/atmospherics/unary/vent_scrubber))
-			var/obj/machinery/atmospherics/unary/vent_scrubber/T = A
+		else if(istype(A, /obj/machinery/atmospherics/components/unary/vent_scrubber))
+			var/obj/machinery/atmospherics/components/unary/vent_scrubber/T = A
 			T.broadcast_status()
 		CHECK_TICK
 

@@ -6,8 +6,8 @@
 	density = 1
 	use_power = 0
 
-	var/obj/machinery/atmospherics/unary/generator_input/input1
-	var/obj/machinery/atmospherics/unary/generator_input/input2
+	var/obj/machinery/atmospherics/components/unary/generator_input/input1
+	var/obj/machinery/atmospherics/components/unary/generator_input/input2
 
 	var/lastgen = 0
 	var/lastgenlev = -1
@@ -16,8 +16,8 @@
 /obj/machinery/power/generator_type2/New()
 	..()
 	spawn(5)
-		input1 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src,turn(dir, 90))
-		input2 = locate(/obj/machinery/atmospherics/unary/generator_input) in get_step(src,turn(dir, -90))
+		input1 = locate(/obj/machinery/atmospherics/components/unary/generator_input) in get_step(src,turn(dir, 90))
+		input2 = locate(/obj/machinery/atmospherics/components/unary/generator_input) in get_step(src,turn(dir, -90))
 		if(!input1 || !input2)
 			stat |= BROKEN
 		updateicon()

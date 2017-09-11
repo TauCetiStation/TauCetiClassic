@@ -339,7 +339,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/cryo_tube
 	name = "circuit board (Cryotube)"
-	build_path = /obj/machinery/atmospherics/unary/cryo_cell
+	build_path = /obj/machinery/atmospherics/components/unary/cryo_cell
 	board_type = "machine"
 	origin_tech = "programming=4;biotech=3;engineering=4"
 	req_components = list(
@@ -349,7 +349,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/heater
 	name = "circuit board (Heater)"
-	build_path = /obj/machinery/atmospherics/unary/heater
+	build_path = /obj/machinery/atmospherics/components/unary/heater
 	board_type = "machine"
 	origin_tech = "powerstorage=2;engineering=1)"
 	req_components = list(
@@ -359,7 +359,7 @@ to destroy them and players will be able to make replacements.
 
 /obj/item/weapon/circuitboard/cooler
 	name = "circuit board (Cooler)"
-	build_path = /obj/machinery/atmospherics/unary/freezer
+	build_path = /obj/machinery/atmospherics/components/unary/freezer
 	board_type = "machine"
 	origin_tech = "magnets=2;engineering=2"
 	req_components = list(

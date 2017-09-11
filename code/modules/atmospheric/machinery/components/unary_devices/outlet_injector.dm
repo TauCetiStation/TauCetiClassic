@@ -2,7 +2,7 @@
 //but it does not permit gas to flow back from the environment into the injector. Can be turned off to prevent any gas flow.
 //When it receives the "inject" signal, it will try to pump it's entire contents into the environment regardless of pressure, using power.
 
-/obj/machinery/atmospherics/unary/outlet_injector
+/obj/machinery/atmospherics/components/unary/outlet_injector
 	icon = 'icons/atmos/injector.dmi'
 	icon_state = "map_injector"
 
@@ -22,21 +22,21 @@
 
 	level = 1
 
-/obj/machinery/atmospherics/unary/outlet_injector/on
+/obj/machinery/atmospherics/components/unary/outlet_injector/on
 	use_power = 1
 	icon_state = "map_injector_on"
 
-/obj/machinery/atmospherics/unary/outlet_injector/New()
+/obj/machinery/atmospherics/components/unary/outlet_injector/New()
 	..()
 	air_contents.volume = ATMOS_DEFAULT_VOLUME_PUMP + 500	//Give it a small reservoir for injecting. Also allows it to have a higher flow rate limit than vent pumps, to differentiate injectors a bit more.
 
-/obj/machinery/atmospherics/unary/outlet_injector/update_icon()
+/obj/machinery/atmospherics/components/unary/outlet_injector/update_icon()
 	if(!powered())
 		icon_state = "off"
 	else
 		icon_state = "[use_power ? "on" : "off"]"
 
-/obj/machinery/atmospherics/unary/outlet_injector/update_underlays()
+/obj/machinery/atmospherics/components/unary/outlet_injector/update_underlays()
 	if(..())
 		underlays.Cut()
 		var/turf/T = get_turf(src)
@@ -44,7 +44,7 @@
 			return
 		add_underlay(T, node, dir)
 
-/obj/machinery/atmospherics/unary/outlet_injector/process()
+/obj/machinery/atmospherics/components/unary/outlet_injector/process()
 	..()
 
 	last_power_draw = 0
@@ -69,7 +69,7 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/unary/outlet_injector/proc/inject()
+/obj/machinery/atmospherics/components/unary/outlet_injector/proc/inject()
 	if(injecting || (stat & NOPOWER))
 		return FALSE
 
@@ -88,13 +88,13 @@
 
 	flick("inject", src)
 
-/obj/machinery/atmospherics/unary/outlet_injector/set_frequency(new_frequency)
+/obj/machinery/atmospherics/components/unary/outlet_injector/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency)
 
-/obj/machinery/atmospherics/unary/outlet_injector/proc/broadcast_status()
+/obj/machinery/atmospherics/components/unary/outlet_injector/proc/broadcast_status()
 	if(!radio_connection)
 		return FALSE
 
@@ -114,11 +114,11 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/unary/outlet_injector/initialize()
+/obj/machinery/atmospherics/components/unary/outlet_injector/initialize()
 	. = ..()
 	set_frequency(frequency)
 
-/obj/machinery/atmospherics/unary/outlet_injector/receive_signal(datum/signal/signal)
+/obj/machinery/atmospherics/components/unary/outlet_injector/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return FALSE
 
@@ -143,5 +143,5 @@
 	broadcast_status()
 	update_icon()
 
-/obj/machinery/atmospherics/unary/outlet_injector/hide(i)
+/obj/machinery/atmospherics/components/unary/outlet_injector/hide(i)
 	update_underlays()

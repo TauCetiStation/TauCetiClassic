@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/unary/heat_exchanger
+/obj/machinery/atmospherics/components/unary/heat_exchanger
 
 	icon = 'icons/obj/atmospherics/heat_exchanger.dmi'
 	icon_state = "intact"
@@ -7,31 +7,31 @@
 	name = "Heat Exchanger"
 	desc = "Exchanges heat between two input gases. Setup for fast heat transfer."
 
-	var/obj/machinery/atmospherics/unary/heat_exchanger/partner = null
+	var/obj/machinery/atmospherics/components/unary/heat_exchanger/partner = null
 	var/update_cycle
 
-/obj/machinery/atmospherics/unary/heat_exchanger/singularity_pull()
+/obj/machinery/atmospherics/components/unary/heat_exchanger/singularity_pull()
 	new /obj/item/pipe(loc, make_from = src)
 	qdel(src)
 
-/obj/machinery/atmospherics/unary/heat_exchanger/update_icon()
+/obj/machinery/atmospherics/components/unary/heat_exchanger/update_icon()
 	if(node)
 		icon_state = "intact"
 	else
 		icon_state = "exposed"
 
-/obj/machinery/atmospherics/unary/heat_exchanger/atmos_init()
+/obj/machinery/atmospherics/components/unary/heat_exchanger/atmos_init()
 	..()
 	if(!partner)
 		var/partner_connect = turn(dir, 180)
 
-		for(var/obj/machinery/atmospherics/unary/heat_exchanger/target in get_step(src,partner_connect))
+		for(var/obj/machinery/atmospherics/components/unary/heat_exchanger/target in get_step(src,partner_connect))
 			if(target.dir & get_dir(src, target))
 				partner = target
 				partner.partner = src
 				break
 
-/obj/machinery/atmospherics/unary/heat_exchanger/process()
+/obj/machinery/atmospherics/components/unary/heat_exchanger/process()
 	..()
 	if(!partner)
 		return FALSE
@@ -66,7 +66,7 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/unary/heat_exchanger/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/atmospherics/components/unary/heat_exchanger/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 

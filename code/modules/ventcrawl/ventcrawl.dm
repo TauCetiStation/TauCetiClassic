@@ -1,6 +1,6 @@
 var/list/ventcrawl_machinery = list(
-	/obj/machinery/atmospherics/unary/vent_scrubber,
-	/obj/machinery/atmospherics/unary/vent_pump
+	/obj/machinery/atmospherics/components/unary/vent_scrubber,
+	/obj/machinery/atmospherics/components/unary/vent_pump
 	)
 
 // Vent crawling whitelisted items, whoo
@@ -82,7 +82,7 @@ var/list/ventcrawl_machinery = list(
 	if(!can_ventcrawl())
 		return
 
-	var/obj/machinery/atmospherics/unary/vent_found
+	var/obj/machinery/atmospherics/components/unary/vent_found
 	if(clicked_on && Adjacent(clicked_on))
 		vent_found = clicked_on
 		if(!istype(vent_found) || !vent_found.can_crawl_through())

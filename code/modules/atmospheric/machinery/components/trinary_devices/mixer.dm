@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/trinary/mixer
+/obj/machinery/atmospherics/components/trinary/mixer
 	icon = 'icons/atmos/mixer.dmi'
 	icon_state = "map"
 	density = 0
@@ -19,14 +19,14 @@
 
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
-/obj/machinery/atmospherics/trinary/mixer/on
+/obj/machinery/atmospherics/components/trinary/mixer/on
 	icon_state = "map_on"
 	use_power = 1
 
-/obj/machinery/atmospherics/trinary/mixer/update_icon(safety = FALSE)
-	if(istype(src, /obj/machinery/atmospherics/trinary/mixer/m_mixer))
+/obj/machinery/atmospherics/components/trinary/mixer/update_icon(safety = FALSE)
+	if(istype(src, /obj/machinery/atmospherics/components/trinary/mixer/m_mixer))
 		icon_state = "m"
-	else if(istype(src, /obj/machinery/atmospherics/trinary/mixer/t_mixer))
+	else if(istype(src, /obj/machinery/atmospherics/components/trinary/mixer/t_mixer))
 		icon_state = "t"
 	else
 		icon_state = ""
@@ -39,29 +39,29 @@
 		icon_state += "off"
 		use_power = 0
 
-/obj/machinery/atmospherics/trinary/mixer/update_underlays()
+/obj/machinery/atmospherics/components/trinary/mixer/update_underlays()
 	if(..())
 		underlays.Cut()
 		var/turf/T = get_turf(src)
 		if(!istype(T))
 			return
 
-		if(istype(src, /obj/machinery/atmospherics/trinary/mixer/t_mixer))
+		if(istype(src, /obj/machinery/atmospherics/components/trinary/mixer/t_mixer))
 			add_underlay(T, node1, turn(dir, -90))
 		else
 			add_underlay(T, node1, turn(dir, -180))
 
-		if(istype(src, /obj/machinery/atmospherics/trinary/mixer/m_mixer) || istype(src, /obj/machinery/atmospherics/trinary/mixer/t_mixer))
+		if(istype(src, /obj/machinery/atmospherics/components/trinary/mixer/m_mixer) || istype(src, /obj/machinery/atmospherics/components/trinary/mixer/t_mixer))
 			add_underlay(T, node2, turn(dir, 90))
 		else
 			add_underlay(T, node2, turn(dir, -90))
 
 		add_underlay(T, node3, dir)
 
-/obj/machinery/atmospherics/trinary/mixer/hide(i)
+/obj/machinery/atmospherics/components/trinary/mixer/hide(i)
 	update_underlays()
 
-/obj/machinery/atmospherics/trinary/mixer/New()
+/obj/machinery/atmospherics/components/trinary/mixer/New()
 	..()
 	air1.volume = ATMOS_DEFAULT_VOLUME_MIXER
 	air2.volume = ATMOS_DEFAULT_VOLUME_MIXER
@@ -70,11 +70,11 @@
 	if (!mixing_inputs)
 		mixing_inputs = list(src.air1 = node1_concentration, src.air2 = node2_concentration)
 
-/obj/machinery/atmospherics/trinary/mixer/singularity_pull()
+/obj/machinery/atmospherics/components/trinary/mixer/singularity_pull()
 	new /obj/item/pipe(loc, make_from = src)
 	qdel(src)
 
-/obj/machinery/atmospherics/trinary/mixer/process()
+/obj/machinery/atmospherics/components/trinary/mixer/process()
 	..()
 
 	last_power_draw = 0
@@ -105,7 +105,7 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/trinary/mixer/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/atmospherics/components/trinary/mixer/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 
@@ -128,7 +128,7 @@
 		new /obj/item/pipe(loc, make_from = src)
 		qdel(src)
 
-/obj/machinery/atmospherics/trinary/mixer/attack_hand(user)
+/obj/machinery/atmospherics/components/trinary/mixer/attack_hand(user)
 	if(..())
 		return
 
@@ -164,7 +164,7 @@
 	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_mixer")
 	onclose(user, "atmo_mixer")
 
-/obj/machinery/atmospherics/trinary/mixer/Topic(href, href_list)
+/obj/machinery/atmospherics/components/trinary/mixer/Topic(href, href_list)
 	if(!..())
 		return FALSE
 
@@ -186,7 +186,7 @@
 	update_icon()
 	updateUsrDialog()
 
-obj/machinery/atmospherics/trinary/mixer/t_mixer
+/obj/machinery/atmospherics/components/trinary/mixer/t_mixer
 	icon_state = "tmap"
 
 	dir = SOUTH
@@ -194,11 +194,11 @@ obj/machinery/atmospherics/trinary/mixer/t_mixer
 
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
-obj/machinery/atmospherics/trinary/mixer/t_mixer/on
+/obj/machinery/atmospherics/components/trinary/mixer/t_mixer/on
 	icon_state = "tmap_on"
 	use_power = 1
 
-obj/machinery/atmospherics/trinary/mixer/t_mixer/New()
+/obj/machinery/atmospherics/components/trinary/mixer/t_mixer/New()
 	..()
 	switch(dir)
 		if(NORTH)
@@ -210,7 +210,7 @@ obj/machinery/atmospherics/trinary/mixer/t_mixer/New()
 		if(WEST)
 			initialize_directions = WEST|NORTH|SOUTH
 
-obj/machinery/atmospherics/trinary/mixer/t_mixer/atmos_init()
+/obj/machinery/atmospherics/components/trinary/mixer/t_mixer/atmos_init()
 	..()
 
 	if(node1 && node2 && node3)
@@ -238,7 +238,7 @@ obj/machinery/atmospherics/trinary/mixer/t_mixer/atmos_init()
 	update_icon()
 	update_underlays()
 
-obj/machinery/atmospherics/trinary/mixer/m_mixer
+/obj/machinery/atmospherics/components/trinary/mixer/m_mixer
 	icon_state = "mmap"
 
 	dir = SOUTH
@@ -246,11 +246,11 @@ obj/machinery/atmospherics/trinary/mixer/m_mixer
 
 	//node 3 is the outlet, nodes 1 & 2 are intakes
 
-obj/machinery/atmospherics/trinary/mixer/m_mixer/on
+/obj/machinery/atmospherics/components/trinary/mixer/m_mixer/on
 	icon_state = "mmap_on"
 	use_power = 1
 
-obj/machinery/atmospherics/trinary/mixer/m_mixer/New()
+/obj/machinery/atmospherics/components/trinary/mixer/m_mixer/New()
 	..()
 	switch(dir)
 		if(NORTH)
@@ -262,7 +262,7 @@ obj/machinery/atmospherics/trinary/mixer/m_mixer/New()
 		if(WEST)
 			initialize_directions = WEST|SOUTH|EAST
 
-obj/machinery/atmospherics/trinary/mixer/m_mixer/atmos_init()
+/obj/machinery/atmospherics/components/trinary/mixer/m_mixer/atmos_init()
 	..()
 	if(node1 && node2 && node3)
 		return

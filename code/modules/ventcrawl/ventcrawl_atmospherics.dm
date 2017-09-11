@@ -51,28 +51,28 @@
 /obj/machinery/atmospherics/proc/can_crawl_through()
 	return TRUE
 
-/obj/machinery/atmospherics/binary/can_crawl_through()
+/obj/machinery/atmospherics/components/binary/can_crawl_through()
 	return use_power
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/can_crawl_through()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/can_crawl_through()
 	return TRUE
 
-/obj/machinery/atmospherics/binary/passive_gate/can_crawl_through()
+/obj/machinery/atmospherics/components/binary/passive_gate/can_crawl_through()
 	return flowing
 
-/obj/machinery/atmospherics/omni/can_crawl_through()
+/obj/machinery/atmospherics/components/omni/can_crawl_through()
 	return use_power
 
-/obj/machinery/atmospherics/trinary/can_crawl_through()
+/obj/machinery/atmospherics/components/trinary/can_crawl_through()
 	return use_power
 
 /obj/machinery/atmospherics/valve/can_crawl_through()
 	return open
 
-/obj/machinery/atmospherics/unary/vent_pump/can_crawl_through()
+/obj/machinery/atmospherics/components/unary/vent_pump/can_crawl_through()
 	return !welded
 
-/obj/machinery/atmospherics/unary/vent_scrubber/can_crawl_through()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded
 
 /obj/machinery/atmospherics/valve/can_crawl_through()
@@ -90,7 +90,7 @@
 /obj/machinery/atmospherics/pipe/manifold/isConnectable(obj/machinery/atmospherics/target)
 	return (target == node3 || ..())
 
-obj/machinery/atmospherics/trinary/isConnectable(obj/machinery/atmospherics/target)
+obj/machinery/atmospherics/components/trinary/isConnectable(obj/machinery/atmospherics/target)
 	return (target == node3 || ..())
 
 /obj/machinery/atmospherics/pipe/manifold4w/isConnectable(obj/machinery/atmospherics/target)
@@ -105,5 +105,5 @@ obj/machinery/atmospherics/trinary/isConnectable(obj/machinery/atmospherics/targ
 /obj/machinery/atmospherics/portables_connector/isConnectable(obj/machinery/atmospherics/target)
 	return (target == node || ..())
 
-/obj/machinery/atmospherics/unary/isConnectable(obj/machinery/atmospherics/target)
+/obj/machinery/atmospherics/components/unary/isConnectable(obj/machinery/atmospherics/target)
 	return (target == node || ..())

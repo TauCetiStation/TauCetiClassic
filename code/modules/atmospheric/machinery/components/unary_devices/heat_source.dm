@@ -1,7 +1,7 @@
 //TODO: Put this under a common parent type with freezers to cut down on the copypasta
 #define HEATER_PERF_MULT 2.5
 
-/obj/machinery/atmospherics/unary/heater
+/obj/machinery/atmospherics/components/unary/heater
 	name = "gas heating system"
 	desc = "Heats gas when connected to a pipe network."
 	icon = 'icons/obj/Cryogenic3.dmi'
@@ -20,7 +20,7 @@
 	var/set_temperature = T20C	//thermostat
 	var/heating = FALSE		//mainly for icon updates
 
-/obj/machinery/atmospherics/unary/heater/New()
+/obj/machinery/atmospherics/components/unary/heater/New()
 	..()
 	initialize_directions = dir
 
@@ -33,7 +33,7 @@
 
 	RefreshParts()
 
-/obj/machinery/atmospherics/unary/heater/atmos_init()
+/obj/machinery/atmospherics/components/unary/heater/atmos_init()
 	..()
 	if(node)
 		return
@@ -56,7 +56,7 @@
 	update_icon()
 
 
-/obj/machinery/atmospherics/unary/heater/update_icon()
+/obj/machinery/atmospherics/components/unary/heater/update_icon()
 	if(panel_open)
 		icon_state = "heater-o"
 	else if(node)
@@ -68,7 +68,7 @@
 		icon_state = "heater_0"
 
 
-/obj/machinery/atmospherics/unary/heater/process()
+/obj/machinery/atmospherics/components/unary/heater/process()
 	..()
 
 	if(stat & (NOPOWER|BROKEN) || !use_power)
@@ -87,13 +87,13 @@
 
 	update_icon()
 
-/obj/machinery/atmospherics/unary/heater/attack_ai(mob/user)
+/obj/machinery/atmospherics/components/unary/heater/attack_ai(mob/user)
 	ui_interact(user)
 
-/obj/machinery/atmospherics/unary/heater/attack_hand(mob/user)
+/obj/machinery/atmospherics/components/unary/heater/attack_hand(mob/user)
 	ui_interact(user)
 
-/obj/machinery/atmospherics/unary/heater/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
+/obj/machinery/atmospherics/components/unary/heater/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["on"] = use_power ? 1 : 0
@@ -122,7 +122,7 @@
 		// auto update every Master Controller tick
 		ui.set_auto_update(1)
 
-/obj/machinery/atmospherics/unary/heater/Topic(href, href_list)
+/obj/machinery/atmospherics/components/unary/heater/Topic(href, href_list)
 	if(!..())
 		return FALSE
 	if(href_list["toggleStatus"])
@@ -141,7 +141,7 @@
 	add_fingerprint(usr)
 
 //upgrading parts
-/obj/machinery/atmospherics/unary/heater/RefreshParts()
+/obj/machinery/atmospherics/components/unary/heater/RefreshParts()
 	..()
 	var/cap_rating = 0
 	var/bin_rating = 0
@@ -157,11 +157,11 @@
 	air_contents.volume = max(initial(internal_volume) - 200, 0) + 200 * bin_rating
 	set_power_level(power_setting)
 
-/obj/machinery/atmospherics/unary/heater/proc/set_power_level(new_power_setting)
+/obj/machinery/atmospherics/components/unary/heater/proc/set_power_level(new_power_setting)
 	power_setting = new_power_setting
 	power_rating = max_power_rating * (power_setting / 100)
 
-/obj/machinery/atmospherics/unary/heater/attackby(obj/item/O, mob/user)
+/obj/machinery/atmospherics/components/unary/heater/attackby(obj/item/O, mob/user)
 	if(default_deconstruction_screwdriver(user, "heater-o", "heater", O))
 		use_power = FALSE
 		update_icon()
@@ -185,7 +185,7 @@
 
 	..()
 
-/obj/machinery/atmospherics/unary/heater/examine(mob/user)
+/obj/machinery/atmospherics/components/unary/heater/examine(mob/user)
 	. = ..(user)
 	if(panel_open)
 		to_chat(user, "The maintenance hatch is open.")

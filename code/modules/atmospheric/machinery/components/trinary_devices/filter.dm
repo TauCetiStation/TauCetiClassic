@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/trinary/filter
+/obj/machinery/atmospherics/components/trinary/filter
 	icon = 'icons/atmos/filter.dmi'
 	icon_state = "map"
 	density = 0
@@ -29,17 +29,17 @@
 
 	frequency = 0
 
-/obj/machinery/atmospherics/trinary/filter/on
+/obj/machinery/atmospherics/components/trinary/filter/on
 	icon_state = "map_on"
 	use_power = 1
 
-/obj/machinery/atmospherics/trinary/filter/set_frequency(new_frequency)
+/obj/machinery/atmospherics/components/trinary/filter/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency, RADIO_ATMOSIA)
 
-/obj/machinery/atmospherics/trinary/filter/New()
+/obj/machinery/atmospherics/components/trinary/filter/New()
 	..()
 	switch(filter_type)
 		if(0) //removing hydrocarbons
@@ -57,12 +57,12 @@
 	air2.volume = ATMOS_DEFAULT_VOLUME_FILTER
 	air3.volume = ATMOS_DEFAULT_VOLUME_FILTER
 
-/obj/machinery/atmospherics/trinary/filter/singularity_pull()
+/obj/machinery/atmospherics/components/trinary/filter/singularity_pull()
 	new /obj/item/pipe(loc, make_from = src)
 	qdel(src)
 
-/obj/machinery/atmospherics/trinary/filter/update_icon()
-	if(istype(src, /obj/machinery/atmospherics/trinary/filter/m_filter))
+/obj/machinery/atmospherics/components/trinary/filter/update_icon()
+	if(istype(src, /obj/machinery/atmospherics/components/trinary/filter/m_filter))
 		icon_state = "m"
 	else
 		icon_state = ""
@@ -75,7 +75,7 @@
 		icon_state += "off"
 		use_power = 0
 
-/obj/machinery/atmospherics/trinary/filter/update_underlays()
+/obj/machinery/atmospherics/components/trinary/filter/update_underlays()
 	if(..())
 		underlays.Cut()
 		var/turf/T = get_turf(src)
@@ -84,17 +84,17 @@
 
 		add_underlay(T, node1, turn(dir, -180))
 
-		if(istype(src, /obj/machinery/atmospherics/trinary/filter/m_filter))
+		if(istype(src, /obj/machinery/atmospherics/components/trinary/filter/m_filter))
 			add_underlay(T, node2, turn(dir, 90))
 		else
 			add_underlay(T, node2, turn(dir, -90))
 
 		add_underlay(T, node3, dir)
 
-/obj/machinery/atmospherics/trinary/filter/hide(i)
+/obj/machinery/atmospherics/components/trinary/filter/hide(i)
 	update_underlays()
 
-/obj/machinery/atmospherics/trinary/filter/process()
+/obj/machinery/atmospherics/components/trinary/filter/process()
 	..()
 
 	last_power_draw = 0
@@ -125,11 +125,11 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/trinary/filter/initialize()
+/obj/machinery/atmospherics/components/trinary/filter/initialize()
 	set_frequency(frequency)
 	. = ..()
 
-/obj/machinery/atmospherics/trinary/filter/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/atmospherics/components/trinary/filter/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 
@@ -153,7 +153,7 @@
 		qdel(src)
 
 
-/obj/machinery/atmospherics/trinary/filter/attack_hand(user) // -- TLE
+/obj/machinery/atmospherics/components/trinary/filter/attack_hand(user) // -- TLE
 	if(..())
 		return
 
@@ -198,7 +198,7 @@
 	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_filter")
 	onclose(user, "atmo_filter")
 
-/obj/machinery/atmospherics/trinary/filter/Topic(href, href_list) // -- TLE
+/obj/machinery/atmospherics/components/trinary/filter/Topic(href, href_list) // -- TLE
 	if(!..())
 		return FALSE
 
@@ -232,17 +232,17 @@
 	update_icon()
 	updateUsrDialog()
 
-/obj/machinery/atmospherics/trinary/filter/m_filter
+/obj/machinery/atmospherics/components/trinary/filter/m_filter
 	icon_state = "mmap"
 
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|EAST
 
-/obj/machinery/atmospherics/trinary/filter/m_filter/on
+/obj/machinery/atmospherics/components/trinary/filter/m_filter/on
 	icon_state = "mmap_on"
 	use_power = 1
 
-obj/machinery/atmospherics/trinary/filter/m_filter/New()
+/obj/machinery/atmospherics/components/trinary/filter/m_filter/New()
 	..()
 	switch(dir)
 		if(NORTH)
@@ -254,11 +254,11 @@ obj/machinery/atmospherics/trinary/filter/m_filter/New()
 		if(WEST)
 			initialize_directions = WEST|SOUTH|EAST
 
-/obj/machinery/atmospherics/trinary/filter/m_filter/initialize()
+/obj/machinery/atmospherics/components/trinary/filter/m_filter/initialize()
 	. = ..()
 	set_frequency(frequency)
 
-/obj/machinery/atmospherics/trinary/filter/m_filter/atmos_init()
+/obj/machinery/atmospherics/components/trinary/filter/m_filter/atmos_init()
 	..()
 
 	if(node1 && node2 && node3)

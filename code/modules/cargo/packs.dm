@@ -688,7 +688,7 @@ datum/supply_pack/New()
 	access = access_engine
 
 /datum/supply_pack/circulator
-	contains = list(/obj/machinery/atmospherics/binary/circulator)
+	contains = list(/obj/machinery/atmospherics/components/binary/circulator)
 	name = "Binary atmospheric circulator"
 	cost = 6000
 	crate_type = /obj/structure/closet/crate/secure/large

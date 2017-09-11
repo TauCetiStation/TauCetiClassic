@@ -1,7 +1,7 @@
 //TODO: Put this under a common parent type with heaters to cut down on the copypasta
 #define FREEZER_PERF_MULT 2.5
 
-/obj/machinery/atmospherics/unary/freezer
+/obj/machinery/atmospherics/components/unary/freezer
 	name = "gas cooling system"
 	desc = "Cools gas when connected to a pipe network."
 	icon = 'icons/obj/Cryogenic3.dmi'
@@ -20,7 +20,7 @@
 	var/set_temperature = T20C		// Thermostat
 	var/cooling = FALSE
 
-/obj/machinery/atmospherics/unary/freezer/New()
+/obj/machinery/atmospherics/components/unary/freezer/New()
 	..()
 	initialize_directions = dir
 	component_parts = list()
@@ -32,7 +32,7 @@
 	component_parts += new /obj/item/weapon/cable_coil(src, 2)
 	RefreshParts()
 
-/obj/machinery/atmospherics/unary/freezer/atmos_init()
+/obj/machinery/atmospherics/components/unary/freezer/atmos_init()
 	..()
 	if(node)
 		return
@@ -53,7 +53,7 @@
 
 	update_icon()
 
-/obj/machinery/atmospherics/unary/freezer/update_icon()
+/obj/machinery/atmospherics/components/unary/freezer/update_icon()
 	if(panel_open)
 		icon_state = "freezer-o"
 	else if(node)
@@ -65,13 +65,13 @@
 		icon_state = "freezer_0"
 	return
 
-/obj/machinery/atmospherics/unary/freezer/attack_ai(mob/user as mob)
+/obj/machinery/atmospherics/components/unary/freezer/attack_ai(mob/user as mob)
 	ui_interact(user)
 
-/obj/machinery/atmospherics/unary/freezer/attack_hand(mob/user as mob)
+/obj/machinery/atmospherics/components/unary/freezer/attack_hand(mob/user as mob)
 	ui_interact(user)
 
-/obj/machinery/atmospherics/unary/freezer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
+/obj/machinery/atmospherics/components/unary/freezer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["on"] = use_power ? 1 : 0
@@ -102,7 +102,7 @@
 		// auto update every Master Controller tick
 		ui.set_auto_update(1)
 
-/obj/machinery/atmospherics/unary/freezer/Topic(href, href_list)
+/obj/machinery/atmospherics/components/unary/freezer/Topic(href, href_list)
 	if(!..())
 		return FALSE
 	if(href_list["toggleStatus"])
@@ -120,7 +120,7 @@
 
 	add_fingerprint(usr)
 
-/obj/machinery/atmospherics/unary/freezer/process()
+/obj/machinery/atmospherics/components/unary/freezer/process()
 	..()
 
 	if(stat & (NOPOWER|BROKEN) || !use_power)
@@ -151,7 +151,7 @@
 	update_icon()
 
 //upgrading parts
-/obj/machinery/atmospherics/unary/freezer/RefreshParts()
+/obj/machinery/atmospherics/components/unary/freezer/RefreshParts()
 	..()
 	var/cap_rating = 0
 	var/manip_rating = 0
@@ -170,11 +170,11 @@
 	air_contents.volume = max(initial(internal_volume) - 200, 0) + 200 * bin_rating
 	set_power_level(power_setting)
 
-/obj/machinery/atmospherics/unary/freezer/proc/set_power_level(new_power_setting)
+/obj/machinery/atmospherics/components/unary/freezer/proc/set_power_level(new_power_setting)
 	power_setting = new_power_setting
 	power_rating = max_power_rating * (power_setting / 100)
 
-/obj/machinery/atmospherics/unary/freezer/attackby(obj/item/O, mob/user)
+/obj/machinery/atmospherics/components/unary/freezer/attackby(obj/item/O, mob/user)
 	if(default_deconstruction_screwdriver(user, "freezer-o", "freezer", O))
 		use_power = FALSE
 		update_icon()
@@ -198,7 +198,7 @@
 
 	..()
 
-/obj/machinery/atmospherics/unary/freezer/examine(mob/user)
+/obj/machinery/atmospherics/components/unary/freezer/examine(mob/user)
 	. = ..(user)
 	if(panel_open)
 		to_chat(user, "The maintenance hatch is open.")

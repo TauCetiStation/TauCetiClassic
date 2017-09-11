@@ -12,7 +12,7 @@ Thus, the two variables affect pump operation are set in New():
 			but overall network volume is also increased as this increases...
 */
 
-/obj/machinery/atmospherics/binary/pump
+/obj/machinery/atmospherics/components/binary/pump
 	icon = 'icons/atmos/pump.dmi'
 	icon_state = "map_off"
 	level = 1
@@ -33,27 +33,27 @@ Thus, the two variables affect pump operation are set in New():
 	frequency = 0
 	var/id = null
 
-/obj/machinery/atmospherics/binary/pump/New()
+/obj/machinery/atmospherics/components/binary/pump/New()
 	..()
 	air1.volume = ATMOS_DEFAULT_VOLUME_PUMP
 	air2.volume = ATMOS_DEFAULT_VOLUME_PUMP
 
-/obj/machinery/atmospherics/binary/pump/singularity_pull()
+/obj/machinery/atmospherics/components/binary/pump/singularity_pull()
 	new /obj/item/pipe(loc, make_from = src)
 	qdel(src)
 
-/obj/machinery/atmospherics/binary/pump/on
+/obj/machinery/atmospherics/components/binary/pump/on
 	icon_state = "map_on"
 	use_power = 1
 
 
-/obj/machinery/atmospherics/binary/pump/update_icon()
+/obj/machinery/atmospherics/components/binary/pump/update_icon()
 	if(!powered())
 		icon_state = "off"
 	else
 		icon_state = "[use_power ? "on" : "off"]"
 
-/obj/machinery/atmospherics/binary/pump/update_underlays()
+/obj/machinery/atmospherics/components/binary/pump/update_underlays()
 	if(..())
 		underlays.Cut()
 		var/turf/T = get_turf(src)
@@ -62,10 +62,10 @@ Thus, the two variables affect pump operation are set in New():
 		add_underlay(T, node1, turn(dir, -180))
 		add_underlay(T, node2, dir)
 
-/obj/machinery/atmospherics/binary/pump/hide(i)
+/obj/machinery/atmospherics/components/binary/pump/hide(i)
 	update_underlays()
 
-/obj/machinery/atmospherics/binary/pump/process()
+/obj/machinery/atmospherics/components/binary/pump/process()
 	last_power_draw = 0
 	last_flow_rate = 0
 
@@ -94,13 +94,13 @@ Thus, the two variables affect pump operation are set in New():
 
 //Radio remote control
 
-/obj/machinery/atmospherics/binary/pump/set_frequency(new_frequency)
+/obj/machinery/atmospherics/components/binary/pump/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
-/obj/machinery/atmospherics/binary/pump/proc/broadcast_status()
+/obj/machinery/atmospherics/components/binary/pump/proc/broadcast_status()
 	if(!radio_connection)
 		return FALSE
 
@@ -120,7 +120,7 @@ Thus, the two variables affect pump operation are set in New():
 
 	return TRUE
 
-/obj/machinery/atmospherics/binary/pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
+/obj/machinery/atmospherics/components/binary/pump/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
 	if(stat & (BROKEN|NOPOWER))
 		return
 
@@ -146,12 +146,12 @@ Thus, the two variables affect pump operation are set in New():
 		ui.open()					// open the new ui window
 		ui.set_auto_update(1)		// auto update every Master Controller tick
 
-/obj/machinery/atmospherics/binary/pump/initialize()
+/obj/machinery/atmospherics/components/binary/pump/initialize()
 	. = ..()
 	if(frequency)
 		set_frequency(frequency)
 
-/obj/machinery/atmospherics/binary/pump/receive_signal(datum/signal/signal)
+/obj/machinery/atmospherics/components/binary/pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"] != "command"))
 		return FALSE
 
@@ -178,7 +178,7 @@ Thus, the two variables affect pump operation are set in New():
 	broadcast_status()
 	update_icon()
 
-/obj/machinery/atmospherics/binary/pump/attack_hand(user)
+/obj/machinery/atmospherics/components/binary/pump/attack_hand(user)
 	if(..())
 		return
 	add_fingerprint(usr)
@@ -188,7 +188,7 @@ Thus, the two variables affect pump operation are set in New():
 	usr.set_machine(src)
 	ui_interact(user)
 
-/obj/machinery/atmospherics/binary/pump/Topic(href, href_list)
+/obj/machinery/atmospherics/components/binary/pump/Topic(href, href_list)
 	if(!..())
 		return FALSE
 
@@ -208,7 +208,7 @@ Thus, the two variables affect pump operation are set in New():
 	add_fingerprint(usr)
 	update_icon()
 
-/obj/machinery/atmospherics/binary/pump/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/atmospherics/components/binary/pump/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
 	if (!(stat & NOPOWER) && use_power)

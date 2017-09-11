@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/unary
+/obj/machinery/atmospherics/components/unary
 	dir = SOUTH
 	initialize_directions = SOUTH
 
@@ -10,7 +10,7 @@
 
 	var/datum/pipe_network/network
 
-/obj/machinery/atmospherics/unary/New()
+/obj/machinery/atmospherics/components/unary/New()
 	..()
 	initialize_directions = dir
 	air_contents = new
@@ -18,7 +18,7 @@
 	air_contents.volume = 200
 
 // Housekeeping and pipe network stuff below
-/obj/machinery/atmospherics/unary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
+/obj/machinery/atmospherics/components/unary/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node)
 		qdel(network)
 		network = new_network
@@ -30,7 +30,7 @@
 
 	return null
 
-/obj/machinery/atmospherics/unary/Destroy()
+/obj/machinery/atmospherics/components/unary/Destroy()
 	if(node)
 		node.disconnect(src)
 		qdel(network)
@@ -39,7 +39,7 @@
 
 	return ..()
 
-/obj/machinery/atmospherics/unary/atmos_init()
+/obj/machinery/atmospherics/components/unary/atmos_init()
 	..()
 	if(node)
 		return
@@ -55,14 +55,14 @@
 	update_icon()
 	update_underlays()
 
-/obj/machinery/atmospherics/unary/build_network()
+/obj/machinery/atmospherics/components/unary/build_network()
 	if(!network && node)
 		network = new /datum/pipe_network()
 		network.normal_members += src
 		network.build_network(node, src)
 
 
-/obj/machinery/atmospherics/unary/return_network(obj/machinery/atmospherics/reference)
+/obj/machinery/atmospherics/components/unary/return_network(obj/machinery/atmospherics/reference)
 	build_network()
 
 	if(reference == node)
@@ -70,13 +70,13 @@
 
 	return null
 
-/obj/machinery/atmospherics/unary/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
+/obj/machinery/atmospherics/components/unary/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
 	if(network == old_network)
 		network = new_network
 
 	return TRUE
 
-/obj/machinery/atmospherics/unary/return_network_air(datum/pipe_network/reference)
+/obj/machinery/atmospherics/components/unary/return_network_air(datum/pipe_network/reference)
 	var/list/results = list()
 
 	if(network == reference)
@@ -84,7 +84,7 @@
 
 	return results
 
-/obj/machinery/atmospherics/unary/disconnect(obj/machinery/atmospherics/reference)
+/obj/machinery/atmospherics/components/unary/disconnect(obj/machinery/atmospherics/reference)
 	if(reference==node)
 		qdel(network)
 		node = null

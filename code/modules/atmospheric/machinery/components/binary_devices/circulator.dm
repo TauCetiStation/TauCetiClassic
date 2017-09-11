@@ -3,7 +3,7 @@
 
 #define ADIABATIC_EXPONENT 0.667 //Actually adiabatic exponent - 1.
 
-/obj/machinery/atmospherics/binary/circulator
+/obj/machinery/atmospherics/components/binary/circulator
 	name = "circulator"
 	desc = "A gas circulator turbine and heat exchanger."
 	icon = 'icons/obj/pipes.dmi'
@@ -25,12 +25,12 @@
 	var/stored_energy = 0
 
 
-/obj/machinery/atmospherics/binary/circulator/New()
+/obj/machinery/atmospherics/components/binary/circulator/New()
 	..()
 	desc = initial(desc) + " Its outlet port is to the [dir2text(dir)]."
 	air1.volume = 400
 
-/obj/machinery/atmospherics/binary/circulator/proc/return_transfer_air()
+/obj/machinery/atmospherics/components/binary/circulator/proc/return_transfer_air()
 	var/datum/gas_mixture/removed
 	if(anchored && !(stat&BROKEN) && network1)
 		var/input_starting_pressure = air1.return_pressure()
@@ -63,19 +63,19 @@
 		update_icon()
 		return removed
 
-/obj/machinery/atmospherics/binary/circulator/proc/return_stored_energy()
+/obj/machinery/atmospherics/components/binary/circulator/proc/return_stored_energy()
 	last_stored_energy_transferred = stored_energy
 	stored_energy = 0
 	return last_stored_energy_transferred
 
-/obj/machinery/atmospherics/binary/circulator/process()
+/obj/machinery/atmospherics/components/binary/circulator/process()
 	..()
 
 	if(last_worldtime_transfer < world.time - 50)
 		recent_moles_transferred = 0
 		update_icon()
 
-/obj/machinery/atmospherics/binary/circulator/update_icon()
+/obj/machinery/atmospherics/components/binary/circulator/update_icon()
 	if(stat & (BROKEN|NOPOWER) || !anchored)
 		icon_state = "circ-p"
 	else if(last_pressure_delta > 0 && recent_moles_transferred > 0)
@@ -88,7 +88,7 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/binary/circulator/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/atmospherics/components/binary/circulator/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 		anchored = !anchored
@@ -124,7 +124,7 @@
 	else
 		..()
 
-/obj/machinery/atmospherics/binary/circulator/verb/rotate_clockwise()
+/obj/machinery/atmospherics/components/binary/circulator/verb/rotate_clockwise()
 	set category = "Object"
 	set name = "Rotate Circulator (Clockwise)"
 	set src in view(1)
@@ -136,7 +136,7 @@
 	desc = initial(desc) + " Its outlet port is to the [dir2text(dir)]."
 
 
-/obj/machinery/atmospherics/binary/circulator/verb/rotate_anticlockwise()
+/obj/machinery/atmospherics/components/binary/circulator/verb/rotate_anticlockwise()
 	set category = "Object"
 	set name = "Rotate Circulator (Counterclockwise)"
 	set src in view(1)

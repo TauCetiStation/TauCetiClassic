@@ -1,4 +1,4 @@
-/obj/machinery/atmospherics/unary/vent_scrubber
+/obj/machinery/atmospherics/components/unary/vent_scrubber
 	icon = 'icons/atmos/vent_scrubber.dmi'
 	icon_state = "map_scrubber_off"
 
@@ -26,11 +26,11 @@
 
 	var/welded = 0
 
-/obj/machinery/atmospherics/unary/vent_scrubber/on
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on
 	use_power = 1
 	icon_state = "map_scrubber_on"
 
-/obj/machinery/atmospherics/unary/vent_scrubber/New()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
 	air_contents.volume = ATMOS_DEFAULT_VOLUME_FILTER
 
@@ -41,17 +41,17 @@
 		assign_uid()
 		id_tag = num2text(uid)
 
-/obj/machinery/atmospherics/unary/vent_scrubber/Destroy()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/Destroy()
 	if(initial_loc)
 		initial_loc.air_scrub_info -= id_tag
 		initial_loc.air_scrub_names -= id_tag
 	return ..()
 
-/obj/machinery/atmospherics/unary/vent_scrubber/singularity_pull()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/singularity_pull()
 	new /obj/item/pipe(loc, make_from = src)
 	qdel(src)
 
-/obj/machinery/atmospherics/unary/vent_scrubber/update_icon(safety = FALSE)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon(safety = FALSE)
 	if(!check_icon_cache())
 		return
 
@@ -73,7 +73,7 @@
 
 	overlays += icon_manager.get_atmos_icon("device", , , scrubber_icon)
 
-/obj/machinery/atmospherics/unary/vent_scrubber/update_underlays()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/update_underlays()
 	if(..())
 		underlays.Cut()
 		var/turf/T = get_turf(src)
@@ -87,12 +87,12 @@
 			else
 				add_underlay(T,, dir)
 
-/obj/machinery/atmospherics/unary/vent_scrubber/set_frequency(new_frequency)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, radio_filter_in)
 
-/obj/machinery/atmospherics/unary/vent_scrubber/proc/broadcast_status()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/proc/broadcast_status()
 	if(!radio_connection)
 		return FALSE
 
@@ -123,7 +123,7 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/unary/vent_scrubber/initialize()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/initialize()
 	. = ..()
 	radio_filter_in = frequency == initial(frequency) ? (RADIO_FROM_AIRALARM) : null
 	radio_filter_out = frequency == initial(frequency) ? (RADIO_TO_AIRALARM) : null
@@ -136,7 +136,7 @@
 			if(g != "oxygen" && g != "nitrogen")
 				scrubbing_gas += g
 
-/obj/machinery/atmospherics/unary/vent_scrubber/process()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/process()
 	..()
 
 	if (hibernate > world.time)
@@ -177,11 +177,11 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/unary/vent_scrubber/hide(i) //to make the little pipe section invisible, the icon changes.
+/obj/machinery/atmospherics/components/unary/vent_scrubber/hide(i) //to make the little pipe section invisible, the icon changes.
 	update_icon()
 	update_underlays()
 
-/obj/machinery/atmospherics/unary/vent_scrubber/receive_signal(datum/signal/signal)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
 		return
 	if(!signal.data["tag"] || (signal.data["tag"] != id_tag) || (signal.data["sigtype"]!="command"))
@@ -257,7 +257,7 @@
 	broadcast_status()
 	update_icon()
 
-/obj/machinery/atmospherics/unary/vent_scrubber/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
 		if (!(stat & NOPOWER) && use_power)
 			to_chat(user, "<span class='warning'>You cannot unwrench \the [src], turn it off first.</span>")
@@ -321,7 +321,7 @@
 
 	return ..()
 
-/obj/machinery/atmospherics/unary/vent_scrubber/examine(mob/user)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/examine(mob/user)
 	if(..(user, 1))
 		to_chat(user, "A small gauge in the corner reads [round(last_flow_rate, 0.1)] L/s; [round(last_power_draw)] W")
 	else

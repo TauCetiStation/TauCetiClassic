@@ -1,7 +1,7 @@
 //--------------------------------------------
 // Base omni device
 //--------------------------------------------
-/obj/machinery/atmospherics/omni
+/obj/machinery/atmospherics/components/omni
 	name = "omni device"
 	icon = 'icons/atmos/omni_devices.dmi'
 	icon_state = "base"
@@ -24,7 +24,7 @@
 
 	var/list/ports = new()
 
-/obj/machinery/atmospherics/omni/New()
+/obj/machinery/atmospherics/components/omni/New()
 	..()
 	icon_state = "base"
 
@@ -46,11 +46,11 @@
 
 	build_icons()
 
-/obj/machinery/atmospherics/omni/singularity_pull()
+/obj/machinery/atmospherics/components/omni/singularity_pull()
 	new /obj/item/pipe(loc, make_from = src)
 	qdel(src)
 
-/obj/machinery/atmospherics/omni/update_icon()
+/obj/machinery/atmospherics/components/omni/update_icon()
 	if(stat & NOPOWER)
 		overlays = overlays_off
 	else if(error_check())
@@ -62,10 +62,10 @@
 
 	return
 
-/obj/machinery/atmospherics/omni/proc/error_check()
+/obj/machinery/atmospherics/components/omni/proc/error_check()
 	return
 
-/obj/machinery/atmospherics/omni/process()
+/obj/machinery/atmospherics/components/omni/process()
 	last_power_draw = 0
 	last_flow_rate = 0
 
@@ -76,7 +76,7 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/atmospherics/omni/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/atmospherics/components/omni/attackby(obj/item/weapon/W, mob/user)
 	if(!istype(W, /obj/item/weapon/wrench))
 		return ..()
 
@@ -103,7 +103,7 @@
 		new /obj/item/pipe(loc, make_from = src)
 		qdel(src)
 
-/obj/machinery/atmospherics/omni/attack_hand(user)
+/obj/machinery/atmospherics/components/omni/attack_hand(user)
 	if(..())
 		return
 
@@ -111,14 +111,14 @@
 	ui_interact(user)
 	return
 
-/obj/machinery/atmospherics/omni/proc/build_icons()
+/obj/machinery/atmospherics/components/omni/proc/build_icons()
 	if(!check_icon_cache())
 		return
 
 	var/core_icon = null
-	if(istype(src, /obj/machinery/atmospherics/omni/mixer))
+	if(istype(src, /obj/machinery/atmospherics/components/omni/mixer))
 		core_icon = "mixer"
-	else if(istype(src, /obj/machinery/atmospherics/omni/filter))
+	else if(istype(src, /obj/machinery/atmospherics/components/omni/filter))
 		core_icon = "filter"
 	else
 		return
@@ -131,7 +131,7 @@
 		overlays_error[1] = icon_manager.get_atmos_icon("omni", , , core_icon)
 		overlays_error[2] = icon_manager.get_atmos_icon("omni", , , "error")
 
-/obj/machinery/atmospherics/omni/proc/update_port_icons()
+/obj/machinery/atmospherics/components/omni/proc/update_port_icons()
 	if(!check_icon_cache())
 		return
 
@@ -166,7 +166,7 @@
 
 	update_icon()
 
-/obj/machinery/atmospherics/omni/proc/select_port_icons(datum/omni_port/P)
+/obj/machinery/atmospherics/components/omni/proc/select_port_icons(datum/omni_port/P)
 	if(!istype(P))
 		return
 
@@ -201,27 +201,27 @@
 
 		return list("on_icon" = ic_on, "off_icon" = ic_off, "pipe_icon" = pipe_state)
 
-/obj/machinery/atmospherics/omni/update_underlays()
+/obj/machinery/atmospherics/components/omni/update_underlays()
 	for(var/datum/omni_port/P in ports)
 		P.update = TRUE
 	update_ports()
 
-/obj/machinery/atmospherics/omni/hide(i)
+/obj/machinery/atmospherics/components/omni/hide(i)
 	update_underlays()
 
-/obj/machinery/atmospherics/omni/proc/update_ports()
+/obj/machinery/atmospherics/components/omni/proc/update_ports()
 	sort_ports()
 	update_port_icons()
 	for(var/datum/omni_port/P in ports)
 		P.update = FALSE
 
-/obj/machinery/atmospherics/omni/proc/sort_ports()
+/obj/machinery/atmospherics/components/omni/proc/sort_ports()
 	return
 
 
 // Housekeeping and pipe network stuff below
 
-/obj/machinery/atmospherics/omni/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
+/obj/machinery/atmospherics/components/omni/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	for(var/datum/omni_port/P in ports)
 		if(reference == P.node)
 			qdel(P.network)
@@ -235,7 +235,7 @@
 
 	return null
 
-/obj/machinery/atmospherics/omni/Destroy()
+/obj/machinery/atmospherics/components/omni/Destroy()
 	for(var/datum/omni_port/P in ports)
 		if(P.node)
 			P.node.disconnect(src)
@@ -244,7 +244,7 @@
 
 	return ..()
 
-/obj/machinery/atmospherics/omni/atmos_init()
+/obj/machinery/atmospherics/components/omni/atmos_init()
 	..()
 	for(var/datum/omni_port/P in ports)
 		if(P.node || P.mode == 0)
@@ -260,14 +260,14 @@
 
 	update_ports()
 
-/obj/machinery/atmospherics/omni/build_network()
+/obj/machinery/atmospherics/components/omni/build_network()
 	for(var/datum/omni_port/P in ports)
 		if(!P.network && P.node)
 			P.network = new /datum/pipe_network()
 			P.network.normal_members += src
 			P.network.build_network(P.node, src)
 
-/obj/machinery/atmospherics/omni/return_network(obj/machinery/atmospherics/reference)
+/obj/machinery/atmospherics/components/omni/return_network(obj/machinery/atmospherics/reference)
 	build_network()
 
 	for(var/datum/omni_port/P in ports)
@@ -276,14 +276,14 @@
 
 	return null
 
-/obj/machinery/atmospherics/omni/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
+/obj/machinery/atmospherics/components/omni/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
 	for(var/datum/omni_port/P in ports)
 		if(P.network == old_network)
 			P.network = new_network
 
 	return TRUE
 
-/obj/machinery/atmospherics/omni/return_network_air(datum/pipe_network/reference)
+/obj/machinery/atmospherics/components/omni/return_network_air(datum/pipe_network/reference)
 	var/list/results = list()
 
 	for(var/datum/omni_port/P in ports)
@@ -292,7 +292,7 @@
 
 	return results
 
-/obj/machinery/atmospherics/omni/disconnect(obj/machinery/atmospherics/reference)
+/obj/machinery/atmospherics/components/omni/disconnect(obj/machinery/atmospherics/reference)
 	for(var/datum/omni_port/P in ports)
 		if(reference == P.node)
 			qdel(P.network)

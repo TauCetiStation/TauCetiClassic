@@ -20,7 +20,7 @@
 
 /datum/event/borer_infestation/start()
 	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
 		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded && temp_vent.network)
 			//Stops cortical borers getting stuck in small networks. See: Security, Virology
 			if(temp_vent.network.normal_members.len > 50)

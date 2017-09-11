@@ -8,7 +8,7 @@
 #define PRESSURE_CHECK_INPUT 2
 #define PRESSURE_CHECK_OUTPUT 4
 
-/obj/machinery/atmospherics/binary/dp_vent_pump
+/obj/machinery/atmospherics/components/binary/dp_vent_pump
 	icon = 'icons/atmos/vent_pump.dmi'
 	icon_state = "map_dp_vent"
 
@@ -40,21 +40,21 @@
 	//2: Do not pass input_pressure_min
 	//4: Do not pass output_pressure_max
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/New()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/New()
 	..()
 	air1.volume = ATMOS_DEFAULT_VOLUME_PUMP
 	air2.volume = ATMOS_DEFAULT_VOLUME_PUMP
 	icon = null
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/high_volume
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
 	name = "Large Dual Port Air Vent"
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/high_volume/New()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/New()
 	..()
 	air1.volume = ATMOS_DEFAULT_VOLUME_PUMP + 800
 	air2.volume = ATMOS_DEFAULT_VOLUME_PUMP + 800
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/update_icon(safety = FALSE)
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/update_icon(safety = FALSE)
 	if(!check_icon_cache())
 		return
 
@@ -76,7 +76,7 @@
 
 	overlays += icon_manager.get_atmos_icon("device", , , vent_icon)
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/update_underlays()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/update_underlays()
 	if(..())
 		underlays.Cut()
 		var/turf/T = get_turf(src)
@@ -94,11 +94,11 @@
 			else
 				add_underlay(T, node2, dir)
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/hide(i)
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/hide(i)
 	update_icon()
 	update_underlays()
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/process()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/process()
 	..()
 
 	last_power_draw = 0
@@ -139,7 +139,7 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/proc/get_pressure_delta(datum/gas_mixture/environment)
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/get_pressure_delta(datum/gas_mixture/environment)
 	var/pressure_delta = DEFAULT_PRESSURE_DELTA
 	var/environment_pressure = environment.return_pressure()
 
@@ -159,13 +159,13 @@
 
 //Radio remote control
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/set_frequency(new_frequency)
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	if(frequency)
 		radio_connection = radio_controller.add_object(src, frequency, filter = RADIO_ATMOSIA)
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/proc/broadcast_status()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/broadcast_status()
 	if(!radio_connection)
 		return FALSE
 
@@ -188,16 +188,16 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/initialize()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/initialize()
 	. = ..()
 	if(frequency)
 		set_frequency(frequency)
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/examine(mob/user)
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/examine(mob/user)
 	if(..(user, 1))
 		to_chat(user, "A small gauge in the corner reads [round(last_flow_rate, 0.1)] L/s; [round(last_power_draw)] W")
 
-/obj/machinery/atmospherics/binary/dp_vent_pump/receive_signal(datum/signal/signal)
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return FALSE
 	if(signal.data["power"])
