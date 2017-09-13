@@ -18,16 +18,14 @@ Thus, the two variables affect pump operation are set in New():
 	level = 1
 
 	name = "gas pump"
-	desc = "A pump."
+	desc = "A pump that moves gas by pressure."
+
+	can_unwrench = TRUE
+	use_power = 0
+	idle_power_usage = 150 // internal circuitry, friction losses and stuff
+	power_rating = 7500    // 7500 W ~ 10 HP
 
 	var/target_pressure = ONE_ATMOSPHERE
-
-	//var/max_volume_transfer = 10000
-
-	use_power = 0
-	idle_power_usage = 150		//internal circuitry, friction losses and stuff
-	power_rating = 7500			//7500 W ~ 10 HP
-
 	var/max_pressure_setting = MAX_PUMP_PRESSURE
 
 	frequency = 0
@@ -35,12 +33,17 @@ Thus, the two variables affect pump operation are set in New():
 
 /obj/machinery/atmospherics/components/binary/pump/New()
 	..()
+
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
+
 	air1.volume = ATMOS_DEFAULT_VOLUME_PUMP
 	air2.volume = ATMOS_DEFAULT_VOLUME_PUMP
 
-/obj/machinery/atmospherics/components/binary/pump/singularity_pull()
-	new /obj/item/pipe(loc, make_from = src)
-	qdel(src)
+/obj/machinery/atmospherics/components/binary/pump/atmos_init()
+	..()
+	if(frequency)
+		set_frequency(frequency)
 
 /obj/machinery/atmospherics/components/binary/pump/on
 	icon_state = "map_on"
@@ -59,38 +62,36 @@ Thus, the two variables affect pump operation are set in New():
 		var/turf/T = get_turf(src)
 		if(!istype(T))
 			return
-		add_underlay(T, node1, turn(dir, -180))
-		add_underlay(T, node2, dir)
+		add_underlay(T, NODE1, turn(dir, -180))
+		add_underlay(T, NODE2, dir)
 
 /obj/machinery/atmospherics/components/binary/pump/hide(i)
 	update_underlays()
 
-/obj/machinery/atmospherics/components/binary/pump/process()
-	last_power_draw = 0
+/obj/machinery/atmospherics/components/binary/pump/process_atmos()
 	last_flow_rate = 0
+	last_power_draw = 0
 
 	if((stat & (NOPOWER|BROKEN)) || !use_power)
 		return
+
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
 
 	var/power_draw = -1
 	var/pressure_delta = target_pressure - air2.return_pressure()
 
 	if(pressure_delta > 0.01 && air1.temperature > 0)
 		//Figure out how much gas to transfer to meet the target pressure.
-		var/transfer_moles = calculate_transfer_moles(air1, air2, pressure_delta, (network2) ? network2.volume : 0)
+		var/datum/pipeline/parent2 = PARENT2
+		var/transfer_moles = calculate_transfer_moles(air1, air2, pressure_delta, (parent2) ? parent2.air.volume : 0)
 		power_draw = pump_gas(src, air1, air2, transfer_moles, power_rating)
 
 	if (power_draw >= 0)
 		last_power_draw = power_draw
 		use_power(power_draw)
 
-		if(network1)
-			network1.update = 1
-
-		if(network2)
-			network2.update = 1
-
-	return TRUE
+		update_parents()
 
 //Radio remote control
 
@@ -145,11 +146,6 @@ Thus, the two variables affect pump operation are set in New():
 		ui.set_initial_data(data)	// when the ui is first opened this is the data it will use
 		ui.open()					// open the new ui window
 		ui.set_auto_update(1)		// auto update every Master Controller tick
-
-/obj/machinery/atmospherics/components/binary/pump/initialize()
-	. = ..()
-	if(frequency)
-		set_frequency(frequency)
 
 /obj/machinery/atmospherics/components/binary/pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"] != "command"))
@@ -208,28 +204,9 @@ Thus, the two variables affect pump operation are set in New():
 	add_fingerprint(usr)
 	update_icon()
 
-/obj/machinery/atmospherics/components/binary/pump/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/wrench))
-		return ..()
-	if (!(stat & NOPOWER) && use_power)
-		to_chat(user, "<span class='warning'>You cannot unwrench this [src], turn it off first.</span>")
-		return TRUE
-
-	var/datum/gas_mixture/int_air = return_air()
-	var/datum/gas_mixture/env_air = loc.return_air()
-
-	if ((int_air.return_pressure() - env_air.return_pressure()) > 2 * ONE_ATMOSPHERE)
-		to_chat(user, "<span class='warning'>You cannot unwrench this [src], it too exerted due to internal pressure.</span>")
-		add_fingerprint(user)
-		return TRUE
-
-	playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-
-	if (do_after(user, 40, null, src))
-		user.visible_message(
-			"<span class='notice'>\The [user] unfastens \the [src].</span>",
-			"<span class='notice'>You have unfastened \the [src].</span>",
-			"You hear ratchet.")
-		new /obj/item/pipe(loc, make_from = src)
-		qdel(src)
+/obj/machinery/atmospherics/components/binary/pump/can_unwrench(mob/user)
+	if(..())
+		if(!(stat & NOPOWER) && use_power)
+			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		else
+			return TRUE

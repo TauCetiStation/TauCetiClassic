@@ -3,18 +3,13 @@
 	icon_state = "intact_off"
 	density = TRUE
 
-	name = "Oxygen Generator"
-	desc = ""
-
-	dir = SOUTH
-	initialize_directions = SOUTH
-
+	name = "oxygen generator"
+	desc = "Generates oxygen"
 	var/on = FALSE
-
 	var/oxygen_content = 10
 
 /obj/machinery/atmospherics/components/unary/oxygen_generator/update_icon()
-	if(node)
+	if(NODE1)
 		icon_state = "intact_[on?("on"):("off")]"
 	else
 		icon_state = "exposed_off"
@@ -24,12 +19,17 @@
 /obj/machinery/atmospherics/components/unary/oxygen_generator/New()
 	..()
 
+	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = 50
 
-/obj/machinery/atmospherics/components/unary/oxygen_generator/process()
-	..()
+/obj/machinery/atmospherics/components/unary/oxygen_generator/process_atmos()
+	last_power_draw = 0
+	last_flow_rate = 0
+
 	if(!on)
-		return FALSE
+		return
+
+	var/datum/gas_mixture/air_contents = AIR1
 
 	var/total_moles = air_contents.total_moles
 
@@ -41,7 +41,4 @@
 		air_contents.temperature = (current_heat_capacity * air_contents.temperature + 20 * added_oxygen * T0C) / (current_heat_capacity + 20 * added_oxygen)
 		air_contents.adjust_gas("oxygen", added_oxygen)
 
-		if(network)
-			network.update = TRUE
-
-	return TRUE
+		update_parents()

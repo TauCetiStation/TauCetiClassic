@@ -1,6 +1,14 @@
-#define REGULATE_NONE	0
-#define REGULATE_INPUT	1	//shuts off when input side is below the target pressure
-#define REGULATE_OUTPUT	2	//shuts off when output side is above the target pressure
+/*
+
+Passive gate is similar to the regular pump except:
+* It doesn't require power
+* Can not transfer low pressure to higher pressure (so it's more like a valve where you can control the flow)
+
+*/
+
+#define REGULATE_NONE   0
+#define REGULATE_INPUT  1 //shuts off when input side is below the target pressure
+#define REGULATE_OUTPUT 2 //shuts off when output side is above the target pressure
 
 /obj/machinery/atmospherics/components/binary/passive_gate
 	icon = 'icons/atmos/passive_gate.dmi'
@@ -10,16 +18,17 @@
 	name = "pressure regulator"
 	desc = "A one-way air valve that can be used to regulate input or output pressure, and flow rate. Does not require power."
 
+	can_unwrench = TRUE
 	use_power = 0
 	interact_offline = 1
 
-	var/unlocked = 0	//If 0, then the valve is locked closed, otherwise it is open(-able, it's a one-way valve so it closes if gas would flow backwards).
+	var/unlocked = 0 // If 0, then the valve is locked closed, otherwise it is open(-able, it's a one-way valve so it closes if gas would flow backwards).
 	var/target_pressure = ONE_ATMOSPHERE
 	var/max_pressure_setting = MAX_PUMP_PRESSURE
 	var/set_flow_rate = ATMOS_DEFAULT_VOLUME_PUMP * 2.5
 	var/regulate_mode = REGULATE_OUTPUT
 
-	var/flowing = 0	//for icons - becomes zero if the valve closes itself due to regulation mode
+	var/flowing = FALSE // for icons - becomes zero if the valve closes itself due to regulation mode
 
 	frequency = 0
 	var/id = null
@@ -30,15 +39,20 @@
 
 /obj/machinery/atmospherics/components/binary/passive_gate/New()
 	..()
+
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
+
 	air1.volume = ATMOS_DEFAULT_VOLUME_PUMP * 2.5
 	air2.volume = ATMOS_DEFAULT_VOLUME_PUMP * 2.5
 
-/obj/machinery/atmospherics/components/binary/passive_gate/singularity_pull()
-	new /obj/item/pipe(loc, make_from = src)
-	qdel(src)
+/obj/machinery/atmospherics/components/binary/passive_gate/atmos_init()
+	..()
+	if(frequency)
+		set_frequency(frequency)
 
 /obj/machinery/atmospherics/components/binary/passive_gate/update_icon()
-	icon_state = (unlocked && flowing)? "on" : "off"
+	icon_state = (unlocked && flowing) ? "on" : "off"
 
 /obj/machinery/atmospherics/components/binary/passive_gate/update_underlays()
 	if(..())
@@ -46,19 +60,21 @@
 		var/turf/T = get_turf(src)
 		if(!istype(T))
 			return
-		add_underlay(T, node1, turn(dir, 180))
-		add_underlay(T, node2, dir)
+		add_underlay(T, NODE1, turn(dir, 180))
+		add_underlay(T, NODE2, dir)
 
 /obj/machinery/atmospherics/components/binary/passive_gate/hide(i)
 	update_underlays()
 
-/obj/machinery/atmospherics/components/binary/passive_gate/process()
-	..()
-
+/obj/machinery/atmospherics/components/binary/passive_gate/process_atmos()
 	last_flow_rate = 0
+	last_power_draw = 0
 
 	if(!unlocked)
 		return FALSE
+
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
 
 	var/output_starting_pressure = air2.return_pressure()
 	var/input_starting_pressure = air1.return_pressure()
@@ -73,7 +89,7 @@
 	//-1 if pump_gas() did not move any gas, >= 0 otherwise
 	var/returnval = -1
 	if((regulate_mode == REGULATE_NONE || pressure_delta > 0.01) && (air1.temperature > 0 || air2.temperature > 0))	//since it's basically a valve, it makes sense to check both temperatures
-		flowing = 1
+		flowing = TRUE
 
 		//flow rate limit
 		var/transfer_moles = (set_flow_rate/air1.volume)*air1.total_moles
@@ -81,22 +97,20 @@
 		//Figure out how much gas to transfer to meet the target pressure.
 		switch (regulate_mode)
 			if (REGULATE_INPUT)
-				transfer_moles = min(transfer_moles, calculate_transfer_moles(air2, air1, pressure_delta, (network1) ? network1.volume : 0))
+				var/datum/pipeline/parent1 = PARENT1
+				transfer_moles = min(transfer_moles, calculate_transfer_moles(air2, air1, pressure_delta, (parent1) ? parent1.air.volume : 0))
 			if (REGULATE_OUTPUT)
-				transfer_moles = min(transfer_moles, calculate_transfer_moles(air1, air2, pressure_delta, (network2) ? network2.volume : 0))
+				var/datum/pipeline/parent2 = PARENT2
+				transfer_moles = min(transfer_moles, calculate_transfer_moles(air1, air2, pressure_delta, (parent2) ? parent2.air.volume : 0))
 
 		//pump_gas() will return a negative number if no flow occurred
 		returnval = pump_gas_passive(src, air1, air2, transfer_moles)
 
 	if (returnval >= 0)
-		if(network1)
-			network1.update = 1
-
-		if(network2)
-			network2.update = 1
+		update_parents()
 
 	if (last_flow_rate)
-		flowing = 1
+		flowing = TRUE
 
 	update_icon()
 
@@ -130,11 +144,6 @@
 	radio_connection.post_signal(src, signal, filter = RADIO_ATMOSIA)
 
 	return TRUE
-
-/obj/machinery/atmospherics/components/binary/passive_gate/initialize()
-	. = ..()
-	if(frequency)
-		set_frequency(frequency)
 
 /obj/machinery/atmospherics/components/binary/passive_gate/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
@@ -181,6 +190,9 @@
 /obj/machinery/atmospherics/components/binary/passive_gate/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
 	if(stat & (BROKEN|NOPOWER))
 		return
+
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
 
 	// this is the data which will be sent to the ui
 	var/data[0]
@@ -229,6 +241,8 @@
 			var/new_pressure = input(usr,"Enter new output pressure (0-[max_pressure_setting]kPa)","Pressure Control", target_pressure) as num
 			target_pressure = between(0, new_pressure, max_pressure_setting)
 
+	var/datum/gas_mixture/air1 = AIR1
+
 	switch(href_list["set_flow_rate"])
 		if ("min")
 			set_flow_rate = 0
@@ -242,31 +256,12 @@
 	update_icon()
 	add_fingerprint(usr)
 
-/obj/machinery/atmospherics/components/binary/passive_gate/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/wrench))
-		return ..()
-
-	if (unlocked)
-		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], turn it off first.</span>")
-		return TRUE
-
-	var/datum/gas_mixture/int_air = return_air()
-	var/datum/gas_mixture/env_air = loc.return_air()
-	if ((int_air.return_pressure()-env_air.return_pressure()) > 2 * ONE_ATMOSPHERE)
-		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it too exerted due to internal pressure.</span>")
-		add_fingerprint(user)
-		return TRUE
-
-	playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-
-	if (do_after(user, 40, null, src))
-		user.visible_message(
-			"<span class='notice'>\The [user] unfastens \the [src].</span>",
-			"<span class='notice'>You have unfastened \the [src].</span>",
-			"You hear ratchet.")
-		new /obj/item/pipe(loc, make_from = src)
-		qdel(src)
+/obj/machinery/atmospherics/components/binary/passive_gate/can_unwrench(mob/user)
+	if(..())
+		if(unlocked)
+			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		else
+			return TRUE
 
 #undef REGULATE_NONE
 #undef REGULATE_INPUT

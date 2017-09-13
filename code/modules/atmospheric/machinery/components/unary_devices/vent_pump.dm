@@ -13,6 +13,8 @@
 
 	name = "Air Vent"
 	desc = "Has a valve and pump attached to it."
+
+	can_unwrench = TRUE
 	use_power = 0
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 7500			//7500 W ~ 10 HP
@@ -39,8 +41,6 @@
 	var/external_pressure_bound_default = EXTERNAL_PRESSURE_BOUND
 	var/internal_pressure_bound_default = INTERNAL_PRESSURE_BOUND
 	var/pressure_checks_default = PRESSURE_CHECKS
-
-	var/welded = 0 // Added for aliens -- TLE
 
 	frequency = 1439
 	//var/datum/radio_frequency/radio_connection
@@ -71,6 +71,8 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/New()
 	..()
+
+	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = ATMOS_DEFAULT_VOLUME_PUMP
 
 	icon = null
@@ -86,9 +88,14 @@
 		initial_loc.air_vent_names -= id_tag
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/vent_pump/singularity_pull()
-	new /obj/item/pipe(loc, make_from = src)
-	qdel(src)
+/obj/machinery/atmospherics/components/unary/vent_pump/atmos_init()
+	//some vents work his own special way
+	radio_filter_in = frequency == 1439 ? (RADIO_FROM_AIRALARM) : null
+	radio_filter_out = frequency == 1439 ? (RADIO_TO_AIRALARM) : null
+	if(frequency)
+		set_frequency(frequency)
+	broadcast_status()
+	..()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume
 	name = "Large Air Vent"
@@ -101,6 +108,8 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
 	..()
+
+	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = ATMOS_DEFAULT_VOLUME_PUMP + 800
 
 /obj/machinery/atmospherics/components/unary/vent_pump/engine
@@ -110,12 +119,14 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/engine/New()
 	..()
+
+	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = ATMOS_DEFAULT_VOLUME_PUMP + 500 //meant to match air injector
 
-/obj/machinery/atmospherics/components/unary/vent_pump/update_icon(var/safety = 0)
+/obj/machinery/atmospherics/components/unary/vent_pump/update_icon(safety = 0)
 	if(!check_icon_cache())
 		return
-	if (!node)
+	if (!NODE1)
 		use_power = 0
 
 	overlays.Cut()
@@ -125,6 +136,8 @@
 	var/turf/T = get_turf(src)
 	if(!istype(T))
 		return
+
+	var/obj/machinery/atmospherics/node = NODE1
 
 	if(!T.is_plating() && node && node.level == 1 && istype(node, /obj/machinery/atmospherics/pipe))
 		vent_icon += "h"
@@ -144,6 +157,9 @@
 		var/turf/T = get_turf(src)
 		if(!istype(T))
 			return
+
+		var/obj/machinery/atmospherics/node = NODE1
+
 		if(!T.is_plating() && node && node.level == 1 && istype(node, /obj/machinery/atmospherics/pipe))
 			return
 		else
@@ -165,17 +181,18 @@
 		return FALSE
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/vent_pump/process()
-	..()
+/obj/machinery/atmospherics/components/unary/vent_pump/process_atmos()
+	last_power_draw = 0
+	last_flow_rate = 0
 
 	if (hibernate > world.time)
-		return TRUE
-
-	if (!node)
+		return
+	if (!NODE1)
 		use_power = 0
 	if(!can_pump())
-		return FALSE
+		return
 
+	var/datum/gas_mixture/air_contents = AIR1
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	var/power_draw = -1
@@ -189,7 +206,8 @@
 			var/transfer_moles = calculate_transfer_moles(air_contents, environment, pressure_delta)
 			power_draw = pump_gas(src, air_contents, environment, transfer_moles, power_rating)
 		else //external -> internal
-			var/transfer_moles = calculate_transfer_moles(environment, air_contents, pressure_delta, (network) ? network.volume : 0)
+			var/datum/pipeline/parent1 = PARENT1
+			var/transfer_moles = calculate_transfer_moles(environment, air_contents, pressure_delta, (parent1) ? parent1.air.volume : 0)
 
 			//limit flow rate from turfs
 			transfer_moles = min(transfer_moles, environment.total_moles * air_contents.volume / environment.volume)	//group_multiplier gets divided out here
@@ -205,14 +223,12 @@
 	if (power_draw >= 0)
 		last_power_draw = power_draw
 		use_power(power_draw)
-		if(network)
-			network.update = TRUE
-
-	return TRUE
+		update_parents()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/proc/get_pressure_delta(datum/gas_mixture/environment)
 	var/pressure_delta = DEFAULT_PRESSURE_DELTA
 	var/environment_pressure = environment.return_pressure()
+	var/datum/gas_mixture/air_contents = AIR1
 
 	if(pump_direction) //internal -> external
 		if(pressure_checks & PRESSURE_CHECK_EXTERNAL)
@@ -259,17 +275,6 @@
 	radio_connection.post_signal(src, signal, radio_filter_out)
 
 	return TRUE
-
-
-/obj/machinery/atmospherics/components/unary/vent_pump/initialize()
-	. = ..()
-
-	//some vents work his own special way
-	radio_filter_in = frequency == 1439 ? (RADIO_FROM_AIRALARM) : null
-	radio_filter_out = frequency == 1439 ? (RADIO_TO_AIRALARM) : null
-	if(frequency)
-		set_frequency(frequency)
-		src.broadcast_status()
 
 /obj/machinery/atmospherics/components/unary/vent_pump/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
@@ -362,32 +367,39 @@
 
 		if(!WT.isOn())
 			to_chat(user, "<span class='notice'>The welding tool needs to be on to start this task.</span>")
-			return TRUE
+			return
 
 		if(!WT.remove_fuel(0, user))
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
-			return TRUE
+			return
 
 		to_chat(user, "<span class='notice'>Now welding \the [src].</span>")
 		playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 
 		if(!do_after(user, 20, null, src))
 			to_chat(user, "<span class='notice'>You must remain close to finish this task.</span>")
-			return TRUE
+			return
 
 		if(!WT.isOn())
 			to_chat(user, "<span class='notice'>The welding tool needs to be on to finish this task.</span>")
-			return TRUE
+			return
 
 		welded = !welded
 		update_icon()
 		user.visible_message("<span class='notice'>\The [user] [welded ? "welds \the [src] shut" : "unwelds \the [src]"].</span>", \
 			"<span class='notice'>You [welded ? "weld \the [src] shut" : "unweld \the [src]"].</span>", \
 			"You hear welding.")
-		return TRUE
+		return
 
 	else
-		..()
+		return ..()
+
+/obj/machinery/atmospherics/components/unary/vent_pump/can_unwrench(mob/user)
+	if(..())
+		if(!(stat & NOPOWER) && use_power)
+			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		else
+			return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_pump/examine(mob/user)
 	if(..(user, 1))
@@ -396,38 +408,6 @@
 		to_chat(user, "You are too far away to read the gauge.")
 	if(welded)
 		to_chat(user, "It seems welded shut.")
-
-/obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/wrench))
-		return ..()
-	if (!(stat & NOPOWER) && use_power)
-		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], turn it off first.</span>")
-		return TRUE
-
-	var/turf/T = src.loc
-
-	if (node && node.level == 1 && isturf(T) && !T.is_plating())
-		to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
-		return TRUE
-
-	var/datum/gas_mixture/int_air = return_air()
-	var/datum/gas_mixture/env_air = loc.return_air()
-
-	if ((int_air.return_pressure() - env_air.return_pressure()) > 2 * ONE_ATMOSPHERE)
-		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it is too exerted due to internal pressure.</span>")
-		add_fingerprint(user)
-		return TRUE
-
-	playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-
-	if (do_after(user, 40, null, src))
-		user.visible_message(
-			"<span class='notice'>\The [user] unfastens \the [src].</span>",
-			"<span class='notice'>You have unfastened \the [src].</span>",
-			"You hear a ratchet.")
-		new /obj/item/pipe(loc, make_from = src)
-		qdel(src)
 
 #undef DEFAULT_PRESSURE_DELTA
 

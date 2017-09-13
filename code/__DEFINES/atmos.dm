@@ -95,3 +95,36 @@
 
 #define MAX_PUMP_PRESSURE       15000 // Maximal pressure setting for pumps and vents
 #define MAX_OMNI_PRESSURE       7500  // Maximal output(s) pressure for omni devices (filters/mixers)
+
+//Atmos machinery pipenet stuff
+
+// used for device_type vars; used by DEVICE_TYPE_LOOP
+#define UNARY        1
+#define BINARY       2
+#define TRINARY      3
+#define QUATERNARY   4
+
+// this is the standard for loop used by all sorts of atmos machinery procs
+#define DEVICE_TYPE_LOOP   var/I in 1 to device_type
+
+// defines for the various machinery lists
+// NODE_I, AIR_I, PARENT_I are used within DEVICE_TYPE_LOOP
+
+//  nodes list - all atmos machinery
+#define NODE1   nodes[1]
+#define NODE2   nodes[2]
+#define NODE3   nodes[3]
+#define NODE4   nodes[4]
+#define NODE_I  nodes[I]
+
+//  airs list - components only
+#define AIR1    airs[1]
+#define AIR2    airs[2]
+#define AIR3    airs[3]
+#define AIR_I   airs[I]
+
+//  parents list - components only
+#define PARENT1    parents[1]
+#define PARENT2    parents[2]
+#define PARENT3    parents[3]
+#define PARENT_I   parents[I]

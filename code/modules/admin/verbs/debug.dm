@@ -1759,10 +1759,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		else if(istype(M,/obj/machinery/atmospherics/components/binary/pump))	//Turning on every pump.
 			var/obj/machinery/atmospherics/components/binary/pump/Pump = M
 			if(Pump.name == "Engine Feed" && response == "Setup Completely")
+				var/datum/gas_mixture/air2 = Pump.AIR2
+
 				found_the_pump = 1
-				Pump.air2.gas["nitrogen"] = 3750	//The contents of 2 canisters.
-				Pump.air2.temperature = 50
-				Pump.air2.update_values()
+				air2.gas["nitrogen"] = 3750	//The contents of 2 canisters.
+				air2.temperature = 50
+				air2.update_values()
 			//Pump.on=1
 			Pump.target_pressure = 4500
 			Pump.update_icon()

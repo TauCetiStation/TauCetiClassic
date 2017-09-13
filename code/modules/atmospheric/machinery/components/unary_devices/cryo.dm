@@ -2,17 +2,17 @@
 	name = "cryo cell"
 	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "pod-off"
-	density = 1
-	anchored = 1
+
+	light_color = "#FFFFFF"
+	density = TRUE
+	anchored = TRUE
+	state_open = 0
 
 	var/on = 0
 	var/temperature_archived
-	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/current_heat_capacity = 50
-	state_open = 0
 	var/efficiency
-
-	light_color = "#FFFFFF"
+	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/New()
 	..()
@@ -20,8 +20,6 @@
 	icon = 'icons/obj/cryogenics_split.dmi'
 	update_icon()
 
-	initialize_directions = dir
-	initialize()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/cryo_tube(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -40,43 +38,89 @@
 	efficiency = C
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/Destroy()
-	var/turf/T = loc
-	T.contents += contents
 	var/obj/item/weapon/reagent_containers/glass/B = beaker
 	if(beaker)
 		B.loc = get_step(loc, SOUTH) //Beaker is carefully ejected from the wreckage of the cryotube
-	return ..()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/initialize()
-	if(node) return
-	var/node_connect = dir
-	for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-		if(target.initialize_directions & get_dir(target,src))
-			node = target
-			break
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/process()
 	..()
-	if(!node)
-		return
+
 	if(!on)
 		updateUsrDialog()
 		return
 
+	var/datum/gas_mixture/air1 = AIR1
+
+	if(air1.total_moles < 10)
+		return
 	if(occupant)
-		if(occupant.stat != DEAD)
-			process_occupant()
+		if(occupant.stat == DEAD) // We don't bother with dead people.
+			return
 
-	if(air_contents)
-		temperature_archived = air_contents.temperature
-		heat_gas_contents()
-		expel_gas()
+		if(air1.gas.len)
+			if(occupant.bodytemperature < T0C && occupant.health < 100)
+				occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
+				occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
 
-	if(abs(temperature_archived-air_contents.temperature) > 1)
-		network.update = 1
+				if(air1.gas["oxygen"] > 2)
+					if(occupant.getOxyLoss())
+						occupant.adjustOxyLoss(-1)
+				else
+					occupant.adjustOxyLoss(-1)
+				//severe damage should heal waaay slower without proper chemicals
+				if(occupant.bodytemperature < 225)
+					if (occupant.getToxLoss())
+						occupant.adjustToxLoss(max(-efficiency, (-20*(efficiency ** 2)) / occupant.getToxLoss()))
+					var/heal_brute = occupant.getBruteLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getBruteLoss()) : 0
+					var/heal_fire = occupant.getFireLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getFireLoss()) : 0
+					occupant.heal_bodypart_damage(heal_brute, heal_fire)
+
+			var/has_cryo = occupant.reagents.get_reagent_amount("cryoxadone") >= 1
+			var/has_clonexa = occupant.reagents.get_reagent_amount("clonexadone") >= 1
+			var/has_cryo_medicine = has_cryo || has_clonexa
+
+			if(beaker && !has_cryo_medicine)
+				beaker.reagents.trans_to(occupant, 1, 10)
+				beaker.reagents.reaction(occupant)
 
 	updateUsrDialog()
 	return 1
+
+/obj/machinery/atmospherics/components/unary/cryo_cell/process_atmos()
+	last_power_draw = 0
+	last_flow_rate = 0
+
+	if(!on)
+		return
+
+	var/datum/gas_mixture/air1 = AIR1
+
+	if(!NODE1 || !AIR1 || !air1.gas.len || air1.gas["oxygen"] < 5) // Turn off if the machine won't work.
+		on = FALSE
+		update_icon()
+		return
+
+	if(occupant)
+		occupant.bodytemperature += 2 * (air1.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air1.heat_capacity())
+		occupant.bodytemperature = max(occupant.bodytemperature, air1.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
+
+		temperature_archived = air1.temperature
+
+		/* heat_gas_contents */
+		if(air1.total_moles < 1)
+			return
+		var/air_heat_capacity = air1.heat_capacity()
+		var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
+		if(combined_heat_capacity > 0)
+			var/combined_energy = T20C * current_heat_capacity + air_heat_capacity * air1.temperature
+			air1.temperature = combined_energy / combined_heat_capacity
+
+		if(abs(temperature_archived - air1.temperature) > 1)
+			var/datum/pipeline/parent1 = PARENT1
+			parent1.update = 1
+
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !iscarbon(target))
@@ -163,11 +207,13 @@
 	data["occupant"] = occupantData;
 
 	data["isOpen"] = state_open
-	data["cellTemperature"] = round(air_contents.temperature)
+
+	var/datum/gas_mixture/air1 = AIR1
+	data["cellTemperature"] = round(air1.temperature)
 	data["cellTemperatureStatus"] = "good"
-	if(air_contents.temperature > T0C) // if greater than 273.15 kelvin (0 celcius)
+	if(air1.temperature > T0C) // if greater than 273.15 kelvin (0 celcius)
 		data["cellTemperatureStatus"] = "bad"
-	else if(air_contents.temperature > 225)
+	else if(air1.temperature > 225)
 		data["cellTemperatureStatus"] = "average"
 
 	data["isBeakerLoaded"] = beaker ? 1 : 0
@@ -222,38 +268,36 @@
 
 	update_icon()
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/weapon/G, mob/user)
-	if(istype(G, /obj/item/weapon/reagent_containers/glass))
+/obj/machinery/atmospherics/components/unary/cryo_cell/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/reagent_containers/glass))
 		if(beaker)
-			to_chat(user, "\red A beaker is already loaded into the machine.")
+			to_chat(user, "<span class='warning'>A beaker is already loaded into [src]!</span>")
 			return
-
-		beaker =  G
-		user.drop_item()
-		G.loc = src
-		user.visible_message("[user] adds \a [G] to \the [src]!", "You add \a [G] to \the [src]!")
+		if(!user.drop_item())
+			return
+		beaker = I
+		I.forceMove(src)
+		user.visible_message(
+			"[user] places [I] in [src].",
+			"<span class='notice'>You place [I] in [src].</span>")
+		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
+		log_game("[key_name(user)] added an [I] to cryo containing [reagentlist]")
+		return
 
 	if(!(on || occupant || state_open))
-		if(default_deconstruction_screwdriver(user, "pod-o", "pod-0", G))
+		if(default_deconstruction_screwdriver(user, "pod-o", "pod-0", I))
+			return
+		if(exchange_parts(user, I))
 			return
 
-	if(default_change_direction_wrench(user, G))
-		if(node)
-			node.disconnect(src)
-			disconnect(node)
-		initialize_directions = dir
-		initialize()
-		build_network()
-		if(node)
-			node.initialize()
-			node.build_network()
-			node.update_icon()
+	if(default_change_direction_wrench(user, I))
+		return
+	if(default_pry_open(I))
+		return
+	if(default_deconstruction_crowbar(I))
 		return
 
-	if(exchange_parts(user, G))
-		return
-
-	default_deconstruction_crowbar(G)
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/open_machine()
 	if(!state_open && !panel_open)
@@ -309,49 +353,6 @@
 		I.layer = 5
 		I.pixel_z = 32
 		overlays += I
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/process_occupant()
-	if(air_contents.total_moles < 10)
-		return
-	if(occupant)
-		if(occupant.stat == DEAD)
-			return
-		occupant.bodytemperature += 2*(air_contents.temperature - occupant.bodytemperature)*current_heat_capacity/(current_heat_capacity + air_contents.heat_capacity())
-		occupant.bodytemperature = max(occupant.bodytemperature, air_contents.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
-		occupant.stat = UNCONSCIOUS
-		if(occupant.bodytemperature < T0C && occupant.health < 100)
-			occupant.sleeping = max(5/efficiency, (1 / occupant.bodytemperature)*2000/efficiency)
-			occupant.Paralyse(max(5/efficiency, (1 / occupant.bodytemperature)*3000/efficiency))
-			if(air_contents.gas["oxygen"] > 2)
-				if(occupant.getOxyLoss()) occupant.adjustOxyLoss(-1)
-			else
-				occupant.adjustOxyLoss(-1)
-			//severe damage should heal waaay slower without proper chemicals
-			if(occupant.bodytemperature < 225)
-				if (occupant.getToxLoss())
-					occupant.adjustToxLoss(max(-efficiency, (-20*(efficiency ** 2)) / occupant.getToxLoss()))
-				var/heal_brute = occupant.getBruteLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getBruteLoss()) : 0
-				var/heal_fire = occupant.getFireLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getFireLoss()) : 0
-				occupant.heal_bodypart_damage(heal_brute, heal_fire)
-		var/has_cryo = occupant.reagents.get_reagent_amount("cryoxadone") >= 1
-		var/has_clonexa = occupant.reagents.get_reagent_amount("clonexadone") >= 1
-		var/has_cryo_medicine = has_cryo || has_clonexa
-		if(beaker && !has_cryo_medicine)
-			beaker.reagents.trans_to(occupant, 1, 10)
-			beaker.reagents.reaction(occupant)
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/heat_gas_contents()
-	if(air_contents.total_moles < 1)
-		return
-	var/air_heat_capacity = air_contents.heat_capacity()
-	var/combined_heat_capacity = current_heat_capacity + air_heat_capacity
-	if(combined_heat_capacity > 0)
-		var/combined_energy = T20C*current_heat_capacity + air_heat_capacity*air_contents.temperature
-		air_contents.temperature = combined_energy/combined_heat_capacity
-
-/obj/machinery/atmospherics/components/unary/cryo_cell/proc/expel_gas()
-	if(air_contents.total_moles < 1)
-		return
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/can_crawl_through()
 	return //can't ventcrawl in or out of cryo.

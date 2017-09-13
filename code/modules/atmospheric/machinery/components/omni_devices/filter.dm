@@ -58,7 +58,7 @@
 
 	return FALSE
 
-/obj/machinery/atmospherics/components/omni/filter/process()
+/obj/machinery/atmospherics/components/omni/filter/process_atmos()
 	if(!..())
 		return FALSE
 
@@ -66,10 +66,10 @@
 	var/datum/gas_mixture/input_air = input.air		// it's completely happy with them if they're in a loop though i.e. "P.air.return_pressure()"... *shrug*
 
 	var/delta = between(0, (output_air ? (max_output_pressure - output_air.return_pressure()) : 0), max_output_pressure)
-	var/transfer_moles_max = calculate_transfer_moles(input_air, output_air, delta, (output && output.network && output.network.volume) ? output.network.volume : 0)
+	var/transfer_moles_max = calculate_transfer_moles(input_air, output_air, delta, (output && output.parent && output.parent.air.volume) ? output.parent.air.volume : 0)
 	for(var/datum/omni_port/filter_output in filters)
 		delta = between(0, (filter_output.air ? (max_output_pressure - filter_output.air.return_pressure()) : 0), max_output_pressure)
-		transfer_moles_max = min(transfer_moles_max, (calculate_transfer_moles(input_air, filter_output.air, delta, (filter_output && filter_output.network && filter_output.network.volume) ? filter_output.network.volume : 0)))
+		transfer_moles_max = min(transfer_moles_max, (calculate_transfer_moles(input_air, filter_output.air, delta, (filter_output && filter_output.parent && filter_output.parent.air.volume) ? filter_output.parent.air.volume : 0)))
 
 	//Figure out the amount of moles to transfer
 	var/transfer_moles = between(0, ((set_flow_rate/input_air.volume)*input_air.total_moles), transfer_moles_max)
@@ -82,13 +82,11 @@
 		last_power_draw = power_draw
 		use_power(power_draw)
 
-		if(input.network)
-			input.network.update = TRUE
-		if(output.network)
-			output.network.update = TRUE
+		input.parent.update = TRUE
+		output.parent.update = TRUE
+
 		for(var/datum/omni_port/P in filters)
-			if(P.network)
-				P.network.update = TRUE
+			P.parent.update = TRUE
 
 	return TRUE
 

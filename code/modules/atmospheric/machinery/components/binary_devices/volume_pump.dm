@@ -6,7 +6,12 @@
 	name = "high power gas pump"
 	desc = "A pump. Has double the power rating of the standard gas pump."
 
-	power_rating = 15000	//15000 W ~ 20 HP
+	power_rating = 15000 // 15000 W ~ 20 HP
+
+/obj/machinery/atmospherics/components/binary/high_power/atmos_init()
+	..()
+
+	set_frequency(frequency)
 
 /obj/machinery/atmospherics/components/binary/pump/high_power/on
 	use_power = 1

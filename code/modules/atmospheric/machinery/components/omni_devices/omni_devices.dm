@@ -9,6 +9,8 @@
 	initialize_directions = 0
 	level = 1
 
+	device_type = QUATERNARY
+
 	var/configuring = 0
 	//var/target_pressure = ONE_ATMOSPHERE	//a base type as abstract as this should NOT be making these kinds of assumptions
 
@@ -46,10 +48,6 @@
 
 	build_icons()
 
-/obj/machinery/atmospherics/components/omni/singularity_pull()
-	new /obj/item/pipe(loc, make_from = src)
-	qdel(src)
-
 /obj/machinery/atmospherics/components/omni/update_icon()
 	if(stat & NOPOWER)
 		overlays = overlays_off
@@ -65,7 +63,7 @@
 /obj/machinery/atmospherics/components/omni/proc/error_check()
 	return
 
-/obj/machinery/atmospherics/components/omni/process()
+/obj/machinery/atmospherics/components/omni/process_atmos()
 	last_power_draw = 0
 	last_flow_rate = 0
 
@@ -221,26 +219,12 @@
 
 // Housekeeping and pipe network stuff below
 
-/obj/machinery/atmospherics/components/omni/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-	for(var/datum/omni_port/P in ports)
-		if(reference == P.node)
-			qdel(P.network)
-			P.network = new_network
-			break
-
-	if(new_network.normal_members.Find(src))
-		return 0
-
-	new_network.normal_members += src
-
-	return null
-
 /obj/machinery/atmospherics/components/omni/Destroy()
 	for(var/datum/omni_port/P in ports)
 		if(P.node)
 			P.node.disconnect(src)
-			qdel(P.network)
 			P.node = null
+			nullifyPipenet(P.parent)
 
 	return ..()
 
@@ -260,46 +244,11 @@
 
 	update_ports()
 
-/obj/machinery/atmospherics/components/omni/build_network()
-	for(var/datum/omni_port/P in ports)
-		if(!P.network && P.node)
-			P.network = new /datum/pipe_network()
-			P.network.normal_members += src
-			P.network.build_network(P.node, src)
-
-/obj/machinery/atmospherics/components/omni/return_network(obj/machinery/atmospherics/reference)
-	build_network()
-
-	for(var/datum/omni_port/P in ports)
-		if(reference == P.node)
-			return P.network
-
-	return null
-
-/obj/machinery/atmospherics/components/omni/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
-	for(var/datum/omni_port/P in ports)
-		if(P.network == old_network)
-			P.network = new_network
-
-	return TRUE
-
-/obj/machinery/atmospherics/components/omni/return_network_air(datum/pipe_network/reference)
-	var/list/results = list()
-
-	for(var/datum/omni_port/P in ports)
-		if(P.network == reference)
-			results += P.air
-
-	return results
-
 /obj/machinery/atmospherics/components/omni/disconnect(obj/machinery/atmospherics/reference)
 	for(var/datum/omni_port/P in ports)
 		if(reference == P.node)
-			qdel(P.network)
+			if(istype(P.node, /obj/machinery/atmospherics/pipe))
+				qdel(P.parent)
 			P.node = null
-			P.update = TRUE
-			break
 
 	update_ports()
-
-	return null

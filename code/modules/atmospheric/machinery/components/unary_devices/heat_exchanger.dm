@@ -1,27 +1,23 @@
 /obj/machinery/atmospherics/components/unary/heat_exchanger
-
 	icon = 'icons/obj/atmospherics/heat_exchanger.dmi'
 	icon_state = "intact"
-	density = 1
 
-	name = "Heat Exchanger"
+	name = "heat exchanger"
 	desc = "Exchanges heat between two input gases. Setup for fast heat transfer."
+
+	can_unwrench = TRUE
+	density = TRUE
 
 	var/obj/machinery/atmospherics/components/unary/heat_exchanger/partner = null
 	var/update_cycle
 
-/obj/machinery/atmospherics/components/unary/heat_exchanger/singularity_pull()
-	new /obj/item/pipe(loc, make_from = src)
-	qdel(src)
-
 /obj/machinery/atmospherics/components/unary/heat_exchanger/update_icon()
-	if(node)
+	if(NODE1)
 		icon_state = "intact"
 	else
 		icon_state = "exposed"
 
 /obj/machinery/atmospherics/components/unary/heat_exchanger/atmos_init()
-	..()
 	if(!partner)
 		var/partner_connect = turn(dir, 180)
 
@@ -31,66 +27,38 @@
 				partner.partner = src
 				break
 
-/obj/machinery/atmospherics/components/unary/heat_exchanger/process()
-	..()
+/obj/machinery/atmospherics/components/unary/heat_exchanger/process_atmos()
+	last_power_draw = 0
+	last_flow_rate = 0
+
 	if(!partner)
 		return FALSE
 
-	if(SSair.current_cycle <= update_cycle)
+	if(SSair.times_fired <= update_cycle)
 		return FALSE
 
-	update_cycle = SSair.current_cycle
-	partner.update_cycle = SSair.current_cycle
+	update_cycle = SSair.times_fired
+	partner.update_cycle = SSair.times_fired
+
+	var/datum/gas_mixture/air_contents = AIR1
+	var/datum/gas_mixture/partner_air_contents = partner.AIR1
 
 	var/air_heat_capacity = air_contents.heat_capacity()
-	var/other_air_heat_capacity = partner.air_contents.heat_capacity()
+	var/other_air_heat_capacity = partner_air_contents.heat_capacity()
 	var/combined_heat_capacity = other_air_heat_capacity + air_heat_capacity
 
 	var/old_temperature = air_contents.temperature
-	var/other_old_temperature = partner.air_contents.temperature
+	var/other_old_temperature = partner_air_contents.temperature
 
 	if(combined_heat_capacity > 0)
-		var/combined_energy = partner.air_contents.temperature*other_air_heat_capacity + air_heat_capacity*air_contents.temperature
+		var/combined_energy = partner_air_contents.temperature*other_air_heat_capacity + air_heat_capacity*air_contents.temperature
 
 		var/new_temperature = combined_energy/combined_heat_capacity
 		air_contents.temperature = new_temperature
-		partner.air_contents.temperature = new_temperature
+		partner_air_contents.temperature = new_temperature
 
-	if(network)
-		if(abs(old_temperature-air_contents.temperature) > 1)
-			network.update = 1
+	if(abs(old_temperature-air_contents.temperature) > 1)
+		update_parents()
 
-	if(partner.network)
-		if(abs(other_old_temperature-partner.air_contents.temperature) > 1)
-			partner.network.update = 1
-
-	return TRUE
-
-/obj/machinery/atmospherics/components/unary/heat_exchanger/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/wrench))
-		return ..()
-
-	var/turf/T = src.loc
-
-	if (level == 1 && isturf(T) && !T.is_plating())
-		to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
-		return TRUE
-
-	var/datum/gas_mixture/int_air = return_air()
-	var/datum/gas_mixture/env_air = loc.return_air()
-
-	if ((int_air.return_pressure() - env_air.return_pressure()) > 2 * ONE_ATMOSPHERE)
-		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it is too exerted due to internal pressure.</span>")
-		add_fingerprint(user)
-		return TRUE
-
-	playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-
-	if (do_after(user, 40, null, src))
-		user.visible_message(
-			"<span class='notice'>\The [user] unfastens \the [src].</span>",
-			"<span class='notice'>You have unfastened \the [src].</span>",
-			"You hear a ratchet.")
-		new /obj/item/pipe(loc, make_from = src)
-		qdel(src)
+	if(abs(other_old_temperature-partner_air_contents.temperature) > 1)
+		partner.update_parents()

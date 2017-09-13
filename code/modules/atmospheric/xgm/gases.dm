@@ -34,6 +34,7 @@
 	tile_overlay = "phoron"
 	overlay_limit = 0.7
 	flags = XGM_GAS_FUEL | XGM_GAS_CONTAMINANT | XGM_GAS_FUSION_FUEL
+	dangerous = TRUE
 
 /datum/xgm_gas/sleeping_agent
 	id = "sleeping_agent"
@@ -44,3 +45,4 @@
 	tile_overlay = "sleeping_agent"
 	overlay_limit = 1
 	flags = XGM_GAS_OXIDIZER //N2O is a powerful oxidizer
+	dangerous = TRUE

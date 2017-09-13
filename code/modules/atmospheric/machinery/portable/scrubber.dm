@@ -56,7 +56,7 @@
 	if(connected_port)
 		overlays += "scrubber-connector"
 
-/obj/machinery/portable_atmospherics/powered/scrubber/process()
+/obj/machinery/portable_atmospherics/powered/scrubber/process_atmos()
 	..()
 
 	var/power_draw = -1
@@ -189,7 +189,7 @@
 	if (old_stat != stat)
 		update_icon()
 
-/obj/machinery/portable_atmospherics/powered/scrubber/huge/process()
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/process_atmos()
 	if(!on || (stat & (NOPOWER | BROKEN)))
 		update_use_power(0)
 		last_flow_rate = 0
@@ -239,7 +239,7 @@
 /obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary
 	name = "Stationary Air Scrubber"
 
-/obj/machinery/portable_atmospherics/powered/scrubber/huge/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/stationary/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		to_chat(user, "<span class='notice'>The bolts are too tight for you to unscrew!</span>")
 		return

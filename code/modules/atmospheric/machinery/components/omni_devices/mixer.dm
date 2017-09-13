@@ -98,7 +98,7 @@
 
 	return FALSE
 
-/obj/machinery/atmospherics/components/omni/mixer/process()
+/obj/machinery/atmospherics/components/omni/mixer/process_atmos()
 	if(!..())
 		return FALSE
 
@@ -110,7 +110,7 @@
 
 	for (var/datum/omni_port/P in inputs)
 		transfer_moles += (set_flow_rate * P.concentration / P.air.volume) * P.air.total_moles
-		transfer_moles_max = min(transfer_moles_max, calculate_transfer_moles(P.air, output.air, delta, (output && output.network && output.network.volume) ? output.network.volume : 0))
+		transfer_moles_max = min(transfer_moles_max, calculate_transfer_moles(P.air, output.air, delta, (output && output.parent && output.parent.air.volume) ? output.parent.air.volume : 0))
 	transfer_moles = between(0, transfer_moles, transfer_moles_max)
 
 	var/power_draw = -1
@@ -122,11 +122,10 @@
 		use_power(power_draw)
 
 		for(var/datum/omni_port/P in inputs)
-			if(P.concentration && P.network)
-				P.network.update = TRUE
+			if(P.concentration)
+				P.parent.update = TRUE
 
-		if(output.network)
-			output.network.update = TRUE
+		output.parent.update = TRUE
 
 	return TRUE
 

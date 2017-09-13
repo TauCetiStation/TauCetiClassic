@@ -66,7 +66,8 @@
 			return M.return_temperature()
 		else if(istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 			var/obj/machinery/atmospherics/components/unary/cryo_cell/cryo = H.loc
-			return cryo.air_contents.temperature
+			var/datum/gas_mixture/G = cryo.AIR1
+			return G.temperature
 
 	var/turf/T = get_turf(src)
 	if(istype(T, /turf/space))

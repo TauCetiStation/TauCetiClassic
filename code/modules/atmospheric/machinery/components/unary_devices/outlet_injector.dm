@@ -9,13 +9,14 @@
 	name = "air injector"
 	desc = "Passively injects air into its surroundings. Has a valve attached to it that can control flow rate."
 
+	can_unwrench = TRUE
 	use_power = 0
-	idle_power_usage = 150		//internal circuitry, friction losses and stuff
-	power_rating = 15000	//15000 W ~ 20 HP
+	idle_power_usage = 150 // internal circuitry, friction losses and stuff
+	power_rating = 15000   // 15000 W ~ 20 HP
 
 	var/injecting = FALSE
 
-	var/volume_rate = 50	//flow rate limit
+	var/volume_rate = 50 // flow rate limit
 
 	frequency = 0
 	var/id = null
@@ -28,7 +29,13 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/New()
 	..()
-	air_contents.volume = ATMOS_DEFAULT_VOLUME_PUMP + 500	//Give it a small reservoir for injecting. Also allows it to have a higher flow rate limit than vent pumps, to differentiate injectors a bit more.
+	var/datum/gas_mixture/air1 = AIR1
+	air1.volume = ATMOS_DEFAULT_VOLUME_PUMP + 500	//Give it a small reservoir for injecting. Also allows it to have a higher flow rate limit than vent pumps, to differentiate injectors a bit more.
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/atmos_init()
+	set_frequency(frequency)
+	broadcast_status()
+	..()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/update_icon()
 	if(!powered())
@@ -42,32 +49,29 @@
 		var/turf/T = get_turf(src)
 		if(!istype(T))
 			return
-		add_underlay(T, node, dir)
+		add_underlay(T, NODE1, dir)
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/process()
-	..()
-
+/obj/machinery/atmospherics/components/unary/outlet_injector/process_atmos()
 	last_power_draw = 0
 	last_flow_rate = 0
 
 	if((stat & (NOPOWER|BROKEN)) || !use_power)
 		return
 
+	var/datum/gas_mixture/air_contents = AIR1
+
 	var/power_draw = -1
 	var/datum/gas_mixture/environment = loc.return_air()
 
 	if(environment && air_contents.temperature > 0)
-		var/transfer_moles = (volume_rate/air_contents.volume)*air_contents.total_moles //apply flow rate limit
+		var/transfer_moles = (volume_rate / air_contents.volume) * air_contents.total_moles // apply flow rate limit
 		power_draw = pump_gas(src, air_contents, environment, transfer_moles, power_rating)
 
 	if (power_draw >= 0)
 		last_power_draw = power_draw
 		use_power(power_draw)
 
-		if(network)
-			network.update = TRUE
-
-	return TRUE
+		update_parents()
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/proc/inject()
 	if(injecting || (stat & NOPOWER))
@@ -77,14 +81,15 @@
 	if (!environment)
 		return FALSE
 
+	var/datum/gas_mixture/air_contents = AIR1
+
 	injecting = TRUE
 
 	if(air_contents.temperature > 0)
 		var/power_used = pump_gas(src, air_contents, environment, air_contents.total_moles, power_rating)
 		use_power(power_used)
 
-		if(network)
-			network.update = TRUE
+		update_parents()
 
 	flick("inject", src)
 
@@ -114,10 +119,6 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/initialize()
-	. = ..()
-	set_frequency(frequency)
-
 /obj/machinery/atmospherics/components/unary/outlet_injector/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return FALSE
@@ -134,6 +135,7 @@
 
 	if(signal.data["set_volume_rate"])
 		var/number = text2num(signal.data["set_volume_rate"])
+		var/datum/gas_mixture/air_contents = AIR1
 		volume_rate = between(0, number, air_contents.volume)
 
 	if(signal.data["status"])
@@ -145,3 +147,10 @@
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/hide(i)
 	update_underlays()
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/can_unwrench(mob/user)
+	if(..())
+		if (!(stat & NOPOWER|BROKEN) && use_power)
+			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		else
+			return TRUE

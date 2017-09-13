@@ -1,168 +1,54 @@
-/obj/machinery/atmospherics/portables_connector
+/obj/machinery/atmospherics/components/unary/portables_connector
 	icon = 'icons/atmos/connector.dmi'
 	icon_state = "map_connector"
 
-	name = "Connector Port"
+	name = "connector port"
 	desc = "For connecting portable devices related to atmospherics control."
 
-	dir = SOUTH
-	initialize_directions = SOUTH
-
-	var/obj/machinery/portable_atmospherics/connected_device
-
-	var/obj/machinery/atmospherics/node
-
-	var/datum/pipe_network/network
-
-	var/on = 0
+	can_unwrench = TRUE
 	use_power = 0
 	level = 1
 
+	var/obj/machinery/portable_atmospherics/connected_device
 
-/obj/machinery/atmospherics/portables_connector/New()
-	initialize_directions = dir
-	..()
-
-/obj/machinery/atmospherics/portables_connector/Destroy()
-	loc = null
-
+/obj/machinery/atmospherics/components/unary/portables_connector/Destroy()
 	if(connected_device)
 		connected_device.disconnect()
-		connected_device = null
-
-	if(node)
-		node.disconnect(src)
-		qdel(network)
-
-	node = null
-
 	return ..()
 
-/obj/machinery/atmospherics/portables_connector/singularity_pull()
-	new /obj/item/pipe(loc, make_from = src)
-	qdel(src)
+/obj/machinery/atmospherics/components/unary/portables_connector/atmos_init_late()
+	var/obj/machinery/portable_atmospherics/PA = locate() in loc
+	if(PA)
+		PA.connect(src)
+		PA.update_icon()
 
-/obj/machinery/atmospherics/portables_connector/update_icon()
+/obj/machinery/atmospherics/components/unary/portables_connector/update_icon()
 	icon_state = "connector"
 
-/obj/machinery/atmospherics/portables_connector/update_underlays()
+/obj/machinery/atmospherics/components/unary/portables_connector/update_underlays()
 	if(..())
 		underlays.Cut()
 		var/turf/T = get_turf(src)
 		if(!istype(T))
 			return
-		add_underlay(T, node, dir)
+		add_underlay(T, NODE1, dir)
 
-/obj/machinery/atmospherics/portables_connector/hide(i)
+/obj/machinery/atmospherics/components/unary/portables_connector/hide(i)
 	update_underlays()
 
-/obj/machinery/atmospherics/portables_connector/process()
-	..()
-	if(!on)
-		return
+/obj/machinery/atmospherics/components/unary/portables_connector/process_atmos()
 	if(!connected_device)
-		on = FALSE
 		return
-	if(network)
-		network.update = TRUE
-	return TRUE
+	update_parents()
 
-// Housekeeping and pipe network stuff below
-/obj/machinery/atmospherics/portables_connector/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-	if(reference == node)
-		qdel(network)
-		network = new_network
+/obj/machinery/atmospherics/components/unary/portables_connector/can_unwrench(mob/user)
+	if(..())
+		if(connected_device)
+			to_chat(user, "<span class='warning'>You cannot unwrench [src], detach [connected_device] first!</span>")
+		else
+			return TRUE
 
-	if(new_network.normal_members.Find(src))
-		return FALSE
+/obj/machinery/atmospherics/components/unary/portables_connector/portableConnectorReturnAir()
+	return connected_device.portableConnectorReturnAir()
 
-	new_network.normal_members += src
-
-	return null
-
-/obj/machinery/atmospherics/portables_connector/atmos_init()
-	..()
-
-	if(node)
-		return
-
-	var/node_connect = dir
-
-	for(var/obj/machinery/atmospherics/target in get_step(src,node_connect))
-		if(target.initialize_directions & get_dir(target,src))
-			if (check_connect_types(target,src))
-				node = target
-				break
-
-	update_icon()
-	update_underlays()
-
-/obj/machinery/atmospherics/portables_connector/build_network()
-	if(!network && node)
-		network = new /datum/pipe_network()
-		network.normal_members += src
-		network.build_network(node, src)
-
-
-/obj/machinery/atmospherics/portables_connector/return_network(obj/machinery/atmospherics/reference)
-	build_network()
-
-	if(reference == node)
-		return network
-
-	if(reference == connected_device)
-		return network
-
-	return null
-
-/obj/machinery/atmospherics/portables_connector/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
-	if(network == old_network)
-		network = new_network
-
-	return TRUE
-
-/obj/machinery/atmospherics/portables_connector/return_network_air(datum/pipe_network/reference)
-	var/list/results = list()
-
-	if(connected_device)
-		results += connected_device.air_contents
-
-	return results
-
-/obj/machinery/atmospherics/portables_connector/disconnect(obj/machinery/atmospherics/reference)
-	if(reference == node)
-		qdel(network)
-		node = null
-
-	update_underlays()
-
-	return null
-
-
-/obj/machinery/atmospherics/portables_connector/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/wrench))
-		return ..()
-	if (connected_device)
-		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], dettach \the [connected_device] first.</span>")
-		return TRUE
-	if (locate(/obj/machinery/portable_atmospherics, src.loc))
-		return TRUE
-
-	var/datum/gas_mixture/int_air = return_air()
-	var/datum/gas_mixture/env_air = loc.return_air()
-
-	if ((int_air.return_pressure()-env_air.return_pressure()) > 2 * ONE_ATMOSPHERE)
-		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it too exerted due to internal pressure.</span>")
-		add_fingerprint(user)
-		return TRUE
-
-	playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-
-	if (do_after(user, 40, null, src))
-		user.visible_message(
-			"<span class='notice'>\The [user] unfastens \the [src].</span>",
-			"<span class='notice'>You have unfastened \the [src].</span>",
-			"You hear a ratchet.")
-		new /obj/item/pipe(loc, make_from = src)
-		qdel(src)
+/obj/proc/portableConnectorReturnAir()

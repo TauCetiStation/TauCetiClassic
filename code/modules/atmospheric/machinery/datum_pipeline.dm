@@ -1,44 +1,149 @@
-
 /datum/pipeline
 	var/datum/gas_mixture/air
+	var/list/datum/gas_mixture/other_airs
 
 	var/list/obj/machinery/atmospherics/pipe/members
-	var/list/obj/machinery/atmospherics/pipe/edges //Used for building networks
+	var/list/obj/machinery/atmospherics/components/other_atmosmch
 
-	var/datum/pipe_network/network
-
+	var/update = TRUE
 	var/alert_pressure = 0
 
 /datum/pipeline/New()
-	START_PROCESSING(SSobj, src)
+	other_airs = list()
+	members = list()
+	other_atmosmch = list()
+	SSair.networks += src
 
 /datum/pipeline/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	QDEL_NULL(network)
+	SSair.networks -= src
 
-	if(air)
-		if(air.volume)
-			temporarily_store_air()
-		QDEL_NULL(air)
+	if(air && air.volume)
+		temporarily_store_air()
 
 	for(var/obj/machinery/atmospherics/pipe/P in members)
-		if(P.parent == src)
-			P.parent = null
-		members -= P
+		P.parent = null
 
-	edges.Cut()
+	for(var/obj/machinery/atmospherics/components/C in other_atmosmch)
+		C.nullifyPipenet(src)
 
 	return ..()
 
-/datum/pipeline/process()//This use to be called called from the pipe networks
+/datum/pipeline/process()
+	if(update)
+		update = FALSE
+		reconcile_air()
+	//update = air.react()
 
 	//Check to see if pressure is within acceptable limits
 	var/pressure = air.return_pressure()
 	if(pressure > alert_pressure)
-		for(var/obj/machinery/atmospherics/pipe/member in members)
-			if(!member.check_pressure(pressure))
-				members.Remove(member)
-				break //Only delete 1 pipe per process
+		var/obj/machinery/atmospherics/pipe/member = pick(members) // pick random member, because why not.
+		if(member)
+			member.check_pressure(pressure)
+
+/datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/base)
+	var/volume = 0
+
+	if(istype(base, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/E = base
+		alert_pressure = E.alert_pressure
+		volume = E.volume
+		members += E
+		if(E.air_temporary)
+			air = E.air_temporary
+			E.air_temporary = null
+	else
+		addMachineryMember(base)
+
+	if(!air)
+		air = new
+
+	var/list/possible_expansions = list(base)
+	while(possible_expansions.len > 0)
+		for(var/obj/machinery/atmospherics/borderline in possible_expansions)
+
+			var/list/result = borderline.pipeline_expansion(src)
+
+			if(result.len > 0)
+				for(var/obj/machinery/atmospherics/P in result)
+					if(istype(P, /obj/machinery/atmospherics/pipe))
+						var/obj/machinery/atmospherics/pipe/item = P
+						if(!members.Find(item))
+
+							if(item.parent)
+								var/static/pipenetwarnings = 10
+								if(pipenetwarnings > 0)
+									warning("build_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) Nearby: ([item.x], [item.y], [item.z])")
+									pipenetwarnings -= 1
+									if(pipenetwarnings == 0)
+										warning("build_pipeline(): further messages about pipenets will be supressed")
+							members += item
+							possible_expansions += item
+
+							alert_pressure = min(alert_pressure, item.alert_pressure)
+
+							volume += item.volume
+							item.parent = src
+
+							if(item.air_temporary)
+								air.merge(item.air_temporary)
+								item.air_temporary = null
+					else
+						P.setPipenet(src, borderline)
+						addMachineryMember(P)
+
+			possible_expansions -= borderline
+
+	air.volume = volume
+
+/datum/pipeline/proc/addMachineryMember(obj/machinery/atmospherics/components/C)
+	other_atmosmch |= C
+	var/datum/gas_mixture/G = C.returnPipenetAir(src)
+	if(!G)
+		stack_trace("addMachineryMember: Null gasmix added to pipeline datum from [C] which is of type [C.type]. Nearby: ([C.x], [C.y], [C.z])")
+	other_airs |= G
+
+/datum/pipeline/proc/addMember(obj/machinery/atmospherics/A, obj/machinery/atmospherics/N)
+	if(istype(A, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/P = A
+		P.parent = src
+		var/list/adjacent = P.pipeline_expansion()
+		for(var/obj/machinery/atmospherics/pipe/I in adjacent)
+			if(I.parent == src)
+				continue
+			var/datum/pipeline/E = I.parent
+			merge(E)
+		if(!members.Find(P))
+			members += P
+			air.volume += P.volume
+	else
+		A.setPipenet(src, N)
+		addMachineryMember(A)
+
+/datum/pipeline/proc/merge(datum/pipeline/E)
+	air.volume += E.air.volume
+	members.Add(E.members)
+	for(var/obj/machinery/atmospherics/pipe/S in E.members)
+		S.parent = src
+	air.merge(E.air)
+	for(var/obj/machinery/atmospherics/components/C in E.other_atmosmch)
+		C.replacePipenet(E, src)
+	other_atmosmch.Add(E.other_atmosmch)
+	other_airs.Add(E.other_airs)
+	E.members.Cut()
+	E.other_atmosmch.Cut()
+	qdel(E)
+
+/obj/machinery/atmospherics/proc/addMember(obj/machinery/atmospherics/A)
+	return
+
+/obj/machinery/atmospherics/pipe/addMember(obj/machinery/atmospherics/A)
+	parent.addMember(A, src)
+
+/obj/machinery/atmospherics/components/addMember(obj/machinery/atmospherics/A)
+	var/datum/pipeline/P = returnPipenet(A)
+	P.addMember(A, src)
+
 
 /datum/pipeline/proc/temporarily_store_air()
 	//Update individual gas_mixtures by volume ratio
@@ -47,83 +152,10 @@
 		member.air_temporary = new
 		member.air_temporary.copy_from(air)
 		member.air_temporary.volume = member.volume
+
 		member.air_temporary.multiply(member.volume / air.volume)
 
-/datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/pipe/base)
-	air = new
-
-	var/list/possible_expansions = list(base)
-	members = list(base)
-	edges = list()
-
-	var/volume = base.volume
-	base.parent = src
-	alert_pressure = base.alert_pressure
-
-	if(base.air_temporary)
-		air = base.air_temporary
-		base.air_temporary = null
-	else
-		air = new
-
-	while(possible_expansions.len > 0)
-		for(var/obj/machinery/atmospherics/pipe/borderline in possible_expansions)
-
-			var/list/result = borderline.pipeline_expansion()
-			var/edge_check = result.len
-
-			if(result.len > 0)
-				for(var/obj/machinery/atmospherics/pipe/item in result)
-					if(item.in_stasis)
-						continue
-					if(!members.Find(item))
-						members += item
-						possible_expansions += item
-
-						volume += item.volume
-						qdel(item.parent)
-						item.parent = src
-
-						alert_pressure = min(alert_pressure, item.alert_pressure)
-
-						if(item.air_temporary)
-							air.merge(item.air_temporary)
-
-					edge_check--
-
-			if(edge_check > 0)
-				edges += borderline
-
-			possible_expansions -= borderline
-
-	air.volume = volume
-
-/datum/pipeline/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-
-	if(new_network.line_members.Find(src))
-		return FALSE
-
-	new_network.line_members += src
-
-	network = new_network
-
-	for(var/obj/machinery/atmospherics/pipe/edge in edges)
-		for(var/obj/machinery/atmospherics/result in edge.pipeline_expansion())
-			if(!istype(result, /obj/machinery/atmospherics/pipe) && (result != reference))
-				result.network_expand(new_network, edge)
-
-
-	return TRUE
-
-/datum/pipeline/proc/return_network(obj/machinery/atmospherics/reference)
-	if(!network)
-		network = new /datum/pipe_network()
-		network.build_network(src, null)
-			//technically passing these parameters should not be allowed
-			//however pipe_network.build_network(..) and pipeline.network_extend(...)
-			//		were setup to properly handle this case
-
-	return network
+		member.air_temporary.temperature = air.temperature
 
 /datum/pipeline/proc/mingle_with_turf(turf/simulated/target, mingle_volume)
 	var/datum/gas_mixture/air_sample = air.remove_ratio(mingle_volume / air.volume)
@@ -150,8 +182,7 @@
 		air.merge(air_sample)
 		//turf_air already modified by equalize_gases()
 
-	if(network)
-		network.update = TRUE
+	update = TRUE
 
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
 	var/total_heat_capacity = air.heat_capacity()
@@ -210,8 +241,44 @@
 				(partial_heat_capacity * target.heat_capacity / (partial_heat_capacity+target.heat_capacity))
 
 			air.temperature -= heat/total_heat_capacity
-	if(network)
-		network.update = TRUE
+	update = TRUE
+
+/datum/pipeline/proc/return_air()
+	. = other_airs + air
+	if(null in .)
+		stack_trace("[src] has one or more null gas mixtures, which may cause bugs. Null mixtures will not be considered in reconcile_air().")
+		return removeNullsFromList(.)
+
+/datum/pipeline/proc/reconcile_air()
+//	equalize_gases(other_airs)
+
+	var/list/datum/gas_mixture/GL = list()
+	var/list/datum/pipeline/PL = list()
+	PL += src
+
+	for(var/i = 1; i <= PL.len; i++) //can't do a for-each here because we may add to the list within the loop
+		var/datum/pipeline/P = PL[i]
+		if(!P)
+			continue
+		GL += P.return_air()
+		for(var/obj/machinery/atmospherics/components/binary/valve/V in P.other_atmosmch)
+			if(V.open)
+				PL |= V.PARENT1
+				PL |= V.PARENT2
+		for(var/obj/machinery/atmospherics/components/trinary/tvalve/V in P.other_atmosmch)
+			if(V.state)
+				if(src != V.PARENT2)
+					PL |= V.PARENT1
+					PL |= V.PARENT2
+			else
+				if(src != V.PARENT3)
+					PL |= V.PARENT1
+					PL |= V.PARENT3
+		for(var/obj/machinery/atmospherics/components/unary/portables_connector/C in P.other_atmosmch)
+			if(C.connected_device)
+				GL += C.portableConnectorReturnAir()
+
+	equalize_gases(GL)
 
 // surface must be the surface area in m^2
 /datum/pipeline/proc/radiate_heat_to_space(surface, thermal_conductivity)
@@ -221,8 +288,7 @@
 	var/heat_gain = get_thermal_radiation(air.temperature, surface, RADIATOR_EXPOSED_SURFACE_AREA_RATIO, thermal_conductivity)
 
 	air.add_thermal_energy(heat_gain)
-	if(network)
-		network.update = TRUE
+	update = TRUE
 
 //Returns the amount of heat gained while in space due to thermal radiation (usually a negative value)
 //surface - the surface area in m^2

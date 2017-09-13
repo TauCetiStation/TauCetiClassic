@@ -1,10 +1,11 @@
-#define SSAIR_PIPENETS   1
-#define SSAIR_TILES_CUR  2
-#define SSAIR_TILES_DEF  3
-#define SSAIR_EDGES      4
-#define SSAIR_FIRE_ZONES 5
-#define SSAIR_HOTSPOTS   6
-#define SSAIR_ZONES      7
+#define SSAIR_PIPENETS         1
+#define SSAIR_ATMOSMACHINERY   2
+#define SSAIR_TILES_CUR        3
+#define SSAIR_TILES_DEF        4
+#define SSAIR_EDGES            5
+#define SSAIR_FIRE_ZONES       6
+#define SSAIR_HOTSPOTS         7
+#define SSAIR_ZONES            8
 
 #define SSAIR_TICK_MULTIPLIER 2
 
@@ -20,16 +21,16 @@ var/datum/subsystem/air/SSair
 
 	flags = SS_BACKGROUND
 
-	var/current_cycle = 0
 	var/next_id       = 1 // Used to keep track of zone UIDs.
 
-	var/cost_pipenets   = 0
-	var/cost_tiles_curr = 0
-	var/cost_tiles_def  = 0
-	var/cost_edges      = 0
-	var/cost_fire_zones = 0
-	var/cost_hotspots   = 0
-	var/cost_zones      = 0
+	var/cost_pipenets        = 0
+	var/cost_atmos_machinery = 0
+	var/cost_tiles_curr      = 0
+	var/cost_tiles_def       = 0
+	var/cost_edges           = 0
+	var/cost_fire_zones      = 0
+	var/cost_hotspots        = 0
+	var/cost_zones           = 0
 
 	// Geometry lists
 	var/list/zones = list()
@@ -43,6 +44,9 @@ var/datum/subsystem/air/SSair
 	var/list/active_hotspots = list()
 	var/list/zones_to_update = list()
 
+	var/list/networks = list()
+	var/list/obj/machinery/atmos_machinery = list()
+
 	var/list/currentrun = list()
 	var/currentpart = SSAIR_PIPENETS
 
@@ -51,15 +55,17 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/stat_entry(msg)
 	msg += "\nC:{"
-	msg += "PN:[round(cost_pipenets)]|"
-	msg += "TC:[round(cost_tiles_curr)]|"
-	msg += "TD:[round(cost_tiles_def)]|"
-	msg += "E:[round(cost_edges)]|"
-	msg += "FZ:[round(cost_fire_zones)]|"
-	msg += "HS:[round(cost_hotspots)]|"
-	msg += "Z:[round(cost_zones)]|"
+	msg += "PN:[round(cost_pipenets,1)]|"
+	msg += "AM:[round(cost_atmos_machinery,1)]"
+	msg += "TC:[round(cost_tiles_curr,1)]|"
+	msg += "TD:[round(cost_tiles_def,1)]|"
+	msg += "E:[round(cost_edges,1)]|"
+	msg += "FZ:[round(cost_fire_zones,1)]|"
+	msg += "HS:[round(cost_hotspots,1)]|"
+	msg += "Z:[round(cost_zones,1)]|"
 	msg += "} "
-	msg += "PN:[pipe_networks.len]|"
+	msg += "PN:[networks.len]|"
+	msg += "AM:[atmos_machinery.len]|"
 	msg += "TTU:[tiles_to_update.len]|"
 	msg += "DT:[deferred_tiles.len]|"
 	msg += "E:[active_edges.len]|"
@@ -78,13 +84,20 @@ var/datum/subsystem/air/SSair
 	..()
 
 /datum/subsystem/air/fire(resumed = 0)
-	current_cycle++
-
 	var/timer = world.tick_usage
 
 	if (currentpart == SSAIR_PIPENETS || !resumed)
 		process_pipenets(resumed)
 		cost_pipenets = MC_AVERAGE(cost_pipenets, TICK_DELTA_TO_MS(world.tick_usage - timer))
+		if(state != SS_RUNNING)
+			return
+		resumed = 0
+		currentpart = SSAIR_ATMOSMACHINERY
+
+	if(currentpart == SSAIR_ATMOSMACHINERY)
+		timer = world.tick_usage
+		process_atmos_machinery(resumed)
+		cost_atmos_machinery = MC_AVERAGE(cost_atmos_machinery, TICK_DELTA_TO_MS(world.tick_usage - timer))
 		if(state != SS_RUNNING)
 			return
 		resumed = 0
@@ -158,17 +171,31 @@ var/datum/subsystem/air/SSair
 
 /datum/subsystem/air/proc/process_pipenets(resumed = 0)
 	if (!resumed)
-		src.currentrun = pipe_networks.Copy()
+		src.currentrun = networks.Copy()
 	// Cache for sanic speed (lists are references anyways)
 	var/list/currentrun = src.currentrun
 	while(currentrun.len)
 		var/datum/thing = currentrun[currentrun.len]
 		currentrun.len--
-		if(thing)
+		if(!QDELETED(thing))
 			thing.process()
 		else
-			pipe_networks -= thing
+			networks -= thing
 		if (MC_TICK_CHECK)
+			return
+
+/datum/subsystem/air/proc/process_atmos_machinery(resumed = 0)
+	var/seconds = wait * 0.1
+	if (!resumed)
+		src.currentrun = atmos_machinery.Copy()
+	//cache for sanic speed (lists are references anyways)
+	var/list/currentrun = src.currentrun
+	while(currentrun.len)
+		var/obj/machinery/M = currentrun[currentrun.len]
+		currentrun.len--
+		if(QDELETED(M) || (M.process_atmos(seconds) == PROCESS_KILL))
+			atmos_machinery.Remove(M)
+		if(MC_TICK_CHECK)
 			return
 
 /datum/subsystem/air/proc/process_tiles_current(resumed = 0)
@@ -265,34 +292,26 @@ var/datum/subsystem/air/SSair
 		CHECK_TICK
 
 /datum/subsystem/air/proc/setup_atmos_machinery()
-	for(var/obj/machinery/atmospherics/A in machines)
-		A.atmos_init()
+	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
+		AM.atmos_init()
 		CHECK_TICK
 
-	for(var/obj/machinery/atmospherics/components/unary/AM in machines)
-		if(istype(AM, /obj/machinery/atmospherics/components/unary/vent_pump))
-			var/obj/machinery/atmospherics/components/unary/vent_pump/T = AM
-			T.broadcast_status()
-		else if(istype(AM, /obj/machinery/atmospherics/components/unary/vent_scrubber))
-			var/obj/machinery/atmospherics/components/unary/vent_scrubber/T = AM
-			T.broadcast_status()
-		CHECK_TICK
-
+//this can't be done with setup_atmos_machinery() because
+//	all atmos machinery has to initalize before the first
+//	pipenet can be built.
 /datum/subsystem/air/proc/setup_pipenets()
-	for(var/obj/machinery/atmospherics/AM in machines)
+	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
 		AM.build_network()
+		CHECK_TICK
+
+	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
+		AM.atmos_init_late()
 		CHECK_TICK
 
 /datum/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
 	for(var/A in atmos_machines)
-		if(!istype(A, /obj/machinery/atmospherics/components/unary))
-			continue
-		if(istype(A, /obj/machinery/atmospherics/components/unary/vent_pump))
-			var/obj/machinery/atmospherics/components/unary/vent_pump/T = A
-			T.broadcast_status()
-		else if(istype(A, /obj/machinery/atmospherics/components/unary/vent_scrubber))
-			var/obj/machinery/atmospherics/components/unary/vent_scrubber/T = A
-			T.broadcast_status()
+		var/obj/machinery/atmospherics/AM = A
+		AM.atmos_init()
 		CHECK_TICK
 
 	for(var/A in atmos_machines)
@@ -300,6 +319,10 @@ var/datum/subsystem/air/SSair
 		AM.build_network()
 		CHECK_TICK
 
+	for(var/A in atmos_machinery)
+		var/obj/machinery/atmospherics/AM = A
+		AM.atmos_init_late()
+		CHECK_TICK
 
 /*********** Procs, which doesn't get involved in processing directly ***********/
 
@@ -364,7 +387,7 @@ var/datum/subsystem/air/SSair
 	var/space = !istype(B)
 
 	if(!space)
-		if(min(A.zone.contents.len, B.zone.contents.len) < ZONE_MIN_SIZE || (direct && (equivalent_pressure(A.zone, B.zone) || current_cycle == 0)))
+		if(min(A.zone.contents.len, B.zone.contents.len) < ZONE_MIN_SIZE || (direct && (equivalent_pressure(A.zone, B.zone) || times_fired == 0)))
 			merge(A.zone, B.zone)
 			return
 
@@ -493,6 +516,7 @@ var/datum/subsystem/air/SSair
 	return TRUE
 
 #undef SSAIR_PIPENETS
+#undef SSAIR_ATMOSMACHINERY
 #undef SSAIR_TILES_CUR
 #undef SSAIR_TILES_DEF
 #undef SSAIR_EDGES

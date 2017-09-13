@@ -7,37 +7,35 @@
 	minimum_temperature_difference = 300
 	thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
-// BubbleWrap
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/New()
-	.. ()
-	switch ( dir )
-		if ( SOUTH )
+	device_type = BINARY
+
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/SetInitDirections()
+	switch(dir)
+		if(SOUTH)
 			initialize_directions = NORTH
 			initialize_directions_he = SOUTH
-		if ( NORTH )
+		if(NORTH)
 			initialize_directions = SOUTH
 			initialize_directions_he = NORTH
-		if ( EAST )
+		if(EAST)
 			initialize_directions = WEST
 			initialize_directions_he = EAST
-		if ( WEST )
+		if(WEST)
 			initialize_directions = EAST
 			initialize_directions_he = WEST
-// BubbleWrap END
 
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/atmos_init()
-	..()
-	for(var/obj/machinery/atmospherics/target in get_step(src, initialize_directions))
-		if(target.initialize_directions & get_dir(target, src))
-			node1 = target
-			break
-	for(var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/target in get_step(src, initialize_directions_he))
-		if(target.initialize_directions_he & get_dir(target, src))
-			node2 = target
-			break
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/getNodeConnects()
+	return list(turn(dir, 180), dir)
 
-	if(!node1 && !node2)
-		qdel(src)
-		return
-
-	update_icon()
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/junction/can_be_node(obj/machinery/atmospherics/target, iteration)
+	var/init_dir
+	switch(iteration)
+		if(1)
+			init_dir = target.initialize_directions
+		if(2)
+			var/obj/machinery/atmospherics/pipe/simple/heat_exchanging/H = target
+			if(!istype(H))
+				return 0
+			init_dir = H.initialize_directions_he
+	if(init_dir & get_dir(target,src))
+		return 1

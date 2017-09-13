@@ -1,3 +1,6 @@
+/*
+	Acts like a normal vent, but has an input AND output.
+*/
 #define DEFAULT_PRESSURE_DELTA 10000
 
 #define EXTERNAL_PRESSURE_BOUND ONE_ATMOSPHERE
@@ -15,7 +18,7 @@
 	//node2 is output port
 	//node1 is input port
 
-	name = "Dual Port Air Vent"
+	name = "dual-port air vent"
 	desc = "Has a valve and pump attached to it. There are two ports."
 
 	level = 1
@@ -42,6 +45,10 @@
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/New()
 	..()
+
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
+
 	air1.volume = ATMOS_DEFAULT_VOLUME_PUMP
 	air2.volume = ATMOS_DEFAULT_VOLUME_PUMP
 	icon = null
@@ -51,6 +58,10 @@
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/New()
 	..()
+
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
+
 	air1.volume = ATMOS_DEFAULT_VOLUME_PUMP + 800
 	air2.volume = ATMOS_DEFAULT_VOLUME_PUMP + 800
 
@@ -65,6 +76,9 @@
 	var/turf/T = get_turf(src)
 	if(!istype(T))
 		return
+
+	var/obj/machinery/atmospherics/node1 = NODE1
+	var/obj/machinery/atmospherics/node2 = NODE2
 
 	if(!T.is_plating() && node1 && node2 && node1.level == 1 && node2.level == 1 && istype(node1, /obj/machinery/atmospherics/pipe) && istype(node2, /obj/machinery/atmospherics/pipe))
 		vent_icon += "h"
@@ -82,6 +96,10 @@
 		var/turf/T = get_turf(src)
 		if(!istype(T))
 			return
+
+		var/obj/machinery/atmospherics/node1 = NODE1
+		var/obj/machinery/atmospherics/node2 = NODE2
+
 		if(!T.is_plating() && node1 && node2 && node1.level == 1 && node2.level == 1 && istype(node1, /obj/machinery/atmospherics/pipe) && istype(node2, /obj/machinery/atmospherics/pipe))
 			return
 		else
@@ -98,14 +116,15 @@
 	update_icon()
 	update_underlays()
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/process()
-	..()
-
-	last_power_draw = 0
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/process_atmos()
 	last_flow_rate = 0
+	last_power_draw = 0
 
 	if(stat & (NOPOWER|BROKEN) || !use_power)
-		return FALSE
+		return
+
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
 
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -116,32 +135,34 @@
 
 	if(pressure_delta > 0.5)
 		if(pump_direction) //internal -> external
-			if (node1 && (environment.temperature || air1.temperature))
+			if (environment.temperature || air1.temperature)
 				var/transfer_moles = calculate_transfer_moles(air1, environment, pressure_delta)
 				power_draw = pump_gas(src, air1, environment, transfer_moles, power_rating)
 
-				if(power_draw >= 0 && network1)
-					network1.update = 1
+				if(power_draw >= 0)
+					var/datum/pipeline/parent1 = PARENT1
+					parent1.update = 1
 		else //external -> internal
-			if (node2 && (environment.temperature || air2.temperature))
-				var/transfer_moles = calculate_transfer_moles(environment, air2, pressure_delta, (network2) ? network2.volume : 0)
+			if (environment.temperature || air2.temperature)
+				var/datum/pipeline/parent2 = PARENT2
+				var/transfer_moles = calculate_transfer_moles(environment, air2, pressure_delta, (parent2) ? parent2.air.volume : 0)
 
 				//limit flow rate from turfs
-				transfer_moles = min(transfer_moles, environment.total_moles * air2.volume/environment.volume)	//group_multiplier gets divided out here
+				transfer_moles = min(transfer_moles, environment.total_moles * air2.volume / environment.volume)	//group_multiplier gets divided out here
 				power_draw = pump_gas(src, environment, air2, transfer_moles, power_rating)
 
-				if(power_draw >= 0 && network2)
-					network2.update = 1
+				if(power_draw >= 0)
+					parent2.update = 1
 
 	if (power_draw >= 0)
 		last_power_draw = power_draw
 		use_power(power_draw)
 
-	return TRUE
-
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/proc/get_pressure_delta(datum/gas_mixture/environment)
 	var/pressure_delta = DEFAULT_PRESSURE_DELTA
 	var/environment_pressure = environment.return_pressure()
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
 
 	if(pump_direction) //internal -> external
 		if(pressure_checks & PRESSURE_CHECK_EXTERNAL)
@@ -188,10 +209,11 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/initialize()
-	. = ..()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/atmos_init()
+	..()
 	if(frequency)
 		set_frequency(frequency)
+	broadcast_status()
 
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/examine(mob/user)
 	if(..(user, 1))
@@ -200,6 +222,7 @@
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/receive_signal(datum/signal/signal)
 	if(!signal.data["tag"] || (signal.data["tag"] != id) || (signal.data["sigtype"]!="command"))
 		return FALSE
+
 	if(signal.data["power"])
 		use_power = text2num(signal.data["power"])
 

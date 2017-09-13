@@ -4,13 +4,12 @@
 	density = 0
 	level = 1
 
-	name = "Gas filter"
+	name = "gas filter"
 
+	can_unwrench = TRUE
 	use_power = 0
-	idle_power_usage = 150		//internal circuitry, friction losses and stuff
-	power_rating = 7500	//This also doubles as a measure of how powerful the filter is, in Watts. 7500 W ~ 10 HP
-
-	var/temp = null // -- TLE
+	idle_power_usage = 150 // internal circuitry, friction losses and stuff
+	power_rating = 7500    // This also doubles as a measure of how powerful the filter is, in Watts. 7500 W ~ 10 HP
 
 	var/set_flow_rate = ATMOS_DEFAULT_VOLUME_FILTER
 
@@ -53,13 +52,13 @@
 		if(4)//removing N2O
 			filtered_out = list("sleeping_agent")
 
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
+	var/datum/gas_mixture/air3 = AIR3
+
 	air1.volume = ATMOS_DEFAULT_VOLUME_FILTER
 	air2.volume = ATMOS_DEFAULT_VOLUME_FILTER
 	air3.volume = ATMOS_DEFAULT_VOLUME_FILTER
-
-/obj/machinery/atmospherics/components/trinary/filter/singularity_pull()
-	new /obj/item/pipe(loc, make_from = src)
-	qdel(src)
 
 /obj/machinery/atmospherics/components/trinary/filter/update_icon()
 	if(istype(src, /obj/machinery/atmospherics/components/trinary/filter/m_filter))
@@ -69,7 +68,7 @@
 
 	if(!powered())
 		icon_state += "off"
-	else if(node2 && node3 && node1)
+	else if(NODE2 && NODE3 && NODE1)
 		icon_state += use_power ? "on" : "off"
 	else
 		icon_state += "off"
@@ -82,26 +81,30 @@
 		if(!istype(T))
 			return
 
-		add_underlay(T, node1, turn(dir, -180))
+		add_underlay(T, NODE1, turn(dir, -180))
 
 		if(istype(src, /obj/machinery/atmospherics/components/trinary/filter/m_filter))
-			add_underlay(T, node2, turn(dir, 90))
+			add_underlay(T, NODE2, turn(dir, 90))
 		else
-			add_underlay(T, node2, turn(dir, -90))
+			add_underlay(T, NODE2, turn(dir, -90))
 
-		add_underlay(T, node3, dir)
+		add_underlay(T, NODE3, dir)
 
 /obj/machinery/atmospherics/components/trinary/filter/hide(i)
 	update_underlays()
 
-/obj/machinery/atmospherics/components/trinary/filter/process()
-	..()
-
+/obj/machinery/atmospherics/components/trinary/filter/process_atmos()
 	last_power_draw = 0
 	last_flow_rate = 0
 
 	if((stat & (NOPOWER|BROKEN)) || !use_power)
 		return
+	if(!(NODE1 && NODE2 && NODE3))
+		return 0
+
+	var/datum/gas_mixture/air1 = AIR1
+	var/datum/gas_mixture/air2 = AIR2
+	var/datum/gas_mixture/air3 = AIR3
 
 	//Figure out the amount of moles to transfer
 	var/transfer_moles = (set_flow_rate / air1.volume) * air1.total_moles
@@ -110,48 +113,15 @@
 	if (transfer_moles > MINIMUM_MOLES_TO_FILTER)
 		power_draw = filter_gas(src, filtered_out, air1, air2, air3, transfer_moles, power_rating)
 
-		if(network2)
-			network2.update = TRUE
-
-		if(network3)
-			network3.update = TRUE
-
-		if(network1)
-			network1.update = TRUE
+		update_parents()
 
 	if (power_draw >= 0)
 		last_power_draw = power_draw
 		use_power(power_draw)
 
-	return TRUE
-
-/obj/machinery/atmospherics/components/trinary/filter/initialize()
+/obj/machinery/atmospherics/components/trinary/filter/atmos_init()
 	set_frequency(frequency)
-	. = ..()
-
-/obj/machinery/atmospherics/components/trinary/filter/attackby(obj/item/weapon/W, mob/user)
-	if (!istype(W, /obj/item/weapon/wrench))
-		return ..()
-
-	var/datum/gas_mixture/int_air = return_air()
-	var/datum/gas_mixture/env_air = loc.return_air()
-
-	if ((int_air.return_pressure() - env_air.return_pressure()) > 2 * ONE_ATMOSPHERE)
-		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it too exerted due to internal pressure.</span>")
-		add_fingerprint(user)
-		return TRUE
-
-	playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-
-	if (do_after(user, 40, null, src))
-		user.visible_message(
-			"<span class='notice'>\The [user] unfastens \the [src].</span>",
-			"<span class='notice'>You have unfastened \the [src].</span>",
-			"You hear a ratchet.")
-		new /obj/item/pipe(loc, make_from = src)
-		qdel(src)
-
+	..()
 
 /obj/machinery/atmospherics/components/trinary/filter/attack_hand(user) // -- TLE
 	if(..())
@@ -208,24 +178,25 @@
 	if(href_list["filterset"])
 		filter_type = text2num(href_list["filterset"])
 
-		filtered_out.Cut()	//no need to create new lists unnecessarily
+		filtered_out.Cut() //no need to create new lists unnecessarily
 		switch(filter_type)
-			if(0) //removing hydrocarbons
+			if(0) // removing hydrocarbons
 				filtered_out += "phoron"
-			if(1) //removing O2
+			if(1) // removing O2
 				filtered_out += "oxygen"
-			if(2) //removing N2
+			if(2) // removing N2
 				filtered_out += "nitrogen"
-			if(3) //removing CO2
+			if(3) // removing CO2
 				filtered_out += "carbon_dioxide"
-			if(4)//removing N2O
+			if(4) // removing N2O
 				filtered_out += "sleeping_agent"
 
-	if (href_list["temp"])
-		temp = null
+	var/datum/gas_mixture/air1 = AIR1
+
 	if(href_list["set_flow_rate"])
 		var/new_flow_rate = input(usr,"Enter new flow rate (0-[air1.volume]L/s)", "Flow Rate Control", set_flow_rate) as num
 		set_flow_rate = max(0, min(air1.volume, new_flow_rate))
+
 	if(href_list["power"])
 		use_power=!use_power
 
@@ -234,16 +205,13 @@
 
 /obj/machinery/atmospherics/components/trinary/filter/m_filter
 	icon_state = "mmap"
-
-	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|EAST
 
 /obj/machinery/atmospherics/components/trinary/filter/m_filter/on
 	icon_state = "mmap_on"
 	use_power = 1
 
-/obj/machinery/atmospherics/components/trinary/filter/m_filter/New()
-	..()
+/obj/machinery/atmospherics/components/trinary/filter/m_filter/SetInitDirections()
 	switch(dir)
 		if(NORTH)
 			initialize_directions = WEST|NORTH|SOUTH
@@ -253,35 +221,3 @@
 			initialize_directions = EAST|WEST|NORTH
 		if(WEST)
 			initialize_directions = WEST|SOUTH|EAST
-
-/obj/machinery/atmospherics/components/trinary/filter/m_filter/initialize()
-	. = ..()
-	set_frequency(frequency)
-
-/obj/machinery/atmospherics/components/trinary/filter/m_filter/atmos_init()
-	..()
-
-	if(node1 && node2 && node3)
-		return
-
-	var/node1_connect = turn(dir, -180)
-	var/node2_connect = turn(dir, 90)
-	var/node3_connect = dir
-
-	for(var/obj/machinery/atmospherics/target in get_step(src, node1_connect))
-		if(target.initialize_directions & get_dir(target,src))
-			node1 = target
-			break
-
-	for(var/obj/machinery/atmospherics/target in get_step(src, node2_connect))
-		if(target.initialize_directions & get_dir(target,src))
-			node2 = target
-			break
-
-	for(var/obj/machinery/atmospherics/target in get_step(src, node3_connect))
-		if(target.initialize_directions & get_dir(target,src))
-			node3 = target
-			break
-
-	update_icon()
-	update_underlays()

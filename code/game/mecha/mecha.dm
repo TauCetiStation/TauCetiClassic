@@ -46,7 +46,7 @@
 	var/internal_tank_valve = ONE_ATMOSPHERE
 	var/obj/machinery/portable_atmospherics/canister/internal_tank
 	var/datum/gas_mixture/cabin_air
-	var/obj/machinery/atmospherics/portables_connector/connected_port = null
+	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port = null
 
 	var/obj/item/device/radio/radio = null
 
@@ -862,7 +862,7 @@
 			. = t_air.temperature
 	return
 
-/obj/mecha/proc/connect(obj/machinery/atmospherics/portables_connector/new_port)
+/obj/mecha/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port)
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
 		return 0
@@ -876,10 +876,10 @@
 	connected_port.connected_device = src
 
 	//Actually enforce the air sharing
-	var/datum/pipe_network/network = connected_port.return_network(src)
-	if(network && !(internal_tank.return_air() in network.gases))
-		network.gases += internal_tank.return_air()
-		network.update = 1
+	var/datum/pipeline/P = connected_port.returnPipenet(src)
+	if(P && !(internal_tank.return_air() in P.other_airs))
+		P.other_airs += internal_tank.return_air()
+		P.update = 1
 	log_message("Connected to gas port.")
 	return 1
 
@@ -887,9 +887,9 @@
 	if(!connected_port)
 		return 0
 
-	var/datum/pipe_network/network = connected_port.return_network(src)
-	if(network)
-		network.gases -= internal_tank.return_air()
+	var/datum/pipeline/P = connected_port.returnPipenet(src)
+	if(P)
+		P.other_airs -= internal_tank.return_air()
 
 	connected_port.connected_device = null
 	connected_port = null
@@ -910,7 +910,7 @@
 	if(!src.occupant) return
 	if(usr!=src.occupant)
 		return
-	var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
+	var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector/) in loc
 	if(possible_port)
 		if(connect(possible_port))
 			src.occupant_message("\blue [name] connects to the port.")

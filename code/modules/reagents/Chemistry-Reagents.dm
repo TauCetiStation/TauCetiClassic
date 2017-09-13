@@ -4126,5 +4126,13 @@ datum
 	var/datum/preferences/A = new()	//Randomize appearance for the human
 	A.randomize_appearance_for(H)
 
+/proc/pretty_string_from_reagent_list(list/reagent_list)
+	//Convert reagent list to a printable string for logging etc
+	var/result = "| "
+	for (var/datum/reagent/R in reagent_list)
+		result += "[R.name], [R.volume] | "
+
+	return result
+
 // Undefine the alias for REAGENTS_EFFECT_MULTIPLER
 #undef REM

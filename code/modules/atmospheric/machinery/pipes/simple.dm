@@ -10,6 +10,8 @@
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
 
+	device_type = BINARY
+
 	var/minimum_temperature_difference = 300
 	var/thermal_conductivity = 0 //WALL_HEAT_TRANSFER_COEFFICIENT No
 
@@ -27,32 +29,20 @@
 	icon = null
 	alpha = 255
 
+/obj/machinery/atmospherics/pipe/simple/SetInitDirections()
+	if(dir in cornerdirs)
+		initialize_directions = dir
 	switch(dir)
-		if(SOUTH || NORTH)
+		if(NORTH,SOUTH)
 			initialize_directions = SOUTH|NORTH
-		if(EAST || WEST)
+		if(EAST,WEST)
 			initialize_directions = EAST|WEST
-		if(NORTHEAST)
-			initialize_directions = NORTH|EAST
-		if(NORTHWEST)
-			initialize_directions = NORTH|WEST
-		if(SOUTHEAST)
-			initialize_directions = SOUTH|EAST
-		if(SOUTHWEST)
-			initialize_directions = SOUTH|WEST
 
-/obj/machinery/atmospherics/pipe/simple/hide(i)
-	if(istype(loc, /turf/simulated))
-		invisibility = i ? 101 : 0
-	update_icon()
-
-/obj/machinery/atmospherics/pipe/simple/process()
-	if(!parent) //This should cut back on the overhead calling build_network thousands of times per cycle
-		..()
-	else if(leaking)
+/*/obj/machinery/atmospherics/pipe/simple/process()
+	if(leaking)
 		parent.mingle_with_turf(loc, volume)
 	else
-		. = PROCESS_KILL
+		. = PROCESS_KILL*/
 
 /obj/machinery/atmospherics/pipe/simple/check_pressure(pressure)
 	// Don't ask me, it happened somehow.
@@ -90,27 +80,6 @@
 	else if(dir == 12)
 		set_dir(4)
 
-/obj/machinery/atmospherics/pipe/simple/Destroy()
-	if(node1)
-		node1.disconnect(src)
-		node1 = null
-	if(node2)
-		node2.disconnect(src)
-		node1 = null
-
-	return ..()
-
-/obj/machinery/atmospherics/pipe/simple/pipeline_expansion()
-	return list(node1, node2)
-
-/obj/machinery/atmospherics/pipe/simple/change_color(new_color)
-	..()
-	//for updating connected atmos device pipes (i.e. vents, manifolds, etc)
-	if(node1)
-		node1.update_underlays()
-	if(node2)
-		node2.update_underlays()
-
 /obj/machinery/atmospherics/pipe/simple/update_icon(safety = 0)
 	if(!atmos_initalized)
 		return
@@ -121,73 +90,25 @@
 
 	overlays.Cut()
 
-	if(!node1 && !node2)
-		var/turf/T = get_turf(src)
-		new /obj/item/pipe(loc, make_from=src)
-		for (var/obj/machinery/meter/meter in T)
-			if (meter.target == src)
-				new /obj/item/pipe_meter(T)
-				qdel(meter)
-		qdel(src)
-	else if(node1 && node2)
+	var/obj/machinery/atmospherics/node1 = NODE1
+	var/obj/machinery/atmospherics/node2 = NODE2
+
+	if(node1 && node2)
 		overlays += icon_manager.get_atmos_icon("pipe", , pipe_color, "[pipe_icon]intact[icon_connect_type]")
-		if(leaking)
-			leaking = FALSE
+		//if(leaking)
+		//	leaking = FALSE
 	else
 		overlays += icon_manager.get_atmos_icon("pipe", , pipe_color, "[pipe_icon]exposed[node1?1:0][node2?1:0][icon_connect_type]")
-		if(!leaking)
-			leaking = TRUE
-			START_PROCESSING(SSmachine, src)
+		//if(!leaking)
+		//	leaking = TRUE
+		//	START_PROCESSING(SSmachine, src)
 
 /obj/machinery/atmospherics/pipe/simple/update_underlays()
 	return
 
 /obj/machinery/atmospherics/pipe/simple/atmos_init()
-	..()
 	normalize_dir()
-	var/node1_dir
-	var/node2_dir
-
-	for(var/direction in cardinal)
-		if(direction&initialize_directions)
-			if (!node1_dir)
-				node1_dir = direction
-			else if (!node2_dir)
-				node2_dir = direction
-
-	for(var/obj/machinery/atmospherics/target in get_step(src,node1_dir))
-		if(target.initialize_directions & get_dir(target,src))
-			if (check_connect_types(target,src))
-				node1 = target
-				break
-	for(var/obj/machinery/atmospherics/target in get_step(src,node2_dir))
-		if(target.initialize_directions & get_dir(target,src))
-			if (check_connect_types(target,src))
-				node2 = target
-				break
-
-	if(!node1 && !node2)
-		qdel(src)
-		return
-
-	var/turf/T = loc
-	if(level == 1 && !T.is_plating()) hide(1)
-	update_icon()
-
-/obj/machinery/atmospherics/pipe/simple/disconnect(obj/machinery/atmospherics/reference)
-	if(reference == node1)
-		if(istype(node1, /obj/machinery/atmospherics/pipe))
-			qdel(parent)
-		node1 = null
-
-	if(reference == node2)
-		if(istype(node2, /obj/machinery/atmospherics/pipe))
-			qdel(parent)
-		node2 = null
-
-	update_icon()
-
-	return null
+	..()
 
 /obj/machinery/atmospherics/pipe/simple/visible
 	icon_state = "intact"

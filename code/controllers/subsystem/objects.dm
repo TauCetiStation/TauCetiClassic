@@ -25,7 +25,6 @@ var/datum/subsystem/objects/SSobj
 
 	global_announcer = new(null) //Doh...
 
-	generateGasData() // Must exist before objects initialization.
 	for(var/thing in world)
 		var/atom/A = thing
 		A.initialize()

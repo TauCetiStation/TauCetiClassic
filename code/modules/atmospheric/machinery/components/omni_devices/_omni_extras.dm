@@ -27,7 +27,7 @@
 	var/transfer_moles = 0
 	var/datum/gas_mixture/air
 	var/obj/machinery/atmospherics/node
-	var/datum/pipe_network/network
+	var/datum/pipeline/parent
 
 /datum/omni_port/New(obj/machinery/atmospherics/components/omni/M, direction = NORTH)
 	..()
@@ -45,16 +45,18 @@
 		return
 
 	master.atmos_init()
-	master.build_network()
 
 	if(node)
 		node.atmos_init()
-		node.build_network()
+		node.addMember(master)
+
+	master.build_network()
 
 /datum/omni_port/proc/disconnect()
 	if(node)
 		node.disconnect(master)
-		master.disconnect(node)
+		node = null
+		master.nullifyPipenet(parent)
 
 
 //--------------------------------------------

@@ -10,29 +10,31 @@ Pipelines + Other Objects -> Pipe network
 
 */
 /obj/machinery/atmospherics
-	anchored = 1
+	anchored = TRUE
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
-
-	var/nodealert = 0
-	var/power_rating //the maximum amount of power the machine can use to do work, affects how powerful the machine is, in Watts
-
 	layer = EXPOSED_PIPE_LAYER
+
+	var/nodealert = FALSE
+	var/can_unwrench = FALSE
+	var/initialize_directions = 0
+	var/power_rating // the maximum amount of power the machine can use to do work, affects how powerful the machine is, in Watts
 
 	var/connect_types = CONNECT_TYPE_REGULAR
 	var/icon_connect_type = "" //"-supply" or "-scrubbers"
 
-	var/initialize_directions = 0
 	var/pipe_color
-
 	var/global/datum/pipe_icon_manager/icon_manager
-	var/obj/machinery/atmospherics/node1
-	var/obj/machinery/atmospherics/node2
+
+	var/device_type = 0
+	var/list/obj/machinery/atmospherics/nodes
 
 	var/atmos_initalized = FALSE
 
-/obj/machinery/atmospherics/New()
+/obj/machinery/atmospherics/New(loc, process = TRUE)
+	nodes = new(device_type)
+
 	if(!icon_manager)
 		icon_manager = new()
 
@@ -42,10 +44,102 @@ Pipelines + Other Objects -> Pipe network
 
 	if(!pipe_color_check(pipe_color))
 		pipe_color = null
+
 	..()
 
-/obj/machinery/atmospherics/proc/atmos_init()
+	if(process)
+		SSair.atmos_machinery += src
+
+	SetInitDirections()
+
+/obj/machinery/atmospherics/Destroy()
+	for(DEVICE_TYPE_LOOP)
+		nullifyNode(I)
+
+	SSair.atmos_machinery -= src
+
+	return ..()
+
+/obj/machinery/atmospherics/proc/nullifyNode(I)
+	if(NODE_I)
+		var/obj/machinery/atmospherics/N = NODE_I
+		N.disconnect(src)
+		NODE_I = null
+
+/obj/machinery/atmospherics/proc/getNodeConnects()
+	var/list/node_connects = list()
+	node_connects.len = device_type
+
+	for(DEVICE_TYPE_LOOP)
+		for(var/D in cardinal)
+			if(D & GetInitDirections())
+				if(D in node_connects)
+					continue
+				node_connects[I] = D
+				break
+	return node_connects
+
+//this is called just after the air controller sets up turfs
+/obj/machinery/atmospherics/proc/atmos_init(list/node_connects)
 	atmos_initalized = TRUE
+
+	if(!node_connects) //for pipes where order of nodes doesn't matter
+		node_connects = getNodeConnects()
+
+	for(DEVICE_TYPE_LOOP)
+		for(var/obj/machinery/atmospherics/target in get_step(src, node_connects[I]))
+			if(can_be_node(target, I))
+				if(check_connect_types(target, src))
+					NODE_I = target
+					break
+
+	update_icon()
+	update_underlays()
+
+// UNTIL proper late_init port (this is called after pipenets are created in air contoller - which means that is most things properly initialized)
+/obj/machinery/atmospherics/proc/atmos_init_late()
+	return
+
+/obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
+	if(target.initialize_directions & get_dir(target,src))
+		return 1
+
+/obj/machinery/atmospherics/proc/pipeline_expansion()
+	return nodes
+
+/obj/machinery/atmospherics/proc/SetInitDirections()
+	return
+
+/obj/machinery/atmospherics/proc/GetInitDirections()
+	return initialize_directions
+
+/obj/machinery/atmospherics/proc/returnPipenet()
+	return
+
+/obj/machinery/atmospherics/proc/returnPipenetAir()
+	return
+
+/obj/machinery/atmospherics/proc/setPipenet()
+	return
+
+/obj/machinery/atmospherics/proc/replacePipenet()
+	return
+
+/obj/machinery/atmospherics/proc/build_network()
+	// Called to build a network from this node
+	return
+
+/obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
+	if(istype(reference, /obj/machinery/atmospherics/pipe))
+		var/obj/machinery/atmospherics/pipe/P = reference
+		qdel(P.parent)
+	var/I = nodes.Find(reference)
+	NODE_I = null
+	update_icon()
+	update_underlays()
+
+/obj/machinery/atmospherics/update_icon()
+	return null
 
 /obj/machinery/atmospherics/hide(do_hide)
 	if(do_hide && level == 1)
@@ -53,10 +147,90 @@ Pipelines + Other Objects -> Pipe network
 	else
 		layer = initial(layer)
 
-/obj/machinery/atmospherics/attackby(atom/A, mob/user)
-	if(istype(A, /obj/item/device/analyzer))
+/obj/machinery/atmospherics/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/device/analyzer))
 		return
+	else if(istype(W, /obj/item/weapon/wrench))
+		if(can_unwrench(user))
+			var/turf/T = get_turf(src)
+			if (level == 1 && isturf(T) && T.intact)
+				to_chat(user, "<span class='warning'>You must remove the plating first!</span>")
+				return 1
+
+			var/datum/gas_mixture/int_air = return_air()
+			var/datum/gas_mixture/env_air = loc.return_air()
+
+			var/unsafe_wrenching = FALSE
+			var/internal_pressure = int_air.return_pressure()-env_air.return_pressure()
+
+			add_fingerprint(user)
+			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
+
+			if (internal_pressure > 2 * ONE_ATMOSPHERE)
+				to_chat(user, "<span class='warning'>As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?</span>")
+				unsafe_wrenching = TRUE //Oh dear oh dear
+
+			if (do_after(user, 20 * W.toolspeed, target = src) && !QDELETED(src))
+				user.visible_message(
+					"[user] unfastens \the [src].", \
+					"<span class='notice'>You unfasten \the [src].</span>",
+					"<span class='italics'>You hear ratchet.</span>")
+				investigate_log("was <span class='warning'>REMOVED</span> by [key_name(usr)]", INVESTIGATE_ATMOS)
+
+				//You unwrenched a pipe full of pressure? Let's splat you into the wall, silly.
+				if(unsafe_wrenching)
+					unsafe_pressure_release(user, internal_pressure)
+				deconstruct(TRUE)
+	else
+		return ..()
+
+/obj/machinery/atmospherics/proc/can_unwrench(mob/user)
+	return can_unwrench
+
+// Throws the user when they unwrench a pipe with a major difference between the internal and environmental pressure.
+/obj/machinery/atmospherics/proc/unsafe_pressure_release(mob/user, pressures = null)
+	if(!user)
+		return
+	if(!pressures)
+		var/datum/gas_mixture/int_air = return_air()
+		var/datum/gas_mixture/env_air = loc.return_air()
+		pressures = int_air.return_pressure() - env_air.return_pressure()
+
+	var/fuck_you_dir = get_dir(src, user) // Because fuck you...
+	if(!fuck_you_dir)
+		fuck_you_dir = pick(cardinal)
+	var/turf/target = get_edge_target_turf(user, fuck_you_dir)
+	var/range = pressures/250
+	var/speed = range/5
+
+	user.visible_message("<span class='danger'>[user] is sent flying by pressure!</span>","<span class='userdanger'>The pressure sends you flying!</span>")
+	user.throw_at(target, range, speed)
+
+/obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
+	if(!(flags & NODECONSTRUCT))
+		if(can_unwrench)
+			var/obj/item/pipe/stored = new(loc, make_from = src)
+			transfer_fingerprints_to(stored)
 	..()
+
+/obj/machinery/atmospherics/construction(pipe_type, obj_color)
+	var/turf/T = get_turf(src)
+	level = T.intact ? 2 : 1
+	atmos_init()
+	var/list/nodes = pipeline_expansion()
+	for(var/obj/machinery/atmospherics/A in nodes)
+		A.atmos_init()
+		A.addMember(src)
+	build_network()
+
+/obj/machinery/atmospherics/singularity_pull(S, current_size)
+	..()
+	if(current_size >= STAGE_FIVE)
+		deconstruct(FALSE)
+
+/obj/machinery/atmospherics/proc/returnPipenets()
+	return list()
 
 /obj/machinery/atmospherics/proc/add_underlay(turf/T, obj/machinery/atmospherics/node, direction, icon_connect_type)
 	if(node)
@@ -99,46 +273,13 @@ obj/machinery/atmospherics/proc/check_connect_types(obj/machinery/atmospherics/a
 	pipe_color = new_color
 	update_icon()
 
+	var/list/nodes = pipeline_expansion()
+	for(var/obj/machinery/atmospherics/A in nodes)
+		A.update_underlays()
+
 /obj/machinery/atmospherics/proc/color_cache_name(obj/machinery/atmospherics/node)
 	//Don't use this for standard pipes
 	if(!istype(node))
 		return null
 
 	return node.pipe_color
-
-/obj/machinery/atmospherics/process()
-	last_flow_rate = 0
-	last_power_draw = 0
-
-	build_network()
-
-/obj/machinery/atmospherics/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-	// Check to see if should be added to network. Add self if so and adjust variables appropriately.
-	// Note don't forget to have neighbors look as well!
-
-	return null
-
-/obj/machinery/atmospherics/proc/build_network()
-	// Called to build a network from this node
-
-	return null
-
-/obj/machinery/atmospherics/proc/return_network(obj/machinery/atmospherics/reference)
-	// Returns pipe_network associated with connection to reference
-	// Notes: should create network if necessary
-	// Should never return null
-
-	return null
-
-/obj/machinery/atmospherics/proc/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
-	// Used when two pipe_networks are combining
-
-/obj/machinery/atmospherics/proc/return_network_air(datum/network/reference)
-	// Return a list of gas_mixture(s) in the object
-	//		associated with reference pipe_network for use in rebuilding the networks gases list
-	// Is permitted to return null
-
-/obj/machinery/atmospherics/proc/disconnect(obj/machinery/atmospherics/reference)
-
-/obj/machinery/atmospherics/update_icon()
-	return null

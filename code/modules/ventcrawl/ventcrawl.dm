@@ -100,12 +100,15 @@ var/list/ventcrawl_machinery = list(
 				break
 
 	if(vent_found)
-		if(vent_found.network && (vent_found.network.normal_members.len || vent_found.network.line_members.len))
+		var/datum/pipeline/vent_found_parent = vent_found.PARENT1
+		if(vent_found_parent && (vent_found_parent.members.len || vent_found_parent.other_atmosmch))
+
+			var/datum/gas_mixture/air_contents = vent_found.AIR1
 
 			to_chat(src, "You begin climbing into the ventilation system...")
-			if(vent_found.air_contents && !issilicon(src))
+			if(air_contents && !issilicon(src))
 
-				switch(vent_found.air_contents.temperature)
+				switch(air_contents.temperature)
 					if(0 to BODYTEMP_COLD_DAMAGE_LIMIT)
 						to_chat(src, "<span class='danger'>You feel a painful freeze coming from the vent!</span>")
 					if(BODYTEMP_COLD_DAMAGE_LIMIT to T0C)
@@ -115,7 +118,7 @@ var/list/ventcrawl_machinery = list(
 					if(BODYTEMP_HEAT_DAMAGE_LIMIT to INFINITY)
 						to_chat(src, "<span class='danger'>You feel a searing heat coming from the vent!</span>")
 
-				switch(vent_found.air_contents.return_pressure())
+				switch(air_contents.return_pressure())
 					if(0 to HAZARD_LOW_PRESSURE)
 						to_chat(src, "<span class='danger'>You feel a rushing draw pulling you into the vent!</span>")
 					if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
@@ -142,19 +145,27 @@ var/list/ventcrawl_machinery = list(
 		to_chat(src, "You must be standing on or beside an air vent to enter it.")
 
 /mob/living/proc/add_ventcrawl(obj/machinery/atmospherics/starting_machine)
+
+	var/list/totalMembers = list()
+
+	for(var/datum/pipeline/P in starting_machine.returnPipenets())
+		totalMembers += P.members
+		totalMembers += P.other_atmosmch
+
+	if(!totalMembers.len)
+		return
+
 	is_ventcrawling = 1
 	//candrop = 0
-	var/datum/pipe_network/network = starting_machine.return_network(starting_machine)
-	if(!network)
-		return
-	for(var/datum/pipeline/pipeline in network.line_members)
-		for(var/obj/machinery/atmospherics/A in (pipeline.members || pipeline.edges))
-			if(!A.pipe_image)
-				A.pipe_image = image(A, A.loc, dir = A.dir)
-			A.pipe_image.layer = ABOVE_LIGHTING_LAYER
-			A.pipe_image.plane = LIGHTING_PLANE
-			pipes_shown += A.pipe_image
-			client.images += A.pipe_image
+
+	for(var/X in totalMembers)
+		var/obj/machinery/atmospherics/A = X //all elements in totalMembers are necessarily of this type.
+		if(!A.pipe_image)
+			A.pipe_image = image(A, A.loc, dir = A.dir)
+		A.pipe_image.layer = ABOVE_LIGHTING_LAYER
+		A.pipe_image.plane = LIGHTING_PLANE
+		pipes_shown += A.pipe_image
+		client.images += A.pipe_image
 
 /mob/living/proc/remove_ventcrawl()
 	is_ventcrawling = 0

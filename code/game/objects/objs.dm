@@ -64,6 +64,10 @@
 	else
 		step_towards(src,S)
 
+// the obj is deconstructed into pieces, whether through careful disassembly or when destroyed.
+/obj/proc/deconstruct(disassembled = TRUE)
+	qdel(src)
+
 /obj/proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 	//Return: (NONSTANDARD)
 	//		null if object handles breathing logic for lifeform

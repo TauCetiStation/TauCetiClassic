@@ -84,14 +84,19 @@
 				air1.temperature = air1.temperature - energy_transfer/air1_heat_capacity
 
 			//Transfer the air
-			circ1.air2.merge(air1)
-			circ2.air2.merge(air2)
+			var/datum/gas_mixture/circ_air1 = circ1.AIR1
+			var/datum/gas_mixture/circ_air2 = circ2.AIR2
+
+
+			circ_air1.merge(air1)
+			circ_air2.merge(air2)
 
 			//Update the gas networks
-			if(circ1.network2)
-				circ1.network2.update = 1
-			if(circ2.network2)
-				circ2.network2.update = 1
+			var/datum/pipeline/parent1 = circ1.PARENT1
+			var/datum/pipeline/parent2 = circ2.PARENT2
+
+			parent1.update = 1
+			parent2.update = 1
 
 	// update icon overlays and power usage only if displayed level has changed
 	if(lastgen > 250000 && prob(10))
@@ -131,6 +136,11 @@
 		user.unset_machine(src)
 		user << browse(null, "window=teg")
 		return
+
+	var/datum/gas_mixture/circ1_air1 = circ1.AIR1
+	var/datum/gas_mixture/circ1_air2 = circ1.AIR2
+	var/datum/gas_mixture/circ2_air1 = circ2.AIR1
+	var/datum/gas_mixture/circ2_air2 = circ2.AIR2
 
 	user.set_machine(src)
 

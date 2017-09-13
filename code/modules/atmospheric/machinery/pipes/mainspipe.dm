@@ -1,7 +1,6 @@
 // internal pipe, don't actually place or use these
 /obj/machinery/atmospherics/pipe/mains_component
 	var/obj/machinery/atmospherics/mains_pipe/parent_pipe
-	var/list/obj/machinery/atmospherics/pipe/mains_component/nodes = new()
 
 /obj/machinery/atmospherics/pipe/mains_component/New(loc)
 	..(loc)
@@ -23,13 +22,6 @@
 	else
 		return TRUE
 
-/obj/machinery/atmospherics/pipe/mains_component/pipeline_expansion()
-	return nodes
-
-/obj/machinery/atmospherics/pipe/mains_component/disconnect(obj/machinery/atmospherics/reference)
-	if(nodes.Find(reference))
-		nodes.Remove(reference)
-
 /obj/machinery/atmospherics/pipe/mains_component/proc/mains_burst()
 	parent_pipe.burst()
 
@@ -43,7 +35,6 @@
 
 	var/initialize_mains_directions = 0
 
-	var/list/obj/machinery/atmospherics/mains_pipe/nodes = new()
 	var/obj/machinery/atmospherics/pipe/mains_component/supply
 	var/obj/machinery/atmospherics/pipe/mains_component/scrubbers
 	var/obj/machinery/atmospherics/pipe/mains_component/aux
@@ -72,7 +63,7 @@
 
 /obj/machinery/atmospherics/mains_pipe/hide(i)
 	if(level == 1 && istype(loc, /turf/simulated))
-		invisibility = i ? 101 : 0
+		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	update_icon()
 
 /obj/machinery/atmospherics/mains_pipe/proc/burst()
@@ -96,15 +87,6 @@
 	else
 		return TRUE
 
-/obj/machinery/atmospherics/mains_pipe/disconnect()
-	..()
-	for(var/obj/machinery/atmospherics/pipe/mains_component/node in nodes)
-		node.disconnect()
-
-/obj/machinery/atmospherics/mains_pipe/Destroy()
-	disconnect()
-	return ..()
-
 /obj/machinery/atmospherics/mains_pipe/atmos_init()
 	..()
 	for(var/i = 1 to nodes.len)
@@ -121,22 +103,16 @@
 	dir = SOUTH
 	initialize_mains_directions = SOUTH|NORTH
 
-/obj/machinery/atmospherics/mains_pipe/simple/New()
-	nodes.len = 2
-	..()
+	device_type = BINARY
+
+/obj/machinery/atmospherics/mains_pipe/simple/SetInitDirections()
+	if(dir in cornerdirs)
+		initialize_directions = dir
 	switch(dir)
-		if(SOUTH || NORTH)
-			initialize_mains_directions = SOUTH|NORTH
-		if(EAST || WEST)
-			initialize_mains_directions = EAST|WEST
-		if(NORTHEAST)
-			initialize_mains_directions = NORTH|EAST
-		if(NORTHWEST)
-			initialize_mains_directions = NORTH|WEST
-		if(SOUTHEAST)
-			initialize_mains_directions = SOUTH|EAST
-		if(SOUTHWEST)
-			initialize_mains_directions = SOUTH|WEST
+		if(NORTH,SOUTH)
+			initialize_directions = SOUTH|NORTH
+		if(EAST,WEST)
+			initialize_directions = EAST|WEST
 
 /obj/machinery/atmospherics/mains_pipe/simple/proc/normalize_dir()
 	if(dir==3)
@@ -203,9 +179,9 @@
 	initialize_mains_directions = EAST|NORTH|WEST
 	volume = 105
 
-/obj/machinery/atmospherics/mains_pipe/manifold/New()
-	nodes.len = 3
-	..()
+	device_type = TRINARY
+
+/obj/machinery/atmospherics/mains_pipe/manifold/SetInitDirections()
 	initialize_mains_directions = (NORTH|SOUTH|EAST|WEST) & ~dir
 
 /obj/machinery/atmospherics/mains_pipe/manifold/atmos_init()
@@ -269,9 +245,7 @@
 	initialize_mains_directions = EAST|NORTH|WEST|SOUTH
 	volume = 105
 
-/obj/machinery/atmospherics/mains_pipe/manifold4w/New()
-	nodes.len = 4
-	..()
+	device_type = QUATERNARY
 
 /obj/machinery/atmospherics/mains_pipe/manifold4w/atmos_init()
 	for(var/obj/machinery/atmospherics/mains_pipe/target in get_step(src,NORTH))
@@ -316,13 +290,13 @@
 	name = "mains splitter"
 	desc = "A splitter for connecting to a single pipe off a mains."
 
+	device_type = BINARY
+
 	var/obj/machinery/atmospherics/pipe/mains_component/split_node
 	var/obj/machinery/atmospherics/node3
 	var/icon_type
 
-/obj/machinery/atmospherics/mains_pipe/split/New()
-	nodes.len = 2
-	..()
+/obj/machinery/atmospherics/mains_pipe/split/SetInitDirections()
 	initialize_mains_directions = turn(dir, 90) | turn(dir, -90)
 	initialize_directions = dir // actually have a normal connection too
 
@@ -352,8 +326,8 @@
 
 	// bind them
 	if(node3 && split_node)
-		var/datum/pipe_network/N1 = node3.return_network(src)
-		var/datum/pipe_network/N2 = split_node.return_network(split_node)
+		var/datum/pipeline/N1 = node3.returnPipenet(src)
+		var/datum/pipeline/N2 = split_node.returnPipenet(split_node)
 		if(N1 && N2)
 			N1.merge(N2)
 
@@ -364,9 +338,6 @@
 
 /obj/machinery/atmospherics/mains_pipe/split/update_icon()
 	icon_state = "split-[icon_type][invisibility ? "-f" : "" ]"
-
-/obj/machinery/atmospherics/mains_pipe/split/return_network(A)
-	return split_node.return_network(A)
 
 /obj/machinery/atmospherics/mains_pipe/split/supply
 	icon_type = "supply"
@@ -417,13 +388,13 @@
 	name = "triple mains splitter"
 	desc = "A splitter for connecting to the 3 pipes on a mainline."
 
+	device_type = UNARY
+
 	var/obj/machinery/atmospherics/supply_node
 	var/obj/machinery/atmospherics/scrubbers_node
 	var/obj/machinery/atmospherics/aux_node
 
-/obj/machinery/atmospherics/mains_pipe/split3/New()
-	nodes.len = 1
-	..()
+/obj/machinery/atmospherics/mains_pipe/split3/SetInitDirections()
 	initialize_mains_directions = dir
 	initialize_directions = cardinal & ~dir // actually have a normal connection too
 
@@ -463,18 +434,18 @@
 
 	// bind them
 	if(supply_node)
-		var/datum/pipe_network/N1 = supply_node.return_network(src)
-		var/datum/pipe_network/N2 = supply.return_network(supply)
+		var/datum/pipeline/N1 = supply_node.returnPipenet(src)
+		var/datum/pipeline/N2 = supply.returnPipenet(supply)
 		if(N1 && N2)
 			N1.merge(N2)
 	if(scrubbers_node)
-		var/datum/pipe_network/N1 = scrubbers_node.return_network(src)
-		var/datum/pipe_network/N2 = scrubbers.return_network(scrubbers)
+		var/datum/pipeline/N1 = scrubbers_node.returnPipenet(src)
+		var/datum/pipeline/N2 = scrubbers.returnPipenet(scrubbers)
 		if(N1 && N2)
 			N1.merge(N2)
 	if(aux_node)
-		var/datum/pipe_network/N1 = aux_node.return_network(src)
-		var/datum/pipe_network/N2 = aux.return_network(aux)
+		var/datum/pipeline/N1 = aux_node.returnPipenet(src)
+		var/datum/pipeline/N2 = aux.returnPipenet(aux)
 		if(N1 && N2)
 			N1.merge(N2)
 
@@ -485,17 +456,6 @@
 
 /obj/machinery/atmospherics/mains_pipe/split3/update_icon()
 	icon_state = "split-t[invisibility ? "-f" : "" ]"
-
-/obj/machinery/atmospherics/mains_pipe/split3/return_network(obj/machinery/atmospherics/reference)
-	var/obj/machinery/atmospherics/A
-
-	A = supply_node.return_network(reference)
-	if(!A)
-		A = scrubbers_node.return_network(reference)
-	if(!A)
-		A = aux_node.return_network(reference)
-
-	return A
 
 /obj/machinery/atmospherics/mains_pipe/split3/hidden
 	level = 1
@@ -513,9 +473,9 @@
 	initialize_directions = SOUTH
 	volume = 35
 
-/obj/machinery/atmospherics/mains_pipe/cap/New()
-	nodes.len = 1
-	..()
+	device_type = UNARY
+
+/obj/machinery/atmospherics/mains_pipe/cap/SetInitDirections()
 	initialize_mains_directions = dir
 
 /obj/machinery/atmospherics/mains_pipe/cap/update_icon()

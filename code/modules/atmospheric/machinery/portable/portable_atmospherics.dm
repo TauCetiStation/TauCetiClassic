@@ -2,39 +2,35 @@
 /obj/machinery/portable_atmospherics
 	name = "atmoalter"
 	use_power = 0
-	var/datum/gas_mixture/air_contents = new
 
-	var/obj/machinery/atmospherics/portables_connector/connected_port
+	var/datum/gas_mixture/air_contents
+	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
 	var/obj/item/weapon/tank/holding
 
 	var/volume = 0
-	var/destroyed = 0
 
 	var/start_pressure = ONE_ATMOSPHERE
 	var/maximum_pressure = 90 * ONE_ATMOSPHERE
 
 /obj/machinery/portable_atmospherics/New()
 	..()
+	SSair.atmos_machinery += src
 
+	air_contents = new
 	air_contents.volume = volume
 	air_contents.temperature = T20C
 
 /obj/machinery/portable_atmospherics/Destroy()
+	SSair.atmos_machinery -= src
+
+	disconnect()
 	QDEL_NULL(air_contents)
 	QDEL_NULL(holding)
+
 	return ..()
 
-/obj/machinery/portable_atmospherics/initialize()
-	. = ..()
-
-	var/obj/machinery/atmospherics/portables_connector/port = locate() in loc
-	if(port)
-		connect(port)
-		update_icon()
-
-/obj/machinery/portable_atmospherics/process()
-	if(!connected_port) //only react when pipe_network will ont it do it for you
-		//Allow for reactions
+/obj/machinery/portable_atmospherics/process_atmos()
+	if(!connected_port) // Pipe network handles reactions if connected.
 		air_contents.react()
 	else
 		update_icon()
@@ -50,7 +46,7 @@
 /obj/machinery/portable_atmospherics/update_icon()
 	return null
 
-/obj/machinery/portable_atmospherics/proc/connect(obj/machinery/atmospherics/portables_connector/new_port)
+/obj/machinery/portable_atmospherics/proc/connect(obj/machinery/atmospherics/components/unary/portables_connector/new_port)
 	//Make sure not already connected to something else
 	if(connected_port || !new_port || new_port.connected_device)
 		return FALSE
@@ -62,75 +58,73 @@
 	//Perform the connection
 	connected_port = new_port
 	connected_port.connected_device = src
-	connected_port.on = TRUE //Activate port updates
+	var/datum/pipeline/connected_port_parent = connected_port.PARENT1
+	connected_port_parent.reconcile_air()
 
 	anchored = TRUE // Prevent movement
-
-	//Actually enforce the air sharing
-	var/datum/pipe_network/network = connected_port.return_network(src)
-	if(network && !network.gases.Find(air_contents))
-		network.gases += air_contents
-		network.update = TRUE
-
 	return TRUE
+
+/obj/machinery/portable_atmospherics/Move()
+	. = ..()
+	if(.)
+		disconnect()
 
 /obj/machinery/portable_atmospherics/proc/disconnect()
 	if(!connected_port)
 		return FALSE
-
-	var/datum/pipe_network/network = connected_port.return_network(src)
-	if(network)
-		network.gases -= air_contents
-
 	anchored = FALSE
-
 	connected_port.connected_device = null
 	connected_port = null
-
 	return TRUE
+
+/obj/machinery/portable_atmospherics/portableConnectorReturnAir()
+	return air_contents
 
 /obj/machinery/portable_atmospherics/proc/update_connected_network()
 	if(!connected_port)
 		return
 
-	var/datum/pipe_network/network = connected_port.return_network(src)
-	if (network)
-		network.update = TRUE
+	var/datum/pipeline/connected_port_parent = connected_port.PARENT1
+	connected_port_parent.update = 1
 
 /obj/machinery/portable_atmospherics/attackby(obj/item/weapon/W, mob/user)
-	if ((istype(W, /obj/item/weapon/tank) && !( src.destroyed )))
-		if (holding)
-			return
-
-		var/obj/item/weapon/tank/T = W
-		user.drop_item()
-		T.forceMove(src)
-		holding = T
-		update_icon()
-		return
-
-	if (istype(W, /obj/item/weapon/wrench))
-		if(connected_port)
-			disconnect()
-			to_chat(user, "<span class='notice'>You disconnect \the [src] from the port.</span>")
-			update_icon()
-			return
-		else
-			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
-			if(possible_port)
-				if(connect(possible_port))
-					to_chat(user, "<span class='notice'>You connect \the [src] to the port.</span>")
-					update_icon()
-					return
-				else
-					to_chat(user, "<span class='notice'>\The [src] failed to connect to the port.</span>")
-					return
-			else
-				to_chat(user, "<span class='notice'>Nothing happens.</span>")
+	if (istype(W, /obj/item/weapon/tank))
+		if(!(stat & BROKEN))
+			if (holding || !user.drop_item())
 				return
-
+			var/obj/item/weapon/tank/T = W
+			T.forceMove(src)
+			holding = T
+			update_icon()
+	else if (istype(W, /obj/item/weapon/wrench))
+		if(!(stat & BROKEN))
+			if(connected_port)
+				disconnect()
+				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+				user.visible_message(
+					"[user] disconnects [src].",
+					"<span class='notice'>You unfasten [src] from the port.</span>",
+					"<span class='italics'>You hear a ratchet.</span>")
+				update_icon()
+				return
+			else
+				var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector/) in loc
+				if(!possible_port)
+					to_chat(user, "<span class='notice'>Nothing happens.</span>")
+					return
+				if(!connect(possible_port))
+					to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
+					return
+				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+				user.visible_message(
+					"[user] connects [src].",
+					"<span class='notice'>You fasten [src] to the port.</span>",
+					"<span class='italics'>You hear a ratchet.</span>")
+				update_icon()
 	if (istype(W, /obj/item/device/analyzer)) // Incase someone do something with this.
 		return
+	else
+		return ..()
 
 /obj/machinery/portable_atmospherics/return_air()
 	return air_contents
@@ -154,17 +148,17 @@
 			to_chat(user, "There is already a power cell installed.")
 			return
 
+		if(!user.drop_item())
+			return
+
 		var/obj/item/weapon/stock_parts/cell/C = I
 
-		user.drop_item()
 		C.add_fingerprint(user)
 		cell = C
 		C.forceMove(src)
 		user.visible_message("<span class='notice'>[user] opens the panel on [src] and inserts [C].</span>", "<span class='notice'>You open the panel on [src] and insert [C].</span>")
 		power_change()
-		return
-
-	if(istype(I, /obj/item/weapon/screwdriver))
+	else if(istype(I, /obj/item/weapon/screwdriver))
 		if(!cell)
 			to_chat(user, "<span class='warning'>There is no power cell installed.</span>")
 			return
@@ -174,8 +168,8 @@
 		cell.forceMove(loc)
 		cell = null
 		power_change()
-		return
-	..()
+	else
+		return ..()
 
 /obj/machinery/portable_atmospherics/proc/log_open()
 	if(air_contents.gas.len == 0)

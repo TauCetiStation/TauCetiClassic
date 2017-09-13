@@ -1,4 +1,4 @@
-/var/datum/xgm_gas_data/gas_data
+/var/datum/xgm_gas_data/gas_data = generateGasData()
 
 /datum/xgm_gas_data
 	//Simple list of all the gas IDs.
@@ -15,6 +15,8 @@
 	var/list/overlay_limit = list()
 	//Flags.
 	var/list/flags = list()
+	//Dangerous Gases
+	var/list/gases_dangerous = list()
 
 /datum/xgm_gas
 	var/id = ""
@@ -26,8 +28,9 @@
 	var/overlay_limit = null
 
 	var/flags = 0
+	var/dangerous = FALSE // currently used by canisters
 
-/datum/subsystem/objects/proc/generateGasData()
+/proc/generateGasData()
 	gas_data = new
 
 	for(var/p in subtypesof(/datum/xgm_gas))
@@ -45,5 +48,6 @@
 		if(gas.overlay_limit)
 			gas_data.overlay_limit[gas.id] = gas.overlay_limit
 		gas_data.flags[gas.id] = gas.flags
+		gas_data.gases_dangerous[gas.id] = gas.dangerous
 
-	return TRUE
+	return gas_data

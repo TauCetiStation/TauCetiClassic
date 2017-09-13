@@ -9,7 +9,7 @@
 	dir = SOUTH
 	initialize_directions = EAST|NORTH|WEST
 
-	var/obj/machinery/atmospherics/node3
+	device_type = TRINARY
 
 	level = 1
 
@@ -18,6 +18,7 @@
 	alpha = 255
 	icon = null
 
+/obj/machinery/atmospherics/pipe/manifold/SetInitDirections()
 	switch(dir)
 		if(NORTH)
 			initialize_directions = EAST|SOUTH|WEST
@@ -28,63 +29,6 @@
 		if(WEST)
 			initialize_directions = NORTH|EAST|SOUTH
 
-/obj/machinery/atmospherics/pipe/manifold/hide(i)
-	if(istype(loc, /turf/simulated))
-		invisibility = i ? 101 : 0
-	update_icon()
-
-/obj/machinery/atmospherics/pipe/manifold/pipeline_expansion()
-	return list(node1, node2, node3)
-
-/obj/machinery/atmospherics/pipe/manifold/process()
-	if(!parent)
-		..()
-	else
-		. = PROCESS_KILL
-
-/obj/machinery/atmospherics/pipe/manifold/Destroy()
-	if(node1)
-		node1.disconnect(src)
-		node1 = null
-	if(node2)
-		node2.disconnect(src)
-		node2 = null
-	if(node3)
-		node3.disconnect(src)
-		node3 = null
-
-	return ..()
-
-/obj/machinery/atmospherics/pipe/manifold/disconnect(obj/machinery/atmospherics/reference)
-	if(reference == node1)
-		if(istype(node1, /obj/machinery/atmospherics/pipe))
-			qdel(parent)
-		node1 = null
-
-	if(reference == node2)
-		if(istype(node2, /obj/machinery/atmospherics/pipe))
-			qdel(parent)
-		node2 = null
-
-	if(reference == node3)
-		if(istype(node3, /obj/machinery/atmospherics/pipe))
-			qdel(parent)
-		node3 = null
-
-	update_icon()
-
-	..()
-
-/obj/machinery/atmospherics/pipe/manifold/change_color(new_color)
-	..()
-	//for updating connected atmos device pipes (i.e. vents, manifolds, etc)
-	if(node1)
-		node1.update_underlays()
-	if(node2)
-		node2.update_underlays()
-	if(node3)
-		node3.update_underlays()
-
 /obj/machinery/atmospherics/pipe/manifold/update_icon(safety = FALSE)
 	if(!atmos_initalized)
 		return
@@ -93,86 +37,33 @@
 
 	alpha = 255
 
-	if(!node1 && !node2 && !node3)
-		var/turf/T = get_turf(src)
-		new /obj/item/pipe(loc, make_from = src)
-		for (var/obj/machinery/meter/meter in T)
-			if (meter.target == src)
-				new /obj/item/pipe_meter(T)
-				qdel(meter)
-		qdel(src)
-	else
-		overlays.Cut()
-		overlays += icon_manager.get_atmos_icon("manifold", , pipe_color, "core" + icon_connect_type)
-		overlays += icon_manager.get_atmos_icon("manifold", , , "clamps" + icon_connect_type)
-		underlays.Cut()
+	var/obj/machinery/atmospherics/node1 = NODE1
+	var/obj/machinery/atmospherics/node2 = NODE2
+	var/obj/machinery/atmospherics/node3 = NODE3
 
-		var/turf/T = get_turf(src)
-		var/list/directions = list(NORTH, SOUTH, EAST, WEST)
-		var/node1_direction = get_dir(src, node1)
-		var/node2_direction = get_dir(src, node2)
-		var/node3_direction = get_dir(src, node3)
+	overlays.Cut()
+	overlays += icon_manager.get_atmos_icon("manifold", , pipe_color, "core" + icon_connect_type)
+	overlays += icon_manager.get_atmos_icon("manifold", , , "clamps" + icon_connect_type)
+	underlays.Cut()
 
-		directions -= dir
+	var/turf/T = get_turf(src)
+	var/list/directions = list(NORTH, SOUTH, EAST, WEST)
+	var/node1_direction = get_dir(src, node1)
+	var/node2_direction = get_dir(src, node2)
+	var/node3_direction = get_dir(src, node3)
 
-		directions -= add_underlay(T,node1,node1_direction,icon_connect_type)
-		directions -= add_underlay(T,node2,node2_direction,icon_connect_type)
-		directions -= add_underlay(T,node3,node3_direction,icon_connect_type)
+	directions -= dir
 
-		for(var/D in directions)
-			add_underlay(T,,D,icon_connect_type)
+	directions -= add_underlay(T,node1,node1_direction,icon_connect_type)
+	directions -= add_underlay(T,node2,node2_direction,icon_connect_type)
+	directions -= add_underlay(T,node3,node3_direction,icon_connect_type)
+
+	for(var/D in directions)
+		add_underlay(T,,D,icon_connect_type)
 
 
 /obj/machinery/atmospherics/pipe/manifold/update_underlays()
 	..()
-	update_icon()
-
-/obj/machinery/atmospherics/pipe/manifold/atmos_init()
-	..()
-	var/connect_directions = (NORTH|SOUTH|EAST|WEST) & (~dir)
-
-	for(var/direction in cardinal)
-		if(direction&connect_directions)
-			for(var/obj/machinery/atmospherics/target in get_step(src, direction))
-				if(target.initialize_directions & get_dir(target, src))
-					if (check_connect_types(target, src))
-						node1 = target
-						connect_directions &= ~direction
-						break
-			if (node1)
-				break
-
-
-	for(var/direction in cardinal)
-		if(direction&connect_directions)
-			for(var/obj/machinery/atmospherics/target in get_step(src, direction))
-				if(target.initialize_directions & get_dir(target,src))
-					if (check_connect_types(target, src))
-						node2 = target
-						connect_directions &= ~direction
-						break
-			if (node2)
-				break
-
-
-	for(var/direction in cardinal)
-		if(direction&connect_directions)
-			for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-				if(target.initialize_directions & get_dir(target, src))
-					if (check_connect_types(target, src))
-						node3 = target
-						connect_directions &= ~direction
-						break
-			if (node3)
-				break
-
-	if(!node1 && !node2 && !node3)
-		qdel(src)
-		return
-
-	var/turf/T = get_turf(src)
-	if(level == 1 && !T.is_plating())
-		hide(1)
 	update_icon()
 
 /obj/machinery/atmospherics/pipe/manifold/visible

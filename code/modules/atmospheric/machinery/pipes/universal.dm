@@ -15,6 +15,9 @@
 	overlays += icon_manager.get_atmos_icon("pipe", , pipe_color, "universal")
 	underlays.Cut()
 
+	var/obj/machinery/atmospherics/node1 = NODE1
+	var/obj/machinery/atmospherics/node2 = NODE2
+
 	if (node1)
 		universal_underlays(node1)
 		if(node2)
@@ -49,6 +52,9 @@
 	overlays.Cut()
 	overlays += icon_manager.get_atmos_icon("pipe", , pipe_color, "universal")
 	underlays.Cut()
+
+	var/obj/machinery/atmospherics/node1 = NODE1
+	var/obj/machinery/atmospherics/node2 = NODE2
 
 	if (node1)
 		universal_underlays(node1)

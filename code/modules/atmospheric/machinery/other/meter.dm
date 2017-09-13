@@ -18,18 +18,20 @@
 
 /obj/machinery/meter/initialize()
 	. = ..()
+	SSair.atmos_machinery += src
 	if (!target)
 		src.target = locate(/obj/machinery/atmospherics/pipe) in loc
 
 /obj/machinery/meter/Destroy()
-	target = null
+	SSair.atmos_machinery -= src
+	src.target = null
 	return ..()
 
 /obj/machinery/meter/singularity_pull()
 	new /obj/item/pipe_meter(loc)
 	qdel(src)
 
-/obj/machinery/meter/process()
+/obj/machinery/meter/process_atmos()
 	if(!target)
 		icon_state = "meterX"
 		return 0
@@ -46,16 +48,16 @@
 		return 0
 
 	var/env_pressure = environment.return_pressure()
-	if(env_pressure <= 0.15*ONE_ATMOSPHERE)
+	if(env_pressure <= 0.15 * ONE_ATMOSPHERE)
 		icon_state = "meter0"
-	else if(env_pressure <= 1.8*ONE_ATMOSPHERE)
-		var/val = round(env_pressure/(ONE_ATMOSPHERE*0.3) + 0.5)
+	else if(env_pressure <= 1.8 * ONE_ATMOSPHERE)
+		var/val = round(env_pressure / (ONE_ATMOSPHERE * 0.3) + 0.5)
 		icon_state = "meter1_[val]"
-	else if(env_pressure <= 30*ONE_ATMOSPHERE)
-		var/val = round(env_pressure/(ONE_ATMOSPHERE*5)-0.35) + 1
+	else if(env_pressure <= 30 * ONE_ATMOSPHERE)
+		var/val = round(env_pressure / (ONE_ATMOSPHERE * 5) - 0.35) + 1
 		icon_state = "meter2_[val]"
-	else if(env_pressure <= 59*ONE_ATMOSPHERE)
-		var/val = round(env_pressure/(ONE_ATMOSPHERE*5) - 6) + 1
+	else if(env_pressure <= 59 * ONE_ATMOSPHERE)
+		var/val = round(env_pressure / (ONE_ATMOSPHERE * 5) - 6) + 1
 		icon_state = "meter3_[val]"
 	else
 		icon_state = "meter4"
@@ -63,7 +65,8 @@
 	if(frequency)
 		var/datum/radio_frequency/radio_connection = radio_controller.return_frequency(frequency)
 
-		if(!radio_connection) return
+		if(!radio_connection)
+			return
 
 		var/datum/signal/signal = new
 		signal.source = src
@@ -107,12 +110,12 @@
 /obj/machinery/meter/attackby(obj/item/weapon/W, mob/user)
 	if (!istype(W, /obj/item/weapon/wrench))
 		return ..()
-	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-	if (do_after(user, 40, src))
-		user.visible_message( \
-			"<span class='notice'>\The [user] unfastens \the [src].</span>", \
-			"<span class='notice'>You have unfastened \the [src].</span>", \
+	if (do_after(user, 40 * W.toolspeed, src))
+		user.visible_message(
+			"<span class='notice'>\The [user] unfastens \the [src].</span>",
+			"<span class='notice'>You have unfastened \the [src].</span>",
 			"You hear ratchet.")
 		new /obj/item/pipe_meter(src.loc)
 		qdel(src)
@@ -127,8 +130,4 @@
 
 /obj/machinery/meter/turf/initialize()
 	. = ..()
-	if (!target)
-		src.target = loc
-
-/obj/machinery/meter/turf/attackby(obj/item/weapon/W, mob/user)
-	return
+	src.target = loc

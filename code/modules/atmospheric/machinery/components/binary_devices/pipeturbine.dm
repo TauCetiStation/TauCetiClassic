@@ -1,6 +1,6 @@
 #define ADIABATIC_EXPONENT 0.667 // Actually adiabatic exponent - 1.
 
-/obj/machinery/atmospherics/pipeturbine
+/obj/machinery/atmospherics/components/pipeturbine
 	name = "turbine"
 	desc = "A gas turbine. Converting pressure into energy since 1884."
 	icon = 'icons/obj/pipeturbine.dmi'
@@ -17,14 +17,13 @@
 
 	var/dP = 0
 
-	var/datum/pipe_network/network1
-	var/datum/pipe_network/network2
-
-/obj/machinery/atmospherics/pipeturbine/New()
+/obj/machinery/atmospherics/components/pipeturbine/New()
 	..()
 	air_in.volume = 200
 	air_out.volume = 800
 	volume_ratio = air_in.volume / (air_in.volume + air_out.volume)
+
+/obj/machinery/atmospherics/components/pipeturbine/SetInitDirections()
 	switch(dir)
 		if(NORTH)
 			initialize_directions = EAST|WEST
@@ -35,21 +34,10 @@
 		if(WEST)
 			initialize_directions = NORTH|SOUTH
 
-/obj/machinery/atmospherics/pipeturbine/Destroy()
-	if(node1)
-		node1.disconnect(src)
-		qdel(network1)
-	if(node2)
-		node2.disconnect(src)
-		qdel(network2)
+/obj/machinery/atmospherics/components/pipeturbine/process_atmos()
+	last_flow_rate = 0
+	last_power_draw = 0
 
-	node1 = null
-	node2 = null
-
-	return ..()
-
-/obj/machinery/atmospherics/pipeturbine/process()
-	..()
 	if(anchored && !(stat & BROKEN))
 		kin_energy *= 1 - kin_loss
 		dP = max(air_in.return_pressure() - air_out.return_pressure(), 0)
@@ -67,12 +55,9 @@
 
 		update_icon()
 
-	if (network1)
-		network1.update = TRUE
-	if (network2)
-		network2.update = TRUE
+	update_parents()
 
-/obj/machinery/atmospherics/pipeturbine/update_icon()
+/obj/machinery/atmospherics/components/pipeturbine/update_icon()
 	overlays.Cut()
 	if (dP > 10)
 		overlays += image('icons/obj/pipeturbine.dmi', "moto-turb")
@@ -83,40 +68,46 @@
 	if (kin_energy > 1000000)
 		overlays += image('icons/obj/pipeturbine.dmi', "hi-turb")
 
-/obj/machinery/atmospherics/pipeturbine/attackby(obj/item/weapon/W, mob/user)
+/obj/machinery/atmospherics/components/pipeturbine/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 		anchored = !anchored
-		to_chat(user, "<span class='notice'>You [anchored ? "secure" : "unsecure"] the bolts holding \the [src] to the floor.</span>")
+		user.visible_message(
+			"[user.name] [anchored ? "secures" : "unsecures"] the bolts holding [src.name] to the floor.", \
+			"You [anchored ? "secure" : "unsecure"] the bolts holding [src] to the floor.", \
+			"You hear a ratchet")
+
+		SetInitDirections()
+		var/obj/machinery/atmospherics/node1 = NODE1
+		if(node1)
+			node1.disconnect(src)
+			NODE1 = null
+		nullifyPipenet(PARENT1)
+
+		var/obj/machinery/atmospherics/node2 = NODE2
+		if(node2)
+			node2.disconnect(src)
+			NODE2 = null
+		nullifyPipenet(PARENT2)
 
 		if(anchored)
-			if(dir & (NORTH|SOUTH))
-				initialize_directions = EAST|WEST
-			else if(dir & (EAST|WEST))
-				initialize_directions = NORTH|SOUTH
-
 			atmos_init()
-			build_network()
-			if (node1)
-				node1.atmos_init()
-				node1.build_network()
-			if (node2)
-				node2.atmos_init()
-				node2.build_network()
-		else
+
+			node1 = NODE1
+			node2 = NODE2
+
 			if(node1)
-				node1.disconnect(src)
-				qdel(network1)
+				node1.atmos_init()
+				node1.addMember(src)
 			if(node2)
-				node2.disconnect(src)
-				qdel(network2)
+				node2.atmos_init()
+				node2.addMember(src)
 
-			node1 = null
-			node2 = null
-
+			build_network()
 	else
 		..()
 
-/obj/machinery/atmospherics/pipeturbine/verb/rotate_clockwise()
+/obj/machinery/atmospherics/components/pipeturbine/verb/rotate_clockwise()
 	set category = "Object"
 	set name = "Rotate Circulator (Clockwise)"
 	set src in view(1)
@@ -127,7 +118,7 @@
 	src.set_dir(turn(src.dir, -90))
 
 
-/obj/machinery/atmospherics/pipeturbine/verb/rotate_anticlockwise()
+/obj/machinery/atmospherics/components/pipeturbine/verb/rotate_anticlockwise()
 	set category = "Object"
 	set name = "Rotate Circulator (Counterclockwise)"
 	set src in view(1)
@@ -136,95 +127,6 @@
 		return
 
 	src.set_dir(turn(src.dir, 90))
-
-//Goddamn copypaste from binary base class because atmospherics machinery API is not damn flexible
-/obj/machinery/atmospherics/pipeturbine/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-	if(reference == node1)
-		qdel(network1)
-		network1 = new_network
-
-	else if(reference == node2)
-		qdel(network2)
-		network2 = new_network
-
-	if(new_network.normal_members.Find(src))
-		return 0
-
-	new_network.normal_members += src
-
-	return null
-
-/obj/machinery/atmospherics/pipeturbine/atmos_init()
-	..()
-
-	if(node1 && node2)
-		return
-
-	var/node2_connect = turn(dir, -90)
-	var/node1_connect = turn(dir, 90)
-
-	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-		if(target.initialize_directions & get_dir(target,src))
-			node1 = target
-			break
-
-	for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-		if(target.initialize_directions & get_dir(target,src))
-			node2 = target
-			break
-
-/obj/machinery/atmospherics/pipeturbine/build_network()
-	if(!network1 && node1)
-		network1 = new /datum/pipe_network()
-		network1.normal_members += src
-		network1.build_network(node1, src)
-
-	if(!network2 && node2)
-		network2 = new /datum/pipe_network()
-		network2.normal_members += src
-		network2.build_network(node2, src)
-
-
-/obj/machinery/atmospherics/pipeturbine/return_network(obj/machinery/atmospherics/reference)
-	build_network()
-
-	if(reference == node1)
-		return network1
-
-	if(reference == node2)
-		return network2
-
-	return null
-
-/obj/machinery/atmospherics/pipeturbine/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
-	if(network1 == old_network)
-		network1 = new_network
-	if(network2 == old_network)
-		network2 = new_network
-
-	return TRUE
-
-/obj/machinery/atmospherics/pipeturbine/return_network_air(datum/pipe_network/reference)
-	var/list/results = list()
-
-	if(network1 == reference)
-		results += air_in
-	if(network2 == reference)
-		results += air_out
-
-	return results
-
-/obj/machinery/atmospherics/pipeturbine/disconnect(obj/machinery/atmospherics/reference)
-	if(reference == node1)
-		qdel(network1)
-		node1 = null
-
-	else if(reference == node2)
-		qdel(network2)
-		node2 = null
-
-	return null
-
 
 /obj/machinery/power/turbinemotor
 	name = "motor"
@@ -235,7 +137,7 @@
 	density = 1
 
 	var/kin_to_el_ratio = 0.1	//How much kinetic energy will be taken from turbine and converted into electricity
-	var/obj/machinery/atmospherics/pipeturbine/turbine
+	var/obj/machinery/atmospherics/components/pipeturbine/turbine
 
 /obj/machinery/power/turbinemotor/New()
 	..()
@@ -244,11 +146,11 @@
 /obj/machinery/power/turbinemotor/proc/updateConnection()
 	turbine = null
 	if(src.loc && anchored)
-		turbine = locate(/obj/machinery/atmospherics/pipeturbine) in get_step(src,dir)
+		turbine = locate(/obj/machinery/atmospherics/components/pipeturbine) in get_step(src,dir)
 		if ((turbine.stat & BROKEN) || !turbine.anchored || turn(turbine.dir, 180) != dir)
 			turbine = null
 
-/obj/machinery/power/turbinemotor/process()
+/obj/machinery/power/turbinemotor/process_atmos()
 	updateConnection()
 	if(!turbine || !anchored || (stat & BROKEN))
 		return

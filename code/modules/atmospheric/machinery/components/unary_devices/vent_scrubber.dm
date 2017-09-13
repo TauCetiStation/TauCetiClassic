@@ -4,6 +4,8 @@
 
 	name = "Air Scrubber"
 	desc = "Has a valve and pump attached to it."
+
+	can_unwrench = TRUE
 	use_power = 0
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 7500			//7500 W ~ 10 HP
@@ -24,14 +26,14 @@
 
 	var/area_uid
 
-	var/welded = 0
-
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on
 	use_power = 1
 	icon_state = "map_scrubber_on"
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/New()
 	..()
+
+	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = ATMOS_DEFAULT_VOLUME_FILTER
 
 	icon = null
@@ -47,9 +49,22 @@
 		initial_loc.air_scrub_names -= id_tag
 	return ..()
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/singularity_pull()
-	new /obj/item/pipe(loc, make_from = src)
-	qdel(src)
+/obj/machinery/atmospherics/components/unary/vent_scrubber/atmos_init()
+	radio_filter_in = frequency == initial(frequency) ? (RADIO_FROM_AIRALARM) : null
+	radio_filter_out = frequency == initial(frequency) ? (RADIO_TO_AIRALARM) : null
+
+	if (frequency)
+		set_frequency(frequency)
+
+	broadcast_status()
+
+	if(!scrubbing_gas)
+		scrubbing_gas = list()
+		for(var/g in gas_data.gases)
+			if(g != "oxygen" && g != "nitrogen")
+				scrubbing_gas += g
+
+	..()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/update_icon(safety = FALSE)
 	if(!check_icon_cache())
@@ -79,6 +94,9 @@
 		var/turf/T = get_turf(src)
 		if(!istype(T))
 			return
+
+		var/obj/machinery/atmospherics/node = NODE1
+
 		if(!T.is_plating() && node && node.level == 1 && istype(node, /obj/machinery/atmospherics/pipe))
 			return
 		else
@@ -123,34 +141,22 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/initialize()
-	. = ..()
-	radio_filter_in = frequency == initial(frequency) ? (RADIO_FROM_AIRALARM) : null
-	radio_filter_out = frequency == initial(frequency) ? (RADIO_TO_AIRALARM) : null
-	if (frequency)
-		set_frequency(frequency)
-		src.broadcast_status()
-	if(!scrubbing_gas)
-		scrubbing_gas = list()
-		for(var/g in gas_data.gases)
-			if(g != "oxygen" && g != "nitrogen")
-				scrubbing_gas += g
-
-/obj/machinery/atmospherics/components/unary/vent_scrubber/process()
-	..()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/process_atmos()
+	last_power_draw = 0
+	last_flow_rate = 0
 
 	if (hibernate > world.time)
-		return TRUE
-
-	if (!node)
+		return
+	if (!NODE1)
 		use_power = 0
 	//broadcast_status()
 	if(!use_power || (stat & (NOPOWER|BROKEN)))
-		return FALSE
+		return
 	if(welded)
-		return FALSE
+		return
 
 	var/datum/gas_mixture/environment = loc.return_air()
+	var/datum/gas_mixture/air_contents = AIR1
 
 	var/power_draw = -1
 	if(scrubbing)
@@ -172,10 +178,7 @@
 		last_power_draw = power_draw
 		use_power(power_draw)
 
-	if(network)
-		network.update = TRUE
-
-	return TRUE
+	update_parents()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/hide(i) //to make the little pipe section invisible, the icon changes.
 	update_icon()
@@ -258,68 +261,44 @@
 	update_icon()
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/wrench))
-		if (!(stat & NOPOWER) && use_power)
-			to_chat(user, "<span class='warning'>You cannot unwrench \the [src], turn it off first.</span>")
-			return TRUE
-
-		var/turf/T = src.loc
-
-		if (node && node.level==1 && isturf(T) && !T.is_plating())
-			to_chat(user, "<span class='warning'>You must remove the plating first.</span>")
-			return TRUE
-
-		var/datum/gas_mixture/int_air = return_air()
-		var/datum/gas_mixture/env_air = loc.return_air()
-
-		if ((int_air.return_pressure() - env_air.return_pressure()) > 2 * ONE_ATMOSPHERE)
-			to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it is too exerted due to internal pressure.</span>")
-			add_fingerprint(user)
-			return TRUE
-
-		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-		to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
-
-		if (do_after(user, 40, null, src))
-			user.visible_message(
-				"<span class='notice'>\The [user] unfastens \the [src].</span>",
-				"<span class='notice'>You have unfastened \the [src].</span>",
-				"You hear a ratchet.")
-			new /obj/item/pipe(loc, make_from = src)
-			qdel(src)
-		return TRUE
-
 	if(istype(W, /obj/item/weapon/weldingtool))
 
 		var/obj/item/weapon/weldingtool/WT = W
 
 		if(!WT.isOn())
 			to_chat(user, "<span class='notice'>The welding tool needs to be on to start this task.</span>")
-			return TRUE
+			return
 
 		if(!WT.remove_fuel(0, user))
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
-			return TRUE
+			return
 
 		to_chat(user, "<span class='notice'>Now welding \the [src].</span>")
 		playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 
 		if(!do_after(user, 20, null, src))
 			to_chat(user, "<span class='notice'>You must remain close to finish this task.</span>")
-			return TRUE
+			return
 
 		if(!WT.isOn())
 			to_chat(user, "<span class='notice'>The welding tool needs to be on to finish this task.</span>")
-			return TRUE
+			return
 
 		welded = !welded
 		update_icon()
 		user.visible_message("<span class='notice'>\The [user] [welded ? "welds \the [src] shut" : "unwelds \the [src]"].</span>", \
 			"<span class='notice'>You [welded ? "weld \the [src] shut" : "unweld \the [src]"].</span>", \
 			"You hear welding.")
-		return TRUE
+		return
+	else
+		return ..()
 
-	return ..()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/can_unwrench(mob/user)
+	if(..())
+		if (!(stat & NOPOWER) && use_power)
+			to_chat(user, "<span class='warning'>You cannot unwrench [src], turn it off first!</span>")
+		else
+			return TRUE
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/examine(mob/user)
 	if(..(user, 1))

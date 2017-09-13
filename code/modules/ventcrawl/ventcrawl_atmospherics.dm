@@ -31,7 +31,8 @@
 			user.forceMove(target_move.loc) //handles entering and so on
 			user.visible_message("You hear something squeezing through the ducts.", "You climb out the ventilation system.")
 		else if(target_move.can_crawl_through())
-			if(target_move.return_network(target_move) != return_network(src))
+			var/list/pipenetdiff = returnPipenets() ^ target_move.returnPipenets()
+			if(pipenetdiff.len)
 				user.remove_ventcrawl()
 				user.add_ventcrawl(target_move)
 			user.forceMove(target_move)
@@ -58,7 +59,7 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/passive_gate/can_crawl_through()
-	return flowing
+	return unlocked
 
 /obj/machinery/atmospherics/components/omni/can_crawl_through()
 	return use_power
@@ -66,7 +67,7 @@
 /obj/machinery/atmospherics/components/trinary/can_crawl_through()
 	return use_power
 
-/obj/machinery/atmospherics/valve/can_crawl_through()
+/obj/machinery/atmospherics/components/binary/valve/can_crawl_through()
 	return open
 
 /obj/machinery/atmospherics/components/unary/vent_pump/can_crawl_through()
@@ -75,7 +76,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/can_crawl_through()
 	return !welded
 
-/obj/machinery/atmospherics/valve/can_crawl_through()
+/obj/machinery/atmospherics/components/binary/valve/can_crawl_through()
 	return open
 
 /obj/machinery/atmospherics/proc/findConnecting(direction)
@@ -85,25 +86,4 @@
 				return target
 
 /obj/machinery/atmospherics/proc/isConnectable(obj/machinery/atmospherics/target)
-	return (target == node1 || target == node2)
-
-/obj/machinery/atmospherics/pipe/manifold/isConnectable(obj/machinery/atmospherics/target)
-	return (target == node3 || ..())
-
-obj/machinery/atmospherics/components/trinary/isConnectable(obj/machinery/atmospherics/target)
-	return (target == node3 || ..())
-
-/obj/machinery/atmospherics/pipe/manifold4w/isConnectable(obj/machinery/atmospherics/target)
-	return (target == node3 || target == node4 || ..())
-
-/obj/machinery/atmospherics/tvalve/isConnectable(obj/machinery/atmospherics/target)
-	return (target == node3 || ..())
-
-/obj/machinery/atmospherics/pipe/cap/isConnectable(obj/machinery/atmospherics/target)
-	return (target == node || ..())
-
-/obj/machinery/atmospherics/portables_connector/isConnectable(obj/machinery/atmospherics/target)
-	return (target == node || ..())
-
-/obj/machinery/atmospherics/components/unary/isConnectable(obj/machinery/atmospherics/target)
-	return (target == node || ..())
+	return nodes.Find(target)
