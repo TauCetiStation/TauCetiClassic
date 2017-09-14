@@ -8,6 +8,7 @@
 	can_unwrench = TRUE
 	use_power = 0
 	level = 1
+	layer = GAS_FILTER_LAYER
 
 	var/obj/machinery/portable_atmospherics/connected_device
 

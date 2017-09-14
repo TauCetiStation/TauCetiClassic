@@ -1,3 +1,6 @@
+#define SIPHONING	0
+#define SCRUBBING	1
+
 /obj/machinery/atmospherics/components/unary/vent_scrubber
 	icon = 'icons/atmos/vent_scrubber.dmi'
 	icon_state = "map_scrubber_off"
@@ -13,13 +16,14 @@
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SCRUBBER //connects to regular and scrubber pipes
 
 	level = 1
+	layer = GAS_SCRUBBER_LAYER
+	frequency = 1439
 
 	var/area/initial_loc
 	var/id_tag = null
-	frequency = 1439
 
 	var/hibernate = 0 //Do we even process?
-	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
+	var/scrubbing = SCRUBBING
 	var/list/scrubbing_gas
 
 	var/panic = 0 //is this scrubber panicked?
@@ -199,16 +203,16 @@
 		panic = text2num(signal.data["panic_siphon"])
 		if(panic)
 			use_power = 1
-			scrubbing = 0
+			scrubbing = SIPHONING
 		else
-			scrubbing = 1
+			scrubbing = SCRUBBING
 	if(signal.data["toggle_panic_siphon"] != null)
 		panic = !panic
 		if(panic)
 			use_power = 1
-			scrubbing = 0
+			scrubbing = SIPHONING
 		else
-			scrubbing = 1
+			scrubbing = SCRUBBING
 
 	if(signal.data["scrubbing"] != null)
 		scrubbing = text2num(signal.data["scrubbing"])

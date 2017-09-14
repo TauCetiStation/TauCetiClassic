@@ -47,7 +47,7 @@ var/datum/subsystem/objects/SSobj
 		currentrun.len--
 
 		if(QDELETED(thing))
-			processing -= thing // not really necessary, since objects remove themself when qdel() happens.
+			processing -= thing
 		else
 			thing.process()
 

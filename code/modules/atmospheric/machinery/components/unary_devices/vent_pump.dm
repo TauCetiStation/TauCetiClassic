@@ -19,10 +19,13 @@
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 7500			//7500 W ~ 10 HP
 
+	level = 1
+	layer = GAS_SCRUBBER_LAYER
+
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SUPPLY //connects to regular and supply pipes
+	frequency = 1439
 
 	var/area/initial_loc
-	level = 1
 	var/area_uid
 	var/id_tag = null
 
@@ -41,12 +44,6 @@
 	var/external_pressure_bound_default = EXTERNAL_PRESSURE_BOUND
 	var/internal_pressure_bound_default = INTERNAL_PRESSURE_BOUND
 	var/pressure_checks_default = PRESSURE_CHECKS
-
-	frequency = 1439
-	//var/datum/radio_frequency/radio_connection
-
-	//var/radio_filter_out
-	//var/radio_filter_in
 
 /obj/machinery/atmospherics/components/unary/vent_pump/on
 	use_power = 1

@@ -113,6 +113,7 @@
 /obj/machinery/atmospherics/pipe/simple/visible
 	icon_state = "intact"
 	level = 2
+	layer = GAS_PIPE_VISIBLE_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers
 	name = "Scrubbers pipe"

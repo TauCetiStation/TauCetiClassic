@@ -69,6 +69,7 @@
 /obj/machinery/atmospherics/pipe/manifold/visible
 	icon_state = "map"
 	level = 2
+	layer = GAS_PIPE_VISIBLE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold/visible/scrubbers
 	name = "Scrubbers pipe manifold"

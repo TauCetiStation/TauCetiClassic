@@ -22,6 +22,7 @@
 	var/id = null
 
 	level = 1
+	layer = GAS_SCRUBBER_LAYER
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on
 	use_power = 1

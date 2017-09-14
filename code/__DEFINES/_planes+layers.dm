@@ -82,9 +82,14 @@ What is the naming convention for planes or layers?
 #define ABOVE_HUD_PLANE   20
 #define ABOVE_HUD_LAYER   20
 
-#define PIPE_LAYER   2.4
-
-#define ABOVE_TILE_LAYER     2.1
-#define EXPOSED_PIPE_LAYER   2.5
-
-#define FIRE_LAYER   3
+//efine TURF_LAYER               2 // For easy recordkeeping; this is a byond define
+#define GAS_PIPE_HIDDEN_LAYER    2.35
+#define GAS_SCRUBBER_LAYER       2.46
+#define GAS_PIPE_VISIBLE_LAYER   2.47
+#define GAS_FILTER_LAYER         2.48
+#define GAS_PUMP_LAYER           2.49
+#define LOW_OBJ_LAYER            2.5
+//efine OBJ_LAYER                3 // For easy recordkeeping; this is a byond define
+#define ABOVE_WINDOW_LAYER       3.3
+//efine MOB_LAYER                4 // For easy recordkeeping; this is a byond define
+//efine FLY_LAYER                5 // For easy recordkeeping; this is a byond define

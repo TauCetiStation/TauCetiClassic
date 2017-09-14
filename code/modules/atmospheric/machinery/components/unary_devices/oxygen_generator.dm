@@ -1,10 +1,13 @@
 /obj/machinery/atmospherics/components/unary/oxygen_generator
 	icon = 'icons/obj/atmospherics/oxygen_generator.dmi'
 	icon_state = "intact_off"
-	density = TRUE
 
 	name = "oxygen generator"
 	desc = "Generates oxygen"
+
+	density = TRUE
+	layer = GAS_SCRUBBER_LAYER
+
 	var/on = FALSE
 	var/oxygen_content = 10
 

@@ -18,22 +18,9 @@
 /obj/machinery/atmospherics/components/binary/valve/shutoff/update_icon()
 	icon_state = "vclamp[open]"
 
-/obj/machinery/atmospherics/components/binary/valve/shutoff/New()
-	hide(1)
-	..()
-
 /obj/machinery/atmospherics/components/binary/valve/shutoff/attack_hand(mob/user)
 	..()
 	override_counter = 3
-
-/obj/machinery/atmospherics/components/binary/valve/shutoff/hide(do_hide)
-	if(do_hide)
-		if(level == 1)
-			layer = PIPE_LAYER
-		else if(level == 2)
-			..()
-	else
-		layer = initial(layer)
 
 /obj/machinery/atmospherics/components/binary/valve/shutoff/process_atmos()
 	last_flow_rate = 0

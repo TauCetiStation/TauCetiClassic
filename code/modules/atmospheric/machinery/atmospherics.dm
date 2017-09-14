@@ -14,7 +14,7 @@ Pipelines + Other Objects -> Pipe network
 	idle_power_usage = 0
 	active_power_usage = 0
 	power_channel = ENVIRON
-	layer = EXPOSED_PIPE_LAYER
+	layer = GAS_PIPE_HIDDEN_LAYER // under wires
 
 	var/nodealert = FALSE
 	var/can_unwrench = FALSE
@@ -140,12 +140,6 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/update_icon()
 	return null
-
-/obj/machinery/atmospherics/hide(do_hide)
-	if(do_hide && level == 1)
-		layer = PIPE_LAYER
-	else
-		layer = initial(layer)
 
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))

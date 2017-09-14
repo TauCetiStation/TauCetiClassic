@@ -3,6 +3,7 @@
 	icon = 'icons/obj/cryogenics.dmi'
 	icon_state = "pod-off"
 
+	layer = ABOVE_WINDOW_LAYER
 	light_color = "#FFFFFF"
 	density = TRUE
 	anchored = TRUE

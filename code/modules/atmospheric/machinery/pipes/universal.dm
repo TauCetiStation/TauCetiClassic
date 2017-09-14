@@ -77,7 +77,7 @@
 
 /obj/machinery/atmospherics/proc/universal_underlays(obj/machinery/atmospherics/node, direction)
 	var/turf/T = loc
-	if(node)
+	if(istype(node))
 		var/node_dir = get_dir(src,node)
 		if(node.icon_connect_type == "-supply")
 			add_underlay_adapter(T, , node_dir, "")

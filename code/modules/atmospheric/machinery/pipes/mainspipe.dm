@@ -27,7 +27,7 @@
 
 /obj/machinery/atmospherics/mains_pipe
 	icon = 'icons/obj/atmospherics/mainspipe.dmi'
-	layer = PIPE_LAYER
+	layer = GAS_PIPE_VISIBLE_LAYER
 
 	var/volume = 0
 

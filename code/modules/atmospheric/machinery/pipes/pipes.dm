@@ -1,7 +1,6 @@
 /obj/machinery/atmospherics/pipe
 	can_unwrench = TRUE
 	use_power = 0
-	layer = PIPE_LAYER
 	can_buckle = 1
 	buckle_require_restraints = 1
 	buckle_lying = -1
@@ -37,11 +36,9 @@
 	parent = null
 
 /obj/machinery/atmospherics/pipe/atmos_init()
-	..()
-
 	var/turf/T = loc
-	if(level == 1 && !T.is_plating())
-		hide(1)
+	hide(!T.is_plating())
+	..()
 
 /obj/machinery/atmospherics/pipe/nullifyNode(I)
 	var/obj/machinery/atmospherics/oldN = NODE_I
@@ -53,7 +50,7 @@
 	return level != 2
 
 /obj/machinery/atmospherics/pipe/hide(i)
-	if(istype(loc, /turf/simulated))
+	if(level == 1 && istype(loc, /turf/simulated))
 		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	update_icon()
 

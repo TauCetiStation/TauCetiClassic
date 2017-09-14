@@ -9,8 +9,9 @@
 	var/start_pressure = 25 * ONE_ATMOSPHERE
 	var/gas_type = ""
 
-	level = 1
 	density = TRUE
+	layer = ABOVE_WINDOW_LAYER
+	level = 1
 
 /obj/machinery/atmospherics/components/unary/tank/New()
 	..()
