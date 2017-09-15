@@ -27,7 +27,7 @@ datum/gear/zippo
 	path = /obj/item/weapon/lighter/zippo
 	cost = 2
 
-/datum/gear/gear/paicard
+/datum/gear/paicard
 	display_name = "PAI device"
 	path = /obj/item/device/paicard
 	cost = 2

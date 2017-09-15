@@ -10,7 +10,6 @@
 
 	votable = 0
 
-	var/list/possible_traitors
 	var/num_players = 0
 
 /datum/game_mode/traitor/autotraitor/announce()
@@ -73,32 +72,37 @@
 /datum/game_mode/traitor/autotraitor/post_setup()
 	..()
 	abandon_allowed = 1
-	addtimer(CALLBACK(src, .proc/traitorcheckloop), 9000)
 
-/datum/game_mode/traitor/autotraitor/proc/traitorcheckloop()
+/datum/game_mode/proc/traitorcheckloop()
 	if(SSshuttle.departed)
 		return
+
 	//message_admins("Performing AutoTraitor Check")
+	var/list/possible_autotraitor = list()
 	var/playercount = 0
 	var/traitorcount = 0
-	var/possible_traitors[0]
-	for(var/mob/living/player in mob_list)
 
-		if (player.client && player.stat != DEAD)
-			playercount += 1
-		if (player.client && player.mind && player.mind.special_role && player.stat != DEAD)
-			traitorcount += 1
-		if (player.client && player.mind && !player.mind.special_role && player.stat != DEAD && (player.client && (ROLE_TRAITOR in player.client.prefs.be_role)) && !jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR))
-			possible_traitors += player
-	for(var/datum/mind/player in possible_traitors)
-		for(var/job in restricted_jobs)
-			if(player.assigned_role == job)
-				possible_traitors -= player
+	for(var/mob/living/player in mob_list)
+		if (player.client && player.mind && player.stat != DEAD)
+			playercount++
+			if(player.mind.special_role)
+				traitorcount++
+			else if((player.client && (ROLE_TRAITOR in player.client.prefs.be_role)) && !jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR) && !isloyal(player))
+				if(!possible_autotraitor.len || !possible_autotraitor.Find(player))
+					possible_autotraitor += player
+
+	for(var/mob/living/player in possible_autotraitor)
+		if(!player.mind || !player.client)
+			possible_autotraitor -= player
+			continue
+		for(var/job in restricted_jobs_autotraitor)
+			if(player.mind.assigned_role == job)
+				possible_autotraitor -= player
 
 	//message_admins("Live Players: [playercount]")
 	//message_admins("Live Traitors: [traitorcount]")
 //		message_admins("Potential Traitors:")
-//		for(var/mob/living/traitorlist in possible_traitors)
+//		for(var/mob/living/traitorlist in possible_autotraitor)
 //			message_admins("[traitorlist.real_name]")
 
 //		var/r = rand(5)
@@ -110,18 +114,17 @@
 	if(traitorcount < max_traitors - 1)
 		traitor_prob += 50
 
-
 	if(traitorcount < max_traitors)
 		//message_admins("Number of Traitors is below maximum.  Rolling for new Traitor.")
 		//message_admins("The probability of a new traitor is [traitor_prob]%")
 
 		if(prob(traitor_prob))
 			message_admins("Making a new Traitor.")
-			if(!possible_traitors.len)
+			if(!possible_autotraitor.len)
 				message_admins("No potential traitors.  Cancelling new traitor.")
-				addtimer(CALLBACK(src, .proc/traitorcheckloop), 9000)
+				addtimer(CALLBACK(src, .proc/traitorcheckloop), autotraitor_delay)
 				return
-			var/mob/living/newtraitor = pick(possible_traitors)
+			var/mob/living/newtraitor = pick(possible_autotraitor)
 			//message_admins("[newtraitor.real_name] is the new Traitor.")
 
 			if (!config.objectives_disabled)
@@ -150,7 +153,7 @@
 	//else
 		//message_admins("Number of Traitors is at maximum.  Not making a new Traitor.")
 
-	addtimer(CALLBACK(src, .proc/traitorcheckloop), 9000)
+	addtimer(CALLBACK(src, .proc/traitorcheckloop), autotraitor_delay)
 
 
 
@@ -158,18 +161,22 @@
 	..()
 	if(SSshuttle.departed)
 		return
+	for(var/job in restricted_jobs)
+		if(character.mind.assigned_role == job)
+			return
 	//message_admins("Late Join Check")
-	if((character.client && (ROLE_TRAITOR in character.client.prefs.be_role)) && !jobban_isbanned(character, "Syndicate") && !jobban_isbanned(character, ROLE_TRAITOR) && !role_available_in_minutes(character, ROLE_TRAITOR))
+	if((character.client && (ROLE_TRAITOR in character.client.prefs.be_role)) && !jobban_isbanned(character, "Syndicate") \
+	 && !jobban_isbanned(character, ROLE_TRAITOR) && !role_available_in_minutes(character, ROLE_TRAITOR) && !isloyal(character))
 		//message_admins("Late Joiner has Be Syndicate")
 		//message_admins("Checking number of players")
 		var/playercount = 0
 		var/traitorcount = 0
 		for(var/mob/living/player in mob_list)
 
-			if (player.client && player.stat != DEAD)
+			if (player.client && player.mind && player.stat != DEAD)
 				playercount += 1
-			if (player.client && player.mind && player.mind.special_role && player.stat != DEAD)
-				traitorcount += 1
+				if(player.mind.special_role)
+					traitorcount += 1
 		//message_admins("Live Players: [playercount]")
 		//message_admins("Live Traitors: [traitorcount]")
 

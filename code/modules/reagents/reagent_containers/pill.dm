@@ -37,12 +37,12 @@
 			qdel(src)
 		return 1
 
-	else if(istype(M, /mob/living/carbon/human) )
-
-		var/mob/living/carbon/human/H = M
-		if(H.species.flags[IS_SYNTHETIC])
-			to_chat(H, "\red They have a monitor for a head, where do you think you're going to put that?")
-			return
+	else
+		if(istype(M, /mob/living/carbon/human) )
+			var/mob/living/carbon/human/H = M
+			if(H.species.flags[IS_SYNTHETIC])
+				to_chat(H, "\red They have a monitor for a head, where do you think you're going to put that?")
+				return
 
 		for(var/mob/O in viewers(world.view, user))
 			O.show_message("\red [user] attempts to force [M] to swallow [src].", 1)
@@ -68,9 +68,10 @@
 	return 0
 
 /obj/item/weapon/reagent_containers/pill/afterattack(obj/target, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 
-	if(target.is_open_container() != 0 && target.reagents)
+	if(target.is_open_container() && target.reagents)
 		if(!target.reagents.total_volume)
 			to_chat(user, "\red [target] is empty. Cant dissolve pill.")
 			return

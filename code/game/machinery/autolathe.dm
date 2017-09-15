@@ -85,15 +85,12 @@ var/global/list/autolathe_recipes_hidden = list( \
 
 	var/operating = 0.0
 	anchored = 1.0
-	var/list/L = list()
-	var/list/LL = list()
+	var/list/L
+	var/list/LL
 	var/hacked = 0
 	var/disabled = 0
 	var/shocked = 0
-	var/list/wires = list()
-	var/hack_wire
-	var/disable_wire
-	var/shock_wire
+	var/datum/wires/autolathe/wires = null
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
@@ -111,25 +108,14 @@ var/global/list/autolathe_recipes_hidden = list( \
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
 
-	src.L = autolathe_recipes
-	src.LL = autolathe_recipes_hidden
-	src.wires["Light Red"] = 0
-	src.wires["Dark Red"] = 0
-	src.wires["Blue"] = 0
-	src.wires["Green"] = 0
-	src.wires["Yellow"] = 0
-	src.wires["Black"] = 0
-	src.wires["White"] = 0
-	src.wires["Gray"] = 0
-	src.wires["Orange"] = 0
-	src.wires["Pink"] = 0
-	var/list/w = list("Light Red","Dark Red","Blue","Green","Yellow","Black","White","Gray","Orange","Pink")
-	src.hack_wire = pick(w)
-	w -= src.hack_wire
-	src.shock_wire = pick(w)
-	w -= src.shock_wire
-	src.disable_wire = pick(w)
-	w -= src.disable_wire
+	L = autolathe_recipes
+	LL = autolathe_recipes_hidden
+
+	wires = new(src)
+
+/obj/machinery/autolathe/Destroy()
+	QDEL_NULL(wires)
+	return ..()
 
 /obj/machinery/autolathe/RefreshParts()
 	..()
@@ -143,55 +129,41 @@ var/global/list/autolathe_recipes_hidden = list( \
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		prod_coeff += M.rating - 1
 
-/obj/machinery/autolathe/proc/wires_win(mob/user)
-	var/dat as text
-	dat += "Autolathe Wires:<BR>"
-	for(var/wire in src.wires)
-		dat += text("[wire] Wire: <A href='?src=\ref[src];wire=[wire];act=wire'>[src.wires[wire] ? "Mend" : "Cut"]</A> <A href='?src=\ref[src];wire=[wire];act=pulse'>Pulse</A><BR>")
-
-	dat += text("The red light is [src.disabled ? "off" : "on"].<BR>")
-	dat += text("The green light is [src.shocked ? "off" : "on"].<BR>")
-	dat += text("The blue light is [src.hacked ? "off" : "on"].<BR>")
-	user << browse("<HTML><HEAD><TITLE>Autolathe Hacking</TITLE></HEAD><BODY>[dat]</BODY></HTML>","window=autolathe_hack")
-	onclose(user, "autolathe_hack")
-
 /obj/machinery/autolathe/proc/regular_win(mob/user)
 	var/coeff = 2 ** prod_coeff
-	var/dat as text
-	if(!panel_open)
-		dat = text("<B>Metal Amount:</B> [src.m_amount] cm<sup>3</sup> (MAX: [max_m_amount])<BR>\n<FONT color=blue><B>Glass Amount:</B></FONT> [src.g_amount] cm<sup>3</sup> (MAX: [max_g_amount])<HR>")
-		var/list/objs = list()
-		objs += src.L
-		if (src.hacked)
-			objs += src.LL
-		for(var/obj/t in objs)
-			if (istype(t, /obj/item/stack))
-				var/title = "[t.name] ([t.m_amt] m /[t.g_amt] g)"
-				if (m_amount<t.m_amt || g_amount<t.g_amt)
-					dat += title + "<br>"
-					continue
-				dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
+	var/dat
 
-				var/obj/item/stack/S = t
-				var/max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)
-				if (max_multiplier>1)
-					dat += " |"
-				if (max_multiplier>10)
-					dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[10]'>x[10]</A>"
-				if (max_multiplier>25)
-					dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[25]'>x[25]</A>"
-				if (max_multiplier>1)
-					dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[max_multiplier]'>x[max_multiplier]</A>"
-			else
-				var/title = "[t.name] ([t.m_amt/coeff] m /[t.g_amt/coeff] g)"
-				if (m_amount<t.m_amt/coeff || g_amount<t.g_amt/coeff)
-					dat += title + "<br>"
-					continue
-				dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
-			dat += "<br>"
-	else
-		wires_win(user)
-		return
+	dat = text("<B>Metal Amount:</B> [src.m_amount] cm<sup>3</sup> (MAX: [max_m_amount])<BR>\n<FONT color=blue><B>Glass Amount:</B></FONT> [src.g_amount] cm<sup>3</sup> (MAX: [max_g_amount])<HR>")
+	var/list/objs = list()
+	objs += src.L
+	if (src.hacked)
+		objs += src.LL
+	for(var/obj/t in objs)
+		if (istype(t, /obj/item/stack))
+			var/title = "[t.name] ([t.m_amt] m /[t.g_amt] g)"
+			if (m_amount<t.m_amt || g_amount<t.g_amt)
+				dat += title + "<br>"
+				continue
+			dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
+
+			var/obj/item/stack/S = t
+			var/max_multiplier = min(S.max_amount, S.m_amt?round(m_amount/S.m_amt):INFINITY, S.g_amt?round(g_amount/S.g_amt):INFINITY)
+			if (max_multiplier>1)
+				dat += " |"
+			if (max_multiplier>10)
+				dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[10]'>x[10]</A>"
+			if (max_multiplier>25)
+				dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[25]'>x[25]</A>"
+			if (max_multiplier>1)
+				dat += " <A href='?src=\ref[src];make=\ref[t];multiplier=[max_multiplier]'>x[max_multiplier]</A>"
+		else
+			var/title = "[t.name] ([t.m_amt/coeff] m /[t.g_amt/coeff] g)"
+			if (m_amount<t.m_amt/coeff || g_amount<t.g_amt/coeff)
+				dat += title + "<br>"
+				continue
+			dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
+		dat += "<br>"
+
 	user << browse("<HTML><HEAD><TITLE>Autolathe Control Panel</TITLE></HEAD><BODY><TT>[dat]</TT></BODY></HTML>", "window=autolathe_regular")
 	onclose(user, "autolathe_regular")
 
@@ -211,13 +183,15 @@ var/global/list/autolathe_recipes_hidden = list( \
 /obj/machinery/autolathe/interact(mob/user)
 	if(..())
 		return
-	if (src.shocked)
-		src.shock(user,50)
-	if (src.disabled)
+	if (shocked && !issilicon(user) && !isobserver(user))
+		shock(user,50)
+	if (disabled)
 		to_chat(user, "\red You press the button, but nothing happens.")
 		return
+	if(wires.interact(user))
+		return
+
 	regular_win(user)
-	return
 
 /obj/machinery/autolathe/attackby(obj/item/I, mob/user)
 	if (busy)
@@ -366,38 +340,4 @@ var/global/list/autolathe_recipes_hidden = list( \
 				if(src.g_amount < 0)
 					src.g_amount = 0
 				busy = 0
-	if(href_list["act"])
-		var/temp_wire = href_list["wire"]
-		if(href_list["act"] == "pulse")
-			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-				to_chat(usr, "You need a multitool!")
-			else
-				if(src.wires[temp_wire])
-					to_chat(usr, "You can't pulse a cut wire.")
-				else
-					if(src.hack_wire == temp_wire)
-						src.hacked = !src.hacked
-						spawn(100) src.hacked = !src.hacked
-					if(src.disable_wire == temp_wire)
-						src.disabled = !src.disabled
-						src.shock(usr,50)
-						spawn(100) src.disabled = !src.disabled
-					if(src.shock_wire == temp_wire)
-						src.shocked = !src.shocked
-						src.shock(usr,50)
-						spawn(100) src.shocked = !src.shocked
-		if(href_list["act"] == "wire")
-			if (!istype(usr.get_active_hand(), /obj/item/weapon/wirecutters))
-				to_chat(usr, "You need wirecutters!")
-			else
-				wires[temp_wire] = !wires[temp_wire]
-				if(src.hack_wire == temp_wire)
-					src.hacked = !src.hacked
-				if(src.disable_wire == temp_wire)
-					src.disabled = !src.disabled
-					src.shock(usr,50)
-				if(src.shock_wire == temp_wire)
-					src.shocked = !src.shocked
-					src.shock(usr,50)
-
 	updateUsrDialog()

@@ -5,23 +5,24 @@
 	desc = "It is a heavy duty industrial laser."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "emitter"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	req_access = list(access_engine_equip)
 
 	use_power = 0
 	idle_power_usage = 10
 	active_power_usage = 300
+	ghost_must_be_admin = TRUE
 
-	var/active = 0
-	var/powered = 0
+	var/active = FALSE
+	var/powered = FALSE
 	var/fire_delay = 100
 	var/maximum_fire_delay = 100
 	var/minimum_fire_delay = 20
 	var/last_shot = 0
 	var/shot_number = 0
 	var/state = 0
-	var/locked = 0
+	var/locked = FALSE
 
 /obj/machinery/power/emitter/New()
 	..()
@@ -62,7 +63,6 @@
 	..()
 	if(state == 2 && anchored)
 		connect_to_network()
-		src.directwired = 1
 
 /obj/machinery/power/emitter/Destroy()
 	message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
@@ -76,25 +76,25 @@
 	else
 		icon_state = "emitter"
 
-
 /obj/machinery/power/emitter/attack_hand(mob/user)
-	src.add_fingerprint(user)
+	if(..())
+		return
 	if(state == 2)
 		if(!powernet)
 			to_chat(user, "The emitter isn't connected to a wire.")
 			return 1
-		if(!src.locked)
-			if(src.active==1)
-				src.active = 0
+		if(!locked || isobserver(user))
+			if(active)
+				active = 0
 				to_chat(user, "You turn off the [src].")
 				message_admins("Emitter turned off by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 				log_game("Emitter turned off by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='red'>off</font> by [user.key]","singulo")
 			else
-				src.active = 1
+				active = 1
 				to_chat(user, "You turn on the [src].")
-				src.shot_number = 0
-				src.fire_delay = maximum_fire_delay
+				shot_number = 0
+				fire_delay = maximum_fire_delay
 				message_admins("Emitter turned on by [key_name(user, user.client)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) in ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)
 				log_game("Emitter turned on by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='green'>on</font> by [user.key]","singulo")
@@ -210,7 +210,6 @@
 						state = 2
 						to_chat(user, "You weld the [src] to the floor.")
 						connect_to_network()
-						src.directwired = 1
 				else
 					to_chat(user, "\red You need more welding fuel to complete this task.")
 			if(2)
@@ -224,7 +223,6 @@
 						state = 1
 						to_chat(user, "You cut the [src] free from the floor.")
 						disconnect_from_network()
-						src.directwired = 0
 				else
 					to_chat(user, "\red You need more welding fuel to complete this task.")
 		return

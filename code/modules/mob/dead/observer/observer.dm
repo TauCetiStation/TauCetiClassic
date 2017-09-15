@@ -31,6 +31,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	var/seedarkness = 1
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
 
+	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
+
 /mob/dead/observer/New(mob/body)
 	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 	see_invisible = SEE_INVISIBLE_OBSERVER
@@ -85,6 +87,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		qdel(ghostimage)
 		ghostimage = null
 		updateallghostimages()
+	QDEL_NULL(adminMulti)
 	return ..()
 
 //this is called when a ghost is drag clicked to something.
@@ -220,7 +223,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		var/response = alert(src, "Are you -sure- you want to ghost?\n(You are alive. If you ghost, you won't be able to play this round for another 30 minutes! You can't change your mind so choose wisely!)","Are you sure you want to ghost?","Stay in body","Ghost")
 		if(response != "Ghost")
 			return	//didn't want to ghost after-all
-		resting = 1
+
+		if(isrobot(usr))
+			var/mob/living/silicon/robot/robot = usr
+			robot.toggle_all_components()
+		else
+			resting = 1
 		var/mob/dead/observer/ghost = ghostize(can_reenter_corpse = FALSE)						//0 parameter is so we can never re-enter our body, "Charlie, you can never come baaaack~" :3
 		ghost.timeofdeath = world.time // Because the living mob won't have a time of death and we want the respawn timer to work properly.
 	return
@@ -255,14 +263,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(statpanel("Status"))
 		stat(null, "Station Time: [worldtime2text()]")
-		if(ticker)
-			if(ticker.mode)
-				if(istype(ticker.mode, /datum/game_mode/gang))
-					var/datum/game_mode/gang/mode = ticker.mode
-					if(isnum(mode.A_timer))
-						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
-					if(isnum(mode.B_timer))
-						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
+		if(ticker.mode && ticker.mode.config_tag == "gang")
+			var/datum/game_mode/gang/mode = ticker.mode
+			if(isnum(mode.A_timer))
+				stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
+			if(isnum(mode.B_timer))
+				stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
 
 /mob/dead/observer/verb/reenter_corpse()
 	set category = "Ghost"
@@ -274,16 +280,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(mind.current.key && copytext(mind.current.key,1,2)!="@")	//makes sure we don't accidentally kick any clients
 		to_chat(usr, "<span class='warning'>Another consciousness is in your body... it is resisting you.</span>")
 		return
-	if(mind.current.ajourn && mind.current.stat != DEAD) //check if the corpse is astral-journeying (it's client ghosted using a cultist rune).
-		var/found_rune
-		for(var/obj/effect/rune/R in mind.current.loc)   //whilst corpse is alive, we can only reenter the body if it's on the rune
-			if(R && R.word1 == cultwords["hell"] && R.word2 == cultwords["travel"] && R.word3 == cultwords["self"]) // Found an astral journey rune.
-				found_rune = 1
-				break
-		if(!found_rune)
-			to_chat(usr, "<span class='warning'>The astral cord that ties your body and your spirit has been severed. You are likely to wander the realm beyond until your body is finally dead and thus reunited with you.</span>")
-			return
-	mind.current.ajourn=0
 	mind.current.key = key
 	return 1
 
@@ -554,6 +550,39 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(host, "<span class='info'>You are now a mouse. Try to avoid interaction with players, and do not give hints away that you are more than a simple rodent.</span>")
 	return host
 
+/mob/dead/observer/proc/ianize()
+	set name = "Become Ian"
+	set category = "Ghost"
+
+	if(!abandon_allowed)
+		to_chat(src, "<span class='notice'>Respawn is disabled.</span>")
+		return
+
+	if(has_enabled_antagHUD == 1 && config.antag_hud_restricted)
+		to_chat(src, "<span class='notice'><B>Upon using the antagHUD you forfeighted the ability to join the round.</B></span>")
+		return
+
+	if(!ticker.mode)
+		to_chat(src, "<span class='notice'>Please wait until game is started.</span>")
+		return
+
+	var/response = alert(src, "Are you -sure- you want to find Bag Boss?","Are you sure you want to become II?","Soap Pain!","Nope!")
+	if(response != "Soap Pain!")
+		return
+
+	var/mob/living/carbon/ian/phoron_dog
+	for(var/mob/living/carbon/ian/IAN in living_mob_list) // Incase there is multi_ians, what should NOT ever happen normally!
+		if(IAN.mind) // Mind means someone was or is in a body.
+			continue
+		phoron_dog = IAN
+		break
+
+	if(phoron_dog)
+		message_admins("[src.ckey] joined the game as [phoron_dog] [ADMIN_JMP(phoron_dog)] [ADMIN_FLW(phoron_dog)].")
+		phoron_dog.ckey = src.ckey
+	else
+		to_chat(src, "<span class='notice'><B>Living and available Ian not found.</B></span>")
+
 /mob/dead/observer/verb/view_manfiest()
 	set name = "View Crew Manifest"
 	set category = "Ghost"
@@ -679,3 +708,6 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		client.images |= ghost_darkness_images
 		if (ghostimage)
 			client.images -= ghostimage //remove ourself
+
+/mob/dead/observer/IsAdvancedToolUser()
+	return IsAdminGhost(src)

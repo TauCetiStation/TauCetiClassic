@@ -5,7 +5,7 @@
 	spread = "Acute"
 	cure = "Surgery"
 	agent = "Appendix"
-	affected_species = list("Human")
+	affected_species = list(HUMAN)
 	permeability_mod = 1
 	contagious_period = 9001 //slightly hacky, but hey! whatever works, right?
 	desc = "If left untreated the subject will become very weak, and may vomit often."
@@ -19,7 +19,8 @@
 
 	if(istype(affected_mob,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = affected_mob
-		if(H.species.name == "Diona" || H.species.name == "Machine" || H.species.name == "Vox") src.cure()
+		if(H.species.name == DIONA || H.species.name == IPC || H.species.name == VOX)
+			src.cure()
 
 	if(stage == 1)
 		if(affected_mob.op_stage.appendix == 2.0)
@@ -49,8 +50,8 @@
 			H.Weaken(10)
 			H.op_stage.appendix = 2.0
 
-			var/datum/organ/external/groin = H.get_organ("groin")
-			var/datum/wound/W = new /datum/wound/internal_bleeding(20)
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_GROIN]
+			BP.sever_artery()
+			BP.germ_level = max(INFECTION_LEVEL_TWO, BP.germ_level)
 			H.adjustToxLoss(25)
-			groin.wounds += W
 			src.cure()

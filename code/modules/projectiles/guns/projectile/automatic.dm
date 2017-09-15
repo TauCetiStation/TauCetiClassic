@@ -77,7 +77,14 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
 	..()
-	icon_state = "c20r[silenced ? "-silencer" : ""][magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"]"
+	overlays.Cut()
+	if(magazine)
+		var/image/magazine_icon = image('icons/obj/gun.dmi', "mag-[ceil(get_ammo(0) / 4) * 4]")
+		overlays += magazine_icon
+	if(silenced)
+		var/image/silencer_icon = image('icons/obj/gun.dmi', "c20r-silencer")
+		overlays += silencer_icon
+	icon_state = "c20r[chambered ? "" : "-e"]"
 	return
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
@@ -166,7 +173,7 @@
 
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
-	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? Ceiling(get_ammo(0)/12.5)*25 : "-empty"]"
+	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? ceil(get_ammo(0) / 12.5) * 25 : "-empty"]"
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/living/user, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!wielded)
@@ -458,16 +465,42 @@
 /obj/item/weapon/gun/projectile/automatic/a28/New()
 	..()
 	update_icon()
-	return
-
-/obj/item/weapon/gun/projectile/automatic/a28/proc/update_magazine()
-	if(magazine)
-		src.overlays = 0
-		overlays += "[magazine.icon_state]-o"
-		return
 
 /obj/item/weapon/gun/projectile/automatic/a28/update_icon()
-	src.overlays = 0
-	update_magazine()
-	icon_state = "a28[chambered ? "" : "-e"]"
+	overlays.Cut()
+	if(magazine)
+		overlays += "[magazine.icon_state]-o"
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 	return
+
+/obj/item/weapon/gun/projectile/automatic/a74
+	name = "A74 assault rifle"
+	mag_type = /obj/item/ammo_box/magazine/a74mm
+	w_class = 3.0
+	icon_state = "a74"
+	item_state = "a74"
+	origin_tech = "combat=5;materials=4;syndicate=6"
+	fire_sound = 'sound/weapons/guns/ak74_fire.ogg'
+	var/icon/mag_icon = icon('icons/obj/gun.dmi',"mag-a74")
+
+/obj/item/weapon/gun/projectile/automatic/a74/New()
+	..()
+	update_icon()
+
+/obj/item/weapon/gun/projectile/automatic/a74/update_icon()
+	overlays.Cut()
+	if(magazine)
+		overlays += mag_icon
+		item_state = "[initial(icon_state)]"
+	else
+		item_state = "[initial(icon_state)]-e"
+
+/obj/item/weapon/gun/projectile/automatic/a74/attack_self(mob/user)
+	if(..())
+		playsound(user, 'sound/weapons/guns/ak74_reload.ogg', 50, 1)
+	update_icon()
+
+/obj/item/weapon/gun/projectile/automatic/a74/attackby(obj/item/A, mob/user)
+	if(..())
+		playsound(user, 'sound/weapons/guns/ak74_reload.ogg', 50, 1)
+	update_icon()

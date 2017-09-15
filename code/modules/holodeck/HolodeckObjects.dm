@@ -309,6 +309,7 @@ obj/structure/stool/bed/chair/holochair
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
+	ghost_must_be_admin = TRUE
 
 /obj/machinery/readybutton/attack_ai(mob/user)
 	to_chat(user, "The station AI is not to interact with these devices!")
@@ -322,9 +323,7 @@ obj/structure/stool/bed/chair/holochair
 	to_chat(user, "The device is a solid button, there's nothing you can do with it!")
 
 /obj/machinery/readybutton/attack_hand(mob/user)
-
-	if(user.stat || stat & (NOPOWER|BROKEN))
-		to_chat(user, "This device is not powered.")
+	if(..())
 		return
 
 	if(!user.IsAdvancedToolUser())

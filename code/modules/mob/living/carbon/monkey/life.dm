@@ -1,14 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
-/mob/living/carbon/monkey
-	var/oxygen_alert = 0
-	var/phoron_alert = 0
-	var/fire_alert = 0
-	var/pressure_alert = 0
-
-	var/temperature_alert = 0
-
-
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
 	//set background = 1
@@ -36,7 +25,6 @@
 
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
-
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
@@ -225,8 +213,8 @@
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
-		if(health < 0)
-			losebreath++
+		if(handle_drowning() || health < 0)
+			losebreath = max(2, losebreath + 1)
 		if(losebreath>0) //Suffocating so do not take a breath
 			losebreath--
 			if (prob(75)) //High chance of gasping for air
@@ -402,7 +390,7 @@
 
 		return 1
 
-	proc/handle_environment(datum/gas_mixture/environment)
+	handle_environment(datum/gas_mixture/environment)
 		if(!environment)
 			return
 

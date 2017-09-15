@@ -32,7 +32,7 @@
 	return ..()
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
-	if (ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
+	if (ishuman(usr) || ismonkey(usr) || isIAN(usr)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
 
 		if(!over_object)
@@ -63,6 +63,10 @@
 					if(!M.unEquip(src))
 						return
 					M.put_in_l_hand(src)
+				if("mouth")
+					if(!M.unEquip(src))
+						return
+					M.put_in_active_hand(src)
 			src.add_fingerprint(usr)
 			return
 	return
@@ -392,6 +396,10 @@
 			if (M.s_active == src)
 				src.close(M)
 	src.add_fingerprint(user)
+
+//Should be merged into attack_hand() later, i mean whole attack_paw() proc, but thats probably a lot of work.
+/obj/item/weapon/storage/attack_paw(mob/user) // so monkey, ian or something will open it, istead of unequip from back
+	return attack_hand(user)                  // to unequip - there is drag n drop available for this task - same as humans do.
 
 /obj/item/weapon/storage/verb/toggle_gathering_mode()
 	set name = "Switch Gathering Method"

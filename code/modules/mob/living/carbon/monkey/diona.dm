@@ -18,7 +18,7 @@
 
 	//Let people pick the little buggers up.
 	if(M.a_intent == "help")
-		if(M.species && M.species.name == "Diona")
+		if(M.species && M.species.name == DIONA)
 			to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
 			to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
 			src.verbs += /mob/living/carbon/monkey/diona/proc/split
@@ -32,7 +32,7 @@
 	..()
 	gender = NEUTER
 	dna.mutantrace = "plant"
-	greaterform = "Diona"
+	greaterform = DIONA
 	add_language("Rootspeak")
 	src.verbs += /mob/living/carbon/monkey/diona/proc/merge
 
@@ -55,7 +55,7 @@
 
 		if(istype(C,/mob/living/carbon/human))
 			var/mob/living/carbon/human/D = C
-			if(D.species && D.species.name == "Diona")
+			if(D.species && D.species.name == DIONA)
 				choices += C
 
 	var/mob/living/M = input(src,"Who do you wish to merge with?") in null|choices
@@ -142,7 +142,7 @@
 	set name = "Evolve"
 	set desc = "Grow to a more complex form."
 
-	if(!is_alien_whitelisted(src, "Diona") && config.usealienwhitelist)
+	if(!is_alien_whitelisted(src, DIONA) && config.usealienwhitelist)
 		to_chat(src, alert("You are currently not whitelisted to play as a full diona."))
 		return 0
 
@@ -158,7 +158,7 @@
 	src.visible_message("\red [src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.","\red You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.")
 
 	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
-	adult.set_species("Diona")
+	adult.set_species(DIONA)
 
 	if(istype(loc,/obj/item/weapon/holder/diona))
 		var/obj/item/weapon/holder/diona/L = loc

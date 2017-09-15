@@ -39,34 +39,38 @@
 		else
 			message = copytext(message,3)
 
-	//parse the language code and consume it
+	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
 	if (speaking)
 		message = copytext(message,2+length(speaking.key))
+	else if(species.force_racial_language)
+		speaking = all_languages[species.language]
 	else
 		switch(species.name)
-			if("Tajaran")
-				message = replacetext(message, "р", pick(list("ррр","рр","р-р")))
-				message = replacetext(message, "Р", pick(list("Ррр","Рр")))
-			if("Unathi")
-				message = replacetext(message, "с", pick(list("ссс","сс","с-с")))
+			if(TAJARAN)
+				message = replacetext(message, "р", pick(list("ррр" , "рр")))
+				message = replacetext(message, "Р", pick(list("Ррр" , "Рр")))
+			if(UNATHI)
+				message = replacetext(message, "с", pick(list("ссс" , "сс")))
 				//И для заглавной... Фигова копипаста. Кто знает решение без второй обработки для заглавной буквы, обязательно переделайте.
-				message = replacetext(message, "С", pick(list("Ссс","Сс")))
-			if("Abductor")
+				message = replacetext(message, "С", pick(list("Ссс" , "Сс")))
+			if(ABDUCTOR)
 				var/mob/living/carbon/human/user = usr
+				var/sm = sanitize(message)
 				for(var/mob/living/carbon/human/H in mob_list)
-					if(H.species.name != "Abductor")
+					if(H.species.name != ABDUCTOR)
 						continue
 					else
 						if(user.team != H.team)
 							continue
 						else
-							to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sanitize(message)]</span>", user.team))
+							to_chat(H, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
 							//return - technically you can add more aliens to a team
 				for(var/mob/M in dead_mob_list)
-					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sanitize(message)]</span>", user.team))
+					to_chat(M, text("<span class='abductor_team[]'><b>[user.real_name]:</b> [sm]</span>", user.team))
 					if(!isobserver(M) && (M.stat != DEAD))
 						to_chat(M, "<hr><span class='warning'>Если вы видите это сообщение, значит что-то сломалось. Пожалуйста, свЯжитесь со мной <b>SpaiR</b> на форуме (http://tauceti.ru/forums/index.php?action=profile;u=1929) или попросите кого-нибудь менЯ позвать. Пожалуйста, <u>запомните</u> что произошло в раунде, эта информациЯ очень <b>важна</b>. Чтобы сообщение исчезло попросите админа достать вас из тела и поместить обратно или сами уйдите в обсерверы.</span><hr>")
+				log_say("Abductor: [name]/[key] : [sm]")
 				return ""
 
 	message = capitalize(trim(message))
@@ -160,7 +164,7 @@
 
 	var/sound/speech_sound
 	var/sound_vol
-	if((species.name == "Vox" || species.name == "Vox Armalis") && prob(20))
+	if((species.name == VOX || species.name == VOX_ARMALIS) && prob(20))
 		speech_sound = sound('sound/voice/shriek1.ogg')
 		sound_vol = 50
 
@@ -256,15 +260,9 @@
 		message = ""
 		handled = 1
 	if(wear_mask)
-		if(istype(wear_mask, /obj/item/clothing/mask/horsehead))
-			var/obj/item/clothing/mask/horsehead/hoers = wear_mask
-			if(hoers.voicechange)
-				//if(mind && mind.changeling && department_radio_keys[copytext(message, 1, 3)] != "changeling")
-				if(message_mode != "changeling")
-					message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
-					verb = pick("whinnies","neighs", "says")
-					//handled = 1
-				handled = 1
+		if(message_mode != "changeling")
+			message = wear_mask.speechModification(message)
+		handled = 1
 
 	if((HULK in mutations) && health >= 25 && length(message))
 		message = "[uppertext_plus(message)]!!!"

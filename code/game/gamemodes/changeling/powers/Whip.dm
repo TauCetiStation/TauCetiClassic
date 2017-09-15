@@ -14,7 +14,7 @@
 	name = "Organic Whip"
 	desc = "A mass of tough tissue that can be elastic"
 	canremove = 0
-	flags = ABSTRACT
+	flags = ABSTRACT | DROPDEL
 	icon = 'icons/obj/weapons.dmi'
 	icon_state = "arm_whip"
 	item_state = "arm_whip"
@@ -27,40 +27,35 @@
 
 /obj/item/weapon/changeling_whip/dropped(mob/user)
 	visible_message("<span class='warning'>With a sickening crunch, [user] reforms his whip into an arm!</span>", "<span class='notice'>We assimilate the Whip back into our body.</span>", "<span class='warning>You hear organic matter ripping and tearing!</span>")
-	qdel(src)
+	..()
 
 /obj/item/weapon/changeling_whip/afterattack(atom/A, mob/living/carbon/human/user)
 	if(!istype(user))
 		return
+	if(user.incapacitated() || user.lying)
+		return
 	if(next_click > world.time)
 		return
-	if(!use_charge(A,user))
+	if(!use_charge(user, 2))
 		return
-	next_click = world.time + 14
-	var/turf/T = get_turf(src)
-	var/turf/U = get_turf(A)
-	var/obj/item/projectile/changeling_whip/LE = new /obj/item/projectile/changeling_whip(T)
+	next_click = world.time + 10
+	var/obj/item/projectile/changeling_whip/LE = new (get_turf(src))
 	if(user.a_intent == "grab")
 		LE.grabber = 1
-	else if(user.a_intent == "disarm" && prob(35))
+	else if(user.a_intent == "disarm" && prob(65))
 		LE.weaken = 5
 	else if(user.a_intent == "hurt")
 		LE.damage = 30
+	else
+		LE.agony = 25
 	LE.host = user
-	LE.def_zone = check_zone(user.zone_sel.selecting)
-	LE.starting = T
-	LE.original = A
-	LE.current = T
-	LE.yo = U.y - T.y
-	LE.xo = U.x - T.x
-	spawn( 1 )
-		LE.process()
+	LE.Fire(A, user)
 
 /obj/item/projectile/changeling_whip
-	name = "laser"
+	name = "Whip"
 	icon_state = "laser"
 	pass_flags = PASSTABLE
-	damage = 5
+	damage = 0
 	kill_count = 7
 	damage_type = BRUTE
 	flag = "bullet"
@@ -74,19 +69,13 @@
 
 /obj/item/projectile/changeling_whip/on_hit(atom/target, blocked = 0)
 	..()
-	if(ismob(target))
-		var/mob/M = target
-		M.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been whipped by [host.name] ([host.ckey])</font>")
-		host.attack_log += text("\[[time_stamp()]\] <font color='red'>whipped [M.name]'s ([M.ckey])</font>")
-		msg_admin_attack("[host] ([host.ckey]) whipped [M.name] ([M.ckey]) ([ADMIN_JMP(M)])")
 	var/atom/movable/T = target
-	var/grab_chance = iscarbon(T) ? 30 : 90
+	var/grab_chance = iscarbon(T) ? 50 : 90
 	if(grabber && !T.anchored && prob(grab_chance))
-		var/dist_to_host = max(0, (get_dist(host, T) - 1) - kill_count) // Distance to turf in front of host.
-		T.throw_at(host, dist_to_host, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
+		T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
 
 /obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
-	if(in_range(T, host) && !host.get_inactive_hand())
+	if(in_range(T, host) && !host.get_inactive_hand() && !host.lying)
 		if(iscarbon(T))
 			var/obj/item/weapon/grab/G = new(host,T)
 			host.put_in_inactive_hand(G)

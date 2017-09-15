@@ -69,8 +69,8 @@
 /obj/item/clothing/tie/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
 	if(ishuman(M) && isliving(user))
 		if(user.a_intent == "help")
-			var/body_part = parse_zone(user.zone_sel.selecting)
-			if(body_part)
+			var/target_zone = parse_zone(user.zone_sel.selecting)
+			if(target_zone)
 				var/their = "their"
 				switch(M.gender)
 					if(MALE)	their = "his"
@@ -79,23 +79,23 @@
 				var/sound = "pulse"
 				var/sound_strength
 
-				if(M.stat == DEAD || (M.status_flags&FAKEDEATH))
+				if(M.stat == DEAD || (M.status_flags & FAKEDEATH))
 					sound_strength = "cannot hear"
 					sound = "anything"
 				else
 					sound_strength = "hear a weak"
-					switch(body_part)
-						if("chest")
+					switch(target_zone)
+						if(BP_CHEST)
 							if(M.oxyloss < 50)
 								sound_strength = "hear a healthy"
 							sound = "pulse and respiration"
-						if("eyes","mouth")
+						if(O_EYES, O_MOUTH)
 							sound_strength = "cannot hear"
 							sound = "anything"
 						else
 							sound_strength = "hear a weak"
 
-				user.visible_message("[user] places [src] against [M]'s [body_part] and listens attentively.", "You place [src] against [their] [body_part]. You [sound_strength] [sound].")
+				user.visible_message("[user] places [src] against [M]'s [target_zone] and listens attentively.", "You place [src] against [their] [target_zone]. You [sound_strength] [sound].")
 				return
 	return ..(M,user)
 
@@ -143,6 +143,7 @@
 /obj/item/clothing/tie/medal/gold/captain
 	name = "medal of captaincy"
 	desc = "A golden medal awarded exclusively to those promoted to the rank of captain. It signifies the codified responsibilities of a captain to Nanotrasen, and their undisputable authority over their crew."
+	icon_state = "gold_nt"
 
 /obj/item/clothing/tie/medal/gold/heroism
 	name = "medal of exceptional heroism"
@@ -376,6 +377,13 @@
 	desc = "Worn brownish synthcotton vest with lots of pockets to unload your hands."
 	icon_state = "vest_brown"
 	item_color = "vest_brown"
+	slots = 5
+
+/obj/item/clothing/tie/storage/syndi_vest
+	name = "suspicious webbing vest"
+	desc = "A villainous red synthcotton vest with lots of pockets to unload your hands."
+	icon_state = "syndi_vest"
+	item_color = "syndi_vest"
 	slots = 5
 /*
 	Holobadges are worn on the belt or neck, and can be used to show that the holder is an authorized

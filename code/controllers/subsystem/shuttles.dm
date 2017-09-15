@@ -4,6 +4,10 @@ var/datum/subsystem/shuttle/SSshuttle
 #define SHUTTLELEAVETIME 180		// 3 minutes = 180 seconds
 #define SHUTTLETRANSITTIME 120		// 2 minutes = 120 seconds
 
+#define SHUTTLE_IN_TRANSIT 0
+#define SHUTTLE_AT_STATION 1
+#define SHUTTLE_AT_CENTCOM 2
+
 #define SUPPLY_DOCKZ 2          //Z-level of the Dock.
 #define SUPPLY_STATIONZ 1       //Z-level of the Station.
 #define SUPPLY_STATION_AREATYPE /area/supply/station //Type of the supply shuttle area for station
@@ -78,7 +82,7 @@ var/datum/subsystem/shuttle/SSshuttle
 	if(timeleft > 1e5)		// midnight rollover protection
 		timeleft = 0
 	switch(location)
-		if(0)
+		if(SHUTTLE_IN_TRANSIT)
 			/* --- Shuttle is in transit to Central Command from SS13 --- */
 			if(direction == 2)
 				if(timeleft < PARALLAX_LOOP_TIME / 10)
@@ -103,7 +107,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						S.spawning = 0
 					*/
 
-					location = 2
+					location = SHUTTLE_AT_CENTCOM
 
 					//main shuttle
 					var/area/start_location = locate(/area/shuttle/escape/transit)
@@ -111,10 +115,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location.move_contents_to(end_location, null, NORTH)
 
-					for(var/obj/machinery/door/unpowered/shuttle/D in end_location)
-						D.locked = 0
-						D.open()
-						CHECK_TICK
+					dock_act(end_location, "shuttle_escape")
 
 					for(var/mob/M in end_location)
 						if(M.client)
@@ -229,7 +230,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					/* --- Shuttle has docked with the station - begin countdown to transit --- */
 			else if(timeleft <= 0)
-				location = 1
+				location = SHUTTLE_AT_STATION
 				var/area/start_location = locate(/area/shuttle/escape/centcom)
 				var/area/end_location = locate(/area/shuttle/escape/station)
 
@@ -263,8 +264,11 @@ var/datum/subsystem/shuttle/SSshuttle
 					CHECK_TICK
 
 				start_location.move_contents_to(end_location)
+
+				dock_act(end_location, "shuttle_escape")
+				dock_act(/area/hallway/secondary/exit, "arrival_escape")
+
 				settimeleft(SHUTTLELEAVETIME)
-				//send2irc("Server", "The Emergency Shuttle has docked with the station.")
 				if(alert == 0)
 					captain_announce("The Emergency Shuttle has docked with the station. You have [round(timeleft()/60,1)] minutes to board the Emergency Shuttle.")
 					world << sound('sound/AI/shuttledock.ogg')
@@ -275,15 +279,15 @@ var/datum/subsystem/shuttle/SSshuttle
 
 				return 1
 
-		if(1)
-
+		if(SHUTTLE_AT_STATION)
 			// Just before it leaves, close the damn doors!
-			if(timeleft == 2 || timeleft == 1)
-				var/area/start_location = locate(/area/shuttle/escape/station)
-				for(var/obj/machinery/door/unpowered/shuttle/D in start_location)
-					D.close()
-					D.locked = 1
-					CHECK_TICK
+			var/static/station_doors_bolted = FALSE
+
+			if(!station_doors_bolted && timeleft < 10)
+				station_doors_bolted = TRUE
+
+				undock_act(/area/shuttle/escape/station, "shuttle_escape")
+				undock_act(/area/hallway/secondary/exit, "arrival_escape")
 
 			if(timeleft>0)
 				return 0
@@ -302,7 +306,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				*/
 
 				departed = 1 // It's going!
-				location = 0 // in deep space
+				location = SHUTTLE_IN_TRANSIT // in deep space
 				direction = 2 // heading to centcom
 
 				//main shuttle
@@ -312,13 +316,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				settimeleft(SHUTTLETRANSITTIME)
 				start_location.move_contents_to(end_location, null, NORTH)
 
-				// Close shuttle doors, lock
-				for(var/obj/machinery/door/unpowered/shuttle/D in end_location)
-					D.close()
-					D.locked = 1
-					CHECK_TICK
-
-							// Some aesthetic turbulance shaking
+				// Some aesthetic turbulance shaking
 				for(var/mob/M in end_location)
 					if(M.client)
 						if(M.buckled)
@@ -416,6 +414,34 @@ var/datum/subsystem/shuttle/SSshuttle
 
 		else
 			return 1
+
+/datum/subsystem/shuttle/proc/dock_act(area_type, door_tag)
+
+	var/area/A = ispath(area_type) ? locate(area_type) : area_type
+
+	for(var/obj/machinery/door/DOOR in A)
+		if(DOOR.tag == door_tag)
+			if(istype(DOOR, /obj/machinery/door/airlock))
+				var/obj/machinery/door/airlock/D = DOOR
+				D.unbolt()
+			else if(istype(DOOR, /obj/machinery/door/unpowered))
+				var/obj/machinery/door/unpowered/D = DOOR
+				D.locked = 0
+				D.open()
+
+/datum/subsystem/shuttle/proc/undock_act(area_type, door_tag)
+
+	var/area/A = ispath(area_type) ? locate(area_type) : area_type
+
+	for(var/obj/machinery/door/DOOR in A)
+		if(DOOR.tag == door_tag)
+			if(istype(DOOR, /obj/machinery/door/airlock))
+				var/obj/machinery/door/airlock/D = DOOR
+				D.close_unsafe(TRUE)
+			else if(istype(DOOR, /obj/machinery/door/unpowered))
+				var/obj/machinery/door/unpowered/D = DOOR
+				D.close()
+				D.locked = 1
 
 /datum/subsystem/shuttle/proc/send()
 	var/area/from

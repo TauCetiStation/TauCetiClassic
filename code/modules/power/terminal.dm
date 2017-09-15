@@ -11,7 +11,6 @@
 	layer = TURF_LAYER
 	var/obj/machinery/power/master = null
 	anchored = 1
-	directwired = 0		// must have a cable on same turf connecting to terminal
 	layer = 2.6 // a bit above wires
 
 
@@ -68,7 +67,7 @@
 						s.set_up(5, 1, master)
 						s.start()
 						return
-					new /obj/item/weapon/cable_coil(loc, 10)
+					new /obj/item/weapon/cable_coil/red(loc, 10)
 					to_chat(user, "<span class='notice'>You cut the cables and dismantle the power terminal.</span>")
 					qdel(src)
 

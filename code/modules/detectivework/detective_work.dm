@@ -96,7 +96,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 	user.set_machine(src)
 	var/dat = ""
 	var/isai = 0
-	if(istype(usr,/mob/living/silicon))
+	if(issilicon(user) || isobserver(user))
 		isai = 1
 	if(temp)
 		dat += "<tt>[temp]</tt><br><br>"

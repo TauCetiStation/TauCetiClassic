@@ -95,6 +95,23 @@
 
 	return english_list(comps, nothing_text="0", and_text="|", comma_text="|")
 
-proc/log_fax(text)
+/proc/log_fax(text)
 	if (config.log_fax)
 		diary << "\[[time_stamp()]]FAX: [revert_ja(text)][log_end]"
+
+/proc/datum_info_line(datum/D)
+	if(!istype(D))
+		return
+	if(!istype(D, /mob))
+		return "[D] ([D.type])"
+	var/mob/M = D
+	return "[M] ([M.ckey]) ([M.type])"
+
+/proc/atom_loc_line(atom/A)
+	if(!istype(A))
+		return
+	var/turf/T = get_turf(A)
+	if(istype(T))
+		return "[A.loc] [COORD(T)] ([A.loc.type])"
+	else if(A.loc)
+		return "[A.loc] (0, 0, 0) ([A.loc.type])"

@@ -118,10 +118,16 @@ log transactions
 	else
 		..()
 
+/obj/machinery/atm/attack_ai(mob/user)
+	to_chat(user, "<span class='red'>[bicon(src)] Artificial unit recognized. Artificial units do not currently receive monetary compensation, as per NanoTrasen regulation #1005.</span>")
+
+/obj/machinery/atm/attack_ghost(mob/user)
+	to_chat(user, "<span class='red'>[bicon(src)] What money?</span>")
+
 /obj/machinery/atm/attack_hand(mob/user)
-	if(istype(user, /mob/living/silicon))
-		to_chat(user, "\red [bicon(src)] Artificial unit recognized. Artificial units do not currently receive monetary compensation, as per NanoTrasen regulation #1005.")
+	if(..())
 		return
+
 	if(get_dist(src,user) <= 1)
 
 		//js replicated from obj/machinery/computer/card
@@ -349,13 +355,8 @@ log transactions
 					R.info += "<i>Service terminal ID:</i> [machine_id]<br>"
 
 					//stamp the paper
-					var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-					stampoverlay.icon_state = "paper_stamp-cent"
-					if(!R.stamped)
-						R.stamped = new
-					R.stamped += /obj/item/weapon/stamp
-					R.overlays += stampoverlay
-					R.stamp_text += "<HR><i>This paper has been stamped by the Automatic Teller Machine.</i>"
+					var/obj/item/weapon/stamp/centcomm/S = new
+					S.stamp_paper(R, "This paper has been stamped by the Automatic Teller Machine.")
 
 				if(prob(50))
 					playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
@@ -391,13 +392,8 @@ log transactions
 					R.info += "</table>"
 
 					//stamp the paper
-					var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-					stampoverlay.icon_state = "paper_stamp-cent"
-					if(!R.stamped)
-						R.stamped = new
-					R.stamped += /obj/item/weapon/stamp
-					R.overlays += stampoverlay
-					R.stamp_text += "<HR><i>This paper has been stamped by the Automatic Teller Machine.</i>"
+					var/obj/item/weapon/stamp/centcomm/S = new
+					S.stamp_paper(R, "This paper has been stamped by the Automatic Teller Machine.")
 
 				if(prob(50))
 					playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)

@@ -25,9 +25,9 @@
 					if(wet)
 						var/turf/T = get_turf(src)
 						T.visible_message("<span class='wet'>Some wet device has been discharged!</span>")
-						var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
-						if(W)
-							W.electrocute_act(150)
+						var/obj/effect/fluid/F = locate() in T
+						if(F)
+							F.electrocute_act(150)
 						else if(istype(loc, /mob/living))
 							var/mob/living/L = loc
 							L.Weaken(6)
@@ -76,9 +76,9 @@
 				if(wet)
 					var/turf/T = get_turf(src)
 					T.visible_message("<span class='wet'>Some wet device has been discharged!</span>")
-					var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
-					if(W)
-						W.electrocute_act(150)
+					var/obj/effect/fluid/F = locate() in T
+					if(F)
+						F.electrocute_act(150)
 					else if(istype(loc, /mob/living))
 						var/mob/living/L = loc
 						L.Weaken(6)

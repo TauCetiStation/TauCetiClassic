@@ -106,7 +106,7 @@
 			if(!src)
 				return
 			to_chat(user, "<span class='notice'>You cut the airlock wires!</span>")
-			new /obj/item/weapon/cable_coil(loc, 1)
+			new /obj/item/weapon/cable_coil/random(loc, 1)
 			state = ASSEMBLY_SECURED
 
 	else if(istype(W, /obj/item/weapon/airlock_electronics) && state == ASSEMBLY_WIRED)

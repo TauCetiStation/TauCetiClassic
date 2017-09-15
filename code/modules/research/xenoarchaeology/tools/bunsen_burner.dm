@@ -26,6 +26,9 @@
 	else
 		to_chat(user, "\red You can't put the [W] onto the [src].")
 
+/obj/machinery/bunsen_burner/attack_ghost(mob/user)
+	return
+
 /obj/machinery/bunsen_burner/attack_hand(mob/user)
 	if(held_container)
 		underlays = null

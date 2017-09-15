@@ -106,49 +106,19 @@ var/lastMove = 0
 
 
 /obj/machinery/computer/arrival_shuttle/proc/lock_doors(area/A)
-	var/area/velocity = locate(/area/centcom/arrival)
-	for(var/obj/machinery/door/airlock/external/D in velocity)
-		if(D.tag == "velocity_1")
-			D.close()
-			spawn(10) //incase someone messing with door.
-				if(D && D.density)
-					D.bolt()
-
-	var/area/station = locate(/area/hallway/secondary/entry)
-	for(var/obj/machinery/door/airlock/external/D in station)
-		if(D.tag == "arrival_1")
-			D.close()
-			spawn(10)
-				if(D && D.density)
-					D.bolt()
-
-	for(var/obj/machinery/door/unpowered/shuttle/wagon/D in A)
-		spawn(0)
-			D.close()
-			D.locked = 1
+	SSshuttle.undock_act(/area/centcom/arrival, "velocity_1")
+	SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_1")
+	SSshuttle.undock_act(A)
 
 /obj/machinery/computer/arrival_shuttle/proc/open_doors(area/A, arrival)
 	switch(arrival)
 		if(0) //Velocity
-			var/area/velocity = locate(/area/centcom/arrival)
-			for(var/obj/machinery/door/airlock/external/D in velocity)
-				if(D.tag == "velocity_1")
-					D.unbolt()
+			SSshuttle.dock_act(/area/centcom/arrival, "velocity_1")
+			SSshuttle.dock_act(A)
 
-			for(var/obj/machinery/door/unpowered/shuttle/wagon/D in A)
-				spawn(0)
-					D.locked = 0
-					D.open()
 		if(2) //Station
-			var/area/station = locate(/area/hallway/secondary/entry)
-			for(var/obj/machinery/door/airlock/external/D in station)
-				if(D.tag == "arrival_1")
-					D.unbolt()
-
-			for(var/obj/machinery/door/unpowered/shuttle/wagon/D in A)
-				spawn(0)
-					D.locked = 0
-					D.open()
+			SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_1")
+			SSshuttle.dock_act(A)
 
 /obj/machinery/computer/arrival_shuttle/proc/shake_mobs(area/A)
 	for(var/mob/M in A)

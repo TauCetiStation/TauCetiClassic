@@ -19,10 +19,13 @@
 	var/selfdestructing = 0
 	var/charges = 1
 
+/obj/machinery/syndicate_beacon/attack_ghost(mob/user) //Not needed, but showing of truncated string is not good
+	return
+
 /obj/machinery/syndicate_beacon/attack_hand(mob/user)
 	usr.set_machine(src)
 	var/dat = "<font color=#005500><i>Scanning [pick("retina pattern", "voice print", "fingerprints", "dna sequence")]...<br>Identity confirmed,<br></i></font>"
-	if(istype(user, /mob/living/carbon/human) || istype(user, /mob/living/silicon/ai))
+	if(ishuman(user) || isAI(user))
 		if(is_special_character(user))
 			dat += "<font color=#07700><i>Operative record found. Greetings, Agent [user.name].</i></font><br>"
 		else if(charges < 1)
@@ -117,10 +120,11 @@
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "beacon"
 
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
+	ghost_must_be_admin = TRUE
 
 	var/active = 0 //It doesn't use up power, so use_power wouldn't really suit it
 	var/icontype = "beacon"
@@ -153,7 +157,6 @@
 
 /obj/machinery/singularity_beacon/attack_ai(mob/user)
 	return
-
 
 /obj/machinery/singularity_beacon/attack_hand(mob/user)
 	if(stat & SCREWED)

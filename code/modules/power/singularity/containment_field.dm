@@ -13,7 +13,6 @@
 
 	var/obj/machinery/field_generator/FG1 = null
 	var/obj/machinery/field_generator/FG2 = null
-
 	var/last_shock     = 0    // Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
 	var/shock_cooldown = 20
 
@@ -31,7 +30,7 @@
 	FG.turn_off()
 
 /obj/machinery/containment_field/attack_hand(mob/user)
-	if(get_dist(src, user) <= 1)
+	if(get_dist(src, user) <= 1 && !isobserver(user))
 		shock(user)
 
 /obj/machinery/containment_field/blob_act()

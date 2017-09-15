@@ -21,17 +21,19 @@
 	var/seconds_electrified = 0;
 	var/shoot_inventory = 0
 	var/locked = 0
-	var/wires = 7
-	var/const/WIRE_SHOCK = 1
-	var/const/WIRE_SHOOTINV = 2
-	var/const/WIRE_SCANID = 3 //Only used by the secure smartfridge, but required by the cut, mend and pulse procs.
+	var/datum/wires/smartfridge/wires = null
 
 /obj/machinery/smartfridge/New()
 	..()
+	wires = new(src)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/smartfridge(null, type)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	RefreshParts()
+
+/obj/machinery/smartfridge/Destroy()
+	QDEL_NULL(wires)
+	return ..()
 
 /obj/machinery/smartfridge/construction()
 	for(var/datum/A in contents)
@@ -268,8 +270,11 @@
 	return 0
 
 /obj/machinery/smartfridge/attack_hand(mob/user)
-	if(!ispowered) return
-	if(seconds_electrified != 0)
+	if(wires.interact(user))
+		return
+	if(!ispowered)
+		return
+	if(!issilicon(user) && !isobserver(user) && seconds_electrified)
 		if(shock(user, 100))
 			return
 
@@ -286,8 +291,6 @@
 
 	var/data[0]
 	data["contents"] = null
-	data["wires"] = null
-	data["panel_open"] = panel_open
 	data["electrified"] = seconds_electrified > 0
 	data["shoot_inventory"] = shoot_inventory
 	data["locked"] = locked
@@ -302,26 +305,6 @@
 
 	if (items.len > 0)
 		data["contents"] = items
-
-	var/list/vendwires = null
-	if (is_secure)
-		vendwires = list(
-			"Violet" = 1,
-			"Orange" = 2,
-			"Green" = 3)
-	else
-		vendwires = list(
-			"Blue" = 1,
-			"Red" = 2,
-			"Black" = 3)
-
-	var/list/vendor_wires[0]
-	for (var/wire in vendwires)
-		var is_uncut = wires & APCWireColorToFlag[vendwires[wire]]
-		vendor_wires.Add(list(list("wire" = wire, "cut" = !is_uncut, "index" = vendwires[wire])))
-
-	if (vendor_wires.len > 0)
-		data["wires"] = vendor_wires
 
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 	if (!ui)
@@ -361,79 +344,6 @@
 						return TRUE
 
 		return TRUE
-
-	if (panel_open)
-		if (href_list["cutwire"])
-			if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-				to_chat(user, "You need wirecutters!")
-				return FALSE
-
-			var/wire_index = text2num(href_list["cutwire"])
-			if (isWireColorCut(wire_index))
-				mend(wire_index)
-			else
-				cut(wire_index)
-			return TRUE
-
-		if (href_list["pulsewire"])
-			if (!istype(usr.get_active_hand(), /obj/item/device/multitool))
-				to_chat(usr, "You need a multitool!")
-				return FALSE
-
-			var/wire_index = text2num(href_list["pulsewire"])
-			if (isWireColorCut(wire_index))
-				to_chat(usr, "You can't pulse a cut wire.")
-				return FALSE
-
-			pulse(wire_index)
-			return TRUE
-
-/*************
-*	Hacking
-**************/
-
-/obj/machinery/smartfridge/proc/cut(wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	var/wireIndex = APCWireColorToIndex[wireColor]
-	src.wires &= ~wireFlag
-	switch(wireIndex)
-		if(WIRE_SHOCK)
-			src.seconds_electrified = -1
-		if (WIRE_SHOOTINV)
-			if(!src.shoot_inventory)
-				src.shoot_inventory = 1
-		if(WIRE_SCANID)
-			src.locked = 1
-
-/obj/machinery/smartfridge/proc/mend(wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	var/wireIndex = APCWireColorToIndex[wireColor]
-	src.wires |= wireFlag
-	switch(wireIndex)
-		if(WIRE_SHOCK)
-			src.seconds_electrified = 0
-		if (WIRE_SHOOTINV)
-			src.shoot_inventory = 0
-		if(WIRE_SCANID)
-			src.locked = 0
-
-/obj/machinery/smartfridge/proc/pulse(wireColor)
-	var/wireIndex = APCWireColorToIndex[wireColor]
-	switch(wireIndex)
-		if(WIRE_SHOCK)
-			src.seconds_electrified = 30
-		if(WIRE_SHOOTINV)
-			src.shoot_inventory = !src.shoot_inventory
-		if(WIRE_SCANID)
-			src.locked = -1
-
-/obj/machinery/smartfridge/proc/isWireColorCut(wireColor)
-	var/wireFlag = APCWireColorToFlag[wireColor]
-	return ((src.wires & wireFlag) == 0)
-
-/obj/machinery/smartfridge/proc/isWireCut(wireIndex)
-	var/wireFlag = APCIndexToFlag[wireIndex]
-	return ((src.wires & wireFlag) == 0)
 
 /obj/machinery/smartfridge/proc/throw_item()
 	var/obj/throw_item = null

@@ -12,3 +12,6 @@
 
 	if(client.media)
 		client.media.stop_music()
+
+	if(is_alien_whitelisted(src, "ian"))
+		verbs += /mob/dead/observer/proc/ianize

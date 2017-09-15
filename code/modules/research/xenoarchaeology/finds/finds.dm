@@ -337,15 +337,13 @@
 		if(26)
 			//energy gun
 			var/spawn_type = pick(\
-			/obj/item/weapon/gun/energy/laser/practice,\
-			/obj/item/weapon/gun/energy/laser,\
-			/obj/item/weapon/gun/energy/xray,\
-			/obj/item/weapon/gun/energy/laser/captain)
+			/obj/item/weapon/gun/energy/sniperrifle/rails,\
+			/obj/item/weapon/gun/tesla/rifle,\
+			/obj/item/weapon/gun/energy/laser/scatter/alien,\
+			/obj/item/weapon/gun/energy/laser/selfcharging/alien)
 			if(spawn_type)
 				var/obj/item/weapon/gun/energy/new_gun = new spawn_type(src.loc)
 				new_item = new_gun
-				new_item.icon_state = "egun[rand(1,6)]"
-				new_gun.desc = "This is an antique energy weapon, you're not sure if it will fire or not."
 
 				//5% chance to explode when first fired
 				//10% chance to have an unchargeable cell
@@ -545,12 +543,10 @@
 
 		if(talkative)
 			new_item.talking_atom = new()
-			talking_atom.holder_atom = new_item
-			talking_atom.init()
+			talking_atom.init(new_item)
 
 		qdel(src)
 
 	else if(talkative)
 		src.talking_atom = new()
-		talking_atom.holder_atom = src
-		talking_atom.init()
+		talking_atom.init(src)

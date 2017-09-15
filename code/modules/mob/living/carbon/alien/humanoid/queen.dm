@@ -9,6 +9,7 @@
 	status_flags = CANPARALYSE
 	heal_rate = 5
 	plasma_rate = 20
+	neurotoxin_delay = 10
 	ventcrawler = 0
 
 
@@ -26,7 +27,7 @@
 			break
 
 	real_name = src.name
-	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin)
+	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/screech)
 	..()
 
 
@@ -82,6 +83,8 @@
 	for(var/image/I in overlays_standing)
 		overlays += I
 
+/mob/living/carbon/alien/humanoid/queen/movement_delay()
+	return(5 + move_delay_add + config.alien_delay)
 
 /mob/living/carbon/alien/humanoid/queen/large
 	icon = 'icons/mob/alienqueen.dmi'

@@ -92,7 +92,7 @@
 		var/bancid = href_list["dbbanaddcid"]
 		var/banduration = text2num(href_list["dbbaddduration"])
 		var/banjob = href_list["dbbanaddjob"]
-		var/banreason = href_list["dbbanreason"]
+		var/banreason = sanitize_simple(href_list["dbbanreason"])
 
 		banckey = ckey(banckey)
 
@@ -172,6 +172,27 @@
 				return
 		edit_admin_permissions()
 
+	else if(href_list["whitelist"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/target_ckey = ckey(href_list["ckey"])
+		var/task = href_list["whitelist"]
+		if(!task)
+			return
+		var/role = href_list["role"]
+
+		switch(task)
+			if("add_user")
+				whitelist_add_user()
+			if("add_role")
+				whitelist_add_role(target_ckey)
+			if("showroles")
+				whitelist_view(target_ckey)
+			if("edit_ban")
+				whitelist_edit(target_ckey, role, ban_edit = TRUE)
+			if("edit_reason")
+				whitelist_edit(target_ckey, role)
 
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))
@@ -187,6 +208,7 @@
 					return
 				SSshuttle.incall()
 				captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+				world << sound('sound/AI/shuttlecalled.ogg')
 				log_admin("[key_name(usr)] called the Emergency Shuttle")
 				message_admins("\blue [key_name_admin(usr)] called the Emergency Shuttle to the station")
 				make_maint_all_access(FALSE)
@@ -261,7 +283,6 @@
 			if("cat")				M.change_mob_type( /mob/living/simple_animal/cat , null, null, delmob )
 			if("runtime")			M.change_mob_type( /mob/living/simple_animal/cat/Runtime , null, null, delmob )
 			if("corgi")				M.change_mob_type( /mob/living/simple_animal/corgi , null, null, delmob )
-			if("ian")				M.change_mob_type( /mob/living/simple_animal/corgi/Ian , null, null, delmob )
 			if("crab")				M.change_mob_type( /mob/living/simple_animal/crab , null, null, delmob )
 			if("coffee")			M.change_mob_type( /mob/living/simple_animal/crab/Coffee , null, null, delmob )
 			if("parrot")			M.change_mob_type( /mob/living/simple_animal/parrot , null, null, delmob )
@@ -311,9 +332,6 @@
 
 	else if(href_list["warn"])
 		usr.client.warn(href_list["warn"])
-
-	else if(href_list["unwarn"])
-		usr.client.unwarn(href_list["unwarn"])
 
 	else if(href_list["unbane"])
 		if(!check_rights(R_BAN))	return
@@ -934,6 +952,20 @@
 			C.prefs.ignore_cid_warning = !(C.prefs.ignore_cid_warning)
 			log_admin("[key_name(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
 			message_admins("[key_name_admin(usr)] has [C.prefs.ignore_cid_warning ? "disabled" : "enabled"] multiple cid notice for [C.ckey].")
+
+	else if(href_list["related_accounts"])
+		var/mob/M = locate(href_list["related_accounts"])
+		if (ismob(M))
+			if(!M.client)
+				return
+			var/client/C = M.client
+
+			var/dat = "<html><head><title>[C.key] related accounts by IP and cid</title></head>"
+			dat += "<center><b>Ckey:</b> [C.ckey]</center><br>"
+			dat += "<b>IP:</b> [C.related_accounts_ip]<hr>"
+			dat += "<b>CID:</b> [C.related_accounts_cid]"
+
+			usr << browse(dat, "window=[C.ckey]_related_accounts")
 
 	else if(href_list["boot2"])
 		var/mob/M = locate(href_list["boot2"])
@@ -1567,42 +1599,29 @@
 		send2slack_custommsg("[key_name(src.owner)] replied to [key_name(H)]'s Syndicate message", input, ":job-nuke:")
 		to_chat(H, "You hear something crackle in your headset for a moment before a voice speaks.  \"Please stand by for a message from your benefactor.  Message as follows, agent. <b>\"[input]\"</b>  Message ends.\"")
 
-	else if(href_list["CentcommFaxView"])
-		var/info = locate(href_list["CentcommFaxView"])
+	else if(href_list["CentcommFaxViewInfo"])
+		var/info = locate(href_list["CentcommFaxViewInfo"])
+		var/stamps = locate(href_list["CentcommFaxViewStamps"])
 
-		usr << browse("<HTML><HEAD><TITLE>Centcomm Fax Message</TITLE></HEAD><BODY>[info]</BODY></HTML>", "window=Centcomm Fax Message")
+		usr << browse("<HTML><HEAD><TITLE>Centcomm Fax Message</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=Centcomm Fax Message")
 
 	else if(href_list["CentcommFaxReply"])
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
 
-		var/input = sanitize_alt(input(src.owner, "Please enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Centcomm", "") as message|null)
-		if(!input)	return
+		var/input = sanitize_alt(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Centcomm", "") as message|null)
+		if(!input)
+			return
 
 		var/customname = sanitize_alt(input(src.owner, "Pick a title for the report", "Title") as text|null)
 
-		for(var/obj/machinery/faxmachine/F in machines)
-			if(! (F.stat & (BROKEN|NOPOWER) ) )
+		var/obj/item/weapon/paper/P = new
+		P.name = "[command_name()]- [customname]"
+		P.info = checkhtml(html_decode(input))
 
-				// animate! it's alive!
-				flick("faxreceive", F)
+		var/obj/item/weapon/stamp/centcomm/S = new
+		S.stamp_paper(P, use_stamp_by_message = TRUE)
 
-				// give the sprite some time to flick
-				spawn(20)
-					var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( F.loc )
-					P.name = "[command_name()]- [customname]"
-					P.info = input
-					P.update_icon()
-
-					playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
-
-					// Stamps
-					var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-					stampoverlay.icon_state = "paper_stamp-cent"
-					if(!P.stamped)
-						P.stamped = new
-					P.stamped += /obj/item/weapon/stamp
-					P.overlays += stampoverlay
-					P.stamp_text += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
+		send_fax(usr, P, "All")
 
 		to_chat(src.owner, "Message reply to transmitted successfully.")
 		log_admin("[key_name(src.owner)] replied to a fax message from [key_name(H)]: [input]")
@@ -1926,34 +1945,6 @@
 				log_admin("[key_name(usr)] made all SMESs powered")
 				message_admins("\blue [key_name_admin(usr)] made all SMESs powered")
 				power_restore_quick()
-			if("activateprison")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","AP")
-				to_chat(world, "\blue <B>Transit signature detected.</B>")
-				to_chat(world, "\blue <B>Incoming shuttle.</B>")
-				/*
-				var/A = locate(/area/shuttle_prison)
-				for(var/atom/movable/AM as mob|obj in A)
-					AM.z = ZLEVEL_STATION
-					AM.Move()
-				*/
-				message_admins("\blue [key_name_admin(usr)] sent the prison shuttle to the station.")
-			if("deactivateprison")
-				/*
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","DP")
-				var/A = locate(/area/shuttle_prison)
-				for(var/atom/movable/AM as mob|obj in A)
-					AM.z == ZLEVEL_CENTCOMM
-					AM.Move()
-				*/
-				message_admins("\blue [key_name_admin(usr)] sent the prison shuttle back.")
-			if("toggleprisonstatus")
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","TPS")
-				for(var/obj/machinery/computer/prison_shuttle/PS in world)
-					PS.allowedtocall = !(PS.allowedtocall)
-					message_admins("\blue [key_name_admin(usr)] toggled status of prison shuttle to [PS.allowedtocall].")
 			if("prisonwarp")
 				if(!ticker)
 					alert("The game hasn't started yet!", null, null, null, null, null)
@@ -1976,7 +1967,7 @@
 					if(!security)
 						//strip their stuff before they teleport into a cell :downs:
 						for(var/obj/item/weapon/W in H)
-							if(istype(W, /datum/organ/external))
+							if(istype(W, /obj/item/organ/external))
 								continue
 								//don't strip organs
 							H.drop_from_inventory(W)
@@ -2202,6 +2193,14 @@
 				feedback_add_details("admin_secrets_fun_used","IR")
 				message_admins("[key_name_admin(usr)] has sent an immovable rod to the station")
 				immovablerod()
+			if("spawnguns")
+				feedback_inc("admin_secrets_fun_used", 1)
+				feedback_add_details("admin_secrets_fun_used", "SG")
+				rightandwrong(0, usr)
+			if("spawnspells")
+				feedback_inc("admin_secrets_fun_used", 1)
+				feedback_add_details("admin_secrets_fun_used", "SP")
+				rightandwrong(1, usr)
 			if("prison_break")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","PB")
@@ -2226,7 +2225,7 @@
 			if("friendai")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","FA")
-				for(var/mob/aiEye/aE in mob_list)
+				for(var/mob/camera/Eye/ai/aE in mob_list)
 					aE.icon_state = "ai_friend"
 				for(var/obj/machinery/M in machines)
 					if(istype(M, /obj/machinery/ai_status_display))
@@ -2736,6 +2735,20 @@
 			if(href_list["vsc"] == "default")
 				vsc.SetDefault(usr)
 
+	else if(href_list["viewruntime"])
+		if(!check_rights(R_DEBUG))
+			return
+
+		var/datum/error_viewer/error_viewer = locate(href_list["viewruntime"])
+		if(!istype(error_viewer))
+			to_chat(usr, "<span class='warning'>That runtime viewer no longer exists.</span>")
+			return
+
+		if(href_list["viewruntime_backto"])
+			error_viewer.show_to(owner, locate(href_list["viewruntime_backto"]), href_list["viewruntime_linear"])
+		else
+			error_viewer.show_to(owner, null, href_list["viewruntime_linear"])
+
 	// player info stuff
 
 	if(href_list["add_player_info"])
@@ -2743,14 +2756,14 @@
 		var/add = input("Add Player Info") as null|text
 		if(!add) return
 
-		notes_add(key,add,usr)
+		notes_add(key, add, usr.client)
 		show_player_info(key)
 
 	if(href_list["remove_player_info"])
 		var/key = href_list["remove_player_info"]
 		var/index = text2num(href_list["remove_index"])
 
-		notes_del(key, index)
+		notes_del(key, index, usr.client)
 		show_player_info(key)
 
 	if(href_list["notes"])

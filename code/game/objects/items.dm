@@ -62,7 +62,7 @@
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
 	sprite_sheets = list(
-		"Tajaran" = 'icons/cat/are/bad'
+		TAJARAN = 'icons/cat/are/bad'
 		)
 	If index term exists and icon_override is not set, this sprite sheet will be used.
 	*/
@@ -84,6 +84,7 @@
 	icon = 'icons/obj/device.dmi'
 
 /obj/item/Destroy()
+	flags &= ~DROPDEL // prevent recursive dels
 	if(ismob(loc))
 		var/mob/m = loc
 		m.drop_from_inventory(src)
@@ -155,7 +156,8 @@
 	to_chat(user, "[open_span]It's a[wet_status] [size] item.[close_span]")
 
 /obj/item/attack_hand(mob/user)
-	if (!user) return
+	if (!user || anchored)
+		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
 		if(istype(src, /obj/item/weapon/melee/))
@@ -184,12 +186,11 @@
 			to_chat(user, "\red \The [src] is far too small for you to pick up.")
 			return
 
-	if(hasorgans(user))
-		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
-		if (user.hand)
-			temp = user:organs_by_name["l_hand"]
-		if(temp && !temp.is_usable())
-			to_chat(user, "<span class='notice'>You try to move your [temp.display_name], but cannot!")
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
+		if(BP && !BP.is_usable())
+			to_chat(H, "<span class='notice'>You try to move your [BP.name], but cannot!")
 			return
 
 	if(istype(src.loc, /obj/item/weapon/storage))
@@ -219,6 +220,10 @@
 		if(isliving(src.loc))
 			return
 		user.next_move = max(user.next_move+2,world.time + 2)
+
+	if(QDELETED(src) || freeze_movement) // remove_from_mob() may remove DROPDEL items, so...
+		return
+
 	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
@@ -226,6 +231,8 @@
 
 
 /obj/item/attack_paw(mob/user)
+	if (!user || anchored)
+		return
 
 	if(isalien(user)) // -- TLE
 		var/mob/living/carbon/alien/A = user
@@ -251,9 +258,13 @@
 	else
 		if(istype(src.loc, /mob/living))
 			return
-		src.pickup(user)
+
 		user.next_move = max(user.next_move+2,world.time + 2)
 
+	if(QDELETED(src) || freeze_movement) // no item - no pickup, you dummy!
+		return
+
+	src.pickup(user)
 	user.put_in_active_hand(src)
 	return
 
@@ -315,7 +326,8 @@
 
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
-	..()
+	if(DROPDEL & flags)
+		qdel(src)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -351,6 +363,8 @@
 	if(ishuman(M))
 		//START HUMAN
 		var/mob/living/carbon/human/H = M
+		if(!H.has_bodypart_for_slot(slot))
+			return 0
 		//fat mutation
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
 			if(FAT in H.mutations)
@@ -542,7 +556,38 @@
 		return 0 //Unsupported slot
 
 		//END MONKEY
-
+	else if(isIAN(M))
+		var/mob/living/carbon/ian/C = M
+		switch(slot)
+			if(slot_head)
+				if(C.head)
+					return FALSE
+				if(istype(src, /obj/item/clothing/mask/facehugger))
+					return TRUE
+				if( !(slot_flags & SLOT_HEAD) )
+					return FALSE
+				return TRUE
+			if(slot_mouth)
+				if(C.mouth)
+					return FALSE
+				return TRUE
+			if(slot_neck)
+				if(C.neck)
+					return FALSE
+				if(istype(src, /obj/item/weapon/handcuffs))
+					return TRUE
+				if( !(slot_flags & SLOT_ID) )
+					return FALSE
+				return TRUE
+			if(slot_back)
+				if(C.back)
+					return FALSE
+				if(istype(src, /obj/item/clothing/suit/armor/vest))
+					return TRUE
+				if( !(slot_flags & SLOT_BACK) )
+					return FALSE
+				return TRUE
+		return FALSE
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
@@ -640,11 +685,11 @@
 		)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/internal/eyes/eyes = H.internal_organs_by_name["eyes"]
-		eyes.damage += rand(3,4)
-		if(eyes.damage >= eyes.min_bruised_damage)
+		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+		IO.damage += rand(3,4)
+		if(IO.damage >= IO.min_bruised_damage)
 			if(H.stat != DEAD)
-				if(eyes.robotic <= 1) //robot eyes bleeding might be a bit silly
+				if(IO.robotic <= 1) //robot eyes bleeding might be a bit silly
 					to_chat(H, "\red Your eyes start to bleed profusely!")
 			if(prob(50))
 				if(H.stat != DEAD)
@@ -653,13 +698,13 @@
 				H.eye_blurry += 10
 				H.Paralyse(1)
 				H.Weaken(4)
-			if (eyes.damage >= eyes.min_broken_damage)
+			if (IO.damage >= IO.min_broken_damage)
 				if(H.stat != DEAD)
 					to_chat(H, "\red You go blind!")
-		var/datum/organ/external/affecting = H.get_organ("head")
-		affecting.take_damage(7)
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+		BP.take_damage(7)
 	else
-		M.take_organ_damage(7)
+		M.take_bodypart_damage(7)
 	M.eye_blurry += rand(3,4)
 	return
 
@@ -697,18 +742,21 @@
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	return 1 //we applied blood to the item
 
+var/global/list/items_blood_overlay_by_type = list()
 /obj/item/proc/generate_blood_overlay()
 	if(blood_overlay)
 		return
 
-	var/icon/I = new /icon(icon, icon_state)
-	I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
-	I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-
-	//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
-	for(var/obj/item/A in world)
-		if(A.type == type && !A.blood_overlay)
-			A.blood_overlay = image(I)
+	var/image/IMG = items_blood_overlay_by_type[type]
+	if(IMG)
+		blood_overlay = IMG
+	else
+		var/icon/ICO = new /icon(icon, icon_state)
+		ICO.Blend(new /icon('icons/effects/blood.dmi', rgb(255, 255, 255)), ICON_ADD) // fills the icon_state with white (except where it's transparent)
+		ICO.Blend(new /icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY)   // adds blood and the remaining white areas become transparant
+		IMG = image("icon" = ICO)
+		items_blood_overlay_by_type[type] = IMG
+		blood_overlay = IMG
 
 /obj/item/proc/showoff(mob/user)
 	for (var/mob/M in view(user))

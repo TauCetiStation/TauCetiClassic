@@ -50,8 +50,8 @@
 /obj/item/clothing/proc/refit_for_species(target_species)
 	//Set species_restricted list
 	switch(target_species)
-		if("Human", "Skrell")	//humanoid bodytypes
-			species_restricted = list("exclude","Unathi","Tajaran","Diona","Vox")
+		if(HUMAN , SKRELL)	//humanoid bodytypes
+			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX)
 		else
 			species_restricted = list(target_species)
 
@@ -70,10 +70,10 @@
 /obj/item/clothing/head/helmet/refit_for_species(target_species)
 	//Set species_restricted list
 	switch(target_species)
-		if("Skrell")
-			species_restricted = list("exclude","Unathi","Tajaran","Diona","Vox")
-		if("Human")
-			species_restricted = list("exclude","Skrell","Unathi","Tajaran","Diona","Vox")
+		if(SKRELL)
+			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX)
+		if(HUMAN)
+			species_restricted = list("exclude" , SKRELL , UNATHI , TAJARAN , DIONA , VOX)
 		else
 			species_restricted = list(target_species)
 
@@ -161,7 +161,7 @@
 	var/vision_flags = 0
 	var/darkness_view = 0//Base human is 2
 	var/invisa_view = 0
-	sprite_sheets = list("Vox" = 'icons/mob/species/vox/eyes.dmi')
+	sprite_sheets = list(VOX = 'icons/mob/species/vox/eyes.dmi')
 /*
 SEE_SELF  // can see self, no matter what
 SEE_MOBS  // can see all mobs, no matter what
@@ -186,8 +186,8 @@ BLIND     // can't see anything
 	body_parts_covered = HANDS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
-	species_restricted = list("exclude","Unathi","Tajaran")
-	sprite_sheets = list("Vox" = 'icons/mob/species/vox/gloves.dmi')
+	species_restricted = list("exclude" , UNATHI , TAJARAN)
+	sprite_sheets = list(VOX = 'icons/mob/species/vox/gloves.dmi')
 
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
@@ -210,7 +210,7 @@ BLIND     // can't see anything
 	body_parts_covered = HEAD
 	slot_flags = SLOT_HEAD
 	w_class = 2.0
-	sprite_sheets = list("Vox" = 'icons/mob/species/vox/head.dmi')
+	sprite_sheets = list(VOX = 'icons/mob/species/vox/head.dmi')
 	var/blockTracking = 0
 
 
@@ -220,8 +220,10 @@ BLIND     // can't see anything
 	icon = 'icons/obj/clothing/masks.dmi'
 	slot_flags = SLOT_MASK
 	body_parts_covered = FACE|EYES
-	sprite_sheets = list("Vox" = 'icons/mob/species/vox/masks.dmi')
+	sprite_sheets = list(VOX = 'icons/mob/species/vox/masks.dmi')
 
+/obj/item/clothing/proc/speechModification(message)
+	return message
 
 //Shoes
 /obj/item/clothing/shoes
@@ -236,9 +238,9 @@ BLIND     // can't see anything
 
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
-	species_restricted = list("exclude","Unathi","Tajaran")
+	species_restricted = list("exclude" , UNATHI , TAJARAN)
 	var/footstep = 1	//used for squeeks whilst walking(tc)
-	sprite_sheets = list("Vox" = 'icons/mob/species/vox/shoes.dmi')
+	sprite_sheets = list(VOX = 'icons/mob/species/vox/shoes.dmi')
 
 //Cutting shoes
 /obj/item/clothing/shoes/attackby(obj/item/weapon/W, mob/user)
@@ -251,8 +253,8 @@ BLIND     // can't see anything
 				name = "mangled [name]"
 				desc = "[desc]<br>They have the toe caps cut off of them."
 				if("exclude" in species_restricted)
-					species_restricted -= "Unathi"
-					species_restricted -= "Tajaran"
+					species_restricted -= UNATHI
+					species_restricted -= TAJARAN
 				src.icon_state += "_cut"
 				user.update_inv_shoes()
 				clipped_status = CLIPPED
@@ -276,7 +278,7 @@ BLIND     // can't see anything
 	var/blood_overlay_type = "suit"
 	siemens_coefficient = 0.9
 	w_class = 3
-	sprite_sheets = list("Vox" = 'icons/mob/species/vox/suit.dmi')
+	sprite_sheets = list(VOX = 'icons/mob/species/vox/suit.dmi')
 
 //Spacesuit
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
@@ -295,8 +297,8 @@ BLIND     // can't see anything
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
-	species_restricted = list("exclude","Diona","Vox")
-	sprite_sheets = list("Vox" = 'icons/mob/species/vox/head.dmi')
+	species_restricted = list("exclude" , DIONA , VOX)
+	sprite_sheets = list(VOX = 'icons/mob/species/vox/head.dmi')
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -317,7 +319,7 @@ BLIND     // can't see anything
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
-	species_restricted = list("exclude","Diona","Vox")
+	species_restricted = list("exclude" , DIONA , VOX)
 
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
 
@@ -332,7 +334,7 @@ BLIND     // can't see anything
 // Some space suits are equipped with reactive membranes that support
 // broken limbs - at the time of writing, only the ninja suit, but
 // I can see it being useful for other suits as we expand them. ~ Z
-// The actual splinting occurs in /datum/organ/external/proc/fracture()
+// The actual splinting occurs in /obj/item/organ/external/proc/fracture()
 /obj/item/clothing/suit/space/proc/check_limb_support()
 
 	// If this isn't set, then we don't need to care.
@@ -346,8 +348,8 @@ BLIND     // can't see anything
 		return
 
 	// Otherwise, remove the splints.
-	for(var/datum/organ/external/E in supporting_limbs)
-		E.status &= ~ ORGAN_SPLINTED
+	for(var/obj/item/organ/external/BP in supporting_limbs)
+		BP.status &= ~ORGAN_SPLINTED
 	supporting_limbs = list()
 
 //Under clothing
@@ -370,7 +372,12 @@ BLIND     // can't see anything
 	var/displays_id = 1
 	var/rolled_down = 0
 	var/basecolor
-	sprite_sheets = list("Vox" = 'icons/mob/species/vox/uniform.dmi')
+	sprite_sheets = list(VOX = 'icons/mob/species/vox/uniform.dmi')
+
+/obj/item/clothing/under/emp_act(severity)
+	..()
+	if(hastie)
+		hastie.emp_act(severity)
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
 	if(hastie)

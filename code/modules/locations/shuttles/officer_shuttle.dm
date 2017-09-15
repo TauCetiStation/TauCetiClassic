@@ -29,11 +29,22 @@
 	from_area = curr_location
 	moving = 1
 	lastMove = world.time
+
 	if(curr_location == locate(/area/shuttle/officer/station))
+		SSshuttle.undock_act(/area/hallway/secondary/exit, "arrival_officer")
+		SSshuttle.undock_act(curr_location)
 		radio.autosay(department_note, "Arrivals Alert System") //вывод сообщения об отбытии шаттла
+	else if(curr_location == locate(/area/shuttle/officer/velocity))
+		SSshuttle.undock_act(/area/centcom/arrival, "velocity_officer")
+		SSshuttle.undock_act(curr_location)
+	else if(curr_location == locate(/area/shuttle/officer/centcomm))
+		SSshuttle.undock_act(/area/centcom/evac, "centcomm_officer")
+		SSshuttle.undock_act(curr_location)
+
 	var/area/transit_location = locate(/area/shuttle/officer/transit)
 	curr_location.move_contents_to(transit_location, null, EAST)
 	curr_location = transit_location
+
 	if(from_area == locate(/area/shuttle/officer/velocity) && dest_location == locate(/area/shuttle/officer/centcomm))
 		sleep(OFFICER_SHUTTLE_MOVE_TIME)
 	else if(from_area == locate(/area/shuttle/officer/velocity) && dest_location == locate(/area/shuttle/officer/station))
@@ -48,8 +59,18 @@
 		sleep(OFFICER_SHUTTLE_MOVE_TIME)
 
 	curr_location.move_contents_to(dest_location)
+
 	if(dest_location == locate(/area/shuttle/officer/station))
+		SSshuttle.dock_act(/area/hallway/secondary/exit, "arrival_officer")
+		SSshuttle.dock_act(dest_location)
 		radio.autosay(arrival_note, "Arrivals Alert System") //вывод сообщения об прибытии шаттла
+	else if(dest_location == locate(/area/shuttle/officer/velocity))
+		SSshuttle.dock_act(/area/centcom/arrival, "velocity_officer")
+		SSshuttle.dock_act(dest_location)
+	else if(dest_location == locate(/area/shuttle/officer/centcomm))
+		SSshuttle.dock_act(/area/shuttle/officer/centcomm, "centcomm_officer")
+		SSshuttle.dock_act(dest_location)
+
 	curr_location = dest_location
 
 	moving = 0

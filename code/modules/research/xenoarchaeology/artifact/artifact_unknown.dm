@@ -249,7 +249,8 @@ var/list/valid_secondary_effect_types = list(\
 				if(secondary_effect && secondary_effect.trigger == TRIGGER_VIEW && secondary_effect.activated)
 					secondary_effect.ToggleActivate(0)
 
-
+/obj/machinery/artifact/attack_ghost(mob/user)
+	return
 
 /obj/machinery/artifact/attack_hand(mob/user)
 	if (get_dist(user, src) > 1)

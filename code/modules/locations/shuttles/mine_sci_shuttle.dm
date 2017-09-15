@@ -2,7 +2,7 @@
 
 #define STATION_DOCK /area/shuttle/mining/station
 #define MINE_DOCK /area/shuttle/mining/outpost
-#define SCI_DOCK /area/shuttle/research/outpost
+#define SCI_DOCK /area/shuttle/research
 
 #define M_S_SHUTTLE_FLOOR /turf/simulated/shuttle/floor/mining
 
@@ -77,6 +77,7 @@ var/global/area/mine_sci_curr_location = null
 /obj/machinery/computer/mine_sci_shuttle/flight_comp
 	name = "Shuttle Console"
 	icon = 'code/modules/locations/shuttles/computer_shuttle_mining.dmi'
+	circuit = /obj/item/weapon/circuitboard/mine_sci_shuttle/flight_comp
 	var/area/mine_sci_curr_location
 	var/moving = 0
 	var/lastMove = 0

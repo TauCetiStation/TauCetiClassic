@@ -58,15 +58,18 @@
 			src.state = STATE_DEFAULT
 		if("login")
 			var/mob/M = usr
-			var/obj/item/weapon/card/id/I = M.get_active_hand()
-			if (istype(I, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = I
-				I = pda.id
-			if (I && istype(I))
-				if(src.check_access(I))
-					authenticated = 1
-				if(20 in I.access || 57 in I.access || 58 in I.access)//cap, hop, hos
-					authenticated = 2
+			if(isobserver(M))
+				authenticated = 2
+			else
+				var/obj/item/weapon/card/id/I = M.get_active_hand()
+				if (istype(I, /obj/item/device/pda))
+					var/obj/item/device/pda/pda = I
+					I = pda.id
+				if (I && istype(I))
+					if(src.check_access(I))
+						authenticated = 1
+					if(20 in I.access || 57 in I.access || 58 in I.access)//cap, hop, hos
+						authenticated = 2
 		if("logout")
 			authenticated = 0
 
@@ -276,10 +279,10 @@
 		var/timeleft = SSshuttle.timeleft()
 		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]<BR>"
 
-	if (istype(user, /mob/living/silicon))
+	if (issilicon(user))
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
-			dat +=  dat2
+			dat += dat2
 			user << browse(dat, "window=communications;size=400x500")
 			onclose(user, "communications")
 		return
@@ -407,10 +410,6 @@
 	dat += "<BR>\[ [(src.aistate != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=ai-main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
 	return dat
 
-/proc/enable_prison_shuttle(mob/user)
-	for(var/obj/machinery/computer/prison_shuttle/PS in machines)
-		PS.allowedtocall = !(PS.allowedtocall)
-
 /proc/call_shuttle_proc(mob/user)
 	if ((!( ticker ) || SSshuttle.location))
 		return
@@ -471,10 +470,6 @@
 			to_chat(user, "The shuttle is refueling. Please wait another [round((54000-world.time)/600)] minutes before trying again.")//may need to change "/600"
 			return
 
-		if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "sandbox")
-			//New version pretends to call the shuttle but cause the shuttle to return after a random duration.
-			SSshuttle.fake_recall = rand(300,500)
-
 		if(ticker.mode.name == "blob" || ticker.mode.name == "epidemic")
 			to_chat(user, "Under directive 7-10, [station_name()] is quarantined until further notice.")
 			return
@@ -532,7 +527,7 @@
 /obj/machinery/computer/communications/Destroy()
 
 	for(var/obj/machinery/computer/communications/commconsole in machines)
-		if(istype(commconsole.loc,/turf) && commconsole != src)
+		if(istype(commconsole.loc, /turf) && commconsole != src)
 			return ..()
 
 	for(var/obj/item/weapon/circuitboard/communications/commboard in machines)
@@ -543,7 +538,7 @@
 		if(!shuttlecaller.stat && shuttlecaller.client && istype(shuttlecaller.loc,/turf))
 			return ..()
 
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || sent_strike_team)
+	if(sent_strike_team)
 		return ..()
 
 	SSshuttle.incall(2)

@@ -3,6 +3,7 @@
 #define STOPS_LOWPRESSUREDMAGE  2    //To successfully stop you taking all pressure damage you must have both a suit and head item with STOPS_PRESSUREDMAGE flag.
 #define STOPS_PRESSUREDMAGE     3    //Used against both, high and low pressure.
 
+#define NOLIMB           -1    // related to THICKMATERIAL check, thats why this is here.
 //FLAGS BITMASK
 #define NOBLUDGEON        2    // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 #define MASKINTERNALS     4    // Mask allows internals.
@@ -28,6 +29,7 @@
 #define BLOCK_GAS_SMOKE_EFFECT  2048    // Blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with ONESIZEFITSALL)
 #define ONESIZEFITSALL          2048
 #define PHORONGUARD             4096    // Does not get contaminated by phoron.
+#define DROPDEL                 8192    // When dropped, it calls qdel on itself
 
 #define	NOREACT  4096    //Reagents dont' react inside this container.
 
@@ -36,6 +38,7 @@
 #define NO_BREATHE         "no_breathe"
 #define NO_SCAN            "no_scan"
 #define NO_PAIN            "no_pain"
+#define NO_EMBED           "no_embed"
 #define HAS_SKIN_TONE      "has_skin_tone"
 #define HAS_SKIN_COLOR     "has_skin_color"
 #define HAS_LIPS           "has_lips"

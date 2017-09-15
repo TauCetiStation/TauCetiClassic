@@ -181,7 +181,7 @@
 					to_chat(user, "<span class='notice'>[GM.name] needs to be on the urinal.</span>")
 					return
 				user.visible_message("<span class='danger'>[user] slams [GM.name] into the [src]!</span>", "<span class='notice'>You slam [GM.name] into the [src]!</span>")
-				GM.apply_damage(8,BRUTE,"head")
+				GM.apply_damage(8, BRUTE, BP_HEAD)
 				playsound(src, 'sound/weapons/smash.ogg', 50, 1, 1)
 				return
 			else
@@ -230,9 +230,9 @@
 		sleep(60)
 		var/mob/living/carbon/C = user
 		if(C.r_hand)
-			C.apply_damage(25,BURN,"r_hand")
+			C.apply_damage(25, BURN, BP_R_HAND)
 		if(C.l_hand)
-			C.apply_damage(25,BURN,"l_hand")
+			C.apply_damage(25, BURN, BP_L_HAND)
 		to_chat(C, "<span class='danger'>The dryer is burning!</span>")
 		new /obj/effect/decal/cleanable/ash(C.loc)
 		qdel(O)
@@ -262,6 +262,7 @@
 	density = 0
 	anchored = 1
 	use_power = 0
+	ghost_must_be_admin = TRUE
 	var/on = 0
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
@@ -290,7 +291,7 @@
 			for (var/atom/movable/G in src.loc)
 				G.clean_blood()
 		else
-			is_payed = 0 // Р•СЃР»Рё РёРіСЂРѕРє РІС‹РєР»СЋС‡РёР» СЂР°РЅСЊС€Рµ РІСЂРµРјРµРЅРё - РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕРµ Р°РЅРЅСѓР»РёСЂРѕРІР°РЅРёРµ РїР»Р°С‚С‹.
+			is_payed = 0 // Если игрок выключил раньше времени - принудительное аннулирование платы.
 	else
 		to_chat(M, "You didn't pay for that. Swipe a card against [src].")
 
@@ -492,7 +493,7 @@
 		var/turf/tile = loc
 		loc.clean_blood()
 		for(var/obj/effect/E in tile)
-			if((istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay)) && !istype(E, /obj/effect/decal/cleanable/water))
+			if((istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay)) && !istype(E, /obj/effect/fluid))
 				qdel(E)
 
 /obj/machinery/shower/process()
@@ -504,7 +505,7 @@
 	else
 		is_payed--
 
-	create_water(src)
+	spawn_fluid(loc, 15)
 
 	if(!mobpresent) return
 
@@ -546,12 +547,11 @@
 	var/busy = 0 	//Something's being washed at the moment
 
 /obj/structure/sink/attack_hand(mob/user)
-	if (hasorgans(user))
-		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
-		if (user.hand)
-			temp = user:organs_by_name["l_hand"]
-		if(temp && !temp.is_usable())
-			to_chat(user, "<span class='notice'>You try to move your [temp.display_name], but cannot!")
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[user.hand ? BP_L_HAND : BP_R_HAND]
+		if(BP && !BP.is_usable())
+			to_chat(user, "<span class='notice'>You try to move your [BP.name], but cannot!")
 			return
 
 	if(isrobot(user) || isAI(user))
@@ -585,7 +585,7 @@
 		to_chat(user, "\red Someone's already washing here.")
 		return
 
-	if (istype(O, /obj/item/weapon/reagent_containers))
+	if (istype(O, /obj/item/weapon/reagent_containers) && O.is_open_container())
 		var/obj/item/weapon/reagent_containers/RG = O
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		user.visible_message("\blue [user] fills \the [RG] using \the [src].","\blue You fill \the [RG] using \the [src].")

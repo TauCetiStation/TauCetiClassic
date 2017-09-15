@@ -40,11 +40,6 @@ proc/listgetindex(list/list,index)
 			return list[index]
 	return
 
-proc/islist(list/list)
-	if(istype(list))
-		return 1
-	return 0
-
 //Return either pick(list) or null if list is not of type /list or is empty
 proc/safepick(list/list)
 	if(!islist(list) || !list.len)
@@ -719,5 +714,9 @@ datum/proc/dd_SortValue()
 	return input_key
 
 #define LAZYINITLIST(L) if (!L) L = list()
-#define LAZYLEN(L) length(L)
 #define UNSETEMPTY(L) if (L && !L.len) L = null
+#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+#define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
+#define LAZYLEN(L) length(L)
+#define LAZYCLEARLIST(L) if(L) L.Cut()
+#define LAZYCOPY(L) L && L.len ? L.Copy() : null

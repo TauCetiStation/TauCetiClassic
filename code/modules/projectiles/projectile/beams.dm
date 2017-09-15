@@ -4,6 +4,7 @@
 	pass_flags = PASSTABLE | PASSGLASS | PASSGRILLE
 	damage = 40
 	damage_type = BURN
+	sharp = TRUE // concentrated burns
 	flag = "laser"
 	eyeblur = 4
 	var/frequency = 1
@@ -139,6 +140,26 @@
 	tracer_type = /obj/effect/projectile/laser/tracer
 	impact_type = /obj/effect/projectile/laser/impact
 
+/obj/item/projectile/beam/rails
+	name = "rails beam"
+	icon_state = "omnilaser"
+	layer = ABOVE_HUD_LAYER
+	plane = ABOVE_HUD_PLANE
+
+	damage = 50
+	stun = 5
+	weaken = 5
+	stutter = 5
+
+	flag = "bullet"
+	pass_flags = PASSTABLE
+	damage_type = BRUTE
+	sharp = TRUE
+
+	muzzle_type = /obj/effect/projectile/rails/tracer // yes, tracer as muzzle!
+	tracer_type = /obj/effect/projectile/rails/tracer
+	impact_type = /obj/effect/projectile/rails/impact
+
 /obj/item/projectile/beam/stun
 	name = "stun beam"
 	icon_state = "stun"
@@ -146,6 +167,7 @@
 	damage = 0
 	agony = 40
 	damage_type = HALLOSS
+	sharp = FALSE // not a laser
 	stutter = 5
 
 	muzzle_type = /obj/effect/projectile/stun/muzzle

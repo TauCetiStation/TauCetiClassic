@@ -20,6 +20,11 @@
 #define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
 
 /**
+ * Delete `item` and nullify var, where it was.
+ */
+#define QDEL_NULL(item) if(item) { qdel(item); item = null }
+
+/**
  * Return `TRUE` if `X` already passed `Destroy()` phase.
  */
 #define QDELETED(X) (!X || X.gc_destroyed)
@@ -29,3 +34,12 @@
  * So you would know for sure, that `qdel()` was used on `X`.
  */
 #define QDESTROYING(X) (!X || X.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
+
+
+/**
+ * Macroses for `qdel()` operations on simple and associative lists.
+ * Use them only in case, when you need to invoke `Destroy()` proc on objects in list.
+ */
+
+#define QDEL_LIST(L) if(L) { for(var/I in L) qdel(I); L.Cut(); }
+#define QDEL_LIST_ASSOC(L) if(L) { for(var/I in L) qdel(L[I]); L.Cut(); }

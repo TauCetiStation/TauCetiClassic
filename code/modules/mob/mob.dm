@@ -95,6 +95,35 @@
 	for(var/mob/M in viewers(src))
 		M.show_message(message, 1, blind_message, 2)
 
+// Show a message to all mobs in earshot of this one
+// This would be for audible actions by the src mob
+// message is the message output to anyone who can hear.
+// self_message (optional) is what the src mob hears.
+// deaf_message (optional) is what deaf people will see.
+// hearing_distance (optional) is the range, how many tiles away the message can be heard.
+
+/mob/audible_message(message, deaf_message, hearing_distance, self_message)
+	var/range = world.view
+	if(hearing_distance)
+		range = hearing_distance
+	for(var/mob/M in get_hearers_in_view(range, src))
+		var/msg = message
+		if(self_message && M == src)
+			msg = self_message
+		M.show_message(msg, 2, deaf_message, 1)
+
+// Show a message to all mobs in earshot of this atom
+// Use for objects performing audible actions
+// message is the message output to anyone who can hear.
+// deaf_message (optional) is what deaf people will see.
+// hearing_distance (optional) is the range, how many tiles away the message can be heard.
+
+/atom/proc/audible_message(message, deaf_message, hearing_distance)
+	var/range = world.view
+	if(hearing_distance)
+		range = hearing_distance
+	for(var/mob/M in get_hearers_in_view(range, src))
+		M.show_message(message, 2, deaf_message, 1)
 
 /mob/proc/findname(msg)
 	for(var/mob/M in mob_list)
@@ -286,6 +315,38 @@
 	face_atom(A)
 	A.examine(src)
 
+/mob/verb/pointed(atom/A as mob|obj|turf in oview())
+	set name = "Point To"
+	set category = "Object"
+
+	if(!usr || !isturf(usr.loc))
+		return
+	if(usr.stat || usr.restrained())
+		return
+	if(usr.status_flags & FAKEDEATH)
+		return
+	if(!(A in oview(usr.loc)))
+		return
+	if(istype(A, /obj/effect/decal/point))
+		return
+
+	var/tile = get_turf(A)
+	if(!tile)
+		return
+
+	var/obj/P = new /obj/effect/decal/point(tile)
+	P.pixel_x = A.pixel_x
+	P.pixel_y = A.pixel_y
+
+	QDEL_IN(P, 20)
+
+	usr.visible_message("<span class='notice'><b>[usr]</b> points to [A].</span>")
+
+	if(isliving(A))
+		for(var/mob/living/carbon/slime/S in oview())
+			if(usr in S.Friends)
+				S.last_pointed = A
+
 /mob/verb/abandon_mob()
 	set name = "Respawn"
 	set category = "OOC"
@@ -346,12 +407,6 @@
 //	M.Login()	//wat
 	return
 
-/client/verb/changes()
-	set name = "Changelog"
-	set category = "OOC"
-
-	usr << link("http://tauceti.ru/forums/index.php?topic=3551")
-
 /mob/verb/observe()
 	set name = "Observe"
 	set category = "OOC"
@@ -397,6 +452,19 @@
 		if(M.cameraFollow)
 			M.cameraFollow = null
 
+//suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
+/mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
+	set name = ".click"
+	set hidden = TRUE
+	set category = null
+	return
+
+/mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
+	set name = ".dblclick"
+	set hidden = TRUE
+	set category = null
+	return
+
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
 		var/t1 = text("window=[href_list["mach_close"]]")
@@ -416,12 +484,11 @@
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if((H.health - H.halloss) <= config.health_threshold_softcrit)
-			for(var/name in H.organs_by_name)
-				var/datum/organ/external/e = H.organs_by_name[name]
+			for(var/bodypart_name in H.bodyparts_by_name)
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart_name]
 				if(H.lying)
-					if((((e.status & ORGAN_BROKEN) && !(e.status & ORGAN_SPLINTED)) || (e.status & ORGAN_BLEEDING)) && ((H.getBruteLoss() + H.getFireLoss()) >= 100))
+					if((((BP.status & ORGAN_BROKEN) && !(BP.status & ORGAN_SPLINTED)) || (BP.status & ORGAN_BLEEDING)) && ((H.getBruteLoss() + H.getFireLoss()) >= 100))
 						return 1
-						break
 		return 0
 
 /mob/MouseDrop(mob/M as mob)
@@ -493,7 +560,7 @@
 /mob/proc/is_mechanical()
 	if(mind && (mind.assigned_role == "Cyborg" || mind.assigned_role == "AI"))
 		return 1
-	return istype(src, /mob/living/silicon) || get_species() == "Machine"
+	return istype(src, /mob/living/silicon) || get_species() == IPC
 
 /mob/proc/is_ready()
 	return client && !!mind
@@ -584,17 +651,18 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/Stat()
 	..()
+
 	if(statpanel("Status"))
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
 		if(client && client.holder)
-			if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
-				if(ticker.mode:malf_mode_declared)
-					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/APC_MIN_TO_MALDF_DECLARE), 0)]")
-			if(SSshuttle)
-				if(SSshuttle.online && SSshuttle.location < 2)
-					var/timeleft = SSshuttle.timeleft()
-					if(timeleft)
-						stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+			if(ticker.mode && ticker.mode.config_tag == "malfunction")
+				var/datum/game_mode/malfunction/GM = ticker.mode
+				if(GM.malf_mode_declared)
+					stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALDF_DECLARE), 0)]")
+			if(SSshuttle.online && SSshuttle.location < 2)
+				var/timeleft = SSshuttle.timeleft()
+				if(timeleft)
+					stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 	if(client && client.holder)
 		if((client.holder.rights & R_ADMIN))
@@ -633,11 +701,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					continue
 				statpanel(listed_turf.name, null, A)
 
-	if(mind)
-		if(mind.changeling)
-			add_stings_to_statpanel(mind.changeling.purchasedpowers)
-
-	if(spell_list && spell_list.len)
+	if(spell_list.len)
 		for(var/obj/effect/proc_holder/spell/S in spell_list)
 			switch(S.charge_type)
 				if("recharge")
@@ -646,13 +710,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
-
-/mob/proc/add_stings_to_statpanel(list/stings)
-	for(var/obj/effect/proc_holder/changeling/S in stings)
-		if(S.chemical_cost >=0 && S.can_be_used_by(src))
-			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
-
-
 
 // facing verbs
 /mob/proc/canface()
@@ -665,69 +722,53 @@ note dizziness decrements automatically in the mob's Life() proc.
 	if(restrained())					return 0
 	return 1
 
-//Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
-/mob/proc/update_canmove()
-	if(!ismob(src))
-		return
-	if(istype(buckled, /obj/vehicle))
-		var/obj/vehicle/V = buckled
-		if(incapacitated())
-			V.unload(src)
-			lying = 1
-			canmove = 0
-		else
-			if(buckled.buckle_lying != -1)
-				lying = buckled.buckle_lying
-			canmove = 1
-			pixel_y = V.mob_offset_y
-	else if(buckled)
+// Updates canmove, lying and icons. Could perhaps do with a rename but I can't think of anything to describe it.
+// We need speed out of this proc, thats why using incapacitated() helper here is a bad idea.
+/mob/proc/update_canmove(no_transform = FALSE)
+
+	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
+
+	lying = (ko || crawling || resting) && !captured && !buckled && !pinned.len
+	canmove = !(ko || resting || stunned || captured || pinned.len)
+	anchored = captured || pinned.len
+
+	if(buckled)
 		if(buckled.buckle_lying != -1)
 			lying = buckled.buckle_lying
-		if(istype(buckled, /obj/structure/stool/bed/chair))
-			var/obj/structure/stool/bed/chair/C = buckled
-			if(C.flipped)
-				lying = 1
-		if(!buckled.buckle_movable)
-			anchored = 1
-			canmove = 0
-		else
-			anchored = 0
-			canmove = 1
-	else if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH))
-		lying = 1
-		canmove = 0
-	else if(stunned)
-		canmove = 0
-	else if(captured)
-		anchored = 1
-		canmove = 0
-		lying = 0
-	else if (crawling)
-		lying = 1
-		canmove = 1
-	else if(!buckled)
-		lying = !can_stand
-		canmove = has_limbs
+		canmove = canmove && buckled.buckle_movable
+		anchored = anchored || buckled.buckle_movable
 
-	if(lying)
-		density = 0
-		if((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove) )
-			if(!isalien(src))
-				drop_l_hand()
-				drop_r_hand()
-	else
-		density = 1
+		if(istype(buckled, /obj/vehicle))
+			var/obj/vehicle/V = buckled
+			if(!canmove)
+				V.unload(src)
+			else
+				pixel_y = V.mob_offset_y
+		else
+			if(istype(buckled, /obj/structure/stool/bed/chair))
+				var/obj/structure/stool/bed/chair/C = buckled
+				if(C.flipped)
+					lying = 1
+
+	density = !lying
+
+	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isalien(src))
+		drop_l_hand()
+		drop_r_hand()
 
 	for(var/obj/item/weapon/grab/G in grabbed_by)
 		if(G.state >= GRAB_AGGRESSIVE)
-			canmove = 0
+			canmove = FALSE
+			if(G.state == GRAB_NECK && G.assailant.zone_sel.selecting == BP_CHEST)
+				lying = FALSE
+				density = TRUE
 			break
 
 	//Temporarily moved here from the various life() procs
 	//I'm fixing stuff incrementally so this will likely find a better home.
 	//It just makes sense for now. ~Carn
 
-	if(lying != lying_prev)
+	if(!no_transform && lying != lying_prev)
 		update_transform()
 	if(update_icon)	//forces a full overlay update
 		update_icon = FALSE
@@ -769,78 +810,129 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/IsAdvancedToolUser()//This might need a rename but it should replace the can this mob use things check
 	return 0
 
+// ========== STUN ==========
+/mob/proc/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
+	if(!isnull(lock))
+		if(lock)
+			status_flags |= LOCKSTUN
+		else
+			status_flags &= ~LOCKSTUN
+	else if(status_flags & LOCKSTUN)
+		return
 
-/mob/proc/Stun(amount)
-	if(status_flags & CANSTUN)
-		stunned = max(max(stunned,amount),0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
-	return
+	if(status_flags & CANSTUN || ignore_canstun)
+		stunned = max(max(stunned, amount), 0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
+		if(updating)
+			update_canmove()
+	else
+		stunned = 0
 
-/mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(status_flags & CANSTUN)
-		stunned = max(amount,0)
-	return
+/mob/proc/SetStunned(amount, updating = 1, ignore_canstun = 0, lock = null) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
+	if(!isnull(lock))
+		if(lock)
+			status_flags |= LOCKSTUN
+		else
+			status_flags &= ~LOCKSTUN
+	else if(status_flags & LOCKSTUN)
+		return
 
-/mob/proc/AdjustStunned(amount)
-	if(status_flags & CANSTUN)
-		stunned = max(stunned + amount,0)
-	return
+	if(status_flags & CANSTUN || ignore_canstun)
+		stunned = max(amount, 0)
+		if(updating)
+			update_canmove()
+	else
+		stunned = 0
 
+/mob/proc/AdjustStunned(amount, updating = 1, ignore_canstun = 0, lock = null)
+	if(!isnull(lock))
+		if(lock)
+			status_flags |= LOCKSTUN
+		else
+			status_flags &= ~LOCKSTUN
+	else if(status_flags & LOCKSTUN)
+		return
+
+	if(status_flags & CANSTUN || ignore_canstun)
+		stunned = max(stunned + amount, 0)
+		if(updating)
+			update_canmove()
+	else
+		stunned = 0
+
+// ========== WEAKEN ==========
 /mob/proc/Weaken(amount)
 	if(status_flags & CANWEAKEN)
-		weakened = max(max(weakened,amount),0)
-		update_canmove()	//updates lying, canmove and icons
-	return
+		weakened = max(max(weakened, amount), 0)
+		update_canmove() // updates lying, canmove and icons
+	else
+		weakened = 0
 
 /mob/proc/SetWeakened(amount)
 	if(status_flags & CANWEAKEN)
-		weakened = max(amount,0)
-		update_canmove()	//updates lying, canmove and icons
-	return
+		weakened = max(amount, 0)
+		update_canmove()
+	else
+		weakened = 0
 
 /mob/proc/AdjustWeakened(amount)
 	if(status_flags & CANWEAKEN)
-		weakened = max(weakened + amount,0)
-		update_canmove()	//updates lying, canmove and icons
-	return
+		weakened = max(weakened + amount, 0)
+		update_canmove()
+	else
+		weakened = 0
 
+// ========== PARALYSE ==========
 /mob/proc/Paralyse(amount)
 	if(status_flags & CANPARALYSE)
-		paralysis = max(max(paralysis,amount),0)
-	return
+		paralysis = max(max(paralysis, amount), 0)
+	else
+		paralysis = 0
 
 /mob/proc/SetParalysis(amount)
 	if(status_flags & CANPARALYSE)
-		paralysis = max(amount,0)
-	return
+		paralysis = max(amount, 0)
+	else
+		paralysis = 0
 
 /mob/proc/AdjustParalysis(amount)
 	if(status_flags & CANPARALYSE)
-		paralysis = max(paralysis + amount,0)
-	return
+		paralysis = max(paralysis + amount, 0)
+	else
+		paralysis = 0
 
+// ========== SLEEPING ==========
 /mob/proc/Sleeping(amount)
-	sleeping = max(max(sleeping,amount),0)
-	return
+	if(status_flags & CANPARALYSE) // because sleeping and paralysis are very similar statuses and i see no point in separate flags at this time (anyway, golems mostly).
+		sleeping = max(max(sleeping, amount), 0)
+	else
+		sleeping = 0
 
 /mob/proc/SetSleeping(amount)
-	sleeping = max(amount,0)
-	return
+	if(status_flags & CANPARALYSE)
+		sleeping = max(amount, 0)
+	else
+		sleeping = 0
 
 /mob/proc/AdjustSleeping(amount)
-	sleeping = max(sleeping + amount,0)
-	return
+	if(status_flags & CANPARALYSE)
+		sleeping = max(sleeping + amount, 0)
+	else
+		sleeping = 0
 
+// ========== RESTING ==========
 /mob/proc/Resting(amount)
-	resting = max(max(resting,amount),0)
+	resting = max(max(resting, amount), 0)
 	return
 
 /mob/proc/SetResting(amount)
-	resting = max(amount,0)
+	resting = max(amount, 0)
 	return
 
 /mob/proc/AdjustResting(amount)
-	resting = max(resting + amount,0)
+	resting = max(resting + amount, 0)
 	return
+
+// =============================
 
 /mob/proc/get_species()
 	return ""
@@ -913,21 +1005,26 @@ mob/proc/yank_out_object()
 	if(istype(src, /mob/living/carbon/human))
 
 		var/mob/living/carbon/human/H = src
-		var/datum/organ/external/affected
+		var/obj/item/organ/external/BP
 
-		for(var/datum/organ/external/organ in H.organs) //Grab the organ holding the implant.
-			for(var/obj/item/weapon/O in organ.implants)
+		for(var/obj/item/organ/external/limb in H.bodyparts) //Grab the organ holding the implant.
+			for(var/obj/item/weapon/O in limb.implants)
 				if(O == selection)
-					affected = organ
+					BP = limb
 
-		affected.implants -= selection
-		H.shock_stage += 10
-		H.bloody_hands(S)
+		BP.implants -= selection
+		for(var/datum/wound/wound in BP.wounds)
+			wound.embedded_objects -= selection
 
-		if(prob(10)) //I'M SO ANEMIC I COULD JUST -DIE-.
-			var/datum/wound/internal_bleeding/I = new (15)
-			affected.wounds += I
-			H.custom_pain("Something tears wetly in your [affected] as [selection] is pulled free!", 1)
+		H.shock_stage += 20
+		BP.take_damage((selection.w_class * 3), null, DAM_EDGE, "Embedded object extraction")
+
+		if(prob(selection.w_class * 5) && BP.sever_artery()) // I'M SO ANEMIC I COULD JUST -DIE-.
+			H.custom_pain("Something tears wetly in your [BP.name] as [selection] is pulled free!", 1)
+
+		if(ishuman(U))
+			var/mob/living/carbon/human/human_user = U
+			human_user.bloody_hands(H)
 
 	selection.loc = get_turf(src)
 

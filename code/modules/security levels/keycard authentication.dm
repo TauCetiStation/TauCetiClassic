@@ -28,6 +28,10 @@
 	to_chat(user, "You are too primitive to use this device.")
 	return
 
+/obj/machinery/keycard_auth/attack_ghost(mob/user)
+	to_chat(user, "Only for livings.")
+	return
+
 /obj/machinery/keycard_auth/attackby(obj/item/weapon/W, mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		to_chat(user, "This device is not powered.")

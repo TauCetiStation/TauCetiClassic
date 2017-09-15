@@ -1,3 +1,5 @@
+#define DUALSABER_BLOCK_CHANCE_MODIFIER 1.2
+
 /* Two-handed Weapons
  * Contains:
  * 		Twohanded
@@ -48,7 +50,7 @@
 	if(user)
 		var/obj/item/weapon/twohanded/O = user.get_inactive_hand()
 		if(istype(O))
-			O.unwield()
+			user.drop_from_inventory(O)
 	return	unwield()
 
 /obj/item/weapon/twohanded/update_icon()
@@ -58,7 +60,7 @@
 	unwield()
 
 /obj/item/weapon/twohanded/attack_self(mob/user)
-	if( istype(user,/mob/living/carbon/monkey) )
+	if(istype(user,/mob/living/carbon/monkey))
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return
 
@@ -75,8 +77,8 @@
 			playsound(src.loc, unwieldsound, 50, 1)
 
 		var/obj/item/weapon/twohanded/offhand/O = user.get_inactive_hand()
-		if(O && istype(O))
-			O.unwield()
+		if(istype(O))
+			user.drop_from_inventory(O)
 		return
 
 	else //Trying to wield it
@@ -104,12 +106,13 @@
 	w_class = 5.0
 	icon_state = "offhand"
 	name = "offhand"
+	flags = ABSTRACT
 
-	unwield()
-		qdel(src)
+/obj/item/weapon/twohanded/offhand/unwield()
+	qdel(src)
 
-	wield()
-		qdel(src)
+/obj/item/weapon/twohanded/offhand/wield()
+	qdel(src)
 
 /*
  * Fireaxe
@@ -172,8 +175,8 @@
 	can_embed = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
-	reflect_chance = rand(50,85)
-	item_color = pick("red", "blue", "green", "purple")
+	reflect_chance = rand(50, 65)
+	item_color = pick("red", "blue", "green", "purple","yellow","pink","black")
 	switch(item_color)
 		if("red")
 			light_color = "#ff0000"
@@ -184,6 +187,12 @@
 		if("purple")
 			light_color = "#551a8b"
 			light_power = 2
+		if("yellow")
+			light_color = "#ffff00"
+		if("pink")
+			light_color = "#ff00ff"
+		if("black")
+			light_color = "#aeaeae"
 
 /obj/item/weapon/twohanded/dualsaber/update_icon()
 	if(wielded)
@@ -194,33 +203,24 @@
 
 /obj/item/weapon/twohanded/dualsaber/attack(target, mob/living/user)
 	..()
-	if((CLUMSY in user.mutations) && (wielded) &&prob(40))
-		to_chat(user, "\red You twirl around a bit before losing your balance and impaling yourself on the [src].")
-		user.take_organ_damage(20,25)
+	if((CLUMSY in user.mutations) && (wielded) && prob(40))
+		to_chat(user, "<span class='userdanger'> You twirl around a bit before losing your balance and impaling yourself on the [src].</span>")
+		user.take_bodypart_damage(20, 25)
 		return
-	if((wielded) && prob(50))
+	if(wielded && prob(50))
 		spawn(0)
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
 				user.dir = i
 				sleep(1)
 
 /obj/item/weapon/twohanded/dualsaber/Get_shield_chance()
-	if(wielded)
-		return 70
+	if(wielded && !slicing)
+		return reflect_chance * DUALSABER_BLOCK_CHANCE_MODIFIER - 5
 	else
 		return 0
 
 /obj/item/weapon/twohanded/dualsaber/IsReflect(def_zone, hol_dir, hit_dir)
-	if(wielded && prob(reflect_chance))
-		if(hol_dir == NORTH && (hit_dir in list(SOUTH, SOUTHEAST, SOUTHWEST)))
-			return TRUE
-		else if(hol_dir == SOUTH && (hit_dir in list(NORTH, NORTHEAST, NORTHWEST)))
-			return TRUE
-		else if(hol_dir == EAST && (hit_dir in list(WEST, NORTHWEST, SOUTHWEST)))
-			return TRUE
-		else if(hol_dir == WEST && (hit_dir in list(EAST, NORTHEAST, SOUTHEAST)))
-			return TRUE
-	return FALSE
+	return !slicing && wielded && prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir)
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/multitool))
@@ -236,12 +236,12 @@
 		return ..()
 
 /obj/item/weapon/twohanded/dualsaber/afterattack(obj/O, mob/user, proximity)
-	if(!istype(O,/obj/machinery/door/airlock) || src.slicing)
+	if(!istype(O,/obj/machinery/door/airlock) || slicing)
 		return
-	if(O.density && src.wielded && proximity && in_range(user, O))
+	if(O.density && wielded && proximity && in_range(user, O))
 		user.visible_message("<span class='danger'>[user] start slicing the [O] </span>")
 		playsound(user.loc, 'sound/items/Welder2.ogg', 100, 1, -1)
-		src.slicing = 1
+		slicing = TRUE
 		var/obj/machinery/door/airlock/D = O
 		var/obj/effect/I = new /obj/effect/overlay/slice(D.loc)
 		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1) && in_range(user, O))
@@ -257,24 +257,27 @@
 			qdel(D)
 			qdel(IC)
 			playsound(user.loc, 'sound/weapons/blade1.ogg', 100, 1, -1)
-		src.slicing = 0
+		slicing = FALSE
 		qdel(I)
 
 
 /obj/item/weapon/twohanded/dualsaber/dropped(mob/user)
  	..()
- 	src.slicing = 0
+ 	slicing = FALSE
 
 /obj/item/weapon/twohanded/dualsaber/attack_self(mob/user)
-	if(src.slicing)
+	if(slicing)
 		return
-	else
-		..()
+	..()
 
 /obj/item/weapon/twohanded/dualsaber/unwield()
 	set_light(0)
+	w_class = initial(w_class)
 	return ..()
 
 /obj/item/weapon/twohanded/dualsaber/wield()
 	set_light(2)
+	w_class = 5
 	return ..()
+
+#undef DUALSABER_BLOCK_CHANCE_MODIFIER

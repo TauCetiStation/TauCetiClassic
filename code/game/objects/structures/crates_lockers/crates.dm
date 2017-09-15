@@ -281,6 +281,13 @@
 	icon_opened = "medicalcrateopen"
 	icon_closed = "medicalcrate"
 
+/obj/structure/closet/crate/secure/medical
+	desc = "A crate with a lock on it"
+	name = "Secured medical crate"
+	icon_state = "medicalseccrate"
+	icon_opened = "medicalseccrateopen"
+	icon_closed = "medicalseccrate"
+
 /obj/structure/closet/crate/rcd
 	desc = "A crate for the storage of the RCD."
 	name = "RCD crate"

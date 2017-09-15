@@ -29,7 +29,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/weapon/cable_coil/random(null, 1)
 	RefreshParts()
 
 /obj/machinery/atmospherics/unary/cryo_cell/RefreshParts()
@@ -91,7 +91,7 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/container_resist(mob/user)
 	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
-	//audible_message("<span class='notice'>You hear a thump from [src].</span>")
+	audible_message("<span class='notice'>You hear a thump from [src].</span>")
 	if(do_after(user, 300, target = src))
 		if(occupant == user) // Check they're still here.
 			open_machine()
@@ -111,7 +111,7 @@
 		open_machine()
 		add_fingerprint(usr)
 	else
-		if(isobserver(usr))
+		if(isobserver(usr) && !IsAdminGhost(usr))
 			return
 		open_machine()
 
@@ -140,7 +140,7 @@
   * @return nothing
   */
 /obj/machinery/atmospherics/unary/cryo_cell/ui_interact(mob/user, ui_key = "main")
-	if(user == occupant || user.stat || panel_open)
+	if(user == occupant || (user.stat && !isobserver(user)) || panel_open)
 		return
 
 	// this is the data which will be sent to the ui
@@ -332,7 +332,7 @@
 					occupant.adjustToxLoss(max(-efficiency, (-20*(efficiency ** 2)) / occupant.getToxLoss()))
 				var/heal_brute = occupant.getBruteLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getBruteLoss()) : 0
 				var/heal_fire = occupant.getFireLoss() ? min(efficiency, 20*(efficiency**2) / occupant.getFireLoss()) : 0
-				occupant.heal_organ_damage(heal_brute,heal_fire)
+				occupant.heal_bodypart_damage(heal_brute, heal_fire)
 		var/has_cryo = occupant.reagents.get_reagent_amount("cryoxadone") >= 1
 		var/has_clonexa = occupant.reagents.get_reagent_amount("clonexadone") >= 1
 		var/has_cryo_medicine = has_cryo || has_clonexa
@@ -355,4 +355,3 @@
 
 /obj/machinery/atmospherics/unary/cryo_cell/can_crawl_through()
 	return //can't ventcrawl in or out of cryo.
-

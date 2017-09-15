@@ -50,3 +50,14 @@
 	layer = LIGHTING_LAYER + 1
 	plane = LIGHTING_PLANE + 1
 	anchored = 1
+
+/obj/effect/overlay/droppod_open
+	layer = 4
+	plane = 4
+	anchored = 1
+	icon = 'icons/obj/structures/droppod.dmi'
+	icon_state = "panel_opening"
+
+/obj/effect/overlay/droppod_open/New()
+	..()
+	QDEL_IN(src, 27)

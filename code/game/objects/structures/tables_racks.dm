@@ -281,7 +281,7 @@
 		return (check_cover(mover,target))
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
-	if(ishuman(mover) && mover.checkpass(PASSCRAWL))
+	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
 		mover.layer = 2.7
 		return 1
 	if(locate(/obj/structure/table) in get_turf(mover))
@@ -354,8 +354,9 @@
 			var/mob/living/A = G.assailant
 			if (G.state < GRAB_AGGRESSIVE)
 				if(user.a_intent == "hurt")
-					if (prob(15))	M.Weaken(5)
-					M.apply_damage(8,def_zone = "head")
+					if (prob(15))
+						M.Weaken(5)
+					M.apply_damage(8,def_zone = BP_HEAD)
 					visible_message("<span class='danger'>[G.assailant] slams [G.affecting]'s face against \the [src]!</span>")
 					playsound(src.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
 					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Slammed with face by [A.name] against \the [src]([A.ckey])</font>"

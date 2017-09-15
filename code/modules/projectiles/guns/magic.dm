@@ -6,13 +6,14 @@
 	item_state = "staff"
 	fire_sound = 'sound/weapons/emitter.ogg'
 	flags =  CONDUCT
-	w_class = 5
-	var/max_charges = 6
+	w_class = 4
+	var/max_charges = 3
 	var/charges = 0
-	var/recharge_rate = 4
+	var/recharge_rate = 14
 	var/charge_tick = 0
 	var/can_charge = 1
 	var/ammo_type = /obj/item/ammo_casing/magic
+	var/global_access = FALSE
 	origin_tech = null
 	clumsy_check = 0
 
@@ -22,7 +23,7 @@
 /obj/item/weapon/gun/magic/afterattack(atom/target, mob/living/user, flag)
 	newshot()
 	var/area/A = get_area(user)
-	if(user.mind.special_role != "Wizard")
+	if(user.mind.special_role != "Wizard" && !global_access)
 		to_chat(user, "<span class='warning'>You have no idea how to use [src].<span>")
 		return
 	if(istype(A, /area/wizard_station))
