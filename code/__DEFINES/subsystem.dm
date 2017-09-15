@@ -1,6 +1,7 @@
 // Subsystem defines.
 // All in one file so it's easier to see what everything is relative to.
 
+#define SS_INIT_FLUIDS    9
 #define SS_INIT_JOBS      8
 #define SS_INIT_MAPPING   7
 #define SS_INIT_XENOARCH  6
@@ -25,6 +26,7 @@
 #define SS_PRIORITY_THROWING   25
 #define SS_PRIORITY_LIGHTING   25
 #define SS_PRIORITY_AIR        20
+#define SS_PRIORITY_FLUIDS     20
 #define SS_PRIORITY_GARBAGE    15
 #define SS_PRIORITY_SUN        3
 
@@ -34,6 +36,7 @@
 #define SS_WAIT_LIGHTING   1
 #define SS_WAIT_PARALAX    2
 #define SS_WAIT_ORBIT      2
+#define SS_WAIT_FLUIDS     3
 #define SS_WAIT_AIR        5
 #define SS_WAIT_GARBAGE    5
 #define SS_WAIT_SPACEDRIFT 5
@@ -45,10 +48,11 @@
 
 
 #define SS_DISPLAY_AIR      1
-#define SS_DISPLAY_GARBAGE  2
-#define SS_DISPLAY_MACHINES 3
-#define SS_DISPLAY_MOBS     4
-#define SS_DISPLAY_LIGHTING 5
-#define SS_DISPLAY_TIMER    6
-#define SS_DISPLAY_NANOUI   7
+#define SS_DISPLAY_FLUIDS   2
+#define SS_DISPLAY_GARBAGE  3
+#define SS_DISPLAY_MACHINES 4
+#define SS_DISPLAY_MOBS     5
+#define SS_DISPLAY_LIGHTING 6
+#define SS_DISPLAY_TIMER    7
+#define SS_DISPLAY_NANOUI   8
 #define SS_DISPLAY_DEFAULT  100

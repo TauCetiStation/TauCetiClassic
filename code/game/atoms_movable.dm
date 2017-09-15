@@ -20,12 +20,15 @@
 	var/inertia_move_delay = 5
 
 	var/list/client_mobs_in_contents
+	var/freeze_movement = FALSE
 
 /atom/movable/New()
 	. = ..()
 
 /atom/movable/Move(atom/newloc, direct = 0)
-	if(!loc || !newloc) return 0
+	if(!loc || !newloc || freeze_movement)
+		return FALSE
+
 	var/atom/oldloc = loc
 
 	if(loc != newloc)
@@ -55,10 +58,9 @@
 					else if (step(src, WEST))
 						. = step(src, SOUTH)
 
-
 	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = 0
-		return
+		return FALSE
 
 	src.move_speed = world.time - src.l_move_time
 	src.l_move_time = world.time
@@ -107,43 +109,54 @@
 		qdel(AM)
 	loc = null
 	invisibility = 101
-	if (pulledby)
-		if (pulledby.pulling == src)
-			pulledby.pulling = null
-		pulledby = null
+	if(pulledby)
+		pulledby.stop_pulling()
 	return ..()
 
-/atom/movable/Bump(atom/A, yes)
-	if(throwing)
-		throwing = FALSE
-		throw_impact(A)
-		fly_speed = 0
+/atom/movable/Bump(atom/A, non_native_bump)
+	STOP_THROWING(src, A)
 
-	spawn( 0 )
-		if ((A && yes))
-			A.last_bumped = world.time
-			A.Bumped(src)
-		return
-	..()
-	return
+	if(A && non_native_bump)
+		A.last_bumped = world.time
+		A.Bumped(src)
+
 
 /atom/movable/proc/forceMove(atom/destination)
 	if(destination)
+		if(pulledby)
+			pulledby.stop_pulling()
 		var/atom/oldloc = loc
-		if(oldloc)
-			oldloc.Exited(src, destination)
-		loc = destination
-		destination.Entered(src, oldloc)
+		var/same_loc = (oldloc == destination)
 		var/area/old_area = get_area(oldloc)
 		var/area/destarea = get_area(destination)
-		if(old_area != destarea)
-			destarea.Entered(src)
-		for(var/atom/movable/AM in destination)
-			if(AM == src)
-				continue
-			AM.Crossed(src)
-		return 1
-	return 0
+
+		if(oldloc && !same_loc)
+			oldloc.Exited(src, destination)
+			if(old_area)
+				old_area.Exited(src, destination)
+
+		loc = destination
+
+		if(!same_loc)
+			destination.Entered(src, oldloc)
+			if(destarea && old_area != destarea)
+				destarea.Entered(src, oldloc)
+
+			for(var/atom/movable/AM in destination)
+				if(AM == src)
+					continue
+				AM.Crossed(src)
+
+		Moved(oldloc, 0)
+		return TRUE
+	return FALSE
+
+/mob/living/forceMove()
+	stop_pulling()
+	if(buckled)
+		buckled.unbuckle_mob()
+	. = ..()
+	update_canmove()
 
 /mob/dead/observer/forceMove(atom/destination)
 	if(destination)
@@ -161,12 +174,12 @@
 	if(isobj(hit_atom))
 		var/obj/O = hit_atom
 		if(!O.anchored)
-			step(O, dir)
+			O.Move(get_step(O, dir))
 
 	if(isturf(hit_atom) && hit_atom.density)
-		step(src, turn(dir, 180))
+		Move(get_step(src, turn(dir, 180)))
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, datum/callback/early_callback)
 	if (!target || speed <= 0)
 		return
 
@@ -207,6 +220,7 @@
 	TT.thrower = thrower
 	TT.diagonals_first = diagonals_first
 	TT.callback = callback
+	TT.early_callback = early_callback
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
@@ -233,6 +247,8 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 
+	src.thrower = thrower
+	throw_source = get_turf(loc)
 	fly_speed = speed
 	throwing = TRUE
 	if(spin)

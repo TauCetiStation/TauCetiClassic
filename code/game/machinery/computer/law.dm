@@ -5,53 +5,50 @@
 	desc = "Used to upload laws to the AI."
 	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/aiupload
+	ghost_must_be_admin = TRUE
 	var/mob/living/silicon/ai/current = null
-	var/opened = 0
+	var/opened = FALSE
 
 	light_color = "#FFFFFF"
 
 
-	verb/AccessInternals()
-		set category = "Object"
-		set name = "Access Computer's Internals"
-		set src in oview(1)
-		if(get_dist(src, usr) > 1 || usr.restrained() || usr.lying || usr.stat || istype(usr, /mob/living/silicon))
-			return
-
-		opened = !opened
-		if(opened)
-			to_chat(usr, "\blue The access panel is now open.")
-		else
-			to_chat(usr, "\blue The access panel is now closed.")
+/obj/machinery/computer/aiupload/verb/AccessInternals()
+	set category = "Object"
+	set name = "Access Computer's Internals"
+	set src in oview(1)
+	if(get_dist(src, usr) > 1 || usr.restrained() || usr.lying || usr.stat || issilicon(usr))
 		return
 
-
-	attackby(obj/item/weapon/O, mob/user)
-		if (user.z > ZLEVEL_EMPTY)
-			to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
-			return
-		if(istype(O, /obj/item/weapon/aiModule))
-			var/obj/item/weapon/aiModule/M = O
-			M.install(src)
-		else
-			..()
+	opened = !opened
+	if(opened)
+		to_chat(usr, "\blue The access panel is now open.")
+	else
+		to_chat(usr, "\blue The access panel is now closed.")
+	return
 
 
-	attack_hand(mob/user)
-		if(src.stat & NOPOWER)
-			to_chat(usr, "The upload computer has no power!")
-			return
-		if(src.stat & BROKEN)
-			to_chat(usr, "The upload computer is broken!")
-			return
-
-		src.current = select_active_ai(user)
-
-		if (!src.current)
-			to_chat(usr, "No active AIs detected.")
-		else
-			to_chat(usr, "[src.current.name] selected for law changes.")
+/obj/machinery/computer/aiupload/attackby(obj/item/weapon/O, mob/user)
+	if (user.z > ZLEVEL_EMPTY)
+		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
+	if(istype(O, /obj/item/weapon/aiModule))
+		var/obj/item/weapon/aiModule/M = O
+		M.install(src)
+	else
+		..()
+
+
+/obj/machinery/computer/aiupload/attack_hand(mob/user)
+	if(..())
+		return
+
+	src.current = select_active_ai(user)
+
+	if (!src.current)
+		to_chat(usr, "No active AIs detected.")
+	else
+		to_chat(usr, "[src.current.name] selected for law changes.")
+	return
 
 
 
@@ -60,28 +57,25 @@
 	desc = "Used to upload laws to Cyborgs."
 	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/borgupload
+	ghost_must_be_admin = TRUE
 	var/mob/living/silicon/robot/current = null
 
 
-	attackby(obj/item/weapon/aiModule/module, mob/user)
-		if(istype(module, /obj/item/weapon/aiModule))
-			module.install(src)
-		else
-			return ..()
+/obj/machinery/computer/borgupload/attackby(obj/item/weapon/aiModule/module, mob/user)
+	if(istype(module, /obj/item/weapon/aiModule))
+		module.install(src)
+	else
+		return ..()
 
 
-	attack_hand(mob/user)
-		if(src.stat & NOPOWER)
-			to_chat(usr, "The upload computer has no power!")
-			return
-		if(src.stat & BROKEN)
-			to_chat(usr, "The upload computer is broken!")
-			return
-
-		src.current = freeborg()
-
-		if (!src.current)
-			to_chat(usr, "No free cyborgs detected.")
-		else
-			to_chat(usr, "[src.current.name] selected for law changes.")
+/obj/machinery/computer/borgupload/attack_hand(mob/user)
+	if(..())
 		return
+
+	src.current = freeborg()
+
+	if (!src.current)
+		to_chat(usr, "No free cyborgs detected.")
+	else
+		to_chat(usr, "[src.current.name] selected for law changes.")
+	return

@@ -63,7 +63,7 @@
 /mob/living/silicon/robot/proc/handle_regular_status_updates()
 
 	if(src.camera && !scrambledcodes)
-		if(src.stat == DEAD || isWireCut(5))
+		if(src.stat == DEAD || wires.is_index_cut(BORG_WIRE_CAMERA))
 			src.camera.status = 0
 		else
 			src.camera.status = 1
@@ -307,6 +307,8 @@
 			weaponlock_time = 120
 
 /mob/living/silicon/robot/update_canmove()
-	if(paralysis || stunned || weakened || buckled || lockcharge) canmove = 0
-	else canmove = 1
+	if(paralysis || stunned || weakened || buckled || lockcharge || pinned.len)
+		canmove = FALSE
+	else
+		canmove = TRUE
 	return canmove

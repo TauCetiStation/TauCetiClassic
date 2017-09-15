@@ -46,7 +46,6 @@
 		var/datum/robot_component/C = components[V]
 		C.max_damage = 10
 
-	verbs -= /mob/living/silicon/robot/verb/Namepick
 	module = new /obj/item/weapon/robot_module/drone(src)
 
 	//Grab stacks.
@@ -345,10 +344,6 @@
 	else
 		to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
 		return
-
-/mob/living/silicon/robot/drone/add_robot_verbs()
-
-/mob/living/silicon/robot/drone/remove_robot_verbs()
 
 /mob/living/simple_animal/drone/mob_negates_gravity()
 	return 1

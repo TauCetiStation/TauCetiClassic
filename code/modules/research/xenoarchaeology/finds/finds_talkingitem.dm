@@ -14,7 +14,8 @@
 	var/talk_interval = 50
 	var/talk_chance = 10
 
-/datum/talking_atom/proc/init()
+/datum/talking_atom/proc/init(atom/holder = null)
+	holder_atom = holder
 	if(holder_atom)
 		START_PROCESSING(SSobj, src)
 

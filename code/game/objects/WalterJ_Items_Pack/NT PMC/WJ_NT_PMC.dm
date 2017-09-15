@@ -69,7 +69,7 @@
 	item_state = "Lizard_Boots"
 	item_color = "Lizard_Boots"
 
-	species_restricted = list("Unathi")
+	species_restricted = list(UNATHI)
 
 /obj/item/clothing/head/soft/nt_pmc_cap
 	icon = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'

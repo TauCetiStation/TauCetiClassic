@@ -1,36 +1,68 @@
+#define CHANGELING_STATPANEL_STATS(BYOND) \
+	if(mind && mind.changeling) \
+	{ \
+		stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]"); \
+		stat("Genetic Damage Time", mind.changeling.geneticdamage); \
+		stat("Absorbed DNA", mind.changeling.absorbedcount); \
+	}
+
+
+#define CHANGELING_STATPANEL_POWERS(BYOND) \
+	if(mind && mind.changeling && mind.changeling.purchasedpowers.len) \
+	{ \
+		for(var/P in mind.changeling.purchasedpowers) \
+		{ \
+			var/obj/effect/proc_holder/changeling/S = P; \
+			if(S.chemical_cost >=0 && S.can_be_used_by(src)) \
+			{ \
+				statpanel("[S.panel]", ((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""), S); \
+			} \
+		} \
+	}
+
 // see _DEFINES/is_helpers.dm for mob type checks
 #define SAFE_PERP -50
 
-/proc/hasorgans(A)
-	return ishuman(A)
+/mob/living/proc/isSynthetic()
+	return FALSE
+
+/mob/living/carbon/human/isSynthetic(target_zone)
+	if(isnull(full_prosthetic))
+		robolimb_count = 0
+		for(var/obj/item/organ/external/BP in bodyparts)
+			if(BP.status & ORGAN_ROBOT)
+				robolimb_count++
+		full_prosthetic = (robolimb_count == bodyparts.len)
+
+	if(!full_prosthetic && target_zone)
+		var/obj/item/organ/external/BP = get_bodypart(target_zone)
+		if(BP)
+			return BP.status & ORGAN_ROBOT
+
+	return full_prosthetic
+
+/mob/living/silicon/isSynthetic()
+	return TRUE
 
 /proc/hsl2rgb(h, s, l)
 	return
 
 /proc/isloyal(A) //Checks to see if the person contains a loyalty implant, then checks that the implant is actually inside of them
 	for(var/obj/item/weapon/implant/loyalty/L in A)
-		if(L && L.implanted)
+		if(L.implanted)
 			return 1
 	return 0
 
 /proc/check_zone(zone)
-	if(!zone)	return "chest"
+	if(!zone)
+		return BP_CHEST
+
 	switch(zone)
-		if("eyes")
-			zone = "head"
-		if("mouth")
-			zone = "head"
-/*		if("l_hand")
-			zone = "l_arm"
-		if("r_hand")
-			zone = "r_arm"
-		if("l_foot")
-			zone = "l_leg"
-		if("r_foot")
-			zone = "r_leg"
-		if("groin")
-			zone = "chest"
-*/
+		if(O_EYES)
+			zone = BP_HEAD
+		if(O_MOUTH)
+			zone = BP_HEAD
+
 	return zone
 
 // Returns zone with a certain probability.
@@ -43,16 +75,20 @@
 	if(probability == 100)
 		return zone
 
-	if(zone == "chest")
-		if(prob(probability))	return "chest"
+	if(zone == BP_CHEST)
+		if(prob(probability))
+			return BP_CHEST
+
 		var/t = rand(1, 9)
 		switch(t)
-			if(1 to 3)	return "head"
-			if(4 to 6)	return "l_arm"
-			if(7 to 9)	return "r_arm"
+			if(1 to 3) return BP_HEAD
+			if(4 to 6) return BP_L_ARM
+			if(7 to 9) return BP_R_ARM
 
-	if(prob(probability * 0.75))	return zone
-	return "chest"
+	if(prob(probability * 0.75))
+		return zone
+
+	return BP_CHEST
 
 // Emulates targetting a specific body part, and miss chances
 // May return null if missed
@@ -64,23 +100,23 @@
 	if(!target.buckled && !target.lying)
 		var/miss_chance = 10
 		switch(zone)
-			if("head")
+			if(BP_HEAD)
 				miss_chance = 30
-			if("l_leg")
+			if(BP_L_LEG)
 				miss_chance = 40
-			if("r_leg")
+			if(BP_R_LEG)
 				miss_chance = 40
-			if("l_arm")
+			if(BP_L_ARM)
 				miss_chance = 40
-			if("r_arm")
+			if(BP_R_ARM)
 				miss_chance = 40
-			if("l_hand")
+			if(BP_L_HAND)
 				miss_chance = 60
-			if("r_hand")
+			if(BP_R_HAND)
 				miss_chance = 60
-			if("l_foot")
+			if(BP_L_FOOT)
 				miss_chance = 60
-			if("r_foot")
+			if(BP_R_FOOT)
 				miss_chance = 60
 		if(prob(max(miss_chance + miss_chance_mod, 0)))
 			if(prob(max(20, (miss_chance/2))))
@@ -89,27 +125,27 @@
 				var/t = rand(1, 100)
 				switch(t)
 					if(1 to 50)
-						return "chest"
+						return BP_CHEST
 					if(51 to 61)
-						return "head"
+						return BP_HEAD
 					if(62 to 66)
-						return "l_arm"
+						return BP_L_ARM
 					if(67 to 71)
-						return "r_arm"
+						return BP_R_ARM
 					if(72 to 76)
-						return "r_leg"
+						return BP_R_LEG
 					if(77 to 81)
-						return "l_leg"
+						return BP_L_LEG
 					if(82 to 87)
-						return "groin"
+						return BP_GROIN
 					if(88 to 91)
-						return "l_foot"
+						return BP_L_FOOT
 					if(92 to 94)
-						return "r_foot"
+						return BP_R_FOOT
 					if(95 to 97)
-						return "l_hand"
+						return BP_L_HAND
 					if(98 to 100)
-						return "r_hand"
+						return BP_R_HAND
 
 	return zone
 
@@ -122,12 +158,12 @@
 
 	var/t = rand(1, 18) // randomly pick a different zone, or maybe the same one
 	switch(t)
-		if(1)		 return "head"
-		if(2)		 return "chest"
-		if(3 to 6)	 return "l_arm"
-		if(7 to 10)	 return "r_arm"
-		if(11 to 14) return "l_leg"
-		if(15 to 18) return "r_leg"
+		if(1)        return BP_HEAD
+		if(2)        return BP_CHEST
+		if(3 to 6)   return BP_L_ARM
+		if(7 to 10)  return BP_R_ARM
+		if(11 to 14) return BP_L_LEG
+		if(15 to 18) return BP_R_LEG
 
 	return zone
 
@@ -214,7 +250,7 @@ proc/slur(phrase)
 	return copytext(t,1,MAX_MESSAGE_LEN)
 
 
-proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
+/proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
 	/* Turn text into complete gibberish! */
 	var/returntext = ""
 	for(var/i = 1, i <= length(t), i++)
@@ -226,6 +262,20 @@ proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 fo
 
 			for(var/j = 1, j <= rand(0, 2), j++)
 				letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
+
+		returntext += letter
+
+	return returntext
+
+/proc/GibberishAll(t) // Same as above, except there is no probability and chance always 100.
+	/* Turn text into complete gibberish! */
+	var/returntext = ""
+	for(var/i = 1 to length(t))
+
+		var/letter = ""
+
+		for(var/j = rand(0, 2) to 0 step -1)
+			letter += pick("#","@","*","&","%","$","/", "<", ">", ";","*","*","*","*","*","*","*")
 
 		returntext += letter
 
@@ -322,7 +372,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 		if(hud_used && hud_used.action_intent)
 			hud_used.action_intent.icon_state = "intent_[a_intent]"
 
-	else if(isrobot(src) || ismonkey(src) || islarva(src)|| isfacehugger(src))
+	else if(isrobot(src) || ismonkey(src) || islarva(src)|| isfacehugger(src) || isIAN(src))
 		switch(input)
 			if("help")
 				a_intent = "help"
@@ -370,26 +420,32 @@ var/list/intents = list("help","disarm","grab","hurt")
 	var/obj/item/weapon/card/id/id = null
 	if(wear_id)
 		id = wear_id.GetID()
+	else if(l_hand)
+		id = l_hand.GetID()
+	else if(r_hand)
+		id = r_hand.GetID()
+
 	if(id && istype(id, /obj/item/weapon/card/id/syndicate))
 		threatcount -= 2
-	// A proper	CentCom id is hard currency.
-	else if(id && istype(id, /obj/item/weapon/card/id/centcom))
+	// A proper CentCom id is hard currency.
+	else if(id && is_type_in_list(id, list(/obj/item/weapon/card/id/centcom, /obj/item/weapon/card/id/ert)))
 		return SAFE_PERP
 
 	if(check_access && !access_obj.allowed(src))
 		threatcount += 4
 
 	if(auth_weapons && !access_obj.allowed(src))
-		if(istype(l_hand, /obj/item/weapon/gun) || istype(l_hand, /obj/item/weapon/melee))
+		var/list/weapon_list = list(/obj/item/weapon/gun, /obj/item/weapon/melee)
+		if(l_hand && is_type_in_list(l_hand, weapon_list))
 			threatcount += 4
 
-		if(istype(r_hand, /obj/item/weapon/gun) || istype(r_hand, /obj/item/weapon/melee))
+		if(r_hand && is_type_in_list(r_hand, weapon_list))
 			threatcount += 4
 
-		if(istype(belt, /obj/item/weapon/gun) || istype(belt, /obj/item/weapon/melee))
+		if(belt && is_type_in_list(belt, weapon_list))
 			threatcount += 2
 
-		if(species.name != "Human")
+		if(species.name != HUMAN)
 			threatcount += 2
 
 	if(check_records || check_arrest)
@@ -415,10 +471,17 @@ var/list/intents = list("help","disarm","grab","hurt")
 		threatcount += 4
 	return threatcount
 
+#undef SAFE_PERP
+
 /proc/IsAdminGhost(var/mob/user)
-	if(check_rights(R_ADMIN, 0) && istype(user, /mob/dead/observer) && user.client.AI_Interact)
+	if(check_rights(R_ADMIN, 0) && isobserver(user) && user.client.AI_Interact)
 		return 1
 	else
 		return 0
 
-#undef SAFE_PERP
+/mob/proc/is_busy(show_warning = TRUE)
+	if(busy_with_action)
+		if(show_warning)
+			to_chat(src, "<span class='warning'>You are busy. Please finish or cancel your current action.</span>")
+		return TRUE
+	return FALSE

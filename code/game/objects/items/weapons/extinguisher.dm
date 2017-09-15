@@ -41,7 +41,7 @@
 
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
-	if(src in user)
+	if(in_range(src, user))
 		to_chat(user, "[reagents.total_volume] units of water left!")
 
 /obj/item/weapon/extinguisher/attack_self(mob/user)
@@ -128,6 +128,7 @@
 					step_towards(W,my_target)
 					if(!W) return
 					if(!W.reagents) break
+					spawn_fluid(loc, spray_amount)
 					W.reagents.reaction(get_turf(W))
 					for(var/atom/atm in get_turf(W))
 						if(!W) return

@@ -33,7 +33,7 @@
 	new /obj/item/weapon/weldingtool(src)
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
-	new /obj/item/weapon/cable_coil(src,30,pick("red","yellow","orange"))
+	new /obj/item/weapon/cable_coil(src, 30, pick(COLOR_RED, COLOR_YELLOW, COLOR_ORANGE))
 
 
 /obj/item/weapon/storage/belt/utility/atmostech/New()
@@ -209,4 +209,5 @@
 	name = "military belt"
 	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
 	icon_state = "militarybelt"
+	item_state = "militarybelt"
 	can_hold = list()

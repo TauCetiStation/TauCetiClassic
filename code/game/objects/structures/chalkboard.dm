@@ -59,7 +59,6 @@
 		to_chat(usr, "\blue You can't post it all on board!")
 		return
 
-	//t = checkhtml(t)
 	t = sanitize(t, list("\n"="\[br\]","ÿ"=LETTER_255))
 
 	// check for exploits

@@ -116,14 +116,18 @@ RCD
 
 			if(2)
 				if(istype(A, /turf/simulated/floor))
+					for(var/atom/AT in A)
+						if(AT.density || istype(AT, /obj/machinery/door) || istype(AT, /obj/structure/mineral_door))
+							to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
+							return 0
 					if(checkResource(10, user))
 						to_chat(user, "Building Airlock...")
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if(do_after(user, 50, target = A))
-							if(!useResource(10, user)) return 0
+							if(!useResource(10, user))
+								return 0
 							activate()
-							var/obj/machinery/door/airlock/T = new /obj/machinery/door/airlock( A )
-							T.autoclose = 1
+							new /obj/machinery/door/airlock(A)
 							return 1
 						return 0
 					return 0

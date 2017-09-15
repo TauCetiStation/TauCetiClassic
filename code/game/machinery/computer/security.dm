@@ -262,6 +262,12 @@ What a mess.*/
 				var/mob/living/silicon/robot/R = usr
 				src.rank = "[R.modtype] [R.braintype]"
 				src.screen = 1
+			else if (isobserver(usr))
+				src.active1 = null
+				src.active2 = null
+				src.authenticated = "Centcomm Agent"
+				src.rank = "Overseer"
+				src.screen = 1
 			else if (istype(scan, /obj/item/weapon/card/id))
 				active1 = null
 				active2 = null
@@ -314,7 +320,7 @@ What a mess.*/
 
 /*			if ("Search Fingerprints")
 			var/t1 = input("Search String: (Fingerprint)", "Secure. records", null, null)  as text
-			if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || (!in_range(src, usr)) && (!istype(usr, /mob/living/silicon))))
+			if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || (!in_range(src, usr)) && !issilicon(usr) && !isobserver(usr)))
 				return
 			active1 = null
 			active2 = null
@@ -376,12 +382,12 @@ What a mess.*/
 				return
 			var/a2 = active2
 			var/t1 = sanitize(copytext(input("Add Comment:", "Secure. records", null, null)  as message,1,MAX_MESSAGE_LEN))
-			if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
+			if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active2 != a2))
 				return FALSE
 			var/counter = 1
 			while(active2.fields[text("com_[]", counter)])
 				counter++
-			active2.fields[text("com_[counter]")] = text("Made by [authenticated] ([rank]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[t1]")
+			active2.fields[text("com_[counter]")] = text("Made by [authenticated] ([rank]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[t1]")
 
 		if("Delete Record (ALL)")
 			if(active1)
@@ -565,7 +571,7 @@ What a mess.*/
 	updateUsrDialog()
 
 /obj/machinery/computer/secure_data/proc/is_not_allowed(mob/user)
-	return !src.authenticated || user.stat || user.restrained() || (!in_range(src, user) && (!istype(user, /mob/living/silicon)))
+	return !src.authenticated || user.stat || user.restrained() || (!in_range(src, user) && !issilicon(usr) && !isobserver(usr))
 
 /obj/machinery/computer/secure_data/proc/get_photo(var/mob/user)
 	var/icon/I = null

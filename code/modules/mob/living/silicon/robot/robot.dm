@@ -1,7 +1,3 @@
-var/list/robot_verbs_default = list(
-	/mob/living/silicon/robot/proc/sensor_mode
-)
-
 #define CYBORG_POWER_USAGE_MULTIPLIER 2.5 // Multiplier for amount of power cyborgs use.
 
 /mob/living/silicon/robot
@@ -18,6 +14,7 @@ var/list/robot_verbs_default = list(
 	var/custom_name = ""
 	var/custom_sprite = 0 //Due to all the sprites involved, a var for our custom borgs may be best
 	var/crisis //Admin-settable for combat module use.
+	var/datum/wires/robot/wires = null
 
 //Hud stuff
 
@@ -26,6 +23,8 @@ var/list/robot_verbs_default = list(
 	var/obj/screen/inv3 = null
 
 	var/shown_robot_modules = 0 //Used to determine whether they have the module menu shown or not
+	var/shown_robot_pda = 0
+	var/shown_robot_foto = 0
 	var/obj/screen/robot_modules_background
 
 //3 Modules can be activated at any one time.
@@ -45,8 +44,6 @@ var/list/robot_verbs_default = list(
 
 	var/obj/item/device/mmi/mmi = null
 
-	var/obj/item/device/pda/ai/robot/rbPDA = null
-
 	var/opened = 0
 	var/emagged = 0
 	var/wiresexposed = 0
@@ -62,7 +59,6 @@ var/list/robot_verbs_default = list(
 	var/datum/effect/effect/system/ion_trail_follow/ion_trail = null
 	var/datum/effect/effect/system/spark_spread/spark_system//So they can initialize sparks whenever/N
 	var/jeton = 0
-	var/borgwires = 31 // 0b11111
 	var/killswitch = 0
 	var/killswitch_time = 60
 	var/weapon_lock = 0
@@ -82,8 +78,7 @@ var/list/robot_verbs_default = list(
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
-
-
+	wires = new(src)
 
 	robot_modules_background = new()
 	robot_modules_background.icon_state = "block"
@@ -113,7 +108,7 @@ var/list/robot_verbs_default = list(
 		camera = new /obj/machinery/camera(src)
 		camera.c_tag = real_name
 		camera.replace_networks(list("SS13","Robots"))
-		if(isWireCut(5)) // 5 = BORG CAMERA
+		if(wires.is_index_cut(BORG_WIRE_CAMERA))
 			camera.status = 0
 
 	initialize_components()
@@ -135,8 +130,6 @@ var/list/robot_verbs_default = list(
 		var/datum/robot_component/cell_component = components["power cell"]
 		cell_component.wrapped = cell
 		cell_component.installed = 1
-
-	add_robot_verbs()
 
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
@@ -163,9 +156,9 @@ var/list/robot_verbs_default = list(
 
 // setup the PDA and its name
 /mob/living/silicon/robot/proc/setup_PDA()
-	if (!rbPDA)
-		rbPDA = new/obj/item/device/pda/ai/robot(src)
-	rbPDA.set_name_and_job(custom_name,"[modtype] [braintype]")
+	if (!pda)
+		pda = new/obj/item/device/pda/silicon/robot(src)
+	pda.set_name_and_job(custom_name,"[modtype] [braintype]")
 
 //If there's an MMI in the robot, have it ejected when the mob goes away. --NEO
 //Improved /N
@@ -330,6 +323,12 @@ var/list/robot_verbs_default = list(
 	var/changed_name = ""
 	if(custom_name)
 		changed_name = custom_name
+		if(client)
+			for(var/obj/screen/screen in client.screen)
+				if(screen.name == "Namepick")
+					client.screen -= screen
+					qdel(screen)
+					break
 	else
 		changed_name = "[modtype] [braintype]-[num2text(ident)]"
 	real_name = changed_name
@@ -361,33 +360,19 @@ var/list/robot_verbs_default = list(
 				if(icon_state == "robot")
 					icon_state = "[src.ckey]-Standard"
 
-/mob/living/silicon/robot/verb/Namepick()
-	set category = "Robot Commands"
+/mob/living/silicon/robot/proc/Namepick()
+	set waitfor = FALSE
 	if(custom_name)
 		return 0
+	var/newname
+	newname = input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text
+	if (newname != "")
+		custom_name = newname
 
-	spawn(0)
-		var/newname
-		newname = input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text
-		if (newname != "")
-			custom_name = newname
+	updatename()
+	updateicon()
 
-		updatename()
-		updateicon()
-
-/mob/living/silicon/robot/verb/cmd_robot_alerts()
-	set category = "Robot Commands"
-	set name = "Show Alerts"
-	robot_alerts()
-
-// this verb lets cyborgs see the stations manifest
-/mob/living/silicon/robot/verb/cmd_station_manifest()
-	set category = "Robot Commands"
-	set name = "Show Crew Manifest"
-	show_station_manifest()
-
-
-/mob/living/silicon/robot/proc/robot_alerts()
+/mob/living/silicon/robot/show_alerts()
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	dat += "<A HREF='?src=\ref[src];mach_close=robotalerts'>Close</A><BR><BR>"
 	for (var/cat in alarms)
@@ -410,19 +395,20 @@ var/list/robot_verbs_default = list(
 
 /mob/living/silicon/robot/proc/self_diagnosis()
 	if(!is_component_functioning("diagnosis unit"))
-		return null
+		to_chat(src, "<span class='userdanger'>Your self-diagnosis component isn't functioning.</span>")
+		return
+	var/datum/robot_component/CO = get_component("diagnosis unit")
+	if (!cell_use_power(CO.active_usage))
+		to_chat(src, "<span class='userdanger'>Low Power.</span>")
 
 	var/dat = "<HEAD><TITLE>[src.name] Self-Diagnosis Report</TITLE></HEAD><BODY>\n"
 	for (var/V in components)
 		var/datum/robot_component/C = components[V]
 		dat += "<b>[C.name]</b><br><table><tr><td>Brute Damage:</td><td>[C.brute_damage]</td></tr><tr><td>Electronics Damage:</td><td>[C.electronics_damage]</td></tr><tr><td>Powered:</td><td>[(!C.idle_usage || C.is_powered()) ? "Yes" : "No"]</td></tr><tr><td>Toggled:</td><td>[ C.toggled ? "Yes" : "No"]</td></table><br>"
 
-	return dat
+	src << browse(dat, "window=robotdiagnosis")
 
-/mob/living/silicon/robot/verb/toggle_lights()
-	set category = "Robot Commands"
-	set name = "Toggle Lights"
-
+/mob/living/silicon/robot/proc/toggle_lights()
 	lights_on = !lights_on
 	to_chat(usr, "You [lights_on ? "enable" : "disable"] your integrated light.")
 	if(lights_on)
@@ -430,24 +416,7 @@ var/list/robot_verbs_default = list(
 	else
 		set_light(0)
 
-/mob/living/silicon/robot/verb/self_diagnosis_verb()
-	set category = "Robot Commands"
-	set name = "Self Diagnosis"
-
-	if(!is_component_functioning("diagnosis unit"))
-		to_chat(src, "\red Your self-diagnosis component isn't functioning.")
-
-	var/datum/robot_component/CO = get_component("diagnosis unit")
-	if (!cell_use_power(CO.active_usage))
-		to_chat(src, "\red Low Power.")
-	var/dat = self_diagnosis()
-	src << browse(dat, "window=robotdiagnosis")
-
-
-/mob/living/silicon/robot/verb/toggle_component()
-	set category = "Robot Commands"
-	set name = "Toggle Component"
-	set desc = "Toggle a component, conserving power."
+/mob/living/silicon/robot/proc/toggle_component()
 
 	var/list/installed_components = list()
 	for(var/V in components)
@@ -490,38 +459,23 @@ var/list/robot_verbs_default = list(
 	return 0
 
 
-// this function displays jetpack pressure in the stat panel
-/mob/living/silicon/robot/proc/show_jetpack_pressure()
-	// if you have a jetpack, show the internal tank pressure
-	var/obj/item/weapon/tank/jetpack/current_jetpack = installed_jetpack()
-	if (current_jetpack)
-		stat("Internal Atmosphere Info", current_jetpack.name)
-		stat("Tank Pressure", current_jetpack.air_contents.return_pressure())
-
-
-// this function returns the robots jetpack, if one is installed
-/mob/living/silicon/robot/proc/installed_jetpack()
-	if(module)
-		return (locate(/obj/item/weapon/tank/jetpack) in module.modules)
-	return 0
-
-
-// this function displays the cyborgs current cell charge in the stat panel
-/mob/living/silicon/robot/proc/show_cell_power()
-	if(cell)
-		stat(null, text("Charge Left: [round(cell.percent())]%"))
-		stat(null, text("Cell Rating: [round(cell.maxcharge)]")) // Round just in case we somehow get crazy values
-		stat(null, text("Power Cell Load: [round(used_power_this_tick)]W"))
-	else
-		stat(null, text("No Cell Inserted!"))
-
-
 // update the status screen display
 /mob/living/silicon/robot/Stat()
 	..()
 	if(statpanel("Status"))
-		show_cell_power()
-		show_jetpack_pressure()
+		if(cell)
+			stat(null, text("Charge Left: [round(cell.percent())]%"))
+			stat(null, text("Cell Rating: [round(cell.maxcharge)]")) // Round just in case we somehow get crazy values
+			stat(null, text("Power Cell Load: [round(used_power_this_tick)]W"))
+		else
+			stat(null, text("No Cell Inserted!"))
+
+		if(module)
+			var/obj/item/weapon/tank/jetpack/current_jetpack = locate(/obj/item/weapon/tank/jetpack) in module.modules
+			if(current_jetpack) // if you have a jetpack, show the internal tank pressure
+				stat("Internal Atmosphere Info", current_jetpack.name)
+				stat("Tank Pressure", current_jetpack.air_contents.return_pressure())
+
 		stat(null, text("Lights: [lights_on ? "ON" : "OFF"]"))
 
 /mob/living/silicon/robot/restrained()
@@ -644,7 +598,7 @@ var/list/robot_verbs_default = list(
 				to_chat(user, "You close the cover.")
 				opened = 0
 				updateicon()
-			else if(wiresexposed && isWireCut(1) && isWireCut(2) && isWireCut(3) && isWireCut(4) && isWireCut(5))
+			else if(wiresexposed && wires.is_all_cut())
 				//Cell is out, wires are exposed, remove MMI, produce damaged chassis, baleet original mob.
 				if(istype(src, /mob/living/silicon/robot/syndicate))
 					return
@@ -660,7 +614,7 @@ var/list/robot_verbs_default = list(
 				C.r_leg = new/obj/item/robot_parts/r_leg(C)
 				C.l_arm = new/obj/item/robot_parts/l_arm(C)
 				C.r_arm = new/obj/item/robot_parts/r_arm(C)
-				C.updateicon()
+				C.update_icon()
 				new/obj/item/robot_parts/chest(loc)
 				src.Destroy()
 			else
@@ -716,9 +670,7 @@ var/list/robot_verbs_default = list(
 			C.electronics_damage = 0
 
 	else if (istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/device/multitool))
-		if (wiresexposed)
-			interact(user)
-		else
+		if (!wires.interact(user))
 			to_chat(user, "You can't reach the wiring.")
 
 	else if(istype(W, /obj/item/weapon/screwdriver) && opened && !cell)	// haxing
@@ -854,9 +806,9 @@ var/list/robot_verbs_default = list(
 					O.show_message(text("\blue [M] caresses [src]'s plating with its scythe-like arm."), 1)
 
 		if ("grab")
-			if (M == src)
+			if (M == src || anchored || M.lying)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
 
@@ -1146,7 +1098,7 @@ var/list/robot_verbs_default = list(
 		return
 
 	if (href_list["showalerts"])
-		robot_alerts()
+		show_alerts()
 		return
 
 	if (href_list["mod"])
@@ -1359,19 +1311,6 @@ var/list/robot_verbs_default = list(
 	else
 		to_chat(src, "Your icon has been set. You now require a module reset to change it.")
 
-/mob/living/silicon/robot/proc/sensor_mode() //Medical/Security HUD controller for borgs
-	set name = "Set Sensor Augmentation"
-	set category = "Robot Commands"
-	set desc = "Augment visual feed with internal sensor overlays."
-	toggle_sensor_mode()
-
-/mob/living/silicon/robot/proc/add_robot_verbs()
-	src.verbs |= robot_verbs_default
-
-/mob/living/silicon/robot/proc/remove_robot_verbs()
-	src.verbs -= robot_verbs_default
-
-
 // Uses power from cyborg's cell. Returns 1 on success or 0 on failure.
 // Properly converts using CELLRATE now! Amount is in Joules.
 /mob/living/silicon/robot/proc/cell_use_power(amount = 0)
@@ -1387,3 +1326,11 @@ var/list/robot_verbs_default = list(
 		used_power_this_tick += amount * CYBORG_POWER_USAGE_MULTIPLIER
 		return 1
 	return 0
+
+/mob/living/silicon/robot/proc/toggle_all_components()
+	for(var/V in components)
+		if(V == "power cell")
+			continue
+		var/datum/robot_component/C = components[V]
+		if(C.installed)
+			C.toggled = !C.toggled

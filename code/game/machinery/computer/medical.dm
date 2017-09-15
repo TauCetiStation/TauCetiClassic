@@ -171,19 +171,26 @@
 
 	else if (href_list["login"])
 
-		if (istype(usr, /mob/living/silicon/ai))
+		if (isAI(usr))
 			src.active1 = null
 			src.active2 = null
 			src.authenticated = usr.name
 			src.rank = "AI"
 			src.screen = 1
 
-		else if (istype(usr, /mob/living/silicon/robot))
+		else if (isrobot(usr))
 			src.active1 = null
 			src.active2 = null
 			src.authenticated = usr.name
 			var/mob/living/silicon/robot/R = usr
 			src.rank = "[R.modtype] [R.braintype]"
+			src.screen = 1
+
+		else if (isobserver(usr))
+			src.active1 = null
+			src.active2 = null
+			src.authenticated = "Centcomm Agent"
+			src.rank = "Overseer"
 			src.screen = 1
 
 		else if (istype(src.scan, /obj/item/weapon/card/id))
@@ -230,7 +237,7 @@
 				if("fingerprint")
 					if (istype(src.active1, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please input fingerprint hash:", "Med. records", src.active1.fields["fingerprint"], null)  as text,1,MAX_MESSAGE_LEN))
-						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active1 != a1))
+						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1))
 							return
 						src.active1.fields["fingerprint"] = t1
 				if("sex")
@@ -242,61 +249,61 @@
 				if("age")
 					if (istype(src.active1, /datum/data/record))
 						var/t1 = input("Please input age:", "Med. records", src.active1.fields["age"], null)  as num
-						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active1 != a1))
+						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1))
 							return
 						src.active1.fields["age"] = t1
 				if("mi_dis")
 					if (istype(src.active2, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please input minor disabilities list:", "Med. records", src.active2.fields["mi_dis"], null)  as text,1,MAX_MESSAGE_LEN))
-						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || src.active2 != a2))
 							return
 						src.active2.fields["mi_dis"] = t1
 				if("mi_dis_d")
 					if (istype(src.active2, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please summarize minor dis.:", "Med. records", src.active2.fields["mi_dis_d"], null)  as message,1,MAX_MESSAGE_LEN))
-						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || src.active2 != a2))
 							return
 						src.active2.fields["mi_dis_d"] = t1
 				if("ma_dis")
 					if (istype(src.active2, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please input major diabilities list:", "Med. records", src.active2.fields["ma_dis"], null)  as text,1,MAX_MESSAGE_LEN))
-						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || src.active2 != a2))
 							return
 						src.active2.fields["ma_dis"] = t1
 				if("ma_dis_d")
 					if (istype(src.active2, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please summarize major dis.:", "Med. records", src.active2.fields["ma_dis_d"], null)  as message,1,MAX_MESSAGE_LEN))
-						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || src.active2 != a2))
 							return
 						src.active2.fields["ma_dis_d"] = t1
 				if("alg")
 					if (istype(src.active2, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please state allergies:", "Med. records", src.active2.fields["alg"], null)  as text,1,MAX_MESSAGE_LEN))
-						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || src.active2 != a2))
 							return
 						src.active2.fields["alg"] = t1
 				if("alg_d")
 					if (istype(src.active2, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please summarize allergies:", "Med. records", src.active2.fields["alg_d"], null)  as message,1,MAX_MESSAGE_LEN))
-						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || src.active2 != a2))
 							return
 						src.active2.fields["alg_d"] = t1
 				if("cdi")
 					if (istype(src.active2, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please state diseases:", "Med. records", src.active2.fields["cdi"], null)  as text,1,MAX_MESSAGE_LEN))
-						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || src.active2 != a2))
 							return
 						src.active2.fields["cdi"] = t1
 				if("cdi_d")
 					if (istype(src.active2, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please summarize diseases:", "Med. records", src.active2.fields["cdi_d"], null)  as message,1,MAX_MESSAGE_LEN))
-						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || src.active2 != a2))
 							return
 						src.active2.fields["cdi_d"] = t1
 				if("notes")
 					if (istype(src.active2, /datum/data/record))
 						var/t1 = copytext(html_encode(input("Please summarize notes:", "Med. records", html_decode(src.active2.fields["notes"]), null)  as message),1,MAX_MESSAGE_LEN)
-						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || src.active2 != a2))
 							return
 						src.active2.fields["notes"] = t1
 				if("p_stat")
@@ -311,21 +318,21 @@
 				if("b_dna")
 					if (istype(src.active1, /datum/data/record))
 						var/t1 = sanitize(copytext(input("Please input DNA hash:", "Med. records", src.active1.fields["dna"], null)  as text,1,MAX_MESSAGE_LEN))
-						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active1 != a1))
+						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1))
 							return
 						src.active1.fields["dna"] = t1
 				if("vir_name")
 					var/datum/data/record/v = locate(href_list["edit_vir"])
 					if (v)
 						var/t1 = sanitize(copytext(input("Please input pathogen name:", "VirusDB", v.fields["name"], null)  as text,1,MAX_MESSAGE_LEN))
-						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active1 != a1))
+						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1))
 							return
 						v.fields["name"] = t1
 				if("vir_desc")
 					var/datum/data/record/v = locate(href_list["edit_vir"])
 					if (v)
 						var/t1 = sanitize(copytext(input("Please input information about pathogen:", "VirusDB", v.fields["description"], null)  as message,1,MAX_MESSAGE_LEN))
-						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active1 != a1))
+						if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || src.active1 != a1))
 							return
 						v.fields["description"] = t1
 				else
@@ -430,12 +437,12 @@
 				return
 			var/a2 = src.active2
 			var/t1 = sanitize(copytext(input("Add Comment:", "Med. records", null, null)  as message,1,MAX_MESSAGE_LEN))
-			if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || src.active2 != a2))
+			if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || src.active2 != a2))
 				return
 			var/counter = 1
 			while(src.active2.fields[text("com_[]", counter)])
 				counter++
-			src.active2.fields[text("com_[counter]")] = text("Made by [authenticated] ([rank]) on [time2text(world.realtime, "DDD MMM DD hh:mm:ss")], [game_year]<BR>[sanitize_popup(t1)]")
+			src.active2.fields[text("com_[counter]")] = text("Made by [authenticated] ([rank]) on [worldtime2text()], [time2text(world.realtime, "DD/MM")]/[game_year]<BR>[sanitize_popup(t1)]")
 
 		if (href_list["del_c"])
 			if ((istype(src.active2, /datum/data/record) && src.active2.fields[text("com_[]", href_list["del_c"])]))
@@ -443,7 +450,7 @@
 
 		if (href_list["search"])
 			var/t1 = input("Search String: (Name, DNA, or ID)", "Med. records", null, null)  as text
-			if ((!( t1 ) || usr.stat || !( src.authenticated ) || usr.restrained() || ((!in_range(src, usr)) && (!istype(usr, /mob/living/silicon)))))
+			if ((!( t1 ) || usr.stat || !( src.authenticated ) || usr.restrained() || ((!in_range(src, usr)) && !issilicon(usr) && !isobserver(usr))))
 				return
 			src.active1 = null
 			src.active2 = null

@@ -195,3 +195,8 @@
 	desc = "A 5.56mm incendiary bullet casing."
 	caliber = "5.56mm"
 	projectile_type = /obj/item/projectile/bullet/incendiary
+
+/obj/item/ammo_casing/a74
+	desc = "A 7.74mm bullet casing."
+	caliber = "7.74mm"
+	projectile_type = /obj/item/projectile/bullet/rifle3

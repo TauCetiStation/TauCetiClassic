@@ -100,7 +100,7 @@
 
 					M.visible_message("<span class='danger'>[M] is hit by the syringe!</span>")
 
-					if(T && istype(T) && T.can_inject())
+					if(T && istype(T) && T.try_inject())
 						if(D.reagents)
 							D.reagents.trans_to(M, 15)
 					else

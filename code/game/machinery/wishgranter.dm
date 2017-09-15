@@ -18,7 +18,7 @@
 		to_chat(user, "The Wish Granter lies silent.")
 		return
 
-	else if(!istype(user, /mob/living/carbon/human))
+	else if(!ishuman(user))
 		to_chat(user, "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's.")
 		return
 
@@ -39,8 +39,8 @@
 		if (!(HULK in user.mutations))
 			user.mutations.Add(HULK)
 
-		if (!(LASER in user.mutations))
-			user.mutations.Add(LASER)
+		if (!(LASEREYES in user.mutations))
+			user.mutations.Add(LASEREYES)
 
 		if (!(XRAY in user.mutations))
 			user.mutations.Add(XRAY)
@@ -53,9 +53,6 @@
 
 		if (!(TK in user.mutations))
 			user.mutations.Add(TK)
-
-		if(!(HEAL in user.mutations))
-			user.mutations.Add(HEAL)
 
 		user.update_mutations()
 

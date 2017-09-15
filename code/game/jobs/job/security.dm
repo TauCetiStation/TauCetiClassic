@@ -9,14 +9,12 @@
 	selection_color = "#ffdddd"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
-	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court,
-			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
-			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
-			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court,
-			            access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
-			            access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
-			            access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective)
+	access = list(
+		access_security, access_sec_doors, access_brig, access_armory, access_court,
+		access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
+		access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
+		access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective
+	)
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
 
@@ -24,7 +22,7 @@
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_sec(H), slot_back)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), slot_back)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 	if(H.gender == FEMALE)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security_fem(H), slot_w_uniform)
@@ -49,9 +47,9 @@
 	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
 	L.imp_in = H
 	L.implanted = 1
-	var/datum/organ/external/affected = H.organs_by_name["head"]
-	affected.implants += L
-	L.part = affected
+	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+	BP.implants += L
+	L.part = BP
 	return 1
 
 
@@ -64,8 +62,7 @@
 	spawn_positions = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
-	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_morgue)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
+	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
 
@@ -73,7 +70,7 @@
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_sec(H), slot_back)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), slot_back)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 	if(H.gender == FEMALE)
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden_fem(H), slot_w_uniform)
@@ -109,7 +106,6 @@
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_court)
-	minimal_access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_court)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 
@@ -117,7 +113,7 @@
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), slot_back)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/det(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
@@ -152,8 +148,7 @@
 	spawn_positions = 5
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
-	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_morgue)
-	minimal_access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
+	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 
@@ -161,7 +156,7 @@
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/security(H), slot_back)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_sec(H), slot_back)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/sec(H), slot_back)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
@@ -191,8 +186,7 @@
 	spawn_positions = 1
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
-	access = list(access_security, access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
-	minimal_access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
+	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 
@@ -200,7 +194,7 @@
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
-		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel_norm(H), slot_back)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), slot_back)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/forensic_technician(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/red(H), slot_shoes)

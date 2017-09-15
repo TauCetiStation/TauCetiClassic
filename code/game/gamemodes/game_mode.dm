@@ -31,6 +31,8 @@
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
+	var/list/restricted_jobs_autotraitor = list("Cyborg", "Security Officer", "Warden")
+	var/autotraitor_delay = 15 MINUTES // how often to try to add new traitors.
 	var/role_type = null
 	var/newscaster_announcements = null
 	var/ert_disabled = 0
@@ -112,6 +114,10 @@ Implants;
 ///post_setup()
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup()
+	var/list/exclude_autotraitor_for = list("extended", "sandbox", "meteor", "gang", "epidemic") // config_tag var
+	if(!(config_tag in exclude_autotraitor_for))
+		addtimer(CALLBACK(src, .proc/traitorcheckloop), autotraitor_delay)
+
 	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
 		display_roundstart_logout_report()
 
@@ -203,8 +209,6 @@ Implants;
 		feedback_set("escaped_on_pod_3",escaped_on_pod_3)
 	if(escaped_on_pod_5 > 0)
 		feedback_set("escaped_on_pod_5",escaped_on_pod_5)
-
-	send2mainirc("A round of [src.name] has ended - [surviving_total] survivors, [ghosts] ghosts.")
 
 	return 0
 

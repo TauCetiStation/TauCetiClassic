@@ -1867,6 +1867,24 @@ datum/design/large_grenade
 	reliability = 79
 	build_path = /obj/item/weapon/grenade/chem_grenade/large
 
+/datum/design/l10
+	name = "L10-c"
+	desc = "A basic energy-based carbine with fast rate of fire."
+	id = "l10"
+	req_tech = list("combat" = 5, "materials" = 6, "magnets" = 4, "powerstorage" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 4500, MAT_DIAMOND = 500, MAT_URANIUM = 1000)
+	build_path = /obj/item/weapon/gun/projectile/automatic/l10c
+
+/datum/design/l10_mag
+	name = "L10-c battery"
+	desc = "A special battery with protection from EM pulse."
+	id = "l10_mag"
+	req_tech = list("combat" = 4, "materials" = 5, "magnets" = 4, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_GOLD = 2000, MAT_SILVER = 1500)
+	build_path = /obj/item/ammo_box/magazine/l10mag
+
 datum/design/smg
 	name = "Submachine Gun"
 	desc = "A lightweight, fast firing gun."
@@ -2030,6 +2048,16 @@ datum/design/bluespace_crystal
 	materials = list(MAT_GOLD = 1500, MAT_DIAMOND = 3000, MAT_PHORON = 1500)
 	reliability = 100
 	build_path = /obj/item/bluespace_crystal/artificial
+
+/datum/design/miningsatchel_holding
+	name = "Mining Satchel of Holding"
+	desc = "A mining satchel that can hold an infinite amount of ores."
+	id = "minerbag_holding"
+	req_tech = list("bluespace" = 4, "materials" = 3, "engineering" = 4)
+	build_type = PROTOLATHE | MINEFAB
+	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 500) //quite cheap, for more convenience
+	build_path = /obj/item/weapon/storage/bag/ore/holding
+	category = list("Tools")
 
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
@@ -2202,6 +2230,15 @@ datum/design/cart_janitor
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/weapon/cartridge/janitor
 
+/datum/design/radio_grid
+	name = "Radio Grid"
+	desc = "A metal grid, attached to circuit to protect it from emitting."
+	id = "radio_grid"
+	req_tech = list("engineering" = 4, "powerstorage" = 3, "magnets" = 3, "programming" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 250, MAT_GLASS = 50)
+	build_path = /obj/item/device/radio_grid
+
 /*
 datum/design/cart_clown
 	name = "Honkworks 5.0 Cartridge"
@@ -2332,6 +2369,46 @@ datum/design/spraycan
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000)
 	build_path = /obj/item/clothing/mask/gas/welding
+
+/datum/design/exwelder
+	name = "Experimental Welding Tool"
+	desc = "An experimental welder capable of self-fuel generation."
+	id = "exwelder"
+	req_tech = list("materials" = 4, "engineering" = 5, "bluespace" = 2, "phorontech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PHORON = 1500, MAT_URANIUM = 200)
+	build_path = /obj/item/weapon/weldingtool/experimental
+	category = list("Equipment")
+
+/datum/design/jawsoflife
+	name = "Jaws of Life"
+	desc = "A small, compact Jaws of Life with an interchangable pry jaws and cutting jaws"
+	id = "jawsoflife"
+	req_tech = list("materials" = 4, "engineering" = 6, "magnets" = 6) // added one more requirment since the Jaws of Life are a bit OP
+	build_path = /obj/item/weapon/crowbar/power
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_SILVER = 2000, MAT_GOLD = 1000)
+	category = list("Equipment")
+
+/datum/design/handdrill
+	name = "Hand Drill"
+	desc = "A small electric hand drill with an interchangable screwdriver and bolt bit"
+	id = "handdrill"
+	req_tech = list("materials" = 4, "engineering" = 6, "magnets" = 6)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_SILVER = 2000, MAT_GOLD = 1000)
+	build_path = /obj/item/weapon/screwdriver/power
+	category = list("Equipment")
+
+/datum/design/magboots
+	name = "Magnetic Boots"
+	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
+	id = "magboots"
+	req_tech = list("materials" = 4, "magnets" = 4, "engineering" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_SILVER = 1500, MAT_GOLD = 2500)
+	build_path = /obj/item/clothing/shoes/magboots
+	category = list("Equipment")
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////

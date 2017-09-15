@@ -1,7 +1,7 @@
 /obj/effect/proc_holder/spell/targeted/area_teleport
 	name = "Area teleport"
 	desc = "This spell teleports you to a type of area of your selection."
-
+	sound = 'sound/magic/Teleport_App.ogg'
 	var/randomise_selection = 0 //if it lets the usr choose the teleport loc or picks it from the list
 	var/invocation_area = 1 //if the invocation appends the selected area
 
@@ -10,26 +10,30 @@
 	if(!thearea || !cast_check(1))
 		revert_cast()
 		return
-	invocation(thearea)
-	spawn(0)
-		if(charge_type == "recharge" && recharge)
-			start_recharge()
+	if(charge_type == "recharge" && recharge)
+		INVOKE_ASYNC(src, .proc/start_recharge)
 	cast(targets,thearea)
-	after_cast(targets)
+	invocation()
 
 /obj/effect/proc_holder/spell/targeted/area_teleport/before_cast(list/targets)
+	for(var/mob/living/target in targets)
+		if(target.incapacitated() || target.lying)
+			return FALSE
 	var/A = null
-
 	if(!randomise_selection)
 		A = input("Area to teleport to", "Teleport", A) in teleportlocs
 	else
 		A = pick(teleportlocs)
 
 	var/area/thearea = teleportlocs[A]
+	usr.say("SCYAR NILA [thearea.name]")
+	if(do_after(usr, 50, target = usr))
+		playsound(usr,'sound/magic/Teleport_diss.ogg', 100, 2)
+		return thearea
+	else
+		return FALSE
 
-	return thearea
-
-/obj/effect/proc_holder/spell/targeted/area_teleport/cast(list/targets,area/thearea)
+/obj/effect/proc_holder/spell/targeted/area_teleport/cast(list/targets, area/thearea)
 	for(var/mob/living/target in targets)
 		var/list/L = list()
 		for(var/turf/T in get_area_turfs(thearea.type))
@@ -45,38 +49,20 @@
 		if(!L.len)
 			to_chat(usr, "The spell matrix was unable to locate a suitable teleport destination for an unknown reason. Sorry.")
 			return
+		var/turf/T = pick(L)
+		target.forceMove(T)
+		handle_teleport_grab(T, target)
 
-		if(target && target.buckled)
-			target.buckled.unbuckle_mob()
-
-		var/list/tempL = L
-		var/attempt = null
-		var/success = 0
-		while(tempL.len)
-			attempt = pick(tempL)
-			success = target.Move(attempt)
-			if(!success)
-				tempL.Remove(attempt)
-			else
-				break
-
-		if(!success)
-			target.loc = pick(L)
-
-	return
-
-/obj/effect/proc_holder/spell/targeted/area_teleport/invocation(area/chosenarea = null)
-	if(!invocation_area || !chosenarea)
-		..()
+/obj/proc/handle_teleport_grab(atom/T, mob/living/U)
+	var/atom/teleport_place
+	if(isturf(T))
+		teleport_place = locate(T.x + rand(-1,1), T.y + rand(-1,1), T.z)
 	else
-		switch(invocation_type)
-			if("shout")
-				usr.say("[invocation] [uppertext(chosenarea.name)]")
-				if(usr.gender==MALE)
-					playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
-				else
-					playsound(usr.loc, pick('sound/misc/null.ogg','sound/misc/null.ogg'), 100, 1)
-			if("whisper")
-				usr.whisper("[invocation] [uppertext(chosenarea.name)]")
-
-	return
+		teleport_place = T
+	var/list/returned = list()
+	for(var/obj/item/weapon/grab/G in list(U.get_active_hand(), U.get_inactive_hand()))
+		returned += G.affecting
+		G.affecting.forceMove(teleport_place)
+	if(length(returned))
+		return returned
+	return null

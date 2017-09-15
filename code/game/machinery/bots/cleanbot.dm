@@ -84,7 +84,6 @@
 	. = ..()
 	if (.)
 		return
-	usr.set_machine(src)
 	interact(user)
 
 /obj/machinery/bot/cleanbot/interact(mob/user)
@@ -95,7 +94,7 @@ Status: []<BR>
 Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>
 Maintenance panel is [src.open ? "opened" : "closed"]"},
 text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
-	if(!src.locked || issilicon(user))
+	if(!src.locked || issilicon(user) || isobserver(user))
 		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[src.blood ? "Yes" : "No"]</A>"))
 		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[src.should_patrol ? "Yes" : "No"]</A>"))
 	//	dat += text({"<BR>Beacon frequency: []<BR>"}, text("<A href='?src=\ref[src];operation=freq'>[src.beacon_freq]</A>"))
@@ -162,12 +161,15 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		src.oddbutton = 1
 		src.screwloose = 1
 
-/obj/machinery/bot/cleanbot/process()
-	//set background = 1
+/obj/machinery/bot/cleanbot/is_on_patrol()
+	return should_patrol
 
+/obj/machinery/bot/cleanbot/process()
 	if(!src.on)
 		return
 	if(src.cleaning)
+		return
+	if(!inaction_check())
 		return
 
 	if(!src.screwloose && !src.oddbutton && prob(5))
@@ -176,19 +178,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(src.screwloose && prob(5))
 		if(istype(loc,/turf/simulated))
 			var/turf/simulated/T = src.loc
-			if(T.wet < 1)
-				T.wet = 1
-				if(T.wet_overlay)
-					T.overlays -= T.wet_overlay
-					T.wet_overlay = null
-				T.wet_overlay = image('icons/effects/water.dmi',T,"wet_floor")
-				T.overlays += T.wet_overlay
-				spawn(800)
-					if (istype(T) && T.wet < 2)
-						T.wet = 0
-						if(T.wet_overlay)
-							T.overlays -= T.wet_overlay
-							T.wet_overlay = null
+			T.make_wet_floor(WATER_FLOOR)
 	if(src.oddbutton && prob(5))
 		visible_message("Something flies out of [src]. He seems to be acting oddly.")
 		var/obj/effect/decal/cleanable/blood/gibs/gib = new /obj/effect/decal/cleanable/blood/gibs(src.loc)
@@ -228,7 +218,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 				if (!next_dest_loc)
 					next_dest_loc = closest_loc
 				if (next_dest_loc)
-					src.patrol_path = AStar(src.loc, next_dest_loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 120, id=botcard, exclude=null)
+					src.patrol_path = get_path_to(src, next_dest_loc, /turf/proc/Distance_cardinal, 0, 120, id=botcard, exclude=null)
 		else
 			patrol_move()
 
@@ -237,8 +227,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(target && path.len == 0)
 		spawn(0)
 			if(!src || !target) return
-			src.path = AStar(src.loc, src.target.loc, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 30, id=botcard)
-			if (!path) path = list()
+			src.path = get_path_to(src, src.target, /turf/proc/Distance_cardinal, 0, 30, id=botcard)
 			if(src.path.len == 0)
 				src.oldtarget = src.target
 				target.targeted_by = null
@@ -309,7 +298,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	target_types += /obj/effect/decal/cleanable/tomato_smudge
 	target_types += /obj/effect/decal/cleanable/egg_smudge
 	target_types += /obj/effect/decal/cleanable/pie_smudge
-	target_types += /obj/effect/decal/cleanable/water
+	target_types += /obj/effect/fluid
 	target_types += /obj/effect/decal/cleanable/molten_item
 	target_types += /obj/effect/decal/cleanable/ash
 	target_types += /obj/effect/decal/cleanable/greenglow

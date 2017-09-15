@@ -66,7 +66,7 @@
 	if(istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
 		return
 
-	if(src.species.name == "Abductor")
+	if(src.species.name == ABDUCTOR)
 		return
 
 	//looks like this only appears in whisper. Should it be elsewhere as well? Maybe handle_speech_problems?

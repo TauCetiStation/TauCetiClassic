@@ -20,7 +20,6 @@ var/list/alldepartments = list("Central Command")
 	var/sendcooldown = 0 // to avoid spamming fax messages
 
 	var/department = "Unknown" // our department
-
 	var/dptdest = "Central Command" // the department we're sending to
 
 /obj/machinery/faxmachine/New()
@@ -32,10 +31,9 @@ var/list/alldepartments = list("Central Command")
 
 /obj/machinery/faxmachine/Destroy()
 	allfaxes -= src
+	QDEL_NULL(scan)
+	QDEL_NULL(tofax)
 	return ..()
-
-/obj/machinery/faxmachine/process()
-	return 0
 
 /obj/machinery/faxmachine/attack_ai(mob/user)
 	return attack_hand(user)
@@ -108,16 +106,14 @@ var/list/alldepartments = list("Central Command")
 			return
 
 		if(tofax)
-
 			if(dptdest == "Central Command")
 				sendcooldown = 1800
-				Centcomm_fax(tofax.info, tofax.name, usr)
-
+				centcomm_fax(usr, tofax)
 			else
 				sendcooldown = 600
-				SendFax(tofax.info, tofax.name, usr, dptdest)
+				send_fax(usr, tofax, dptdest)
 
-			to_chat(usr, "Message transmitted successfully.")
+			audible_message("Message transmitted successfully.")
 
 			spawn(sendcooldown) // cooldown time
 				sendcooldown = 0
@@ -142,7 +138,7 @@ var/list/alldepartments = list("Central Command")
 			else
 				scan.loc = src.loc
 				scan = null
-		else
+		else if(ishuman (usr))
 			var/obj/item/I = usr.get_active_hand()
 			if (istype(I, /obj/item/weapon/card/id))
 				usr.drop_item()
@@ -192,69 +188,37 @@ var/list/alldepartments = list("Central Command")
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 	return
 
-/proc/Centcomm_fax(sent, sentname, mob/Sender)
-	var/msg = "\blue <b><font color='orange'>CENTCOMM FAX: </font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<a href='?_src_=holder;CentcommFaxReply=\ref[Sender]'>RPLY</a>)</b>: Receiving '[sentname]' via secure connection ... <a href='?_src_=holder;CentcommFaxView=\ref[sent]'>view message</a>"
-	log_fax("[Sender] sending [sentname] : [sent]")
+/proc/centcomm_fax(mob/sender, obj/item/weapon/paper/P)
+	var/msg = text("<span class='notice'><b>[] [] [] [] [] [] []</b>: Receiving '[P.name]' via secure connection ... []</span>",
+	"<font color='orange'>CENTCOMM FAX: </font>[key_name(sender, 1)]",
+	"(<a href='?_src_=holder;adminplayeropts=\ref[sender]'>PP</a>)",
+	"(<a href='?_src_=vars;Vars=\ref[sender]'>VV</a>)",
+	"(<a href='?_src_=holder;subtlemessage=\ref[sender]'>SM</a>)",
+	ADMIN_JMP(sender),
+	"(<a href='?_src_=holder;secretsadmin=check_antagonist'>CA</a>)",
+	"(<a href='?_src_=holder;CentcommFaxReply=\ref[sender]'>RPLY</a>)",
+	"<a href='?_src_=holder;CentcommFaxViewInfo=\ref[P.info];CentcommFaxViewStamps=\ref[P.stamp_text]'>view message</a>")  // Some weird BYOND bug doesn't allow to send \ref like `[P.info + P.stamp_text]`.
+
 	for(var/client/C in admins)
 		to_chat(C, msg)
-	send2slack_custommsg("[key_name(Sender)] sent fax to Centcomm", sent, ":fax:")
 
-proc/MakeFaxPaper(obj/fax, sent_text, sent_name, mob/Sender, stamp, stamp_text, stamp_imgbuf)
-	var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(fax.loc)
-	P.name = "[sent_name]"
-	P.info = "[sent_text]"
-	P.update_icon()
-	if(stamp == "CentCom")
-		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-		stampoverlay.icon_state = "paper_stamp-cent"
-		if(!stamp_text)
-			P.stamp_text += "<HR><i>This paper has been stamped by the Central Command Quantum Relay.</i>"
-		else
-			P.stamp_text = "<HR><i>[stamp_text]</i>"
-		P.overlays += stampoverlay
-	if (stamp == "Clown")
-		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-		stampoverlay.icon_state = "paper_stamp-clown"
-		if(!stamp_text)
-			P.stamp_text += "<HR><i>This paper has been stamped by strange pink stamp.</i>"
-		else
-			P.stamp_text = "<HR><i>[stamp_text]</i>"
-		P.overlays += stampoverlay
-	if (stamp == "Syndicate")
-		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-		stampoverlay.icon_state = "paper_stamp-syndicate"
-		if(!stamp_text)
-			P.stamp_text += "<HR><i>This paper has been stamped by the Syndicate Command Interception Relay.</i>"
-		else
-			P.stamp_text = "<HR><i>[stamp_text]</i>"
-		P.overlays += stampoverlay
-	if (stamp == "FakeCentCom")
-		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-		stampoverlay.icon_state = "paper_stamp-fakecentcom"
-		if(!stamp_text)
-			P.stamp_text += "<HR><i>This paper has been stamped by the Central Compound Quantum Relay.</i>"
-		else
-			P.stamp_text = "<HR><i>[stamp_text]</i>"
-		P.overlays += stampoverlay
-	if (stamp == "Custom")
-		if(!stamp_text)
-			P.stamp_text += "<HR><i>This paper has been stamped by the Central Compound Quantum Relay.</i>"
-		else
-			P.stamp_text = "<HR><i>[stamp_text]</i>"
-		P.overlays += stamp_imgbuf
+	send_fax(sender, P, "Central Command")
+	send2slack_custommsg("[key_name(sender)] sent fax to Centcomm", P.info + P.stamp_text, ":fax:")
 
-/proc/SendFax(sent_text, sent_name, mob/Sender, dpt, stamp, stamp_text)
-
-	var/image/stamp_imgbuf
-	if(stamp == "Custom")
-		stamp_imgbuf = image (input("Pick icon:","Icon") as icon)
-		if (!stamp_imgbuf)
-			return
-		stamp_imgbuf.icon_state = input(usr, "Please enter icon_state of the custom stamp, don't worry about that if it is not DMI file.") as message|null
-
+/proc/send_fax(mob/sender, obj/item/weapon/paper/P, department)
 	for(var/obj/machinery/faxmachine/F in allfaxes)
-		if((dpt == "All" || F.department == dpt) && ! (F.stat & (BROKEN|NOPOWER) ))
-			flick("faxreceive", F)
-			addtimer(CALLBACK(GLOBAL_PROC, .proc/MakeFaxPaper, F, sent_text, sent_name, Sender, stamp, stamp_text, stamp_imgbuf), 20)
-			playsound(F.loc, "sound/items/polaroid1.ogg", 50, 1)
+		if((department == "All" || F.department == department) && !( F.stat & (BROKEN|NOPOWER) ))
+			F.print_fax(P.create_self_copy())
 
+	log_fax("[sender] sending [P.name] to [department]: [P.info]")
+
+/obj/machinery/faxmachine/proc/print_fax(obj/item/weapon/paper/P)
+	set waitfor = FALSE
+
+	playsound(src, "sound/items/polaroid1.ogg", 50, 1)
+	flick("faxreceive", src)
+
+	sleep(20)
+
+	P.loc = loc
+	audible_message("Received message.")

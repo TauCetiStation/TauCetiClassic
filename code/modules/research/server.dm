@@ -20,8 +20,8 @@
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/rdserver(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/weapon/cable_coil/red(null, 1)
+	component_parts += new /obj/item/weapon/cable_coil/red(null, 1)
 	RefreshParts()
 	src.initialize(); //Agouri
 
@@ -139,7 +139,7 @@
 /obj/machinery/r_n_d/server/attack_hand(mob/user)
 	if (disabled)
 		return
-	if (shocked)
+	if (shocked && !issilicon(user) && !isobserver(user))
 		shock(user,50)
 	return
 

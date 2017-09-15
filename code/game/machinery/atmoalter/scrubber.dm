@@ -30,37 +30,41 @@
 
 	var/global/gid = 1
 	var/id = 0
-	New()
-		..()
-		id = gid
-		gid++
 
-		name = "[name] (ID [id])"
+/obj/machinery/portable_atmospherics/scrubber/huge/New()
+	..()
+	id = gid
+	gid++
 
-	attack_hand(mob/user)
-		to_chat(usr, "\blue You can't directly interact with this machine. Use the area atmos computer.")
+	name = "[name] (ID [id])"
 
-	update_icon()
-		src.overlays = 0
+/obj/machinery/portable_atmospherics/scrubber/huge/attack_ghost(mob/user)
+	return //Do not show anything
 
+/obj/machinery/portable_atmospherics/scrubber/huge/attack_hand(mob/user)
+	to_chat(usr, "\blue You can't directly interact with this machine. Use the area atmos computer.")
+
+/obj/machinery/portable_atmospherics/scrubber/huge/update_icon()
+	src.overlays = 0
+
+	if(on)
+		icon_state = "scrubber:1"
+	else
+		icon_state = "scrubber:0"
+
+/obj/machinery/portable_atmospherics/scrubber/huge/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W, /obj/item/weapon/wrench))
 		if(on)
-			icon_state = "scrubber:1"
-		else
-			icon_state = "scrubber:0"
-
-	attackby(obj/item/weapon/W, mob/user)
-		if(istype(W, /obj/item/weapon/wrench))
-			if(on)
-				to_chat(user, "\blue Turn it off first!")
-				return
-
-			anchored = !anchored
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-			to_chat(user, "\blue You [anchored ? "wrench" : "unwrench"] \the [src].")
-
+			to_chat(user, "\blue Turn it off first!")
 			return
 
-		..()
+		anchored = !anchored
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		to_chat(user, "\blue You [anchored ? "wrench" : "unwrench"] \the [src].")
+
+		return
+
+	..()
 
 /obj/machinery/portable_atmospherics/scrubber/huge/stationary
 	name = "Stationary Air Scrubber"

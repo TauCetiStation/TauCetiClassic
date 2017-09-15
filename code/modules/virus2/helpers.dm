@@ -144,11 +144,11 @@ proc/airborne_can_reach(turf/source, turf/target)
 
 		if (ishuman(victim))
 			var/mob/living/carbon/human/H = victim
-			var/datum/organ/external/select_area = H.get_organ(src.zone_sel.selecting)
+			var/obj/item/organ/external/BP = H.get_bodypart(zone_sel.selecting)
 			var/list/clothes = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes)
 			for(var/obj/item/clothing/C in clothes )
 				if(C && istype(C))
-					if(C.body_parts_covered & select_area.body_part)
+					if(C.body_parts_covered & BP.body_part)
 						nudity = 0
 		if (nudity)
 			for (var/ID in victim.virus2)

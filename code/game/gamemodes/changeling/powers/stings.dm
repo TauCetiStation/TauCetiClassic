@@ -41,11 +41,7 @@
 		return
 	if(!isturf(user.loc))
 		return
-	if(!ranged && get_dist(user, target) > 1)
-		return
-	if(get_dist(user, target) > (user.mind.changeling.sting_range))
-		return //sanity check as AStar is still throwing insane stunts
-	if(!AStar(user.loc, target.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance, user.mind.changeling.sting_range))
+	if(!AStar(user, target.loc, /turf/proc/Distance, user.mind.changeling.sting_range, simulated_only = FALSE))
 		return //hope this ancient magic still works
 	if(target.mind && target.mind.changeling)
 		sting_feedback(user,target)
@@ -68,7 +64,7 @@
 
 /obj/effect/proc_holder/changeling/sting/proc/sting_fail(mob/user, mob/target)
 	if(!target)
-		return
+		return 1
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.wear_suit)
@@ -80,14 +76,21 @@
 				H.drip(10)
 				return 1
 	if(ishuman(target))
-		var/datum/organ/external/affecting = target:get_organ(user.zone_sel.selecting)
-		if(target:check_thickmaterial(affecting))
-			to_chat(user, "<span class='warning'>We broke our sting about [target.name]'s [user.zone_sel.selecting]!</span>")
-			to_chat(target, "<span class='warning'>You feel a tiny push in your [user.zone_sel.selecting]!</span>")
+		var/mob/living/carbon/human/H = target
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
+		var/result = H.check_thickmaterial(BP) || H.isSynthetic(BP_CHEST)
+		if(result)
+			if(result == NOLIMB)
+				to_chat(user, "<span class='warning'>We missed! [target.name] has no [BP.name]!</span>")
+			else
+				to_chat(user, "<span class='warning'>We broke our sting about [target.name]'s [BP.name]!</span>")
+				to_chat(target, "<span class='warning'>You feel a tiny push in your [BP.name]!</span>")
+				if(ishuman(user))
+					var/mob/living/carbon/human/HU = user
+					HU.drip(10)
 			unset_sting(user)
 			user.mind.changeling.chem_charges -= rand(5,10)
-			if(ishuman(user))
-				user:drip(10)
+
 			return 1
 		else
 			return 0
@@ -246,8 +249,8 @@ obj/effect/proc_holder/changeling/sting/blind
 	helptext = "Temporarily paralyse the target."
 	desc = "We silently sting a human, paralyzing them for a short time."
 	sting_icon = "sting_paralyse"
-	chemical_cost = 30
-	genomecost = 6
+	chemical_cost = 40
+	genomecost = 8
 
 /obj/effect/proc_holder/changeling/sting/paralysis/sting_action(mob/user, mob/living/carbon/target)
 	if(sting_fail(user,target))
@@ -255,31 +258,6 @@ obj/effect/proc_holder/changeling/sting/blind
 	to_chat(target, "<span class='danger'>Your muscles begin to painfully tighten.</span>")
 	target.Weaken(20)
 	feedback_add_details("changeling_powers","PS")
-	return 1
-
-/obj/effect/proc_holder/changeling/sting/death
-	name = "Death Sting"
-	helptext = "Causes spasms onto death."
-	desc = "We silently sting a human, filling him with potent chemicals. His rapid death is all but assured."
-	sting_icon = "sting_death"
-	chemical_cost = 40
-	genomecost = 8
-
-/obj/effect/proc_holder/changeling/sting/death/sting_action(mob/user, mob/living/carbon/target)
-	if(sting_fail(user,target))
-		return 0
-	to_chat(target, "<span class='danger'>You feel a small prick and your chest becomes tight.</span>")
-	target.silent = 15
-	if(target.reagents)
-		target.reagents.add_reagent("cryptobiolin", 20)
-	spawn(50)
-		if(target && target.reagents)
-			target.reagents.add_reagent("lexorin", 20)
-			target.reagents.add_reagent("toxin", 20)
-			target.reagents.add_reagent("radium", 20)
-			target.reagents.add_reagent("phoron", 20)
-			target.reagents.add_reagent("pacid", 20)
-	feedback_add_details("changeling_powers","DTHS")
 	return 1
 
 obj/effect/proc_holder/changeling/sting/unfat

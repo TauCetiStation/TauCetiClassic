@@ -65,14 +65,11 @@
 			tank = new /obj/structure/reagent_dispensers/watertank(src)
 
 /obj/machinery/bot/farmbot/Bump(atom/M) //Leave no door unopened!
-	spawn(0)
-		if ((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
-			var/obj/machinery/door/D = M
-			if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard))
-				D.open()
-				src.frustration = 0
-		return
-	return
+	if ((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
+		var/obj/machinery/door/D = M
+		if (!istype(D, /obj/machinery/door/firedoor) && D.check_access(src.botcard))
+			D.open()
+			src.frustration = 0
 
 /obj/machinery/bot/farmbot/turn_on()
 	. = ..()
@@ -112,7 +109,7 @@
 	dat += "<br>Fertilizer Storage: <A href='?src=\ref[src];eject=1'>\[[get_total_ferts()]/[Max_Fertilizers]\]</a>"
 
 	dat += "<br>Behaviour controls are [src.locked ? "locked" : "unlocked"]<hr>"
-	if(!src.locked)
+	if(!src.locked || issilicon(user) || isobserver(user))
 		dat += "<TT>Watering Controls:<br>"
 		dat += " Water Plants : <A href='?src=\ref[src];water=1'>[src.setting_water ? "Yes" : "No"]</A><BR>"
 		dat += " Refill Watertank : <A href='?src=\ref[src];refill=1'>[src.setting_refill ? "Yes" : "No"]</A><BR>"
@@ -138,22 +135,23 @@
 			turn_off()
 		else
 			turn_on()
-	else if((href_list["water"]) && (!src.locked))
-		setting_water = !setting_water
-	else if((href_list["refill"]) && (!src.locked))
-		setting_refill = !setting_refill
-	else if((href_list["fertilize"]) && (!src.locked))
-		setting_fertilize = !setting_fertilize
-	else if((href_list["weed"]) && (!src.locked))
-		setting_weed = !setting_weed
-	else if((href_list["ignoreWeed"]) && (!src.locked))
-		setting_ignoreWeeds = !setting_ignoreWeeds
-	else if((href_list["ignoreMush"]) && (!src.locked))
-		setting_ignoreMushrooms = !setting_ignoreMushrooms
-	else if (href_list["eject"] )
-		flick("farmbot_hatch",src)
-		for (var/obj/item/nutrient/fert in contents)
-			fert.loc = get_turf(src)
+	else if(!locked || issilicon(usr) || isobserver(usr))
+		if(href_list["water"])
+			setting_water = !setting_water
+		else if(href_list["refill"])
+			setting_refill = !setting_refill
+		else if(href_list["fertilize"])
+			setting_fertilize = !setting_fertilize
+		else if(href_list["weed"])
+			setting_weed = !setting_weed
+		else if(href_list["ignoreWeed"])
+			setting_ignoreWeeds = !setting_ignoreWeeds
+		else if(href_list["ignoreMush"])
+			setting_ignoreMushrooms = !setting_ignoreMushrooms
+		else if(href_list["eject"])
+			flick("farmbot_hatch",src)
+			for (var/obj/item/nutrient/fert in contents)
+				fert.loc = get_turf(src)
 
 	src.updateUsrDialog()
 
@@ -355,15 +353,14 @@
 		spawn(0)
 			var/turf/dest = get_step_towards(target,src)  //Can't pathfind to a tray, as it is dense, so pathfind to the spot next to the tray
 
-			src.path = AStar(src.loc, dest, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 30,id=botcard)
+			src.path = get_path_to(src, dest, /turf/proc/Distance, 0, 30,id=botcard)
 			if(src.path.len == 0)
 				for ( var/turf/spot in orange(1,target) ) //The closest one is unpathable, try  the other spots
 					if ( spot == dest ) //We already tried this spot
 						continue
 					if ( spot.density )
 						continue
-					src.path = AStar(src.loc, spot, /turf/proc/CardinalTurfsWithAccess, /turf/proc/Distance, 0, 30,id=botcard)
-					src.path = reverselist(src.path)
+					src.path = get_path_to(src, spot, /turf/proc/Distance, 0, 30,id=botcard)
 					if ( src.path.len > 0 )
 						break
 
@@ -437,10 +434,10 @@
 
 			src.visible_message("\red <B>[src] [attackVerb] [human]!</B>")
 			var/damage = 5
-			var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-			var/datum/organ/external/affecting = human.get_organ(ran_zone(dam_zone))
-			var/armor = human.run_armor_check(affecting, "melee")
-			human.apply_damage(damage,BRUTE,affecting,armor,sharp=1,edge=1)
+			var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
+			var/obj/item/organ/external/BP = human.bodyparts_by_name[ran_zone(dam_zone)]
+			var/armor = human.run_armor_check(BP, "melee")
+			human.apply_damage(damage, BRUTE, BP, armor, DAM_SHARP | DAM_EDGE)
 
 	else // warning, plants infested with weeds!
 		mode = FARMBOT_MODE_WAITING

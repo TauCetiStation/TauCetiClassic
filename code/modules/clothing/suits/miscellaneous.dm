@@ -296,6 +296,12 @@
 	icon_state = "neocoat"
 	item_state = "neocoat"
 
+/obj/item/clothing/suit/serifcoat
+	name = "serif coat"
+	desc = "A old coat"
+	icon_state = "serif_coat"
+	item_state = "det_suit"
+
 //stripper
 /obj/item/clothing/under/stripper
 	body_parts_covered = 0
@@ -551,3 +557,56 @@
 		return
 	usr.update_inv_wear_suit()
 
+
+/obj/item/clothing/suit/hooded/angel_suit
+	name = "Angel Suit"
+	desc = "Angel costume, which Emits aura of light."
+	icon_state = "angela_suit"
+	hoodtype = /obj/item/clothing/head/angel_nimb
+
+/obj/item/clothing/suit/student_jacket
+	name = "Student Jacket"
+	desc = "A Student's jacket from the eighties."
+	icon_state = "student_jacket"
+	action_button_name = "To Fasten"
+	var/fastened = TRUE
+
+/obj/item/clothing/suit/student_jacket/ui_action_click()
+	if(fastened)
+		icon_state = "student_jacket_open"
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			if(H.wear_suit == src)
+				H.update_inv_wear_suit()
+	else
+		icon_state = "student_jacket"
+		if(ishuman(loc))
+			var/mob/living/carbon/human/H = loc
+			if(H.wear_suit == src)
+				H.update_inv_wear_suit()
+	fastened = !fastened
+
+/obj/item/clothing/suit/atlas_jacket
+	name = "Atlas Jacket"
+	desc = "Stylish white satin jacket with a scorpion embroidered on the back."
+	icon_state = "atlas_jacket"
+
+/obj/item/clothing/suit/shawl
+	name = "Shawl"
+	desc = "A pink Shawl for Hindi Womans."
+	icon_state = "shawl"
+
+/obj/item/clothing/suit/sukeban_coat
+	name = "Sukeban Coat"
+	desc = "Just a Street Japanese coat"
+	icon_state = "sukeban_coat"
+
+/obj/item/clothing/suit/plaid
+	name = "Plaid"
+	desc = "Home warm plaid"
+	icon_state = "plaid"
+
+/obj/item/clothing/suit/tuxedo
+	name = "Tuxedo"
+	desc = "A semi-formal evening suit distinguished primarily by satin or grosgrain facings on the jacket's lapels"
+	icon_state = "tuxedo"

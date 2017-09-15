@@ -7,20 +7,20 @@
 	icon_state = "mflash1"
 	var/id = null
 	var/range = 2 //this is roughly the size of brig cell
-	var/disable = 0
+	var/disable = FALSE
 	var/last_flash = 0 //Don't want it getting spammed like regular flashes
 	var/strength = 10 //How weakened targets are when flashed.
 	var/base_state = "mflash"
-	anchored = 1
+	anchored = TRUE
 
 /obj/machinery/flasher/portable //Portable version of the flasher. Only flashes when anchored
 	name = "portable flasher"
 	desc = "A portable flashing device. Wrench to activate and deactivate. Cannot detect slow movements."
 	icon_state = "pflash1"
 	strength = 8
-	anchored = 0
+	anchored = FALSE
 	base_state = "pflash"
-	density = 1
+	density = TRUE
 
 /*
 /obj/machinery/flasher/New()
@@ -48,11 +48,15 @@
 			user.visible_message("\red [user] has connected the [src]'s flashbulb!", "\red You connect the [src]'s flashbulb!")
 
 //Let the AI trigger them directly.
-/obj/machinery/flasher/attack_ai()
+/obj/machinery/flasher/attack_ai(mob/user)
 	if (src.anchored)
 		return src.flash()
 	else
 		return
+
+/obj/machinery/flasher/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		attack_ai(user)
 
 /obj/machinery/flasher/proc/flash()
 	if (!(powered()))
@@ -81,10 +85,10 @@
 		O.Weaken(strength)
 		if (istype(O, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = O
-			var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
-			if ((E.damage > E.min_bruised_damage && prob(E.damage + 50)))
+			var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+			if (IO.damage > IO.min_bruised_damage && prob(IO.damage + 50))
 				H.flash_eyes()
-				E.damage += rand(1, 5)
+				IO.damage += rand(1, 5)
 		else
 			if(!O.blinded && istype(O,/mob/living))
 				var/mob/living/L = O
@@ -131,10 +135,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/flasher_button/attack_hand(mob/user)
-
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(active)
+	if(..() || active)
 		return
 
 	use_power(5)
@@ -143,7 +144,7 @@
 	icon_state = "launcheract"
 
 	for(var/obj/machinery/flasher/M in machines)
-		if(M.id == src.id)
+		if(M.id == id)
 			spawn()
 				M.flash()
 

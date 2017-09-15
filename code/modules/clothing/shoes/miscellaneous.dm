@@ -182,3 +182,16 @@
 	item_color = "workboots"
 	item_state = "b_shoes"  // need sprites for this
 	clipped_status = CLIPPABLE
+
+/obj/item/clothing/shoes/roman
+	name = "roman sandals"
+	desc = "Sandals with buckled leather straps on it."
+	icon_state = "roman"
+	item_state = "roman"
+
+/obj/item/clothing/shoes/heels
+	name = "Heels"
+	icon_state = "high_shoes"
+
+/obj/item/clothing/shoes/heels/alternate
+	icon_state = "high_shoes2"

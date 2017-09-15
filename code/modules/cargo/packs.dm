@@ -102,9 +102,8 @@ datum/supply_pack/New()
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
-					/obj/item/weapon/pen/paralysis,
-					/obj/item/weapon/grenade/chem_grenade/incendiary)
-	cost = 2000
+					/obj/item/weapon/pen/paralysis)
+	cost = 1750
 	crate_name = "Special Ops crate"
 	group = "Security"
 	hidden = TRUE
@@ -130,11 +129,8 @@ datum/supply_pack/New()
 	contains = list(/obj/item/weapon/flamethrower/full,
 					/obj/item/weapon/tank/phoron,
 					/obj/item/weapon/tank/phoron,
-					/obj/item/weapon/tank/phoron,
-					/obj/item/weapon/grenade/chem_grenade/incendiary,
-					/obj/item/weapon/grenade/chem_grenade/incendiary,
-					/obj/item/weapon/grenade/chem_grenade/incendiary)
-	cost = 2500
+					/obj/item/weapon/tank/phoron)
+	cost = 1750
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "Experimental weapons crate"
 	access = access_heads
@@ -749,7 +745,7 @@ datum/supply_pack/New()
 					/obj/item/weapon/virusdish/random,
 					/obj/item/weapon/virusdish/random)
 	cost = 2500
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/medical
 	crate_name = "Virus sample crate"
 	access = access_cmo
 	group = "Medical / Science"
@@ -796,7 +792,7 @@ datum/supply_pack/New()
 					/obj/item/weapon/bonesetter,
 					/obj/item/weapon/circular_saw)
 	cost = 2500
-	crate_type = /obj/structure/closet/crate/secure
+	crate_type = /obj/structure/closet/crate/secure/medical
 	crate_name = "Surgery crate"
 	access = access_medical
 	group = "Medical / Science"
@@ -805,11 +801,63 @@ datum/supply_pack/New()
 	name = "Sterile equipment crate"
 	contains = list(/obj/item/clothing/under/rank/medical/green,
 					/obj/item/clothing/under/rank/medical/green,
+					/obj/item/clothing/head/surgery/green,
+					/obj/item/clothing/head/surgery/green,
 					/obj/item/weapon/storage/box/masks,
 					/obj/item/weapon/storage/box/gloves)
 	cost = 1500
 	crate_type = /obj/structure/closet/crate
 	crate_name = "Sterile equipment crate"
+	group = "Medical / Science"
+
+/datum/supply_pack/bloodpacks
+	name = "Blood Pack Variety Crate"
+	cost = 3500
+	contains = list(/obj/item/weapon/reagent_containers/blood/empty,
+					/obj/item/weapon/reagent_containers/blood/empty,
+					/obj/item/weapon/reagent_containers/blood/APlus,
+					/obj/item/weapon/reagent_containers/blood/AMinus,
+					/obj/item/weapon/reagent_containers/blood/BPlus,
+					/obj/item/weapon/reagent_containers/blood/BMinus,
+					/obj/item/weapon/reagent_containers/blood/OPlus,
+					/obj/item/weapon/reagent_containers/blood/OMinus)
+	crate_type = /obj/structure/closet/crate/freezer
+	crate_name = "blood freezer"
+	group = "Medical / Science"
+
+/datum/supply_pack/iv_drip
+	name = "IV Drip Crate"
+	cost = 1000
+	contains = list(/obj/machinery/iv_drip)
+	crate_type = /obj/structure/closet/crate/medical
+	crate_name = "iv drip crate"
+	group = "Medical / Science"
+
+/datum/supply_pack/body_bags
+	name = "Body Bags Crate"
+	cost = 1000
+	contains = list(/obj/item/weapon/storage/box/bodybags,
+					/obj/item/weapon/storage/box/bodybags,
+					/obj/item/weapon/storage/box/bodybags)
+	crate_name = "body bags crate"
+	group = "Medical / Science"
+
+/datum/supply_pack/suspension_gen
+	name = "Suspension Field Generetor Crate"
+	cost = 3000
+	contains = list(/obj/machinery/suspension_gen)
+	crate_type = /obj/structure/closet/crate/secure/scisecurecrate
+	crate_name = "Suspension Field Generetor Crate"
+	access = access_research
+	group = "Medical / Science"
+
+/datum/supply_pack/floodlight
+	name = "Emergency Floodlight Crate"
+	cost = 2000
+	contains = list(/obj/machinery/floodlight,
+					/obj/machinery/floodlight)
+	crate_type = /obj/structure/closet/crate/scicrate
+	crate name = "Emergency Floodlight Crate"
 	group = "Medical / Science"
 
 //----------------------------------------------

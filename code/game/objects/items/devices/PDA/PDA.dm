@@ -214,13 +214,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 // Special AI/pAI PDAs that cannot explode.
-/obj/item/device/pda/ai
+/obj/item/device/pda/silicon
 	icon_state = "NONE"
 	ttone = "data"
 	detonate = 0
 
 
-/obj/item/device/pda/ai/proc/set_name_and_job(newname, newjob, newrank)
+/obj/item/device/pda/silicon/proc/set_name_and_job(newname, newjob, newrank)
 	owner = newname
 	ownjob = newjob
 	if(newrank)
@@ -231,7 +231,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 //AI verb and proc for sending PDA messages.
-/obj/item/device/pda/ai/verb/cmd_send_pdamesg()
+/obj/item/device/pda/silicon/verb/cmd_send_pdamesg()
 	set category = "AI Commands"
 	set name = "Send Message"
 	set src in usr
@@ -248,7 +248,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		create_message(usr, selected)
 
 
-/obj/item/device/pda/ai/verb/cmd_toggle_pda_receiver()
+/obj/item/device/pda/silicon/verb/cmd_toggle_pda_receiver()
 	set category = "AI Commands"
 	set name = "Toggle Sender/Receiver"
 	set src in usr
@@ -259,18 +259,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	to_chat(usr, "<span class='notice'>PDA sender/receiver toggled [(toff ? "Off" : "On")]!</span>")
 
 
-/obj/item/device/pda/ai/verb/cmd_toggle_pda_silent()
+/obj/item/device/pda/silicon/verb/cmd_toggle_pda_silent()
 	set category = "AI Commands"
 	set name = "Toggle Ringer"
 	set src in usr
 	if(usr.stat == DEAD)
 		to_chat(usr, "You can't do that because you are dead!")
 		return
-	message_silent=!message_silent
+	message_silent = !message_silent
 	to_chat(usr, "<span class='notice'>PDA ringer toggled [(message_silent ? "Off" : "On")]!</span>")
 
 
-/obj/item/device/pda/ai/verb/cmd_show_message_log()
+/obj/item/device/pda/silicon/verb/cmd_show_message_log()
 	set category = "AI Commands"
 	set name = "Show Message Log"
 	set src in usr
@@ -288,36 +288,29 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	usr << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 
 
-/obj/item/device/pda/ai/can_use()
+/obj/item/device/pda/silicon/can_use()
 	return 1
 
 
-/obj/item/device/pda/ai/attack_self(mob/user)
+/obj/item/device/pda/silicon/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
 	return
 
 //Special PDA for robots
-/obj/item/device/pda/ai/robot/cmd_send_pdamesg()
+
+/obj/item/device/pda/silicon/robot/cmd_toggle_pda_receiver()
 	set category = "Robot Commands"
-	set hidden = 0
+	set hidden = 1
 	..()
 
-/obj/item/device/pda/ai/robot/cmd_toggle_pda_receiver()
+/obj/item/device/pda/silicon/robot/cmd_toggle_pda_silent()
 	set category = "Robot Commands"
+	set hidden = 1
 	..()
 
-/obj/item/device/pda/ai/robot/cmd_toggle_pda_silent()
-	set category = "Robot Commands"
-	..()
-
-/obj/item/device/pda/ai/robot/cmd_show_message_log()
-	set category = "Robot Commands"
-	set hidden = 0
-	..()
-
-/obj/item/device/pda/ai/pai
+/obj/item/device/pda/silicon/pai
 	ttone = "assist"
 
 
@@ -884,16 +877,16 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		empulse(P.loc, 3, 6, 1)
 		message += "Your [P] emits a wave of electromagnetic energy!"
 	if(i>=25 && i<=40) //Smoke
-		var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
+		var/datum/effect/effect/system/smoke_spread/S = new /datum/effect/effect/system/smoke_spread
 		S.attach(P.loc)
-		S.set_up(P, 10, 0, P.loc)
+		S.set_up(n = 10, c = 0, loca = P.loc, direct = 0)
 		playsound(P.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 		S.start()
 		message += "Large clouds of smoke billow forth from your [P]!"
 	if(i>=40 && i<=45) //Bad smoke
 		var/datum/effect/effect/system/smoke_spread/bad/B = new /datum/effect/effect/system/smoke_spread/bad
 		B.attach(P.loc)
-		B.set_up(P, 10, 0, P.loc)
+		B.set_up(n = 10, c = 0, loca = P.loc, direct = 0)
 		playsound(P.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
 		B.start()
 		message += "Large clouds of noxious smoke billow forth from your [P]!"
@@ -907,7 +900,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		message += "Your [P] flashes with a blinding white light! You feel weaker."
 	if(i>=85) //Sparks
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(2, 1, P.loc)
+		s.set_up(n = 2, c = 1, loca = P.loc)
 		s.start()
 		message += "Your [P] begins to spark violently!"
 	if(i>45 && i<65 && prob(50)) //Nothing happens
@@ -1003,9 +996,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			var/who = src.owner
 			if(prob(50))
 				who = P.owner
-			for(var/mob/living/silicon/ai/ai in mob_list)
+			for(var/mob/living/silicon/ai/ai in ai_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
-				if(ai.aiPDA != P && ai.aiPDA != src)
+				if(ai.pda != P && ai.pda != src)
 					ai.show_message("<i>Intercepted message from <b>[who]</b>: [sanitize_chat(t)]</i>")
 
 		nanomanager.update_user_uis(U, src) // Update the sending user's PDA UI so that they can see the new message
@@ -1179,11 +1172,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 					user.show_message("\blue &emsp; Time of Death: [C.tod]")
 				if(istype(C, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = C
-					var/list/damaged = H.get_damaged_organs(1,1)
+					var/list/damaged = H.get_damaged_bodyparts(1, 1)
 					user.show_message("\blue Localized Damage, Brute/Burn:",1)
 					if(length(damaged)>0)
-						for(var/datum/organ/external/org in damaged)
-							user.show_message(text("\blue &emsp; []: []\blue-[]",capitalize(org.display_name),(org.brute_dam > 0)?"\red [org.brute_dam]":0,(org.burn_dam > 0)?"\red [org.burn_dam]":0),1)
+						for(var/obj/item/organ/external/BP in damaged)
+							user.show_message(text("\blue &emsp; []: []\blue-[]",capitalize(BP.name),(BP.brute_dam > 0)?"\red [BP.brute_dam]":0,(BP.burn_dam > 0)?"\red [BP.burn_dam]":0),1)
 					else
 						user.show_message("\blue &emsp; Limbs are OK.",1)
 
@@ -1314,21 +1307,10 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		src.id.loc = get_turf(src.loc)
 	return ..()
 
-/obj/item/device/pda/clown/Crossed(AM as mob|obj) //Clown PDA is slippery.
-	if (istype(AM, /mob/living/carbon))
-		var/mob/M =	AM
-		if ((istype(M, /mob/living/carbon/human) && ( (istype(M:shoes, /obj/item/clothing/shoes) && M:shoes.flags&NOSLIP)) || (istype(M:wear_suit, /obj/item/clothing/suit/space/rig) && M:wear_suit.flags&NOSLIP)  ) || M.m_intent == "walk")
-			return
-
-		if ((istype(M, /mob/living/carbon/human) && (M.real_name != src.owner) && (istype(src.cartridge, /obj/item/weapon/cartridge/clown))))
-			if (src.cartridge.charges < 5)
-				src.cartridge.charges++
-
-		M.stop_pulling()
-		to_chat(M, "\blue You slipped on the PDA!")
-		playsound(src.loc, 'sound/misc/slip.ogg', 50, 1, -3)
-		M.Stun(8)
-		M.Weaken(5)
+/obj/item/device/pda/clown/Crossed(mob/living/carbon/C) //Clown PDA is slippery.
+	if(istype(C))
+		if (C.slip("the PDA", 4, 2) && ishuman(C) && src.cartridge.charges < 5)
+			cartridge.charges++
 
 /obj/item/device/pda/proc/available_pdas()
 	var/list/names = list()

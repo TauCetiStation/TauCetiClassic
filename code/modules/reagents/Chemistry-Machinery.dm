@@ -84,7 +84,7 @@
   */
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main",datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER)) return
-	if(user.stat || user.restrained()) return
+	if((user.stat && !isobserver(user)) || user.restrained()) return
 
 	// this is the data which will be sent to the ui
 	var/data[0]
@@ -633,9 +633,8 @@
 	return src.attack_hand(user)
 
 /obj/machinery/chem_master/attack_hand(mob/user)
-	if(stat & BROKEN)
+	if(..())
 		return
-	user.set_machine(src)
 	if(!(user.client in has_sprites))
 		spawn()
 			has_sprites += user.client
@@ -919,9 +918,8 @@
 
 
 /obj/machinery/computer/pandemic/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
+	if(..())
 		return
-	user.set_machine(src)
 	var/dat = ""
 	if(src.temphtml)
 		dat = "[src.temphtml]<BR><BR><A href='?src=\ref[src];clear=1'>Main Menu</A>"

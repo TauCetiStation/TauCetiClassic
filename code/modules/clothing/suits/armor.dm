@@ -128,7 +128,7 @@
 	var/hit_reflect_chance = 40
 
 /obj/item/clothing/suit/armor/laserproof/IsReflect(def_zone)
-	if(!(def_zone in list("chest", "groin"))) //If not shot where ablative is covering you, you don't get the reflection bonus!
+	if(!(def_zone in list(BP_CHEST , BP_GROIN))) //If not shot where ablative is covering you, you don't get the reflection bonus!
 		return 0
 	if (prob(hit_reflect_chance))
 		return 1
@@ -295,3 +295,16 @@
 				"\blue You draw \the [holstered], pointing it at the ground.")
 			usr.put_in_hands(holstered)
 		holstered = null
+
+/obj/item/clothing/suit/armor/syndiassault
+	name = "Assault Armor"
+	icon_state = "assaultarmor"
+	item_state = "assaultarmor"
+	flags = THICKMATERIAL
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
+	slowdown = 0.5
+	armor = list(melee = 50, bullet = 60, laser = 40, energy = 70, bomb = 50, bio = 0, rad = 50)
+	siemens_coefficient = 0.2
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
+	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE

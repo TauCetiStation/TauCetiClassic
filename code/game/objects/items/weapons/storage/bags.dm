@@ -43,7 +43,7 @@
 	name = "trash bag of holding"
 	desc = "The latest and greatest in custodial convenience, a trashbag that is capable of holding vast quantities of garbage."
 	icon_state = "bluetrashbag"
-	max_combined_w_class = 200 //it may help to collect MOAR
+	max_combined_w_class = 120
 	storage_slots = 60
 
 /obj/item/weapon/storage/bag/trash/update_icon()
@@ -87,10 +87,16 @@
 	slot_flags = SLOT_BELT | SLOT_POCKET
 	w_class = 3
 	storage_slots = 50
-	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * ore.w_class
-	max_w_class = 3
+	max_combined_w_class = 100
 	can_hold = list("/obj/item/weapon/ore", "/obj/item/bluespace_crystal")
 
+/obj/item/weapon/storage/bag/ore/holding
+	name = "Mining satchel of holding"
+	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
+	storage_slots = 150
+	max_combined_w_class = 300
+	origin_tech = "bluespace=4;materials=3;engineering=3"
+	icon_state = "satchel_bspace"
 
 // -----------------------------
 //          Plant bag
@@ -256,7 +262,6 @@
 	name = "Cash bag"
 	desc = "A bag for carrying lots of cash. It's got a big dollar sign printed on the front."
 	storage_slots = 50; //the number of cash pieces it can carry.
-	max_combined_w_class = 200 //Doesn't matter what this is, so long as it's more or equal to storage_slots * cash.w_class
-	max_w_class = 3
+	max_combined_w_class = 100
 	w_class = 2
 	can_hold = list("/obj/item/weapon/coin","/obj/item/weapon/spacecash")

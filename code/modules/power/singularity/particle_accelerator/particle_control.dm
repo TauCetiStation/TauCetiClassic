@@ -205,12 +205,10 @@
 
 
 /obj/machinery/particle_accelerator/control_box/interact(mob/user)
-	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
-		if(!istype(user, /mob/living/silicon))
-			user.unset_machine()
-			user << browse(null, "window=pacontrol")
-			return
-	user.set_machine(src)
+	if(..() || (get_dist(src, user) > 1) && !issilicon(user) && !isobserver(user))
+		user.unset_machine()
+		user << browse(null, "window=pacontrol")
+		return
 
 	var/dat = ""
 	dat += "Particle Accelerator Control Panel<BR>"

@@ -72,9 +72,9 @@
 		return
 
 	var/turf/location = src.loc
-	if(istype(location, /mob/))
-		var/mob/living/carbon/human/M = location
-		if(M.l_hand == src || M.r_hand == src || M.head == src)
+	if(iscarbon(location))
+		var/mob/living/carbon/M = location
+		if(M.l_hand == src || M.r_hand == src || M.head == src || M.mouth == src)
 			location = M.loc
 
 	if (istype(location, /turf))

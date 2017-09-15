@@ -31,7 +31,7 @@
 	return src.attack_hand(user)
 
 /obj/structure/stool/bed/CanPass(atom/movable/mover)
-	if(ishuman(mover) && mover.checkpass(PASSCRAWL))
+	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
 		mover.layer = 2.7
 	return ..()
 
@@ -75,7 +75,7 @@
 	..()
 
 /obj/structure/stool/bed/roller/CanPass(atom/movable/mover)
-	if(ishuman(mover) && mover.checkpass(PASSCRAWL))
+	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
 		return 0
 	return ..()
 

@@ -86,7 +86,7 @@ if (typeof String.prototype.trim !== 'function') {
 
 //Shit fucking piece of crap that doesn't work god fuckin damn it
 function linkify(text) {
-	var rex = /((?:<a|<iframe|<img)(?:.*?(?:src="|href=").*?))?(?:(?:https?:\/\/)|(?:www\.))+(?:[^ ]*?\.[^ ]*?)+[-A-Za-z0-9+&@#\/%?=~_|$!:,.;]+/ig;
+	var rex = /((?:<a|<iframe|<img)(?:.*?(?:src|href)=(?:'|").*?))?(?:(?:https?:\/\/)|(?:www\.))+(?:[^ ]*?\.[^ ]*?)+[-A-Za-z0-9+&@#\/%?=~_|$!:,.;]+/ig;
 	return text.replace(rex, function ($0, $1) {
 		if(/^https?:\/\/.+/i.test($0)) {
 			return $1 ? $0: '<a href="'+$0+'">'+$0+'</a>';
@@ -98,7 +98,7 @@ function linkify(text) {
 }
 //da
 function emojify(text) {
-	var rex = /:[^(\s|:)]+:/g; 
+	var rex = /:[^(\s|:)]+:/g;
 	return text.replace(rex, function ($0) {
 		return '<i class="em em-'+$0.substring(1, $0.length-1)+'">'+$0+'</i>';
 	});
@@ -793,30 +793,26 @@ $(function() {
 	});
 
 	$('#saveLog').click(function(e) {
-		var saved = '';
+		// Supported only under IE 10+.
+		if (window.Blob) {
+			$.ajax({
+				type: 'GET',
+				url: 'browserOutput.css',
+				success: function(styleData) {
+					var chatLogHtml = '<head><title>Chat Log</title><style>' + styleData + '</style></head><body>' + $messages.html() + '</body>';
 
-		if (window.XMLHtpRequest) {
-			xmlHttp = new XMLHttpRequest();
+					var currentData = new Date();
+					var formattedDate = (currentData.getMonth() + 1) + '.' + currentData.getDate() + '.' + currentData.getFullYear();
+					var formattedTime = currentData.getHours() + '-' + currentData.getMinutes();
+
+					var blobObject = new Blob([chatLogHtml]);
+					var fileName = 'TauCeti ChatLog (' + formattedDate + ' ' + formattedTime + ').html';
+
+					window.navigator.msSaveBlob(blobObject, fileName);
+				}
+			});
 		} else {
-			xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		xmlHttp.open('GET', 'browserOutput.css', false);
-		xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-		xmlHttp.send();
-		saved += '<style>'+xmlHttp.responseText+'</style>';
-
-		saved += $messages.html();
-		saved = saved.replace(/&/g, '&amp;');
-		saved = saved.replace(/</g, '&lt;');
-
-		var win;
-		try {
-			win = window.open('', 'Chat Log', 'toolbar=no, location=no, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, width=780, height=200, top='+(screen.height-400)+', left='+(screen.width-840));
-		} catch (e) {
-			return;
-		}
-		if (win && win.document && window.document.body) {
-			win.document.body.innerHTML = saved;
+			output('<span class="big red">This function does not supported on your version of Internet Explorer (9 or less). Please, update to the latest version.</span>', 'internal');
 		}
 	});
 

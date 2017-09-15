@@ -182,10 +182,10 @@
 		mezzer()
 
 
-/obj/singularity/narsie/Bump(atom/A)//you dare stand before a god?!
+/obj/singularity/narsie/Bump()
 	return
 
-/obj/singularity/narsie/Bumped(atom/A)
+/obj/singularity/narsie/Bumped()
 	return
 
 /obj/singularity/narsie/mezzer()

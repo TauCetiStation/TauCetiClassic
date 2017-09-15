@@ -160,7 +160,7 @@ obj/structure/windoor_assembly/Destroy()
 						return
 
 					to_chat(user, "\blue You cut the windoor wires.!")
-					new/obj/item/weapon/cable_coil(get_turf(user), 1)
+					new /obj/item/weapon/cable_coil/random(get_turf(user), 1)
 					src.state = "01"
 					if(src.secure)
 						src.name = "Secure Anchored Windoor Assembly"
@@ -320,11 +320,3 @@ obj/structure/windoor_assembly/Destroy()
 
 	update_icon()
 	return
-
-/obj/structure/windoor_assembly/proc/update_nearby_tiles(need_rebuild)
-	if(!SSair)
-		return 0
-
-	SSair.mark_for_update(get_turf(src))
-
-	return 1

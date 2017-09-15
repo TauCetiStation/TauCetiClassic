@@ -240,18 +240,17 @@
 						O.show_message("\blue [M] [response_help] [src]")
 
 		if("grab")
-			if (M == src)
+			if (M == src || anchored || M.lying)
 				return
 			if (!(status_flags & CANPUSH))
 				return
 
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
 
 			grabbed_by += G
 			G.synch()
-			G.affecting = src
 			LAssailant = M
 
 			for(var/mob/O in viewers(src, null))
@@ -277,18 +276,17 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
 		if ("grab")
-			if(M == src)
+			if(M == src || anchored || M.lying)
 				return
 			if(!(status_flags & CANPUSH))
 				return
 
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
 
 			grabbed_by += G
 			G.synch()
-			G.affecting = src
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
@@ -346,17 +344,11 @@
 	if(istype(O, /obj/item/stack/medical))
 		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
-			if(health < maxHealth)
-				if(MED.amount >= 1)
-					adjustBruteLoss(-MED.heal_brute)
-					MED.amount -= 1
-					if(MED.amount <= 0)
-						qdel(MED)
-					for(var/mob/M in viewers(src, null))
-						if ((M.client && !( M.blinded )))
-							M.show_message("\blue [user] applies the [MED] on [src]")
+			if(health < maxHealth && MED.use(1))
+				adjustBruteLoss(-MED.heal_brute)
+				src.visible_message("<span class='notice'>[user] applies the [MED] on [src]</span>")
 		else
-			to_chat(user, "\blue this [src] is dead, medical items won't bring it back to life.")
+			to_chat(user, "<span class='notice'> this [src] is dead, medical items won't bring it back to life.</span>")
 	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
 			new meat_type (get_turf(src))
@@ -364,20 +356,6 @@
 				qdel(src)
 				return
 			gib()
-	else
-		if(O.force)
-			var/damage = O.force
-			if (O.damtype == HALLOSS)
-				damage = 0
-			adjustBruteLoss(damage)
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
-		else
-			to_chat(usr, "\red This weapon is ineffective, it does no damage.")
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red [user] gently taps [src] with the [O]. ")
 	..()
 
 

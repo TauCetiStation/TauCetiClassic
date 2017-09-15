@@ -63,7 +63,7 @@
 		return 1
 	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 		to_chat(M, "<span class='danger'>[src] blows up in your face!</span>")
-		M.take_organ_damage(0,20)
+		M.take_bodypart_damage(0, 20)
 		M.drop_item()
 		qdel(src)
 		return 0
@@ -190,11 +190,11 @@
 			return
 
 		if(isliving(target) && isliving(user))
-			var/datum/organ/external/affecting = user.zone_sel.selecting
-			if(affecting == "head")
+			var/target_zone = user.zone_sel.selecting
+			if(target_zone == BP_HEAD)
 				var/obj/item/ammo_casing/AC = chambered
 				if(AC.fire(user, user))
-					user.apply_damage(300, BRUTE, affecting, sharp=1)
+					user.apply_damage(300, BRUTE, target_zone, null, DAM_SHARP)
 					playsound(user, fire_sound, 50, 1)
 					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 					return

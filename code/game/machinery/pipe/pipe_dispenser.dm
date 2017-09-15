@@ -13,7 +13,6 @@
 /obj/machinery/pipedispenser/attack_hand(user)
 	if(..())
 		return
-///// Z-Level stuff
 	var/dat = {"
 <b>Regular pipes:</b><BR>
 <A href='?src=\ref[src];make=0;dir=1'>Pipe</A><BR>
@@ -32,12 +31,12 @@
 <A href='?src=\ref[src];make=10;dir=1'>Scrubber</A><BR>
 <A href='?src=\ref[src];makemeter=1'>Meter</A><BR>
 <A href='?src=\ref[src];make=13;dir=1'>Gas Filter</A><BR>
-<A href='?src=\ref[src];make=23;dir=1'>Gas Filter-Mirrored</A><BR>
+<A href='?src=\ref[src];make=21;dir=1'>Gas Filter-Mirrored</A><BR>
 <A href='?src=\ref[src];make=14;dir=1'>Gas Mixer</A><BR>
-<A href='?src=\ref[src];make=25;dir=1'>Gas Mixer-Mirrored</A><BR>
-<A href='?src=\ref[src];make=24;dir=1'>Gas Mixer-T</A><BR>
-<A href='?src=\ref[src];make=26;dir=1'>Omni Gas Mixer</A><BR>
-<A href='?src=\ref[src];make=27;dir=1'>Omni Gas Filter</A><BR>
+<A href='?src=\ref[src];make=23;dir=1'>Gas Mixer-Mirrored</A><BR>
+<A href='?src=\ref[src];make=22;dir=1'>Gas Mixer-T</A><BR>
+<A href='?src=\ref[src];make=24;dir=1'>Omni Gas Mixer</A><BR>
+<A href='?src=\ref[src];make=25;dir=1'>Omni Gas Filter</A><BR>
 <b>Heat exchange:</b><BR>
 <A href='?src=\ref[src];make=2;dir=1'>Pipe</A><BR>
 <A href='?src=\ref[src];make=3;dir=5'>Bent Pipe</A><BR>
@@ -48,7 +47,6 @@
 <A href='?src=\ref[src];make=12;dir=5'>Bent Pipe</A><BR>
 
 "}
-///// Z-Level stuff
 //What number the make points to is in the define # at the top of construction.dm in same folder
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
@@ -153,7 +151,6 @@ Nah
 	if(..())
 		return
 
-///// Z-Level stuff
 	var/dat = {"<b>Disposal Pipes</b><br><br>
 <A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
 <A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
@@ -164,7 +161,6 @@ Nah
 <A href='?src=\ref[src];dmake=6'>Outlet</A><BR>
 <A href='?src=\ref[src];dmake=7'>Chute</A><BR>
 "}
-///// Z-Level stuff
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	return

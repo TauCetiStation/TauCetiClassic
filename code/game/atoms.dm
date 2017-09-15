@@ -183,8 +183,8 @@
 	return
 
 /atom/proc/add_hiddenprint(mob/living/M)
-	if(isnull(M)) return
-	if(isnull(M.key)) return
+	if(!M || !M.key)
+		return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna))
@@ -205,10 +205,9 @@
 			src.fingerprintslast = M.key
 	return
 
-/atom/proc/add_fingerprint(mob/living/M, ignoregloves = 0)
-	if(isnull(M)) return
-	if(isAI(M)) return
-	if(isnull(M.key)) return
+/atom/proc/add_fingerprint(mob/M, ignoregloves = 0)
+	if(!M || !M.key || isAI(M)) //AI's clicks already calls add_hiddenprint from ClickOn() proc
+		return
 	if (ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
@@ -301,7 +300,7 @@
 	else
 		//Smudge up dem prints some
 		if(fingerprintslast != M.key)
-			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), M.real_name, M.key)
+			fingerprintshidden += text("\[[]\]Real name: [], Key: []", time_stamp(), M.real_name, M.key)
 			fingerprintslast = M.key
 
 	//Cleaning up shit.

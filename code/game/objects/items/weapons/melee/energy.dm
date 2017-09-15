@@ -42,6 +42,7 @@
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	sharp = 1
 	edge = 1
+	var/hacked
 
 /obj/item/weapon/melee/energy/sword/attackby(obj/item/weapon/W, mob/living/user)
 	if(istype(W, /obj/item/weapon/melee/energy/sword) && !istype(W, /obj/item/weapon/melee/energy/sword/pirate))
@@ -54,6 +55,18 @@
 		qdel(W)
 		qdel(src)
 		user.put_in_hands(newSaber)
+	if(istype(W, /obj/item/device/multitool))
+		if(!hacked)
+			hacked = 1
+			to_chat(user,"<span class='warning'>RNBW_ENGAGE</span>")
+			item_color = "rainbow"
+			if (active)
+				active = 0
+				icon_state = "sword0"
+		else
+			to_chat(user,"<span class='warning'>It's starting to look like a triple rainbow - no, nevermind.</span>")
+	else
+		return ..()
 
 /obj/item/weapon/melee/energy/sword/pirate
 	name = "energy cutlass"
@@ -74,6 +87,6 @@
 	throw_speed = 1
 	throw_range = 1
 	w_class = 4.0//So you can't hide it in your pocket or some such.
-	flags = NOSHIELD | NOBLOODY
+	flags = NOSHIELD | NOBLOODY | DROPDEL
 	attack_verb = list("attacked", "slashed", "stabbed", "sliced", "torn", "ripped", "diced", "cut")
 	var/datum/effect/effect/system/spark_spread/spark_system

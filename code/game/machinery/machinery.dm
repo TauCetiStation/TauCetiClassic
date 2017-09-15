@@ -115,6 +115,12 @@ Class Procs:
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
+	var/ghost_must_be_admin = 0	// 0 - every ghost can see interface (and admins can also interact)
+								// 1 - only admins in ghost form can interact
+	var/frequency = 0
+	var/datum/radio_frequency/radio_connection
+	var/radio_filter_out
+	var/radio_filter_in
 
 /obj/machinery/New()
 	..()
@@ -123,10 +129,19 @@ Class Procs:
 	power_change()
 
 /obj/machinery/Destroy()
+	if(frequency)
+		set_frequency(null)
 	machines -= src
 	STOP_PROCESSING(SSmachine, src)
+
 	dropContents()
 	return ..()
+
+/obj/machinery/proc/set_frequency(new_frequency)
+	radio_controller.remove_object(src, frequency)
+	frequency = new_frequency
+	if(frequency)
+		radio_connection = radio_controller.add_object(src, frequency, radio_filter_in)
 
 /obj/machinery/proc/locate_machinery()
 	return
@@ -275,22 +290,24 @@ Class Procs:
 		// For some reason attack_robot doesn't work
 		// This is to stop robots from using cameras to remotely control machines.
 		if(user.client && user.client.eye == user)
-			return src.attack_hand(user)
+			return attack_hand(user)
 	else
-		return src.attack_hand(user)
+		return attack_hand(user)
 
 /obj/machinery/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
+
+/obj/machinery/attack_ghost(mob/user)
+	if(!user.client.machine_interactive_ghost || (ghost_must_be_admin && !IsAdminGhost(user)))
+		return 1
+	return attack_hand(user)
 
 /obj/machinery/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
-	if((user.lying || user.stat) && !IsAdminGhost(user))
+	if((user.lying || user.stat) && !isobserver(user))
 		return 1
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) || \
-			istype(user, /mob/living/carbon/alien/humanoid/queen) ))
+	if ( !(ishuman(user) || issilicon(user) || ismonkey(user) || isalienqueen(user) || isobserver(user)) )
 		to_chat(usr, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return 1
 /*

@@ -7,6 +7,7 @@
 	max_plasma = 250
 	icon_state = "aliens_s"
 	plasma_rate = 10
+	heal_rate = 2
 
 /mob/living/carbon/alien/humanoid/sentinel/New()
 	var/datum/reagents/R = new/datum/reagents(100)
@@ -38,3 +39,6 @@
 					healths.icon_state = "health6"
 		else
 			healths.icon_state = "health7"
+
+/mob/living/carbon/alien/humanoid/sentinel/movement_delay()
+	return(1 + move_delay_add + config.alien_delay)

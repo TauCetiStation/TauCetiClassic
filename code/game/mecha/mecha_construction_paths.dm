@@ -190,7 +190,7 @@
 					holder.icon_state = "ripley4"
 				else
 					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil(get_turf(holder))
+					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil/random(get_turf(holder))
 					coil.amount = 4
 					holder.icon_state = "ripley2"
 			if(10)
@@ -424,7 +424,7 @@
 					holder.icon_state = "gygax4"
 				else
 					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil(get_turf(holder))
+					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil/random(get_turf(holder))
 					coil.amount = 4
 					holder.icon_state = "gygax2"
 			if(16)
@@ -686,7 +686,7 @@
 					holder.icon_state = "fireripley4"
 				else
 					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil(get_turf(holder))
+					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil/random(get_turf(holder))
 					coil.amount = 4
 					holder.icon_state = "fireripley2"
 			if(11)
@@ -1007,7 +1007,7 @@
 					holder.icon_state = "durand4"
 				else
 					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil(get_turf(holder))
+					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil/random(get_turf(holder))
 					coil.amount = 4
 					holder.icon_state = "durand2"
 			if(16)
@@ -1286,7 +1286,7 @@
 					holder.icon_state = "odysseus4"
 				else
 					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil(get_turf(holder))
+					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil/random(get_turf(holder))
 					coil.amount = 4
 					holder.icon_state = "odysseus2"
 			if(10)
@@ -1520,7 +1520,7 @@
 					holder.icon_state = "vindicator4"
 				else
 					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil(get_turf(holder))
+					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil/random(get_turf(holder))
 					coil.amount = 30
 					holder.icon_state = "vindicator2"
 			if(16)
@@ -1800,7 +1800,7 @@
 					holder.icon_state = "ultra4"
 				else
 					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil(get_turf(holder))
+					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil/random(get_turf(holder))
 					coil.amount = 4
 					holder.icon_state = "ultra2"
 			if(16)

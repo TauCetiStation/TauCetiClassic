@@ -47,6 +47,16 @@
 	path = /obj/item/clothing/suit/wcoat
 	cost = 1
 
+/datum/gear/suit/kung
+	display_name = "Kung jacket"
+	path = /obj/item/clothing/suit/fluff/kung
+	cost = 1
+
+/datum/gear/suit/serifcoat
+	display_name = "Serif coat"
+	path = /obj/item/clothing/suit/serifcoat
+	cost = 1
+
 
 
 /datum/gear/under
@@ -96,3 +106,20 @@
 /datum/gear/under/kilt
 	display_name = "Kilt"
 	path = /obj/item/clothing/under/kilt
+
+/datum/gear/under/kung
+	display_name = "Kung under"
+	path = /obj/item/clothing/under/fluff/kung
+	cost = 1
+
+/datum/gear/suit/m65
+	display_name = "M65 Jacket Selection"
+	path = 	/obj/item/clothing/suit/storage/miljacket_army
+
+/datum/gear/suit/m65/New()
+	..()
+	var/m65s = list()
+	m65s["army"] = /obj/item/clothing/suit/storage/miljacket_army
+	m65s["ranger"] = /obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger
+	m65s["navy"] = /obj/item/clothing/suit/storage/miljacket_army/miljacket_navy
+	gear_tweaks += new/datum/gear_tweak/path(m65s)
