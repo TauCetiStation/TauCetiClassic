@@ -27,9 +27,12 @@
 	src.target = null
 	return ..()
 
-/obj/machinery/meter/singularity_pull()
-	new /obj/item/pipe_meter(loc)
-	qdel(src)
+/obj/machinery/meter/singularity_pull(S, current_size)
+	..()
+
+	if(current_size >= STAGE_FIVE)
+		new /obj/item/pipe_meter(loc)
+		qdel(src)
 
 /obj/machinery/meter/process_atmos()
 	if(!target)
