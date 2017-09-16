@@ -319,7 +319,7 @@ var/datum/subsystem/air/SSair
 		AM.build_network()
 		CHECK_TICK
 
-	for(var/A in atmos_machinery)
+	for(var/A in atmos_machines)
 		var/obj/machinery/atmospherics/AM = A
 		AM.atmos_init_late()
 		CHECK_TICK
