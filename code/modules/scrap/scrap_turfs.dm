@@ -58,6 +58,8 @@
 
 
 /turf/simulated/floor/plating/ironsand/junkyard/surround_by_scrap()
+	if(prob(1))
+		new /obj/item/blueprints/junkyard(src)
 	if(prob(2))
 		new /obj/structure/scrap/poor/structure(src)
 	if(prob(4))

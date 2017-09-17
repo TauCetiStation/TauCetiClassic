@@ -87,7 +87,9 @@
 											"<span class='notice'>You place bandaid over [W.desc] on [M]'s [BP.name].</span>")
 					W.bandage()
 					if(crit_fail)
-						W.germ_level += pick(50, 80, 120)
+						W.germ_level += germ_level
+					else
+						W.germ_level += min(germ_level, 3)
 					used++
 				BP.update_damages()
 				if(used == amount)

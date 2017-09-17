@@ -183,8 +183,8 @@
 	icon_state = "santa"
 /obj/random/cloth/randomhead/item_to_spawn()
 	return pick(\
-				prob(6);/obj/random/cloth/head,\
-				prob(3);/obj/random/cloth/helmet,\
+				prob(12);/obj/random/cloth/head,\
+				prob(4);/obj/random/cloth/helmet,\
 				prob(1);/obj/random/cloth/spacehelmet\
 			)
 
@@ -198,8 +198,8 @@
 				prob(12);/obj/random/cloth/hazmatsuit,\
 				prob(16);/obj/random/cloth/shittysuit,\
 				prob(16);/obj/random/cloth/storagesuit,\
-				prob(4);/obj/random/cloth/spacesuit,\
-				prob(8);/obj/random/cloth/armor\
+				prob(2);/obj/random/cloth/spacesuit,\
+				prob(6);/obj/random/cloth/armor\
 			)
 
 /obj/random/cloth/random_cloth

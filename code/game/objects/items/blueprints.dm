@@ -82,6 +82,8 @@ move an amendment</a> to the drawing.</p>
 /obj/item/blueprints/proc/get_area_type(area/A = get_area())
 	if (istype(A, /area/space))
 		return AREA_SPACE
+	if (istype(A, /area/awaymission/junkyard))
+		return AREA_SPACE // allow junkyard building
 	var/list/SPECIALS = list(
 		/area/shuttle,
 		/area/centcom,
@@ -129,7 +131,7 @@ move an amendment</a> to the drawing.</p>
 	A.always_unpowered = 0
 	A.valid_territory = 0
 	move_turfs_to_area(turfs, A)
-
+	to_chat(usr, "[turfs.len] turfs processed")
 	A.always_unpowered = 0
 
 	spawn(5)
@@ -205,6 +207,10 @@ move an amendment</a> to the drawing.</p>
 	if (locate(/obj/structure/falsewall) in T2)
 		return BORDER_2NDTILE
 	if (locate(/obj/structure/falserwall) in T2)
+		return BORDER_2NDTILE
+	if (locate(/obj/structure/mineral_door) in T2)
+		return BORDER_2NDTILE
+	if (locate(/obj/structure/inflatable/door) in T2)
 		return BORDER_2NDTILE
 
 	return BORDER_NONE

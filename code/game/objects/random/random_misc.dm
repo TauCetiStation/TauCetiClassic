@@ -46,6 +46,7 @@
 						prob(8);/obj/item/weapon/storage/box/monkeycubes/farwacubes,\
 						prob(8);/obj/item/weapon/storage/box/monkeycubes/stokcubes,\
 						prob(8);/obj/item/weapon/storage/box/monkeycubes/neaeracubes,\
+
 						prob(30);/obj/item/weapon/storage/box/ids,\
 						prob(20);/obj/item/weapon/storage/box/handcuffs,\
 						prob(10);/obj/item/weapon/storage/box/contraband\
@@ -120,15 +121,15 @@
 
 
 /obj/random/misc/pack
-	name = "Random Medkit"
-	desc = "This is a random medical kit."
+	name = "Random Misc"
+	desc = "This is a random misc pack."
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "firstaid"
 /obj/random/misc/pack/item_to_spawn()
 		return pick(\
-						prob(45);/obj/random/misc/toy,\
-						prob(20);/obj/random/misc/lighters,\
-						prob(20);/obj/random/misc/smokes,\
-						prob(45);/obj/random/misc/storage,\
+						prob(90);/obj/random/misc/toy,\
+						prob(40);/obj/random/misc/lighters,\
+						prob(40);/obj/random/misc/smokes,\
+						prob(90);/obj/random/misc/storage,\
 						prob(1);/obj/random/misc/musical\
 					)

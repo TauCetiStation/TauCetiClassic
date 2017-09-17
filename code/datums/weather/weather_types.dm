@@ -87,11 +87,11 @@
 	end_duration = 300
 	end_sound = 'sound/ambience/ash_storm_end.ogg'
 	end_overlay = "light_ash"
-
 	area_type = /area/awaymission/junkyard
 	target_z = ZLEVEL_JUNKYARD
 
 	immunity_type = "ash"
+	var/spawn_tornadoes = 1
 	var/list/tornados = list()
 	probability = 10
 
@@ -104,12 +104,13 @@
 
 /datum/weather/scrap_storm/start()
 	..()
-	var/list/turfs = get_area_turfs(area_type)
-	for(var/i = 1 to 4)
-		var/turf/wheretospawn = pick(turfs)
-		if(!wheretospawn.density)
-			var/obj/singularity/scrap_ball/new_tornado = new /obj/singularity/scrap_ball(wheretospawn)
-			tornados += new_tornado
+	if(spawn_tornadoes)
+		var/list/turfs = get_area_turfs(area_type)
+		for(var/i = 1 to 4)
+			var/turf/wheretospawn = pick(turfs)
+			if(!wheretospawn.density)
+				var/obj/singularity/scrap_ball/new_tornado = new /obj/singularity/scrap_ball(wheretospawn)
+				tornados += new_tornado
 
 /datum/weather/scrap_storm/end()
 	for(var/obj/singularity/scrap_ball/del_tornado in tornados)
@@ -119,8 +120,8 @@
 /datum/weather/scrap_storm/impact(mob/living/L)
 	if(is_scrap_immune(L))
 		return
-	L.apply_effect(0.5,BRUTE,0)
-	L.apply_effect(1,AGONY,0)
+	L.take_overall_damage(1, 0)
+	L.apply_effect(1.5,AGONY,0)
 
 /datum/weather/scrap_storm/emberfall //Emberfall: An ash storm passes by, resulting in harmless embers falling like snow. 10% to happen in place of an ash storm.
 	name = "emberfall"
@@ -133,7 +134,7 @@
 	end_message = "<span class='notice'>The emberfall slows, stops. Another layer of hardened soot to the ground beneath your feet.</span>"
 
 	aesthetic = TRUE
-
+	spawn_tornadoes = 0
 	probability = 60
 
 /datum/weather/rad_storm
@@ -224,6 +225,7 @@
 	weather_sound = 'sound/ambience/acidrain_mid.ogg'
 	overlay_layer = 10
 	end_duration = 100
+	weather_alpha = 60
 	end_message = "<span class='notice'>The rain starts to dissipate.</span>"
 	end_sound = 'sound/ambience/acidrain_end.ogg'
 
@@ -236,4 +238,7 @@
 
 
 /datum/weather/acid_rain/impact(mob/living/L)
-	L.take_overall_damage(0,1)
+	if(!istype(/turf/, L.loc))
+		return
+	if(!prob(L.getarmor(null, "bio")))
+		L.take_overall_damage(0, 1)

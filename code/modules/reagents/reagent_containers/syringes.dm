@@ -105,6 +105,7 @@
 						src.reagents.update_total()
 						src.on_reagent_change()
 						src.reagents.handle_reactions()
+					infect_limb(user, target)
 					to_chat(user, "\blue You take a blood sample from [target]")
 					for(var/mob/O in viewers(4, user))
 						O.show_message("\red [user] takes a blood sample from [target].", 1)
@@ -151,6 +152,7 @@
 					for(var/datum/reagent/R in src.reagents.reagent_list)
 						injected += R.name
 					var/contained = english_list(injected)
+					infect_limb(user, target)
 					M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been injected with [src.name] by [user.name] ([user.ckey]). Reagents: [contained]</font>")
 					user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to inject [M.name] ([M.key]). Reagents: [contained]</font>")
 					msg_admin_attack("[user.name] ([user.ckey]) injected [M.name] ([M.key]) with [src.name]. Reagents: [contained] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
@@ -160,7 +162,7 @@
 					if(!L.try_inject(user, TRUE, TRUE))
 						return
 					src.reagents.reaction(target, INGEST)
-
+					infect_limb(user, target)
 			var/datum/reagent/blood/B
 			for(var/datum/reagent/blood/d in src.reagents.reagent_list)
 				B = d
@@ -205,7 +207,7 @@
 				visible_message("\red <B>[user] tries to stab [target] in \the [hit_area] with [name], but the attack is deflected by armor!</B>")
 				qdel(src)
 				return
-
+			infect_limb(user, target)
 			BP.take_damage(3)
 		else
 			target.take_bodypart_damage(3)// 7 is the same as crowbar punch
@@ -247,6 +249,19 @@
 
 		filling.icon += mix_color_from_reagents(reagents.reagent_list)
 		overlays += filling
+
+/obj/item/weapon/reagent_containers/syringe/proc/infect_limb(mob/living/carbon/target, mob/living/carbon/user)
+	if(ishuman(target))
+		var/mob/living/carbon/human/H = target
+		var/target_zone = user.zone_sel.selecting
+		var/obj/item/organ/external/BP = H.get_bodypart(target_zone)
+
+		if (!BP)
+			return
+		if(crit_fail)
+			BP.germ_level += germ_level / 7
+		else
+			BP.germ_level += min(germ_level, 3)
 
 /obj/item/weapon/reagent_containers/ld50_syringe
 	name = "Lethal Injection Syringe"

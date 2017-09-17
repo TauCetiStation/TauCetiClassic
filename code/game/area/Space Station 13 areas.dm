@@ -1159,6 +1159,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/awaymission/junkyard
 	name = "Junkyard"
 	icon_state = "away"
+	always_unpowered = 1
 
 /area/awaymission/BMPship1
 	name = "Aft Block"
