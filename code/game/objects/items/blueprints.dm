@@ -131,7 +131,6 @@ move an amendment</a> to the drawing.</p>
 	A.always_unpowered = 0
 	A.valid_territory = 0
 	move_turfs_to_area(turfs, A)
-	to_chat(usr, "[turfs.len] turfs processed")
 	A.always_unpowered = 0
 
 	spawn(5)
