@@ -10,21 +10,18 @@
 	m_amt = 2000
 	g_amt = 1000
 	item_state = "sheet-metal"
-	w_class = 4.0
+	w_class = 5.0
 
 /obj/item/weapon/game_kit/New()
 	src.board_stat = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 	src.selected = "CR"
 
-/obj/item/weapon/game_kit/attack_paw(mob/user as mob)
-	return src.attack_hand(user)
+/obj/item/weapon/game_kit/attack_paw(mob/user)
+	return src.interact(user)
 
-/obj/item/weapon/game_kit/MouseDrop(mob/user as mob)
-	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
-		if (usr.hand)
-			src.attack_hand(usr)
-
-
+/obj/item/weapon/game_kit/attack_hand(mob/user)	
+	return src.interact(user)
+	
 /obj/item/weapon/game_kit/proc/update()
 	var/dat = text("<CENTER><B>Game Board</B></CENTER><BR><a href='?src=\ref[];mode=hia'>[]</a> <a href='?src=\ref[];mode=remove'>remove</a><HR><table width= 256  border= 0  height= 256  cellspacing= 0  cellpadding= 0 >", src, (src.selected ? text("Selected: []", src.selected) : "Nothing Selected"), src)
 	for (var/y = 1 to 8)
@@ -56,16 +53,16 @@
 		dat += "<a href='?src=\ref[src];s_piece=[piece]'><img src='[src.base_url]/board_[piece].png' width=32 height=32 border=0></a>"
 	src.data = dat
 
-/obj/item/weapon/game_kit/attack_ai(mob/user as mob, unused, flag)
-	return src.attack_hand(user, unused, flag)
+/obj/item/weapon/game_kit/attack_ai(mob/user)
+	return src.interact(user)
 
-/obj/item/weapon/game_kit/attack_hand(mob/user)
+/obj/item/weapon/game_kit/interact(mob/user)
 	user.machine = src
 	if (!( src.data ))
 		update()
 	user << browse(src.data, "window=game_kit")
 	onclose(user, "game_kit")
-	return
+
 
 /obj/item/weapon/game_kit/Topic(href, href_list)
 	..()
@@ -135,4 +132,4 @@
 		update()
 		for(var/mob/M in viewers(1, src))
 			if ((M.client && M.machine == src))
-				src.attack_hand(M)
+				src.interact(M)
