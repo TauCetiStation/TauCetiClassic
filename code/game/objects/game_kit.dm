@@ -6,6 +6,7 @@
 	var/selected = null
 	var/board_stat = null
 	var/data = ""
+	var/reversed = 0
 	m_amt = 2000
 	g_amt = 1000
 	item_state = "sheet-metal"
@@ -22,14 +23,18 @@
 	return interact(user)
 
 /obj/item/weapon/game_kit/proc/update()
-	var/dat = text("<CENTER><B>Game Board</B></CENTER><BR><a href='?src=\ref[];mode=hia'>[]</a> <a href='?src=\ref[];mode=remove'>remove</a><HR><table width= 256  border= 0  height= 256  cellspacing= 0  cellpadding= 0 >", src, (selected ? text("Selected: []", selected) : "Nothing Selected"), src)
+	var/dat = text("<CENTER><B>Game Board</B></CENTER><BR><a href='?src=\ref[];mode=hia'>[]</a> <a href='?src=\ref[];mode=remove'>remove</a> <a href='?src=\ref[];reverse=\ref[src]'>invert board</a> <HR><table width= 256  border= 0  height= 256  cellspacing= 0  cellpadding= 0 >", src, (selected ? text("Selected: []", selected) : "Nothing Selected"), src, src)
 	for (var/y = 1 to 8)
 		dat += "<tr>"
 
 		for (var/x = 1 to 8)
-			var/color = (y + x) % 2 ? "#999999" : "#ffffff"
-			var/piece = copytext(board_stat, ((y - 1) * 8 + x) * 2 - 1, ((y - 1) * 8 + x) * 2 + 1)
+			var/color
+			if(!reversed)
+				color = (y + x) % 2 ? "#999999" : "#ffffff"
+			else
+				color = (y + x) % 2 ? "#ffffff" : "#999999"
 
+			var/piece = copytext(board_stat, ((y - 1) * 8 + x) * 2 - 1, ((y - 1) * 8 + x) * 2 + 1)
 			dat += "<td>"
 			dat += "<td style='background-color:[color]' width=32 height=32>"
 			if (piece != "BB")
@@ -78,6 +83,22 @@
 				selected = "remove"
 			else
 				selected = null
+		else if (href_list["reverse"])
+			var/firstpart
+			var/secondpart
+			for (var/symbol = 65, symbol > 1, symbol-=2)
+				firstpart += copytext(board_stat, symbol-2, symbol)
+
+			for (var/symbol = 129, symbol > 65, symbol-=2)
+				secondpart += copytext(board_stat, symbol-2, symbol)
+
+			board_stat = secondpart + firstpart
+
+			if (!reversed)
+				reversed = 1
+			else
+				reversed = 0
+
 		else if (href_list["s_board"])
 			if (!( selected ))
 				selected = href_list["s_board"]
