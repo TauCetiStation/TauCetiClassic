@@ -22,13 +22,8 @@
 /obj/item/weapon/game_kit/MouseDrop(mob/user as mob)
 	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
 		if (usr.hand)
-			if (!usr.l_hand)
-				spawn (0)
-					src.attack_hand(usr, 1, 1)
-		else
-			if (!usr.r_hand)
-				spawn (0)
-					src.attack_hand(usr, 0, 1)
+			src.attack_hand(usr)
+
 
 /obj/item/weapon/game_kit/proc/update()
 	var/dat = text("<CENTER><B>Game Board</B></CENTER><BR><a href='?src=\ref[];mode=hia'>[]</a> <a href='?src=\ref[];mode=remove'>remove</a><HR><table width= 256  border= 0  height= 256  cellspacing= 0  cellpadding= 0 >", src, (src.selected ? text("Selected: []", src.selected) : "Nothing Selected"), src)
@@ -64,17 +59,12 @@
 /obj/item/weapon/game_kit/attack_ai(mob/user as mob, unused, flag)
 	return src.attack_hand(user, unused, flag)
 
-/obj/item/weapon/game_kit/attack_hand(mob/user as mob, unused, flag)
-
-	if (flag)
-		return ..()
-	else
-		user.machine = src
-		if (!( src.data ))
-			update()
-		user << browse(src.data, "window=game_kit")
-		onclose(user, "game_kit")
-		return
+/obj/item/weapon/game_kit/attack_hand(mob/user)
+	user.machine = src
+	if (!( src.data ))
+		update()
+	user << browse(src.data, "window=game_kit")
+	onclose(user, "game_kit")
 	return
 
 /obj/item/weapon/game_kit/Topic(href, href_list)
