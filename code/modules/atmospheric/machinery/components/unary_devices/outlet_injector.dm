@@ -21,7 +21,7 @@
 	frequency = 0
 	var/id = null
 
-	level = 1
+	level = PIPE_HIDDEN_LEVEL
 	layer = GAS_SCRUBBER_LAYER
 
 /obj/machinery/atmospherics/components/unary/outlet_injector/on

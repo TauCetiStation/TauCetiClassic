@@ -3,7 +3,6 @@
 	desc = "An endcap for pipes."
 	icon = 'icons/atmos/pipes.dmi'
 	icon_state = ""
-	level = 2
 
 	volume = 35
 
@@ -29,7 +28,7 @@
 	overlays += icon_manager.get_atmos_icon("pipe", , pipe_color, "cap")
 
 /obj/machinery/atmospherics/pipe/cap/visible
-	level = 2
+	level = PIPE_VISIBLE_LEVEL
 	icon_state = "cap"
 
 /obj/machinery/atmospherics/pipe/cap/visible/scrubbers
@@ -54,7 +53,7 @@
 	color = PIPE_COLOR_ORANGE
 
 /obj/machinery/atmospherics/pipe/cap/hidden
-	level = 1
+	level = PIPE_HIDDEN_LEVEL
 	icon_state = "cap"
 	alpha = 128
 

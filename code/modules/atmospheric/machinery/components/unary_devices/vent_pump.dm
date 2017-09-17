@@ -19,7 +19,7 @@
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 7500			//7500 W ~ 10 HP
 
-	level = 1
+	level = PIPE_HIDDEN_LEVEL
 	layer = GAS_SCRUBBER_LAYER
 
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SUPPLY //connects to regular and supply pipes
@@ -136,7 +136,7 @@
 
 	var/obj/machinery/atmospherics/node = NODE1
 
-	if(!T.is_plating() && node && node.level == 1 && istype(node, /obj/machinery/atmospherics/pipe))
+	if(!T.is_plating() && node && node.level == PIPE_HIDDEN_LEVEL && istype(node, /obj/machinery/atmospherics/pipe))
 		vent_icon += "h"
 
 	if(welded)
@@ -157,7 +157,7 @@
 
 		var/obj/machinery/atmospherics/node = NODE1
 
-		if(!T.is_plating() && node && node.level == 1 && istype(node, /obj/machinery/atmospherics/pipe))
+		if(!T.is_plating() && node && node.level == PIPE_HIDDEN_LEVEL && istype(node, /obj/machinery/atmospherics/pipe))
 			return
 		else
 			if(node)

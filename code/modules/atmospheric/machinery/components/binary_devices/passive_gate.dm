@@ -13,7 +13,6 @@ Passive gate is similar to the regular pump except:
 /obj/machinery/atmospherics/components/binary/passive_gate
 	icon = 'icons/atmos/passive_gate.dmi'
 	icon_state = "map_off"
-	level = 1
 
 	name = "pressure regulator"
 	desc = "A one-way air valve that can be used to regulate input or output pressure, and flow rate. Does not require power."

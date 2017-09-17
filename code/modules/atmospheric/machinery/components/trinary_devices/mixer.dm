@@ -1,8 +1,7 @@
 /obj/machinery/atmospherics/components/trinary/mixer
 	icon = 'icons/atmos/mixer.dmi'
 	icon_state = "map"
-	density = 0
-	level = 1
+	density = FALSE
 
 	name = "gas mixer"
 

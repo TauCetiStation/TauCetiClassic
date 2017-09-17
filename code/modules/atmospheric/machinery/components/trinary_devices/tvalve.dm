@@ -6,7 +6,6 @@
 	desc = "A pipe valve."
 
 	can_unwrench = TRUE
-	level = 1
 	ghost_must_be_admin = TRUE
 
 	var/state = 0 // 0 = go straight, 1 = go to side

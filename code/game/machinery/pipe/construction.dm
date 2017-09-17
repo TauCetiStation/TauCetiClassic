@@ -415,7 +415,7 @@ Buildable meters
 	//TODO: Move all of this stuff into the various pipe constructors.
 	switch(pipe_type)
 		if(PIPE_SIMPLE_STRAIGHT, PIPE_SIMPLE_BENT)
-			var/obj/machinery/atmospherics/pipe/simple/P = new(loc)
+			var/obj/machinery/atmospherics/pipe/simple/hidden/P = new(loc)
 			P.pipe_color = color
 			P.set_dir(dir)
 			P.initialize_directions = pipe_dir
@@ -468,7 +468,7 @@ Buildable meters
 			C.construction()
 
 		if(PIPE_MANIFOLD)		//manifold
-			var/obj/machinery/atmospherics/pipe/manifold/M = new(loc)
+			var/obj/machinery/atmospherics/pipe/manifold/hidden/M = new(loc)
 			M.pipe_color = color
 			M.set_dir(dir)
 			M.initialize_directions = pipe_dir
@@ -496,7 +496,7 @@ Buildable meters
 			M.construction()
 
 		if(PIPE_MANIFOLD4W)		//4-way manifold
-			var/obj/machinery/atmospherics/pipe/manifold4w/M = new(loc)
+			var/obj/machinery/atmospherics/pipe/manifold4w/hidden/M = new(loc)
 			M.pipe_color = color
 			M.set_dir(dir)
 			M.initialize_directions = pipe_dir
@@ -668,7 +668,7 @@ Buildable meters
 			V.construction()
 
 		if(PIPE_CAP)
-			var/obj/machinery/atmospherics/pipe/cap/C = new(loc)
+			var/obj/machinery/atmospherics/pipe/cap/hidden/C = new(loc)
 			C.set_dir(dir)
 			C.initialize_directions = pipe_dir
 			C.construction()

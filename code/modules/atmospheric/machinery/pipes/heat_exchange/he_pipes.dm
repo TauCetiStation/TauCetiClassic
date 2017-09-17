@@ -3,7 +3,7 @@
 	icon_state = "intact"
 	pipe_icon = "hepipe"
 	color = "#404040"
-	level = 2
+	level = PIPE_VISIBLE_LEVEL
 	connect_types = CONNECT_TYPE_HE
 	var/initialize_directions_he
 	var/surface = 2	//surface area in m^2

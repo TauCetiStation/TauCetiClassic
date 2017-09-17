@@ -5,7 +5,6 @@
 	name = "automatic shutoff valve"
 	desc = "A pipe valve. There is a reset button on the side."
 
-	level = 1
 	connect_types = CONNECT_TYPE_SCRUBBER | CONNECT_TYPE_SUPPLY | CONNECT_TYPE_REGULAR
 	open = TRUE
 

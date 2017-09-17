@@ -11,8 +11,6 @@
 
 	device_type = QUATERNARY
 
-	level = 1
-
 /obj/machinery/atmospherics/pipe/manifold4w/New()
 	..()
 	alpha = 255
@@ -76,7 +74,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold4w/visible
 	icon_state = "map_4way"
-	level = 2
+	level = PIPE_VISIBLE_LEVEL
 	layer = GAS_PIPE_VISIBLE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold4w/visible/scrubbers
@@ -119,7 +117,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold4w/hidden
 	icon_state = "map_4way"
-	level = 1
+	level = PIPE_HIDDEN_LEVEL
 	alpha = 128		//set for the benefit of mapping - this is reset to opaque when the pipe is spawned in game
 
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/scrubbers

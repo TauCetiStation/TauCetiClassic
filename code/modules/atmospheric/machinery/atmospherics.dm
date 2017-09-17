@@ -9,6 +9,10 @@ Pipes -> Pipelines
 Pipelines + Other Objects -> Pipe network
 
 */
+
+#define PIPE_VISIBLE_LEVEL   2
+#define PIPE_HIDDEN_LEVEL    1
+
 /obj/machinery/atmospherics
 	anchored = TRUE
 	idle_power_usage = 0
@@ -210,7 +214,8 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/construction(pipe_type, obj_color)
 	var/turf/T = get_turf(src)
-	level = T.intact ? 2 : 1
+	if(level == PIPE_HIDDEN_LEVEL) // so we only hide ones that are hideable.
+		level = !T.is_plating() ? PIPE_VISIBLE_LEVEL : PIPE_HIDDEN_LEVEL
 	atmos_init()
 	var/list/nodes = pipeline_expansion()
 	for(var/obj/machinery/atmospherics/A in nodes)
@@ -228,7 +233,7 @@ Pipelines + Other Objects -> Pipe network
 
 /obj/machinery/atmospherics/proc/add_underlay(turf/T, obj/machinery/atmospherics/node, direction, icon_connect_type)
 	if(node)
-		if(!T.is_plating() && node.level == 1 && istype(node, /obj/machinery/atmospherics/pipe))
+		if(!T.is_plating() && node.level == PIPE_HIDDEN_LEVEL && istype(node, /obj/machinery/atmospherics/pipe))
 			//underlays += icon_manager.get_atmos_icon("underlay_down", direction, color_cache_name(node))
 			underlays += icon_manager.get_atmos_icon("underlay", direction, color_cache_name(node), "down" + icon_connect_type)
 		else

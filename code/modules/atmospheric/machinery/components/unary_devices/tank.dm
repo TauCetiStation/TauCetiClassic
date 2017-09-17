@@ -11,7 +11,6 @@
 
 	density = TRUE
 	layer = ABOVE_WINDOW_LAYER
-	level = 1
 
 /obj/machinery/atmospherics/components/unary/tank/New()
 	..()

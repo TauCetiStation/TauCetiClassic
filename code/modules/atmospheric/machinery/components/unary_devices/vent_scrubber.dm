@@ -15,7 +15,7 @@
 
 	connect_types = CONNECT_TYPE_REGULAR|CONNECT_TYPE_SCRUBBER //connects to regular and scrubber pipes
 
-	level = 1
+	level = PIPE_HIDDEN_LEVEL
 	layer = GAS_SCRUBBER_LAYER
 	frequency = 1439
 
@@ -101,7 +101,7 @@
 
 		var/obj/machinery/atmospherics/node = NODE1
 
-		if(!T.is_plating() && node && node.level == 1 && istype(node, /obj/machinery/atmospherics/pipe))
+		if(!T.is_plating() && node && node.level == PIPE_HIDDEN_LEVEL && istype(node, /obj/machinery/atmospherics/pipe))
 			return
 		else
 			if(node)

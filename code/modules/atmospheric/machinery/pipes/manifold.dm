@@ -11,8 +11,6 @@
 
 	device_type = TRINARY
 
-	level = 1
-
 /obj/machinery/atmospherics/pipe/manifold/New()
 	..()
 	alpha = 255
@@ -68,7 +66,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold/visible
 	icon_state = "map"
-	level = 2
+	level = PIPE_VISIBLE_LEVEL
 	layer = GAS_PIPE_VISIBLE_LAYER
 
 /obj/machinery/atmospherics/pipe/manifold/visible/scrubbers
@@ -112,7 +110,7 @@
 
 /obj/machinery/atmospherics/pipe/manifold/hidden
 	icon_state = "map"
-	level = 1
+	level = PIPE_HIDDEN_LEVEL
 	alpha = 128		//set for the benefit of mapping - this is reset to opaque when the pipe is spawned in game
 
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers

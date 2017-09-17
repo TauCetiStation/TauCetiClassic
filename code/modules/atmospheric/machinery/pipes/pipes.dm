@@ -14,7 +14,7 @@
 
 /obj/machinery/atmospherics/pipe/New()
 	if(istype(get_turf(src), /turf/simulated/wall) || istype(get_turf(src), /turf/simulated/shuttle/wall) || istype(get_turf(src), /turf/unsimulated/wall))
-		level = 1
+		level = PIPE_HIDDEN_LEVEL
 	..()
 
 /obj/machinery/atmospherics/pipe/Destroy()
@@ -47,10 +47,10 @@
 		oldN.build_network()
 
 /obj/machinery/atmospherics/pipe/hides_under_flooring()
-	return level != 2
+	return level != PIPE_VISIBLE_LEVEL
 
 /obj/machinery/atmospherics/pipe/hide(i)
-	if(level == 1 && istype(loc, /turf/simulated))
+	if(level == PIPE_HIDDEN_LEVEL && istype(loc, /turf/simulated))
 		invisibility = i ? INVISIBILITY_MAXIMUM : 0
 	update_icon()
 

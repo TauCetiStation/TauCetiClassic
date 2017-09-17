@@ -19,8 +19,6 @@
 	var/fatigue_pressure = 170 * ONE_ATMOSPHERE
 	alert_pressure = 170 * ONE_ATMOSPHERE
 
-	level = 1
-
 /obj/machinery/atmospherics/pipe/simple/New()
 	..()
 
@@ -112,7 +110,7 @@
 
 /obj/machinery/atmospherics/pipe/simple/visible
 	icon_state = "intact"
-	level = 2
+	level = PIPE_VISIBLE_LEVEL
 	layer = GAS_PIPE_VISIBLE_LAYER
 
 /obj/machinery/atmospherics/pipe/simple/visible/scrubbers
@@ -158,7 +156,7 @@
 
 /obj/machinery/atmospherics/pipe/simple/hidden
 	icon_state = "intact"
-	level = 1
+	level = PIPE_HIDDEN_LEVEL
 	alpha = 128		//set for the benefit of mapping - this is reset to opaque when the pipe is spawned in game
 
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers

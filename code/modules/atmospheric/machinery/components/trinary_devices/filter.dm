@@ -1,8 +1,7 @@
 /obj/machinery/atmospherics/components/trinary/filter
 	icon = 'icons/atmos/filter.dmi'
 	icon_state = "map"
-	density = 0
-	level = 1
+	density = FALSE
 
 	name = "gas filter"
 

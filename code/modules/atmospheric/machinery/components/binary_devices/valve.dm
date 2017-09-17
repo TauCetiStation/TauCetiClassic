@@ -9,7 +9,6 @@
 	desc = "A pipe valve."
 
 	can_unwrench = TRUE
-	level = 1
 
 	ghost_must_be_admin = TRUE
 
