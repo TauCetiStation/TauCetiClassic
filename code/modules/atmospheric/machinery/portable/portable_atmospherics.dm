@@ -106,7 +106,6 @@
 					"<span class='notice'>You unfasten [src] from the port.</span>",
 					"<span class='italics'>You hear a ratchet.</span>")
 				update_icon()
-				return
 			else
 				var/obj/machinery/atmospherics/components/unary/portables_connector/possible_port = locate(/obj/machinery/atmospherics/components/unary/portables_connector/) in loc
 				if(!possible_port)
@@ -121,7 +120,7 @@
 					"<span class='notice'>You fasten [src] to the port.</span>",
 					"<span class='italics'>You hear a ratchet.</span>")
 				update_icon()
-	if (istype(W, /obj/item/device/analyzer)) // Incase someone do something with this.
+	else if (istype(W, /obj/item/device/analyzer)) // Incase someone do something with this.
 		return
 	else
 		return ..()
