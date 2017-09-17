@@ -582,6 +582,7 @@
 #include "code\game\objects\explosion.dm"
 #include "code\game\objects\explosion_recursive.dm"
 #include "code\game\objects\fitness.dm"
+#include "code\game\objects\game_kit.dm"
 #include "code\game\objects\items.dm"
 #include "code\game\objects\objs.dm"
 #include "code\game\objects\powerfist.dm"
