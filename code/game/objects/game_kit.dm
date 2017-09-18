@@ -6,7 +6,6 @@
 	var/selected = null
 	var/board_stat = null
 	var/data = ""
-	var/reversed = 0
 	m_amt = 2000
 	g_amt = 1000
 	item_state = "sheet-metal"
@@ -28,12 +27,7 @@
 		dat += "<tr>"
 
 		for (var/x = 1 to 8)
-			var/color
-			if(!reversed)
-				color = (y + x) % 2 ? "#999999" : "#ffffff"
-			else
-				color = (y + x) % 2 ? "#ffffff" : "#999999"
-
+			var/color = (y + x) % 2 ? "#999999" : "#ffffff"
 			var/piece = copytext(board_stat, ((y - 1) * 8 + x) * 2 - 1, ((y - 1) * 8 + x) * 2 + 1)
 			dat += "<td>"
 			dat += "<td style='background-color:[color]' width=32 height=32>"
@@ -93,11 +87,6 @@
 				secondpart += copytext(board_stat, symbol-2, symbol)
 
 			board_stat = secondpart + firstpart
-
-			if (!reversed)
-				reversed = 1
-			else
-				reversed = 0
 
 		else if (href_list["s_board"])
 			if (!( selected ))
