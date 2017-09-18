@@ -10,7 +10,6 @@
 	state_open = 0
 
 	var/on = 0
-	var/temperature_archived
 	var/current_heat_capacity = 50
 	var/efficiency
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
@@ -107,8 +106,6 @@
 		occupant.bodytemperature += 2 * (air1.temperature - occupant.bodytemperature) * current_heat_capacity / (current_heat_capacity + air1.heat_capacity())
 		occupant.bodytemperature = max(occupant.bodytemperature, air1.temperature) // this is so ugly i'm sorry for doing it i'll fix it later i promise
 
-		temperature_archived = air1.temperature
-
 		/* heat_gas_contents */
 		if(air1.total_moles < 1)
 			return
@@ -117,10 +114,6 @@
 		if(combined_heat_capacity > 0)
 			var/combined_energy = T20C * current_heat_capacity + air_heat_capacity * air1.temperature
 			air1.temperature = combined_energy / combined_heat_capacity
-
-		if(abs(temperature_archived - air1.temperature) > 1)
-			var/datum/pipeline/parent1 = PARENT1
-			parent1.update = 1
 
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/MouseDrop_T(mob/target, mob/user)
@@ -135,6 +128,9 @@
 	container_resist(user)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/user)
+	if(user.is_busy(FALSE)) // prevents spam too.
+		return
+
 	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")
 	audible_message("<span class='notice'>You hear a thump from [src].</span>")
 	if(do_after(user, 300, target = src))

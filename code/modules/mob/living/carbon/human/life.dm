@@ -618,14 +618,7 @@
 	var/adjusted_pressure = calculate_affecting_pressure(pressure)
 
 	if(!istype(get_turf(src), /turf/space)) //space is not meant to change your body temperature.
-		var/loc_temp = T0C
-		if(istype(loc, /obj/mecha))
-			var/obj/mecha/M = loc
-			loc_temp =  M.return_temperature()
-		else if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-			loc_temp = loc:air_contents.temperature
-		else
-			loc_temp = environment.temperature
+		var/loc_temp = get_temperature(environment)
 
 		if(adjusted_pressure < species.warning_high_pressure && adjusted_pressure > species.warning_low_pressure && abs(loc_temp - bodytemperature) < 20 && bodytemperature < species.heat_level_1 && bodytemperature > species.cold_level_1)
 			clear_alert("pressure")
