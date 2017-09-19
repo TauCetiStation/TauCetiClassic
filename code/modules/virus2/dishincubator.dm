@@ -128,8 +128,8 @@
 
 	if(beaker)
 		if(beaker.reagents.get_reagent_amount("virusfood"))
-			foodsupply += max(min(beaker.reagents.get_reagent_amount("virusfood"), 5)*2, 1)
-			beaker.reagents.remove_reagent("virusfood",min(beaker.reagents.get_reagent_amount("virusfood"), 5))
+			foodsupply += (min(beaker.reagents.get_reagent_amount("virusfood"), 5))*2
+			beaker.reagents.remove_reagent("virusfood", 5)
 			nanomanager.update_uis(src)
 
 
