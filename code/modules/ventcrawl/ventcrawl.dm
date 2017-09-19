@@ -69,14 +69,14 @@ var/list/ventcrawl_machinery = list(
 				return FALSE
 	return TRUE
 
-/mob/living/AltClickOn(atom/A)
-	if(is_type_in_list(A, ventcrawl_machinery))
-		handle_ventcrawl(A)
-		return 1
-	return ..()
-
 /mob/living/carbon/alien/ventcrawl_carry()
 	return TRUE
+
+/obj/machinery/atmospherics/AltClick(mob/living/L)
+	if(is_type_in_list(src, ventcrawl_machinery))
+		L.handle_ventcrawl(src)
+		return
+	..()
 
 /mob/living/proc/handle_ventcrawl(atom/clicked_on)
 	if(!can_ventcrawl())
