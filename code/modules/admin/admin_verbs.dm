@@ -265,6 +265,7 @@ var/list/admin_verbs_hideable = list(
 			verbs += admin_verbs_ban
 		if(holder.rights & R_FUN)
 			verbs += admin_verbs_fun
+			verbs += admin_verbs_event_fun
 		if(holder.rights & R_SERVER)
 			verbs += admin_verbs_server
 		if(holder.rights & R_DEBUG)
@@ -283,6 +284,7 @@ var/list/admin_verbs_hideable = list(
 			verbs += admin_verbs_spawn
 		if(holder.rights & R_EVENT)
 			verbs += admin_verbs_event
+			verbs += admin_verbs_event_fun
 
 		if(holder.rights & R_ADMIN)
 			control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
@@ -303,6 +305,7 @@ var/list/admin_verbs_hideable = list(
 		admin_verbs_sounds,
 		admin_verbs_spawn,
 		admin_verbs_event,
+		admin_verbs_event_fun,
 		/*Debug verbs added by "show debug verbs"*/
 		/client/proc/Cell,
 		/client/proc/do_not_use_these,

@@ -1,9 +1,13 @@
 var/list/admin_verbs_event = list(
-	/client/proc/cmd_event_say,
+	/client/proc/cmd_event_say
+	)
+
+var/list/admin_verbs_event_fun = list(
 	/client/proc/gateway_fix,
 	//client/proc/Noir_anomaly,
 	/client/proc/centcom_barriers_toggle
 	)
+
 
 //////////////////////////////
 // Map loader
