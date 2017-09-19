@@ -5,43 +5,45 @@
 	desc = "Allows you play chess, checkers, or whichever game involving those pieces."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "game_kit"
-	var/selected = null
-	var/board_stat = null
+	var/selected = null			//Selected piece
+	var/board_stat = null		//Core string
 	var/data = ""
-	force = 12
+	force = 8
 	m_amt = 2000
 	g_amt = 1000
 	item_state = "sheet-metal"
 	w_class = 5.0
 
 /obj/item/weapon/game_kit/New()
+	//Parts of this terrible string is being changed into codename of pieces, and then - transformed into pictures
 	board_stat = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 	selected = "CR"
 
-/obj/item/weapon/game_kit/MouseDrop(mob/user)
+/obj/item/weapon/game_kit/MouseDrop(mob/user)		//Drag & Drop to play
 	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
 		interact(user)
 
 /obj/item/weapon/game_kit/proc/update()
 	var/dat = text("<CENTER><B>Game Board</B></CENTER><BR><a href='?src=\ref[];mode=hia'>[]</a> <a href='?src=\ref[];mode=remove'>remove</a> <a href='?src=\ref[];reverse=\ref[src]'>invert board</a> <HR><table width= 256  border= 0  height= 256  cellspacing= 0  cellpadding= 0 >", src, (selected ? text("Selected: []", selected) : "Nothing Selected"), src, src)
+	//Board initialization
 	for (var/y = 1 to 8)
 		dat += "<tr>"
 
 		for (var/x = 1 to 8)
-			var/color = (y + x) % 2 ? "#999999" : "#ffffff"
-			var/piece = copytext(board_stat, ((y - 1) * 8 + x) * 2 - 1, ((y - 1) * 8 + x) * 2 + 1)
+			var/color = (y + x) % 2 ? "#999999" : "#ffffff"		//Color the squares in black and white
+			var/piece = copytext(board_stat, ((y - 1) * 8 + x) * 2 - 1, ((y - 1) * 8 + x) * 2 + 1)		//Copy the part of the board_stat string.
 			dat += "<td>"
 			dat += "<td style='background-color:[color]' width=32 height=32>"
-			if (piece != "BB")
+			if (piece != "BB")		//If it is not "BB", but codename of the piece, then place picture of this piece onto the board
 				dat += "<a href='?src=\ref[src];s_board=[x] [y]'><img src=[piece].png width=32 height=32 border=0>"
-			else
+			else		//If it is "BB" - place empty square
 				dat += "<a href='?src=\ref[src];s_board=[x] [y]'><img src=none.png width=32 height=32 border=0>"
 			dat += "</td>"
-
 		dat += "</tr>"
-
+		
+	//Pieces for people to click and place on the board
 	dat += "</table><HR><B>Chips:</B><BR>"
-	for (var/piece in list("CB", "CR"))
+	for (var/piece in list("CB", "CR"))	
 		dat += "<a href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
 
 	dat += "<HR><B>Chess pieces:</B><BR>"
@@ -57,7 +59,7 @@
 
 /obj/item/weapon/game_kit/interact(mob/user)
 	user.machine = src
-	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/chess)
+	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/chess)		//Sending pictures to the client
 	assets.send(user)
 	if (!( data ))
 		update()
@@ -65,7 +67,7 @@
 	onclose(user, "game_kit")
 
 
-/obj/item/weapon/game_kit/Topic(href, href_list)
+/obj/item/weapon/game_kit/Topic(href, href_list)		//Interface
 	..()
 	if ((usr.stat || usr.restrained()))
 		return
@@ -142,6 +144,6 @@
 										board_stat = text("[][][]", copytext(board_stat, 1, place), selected, copytext(board_stat, place + 2, 129))
 		add_fingerprint(usr)
 		update()
-		for(var/mob/M in viewers(1, src.loc))
+		for(var/mob/M in viewers(1, src.loc))		//If someone is playing with us - they would see that we made a move.
 			if ((M.client && M.machine == src))
 				interact(M)
