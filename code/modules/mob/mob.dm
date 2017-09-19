@@ -20,11 +20,16 @@
 /mob/New()
 	spawn()
 		if(client) animate(client, color = null, time = 0)
+
 	mob_list += src
+
 	if(stat == DEAD)
 		dead_mob_list += src
 	else
 		living_mob_list += src
+
+	gib()
+
 	..()
 
 /mob/proc/Cell()
