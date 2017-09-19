@@ -249,3 +249,28 @@
 		to_chat(H, "\red You feel the acid on your skin!")
 		return
 	..()
+
+/obj/item/projectile/energy/sound
+	name = "sound wave"
+	icon_state = "declone"
+	damage_type = TOX
+	damage = 5
+	irradiate = 5
+
+/obj/item/projectile/energy/sound/on_hit(atom/target, blocked = 0)
+	if (ishuman(target) || issilicon(target))
+		var/mob/living/M = target
+		var/ear_safety = 0
+		M.show_message("\blue The sound hits you hard.You start dance wave!")
+		playsound(M, pick('sound/weapons/dubstep1.ogg', 'sound/weapons/dubstep2.ogg', 'sound/weapons/dubstep3.ogg', 'sound/weapons/dubstep4.ogg'), 100)
+		for(var/mob/living/H in hear(5, get_turf(src)))
+			if(istype(H:l_ear, /obj/item/clothing/ears/earmuffs) || istype(H:r_ear, /obj/item/clothing/ears/earmuffs))
+				ear_safety = 1
+			if(istype(H:head, /obj/item/clothing/head/helmet))
+				ear_safety = 1
+			if(!ear_safety)
+				H.show_message("\blue You hear crazy music and cant resist!")
+				H.emote("me",1,pick("spinning around","dances hard","dances like in last day","doing crazy staff"))
+				H.Stun(5)
+				H.ear_damage += rand(0, 5)
+				H.nutrition -= 40
