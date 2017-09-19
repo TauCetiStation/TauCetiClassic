@@ -83,14 +83,14 @@
 		for(var/client/C in admins)
 			if(C.ckey in stealth_keys)
 				continue
-			if(C.holder.fakekey && (!R_ADMIN & holder.rights))
+			if(C.holder.fakekey && !(R_ADMIN & holder.rights))
 				continue
 			msg += "&emsp;[C] is a [C.holder.rank]"
 			if(C.holder.fakekey)
 				msg += " <i>(as [C.holder.fakekey])</i>"
 			if(isobserver(C.mob))
 				msg += " - Observing"
-			else if(istype(C.mob,/mob/new_player))
+			else if(istype(C.mob, /mob/new_player))
 				msg += " - Lobby"
 			else
 				msg += " - Playing"

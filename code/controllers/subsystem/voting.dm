@@ -1,3 +1,7 @@
+#define VOTE_STARTER_DEFAULT 1 //Can initiate only allowed votes
+#define VOTE_STARTER_CUSTOM  2 //Can initiate custom votes
+#define VOTE_STARTER_ANY     3 //Can initiate any votes
+
 var/datum/subsystem/vote/SSvote
 
 /datum/subsystem/vote
@@ -162,9 +166,9 @@ var/datum/subsystem/vote/SSvote
 	return 0
 
 /datum/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
-	var/is_admin = 0
-	if(check_rights(R_ADMIN))
-		is_admin = 1
+	var/is_admin = FALSE
+	if(check_rights(0))
+		is_admin = TRUE
 	if(!mode)
 		if(started_time != null && !is_admin)
 			var/next_allowed_time = (started_time + config.vote_delay)
@@ -233,9 +237,12 @@ var/datum/subsystem/vote/SSvote
 /datum/subsystem/vote/proc/interface(client/C)
 	if(!C)
 		return
-	var/admin = 0
-	if(C.holder && (C.holder.rights & R_ADMIN))
-		admin = 1
+	var/vote_starter = VOTE_STARTER_DEFAULT
+	if(C.holder)
+		if(C.holder.rights & R_ADMIN)
+			vote_starter = VOTE_STARTER_ANY
+		else
+			vote_starter = VOTE_STARTER_CUSTOM
 	voting |= C
 
 	if(mode)
@@ -249,43 +256,43 @@ var/datum/subsystem/vote/SSvote
 			if(!votes)
 				votes = 0
 			. += "<li><a href='?src=\ref[src];vote=[i]'>[sanitize_alt(choices[i])]</a>"
-			if(mode == "custom" || admin)
+			if(mode == "custom" || vote_starter == VOTE_STARTER_ANY)
 				. += "([votes] votes)"
 			if(choices[i] == voted[C.ckey])
 				. += " [html_decode("&#10003")]" // Checkmark
 			. += "</li>"
 		. += "</ul><hr>"
-		if(admin)
+		if(vote_starter == VOTE_STARTER_ANY)
 			. += "(<a href='?src=\ref[src];vote=cancel'>Cancel Vote</a>) "
 	else
 		. += "<h2>Start a vote:</h2><hr><ul><li>"
 		//restart
-		if(admin || config.allow_vote_restart)
+		if(vote_starter == VOTE_STARTER_ANY || config.allow_vote_restart)
 			. += "<a href='?src=\ref[src];vote=restart'>Restart</a>"
 		else
 			. += "<font color='grey'>Restart (Disallowed)</font>"
-		if(admin)
+		if(vote_starter == VOTE_STARTER_ANY)
 			. += "&emsp;(<a href='?src=\ref[src];vote=toggle_restart'>[config.allow_vote_restart?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
 		//crew transfer
-		if(admin || config.allow_vote_mode)
+		if(vote_starter == VOTE_STARTER_ANY || config.allow_vote_mode)
 			. += "<a href='?src=\ref[src];vote=crew_transfer'>Crew Transfer</a>"
 		else
 			. += "<font color='grey'>Crew Transfer (Disallowed)</font>"
-		if(admin)
+		if(vote_starter == VOTE_STARTER_ANY)
 			. += "\t(<a href='?src=\ref[src];vote=toggle_crew'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
 		. += "</li><li>"
 		//gamemode
-		if(admin || config.allow_vote_mode)
+		if(vote_starter == VOTE_STARTER_ANY || config.allow_vote_mode)
 			. += "<a href='?src=\ref[src];vote=gamemode'>GameMode</a>"
 		else
 			. += "<font color='grey'>GameMode (Disallowed)</font>"
-		if(admin)
+		if(vote_starter == VOTE_STARTER_ANY)
 			. += "\t(<a href='?src=\ref[src];vote=toggle_gamemode'>[config.allow_vote_mode?"Allowed":"Disallowed"]</a>)"
 
 		. += "</li>"
 		//custom
-		if(admin)
+		if(vote_starter >= VOTE_STARTER_CUSTOM)
 			. += "<li><a href='?src=\ref[src];vote=custom'>Custom</a></li>"
 		. += "</ul><hr>"
 	. += "<a href='?src=\ref[src];vote=close' style='position:absolute;right:50px'>Close</a>"
@@ -348,3 +355,7 @@ var/datum/subsystem/vote/SSvote
 	if(old_stat_deadchat && !dsay_allowed)
 		to_chat(world, "<B>Deadchat has been globally enabled!</B>")
 		dsay_allowed = TRUE
+
+#undef VOTE_STARTER_DEFAULT
+#undef VOTE_STARTER_CUSTOM
+#undef VOTE_STARTER_ANY

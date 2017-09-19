@@ -165,7 +165,7 @@ macro "macro"
 		is-disabled = false
 	elem "MACRO-F7"
 		name = "F7"
-		command = "Admin-PM"
+		command = "esay"
 		is-disabled = false
 	elem "MACRO-F8"
 		name = "F8"
@@ -423,7 +423,7 @@ macro "hotkeymode"
 		is-disabled = false
 	elem "HKMODE-F7"
 		name = "F7"
-		command = "Admin-PM"
+		command = "esay"
 		is-disabled = false
 	elem "HKMODE-F8"
 		name = "F8"

@@ -1,5 +1,5 @@
 var/list/admin_verbs_event = list(
-	/client/proc/event_map_loader,
+	/client/proc/cmd_event_say,
 	/client/proc/gateway_fix,
 	//client/proc/Noir_anomaly,
 	/client/proc/centcom_barriers_toggle
@@ -12,7 +12,8 @@ var/list/admin_verbs_event = list(
 /client/proc/event_map_loader()
 	set category = "Event"
 	set name = "Event map loader"
-	if(!check_rights(R_PERMISSIONS))	return
+	if(!check_rights(R_PERMISSIONS))
+		return
 
 	var/list/AllowedMaps = list()
 
@@ -88,7 +89,8 @@ var/list/admin_verbs_event = list(
 	set category = "Event"
 	set name = "Connect Gateways"
 
-	if(!check_rights(R_FUN))	return
+	if(!check_rights(R_FUN|R_EVENT))
+		return
 
 	for(var/obj/machinery/gateway/G in machines)
 		G.initialize()
@@ -107,7 +109,8 @@ var/centcom_barriers_stat = 1
 
 	centcom_barriers_stat = !centcom_barriers_stat
 
-	if(!check_rights(R_FUN))	return
+	if(!check_rights(R_FUN|R_EVENT))
+		return
 
 	for(var/obj/effect/landmark/trololo/L in landmarks_list)
 		L.active = centcom_barriers_stat

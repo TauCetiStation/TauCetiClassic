@@ -7,31 +7,15 @@ var/list/admin_verbs_default = list(
 	/client/proc/cmd_mentor_check_new_players,
 	/datum/admins/proc/show_player_panel,	/*shows an interface for individual players, with various links (links require additional flags*/
 	/client/proc/player_panel,
-	/client/proc/debug_variables		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
-	)
-var/list/admin_verbs_admin = list(
+	/client/proc/debug_variables,		/*allows us to -see- the variables of any instance in the game. +VAREDIT needed to modify*/
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
-	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
-//	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
-	/datum/admins/proc/toggleenter,		/*toggles whether people can join the current game*/
-	/datum/admins/proc/toggleguests,	/*toggles whether guests can join the current game*/
 	/datum/admins/proc/announce,		/*priority announce something to all clients.*/
-	/client/proc/colorooc,				/*allows us to set a custom colour for everythign we say in ooc*/
 	/client/proc/admin_ghost,			/*allows us to ghost/reenter body at will*/
 	/client/proc/toggle_view_range,		/*changes how far we can see*/
-	/datum/admins/proc/view_txt_log,	/*shows the server log (diary) for today*/
-	/datum/admins/proc/view_atk_log,	/*shows the server combat-log, doesn't do anything presently*/
-	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
-	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
 	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
 	/datum/admins/proc/access_news_network,	/*allows access of newscasters*/
-	/client/proc/giveruntimelog,		/*allows us to give access to runtime logs to somebody*/
-	/client/proc/getserverlog,			/*allows us to fetch server logs (diary) for other days*/
-	/client/proc/get_whitelist, 			//Whitelist
-	/client/proc/add_to_whitelist,
-	/datum/admins/proc/whitelist_panel,
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
 	/client/proc/Getmob,				/*teleports a mob to our location*/
 	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
@@ -48,39 +32,55 @@ var/list/admin_verbs_admin = list(
 	/client/proc/check_words,			/*displays cult-words*/
 	/client/proc/check_ai_laws,			/*shows AI and borg laws*/
 	/client/proc/check_antagonists,
-	/client/proc/admin_memo,			/*admin memo system. show/delete/write. +SERVER needed to delete admin memos of others*/
 	/client/proc/dsay,					/*talk in deadchat using our ckey/fakekey*/
+	/client/proc/secrets,
+	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
+	/client/proc/cmd_admin_change_custom_event,
+	/client/proc/cmd_admin_rejuvenate,
+	/client/proc/man_up,
+	/client/proc/global_man_up,
+	/client/proc/response_team, // Response Teams admin verb
+	/client/proc/aooc,
+	/client/proc/change_security_level,
+	/client/proc/empty_ai_core_toggle_latejoin,
+	/client/proc/send_fax_message
+	)
+var/list/admin_verbs_admin = list(
+	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
+//	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
+	/datum/admins/proc/toggleenter,		/*toggles whether people can join the current game*/
+	/datum/admins/proc/toggleguests,	/*toggles whether guests can join the current game*/
+	/client/proc/colorooc,				/*allows us to set a custom colour for everythign we say in ooc*/
+	/datum/admins/proc/view_txt_log,	/*shows the server log (diary) for today*/
+	/datum/admins/proc/view_atk_log,	/*shows the server combat-log, doesn't do anything presently*/
+	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
+	/client/proc/cmd_admin_pm_panel,	/*admin-pm list*/
+	/client/proc/giveruntimelog,		/*allows us to give access to runtime logs to somebody*/
+	/client/proc/getserverlog,			/*allows us to fetch server logs (diary) for other days*/
+	/client/proc/get_whitelist, 			//Whitelist
+	/client/proc/add_to_whitelist,
+	/datum/admins/proc/whitelist_panel,
+	/client/proc/admin_memo,			/*admin memo system. show/delete/write. +SERVER needed to delete admin memos of others*/
 	/client/proc/toggleprayers,			/*toggles prayers on/off*/
 //	/client/proc/toggle_hear_deadcast,	/*toggles whether we hear deadchat*/
 	/client/proc/toggle_hear_radio,		/*toggles whether we hear the radio*/
 	/client/proc/investigate_show,		/*various admintools for investigation. Such as a singulo grief-log*/
-	/client/proc/secrets,
 	/datum/admins/proc/toggleooc,		/*toggles ooc on/off for everyone*/
 	/datum/admins/proc/togglelooc,		/*toggles looc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead,	/*toggles ooc on/off for everyone who is dead*/
 	/datum/admins/proc/toggledsay,		/*toggles dsay on/off for everyone*/
-	/client/proc/game_panel,			/*game panel, allows to change game-mode etc*/
 	/client/proc/cmd_admin_say,			/*admin-only ooc chat*/
 	/datum/admins/proc/PlayerNotes,
 	/datum/admins/proc/show_player_info,
 	/client/proc/free_slot,			/*frees slot for chosen job*/
-	/client/proc/cmd_admin_change_custom_event,
-	/client/proc/cmd_admin_rejuvenate,
 	/client/proc/toggleattacklogs,
 	/client/proc/toggledebuglogs,
 	/client/proc/toggleghostwriters,
 	/client/proc/toggledrones,
 	/client/proc/check_customitem_activity,
-	/client/proc/man_up,
-	/client/proc/global_man_up,
-	/client/proc/response_team, // Response Teams admin verb
 	/client/proc/toggle_antagHUD_use,
 	/client/proc/toggle_antagHUD_restrictions,
-	/client/proc/allow_character_respawn,    /* Allows a ghost to respawn */
-	/client/proc/aooc,
-	/client/proc/change_security_level,
-	/client/proc/empty_ai_core_toggle_latejoin,
-	/client/proc/send_fax_message
+	/client/proc/allow_character_respawn    /* Allows a ghost to respawn */
 	)
 var/list/admin_verbs_ban = list(
 	/client/proc/unban_panel
@@ -175,7 +175,8 @@ var/list/admin_verbs_permissions = list(
 	/client/proc/gsw_add,
 	/client/proc/library_debug_cat,
 	/client/proc/library_debug_remove,
-	/client/proc/library_debug_read
+	/client/proc/library_debug_read,
+	/client/proc/event_map_loader
 	)
 var/list/admin_verbs_rejuv = list(
 	/client/proc/respawn_character
@@ -280,11 +281,11 @@ var/list/admin_verbs_hideable = list(
 			verbs += admin_verbs_sounds
 		if(holder.rights & R_SPAWN)
 			verbs += admin_verbs_spawn
+		if(holder.rights & R_EVENT)
+			verbs += admin_verbs_event
 
 		if(holder.rights & R_ADMIN)
 			control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
-		if(holder.rights & R_FUN)
-			verbs += admin_verbs_event
 
 /client/proc/remove_admin_verbs()
 	verbs.Remove(
@@ -673,7 +674,8 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Sets the station security level."
 	set category = "Admin"
 
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN|R_EVENT))
+		return
 	var sec_level = input(usr, "It's currently code [get_security_level()].", "Select Security Level")  as null|anything in (list("green","blue","red","delta")-get_security_level())
 	if(alert("Switch from code [get_security_level()] to code [sec_level]?","Change security level?","Yes","No") == "Yes")
 		set_security_level(sec_level)
@@ -694,7 +696,8 @@ var/list/admin_verbs_hideable = list(
 	set name = "Edit Appearance"
 	set category = "Fun"
 
-	if(!check_rights(R_FUN))	return
+	if(!check_rights(R_FUN|R_EVENT))
+		return
 
 	if(!istype(M, /mob/living/carbon/human))
 		to_chat(usr, "\red You can only do this to humans!")
@@ -853,7 +856,8 @@ var/list/admin_verbs_hideable = list(
 	set name = "Give Achievement"
 	set category = "Fun"
 
-	if(!check_rights(R_FUN))	return
+	if(!check_rights(R_FUN|R_EVENT))
+		return
 
 	var/achoice = "Cancel"
 
@@ -895,7 +899,8 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	set name = "Antag OOC"
 
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN|R_EVENT))
+		return
 
 	var/msg = sanitize(copytext(input(usr, "", "Antag OOC") as text, 1, MAX_MESSAGE_LEN))
 	if(!msg)	return
