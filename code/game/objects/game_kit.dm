@@ -1,3 +1,5 @@
+//After lying in a trash pile for countless millenniums, this wonderful thing from Goonstation finally comes back.
+
 /obj/item/weapon/game_kit
 	name = "gaming kit"
 	desc = "Allows you play chess, checkers, or whichever game involving those pieces."
@@ -6,6 +8,7 @@
 	var/selected = null
 	var/board_stat = null
 	var/data = ""
+	force = 12
 	m_amt = 2000
 	g_amt = 1000
 	item_state = "sheet-metal"
@@ -15,11 +18,9 @@
 	board_stat = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 	selected = "CR"
 
-/obj/item/weapon/game_kit/attack_paw(mob/user)
-	return interact(user)
-
-/obj/item/weapon/game_kit/attack_hand(mob/user)
-	return interact(user)
+/obj/item/weapon/game_kit/MouseDrop(mob/user)
+	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
+		interact(user)
 
 /obj/item/weapon/game_kit/proc/update()
 	var/dat = text("<CENTER><B>Game Board</B></CENTER><BR><a href='?src=\ref[];mode=hia'>[]</a> <a href='?src=\ref[];mode=remove'>remove</a> <a href='?src=\ref[];reverse=\ref[src]'>invert board</a> <HR><table width= 256  border= 0  height= 256  cellspacing= 0  cellpadding= 0 >", src, (selected ? text("Selected: []", selected) : "Nothing Selected"), src, src)
@@ -141,6 +142,6 @@
 										board_stat = text("[][][]", copytext(board_stat, 1, place), selected, copytext(board_stat, place + 2, 129))
 		add_fingerprint(usr)
 		update()
-		for(var/mob/M in viewers(1, src))
+		for(var/mob/M in viewers(1, src.loc))
 			if ((M.client && M.machine == src))
 				interact(M)
