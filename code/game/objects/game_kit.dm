@@ -5,7 +5,7 @@
 	desc = "Allows you play chess, checkers, or whichever game involving those pieces."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "game_kit"
-	var/selected = null			//Selected piece
+	var/selected = null	
 	var/board_stat = null		//Core string
 	var/data = ""
 	force = 8
@@ -67,7 +67,7 @@
 	onclose(user, "game_kit")
 
 
-/obj/item/weapon/game_kit/Topic(href, href_list)		//Interface
+/obj/item/weapon/game_kit/Topic(href, href_list)
 	..()
 	if ((usr.stat || usr.restrained()))
 		return
