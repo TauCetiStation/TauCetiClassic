@@ -44,6 +44,13 @@
 	..()
 	charge = 0
 
+/obj/item/weapon/stock_parts/cell/apc
+	name = "APC power cell"
+	desc = "A special power cell designed for heavy-duty use in area power controllers."
+	origin_tech = "powerstorage=1"
+	maxcharge = 500
+	g_amt = 40
+
 /obj/item/weapon/stock_parts/cell/high
 	name = "high-capacity power cell"
 	origin_tech = "powerstorage=2"

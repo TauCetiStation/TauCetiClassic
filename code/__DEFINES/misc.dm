@@ -117,10 +117,6 @@
 #define shuttle_time_in_station 1800 // 3 minutes in the station
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
 
-//Flags for zone sleeping
-#define ZONE_ACTIVE 	1
-#define ZONE_SLEEPING 	0
-
 #define FOR_DVIEW(type, range, center, invis_flags) \
 	dview_mob.loc = center; \
 	dview_mob.see_invisible = invis_flags; \

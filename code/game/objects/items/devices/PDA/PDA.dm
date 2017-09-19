@@ -467,23 +467,23 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			var/datum/gas_mixture/environment = T.return_air()
 
 			var/pressure = environment.return_pressure()
-			var/total_moles = environment.total_moles()
+			var/total_moles = environment.total_moles
 
 			if (total_moles)
-				var/o2_level = environment.oxygen/total_moles
-				var/n2_level = environment.nitrogen/total_moles
-				var/co2_level = environment.carbon_dioxide/total_moles
-				var/phoron_level = environment.phoron/total_moles
-				var/unknown_level =  1-(o2_level+n2_level+co2_level+phoron_level)
-				data["aircontents"] = list(\
-					"pressure" = "[round(pressure,0.1)]",\
-					"nitrogen" = "[round(n2_level*100,0.1)]",\
-					"oxygen" = "[round(o2_level*100,0.1)]",\
-					"carbon_dioxide" = "[round(co2_level*100,0.1)]",\
-					"phoron" = "[round(phoron_level*100,0.01)]",\
-					"other" = "[round(unknown_level, 0.01)]",\
-					"temp" = "[round(environment.temperature-T0C,0.1)]",\
-					"reading" = 1\
+				var/o2_level = environment.gas["oxygen"] / total_moles
+				var/n2_level = environment.gas["nitrogen"] / total_moles
+				var/co2_level = environment.gas["carbon_dioxide"] / total_moles
+				var/phoron_level = environment.gas["phoron"] / total_moles
+				var/unknown_level =  1 - (o2_level + n2_level + co2_level + phoron_level)
+				data["aircontents"] = list(
+					"pressure" = "[round(pressure,0.1)]",
+					"nitrogen" = "[round(n2_level*100,0.1)]",
+					"oxygen" = "[round(o2_level*100,0.1)]",
+					"carbon_dioxide" = "[round(co2_level*100,0.1)]",
+					"phoron" = "[round(phoron_level*100,0.01)]",
+					"other" = "[round(unknown_level, 0.01)]",
+					"temp" = "[round(environment.temperature-T0C,0.1)]",
+					"reading" = 1
 					)
 		if(isnull(data["aircontents"]))
 			data["aircontents"] = list("reading" = 0)
@@ -1231,62 +1231,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				to_chat(user, "\blue No significant chemical agents found in [A].")
 
 		if(5)
-			if((istype(A, /obj/item/weapon/tank)) || (istype(A, /obj/machinery/portable_atmospherics)))
-				var/obj/icon = A
-				for (var/mob/O in viewers(user, null))
-					to_chat(O, "\red [user] has used [src] on [bicon(icon)] [A]")
-				var/pressure = A:air_contents.return_pressure()
-
-				var/total_moles = A:air_contents.total_moles()
-
-				to_chat(user, "\blue Results of analysis of [bicon(icon)]")
-				if (total_moles>0)
-					var/o2_concentration = A:air_contents.oxygen/total_moles
-					var/n2_concentration = A:air_contents.nitrogen/total_moles
-					var/co2_concentration = A:air_contents.carbon_dioxide/total_moles
-					var/phoron_concentration = A:air_contents.phoron/total_moles
-
-					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
-
-					to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
-					to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
-					to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
-					to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
-					to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
-					if(unknown_concentration>0.01)
-						to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
-					to_chat(user, "\blue Temperature: [round(A:air_contents.temperature-T0C)]&deg;C")
-				else
-					to_chat(user, "\blue Tank is empty!")
-
-			if (istype(A, /obj/machinery/atmospherics/pipe/tank))
-				var/obj/icon = A
-				for (var/mob/O in viewers(user, null))
-					to_chat(O, "\red [user] has used [src] on [bicon(icon)] [A]")
-
-				var/obj/machinery/atmospherics/pipe/tank/T = A
-				var/pressure = T.parent.air.return_pressure()
-				var/total_moles = T.parent.air.total_moles()
-
-				to_chat(user, "\blue Results of analysis of [bicon(icon)]")
-				if (total_moles>0)
-					var/o2_concentration = T.parent.air.oxygen/total_moles
-					var/n2_concentration = T.parent.air.nitrogen/total_moles
-					var/co2_concentration = T.parent.air.carbon_dioxide/total_moles
-					var/phoron_concentration = T.parent.air.phoron/total_moles
-
-					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
-
-					to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
-					to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
-					to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
-					to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
-					to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
-					if(unknown_concentration>0.01)
-						to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
-					to_chat(user, "\blue Temperature: [round(T.parent.air.temperature-T0C)]&deg;C")
-				else
-					to_chat(user, "\blue Tank is empty!")
+			analyze_gases(A, user)
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		note = A:info
