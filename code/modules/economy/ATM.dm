@@ -323,9 +323,9 @@ log transactions
 				if(amount <= 0)
 					alert("That is not a valid amount.")
 				else if(authenticated_account && amount > 0)
+					var/response = alert(usr.client, "In what way would you like to recieve your money?", "Choose money format", "Chip", "Cash")
 					if(amount <= authenticated_account.money)
 						authenticated_account.money -= amount
-						var/response = alert(usr.client, "In what way would you like to recieve your money?", "Choose money format", "Chip", "Cash")
 						playsound(src, 'sound/machines/chime.ogg', 50, 1)
 						if(response == "Chip")
 							spawn_ewallet(amount,src.loc)
