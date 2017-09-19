@@ -202,7 +202,7 @@ log transactions
 							dat += "<form name='withdrawal' action='?src=\ref[src]' method='get'>"
 							dat += "<input type='hidden' name='src' value='\ref[src]'>"
 							dat += "<input type='hidden' name='choice' value='withdrawal'>"
-							dat += "<input type='text' name='funds_amount' value='' style='width:200px; background-color:white;'><input type='submit' value='Withdraw funds'>"
+							dat += "<input type='text' name='funds_amount' value='' style='width:200px; background-color:white;'><input type='submit' value='Withdraw charge card'>"
 							dat += "</form>"
 							dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=1'>Change account security level</a><br>"
 							dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=2'>Make transfer</a><br>"
@@ -324,15 +324,13 @@ log transactions
 					alert("That is not a valid amount.")
 				else if(authenticated_account && amount > 0)
 					if(amount <= authenticated_account.money)
-						var/client/C = usr.client
-						var/response = alert(C, "In what way would you like to recieve your money?", "Choose money format", "Chip", "Cash")
 						playsound(src, 'sound/machines/chime.ogg', 50, 1)
-						authenticated_account.money -= amount
-						if(response == "Chip")
-							spawn_ewallet(amount,src.loc)
-						else if (response == "Cash")
-							spawn_money(amount, src.loc)
 
+						//remove the money
+						authenticated_account.money -= amount
+
+						//	spawn_money(amount,src.loc)
+						spawn_ewallet(amount,src.loc)
 
 						//create an entry in the account transaction log
 						var/datum/transaction/T = new()
