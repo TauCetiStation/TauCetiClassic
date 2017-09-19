@@ -190,13 +190,14 @@
 
 	var/obj/structure/disposalpipe/CP = locate() in T
 	if(ptype>=6 && ptype <= 8) // Disposal or outlet
-		if(CP) // There's something there
-			if(!istype(CP,/obj/structure/disposalpipe/trunk))
+		if (!(istype(I, /obj/item/weapon/wrench) && anchored))
+			if(CP) // There's something there
+				if(!istype(CP,/obj/structure/disposalpipe/trunk))
+					to_chat(user, "The [nicetype] requires a trunk underneath it in order to work.")
+					return
+			else // Nothing under, fuck.
 				to_chat(user, "The [nicetype] requires a trunk underneath it in order to work.")
 				return
-		else // Nothing under, fuck.
-			to_chat(user, "The [nicetype] requires a trunk underneath it in order to work.")
-			return
 	else
 		if(CP)
 			update()
