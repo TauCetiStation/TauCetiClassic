@@ -12,6 +12,11 @@
 	projectile_type = /obj/item/projectile/beam
 	select_name = "kill"
 
+/obj/item/ammo_casing/energy/dubstep
+	projectile_type = /obj/item/projectile/energy/sound
+	e_cost = 500
+	fire_sound = 'sound/effects/EMPulse.ogg'
+
 /obj/item/ammo_casing/energy/laser_pulse
 	projectile_type = /obj/item/projectile/energy/laser
 	select_name = "kill"

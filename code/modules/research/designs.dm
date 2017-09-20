@@ -2419,6 +2419,15 @@ datum/design/spraycan
 	build_path = /obj/item/clothing/shoes/magboots
 	category = list("Equipment")
 
+/datum/design/dubstep
+	name = "Dubstep gun"
+	desc = "Experemental gun fires long-range pulses of energy to the beat of an electronic song."
+	id = "dubstep"
+	req_tech = list("combat" = 4, "magnets" = 4, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_URANIUM = 500, MAT_GOLD = 2500, MAT_BANANIUM = 100)
+	build_path = /obj/item/weapon/gun/energy/dubstep
+
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////
 /////////////////////////////////////////
