@@ -204,7 +204,7 @@
 			var/obj/location_as_object = loc
 			breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
 		else if(isturf(loc))
-			var/breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+			var/breath_moles = environment.total_moles * BREATH_PERCENTAGE
 			breath = loc.remove_air(breath_moles)
 
 			var/block = FALSE
@@ -212,17 +212,13 @@
 				var/obj/item/clothing/mask/gas/G = wear_mask
 				var/datum/gas_mixture/filtered = new
 
-				filtered.copy_from(breath)
-				filtered.phoron *= G.gas_filter_strength
-				for(var/datum/gas/gas in filtered.trace_gases)
-					gas.moles *= G.gas_filter_strength
-				filtered.update_values()
-				loc.assume_air(filtered)
+				for(var/g in  list("phoron", "sleeping_agent"))
+					if(breath.gas[g])
+						filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
+						breath.gas[g] -= filtered.gas[g]
 
-				breath.phoron *= 1 - G.gas_filter_strength
-				for(var/datum/gas/gas in breath.trace_gases)
-					gas.moles *= 1 - G.gas_filter_strength
 				breath.update_values()
+				filtered.update_values()
 
 				block = TRUE
 
@@ -246,14 +242,14 @@
 	var/SA_para_min = 0.5
 	var/SA_sleep_min = 5
 	var/oxygen_used = 0
-	var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+	var/breath_pressure = (breath.total_moles * R_IDEAL_GAS_EQUATION * breath.temperature) / BREATH_VOLUME
 
 	//Partial pressure of the O2 in our breath
-	var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
+	var/O2_pp = (breath.gas["oxygen"] / breath.total_moles) * breath_pressure
 	// Same, but for the phoron
-	var/Toxins_pp = (breath.phoron/breath.total_moles())*breath_pressure
+	var/Toxins_pp = (breath.gas["phoron"] / breath.total_moles) * breath_pressure
 	// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-	var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure
+	var/CO2_pp = (breath.gas["carbon_dioxide"] / breath.total_moles) * breath_pressure
 
 	if(O2_pp < safe_oxygen_min) 			// Too little oxygen
 		if(prob(20))
@@ -262,15 +258,15 @@
 			O2_pp = 0.01
 		var/ratio = safe_oxygen_min/O2_pp
 		adjustOxyLoss(min(5 * ratio, 7)) // Don't fuck them up too fast (space only does 7 after all!)
-		oxygen_used = breath.oxygen * ratio / 6
+		oxygen_used = breath.gas["oxygen"] * ratio / 6
 		oxygen_alert = TRUE
 	else // We're in safe limits
 		adjustOxyLoss(-5)
-		oxygen_used = breath.oxygen / 6
+		oxygen_used = breath.gas["oxygen"] / 6
 		oxygen_alert = FALSE
 
-	breath.oxygen -= oxygen_used
-	breath.carbon_dioxide += oxygen_used
+	breath.adjust_gas("oxygen", oxygen_used, update = FALSE)
+	breath.adjust_gas_temp("carbon_dioxide", oxygen_used, bodytemperature, update = FALSE) //update afterwards
 
 	if(CO2_pp > safe_co2_max)
 		if(!co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
@@ -287,7 +283,7 @@
 		co2overloadtime = 0
 
 	if(Toxins_pp > safe_phoron_max) // Too much phoron
-		var/ratio = (breath.phoron/safe_phoron_max) * 10
+		var/ratio = (breath.gas["phoron"]/safe_phoron_max) * 10
 		//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 		if(reagents)
 			reagents.add_reagent("toxin", Clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
@@ -295,16 +291,15 @@
 	else
 		phoron_alert = FALSE
 
-	if(breath.trace_gases.len) // If there's some other shit in the air lets deal with it here.
-		for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-			var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
-			if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
-				Paralyse(3) // 3 gives them one second to wake up and run away a bit!
-				if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-					sleeping = max(sleeping + 2, 10)
-			else if(SA_pp > 0.01) // There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-				if(prob(20))
-					emote(pick("giggle", "laugh"))
+	if(breath.gas["sleeping_agent"]) // If there's some other shit in the air lets deal with it here.
+		var/SA_pp = (breath.gas["sleeping_agent"] / breath.total_moles) * breath_pressure
+		if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
+			Paralyse(3) // 3 gives them one second to wake up and run away a bit!
+			if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
+				Sleeping(5)
+		else if(SA_pp > 0.01) // There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+			if(prob(20))
+				emote(pick("giggle", "laugh"))
 
 	if(breath.temperature > (T0C + 66)) // Hot air hurts :(
 		if(prob(20))
@@ -313,8 +308,9 @@
 	else
 		fire_alert = FALSE
 
-	if(breath)
-		loc.assume_air(breath)
+	//if(breath)
+	//	loc.assume_air(breath)
+	breath.update_values()
 
 	return TRUE
 
@@ -471,7 +467,7 @@
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 
-	if(istype(head, /obj/item/clothing/head/helmet/space) || (adjusted_pressure < WARNING_HIGH_PRESSURE && adjusted_pressure > WARNING_LOW_PRESSURE && abs(environment.temperature - 293.15) < 20 && abs(bodytemperature - 310.14) < 0.5 && environment.phoron < MOLES_PHORON_VISIBLE))
+	if(istype(head, /obj/item/clothing/head/helmet/space) || (adjusted_pressure < WARNING_HIGH_PRESSURE && adjusted_pressure > WARNING_LOW_PRESSURE && abs(environment.temperature - 293.15) < 20 && abs(bodytemperature - 310.14) < 0.5))
 		clear_alert("pressure")
 		return
 

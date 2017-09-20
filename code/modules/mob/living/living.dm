@@ -393,6 +393,33 @@
 /mob/living/proc/try_inject()
 	return TRUE
 
+/mob/living/proc/get_temperature(datum/gas_mixture/environment)
+	var/loc_temp = T0C
+	if(istype(loc, /obj/mecha))
+		var/obj/mecha/M = loc
+		loc_temp =  M.return_temperature()
+
+	else if(istype(loc, /obj/structure/transit_tube_pod))
+		loc_temp = environment.temperature
+
+	else if(istype(get_turf(src), /turf/space))
+		var/turf/heat_turf = get_turf(src)
+		loc_temp = heat_turf.temperature
+
+	else if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		var/obj/machinery/atmospherics/components/unary/cryo_cell/C = loc
+		var/datum/gas_mixture/G = C.AIR1
+
+		if(G.total_moles < 10)
+			loc_temp = environment.temperature
+		else
+			loc_temp = G.temperature
+
+	else
+		loc_temp = environment.temperature
+
+	return loc_temp
+
 // heal ONE bodypart, bodypart gets randomly selected from damaged ones.
 /mob/living/proc/heal_bodypart_damage(brute, burn)
 	adjustBruteLoss(-brute)

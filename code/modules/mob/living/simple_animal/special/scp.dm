@@ -186,12 +186,6 @@
 /mob/living/simple_animal/special/scp173/attack_animal(mob/living/simple_animal/M)
 	M.emote("[M.friendly] \the <EM>[src]</EM>")
 
-/mob/living/simple_animal/special/scp173/airflow_stun()
-	return
-
-/mob/living/simple_animal/special/scp173/airflow_hit(atom/A)
-	return
-
 /mob/living/simple_animal/special/scp173/Process_Spacemove(movement_dir = 0)
 	return 1 //copypasta from carp code
 

@@ -12,12 +12,13 @@ REAGENT SCANNER
 	name = "T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
-	var/on = 0
 	slot_flags = SLOT_BELT
-	w_class = 2
+	w_class = ITEM_SIZE_SMALL
 	item_state = "electronic"
 	m_amt = 150
 	origin_tech = "magnets=1;engineering=1"
+
+	var/on = FALSE
 
 /obj/item/device/t_scanner/attack_self(mob/user)
 
@@ -27,11 +28,26 @@ REAGENT SCANNER
 	if(on)
 		START_PROCESSING(SSobj, src)
 
+/obj/item/device/t_scanner/proc/flick_sonar(obj/pipe)
+	if(ismob(loc))
+		var/mob/M = loc
+		var/image/I = new(loc = get_turf(pipe))
+
+		var/mutable_appearance/MA = new(pipe)
+		MA.alpha = 128
+		MA.dir = pipe.dir
+
+		I.appearance = MA
+		if(M.client)
+			flick_overlay(I, list(M.client), 8)
 
 /obj/item/device/t_scanner/process()
 	if(!on)
 		STOP_PROCESSING(SSobj, src)
-		return
+		return null
+	scan()
+
+/obj/item/device/t_scanner/proc/scan()
 
 	for(var/turf/T in range(1, src.loc) )
 
@@ -43,21 +59,8 @@ REAGENT SCANNER
 			if(O.level != 1)
 				continue
 
-			if(O.invisibility == 101)
-				O.invisibility = 0
-				spawn(10)
-					if(O)
-						var/turf/U = O.loc
-						if(U.intact)
-							O.invisibility = 101
-
-		var/mob/living/M = locate() in T
-		if(M && M.invisibility == 2)
-			M.invisibility = 0
-			spawn(2)
-				if(M)
-					M.invisibility = INVISIBILITY_LEVEL_TWO
-
+			if(O.invisibility >= INVISIBILITY_MAXIMUM)
+				flick_sonar(O)
 
 /obj/item/device/healthanalyzer
 	name = "Health Analyzer"
@@ -304,60 +307,38 @@ REAGENT SCANNER
 
 	action_button_name = "Use Analyzer"
 
+	var/advanced_mode = 0
+
+/obj/item/device/analyzer/verb/verbosity(mob/user as mob)
+	set name = "Toggle Advanced Gas Analysis"
+	set category = "Object"
+	set src in usr
+
+	if (!user.incapacitated())
+		advanced_mode = !advanced_mode
+		to_chat(usr, "You toggle advanced gas analysis [advanced_mode ? "on" : "off"].")
+
 /obj/item/device/analyzer/attack_self(mob/user)
 
-	if (user.stat)
+	if (user.incapacitated())
 		return
 	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
 		to_chat(usr, "\red You don't have the dexterity to do this!")
 		return
 
-	var/turf/location = user.loc
-	if (!( istype(location, /turf) ))
+	analyze_gases(user.loc, user,advanced_mode)
+	return TRUE
+
+/obj/item/device/analyzer/afterattack(obj/O, mob/user, proximity)
+	if(!proximity)
 		return
-
-	var/datum/gas_mixture/environment = location.return_air()
-
-	var/pressure = environment.return_pressure()
-	var/total_moles = environment.total_moles()
-
-	user.show_message("\blue <B>Results:</B>", 1)
-	if(abs(pressure - ONE_ATMOSPHERE) < 10)
-		user.show_message("\blue Pressure: [round(pressure,0.1)] kPa", 1)
-	else
-		user.show_message("\red Pressure: [round(pressure,0.1)] kPa", 1)
-	if(total_moles)
-		var/o2_concentration = environment.oxygen/total_moles
-		var/n2_concentration = environment.nitrogen/total_moles
-		var/co2_concentration = environment.carbon_dioxide/total_moles
-		var/phoron_concentration = environment.phoron/total_moles
-
-		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
-		if(abs(n2_concentration - N2STANDARD) < 20)
-			user.show_message("\blue Nitrogen: [round(n2_concentration*100)]%", 1)
-		else
-			user.show_message("\red Nitrogen: [round(n2_concentration*100)]%", 1)
-
-		if(abs(o2_concentration - O2STANDARD) < 2)
-			user.show_message("\blue Oxygen: [round(o2_concentration*100)]%", 1)
-		else
-			user.show_message("\red Oxygen: [round(o2_concentration*100)]%", 1)
-
-		if(co2_concentration > 0.01)
-			user.show_message("\red CO2: [round(co2_concentration*100)]%", 1)
-		else
-			user.show_message("\blue CO2: [round(co2_concentration*100)]%", 1)
-
-		if(phoron_concentration > 0.01)
-			user.show_message("\red Phoron: [round(phoron_concentration*100)]%", 1)
-
-		if(unknown_concentration > 0.01)
-			user.show_message("\red Unknown: [round(unknown_concentration*100)]%", 1)
-
-		user.show_message("\blue Temperature: [round(environment.temperature-T0C)]&deg;C", 1)
-
-	src.add_fingerprint(user)
-	return
+	if (user.incapacitated())
+		return
+	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		to_chat(usr, "\red You don't have the dexterity to do this!")
+		return
+	if(istype(O) && O.simulated)
+		analyze_gases(O, user, advanced_mode)
 
 /obj/item/device/mass_spectrometer
 	desc = "A hand-held mass spectrometer which identifies trace chemicals in a blood sample."
