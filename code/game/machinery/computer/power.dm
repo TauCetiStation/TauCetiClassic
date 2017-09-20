@@ -83,7 +83,7 @@
 
 		t += "</FONT></PRE></TT>"
 
-	user << browse(t, "window=powcomp;size=450")
+	user << browse(t, "window=powcomp;size=450x900")
 	onclose(user, "powcomp")
 
 

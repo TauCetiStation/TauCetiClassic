@@ -72,12 +72,11 @@
 
 /obj/item/weapon/tank/make_old()
 	var/new_vol = pick(0.2,0.4,0,6,0,8)
-	air_contents.oxygen *= new_vol
-	air_contents.carbon_dioxide *= new_vol
-	air_contents.nitrogen *= new_vol
-	air_contents.temperature  = 293
-	for(var/datum/gas/G in air_contents.trace_gases)
-		G.moles *= new_vol
+	air_contents.gas["oxygen"] *= new_vol
+	air_contents.gas["carbon_dioxide"] *= new_vol
+	air_contents.gas["nitrogen"] *= new_vol
+	air_contents.gas["sleeping_agent"] *= new_vol
+	air_contents.temperature = 293
 	volume *= new_vol
 	air_contents.update_values()
 	..()

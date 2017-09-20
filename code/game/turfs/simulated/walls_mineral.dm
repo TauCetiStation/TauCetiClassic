@@ -103,12 +103,8 @@
 	for(var/turf/simulated/floor/target_tile in range(0,src))
 		/*if(target_tile.parent && target_tile.parent.group_processing)
 			target_tile.parent.suspend_group_processing()*/
-		var/datum/gas_mixture/napalm = new
-		var/phoronToDeduce = 20
-		napalm.phoron = phoronToDeduce
-		napalm.temperature = 400+T0C
-		target_tile.assume_air(napalm)
-		spawn (0) target_tile.hotspot_expose(temperature, 400)
+		target_tile.assume_gas("phoron", 20)
+		target_tile.hotspot_expose(400 + T0C, 400)
 	for(var/obj/structure/falsewall/phoron/F in range(3,src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
 		var/turf/T = get_turf(F)
 		T.ChangeTurf(/turf/simulated/wall/mineral/phoron/)

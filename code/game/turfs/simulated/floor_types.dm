@@ -77,7 +77,8 @@
 		if(floor_type)
 			if(prob(30))
 				new floor_type(src)
-				make_plating()
+				ChangeTurf(/turf/simulated/floor)
+				make_plating() // why there is return for this floor type in that proc?
 		else if(prob(30))
 			ReplaceWithLattice()
 
@@ -85,18 +86,39 @@
 	name = "engraved floor"
 	icon_state = "cult"
 
+/turf/simulated/floor/engine/airmix
+	oxygen = MOLES_O2ATMOS
+	nitrogen = MOLES_N2ATMOS
+
+/turf/simulated/floor/engine/nitrogen
+	oxygen = 0
+	nitrogen = ATMOSTANK_NITROGEN
+
+/turf/simulated/floor/engine/oxygen
+	oxygen = ATMOSTANK_OXYGEN
+	nitrogen = 0
+
+/turf/simulated/floor/engine/phoron
+	oxygen = 0
+	nitrogen = 0
+	phoron = ATMOSTANK_PHORON
+
+/turf/simulated/floor/engine/carbon_dioxide
+	oxygen = 0
+	nitrogen = 0
+	carbon_dioxide = ATMOSTANK_CO2
 
 /turf/simulated/floor/engine/n20
-	New()
-		. = ..()
-		var/datum/gas_mixture/adding = new
-		var/datum/gas/sleeping_agent/trace_gas = new
+	oxygen = 0
+	nitrogen = 0
 
-		trace_gas.moles = 2000
-		adding.trace_gases += trace_gas
-		adding.temperature = T20C
+/turf/simulated/floor/engine/n20/New()
+	..()
 
-		assume_air(adding)
+	if(!air)
+		make_air()
+
+	air.adjust_gas("sleeping_agent", ATMOSTANK_NITROUSOXIDE)
 
 /turf/simulated/floor/engine/vacuum
 	name = "vacuum floor"

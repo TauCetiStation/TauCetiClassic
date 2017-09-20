@@ -15,6 +15,9 @@
 			return 1
 	return (!mover.density || !density || lying)
 
+/mob/proc/setMoveCooldown(timeout)
+	if(client)
+		client.move_delay = max(world.time + timeout, client.move_delay)
 
 /client/North()
 	..()

@@ -16,7 +16,6 @@
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
-	pressure_resistance = 5
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
 

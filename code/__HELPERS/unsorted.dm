@@ -11,6 +11,9 @@
  * A large number of misc global procs.
  */
 
+//Checks if all high bits in req_mask are set in bitfield
+#define BIT_TEST_ALL(bitfield, req_mask) ((~(bitfield) & (req_mask)) == 0)
+
 //Inverts the colour of an HTML string
 /proc/invertHTML(HTMLstring)
 
@@ -1593,6 +1596,10 @@ var/mob/dview/dview_mob = new
 		c_dist++
 
 	return L
+
+//gives us the stack trace from CRASH() without ending the current proc.
+/proc/stack_trace(msg)
+	CRASH(msg)
 
 //Increases delay as the server gets more overloaded,
 //as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful

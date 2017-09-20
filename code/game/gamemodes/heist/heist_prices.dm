@@ -161,7 +161,6 @@
 /obj/item/device/mass_spectrometer/price = 2650
 /obj/item/device/mass_spectrometer/adv/price = 3020
 /obj/item/device/mmi/posibrain/price = 30090
-/obj/item/device/pipe_painter/price = 384
 /obj/item/device/radio/headset/price = 150
 /obj/item/device/radio/headset/ert/price = 7000
 /obj/item/device/radio/headset/heads/price = 5500
