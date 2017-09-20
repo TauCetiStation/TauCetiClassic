@@ -74,6 +74,12 @@ proc/listclearnulls(list/list)
 			list -= null
 	return
 
+// same as above, except it returns list back.
+/proc/removeNullsFromList(list/L)
+	while(L.Remove(null))
+		continue
+	return L
+
 /*
  * Returns list containing all the entries from first list that are not present in second.
  * If skiprep = 1, repeated elements are treated as one.

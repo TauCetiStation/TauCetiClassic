@@ -82,7 +82,6 @@ turf/simulated/floor/holofloor/update_icon()
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
 	anchored = 1.0
-	pressure_resistance = 15
 
 
 /obj/item/clothing/gloves/boxing/hologlove

@@ -133,7 +133,6 @@
 	density = TRUE
 	opacity = FALSE
 	anchored = FALSE
-	pressure_resistance = 2*ONE_ATMOSPHERE
 	ghost_must_be_admin = TRUE
 	req_access = list(access_engine)
 	var/const/max_health = 100

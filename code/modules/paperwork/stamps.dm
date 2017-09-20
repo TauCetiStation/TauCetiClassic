@@ -10,7 +10,6 @@
 	throw_range = 15
 	m_amt = 60
 	item_color = "cargo"
-	pressure_resistance = 2
 	attack_verb = list("stamped")
 	var/stamp_by_message = ""
 	var/big_stamp = FALSE

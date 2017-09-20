@@ -37,7 +37,7 @@
 "aL" = (/turf/simulated/shuttle/floor{icon_state = "floor3"},/turf/simulated/shuttle/wall{icon_state = "swall_f6"; dir = 2},/area/derelict/ship)
 "aM" = (/obj/machinery/door/airlock/glass,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
 "aN" = (/obj/machinery/light_switch{pixel_x = 27},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
-"aO" = (/obj/machinery/portable_atmospherics/scrubber,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
+"aO" = (/obj/machinery/portable_atmospherics/powered/scrubber,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
 "aP" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 4},/turf/simulated/shuttle/plating,/area/derelict/ship)
 "aQ" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
 "aR" = (/obj/machinery/door/window,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)

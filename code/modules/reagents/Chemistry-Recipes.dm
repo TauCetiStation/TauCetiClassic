@@ -1207,15 +1207,12 @@ datum
 				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
 				sleep(50)
+				if(!(holder.my_atom && holder.my_atom.loc))
+					return
+
 				var/turf/location = get_turf(holder.my_atom.loc)
-				for(var/turf/simulated/floor/target_tile in range(0,location))
-
-					var/datum/gas_mixture/napalm = new
-
-					napalm.phoron = 25
-					napalm.temperature = 1400
-
-					target_tile.assume_air(napalm)
+				for(var/turf/simulated/floor/target_tile in range(0, location))
+					target_tile.assume_gas("phoron", 25, 1400)
 					spawn (0)
 						target_tile.hotspot_expose(700, 400)
 				message_admins("Orange slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>)")
