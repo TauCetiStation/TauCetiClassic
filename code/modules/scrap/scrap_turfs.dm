@@ -74,6 +74,9 @@
 
 	return 1
 
+/turf/simulated/floor/plating/ironsand/update_air_properties()
+	return //:joypain:
+
 /turf/simulated/floor/plating/ironsand/junkyard/safe
 	icon_state = "ironsand2"
 /turf/simulated/floor/plating/ironsand/junkyard/challenging

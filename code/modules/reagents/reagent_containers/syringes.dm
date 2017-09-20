@@ -262,6 +262,7 @@
 			BP.germ_level += germ_level / 7
 		else
 			BP.germ_level += min(germ_level, 3)
+		H.bad_bodyparts |= BP
 
 /obj/item/weapon/reagent_containers/ld50_syringe
 	name = "Lethal Injection Syringe"

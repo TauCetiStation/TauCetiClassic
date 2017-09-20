@@ -28,6 +28,8 @@
 	name = "build plans"
 	desc = "Automatic shelter schematics. Warning: Single use only!"
 	var/used = 0
+	greedy = 1
+	max_area_size = 150
 
 /obj/item/blueprints/junkyard/interact()
 	if(!used)

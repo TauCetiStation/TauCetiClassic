@@ -4,6 +4,9 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "blueprints"
 	attack_verb = list("attacked", "bapped", "hit")
+	var/max_area_size = 300
+	var/greedy = 0
+
 	var/const/AREA_ERRNONE = 0
 	var/const/AREA_STATION = 1
 	var/const/AREA_SPACE =   2
@@ -190,12 +193,12 @@ move an amendment</a> to the drawing.</p>
 		return BORDER_BETWEEN
 	if (istype(T2, /turf/simulated/wall))
 		return BORDER_2NDTILE
-	if (!istype(T2, /turf/simulated))
+	if (!istype(T2, /turf/simulated) || (dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
 		return BORDER_BETWEEN
 
 	for (var/obj/structure/window/W in T2)
 		if(turn(dir,180) == W.dir)
-			return BORDER_BETWEEN
+			return BORDER_2NDTILE
 		if (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST))
 			return BORDER_2NDTILE
 	for(var/obj/machinery/door/window/D in T2)
@@ -218,20 +221,21 @@ move an amendment</a> to the drawing.</p>
 	var/list/turf/found = new
 	var/list/turf/pending = list(first)
 	while(pending.len)
-		if (found.len+pending.len > 300)
+		if (found.len+pending.len > max_area_size)
 			return ROOM_ERR_TOOLARGE
 		var/turf/T = pending[1] //why byond havent list::pop()?
 		pending -= T
-		for (var/dir in cardinal)
-			var/skip = 0
-			for (var/obj/structure/window/W in T)
-				if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
-					skip = 1; break
-			if (skip) continue
-			for(var/obj/machinery/door/window/D in T)
-				if(dir == D.dir)
-					skip = 1; break
-			if (skip) continue
+		for (var/dir in alldirs)
+			if(!greedy) // we want to add windows to area or not
+				var/skip = 0
+				for (var/obj/structure/window/W in T)
+					if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
+						skip = 1; break
+				if (skip) continue
+				for(var/obj/machinery/door/window/D in T)
+					if(dir == D.dir)
+						skip = 1; break
+				if (skip) continue
 
 			var/turf/NT = get_step(T,dir)
 			if (!isturf(NT) || (NT in found) || (NT in pending))
