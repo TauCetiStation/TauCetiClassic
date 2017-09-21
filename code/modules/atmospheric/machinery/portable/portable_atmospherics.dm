@@ -59,7 +59,9 @@
 	connected_port = new_port
 	connected_port.connected_device = src
 	var/datum/pipeline/connected_port_parent = connected_port.PARENT1
-	connected_port_parent.reconcile_air()
+
+	if(connected_port_parent)                 // incase SSair isn't initialized (actally pipelines) ...
+		connected_port_parent.reconcile_air() // ... this will be done when build_network() executed, so don't worry.
 
 	anchored = TRUE // Prevent movement
 	return TRUE

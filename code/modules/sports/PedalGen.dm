@@ -27,8 +27,8 @@
 	var/obj/machinery/power/dynamo/Generator = null
 	var/pedaled = 0
 
-/obj/structure/stool/bed/chair/pedalgen/initialize()
-	..()
+/obj/structure/stool/bed/chair/pedalgen/atom_init()
+	. = ..()
 	if(anchored)
 		Generator.loc = src.loc
 		Generator.connect_to_network()

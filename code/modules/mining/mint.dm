@@ -23,14 +23,16 @@
 	var/coinsToProduce = 10
 
 
-/obj/machinery/mineral/mint/initialize()
+/obj/machinery/mineral/mint/atom_init()
+	. = ..()
 	for (var/dir in cardinal)
 		src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
-		if(src.input) break
+		if(src.input)
+			break
 	for (var/dir in cardinal)
 		src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
-		if(src.output) break
-	START_PROCESSING(SSobj, src)
+		if(src.output)
+			break
 
 /obj/machinery/mineral/mint/process()
 	if ( src.input)

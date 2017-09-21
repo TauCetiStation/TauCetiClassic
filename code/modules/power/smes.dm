@@ -26,10 +26,9 @@
 	var/last_output = 0
 	var/last_online = 0
 	var/constructed = 0
-	var/initialized = 0
 
-/obj/machinery/power/smes/initialize()
-	initialized = 1
+/obj/machinery/power/smes/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/smes(null)
 	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
@@ -55,27 +54,22 @@
 	if(map_max_output)
 		max_output = map_max_output
 
-/obj/machinery/power/smes/New()
-	..()
-	spawn(5)
-		if(!constructed && !initialized)
-			initialize()
-		dir_loop:
-			for(var/d in cardinal)
-				var/turf/T = get_step(src, d)
-				for(var/obj/machinery/power/terminal/term in T)
-					if(term && term.dir == turn(d, 180))
-						terminal = term
-						break dir_loop
+	dir_loop:
+		for(var/d in cardinal)
+			var/turf/T = get_step(src, d)
+			for(var/obj/machinery/power/terminal/term in T)
+				if(term && term.dir == turn(d, 180))
+					terminal = term
+					break dir_loop
 
-		if(!terminal)
-			stat |= BROKEN
-			return
-		terminal.master = src
-		if(!powernet)
-			connect_to_network()
-		update_icon()
-	return
+	if(!terminal)
+		stat |= BROKEN
+		return
+	terminal.master = src
+
+	if(!powernet)
+		connect_to_network()
+	update_icon()
 
 /obj/machinery/power/smes/proc/update_cells()
 	for(var/obj/item/weapon/stock_parts/cell/cell in component_parts)

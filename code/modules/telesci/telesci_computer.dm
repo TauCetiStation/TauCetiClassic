@@ -36,6 +36,11 @@
 	..()
 	recalibrate()
 
+/obj/machinery/computer/telescience/atom_init()
+	. = ..()
+	for(var/i = 1; i <= starting_crystals; i++)
+		crystals += new /obj/item/bluespace_crystal/artificial(null) // starting crystals
+
 /obj/machinery/computer/telescience/Destroy()
 	eject()
 	if(inserted_gps)
@@ -50,11 +55,6 @@
 /obj/machinery/computer/telescience/examine(mob/user)
 	..()
 	to_chat(user, "There are [crystals.len] bluespace crystals in the crystal ports.")
-
-/obj/machinery/computer/telescience/initialize()
-	..()
-	for(var/i = 1; i <= starting_crystals; i++)
-		crystals += new /obj/item/bluespace_crystal/artificial(null) // starting crystals
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
 	to_chat(user, "<span class='warning'>You are too primitive to use this computer!</span>")

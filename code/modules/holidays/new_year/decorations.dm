@@ -13,8 +13,8 @@
 	var/on = 0
 	var/brightness = 2
 
-/obj/item/decoration/garland/initialize()
-	..()
+/obj/item/decoration/garland/atom_init()
+	. = ..()
 	if(on)
 		icon_state = "[initial(icon_state)]_on"
 		set_light(brightness)

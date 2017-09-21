@@ -63,11 +63,6 @@
 	var/time_per_sheet = 40
 	var/heat = 0
 
-/obj/machinery/power/port_gen/pacman/initialize()
-	..()
-	if(anchored)
-		connect_to_network()
-
 /obj/machinery/power/port_gen/pacman/New()
 	..()
 	component_parts = list()
@@ -78,6 +73,11 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new board_path(src)
 	RefreshParts()
+
+/obj/machinery/power/port_gen/pacman/atom_init()
+	. = ..()
+	if(anchored)
+		connect_to_network()
 
 /obj/machinery/power/port_gen/pacman/Destroy()
 	DropFuel()

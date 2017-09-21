@@ -34,7 +34,8 @@
 	icon_state = "rock"
 	geologic_data = new(src)
 
-/turf/simulated/mineral/initialize()
+/turf/simulated/mineral/atom_init()
+	. = ..()
 	MineralSpread()
 
 	var/turf/T

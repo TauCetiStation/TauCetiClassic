@@ -280,12 +280,12 @@
 	var/trackdir = 1		// -1=CCW, 1=CW
 	var/nexttime = 0		// Next clock time that manual tracking will move the array
 
-
-/obj/machinery/power/solar_control/New()
-	..()
-	if(ticker)
-		initialize()
+/obj/machinery/power/solar_control/atom_init()
+	. = ..()
 	connect_to_network()
+	if(!powernet)
+		return
+	set_panels(cdir)
 
 /obj/machinery/power/solar_control/disconnect_from_network()
 	..()
@@ -296,11 +296,6 @@
 	if(powernet)
 		SSsun.solars.Add(src)
 	return to_return
-
-/obj/machinery/power/solar_control/initialize()
-	..()
-	if(!powernet) return
-	set_panels(cdir)
 
 /obj/machinery/power/solar_control/update_icon()
 	if(stat & BROKEN)

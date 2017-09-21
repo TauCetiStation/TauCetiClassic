@@ -23,7 +23,7 @@
 
 	cell = new/obj/item/weapon/stock_parts/cell/apc(src)
 
-/obj/machinery/portable_atmospherics/powered/scrubber/initialize()
+/obj/machinery/portable_atmospherics/powered/scrubber/atom_init()
 	. = ..()
 	if(!scrubbing_gas)
 		scrubbing_gas = list()

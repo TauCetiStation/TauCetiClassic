@@ -32,6 +32,11 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	RefreshParts()
 
+/obj/machinery/power/emitter/atom_init()
+	. = ..()
+	if(state == 2 && anchored)
+		connect_to_network()
+
 /obj/machinery/power/emitter/RefreshParts()
 	var/max_firedelay = 120
 	var/firedelay = 120
@@ -58,11 +63,6 @@
 		return 0
 	src.dir = turn(src.dir, 90)
 	return 1
-
-/obj/machinery/power/emitter/initialize()
-	..()
-	if(state == 2 && anchored)
-		connect_to_network()
 
 /obj/machinery/power/emitter/Destroy()
 	message_admins("Emitter deleted at ([x],[y],[z] - <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)",0,1)

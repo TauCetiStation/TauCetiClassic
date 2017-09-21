@@ -1,8 +1,12 @@
 // Clickable stat() button.
 /obj/effect/statclick
+	name = "Initializing..."
 	var/target
 
-/obj/effect/statclick/New(text, target)
+INITIALIZE_IMMEDIATE(/obj/effect/statclick)
+
+/obj/effect/statclick/atom_init(mapload, text, target)
+	. = ..()
 	name = text
 	src.target = target
 
@@ -14,7 +18,7 @@
 	var/class
 
 /obj/effect/statclick/debug/Click()
-	if(!usr.client.holder)
+	if(!usr.client.holder || !target)
 		return
 	if(!(usr.client.holder.rights & R_DEBUG))
 		return
