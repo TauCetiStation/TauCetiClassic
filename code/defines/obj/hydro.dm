@@ -5,7 +5,7 @@
 	desc = "A hand-held scanner which reports condition of the plant."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "hydro"
-	item_state = "analyzer"
+	item_state = "plantanalyzer"
 
 	attack_self(mob/user)
 		return 0

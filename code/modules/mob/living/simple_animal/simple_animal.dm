@@ -157,10 +157,10 @@
 		if(istype(T,/turf/simulated))
 			var/turf/simulated/ST = T
 			if(ST.air)
-				var/tox = ST.air.phoron
-				var/oxy = ST.air.oxygen
-				var/n2  = ST.air.nitrogen
-				var/co2 = ST.air.carbon_dioxide
+				var/tox = ST.air.gas["phoron"]
+				var/oxy = ST.air.gas["oxygen"]
+				var/n2  = ST.air.gas["nitrogen"]
+				var/co2 = ST.air.gas["carbon_dioxide"]
 
 				if(min_oxy)
 					if(oxy < min_oxy)

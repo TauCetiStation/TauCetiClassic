@@ -149,6 +149,9 @@ Class Procs:
 /obj/machinery/process()//If you dont use process or power why are you here
 	return PROCESS_KILL
 
+/obj/machinery/proc/process_atmos()//If you dont use process why are you here
+	return PROCESS_KILL
+
 /obj/machinery/emp_act(severity)
 	if(use_power && stat == 0)
 		use_power(7500/severity)
@@ -172,12 +175,14 @@ Class Procs:
 
 /obj/machinery/proc/dropContents()
 	var/turf/T = get_turf(src)
-	T.contents += contents
-	if(occupant)
-		if(occupant.client)
-			occupant.client.eye = occupant
-			occupant.client.perspective = MOB_PERSPECTIVE
-		occupant = null
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(T)
+		if(isliving(AM))
+			var/mob/living/L = AM
+			if(L.client)
+				L.client.eye = L
+				L.client.perspective = MOB_PERSPECTIVE
+	occupant = null
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
 	state_open = 0

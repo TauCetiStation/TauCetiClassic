@@ -82,13 +82,6 @@
 		to_chat(usr, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
 		visible_message("<span class='red'>[user] gently taps [src] with [O].</span>")
 
-/mob/living/simple_animal/construct/airflow_stun()
-	return
-
-/mob/living/simple_animal/construct/airflow_hit(atom/A)
-	return
-
-
 /////////////////Juggernaut///////////////
 /mob/living/simple_animal/construct/armoured
 	name = "Juggernaut"

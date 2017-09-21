@@ -106,20 +106,17 @@
 		var/turf/simulated/L = loc
 		if(istype(L))
 			var/datum/gas_mixture/env = L.return_air()
-			if(env.temperature < (heat_amt+T0C))
 
-				var/transfer_moles = 0.25 * env.total_moles()
+			var/transfer_moles = 0.25 * env.total_moles
 
-				var/datum/gas_mixture/removed = env.remove(transfer_moles)
+			var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
-				if(removed)
+			if(removed)
+				var/heat_produced = idle_power_usage	//obviously can't produce more heat than the machine draws from it's power source
 
-					var/heat_capacity = removed.heat_capacity()
-					if(heat_capacity == 0 || heat_capacity == null)
-						heat_capacity = 1
-					removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
+				removed.add_thermal_energy(heat_produced)
 
-				env.merge(removed)
+			env.merge(removed)
 
 /obj/machinery/r_n_d/server/attackby(obj/item/I, mob/user)
 	if (disabled)

@@ -119,7 +119,7 @@
 			found += A.search_contents_for(path,filter_path)
 	return found
 
-/atom/proc/examine(mob/user)
+/atom/proc/examine(mob/user, distance = -1)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
 	if(src.blood_DNA)
@@ -155,6 +155,8 @@
 				to_chat(user, "<span class='info'>[reagents.total_volume] units of liquid.</span>")
 		else
 			to_chat(user, "Nothing.")
+
+	return distance == -1 || (get_dist(src, user) <= distance)
 
 //called to set the atom's dir and used to add behaviour to dir-changes
 /atom/proc/set_dir(new_dir)
