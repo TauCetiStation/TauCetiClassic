@@ -46,15 +46,21 @@ var/global/list/junkyard_bum_list = list()     //list of all bums placements
 	update_inv_l_hand()
 
 
-/mob/dead/observer/verb/become_bum()
+/mob/dead/verb/become_bum()
 	set name = "Become space bum"
 	set category = "Ghost"
 	var/mob/dead/observer/M = usr
-	if(config.antag_hud_restricted && M.has_enabled_antagHUD == 1)
-		to_chat(src, "<span class='warning'>antagHUD restrictions prevent you from spawning in as a mouse.</span>")
+	if(ticker.current_state < GAME_STATE_PLAYING)
+		to_chat(src, "<span class='warning'> The game hasn't started yet!</span>")
 		return
-	if(client.time_joined_as_spacebum + 300 >= world.time)
-		to_chat(src, "<span class='warning'>You may only spawn as space bum once per 5 minutes. [600 - world.time + client.time_joined_as_spacebum] seconds to respawn.</span>")
+	if(!SSjunkyard.junkyard_initialised)
+		to_chat(src, "<span class='warning'>Junkyard not loaded. No space hobos for you. Ask admins to load junkyard.</span>")
+		return
+	if(config.antag_hud_restricted && M.has_enabled_antagHUD == 1)
+		to_chat(src, "<span class='warning'>antagHUD restrictions prevent you from spawning in as a bum.</span>")
+		return
+	if(client.time_joined_as_spacebum + 1200 >= world.time)
+		to_chat(src, "<span class='warning'>You may only spawn as space bum once per 5 minutes. [1200 - world.time + client.time_joined_as_spacebum] seconds to respawn.</span>")
 		return
 	client.time_joined_as_spacebum = world.time
 	var/response = alert(src, "Are you -sure- you want to become a space bum?","Are you sure you want to hobo?","Yeah!","Nope!")
@@ -67,5 +73,5 @@ var/global/list/junkyard_bum_list = list()     //list of all bums placements
 	var/obj/effect/landmark/location = pick(junkyard_bum_list)
 	var/mob/living/carbon/human/bum/host = new /mob/living/carbon/human/bum(location.loc)
 	host.ckey = src.ckey
-	to_chat(host, "<span class='warning'>You are space bum now. Try to survive. There are no rules.</span>")
+	to_chat(host, "<span class='warning'>You are space bum now. Try to survive. Try to cooperate. Try to be friendly. Only remember: there are no rules!</span>")
 	return host

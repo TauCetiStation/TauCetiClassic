@@ -45,6 +45,10 @@
 	on = !on
 	update_brightness(user)
 	item_state = icon_state
+	if(user.hand && loc == user)
+		user.update_inv_r_hand()
+	else
+		user.update_inv_l_hand()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/torch/attack_self()

@@ -17,7 +17,6 @@ var/datum/subsystem/mapping/SSmapping
 	// Generate mining.
 	make_mining_asteroid_secrets()
 	populate_distribution_map()
-	populate_junkyard()
 	// Load templates
 	preloadTemplates()
 	..()
@@ -29,16 +28,6 @@ var/datum/subsystem/mapping/SSmapping
 /datum/subsystem/mapping/proc/populate_distribution_map()
 	var/datum/ore_distribution/distro = new
 	distro.populate_distribution_map()
-
-/datum/subsystem/mapping/proc/populate_junkyard()
-	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
-	for(var/thing in turfs_to_init)
-		var/turf/T = thing
-		if(istype(T, /turf/simulated/mineral/airfull/junkyard))
-			T.surround_by_scrap()
-		if(istype(T, /turf/simulated/floor/plating/ironsand/junkyard))
-			T.surround_by_scrap()
-		CHECK_TICK
 
 
 /datum/subsystem/mapping/Recover()

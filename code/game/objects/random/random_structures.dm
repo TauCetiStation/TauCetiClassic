@@ -219,8 +219,8 @@
 					prob(100);/obj/machinery/hydroponics/constructable,\
 					prob(100);/obj/structure/stool/bed/chair/wheelchair,\
 					prob(100);/obj/structure/stool/bed/roller,\
-					prob(100);/obj/machinery/portable_atmospherics/pump,\
-					prob(100);/obj/machinery/portable_atmospherics/scrubber,\
+					prob(100);/obj/machinery/portable_atmospherics/powered/pump,\
+					prob(100);/obj/machinery/portable_atmospherics/powered/scrubber,\
 					prob(100);/obj/structure/kitchenspike,\
 					prob(75);/obj/structure/janitorialcart,\
 					prob(40);/obj/machinery/power/grounding_rod,\
@@ -239,9 +239,9 @@
 					prob(15);/obj/structure/particle_accelerator/fuel_chamber,\
 					prob(15);/obj/structure/particle_accelerator/end_cap,\
 					prob(15);/obj/machinery/particle_accelerator/control_box,\
-					prob(10);/obj/machinery/atmospherics/binary/circulator,\
+				//	prob(10);/obj/machinery/atmospherics/binary/circulator,
 					prob(10);/obj/machinery/power/tesla_coil,\
-					prob(5);/obj/machinery/power/generator_type2,\
+				//	prob(5);/obj/machinery/power/generator_type2,
 					prob(5);/obj/structure/safe,\
 					prob(5);/obj/machinery/the_singularitygen/tesla,\
 					prob(5);/obj/machinery/the_singularitygen,\

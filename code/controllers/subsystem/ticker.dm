@@ -504,6 +504,9 @@ var/datum/subsystem/ticker/ticker
 			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
 		world.log << dellog
 
+	if(SSjunkyard)
+		SSjunkyard.save_stats()
+
 	scoreboard(ai_completions)
 
 	return 1

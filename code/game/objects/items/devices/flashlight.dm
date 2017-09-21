@@ -196,6 +196,10 @@
 		src.force = on_damage
 		src.damtype = "fire"
 		item_state = icon_state
+		if(user.hand)
+			user.update_inv_l_hand()
+		else
+			user.update_inv_r_hand()
 		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/slime

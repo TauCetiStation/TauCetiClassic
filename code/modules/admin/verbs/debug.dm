@@ -383,6 +383,17 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.")
 	feedback_add_details("admin_verb","MPWN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+
+/client/proc/cmd_debug_load_junkyard()
+	set category = "Debug"
+	set name = "Load Junkyard"
+	SSjunkyard.populate_junkyard()
+	log_admin("[key_name(src)] pupulated junkyard. SSjunkyard.populate_junkyard() called.")
+	message_admins("[key_name_admin(src)] pupulated junkyard. SSjunkyard.populate_junkyard() called.")
+	feedback_add_details("admin_verb","PPJYD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
+
 /client/proc/cmd_debug_tog_aliens()
 	set category = "Server"
 	set name = "Toggle Aliens"

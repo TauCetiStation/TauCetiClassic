@@ -34,6 +34,11 @@ var/global/list/scrap_base_cache = list()
 	var/list/ways = list("pokes around", "digs through", "rummages through", "goes through","picks through")
 	var/list/diggers = list()
 
+
+
+
+
+
 /obj/structure/scrap/proc/make_cube()
 	var/obj/container = new /obj/structure/scrap_cube(src.loc, loot_max)
 	src.forceMove(container)
@@ -497,3 +502,7 @@ var/global/list/scrap_base_cache = list()
 /obj/item/weapon/storage/internal/updating/update_icon()
 	if(master_item)
 		master_item.update_icon()
+
+/obj/item/weapon/storage/internal/updating/remove_from_storage(obj/item/W, atom/new_location)
+	if(..())
+		SSjunkyard.add_junk_to_stats("[W.type]")
