@@ -673,7 +673,6 @@ var/global/BSACooldown = 0
 			<BR>
 			<A href='?src=\ref[src];secretsadmin=list_job_debug'>Show Job Debug</A><BR>
 			<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
-			<A href='?src=\ref[src];secretscoder=spawn_objects'>Admin Log</A><BR>
 			<BR>
 			"}
 
