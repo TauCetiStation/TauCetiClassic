@@ -37,6 +37,7 @@ var/global/list/junkyard_bum_list = list()     //list of all bums placements
 	real_name = name
 	var/datum/preferences/A = new()	//Randomize appearance for the human
 	A.randomize_appearance_for(src)
+	sight |= SEE_BLACKNESS
 	update_inv_head()
 	update_inv_wear_suit()
 	update_inv_gloves()

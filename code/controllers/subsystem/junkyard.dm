@@ -40,4 +40,4 @@ var/datum/subsystem/junkyard/SSjunkyard
 	if(isnull(junk[junktype]))
 		junk[junktype] = 1
 	else
-		junk[junktype] = 0
+		junk[junktype] ++
