@@ -43,24 +43,6 @@
 	var/next_dest
 	var/next_dest_loc
 
-	/*
-	var/auto_patrol = 0		// set to make bot automatically patrol
-
-	var/beacon_freq = 1445		// navigation beacon frequency
-
-	var/turf/patrol_target	// this is turf to navigate to (location of beacon)
-	var/new_destination		// pending new destination (waiting for beacon response)
-	var/destination			// destination description tag
-	var/next_destination	// the next destination in the patrol route
-	var/list/path = new				// list of path turfs
-
-	var/blockcount = 0		//number of times retried a blocked path
-	var/awaiting_beacon	= 0	// count of pticks awaiting a beacon response
-
-	var/nearest_beacon			// the nearest beacon's tag
-	var/turf/nearest_beacon_loc	// the nearest beacon's location
-	*/
-
 /obj/machinery/bot/cleanbot/New()
 	..()
 	src.get_targets()
