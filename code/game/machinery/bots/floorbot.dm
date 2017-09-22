@@ -172,15 +172,14 @@
 				if(T != src.oldtarget && !(target in floorbottargets))
 					src.oldtarget = T
 					src.target = T
-					break
+					return
 		if(src.target == null || !src.target)
 			if(src.maketiles)
-				if(src.target == null || !src.target)
-					for(var/obj/item/stack/sheet/metal/M in view(7, src))
-						if(!(M in floorbottargets) && M != src.oldtarget && M.amount == 1 && !(istype(M.loc, /turf/simulated/wall)))
-							src.oldtarget = M
-							src.target = M
-							break
+				for(var/obj/item/stack/sheet/metal/M in view(7, src))
+					if(!(M in floorbottargets) && M != src.oldtarget && M.amount == 1 && !(istype(M.loc, /turf/simulated/wall)))
+						src.oldtarget = M
+						src.target = M
+						return
 		else
 			return
 	if(prob(5))
@@ -235,9 +234,9 @@
 	if(src.target && (src.target != null) && src.path.len == 0)
 		spawn(0)
 			if(!istype(src.target, /turf/))
-				src.path = get_path_to(src, src.target, /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = FALSE)
+				src.path = get_path_to(src, get_turf(src.target), /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = FALSE)
 			else
-				src.path = get_path_to(src, src.target, /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = FALSE)
+				src.path = get_path_to(src, get_turf(src.target), /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = FALSE)
 			if(src.path.len == 0)
 				src.oldtarget = src.target
 				src.target = null
@@ -439,3 +438,6 @@
 			return
 
 		src.created_name = t
+
+/obj/machinery/bot/floorbot/Process_Spacemove(movement_dir = 0)
+	return 1
