@@ -43,6 +43,24 @@
 	var/next_dest
 	var/next_dest_loc
 
+	/*
+	var/auto_patrol = 0		// set to make bot automatically patrol
+
+	var/beacon_freq = 1445		// navigation beacon frequency
+
+	var/turf/patrol_target	// this is turf to navigate to (location of beacon)
+	var/new_destination		// pending new destination (waiting for beacon response)
+	var/destination			// destination description tag
+	var/next_destination	// the next destination in the patrol route
+	var/list/path = new				// list of path turfs
+
+	var/blockcount = 0		//number of times retried a blocked path
+	var/awaiting_beacon	= 0	// count of pticks awaiting a beacon response
+
+	var/nearest_beacon			// the nearest beacon's tag
+	var/turf/nearest_beacon_loc	// the nearest beacon's location
+	*/
+
 /obj/machinery/bot/cleanbot/New()
 	..()
 	src.get_targets()
@@ -169,8 +187,8 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		return
 	if(src.cleaning)
 		return
-	if(!inaction_check())
-		return
+	//if(!inaction_check())
+	//	return
 
 	if(!src.screwloose && !src.oddbutton && prob(5))
 		visible_message("[src] makes an excited beeping booping sound!")
@@ -194,6 +212,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 					return
 
 	if(!src.target || src.target == null)
+
 		if(src.loc != src.oldloc)
 			src.oldtarget = null
 
@@ -207,7 +226,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 
 			closest_dist = 9999
 			closest_loc = null
-			next_dest_loc = null
+			//next_dest_loc = null
 
 			var/datum/signal/signal = new()
 			signal.source = src
@@ -227,7 +246,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(target && path.len == 0)
 		spawn(0)
 			if(!src || !target) return
-			src.path = get_path_to(src, src.target, /turf/proc/Distance_cardinal, 0, 30, id=botcard)
+			src.path = get_path_to(src, get_turf(src.target), /turf/proc/Distance_cardinal, 0, 30, id=botcard)
 			if(src.path.len == 0)
 				src.oldtarget = src.target
 				target.targeted_by = null
@@ -269,20 +288,27 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		failed_steps = 0
 
 /obj/machinery/bot/cleanbot/receive_signal(datum/signal/signal)
+
+
 	var/recv = signal.data["beacon"]
 	var/valid = signal.data["patrol"]
 	if(!recv || !valid)
 		return
 
 	var/dist = get_dist(src, signal.source.loc)
+	var/closest_dest = recv
 	if (dist < closest_dist && signal.source.loc != src.loc)
 		closest_dist = dist
 		closest_loc = signal.source.loc
-		next_dest = signal.data["next_patrol"]
+		closest_dest = recv
 
-	if (recv == next_dest)
+	if(next_dest == null || patrol_path == null || next_dest_loc == null)
+		next_dest_loc = closest_loc
+		next_dest = closest_dest
+	if(next_dest_loc == src.loc && recv == next_dest)
 		next_dest_loc = signal.source.loc
 		next_dest = signal.data["next_patrol"]
+
 
 /obj/machinery/bot/cleanbot/proc/get_targets()
 	src.target_types = new/list()
@@ -302,12 +328,18 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	target_types += /obj/effect/decal/cleanable/molten_item
 	target_types += /obj/effect/decal/cleanable/ash
 	target_types += /obj/effect/decal/cleanable/greenglow
+	target_types += /obj/effect/decal/cleanable/spiderling_remains
+
 
 	if(src.blood)
 		target_types += /obj/effect/decal/cleanable/blood/
 		target_types += /obj/effect/decal/cleanable/blood/gibs/
 		target_types += /obj/effect/decal/cleanable/blood/tracks
 		target_types += /obj/effect/decal/cleanable/blood/tracks/footprints
+		target_types += /obj/effect/decal/cleanable/blood/tracks/wheels
+		target_types += /obj/effect/decal/cleanable/blood/splatter
+		target_types += /obj/effect/decal/cleanable/blood/drip
+		target_types += /obj/effect/decal/cleanable/blood/trail_holder
 
 /obj/machinery/bot/cleanbot/proc/clean(obj/effect/decal/cleanable/target)
 	anchored = 1
