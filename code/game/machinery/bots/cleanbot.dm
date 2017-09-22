@@ -169,8 +169,8 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		return
 	if(src.cleaning)
 		return
-	//if(!inaction_check())
-	//	return
+	if(!inaction_check())
+		return
 
 	if(!src.screwloose && !src.oddbutton && prob(5))
 		visible_message("[src] makes an excited beeping booping sound!")
