@@ -181,6 +181,11 @@ var/list/admin_verbs_permissions = list(
 var/list/admin_verbs_rejuv = list(
 	/client/proc/respawn_character
 	)
+var/list/admin_verbs_whitelist = list(
+	/client/proc/get_whitelist, 			//Whitelist
+	/client/proc/add_to_whitelist,
+	/datum/admins/proc/whitelist_panel
+	)
 
 //verbs which can be hidden - needs work
 var/list/admin_verbs_hideable = list(
@@ -282,6 +287,8 @@ var/list/admin_verbs_hideable = list(
 			verbs += admin_verbs_sounds
 		if(holder.rights & R_SPAWN)
 			verbs += admin_verbs_spawn
+		if(holder.rights & R_WHITELIST)
+			verbs += admin_verbs_whitelist
 		if(holder.rights & R_EVENT)
 			verbs += admin_verbs_event
 			verbs += admin_verbs_event_fun
