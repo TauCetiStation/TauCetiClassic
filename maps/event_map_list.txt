@@ -16,3 +16,4 @@ maps/RandomZLevels/z3.dmm
 maps/RandomZLevels/z4.dmm
 maps/RandomZLevels/z5.dmm
 maps/RandomZLevels/z6.dmm
+maps/eventmakers_maps/wild_west.dmm
