@@ -1444,7 +1444,6 @@
 #define MAX_LEAP_DIST 4
 
 /mob/living/carbon/human/proc/leap_at(atom/A)
-	var/mob/living/carbon/human/H = usr
 	if(leap_icon.time_used > world.time)
 		to_chat(src, "<span class='warning'>You are too fatigued to leap right now!</span>")
 		return
@@ -1468,14 +1467,14 @@
 	var/prev_intent = a_intent
 	a_intent_change("hurt")
 
-	if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
-		for(var/obj/item/clothing/suit/space/vox/stealth/V in list(H.wear_suit))
+	if(src.wear_suit && istype(src.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
+		for(var/obj/item/clothing/suit/space/vox/stealth/V in list(src.wear_suit))
 			if(V.on)
 				V.overload()
 
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .leap_end, prev_intent))
 
-	H.toggle_leap()
+	src.toggle_leap()
 
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)

@@ -189,10 +189,7 @@
 
 /obj/item/clothing/suit/space/vox/stealth/proc/is_damaged()
 	if(damage >= 2)
-		wearer.visible_message(
-		"<span class='warning'>[wearer] appears from nowhere!",
-		"<span class='warning'>[src] is too damaged to support stealth mode!</span>"
-		)
+		to_chat(wearer, "<span class='warning'>[src] is too damaged to support stealth mode!</span>")
 		var/datum/effect/effect/system/spark_spread/s = new
 		s.set_up(5, 1, src)
 		s.start()
