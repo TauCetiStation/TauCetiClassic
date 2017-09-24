@@ -1444,6 +1444,7 @@
 #define MAX_LEAP_DIST 4
 
 /mob/living/carbon/human/proc/leap_at(atom/A)
+	var/mob/living/carbon/human/H = usr
 	if(leap_icon.time_used > world.time)
 		to_chat(src, "<span class='warning'>You are too fatigued to leap right now!</span>")
 		return
@@ -1463,10 +1464,19 @@
 	status_flags |= LEAPING
 	stop_pulling()
 
+
 	var/prev_intent = a_intent
 	a_intent_change("hurt")
 
+	if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
+		for(var/obj/item/clothing/suit/space/vox/stealth/V in list(H.wear_suit))
+			if(V.on)
+				V.overload()
+
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .leap_end, prev_intent))
+
+	H.toggle_leap()
+
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
 	status_flags &= ~LEAPING
@@ -1494,6 +1504,8 @@
 
 		visible_message("<span class='warning'><b>\The [src]</b> seizes [L] aggressively!</span>")
 
+		src.toggle_leap()
+
 		var/obj/item/weapon/grab/G = new(src, L)
 		if(use_hand == "left")
 			l_hand = G
@@ -1503,6 +1515,7 @@
 		G.state = GRAB_AGGRESSIVE
 		G.icon_state = "grabbed1"
 		G.synch()
+		L.grabbed_by += G
 
 	else if(A.density)
 		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='danger'>You smashes into [A]!</span>")

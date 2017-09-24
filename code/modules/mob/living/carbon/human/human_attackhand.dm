@@ -18,6 +18,10 @@
 		for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(M.wear_suit))
 			if(V.stealth_active)
 				V.DeactivateStealth()
+	if(M.wear_suit && istype(M.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
+		for(var/obj/item/clothing/suit/space/vox/stealth/V in list(M.wear_suit))
+			if(V.on)
+				V.overload()
 
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		M.do_attack_animation(src)
@@ -144,6 +148,7 @@
 				playsound(loc, attack.miss_sound, 25, 1, -1)
 				visible_message("\red <B>[M] tried to [pick(attack.attack_verb)] [src]!</B>")
 				return 0
+
 
 
 			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
