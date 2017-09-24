@@ -35,6 +35,7 @@
 	move_to_delay = 6
 	speed = 3
 	environment_smash = 1
+	weather_immunities = list("ash", "acid")
 
 //nursemaids - these create webs and eggs
 /mob/living/simple_animal/hostile/giant_spider/nurse

@@ -13,7 +13,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "cuirass"
 /obj/random/cloth/armor/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/suit/armor))
+	return pick(subtypesof(/obj/item/clothing/suit/armor) - list(/obj/item/clothing/suit/armor/tdome))
 
 
 /obj/random/cloth/spacesuit
@@ -30,7 +30,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "miljacket_ranger"
 /obj/random/cloth/storagesuit/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/suit/storage))
+	return pick(subtypesof(/obj/item/clothing/suit/storage) - list(/obj/item/clothing/suit/storage/lawyer))
 
 /obj/random/cloth/hazmatsuit
 	name = "random hazmatsuit"
@@ -71,7 +71,7 @@
 	icon = 'icons/obj/clothing/suits.dmi'
 	icon_state = "tourist"
 /obj/random/cloth/under/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/under) - list(/obj/item/clothing/under/stripper/stripper_green, /obj/item/clothing/under/lawyer, /obj/item/clothing/under/color, /obj/item/clothing/under/shorts, /obj/item/clothing/under/swimsuit, /obj/item/clothing/under/shadowling, /obj/item/clothing/under/fluff, /obj/item/clothing/under/rank, /obj/item/clothing/under/pj, /obj/item/clothing/under/wedding, /obj/item/clothing/under/gimmick/rank, /obj/item/clothing/under/bluepyjamas, /obj/item/clothing/under/acj))
+	return pick(subtypesof(/obj/item/clothing/under) - list(/obj/item/clothing/under/stripper/stripper_green, /obj/item/clothing/under/lawyer, /obj/item/clothing/under/color, /obj/item/clothing/under/shorts, /obj/item/clothing/under/swimsuit, /obj/item/clothing/under/shadowling, /obj/item/clothing/under/fluff, /obj/item/clothing/under/rank, /obj/item/clothing/under/pj, /obj/item/clothing/under/wedding, /obj/item/clothing/under/gimmick/rank, /obj/item/clothing/under/bluepyjamas, /obj/item/clothing/under/acj, /obj/item/clothing/under/redpyjamas, /obj/item/clothing/under/gimmick/rank/head_of_personnel, /obj/item/clothing/under/dress, /obj/item/clothing/under/cloud))
 
 /obj/random/cloth/spacehelmet
 	name = "random spacehelmet"

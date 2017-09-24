@@ -56,6 +56,9 @@
 		if(!A.density && !locate(/obj/structure/scrap in A.contents))
 			new /obj/random/scrap/dense_weighted(A)
 
+/turf/simulated/floor/plating/ironsand/junkyard
+	var/dug = 0
+
 
 /turf/simulated/floor/plating/ironsand/junkyard/surround_by_scrap()
 	if(prob(1))
@@ -115,3 +118,19 @@
 				new /obj/random/mobs/peacefull(src)
 
 
+/turf/simulated/floor/plating/ironsand/junkyard/attackby(obj/item/weapon/W, mob/user)
+	if(!W || !user)
+		return 0
+	if ((istype(W, /obj/item/weapon/shovel)))
+		var/turf/T = user.loc
+		if (!( istype(T, /turf) ))
+			return 0
+		if (!dug)
+			if(do_after(user, 60, target = src))
+				if(!dug) //someone else digged here
+					visible_message("<span class='notice'>\The [user] shovels new grave.</span>")
+					new /obj/structure/pit(src)
+					dug = 1
+				return
+		return
+	..(W,user)

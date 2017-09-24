@@ -494,10 +494,19 @@ var/global/list/scrap_base_cache = list()
 	base_max = 6
 	big_item_chance = 100
 
-/obj/structure/scrap/poor/structure/New()
-	make_big_loot()
-	..()
+//obj/structure/scrap/poor/structure/New() //removed big loot generation from structure scrap
+//	make_big_loot()
+//	..()
 
+/obj/structure/scrap/poor/structure/update_icon() //make big trash icon for this
+	..()
+	if(!loot_generated)
+		underlays += image(icon, icon_state = "underlay_big")
+
+/obj/structure/scrap/poor/structure/make_big_loot()
+	..()
+	if(big_item)
+		visible_message("<span class='notice'>\The [src] reveals [big_item] underneath the trash!</span>")
 
 /obj/item/weapon/storage/internal/updating/update_icon()
 	if(master_item)

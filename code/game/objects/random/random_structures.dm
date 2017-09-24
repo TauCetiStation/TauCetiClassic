@@ -41,8 +41,6 @@
 					/obj/structure/closet/lawcloset,\
 					/obj/structure/closet/jcloset,\
 					/obj/structure/closet/gmcloset,\
-					/obj/structure/closet/thunderdome/tdgreen,\
-					/obj/structure/closet/thunderdome/tdred,\
 					/obj/structure/closet/gimmick/tacticool,\
 					/obj/structure/closet/gimmick/russian,\
 					/obj/structure/closet/cabinet,\
@@ -150,7 +148,9 @@
 					prob(4);/obj/structure/closet/secure_closet/ert/engineer,\
 					prob(4);/obj/structure/closet/secure_closet/ert/medical,\*/
 					prob(3);/obj/structure/closet/abductor,\
-					prob(20);/obj/structure/closet/malf/suits\
+					prob(20);/obj/structure/closet/malf/suits,\
+					prob(2);/obj/structure/closet/thunderdome/tdgreen,\
+					prob(2);/obj/structure/closet/thunderdome/tdred\
 				)
 
 

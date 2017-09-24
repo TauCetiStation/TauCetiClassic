@@ -380,14 +380,12 @@ BLIND     // can't see anything
 		hastie.emp_act(severity)
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
-	if(I.sharp)
+	if(I.sharp && !istype(loc, /mob/living/carbon/human)) //you can cut only clothes lying on the floor
 		new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), old = crit_fail)
 		new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), old = crit_fail)
 		new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), old = crit_fail)
 		qdel(src)
-		if(istype(loc, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform()
+		return
 	if(hastie)
 		hastie.attackby(I, user)
 		return

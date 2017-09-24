@@ -81,7 +81,7 @@
 	weather_duration_upper = 1500
 	weather_sound = 'sound/ambience/ash_storm_start.ogg'
 	weather_overlay = "ash_storm"
-	weather_alpha = 200
+	weather_alpha = 170
 	overlay_layer = 10
 	end_message = "<span class='boldannounce'>The shrieking wind whips away the last of the ash and falls to its usual murmur. It should be safe to go outside now.</span>"
 	end_duration = 300
@@ -132,7 +132,7 @@
 	weather_overlay = "light_ash"
 
 	end_message = "<span class='notice'>The emberfall slows, stops. Another layer of hardened soot to the ground beneath your feet.</span>"
-
+	weather_alpha = 250
 	aesthetic = TRUE
 	spawn_tornadoes = 0
 	probability = 60
