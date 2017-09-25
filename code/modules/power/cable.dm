@@ -420,6 +420,9 @@ By design, d1 is the smallest direction and d2 is the highest
 // General procedures
 ///////////////////////////////////
 
+/obj/item/weapon/cable_coil/proc/add(_amount)
+	amount += _amount
+
 //you can use wires to heal robotics
 /obj/item/weapon/cable_coil/attack(mob/M, mob/user)
 	if(ishuman(M))

@@ -3,6 +3,7 @@
 	plane = GAME_PLANE
 	var/level = 2
 	var/flags = 0
+	var/flags_2 = 0
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
@@ -89,6 +90,21 @@
 		light = null
 
 	return ..()
+
+/atom/proc/CheckParts(list/parts_list)
+	for(var/A in parts_list)
+		if(istype(A, /datum/reagent))
+			if(!reagents)
+				reagents = new()
+			reagents.reagent_list.Add(A)
+			reagents.conditional_update()
+		else if(ismovableatom(A))
+			var/atom/movable/M = A
+			if(isliving(M.loc))
+				var/mob/living/L = M.loc
+				L.drop_from_inventory(M, src)
+			else
+				M.forceMove(src)
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	return null

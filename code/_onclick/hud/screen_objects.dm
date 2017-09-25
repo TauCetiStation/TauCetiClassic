@@ -639,3 +639,13 @@
 				usr.update_inv_r_hand()
 				usr.next_move = world.time+6
 	return 1
+
+/obj/screen/inventory/craft
+	name = "crafting menu"
+	icon = 'icons/mob/screen1_Midnight.dmi'
+	icon_state = "craft"
+	screen_loc = ui_crafting
+
+/obj/screen/inventory/craft/Click()
+	var/mob/living/M = usr
+	M.OpenCraftingMenu()
