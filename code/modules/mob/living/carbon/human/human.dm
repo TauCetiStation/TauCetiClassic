@@ -1467,12 +1467,12 @@
 	var/prev_intent = a_intent
 	a_intent_change("hurt")
 
-	if(src.wear_suit && istype(src.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
-		for(var/obj/item/clothing/suit/space/vox/stealth/V in list(src.wear_suit))
+	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/space/vox/stealth))
+		for(var/obj/item/clothing/suit/space/vox/stealth/V in list(wear_suit))
 			if(V.on)
 				V.overload()
 
-	src.toggle_leap()
+	toggle_leap()
 
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .leap_end, prev_intent))
 
