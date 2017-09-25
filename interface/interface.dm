@@ -83,7 +83,7 @@ Any-Mode: (hotkey doesn't need to be on)
 Admin:
 \tF5 = Asay
 \tF6 = player-panel-new
-\tF7 = Esay
+\tF7 = admin-pm
 \tF8 = Invisimin
 \tF9 = Mentorhelp
 </font>"}

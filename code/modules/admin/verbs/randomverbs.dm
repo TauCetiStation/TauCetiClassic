@@ -756,7 +756,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Gib"
 
-	if(!check_rights(R_ADMIN|R_FUN|R_EVENT))
+	if(!check_rights(R_ADMIN|R_FUN))
 		return
 
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
@@ -913,7 +913,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!ticker || SSshuttle.location)
 		return
 
-	if(!check_rights(R_ADMIN|R_EVENT))
+	if(!check_rights(R_ADMIN))
 		return
 
 	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes")
@@ -957,7 +957,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Cancel Shuttle"
 
-	if(!check_rights(R_ADMIN|R_EVENT))
+	if(!check_rights(R_ADMIN))
 		return
 
 	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes") return
@@ -984,7 +984,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if (!ticker)
 		return
 
-	if(!check_rights(R_ADMIN|R_EVENT))
+	if(!check_rights(R_ADMIN))
 		return
 
 	SSshuttle.deny_shuttle = !SSshuttle.deny_shuttle
@@ -1058,7 +1058,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set name = "Send Fax Message"
 	set category = "Special Verbs"
 
-	if(!check_rights(R_ADMIN|R_EVENT))
+	if(!check_rights(R_ADMIN))
 		return
 
 	var/sent_text = sanitize_alt(input(usr, "Please, enter the text you want to send.", "What?", "") as message|null)

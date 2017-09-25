@@ -445,7 +445,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Assume direct control"
 	set desc = "Direct intervention."
 
-	if(!check_rights(R_DEBUG|R_ADMIN|R_EVENT))	return
+	if(!check_rights(R_DEBUG|R_ADMIN))
+		return
 	if(M.ckey)
 		if(alert("This mob is being controlled by [M.ckey]. Are you sure you wish to assume control of it? [M.ckey] will be made a ghost.",,"Yes","No") != "Yes")
 			return

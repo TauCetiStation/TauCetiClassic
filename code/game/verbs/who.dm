@@ -75,75 +75,50 @@
 	set category = "Admin"
 	set name = "Staffwho"
 
-	var/msg = ""
-	var/list/messages = list("", "", "", "") 
-	var/list/num_online = list(0, 0, 0, 0)
+	var/list/messages = list("", "") 
+	var/list/num_online = list(0, 0)
 	if(holder)
 		for(var/client/C in admins)
 			if(C.ckey in stealth_keys)
 				continue
 			if(C.holder.fakekey && !(R_ADMIN & holder.rights))
 				continue
-			msg += "&emsp;[C] is a [C.holder.rank]"
+			messages[1] += "&emsp;[C] is a [C.holder.rank]"
 			if(C.holder.fakekey)
-				msg += " <i>(as [C.holder.fakekey])</i>"
+				messages[1] += " <i>(as [C.holder.fakekey])</i>"
 			if(isobserver(C.mob))
-				msg += " - Observing"
+				messages[1] += " - Observing"
 			else if(istype(C.mob, /mob/new_player))
-				msg += " - Lobby"
+				messages[1] += " - Lobby"
 			else
-				msg += " - Playing"
+				messages[1] += " - Playing"
 			if(C.is_afk())
-				msg += " (AFK)"
-			msg += "\n"
-			if(C.holder.rights & R_ADMIN)
-				messages[1] += msg
-				num_online[1]++
-			else if(C.holder.rights & R_EVENT)
-				messages[2] += msg
-				num_online[2]++
-			else
-				messages[3] += msg
-				num_online[3]++
-			msg = ""
+				messages[1] += " (AFK)"
+			messages[1] += "\n"
+			num_online[1]++
 		for(var/client/C in mentors)
-			msg += "&emsp;[C] is a Mentor"
+			messages[2] += "&emsp;[C] is a Mentor"
 			if(isobserver(C.mob))
-				msg += " - Observing"
+				messages[2] += " - Observing"
 			else if(istype(C.mob,/mob/new_player))
-				msg += " - Lobby"
+				messages[2] += " - Lobby"
 			else
-				msg += " - Playing"
+				messages[2] += " - Playing"
 			if(C.is_afk())
-				msg += " (AFK)"
-			msg += "\n"
-			messages[4] += msg
-			num_online[4]++
-			msg = ""
+				messages[2] += " (AFK)"
+			messages[2] += "\n"
+			num_online[2]++
 	else
 		for(var/client/C in admins)
 			if(C.ckey in stealth_keys)
 				continue
 			if(!C.holder.fakekey)
-				msg += "&emsp;[C] is a [C.holder.rank]\n"
-				if(C.holder.rights & R_ADMIN)
-					messages[1] += msg
-					num_online[1]++
-				else if(C.holder.rights & R_EVENT)
-					messages[2] += msg
-					num_online[2]++
-				else
-					messages[3] += msg
-					num_online[3]++
-				msg = ""
+				messages[1] += "&emsp;[C] is a [C.holder.rank]\n"
+				num_online[1]++
 		for(var/client/C in mentors)
-			msg += "&emsp;[C] is a Mentor\n"
-			messages[4] += msg
-			num_online[4]++
-			msg = ""
+			messages[2] += "&emsp;[C] is a Mentor\n"
+			num_online[2]++
 	
-	msg += (num_online[1]) ? "<b>Current Admins ([num_online[1]]):</b>\n" + messages[1] : "<b>No Admins online</b>\n"
-	msg += (num_online[2]) ? "\n<b>Current Eventers ([num_online[2]]):</b>\n" + messages[2] : "\n<b>No Eventers online</b>\n"
-	msg += (num_online[4]) ? "\n<b>Current Mentors ([num_online[4]]):</b>\n" + messages[4] : "\n<b>No Mentors online</b>\n"
-	msg += (num_online[3]) ? "\n<b>Other ([num_online[3]]):</b>\n" + messages[3] : ""
-	to_chat(src, msg)
+	messages[1]  = num_online[1] ? "<b>Current Admins ([num_online[1]]):</b>\n" + messages[1] : "<b>No Admins online</b>\n"
+	messages[1] += num_online[2] ? "\n<b>Current Mentors ([num_online[2]]):</b>\n" + messages[2] : "\n<b>No Mentors online</b>\n"
+	to_chat(src, messages[1])

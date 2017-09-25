@@ -84,7 +84,7 @@ var/global/floorIsLava = 0
 		<A href='?src=\ref[src];getmob=\ref[M]'>Get</A> |
 		<A href='?src=\ref[src];sendmob=\ref[M]'>Send To</A>
 		<br><br>
-		[check_rights(R_ADMIN|R_EVENT,0) ? "<A href='?src=\ref[src];traitor=\ref[M]'>Traitor panel</A> | " : "" ]
+		[check_rights(R_ADMIN,0) ? "<A href='?src=\ref[src];traitor=\ref[M]'>Traitor panel</A> | " : "" ]
 		<A href='?src=\ref[src];narrateto=\ref[M]'>Narrate to</A> |
 		<A href='?src=\ref[src];subtlemessage=\ref[M]'>Subtle message</A>
 	"}
@@ -578,7 +578,7 @@ var/global/floorIsLava = 0
 
 	var/dat = "<B>The first rule of adminbuse is: you don't talk about the adminbuse.</B><HR>"
 
-	if(check_rights(R_ADMIN|R_EVENT,0))
+	if(check_rights(R_ADMIN,0))
 		dat += {"
 			<B>Admin Secrets</B><BR>
 			<BR>
@@ -1162,7 +1162,7 @@ var/global/floorIsLava = 0
 /datum/admins/proc/cmd_ghost_drag(mob/dead/observer/frommob, mob/living/tomob)
 
 	//this is the exact two check rights checks required to edit a ckey with vv.
-	if (!check_rights(R_ADMIN|R_EVENT,0))
+	if (!check_rights(R_ADMIN,0))
 		return 0
 
 	if (!frommob.ckey)

@@ -488,7 +488,7 @@
 	usr << browse(out, "window=edit_memory[src];size=400x500")
 
 /datum/mind/Topic(href, href_list)
-	if(!check_rights(R_ADMIN|R_EVENT))
+	if(!check_rights(R_ADMIN))
 		return
 
 	if (href_list["role_edit"])

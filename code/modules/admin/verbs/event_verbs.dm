@@ -1,13 +1,8 @@
 var/list/admin_verbs_event = list(
-	/client/proc/cmd_event_say
-	)
-
-var/list/admin_verbs_event_fun = list(
+	/client/proc/event_map_loader,
 	/client/proc/gateway_fix,
-	//client/proc/Noir_anomaly,
 	/client/proc/centcom_barriers_toggle
 	)
-
 
 //////////////////////////////
 // Map loader
@@ -16,7 +11,7 @@ var/list/admin_verbs_event_fun = list(
 /client/proc/event_map_loader()
 	set category = "Event"
 	set name = "Event map loader"
-	if(!check_rights(R_PERMISSIONS))
+	if(!check_rights(R_EVENT))
 		return
 
 	var/list/AllowedMaps = list()

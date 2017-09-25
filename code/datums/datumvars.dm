@@ -418,12 +418,12 @@ body
 	if(usr.client != src || !holder)
 		return
 	if(href_list["Vars"])
-		if(!check_rights(0))
+		if(!check_rights(R_DEBUG|R_ADMIN))
 			return
 		debug_variables(locate(href_list["Vars"]))
 
 	else if(href_list["view_flags"])
-		if(!check_rights(0))
+		if(!check_rights(R_DEBUG|R_ADMIN))
 			return
 		view_flags_variables(href_list["view_flags"])
 
@@ -491,7 +491,7 @@ body
 		href_list["datumrefresh"] = href_list["mob_player_panel"]
 
 	else if(href_list["give_spell"])
-		if(!check_rights(R_ADMIN|R_EVENT))
+		if(!check_rights(R_ADMIN|R_FUN))
 			return
 
 		var/mob/M = locate(href_list["give_spell"])
@@ -503,7 +503,7 @@ body
 		href_list["datumrefresh"] = href_list["give_spell"]
 
 	else if(href_list["give_disease"])
-		if(!check_rights(R_ADMIN|R_EVENT))
+		if(!check_rights(R_ADMIN|R_FUN))
 			return
 
 		var/mob/M = locate(href_list["give_disease"])
@@ -515,7 +515,7 @@ body
 		href_list["datumrefresh"] = href_list["give_spell"]
 
 	else if(href_list["give_disease2"])
-		if(!check_rights(R_ADMIN|R_EVENT))
+		if(!check_rights(R_ADMIN|R_FUN))
 			return
 
 		var/mob/M = locate(href_list["give_disease2"])
@@ -551,7 +551,7 @@ body
 		href_list["datumrefresh"] = href_list["godmode"]
 
 	else if(href_list["gib"])
-		if(!check_rights(R_ADMIN|R_EVENT))
+		if(!check_rights(R_ADMIN|R_FUN))
 			return
 
 		var/mob/M = locate(href_list["gib"])
@@ -937,7 +937,7 @@ body
 		M.regenerate_icons()
 
 	else if(href_list["adjustDamage"] && href_list["mobToDamage"])
-		if(!check_rights(R_DEBUG|R_ADMIN|R_EVENT))
+		if(!check_rights(R_DEBUG|R_ADMIN|R_FUN))
 			return
 
 		var/mob/living/L = locate(href_list["mobToDamage"])
@@ -968,7 +968,7 @@ body
 			href_list["datumrefresh"] = href_list["mobToDamage"]
 
 	else if(href_list["setckey"])
-		if(!check_rights(R_ADMIN|R_EVENT))
+		if(!check_rights(R_ADMIN))
 			return
 
 		var/mob/C = locate(href_list["setckey"])
