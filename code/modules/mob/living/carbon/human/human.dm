@@ -1472,10 +1472,9 @@
 			if(V.on)
 				V.overload()
 
-	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .leap_end, prev_intent))
-
 	src.toggle_leap()
 
+	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .leap_end, prev_intent))
 
 /mob/living/carbon/human/proc/leap_end(prev_intent)
 	status_flags &= ~LEAPING
@@ -1491,7 +1490,6 @@
 		L.Weaken(5)
 		sleep(2) // Runtime prevention (infinite bump() calls on hulks)
 		step_towards(src, L)
-		toggle_leap(FALSE)
 
 		var/use_hand = "left"
 		if(l_hand)
@@ -1502,8 +1500,6 @@
 				use_hand = "right"
 
 		visible_message("<span class='warning'><b>\The [src]</b> seizes [L] aggressively!</span>")
-
-		src.toggle_leap()
 
 		var/obj/item/weapon/grab/G = new(src, L)
 		if(use_hand == "left")

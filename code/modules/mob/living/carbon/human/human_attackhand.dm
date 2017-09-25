@@ -14,14 +14,15 @@
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
 
-	if(M.wear_suit && istype(M.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))	//When abductor will hit someone from stelth he will reveal himself
-		for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(M.wear_suit))
-			if(V.stealth_active)
-				V.DeactivateStealth()
-	if(M.wear_suit && istype(M.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
-		for(var/obj/item/clothing/suit/space/vox/stealth/V in list(M.wear_suit))
-			if(V.on)
-				V.overload()
+	if(M.wear_suit)
+		if(istype(M.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
+			for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(M.wear_suit))
+				if(V.stealth_active)
+					V.DeactivateStealth()
+		if(istype(M.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
+			for(var/obj/item/clothing/suit/space/vox/stealth/V in list(M.wear_suit))
+				if(V.on)
+					V.overload()
 
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		M.do_attack_animation(src)
