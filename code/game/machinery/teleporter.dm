@@ -17,7 +17,8 @@
 	..()
 	return
 
-/obj/machinery/computer/teleporter/initialize()
+/obj/machinery/computer/teleporter/atom_init()
+	. = ..()
 	link_power_station()
 
 /obj/machinery/computer/teleporter/Destroy()
@@ -258,7 +259,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	RefreshParts()
 
-/obj/machinery/teleport/hub/initialize()
+/obj/machinery/teleport/hub/atom_init()
+	. = ..()
 	link_power_station()
 
 /obj/machinery/teleport/hub/Destroy()
@@ -370,7 +372,8 @@
 	RefreshParts()
 	link_console_and_hub()
 
-/obj/machinery/teleport/station/initialize()
+/obj/machinery/teleport/station/atom_init()
+	. = ..()
 	link_console_and_hub()
 
 /obj/machinery/teleport/station/RefreshParts()

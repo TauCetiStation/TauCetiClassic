@@ -50,6 +50,10 @@ var/datum/subsystem/air/SSair
 	var/list/currentrun = list()
 	var/currentpart = SSAIR_PIPENETS
 
+	var/map_loading = TRUE
+	var/map_init_levels = 0 // number of z-levels initialized under this type of SS.
+	var/list/queued_for_update
+
 /datum/subsystem/air/New()
 	NEW_SS_GLOBAL(SSair)
 
@@ -78,6 +82,7 @@ var/datum/subsystem/air/SSair
 
 
 /datum/subsystem/air/Initialize(timeofday)
+	map_loading = FALSE
 	setup_allturfs()
 	setup_atmos_machinery()
 	setup_pipenets()
@@ -287,6 +292,8 @@ var/datum/subsystem/air/SSair
 /datum/subsystem/air/proc/setup_allturfs()
 	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
 
+	map_init_levels = world.maxz // we simply set current max Z level (later on this value will be increased by maploading process).
+
 	for(var/turf/simulated/T in turfs_to_init)
 		T.update_air_properties()
 		CHECK_TICK
@@ -304,10 +311,6 @@ var/datum/subsystem/air/SSair
 		AM.build_network()
 		CHECK_TICK
 
-	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
-		AM.atmos_init_late()
-		CHECK_TICK
-
 /datum/subsystem/air/proc/setup_template_machinery(list/atmos_machines)
 	for(var/A in atmos_machines)
 		var/obj/machinery/atmospherics/AM = A
@@ -317,11 +320,6 @@ var/datum/subsystem/air/SSair
 	for(var/A in atmos_machines)
 		var/obj/machinery/atmospherics/AM = A
 		AM.build_network()
-		CHECK_TICK
-
-	for(var/A in atmos_machines)
-		var/obj/machinery/atmospherics/AM = A
-		AM.atmos_init_late()
 		CHECK_TICK
 
 /*********** Procs, which doesn't get involved in processing directly ***********/
@@ -417,7 +415,7 @@ var/datum/subsystem/air/SSair
 	if(direct)
 		c.mark_direct()
 
-/datum/subsystem/air/proc/mark_for_update(turf/T)
+/datum/subsystem/air/proc/mark_for_update(turf/simulated/T)
 	#ifdef ZASDBG
 	ASSERT(isturf(T))
 	#endif
@@ -425,13 +423,29 @@ var/datum/subsystem/air/SSair
 	if(T.needs_air_update)
 		return
 
-	tiles_to_update |= T
+	if(map_loading && T.z > map_init_levels) // we don't want to interupt SS process on other levels
+		if(queued_for_update)
+			queued_for_update[T] = T
+	else
+		tiles_to_update += T
+		#ifdef ZASDBG
+		T.overlays += mark
+		#endif
 
-	#ifdef ZASDBG
-	T.overlays += mark
-	#endif
+		T.needs_air_update = TRUE
 
-	T.needs_air_update = TRUE
+/datum/subsystem/air/StartLoadingMap()
+	LAZYINITLIST(queued_for_update)
+	map_loading = TRUE
+
+/datum/subsystem/air/StopLoadingMap()
+	map_loading = FALSE
+	map_init_levels = world.maxz // update z level counting, so air start to work on added levels.
+
+	for(var/T in queued_for_update)
+		mark_for_update(T)
+
+	queued_for_update.Cut()
 
 /datum/subsystem/air/proc/mark_zone_update(zone/Z)
 	#ifdef ZASDBG

@@ -214,10 +214,20 @@ var/world_topic_spam_protect_time = world.timeofday
 
 
 
-/world/Reboot(var/reason)
-	/*spawn(0)
-		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
-		*/
+/world/Reboot(reason)
+
+	// Bad initializations log.
+	var/initlog = SSatoms.InitLog()
+	if(initlog)
+		world.log << initlog
+
+	// Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
+	if(SSgarbage.didntgc.len)
+		var/dellog = ""
+		for(var/path in SSgarbage.didntgc)
+			dellog += "Path : [path] \n"
+			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
+		world.log << dellog
 
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite

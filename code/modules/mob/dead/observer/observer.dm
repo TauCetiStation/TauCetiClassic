@@ -13,6 +13,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	canmove = 0
 	blinded = 0
 	anchored = 1	//  don't get pushed around
+	see_invisible = SEE_INVISIBLE_OBSERVER
+	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
@@ -33,19 +35,17 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 
-/mob/dead/observer/New(mob/body)
-	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	see_invisible = SEE_INVISIBLE_OBSERVER
-	see_in_dark = 100
+/mob/dead/observer/atom_init()
+	invisibility = INVISIBILITY_OBSERVER
+
 	verbs += /mob/dead/observer/proc/dead_tele
 
-	stat = DEAD
-
-	ghostimage = image(icon,src,"ghost")
+	ghostimage = image(icon, src, "ghost")
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
 
 	var/turf/T
+	var/mob/body = loc
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
@@ -73,13 +73,18 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
-	if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
+	if(!T)
+		T = pick(latejoin)			//Safety in case we cannot find the body's position
+
 	loc = T
 
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	real_name = name
-	..()
+
+	dead_mob_list += src
+
+	. = ..()
 
 /mob/dead/observer/Destroy()
 	if (ghostimage)

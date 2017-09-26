@@ -91,7 +91,7 @@ var/list/admin_verbs_event = list(
 	if(!check_rights(R_FUN))	return
 
 	for(var/obj/machinery/gateway/G in machines)
-		G.initialize()
+		G.atom_init()
 
 	log_admin("[key_name(src)] connected gates")
 	message_admins("\blue [key_name_admin(src)] connected gates")

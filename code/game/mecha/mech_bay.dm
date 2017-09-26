@@ -166,5 +166,6 @@
 	else
 		icon_state = "recharge_comp_on"
 
-/obj/machinery/computer/mech_bay_power_console/initialize()
+/obj/machinery/computer/mech_bay_power_console/atom_init()
+	. = ..()
 	reconnect()

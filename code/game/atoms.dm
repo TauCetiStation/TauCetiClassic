@@ -17,6 +17,8 @@
 	var/resize = 1		//don't abuse this shit
 	var/resize_rev = 1	//helps to restore default size
 
+	var/initialized = FALSE
+
 	///Chemistry.
 	var/datum/reagents/reagents = null
 
@@ -26,6 +28,67 @@
 
 	//Detective Work, used for the duplicate data points kept in the scanners
 	var/list/original_atom
+
+/atom/New(loc, ...)
+	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+		_preloader.load(src)
+
+	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
+
+	var/do_initialize = SSatoms.initialized
+	if(do_initialize > INITIALIZATION_INSSATOMS)
+		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
+		if(SSatoms.InitAtom(src, args))
+			//we were deleted
+			return
+
+	var/list/created = SSatoms.created_atoms
+	if(created)
+		created += src
+
+// Called after New if the map is being loaded. mapload = TRUE
+// Called from base of New if the map is being loaded. mapload = FALSE
+// This base must be called or derivatives must set initialized to TRUE
+// must not sleep
+// Other parameters are passed from New (excluding loc), this does not happen if mapload is TRUE
+// Must return an Initialize hint. Defined in __DEFINES/subsystems.dm
+
+//Note: the following functions don't call the base for optimization and must copypasta:
+// /turf/atom_init
+// /turf/space/atom_init
+// /mob/dead/atom_init
+// /mob/new_player/atom_init
+
+//Do also note that this proc always runs in New for /mob/dead && /mob/new_player
+/atom/proc/atom_init(mapload, ...)
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
+
+	if(light_power && light_range)
+		update_light()
+
+	if(opacity && isturf(src.loc))
+		var/turf/T = src.loc
+		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
+	return INITIALIZE_HINT_NORMAL
+
+//called if atom_init returns INITIALIZE_HINT_LATELOAD
+/atom/proc/atom_init_late()
+	return
+
+/atom/Destroy()
+	if(reagents)
+		QDEL_NULL(reagents)
+
+	LAZYCLEARLIST(overlays)
+
+	if(light)
+		light.destroy()
+		light = null
+
+	return ..()
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	return null
@@ -410,10 +473,6 @@
 	. = ..()
 	sleep(1)
 	stoplag()
-
-//This will be called after the map and objects are loaded
-/atom/proc/initialize()
-	return
 
 /atom/proc/update_transform()
 	var/matrix/ntransform = matrix(transform)

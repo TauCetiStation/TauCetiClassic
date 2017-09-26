@@ -26,12 +26,21 @@
 	var/has_resources
 	var/list/resources
 
-/turf/New()
-	..()
-	for(var/atom/movable/AM as mob|obj in src)
-		spawn( 0 )
-			src.Entered(AM)
-			return
+/turf/atom_init()
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
+
+	for(var/atom/movable/AM in src)
+		Entered(AM)
+
+	if(light_power && light_range)
+		update_light()
+
+	if(opacity)
+		has_opaque_atom = TRUE
+
+	return INITIALIZE_HINT_NORMAL
 
 /turf/Destroy()
 	..()
@@ -94,25 +103,30 @@
 	return 1 //Nothing found to block so return success!
 
 
-/turf/Entered(atom/atom as mob|obj)
-	if(!istype(atom, /atom/movable))
+/turf/Entered(atom/movable/AM)
+	if(!istype(AM, /atom/movable))
 		return
 
-	var/atom/movable/A = atom
 	var/loopsanity = 100
-	if(ismob(A))
-		var/mob/M = A
+	if(ismob(AM))
+		var/mob/M = AM
 		if(!M.lastarea)
 			M.lastarea = get_area(M.loc)
 
 	..()
+
+	// If an opaque movable atom moves around we need to potentially update visibility.
+	if(AM.opacity)
+		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
+		reconsider_lights()
+
 	var/objects = 0
 	for(var/atom/O as mob|obj|turf|area in range(1))
 		if(objects > loopsanity)	break
 		objects++
 		spawn( 0 )
-			if ((O && A))
-				O.HasProximity(A, 1)
+			if ((O && AM))
+				O.HasProximity(AM, 1)
 			return
 	return
 
@@ -192,7 +206,7 @@
 		if(SSair)
 			SSair.mark_for_update(src) //handle the addition of the new turf.
 
-		for(var/turf/space/S in range(W,1))
+		for(var/turf/space/S in RANGE_TURFS(1, W))
 			S.update_starlight()
 
 		W.levelupdate()
@@ -202,7 +216,7 @@
 
 		var/turf/W = new N( locate(src.x, src.y, src.z) )
 
-		for(var/turf/space/S in range(W,1))
+		for(var/turf/space/S in RANGE_TURFS(1, W))
 			S.update_starlight()
 
 		if(SSair)

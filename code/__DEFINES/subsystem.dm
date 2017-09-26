@@ -1,11 +1,29 @@
-// Subsystem defines.
-// All in one file so it's easier to see what everything is relative to.
+
+#define INITIALIZATION_INSSATOMS     0   // New should not call atom_init
+#define INITIALIZATION_INNEW_MAPLOAD 1   // New should call atom_init(TRUE)
+#define INITIALIZATION_INNEW_REGULAR 2   // New should call atom_init(FALSE)
+
+#define INITIALIZE_HINT_NORMAL   0       // Nothing happens
+#define INITIALIZE_HINT_LATELOAD 1       // Call atom_init_late
+#define INITIALIZE_HINT_QDEL     2       // Call qdel on the atom
+
+//type and all subtypes should always call atom_init in New()
+#define INITIALIZE_IMMEDIATE(X) ##X/New(loc, ...){\
+    ..();\
+    if(!initialized) {\
+        args[1] = TRUE;\
+        SSatoms.InitAtom(src, args);\
+    }\
+}
+
+// Subsystem init_order, from highest priority to lowest priority
+// The numbers just define the ordering, they are meaningless otherwise.
 
 #define SS_INIT_FLUIDS    9
 #define SS_INIT_JOBS      8
 #define SS_INIT_MAPPING   7
 #define SS_INIT_XENOARCH  6
-#define SS_INIT_OBJECT    5
+#define SS_INIT_ATOMS     5
 #define SS_INIT_MACHINES  4
 #define SS_INIT_SHUTTLES  3
 #define SS_INIT_SUN       2

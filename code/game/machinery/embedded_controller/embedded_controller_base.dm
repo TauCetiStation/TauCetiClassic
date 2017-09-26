@@ -64,7 +64,8 @@
 
 	unacidable = 1
 
-/obj/machinery/embedded_controller/radio/initialize()
+/obj/machinery/embedded_controller/radio/atom_init()
+	. = ..()
 	set_frequency(frequency)
 	var/datum/computer/file/embedded_program/new_prog = new
 

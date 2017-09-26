@@ -9,11 +9,21 @@
 	plane = PLANE_SPACE
 //	heat_capacity = 700000 No.
 
-/turf/space/New()
+/turf/space/atom_init()
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
+
 	if(!istype(src, /turf/space/transit))
 		icon_state = SPACE_ICON_STATE
-	update_starlight()
-	..()
+
+	if(light_power && light_range)
+		update_light()
+
+	if(opacity)
+		has_opaque_atom = TRUE
+
+	return INITIALIZE_HINT_NORMAL
 
 /turf/space/Destroy()
 	return QDEL_HINT_LETMELIVE

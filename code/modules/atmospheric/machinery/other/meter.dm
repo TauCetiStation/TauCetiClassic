@@ -12,11 +12,7 @@
 	idle_power_usage = 2
 	active_power_usage = 5
 
-/obj/machinery/meter/New()
-	..()
-	initialize()
-
-/obj/machinery/meter/initialize()
+/obj/machinery/meter/atom_init()
 	. = ..()
 	SSair.atmos_machinery += src
 	if (!target)
@@ -125,12 +121,6 @@
 
 // TURF METER - REPORTS A TILE'S AIR CONTENTS
 
-/obj/machinery/meter/turf/New()
-	..()
+/obj/machinery/meter/turf/atom_init()
 	src.target = loc
-	return 1
-
-
-/obj/machinery/meter/turf/initialize()
 	. = ..()
-	src.target = loc
