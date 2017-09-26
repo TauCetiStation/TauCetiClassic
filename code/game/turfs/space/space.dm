@@ -43,14 +43,15 @@
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
 		if(L)
-			if(R.amount < 2)
+			if(R.get_amount() < 2)
 				to_chat(user, "\red You don't have enough rods to do that.")
 				return
 			to_chat(user, "\blue You begin to build a catwalk.")
 			if(do_after(user,30,target = src))
+				if(!R.use(2))
+					return
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 				to_chat(user, "\blue You build a catwalk!")
-				R.use(2)
 				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
 				qdel(L)
 				return

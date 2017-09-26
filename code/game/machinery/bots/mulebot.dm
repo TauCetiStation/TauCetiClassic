@@ -851,7 +851,7 @@
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
-	new /obj/item/weapon/cable_coil/cut/red(Tsec)
+	new /obj/item/stack/cable_coil/cut/red(Tsec)
 	if (cell)
 		cell.loc = Tsec
 		cell.update_icon()

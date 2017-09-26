@@ -56,12 +56,11 @@
 
 		if(!S)
 			src.modules -= null
-			S = new T(src)
+			S = new T(src, 1)
 			src.modules += S
-			S.amount = 1
 
-		if(S && S.amount < stacktypes[T])
-			S.amount++
+		if(S.get_amount() < stacktypes[T])
+			S.add(1)
 
 /obj/item/weapon/robot_module/proc/rebuild()//Rebuilds the list so it's possible to add/remove items from the module
 	var/list/temp_list = modules
@@ -180,7 +179,7 @@
 		/obj/item/stack/sheet/metal/cyborg = 50,
 		/obj/item/stack/sheet/glass/cyborg = 50,
 		/obj/item/stack/sheet/rglass/cyborg = 50,
-		/obj/item/weapon/cable_coil/cyborg = 50,
+		/obj/item/stack/cable_coil/cyborg = 50,
 		/obj/item/stack/rods = 15,
 		/obj/item/stack/tile/plasteel = 15
 		)
@@ -206,16 +205,9 @@
 		src.emag = new /obj/item/borg/stun(src)
 
 		for(var/T in stacktypes)
-			if(!iscoil(T))
-				var/obj/item/stack/W = new T(src)
-				W.amount = stacktypes[T]
-				src.modules += W
-			else
-				var/obj/item/weapon/cable_coil/cyborg/C = new T(src)
-				C.amount = stacktypes[T]
-				src.modules += C
-
-		return
+			var/obj/item/stack/W = new T(src)
+			W.set_amount(stacktypes[T])
+			src.modules += W
 
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
@@ -408,7 +400,7 @@
 		/obj/item/stack/tile/plasteel = 15,
 		/obj/item/stack/sheet/metal/cyborg = 20,
 		/obj/item/stack/sheet/glass/cyborg = 20,
-		/obj/item/weapon/cable_coil/cyborg = 30
+		/obj/item/stack/cable_coil/cyborg = 30
 		)
 
 	New()
@@ -427,16 +419,9 @@
 		src.emag.name = "Plasma Cutter"
 
 		for(var/T in stacktypes)
-			if(!iscoil(T))
-				var/obj/item/stack/W = new T(src)
-				W.amount = stacktypes[T]
-				src.modules += W
-			else
-				var/obj/item/weapon/cable_coil/cyborg/C = new T(src)
-				C.amount = stacktypes[T]
-				src.modules += C
-
-		return
+			var/obj/item/stack/W = new T(src)
+			W.set_amount(stacktypes[T])
+			src.modules += W
 
 	add_languages(mob/living/silicon/robot/R)
 		return	//not much ROM to spare in that tiny microprocessor!

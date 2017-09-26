@@ -94,13 +94,9 @@ datum/hSB
 					P.back.plane = ABOVE_HUD_PLANE
 					P.internal = P.back
 				if("hsbmetal")
-					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/metal
-					hsb.amount = 50
-					hsb.loc = usr.loc
+					new/obj/item/stack/sheet/metal(usr.loc, 50)
 				if("hsbglass")
-					var/obj/item/stack/sheet/hsb = new/obj/item/stack/sheet/glass
-					hsb.amount = 50
-					hsb.loc = usr.loc
+					new/obj/item/stack/sheet/glass(usr.loc, 50)
 				if("hsbairlock")
 					var/obj/machinery/door/hsb = new/obj/machinery/door/airlock
 

@@ -287,11 +287,9 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								M.death()
 							if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
 								var/obj/item/stack/sheet/S = I
-								if(S.amount > 1)
-									S.amount--
+								if(S.use(1))
 									linked_destroy.loaded_item = S
 								else
-									qdel(S)
 									linked_destroy.icon_state = "d_analyzer"
 							else
 								if(!(I in linked_destroy.component_parts))
@@ -508,8 +506,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			var/obj/item/stack/sheet/sheet = new type(linked_lathe.loc)
 			var/available_num_sheets = round(linked_lathe.vars[res_amount] / sheet.perunit)
 			if(available_num_sheets > 0)
-				sheet.amount = min(available_num_sheets, desired_num_sheets)
-				linked_lathe.vars[res_amount] = max(0, (linked_lathe.vars[res_amount] - sheet.amount * sheet.perunit))
+				sheet.set_amount(min(available_num_sheets, desired_num_sheets))
+				linked_lathe.vars[res_amount] = max(0, (linked_lathe.vars[res_amount] - sheet.get_amount() * sheet.perunit))
 			else
 				qdel(sheet)
 	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
@@ -532,8 +530,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			var/obj/item/stack/sheet/sheet = new type(linked_imprinter.loc)
 			var/available_num_sheets = round(linked_imprinter.vars[res_amount] / sheet.perunit)
 			if(available_num_sheets > 0)
-				sheet.amount = min(available_num_sheets, desired_num_sheets)
-				linked_imprinter.vars[res_amount] = max(0, (linked_imprinter.vars[res_amount]-sheet.amount * sheet.perunit))
+				sheet.set_amount(min(available_num_sheets, desired_num_sheets))
+				linked_imprinter.vars[res_amount] = max(0, (linked_imprinter.vars[res_amount]-sheet.get_amount() * sheet.perunit))
 			else
 				qdel(sheet)
 

@@ -80,7 +80,7 @@
 			icon_state = iconname
 
 	if(health <= -100)
-		new /obj/item/stack/sheet/plasteel(src.loc)
+		new /obj/item/stack/sheet/plasteel(loc)
 		qdel(src)
 
 /obj/machinery/dominator/proc/set_broken()

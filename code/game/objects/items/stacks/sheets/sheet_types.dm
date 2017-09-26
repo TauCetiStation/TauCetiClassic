@@ -102,7 +102,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	throwforce = 14.0
 	flags = CONDUCT
 
-/obj/item/stack/sheet/metal/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/metal/New()
 	recipes = metal_recipes
 	return ..()
 
@@ -126,9 +126,9 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	flags = CONDUCT
 	origin_tech = "materials=2"
 
-/obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
-		recipes = plasteel_recipes
-		return ..()
+/obj/item/stack/sheet/plasteel/New()
+	recipes = plasteel_recipes
+	return ..()
 
 /*
  * Wood
@@ -158,7 +158,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
 
-/obj/item/stack/sheet/wood/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/wood/New()
 	recipes = wood_recipes
 	return ..()
 
@@ -202,6 +202,6 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	icon_state = "sheet-card"
 	origin_tech = "materials=1"
 
-/obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
-		recipes = cardboard_recipes
-		return ..()
+/obj/item/stack/sheet/cardboard/New()
+	recipes = cardboard_recipes
+	return ..()

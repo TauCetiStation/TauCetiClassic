@@ -57,7 +57,7 @@
 /datum/surgery_step/head/shape
 	allowed_tools = list(
 	/obj/item/weapon/FixOVein = 100, 	\
-	/obj/item/weapon/cable_coil = 75
+	/obj/item/stack/cable_coil = 75
 	)
 
 	min_duration = 80
@@ -91,7 +91,7 @@
 /datum/surgery_step/head/suture
 	allowed_tools = list(
 	/obj/item/weapon/hemostat = 100, 	\
-	/obj/item/weapon/cable_coil = 75,	\
+	/obj/item/stack/cable_coil = 75,	\
 	/obj/item/weapon/wirecutters = 75,           \
 	/obj/item/weapon/kitchen/utensil/fork = 50,  \
 	/obj/item/weapon/FixOVein = 80)

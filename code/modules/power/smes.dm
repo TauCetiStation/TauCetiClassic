@@ -37,7 +37,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
 	component_parts += new /obj/item/weapon/stock_parts/cell/high(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/cable_coil/red(null, 5)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 5)
 	var/map_capacity = capacity
 	var/map_charge = charge
 	var/map_max_input = max_input
@@ -127,7 +127,7 @@
 
 
 	//building and linking a terminal
-	if(istype(I, /obj/item/weapon/cable_coil))
+	if(istype(I, /obj/item/stack/cable_coil))
 		var/dir = get_dir(user,src)
 		if(dir & (dir-1))//we don't want diagonal click
 			return
@@ -146,15 +146,15 @@
 			return
 
 
-		var/obj/item/weapon/cable_coil/C = I
-		if(C.amount < 10)
+		var/obj/item/stack/cable_coil/C = I
+		if(C.get_amount() < 10)
 			to_chat(user, "<span class='warning'>You need more wires!</span>")
 			return
 
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 
-		if(do_after(user, 20, target = src) && C.amount >= 10)
+		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
 			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
 			if (prob(50) && electrocute_mob(usr, N, N)) //animate the electrocution if uncautious and unlucky
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread

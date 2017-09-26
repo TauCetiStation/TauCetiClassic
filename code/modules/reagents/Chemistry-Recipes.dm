@@ -1046,12 +1046,8 @@ datum
 			required_container = /obj/item/slime_extract/metal
 			required_other = 1
 			on_reaction(datum/reagents/holder)
-				var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal
-				M.amount = 15
-				M.loc = get_turf_loc(holder.my_atom)
-				var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel
-				P.amount = 5
-				P.loc = get_turf_loc(holder.my_atom)
+				new /obj/item/stack/sheet/metal(get_turf_loc(holder.my_atom), 15)
+				new /obj/item/stack/sheet/plasteel(get_turf_loc(holder.my_atom), 5)
 
 //Gold
 		slimecrit
@@ -1294,9 +1290,7 @@ datum
 			required_container = /obj/item/slime_extract/darkpurple
 			required_other = 1
 			on_reaction(datum/reagents/holder)
-				var/obj/item/stack/sheet/mineral/phoron/P = new /obj/item/stack/sheet/mineral/phoron
-				P.amount = 10
-				P.loc = get_turf_loc(holder.my_atom)
+				new /obj/item/stack/sheet/mineral/phoron(get_turf_loc(holder.my_atom), 10)
 
 //Red
 		slimeglycerol

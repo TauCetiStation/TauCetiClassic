@@ -230,7 +230,8 @@ So, hopefully this is helpful if any more icons are to be added/changed/wonderin
 					"You remove the external bolts.")
 				temp_state--
 			else if(iscoil(O))
-				if(O:use(1,user))
+				var/obj/item/stack/cable_coil/C = O
+				if(C.use(1))
 					user.visible_message("[user.name] adds wires to the [src.name].", \
 						"You add some wires.")
 					temp_state++

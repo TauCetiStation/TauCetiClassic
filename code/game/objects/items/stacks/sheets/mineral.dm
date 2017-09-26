@@ -59,7 +59,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	)
 
 
-/obj/item/stack/sheet/mineral/sandstone/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/mineral/sandstone/New()
 	recipes = sandstone_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4

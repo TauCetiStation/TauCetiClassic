@@ -930,10 +930,10 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(obj/item/stack/sheet/P)
-	if(P.type == fuel.type && P.amount)
+	if(P.type == fuel.type && P.get_amount())
 		var/to_load = max(max_fuel - fuel.amount*fuel.perunit,0)
 		if(to_load)
-			var/units = min(max(round(to_load / P.perunit),1),P.amount)
+			var/units = min(max(round(to_load / P.perunit),1),P.get_amount())
 			if(units)
 				fuel.amount += units
 				P.use(units)

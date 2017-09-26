@@ -14,7 +14,7 @@
 	name = "IED"
 	result = /obj/item/weapon/grenade/iedcasing
 	reqs = list(/datum/reagent/fuel = 50,
-				/obj/item/weapon/cable_coil = 1,
+				/obj/item/stack/cable_coil = 1,
 				/obj/item/device/assembly/igniter = 1,
 				/obj/item/weapon/reagent_containers/food/drinks/cans = 1)
 	parts = list(/obj/item/weapon/reagent_containers/food/drinks/cans = 1)
@@ -60,7 +60,7 @@
 /datum/crafting_recipe/toysword
 	name = "Toy Sword"
 	reqs = list(/obj/item/weapon/light/bulb = 1,
-				/obj/item/weapon/cable_coil = 1,
+				/obj/item/stack/cable_coil = 1,
 				/obj/item/stack/sheet/mineral/plastic = 4)
 	result = /obj/item/toy/sword
 	category = CAT_MISC

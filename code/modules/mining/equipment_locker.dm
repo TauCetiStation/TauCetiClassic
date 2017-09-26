@@ -60,11 +60,11 @@
 	var/obj/item/stack/sheet/mineral/processed_sheet = SmeltMineral(O)
 	if(processed_sheet)
 		if(!(processed_sheet in stack_list)) //It's the first of this sheet added
-			var/obj/item/stack/sheet/mineral/s = new processed_sheet(src,0)
+			var/obj/item/stack/sheet/mineral/s = new processed_sheet(src)
 			s.amount = 0
 			stack_list[processed_sheet] = s
 		var/obj/item/stack/sheet/mineral/storage = stack_list[processed_sheet]
-		storage.amount += sheet_per_ore //Stack the sheets
+		storage.add(sheet_per_ore) //Stack the sheets
 		qdel(O) //... garbage collect
 
 /obj/machinery/mineral/ore_redemption/process()
@@ -144,10 +144,10 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 
 	for(var/O in stack_list)
 		s = stack_list[O]
-		if(s.amount > 0)
+		if(s.get_amount() > 0)
 			if(O == stack_list[1])
 				dat += "<br>"		//just looks nicer
-			dat += text("[capitalize(s.name)]: [s.amount] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
+			dat += text("[capitalize(s.name)]: [s.get_amount()] <A href='?src=\ref[src];release=[s.type]'>Release</A><br>")
 
 	dat += text("<br><div class='statusDisplay'><b>Mineral Value List:</b><BR>[get_ore_values()]</div>")
 
@@ -197,11 +197,11 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			var/obj/item/stack/sheet/mineral/inp = stack_list[text2path(href_list["release"])]
 			var/obj/item/stack/sheet/mineral/out = new inp.type()
 			var/desired = input("How much?", "How much to eject?", 1) as num
-			out.amount = min(desired,50,inp.amount)
-			if(out.amount >= 1)
-				inp.amount -= out.amount
+			out.set_amount(min(desired, 50, inp.get_amount()))
+			if(out.get_amount() >= 1)
+				inp.use(out.get_amount())
 				unload_mineral(out)
-			if(inp.amount < 1)
+			if(inp.get_amount() < 1)
 				stack_list -= text2path(href_list["release"])
 		else
 			to_chat(usr, "<span class='warning'>Required access not found.</span>")
@@ -228,8 +228,8 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 
 	for(var/O in stack_list)
 		s = stack_list[O]
-		while(s.amount > s.max_amount)
-			new s.type(loc,s.max_amount)
+		while(s.get_amount() > s.max_amount)
+			new s.type(loc, s.max_amount)
 			s.use(s.max_amount)
 		s.loc = loc
 		s.layer = initial(s.layer)

@@ -180,7 +180,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(src)
-	component_parts += new /obj/item/weapon/cable_coil(src, 2)
+	component_parts += new /obj/item/stack/cable_coil(src, 2)
 
 	RefreshParts()
 
@@ -227,7 +227,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-	component_parts += new /obj/item/weapon/cable_coil(src, 5)
+	component_parts += new /obj/item/stack/cable_coil(src, 5)
 
 	RefreshParts()
 
