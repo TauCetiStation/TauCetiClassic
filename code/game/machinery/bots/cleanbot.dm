@@ -194,7 +194,6 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 					return
 
 	if(!src.target || src.target == null)
-
 		if(src.loc != src.oldloc)
 			src.oldtarget = null
 
@@ -208,7 +207,6 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 
 			closest_dist = 9999
 			closest_loc = null
-			//next_dest_loc = null
 
 			var/datum/signal/signal = new()
 			signal.source = src
@@ -270,20 +268,16 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		failed_steps = 0
 
 /obj/machinery/bot/cleanbot/receive_signal(datum/signal/signal)
-
-
 	var/recv = signal.data["beacon"]
 	var/valid = signal.data["patrol"]
 	if(!recv || !valid)
 		return
-
 	var/dist = get_dist(src, signal.source.loc)
-	var/closest_dest = recv
+	var/closest_dest = null
 	if (dist < closest_dist && signal.source.loc != src.loc)
 		closest_dist = dist
 		closest_loc = signal.source.loc
 		closest_dest = recv
-
 	if(next_dest == null || patrol_path == null || next_dest_loc == null)
 		next_dest_loc = closest_loc
 		next_dest = closest_dest
@@ -291,10 +285,8 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		next_dest_loc = signal.source.loc
 		next_dest = signal.data["next_patrol"]
 
-
 /obj/machinery/bot/cleanbot/proc/get_targets()
 	src.target_types = new/list()
-
 	target_types += /obj/effect/decal/cleanable/blood/oil
 	target_types += /obj/effect/decal/cleanable/blood/gibs/robot
 	target_types += /obj/effect/decal/cleanable/vomit
@@ -311,8 +303,6 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	target_types += /obj/effect/decal/cleanable/ash
 	target_types += /obj/effect/decal/cleanable/greenglow
 	target_types += /obj/effect/decal/cleanable/spiderling_remains
-
-
 	if(src.blood)
 		target_types += /obj/effect/decal/cleanable/blood/
 		target_types += /obj/effect/decal/cleanable/blood/gibs/
