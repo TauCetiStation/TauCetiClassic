@@ -94,7 +94,7 @@
 						W.germ_level += germ_level
 					else
 						W.germ_level += min(germ_level, 3)
-					used++
+
 				BP.update_damages()
 				H.update_bandage()
 

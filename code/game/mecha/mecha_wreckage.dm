@@ -16,7 +16,7 @@
 													/obj/item/stack/sheet/plasteel
 													),
 									"wirecutter" = list(
-													/obj/item/weapon/cable_coil,
+													/obj/item/stack/cable_coil,
 													/obj/item/stack/rods
 													),
 									"crowbar" = list(
@@ -88,7 +88,7 @@
 													/obj/item/stack/sheet/plasteel
 													),
 									"wirecutter" = list(
-													/obj/item/weapon/cable_coil,
+													/obj/item/stack/cable_coil,
 													/obj/item/weapon/circuitboard/mecha/gygax/targeting,
 													/obj/item/weapon/circuitboard/mecha/gygax/peripherals,
 													/obj/item/weapon/circuitboard/mecha/gygax/main,
@@ -123,7 +123,7 @@
 													/obj/item/stack/sheet/plasteel
 													),
 									"wirecutter" = list(
-													/obj/item/weapon/cable_coil,
+													/obj/item/stack/cable_coil,
 													/obj/item/weapon/circuitboard/mecha/ultra/targeting,
 													/obj/item/weapon/circuitboard/mecha/ultra/peripherals,
 													/obj/item/weapon/circuitboard/mecha/ultra/main,
@@ -166,7 +166,7 @@
 													/obj/item/stack/sheet/plasteel
 													),
 									"wirecutter" = list(
-													/obj/item/weapon/cable_coil,
+													/obj/item/stack/cable_coil,
 													/obj/item/weapon/circuitboard/mecha/ripley/peripherals,
 													/obj/item/weapon/circuitboard/mecha/ripley/main,
 													/obj/item/stack/rods
@@ -206,7 +206,7 @@
 													/obj/item/stack/sheet/plasteel
 													),
 									"wirecutter" = list(
-													/obj/item/weapon/cable_coil,
+													/obj/item/stack/cable_coil,
 													/obj/item/weapon/circuitboard/mecha/honker/main,
 													/obj/item/weapon/circuitboard/mecha/honker/peripherals,
 													/obj/item/weapon/circuitboard/mecha/honker/targeting,
@@ -237,7 +237,7 @@
 													/obj/item/stack/sheet/plasteel
 													),
 									"wirecutter" = list(
-													/obj/item/weapon/cable_coil,
+													/obj/item/stack/cable_coil,
 													/obj/item/weapon/circuitboard/mecha/durand/targeting,
 													/obj/item/weapon/circuitboard/mecha/durand/peripherals,
 													/obj/item/weapon/circuitboard/mecha/durand/main,
@@ -268,7 +268,7 @@
 													/obj/item/stack/sheet/plasteel
 													),
 									"wirecutter" = list(
-													/obj/item/weapon/cable_coil,
+													/obj/item/stack/cable_coil,
 													/obj/item/weapon/circuitboard/mecha/vindicator/targeting,
 													/obj/item/weapon/circuitboard/mecha/vindicator/peripherals,
 													/obj/item/weapon/circuitboard/mecha/vindicator/main,
@@ -304,7 +304,7 @@
 													/obj/item/stack/sheet/plasteel
 													),
 									"wirecutter" = list(
-													/obj/item/weapon/cable_coil,
+													/obj/item/stack/cable_coil,
 													/obj/item/weapon/circuitboard/mecha/odysseus/peripherals,
 													/obj/item/weapon/circuitboard/mecha/odysseus/main,
 													/obj/item/stack/rods

@@ -27,41 +27,16 @@
 			return 0
 		playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
 
-			return 1
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
 		if(!S.use(5))
 			to_chat(user, ("There's not enough material in this stack."))
 			return 0
-
-			return 1
 	if(istype(used_atom, /obj))
 		var/obj/part = used_atom
 		if(part.crit_fail || part.reliability < 50)
 			user.visible_message("[user] was unable to connect [used_atom] to [holder].", "You failed to connect [used_atom] to [holder]")
 			return 0
-	else if(istype(used_atom, /obj/item/weapon/wrench))
-		playsound(holder, 'sound/items/Ratchet.ogg', 50, 1)
-
-	else if(istype(used_atom, /obj/item/weapon/screwdriver))
-		playsound(holder, 'sound/items/Screwdriver.ogg', 50, 1)
-
-	else if(istype(used_atom, /obj/item/weapon/wirecutters))
-		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
-
-	else if(istype(used_atom, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = used_atom
-		if(!C.use(4))
-			to_chat(user, ("There's not enough cable to finish the task."))
-			return 0
-		playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
-
-	else if(istype(used_atom, /obj/item/stack))
-		var/obj/item/stack/S = used_atom
-		if(!S.use(5))
-			to_chat(user, ("There's not enough material in this stack."))
-			return 0
-
 	return 1
 
 
