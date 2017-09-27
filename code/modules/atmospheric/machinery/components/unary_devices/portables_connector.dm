@@ -11,16 +11,17 @@
 
 	var/obj/machinery/portable_atmospherics/connected_device
 
-/obj/machinery/atmospherics/components/unary/portables_connector/Destroy()
-	if(connected_device)
-		connected_device.disconnect()
-	return ..()
-
-/obj/machinery/atmospherics/components/unary/portables_connector/atmos_init_late()
+/obj/machinery/atmospherics/components/unary/portables_connector/atom_init()
+	. = ..()
 	var/obj/machinery/portable_atmospherics/PA = locate() in loc
 	if(PA)
 		PA.connect(src)
 		PA.update_icon()
+
+/obj/machinery/atmospherics/components/unary/portables_connector/Destroy()
+	if(connected_device)
+		connected_device.disconnect()
+	return ..()
 
 /obj/machinery/atmospherics/components/unary/portables_connector/update_icon()
 	icon_state = "connector"

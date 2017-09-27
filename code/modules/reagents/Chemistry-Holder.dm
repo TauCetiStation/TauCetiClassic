@@ -513,6 +513,9 @@ var/const/INGEST = 2
 
 	return 0
 
+/datum/reagents/proc/get_reagent(type)
+	. = locate(type) in reagent_list
+
 /datum/reagents/proc/get_reagents()
 	var/res = ""
 	for(var/datum/reagent/A in reagent_list)

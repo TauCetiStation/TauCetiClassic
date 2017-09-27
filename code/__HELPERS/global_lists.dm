@@ -31,6 +31,8 @@
 		surgery_steps += S
 	sort_surgeries()
 
+	init_subtypes(/datum/crafting_recipe, crafting_recipes)
+
 	//Medical side effects. List all effects by their names
 	for(var/T in subtypesof(/datum/medical_effect))
 		var/datum/medical_effect/M = new T

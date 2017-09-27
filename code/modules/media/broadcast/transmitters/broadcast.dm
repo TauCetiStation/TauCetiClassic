@@ -18,8 +18,9 @@
 	var/const/RADS_PER_TICK=150
 	var/const/MAX_TEMP=70 // Celsius
 
-/obj/machinery/media/transmitter/broadcast/initialize()
-	testing("[type]/initialize() called!")
+/obj/machinery/media/transmitter/broadcast/atom_init()
+	. = ..()
+	testing("[type]/atom_init() called!")
 	if(autolink && autolink.len)
 		for(var/obj/machinery/media/source in orange(20, src))
 			if(source.id_tag in autolink)

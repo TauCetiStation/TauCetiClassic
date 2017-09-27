@@ -537,12 +537,11 @@ var/list/wood_icons = list("wood","wood-broken")
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		if (is_plating())
-			if (R.amount >= 2)
+			if (R.get_amount() >= 2)
 				to_chat(user, "\blue Reinforcing the floor...")
-				if(do_after(user, 30, target = src) && R && R.amount >= 2 && is_plating())
-					if (R.use(2))
-						ChangeTurf(/turf/simulated/floor/engine)
-						playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
+				if(do_after(user, 30, target = src) && R.use(2) && is_plating())
+					ChangeTurf(/turf/simulated/floor/engine)
+					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					return
 			else
 				to_chat(user, "\red You need more rods.")
@@ -583,9 +582,9 @@ var/list/wood_icons = list("wood","wood-broken")
 				to_chat(user, "\blue This section is too damaged to support a tile. Use a welder to fix the damage.")
 
 
-	if(istype(C, /obj/item/weapon/cable_coil))
+	if(istype(C, /obj/item/stack/cable_coil))
 		if(is_plating() || is_catwalk())
-			var/obj/item/weapon/cable_coil/coil = C
+			var/obj/item/stack/cable_coil/coil = C
 			for(var/obj/structure/cable/LC in src)
 				if((LC.d1==0)||(LC.d2==0))
 					LC.attackby(C,user)

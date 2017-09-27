@@ -4,7 +4,8 @@
 	icon = 'icons/obj/items.dmi'
 	amount = 5
 	max_amount = 5
-	w_class = 2
+	w_class = ITEM_SIZE_TINY
+	full_w_class = ITEM_SIZE_TINY
 	throw_speed = 4
 	throw_range = 20
 	var/heal_brute = 0
@@ -13,6 +14,9 @@
 /obj/item/stack/medical/attack(mob/living/carbon/M, mob/user)
 	if(!istype(M))
 		to_chat(user, "<span class='warning'>\The [src] cannot be applied to [M]!</span>")
+		return 1
+
+	if(user.is_busy())
 		return 1
 
 	if(!(istype(user, /mob/living/carbon/human) || \
@@ -66,11 +70,11 @@
 			else
 				user.visible_message("<span class='notice'>\The [user] starts treating [M]'s [BP.name].</span>", \
 									"<span class='notice'>You start treating [M]'s [BP.name].</span>")
-				var/used = 0
+
 				for(var/datum/wound/W in BP.wounds)
 					if(W.bandaged)
 						continue
-					if(used == amount)
+					if(!use(1))
 						break
 					if(!do_mob(user, M, W.damage))
 						to_chat(user, "<span class='notice'>You must stand still to bandage wounds.</span>")
@@ -92,13 +96,13 @@
 						W.germ_level += min(germ_level, 3)
 					used++
 				BP.update_damages()
-				if(used == amount)
-					if(BP.is_bandaged())
-						to_chat(user, "<span class='warning'>\The [src] is used up.</span>")
-					else
-						to_chat(user, "<span class='warning'>\The [src] is used up, but there are more wounds to treat on \the [BP.name].</span>")
 				H.update_bandage()
-				use(used)
+
+				if(BP.is_bandaged())
+					to_chat(user, "<span class='warning'>\The [src] is used up.</span>")
+				else
+					to_chat(user, "<span class='warning'>\The [src] is used up, but there are more wounds to treat on \the [BP.name].</span>")
+
 		else
 			if(can_operate(H))        //Checks if mob is lying down on table for surgery
 				if(do_surgery(H,user,src))
@@ -128,18 +132,19 @@
 				to_chat(user, "<span class='warning'>The wounds on [M]'s [BP.name] have already been salved.</span>")
 				return 1
 			else
-				if(amount < 1)
-					to_chat(user, "<span class='danger'>You need more oniment to do this.</span>")
-					return
 				user.visible_message("<span class='notice'>\The [user] starts salving wounds on [M]'s [BP.name].</span>", \
 									"<span class='notice'>You start salving the wounds on [M]'s [BP.name].</span>")
 				if(!do_mob(user, M, 25))
 					to_chat(user, "<span class='notice'>You must stand still to salve wounds.</span>")
 					return 1
+
+				if(!use(1))
+					to_chat(user, "<span class='danger'>You need more ointment to do this.</span>")
+					return
+
 				user.visible_message("<span class='notice'>\The [user] salves wounds on [M]'s [BP.name].</span>", \
 									"<span class='notice'>You salve wounds on [M]'s [BP.name].</span>")
 				BP.salve()
-				use(1)
 		else
 			if(can_operate(H))        //Checks if mob is lying down on table for surgery
 				if(do_surgery(H,user,src))
@@ -186,11 +191,11 @@
 			else
 				user.visible_message("<span class='notice'>\The [user] starts treating [M]'s [BP.name].</span>", \
 									"<span class='notice'>You start treating [M]'s [BP.name].</span>")
-				var/used = 0
+
 				for(var/datum/wound/W in BP.wounds)
 					if(W.bandaged && W.disinfected)
 						continue
-					if(used == amount)
+					if(!use(1))
 						break
 					if(!do_mob(user, M, W.damage))
 						to_chat(user, "<span class='notice'>You must stand still to bandage wounds.</span>")
@@ -207,15 +212,15 @@
 					W.bandage()
 					W.disinfect()
 					W.heal_damage(heal_brute)
-					used++
+
 				BP.update_damages()
-				if(used == amount)
-					if(BP.is_bandaged())
-						to_chat(user, "<span class='warning'>\The [src] is used up.</span>")
-					else
-						to_chat(user, "<span class='warning'>\The [src] is used up, but there are more wounds to treat on \the [BP.name].</span>")
 				H.update_bandage()
-				use(used)
+
+				if(BP.is_bandaged())
+					to_chat(user, "<span class='warning'>\The [src] is used up.</span>")
+				else
+					to_chat(user, "<span class='warning'>\The [src] is used up, but there are more wounds to treat on \the [BP.name].</span>")
+
 		else
 			if(can_operate(H))        //Checks if mob is lying down on table for surgery
 				if(do_surgery(H,user,src))
@@ -244,19 +249,22 @@
 				to_chat(user, "<span class='warning'>The wounds on [M]'s [BP.name] have already been salved.</span>")
 				return 1
 			else
-				if(amount < 1)
-					to_chat(user, "<span class='danger'>You need more advanced burn kit's to do this.</span>")
-					return
 				user.visible_message("<span class='notice'>\The [user] starts salving wounds on [M]'s [BP.name].</span>", \
 									"<span class='notice'>You start salving the wounds on [M]'s [BP.name].</span>")
+
 				if(!do_mob(user, M, 25))
 					to_chat(user, "<span class='notice'>You must stand still to salve wounds.</span>")
 					return 1
+
+				if(!use(1))
+					to_chat(user, "<span class='danger'>You need more advanced burn kit's to do this.</span>")
+					return
+
 				user.visible_message("<span class='notice'>\The [user] covers wounds on [M]'s [BP.name] with regenerative membrane.</span>", \
 									"<span class='notice'>You cover wounds on [M]'s [BP.name] with regenerative membrane.</span>")
-				BP.heal_damage(0,heal_burn)
+				BP.heal_damage(0, heal_burn)
 				BP.salve()
-				use(1)
+
 		else
 			if(can_operate(H))        //Checks if mob is lying down on table for surgery
 				if (do_surgery(H,user,src))
@@ -285,9 +293,7 @@
 		if(BP.status & ORGAN_SPLINTED)
 			to_chat(user, "<span class='danger'>[M]'s [limb] is already splinted!</span>")
 			return
-		if(amount < 1)
-			to_chat(user, "<span class='danger'>You need more splints's to do this.</span>")
-			return
+
 		if(M != user)
 			user.visible_message("<span class='danger'>[user] starts to apply \the [src] to [M]'s [limb]</span>.", \
 								"<span class='danger'>You start to apply \the [src] to [M]'s [limb].</span>", \
@@ -300,6 +306,10 @@
 								"<span class='danger'>You start to apply \the [src] to your [limb].</span>", \
 								"<span class='danger'>You hear something being wrapped.</span>")
 		if(do_after(user, 50, target = M))
+			if(!use(1))
+				to_chat(user, "<span class='danger'>You need more splints's to do this.</span>")
+				return
+
 			if(M != user)
 				user.visible_message("<span class='danger'>[user] finishes applying \the [src] to [M]'s [limb].</span>", \
 									"<span class='danger'>You finish applying \the [src] to [M]'s [limb].</span>", \
@@ -315,5 +325,5 @@
 										"<span class='danger'>You hear something being wrapped.</span>")
 					return
 			BP.status |= ORGAN_SPLINTED
-			use(1)
+
 		return

@@ -53,6 +53,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/light/bulb(), \
 		new /obj/item/ashtray/glass(), \
 		new /obj/item/weapon/camera_assembly(), \
+		new /obj/item/weapon/game_kit(), \
 		new /obj/item/newscaster_frame(), \
 	)
 
@@ -208,11 +209,9 @@ var/global/list/autolathe_recipes_hidden = list( \
 	if (panel_open)
 		if(istype(I, /obj/item/weapon/crowbar))
 			if(m_amount >= 3750)
-				var/obj/item/stack/sheet/metal/G = new /obj/item/stack/sheet/metal(src.loc)
-				G.amount = round(m_amount / 3750)
+				new /obj/item/stack/sheet/metal(loc, round(m_amount / 3750))
 			if(g_amount >= 3750)
-				var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
-				G.amount = round(g_amount / 3750)
+				new /obj/item/stack/sheet/glass(loc, round(g_amount / 3750))
 			default_deconstruction_crowbar(I)
 			return 1
 		else
@@ -238,7 +237,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	var/g_amt = I.g_amt
 	if (istype(I, /obj/item/stack))
 		stack = I
-		amount = stack.amount
+		amount = stack.get_amount()
 		if (m_amt)
 			amount = min(amount, round((max_m_amount-src.m_amount)/m_amt))
 			flick("autolathe_o",src)//plays metal insertion animation
@@ -328,7 +327,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 					src.g_amount -= template.g_amt*multiplier
 					var/obj/new_item = new template.type(T)
 					var/obj/item/stack/S = new_item
-					S.amount = multiplier
+					S.set_amount(multiplier)
 				else
 					src.m_amount -= template.m_amt/coeff
 					src.g_amount -= template.g_amt/coeff

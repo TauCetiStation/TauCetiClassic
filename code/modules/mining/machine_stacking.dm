@@ -54,8 +54,7 @@
 	if(href_list["release_stack"])
 		if(machine.stack_storage[href_list["release_stack"]] > 0)
 			var/stacktype = machine.stack_paths[href_list["release_stack"]]
-			var/obj/item/stack/sheet/S = new stacktype (get_turf(machine.output))
-			S.amount = machine.stack_storage[href_list["release_stack"]]
+			new stacktype (get_turf(machine.output), machine.stack_storage[href_list["release_stack"]])
 			machine.stack_storage[href_list["release_stack"]] = 0
 
 	src.updateUsrDialog()
@@ -106,7 +105,7 @@
 			if(istype(O,/obj/item/stack))
 				var/obj/item/stack/S = O
 				if(!isnull(stack_storage[S.name]))
-					stack_storage[S.name] += S.amount
+					stack_storage[S.name] += S.get_amount()
 					qdel(S)
 				else
 					S.loc = output.loc
@@ -116,8 +115,7 @@
 	for(var/sheet in stack_storage)
 		if(stack_storage[sheet] >= stack_amt)
 			var/stacktype = stack_paths[sheet]
-			var/obj/item/stack/sheet/S = new stacktype (get_turf(output))
-			S.amount = stack_amt
+			new stacktype (get_turf(output), stack_amt)
 			stack_storage[sheet] -= stack_amt
 	console.updateUsrDialog()
 	return

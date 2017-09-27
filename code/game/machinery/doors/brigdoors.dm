@@ -58,10 +58,9 @@
 		return
 	return
 
-/obj/machinery/door_timer/initialize()
+/obj/machinery/door_timer/atom_init()
+	. = ..()
 	cell_open()
-
-	return
 
 //Main door timer loop, if it's timing and time is >0 reduce time by 1.
 // if it's less than 0, open door, reset timer

@@ -223,7 +223,7 @@
 /obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		new /obj/item/stack/sheet/wood(src.loc)
+		new /obj/item/stack/sheet/wood(loc)
 		qdel(src)
 	if(istype(W, /obj/item/weapon/melee/energy))
 		if(istype(W, /obj/item/weapon/melee/energy/blade) || W:active)
@@ -235,7 +235,7 @@
 			playsound(src.loc, "sparks", 50, 1)
 			for(var/mob/O in viewers(user, 4))
 				O.show_message("\blue [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
-			new /obj/item/stack/sheet/wood(src.loc)
+			new /obj/item/stack/sheet/wood(loc)
 			qdel(src)
 	else
 		..()

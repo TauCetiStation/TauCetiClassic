@@ -4,7 +4,7 @@
 	return price
 
 /obj/item/stack/get_price()
-	return price * amount
+	return price * get_amount()
 
 /obj/machinery/get_price()
 	var/my_price = price

@@ -80,14 +80,11 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			for(var/obj/item/weapon/reagent_containers/glass/G in component_parts)
 				reagents.trans_to(G, G.reagents.maximum_volume)
 			if(g_amount >= 3750)
-				var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(src.loc)
-				G.amount = round(g_amount / 3750)
+				new /obj/item/stack/sheet/glass(loc, round(g_amount / 3750))
 			if(gold_amount >= 2000)
-				var/obj/item/stack/sheet/mineral/gold/G = new /obj/item/stack/sheet/mineral/gold(src.loc)
-				G.amount = round(gold_amount / 2000)
+				new /obj/item/stack/sheet/mineral/gold(loc, round(gold_amount / 2000))
 			if(diamond_amount >= 2000)
-				var/obj/item/stack/sheet/mineral/diamond/G = new /obj/item/stack/sheet/mineral/diamond(src.loc)
-				G.amount = round(diamond_amount / 2000)
+				new /obj/item/stack/sheet/mineral/diamond(loc, round(diamond_amount / 2000))
 			default_deconstruction_crowbar(O)
 			return
 		else
@@ -118,19 +115,20 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 		amount = 0
 	if(amount == 0)
 		return
-	if(amount > stack.amount)
-		amount = min(stack.amount, round((max_material_amount-TotalMaterials())/stack.perunit))
+	if(amount > stack.get_amount())
+		amount = min(stack.get_amount(), round((max_material_amount-TotalMaterials())/stack.perunit))
 
 	busy = 1
 	use_power(max(1000, (3750*amount/10)))
 	spawn(16)
-		to_chat(user, "\blue You add [amount] sheets to the [src.name].")
-		if(istype(stack, /obj/item/stack/sheet/glass))
-			g_amount += amount * 3750
-		else if(istype(stack, /obj/item/stack/sheet/mineral/gold))
-			gold_amount += amount * 2000
-		else if(istype(stack, /obj/item/stack/sheet/mineral/diamond))
-			diamond_amount += amount * 2000
-		stack.use(amount)
+		if(stack.get_amount() >= amount)
+			to_chat(user, "\blue You add [amount] sheets to the [src.name].")
+			if(istype(stack, /obj/item/stack/sheet/glass))
+				g_amount += amount * 3750
+			else if(istype(stack, /obj/item/stack/sheet/mineral/gold))
+				gold_amount += amount * 2000
+			else if(istype(stack, /obj/item/stack/sheet/mineral/diamond))
+				diamond_amount += amount * 2000
+			stack.use(amount)
 		busy = 0
 		src.updateUsrDialog()

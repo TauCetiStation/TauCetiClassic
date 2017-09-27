@@ -20,28 +20,48 @@
 	else if(istype(used_atom, /obj/item/weapon/wirecutters))
 		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
 		return 1
-	else if(istype(used_atom, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/C = used_atom
-		if(C.amount<4)
+	else if(istype(used_atom, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = used_atom
+		if(!C.use(4))
 			to_chat(user, ("There's not enough cable to finish the task."))
 			return 0
-		else
-			C.use(4)
-			playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
+
 			return 1
 	else if(istype(used_atom, /obj/item/stack))
 		var/obj/item/stack/S = used_atom
-		if(S.amount < 5)
+		if(!S.use(5))
 			to_chat(user, ("There's not enough material in this stack."))
 			return 0
-		else
-			S.use(5)
+
 			return 1
 	if(istype(used_atom, /obj))
 		var/obj/part = used_atom
 		if(part.crit_fail || part.reliability < 50)
 			user.visible_message("[user] was unable to connect [used_atom] to [holder].", "You failed to connect [used_atom] to [holder]")
 			return 0
+	else if(istype(used_atom, /obj/item/weapon/wrench))
+		playsound(holder, 'sound/items/Ratchet.ogg', 50, 1)
+
+	else if(istype(used_atom, /obj/item/weapon/screwdriver))
+		playsound(holder, 'sound/items/Screwdriver.ogg', 50, 1)
+
+	else if(istype(used_atom, /obj/item/weapon/wirecutters))
+		playsound(holder, 'sound/items/Wirecutter.ogg', 50, 1)
+
+	else if(istype(used_atom, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = used_atom
+		if(!C.use(4))
+			to_chat(user, ("There's not enough cable to finish the task."))
+			return 0
+		playsound(holder, 'sound/items/Deconstruct.ogg', 50, 1)
+
+	else if(istype(used_atom, /obj/item/stack))
+		var/obj/item/stack/S = used_atom
+		if(!S.use(5))
+			to_chat(user, ("There's not enough material in this stack."))
+			return 0
+
 	return 1
 
 
@@ -113,7 +133,7 @@
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="The wiring is added"),
 					 //12
-					 list("key"=/obj/item/weapon/cable_coil,
+					 list("key"=/obj/item/stack/cable_coil,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="The hydraulic systems are active."),
 					 //13
@@ -157,8 +177,7 @@
 					holder.icon_state = "ripley4"
 				else
 					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil/random(get_turf(holder))
-					coil.amount = 4
+					new /obj/item/stack/cable_coil/random(get_turf(holder), 4)
 					holder.icon_state = "ripley2"
 			if(10)
 				if(diff==FORWARD)
@@ -205,8 +224,7 @@
 					holder.icon_state = "ripley10"
 				else
 					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
-					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/sheet/metal(get_turf(holder), 5)
 					holder.icon_state = "ripley8"
 			if(4)
 				if(diff==FORWARD)
@@ -228,8 +246,7 @@
 					holder.icon_state = "ripley13"
 				else
 					user.visible_message("[user] pries external armor layer from [holder].", "You prie external armor layer from [holder].")
-					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/sheet/plasteel(get_turf(holder), 5)
 					holder.icon_state = "ripley11"
 			if(1)
 				if(diff==FORWARD)
@@ -338,7 +355,7 @@
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="The wiring is added"),
 					 //18
-					 list("key"=/obj/item/weapon/cable_coil,
+					 list("key"=/obj/item/stack/cable_coil,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="The hydraulic systems are active."),
 					 //19
@@ -382,8 +399,7 @@
 					holder.icon_state = "gygax4"
 				else
 					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil/random(get_turf(holder))
-					coil.amount = 4
+					new /obj/item/stack/cable_coil/random(get_turf(holder), 4)
 					holder.icon_state = "gygax2"
 			if(16)
 				if(diff==FORWARD)
@@ -478,8 +494,7 @@
 					holder.icon_state = "gygax16"
 				else
 					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
-					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/sheet/metal(get_turf(holder), 5)
 					holder.icon_state = "gygax14"
 			if(4)
 				if(diff==FORWARD)
@@ -591,7 +606,7 @@
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="The wiring is added"),
 					 //13
-					 list("key"=/obj/item/weapon/cable_coil,
+					 list("key"=/obj/item/stack/cable_coil,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="The hydraulic systems are active."),
 					 //14
@@ -635,8 +650,7 @@
 					holder.icon_state = "fireripley4"
 				else
 					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil/random(get_turf(holder))
-					coil.amount = 4
+					new /obj/item/stack/cable_coil/random(get_turf(holder), 4)
 					holder.icon_state = "fireripley2"
 			if(11)
 				if(diff==FORWARD)
@@ -684,8 +698,7 @@
 					holder.icon_state = "fireripley10"
 				else
 					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
-					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/sheet/plasteel(get_turf(holder), 5)
 					holder.icon_state = "fireripley8"
 			if(5)
 				if(diff==FORWARD)
@@ -707,8 +720,7 @@
 					holder.icon_state = "fireripley13"
 				else
 					user.visible_message("[user] removes the external armor from [holder].", "You remove the external armor from [holder].")
-					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/sheet/plasteel(get_turf(holder), 5)
 					holder.icon_state = "fireripley11"
 			if(2)
 				if(diff==FORWARD)
@@ -716,8 +728,7 @@
 					holder.icon_state = "fireripley14"
 				else
 					user.visible_message("[user] pries external armor layer from [holder].", "You prie external armor layer from [holder].")
-					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/sheet/plasteel(get_turf(holder), 5)
 					holder.icon_state = "fireripley12"
 			if(1)
 				if(diff==FORWARD)
@@ -894,7 +905,7 @@
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="The wiring is added"),
 					 //18
-					 list("key"=/obj/item/weapon/cable_coil,
+					 list("key"=/obj/item/stack/cable_coil,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="The hydraulic systems are active."),
 					 //19
@@ -939,8 +950,7 @@
 					holder.icon_state = "durand4"
 				else
 					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil/random(get_turf(holder))
-					coil.amount = 4
+					new /obj/item/stack/cable_coil/random(get_turf(holder), 4)
 					holder.icon_state = "durand2"
 			if(16)
 				if(diff==FORWARD)
@@ -1035,8 +1045,7 @@
 					holder.icon_state = "durand16"
 				else
 					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
-					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/sheet/metal(get_turf(holder), 5)
 					holder.icon_state = "durand14"
 			if(4)
 				if(diff==FORWARD)
@@ -1156,7 +1165,7 @@
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="The wiring is added"),
 					 //12
-					 list("key"=/obj/item/weapon/cable_coil,
+					 list("key"=/obj/item/stack/cable_coil,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="The hydraulic systems are active."),
 					 //13
@@ -1200,8 +1209,7 @@
 					holder.icon_state = "odysseus4"
 				else
 					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil/random(get_turf(holder))
-					coil.amount = 4
+					new /obj/item/stack/cable_coil/random(get_turf(holder), 4)
 					holder.icon_state = "odysseus2"
 			if(10)
 				if(diff==FORWARD)
@@ -1248,8 +1256,7 @@
 					holder.icon_state = "odysseus10"
 				else
 					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
-					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/sheet/metal(get_turf(holder), 5)
 					holder.icon_state = "odysseus8"
 			if(4)
 				if(diff==FORWARD)
@@ -1271,8 +1278,7 @@
 					user.visible_message("[user] secures external armor layer.", "You secure external reinforced armor layer.")
 					holder.icon_state = "odysseus13"
 				else
-					var/obj/item/stack/sheet/plasteel/MS = new /obj/item/stack/sheet/plasteel(get_turf(holder))
-					MS.amount = 5
+					var/obj/item/stack/sheet/plasteel/MS = new (get_turf(holder), 5)
 					user.visible_message("[user] pries [MS] from [holder].", "You prie [MS] from [holder].")
 					holder.icon_state = "odysseus11"
 			if(1)
@@ -1380,7 +1386,7 @@
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="The wiring is added"),
 					 //18
-					 list("key"=/obj/item/weapon/cable_coil,
+					 list("key"=/obj/item/stack/cable_coil,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="The hydraulic systems are active."),
 					 //19
@@ -1425,8 +1431,7 @@
 					holder.icon_state = "vindicator4"
 				else
 					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil/random(get_turf(holder))
-					coil.amount = 30
+					new /obj/item/stack/cable_coil/random(get_turf(holder), 30)
 					holder.icon_state = "vindicator2"
 			if(16)
 				if(diff==FORWARD)
@@ -1521,8 +1526,7 @@
 					holder.icon_state = "vindicator16"
 				else
 					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
-					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
-					MS.amount = 30
+					new /obj/item/stack/sheet/metal(get_turf(holder), 30)
 					holder.icon_state = "vindicator14"
 			if(4)
 				if(diff==FORWARD)
@@ -1652,7 +1656,7 @@
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="The wiring is added"),
 					 //18
-					 list("key"=/obj/item/weapon/cable_coil,
+					 list("key"=/obj/item/stack/cable_coil,
 					 		"backkey"=/obj/item/weapon/screwdriver,
 					 		"desc"="The hydraulic systems are active."),
 					 //19
@@ -1696,8 +1700,7 @@
 					holder.icon_state = "ultra4"
 				else
 					user.visible_message("[user] removes the wiring from [holder].", "You remove the wiring from [holder].")
-					var/obj/item/weapon/cable_coil/coil = new /obj/item/weapon/cable_coil/random(get_turf(holder))
-					coil.amount = 4
+					new /obj/item/stack/cable_coil/random(get_turf(holder), 4)
 					holder.icon_state = "ultra2"
 			if(16)
 				if(diff==FORWARD)
@@ -1792,8 +1795,7 @@
 					holder.icon_state = "ultra16"
 				else
 					user.visible_message("[user] pries internal armor layer from [holder].", "You prie internal armor layer from [holder].")
-					var/obj/item/stack/sheet/metal/MS = new /obj/item/stack/sheet/metal(get_turf(holder))
-					MS.amount = 5
+					new /obj/item/stack/sheet/metal(get_turf(holder), 5)
 					holder.icon_state = "ultra14"
 			if(4)
 				if(diff==FORWARD)

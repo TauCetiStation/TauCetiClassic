@@ -154,6 +154,8 @@
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
+	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
+
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
 	for (var/T in L)
@@ -561,6 +563,8 @@
 					config.organ_health_multiplier = value / 100
 				if("organ_regeneration_multiplier")
 					config.organ_regeneration_multiplier = value / 100
+				if("craft_recipes_visibility")
+					config.craft_recipes_visibility = TRUE
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
@@ -716,6 +720,6 @@
 
 /datum/configuration/proc/stat_entry()
 	if(!statclick)
-		statclick = new/obj/effect/statclick/debug("Edit", src)
+		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
 
 	stat("[name]:", statclick)

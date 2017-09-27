@@ -259,14 +259,14 @@
 			to_chat(user, "\blue You open the panel and expose the wiring.")
 			is_open = 1
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && malfunction && is_open)
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(istype(W, /obj/item/stack/cable_coil) && malfunction && is_open)
+		var/obj/item/stack/cable_coil/coil = W
 		to_chat(user, "\blue You begin to replace the wires.")
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
 		if(do_after(user, 30, target = src))
-			if(!src || !coil) return
-			if(!coil.use(1))
+			if(QDELETED(src) || !coil.use(1))
 				return
+
 			health = max_health
 			malfunction = 0
 			to_chat(user, "\blue You repair the [src]!")

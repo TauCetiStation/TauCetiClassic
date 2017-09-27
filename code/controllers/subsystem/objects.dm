@@ -9,8 +9,8 @@ var/datum/subsystem/objects/SSobj
 /datum/subsystem/objects
 	name = "Objects"
 
-	init_order = SS_INIT_OBJECT
 	priority   = SS_PRIORITY_OBJECTS
+	flags = SS_NO_INIT
 
 	var/list/processing = list()
 	var/list/currentrun = list()
@@ -18,23 +18,8 @@ var/datum/subsystem/objects/SSobj
 /datum/subsystem/objects/New()
 	NEW_SS_GLOBAL(SSobj)
 
-/datum/subsystem/objects/Initialize(timeofday)
-	setupGenetics()
-	color_windows_init()
-	populate_gear_list()
-
-	global_announcer = new(null) //Doh...
-
-	for(var/thing in world)
-		var/atom/A = thing
-		A.initialize()
-		CHECK_TICK
-	..()
-
-
 /datum/subsystem/objects/stat_entry()
 	..("P:[processing.len]")
-
 
 /datum/subsystem/objects/fire(resumed = 0)
 	if (!resumed)
@@ -53,12 +38,6 @@ var/datum/subsystem/objects/SSobj
 
 		if (MC_TICK_CHECK)
 			return
-
-
-/datum/subsystem/objects/proc/setup_template_objects(list/objects)
-	for(var/A in objects)
-		var/atom/B = A
-		B.initialize()
 
 /datum/subsystem/objects/Recover()
 	if (istype(SSobj.processing))

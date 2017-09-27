@@ -189,6 +189,25 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"paper_dickbutt.png" = 'icons/paper_icons/dickbutt.png'
 	)
 
+/datum/asset/simple/chess
+	assets = list(
+		"BR.png" = 'icons/obj/chess/board_BR.png',
+		"BN.png" = 'icons/obj/chess/board_BN.png',
+		"BI.png" = 'icons/obj/chess/board_BI.png',
+		"BQ.png" = 'icons/obj/chess/board_BQ.png',
+		"BK.png" = 'icons/obj/chess/board_BK.png',
+		"BP.png" = 'icons/obj/chess/board_BP.png',
+		"WR.png" = 'icons/obj/chess/board_WR.png',
+		"WN.png" = 'icons/obj/chess/board_WN.png',
+		"WI.png" = 'icons/obj/chess/board_WI.png',
+		"WQ.png" = 'icons/obj/chess/board_WQ.png',
+		"WK.png" = 'icons/obj/chess/board_WK.png',
+		"WP.png" = 'icons/obj/chess/board_WP.png',
+		"CB.png" = 'icons/obj/chess/board_CB.png',
+		"CR.png" = 'icons/obj/chess/board_CR.png',
+		"none.png" = 'icons/obj/chess/board_none.png'
+	)
+
 /datum/asset/nanoui
 	var/list/common = list()
 
@@ -201,6 +220,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	var/list/uncommon_dirs = list(
 		"nano/templates/"
 	)
+
+
 
 /datum/asset/nanoui/register()
 	// Crawl the directories to find files.

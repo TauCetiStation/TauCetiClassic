@@ -100,10 +100,6 @@ Pipelines + Other Objects -> Pipe network
 	update_icon()
 	update_underlays()
 
-// UNTIL proper late_init port (this is called after pipenets are created in air contoller - which means that is most things properly initialized)
-/obj/machinery/atmospherics/proc/atmos_init_late()
-	return
-
 /obj/machinery/atmospherics/proc/can_be_node(obj/machinery/atmospherics/target)
 	if(target.initialize_directions & get_dir(target,src))
 		return 1

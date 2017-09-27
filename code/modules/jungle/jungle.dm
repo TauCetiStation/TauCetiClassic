@@ -134,7 +134,8 @@
 	var/list/animal_spawners = list()
 
 
-/obj/machinery/jungle_controller/initialize()
+/obj/machinery/jungle_controller/atom_init()
+	. = ..()
 	to_chat(world, "\red \b Setting up jungle, this may take a bleeding eternity...")
 
 	//crash dat shuttle

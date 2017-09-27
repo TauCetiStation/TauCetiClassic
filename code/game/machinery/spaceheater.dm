@@ -28,7 +28,7 @@
 	component_parts += new /obj/item/weapon/circuitboard/space_heater(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/cable_coil/red(null, 3)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 3)
 	RefreshParts()
 	update_icon()
 

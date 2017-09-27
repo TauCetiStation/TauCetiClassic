@@ -106,8 +106,6 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 		update_icon()
-		if(ticker && ticker.current_state == 3)//if the game is running
-			initialize()
 		return
 
 	first_run()
@@ -132,7 +130,8 @@
 	TLV["temperature"] =	list(T0C-26, T0C, T0C+40, T0C+66) // K
 
 
-/obj/machinery/alarm/initialize()
+/obj/machinery/alarm/atom_init()
+	. = ..()
 	set_frequency(frequency)
 	if (!master_is_operating())
 		elect_master()
@@ -816,7 +815,7 @@
 			if (istype(W, /obj/item/weapon/wirecutters))
 				user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 				playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
-				new /obj/item/weapon/cable_coil/random(get_turf(src), 5)
+				new /obj/item/stack/cable_coil/random(loc, 5)
 				buildstage = 1
 				update_icon()
 				return
@@ -835,16 +834,13 @@
 			return
 
 		if(1)
-			if(istype(W, /obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/coil = W
-				if(coil.amount < 5)
+			if(istype(W, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/coil = W
+				if(!coil.use(5))
 					to_chat(user, "<span class='warning'>You need 5 pieces of cable to do wire \the [src].</span>")
 					return
 
 				to_chat(user, "You wire \the [src]!")
-				coil.amount -= 5
-				if(!coil.amount)
-					qdel(coil)
 
 				buildstage = 2
 				update_icon()
@@ -920,7 +916,7 @@ Code shamelessly copied from apc_frame
 
 /obj/item/alarm_frame/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal(get_turf(loc), 2)
+		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
 		return
 	..()
@@ -1025,20 +1021,16 @@ FIRE ALARM
 						user.visible_message("\red [user] has disconnected [src]'s detecting unit!", "You have disconnected [src]'s detecting unit.")
 				else if (istype(W, /obj/item/weapon/wirecutters))
 					user.visible_message("\red [user] has cut the wires inside \the [src]!", "You have cut the wires inside \the [src].")
-					new /obj/item/weapon/cable_coil/random(get_turf(src), 5)
+					new /obj/item/stack/cable_coil/random(loc, 5)
 					playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
 					buildstage = 1
 					update_icon()
 			if(1)
-				if(istype(W, /obj/item/weapon/cable_coil))
-					var/obj/item/weapon/cable_coil/coil = W
-					if(coil.amount < 5)
+				if(istype(W, /obj/item/stack/cable_coil))
+					var/obj/item/stack/cable_coil/coil = W
+					if(!coil.use(5))
 						to_chat(user, "<span class='warning'>You need 5 pieces of cable to do wire \the [src].</span>")
 						return
-
-					coil.amount -= 5
-					if(!coil.amount)
-						qdel(coil)
 
 					buildstage = 2
 					to_chat(user, "You wire \the [src]!")
@@ -1232,7 +1224,7 @@ Code shamelessly copied from apc_frame
 
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
-		new /obj/item/stack/sheet/metal(get_turf(loc), 2)
+		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
 		return
 	..()

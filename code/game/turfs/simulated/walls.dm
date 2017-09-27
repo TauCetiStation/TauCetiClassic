@@ -136,8 +136,7 @@
 		new /obj/effect/decal/cleanable/blood(src)
 		return (new /obj/structure/cultgirder(src))
 
-	var/obj/item/stack/sheet/sheet = new sheet_type(src)
-	sheet.amount = 2
+	new sheet_type(src, 2)
 	return (new /obj/structure/girder(src))
 
 /turf/simulated/wall/proc/devastate_wall()
@@ -145,8 +144,7 @@
 		new /obj/effect/decal/cleanable/blood(src)
 		new /obj/effect/decal/remains/human(src)
 
-	var/obj/item/stack/sheet/sheet = new sheet_type(src)
-	sheet.amount = 2
+	new sheet_type(src, 2)
 	new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity)

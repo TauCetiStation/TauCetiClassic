@@ -336,6 +336,10 @@ Class Procs:
 	user.set_machine(src)
 	return ..()
 
+/obj/machinery/CheckParts(list/parts_list)
+	..()
+	RefreshParts()
+
 /obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
 	return
 

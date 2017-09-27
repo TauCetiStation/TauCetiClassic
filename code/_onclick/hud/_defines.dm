@@ -65,7 +65,7 @@
 #define ui_alien_oclothing "CENTER-3:14,SOUTH:5"
 
 //Lower right, persistant menu
-#define ui_dropbutton "EAST-4:22,SOUTH:5"
+#define ui_crafting "EAST-4:22,SOUTH:5"
 #define ui_drop_throw "EAST-1:28,SOUTH+1:7"
 #define ui_pull_resist "EAST-2:26,SOUTH+1:7"
 #define ui_movi "EAST-2:26,SOUTH:5"

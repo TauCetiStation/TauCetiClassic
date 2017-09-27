@@ -304,7 +304,7 @@
 		else
 			module_string += text("[O]: <A HREF=?src=\ref[src];act=\ref[O]>Activate</A><BR>")
 
-		if((istype(O,/obj/item/weapon) || istype(O,/obj/item/device)) && !(istype(O,/obj/item/weapon/cable_coil)))
+		if((istype(O,/obj/item/weapon) || istype(O,/obj/item/device)) && !(istype(O,/obj/item/stack/cable_coil)))
 			tools += module_string
 		else
 			resources += module_string
@@ -337,24 +337,20 @@
 			switch(type)
 				if("metal")
 					if(!stack_metal)
-						stack_metal = new /obj/item/stack/sheet/metal/cyborg(src.module)
-						stack_metal.amount = 1
+						stack_metal = new (module, 1)
 					stack = stack_metal
 				if("glass")
 					if(!stack_glass)
-						stack_glass = new /obj/item/stack/sheet/glass/cyborg(src.module)
-						stack_glass.amount = 1
+						stack_glass = new (module, 1)
 					stack = stack_glass
 				if("wood")
 					if(!stack_wood)
-						stack_wood = new /obj/item/stack/sheet/wood/cyborg(src.module)
-						stack_wood.amount = 1
+						stack_wood = new (module, 1)
 					stack = stack_wood
 				if("plastic")
 					if(!stack_plastic)
-						stack_plastic = new /obj/item/stack/sheet/mineral/plastic/cyborg(src.module)
-						stack_plastic.amount = 1
+						stack_plastic = new (module, 1)
 					stack = stack_plastic
 
-			stack.amount++
+			stack.add(1)
 			decompiler.stored_comms[type]--;

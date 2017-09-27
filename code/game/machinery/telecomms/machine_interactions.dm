@@ -45,19 +45,20 @@
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				construct_op ++
-				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil/red(user.loc)
-				A.amount = 5
+				new /obj/item/stack/cable_coil/red(user.loc, 5)
 				stat |= BROKEN // the machine's been borked!
 		if(3)
-			if(istype(P, /obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/A = P
-				if(A.use(5))
-					to_chat(user, "<span class='notice'>You insert the cables.</span>")
-					construct_op --
-					stat &= ~BROKEN // the machine's not borked anymore!
-				else
+			if(istype(P, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/A = P
+				if(!A.use(5))
 					to_chat(user, "<span class='danger'>You need more cable to do that.</span>")
-			if(istype(P, /obj/item/weapon/crowbar))
+					return
+
+				to_chat(user, "<span class='notice'>You insert the cables.</span>")
+				construct_op --
+				stat &= ~BROKEN // the machine's not borked anymore!
+
+			else if(istype(P, /obj/item/weapon/crowbar))
 				to_chat(user, "<span class='notice'>You begin prying out the circuit board and components...</span>")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user,60,target = src))
@@ -79,12 +80,10 @@
 						for(var/I in C.req_components)
 							for(var/i = 1, i <= C.req_components[I], i++)
 								newpath = text2path(I)
-								var/obj/item/s = new newpath
-								s.loc = src.loc
-								if(istype(s, /obj/item/weapon/cable_coil))
-									var/obj/item/weapon/cable_coil/A = s
-									A.amount = 1
-									A.update_icon()
+								if(istype(newpath, /obj/item/stack/cable_coil))
+									new newpath(loc, 1)
+								else
+									new newpath(loc)
 
 						// Drop a circuit board too
 						C.loc = src.loc

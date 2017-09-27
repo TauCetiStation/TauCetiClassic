@@ -152,7 +152,7 @@
 //hook for printing stats to the "MC" statuspanel for admins to see performance and related stats etc.
 /datum/subsystem/proc/stat_entry(msg)
 	if(!statclick)
-		statclick = new/obj/effect/statclick/debug("Initializing...", src)
+		statclick = new/obj/effect/statclick/debug(null, "Initializing...", src)
 
 	if(can_fire)
 		msg = "[round(cost, 1)]ms|[round(tick_usage, 1)]%|[round(ticks, 0.1)]\t[msg]"
@@ -192,3 +192,7 @@
 /datum/subsystem/on_varedit(edited_var)
 	if (edited_var == "can_fire" && can_fire)
 		next_fire = world.time + wait
+
+/datum/subsystem/proc/StartLoadingMap()
+
+/datum/subsystem/proc/StopLoadingMap()

@@ -1091,7 +1091,7 @@ proc/get_mob_with_client_list()
 
 //Quick type checks for some tools
 var/global/list/common_tools = list(
-/obj/item/weapon/cable_coil,
+/obj/item/stack/cable_coil,
 /obj/item/weapon/wrench,
 /obj/item/weapon/weldingtool,
 /obj/item/weapon/screwdriver,
@@ -1115,7 +1115,7 @@ var/global/list/common_tools = list(
 	return 0
 
 /proc/iscoil(O)
-	if(istype(O, /obj/item/weapon/cable_coil))
+	if(istype(O, /obj/item/stack/cable_coil))
 		return 1
 	return 0
 
@@ -1139,8 +1139,8 @@ var/global/list/common_tools = list(
 		return 1
 	return 0
 
-/proc/iswire(O)
-	if(istype(O, /obj/item/weapon/cable_coil))
+/proc/iswire(O) // coil, wire... whats the difference here?
+	if(istype(O, /obj/item/stack/cable_coil))
 		return 1
 	return 0
 

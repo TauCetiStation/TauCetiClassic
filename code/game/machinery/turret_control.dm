@@ -51,7 +51,8 @@
 			A.turret_controls -= src
 	return ..()
 
-/obj/machinery/turretid/initialize()
+/obj/machinery/turretid/atom_init()
+	. = ..()
 	if(!control_area)
 		control_area = get_area(src)
 	else if(istext(control_area))
@@ -68,7 +69,6 @@
 			control_area = null
 
 	power_change() //Checks power and initial settings
-	return
 
 /obj/machinery/turretid/proc/isLocked(mob/user)
 	if(ailock && issilicon(user))

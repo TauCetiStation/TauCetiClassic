@@ -34,7 +34,8 @@
 	icon_state = "rock"
 	geologic_data = new(src)
 
-/turf/simulated/mineral/initialize()
+/turf/simulated/mineral/atom_init()
+	. = ..()
 	MineralSpread()
 
 	var/turf/T
@@ -382,20 +383,16 @@
 	for(var/j in 1 to rand(1, 3 + max(min(severity, 1), 0) * 2))
 		switch(rand(1,7))
 			if(1)
-				var/obj/item/stack/rods/R = new(src)
-				R.amount = rand(5,25)
+				new/obj/item/stack/rods(src, rand(5,25))
 
 			if(2)
-				var/obj/item/stack/tile/R = new(src)
-				R.amount = rand(1,5)
+				new/obj/item/stack/tile(src, rand(1,5))
 
 			if(3)
-				var/obj/item/stack/sheet/metal/R = new(src)
-				R.amount = rand(5,25)
+				new/obj/item/stack/sheet/metal(src, rand(5,25))
 
 			if(4)
-				var/obj/item/stack/sheet/plasteel/R = new(src)
-				R.amount = rand(5,25)
+				new/obj/item/stack/sheet/plasteel(src, rand(5,25))
 
 			if(5)
 				var/quantity = rand(1,3)
@@ -408,8 +405,7 @@
 					new /obj/item/weapon/shard/phoron(src)
 
 			if(7)
-				var/obj/item/stack/sheet/mineral/uranium/R = new(src)
-				R.amount = rand(5,25)
+				new/obj/item/stack/sheet/mineral/uranium(src, rand(5,25))
 
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
