@@ -88,11 +88,16 @@
 	if(dna)
 		dna.real_name = real_name
 
+	handcrafting = new()
+
 	verbs += /mob/living/carbon/proc/crawl
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
 	regenerate_icons()
+
+/mob/living/carbon/human/OpenCraftingMenu()
+	handcrafting.ui_interact(src)
 
 /mob/living/carbon/human/Stat()
 	..()

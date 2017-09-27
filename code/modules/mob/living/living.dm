@@ -2,6 +2,9 @@
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
+/mob/living/proc/OpenCraftingMenu()
+	return
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)

@@ -161,6 +161,9 @@
 			qdel(src)
 		return 1
 
+/obj/item/stack/proc/add(_amount)
+	amount += _amount
+
 /obj/item/proc/use_multi(mob/user, list/res_list)
 	. = TRUE
 	for(var/x in res_list)
