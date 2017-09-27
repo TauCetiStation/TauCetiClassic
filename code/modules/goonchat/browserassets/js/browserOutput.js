@@ -896,13 +896,13 @@ $(function() {
 				'<div id="picker-notify"><span><b>COPIED</b></span></div>' +
 				'<p>Emoji will be copied to the clipboard.</p>';
 		
-		var main = '';
+		var main = '<div class="emojiList">';
 		
 		emojiList.forEach(function (emoji) {
 			main += '<a href="#" data-emoji="' + emoji + '" title="' + emoji + '"><i class="em em-' + emoji + '"></i></a>';
 		});
 		
-		var footer = '</div>';
+		var footer = '</div></div>';
 
 		createPopup(header + main + footer, 400);
 		
