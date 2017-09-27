@@ -484,17 +484,17 @@
 					update_icon()
 				else
 					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
-	else if (istype(W, /obj/item/weapon/cable_coil) && !terminal && opened && has_electronics!=2)
+	else if (istype(W, /obj/item/stack/cable_coil) && !terminal && opened && has_electronics != 2)
 		if (src.loc:intact)
 			to_chat(user, "\red You must remove the floor plating in front of the APC first.")
 			return
-		var/obj/item/weapon/cable_coil/C = W
-		if(C.amount < 10)
+		var/obj/item/stack/cable_coil/C = W
+		if(C.get_amount() < 10)
 			to_chat(user, "\red You need more wires.")
 			return
 		to_chat(user, "You start adding cables to the APC frame...")
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 20, target = src) && C.amount >= 10)
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
 			var/turf/T = get_turf_loc(src)
 			var/obj/structure/cable/N = T.get_cable_node()
 			if (prob(50) && electrocute_mob(usr, N, N))

@@ -141,7 +141,7 @@
 			return 0 //I don't care, but the existing code rejects them for not being "sheets" *shrug* -Sayu
 		var/current = 0
 		for(var/obj/item/stack/sheet/S in contents)
-			current += S.amount
+			current += S.get_amount()
 		if(capacity == current)//If it's full, you're done
 			if(!stop_messages)
 				to_chat(usr, "\red The snatcher is full.")
@@ -158,11 +158,11 @@
 		var/inserted = 0
 		var/current = 0
 		for(var/obj/item/stack/sheet/S2 in contents)
-			current += S2.amount
-		if(capacity < current + S.amount)//If the stack will fill it up
+			current += S2.get_amount()
+		if(capacity < current + S.get_amount())//If the stack will fill it up
 			amount = capacity - current
 		else
-			amount = S.amount
+			amount = S.get_amount()
 
 		for(var/obj/item/stack/sheet/sheet in contents)
 			if(S.type == sheet.type) // we are violating the amount limitation because these are not sane objects
@@ -171,10 +171,10 @@
 				inserted = 1
 				break
 
-		if(!inserted || !S.amount)
+		if(!inserted || !S.get_amount())
 			usr.remove_from_mob(S)
 			usr.update_icons()	//update our overlays
-			if(!S.amount)
+			if(!S.get_amount())
 				qdel(S)
 			else
 				S.loc = src
@@ -199,7 +199,7 @@
 			for(var/obj/item/stack/sheet/I in contents)
 				adjusted_contents++
 				var/datum/numbered_display/D = new/datum/numbered_display(I)
-				D.number = I.amount
+				D.number = I.get_amount()
 				numbered_contents.Add( D )
 
 		var/row_num = 0
@@ -214,12 +214,12 @@
 	quick_empty()
 		var/location = get_turf(src)
 		for(var/obj/item/stack/sheet/S in contents)
-			while(S.amount)
+			while(S.get_amount())
 				var/obj/item/stack/sheet/N = new S.type(location)
-				var/stacksize = min(S.amount,N.max_amount)
+				var/stacksize = min(S.get_amount(),N.max_amount)
 				N.amount = stacksize
 				S.amount -= stacksize
-			if(!S.amount)
+			if(!S.get_amount())
 				qdel(S) // todo: there's probably something missing here
 		orient2hud(usr)
 		if(usr.s_active)
@@ -236,9 +236,9 @@
 		//Therefore, make a new stack internally that has the remainder.
 		// -Sayu
 
-		if(S.amount > S.max_amount)
+		if(S.get_amount() > S.max_amount)
 			var/obj/item/stack/sheet/temp = new S.type(src)
-			temp.amount = S.amount - S.max_amount
+			temp.amount = S.get_amount() - S.max_amount
 			S.amount = S.max_amount
 
 		return ..(S,new_location)

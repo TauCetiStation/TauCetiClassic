@@ -759,13 +759,9 @@ It can still be worn/put on as normal.
 			for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG , BP_L_ARM , BP_R_ARM))
 				var/obj/item/organ/external/BP = target.bodyparts_by_name[bodypart_name]
 				if (BP && (BP.status & ORGAN_SPLINTED))
-					var/obj/item/W = new /obj/item/stack/medical/splint(amount = 1)
+					var/obj/item/W = new /obj/item/stack/medical/splint(target.loc, 1)
 					BP.status &= ~ORGAN_SPLINTED
-					if (W)
-						W.loc = target.loc
-						W.layer = initial(W.layer)
-						W.appearance_flags = 0
-						W.add_fingerprint(source)
+					W.add_fingerprint(source)
 		if("bandages")
 			for(var/obj/item/organ/external/BP in target.bodyparts)
 				for(var/datum/wound/W in BP.wounds)

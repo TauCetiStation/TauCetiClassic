@@ -811,8 +811,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	var/t_yield = round(yield*parent.yieldmod)
 
 	if(t_yield > 0)
-		var/obj/item/stack/tile/grass/new_grass = new/obj/item/stack/tile/grass(user.loc)
-		new_grass.amount = t_yield
+		new/obj/item/stack/tile/grass(user.loc, t_yield)
 
 	parent.update_tray()
 

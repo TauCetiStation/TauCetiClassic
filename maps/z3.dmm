@@ -75,7 +75,7 @@
 "bx" = (/obj/item/weapon/shard{icon_state = "medium"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
 "by" = (/obj/structure/stool/bed/chair/metal,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
 "bz" = (/obj/structure/cable,/obj/structure/computerframe{anchored = 1},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
-"bA" = (/obj/structure/cable,/obj/structure/computerframe{anchored = 1},/obj/item/weapon/cable_coil/cut/red,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
+"bA" = (/obj/structure/cable,/obj/structure/computerframe{anchored = 1},/obj/item/stack/cable_coil/cut/red,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
 "bB" = (/obj/structure/rack,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/tank/emergency_oxygen,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
 "bC" = (/obj/structure/rack,/obj/item/clothing/suit/space/syndicate,/obj/item/clothing/head/helmet/space/syndicate,/obj/item/clothing/mask/breath,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
 "bD" = (/obj/structure/rack,/obj/item/weapon/storage/toolbox/syndicate,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)

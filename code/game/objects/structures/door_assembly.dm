@@ -87,8 +87,8 @@
 			to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]secured the airlock assembly!</span>")
 			anchored = !anchored
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && state == ASSEMBLY_SECURED && anchored )
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(istype(W, /obj/item/stack/cable_coil) && state == ASSEMBLY_SECURED && anchored )
+		var/obj/item/stack/cable_coil/coil = W
 		user.visible_message("[user] wires the airlock assembly.", "You start to wire the airlock assembly.")
 		if(do_after(user, 40, target = src))
 			if(!src)
@@ -106,7 +106,7 @@
 			if(!src)
 				return
 			to_chat(user, "<span class='notice'>You cut the airlock wires!</span>")
-			new /obj/item/weapon/cable_coil/random(loc, 1)
+			new /obj/item/stack/cable_coil/random(loc, 1)
 			state = ASSEMBLY_SECURED
 
 	else if(istype(W, /obj/item/weapon/airlock_electronics) && state == ASSEMBLY_WIRED)
@@ -143,7 +143,7 @@
 
 	else if(istype(W, /obj/item/stack/sheet))
 		var/obj/item/stack/sheet/S = W
-		if(S && S.amount >= 1)
+		if(S.get_amount() >= 1)
 			if(istype(S, /obj/item/stack/sheet/rglass))
 				if(glass_material)
 					to_chat(user, "<span class='notice'>There is already glass in the [src].</span>")
@@ -161,12 +161,13 @@
 			else if(istype(S, /obj/item/stack/sheet/mineral) && S.sheettype)
 				if(can_insert_mineral())
 					var/M = S.sheettype
-					if(S.amount >= 2)
+					if(S.get_amount() >= 2)
 						playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 						user.visible_message("[user] adds [S.name] to the airlock assembly.", "You start to install [S.name] into the airlock assembly.")
 						if(do_after(user, 40, target = src))
+							if(!S.use(2))
+								return
 							to_chat(user, "<span class='notice'>You installed [M] plating into the airlock assembly!</span>")
-							S.use(2)
 							change_mineral_airlock_type(M)
 					else
 						to_chat(user, "<span class='notice'>There is not enough [S].</span>")

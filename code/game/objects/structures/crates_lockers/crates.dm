@@ -76,28 +76,29 @@
 			W.forceMove(src.loc)
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))	//OOP? Doesn't heard.
 		return
-	else if(istype(W, /obj/item/weapon/cable_coil))
+	else if(istype(W, /obj/item/stack/cable_coil))
 		if(rigged)
 			to_chat(user, "<span class='notice'>[src] is already rigged!</span>")
 			return
+
+		var/obj/item/stack/cable_coil/C = W
+		if(!C.use(1))
+			return
+
 		to_chat(user, "<span class='notice'>You rig [src].</span>")
-		user.drop_item()
-		qdel(W)
 		rigged = 1
-		return
 	else if(istype(W, /obj/item/device/radio/electropack))
 		if(rigged)
 			to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
 			user.drop_item()
 			W.forceMove(src)
-			return
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(rigged)
 			to_chat(user, "<span class='notice'>You cut away the wiring.</span>")
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			rigged = 0
-			return
-	else return attack_hand(user)
+	else
+		return attack_hand(user)
 
 /obj/structure/closet/crate/ex_act(severity)
 	switch(severity)
@@ -183,7 +184,7 @@
 		src.toggle(user)
 
 /obj/structure/closet/crate/secure/attackby(obj/item/weapon/W, mob/user)
-	if(is_type_in_list(W, list(/obj/item/weapon/packageWrap, /obj/item/weapon/cable_coil, /obj/item/device/radio/electropack, /obj/item/weapon/wirecutters)))
+	if(is_type_in_list(W, list(/obj/item/weapon/packageWrap, /obj/item/stack/cable_coil, /obj/item/device/radio/electropack, /obj/item/weapon/wirecutters)))
 		return ..()
 	if(locked && (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)))
 		overlays.Cut()

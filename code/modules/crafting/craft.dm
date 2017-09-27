@@ -94,7 +94,7 @@
 	for(var/obj/I in get_environment(user))
 		if(I.flags_2 & HOLOGRAM_2)
 			continue
-		if(istype(I, /obj/item/stack) || istype(I, /obj/item/weapon/cable_coil))
+		if(istype(I, /obj/item/stack))
 			var/obj/item/stack/S = I
 			.[I.type] += S.amount
 		else
@@ -207,7 +207,7 @@
 							surroundings -= RC
 					else
 						surroundings -= RC
-			else if(ispath(A, /obj/item/stack) || ispath(A, /obj/item/weapon/cable_coil)) // COILS MUST ... !! Actually moved under /stack .
+			else if(ispath(A, /obj/item/stack))
 				var/obj/item/stack/S
 				var/obj/item/stack/SD
 				while(amt > 0)
@@ -247,7 +247,7 @@
 			. += RG
 			Deletion -= RG
 			continue
-		else if(istype(A, /obj/item/stack) || istype(A, /obj/item/weapon/cable_coil))
+		else if(istype(A, /obj/item/stack))
 			var/obj/item/stack/ST = locate(A) in Deletion
 			if(ST.amount > partlist[A])
 				ST.amount = partlist[A]

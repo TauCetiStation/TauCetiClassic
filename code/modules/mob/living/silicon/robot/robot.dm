@@ -580,11 +580,11 @@
 			to_chat(user, "Need more welding fuel!")
 			return
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && (wiresexposed || istype(src,/mob/living/silicon/robot/drone)))
+	else if(istype(W, /obj/item/stack/cable_coil) && (wiresexposed || istype(src,/mob/living/silicon/robot/drone)))
 		if (!getFireLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
-		var/obj/item/weapon/cable_coil/coil = W
+		var/obj/item/stack/cable_coil/coil = W
 		if(!coil.use(1))
 			return
 		adjustFireLoss(-30)

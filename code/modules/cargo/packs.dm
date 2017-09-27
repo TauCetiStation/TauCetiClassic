@@ -45,9 +45,9 @@ datum/supply_pack/New()
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
 	for(var/item in contains)
 		var/n_item = new item(C)
-		if(src.amount && istype(n_item, /obj/item/stack/sheet))
+		if(amount && istype(n_item, /obj/item/stack/sheet))
 			var/obj/item/stack/sheet/n_sheet = n_item
-			n_sheet.amount = src.amount
+			n_sheet.set_amount(amount)
 
 //----------------------------------------------
 //-----------------OPERATIONS-------------------
