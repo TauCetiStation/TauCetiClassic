@@ -17,10 +17,16 @@
 
 		if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
 			var/mob/living/carbon/human/H = user
-			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
-					if(V.stealth_active)
-						V.DeactivateStealth()
+			if(H.wear_suit)
+				if(istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
+					for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
+						if(V.stealth_active)
+							V.DeactivateStealth()
+				if(istype(H.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
+					for(var/obj/item/clothing/suit/space/vox/stealth/V in list(H.wear_suit))
+						if(V.on)
+							V.overload()
+
 
 		if(butcher_results && stat == DEAD)
 			if(buckled && istype(buckled, /obj/structure/kitchenspike))

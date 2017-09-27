@@ -177,22 +177,35 @@
 		STOP_PROCESSING(SSobj, src)
 		wearer.alpha = 255
 	else if(!deactive)
-		if(!istype(wearer) || wearer.wear_suit != src)
-			return
-		if(is_damaged())
-			return
-		on = TRUE
-		START_PROCESSING(SSobj, src)
+		to_chat(wearer, "<span class='notice'>Turning on stealth mode...</span>")
+		if(do_after(wearer, 40, target = wearer))
+			if(!istype(wearer) || wearer.wear_suit != src)
+				return
+			if(is_damaged())
+				return
+			on = TRUE
+			to_chat(wearer, "<span class='notice'>Stealth mode in now on!</span>")
+			START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/vox/stealth/proc/is_damaged()
-	if(damage >= 5)
-		to_chat(wearer, "<span class='warning'>[src] is too damaged to support stealth field.</span>")
+	if(damage >= 2)
+		to_chat(wearer, "<span class='warning'>[src] is too damaged to support stealth mode!</span>")
 		var/datum/effect/effect/system/spark_spread/s = new
 		s.set_up(5, 1, src)
 		s.start()
 		return TRUE
 	else
 		return FALSE
+
+/obj/item/clothing/suit/space/vox/stealth/proc/overload()
+	wearer.visible_message(
+	"<span class='warning'>[wearer] appears from nowhere!",
+	"<span class='warning'>Your stealth got overloaded and no longer can sustain itself!</span>"
+	)
+	var/datum/effect/effect/system/spark_spread/s = new
+	s.set_up(5, 1, src)
+	s.start()
+	toggle_stealth()
 
 /obj/item/clothing/head/helmet/space/vox/medic
 	name = "alien goggled helmet"
