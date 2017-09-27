@@ -122,7 +122,18 @@ INITIALIZE_IMMEDIATE(/mob/new_player) // until new_player moves under /dead type
 			close_spawn_windows()
 			var/obj/O = locate("landmark*Observer-Start")
 			to_chat(src, "\blue Now teleporting.")
-			observer.loc = O.loc
+
+			if(O)
+				observer.loc = O.loc
+			else
+				world.log << "\"landmark*Observer-Start\" not found, executing plan B."
+				var/list/turfs = get_area_turfs(/area/shuttle/arrival/station)
+				if(turfs.len)
+					observer.loc = pick(turfs)
+				else
+					world.log << "\"/area/shuttle/arrival/station\" not found, executing plan C"
+					observer.loc = locate(round(world.maxx / 2), round(world.maxy / 2), ZLEVEL_STATION) // middle of the station
+
 			observer.timeofdeath = world.time // Set the time of death so that the respawn timer works correctly.
 
 			//client.prefs.update_preview_icon()
