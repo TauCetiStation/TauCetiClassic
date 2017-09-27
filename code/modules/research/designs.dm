@@ -2090,6 +2090,15 @@ datum/design/security_hud
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
 
+datum/design/secmed_hud
+	name = "Mixed HUD"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status."
+	id = "security_hud"
+	req_tech = list("magnets" = 4, "combat" = 3, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	build_path = /obj/item/clothing/glasses/sunglasses/hud/secmed
+
 datum/design/mining_hud
 	name = "Geological Optical Scanner"
 	desc = "A heads-up display that scans the rocks in view and provides some data about their composition."

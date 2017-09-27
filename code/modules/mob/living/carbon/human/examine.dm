@@ -432,6 +432,8 @@
 			msg += "<span class = 'deptradio'>Security records:</span> <a href='?src=\ref[src];secrecord=`'>\[View\]</a>  <a href='?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>\n"
 
 	if(hasHUD(user,"medical"))
+		if(hasHUD(user,"security"))
+			msg += "*---------*\n"
 		var/perpname = "wot"
 		var/medical = "None"
 
@@ -482,9 +484,9 @@
 		var/mob/living/carbon/human/H = M
 		switch(hudtype)
 			if("security")
-				return istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud)
+				return istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/hud/secmed)
 			if("medical")
-				return istype(H.glasses, /obj/item/clothing/glasses/hud/health)
+				return istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/hud/secmed)
 			else
 				return 0
 	else if(istype(M, /mob/living/silicon/robot))
