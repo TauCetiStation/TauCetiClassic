@@ -930,10 +930,10 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(obj/item/stack/sheet/P)
-	if(P.type == fuel.type && P.amount)
+	if(P.type == fuel.type && P.get_amount())
 		var/to_load = max(max_fuel - fuel.amount*fuel.perunit,0)
 		if(to_load)
-			var/units = min(max(round(to_load / P.perunit),1),P.amount)
+			var/units = min(max(round(to_load / P.perunit),1),P.get_amount())
 			if(units)
 				fuel.amount += units
 				P.use(units)
@@ -959,12 +959,12 @@
 		return
 	var/datum/gas_mixture/GM = new
 	if(prob(10))
-		GM.phoron += 100
+		GM.gas["phoron"] += 100
 		GM.temperature = 1500+T0C //should be enough to start a fire
 		T.visible_message("The [src] suddenly disgorges a cloud of heated phoron.")
 		destroy()
 	else
-		GM.phoron += 5
+		GM.gas["phoron"] += 5
 		GM.temperature = istype(T) ? T.air.temperature : T20C
 		T.visible_message("The [src] suddenly disgorges a cloud of phoron.")
 	T.assume_air(GM)

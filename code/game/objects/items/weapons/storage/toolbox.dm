@@ -60,12 +60,12 @@
 		new /obj/item/weapon/wirecutters(src)
 		new /obj/item/device/t_scanner(src)
 		new /obj/item/weapon/crowbar(src)
-		new /obj/item/weapon/cable_coil/random(src)
-		new /obj/item/weapon/cable_coil/random(src)
+		new /obj/item/stack/cable_coil/random(src)
+		new /obj/item/stack/cable_coil/random(src)
 		if(prob(5))
 			new /obj/item/clothing/gloves/yellow(src)
 		else
-			new /obj/item/weapon/cable_coil/random(src)
+			new /obj/item/stack/cable_coil/random(src)
 
 /obj/item/weapon/storage/toolbox/syndicate
 	name = "suspicious looking toolbox"
@@ -80,6 +80,6 @@
 		new /obj/item/weapon/wrench(src)
 		new /obj/item/weapon/weldingtool(src)
 		new /obj/item/weapon/crowbar(src)
-		new /obj/item/weapon/cable_coil/random(src)
+		new /obj/item/stack/cable_coil/random(src)
 		new /obj/item/weapon/wirecutters(src)
 		new /obj/item/device/multitool(src)

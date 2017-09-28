@@ -99,9 +99,8 @@
 						possible_spawns += bar_type
 
 					var/bar_type = pick(possible_spawns)
-					for(var/i=0,i<amount,i++)
-						var/obj/item/stack/sheet/mineral/M = new bar_type(C)
-						M.amount = quantity
+					for(var/i in 1 to amount)
+						new bar_type(C, quantity)
 				else
 					//credits
 

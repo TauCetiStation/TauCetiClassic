@@ -17,7 +17,7 @@
 	ghostize()
 	..()
 */
-/mob/New()
+/mob/atom_init()
 	spawn()
 		if(client) animate(client, color = null, time = 0)
 	mob_list += src
@@ -25,25 +25,24 @@
 		dead_mob_list += src
 	else
 		living_mob_list += src
-	..()
+	. = ..()
 
 /mob/proc/Cell()
 	set category = "Admin"
 	set hidden = TRUE
 
-	if(!loc)
+	if(!isturf(loc))
 		return 0
 
-	var/datum/gas_mixture/environment = loc.return_air()
+	var/turf/T = loc
 
-	var/t = "\blue Coordinates: [x],[y] \n"
-	t+= "\red Temperature: [environment.temperature] \n"
-	t+= "\blue Nitrogen: [environment.nitrogen] \n"
-	t+= "\blue Oxygen: [environment.oxygen] \n"
-	t+= "\blue Phoron : [environment.phoron] \n"
-	t+= "\blue Carbon Dioxide: [environment.carbon_dioxide] \n"
-	for(var/datum/gas/trace_gas in environment.trace_gases)
-		to_chat(usr, "\blue [trace_gas.type]: [trace_gas.moles] \n")
+	var/datum/gas_mixture/env = T.return_air()
+
+	var/t = "<span class='notice'>Coordinates: [T.x],[T.y],[T.z]</span>\n"
+	t += "<span class='warning'>Temperature: [env.temperature]</span>\n"
+	t += "<span class='warning'>Pressure: [env.return_pressure()]kPa</span>\n"
+	for(var/g in env.gas)
+		t += "<span class='notice'>[g]: [env.gas[g]] / [env.gas[g] * R_IDEAL_GAS_EQUATION * env.temperature / env.volume]kPa</span>\n"
 
 	usr.show_message(t, 1)
 

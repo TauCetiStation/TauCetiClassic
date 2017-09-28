@@ -27,7 +27,12 @@
 /**
  * Return `TRUE` if `X` already passed `Destroy()` phase.
  */
-#define QDELETED(X) (!X || X.gc_destroyed)
+#define QDELING(X) (X.gc_destroyed)
+
+/**
+ * Same as above plus sanitization that checks if atom exist.
+ */
+#define QDELETED(X) (!X || QDELING(X))
 
 /**
  * Return `TRUE` if `X` is in `Destroy()` phase.

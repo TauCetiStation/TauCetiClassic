@@ -29,15 +29,7 @@
 	if ( istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
-			var/obj/item/stack/sheet/glass/phoronglass/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/glass/phoronglass/G in user.loc)
-				if(G==NG)
-					continue
-				if(G.amount>=G.max_amount)
-					continue
-				G.attackby(NG, user)
-				to_chat(usr, "You add the newly-formed phoron glass to the stack. It now contains [NG.amount] sheets.")
-			//SN src = null
+			new /obj/item/stack/sheet/glass/phoronglass(user.loc, , TRUE)
 			qdel(src)
 			return
 	return ..()

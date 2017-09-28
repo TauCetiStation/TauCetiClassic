@@ -17,6 +17,9 @@
 	src.adding += using
 	action_intent = using
 
+	using = new /obj/screen/inventory/craft
+	src.adding += using
+
 //intent small hud objects
 	var/icon/ico
 

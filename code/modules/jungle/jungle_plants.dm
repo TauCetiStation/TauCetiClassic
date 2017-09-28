@@ -36,8 +36,7 @@
 			spawn(rand(15,30))
 				if(get_dist(user,src) < 2)
 					to_chat(user, "\blue You clear away [src].")
-					var/obj/item/stack/sheet/wood/W = new(src.loc)
-					W.amount = rand(3,15)
+					new/obj/item/stack/sheet/wood(loc, rand(3,15))
 					if(prob(50))
 						icon_state = "stump[rand(1,2)]"
 						name = "cleared foliage"

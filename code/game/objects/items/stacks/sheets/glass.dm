@@ -32,7 +32,7 @@
 
 /obj/item/stack/sheet/glass/attackby(obj/item/W, mob/user)
 	..()
-	if(istype(W,/obj/item/weapon/cable_coil))
+	if(istype(W,/obj/item/stack/cable_coil))
 
 		var/list/resources_to_use = list()
 		resources_to_use[W] = 5
@@ -52,11 +52,8 @@
 
 		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
 		RG.add_fingerprint(user)
-		RG.add_to_stacks(user)
-		var/obj/item/stack/sheet/glass/G = src
-		src = null
-		var/replace = (user.get_inactive_hand() == G)
-		if (!G && !RG && replace)
+		var/replace = user.get_inactive_hand() == src
+		if(QDELETED(src) && replace)
 			user.put_in_hands(RG)
 	else
 		return ..()
@@ -70,10 +67,10 @@
 		to_chat(user, "\red You don't have the dexterity to do this!")
 		return 0
 	var/title = "Sheet-Glass"
-	title += " ([src.amount] sheet\s left)"
+	title += " ([get_amount()] sheet\s left)"
 	switch(alert(title, "Would you like full tile glass or one direction?", "One Direction", "Full Window", "Cancel", null))
 		if("One Direction")
-			if(!src)
+			if(QDELETED(src))
 				return 1
 			if(src.loc != user)
 				return 1
@@ -111,7 +108,7 @@
 			W.ini_dir = W.dir
 			W.anchored = 0
 		if("Full Window")
-			if(!src)
+			if(QDELETED(src))
 				return 1
 			if(src.loc != user)
 				return 1
@@ -136,21 +133,13 @@
 	..()
 	playsound(src, "shatter", 70, 1)
 	new /obj/item/weapon/shard(loc)
-	var/new_amount = amount - rand(5,35)
-	if(new_amount > 0)
-		amount = new_amount
-	else
-		qdel(src)
+	set_amount(get_amount() - rand(5,35))
 
 /obj/item/stack/sheet/rglass/after_throw(datum/callback/callback)
 	..()
 	playsound(src, "shatter", 70, 1)
 	new /obj/item/weapon/shard(loc)
-	var/new_amount = amount - rand(1,15)
-	if(new_amount > 0)
-		amount = new_amount
-	else
-		qdel(src)
+	set_amount(get_amount() - rand(1,15))
 
 /*
  * Reinforced glass sheets
@@ -176,18 +165,18 @@
 	construct_window(user)
 
 /obj/item/stack/sheet/rglass/proc/construct_window(mob/user)
-	if(!user || !src)
+	if(!user || QDELETED(src))
 		return 0
-	if(!istype(user.loc,/turf))
+	if(!isturf(user.loc))
 		return 0
 	if(!user.IsAdvancedToolUser())
 		to_chat(user, "\red You don't have the dexterity to do this!")
 		return 0
 	var/title = "Sheet Reinf. Glass"
-	title += " ([src.amount] sheet\s left)"
+	title += " ([get_amount()] sheet\s left)"
 	switch(input(title, "Would you like full tile glass a one direction glass pane or a windoor?") in list("One Direction", "Full Window", "Windoor", "Cancel"))
 		if("One Direction")
-			if(!src)
+			if(QDELETED(src))
 				return 1
 			if(src.loc != user)
 				return 1
@@ -226,7 +215,7 @@
 			W.anchored = 0
 
 		if("Full Window")
-			if(!src)
+			if(QDELETED(src))
 				return 1
 			if(src.loc != user)
 				return 1
@@ -247,7 +236,7 @@
 			W.anchored = 0
 
 		if("Windoor")
-			if(!src || src.loc != user)
+			if(QDELETED(src) || src.loc != user)
 				return 1
 
 			if(isturf(user.loc) && locate(/obj/structure/windoor_assembly/, user.loc))
@@ -320,10 +309,10 @@
 			for(var/obj/item/stack/sheet/glass/G in user.loc)
 				if(G==NG)
 					continue
-				if(G.amount>=G.max_amount)
+				if(G.get_amount() >= G.max_amount)
 					continue
 				G.attackby(NG, user)
-				to_chat(usr, "You add the newly-formed glass to the stack. It now contains [NG.amount] sheets.")
+				to_chat(usr, "You add the newly-formed glass to the stack. It now contains [NG.get_amount()] sheets.")
 			//SN src = null
 			qdel(src)
 			return
@@ -366,26 +355,6 @@
 
 /obj/item/stack/sheet/glass/phoronglass/attack_self(mob/user)
 	construct_window(user)
-
-/obj/item/stack/sheet/glass/phoronglass/attackby(obj/item/W, mob/user)
-	..()
-	if(istype(W, /obj/item/stack/rods))
-		var/list/resources_to_use = list()
-		resources_to_use[W] = 1
-		resources_to_use[src] = 1
-		if(!use_multi(user, resources_to_use))
-			return
-
-		var/obj/item/stack/sheet/glass/phoronrglass/RG = new (user.loc)
-		RG.add_fingerprint(user)
-		RG.add_to_stacks(user)
-		var/obj/item/stack/sheet/glass/G = src
-		src = null
-		var/replace = (user.get_inactive_hand() == G)
-		if (!G && !RG && replace)
-			user.put_in_hands(RG)
-	else
-		return ..()
 
 /*
  * Reinforced phoron glass sheets

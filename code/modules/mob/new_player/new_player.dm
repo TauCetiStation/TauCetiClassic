@@ -1,4 +1,4 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:33
+INITIALIZE_IMMEDIATE(/mob/new_player) // until new_player moves under /dead type path.
 
 /mob/new_player
 	var/ready = 0
@@ -9,14 +9,22 @@
 
 	invisibility = 101
 
+	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF // until new_player moves under /dead type path.
+
 	density = 0
 	stat = DEAD
 	canmove = 0
 
 	anchored = 1	//  don't get pushed around
 
-/mob/new_player/New()
+/mob/new_player/atom_init()
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
+
 	mob_list += src
+
+	return INITIALIZE_HINT_NORMAL
 
 /mob/new_player/verb/new_player_panel()
 	set src = usr

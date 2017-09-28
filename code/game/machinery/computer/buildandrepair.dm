@@ -405,13 +405,12 @@
 				to_chat(user, "\blue You unfasten the circuit board.")
 				src.state = 1
 				src.icon_state = "1"
-			if(istype(P, /obj/item/weapon/cable_coil))
-				if(P:amount >= 5)
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			if(istype(P, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/C = P
+				if(C.get_amount() >= 5)
+					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20, target = src))
-						if(P)
-							P:amount -= 5
-							if(!P:amount) qdel(P)
+						if(C.use(5))
 							to_chat(user, "\blue You add cables to the frame.")
 							src.state = 3
 							src.icon_state = "3"
@@ -421,15 +420,14 @@
 				to_chat(user, "\blue You remove the cables.")
 				src.state = 2
 				src.icon_state = "2"
-				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil/random(src.loc)
-				A.amount = 5
+				new /obj/item/stack/cable_coil/random(loc, 5)
 
 			if(istype(P, /obj/item/stack/sheet/glass))
-				if(P:amount >= 2)
-					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				var/obj/item/stack/sheet/glass/G = P
+				if(G.get_amount() >= 2)
+					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20, target = src))
-						if(P)
-							P:use(2)
+						if(G.use(2))
 							to_chat(user, "\blue You put in the glass panel.")
 							src.state = 4
 							src.icon_state = "4"

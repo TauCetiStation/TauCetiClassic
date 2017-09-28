@@ -484,17 +484,17 @@
 					update_icon()
 				else
 					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
-	else if (istype(W, /obj/item/weapon/cable_coil) && !terminal && opened && has_electronics!=2)
+	else if (istype(W, /obj/item/stack/cable_coil) && !terminal && opened && has_electronics != 2)
 		if (src.loc:intact)
 			to_chat(user, "\red You must remove the floor plating in front of the APC first.")
 			return
-		var/obj/item/weapon/cable_coil/C = W
-		if(C.amount < 10)
+		var/obj/item/stack/cable_coil/C = W
+		if(C.get_amount() < 10)
 			to_chat(user, "\red You need more wires.")
 			return
 		to_chat(user, "You start adding cables to the APC frame...")
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 20, target = src) && C.amount >= 10)
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
 			var/turf/T = get_turf_loc(src)
 			var/obj/structure/cable/N = T.get_cable_node()
 			if (prob(50) && electrocute_mob(usr, N, N))
@@ -702,7 +702,7 @@
 		"powerCellStatus" = cell ? cell.percent() : null,
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
-		"totalLoad" = lastused_equip + lastused_light + lastused_environ,
+		"totalLoad" = round(lastused_equip) + lastused_light + round(lastused_environ),
 		"coverLocked" = coverlocked,
 		"siliconUser" = issilicon(user) | isobserver(user),
 		"malfStatus" = get_malf_status(user),
@@ -710,7 +710,7 @@
 		"powerChannels" = list(
 			list(
 				"title" = "Equipment",
-				"powerLoad" = lastused_equip,
+				"powerLoad" = round(lastused_equip),
 				"status" = equipment,
 				"topicParams" = list(
 					"auto" = list("eqp" = 3),
@@ -730,7 +730,7 @@
 			),
 			list(
 				"title" = "Environment",
-				"powerLoad" = lastused_environ,
+				"powerLoad" = round(lastused_environ),
 				"status" = environ,
 				"topicParams" = list(
 					"auto" = list("env" = 3),

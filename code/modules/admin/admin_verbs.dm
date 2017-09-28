@@ -177,8 +177,7 @@ var/list/admin_verbs_permissions = list(
 	/client/proc/gsw_add,
 	/client/proc/library_debug_cat,
 	/client/proc/library_debug_remove,
-	/client/proc/library_debug_read,
-	/client/proc/event_map_loader
+	/client/proc/library_debug_read
 	)
 var/list/admin_verbs_rejuv = list(
 	/client/proc/respawn_character
@@ -1025,7 +1024,7 @@ var/list/admin_verbs_hideable = list(
 		return
 
 	for(var/obj/machinery/gateway/G in machines)
-		G.initialize()
+		G.atom_init()
 
 	log_admin("[key_name(src)] connected gates")
 	message_admins("\blue [key_name_admin(src)] connected gates")
@@ -1059,10 +1058,10 @@ var/centcom_barriers_stat = 1
 	var/active = 1
 	var/lchannel = 999
 
-	Crossed(M as mob)
-		if(!active) return
-		/*if(istype(M, /mob/living/carbon))
-			M << sound(melody,0,1,lchannel,20)*/
+/obj/effect/landmark/trololo/Crossed(mob/M)
+	if(!active) return
+	/*if(istype(M, /mob/living/carbon))
+		M << sound(melody,0,1,lchannel,20)*/
 
 /obj/structure/centcom_barrier
 	name = "Invisible wall"

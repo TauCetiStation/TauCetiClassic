@@ -17,8 +17,8 @@ var/global/obj/item/device/nuclear_challenge/Challenge
 	var/static/Dropod_used = FALSE
 	var/static/shuttle_moved = FALSE
 
-/obj/item/device/nuclear_challenge/initialize()
-	..()
+/obj/item/device/nuclear_challenge/atom_init()
+	. = ..()
 	Challenge = src
 
 /obj/item/device/nuclear_challenge/Destroy()

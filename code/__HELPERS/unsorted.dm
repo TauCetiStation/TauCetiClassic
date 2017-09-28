@@ -11,6 +11,9 @@
  * A large number of misc global procs.
  */
 
+//Checks if all high bits in req_mask are set in bitfield
+#define BIT_TEST_ALL(bitfield, req_mask) ((~(bitfield) & (req_mask)) == 0)
+
 //Inverts the colour of an HTML string
 /proc/invertHTML(HTMLstring)
 
@@ -1088,7 +1091,7 @@ proc/get_mob_with_client_list()
 
 //Quick type checks for some tools
 var/global/list/common_tools = list(
-/obj/item/weapon/cable_coil,
+/obj/item/stack/cable_coil,
 /obj/item/weapon/wrench,
 /obj/item/weapon/weldingtool,
 /obj/item/weapon/screwdriver,
@@ -1112,7 +1115,7 @@ var/global/list/common_tools = list(
 	return 0
 
 /proc/iscoil(O)
-	if(istype(O, /obj/item/weapon/cable_coil))
+	if(istype(O, /obj/item/stack/cable_coil))
 		return 1
 	return 0
 
@@ -1136,8 +1139,8 @@ var/global/list/common_tools = list(
 		return 1
 	return 0
 
-/proc/iswire(O)
-	if(istype(O, /obj/item/weapon/cable_coil))
+/proc/iswire(O) // coil, wire... whats the difference here?
+	if(istype(O, /obj/item/stack/cable_coil))
 		return 1
 	return 0
 
@@ -1593,6 +1596,10 @@ var/mob/dview/dview_mob = new
 		c_dist++
 
 	return L
+
+//gives us the stack trace from CRASH() without ending the current proc.
+/proc/stack_trace(msg)
+	CRASH(msg)
 
 //Increases delay as the server gets more overloaded,
 //as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful

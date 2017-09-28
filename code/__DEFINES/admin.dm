@@ -48,3 +48,4 @@
 #define ADMIN_JMP(target) "(<a href='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>)"
 #define ADMIN_VV(target) "(<a href='?_src_=vars;Vars=\ref[target]'>VV</a>)"
 #define ADMIN_PP(user)  "(<a href='?_src_=holder;adminplayeropts=\ref[user]'>PP</a>)"
+#define ADMIN_LOOKUPFLW(user) "[key_name_admin(user)][ADMIN_QUE(user)] [ADMIN_FLW(user)]"

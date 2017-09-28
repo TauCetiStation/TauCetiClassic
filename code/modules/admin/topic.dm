@@ -2416,19 +2416,21 @@
 							var/obj/effect/decal/cleanable/mucus/N = O
 							if(N.virus2.len)
 								N.virus2.Cut()
-			if("restore_air")
+			if("restore_air") // this is unproper way to restore turfs default gas values, since you can delete sleeping agent for example.
 				var/turf/simulated/T = get_turf(usr)
-				if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/shuttle/floor))
-					T.zone.air.carbon_dioxide = 0
-					T.zone.air.phoron = 0
-					if(T.zone.air.trace_gases.len>0)
-						for(var/datum/gas/trace_gas in T.zone.air.trace_gases)
-							if(istype(trace_gas, /datum/gas/sleeping_agent))
-								T.zone.air.trace_gases -= trace_gas
-					T.zone.air.temperature = 293
-					T.zone.air.nitrogen = 80
-					T.zone.air.oxygen = 21
-					T.zone.air.total_moles = 101
+				if((istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/shuttle/floor)) && T.zone.air)
+					var/datum/gas_mixture/GM = T.zone.air
+
+					for(var/g in gas_data.gases)
+						GM.gas -= g
+
+					GM.gas["carbon_dioxide"] = T.carbon_dioxide
+					GM.gas["phoron"] = T.phoron
+					GM.gas["nitrogen"] = T.nitrogen
+					GM.gas["oxygen"] = T.oxygen
+					GM.temperature = 293
+					GM.update_values()
+
 					message_admins("[key_name_admin(usr)] has restored air in [T.x] [T.y] [T.z] <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>.")
 				else
 					to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")

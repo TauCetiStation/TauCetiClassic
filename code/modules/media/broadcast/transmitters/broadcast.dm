@@ -18,8 +18,9 @@
 	var/const/RADS_PER_TICK=150
 	var/const/MAX_TEMP=70 // Celsius
 
-/obj/machinery/media/transmitter/broadcast/initialize()
-	testing("[type]/initialize() called!")
+/obj/machinery/media/transmitter/broadcast/atom_init()
+	. = ..()
+	testing("[type]/atom_init() called!")
 	if(autolink && autolink.len)
 		for(var/obj/machinery/media/source in orange(20, src))
 			if(source.id_tag in autolink)
@@ -159,7 +160,7 @@
 			var/datum/gas_mixture/env = L.return_air()
 			if(env.temperature != MAX_TEMP + T0C)
 
-				var/transfer_moles = 0.25 * env.total_moles()
+				var/transfer_moles = 0.25 * env.total_moles
 
 				var/datum/gas_mixture/removed = env.remove(transfer_moles)
 

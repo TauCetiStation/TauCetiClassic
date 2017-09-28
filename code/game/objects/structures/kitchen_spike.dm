@@ -14,8 +14,7 @@
 		return
 	else if(anchored && istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
-		if(R.amount >= 4)
-			R.use(4)
+		if(R.use(4))
 			to_chat(user, "<span class='notice'>You add spikes to the frame.</span>")
 			var/obj/F = new /obj/structure/kitchenspike(src.loc)
 			transfer_fingerprints_to(F)

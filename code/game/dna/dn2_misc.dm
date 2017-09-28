@@ -448,7 +448,7 @@
 			if (prob(75))
 				to_chat(user, text("\blue You destroy that girder!"))
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-				new /obj/item/stack/sheet/metal(get_turf(src))
+				new /obj/item/stack/sheet/metal(loc)
 				qdel(src)
 			else
 				to_chat(user, text("\blue You punch the girder."))

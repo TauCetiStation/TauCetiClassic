@@ -149,7 +149,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		var/turf/position = get_turf(src)
 		listening_level = position.z
 
-/obj/machinery/telecomms/initialize()
+/obj/machinery/telecomms/atom_init()
+	. = ..()
 	if(autolinkers.len)
 		// Links nearby machines
 		if(!long_range_link)
@@ -235,20 +236,21 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		var/turf/simulated/L = loc
 		if(istype(L))
 			var/datum/gas_mixture/env = L.return_air()
-			if(env.temperature < (heat_amt+T0C))
 
-				var/transfer_moles = 0.25 * env.total_moles()
+			var/transfer_moles = 0.25 * env.total_moles
 
-				var/datum/gas_mixture/removed = env.remove(transfer_moles)
+			var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
-				if(removed)
+			if(removed)
 
-					var/heat_capacity = removed.heat_capacity()
-					if(heat_capacity == 0 || heat_capacity == null)
-						heat_capacity = 1
-					removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
+				var/heat_produced = idle_power_usage	//obviously can't produce more heat than the machine draws from it's power source
+				if (traffic <= 0)
+					heat_produced *= 0.30	//if idle, produce less heat.
 
-				env.merge(removed)
+				removed.add_thermal_energy(heat_produced)
+
+			env.merge(removed)
+
 /*
 	The receiver idles and receives messages from subspace-compatible radio equipment;
 	primarily headsets. They then just relay this information to all linked devices,
@@ -532,7 +534,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/cable_coil/random(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
 	RefreshParts()
 
 /obj/machinery/telecomms/server/receive_information(datum/signal/signal, obj/machinery/telecomms/machine_from)

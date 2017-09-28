@@ -1,4 +1,5 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans
+	name = "soda can"
 	var/canopened = 0
 
 /obj/item/weapon/reagent_containers/food/drinks/cans/attack_self(mob/user)

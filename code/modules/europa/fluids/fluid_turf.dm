@@ -62,8 +62,8 @@
 		flooded = 1
 		update_icon()
 
-/turf/simulated/initialize()
-	if((ticker && ticker.current_state == GAME_STATE_PLAYING) && SSfluids)
+/turf/simulated/atom_init()
+	if((ticker.current_state == GAME_STATE_PLAYING) && SSfluids)
 		fluid_update()
 	. = ..()
 

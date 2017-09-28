@@ -13,6 +13,8 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	canmove = 0
 	blinded = 0
 	anchored = 1	//  don't get pushed around
+	see_invisible = SEE_INVISIBLE_OBSERVER
+	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
@@ -33,19 +35,17 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	var/obj/item/device/multitool/adminMulti = null //Wew, personal multiotool for ghosts!
 
-/mob/dead/observer/New(mob/body)
-	sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
-	see_invisible = SEE_INVISIBLE_OBSERVER
-	see_in_dark = 100
+/mob/dead/observer/atom_init()
+	invisibility = INVISIBILITY_OBSERVER
+
 	verbs += /mob/dead/observer/proc/dead_tele
 
-	stat = DEAD
-
-	ghostimage = image(icon,src,"ghost")
+	ghostimage = image(icon, src, "ghost")
 	ghost_darkness_images |= ghostimage
 	updateallghostimages()
 
 	var/turf/T
+	var/mob/body = loc
 	if(ismob(body))
 		T = get_turf(body)				//Where is the body located?
 		attack_log = body.attack_log	//preserve our attack logs by copying them to our ghost
@@ -73,13 +73,18 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 		mind = body.mind	//we don't transfer the mind but we keep a reference to it.
 
-	if(!T)	T = pick(latejoin)			//Safety in case we cannot find the body's position
+	if(!T)
+		T = pick(latejoin)			//Safety in case we cannot find the body's position
+
 	loc = T
 
 	if(!name)							//To prevent nameless ghosts
 		name = capitalize(pick(first_names_male)) + " " + capitalize(pick(last_names))
 	real_name = name
-	..()
+
+	dead_mob_list += src
+
+	. = ..()
 
 /mob/dead/observer/Destroy()
 	if (ghostimage)
@@ -453,51 +458,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	if(!istype(usr, /mob/dead/observer)) return
 
-	// Shamelessly copied from the Gas Analyzers
-	if (!( istype(usr.loc, /turf) ))
-		return
-
-	var/datum/gas_mixture/environment = usr.loc.return_air()
-
-	var/pressure = environment.return_pressure()
-	var/total_moles = environment.total_moles()
-
-	to_chat(src, "<span class='danger'>Results:</span>")
-	if(abs(pressure - ONE_ATMOSPHERE) < 10)
-		to_chat(src, "<span class='info'>Pressure: [round(pressure,0.1)] kPa</span>")
-	else
-		to_chat(src, "<span class='red'>Pressure: [round(pressure,0.1)] kPa</span>")
-	if(total_moles)
-		var/o2_concentration = environment.oxygen/total_moles
-		var/n2_concentration = environment.nitrogen/total_moles
-		var/co2_concentration = environment.carbon_dioxide/total_moles
-		var/phoron_concentration = environment.phoron/total_moles
-
-		var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
-		if(abs(n2_concentration - N2STANDARD) < 20)
-			to_chat(src, "<span class='info'>Nitrogen: [round(n2_concentration*100)]% ([round(environment.nitrogen,0.01)] moles)</span>")
-		else
-			to_chat(src, "<span class='red'>Nitrogen: [round(n2_concentration*100)]% ([round(environment.nitrogen,0.01)] moles)</span>")
-
-		if(abs(o2_concentration - O2STANDARD) < 2)
-			to_chat(src, "<span class='info'>Oxygen: [round(o2_concentration*100)]% ([round(environment.oxygen,0.01)] moles)</span>")
-		else
-			to_chat(src, "<span class='red'>Oxygen: [round(o2_concentration*100)]% ([round(environment.oxygen,0.01)] moles)</span>")
-
-		if(co2_concentration > 0.01)
-			to_chat(src, "<span class='red'>CO2: [round(co2_concentration*100)]% ([round(environment.carbon_dioxide,0.01)] moles)</span>")
-		else
-			to_chat(src, "<span class='info'>CO2: [round(co2_concentration*100)]% ([round(environment.carbon_dioxide,0.01)] moles)</span>")
-
-		if(phoron_concentration > 0.01)
-			to_chat(src, "<span class='red'>Phoron: [round(phoron_concentration*100)]% ([round(environment.phoron,0.01)] moles)</span>")
-
-		if(unknown_concentration > 0.01)
-			to_chat(src, "<span class='red'>Unknown: [round(unknown_concentration*100)]% ([round(unknown_concentration*total_moles,0.01)] moles)</span>")
-
-		to_chat(src, "<span class='info'>Temperature: [round(environment.temperature-T0C,0.1)]&deg;C</span>")
-		to_chat(src, "<span class='info'>Heat Capacity: [round(environment.heat_capacity(),0.1)]</span>")
-
+	var/turf/t = get_turf(src)
+	if(t)
+		print_atmos_analysis(src, atmosanalyzer_scan(t))
 
 /mob/dead/observer/verb/become_mouse()
 	set name = "Become mouse"
@@ -532,9 +495,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 /mob/proc/mousize()
 	//find a viable mouse candidate
 	var/mob/living/simple_animal/mouse/host
-	var/obj/machinery/atmospherics/unary/vent_pump/vent_found
+	var/obj/machinery/atmospherics/components/unary/vent_pump/vent_found
 	var/list/found_vents = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/v in machines)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in machines)
 		if(!v.welded && v.z == src.z)
 			found_vents.Add(v)
 	if(found_vents.len)

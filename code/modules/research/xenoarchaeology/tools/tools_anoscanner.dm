@@ -12,8 +12,9 @@
 	var/last_scan_time = 0
 	var/scan_delay = 25
 
-/obj/item/device/ano_scanner/initialize()
-	scan()
+/obj/item/device/ano_scanner/atom_init()
+	. = ..()
+	scan() // ?why?
 
 /obj/item/device/ano_scanner/attack_self(mob/user)
 	return src.interact(user)

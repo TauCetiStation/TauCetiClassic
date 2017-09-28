@@ -47,10 +47,10 @@
 
 /obj/machinery/door/window/proc/shatter(display_message = 1)
 	if(!(flags & NODECONSTRUCT))
-		new /obj/item/weapon/shard(src.loc)
-		new /obj/item/weapon/shard(src.loc)
-		new /obj/item/stack/rods(src.loc, 2)
-		new /obj/item/weapon/cable_coil/red(src.loc, 2)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/stack/rods(loc, 2)
+		new /obj/item/stack/cable_coil/red(loc, 2)
 		var/obj/item/weapon/airlock_electronics/ae
 		if(!electronics)
 			ae = new/obj/item/weapon/airlock_electronics( src.loc )

@@ -242,8 +242,7 @@
 			possible_spawns += /obj/item/stack/sheet/mineral/silver
 
 			var/new_type = pick(possible_spawns)
-			new_item = new new_type(src.loc)
-			new_item:amount = rand(5,45)
+			new_item = new new_type(loc, rand(5,45))
 		if(15)
 			if(prob(75))
 				new_item = new /obj/item/weapon/pen(src.loc)

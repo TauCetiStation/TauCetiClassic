@@ -178,10 +178,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(istype(W, /obj/item/weapon/cable_coil))
-		if(W:amount >= 5)
-			W:amount -= 5
-			if(!W:amount) qdel(W)
+	if(istype(W, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = W
+		if(C.use(5))
 			to_chat(user, "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>")
 			var/obj/item/weapon/stock_parts/cell/potato/pocell = new /obj/item/weapon/stock_parts/cell/potato(user.loc)
 			pocell.maxcharge = src.potency * 10

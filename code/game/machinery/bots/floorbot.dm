@@ -101,7 +101,7 @@
 		var/obj/item/stack/tile/plasteel/T = W
 		if(src.amount >= 50)
 			return
-		var/loaded = min(50-src.amount, T.amount)
+		var/loaded = min(50-src.amount, T.get_amount())
 		T.use(loaded)
 		src.amount += loaded
 		to_chat(user, "<span class='notice'>You load [loaded] tiles into the floorbot. He now contains [src.amount] tiles.</span>")
@@ -172,15 +172,14 @@
 				if(T != src.oldtarget && !(target in floorbottargets))
 					src.oldtarget = T
 					src.target = T
-					break
+					return
 		if(src.target == null || !src.target)
 			if(src.maketiles)
-				if(src.target == null || !src.target)
-					for(var/obj/item/stack/sheet/metal/M in view(7, src))
-						if(!(M in floorbottargets) && M != src.oldtarget && M.amount == 1 && !(istype(M.loc, /turf/simulated/wall)))
-							src.oldtarget = M
-							src.target = M
-							break
+				for(var/obj/item/stack/sheet/metal/M in view(7, src))
+					if(!(M in floorbottargets) && M != src.oldtarget && M.get_amount() == 1 && !(istype(M.loc, /turf/simulated/wall)))
+						src.oldtarget = M
+						src.target = M
+						return
 		else
 			return
 	if(prob(5))
@@ -235,9 +234,9 @@
 	if(src.target && (src.target != null) && src.path.len == 0)
 		spawn(0)
 			if(!istype(src.target, /turf/))
-				src.path = get_path_to(src, src.target, /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = FALSE)
+				src.path = get_path_to(src, get_turf(src.target), /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = FALSE)
 			else
-				src.path = get_path_to(src, src.target, /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = FALSE)
+				src.path = get_path_to(src, get_turf(src.target), /turf/proc/Distance_cardinal, 0, 30, id=botcard, simulated_only = FALSE)
 			if(src.path.len == 0)
 				src.oldtarget = src.target
 				src.target = null
@@ -309,41 +308,39 @@
 			src.target = null
 
 /obj/machinery/bot/floorbot/proc/eattile(obj/item/stack/tile/plasteel/T)
-	if(!istype(T, /obj/item/stack/tile/plasteel))
+	if(!istype(T))
 		return
 	visible_message("\red [src] begins to collect tiles.")
 	src.repairing = 1
 	spawn(20)
-		if(isnull(T))
+		if(QDELETED(T))
 			src.target = null
 			src.repairing = 0
 			return
-		if(src.amount + T.amount > 50)
+		if(src.amount + T.get_amount() > 50)
 			var/i = 50 - src.amount
 			src.amount += i
-			T.amount -= i
+			T.use(i)
 		else
-			src.amount += T.amount
+			src.amount += T.get_amount()
 			qdel(T)
 		src.updateicon()
 		src.target = null
 		src.repairing = 0
 
 /obj/machinery/bot/floorbot/proc/maketile(obj/item/stack/sheet/metal/M)
-	if(!istype(M, /obj/item/stack/sheet/metal))
+	if(!istype(M))
 		return
-	if(M.amount > 1)
+	if(M.get_amount() > 1)
 		return
 	visible_message("\red [src] begins to create tiles.")
 	src.repairing = 1
 	spawn(20)
-		if(isnull(M))
+		if(QDELETED(M))
 			src.target = null
 			src.repairing = 0
 			return
-		var/obj/item/stack/tile/plasteel/T = new /obj/item/stack/tile/plasteel
-		T.amount = 4
-		T.loc = M.loc
+		new /obj/item/stack/tile/plasteel(M.loc, 4)
 		qdel(M)
 		src.target = null
 		src.repairing = 0
@@ -369,12 +366,10 @@
 
 	while (amount)//Dumps the tiles into the appropriate sized stacks
 		if(amount >= 16)
-			var/obj/item/stack/tile/plasteel/T = new (Tsec)
-			T.amount = 16
+			new /obj/item/stack/tile/plasteel(Tsec, 16)
 			amount -= 16
 		else
-			var/obj/item/stack/tile/plasteel/T = new (Tsec)
-			T.amount = src.amount
+			new /obj/item/stack/tile/plasteel(Tsec, amount)
 			amount = 0
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -439,3 +434,6 @@
 			return
 
 		src.created_name = t
+
+/obj/machinery/bot/floorbot/Process_Spacemove(movement_dir = 0)
+	return 1

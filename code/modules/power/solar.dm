@@ -206,8 +206,7 @@
 // Give back the glass type we were supplied with
 /obj/item/solar_assembly/proc/give_glass()
 	if(glass_type)
-		var/obj/item/stack/sheet/S = new glass_type(src.loc)
-		S.amount = 2
+		new glass_type(src.loc, 2)
 		glass_type = null
 
 
@@ -228,9 +227,8 @@
 
 		if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
 			var/obj/item/stack/sheet/S = W
-			if(S.amount >= 2)
+			if(S.use(2))
 				glass_type = W.type
-				S.use(2)
 				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				user.visible_message("<span class='notice'>[user] places the glass on the solar assembly.</span>")
 				if(tracker)
@@ -280,12 +278,12 @@
 	var/trackdir = 1		// -1=CCW, 1=CW
 	var/nexttime = 0		// Next clock time that manual tracking will move the array
 
-
-/obj/machinery/power/solar_control/New()
-	..()
-	if(ticker)
-		initialize()
+/obj/machinery/power/solar_control/atom_init()
+	. = ..()
 	connect_to_network()
+	if(!powernet)
+		return
+	set_panels(cdir)
 
 /obj/machinery/power/solar_control/disconnect_from_network()
 	..()
@@ -296,11 +294,6 @@
 	if(powernet)
 		SSsun.solars.Add(src)
 	return to_return
-
-/obj/machinery/power/solar_control/initialize()
-	..()
-	if(!powernet) return
-	set_panels(cdir)
 
 /obj/machinery/power/solar_control/update_icon()
 	if(stat & BROKEN)

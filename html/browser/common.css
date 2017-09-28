@@ -77,6 +77,41 @@ a.icon img, .linkOn.icon img
 	height: 18px;
 }
 
+.connect_description
+{
+	position: relative;
+	width: 220px;
+}
+
+.description
+{
+	left: 100%;
+	width: 250px;
+}
+
+.statusDisplay .description
+{
+	display: none;
+	position: absolute;
+	bottom: 0;
+	z-index: 20;
+	background-color: #111;
+	color: white;
+	padding: 0 0.25em 0.5em;
+	text-align: center;
+	border: 1px solid #40628a;
+}
+
+.linkOff:hover .description, a:hover .description
+{
+	display: block;
+}
+
+.linkOff:hover .description:hover, a:hover .description:hover
+{
+	display: none;
+}
+
 ul
 {
 	padding: 4px 0 0 10px;

@@ -270,7 +270,7 @@ datum/game_mode/mutiny
 		for(var/atom/A in sold)
 			if(istype(A, /obj/item/stack/sheet/mineral) || istype(A, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/S = A
-				D.materials_shipped += S.amount
+				D.materials_shipped += S.get_amount()
 
 	proc/suspension_directive(datum/money_account/account)
 		var/datum/directive/terminations/D = get_directive("terminations")
