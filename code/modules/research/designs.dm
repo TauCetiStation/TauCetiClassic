@@ -2092,8 +2092,8 @@ datum/design/security_hud
 
 datum/design/secmed_hud
 	name = "Mixed HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status."
-	id = "security_hud"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and health status."
+	id = "secmed_hud"
 	req_tech = list("magnets" = 4, "combat" = 3, "biotech" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)

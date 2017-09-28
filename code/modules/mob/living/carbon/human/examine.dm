@@ -433,7 +433,7 @@
 
 	if(hasHUD(user,"medical"))
 		if(hasHUD(user,"security"))
-			msg += "*---------*\n"
+			msg += "---------\n"
 		var/perpname = "wot"
 		var/medical = "None"
 
