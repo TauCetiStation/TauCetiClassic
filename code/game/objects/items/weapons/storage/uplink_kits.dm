@@ -191,3 +191,15 @@
 	..()
 	new /obj/item/clothing/suit/space/rig/syndi(src)
 	new /obj/item/clothing/head/helmet/space/rig/syndi(src)
+	new /obj/item/clothing/shoes/magboots/syndie(src)
+
+/obj/item/weapon/storage/box/syndie_kit/armor
+	name = "box (K)"
+
+/obj/item/weapon/storage/box/syndie_kit/armor/New()
+	..()
+	new /obj/item/clothing/suit/armor/syndiassault(src)
+	if(prob(50))
+		new /obj/item/clothing/head/helmet/syndiassault(src)
+	else
+		new /obj/item/clothing/head/helmet/syndiassault/alternate(src)

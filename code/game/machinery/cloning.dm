@@ -35,8 +35,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil/red(null, 1)
-	component_parts += new /obj/item/weapon/cable_coil/red(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
 	RefreshParts()
 
 /obj/machinery/clonepod/RefreshParts()
@@ -145,14 +145,16 @@
 		return src.healthstring
 
 /obj/machinery/clonepod/attack_ai(mob/user)
-	src.add_hiddenprint(user)
 	return attack_hand(user)
+
 /obj/machinery/clonepod/attack_paw(mob/user)
 	return attack_hand(user)
+
 /obj/machinery/clonepod/attack_hand(mob/user)
 	if ((isnull(src.occupant)) || (stat & NOPOWER))
 		return
 	if ((!isnull(src.occupant)) && (src.occupant.stat != DEAD))
+		src.add_hiddenprint(user)
 		var/completion = (100 * ((src.occupant.health + 100) / (src.heal_level + 100)))
 		to_chat(user, "Current clone cycle is [round(completion)]% complete.")
 	return

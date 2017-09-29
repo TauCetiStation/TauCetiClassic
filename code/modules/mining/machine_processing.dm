@@ -6,6 +6,7 @@
 	icon_state = "console"
 	density = 1
 	anchored = 1
+	ghost_must_be_admin = TRUE //not needed, but better use this than show "Access denied"
 
 	var/obj/machinery/mineral/processing_unit/machine = null
 	var/machinedir = EAST

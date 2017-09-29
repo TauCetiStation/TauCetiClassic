@@ -42,12 +42,12 @@
 #define ui_inv3 "CENTER  :16,SOUTH:5"			//borgs
 #define ui_borg_store "CENTER+1:16,SOUTH:5"		//borgs
 #define ui_borg_inventory "CENTER-3:16,SOUTH:5"	//borgs
-#define ui_borg_pull "EAST-2:26,SOUTH+1:7"
+#define ui_borg_pull "EAST-3:24,SOUTH+1:7"
 #define ui_borg_module "EAST-1:28,SOUTH+1:7"
 #define ui_borg_panel "EAST-2:26,SOUTH:5"
 #define ui_borg_health "EAST-1:28,CENTER-1:15"	//borgs have the health display where humans have the pressure damage indicator.
 #define ui_borg_component "EAST-2:26,SOUTH+1:7"
-#define ui_borg_sensor "EAST-3:24,SOUTH+1:7"
+#define ui_borg_sensor "SOUTH+1:6,WEST+2"
 #define ui_borg_diagnostic "EAST-4:22,SOUTH:5"
 #define ui_borg_light "CENTER+2:22,SOUTH:5"
 #define ui_borg_show_laws "SOUTH:6,WEST"
@@ -65,7 +65,7 @@
 #define ui_alien_oclothing "CENTER-3:14,SOUTH:5"
 
 //Lower right, persistant menu
-#define ui_dropbutton "EAST-4:22,SOUTH:5"
+#define ui_crafting "EAST-4:22,SOUTH:5"
 #define ui_drop_throw "EAST-1:28,SOUTH+1:7"
 #define ui_pull_resist "EAST-2:26,SOUTH+1:7"
 #define ui_movi "EAST-2:26,SOUTH:5"

@@ -6,13 +6,14 @@ var/global/list/rad_collectors = list()
 	desc = "A device which uses Hawking Radiation and phoron to produce power."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "ca"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
+	ghost_must_be_admin = TRUE
 	req_access = list(access_engine_equip)
 	var/obj/item/weapon/tank/phoron/P = null
 	var/last_power = 0
-	var/active = 0
-	var/locked = 0
+	var/active = FALSE
+	var/locked = FALSE
 	var/drainratio = 1
 
 /obj/machinery/power/rad_collector/New()
@@ -25,22 +26,20 @@ var/global/list/rad_collectors = list()
 
 /obj/machinery/power/rad_collector/process()
 	if(P)
-		if(P.air_contents.phoron <= 0)
+		if(P.air_contents.gas["phoron"] == 0)
 			investigate_log("<font color='red'>out of fuel</font>.","singulo")
-			P.air_contents.phoron = 0
 			eject()
 		else
-			P.air_contents.adjust(tx = -0.001*drainratio)
+			P.air_contents.adjust_gas("phoron", -0.001 * drainratio)
 	return
-
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
 	if(anchored)
-		if(!src.locked)
+		if(!src.locked || isobserver(user))
 			toggle_power()
 			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 			"You turn the [src.name] [active? "on":"off"].")
-			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.phoron/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
+			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.gas["phoron"]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 			return
 		else
 			to_chat(user, "\red The controls are locked!")
@@ -120,7 +119,7 @@ var/global/list/rad_collectors = list()
 /obj/machinery/power/rad_collector/proc/receive_pulse(pulse_strength)
 	if(P && active)
 		var/power_produced = 0
-		power_produced = P.air_contents.phoron*pulse_strength*20
+		power_produced = P.air_contents.gas["phoron"] * pulse_strength * 20
 		add_avail(power_produced)
 		last_power = power_produced
 		return

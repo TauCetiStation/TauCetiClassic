@@ -32,7 +32,8 @@ var/list/whitelist = list()
 /client/proc/add_to_whitelist()
 	set category = "Server"
 	set name = "Whitelist: Add"
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN))
+		return
 
 	var/path = "config/whitelist.txt"
 	var/player = ckey(input("Input player byound key", "\n") as text)

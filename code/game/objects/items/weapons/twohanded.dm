@@ -1,3 +1,5 @@
+#define DUALSABER_BLOCK_CHANCE_MODIFIER 1.2
+
 /* Two-handed Weapons
  * Contains:
  * 		Twohanded
@@ -174,7 +176,7 @@
 	can_embed = 0
 
 /obj/item/weapon/twohanded/dualsaber/New()
-	reflect_chance = rand(50,85)
+	reflect_chance = rand(50, 65)
 	item_color = pick("red", "blue", "green", "purple","yellow","pink","black")
 	switch(item_color)
 		if("red")
@@ -202,26 +204,24 @@
 
 /obj/item/weapon/twohanded/dualsaber/attack(target, mob/living/user)
 	..()
-	if((CLUMSY in user.mutations) && (wielded) &&prob(40))
-		to_chat(user, "\red You twirl around a bit before losing your balance and impaling yourself on the [src].")
+	if((CLUMSY in user.mutations) && (wielded) && prob(40))
+		to_chat(user, "<span class='userdanger'> You twirl around a bit before losing your balance and impaling yourself on the [src].</span>")
 		user.take_bodypart_damage(20, 25)
 		return
-	if((wielded) && prob(50))
+	if(wielded && prob(50))
 		spawn(0)
 			for(var/i in list(1,2,4,8,4,2,1,2,4,8,4,2))
 				user.dir = i
 				sleep(1)
 
 /obj/item/weapon/twohanded/dualsaber/Get_shield_chance()
-	if(wielded)
-		return 70
+	if(wielded && !slicing)
+		return reflect_chance * DUALSABER_BLOCK_CHANCE_MODIFIER - 5
 	else
 		return 0
 
 /obj/item/weapon/twohanded/dualsaber/IsReflect(def_zone, hol_dir, hit_dir)
-	if(wielded && prob(reflect_chance))
-		return is_the_opposite_dir(hol_dir, hit_dir)
-	return FALSE
+	return !slicing && wielded && prob(reflect_chance) && is_the_opposite_dir(hol_dir, hit_dir)
 
 /obj/item/weapon/twohanded/dualsaber/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/multitool))
@@ -237,12 +237,12 @@
 		return ..()
 
 /obj/item/weapon/twohanded/dualsaber/afterattack(obj/O, mob/user, proximity)
-	if(!istype(O,/obj/machinery/door/airlock) || src.slicing)
+	if(!istype(O,/obj/machinery/door/airlock) || slicing)
 		return
-	if(O.density && src.wielded && proximity && in_range(user, O))
+	if(O.density && wielded && proximity && in_range(user, O))
 		user.visible_message("<span class='danger'>[user] start slicing the [O] </span>")
 		playsound(user.loc, 'sound/items/Welder2.ogg', 100, 1, -1)
-		src.slicing = 1
+		slicing = TRUE
 		var/obj/machinery/door/airlock/D = O
 		var/obj/effect/I = new /obj/effect/overlay/slice(D.loc)
 		if(do_after(user, 450, target = D) && D.density && !(D.operating == -1) && in_range(user, O))
@@ -258,19 +258,18 @@
 			qdel(D)
 			qdel(IC)
 			playsound(user.loc, 'sound/weapons/blade1.ogg', 100, 1, -1)
-		src.slicing = 0
+		slicing = FALSE
 		qdel(I)
 
 
 /obj/item/weapon/twohanded/dualsaber/dropped(mob/user)
  	..()
- 	src.slicing = 0
+ 	slicing = FALSE
 
 /obj/item/weapon/twohanded/dualsaber/attack_self(mob/user)
-	if(src.slicing)
+	if(slicing)
 		return
-	else
-		..()
+	..()
 
 /obj/item/weapon/twohanded/dualsaber/unwield()
 	set_light(0)
@@ -281,3 +280,5 @@
 	set_light(2)
 	w_class = 5
 	return ..()
+
+#undef DUALSABER_BLOCK_CHANCE_MODIFIER

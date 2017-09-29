@@ -408,7 +408,7 @@
 	return
 
 /obj/machinery/crema_switch/attack_hand(mob/user)
-	if(src.allowed(usr))
+	if(allowed(user))
 		for (var/obj/structure/crematorium/C in world)
 			if (C.id == id)
 				if (!C.cremating)
@@ -417,5 +417,5 @@
 						message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 					C.cremate(user)
 	else
-		to_chat(usr, "<span class='rose'>Access denied.</span>")
+		to_chat(user, "<span class='rose'>Access denied.</span>")
 	return

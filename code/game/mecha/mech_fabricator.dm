@@ -301,11 +301,11 @@
 	return round(initial(D.construction_time)*time_coeff*time_coeff_tech, roundto)
 
 /obj/machinery/mecha_part_fabricator/proc/operation_allowed(mob/M)
-	if(isrobot(M) || isAI(M))
+	if(isrobot(M) || isAI(M) || IsAdminGhost(M))
 		return 1
 	if(!istype(req_access) || !req_access.len)
 		return 1
-	else if(istype(M, /mob/living/carbon/human))
+	else if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		for(var/ID in list(H.get_active_hand(), H.wear_id, H.belt))
 			if(src.check_access(ID))
@@ -515,8 +515,8 @@
 	var/total_amount = round(resources[mat_string]/MINERAL_MATERIAL_AMOUNT)
 	if(total_amount)//if there's still enough material for sheets
 		var/obj/item/stack/sheet/res = new type(get_turf(src),min(amount,total_amount))
-		resources[mat_string] -= res.amount*MINERAL_MATERIAL_AMOUNT
-		result += res.amount
+		resources[mat_string] -= res.get_amount()*MINERAL_MATERIAL_AMOUNT
+		result += res.get_amount()
 
 	return result
 
@@ -574,7 +574,7 @@
 		if(resources[material] < res_max_amount)
 			overlays += "fab-load-[material2name(material)]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
 
-			var/transfer_amount = min(stack.amount, round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
+			var/transfer_amount = min(stack.get_amount(), round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
 			stack.use(transfer_amount)
 			to_chat(user, "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>")

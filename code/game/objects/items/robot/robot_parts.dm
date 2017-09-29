@@ -89,10 +89,14 @@
 /obj/item/robot_parts/robot_suit/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/stack/sheet/metal) && !l_arm && !r_arm && !l_leg && !r_leg && !chest && !head)
+		var/obj/item/stack/sheet/metal/M = W
+		if(!M.use(1))
+			return
+
 		var/obj/item/weapon/ed209_assembly/B = new /obj/item/weapon/ed209_assembly
 		B.loc = get_turf(src)
 		to_chat(user, "<span class='info'>You armed the robot frame!</span>")
-		W:use(1)
+
 		if (user.get_inactive_hand()==src)
 			user.remove_from_mob(src)
 			user.put_in_inactive_hand(B)
@@ -267,46 +271,47 @@
 
 /obj/item/robot_parts/chest/attackby(obj/item/W, mob/user)
 	..()
+
 	if(istype(W, /obj/item/weapon/stock_parts/cell))
 		if(cell)
 			to_chat(user, "<span class='info'>You have already inserted a cell!</span>")
 			return
-		else
-			user.drop_item()
-			W.loc = src
-			cell = W
-			to_chat(user, "<span class='info'>You insert the cell!</span>")
-		return
 
-	if(istype(W, /obj/item/weapon/cable_coil))
+		user.drop_item()
+		W.loc = src
+		cell = W
+		to_chat(user, "<span class='info'>You insert the cell!</span>")
+
+	else if(istype(W, /obj/item/stack/cable_coil))
 		if(wires)
 			to_chat(user, "<span class='info'>You have already inserted wire!</span>")
 			return
-		else
-			var/obj/item/weapon/cable_coil/coil = W
-			if(!coil.use(1))
-				return
-			wires = 1.0
-			to_chat(user, "<span class='info'>You insert the wire!</span>")
-		return
 
-	if(istype(W, /obj/item/weapon/crowbar))
-		if(cell)
-			to_chat(user, "<span class='info'>You took out a cell!</span>")
-			cell.loc = get_turf(src)
-			cell = null
-		else
+		var/obj/item/stack/cable_coil/coil = W
+		if(!coil.use(1))
+			return
+
+		wires = 1.0
+		to_chat(user, "<span class='info'>You insert the wire!</span>")
+
+	else if(istype(W, /obj/item/weapon/crowbar))
+		if(!cell)
 			to_chat(user, "<span class='warning'>No cell installed!</span>")
-		return
+			return
 
-	if(istype(W, /obj/item/weapon/wirecutters))
-		if(wires)
-			to_chat(user, "<span class='info'>You cut the wires!</span>")
-			new /obj/item/weapon/cable_coil(get_turf(src), 1)
-			wires = 0.0
-		else
+		to_chat(user, "<span class='info'>You took out a cell!</span>")
+		cell.loc = get_turf(src)
+		cell = null
+
+	else if(istype(W, /obj/item/weapon/wirecutters))
+		if(!wires)
 			to_chat(user, "<span class='warning'>No wires installed!</span>")
-	return
+			return
+
+		to_chat(user, "<span class='info'>You cut the wires!</span>")
+		new /obj/item/stack/cable_coil(get_turf(src), 1)
+		wires = 0.0
+		return
 
 /obj/item/robot_parts/head/attackby(obj/item/W, mob/user)
 	..()

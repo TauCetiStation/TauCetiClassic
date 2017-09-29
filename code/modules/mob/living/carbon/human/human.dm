@@ -88,11 +88,16 @@
 	if(dna)
 		dna.real_name = real_name
 
+	handcrafting = new()
+
 	verbs += /mob/living/carbon/proc/crawl
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
 	regenerate_icons()
+
+/mob/living/carbon/human/OpenCraftingMenu()
+	handcrafting.ui_interact(src)
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -1349,7 +1354,7 @@
 	else
 		to_chat(usr, "<font color='purple'>Nothing of interest...</font>")
 
-/mob/living/carbon/try_inject(mob/living/user, error_msg, instant, stealth)
+/mob/living/carbon/try_inject(mob/living/user, error_msg, instant, stealth, pierce_armor)
 	if(istype(user))
 		if(user.is_busy())
 			return
@@ -1372,15 +1377,17 @@
 					to_chat(user, "<span class='warning'>[src] has no such body part, try to inject somewhere else.</span>")
 				return FALSE
 			if(THICKMATERIAL)
-				if(error_msg)
-					to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
-				return FALSE
-			if(PHORONGUARD)
-				if(user.a_intent == I_HURT)
+				if(!pierce_armor)
 					if(error_msg)
 						to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
 					return FALSE
-				hunt_injection_port = TRUE
+			if(PHORONGUARD)
+				if(!pierce_armor)
+					if(user.a_intent == I_HURT)
+						if(error_msg)
+							to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+						return FALSE
+					hunt_injection_port = TRUE
 
 		if(isSynthetic(user.zone_sel.selecting))
 			if(error_msg)
@@ -1467,8 +1474,16 @@
 	status_flags |= LEAPING
 	stop_pulling()
 
+
 	var/prev_intent = a_intent
 	a_intent_change("hurt")
+
+	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/space/vox/stealth))
+		for(var/obj/item/clothing/suit/space/vox/stealth/V in list(wear_suit))
+			if(V.on)
+				V.overload()
+
+	toggle_leap()
 
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .leap_end, prev_intent))
 
@@ -1486,7 +1501,6 @@
 		L.Weaken(5)
 		sleep(2) // Runtime prevention (infinite bump() calls on hulks)
 		step_towards(src, L)
-		toggle_leap(FALSE)
 
 		var/use_hand = "left"
 		if(l_hand)
@@ -1507,6 +1521,7 @@
 		G.state = GRAB_AGGRESSIVE
 		G.icon_state = "grabbed1"
 		G.synch()
+		L.grabbed_by += G
 
 	else if(A.density)
 		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='danger'>You smashes into [A]!</span>")

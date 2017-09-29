@@ -13,24 +13,20 @@
 
 /obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/stack/sheet/metal))
+		var/obj/item/stack/sheet/metal/M = O
 		if (src.metal_amount < 150000.0)
 			var/count = 0
 			src.overlays += "fab-load-metal"
 			spawn(15)
-				if(O)
-					if(!O:amount)
-						return
-					while(metal_amount < 150000 && O:amount)
-						src.metal_amount += O:m_amt /*O:height * O:width * O:length * 100000.0*/
-						O:amount--
-						count++
+				if(!M.get_amount())
+					return
+				while(metal_amount < 150000 && M.use(1))
+					src.metal_amount += M.m_amt /*O:height * O:width * O:length * 100000.0*/
+					count++
 
-					if (O:amount < 1)
-						qdel(O)
-
-					to_chat(user, "You insert [count] metal sheet\s into the fabricator.")
-					src.overlays -= "fab-load-metal"
-					updateDialog()
+				to_chat(user, "You insert [count] metal sheet\s into the fabricator.")
+				src.overlays -= "fab-load-metal"
+				updateDialog()
 		else
 			to_chat(user, "The robot part maker is full. Please remove metal from the robot part maker in order to insert more.")
 

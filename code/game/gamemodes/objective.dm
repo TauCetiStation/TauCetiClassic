@@ -496,7 +496,7 @@ datum/objective/steal
 		"a chief medical officer's jumpsuit" = /obj/item/clothing/under/rank/chief_medical_officer,
 		"a head of security's jumpsuit" = /obj/item/clothing/under/rank/head_of_security,
 		"a head of personnel's jumpsuit" = /obj/item/clothing/under/rank/head_of_personnel,
-		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray,
+		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray/cmo,
 		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
 		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
 	)
@@ -556,7 +556,7 @@ datum/objective/steal
 
 				for(var/obj/item/I in all_items) //Check for phoron tanks
 					if(istype(I, steal_target))
-						found_amount += (target_name=="28 moles of phoron (full tank)" ? (I:air_contents:phoron) : (I:amount))
+						found_amount += (target_name == "28 moles of phoron (full tank)" ? (I:air_contents:gas["phoron"]) : (I:amount))
 				return found_amount>=target_amount
 
 			if("50 coins (in bag)")
@@ -900,12 +900,12 @@ datum/objective/meme_attune
 		if(istype(O, /obj/item/stack/sheet))
 			if(O.name == target)
 				S = O
-				total_amount += S.amount
+				total_amount += S.get_amount()
 		for(var/obj/I in O.contents)
 			if(istype(I, /obj/item/stack/sheet))
 				if(I.name == target)
 					S = I
-					total_amount += S.amount
+					total_amount += S.get_amount()
 
 	var/datum/game_mode/heist/H = ticker.mode
 	for(var/datum/mind/raider in H.raiders)
@@ -914,7 +914,7 @@ datum/objective/meme_attune
 				if(istype(O,/obj/item/stack/sheet))
 					if(O.name == target)
 						var/obj/item/stack/sheet/S = O
-						total_amount += S.amount
+						total_amount += S.get_amount()
 
 	if(total_amount >= target_amount)
 		return TRUE

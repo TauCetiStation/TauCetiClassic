@@ -6,7 +6,6 @@
 	density = 1
 	anchored = 0
 	flags = OPENCONTAINER
-	pressure_resistance = 2*ONE_ATMOSPHERE
 
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)

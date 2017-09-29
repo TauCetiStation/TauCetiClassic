@@ -118,10 +118,16 @@ log transactions
 	else
 		..()
 
+/obj/machinery/atm/attack_ai(mob/user)
+	to_chat(user, "<span class='red'>[bicon(src)] Artificial unit recognized. Artificial units do not currently receive monetary compensation, as per NanoTrasen regulation #1005.</span>")
+
+/obj/machinery/atm/attack_ghost(mob/user)
+	to_chat(user, "<span class='red'>[bicon(src)] What money?</span>")
+
 /obj/machinery/atm/attack_hand(mob/user)
-	if(istype(user, /mob/living/silicon))
-		to_chat(user, "\red [bicon(src)] Artificial unit recognized. Artificial units do not currently receive monetary compensation, as per NanoTrasen regulation #1005.")
+	if(..())
 		return
+
 	if(get_dist(src,user) <= 1)
 
 		//js replicated from obj/machinery/computer/card
@@ -196,7 +202,7 @@ log transactions
 							dat += "<form name='withdrawal' action='?src=\ref[src]' method='get'>"
 							dat += "<input type='hidden' name='src' value='\ref[src]'>"
 							dat += "<input type='hidden' name='choice' value='withdrawal'>"
-							dat += "<input type='text' name='funds_amount' value='' style='width:200px; background-color:white;'><input type='submit' value='Withdraw charge card'>"
+							dat += "<input type='text' name='funds_amount' value='' style='width:200px; background-color:white;'><input type='submit' value='Withdraw funds'>"
 							dat += "</form>"
 							dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=1'>Change account security level</a><br>"
 							dat += "<A href='?src=\ref[src];choice=view_screen;view_screen=2'>Make transfer</a><br>"
@@ -317,14 +323,15 @@ log transactions
 				if(amount <= 0)
 					alert("That is not a valid amount.")
 				else if(authenticated_account && amount > 0)
+					var/response = alert(usr.client, "In what way would you like to recieve your money?", "Choose money format", "Chip", "Cash")
 					if(amount <= authenticated_account.money)
-						playsound(src, 'sound/machines/chime.ogg', 50, 1)
-
-						//remove the money
 						authenticated_account.money -= amount
+						playsound(src, 'sound/machines/chime.ogg', 50, 1)
+						if(response == "Chip")
+							spawn_ewallet(amount,src.loc)
+						else
+							spawn_money(amount, src.loc)
 
-						//	spawn_money(amount,src.loc)
-						spawn_ewallet(amount,src.loc)
 
 						//create an entry in the account transaction log
 						var/datum/transaction/T = new()

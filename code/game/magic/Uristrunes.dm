@@ -20,8 +20,7 @@ var/list/word_to_uristrune_table = null
 
 
 
-/proc/get_uristrune_cult(power = null, word1, word2, word3)
-	var/animated = power ? TRUE : FALSE
+/proc/get_uristrune_cult(animated, word1, word2, word3)
 	var/bits = word_to_uristrune_bit(word1) \
 			 | word_to_uristrune_bit(word2) \
 			 | word_to_uristrune_bit(word3)

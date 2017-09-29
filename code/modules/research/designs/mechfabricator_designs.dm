@@ -203,7 +203,7 @@
 	category = list("Odysseus")
 
 /datum/design/odysseus_left_arm
-	name = "Exosuit Right Arm (\"Odysseus\")"
+	name = "Exosuit Left Arm (\"Odysseus\")"
 	id = "odysseus_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_left_arm

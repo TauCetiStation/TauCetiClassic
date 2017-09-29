@@ -1,14 +1,28 @@
-/client/var/inquisitive_ghost = 1
+/client/var/inquisitive_ghost = TRUE
 /mob/dead/observer/verb/toggle_inquisition() // warning: unexpected inquisition
 	set name = "Toggle Inquisitiveness"
 	set desc = "Sets whether your ghost examines everything on click by default."
 	set category = "Ghost"
-	if(!client) return
+	if(!client)
+		return
 	client.inquisitive_ghost = !client.inquisitive_ghost
 	if(client.inquisitive_ghost)
 		to_chat(src, "\blue You will now examine everything you click on.")
 	else
 		to_chat(src, "\blue You will no longer examine things you click on.")
+
+/client/var/machine_interactive_ghost = FALSE
+/mob/dead/observer/verb/toggle_interactive_machines() // warning: unexpected inquisition
+	set name = "Toggle Interactive Machines"
+	set desc = "Sets whether your ghost interact with machines on click by default."
+	set category = "Ghost"
+	if(!client)
+		return
+	client.machine_interactive_ghost = !client.machine_interactive_ghost
+	if(client.machine_interactive_ghost)
+		to_chat(src, "\blue You will now interact with machines you click on.")
+	else
+		to_chat(src, "\blue You will no longer interact with machines you click on.")
 
 /mob/dead/observer/DblClickOn(atom/A, params)
 	if(client.buildmode)
@@ -32,19 +46,17 @@
 	if(client.buildmode)
 		build_click(src, client.buildmode, params, A)
 		return
-	if(world.time <= next_move) return
+	if(world.time <= next_move)
+		return
 	next_move = world.time + 8
+	if(client.inquisitive_ghost)
+		examinate(A)	
 	// You are responsible for checking config.ghost_interaction when you override this function
 	// Not all of them require checking, see below
 	A.attack_ghost(src)
 
 // Oh by the way this didn't work with old click code which is why clicking shit didn't spam you
-/atom/proc/attack_ghost(mob/dead/observer/user)
-	if(user.client)
-		if(check_rights(R_ADMIN, 0) && user.client.AI_Interact)
-			attack_ai(user)
-		if(user.client.inquisitive_ghost)
-			user.examinate(src)
+/atom/proc/attack_ghost(mob/user)
 	return
 
 // ---------------------------------------

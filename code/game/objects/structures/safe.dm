@@ -30,7 +30,8 @@ FLOOR SAFES
 	tumbler_2_open = rand(0, 72)
 
 
-/obj/structure/safe/initialize()
+/obj/structure/safe/atom_init()
+	. = ..()
 	for(var/obj/item/I in loc)
 		if(space >= maxspace)
 			return
@@ -181,8 +182,8 @@ obj/structure/safe/meteorhit(obj/O)
 	layer = 2.5
 
 
-/obj/structure/safe/floor/initialize()
-	..()
+/obj/structure/safe/floor/atom_init()
+	. = ..()
 	var/turf/T = loc
 	hide(T.intact)
 

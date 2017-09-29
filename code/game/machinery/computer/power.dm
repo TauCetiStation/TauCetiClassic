@@ -43,7 +43,7 @@
 /obj/machinery/computer/monitor/interact(mob/user)
 
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!(istype(user, /mob/living/silicon) || IsAdminGhost(user)))
+		if (!issilicon(user) && !isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=powcomp")
 			return
@@ -83,7 +83,7 @@
 
 		t += "</FONT></PRE></TT>"
 
-	user << browse(t, "window=powcomp;size=450")
+	user << browse(t, "window=powcomp;size=450x900")
 	onclose(user, "powcomp")
 
 

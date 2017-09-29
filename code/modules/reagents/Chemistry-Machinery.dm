@@ -84,7 +84,7 @@
   */
 /obj/machinery/chem_dispenser/ui_interact(mob/user, ui_key = "main",datum/nanoui/ui = null)
 	if(stat & (BROKEN|NOPOWER)) return
-	if(user.stat || user.restrained()) return
+	if((user.stat && !isobserver(user)) || user.restrained()) return
 
 	// this is the data which will be sent to the ui
 	var/data[0]
@@ -633,9 +633,8 @@
 	return src.attack_hand(user)
 
 /obj/machinery/chem_master/attack_hand(mob/user)
-	if(stat & BROKEN)
+	if(..())
 		return
-	user.set_machine(src)
 	if(!(user.client in has_sprites))
 		spawn()
 			has_sprites += user.client
@@ -919,9 +918,8 @@
 
 
 /obj/machinery/computer/pandemic/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
+	if(..())
 		return
-	user.set_machine(src)
 	var/dat = ""
 	if(src.temphtml)
 		dat = "[src.temphtml]<BR><BR><A href='?src=\ref[src];clear=1'>Main Menu</A>"
@@ -1389,14 +1387,14 @@
 		var/allowed = get_allowed_by_id(O)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
-		for(var/i = 1; i <= round(O.amount, 1); i++)
+		for(var/i = 1; i <= round(O.get_amount(), 1); i++)
 			for (var/r_id in allowed)
 				var/space = beaker.reagents.maximum_volume - beaker.reagents.total_volume
 				var/amount = allowed[r_id]
 				beaker.reagents.add_reagent(r_id,min(amount, space))
 				if (space < amount)
 					break
-			if (i == round(O.amount, 1))
+			if (i == round(O.get_amount(), 1))
 				remove_object(O)
 				break
 	//Plants

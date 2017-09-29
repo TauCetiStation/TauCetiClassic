@@ -207,20 +207,14 @@ var/list/turret_icons
 		to_chat(user, "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>")
 		return TRUE
 
-	if(locked && !issilicon(user) && !IsAdminGhost(user))
+	if(locked && !issilicon(user) && !isobserver(user))
 		to_chat(user, "<span class='notice'>Access denied.</span>")
 		return TRUE
 
 	return FALSE
 
-/obj/machinery/porta_turret/attack_ai(mob/user)
-	if(isLocked(user))
-		return
-
-	interact(user)
-
 /obj/machinery/porta_turret/attack_hand(mob/user)
-	if(isLocked(user))
+	if(..() || isLocked(user))
 		return
 
 	interact(user)
@@ -771,8 +765,7 @@ var/list/turret_icons
 		if(1)
 			if(istype(I, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/M = I
-				if(M.amount >= 2)
-					M.use(2)
+				if(M.use(2))
 					to_chat(user, "<span class='notice'>You add some metal armor to the interior frame.</span>")
 					build_step = 2
 					icon_state = "turret_frame2"
@@ -857,8 +850,7 @@ var/list/turret_icons
 		if(6)
 			if(istype(I, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/M = I
-				if(M.amount >= 2)
-					M.use(2)
+				if(M.use(2))
 					to_chat(user, "<span class='notice'>You add some metal armor to the exterior frame.</span>")
 					build_step = 7
 				else
@@ -916,6 +908,14 @@ var/list/turret_icons
 	..()
 
 
+/obj/machinery/porta_turret_construct/attack_ai()
+	return
+
+
+/obj/machinery/porta_turret_construct/attack_ghost()
+	return
+
+
 /obj/machinery/porta_turret_construct/attack_hand(mob/user)
 	switch(build_step)
 		if(4)
@@ -934,8 +934,6 @@ var/list/turret_icons
 			new /obj/item/device/assembly/prox_sensor(loc)
 			build_step = 4
 
-/obj/machinery/porta_turret_construct/attack_ai()
-	return
 
 /obj/effect/porta_turret_cover
 	icon = 'icons/obj/turrets.dmi'

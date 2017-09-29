@@ -64,6 +64,9 @@
 	else
 		..()
 
+/obj/machinery/mill/attack_ghost(mob/user)
+	return
+
 /obj/machinery/mill/attack_hand(mob/user)
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
 		F.loc = src.loc
@@ -134,6 +137,9 @@
 	else
 		..()
 
+/obj/machinery/fermenter/attack_ghost(mob/user)
+	return
+
 /obj/machinery/fermenter/attack_hand(mob/user)
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
 		F.loc = src.loc
@@ -194,6 +200,9 @@
 		input += W
 	else
 		..()
+
+/obj/machinery/still/attack_ghost(mob/user)
+	return
 
 /obj/machinery/still/attack_hand(mob/user)
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
@@ -279,6 +288,9 @@
 		input += W
 	else
 		..()
+
+/obj/machinery/centrifuge/attack_ghost(mob/user)
+	return
 
 /obj/machinery/centrifuge/attack_hand(mob/user)
 	for(var/obj/item/weapon/reagent_containers/food/F in output)

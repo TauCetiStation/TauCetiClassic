@@ -82,7 +82,7 @@ Maintenance panel panel is [open ? "opened" : "closed"]"},
 
 "<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
 
-	if(!locked || issilicon(user))
+	if(!locked || issilicon(user) || isobserver(user))
 		if(!lasercolor)
 			dat += text({"<BR>
 Check for Weapon Authorization: []<BR>
@@ -443,8 +443,8 @@ Auto Patrol: []"},
 				icon_state = "[lasercolor]ed209_prox"
 
 		if(6)
-			if(istype(W, /obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/coil = W
+			if(istype(W, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/coil = W
 				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
 				if(do_after(user, 40, target = src))
 					if(build_step == 6 && coil.use(1))

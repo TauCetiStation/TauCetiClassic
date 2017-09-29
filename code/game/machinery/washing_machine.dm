@@ -50,8 +50,7 @@
 
 	//Tanning!
 	for(var/obj/item/stack/sheet/hairlesshide/HH in contents)
-		var/obj/item/stack/sheet/wetleather/WL = new(src)
-		WL.amount = HH.amount
+		new/obj/item/stack/sheet/wetleather(src, HH.get_amount())
 		qdel(HH)
 
 
@@ -280,6 +279,12 @@
 	else
 		..()
 	update_icon()
+
+/obj/machinery/washing_machine/attack_ai(mob/user)
+	return
+
+/obj/machinery/washing_machine/attack_ghost(mob/user)
+	return
 
 /obj/machinery/washing_machine/attack_hand(mob/user)
 	switch(state)

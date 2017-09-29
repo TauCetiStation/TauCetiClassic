@@ -9,7 +9,8 @@
 	var/hacked = FALSE
 	var/static/obj/transit_loc = null
 
-/obj/machinery/gateway/initialize()
+/obj/machinery/gateway/atom_init()
+	. = ..()
 	update_icon()
 	if(dir == 2)
 		density = 0
@@ -28,18 +29,19 @@
 
 //this is da important part wot makes things go
 /obj/machinery/gateway/centerstation
-	density = 1
+	density = TRUE
 	icon_state = "offcenter"
 	use_power = 1
 
 	//warping vars
 	var/list/linked = list()
-	var/ready = 0				//have we got all the parts for a gateway?
+	var/ready = FALSE			//have we got all the parts for a gateway?
 	var/wait = 0				//this just grabs world.time at world start
 	var/blocked = TRUE			// used in gateway_locker to allow/disallow entering to gateway while hacked
 	var/obj/machinery/gateway/centeraway/awaygate = null
 
-/obj/machinery/gateway/centerstation/initialize()
+/obj/machinery/gateway/centerstation/atom_init()
+	. = ..()
 	update_icon()
 	wait = world.time + config.gateway_delay	//+ thirty minutes default
 	awaygate = locate(/obj/machinery/gateway/centeraway)
@@ -107,7 +109,6 @@ obj/machinery/gateway/centerstation/process()
 	active = 0
 	update_icon()
 
-
 /obj/machinery/gateway/centerstation/attack_hand(mob/user)
 	if(!ready)
 		detect()
@@ -124,49 +125,28 @@ obj/machinery/gateway/centerstation/process()
 		return
 	if(awaygate.calibrated)
 		if(hacked && blocked)
-			var/allowed = FALSE
-
-			if(iscarbon(M))
-				var/mob/living/carbon/C = M
-				if(C.mind && C.mind.special_role == "Syndicate")
-					allowed = TRUE
-				else
-					to_chat(C, "<span class='danger'>Gateway Matter reacts strangely to your Touching</span>")
-			else if(istype(M, /mob/living/silicon/robot/syndicate))
-				allowed = TRUE
-			else if(istype(M, /obj/mecha))
-				var/obj/mecha/MECH = M
-				if(MECH.occupant && MECH.occupant.mind && MECH.occupant.mind.special_role == "Syndicate")
-					allowed = TRUE
-			else if(istype(M, /obj/machinery/nuclearbomb))
-				var/obj/machinery/nuclearbomb/N = M
-				if(!N.timing && !N.auth)
-					allowed = TRUE
-
-			if(!allowed)
-				return
+			if(ismob(M))
+				to_chat(M, "<span class='danger'>Gateway Matter reacts strangely to your Touching</span>")
+			return
 		M.dir = SOUTH
 		enter_to_transit(M, get_step(awaygate.loc, SOUTH))
-		return
 	else
 		var/obj/effect/landmark/dest = pick(awaydestinations)
 		if(dest)
 			M.dir = SOUTH
 			enter_to_transit(M, dest.loc)
 			use_power(5000)
-		return
 
 
 /obj/machinery/gateway/centerstation/attackby(obj/item/device/W, mob/user)
 	if(istype(W,/obj/item/device/multitool))
 		to_chat(user, "The gate is already calibrated, there is no work for you to do here.")
-		return
 
 /////////////////////////////////////Away////////////////////////
 
 
 /obj/machinery/gateway/centeraway
-	density = 1
+	density = TRUE
 	icon_state = "offcenter"
 	use_power = 0
 	var/calibrated = 1
@@ -175,7 +155,8 @@ obj/machinery/gateway/centerstation/process()
 	var/obj/machinery/gateway/centerstation/stationgate = null
 
 
-/obj/machinery/gateway/centeraway/initialize()
+/obj/machinery/gateway/centeraway/atom_init()
+	. = ..()
 	update_icon()
 	stationgate = locate(/obj/machinery/gateway/centerstation)
 
@@ -229,7 +210,6 @@ obj/machinery/gateway/centerstation/process()
 	playsound(src, 'sound/machines/gateway/gateway_close.ogg', 100, 2)
 	active = 0
 	update_icon()
-
 
 /obj/machinery/gateway/centeraway/attack_hand(mob/user)
 	if(!ready)

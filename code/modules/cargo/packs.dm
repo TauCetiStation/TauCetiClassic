@@ -45,9 +45,9 @@ datum/supply_pack/New()
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
 	for(var/item in contains)
 		var/n_item = new item(C)
-		if(src.amount && istype(n_item, /obj/item/stack/sheet))
+		if(amount && istype(n_item, /obj/item/stack/sheet))
 			var/obj/item/stack/sheet/n_sheet = n_item
-			n_sheet.amount = src.amount
+			n_sheet.set_amount(amount)
 
 //----------------------------------------------
 //-----------------OPERATIONS-------------------
@@ -102,9 +102,8 @@ datum/supply_pack/New()
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
 					/obj/item/weapon/grenade/smokebomb,
-					/obj/item/weapon/pen/paralysis,
-					/obj/item/weapon/grenade/chem_grenade/incendiary)
-	cost = 2000
+					/obj/item/weapon/pen/paralysis)
+	cost = 1750
 	crate_name = "Special Ops crate"
 	group = "Security"
 	hidden = TRUE
@@ -130,11 +129,8 @@ datum/supply_pack/New()
 	contains = list(/obj/item/weapon/flamethrower/full,
 					/obj/item/weapon/tank/phoron,
 					/obj/item/weapon/tank/phoron,
-					/obj/item/weapon/tank/phoron,
-					/obj/item/weapon/grenade/chem_grenade/incendiary,
-					/obj/item/weapon/grenade/chem_grenade/incendiary,
-					/obj/item/weapon/grenade/chem_grenade/incendiary)
-	cost = 2500
+					/obj/item/weapon/tank/phoron)
+	cost = 1750
 	crate_type = /obj/structure/closet/crate/secure/weapon
 	crate_name = "Experimental weapons crate"
 	access = access_heads
@@ -682,23 +678,23 @@ datum/supply_pack/New()
 	group = "Engineering"
 	access = access_ce
 
-/datum/supply_pack/teg
+/*/datum/supply_pack/teg // teg currently were broken for a long time ago, so no point to have it in-game until fixed.
 	contains = list(/obj/machinery/power/generator)
 	name = "Mark I Thermoelectric Generator"
 	cost = 7500
 	crate_type = /obj/structure/closet/crate/secure/large
 	crate_name = "Mk1 TEG crate"
 	group = "Engineering"
-	access = access_engine
+	access = access_engine*/
 
-/datum/supply_pack/circulator
-	contains = list(/obj/machinery/atmospherics/binary/circulator)
+/*/datum/supply_pack/circulator
+	contains = list(/obj/machinery/atmospherics/components/binary/circulator)
 	name = "Binary atmospheric circulator"
 	cost = 6000
 	crate_type = /obj/structure/closet/crate/secure/large
 	crate_name = "Atmospheric circulator crate"
 	group = "Engineering"
-	access = access_engine
+	access = access_engine*/
 
 /datum/supply_pack/air_dispenser
 	contains = list(/obj/machinery/pipedispenser/orderable)

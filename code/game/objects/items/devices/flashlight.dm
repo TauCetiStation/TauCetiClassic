@@ -13,8 +13,8 @@
 	var/on = 0
 	var/brightness_on = 5 //luminosity when on
 
-/obj/item/device/flashlight/initialize()
-	..()
+/obj/item/device/flashlight/atom_init()
+	. = ..()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		set_light(brightness_on)

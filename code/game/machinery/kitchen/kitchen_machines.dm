@@ -147,9 +147,10 @@
 		if (contents.len>=max_n_of_items)
 			to_chat(user, "<span class='danger'>Tihs [src] is full of ingredients, you cannot put more.</span>")
 			return 1
-		if (istype(O,/obj/item/stack) && O:amount>1)
+		var/obj/item/stack/S = O
+		if (istype(S) && S.get_amount() > 1)
 			new O.type (src)
-			O:use(1)
+			S.use(1)
 			user.visible_message( \
 				"<span class='notice'>[user] has added one of [O] to \the [src].</span>", \
 				"<span class='notice'>You add one of [O] to \the [src].</span>")
@@ -455,7 +456,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
 	RefreshParts()
 
 /obj/machinery/kitchen_machine/oven
@@ -477,7 +478,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
 	RefreshParts()
 
 /obj/machinery/kitchen_machine/grill
@@ -499,7 +500,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
 	RefreshParts()
 
 /obj/machinery/kitchen_machine/candymaker
@@ -521,5 +522,5 @@
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil/random(null, 2)
+	component_parts += new /obj/item/stack/cable_coil/random(null, 2)
 	RefreshParts()

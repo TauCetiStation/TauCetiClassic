@@ -1,9 +1,9 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
 #define CULT_RUNES_LIMIT 26
 
-var/list/cultwords = list()
+var/list/cultwords = list() // associated english word = runeword
+var/list/cultwords_reverse = list() // associated runeword = english word
 var/list/cult_datums = list()
-var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
 
 /client/proc/check_words() // -- Urist
 	set category = "Special Verbs"
@@ -11,13 +11,16 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	set desc = "Check the rune-word meaning."
 	if(!cultwords["travel"])
 		runerandom()
-	for (var/word in engwords)
-		to_chat(usr, "[cultwords[word]] is [word]")
+	for (var/word in cultwords)
+		to_chat(usr, "[word] is [cultwords[word]]")
 
 /proc/runerandom() //randomizes word meaning
-	var/list/runewords=list("ire","ego","nahlizet","certum","veri","jatkaa","mgar","balaq", "karazet", "geeri") ///"orkan" and "allaq" removed.
-	for (var/word in engwords)
+	var/list/runewords = list("ire","ego","nahlizet","certum","veri","jatkaa","mgar","balaq", "karazet", "geeri") ///"orkan" and "allaq" removed.
+	var/list/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", "self", "see", "other", "hide")
+	for(var/word in engwords)
 		cultwords[word] = pick_n_take(runewords)
+		cultwords_reverse[cultwords[word]] = word
+
 	for(var/type in subtypesof(/datum/cult))
 		var/datum/cult/dat = type
 		var/word1 = initial(dat.word1)
@@ -116,11 +119,10 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		to_chat(user, "You are unable to speak the words of the rune.")
 		return
 	if(!power || prob(user.getBrainLoss()))
+		user.say(pick("Hakkrutju gopoenjim.", "Nherasai pivroiashan.", "Firjji prhiv mazenhor.",\
+		"Tanah eh wakantahe.", "Obliyae na oraie.", "Miyf hon vnor'c.", "Wakabai hij fen juswix."))
 		return
 	power.action(user)
-
-/obj/effect/rune/proc/check_icon(word1, word2, word3)
-	icon = get_uristrune_cult(power, word1, word2, word3)
 
 /obj/item/weapon/book/tome
 	name = "book"
@@ -248,7 +250,7 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 		if("clear")
 			words[words[number]] = words[number]
 		if("change")
-			words[words[number]] = input("Enter the translation for [words[number]]", "Word notes") in engwords
+			words[words[number]] = input("Enter the translation for [words[number]]", "Word notes") in cultwords
 			for (var/w in words)
 				if ((words[w] == words[words[number]]) && (w != words[number]))
 					words[w] = w
@@ -340,22 +342,26 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	var/w3
 	var/list/english = list()
 	for (var/w in words)
-		english+=words[w]
+		english += words[w]
 	if(user)
 		w1 = input("Write your first rune:", "Rune Scribing") in english
-		for (var/w in words)
-			if (words[w] == w1)
-				w1 = w
+		if(!w1)
+			return
+		if(w1 in cultwords)
+			w1 = cultwords[w1]
+
 	if(user)
 		w2 = input("Write your second rune:", "Rune Scribing") in english
-		for (var/w in words)
-			if (words[w] == w2)
-				w2 = w
+		if(!w2)
+			return
+		if(w2 in cultwords)
+			w2 = cultwords[w2]
 	if(user)
 		w3 = input("Write your third rune:", "Rune Scribing") in english
-		for (var/w in words)
-			if (words[w] == w3)
-				w3 = w
+		if(!w3)
+			return
+		if(w3 in cultwords)
+			w3 = cultwords[w3]
 
 	if(user.get_active_hand() != src)
 		return
@@ -366,18 +372,18 @@ var/engwords = list("travel", "blood", "join", "hell", "destroy", "technology", 
 	user.take_overall_damage((rand(9) + 1) / 10) // 0.1 to 1.0 damage
 	if((unlocked || do_after(user, 50, target = user)) && user.get_active_hand() == src)
 		var/obj/effect/rune/R = new /obj/effect/rune(user.loc)
-		if(words[w1] == "travel")
-			if(words[w2] == "self")
-				R.power = new /datum/cult/teleport(R, words[w3])
-			else if(words[w2] == "other")
-				R.power = new /datum/cult/item_port(R, words[w3])
+		if(w1 == cultwords["travel"])
+			if(w2 == cultwords["self"])
+				R.power = new /datum/cult/teleport(R, cultwords_reverse[w3])
+			else if(w2 == cultwords["other"])
+				R.power = new /datum/cult/item_port(R, cultwords_reverse[w3])
 		to_chat(user, "<span class='userdanger'>You finish drawing the arcane markings of the Geometer.</span>")
 		if(!R.power)
-			var/type = cult_datums[words[w1] + words[w2] + words[w3]]
+			var/type = cult_datums[cultwords_reverse[w1] + cultwords_reverse[w2] + cultwords_reverse[w3]]
 			if(ispath(type))
 				R.power = new type(R)
 		R.desc = "[w1], [w2], [w3]" // for examine
-		R.check_icon(w1, w2, w3)
+		R.icon = get_uristrune_cult((R.power ? TRUE : FALSE), w1, w2, w3)
 		R.blood_DNA = list()
 		R.blood_DNA[user.dna.unique_enzymes] = user.dna.b_type
 

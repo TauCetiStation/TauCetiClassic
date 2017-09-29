@@ -4,7 +4,6 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
 	anchored = 1.0
-	pressure_resistance = 15
 
 /obj/structure/stool/bar
 	name = "bar stool"
@@ -28,13 +27,13 @@
 
 /obj/structure/stool/blob_act()
 	if(prob(75))
-		new /obj/item/stack/sheet/metal(src.loc)
+		new /obj/item/stack/sheet/metal(loc)
 		qdel(src)
 
 /obj/structure/stool/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		new /obj/item/stack/sheet/metal(src.loc)
+		new /obj/item/stack/sheet/metal(loc)
 		qdel(src)
 	if(istype(W, /obj/item/weapon/melee/energy))
 		if(istype(W, /obj/item/weapon/melee/energy/blade) || W:active)
@@ -47,7 +46,7 @@
 			for(var/mob/O in viewers(user, 4))
 				O.show_message("\blue [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
 			if(!(flags&NODECONSTRUCT))
-				new /obj/item/stack/sheet/metal(src.loc)
+				new /obj/item/stack/sheet/metal(loc)
 			qdel(src)
 	return
 

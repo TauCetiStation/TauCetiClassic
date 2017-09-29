@@ -474,7 +474,7 @@ var/list/intents = list("help","disarm","grab","hurt")
 #undef SAFE_PERP
 
 /proc/IsAdminGhost(var/mob/user)
-	if(check_rights(R_ADMIN, 0) && istype(user, /mob/dead/observer) && user.client.AI_Interact)
+	if(check_rights(R_ADMIN, 0) && isobserver(user) && user.client.AI_Interact)
 		return 1
 	else
 		return 0

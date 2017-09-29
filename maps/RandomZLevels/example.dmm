@@ -98,7 +98,7 @@
 "bT" = (/obj/structure/table,/obj/item/device/analyzer,/turf/simulated/floor,/area/awaymission/example)
 "bU" = (/obj/structure/table,/obj/item/weapon/rack_parts,/turf/simulated/floor,/area/awaymission/example)
 "bV" = (/obj/structure/table,/obj/item/device/toner,/turf/simulated/floor,/area/awaymission/example)
-"bW" = (/obj/structure/table,/obj/item/weapon/wirecutters,/obj/item/weapon/cable_coil/yellow,/turf/simulated/floor,/area/awaymission/example)
+"bW" = (/obj/structure/table,/obj/item/weapon/wirecutters,/obj/item/stack/cable_coil/yellow,/turf/simulated/floor,/area/awaymission/example)
 "bX" = (/obj/structure/table,/obj/item/weapon/wrench,/turf/simulated/floor,/area/awaymission/example)
 "bY" = (/obj/machinery/vending/assist,/turf/simulated/floor,/area/awaymission/example)
 "bZ" = (/obj/structure/ladder{id = "example"},/turf/simulated/floor/plating,/area/awaymission/example)

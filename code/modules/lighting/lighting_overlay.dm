@@ -25,6 +25,9 @@
 	T.lighting_overlay = src
 	T.luminosity       = FALSE
 
+	for(var/turf/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+		S.update_starlight()
+
 	if(no_update)
 		return
 

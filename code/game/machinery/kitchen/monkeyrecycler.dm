@@ -4,11 +4,12 @@
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	layer = 2.9
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 50
+	ghost_must_be_admin = TRUE
 	var/grinded = 0
 	var/required_grind = 5
 	var/cube_production = 1
@@ -74,7 +75,7 @@
 	return
 
 /obj/machinery/monkey_recycler/attack_hand(mob/user)
-	if (src.stat != CONSCIOUS) //NOPOWER etc
+	if (..())
 		return
 	if(grinded >= required_grind)
 		to_chat(user, "\blue The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.")

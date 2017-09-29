@@ -30,9 +30,10 @@ datum/genesequence
 	var/list/discovered_genomes = list("! Clear !")
 	var/list/accepted_fossil_types = list(/obj/item/weapon/fossil/plant)
 
-/obj/machinery/computer/reconstitutor/initialize()
-	..()
-	undiscovered_genesequences = SSxenoarch.all_plant_genesequences.Copy()
+/obj/machinery/computer/reconstitutor/atom_init()
+	. = ..()
+	if(!undiscovered_genesequences)
+		undiscovered_genesequences = SSxenoarch.all_plant_genesequences.Copy()
 
 /obj/machinery/computer/reconstitutor/animal
 	name = "Fauna reconstitution console"
@@ -40,9 +41,9 @@ datum/genesequence
 	pod1 = null
 	circuit = /obj/item/weapon/circuitboard/reconstitutor/animal
 
-/obj/machinery/computer/reconstitutor/animal/initialize()
-	..()
+/obj/machinery/computer/reconstitutor/animal/atom_init()
 	undiscovered_genesequences = SSxenoarch.all_animal_genesequences.Copy()
+	. = ..()
 
 /obj/machinery/computer/reconstitutor/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/fossil))
@@ -91,7 +92,7 @@ datum/genesequence
 	interact(user)
 
 /obj/machinery/computer/reconstitutor/interact(mob/user)
-	if(stat & (NOPOWER|BROKEN) || get_dist(src, user) > 1)
+	if(stat & (NOPOWER|BROKEN) || get_dist(src, user) > 1 && !issilicon(user) && !isobserver(user))
 		user.unset_machine(src)
 		return
 

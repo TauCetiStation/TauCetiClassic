@@ -260,9 +260,8 @@
 		message = ""
 		handled = 1
 	if(wear_mask)
-		var/obj/item/clothing/mask/Mask= wear_mask
 		if(message_mode != "changeling")
-			message = Mask.speechModification(message)
+			message = wear_mask.speechModification(message)
 		handled = 1
 
 	if((HULK in mutations) && health >= 25 && length(message))

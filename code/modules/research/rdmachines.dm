@@ -34,6 +34,6 @@
 		return 0
 
 /obj/machinery/r_n_d/attack_hand(mob/user)
-	if(shocked)
+	if(shocked && !issilicon(user) && !isobserver(user))
 		shock(user, 50)
 	wires.interact(user)

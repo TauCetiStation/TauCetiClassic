@@ -115,7 +115,8 @@ Class Procs:
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
-
+	var/ghost_must_be_admin = 0	// 0 - every ghost can see interface (and admins can also interact)
+								// 1 - only admins in ghost form can interact
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
@@ -148,6 +149,9 @@ Class Procs:
 /obj/machinery/process()//If you dont use process or power why are you here
 	return PROCESS_KILL
 
+/obj/machinery/proc/process_atmos()//If you dont use process why are you here
+	return PROCESS_KILL
+
 /obj/machinery/emp_act(severity)
 	if(use_power && stat == 0)
 		use_power(7500/severity)
@@ -171,12 +175,14 @@ Class Procs:
 
 /obj/machinery/proc/dropContents()
 	var/turf/T = get_turf(src)
-	T.contents += contents
-	if(occupant)
-		if(occupant.client)
-			occupant.client.eye = occupant
-			occupant.client.perspective = MOB_PERSPECTIVE
-		occupant = null
+	for(var/atom/movable/AM in contents)
+		AM.forceMove(T)
+		if(isliving(AM))
+			var/mob/living/L = AM
+			if(L.client)
+				L.client.eye = L
+				L.client.perspective = MOB_PERSPECTIVE
+	occupant = null
 
 /obj/machinery/proc/close_machine(mob/living/target = null)
 	state_open = 0
@@ -289,22 +295,24 @@ Class Procs:
 		// For some reason attack_robot doesn't work
 		// This is to stop robots from using cameras to remotely control machines.
 		if(user.client && user.client.eye == user)
-			return src.attack_hand(user)
+			return attack_hand(user)
 	else
-		return src.attack_hand(user)
+		return attack_hand(user)
 
 /obj/machinery/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
+
+/obj/machinery/attack_ghost(mob/user)
+	if(!user.client.machine_interactive_ghost || (ghost_must_be_admin && !IsAdminGhost(user)))
+		return 1
+	return attack_hand(user)
 
 /obj/machinery/attack_hand(mob/user)
 	if(stat & (NOPOWER|BROKEN|MAINT))
 		return 1
-	if((user.lying || user.stat) && !IsAdminGhost(user))
+	if((user.lying || user.stat) && !isobserver(user))
 		return 1
-	if ( ! (istype(usr, /mob/living/carbon/human) || \
-			istype(usr, /mob/living/silicon) || \
-			istype(usr, /mob/living/carbon/monkey) || \
-			istype(user, /mob/living/carbon/alien/humanoid/queen) ))
+	if ( !(ishuman(user) || issilicon(user) || ismonkey(user) || isalienqueen(user) || isobserver(user)) )
 		to_chat(usr, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return 1
 /*
@@ -327,6 +335,10 @@ Class Procs:
 	src.add_fingerprint(user)
 	user.set_machine(src)
 	return ..()
+
+/obj/machinery/CheckParts(list/parts_list)
+	..()
+	RefreshParts()
 
 /obj/machinery/proc/RefreshParts() //Placeholder proc for machines that are built using frames.
 	return

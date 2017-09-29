@@ -125,15 +125,16 @@
 				src.icon_state = "tube-construct-stage1"
 			if("bulb")
 				src.icon_state = "bulb-construct-stage1"
-		new /obj/item/weapon/cable_coil/random(get_turf(src.loc), 1)
+		new /obj/item/stack/cable_coil/random(get_turf(src.loc), 1)
 		user.visible_message("[user.name] removes the wiring from [src].", \
 			"You remove the wiring from [src].", "You hear a noise.")
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		return
 
-	if(istype(W, /obj/item/weapon/cable_coil))
-		if (src.stage != 1) return
-		var/obj/item/weapon/cable_coil/coil = W
+	if(istype(W, /obj/item/stack/cable_coil))
+		if (src.stage != 1)
+			return
+		var/obj/item/stack/cable_coil/coil = W
 		if(!coil.use(1))
 			return
 		switch(fixture_type)
@@ -467,7 +468,10 @@
 
 /obj/machinery/light/attack_ai(mob/user)
 	src.flicker(1)
-	return
+
+/obj/machinery/light/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		flicker(1)
 
 // Aliens smash the bulb but do not get electrocuted./N
 /obj/machinery/light/attack_alien(mob/living/carbon/alien/humanoid/user)//So larva don't go breaking light bulbs.

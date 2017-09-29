@@ -59,7 +59,7 @@
 			user.visible_message("<span class='warning'>[user.name] dismantles the power terminal[master ? " from [master]" : ""].</span>", \
 								"You begin to cut the cables...")
 
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 			if(do_after(user, 50 , target = src))
 				if((master && master.can_terminal_dismantle()) || !master)
 					if(prob(50) && electrocute_mob(user, powernet, src))
@@ -67,7 +67,7 @@
 						s.set_up(5, 1, master)
 						s.start()
 						return
-					new /obj/item/weapon/cable_coil/red(loc, 10)
+					new /obj/item/stack/cable_coil/red(loc, 10)
 					to_chat(user, "<span class='notice'>You cut the cables and dismantle the power terminal.</span>")
 					qdel(src)
 

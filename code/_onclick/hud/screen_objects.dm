@@ -298,21 +298,21 @@
 																		//These tanks we're sure of their contents
 										if("nitrogen") 							//So we're a bit more picky about them.
 
-											if(t.air_contents.nitrogen && !t.air_contents.oxygen)
-												contents.Add(t.air_contents.nitrogen)
+											if(t.air_contents.gas["nitrogen"] && !t.air_contents.gas["oxygen"])
+												contents.Add(t.air_contents.gas["nitrogen"])
 											else
 												contents.Add(0)
 
 										if ("oxygen")
-											if(t.air_contents.oxygen && !t.air_contents.phoron)
-												contents.Add(t.air_contents.oxygen)
+											if(t.air_contents.gas["oxygen"] && !t.air_contents.gas["phoron"])
+												contents.Add(t.air_contents.gas["oxygen"])
 											else
 												contents.Add(0)
 
 										// No races breath this, but never know about downstream servers.
 										if ("carbon dioxide")
-											if(t.air_contents.carbon_dioxide && !t.air_contents.phoron)
-												contents.Add(t.air_contents.carbon_dioxide)
+											if(t.air_contents.gas["carbon_dioxide"] && !t.air_contents.gas["phoron"])
+												contents.Add(t.air_contents.gas["carbon_dioxide"])
 											else
 												contents.Add(0)
 
@@ -639,3 +639,13 @@
 				usr.update_inv_r_hand()
 				usr.next_move = world.time+6
 	return 1
+
+/obj/screen/inventory/craft
+	name = "crafting menu"
+	icon = 'icons/mob/screen1_Midnight.dmi'
+	icon_state = "craft"
+	screen_loc = ui_crafting
+
+/obj/screen/inventory/craft/Click()
+	var/mob/living/M = usr
+	M.OpenCraftingMenu()

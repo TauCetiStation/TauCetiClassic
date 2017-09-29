@@ -58,15 +58,18 @@
 			src.state = STATE_DEFAULT
 		if("login")
 			var/mob/M = usr
-			var/obj/item/weapon/card/id/I = M.get_active_hand()
-			if (istype(I, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = I
-				I = pda.id
-			if (I && istype(I))
-				if(src.check_access(I))
-					authenticated = 1
-				if(20 in I.access || 57 in I.access || 58 in I.access)//cap, hop, hos
-					authenticated = 2
+			if(isobserver(M))
+				authenticated = 2
+			else
+				var/obj/item/weapon/card/id/I = M.get_active_hand()
+				if (istype(I, /obj/item/device/pda))
+					var/obj/item/device/pda/pda = I
+					I = pda.id
+				if (I && istype(I))
+					if(src.check_access(I))
+						authenticated = 1
+					if(20 in I.access || 57 in I.access || 58 in I.access)//cap, hop, hos
+						authenticated = 2
 		if("logout")
 			authenticated = 0
 
@@ -276,10 +279,10 @@
 		var/timeleft = SSshuttle.timeleft()
 		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]<BR>"
 
-	if (istype(user, /mob/living/silicon))
+	if (issilicon(user))
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
-			dat +=  dat2
+			dat += dat2
 			user << browse(dat, "window=communications;size=400x500")
 			onclose(user, "communications")
 		return

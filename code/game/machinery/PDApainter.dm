@@ -3,8 +3,9 @@
 	desc = "A PDA painting machine. To use, simply insert your PDA and choose the desired preset paint scheme."
 	icon = 'icons/obj/machines/pdapainter.dmi'
 	icon_state = "pdapainter"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
+	ghost_must_be_admin = TRUE
 	var/obj/item/device/pda/storedpda = null
 	var/list/colorlist = list()
 	var/list/tc_pda_list = list(/obj/item/device/pda/forensic)
@@ -62,16 +63,13 @@
 
 
 /obj/machinery/pdapainter/attack_hand(mob/user)
-	..()
-
-	src.add_fingerprint(user)
+	if(..())
+		return
 
 	if(storedpda)
 		var/obj/item/device/pda/P
 		P = input(user, "Select your color!", "PDA Painting") as null|anything in colorlist
 		if(!P)
-			return
-		if(!in_range(src, user))
 			return
 
 		storedpda.icon = 'icons/obj/pda.dmi'
