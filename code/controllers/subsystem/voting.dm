@@ -162,9 +162,9 @@ var/datum/subsystem/vote/SSvote
 	return 0
 
 /datum/subsystem/vote/proc/initiate_vote(vote_type, initiator_key)
-	var/is_admin = 0
+	var/is_admin = FALSE
 	if(check_rights(R_ADMIN))
-		is_admin = 1
+		is_admin = TRUE
 	if(!mode)
 		if(started_time != null && !is_admin)
 			var/next_allowed_time = (started_time + config.vote_delay)
@@ -233,9 +233,9 @@ var/datum/subsystem/vote/SSvote
 /datum/subsystem/vote/proc/interface(client/C)
 	if(!C)
 		return
-	var/admin = 0
+	var/admin = FALSE
 	if(C.holder && (C.holder.rights & R_ADMIN))
-		admin = 1
+		admin = TRUE
 	voting |= C
 
 	if(mode)

@@ -446,7 +446,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Assume direct control"
 	set desc = "Direct intervention."
 
-	if(!check_rights(R_DEBUG|R_ADMIN))	return
+	if(!check_rights(R_DEBUG|R_ADMIN))
+		return
 	if(M.ckey)
 		if(alert("This mob is being controlled by [M.ckey]. Are you sure you wish to assume control of it? [M.ckey] will be made a ghost.",,"Yes","No") != "Yes")
 			return
@@ -1722,7 +1723,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Setup supermatter"
 	set desc = "Sets up the supermatter engine."
 
-	if(!check_rights(R_DEBUG|R_ADMIN))      return
+	if(!check_rights(R_DEBUG))
+		return
 
 	var/response = alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Setup Completely","Setup except coolant","No")
 

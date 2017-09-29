@@ -68,9 +68,10 @@
 	if (config.log_attack)
 		diary << "\[[time_stamp()]]ATTACK: [text][log_end]" //Seperate attack logs? Why?  FOR THE GLORY OF SATAN!
 
-/proc/log_adminsay(text)
+/proc/log_adminsay(text, say_type)
+	admin_log.Add(text)
 	if (config.log_adminchat)
-		diary << "\[[time_stamp()]]ADMINSAY: [revert_ja(text)][log_end]"
+		diary << "\[[time_stamp()]][say_type]: [revert_ja(text)][log_end]"
 
 /proc/log_adminwarn(text)
 	if (config.log_adminwarn)

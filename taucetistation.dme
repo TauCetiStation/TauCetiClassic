@@ -904,7 +904,6 @@
 #include "code\modules\admin\verbs\diagnostics.dm"
 #include "code\modules\admin\verbs\dice.dm"
 #include "code\modules\admin\verbs\epileptic_anomaly.dm"
-#include "code\modules\admin\verbs\event_verbs.dm"
 #include "code\modules\admin\verbs\fps.dm"
 #include "code\modules\admin\verbs\getlogs.dm"
 #include "code\modules\admin\verbs\library.dm"
