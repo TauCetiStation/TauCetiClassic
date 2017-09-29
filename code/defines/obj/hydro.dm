@@ -1375,6 +1375,7 @@
 	throwforce = 7.0
 	w_class = 2.0
 	m_amt = 50
+	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 
 // *************************************
