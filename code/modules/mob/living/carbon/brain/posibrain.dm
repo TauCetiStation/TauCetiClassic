@@ -136,7 +136,7 @@
 /obj/item/device/mmi/posibrain/New()
 
 	src.brainmob = new(src)
-	src.brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI"))]-[rand(100, 999)]"
+	src.brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","CHRI","CDB","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD","XHS","BOB","EXAD","JMAD"))]-[rand(100, 999)]"
 	src.brainmob.real_name = src.brainmob.name
 	src.brainmob.loc = src
 	src.brainmob.container = src
