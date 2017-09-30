@@ -150,7 +150,7 @@
 		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
 		src.modules += new /obj/item/weapon/extinguisher/mini(src)
-
+		src.modules += new /obj/item/weapon/gripper/chemistry(src)
 		src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 		src.emag.reagents.add_reagent("pacid", 250)
@@ -262,9 +262,9 @@
 
 	New()
 		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
-
+		src.modules += new /obj/item/weapon/gripper/service(src)
+		src.modules += new /obj/item/weapon/gripper/paperwork(src)
 		var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
 		M.matter = 30
 		src.modules += M
@@ -276,7 +276,6 @@
 		src.modules += L
 
 		src.modules += new /obj/item/weapon/tray/robotray(src)
-		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 		src.modules += new /obj/item/weapon/pen/robopen(src)
 		src.modules += new /obj/item/weapon/razor(src)
 
@@ -377,6 +376,7 @@
 		src.modules += new /obj/item/weapon/circular_saw(src)
 		src.modules += new /obj/item/weapon/scalpel(src)
 		src.modules += new /obj/item/weapon/extinguisher/mini(src) //To unfuck xenobiology up
+
 
 		src.modules += new /obj/item/weapon/crowbar/red(src)
 		src.modules += new /obj/item/weapon/wrench(src)
