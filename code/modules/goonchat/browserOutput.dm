@@ -1,19 +1,20 @@
 var/list/chatResources = list(
-	"goon/browserassets/js/jquery.min.js",
-	"goon/browserassets/js/jquery.mark.min.js",
-	"goon/browserassets/js/json2.min.js",
-	"goon/browserassets/js/browserOutput.js",
-	"goon/browserassets/css/fonts/fontawesome-webfont.eot",
-	"goon/browserassets/css/fonts/fontawesome-webfont.svg",
-	"goon/browserassets/css/fonts/fontawesome-webfont.ttf",
-	"goon/browserassets/css/fonts/fontawesome-webfont.woff",
-	"goon/browserassets/css/font-awesome.css",
-	"goon/browserassets/css/emojib64.css",
-	"goon/browserassets/css/browserOutput.css"
+	"code/modules/goonchat/browserassets/js/jquery.min.js",
+	"code/modules/goonchat/browserassets/js/jquery.mark.min.js",
+	"code/modules/goonchat/browserassets/js/json2.min.js",
+	"code/modules/goonchat/browserassets/js/browserOutput.js",
+	"code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.eot",
+	"code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.svg",
+	"code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.ttf",
+	"code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.woff",
+	"code/modules/goonchat/browserassets/css/font-awesome.css",
+	"code/modules/goonchat/browserassets/css/emojib64.css",
+	"code/modules/goonchat/browserassets/css/browserOutput.css"
 )
 
-/var/savefile/iconCache = new /savefile("data/iconCache.sav")
-/var/chatDebug = file("data/chatDebug.log")
+var/savefile/iconCache = new /savefile("data/iconCache.sav")
+var/chatDebug = file("data/chatDebug.log")
+var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json")
 
 /datum/chatOutput
 	var/client/owner = null
@@ -58,7 +59,7 @@ var/list/chatResources = list(
 		for(var/asset in global.chatResources)
 			owner << browse_rsc(file(asset))
 
-		owner << browse(file("goon/browserassets/html/browserOutput.html"), "window=browseroutput")
+		owner << browse(file("code/modules/goonchat/browserassets/html/browserOutput.html"), "window=browseroutput")
 		sleep(20 SECONDS)
 		if(!owner || loaded)
 			break
@@ -104,6 +105,7 @@ var/list/chatResources = list(
 	src.sendClientData()
 
 	pingLoop()
+	sendEmojiList()
 
 /datum/chatOutput/proc/pingLoop()
 	set waitfor = FALSE
@@ -111,6 +113,10 @@ var/list/chatResources = list(
 	while (owner)
 		ehjax_send(data = owner.is_afk(29 SECONDS) ? "softPang" : "pang") // SoftPang isn't handled anywhere but it'll always reset the opts.lastPang.
 		sleep(30 SECONDS)
+
+/datum/chatOutput/proc/sendEmojiList()
+	ehjax_send(data = emojiJson)
+
 
 /datum/chatOutput/proc/ehjax_send(var/client/C = owner, var/window = "browseroutput", var/data)
 	if(islist(data))

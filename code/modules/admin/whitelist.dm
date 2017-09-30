@@ -4,7 +4,7 @@
 	set desc = "Allows you to view whitelist and maybe add or edit users."
 
 	src = usr.client.holder
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_ADMIN|R_WHITELIST))
 		return
 
 	var/output = {"<!DOCTYPE html>
@@ -36,7 +36,7 @@
 
 /datum/admins/proc/whitelist_view(user_ckey)
 	src = usr.client.holder
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_ADMIN|R_WHITELIST))
 		return
 	if(!user_ckey)
 		to_chat(usr, "<span class='alert'>Error: Topic 'whitelist': No valid ckey</span>")

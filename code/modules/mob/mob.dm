@@ -17,7 +17,7 @@
 	ghostize()
 	..()
 */
-/mob/New()
+/mob/atom_init()
 	spawn()
 		if(client) animate(client, color = null, time = 0)
 	mob_list += src
@@ -25,7 +25,7 @@
 		dead_mob_list += src
 	else
 		living_mob_list += src
-	..()
+	. = ..()
 
 /mob/proc/Cell()
 	set category = "Admin"

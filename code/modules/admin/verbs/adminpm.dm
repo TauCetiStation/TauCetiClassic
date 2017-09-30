@@ -2,7 +2,7 @@
 /client/proc/cmd_admin_pm_context(mob/M as mob in mob_list)
 	set category = null
 	set name = "Admin PM Mob"
-	if(!holder)
+	if(!check_rights(R_ADMIN))
 		to_chat(src, "<font color='red'>Error: Admin-PM-Context: Only administrators may use this command.</font>")
 		return
 	if( !ismob(M) || !M.client )	return
@@ -13,7 +13,7 @@
 /client/proc/cmd_admin_pm_panel()
 	set category = "Admin"
 	set name = "Admin PM"
-	if(!holder)
+	if(!check_rights(R_ADMIN))
 		to_chat(src, "<font color='red'>Error: Admin-PM-Panel: Only administrators may use this command.</font>")
 		return
 	var/list/client/targets[0]
@@ -157,12 +157,12 @@
 		//check client/X is an admin and isn't the sender or recipient
 		if(X == C || X == src)
 			continue
-		if(X.key!=key && X.key!=C.key)
+		if(X.key != key && X.key != C.key && X.holder.rights & R_ADMIN)
 			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>")//inform X
 	for(var/client/X in mentors)
 		if(X == C || X == src)
 			continue
-		if(X.key!=key && X.key!=C.key && !C.holder && !src.holder)
+		if(X.key != key && X.key != C.key && !C.holder && !src.holder)
 			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0, 0)]-&gt;[key_name(C, X, 0, 0)]:</B> \blue [msg]</font>")//inform X
 
 /client/proc/cmd_admin_irc_pm()

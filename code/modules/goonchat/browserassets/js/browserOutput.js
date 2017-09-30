@@ -40,6 +40,7 @@ var opts = {
 	'highlightLimit': 5,
 	'highlightColor': '#FFFF00', //The color of the highlighted message
 	'pingDisabled': false, //Has the user disabled the ping counter
+	'emojiList': [],
 
 	//Ping display
 	'lastPang': 0, //Timestamp of the last response from the server.
@@ -360,7 +361,7 @@ function ehjaxCallback(data) {
 			return;
 		}
 		data = dataJ;
-
+		
 		if (data.clientData) {
 			if (opts.restarting) {
 				opts.restarting = false;
@@ -395,6 +396,8 @@ function ehjaxCallback(data) {
 				'<span class="italic">You hear a strange robotic voice...</span>' + message;
 			}
 			output(message, 'preventLink');
+		} else if (data.emoji) {
+			emojiList = data.emoji
 		}
 	}
 }
@@ -416,6 +419,14 @@ function createPopup(contents, width) {
 
 function toggleWasd(state) {
 	opts.wasd = (state == 'on' ? true : false);
+}
+
+function copyToClipboard(text) {
+	var $temp = $('<input>');
+	$('body').append($temp);
+	$temp.val(text).select();
+	document.execCommand('copy');
+	$temp.remove();
 }
 
 /*****************************************
@@ -879,6 +890,34 @@ $(function() {
 		setCookie('highlightcolor', opts.highlightColor, 365);
 	});
 
+	$('#emojiPicker').click(function () {
+		var header = '<div class="head">Emoji Picker</div>' + 
+			'<div class="emojiPicker">' + 
+				'<div id="picker-notify"><span><b>COPIED</b></span></div>' +
+				'<p>Emoji will be copied to the clipboard.</p>';
+		
+		var main = '<div class="emojiList">';
+		
+		emojiList.forEach(function (emoji) {
+			main += '<a href="#" data-emoji="' + emoji + '" title="' + emoji + '"><i class="em em-' + emoji + '"></i></a>';
+		});
+		
+		var footer = '</div></div>';
+
+		createPopup(header + main + footer, 400);
+		
+		$('.emojiPicker a').click(function () {
+			copyToClipboard(':' + $(this).data('emoji') + ':');
+			
+			var $pickerNotify = $('#picker-notify');
+			$pickerNotify.slideDown('fast', function() {
+				setTimeout(function() {
+					$pickerNotify.slideUp('fast');
+				}, 500);
+			});
+		});
+	});
+	
 	$('#clearMessages').click(function() {
 		$messages.empty();
 		opts.messageCount = 0;

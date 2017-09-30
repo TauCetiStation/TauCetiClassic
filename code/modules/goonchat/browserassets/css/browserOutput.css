@@ -126,7 +126,7 @@ a.popt {text-decoration: none;}
 	line-height: 30px;
 	float: right;
 }
-#options .decreaseFont {border-top: 0;}
+#options #decreaseFont {border-top: 0;}
 
 /* POPUPS */
 .popup {
@@ -172,6 +172,14 @@ a.popt {text-decoration: none;}
 .highlightPopup input[type=text] {display: block; width: 215px; text-align: left; margin-top: 5px;}
 .highlightPopup input.highlightColor {background-color: #FFFF00;}
 .highlightPopup input.highlightTermSubmit {margin-top: 5px;}
+
+.emojiPicker {padding: 10px; text-align: center;}
+.emojiPicker .emojiList {max-height: 185px; overflow-y: auto;}
+.emojiPicker i {margin: 4px;}
+.emojiPicker a {font-size: 20px;}
+.emojiPicker a:hover {background: #ccc;}
+.emojiPicker #picker-notify {display: none; position: absolute; width: 100%; text-align: center;}
+.emojiPicker #picker-notify span {background-color: #67ba5d; padding-left: 5px; padding-right: 5px;}
 
 /* ADMIN CONTEXT MENU */
 .contextMenu {
