@@ -456,13 +456,12 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	cost = 2
 //	excludefrom = list(/datum/game_mode/nuclear)
-/*
-/datum/uplink_item/stealthy_tools/chameleon_stamp
-	name = "Chameleon Stamp"
-	desc = "A stamp that can be activated to imitate an official Nanotrasen Stamp. The disguised stamp will work exactly like the real stamp and will allow you to forge false documents to gain access or equipment; \
-	it can also be used in a washing machine to forge clothing."
-	item = /obj/item/weapon/stamp/chameleon
-	cost = 1 */
+
+/datum/uplink_item/stealthy_tools/chameleon_penstamp
+    name = "Fake Bureucracy Set"
+    desc = "This set allows you to forge various documents at the station."
+    item = /obj/item/weapon/storage/box/syndie_kit/fake
+    cost = 4
 
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
