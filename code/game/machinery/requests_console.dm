@@ -263,7 +263,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(!announcementConsole)
 			return FALSE
 		for(var/mob/M in player_list)
-			if(!istype(M, /mob/new_player))
+			if(!isnewplayer(M))
 				to_chat(M, "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>")
 		announceAuth = 0
 		message = ""

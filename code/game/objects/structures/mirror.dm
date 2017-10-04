@@ -204,7 +204,7 @@
 
 			if(hairchoice == "Style") //So you just want to use a mirror then?
 				var/userloc = H.loc
-				//see code/modules/mob/new_player/preferences.dm at approx line 545 for comments!
+				//see code/modules/mob/dead/new_player/preferences.dm at approx line 545 for comments!
 				//this is largely copypasted from there.
 				//handle facial hair (if necessary)
 				if(H.gender == MALE)

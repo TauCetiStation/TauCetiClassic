@@ -190,7 +190,7 @@ var/const/MAX_SAVE_SLOTS = 10
 		user << browse(null, "window=preferences")
 		return
 
-	if(!istype(user, /mob/new_player))
+	if(!isnewplayer(user))
 		return
 
 	switch(href_list["preference"])

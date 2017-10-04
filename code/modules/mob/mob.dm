@@ -4,19 +4,7 @@
 	living_mob_list -= src
 	ghostize(bancheck = TRUE)
 	return ..()
-/*
-/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	mob_list -= src
-	dead_mob_list -= src
-	living_mob_list -= src
-	qdel(hud_used)
-	if(mind && mind.current == src)
-		spellremove(src)
-	for(var/infection in viruses)
-		qdel(infection)
-	ghostize()
-	..()
-*/
+
 /mob/atom_init()
 	spawn()
 		if(client) animate(client, color = null, time = 0)
@@ -396,7 +384,7 @@
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
 
-	var/mob/new_player/M = new /mob/new_player()
+	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		qdel(M)
@@ -413,7 +401,7 @@
 
 	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = TRUE
-	else if(stat != DEAD || istype(src, /mob/new_player) || jobban_isbanned(src, "Observer"))
+	else if(stat != DEAD || isnewplayer(src) || jobban_isbanned(src, "Observer"))
 		to_chat(usr, "\blue You must be observing to use this!")
 		return
 

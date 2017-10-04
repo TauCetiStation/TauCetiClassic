@@ -75,7 +75,7 @@
 	set category = "Admin"
 	set name = "Staffwho"
 
-	var/list/messages = list("", "") 
+	var/list/messages = list("", "")
 	var/list/num_online = list(0, 0)
 	if(holder)
 		for(var/client/C in admins)
@@ -88,7 +88,7 @@
 				messages[1] += " <i>(as [C.holder.fakekey])</i>"
 			if(isobserver(C.mob))
 				messages[1] += " - Observing"
-			else if(istype(C.mob, /mob/new_player))
+			else if(isnewplayer(C.mob))
 				messages[1] += " - Lobby"
 			else
 				messages[1] += " - Playing"
@@ -100,7 +100,7 @@
 			messages[2] += "&emsp;[C] is a Mentor"
 			if(isobserver(C.mob))
 				messages[2] += " - Observing"
-			else if(istype(C.mob,/mob/new_player))
+			else if(isnewplayer(C.mob))
 				messages[2] += " - Lobby"
 			else
 				messages[2] += " - Playing"
@@ -118,7 +118,7 @@
 		for(var/client/C in mentors)
 			messages[2] += "&emsp;[C] is a Mentor\n"
 			num_online[2]++
-	
+
 	messages[1]  = num_online[1] ? "<b>Current Admins ([num_online[1]]):</b>\n" + messages[1] : "<b>No Admins online</b>\n"
 	messages[1] += num_online[2] ? "\n<b>Current Mentors ([num_online[2]]):</b>\n" + messages[2] : "\n<b>No Mentors online</b>\n"
 	to_chat(src, messages[1])

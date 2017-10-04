@@ -1,5 +1,5 @@
 /world
-	mob = /mob/new_player
+	mob = /mob/dead/new_player
 	turf = /turf/space
 	area = /area/space
 	view = "15x15"
