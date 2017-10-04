@@ -341,12 +341,14 @@
 /obj/effect/landmark/abductor
 	var/team = 1
 
-/obj/effect/landmark/abductor/console/New()
+/obj/effect/landmark/abductor/console/atom_init()
+	..()
+
 	var/obj/machinery/abductor/console/c = new /obj/machinery/abductor/console(src.loc)
 	c.team = team
-	spawn(5)
-		c.Initialize()
-	qdel(src)
+	c.Initialize()
+
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/abductor/agent
 /obj/effect/landmark/abductor/scientist
