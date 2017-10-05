@@ -84,6 +84,15 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.faction = "faithless"
 			H.set_species(SHADOWLING)
 			H.dna.mutantrace = "shadowling"
+
+			H.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling, slot_w_uniform)
+			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling, slot_shoes)
+			H.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling, slot_wear_suit)
+			H.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling, slot_head)
+			H.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling, slot_gloves)
+			H.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling, slot_wear_mask)
+			H.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, slot_glasses)
+
 			H.update_mutantrace()
 			H.regenerate_icons()
 			usr.mind.transfer_to(H)
@@ -93,7 +102,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/glare
-			H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/veil
+			H.spell_list += new /obj/effect/proc_holder/spell/targeted/veil
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadow_walk
 			H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
 			H.spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind

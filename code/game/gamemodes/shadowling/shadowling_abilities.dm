@@ -29,37 +29,34 @@
 
 
 
-/obj/effect/proc_holder/spell/aoe_turf/veil
+/obj/effect/proc_holder/spell/targeted/veil
 	name = "Veil"
 	desc = "Extinguishes most nearby light sources."
 	panel = "Shadowling Abilities"
-	charge_max = 250 //Short cooldown because people can just turn the lights back on
+	charge_max = 700
 	clothes_req = 0
-	range = 5
+	range = -1
+	include_user = 1
 
-/obj/effect/proc_holder/spell/aoe_turf/veil/cast(list/targets)
-	to_chat(usr, "<span class='shadowling'>You silently disable all nearby lights.</span>")
-	var/list/blacklisted_lights = list(/obj/item/device/flashlight/flare, /obj/item/device/flashlight/slime, /obj/item/weapon/reagent_containers/food/snacks/glowstick)
-	for(var/turf/T in targets)
-		for(var/obj/item/F in T.contents)
-			if(is_type_in_list(F, blacklisted_lights))
-				F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
+/obj/effect/proc_holder/spell/targeted/veil/cast(list/targets)
+	for(var/mob/living/user in targets)
+		to_chat(user, "<span class='shadowling'>You send out a wave of creeping darkness</span>")
+		for(var/expand = 1 to 10)
+			user.set_light(expand, -expand, "#FFFFFF")
+			sleep(2)
+
+		sleep(160)
+
+		to_chat(user, "<span class='shadowling'>Your veil would soon run out of power. Seek dark places.</span>")
+
+		sleep(40)
+
+		for(var/contort = 9, contort >= 0, --contort)
+			if(contort == 0)
+				user.set_light(0)
 				return
-			F.set_light(0)
-		for(var/obj/machinery/light/L in T.contents)
-			L.on = 0
-			L.visible_message("<span class='danger'>[L] flickers and falls dark.</span>")
-			L.update(0)
-		for(var/obj/effect/glowshroom/G in orange(2, usr)) //Very small radius
-			G.visible_message("<span class='warning'>\The [G] withers away!</span>")
-			qdel(G)
-		for(var/mob/living/carbon/human/H in T.contents)
-			for(var/obj/item/F in H)
-				if(is_type_in_list(F, blacklisted_lights))
-					F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
-					return
-				F.set_light(0)
-			H.set_light(0) //This is required with the object-based lighting
+			user.set_light(contort, -contort, "#FFFFFF")
+			sleep(2)
 
 
 
@@ -444,8 +441,9 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 	nearbyTargets = list()
 	for(var/turf/T in targets)
 		for(var/mob/living/carbon/M in T.contents)
-			targetsDrained++
-			nearbyTargets.Add(M)
+			if(M != U)
+				targetsDrained++
+				nearbyTargets.Add(M)
 		for(var/mob/living/carbon/M in nearbyTargets)
 			nearbyTargets.Remove(M) //To prevent someone dying like a zillion times
 			U.heal_bodypart_damage(10, 10)
