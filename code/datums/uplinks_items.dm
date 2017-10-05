@@ -458,10 +458,10 @@
 //	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/chameleon_penstamp
-    name = "Fake Bureucracy Set"
-    desc = "This set allows you to forge various documents at the station."
-    item = /obj/item/weapon/storage/box/syndie_kit/fake
-    cost = 4
+	name = "Fake Bureucracy Set"
+	desc = "This set allows you to forge various documents at the station."
+	item = /obj/item/weapon/storage/box/syndie_kit/fake
+	cost = 4
 
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
