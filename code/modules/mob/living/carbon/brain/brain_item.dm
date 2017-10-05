@@ -13,29 +13,28 @@
 
 	var/mob/living/carbon/brain/brainmob = null
 
-	New()
-		..()
-		//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
-		//WASSSSSUUUPPPP /N
-		spawn(5)
-			if(brainmob && brainmob.client)
-				brainmob.client.screen.len = null //clear the hud
+/obj/item/brain/New()
+	..()
+	//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
+	//WASSSSSUUUPPPP /N
+	spawn(5)
+		if(brainmob && brainmob.client)
+			brainmob.client.screen.len = null //clear the hud
 
-	proc
-		transfer_identity(mob/living/carbon/H)
-			name = "[H]'s brain"
-			brainmob = new(src)
-			brainmob.name = H.real_name
-			brainmob.real_name = H.real_name
-			brainmob.dna = H.dna.Clone()
-			brainmob.timeofhostdeath = H.timeofdeath
-			if(H.mind)
-				H.mind.transfer_to(brainmob)
+/obj/item/brain/proc/transfer_identity(mob/living/carbon/H)
+	name = "[H]'s brain"
+	brainmob = new(src)
+	brainmob.name = H.real_name
+	brainmob.real_name = H.real_name
+	brainmob.dna = H.dna.Clone()
+	brainmob.timeofhostdeath = H.timeofdeath
+	if(H.mind)
+		H.mind.transfer_to(brainmob)
 
-			to_chat(brainmob, "\blue You feel slightly disoriented. That's normal when you're just a brain.")
-			var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-			if(mode)
-				mode.debrain_directive(src)
+	to_chat(brainmob, "\blue You feel slightly disoriented. That's normal when you're just a brain.")
+	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
+	if(mode)
+		mode.debrain_directive(src)
 
 /obj/item/brain/examine(mob/user) // -- TLE
 	..()

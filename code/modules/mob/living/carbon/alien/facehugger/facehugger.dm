@@ -26,7 +26,7 @@ var/const/MAX_IMPREGNATION_TIME = 150
 	var/obj/item/weapon/l_store = null
 
 //This is fine right now, if we're adding organ specific damage this needs to be updated
-/mob/living/carbon/alien/facehugger/New()
+/mob/living/carbon/alien/facehugger/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
@@ -35,7 +35,7 @@ var/const/MAX_IMPREGNATION_TIME = 150
 	real_name = name
 	regenerate_icons()
 	a_intent = "grab"
-	..()
+	. = ..()
 
 /mob/living/carbon/alien/facehugger/adjustToxLoss(amount)
 	..(amount)

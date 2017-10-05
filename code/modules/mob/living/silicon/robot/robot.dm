@@ -73,7 +73,7 @@
 	var/braintype = "Cyborg"
 	var/pose
 
-/mob/living/silicon/robot/New(loc,var/syndie = 0,var/unfinished = 0)
+/mob/living/silicon/robot/atom_init(mapload, syndie = 0, unfinished = 0)
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -124,7 +124,7 @@
 		cell.maxcharge = 7500
 		cell.charge = 7500
 
-	..()
+	. = ..()
 
 	if(cell)
 		var/datum/robot_component/cell_component = components["power cell"]

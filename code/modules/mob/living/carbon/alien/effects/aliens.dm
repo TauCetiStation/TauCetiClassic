@@ -423,42 +423,40 @@
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	var/used = 0
 
-	New()
-		..()
-		spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
-			Grow()
+/obj/effect/alien/egg/New()
+	..()
+	spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
+		Grow()
 
-	attack_paw(user)
-		if(isalien(user))
-			switch(status)
-				if(GROWING)
-					to_chat(user, "\red The child is not developed yet.")
-					return
-				if(BURST)
-					to_chat(user, "You clear the hatched egg.")
-					playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-					qdel(src)
-					return
-		else
-			return attack_hand(user)
+/obj/effect/alien/egg/attack_paw(user)
+	if(isalien(user))
+		switch(status)
+			if(GROWING)
+				to_chat(user, "\red The child is not developed yet.")
+				return
+			if(BURST)
+				to_chat(user, "You clear the hatched egg.")
+				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+				qdel(src)
+				return
+	else
+		return attack_hand(user)
 
-	attack_hand(user)
-		to_chat(user, "It feels slimy.")
-		return
+/obj/effect/alien/egg/attack_hand(user)
+	to_chat(user, "It feels slimy.")
 
-	proc/Grow()
-		icon_state = "egg"
-		status = GROWN
-		new /obj/item/clothing/mask/facehugger(src)
-		return
+/obj/effect/alien/egg/proc/Grow()
+	icon_state = "egg"
+	status = GROWN
+	new /obj/item/clothing/mask/facehugger(src)
 
-	proc/Burst()
-		if(status == GROWN || status == GROWING)
-			icon_state = "egg_hatched"
-			flick("egg_opening", src)
-			status = BURSTING
-			spawn(15)
-				status = BURST
+/obj/effect/alien/egg/proc/Burst()
+	if(status == GROWN || status == GROWING)
+		icon_state = "egg_hatched"
+		flick("egg_opening", src)
+		status = BURSTING
+		spawn(15)
+			status = BURST
 
 /obj/effect/alien/egg/attack_ghost(mob/living/user)
 	if(!(src in view()))

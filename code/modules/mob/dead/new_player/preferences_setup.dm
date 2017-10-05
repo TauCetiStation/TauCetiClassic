@@ -197,7 +197,7 @@ datum/preferences
 				return
 
 	// Set up the dummy for its photoshoot
-	var/mob/living/carbon/human/dummy/mannequin = new(new_species = species)
+	var/mob/living/carbon/human/dummy/mannequin = new(null, species)
 	copy_to(mannequin)
 
 	// Determine what job is marked as 'High' priority, and dress them up as such.

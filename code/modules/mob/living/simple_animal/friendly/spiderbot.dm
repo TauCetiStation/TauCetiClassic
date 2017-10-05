@@ -195,14 +195,14 @@
 	eject_brain()
 	return ..()
 
-/mob/living/simple_animal/spiderbot/New()
+/mob/living/simple_animal/spiderbot/atom_init()
 
 	radio = new /obj/item/device/radio/borg(src)
 	camera = new /obj/machinery/camera(src)
 	camera.c_tag = "Spiderbot-[real_name]"
 	camera.replace_networks(list("SS13"))
 
-	..()
+	. = ..()
 
 /mob/living/simple_animal/spiderbot/death()
 

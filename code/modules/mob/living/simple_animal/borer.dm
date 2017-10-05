@@ -57,6 +57,13 @@
 	var/controlling                         // Used in human death check.
 	var/docile = 0                          // Sugar can stop borers from acting.
 
+/mob/living/simple_animal/borer/atom_init()
+	. = ..()
+	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
+	host_brain = new/mob/living/captive_brain(src)
+
+	request_player()
+
 /mob/living/simple_animal/borer/Life()
 
 	..()
@@ -94,14 +101,6 @@
 
 				if(prob(host.brainloss/20))
 					host.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
-
-/mob/living/simple_animal/borer/New()
-	..()
-	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
-	host_brain = new/mob/living/captive_brain(src)
-
-	request_player()
-
 
 /mob/living/simple_animal/borer/say(var/message)
 

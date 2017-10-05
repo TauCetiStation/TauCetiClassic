@@ -22,40 +22,42 @@
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 
-/mob/living/carbon/human/skrell/New(var/new_loc)
+INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
+
+/mob/living/carbon/human/skrell/atom_init(mapload)
 	h_style = "Skrell Male Tentacles"
-	..(new_loc, SKRELL)
+	. = ..(mapload, SKRELL)
 
-/mob/living/carbon/human/tajaran/New(var/new_loc)
+/mob/living/carbon/human/tajaran/atom_init(mapload)
 	h_style = "Tajaran Ears"
-	..(new_loc, TAJARAN)
+	. = ..(mapload, TAJARAN)
 
-/mob/living/carbon/human/unathi/New(var/new_loc)
+/mob/living/carbon/human/unathi/atom_init(mapload)
 	h_style = "Unathi Horns"
-	..(new_loc, UNATHI)
+	. = ..(mapload, UNATHI)
 
-/mob/living/carbon/human/vox/New(var/new_loc)
+/mob/living/carbon/human/vox/atom_init(mapload)
 	h_style = "Short Vox Quills"
-	..(new_loc, VOX)
+	. = ..(mapload, VOX)
 
-/mob/living/carbon/human/voxarmalis/New(var/new_loc)
+/mob/living/carbon/human/voxarmalis/atom_init(mapload)
 	h_style = "Bald"
-	..(new_loc, VOX_ARMALIS)
+	. = ..(mapload, VOX_ARMALIS)
 
-/mob/living/carbon/human/diona/New(var/new_loc)
-	..(new_loc, DIONA)
+/mob/living/carbon/human/diona/atom_init(mapload)
+	. = ..(mapload, DIONA)
 
-/mob/living/carbon/human/machine/New(var/new_loc)
+/mob/living/carbon/human/machine/atom_init(mapload)
 	h_style = "blue IPC screen"
-	..(new_loc, IPC)
+	. = ..(mapload, IPC)
 
-/mob/living/carbon/human/abductor/New(var/new_loc)
-	..(new_loc, ABDUCTOR)
+/mob/living/carbon/human/abductor/atom_init(mapload)
+	. = ..(mapload, ABDUCTOR)
 
-/mob/living/carbon/human/golem/New(loc)
-	..(loc, GOLEM)
+/mob/living/carbon/human/golem/atom_init(mapload)
+	. = ..(mapload, GOLEM)
 
-/mob/living/carbon/human/New(new_loc, new_species)
+/mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
 
@@ -71,8 +73,6 @@
 	reagents = R
 	R.my_atom = src
 
-
-
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
 	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealthy")
 	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudunknown")
@@ -83,7 +83,7 @@
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
 
-	..()
+	. = ..()
 
 	if(dna)
 		dna.real_name = real_name

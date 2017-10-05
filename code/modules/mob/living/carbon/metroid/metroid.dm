@@ -73,7 +73,7 @@
 	nutrition = 800 // 1200 = max
 
 
-/mob/living/carbon/slime/New()
+/mob/living/carbon/slime/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
@@ -83,14 +83,11 @@
 	else
 		name = text("[colour] adult slime ([number])")
 	real_name = name
-	spawn (1)
-		regenerate_icons()
-		to_chat(src, "\blue Your icons have been generated!")
-	..()
 
-/mob/living/carbon/slime/adult/New()
-	//verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
-	..()
+	. = ..()
+
+	regenerate_icons()
+
 /mob/living/carbon/slime/Destroy()
 	Victim = null
 	Target = null
@@ -100,6 +97,7 @@
 	if(Friends.len)
 		Friends.Cut()
 	return ..()
+
 /mob/living/carbon/slime/regenerate_icons()
 	overlays.len = 0
 	//var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
