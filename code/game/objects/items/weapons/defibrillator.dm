@@ -57,6 +57,9 @@
 	else
 		new_overlays += "[initial(icon_state)]-nocell"
 
+	if(blood_DNA && blood_DNA.len && blood_overlay)
+		new_overlays += blood_overlay
+
 	overlays = new_overlays
 
 /obj/item/weapon/defibrillator/ui_action_click()
