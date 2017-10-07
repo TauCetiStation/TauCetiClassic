@@ -1,4 +1,4 @@
-#define DRYING_TIME 5 * 60*10                        //for 1 unit of depth in puddle (amount var)
+#define DRYING_TIME 5 MINUTES                        //for 1 unit of depth in puddle (amount var)
 
 var/global/list/image/splatter_cache=list()
 
@@ -23,34 +23,33 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/blood/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
-	STOP_PROCESSING(SSobj, src)
 	return ..()
 
-/obj/effect/decal/cleanable/blood/New()
+/obj/effect/decal/cleanable/blood/atom_init()
 	..()
-	update_icon()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/decal/cleanable/blood/atom_init_late()
 	remove_ex_blood()
+	update_icon()
 
 /obj/effect/decal/cleanable/blood/proc/remove_ex_blood() //removes existant blood on the turf
 	if(istype(src, /obj/effect/decal/cleanable/blood/tracks))
 		return // We handle our own drying.
 
-	if(isturf(loc))
+	if(loc) // someone should make blood that drips thru closet or smth like that.
 		for(var/obj/effect/decal/cleanable/blood/B in loc)
 			if(B != src && B.type == type)
 				if (B.blood_DNA)
 					blood_DNA |= B.blood_DNA.Copy()
 				qdel(B)
 
-	drytime = world.time + DRYING_TIME * (amount+1)
-	START_PROCESSING(SSobj, src)
-
-/obj/effect/decal/cleanable/blood/process()
-	if(world.time > drytime)
-		dry()
+		drytime = world.time + DRYING_TIME * (amount + 1)
+		addtimer(CALLBACK(src, .proc/dry), drytime)
 
 /obj/effect/decal/cleanable/blood/update_icon()
-	if(basecolor == "rainbow") basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
+	if(basecolor == "rainbow")
+		basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
 	color = basecolor
 
 /obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/perp)
@@ -110,7 +109,6 @@ var/global/list/image/splatter_cache=list()
 	desc = "It's dry and crusty. Someone is not doing their job."
 	color = adjust_brightness(color, -50)
 	amount = 0
-	STOP_PROCESSING(SSobj, src)
 
 /obj/effect/decal/cleanable/blood/attack_hand(mob/living/carbon/human/user)
 	..()

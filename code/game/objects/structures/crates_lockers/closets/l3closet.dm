@@ -10,10 +10,9 @@
 	icon_closed = "bio_general"
 	icon_opened = "bio_generalopen"
 
-/obj/structure/closet/l3closet/general/New()
-	..()
-	new /obj/item/clothing/suit/bio_suit/new_hazmat/general(src)
-	new /obj/item/clothing/head/bio_hood/new_hazmat/general(src)
+/obj/structure/closet/l3closet/general/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/suit/bio_suit/new_hazmat/general(src)
 
 
 /obj/structure/closet/l3closet/virology
@@ -21,10 +20,9 @@
 	icon_closed = "bio_virology"
 	icon_opened = "bio_virologyopen"
 
-/obj/structure/closet/l3closet/virology/New()
-	..()
-	new /obj/item/clothing/suit/bio_suit/new_hazmat/virology(src)
-	new /obj/item/clothing/head/bio_hood/new_hazmat/virology(src)
+/obj/structure/closet/l3closet/virology/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/suit/bio_suit/new_hazmat/virology(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/oxygen(src)
 
@@ -34,10 +32,9 @@
 	icon_closed = "bio_security"
 	icon_opened = "bio_securityopen"
 
-/obj/structure/closet/l3closet/security/New()
-	..()
-	new /obj/item/clothing/suit/bio_suit/new_hazmat/security(src)
-	new /obj/item/clothing/head/bio_hood/new_hazmat/security(src)
+/obj/structure/closet/l3closet/security/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/suit/bio_suit/new_hazmat/security(src)
 
 
 /obj/structure/closet/l3closet/janitor
@@ -45,10 +42,9 @@
 	icon_closed = "bio_janitor"
 	icon_opened = "bio_janitoropen"
 
-/obj/structure/closet/l3closet/janitor/New()
-	..()
-	new /obj/item/clothing/suit/bio_suit/new_hazmat/janitor(src)
-	new /obj/item/clothing/head/bio_hood/new_hazmat/janitor(src)
+/obj/structure/closet/l3closet/janitor/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/suit/bio_suit/new_hazmat/janitor(src)
 
 
 /obj/structure/closet/l3closet/scientist
@@ -56,7 +52,6 @@
 	icon_closed = "bio_scientist"
 	icon_opened = "bio_scientistopen"
 
-/obj/structure/closet/l3closet/scientist/New()
-	..()
-	new /obj/item/clothing/suit/bio_suit/new_hazmat/scientist(src)
-	new /obj/item/clothing/head/bio_hood/new_hazmat/scientist(src)
+/obj/structure/closet/l3closet/scientist/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/suit/bio_suit/new_hazmat/scientist(src)

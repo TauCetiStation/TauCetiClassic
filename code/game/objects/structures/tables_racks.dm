@@ -31,8 +31,8 @@
 			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
 			T.update_icon()
 
-/obj/structure/table/New()
-	..()
+/obj/structure/table/atom_init()
+	. = ..()
 	for(var/obj/structure/table/T in src.loc)
 		if(T != src)
 			qdel(T)

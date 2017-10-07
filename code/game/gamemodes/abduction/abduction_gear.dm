@@ -680,9 +680,9 @@
 	desc = "Advanced flat surface technology at work!"
 	icon = 'icons/obj/abductor.dmi'
 
-/obj/structure/table/abductor/New()		// Fuck this shit, I am out...
+/obj/structure/table/abductor/atom_init()		// Fuck this shit, I am out...
+	. = ..()
 	verbs -= /obj/structure/table/verb/do_flip
-	return
 
 /obj/structure/closet/abductor
 	name = "alien locker"

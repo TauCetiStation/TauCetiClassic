@@ -6,11 +6,11 @@
 	var/spawn_nothing_percentage = 0 // this variable determines the likelyhood that this random object will not spawn anything
 
 // creates a new object and deletes itself
-/obj/random/New()
+/obj/random/atom_init()
 	..()
 	if (!prob(spawn_nothing_percentage))
 		spawn_item()
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 
 // this function should return a specific item to spawn
@@ -21,7 +21,7 @@
 // creates the random item
 /obj/random/proc/spawn_item()
 	var/build_path = item_to_spawn()
-	return (new build_path(src.loc))
+	return build_path ? (new build_path(loc)) : null
 
 /obj/randomcatcher
 	name = "Random Catcher Object"
@@ -29,6 +29,6 @@
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "rup"
 
-/obj/randomcatcher/proc/get_item(var/type)
+/obj/randomcatcher/proc/get_item(type)
 	new type(src)
-	. = pick(src.contents)
+	. = pick(contents)

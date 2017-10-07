@@ -76,11 +76,11 @@
 
 /obj/machinery/mineral/stacking_machine/New()
 	..()
-	for(var/stacktype in typesof(/obj/item/stack/sheet/mineral)-/obj/item/stack/sheet/mineral)
-		var/obj/item/stack/S = new stacktype(src)
-		stack_storage[S.name] = 0
-		stack_paths[S.name] = stacktype
-		qdel(S)
+	for(var/stacktype in subtypesof(/obj/item/stack/sheet/mineral))
+		var/obj/item/stack/S = stacktype //= new stacktype(src)
+		stack_storage[initial(S.name)] = 0
+		stack_paths[initial(S.name)] = stacktype
+		//qdel(S)
 	stack_storage["glass"] = 0
 	stack_paths["glass"] = /obj/item/stack/sheet/glass
 	stack_storage["metal"] = 0
