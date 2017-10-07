@@ -267,8 +267,8 @@
 					A.loc.Entered(A)
 	return
 
-/turf/space/ChangeTurf(turf/N, force_lighting_update = 0)
-	return ..(N, 1)
+/turf/space/ChangeTurf(path, force_lighting_update = 0)
+	return ..(path, TRUE)
 
 /turf/space/singularity_act()
 	return

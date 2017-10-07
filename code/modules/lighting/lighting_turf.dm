@@ -7,12 +7,6 @@
 	var/tmp/list/datum/lighting_corner/corners[4]
 	var/tmp/has_opaque_atom = FALSE // Not to be confused with opacity, this will be TRUE if there's any opaque atom on the tile.
 
-/turf/New()
-	. = ..()
-
-	if(opacity)
-		has_opaque_atom = TRUE
-
 // Causes any affecting light sources to be queued for a visibility update, for example a door got opened.
 /turf/proc/reconsider_lights()
 	for(var/A in affecting_lights)
@@ -83,12 +77,13 @@
 		reconsider_lights()
 
 /turf/change_area(area/old_area, area/new_area)
-	if(new_area.dynamic_lighting != old_area.dynamic_lighting)
-		if(new_area.dynamic_lighting)
-			lighting_build_overlay()
+	if(SSlighting.initialized)
+		if(new_area.dynamic_lighting != old_area.dynamic_lighting)
+			if(new_area.dynamic_lighting)
+				lighting_build_overlay()
 
-		else
-			lighting_clear_overlay()
+			else
+				lighting_clear_overlay()
 
 /turf/proc/get_corners(dir)
 	if(has_opaque_atom)

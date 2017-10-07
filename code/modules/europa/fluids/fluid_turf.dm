@@ -50,18 +50,6 @@
 		SSfluids.remove_active_source(src)
 	return ..()
 
-/turf/ChangeTurf(turf/N, tell_universe = 1, force_lighting_update = 0)
-	var/old_flooded = flooded
-	var/obj/effect/fluid/F = locate() in src
-	. = ..()
-	if(F)
-		F.forceMove(src)
-		F.start_loc = src
-		fluid_update()
-	if(old_flooded)
-		flooded = 1
-		update_icon()
-
 /turf/simulated/atom_init()
 	if((ticker.current_state == GAME_STATE_PLAYING) && SSfluids)
 		fluid_update()

@@ -23,9 +23,6 @@
 	var/walltype = "metal"
 	var/sheet_type = /obj/item/stack/sheet/metal
 
-/turf/simulated/wall/New()
-	..()
-
 /turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
@@ -33,11 +30,11 @@
 	dismantle_wall()
 	return ..()
 
-/turf/simulated/wall/ChangeTurf(newtype)
+/turf/simulated/wall/ChangeTurf()
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
 			qdel(E)
-	..(newtype)
+	. = ..()
 	relativewall_neighbours()
 
 //Appearance

@@ -1,6 +1,6 @@
 // Holographic Items!
 
-/turf/simulated/floor/holofloor/
+/turf/simulated/floor/holofloor
 	thermal_conductivity = 0
 
 /turf/simulated/floor/holofloor/grass
@@ -8,15 +8,17 @@
 	icon_state = "grass1"
 	floor_type = /obj/item/stack/tile/grass
 
-	New()
-		icon_state = "grass[pick("1","2","3","4")]"
-		..()
-		spawn(4)
-			update_icon()
-			for(var/direction in cardinal)
-				if(istype(get_step(src,direction),/turf/simulated/floor))
-					var/turf/simulated/floor/FF = get_step(src,direction)
-					FF.update_icon() //so siding get updated properly
+/turf/simulated/floor/holofloor/grass/atom_init()
+	icon_state = "grass[pick("1","2","3","4")]"
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/simulated/floor/holofloor/grass/atom_init_late()
+	update_icon()
+	for(var/direction in cardinal)
+		if(istype(get_step(src,direction),/turf/simulated/floor))
+			var/turf/simulated/floor/FF = get_step(src,direction)
+			FF.update_icon() //so siding get updated properly
 
 turf/simulated/floor/holofloor/update_icon()
 	if(icon_state in icons_to_ignore_at_floor_init)
@@ -29,7 +31,8 @@ turf/simulated/floor/holofloor/update_icon()
 	name = "\proper space"
 	icon_state = "0"
 
-/turf/simulated/floor/holofloor/space/New()
+/turf/simulated/floor/holofloor/space/atom_init()
+	. = ..()
 	icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
 
 /turf/simulated/floor/holofloor/desert
@@ -37,8 +40,8 @@ turf/simulated/floor/holofloor/update_icon()
 	desc = "Uncomfortably gritty for a hologram."
 	icon_state = "asteroid"
 
-/turf/simulated/floor/holofloor/desert/New()
-	..()
+/turf/simulated/floor/holofloor/desert/atom_init()
+	. = ..()
 	if(prob(10))
 		overlays += "asteroid[rand(0,9)]"
 
