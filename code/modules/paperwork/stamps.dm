@@ -93,7 +93,7 @@
 		var/obj/item/weapon/stamp/S = new stamp_type
 		stamps[capitalize(S.name)] = S
 
-	var/list/show_stamps = list() + sortList(stamps) // the list that will be shown to the user to pick from
+	var/list/show_stamps = sortList(stamps) // the list that will be shown to the user to pick from
 
 	var/input_stamp = input(user, "Choose a stamp to disguise as.", "Choose a stamp.") as null|anything in show_stamps
 
