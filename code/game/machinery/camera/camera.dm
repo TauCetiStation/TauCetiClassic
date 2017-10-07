@@ -77,18 +77,18 @@
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof() && status)
 		if(prob(100/severity))
-			var/list/previous_network = network
+			addtimer(CALLBACK(src, .proc/fix_emp_state, network), 900)
 			network = list()
 			stat |= EMPED
 			toggle_cam(TRUE)
 			triggerCameraAlarm()
-			spawn(900)
-				network = previous_network
-				stat &= ~EMPED
-				cancelCameraAlarm()
-				toggle_cam(TRUE)
 			..()
 
+/obj/machinery/camera/proc/fix_emp_state(list/previous_network)
+	network = previous_network
+	stat &= ~EMPED
+	cancelCameraAlarm()
+	toggle_cam(TRUE)
 
 /obj/machinery/camera/ex_act(severity)
 	if(src.invuln)
