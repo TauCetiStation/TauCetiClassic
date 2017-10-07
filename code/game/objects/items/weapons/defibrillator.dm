@@ -233,7 +233,7 @@
 		cooldown = FALSE
 		update_icon()
 
-		make_announcement("beeps, \"Unit is re-energized.\"", "notice")
+		make_announcement("beeps, \"Unit is re-energized.\"")
 		playsound(src, 'sound/items/defib_ready.ogg', 50, 0)
 
 /obj/item/weapon/twohanded/shockpaddles/update_icon()
@@ -291,10 +291,20 @@
 		return TRUE
 	return FALSE
 
-/obj/item/weapon/twohanded/shockpaddles/proc/check_charge(var/charge_amt)
+/obj/item/weapon/twohanded/shockpaddles/proc/check_brain(mob/living/carbon/human/H)
+	if(!H.should_have_organ(O_BRAIN))
+		return FALSE
+	if(!H.organs_by_name[O_BRAIN])
+		return TRUE
+	var/obj/item/organ/external/bodypart_head = H.bodyparts_by_name[BP_HEAD]
+	if(!bodypart_head || (bodypart_head.status & ORGAN_DESTROYED))
+		return TRUE
+	return FALSE
+
+/obj/item/weapon/twohanded/shockpaddles/proc/check_charge(charge_amt)
 	return TRUE
 
-/obj/item/weapon/twohanded/shockpaddles/proc/checked_use(var/charge_amt)
+/obj/item/weapon/twohanded/shockpaddles/proc/checked_use(charge_amt)
 	return TRUE
 
 /obj/item/weapon/twohanded/shockpaddles/attack(mob/M, mob/living/user, def_zone)
@@ -325,12 +335,17 @@
 
 	var/error = can_defib(H)
 	if(error)
-		make_announcement(error, "warning")
+		make_announcement(error)
 		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
 		return
 
 	if(check_blood_level(H))
-		make_announcement("buzzes, \"Warning - Patient is in hypovolemic shock and require a blood transfusion. Operation aborted.\"", "warning") //also includes heart damage
+		make_announcement("buzzes, \"Warning - Patient is in hypovolemic shock and require a blood transfusion. Operation aborted.\"") //also includes heart damage
+		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
+		return
+
+	if(check_brain(H))
+		make_announcement("buzzes, \"Error - Patient's brain is missing or is too damaged to be functional. Operation aborted.\"") //also includes heart damage
 		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
 		return
 
@@ -340,7 +355,7 @@
 
 	//deduct charge here, in case the base unit was EMPed or something during the delay time
 	if(!checked_use(charge_cost))
-		make_announcement("buzzes, \"Insufficient charge.\"", "warning")
+		make_announcement("buzzes, \"Insufficient charge.\"")
 		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
 		return
 
@@ -351,7 +366,7 @@
 
 	error = can_revive(H)
 	if(error)
-		make_announcement(error, "warning")
+		make_announcement(error)
 		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
 		return
 
@@ -388,7 +403,7 @@
 		else
 			user.Weaken(6)
 
-	make_announcement("pings, \"Resuscitation successful.\"", "notice")
+	make_announcement("pings, \"Resuscitation successful.\"")
 	playsound(get_turf(src), 'sound/items/defib_success.ogg', 50, 0)
 
 /obj/item/weapon/twohanded/shockpaddles/proc/return_to_body_dialog(mob/living/carbon/human/returnable)
@@ -437,7 +452,7 @@
 
 	//deduct charge here, in case the base unit was EMPed or something during the delay time
 	if(!checked_use(charge_cost))
-		make_announcement("buzzes, \"Insufficient charge.\"", "warning")
+		make_announcement("buzzes, \"Insufficient charge.\"")
 		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
 		return
 
@@ -469,7 +484,7 @@
 	var/brain_damage = Clamp((deadtime - DEFIB_TIME_LOSS)/(DEFIB_TIME_LIMIT - DEFIB_TIME_LOSS) * MAX_BRAIN_DAMAGE, H.getBrainLoss(), MAX_BRAIN_DAMAGE)
 	H.setBrainLoss(brain_damage)
 
-/obj/item/weapon/twohanded/shockpaddles/proc/make_announcement(var/message, var/msg_class)
+/obj/item/weapon/twohanded/shockpaddles/proc/make_announcement(message)
 	audible_message("<b>\The [src]</b> [message]", "\The [src] vibrates slightly.")
 
 /obj/item/weapon/twohanded/shockpaddles/proc/emag_act(mob/user)
@@ -488,10 +503,10 @@
 	if(safety != new_safety)
 		safety = new_safety
 		if(safety)
-			make_announcement("beeps, \"Safety protocols enabled!\"", "notice")
+			make_announcement("beeps, \"Safety protocols enabled!\"")
 			playsound(get_turf(src), 'sound/items/defib_safetyOn.ogg', 50, 0)
 		else
-			make_announcement("beeps, \"Safety protocols disabled!\"", "warning")
+			make_announcement("beeps, \"Safety protocols disabled!\"")
 			playsound(get_turf(src), 'sound/items/defib_safetyOff.ogg', 50, 0)
 		update_icon()
 	..()
@@ -503,12 +518,12 @@
 	combat = TRUE
 	cooldown_time = 3 SECONDS
 
-/obj/item/weapon/twohanded/shockpaddles/robot/check_charge(var/charge_amt)
+/obj/item/weapon/twohanded/shockpaddles/robot/check_charge(charge_amt)
 	if(isrobot(loc))
 		var/mob/living/silicon/robot/R = loc
 		return (R.cell && R.cell.charge >= charge_amt)
 
-/obj/item/weapon/twohanded/shockpaddles/robot/checked_use(var/charge_amt)
+/obj/item/weapon/twohanded/shockpaddles/robot/checked_use(charge_amt)
 	if(isrobot(loc))
 		var/mob/living/silicon/robot/R = loc
 		return (R.cell && R.cell.use(charge_amt))
@@ -541,13 +556,13 @@
 	if(base_unit)
 		base_unit.reattach_paddles(user) //paddles attached to a base unit should never exist outside of their base unit or the mob equipping the base unit
 
-/obj/item/weapon/twohanded/shockpaddles/linked/check_charge(var/charge_amt)
+/obj/item/weapon/twohanded/shockpaddles/linked/check_charge(charge_amt)
 	return (base_unit.bcell && base_unit.bcell.charge >= charge_amt)
 
-/obj/item/weapon/twohanded/shockpaddles/linked/checked_use(var/charge_amt)
+/obj/item/weapon/twohanded/shockpaddles/linked/checked_use(charge_amt)
 	return (base_unit.bcell && base_unit.bcell.use(charge_amt))
 
-/obj/item/weapon/twohanded/shockpaddles/linked/make_announcement(var/message, var/msg_class)
+/obj/item/weapon/twohanded/shockpaddles/linked/make_announcement(message)
 	base_unit.audible_message("<b>\The [base_unit]</b> [message]", "\The [base_unit] vibrates slightly.")
 
 /*
@@ -558,10 +573,10 @@
 	desc = "A pair of shockpaddles with integrated capacitor" //Good old defib
 	var/charges = 10
 
-/obj/item/weapon/twohanded/shockpaddles/standalone/check_charge(var/charge_amt)
+/obj/item/weapon/twohanded/shockpaddles/standalone/check_charge(charge_amt)
 	return charges
 
-/obj/item/weapon/twohanded/shockpaddles/standalone/checked_use(var/charge_amt)
+/obj/item/weapon/twohanded/shockpaddles/standalone/checked_use(charge_amt)
 	if(charges)
 		charges--
 		return TRUE
