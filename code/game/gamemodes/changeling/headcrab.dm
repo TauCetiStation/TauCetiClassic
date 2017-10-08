@@ -82,7 +82,8 @@
 	var/respawn_time = 0
 
 
-/obj/item/changeling_egg/New()
+/obj/item/changeling_egg/atom_init()
+	. = ..()
 	respawn_time = world.time + EGG_INCUBATION_TIME
 	START_PROCESSING(SSobj, src)
 

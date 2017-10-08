@@ -101,9 +101,6 @@
 	icon_state = "magic_mirror"
 //	var/list/choosable_races = list()
 
-/obj/structure/mirror/magic/New()
-	..()
-
 /obj/structure/mirror/magic/attack_hand(mob/user)
 	if(!ishuman(user))
 		return

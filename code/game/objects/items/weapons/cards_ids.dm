@@ -140,13 +140,14 @@
 	var/rank = null			//actual job
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
-/obj/item/weapon/card/id/New()
-	..()
-	spawn(30)
-	if(istype(loc, /mob/living/carbon/human))
-		blood_type = loc:dna:b_type
-		dna_hash = loc:dna:unique_enzymes
-		fingerprint_hash = md5(loc:dna:uni_identity)
+/obj/item/weapon/card/id/atom_init()
+	. = ..()
+
+	if(ishuman(loc)) // this should be ok without any spawn as long, as item spawned inside mob by equip procs.
+		var/mob/living/carbon/human/H = loc
+		blood_type = H.dna.b_type
+		dna_hash = H.dna.unique_enzymes
+		fingerprint_hash = md5(H.dna.uni_identity)
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	for(var/mob/O in viewers(user, null))
@@ -207,8 +208,8 @@
 	origin_tech = "syndicate=3"
 	var/registered_user=null
 
-/obj/item/weapon/card/id/syndicate/New(mob/user as mob)
-	..()
+/obj/item/weapon/card/id/syndicate/atom_init(mob/user)
+	. = ..()
 	if(!isnull(user)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
 		registered_name = ishuman(user) ? user.real_name : user.name
 	else
@@ -294,10 +295,10 @@
 	registered_name = "Captain"
 	assignment = "Captain"
 
-/obj/item/weapon/card/id/captains_spare/New()
+/obj/item/weapon/card/id/captains_spare/atom_init()
 	var/datum/job/captain/J = new/datum/job/captain
 	access = J.get_access()
-	..()
+	. = ..()
 
 /obj/item/weapon/card/id/centcom
 	name = "\improper CentCom. ID"
@@ -306,9 +307,9 @@
 	registered_name = "Central Command"
 	assignment = "General"
 
-/obj/item/weapon/card/id/centcom/New()
+/obj/item/weapon/card/id/centcom/atom_init()
 	access = get_all_centcom_access()
-	..()
+	. = ..()
 
 /obj/item/weapon/card/id/ert
 	name = "\improper CentCom. ID"
@@ -316,7 +317,7 @@
 	registered_name = "Central Command"
 	assignment = "Emergency Response Team"
 
-/obj/item/weapon/card/id/ert/New()
+/obj/item/weapon/card/id/ert/atom_init()
 	access = get_all_accesses()
 	access += get_all_centcom_access()
-	..()
+	. = ..()

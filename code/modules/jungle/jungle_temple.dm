@@ -287,15 +287,19 @@
 	icon_state = "trap"
 	var/trap_type
 
-	New()
-		trap_type = pick(50;"thrower","sawburst","poison_dart","flame_burst",10;"phoron_gas",5;"n2_gas")
-		if( (trap_type == "phoron_gas" || trap_type == "n2_gas") && prob(10))
-			new /obj/effect/glowshroom(src.loc)
+/obj/effect/step_trigger/trap/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
 
-		//hint that this tile is dangerous
-		if(prob(90))
-			var/turf/T = get_turf(src)
-			T.desc = pick("There is a faint sheen of moisture over the top.","It looks a little unstable.","Something doesn't seem right.")
+/obj/effect/step_trigger/trap/atom_init_late()
+	trap_type = pick(50;"thrower","sawburst","poison_dart","flame_burst",10;"phoron_gas",5;"n2_gas")
+	if( (trap_type == "phoron_gas" || trap_type == "n2_gas") && prob(10))
+		new /obj/effect/glowshroom(src.loc)
+
+	//hint that this tile is dangerous
+	if(prob(90))
+		var/turf/T = get_turf(src)
+		T.desc = pick("There is a faint sheen of moisture over the top.","It looks a little unstable.","Something doesn't seem right.")
 
 /obj/effect/step_trigger/trap/Trigger(atom/A)
 	var/mob/living/M = A
@@ -377,13 +381,14 @@
 	icon_state = "faketrap"
 	name = "fake trap"
 
-	New()
-		if(prob(10))
-			new /obj/effect/glowshroom(src.loc)
-		if(prob(90))
-			var/turf/T = get_turf(src)
-			T.desc = pick("It looks a little dustier than the surrounding tiles.","It is somewhat ornate.","It looks a little darker than the surrounding tiles.")
-		qdel(src)
+/obj/effect/step_trigger/trap/fake/atom_init_late()
+	..()
+	if(prob(10))
+		new /obj/effect/glowshroom(src.loc)
+	if(prob(90))
+		var/turf/T = get_turf(src)
+		T.desc = pick("It looks a little dustier than the surrounding tiles.","It is somewhat ornate.","It looks a little darker than the surrounding tiles.")
+	qdel(src)
 
 //50% chance of being a trap
 /obj/effect/step_trigger/trap/fifty
@@ -391,10 +396,10 @@
 	name = "fifty fifty trap"
 	icon_state = "fiftytrap"
 
-	New()
-		if(prob(50))
-			..()
-		else
-			if(prob(10))
-				new /obj/effect/glowshroom(src.loc)
-			qdel(src)
+/obj/effect/step_trigger/trap/fifty/atom_init_late()
+	if(prob(50))
+		..()
+	else
+		if(prob(10))
+			new /obj/effect/glowshroom(src.loc)
+		qdel(src)

@@ -43,7 +43,7 @@
 
 // the inlet stage of the gas turbine electricity generator
 
-/obj/machinery/compressor/New()
+/obj/machinery/compressor/atom_init()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/power_compressor(null)
@@ -56,6 +56,9 @@
 	component_parts += new /obj/item/stack/cable_coil/red(null, 5)
 	RefreshParts()
 	gas_contained = new
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/compressor/atom_init_late()
 	inturf = get_step(src, dir)
 
 	turbine = locate() in get_step(src, get_dir(inturf, src))
@@ -133,7 +136,7 @@
 		overlays += image('icons/obj/pipes.dmi', "comp-o1", FLY_LAYER)
 	 //TODO: DEFERRED
 
-/obj/machinery/power/turbine/New()
+/obj/machinery/power/turbine/atom_init()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/power_turbine(src)
@@ -146,6 +149,9 @@
 	component_parts += new /obj/item/stack/cable_coil/red(src, 5)
 	RefreshParts()
 
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/power/turbine/atom_init_late()
 	outturf = get_step(src, dir)
 
 	compressor = locate() in get_step(src, get_dir(outturf, src))
@@ -263,8 +269,11 @@
 
 
 
-/obj/machinery/computer/turbine_computer/New()
+/obj/machinery/computer/turbine_computer/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/turbine_computer/atom_init_late()
 	search_turbine()
 	doors = new /list()
 	for(var/obj/machinery/door/poddoor/P in machines)

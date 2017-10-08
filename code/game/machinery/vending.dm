@@ -56,28 +56,24 @@
 	var/scan_id = TRUE
 
 
-/obj/machinery/vending/New()
-	..()
+/obj/machinery/vending/atom_init()
+	. = ..()
 	wires = new(src)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
-	spawn(4)
-		src.slogan_list = splittext(src.product_slogans, ";")
 
-		// So not all machines speak at the exact same time.
-		// The first time this machine says something will be at slogantime + this random value,
-		// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
-		src.last_slogan = world.time + rand(0, slogan_delay)
+	slogan_list = splittext(product_slogans, ";")
 
-		src.build_inventory(products)
-		 //Add hidden inventory
-		src.build_inventory(contraband, 1)
-		src.build_inventory(premium, 0, 1)
-		power_change()
+	// So not all machines speak at the exact same time.
+	// The first time this machine says something will be at slogantime + this random value,
+	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
+	last_slogan = world.time + rand(0, slogan_delay)
 
-		return
-
-	return
+	build_inventory(products)
+	 //Add hidden inventory
+	build_inventory(contraband, 1)
+	build_inventory(premium, 0, 1)
+	power_change()
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -1045,17 +1041,19 @@
 	name = "LSD"
 	desc = "Ahaha oh wow."
 	icon_state = "pill9"
-	New()
-		..()
-		reagents.add_reagent("mindbreaker", 0)
+
+/obj/item/weapon/reagent_containers/pill/LSD/atom_init()
+	. = ..()
+	reagents.add_reagent("mindbreaker", 0)
 
 /obj/item/weapon/reagent_containers/glass/beaker/LSD
 	name = "LSD IV"
 	desc = "Ahaha oh wow."
-	New()
-		..()
-		reagents.add_reagent("mindbreaker", 0)
-		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/LSD/atom_init()
+	. = ..()
+	reagents.add_reagent("mindbreaker", 0)
+	update_icon()
 
 /obj/machinery/vending/sustenance
 	name = "\improper Sustenance Vendor"

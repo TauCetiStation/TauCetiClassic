@@ -599,9 +599,9 @@
 	var/belt = null
 	var/mob/living/carbon/fastened = null
 
-/obj/machinery/optable/abductor/New()
+/obj/machinery/optable/abductor/atom_init()
 	belt = image("icons/obj/abductor.dmi", "belt", layer = FLY_LAYER)
-	return ..()
+	. = ..()
 
 /obj/machinery/optable/abductor/attack_hand()
 	if(!victim && !fastened)
@@ -717,8 +717,8 @@
 <br>
 Congratulations! You are now trained for xenobiology research!"}
 
-/obj/item/weapon/paper/abductor/New()
-	..()
+/obj/item/weapon/paper/abductor/atom_init()
+	. = ..()
 	verbs -= /obj/item/weapon/paper/verb/crumple
 
 /obj/item/weapon/paper/abductor/update_icon()

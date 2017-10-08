@@ -23,7 +23,8 @@
 		return 40
 	return 0
 
-/obj/item/weapon/melee/energy/sword/New()
+/obj/item/weapon/melee/energy/sword/atom_init()
+	. = ..()
 	item_color = pick("red","blue","green","purple","yellow","pink","black")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
@@ -187,33 +188,40 @@
  */
 //Most of the other special functions are handled in their own files.
 
-/obj/item/weapon/melee/energy/sword/green/New()
+/obj/item/weapon/melee/energy/sword/green/atom_init()
+	. = ..()
 	item_color = "green"
 
-/obj/item/weapon/melee/energy/sword/red/New()
+/obj/item/weapon/melee/energy/sword/red/atom_init()
+	. = ..()
 	item_color = "red"
 
-/obj/item/weapon/melee/energy/sword/blue/New()
+/obj/item/weapon/melee/energy/sword/blue/atom_init()
+	. = ..()
 	item_color = "blue"
 
-/obj/item/weapon/melee/energy/sword/purple/New()
+/obj/item/weapon/melee/energy/sword/purple/atom_init()
+	. = ..()
 	item_color = "purple"
 
-/obj/item/weapon/melee/energy/sword/yellow/New()
+/obj/item/weapon/melee/energy/sword/yellow/atom_init()
+	. = ..()
 	item_color = "yellow"
 
-/obj/item/weapon/melee/energy/sword/pink/New()
+/obj/item/weapon/melee/energy/sword/pink/atom_init()
+	. = ..()
 	item_color = "pink"
 
-/obj/item/weapon/melee/energy/sword/black/New()
+/obj/item/weapon/melee/energy/sword/black/atom_init()
+	. = ..()
 	item_color = "black"
 
 
-/obj/item/weapon/melee/energy/blade/New()
+/obj/item/weapon/melee/energy/blade/atom_init()
+	. = ..()
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-	return
 
 /*
  * Energy Axe

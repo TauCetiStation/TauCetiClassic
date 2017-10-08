@@ -133,8 +133,8 @@
 	broken = 0
 	locked = 1
 
-/obj/structure/closet/crate/secure/New()
-	..()
+/obj/structure/closet/crate/secure/atom_init()
+	. = ..()
 	if(locked)
 		overlays.Cut()
 		overlays += redlight

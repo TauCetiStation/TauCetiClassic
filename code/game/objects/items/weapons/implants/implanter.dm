@@ -59,41 +59,37 @@
 /obj/item/weapon/implanter/loyalty
 	name = "implanter-loyalty"
 
-/obj/item/weapon/implanter/loyalty/New()
-	src.imp = new /obj/item/weapon/implant/loyalty( src )
-	..()
+/obj/item/weapon/implanter/loyalty/atom_init()
+	imp = new /obj/item/weapon/implant/loyalty(src)
+	. = ..()
 	update()
-	return
 
 
 
 /obj/item/weapon/implanter/explosive
 	name = "implanter (E)"
 
-/obj/item/weapon/implanter/explosive/New()
-	src.imp = new /obj/item/weapon/implant/explosive( src )
-	..()
+/obj/item/weapon/implanter/explosive/atom_init()
+	imp = new /obj/item/weapon/implant/explosive(src)
+	. = ..()
 	update()
-	return
 
 /obj/item/weapon/implanter/adrenalin
 	name = "implanter-adrenalin"
 
-/obj/item/weapon/implanter/adrenalin/New()
-	src.imp = new /obj/item/weapon/implant/adrenalin(src)
-	..()
+/obj/item/weapon/implanter/adrenalin/atom_init()
+	imp = new /obj/item/weapon/implant/adrenalin(src)
+	. = ..()
 	update()
-	return
 
 /obj/item/weapon/implanter/compressed
 	name = "implanter (C)"
 	icon_state = "cimplanter1"
 
-/obj/item/weapon/implanter/compressed/New()
-	imp = new /obj/item/weapon/implant/compressed( src )
-	..()
+/obj/item/weapon/implanter/compressed/atom_init()
+	imp = new /obj/item/weapon/implant/compressed(src)
+	. = ..()
 	update()
-	return
 
 /obj/item/weapon/implanter/compressed/update()
 	if (imp)
@@ -134,6 +130,6 @@
 	name = "implanter (storage)"
 	icon_state = "cimplanter1"
 
-/obj/item/weapon/implanter/storage/New()
+/obj/item/weapon/implanter/storage/atom_init()
 	imp = new /obj/item/weapon/implant/storage(src)
-	..()
+	. = ..()

@@ -18,8 +18,8 @@ ________________________________________________________________________________
 
 //=======//NEW AND DEL//=======//
 
-/obj/item/clothing/suit/space/space_ninja/New()
-	..()
+/obj/item/clothing/suit/space/space_ninja/atom_init()
+	. = ..()
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/init//suit initialize verb
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_instruction//for AIs
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_holo
@@ -1222,7 +1222,8 @@ ________________________________________________________________________________
 ===================================================================================
 */
 
-/obj/item/clothing/mask/gas/voice/space_ninja/New()
+/obj/item/clothing/mask/gas/voice/space_ninja/atom_init()
+	. = ..()
 	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev
 	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/switchm
 

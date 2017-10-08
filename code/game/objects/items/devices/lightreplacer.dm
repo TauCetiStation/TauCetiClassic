@@ -61,10 +61,10 @@
 	var/decrement = 1
 	var/charge = 1
 
-/obj/item/device/lightreplacer/New()
+/obj/item/device/lightreplacer/atom_init()
 	uses = max_uses / 2
 	failmsg = "The [name]'s refill light blinks red."
-	..()
+	. = ..()
 
 /obj/item/device/lightreplacer/examine(mob/user)
 	..()

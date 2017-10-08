@@ -22,8 +22,8 @@
 	var/repairs
 
 
-/obj/machinery/recharge_station/New()
-	..()
+/obj/machinery/recharge_station/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/cyborgrecharger(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)

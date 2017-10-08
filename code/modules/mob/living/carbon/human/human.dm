@@ -1427,8 +1427,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	var/cooldown = 10 SECONDS
 
 
-/obj/screen/leap/New()
-	..()
+/obj/screen/leap/atom_init()
+	. = ..()
 	overlays += image(icon, "leap")
 	update_icon()
 

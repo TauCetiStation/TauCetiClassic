@@ -152,10 +152,9 @@ for reference:
 	var/locked = 0.0
 //	req_access = list(access_maint_tunnels)
 
-/obj/machinery/deployable/barrier/New()
-	..()
-
-	src.icon_state = "barrier[src.locked]"
+/obj/machinery/deployable/barrier/atom_init()
+	. = ..()
+	icon_state = "barrier[locked]"
 
 /obj/machinery/deployable/barrier/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/id/))

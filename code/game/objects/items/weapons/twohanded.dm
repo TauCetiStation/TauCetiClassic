@@ -175,7 +175,8 @@
 	edge = 1
 	can_embed = 0
 
-/obj/item/weapon/twohanded/dualsaber/New()
+/obj/item/weapon/twohanded/dualsaber/atom_init()
+	. = ..()
 	reflect_chance = rand(50, 65)
 	item_color = pick("red", "blue", "green", "purple","yellow","pink","black")
 	switch(item_color)

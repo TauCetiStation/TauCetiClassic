@@ -113,8 +113,8 @@
 	update_icon()
 
 
-/obj/machinery/door/airlock/New()
-	..()
+/obj/machinery/door/airlock/atom_init()
+	. = ..()
 
 	if(radio_controller)
 		set_frequency(frequency)

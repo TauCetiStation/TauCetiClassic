@@ -141,8 +141,8 @@ var/global/list/image/splatter_cache=list()
 	amount = 0
 	var/list/drips = list()
 
-/obj/effect/decal/cleanable/blood/drip/New()
-	..()
+/obj/effect/decal/cleanable/blood/drip/atom_init()
+	. = ..()
 	drips |= icon_state
 
 /obj/effect/decal/cleanable/blood/writing
@@ -153,8 +153,8 @@ var/global/list/image/splatter_cache=list()
 	amount = 0
 	var/message
 
-/obj/effect/decal/cleanable/blood/writing/New()
-	..()
+/obj/effect/decal/cleanable/blood/writing/atom_init()
+	. = ..()
 	if(random_icon_states.len)
 		for(var/obj/effect/decal/cleanable/blood/writing/W in loc)
 			random_icon_states.Remove(W.icon_state)
@@ -254,8 +254,11 @@ var/global/list/image/splatter_cache=list()
 	random_icon_states = list("mucus")
 
 	var/list/datum/disease2/disease/virus2 = list()
-	var/dry=0 // Keeps the lag down
+	var/dry = 0 // Keeps the lag down
 
-/obj/effect/decal/cleanable/mucus/New()
-	spawn(DRYING_TIME * 2)
-		dry=1
+/obj/effect/decal/cleanable/mucus/atom_init()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/set_dry, 1), DRYING_TIME * 2)
+
+/obj/effect/decal/cleanable/mucus/proc/set_dry(value) // just to change var using timer, we need a whole new proc :(
+	dry = value

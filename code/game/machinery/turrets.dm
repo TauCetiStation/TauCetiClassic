@@ -77,13 +77,11 @@
 	var/area/turret_protected/protected_area
 
 
-/obj/machinery/turret/New()
+/obj/machinery/turret/atom_init()
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-//	targets = new
-	..()
-	return
+	. = ..()
 
 
 /obj/machinery/turret/Destroy()
@@ -357,8 +355,11 @@
 	var/ailock = 0 // AI cannot use this
 	req_access = list(access_ai_upload)
 
-/obj/machinery/turretid/New()
+/obj/machinery/turretid/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/turretid/atom_init_late()
 	if(!control_area)
 		var/area/CA = get_area(src)
 		if(CA.master && CA.master != CA)
@@ -371,7 +372,6 @@
 				control_area = A
 				break
 	//don't have to check if control_area is path, since get_area_all_atoms can take path.
-	return
 
 /obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN)

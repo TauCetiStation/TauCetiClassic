@@ -98,8 +98,8 @@
 		return
 	..()
 
-/obj/machinery/power/apc/New(turf/loc, ndir, building=0)
-	..()
+/obj/machinery/power/apc/atom_init(mapload, ndir, building = 0)
+	. = ..()
 
 	wires = new(src)
 
@@ -107,21 +107,21 @@
 	// this allows the APC to be embedded in a wall, yet still inside an area
 	if (building)
 		dir = ndir
-	src.tdir = dir		// to fix Vars bug
+	tdir = dir		// to fix Vars bug
 	dir = SOUTH
 
-	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
-	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
-	if (building==0)
+	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 24 : -24)
+	pixel_y = (tdir & 3)? (tdir == 1 ? 24 : -24) : 0
+	if (building == 0)
 		init()
 	else
-		area = src.loc.loc:master
+		area = loc.loc:master
 		area.apc = src
 		opened = 1
 		operating = 0
 		name = "[area.name] APC"
 		stat |= MAINT
-		src.update_icon()
+		update_icon()
 		addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/Destroy()

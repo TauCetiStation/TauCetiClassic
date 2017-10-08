@@ -53,9 +53,9 @@
 
 
 
-/obj/machinery/mining/drill/New()
+/obj/machinery/mining/drill/atom_init()
 
-	..()
+	. = ..()
 
 	wires = new(src)
 

@@ -27,15 +27,15 @@
 	energy = 15
 
 
-/obj/effect/accelerated_particle/New(loc, dir = 2)
-	src.loc = loc
+/obj/effect/accelerated_particle/atom_init(mapload, dir = 2)
 	src.dir = dir
 	if(movement_range > 20)
 		movement_range = 20
-	spawn(0)
-		move(1)
-	return
+	..()
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/effect/accelerated_particle/atom_init_late()
+	move(1)
 
 /obj/effect/accelerated_particle/Bump(atom/A)
 	if (A)

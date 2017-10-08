@@ -2,8 +2,8 @@
 /obj/machinery/atmospherics/pipe/mains_component
 	var/obj/machinery/atmospherics/mains_pipe/parent_pipe
 
-/obj/machinery/atmospherics/pipe/mains_component/New(loc)
-	..(loc)
+/obj/machinery/atmospherics/pipe/mains_component/atom_init()
+	. = ..()
 	parent_pipe = loc
 
 /obj/machinery/atmospherics/pipe/mains_component/check_pressure(pressure)
@@ -46,8 +46,8 @@
 	var/fatigue_pressure = 170 * ONE_ATMOSPHERE
 	alert_pressure = 170 * ONE_ATMOSPHERE
 
-/obj/machinery/atmospherics/mains_pipe/New()
-	..()
+/obj/machinery/atmospherics/mains_pipe/atom_init()
+	. = ..()
 
 	supply = new(src)
 	supply.volume = volume
@@ -342,8 +342,8 @@
 /obj/machinery/atmospherics/mains_pipe/split/supply
 	icon_type = "supply"
 
-/obj/machinery/atmospherics/mains_pipe/split/supply/New()
-	..()
+/obj/machinery/atmospherics/mains_pipe/split/supply/atom_init()
+	. = ..()
 	split_node = supply
 
 /obj/machinery/atmospherics/mains_pipe/split/supply/hidden
@@ -357,8 +357,8 @@
 /obj/machinery/atmospherics/mains_pipe/split/scrubbers
 	icon_type = "scrubbers"
 
-/obj/machinery/atmospherics/mains_pipe/split/scrubbers/New()
-	..()
+/obj/machinery/atmospherics/mains_pipe/split/scrubbers/atom_init()
+	. = ..()
 	split_node = scrubbers
 
 /obj/machinery/atmospherics/mains_pipe/split/scrubbers/hidden
@@ -372,8 +372,8 @@
 /obj/machinery/atmospherics/mains_pipe/split/aux
 	icon_type = "aux"
 
-/obj/machinery/atmospherics/mains_pipe/split/aux/New()
-	..()
+/obj/machinery/atmospherics/mains_pipe/split/aux/atom_init()
+	. = ..()
 	split_node = aux
 
 /obj/machinery/atmospherics/mains_pipe/split/aux/hidden
@@ -515,9 +515,9 @@ obj/machinery/atmospherics/mains_pipe/valve
 	dir = SOUTH
 	initialize_mains_directions = SOUTH|NORTH
 
-	New()
+	atom_init()
 		nodes.len = 2
-		..()
+		. = ..()
 		initialize_mains_directions = dir | turn(dir, 180)
 
 	update_icon(animation)

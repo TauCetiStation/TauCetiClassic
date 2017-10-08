@@ -14,8 +14,8 @@
 	var/efficiency
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/New()
-	..()
+/obj/machinery/atmospherics/components/unary/cryo_cell/atom_init()
+	. = ..()
 
 	icon = 'icons/obj/cryogenics_split.dmi'
 	update_icon()

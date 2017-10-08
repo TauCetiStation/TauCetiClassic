@@ -29,18 +29,20 @@
 
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
-/obj/machinery/disposal/New()
+/obj/machinery/disposal/atom_init()
 	..()
-	spawn(5)
-		trunk = locate() in src.loc
-		if(!trunk)
-			mode = 0
-			flush = 0
-		else
-			trunk.linked = src	// link the pipe trunk to self
+	return INITIALIZE_HINT_LATELOAD
 
-		air_contents = new/datum/gas_mixture(PRESSURE_TANK_VOLUME)
-		update()
+/obj/machinery/disposal/atom_init_late()
+	trunk = locate() in src.loc
+	if(!trunk)
+		mode = 0
+		flush = 0
+	else
+		trunk.linked = src	// link the pipe trunk to self
+
+	air_contents = new/datum/gas_mixture(PRESSURE_TANK_VOLUME)
+	update()
 
 /obj/machinery/disposal/Destroy()
 	eject()
@@ -706,11 +708,9 @@
 	var/base_icon_state	// initial icon state on map
 
 	// new pipe, set the icon_state as on map
-/obj/structure/disposalpipe/New()
-	..()
+/obj/structure/disposalpipe/atom_init()
+	. = ..()
 	base_icon_state = icon_state
-	return
-
 
 	// pipe is deleted
 	// ensure if holder is present, it is expelled
@@ -969,22 +969,21 @@
 /obj/structure/disposalpipe/segment
 	icon_state = "pipe-s"
 
-/obj/structure/disposalpipe/segment/New()
-	..()
+/obj/structure/disposalpipe/segment/atom_init()
+	. = ..()
 	if(icon_state == "pipe-s")
 		dpdir = dir | turn(dir, 180)
 	else
 		dpdir = dir | turn(dir, -90)
 
 	update()
-	return
 
 //a three-way junction with dir being the dominant direction
 /obj/structure/disposalpipe/junction
 	icon_state = "pipe-j1"
 
-/obj/structure/disposalpipe/junction/New()
-	..()
+/obj/structure/disposalpipe/junction/atom_init()
+	. = ..()
 	if(icon_state == "pipe-j1")
 		dpdir = dir | turn(dir, -90) | turn(dir,180)
 	else if(icon_state == "pipe-j2")
@@ -992,7 +991,6 @@
 	else // pipe-y
 		dpdir = dir | turn(dir,90) | turn(dir, -90)
 	update()
-	return
 
 
 // next direction to move
@@ -1041,10 +1039,11 @@
 	else
 		name = initial(name)
 
-/obj/structure/disposalpipe/tagger/New()
+/obj/structure/disposalpipe/tagger/atom_init()
 	. = ..()
 	dpdir = dir | turn(dir, 180)
-	if(sort_tag) tagger_locations |= sort_tag
+	if(sort_tag)
+		tagger_locations |= sort_tag
 	updatename()
 	updatedesc()
 	update()
@@ -1109,9 +1108,10 @@
 
 	dpdir = sortdir | posdir | negdir
 
-/obj/structure/disposalpipe/sortjunction/New()
+/obj/structure/disposalpipe/sortjunction/atom_init()
 	. = ..()
-	if(sortType) tagger_locations |= sortType
+	if(sortType)
+		tagger_locations |= sortType
 
 	updatedir()
 	updatename()
@@ -1199,14 +1199,14 @@
 	icon_state = "pipe-t"
 	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
 
-/obj/structure/disposalpipe/trunk/New()
+/obj/structure/disposalpipe/trunk/atom_init()
 	..()
 	dpdir = dir
-	spawn(1)
-		getlinked()
-
 	update()
-	return
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/disposalpipe/trunk/atom_init_late()
+	getlinked()
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
 	linked = null
@@ -1302,10 +1302,9 @@
 					// i.e. will be treated as an empty turf
 	desc = "A broken piece of disposal pipe."
 
-/obj/structure/disposalpipe/broken/New()
-	..()
+/obj/structure/disposalpipe/broken/atom_init()
+	. = ..()
 	update()
-	return
 
 	// called when welded
 	// for broken pipe, remove and turn into scrap
@@ -1328,16 +1327,16 @@
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/mode = 0
 
-/obj/structure/disposaloutlet/New()
+/obj/structure/disposaloutlet/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
 
-	spawn(1)
-		target = get_ranged_target_turf(src, dir, 10)
+/obj/structure/disposaloutlet/atom_init_late()
+	target = get_ranged_target_turf(src, dir, 10)
 
-
-		var/obj/structure/disposalpipe/trunk/trunk = locate() in src.loc
-		if(trunk)
-			trunk.linked = src	// link the pipe trunk to self
+	var/obj/structure/disposalpipe/trunk/trunk = locate() in loc
+	if(trunk)
+		trunk.linked = src	// link the pipe trunk to self
 
 // expel the contents of the holder object, then delete it
 // called when the holder exits the outlet

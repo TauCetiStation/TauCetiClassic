@@ -100,5 +100,5 @@
 	sterile = 1
 	gender = FEMALE
 
-/obj/item/clothing/mask/facehugger/lamarr/New()//to prevent deleting it if aliums are disabled
+/obj/item/clothing/mask/facehugger/lamarr/atom_init_late()//to prevent deleting it if aliums are disabled
 	return

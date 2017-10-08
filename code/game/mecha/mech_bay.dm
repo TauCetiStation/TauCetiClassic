@@ -23,8 +23,8 @@
 	var/repairability = 0
 	var/turf/recharging_turf = null
 
-/obj/machinery/mech_bay_recharge_port/New()
-	..()
+/obj/machinery/mech_bay_recharge_port/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/mech_recharger(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)

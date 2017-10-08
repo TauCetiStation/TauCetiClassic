@@ -339,8 +339,8 @@
 	mouse_opacity = 2
 	screen_loc = "CENTER"
 
-/obj/screen/click_catcher/New()
-	..()
+/obj/screen/click_catcher/atom_init()
+	. = ..()
 	transform = matrix(200, 0, 0, 0, 200, 0)
 
 /obj/screen/click_catcher/Click(location, control, params)

@@ -206,12 +206,16 @@ obj/structure/stool/bed/chair/holochair
 	var/active = 0
 
 /obj/item/weapon/holo/esword/green
-	New()
-		item_color = "green"
+
+/obj/item/weapon/holo/esword/green/atom_init()
+	. = ..()
+	item_color = "green"
 
 /obj/item/weapon/holo/esword/red
-	New()
-		item_color = "red"
+
+/obj/item/weapon/holo/esword/red/atom_init()
+	. = ..()
+	item_color = "red"
 
 /obj/item/weapon/holo/esword/Get_shield_chance()
 	if(active)
@@ -221,7 +225,8 @@ obj/structure/stool/bed/chair/holochair
 /obj/item/weapon/holo/esword/attack(target, mob/user)
 	..()
 
-/obj/item/weapon/holo/esword/New()
+/obj/item/weapon/holo/esword/atom_init()
+	. = ..()
 	item_color = pick("red","blue","green","purple")
 
 /obj/item/weapon/holo/esword/attack_self(mob/living/user)
@@ -317,10 +322,6 @@ obj/structure/stool/bed/chair/holochair
 	to_chat(user, "The station AI is not to interact with these devices!")
 	return
 
-/obj/machinery/readybutton/New()
-	..()
-
-
 /obj/machinery/readybutton/attackby(obj/item/weapon/W, mob/user)
 	to_chat(user, "The device is a solid button, there's nothing you can do with it!")
 
@@ -396,8 +397,8 @@ obj/structure/stool/bed/chair/holochair
 	meat_amount = 0
 	meat_type = null
 
-/mob/living/simple_animal/hostile/carp/holodeck/New()
-	..()
+/mob/living/simple_animal/hostile/carp/holodeck/atom_init()
+	. = ..()
 	set_light(2) //hologram lighting
 
 /mob/living/simple_animal/hostile/carp/holodeck/proc/set_safety(safe)

@@ -27,6 +27,6 @@
 	target_pressure = MAX_PUMP_PRESSURE
 
 // A possible variant for Atmospherics distribution feed.
-/obj/machinery/atmospherics/components/binary/pump/high_power/on/distribution/New()
-	..()
+/obj/machinery/atmospherics/components/binary/pump/high_power/on/distribution/atom_init()
+	. = ..()
 	target_pressure = round(3 * ONE_ATMOSPHERE)

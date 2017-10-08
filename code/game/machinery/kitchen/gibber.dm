@@ -22,20 +22,21 @@
 /obj/machinery/gibber/autogibber
 	var/turf/input_plate
 
-/obj/machinery/gibber/autogibber/New()
+/obj/machinery/gibber/autogibber/atom_init()
 	..()
-	spawn(5)
-		for(var/i in cardinal)
-			var/obj/machinery/mineral/input/input_obj = locate( /obj/machinery/mineral/input, get_step(src.loc, i) )
-			if(input_obj)
-				if(isturf(input_obj.loc))
-					input_plate = input_obj.loc
-					qdel(input_obj)
-					break
+	return INITIALIZE_HINT_LATELOAD
 
-		if(!input_plate)
-			log_misc("a [src] didn't find an input plate.")
-			return
+/obj/machinery/gibber/autogibber/atom_init_late()
+	for(var/i in cardinal)
+		var/obj/machinery/mineral/input/input_obj = locate( /obj/machinery/mineral/input, get_step(src.loc, i) )
+		if(input_obj)
+			if(isturf(input_obj.loc))
+				input_plate = input_obj.loc
+				qdel(input_obj)
+				break
+
+	if(!input_plate)
+		log_misc("a [src] didn't find an input plate.")
 
 /obj/machinery/gibber/autogibber/Bumped(atom/A)
 	if(!input_plate) return
@@ -48,9 +49,9 @@
 			M.gib()
 
 
-/obj/machinery/gibber/New()
-	..()
-	src.overlays += image('icons/obj/kitchen.dmi', "grjam")
+/obj/machinery/gibber/atom_init()
+	. = ..()
+	overlays += image('icons/obj/kitchen.dmi', "grjam")
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/gibber(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)

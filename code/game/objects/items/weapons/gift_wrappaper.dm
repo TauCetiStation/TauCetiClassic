@@ -14,15 +14,14 @@
 	icon_state = "gift1"
 	item_state = "gift1"
 
-/obj/item/weapon/a_gift/New()
-	..()
+/obj/item/weapon/a_gift/atom_init()
+	. = ..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
 	if(w_class > 0 && w_class < 4)
 		icon_state = "gift[w_class]"
 	else
 		icon_state = "gift[pick(1, 2, 3)]"
-	return
 
 /obj/item/weapon/gift/attack_self(mob/user)
 	user.drop_item()

@@ -65,20 +65,19 @@
 	name = "bottle of BeezEez"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle17"
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/beezeez/atom_init()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/honeycomb
 	name = "honeycomb"
 	icon_state = "honeycomb"
 	desc = "Dripping with sugary sweetness."
 
-	New()
-		..()
-
-/obj/item/weapon/reagent_containers/food/snacks/honeycomb/New()
-	..()
+/obj/item/weapon/reagent_containers/food/snacks/honeycomb/atom_init()
+	. = ..()
 	reagents.add_reagent("honey",10)
 	reagents.add_reagent("nutriment", 0.5)
 	reagents.add_reagent("sugar", 2)

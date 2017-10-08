@@ -15,13 +15,14 @@
 	var/list/enemy_players = list()
 	var/tribe_type = 1
 
-/obj/effect/jungle_tribe_spawn/New()
+/obj/effect/jungle_tribe_spawn/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 	tribe_type = rand(1,5)
 
 	var/num_tribesmen = rand(3,6)
-	for(var/i=0,i<num_tribesmen,i++)
-		var/mob/living/simple_animal/hostile/tribesman/T = new(src.loc)
+	for (var/i in 1 to num_tribesmen)
+		var/mob/living/simple_animal/hostile/tribesman/T = new(loc)
 		T.my_type = tribe_type
 		T.x += rand(-6,6)
 		T.y += rand(-6,6)

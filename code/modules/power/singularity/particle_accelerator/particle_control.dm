@@ -18,9 +18,9 @@
 	var/assembled = 0
 	var/parts = null
 
-/obj/machinery/particle_accelerator/control_box/New()
+/obj/machinery/particle_accelerator/control_box/atom_init()
 	connected_parts = list()
-	..()
+	. = ..()
 
 /obj/machinery/particle_accelerator/control_box/Destroy()
 	if(active)

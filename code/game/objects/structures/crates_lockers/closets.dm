@@ -18,6 +18,7 @@
 
 /obj/structure/closet/atom_init(mapload)
 	. = ..()
+	closet_list += src
 	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
 		for(var/obj/item/I in src.loc)
 			if(I.density || I.anchored || I == src)
@@ -25,6 +26,10 @@
 			I.forceMove(src)
 	PopulateContents()
 	update_icon()
+
+/obj/structure/closet/Destroy()
+	closet_list -= src
+	return ..()
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()

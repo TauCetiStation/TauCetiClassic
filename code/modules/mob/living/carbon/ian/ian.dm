@@ -220,8 +220,8 @@
 	icon_state = "bubble"
 	anchored = TRUE
 
-/obj/effect/bubble_ian/New(loc, mob/M)
-	..()
+/obj/effect/bubble_ian/atom_init(loc, mob/M)
+	. = ..()
 	playsound(src, 'sound/effects/bubble_spawn.ogg', 50, 1)
 	switch(M.dir)
 		if(WEST)

@@ -25,8 +25,8 @@
 	circuit = /obj/item/weapon/circuitboard/computer/cargo/request
 	requestonly = TRUE
 
-/obj/machinery/computer/cargo/New()
-	..()
+/obj/machinery/computer/cargo/atom_init()
+	. = ..()
 	var/obj/item/weapon/circuitboard/computer/cargo/board = circuit
 	contraband = board.contraband_enabled
 	hacked = board.hacked

@@ -24,8 +24,8 @@ var/message_delay = 0 // To make sure restarting the recentmessages list is kept
 	delay = 7
 	circuitboard = "/obj/item/weapon/circuitboard/telecomms/broadcaster"
 
-/obj/machinery/telecomms/broadcaster/New()
-	..()
+/obj/machinery/telecomms/broadcaster/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/telecomms/broadcaster(null)
 	component_parts += new /obj/item/weapon/stock_parts/subspace/filter(null)

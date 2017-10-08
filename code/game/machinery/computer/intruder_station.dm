@@ -6,8 +6,8 @@
 	var/show_tool_desc
 	var/obj/item/stored_uplink
 
-/obj/machinery/computer/intruder_station/New()
-	..()
+/obj/machinery/computer/intruder_station/atom_init()
+	. = ..()
 	for(var/Dat in subtypesof(/datum/intruder_tools))
 		tools += new Dat
 

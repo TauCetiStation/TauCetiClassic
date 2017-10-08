@@ -35,8 +35,8 @@
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
-/obj/item/weapon/spikethrower/New()
-	..()
+/obj/item/weapon/spikethrower/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 	last_regen = world.time
 

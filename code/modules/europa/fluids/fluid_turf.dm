@@ -14,8 +14,8 @@
 /obj/effect/flood/ex_act()
 	return
 
-/obj/effect/flood/New()
-	..()
+/obj/effect/flood/atom_init()
+	. = ..()
 	verbs.Cut()
 
 /turf/var/fluid_blocked_dirs = 0

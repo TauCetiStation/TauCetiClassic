@@ -3,8 +3,8 @@
 	var/list/grid_sensors
 	var/active_sensor = null	//name_tag of the currently selected sensor
 
-/obj/nano_module/power_monitor/New()
-	..()
+/obj/nano_module/power_monitor/atom_init()
+	. = ..()
 	refresh_sensors()
 
 /obj/nano_module/power_monitor/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)

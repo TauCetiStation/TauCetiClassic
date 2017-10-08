@@ -5,26 +5,16 @@
 	name = "Happy pills"
 	desc = "Highly illegal drug. When you want to see the rainbow."
 
-/obj/item/weapon/storage/pill_bottle/happy/New()
-	..()
-	new /obj/item/weapon/reagent_containers/pill/happy( src )
-	new /obj/item/weapon/reagent_containers/pill/happy( src )
-	new /obj/item/weapon/reagent_containers/pill/happy( src )
-	new /obj/item/weapon/reagent_containers/pill/happy( src )
-	new /obj/item/weapon/reagent_containers/pill/happy( src )
-	new /obj/item/weapon/reagent_containers/pill/happy( src )
-	new /obj/item/weapon/reagent_containers/pill/happy( src )
+/obj/item/weapon/storage/pill_bottle/happy/atom_init()
+	. = ..()
+	for (var/i in 1 to 7)
+		new /obj/item/weapon/reagent_containers/pill/happy(src)
 
 /obj/item/weapon/storage/pill_bottle/zoom
 	name = "Zoom pills"
 	desc = "Highly illegal drug. Trade brain for speed."
 
-/obj/item/weapon/storage/pill_bottle/zoom/New()
-	..()
-	new /obj/item/weapon/reagent_containers/pill/zoom( src )
-	new /obj/item/weapon/reagent_containers/pill/zoom( src )
-	new /obj/item/weapon/reagent_containers/pill/zoom( src )
-	new /obj/item/weapon/reagent_containers/pill/zoom( src )
-	new /obj/item/weapon/reagent_containers/pill/zoom( src )
-	new /obj/item/weapon/reagent_containers/pill/zoom( src )
-	new /obj/item/weapon/reagent_containers/pill/zoom( src )
+/obj/item/weapon/storage/pill_bottle/zoom/atom_init()
+	. = ..()
+	for (var/i in 1 to 7)
+		new /obj/item/weapon/reagent_containers/pill/zoom(src)

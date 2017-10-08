@@ -11,12 +11,11 @@
 	var/obj/item/ammo_box/magazine/magazine
 	var/energy_gun = 0 //Used in examine, if 1 - no ammo count.
 
-/obj/item/weapon/gun/projectile/New()
-	..()
+/obj/item/weapon/gun/projectile/atom_init()
+	. = ..()
 	magazine = new mag_type(src)
 	chamber_round()
 	update_icon()
-	return
 
 /obj/item/weapon/gun/projectile/process_chamber(var/eject_casing = 1, var/empty_chamber = 1, var/no_casing = 0)
 //	if(chambered)

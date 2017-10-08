@@ -139,7 +139,7 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		return 0
 
 
-/obj/machinery/telecomms/New()
+/obj/machinery/telecomms/atom_init()
 	telecomms_list += src
 	..()
 
@@ -148,9 +148,9 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 		//Defaults to our Z level!
 		var/turf/position = get_turf(src)
 		listening_level = position.z
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/telecomms/atom_init()
-	. = ..()
+/obj/machinery/telecomms/atom_init_late()
 	if(autolinkers.len)
 		// Links nearby machines
 		if(!long_range_link)
@@ -524,8 +524,8 @@ var/global/list/obj/machinery/telecomms/telecomms_list = list()
 	var/language = "human"
 	var/obj/item/device/radio/headset/server_radio = null
 
-/obj/machinery/telecomms/server/New()
-	..()
+/obj/machinery/telecomms/server/atom_init()
+	. = ..()
 	Compiler = new()
 	Compiler.Holder = src
 	server_radio = new()

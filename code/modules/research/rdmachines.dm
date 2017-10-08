@@ -11,8 +11,8 @@
 	var/datum/wires/rnd/wires = null
 	var/obj/machinery/computer/rdconsole/linked_console
 
-/obj/machinery/r_n_d/New()
-	..()
+/obj/machinery/r_n_d/atom_init()
+	. = ..()
 	wires = new(src)
 
 /obj/machinery/r_n_d/Destroy()

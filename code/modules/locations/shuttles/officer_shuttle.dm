@@ -16,9 +16,13 @@
 	var/lastMove = 0
 
 
-/obj/machinery/computer/officer_shuttle/New()
-	curr_location= locate(/area/shuttle/officer/velocity)
+/obj/machinery/computer/officer_shuttle/atom_init()
 	radio = new (src)
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/officer_shuttle/atom_init_late()
+	curr_location = locate(/area/shuttle/officer/velocity)
 
 /obj/machinery/computer/officer_shuttle/proc/officer_move_to(area/destination)
 	if(moving)	return

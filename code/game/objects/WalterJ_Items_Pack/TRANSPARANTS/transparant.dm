@@ -15,8 +15,8 @@
  	//var/image/inhand_blood_overlay
 	attack_verb = list("bashed", "pacified", "smashed", "opressed", "flapped")
 
-/obj/item/weapon/transparant/New()
-	..()
+/obj/item/weapon/transparant/atom_init()
+	. = ..()
 	not_bloody_state = icon_state
 
 /obj/item/weapon/transparant/attackby(obj/item/I, mob/user)

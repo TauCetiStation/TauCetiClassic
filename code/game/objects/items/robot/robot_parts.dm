@@ -59,8 +59,8 @@
 	var/created_name = ""
 	w_class = 3
 
-/obj/item/robot_parts/robot_suit/New()
-	..()
+/obj/item/robot_parts/robot_suit/atom_init()
+	. = ..()
 	update_icon()
 
 /obj/item/robot_parts/robot_suit/update_icon()

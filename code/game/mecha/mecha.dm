@@ -70,8 +70,8 @@
 	var/max_equip = 3
 	var/datum/events/events
 
-/obj/mecha/New()
-	..()
+/obj/mecha/atom_init()
+	. = ..()
 	events = new
 	icon_state += "-open"
 	add_radio()
@@ -88,7 +88,6 @@
 	log_message("[src.name] created.")
 	loc.Entered(src)
 	mechas_list += src //global mech list
-	return
 
 /obj/mecha/Destroy()
 	go_out()

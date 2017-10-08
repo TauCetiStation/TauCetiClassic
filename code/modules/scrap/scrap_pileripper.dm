@@ -22,9 +22,9 @@
 	var/rating = 1
 	var/last_ripped = 0
 
-/obj/machinery/pile_ripper/New()
+/obj/machinery/pile_ripper/atom_init()
 	// On us
-	..()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/pile_ripper(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)

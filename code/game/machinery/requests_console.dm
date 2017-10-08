@@ -68,8 +68,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(icon_state == "req_comp_off")
 			icon_state = "req_comp0"
 
-/obj/machinery/requests_console/New()
-	..()
+/obj/machinery/requests_console/atom_init()
+	. = ..()
 	name = "[department] Requests Console"
 	allConsoles += src
 	//req_console_departments += department

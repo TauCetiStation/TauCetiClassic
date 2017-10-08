@@ -13,16 +13,16 @@
 	desc = "To be applied to the head repeatedly."
 	icon_state ="bible"
 
-/obj/item/weapon/storage/bible/booze/New()
-	..()
-	new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
-	new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
-	new /obj/item/weapon/spacecash(src)
-	new /obj/item/weapon/spacecash(src)
-	new /obj/item/weapon/spacecash(src)
+/obj/item/weapon/storage/bible/booze/atom_init()
+	. = ..()
+	for (var/i in 1 to 2)
+		new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/spacecash(src)
 
 /obj/item/weapon/storage/bible/afterattack(atom/A, mob/user, proximity)
-	if(!proximity) return
+	if(!proximity)
+		return
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
 		if(A.reagents && A.reagents.has_reagent("water")) //blesses all the water in the holder
 			to_chat(user, "\blue You bless [A].")

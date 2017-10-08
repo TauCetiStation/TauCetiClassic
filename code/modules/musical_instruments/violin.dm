@@ -8,8 +8,8 @@
 
 	var/datum/music_player/MP = null
 
-/obj/item/device/violin/New()
-	..()
+/obj/item/device/violin/atom_init()
+	. = ..()
 	MP = new(src, "sound/musical_instruments/violin")
 
 /obj/item/device/violin/Destroy()

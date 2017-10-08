@@ -18,10 +18,9 @@
 	return src.attack_hand(user)
 
 
-/obj/item/weapon/reagent_containers/hypospray/New() //comment this to make hypos start off empty
-	..()
-	reagents.add_reagent("tricordrazine", 30)
-	return
+//obj/item/weapon/reagent_containers/hypospray/atom_init() //comment this to make hypos start off empty
+//	. = ..()
+//	reagents.add_reagent("tricordrazine", 30) this is base type of all hyposprays and should not have any reagents!
 
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
@@ -56,8 +55,8 @@
 	item_state = "autoinjector"
 	volume = 5
 
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/New()
-	..()
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/atom_init()
+	. = ..()
 	reagents.remove_reagent("tricordrazine", 30)
 	reagents.add_reagent("inaprovaline", 5)
 	flags &= ~OPENCONTAINER
@@ -70,8 +69,8 @@
 	icon_state = "stimpen"
 	volume = 20
 
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack/New()
-	..()
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack/atom_init()
+	. = ..()
 	reagents.add_reagent("coffee", 13)
 	reagents.add_reagent("hyperzine", 2)
 	update_icon()

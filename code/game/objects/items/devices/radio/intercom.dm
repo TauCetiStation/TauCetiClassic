@@ -11,8 +11,8 @@
 	var/mob/living/silicon/ai/ai = list()
 	var/last_tick //used to delay the powercheck
 
-/obj/item/device/radio/intercom/New()
-	..()
+/obj/item/device/radio/intercom/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/radio/intercom/Destroy()

@@ -178,15 +178,19 @@ var/list/ai_verbs_default = list(
 	var/mob/living/silicon/ai/powered_ai = null
 	invisibility = 100
 
-/obj/machinery/ai_powersupply/New(var/mob/living/silicon/ai/ai=null)
+/obj/machinery/ai_powersupply/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/ai_powersupply/atom_init_late()
+	var/mob/living/silicon/ai/ai = loc
 	powered_ai = ai
 	if(isnull(powered_ai))
 		qdel(src)
+		return
 
 	forceMove(powered_ai.loc)
 	use_power(1) // Just incase we need to wake up the power system.
-
-	..()
 
 /obj/machinery/ai_powersupply/process()
 	if(!powered_ai || powered_ai.stat & DEAD)

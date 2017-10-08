@@ -13,16 +13,14 @@
 	var/title = "Mass Driver Controls"
 
 
-/obj/machinery/computer/pod/New()
+/obj/machinery/computer/pod/atom_init()
 	..()
-	spawn( 5 )
-		for(var/obj/machinery/mass_driver/M in machines)
-			if(M.id == id)
-				connected = M
-			else
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/computer/pod/atom_init_late()
+	for(var/obj/machinery/mass_driver/M in machines)
+		if(M.id == id)
+			connected = M
 
 /obj/machinery/computer/pod/proc/alarm()
 	if(stat & (NOPOWER|BROKEN))

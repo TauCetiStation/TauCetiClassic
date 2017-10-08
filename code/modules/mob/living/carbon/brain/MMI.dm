@@ -92,8 +92,8 @@
 
 	var/obj/item/device/radio/radio = null//Let's give it a radio.
 
-/obj/item/device/mmi/radio_enabled/New()
-	..()
+/obj/item/device/mmi/radio_enabled/atom_init()
+	. = ..()
 	radio = new(src)//Spawns a radio inside the MMI.
 	radio.broadcasting = 1//So it's broadcasting from the start.
 

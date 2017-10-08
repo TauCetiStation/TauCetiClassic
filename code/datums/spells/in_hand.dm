@@ -39,8 +39,8 @@
 	var/max_power = 1       // max level of spell when used in combination with can_powerup or what ever you want to use this for.
 	var/power_of_spell = 1  // current power of this spell.
 
-/obj/item/weapon/magic/New(obj/effect/proc_holder/spell/G)
-	..()
+/obj/item/weapon/magic/atom_init(mapload, obj/effect/proc_holder/spell/G)
+	. = ..()
 	if(G)
 		Spell = G
 		Spell.charge_max = initial(Spell.charge_max) // Incase spell has variable charge time, so we need to reset its CD back to normal.
@@ -381,8 +381,8 @@
 	nodamage = 1
 	flag = "magic"
 
-/obj/item/projectile/magic/healing_ball/New()
-	..()
+/obj/item/projectile/magic/healing_ball/atom_init()
+	. = ..()
 	icon_state = initial(icon_state) + "[power_of_spell]"
 
 /obj/item/projectile/magic/healing_ball/on_hit(mob/living/target)

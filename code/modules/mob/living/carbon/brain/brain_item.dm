@@ -13,8 +13,8 @@
 
 	var/mob/living/carbon/brain/brainmob = null
 
-/obj/item/brain/New()
-	..()
+/obj/item/brain/atom_init()
+	. = ..()
 	//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
 	//WASSSSSUUUPPPP /N
 	spawn(5)

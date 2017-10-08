@@ -10,8 +10,8 @@
 	var/obj/item/clothing/under/has_suit = null		//the suit the tie may be attached to
 	var/image/inv_overlay = null	//overlay used when attached to clothing.
 
-/obj/item/clothing/tie/New()
-	..()
+/obj/item/clothing/tie/atom_init()
+	. = ..()
 	inv_overlay = image("icon" = 'icons/obj/clothing/ties_overlay.dmi', "icon_state" = "[item_color? "[item_color]" : "[icon_state]"]")
 
 //when user attached an accessory to S
@@ -320,8 +320,8 @@
 	var/slots = 3
 	var/obj/item/weapon/storage/internal/hold
 
-/obj/item/clothing/tie/storage/New()
-	..()
+/obj/item/clothing/tie/storage/atom_init()
+	. = ..()
 	hold = new/obj/item/weapon/storage/internal(src)
 	hold.storage_slots = slots
 
@@ -456,8 +456,8 @@
 	item_color = "unathiharness2"
 	slots = 2
 
-/obj/item/clothing/tie/storage/knifeharness/New()
-	..()
+/obj/item/clothing/tie/storage/knifeharness/atom_init()
+	. = ..()
 	hold.max_combined_w_class = 4
 	hold.can_hold = list("/obj/item/weapon/hatchet/unathiknife",\
 	"/obj/item/weapon/kitchen/utensil/knife",\

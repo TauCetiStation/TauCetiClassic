@@ -58,9 +58,12 @@
 	desc = "Some sort of purple substance in an egglike shape. It pulses and throbs from within and seems impenetrable."
 	health = INFINITY
 
-/obj/effect/alien/resin/New()
+/obj/effect/alien/resin/atom_init()
 	relativewall_neighbours()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/alien/resin/atom_init_late()
 	var/turf/T = get_turf(src)
 	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
@@ -199,23 +202,25 @@
 	var/node_range = NODERANGE
 	light_color = "#24C1FF"
 
-/obj/structure/alien/weeds/node/New()
-	..(src.loc, src)
+/obj/structure/alien/weeds/node/atom_init(mapload)
+	. = ..(mapload, src)
+
+/obj/structure/alien/weeds/node/atom_init_late()
 	for (var/obj/structure/alien/weeds/W in loc)
 		if (W != src)
 			qdel(W)
 	set_light(2)
 
-/obj/structure/alien/weeds/New(pos, node)
+/obj/structure/alien/weeds/atom_init(mapload, node)
 	..()
 	if(istype(loc, /turf/space))
-		qdel(src)
-		return
-
+		return INITIALIZE_HINT_QDEL
 	linked_node = node
 	if(icon_state == "weeds")
 		icon_state = pick("weeds", "weeds1", "weeds2")
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/structure/alien/weeds/atom_init_late()
 	if(!weedImageCache)
 		weedImageCache = list()
 		weedImageCache["[WEED_NORTH_EDGING]"] = image('icons/mob/xenomorph.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
@@ -354,10 +359,12 @@
 	var/ticks = 0
 	var/target_strength = 0
 
-/obj/effect/alien/acid/New(loc, target)
-	..(loc)
+/obj/effect/alien/acid/atom_init(mapload, target)
+	..()
 	src.target = target
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/effect/alien/acid/atom_init_late()
 	if(isturf(target)) // Turf take twice as long to take down.
 		target_strength = 8
 	else if(istype(target, /obj/machinery/atmospherics/components/unary/vent_pump))
@@ -423,10 +430,9 @@
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	var/used = 0
 
-/obj/effect/alien/egg/New()
-	..()
-	spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
-		Grow()
+/obj/effect/alien/egg/atom_init()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
 
 /obj/effect/alien/egg/attack_paw(user)
 	if(isalien(user))

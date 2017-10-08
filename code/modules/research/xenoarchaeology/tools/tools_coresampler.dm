@@ -3,13 +3,13 @@
 /obj/item/weapon/storage/box/samplebags
 	name = "sample bag box"
 	desc = "A box claiming to contain sample bags."
-	New()
-		for(var/i=0, i<7, i++)
-			var/obj/item/weapon/evidencebag/S = new(src)
-			S.name = "sample bag"
-			S.desc = "a bag for holding research samples."
-		..()
-		return
+
+/obj/item/weapon/storage/box/samplebags/atom_init()
+	for (var/i in 1 to 7)
+		var/obj/item/weapon/evidencebag/S = new(src)
+		S.name = "sample bag"
+		S.desc = "a bag for holding research samples."
+	. = ..()
 
 //////////////////////////////////////////////////////////////////
 

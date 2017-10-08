@@ -34,8 +34,8 @@ log transactions
 	var/view_screen = NO_SCREEN
 	var/datum/effect/effect/system/spark_spread/spark_system
 
-/obj/machinery/atm/New()
-	..()
+/obj/machinery/atm/atom_init()
+	. = ..()
 	machine_id = "[station_name()] RT #[num_financial_terminals++]"
 	spark_system = new /datum/effect/effect/system/spark_spread
 	spark_system.set_up(5, 0, src)
