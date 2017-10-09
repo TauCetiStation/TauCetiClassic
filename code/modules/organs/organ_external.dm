@@ -413,8 +413,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		for(var/datum/wound/W in wounds)
 			//Infected wounds raise the organ's germ level
 			if (W.germ_level > germ_level)
-				germ_level++
-				break	//limit increase to a maximum of one per second
+				germ_level = min(W.amount + germ_level, W.germ_level) //faster infections from dirty wounds, but not faster than natural wound germification.
 
 /obj/item/organ/external/proc/handle_germ_effects()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")

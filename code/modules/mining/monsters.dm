@@ -20,6 +20,7 @@
 	a_intent = "harm"
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
+	weather_immunities = list("ash", "acid")
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()

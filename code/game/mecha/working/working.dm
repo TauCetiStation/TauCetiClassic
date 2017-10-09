@@ -4,7 +4,7 @@
 /obj/mecha/working/New()
 	..()
 	var/turf/T = get_turf(src)
-	if(T.z != ZLEVEL_CENTCOMM)
+	if(T.z != ZLEVEL_CENTCOMM && T.z != ZLEVEL_JUNKYARD)
 		new /obj/item/mecha_parts/mecha_tracking(src)
 	return
 
