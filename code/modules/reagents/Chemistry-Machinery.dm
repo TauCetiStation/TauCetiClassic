@@ -2,7 +2,7 @@
 #define LIQUID 2
 #define GAS 3
 #define MAX_PILL_SPRITE 20
-#define MAX_BOTTLE_SPRITE 20
+#define MAX_BOTTLE_SPRITE 3
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	density = 1
@@ -475,7 +475,7 @@
 		return
 
 	else if(href_list["changebottle"])
-		var/dat = "<B>Choose bottle colour</B><BR>"
+		var/dat = "<B>Choose bottle</B><BR>"
 
 		dat += "<TABLE><TR>"
 		for(var/i = 1 to MAX_BOTTLE_SPRITE)

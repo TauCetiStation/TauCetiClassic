@@ -6,29 +6,37 @@
 	desc = "A small bottle."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = null
-	item_state = "atoxinbottle"
+	item_state = "bottle1"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10,15,25,30)
 	flags = OPENCONTAINER
 	volume = 30
+	var/filler_margin_y = 11
+	var/filler_height = 7
+	var/current_offset = -1
 
-	New()
-		..()
-		if(!icon_state)
-			icon_state = "bottle[rand(1,20)]"
+/obj/item/weapon/reagent_containers/glass/bottle/New()
+	..()
+	if(!icon_state)
+		icon_state = "bottle[rand(1,3)]"
 
+/obj/item/weapon/reagent_containers/glass/bottle/update_icon()
+	current_offset = show_filler_on_icon(filler_margin_y, filler_height, current_offset)
+
+	overlays.Cut()
+	if (!is_open_container())
+		var/image/lid = image(icon, src, "lid_bottle")
+		overlays += lid
+
+/obj/item/weapon/reagent_containers/glass/bottle/on_reagent_change()
+	..()
 	update_icon()
-		overlays.Cut()
-
-		if (!is_open_container())
-			var/image/lid = image(icon, src, "lid_bottle")
-			overlays += lid
 
 /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline
 	name = "inaprovaline bottle"
 	desc = "A small bottle. Contains inaprovaline - used to stabilize patients."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle16"
+	icon_state = "bottle1"
 
 	New()
 		..()
@@ -38,7 +46,7 @@
 	name = "kyphotorin bottle"
 	desc = "A small bottle. Contains kyphotorin - used to recover bones."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle18"
+	icon_state = "bottle1"
 
 /obj/item/weapon/reagent_containers/glass/bottle/kyphotorin/New()
 	..()
@@ -48,7 +56,7 @@
 	name = "toxin bottle"
 	desc = "A small bottle of toxins. Do not drink, it is poisonous."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle12"
+	icon_state = "bottle2"
 
 	New()
 		..()
@@ -58,7 +66,7 @@
 	name = "cyanide bottle"
 	desc = "A small bottle of cyanide. Bitter almonds?"
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle12"
+	icon_state = "bottle2"
 
 	New()
 		..()
@@ -68,7 +76,7 @@
 	name = "sleep-toxin bottle"
 	desc = "A small bottle of sleep toxins. Just the fumes make you sleepy."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle20"
+	icon_state = "bottle2"
 
 	New()
 		..()
@@ -78,7 +86,7 @@
 	name = "Chloral Hydrate Bottle"
 	desc = "A small bottle of Choral Hydrate. Mickey's Favorite!"
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle20"
+	icon_state = "bottle2"
 
 	New()
 		..()
@@ -88,7 +96,7 @@
 	name = "anti-toxin bottle"
 	desc = "A small bottle of Anti-toxins. Counters poisons, and repairs damage, a wonder drug."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle17"
+	icon_state = "bottle1"
 
 	New()
 		..()
@@ -98,7 +106,7 @@
 	name = "unstable mutagen bottle"
 	desc = "A small bottle of unstable mutagen. Randomly changes the DNA structure of whoever comes in contact."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle20"
+	icon_state = "bottle2"
 
 	New()
 		..()
@@ -108,7 +116,7 @@
 	name = "ammonia bottle"
 	desc = "A small bottle."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle20"
+	icon_state = "bottle2"
 
 	New()
 		..()
@@ -118,7 +126,7 @@
 	name = "diethylamine bottle"
 	desc = "A small bottle."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle17"
+	icon_state = "bottle1"
 
 	New()
 		..()
@@ -293,7 +301,7 @@
 	name = "Polytrinic Acid Bottle"
 	desc = "A small bottle. Contains a small amount of Polytrinic Acid"
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle17"
+	icon_state = "bottle1"
 	New()
 		..()
 		reagents.add_reagent("pacid", 30)
@@ -302,7 +310,7 @@
 	name = "Adminordrazine Bottle"
 	desc = "A small bottle. Contains the liquid essence of the gods."
 	icon = 'icons/obj/drinks.dmi'
-	icon_state = "holyflask"
+	icon_state = "bottle1"
 	New()
 		..()
 		reagents.add_reagent("adminordrazine", 30)
@@ -320,7 +328,7 @@
 	name = "Frost Oil Bottle"
 	desc = "A small bottle. Contains cold sauce."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle17"
+	icon_state = "bottle1"
 	New()
 		..()
 		reagents.add_reagent("frostoil", 30)
@@ -338,7 +346,7 @@
 	name = "alphaamanitin bottle"
 	desc = "A small bottle of alpha-amanitin. Did you like mushrooms?"
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle12"
+	icon_state = "bottle2"
 	New()
 		..()
 		reagents.add_reagent("alphaamanitin", 30)
@@ -347,7 +355,7 @@
 	name = "carpotoxin bottle"
 	desc = "A small bottle of carpotoxin. Upon receipt of substance no carp was not injured."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle12"
+	icon_state = "bottle2"
 	New()
 		..()
 		reagents.add_reagent("carpotoxin", 30)
@@ -356,7 +364,7 @@
 	name = "zombiepowder bottle"
 	desc = "A small bottle of zombiepowder. We are not responsible for the uprising of dead."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle16"
+	icon_state = "bottle1"
 	New()
 		..()
 		reagents.add_reagent("zombiepowder", 30)
@@ -366,7 +374,7 @@
 	name = "peridaxon bottle"
 	desc = "A small bottle of peridaxon."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle18"
+	icon_state = "bottle1"
 
 /obj/item/weapon/reagent_containers/glass/bottle/peridaxon/New()
 	..()
@@ -376,7 +384,7 @@
 	name = "lexorin bottle"
 	desc = "A small bottle of peridaxon."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle15"
+	icon_state = "bottle1"
 
 /obj/item/weapon/reagent_containers/glass/bottle/lexorin/New()
 	..()
@@ -386,7 +394,7 @@
 	name = "nantes bottle"
 	desc = "A small bottle of peridaxon."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "bottle10"
+	icon_state = "bottle2"
 
 /obj/item/weapon/reagent_containers/glass/bottle/nanites/New()
 	..()
