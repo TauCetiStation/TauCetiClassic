@@ -55,6 +55,8 @@
 		var/atom/movable/to_add = A
 		if(to_add.anchored || to_add.orbiting)
 			return
+		if(get_area(to_add) != get_area(src))
+			return
 		if(istype(to_add, /mob/living))
 			var/mob/living/nomove = to_add
 			nomove.apply_effect(5, STUN)

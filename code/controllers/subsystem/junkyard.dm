@@ -33,6 +33,7 @@ var/datum/subsystem/junkyard/SSjunkyard
 			T.surround_by_scrap()
 		CHECK_TICK
 	junkyard_initialised = 1
+	SSweather.eligible_zlevels.Add(7) //junkyard
 
 /datum/subsystem/junkyard/proc/add_junk_to_stats(junktype)
 	if(!junktype)

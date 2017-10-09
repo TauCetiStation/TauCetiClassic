@@ -37,7 +37,7 @@
 	var/overlay_layer = AREA_LAYER //Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
 	var/aesthetic = FALSE //If the weather has no purpose other than looks
 	var/immunity_type = "storm" //Used by mobs to prevent them from being affected by the weather
-
+	var/additional_action = FALSE // Use when we want some other firing process to run in controller
 	var/stage = END_STAGE //The stage of the weather, from 1-4
 
 	var/probability = FALSE //Percent chance to happen if there are other possible weathers on the z-level
@@ -121,6 +121,9 @@
 	return 1
 
 /datum/weather/proc/impact(mob/living/L) //What effect does this weather have on the hapless mob?
+	return
+
+/datum/weather/proc/additional_action() //Proc for other actions?
 	return
 
 /datum/weather/proc/update_areas()

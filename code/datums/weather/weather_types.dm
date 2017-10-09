@@ -105,6 +105,9 @@
 /datum/weather/scrap_storm/start()
 	..()
 	if(spawn_tornadoes)
+		var/area/A = locate(area_type)
+		for(var/obj/item/weapon/scrap_lump/C in A)
+			qdel(C)
 		var/list/turfs = get_area_turfs(area_type)
 		for(var/i = 1 to 4)
 			var/turf/wheretospawn = pick(turfs)
@@ -228,7 +231,7 @@
 	weather_alpha = 60
 	end_message = "<span class='notice'>The rain starts to dissipate.</span>"
 	end_sound = 'sound/ambience/acidrain_end.ogg'
-
+	additional_action = TRUE
 	area_type = /area/awaymission/junkyard
 	target_z = ZLEVEL_JUNKYARD
 
@@ -240,5 +243,19 @@
 /datum/weather/acid_rain/impact(mob/living/L)
 	if(!istype(/turf/, L.loc))
 		return
+	L.water_act(5)
 	if(!prob(L.getarmor(null, "bio")))
 		L.take_overall_damage(0, 1)
+
+/datum/weather/acid_rain/additional_action() //Proc for other actions?
+	if(prob(15))
+		var/list/turfs = get_area_turfs(area_type)
+		for(var/i = 1 to turfs.len / 400)
+			var/turf/wheretospawn = pick(turfs)
+			if(wheretospawn.density)
+				continue
+			var/obj/effect/fluid/F = locate() in wheretospawn
+			if(!F)
+				F = new(wheretospawn)
+				F.set_depth(5)
+

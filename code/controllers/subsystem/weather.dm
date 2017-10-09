@@ -9,7 +9,7 @@ var/datum/subsystem/weather/SSweather
 	wait = 10
 	var/list/processing = list()
 	var/list/existing_weather = list()
-	var/list/eligible_zlevels = list(ZLEVEL_JUNKYARD)
+	var/list/eligible_zlevels = list()
 
 /datum/subsystem/weather/fire()
 	for(var/V in processing)
@@ -19,6 +19,9 @@ var/datum/subsystem/weather/SSweather
 		for(var/mob/living/L in mob_list)
 			if(W.can_impact(L))
 				W.impact(L)
+		if(W.additional_action)
+			W.additional_action()
+
 	for(var/Z in eligible_zlevels)
 		var/list/possible_weather_for_this_z = list()
 		for(var/V in existing_weather)
