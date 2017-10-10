@@ -6851,7 +6851,7 @@
 "cHg" = (/obj/machinery/camera{c_tag = "Main Computer Room"; dir = 2; network = list("Tcomsat")},/obj/structure/table/woodentable,/obj/item/weapon/paper_bin,/obj/item/weapon/pen/blue,/turf/simulated/floor/carpet,/area/tcommsat/computer)
 "cHh" = (/obj/structure/closet/malf/suits,/obj/item/clothing/glasses/night,/turf/simulated/floor/carpet,/area/tcommsat/computer)
 "cHl" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/lattice,/turf/space,/area/space)
-"cHm" = (/obj/item/device/radio/intercom{anyai = 1; freerange = 1; name = "General Listening Channel"; pixel_x = -28; pixel_y = 0},/obj/machinery/computer/telecomms/traffic,/turf/simulated/floor/carpet,/area/tcommsat/computer)
+"cHm" = (/obj/item/device/radio/intercom{anyai = 1; freerange = 1; name = "General Listening Channel"; pixel_x = -28; pixel_y = 0},/turf/simulated/floor/carpet,/area/tcommsat/computer)
 "cHp" = (/turf/simulated/floor/carpet,/area/tcommsat/computer)
 "cHr" = (/obj/machinery/computer/telecomms/monitor{network = list("tcommsat")},/obj/item/device/radio/intercom{anyai = 1; freerange = 1; name = "General Listening Channel"; pixel_x = 28; pixel_y = 0},/turf/simulated/floor/carpet,/area/tcommsat/computer)
 "cHt" = (/obj/machinery/computer/telecomms/server{network = list("tcommsat")},/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/floor/carpet,/area/tcommsat/computer)
