@@ -821,6 +821,8 @@
 			number += 2
 	if(istype(src.glasses, /obj/item/clothing/glasses/night/shadowling))
 		number -= 1
+	if(istype(src.head, /obj/item/clothing/head/helmet/space/sk))
+		number = 0
 	return number
 
 
