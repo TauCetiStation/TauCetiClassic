@@ -501,9 +501,9 @@
 /obj/item/weapon/storage/box/holobadge/atom_init()
 	. = ..()
 	for(var/i in 1 to 4)
-		new /obj/item/clothing/tie/holobadge(src)
+		new /obj/item/clothing/accessory/holobadge(src)
 	for(var/i in 1 to 3)
-		new /obj/item/clothing/tie/holobadge/cord(src)
+		new /obj/item/clothing/accessory/holobadge/cord(src)
 
 //Evidence bag
 /obj/item/weapon/storage/box/evidence

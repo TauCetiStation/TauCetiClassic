@@ -1132,9 +1132,9 @@ datum/supply_pack/New()
 
 /datum/supply_pack/vest
 	name = "Vest Crate"
-	contains = list(/obj/item/clothing/tie/storage/brown_vest,
-					/obj/item/clothing/tie/storage/brown_vest,
-					/obj/item/clothing/tie/storage/black_vest)
+	contains = list(/obj/item/clothing/accessory/storage/brown_vest,
+					/obj/item/clothing/accessory/storage/brown_vest,
+					/obj/item/clothing/accessory/storage/black_vest)
 	cost = 4000
 	crate_name = "Vest Crate"
 	group = "Supply"

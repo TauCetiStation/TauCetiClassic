@@ -120,7 +120,7 @@
 	new /obj/item/device/flash(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/melee/baton(src)
-	new /obj/item/clothing/tie/holster/waist(src)
+	new /obj/item/clothing/accessory/holster/waist(src)
 	new /obj/item/weapon/melee/telebaton(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/device/flashlight/flare(src)
@@ -153,7 +153,7 @@
 	new /obj/item/clothing/under/rank/warden_fem(src)
 	new /obj/item/clothing/suit/storage/flak(src)
 	new /obj/item/clothing/suit/storage/flak/warden(src)
-	new /obj/item/clothing/tie/holster/armpit(src)
+	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/weapon/gun/energy/taser(src)
 	new /obj/item/weapon/storage/belt/security(src)
 	new /obj/item/clothing/mask/gas/sechailer(src)
@@ -191,7 +191,7 @@
 	new /obj/item/clothing/suit/storage/flak(src)
 	new /obj/item/clothing/head/helmet(src)
 	new /obj/item/weapon/storage/belt/security(src)
-	new /obj/item/clothing/tie/holster/armpit(src)
+	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/weapon/gun/energy/taser(src)
 	new /obj/item/device/radio/headset/headset_sec(src)
 	new /obj/item/device/flash(src)
@@ -211,25 +211,25 @@
 /obj/structure/closet/secure_closet/security/cargo
 
 /obj/structure/closet/secure_closet/security/cargo/PopulateContents()
-	new /obj/item/clothing/tie/armband/cargo(src)
+	new /obj/item/clothing/accessory/armband/cargo(src)
 	new /obj/item/device/encryptionkey/headset_cargo(src)
 
 /obj/structure/closet/secure_closet/security/engine
 
 /obj/structure/closet/secure_closet/security/engine/PopulateContents()
-	new /obj/item/clothing/tie/armband/engine(src)
+	new /obj/item/clothing/accessory/armband/engine(src)
 	new /obj/item/device/encryptionkey/headset_eng(src)
 
 /obj/structure/closet/secure_closet/security/science
 
 /obj/structure/closet/secure_closet/security/science/PopulateContents()
-	new /obj/item/clothing/tie/armband/science(src)
+	new /obj/item/clothing/accessory/armband/science(src)
 	new /obj/item/device/encryptionkey/headset_sci(src)
 
 /obj/structure/closet/secure_closet/security/med
 
 /obj/structure/closet/secure_closet/security/med/PopulateContents()
-	new /obj/item/clothing/tie/armband/medgreen(src)
+	new /obj/item/clothing/accessory/armband/medgreen(src)
 	new /obj/item/device/encryptionkey/headset_med(src)
 
 /obj/structure/closet/secure_closet/detective
@@ -262,7 +262,7 @@
 		new /obj/item/ammo_box/magazine/c45r(src)
 	new /obj/item/taperoll/police(src)
 	new /obj/item/weapon/gun/projectile/automatic/colt1911(src)
-	new /obj/item/clothing/tie/holster/armpit(src)
+	new /obj/item/clothing/accessory/holster/armpit(src)
 
 /obj/structure/closet/secure_closet/detective/update_icon()
 	if(broken)

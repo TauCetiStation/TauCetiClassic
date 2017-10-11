@@ -125,10 +125,10 @@
 /obj/item/clothing/suit/space/price = 24456
 /obj/item/clothing/suit/space/rig/price = 32547
 /obj/item/clothing/suit/storage/labcoat/cmo/price = 5500
-/obj/item/clothing/tie/holobadge/price = 350
-/obj/item/clothing/tie/holster/price = 1600
-/obj/item/clothing/tie/medal/price = 9500
-/obj/item/clothing/tie/medal/gold/captain/price = 70000
+/obj/item/clothing/accessory/holobadge/price = 350
+/obj/item/clothing/accessory/holster/price = 1600
+/obj/item/clothing/accessory/medal/price = 9500
+/obj/item/clothing/accessory/medal/gold/captain/price = 70000
 /obj/item/clothing/under/M35_Jacket/price = 750
 /obj/item/clothing/under/M35_Jacket_Oficer/price = 1000
 /obj/item/clothing/under/chameleon/price = 444
