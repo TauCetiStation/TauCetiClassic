@@ -10,10 +10,10 @@
 	var/cooldown = 70
 	var/last_played = 0
 
-/obj/item/device/harmonica/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/device/harmonica/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M) || M != user)
 		return ..()
-	if(user.zone_sel.selecting == O_MOUTH && last_played <= world.time)
+	if(def_zone == O_MOUTH && last_played <= world.time)
 		play(user)
 
 /obj/item/device/harmonica/New()

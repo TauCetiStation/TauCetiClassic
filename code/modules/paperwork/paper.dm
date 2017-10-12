@@ -159,13 +159,13 @@
 		show_content(user, forcestars = TRUE)
 	return
 
-/obj/item/weapon/paper/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(user.zone_sel.selecting == O_EYES)
+/obj/item/weapon/paper/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+	if(def_zone == O_EYES)
 		user.visible_message("<span class='notice'>You show the paper to [M]. </span>", \
 			"<span class='notice'> [user] holds up a paper and shows it to [M]. </span>")
 		to_chat(M, examine())
 
-	else if(user.zone_sel.selecting == O_MOUTH) // lipstick wiping
+	else if(def_zone == O_MOUTH) // lipstick wiping
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H == user)

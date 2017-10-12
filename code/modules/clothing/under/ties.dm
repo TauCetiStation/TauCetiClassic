@@ -66,10 +66,10 @@
 	icon_state = "stethoscope"
 	item_color = "stethoscope"
 
-/obj/item/clothing/tie/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
+/obj/item/clothing/tie/stethoscope/attack(mob/living/carbon/human/M, mob/living/user, def_zone)
 	if(ishuman(M) && isliving(user))
 		if(user.a_intent == "help")
-			var/target_zone = parse_zone(user.zone_sel.selecting)
+			var/target_zone = parse_zone(def_zone)
 			if(target_zone)
 				var/their = "their"
 				switch(M.gender)

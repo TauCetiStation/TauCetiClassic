@@ -1,29 +1,26 @@
-/obj/item/robot_parts/attack(mob/living/carbon/human/M, mob/living/carbon/user)
+/obj/item/robot_parts/attack(mob/living/carbon/human/M, mob/living/carbon/user, def_zone)
 	var/child = null
 
-	if(!istype(M))
+	if(!ishuman(M))
 		return ..()
 
 	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/stool/bed/roller, M.loc) && (M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(75) || (locate(/obj/structure/table/, M.loc) && (M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(66))))
 		return ..()
 
-	if(!istype(M, /mob/living/carbon/human))
-		return ..()
-
-	if((user.zone_sel.selecting == BP_L_ARM) && (istype(src, /obj/item/robot_parts/l_arm)))
+	if((def_zone == BP_L_ARM) && (istype(src, /obj/item/robot_parts/l_arm)))
 		child = BP_L_HAND
-	else if((user.zone_sel.selecting == BP_R_ARM) && (istype(src, /obj/item/robot_parts/r_arm)))
+	else if((def_zone == BP_R_ARM) && (istype(src, /obj/item/robot_parts/r_arm)))
 		child = BP_R_HAND
-	else if((user.zone_sel.selecting == BP_R_LEG) && (istype(src, /obj/item/robot_parts/r_leg)))
+	else if((def_zone == BP_R_LEG) && (istype(src, /obj/item/robot_parts/r_leg)))
 		child = BP_R_FOOT
-	else if((user.zone_sel.selecting == BP_L_LEG) && (istype(src, /obj/item/robot_parts/l_leg)))
+	else if((def_zone == BP_L_LEG) && (istype(src, /obj/item/robot_parts/l_leg)))
 		child = BP_L_FOOT
 	else
 		to_chat(user, "\red That doesn't fit there!")
 		return ..()
 
 	var/mob/living/carbon/human/H = M
-	var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+	var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 	if(BP.status & ORGAN_DESTROYED)
 		if(!(BP.status & ORGAN_ATTACHABLE))
 			to_chat(user, "\red The wound is not ready for a replacement!")

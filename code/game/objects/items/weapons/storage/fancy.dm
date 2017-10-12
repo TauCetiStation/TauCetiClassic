@@ -203,11 +203,11 @@
 			reagents.trans_to(W, (reagents.total_volume/contents.len))
 	..()
 
-/obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!istype(M, /mob))
+/obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+	if(!istype(M))
 		return
 
-	if(M == user && user.zone_sel.selecting == O_MOUTH && contents.len > 0 && !user.wear_mask)
+	if(M == user && def_zone == O_MOUTH && contents.len > 0 && !user.wear_mask)
 		var/has_cigarette = 0
 		for(var/obj/item/I in contents)
 			if(istype(I, /obj/item/clothing/mask/cigarette))

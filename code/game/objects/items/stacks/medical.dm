@@ -11,7 +11,7 @@
 	var/heal_brute = 0
 	var/heal_burn = 0
 
-/obj/item/stack/medical/attack(mob/living/carbon/M, mob/user)
+/obj/item/stack/medical/attack(mob/living/carbon/M, mob/user, def_zone)
 	if(!istype(M))
 		to_chat(user, "<span class='warning'>\The [src] cannot be applied to [M]!</span>")
 		return 1
@@ -19,15 +19,13 @@
 	if(user.is_busy())
 		return 1
 
-	if(!(istype(user, /mob/living/carbon/human) || \
-			istype(user, /mob/living/silicon) || \
-			istype(user, /mob/living/carbon/monkey)) )
+	if(!(ishuman(user) || issilicon(user) || ismonkey(user)) )
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
 
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 
 		if(BP.body_zone == BP_HEAD)
 			if(H.head && istype(H.head,/obj/item/clothing/head/helmet/space))
@@ -55,13 +53,13 @@
 	icon_state = "brutepack"
 	origin_tech = "biotech=1"
 
-/obj/item/stack/medical/bruise_pack/attack(mob/living/carbon/M, mob/user)
+/obj/item/stack/medical/bruise_pack/attack(mob/living/carbon/M, mob/user, def_zone)
 	if(..())
 		return 1
 
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 
 		if(BP.open == 0)
 			if(BP.is_bandaged())
@@ -119,13 +117,13 @@
 	heal_burn = 1
 	origin_tech = "biotech=1"
 
-/obj/item/stack/medical/ointment/attack(mob/living/carbon/M, mob/user)
+/obj/item/stack/medical/ointment/attack(mob/living/carbon/M, mob/user, def_zone)
 	if(..())
 		return 1
 
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 
 		if(BP.open == 0)
 			if(BP.is_salved())
@@ -176,13 +174,13 @@
 	heal_brute = 12
 	origin_tech = "biotech=1"
 
-/obj/item/stack/medical/advanced/bruise_pack/attack(mob/living/carbon/M, mob/user)
+/obj/item/stack/medical/advanced/bruise_pack/attack(mob/living/carbon/M, mob/user, def_zone)
 	if(..())
 		return 1
 
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 
 		if(BP.open == 0)
 			if(BP.is_bandaged() && BP.is_disinfected())
@@ -236,13 +234,13 @@
 	heal_burn = 12
 	origin_tech = "biotech=1"
 
-/obj/item/stack/medical/advanced/ointment/attack(mob/living/carbon/M, mob/user)
+/obj/item/stack/medical/advanced/ointment/attack(mob/living/carbon/M, mob/user, def_zone)
 	if(..())
 		return 1
 
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 
 		if(BP.open == 0)
 			if(BP.is_salved())
@@ -279,13 +277,13 @@
 	amount = 5
 	max_amount = 5
 
-/obj/item/stack/medical/splint/attack(mob/living/carbon/M, mob/user)
+/obj/item/stack/medical/splint/attack(mob/living/carbon/M, mob/user, def_zone)
 	if(..())
 		return 1
 
-	if(istype(M, /mob/living/carbon/human))
+	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 		var/limb = BP.name
 		if(!((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)))
 			to_chat(user, "<span class='danger'>You can't apply a splint there!</span>")

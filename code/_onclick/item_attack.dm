@@ -13,7 +13,10 @@
 
 /mob/living/attackby(obj/item/I, mob/user, params)
 	if(istype(I) && ismob(user))
-		I.attack(src, user)
+		if(user.zone_sel && user.zone_sel.selecting)
+			I.attack(src, user, user.zone_sel.selecting)
+		else
+			I.attack(src, user)
 
 		if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
 			var/mob/living/carbon/human/H = user
@@ -55,7 +58,7 @@
 	// Knifing
 	if(edge)
 		for(var/obj/item/weapon/grab/G in M.grabbed_by)
-			if(G.assailant == user && G.state >= GRAB_NECK && world.time >= (G.last_action + 20) && user.zone_sel.selecting == BP_HEAD)
+			if(G.assailant == user && G.state >= GRAB_NECK && world.time >= (G.last_action + 20) && def_zone == BP_HEAD)
 				var/protected = 0
 				if(ishuman(M))
 					var/mob/living/carbon/human/AH = M

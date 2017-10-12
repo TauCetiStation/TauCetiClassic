@@ -5,13 +5,23 @@
 	recieving object instead, so that's the default action.  This allows you to drag
 	almost anything into a trash can.
 */
-/atom/MouseDrop(atom/over)
-	if(!usr || !over) return
-	if(!Adjacent(usr) || !over.Adjacent(usr)) return // should stop you from dragging through windows
+/atom/proc/CanMouseDrop(atom/over, mob/user = usr)
+	if(!user || !over)
+		return FALSE
+	if(user.incapacitated())
+		return FALSE
+	if(!src.Adjacent(user) || !over.Adjacent(user))
+		return FALSE // should stop you from dragging through windows
+	return TRUE
 
-	spawn(0)
-		over.MouseDrop_T(src,usr)
-	return
+
+/atom/MouseDrop(atom/over)
+	if(!usr || !over)
+		return
+	if(!Adjacent(usr) || !over.Adjacent(usr))
+		return // should stop you from dragging through windows
+
+	INVOKE_ASYNC(over, /atom.proc/MouseDrop_T, src, usr)
 
 // recieve a mousedrop
 /atom/proc/MouseDrop_T(atom/dropping, mob/user)
