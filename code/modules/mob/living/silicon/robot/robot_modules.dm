@@ -152,7 +152,6 @@
 		src.modules += new /obj/item/weapon/extinguisher/mini(src)
 		src.modules += new /obj/item/weapon/twohanded/shockpaddles/robot(src)
 		src.modules += new /obj/item/weapon/gripper/chemistry(src)
-
 		src.emag = new /obj/item/weapon/reagent_containers/spray(src)
 
 		src.emag.reagents.add_reagent("pacid", 250)
