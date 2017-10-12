@@ -204,7 +204,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		if(can_unwrench)
-			var/obj/item/pipe/stored = new(loc, make_from = src)
+			var/obj/item/pipe/stored = new(loc, null, null, src)
 			transfer_fingerprints_to(stored)
 	..()
 

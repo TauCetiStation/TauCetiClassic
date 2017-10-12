@@ -97,7 +97,7 @@
 			"<span class='notice'>\The [user] unfastens \the [src].</span>",
 			"<span class='notice'>You have unfastened \the [src].</span>",
 			"You hear a ratchet.")
-		new /obj/item/pipe(loc, make_from = src)
+		new /obj/item/pipe(loc, null, null, src)
 		qdel(src)
 
 /obj/machinery/atmospherics/components/omni/attack_hand(user)

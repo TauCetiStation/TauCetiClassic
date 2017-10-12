@@ -31,11 +31,8 @@
 	src.dir = dir
 	if(movement_range > 20)
 		movement_range = 20
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/effect/accelerated_particle/atom_init_late()
-	move(1)
+	INVOKE_ASYNC(src, .proc/move, 1)
+	. = ..()
 
 /obj/effect/accelerated_particle/Bump(atom/A)
 	if (A)

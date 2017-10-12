@@ -28,6 +28,9 @@
 		var/image/lid = image(icon, src, "lid_bottle")
 		overlays += lid
 
+/obj/item/weapon/reagent_containers/glass/bottle/on_reagent_change()
+	..()
+	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline
 	name = "inaprovaline bottle"

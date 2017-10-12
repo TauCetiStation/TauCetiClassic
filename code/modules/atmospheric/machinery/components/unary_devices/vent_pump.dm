@@ -123,8 +123,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon(safety = 0)
 	if(!check_icon_cache())
 		return
-	if (!NODE1)
-		use_power = 0
 
 	overlays.Cut()
 
