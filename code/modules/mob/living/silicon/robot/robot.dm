@@ -410,7 +410,7 @@
 
 /mob/living/silicon/robot/proc/toggle_lights()
 	if (stat == DEAD)
- 		return
+		return
  	lights_on = !lights_on
 	to_chat(usr, "You [lights_on ? "enable" : "disable"] your integrated light.")
 	if(lights_on)
