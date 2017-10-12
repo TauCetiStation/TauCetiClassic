@@ -409,17 +409,14 @@
 	src << browse(dat, "window=robotdiagnosis")
 
 /mob/living/silicon/robot/proc/toggle_lights()
-	lights_on = !lights_on
 	if (stat == DEAD)
- 	return
+ 		return
+ 	lights_on = !lights_on
 	to_chat(usr, "You [lights_on ? "enable" : "disable"] your integrated light.")
 	if(lights_on)
 		set_light(5)
 	else
 		set_light(0)
-
-
-
 
 /mob/living/silicon/robot/proc/toggle_component()
 
