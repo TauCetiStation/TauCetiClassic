@@ -38,7 +38,6 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
-	var/lava = 0
 	var/broken = 0
 	var/burnt = 0
 	var/mineral = "metal"
@@ -85,14 +84,14 @@ var/list/wood_icons = list("wood","wood-broken")
 	//set src in oview(1)
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(basetype)
 		if(2.0)
 			switch(pick(1,2;75,3))
 				if (1)
 					src.ReplaceWithLattice()
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 				if(2)
-					src.ChangeTurf(/turf/space)
+					src.ChangeTurf(basetype)
 				if(3)
 					if(prob(80))
 						src.break_tile_to_plating()
@@ -144,9 +143,7 @@ var/list/wood_icons = list("wood","wood-broken")
 			ReplaceWithLattice()
 
 /turf/simulated/floor/update_icon()
-	if(lava)
-		return
-	else if(is_plasteel_floor())
+	if(is_plasteel_floor())
 		if(!broken && !burnt)
 			icon_state = icon_regular_floor
 	else if(is_plating())

@@ -380,6 +380,12 @@ BLIND     // can't see anything
 		hastie.emp_act(severity)
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
+	if(I.sharp && !istype(loc, /mob/living/carbon/human)) //you can cut only clothes lying on the floor
+		new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), old = crit_fail)
+		new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), old = crit_fail)
+		new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), old = crit_fail)
+		qdel(src)
+		return
 	if(hastie)
 		hastie.attackby(I, user)
 		return
@@ -394,7 +400,6 @@ BLIND     // can't see anything
 			H.update_inv_w_uniform()
 		action_button_name = "Use inventory."
 		return
-
 	..()
 
 /obj/item/clothing/under/attack_hand(mob/user)

@@ -21,3 +21,22 @@
 					prob(2);/obj/random/guns/set_shotgun,\
 					prob(1);/obj/random/guns/set_357)
 	..()
+
+
+/obj/item/blueprints/junkyard
+	color = "yellow"
+	name = "build plans"
+	desc = "Automatic shelter schematics. Warning: Single use only!"
+	var/used = 0
+	greedy = 1
+	max_area_size = 150
+
+/obj/item/blueprints/junkyard/interact()
+	if(!used)
+		create_area()
+	else
+		qdel(src)
+
+/obj/item/blueprints/junkyard/create_area()
+	used = 1
+	..()

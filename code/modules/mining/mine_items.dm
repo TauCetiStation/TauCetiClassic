@@ -577,7 +577,7 @@ obj/item/projectile/kinetic/New()
 	get_template()
 	if(!used)
 		var/turf/T = get_turf(src)
-		if((T.z != ZLEVEL_ASTEROID) && !istype(T.loc, /area/space)) //we don't need complete all checks
+		if((T.z != ZLEVEL_ASTEROID) && (T.z != ZLEVEL_JUNKYARD) && !istype(T.loc, /area/space)  && !istype(T.loc, /area/shuttle)) //we don't need complete all checks
 			src.loc.visible_message("<span class='warning'>You must use shelter at asteroid or in space! Grab this shit \
 			and shut up!</span>")
 			used = TRUE

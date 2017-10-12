@@ -80,7 +80,7 @@
 	flick("[mineralType]opening",src)
 	sleep(10)
 	density = 0
-	opacity = 0
+	set_opacity(0)
 	state = 1
 	update_icon()
 	isSwitchingStates = 0
@@ -92,7 +92,7 @@
 	flick("[mineralType]closing",src)
 	sleep(10)
 	density = 1
-	opacity = 1
+	set_opacity(1)
 	state = 0
 	update_icon()
 	isSwitchingStates = 0

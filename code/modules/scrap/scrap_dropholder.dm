@@ -14,6 +14,7 @@
 	dropped.loc = get_turf_loc(src)
 	var/initial_x = dropped.pixel_x
 	var/initial_y = dropped.pixel_y
+	dropped.plane = 1
 	dropped.pixel_x = rand(-150, 150)
 	dropped.pixel_y = 500 //when you think that pixel_z is height but you are wrong
 	dropped.density = 0
@@ -28,6 +29,7 @@
 		playsound(dropped.loc, 'sound/effects/meteorimpact.ogg', 50, 1)
 		dropped.density = initial(dropped.density)
 		dropped.opacity = initial(dropped.opacity)
+		dropped.plane = initial(dropped.plane)
 	qdel(src)
 
 /obj/effect/falling_effec/ex_act()

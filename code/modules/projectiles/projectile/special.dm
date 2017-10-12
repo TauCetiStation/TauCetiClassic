@@ -249,3 +249,10 @@
 		to_chat(H, "\red You feel the acid on your skin!")
 		return
 	..()
+
+
+/obj/item/projectile/bullet/scrap //
+	icon_state = "scrap_shot"
+	damage = 35
+	stoping_power = 8
+	kill_count = 14

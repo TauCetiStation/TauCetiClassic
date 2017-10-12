@@ -170,6 +170,7 @@ var/datum/subsystem/garbage_collector/SSgarbage
 			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
 				SSgarbage.QueueForQueuing(D)
 			if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
+				D.gc_destroyed = null
 				return
 			if (QDEL_HINT_IWILLGC)		//functionally the same as the above. qdel should assume the object will gc on its own, and not check it.
 				return
