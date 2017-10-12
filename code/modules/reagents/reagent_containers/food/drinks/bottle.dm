@@ -38,21 +38,7 @@
 		update_icon()
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/update_icon()
-	if(reagents.total_volume == 0)
-		return
-		underlays.Cut()
-
-	var/icon/filler = new('icons/obj/reagentfillings.dmi',src.icon_state)
-	var/icon/cut = new('icons/obj/reagentfillings.dmi', "cut")
-	filler += mix_color_from_reagents(reagents.reagent_list)
-
-	var/offset = round((reagents.total_volume / volume) * 24) + 2
-	filler.Blend(cut, ICON_OVERLAY,1,offset)
-	filler.SwapColor(rgb(255, 0, 220, 255), rgb(0, 0, 0, 0))
-
-	underlays.Cut()
-	underlays += filler
-
+	show_filler_on_icon(3, 24, 0)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/attack(mob/living/target, mob/living/user, def_zone)
 
