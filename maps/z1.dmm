@@ -4805,7 +4805,7 @@
 "bOu" = (/obj/machinery/atmospherics/pipe/simple/visible{dir = 5},/turf/simulated/floor{dir = 10; icon_state = "warning"},/area/rnd/mixing)
 "bOv" = (/turf/simulated/floor{icon_state = "white"},/area/rnd/telesci)
 "bOw" = (/obj/structure/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 6},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/turf/simulated/floor{icon_state = "white"},/area/rnd/mixing)
-"bOx" = (/obj/item/weapon/crowbar/red,/obj/structure/table/reinforced,/turf/simulated/floor{icon_state = "white"},/area/rnd/telesci)
+"bOx" = (/obj/item/weapon/crowbar/red,/obj/structure/table/reinforced,/obj/item/bluespace_crystal/artificial,/obj/item/bluespace_crystal/artificial,/obj/item/bluespace_crystal/artificial,/turf/simulated/floor{icon_state = "white"},/area/rnd/telesci)
 "bOy" = (/obj/machinery/atmospherics/pipe/simple/visible{dir = 9},/turf/simulated/floor{dir = 6; icon_state = "warning"},/area/rnd/mixing)
 "bOz" = (/turf/simulated/floor/engine,/area/rnd/telesci)
 "bOA" = (/obj/structure/cable{d1 = 4; d2 = 8; icon_state = "4-8"; pixel_x = 0},/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 4},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 4},/turf/simulated/floor{icon_state = "white"},/area/rnd/mixing)

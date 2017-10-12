@@ -103,7 +103,7 @@
 		src.modules += new /obj/item/device/flash(src)
 		src.modules += new /obj/item/device/healthanalyzer(src)
 		src.modules += new /obj/item/weapon/reagent_containers/borghypo/surgeon(src)
-		src.modules += new /obj/item/weapon/scalpel(src)
+		src.modules += new /obj/item/weapon/scalpel/manager(src)
 		src.modules += new /obj/item/weapon/FixOVein(src)
 		src.modules += new /obj/item/weapon/hemostat(src)
 		src.modules += new /obj/item/weapon/retractor(src)
@@ -142,6 +142,7 @@
 		src.modules += new /obj/item/device/healthanalyzer(src)
 		src.modules += new /obj/item/device/reagent_scanner/adv(src)
 		src.modules += new /obj/item/roller_holder(src)
+		src.modules += new /obj/item/weapon/crowbar(src)
 		src.modules += new /obj/item/stack/medical/ointment(src)
 		src.modules += new /obj/item/stack/medical/bruise_pack(src)
 		src.modules += new /obj/item/stack/medical/splint(src)
@@ -150,6 +151,8 @@
 		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
 		src.modules += new /obj/item/weapon/extinguisher/mini(src)
+		src.modules += new /obj/item/weapon/gripper/chemistry(src)
+		src.modules += new /obj/item/borg/sight/hud/med(src)
 		src.modules += new /obj/item/weapon/twohanded/shockpaddles/robot(src)
 
 		src.emag = new /obj/item/weapon/reagent_containers/spray(src)
@@ -263,7 +266,6 @@
 
 	New()
 		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
 		src.modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 
 		var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
@@ -277,10 +279,11 @@
 		src.modules += L
 
 		src.modules += new /obj/item/weapon/tray/robotray(src)
-		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
+		src.modules += new /obj/item/weapon/gripper/service(src)
+		src.modules += new /obj/item/weapon/gripper/paperwork(src)
 		src.modules += new /obj/item/weapon/pen/robopen(src)
 		src.modules += new /obj/item/weapon/razor(src)
-
+		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 		src.emag = new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
 
 		var/datum/reagents/R = new/datum/reagents(50)
@@ -385,9 +388,9 @@
 		src.modules += new /obj/item/weapon/wirecutters(src)
 		src.modules += new /obj/item/weapon/weldingtool/largetank(src) //To fuck and unfuck (but mostly fuck) shit up
 
-		src.emag = new /obj/item/device/lustmodule(src) //To fuck people's shit up
+		src.emag = new /obj/item/weapon/hand_tele(src) //To fuck people's shit up
 
-		src.emag.name = "Slime bloodlust pulse emitter"
+		src.emag.name = "Hand Tele"
 		return
 
 /obj/item/weapon/robot_module/drone

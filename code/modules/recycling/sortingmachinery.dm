@@ -174,13 +174,16 @@
 /obj/item/device/destTagger
 	name = "destination tagger"
 	desc = "Used to set the destination of properly wrapped packages."
-	icon_state = "dest_tagger"
+	icon_state = "dest_Tagger"
 	var/currTag = 0
 
 	w_class = 2
 	item_state = "electronic"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
+	m_amt = 3000
+	g_amt = 1300
+	origin_tech = "materials=1;engineering=1"
 
 /obj/item/device/destTagger/proc/openwindow(mob/user)
 	var/dat = "<tt><center><h1><b>TagMaster 2.3</b></h1></center>"
