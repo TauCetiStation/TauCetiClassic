@@ -805,7 +805,7 @@
 	if(istype(src.head, /obj/item/clothing/head/welding))
 		if(!src.head:up)
 			number += 2
-	if(istype(src.head, /obj/item/clothing/head/helmet/space))
+	if(istype(src.head, /obj/item/clothing/head/helmet/space) && !istype(src.head, /obj/item/clothing/head/helmet/space/sk))
 		number += 2
 	if(istype(src.glasses, /obj/item/clothing/glasses/thermal))
 		number -= 1
