@@ -78,7 +78,7 @@
 	drone_progress = 0
 
 
-/mob/dead/verb/join_as_drone()
+/mob/dead/observer/verb/join_as_drone()
 
 	set category = "Ghost"
 	set name = "Join As Drone"
