@@ -18,9 +18,9 @@ var/const/SAFETY_COOLDOWN = 100
 	var/extra_materials = 0
 	var/list/blacklist = list(/obj/item/pipe, /obj/item/pipe_meter, /obj/structure/disposalconstruct, /obj/item/weapon/reagent_containers, /obj/item/weapon/paper, /obj/item/stack/, /obj/item/weapon/pen, /obj/item/weapon/storage/, /obj/item/clothing/mask/cigarette) // Don't allow us to grind things we can poop out at 200 a second for free.
 
-/obj/machinery/recycler/New()
+/obj/machinery/recycler/atom_init()
 	// On us
-	..()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/recycler(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)

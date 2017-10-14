@@ -39,10 +39,9 @@
 		var/status = 0
 		slot_flags = null
 
-/obj/item/weapon/melee/cattleprod/New()
-	..()
+/obj/item/weapon/melee/cattleprod/atom_init()
+	. = ..()
 	update_icon()
-	return
 
 /obj/item/weapon/melee/cattleprod/attack_self(mob/user)
 	if(bcell && bcell.charge > hitcost)

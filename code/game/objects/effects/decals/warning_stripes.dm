@@ -2,8 +2,8 @@
 	icon = 'icons/effects/warning_stripes.dmi'
 	layer = 2
 
-/obj/effect/decal/warning_stripes/New()
-	. = ..()
+/obj/effect/decal/warning_stripes/atom_init()
+	..()
 
 	loc.overlays += src
-	qdel(src)
+	return INITIALIZE_HINT_QDEL

@@ -29,13 +29,11 @@
 
 /obj/structure/stool/bed/chair/pedalgen/atom_init()
 	. = ..()
-	if(anchored)
-		Generator.loc = src.loc
-		Generator.connect_to_network()
-
-/obj/structure/stool/bed/chair/pedalgen/New()
 	handle_rotation()
 	Generator = new /obj/machinery/power/dynamo(src)
+	if(anchored)
+		Generator.loc = loc
+		Generator.connect_to_network()
 
 /obj/structure/stool/bed/chair/pedalgen/examine(mob/user)
 	..()

@@ -65,8 +65,8 @@ var/list/cult_datums = list()
 
 // self other technology - Communication rune  //was other hear blood
 // join hide technology - stun rune. Rune color: bright pink.
-/obj/effect/rune/New()
-	..()
+/obj/effect/rune/atom_init()
+	. = ..()
 	cult_runes += src
 	blood_overlay = image('icons/effects/blood.dmi', src, "mfloor[rand(1, 7)]", 2)
 	blood_overlay.override = 1
@@ -234,8 +234,8 @@ var/list/cult_datums = list()
 				</html>
 				"}
 
-/obj/item/weapon/book/tome/New()
-	..()
+/obj/item/weapon/book/tome/atom_init()
+	. = ..()
 	if (icon_state == "book")
 		icon_state = "book[pick(1,2,3,4,5,6)]"
 
@@ -403,8 +403,8 @@ var/list/cult_datums = list()
 		to_chat(user, "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of.\
 		Most of these are useless, though.")
 
-obj/item/weapon/book/tome/imbued/New()
-	..()
+obj/item/weapon/book/tome/imbued/atom_init()
+	. = ..()
 	unlocked = TRUE
 	if(!cultwords["travel"])
 		runerandom()

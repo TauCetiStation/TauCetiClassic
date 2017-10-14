@@ -128,8 +128,8 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = 0
 
-/obj/item/weapon/gun/projectile/revolver/russian/New()
-	..()
+/obj/item/weapon/gun/projectile/revolver/russian/atom_init()
+	. = ..()
 	Spin()
 	update_icon()
 

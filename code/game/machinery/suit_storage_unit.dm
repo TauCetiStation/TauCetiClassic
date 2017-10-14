@@ -44,14 +44,16 @@
 	SUIT_TYPE = /obj/item/clothing/suit/space/globose/science
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose/science
 	MASK_TYPE = /obj/item/clothing/mask/breath
-/obj/machinery/suit_storage_unit/New()
-	src.update_icon()
+
+/obj/machinery/suit_storage_unit/atom_init()
+	. = ..()
 	if(SUIT_TYPE)
 		SUIT = new SUIT_TYPE(src)
 	if(HELMET_TYPE)
 		HELMET = new HELMET_TYPE(src)
 	if(MASK_TYPE)
 		MASK = new MASK_TYPE(src)
+	update_icon()
 
 /obj/machinery/suit_storage_unit/update_icon()
 	var/hashelmet = 0

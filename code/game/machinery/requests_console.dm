@@ -68,8 +68,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(icon_state == "req_comp_off")
 			icon_state = "req_comp0"
 
-/obj/machinery/requests_console/New()
-	..()
+/obj/machinery/requests_console/atom_init()
+	. = ..()
 	name = "[department] Requests Console"
 	allConsoles += src
 	//req_console_departments += department
@@ -263,7 +263,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(!announcementConsole)
 			return FALSE
 		for(var/mob/M in player_list)
-			if(!istype(M, /mob/new_player))
+			if(!isnewplayer(M))
 				to_chat(M, "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>")
 		announceAuth = 0
 		message = ""

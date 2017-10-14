@@ -16,8 +16,8 @@
 	var/static/list/modes // used to dye pipes, contains pipe colors.
 	var/obj/item/device/toner/ink
 
-/obj/item/weapon/airlock_painter/New()
-	..()
+/obj/item/weapon/airlock_painter/atom_init()
+	. = ..()
 
 	if(!modes)
 		modes = new()

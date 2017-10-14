@@ -21,8 +21,8 @@
 	var/settableTemperatureRange = 30
 
 
-/obj/machinery/space_heater/New()
-	..()
+/obj/machinery/space_heater/atom_init()
+	. = ..()
 	cell = new(src)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/space_heater(null)

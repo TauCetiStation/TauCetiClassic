@@ -144,148 +144,166 @@
 	name = "Griffeater Gin"
 	desc = "A bottle of high quality gin, produced in the New London Space Station."
 	icon_state = "ginbottle"
-	New()
-		..()
-		reagents.add_reagent("gin", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/gin/atom_init()
+	. = ..()
+	reagents.add_reagent("gin", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey
 	name = "Uncle Git's Special Reserve"
 	desc = "A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES."
 	icon_state = "whiskeybottle"
-	New()
-		..()
-		reagents.add_reagent("whiskey", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey/atom_init()
+	. = ..()
+	reagents.add_reagent("whiskey", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka
 	name = "Tunguska Triple Distilled"
 	desc = "Aah, vodka. Prime choice of drink AND fuel by Russians worldwide."
 	icon_state = "vodkabottle"
-	New()
-		..()
-		reagents.add_reagent("vodka", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vodka/atom_init()
+	. = ..()
+	reagents.add_reagent("vodka", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla
 	name = "Caccavo Guaranteed Quality Tequilla"
 	desc = "Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!"
 	icon_state = "tequillabottle"
-	New()
-		..()
-		reagents.add_reagent("tequilla", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla/atom_init()
+	. = ..()
+	reagents.add_reagent("tequilla", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing
 	name = "Bottle of Nothing"
 	desc = "A bottle filled with nothing."
 	icon_state = "bottleofnothing"
-	New()
-		..()
-		reagents.add_reagent("nothing", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing/atom_init()
+	. = ..()
+	reagents.add_reagent("nothing", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/patron
 	name = "Wrapp Artiste Patron"
 	desc = "Silver laced tequilla, served in space night clubs across the galaxy."
 	icon_state = "patronbottle"
-	New()
-		..()
-		reagents.add_reagent("patron", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/patron/atom_init()
+	. = ..()
+	reagents.add_reagent("patron", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/rum
 	name = "Captain Pete's Cuban Spiced Rum"
 	desc = "This isn't just rum, oh no. It's practically GRIFF in a bottle."
 	icon_state = "rumbottle"
-	New()
-		..()
-		reagents.add_reagent("rum", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/rum/atom_init()
+	. = ..()
+	reagents.add_reagent("rum", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater
 	name = "Flask of Holy Water"
 	desc = "A flask of the chaplain's holy water."
 	icon_state = "holyflask"
-	New()
-		..()
-		reagents.add_reagent("holywater", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/holywater/atom_init()
+	. = ..()
+	reagents.add_reagent("holywater", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth
 	name = "Goldeneye Vermouth"
 	desc = "Sweet, sweet dryness~"
 	icon_state = "vermouthbottle"
-	New()
-		..()
-		reagents.add_reagent("vermouth", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/vermouth/atom_init()
+	. = ..()
+	reagents.add_reagent("vermouth", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua
 	name = "Robert Robust's Coffee Liqueur"
 	desc = "A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK"
 	icon_state = "kahluabottle"
 	is_transparent = 0
-	New()
-		..()
-		reagents.add_reagent("kahlua", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/kahlua/atom_init()
+	. = ..()
+	reagents.add_reagent("kahlua", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager
 	name = "College Girl Goldschlager"
 	desc = "Because they are the only ones who will drink 100 proof cinnamon schnapps."
 	icon_state = "goldschlagerbottle"
-	New()
-		..()
-		reagents.add_reagent("goldschlager", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/goldschlager/atom_init()
+	. = ..()
+	reagents.add_reagent("goldschlager", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cognac
 	name = "Chateau De Baton Premium Cognac"
 	desc = "A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time."
 	icon_state = "cognacbottle"
-	New()
-		..()
-		reagents.add_reagent("cognac", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/cognac/atom_init()
+	. = ..()
+	reagents.add_reagent("cognac", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/wine
 	name = "Doublebeard Bearded Special Wine"
 	desc = "A faint aura of unease and asspainery surrounds the bottle."
 	icon_state = "winebottle"
 	is_transparent = 0
-	New()
-		..()
-		reagents.add_reagent("wine", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/wine/atom_init()
+	. = ..()
+	reagents.add_reagent("wine", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe
 	name = "Jailbreaker Verte"
 	desc = "One sip of this and you just know you're gonna have a good time."
 	icon_state = "absinthebottle"
-	New()
-		..()
-		reagents.add_reagent("absinthe", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe/atom_init()
+	. = ..()
+	reagents.add_reagent("absinthe", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor
 	name = "Emeraldine Melon Liquor"
 	desc = "A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light."
 	icon_state = "alco-green" //Placeholder.
-	New()
-		..()
-		reagents.add_reagent("melonliquor", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor/atom_init()
+	. = ..()
+	reagents.add_reagent("melonliquor", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao
 	name = "Miss Blue Curacao"
 	desc = "A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic."
 	icon_state = "alco-blue" //Placeholder.
-	New()
-		..()
-		reagents.add_reagent("bluecuracao", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao/atom_init()
+	. = ..()
+	reagents.add_reagent("bluecuracao", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine
 	name = "Briar Rose Grenadine Syrup"
 	desc = "Sweet and tangy, a bar syrup used to add color or flavor to drinks."
 	icon_state = "grenadinebottle"
-	New()
-		..()
-		reagents.add_reagent("grenadine", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine/atom_init()
+	. = ..()
+	reagents.add_reagent("grenadine", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/pwine
 	name = "Warlock's Velvet"
 	desc = "What a delightful packaging for a surely high quality wine! The vintage must be amazing!"
 	icon_state = "pwinebottle"
 	is_transparent = 0
-	New()
-		..()
-		reagents.add_reagent("pwine", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/pwine/atom_init()
+	. = ..()
+	reagents.add_reagent("pwine", 100)
 
 //////////////////////////JUICES AND STUFF ///////////////////////
 
@@ -295,9 +313,10 @@
 	icon_state = "orangejuice"
 	item_state = "carton"
 	is_glass = 0
-	New()
-		..()
-		reagents.add_reagent("orangejuice", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/orangejuice/atom_init()
+	. = ..()
+	reagents.add_reagent("orangejuice", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/cream
 	name = "Milk Cream"
@@ -305,9 +324,10 @@
 	icon_state = "cream"
 	item_state = "carton"
 	is_glass = 0
-	New()
-		..()
-		reagents.add_reagent("cream", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/cream/atom_init()
+	. = ..()
+	reagents.add_reagent("cream", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice
 	name = "Tomato Juice"
@@ -315,9 +335,10 @@
 	icon_state = "tomatojuice"
 	item_state = "carton"
 	is_glass = 0
-	New()
-		..()
-		reagents.add_reagent("tomatojuice", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/tomatojuice/atom_init()
+	. = ..()
+	reagents.add_reagent("tomatojuice", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice
 	name = "Lime Juice"
@@ -325,26 +346,29 @@
 	icon_state = "limejuice"
 	item_state = "carton"
 	is_glass = 0
-	New()
-		..()
-		reagents.add_reagent("limejuice", 100)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/limejuice/atom_init()
+	. = ..()
+	reagents.add_reagent("limejuice", 100)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/ale
 	name = "Magm-Ale"
 	desc = "A true dorf's drink of choice."
 	icon_state = "alebottle"
-	New()
-		..()
-		reagents.add_reagent("ale", 100)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/ale/atom_init()
+	. = ..()
+	reagents.add_reagent("ale", 100)
+	pixel_x = rand(-10.0, 10)
+	pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/beer
 	name = "Space Beer"
 	desc = "Contains only water, malt and hops."
 	icon_state = "beer"
-	New()
-		..()
-		reagents.add_reagent("beer", 100)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/beer/atom_init()
+	. = ..()
+	reagents.add_reagent("beer", 100)
+	pixel_x = rand(-10.0, 10)
+	pixel_y = rand(-10.0, 10)

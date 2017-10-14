@@ -1,11 +1,22 @@
 var/global/list/junkyard_bum_list = list()     //list of all bums placements
 
-/obj/effect/landmark/junkyard_bum/New()
-	junkyard_bum_list += src
-	invisibility = 101
-
-/mob/living/carbon/human/bum/New()
+/obj/effect/landmark/junkyard_bum/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD // i guess we wan't to allow join anyone only after everything setups, in case junkyard working thru map loader.
+
+/obj/effect/landmark/junkyard_bum/atom_init_late()
+	junkyard_bum_list += src
+
+/obj/effect/landmark/junkyard_bum/Destroy()
+	junkyard_bum_list -= src
+	return ..()
+
+/mob/living/carbon/human/bum/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD // because of qdel(CATCH) - we are not allowed to qdel anyone else inside atom_init
+
+/mob/living/carbon/human/bum/atom_init_late()
+	..() // in case someone implements something for parent inside late init, that i'm pretty sure will require calling parent.
 	generate_random_bum()
 
 /mob/living/carbon/human/proc/generate_random_bum()
@@ -56,6 +67,9 @@ var/global/list/junkyard_bum_list = list()     //list of all bums placements
 		return
 	if(!SSjunkyard.junkyard_initialised)
 		to_chat(src, "<span class='warning'>Junkyard not loaded. No space hobos for you. Ask admins to load junkyard.</span>")
+		return
+	if(!junkyard_bum_list.len)
+		to_chat(src, "<span class='warning'>No spawn points were loaded at this moment. Please try again later or ask admins.</span>")
 		return
 	if(config.antag_hud_restricted && M.has_enabled_antagHUD == 1)
 		to_chat(src, "<span class='warning'>antagHUD restrictions prevent you from spawning in as a bum.</span>")

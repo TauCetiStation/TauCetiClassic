@@ -25,7 +25,8 @@
 	var/source_rock = "/turf/simulated/mineral/"
 	var/datum/geosample/geological_data
 
-/obj/item/weapon/rocksliver/New()
+/obj/item/weapon/rocksliver/atom_init()
+	. = ..()
 	icon_state = "sliver[rand(1,3)]"
 	pixel_x = rand(0,16)-8
 	pixel_y = rand(0,8)-8

@@ -12,8 +12,8 @@
 	var/start_pressure = ONE_ATMOSPHERE
 	var/maximum_pressure = 90 * ONE_ATMOSPHERE
 
-/obj/machinery/portable_atmospherics/New()
-	..()
+/obj/machinery/portable_atmospherics/atom_init()
+	. = ..()
 	SSair.atmos_machinery += src
 
 	air_contents = new

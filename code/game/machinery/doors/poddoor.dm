@@ -14,8 +14,8 @@
 /obj/machinery/door/poddoor/cargo
 	icon = 'code/modules/locations/shuttles/cargo.dmi'
 
-/obj/machinery/door/poddoor/New()
-	..()
+/obj/machinery/door/poddoor/atom_init()
+	. = ..()
 	if(density)
 		layer = base_layer + PODDOOR_CLOSED_MOD
 

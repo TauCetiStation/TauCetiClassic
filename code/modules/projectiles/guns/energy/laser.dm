@@ -9,8 +9,8 @@
 	origin_tech = "combat=3;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
 
-/obj/item/weapon/gun/energy/laser/New()
-	..()
+/obj/item/weapon/gun/energy/laser/atom_init()
+	. = ..()
 	if(power_supply)
 		power_supply.maxcharge = 1500
 		power_supply.charge = 1500
@@ -60,8 +60,8 @@ obj/item/weapon/gun/energy/laser/retro
 	var/charge_tick = 0
 	var/chargespeed = 0
 
-/obj/item/weapon/gun/energy/laser/selfcharging/New()
-	..()
+/obj/item/weapon/gun/energy/laser/selfcharging/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 
@@ -172,8 +172,8 @@ obj/item/weapon/gun/energy/laser/retro
 		to_chat(M, "\red You need to be wearing your laser tag vest!")
 	return 0
 
-/obj/item/weapon/gun/energy/laser/bluetag/New()
-	..()
+/obj/item/weapon/gun/energy/laser/bluetag/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 
@@ -207,8 +207,8 @@ obj/item/weapon/gun/energy/laser/retro
 		to_chat(M, "\red You need to be wearing your laser tag vest!")
 	return 0
 
-/obj/item/weapon/gun/energy/laser/redtag/New()
-	..()
+/obj/item/weapon/gun/energy/laser/redtag/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 

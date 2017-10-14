@@ -85,20 +85,19 @@
 /obj/structure/bookcase/manuals/medical
 	name = "Medical Manuals bookcase"
 
-/obj/structure/bookcase/manuals/medical/New()
-	..()
+/obj/structure/bookcase/manuals/medical/atom_init()
+	. = ..()
 	new /obj/item/weapon/book/manual/medical_cloning(src)
-	new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
-	new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
-	new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
 	update_icon()
 
 
 /obj/structure/bookcase/manuals/engineering
 	name = "Engineering Manuals bookcase"
 
-/obj/structure/bookcase/manuals/engineering/New()
-	..()
+/obj/structure/bookcase/manuals/engineering/atom_init()
+	. = ..()
 	new /obj/item/weapon/book/manual/engineering_construction(src)
 	new /obj/item/weapon/book/manual/engineering_particle_accelerator(src)
 	new /obj/item/weapon/book/manual/engineering_hacking(src)
@@ -112,8 +111,8 @@
 /obj/structure/bookcase/manuals/research_and_development
 	name = "R&D Manuals bookcase"
 
-/obj/structure/bookcase/manuals/research_and_development/New()
-	..()
+/obj/structure/bookcase/manuals/research_and_development/atom_init()
+	. = ..()
 	new /obj/item/weapon/book/manual/research_and_development(src)
 	update_icon()
 

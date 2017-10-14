@@ -19,8 +19,8 @@
 	var/merge_type = null               // This path and its children should merge with this stack, defaults to src.type
 	var/full_w_class = ITEM_SIZE_NORMAL // The weight class the stack should have at amount > 2/3rds max_amount
 
-/obj/item/stack/New(loc, new_amount = null, merge = FALSE)
-	..()
+/obj/item/stack/atom_init(mapload, new_amount = null, merge = FALSE)
+	. = ..()
 
 	if(new_amount)
 		amount = new_amount

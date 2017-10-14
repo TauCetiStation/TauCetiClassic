@@ -34,8 +34,8 @@
 	use_power = 1
 	icon_state = "map_scrubber_on"
 
-/obj/machinery/atmospherics/components/unary/vent_scrubber/New()
-	..()
+/obj/machinery/atmospherics/components/unary/vent_scrubber/atom_init()
+	. = ..()
 
 	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = ATMOS_DEFAULT_VOLUME_FILTER

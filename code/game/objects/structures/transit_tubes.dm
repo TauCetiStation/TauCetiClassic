@@ -51,8 +51,8 @@
 	move_out_content()
 	return ..()
 
-/obj/structure/transit_tube_pod/New()
-	..()
+/obj/structure/transit_tube_pod/atom_init()
+	. = ..()
 
 	air_contents.adjust_multi("oxygen", MOLES_O2STANDARD * 2, "nitrogen", MOLES_N2STANDARD)
 	air_contents.temperature = T20C
@@ -85,8 +85,8 @@
 			visible_message("<span class='notice'>[user] took out everything from the [src].</span>")
 			move_out_content()
 
-/obj/structure/transit_tube/New()
-	..()
+/obj/structure/transit_tube/atom_init()
+	. = ..()
 	if(tube_dirs == null)
 		init_dirs()
 

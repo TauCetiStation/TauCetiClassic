@@ -11,14 +11,12 @@
 	var/turf/target //Used for one-time-use teleport cards (such as clown planet coordinates.)
 						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
 
-/obj/machinery/computer/teleporter/New()
-	src.id = "[rand(1000, 9999)]"
-	link_power_station()
-	..()
-	return
-
 /obj/machinery/computer/teleporter/atom_init()
+	id = "[rand(1000, 9999)]"
 	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/teleporter/atom_init_late()
 	link_power_station()
 
 /obj/machinery/computer/teleporter/Destroy()
@@ -248,9 +246,8 @@
 	var/obj/machinery/teleport/station/power_station
 	var/calibrated //Calibration prevents mutation
 
-/obj/machinery/teleport/hub/New()
+/obj/machinery/teleport/hub/atom_init()
 	..()
-	link_power_station()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/teleporter_hub(null)
 	component_parts += new /obj/item/bluespace_crystal/artificial(null)
@@ -258,9 +255,9 @@
 	component_parts += new /obj/item/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	RefreshParts()
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/teleport/hub/atom_init()
-	. = ..()
+/obj/machinery/teleport/hub/atom_init_late()
 	link_power_station()
 
 /obj/machinery/teleport/hub/Destroy()
@@ -341,8 +338,8 @@
 /obj/machinery/teleport/hub/proc/is_ready()
 	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
 
-//obj/machinery/teleport/hub/syndicate/New()
-//	..()
+//obj/machinery/teleport/hub/syndicate/atom_init()
+//	. = ..()
 //	component_parts += new /obj/item/weapon/stock_parts/matter_bin/super(null)
 //	RefreshParts()
 
@@ -360,7 +357,7 @@
 	var/list/linked_stations = list()
 	var/efficiency = 0
 
-/obj/machinery/teleport/station/New()
+/obj/machinery/teleport/station/atom_init()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/teleporter_station(null)
@@ -370,10 +367,9 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
-	link_console_and_hub()
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/teleport/station/atom_init()
-	. = ..()
+/obj/machinery/teleport/station/atom_init_late()
 	link_console_and_hub()
 
 /obj/machinery/teleport/station/RefreshParts()

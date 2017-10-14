@@ -57,8 +57,8 @@ var/list/ingredients_source = list(
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/obj/item/weapon/reagent_containers/glass/held_container
 
-/obj/machinery/icecream_vat/New()
-	..()
+/obj/machinery/icecream_vat/atom_init()
+	. = ..()
 
 	while(ingredients.len < 11)
 		ingredients.Add(5)
@@ -220,7 +220,8 @@ var/list/ingredients_source = list(
 	var/cone_type
 	bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/icecream/New()
+/obj/item/weapon/reagent_containers/food/snacks/icecream/atom_init()
+	. = ..()
 	create_reagents(20)
 	reagents.add_reagent("nutriment", 5)
 

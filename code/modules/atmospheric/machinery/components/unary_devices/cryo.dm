@@ -14,8 +14,8 @@
 	var/efficiency
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/New()
-	..()
+/obj/machinery/atmospherics/components/unary/cryo_cell/atom_init()
+	. = ..()
 
 	icon = 'icons/obj/cryogenics_split.dmi'
 	update_icon()
@@ -128,7 +128,7 @@
 	container_resist(user)
 
 /obj/machinery/atmospherics/components/unary/cryo_cell/container_resist(mob/user)
-	if(user.is_busy(FALSE)) // prevents spam too.
+	if(user.is_busy(null, FALSE)) // prevents spam too.
 		return
 
 	to_chat(user, "<span class='notice'>You struggle inside the cryotube, kicking the release with your foot... (This will take around 30 seconds.)</span>")

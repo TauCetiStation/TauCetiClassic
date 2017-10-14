@@ -27,9 +27,8 @@
 
 	..()
 
-/mob/living/carbon/monkey/diona/New()
-
-	..()
+/mob/living/carbon/monkey/diona/atom_init()
+	. = ..()
 	gender = NEUTER
 	dna.mutantrace = "plant"
 	greaterform = DIONA

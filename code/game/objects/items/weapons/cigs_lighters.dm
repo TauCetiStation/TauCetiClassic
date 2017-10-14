@@ -73,8 +73,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/chem_volume = 15
 	body_parts_covered = 0
 
-/obj/item/clothing/mask/cigarette/New()
-	..()
+/obj/item/clothing/mask/cigarette/atom_init()
+	. = ..()
 	flags |= NOREACT // so it doesn't react until you light it
 	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
 
@@ -243,8 +243,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = 1
 	throwforce = 1
 
-/obj/item/weapon/cigbutt/New()
-	..()
+/obj/item/weapon/cigbutt/atom_init()
+	. = ..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
 	transform = turn(transform,rand(0,360))
@@ -404,11 +404,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "zippo"
 
 /obj/item/weapon/lighter/random
-	New()
-		var/color = pick("r","c","y","g")
-		icon_on = "lighter-[color]-on"
-		icon_off = "lighter-[color]"
-		icon_state = icon_off
+
+/obj/item/weapon/lighter/random/atom_init()
+	. = ..()
+	var/color = pick("r","c","y","g")
+	icon_on = "lighter-[color]-on"
+	icon_off = "lighter-[color]"
+	icon_state = icon_off
 
 /obj/item/weapon/lighter/attack_self(mob/living/user)
 	if(user.r_hand == src || user.l_hand == src)

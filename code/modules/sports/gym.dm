@@ -10,7 +10,8 @@
 
 	var/health = 1000
 
-/obj/structure/pbag/New()
+/obj/structure/pbag/atom_init()
+	. = ..()
 	//color = pick("#aaffaa", "#aaaaff", "#ff3030", "#ff1010", "#ffffff")
 	color = random_color()
 

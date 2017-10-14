@@ -17,8 +17,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	var/efficiency_coeff
 	reagents = new(0)
 
-/obj/machinery/r_n_d/circuit_imprinter/New()
-	..()
+/obj/machinery/r_n_d/circuit_imprinter/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/circuit_imprinter(src)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)

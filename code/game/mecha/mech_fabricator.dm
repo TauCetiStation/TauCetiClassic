@@ -47,8 +47,8 @@
 								"Misc"
 								)
 
-/obj/machinery/mecha_part_fabricator/New()
-	..()
+/obj/machinery/mecha_part_fabricator/atom_init()
+	. = ..()
 	New_parts()
 	files = new /datum/research(src) //Setup the research data holder.
 

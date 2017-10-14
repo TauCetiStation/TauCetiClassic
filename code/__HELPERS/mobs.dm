@@ -149,7 +149,7 @@ proc/RoundHealth(health)
 		stoplag()
 		if (progress)
 			progbar.update(world.time - starttime)
-		if(!user || !target)
+		if(QDELETED(user) || QDELETED(target))
 			. = FALSE
 			break
 		if(uninterruptible)
@@ -166,63 +166,68 @@ proc/RoundHealth(health)
 		user.busy_with_action = FALSE
 
 /proc/do_after(mob/user, delay, needhand = TRUE, atom/target = null, can_move = FALSE, progress = TRUE)
-	if(!user)
-		return 0
+	if(!user || target && QDELING(target))
+		return FALSE
 
 	user.busy_with_action = TRUE
 
+	var/target_null = TRUE
 	var/atom/Tloc = null
-	if(target && (target != user))
-		Tloc = target.loc
+	if(target)
+		target_null = FALSE
+		if(target != user)
+			target.in_use_action = TRUE
+			Tloc = target.loc
 
 	var/atom/Uloc = null
 	if(!can_move)
 		Uloc = user.loc
 
-	var/holding = user.get_active_hand()
+	var/obj/item/holding = user.get_active_hand()
 
-	var/holdingnull = 1 //User's hand started out empty, check for an empty hand
+	var/holdingnull = TRUE //User's hand started out empty, check for an empty hand
 	if(holding)
-		holdingnull = 0 //Users hand started holding something, check to see if it's still holding that
+		holdingnull = FALSE //Users hand started holding something, check to see if it's still holding that
 
 	var/datum/progressbar/progbar
 	if (progress)
 		if(user.client && (user.client.prefs.toggles & SHOW_PROGBAR))
 			progbar = new(user, delay, target)
 		else
-			progress = 0
+			progress = FALSE
 
 	var/endtime = world.time + delay
 	var/starttime = world.time
-	. = 1
+	. = TRUE
 	while (world.time < endtime)
 		stoplag()
 		if (progress)
 			progbar.update(world.time - starttime)
 
-		if(!user || user.stat || user.weakened || user.stunned)
-			. = 0
+		if(QDELETED(user) || !target_null && QDELETED(target))
+			. = FALSE
 			break
 
-		if(Uloc && (user.loc != Uloc))
-			. = 0
+		if(user.stat || user.weakened || user.stunned)
+			. = FALSE
 			break
 
-		if(Tloc && (!target || Tloc != target.loc))
-			. = 0
+		if(Uloc && (user.loc != Uloc) || Tloc && (Tloc != target.loc))
+			. = FALSE
 			break
 
 		if(needhand)
 			//This might seem like an odd check, but you can still need a hand even when it's empty
 			//i.e the hand is used to pull some item/tool out of the construction
-			if(!holdingnull)
-				if(!holding)
-					. = 0
-					break
+			if(!holdingnull && QDELETED(holding))
+				. = FALSE
+				break
 			if(user.get_active_hand() != holding)
-				. = 0
+				. = FALSE
 				break
 	if(progress)
 		qdel(progbar)
 	if(user)
 		user.busy_with_action = FALSE
+	if(target)
+		target.in_use_action = FALSE

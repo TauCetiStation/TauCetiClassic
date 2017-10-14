@@ -139,10 +139,10 @@
 	name = "\improper broken core AI module"
 	desc = "broken Core AI Module: 'Reconfigures the AI's core laws.'"
 
-/obj/machinery/broken/New()
+/obj/machinery/broken/atom_init()
 	..()
-	explosion(src.loc, 1, 2, 3, 3)
-	qdel(src)
+	explosion(loc, 1, 2, 3, 3)
+	return INITIALIZE_HINT_QDEL
 
 /obj/machinery/broken/Destroy()
 	contents.Cut()

@@ -1,8 +1,8 @@
 // the power cell
 // charge from 0 to 100%
 // fits in APC to provide backup power
-/obj/item/weapon/stock_parts/cell/New()
-	..()
+/obj/item/weapon/stock_parts/cell/atom_init()
+	. = ..()
 	charge = maxcharge
 	addtimer(CALLBACK(src, .proc/updateicon), 5)
 

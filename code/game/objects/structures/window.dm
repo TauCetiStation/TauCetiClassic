@@ -372,8 +372,8 @@
 */
 
 
-/obj/structure/window/New(Loc)
-	..()
+/obj/structure/window/atom_init()
+	. = ..()
 
 	ini_dir = dir
 
@@ -381,7 +381,7 @@
 
 	color = color_windows()
 
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles(need_rebuild = 1)
 	update_nearby_icons()
 
 

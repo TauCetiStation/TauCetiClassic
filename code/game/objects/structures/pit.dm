@@ -98,8 +98,8 @@
 	desc = "Some things are better left buried."
 	open = 0
 
-/obj/structure/pit/closed/New()
-	..()
+/obj/structure/pit/closed/atom_init()
+	. = ..()
 	close()
 
 //invisible until unearthed first
@@ -115,7 +115,7 @@
 	name = "grave"
 	icon_state = "pit0"
 
-/obj/structure/pit/closed/grave/New()
+/obj/structure/pit/closed/grave/atom_init()
 	var/obj/structure/closet/coffin/C = new(src.loc)
 
 	var/obj/effect/decal/remains/human/bones = new(C)
@@ -165,7 +165,7 @@
 
 	var/obj/structure/gravemarker/random/R = new(src.loc)
 	R.generate()
-	..()
+	. = ..()
 
 /obj/structure/gravemarker
 	name = "grave marker"
@@ -184,9 +184,9 @@
 	..()
 	to_chat(user, message)
 
-/obj/structure/gravemarker/random/New()
+/obj/structure/gravemarker/random/atom_init()
 	generate()
-	..()
+	. = ..()
 
 /obj/structure/gravemarker/random/proc/generate()
 	icon_state = pick("wood","cross")

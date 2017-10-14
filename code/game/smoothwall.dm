@@ -90,15 +90,15 @@
 		W.update_icon()
 	return
 
-/turf/simulated/wall/New()
+/turf/simulated/wall/atom_init()
 	relativewall_neighbours()
-	..()
+	. = ..()
 
-/turf/simulated/shuttle/wall/New()
+/turf/simulated/shuttle/wall/atom_init()
 	var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
 	I.plane = PLANE_SPACE
 	underlays += I
-	..()
+	. = ..()
 
 /turf/simulated/wall/Destroy()
 

@@ -10,10 +10,10 @@
 		var/const/max_health = 200
 		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
-/obj/machinery/shield/New()
-	src.dir = pick(1,2,3,4)
-	..()
-	update_nearby_tiles(need_rebuild=1)
+/obj/machinery/shield/atom_init()
+	dir = pick(1,2,3,4)
+	. = ..()
+	update_nearby_tiles(need_rebuild = 1)
 
 /obj/machinery/shield/Destroy()
 	opacity = 0
@@ -548,10 +548,10 @@
 		var/obj/machinery/shieldwallgen/gen_primary
 		var/obj/machinery/shieldwallgen/gen_secondary
 
-/obj/machinery/shieldwall/New(var/obj/machinery/shieldwallgen/A, var/obj/machinery/shieldwallgen/B)
-	..()
-	src.gen_primary = A
-	src.gen_secondary = B
+/obj/machinery/shieldwall/atom_init(mapload, obj/machinery/shieldwallgen/A, obj/machinery/shieldwallgen/B)
+	. = ..()
+	gen_primary = A
+	gen_secondary = B
 	if(A && B)
 		needs_power = 1
 

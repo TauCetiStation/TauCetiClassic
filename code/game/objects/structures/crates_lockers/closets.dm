@@ -16,13 +16,24 @@
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 
-/obj/structure/closet/atom_init()
+/obj/structure/closet/atom_init(mapload)
 	. = ..()
-	if(!opened)		// if closed, any item at the crate's loc is put in the contents
+	closet_list += src
+	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
 		for(var/obj/item/I in src.loc)
 			if(I.density || I.anchored || I == src)
 				continue
 			I.forceMove(src)
+	PopulateContents()
+	update_icon()
+
+/obj/structure/closet/Destroy()
+	closet_list -= src
+	return ..()
+
+//USE THIS TO FILL IT, NOT INITIALIZE OR NEW
+/obj/structure/closet/proc/PopulateContents()
+	return
 
 /obj/structure/closet/alter_health()
 	return get_turf(src)

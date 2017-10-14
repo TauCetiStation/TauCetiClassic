@@ -85,7 +85,7 @@
 /obj/machinery/porta_turret/AI_special
 	special_control = TRUE
 
-/obj/machinery/porta_turret/New()
+/obj/machinery/porta_turret/atom_init()
 	..()
 	req_one_access = list(access_security, access_heads)
 
@@ -94,10 +94,13 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/porta_turret/atom_init_late()
 	setup()
 
-/obj/machinery/porta_turret/crescent/New()
-	..()
+/obj/machinery/porta_turret/crescent/atom_init()
+	. = ..()
 	req_one_access.Cut()
 	req_access = list(access_cent_specops)
 

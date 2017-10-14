@@ -73,11 +73,11 @@
 		return 1
 	return ..()
 
-/mob/living/simple_animal/hostile/blobspore/New(loc, var/obj/effect/blob/factory/linked_node)
+/mob/living/simple_animal/hostile/blobspore/atom_init(mapload, obj/effect/blob/factory/linked_node)
 	if(istype(linked_node))
 		factory = linked_node
 		factory.spores += src
-	..()
+	. = ..()
 
 /mob/living/simple_animal/hostile/blobspore/Life()
 

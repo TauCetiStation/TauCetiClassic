@@ -167,7 +167,9 @@ var/list/admin_verbs_debug = list(
 	/*/client/proc/callproc,*/
 //	/proc/machine_upgrade,
 	/client/proc/toggledebuglogs,
-	/client/proc/view_runtimes
+	/client/proc/view_runtimes,
+	/client/proc/cmd_display_del_log,
+	/client/proc/cmd_display_init_log
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -381,7 +383,7 @@ var/list/admin_verbs_hideable = list(
 
 		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	else if(istype(mob,/mob/new_player))
+	else if(isnewplayer(mob))
 		to_chat(src, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>")
 	else
 		//ghostize
@@ -982,12 +984,11 @@ var/list/admin_verbs_hideable = list(
 	message_admins("[key_name_admin(src)] started loading event-map [choice]")
 	log_admin("[key_name_admin(src)] started loading event-map [choice]")
 
-	var/file = file(choice)
-	if(isfile(file))
-		maploader.load_map(file)//, load_speed = 100)
-
-	message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
-	log_admin("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
+	if(maploader.load_new_z_level(choice))//, load_speed = 100)
+		message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
+		log_admin("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
+	else
+		message_admins("[key_name_admin(src)] failed to load event-map [choice].")
 
 //////////////////////////////
 // Noir event

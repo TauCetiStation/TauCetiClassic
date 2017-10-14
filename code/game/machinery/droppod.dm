@@ -35,8 +35,8 @@
 	var/static/initial_eyeobj_location = null
 	var/image/mob_overlay
 
-/obj/structure/droppod/New()
-	..()
+/obj/structure/droppod/atom_init()
+	. = ..()
 	if(!initial_eyeobj_location)
 		initial_eyeobj_location = locate(/obj/effect/landmark/droppod) in landmarks_list
 	if(!allowed_areas)
@@ -103,10 +103,35 @@
 /datum/droppod_allowed/New()
 	..()
 	if(!black_list_areas)
-		black_list_areas = list(/area/aisat, /area/turret_protected/aisat, /area/turret_protected/ai, /area/ai_monitored/storage/secure, /area/tcommsat/computer, /area/AIsattele,
-	/area/tcommsat/chamber, /area/turret_protected/ai_upload, /area/crew_quarters/captain, /area/bridge, /area/bridge/meeting_room, /area/teleporter, /area/security/nuke_storage,
-	/area/crew_quarters/heads, /area/security/armoury, /area/security/warden, /area/turret_protected/aisat_interior,/area/security/main, /area/security/brig, /area/security/range,
-	/area/security/hos,	/area/security/prison, /area/security/execution, /area/security/forensic_office, /area/security/detectives_office, /area/server, /area/comms, /area/tcommsat/computer)
+		black_list_areas = list(
+			/area/aisat,
+			/area/turret_protected/aisat,
+			/area/turret_protected/ai,
+			/area/turret_protected/ai_upload,
+			/area/turret_protected/aisat_interior,
+			/area/ai_monitored/storage/secure,
+			/area/tcommsat/computer,
+			/area/tcommsat/chamber,
+			/area/AIsattele,
+			/area/crew_quarters/captain,
+			/area/crew_quarters/heads,
+			/area/bridge,
+			/area/bridge/meeting_room,
+			/area/teleporter,
+			/area/security/nuke_storage,
+			/area/security/armoury,
+			/area/security/warden,
+			/area/security/main,
+			/area/security/brig,
+			/area/security/range,
+			/area/security/hos,
+			/area/security/prison,
+			/area/security/execution,
+			/area/security/forensic_office,
+			/area/security/detectives_office,
+			/area/server,
+			/area/comms
+			)
 	if(!areas)
 		areas = teleportlocs
 		for(var/i in areas)

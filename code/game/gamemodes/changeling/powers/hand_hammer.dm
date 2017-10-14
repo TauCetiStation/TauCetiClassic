@@ -20,8 +20,8 @@
 	icon_state = "arm_hammer"
 	item_state = "arm_hammer"
 
-/obj/item/weapon/changeling_hammer/New()
-	..()
+/obj/item/weapon/changeling_hammer/atom_init()
+	. = ..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly hammer.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 

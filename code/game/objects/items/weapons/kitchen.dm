@@ -26,10 +26,10 @@
 	origin_tech = "materials=1"
 	attack_verb = list("attacked", "stabbed", "poked")
 
-/obj/item/weapon/kitchen/utensil/New()
+/obj/item/weapon/kitchen/utensil/atom_init()
+	. = ..()
 	if (prob(60))
-		src.pixel_y = rand(0, 4)
-	return
+		pixel_y = rand(0, 4)
 
 /*
  * Spoons

@@ -19,8 +19,8 @@ var/list/gurgles = list(
 	var/last_gurgle = 0
 	var/welded
 
-/obj/structure/drain/New()
-	..()
+/obj/structure/drain/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/drain/Destroy()

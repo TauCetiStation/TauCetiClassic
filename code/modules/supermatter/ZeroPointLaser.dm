@@ -38,10 +38,6 @@
 	src.dir = turn(src.dir, 90)
 	return 1
 
-/obj/machinery/zero_point_emitter/New()
-	..()
-	return
-
 /obj/machinery/zero_point_emitter/update_icon()
 	if (active && !(stat & (NOPOWER|BROKEN)))
 		icon_state = "laser"//"emitter_+a"

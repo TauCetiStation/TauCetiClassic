@@ -46,8 +46,8 @@
 	item_state = "Leather_belt_Mauser"
 	item_color = "Leather_belt_Mauser"
 
-/obj/item/clothing/tie/storage/black_vest/mauser_belt/New()
-	..()
+/obj/item/clothing/tie/storage/black_vest/mauser_belt/atom_init()
+	. = ..()
 	inv_overlay = image("icon" = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi', "icon_state" = "Leather_belt_Mauser")
 
 /obj/item/clothing/head/helmet/M35_Helmet

@@ -14,8 +14,8 @@
 	name = "cyborgification waiver"
 	desc = "It's some kind of official-looking contract."
 
-/obj/item/weapon/paper/fluff/sue_donem/New()
-	..()
+/obj/item/weapon/paper/fluff/sue_donem/atom_init()
+	. = ..()
 
 	info = "<B>Organic Carrier AIA and Standard Cyborgification Agreement</B><BR>\n<BR>\nUnder the authority of Nanotrasen Synthetic Intelligence Division, this document hereby authorizes an accredited Roboticist of the NSS Exodus or a deputized authority to perform a regulation lobotomisation upon the person of one '<I>Sue Donem</I>' (hereafter referred to as the Subject) with intent to enact a live Artificial Intelligence Assimilation (AIA) or live Cyborgification proceedure.<BR>\n<BR>\nNo further station authorization is required, and the Subject waives all rights as a human under Nanotrasen internal and external legal protocol. This document is subject to amendment under Nanotrasen internal protocol \[REDACTED\].<BR>\n<BR>\nSigned: <I>Sue Donem</I><BR>\n"
 
@@ -325,25 +325,22 @@
 /obj/item/weapon/storage/pill_bottle/fluff/listermedbottle //compactninja: Lister Black
 	name = "Pill bottle (anti-depressants)"
 	desc = "Contains pills used to deal with depression. They appear to be prescribed to Lister Black"
-	New()
-		..()
-		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
-		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
-		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
-		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
-		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
-		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
-		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
+
+/obj/item/weapon/storage/pill_bottle/fluff/listermedbottle/atom_init()
+	. = ..()
+	for (var/i in 1 to 7)
+		new /obj/item/weapon/reagent_containers/pill/fluff/listermed(src)
 
 /obj/item/weapon/reagent_containers/pill/fluff/listermed
 	name = "anti-depressant pill"
 	desc = "Used to deal with depression."
 	icon_state = "pill9"
-	New()
-		..()
-		reagents.add_reagent("stoxin", 5)
-		reagents.add_reagent("sugar", 10)
-		reagents.add_reagent("ethanol", 5)
+
+/obj/item/weapon/reagent_containers/pill/fluff/listermed/atom_init()
+	. = ..()
+	reagents.add_reagent("stoxin", 5)
+	reagents.add_reagent("sugar", 10)
+	reagents.add_reagent("ethanol", 5)
 
 /obj/item/clothing/mask/fluff/electriccig //CubeJackal: Barry Sharke
 	name = "Electronic cigarette"
@@ -365,12 +362,11 @@
 	amount_per_transfer_from_this = 5
 	volume = 15
 
-/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/New()
-	..()
+/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/atom_init()
+	. = ..()
 	reagents.remove_reagent("tricordrazine", 30)
 	reagents.add_reagent("oxycodone", 15)
 	update_icon()
-	return
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user)
 	to_chat(user, "\blue You click \the [src] but get no reaction. Must be dead.")
@@ -1027,23 +1023,24 @@
 	icon_state = "nashi_belt"
 	item_state = "fluff_rbelt"
 
-	New()
-		..()
-		new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 14, "Bicaridine")
-		new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 15, "Dermaline")
-		new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 16, "Dylovene")
-		new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 17, "Dexalin Plus")
-		new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 18, "Tricordrazine")
-		new /obj/item/weapon/reagent_containers/syringe/(src)
-		new /obj/item/device/healthanalyzer(src)
+/obj/item/weapon/storage/belt/medical/fluff/nashi_belt/atom_init()
+	. = ..()
+	new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 14, "Bicaridine")
+	new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 15, "Dermaline")
+	new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 16, "Dylovene")
+	new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 17, "Dexalin Plus")
+	new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 18, "Tricordrazine")
+	new /obj/item/weapon/reagent_containers/syringe/(src)
+	new /obj/item/device/healthanalyzer(src)
 
 /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle
 	icon = 'icons/obj/chemical.dmi'
-	New(loc, var/color, var/labeled)
-		..()
-		name = "[labeled] bottle"
-		desc = "A small bottle.  Contains [labeled]"
-		icon_state = "bottle[color]"
+
+/obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle/atom_init(color, labeled)
+	. = ..()
+	name = "[labeled] bottle"
+	desc = "A small bottle.  Contains [labeled]"
+	icon_state = "bottle[color]"
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/yuri_kornienkovich_flask
 	name = "Yuri's Flask"

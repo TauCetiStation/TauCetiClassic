@@ -46,8 +46,8 @@
 //	invisa_view = 2
 	var/error
 
-/obj/item/clothing/glasses/hud/mining/New()
-	..()
+/obj/item/clothing/glasses/hud/mining/atom_init()
+	. = ..()
 	error = pick(-1,1)
 
 /obj/item/clothing/glasses/hud/mining/process_hud(mob/M)

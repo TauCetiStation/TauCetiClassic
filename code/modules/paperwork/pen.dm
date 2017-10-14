@@ -49,13 +49,12 @@
 	origin_tech = "materials=2;syndicate=5"
 
 
-/obj/item/weapon/pen/sleepypen/New()
+/obj/item/weapon/pen/sleepypen/atom_init()
 	var/datum/reagents/R = new/datum/reagents(30) //Used to be 300
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("chloralhydrate", 22)	//Used to be 100 sleep toxin//30 Chloral seems to be fatal, reducing it to 22./N
-	..()
-	return
+	. = ..()
 
 
 /obj/item/weapon/pen/sleepypen/attack(mob/M, mob/user)
@@ -87,14 +86,13 @@
 		reagents.trans_to(M, 50)
 
 
-/obj/item/weapon/pen/paralysis/New()
+/obj/item/weapon/pen/paralysis/atom_init()
 	var/datum/reagents/R = new/datum/reagents(50)
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("zombiepowder", 10)
 	R.add_reagent("cryptobiolin", 15)
-	..()
-	return
+	. = ..()
 
 /obj/item/weapon/pen/edagger
 	origin_tech = "combat=3;syndicate=1"

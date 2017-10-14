@@ -149,8 +149,11 @@
 		if (last_to_emag)
 			C.friends = list(last_to_emag)
 
-/obj/machinery/computer/HolodeckControl/New()
+/obj/machinery/computer/HolodeckControl/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/HolodeckControl/atom_init_late()
 	linkedholodeck = locate(/area/holodeck/alphadeck)
 
 //This could all be done better, but it works for now.

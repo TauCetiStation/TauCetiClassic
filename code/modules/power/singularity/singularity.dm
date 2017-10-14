@@ -24,21 +24,23 @@
 	var/last_failed_movement = 0//Will not move in the same dir if it couldnt before, will help with the getting stuck on fields thing
 	var/last_warning
 
-/obj/singularity/New(loc, var/starting_energy = 50, var/temp = 0)
+/obj/singularity/atom_init(mapload, starting_energy = 50, temp = 0)
 	//CARN: admin-alert for chuckle-fuckery.
 	admin_investigate_setup()
 
-	src.energy = starting_energy
+	energy = starting_energy
 	if(temp)
 		QDEL_IN(src, temp)
 	..()
 	START_PROCESSING(SSobj, src)
 	poi_list |= src
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/singularity/atom_init_late()
 	for(var/obj/machinery/singularity_beacon/singubeacon in machines)
 		if(singubeacon.active)
 			target = singubeacon
 			break
-	return
 
 /obj/singularity/Destroy()
 	STOP_PROCESSING(SSobj, src)

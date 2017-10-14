@@ -9,8 +9,8 @@
 	var/obj/item/weapon/reagent_containers/beaker = null
 
 
-/obj/machinery/iv_drip/New()
-	..()
+/obj/machinery/iv_drip/atom_init()
+	. = ..()
 	update_icon()
 
 /obj/machinery/iv_drip/update_icon()

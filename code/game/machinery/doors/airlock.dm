@@ -57,20 +57,22 @@ var/list/airlock_overlays = list()
 	var/door_bolt_down_sound = 'sound/machines/airlock/airlockBoltsDown.ogg'
 	var/door_forced_sound    = 'sound/machines/airlock/airlockForced.ogg'
 
-/obj/machinery/door/airlock/New(loc, dir = null)
+/obj/machinery/door/airlock/atom_init(mapload, dir = null)
 	..()
 	wires = new(src)
-	if(closeOtherId != null)
-		spawn (5)
-			for (var/obj/machinery/door/airlock/A in machines)
-				if(A.closeOtherId == closeOtherId && A != src)
-					closeOther = A
-					break
 	if(glass && !inner_material)
 		inner_material = "glass"
 	if(dir)
 		src.dir = dir
 	update_icon()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/door/airlock/atom_init_late()
+	if(closeOtherId != null)
+		for (var/obj/machinery/door/airlock/A in machines)
+			if(A.closeOtherId == closeOtherId && A != src)
+				closeOther = A
+				break
 
 /obj/machinery/door/airlock/Destroy()
 	QDEL_NULL(wires)
@@ -1141,7 +1143,8 @@ var/list/airlock_overlays = list()
 		return
 
 
-/obj/structure/door_scrap/New()
+/obj/structure/door_scrap/atom_init()
+	. = ..()
 	var/image/fire_overlay = image("icon"='icons/effects/effects.dmi', "icon_state"="s_fire", "layer" = (LIGHTING_LAYER + 1))
 	fire_overlay.plane = LIGHTING_PLANE + 1
 	overlays += fire_overlay

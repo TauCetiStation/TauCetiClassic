@@ -682,7 +682,7 @@
 
 /mob/living/silicon/pai/proc/translator_toggle()
 
-	// 	Sol Common, Tradeband and Gutter are added with New() and are therefore the current default, always active languages
+	// 	Sol Common, Tradeband and Gutter are added with atom_init() and are therefore the current default, always active languages
 
 	if(translator_on)
 		translator_on = 0

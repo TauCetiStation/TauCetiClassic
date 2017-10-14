@@ -24,8 +24,8 @@
 
 	var/list/mixing_inputs = list()
 
-/obj/machinery/atmospherics/components/omni/mixer/New()
-	..()
+/obj/machinery/atmospherics/components/omni/mixer/atom_init()
+	. = ..()
 	if(mapper_set())
 		var/con = 0
 		for(var/datum/omni_port/P in ports)

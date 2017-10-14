@@ -26,8 +26,8 @@ var/bomb_set
 	var/lastentered = ""
 	var/spray_icon_state
 
-/obj/machinery/nuclearbomb/New()
-	..()
+/obj/machinery/nuclearbomb/atom_init()
+	. = ..()
 	poi_list |= src
 	r_code = "[rand(10000, 99999.0)]"//Creates a random code upon object spawn.
 	wires = new(src)
@@ -500,8 +500,8 @@ var/bomb_set
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
 
-/obj/item/weapon/disk/nuclear/New()
-	..()
+/obj/item/weapon/disk/nuclear/atom_init()
+	. = ..()
 	poi_list |= src
 	START_PROCESSING(SSobj, src)
 

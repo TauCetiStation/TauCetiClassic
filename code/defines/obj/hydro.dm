@@ -1157,10 +1157,11 @@
 	var/potency = 1
 	var/plant_type = 0
 
-/obj/item/weapon/grown/New()
+/obj/item/weapon/grown/atom_init()
 	var/datum/reagents/R = new/datum/reagents(50)
 	reagents = R
 	R.my_atom = src
+	. = ..()
 
 /obj/item/weapon/grown/proc/changePotency(newValue) //-QualityVan
 	potency = newValue
@@ -1215,15 +1216,12 @@
 	throw_range = 3
 	plant_type = 1
 	seed = "/obj/item/seeds/gibtomato"
-	New()
-		..()
 
-
-/obj/item/weapon/grown/gibtomato/New()
-	..()
-	src.gibs = new /obj/effect/gibspawner/human(get_turf(src))
-	src.gibs.attach(src)
-	src.smoke.set_up(10, 0, usr.loc)
+/obj/item/weapon/grown/gibtomato/atom_init()
+	. = ..()
+	gibs = new /obj/effect/gibspawner/human(get_turf(src))
+	gibs.attach(src)
+	smoke.set_up(10, 0, usr.loc)
 */
 /obj/item/weapon/grown/nettle // -- Skie
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
@@ -1240,8 +1238,8 @@
 	origin_tech = "combat=1"
 	seed = "/obj/item/seeds/nettleseed"
 
-/obj/item/weapon/grown/nettle/New()
-	..()
+/obj/item/weapon/grown/nettle/atom_init()
+	. = ..()
 	spawn(5)	//So potency can be set in the proc that creates these crops
 		reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
 		reagents.add_reagent("sacid", round(potency, 1))
@@ -1263,8 +1261,8 @@
 	origin_tech = "combat=3"
 	attack_verb = list("stung")
 
-/obj/item/weapon/grown/deathnettle/New()
-	..()
+/obj/item/weapon/grown/deathnettle/atom_init()
+	. = ..()
 	spawn(5)	//So potency can be set in the proc that creates these crops
 		reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
 		reagents.add_reagent("pacid", round(potency, 1))
@@ -1285,9 +1283,10 @@
 	var/toxicity = 0
 	var/PestKillStr = 0
 
-/obj/item/pestkiller/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+/obj/item/pestkiller/atom_init()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 /obj/item/pestkiller/carbaryl
 	name = "bottle of carbaryl"
@@ -1296,10 +1295,6 @@
 	toxicity = 4
 	PestKillStr = 2
 
-/obj/item/pestkiller/carbaryl/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
-
 /obj/item/pestkiller/lindane
 	name = "bottle of lindane"
 	icon = 'icons/obj/chemical.dmi'
@@ -1307,20 +1302,12 @@
 	toxicity = 6
 	PestKillStr = 4
 
-/obj/item/pestkiller/lindane/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
-
 /obj/item/pestkiller/phosmet
 	name = "bottle of phosmet"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
 	toxicity = 8
 	PestKillStr = 7
-
-/obj/item/pestkiller/phosmet/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
 
 // *************************************
 // Hydroponics Tools
@@ -1421,9 +1408,10 @@
 	var/mutmod = 0
 	var/yieldmod = 0
 
-/obj/item/nutrient/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+/obj/item/nutrient/atom_init()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 /obj/item/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
@@ -1432,10 +1420,6 @@
 	mutmod = 1
 	yieldmod = 1
 
-/obj/item/nutrient/ez/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
-
 /obj/item/nutrient/l4z
 	name = "bottle of Left 4 Zed"
 	icon = 'icons/obj/chemical.dmi'
@@ -1443,19 +1427,9 @@
 	mutmod = 2
 	yieldmod = 0
 
-/obj/item/nutrient/l4z/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
-
 /obj/item/nutrient/rh
 	name = "bottle of Robust Harvest"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
 	mutmod = 0
 	yieldmod = 2
-
-/obj/item/nutrient/rh/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
-
-

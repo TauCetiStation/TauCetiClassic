@@ -116,13 +116,13 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	orient_right = 1
 	icon_state = "cryo_rear-r"
 
-/obj/structure/cryofeed/New()
+/obj/structure/cryofeed/atom_init()
 
 	if(orient_right)
 		icon_state = "cryo_rear-r"
 	else
 		icon_state = "cryo_rear"
-	..()
+	. = ..()
 
 //Cryopods themselves.
 /obj/machinery/cryopod
@@ -159,7 +159,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 	orient_right = 1
 	icon_state = "cryosleeper_right"
 
-/obj/machinery/cryopod/New()
+/obj/machinery/cryopod/atom_init()
 
 	announce = new /obj/item/device/radio/intercom(src)
 
@@ -167,7 +167,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 		icon_state = "cryosleeper_right"
 	else
 		icon_state = "cryosleeper_left"
-	..()
+	. = ..()
 
 //Lifted from Unity stasis.dm and refactored. ~Zuhayr
 /obj/machinery/cryopod/process()

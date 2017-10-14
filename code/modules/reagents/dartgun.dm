@@ -46,9 +46,8 @@
 		icon_state = "dartgun-[cartridge.darts]"
 	return 1
 
-/obj/item/weapon/gun/dartgun/New()
-
-	..()
+/obj/item/weapon/gun/dartgun/atom_init()
+	. = ..()
 	if(starting_chems)
 		for(var/chem in starting_chems)
 			var/obj/B = new container_type(src)

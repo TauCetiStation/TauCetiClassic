@@ -26,21 +26,19 @@
 	var/effectiverange = 25
 
 	// Borrows code from cloning computer
-/obj/machinery/computer/gravity_control_computer/New()
+/obj/machinery/computer/gravity_control_computer/atom_init()
 	..()
-	spawn(5)
-		updatemodules()
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/gravity_generator/New()
+/obj/machinery/computer/gravity_control_computer/atom_init_late()
+	updatemodules()
+
+/obj/machinery/gravity_generator/atom_init()
 	..()
-	spawn(5)
-		locatelocalareas()
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
 
-
+/obj/machinery/gravity_generator/atom_init_late()
+	locatelocalareas()
 
 /obj/machinery/computer/gravity_control_computer/proc/updatemodules()
 	src.gravity_generator = findgenerator()

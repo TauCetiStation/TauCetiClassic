@@ -15,9 +15,12 @@
 	var/lastgen = 0
 	var/lastgenlev = -1
 
-/obj/machinery/power/generator/New()
+/obj/machinery/power/generator/atom_init()
 	..()
-	addtimer(CALLBACK(src, .proc/reconnect), 1)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/power/generator/atom_init_late()
+	reconnect()
 
 //generators connect in dir and reverse_dir(dir) directions
 //mnemonic to determine circulator/generator directions: the cirulators orbit clockwise around the generator

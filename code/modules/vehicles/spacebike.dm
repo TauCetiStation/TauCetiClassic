@@ -34,8 +34,8 @@
 	..()
 	to_chat(user, "There is a small tag reading [id].")
 
-/obj/vehicle/space/spacebike/New()
-	..()
+/obj/vehicle/space/spacebike/atom_init()
+	. = ..()
 	ion = new /datum/effect/effect/system/ion_trail_follow()
 	ion.set_up(src)
 	turn_off()

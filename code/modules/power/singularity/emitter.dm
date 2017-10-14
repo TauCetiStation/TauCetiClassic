@@ -24,8 +24,8 @@
 	var/state = 0
 	var/locked = FALSE
 
-/obj/machinery/power/emitter/New()
-	..()
+/obj/machinery/power/emitter/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/emitter(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)

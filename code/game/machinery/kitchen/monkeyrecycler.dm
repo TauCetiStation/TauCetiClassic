@@ -14,8 +14,8 @@
 	var/required_grind = 5
 	var/cube_production = 1
 
-/obj/machinery/monkey_recycler/New()
-	..()
+/obj/machinery/monkey_recycler/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/monkey_recycler(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)

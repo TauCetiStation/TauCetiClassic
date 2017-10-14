@@ -71,7 +71,7 @@
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
 
-#define isnewplayer(A) (istype(A, /mob/new_player))
+#define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
 // ELSE
 

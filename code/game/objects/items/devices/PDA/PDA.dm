@@ -318,8 +318,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
  *	The Actual PDA
  */
 
-/obj/item/device/pda/New()
-	..()
+/obj/item/device/pda/atom_init()
+	. = ..()
 	PDAs += src
 	PDAs = sortAtom(PDAs)
 	if(default_cartridge)

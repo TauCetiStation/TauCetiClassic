@@ -4,9 +4,6 @@
 /obj/machinery/shield_gen/external
 	name = "hull shield generator"
 
-/obj/machinery/shield_gen/external/New()
-	..()
-
 /obj/machinery/shield_gen/external/get_shielded_turfs()
 	var
 		list

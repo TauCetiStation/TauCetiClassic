@@ -30,6 +30,8 @@
 	//Detective Work, used for the duplicate data points kept in the scanners
 	var/list/original_atom
 
+	var/in_use_action = FALSE // do_after sets this to TRUE and is_busy() can check for that to disallow multiple users to interact with this at the same time.
+
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
@@ -58,9 +60,8 @@
 // /turf/atom_init
 // /turf/space/atom_init
 // /mob/dead/atom_init
-// /mob/new_player/atom_init
 
-//Do also note that this proc always runs in New for /mob/dead && /mob/new_player
+//Do also note that this proc always runs in New for /mob/dead
 /atom/proc/atom_init(mapload, ...)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")

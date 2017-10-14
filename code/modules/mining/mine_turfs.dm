@@ -29,13 +29,13 @@
 
 	has_resources = 1
 
-/turf/simulated/mineral/New()
+/turf/simulated/mineral/atom_init()
 	..()
 	icon_state = "rock"
 	geologic_data = new(src)
+	return INITIALIZE_HINT_LATELOAD
 
-/turf/simulated/mineral/atom_init()
-	. = ..()
+/turf/simulated/mineral/atom_init_late()
 	MineralSpread()
 
 	var/turf/T
@@ -414,7 +414,11 @@
 	var/mineralSpawnChanceList = list("Uranium" = 10, "Platinum" = 10, "Iron" = 20, "Coal" = 15, "Diamond" = 5, "Gold" = 15, "Silver" = 15, "Phoron" = 25,)
 	var/mineralChance = 10  //means 10% chance of this plot changing to a mineral deposit
 
-/turf/simulated/mineral/random/New()
+/turf/simulated/mineral/random/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/simulated/mineral/random/atom_init_late()
 	if (prob(mineralChance) && !mineral)
 		var/mineral_name = pickweight(mineralSpawnChanceList) //temp mineral name
 
@@ -426,39 +430,34 @@
 			UpdateMineral()
 			CaveSpread()
 
-	. = ..()
-
 /turf/simulated/mineral/random/caves
 	mineralChance = 25
-
-/turf/simulated/mineral/random/caves/New()
-	..()
 
 /turf/simulated/mineral/random/high_chance
 	icon_state = "rock_highchance"
 	mineralChance = 40
 	mineralSpawnChanceList = list("Uranium" = 35, "Platinum" = 45, "Diamond" = 30, "Gold" = 45, "Silver" = 50, "Phoron" = 50)
 
-/turf/simulated/mineral/random/high_chance/New()
+/turf/simulated/mineral/random/high_chance/atom_init()
 	icon_state = "rock"
-	..()
+	. = ..()
 
 /turf/simulated/mineral/random/low_chance
 	icon_state = "rock_lowchance"
 	mineralChance = 5
 	mineralSpawnChanceList = list("Uranium" = 1, "Platinum" = 1, "Iron" = 50, "Coal" = 20, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Phoron" = 1)
 
-/turf/simulated/mineral/random/low_chance/New()
+/turf/simulated/mineral/random/low_chance/atom_init()
 	icon_state = "rock"
-	..()
+	. = ..()
 
 /turf/simulated/mineral/random/labormineral
 	mineralSpawnChanceList = list("Uranium" = 1, "Platinum" = 1, "Iron" = 60, "Coal" = 30, "Diamond" = 1, "Gold" = 1, "Silver" = 1, "Phoron" = 2)
 	icon_state = "rock_labor"
 
-/turf/simulated/mineral/random/labormineral/New()
+/turf/simulated/mineral/random/labormineral/atom_init()
 	icon_state = "rock"
-	..()
+	. = ..()
 
 /turf/simulated/mineral/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash >= 2)
@@ -474,7 +473,7 @@
 	var/mob_spawn_list = list("Goldgrub" = 4, "Goliath" = 10, "Basilisk" = 8, "Hivelord" = 6, "Drone" = 2)
 	var/sanity = 1
 
-/turf/simulated/floor/plating/airless/asteroid/cave/New(loc, var/length, var/go_backwards = 1, var/exclude_dir = -1)
+/turf/simulated/floor/plating/airless/asteroid/cave/atom_init(mapload, length, go_backwards = 1, exclude_dir = -1)
 
 	// If length (arg2) isn't defined, get a random length; otherwise assign our length to the length arg.
 	if(!length)
@@ -491,9 +490,13 @@
 	make_tunnel(forward_cave_dir)
 	if(go_backwards)
 		make_tunnel(backward_cave_dir)
+
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/simulated/floor/plating/airless/asteroid/cave/atom_init_late()
 	// Kill ourselves by replacing ourselves with a normal floor.
 	SpawnFloor(src)
-	..()
 
 /turf/simulated/floor/plating/airless/asteroid/cave/proc/make_tunnel(dir)
 
@@ -583,7 +586,7 @@
 	var/dug = 0       //0 = has not yet been dug, 1 = has already been dug
 	has_resources = 1
 
-/turf/simulated/floor/plating/airless/asteroid/New()
+/turf/simulated/floor/plating/airless/asteroid/atom_init()
 	var/proper_name = name
 	..()
 	name = proper_name
@@ -592,8 +595,10 @@
 	//	seedAmt = rand(1,4)
 	if(prob(20))
 		icon_state = "asteroid[rand(0,12)]"
-	spawn(2)
-		updateMineralOverlays()
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/simulated/floor/plating/airless/asteroid/atom_init_late()
+	updateMineralOverlays()
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
 	switch(severity)
