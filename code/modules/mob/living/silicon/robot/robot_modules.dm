@@ -103,7 +103,7 @@
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo/surgeon(src)
-	modules += new /obj/item/weapon/scalpel(src)
+	modules += new /obj/item/weapon/scalpel/manager(src)
 	modules += new /obj/item/weapon/FixOVein(src)
 	modules += new /obj/item/weapon/hemostat(src)
 	modules += new /obj/item/weapon/retractor(src)
@@ -139,7 +139,10 @@
 
 /obj/item/weapon/robot_module/crisis/atom_init()
 	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/gripper/chemistry(src)
 	modules += new /obj/item/device/healthanalyzer(src)
+	modules += new /obj/item/borg/sight/hud/med(src)
 	modules += new /obj/item/device/reagent_scanner/adv(src)
 	modules += new /obj/item/roller_holder(src)
 	modules += new /obj/item/stack/medical/ointment(src)
@@ -263,7 +266,9 @@
 
 /obj/item/weapon/robot_module/butler/atom_init()
 	modules += new /obj/item/device/flash(src)
-	modules += new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
+	modules += new /obj/item/weapon/gripper/service(src)
+	modules += new /obj/item/weapon/gripper/paperwork(src)
+	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 	modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 
 	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
