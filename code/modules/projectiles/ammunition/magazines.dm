@@ -25,7 +25,8 @@
 	max_ammo = 6
 	multiload = 0
 
-/obj/item/ammo_box/magazine/internal/cylinder/rus357/New()
+/obj/item/ammo_box/magazine/internal/cylinder/rus357/atom_init()
+	. = ..()
 	stored_ammo += new ammo_type(src)
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev38

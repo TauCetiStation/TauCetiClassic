@@ -20,8 +20,8 @@
 	item_state = "arm_whip"
 	var/next_click
 
-/obj/item/weapon/changeling_whip/New()
-	..()
+/obj/item/weapon/changeling_whip/atom_init()
+	. = ..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly elastic whip.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 

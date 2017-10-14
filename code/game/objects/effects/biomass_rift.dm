@@ -22,10 +22,10 @@
 	var/list/obj/effect/biomass/linkedBiomass = list() //all the biomass patches that have spread from it
 	var/newicon = 1 //DEBUG
 
-/obj/effect/rift/New()
+/obj/effect/rift/atom_init()
 	//set background = 1
 
-	..()
+	. = ..()
 
 	for(var/turf/T in orange(1,src))
 		if(!IsValidBiomassLoc(T))
@@ -42,10 +42,10 @@
 		qdel(biomass)
 	..()
 
-/obj/effect/biomass/New()
+/obj/effect/biomass/atom_init()
 	//set background = 1
 
-	..()
+	. = ..()
 	if(!IsValidBiomassLoc(loc,src))
 		qdel(src)
 		return

@@ -20,8 +20,8 @@
 
 	var/fail_message
 
-/obj/machinery/replicator/New()
-	..()
+/obj/machinery/replicator/atom_init()
+	. = ..()
 
 	var/list/viables = list(\
 	/obj/item/roller,\
@@ -70,7 +70,7 @@
 	)
 
 	var/quantity = rand(5,15)
-	for(var/i=0, i<quantity, i++)
+	for (var/i in 1 to quantity)
 		var/button_desc = "a [pick("yellow","purple","green","blue","red","orange","white")], "
 		button_desc += "[pick("round","square","diamond","heart","dog","human")] shaped "
 		button_desc += "[pick("toggle","switch","lever","button","pad","hole")]"

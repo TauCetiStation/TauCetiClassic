@@ -19,8 +19,8 @@
 
 // Auto conveyour is always on unless unpowered
 
-/obj/machinery/conveyor/auto/New(loc, newdir)
-	..(loc, newdir)
+/obj/machinery/conveyor/auto/atom_init(mapload, newdir)
+	. = ..(mapload, newdir)
 	operating = 1
 	update_move_direction()
 
@@ -38,8 +38,8 @@
 	icon_state = "conveyor[operating * verted]"
 
 // create a conveyor
-/obj/machinery/conveyor/New(loc, newdir)
-	..(loc)
+/obj/machinery/conveyor/atom_init(mapload, newdir)
+	. = ..()
 	if(newdir)
 		dir = newdir
 	update_move_direction()
@@ -208,17 +208,18 @@
 
 
 
-/obj/machinery/conveyor_switch/New(newloc, newid)
-	..(newloc)
+/obj/machinery/conveyor_switch/atom_init(mapload, newid)
+	..()
 	if(!id)
 		id = newid
 	update()
+	return INITIALIZE_HINT_LATELOAD
 
-	spawn(5)		// allow map load
-		conveyors = list()
-		for(var/obj/machinery/conveyor/C in machines)
-			if(C.id == id)
-				conveyors += C
+/obj/machinery/conveyor_switch/atom_init_late()
+	conveyors = list()
+	for(var/obj/machinery/conveyor/C in machines)
+		if(C.id == id)
+			conveyors += C
 
 // update the icon depending on the position
 
@@ -325,8 +326,8 @@
 	w_class = 4
 	var/id = "" //inherited by the switch
 
-/obj/item/conveyor_switch_construct/New()
-	..()
+/obj/item/conveyor_switch_construct/atom_init()
+	. = ..()
 	id = rand() //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)

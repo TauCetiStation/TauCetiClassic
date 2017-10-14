@@ -12,10 +12,10 @@
 
 	var/alert_pressure = 170 * ONE_ATMOSPHERE
 
-/obj/machinery/atmospherics/pipe/New()
+/obj/machinery/atmospherics/pipe/atom_init()
 	if(istype(get_turf(src), /turf/simulated/wall) || istype(get_turf(src), /turf/simulated/shuttle/wall) || istype(get_turf(src), /turf/unsimulated/wall))
 		level = PIPE_HIDDEN_LEVEL
-	..()
+	. = ..()
 
 /obj/machinery/atmospherics/pipe/Destroy()
 	releaseAirToTurf()

@@ -23,8 +23,8 @@
 	var/locked = 0
 	var/datum/wires/smartfridge/wires = null
 
-/obj/machinery/smartfridge/New()
-	..()
+/obj/machinery/smartfridge/atom_init()
+	. = ..()
 	wires = new(src)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/smartfridge(null, type)

@@ -12,8 +12,8 @@
 /obj/structure/device/piano/unable_to_play(mob/living/user)
 	return ..() || !in_range(src, user) || !anchored
 
-/obj/structure/device/piano/New()
-	..()
+/obj/structure/device/piano/atom_init()
+	. = ..()
 	MP = new(src, sound_path)
 
 /obj/structure/device/piano/Destroy()

@@ -14,9 +14,9 @@
 	light_power = 2
 	ghost_must_be_admin = TRUE
 
-/obj/machinery/floodlight/New()
-	src.cell = new(src)
-	..()
+/obj/machinery/floodlight/atom_init()
+	cell = new(src)
+	. = ..()
 
 /obj/machinery/floodlight/proc/updateicon()
 	icon_state = "flood[open ? "o" : ""][open && cell ? "b" : ""]0[on]"

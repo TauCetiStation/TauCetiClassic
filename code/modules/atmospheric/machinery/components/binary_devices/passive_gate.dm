@@ -36,8 +36,8 @@ Passive gate is similar to the regular pump except:
 	unlocked = 1
 	icon_state = "map_on"
 
-/obj/machinery/atmospherics/components/binary/passive_gate/New()
-	..()
+/obj/machinery/atmospherics/components/binary/passive_gate/atom_init()
+	. = ..()
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2

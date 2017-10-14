@@ -22,8 +22,8 @@ var/list/alldepartments = list("Central Command")
 	var/department = "Unknown" // our department
 	var/dptdest = "Central Command" // the department we're sending to
 
-/obj/machinery/faxmachine/New()
-	..()
+/obj/machinery/faxmachine/atom_init()
+	. = ..()
 	allfaxes += src
 
 	if( !("[department]" in alldepartments) )

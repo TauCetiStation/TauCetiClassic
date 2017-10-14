@@ -20,8 +20,8 @@
 	var/obj/item/weapon/stock_parts/cell/bcell = null
 	var/charge_time = 2 SECONDS
 
-/obj/item/weapon/defibrillator/New() //starts without a cell for rnd
-	..()
+/obj/item/weapon/defibrillator/atom_init() // starts without a cell for rnd
+	. = ..()
 	if(ispath(paddles))
 		paddles = new paddles(src, src)
 	else
@@ -540,10 +540,10 @@
 /obj/item/weapon/twohanded/shockpaddles/linked
 	var/obj/item/weapon/defibrillator/base_unit
 
-/obj/item/weapon/twohanded/shockpaddles/linked/New(newloc, obj/item/weapon/defibrillator/defib)
+/obj/item/weapon/twohanded/shockpaddles/linked/atom_init(mapload, obj/item/weapon/defibrillator/defib)
 	base_unit = defib
 	charge_time = base_unit.charge_time
-	..(newloc)
+	. = ..()
 
 /obj/item/weapon/twohanded/shockpaddles/linked/Destroy()
 	if(base_unit)
@@ -599,9 +599,12 @@
 	icon_state = "defibpaddleso"
 	item_state = "defibpaddles"
 
-/obj/item/weapon/twohanded/offhand/shockpaddles/New(mob/user)
-	..()
-	var/obj/item/weapon/twohanded/shockpaddles/paddles = user.get_active_hand()
+/obj/item/weapon/twohanded/offhand/shockpaddles/atom_init()
+	. = ..()
+	var/mob/user = loc
+	var/obj/item/weapon/twohanded/shockpaddles/paddles
+	if(istype(user))
+		paddles = user.get_active_hand()
 	if(!istype(paddles))
 		return
 	if(paddles.cooldown)

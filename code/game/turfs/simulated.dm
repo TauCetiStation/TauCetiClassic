@@ -9,8 +9,8 @@
 	var/max_fire_temperature_sustained = 0 //The max temperature of the fire which it was subjected to
 	var/dirt = 0
 
-/turf/simulated/New()
-	..()
+/turf/simulated/atom_init()
+	. = ..()
 	levelupdate()
 
 /turf/simulated/proc/AddTracks(mob/M,bloodDNA,comingdir,goingdir,bloodcolor="#A10808")

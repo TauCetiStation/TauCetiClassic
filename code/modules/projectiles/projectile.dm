@@ -66,9 +66,9 @@
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
 
-/obj/item/projectile/New()
+/obj/item/projectile/atom_init()
 	damtype = damage_type // TODO unify these vars properly (Bay12)
-	..()
+	. = ..()
 	if(light_color)
 		set_light(light_range,light_power,light_color)
 

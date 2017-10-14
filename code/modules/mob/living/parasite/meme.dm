@@ -65,8 +65,8 @@ mob/living/parasite/meme/var/meme_death = "stoxin"
 mob/living/parasite/meme/var/list/indoctrinated = list()
 
 
-mob/living/parasite/meme/New()
-	..()
+mob/living/parasite/meme/atom_init()
+	. = ..()
 	name = "[pick("Meme")] [rand(1000,9999)]"
 
 mob/living/parasite/meme/Life()

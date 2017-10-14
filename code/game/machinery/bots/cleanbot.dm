@@ -43,8 +43,8 @@
 	var/next_dest
 	var/next_dest_loc
 
-/obj/machinery/bot/cleanbot/New()
-	..()
+/obj/machinery/bot/cleanbot/atom_init()
+	. = ..()
 	src.get_targets()
 	src.icon_state = "cleanbot[src.on]"
 

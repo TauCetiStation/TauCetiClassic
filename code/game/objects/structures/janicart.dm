@@ -15,8 +15,9 @@
 	var/signs = 0	//maximum capacity hardcoded below
 
 
-/obj/structure/janitorialcart/New()
+/obj/structure/janitorialcart/atom_init()
 	create_reagents(100)
+	. = ..()
 
 /obj/structure/janitorialcart/examine(mob/user)
 	..()
@@ -171,9 +172,10 @@
 	var/callme = "pimpin' ride"	//how do people refer to it?
 
 
-/obj/structure/stool/bed/chair/janicart/New()
+/obj/structure/stool/bed/chair/janicart/atom_init()
 	handle_rotation()
 	create_reagents(100)
+	. = ..()
 
 
 /obj/structure/stool/bed/chair/janicart/examine(mob/user)

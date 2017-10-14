@@ -10,7 +10,11 @@
 	var/used = FALSE
 	var/opened = FALSE
 
-/obj/item/device/gateway_locker/New()
+/obj/item/device/gateway_locker/atom_init()
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/device/gateway_locker/atom_init_late()
 	stationgate = locate(/obj/machinery/gateway/centerstation)
 
 /obj/item/device/gateway_locker/attack_self(mob/user)

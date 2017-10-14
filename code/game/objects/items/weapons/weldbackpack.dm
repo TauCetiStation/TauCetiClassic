@@ -7,7 +7,8 @@
 	w_class = 4.0
 	var/max_fuel = 350
 
-/obj/item/weapon/weldpack/New()
+/obj/item/weapon/weldpack/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(max_fuel) //Lotsa refills
 	reagents = R
 	R.my_atom = src

@@ -126,11 +126,14 @@
 	icon = 'icons/effects/genetics.dmi'
 	icon_state = "shadow_portal"
 
-/obj/structure/shadow_vortex/New()
-	//src.audible_message("<span class='warning'><b>\The [src] lets out a dismaying screech as dimensional barriers are torn apart!</span>")
-	playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
-	sleep(100)
-	qdel(src)
+/obj/structure/shadow_vortex/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/shadow_vortex/atom_init_late()
+	audible_message("<span class='warning'><b>\The [src] lets out a dismaying screech as dimensional barriers are torn apart!</span>")
+	playsound(src, 'sound/effects/supermatter.ogg', 100, 1)
+	QDEL_IN(src, 100)
 
 /obj/structure/shadow_vortex/Crossed(var/td)
 	..()

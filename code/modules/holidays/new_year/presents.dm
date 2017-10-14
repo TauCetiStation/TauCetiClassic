@@ -87,7 +87,8 @@
 						/obj/item/toy/prize/poly/polyspecial			= 1
 						)
 
-/obj/item/weapon/present/New()
+/obj/item/weapon/present/atom_init()
+	. = ..()
 	icon_state = "gift[rand(1,9)]"
 	pixel_x = rand(-6,6)
 	pixel_y = rand(-6,6)

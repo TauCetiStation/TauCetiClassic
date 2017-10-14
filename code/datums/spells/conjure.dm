@@ -94,8 +94,8 @@
 /obj/effect/forcefield/magic
 	var/mob/wizard
 
-/obj/effect/forcefield/magic/New(turf/loc, mob/wiz, timeleft = 300)
-	..()
+/obj/effect/forcefield/magic/atom_init(mapload, mob/wiz, timeleft = 300)
+	. = ..()
 	wizard = wiz
 	QDEL_IN(src, timeleft)
 

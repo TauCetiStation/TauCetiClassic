@@ -5,8 +5,8 @@
 /obj/item/weapon/reagent_containers/glass/replenishing
 	var/spawning_id
 
-/obj/item/weapon/reagent_containers/glass/replenishing/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/replenishing/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 	spawning_id = pick("blood","holywater","lube","stoxin","ethanol","ice","glycerol","fuel","cleaner")
 
@@ -21,7 +21,8 @@
 	var/last_twitch = 0
 	var/max_stored_messages = 100
 
-/obj/item/clothing/mask/gas/poltergeist/New()
+/obj/item/clothing/mask/gas/poltergeist/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/mask/gas/poltergeist/process()
@@ -54,8 +55,8 @@
 	var/wight_check_index = 1
 	var/list/shadow_wights = list()
 
-/obj/item/weapon/vampiric/New()
-	..()
+/obj/item/weapon/vampiric/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/vampiric/process()
@@ -141,10 +142,10 @@
 	var/turf/target_turf
 	var/loc_last_process
 
-/obj/effect/decal/cleanable/blood/splatter/animated/New()
-	..()
+/obj/effect/decal/cleanable/blood/splatter/animated/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
-	loc_last_process = src.loc
+	loc_last_process = loc
 
 /obj/effect/decal/cleanable/blood/splatter/animated/process()
 	if(target_turf && src.loc != target_turf)
@@ -172,7 +173,8 @@
 	icon_state = "shade"
 	density = 1
 
-/obj/effect/shadow_wight/New()
+/obj/effect/shadow_wight/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/shadow_wight/process()

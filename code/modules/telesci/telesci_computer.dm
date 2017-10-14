@@ -32,8 +32,8 @@
 	var/obj/item/device/gps/inserted_gps
 	var/obj/effect/portal/tsci_wormhole/active_wormhole = null
 
-/obj/machinery/computer/telescience/New()
-	..()
+/obj/machinery/computer/telescience/atom_init()
+	. = ..()
 	recalibrate()
 
 /obj/machinery/computer/telescience/atom_init()

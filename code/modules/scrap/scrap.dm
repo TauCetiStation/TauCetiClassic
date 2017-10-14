@@ -40,12 +40,12 @@ var/global/list/scrap_base_cache = list()
 
 
 /obj/structure/scrap/proc/make_cube()
-	var/obj/container = new /obj/structure/scrap_cube(src.loc, loot_max)
-	src.forceMove(container)
+	var/obj/container = new /obj/structure/scrap_cube(loc, loot_max)
+	forceMove(container)
 
-/obj/structure/scrap/New()
+/obj/structure/scrap/atom_init()
+	. = ..()
 	update_icon(1)
-	..()
 
 
 /obj/effect/scrapshot
@@ -55,21 +55,20 @@ var/global/list/scrap_base_cache = list()
 	anchored = 1
 	density = 0
 
-/obj/effect/scrapshot/New(var/turf/spawnloc, var/severity = 1)
-	..(spawnloc)
-	spawn(0)
-		switch(severity)
-			if(1)
-				for(var/i in 1 to 12)
-					var/projtype = pick(/obj/item/stack/rods, /obj/item/weapon/shard)
-					var/obj/item/projectile = new projtype(spawnloc)
-					projectile.throw_at(locate(spawnloc.x + rand(40) - 20, spawnloc.y + rand(40) - 20, spawnloc.z), 81, pick(1,3,80,80))
-			if(2)
-				for(var/i in 1 to 4)
-					var/projtype = pick(subtypesof(/obj/item/trash))
-					var/obj/item/projectile = new projtype(spawnloc)
-					projectile.throw_at(locate(spawnloc.x + rand(10) - 5, spawnloc.y + rand(10) - 5, spawnloc.z), 3, 1)
-	qdel(src)
+/obj/effect/scrapshot/atom_init(mapload, severity = 1)
+	..()
+	switch(severity)
+		if(1)
+			for(var/i in 1 to 12)
+				var/projtype = pick(/obj/item/stack/rods, /obj/item/weapon/shard)
+				var/obj/item/projectile = new projtype(loc)
+				projectile.throw_at(locate(loc.x + rand(40) - 20, loc.y + rand(40) - 20, loc.z), 81, pick(1,3,80,80))
+		if(2)
+			for(var/i in 1 to 4)
+				var/projtype = pick(subtypesof(/obj/item/trash))
+				var/obj/item/projectile = new projtype(loc)
+				projectile.throw_at(locate(loc.x + rand(10) - 5, loc.y + rand(10) - 5, loc.z), 3, 1)
+	return INITIALIZE_HINT_QDEL
 
 
 /obj/structure/scrap/ex_act(severity)
@@ -494,9 +493,13 @@ var/global/list/scrap_base_cache = list()
 	base_max = 6
 	big_item_chance = 100
 
-//obj/structure/scrap/poor/structure/New() //removed big loot generation from structure scrap
+//obj/structure/scrap/poor/structure/atom_init() //removed big loot generation from structure scrap
 //	make_big_loot()
 //	..()
+//	return INITIALIZE_HINT_LATELOAD
+//
+//obj/structure/scrap/poor/structure/atom_init_late()
+//	make_big_loot()
 
 /obj/structure/scrap/poor/structure/update_icon() //make big trash icon for this
 	..()

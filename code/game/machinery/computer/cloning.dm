@@ -16,12 +16,12 @@
 	var/loading = 0 // Nice loading text
 	var/autoprocess = 0
 
-/obj/machinery/computer/cloning/New()
+/obj/machinery/computer/cloning/atom_init()
 	..()
-	spawn(5)
-		updatemodules()
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/cloning/atom_init_late()
+	updatemodules()
 
 /obj/machinery/computer/cloning/process()
 	if(!(scanner && pod1 && autoprocess))

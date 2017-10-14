@@ -4,8 +4,8 @@
 	var/hoodtype = /obj/item/clothing/head //so the chaplain hoodie or other hoodies can override this
 	var/hooded = FALSE
 
-/obj/item/clothing/suit/hooded/New()
-	..()
+/obj/item/clothing/suit/hooded/atom_init()
+	. = ..()
 	hood = new hoodtype(src)
 	hood.canremove = FALSE
 	hood.unacidable = FALSE

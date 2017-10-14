@@ -74,7 +74,7 @@
 							)
 	health_regen = 3
 
-/mob/living/simple_animal/hulk/New()
+/mob/living/simple_animal/hulk/atom_init()
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name

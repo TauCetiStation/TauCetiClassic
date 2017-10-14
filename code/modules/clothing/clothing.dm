@@ -137,12 +137,14 @@
 	icon_state = "block"
 	slot_flags = SLOT_EARS | SLOT_TWOEARS
 
-	New(var/obj/O)
-		name = O.name
-		desc = O.desc
-		icon = O.icon
-		icon_state = O.icon_state
-		dir = O.dir
+/obj/item/clothing/ears/offear/atom_init()
+	. = ..()
+	var/obj/O = loc
+	name = O.name
+	desc = O.desc
+	icon = O.icon
+	icon_state = O.icon_state
+	dir = O.dir
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
@@ -541,6 +543,6 @@ BLIND     // can't see anything
 
 	src.remove_accessory(usr)
 
-/obj/item/clothing/under/rank/New()
+/obj/item/clothing/under/rank/atom_init()
 	sensor_mode = pick(0,1,2,3)
-	..()
+	. = ..()

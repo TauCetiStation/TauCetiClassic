@@ -56,15 +56,6 @@
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
-/mob/living/simple_animal/New()
-	..()
-	verbs -= /mob/verb/observe
-
-/mob/living/simple_animal/Login()
-	if(src && src.client)
-		src.client.screen = null
-	..()
-
 /mob/living/simple_animal/updatehealth()
 	return
 

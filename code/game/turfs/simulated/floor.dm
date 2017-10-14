@@ -62,8 +62,8 @@ var/list/wood_icons = list("wood","wood-broken")
 	proc/toggle_lightfloor_on()
 		lightfloor_state ^= LIGHTFLOOR_ON_BIT
 
-/turf/simulated/floor/New()
-	..()
+/turf/simulated/floor/atom_init()
+	. = ..()
 	if(icon_state in icons_to_ignore_at_floor_init) //so damaged/burned tiles or plating icons aren't saved as the default
 		icon_regular_floor = "floor"
 	else

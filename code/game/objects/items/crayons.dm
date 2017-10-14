@@ -182,8 +182,8 @@
 	edible = 0
 	validSurfaces = list(/turf/simulated/floor,/turf/simulated/wall)
 
-/obj/item/toy/crayon/spraycan/New()
-	..()
+/obj/item/toy/crayon/spraycan/atom_init()
+	. = ..()
 	name = "spray can"
 	update_icon()
 

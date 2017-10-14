@@ -41,23 +41,27 @@
 	icon_state = "decal_1"
 	random_icon_states = list("decal_1", "decal_2", "decal_3", "decal_4", "decal_5")
 
-/obj/structure/cellular_biomass/wall/bluespace/New()
+/obj/structure/cellular_biomass/wall/bluespace/atom_init()
+	. = ..()
 	icon_state = "bluewall_1"
 	desc = get_bluespace_scramble()
 
-/obj/structure/cellular_biomass/grass/bluespace/New()
+/obj/structure/cellular_biomass/grass/bluespace/atom_init()
+	. = ..()
 	icon_state = "bluegrass_1"
 	desc = get_bluespace_scramble()
 
-/obj/structure/cellular_biomass/core/bluespace/New()
+/obj/structure/cellular_biomass/core/bluespace/atom_init()
+	. = ..()
 	icon_state = "light_1"
 	set_light(luminosity)
 	desc = get_bluespace_scramble()
 
-/obj/structure/cellular_biomass/lair/bluespace/New()
+/obj/structure/cellular_biomass/lair/bluespace/atom_init()
 	var/type = pick(subtypesof(/mob/living/simple_animal/hostile/cellular/bluespace/))
-	new type(src.loc)
-	qdel(src) //glitches are self-replicating, no need for lair
+	new type(loc)
+	..()
+	return INITIALIZE_HINT_QDEL // glitches are self-replicating, no need for lair
 
 /obj/effect/decal/cleanable/bluespace
 	name = "Glitch"

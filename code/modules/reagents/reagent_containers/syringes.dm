@@ -385,36 +385,40 @@
 /obj/item/weapon/reagent_containers/syringe/inaprovaline
 	name = "Syringe (inaprovaline)"
 	desc = "Contains inaprovaline - used to stabilize patients."
-	New()
-		..()
-		reagents.add_reagent("inaprovaline", 15)
-		mode = SYRINGE_INJECT
-		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/inaprovaline/atom_init()
+	. = ..()
+	reagents.add_reagent("inaprovaline", 15)
+	mode = SYRINGE_INJECT
+	update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/antitoxin
 	name = "Syringe (anti-toxin)"
 	desc = "Contains anti-toxins."
-	New()
-		..()
-		reagents.add_reagent("anti_toxin", 15)
-		mode = SYRINGE_INJECT
-		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/antitoxin/atom_init()
+	. = ..()
+	reagents.add_reagent("anti_toxin", 15)
+	mode = SYRINGE_INJECT
+	update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/antiviral
 	name = "Syringe (spaceacillin)"
 	desc = "Contains antiviral agents."
-	New()
-		..()
-		reagents.add_reagent("spaceacillin", 15)
-		mode = SYRINGE_INJECT
-		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/antiviral/atom_init()
+	. = ..()
+	reagents.add_reagent("spaceacillin", 15)
+	mode = SYRINGE_INJECT
+	update_icon()
 
 /obj/item/weapon/reagent_containers/ld50_syringe/choral
-	New()
-		..()
-		reagents.add_reagent("chloralhydrate", 50)
-		mode = SYRINGE_INJECT
-		update_icon()
+
+/obj/item/weapon/reagent_containers/ld50_syringe/choral/atom_init()
+	. = ..()
+	reagents.add_reagent("chloralhydrate", 50)
+	mode = SYRINGE_INJECT
+	update_icon()
 
 
 //Robot syringes
@@ -422,37 +426,41 @@
 /obj/item/weapon/reagent_containers/syringe/robot/antitoxin
 	name = "Syringe (anti-toxin)"
 	desc = "Contains anti-toxins."
-	New()
-		..()
-		reagents.add_reagent("anti_toxin", 15)
-		mode = SYRINGE_INJECT
-		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/robot/antitoxin/atom_init()
+	. = ..()
+	reagents.add_reagent("anti_toxin", 15)
+	mode = SYRINGE_INJECT
+	update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/robot/inoprovaline
 	name = "Syringe (inoprovaline)"
 	desc = "Contains inaprovaline - used to stabilize patients."
-	New()
-		..()
-		reagents.add_reagent("inaprovaline", 15)
-		mode = SYRINGE_INJECT
-		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/robot/inoprovaline/atom_init()
+	. = ..()
+	reagents.add_reagent("inaprovaline", 15)
+	mode = SYRINGE_INJECT
+	update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/robot/mixed
 	name = "Syringe (mixed)"
 	desc = "Contains inaprovaline & anti-toxins."
-	New()
-		..()
-		reagents.add_reagent("inaprovaline", 7)
-		reagents.add_reagent("anti_toxin", 8)
-		mode = SYRINGE_INJECT
-		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/robot/mixed/atom_init()
+	. = ..()
+	reagents.add_reagent("inaprovaline", 7)
+	reagents.add_reagent("anti_toxin", 8)
+	mode = SYRINGE_INJECT
+	update_icon()
 
 /obj/item/weapon/reagent_containers/syringe/mulligan
 	name = "Mulligan"
 	desc = "A syringe used to completely change the users identity."
 	amount_per_transfer_from_this = 1
-	New()
-		..()
-		reagents.add_reagent("mulligan", 1)
-		mode = SYRINGE_INJECT
-		update_icon()
+
+/obj/item/weapon/reagent_containers/syringe/mulligan/atom_init()
+	. = ..()
+	reagents.add_reagent("mulligan", 1)
+	mode = SYRINGE_INJECT
+	update_icon()

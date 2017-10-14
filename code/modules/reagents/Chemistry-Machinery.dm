@@ -2,7 +2,7 @@
 #define LIQUID 2
 #define GAS 3
 #define MAX_PILL_SPRITE 20
-#define MAX_BOTTLE_SPRITE 20
+#define MAX_BOTTLE_SPRITE 3
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	density = 1
@@ -49,8 +49,8 @@
 	else
 		recharged -= 1
 
-/obj/machinery/chem_dispenser/New()
-	..()
+/obj/machinery/chem_dispenser/atom_init()
+	. = ..()
 	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
 
@@ -231,8 +231,8 @@
 		)
 	)
 
-/obj/machinery/chem_dispenser/constructable/New()
-	..()
+/obj/machinery/chem_dispenser/constructable/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/chem_dispenser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -364,8 +364,8 @@
 	var/max_pill_count = 20
 
 
-/obj/machinery/chem_master/New()
-	..()
+/obj/machinery/chem_master/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
@@ -475,7 +475,7 @@
 		return
 
 	else if(href_list["changebottle"])
-		var/dat = "<B>Choose bottle colour</B><BR>"
+		var/dat = "<B>Choose bottle</B><BR>"
 
 		dat += "<TABLE><TR>"
 		for(var/i = 1 to MAX_BOTTLE_SPRITE)
@@ -733,8 +733,8 @@
 	name = "ChemMaster 2999"
 	desc = "Used to seperate chemicals and distribute them in a variety of forms."
 
-/obj/machinery/chem_master/constructable/New()
-	..()
+/obj/machinery/chem_master/constructable/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/chem_master(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
@@ -1098,10 +1098,9 @@
 
 	var/list/holdingitems = list()
 
-/obj/machinery/reagentgrinder/New()
-	..()
+/obj/machinery/reagentgrinder/atom_init()
+	. = ..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-	return
 
 /obj/machinery/reagentgrinder/update_icon()
 	icon_state = "juicer"+num2text(!isnull(beaker))

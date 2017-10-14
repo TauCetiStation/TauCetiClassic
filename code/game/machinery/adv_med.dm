@@ -182,12 +182,12 @@
 	var/storedinfo = null
 
 
-/obj/machinery/body_scanconsole/New()
+/obj/machinery/body_scanconsole/atom_init()
 	..()
-	spawn( 5 )
-		src.connected = locate(/obj/machinery/bodyscanner, get_step(src, WEST))
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/body_scanconsole/atom_init_late()
+	connected = locate(/obj/machinery/bodyscanner, get_step(src, WEST))
 
 /*
 

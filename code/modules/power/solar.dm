@@ -30,8 +30,8 @@
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control = null
 
-/obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S, var/process = 1)
-	..(loc)
+/obj/machinery/power/solar/atom_init(mapload, obj/item/solar_assembly/S, process = 1)
+	. = ..()
 	Make(S)
 	connect_to_network(process)
 
@@ -176,8 +176,8 @@
 		src.density = 0
 
 
-/obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
-	..(loc, S, 0)
+/obj/machinery/power/solar/fake/atom_init(mapload, obj/item/solar_assembly/S)
+	. = ..(mapload, S, 0)
 
 /obj/machinery/power/solar/fake/process()
 	. = PROCESS_KILL

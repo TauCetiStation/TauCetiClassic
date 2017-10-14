@@ -14,11 +14,11 @@
 	layer = 2.6 // a bit above wires
 
 
-/obj/machinery/power/terminal/New()
-	..()
+/obj/machinery/power/terminal/atom_init()
+	. = ..()
 	var/turf/T = src.loc
-	if(level==1) hide(T.intact)
-	return
+	if(level == 1)
+		hide(T.intact)
 
 /obj/machinery/power/terminal/Destroy()
 	if(master)

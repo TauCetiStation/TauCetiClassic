@@ -37,9 +37,6 @@
 //-------------------------------------------
 // Standard procs
 //-------------------------------------------
-/obj/vehicle/New()
-	..()
-
 /obj/vehicle/Move()
 	if(can_move())
 		var/old_loc = get_turf(src)

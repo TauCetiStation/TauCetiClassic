@@ -24,9 +24,9 @@
 /obj/effect/glowshroom/single
 	spreadChance = 0
 
-/obj/effect/glowshroom/New()
+/obj/effect/glowshroom/atom_init()
 
-	..()
+	. = ..()
 
 	dir = CalcDir()
 

@@ -12,8 +12,8 @@
 	density = TRUE
 	layer = ABOVE_WINDOW_LAYER
 
-/obj/machinery/atmospherics/components/unary/tank/New()
-	..()
+/obj/machinery/atmospherics/components/unary/tank/atom_init()
+	. = ..()
 
 	icon_state = replacetext(icon_state, "_map", "")
 
@@ -25,8 +25,8 @@
 		air_contents.adjust_gas(gas_type, (start_pressure) * (air_contents.volume) / (R_IDEAL_GAS_EQUATION * air_contents.temperature))
 		name = "[name] ([gas_data.name[gas_type]])"
 
-/obj/machinery/atmospherics/components/unary/tank/air/New()
-	..()
+/obj/machinery/atmospherics/components/unary/tank/air/atom_init()
+	. = ..()
 
 	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.adjust_multi("oxygen",  (start_pressure * O2STANDARD) * (air_contents.volume) / (R_IDEAL_GAS_EQUATION * air_contents.temperature), \

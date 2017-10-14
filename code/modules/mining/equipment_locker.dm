@@ -31,8 +31,8 @@
 								"uranium" = 20,
 								"osmium" = 	40)
 
-/obj/machinery/mineral/ore_redemption/New()
-	..()
+/obj/machinery/mineral/ore_redemption/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/ore_redemption(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -279,8 +279,8 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	src.equipment_path = path
 	src.cost = cost
 
-/obj/machinery/mineral/equipment_vendor/New()
-	..()
+/obj/machinery/mineral/equipment_vendor/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/mining_equipment_vendor(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -405,10 +405,11 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 /**********************Mining Equipment Locker Items**************************/
 /**********************Mining Rig Pack**********************/
 
-/obj/item/mining_rig_pack/New()
+/obj/item/mining_rig_pack/atom_init()
+	..()
 	new /obj/item/clothing/head/helmet/space/rig/mining(src.loc)
 	new	/obj/item/clothing/suit/space/rig/mining(src.loc)
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /**********************Mining Equipment Voucher**********************/
 
@@ -561,7 +562,11 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	var/resonance_damage = 30
 	var/creator = null
 
-/obj/effect/resonance/New()
+/obj/effect/resonance/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/resonance/atom_init_late()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
@@ -602,7 +607,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 /obj/item/clothing/mask/facehugger/toy/Die()
 	return
 
-/obj/item/clothing/mask/facehugger/toy/New()//to prevent deleting it if aliums are disabled
+/obj/item/clothing/mask/facehugger/toy/atom_init_late() // to prevent deleting it if aliums are disabled
 	return
 
 /**********************Mining drone**********************/
@@ -678,8 +683,8 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	qdel(src)
 	return
 
-/mob/living/simple_animal/hostile/mining_drone/New()
-	..()
+/mob/living/simple_animal/hostile/mining_drone/atom_init()
+	. = ..()
 	SetCollectBehavior()
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)

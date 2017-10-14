@@ -370,13 +370,21 @@
 /obj/effect/equip_e/proc/done()
 	return
 
-/obj/effect/equip_e/New()
-	if (!ticker)
-		qdel(src)
-	spawn(100)
-		qdel(src)
+/obj/effect/equip_e/atom_init()
 	..()
-	return
+	if (!ticker)
+		return INITIALIZE_HINT_QDEL
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/equip_e/atom_init_late()
+	QDEL_IN(src, 100)
+
+/obj/effect/equip_e/Destroy()
+	source = null
+	s_loc = null
+	t_loc = null
+	item = null
+	return ..()
 
 /obj/effect/equip_e/human/process()
 	if(ismouse(source))

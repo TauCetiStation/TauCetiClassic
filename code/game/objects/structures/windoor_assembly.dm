@@ -27,10 +27,10 @@ obj/structure/windoor_assembly
 	var/secure = 0		//Whether or not this creates a secure windoor
 	var/state = "01"	//How far the door assembly has progressed
 
-obj/structure/windoor_assembly/New(dir=NORTH)
-	..()
+obj/structure/windoor_assembly/atom_init(mapload, dir = NORTH)
+	. = ..()
 	src.ini_dir = src.dir
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles(need_rebuild = 1)
 
 obj/structure/windoor_assembly/Destroy()
 	density = 0

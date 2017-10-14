@@ -71,11 +71,9 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 
-
-	New()
-		src.imp = new /obj/item/weapon/implant/tracking( src )
-		..()
-		return
+/obj/item/weapon/implantcase/tracking/atom_init()
+	imp = new /obj/item/weapon/implant/tracking(src)
+	. = ..()
 
 
 
@@ -85,11 +83,9 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-r"
 
-
-	New()
-		src.imp = new /obj/item/weapon/implant/explosive( src )
-		..()
-		return
+/obj/item/weapon/implantcase/explosive/atom_init()
+	imp = new /obj/item/weapon/implant/explosive(src)
+	. = ..()
 
 
 
@@ -98,11 +94,11 @@
 	desc = "A case containing a chemical implant."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
-/obj/item/weapon/implantcase/chem/New()
 
-	src.imp = new /obj/item/weapon/implant/chem( src )
-	..()
-	return
+/obj/item/weapon/implantcase/chem/atom_init()
+	imp = new /obj/item/weapon/implant/chem(src)
+	. = ..()
+
 
 
 /obj/item/weapon/implantcase/loyalty
@@ -111,11 +107,10 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-r"
 
+/obj/item/weapon/implantcase/loyalty/atom_init()
+	imp = new /obj/item/weapon/implant/loyalty(src)
+	. = ..()
 
-	New()
-		src.imp = new /obj/item/weapon/implant/loyalty( src )
-		..()
-		return
 
 
 /obj/item/weapon/implantcase/death_alarm
@@ -124,7 +119,6 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 
-	New()
-		src.imp = new /obj/item/weapon/implant/death_alarm( src )
-		..()
-		return
+/obj/item/weapon/implantcase/death_alarm/atom_init()
+	imp = new /obj/item/weapon/implant/death_alarm(src)
+	. = ..()

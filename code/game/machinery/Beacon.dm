@@ -11,8 +11,8 @@
 	idle_power_usage = 0
 	var/obj/item/device/radio/beacon/Beacon
 
-/obj/machinery/bluespace_beacon/New()
-	..()
+/obj/machinery/bluespace_beacon/atom_init()
+	. = ..()
 	var/turf/T = loc
 	Beacon = new /obj/item/device/radio/beacon
 	Beacon.invisibility = INVISIBILITY_MAXIMUM

@@ -16,7 +16,8 @@
 	if(def_zone == O_MOUTH && last_played <= world.time)
 		play(user)
 
-/obj/item/device/harmonica/New()
+/obj/item/device/harmonica/atom_init()
+	. = ..()
 	channel = rand(1000, 1024)
 
 /obj/item/device/harmonica/proc/play(mob/living/carbon/user)

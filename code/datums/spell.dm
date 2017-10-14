@@ -119,8 +119,8 @@ var/list/spells = typesof(/obj/effect/proc_holder/spell) //needed for the badmin
 	if(sound)
 		playsound(user, sound, 100, 1)
 
-/obj/effect/proc_holder/spell/New()
-	..()
+/obj/effect/proc_holder/spell/atom_init()
+	. = ..()
 	charge_counter = charge_max
 	if(!casting_clothes)
 		casting_clothes = typecacheof(list(/obj/item/clothing/suit/wizrobe, /obj/item/clothing/suit/space/rig/wizard,

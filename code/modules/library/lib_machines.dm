@@ -152,8 +152,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 	var/bibledelay = 0
 
-/obj/machinery/computer/libraryconsole/bookmanagement/New()
-	..()
+/obj/machinery/computer/libraryconsole/bookmanagement/atom_init()
+	. = ..()
 	if(circuit)
 		circuit.name = "circuit board (Book Inventory Management Console)"
 		circuit.build_path = /obj/machinery/computer/libraryconsole/bookmanagement

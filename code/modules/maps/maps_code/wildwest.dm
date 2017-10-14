@@ -110,7 +110,8 @@
 	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered
 	var/triggered = 0
 
-/obj/effect/meatgrinder/New()
+/obj/effect/meatgrinder/atom_init()
+	. = ..()
 	icon_state = "blob"
 
 /obj/effect/meatgrinder/Crossed(AM as mob|obj)

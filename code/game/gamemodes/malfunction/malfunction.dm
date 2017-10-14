@@ -29,7 +29,7 @@
 
 
 /datum/game_mode/malfunction/pre_setup()
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		if(player.mind && player.mind.assigned_role == "AI" && (ROLE_MALF in player.client.prefs.be_role))
 			malf_ai+=player.mind
 	if(malf_ai.len)

@@ -11,8 +11,8 @@
 
 	var/list/cards = list()
 
-/obj/item/weapon/deck/New()
-	..()
+/obj/item/weapon/deck/atom_init()
+	. = ..()
 
 	var/datum/playingcard/P
 	for(var/suit in list("spades","clubs","diamonds","hearts"))

@@ -18,11 +18,11 @@
 
 	var/health = 100
 
-/obj/structure/mineral_door/New(location)
-	..()
+/obj/structure/mineral_door/atom_init()
+	. = ..()
 	icon_state = mineralType
 	name = "[mineralType] door"
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles(need_rebuild = 1)
 
 /obj/structure/mineral_door/Destroy()
 	update_nearby_tiles()
@@ -263,11 +263,11 @@
 	health = 150
 	var/close_delay = 100
 
-/obj/structure/mineral_door/resin/New()
+/obj/structure/mineral_door/resin/atom_init()
 	var/turf/T = get_turf(loc)
 	if(T)
 		T.blocks_air = TRUE
-	..()
+	. = ..()
 
 /obj/structure/mineral_door/resin/Destroy()
 	var/turf/T = get_turf(loc)

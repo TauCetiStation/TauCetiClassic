@@ -15,8 +15,8 @@
 	var/productivity = 0
 	var/max_items = 10
 
-/obj/machinery/biogenerator/New()
-	..()
+/obj/machinery/biogenerator/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src

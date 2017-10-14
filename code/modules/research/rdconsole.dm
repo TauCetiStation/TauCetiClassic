@@ -126,8 +126,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		C.files.RefreshResearch()
 
 
-/obj/machinery/computer/rdconsole/New()
-	..()
+/obj/machinery/computer/rdconsole/atom_init()
+	. = ..()
 	files = new /datum/research(src) //Setup the research data holder.
 	if(!id)
 		for(var/obj/machinery/r_n_d/server/centcom/S in machines)
@@ -927,8 +927,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_access = null
 	req_access_txt = "29"
 
-/obj/machinery/computer/rdconsole/robotics/New()
-	..()
+/obj/machinery/computer/rdconsole/robotics/atom_init()
+	. = ..()
 	if(circuit)
 		circuit.name = "circuit board (RD Console - Robotics)"
 		circuit.build_path = /obj/machinery/computer/rdconsole/robotics
@@ -943,8 +943,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_access = null
 	req_access_txt = "48"
 
-/obj/machinery/computer/rdconsole/mining/New()
-	..()
+/obj/machinery/computer/rdconsole/mining/atom_init()
+	. = ..()
 	if(circuit)
 		circuit.name = "circuit board (RD Console - Mining)"
 		circuit.build_path = /obj/machinery/computer/rdconsole/mining

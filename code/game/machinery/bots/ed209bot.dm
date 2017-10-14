@@ -35,8 +35,8 @@
 	var/lasercolor = ""
 
 
-/obj/machinery/bot/secbot/ed209/New(loc,created_name,created_lasercolor)
-	..()
+/obj/machinery/bot/secbot/ed209/atom_init(mapload, created_name, created_lasercolor)
+	. = ..()
 	if(created_name)
 		name = created_name
 	if(created_lasercolor)
@@ -508,10 +508,12 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/ed209/proc/enable()
 	disabled = 0
 
-/obj/machinery/bot/secbot/ed209/bluetag/New()//If desired, you spawn red and bluetag bots easily
+/obj/machinery/bot/secbot/ed209/bluetag/atom_init() // If desired, you spawn red and bluetag bots easily
+	..()
 	new /obj/machinery/bot/secbot/ed209(get_turf(src), null, "b")
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
-/obj/machinery/bot/secbot/ed209/redtag/New()
+/obj/machinery/bot/secbot/ed209/redtag/atom_init()
+	..()
 	new /obj/machinery/bot/secbot/ed209(get_turf(src), null, "r")
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
