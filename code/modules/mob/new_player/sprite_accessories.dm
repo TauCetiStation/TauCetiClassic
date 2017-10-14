@@ -662,6 +662,56 @@
 	name = "Shinibu"
 	icon_state = "hair_shinobu"
 
+/datum/sprite_accessory/hair/combed
+	name = "Combed Hair"
+	icon_state = "hair_combed"
+
+/datum/sprite_accessory/hair/longsidepart
+	name = "Long Sideparts"
+	icon_state = "hair_longsidepartstraight"
+
+/datum/sprite_accessory/hair/bluntbangs
+	name = "Blunt Bangs"
+	icon_state = "hair_bluntbangs"
+
+/datum/sprite_accessory/hair/whispybangshigh
+	name = "Whispy Bangish"
+	icon_state = "hair_whispybangshigh"
+
+/datum/sprite_accessory/hair/whispybangs
+	name = "Whispy Bangs"
+	icon_state = "hair_whispybangs"
+
+/datum/sprite_accessory/hair/combedbob
+	name = "Combed Bob"
+	icon_state = "hair_combedbob"
+
+/datum/sprite_accessory/hair/halfshavedlong
+	name = "Long Half Shaved"
+	icon_state = "hair_halfshaved"
+
+/datum/sprite_accessory/hair/slighlymessy
+	name = "Slightly Messed"
+	icon_state = "hair_slightlymessy"
+
+/datum/sprite_accessory/hair/gypsy
+	name = "Long Gypsy"
+	icon_state = "hair_gipsy"
+
+/datum/sprite_accessory/hair/geisha
+	name = "Geisha"
+	icon_state = "hair_geisha"
+
+/datum/sprite_accessory/hair/fullovereye
+	name = "Hair Over Eye"
+	icon_state = "hair_baum"
+
+/datum/sprite_accessory/hair/chub
+	name = "Chub"
+	icon_state = "hair_chub"
+
+
+
 //datum/sprite_accessory/hair/modern
 //	name = "Modern"
 //	icon_state = "hair_modern"
