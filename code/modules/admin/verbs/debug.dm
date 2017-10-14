@@ -1860,7 +1860,10 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Display Initialzie() Log"
 	set desc = "Displays a list of things that didn't handle Initialize() properly"
 
-	usr << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
+	if(!LAZYLEN(SSatoms.BadInitializeCalls))
+		to_chat(usr, "<span class='notice'>There is no bad initializations found in log.</span>")
+	else
+		usr << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
 
 // DNA2 - Admin Hax
 /client/proc/cmd_admin_toggle_block(mob/M,block)
