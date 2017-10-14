@@ -59,8 +59,8 @@
 	var/created_name = ""
 	w_class = 3
 
-/obj/item/robot_parts/robot_suit/New()
-	..()
+/obj/item/robot_parts/robot_suit/atom_init()
+	. = ..()
 	update_icon()
 
 /obj/item/robot_parts/robot_suit/update_icon()
@@ -220,7 +220,7 @@
 				to_chat(user, "<span class='warning'>This [W] does not seem to fit.</span>")
 				return
 
-			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc), unfinished = 1)
+			var/mob/living/silicon/robot/O = new /mob/living/silicon/robot(get_turf(loc))
 			if(!O)	return
 
 			user.drop_item()

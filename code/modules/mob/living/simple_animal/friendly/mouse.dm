@@ -51,8 +51,8 @@
 		else if(prob(5))
 			emote("snuffles")
 
-/mob/living/simple_animal/mouse/New()
-	..()
+/mob/living/simple_animal/mouse/atom_init()
+	. = ..()
 	name = "[name] ([rand(1, 1000)])"
 	real_name = name
 

@@ -267,6 +267,7 @@
 	if(src in user)
 		to_chat(user, "The small label on the back side tells: \"Designed by W&J Company\".")
 
-/obj/item/clothing/mask/gas/coloured/New()
+/obj/item/clothing/mask/gas/coloured/atom_init()
+	. = ..()
 	var/color = pick("orange", "blue")
 	icon_state = "gas_mask_[color]"

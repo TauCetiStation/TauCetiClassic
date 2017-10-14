@@ -31,14 +31,15 @@
 	idle_power_usage = 20
 	active_power_usage = 100
 
-/obj/machinery/shield_gen/New()
-	spawn(10)
-		for(var/obj/machinery/shield_capacitor/possible_cap in range(1, src))
-			if(get_dir(possible_cap, src) == possible_cap.dir)
-				owned_capacitor = possible_cap
-				break
+/obj/machinery/shield_gen/atom_init()
 	field = new/list()
-	..()
+	. = ..()
+
+/obj/machinery/shield_gen/atom_init_late()
+	for(var/obj/machinery/shield_capacitor/possible_cap in range(1, src))
+		if(get_dir(possible_cap, src) == possible_cap.dir)
+			owned_capacitor = possible_cap
+			break
 
 /obj/machinery/shield_gen/Destroy()
 	for(var/obj/effect/energy_field/D in field)

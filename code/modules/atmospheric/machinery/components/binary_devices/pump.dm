@@ -30,8 +30,8 @@ Thus, the two variables affect pump operation are set in New():
 	frequency = 0
 	var/id = null
 
-/obj/machinery/atmospherics/components/binary/pump/New()
-	..()
+/obj/machinery/atmospherics/components/binary/pump/atom_init()
+	. = ..()
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2

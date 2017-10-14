@@ -76,11 +76,14 @@
 	build_path = /obj/machinery/computer/communications
 	origin_tech = "programming=2;magnets=2"
 	var/cooldown = 0
-/obj/item/weapon/circuitboard/communications/New()
-	..()
+
+/obj/item/weapon/circuitboard/communications/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
+
 /obj/item/weapon/circuitboard/communications/process()
 	cooldown = max(cooldown - 1, 0)
+
 /obj/item/weapon/circuitboard/card
 	name = "Circuit board (ID Computer)"
 	build_path = /obj/machinery/computer/card

@@ -9,9 +9,9 @@
 	circuit = "/obj/item/weapon/circuitboard/crew"
 	var/obj/nano_module/crew_monitor/crew_monitor
 
-/obj/machinery/computer/crew/New()
+/obj/machinery/computer/crew/atom_init()
 	crew_monitor = new(src)
-	..()
+	. = ..()
 
 /obj/machinery/computer/crew/attack_hand(mob/user)
 	if(..())

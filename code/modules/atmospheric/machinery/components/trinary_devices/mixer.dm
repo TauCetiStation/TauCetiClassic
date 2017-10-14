@@ -61,8 +61,8 @@
 /obj/machinery/atmospherics/components/trinary/mixer/hide(i)
 	update_underlays()
 
-/obj/machinery/atmospherics/components/trinary/mixer/New()
-	..()
+/obj/machinery/atmospherics/components/trinary/mixer/atom_init()
+	. = ..()
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2

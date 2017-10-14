@@ -71,17 +71,16 @@
 							"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
 		return(BRUTELOSS)
 
-/obj/item/weapon/screwdriver/New(loc, var/param_color)
-	..()
+/obj/item/weapon/screwdriver/atom_init(mapload, param_color)
+	. = ..()
 	if(!icon_state)
 		if(!param_color)
 			param_color = pick("red", "blue", "purple", "brown", "green", "cyan", "yellow")
 		icon_state = "screwdriver_[param_color]"
 		item_state = "screwdriver_[param_color]"
 
-	src.pixel_y = rand(-6, 6)
-	src.pixel_x = rand(-4, 4)
-	return
+	pixel_y = rand(-6, 6)
+	pixel_x = rand(-4, 4)
 
 /obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M) || user.a_intent == "help")
@@ -133,8 +132,8 @@
 	sharp = 1
 	edge = 1
 
-/obj/item/weapon/wirecutters/New(loc, var/param_color)
-	..()
+/obj/item/weapon/wirecutters/atom_init(mapload, param_color)
+	. = ..()
 	if(!icon_state)
 		if(!param_color)
 			param_color = pick("yellow","red")
@@ -201,13 +200,13 @@
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 
-/obj/item/weapon/weldingtool/New()
+/obj/item/weapon/weldingtool/atom_init()
+	. = ..()
 //	var/random_fuel = min(rand(10,20),max_fuel)
 	var/datum/reagents/R = new/datum/reagents(max_fuel)
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
-	return
 
 
 /obj/item/weapon/weldingtool/examine(mob/user)

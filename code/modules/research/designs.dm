@@ -2155,9 +2155,10 @@ datum/design/mining_hud
 	g_amt = 10
 	var/datum/design/blueprint
 
-/obj/item/weapon/disk/design_disk/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+/obj/item/weapon/disk/design_disk/atom_init()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 
 /////////////////////////////////////////

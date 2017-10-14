@@ -60,10 +60,14 @@ var/list/datum/puddle/puddles = list()
 	var/new_volume = 0
 	var/datum/puddle/controller
 
-/obj/effect/liquid/New()
+/obj/effect/liquid/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/liquid/atom_init_late()
 	if( !isturf(loc) )
 		qdel(src)
+		return
 
 	for( var/obj/effect/liquid/L in loc )
 		if(L != src)

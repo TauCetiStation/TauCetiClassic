@@ -14,8 +14,8 @@
 	var/rating_speed = 1
 	var/rating_amount = 1
 
-/obj/machinery/processor/New()
-	..()
+/obj/machinery/processor/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/processor(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)

@@ -98,8 +98,8 @@ var/global/list/autolathe_recipes_hidden = list( \
 	var/busy = 0
 	var/prod_coeff
 
-/obj/machinery/autolathe/New()
-	..()
+/obj/machinery/autolathe/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/autolathe(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)

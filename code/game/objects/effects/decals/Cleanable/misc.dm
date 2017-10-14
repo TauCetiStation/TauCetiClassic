@@ -25,10 +25,9 @@
 
 /obj/effect/decal/cleanable/greenglow
 
-/obj/effect/decal/cleanable/greenglow/New()
-	..()
-	spawn(1200)// 2 minutes
-		qdel(src)
+/obj/effect/decal/cleanable/greenglow/atom_init()
+	. = ..()
+	QDEL_IN(src, 1200)
 
 /obj/effect/decal/cleanable/dirt
 	name = "dirt"
@@ -146,16 +145,21 @@
 	layer = 2.1
 	anchored = 1
 
-/obj/effect/decal/cleanable/toilet_paint/New(main = random_color(),shade = random_color())
-	..()
+var/list/toilet_overlay_cache = list()
+
+/obj/effect/decal/cleanable/toilet_paint/atom_init(mapload, main = random_color(), shade = random_color())
+	. = ..()
 
 	var/type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa")
 
-	var/icon/mainOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]",2.1)
-	var/icon/shadeOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]s",2.1)
+	var/icon/mainOverlay = toilet_overlay_cache["[type]"]
+	var/icon/shadeOverlay = toilet_overlay_cache["[type]s"]
 
-	//mainOverlay.Blend(main,ICON_ADD)
-	shadeOverlay.Blend(shade,ICON_ADD)
+	if(!mainOverlay)
+		mainOverlay = toilet_overlay_cache["[type]"] = new/icon('icons/effects/crayondecal.dmi',"[type]", 2.1)
+	if(!shadeOverlay)
+		shadeOverlay = toilet_overlay_cache["[type]s"] = new/icon('icons/effects/crayondecal.dmi',"[type]s", 2.1)
+		shadeOverlay.Blend(shade, ICON_ADD)
 
 	overlays += mainOverlay
 	overlays += shadeOverlay

@@ -12,8 +12,8 @@
 	var/light_range_on = 1.5
 	var/light_power_on = 3
 
-/obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
-	..(location)
+/obj/machinery/computer/atom_init(mapload, obj/item/weapon/circuitboard/C)
+	. = ..()
 	if(C && istype(C))
 		circuit = C
 	else

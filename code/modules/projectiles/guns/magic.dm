@@ -37,8 +37,8 @@
 		charges--
 	return
 
-/obj/item/weapon/gun/magic/New()
-	..()
+/obj/item/weapon/gun/magic/atom_init()
+	. = ..()
 	charges = max_charges
 	chambered = new ammo_type(src)
 	if(can_charge)

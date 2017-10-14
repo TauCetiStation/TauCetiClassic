@@ -76,11 +76,11 @@
 	start_pressure = 0
 	var/obj/machinery/portable_atmospherics/canister/canister_type = /obj/machinery/portable_atmospherics/canister
 
-/obj/machinery/portable_atmospherics/canister/empty/New()
+/obj/machinery/portable_atmospherics/canister/empty/atom_init()
 	name = initial(canister_type.name)
 	icon_state = initial(canister_type.icon_state)
 	canister_color = initial(canister_type.canister_color)
-	..()
+	. = ..()
 
 /obj/machinery/portable_atmospherics/canister/empty/air
 	icon_state = "grey"
@@ -107,8 +107,8 @@
 	canister_type = /obj/machinery/portable_atmospherics/canister/sleeping_agent
 
 
-/obj/machinery/portable_atmospherics/canister/New()
-	..()
+/obj/machinery/portable_atmospherics/canister/atom_init()
+	. = ..()
 	create_gas()
 	update_icon()
 

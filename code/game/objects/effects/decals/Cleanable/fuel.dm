@@ -7,18 +7,19 @@
 
 	var/amount = 1 //Basically moles.
 
-/obj/effect/decal/cleanable/liquid_fuel/New(newLoc, amt = 1)
-	src.amount = amt
+/obj/effect/decal/cleanable/liquid_fuel/atom_init(mapload, amt = 1)
+	amount = amt
+	..()
 
 	//Be absorbed by any other liquid fuel in the tile.
-	for(var/obj/effect/decal/cleanable/liquid_fuel/other in newLoc)
+	for(var/obj/effect/decal/cleanable/liquid_fuel/other in loc)
 		if(other != src)
-			other.amount += src.amount
-			spawn other.Spread()
-			qdel(src)
+			other.amount += amount
+			other.Spread()
+			return INITIALIZE_HINT_QDEL
 
 	Spread()
-	. = ..()
+
 
 /obj/effect/decal/cleanable/liquid_fuel/proc/Spread()
 	//Allows liquid fuels to sometimes flow into other tiles.
@@ -42,9 +43,9 @@
 		icon_state = "mustard"
 		anchored = 0
 
-/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/New(newLoc, amt = 1, d = 0)
-		dir = d //Setting this direction means you won't get torched by your own flamethrower.
-		. = ..()
+/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/atom_init(mapload, amt = 1, d = 0)
+	dir = d //Setting this direction means you won't get torched by your own flamethrower.
+	. = ..()
 
 /obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel/Spread()
 	//The spread for flamethrower fuel is much more precise, to create a wide fire pattern.

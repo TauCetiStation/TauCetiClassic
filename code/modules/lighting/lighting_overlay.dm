@@ -17,7 +17,7 @@
 
 	var/needs_update = FALSE
 
-/atom/movable/lighting_overlay/New(var/atom/loc, var/no_update = FALSE)
+/atom/movable/lighting_overlay/atom_init(mapload, no_update = FALSE)
 	. = ..()
 	verbs.Cut()
 

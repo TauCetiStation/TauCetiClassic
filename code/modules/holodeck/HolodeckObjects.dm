@@ -1,6 +1,6 @@
 // Holographic Items!
 
-/turf/simulated/floor/holofloor/
+/turf/simulated/floor/holofloor
 	thermal_conductivity = 0
 
 /turf/simulated/floor/holofloor/grass
@@ -8,15 +8,17 @@
 	icon_state = "grass1"
 	floor_type = /obj/item/stack/tile/grass
 
-	New()
-		icon_state = "grass[pick("1","2","3","4")]"
-		..()
-		spawn(4)
-			update_icon()
-			for(var/direction in cardinal)
-				if(istype(get_step(src,direction),/turf/simulated/floor))
-					var/turf/simulated/floor/FF = get_step(src,direction)
-					FF.update_icon() //so siding get updated properly
+/turf/simulated/floor/holofloor/grass/atom_init()
+	icon_state = "grass[pick("1","2","3","4")]"
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/simulated/floor/holofloor/grass/atom_init_late()
+	update_icon()
+	for(var/direction in cardinal)
+		if(istype(get_step(src,direction),/turf/simulated/floor))
+			var/turf/simulated/floor/FF = get_step(src,direction)
+			FF.update_icon() //so siding get updated properly
 
 turf/simulated/floor/holofloor/update_icon()
 	if(icon_state in icons_to_ignore_at_floor_init)
@@ -29,7 +31,8 @@ turf/simulated/floor/holofloor/update_icon()
 	name = "\proper space"
 	icon_state = "0"
 
-/turf/simulated/floor/holofloor/space/New()
+/turf/simulated/floor/holofloor/space/atom_init()
+	. = ..()
 	icon_state = "[((x + y) ^ ~(x * y) + z) % 25]"
 
 /turf/simulated/floor/holofloor/desert
@@ -37,8 +40,8 @@ turf/simulated/floor/holofloor/update_icon()
 	desc = "Uncomfortably gritty for a hologram."
 	icon_state = "asteroid"
 
-/turf/simulated/floor/holofloor/desert/New()
-	..()
+/turf/simulated/floor/holofloor/desert/atom_init()
+	. = ..()
 	if(prob(10))
 		overlays += "asteroid[rand(0,9)]"
 
@@ -203,12 +206,16 @@ obj/structure/stool/bed/chair/holochair
 	var/active = 0
 
 /obj/item/weapon/holo/esword/green
-	New()
-		item_color = "green"
+
+/obj/item/weapon/holo/esword/green/atom_init()
+	. = ..()
+	item_color = "green"
 
 /obj/item/weapon/holo/esword/red
-	New()
-		item_color = "red"
+
+/obj/item/weapon/holo/esword/red/atom_init()
+	. = ..()
+	item_color = "red"
 
 /obj/item/weapon/holo/esword/Get_shield_chance()
 	if(active)
@@ -218,7 +225,8 @@ obj/structure/stool/bed/chair/holochair
 /obj/item/weapon/holo/esword/attack(target, mob/user)
 	..()
 
-/obj/item/weapon/holo/esword/New()
+/obj/item/weapon/holo/esword/atom_init()
+	. = ..()
 	item_color = pick("red","blue","green","purple")
 
 /obj/item/weapon/holo/esword/attack_self(mob/living/user)
@@ -314,10 +322,6 @@ obj/structure/stool/bed/chair/holochair
 	to_chat(user, "The station AI is not to interact with these devices!")
 	return
 
-/obj/machinery/readybutton/New()
-	..()
-
-
 /obj/machinery/readybutton/attackby(obj/item/weapon/W, mob/user)
 	to_chat(user, "The device is a solid button, there's nothing you can do with it!")
 
@@ -393,8 +397,8 @@ obj/structure/stool/bed/chair/holochair
 	meat_amount = 0
 	meat_type = null
 
-/mob/living/simple_animal/hostile/carp/holodeck/New()
-	..()
+/mob/living/simple_animal/hostile/carp/holodeck/atom_init()
+	. = ..()
 	set_light(2) //hologram lighting
 
 /mob/living/simple_animal/hostile/carp/holodeck/proc/set_safety(safe)

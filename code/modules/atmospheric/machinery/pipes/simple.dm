@@ -19,8 +19,8 @@
 	var/fatigue_pressure = 170 * ONE_ATMOSPHERE
 	alert_pressure = 170 * ONE_ATMOSPHERE
 
-/obj/machinery/atmospherics/pipe/simple/New()
-	..()
+/obj/machinery/atmospherics/pipe/simple/atom_init()
+	. = ..()
 
 	// Pipe colors and icon states are handled by an image cache - so color and icon should
 	//  be null. For mapping purposes color is defined in the object definitions.

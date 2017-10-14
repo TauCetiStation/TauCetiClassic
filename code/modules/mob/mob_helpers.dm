@@ -479,9 +479,13 @@ var/list/intents = list("help","disarm","grab","hurt")
 	else
 		return 0
 
-/mob/proc/is_busy(show_warning = TRUE)
+/mob/proc/is_busy(atom/target, show_warning = TRUE)
 	if(busy_with_action)
 		if(show_warning)
 			to_chat(src, "<span class='warning'>You are busy. Please finish or cancel your current action.</span>")
+		return TRUE
+	if(target && target.in_use_action)
+		if(show_warning)
+			to_chat(src, "<span class='warning'>Please wait while someone else will finish interacting with [target].</span>")
 		return TRUE
 	return FALSE

@@ -34,8 +34,8 @@
 /obj/machinery/sleeper/upgraded
 	upgraded = TRUE
 
-/obj/machinery/sleeper/New()
-	..()
+/obj/machinery/sleeper/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/sleeper(null)
 	if(upgraded)

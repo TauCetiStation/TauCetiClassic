@@ -24,10 +24,14 @@
 	melee_damage_upper = 5
 	var/datum/reagents/udder = null
 
-/mob/living/simple_animal/hostile/retaliate/goat/New()
+/mob/living/simple_animal/hostile/retaliate/goat/atom_init()
 	udder = new(50)
 	udder.my_atom = src
-	..()
+	. = ..()
+
+/mob/living/simple_animal/hostile/retaliate/goat/Destroy()
+	QDEL_NULL(udder)
+	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life()
 	. = ..()
@@ -106,10 +110,14 @@
 	health = 50
 	var/datum/reagents/udder = null
 
-/mob/living/simple_animal/cow/New()
+/mob/living/simple_animal/cow/atom_init()
 	udder = new(50)
 	udder.my_atom = src
-	..()
+	. = ..()
+
+/mob/living/simple_animal/cow/Destroy()
+	QDEL_NULL(udder)
+	return ..()
 
 /mob/living/simple_animal/cow/attackby(obj/item/O, mob/user)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
@@ -175,13 +183,13 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	small = 1
 
-/mob/living/simple_animal/chick/New()
-	..()
+/mob/living/simple_animal/chick/atom_init()
+	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
 /mob/living/simple_animal/chick/Life()
-	. =..()
+	. = ..()
 	if(!.)
 		return
 	if(!stat)
@@ -217,8 +225,8 @@ var/global/chicken_count = 0
 	pass_flags = PASSTABLE
 	small = 1
 
-/mob/living/simple_animal/chicken/New()
-	..()
+/mob/living/simple_animal/chicken/atom_init()
+	. = ..()
 	if(!body_color)
 		body_color = pick( list("brown","black","white") )
 	icon_state = "chicken_[body_color]"

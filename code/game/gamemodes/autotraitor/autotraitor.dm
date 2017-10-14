@@ -27,7 +27,7 @@
 				antag_candidates -= player
 
 
-	for(var/mob/new_player/P in mob_list)
+	for(var/mob/dead/new_player/P in mob_list)
 		if(P.client && P.ready)
 			num_players++
 

@@ -30,7 +30,7 @@
 *   Initialising
 ********************/
 
-/obj/machinery/kitchen_machine/New()
+/obj/machinery/kitchen_machine/atom_init()
 	..()
 	reagents = new/datum/reagents(100)
 	reagents.my_atom = src
@@ -38,17 +38,20 @@
 		available_recipes = new
 		acceptable_items = new
 		acceptable_reagents = new
-		for(var/type in subtypesof(recipe_type))
-			var/datum/recipe/recipe = new type
-			if(recipe.result) // Ignore recipe subtypes that lack a result
-				available_recipes += recipe
-				for(var/item in recipe.items)
-					acceptable_items |= item
-				for(var/reagent in recipe.reagents)
-					acceptable_reagents |= reagent
-			else
-				qdel(recipe)
-		acceptable_items |= /obj/item/weapon/reagent_containers/food/snacks/grown
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/kitchen_machine/atom_init_late()
+	for(var/type in subtypesof(recipe_type))
+		var/datum/recipe/recipe = new type
+		if(recipe.result) // Ignore recipe subtypes that lack a result
+			available_recipes += recipe
+			for(var/item in recipe.items)
+				acceptable_items |= item
+			for(var/reagent in recipe.reagents)
+				acceptable_reagents |= reagent
+		else
+			qdel(recipe)
+	acceptable_items |= /obj/item/weapon/reagent_containers/food/snacks/grown
 
 /obj/machinery/kitchen_machine/RefreshParts()
 	var/E
@@ -449,8 +452,8 @@
 	dirty_icon = "mwbloody"
 	open_icon = "mw-o"
 
-/obj/machinery/kitchen_machine/microwave/New()
-	..()
+/obj/machinery/kitchen_machine/microwave/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/microwave(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
@@ -471,8 +474,8 @@
 	dirty_icon = "oven_dirty"
 	open_icon = "oven_open"
 
-/obj/machinery/kitchen_machine/oven/New()
-	..()
+/obj/machinery/kitchen_machine/oven/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/oven(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
@@ -493,8 +496,8 @@
 	dirty_icon = "grill_dirty"
 	open_icon = "grill_open"
 
-/obj/machinery/kitchen_machine/grill/New()
-	..()
+/obj/machinery/kitchen_machine/grill/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/grill(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
@@ -515,8 +518,8 @@
 	dirty_icon = "candymaker_dirty"
 	open_icon = "candymaker_open"
 
-/obj/machinery/kitchen_machine/candymaker/New()
-	..()
+/obj/machinery/kitchen_machine/candymaker/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/candymaker(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)

@@ -10,7 +10,8 @@
 	anchored = 1
 	var/obj/item/device/assembly/signaler/anomaly/aSignal = null
 
-/obj/effect/anomaly/New()
+/obj/effect/anomaly/atom_init()
+	. = ..()
 	set_light(3,5,light_color)
 	aSignal = new(src)
 	aSignal.name = "[name] core"
@@ -47,8 +48,8 @@
 	density = 1
 	var/boing = 0
 
-/obj/effect/anomaly/grav/New()
-	..()
+/obj/effect/anomaly/grav/atom_init()
+	. = ..()
 	aSignal.origin_tech = "magnets=8;powerstorage=4"
 
 /obj/effect/anomaly/grav/anomalyEffect()
@@ -84,8 +85,8 @@
 	icon_state = "flux2"
 	light_color = "#FFE194"
 
-/obj/effect/anomaly/flux/New()
-	..()
+/obj/effect/anomaly/flux/atom_init()
+	. = ..()
 	aSignal.origin_tech = "powerstorage=8;programming=4;phorontech=4"
 
 /////////////////////
@@ -96,8 +97,8 @@
 	density = 1
 	light_color = "#009EFF"
 
-/obj/effect/anomaly/bluespace/New()
-	..()
+/obj/effect/anomaly/bluespace/atom_init()
+	. = ..()
 	aSignal.origin_tech = "bluespace=8;magnets=5;powerstorage=3"
 
 /obj/effect/anomaly/bluespace/Bumped(atom/A)
@@ -111,8 +112,8 @@
 	name = "pyroclastic anomaly"
 	icon_state = "pyro"
 
-/obj/effect/anomaly/pyro/New()
-	..()
+/obj/effect/anomaly/pyro/atom_init()
+	. = ..()
 	aSignal.origin_tech = "phorontech=8;powerstorage=4;biotech=6"
 
 /obj/effect/anomaly/pyro/anomalyEffect()
@@ -130,8 +131,8 @@
 	icon_state = "vortex"
 	desc = "That's a nice station you have there. It'd be a shame if something happened to it."
 
-/obj/effect/anomaly/bhole/New()
-	..()
+/obj/effect/anomaly/bhole/atom_init()
+	. = ..()
 	aSignal.origin_tech = "materials=8;combat=4;engineering=4"
 
 /obj/effect/anomaly/bhole/anomalyEffect()

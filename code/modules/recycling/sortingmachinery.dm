@@ -215,12 +215,14 @@
 
 	var/c_mode = 0
 
-/obj/machinery/disposal/deliveryChute/New()
+/obj/machinery/disposal/deliveryChute/atom_init()
 	..()
-	spawn(5)
-		trunk = locate() in src.loc
-		if(trunk)
-			trunk.linked = src	// link the pipe trunk to self
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/disposal/deliveryChute/atom_init_late()
+	trunk = locate() in loc
+	if(trunk)
+		trunk.linked = src	// link the pipe trunk to self
 
 /obj/machinery/disposal/deliveryChute/Destroy()
 	if(trunk)

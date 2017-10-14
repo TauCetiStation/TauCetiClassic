@@ -22,11 +22,9 @@
 		return
 	return
 
-/obj/effect/portal/New()
-	spawn(300)
-		qdel(src)
-		return
-	return
+/obj/effect/portal/atom_init()
+	. = ..()
+	QDEL_IN(src, 300)
 
 /obj/effect/portal/proc/teleport(atom/movable/M, density_check = TELE_CHECK_NONE, respect_entrydir = FALSE, use_forceMove = TRUE)
 	if (istype(M, /obj/effect)) //sparks don't teleport
@@ -55,7 +53,8 @@
 	var/obj/effect/portal/tsci_wormhole/linked_portal = null
 	var/obj/machinery/computer/telescience/linked_console = null
 
-/obj/effect/portal/tsci_wormhole/New(loc, turf/exit, other_side_portal = FALSE)
+/obj/effect/portal/tsci_wormhole/atom_init(mapload, turf/exit, other_side_portal = FALSE)
+	. = ..()
 	if(!other_side_portal)
 		linked_portal = new(exit, get_turf(src), TRUE)
 		linked_portal.linked_portal = src

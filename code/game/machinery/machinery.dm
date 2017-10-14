@@ -122,8 +122,8 @@ Class Procs:
 	var/radio_filter_out
 	var/radio_filter_in
 
-/obj/machinery/New()
-	..()
+/obj/machinery/atom_init()
+	. = ..()
 	machines += src
 	START_PROCESSING(SSmachine, src)
 	power_change()

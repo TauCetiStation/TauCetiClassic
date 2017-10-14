@@ -49,12 +49,11 @@
 /mob/living/var/scp_mark = 0
 /turf/var/scp_was_here = 0
 
-/mob/living/simple_animal/special/scp173/New()
-	for(var/mob/living/simple_animal/special/scp173/SA in world) //only 1 can exist at the same time
-		if(SA && SA != src)
-			qdel(src)
-			return
-	..()
+/mob/living/simple_animal/special/scp173/atom_init()
+	. = ..()
+	for(var/mob/living/simple_animal/special/scp173/SA in mob_list) //only 1 can exist at the same time
+		if(SA != src)
+			qdel(SA)
 
 /mob/living/simple_animal/special/scp173/Life()
 	if(!activated) return

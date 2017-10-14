@@ -293,10 +293,10 @@
 	var/atom/master = null
 	anchored = 1
 
-/atom/movable/overlay/New()
-	for(var/x in src.verbs)
-		src.verbs -= x
-	return
+/atom/movable/overlay/atom_init()
+	. = ..()
+	for(var/x in verbs)
+		verbs -= x
 
 /atom/movable/overlay/attackby(a, b, params)
 	if (src.master)

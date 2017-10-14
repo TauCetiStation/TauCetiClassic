@@ -93,8 +93,8 @@
 	if(anchored)
 		update_music()
 
-/obj/machinery/media/New()
-	..()
+/obj/machinery/media/atom_init()
+	. = ..()
 	update_media_source()
 
 /obj/machinery/media/Destroy()

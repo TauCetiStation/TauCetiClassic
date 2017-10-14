@@ -73,8 +73,8 @@ var/list/valid_secondary_effect_types = list(\
 	var/last_scan = 0
 	var/scan_delay = 20
 
-/obj/machinery/artifact/New()
-	..()
+/obj/machinery/artifact/atom_init()
+	. = ..()
 
 	//setup primary effect - these are the main ones (mixed)
 	if(need_inicial == 1)

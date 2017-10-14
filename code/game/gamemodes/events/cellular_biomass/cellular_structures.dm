@@ -89,7 +89,8 @@
 	health = 40
 	layer = 2
 
-/obj/structure/cellular_biomass/grass/New()
+/obj/structure/cellular_biomass/grass/atom_init()
+	. = ..()
 	icon_state = "bloodfloor_[pick(1,2,3)]"
 
 
@@ -105,7 +106,8 @@
 	light_color = "#710F8C"
 	icon_state = "light_1"
 
-/obj/structure/cellular_biomass/core/New()
+/obj/structure/cellular_biomass/core/atom_init()
+	. = ..()
 	icon_state = "light_[pick(1,2)]"
 	set_light(luminosity)
 

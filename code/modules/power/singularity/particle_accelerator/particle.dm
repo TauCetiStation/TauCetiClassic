@@ -27,15 +27,12 @@
 	energy = 15
 
 
-/obj/effect/accelerated_particle/New(loc, dir = 2)
-	src.loc = loc
+/obj/effect/accelerated_particle/atom_init(mapload, dir = 2)
 	src.dir = dir
 	if(movement_range > 20)
 		movement_range = 20
-	spawn(0)
-		move(1)
-	return
-
+	INVOKE_ASYNC(src, .proc/move, 1)
+	. = ..()
 
 /obj/effect/accelerated_particle/Bump(atom/A)
 	if (A)

@@ -18,8 +18,8 @@
                                         /obj/item/ammo_box/magazine/l10mag
                                     )
 
-/obj/machinery/recharger/New()
-	..()
+/obj/machinery/recharger/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/recharger()
 	component_parts += new /obj/item/weapon/stock_parts/capacitor()

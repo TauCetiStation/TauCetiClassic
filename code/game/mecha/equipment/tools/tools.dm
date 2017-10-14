@@ -231,12 +231,11 @@
 	energy_drain = 0
 	range = MELEE|RANGED
 
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/New()
+/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/atom_init()
 	reagents = new/datum/reagents(200)
 	reagents.my_atom = src
 	reagents.add_reagent("water", 200)
-	..()
-	return
+	. = ..()
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/action(atom/target) //copypasted from extinguisher. TODO: Rewrite from scratch.
 	if(!action_checks(target) || get_dist(chassis, target)>3) return
@@ -681,11 +680,10 @@
 	var/icon/droid_overlay
 	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH)
 
-/obj/item/mecha_parts/mecha_equipment/repair_droid/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/repair_droid/atom_init()
+	. = ..()
 	pr_repair_droid = new /datum/global_iterator/mecha_repair_droid(list(src),0)
 	pr_repair_droid.set_delay(equip_cooldown)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/mecha/M)
 	..()
@@ -766,11 +764,10 @@
 	var/coeff = 100
 	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
 
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/atom_init()
+	. = ..()
 	pr_energy_relay = new /datum/global_iterator/mecha_energy_relay(list(src),0)
 	pr_energy_relay.set_delay(equip_cooldown)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/detach()
 	pr_energy_relay.stop()
@@ -880,17 +877,15 @@
 	var/power_per_cycle = 20
 	reliability = 1000
 
-/obj/item/mecha_parts/mecha_equipment/generator/New()
+/obj/item/mecha_parts/mecha_equipment/generator/atom_init()
 	..()
-	init()
-	return
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/item/mecha_parts/mecha_equipment/generator/proc/init()
+/obj/item/mecha_parts/mecha_equipment/generator/atom_init_late()
 	fuel = new /obj/item/stack/sheet/mineral/phoron(src)
 	fuel.amount = 0
 	pr_mech_generator = new /datum/global_iterator/mecha_generator(list(src),0)
 	pr_mech_generator.set_delay(equip_cooldown)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/detach()
 	pr_mech_generator.stop()
@@ -1013,12 +1008,11 @@
 	var/rad_per_cycle = 0.3
 	reliability = 1000
 
-/obj/item/mecha_parts/mecha_equipment/generator/nuclear/init()
+/obj/item/mecha_parts/mecha_equipment/generator/nuclear/atom_init_late()
 	fuel = new /obj/item/stack/sheet/mineral/uranium(src)
 	fuel.amount = 0
 	pr_mech_generator = new /datum/global_iterator/mecha_generator/nuclear(list(src),0)
 	pr_mech_generator.set_delay(equip_cooldown)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/critfail()
 	return
@@ -1127,8 +1121,8 @@
 	var/aiming = FALSE
 	var/static/datum/droppod_allowed/allowed_areas
 
-/obj/item/mecha_parts/mecha_equipment/Drop_system/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/Drop_system/atom_init()
+	. = ..()
 	if(!allowed_areas)
 		allowed_areas = new
 

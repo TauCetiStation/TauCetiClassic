@@ -112,8 +112,8 @@
 	var/held = /obj/item/roller
 	var/type_bed = /obj/structure/stool/bed/roller
 
-/obj/item/roller_holder/New()
-	..()
+/obj/item/roller_holder/atom_init()
+	. = ..()
 	held = new held(src)
 
 /obj/item/roller_holder/attack_self(mob/user)

@@ -74,7 +74,7 @@
 		explosion_power = 3 //3,6,9,12? Or is that too small?
 
 
-/obj/machinery/power/supermatter/New()
+/obj/machinery/power/supermatter/atom_init()
 	. = ..()
 	radio = new (src)
 

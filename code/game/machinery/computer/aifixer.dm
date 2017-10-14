@@ -9,9 +9,9 @@
 	var/active = 0
 	circuit = /obj/item/weapon/circuitboard/aifixer
 
-/obj/machinery/computer/aifixer/New()
-	src.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
-	..()
+/obj/machinery/computer/aifixer/atom_init()
+	overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
+	. = ..()
 
 /obj/machinery/computer/aifixer/attackby(I, user)
 	if(istype(I, /obj/item/device/aicard))
@@ -27,7 +27,7 @@
 /obj/machinery/computer/aifixer/attack_hand(mob/user)
 	if(..())
 		return
- 
+
 	var/dat = "<h3>AI System Integrity Restorer</h3><br><br>"
 
 	if (src.occupier)

@@ -18,8 +18,8 @@
 
 	var/list/scrubbing_gas
 
-/obj/machinery/portable_atmospherics/powered/scrubber/New()
-	..()
+/obj/machinery/portable_atmospherics/powered/scrubber/atom_init()
+	. = ..()
 
 	cell = new/obj/item/weapon/stock_parts/cell/apc(src)
 
@@ -160,8 +160,8 @@
 	var/global/gid = 1
 	var/id = 0
 
-/obj/machinery/portable_atmospherics/powered/scrubber/huge/New()
-	..()
+/obj/machinery/portable_atmospherics/powered/scrubber/huge/atom_init()
+	. = ..()
 	cell = null
 
 	id = gid

@@ -63,8 +63,8 @@
 	var/time_per_sheet = 40
 	var/heat = 0
 
-/obj/machinery/power/port_gen/pacman/New()
-	..()
+/obj/machinery/power/port_gen/pacman/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)

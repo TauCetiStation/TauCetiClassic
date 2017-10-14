@@ -79,8 +79,8 @@
 	var/temperature_dangerlevel = 0
 	var/other_dangerlevel = 0
 
-/obj/machinery/alarm/server/New()
-	..()
+/obj/machinery/alarm/server/atom_init()
+	. = ..()
 	req_access = list(access_rd, access_atmospherics, access_engine_equip)
 	TLV["oxygen"] =			list(-1.0, -1.0,-1.0,-1.0) // Partial pressure, kpa
 	TLV["carbon dioxide"] = list(-1.0, -1.0,   5,  10) // Partial pressure, kpa
@@ -91,8 +91,9 @@
 	target_temperature = 90
 
 
-/obj/machinery/alarm/New(var/loc, var/dir, var/building = 0)
-	..()
+/obj/machinery/alarm/atom_init(mapload, dir, building = 0)
+	. = ..()
+	set_frequency(frequency)
 
 	if(building)
 		if(loc)
@@ -106,10 +107,11 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 		update_icon()
-		return
+		return // not sure about this, is constructing initializing it same as first_run()?
 
+	if (!master_is_operating())
+		elect_master()
 	first_run()
-
 
 /obj/machinery/alarm/proc/first_run()
 	alarm_area = get_area(src)
@@ -128,13 +130,6 @@
 	TLV["other"] =			list(-1.0, -1.0, 0.5, 1.0) // Partial pressure, kpa
 	TLV["pressure"] =		list(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20) /* kpa */
 	TLV["temperature"] =	list(T0C-26, T0C, T0C+40, T0C+66) // K
-
-
-/obj/machinery/alarm/atom_init()
-	. = ..()
-	set_frequency(frequency)
-	if (!master_is_operating())
-		elect_master()
 
 /obj/machinery/alarm/Destroy()
 	if(wires)
@@ -1173,8 +1168,8 @@ FIRE ALARM
 		FA.detecting = FALSE
 		FA.update_icon()
 
-/obj/machinery/firealarm/New(loc, dir, building)
-	..()
+/obj/machinery/firealarm/atom_init(mapload, dir, building)
+	. = ..()
 
 	if(loc)
 		src.loc = loc

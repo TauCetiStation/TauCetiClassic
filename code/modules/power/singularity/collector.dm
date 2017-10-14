@@ -16,8 +16,8 @@ var/global/list/rad_collectors = list()
 	var/locked = FALSE
 	var/drainratio = 1
 
-/obj/machinery/power/rad_collector/New()
-	..()
+/obj/machinery/power/rad_collector/atom_init()
+	. = ..()
 	rad_collectors += src
 
 /obj/machinery/power/rad_collector/Destroy()

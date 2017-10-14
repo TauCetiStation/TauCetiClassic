@@ -8,8 +8,9 @@
 	var/amount_per_transfer_from_this = 5	//shit I dunno, adding this so syringes stop runtime erroring. --NeoFite
 
 
-/obj/structure/mopbucket/New()
+/obj/structure/mopbucket/atom_init()
 	create_reagents(100)
+	. = ..()
 
 
 /obj/structure/mopbucket/examine(mob/user)

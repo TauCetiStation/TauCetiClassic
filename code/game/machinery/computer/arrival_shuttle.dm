@@ -16,9 +16,10 @@ var/lastMove = 0
 	var/obj/item/device/radio/intercom/radio
 
 
-/obj/machinery/computer/arrival_shuttle/New()
+/obj/machinery/computer/arrival_shuttle/atom_init()
 //	curr_location= locate(/area/shuttle/arrival/pre_game)
 	radio = new (src)
+	. = ..()
 
 /obj/machinery/computer/arrival_shuttle/proc/try_move_from_station()
 	if(moving || location != 2 || !SSshuttle)

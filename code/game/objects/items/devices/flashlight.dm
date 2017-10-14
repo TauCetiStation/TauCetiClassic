@@ -154,9 +154,9 @@
 	action_button_name = "Toggle Flare"
 
 
-/obj/item/device/flashlight/flare/New()
+/obj/item/device/flashlight/flare/atom_init()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
-	..()
+	. = ..()
 
 /obj/item/device/flashlight/flare/process()
 	var/turf/pos = get_turf(src)
@@ -215,11 +215,13 @@
 	brightness_on = 6
 	on = 1 //Bio-luminesence has one setting, on.
 
-/obj/item/device/flashlight/slime/New()
-	set_light(brightness_on)
-	spawn(1) //Might be sloppy, but seems to be necessary to prevent further runtimes and make these work as intended... don't judge me!
-		update_brightness()
-		icon_state = initial(icon_state)
+/obj/item/device/flashlight/slime/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/device/flashlight/slime/atom_init_late()
+	update_brightness()
+	icon_state = initial(icon_state)
 
 /obj/item/device/flashlight/slime/attack_self(mob/user)
 	return //Bio-luminescence does not toggle.
@@ -231,8 +233,8 @@
 	var/charge_tick = 0
 
 
-/obj/item/device/flashlight/emp/New()
-	..()
+/obj/item/device/flashlight/emp/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/emp/Destroy()

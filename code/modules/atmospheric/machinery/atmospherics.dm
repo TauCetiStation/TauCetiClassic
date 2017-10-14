@@ -36,7 +36,7 @@ Pipelines + Other Objects -> Pipe network
 
 	var/atmos_initalized = FALSE
 
-/obj/machinery/atmospherics/New(loc, process = TRUE)
+/obj/machinery/atmospherics/atom_init(mapload, process = TRUE)
 	nodes = new(device_type)
 
 	if(!icon_manager)
@@ -49,7 +49,7 @@ Pipelines + Other Objects -> Pipe network
 	if(!pipe_color_check(pipe_color))
 		pipe_color = null
 
-	..()
+	. = ..()
 
 	if(process)
 		SSair.atmos_machinery += src
@@ -204,7 +204,7 @@ Pipelines + Other Objects -> Pipe network
 /obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
 	if(!(flags & NODECONSTRUCT))
 		if(can_unwrench)
-			var/obj/item/pipe/stored = new(loc, make_from = src)
+			var/obj/item/pipe/stored = new(loc, null, null, src)
 			transfer_fingerprints_to(stored)
 	..()
 

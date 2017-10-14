@@ -4,7 +4,8 @@
 	name = "Gererates Scrap Pile"
 	icon_state = "rock"
 
-/obj/effect/scrap_pile_generator/New(var/heap_size = 1)
+/obj/effect/scrap_pile_generator/atom_init(mapload, heap_size = 1)
+	. = ..()
 	var/size = 0
 	var/maintype = /obj/random/scrap/dense_weighted
 	var/subtype = /obj/random/scrap/sparse_weighted
@@ -36,7 +37,6 @@
 	for(var/turf/T in makesparse)
 		if(!locate(/obj/structure/scrap in T.contents))
 			new subtype(T)
-	return
 
 
 
@@ -45,9 +45,7 @@
 	name = "Mineral deposit"
 	icon_state = "rock"
 
-/turf/simulated/mineral/airfull/junkyard/New()
-	..()
-
+/turf/simulated/mineral/airfull/junkyard
 
 /turf/proc/surround_by_scrap()
 	var/turf/A
@@ -90,7 +88,7 @@
 /turf/simulated/floor/plating/ironsand/junkyard/safe/surround_by_scrap()
 	if(..())
 		if(prob(1))
-			new /obj/effect/scrap_pile_generator(src, heap_size = 1)
+			new /obj/effect/scrap_pile_generator(src, 1)
 			return
 		if(prob(1))
 			new /obj/effect/landmark/junkyard_bum(src)
@@ -102,7 +100,7 @@
 /turf/simulated/floor/plating/ironsand/junkyard/challenging/surround_by_scrap()
 	if(..())
 		if(prob(1))
-			new /obj/effect/scrap_pile_generator(src, heap_size = 2)
+			new /obj/effect/scrap_pile_generator(src, 2)
 			return
 		if(prob(1) && prob(30))
 			new /obj/random/mobs/moderate(src)
@@ -110,7 +108,7 @@
 /turf/simulated/floor/plating/ironsand/junkyard/dangerous/surround_by_scrap()
 	if(..())
 		if(prob(1))
-			new /obj/effect/scrap_pile_generator(src, "heap_size" = 3)
+			new /obj/effect/scrap_pile_generator(src, 3)
 			return
 		if(prob(1))
 			new /obj/random/mobs/dangerous(src)

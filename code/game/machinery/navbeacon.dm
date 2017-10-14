@@ -20,17 +20,12 @@
 
 	req_access = list(access_engine)
 
-/obj/machinery/navbeacon/New()
-	..()
-
+/obj/machinery/navbeacon/atom_init()
+	. = ..()
 	set_codes()
-
 	var/turf/T = loc
 	hide(T.intact)
-
-	spawn(5)	// must wait for map loading to finish
-		if(radio_controller)
-			radio_controller.add_object(src, freq, RADIO_NAVBEACONS)
+	radio_controller.add_object(src, freq, RADIO_NAVBEACONS)
 
 /obj/machinery/navbeacon/Destroy()
 	if(radio_controller)

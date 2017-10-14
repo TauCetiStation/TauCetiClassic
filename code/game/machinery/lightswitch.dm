@@ -13,19 +13,21 @@
 	var/otherarea = null
 	//	luminosity = 1
 
-/obj/machinery/light_switch/New()
+/obj/machinery/light_switch/atom_init()
 	..()
-	spawn(5)
-		src.area = src.loc.loc
+	return INITIALIZE_HINT_LATELOAD
 
-		if(otherarea)
-			src.area = locate(text2path("/area/[otherarea]"))
+/obj/machinery/light_switch/atom_init_late()
+	area = loc.loc
 
-		if(!name)
-			name = "light switch ([area.name])"
+	if(otherarea)
+		area = locate(text2path("/area/[otherarea]"))
 
-		src.on = src.area.lightswitch
-		updateicon()
+	if(!name)
+		name = "light switch ([area.name])"
+
+	on = area.lightswitch
+	updateicon()
 
 
 

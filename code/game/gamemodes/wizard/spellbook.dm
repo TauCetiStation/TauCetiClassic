@@ -380,8 +380,11 @@
 	else
 		to_chat(user, "It appears to have no author.")
 
-/obj/item/weapon/spellbook/New()
+/obj/item/weapon/spellbook/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/spellbook/atom_init_late()
 	var/entry_types = subtypesof(/datum/spellbook_entry) - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
 	for(var/T in entry_types)
 		var/datum/spellbook_entry/E = new T

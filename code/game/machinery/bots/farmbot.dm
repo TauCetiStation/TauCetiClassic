@@ -52,17 +52,19 @@
 	var/path[] = new() // used for pathing
 	var/frustration
 
-/obj/machinery/bot/farmbot/New()
+/obj/machinery/bot/farmbot/atom_init()
 	..()
-	src.icon_state = "farmbot[src.on]"
-	spawn (4)
-		src.botcard = new /obj/item/weapon/card/id(src)
-		src.botcard.access = req_access
+	icon_state = "farmbot[src.on]"
+	return INITIALIZE_HINT_LATELOAD
 
-		if ( !tank ) //Should be set as part of making it... but lets check anyway
-			tank = locate(/obj/structure/reagent_dispensers/watertank/) in contents
-		if ( !tank ) //An admin must have spawned the farmbot! Better give it a tank.
-			tank = new /obj/structure/reagent_dispensers/watertank(src)
+/obj/machinery/bot/farmbot/atom_init_late()
+	botcard = new /obj/item/weapon/card/id(src)
+	botcard.access = req_access
+
+	if ( !tank ) //Should be set as part of making it... but lets check anyway
+		tank = locate(/obj/structure/reagent_dispensers/watertank/) in contents
+	if ( !tank ) //An admin must have spawned the farmbot! Better give it a tank.
+		tank = new /obj/structure/reagent_dispensers/watertank(src)
 
 /obj/machinery/bot/farmbot/Bump(atom/M) //Leave no door unopened!
 	if ((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
@@ -517,12 +519,15 @@
 	var/created_name = "Farmbot" //To preserve the name if it's a unique farmbot I guess
 	w_class = 3.0
 
-	New()
-		..()
-		spawn(4) // If an admin spawned it, it won't have a watertank it, so lets make one for em!
-			var tank = locate(/obj/structure/reagent_dispensers/watertank) in contents
-			if( !tank )
-				new /obj/structure/reagent_dispensers/watertank(src)
+/obj/item/weapon/farmbot_arm_assembly/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/farmbot_arm_assembly/atom_init_late()
+	// If an admin spawned it, it won't have a watertank it, so lets make one for em!
+	var/tank = locate(/obj/structure/reagent_dispensers/watertank) in contents
+	if(!tank)
+		new /obj/structure/reagent_dispensers/watertank(src)
 
 
 /obj/structure/reagent_dispensers/watertank/attackby(obj/item/robot_parts/S, mob/user)

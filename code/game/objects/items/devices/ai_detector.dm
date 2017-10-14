@@ -3,8 +3,8 @@
 	icon_state = "multitool"
 	var/track_delay = 0
 
-/obj/item/device/multitool/ai_detect/New()
-	..()
+/obj/item/device/multitool/ai_detect/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/multitool/ai_detect/Destroy()
