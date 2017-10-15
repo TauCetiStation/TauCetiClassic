@@ -544,8 +544,8 @@
 	return 0
 
 /mob/living/simple_animal/hulk/unathi/AltClickOn(atom/A)
-	if(!src.stat && src.mind && (src.health > 0) && (istype(A, /mob/living)) && (A != src))
-		src.try_to_eat(A)
+	if(!stat && mind && health > 0 && isliving(A) && A != src && Adjacent(A))
+		try_to_eat(A)
 		next_click = world.time + 5
 	else
 		..()
@@ -558,6 +558,8 @@
 		else
 			to_chat(usr, "Tear or Swallow is still recharging.")
 			return
+	else
+		return
 
 	var/mob/living/simple_animal/SA = usr
 	if(target.stat == DEAD)
