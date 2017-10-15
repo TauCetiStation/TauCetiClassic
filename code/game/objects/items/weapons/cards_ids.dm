@@ -208,9 +208,10 @@
 	origin_tech = "syndicate=3"
 	var/registered_user=null
 
-/obj/item/weapon/card/id/syndicate/atom_init(mob/user)
+/obj/item/weapon/card/id/syndicate/atom_init()
 	. = ..()
-	if(!isnull(user)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
+	if(ismob(loc)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
+		var/mob/user = loc
 		registered_name = ishuman(user) ? user.real_name : user.name
 	else
 		registered_name = "Agent Card"
