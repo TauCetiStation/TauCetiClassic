@@ -58,7 +58,7 @@ var/global/list/junkyard_bum_list = list()     //list of all bums placements
 	update_inv_l_hand()
 
 
-/mob/dead/verb/become_bum()
+/mob/dead/observer/verb/become_bum()
 	set name = "Become space bum"
 	set category = "Ghost"
 	var/mob/dead/observer/M = usr
