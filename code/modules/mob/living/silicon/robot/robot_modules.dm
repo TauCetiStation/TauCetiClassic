@@ -77,7 +77,6 @@
 	name = "standard robot module"
 
 /obj/item/weapon/robot_module/standard/atom_init()
-	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/melee/baton(src)
 	modules += new /obj/item/weapon/extinguisher(src)
 	modules += new /obj/item/weapon/wrench(src)
@@ -100,7 +99,6 @@
 		)
 
 /obj/item/weapon/robot_module/surgeon/atom_init()
-	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	modules += new /obj/item/borg/sight/hud/med(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo/surgeon(src)
@@ -139,7 +137,6 @@
 		)
 
 /obj/item/weapon/robot_module/crisis/atom_init()
-	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/gripper/chemistry(src)
 	modules += new /obj/item/device/healthanalyzer(src)
@@ -190,7 +187,6 @@
 		)
 
 /obj/item/weapon/robot_module/engineering/atom_init()
-	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/borg/sight/meson(src)
 	modules += new /obj/item/weapon/extinguisher(src)
 	modules += new /obj/item/weapon/weldingtool/largetank(src)
@@ -218,7 +214,6 @@
 	name = "security robot module"
 
 /obj/item/weapon/robot_module/security/atom_init()
-	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/handcuffs/cyborg(src)
 	modules += new /obj/item/weapon/melee/baton(src)
 	modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
@@ -244,7 +239,6 @@
 	name = "janitorial robot module"
 
 /obj/item/weapon/robot_module/janitor/atom_init()
-	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/soap/nanotrasen(src)
 	modules += new /obj/item/weapon/storage/bag/trash(src)
 	modules += new /obj/item/weapon/mop(src)
@@ -267,7 +261,6 @@
 	name = "service robot module"
 
 /obj/item/weapon/robot_module/butler/atom_init()
-	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/gripper/service(src)
 	modules += new /obj/item/weapon/gripper/paperwork(src)
 	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
@@ -337,12 +330,10 @@
 
 /obj/item/weapon/robot_module/syndicate/atom_init()
 	. = ..()
-	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/borg/sight/night(src)
 	modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
 	modules += new /obj/item/weapon/card/emag(src)
-	modules += new /obj/item/borg/sight/night(src)
 	modules += new /obj/item/weapon/gun/projectile/automatic/borg(src)
 	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	modules += new /obj/item/weapon/wrench(src)
@@ -354,7 +345,6 @@
 
 /obj/item/weapon/robot_module/combat/atom_init()
 	. = ..()
-	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/borg/sight/thermal(src)
 	modules += new /obj/item/weapon/gun/energy/laser/cyborg(src)
 	modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
