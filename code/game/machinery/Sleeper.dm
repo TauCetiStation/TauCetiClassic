@@ -34,7 +34,7 @@
 /obj/machinery/sleeper/upgraded
 	upgraded = TRUE
 
-/obj/machinery/sleeper/atom_init()
+/obj/machinery/sleeper/atom_init(mapload)
 	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/sleeper(null)
@@ -48,6 +48,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
 	RefreshParts()
+	if(mapload)
+		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
