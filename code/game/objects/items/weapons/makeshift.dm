@@ -16,6 +16,14 @@
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"
 
+/obj/item/weapon/twohanded/spear/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(istype(W, /obj/item/weapon/organ/head))
+		if(loc == user)
+			user.drop_from_inventory(src)
+		var/obj/structure/headpole/H = new (get_turf(src), W, src)
+		user.drop_from_inventory(W, H)
+
 
 /obj/item/clothing/head/helmet/battlebucket
 	icon = 'icons/obj/makeshift.dmi'
