@@ -37,7 +37,7 @@
 
 	//method = rand(0,2)
 	if(inside_item_type)
-		new/obj/item/weapon/archaeological_find(src, new_item_type = inside_item_type)
+		new/obj/item/weapon/archaeological_find(src, inside_item_type)
 		inside = locate() in contents
 
 /*/obj/item/weapon/ore/strangerock/ex_act(var/severity)
