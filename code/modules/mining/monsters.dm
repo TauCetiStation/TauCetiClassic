@@ -413,16 +413,13 @@
 		icon_state = icon_aggro
 	return
 
-/obj/effect/goliath_tentacle/
+/obj/effect/goliath_tentacle
 	name = "Goliath tentacle"
 	icon = 'icons/mob/monsters.dmi'
 	icon_state = "Goliath_tentacle"
 
 /obj/effect/goliath_tentacle/atom_init()
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/effect/goliath_tentacle/atom_init_late()
+	. = ..()
 	var/turftype = get_turf(src)
 	if(istype(turftype, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = turftype
@@ -432,16 +429,12 @@
 /obj/effect/goliath_tentacle/original
 
 /obj/effect/goliath_tentacle/original/atom_init()
-	..()
-	return INITIALIZE_HINT_LATELOAD
-
-/obj/effect/goliath_tentacle/original/atom_init_late()
+	. = ..()
 	var/list/directions = cardinal.Copy()
-	var/counter
-	for(counter = 1, counter <= 3, counter++)
+	for (var/i in 1 to 3)
 		var/spawndir = pick(directions)
 		directions -= spawndir
-		var/turf/T = get_step(src,spawndir)
+		var/turf/T = get_step(src, spawndir)
 		new /obj/effect/goliath_tentacle(T)
 
 /obj/effect/goliath_tentacle/proc/Trip()
