@@ -17,7 +17,7 @@
 	icon_state = "table"
 	density = 1
 	anchored = 1.0
-	layer = 2.8
+	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.")
 	climbable = 1
 
@@ -609,6 +609,7 @@
 	icon_state = "rack"
 	density = 1
 	anchored = 1.0
+	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.
 	var/parts = /obj/item/weapon/rack_parts
 
