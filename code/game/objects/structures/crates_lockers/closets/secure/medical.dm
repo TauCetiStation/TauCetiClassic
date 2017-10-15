@@ -94,9 +94,6 @@
 	else
 		new /obj/item/weapon/storage/backpack/satchel/med(src)
 
-	for (var/i in 1 to 2)
-		new /obj/item/clothing/suit/bio_suit/new_hazmat/cmo(src)
-
 	switch(pick("blue", "green", "purple"))
 		if ("blue")
 			new /obj/item/clothing/under/rank/medical/blue(src)
@@ -108,6 +105,8 @@
 			new /obj/item/clothing/under/rank/medical/purple(src)
 			new /obj/item/clothing/head/surgery/purple(src)
 
+	new /obj/item/clothing/suit/bio_suit/new_hazmat/cmo(src)
+	new /obj/item/clothing/head/bio_hood/new_hazmat/cmo(src)
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/under/rank/chief_medical_officer(src)
 	new /obj/item/clothing/suit/storage/labcoat/cmo(src)

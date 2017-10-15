@@ -181,6 +181,9 @@
 	item_state = "electronic"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
+	m_amt = 3000
+	g_amt = 1300
+	origin_tech = "materials=1;engineering=1"
 
 /obj/item/device/destTagger/proc/openwindow(mob/user)
 	var/dat = "<tt><center><h1><b>TagMaster 2.3</b></h1></center>"

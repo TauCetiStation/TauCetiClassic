@@ -102,8 +102,9 @@
 /obj/item/weapon/robot_module/surgeon/atom_init()
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/device/healthanalyzer(src)
+	modules += new /obj/item/borg/sight/hud/med(src)
 	modules += new /obj/item/weapon/reagent_containers/borghypo/surgeon(src)
-	modules += new /obj/item/weapon/scalpel(src)
+	modules += new /obj/item/weapon/scalpel/manager(src)
 	modules += new /obj/item/weapon/FixOVein(src)
 	modules += new /obj/item/weapon/hemostat(src)
 	modules += new /obj/item/weapon/retractor(src)
@@ -139,7 +140,10 @@
 
 /obj/item/weapon/robot_module/crisis/atom_init()
 	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/gripper/chemistry(src)
 	modules += new /obj/item/device/healthanalyzer(src)
+	modules += new /obj/item/borg/sight/hud/med(src)
 	modules += new /obj/item/device/reagent_scanner/adv(src)
 	modules += new /obj/item/roller_holder(src)
 	modules += new /obj/item/stack/medical/ointment(src)
@@ -219,6 +223,7 @@
 	modules += new /obj/item/weapon/melee/baton(src)
 	modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
 	modules += new /obj/item/taperoll/police(src)
+	modules += new /obj/item/borg/sight/hud/sec(src)
 	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 	. = ..()
 
@@ -263,7 +268,9 @@
 
 /obj/item/weapon/robot_module/butler/atom_init()
 	modules += new /obj/item/device/flash(src)
-	modules += new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
+	modules += new /obj/item/weapon/gripper/service(src)
+	modules += new /obj/item/weapon/gripper/paperwork(src)
+	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
 	modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 
 	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
@@ -335,6 +342,7 @@
 	modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
 	modules += new /obj/item/weapon/card/emag(src)
+	modules += new /obj/item/borg/sight/night(src)
 	modules += new /obj/item/weapon/gun/projectile/automatic/borg(src)
 	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
 	modules += new /obj/item/weapon/wrench(src)
@@ -384,9 +392,9 @@
 	modules += new /obj/item/weapon/wirecutters(src)
 	modules += new /obj/item/weapon/weldingtool/largetank(src) //To fuck and unfuck (but mostly fuck) shit up
 
-	emag = new /obj/item/device/lustmodule(src) //To fuck people's shit up
+	emag = new /obj/item/weapon/hand_tele(src) //To fuck people's shit up
 
-	emag.name = "Slime bloodlust pulse emitter"
+	emag.name = "Hand tele"
 
 /obj/item/weapon/robot_module/drone
 	name = "drone module"

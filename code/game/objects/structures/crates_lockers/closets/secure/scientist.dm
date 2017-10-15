@@ -29,9 +29,9 @@
 	icon_off = "rdsecureoff"
 
 /obj/structure/closet/secure_closet/RD/PopulateContents()
-	for (var/i in 1 to 2)
-		new /obj/item/clothing/suit/bio_suit/new_hazmat/scientist(src)
 
+	new /obj/item/clothing/suit/bio_suit/new_hazmat/scientist(src)
+	new /obj/item/clothing/head/bio_hood/new_hazmat/scientist(src)
 	new /obj/item/clothing/under/rank/research_director(src)
 	new /obj/item/clothing/under/rank/research_director/rdalt(src)
 	new /obj/item/clothing/under/rank/research_director/dress_rd(src)
