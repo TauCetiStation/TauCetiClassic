@@ -23,19 +23,19 @@
 	dropped.density = 0
 	dropped.opacity = 0
 	animate(dropped, pixel_y = initial_y, pixel_x = initial_x , time = 7)
-	addtimer(CALLBACK(src, .proc/end_fall, dropped), 7)
+	addtimer(CALLBACK(dropped, /atom/movable/proc/end_fall), 7)
 	qdel(src)
 
-/obj/effect/falling_effect/proc/end_fall(atom/movable/dropped)
-	for(var/atom/movable/AM in dropped.loc)
-		if(AM != dropped)
+/atom/movable/proc/end_fall()
+	for(var/atom/movable/AM in loc)
+		if(AM != src)
 			AM.ex_act(1)
-	for(var/mob/living/M in oviewers(6, dropped))
+	for(var/mob/living/M in oviewers(6, src))
 		shake_camera(M, 2, 2)
-	playsound(dropped.loc, 'sound/effects/meteorimpact.ogg', 50, 1)
-	dropped.density = initial(dropped.density)
-	dropped.opacity = initial(dropped.opacity)
-	dropped.plane = initial(dropped.plane)
+	playsound(loc, 'sound/effects/meteorimpact.ogg', 50, 1)
+	density = initial(density)
+	opacity = initial(opacity)
+	plane = initial(plane)
 
 /obj/effect/falling_effec/ex_act()
 	return
