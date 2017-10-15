@@ -15,7 +15,7 @@
 	new /obj/item/weapon/crowbar/red(src)
 	new /obj/item/weapon/storage/belt/military(src)
 	new /obj/item/clothing/gloves/combat(src)
-	new /obj/item/clothing/tie/storage/syndi_vest(src)
+	new /obj/item/clothing/accessory/storage/syndi_vest(src)
 	new /obj/item/clothing/mask/gas/syndicate(src)
 
 

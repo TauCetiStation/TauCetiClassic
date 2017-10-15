@@ -127,7 +127,7 @@
 	icon = 'icons/obj/clothing/glasses.dmi'
 	icon_state = "material"
 /obj/random/cloth/tie/item_to_spawn()
-	return pick(subtypesof(/obj/item/clothing/tie))
+	return pick(subtypesof(/obj/item/clothing/accessory))
 
 /obj/random/cloth/storage
 	name = "random storage"

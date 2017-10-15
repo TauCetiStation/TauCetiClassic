@@ -55,7 +55,7 @@
 		if(15)
 			new/obj/item/clothing/under/chameleon(src)
 			for (var/i in 1 to 7)
-				new/obj/item/clothing/tie/horrible(src)
+				new/obj/item/clothing/accessory/tie/horrible(src)
 		if(16)
 			new/obj/item/clothing/under/shorts(src)
 			new/obj/item/clothing/under/shorts/red(src)

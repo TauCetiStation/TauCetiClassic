@@ -936,7 +936,7 @@
 "rZ" = (/obj/item/clothing/shoes/western,/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)
 "sa" = (/obj/item/weapon/bedsheet/orange,/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)
 "sb" = (/obj/machinery/light_construct/small{dir = 1},/obj/structure/stool/bed/chair/wood/normal,/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)
-"sc" = (/obj/item/clothing/tie/holster/waist,/obj/item/clothing/head/western,/obj/structure/table/woodentable,/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)
+"sc" = (/obj/item/clothing/accessory/holster/waist,/obj/item/clothing/head/western,/obj/structure/table/woodentable,/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)
 "sd" = (/obj/structure/stool/bed,/obj/effect/decal/remains/human,/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)
 "se" = (/obj/item/weapon/table_parts/wood,/obj/item/weapon/broken_bottle,/mob/living/simple_animal/hostile/asteroid/goliath,/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)
 "sf" = (/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)

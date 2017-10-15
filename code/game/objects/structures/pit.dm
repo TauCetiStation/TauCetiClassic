@@ -150,14 +150,14 @@
 
 	if(prob(30))
 		var/list/misc = list(
-			/obj/item/clothing/tie/fluff/altair_locket,
-			/obj/item/clothing/tie/holobadge,
-			/obj/item/clothing/tie/horrible,
-			/obj/item/clothing/tie/medal,
-			/obj/item/clothing/tie/medal/silver,
-			/obj/item/clothing/tie/medal/silver/valor,
-			/obj/item/clothing/tie/medal/gold,
-			/obj/item/clothing/tie/medal/gold/heroism,
+			/obj/item/clothing/accessory/fluff/altair_locket,
+			/obj/item/clothing/accessory/holobadge,
+			/obj/item/clothing/accessory/tie/horrible,
+			/obj/item/clothing/accessory/medal,
+			/obj/item/clothing/accessory/medal/silver,
+			/obj/item/clothing/accessory/medal/silver/valor,
+			/obj/item/clothing/accessory/medal/gold,
+			/obj/item/clothing/accessory/medal/gold/heroism,
 			/obj/item/weapon/gun/energy/laser/retro/jetsons
 			)
 		loot = pick(misc)
