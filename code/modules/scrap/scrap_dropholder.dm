@@ -23,7 +23,7 @@
 	dropped.density = 0
 	dropped.opacity = 0
 	animate(dropped, pixel_y = initial_y, pixel_x = initial_x , time = 7)
-	addtimer(CALLBACK(dropped, /atom/movable/proc/end_fall), 7)
+	addtimer(CALLBACK(dropped, /atom/movable.proc/end_fall), 7)
 	qdel(src)
 
 /atom/movable/proc/end_fall()
@@ -37,5 +37,5 @@
 	opacity = initial(opacity)
 	plane = initial(plane)
 
-/obj/effect/falling_effec/ex_act()
+/obj/effect/falling_effect/ex_act()
 	return
