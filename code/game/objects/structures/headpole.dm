@@ -24,7 +24,9 @@
 		display_head.dir = SOUTH
 		display_head.pixel_y = -3
 		display_head.pixel_x = 1
-		overlays += display_head.appearance
+		display_head.layer = 3
+		display_head.plane = 0
+		overlays += display_head
 	if(S)
 		spear = S
 		S.forceMove(src)
