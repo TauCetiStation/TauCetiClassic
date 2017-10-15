@@ -10,8 +10,11 @@
 	var/static/obj/transit_loc = null
 
 /obj/machinery/gateway/atom_init()
-	. = ..()
+	..()
 	update_icon()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/gateway/atom_init_late()
 	if(dir == 2)
 		density = 0
 	if(!transit_loc)
@@ -42,8 +45,9 @@
 
 /obj/machinery/gateway/centerstation/atom_init()
 	. = ..()
-	update_icon()
 	wait = world.time + config.gateway_delay	//+ thirty minutes default
+
+/obj/machinery/gateway/centerstation/atom_init_late()
 	awaygate = locate(/obj/machinery/gateway/centeraway)
 
 
@@ -155,9 +159,7 @@ obj/machinery/gateway/centerstation/process()
 	var/obj/machinery/gateway/centerstation/stationgate = null
 
 
-/obj/machinery/gateway/centeraway/atom_init()
-	. = ..()
-	update_icon()
+/obj/machinery/gateway/centeraway/atom_init_late()
 	stationgate = locate(/obj/machinery/gateway/centerstation)
 
 
