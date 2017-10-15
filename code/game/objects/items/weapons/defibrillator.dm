@@ -274,10 +274,6 @@
 	if(!check_contact(H))
 		return "buzzes, \"Patient's chest is obstructed. Operation aborted.\""
 
-/obj/item/weapon/twohanded/shockpaddles/proc/can_revive(mob/living/carbon/human/H) //This is checked right before attempting to revive
-	if((H.stat == DEAD && (world.time - H.timeofdeath) >= DEFIB_TIME_LIMIT) || H.health < config.health_threshold_dead)
-		return "buzzes, \"Resuscitation failed - Severe neurological decay makes recovery of patient impossible. Further attempts futile.\""
-
 /obj/item/weapon/twohanded/shockpaddles/proc/check_contact(mob/living/carbon/human/H, sel_zone = BP_CHEST)
 	if(!combat)
 		if(H.check_thickmaterial(target_zone = sel_zone))
@@ -362,24 +358,7 @@
 		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
 		return
 
-	H.visible_message("<span class='warning'>\The [H]'s body convulses a bit.</span>")
-	playsound(get_turf(src), "bodyfall", 50, 1)
-	playsound(get_turf(src), 'sound/items/defib_zap.ogg', 50, 1, -1)
-	set_cooldown(cooldown_time)
-
-	error = can_revive(H)
-	if(error)
-		make_announcement(error)
-		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
-		return
-
-	if(H.health <= config.health_threshold_crit || prob(10))
-		var/suff = min(H.getOxyLoss(), 20)
-		H.adjustOxyLoss(-suff)
-	else
-		H.adjustFireLoss(burn_damage_amt)
-	H.updatehealth()
-	user.visible_message("[user] shocks [H] with [src].", "You shock [H] with [src].</span>", "You hear electricity zaps flesh.")
+	user.visible_message("<span class='warning'>[user] shocks [H] with [src].</span>", "<span class='warning'>You shock [H] with [src].</span>", "<span class='warning'>You hear electricity zaps flesh.</span>")
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Shock [H.name] ([H.ckey]) with [src.name]</font>"
 	msg_admin_attack("[user.name] ([user.ckey]) shock [H.name] ([H.ckey]) with [src.name] [ADMIN_FLW(user)]")
 	H.apply_effect(4, STUN, 0)
@@ -392,6 +371,27 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, H)
 	s.start()
+	playsound(get_turf(src), "bodyfall", 50, 1)
+	playsound(get_turf(src), 'sound/items/defib_zap.ogg', 50, 1, -1)
+	set_cooldown(cooldown_time)
+
+	if(H.stat == DEAD && (world.time - H.timeofdeath) >= DEFIB_TIME_LIMIT)
+		make_announcement("buzzes, \"Resuscitation failed - Severe neurological decay makes recovery of patient impossible. Further attempts futile.\"")
+		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
+		return
+
+	if(H.health <= config.health_threshold_crit || prob(10))
+		var/suff = min(H.getOxyLoss(), 20)
+		H.adjustOxyLoss(-suff)
+	else
+		H.adjustFireLoss(burn_damage_amt)
+	H.updatehealth()
+
+	if(H.health < config.health_threshold_dead)
+		make_announcement("buzzes, \"Resuscitation failed - Patinent's body is too wounded to sustain life.\"")
+		playsound(get_turf(src), 'sound/items/defib_failed.ogg', 50, 0)
+		return
+
 	if(H.stat == DEAD)
 		H.stat = UNCONSCIOUS
 		return_to_body_dialog(H)
