@@ -62,7 +62,7 @@
 	if(display_head)
 		qdel(display_head)
 		display_head = null
-	..()
+	return ..()
 
 //obj/structure/headpole/with_head/atom_init()
 //	var/obj/item/weapon/organ/head/H = new (src)
