@@ -26,16 +26,16 @@
 
 /obj/machinery/power/emitter/atom_init()
 	. = ..()
+	if(state == 2 && anchored)
+		connect_to_network()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/power/emitter/atom_init_late(board_path = /obj/item/weapon/circuitboard/emitter)
 	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/emitter(null)
+	component_parts += new board_path(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	RefreshParts()
-
-/obj/machinery/power/emitter/atom_init()
-	. = ..()
-	if(state == 2 && anchored)
-		connect_to_network()
 
 /obj/machinery/power/emitter/RefreshParts()
 	var/max_firedelay = 120
@@ -79,6 +79,9 @@
 /obj/machinery/power/emitter/attack_hand(mob/user)
 	if(..())
 		return
+	activate(user)
+
+/obj/machinery/power/emitter/proc/activate(mob/user)
 	if(state == 2)
 		if(!powernet)
 			to_chat(user, "The emitter isn't connected to a wire.")
@@ -141,12 +144,12 @@
 
 		src.last_shot = world.time
 		if(src.shot_number < 3)
-			src.fire_delay = 2
+			src.fire_delay = get_burst_delay()
 			src.shot_number ++
 		else
-			src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
+			src.fire_delay = get_rand_burst_delay()
 			src.shot_number = 0
-		var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+		var/obj/item/projectile/beam/emitter/A = get_emitter_beam()
 		playsound(src.loc, 'sound/weapons/emitter.ogg', 25, 1)
 		if(prob(35))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -262,3 +265,12 @@
 
 	..()
 	return
+
+/obj/machinery/power/emitter/proc/get_rand_burst_delay()
+	return rand(minimum_fire_delay, maximum_fire_delay)
+
+/obj/machinery/power/emitter/proc/get_burst_delay()
+	return 2
+
+/obj/machinery/power/emitter/proc/get_emitter_beam()
+	return new /obj/item/projectile/beam/emitter(get_turf(src))

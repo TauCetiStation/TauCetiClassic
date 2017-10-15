@@ -441,3 +441,12 @@
 	if(!void)
 		void = new()
 		screen += void
+
+//This may help with UI's that were stuck and don't want to open anymore.
+/client/verb/close_nanouis()
+	set name = "Fix NanoUI (Close All)"
+	set category = "OOC"
+	set desc = "Closes all opened NanoUI."
+
+	to_chat(src, "<span class='notice'>You forcibly close any opened NanoUI interfaces.")
+	nanomanager.close_user_uis(usr)

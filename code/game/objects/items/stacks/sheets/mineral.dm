@@ -151,6 +151,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "phorontech=2;materials=2"
 	perunit = 2000
 	sheettype = "phoron"
+	is_fusion_fuel = TRUE
 
 
 /obj/item/stack/sheet/mineral/phoron/atom_init()
@@ -261,6 +262,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=6;powerstorage=5;magnets=5"
 	sheettype = "mhydrogen"
 	perunit = 2000
+	is_fusion_fuel = TRUE
 
 /*
  * Tritium
@@ -273,6 +275,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=5"
 	color = "#777777"
 	perunit = 2000
+	is_fusion_fuel = TRUE
 
 /*
  * Osmium
@@ -284,3 +287,13 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=5"
 	color = "#9999FF"
 	perunit = 2000
+
+// Fusion fuel.
+/obj/item/stack/sheet/mineral/deuterium
+	name = "deuterium"
+	icon_state = "sheet-silver"
+	sheettype = "deuterium"
+	origin_tech = "materials=3"
+	color = "#999999"
+	perunit = 2000
+	is_fusion_fuel = TRUE
