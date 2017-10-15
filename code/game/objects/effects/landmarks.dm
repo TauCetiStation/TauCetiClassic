@@ -95,9 +95,12 @@
 /obj/effect/landmark/latejoin
 	name = "JoinLate"
 
-/obj/effect/landmark/latejoin/atom_init(mapload)
+/obj/effect/landmark/latejoin/New(loc)
 	..()
 	latejoin += loc
+
+/obj/effect/landmark/latejoin/atom_init(mapload)
+	..()
 	return INITIALIZE_HINT_QDEL
 
 //Costume spawner landmarks
