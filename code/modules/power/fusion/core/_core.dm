@@ -27,7 +27,8 @@ var/list/fusion_cores = list()
 
 /obj/machinery/power/fusion_core/atom_init()
 	. = ..()
-	connect_to_network()
+	if(anchored)
+		connect_to_network()
 	fusion_cores += src
 
 /obj/machinery/power/fusion_core/Destroy()
@@ -111,10 +112,12 @@ var/list/fusion_cores = list()
 		anchored = !anchored
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 		if(anchored)
+			connect_to_network()
 			user.visible_message("[user.name] secures [src.name] to the floor.", \
 				"You secure the [src.name] to the floor.", \
 				"You hear a ratchet")
 		else
+			disconnect_from_network()
 			user.visible_message("[user.name] unsecures [src.name] from the floor.", \
 				"You unsecure the [src.name] from the floor.", \
 				"You hear a ratchet")
