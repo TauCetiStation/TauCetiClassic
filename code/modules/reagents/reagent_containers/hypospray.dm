@@ -17,11 +17,6 @@
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-
-//obj/item/weapon/reagent_containers/hypospray/atom_init() //comment this to make hypos start off empty
-//	. = ..()
-//	reagents.add_reagent("tricordrazine", 30) this is base type of all hyposprays and should not have any reagents!
-
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
 		to_chat(user, "\red [src] is empty.")
@@ -47,6 +42,10 @@
 
 /obj/item/weapon/reagent_containers/hypospray/cmo //We need "another" hypo for CMO
 
+/obj/item/weapon/reagent_containers/hypospray/cmo/atom_init()
+	. = ..()
+	reagents.add_reagent("tricordrazine", 30)
+
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector
 	name = "autoinjector"
@@ -57,7 +56,6 @@
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/atom_init()
 	. = ..()
-	reagents.remove_reagent("tricordrazine", 30)
 	reagents.add_reagent("inaprovaline", 5)
 	flags &= ~OPENCONTAINER
 	amount_per_transfer_from_this = volume
