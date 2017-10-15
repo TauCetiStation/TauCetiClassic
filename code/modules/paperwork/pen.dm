@@ -131,3 +131,47 @@
 		icon_state = initial(icon_state) //looks like a normal pen when off.
 		item_state = initial(item_state)
 
+/*
+ * Chameleon pen
+ */
+/obj/item/weapon/pen/chameleon
+	var/signature = ""
+
+/obj/item/weapon/pen/chameleon/attack_self(mob/user)
+	signature = sanitize(input("Enter new signature. Leave blank for 'Anonymous'", "New Signature", signature))
+
+/obj/item/weapon/pen/proc/get_signature(mob/user)
+	return (user && user.real_name) ? user.real_name : "Anonymous"
+
+/obj/item/weapon/pen/chameleon/get_signature(mob/user)
+	return signature ? signature : "Anonymous"
+
+/obj/item/weapon/pen/chameleon/verb/set_colour()
+	set name = "Change Pen Colour"
+	set category = "Object"
+
+	var/list/possible_colours = list ("Yellow", "Green", "Pink", "Blue", "Orange", "Cyan", "Red", "Invisible", "Black")
+	var/selected_type = input("Pick new colour.", "Pen Colour", null, null) as null|anything in possible_colours
+
+	if(selected_type)
+		switch(selected_type)
+			if("Yellow")
+				colour = "yellow"
+			if("Green")
+				colour = "lime"
+			if("Pink")
+				colour = "pink"
+			if("Blue")
+				colour = "blue"
+			if("Orange")
+				colour = "orange"
+			if("Cyan")
+				colour = "cyan"
+			if("Red")
+				colour = "red"
+			if("Invisible")
+				colour = "white"
+			else
+				colour = "black"
+		to_chat(usr, "<span class='info'>You select the [lowertext(selected_type)] ink container.</span>")
+

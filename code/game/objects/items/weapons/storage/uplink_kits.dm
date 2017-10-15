@@ -200,3 +200,12 @@
 		new /obj/item/clothing/head/helmet/syndiassault(src)
 	else
 		new /obj/item/clothing/head/helmet/syndiassault/alternate(src)
+
+/obj/item/weapon/storage/box/syndie_kit/fake
+	name = "box (B)"
+	desc = "This set allows you to forge various documents at the station."
+
+/obj/item/weapon/storage/box/syndie_kit/fake/atom_init()
+	. = ..()
+	new /obj/item/weapon/pen/chameleon(src)
+	new /obj/item/weapon/stamp/chameleon(src)
