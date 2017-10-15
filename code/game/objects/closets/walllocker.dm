@@ -20,6 +20,9 @@
 	var/amount = 2 // spawns each items X times.
 	icon_state = "emerg"
 
+/obj/structure/closet/walllocker/emerglocker/update_icon() // We don't want any icons manipulation with this.
+	return
+
 /obj/structure/closet/walllocker/emerglocker/toggle(mob/user)
 	src.attack_hand(user)
 	return
