@@ -22,7 +22,6 @@
 
 
 /obj/item/weapon/robot_module/atom_init()
-	modules += new /obj/item/device/flash(src)
 	emag = new /obj/item/toy/sword(src)
 	emag.name = "Placeholder Emag Item"
 	. = ..()
@@ -338,7 +337,6 @@
 /obj/item/weapon/robot_module/syndicate/atom_init()
 	. = ..()
 	modules += new /obj/item/device/flash(src)
-	modules += new /obj/item/borg/sight/night(src)
 	modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
 	modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
 	modules += new /obj/item/weapon/card/emag(src)
