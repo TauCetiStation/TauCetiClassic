@@ -17,6 +17,7 @@ var/list/fusion_cores = list()
 	idle_power_usage = 50
 	active_power_usage = 500 //multiplied by field strength
 	anchored = FALSE
+	ghost_must_be_admin = TRUE
 
 	var/obj/effect/fusion_em_field/owned_field
 	var/field_strength = 1//0.01
