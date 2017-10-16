@@ -50,6 +50,6 @@
 	origin_tech = "materials=5"
 
 /obj/item/weapon/fuel_assembly/hydrogen
-	fuel_type = "metallic hydrogen"
+	fuel_type = "hydrogen"
 	fuel_colour = "#e6c5de"
 	origin_tech = "materials=6;powerstorage=5;magnets=5"
