@@ -4,7 +4,7 @@
 	name = "Emitter"
 	desc = "It is a heavy duty industrial laser."
 	icon = 'icons/obj/singularity.dmi'
-	icon_state = "emitter"
+	icon_state = "emitter-off"
 	anchored = FALSE
 	density = TRUE
 	req_access = list(access_engine_equip)
@@ -71,10 +71,12 @@
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
-	if (active && powernet && avail(active_power_usage))
-		icon_state = "emitter_+a"
+	if (active && avail(active_power_usage))
+		icon_state = "emitter-active"
+	else if(panel_open)
+		icon_state = "emitter-open"
 	else
-		icon_state = "emitter"
+		icon_state = "emitter-off"
 
 /obj/machinery/power/emitter/attack_hand(mob/user)
 	if(..())
@@ -94,6 +96,9 @@
 				log_game("Emitter turned off by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='red'>off</font> by [user.key]","singulo")
 			else
+				if(panel_open)
+					to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
+					return
 				active = 1
 				to_chat(user, "You turn on the [src].")
 				shot_number = 0
@@ -252,8 +257,12 @@
 		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
 		return
 
-	if(default_deconstruction_screwdriver(user, "emitter_open", "emitter", W))
-		return
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if(active)
+			to_chat(user, "Turn off the [src] first.")
+			return
+		if(default_deconstruction_screwdriver(user, "emitter-open", "emitter-off", W))
+			return
 
 	if(exchange_parts(user, W))
 		return
