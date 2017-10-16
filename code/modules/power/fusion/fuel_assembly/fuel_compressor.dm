@@ -42,7 +42,10 @@
 		if(!S.use(25))
 			to_chat(user, "<span class='warning'>You need at least 25 [S.get_stack_name()] to make a fuel rod.</span>")
 			return
-		var/path = get_fuel_assembly_by_material(initial(S.name))
+		var/path = get_fuel_assembly_by_material(S.type)
+		if(!path) // incase, someone sets is_fusion_fuel to true, but forgets to add that into proc above.
+			visible_message("<span class='notice'>\The [src] is non supported fuel. Please contact with coder team.</span>")
+			return
 		var/obj/item/weapon/fuel_assembly/F = new path(get_turf(src))
 		visible_message("<span class='notice'>\The [src] compresses the [S] into a new fuel assembly.</span>")
 		user.put_in_hands(F)
