@@ -189,7 +189,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		return amt
 	return 0
 
-/proc/blood_splatter(target, datum/reagent/blood/source, large, spray_dir, s_blood_color = "#C80000")
+/proc/blood_splatter(target, datum/reagent/blood/source, large, spray_dir, s_blood_color)
 	var/obj/effect/decal/cleanable/blood/B
 	var/decal_type = /obj/effect/decal/cleanable/blood/splatter
 	var/turf/T = get_turf(target)
@@ -222,7 +222,7 @@ var/const/BLOOD_VOLUME_SURVIVE = 122
 		return B
 
 	// Update appearance.
-	B.basecolor = s_blood_color // source.data["blood_colour"] <- leaving this pointer, could be important for later.
+	B.basedatum = new/datum/dirt_cover(s_blood_color) // source.data["blood_colour"] <- leaving this pointer, could be important for later.
 	B.update_icon()
 	if(spray_dir)
 		B.icon_state = "squirt"

@@ -76,17 +76,17 @@
 
 		// Tracking blood
 		var/list/bloodDNA = null
-		var/bloodcolor=""
+		var/datum/dirt_cover/bloodcolor
 		if(M.shoes)
 			var/obj/item/clothing/shoes/S = M.shoes
 			if(S.track_blood && S.blood_DNA)
 				bloodDNA   = S.blood_DNA
-				bloodcolor = S.blood_color
+				bloodcolor = new/datum/dirt_cover(S.dirt_overlay)
 				S.track_blood--
 		else
 			if(M.track_blood && M.feet_blood_DNA)
 				bloodDNA   = M.feet_blood_DNA
-				bloodcolor = M.feet_blood_color
+				bloodcolor = new/datum/dirt_cover(M.feet_dirt_color)
 				M.track_blood--
 
 		if (bloodDNA)
@@ -157,9 +157,9 @@
 
 	//Species-specific blood.
 	if(M.species)
-		newblood.basecolor = M.species.blood_color
+		newblood.basedatum = new/datum/dirt_cover(M.species.blood_color)
 	else
-		newblood.basecolor = "#A10808"
+		newblood.basedatum = new/datum/dirt_cover/red_blood()
 
 	newblood.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	newblood.virus2 = virus_copylist(M.virus2)
@@ -174,7 +174,7 @@
 
 		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
 		this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-		this.basecolor = "#A10808"
+		this.basedatum = new/datum/dirt_cover/red_blood()
 		this.update_icon()
 
 	else if(istype(M,/mob/living/carbon/human))
@@ -184,9 +184,9 @@
 
 		//Species-specific blood.
 		if(H.species)
-			this.basecolor = H.species.blood_color
+			this.basedatum = new/datum/dirt_cover(H.species.blood_color)
 		else
-			this.basecolor = "#A10808"
+			this.basedatum = new/datum/dirt_cover/red_blood()
 		this.update_icon()
 
 		this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type

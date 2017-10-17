@@ -552,9 +552,9 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing.color = U.color
 		overlays_standing[UNIFORM_LAYER] = standing
 
-		if(U.blood_DNA)
+		if(U.dirt_overlay)
 			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state"="uniformblood")
-			bloodsies.color		= U.blood_color
+			bloodsies.color		= U.dirt_overlay.color
 			standing.overlays	+= bloodsies
 
 		if(U.accessories.len)
@@ -619,14 +619,14 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing.color = gloves.color
 		overlays_standing[GLOVES_LAYER]	= standing
 
-		if(gloves.blood_DNA)
+		if(gloves.dirt_overlay)
 			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
-			bloodsies.color = gloves.blood_color
+			bloodsies.color = dirt_overlay.color
 			standing.overlays	+= bloodsies
 	else
 		if(blood_DNA)
 			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
-			bloodsies.color = hand_blood_color
+			bloodsies.color = hand_dirt_color.color
 			overlays_standing[GLOVES_LAYER]	= bloodsies
 
 	apply_overlay(GLOVES_LAYER)
@@ -700,14 +700,14 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing.color = shoes.color
 		overlays_standing[SHOES_LAYER] = standing
 
-		if(shoes.blood_DNA)
+		if(shoes.dirt_overlay)
 			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
-			bloodsies.color = shoes.blood_color
+			bloodsies.color = shoes.dirt_overlay.color
 			standing.overlays += bloodsies
 	else
 		if(feet_blood_DNA)
 			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
-			bloodsies.color = feet_blood_color
+			bloodsies.color = feet_dirt_color.color
 			overlays_standing[SHOES_LAYER] = bloodsies
 
 	apply_overlay(SHOES_LAYER)
@@ -751,9 +751,9 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing.color = head.color
 		overlays_standing[HEAD_LAYER]	= standing
 
-		if(head.blood_DNA)
+		if(head.dirt_overlay)
 			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")
-			bloodsies.color = head.blood_color
+			bloodsies.color = head.dirt_overlay.color
 			standing.overlays	+= bloodsies
 
 	apply_overlay(HEAD_LAYER)
@@ -801,10 +801,10 @@ Please contact me on #coderbus IRC. ~Carn x
 			drop_l_hand()
 			drop_r_hand()
 
-		if(wear_suit.blood_DNA)
+		if(wear_suit.dirt_overlay)
 			var/obj/item/clothing/suit/S = wear_suit
 			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="[S.blood_overlay_type]blood")
-			bloodsies.color = wear_suit.blood_color
+			bloodsies.color = dirt_overlay.color
 			standing.overlays	+= bloodsies
 
 		if(FAT in mutations)
@@ -855,9 +855,9 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing.color = wear_mask.color
 		overlays_standing[FACEMASK_LAYER]	= standing
 
-		if(wear_mask.blood_DNA && !istype(wear_mask, /obj/item/clothing/mask/cigarette))
+		if(wear_mask.dirt_overlay && !istype(wear_mask, /obj/item/clothing/mask/cigarette))
 			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="maskblood")
-			bloodsies.color = wear_mask.blood_color
+			bloodsies.color = wear_mask.dirt_overlay.color
 			standing.overlays	+= bloodsies
 
 	apply_overlay(FACEMASK_LAYER)

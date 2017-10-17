@@ -15,7 +15,8 @@ var/global/list/image/splatter_cache=list()
 	var/base_icon = 'icons/effects/blood.dmi'
 	var/list/viruses = list()
 	blood_DNA = list()
-	var/basecolor="#A10808" // Color when wet.
+	var/datum/dirt_cover/basedatum  // Color when wet.
+
 	var/list/datum/disease2/disease/virus2 = list()
 	var/amount = 5
 	var/drytime
@@ -27,6 +28,7 @@ var/global/list/image/splatter_cache=list()
 
 /obj/effect/decal/cleanable/blood/atom_init()
 	..()
+	basedatum = new/datum/dirt_cover/red_blood()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/decal/cleanable/blood/atom_init_late()
@@ -48,9 +50,7 @@ var/global/list/image/splatter_cache=list()
 		addtimer(CALLBACK(src, .proc/dry), drytime)
 
 /obj/effect/decal/cleanable/blood/update_icon()
-	if(basecolor == "rainbow")
-		basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
-	color = basecolor
+	color = basedatum.color
 
 /obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/perp)
 	if(!istype(perp))
@@ -71,24 +71,21 @@ var/global/list/image/splatter_cache=list()
 		if(perp.shoes && !perp.buckled)//Adding blood to shoes
 			var/obj/item/clothing/shoes/S = perp.shoes
 			if(istype(S))
-				S.blood_color = basecolor
+				if(dirt_overlay && dirt_overlay.color != basedatum.color)
+					S.overlays.Cut()
+					S.add_dirt_cover(basedatum)
 				S.track_blood = max(amount,S.track_blood)
-				if(!S.blood_overlay)
-					S.generate_blood_overlay()
 				if(!S.blood_DNA)
 					S.blood_DNA = list()
-					S.blood_overlay.color = basecolor
-					S.overlays += S.blood_overlay
-				if(S.blood_overlay && S.blood_overlay.color != basecolor)
-					S.blood_overlay.color = basecolor
-					S.overlays.Cut()
-					S.overlays += S.blood_overlay
 				if(blood_DNA.len)
 					S.blood_DNA |= blood_DNA.Copy()
 			skip = TRUE
 
 	if (hasfeet && !skip) // Or feet
-		perp.feet_blood_color = basecolor
+		if(perp.feet_dirt_color)
+			perp.feet_dirt_color.add_dirt(basedatum)
+		else
+			perp.feet_dirt_color = new/datum/dirt_cover(basedatum)
 		perp.track_blood = max(amount,perp.track_blood)
 		if(!perp.feet_blood_DNA)
 			perp.feet_blood_DNA = list()
@@ -123,7 +120,11 @@ var/global/list/image/splatter_cache=list()
 			user.blood_DNA = list()
 		user.blood_DNA |= blood_DNA.Copy()
 		user.bloody_hands += taken
-		user.hand_blood_color = basecolor
+		user.hand_dirt_color = basedatum
+		if(user.hand_dirt_color)
+			user.hand_dirt_color.add_dirt(basedatum)
+		else
+			user.hand_dirt_color = new/datum/dirt_cover(basedatum)
 		user.update_inv_gloves()
 		user.verbs += /mob/living/carbon/human/proc/bloody_doodle
 
@@ -164,7 +165,7 @@ var/global/list/image/splatter_cache=list()
 
 /obj/effect/decal/cleanable/blood/writing/examine(mob/user)
 	..()
-	to_chat(user, "It reads: <font color='[basecolor]'>\"[message]\"<font>")
+	to_chat(user, "It reads: <font color='[basedatum.color]'>\"[message]\"<font>")
 
 /obj/effect/decal/cleanable/blood/trail_holder
 	name = "blood"
@@ -196,13 +197,9 @@ var/global/list/image/splatter_cache=list()
 
 /obj/effect/decal/cleanable/blood/gibs/update_icon()
 	var/image/giblets = new(base_icon, "[icon_state]_flesh", dir)
-	if(!fleshcolor || fleshcolor == "rainbow")
-		fleshcolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
 	giblets.color = fleshcolor
-
 	var/icon/blood = new(base_icon,"[icon_state]",dir)
-	if(basecolor == "rainbow") basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
-	blood.Blend(basecolor,ICON_MULTIPLY)
+	blood.Blend(basedatum.color,ICON_MULTIPLY)
 
 	icon = blood
 	overlays.Cut()
@@ -231,7 +228,7 @@ var/global/list/image/splatter_cache=list()
 			sleep(3)
 			if (i > 0)
 				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
-				b.basecolor = src.basecolor
+				b.basedatum = new/datum/dirt_cover(src.basedatum)
 				b.update_icon()
 				for(var/datum/disease/D in src.viruses)
 					var/datum/disease/ND = D.Copy(1)

@@ -58,7 +58,7 @@
 
 	var/list/abilities = list()	// For species-derived or admin-given powers
 
-	var/blood_color = "#A10808" //Red.
+	var/datum/dirt_cover/blood_color = /datum/dirt_cover/red_blood //Red.
 	var/flesh_color = "#FFC896" //Pink.
 	var/base_color      //Used when setting species.
 
@@ -299,7 +299,7 @@
 		NO_SCAN = TRUE
 	)
 
-	blood_color = "#2299FC"
+	blood_color = /datum/dirt_cover/blue_blood
 	flesh_color = "#808D11"
 	reagent_tag = IS_VOX
 
@@ -373,7 +373,7 @@
 	,NO_PAIN = TRUE
 	)
 
-	blood_color = "#2299FC"
+	blood_color = /datum/dirt_cover/blue_blood
 	flesh_color = "#808D11"
 	reagent_tag = IS_VOX
 	tail = "armalis_tail"
@@ -421,7 +421,7 @@
 	,NO_PAIN = TRUE
 	)
 
-	blood_color = "#004400"
+	blood_color = /datum/dirt_cover/green_blood
 	flesh_color = "#907E4A"
 
 	reagent_tag = IS_DIONA
@@ -482,7 +482,7 @@
 	,BIOHAZZARD_IMMUNE = TRUE
 	)
 
-	blood_color = "#1F181F"
+	blood_color = /datum/dirt_cover/oil
 	flesh_color = "#575757"
 
 /datum/species/abductor
@@ -499,7 +499,7 @@
 	,VIRUS_IMMUNE = TRUE
 	)
 
-	blood_color = "#BCBCBC"
+	blood_color = /datum/dirt_cover/gray_blood
 
 /datum/species/abductor/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -575,7 +575,7 @@
 	heat_level_2 = 3000
 	heat_level_3 = 4000
 
-	blood_color = "#000000"
+	blood_color = /datum/dirt_cover/black_blood
 	darksight = 8
 
 	flags = list(
@@ -608,7 +608,7 @@
 	brain_mod = 0
 	speed_mod = 2
 
-	blood_color = "#515573"
+	blood_color = /datum/dirt_cover/adamant_blood
 	flesh_color = "#137E8F"
 
 	flags = list(

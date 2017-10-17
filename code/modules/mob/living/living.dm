@@ -711,11 +711,11 @@
 				var/mob/living/carbon/human/H = M
 				if(H.species)
 					if(TH.color != H.species.blood_color)
-						TH.basecolor = H.species.blood_color
+						TH.basedatum = new/datum/dirt_cover(H.species.blood_color)
 						TH.update_icon()
 			else
-				if(TH.color != initial(TH.basecolor))
-					TH.basecolor = initial(TH.basecolor)
+				if(TH.basedatum != initial(TH.basedatum))
+					TH.basedatum = initial(TH.basedatum)
 					TH.update_icon()
 			if(!TH.amount)
 				STOP_PROCESSING(SSobj, TH)
