@@ -35,6 +35,13 @@
 	src.adding += using
 	help_intent = using
 
+	using = new /obj/screen/corgi/stamina_bar()
+	var/mob/living/carbon/CARB = usr
+	using.icon_state = "stam_bar_[round(CARB.stamina, 5)]"
+	using.screen_loc = ui_stamina2
+	src.adding += using
+	staminadisplay = using
+
 	ico = new(ui_style, "black")
 	ico.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, -1,-1,-1,-1)
 	ico.DrawBox(rgb(255,255,255,1),ico.Width()/2,ico.Height()/2,ico.Width(),ico.Height())
