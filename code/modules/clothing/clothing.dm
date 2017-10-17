@@ -426,7 +426,7 @@ BLIND     // can't see anything
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
 	if(I.sharp && !istype(loc, /mob/living/carbon/human)) //you can cut only clothes lying on the floor
 		for (var/i in 1 to 3)
-			new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), old = crit_fail)
+			new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), null, null, crit_fail)
 		qdel(src)
 		return
 

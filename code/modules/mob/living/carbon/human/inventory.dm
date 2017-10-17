@@ -336,10 +336,10 @@
 			to_chat(src, "<span class='warning'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return
 
-	if(W == l_hand)
+	if(W == l_hand && slot != slot_l_hand)
 		l_hand = null
 		update_inv_l_hand() // So items actually disappear from hands.
-	else if(W == r_hand)
+	else if(W == r_hand && slot != slot_r_hand)
 		r_hand = null
 		update_inv_r_hand()
 

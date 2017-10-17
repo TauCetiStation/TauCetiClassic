@@ -23,20 +23,23 @@
 	overlays += list(I, image(icon, "fuel_assembly_bracket"))
 	rod_quantities[fuel_type] = initial_amount
 
-/proc/get_fuel_assembly_by_material(mat)
-	switch(mat)
-		if("phoron")
+/proc/get_fuel_assembly_by_material(type)
+	switch(type)
+		if(/obj/item/stack/sheet/mineral/phoron)
 			return /obj/item/weapon/fuel_assembly/phoron
-		if("deuterium")
+
+		if(/obj/item/stack/sheet/mineral/deuterium)
 			return /obj/item/weapon/fuel_assembly/deuterium
-		if("tritium")
+
+		if(/obj/item/stack/sheet/mineral/tritium)
 			return /obj/item/weapon/fuel_assembly/tritium
-		if("metallic hydrogen")
+
+		if(/obj/item/stack/sheet/mineral/mhydrogen)
 			return /obj/item/weapon/fuel_assembly/hydrogen
 
 /obj/item/weapon/fuel_assembly/phoron
 	fuel_type = "phoron"
-	fuel_colour = "#999999"
+	fuel_colour = "#e37108"
 	origin_tech = "materials=3"
 
 /obj/item/weapon/fuel_assembly/deuterium
@@ -50,6 +53,6 @@
 	origin_tech = "materials=5"
 
 /obj/item/weapon/fuel_assembly/hydrogen
-	fuel_type = "metallic hydrogen"
+	fuel_type = "hydrogen"
 	fuel_colour = "#e6c5de"
 	origin_tech = "materials=6;powerstorage=5;magnets=5"

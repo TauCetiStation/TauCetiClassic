@@ -46,12 +46,6 @@ var/list/gyrotrons = list()
 	E.damage = mega_energy * 50
 	return E
 
-/obj/machinery/power/emitter/gyrotron/update_icon()
-	if (active && powernet && avail(active_power_usage))
-		icon_state = "emitter-on"
-	else
-		icon_state = "emitter-off"
-
 /obj/machinery/power/emitter/gyrotron/attackby(obj/item/W, mob/user)
 	if(ismultitool(W))
 		var/new_ident = input("Enter a new ident tag.", "Gyrotron", id_tag) as null|text

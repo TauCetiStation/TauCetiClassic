@@ -2,6 +2,7 @@
 	name = "fuel injection control computer"
 	icon = 'icons/obj/machines/power/fusion.dmi'
 	icon_state = "fuel"
+	ghost_must_be_admin = TRUE
 
 	var/id_tag
 	var/scan_range = 25
