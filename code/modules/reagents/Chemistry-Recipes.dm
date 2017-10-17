@@ -2199,3 +2199,18 @@ datum
 	result = "mednanobots"
 	required_reagents = list("nanobots" = 1, "doctorsdelight" = 5)
 	result_amount = 1
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/chemical_reaction/deuterium
+	name = "Deuterium"
+	result = null
+	required_reagents = list("water" = 70, "oxygen" = 30)
+	result_amount = 1
+
+/datum/chemical_reaction/deuterium/on_reaction(datum/reagents/holder, created_volume)
+	var/turf/T = get_turf(holder.my_atom)
+	if(istype(T))
+		new /obj/item/stack/sheet/mineral/deuterium(T, created_volume)
