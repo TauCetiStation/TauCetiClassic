@@ -641,3 +641,8 @@
 
 /mob/living/carbon/proc/bloody_body(mob/living/source)
 	return
+
+/mob/living/carbon/proc/adjustStaminaLoss(amount)
+	if(status_flags & GODMODE)
+		return
+	stamina = min(100,max(0,stamina-amount))
