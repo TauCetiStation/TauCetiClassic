@@ -1284,7 +1284,12 @@
 
 	if(hud_used && hud_used.move_intent)
 		var/obj/screen/S = hud_used.move_intent
-		S.icon_state = (m_intent == "run" ? "running" : "walking")
+		if(m_intent == "run")
+			S.icon_state = "running"
+		else if(m_intent == "sprint")
+			S.icon_state = "sprinting"
+		else
+			S.icon_state = "walking"
 
 	for(var/image/hud in client.images)
 		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe

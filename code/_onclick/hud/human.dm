@@ -83,7 +83,12 @@
 	using = new /obj/screen()
 	using.name = "mov_intent"
 	using.icon = ui_style
-	using.icon_state = (mymob.m_intent == "run" ? "running" : "walking")
+	if(mymob.m_intent == "run")
+		using.icon_state = "running"
+	else if(mymob.m_intent == "sprint")
+		using.icon_state = "sprinting"
+	else
+		using.icon_state = "walking"
 	using.screen_loc = ui_movi
 	using.layer = ABOVE_HUD_LAYER
 	using.plane = ABOVE_HUD_PLANE

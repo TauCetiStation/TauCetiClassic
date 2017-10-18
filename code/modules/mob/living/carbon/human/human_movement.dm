@@ -11,7 +11,7 @@
 	if(!has_gravity(src))
 		adjustStaminaLoss(0.5)
 		return -1 // It's hard to be slowed down in space by... anything
-	var/staminacost = 0.25
+	var/staminacost = 0
 	var/tally = species.speed_mod
 
 	if(RUN in mutations)
@@ -20,7 +20,7 @@
 
 	if(crawling)
 		tally += 7
-		staminacost += 0.5
+		staminacost += 0.25
 
 	if(embedded_flag)
 		handle_embedded_objects() // Moving with objects stuck in you can cause bad times.
@@ -93,7 +93,9 @@
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 
 	if(m_intent == "run")
-		staminacost += 0.5
+		staminacost += 0.25
+	else if(m_intent == "sprint")
+		staminacost += 1.0
 
 	if(staminacost>0)
 		adjustStaminaLoss(staminacost)
