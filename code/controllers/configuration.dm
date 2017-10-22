@@ -151,6 +151,9 @@
 	var/slack_team = 0
 	var/antigrief_alarm_level = 1
 
+	var/allow_donators = 0
+	var/donate_info_url = 0
+
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
 
@@ -521,6 +524,12 @@
 
 				if("antigrief_alarm_level")
 					config.antigrief_alarm_level = value
+
+				if("allow_donators")
+					config.allow_donators = 1
+
+				if("donate_info_url")
+					config.donate_info_url = value
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")

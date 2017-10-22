@@ -195,6 +195,9 @@
 		add_admin_verbs()
 		admin_memo_show()
 
+	if(config.allow_donators && ckey in donators)
+		donator = 1
+		
 	log_client_to_db(tdata)
 
 	send_resources()
