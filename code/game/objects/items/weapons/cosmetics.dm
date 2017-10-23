@@ -133,7 +133,7 @@
 				if(do_after(user, 50, target = H))
 					user.visible_message("[user] shaves his facial hair clean with [src].", \
 										 "<span class='notice'>You finish shaving with [src]. Fast and clean!</span>")
-					shave(H, location)
+					shave(H, def_zone)
 			else
 				var/turf/H_loc = H.loc
 				user.visible_message("<span class='warning'>[user] tries to shave [H]'s facial hair with [src].</span>", \
@@ -142,7 +142,7 @@
 					if(H_loc == H.loc)
 						user.visible_message("<span class='warning'>[user] shaves off [H]'s facial hair with [src].</span>", \
 											 "<span class='notice'>You shave [H]'s facial hair clean off.</span>")
-						shave(H, location, user)
+						shave(H, def_zone, user)
 
 		else if(def_zone == BP_HEAD)
 			if(!H.species.flags[HAS_HAIR])
@@ -161,7 +161,7 @@
 				if(do_after(user, 50, target = H))
 					user.visible_message("[user] shaves his head with [src].", \
 										 "<span class='notice'>You finish shaving with [src].</span>")
-					shave(H, location)
+					shave(H, def_zone)
 			else
 				var/turf/H_loc = H.loc
 				user.visible_message("<span class='warning'>[user] tries to shave [H]'s head with [src]!</span>", \
@@ -170,7 +170,7 @@
 					if(H_loc == H.loc)
 						user.visible_message("<span class='warning'>[user] shaves [H]'s head bald with [src]!</span>", \
 											 "<span class='notice'>You shave [H]'s head bald.</span>")
-						shave(H, location, user)
+						shave(H, def_zone, user)
 		else
 			..()
 	else
