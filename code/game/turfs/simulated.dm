@@ -13,7 +13,7 @@
 	. = ..()
 	levelupdate()
 
-/turf/simulated/proc/AddTracks(mob/M,bloodDNA,comingdir,goingdir,bloodcolor="#A10808")
+/turf/simulated/proc/AddTracks(mob/M,bloodDNA,comingdir,goingdir, blooddatum = null)
 	var/typepath
 	if(ishuman(M))
 		typepath = /obj/effect/decal/cleanable/blood/tracks/footprints
@@ -25,7 +25,9 @@
 	var/obj/effect/decal/cleanable/blood/tracks/tracks = locate(typepath) in src
 	if(!tracks)
 		tracks = new typepath(src)
-	tracks.AddTracks(bloodDNA,comingdir,goingdir,bloodcolor)
+	if(!blooddatum)
+		blooddatum = new /datum/dirt_cover/red_blood
+	tracks.AddTracks(bloodDNA,comingdir,goingdir,blooddatum)
 
 /turf/simulated/Entered(atom/A, atom/OL)
 	if(movement_disabled && usr.ckey != movement_disabled_exception)
@@ -76,24 +78,24 @@
 
 		// Tracking blood
 		var/list/bloodDNA = null
-		var/datum/dirt_cover/bloodcolor
+		var/datum/dirt_cover/blooddatum
 		if(M.shoes)
 			var/obj/item/clothing/shoes/S = M.shoes
 			if(S.track_blood && S.blood_DNA)
 				bloodDNA   = S.blood_DNA
-				bloodcolor = new/datum/dirt_cover(S.dirt_overlay)
+				blooddatum = new/datum/dirt_cover(S.dirt_overlay)
 				S.track_blood--
 		else
 			if(M.track_blood && M.feet_blood_DNA)
 				bloodDNA   = M.feet_blood_DNA
-				bloodcolor = new/datum/dirt_cover(M.feet_dirt_color)
+				blooddatum = new/datum/dirt_cover(M.feet_dirt_color)
 				M.track_blood--
 
 		if (bloodDNA)
-			src.AddTracks(M,bloodDNA,M.dir,0,bloodcolor) // Coming
+			src.AddTracks(M,bloodDNA,M.dir,0,blooddatum) // Coming
 			var/turf/simulated/from = get_step(M,reverse_direction(M.dir))
 			if(istype(from) && from)
-				from.AddTracks(M,bloodDNA,0,M.dir,bloodcolor) // Going
+				from.AddTracks(M,bloodDNA,0,M.dir,blooddatum) // Going
 
 			bloodDNA = null
 
@@ -157,7 +159,7 @@
 
 	//Species-specific blood.
 	if(M.species)
-		newblood.basedatum = new/datum/dirt_cover(M.species.blood_color)
+		newblood.basedatum = new M.species.blood_color
 	else
 		newblood.basedatum = new/datum/dirt_cover/red_blood()
 

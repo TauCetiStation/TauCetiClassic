@@ -729,23 +729,23 @@
 	if(istype(src, /obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = src
 		G.transfer_blood = 0
+
 /obj/item/add_dirt_cover()
 	if(!blood_overlay)
 		generate_dirt_cover()
 	..()
 	if(dirt_overlay)
-		blood_overlay.color = dirt_overlay.color
-		overlays += blood_overlay
+		if(blood_overlay.color != dirt_overlay.color)
+			overlays.Remove(blood_overlay)
+			blood_overlay.color = dirt_overlay.color
+			overlays += blood_overlay
 
 /obj/item/add_blood(mob/living/carbon/human/M)
 	if (!..())
 		return 0
 
-	if(istype(src, /obj/item/weapon/melee/energy))
-		return
-
 	//if we haven't made our blood_overlay already
-	add_dirt_cover(new/datum/dirt_cover(M.species.blood_color))
+	//add_dirt_cover(new M.species.blood_color)
 
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.

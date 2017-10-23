@@ -205,8 +205,7 @@
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
 	if(dirt_overlay) //Oil and blood puddles got 'blood_color = NULL', however they got 'color' instead
-		f_name += ""
-		f_name += "<span class='danger'>[dirt_overlay.name] covered [name]!</span>!"
+		f_name = "<span class='danger'>[dirt_overlay.name] covered [name]!</span>!"
 	to_chat(user, "[bicon(src)] That's [f_name]")
 	if(desc)
 		to_chat(user, desc)
@@ -226,7 +225,10 @@
 	return distance == -1 || (get_dist(src, user) <= distance)
 
 /atom/proc/dirt_description()
-	return "[dirt_overlay.name]-covered [name]!"
+	if(dirt_overlay)
+		return "[dirt_overlay.name]-covered [name]!"
+	else
+		return name
 
 //called to set the atom's dir and used to add behaviour to dir-changes
 /atom/proc/set_dir(new_dir)
@@ -413,7 +415,7 @@
 	M.check_dna()
 	if(!blood_DNA || !istype(blood_DNA, /list))	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
 		blood_DNA = list()
-	add_dirt_cover(new/datum/dirt_cover(M.species.blood_color))
+	add_dirt_cover(new M.species.blood_color)
 //	blood_color = "#A10808"
 //	if (M.species)
 //		blood_color = M.species.blood_color
@@ -449,9 +451,11 @@
 
 /atom/proc/clean_blood()
 	src.germ_level = 0
+	if(dirt_overlay)
+		dirt_overlay = null
 	if(istype(blood_DNA, /list))
 		blood_DNA = null
-		return 1
+	return 1
 
 
 /atom/proc/get_global_map_pos()

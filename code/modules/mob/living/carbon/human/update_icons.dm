@@ -185,7 +185,8 @@ Please contact me on #coderbus IRC. ~Carn x
 	remove_damage_overlay(BP.limb_layer)
 	if(species.damage_mask && !(BP.status & ORGAN_DESTROYED))
 		var/image/standing = image("icon" = 'icons/mob/human_races/damage_overlays.dmi', "icon_state" = "[BP.body_zone]_[BP.damage_state]", "layer" = -DAMAGE_LAYER)
-		standing.color = species.blood_color
+		var/datum/dirt_cover/mob = new species.blood_color()
+		standing.color = mob.color
 		overlays_damage[BP.limb_layer] = standing
 		apply_damage_overlay(BP.limb_layer)
 
@@ -621,7 +622,7 @@ Please contact me on #coderbus IRC. ~Carn x
 
 		if(gloves.dirt_overlay)
 			var/image/bloodsies	= image("icon"='icons/effects/blood.dmi', "icon_state"="bloodyhands")
-			bloodsies.color = dirt_overlay.color
+			bloodsies.color = gloves.dirt_overlay.color
 			standing.overlays	+= bloodsies
 	else
 		if(blood_DNA)
@@ -793,19 +794,19 @@ Please contact me on #coderbus IRC. ~Carn x
 			standing = image("icon"=((wear_suit.icon_override) ? wear_suit.icon_override : (species.sprite_sheets["suit"] ? species.sprite_sheets["suit"] : 'icons/mob/suit.dmi')), "icon_state"="[wear_suit.icon_state]", "layer"=-SUIT_LAYER)
 		else
 			standing = image("icon"=wear_suit:icon_custom, "icon_state"="[wear_suit.icon_state]_mob", "layer"=-SUIT_LAYER)
+
+		if(wear_suit.dirt_overlay)
+			var/obj/item/clothing/suit/S = wear_suit
+			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="[S.blood_overlay_type]blood")
+			bloodsies.color = wear_suit.dirt_overlay.color
+			standing.overlays += bloodsies
 		standing.color = wear_suit.color
-		overlays_standing[SUIT_LAYER]	= standing
+		overlays_standing[SUIT_LAYER] = standing
 
 		if(istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
 			drop_from_inventory(handcuffed)
 			drop_l_hand()
 			drop_r_hand()
-
-		if(wear_suit.dirt_overlay)
-			var/obj/item/clothing/suit/S = wear_suit
-			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="[S.blood_overlay_type]blood")
-			bloodsies.color = dirt_overlay.color
-			standing.overlays	+= bloodsies
 
 		if(FAT in mutations)
 			if(!(wear_suit.flags & ONESIZEFITSALL))

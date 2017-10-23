@@ -19,13 +19,13 @@
 	var/fleshcolor //Used for gibbed humans.
 	var/datum/dirt_cover/blooddatum //Used for gibbed humans.
 
-/obj/effect/gibspawner/atom_init(location, list/viruses, datum/dna/MobDNA, _fleshcolor, _bloodcolor)
+/obj/effect/gibspawner/atom_init(location, list/viruses, datum/dna/MobDNA, _fleshcolor, _blooddatum)
 	..()
 
 	if(_fleshcolor)
 		fleshcolor = _fleshcolor
-	if(_bloodcolor)
-		blooddatum = new/datum/dirt_cover(_bloodcolor)
+	if(_blooddatum)
+		blooddatum = new _blooddatum
 
 	if(isturf(loc)) // basically if a badmin spawns it
 		Gib(loc, viruses, MobDNA)

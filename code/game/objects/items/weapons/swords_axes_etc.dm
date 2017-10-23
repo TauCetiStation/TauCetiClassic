@@ -23,6 +23,9 @@
 		return 40
 	return 0
 
+/obj/item/weapon/melee/energy/add_blood()
+	return
+
 /obj/item/weapon/melee/energy/sword/atom_init()
 	. = ..()
 	item_color = pick("red","blue","green","purple","yellow","pink","black")

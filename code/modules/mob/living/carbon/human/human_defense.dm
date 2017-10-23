@@ -381,16 +381,18 @@
 
 /mob/living/carbon/human/bloody_hands(mob/living/source, amount = 2)
 	if (gloves)
-		gloves.add_blood(source)
-		gloves:transfer_blood = amount
-		gloves:bloody_hands_mob = source
+		if(istype(gloves, /obj/item/clothing/gloves/))
+			var/obj/item/clothing/gloves/GL = gloves
+			GL.add_blood(source)
+			GL.transfer_blood = amount
+			GL.bloody_hands_mob = source
 	else
 		add_blood(source)
 		bloody_hands = amount
 		bloody_hands_mob = source
 	update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
 
-/mob/living/carbon/human/bloody_body(mob/living/source)
+/mob/living/carbon/human/bloody_body(mob/living/carbon/human/source)
 	if(wear_suit)
 		wear_suit.add_blood(source)
 		update_inv_wear_suit()

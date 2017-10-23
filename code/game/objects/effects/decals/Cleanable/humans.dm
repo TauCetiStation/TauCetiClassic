@@ -16,7 +16,7 @@ var/global/list/image/splatter_cache=list()
 	var/list/viruses = list()
 	blood_DNA = list()
 	var/datum/dirt_cover/basedatum  // Color when wet.
-
+	var/spawntype = /datum/dirt_cover/red_blood
 	var/list/datum/disease2/disease/virus2 = list()
 	var/amount = 5
 	var/drytime
@@ -28,7 +28,8 @@ var/global/list/image/splatter_cache=list()
 
 /obj/effect/decal/cleanable/blood/atom_init()
 	..()
-	basedatum = new/datum/dirt_cover/red_blood()
+
+	basedatum = new spawntype
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/decal/cleanable/blood/atom_init_late()
@@ -71,7 +72,7 @@ var/global/list/image/splatter_cache=list()
 		if(perp.shoes && !perp.buckled)//Adding blood to shoes
 			var/obj/item/clothing/shoes/S = perp.shoes
 			if(istype(S))
-				if(dirt_overlay && dirt_overlay.color != basedatum.color)
+				if((dirt_overlay && dirt_overlay.color != basedatum.color) || (!dirt_overlay))
 					S.overlays.Cut()
 					S.add_dirt_cover(basedatum)
 				S.track_blood = max(amount,S.track_blood)
@@ -120,7 +121,7 @@ var/global/list/image/splatter_cache=list()
 			user.blood_DNA = list()
 		user.blood_DNA |= blood_DNA.Copy()
 		user.bloody_hands += taken
-		user.hand_dirt_color = basedatum
+		user.hand_dirt_color = new/datum/dirt_cover(basedatum)
 		if(user.hand_dirt_color)
 			user.hand_dirt_color.add_dirt(basedatum)
 		else

@@ -130,7 +130,7 @@
 		else
 			msg += "[t_He] [t_has] [bicon(gloves)] \a [gloves] on [t_his] hands.\n"
 	else if(blood_DNA)
-		msg += "<span class='warning'>[t_He] [t_has] [hand_dirt_color.color]-stained hands!</span>\n"
+		msg += "<span class='warning'>[t_He] [t_has] [hand_dirt_color.name]-stained hands!</span>\n"
 
 	//handcuffed?
 	if(handcuffed)
