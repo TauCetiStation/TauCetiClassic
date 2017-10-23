@@ -10,6 +10,7 @@ var/list/fuel_injectors = list()
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 500
+	ghost_must_be_admin = TRUE
 
 	var/fuel_usage = 0.0001
 	var/id_tag

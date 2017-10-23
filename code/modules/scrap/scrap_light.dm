@@ -52,8 +52,8 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "gauze"
 
-/obj/item/stack/medical/bruise_pack/rags/New(var/newloc, old = 0)
-	..()
+/obj/item/stack/medical/bruise_pack/rags/atom_init(mapload, new_amount = null, merge = FALSE, old = 0)
+	. = ..()
 	if(prob(33) || old)
 		make_old()
 

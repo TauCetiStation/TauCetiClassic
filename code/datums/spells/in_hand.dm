@@ -39,10 +39,10 @@
 	var/max_power = 1       // max level of spell when used in combination with can_powerup or what ever you want to use this for.
 	var/power_of_spell = 1  // current power of this spell.
 
-/obj/item/weapon/magic/atom_init(mapload, obj/effect/proc_holder/spell/G)
+/obj/item/weapon/magic/atom_init()
 	. = ..()
-	if(G)
-		Spell = G
+	if(istype(loc, /obj/effect/proc_holder/spell))
+		Spell = loc
 		Spell.charge_max = initial(Spell.charge_max) // Incase spell has variable charge time, so we need to reset its CD back to normal.
 	update_icon()
 
