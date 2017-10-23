@@ -62,7 +62,7 @@
 				ties += "[bicon(accessory)] \a [accessory]"
 		var/tie_msg = ties.len ? ". Attached to it is [english_list(ties)]" : ""
 
-		if(w_uniform.blood_DNA)
+		if(w_uniform.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(w_uniform)] [w_uniform.gender==PLURAL?"some":"a"] [w_uniform.dirt_description()][tie_msg]!</span>\n"
 		else if(w_uniform.wet)
 			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(w_uniform)] [w_uniform.gender==PLURAL?"some":"a"] wet [w_uniform.name][tie_msg]!</span>\n"
@@ -71,7 +71,7 @@
 
 	//head
 	if(head)
-		if(head.blood_DNA)
+		if(head.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] [head.dirt_description()] on [t_his] head!</span>\n"
 		else if(head.wet)
 			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] wet [head.name] on [t_his] head!</span>\n"
@@ -80,7 +80,7 @@
 
 	//suit/armour
 	if(wear_suit)
-		if(wear_suit.blood_DNA)
+		if(wear_suit.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(wear_suit)] [wear_suit.gender==PLURAL?"some":"a"] [wear_suit.dirt_description()]!</span>\n"
 		else if(wear_suit.wet)
 			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(wear_suit)] [wear_suit.gender==PLURAL?"some":"a"] wet [wear_suit.name]!</span>\n"
@@ -89,14 +89,14 @@
 
 		//suit/armour storage
 		if(s_store && !skipsuitstorage)
-			if(s_store.blood_DNA)
+			if(s_store.dirt_overlay)
 				msg += "<span class='warning'>[t_He] [t_is] carrying [bicon(s_store)] [s_store.gender==PLURAL?"some":"a"] [s_store.dirt_description()] on [t_his] [wear_suit.name]!</span>\n"
 			else
 				msg += "[t_He] [t_is] carrying [bicon(s_store)] \a [s_store] on [t_his] [wear_suit.name].\n"
 
 	//back
 	if(back)
-		if(back.blood_DNA)
+		if(back.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_has] [bicon(back)] [back.gender==PLURAL?"some":"a"] [back.dirt_description()] on [t_his] back.</span>\n"
 		else if(back.wet)
 			msg += "<span class='wet'>[t_He] [t_has] [bicon(back)] [back.gender==PLURAL?"some":"a"] wet [back] on [t_his] back.</span>\n"
@@ -105,7 +105,7 @@
 
 	//left hand
 	if(l_hand && !(l_hand.flags&ABSTRACT))
-		if(l_hand.blood_DNA)
+		if(l_hand.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_is] holding [bicon(l_hand)] [l_hand.gender==PLURAL?"some":"a"] [l_hand.dirt_description()] in [t_his] left hand!</span>\n"
 		else if(l_hand.wet)
 			msg += "<span class='wet'>[t_He] [t_is] holding [bicon(l_hand)] [l_hand.gender==PLURAL?"some":"a"] wet [l_hand.name] in [t_his] left hand!</span>\n"
@@ -114,7 +114,7 @@
 
 	//right hand
 	if(r_hand && !(r_hand.flags&ABSTRACT))
-		if(r_hand.blood_DNA)
+		if(r_hand.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_is] holding [bicon(r_hand)] [r_hand.gender==PLURAL?"some":"a"] [r_hand.dirt_description()] in [t_his] right hand!</span>\n"
 		else if(r_hand.wet)
 			msg += "<span class='wet'>[t_He] [t_is] holding [bicon(r_hand)] [r_hand.gender==PLURAL?"some":"a"] wet [r_hand.name] in [t_his] right hand!</span>\n"
@@ -123,13 +123,13 @@
 
 	//gloves
 	if(gloves && !skipgloves)
-		if(gloves.blood_DNA)
+		if(gloves.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_has] [bicon(gloves)] [gloves.gender==PLURAL?"some":"a"] [gloves.dirt_description()] on [t_his] hands!</span>\n"
 		else if(gloves.wet)
 			msg += "<span class='wet'>[t_He] [t_has] [bicon(gloves)] [gloves.gender==PLURAL?"some":"a"] wet [gloves.name] on [t_his] hands!</span>\n"
 		else
 			msg += "[t_He] [t_has] [bicon(gloves)] \a [gloves] on [t_his] hands.\n"
-	else if(blood_DNA)
+	else if(hand_dirt_color)
 		msg += "<span class='warning'>[t_He] [t_has] [hand_dirt_color.name]-stained hands!</span>\n"
 
 	//handcuffed?
@@ -145,7 +145,7 @@
 
 	//belt
 	if(belt)
-		if(belt.blood_DNA)
+		if(belt.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_has] [bicon(belt)] [belt.gender==PLURAL?"some":"a"] [belt.dirt_description()] about [t_his] waist!</span>\n"
 		else if(belt.wet)
 			msg += "<span class='wet'>[t_He] [t_has] [bicon(belt)] [belt.gender==PLURAL?"some":"a"] wet [belt.name] about [t_his] waist!</span>\n"
@@ -154,18 +154,18 @@
 
 	//shoes
 	if(shoes && !skipshoes)
-		if(shoes.blood_DNA)
+		if(shoes.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(shoes)] [shoes.gender==PLURAL?"some":"a"] [shoes.dirt_description()] on [t_his] feet!</span>\n"
 		else if(shoes.wet)
 			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(shoes)] [shoes.gender==PLURAL?"some":"a"] wet [shoes.name] on [t_his] feet!</span>\n"
 		else
 			msg += "[t_He] [t_is] wearing [bicon(shoes)] \a [shoes] on [t_his] feet.\n"
-	else if(feet_blood_DNA)
+	else if(feet_dirt_color)
 		msg += "<span class='warning'>[t_He] [t_has] [feet_dirt_color.name]-stained feet!</span>\n"
 
 	//mask
 	if(wear_mask && !skipmask)
-		if(wear_mask.blood_DNA)
+		if(wear_mask.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_has] [bicon(wear_mask)] [wear_mask.gender==PLURAL?"some":"a"] [wear_mask.dirt_description()] on [t_his] face!</span>\n"
 		else if(wear_mask.wet)
 			msg += "<span class='wet'>[t_He] [t_has] [bicon(wear_mask)] [wear_mask.gender==PLURAL?"some":"a"] wet [wear_mask.name] on [t_his] face!</span>\n"
@@ -174,7 +174,7 @@
 
 	//eyes
 	if(glasses && !skipeyes)
-		if(glasses.blood_DNA)
+		if(glasses.dirt_overlay)
 			msg += "<span class='warning'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] [glasses.dirt_description()] covering [t_his] eyes!</span>\n"
 		else if(glasses.wet)
 			msg += "<span class='wet'>[t_He] [t_has] [bicon(glasses)] [glasses.gender==PLURAL?"some":"a"] wet [glasses] covering [t_his] eyes!</span>\n"

@@ -205,7 +205,7 @@
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
 	if(dirt_overlay) //Oil and blood puddles got 'blood_color = NULL', however they got 'color' instead
-		f_name = "<span class='danger'>[dirt_overlay.name] covered [name]!</span>!"
+		f_name = "<span class='danger'>[dirt_description()]!</span>"
 	to_chat(user, "[bicon(src)] That's [f_name]")
 	if(desc)
 		to_chat(user, desc)
@@ -226,7 +226,7 @@
 
 /atom/proc/dirt_description()
 	if(dirt_overlay)
-		return "[dirt_overlay.name]-covered [name]!"
+		return "[dirt_overlay.name]-covered [name]"
 	else
 		return name
 
@@ -424,7 +424,7 @@
 /atom/proc/add_dirt_cover(dirt_datum)
 	if(flags & NOBLOODY) return 0
 	if(!dirt_datum) return 0
-	if(!dirt_overlay)	//if our list of DNA doesn't exist yet (or isn't a list) initialise it.
+	if(!dirt_overlay)
 		dirt_overlay = new/datum/dirt_cover(dirt_datum)
 	else
 		dirt_overlay.add_dirt(dirt_datum)

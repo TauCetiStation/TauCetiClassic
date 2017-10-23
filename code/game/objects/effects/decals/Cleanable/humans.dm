@@ -96,10 +96,8 @@ var/global/list/image/splatter_cache=list()
 		W.bloodiness = 4
 
 	perp.update_inv_shoes()
-	if(!istype(src, /obj/effect/decal/cleanable/blood/oil))
-		if(perp.lying)
-			perp.bloody_body(perp)
-			perp.bloody_hands(perp)
+	if(perp.lying)
+		perp.crawl_in_blood(src)
 	amount--
 
 /obj/effect/decal/cleanable/blood/proc/dry()
