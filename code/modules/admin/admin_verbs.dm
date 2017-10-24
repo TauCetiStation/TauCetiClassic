@@ -105,7 +105,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/make_sound,
 	/client/proc/toggle_random_events,
-	/client/proc/set_ooc,
+	/client/proc/set_global_ooc,
 	/client/proc/editappear,
 	/client/proc/roll_dices,
 	/client/proc/epileptic_anomaly,
@@ -196,7 +196,7 @@ var/list/admin_verbs_event = list(
 
 //verbs which can be hidden - needs work
 var/list/admin_verbs_hideable = list(
-	/client/proc/set_ooc,
+	/client/proc/set_global_ooc,
 	/client/proc/deadmin_self,
 //	/client/proc/deadchat,
 	/client/proc/toggleprayers,
@@ -462,12 +462,15 @@ var/list/admin_verbs_hideable = list(
 	return
 
 /client/proc/colorooc()
-	set category = "Fun"
-	set name = "OOC Text Color"
-	if(!holder)	return
-	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
-	if(new_ooccolor)
-		prefs.ooccolor = new_ooccolor
+	set category = "OOC"
+	set name = "Set Admin OOC Color"
+	if(!holder)
+		return
+	if(!config.allow_admin_ooccolor)
+		to_chat(usr, "<span class='warning'>Currently disabled by config.</span>")
+	var/new_aooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
+	if(new_aooccolor)
+		prefs.aooccolor = new_aooccolor
 		prefs.save_preferences()
 	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return

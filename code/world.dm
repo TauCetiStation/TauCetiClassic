@@ -28,6 +28,8 @@
 	load_motd()
 	load_admins()
 	load_mentors()
+	if(config.allow_donators)
+		load_donators()
 	if(config.usewhitelist)
 		load_whitelist()
 	if(config.usealienwhitelist)
@@ -295,9 +297,17 @@ var/world_topic_spam_protect_time = world.timeofday
 	fdel(F)
 	F << the_last_mode
 
-
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
+
+/world/proc/load_donators()
+	var/L = file2list("config/donators.txt")
+	for(var/line in L)
+		if(!length(line))
+			continue
+		if(copytext(line,1,2) == "#")
+			continue
+		donators.Add(ckey(line))
 
 
 /world/proc/load_configuration()
