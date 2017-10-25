@@ -81,19 +81,23 @@ rcd light flash thingy on matter drain
 /client/proc/overload_machine(obj/machinery/M as obj in machines)
 	set name = "Overload Machine"
 	set category = "Malfunction"
-	if (istype(M, /obj/machinery))
-		for(var/datum/AI_Module/small/overload_machine/overload in usr:current_modules)
-			if(overload.uses > 0)
-				overload.uses --
-				for(var/mob/V in hearers(M, null))
-					V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
-				spawn(50)
-					explosion(get_turf(M), 0,1,2,3)
-					qdel(M)
-			else
-				to_chat(usr, "Out of uses.")
+	if (istype(M, /obj/machinery/computer) || istype(M, /obj/machinery/autolathe) || istype(M, /obj/machinery/vending) || istype(M, /obj/machinery/clonepod) || istype(M, /obj/machinery/bot) || istype(M, /obj/machinery/power/apc) )
+		if (M.is_operational())
+			for(var/datum/AI_Module/small/overload_machine/overload in usr:current_modules)
+				if(overload.uses > 0)
+					overload.uses --
+					for(var/mob/V in hearers(M, null))
+						V.show_message("\blue You hear a loud electrical buzzing sound!", 2)
+					to_chat(usr, "You send a viral signal and the machine starts overheating...")
+					spawn(50)
+						explosion(get_turf(M), 0,1,2,3) //TODO: vary explosion power depending on machine type and power in network
+						qdel(M)
+				else
+					to_chat(usr, "Out of uses.")
+		else
+			to_chat(usr, "The machine is non-functional")
 	else
-		to_chat(usr, "That's not a machine.")
+		to_chat(usr, "You can`t explode this, dummy.")
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
