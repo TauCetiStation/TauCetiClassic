@@ -131,6 +131,9 @@
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "moonrock"
 	icon_spawn_state = "moonrock"
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
 
 /turf/unsimulated/jungle/rock/moon/atom_init()
 	..()

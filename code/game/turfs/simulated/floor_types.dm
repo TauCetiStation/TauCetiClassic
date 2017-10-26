@@ -259,13 +259,10 @@
 /turf/simulated/floor/airless/plating/moon
 	name = "Moon Sand"
 	icon_state = "moon0"
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
 	basetype = /turf/simulated/floor/airless/plating/moon
-
-/turf/simulated/floor/airless/plating/moon/ex_act()
-	return 0
-
-/turf/simulated/floor/airless/plating/moon/burn_tile()
-	return 0
 
 /turf/simulated/floor/airless/plating/moon/atom_init()
 	. = ..()

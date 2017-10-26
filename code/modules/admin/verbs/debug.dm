@@ -1027,6 +1027,17 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/l10mag/MP41p(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/l10mag/MP41p(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/l10mag/MP41p(M), slot_in_backpack)
+
+			var/obj/item/weapon/card/id/centcom/W = new(M)
+			W.assignment = "Nazi Soldier"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.icon_state = "centcom"
+			W.access = get_all_accesses()
+			W.access += get_all_centcom_access()
+			W.rank = "Shturmfuhrer"
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
 
 		if("space nazi armored")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/nazitrooper(M), slot_w_uniform)
@@ -1039,6 +1050,17 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/l10mag/MP41p(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/l10mag/MP41p(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/l10mag/MP41p(M), slot_in_backpack)
+
+			var/obj/item/weapon/card/id/centcom/W = new(M)
+			W.assignment = "Nazi Soldier"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.icon_state = "centcom"
+			W.access = get_all_accesses()
+			W.access += get_all_centcom_access()
+			W.rank = "Shturmfuhrer"
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
 
 		if("space nazi officer")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/Waffen_SS_Form(M), slot_w_uniform)
@@ -1050,6 +1072,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
 			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m9pmm(M), slot_in_backpack)
 			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m9pmm(M), slot_in_backpack)
+
+			var/obj/item/weapon/card/id/centcom/W = new(M)
+			W.assignment = "Nazi Officer"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.icon_state = "centcom"
+			W.access = get_all_accesses()
+			W.access += get_all_centcom_access()
+			W.rank = "Shturmfuhrer"
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
 
 		if("captain")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/captain(M), slot_w_uniform)
