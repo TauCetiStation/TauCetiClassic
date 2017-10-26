@@ -120,6 +120,46 @@
 		if (T)
 			T.overlays += image('icons/turf/walls.dmi', "rock_side_e", layer=6)
 
+//moonrock event
+
+/turf/unsimulated/jungle/rock/moon
+	bushes_spawn = 0
+	plants_spawn = 0
+	density = 1
+	name = "rock wall"
+	desc = "Heap of grey stones."
+	icon = 'icons/turf/walls.dmi'
+	icon_state = "moonrock"
+	icon_spawn_state = "moonrock"
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
+
+/turf/unsimulated/jungle/rock/moon/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/unsimulated/jungle/rock/moon/atom_init_late()
+	var/turf/T
+	if(!istype(get_step(src, NORTH), /turf/unsimulated/jungle/rock/moon) && !istype(get_step(src, NORTH), /turf/unsimulated/wall))
+		T = get_step(src, NORTH)
+		if (T)
+			T.overlays += image('icons/turf/walls.dmi', "moonrock_side_s")
+	if(!istype(get_step(src, SOUTH), /turf/unsimulated/jungle/rock/moon) && !istype(get_step(src, SOUTH), /turf/unsimulated/wall))
+		T = get_step(src, SOUTH)
+		if (T)
+			T.overlays += image('icons/turf/walls.dmi', "moonrock_side_n", layer=6)
+	if(!istype(get_step(src, EAST), /turf/unsimulated/jungle/rock/moon) && !istype(get_step(src, EAST), /turf/unsimulated/wall))
+		T = get_step(src, EAST)
+		if (T)
+			T.overlays += image('icons/turf/walls.dmi', "moonrock_side_w", layer=6)
+	if(!istype(get_step(src, WEST), /turf/unsimulated/jungle/rock/moon) && !istype(get_step(src, WEST), /turf/unsimulated/wall))
+		T = get_step(src, WEST)
+		if (T)
+			T.overlays += image('icons/turf/walls.dmi', "moonrock_side_e", layer=6)
+
+//moonrock event
+
 /turf/unsimulated/jungle/water
 	bushes_spawn = 0
 	name = "murky water"

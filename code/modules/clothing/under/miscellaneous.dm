@@ -722,3 +722,10 @@
 	else if(slot == slot_head)
 		body_parts_covered = HEAD
 
+/obj/item/clothing/under/nazitrooper
+	name = "nazi uniform"
+	desc = "Sieg Heil, Victoria!."
+	icon_state = "nazitrooper"
+	item_state = "nazitrooper"
+	item_color = "nazitrooper"
+	flags = ONESIZEFITSALL

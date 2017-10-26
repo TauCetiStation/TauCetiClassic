@@ -300,6 +300,26 @@
 /obj/item/ammo_box/magazine/l10mag/update_icon()
 	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
 
+/obj/item/ammo_box/magazine/l10mag/MP41p
+	name = "MP41p battery"
+	desc = "A special battery with protection from EM pulse."
+	icon_state = "MP41p_clip"
+	origin_tech = "combat=2"
+	ammo_type = /obj/item/ammo_casing/l10
+	caliber = "energy"
+	max_ammo = 25
+
+/obj/item/ammo_box/magazine/l10mag/MP41p/examine(mob/user)
+	..()
+	if(src in view(1, user))
+		to_chat(user, "<span class='notice'>You see a charge meter, it reads: [round(ammo_count() * 100 / max_ammo)]%.</span>")
+
+/obj/item/ammo_box/magazine/l10mag/MP41p/attack_self(mob/user)
+	return
+
+/obj/item/ammo_box/magazine/l10mag/MP41p/update_icon()
+	icon_state = "[initial(icon_state)][ammo_count() ? "" : "-0"]"
+
 /obj/item/ammo_box/magazine/c5_9mm
 	name = "magazine (9mm rubber)"
 	icon_state = "c5_mag"

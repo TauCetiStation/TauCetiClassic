@@ -256,6 +256,18 @@
 	. = ..()
 	icon_state = "ironsand[rand(1,15)]"
 
+/turf/simulated/floor/airless/plating/moon
+	name = "Moon Sand"
+	icon_state = "moon0"
+	oxygen = 0.01
+	nitrogen = 0.01
+	temperature = TCMB
+	basetype = /turf/simulated/floor/airless/plating/moon
+
+/turf/simulated/floor/airless/plating/moon/atom_init()
+	. = ..()
+	icon_state = "moon[rand(0,3)]"
+
 /turf/simulated/floor/plating/snow
 	basetype = /turf/simulated/floor/plating/ironsand
 	name = "snow"

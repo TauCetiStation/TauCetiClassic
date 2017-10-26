@@ -501,3 +501,87 @@
 	if(..())
 		playsound(user, 'sound/weapons/guns/ak74_reload.ogg', 50, 1)
 	update_icon()
+
+//=================L10c resprite=================\\
+
+/obj/item/weapon/gun/projectile/automatic/l10c/MP41p
+	name = "MP41p"
+	desc = "A basic energy-based submachine gun with fast rate of fire."
+	icon_state = "MP41p"
+	item_state = "MP41p"
+	w_class = 4.0
+	origin_tech = "combat=3;magnets=2"
+	mag_type = /obj/item/ammo_box/magazine/l10mag/MP41p
+	fire_sound = 'sound/weapons/guns/l10c-shot.ogg'
+	recoil = 0
+	energy_gun = 1
+
+/obj/item/weapon/gun/projectile/automatic/l10c/MP41p/New()
+	..()
+	update_icon()
+	return
+
+/obj/item/weapon/gun/projectile/automatic/l10c/MP41p/process_chamber()
+	return ..(0, 1, 1)
+
+/obj/item/weapon/gun/projectile/automatic/l10c/MP41p/afterattack(atom/target, mob/living/user, flag)
+	..()
+	update_icon(user)
+	return
+
+/obj/item/weapon/gun/projectile/automatic/l10c/MP41p/attack_self(mob/user)
+	if(magazine && magazine.ammo_count())
+		playsound(user, 'sound/weapons/guns/l10c-unload.ogg', 70, 1)
+	if(chambered)
+		var/obj/item/ammo_casing/AC = chambered //Find chambered round
+		qdel(AC)
+		chambered = null
+		magazine.stored_ammo += new magazine.ammo_type(magazine)
+	if (magazine)
+		magazine.loc = get_turf(src.loc)
+		user.put_in_hands(magazine)
+		magazine.update_icon()
+		magazine = null
+		to_chat(user, "<span class='notice'>You pull the magazine out of \the [src]!</span>")
+	else
+		to_chat(user, "<span class='notice'>There's no magazine in \the [src].</span>")
+	update_icon(user)
+	return
+
+/obj/item/weapon/gun/projectile/automatic/l10c/MP41p/attackby(obj/item/A, mob/user)
+	if (istype(A, /obj/item/ammo_box/magazine))
+		var/obj/item/ammo_box/magazine/AM = A
+		if (!magazine && istype(AM, mag_type))
+			user.remove_from_mob(AM)
+			magazine = AM
+			magazine.loc = src
+			to_chat(user, "<span class='notice'>You load a new magazine into \the [src].</span>")
+			if(AM.ammo_count())
+				playsound(user, 'sound/weapons/guns/l10c-load.ogg', 70, 1)
+			chamber_round()
+			A.update_icon()
+			update_icon(user)
+			return 1
+		else if (magazine)
+			to_chat(user, "<span class='notice'>There's already a magazine in \the [src].</span>")
+	return 0
+
+/obj/item/weapon/gun/projectile/automatic/l10c/MP41p/update_icon(mob/M)
+	if(!magazine)
+		icon_state = "[initial(icon_state)]-e"
+		item_state = "[initial(item_state)]-e"
+	else if(chambered)
+		icon_state = "[initial(icon_state)]"
+		item_state = "[initial(item_state)]"
+	else if(magazine && magazine.ammo_count())
+		icon_state = "[initial(icon_state)]"
+		item_state = "[initial(item_state)]"
+	else
+		icon_state = "[initial(icon_state)]-0"
+		item_state = "[initial(item_state)]-0"
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		H.update_inv_l_hand()
+		H.update_inv_r_hand()
+		H.update_inv_belt()
+	return

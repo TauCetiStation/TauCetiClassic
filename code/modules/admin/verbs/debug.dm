@@ -593,6 +593,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"pirate",
 		"space pirate",
 		"soviet admiral",
+		"space nazi",
+		"space nazi armored",
+		"space nazi officer",
 		"tunnel clown",
 		"masked killer",
 		"assassin",
@@ -1016,6 +1019,70 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access += get_all_centcom_access()
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
+		if("space nazi")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/nazitrooper(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/Waffen_SS_Helmet(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/l10c/MP41p(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/l10mag/MP41p(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/l10mag/MP41p(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/l10mag/MP41p(M), slot_in_backpack)
+
+			var/obj/item/weapon/card/id/centcom/W = new(M)
+			W.assignment = "Nazi Soldier"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.icon_state = "centcom"
+			W.access = get_all_accesses()
+			W.access += get_all_centcom_access()
+			W.rank = "Shturmfuhrer"
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
+
+		if("space nazi armored")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/nazitrooper(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/Waffen_SS_Helmet(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/armor/vest(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/German(M), slot_wear_mask)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/l10c/MP41p(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/l10mag/MP41p(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/l10mag/MP41p(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/l10mag/MP41p(M), slot_in_backpack)
+
+			var/obj/item/weapon/card/id/centcom/W = new(M)
+			W.assignment = "Nazi Soldier"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.icon_state = "centcom"
+			W.access = get_all_accesses()
+			W.access += get_all_centcom_access()
+			W.rank = "Shturmfuhrer"
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
+
+		if("space nazi officer")
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/Waffen_SS_Form(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/combat(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(M), slot_gloves)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal/eyepatch(M), slot_glasses)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/WAFFEN_SS_Cap(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/weapon/gun/projectile/automatic/luger(M), slot_belt)
+			M.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(M), slot_back)
+			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m9pmm(M), slot_in_backpack)
+			M.equip_to_slot_or_del(new /obj/item/ammo_box/magazine/m9pmm(M), slot_in_backpack)
+
+			var/obj/item/weapon/card/id/centcom/W = new(M)
+			W.assignment = "Nazi Officer"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.icon_state = "centcom"
+			W.access = get_all_accesses()
+			W.access += get_all_centcom_access()
+			W.rank = "Shturmfuhrer"
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
+
 		if("captain")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/captain(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), slot_shoes)

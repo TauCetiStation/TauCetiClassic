@@ -41,3 +41,39 @@
 			welder_salvage += part
 			parts -= part
 	return*/
+
+// UFO
+
+/obj/mecha/combat/hoverpod
+	name = "hover pod"
+	icon_state = "engineering_pod"
+	desc = "Stubby and round, it has a human sized access hatch on the top."
+	health = 250
+	step_in = 3
+	wreckage = /obj/effect/decal/mecha_wreckage/hoverpod
+
+/obj/mecha/combat/hoverpod/Process_Spacemove(movement_dir = 0)
+	return 1 // puts the hover in hoverpod
+
+//these three procs overriden to play different sounds
+/obj/mecha/combat/hoverpod/mechturn(direction)
+	dir = direction
+	//playsound(src,'sound/machines/hiss.ogg',40,1)
+	return 1
+
+/obj/mecha/combat/hoverpod/mechstep(direction)
+	var/result = step(src,direction)
+	if(result)
+		playsound(src,'sound/machines/hiss.ogg',40,1)
+	return result
+
+
+/obj/mecha/combat/hoverpod/mechsteprand()
+	var/result = step_rand(src)
+	if(result)
+		playsound(src,'sound/machines/hiss.ogg',40,1)
+	return result
+
+/obj/effect/decal/mecha_wreckage/hoverpod
+	name = "Hover pod wreckage"
+	icon_state = "engineering_pod-broken"
