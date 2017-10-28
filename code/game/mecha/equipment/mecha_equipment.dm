@@ -88,6 +88,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M)
 	if(istype(M))
+		if(istype(src, /obj/item/mecha_parts/mecha_equipment/Drop_system))
+			return 1
 		if(M.equipment.len<M.max_equip)
 			return 1
 	return 0

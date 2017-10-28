@@ -637,12 +637,7 @@
 				E.attach(src)
 				user.visible_message("[user] attaches [W] to [src]", "You attach [W] to [src]")
 			else
-				if(istype(W, /obj/item/mecha_parts/mecha_equipment/Drop_system))
-					user.drop_item()
-					E.attach(src)
-					user.visible_message("[user] attaches [W] to [src]", "You attach [W] to [src]")
-				else
-					to_chat(user, "You were unable to attach [W] to [src]")
+				to_chat(user, "You were unable to attach [W] to [src]")
 		return
 	if(istype(W, /obj/item/weapon/card/id)||istype(W, /obj/item/device/pda))
 		if(add_req_access || maint_access)
