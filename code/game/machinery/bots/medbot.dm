@@ -459,7 +459,7 @@
 	return
 
 /obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj)
-	if(Proj.flag == "taser")
+	if(is_type_in_list(Proj, taser_projectiles)) //taser_projectiles defined in projectile.dm
 		src.stunned = min(stunned+10,20)
 	..()
 

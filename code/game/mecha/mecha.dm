@@ -499,7 +499,7 @@
 		src.log_append_to_last("Armor saved.")
 		return
 	var/ignore_threshold
-	if(Proj.flag == "taser")
+	if(is_type_in_list(Proj, taser_projectiles)) //taser_projectiles defined in projectile.dm
 		use_power(200)
 		return
 	if(istype(Proj, /obj/item/projectile/beam/pulse))
