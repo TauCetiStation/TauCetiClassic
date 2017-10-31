@@ -3215,6 +3215,13 @@ datum
 			color = "#664300" // rgb: 102, 67, 0
 			boozepwr = 1.5
 
+		ethanol/champagne
+			name = "Champagne"
+			id = "champagne"
+			description = "Une delicieuse boisson."
+			color = "#FCFCEE" // rgb: 252, 252, 238
+			boozepwr = 1
+
 		ethanol/tequilla
 			name = "Tequila"
 			id = "tequilla"
