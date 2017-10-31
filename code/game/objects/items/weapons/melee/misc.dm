@@ -15,6 +15,30 @@
 	to_chat(viewers(user), "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>")
 	return (OXYLOSS)
 
+/obj/item/weapon/melee/whip
+	name = "Whip"
+	desc = "A tool used by great men to placate the frothing masses."
+	icon_state = "whip"
+	item_state = "whip"
+	flags = CONDUCT
+	slot_flags = SLOT_BELT
+	force = 5
+	throwforce = 3
+	w_class = 3
+	origin_tech = "combat=1"
+	attack_verb = list("whipped", "lashed", "disciplined")
+	hitsound = 'sound/weapons/whip.ogg'
+
+/obj/item/weapon/melee/whip/attack_self(mob/user)
+	if(cooldown < world.time - 8)
+		to_chat(user, "<span class='notice'>You whip the air.</span>")
+		playsound(loc, 'sound/weapons/whip.ogg', 30, 1)
+		cooldown = world.time
+
+/obj/item/weapon/melee/whip/suicide_act(mob/user)
+	to_chat(viewers(user), "\red <b>[user] is strangling \himself with the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	return (OXYLOSS)
+
 /obj/item/weapon/melee/icepick
 	name = "ice pick"
 	desc = "Used for chopping ice. Also excellent for mafia esque murders."
