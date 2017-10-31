@@ -110,6 +110,10 @@
 					icon_state = "tequillaglass"
 					name = "Glass of Tequilla"
 					desc = "Now all that's missing is the weird colored shades!"
+				if("champagne")
+					icon_state = "chamglass"
+					name = "Glass of ñhampagne"
+					desc = "Very fine drink."
 				if("patron")
 					icon_state = "patronglass"
 					name = "Glass of Patron"
