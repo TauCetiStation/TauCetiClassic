@@ -454,6 +454,14 @@
 					icon_state = "milkshake"
 					name = "Milkshake"
 					desc = "Glorious brainfreezing mixture."
+				if("milkshake_chocolate")
+					icon_state = "milkshake_chocolate"
+					name = "Cjocolate Milkshake"
+					desc = "Glorious brainfreezing mixture."
+				if("milkshake_strawberry")
+					icon_state = "milkshake_strawberry"
+					name = "Strawberry Milkshake"
+					desc = "Glorious brainfreezing mixture."
 				if("lemonade")
 					icon_state = "lemonadeglass"
 					name = "Lemonade"
