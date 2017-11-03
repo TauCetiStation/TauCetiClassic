@@ -125,7 +125,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/shuttle/escape_pod5/transit
 	icon_state = "shuttle"
-	parallax_movedir = 4
+	parallax_movedir = WEST
 
 /area/shuttle/mining
 	name = "Mining Shuttle"
