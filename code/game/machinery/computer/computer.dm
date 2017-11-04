@@ -133,8 +133,19 @@
 	return
 
 /obj/machinery/computer/attack_hand(user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(HULK in H.mutations)
+			if(stat & (BROKEN))
+				return 1
+			if(H.a_intent == "hurt")
+				H.visible_message("\red [H.name] smashes [src] with \his mighty arms!")
+				set_broken()
+				return 1
+			else
+				H.visible_message("\red [H.name] stares cluelessly at [src] and drools.")
+				return 1
 	. = ..()
-	return
 
 /obj/machinery/computer/attack_paw(mob/user)
 	if(circuit)

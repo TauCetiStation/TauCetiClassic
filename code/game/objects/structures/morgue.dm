@@ -202,7 +202,12 @@
 	var/id = 1
 	var/locked = 0
 
+/obj/structure/crematorium/atom_init()
+	. = ..()
+	crematorium_list += src
+
 /obj/structure/crematorium/Destroy()
+	crematorium_list -= src
 	if(connected)
 		qdel(connected)
 		connected = null
@@ -408,14 +413,13 @@
 	return
 
 /obj/machinery/crema_switch/attack_hand(mob/user)
-	if(allowed(user))
-		for (var/obj/structure/crematorium/C in world)
-			if (C.id == id)
-				if (!C.cremating)
-					for(var/mob/living/M in C.contents)
-						user.attack_log += "\[[time_stamp()]\]<font color='red'> Cremated [M.name] ([M.ckey])</font>"
-						message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-					C.cremate(user)
-	else
-		to_chat(user, "<span class='rose'>Access denied.</span>")
-	return
+	if(..())
+		return 1
+
+	for (var/obj/structure/crematorium/C in crematorium_list)
+		if (C.id == id)
+			if (!C.cremating)
+				for(var/mob/living/M in C.contents)
+					user.attack_log += "\[[time_stamp()]\]<font color='red'> Cremated [M.name] ([M.ckey])</font>"
+					message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				C.cremate(user)

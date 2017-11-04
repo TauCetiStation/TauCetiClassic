@@ -29,19 +29,10 @@
 		program.process()
 
 	update_icon()
-	src.updateDialog()
-
-/obj/machinery/embedded_controller/attack_ai(mob/user)
-	src.ui_interact(user)
+	updateUsrDialog()
 
 /obj/machinery/embedded_controller/attack_paw(mob/user)
 	to_chat(user, "You do not have the dexterity to use this.")
-	return
-
-/obj/machinery/embedded_controller/attack_hand(mob/user)
-	src.ui_interact(user)
-
-/obj/machinery/embedded_controller/ui_interact()
 	return
 
 /obj/machinery/embedded_controller/radio

@@ -9,8 +9,7 @@
 	desc = "A pipe valve."
 
 	can_unwrench = TRUE
-
-	ghost_must_be_admin = TRUE
+	interact_offline = TRUE
 
 	var/open = FALSE
 
@@ -73,10 +72,13 @@
 		set_dir(4)
 
 /obj/machinery/atmospherics/components/binary/valve/attack_ai(mob/user)
-	return
+	if(interact_offline && IsAdminGhost(user) || !interact_offline)
+		return ..()
 
 /obj/machinery/atmospherics/components/binary/valve/attack_hand(mob/user)
-	add_fingerprint(usr)
+	if(..())
+		return 1
+
 	update_icon(1)
 	sleep(10)
 	if (open)
@@ -91,20 +93,10 @@
 	name = "digital valve"
 	desc = "A digitally controlled valve."
 	icon = 'icons/atmos/digital_valve.dmi'
+	interact_offline = FALSE
 
 	frequency = 0
 	var/id = null
-
-/obj/machinery/atmospherics/components/binary/valve/digital/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/atmospherics/components/binary/valve/digital/attack_hand(mob/user)
-	if(!powered())
-		return
-	if(!src.allowed(user))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
-		return
-	..()
 
 /obj/machinery/atmospherics/components/binary/valve/digital/open
 	open = TRUE

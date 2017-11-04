@@ -63,6 +63,7 @@ var/list/valid_secondary_effect_types = list(\
 	desc = "A large alien device."
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "ano00"
+	interact_offline = TRUE
 	var/icon_num = 0
 	density = 1
 	var/datum/artifact_effect/my_effect
@@ -249,18 +250,16 @@ var/list/valid_secondary_effect_types = list(\
 				if(secondary_effect && secondary_effect.trigger == TRIGGER_VIEW && secondary_effect.activated)
 					secondary_effect.ToggleActivate(0)
 
-/obj/machinery/artifact/attack_ghost(mob/user)
-	return
-
 /obj/machinery/artifact/attack_hand(mob/user)
-	if (get_dist(user, src) > 1)
+	if(..())
+		return 1
+
+	if (!in_range(src, user) && !IsAdminGhost(user))
 		to_chat(user, "\red You can't reach [src] from here.")
 		return
 	if(ishuman(user) && user:gloves)
 		to_chat(user, "<b>You touch [src]</b> with your gloved hands, [pick("but nothing of note happens","but nothing happens","but nothing interesting happens","but you notice nothing different","but nothing seems to have happened")].")
 		return
-
-	src.add_fingerprint(user)
 
 	if(my_effect.trigger == TRIGGER_TOUCH)
 		to_chat(user, "<b>You touch [src].<b>")

@@ -6,6 +6,7 @@
 	icon_state = "hydrotray"
 	density = 1
 	anchored = 1
+	interact_offline = TRUE
 	var/waterlevel = 100 // The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
 	var/nutrilevel = 10 // The amount of nutrient in the tray (max 10)
@@ -746,11 +747,13 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 		update_icon()
 
 /obj/machinery/hydroponics/attack_hand(mob/user)
-	if(issilicon(user) || isobserver(user)) //How does AI/ghosts know what plant is?
-		return
+	if(..())
+		return 1
+	if(issilicon(user)) //How does AI know what plant is?
+		return 1
 	if(harvest)
 		if(!(user in range(1,src)))
-			return
+			return 1
 		myseed.harvest()
 	else if(dead)
 		planted = 0

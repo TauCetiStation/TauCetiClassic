@@ -42,9 +42,9 @@
 	active_power_usage = 1000 // For heating/cooling rooms. 1000 joules equates to about 1 degree every 2 seconds for a single tile of air.
 	power_channel = ENVIRON
 	req_one_access = list(access_atmospherics, access_engine_equip)
+	frequency = 1439
 
 	var/breach_detection = TRUE // Whether to use automatic breach detection or not
-	frequency = 1439
 	//var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = 1437
 	var/remote_control = FALSE
@@ -479,19 +479,6 @@
 //END HACKING//
 ///////////////
 
-/obj/machinery/alarm/attack_ai(mob/user)
-	ui_interact(user)
-
-/obj/machinery/alarm/attack_hand(mob/user)
-	. = ..()
-	if (.)
-		return
-	return interact(user)
-
-/obj/machinery/alarm/interact(mob/user)
-	ui_interact(user)
-	wires.interact(user)
-
 /obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, master_ui = null, datum/topic_state/custom_state)
 	var/data[0]
 	var/remote_connection = 0
@@ -502,7 +489,7 @@
 		remote_connection = href["remote_connection"]	// Remote connection means we're non-adjacent/connecting from another computer
 		remote_access = href["remote_access"]			// Remote access means we also have the privilege to alter the air alarm.
 
-	data["locked"] = locked && !issilicon(user)
+	data["locked"] = locked && !issilicon(user) && !isobserver(user)
 	data["remote_connection"] = remote_connection
 	data["remote_access"] = remote_access
 	data["rcon"] = rcon_setting
@@ -807,7 +794,7 @@
 				update_icon()
 				return
 
-			if (istype(W, /obj/item/weapon/wirecutters))
+			if (istype(W, /obj/item/weapon/wirecutters) && wiresexposed && wires.is_all_cut())
 				user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 				playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				new /obj/item/stack/cable_coil/random(loc, 5)
@@ -826,6 +813,11 @@
 						updateUsrDialog()
 					else
 						to_chat(user, "\red Access denied.")
+
+			if(wiresexposed && is_wire_tool(W))
+				wires.interact(user)
+				return
+
 			return
 
 		if(1)
@@ -840,6 +832,7 @@
 				buildstage = 2
 				update_icon()
 				first_run()
+				wires.repair()
 				return
 
 			else if(istype(W, /obj/item/weapon/crowbar))
@@ -1086,10 +1079,7 @@ FIRE ALARM
 			stat |= NOPOWER
 			update_icon()
 
-/obj/machinery/firealarm/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/firealarm/ui_interact(mob/user)
 	if (buildstage != 2)
 		return
 
@@ -1125,7 +1115,6 @@ FIRE ALARM
 		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>[stars("Fire alarm")]</B> [d1]\n<HR><b>The current alert level is: [stars(get_security_level())]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
 		user << browse(dat, "window=firealarm")
 		onclose(user, "firealarm")
-	return
 
 /obj/machinery/firealarm/Topic(href, href_list)
 	. = ..()
@@ -1248,103 +1237,3 @@ Code shamelessly copied from apc_frame
 	new /obj/machinery/firealarm(loc, ndir, 1)
 
 	qdel(src)
-
-
-/obj/machinery/partyalarm
-	name = "\improper PARTY BUTTON"
-	desc = "Cuban Pete is in the house!"
-	icon = 'icons/obj/monitors.dmi'
-	icon_state = "fire0"
-	var/detecting = 1.0
-	var/working = 1.0
-	var/time = 10.0
-	var/timing = 0.0
-	var/lockdownbyai = 0
-	anchored = 1.0
-	use_power = 1
-	idle_power_usage = 2
-	active_power_usage = 6
-
-/obj/machinery/partyalarm/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/partyalarm/attack_hand(mob/user)
-	if(..())
-		return
-
-	var/area/A = get_area(src)
-	if(!istype(A))
-		return
-	if(A.master)
-		A = A.master
-	var/d1
-	var/d2
-	if (ishuman(user) || issilicon(user) || isobserver(user))
-
-		if (A.party)
-			d1 = text("<A href='?src=\ref[];reset=1'>No Party :(</A>", src)
-		else
-			d1 = text("<A href='?src=\ref[];alarm=1'>PARTY!!!</A>", src)
-		if (timing)
-			d2 = text("<A href='?src=\ref[];time=0'>Stop Time Lock</A>", src)
-		else
-			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
-		var/second = time % 60
-		var/minute = (time - second) / 60
-		var/dat = text("<HTML><HEAD></HEAD><BODY><TT><B>Party Button</B> []\n<HR>\nTimer System: []<BR>\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT></BODY></HTML>", d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src)
-		user << browse(dat, "window=partyalarm")
-		onclose(user, "partyalarm")
-	else
-		if (A.fire)
-			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("No Party :("))
-		else
-			d1 = text("<A href='?src=\ref[];alarm=1'>[]</A>", src, stars("PARTY!!!"))
-		if (timing)
-			d2 = text("<A href='?src=\ref[];time=0'>[]</A>", src, stars("Stop Time Lock"))
-		else
-			d2 = text("<A href='?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
-		var/second = time % 60
-		var/minute = (time - second) / 60
-		var/dat = text("<HTML><HEAD></HEAD><BODY><TT><B>[]</B> []\n<HR>\nTimer System: []<BR>\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT></BODY></HTML>", stars("Party Button"), d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src)
-		user << browse(dat, "window=partyalarm")
-		onclose(user, "partyalarm")
-	return
-
-/obj/machinery/partyalarm/proc/reset()
-	if (!( working ))
-		return
-	var/area/A = get_area(src)
-	ASSERT(isarea(A))
-	if(A.master)
-		A = A.master
-	A.partyreset()
-	return
-
-/obj/machinery/partyalarm/proc/alarm()
-	if (!( working ))
-		return
-	var/area/A = get_area(src)
-	ASSERT(isarea(A))
-	if(A.master)
-		A = A.master
-	A.partyalert()
-	return
-
-/obj/machinery/partyalarm/Topic(href, href_list)
-	. = ..()
-	if(!.)
-		return
-	if (href_list["reset"])
-		reset()
-	else
-		if (href_list["alarm"])
-			alarm()
-		else
-			if (href_list["time"])
-				timing = text2num(href_list["time"])
-			else
-				if (href_list["tp"])
-					var/tp = text2num(href_list["tp"])
-					time += tp
-					time = min(max(round(time), 0), 120)
-	updateUsrDialog()

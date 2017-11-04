@@ -122,14 +122,7 @@
 	set_frequency(frequency)
 	..()
 
-/obj/machinery/atmospherics/components/trinary/filter/attack_hand(user) // -- TLE
-	if(..())
-		return
-
-	if(!src.allowed(user))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
-		return
-
+/obj/machinery/atmospherics/components/trinary/filter/ui_interact(user) // -- TLE
 	var/dat
 	var/current_filter_type
 	switch(filter_type)

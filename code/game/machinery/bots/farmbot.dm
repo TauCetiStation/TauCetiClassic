@@ -84,20 +84,13 @@
 	src.icon_state = "farmbot[src.on]"
 	src.updateUsrDialog()
 
-/obj/machinery/bot/farmbot/attack_paw(mob/user)
-	return attack_hand(user)
-
-
 /obj/machinery/bot/farmbot/proc/get_total_ferts()
 	var total_fert = 0
 	for (var/obj/item/nutrient/fert in contents)
 		total_fert++
 	return total_fert
 
-/obj/machinery/bot/farmbot/attack_hand(mob/user)
-	. = ..()
-	if (.)
-		return
+/obj/machinery/bot/farmbot/ui_interact(mob/user)
 	var/dat
 	dat += "<TT><B>Automatic Hyrdoponic Assisting Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
@@ -125,7 +118,6 @@
 
 	user << browse("<HEAD><TITLE>Farmbot v1.0 controls</TITLE></HEAD>[dat]", "window=autofarm")
 	onclose(user, "autofarm")
-	return
 
 /obj/machinery/bot/farmbot/Topic(href, href_list)
 	. = ..()

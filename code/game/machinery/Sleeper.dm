@@ -205,9 +205,7 @@
 	add_fingerprint(usr)
 	return
 
-/obj/machinery/sleeper/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/sleeper/ui_interact(mob/user)
 	var/dat = "<h3>Sleeper Status</h3>"
 
 	dat += "<div class='statusDisplay'>"
@@ -301,12 +299,6 @@
 	else
 		to_chat(usr, "<span class='notice'>ERROR: Subject cannot metabolise chemicals.</span>")
 	updateUsrDialog()
-
-/obj/machinery/sleeper/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/sleeper/attack_paw(mob/user)
-	return attack_hand(user)
 
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)

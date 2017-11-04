@@ -266,14 +266,11 @@
 		..()
 	return
 
-/obj/machinery/computer/communications/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/communications/ui_interact(mob/user)
 	if (src.z > ZLEVEL_EMPTY)
 		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
 
-	user.set_machine(src)
 	var/dat = "<head><title>Communications Console</title></head><body>"
 	if (SSshuttle.online && SSshuttle.location==0)
 		var/timeleft = SSshuttle.timeleft()

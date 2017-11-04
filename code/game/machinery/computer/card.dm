@@ -70,13 +70,7 @@
 	nanomanager.update_uis(src)
 	attack_hand(user)
 
-/obj/machinery/computer/card/attack_hand(mob/user)
-	if(..())
-		return
-	ui_interact(user)
-
 /obj/machinery/computer/card/ui_interact(mob/user, ui_key="main", datum/nanoui/ui=null)
-	user.set_machine(src)
 	var/data[0]
 	data["src"] = "\ref[src]"
 	data["station_name"] = station_name()

@@ -200,9 +200,7 @@
 		nanomanager.update_uis(src)
 		return
 
-	if(istype(O, /obj/item/device/multitool)||istype(O, /obj/item/weapon/wirecutters))
-		if(panel_open)
-			attack_hand(user)
+	if(is_wire_tool(O) && panel_open && wires.interact(user))
 		return
 
 	if(!src.ispowered)
@@ -263,30 +261,23 @@
 
 	..()
 
-/obj/machinery/smartfridge/attack_paw(mob/user)
-	return attack_hand(user)
-
 /obj/machinery/smartfridge/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
 	return 0
 
 /obj/machinery/smartfridge/attack_hand(mob/user)
-	if(wires.interact(user))
-		return
-	if(!ispowered)
-		return
 	if(!issilicon(user) && !isobserver(user) && seconds_electrified)
 		if(shock(user, 100))
 			return
 
-	ui_interact(user)
+	return ..()
 
 /*******************
 *   SmartFridge Menu
 ********************/
 
 /obj/machinery/smartfridge/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	user.set_machine(src)
-
 	var/is_secure = istype(src,/obj/machinery/smartfridge/secure)
 
 	var/data[0]

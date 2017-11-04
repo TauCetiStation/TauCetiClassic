@@ -173,16 +173,6 @@ Thus, the two variables affect pump operation are set in New():
 	broadcast_status()
 	update_icon()
 
-/obj/machinery/atmospherics/components/binary/pump/attack_hand(user)
-	if(..())
-		return
-	add_fingerprint(usr)
-	if(!allowed(user))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
-		return
-	usr.set_machine(src)
-	ui_interact(user)
-
 /obj/machinery/atmospherics/components/binary/pump/Topic(href, href_list)
 	if(!..())
 		return FALSE

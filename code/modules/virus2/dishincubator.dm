@@ -46,13 +46,7 @@
 
 		src.attack_hand(user)
 
-/obj/machinery/disease2/incubator/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN)) return
-	ui_interact(user)
-
 /obj/machinery/disease2/incubator/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	user.set_machine(src)
-
 	var/data[0]
 	data["chemicals_inserted"] = !!beaker
 	data["dish_inserted"] = !!dish

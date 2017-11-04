@@ -146,20 +146,13 @@
 			src.healthstring = "ERROR"
 		return src.healthstring
 
-/obj/machinery/clonepod/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/clonepod/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/clonepod/attack_hand(mob/user)
-	if ((isnull(src.occupant)) || (stat & NOPOWER))
-		return
-	if ((!isnull(src.occupant)) && (src.occupant.stat != DEAD))
-		src.add_hiddenprint(user)
-		var/completion = (100 * ((src.occupant.health + 100) / (src.heal_level + 100)))
-		to_chat(user, "Current clone cycle is [round(completion)]% complete.")
-	return
+/obj/machinery/clonepod/examine(mob/user)
+	if(..(user, 3))
+		if ((isnull(occupant)) || (stat & NOPOWER))
+			return
+		if ((!isnull(occupant)) && (occupant.stat != DEAD))
+			var/completion = (100 * ((occupant.health + 100) / (heal_level + 100)))
+			to_chat(user, "Current clone cycle is [round(completion)]% complete.")
 
 //Clonepod
 

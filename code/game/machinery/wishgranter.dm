@@ -12,7 +12,8 @@
 	var/insisting = 0
 
 /obj/machinery/wish_granter/attack_hand(mob/user)
-	usr.set_machine(src)
+	if(..())
+		return 0
 
 	if(charges <= 0)
 		to_chat(user, "The Wish Granter lies silent.")
@@ -69,5 +70,3 @@
 			obj_count++
 
 		to_chat(user, "You have a very bad feeling about this.")
-
-	return

@@ -293,7 +293,8 @@
 			return
 
 
-	if(!panel_open || active) return ..()
+	if(!panel_open || active)
+		return ..()
 
 	if(istype(O, /obj/item/weapon/stock_parts/cell))
 		if(cell)
@@ -306,15 +307,16 @@
 			to_chat(user, "You install \the [O].")
 		return
 
-	if(istype(O, /obj/item/weapon/wirecutters) || istype(O, /obj/item/device/multitool))
-		wires.interact(user)
+	if(is_wire_tool(O) && wires.interact(user))
 		return
 	..()
 
 /obj/machinery/mining/drill/attack_hand(mob/user)
-	if(!in_range(src, user) || issilicon(user) || isobserver(user))
+	if(..())
+		return 1
+	if(issilicon(user))
 		return
-	if(wires_shocked)
+	if(wires_shocked && !isobserver(user))
 		shock(user)
 	if (panel_open && cell)
 		to_chat(user, "You take out \the [cell].")

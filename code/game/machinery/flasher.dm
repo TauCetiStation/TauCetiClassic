@@ -44,14 +44,10 @@
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai(mob/user)
-	if (src.anchored)
-		return src.flash()
+	if (anchored)
+		return flash()
 	else
 		return
-
-/obj/machinery/flasher/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_ai(user)
 
 /obj/machinery/flasher/proc/flash()
 	if (!(powered()))
@@ -120,18 +116,12 @@
 			user.show_message(text("\red [src] is now secured."))
 			src.overlays += "[base_state]-s"
 
-/obj/machinery/flasher_button/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/flasher_button/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/flasher_button/attack_hand(mob/user)
 	if(..() || active)
-		return
+		return 1
 
 	use_power(5)
 
@@ -147,5 +137,3 @@
 
 	icon_state = "launcherbtt"
 	active = 0
-
-	return

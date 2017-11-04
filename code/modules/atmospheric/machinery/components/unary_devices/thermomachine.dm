@@ -69,12 +69,6 @@
 
 	return TRUE
 
-/obj/machinery/atmospherics/components/unary/thermomachine/attack_ai(mob/user)
-	ui_interact(user)
-
-/obj/machinery/atmospherics/components/unary/thermomachine/attack_hand(mob/user)
-	ui_interact(user)
-
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
 	var/data[0]
 	var/datum/gas_mixture/air1 = AIR1

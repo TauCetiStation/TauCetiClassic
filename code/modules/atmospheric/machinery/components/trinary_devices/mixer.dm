@@ -111,20 +111,9 @@
 		last_power_draw = power_draw
 		use_power(power_draw)
 
-/obj/machinery/atmospherics/components/trinary/mixer/attack_hand(user)
-	if(..())
-		return
-
-	add_fingerprint(usr)
-
-	if(!allowed(user))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
-		return
-
+/obj/machinery/atmospherics/components/trinary/mixer/ui_interact(user)
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
-
-	usr.set_machine(src)
 
 	var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[use_power?"On":"Off"]</a><br>
 				<b>Set Flow Rate Limit: </b>

@@ -7,7 +7,6 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	anchored = TRUE
-	ghost_must_be_admin = TRUE
 	var/on = TRUE
 	var/area/area = null
 	var/otherarea = null
@@ -45,13 +44,9 @@
 	if(src in oview(1, user))
 		to_chat(user, "A light switch. It is [on? "on" : "off"].")
 
-
-/obj/machinery/light_switch/attack_paw(mob/user)
-	src.attack_hand(user)
-
 /obj/machinery/light_switch/attack_hand(mob/user)
 	if(..())
-		return
+		return 1
 
 	on = !on
 	playsound(src, 'sound/items/buttonclick.ogg', 20, 1, 1)

@@ -27,9 +27,9 @@
 		toggle_power()
 	return ..()
 
-/obj/machinery/particle_accelerator/control_box/attack_hand(mob/user)
+/obj/machinery/particle_accelerator/control_box/interact(mob/user)
 	if(construction_state >= 3)
-		interact(user)
+		..()
 
 /obj/machinery/particle_accelerator/control_box/update_state()
 	if(construction_state < 3)
@@ -46,8 +46,6 @@
 		use_power = 1
 		active = 0
 		connected_parts = list()
-
-	return
 
 /obj/machinery/particle_accelerator/control_box/update_icon()
 	if(active)
@@ -204,8 +202,8 @@
 	return 1
 
 
-/obj/machinery/particle_accelerator/control_box/interact(mob/user)
-	if(..() || (get_dist(src, user) > 1) && !issilicon(user) && !isobserver(user))
+/obj/machinery/particle_accelerator/control_box/ui_interact(mob/user)
+	if(in_range(src, user) && !issilicon(user) && !isobserver(user))
 		user.unset_machine()
 		user << browse(null, "window=pacontrol")
 		return
@@ -230,4 +228,3 @@
 
 	user << browse(dat, "window=pacontrol;size=420x500")
 	onclose(user, "pacontrol")
-	return

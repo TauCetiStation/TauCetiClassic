@@ -184,9 +184,7 @@
 		src.updateUsrDialog()
 
 		return
-	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
-		if(src.panel_open)
-			attack_hand(user)
+	else if(is_wire_tool(W) && panel_open && wires.interact(user))
 		return
 
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
@@ -335,16 +333,7 @@
 	else
 		to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>")
 
-/obj/machinery/vending/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/vending/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/vending/attack_hand(mob/user)
-	if(..() || wires.interact(user))
-		return
-
+/obj/machinery/vending/ui_interact(mob/user)
 	if(seconds_electrified && !issilicon(user) && !isobserver(user))
 		if(shock(user, 100))
 			return
@@ -398,7 +387,6 @@
 	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 500)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/vending/Topic(href, href_list)
 	. = ..()

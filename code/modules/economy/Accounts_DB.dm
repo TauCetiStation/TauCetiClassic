@@ -55,14 +55,7 @@
 
 	attack_hand(user)
 
-/obj/machinery/account_database/attack_hand(mob/user)
-	if(..())
-		return
-	ui_interact(user)
-
 /obj/machinery/account_database/ui_interact(mob/user, ui_key="main", datum/nanoui/ui=null)
-	user.set_machine(src)
-
 	var/data[0]
 	data["src"] = "\ref[src]"
 	data["id_inserted"] = !!held_card

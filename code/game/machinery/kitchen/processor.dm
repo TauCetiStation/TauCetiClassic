@@ -5,12 +5,11 @@
 	layer = 2.9
 	density = TRUE
 	anchored = TRUE
-	var/broken = FALSE
-	var/processing = FALSE
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 50
-	ghost_must_be_admin = TRUE
+	var/broken = FALSE
+	var/processing = FALSE
 	var/rating_speed = 1
 	var/rating_amount = 1
 
@@ -168,8 +167,8 @@
 	return
 
 /obj/machinery/processor/attack_hand(mob/user)
-	if (src.stat != CONSCIOUS) //NOPOWER etc
-		return
+	if(..())
+		return 1
 	if(src.processing)
 		to_chat(user, "\red The processor is in the process of processing.")
 		return 1

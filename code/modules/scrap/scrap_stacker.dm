@@ -4,7 +4,7 @@
 	icon_state = "stacker"
 	density = TRUE
 	anchored = TRUE
-	ghost_must_be_admin = TRUE
+	use_power = 0
 	var/obj/machinery/mineral/input = null
 	var/obj/machinery/mineral/output = null
 	var/list/stack_storage[0]
@@ -28,9 +28,11 @@
 		AM.forceMove(loc)
 
 /obj/machinery/scrap/stacking_machine/attack_hand(mob/user)
+	if(..())
+		return 1
+
 	if(scrap_amount < 1)
 		return
 	visible_message("<span class='notice'>\The [src] was forced to release everything inside.</span>")
 	new /obj/item/stack/sheet/refined_scrap(loc, scrap_amount)
 	scrap_amount = 0
-	..()

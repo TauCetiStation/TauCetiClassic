@@ -12,7 +12,6 @@
 	use_power = 0
 	idle_power_usage = 10
 	active_power_usage = 300
-	ghost_must_be_admin = TRUE
 
 	var/active = FALSE
 	var/powered = FALSE
@@ -80,7 +79,7 @@
 
 /obj/machinery/power/emitter/attack_hand(mob/user)
 	if(..())
-		return
+		return 1
 	activate(user)
 
 /obj/machinery/power/emitter/proc/activate(mob/user)

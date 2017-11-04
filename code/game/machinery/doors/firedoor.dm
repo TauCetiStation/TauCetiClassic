@@ -14,7 +14,6 @@
 	glass = 0
 	door_open_sound  = 'sound/machines/electric_door_open.ogg'
 	door_close_sound = 'sound/machines/electric_door_open.ogg'
-	ghost_must_be_admin = TRUE //currently not needed, but what if someone deleted allowed() in attack_hand() proc?
 
 	//These are frequenly used with windows, so make sure zones can pass.
 	//Generally if a firedoor is at a place where there should be a zone boundery then there will be a regular door underneath it.

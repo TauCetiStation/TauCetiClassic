@@ -17,13 +17,11 @@
 	var/stop = 0.0
 	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
 
-/obj/machinery/computer/robotics/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/robotics/ui_interact(mob/user)
 	if (src.z > ZLEVEL_EMPTY)
 		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
-	user.set_machine(src)
+
 	var/dat
 	if (src.temp)
 		dat = "<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>"
@@ -92,7 +90,6 @@
 
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 /obj/machinery/computer/robotics/Topic(href, href_list)
 	. = ..()

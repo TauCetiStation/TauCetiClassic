@@ -4,6 +4,7 @@
 	icon = 'icons/atmos/clamp.dmi'
 	icon_state = "pclamp0"
 	anchored = TRUE
+	use_power = 0
 
 	var/obj/machinery/atmospherics/pipe/simple/target = null
 	var/open = TRUE
@@ -38,6 +39,9 @@
 		network_node2 = P2.network
 
 /obj/machinery/clamp/attack_hand(mob/user)
+	if(..())
+		return 1
+
 	if(!target || !user)
 		return
 

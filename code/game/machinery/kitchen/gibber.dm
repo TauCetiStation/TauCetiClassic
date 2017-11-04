@@ -6,17 +6,15 @@
 	icon_state = "grinder"
 	density = TRUE
 	anchored = TRUE
+	use_power = 1
+	idle_power_usage = 2
+	active_power_usage = 500
 	var/operating = FALSE //Is it on?
 	var/dirty = FALSE // Does it need cleaning?
-
 	var/gibtime = 80 // Time from starting until meat appears
 	var/gib_throw_dir // Direction to spit meat and gibs in.
 	var/meat_produced = 0
 	var/ignore_clothing = 0
-	use_power = 1
-	idle_power_usage = 2
-	active_power_usage = 500
-	ghost_must_be_admin = TRUE
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
@@ -81,21 +79,18 @@
 	else
 		src.overlays += image('icons/obj/kitchen.dmi', "gridle")
 
-/obj/machinery/gibber/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/gibber/container_resist()
 	go_out()
 	return
 
 /obj/machinery/gibber/attack_hand(mob/user)
 	if(..())
-		return
+		return 1
 	if(operating)
 		to_chat(user, "<span class='danger'>The gibber is locked and running, wait for it to finish.</span>")
 		return
 	else
-		src.startgibbing(user)
+		startgibbing(user)
 
 /obj/machinery/gibber/attackby(obj/item/W, mob/user)
 

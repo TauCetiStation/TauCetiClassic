@@ -4,6 +4,7 @@
 	desc = "A flat, self-heating device designed for bringing chemical mixtures to boil."
 	icon = 'icons/obj/device.dmi'
 	icon_state = "bunsen0"
+	interact_offline = TRUE
 	var/heating = 0		//whether the bunsen is turned on
 	var/heated = 0		//whether the bunsen has been on long enough to let stuff react
 	var/obj/item/weapon/reagent_containers/held_container
@@ -26,10 +27,14 @@
 	else
 		to_chat(user, "\red You can't put the [W] onto the [src].")
 
-/obj/machinery/bunsen_burner/attack_ghost(mob/user)
-	return
+/obj/machinery/bunsen_burner/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
 
 /obj/machinery/bunsen_burner/attack_hand(mob/user)
+	if(..())
+		return 1
+
 	if(held_container)
 		underlays = null
 		to_chat(user, "\blue You remove the [held_container] from the [src].")
