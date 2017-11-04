@@ -13,8 +13,8 @@
 	if(proximity && istype(G) && G.Touch(A,1))
 		return
 
-	if(!A.can_mob_interact(src))
-		return
+	//if(!A.can_mob_interact(src)) maybe in future...
+	//	return
 
 	A.attack_hand(src)
 
