@@ -312,7 +312,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				//main shuttle
 				var/area/start_location = locate(/area/shuttle/escape/station)
 				var/area/end_location = locate(/area/shuttle/escape/transit)
-				end_location.parallax_movedir = NORTH
+				end_location.parallax_movedir = WEST
 				settimeleft(SHUTTLETRANSITTIME)
 				start_location.move_contents_to(end_location, null, NORTH)
 
@@ -333,7 +333,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location = locate(/area/shuttle/escape_pod1/station)
 					end_location = locate(/area/shuttle/escape_pod1/transit)
-					end_location.parallax_movedir = WEST
+					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					for(var/obj/machinery/door/D in end_location)
 						D.close()
@@ -352,7 +352,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location = locate(/area/shuttle/escape_pod2/station)
 					end_location = locate(/area/shuttle/escape_pod2/transit)
-					end_location.parallax_movedir = WEST
+					end_location.parallax_movedir = EAST
 					start_location.move_contents_to(end_location, null, NORTH)
 					for(var/obj/machinery/door/D in end_location)
 						D.close()

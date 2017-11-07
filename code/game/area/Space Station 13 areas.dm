@@ -69,7 +69,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/shuttle/escape/transit // the area to pass through for 3 minute transit
 	name = "Emergency Shuttle Transit"
 	icon_state = "shuttle"
-	parallax_movedir = NORTH
+	parallax_movedir = WEST
 
 /area/shuttle/escape_pod1
 	name = "Escape Pod One"
@@ -111,7 +111,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/shuttle/escape_pod3/transit
 	icon_state = "shuttle"
-	parallax_movedir = WEST
+	parallax_movedir = EAST
 
 /area/shuttle/escape_pod5 //Pod 4 was lost to meteors
 	name = "Escape Pod Five"
