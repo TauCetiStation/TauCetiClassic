@@ -217,7 +217,7 @@
 					s.set_up(2, 1, T)
 					s.start()
 				T.ex_act(3)
-				T.hotspot_expose(1000,500,1)
+				T.hotspot_expose(1000, 500)
 
 /obj/machinery/computer/HolodeckControl/proc/derez(obj/obj , silent = 1)
 	holographic_objs.Remove(obj)
@@ -314,7 +314,7 @@
 	s.start()
 	if(T)
 		T.temperature = 5000
-		T.hotspot_expose(50000,50000,1)
+		T.hotspot_expose(50000, 50000)
 
 /obj/machinery/computer/HolodeckControl/proc/toggleGravity(area/A)
 	if(world.time < (last_gravity_change + 25))

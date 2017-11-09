@@ -15,10 +15,10 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	return null
 
 
-/turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0, atom/firestarter)
+/turf/proc/hotspot_expose(exposed_temperature, exposed_volume, atom/firestarter)
 
 
-/turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/firestarter)
+/turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, atom/firestarter)
 	if(fire_protection > world.time - 300)
 		return FALSE
 	if(locate(/obj/fire) in src)

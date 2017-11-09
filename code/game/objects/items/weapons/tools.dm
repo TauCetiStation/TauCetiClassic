@@ -292,7 +292,7 @@
 		if(M.l_hand == src || M.r_hand == src)
 			location = get_turf(M)
 	if (istype(location, /turf))
-		location.hotspot_expose(700, 5, 0, src)
+		location.hotspot_expose(700, 5, src)
 
 
 /obj/item/weapon/weldingtool/afterattack(obj/O, mob/user, proximity)
@@ -313,7 +313,7 @@
 		remove_fuel(1)
 		var/turf/location = get_turf(user)
 		if (istype(location, /turf))
-			location.hotspot_expose(700, 50, 1, src)
+			location.hotspot_expose(700, 50, src)
 
 			if(isliving(O))				//Welding can ignite mobs, splashed with fuel
 				var/mob/living/L = O
