@@ -223,6 +223,7 @@
 		if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. \
 		This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
 
+	handle_alien_whitelist_by_time(src)
 
 	//////////////
 	//DISCONNECT//
