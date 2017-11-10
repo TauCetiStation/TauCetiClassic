@@ -128,8 +128,8 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = 0
 
-/obj/item/weapon/gun/projectile/revolver/russian/New()
-	..()
+/obj/item/weapon/gun/projectile/revolver/russian/atom_init()
+	. = ..()
 	Spin()
 	update_icon()
 
@@ -177,7 +177,7 @@
 	..()
 	spun = 0
 
-/obj/item/weapon/gun/projectile/revolver/russian/attack(atom/target, mob/living/user)
+/obj/item/weapon/gun/projectile/revolver/russian/attack(atom/target, mob/living/user, def_zone)
 	if(!spun && get_ammo(0,0))
 		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
 		Spin()
@@ -190,11 +190,10 @@
 			return
 
 		if(isliving(target) && isliving(user))
-			var/target_zone = user.zone_sel.selecting
-			if(target_zone == BP_HEAD)
+			if(def_zone == BP_HEAD)
 				var/obj/item/ammo_casing/AC = chambered
 				if(AC.fire(user, user))
-					user.apply_damage(300, BRUTE, target_zone, null, DAM_SHARP)
+					user.apply_damage(300, BRUTE, def_zone, null, DAM_SHARP)
 					playsound(user, fire_sound, 50, 1)
 					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 					return

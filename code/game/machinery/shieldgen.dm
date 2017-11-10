@@ -10,10 +10,10 @@
 		var/const/max_health = 200
 		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
-/obj/machinery/shield/New()
-	src.dir = pick(1,2,3,4)
-	..()
-	update_nearby_tiles(need_rebuild=1)
+/obj/machinery/shield/atom_init()
+	dir = pick(1,2,3,4)
+	. = ..()
+	update_nearby_tiles(need_rebuild = 1)
 
 /obj/machinery/shield/Destroy()
 	opacity = 0
@@ -133,7 +133,6 @@
 	density = TRUE
 	opacity = FALSE
 	anchored = FALSE
-	pressure_resistance = 2*ONE_ATMOSPHERE
 	ghost_must_be_admin = TRUE
 	req_access = list(access_engine)
 	var/const/max_health = 100
@@ -260,14 +259,14 @@
 			to_chat(user, "\blue You open the panel and expose the wiring.")
 			is_open = 1
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && malfunction && is_open)
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(istype(W, /obj/item/stack/cable_coil) && malfunction && is_open)
+		var/obj/item/stack/cable_coil/coil = W
 		to_chat(user, "\blue You begin to replace the wires.")
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
 		if(do_after(user, 30, target = src))
-			if(!src || !coil) return
-			if(!coil.use(1))
+			if(QDELETED(src) || !coil.use(1))
 				return
+
 			health = max_health
 			malfunction = 0
 			to_chat(user, "\blue You repair the [src]!")
@@ -549,10 +548,10 @@
 		var/obj/machinery/shieldwallgen/gen_primary
 		var/obj/machinery/shieldwallgen/gen_secondary
 
-/obj/machinery/shieldwall/New(var/obj/machinery/shieldwallgen/A, var/obj/machinery/shieldwallgen/B)
-	..()
-	src.gen_primary = A
-	src.gen_secondary = B
+/obj/machinery/shieldwall/atom_init(mapload, obj/machinery/shieldwallgen/A, obj/machinery/shieldwallgen/B)
+	. = ..()
+	gen_primary = A
+	gen_secondary = B
 	if(A && B)
 		needs_power = 1
 

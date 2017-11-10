@@ -151,8 +151,13 @@
 	var/slack_team = 0
 	var/antigrief_alarm_level = 1
 
+	var/allow_donators = 0
+	var/donate_info_url = 0
+
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
+
+	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -520,6 +525,12 @@
 				if("antigrief_alarm_level")
 					config.antigrief_alarm_level = value
 
+				if("allow_donators")
+					config.allow_donators = 1
+
+				if("donate_info_url")
+					config.donate_info_url = value
+
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
@@ -561,6 +572,8 @@
 					config.organ_health_multiplier = value / 100
 				if("organ_regeneration_multiplier")
 					config.organ_regeneration_multiplier = value / 100
+				if("craft_recipes_visibility")
+					config.craft_recipes_visibility = TRUE
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
@@ -716,6 +729,6 @@
 
 /datum/configuration/proc/stat_entry()
 	if(!statclick)
-		statclick = new/obj/effect/statclick/debug("Edit", src)
+		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
 
 	stat("[name]:", statclick)

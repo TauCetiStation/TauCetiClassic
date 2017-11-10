@@ -1156,6 +1156,11 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Mars"
 	icon_state = "away"
 
+/area/awaymission/junkyard
+	name = "Junkyard"
+	icon_state = "away"
+	always_unpowered = 1
+
 /area/awaymission/BMPship1
 	name = "Aft Block"
 	icon_state = "away1"
@@ -1242,7 +1247,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	dynamic_lighting = 0
 	requires_power = 0
 	var/sound/mysound = null
-
+/* hello copypasta of area/beach (this idea with this area is Eeeeuuuuuwwww)
 /area/awaymission/beach/New()
 	..()
 	var/sound/S = new/sound()
@@ -1292,7 +1297,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	if(!target || !sound)
 		return
 	target << sound
-
+*/
 /////////////////////////////////////////////////////////////////////
 /*
  Lists of areas to be used with is_type_in_list.
@@ -1359,7 +1364,7 @@ var/list/the_station_areas = list (
 	dynamic_lighting = 0
 	requires_power = 0
 	var/sound/mysound = null
-
+/* hello copypasta of area/away_mission/beach
 /area/beach/New()
 	..()
 	var/sound/S = new/sound()
@@ -1401,3 +1406,4 @@ var/list/the_station_areas = list (
 				addtimer(CALLBACK(src, .proc/send_sound, H, S), sound_delay)
 
 	addtimer(CALLBACK(src, .process), 60)
+*/

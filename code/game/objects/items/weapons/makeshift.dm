@@ -16,6 +16,14 @@
 /obj/item/weapon/twohanded/spear/update_icon()
 	icon_state = "spearglass[wielded]"
 
+/obj/item/weapon/twohanded/spear/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(istype(W, /obj/item/weapon/organ/head))
+		if(loc == user)
+			user.drop_from_inventory(src)
+		var/obj/structure/headpole/H = new (get_turf(src), W, src)
+		user.drop_from_inventory(W, H)
+
 
 /obj/item/clothing/head/helmet/battlebucket
 	icon = 'icons/obj/makeshift.dmi'
@@ -24,22 +32,6 @@
 	icon_state = "battle_bucket"
 	item_state = "bucket"
 	armor = list(melee = 20, bullet = 5, laser = 5,energy = 3, bomb = 5, bio = 0, rad = 0)
-
-/obj/item/weapon/handcuffs/cable/attackby(obj/item/I, mob/user)
-	..()
-	if(istype(I, /obj/item/stack/rods))
-		var/obj/item/stack/rods/R = I
-		if(!R.use(1))
-			return
-
-		var/obj/item/weapon/wirerod/W = new /obj/item/weapon/wirerod
-
-		user.remove_from_mob(src)
-
-		user.put_in_hands(W)
-		to_chat(user, "<span class='notice'>You wrap the cable restraint around the top of the rod.</span>")
-
-		qdel(src)
 
 /obj/item/weapon/melee/cattleprod
 		icon = 'icons/obj/makeshift.dmi'
@@ -55,11 +47,9 @@
 		var/status = 0
 		slot_flags = null
 
-
-/obj/item/weapon/melee/cattleprod/New()
-	..()
+/obj/item/weapon/melee/cattleprod/atom_init()
+	. = ..()
 	update_icon()
-	return
 
 /obj/item/weapon/melee/cattleprod/attack_self(mob/user)
 	if(bcell && bcell.charge > hitcost)
@@ -183,41 +173,15 @@
 			bcell.reliability -= 10 / severity
 	..()
 
-/obj/item/weapon/wirerod
-		icon = 'icons/obj/makeshift.dmi'
-		icon_state = "wirerod"
-		name = "wired rod"
-		desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
-		item_state = "rods"
-		flags = CONDUCT
-		force = 9
-		throwforce = 10
-		w_class = 3
-		m_amt = 1875
-		attack_verb = list("hit", "bludgeoned", "whacked", "bonked")
-
-
-/obj/item/weapon/wirerod/attackby(obj/item/I, mob/user)
-	..()
-	if(istype(I, /obj/item/weapon/shard))
-		var/obj/item/weapon/twohanded/spear/S = new /obj/item/weapon/twohanded/spear
-
-		user.remove_from_mob(I)
-		user.remove_from_mob(src)
-
-		user.put_in_hands(S)
-		to_chat(user, "<span class='notice'>You fasten the glass shard to the top of the rod with the cable.</span>")
-		qdel(I)
-		qdel(src)
-
-	else if(istype(I, /obj/item/weapon/wirecutters))
-
-		var/obj/item/weapon/melee/cattleprod/P = new /obj/item/weapon/melee/cattleprod
-
-		user.remove_from_mob(I)
-		user.remove_from_mob(src)
-
-		user.put_in_hands(P)
-		to_chat(user, "<span class='notice'>You fasten the wirecutters to the top of the rod with the cable, prongs outward.</span>")
-		qdel(I)
-		qdel(src)
+/obj/item/weapon/wirerod // assembly component for spear and stunprod.
+	icon = 'icons/obj/makeshift.dmi'
+	icon_state = "wirerod"
+	name = "wired rod"
+	desc = "A rod with some wire wrapped around the top. It'd be easy to attach something to the top bit."
+	item_state = "rods"
+	flags = CONDUCT
+	force = 9
+	throwforce = 10
+	w_class = 3
+	m_amt = 1875
+	attack_verb = list("hit", "bludgeoned", "whacked", "bonked")

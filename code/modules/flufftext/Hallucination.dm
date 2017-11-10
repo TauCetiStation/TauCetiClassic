@@ -231,14 +231,17 @@ Gunshots/explosions/opening doors/less rare audio (done)
 			for(var/mob/O in oviewers(world.view , my_target))
 				to_chat(O, "\red <B>[my_target] stumbles around.</B>")
 
-/obj/effect/fake_attacker/New()
-	..()
-	spawn(300)
-		if(my_target)
-			my_target.hallucinations -= src
-		qdel(src)
+/obj/effect/fake_attacker/atom_init()
+	. = ..()
+	QDEL_IN(src, 300)
 	step_away(src,my_target,2)
 	spawn attack_loop()
+
+/obj/effect/fake_attacker/Destroy()
+	if(my_target)
+		my_target.hallucinations -= src
+		my_target = null
+	return ..()
 
 
 /obj/effect/fake_attacker/proc/updateimage()

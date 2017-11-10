@@ -84,7 +84,7 @@ var/datum/subsystem/ticker/ticker
 			//lobby stats for statpanels
 			totalPlayers = 0
 			totalPlayersReady = 0
-			for(var/mob/new_player/player in player_list)
+			for(var/mob/dead/new_player/player in player_list)
 				++totalPlayers
 				if(player.ready)
 					++totalPlayersReady
@@ -340,8 +340,8 @@ var/datum/subsystem/ticker/ticker
 
 
 /datum/subsystem/ticker/proc/create_characters()
-	for(var/mob/new_player/player in player_list)
-		sleep(1)//Maybe remove??
+	for(var/mob/dead/new_player/player in player_list)
+		//sleep(1)//Maybe remove??
 		if(player && player.ready && player.mind)
 			joined_player_list += player.ckey
 			if(player.mind.assigned_role=="AI")
@@ -352,7 +352,7 @@ var/datum/subsystem/ticker/ticker
 			else
 				player.create_character()
 				qdel(player)
-
+		CHECK_TICK // comment/remove this and uncomment sleep, if crashes at round start will come back.
 
 /datum/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)
@@ -363,7 +363,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/proc/equip_characters()
 	var/captainless=1
 	for(var/mob/living/carbon/human/player in player_list)
-		if(player && player.mind && player.mind.assigned_role)
+		if(player && player.mind && player.mind.assigned_role && player.mind.assigned_role != "default")
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
 			if(player.mind.assigned_role != "MODE")
@@ -496,13 +496,8 @@ var/datum/subsystem/ticker/ticker
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
 
-	//Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
-	if(SSgarbage.didntgc.len)
-		var/dellog = ""
-		for(var/path in SSgarbage.didntgc)
-			dellog += "Path : [path] \n"
-			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
-		world.log << dellog
+	if(SSjunkyard)
+		SSjunkyard.save_stats()
 
 	scoreboard(ai_completions)
 

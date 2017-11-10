@@ -14,9 +14,9 @@
 	use_power = 0
 	ghost_must_be_admin = TRUE
 
-/obj/machinery/emergency_authentication_device/New(loc, mode)
+/obj/machinery/emergency_authentication_device/atom_init(mapload, mode)
 	src.mode = mode
-	..(loc)
+	. = ..()
 
 /obj/machinery/emergency_authentication_device/proc/check_key_existence()
 	if(!mode.captains_key)

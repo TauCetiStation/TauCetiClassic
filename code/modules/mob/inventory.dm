@@ -54,22 +54,23 @@
 	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
 //The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
-var/list/slot_equipment_priority = list( \
-		slot_back,\
-		slot_wear_id,\
-		slot_w_uniform,\
-		slot_wear_suit,\
-		slot_wear_mask,\
-		slot_head,\
-		slot_shoes,\
-		slot_gloves,\
-		slot_l_ear,\
-		slot_r_ear,\
-		slot_glasses,\
-		slot_belt,\
-		slot_s_store,\
-		slot_l_store,\
-		slot_r_store\
+var/list/slot_equipment_priority = list(
+	slot_back,
+	slot_wear_id,
+	slot_w_uniform,
+	slot_wear_suit,
+	slot_wear_mask,
+	slot_head,
+	slot_shoes,
+	slot_gloves,
+	slot_l_ear,
+	slot_r_ear,
+	slot_glasses,
+	slot_belt,
+	slot_s_store,
+	slot_tie,
+	slot_l_store,
+	slot_r_store
 	)
 
 //puts the item "W" into an appropriate slot in a human's inventory
@@ -280,8 +281,36 @@ var/list/slot_equipment_priority = list( \
 		I.dropped(src)
 	return 1
 
+//Returns the item equipped to the specified slot, if any.
+/mob/proc/get_equipped_item(var/slot)
+	return null
 
-//Outdated but still in use apparently. This should at least be a human proc.
+/mob/living/carbon/get_equipped_item(var/slot)
+	switch(slot)
+		if(slot_back) return back
+		if(slot_wear_mask) return wear_mask
+		if(slot_l_hand) return l_hand
+		if(slot_r_hand) return r_hand
+	return null
+
+/mob/living/carbon/human/get_equipped_item(var/slot)
+	switch(slot)
+		if(slot_belt) return belt
+		if(slot_l_ear) return l_ear
+		if(slot_r_ear) return r_ear
+		if(slot_glasses) return glasses
+		if(slot_gloves) return gloves
+		if(slot_head) return head
+		if(slot_shoes) return shoes
+		if(slot_wear_id) return wear_id
+		if(slot_wear_suit) return wear_suit
+		if(slot_w_uniform) return w_uniform
+		if(slot_back) return back
+		if(slot_wear_mask) return wear_mask
+		if(slot_l_hand) return l_hand
+		if(slot_r_hand) return r_hand
+	return null
+
 /mob/proc/get_equipped_items()
 	return null
 

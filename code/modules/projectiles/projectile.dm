@@ -66,9 +66,9 @@
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
 
-/obj/item/projectile/New()
+/obj/item/projectile/atom_init()
 	damtype = damage_type // TODO unify these vars properly (Bay12)
-	..()
+	. = ..()
 	if(light_color)
 		set_light(light_range,light_power,light_color)
 
@@ -266,9 +266,14 @@
 
 		if(!bumped && !isturf(original))
 			if(loc == get_turf(original))
-				if(!(original in permutated))
-					if(Bump(original))
-						return
+				if(isturf(original.loc))
+					if(!(original in permutated))
+						if(Bump(original))
+							return
+				else//if target is in mecha/crate/MULE/etc
+					if(!(original.loc in permutated))
+						if(Bump(original.loc))
+							return
 
 		if(first_step)
 			muzzle_effect(effect_transform)
@@ -355,14 +360,15 @@
 	if(istype(A, /obj/item/projectile))
 		return
 	if(istype(A, /mob/living))
-		result = 2 //We hit someone, return 1!
+		result = 2 //We hit someone, return 1 (in process() 2 will be decremented to 1)!
+		bumped = TRUE
 		return
 	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window))
 		return
 	if(checkpass(PASSGRILLE) && istype(A, /obj/structure/grille))
 		return
 	result = 1
-	return
+	bumped = TRUE
 
 /obj/item/projectile/test/process()
 	var/turf/curloc = get_turf(src)
@@ -371,8 +377,8 @@
 		return 0
 	yo = targloc.y - curloc.y
 	xo = targloc.x - curloc.x
-	target = targloc
 	original = target
+	target = targloc
 	starting = curloc
 
 	//plot the initial trajectory
@@ -381,26 +387,31 @@
 	while(src) //Loop on through!
 		if(result)
 			return (result - 1)
-		if((!( target ) || loc == target))
+		if(!target || loc == target)
 			target = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
+		if(x == 1 || x == world.maxx || y == 1 || y == world.maxy || kill_count-- < 1)
+			qdel(src)
+			return 0
 
 		trajectory.increment()	// increment the current location
 		location = trajectory.return_location(location)		// update the locally stored location data
+		if(!location)
+			qdel(src)
+			return 0
 
 		Move(location.return_turf())
 
-		var/mob/living/M = locate() in get_turf(src)
-		if(istype(M)) //If there is someting living...
-			return 1 //Return 1
-		else
-			M = locate() in get_step(src,target)
-			if(istype(M))
-				return 1
+		if(!bumped && !isturf(original) && loc == get_turf(original))
+			if(isturf(original.loc))
+				Bump(original)
+			else
+				Bump(original.loc) //if target is in mecha/crate/MULE/etc
 
 /obj/item/projectile/test/dummy/Bump(atom/A) //Another test projectile with increased checklist
 	..()
 	if(result != 1)
 		return
+	//bumped is already set to TRUE
 	if(is_type_in_list(A, list(/obj/structure/closet, /obj/mecha, /obj/machinery/bot/mulebot)))
 		result = 2
 	return
@@ -410,3 +421,8 @@
 
 /obj/item/projectile/Process_Spacemove(movement_dir = 0)
 	return 1 //Bullets don't drift in space
+
+var/static/list/taser_projectiles = list(
+	/obj/item/projectile/beam/stun,
+	/obj/item/ammo_casing/energy/electrode
+)

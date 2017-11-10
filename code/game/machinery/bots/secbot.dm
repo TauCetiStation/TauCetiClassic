@@ -72,21 +72,15 @@
 	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 
 
-
-/obj/machinery/bot/secbot/New()
-	..()
-	update_icon()
-	addtimer(CALLBACK(src, .proc/post_creation), 3)
-
-
-/obj/machinery/bot/secbot/proc/post_creation()
+/obj/machinery/bot/secbot/atom_init()
+	. = ..()
 	botcard = new /obj/item/weapon/card/id(src)
 	var/datum/job/detective/J = new/datum/job/detective
 	botcard.access = J.get_access()
 	if(radio_controller)
 		radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
-
+	update_icon()
 
 /obj/machinery/bot/secbot/turn_on()
 	..()

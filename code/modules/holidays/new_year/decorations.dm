@@ -13,8 +13,8 @@
 	var/on = 0
 	var/brightness = 2
 
-/obj/item/decoration/garland/initialize()
-	..()
+/obj/item/decoration/garland/atom_init()
+	. = ..()
 	if(on)
 		icon_state = "[initial(icon_state)]_on"
 		set_light(brightness)
@@ -22,7 +22,8 @@
 		icon_state = initial(icon_state)
 		set_light(0)
 
-/obj/item/decoration/garland/New()
+/obj/item/decoration/garland/atom_init()
+	. = ..()
 	on = 1
 	light_color = pick("#FF0000","#6111FF","#FFA500","#44FAFF")
 	initialize()
@@ -37,28 +38,36 @@
 	desc = "Soft tinsel, pleasant to the touch. Ahhh..."
 	icon_state = "tinsel_g"
 
-/obj/item/decoration/tinsel/New()
+/obj/item/decoration/tinsel/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/decoration/tinsel/atom_init_late()
 	icon_state = "tinsel[pick("_g","_r","_y","_w")]"
 
 /obj/item/decoration/tinsel/green
 	icon_state = "tinsel_g"
-	New()
-		return
+
+/obj/item/decoration/tinsel/green/atom_init_late()
+	return
 
 /obj/item/decoration/tinsel/red
 	icon_state = "tinsel_r"
-	New()
-		return
+
+/obj/item/decoration/tinsel/red/atom_init_late()
+	return
 
 /obj/item/decoration/tinsel/yellow
 	icon_state = "tinsel_y"
-	New()
-		return
+
+/obj/item/decoration/tinsel/yellow/atom_init_late()
+	return
 
 /obj/item/decoration/tinsel/white
 	icon_state = "tinsel_w"
-	New()
-		return
+
+/obj/item/decoration/tinsel/white/atom_init_late()
+	return
 
 //Snowflakes
 /obj/item/decoration/snowflake
@@ -66,7 +75,8 @@
 	desc = "Snowflakes from very soft and pleasant to touch material."
 	icon_state = "snowflakes_1"
 
-/obj/item/decoration/snowflake/New()
+/obj/item/decoration/snowflake/atom_init()
+	. = ..()
 	icon_state = "snowflakes_[rand(1,4)]"
 
 /obj/item/decoration/snowflake/afterattack(atom/target, mob/living/user, flag, params)

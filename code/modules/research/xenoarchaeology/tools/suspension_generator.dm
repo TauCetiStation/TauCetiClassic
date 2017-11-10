@@ -15,9 +15,9 @@
 	var/obj/effect/suspension_field/suspension_field
 	var/list/secured_mobs = list()
 
-/obj/machinery/suspension_gen/New()
-	src.cell = new/obj/item/weapon/stock_parts/cell/high(src)
-	..()
+/obj/machinery/suspension_gen/atom_init()
+	cell = new/obj/item/weapon/stock_parts/cell/high(src)
+	. = ..()
 
 /obj/machinery/suspension_gen/process()
 	//set background = 1

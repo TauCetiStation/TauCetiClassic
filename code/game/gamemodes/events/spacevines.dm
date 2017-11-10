@@ -11,9 +11,6 @@
 	var/energy = 0
 	var/obj/effect/spacevine_controller/master = null
 
-/obj/effect/spacevine/New()
-	return
-
 /obj/effect/spacevine/Destroy()
 	if(master)
 		master.vines -= src
@@ -62,9 +59,10 @@
 	//What this does is that instead of having the grow minimum of 1, required to start growing, the minimum will be 0,
 	//meaning if you get the spacevines' size to something less than 20 plots, it won't grow anymore.
 
-/obj/effect/spacevine_controller/New()
-	if(!istype(src.loc,/turf/simulated/floor))
-		qdel(src)
+/obj/effect/spacevine_controller/atom_init()
+	. = ..()
+	if(!istype(loc, /turf/simulated/floor))
+		return INITIALIZE_HINT_QDEL
 
 	spawn_spacevine_piece(src.loc)
 	START_PROCESSING(SSobj, src)

@@ -110,31 +110,9 @@
 		update_icon()
 		return
 
-	if(istype(W, /obj/item/device/analyzer) && ptank)
-		var/obj/item/weapon/icon = src
-		user.visible_message("<span class='notice'>[user] has used the analyzer on [bicon(icon)]</span>")
-		var/pressure = ptank.air_contents.return_pressure()
-		var/total_moles = ptank.air_contents.total_moles()
-
-		to_chat(user, "\blue Results of analysis of [bicon(icon)]")
-		if(total_moles>0)
-			var/o2_concentration = ptank.air_contents.oxygen/total_moles
-			var/n2_concentration = ptank.air_contents.nitrogen/total_moles
-			var/co2_concentration = ptank.air_contents.carbon_dioxide/total_moles
-			var/phoron_concentration = ptank.air_contents.phoron/total_moles
-
-			var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
-
-			to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
-			to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
-			to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
-			to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
-			to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
-			if(unknown_concentration>0.01)
-				to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
-			to_chat(user, "\blue Temperature: [round(ptank.air_contents.temperature-T0C)]&deg;C")
-		else
-			to_chat(user, "\blue Tank is empty!")
+	if(istype(W, /obj/item/device/analyzer))
+		var/obj/item/device/analyzer/A = W
+		A.analyze_gases(src, user)
 		return
 	..()
 	return
@@ -161,7 +139,7 @@
 	usr.set_machine(src)
 	if(href_list["light"])
 		if(!ptank)	return
-		if(ptank.air_contents.phoron < 1)	return
+		if(ptank.air_contents.gas["phoron"] < 1)	return
 		if(!status)	return
 		lit = !lit
 		if(lit)
@@ -206,23 +184,22 @@
 /obj/item/weapon/flamethrower/proc/ignite_turf(turf/target)
 	//TODO: DEFERRED Consider checking to make sure tank pressure is high enough before doing this...
 	//Transfer 5% of current tank air contents to turf
-	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(0.02*(throw_amount/100))
+	var/datum/gas_mixture/air_transfer = ptank.air_contents.remove_ratio(0.02 * (throw_amount / 100))
 	//air_transfer.toxins = air_transfer.toxins * 5 // This is me not comprehending the air system. I realize this is retarded and I could probably make it work without fucking it up like this, but there you have it. -- TLE
-	new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(target,air_transfer.phoron,get_dir(loc,target))
-	air_transfer.phoron = 0
+	new/obj/effect/decal/cleanable/liquid_fuel/flamethrower_fuel(target, air_transfer.gas["phoron"], get_dir(loc,target))
+	air_transfer.gas["phoron"] = 0
 	target.assume_air(air_transfer)
 	//Burn it based on transfered gas
 	//target.hotspot_expose(part4.air_contents.temperature*2,300)
-	target.hotspot_expose((ptank.air_contents.temperature*2) + 380,500) // -- More of my "how do I shot fire?" dickery. -- TLE
+	target.hotspot_expose((ptank.air_contents.temperature * 2) + 380, 500) // -- More of my "how do I shot fire?" dickery. -- TLE
 	//location.hotspot_expose(1000,500,1)
 	return
 
-/obj/item/weapon/flamethrower/full/New(var/loc)
-	..()
+/obj/item/weapon/flamethrower/full/atom_init()
+	. = ..()
 	weldtool = new /obj/item/weapon/weldingtool(src)
 	weldtool.status = 0
 	igniter = new /obj/item/device/assembly/igniter(src)
 	igniter.secured = 0
 	status = 1
 	update_icon()
-	return

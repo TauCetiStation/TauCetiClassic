@@ -73,8 +73,8 @@ var/list/valid_secondary_effect_types = list(\
 	var/last_scan = 0
 	var/scan_delay = 20
 
-/obj/machinery/artifact/New()
-	..()
+/obj/machinery/artifact/atom_init()
+	. = ..()
 
 	//setup primary effect - these are the main ones (mixed)
 	if(need_inicial == 1)
@@ -144,13 +144,13 @@ var/list/valid_secondary_effect_types = list(\
 			else if(env.temperature > 375)
 				trigger_hot = 1
 
-			if(env.phoron >= 10)
+			if(env.gas["phoron"] >= 10)
 				trigger_phoron = 1
-			if(env.oxygen >= 10)
+			if(env.gas["oxygen"] >= 10)
 				trigger_oxy = 1
-			if(env.carbon_dioxide >= 10)
+			if(env.gas["carbon_dioxide"] >= 10)
 				trigger_co2 = 1
-			if(env.nitrogen >= 10)
+			if(env.gas["nitrogen"] >= 10)
 				trigger_nitro = 1
 
 	//COLD ACTIVATION

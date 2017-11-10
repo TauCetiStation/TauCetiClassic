@@ -1,4 +1,4 @@
-obj/structure/firedoor_assembly
+/obj/structure/firedoor_assembly
 	name = "\improper emergency shutter assembly"
 	desc = "It can save lives."
 	icon = 'icons/obj/doors/DoorHazard.dmi'
@@ -8,16 +8,16 @@ obj/structure/firedoor_assembly
 	density = 1
 	var/wired = 0
 
-obj/structure/firedoor_assembly/update_icon()
+/obj/structure/firedoor_assembly/update_icon()
 	if(anchored)
 		icon_state = "door_anchored"
 	else
 		icon_state = "door_construction"
 
-obj/structure/firedoor_assembly/attackby(C, mob/user)
-	if(istype(C, /obj/item/weapon/cable_coil) && !wired && anchored)
-		var/obj/item/weapon/cable_coil/cable = C
-		if (cable.amount < 1)
+/obj/structure/firedoor_assembly/attackby(C, mob/user)
+	if(istype(C, /obj/item/stack/cable_coil) && !wired && anchored)
+		var/obj/item/stack/cable_coil/cable = C
+		if (cable.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need one length of coil to wire \the [src].</span>")
 			return
 		user.visible_message("[user] wires \the [src].", "You start to wire \the [src].")
@@ -33,7 +33,7 @@ obj/structure/firedoor_assembly/attackby(C, mob/user)
 		if(do_after(user, 40, target = src))
 			if(!src) return
 			to_chat(user, "<span class='notice'>You cut the wires!</span>")
-			new /obj/item/weapon/cable_coil/random(src.loc, 1)
+			new /obj/item/stack/cable_coil/random(src.loc, 1)
 			wired = 0
 
 	else if(istype(C, /obj/item/weapon/airalarm_electronics) && wired)

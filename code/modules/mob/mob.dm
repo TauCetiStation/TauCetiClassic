@@ -4,20 +4,8 @@
 	living_mob_list -= src
 	ghostize(bancheck = TRUE)
 	return ..()
-/*
-/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	mob_list -= src
-	dead_mob_list -= src
-	living_mob_list -= src
-	qdel(hud_used)
-	if(mind && mind.current == src)
-		spellremove(src)
-	for(var/infection in viruses)
-		qdel(infection)
-	ghostize()
-	..()
-*/
-/mob/New()
+
+/mob/atom_init()
 	spawn()
 		if(client) animate(client, color = null, time = 0)
 	mob_list += src
@@ -25,25 +13,24 @@
 		dead_mob_list += src
 	else
 		living_mob_list += src
-	..()
+	. = ..()
 
 /mob/proc/Cell()
 	set category = "Admin"
 	set hidden = TRUE
 
-	if(!loc)
+	if(!isturf(loc))
 		return 0
 
-	var/datum/gas_mixture/environment = loc.return_air()
+	var/turf/T = loc
 
-	var/t = "\blue Coordinates: [x],[y] \n"
-	t+= "\red Temperature: [environment.temperature] \n"
-	t+= "\blue Nitrogen: [environment.nitrogen] \n"
-	t+= "\blue Oxygen: [environment.oxygen] \n"
-	t+= "\blue Phoron : [environment.phoron] \n"
-	t+= "\blue Carbon Dioxide: [environment.carbon_dioxide] \n"
-	for(var/datum/gas/trace_gas in environment.trace_gases)
-		to_chat(usr, "\blue [trace_gas.type]: [trace_gas.moles] \n")
+	var/datum/gas_mixture/env = T.return_air()
+
+	var/t = "<span class='notice'>Coordinates: [T.x],[T.y],[T.z]</span>\n"
+	t += "<span class='warning'>Temperature: [env.temperature]</span>\n"
+	t += "<span class='warning'>Pressure: [env.return_pressure()]kPa</span>\n"
+	for(var/g in env.gas)
+		t += "<span class='notice'>[g]: [env.gas[g]] / [env.gas[g] * R_IDEAL_GAS_EQUATION * env.temperature / env.volume]kPa</span>\n"
 
 	usr.show_message(t, 1)
 
@@ -397,7 +384,7 @@
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
 
-	var/mob/new_player/M = new /mob/new_player()
+	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		qdel(M)
@@ -414,7 +401,7 @@
 
 	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = TRUE
-	else if(stat != DEAD || istype(src, /mob/new_player) || jobban_isbanned(src, "Observer"))
+	else if(stat != DEAD || isnewplayer(src) || jobban_isbanned(src, "Observer"))
 		to_chat(usr, "\blue You must be observing to use this!")
 		return
 

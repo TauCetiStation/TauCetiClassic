@@ -22,40 +22,42 @@
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 
-/mob/living/carbon/human/skrell/New(var/new_loc)
+INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
+
+/mob/living/carbon/human/skrell/atom_init(mapload)
 	h_style = "Skrell Male Tentacles"
-	..(new_loc, SKRELL)
+	. = ..(mapload, SKRELL)
 
-/mob/living/carbon/human/tajaran/New(var/new_loc)
+/mob/living/carbon/human/tajaran/atom_init(mapload)
 	h_style = "Tajaran Ears"
-	..(new_loc, TAJARAN)
+	. = ..(mapload, TAJARAN)
 
-/mob/living/carbon/human/unathi/New(var/new_loc)
+/mob/living/carbon/human/unathi/atom_init(mapload)
 	h_style = "Unathi Horns"
-	..(new_loc, UNATHI)
+	. = ..(mapload, UNATHI)
 
-/mob/living/carbon/human/vox/New(var/new_loc)
+/mob/living/carbon/human/vox/atom_init(mapload)
 	h_style = "Short Vox Quills"
-	..(new_loc, VOX)
+	. = ..(mapload, VOX)
 
-/mob/living/carbon/human/voxarmalis/New(var/new_loc)
+/mob/living/carbon/human/voxarmalis/atom_init(mapload)
 	h_style = "Bald"
-	..(new_loc, VOX_ARMALIS)
+	. = ..(mapload, VOX_ARMALIS)
 
-/mob/living/carbon/human/diona/New(var/new_loc)
-	..(new_loc, DIONA)
+/mob/living/carbon/human/diona/atom_init(mapload)
+	. = ..(mapload, DIONA)
 
-/mob/living/carbon/human/machine/New(var/new_loc)
+/mob/living/carbon/human/machine/atom_init(mapload)
 	h_style = "blue IPC screen"
-	..(new_loc, IPC)
+	. = ..(mapload, IPC)
 
-/mob/living/carbon/human/abductor/New(var/new_loc)
-	..(new_loc, ABDUCTOR)
+/mob/living/carbon/human/abductor/atom_init(mapload)
+	. = ..(mapload, ABDUCTOR)
 
-/mob/living/carbon/human/golem/New(loc)
-	..(loc, GOLEM)
+/mob/living/carbon/human/golem/atom_init(mapload)
+	. = ..(mapload, GOLEM)
 
-/mob/living/carbon/human/New(new_loc, new_species)
+/mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
 
@@ -71,8 +73,6 @@
 	reagents = R
 	R.my_atom = src
 
-
-
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
 	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealthy")
 	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudunknown")
@@ -83,16 +83,21 @@
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
 
-	..()
+	. = ..()
 
 	if(dna)
 		dna.real_name = real_name
+
+	handcrafting = new()
 
 	verbs += /mob/living/carbon/proc/crawl
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
 	regenerate_icons()
+
+/mob/living/carbon/human/OpenCraftingMenu()
+	handcrafting.ui_interact(src)
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -363,7 +368,7 @@
 	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=s_store'>[(s_store ? s_store : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(s_store, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
 	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
 	<BR>[(legcuffed ? text("<A href='?src=\ref[src];item=legcuff'>Legcuffed</A>") : text(""))]
-	<BR>[(suit) ? ((suit.hastie) ? text(" <A href='?src=\ref[];item=tie'>Remove Accessory</A>", src) : "") :]
+	<BR>[(suit) ? ((suit.accessories.len) ? text(" <A href='?src=\ref[];item=tie'>Remove Accessory</A>", src) : "") :]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=bandages'>Remove Bandages</A>
 	<BR><A href='?src=\ref[src];item=splints'>Remove Splints</A>
@@ -800,7 +805,7 @@
 	if(istype(src.head, /obj/item/clothing/head/welding))
 		if(!src.head:up)
 			number += 2
-	if(istype(src.head, /obj/item/clothing/head/helmet/space))
+	if(istype(src.head, /obj/item/clothing/head/helmet/space) && !istype(src.head, /obj/item/clothing/head/helmet/space/sk))
 		number += 2
 	if(istype(src.glasses, /obj/item/clothing/glasses/thermal))
 		number -= 1
@@ -1422,8 +1427,8 @@
 	var/cooldown = 10 SECONDS
 
 
-/obj/screen/leap/New()
-	..()
+/obj/screen/leap/atom_init()
+	. = ..()
 	overlays += image(icon, "leap")
 	update_icon()
 
@@ -1469,8 +1474,16 @@
 	status_flags |= LEAPING
 	stop_pulling()
 
+
 	var/prev_intent = a_intent
 	a_intent_change("hurt")
+
+	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/space/vox/stealth))
+		for(var/obj/item/clothing/suit/space/vox/stealth/V in list(wear_suit))
+			if(V.on)
+				V.overload()
+
+	toggle_leap()
 
 	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .leap_end, prev_intent))
 
@@ -1488,7 +1501,6 @@
 		L.Weaken(5)
 		sleep(2) // Runtime prevention (infinite bump() calls on hulks)
 		step_towards(src, L)
-		toggle_leap(FALSE)
 
 		var/use_hand = "left"
 		if(l_hand)
@@ -1509,6 +1521,7 @@
 		G.state = GRAB_AGGRESSIVE
 		G.icon_state = "grabbed1"
 		G.synch()
+		L.grabbed_by += G
 
 	else if(A.density)
 		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='danger'>You smashes into [A]!</span>")

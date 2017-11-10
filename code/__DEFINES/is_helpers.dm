@@ -71,7 +71,7 @@
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
 
-#define isnewplayer(A) (istype(A, /mob/new_player))
+#define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
 // ELSE
 
@@ -82,6 +82,8 @@
 #define islist(A) (istype(A, /list))
 
 #define ismachinery(A) (istype(A, /obj/machinery))
+
+#define ismovableatom(A) (istype(A, /atom/movable))
 
 // GOONCHAT PORT
 

@@ -17,12 +17,6 @@
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-
-/obj/item/weapon/reagent_containers/hypospray/New() //comment this to make hypos start off empty
-	..()
-	reagents.add_reagent("tricordrazine", 30)
-	return
-
 /obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
 		to_chat(user, "\red [src] is empty.")
@@ -48,6 +42,10 @@
 
 /obj/item/weapon/reagent_containers/hypospray/cmo //We need "another" hypo for CMO
 
+/obj/item/weapon/reagent_containers/hypospray/cmo/atom_init()
+	. = ..()
+	reagents.add_reagent("tricordrazine", 30)
+
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector
 	name = "autoinjector"
@@ -56,9 +54,8 @@
 	item_state = "autoinjector"
 	volume = 5
 
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/New()
-	..()
-	reagents.remove_reagent("tricordrazine", 30)
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/atom_init()
+	. = ..()
 	reagents.add_reagent("inaprovaline", 5)
 	flags &= ~OPENCONTAINER
 	amount_per_transfer_from_this = volume
@@ -70,8 +67,8 @@
 	icon_state = "stimpen"
 	volume = 20
 
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack/New()
-	..()
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack/atom_init()
+	. = ..()
 	reagents.add_reagent("coffee", 13)
 	reagents.add_reagent("hyperzine", 2)
 	update_icon()

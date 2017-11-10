@@ -27,7 +27,7 @@
 	var/door_open_sound  = 'sound/machines/airlock/airlockToggle_2.ogg'
 	var/door_close_sound = 'sound/machines/airlock/airlockToggle_2.ogg'
 
-/obj/machinery/door/New()
+/obj/machinery/door/atom_init()
 	. = ..()
 	if(density)
 		layer = base_layer + DOOR_CLOSED_MOD //Above most items if closed
@@ -38,7 +38,6 @@
 		explosion_resistance = 0
 
 	update_nearby_tiles(need_rebuild=1)
-	return
 
 
 /obj/machinery/door/Destroy()

@@ -17,7 +17,7 @@
 	icon_state = "table"
 	density = 1
 	anchored = 1.0
-	layer = 2.8
+	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.")
 	climbable = 1
 
@@ -31,8 +31,8 @@
 			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
 			T.update_icon()
 
-/obj/structure/table/New()
-	..()
+/obj/structure/table/atom_init()
+	. = ..()
 	for(var/obj/structure/table/T in src.loc)
 		if(T != src)
 			qdel(T)
@@ -609,6 +609,7 @@
 	icon_state = "rack"
 	density = 1
 	anchored = 1.0
+	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.
 	var/parts = /obj/item/weapon/rack_parts
 

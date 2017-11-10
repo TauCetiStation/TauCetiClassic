@@ -88,52 +88,55 @@
 
 				if(/obj/item/stack/sheet/metal, /obj/item/stack/sheet/metal/cyborg)
 					if(!anchored)
-						if(S.amount < 2) return
-						S.use(2)
+						if(!S.use(2))
+							return
 						to_chat(user, "\blue You create a false wall! Push on it to open or close the passage.")
 						new /obj/structure/falsewall (src.loc)
 						qdel(src)
 					else
-						if(S.amount < 2) return ..()
+						if(S.get_amount() < 2)
+							return ..()
 						to_chat(user, "\blue Now adding plating...")
-						if (do_after(user,40,target = src))
-							if(!src || !S || S.amount < 2) return
-							S.use(2)
+						if (do_after(user, 40, target = src))
+							if(QDELETED(src) || QDELETED(S) || !S.use(2))
+								return
 							to_chat(user, "\blue You added the plating!")
 							var/turf/Tsrc = get_turf(src)
 							Tsrc.ChangeTurf(/turf/simulated/wall)
 							for(var/turf/simulated/wall/X in Tsrc.loc)
-								if(X)	X.add_hiddenprint(usr)
+								X.add_hiddenprint(usr)
 							qdel(src)
 						return
 
 				if(/obj/item/stack/sheet/plasteel)
 					if(!anchored)
-						if(S.amount < 2) return
-						S.use(2)
+						if(!S.use(2))
+							return
 						to_chat(user, "\blue You create a false wall! Push on it to open or close the passage.")
 						new /obj/structure/falserwall (src.loc)
 						qdel(src)
 					else
 						if (src.icon_state == "reinforced") //I cant believe someone would actually write this line of code...
-							if(S.amount < 1) return ..()
+							if(S.get_amount() < 1)
+								return ..()
 							to_chat(user, "\blue Now finalising reinforced wall.")
 							if(do_after(user, 50, target = src))
-								if(!src || !S || S.amount < 1) return
-								S.use(1)
+								if(QDELETED(src) || QDELETED(S) || !S.use(1))
+									return
 								to_chat(user, "\blue Wall fully reinforced!")
 								var/turf/Tsrc = get_turf(src)
 								Tsrc.ChangeTurf(/turf/simulated/wall/r_wall)
 								for(var/turf/simulated/wall/r_wall/X in Tsrc.loc)
-									if(X)	X.add_hiddenprint(usr)
+									X.add_hiddenprint(usr)
 								qdel(src)
 							return
 						else
-							if(S.amount < 1) return ..()
+							if(S.get_amount() < 1)
+								return ..()
 							to_chat(user, "\blue Now reinforcing girders")
-							if (do_after(user,60,target = src))
-								if(!src || !S || S.amount < 1) return
-								S.use(1)
+							if (do_after(user, 60, target = src))
+								if(QDELETED(src) || QDELETED(S) || !S.use(1))
+									return
 								to_chat(user, "\blue Girders reinforced!")
 								new/obj/structure/girder/reinforced( src.loc )
 								qdel(src)
@@ -142,23 +145,24 @@
 			if(S.sheettype)
 				var/M = S.sheettype
 				if(!anchored)
-					if(S.amount < 2) return
-					S.use(2)
+					if(!S.use(2))
+						return
 					to_chat(user, "\blue You create a false wall! Push on it to open or close the passage.")
 					var/F = text2path("/obj/structure/falsewall/[M]")
 					new F (src.loc)
 					qdel(src)
 				else
-					if(S.amount < 2) return ..()
+					if(S.get_amount() < 2)
+						return ..()
 					to_chat(user, "\blue Now adding plating...")
-					if (do_after(user,40,target = src))
-						if(!src || !S || S.amount < 2) return
-						S.use(2)
+					if (do_after(user, 40, target = src))
+						if(QDELETED(src) || QDELETED(S) || !S.use(2))
+							return
 						to_chat(user, "\blue You added the plating!")
 						var/turf/Tsrc = get_turf(src)
 						Tsrc.ChangeTurf(text2path("/turf/simulated/wall/mineral/[M]"))
 						for(var/turf/simulated/wall/mineral/X in Tsrc.loc)
-							if(X)	X.add_hiddenprint(usr)
+							X.add_hiddenprint(usr)
 						qdel(src)
 					return
 

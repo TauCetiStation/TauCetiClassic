@@ -56,28 +56,24 @@
 	var/scan_id = TRUE
 
 
-/obj/machinery/vending/New()
-	..()
+/obj/machinery/vending/atom_init()
+	. = ..()
 	wires = new(src)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/vendor(null)
-	spawn(4)
-		src.slogan_list = splittext(src.product_slogans, ";")
 
-		// So not all machines speak at the exact same time.
-		// The first time this machine says something will be at slogantime + this random value,
-		// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
-		src.last_slogan = world.time + rand(0, slogan_delay)
+	slogan_list = splittext(product_slogans, ";")
 
-		src.build_inventory(products)
-		 //Add hidden inventory
-		src.build_inventory(contraband, 1)
-		src.build_inventory(premium, 0, 1)
-		power_change()
+	// So not all machines speak at the exact same time.
+	// The first time this machine says something will be at slogantime + this random value,
+	// so if slogantime is 10 minutes, it will say it at somewhere between 10 and 20 minutes after the machine is crated.
+	last_slogan = world.time + rand(0, slogan_delay)
 
-		return
-
-	return
+	build_inventory(products)
+	 //Add hidden inventory
+	build_inventory(contraband, 1)
+	build_inventory(premium, 0, 1)
+	power_change()
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -902,7 +898,7 @@
 	icon_deny = "tool-deny"
 
 	//req_access_txt = "12" //Maintenance access
-	products = list(/obj/item/weapon/cable_coil/random = 10,/obj/item/weapon/crowbar = 5,/obj/item/weapon/weldingtool = 3,/obj/item/weapon/wirecutters = 5,
+	products = list(/obj/item/stack/cable_coil/random = 10,/obj/item/weapon/crowbar = 5,/obj/item/weapon/weldingtool = 3,/obj/item/weapon/wirecutters = 5,
 					/obj/item/weapon/wrench = 5,/obj/item/device/analyzer = 5,/obj/item/device/t_scanner = 5,/obj/item/weapon/screwdriver = 5)
 	contraband = list(/obj/item/weapon/weldingtool/hugetank = 2,/obj/item/clothing/gloves/fyellow = 2)
 	premium = list(/obj/item/clothing/gloves/yellow = 1)
@@ -928,7 +924,7 @@
 	products = list(/obj/item/clothing/under/rank/chief_engineer = 4,/obj/item/clothing/under/rank/engineer = 4,/obj/item/clothing/shoes/workboots = 4,/obj/item/clothing/head/hardhat/yellow = 4,
 					/obj/item/clothing/head/hardhat/yellow/visor = 1,/obj/item/weapon/storage/belt/utility = 4,/obj/item/clothing/glasses/meson = 4,/obj/item/clothing/gloves/yellow = 4, /obj/item/weapon/screwdriver = 12,
 					/obj/item/weapon/crowbar = 12,/obj/item/weapon/wirecutters = 12,/obj/item/device/multitool = 12,/obj/item/weapon/wrench = 12,/obj/item/device/t_scanner = 12,
-					/obj/item/weapon/cable_coil/heavyduty = 8, /obj/item/weapon/stock_parts/cell = 8, /obj/item/weapon/weldingtool = 8,/obj/item/clothing/head/welding = 8,
+					/obj/item/stack/cable_coil/heavyduty = 8, /obj/item/weapon/stock_parts/cell = 8, /obj/item/weapon/weldingtool = 8,/obj/item/clothing/head/welding = 8,
 					/obj/item/weapon/light/tube = 10,/obj/item/clothing/suit/fire = 4, /obj/item/weapon/stock_parts/scanning_module = 5,/obj/item/weapon/stock_parts/micro_laser = 5,
 					/obj/item/weapon/stock_parts/matter_bin = 5,/obj/item/weapon/stock_parts/manipulator = 5,/obj/item/weapon/stock_parts/console_screen = 5)
 	// There was an incorrect entry (cablecoil/power).  I improvised to cablecoil/heavyduty.
@@ -942,7 +938,7 @@
 	icon_state = "robotics"
 	icon_deny = "robotics-deny"
 	req_access_txt = "29"
-	products = list(/obj/item/weapon/cable_coil/random = 2,/obj/item/device/flash = 4,
+	products = list(/obj/item/stack/cable_coil/random = 2,/obj/item/device/flash = 4,
 					/obj/item/weapon/stock_parts/cell/high = 5, /obj/item/device/assembly/prox_sensor = 3,/obj/item/device/assembly/signaler = 3,/obj/item/device/healthanalyzer = 3,
 					/obj/item/weapon/scalpel = 2,/obj/item/weapon/circular_saw = 2,/obj/item/weapon/tank/anesthetic = 2,/obj/item/clothing/mask/breath/medical = 2)
 	//everything after the power cell had no amounts, I improvised.  -Sayu
@@ -975,7 +971,7 @@
 	/obj/item/clothing/suit/student_jacket=3,/obj/item/clothing/suit/shawl=2,/obj/item/clothing/suit/atlas_jacket=4,/obj/item/clothing/under/sukeban_pants=2,
 	/obj/item/clothing/under/sukeban_dress=2,/obj/item/clothing/suit/sukeban_coat=4,/obj/item/clothing/under/pinkpolo=3,/obj/item/clothing/under/pretty_dress=1)
 
-	contraband = list(/obj/item/clothing/under/syndicate/tacticool=2,/obj/item/clothing/mask/balaclava=2,/obj/item/clothing/head/ushanka=2,/obj/item/clothing/under/soviet=2)
+	contraband = list(/obj/item/clothing/under/syndicate/tacticool=2,/obj/item/clothing/mask/balaclava=2,/obj/item/clothing/head/ushanka=2,/obj/item/clothing/under/soviet=2,/obj/item/clothing/mask/gas/fawkes = 6)
 
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=2,/obj/item/clothing/head/mailman=2,/obj/item/clothing/under/rank/mailman=2,/obj/item/clothing/suit/jacket/leather=2,
 	/obj/item/clothing/suit/jacket/leather/overcoat=2,/obj/item/clothing/under/pants/mustangjeans=2)
@@ -1045,17 +1041,19 @@
 	name = "LSD"
 	desc = "Ahaha oh wow."
 	icon_state = "pill9"
-	New()
-		..()
-		reagents.add_reagent("mindbreaker", 0)
+
+/obj/item/weapon/reagent_containers/pill/LSD/atom_init()
+	. = ..()
+	reagents.add_reagent("mindbreaker", 0)
 
 /obj/item/weapon/reagent_containers/glass/beaker/LSD
 	name = "LSD IV"
 	desc = "Ahaha oh wow."
-	New()
-		..()
-		reagents.add_reagent("mindbreaker", 0)
-		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/LSD/atom_init()
+	. = ..()
+	reagents.add_reagent("mindbreaker", 0)
+	update_icon()
 
 /obj/machinery/vending/sustenance
 	name = "\improper Sustenance Vendor"
@@ -1086,3 +1084,4 @@
 					/obj/item/clothing/suit/tuxedo = 3,/obj/item/clothing/under/popking = 1, /obj/item/clothing/under/popking/alternate = 1, /obj/item/clothing/suit/hooded/angel_suit = 1,
 					/obj/item/clothing/mask/fake_face = 2,)
 	prices = list(/obj/item/clothing/head/xenos = 100, /obj/item/clothing/suit/xenos = 200, /obj/item/clothing/suit/monkeysuit = 200)
+	contraband = list(/obj/item/clothing/mask/gas/fawkes = 2)

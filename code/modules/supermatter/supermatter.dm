@@ -74,7 +74,7 @@
 		explosion_power = 3 //3,6,9,12? Or is that too small?
 
 
-/obj/machinery/power/supermatter/New()
+/obj/machinery/power/supermatter/atom_init()
 	. = ..()
 	radio = new (src)
 
@@ -146,7 +146,7 @@
 	damage = max( damage + ( (removed.temperature - 800) / 150 ) , 0 )
 	//Ok, 100% oxygen atmosphere = best reaction
 	//Maxes out at 100% oxygen pressure
-	oxygen = max(min((removed.oxygen - (removed.nitrogen * NITROGEN_RETARDATION_FACTOR)) / MOLES_CELLSTANDARD, 1), 0)
+	oxygen = max(min((removed.gas["oxygen"] - (removed.gas["nitrogen"] * NITROGEN_RETARDATION_FACTOR)) / MOLES_CELLSTANDARD, 1), 0)
 
 	var/temp_factor = 100
 
@@ -172,7 +172,7 @@
 
 	//Also keep in mind we are only adding this temperature to (efficiency)% of the one tile the rock
 	//is on. An increase of 4*C @ 25% efficiency here results in an increase of 1*C / (#tilesincore) overall.
-	
+
 	var/thermal_power = THERMAL_RELEASE_MODIFIER
 	if(removed.total_moles < 35) thermal_power += 750   //If you don't add coolant, you are going to have a bad time.
 
@@ -181,9 +181,9 @@
 	removed.temperature = max(0, min(removed.temperature, 10000))
 
 	//Calculate how much gas to release
-	removed.phoron += max(device_energy / PHORON_RELEASE_MODIFIER, 0)
+	removed.gas["phoron"] += max(device_energy / PHORON_RELEASE_MODIFIER, 0)
 
-	removed.oxygen += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
+	removed.gas["oxygen"] += max((device_energy + removed.temperature - T0C) / OXYGEN_RELEASE_MODIFIER, 0)
 
 	removed.update_values()
 

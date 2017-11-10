@@ -28,8 +28,8 @@
 	var/alarm_on = 0
 	var/busy = 0
 
-/obj/machinery/camera/New()
-	..()
+/obj/machinery/camera/atom_init()
+	. = ..()
 	cameranet.cameras += src //Camera must be added to global list of all cameras no matter what...
 	var/list/open_networks = difflist(network,RESTRICTED_CAMERA_NETWORKS) //...but if all of camera's networks are restricted, it only works for specific camera consoles.
 	if(open_networks.len) //If there is at least one open network, chunk is available for AI usage.
@@ -43,13 +43,13 @@
 		if(C != src && C.c_tag == src.c_tag && tempnetwork.len)
 			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
 	*/
-	if(!src.network || src.network.len < 1)
+	if(!network || network.len < 1)
 		if(loc)
-			error("[src.name] in [get_area(src)] (x:[src.x] y:[src.y] z:[src.z] has errored. [src.network?"Empty network list":"Null network list"]")
+			error("[name] in [get_area(src)] ([COORD(src)]) has errored. [network ? "Empty network list" : "Null network list"]")
 		else
-			error("[src.name] in [get_area(src)]has errored. [src.network?"Empty network list":"Null network list"]")
-		ASSERT(src.network)
-		ASSERT(src.network.len > 0)
+			error("[name] in [get_area(src)]has errored. [network ? "Empty network list" : "Null network list"]")
+		ASSERT(network)
+		ASSERT(network.len > 0)
 
 /obj/machinery/camera/Destroy()
 	disconnect_viewers()
@@ -77,18 +77,18 @@
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof() && status)
 		if(prob(100/severity))
-			var/list/previous_network = network
+			addtimer(CALLBACK(src, .proc/fix_emp_state, network), 900)
 			network = list()
 			stat |= EMPED
 			toggle_cam(TRUE)
 			triggerCameraAlarm()
-			spawn(900)
-				network = previous_network
-				stat &= ~EMPED
-				cancelCameraAlarm()
-				toggle_cam(TRUE)
 			..()
 
+/obj/machinery/camera/proc/fix_emp_state(list/previous_network)
+	network = previous_network
+	stat &= ~EMPED
+	cancelCameraAlarm()
+	toggle_cam(TRUE)
 
 /obj/machinery/camera/ex_act(severity)
 	if(src.invuln)
@@ -208,7 +208,7 @@
 			playsound(loc, "sparks", 50, 1)
 			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [W]!</span>")
 			drop_assembly()
-			new /obj/item/weapon/cable_coil/cut/red(loc)
+			new /obj/item/stack/cable_coil/cut/red(loc)
 			qdel(src)
 	else
 		..()

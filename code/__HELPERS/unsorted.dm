@@ -11,6 +11,9 @@
  * A large number of misc global procs.
  */
 
+//Checks if all high bits in req_mask are set in bitfield
+#define BIT_TEST_ALL(bitfield, req_mask) ((~(bitfield) & (req_mask)) == 0)
+
 //Inverts the colour of an HTML string
 /proc/invertHTML(HTMLstring)
 
@@ -421,8 +424,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	ADD_TO_MOBLIST(/mob/living/carbon/human)
 	ADD_TO_MOBLIST(/mob/living/carbon/brain)
 	ADD_TO_MOBLIST(/mob/living/carbon/alien)
-	ADD_TO_MOBLIST(/mob/dead/observer)
-	ADD_TO_MOBLIST(/mob/new_player)
+	ADD_TO_MOBLIST(/mob/dead)
 	ADD_TO_MOBLIST(/mob/living/carbon/monkey)
 	ADD_TO_MOBLIST(/mob/living/carbon/slime)
 	ADD_TO_MOBLIST(/mob/living/carbon/ian)
@@ -771,7 +773,7 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 		C.x_pos = (T.x - trg_min_x)
 		C.y_pos = (T.y - trg_min_y)
 
-	var/list/fromupdate = new/list()
+
 	var/list/toupdate = new/list()
 
 	moving:
@@ -785,7 +787,9 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 					var/old_icon_state1 = T.icon_state
 					var/old_icon1 = T.icon
 
-					var/turf/X = B.ChangeTurf(T.type)
+
+					var/turf/X = T.MoveTurf(B)
+
 					X.dir = old_dir1
 					X.icon_state = old_icon_state1
 					X.icon = old_icon1 //Shuttle floors are in shuttle.dmi while the defaults are floors.dmi
@@ -850,10 +854,8 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 
 					toupdate += X
 
-					if(turftoleave)
-						fromupdate += T.ChangeTurf(turftoleave)
-					else
-						T.ChangeTurf(/turf/space)
+//					if(turftoleave)
+//						T.MoveTurf(turftoleave)
 
 					refined_src -= T
 					refined_trg -= B
@@ -1088,7 +1090,7 @@ proc/get_mob_with_client_list()
 
 //Quick type checks for some tools
 var/global/list/common_tools = list(
-/obj/item/weapon/cable_coil,
+/obj/item/stack/cable_coil,
 /obj/item/weapon/wrench,
 /obj/item/weapon/weldingtool,
 /obj/item/weapon/screwdriver,
@@ -1112,7 +1114,7 @@ var/global/list/common_tools = list(
 	return 0
 
 /proc/iscoil(O)
-	if(istype(O, /obj/item/weapon/cable_coil))
+	if(istype(O, /obj/item/stack/cable_coil))
 		return 1
 	return 0
 
@@ -1136,41 +1138,54 @@ var/global/list/common_tools = list(
 		return 1
 	return 0
 
-/proc/iswire(O)
-	if(istype(O, /obj/item/weapon/cable_coil))
+/proc/iswire(O) // coil, wire... whats the difference here?
+	if(istype(O, /obj/item/stack/cable_coil))
 		return 1
 	return 0
 
 /proc/is_hot(obj/item/W)
-	switch(W.type)
-		if(/obj/item/weapon/weldingtool)
-			var/obj/item/weapon/weldingtool/WT = W
-			if(WT.isOn())
-				return 3800
-			else
-				return 0
-		if(/obj/item/weapon/lighter)
-			if(W:lit)
-				return 1500
-			else
-				return 0
-		if(/obj/item/weapon/match)
-			if(W:lit)
-				return 1000
-			else
-				return 0
-		if(/obj/item/clothing/mask/cigarette)
-			if(W:lit)
-				return 1000
-			else
-				return 0
-		if(/obj/item/weapon/pickaxe/plasmacutter)
+	if(istype(W,/obj/item/weapon/weldingtool))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(WT.isOn())
 			return 3800
-		if(/obj/item/weapon/melee/energy)
-			return 3500
 		else
 			return 0
-
+	if(istype(W,/obj/item/weapon/lighter))
+		var/obj/item/weapon/lighter/LT = W
+		if(LT.lit)
+			return 1500
+		else
+			return 0
+	if(istype(W,/obj/item/weapon/match))
+		var/obj/item/weapon/match/MT = W
+		if(MT.lit)
+			return 1000
+		else
+			return 0
+	if(istype(W,/obj/item/clothing/mask/cigarette))
+		var/obj/item/clothing/mask/cigarette/CG = W
+		if(CG.lit)
+			return 1000
+		else
+			return 0
+	if(istype(W,/obj/item/weapon/pickaxe/plasmacutter))
+		return 3800
+	if(istype(W,/obj/item/candle))
+		var/obj/item/candle/CD = W
+		if(CD.lit)
+			return 1000
+		else
+			return 0
+	if(istype(W,/obj/item/device/flashlight/flare/torch))
+		var/obj/item/device/flashlight/flare/torch/TCH = W
+		if(TCH.on)
+			return 1500
+		else
+			return 0
+	if(istype(W,/obj/item/weapon/melee/energy))
+		return 3500
+	else
+		return 0
 	return 0
 
 // Whether or not the given item counts as sharp in terms of dealing damage
@@ -1345,32 +1360,6 @@ var/list/WALLITEMS = typecacheof(list(
 		if(cp<minp)minp=cp
 		if(cp>maxp)maxp=cp
 	return abs(minp-maxp)
-
-var/mob/dview/dview_mob = new
-
-//Version of view() which ignores darkness, because BYOND doesn't have it.
-/proc/dview(range = world.view, center, invis_flags = 0)
-	if(!center)
-		return
-
-	dview_mob.loc = center
-
-	dview_mob.see_invisible = invis_flags
-
-	. = view(range, dview_mob)
-	dview_mob.loc = null
-
-/mob/dview
-	invisibility = 101
-	density = 0
-
-	anchored = 1
-	simulated = 0
-
-	see_in_dark = 1e6
-
-/mob/dview/New()
-	// do nothing. we don't want to be in any mob lists; we're a dummy not a mob.
 
 //similar function to range(), but with no limitations on the distance; will search spiralling outwards from the center
 /proc/ultra_range(dist=0, center=usr, orange=0)
@@ -1593,6 +1582,10 @@ var/mob/dview/dview_mob = new
 		c_dist++
 
 	return L
+
+//gives us the stack trace from CRASH() without ending the current proc.
+/proc/stack_trace(msg)
+	CRASH(msg)
 
 //Increases delay as the server gets more overloaded,
 //as sleeps aren't cheap and sleeping only to wake up and sleep again is wasteful

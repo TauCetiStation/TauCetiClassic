@@ -14,12 +14,12 @@
 	var/static/list/allowed_items = list(
                                         /obj/item/weapon/gun/energy,
                                         /obj/item/weapon/melee/baton,
-                                        /obj/item/weapon/defibrillator,
+                                        /obj/item/weapon/twohanded/shockpaddles/standalone,
                                         /obj/item/ammo_box/magazine/l10mag
                                     )
 
-/obj/machinery/recharger/New()
-	..()
+/obj/machinery/recharger/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/recharger()
 	component_parts += new /obj/item/weapon/stock_parts/capacitor()
@@ -114,8 +114,8 @@
 			else
 				icon_state = "recharger2"
 			return
-		if(istype(charging, /obj/item/weapon/defibrillator))
-			var/obj/item/weapon/defibrillator/D = charging
+		if(istype(charging, /obj/item/weapon/twohanded/shockpaddles/standalone))
+			var/obj/item/weapon/twohanded/shockpaddles/standalone/D = charging
 			if(D.charges < initial(D.charges))
 				D.charges++
 				icon_state = "recharger1"
@@ -189,8 +189,8 @@
 			else
 				icon_state = "wrecharger2"
 			return
-		if(istype(charging, /obj/item/weapon/defibrillator))
-			var/obj/item/weapon/defibrillator/D = charging
+		if(istype(charging, /obj/item/weapon/twohanded/shockpaddles/standalone))
+			var/obj/item/weapon/twohanded/shockpaddles/standalone/D = charging
 			if(D.charges < initial(D.charges))
 				D.charges++
 				icon_state = "wrecharger1"

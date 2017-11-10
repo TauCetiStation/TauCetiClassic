@@ -4,8 +4,8 @@
 	icon_state = "mining_brace"
 	var/obj/machinery/mining/drill/connected
 
-/obj/machinery/mining/brace/New()
-	..()
+/obj/machinery/mining/brace/atom_init()
+	. = ..()
 
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/miningdrillbrace(null)

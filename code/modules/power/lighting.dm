@@ -79,8 +79,8 @@
 	var/sheets_refunded = 2
 	var/obj/machinery/light/newlight = null
 
-/obj/machinery/light_construct/New()
-	..()
+/obj/machinery/light_construct/atom_init()
+	. = ..()
 	if (fixture_type == "bulb")
 		icon_state = "bulb-construct-stage1"
 
@@ -125,15 +125,16 @@
 				src.icon_state = "tube-construct-stage1"
 			if("bulb")
 				src.icon_state = "bulb-construct-stage1"
-		new /obj/item/weapon/cable_coil/random(get_turf(src.loc), 1)
+		new /obj/item/stack/cable_coil/random(get_turf(src.loc), 1)
 		user.visible_message("[user.name] removes the wiring from [src].", \
 			"You remove the wiring from [src].", "You hear a noise.")
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		return
 
-	if(istype(W, /obj/item/weapon/cable_coil))
-		if (src.stage != 1) return
-		var/obj/item/weapon/cable_coil/coil = W
+	if(istype(W, /obj/item/stack/cable_coil))
+		if (src.stage != 1)
+			return
+		var/obj/item/stack/cable_coil/coil = W
 		if(!coil.use(1))
 			return
 		switch(fixture_type)
@@ -234,31 +235,32 @@
 	brightness_range = 12
 	brightness_power = 4
 
-/obj/machinery/light/built/New()
+/obj/machinery/light/built/atom_init()
 	status = LIGHT_EMPTY
 	update(0)
-	..()
+	. = ..()
 
-/obj/machinery/light/small/built/New()
+/obj/machinery/light/small/built/atom_init()
 	status = LIGHT_EMPTY
 	update(0)
-	..()
+	. = ..()
 
 // create a new lighting fixture
-/obj/machinery/light/New()
+/obj/machinery/light/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
 
-	spawn(2)
-		var/area/A = get_area(src)
-		if(A && !A.requires_power)
-			on = 1
+/obj/machinery/light/atom_init_late()
+	var/area/A = get_area(src)
+	if(A && !A.requires_power)
+		on = 1
 
-		if(src.z == ZLEVEL_STATION || src.z == ZLEVEL_ASTEROID)
-			switch(fitting)
-				if("tube","bulb")
-					if(prob(2))
-						broken(1)
-		addtimer(CALLBACK(src, .proc/update, 0), 1)
+	if(src.z == ZLEVEL_STATION || src.z == ZLEVEL_ASTEROID)
+		switch(fitting)
+			if("tube","bulb")
+				if(prob(2))
+					broken(1)
+	addtimer(CALLBACK(src, .proc/update, 0), 1)
 
 /obj/machinery/light/Destroy()
 	var/area/A = get_area(src)
@@ -724,8 +726,8 @@
 			desc = "A broken [name]."
 
 
-/obj/item/weapon/light/New()
-	..()
+/obj/item/weapon/light/atom_init()
+	. = ..()
 	switch(name)
 		if("light tube")
 			brightness_range = rand(6,9)

@@ -45,9 +45,9 @@
 		STOP_PROCESSING(SSobj, src)
 		return
 
-/obj/machinery/syndicatebomb/New()
+/obj/machinery/syndicatebomb/atom_init()
 	wires = new(src)
-	..()
+	. = ..()
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	..()

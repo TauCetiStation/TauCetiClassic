@@ -1046,12 +1046,8 @@ datum
 			required_container = /obj/item/slime_extract/metal
 			required_other = 1
 			on_reaction(datum/reagents/holder)
-				var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal
-				M.amount = 15
-				M.loc = get_turf_loc(holder.my_atom)
-				var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel
-				P.amount = 5
-				P.loc = get_turf_loc(holder.my_atom)
+				new /obj/item/stack/sheet/metal(get_turf_loc(holder.my_atom), 15)
+				new /obj/item/stack/sheet/plasteel(get_turf_loc(holder.my_atom), 5)
 
 //Gold
 		slimecrit
@@ -1207,15 +1203,12 @@ datum
 				for(var/mob/O in viewers(get_turf_loc(holder.my_atom), null))
 					O.show_message(text("\red The slime extract begins to vibrate violently !"), 1)
 				sleep(50)
+				if(!(holder.my_atom && holder.my_atom.loc))
+					return
+
 				var/turf/location = get_turf(holder.my_atom.loc)
-				for(var/turf/simulated/floor/target_tile in range(0,location))
-
-					var/datum/gas_mixture/napalm = new
-
-					napalm.phoron = 25
-					napalm.temperature = 1400
-
-					target_tile.assume_air(napalm)
+				for(var/turf/simulated/floor/target_tile in range(0, location))
+					target_tile.assume_gas("phoron", 25, 1400)
 					spawn (0)
 						target_tile.hotspot_expose(700, 400)
 				message_admins("Orange slime extract activated by [key_name_admin(usr)](<A HREF='?_src_=holder;adminmoreinfo=\ref[usr]'>?</A>)")
@@ -1297,9 +1290,7 @@ datum
 			required_container = /obj/item/slime_extract/darkpurple
 			required_other = 1
 			on_reaction(datum/reagents/holder)
-				var/obj/item/stack/sheet/mineral/phoron/P = new /obj/item/stack/sheet/mineral/phoron
-				P.amount = 10
-				P.loc = get_turf_loc(holder.my_atom)
+				new /obj/item/stack/sheet/mineral/phoron(get_turf_loc(holder.my_atom), 10)
 
 //Red
 		slimeglycerol
@@ -2208,3 +2199,18 @@ datum
 	result = "mednanobots"
 	required_reagents = list("nanobots" = 1, "doctorsdelight" = 5)
 	result_amount = 1
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/chemical_reaction/deuterium
+	name = "Deuterium"
+	result = null
+	required_reagents = list("water" = 70, "oxygen" = 30)
+	result_amount = 1
+
+/datum/chemical_reaction/deuterium/on_reaction(datum/reagents/holder, created_volume)
+	var/turf/T = get_turf(holder.my_atom)
+	if(istype(T))
+		new /obj/item/stack/sheet/mineral/deuterium(T, created_volume)

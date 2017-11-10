@@ -29,14 +29,16 @@
 							"plasteel"= 50,
 							"diamond" = 70)
 
-/obj/machinery/mineral/processing_unit_console/New()
+/obj/machinery/mineral/processing_unit_console/atom_init()
 	..()
-	spawn(7)
-		src.machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, machinedir))
-		if (machine)
-			machine.console = src
-		else
-			qdel(src)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/mineral/processing_unit_console/atom_init_late()
+	machine = locate(/obj/machinery/mineral/processing_unit, get_step(src, machinedir))
+	if (machine)
+		machine.console = src
+	else
+		qdel(src)
 
 /obj/machinery/mineral/processing_unit_console/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -184,7 +186,7 @@
 	var/list/alloy_data[0]
 	var/active = 0
 
-/obj/machinery/mineral/processing_unit/New()
+/obj/machinery/mineral/processing_unit/atom_init()
 	..()
 	//TODO: Ore and alloy global storage datum.
 	for(var/alloytype in typesof(/datum/alloy)-/datum/alloy)
@@ -194,16 +196,18 @@
 		ore_data[OD.oretag] = OD
 		ores_processing[OD.oretag] = 0
 		ores_stored[OD.oretag] = 0
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/mineral/processing_unit/atom_init_late()
 	//Locate our output and input machinery.
-	spawn(5)
-		for (var/dir in cardinal)
-			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
-			if(src.input) break
-		for (var/dir in cardinal)
-			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
-			if(src.output) break
-		return
-	return
+	for (var/dir in cardinal)
+		input = locate(/obj/machinery/mineral/input, get_step(src, dir))
+		if(input)
+			break
+	for (var/dir in cardinal)
+		output = locate(/obj/machinery/mineral/output, get_step(src, dir))
+		if(output)
+			break
 
 /obj/machinery/mineral/processing_unit/process()
 

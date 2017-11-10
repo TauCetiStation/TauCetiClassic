@@ -27,9 +27,10 @@
 	var/mail_destination = ""
 
 	holder_type = /obj/item/weapon/holder/drone
-/mob/living/silicon/robot/drone/New()
 
-	..()
+/mob/living/silicon/robot/drone/atom_init()
+
+	. = ..()
 
 	if(camera && "Robots" in camera.network)
 		camera.add_network("Engineering")

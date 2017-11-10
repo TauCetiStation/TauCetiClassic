@@ -15,8 +15,8 @@
 	var/productivity = 0
 	var/max_items = 10
 
-/obj/machinery/biogenerator/New()
-	..()
+/obj/machinery/biogenerator/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
@@ -25,7 +25,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil/random(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
 	RefreshParts()
 
 /obj/machinery/biogenerator/RefreshParts()

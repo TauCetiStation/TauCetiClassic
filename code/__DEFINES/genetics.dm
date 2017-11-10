@@ -72,3 +72,5 @@
 #define BLIND			1
 #define MUTE			2
 #define DEAF			4
+
+#define MUTCHK_FORCED        1

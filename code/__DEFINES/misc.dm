@@ -117,10 +117,6 @@
 #define shuttle_time_in_station 1800 // 3 minutes in the station
 #define shuttle_time_to_arrive 6000 // 10 minutes to arrive
 
-//Flags for zone sleeping
-#define ZONE_ACTIVE 	1
-#define ZONE_SLEEPING 	0
-
 #define FOR_DVIEW(type, range, center, invis_flags) \
 	dview_mob.loc = center; \
 	dview_mob.see_invisible = invis_flags; \
@@ -201,6 +197,9 @@
 //Wet floor states/severity
 #define WATER_FLOOR 1
 #define LUBE_FLOOR  2
+
+#define WORLD_ICON_SIZE 32
+#define PIXEL_MULTIPLIER WORLD_ICON_SIZE/32
 
 // (Bay12 = -2), but we don't have that projectile code, so...
 #define PROJECTILE_FORCE_MISS -1

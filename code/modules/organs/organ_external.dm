@@ -413,8 +413,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		for(var/datum/wound/W in wounds)
 			//Infected wounds raise the organ's germ level
 			if (W.germ_level > germ_level)
-				germ_level++
-				break	//limit increase to a maximum of one per second
+				germ_level = min(W.amount + germ_level, W.germ_level) //faster infections from dirty wounds, but not faster than natural wound germification.
 
 /obj/item/organ/external/proc/handle_germ_effects()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
@@ -1227,8 +1226,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/weapon/organ
 	icon = 'icons/mob/human_races/r_human.dmi'
 
-/obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
-	..(loc)
+/obj/item/weapon/organ/atom_init(mapload, mob/living/carbon/human/H)
+	. = ..()
 	if(!istype(H))
 		return
 	if(H.dna)
@@ -1299,10 +1298,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/weapon/organ/head/posi
 	name = "robotic head"
 
-/obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
+/obj/item/weapon/organ/head/atom_init(mapload, mob/living/carbon/human/H)
 	if(istype(H))
 		src.icon_state = H.gender == MALE? "head_m" : "head_f"
-	..()
+	. = ..()
 	//Add (facial) hair.
 	if(H.f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
@@ -1345,6 +1344,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 				if(istype(crab))
 					crab.sting_action(brainmob)
 					H.gib()
+
 /obj/item/weapon/organ/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
 	brainmob.name = H.real_name

@@ -114,12 +114,7 @@
 /obj/item/weapon/storage/box/mechabeacons
 	name = "Exosuit Tracking Beacons"
 
-/obj/item/weapon/storage/box/mechabeacons/New()
-	..()
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
+/obj/item/weapon/storage/box/mechabeacons/atom_init()
+	. = ..()
+	for (var/i in 1 to 7)
+		new /obj/item/mecha_parts/mecha_tracking(src)

@@ -5,8 +5,8 @@
 	var/logged_in = "Cargo Department"
 	var/vmode = 1
 
-/obj/machinery/computer/stockexchange/New()
-	..()
+/obj/machinery/computer/stockexchange/atom_init()
+	. = ..()
 	logged_in = "[world.name] Cargo Department"
 
 /obj/machinery/computer/stockexchange/proc/balance()

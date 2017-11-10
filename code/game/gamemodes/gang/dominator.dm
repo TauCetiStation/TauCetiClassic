@@ -14,11 +14,10 @@
 /obj/machinery/dominator/tesla_act()
 	qdel(src)
 
-/obj/machinery/dominator/New()
-	..()
+/obj/machinery/dominator/atom_init()
+	. = ..()
 	if(!istype(ticker.mode, /datum/game_mode/gang))
-		qdel(src)
-		return
+		return INITIALIZE_HINT_QDEL
 	set_light(2)
 	poi_list |= src
 
@@ -80,7 +79,7 @@
 			icon_state = iconname
 
 	if(health <= -100)
-		new /obj/item/stack/sheet/plasteel(src.loc)
+		new /obj/item/stack/sheet/plasteel(loc)
 		qdel(src)
 
 /obj/machinery/dominator/proc/set_broken()

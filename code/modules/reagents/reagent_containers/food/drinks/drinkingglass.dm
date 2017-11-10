@@ -527,13 +527,15 @@
 
 // for /obj/machinery/vending/sovietsoda
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda
-	New()
-		..()
-		reagents.add_reagent("sodawater", volume)
-		on_reagent_change()
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda/atom_init()
+	. = ..()
+	reagents.add_reagent("sodawater", volume)
+	on_reagent_change()
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola
-	New()
-		..()
-		reagents.add_reagent("cola", volume)
-		on_reagent_change()
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola/atom_init()
+	. = ..()
+	reagents.add_reagent("cola", volume)
+	on_reagent_change()

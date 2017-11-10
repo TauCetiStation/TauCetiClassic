@@ -107,19 +107,6 @@
 	m_amt = 50
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
-/*
-/obj/item/weapon/game_kit
-	name = "Gaming Kit"
-	icon = 'icons/obj/items.dmi'
-	icon_state = "game_kit"
-	var/selected = null
-	var/board_stat = null
-	var/data = ""
-	var/base_url = "http://svn.slurm.us/public/spacestation13/misc/game_kit"
-	item_state = "sheet-metal"
-	w_class = 5.0
-*/
-
 /obj/item/weapon/gift
 	name = "gift"
 	desc = "A wrapped item."
@@ -311,21 +298,20 @@
 	icon_state = "shrapnellarge"
 	desc = "A bunch of tiny bits of shattered metal."
 
-/obj/item/weapon/shard/shrapnel/New()
+/obj/item/weapon/shard/shrapnel/atom_init()
+	. = ..()
 
-	src.icon_state = pick("shrapnellarge", "shrapnelmedium", "shrapnelsmall")
-	switch(src.icon_state)
+	icon_state = pick("shrapnellarge", "shrapnelmedium", "shrapnelsmall")
+	switch(icon_state)
 		if("shrapnelsmall")
-			src.pixel_x = rand(-12, 12)
-			src.pixel_y = rand(-12, 12)
+			pixel_x = rand(-12, 12)
+			pixel_y = rand(-12, 12)
 		if("shrapnelmedium")
-			src.pixel_x = rand(-8, 8)
-			src.pixel_y = rand(-8, 8)
+			pixel_x = rand(-8, 8)
+			pixel_y = rand(-8, 8)
 		if("shrapnellarge")
-			src.pixel_x = rand(-5, 5)
-			src.pixel_y = rand(-5, 5)
-		else
-	return
+			pixel_x = rand(-5, 5)
+			pixel_y = rand(-5, 5)
 
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"
@@ -623,9 +609,11 @@
 	icon = 'icons/obj/stock_parts.dmi'
 	w_class = 2.0
 	var/rating = 1
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/weapon/stock_parts/atom_init()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 //Rank 1
 

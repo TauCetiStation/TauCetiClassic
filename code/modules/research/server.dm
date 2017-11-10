@@ -15,15 +15,14 @@
 	var/delay = 10
 	req_access = list(access_rd) //Only the R&D can change server settings.
 
-/obj/machinery/r_n_d/server/New()
-	..()
+/obj/machinery/r_n_d/server/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/rdserver(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
-	component_parts += new /obj/item/weapon/cable_coil/red(null, 1)
-	component_parts += new /obj/item/weapon/cable_coil/red(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
 	RefreshParts()
-	src.initialize(); //Agouri
 
 /obj/machinery/r_n_d/server/Destroy()
 	griefProtection()
@@ -35,8 +34,10 @@
 		tot_rating += SP.rating
 	heat_gen /= max(1, tot_rating)
 
-/obj/machinery/r_n_d/server/initialize()
-	if(!files) files = new /datum/research(src)
+/obj/machinery/r_n_d/server/atom_init()
+	. = ..()
+	if(!files)
+		files = new /datum/research(src)
 	var/list/temp_list
 	if(!id_with_upload.len)
 		temp_list = list()
@@ -106,20 +107,17 @@
 		var/turf/simulated/L = loc
 		if(istype(L))
 			var/datum/gas_mixture/env = L.return_air()
-			if(env.temperature < (heat_amt+T0C))
 
-				var/transfer_moles = 0.25 * env.total_moles()
+			var/transfer_moles = 0.25 * env.total_moles
 
-				var/datum/gas_mixture/removed = env.remove(transfer_moles)
+			var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
-				if(removed)
+			if(removed)
+				var/heat_produced = idle_power_usage	//obviously can't produce more heat than the machine draws from it's power source
 
-					var/heat_capacity = removed.heat_capacity()
-					if(heat_capacity == 0 || heat_capacity == null)
-						heat_capacity = 1
-					removed.temperature = min((removed.temperature*heat_capacity + heating_power)/heat_capacity, 1000)
+				removed.add_thermal_energy(heat_produced)
 
-				env.merge(removed)
+			env.merge(removed)
 
 /obj/machinery/r_n_d/server/attackby(obj/item/I, mob/user)
 	if (disabled)
@@ -150,8 +148,8 @@
 	name = "Centcom Central R&D Database"
 	server_id = -1
 
-/obj/machinery/r_n_d/server/centcom/initialize()
-	..()
+/obj/machinery/r_n_d/server/centcom/atom_init()
+	. = ..()
 	var/list/no_id_servers = list()
 	var/list/server_ids = list()
 	for(var/obj/machinery/r_n_d/server/S in machines)

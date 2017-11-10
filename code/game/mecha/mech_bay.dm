@@ -23,8 +23,8 @@
 	var/repairability = 0
 	var/turf/recharging_turf = null
 
-/obj/machinery/mech_bay_recharge_port/New()
-	..()
+/obj/machinery/mech_bay_recharge_port/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/mech_recharger(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
@@ -32,7 +32,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/cable_coil/random(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
 	RefreshParts()
 	recharging_turf = get_step(loc, dir)
 
@@ -166,5 +166,6 @@
 	else
 		icon_state = "recharge_comp_on"
 
-/obj/machinery/computer/mech_bay_power_console/initialize()
+/obj/machinery/computer/mech_bay_power_console/atom_init()
+	. = ..()
 	reconnect()

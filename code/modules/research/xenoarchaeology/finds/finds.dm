@@ -32,12 +32,12 @@
 	var/method = 0// 0 = fire, 1 = brush, 2 = pick
 	origin_tech = "materials=5"
 
-/obj/item/weapon/ore/strangerock/New(loc, var/inside_item_type = 0)
-	..(loc)
+/obj/item/weapon/ore/strangerock/atom_init(mapload, inside_item_type = 0)
+	. = ..()
 
 	//method = rand(0,2)
 	if(inside_item_type)
-		new/obj/item/weapon/archaeological_find(src, new_item_type = inside_item_type)
+		new/obj/item/weapon/archaeological_find(src, inside_item_type)
 		inside = locate() in contents
 
 /*/obj/item/weapon/ore/strangerock/ex_act(var/severity)
@@ -83,7 +83,9 @@
 	icon_state = "ano01"
 	var/find_type = 0
 
-/obj/item/weapon/archaeological_find/New(loc, var/new_item_type)
+/obj/item/weapon/archaeological_find/atom_init(mapload, new_item_type)
+	. = ..()
+
 	if(new_item_type)
 		find_type = new_item_type
 	else
@@ -242,8 +244,7 @@
 			possible_spawns += /obj/item/stack/sheet/mineral/silver
 
 			var/new_type = pick(possible_spawns)
-			new_item = new new_type(src.loc)
-			new_item:amount = rand(5,45)
+			new_item = new new_type(loc, rand(5,45))
 		if(15)
 			if(prob(75))
 				new_item = new /obj/item/weapon/pen(src.loc)
@@ -545,7 +546,7 @@
 			new_item.talking_atom = new()
 			talking_atom.init(new_item)
 
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 	else if(talkative)
 		src.talking_atom = new()

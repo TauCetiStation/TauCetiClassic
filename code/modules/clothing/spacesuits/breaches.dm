@@ -19,8 +19,8 @@
 	var/burn_damage = 0                     // Specifically burn damage.
 	var/base_name                           // Used to keep the original name safe while we apply modifiers.
 
-/obj/item/clothing/suit/space/New()
-	..()
+/obj/item/clothing/suit/space/atom_init()
+	. = ..()
 	base_name = "[name]"
 
 //Some simple descriptors for breaches. Global because lazy, TODO: work out a better way to do this.
@@ -186,9 +186,9 @@ var/global/list/breach_burn_descriptors = list(
 			return
 
 		var/obj/item/stack/sheet/P = W
-		if(P.amount < 3)
-			P.use(P.amount)
-			repair_breaches(BURN, ( istype(P,/obj/item/stack/sheet/mineral/plastic) ? P.amount : (P.amount*2) ), user)
+		if(P.get_amount() < 3)
+			P.use(P.get_amount())
+			repair_breaches(BURN, ( istype(P,/obj/item/stack/sheet/mineral/plastic) ? P.get_amount() : (P.get_amount() * 2) ), user)
 		else
 			P.use(3)
 			repair_breaches(BURN, ( istype(P,/obj/item/stack/sheet/mineral/plastic) ? 3 : 5), user)

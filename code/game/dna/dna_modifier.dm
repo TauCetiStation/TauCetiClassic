@@ -53,16 +53,16 @@
 	var/open = 0
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
-/obj/machinery/dna_scannernew/New()
-	..()
+/obj/machinery/dna_scannernew/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/clonescanner(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil/random(null, 1)
-	component_parts += new /obj/item/weapon/cable_coil/random(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
 	RefreshParts()
 
 /obj/machinery/dna_scannernew/RefreshParts()
@@ -286,19 +286,19 @@
 		..()
 	return
 
-/obj/machinery/computer/scan_consolenew/New()
+/obj/machinery/computer/scan_consolenew/atom_init()
 	..()
 	for(var/i=0;i<3;i++)
 		buffers[i+1]=new /datum/dna2/record
-	spawn(5)
-		for(dir in list(NORTH,EAST,SOUTH,WEST))
-			connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
-			if(!isnull(connected))
-				break
-		spawn(250)
-			injector_ready = 1
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/scan_consolenew/atom_init_late()
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+		if(!isnull(connected))
+			break
+	spawn(250)
+		injector_ready = 1
 
 /obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(list/buffer)
 	var/list/arr = list()

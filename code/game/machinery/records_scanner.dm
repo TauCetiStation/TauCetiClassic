@@ -8,7 +8,8 @@
 	anchored = 1
 	var/lastuser = null
 
-/obj/machinery/scanner/New()
+/obj/machinery/scanner/atom_init()
+	. = ..()
 	if(!outputdir)
 		switch(dir)
 			if(1)

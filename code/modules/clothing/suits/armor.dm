@@ -40,8 +40,8 @@
 	siemens_coefficient = 0.4
 	armor = list(melee = 50, bullet = 45, laser = 23, energy = 25, bomb = 35, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/storage/flak/New()
-	..()
+/obj/item/clothing/suit/storage/flak/atom_init()
+	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.storage_slots = 4
 
@@ -112,8 +112,8 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 10, bullet = 80, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/storage/flak/bulletproof/New()
-	..()
+/obj/item/clothing/suit/storage/flak/bulletproof/atom_init()
+	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.storage_slots = 5
 

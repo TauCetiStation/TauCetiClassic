@@ -32,28 +32,25 @@
 	icon_state = "x2"
 	var/obj/structure/ladder/my_ladder
 
-	New()
-		//pick a random temple to link to
-		var/list/waypoints = list()
-		for(var/obj/effect/landmark/temple/destination/T in landmarks_list)
-			waypoints.Add(T)
-			if(!T)
-				return
-			else continue
-		var/obj/effect/landmark/temple/destination/dest_temple = pick(waypoints)
-		dest_temple.init()
+/obj/effect/landmark/temple/atom_init()
+	..()
+	//pick a random temple to link to
+	var/list/waypoints = list()
+	for(var/obj/effect/landmark/temple/destination/T in landmarks_list)
+		waypoints.Add(T)
+		continue
 
-		//connect this landmark to the other
-		my_ladder = new /obj/structure/ladder(src.loc)
-		my_ladder.id = dest_temple.my_ladder.id
-		dest_temple.my_ladder.up = my_ladder
+	var/obj/effect/landmark/temple/destination/dest_temple = pick(waypoints)
+	dest_temple.init()
 
-		//delete the landmarks now that we're finished
-		qdel(dest_temple)
-		qdel(src)
+	//connect this landmark to the other
+	my_ladder = new /obj/structure/ladder(src.loc)
+	my_ladder.id = dest_temple.my_ladder.id
+	dest_temple.my_ladder.up = my_ladder
 
-/obj/effect/landmark/temple/destination/New()
-	//nothing
+	//delete the landmarks now that we're finished
+	qdel(dest_temple)
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/temple/destination/proc/init()
 	my_ladder = new /obj/structure/ladder(src.loc)
@@ -134,7 +131,8 @@
 	var/list/animal_spawners = list()
 
 
-/obj/machinery/jungle_controller/initialize()
+/obj/machinery/jungle_controller/atom_init()
+	. = ..()
 	to_chat(world, "\red \b Setting up jungle, this may take a bleeding eternity...")
 
 	//crash dat shuttle

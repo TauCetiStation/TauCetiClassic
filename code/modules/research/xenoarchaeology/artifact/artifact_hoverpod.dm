@@ -31,13 +31,13 @@
 	name = "Hover pod wreckage"
 	icon_state = "engineering_pod-broken"
 
-	/*New()
-		..()
-		var/list/parts = list(
+/*/obj/effect/decal/mecha_wreckage/hoverpod/atom_init()
+	. = ..()
+	var/list/parts = list(
 
-		for(var/i=0;i<2;i++)
-			if(!isemptylist(parts) && prob(40))
-				var/part = pick(parts)
-				welder_salvage += part
-				parts -= part
-		return*/
+	for(var/i=0;i<2;i++)
+		if(!isemptylist(parts) && prob(40))
+			var/part = pick(parts)
+			welder_salvage += part
+			parts -= part
+	return*/

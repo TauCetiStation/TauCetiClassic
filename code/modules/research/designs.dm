@@ -1214,14 +1214,23 @@ datum/design/cryotube
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/cryo_tube
 
-datum/design/thermomachine
-	name = "Freezer/Heater Board"
-	desc = "The circuit board for a freezer/heater."
-	id = "thermomachine"
-	req_tech = list("programming" = 3, "phorontech" = 3)
+/datum/design/gas_heater
+	name = "gas heating system"
+	desc = "The circuit board for a heater."
+	id = "gasheater"
+	req_tech = list("powerstorage" = 2, "engineering" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/thermomachine
+	build_path = /obj/item/weapon/circuitboard/heater
+
+/datum/design/gas_cooler
+	name = "gas cooling system"
+	desc = "The circuit board for a freezer."
+	id = "gascooler"
+	req_tech = list("magnets" = 2, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/cooler
 
 datum/design/biogenerator
 	name = "Biogenerator Board"
@@ -1705,15 +1714,34 @@ datum/design/noreactbeaker
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = list("Misc")
 
-datum/design/defibrillators
+datum/design/defibrillators_back
 	name = "Defibrillators"
 	desc = "Defibrillators to revive people."
-	id = "defibrillators"
-	req_tech = list("combat" = 2,"biotech" = 2)
+	id = "defibrillators_back"
+	req_tech = list("biotech" = 3, "powerstorage" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
 	reliability = 76
 	build_path = /obj/item/weapon/defibrillator
+
+datum/design/defibrillators_belt
+	name = "Compact defibrillators"
+	desc = "Defibrillators to revive people."
+	id = "defibrillators_compact"
+	req_tech = list("biotech" = 3, "powerstorage" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
+	reliability = 76
+	build_path = /obj/item/weapon/defibrillator/compact
+
+datum/design/defibrillators_standalone
+	name = "Standalone defibrillators"
+	desc = "Defibrillators to revive people."
+	id = "defibrillators_standalone"
+	req_tech = list("biotech" = 4, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000)
+	build_path = /obj/item/weapon/twohanded/shockpaddles/standalone
 
 /datum/design/sensor_device
 	name = "Handheld Crew Monitor"
@@ -2081,6 +2109,15 @@ datum/design/security_hud
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
 
+datum/design/secmed_hud
+	name = "Mixed HUD"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and health status."
+	id = "secmed_hud"
+	req_tech = list("magnets" = 4, "combat" = 3, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	build_path = /obj/item/clothing/glasses/sunglasses/hud/secmed
+
 datum/design/mining_hud
 	name = "Geological Optical Scanner"
 	desc = "A heads-up display that scans the rocks in view and provides some data about their composition."
@@ -2118,9 +2155,10 @@ datum/design/mining_hud
 	g_amt = 10
 	var/datum/design/blueprint
 
-/obj/item/weapon/disk/design_disk/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+/obj/item/weapon/disk/design_disk/atom_init()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 
 /////////////////////////////////////////

@@ -86,8 +86,7 @@ var/list/ghostteleportlocs = list()
 	ghostteleportlocs = sortAssoc(ghostteleportlocs)
 	return 1
 
-
-/area/New()
+/area/New() // not ready for transfer, problems with alarms raises if this part moved into init (requires more time)
 	icon_state = ""
 	layer = 10
 	master = src
@@ -102,7 +101,14 @@ var/list/ghostteleportlocs = list()
 
 	..()
 
-	power_change()		// all machines set to current power level, also updates lighting icon
+/area/atom_init()
+
+	. = ..()
+
+	if(dynamic_lighting)
+		luminosity = FALSE
+
+	power_change() // all machines set to current power level, also updates lighting icon
 
 
 /area/proc/poweralert(state, obj/source)

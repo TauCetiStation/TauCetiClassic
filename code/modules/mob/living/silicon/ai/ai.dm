@@ -31,8 +31,9 @@ var/list/ai_verbs_default = list(
 	name = "AI"
 	icon = 'icons/mob/AI.dmi'//
 	icon_state = "ai"
-	anchored = 1 // -- TLE
-	density = 1
+	anchored = TRUE // -- TLE
+	density = TRUE
+	canmove = FALSE
 	status_flags = CANSTUN|CANPARALYSE
 	shouldnt_see = list(/obj/effect/rune)
 	var/list/network = list("SS13")
@@ -91,7 +92,8 @@ var/list/ai_verbs_default = list(
 /mob/living/silicon/ai/proc/remove_ai_verbs()
 	src.verbs -= ai_verbs_default
 
-/mob/living/silicon/ai/New(loc, var/datum/ai_laws/L, var/obj/item/device/mmi/B, var/safety = 0)
+/mob/living/silicon/ai/atom_init(mapload, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
+	. = ..()
 	var/list/possibleNames = ai_names
 
 	var/pickedName = null
@@ -104,10 +106,6 @@ var/list/ai_verbs_default = list(
 
 	real_name = pickedName
 	name = real_name
-	anchored = 1
-	canmove = 0
-	density = 1
-	loc = loc
 
 	holo_icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo1"))
 
@@ -130,7 +128,7 @@ var/list/ai_verbs_default = list(
 
 	aiCamera = new/obj/item/device/camera/siliconcam/ai_camera(src)
 
-	if (istype(loc, /turf))
+	if (isturf(loc))
 		add_ai_verbs(src)
 
 	//Languages
@@ -143,11 +141,10 @@ var/list/ai_verbs_default = list(
 	add_language("Tradeband", 1)
 	add_language("Gutter", 0)
 
-	if(!safety)//Only used by AIize() to successfully spawn an AI.
-		if (!B)//If there is no player/brain inside.
+	if(!safety) // Only used by AIize() to successfully spawn an AI.
+		if(!B)  // If there is no player/brain inside.
 			empty_playable_ai_cores += new/obj/structure/AIcore/deactivated(loc)//New empty terminal.
-			qdel(src)//Delete AI.
-			return
+			return INITIALIZE_HINT_QDEL // Delete AI.
 		else
 			if (B.brainmob.mind)
 				B.brainmob.mind.transfer_to(src)
@@ -163,9 +160,7 @@ var/list/ai_verbs_default = list(
 
 			job = "AI"
 
-	spawn(5)
-		new /obj/machinery/ai_powersupply(src)
-
+	new /obj/machinery/ai_powersupply(src)
 
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
@@ -176,10 +171,7 @@ var/list/ai_verbs_default = list(
 	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 
-
 	ai_list += src
-	..()
-	return
 
 /mob/living/silicon/ai/Destroy()
 	connected_robots.Cut()
@@ -200,15 +192,19 @@ var/list/ai_verbs_default = list(
 	var/mob/living/silicon/ai/powered_ai = null
 	invisibility = 100
 
-/obj/machinery/ai_powersupply/New(var/mob/living/silicon/ai/ai=null)
+/obj/machinery/ai_powersupply/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/ai_powersupply/atom_init_late()
+	var/mob/living/silicon/ai/ai = loc
 	powered_ai = ai
 	if(isnull(powered_ai))
 		qdel(src)
+		return
 
 	forceMove(powered_ai.loc)
 	use_power(1) // Just incase we need to wake up the power system.
-
-	..()
 
 /obj/machinery/ai_powersupply/process()
 	if(!powered_ai || powered_ai.stat & DEAD)

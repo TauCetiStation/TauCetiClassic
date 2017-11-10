@@ -8,7 +8,7 @@
 /datum/export/stack/get_amount(obj/O)
 	var/obj/item/stack/S = O
 	if(istype(S))
-		return S.amount
+		return S.get_amount()
 	return 0
 
 
@@ -113,15 +113,15 @@
 /datum/export/stack/cable
 	cost = 0.2
 	unit_name = "cable piece"
-	export_types = list(/obj/item/weapon/cable_coil)
+	export_types = list(/obj/item/stack/cable_coil)
 
 /datum/export/stack/cable/get_cost(O)
 	return round(..(O))
 
 /datum/export/stack/cable/get_amount(obj/O)
-	var/obj/item/weapon/cable_coil/S = O
+	var/obj/item/stack/cable_coil/S = O
 	if(istype(S))
-		return S.amount
+		return S.get_amount()
 	return 0
 
 /datum/export/stack/bananium

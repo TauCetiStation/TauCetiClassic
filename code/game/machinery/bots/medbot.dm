@@ -58,27 +58,28 @@
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
 	w_class = 3.0
 
-	New()
-		..()
-		spawn(5)
-			if(src.skin)
-				src.overlays += image('icons/obj/aibots.dmi', "kit_skin_[src.skin]")
-
-
-/obj/machinery/bot/medbot/New()
+/obj/item/weapon/firstaid_arm_assembly/atom_init()
 	..()
-	src.icon_state = "medibot[src.on]"
+	return INITIALIZE_HINT_LATELOAD
 
-	spawn(4)
-		if(src.skin)
-			src.overlays += image('icons/obj/aibots.dmi', "medskin_[src.skin]")
+/obj/item/weapon/firstaid_arm_assembly/atom_init_late()
+	if(skin)
+		overlays += image('icons/obj/aibots.dmi', "kit_skin_[skin]")
 
-		src.botcard = new /obj/item/weapon/card/id(src)
-		if(isnull(src.botcard_access) || (src.botcard_access.len < 1))
-			var/datum/job/doctor/J = new/datum/job/doctor
-			src.botcard.access = J.get_access()
-		else
-			src.botcard.access = src.botcard_access
+/obj/machinery/bot/medbot/atom_init()
+	..()
+	botcard = new /obj/item/weapon/card/id(src)
+	if(isnull(botcard_access) || (botcard_access.len < 1))
+		var/datum/job/doctor/J = new/datum/job/doctor
+		botcard.access = J.get_access()
+	else
+		botcard.access = botcard_access
+	icon_state = "medibot[on]"
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/bot/medbot/atom_init_late()
+	if(skin)
+		overlays += image('icons/obj/aibots.dmi', "medskin_[skin]")
 
 /obj/machinery/bot/medbot/turn_on()
 	. = ..()
@@ -149,7 +150,7 @@
 			turn_off()
 		else
 			turn_on()
-	
+
 	else if(src.locked && !issilicon(usr) && !isobserver(usr))
 		return
 
@@ -458,7 +459,7 @@
 	return
 
 /obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj)
-	if(Proj.flag == "taser")
+	if(is_type_in_list(Proj, taser_projectiles)) //taser_projectiles defined in projectile.dm
 		src.stunned = min(stunned+10,20)
 	..()
 

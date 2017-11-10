@@ -7,7 +7,8 @@
 
 	var/on=0
 
-/obj/machinery/media/receiver/boombox/initialize()
+/obj/machinery/media/receiver/boombox/atom_init()
+	. = ..()
 	if(on)
 		update_on()
 	update_icon()

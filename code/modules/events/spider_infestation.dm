@@ -19,12 +19,19 @@
 
 /datum/event/spider_infestation/start()
 	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in machines)
-		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded && temp_vent.network)
-			if(temp_vent.network.normal_members.len > 50)
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
+		if(QDELETED(temp_vent))
+			continue
+		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
+			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
+			if(temp_vent_parent.other_atmosmch.len > 50)
 				vents += temp_vent
 
-	while((spawncount >= 1) && vents.len)
+	if(!vents.len)
+		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
+		return
+
+	while(spawncount >= 1)
 		var/obj/vent = pick(vents)
 		new /obj/effect/spider/spiderling(vent.loc)
 		vents -= vent

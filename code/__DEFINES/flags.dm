@@ -33,6 +33,9 @@
 
 #define	NOREACT  4096    //Reagents dont' react inside this container.
 
+/* Secondary atom flags, for the flags_2 var, denoted with a _2 */
+#define HOLOGRAM_2   1
+
 //Species flags.
 #define NO_BLOOD           "no_blood"
 #define NO_BREATHE         "no_breathe"
@@ -87,4 +90,4 @@
 #define SLOT_POCKET       2048    // This is to allow items with a w_class of 3 or 4 to fit in pockets.
 #define SLOT_DENYPOCKET   4096    // This is to deny items with a w_class of 2 or 1 to fit in pockets.
 #define SLOT_TWOEARS      8192
-#define SLOT_LEGS        16384
+#define SLOT_TIE         16384

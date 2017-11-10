@@ -74,7 +74,7 @@
 							)
 	health_regen = 3
 
-/mob/living/simple_animal/hulk/New()
+/mob/living/simple_animal/hulk/atom_init()
 	..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
@@ -194,12 +194,6 @@
 
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
-
-/mob/living/simple_animal/hulk/airflow_stun()
-	return
-
-/mob/living/simple_animal/hulk/airflow_hit(atom/A)
-	return
 
 //mob/living/simple_animal/hulk/Process_Spacemove(movement_dir = 0)
 //	return 1 //copypasta from carp code

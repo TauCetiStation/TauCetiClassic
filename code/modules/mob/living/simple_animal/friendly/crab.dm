@@ -57,11 +57,8 @@
 		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
 			if(health < maxHealth)
-				if(MED.amount >= 1)
+				if(MED.use(1))
 					health = min(maxHealth, health + MED.heal_brute)
-					MED.amount -= 1
-					if(MED.amount <= 0)
-						qdel(MED)
 					for(var/mob/M in viewers(src, null))
 						if ((M.client && !( M.blinded )))
 							M.show_message("\blue [user] applies the [MED] on [src]")

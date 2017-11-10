@@ -9,9 +9,9 @@
 	var/transform_dead = 0
 	var/transform_standing = 0
 
-/obj/machinery/transformer/New()
+/obj/machinery/transformer/atom_init()
 	// On us
-	..()
+	. = ..()
 	new /obj/machinery/conveyor(loc, WEST, 1)
 
 /obj/machinery/transformer/Bumped(atom/movable/AM)
@@ -38,8 +38,8 @@
 		if(robot)
 			robot.lying = 0
 
-/obj/machinery/transformer/conveyor/New()
-	..()
+/obj/machinery/transformer/conveyor/atom_init()
+	. = ..()
 	var/turf/T = loc
 	if(T)
 		// Spawn Conveyour Belts

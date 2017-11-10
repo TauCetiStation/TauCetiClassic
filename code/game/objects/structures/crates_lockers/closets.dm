@@ -4,6 +4,7 @@
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "closed"
 	density = 1
+	layer = CONTAINER_STRUCTURE_LAYER
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
 	var/opened = 0
@@ -16,11 +17,24 @@
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 
-/obj/structure/closet/initialize()
-	if(!opened)		// if closed, any item at the crate's loc is put in the contents
+/obj/structure/closet/atom_init(mapload)
+	. = ..()
+	closet_list += src
+	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
 		for(var/obj/item/I in src.loc)
-			if(I.density || I.anchored || I == src) continue
+			if(I.density || I.anchored || I == src)
+				continue
 			I.forceMove(src)
+	PopulateContents()
+	update_icon()
+
+/obj/structure/closet/Destroy()
+	closet_list -= src
+	return ..()
+
+//USE THIS TO FILL IT, NOT INITIALIZE OR NEW
+/obj/structure/closet/proc/PopulateContents()
+	return
 
 /obj/structure/closet/alter_health()
 	return get_turf(src)
@@ -183,7 +197,7 @@
 			if(!WT.remove_fuel(0,user))
 				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
-			new /obj/item/stack/sheet/metal(src.loc)
+			new /obj/item/stack/sheet/metal(loc)
 			for(var/mob/M in viewers(src))
 				M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", 3, "You hear welding.", 2)
 			qdel(src)

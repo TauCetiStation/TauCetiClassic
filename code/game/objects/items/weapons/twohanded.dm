@@ -24,6 +24,7 @@
 	var/force_wielded = 0
 	var/wieldsound = null
 	var/unwieldsound = null
+	var/obj/item/weapon/twohanded/offhand/offhand_item = /obj/item/weapon/twohanded/offhand
 
 /obj/item/weapon/twohanded/proc/unwield()
 	wielded = 0
@@ -95,7 +96,7 @@
 		else
 			user.update_inv_r_hand()
 
-		var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
+		var/obj/item/weapon/twohanded/offhand/O = new offhand_item(user) ////Let's reserve his other hand~
 		O.name = "[initial(name)] - offhand"
 		O.desc = "Your second grip on the [initial(name)]"
 		user.put_in_inactive_hand(O)
@@ -174,7 +175,8 @@
 	edge = 1
 	can_embed = 0
 
-/obj/item/weapon/twohanded/dualsaber/New()
+/obj/item/weapon/twohanded/dualsaber/atom_init()
+	. = ..()
 	reflect_chance = rand(50, 65)
 	item_color = pick("red", "blue", "green", "purple","yellow","pink","black")
 	switch(item_color)

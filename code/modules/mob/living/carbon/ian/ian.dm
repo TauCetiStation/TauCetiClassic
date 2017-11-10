@@ -47,7 +47,7 @@
 	var/pose_prev = 0
 	var/pose_last = 0
 
-/mob/living/carbon/ian/New()
+/mob/living/carbon/ian/atom_init()
 	reagents = new(1000)
 	reagents.my_atom = src
 
@@ -58,7 +58,7 @@
 	dna.unique_enzymes = md5(name)
 	dna.SetUIState(DNA_UI_GENDER)
 
-	..()
+	. = ..()
 
 	verbs += /mob/living/carbon/proc/crawl
 
@@ -220,8 +220,8 @@
 	icon_state = "bubble"
 	anchored = TRUE
 
-/obj/effect/bubble_ian/New(loc, mob/M)
-	..()
+/obj/effect/bubble_ian/atom_init(loc, mob/M)
+	. = ..()
 	playsound(src, 'sound/effects/bubble_spawn.ogg', 50, 1)
 	switch(M.dir)
 		if(WEST)

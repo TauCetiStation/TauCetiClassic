@@ -40,8 +40,8 @@ var/const/HOLOPAD_MODE = 0
 	var/last_request = 0 //to prevent request spam. ~Carn
 	var/holo_range = 5 // Change to change how far the AI can move away from the holopad before deactivating.
 
-/obj/machinery/hologram/holopad/New()
-	..()
+/obj/machinery/hologram/holopad/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/holopad(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)

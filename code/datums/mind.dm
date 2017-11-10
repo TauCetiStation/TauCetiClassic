@@ -488,7 +488,8 @@
 	usr << browse(out, "window=edit_memory[src];size=400x500")
 
 /datum/mind/Topic(href, href_list)
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN))
+		return
 
 	if (href_list["role_edit"])
 		var/new_role = input("Select new role", "Assigned role", assigned_role) as null|anything in joblist
@@ -1598,7 +1599,7 @@
 /mob/living/carbon/human/mind_initialize()
 	..()
 	if(!mind.assigned_role)
-		mind.assigned_role = "Test Subject"	//default
+		mind.assigned_role = "default"	//default
 
 //MONKEY
 /mob/living/carbon/monkey/mind_initialize()

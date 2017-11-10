@@ -13,8 +13,8 @@
 	var/fry_time = 0.0
 
 
-/obj/machinery/deepfryer/New()
-	..()
+/obj/machinery/deepfryer/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/deepfryer(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)

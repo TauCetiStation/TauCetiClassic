@@ -16,7 +16,6 @@
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
-	pressure_resistance = 5
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
 
@@ -526,6 +525,19 @@
 					if(B.contents.len < B.storage_slots && w_class <= B.max_w_class)
 						return 1
 				return 0
+			if(slot_tie)
+				if(!H.w_uniform)
+					if(!disable_warning)
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
+					return FALSE
+				var/obj/item/clothing/under/uniform = H.w_uniform
+				if(uniform.accessories.len && !uniform.can_attach_accessory(src))
+					if (!disable_warning)
+						to_chat(H, "<span class='warning'>You already have an accessory of this type attached to your [uniform].</span>")
+					return FALSE
+				if( !(slot_flags & SLOT_TIE) )
+					return FALSE
+				return TRUE
 		return 0 //Unsupported slot
 		//END HUMAN
 

@@ -57,7 +57,7 @@
 	var/datum/wires/mulebot/wires = null
 	var/bloodiness = 0		// count of bloodiness
 
-/obj/machinery/bot/mulebot/New()
+/obj/machinery/bot/mulebot/atom_init()
 	..()
 	wires = new(src)
 	botcard = new(src)
@@ -68,17 +68,19 @@
 	cell.charge = 2000
 	cell.maxcharge = 2000
 
-	spawn(5)	// must wait for map loading to finish
-		if(radio_controller)
-			radio_controller.add_object(src, control_freq, filter = RADIO_MULEBOT)
-			radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
+	if(radio_controller)
+		radio_controller.add_object(src, control_freq, filter = RADIO_MULEBOT)
+		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
 
-		var/count = 0
-		for(var/obj/machinery/bot/mulebot/other in machines)
-			count++
-		if(!suffix)
-			suffix = "#[count]"
-		name = "Mulebot ([suffix])"
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/bot/mulebot/atom_init_late()
+	var/count = 0
+	for(var/obj/machinery/bot/mulebot/other in machines)
+		count++
+	if(!suffix)
+		suffix = "#[count]"
+	name = "Mulebot ([suffix])"
 
 /obj/machinery/bot/mulebot/Destroy()
 	QDEL_NULL(wires)
@@ -851,7 +853,7 @@
 	new /obj/item/device/assembly/prox_sensor(Tsec)
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
-	new /obj/item/weapon/cable_coil/cut/red(Tsec)
+	new /obj/item/stack/cable_coil/cut/red(Tsec)
 	if (cell)
 		cell.loc = Tsec
 		cell.update_icon()

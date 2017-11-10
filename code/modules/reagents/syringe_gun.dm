@@ -135,7 +135,8 @@
 	anchored = 1
 	density = 0
 
-/obj/effect/syringe_gun_dummy/New()
+/obj/effect/syringe_gun_dummy/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(15)
 	reagents = R
 	R.my_atom = src

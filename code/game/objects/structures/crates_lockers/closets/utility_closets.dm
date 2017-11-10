@@ -19,27 +19,24 @@
 	icon_closed = "emergency"
 	icon_opened = "emergencyopen"
 
-/obj/structure/closet/emcloset/New()
-	..()
-
+/obj/structure/closet/emcloset/PopulateContents()
 	new /obj/item/clothing/head/helmet/space/sk(src)
 	new /obj/item/clothing/suit/space/sk(src)
-	switch (pickweight(list("small" = 55, "aid" = 25, "tank" = 10, "both" = 10, "nothing" = 0, "delete" = 0)))
+
+	switch (pickweight(list("small" = 55, "aid" = 25, "tank" = 10, "both" = 10, "nothing" = 4, "delete" = 1)))
 		if ("small")
-			new /obj/item/weapon/tank/emergency_oxygen(src)
-			new /obj/item/weapon/tank/emergency_oxygen(src)
-			new /obj/item/clothing/mask/breath(src)
-			new /obj/item/clothing/mask/breath(src)
+			for (var/i in 1 to 2)
+				new /obj/item/weapon/tank/emergency_oxygen(src)
+				new /obj/item/clothing/mask/breath(src)
 		if ("aid")
 			new /obj/item/weapon/tank/emergency_oxygen(src)
 			new /obj/item/weapon/storage/toolbox/emergency(src)
 			new /obj/item/clothing/mask/breath(src)
 			new /obj/item/weapon/storage/firstaid/o2(src)
 		if ("tank")
-			new /obj/item/weapon/tank/emergency_oxygen/engi(src)
-			new /obj/item/clothing/mask/breath(src)
-			new /obj/item/weapon/tank/emergency_oxygen/engi(src)
-			new /obj/item/clothing/mask/breath(src)
+			for (var/i in 1 to 2)
+				new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+				new /obj/item/clothing/mask/breath(src)
 		if ("both")
 			new /obj/item/weapon/storage/toolbox/emergency(src)
 			new /obj/item/weapon/tank/emergency_oxygen/engi(src)
@@ -57,7 +54,7 @@
 			new /obj/structure/closet/firecloset(src.loc)
 			qdel(src)*/
 
-/obj/structure/closet/emcloset/legacy/New()
+/obj/structure/closet/emcloset/legacy/PopulateContents()
 	..()
 	new /obj/item/weapon/tank/oxygen(src)
 	new /obj/item/clothing/mask/gas/coloured(src)
@@ -72,20 +69,14 @@
 	icon_closed = "firecloset"
 	icon_opened = "fireclosetopen"
 
-/obj/structure/closet/firecloset/New()
-	..()
-
+/obj/structure/closet/firecloset/PopulateContents()
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas/coloured(src)
 	new /obj/item/weapon/tank/oxygen/red(src)
 	new /obj/item/weapon/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
 
-/obj/structure/closet/firecloset/full/New()
-	..()
-	sleep(4)
-	contents = list()
-
+/obj/structure/closet/firecloset/full/PopulateContents()
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas/coloured(src)
 	new /obj/item/device/flashlight(src)
@@ -110,8 +101,7 @@
 	icon_closed = "toolcloset"
 	icon_opened = "toolclosetopen"
 
-/obj/structure/closet/toolcloset/New()
-	..()
+/obj/structure/closet/toolcloset/PopulateContents()
 	if(prob(40))
 		new /obj/item/clothing/suit/storage/hazardvest(src)
 	if(prob(70))
@@ -130,12 +120,9 @@
 		new /obj/item/device/t_scanner(src)
 	if(prob(20))
 		new /obj/item/weapon/storage/belt/utility(src)
-	if(prob(30))
-		new /obj/item/weapon/cable_coil/random(src)
-	if(prob(30))
-		new /obj/item/weapon/cable_coil/random(src)
-	if(prob(30))
-		new /obj/item/weapon/cable_coil/random(src)
+	for (var/i in 1 to 3)
+		if(prob(30))
+			new /obj/item/stack/cable_coil/random(src)
 	if(prob(20))
 		new /obj/item/device/multitool(src)
 	if(prob(5))
@@ -157,12 +144,10 @@
 	icon_opened = "toolclosetopen"
 	icon_closed = "radsuitcloset"
 
-/obj/structure/closet/radiation/New()
-	..()
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
+/obj/structure/closet/radiation/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/suit/radiation(src)
+		new /obj/item/clothing/head/radiation(src)
 
 /*
  * Bombsuit closet
@@ -174,13 +159,11 @@
 	icon_closed = "bombsuit"
 	icon_opened = "bombsuitopen"
 
-/obj/structure/closet/bombcloset/New()
-	..()
-	sleep(2)
-	new /obj/item/clothing/suit/bomb_suit( src )
-	new /obj/item/clothing/under/color/black( src )
-	new /obj/item/clothing/shoes/black( src )
-	new /obj/item/clothing/head/bomb_hood( src )
+/obj/structure/closet/bombcloset/PopulateContents()
+	new /obj/item/clothing/suit/bomb_suit(src)
+	new /obj/item/clothing/under/color/black(src)
+	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/clothing/head/bomb_hood(src)
 
 
 /obj/structure/closet/bombclosetsecurity
@@ -190,13 +173,11 @@
 	icon_closed = "bombsuitsec"
 	icon_opened = "bombsuitsecopen"
 
-/obj/structure/closet/bombclosetsecurity/New()
-	..()
-	sleep(2)
-	new /obj/item/clothing/suit/bomb_suit/security( src )
-	new /obj/item/clothing/under/rank/security( src )
-	new /obj/item/clothing/shoes/brown( src )
-	new /obj/item/clothing/head/bomb_hood/security( src )
+/obj/structure/closet/bombclosetsecurity/PopulateContents()
+	new /obj/item/clothing/suit/bomb_suit/security(src)
+	new /obj/item/clothing/under/rank/security(src)
+	new /obj/item/clothing/shoes/brown(src)
+	new /obj/item/clothing/head/bomb_hood/security(src)
 
 /*
  * Hydrant
@@ -207,13 +188,11 @@
 	icon_state = "hydrant"
 	icon_closed = "hydrant"
 	icon_opened = "hydrant_open"
-	anchored = 1
-	density = 0
-	wall_mounted = 1
+	anchored = TRUE
+	density = FALSE
+	wall_mounted = TRUE
 
-/obj/structure/closet/hydrant/New()
-	..()
-	sleep(2)
+/obj/structure/closet/hydrant/PopulateContents()
 	new /obj/item/clothing/suit/fire/firefighter(src)
 	new /obj/item/clothing/mask/gas/coloured(src)
 	new /obj/item/device/flashlight(src)
@@ -230,9 +209,9 @@
 	icon_state = "medical_wall"
 	icon_closed = "medical_wall"
 	icon_opened = "medical_wall_open"
-	anchored = 1
-	density = 0
-	wall_mounted = 1
+	anchored = TRUE
+	density = FALSE
+	wall_mounted = TRUE
 
 /obj/structure/closet/medical_wall/update_icon()
 	if(!opened)

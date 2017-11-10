@@ -73,7 +73,7 @@
 	var/braintype = "Cyborg"
 	var/pose
 
-/mob/living/silicon/robot/New(loc,var/syndie = 0,var/unfinished = 0)
+/mob/living/silicon/robot/atom_init()
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
@@ -88,19 +88,6 @@
 	updatename("Default")
 	updateicon()
 
-	if(syndie)
-		if(!cell)
-			cell = new /obj/item/weapon/stock_parts/cell(src)
-
-		laws = new /datum/ai_laws/antimov()
-		lawupdate = 0
-		scrambledcodes = 1
-		cell.maxcharge = 25000
-		cell.charge = 25000
-		module = new /obj/item/weapon/robot_module/syndicate(src)
-		hands.icon_state = "standard"
-		icon_state = "secborg"
-		modtype = "Security"
 	init()
 
 	radio = new /obj/item/device/radio/borg(src)
@@ -112,7 +99,6 @@
 			camera.status = 0
 
 	initialize_components()
-	//if(!unfinished)
 	// Create all the robot parts.
 	for(var/V in components) if(V != "power cell")
 		var/datum/robot_component/C = components[V]
@@ -124,7 +110,7 @@
 		cell.maxcharge = 7500
 		cell.charge = 7500
 
-	..()
+	. = ..()
 
 	if(cell)
 		var/datum/robot_component/cell_component = components["power cell"]
@@ -303,7 +289,7 @@
 	feedback_inc("cyborg_[lowertext(modtype)]",1)
 	updatename()
 
-	if(modtype == "Medical" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
+	if(modtype == "Crisis" || modtype == "Surgeon" || modtype == "Security" || modtype == "Combat" || modtype == "Syndicate")
 		status_flags &= ~CANPUSH
 
 	choose_icon(6,module_sprites)
@@ -409,6 +395,8 @@
 	src << browse(dat, "window=robotdiagnosis")
 
 /mob/living/silicon/robot/proc/toggle_lights()
+	if (stat == DEAD)
+		return
 	lights_on = !lights_on
 	to_chat(usr, "You [lights_on ? "enable" : "disable"] your integrated light.")
 	if(lights_on)
@@ -580,11 +568,11 @@
 			to_chat(user, "Need more welding fuel!")
 			return
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && (wiresexposed || istype(src,/mob/living/silicon/robot/drone)))
+	else if(istype(W, /obj/item/stack/cable_coil) && (wiresexposed || istype(src,/mob/living/silicon/robot/drone)))
 		if (!getFireLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
-		var/obj/item/weapon/cable_coil/coil = W
+		var/obj/item/stack/cable_coil/coil = W
 		if(!coil.use(1))
 			return
 		adjustFireLoss(-30)

@@ -28,10 +28,16 @@
 
 	return
 
-/obj/machinery/pdapainter/New()
-	..()
-	var/blocked = list(/obj/item/device/pda/silicon/pai, /obj/item/device/pda/silicon, /obj/item/device/pda/silicon/robot,
-						/obj/item/device/pda/heads, /obj/item/device/pda/clear, /obj/item/device/pda/syndicate)
+/obj/machinery/pdapainter/atom_init()
+	. = ..()
+	var/blocked = list(
+		/obj/item/device/pda/silicon/pai,
+		/obj/item/device/pda/silicon,
+		/obj/item/device/pda/silicon/robot,
+		/obj/item/device/pda/heads,
+		/obj/item/device/pda/clear,
+		/obj/item/device/pda/syndicate
+		)
 
 	for(var/P in typesof(/obj/item/device/pda)-blocked)
 		var/obj/item/device/pda/D = new P
@@ -39,7 +45,7 @@
 		//D.name = "PDA Style [colorlist.len+1]" //Gotta set the name, otherwise it all comes up as "PDA"
 		D.name = D.icon_state //PDAs don't have unique names, but using the sprite names works.
 
-		src.colorlist += D
+		colorlist += D
 
 
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/user)

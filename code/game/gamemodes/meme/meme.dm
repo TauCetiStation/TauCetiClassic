@@ -70,7 +70,7 @@
 		log_misc("Everything was O.K. No meme candidates over limit. Limit was [meme_limit] and possible meme candidates is [antag_candidates.len]")
 
 	// for each 2 possible memes, add one meme and one host
-	/*for(var/mob/new_player/player in player_list)
+	/*for(var/mob/dead/new_player/player in player_list)
 	var/list/possible_targets = list()
 		for(var/datum/mind/possible_target in ticker.minds)
 			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD))
@@ -82,7 +82,7 @@
 		return 0 // not enough candidates for meme
 
 	while(antag_candidates.len >= 1)
-		//for(var/mob/new_player/player in player_list)
+		//for(var/mob/dead/new_player/player in player_list)
 		var/datum/mind/meme = pick(antag_candidates)
 		antag_candidates.Remove(meme)
 

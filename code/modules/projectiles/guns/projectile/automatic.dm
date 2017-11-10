@@ -45,10 +45,9 @@
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 
 
-/obj/item/weapon/gun/projectile/automatic/c20r/New()
-	..()
+/obj/item/weapon/gun/projectile/automatic/c20r/atom_init()
+	. = ..()
 	update_icon()
-	return
 
 /obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target, mob/living/user, flag)
 	..()
@@ -244,10 +243,9 @@
 	recoil = 0
 	energy_gun = 1
 
-/obj/item/weapon/gun/projectile/automatic/l10c/New()
-	..()
+/obj/item/weapon/gun/projectile/automatic/l10c/atom_init()
+	. = ..()
 	update_icon()
-	return
 
 /obj/item/weapon/gun/projectile/automatic/l10c/process_chamber()
 	return ..(0, 1, 1)
@@ -427,10 +425,9 @@
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/Gunshot.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/bulldog/New()
-	..()
+/obj/item/weapon/gun/projectile/automatic/bulldog/atom_init()
+	. = ..()
 	update_icon()
-	return
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/proc/update_magazine()
 	if(magazine)
@@ -462,8 +459,8 @@
 	mag_type = /obj/item/ammo_box/magazine/m556
 	fire_sound = 'sound/weapons/Gunshot.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/a28/New()
-	..()
+/obj/item/weapon/gun/projectile/automatic/a28/atom_init()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/gun/projectile/automatic/a28/update_icon()
@@ -483,8 +480,8 @@
 	fire_sound = 'sound/weapons/guns/ak74_fire.ogg'
 	var/icon/mag_icon = icon('icons/obj/gun.dmi',"mag-a74")
 
-/obj/item/weapon/gun/projectile/automatic/a74/New()
-	..()
+/obj/item/weapon/gun/projectile/automatic/a74/atom_init()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/gun/projectile/automatic/a74/update_icon()

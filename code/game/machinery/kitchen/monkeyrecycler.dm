@@ -14,13 +14,26 @@
 	var/required_grind = 5
 	var/cube_production = 1
 
-/obj/machinery/monkey_recycler/New()
-	..()
+/obj/machinery/monkey_recycler/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/monkey_recycler(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	RefreshParts()
+	
+/obj/machinery/monkey_recycler/proc/grind(var/M, mob/user)
+	user.drop_item()
+	qdel(M)
+	to_chat(user, "\blue You stuff the monkey in the machine.")
+	playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
+	var/offset = prob(50) ? -2 : 2
+	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
+	use_power(500)
+	src.grinded++
+	sleep(50)
+	pixel_x = initial(pixel_x)
+	to_chat(user, "\blue The machine now has [grinded] monkeys worth of material stored.")
 
 /obj/machinery/monkey_recycler/RefreshParts()
 	var/req_grind = 5
@@ -51,6 +64,14 @@
 
 	if (src.stat != CONSCIOUS) //NOPOWER etc
 		return
+	if (istype(O, /obj/item/weapon/holder/monkey))
+		var/mob/living/G
+		for (var/mob/living/M in O.contents)
+			G = M
+		if (G.stat == CONSCIOUS)
+			to_chat(user, "\red The monkey is struggling far too much to put it in the recycler.")
+		else
+			grind(O, user)
 	if (istype(O, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = O
 		var/grabbed = G.affecting
@@ -59,17 +80,7 @@
 			if(target.stat == CONSCIOUS)
 				to_chat(user, "\red The monkey is struggling far too much to put it in the recycler.")
 			else
-				user.drop_item()
-				qdel(target)
-				to_chat(user, "\blue You stuff the monkey in the machine.")
-				playsound(src.loc, 'sound/machines/juicer.ogg', 50, 1)
-				var/offset = prob(50) ? -2 : 2
-				animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
-				use_power(500)
-				src.grinded++
-				sleep(50)
-				pixel_x = initial(pixel_x)
-				to_chat(user, "\blue The machine now has [grinded] monkeys worth of material stored.")
+				grind(target, user)
 		else
 			to_chat(user, "\red The machine only accepts monkeys!")
 	return

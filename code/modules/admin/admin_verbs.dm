@@ -76,7 +76,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/response_team, // Response Teams admin verb
 	/client/proc/toggle_antagHUD_use,
 	/client/proc/toggle_antagHUD_restrictions,
-	/client/proc/allow_character_respawn,    /* Allows a ghost to respawn */
+	/client/proc/allow_character_respawn,	/* Allows a ghost to respawn */
 	/client/proc/aooc,
 	/client/proc/change_security_level,
 	/client/proc/empty_ai_core_toggle_latejoin,
@@ -105,14 +105,16 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/make_sound,
 	/client/proc/toggle_random_events,
-	/client/proc/set_ooc,
+	/client/proc/set_global_ooc,
 	/client/proc/editappear,
 	/client/proc/roll_dices,
 	/client/proc/epileptic_anomaly,
 //	/client/proc/Noir_anomaly,
 	/client/proc/epileptic_anomaly_cancel,
 	/client/proc/achievement,
-	/client/proc/toggle_AI_interact /*toggle admin ability to interact with machines as an AI*/
+	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
+	/client/proc/centcom_barriers_toggle,
+	/client/proc/gateway_fix
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
@@ -148,6 +150,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/Debug2,
 	/client/proc/ZASSettings,
 	/client/proc/cmd_debug_make_powernets,
+	/client/proc/cmd_debug_load_junkyard,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_admin_delete,
 	/client/proc/cmd_debug_del_all,
@@ -164,7 +167,9 @@ var/list/admin_verbs_debug = list(
 	/*/client/proc/callproc,*/
 //	/proc/machine_upgrade,
 	/client/proc/toggledebuglogs,
-	/client/proc/view_runtimes
+	/client/proc/view_runtimes,
+	/client/proc/cmd_display_del_log,
+	/client/proc/cmd_display_init_log
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -180,10 +185,18 @@ var/list/admin_verbs_permissions = list(
 var/list/admin_verbs_rejuv = list(
 	/client/proc/respawn_character
 	)
+var/list/admin_verbs_whitelist = list(
+	/client/proc/get_whitelist, 			//Whitelist
+	/client/proc/add_to_whitelist,
+	/datum/admins/proc/whitelist_panel
+	)
+var/list/admin_verbs_event = list(
+	/client/proc/event_map_loader
+	)
 
 //verbs which can be hidden - needs work
 var/list/admin_verbs_hideable = list(
-	/client/proc/set_ooc,
+	/client/proc/set_global_ooc,
 	/client/proc/deadmin_self,
 //	/client/proc/deadchat,
 	/client/proc/toggleprayers,
@@ -280,11 +293,13 @@ var/list/admin_verbs_hideable = list(
 			verbs += admin_verbs_sounds
 		if(holder.rights & R_SPAWN)
 			verbs += admin_verbs_spawn
+		if(holder.rights & R_WHITELIST)
+			verbs += admin_verbs_whitelist
+		if(holder.rights & R_EVENT)
+			verbs += admin_verbs_event
 
 		if(holder.rights & R_ADMIN)
 			control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
-		if(holder.rights & R_FUN)
-			verbs += admin_verbs_event
 
 /client/proc/remove_admin_verbs()
 	verbs.Remove(
@@ -368,7 +383,7 @@ var/list/admin_verbs_hideable = list(
 
 		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	else if(istype(mob,/mob/new_player))
+	else if(isnewplayer(mob))
 		to_chat(src, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>")
 	else
 		//ghostize
@@ -447,12 +462,15 @@ var/list/admin_verbs_hideable = list(
 	return
 
 /client/proc/colorooc()
-	set category = "Fun"
-	set name = "OOC Text Color"
-	if(!holder)	return
-	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
-	if(new_ooccolor)
-		prefs.ooccolor = new_ooccolor
+	set category = "OOC"
+	set name = "Set Admin OOC Color"
+	if(!holder)
+		return
+	if(!config.allow_admin_ooccolor)
+		to_chat(usr, "<span class='warning'>Currently disabled by config.</span>")
+	var/new_aooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
+	if(new_aooccolor)
+		prefs.aooccolor = new_aooccolor
 		prefs.save_preferences()
 	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
@@ -482,22 +500,22 @@ var/list/admin_verbs_hideable = list(
 /client/proc/warn(warned_ckey)
 	if(!check_rights(R_ADMIN))
 		return
-	
+
 	warned_ckey = ckey(warned_ckey)
-	
+
 	var/reason = input(usr, "Reason?", "Warn Reason","") as text|null
 
 	if(!warned_ckey || !reason)
 		return
-	
+
 	notes_add(warned_ckey, "ADMINWARN: " + reason, src)
-	
+
 	var/client/C = directory[warned_ckey]
 	reason = sanitize(reason)
-	
+
 	if(C)
 		to_chat(C, "<span class='alert'><span class='reallybig bold'>You have been formally warned by an administrator.</span><br>Reason: [reason].</span>")
-	
+
 	log_admin("[src.key] has warned [warned_ckey] with reason: [reason]")
 	message_admins("[key_name_admin(src)] has warned [C ? key_name_admin(C) : warned_ckey] with reason: [reason].")
 
@@ -673,7 +691,8 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Sets the station security level."
 	set category = "Admin"
 
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN))
+		return
 	var sec_level = input(usr, "It's currently code [get_security_level()].", "Select Security Level")  as null|anything in (list("green","blue","red","delta")-get_security_level())
 	if(alert("Switch from code [get_security_level()] to code [sec_level]?","Change security level?","Yes","No") == "Yes")
 		set_security_level(sec_level)
@@ -694,7 +713,8 @@ var/list/admin_verbs_hideable = list(
 	set name = "Edit Appearance"
 	set category = "Fun"
 
-	if(!check_rights(R_FUN))	return
+	if(!check_rights(R_FUN))
+		return
 
 	if(!istype(M, /mob/living/carbon/human))
 		to_chat(usr, "\red You can only do this to humans!")
@@ -853,7 +873,8 @@ var/list/admin_verbs_hideable = list(
 	set name = "Give Achievement"
 	set category = "Fun"
 
-	if(!check_rights(R_FUN))	return
+	if(!check_rights(R_FUN))
+		return
 
 	var/achoice = "Cancel"
 
@@ -895,7 +916,8 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	set name = "Antag OOC"
 
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN))
+		return
 
 	var/msg = sanitize(copytext(input(usr, "", "Antag OOC") as text, 1, MAX_MESSAGE_LEN))
 	if(!msg)	return
@@ -916,6 +938,140 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Allows you to interact with most machines as an AI would as a ghost"
 
 	AI_Interact = !AI_Interact
-	machine_interactive_ghost = AI_Interact 
+	machine_interactive_ghost = AI_Interact
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
+
+//////////////////////////////
+// Map loader
+//////////////////////////////
+
+/client/proc/event_map_loader()
+	set category = "Event"
+	set name = "Event map loader"
+	if(!check_rights(R_EVENT))
+		return
+
+	var/list/AllowedMaps = list()
+
+	var/list/Lines = file2list("maps/event_map_list.txt")
+	if(!Lines.len)	return
+	for (var/t in Lines)
+		if (!t)
+			continue
+		t = trim(t)
+		if (length(t) == 0)
+			continue
+		else if (copytext(t, 1, 2) == "#")
+			continue
+		var/pos = findtext(t, " ")
+		var/name = null
+		if (pos)
+			// No, don't do lowertext here, that breaks paths on linux
+			name = copytext(t, 1, pos)
+		//	value = copytext(t, pos + 1)
+		else
+			// No, don't do lowertext here, that breaks paths on linux
+			name = t
+		if (!name)
+			continue
+
+		AllowedMaps.Add(name)
+
+
+	AllowedMaps += "--CANCEL--"
+
+	var/choice = input("Select a map", , "CANCEL") in AllowedMaps
+	if(choice == "--CANCEL--") return
+
+	message_admins("[key_name_admin(src)] started loading event-map [choice]")
+	log_admin("[key_name_admin(src)] started loading event-map [choice]")
+
+	if(maploader.load_new_z_level(choice))//, load_speed = 100)
+		message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
+		log_admin("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
+	else
+		message_admins("[key_name_admin(src)] failed to load event-map [choice].")
+
+//////////////////////////////
+// Noir event
+//////////////////////////////
+/*
+/client/proc/Noir_anomaly()
+	set category = "Event"
+	set name = "Noir event(in dev!)"
+	if(!check_rights(R_PERMISSIONS))	return
+
+	if(alert("Are you really sure?",,"Yes","No") != "Yes")
+		return
+
+	for(var/atom/O in world)
+		if(O.icon)
+			if(O.color)
+				O.color = null
+
+			var/icon/newIcon = icon(O.icon)
+			newIcon.GrayScale()
+			O.icon = newIcon
+
+	log_admin("[key_name(src)] started noir event!", 1)
+	message_admins("\blue [key_name_admin(src)] started noir event!", 1)
+*/
+//////////////////////////////
+// Gateway
+//////////////////////////////
+
+/client/proc/gateway_fix()
+	set category = "Event"
+	set name = "Connect Gateways"
+
+	if(!check_rights(R_FUN))
+		return
+
+	for(var/obj/machinery/gateway/G in machines)
+		G.atom_init()
+
+	log_admin("[key_name(src)] connected gates")
+	message_admins("\blue [key_name_admin(src)] connected gates")
+
+//////////////////////////////
+// Velocity\Centcomm barriers
+//////////////////////////////
+var/centcom_barriers_stat = 1
+
+/client/proc/centcom_barriers_toggle()
+	set category = "Event"
+	set name = "Centcom Barriers Toggle"
+
+	centcom_barriers_stat = !centcom_barriers_stat
+
+	if(!check_rights(R_FUN))
+		return
+
+	for(var/obj/effect/landmark/trololo/L in landmarks_list)
+		L.active = centcom_barriers_stat
+	for(var/obj/structure/centcom_barrier/B in world)
+		B.density = centcom_barriers_stat
+
+	log_admin("[key_name(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
+	message_admins("\blue [key_name_admin(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
+
+/obj/effect/landmark/trololo
+	name = "Rickroll"
+	//var/melody = 'sound/Never_Gonna_Give_You_Up.ogg'	//NOPE
+	var/message = "<i>\blue It's not the door you're looking for...</i>"
+	var/active = 1
+	var/lchannel = 999
+
+/obj/effect/landmark/trololo/Crossed(mob/M)
+	if(!active) return
+	/*if(istype(M, /mob/living/carbon))
+		M << sound(melody,0,1,lchannel,20)*/
+
+/obj/structure/centcom_barrier
+	name = "Invisible wall"
+	anchored = 1
+	density = 1
+	invisibility = 101
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "x3"
