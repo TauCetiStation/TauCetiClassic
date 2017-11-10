@@ -4949,7 +4949,7 @@
 "bRi" = (/obj/machinery/vending/assist,/turf/simulated/floor{dir = 2; icon_state = "brown"},/area/quartermaster/miningoffice)
 "bRj" = (/obj/structure/table/reinforced,/obj/item/clothing/glasses/science{pixel_x = 2; pixel_y = 6},/obj/item/clothing/glasses/science{pixel_x = 2; pixel_y = 6},/obj/item/device/gps/science,/obj/item/device/gps/science,/obj/item/device/gps/science,/obj/item/device/gps/science,/turf/simulated/floor{icon_state = "white"},/area/rnd/telesci)
 "bRk" = (/obj/machinery/atmospherics/pipe/manifold4w/visible,/obj/machinery/atmospherics/pipe/simple/hidden/supply,/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{dir = 9},/turf/simulated/floor,/area/medical/cryo)
-"bRl" = (/obj/machinery/atmospherics/components/unary/thermomachine/freezer{dir = 4},/obj/machinery/atmospherics/components/unary/vent_scrubber/on{dir = 4},/turf/simulated/floor,/area/medical/cryo)
+"bRl" = (/turf/simulated/floor,/area/medical/cryo)
 "bRm" = (/turf/simulated/wall/r_wall,/area/rnd/storage)
 "bRn" = (/turf/simulated/floor,/area/quartermaster/miningoffice)
 "bRo" = (/obj/structure/barricade/wooden,/turf/simulated/floor/plating,/area/maintenance/aft)

@@ -71,6 +71,7 @@
 	*/
 	if (hcarp)
 		hcattack_ai(A)
+		return
 
 	A.attack_ai(src)
 
@@ -99,10 +100,9 @@
 	A.AICtrlClick(src)
 /mob/living/silicon/ai/AltClickOn(atom/A)
 	if(active_module)
-		if(ismachinery(A))
-			module_handler(A)
-	else
-		A.AIAltClick(src)
+		active_module.AIAltClickHandle(A)
+		return
+	A.AIAltClick(src)
 
 /*
 	The following criminally helpful code is just the previous code cleaned up;

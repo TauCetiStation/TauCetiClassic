@@ -156,6 +156,9 @@
 #define APC_MIN_TO_MALDF_DECLARE 5
 //if malf apcs < than this, makf can't begin the takeover attempt
 
+#define APC_BONUS_WITH_INTERCEPT 3
+//If AI intercepts message, he can hack additional APC_BONUS_WITH_INTERCEPT APCs without attracting attention
+
 // Maploader bounds indices
 #define MAP_MINX 1
 #define MAP_MINY 2

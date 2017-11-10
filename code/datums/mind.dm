@@ -1190,14 +1190,10 @@
 					current.verbs.Remove(/mob/living/silicon/ai/proc/choose_modules,
 						/datum/game_mode/malfunction/proc/takeover,
 						/datum/game_mode/malfunction/proc/ai_win,
-						/client/proc/fireproof_core,
-						/client/proc/upgrade_turrets,
 						/client/proc/disable_rcd,
 						/client/proc/overload_machine,
 						/client/proc/nanject,
 						/client/proc/blackout,
-						/client/proc/interhack,
-						/client/proc/holohack,
 						/client/proc/reactivate_camera)
 
 					current:laws = new /datum/ai_laws/nanotrasen
