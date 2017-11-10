@@ -282,8 +282,9 @@
 	mouse_opacity = 0
 
 /obj/machinery/shower/attack_hand(mob/M)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	if(is_payed)
 		on = !on

@@ -76,8 +76,9 @@
 		return ..()
 
 /obj/machinery/atmospherics/components/binary/valve/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	update_icon(1)
 	sleep(10)

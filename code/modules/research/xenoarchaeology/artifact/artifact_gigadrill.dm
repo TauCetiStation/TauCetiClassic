@@ -12,8 +12,9 @@
 	var/turf/drilling_turf
 
 /obj/machinery/giga_drill/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 	if(active)
 		active = 0
 		icon_state = "gigadrill"

@@ -142,8 +142,9 @@
 
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	user.Move_Pulled(src)
 
@@ -248,8 +249,9 @@
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	if(position == 0)
 		if(convdir)   //is it a oneway switch

@@ -205,7 +205,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		return
 
 	if(isobserver(user))
-		to_chat(user, "[src]'s UI has no support for observer, ask coder team to implement it.")
+		to_chat(user, "[src]'s UI has no support for observer.")
 		return
 
 	if(ishuman(user) || issilicon(user)) // need abit of rewriting this to make it work for observers.

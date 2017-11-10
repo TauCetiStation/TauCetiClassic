@@ -229,14 +229,14 @@ var/bomb_set
 	..()
 
 /obj/machinery/nuclearbomb/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	if (extended)
 		if (!ishuman(user) && !isobserver(user))
 			to_chat(usr, "\red You don't have the dexterity to do this!")
-			return
-		ui_interact(user)
+			return 1
 	else if (deployable)
 		if(removal_stage < 5)
 			anchored = TRUE

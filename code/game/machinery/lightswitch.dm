@@ -45,8 +45,9 @@
 		to_chat(user, "A light switch. It is [on? "on" : "off"].")
 
 /obj/machinery/light_switch/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	on = !on
 	playsound(src, 'sound/items/buttonclick.ogg', 20, 1, 1)

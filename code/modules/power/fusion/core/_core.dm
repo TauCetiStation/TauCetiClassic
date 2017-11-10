@@ -95,8 +95,9 @@ var/list/fusion_cores = list()
 		return ..()
 
 /obj/machinery/power/fusion_core/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	visible_message("<span class='notice'>\The [user] hugs \the [src] to make it feel better!</span>")
 	if(owned_field)

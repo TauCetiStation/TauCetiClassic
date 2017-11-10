@@ -28,11 +28,12 @@
 		AM.forceMove(loc)
 
 /obj/machinery/scrap/stacking_machine/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	if(scrap_amount < 1)
-		return
+		return 1
 	visible_message("<span class='notice'>\The [src] was forced to release everything inside.</span>")
 	new /obj/item/stack/sheet/refined_scrap(loc, scrap_amount)
 	scrap_amount = 0

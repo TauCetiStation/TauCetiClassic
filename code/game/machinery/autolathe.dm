@@ -140,7 +140,6 @@ var/global/list/autolathe_recipes_hidden = list( \
 	if(disabled)
 		return
 
-	user.set_machine(src)
 	var/coeff = 2 ** prod_coeff
 	var/dat
 

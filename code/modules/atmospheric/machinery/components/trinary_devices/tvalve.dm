@@ -80,12 +80,13 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/trinary/tvalve/attack_ai(mob/user)
-	if(interact_offline && IsAdminGhost(user) || !interact_offline)
+	if(IsAdminGhost(user) || !interact_offline)
 		return ..()
 
 /obj/machinery/atmospherics/components/trinary/tvalve/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	update_icon(1)
 	sleep(10)

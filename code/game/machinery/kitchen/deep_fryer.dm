@@ -69,8 +69,9 @@
 			visible_message("[src] emits an acrid smell!")
 
 /obj/machinery/deepfryer/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	if(frying)
 		to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")

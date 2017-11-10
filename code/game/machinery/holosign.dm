@@ -50,8 +50,9 @@
 	return attack_hand(user)
 
 /obj/machinery/holosign_switch/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	use_power(5)
 

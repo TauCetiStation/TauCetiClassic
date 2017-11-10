@@ -316,14 +316,14 @@ Class Procs:
 // set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user)
 	if ((user.lying || user.stat) && !IsAdminGhost(user))
-		return TRUE
+		return 1
 	if(!is_interactable())
-		return TRUE
+		return 1
 	if (!(ishuman(user) || issilicon(user) || ismonkey(user) || isalienqueen(user) || IsAdminGhost(user)))
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
-		return TRUE
+		return 1
 	if (!can_mob_interact(user))
-		return TRUE
+		return 1
 	if(hasvar(src, "wires"))              // Lets close wires window if panel is closed.
 		var/datum/wires/DW = vars["wires"] // Wires and machinery that uses this feature actually should be refactored.
 		if(istype(DW) && !DW.can_use(user)) // Many of them do not use panel_open var.
@@ -331,13 +331,13 @@ Class Procs:
 	if(interact_allowed && !allowed(user))
 		allowed_fail(user)
 		to_chat(user, "<span class='warning'>Access Denied.</span>")
-		return TRUE
+		return 1
 
 	var/area/A = get_area(src)
 	A.master.powerupdate = 1 // <- wtf is this var and its comments...
 
 	interact(user)
-	return FALSE
+	return 0
 
 /obj/machinery/CheckParts(list/parts_list)
 	..()

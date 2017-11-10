@@ -422,8 +422,9 @@
 			return
 
 /obj/machinery/teleport/station/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	if(!panel_open)
 		toggle(user)

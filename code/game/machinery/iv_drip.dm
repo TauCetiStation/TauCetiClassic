@@ -141,8 +141,9 @@
 		return ..()
 
 /obj/machinery/iv_drip/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	if(beaker)
 		beaker.loc = get_turf(src)

@@ -82,12 +82,14 @@ var/list/fuel_injectors = list()
 	return ..()
 
 /obj/machinery/fusion_fuel_injector/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	if(injecting)
 		to_chat(user, "<span class='warning'>Shut \the [src] off before playing with the fuel rod!</span>")
-	else if(cur_assembly)
+		return 1
+	if(cur_assembly)
 		cur_assembly.forceMove(get_turf(src))
 		user.put_in_hands(cur_assembly)
 		visible_message("<span class='notice'>\The [user] removes \the [cur_assembly] from \the [src].</span>")

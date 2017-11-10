@@ -38,13 +38,11 @@
 		stat &= ~NOPOWER
 
 /obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
-	if(..())
-		return 1
-	if(IsAdminGhost(user))
-		to_chat(user, "<span class='notice'>[src] has no support for admin interactions.</span>")
+	. = ..()
+	if(.)
 		return
 	if(!ishuman(user) || lastuser == user.real_name)
-		return
+		return 1
 	use_power(500)
 	flick("scanner_on",src)
 	lastuser = user.real_name

@@ -11,7 +11,8 @@
 	var/on = TRUE
 
 /obj/machinery/igniter/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	use_power(50)
@@ -108,7 +109,10 @@
 	return attack_hand(user)
 
 /obj/machinery/ignition_switch/attack_hand(mob/user)
-	if(..() || active)
+	. = ..()
+	if(.)
+		return
+	if(active)
 		return 1
 
 	use_power(5)

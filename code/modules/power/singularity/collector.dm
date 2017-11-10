@@ -34,8 +34,9 @@ var/global/list/rad_collectors = list()
 	return
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	if(anchored)
 		if(!locked || IsAdminGhost(user))
@@ -46,6 +47,7 @@ var/global/list/rad_collectors = list()
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.gas["phoron"]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
+			return 1
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))

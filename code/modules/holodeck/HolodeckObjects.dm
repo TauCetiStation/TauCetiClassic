@@ -326,19 +326,21 @@ obj/structure/stool/bed/chair/holochair
 	to_chat(user, "The device is a solid button, there's nothing you can do with it!")
 
 /obj/machinery/readybutton/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	if(!user.IsAdvancedToolUser())
-		return 0
+		return 1
 
-	currentarea = get_area(src.loc)
+	currentarea = get_area(loc)
 	if(!currentarea)
 		qdel(src)
+		return 1
 
 	if(eventstarted)
 		to_chat(usr, "The event has already begun!")
-		return
+		return 1
 
 	ready = !ready
 

@@ -220,14 +220,15 @@
 	checkhp()
 
 /obj/machinery/shieldgen/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 	if(locked && !IsAdminGhost(user))
 		to_chat(user, "The machine is locked, you are unable to use it.")
-		return
+		return 1
 	if(is_open)
 		to_chat(user, "The panel must be closed before operating this machine.")
-		return
+		return 1
 
 	if (src.active)
 		user.visible_message("\blue [bicon(src)] [user] deactivated the shield generator.", \
@@ -358,8 +359,9 @@
 //		use_power(250) //uses APC power
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 	if(state != 1)
 		to_chat(user, "\red The shield generator needs to be firmly secured to the floor first.")
 		return 1

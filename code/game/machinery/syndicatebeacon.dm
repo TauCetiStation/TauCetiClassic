@@ -134,7 +134,7 @@
 	if(!checkWirePower())
 		if(user)
 			to_chat(user, "\blue The connected wire doesn't have enough current.")
-		return
+		return 1
 	for(var/obj/singularity/singulo in world)
 		if(singulo.z == z)
 			singulo.target = src
@@ -159,14 +159,15 @@
 		return ..()
 
 /obj/machinery/singularity_beacon/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return 1
 
 	if(stat & SCREWED)
 		return active ? Deactivate(user) : Activate(user)
 	else
 		to_chat(user, "\red You need to screw the beacon to the floor first!")
-		return
+		return 1
 
 
 /obj/machinery/singularity_beacon/attackby(obj/item/weapon/W, mob/user)

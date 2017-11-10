@@ -32,17 +32,19 @@
 		return ..()
 
 /obj/machinery/bunsen_burner/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
+		return
+
+	if(!held_container)
+		to_chat(user, "\red There is nothing on the [src].")
 		return 1
 
-	if(held_container)
-		underlays = null
-		to_chat(user, "\blue You remove the [held_container] from the [src].")
-		held_container.loc = src.loc
-		held_container.attack_hand(user)
-		held_container = null
-	else
-		to_chat(user, "\red There is nothing on the [src].")
+	underlays = null
+	to_chat(user, "\blue You remove the [held_container] from the [src].")
+	held_container.loc = src.loc
+	held_container.attack_hand(user)
+	held_container = null
 
 /obj/machinery/bunsen_burner/proc/try_heating()
 	src.visible_message("\blue [bicon(src)] [src] hisses.")

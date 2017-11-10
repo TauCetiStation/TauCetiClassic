@@ -81,20 +81,19 @@
 
 /obj/machinery/gibber/container_resist()
 	go_out()
-	return
 
 /obj/machinery/gibber/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 	if(operating)
 		to_chat(user, "<span class='danger'>The gibber is locked and running, wait for it to finish.</span>")
-		return
+		return 1
 	else
 		startgibbing(user)
 
 /obj/machinery/gibber/attackby(obj/item/W, mob/user)
-
-	if (istype(W, /obj/item/weapon/grab))
+	if(istype(W, /obj/item/weapon/grab))
 		src.add_fingerprint(user)
 		var/obj/item/weapon/grab/G = W
 		move_into_gibber(user, G.affecting)

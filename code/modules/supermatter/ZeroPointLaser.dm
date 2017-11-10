@@ -44,8 +44,9 @@
 		icon_state = "laser"//"emitter"
 
 /obj/machinery/zero_point_emitter/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	if(state == 2)
 		if(!locked || IsAdminGhost(user))
@@ -62,8 +63,10 @@
 			update_icon()
 		else
 			to_chat(user, "<span class='warning'>The controls are locked!</span>")
+			return 1
 	else
 		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first.</span>")
+		return 1
 
 
 /obj/machinery/zero_point_emitter/emp_act(severity)//Emitters are hardened but still might have issues

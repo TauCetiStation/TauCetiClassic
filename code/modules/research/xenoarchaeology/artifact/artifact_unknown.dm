@@ -251,12 +251,13 @@ var/list/valid_secondary_effect_types = list(\
 					secondary_effect.ToggleActivate(0)
 
 /obj/machinery/artifact/attack_hand(mob/user)
-	if(..())
-		return 1
-
-	if (!in_range(src, user) && !IsAdminGhost(user))
-		to_chat(user, "\red You can't reach [src] from here.")
+	. = ..()
+	if(.)
 		return
+
+	if(!in_range(src, user) && !IsAdminGhost(user))
+		to_chat(user, "\red You can't reach [src] from here.")
+		return 1
 	if(ishuman(user) && user:gloves)
 		to_chat(user, "<b>You touch [src]</b> with your gloved hands, [pick("but nothing of note happens","but nothing happens","but nothing interesting happens","but you notice nothing different","but nothing seems to have happened")].")
 		return
@@ -277,8 +278,7 @@ var/list/valid_secondary_effect_types = list(\
 		secondary_effect.DoEffectTouch(user)
 
 /obj/machinery/artifact/attackby(obj/item/weapon/W, mob/living/user)
-
-	if (istype(W, /obj/item/weapon/reagent_containers/))
+	if(istype(W, /obj/item/weapon/reagent_containers/))
 		if(W.reagents.has_reagent("hydrogen", 1) || W.reagents.has_reagent("water", 1))
 			if(my_effect.trigger == TRIGGER_WATER)
 				my_effect.ToggleActivate()

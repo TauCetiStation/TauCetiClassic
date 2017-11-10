@@ -498,12 +498,13 @@
 // if hands aren't protected and the light is on, burn the player
 
 /obj/machinery/light/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	if(status == LIGHT_EMPTY)
 		to_chat(user, "There is no [fitting] in this light.")
-		return
+		return 1
 
 	// make it burn hands if not wearing fire-insulated gloves
 	if(on)
@@ -511,7 +512,6 @@
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
-
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
 				if(G.max_heat_protection_temperature)
@@ -525,7 +525,7 @@
 			to_chat(user, "You telekinetically remove the light [fitting].")
 		else
 			to_chat(user, "You try to remove the light [fitting], but it's too hot and you don't want to burn your hand.")
-			return				// if burned, don't remove the light
+			return 1			// if burned, don't remove the light
 	else
 		to_chat(user, "You remove the light [fitting].")
 

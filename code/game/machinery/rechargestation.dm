@@ -121,8 +121,9 @@
 	default_deconstruction_crowbar(P)
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 	if(!construct_op)
 		toggle_open()
 	else

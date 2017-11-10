@@ -413,8 +413,9 @@
 	return
 
 /obj/machinery/crema_switch/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	for (var/obj/structure/crematorium/C in crematorium_list)
 		if (C.id == id)

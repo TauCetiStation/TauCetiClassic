@@ -21,19 +21,21 @@
 	var/insistinga = 0
 
 /obj/machinery/wish_granter_dark/attack_hand(mob/living/carbon/human/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	if(chargesa <= 0)
 		user << "The Wish Granter lies silent."
-		return
+		return 1
 
 	else if(!ishuman(user))
 		user << "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's."
-		return
+		return 1
 
 	else if(is_special_character(user))
 		user << "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away."
+		return 1
 
 	else if (!insistinga)
 		user << "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?"

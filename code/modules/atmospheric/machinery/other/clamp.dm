@@ -39,11 +39,12 @@
 		network_node2 = P2.network
 
 /obj/machinery/clamp/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 
 	if(!target || !user)
-		return
+		return 1
 
 	if(!open)
 		open()

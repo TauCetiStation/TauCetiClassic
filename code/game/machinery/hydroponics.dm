@@ -747,8 +747,9 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 		update_icon()
 
 /obj/machinery/hydroponics/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 	if(issilicon(user)) //How does AI know what plant is?
 		return 1
 	if(harvest)

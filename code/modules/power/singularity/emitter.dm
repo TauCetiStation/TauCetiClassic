@@ -78,8 +78,9 @@
 		icon_state = "emitter-off"
 
 /obj/machinery/power/emitter/attack_hand(mob/user)
-	if(..())
-		return 1
+	. = ..()
+	if(.)
+		return
 	activate(user)
 
 /obj/machinery/power/emitter/proc/activate(mob/user)
