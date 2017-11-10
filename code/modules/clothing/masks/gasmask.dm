@@ -231,6 +231,11 @@
 	desc = "The traditional mime's mask. It has an eerie facial posture."
 	icon_state = "mime"
 
+/obj/item/clothing/mask/gas/fawkes //--getup1
+	name = "strange mask"
+	desc = "Remember, remember, the fifth of November"
+	icon_state = "fawkes"
+
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
 	desc = "A mask used when acting as a monkey."
