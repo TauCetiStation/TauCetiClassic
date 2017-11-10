@@ -299,6 +299,9 @@ var/bomb_set
 	if(!.)
 		return
 
+	if(!extended)
+		return
+
 	if (href_list["auth"])
 		if (src.auth)
 			src.auth.loc = src.loc
