@@ -17,7 +17,7 @@ rcd light flash thingy on matter drain
 	var/description = ""
 	var/engaged = 0
 	var/verb_caller = null
-	var/single_use = FALSE
+	var/need_only_one = FALSE
 	var/mob/living/silicon/ai/owner = null
 	var/list/valid_targets = list(/obj/machinery)
 
@@ -25,13 +25,13 @@ rcd light flash thingy on matter drain
 	owner = module_owner
 	module_owner.current_modules[module_name] = src
 	if(verb_caller)
-		module_owner.client.verbs |= verb_caller
+		owner.verbs |= verb_caller
 
 /datum/AI_Module/Destroy()
 	if(owner)
 		owner.current_modules[module_name] = null
 		if(verb_caller && owner.client)
-			owner.client.verbs -= verb_caller
+			owner.verbs -= verb_caller
 		owner = null
 
 /datum/AI_Module/proc/AIAltClickHandle(atom/A)
@@ -86,7 +86,7 @@ rcd light flash thingy on matter drain
 		var/datum/AI_Module/selected_module = selected_module_path
 		selected_module = cur_AI.current_modules[initial(selected_module.module_name)]
 		if(selected_module)
-			if(selected_module.single_use)
+			if(selected_module.need_only_one)
 				temp = "This module is only needed once."
 			else
 				var/uses_to_add = initial(selected_module.uses)
@@ -110,7 +110,7 @@ rcd light flash thingy on matter drain
 /datum/AI_Module/large/fireproof_core
 	module_name = "Core upgrade: Fireproof Core"
 	description = "An upgrade to improve core resistance, making it immune to fire and heat. This effect is permanent."
-	single_use = TRUE
+	need_only_one = TRUE
 
 /datum/AI_Module/large/fireproof_core/BuyedNewHandle()
 	for(var/mob/living/silicon/ai/ai in player_list)
@@ -120,7 +120,7 @@ rcd light flash thingy on matter drain
 /datum/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret upgrade"
 	description = "Improves the firing speed and health of all AI turrets. This effect is permanent."
-	single_use = TRUE
+	need_only_one = TRUE
 
 /datum/AI_Module/large/upgrade_turrets/BuyedNewHandle()
 	for(var/obj/machinery/porta_turret/turret in machines)
@@ -230,27 +230,30 @@ rcd light flash thingy on matter drain
 
 /datum/AI_Module/small/interhack
 	module_name = "Hack intercept"
-	description = "Hacks the status upgrade from Cent. Com, removing any information about malfunctioning electrical systems."
-	single_use = TRUE
+	description = "Hacks the status update from Cent. Com, removing any information about malfunctioning electrical systems."
+	need_only_one = TRUE
 
 /datum/AI_Module/small/interhack/BuyedNewHandle()
 	var/datum/game_mode/malfunction/cur_malf = ticker.mode
 	if(!istype(cur_malf))
 		return
-	cur_malf.hack_intercept()
-	to_chat(owner, "Status upgrade hacked.")
+	cur_malf.intercept_hacked = TRUE
+	to_chat(owner, "Status update hacked.")
 
 /datum/AI_Module/large/holohack
 	module_name = "Hacked hologram"
 	description = "Hacks holopads to project much more useful hologram."
-	single_use = TRUE
+	need_only_one = TRUE
+	verb_caller = /client/proc/holohack
 
-/datum/AI_Module/large/holohack/BuyedNewHandle()
+/client/proc/holohack()
+	set category = "Malfunction"
+	set name = "Holohack toggle"
 	var/datum/game_mode/malfunction/cur_malf = ticker.mode
 	if(!istype(cur_malf))
 		return
-	cur_malf.hack_holopads()
-	to_chat(owner, "Holopads hacked.")
+	cur_malf.holohack = !cur_malf.holohack
+	to_chat(usr, "Holopads hack [cur_malf.holohack ? "enabled" : "disabled"].")
 
 /datum/AI_Module/small/reactivate_camera
 	module_name = "Reactivate camera"

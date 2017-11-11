@@ -101,16 +101,11 @@ var/const/HOLOPAD_MODE = 0
 /obj/machinery/hologram/holopad/proc/activate_holo(mob/living/silicon/ai/user)
 	if(!(stat & NOPOWER) && user.eyeobj.loc == src.loc)//If the projector has power and client eye is on it.
 		if(!hologram)//If there is not already a hologram.
-			var/malfhack = 0
-			if(ticker.mode.name == "AI malfunction")
-				var/datum/game_mode/malfunction/malf = ticker.mode
-				if (malf.holhack == 1)
-					malfhack = 1
-
 			create_holo(user)//Create one.
 
-			if(malfhack)
-				make_danger(user)
+			var/datum/game_mode/malfunction/cur_malf = ticker.mode
+			if(istype(cur_malf) && cur_malf.holohack)
+				change_holo_to_carp(user)
 				
 			src.visible_message("A holographic image of [hologram.name] flicks to life right before your eyes!")
 		else
@@ -153,7 +148,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	master = A//AI is the master.
 	use_power = 2//Active power usage.
 
-/obj/machinery/hologram/holopad/proc/make_danger(mob/living/silicon/ai/A)
+/obj/machinery/hologram/holopad/proc/change_holo_to_carp(mob/living/silicon/ai/A)
 	hologram.icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo4"))
 	hologram.name = "space carp"
 	hologram.desc = "Hologram of cute space carp... Wait, WHAT?"

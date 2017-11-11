@@ -23,7 +23,7 @@
 	var/to_nuke_or_not_to_nuke = 0
 	var/apcs = 0 //Adding dis to track how many APCs the AI hacks. --NeoFite
 	var/AI_malf_revealed = 0
-	var/holhack = FALSE
+	var/holohack = FALSE
 	var/intercept_hacked = FALSE
 
 
@@ -81,10 +81,7 @@
 
 
 /datum/game_mode/malfunction/proc/hack_intercept()
-	intercept_hacked = TRUE
-
-/datum/game_mode/malfunction/proc/hack_holopads()
-	holhack = TRUE
+	
 
 
 /datum/game_mode/malfunction/process(seconds)
