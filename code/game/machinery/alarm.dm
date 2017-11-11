@@ -306,23 +306,27 @@
 
 /obj/machinery/alarm/update_icon()
 	if(wiresexposed)
-		icon_state = "alarmx"
+		switch(buildstage)
+			if(2)
+				icon_state="alarm_b2"
+			if(1)
+				icon_state="alarm_b1"
+			if(0)
+				icon_state="alarm_b0"
 		return
-	if((stat & (NOPOWER|BROKEN)) || shorted)
+
+	if((stat & NOPOWER) || shorted)
 		icon_state = "alarmp"
+		return
+	if(stat & BROKEN)
+		icon_state = "alarmx"
 		return
 
 	var/icon_level = danger_level
 	if (alarm_area.atmosalm)
 		icon_level = max(icon_level, 1)	//if there's an atmos alarm but everything is okay locally, no need to go past yellow
 
-	switch(icon_level)
-		if (0)
-			icon_state = "alarm0"
-		if (1)
-			icon_state = "alarm2" //yes, alarm2 is yellow alarm
-		if (2)
-			icon_state = "alarm1"
+	icon_state = "alarm[icon_level]"
 
 /obj/machinery/alarm/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
@@ -788,20 +792,12 @@
 
 
 /obj/machinery/alarm/attackby(obj/item/W, mob/user)
-/*	if (istype(W, /obj/item/weapon/wirecutters))
-		stat ^= BROKEN
-		add_fingerprint(user)
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [] has []activated []!", user, (stat&BROKEN) ? "de" : "re", src), 1)
-		update_icon()
-		return
-*/
+
 	add_fingerprint(user)
 
 	switch(buildstage)
 		if(2)
 			if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
-				//user << "You pop the Air Alarm's maintence panel open."
 				wiresexposed = !wiresexposed
 				to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 				update_icon()
