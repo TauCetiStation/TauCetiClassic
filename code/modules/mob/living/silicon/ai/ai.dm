@@ -43,7 +43,7 @@ var/list/ai_verbs_default = list(
 	//var/list/laws = list()
 	var/viewalerts = 0
 	var/lawcheck[1]
-	var/hcarp = 0
+	var/holohack = FALSE
 	var/datum/AI_Module/active_module = null
 	var/ioncheck[1]
 	var/lawchannel = "Common" // Default channel on which to state laws
@@ -54,7 +54,6 @@ var/list/ai_verbs_default = list(
 //Hud stuff
 
 	//MALFUNCTION
-	var/datum/AI_Module/module_picker/malf_picker
 	var/processing_time = 100
 	var/list/datum/AI_Module/current_modules = list()
 	var/fire_res_on_core = 0
@@ -78,15 +77,14 @@ var/list/ai_verbs_default = list(
 	verbs |= ai_verbs_default
 
 /mob/living/silicon/ai/proc/hcattack_ai(atom/A)
-	if(isliving(A))
-		var/mob/living/L = A
-		if(!in_range(eyeobj, A))
-			return
-		eyeobj.visible_message("<span class='userdanger'>space carp nashes at [A]</span>")
-		L.apply_damage(15, BRUTE, BP_CHEST, run_armor_check(BP_CHEST, "melee"), DAM_SHARP|DAM_EDGE)
-		for(var/mob/M in hearers(15, get_turf(eyeobj)))
-			M.playsound_local(get_turf(src.eyeobj), 'sound/weapons/bite.ogg', 100, falloff = 5)
-		playsound_local(get_turf(src), 'sound/weapons/bite.ogg', 30, falloff = 1)
+	if(!isliving(A) || !in_range(eyeobj, A))
+		return 1
+	var/mob/living/L = A
+	eyeobj.visible_message("<span class='userdanger'>space carp nashes at [A]</span>")
+	L.apply_damage(15, BRUTE, BP_CHEST, run_armor_check(BP_CHEST, "melee"), DAM_SHARP|DAM_EDGE)
+	for(var/mob/M in hearers(15, get_turf(eyeobj)))
+		M.playsound_local(get_turf(src.eyeobj), 'sound/weapons/bite.ogg', 100, falloff = 5)
+	playsound_local(get_turf(src), 'sound/weapons/bite.ogg', 30, falloff = 1)
 
 /mob/living/silicon/ai/proc/remove_ai_verbs()
 	verbs -= ai_verbs_default
@@ -696,11 +694,7 @@ var/list/ai_verbs_default = list(
 //End of code by Mord_Sith
 
 
-/mob/living/silicon/ai/proc/choose_modules()
-	set category = "Malfunction"
-	set name = "Choose Module"
 
-	malf_picker.use(src)
 
 /mob/living/silicon/ai/proc/ai_statuschange()
 	set category = "AI Commands"

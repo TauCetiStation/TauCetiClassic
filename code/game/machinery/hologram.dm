@@ -103,8 +103,7 @@ var/const/HOLOPAD_MODE = 0
 		if(!hologram)//If there is not already a hologram.
 			create_holo(user)//Create one.
 
-			var/datum/game_mode/malfunction/cur_malf = ticker.mode
-			if(istype(cur_malf) && cur_malf.holohack)
+			if(user.holohack)
 				change_holo_to_carp(user)
 				
 			src.visible_message("A holographic image of [hologram.name] flicks to life right before your eyes!")
@@ -152,7 +151,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.icon = getHologramIcon(icon('icons/mob/AI.dmi',"holo4"))
 	hologram.name = "space carp"
 	hologram.desc = "Hologram of cute space carp... Wait, WHAT?"
-	A.hcarp = 1
 
 /obj/machinery/hologram/holopad/proc/clear_holo()
 //	hologram.set_light(0)//Clear lighting.	//handled by the lighting controller when its ower is deleted
@@ -170,7 +168,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(hologram)//If there is a hologram.
 		if(master && !master.stat && master.client && master.eyeobj)//If there is an AI attached, it's not incapacitated, it has a client, and the client eye is centered on the projector.
 			if(!(stat & NOPOWER))//If the  machine has power.
-				if((HOLOPAD_MODE == 0 && (get_dist(master.eyeobj, src) <= holo_range)))
+				if(HOLOPAD_MODE == 0 && (get_dist(master.eyeobj, src) <= holo_range))
 					return 1
 
 				else if (HOLOPAD_MODE == 1)
@@ -178,11 +176,6 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 					var/area/eye_area = get_area(master.eyeobj)
 					if(eye_area in holo_area.master.related)
 						return 1
-				else
-					master.hcarp = 0
-
-			else
-				master.hcarp = 0
 
 		clear_holo()//If not, we want to get rid of the hologram.
 	return 1

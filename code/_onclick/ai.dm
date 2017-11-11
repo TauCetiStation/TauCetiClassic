@@ -69,9 +69,9 @@
 		RestrainedClickOn(A)
 	else
 	*/
-	if (hcarp)
-		hcattack_ai(A)
-		return
+	if (holohack)
+		if(!hcattack_ai(A))
+			return
 
 	A.attack_ai(src)
 

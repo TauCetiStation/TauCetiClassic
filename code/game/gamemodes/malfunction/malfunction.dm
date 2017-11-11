@@ -23,7 +23,6 @@
 	var/to_nuke_or_not_to_nuke = 0
 	var/apcs = 0 //Adding dis to track how many APCs the AI hacks. --NeoFite
 	var/AI_malf_revealed = 0
-	var/holohack = FALSE
 	var/intercept_hacked = FALSE
 
 
@@ -55,16 +54,14 @@
 			sleep(50)
 			world.Reboot()
 			return
-		AI_mind.current.verbs += /mob/living/silicon/ai/proc/choose_modules
-		AI_mind.current:laws = new /datum/ai_laws/malfunction
-		AI_mind.current:malf_picker = new /datum/AI_Module/module_picker
-		AI_mind.current:show_laws()
+		var/mob/living/silicon/ai/AI_mind_current = AI_mind.current
+		new /datum/AI_Module/module_picker(AI_mind_current)
+		new /datum/AI_Module/takeover(AI_mind_current)
+		AI_mind_current.laws = new /datum/ai_laws/malfunction
+		AI_mind_current.show_laws()
 
 		greet_malf(AI_mind)
-
 		AI_mind.special_role = "malfunction"
-
-		AI_mind.current.verbs += /datum/game_mode/malfunction/proc/takeover
 
 	if(SSshuttle)
 		SSshuttle.always_fake_recall = TRUE
@@ -131,15 +128,18 @@
 		to_chat(AI, "Congratulations you have taken control of the station.")
 		to_chat(AI, "You may decide to blow up the station. You have 60 seconds to choose.")
 		to_chat(AI, "You should have a new verb in the Malfunction tab. If you dont - rejoin the game.")
-		AI.client.verbs += /datum/game_mode/malfunction/proc/ai_win	//We won't see verb, added to mob which is out of view, so we adding it to client.
+		new /datum/AI_Module/ai_win(AI)
+		//AI.client.verbs += /datum/game_mode/malfunction/proc/ai_win	//We won't see verb, added to mob which is out of view, so we adding it to client.
 	addtimer(CALLBACK(src, .proc/remove_ai_win_verb), 600)
 
 
 /datum/game_mode/malfunction/proc/remove_ai_win_verb()
-	for(var/datum/mind/AI_mind in malf_ai)
-		var/mob/living/silicon/ai/AI = AI_mind.current
-		AI.client.verbs -= /datum/game_mode/malfunction/proc/ai_win
 	to_nuke_or_not_to_nuke = FALSE
+	for(var/datum/mind/AI_mind in malf_ai)
+		var/mob/living/silicon/ai/cur_AI = AI_mind.current
+		var/datum/AI_Module/explode_module = cur_AI.current_modules["Explode"]
+		if(explode_module)
+			qdel(explode_module)
 
 /datum/game_mode/proc/is_malf_ai_dead()
 	var/all_dead = TRUE
@@ -170,52 +170,32 @@
 
 
 /datum/game_mode/malfunction/proc/takeover()
-	set category = "Malfunction"
-	set name = "System Override"
-	set desc = "Start the victory timer."
-	if (!istype(ticker.mode, /datum/game_mode/malfunction))
-		to_chat(usr,"You cannot begin a takeover in this round type!")
-		return
-	var/datum/game_mode/malfunction/cur_malf = ticker.mode
-	if (cur_malf.malf_mode_declared)
-		to_chat(usr,"You've already begun your takeover.")
-		return
-	if (cur_malf.apcs < APC_MIN_TO_MALDF_DECLARE)
-		to_chat(usr,"You don't have enough hacked APCs to take over the station yet. You need to hack at least 5, however hacking more will make the takeover faster. You have hacked [ticker.mode:apcs] APCs so far.")
-		return
-	if (cur_malf.AI_malf_revealed < 4)
-		if (alert(usr, "Are you sure you wish to initiate the takeover? The station hostile runtime detection software is bound to alert everyone. You have hacked [ticker.mode:apcs] APCs.", "Takeover:", "Yes", "No") != "Yes")
-			return
-		captain_announce("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring")
-	cur_malf.malf_mode_declared = TRUE
-	for(var/datum/mind/AI_mind in cur_malf.malf_ai)
-		AI_mind.current.verbs -= /datum/game_mode/malfunction/proc/takeover
+	malf_mode_declared = TRUE
+	for(var/datum/mind/AI_mind in malf_ai)
+		var/mob/living/silicon/ai/cur_AI = AI_mind.current
+		var/datum/AI_Module/takeover_module = cur_AI.current_modules["System Override"]
+		if(takeover_module)
+			qdel(takeover_module)
+
 	for(var/mob/M in player_list)
 		if(!isnewplayer(M))
 			M << sound('sound/AI/aimalf.ogg')
+
 	addtimer(CALLBACK(GLOBAL_PROC, .proc/set_security_level, "delta"), 50)
 
 
 
 /datum/game_mode/malfunction/proc/ai_win()
-	set category = "Malfunction"
-	set name = "Explode"
-	set desc = "Station go boom."
-	var/datum/game_mode/malfunction/cur_malf = ticker.mode
-	if(!istype(cur_malf))
-		to_chat(usr, "Uh oh, wrong game mode. Please contact a coder.")
+	if (!to_nuke_or_not_to_nuke)
 		return
-	if (!cur_malf.to_nuke_or_not_to_nuke)
-		return
-	cur_malf.to_nuke_or_not_to_nuke = FALSE
+	remove_ai_win_verb()
 	var/turf/malf_turf
-	for(var/datum/mind/AI_mind in cur_malf.malf_ai)
-		var/mob/living/silicon/ai/AI = AI_mind.current
-		AI.client.verbs -= /datum/game_mode/malfunction/proc/ai_win
-		AI.client.screen.Cut()
+	for(var/datum/mind/AI_mind in malf_ai)
+		var/mob/living/silicon/ai/cur_AI = AI_mind.current
+		cur_AI.client.screen.Cut()
 		if(!malf_turf)
-			malf_turf = get_turf(AI)
-	cur_malf.explosion_in_progress = TRUE
+			malf_turf = get_turf(cur_AI)
+	explosion_in_progress = TRUE
 	for(var/mob/M in player_list)
 		M << 'sound/machines/Alarm.ogg'
 	to_chat(world, "Self-destructing in 10")
@@ -228,8 +208,8 @@
 	if(malf_turf)
 		sleep(20)
 		explosion(malf_turf, 15, 70, 200)
-	cur_malf.station_was_nuked = TRUE
-	cur_malf.explosion_in_progress = FALSE
+	station_was_nuked = TRUE
+	explosion_in_progress = FALSE
 
 
 /datum/game_mode/malfunction/declare_completion()
