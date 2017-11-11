@@ -289,7 +289,7 @@
 /proc/is_alien_whitelisted(mob/M, role)
 	if(!config.usealienwhitelist)
 		return TRUE
-	if(!M || !role || !role_whitelist || !role_whitelist[M.ckey])
+	if(!M || !role || !role_whitelist)
 		return FALSE
 
 	role = lowertext(role)
@@ -305,19 +305,12 @@
 		if("skrellian")
 			role = "skrell"
 
-	if(role_whitelist[M.ckey][role] && !role_whitelist[M.ckey][role]["ban"])
+	if(role_whitelist[M.ckey] && role_whitelist[M.ckey][role])
+		if(role_whitelist[M.ckey][role]["ban"])
+			return FALSE
 		return TRUE
+
+	if(M.client && whitelisted_roles_by_time[role] && M.client.player_ingame_age >= whitelisted_roles_by_time[role])
+		return TRUE
+
 	return FALSE
-
-/proc/handle_alien_whitelist_by_time(client/C)
-	if(!config.usealienwhitelist || !C || !role_whitelist)
-		return
-
-	var/list/aliens_whitelist_for_client = role_whitelist[C.ckey]
-	for(var/role in whitelisted_roles_by_time)
-		if(C.player_ingame_age < whitelisted_roles_by_time[role])
-			continue
-		if(aliens_whitelist_for_client && aliens_whitelist_for_client[role]) //banned or already have - no difference
-			continue
-		if(whitelist_DB_add(C.ckey, role, "[whitelisted_roles_by_time[role]] minutes played", "great_aliens_granter_bot", added_by_bot = TRUE))
-			to_chat(C, "<span class='notice'>You played here for at least [whitelisted_roles_by_time[role]] minutes. Now you have access to the species: [role]. Congratulations!</span>")
