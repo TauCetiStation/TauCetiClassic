@@ -1184,25 +1184,23 @@
 		switch(href_list["silicon"])
 			if("unmalf")
 				if(src in ticker.mode.malf_ai)
+					var/mob/living/silicon/ai/current_ai = current
 					ticker.mode.malf_ai -= src
 					special_role = null
 
-					current.verbs.Remove(/mob/living/silicon/ai/proc/choose_modules,
+					for(var/datum/AI_Module/module in current_ai.current_modules)
+						qdel(module)
+
+					current_ai.verbs.Remove(
 						/datum/game_mode/malfunction/proc/takeover,
-						/datum/game_mode/malfunction/proc/ai_win,
-						/client/proc/disable_rcd,
-						/client/proc/overload_machine,
-						/client/proc/nanject,
-						/client/proc/blackout,
-						/client/proc/holohack,
-						/client/proc/reactivate_camera)
+						/datum/game_mode/malfunction/proc/ai_win
+						)
 
-					current:laws = new /datum/ai_laws/nanotrasen
-					qdel(current:malf_picker)
-					current:show_laws()
-					current.icon_state = "ai"
+					current_ai.laws = new /datum/ai_laws/nanotrasen
+					current_ai.show_laws()
+					current_ai.icon_state = "ai"
 
-					to_chat(current, "\red <FONT size = 3><B>You have been patched! You are no longer malfunctioning!</B></FONT>")
+					to_chat(current_ai, "<span class='userdanger'>You have been patched! You are no longer malfunctioning!</span>")
 					log_admin("[key_name_admin(usr)] has de-malf'ed [current].")
 
 			if("malf")
@@ -1325,9 +1323,8 @@
 	if(!(src in ticker.mode.malf_ai))
 		ticker.mode.malf_ai += src
 
-		current.verbs += /mob/living/silicon/ai/proc/choose_modules
 		current.verbs += /datum/game_mode/malfunction/proc/takeover
-		current:malf_picker = new /datum/AI_Module/module_picker
+		new /datum/AI_Module/module_picker(current)
 		current:laws = new /datum/ai_laws/malfunction
 		current:show_laws()
 		to_chat(current, "<b>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</b>")

@@ -23,7 +23,6 @@
 	var/to_nuke_or_not_to_nuke = 0
 	var/apcs = 0 //Adding dis to track how many APCs the AI hacks. --NeoFite
 	var/AI_malf_revealed = 0
-	var/holohack = FALSE
 	var/intercept_hacked = FALSE
 
 
@@ -55,15 +54,13 @@
 			sleep(50)
 			world.Reboot()
 			return
-		AI_mind.current.verbs += /mob/living/silicon/ai/proc/choose_modules
-		AI_mind.current:laws = new /datum/ai_laws/malfunction
-		AI_mind.current:malf_picker = new /datum/AI_Module/module_picker
-		AI_mind.current:show_laws()
+		new /datum/AI_Module/module_picker(AI_mind.current)
+		var/mob/living/silicon/ai/AI_mind_current = AI_mind.current
+		AI_mind_current.laws = new /datum/ai_laws/malfunction
+		AI_mind_current.show_laws()
 
 		greet_malf(AI_mind)
-
 		AI_mind.special_role = "malfunction"
-
 		AI_mind.current.verbs += /datum/game_mode/malfunction/proc/takeover
 
 	if(SSshuttle)
