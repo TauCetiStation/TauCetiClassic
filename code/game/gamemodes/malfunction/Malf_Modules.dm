@@ -52,7 +52,7 @@ rcd light flash thingy on matter drain
 	large_modules = subtypesof(/datum/AI_Module/large)
 	small_modules = subtypesof(/datum/AI_Module/small)
 
-/datum/AI_Module/module_picker/proc/use(user)
+/datum/AI_Module/module_picker/proc/use(mob/user)
 	var/dat
 	if(temp)
 		dat = "[temp]<BR><BR><A href='byond://?src=\ref[src];clear=1'>Clear</A>"
@@ -63,14 +63,12 @@ rcd light flash thingy on matter drain
 		dat += "<HR>"
 		dat += "<B>Install Module:</B><BR>"
 		dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
-		for(var/datum/AI_Module/module in large_modules)
-			if(!initial(module.module_name))
-				continue
-			dat += "<A href='byond://?src=\ref[src];module_type=[module]'>[initial(module.module_name)]</A> (50)<BR>"
-		for(var/datum/AI_Module/module in small_modules)
-			if(!initial(module.module_name))
-				continue
-			dat += "<A href='byond://?src=\ref[src];module_type=[module]'>[initial(module.module_name)]</A> (15)<BR>"
+		for(var/module in large_modules)
+			var/datum/AI_Module/module_type = module
+			dat += "<A href='byond://?src=\ref[src];module_type=[module]'>[initial(module_type.module_name)]</A> (50)<BR>"
+		for(var/module in small_modules)
+			var/datum/AI_Module/module_type = module
+			dat += "<A href='byond://?src=\ref[src];module_type=[module]'>[initial(module_type.module_name)]</A> (10)<BR>"
 		dat += "<HR>"
 
 	user << browse(dat, "window=modpicker")
@@ -84,22 +82,24 @@ rcd light flash thingy on matter drain
 	if(href_list["clear"])
 		temp = null
 	else if(href_list["module_type"])
-		var/datum/AI_Module/selected_module = text2path(href_list["module_type"])
-		var/datum/AI_Module/available_module = cur_AI.current_modules[initial(selected_module.module_name)]
-		if(available_module)
-			if(available_module.single_use)
+		var/selected_module_path = text2path(href_list["module_type"])
+		var/datum/AI_Module/selected_module = selected_module_path
+		selected_module = cur_AI.current_modules[initial(selected_module.module_name)]
+		if(selected_module)
+			if(selected_module.single_use)
 				temp = "This module is only needed once."
 			else
-				available_module.uses += initial(selected_module.uses)
-				temp = "Additional uses added to module: [available_module.module_name]"
-				processing_time -= (selected_module in large_modules ? 50 : 10)
-				available_module.BuyedUsesHandle()
+				var/uses_to_add = initial(selected_module.uses)
+				selected_module.uses += uses_to_add
+				temp = "Added uses ([uses_to_add]) to module: [selected_module.module_name]"
+				processing_time -= istype(selected_module, /datum/AI_Module/large) ? 50 : 10
+				selected_module.BuyedUsesHandle()
 		else
-			available_module = new selected_module(cur_AI)
-			temp = available_module.description
-			processing_time -= (selected_module in large_modules ? 50 : 10)
-			available_module.BuyedNewHandle()
-	use(usr)
+			selected_module = new selected_module_path(cur_AI)
+			temp = selected_module.description
+			processing_time -= istype(selected_module, /datum/AI_Module/large) ? 50 : 10
+			selected_module.BuyedNewHandle()
+	use(cur_AI)
 
 /datum/AI_Module/large/
 	uses = 1
@@ -139,7 +139,7 @@ rcd light flash thingy on matter drain
 	set category = "Malfunction"
 	set name = "Disable RCDs"
 	var/mob/living/silicon/ai/A = usr
-	var/datum/AI_Module/large/disable_rcd/rcdmod = A.current_modules["rcdmod"]
+	var/datum/AI_Module/large/disable_rcd/rcdmod = A.current_modules["RCD disable"]
 	if(rcdmod.uses)
 		rcdmod.uses--
 		for(var/obj/item/weapon/rcd/rcd in world)
@@ -156,21 +156,22 @@ rcd light flash thingy on matter drain
 	uses = 2
 	verb_caller = /client/proc/overload_machine
 
-/client/proc/overload_machine()
-	set name = "Overload Machine"
-	set category = "Malfunction"
-	var/mob/living/silicon/ai/A = usr
-	A.toggle_small_alt_click_module("Machine overload")
-
 /datum/AI_Module/small/overload_machine/AIAltClickHandle(obj/machinery/M)
 	if(..())
 		return
 
 	uses--
 	M.audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
-	to_chat(owner, "Machine overloaded.")
-	owner.active_module = null
+	to_chat(owner, "Machine overloaded. Uses left: [uses]")
+	if(uses <= 0)
+		owner.active_module = null
 	addtimer(CALLBACK(src, .proc/overload_post_action, M), 50)
+
+/client/proc/overload_machine()
+	set name = "Overload Machine"
+	set category = "Malfunction"
+	var/mob/living/silicon/ai/cur_AI = usr
+	cur_AI.toggle_small_alt_click_module("Machine overload")
 
 /datum/AI_Module/small/overload_machine/proc/overload_post_action(obj/machinery/M)
 	if(M)
@@ -185,12 +186,6 @@ rcd light flash thingy on matter drain
 	uses = 1
 	verb_caller = /client/proc/nanject
 
-/client/proc/nanject()
-	set name = "Add nanobot injector"
-	set category = "Malfunction"
-	var/mob/living/silicon/ai/A = usr
-	A.toggle_small_alt_click_module("Nanites injector")
-
 /datum/AI_Module/small/nanject/AIAltClickHandle(obj/machinery/M)
 	if(..())
 		return
@@ -198,11 +193,19 @@ rcd light flash thingy on matter drain
 	if(!M.nanjector)
 		uses--
 		M.nanjector = TRUE
-		to_chat(owner, "Nanobot injector installed.")
+		to_chat(owner, "Nanobot injector installed. Uses left: [uses]")
 		owner.active_module = null
 		M.audible_message("<span class='notice'>You hear a quiet click.</span>")
+		if(uses <= 0)
+			owner.active_module = null
 	else
 		to_chat(owner, "This machine already upgraded.")
+
+/client/proc/nanject()
+	set name = "Add nanobot injector"
+	set category = "Malfunction"
+	var/mob/living/silicon/ai/cur_AI = usr
+	cur_AI.toggle_small_alt_click_module("Nanites injector")
 
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
@@ -214,7 +217,7 @@ rcd light flash thingy on matter drain
 	set category = "Malfunction"
 	set name = "Blackout"
 	var/mob/living/silicon/ai/cur_AI = usr
-	var/datum/AI_Module/small/blackout/blackout = cur_AI.current_modules["blackout"]
+	var/datum/AI_Module/small/blackout/blackout = cur_AI.current_modules["Blackout"]
 	if(blackout.uses)
 		blackout.uses--
 		for(var/obj/machinery/power/apc/apc in machines)
@@ -259,13 +262,13 @@ rcd light flash thingy on matter drain
 	set name = "Reactivate Camera"
 	set category = "Malfunction"
 	var/mob/living/silicon/ai/cur_AI = usr
-	var/datum/AI_Module/small/reactivate_camera/camera_mod = cur_AI.current_modules["reactivate_camera"]
+	var/datum/AI_Module/small/reactivate_camera/camera_mod = cur_AI.current_modules["Reactivate camera"]
 	if(!camera_mod.uses)
 		to_chat(cur_AI, "[camera_mod.module_name] module activation failed. Out of uses.")
 		return
 
 	var/list/disabled_cameras = list()
-	for(var/obj/machinery/camera/cam in view(cur_AI.eyeobj))
+	for(var/obj/machinery/camera/cam in range(cur_AI.eyeobj))
 		if(!cam.status)
 			disabled_cameras += cam
 
@@ -287,49 +290,37 @@ rcd light flash thingy on matter drain
 	description = "Upgrades a camera to have X-Ray vision, Motion and be EMP-Proof. 10 uses."
 	uses = 10
 	verb_caller = /client/proc/upgrade_camera
+	valid_targets = list(/obj/machinery/camera)
+
+/datum/AI_Module/small/upgrade_camera/AIAltClickHandle(obj/machinery/camera/sel_cam)
+	if(..())
+		return
+
+	if(sel_cam.isXRay() && sel_cam.isEmpProof() && sel_cam.isMotion())
+		to_chat(owner, "This camera is already upgraded")
+		return
+
+	if(!sel_cam.isXRay())
+		sel_cam.upgradeXRay()
+		//Update what it can see.
+		cameranet.updateVisibility(sel_cam, 0)
+
+	if(!sel_cam.isEmpProof())
+		sel_cam.upgradeEmpProof()
+
+	if(!sel_cam.isMotion())
+		sel_cam.upgradeMotion()
+		// Add it to machines that process
+		machines |= sel_cam
+
+	uses--
+	sel_cam.audible_message("<span class='notice'>[bicon(sel_cam)] beeps</span>")
+	to_chat(owner, "Camera successully upgraded. Uses left: [uses]")
+	if(uses <= 0)
+		owner.active_module = null
 
 /client/proc/upgrade_camera()
 	set name = "Upgrade Camera"
 	set category = "Malfunction"
 	var/mob/living/silicon/ai/cur_AI = usr
-	var/datum/AI_Module/small/upgrade_camera/camera_mod = cur_AI.current_modules["upgrade_camera"]
-	if(!camera_mod.uses)
-		to_chat(cur_AI, "[camera_mod.module_name] module activation failed. Out of uses.")
-		return
-
-	var/list/upgradeable_cameras = list()
-	for(var/obj/machinery/camera/cam in view(cur_AI.eyeobj))
-		if(!cam.isXRay() || !cam.isEmpProof() || !cam.isMotion())
-			upgradeable_cameras += cam
-
-	if(!length(upgradeable_cameras))
-		to_chat(cur_AI, "No cameras found or all cameras in your field of view is already upgraded.")
-		return
-
-	var/obj/machinery/camera/sel_cam = input(cur_AI, "Upgrade Camera","Choose Object") in upgradeable_cameras
-	if(!sel_cam)
-		return
-
-	var/upgraded = FALSE
-	if(!sel_cam.isXRay())
-		sel_cam.upgradeXRay()
-		//Update what it can see.
-		cameranet.updateVisibility(sel_cam)
-		upgraded = TRUE
-
-	if(!sel_cam.isEmpProof())
-		sel_cam.upgradeEmpProof()
-		upgraded = TRUE
-
-	if(!sel_cam.isMotion())
-		sel_cam.upgradeMotion()
-		upgraded = TRUE
-		// Add it to machines that process
-		machines |= sel_cam
-
-	if(upgraded)
-		camera_mod.uses--
-		sel_cam.audible_message("<span class='notice'>[bicon(sel_cam)] beeps</span>")
-		to_chat(cur_AI, "Camera successully upgraded!")
-	else
-		to_chat(cur_AI, "This camera is already upgraded!")
+	cur_AI.toggle_small_alt_click_module("Upgrade Camera")
