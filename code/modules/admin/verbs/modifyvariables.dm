@@ -263,14 +263,14 @@ var/list/forbidden_varedit_object_types = list(
 /client/proc/modify_variables(atom/O, param_var_name = null, autodetect_class = 0)
 	if(!check_rights(R_VAREDIT))	return
 
-	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "mutantrace", "player_ingame_age", "resize", "summon_type")
+	var/list/icons_modifying = list("resize", "resize_rev")
+	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "mutantrace", "player_ingame_age", "summon_type")
 	var/list/typechange_locked = list("player_next_age_tick","player_ingame_age")
-	var/list/fully_locked = list("player_next_age_tick", "resize_rev")
+	var/list/fully_locked = list("holder", "player_next_age_tick", "resize_rev")
 
-	for(var/p in forbidden_varedit_object_types)
-		if( istype(O,p) )
-			to_chat(usr, "\red It is forbidden to edit this object's variables.")
-			return
+	if(is_type_in_list(O, forbidden_varedit_object_types))
+		to_chat(usr, "\red It is forbidden to edit this object's variables.")
+		return
 
 	var/class
 	var/variable
@@ -285,11 +285,14 @@ var/list/forbidden_varedit_object_types = list(
 			to_chat(usr, "\red It is forbidden to edit this variable.")
 			return
 
-		if(!autodetect_class)
-			if(param_var_name in typechange_locked) return
+		if(!autodetect_class && (param_var_name in typechange_locked))
+			return
 
-		if(param_var_name == "holder" || (param_var_name in locked))
-			if(!check_rights(R_DEBUG))	return
+		if((param_var_name in locked) && !check_rights(R_DEBUG))
+			return
+
+		if((param_var_name in icons_modifying) && !check_rights(R_DEBUG|R_EVENT))
+			return
 
 		variable = param_var_name
 

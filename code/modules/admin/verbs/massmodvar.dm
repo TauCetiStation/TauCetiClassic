@@ -26,13 +26,13 @@
 /client/proc/massmodify_variables(atom/O, var_name = "", method = 0)
 	if(!check_rights(R_VAREDIT))	return
 
-	var/list/locked = list("vars", "key", "ckey", "client", "icon", "icon_state", "resize", "resize_rev", "summon_type")
-	var/list/fully_locked = list("player_next_age_tick", "player_ingame_age",)
+	var/list/icons_modifying = list("icon", "icon_state", "resize", "resize_rev")
+	var/list/locked = list("vars", "summon_type")
+	var/list/fully_locked = list("holder", "key", "ckey", "client", "player_next_age_tick", "player_ingame_age",)
 
-	for(var/p in forbidden_varedit_object_types)
-		if( istype(O,p) )
-			to_chat(usr, "\red It is forbidden to edit this object's variables.")
-			return
+	if(is_type_in_list(O, forbidden_varedit_object_types))
+		to_chat(usr, "\red It is forbidden to edit this object's variables.")
+		return
 
 	var/list/names = list()
 	for (var/V in O.vars)
@@ -47,7 +47,9 @@
 	else
 		variable = var_name
 
-	if(!variable)	return
+	if(!variable)
+		return
+
 	var/default
 	var/var_value = O.vars[variable]
 	var/dir
@@ -56,8 +58,11 @@
 		to_chat(usr, "\red It is forbidden to edit this variable.")
 		return
 
-	if(variable == "holder" || (variable in locked))
-		if(!check_rights(R_DEBUG))	return
+	if((variable in locked) && !check_rights(R_DEBUG))
+		return
+
+	if((variable in icons_modifying) && !check_rights(R_DEBUG|R_EVENT))
+		return
 
 	if(isnull(var_value))
 		to_chat(usr, "Unable to determine variable type.")
