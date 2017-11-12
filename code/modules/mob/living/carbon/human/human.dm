@@ -1466,7 +1466,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		to_chat(src, "<span class='notice'>It is unsafe to leap without gravity!</span>")
 		return
 
-	if(stat || stunned || lying)
+	if(incapacitated() || buckled || pinned.len || stance_damage >= 4)
 		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
 		return
 
