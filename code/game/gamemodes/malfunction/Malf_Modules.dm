@@ -201,9 +201,39 @@ robot_fabricator
 	description = "Overloads an electrical machine, causing a small explosion. 2 uses."
 	uses = 2
 	verb_caller = /mob/living/silicon/ai/proc/overload_machine
+	valid_targets = list(
+			/obj/machinery/computer,
+			/obj/machinery/autolathe,
+			/obj/machinery/vending,
+			/obj/machinery/atmospherics/components/unary/thermomachine,
+			/obj/machinery/bot,
+			/obj/machinery/power/apc,
+			/obj/machinery/power/smes,
+			/obj/machinery/clonepod,
+			/obj/machinery/sleeper,
+			/obj/machinery/dna_scannernew,
+			/obj/machinery/atmospherics/components/binary/pump,
+			/obj/machinery/atmospherics/components/omni/filter,
+			/obj/machinery/atmospherics/components/omni/mixer,
+			/obj/machinery/r_n_d,
+			/obj/machinery/mecha_part_fabricator,
+			/obj/machinery/photocopier,
+			/obj/machinery/shieldwallgen,
+			/obj/machinery/pdapainter,
+			/obj/machinery/monkey_recycler,
+			/obj/machinery/telepad,
+			/obj/machinery/teleport,
+			/obj/machinery/recharger,
+			/obj/machinery/cell_charger
+			)
+
 
 /datum/AI_Module/small/overload_machine/AIAltClickHandle(obj/machinery/M)
 	if(..())
+		return
+
+	if(!M.is_operational())
+		to_chat(usr, "<span class='red'>The machine is non-functional</span>")
 		return
 
 	uses--
@@ -216,8 +246,7 @@ robot_fabricator
 /mob/living/silicon/ai/proc/overload_machine()
 	set name = "Overload Machine"
 	set category = "Malfunction"
-	var/mob/living/silicon/ai/cur_AI = usr
-	cur_AI.toggle_small_alt_click_module("Machine overload")
+	toggle_small_alt_click_module("Machine overload")
 
 /datum/AI_Module/small/overload_machine/proc/overload_post_action(obj/machinery/M)
 	if(M)
@@ -245,7 +274,7 @@ robot_fabricator
 			apc.overload_lighting()
 		else
 			apc.overload++
-	to_chat(src, "<span class='notice'>APCs overloaded. Uses left: [uses]</span>")
+	to_chat(src, "<span class='notice'>APCs overloaded. Uses left: [blackout.uses]</span>")
 
 /datum/AI_Module/small/interhack
 	module_name = "Hack intercept"
@@ -344,5 +373,4 @@ robot_fabricator
 /mob/living/silicon/ai/proc/upgrade_camera()
 	set name = "Upgrade Camera"
 	set category = "Malfunction"
-	var/mob/living/silicon/ai/cur_AI = usr
-	cur_AI.toggle_small_alt_click_module("Upgrade Camera")
+	toggle_small_alt_click_module("Upgrade Camera")
