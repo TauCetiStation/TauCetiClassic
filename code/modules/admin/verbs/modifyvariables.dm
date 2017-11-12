@@ -435,6 +435,8 @@ var/list/forbidden_varedit_object_types = list(
 	if(holder.marked_datum && class == "marked datum ([holder.marked_datum.type])")
 		class = "marked datum"
 
+	var/log_handled = FALSE
+
 	switch(class)
 
 		if("list")
@@ -443,6 +445,10 @@ var/list/forbidden_varedit_object_types = list(
 
 		if("restore to default")
 			if(variable=="resize")
+				world.log << "### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.resize_rev]")]"
+				log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.resize_rev]")
+				message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.resize_rev]")
+				log_handled = TRUE
 				O.vars[variable] = O.resize_rev
 				O.update_transform()
 				O.resize_rev = initial(O.resize_rev)
@@ -492,6 +498,10 @@ var/list/forbidden_varedit_object_types = list(
 						to_chat(usr, "<b>Resize coefficient can't be equal 0</b>")
 						return
 					O.vars[variable] = var_new
+					world.log << "### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.resize]")]"
+					log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.resize]")
+					message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.resize]")
+					log_handled = TRUE
 					O.update_transform()
 				else
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
@@ -527,6 +537,7 @@ var/list/forbidden_varedit_object_types = list(
 		if("marked datum")
 			O.vars[variable] = holder.marked_datum
 
-	world.log << "### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"
-	log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
-	message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
+	if(!log_handled)
+		world.log << "### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"
+		log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
+		message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]")

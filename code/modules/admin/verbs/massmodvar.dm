@@ -137,10 +137,16 @@
 	else
 		original_name = O:name
 
+	var/log_handled = FALSE
+
 	switch(class)
 
 		if("restore to default")
 			if(variable=="resize")
+				world.log << "### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.resize_rev]")]"
+				log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.resize_rev]")
+				message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.resize_rev]")
+				log_handled = TRUE
 				O.vars[variable] = O.resize_rev
 				O.update_transform()
 				O.resize_rev = initial(O.resize_rev)
@@ -261,17 +267,16 @@
 			if(isnull(new_value))
 				return
 
-			switch(variable)
-				if("light_range")
-					O.set_light(new_value)
-				if("resize")
-					if(new_value == 0)
-						to_chat(usr, "<b>Resize coefficient can't be equal 0</b>")
-						return
-					O.vars[variable] = new_value
-					O.update_transform()
-				else
-					O.vars[variable] = new_value
+			if(variable=="resize")
+				if(new_value == 0)
+					to_chat(usr, "<b>Resize coefficient can't be equal 0</b>")
+					return
+				world.log << "### VarEdit by [src]: [O.type] [variable]=[html_encode("[new_value]")]"
+				log_admin("[key_name(src)] modified [original_name]'s [variable] to [new_value]")
+				message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [new_value]")
+				log_handled = TRUE
+			else
+				O.vars[variable] = new_value
 
 			if(method)
 				if(istype(O, /mob))
@@ -482,6 +487,7 @@
 							A.vars[variable] = O.vars[variable]
 						CHECK_TICK
 
-	world.log << "### MassVarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"
-	log_admin("[key_name(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]")
-	message_admins("[key_name_admin(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]", 1)
+	if(!log_handled)
+		world.log << "### MassVarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"
+		log_admin("[key_name(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]")
+		message_admins("[key_name_admin(src)] mass modified [original_name]'s [variable] to [O.vars[variable]]", 1)
