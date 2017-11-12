@@ -266,7 +266,7 @@ var/list/forbidden_varedit_object_types = list(
 	var/list/icons_modifying = list("resize", "resize_rev")
 	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "mutantrace", "player_ingame_age", "summon_type")
 	var/list/typechange_locked = list("player_next_age_tick","player_ingame_age")
-	var/list/fully_locked = list("holder", "player_next_age_tick", "resize_rev")
+	var/list/fully_locked = list("holder", "player_next_age_tick")
 
 	if(is_type_in_list(O, forbidden_varedit_object_types))
 		to_chat(usr, "\red It is forbidden to edit this object's variables.")
@@ -444,12 +444,8 @@ var/list/forbidden_varedit_object_types = list(
 		if("restore to default")
 			if(variable=="resize")
 				O.vars[variable] = O.resize_rev
-				world.log << "### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"
-				log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
-				message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]", 1)
 				O.update_transform()
 				O.resize_rev = initial(O.resize_rev)
-				return
 			else
 				O.vars[variable] = initial(O.vars[variable])
 
@@ -457,49 +453,51 @@ var/list/forbidden_varedit_object_types = list(
 			return .(O.vars[variable])
 
 		if("text")
-			var/var_new = sanitize(input("Enter new text:","Text",O.vars[variable])) as null|text
-			if(var_new==null) return
+			var/var_new = sanitize(input("Enter new text:", "Text", O.vars[variable])) as null|text
+			if(isnull(var_new))
+				return
 			O.vars[variable] = var_new
 
 		if("num")
-			if(variable=="light_range")
-				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
-				if(var_new == null) return
-				O.set_light(var_new)
-			else if(variable=="player_ingame_age")
-				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
-				if(var_new == null) return
-				else if(var_new < 0) return
-				O.vars[variable] = var_new
-				if(istype(O,/client))
-					var/client/C = O
-					if(C) C.log_client_ingame_age_to_db()
-			else if(variable=="stat")
-				var/var_new = input("Enter new number:","Num",O.vars[variable]) as null|num
-				if(var_new == null) return
-				if((O.vars[variable] == 2) && (var_new < 2))//Bringing the dead back to life
-					dead_mob_list -= O
-					living_mob_list += O
-				if((O.vars[variable] < 2) && (var_new == 2))//Kill him
-					living_mob_list -= O
-					dead_mob_list += O
-				O.vars[variable] = var_new
-			else if(variable=="resize")
-				var/var_new = input("Enter new coefficient: \n(object will be resized by multiplying this number)","Num",O.vars[variable]) as null|num
-				if(var_new == null) return
-				if(var_new == 0)
-					to_chat(usr, "<b>Resize coefficient can't be equal 0</b>")
-					return
-				O.vars[variable] = var_new
-				world.log << "### VarEdit by [src]: [O.type] [variable]=[html_encode("[O.vars[variable]]")]"
-				log_admin("[key_name(src)] modified [original_name]'s [variable] to [O.vars[variable]]")
-				message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.vars[variable]]", 1)
-				O.update_transform()
-				return
-			else
-				var/var_new =  input("Enter new number:","Num",O.vars[variable]) as null|num
-				if(var_new==null) return
-				O.vars[variable] = var_new
+			switch(variable)
+				if("light_range")
+					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
+					if(isnull(var_new))
+						return
+					O.set_light(var_new)
+				if("player_ingame_age")
+					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
+					if(isnull(var_new) || var_new < 0)
+						return
+					O.vars[variable] = var_new
+					if(istype(O,/client))
+						var/client/C = O
+						if(C) C.log_client_ingame_age_to_db()
+				if("stat")
+					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
+					if(isnull(var_new))
+						return
+					if((O.vars[variable] == 2) && (var_new < 2))//Bringing the dead back to life
+						dead_mob_list -= O
+						living_mob_list += O
+					if((O.vars[variable] < 2) && (var_new == 2))//Kill him
+						living_mob_list -= O
+						dead_mob_list += O
+					O.vars[variable] = var_new
+				if("resize")
+					var/var_new = input("Enter new coefficient: \n(object will be resized by multiplying this number)", "Num", O.vars[variable]) as null|num
+					if(isnull(var_new))
+						return
+					if(var_new == 0)
+						to_chat(usr, "<b>Resize coefficient can't be equal 0</b>")
+						return
+					O.vars[variable] = var_new
+					O.update_transform()
+				else
+					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
+					if(isnull(var_new))
+						return
+					O.vars[variable] = var_new
 
 		if("type")
 			var/var_new = input("Enter type:","Type",O.vars[variable]) as null|anything in typesof(/obj,/mob,/area,/turf)
