@@ -77,10 +77,6 @@
 	to_chat(malf.current, "When you feel you have enough APCs under your control, you may begin the takeover attempt.")
 
 
-/datum/game_mode/malfunction/proc/hack_intercept()
-	
-
-
 /datum/game_mode/malfunction/process(seconds)
 	if(apcs >= APC_MIN_TO_MALDF_DECLARE && malf_mode_declared)
 		AI_win_timeleft -= (apcs / APC_MIN_TO_MALDF_DECLARE) * seconds //Victory timer now de-increments almost normally

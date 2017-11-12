@@ -1,30 +1,24 @@
 // TO DO:
 /*
-epilepsy flash on lights
-delay round message
-microwave makes robots
-dampen radios
-reactivate cameras - done
-eject engine
-core sheild
-cable stun
-rcd light flash thingy on matter drain
+nanjector
+robot_fabricator
 */
 
 
 /datum/AI_Module
 	var/uses = 0
+	var/price = 0
 	var/module_name = null
-	var/description = ""
-	var/engaged = 0
+	var/description = null
 	var/verb_caller = null
-	var/need_only_one = FALSE
+	var/need_only_once = FALSE
+	var/only_for_malf_gamemode = FALSE
 	var/mob/living/silicon/ai/owner = null
 	var/list/valid_targets = list(/obj/machinery)
 
 /datum/AI_Module/New(mob/living/silicon/ai/module_owner)
 	owner = module_owner
-	module_owner.	[module_name] = src
+	module_owner.current_modules[module_name] = src
 	if(verb_caller)
 		owner.verbs |= verb_caller
 
@@ -48,13 +42,12 @@ rcd light flash thingy on matter drain
 	verb_caller = /mob/living/silicon/ai/proc/choose_modules
 	var/temp = null
 	var/processing_time = 100
-	var/list/large_modules
-	var/list/small_modules
+	var/list/available_modules = null
 
 /datum/AI_Module/module_picker/New(mob/living/silicon/ai/module_owner)
 	..()
-	large_modules = subtypesof(/datum/AI_Module/large)
-	small_modules = subtypesof(/datum/AI_Module/small)
+	available_modules = subtypesof(/datum/AI_Module/large)
+	available_modules += subtypesof(/datum/AI_Module/small)
 
 /datum/AI_Module/module_picker/proc/use(mob/user)
 	var/dat
@@ -67,12 +60,12 @@ rcd light flash thingy on matter drain
 		dat += "<HR>"
 		dat += "<B>Install Module:</B><BR>"
 		dat += "<I>The number afterwards is the amount of processing time it consumes.</I><BR>"
-		for(var/module in large_modules)
+		var/is_malf = istype(ticker.mode, /datum/game_mode/malfunction)
+		for(var/module in available_modules)
 			var/datum/AI_Module/module_type = module
-			dat += "<A href='byond://?src=\ref[src];module_type=[module]'>[initial(module_type.module_name)]</A> (50)<BR>"
-		for(var/module in small_modules)
-			var/datum/AI_Module/module_type = module
-			dat += "<A href='byond://?src=\ref[src];module_type=[module]'>[initial(module_type.module_name)]</A> (10)<BR>"
+			if(initial(module_type.only_for_malf_gamemode) && !is_malf)
+				continue
+			dat += "<A href='byond://?src=\ref[src];module_type=[module]'>[initial(module_type.module_name)]</A> ([initial(module_type.price)])<BR>"
 		dat += "<HR>"
 
 	user << browse(dat, "window=modpicker")
@@ -88,20 +81,24 @@ rcd light flash thingy on matter drain
 	else if(href_list["module_type"])
 		var/selected_module_path = text2path(href_list["module_type"])
 		var/datum/AI_Module/selected_module = selected_module_path
-		selected_module = cur_AI.current_modules[initial(selected_module.module_name)]
-		if(selected_module)
-			if(selected_module.need_only_one)
-				temp = "This module is only needed once."
-			else
-				var/uses_to_add = initial(selected_module.uses)
-				selected_module.uses += uses_to_add
-				temp = "Added uses ([uses_to_add]) to module: [selected_module.module_name]"
-				processing_time -= istype(selected_module, /datum/AI_Module/large) ? 50 : 10
+		var/module_price = initial(selected_module.price)
+		if(module_price > processing_time)
+			temp = "Not enough processing time."
 		else
-			selected_module = new selected_module_path(cur_AI)
-			temp = selected_module.description
-			processing_time -= istype(selected_module, /datum/AI_Module/large) ? 50 : 10
-			selected_module.BuyedNewHandle()
+			selected_module = cur_AI.current_modules[initial(selected_module.module_name)]
+			if(selected_module)
+				if(selected_module.need_only_once)
+					temp = "This module is only needed once."
+				else
+					var/uses_to_add = initial(selected_module.uses)
+					selected_module.uses += uses_to_add
+					temp = "Added uses ([uses_to_add]) to module: [selected_module.module_name]"
+					processing_time -= module_price
+			else
+				selected_module = new selected_module_path(cur_AI)
+				temp = selected_module.description
+				processing_time -= module_price
+				selected_module.BuyedNewHandle()
 	use(cur_AI)
 
 /mob/living/silicon/ai/proc/choose_modules()
@@ -151,14 +148,16 @@ rcd light flash thingy on matter drain
 
 /datum/AI_Module/large/
 	uses = 1
+	price = MALF_LARGE_MODULE_PRICE
 
 /datum/AI_Module/small/
 	uses = 5
+	price = MALF_SMALL_MODULE_PRICE
 
 /datum/AI_Module/large/fireproof_core
 	module_name = "Core upgrade: Fireproof Core"
 	description = "An upgrade to improve core resistance, making it immune to fire and heat. This effect is permanent."
-	need_only_one = TRUE
+	need_only_once = TRUE
 
 /datum/AI_Module/large/fireproof_core/BuyedNewHandle()
 	for(var/mob/living/silicon/ai/ai in player_list)
@@ -168,7 +167,7 @@ rcd light flash thingy on matter drain
 /datum/AI_Module/large/upgrade_turrets
 	module_name = "AI Turret upgrade"
 	description = "Improves the firing speed and health of all AI turrets. This effect is permanent."
-	need_only_one = TRUE
+	need_only_once = TRUE
 
 /datum/AI_Module/large/upgrade_turrets/BuyedNewHandle()
 	for(var/obj/machinery/porta_turret/turret in machines)
@@ -227,33 +226,6 @@ rcd light flash thingy on matter drain
 	else
 		uses++
 
-/datum/AI_Module/small/nanject
-	module_name = "Nanites injector"
-	description = "Upgrades an electrical machine with nanobot injector. 1 use."
-	uses = 1
-	verb_caller = /mob/living/silicon/ai/proc/nanject
-
-/datum/AI_Module/small/nanject/AIAltClickHandle(obj/machinery/M)
-	if(..())
-		return
-
-	if(!M.nanjector)
-		uses--
-		M.nanjector = TRUE
-		to_chat(owner, "<span class='notice'>Nanobot injector installed. Uses left: [uses]</span>")
-		owner.active_module = null
-		M.audible_message("<span class='notice'>You hear a quiet click.</span>")
-		if(uses <= 0)
-			owner.active_module = null
-	else
-		to_chat(owner, "<span class='notice'>This machine already upgraded.</span>")
-
-/mob/living/silicon/ai/proc/nanject()
-	set name = "Add nanobot injector"
-	set category = "Malfunction"
-	var/mob/living/silicon/ai/cur_AI = usr
-	cur_AI.toggle_small_alt_click_module("Nanites injector")
-
 /datum/AI_Module/small/blackout
 	module_name = "Blackout"
 	description = "Attempts to overload the lighting circuits on the station, destroying some bulbs. 3 uses."
@@ -264,24 +236,27 @@ rcd light flash thingy on matter drain
 	set category = "Malfunction"
 	set name = "Blackout"
 	var/datum/AI_Module/small/blackout/blackout = current_modules["Blackout"]
-	if(blackout.uses)
-		blackout.uses--
-		for(var/obj/machinery/power/apc/apc in machines)
-			if(prob(30 * apc.overload))
-				apc.overload_lighting()
-			else
-				apc.overload++
-	else
-		to_chat(src, "<span class='red'>Out of uses.</span>")
+	if(!blackout.uses)
+		to_chat(src, "<span class='red'>[blackout.module_name] module activation failed. Out of uses.</span>")
+		return
+	blackout.uses--
+	for(var/obj/machinery/power/apc/apc in machines)
+		if(prob(30 * apc.overload))
+			apc.overload_lighting()
+		else
+			apc.overload++
+	to_chat(src, "<span class='notice'>APCs overloaded. Uses left: [uses]</span>")
 
 /datum/AI_Module/small/interhack
 	module_name = "Hack intercept"
 	description = "Hacks the status update from Cent. Com, removing any information about malfunctioning electrical systems."
-	need_only_one = TRUE
+	need_only_once = TRUE
+	only_for_malf_gamemode = TRUE
 
 /datum/AI_Module/small/interhack/BuyedNewHandle()
 	var/datum/game_mode/malfunction/cur_malf = ticker.mode
-	if(!istype(cur_malf))
+	if(!istype(cur_malf)) //Is it possible? Probably not
+		qdel(src)
 		return
 	cur_malf.intercept_hacked = TRUE
 	to_chat(owner, "<span class='notice'>Status update hacked.</span>")
@@ -289,7 +264,7 @@ rcd light flash thingy on matter drain
 /datum/AI_Module/large/holohack
 	module_name = "Hacked hologram"
 	description = "Hacks holopads to project much more useful hologram."
-	need_only_one = TRUE
+	need_only_once = TRUE
 	verb_caller = /mob/living/silicon/ai/proc/holohack
 
 /mob/living/silicon/ai/proc/holohack()

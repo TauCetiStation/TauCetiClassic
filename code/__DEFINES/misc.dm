@@ -159,6 +159,10 @@
 #define APC_BONUS_WITH_INTERCEPT 3
 //If AI intercepts message, he can hack additional APC_BONUS_WITH_INTERCEPT APCs without attracting attention
 
+#define MALF_SMALL_MODULE_PRICE 10
+#define MALF_LARGE_MODULE_PRICE 50
+//Malf modules prices
+
 // Maploader bounds indices
 #define MAP_MINX 1
 #define MAP_MINY 2
