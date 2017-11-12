@@ -644,7 +644,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(BP.parent == src)
 			BP.droplimb(null, clean, disintegrate)
 
-	if(parent && disintegrate != DROPLIMB_BURN)
+	if(parent && !(parent.status & ORGAN_DESTROYED) && disintegrate != DROPLIMB_BURN)
 		if(clean)
 			if(prob(10))
 				parent.sever_artery()
