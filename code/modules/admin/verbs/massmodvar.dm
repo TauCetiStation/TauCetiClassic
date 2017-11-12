@@ -26,9 +26,9 @@
 /client/proc/massmodify_variables(atom/O, var_name = "", method = 0)
 	if(!check_rights(R_VAREDIT))	return
 
-	var/list/icons_modifying = list("icon", "icon_state", "resize", "resize_rev")
+	var/list/icons_modifying = list("icon", "icon_state", "resize")
 	var/list/locked = list("vars", "summon_type")
-	var/list/fully_locked = list("holder", "key", "ckey", "client", "player_next_age_tick", "player_ingame_age")
+	var/list/fully_locked = list("holder", "key", "ckey", "client", "player_next_age_tick", "player_ingame_age", "resize_rev")
 
 	if(is_type_in_list(O, forbidden_varedit_object_types))
 		to_chat(usr, "\red It is forbidden to edit this object's variables.")
