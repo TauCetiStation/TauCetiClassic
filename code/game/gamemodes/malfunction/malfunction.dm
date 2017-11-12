@@ -78,8 +78,8 @@
 
 
 /datum/game_mode/malfunction/process(seconds)
-	if(apcs >= APC_MIN_TO_MALDF_DECLARE && malf_mode_declared)
-		AI_win_timeleft -= (apcs / APC_MIN_TO_MALDF_DECLARE) * seconds //Victory timer now de-increments almost normally
+	if(apcs >= APC_MIN_TO_MALF_DECLARE && malf_mode_declared)
+		AI_win_timeleft -= (apcs / APC_MIN_TO_MALF_DECLARE) * seconds //Victory timer now de-increments almost normally
 	..()
 	if(AI_win_timeleft <= 0)
 		check_win()
@@ -87,19 +87,19 @@
 	if(malf_mode_declared)
 		return
 
-	if(apcs == (INTERCEPT_APCS + 1) && AI_malf_revealed < 1)
+	if(apcs >= (INTERCEPT_APCS + 1) && AI_malf_revealed < 1)
 		AI_malf_revealed = 1
 		world << sound('sound/AI/commandreport.ogg')
 		captain_announce("Caution, [station_name]. We have detected abnormal behaviour in your network. It seems someone is trying to hack your electronic systems. We will update you when we have more information.", "Network Monitoring")
-	if(apcs == (INTERCEPT_APCS + 2) && AI_malf_revealed < 2)
+	if(apcs >= (INTERCEPT_APCS + 2) && AI_malf_revealed < 2)
 		AI_malf_revealed = 2
 		world << sound('sound/AI/commandreport.ogg')
 		captain_announce("We started tracing the intruder. Whoever is doing this, they seem to be on the station itself. We suggest checking all network control terminals. We will keep you updated on the situation.", "Network Monitoring")
-	if(apcs == (INTERCEPT_APCS + 4) && AI_malf_revealed < 3)
+	if(apcs >= (INTERCEPT_APCS + 4) && AI_malf_revealed < 3)
 		AI_malf_revealed = 3
 		world << sound('sound/AI/commandreport.ogg')
 		captain_announce("This is highly abnormal and somewhat concerning. The intruder is too fast, he is evading our traces. No man could be this fast...", "Network Monitoring")
-	if(apcs == (INTERCEPT_APCS + 6) && AI_malf_revealed < 4)
+	if(apcs >= (INTERCEPT_APCS + 6) && AI_malf_revealed < 4)
 		AI_malf_revealed = 4
 		captain_announce("We have traced the intrude#, it seem& t( e yo3r AI s7stem, it &# *#ck@ng th$ sel$ destru$t mechani&m, stop i# bef*@!)$#&&@@  <CONNECTION LOST>", "Network Monitoring")
 		takeover()
@@ -197,7 +197,7 @@
 	to_chat(world, "Self-destructing in 10")
 	for (var/i=9 to 1 step -1)
 		sleep(10)
-		to_chat(world, i)
+		to_chat(world, "[i]")
 	sleep(10)
 	enter_allowed = FALSE
 	ticker.station_explosion_cinematic(0, null)

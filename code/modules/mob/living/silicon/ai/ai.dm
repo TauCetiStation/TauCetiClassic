@@ -293,8 +293,8 @@ var/list/ai_verbs_default = list(
 		var/datum/game_mode/malfunction/malf = ticker.mode
 		for (var/datum/mind/malfai in malf.malf_ai)
 			if (mind == malfai) // are we the evil one?
-				if (malf.apcs >= APC_MIN_TO_MALDF_DECLARE)
-					stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALDF_DECLARE), 0)] seconds")
+				if (malf.apcs >= APC_MIN_TO_MALF_DECLARE)
+					stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALF_DECLARE), 0)] seconds")
 
 
 /mob/living/silicon/ai/show_alerts()

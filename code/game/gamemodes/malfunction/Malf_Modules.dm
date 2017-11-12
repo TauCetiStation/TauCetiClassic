@@ -122,7 +122,7 @@ robot_fabricator
 	if(cur_malf.malf_mode_declared)
 		to_chat(src,"<span class='notice'>You've already begun your takeover.</span>")
 		return
-	if(cur_malf.apcs < APC_MIN_TO_MALDF_DECLARE)
+	if(cur_malf.apcs < APC_MIN_TO_MALF_DECLARE)
 		to_chat(src,"<span class='red'>You don't have enough hacked APCs to take over the station yet. You need to hack at least 5, however hacking more will make the takeover faster. You have hacked [ticker.mode:apcs] APCs so far.</span>")
 		return
 	if(cur_malf.AI_malf_revealed < 4)
@@ -230,11 +230,11 @@ robot_fabricator
 
 /datum/AI_Module/small/overload_machine/AIAltClickHandle(obj/machinery/M)
 	if(..())
-		return
+		return 1
 
 	if(!M.is_operational())
 		to_chat(usr, "<span class='red'>The machine is non-functional</span>")
-		return
+		return 1
 
 	uses--
 	M.audible_message("<span class='notice'>You hear a loud electrical buzzing sound!</span>")
@@ -345,11 +345,11 @@ robot_fabricator
 
 /datum/AI_Module/small/upgrade_camera/AIAltClickHandle(obj/machinery/camera/sel_cam)
 	if(..())
-		return
+		return 1
 
-	if(sel_cam.isXRay() && sel_cam.isEmpProof() && sel_cam.isMotion())
+	if(sel_cam.isXRay() && sel_cam.isEmpProof())
 		to_chat(owner, "<span class='notice'>This camera is already upgraded</span>")
-		return
+		return 1
 
 	if(!sel_cam.isXRay())
 		sel_cam.upgradeXRay()
@@ -358,11 +358,6 @@ robot_fabricator
 
 	if(!sel_cam.isEmpProof())
 		sel_cam.upgradeEmpProof()
-
-	if(!sel_cam.isMotion())
-		sel_cam.upgradeMotion()
-		// Add it to machines that process
-		machines |= sel_cam
 
 	uses--
 	sel_cam.audible_message("<span class='notice'>[bicon(sel_cam)] beeps</span>")

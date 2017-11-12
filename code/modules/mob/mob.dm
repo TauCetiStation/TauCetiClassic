@@ -645,7 +645,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 			if(ticker.mode && ticker.mode.config_tag == "malfunction")
 				var/datum/game_mode/malfunction/GM = ticker.mode
 				if(GM.malf_mode_declared)
-					stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALDF_DECLARE), 0)]")
+					stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
 			if(SSshuttle.online && SSshuttle.location < 2)
 				var/timeleft = SSshuttle.timeleft()
 				if(timeleft)

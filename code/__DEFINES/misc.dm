@@ -153,10 +153,10 @@
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 
-#define APC_MIN_TO_MALDF_DECLARE 5
+#define APC_MIN_TO_MALF_DECLARE 5
 //if malf apcs < than this, malf can't begin the takeover attempt
 
-#define APC_BONUS_WITH_INTERCEPT 3
+#define APC_BONUS_WITH_INTERCEPT 4
 //If AI intercepts message, he can hack additional APC_BONUS_WITH_INTERCEPT APCs without attracting attention
 
 #define MALF_SMALL_MODULE_PRICE 10

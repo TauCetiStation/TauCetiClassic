@@ -100,8 +100,8 @@
 	A.AICtrlClick(src)
 /mob/living/silicon/ai/AltClickOn(atom/A)
 	if(active_module)
-		active_module.AIAltClickHandle(A)
-		return
+		if(active_module.AIAltClickHandle(A))
+			return
 	A.AIAltClick(src)
 
 /*
