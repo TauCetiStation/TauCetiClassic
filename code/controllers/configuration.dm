@@ -455,10 +455,10 @@
 					if (avail_time_sep)
 						avail_alien_name = lowertext(copytext(value, 1, avail_time_sep))
 						avail_alien_ingame_time = text2num(copytext(value, avail_time_sep + 1))
-						if (avail_alien_name in whitelisted_species)
+						if (avail_alien_name in whitelisted_roles)
 							config.whitelisted_species_by_time[avail_alien_name] = avail_alien_ingame_time
 						else
-							log_misc("Incorrect species whitelist for experienced players configuration definition: [value].")
+							log_misc("Incorrect species whitelist for experienced players configuration definition, species missing in whitelisted_spedcies: [avail_alien_name].")
 					else
 						log_misc("Incorrect species whitelist for experienced players configuration definition: [value].")
 
