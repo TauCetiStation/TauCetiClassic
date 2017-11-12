@@ -96,6 +96,7 @@ Class Procs:
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
+	layer = DEFAULT_MACHINERY_LAYER
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1

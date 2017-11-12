@@ -202,11 +202,11 @@
 		if(brute == 0 && burn == 0)
 			break
 
-		// heal brute damage
-		if(W.damage_type == CUT || W.damage_type == BRUISE)
-			brute = W.heal_damage(brute)
-		else if(W.damage_type == BURN)
-			burn = W.heal_damage(burn)
+		switch(W.damage_type)
+			if(BURN, LASER) // heal burn damage
+				burn = W.heal_damage(burn)
+			else // heal brute damage
+				brute = W.heal_damage(brute)
 
 	if(internal)
 		status &= ~ORGAN_BROKEN

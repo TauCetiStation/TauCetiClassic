@@ -34,7 +34,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		burn_out()
 		return
 	if(location)
-		location.hotspot_expose(700, 5, 0, src)
+		location.hotspot_expose(700, 5, src)
 		return
 
 /obj/item/weapon/match/dropped(mob/user)
@@ -168,7 +168,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		die()
 		return
 	if(location)
-		location.hotspot_expose(700, 5, 0, src)
+		location.hotspot_expose(700, 5, src)
 	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
 		if(iscarbon(loc) && (src == loc:wear_mask)) // if it's in the human/monkey mouth, transfer reagents to the mob
 			if(istype(loc, /mob/living/carbon/human))
@@ -472,5 +472,5 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/lighter/process()
 	var/turf/location = get_turf(src)
 	if(location)
-		location.hotspot_expose(700, 5, 0, src)
+		location.hotspot_expose(700, 5, src)
 	return

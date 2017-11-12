@@ -185,8 +185,8 @@ datum/supply_pack/New()
 
 /datum/supply_pack/ballistic
 	name = "Ballistic gear crate"
-	contains = list(/obj/item/clothing/suit/armor/bulletproof,
-					/obj/item/clothing/suit/armor/bulletproof,
+	contains = list(/obj/item/clothing/suit/storage/flak/bulletproof,
+					/obj/item/clothing/suit/storage/flak/bulletproof,
 					/obj/item/weapon/gun/projectile/shotgun/combat,
 					/obj/item/weapon/gun/projectile/shotgun/combat)
 	cost = 5000
@@ -268,7 +268,7 @@ datum/supply_pack/New()
 /datum/supply_pack/exparmor
 	name = "Experimental armor crate"
 	contains = list(/obj/item/clothing/suit/armor/laserproof,
-					/obj/item/clothing/suit/armor/bulletproof,
+					/obj/item/clothing/suit/storage/flak/bulletproof,
 					/obj/item/clothing/head/helmet/riot,
 					/obj/item/clothing/suit/armor/riot)
 	cost = 3500

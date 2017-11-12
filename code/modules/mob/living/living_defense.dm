@@ -220,7 +220,7 @@
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)
-	location.hotspot_expose(fire_burn_temperature(), 50, 1)
+	location.hotspot_expose(fire_burn_temperature(), 50)
 
 /mob/living/fire_act()
 	adjust_fire_stacks(0.5)
