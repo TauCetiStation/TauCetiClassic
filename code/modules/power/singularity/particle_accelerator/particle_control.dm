@@ -203,7 +203,7 @@
 
 
 /obj/machinery/particle_accelerator/control_box/ui_interact(mob/user)
-	if(in_range(src, user) && !issilicon(user) && !isobserver(user))
+	if(!in_range(src, user) && !issilicon(user) && !isobserver(user))
 		user.unset_machine()
 		user << browse(null, "window=pacontrol")
 		return
