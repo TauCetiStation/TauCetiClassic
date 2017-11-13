@@ -121,10 +121,13 @@ var/list/forbidden_varedit_object_types = list(
 			L += var_value
 
 /client/proc/mod_list(list/L)
-	if(!check_rights(R_VAREDIT))	return
+	if(!check_rights(R_VAREDIT))
+		return
 
-	if(!istype(L,/list))
-		to_chat(src, "Not a List.")
+	if(!islist(L))
+		to_chat(usr, "Still not a list")
+		return
+		
 
 	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state")
 	var/list/names = sortList(L)
@@ -223,7 +226,11 @@ var/list/forbidden_varedit_object_types = list(
 	switch(class) //Spits a runtime error if you try to modify an entry in the contents list. Dunno how to fix it, yet.
 
 		if("list")
-			mod_list(variable)
+			if(!islist(L[L.Find(variable)]))
+				if(alert("This is not a list. Would you like to create new list?",,"Yes","No") == "No")
+					return
+				L[L.Find(variable)] = list()
+			mod_list(L[L.Find(variable)])
 
 		if("restore to default")
 			L[L.Find(variable)]=initial(variable)
@@ -435,6 +442,10 @@ var/list/forbidden_varedit_object_types = list(
 	switch(class)
 
 		if("list")
+			if(!islist(O.vars[variable]))
+				if(alert("This is not a list. Would you like to create new list?",,"Yes","No") == "No")
+					return
+				O.vars[variable] = list()
 			mod_list(O.vars[variable])
 			return
 
