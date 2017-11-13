@@ -2812,6 +2812,20 @@ datum
 			color = "#9F3400" // rgb: 159, 052, 000
 			adj_temp = - 2
 
+		drink/cold/milkshake/chocolate
+			name = "Chocolate Milkshake"
+			description = "Glorious brainfreezing mixture."
+			id = "milkshake_chocolate"
+			color = "#AEE5E4" // rgb" 174, 229, 228
+			adj_temp = -9
+
+		drink/cold/milkshake/strawberry
+			name = "Strawberry Milkshake"
+			description = "Glorious brainfreezing mixture."
+			id = "milkshake_strawberry"
+			color = "#AEE5E4" // rgb" 174, 229, 228
+			adj_temp = -9
+
 		drink/cold/milkshake
 			name = "Milkshake"
 			description = "Glorious brainfreezing mixture."
@@ -3214,6 +3228,13 @@ datum
 			description = "Yohoho and all that."
 			color = "#664300" // rgb: 102, 67, 0
 			boozepwr = 1.5
+
+		ethanol/champagne
+			name = "Champagne"
+			id = "champagne"
+			description = "Une delicieuse boisson."
+			color = "#FCFCEE" // rgb: 252, 252, 238
+			boozepwr = 1
 
 		ethanol/tequilla
 			name = "Tequila"

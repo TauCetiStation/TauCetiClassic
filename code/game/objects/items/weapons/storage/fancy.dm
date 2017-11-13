@@ -237,6 +237,22 @@
 		reagents.add_reagent("tricordrazine",15)
 	name = "cigarette packet"
 
+/obj/item/weapon/storage/fancy/cigarettes/clown
+	name = "Rainbow Cigs"
+	desc = "Ciggaretes with a bad reputation"
+	icon_state = "clowncig"
+
+/obj/item/weapon/storage/fancy/cigarettes/clown/New()
+	..()
+	for(var/i = 1 to storage_slots)
+		reagents.add_reagent("fuel",10)
+	name = "cigarette packet"
+
+/obj/item/weapon/storage/fancy/cigarettes/menthol
+	name = "Uplit Cigs"
+	desc = "A packet of six menthol cigarettes."
+	icon_state = "ucig"
+
 /*
  * Vial Box
  */

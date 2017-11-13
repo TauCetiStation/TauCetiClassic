@@ -2127,6 +2127,20 @@ datum
 			required_reagents = list("cream" = 1, "ice" = 2, "milk" = 2)
 			result_amount = 5
 
+		chocolatemilkshake
+			name = "Chocolate Milkshake"
+			id = "milkshake_chocolate"
+			result = "milkshake_chocolate"
+			required_reagents = list("cream" = 1, "ice" = 2, "milk" = 2, "hot_coco" = 1)
+			result_amount = 6
+
+		strawberrymilkshake
+			name = "Milkshake"
+			id = "milkshake_strawberry"
+			result = "milkshake_strawberry"
+			required_reagents = list("cream" = 1, "ice" = 2, "milk" = 2, "berryjuice" = 1)
+			result_amount = 6
+
 		rewriter
 			name = "Rewriter"
 			id = "rewriter"

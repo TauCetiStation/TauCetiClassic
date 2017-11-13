@@ -203,6 +203,15 @@
 	. = ..()
 	reagents.add_reagent("rum", 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne
+	name = "Duc de Paris Brut"
+	desc = "Boisson elegante. Servir froid."
+	icon_state = "chambottle"
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne/atom_init()
+	. = ..()
+	reagents.add_reagent("champagne", 100)
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater
 	name = "Flask of Holy Water"
 	desc = "A flask of the chaplain's holy water."
@@ -372,3 +381,11 @@
 	reagents.add_reagent("beer", 100)
 	pixel_x = rand(-10.0, 10)
 	pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/throw_impact(atom/hit_atom)
+	..()
+	new /obj/item/weapon/shard(loc)
+	reagents.reaction(hit_atom, TOUCH)
+	playsound(src, "shatter", 70, 1)
+	visible_message("<span class='rose'>\The [src.name] has been shattered.</span>", "<span class='rose'>You hear a smack.</span>")
+	qdel(src)
