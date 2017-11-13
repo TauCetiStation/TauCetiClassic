@@ -1506,6 +1506,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			sleep(2) // Runtime prevention (infinite bump() calls on hulks)
 			step_towards(src, L)
 
+			if(restrained()) //You can leap when you hands are cuffed, but you can't grab
+				return
+
 			var/use_hand = "left"
 			if(l_hand)
 				if(r_hand)
