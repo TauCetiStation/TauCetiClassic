@@ -332,13 +332,15 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return
 
 
-/mob/living/carbon/human/restrained()
-	if (handcuffed)
-		return 1
+/mob/living/carbon/human/restrained(check_type = HANDS)
+	if ((check_type & HANDS) && handcuffed)
+		return TRUE
+	if ((check_type & LEGS) && legcuffed)
+		return TRUE
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-		return 1
+		return TRUE
 	if (istype(buckled, /obj/structure/stool/bed/nest))
-		return 1
+		return TRUE
 	return 0
 
 
@@ -1466,7 +1468,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		to_chat(src, "<span class='notice'>It is unsafe to leap without gravity!</span>")
 		return
 
-	if(incapacitated() || buckled || pinned.len || stance_damage >= 4)
+	if(incapacitated(LEGS) || buckled || pinned.len || stance_damage >= 4) //because you need !restrained legs to leap
 		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
 		return
 
