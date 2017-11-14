@@ -63,16 +63,6 @@
 // Doors!
 #define DOOR_CRUSH_DAMAGE 10
 
-#define DOOR_LAYER          2.82
-#define DOOR_CLOSED_MOD     0.3 //how much the layer is increased when the door is closed
-
-#define PODDOOR_CLOSED_MOD  0.3
-
-#define SHUTTERS_LAYER      3.1
-
-#define FIREDOOR_LAYER      2.5
-#define FIREDOOR_CLOSED_MOD 0.31
-
 #define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
 
 #define FIREDOOR_MAX_TEMP 50 // °C
@@ -176,9 +166,6 @@
 #define MANIFEST_ERROR_CONTENTS		2
 #define MANIFEST_ERROR_ITEM			4
 
-// from /tg/
-#define ABOVE_NORMAL_TURF_LAYER 2.08
-#define BELOW_MOB_LAYER 3.7
 
 //teleport checks
 #define TELE_CHECK_NONE 0
