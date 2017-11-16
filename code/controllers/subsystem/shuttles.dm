@@ -51,8 +51,14 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/moving = 0
 	var/eta_timeofday
 	var/eta
+		//shuttles list
+	var/list/datum/shuttle/shuttles = list()
+	var/datum/shuttle/shuttle_suply = null
+	var/list/processing = list()
+		//docking controllers
+	var/list/registered_shuttle_landmarks = list()
+	var/last_landmark_registration_time = 0
 
-	//var/datum/round_event/shuttle_loan/shuttle_loan
 
 /datum/subsystem/shuttle/New()
 	NEW_SS_GLOBAL(SSshuttle)
@@ -64,9 +70,19 @@ var/datum/subsystem/shuttle/SSshuttle
 		var/datum/supply_pack/P = new typepath()
 		supply_packs[P.name] = P
 
+	for(var/shuttle_type in subtypesof(/datum/shuttle))
+		var/datum/shuttle/shuttle = shuttle_type
+		if(!initial(shuttle.name))
+			continue
+		shuttle = new shuttle()
+
 	..()
 
 /datum/subsystem/shuttle/fire()
+	for(var/datum/shuttle/shuttle in processing)
+		if(shuttle.process_state)
+			shuttle.process()
+
 	if(moving == 1)
 		var/ticksleft = (eta_timeofday - world.timeofday)
 		if(ticksleft > 0)
@@ -429,6 +445,13 @@ var/datum/subsystem/shuttle/SSshuttle
 				var/obj/machinery/door/unpowered/D = DOOR
 				D.locked = 0
 				D.open()
+
+/datum/subsystem/shuttle/proc/register_landmark(shuttle_landmark_tag, obj/effect/shuttle_landmark/shuttle_landmark)
+	if (registered_shuttle_landmarks[shuttle_landmark_tag])
+		CRASH("Attempted to register shuttle landmark with tag [shuttle_landmark_tag], but it is already registered!")
+	if (istype(shuttle_landmark))
+		registered_shuttle_landmarks[shuttle_landmark_tag] = shuttle_landmark
+		last_landmark_registration_time = world.time
 
 /datum/subsystem/shuttle/proc/undock_act(area_type, door_tag)
 

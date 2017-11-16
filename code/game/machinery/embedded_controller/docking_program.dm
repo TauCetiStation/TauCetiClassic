@@ -71,7 +71,7 @@
 	var/override_enabled = 0	//when enabled, do not open/close doors or cycle airlocks and wait for the player to do it manually
 	var/received_confirm = 0	//for undocking, whether the server has recieved a confirmation from the client
 
-/datum/computer/file/embedded_program/docking/New(var/obj/machinery/embedded_controller/M)
+/datum/computer/file/embedded_program/docking/New(obj/machinery/embedded_controller/M)
 	..()
 	if(id_tag)
 		tag = id_tag //set tags for initialization
@@ -182,7 +182,7 @@
 		control_mode = MODE_NONE
 
 
-/datum/computer/file/embedded_program/docking/proc/initiate_docking(var/target)
+/datum/computer/file/embedded_program/docking/proc/initiate_docking(target)
 	if (dock_state != STATE_UNDOCKED || control_mode == MODE_SERVER)	//must be undocked and not serving another request to begin a new docking handshake
 		return
 	

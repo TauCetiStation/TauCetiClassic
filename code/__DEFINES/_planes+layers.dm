@@ -94,5 +94,6 @@ What is the naming convention for planes or layers?
 #define DEFAULT_MACHINERY_LAYER    2.85
 //efine OBJ_LAYER                  3 // For easy recordkeeping; this is a byond define
 #define ABOVE_WINDOW_LAYER         3.3
+#define EMBEDDED_CONTROLLER_LAYER  3.31
 //efine MOB_LAYER                  4 // For easy recordkeeping; this is a byond define
 //efine FLY_LAYER                  5 // For easy recordkeeping; this is a byond define

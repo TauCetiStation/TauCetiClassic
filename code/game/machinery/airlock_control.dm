@@ -27,23 +27,12 @@
 			bolt()
 
 		if("secure_open")
-
-			unbolt()
-
-			sleep(2)
-			suppres_next_status_send = TRUE
-			open()
-
-			bolt()
+			INVOKE_ASYNC(src, .proc/secured_open)
+			return
 
 		if("secure_close")
-			unbolt()
-
-			sleep(2)
-			suppres_next_status_send = TRUE
-			close()
-
-			bolt()
+			INVOKE_ASYNC(src, .proc/secured_close)
+			return
 
 	send_status()
 

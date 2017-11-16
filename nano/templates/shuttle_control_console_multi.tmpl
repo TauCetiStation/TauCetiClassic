@@ -7,7 +7,7 @@
 <div class="item" style="padding-top: 10px">
 	<div class="item">
 		<div class="itemLabel">
-			Bluespace Drive:
+			Drive:
 		</div>
 		<div class="itemContent">
 			{{if data.shuttle_state == "idle"}}
@@ -48,7 +48,6 @@
 				{{else}}
 					<span class="bad">ERROR</span>
 				{{/if}}
-
 			</div>
 		</div>
 	</div>
@@ -70,13 +69,22 @@
 	</div>
 </div>
 
+<div class="item" style="padding-top: 10px">
+	<div class="itemLabel">
+	    Current Destination:
+	</div>
+	<span class="average">{{:data.destination_name}}</span>
+	<div class="item">
+		{{:helper.link('Choose Destination', 'arrowreturn-1-s', {'pick' : '1'}, data.can_pick ? null : 'disabled' , null)}}
+	</div>
+</div>
 <h3>Shuttle Control</h3>
 <div class="item" style="padding-top: 10px">
 	<div class="item">
 		<div class="itemContent" style="padding-top: 2px; width: 100%">
-			{{:helper.link('Launch Shuttle', 'arrowthickstop-1-e', {'move' : '1'}, data.can_launch? null : 'disabled' , null)}}
+			{{:helper.link('Launch Shuttle', 'arrowthickstop-1-e', {'move' : '1'}, data.can_launch ? null : 'disabled' , null)}}
 			{{:helper.link('Cancel Launch', 'cancel', {'cancel' : '1'}, data.can_cancel ? null : 'disabled' , null)}}
-			{{:helper.link('Force Launch', 'alert', {'force' : '1'}, data.can_force? null : 'disabled' , data.can_force ? 'redButton' : null)}}
+			{{:helper.link('Force Launch', 'alert', {'force' : '1'}, data.can_force ? null : 'disabled' , data.can_force ? 'redButton' : null)}}
 		</div>
 	</div>
 </div>

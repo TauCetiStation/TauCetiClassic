@@ -8,15 +8,15 @@
 
 /obj/machinery/embedded_controller/radio/airlock/docking_port/atom_init()
 	. = ..()
-	docking_program = new/datum/computer/file/embedded_program/docking/airlock(src, airlock_program)
 	airlock_program = program
+	docking_program = new(src, airlock_program)
 	program = docking_program
 
 /obj/machinery/embedded_controller/radio/airlock/docking_port/Destroy()
 	QDEL_NULL(airlock_program)
 	return ..()
 
-/obj/machinery/embedded_controller/radio/airlock/docking_port/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1, datum/nano_ui/master_ui = null, datum/topic_state/state)
+/obj/machinery/embedded_controller/radio/airlock/docking_port/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	var/data[0]
 
 	data = list(
@@ -29,10 +29,10 @@
 		"override_enabled" = docking_program.override_enabled,
 	)
 
-	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data, force_open)
+	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 
 	if (!ui)
-		ui = new(user, src, ui_key, "docking_airlock_console.tmpl", name, 470, 290, state = state)
+		ui = new(user, src, ui_key, "docking_airlock_console.tmpl", name, 470, 290)
 		ui.set_initial_data(data)
 		ui.open()
 		ui.set_auto_update(1)

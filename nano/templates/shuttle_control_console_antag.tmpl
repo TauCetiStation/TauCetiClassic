@@ -3,11 +3,14 @@
 	<div class="item">
 		{{:data.shuttle_status}}
 	</div>
+	<div class="item">
+		Cloaking field is {{ cloaked? "enabled" : "disabled" }}. {{:helper.link('Toggle', 'arrowreturn-1-s', {'toggle_cloaked' : '1'} }}
+	</div>
 </div>
 <div class="item" style="padding-top: 10px">
 	<div class="item">
 		<div class="itemLabel">
-			Bluespace Drive:
+			Drive:
 		</div>
 		<div class="itemContent">
 			{{if data.shuttle_state == "idle"}}
@@ -48,35 +51,26 @@
 				{{else}}
 					<span class="bad">ERROR</span>
 				{{/if}}
-
 			</div>
 		</div>
 	</div>
 {{/if}}
 <div class="item" style="padding-top: 10px">
+	<div class="itemLabel">
+	    Current Destination:
+	</div>
+	<span class="average">{{:data.destination_name}}</span>
 	<div class="item">
-		<div class="itemLabel">
-			Ready to next move:
-		</div>
-		<div class="itemContent">
-			{{if data.ready_to_next_jump}}
-				<span class="idle">NOW</span>
-			{{else data.next_jump_possible_in > 0}}
-				<span style="font-weight: bold;color: #336699">IN {{:data.next_jump_possible_in}} SECOND(S)</span>
-			{{else}}
-				<span class="bad">NOT NOW</span>
-			{{/if}}
-		</div>
+		{{:helper.link('Choose Destination', 'arrowreturn-1-s', {'pick' : '1'}, data.can_pick ? null : 'disabled' , null)}}
 	</div>
 </div>
-
 <h3>Shuttle Control</h3>
 <div class="item" style="padding-top: 10px">
 	<div class="item">
 		<div class="itemContent" style="padding-top: 2px; width: 100%">
-			{{:helper.link('Launch Shuttle', 'arrowthickstop-1-e', {'move' : '1'}, data.can_launch? null : 'disabled' , null)}}
+			{{:helper.link('Launch Shuttle', 'arrowthickstop-1-e', {'move' : '1'}, data.can_launch ? null : 'disabled' , null)}}
 			{{:helper.link('Cancel Launch', 'cancel', {'cancel' : '1'}, data.can_cancel ? null : 'disabled' , null)}}
-			{{:helper.link('Force Launch', 'alert', {'force' : '1'}, data.can_force? null : 'disabled' , data.can_force ? 'redButton' : null)}}
+			{{:helper.link('Force Launch', 'alert', {'force' : '1'}, data.can_force ? null : 'disabled' , data.can_force ? 'redButton' : null)}}
 		</div>
 	</div>
 </div>

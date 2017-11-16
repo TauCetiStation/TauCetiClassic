@@ -10,12 +10,21 @@
 	var/tag_airlock_mech_sensor
 	var/tag_shuttle_mech_sensor
 	var/tag_secure = 0
+	var/list/dummy_terminals = list()
 	var/cycle_to_external_air = 0
 	program = /datum/computer/file/embedded_program/airlock
 
 /obj/machinery/embedded_controller/radio/airlock/atom_init()
 	. = ..()
 	program = new program(src)
+
+/*
+/obj/machinery/embedded_controller/radio/airlock/Destroy()
+	for(var/obj/machinery/dummy_airlock_controller/dummy in dummy_terminals)
+		dummy.master_controller = null
+	dummy_terminals.Cut()
+	return ..()
+*/
 
 //Advanced airlock controller for when you want a more versatile airlock controller - useful for turning simple access control rooms into airlocks
 /obj/machinery/embedded_controller/radio/airlock/advanced_airlock_controller

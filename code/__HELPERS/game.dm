@@ -125,7 +125,7 @@
 			turfs += T
 	return turfs
 
-/proc/circleviewturfs(center=usr,radius=3)		//Is there even a diffrence between this proc and circlerangeturfs()?
+/proc/circleviewturfs(center=usr,radius=3)
 
 	var/turf/centerturf = get_turf(center)
 	var/list/turfs = new/list()

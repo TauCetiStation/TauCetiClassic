@@ -185,6 +185,18 @@
 #define TELE_CHECK_TURFS 1
 #define TELE_CHECK_ALL 2
 
+// Shuttle moving status.
+#define SHUTTLE_IDLE      0
+#define SHUTTLE_WARMUP    1
+#define SHUTTLE_INTRANSIT 2
+
+// Autodock shuttle processing status.
+#define IDLE_STATE   0
+#define WAIT_LAUNCH  1
+#define FORCE_LAUNCH 2
+#define WAIT_ARRIVE  3
+#define WAIT_FINISH 4
+
 //get_turf(): Returns the turf that contains the atom.
 //Example: A fork inside a box inside a locker will return the turf the locker is standing on.
 #define get_turf(A) (get_step(A, 0))

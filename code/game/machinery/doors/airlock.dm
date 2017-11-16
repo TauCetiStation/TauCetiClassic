@@ -174,6 +174,26 @@ var/list/airlock_overlays = list()
 	if(secondsBackupPowerLost > 0)
 		secondsBackupPowerLost = 0
 
+/obj/machinery/door/airlock/proc/secured_open()
+	unbolt()
+
+	sleep(2)
+	suppres_next_status_send = TRUE
+	open()
+
+	bolt()
+	send_status()
+
+/obj/machinery/door/airlock/proc/secured_close()
+	unbolt()
+
+	sleep(2)
+	suppres_next_status_send = TRUE
+	close()
+
+	bolt()
+	send_status()
+
 /obj/machinery/door/airlock/proc/bolt()
 	if(locked)
 		return
