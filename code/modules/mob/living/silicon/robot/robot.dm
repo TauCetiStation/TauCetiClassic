@@ -557,6 +557,7 @@
 		if (!getBruteLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
+		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0))
 			adjustBruteLoss(-30)
@@ -572,6 +573,7 @@
 		if (!getFireLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
+		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/stack/cable_coil/coil = W
 		if(!coil.use(1))
 			return
@@ -695,6 +697,7 @@
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
 		if(!opened)//Cover is closed
 			if(locked)
+				user.SetNextMove(CLICK_CD_MELEE)
 				if(prob(90))
 					var/obj/item/weapon/card/emag/emag = W
 					emag.uses--

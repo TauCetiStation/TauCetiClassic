@@ -159,6 +159,7 @@ Pipelines + Other Objects -> Pipe network
 
 			add_fingerprint(user)
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			user.SetNextMove(CLICK_CD_INTERACT)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 
 			if (internal_pressure > 2 * ONE_ATMOSPHERE)

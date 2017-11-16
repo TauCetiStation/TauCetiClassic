@@ -323,6 +323,7 @@
 		chance += 50
 
 	if(chance && prob(chance))
+		user.SetNextMove(CLICK_CD_MELEE * 2) // DISMORALING HIM
 		if(O.force)
 			user.visible_message("<span class='warning'>[user] hits [src] with the [O], however [src] is too armored.</span>",
 			                     "<span class='warning'>You can't cause [src] any damage.</span>")

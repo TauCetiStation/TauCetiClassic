@@ -72,6 +72,7 @@
 			adjustBruteLoss(damage)
 
 /mob/living/simple_animal/construct/attackby(obj/item/O, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(O.force)
 		var/damage = O.force
 		if (O.damtype == HALLOSS)
@@ -79,7 +80,7 @@
 		adjustBruteLoss(damage)
 		visible_message("<span class='danger'>[src] has been attacked with [O] by [user].</span>")
 	else
-		to_chat(usr, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
+		to_chat(user, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
 		visible_message("<span class='red'>[user] gently taps [src] with [O].</span>")
 
 /////////////////Juggernaut///////////////
@@ -104,6 +105,7 @@
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
 
 /mob/living/simple_animal/construct/armoured/attackby(obj/item/O, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(O.force)
 		if(O.force >= 11)
 			var/damage = O.force
@@ -209,6 +211,7 @@
 	var/max_energy = 1000
 
 /mob/living/simple_animal/construct/behemoth/attackby(obj/item/O, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(O.force)
 		if(O.force >= 11)
 			var/damage = O.force
@@ -219,7 +222,7 @@
 		else
 			visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>")
 	else
-		to_chat(usr, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
+		to_chat(user, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
 		visible_message("<span class='red'>[user] gently taps [src] with [O].</span>")
 
 

@@ -108,6 +108,7 @@
 	return 0
 
 /obj/structure/grille/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(iswirecutter(W))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)

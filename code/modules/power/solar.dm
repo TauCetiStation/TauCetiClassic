@@ -73,6 +73,7 @@
 	else if (W)
 		src.add_fingerprint(user)
 		src.health -= W.force
+		user.SetNextMove(CLICK_CD_MELEE)
 		src.healthcheck()
 	..()
 

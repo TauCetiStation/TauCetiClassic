@@ -125,14 +125,14 @@
 	for(var/obj/item/toy/crayon/crayon in contents)
 		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
 
-/obj/item/weapon/storage/fancy/crayons/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/toy/crayon))
-		switch(W:colourName)
+/obj/item/weapon/storage/fancy/crayons/attackby(obj/item/toy/crayon/W, mob/user)
+	if(istype(W))
+		switch(W.colourName)
 			if("mime")
-				to_chat(usr, "This crayon is too sad to be contained in this box.")
+				to_chat(user, "This crayon is too sad to be contained in this box.")
 				return
 			if("rainbow")
-				to_chat(usr, "This crayon is too powerful to be contained in this box.")
+				to_chat(user, "This crayon is too powerful to be contained in this box.")
 				return
 	..()
 

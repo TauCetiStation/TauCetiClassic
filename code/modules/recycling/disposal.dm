@@ -114,6 +114,7 @@
 	if(istype(G))	// handle grabbed mob
 		if(ismob(G.affecting))
 			var/mob/GM = G.affecting
+			user.SetNextMove(CLICK_CD_MELEE)
 			for (var/mob/V in viewers(usr))
 				V.show_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>", 3)
 			if(do_after(usr, 20, target = src))

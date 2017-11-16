@@ -24,6 +24,7 @@
 /obj/item/light_fixture_frame/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
+		user.SetNextMove(CLICK_CD_RAPID)
 		qdel(src)
 		return
 	..()
@@ -97,10 +98,11 @@
 
 /obj/machinery/light_construct/attackby(obj/item/weapon/W, mob/user)
 	src.add_fingerprint(user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	if (istype(W, /obj/item/weapon/wrench))
 		if (src.stage == 1)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			to_chat(usr, "You begin deconstructing [src].")
+			to_chat(user, "You begin deconstructing [src].")
 			if (!do_after(usr, 30, target = src))
 				return
 			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
@@ -396,6 +398,7 @@
 
 
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		if(prob(1+W.force * 5))
 
 			to_chat(user, "You hit the light, and it smashes!")
@@ -742,6 +745,7 @@
 	..()
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
+		user.SetNextMove(CLICK_CD_INTERACT)
 
 		to_chat(user, "You inject the solution into the [src].")
 

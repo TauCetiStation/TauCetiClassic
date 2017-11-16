@@ -44,7 +44,7 @@
 		to_chat(user, "-Plant Production: \blue [production]")
 		if(potency != -1)
 			to_chat(user, "-Plant Potency: \blue [potency]")
-		return
+		return user.SetNextMove(CLICK_CD_INTERACT)
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
 /obj/item/seeds/chiliseed
@@ -1182,6 +1182,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
 		for(var/i in 1 to 2)

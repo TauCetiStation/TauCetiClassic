@@ -57,6 +57,7 @@
 	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
 		return
 	..()
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(prob(50))
 		to_chat(user, "\The [src] shatters!")
 		message_admins("Virus dish shattered by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>[src.x],[src.y],[src.z]</a>)")
@@ -83,7 +84,7 @@
 /obj/item/weapon/ruinedvirusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
 	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
 		return ..()
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(prob(50))
 		to_chat(user, "\The [src] shatters!")
 		qdel(src)

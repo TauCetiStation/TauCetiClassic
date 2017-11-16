@@ -198,8 +198,7 @@
 				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
 			new /obj/item/stack/sheet/metal(loc)
-			for(var/mob/M in viewers(src))
-				M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", 3, "You hear welding.", 2)
+			visible_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", "You hear welding.")
 			qdel(src)
 			return
 		if(isrobot(user))
@@ -209,20 +208,21 @@
 		usr.drop_item()
 		if(W)
 			W.forceMove(src.loc)
+
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))
 		return
+
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!WT.remove_fuel(0,user))
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 		src.welded = !src.welded
 		src.update_icon()
-		for(var/mob/M in viewers(src))
-			M.show_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", 3, "You hear welding.", 2)
+		visible_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", "You hear welding.")
 	else
-		src.attack_hand(user)
-	return
+		attack_hand(user)
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/user)
 	if(istype(O, /obj/screen))	//fix for HUD elements making their way into the world	-Pete
@@ -241,6 +241,7 @@
 		return
 	if(istype(O, /obj/structure/closet))
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	step_towards(O, src.loc)
 	if(user != O)
 		user.show_viewers("<span class='danger'>[user] stuffs [O] into [src]!</span>")

@@ -17,6 +17,7 @@
 
 /obj/item/weapon/paper_bundle/attackby(obj/item/weapon/W, mob/user)
 	..()
+	user.SetNextMove(CLICK_CD_INTERACT)
 	var/obj/item/weapon/paper/P
 	if(istype(W, /obj/item/weapon/paper))
 		P = W

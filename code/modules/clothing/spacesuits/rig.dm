@@ -179,11 +179,11 @@
 
 /obj/item/clothing/suit/space/rig/attackby(obj/item/W, mob/user)
 
-	if(!istype(user,/mob/living)) return
+	if(!isliving(user)) return
 
 	if(user.a_intent == "help")
 
-		if(istype(src.loc,/mob/living) && !istype(W, /obj/item/weapon/patcher))
+		if(isliving(loc) && !istype(W, /obj/item/weapon/patcher))
 			to_chat(user, "How do you propose to modify a hardsuit while it is being worn?")
 			return
 
@@ -356,11 +356,10 @@
 		to_chat(user, "This helmet has a built-in camera. It's [camera ? "" : "in"]active.")
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attackby(obj/item/W, mob/living/carbon/human/user)
-	if(!istype(user) || user.species.flags[IS_SYNTHETIC])
-		return
-	if(!istype(W, /obj/item/weapon/reagent_containers/pill))
-		return
+	if(!istype(user) || user.species.flags[IS_SYNTHETIC] || !istype(W, /obj/item/weapon/reagent_containers/pill))
+		return ..()
 	if(up && user.head == src)
+		user.SetNextMove(CLICK_CD_RAPID)
 		var/obj/item/weapon/reagent_containers/pill/P = W
 		P.reagents.trans_to_ingest(user, W.reagents.total_volume)
 		to_chat(user, "<span class='notice'>[src] consumes [W] and injected reagents to you!</span>")

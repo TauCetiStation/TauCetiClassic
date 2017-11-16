@@ -233,7 +233,7 @@
 			to_chat(user, "It has a steel cable loosely strung across the lath.")
 
 /obj/item/weapon/crossbowframe/attackby(obj/item/W, mob/user) // its better to implement this in personal crafting later.
-	if(istype(user, /mob/living/silicon/robot))
+	if(isrobot(user))
 		return
 
 	if(istype(W, /obj/item/stack))

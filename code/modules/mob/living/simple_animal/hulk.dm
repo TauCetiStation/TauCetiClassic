@@ -199,6 +199,7 @@
 //	return 1 //copypasta from carp code
 
 /mob/living/simple_animal/hulk/attackby(obj/item/O, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(O.force)
 		if(O.force >= 10)
 			var/damage = O.force

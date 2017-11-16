@@ -30,8 +30,8 @@
 		W.loc = loc
 		W.layer = 3.1
 		pinned_target = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "<span class='notice'>You slide the target into the stake.</span>")
-	return
 
 /obj/structure/target_stake/attack_hand(mob/user)
 	// taking pinned targets off!

@@ -77,6 +77,7 @@
 	else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
 		broken = 1
 		locked = 0
+		user.SetNextMove(CLICK_CD_MELEE)
 		desc = "It appears to be broken."
 		icon_state = icon_off
 		flick(icon_broken, src)

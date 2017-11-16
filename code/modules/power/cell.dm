@@ -71,6 +71,7 @@
 	..()
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = W
+		user.SetNextMove(CLICK_CD_RAPID)
 
 		to_chat(user, "You inject the solution into the power cell.")
 

@@ -57,6 +57,7 @@
 		else
 			to_chat(user, "\red Access denied.")
 	else if(istype(W, /obj/item/weapon/card/emag))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(prob(75))
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")

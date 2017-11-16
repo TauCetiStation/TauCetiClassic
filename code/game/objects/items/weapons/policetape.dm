@@ -124,6 +124,7 @@
 
 /obj/item/tape/attackby(obj/item/weapon/W, mob/user)
 	breaktape(W, user, FALSE)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 /obj/item/tape/attack_hand(mob/user)
 	if (user.a_intent == "help" && src.allowed(user))

@@ -280,7 +280,7 @@
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/storage))
+	if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
@@ -307,7 +307,7 @@
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
-	return
+	return FALSE
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	callback = CALLBACK(src, .proc/after_throw, callback) // Replace their callback with our own.

@@ -155,8 +155,9 @@ var/global/loopModeNames=list(
 
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user, params)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/card/emag))
-		current_song=0
+		current_song = 0
 		if(!emagged)
 			playlist_id = "emagged"
 			last_reload=world.time
@@ -177,6 +178,8 @@ var/global/loopModeNames=list(
 			playing = emagged
 			update_music()
 			update_icon()
+	else
+		..()
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	. = ..()

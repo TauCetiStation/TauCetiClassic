@@ -29,6 +29,7 @@
 /obj/structure/bush/attackby(obj/I, mob/user)
 	//hatchets can clear away undergrowth
 	if(istype(I, /obj/item/weapon/hatchet) && !stump)
+		user.SetNextMove(CLICK_CD_MELEE)
 		if(indestructable)
 			//this bush marks the edge of the map, you can't destroy it
 			to_chat(user, "\red You flail away at the undergrowth, but it's too thick here.")

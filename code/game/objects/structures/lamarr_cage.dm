@@ -70,7 +70,6 @@
 	src.health -= W.force
 	src.healthcheck()
 	..()
-	return
 
 /obj/structure/lamarr/attack_paw(mob/user)
 	return src.attack_hand(user)

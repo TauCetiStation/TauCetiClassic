@@ -375,11 +375,11 @@
 
 /obj/machinery/power/apc/attackby(obj/item/W, mob/user)
 
-	if (istype(user, /mob/living/silicon) && get_dist(src,user)>1)
+	if (issilicon(user) && get_dist(src,user)>1)
 		return src.attack_hand(user)
 	src.add_fingerprint(user)
 	if (istype(W, /obj/item/weapon/crowbar) && opened)
-		if (has_electronics==1)
+		if (has_electronics)
 			if (terminal)
 				to_chat(user, "\red Disconnect wires first.")
 				return

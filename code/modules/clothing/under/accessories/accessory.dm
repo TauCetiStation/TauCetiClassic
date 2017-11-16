@@ -37,11 +37,6 @@
 	usr.put_in_hands(src)
 	add_fingerprint(user)
 
-//default attackby behaviour
-/obj/item/clothing/accessory/attackby(obj/item/I, mob/user)
-	..()
-
-//default attack_hand behaviour
 /obj/item/clothing/accessory/attack_hand(mob/user)
 	if(has_suit)
 		has_suit.remove_accessory(user)
@@ -190,7 +185,7 @@
 			"<span class='warning'>You display your NanoTrasen Internal Security Legal Authorization Badge.\nIt reads: [stored_name], NT Security.</span>")
 
 /obj/item/clothing/accessory/holobadge/attackby(obj/item/O, mob/user)
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if (istype(O, /obj/item/weapon/card/emag))
 		if (emagged)
 			to_chat(user, "<span class='warning'>[src] is already cracked.</span>")

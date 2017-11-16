@@ -252,6 +252,7 @@
 		"<span class=\"warning\">Everything suddenly goes silent.</span>")
 
 	user.drop_from_inventory(W)
+	user.SetNextMove(CLICK_CD_MELEE)
 	Consume(W)
 
 	user.apply_effect(150, IRRADIATE)

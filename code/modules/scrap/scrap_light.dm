@@ -11,6 +11,7 @@
 
 /obj/item/device/flashlight/flare/torch/attackby(obj/item/W, mob/user, params) // ravioli ravioli here comes stupid copypastoli
 	..()
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(is_hot(W))
 		light(user)
 

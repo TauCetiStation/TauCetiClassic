@@ -80,6 +80,7 @@
 		to_chat(user, "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>")
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/T = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(T.welding)
 			if(health < maxhealth)
 				if(open)

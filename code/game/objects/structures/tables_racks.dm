@@ -346,12 +346,12 @@
 
 
 /obj/structure/table/attackby(obj/item/W, mob/user, params)
-	if (!W) return
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user) < 2)
 		var/obj/item/weapon/grab/G = W
-		if (istype(G.affecting, /mob/living))
+		if(isliving(G.affecting))
 			var/mob/living/M = G.affecting
 			var/mob/living/A = G.assailant
+			user.SetNextMove(CLICK_CD_MELEE)
 			if (G.state < GRAB_AGGRESSIVE)
 				if(user.a_intent == "hurt")
 					if (prob(15))
@@ -398,8 +398,8 @@
 			spark_system.start()
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			playsound(src.loc, "sparks", 50, 1)
-			for(var/mob/O in viewers(user, 4))
-				O.show_message("<span class='notice'>[src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.</span>", 2)
+			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
+			user.SetNextMove(CLICK_CD_MELEE)
 			destroy()
 			return
 
@@ -663,13 +663,13 @@
 	if(istype(W, /obj/item/weapon/melee/energy)||istype(W, /obj/item/weapon/twohanded/dualsaber))
 		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W:active && user.a_intent == "hurt"))
 			user.do_attack_animation(src)
+			user.SetNextMove(CLICK_CD_MELEE)
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			playsound(src.loc, "sparks", 50, 1)
-			for(var/mob/O in viewers(user, 4))
-				O.show_message("\blue [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
+			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'> You hear [src] coming apart.</span>")
 			destroy()
 			return
 	if(isrobot(user))

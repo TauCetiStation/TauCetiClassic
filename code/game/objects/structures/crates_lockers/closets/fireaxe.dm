@@ -38,6 +38,7 @@
 				to_chat(user, "<span class='notice'>You disable the locking modules.</span>")
 				update_icon()
 		else if(istype(O, /obj/item/weapon))
+			user.SetNextMove(CLICK_CD_MELEE)
 			if(smashed || localopened)
 				if(localopened)
 					localopened = FALSE

@@ -1355,6 +1355,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	brainmob.container = src
 
 /obj/item/weapon/organ/head/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(istype(W,/obj/item/weapon/scalpel))
 		switch(brain_op_stage)
 			if(0)

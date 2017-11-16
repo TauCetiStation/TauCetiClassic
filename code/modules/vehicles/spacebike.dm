@@ -91,6 +91,7 @@
 			user.drop_item()
 			K.loc = src
 			key = K
+			user.SetNextMove(CLICK_CD_INTERACT)
 			playsound(loc, 'sound/items/insert_key.ogg', 25, 1)
 			to_chat(user, "<span class='notice'>You put the key into the slot.</span>")
 			verbs += /obj/vehicle/space/spacebike/verb/remove_key

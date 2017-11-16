@@ -240,6 +240,7 @@ var/global/list/scrap_base_cache = list()
 
 /obj/structure/scrap/attackby(obj/item/W, mob/user)
 	var/do_dig = 0
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W,/obj/item/weapon/shovel))
 		do_dig = 30
 	if(istype(W,/obj/item/stack/rods))

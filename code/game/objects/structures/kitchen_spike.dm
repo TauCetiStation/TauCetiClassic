@@ -19,6 +19,8 @@
 			var/obj/F = new /obj/structure/kitchenspike(src.loc)
 			transfer_fingerprints_to(F)
 			qdel(src)
+	else
+		..()
 
 /obj/structure/kitchenspike
 	name = "meatspike"
@@ -75,6 +77,8 @@
 					qdel(G)
 		else
 			to_chat(user, "<span class='danger'>You can't use that on the spike!</span>")
+	else
+		..()
 
 /obj/structure/kitchenspike/user_buckle_mob(mob/living/M, mob/living/user) //Don't want them getting put on the rack other than by spiking
 	return

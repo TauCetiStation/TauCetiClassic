@@ -86,6 +86,7 @@
 	if(opening)
 		to_chat(user, "\red You must wait until the door has stopped moving.")
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(density)
 		var/turf/T = get_turf(src)
@@ -102,7 +103,7 @@
 
 		if( istype(W, /obj/item/weapon/weldingtool) )
 			var/obj/item/weapon/weldingtool/WT = W
-			if( WT:welding )
+			if( WT.welding )
 				if(!mineral)
 					T.ChangeTurf(/turf/simulated/wall)
 				else
@@ -227,6 +228,7 @@
 	if(opening)
 		to_chat(user, "\red You must wait until the door has stopped moving.")
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(istype(W, /obj/item/weapon/screwdriver))
 		var/turf/T = get_turf(src)

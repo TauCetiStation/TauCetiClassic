@@ -717,6 +717,7 @@ obj/item/projectile/kinetic/atom_init()
 
 /obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
 						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
@@ -831,6 +832,7 @@ obj/item/projectile/kinetic/atom_init()
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")

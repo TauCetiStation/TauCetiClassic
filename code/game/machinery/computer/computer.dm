@@ -109,7 +109,8 @@
 	text = replacetext(text, "\n", "<BR>")
 	return text
 
-/obj/machinery/computer/attackby(I, user)
+/obj/machinery/computer/attackby(obj/item/I, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
@@ -130,7 +131,6 @@
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
-	return
 
 /obj/machinery/computer/attack_hand(user)
 	. = ..()

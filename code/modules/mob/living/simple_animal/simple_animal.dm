@@ -343,6 +343,7 @@
 	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
 			new meat_type (get_turf(src))
+			user.SetNextMove(CLICK_CD_MELEE)
 			if(prob(95))
 				qdel(src)
 				return

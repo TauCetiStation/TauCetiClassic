@@ -162,6 +162,7 @@
 
 /obj/effect/alien/resin/attackby(obj/item/weapon/W, mob/user)
 	var/aforce = W.force
+	user.SetNextMove(CLICK_CD_MELEE)
 	health = max(0, health - aforce)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	healthcheck()
@@ -299,6 +300,7 @@
 		visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
 
 	var/damage = W.force / 4.0
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -501,6 +503,7 @@
 	else
 		src.visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")
 	var/damage = W.force / 4.0
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W

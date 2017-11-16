@@ -126,6 +126,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		else
 			newcable = new /obj/item/stack/cable_coil(T, 1, color)
 		newcable.fingerprintslast = user.key
+		user.SetNextMove(CLICK_CD_RAPID)
 
 		user.visible_message("<span class='warning'>[user] cuts the cable.</span>")
 

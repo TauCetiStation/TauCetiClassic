@@ -280,6 +280,7 @@
 
 
 /obj/machinery/mining/drill/attackby(obj/item/O, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(wires_shocked)
 		shock(user)
 	if(active && wires_protector_disable)

@@ -484,6 +484,7 @@ var/list/wood_icons = list("wood","wood-broken")
 
 	if(!C || !user)
 		return 0
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles
 		if(is_light_floor())

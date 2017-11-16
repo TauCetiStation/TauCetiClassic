@@ -43,13 +43,14 @@
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user)
 
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	//get the user's location
-	if(!istype(user.loc, /turf))
+	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(rotting)
 		if(istype(W, /obj/item/weapon/weldingtool))

@@ -148,9 +148,8 @@
 
 
 /obj/effect/blob/attackby(obj/item/weapon/W, mob/user)
-	user.do_attack_animation(src)
+	..()
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	src.visible_message("\red <B>The [src.name] has been attacked with \the [W][(user ? " by [user]." : ".")]")
 	var/damage = 0
 	switch(W.damtype)
 		if("fire")

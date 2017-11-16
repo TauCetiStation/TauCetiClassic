@@ -53,11 +53,12 @@
 			update_icon()
 			return
 
-	if(istype(I, /obj/item/weapon/grab))
+	else if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 
 		if(isliving(G.affecting))
 			var/mob/living/GM = G.affecting
+			user.SetNextMove(CLICK_CD_MELEE)
 
 			if(G.state>1)
 				if(!GM.loc == get_turf(src))
@@ -87,6 +88,8 @@
 		user.drop_item()
 		I.loc = src
 		w_items += I.w_class
+		user.SetNextMove(CLICK_CD_INTERACT)
+		add_fingerprint(user)
 		to_chat(user, "You carefully place \the [I] into the cistern.")
 		return
 
@@ -104,6 +107,7 @@
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		if(isliving(G.affecting))
+			user.SetNextMove(CLICK_CD_MELEE)
 			var/mob/living/GM = G.affecting
 			if(G.state>1)
 				if(!GM.loc == get_turf(src))
@@ -113,6 +117,8 @@
 				GM.adjustBruteLoss(8)
 			else
 				to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
+	else
+		..()
 
 /obj/structure/dryer
 	name = "hand dryer"
@@ -161,6 +167,7 @@
 /obj/structure/dryer/attackby(obj/item/O, mob/user)
 
 	if (istype(O, /obj/item/weapon/card/emag))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if (emagged)
 			to_chat(user, "\red [src] is already cracked.")
 			return
@@ -177,6 +184,7 @@
 		var/obj/item/weapon/grab/G = O
 		if(isliving(G.affecting))
 			var/mob/living/GM = G.affecting
+			user.SetNextMove(CLICK_CD_MELEE)
 			if(G.state>1)
 				if(!GM.loc == get_turf(src))
 					to_chat(user, "<span class='notice'>[GM.name] needs to be on the urinal.</span>")
@@ -205,6 +213,7 @@
 
 		if(istype(O, /obj/item/weapon/grab))	//Holding someone under dryer
 			var/obj/item/weapon/grab/G = O
+			user.SetNextMove(CLICK_CD_MELEE)
 			if(isliving(G.affecting))
 				var/mob/living/GM = G.affecting
 				if(G.state>2)
@@ -297,7 +306,7 @@
 		to_chat(M, "You didn't pay for that. Swipe a card against [src].")
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
-	if(I.type == /obj/item/device/analyzer)
+	if(I.type == /obj/item/device/analyzer) // istype?
 		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
 	else if(istype(I, /obj/item/weapon/wrench))
 		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>")
@@ -312,6 +321,7 @@
 			user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I].</span>")
 			add_fingerprint(user)
 	else if(istype(I, /obj/item/weapon/card))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!is_payed)
 			if(!on)
 				var/obj/item/weapon/card/C = I
@@ -590,6 +600,7 @@
 		var/obj/item/weapon/reagent_containers/RG = O
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		user.visible_message("\blue [user] fills \the [RG] using \the [src].","\blue You fill \the [RG] using \the [src].")
+		user.SetNextMove(CLICK_CD_INTERACT)
 		return
 
 	else if (istype(O, /obj/item/weapon/melee/baton))

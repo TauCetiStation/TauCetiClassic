@@ -282,6 +282,7 @@ update_flag
 		if(stat & BROKEN)
 			if(!WT.remove_fuel(0, user))
 				return
+			user.SetNextMove(CLICK_CD_INTERACT)
 			playsound(src, 'sound/items/Welder2.ogg', 40, 1)
 			to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
 			if(do_after(user, 30, target = src))
@@ -294,6 +295,7 @@ update_flag
 		visible_message("\red [user] hits the [src] with a [W]!")
 		src.add_fingerprint(user)
 		investigate_log("was smacked with \a [W] by [key_name(user)].", INVESTIGATE_ATMOS)
+		user.SetNextMove(CLICK_CD_MELEE)
 		take_damage(W.force)
 
 	if(istype(user, /mob/living/silicon/robot) && istype(W, /obj/item/weapon/tank/jetpack))

@@ -71,6 +71,7 @@
 
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	src.health -= W.force
 	src.healthcheck()
 	..()

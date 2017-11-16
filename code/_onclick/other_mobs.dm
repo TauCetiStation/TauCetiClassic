@@ -5,36 +5,36 @@
 	Otherwise pretty standard.
 */
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
+	..()
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
 
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
-	if(proximity && istype(G) && G.Touch(A,1))
+	if(istype(G) && G.Touch(A, 1))
 		return
-
 	A.attack_hand(src)
-/atom/proc/attack_hand(mob/user)
-	return
 
-/mob/living/carbon/human/RestrainedClickOn(atom/A)
+/atom/proc/attack_hand(mob/user)
 	return
 
 /*
 	Animals & All Unspecified
 */
-/mob/living/UnarmedAttack(atom/A)
-	A.attack_animal(src)
 /atom/proc/attack_animal(mob/user)
 	return
-/mob/living/RestrainedClickOn(atom/A)
-	return
+
+/mob/living/UnarmedAttack(atom/A)
+	..()
+	A.attack_animal(src)
 
 /*
 	Monkeys
 */
 /mob/living/carbon/monkey/UnarmedAttack(atom/A)
+	..()
 	A.attack_paw(src)
+
 /atom/proc/attack_paw(mob/user)
 	return
 
@@ -54,26 +54,24 @@
 	var/armor = ML.run_armor_check(dam_zone, "melee")
 	if(prob(75))
 		ML.apply_damage(rand(1,3), BRUTE, dam_zone, armor)
-		for(var/mob/O in viewers(ML, null))
-			O.show_message("\red <B>[name] has bit [ML]!</B>", 1)
+		visible_message("<span class='danger'>[name] has bit [ML]!</span>")
 		if(armor >= 100) return
 		if(ismonkey(ML))
 			for(var/datum/disease/D in viruses)
 				if(istype(D, /datum/disease/jungle_fever))
 					ML.contract_disease(D,1,0)
 	else
-		for(var/mob/O in viewers(ML, null))
-			O.show_message("\red <B>[src] has attempted to bite [ML]!</B>", 1)
+		visible_message("<span class='danger'>[src] has attempted to bite [ML]!</span>")
 
 /*
 	Slimes
 	Nothing happening here
 */
 /mob/living/carbon/slime/UnarmedAttack(atom/A)
+	..()
 	A.attack_slime(src)
+
 /atom/proc/attack_slime(mob/user)
-	return
-/mob/living/carbon/slime/RestrainedClickOn(atom/A)
 	return
 
 /*

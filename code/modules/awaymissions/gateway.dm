@@ -145,6 +145,8 @@ obj/machinery/gateway/centerstation/process()
 /obj/machinery/gateway/centerstation/attackby(obj/item/device/W, mob/user)
 	if(istype(W,/obj/item/device/multitool))
 		to_chat(user, "The gate is already calibrated, there is no work for you to do here.")
+	else
+		..()
 
 /////////////////////////////////////Away////////////////////////
 
@@ -239,11 +241,11 @@ obj/machinery/gateway/centerstation/process()
 	if(istype(W,/obj/item/device/multitool))
 		if(calibrated)
 			to_chat(user, "The gate is already calibrated, there is no work for you to do here.")
-			return
 		else
 			to_chat(user, "<span class='notice'> <b>Recalibration successful!</b>:</span> This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
 			calibrated = 1
-			return
+	else
+		..()
 
 /obj/machinery/gateway/proc/enter_to_transit(atom/movable/entered, turf/target)
 	playsound(src, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)

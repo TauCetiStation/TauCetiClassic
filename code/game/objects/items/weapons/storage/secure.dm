@@ -175,7 +175,7 @@
 				src.close(M)
 	src.add_fingerprint(user)
 
-/obj/item/weapon/storage/secure/briefcase/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/item/weapon/storage/secure/briefcase/attackby(obj/item/weapon/W, mob/user)
 	..()
 	update_icon()
 
