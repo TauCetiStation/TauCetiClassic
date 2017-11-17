@@ -54,7 +54,8 @@ var/global/list/sounds_cache = list()
 /client/proc/stop_server_sound()
 	set category = "Fun"
 	set name = "Stop Global Sound"
-	if(!check_rights(R_SOUNDS))	return
+	if(!check_rights(R_SOUNDS))
+		return
 	var/sound/sound = sound(null, repeat = 0, wait = 0, channel = 777)
 	for(var/mob/M in player_list)
 		M << sound
