@@ -306,23 +306,20 @@
 
 /obj/machinery/alarm/update_icon()
 	if(wiresexposed)
-		icon_state = "alarmx"
+		icon_state="alarm_build[buildstage]"
 		return
-	if((stat & (NOPOWER|BROKEN)) || shorted)
-		icon_state = "alarmp"
+
+	if((stat & NOPOWER) || shorted)
+		icon_state = "alarm_unpowered"
+		return
+	if(stat & BROKEN)
+		icon_state = "alarm_broken"
 		return
 
 	var/icon_level = danger_level
 	if (alarm_area.atmosalm)
 		icon_level = max(icon_level, 1)	//if there's an atmos alarm but everything is okay locally, no need to go past yellow
-
-	switch(icon_level)
-		if (0)
-			icon_state = "alarm0"
-		if (1)
-			icon_state = "alarm2" //yes, alarm2 is yellow alarm
-		if (2)
-			icon_state = "alarm1"
+	icon_state = "alarm[icon_level]"
 
 /obj/machinery/alarm/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
@@ -788,20 +785,12 @@
 
 
 /obj/machinery/alarm/attackby(obj/item/W, mob/user)
-/*	if (istype(W, /obj/item/weapon/wirecutters))
-		stat ^= BROKEN
-		add_fingerprint(user)
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [] has []activated []!", user, (stat&BROKEN) ? "de" : "re", src), 1)
-		update_icon()
-		return
-*/
+
 	add_fingerprint(user)
 
 	switch(buildstage)
 		if(2)
 			if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
-				//user << "You pop the Air Alarm's maintence panel open."
 				wiresexposed = !wiresexposed
 				to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 				update_icon()
@@ -964,20 +953,13 @@ FIRE ALARM
 
 /obj/machinery/firealarm/update_icon()
 	if(wiresexposed)
-		switch(buildstage)
-			if(2)
-				icon_state="fire_b2"
-			if(1)
-				icon_state="fire_b1"
-			if(0)
-				icon_state="fire_b0"
-
+		icon_state="fire_build[buildstage]"
 		return
 
 	if(stat & BROKEN)
-		icon_state = "firex"
+		icon_state = "fire_broken"
 	else if(stat & NOPOWER)
-		icon_state = "firep"
+		icon_state = "fire_unpowered"
 	else if(!detecting)
 		icon_state = "fire1"
 	else
@@ -1032,13 +1014,15 @@ FIRE ALARM
 					update_icon()
 
 				else if(istype(W, /obj/item/weapon/crowbar))
-					to_chat(user, "You pry out the circuit!")
+					to_chat(user, "You start prying out the circuit.")
 					playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-					spawn(20)
+					if(do_after(user,20,target = src))
+						to_chat(user, "You pry out the circuit!")
 						var/obj/item/weapon/firealarm_electronics/circuit = new /obj/item/weapon/firealarm_electronics()
 						circuit.loc = user.loc
 						buildstage = 0
 						update_icon()
+
 			if(0)
 				if(istype(W, /obj/item/weapon/firealarm_electronics))
 					to_chat(user, "You insert the circuit!")
