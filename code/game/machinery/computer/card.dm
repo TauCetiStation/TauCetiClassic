@@ -30,7 +30,7 @@
 			"target_rank" = get_target_rank(),
 				"job" = job)))
 
-		return formatted
+	return formatted
 
 /obj/machinery/computer/card/verb/eject_id()
 	set category = "Object"
