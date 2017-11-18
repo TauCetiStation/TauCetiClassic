@@ -289,7 +289,7 @@
 /proc/is_alien_whitelisted(mob/M, role)
 	if(!config.usealienwhitelist)
 		return TRUE
-	if(!M || !role || !role_whitelist || !role_whitelist[M.ckey])
+	if(!M || !role || !role_whitelist)
 		return FALSE
 
 	role = lowertext(role)
@@ -305,6 +305,12 @@
 		if("skrellian")
 			role = "skrell"
 
-	if(role_whitelist[M.ckey][role] && !role_whitelist[M.ckey][role]["ban"])
+	if(role_whitelist[M.ckey] && role_whitelist[M.ckey][role])
+		if(role_whitelist[M.ckey][role]["ban"])
+			return FALSE
 		return TRUE
+
+	if(M.client && config.whitelisted_species_by_time[role] && M.client.player_ingame_age >= config.whitelisted_species_by_time[role])
+		return TRUE
+
 	return FALSE

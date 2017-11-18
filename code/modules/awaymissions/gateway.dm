@@ -15,8 +15,8 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/gateway/atom_init_late()
-	if(dir == 2)
-		density = 0
+	if(dir & SOUTH)
+		density = FALSE
 	if(!transit_loc)
 		transit_loc = locate(/obj/effect/landmark/gateway_transit) in landmarks_list
 

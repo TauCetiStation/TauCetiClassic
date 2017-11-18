@@ -89,7 +89,9 @@ What is the naming convention for planes or layers?
 #define GAS_FILTER_LAYER           2.48
 #define GAS_PUMP_LAYER             2.49
 #define LOW_OBJ_LAYER              2.5
+#define BELOW_CONTAINERS_LAYER     2.7
 #define CONTAINER_STRUCTURE_LAYER  2.8
+#define DEFAULT_MACHINERY_LAYER    2.85
 //efine OBJ_LAYER                  3 // For easy recordkeeping; this is a byond define
 #define ABOVE_WINDOW_LAYER         3.3
 //efine MOB_LAYER                  4 // For easy recordkeeping; this is a byond define

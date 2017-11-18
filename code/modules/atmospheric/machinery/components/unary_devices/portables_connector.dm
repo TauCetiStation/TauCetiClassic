@@ -16,7 +16,8 @@
 	var/obj/machinery/portable_atmospherics/PA = locate() in loc
 	if(PA)
 		PA.connect(src)
-		PA.update_icon()
+		if(PA.initialized)
+			PA.update_icon()
 
 /obj/machinery/atmospherics/components/unary/portables_connector/Destroy()
 	if(connected_device)
