@@ -5,6 +5,7 @@
 	density = TRUE
 	anchored = TRUE
 	use_power = 0 // i see no point in that, better implement battery feature.
+	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/unwrenched = 0
 	var/wait = 0
 

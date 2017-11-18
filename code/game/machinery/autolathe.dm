@@ -85,6 +85,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/m_amount = 0.0
 	var/max_m_amount = 150000.0

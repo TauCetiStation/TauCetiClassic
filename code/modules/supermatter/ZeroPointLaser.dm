@@ -14,7 +14,7 @@
 	idle_power_usage = 10
 	active_power_usage = 300
 	interact_offline = TRUE
-	interact_allowed = FALSE
+	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/active = FALSE
 	var/fire_delay = 100

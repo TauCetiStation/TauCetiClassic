@@ -3,6 +3,7 @@
 
 	name = "Embedded Controller"
 	anchored = 1
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/on = 1
 

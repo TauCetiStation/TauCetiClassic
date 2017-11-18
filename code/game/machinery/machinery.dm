@@ -117,7 +117,7 @@ Class Procs:
 	var/unsecuring_tool = /obj/item/weapon/wrench
 	var/interact_open = FALSE // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
-	var/interact_allowed = TRUE // should machine call allowed() in attack_hand(). See machinery/turretid for example.
+	var/allowed_checks = ALLOWED_CHECK_EVERYWHERE // should machine call allowed() in attack_hand(). See machinery/turretid for example.
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
@@ -266,8 +266,13 @@ Class Procs:
 	if(!can_mob_interact(usr))
 		return FALSE
 
+	if((allowed_checks & ALLOWED_CHECK_TOPIC) && !emagged && !allowed(usr))
+		allowed_fail(usr)
+		to_chat(usr, "<span class='warning'>Access Denied.</span>")
+		return FALSE
+
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 
 	var/area/A = get_area(src)
 	A.master.powerupdate = 1
@@ -329,7 +334,7 @@ Class Procs:
 		var/datum/wires/DW = vars["wires"] // Wires and machinery that uses this feature actually should be refactored.
 		if(istype(DW) && !DW.can_use(user)) // Many of them do not use panel_open var.
 			DW.Topic("close=1", list("close"="1"))
-	if(interact_allowed && !allowed(user))
+	if((allowed_checks & ALLOWED_CHECK_A_HAND) && !emagged && !allowed(user))
 		allowed_fail(user)
 		to_chat(user, "<span class='warning'>Access Denied.</span>")
 		return 1

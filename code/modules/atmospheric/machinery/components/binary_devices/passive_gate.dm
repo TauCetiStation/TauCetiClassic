@@ -20,6 +20,7 @@ Passive gate is similar to the regular pump except:
 	can_unwrench = TRUE
 	use_power = 0
 	interact_offline = TRUE
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/unlocked = 0 // If 0, then the valve is locked closed, otherwise it is open(-able, it's a one-way valve so it closes if gas would flow backwards).
 	var/target_pressure = ONE_ATMOSPHERE

@@ -43,6 +43,7 @@
 	power_channel = ENVIRON
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	frequency = 1439
+	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/breach_detection = TRUE // Whether to use automatic breach detection or not
 	//var/skipprocess = 0 //Experimenting
@@ -951,6 +952,7 @@ FIRE ALARM
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/last_process = 0
 	var/wiresexposed = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone

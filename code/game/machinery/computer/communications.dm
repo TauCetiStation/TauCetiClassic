@@ -8,6 +8,7 @@
 	light_color = "#0099ff"
 	req_access = list(access_heads)
 	circuit = /obj/item/weapon/circuitboard/communications
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()

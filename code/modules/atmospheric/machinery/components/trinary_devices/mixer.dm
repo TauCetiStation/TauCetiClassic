@@ -9,6 +9,7 @@
 	use_power = 0
 	idle_power_usage = 150 // internal circuitry, friction losses and stuff
 	power_rating = 3700    // This also doubles as a measure of how powerful the mixer is, in Watts. 3700 W ~ 5 HP
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/set_flow_rate = ATMOS_DEFAULT_VOLUME_MIXER
 	var/list/mixing_inputs

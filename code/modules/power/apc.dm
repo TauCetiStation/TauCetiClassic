@@ -46,6 +46,7 @@
 	anchored = 1
 	use_power = 0
 	req_access = list(access_engine_equip)
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell

@@ -13,7 +13,7 @@
 	icon_state = "control_standby"
 	anchored = 1
 	density = 0
-	interact_allowed = FALSE // we use isLocked proc to open UI.
+	allowed_checks = ALLOWED_CHECK_NONE // we use isLocked proc to open UI.
 
 	var/enabled = 0
 	var/lethal = 0

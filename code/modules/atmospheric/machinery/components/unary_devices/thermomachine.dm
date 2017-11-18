@@ -10,6 +10,7 @@
 	use_power = 0
 	idle_power_usage = 5			// 5 Watts for thermostat related circuitry
 	layer = OBJ_LAYER
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/max_temperature = 0
 	var/min_temperature = 0

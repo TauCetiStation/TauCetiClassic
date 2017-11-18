@@ -10,6 +10,7 @@
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 5000
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 /obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/stack/sheet/metal))

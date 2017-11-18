@@ -11,6 +11,7 @@
 	idle_power_usage = 5
 	active_power_usage = 100
 	flags = NOREACT
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/max_n_of_items = 1500
 	var/icon_on = "smartfridge"
 	var/icon_off = "smartfridge-off"

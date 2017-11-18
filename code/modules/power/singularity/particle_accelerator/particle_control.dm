@@ -14,6 +14,7 @@
 	construction_state = 0
 	active = 0
 	dir = 1
+	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/list/obj/structure/particle_accelerator/connected_parts
 	var/assembled = 0
 	var/parts = null

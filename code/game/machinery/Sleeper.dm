@@ -18,6 +18,7 @@
 	anchored = 1
 	state_open = 1
 	light_color = "#7BF9FF"
+	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/filtering = 0
 	var/efficiency = 1

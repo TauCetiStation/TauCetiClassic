@@ -13,7 +13,7 @@ var/list/alldepartments = list("Central Command")
 	active_power_usage = 200
 	power_channel = EQUIP
 	interact_offline = TRUE
-
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/weapon/card/id/scan = null // identification
 	var/authenticated = 0
 

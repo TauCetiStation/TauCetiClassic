@@ -23,6 +23,7 @@ Thus, the two variables affect pump operation are set in New():
 	use_power = 0
 	idle_power_usage = 150 // internal circuitry, friction losses and stuff
 	power_rating = 7500    // 7500 W ~ 10 HP
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/target_pressure = ONE_ATMOSPHERE
 	var/max_pressure_setting = MAX_PUMP_PRESSURE
