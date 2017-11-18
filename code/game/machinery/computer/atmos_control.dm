@@ -9,6 +9,7 @@
 	light_color = "#00b000"
 	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
 	req_access = list(access_ce)
+	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/obj/machinery/alarm/current
 	var/overridden = FALSE //not set yet, can't think of a good way to do it
