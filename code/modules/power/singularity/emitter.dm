@@ -12,6 +12,7 @@
 	use_power = 0
 	idle_power_usage = 10
 	active_power_usage = 300
+	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/active = FALSE
 	var/powered = FALSE
