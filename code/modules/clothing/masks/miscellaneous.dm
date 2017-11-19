@@ -93,23 +93,25 @@
 	icon_state = "violetscarf"
 	item_state = "violetscarf"
 
-/obj/item/clothing/mask/scarf/attack_self()
+/obj/item/clothing/mask/scarf/attack_self(mob/user)
 
-	if(usr.canmove && !usr.stat && !usr.restrained())
-		if(!src.hanging)
-			src.hanging = !src.hanging
-			gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
-			flags &= ~ MASKCOVERSMOUTH
-			icon_state = "[initial(icon_state)]down"
-			to_chat(usr, "Your scarf is now hanging on your neck.")
+	if(user.incapacitated())
+		return
 
-		else
-			src.hanging = !src.hanging
-			gas_transfer_coefficient = 0.90
-			flags |= MASKCOVERSMOUTH
-			icon_state = "[initial(icon_state)]"
-			to_chat(usr, "You pull the scarf up to cover your face.")
-		usr.update_inv_wear_mask()
+
+	if(!hanging)
+		hanging = !hanging
+		gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
+		flags &= ~MASKCOVERSMOUTH
+		icon_state = "[initial(icon_state)]down"
+		to_chat(user, "Your scarf is now hanging on your neck.")
+	else
+		hanging = !hanging
+		gas_transfer_coefficient = 0.90
+		flags |= MASKCOVERSMOUTH
+		icon_state = "[initial(icon_state)]"
+		to_chat(user, "You pull the scarf up to cover your face.")
+	user.update_inv_wear_mask()
 
 
 
