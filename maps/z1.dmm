@@ -5432,7 +5432,7 @@
 "cax" = (/turf/simulated/floor{dir = 9; icon_state = "warnwhite"},/area/rnd/mixing)
 "cay" = (/obj/machinery/camera{c_tag = "Engineering Access"},/obj/machinery/status_display{density = 0; layer = 4; pixel_x = 0; pixel_y = 32},/obj/machinery/vending/engivend,/turf/simulated/floor,/area/engine/break_room)
 "caz" = (/obj/machinery/meter,/obj/machinery/atmospherics/pipe/manifold/visible,/turf/simulated/floor{icon_state = "floorgrime"},/area/rnd/mixing)
-"caA" = (/obj/machinery/constructable_frame/machine_frame,/turf/simulated/floor,/area/engine/break_room)
+"caA" = (/obj/machinery/vending/eva/engineering,/turf/simulated/floor,/area/engine/break_room)
 "caB" = (/obj/machinery/portable_atmospherics/canister/phoron,/turf/simulated/floor/engine/phoron,/area/atmos)
 "caC" = (/obj/machinery/air_sensor{frequency = 1441; id_tag = "tox_sensor"},/turf/simulated/floor/engine/phoron,/area/atmos)
 "caD" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor/engine/phoron,/area/atmos)
