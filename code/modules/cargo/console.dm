@@ -22,6 +22,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "request"
 	light_color = "#b88b2e"
+	req_access = list()
 	circuit = /obj/item/weapon/circuitboard/computer/cargo/request
 	requestonly = TRUE
 
