@@ -111,17 +111,8 @@
 	src.open()
 	return
 
-
-/obj/machinery/door/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-
-/obj/machinery/door/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-
 /obj/machinery/door/attack_hand(mob/user)
-	return src.attackby(user, user)
+	return attackby(user, user)
 
 /obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))

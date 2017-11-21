@@ -94,13 +94,7 @@
 					qdel(src)
 
 
-/obj/machinery/telecomms/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/telecomms/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/telecomms/ui_interact(mob/user)
 	// You need a multitool to use this, or be silicon/ghost
 	if(!issilicon(user) && !isobserver(user))
 		// istype returns false if the value is null

@@ -330,15 +330,6 @@ update_flag
 		holding.forceMove(T)
 		holding = null
 
-/obj/machinery/portable_atmospherics/canister/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/portable_atmospherics/canister/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/portable_atmospherics/canister/attack_hand(mob/user)
-	return src.ui_interact(user)
-
 /obj/machinery/portable_atmospherics/canister/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(stat & BROKEN)
 		return

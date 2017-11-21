@@ -19,13 +19,6 @@
 	else
 		return ..()
 
-/obj/machinery/computer/fusion_core_control/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/computer/fusion_core_control/attack_hand(mob/user)
-	add_fingerprint(user)
-	ui_interact(user)
-
 /obj/machinery/computer/fusion_core_control/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 
 	if(stat & BROKEN)

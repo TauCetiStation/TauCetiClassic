@@ -9,6 +9,7 @@
 	use_power = 1
 	idle_power_usage = 4
 	active_power_usage = 250
+	interact_offline = TRUE
 	var/obj/item/weapon/charging = null
 	var/recharge_coeff = 1
 	var/static/list/allowed_items = list(
@@ -71,13 +72,13 @@
 			return
 
 /obj/machinery/recharger/attack_ai(mob/user)
-	return
-
-/obj/machinery/recharger/attack_ghost(mob/user)
-	return
+	if(IsAdminGhost(user))
+		return ..()
+	return 1
 
 /obj/machinery/recharger/attack_hand(mob/user)
-	add_fingerprint(user)
+	if(..())
+		return 1
 
 	if(charging)
 		charging.update_icon()
@@ -85,9 +86,6 @@
 		charging = null
 		use_power = 1
 		update_icon()
-
-/obj/machinery/recharger/attack_paw(mob/user)
-	return attack_hand(user)
 
 /obj/machinery/recharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)

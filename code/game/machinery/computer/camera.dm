@@ -99,7 +99,7 @@
 		reset_current()
 		usr.check_eye(current)
 
-/obj/machinery/computer/security/attack_ghost(mob/user)
+/obj/machinery/computer/security/attack_ghost(mob/user) // this should not ever be opened to ghots, there is simply no point (even for admin) and also this thing eats up ALOT of resources.
 	return
 
 /obj/machinery/computer/security/attack_hand(mob/user)
@@ -113,10 +113,7 @@
 		world.log << "The computer at [x],[y],[z] has a network that is not a list!"
 		return
 
-	if(..())
-		return
-
-	ui_interact(user)
+	..()
 
 /obj/machinery/computer/security/proc/can_access_camera(obj/machinery/camera/C)
 	var/list/shared_networks = src.network & C.network
