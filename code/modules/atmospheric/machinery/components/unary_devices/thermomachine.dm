@@ -10,6 +10,7 @@
 	use_power = 0
 	idle_power_usage = 5			// 5 Watts for thermostat related circuitry
 	layer = OBJ_LAYER
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/max_temperature = 0
 	var/min_temperature = 0
@@ -68,12 +69,6 @@
 		return FALSE
 
 	return TRUE
-
-/obj/machinery/atmospherics/components/unary/thermomachine/attack_ai(mob/user)
-	ui_interact(user)
-
-/obj/machinery/atmospherics/components/unary/thermomachine/attack_hand(mob/user)
-	ui_interact(user)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)
 	var/data[0]

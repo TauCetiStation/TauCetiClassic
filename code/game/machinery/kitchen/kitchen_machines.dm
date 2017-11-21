@@ -182,23 +182,16 @@
 		return 1
 	src.updateUsrDialog()
 
-/obj/machinery/kitchen_machine/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/kitchen_machine/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
 	return 0
-
-/obj/machinery/kitchen_machine/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
 
 /*******************
 *   Kitchen Machine Menu
 ********************/
 
-/obj/machinery/kitchen_machine/interact(mob/user)
-	if(panel_open)
-		return
+/obj/machinery/kitchen_machine/ui_interact(mob/user)
 	var/dat = "<div class='statusDisplay'>"
 	if(src.broken > 0)
 		dat += "ERROR: >> 0 --Responce input zero<BR>Contact your operator of the device manifactor support.</div>"
@@ -257,8 +250,7 @@
 	var/datum/browser/popup = new(user, name, name, 400, 400)
 	popup.set_content(dat)
 	popup.open(0)
-	onclose(user, "[src.name]")
-	return
+	onclose(user, "[name]")
 
 /***********************************
 *   Kitchen Machine Handling/Cooking

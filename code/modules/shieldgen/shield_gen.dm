@@ -88,19 +88,8 @@
 	else
 		..()
 
-/obj/machinery/shield_gen/attack_paw(user)
-	return src.attack_hand(user)
-
-/obj/machinery/shield_gen/attack_ai(user)
-	return src.attack_hand(user)
-
-/obj/machinery/shield_gen/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
-		return
-	interact(user)
-
-/obj/machinery/shield_gen/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+/obj/machinery/shield_gen/ui_interact(mob/user)
+	if ( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )
 		if (!issilicon(user) && !isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=shield_generator")
@@ -138,7 +127,6 @@
 	t += "<A href='?src=\ref[src]'>Refresh</A> "
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 	user << browse(t, "window=shield_generator;size=500x400")
-	user.set_machine(src)
 
 /obj/machinery/shield_gen/process()
 

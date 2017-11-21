@@ -53,6 +53,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 	default_deconstruction_crowbar(O)
 
+	if (panel_open && is_wire_tool(O) && wires.interact(user))
+		return
 	if (disabled)
 		return
 	if (!linked_console)

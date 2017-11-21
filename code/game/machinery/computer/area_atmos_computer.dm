@@ -20,9 +20,7 @@
 /obj/machinery/computer/area_atmos/atom_init_late()
 	scanscrubbers()
 
-/obj/machinery/computer/area_atmos/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/area_atmos/ui_interact(mob/user)
 	var/dat = {"
 	<html>
 		<head>

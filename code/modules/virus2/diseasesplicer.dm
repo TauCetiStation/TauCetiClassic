@@ -33,19 +33,7 @@
 
 	src.attack_hand(user)
 
-/obj/machinery/computer/diseasesplicer/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/diseasesplicer/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/diseasesplicer/attack_hand(mob/user)
-	if(..()) return
-	ui_interact(user)
-
 /obj/machinery/computer/diseasesplicer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	user.set_machine(src)
-
 	var/data[0]
 	data["dish_inserted"] = !!dish
 	data["growth"] = 0

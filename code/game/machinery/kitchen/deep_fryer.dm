@@ -8,6 +8,7 @@
 	anchored = 1
 	use_power = 1
 	idle_power_usage = 5
+	interact_offline = TRUE
 	var/on = FALSE	//Is it deep frying already?
 	var/obj/item/frying = null	//What's being fried RIGHT NOW?
 	var/fry_time = 0.0
@@ -67,10 +68,11 @@
 		else if (fry_time == 60)
 			visible_message("[src] emits an acrid smell!")
 
-/obj/machinery/deepfryer/attack_ghost(mob/user)
-	return
-
 /obj/machinery/deepfryer/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	if(frying)
 		to_chat(user, "<span class='notice'>You eject [frying] from [src].</span>")
 		var/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/S = new(loc)
@@ -99,4 +101,3 @@
 		frying = null
 		on = FALSE
 		fry_time = 0
-		return

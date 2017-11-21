@@ -8,6 +8,7 @@
 	density = 1
 	anchored = 1
 	use_power = 0
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/output = 50000
 	var/lastout = 0
 	var/loaddemand = 0
@@ -333,16 +334,6 @@
 		terminal.powernet.newload += amount
 
 
-/obj/machinery/power/smes/attack_ai(mob/user)
-	add_fingerprint(user)
-	ui_interact(user)
-
-
-/obj/machinery/power/smes/attack_hand(mob/user)
-	add_fingerprint(user)
-	ui_interact(user)
-
-
 /obj/machinery/power/smes/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 
 	if(stat & BROKEN)
@@ -351,7 +342,7 @@
 	// this is the data which will be sent to the ui
 	var/data[0]
 	data["nameTag"] = name_tag
-	data["storedCapacity"] = round(100.0*charge/capacity, 0.1)
+	data["storedCapacity"] = round(100.0 * charge / capacity, 0.1)
 	data["charging"] = charging
 	data["chargeMode"] = chargemode
 	data["chargeLevel"] = chargelevel

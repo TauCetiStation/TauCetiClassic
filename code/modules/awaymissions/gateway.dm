@@ -114,6 +114,10 @@ obj/machinery/gateway/centerstation/process()
 	update_icon()
 
 /obj/machinery/gateway/centerstation/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	if(!ready)
 		detect()
 		return
@@ -214,6 +218,10 @@ obj/machinery/gateway/centerstation/process()
 	update_icon()
 
 /obj/machinery/gateway/centeraway/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	if(!ready)
 		detect()
 		return
