@@ -59,7 +59,7 @@
 			new /obj/item/weapon/soap/syndie(src)
 			new /obj/item/weapon/storage/bag/trash(src)
 			new /obj/item/bodybag(src)
-			new /obj/item/clothing/under/suit_jacket(src)
+			new /obj/item/clothing/under/suit_jacket/reinforced(src)
 			new /obj/item/clothing/shoes/laceup(src)
 			new /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate(src)
 			new /obj/item/clothing/glasses/sunglasses/big(src)
