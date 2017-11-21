@@ -96,6 +96,17 @@
 	A.AICtrlClick(src)
 /mob/living/silicon/ai/AltClickOn(atom/A)
 	A.AIAltClick(src)
+/mob/living/silicon/ai/MiddleClickOn(atom/A)
+	if(cmptext(usr.mind.special_role,"malfunction"))
+		if(istype(A, /obj/machinery))
+			var doWeHaveIt = 0
+			for (var/datum/AI_Module/mod in usr:current_modules)
+				if(istype(mod, /datum/AI_Module/small/overload_machine))
+					doWeHaveIt = 1
+			if (doWeHaveIt)
+				client.overload_machine(A)
+			else
+				to_chat(usr, "You can`t overload machines until you get relevant ability")
 
 /*
 	The following criminally helpful code is just the previous code cleaned up;
