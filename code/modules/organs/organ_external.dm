@@ -714,7 +714,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 				if(!clean)
 					// Throw limb around.
 					if(isturf(bodypart.loc))
-						bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), rand(1, 3), 30)
+						bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), rand(1, 3), throw_speed)
 					dir = 2
 		if(DROPLIMB_BURN)
 			new /obj/effect/decal/cleanable/ash(get_turf(owner))
@@ -731,11 +731,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 				gore.basecolor =  owner.species.blood_color
 				gore.update_icon()
 
-			gore.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), 30)
+			gore.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), throw_speed)
 
 			for(var/obj/item/I in src)
 				I.loc = get_turf(src)
-				I.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), 30)
+				I.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), throw_speed)
 
 	switch(body_part)
 		if(HEAD)
