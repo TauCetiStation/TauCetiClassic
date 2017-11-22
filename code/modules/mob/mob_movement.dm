@@ -202,12 +202,16 @@
 		move_delay = world.time//set move delay
 		mob.last_move_intent = world.time + 10
 		switch(mob.m_intent)
+			if("sprint")
+				if(mob.drowsyness > 0)
+					move_delay += 6
+				move_delay += 0+config.run_speed
 			if("run")
 				if(mob.drowsyness > 0)
 					move_delay += 6
-				move_delay += 1+config.run_speed
+				move_delay += 2+config.run_speed
 			if("walk")
-				move_delay += 7+config.walk_speed
+				move_delay += 5+config.walk_speed
 		move_delay += mob.movement_delay()
 
 		if(mob.pulledby || mob.buckled) // Wheelchair driving!

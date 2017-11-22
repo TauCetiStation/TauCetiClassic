@@ -976,7 +976,14 @@
 		if(!(status_flags & GODMODE)) adjustToxLoss(total_phoronloss)
 
 	if(status_flags & GODMODE)	return 0	//godmode
-
+	var/staminaregen = 3.0
+	//cold makes lose stamina
+	if (bodytemperature < species.cold_level_1)
+		staminaregen -= 2.0
+		if (bodytemperature < species.cold_level_2)
+			staminaregen -= 2.0
+			if (bodytemperature < species.cold_level_3)
+				staminaregen -= 4.0
 	if(species.flags[REQUIRE_LIGHT])
 		var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 		if(isturf(loc)) //else, there's considered to be no light
@@ -989,10 +996,12 @@
 		if(species.flags[IS_PLANT])
 			if(nutrition > 500)
 				nutrition = 500
+			staminaregen -= 4.0 //plants need light to regenerate
 			if(light_amount >= 3) //if there's enough light, heal
 				adjustBruteLoss(-(light_amount))
 				adjustToxLoss(-(light_amount))
 				adjustOxyLoss(-(light_amount))
+				staminaregen += 1.0*light_amount
 				//TODO: heal wounds, heal broken limbs.
 
 	if(dna && dna.mutantrace == "shadow")
@@ -1003,8 +1012,10 @@
 
 		if(light_amount > 2) //if there's enough light, start dying
 			take_overall_damage(1,1)
+			staminaregen -= 2.0
 		else if (light_amount < 2) //heal in the dark
 			heal_overall_damage(1,1)
+			staminaregen += 2.0
 
 	if(dna && dna.mutantrace == "shadowling")
 		var/light_amount = 0
@@ -1017,6 +1028,7 @@
 			take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
 			to_chat(src, "<span class='userdanger'>The light burns you!</span>")
 			src << 'sound/weapons/sear.ogg'
+			staminaregen -= 8.0
 		else if (light_amount < LIGHT_HEAL_THRESHOLD) //heal in the dark
 			heal_overall_damage(5,5)
 			adjustToxLoss(-3)
@@ -1025,6 +1037,7 @@
 			adjustOxyLoss(-10)
 			SetWeakened(0)
 			SetStunned(0)
+			staminaregen += 4
 
 	//The fucking FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(FAT in mutations)
@@ -1036,6 +1049,7 @@
 			update_mutations()
 			update_inv_w_uniform()
 			update_inv_wear_suit()
+			staminaregen -= 1.5
 	else
 		if(overeatduration > 500 && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
 			mutations.Add(FAT)
@@ -1048,19 +1062,28 @@
 
 	// nutrition decrease
 	if (nutrition > 0 && stat != DEAD)
-		nutrition = max (0, nutrition - HUNGER_FACTOR)
+		nutrition = max (0, nutrition - HUNGER_FACTOR - (100-stamina)/1000)
 
 	if (nutrition > 450)
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
+			staminaregen -= 1.0
 	else
 		if(overeatduration > 1)
 			overeatduration -= 2 //doubled the unfat rate
+			staminaregen -= 0.8
+		if (nutrition < 250)
+			staminaregen -= 1.0
+			if (nutrition < 125)
+				staminaregen -= 2 //starving humans are not good runners
+				if (nutrition < 50)
+					staminaregen -= 2.5
 
 	if(species.flags[REQUIRE_LIGHT])
 		if(nutrition < 200)
 			take_overall_damage(2,0)
 			traumatic_shock++
+			staminaregen -= 6.0
 
 	if (drowsyness)
 		drowsyness--
@@ -1074,12 +1097,24 @@
 	if(resting)
 		dizziness = max(0, dizziness - 15)
 		jitteriness = max(0, jitteriness - 15)
+		if(buckled)
+			staminaregen += 1.5
+		else
+			staminaregen += 0.5 //resting on floor is not very comfortable
 	else
 		dizziness = max(0, dizziness - 3)
 		jitteriness = max(0, jitteriness - 3)
 
 	if(!species.flags[IS_SYNTHETIC])
 		handle_trace_chems()
+		adjustStaminaLoss(-staminaregen)
+		if(stamina<20)
+			if(species.flags[NO_BLOOD] || !( reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola") ))
+				m_intent = "walk"
+			if(stamina<10)
+				Weaken(5)
+				if(stamina<5)
+					sleeping += 1
 
 	updatehealth()
 
@@ -1242,6 +1277,19 @@
 
 	if(hud_updateflag)//Is there any reason for 2nd check? ~Zve
 		handle_hud_list()
+
+	if(hud_used && hud_used.staminadisplay)
+		var/obj/screen/corgi/stamina_bar/SB = hud_used.staminadisplay
+		SB.icon_state = "stam_bar_[round(stamina, 5)]"
+
+	if(hud_used && hud_used.move_intent)
+		var/obj/screen/S = hud_used.move_intent
+		if(m_intent == "run")
+			S.icon_state = "running"
+		else if(m_intent == "sprint")
+			S.icon_state = "sprinting"
+		else
+			S.icon_state = "walking"
 
 	for(var/image/hud in client.images)
 		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe

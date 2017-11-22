@@ -229,6 +229,9 @@
 					return 1
 				switch(usr.m_intent)
 					if("run")
+						usr.m_intent = "sprint"
+						usr.hud_used.move_intent.icon_state = "sprinting"
+					if("sprint")
 						usr.m_intent = "walk"
 						usr.hud_used.move_intent.icon_state = "walking"
 					if("walk")
