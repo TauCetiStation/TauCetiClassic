@@ -61,6 +61,7 @@
 		return
 
 	use_power(5)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	active = !active
 	if(active)

@@ -287,6 +287,7 @@
 	return
 
 /obj/machinery/washing_machine/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	switch(state)
 		if(1)
 			state = 2

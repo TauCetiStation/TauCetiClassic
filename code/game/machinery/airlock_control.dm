@@ -220,7 +220,7 @@
 		icon_state = "access_button_off"
 
 /obj/machinery/access_button/attack_hand(mob/user)
-	add_fingerprint(usr)
+	add_fingerprint(user)
 	if(!allowed(user))
 		to_chat(user, "\red Access Denied")
 

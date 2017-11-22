@@ -55,7 +55,7 @@
 /obj/structure/falsewall/attack_hand(mob/user)
 	if(opening)
 		return
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(density)
 		opening = 1
 		icon_state = "[mineral]fwall_open"
@@ -179,7 +179,7 @@
 /obj/structure/falserwall/attack_hand(mob/user)
 	if(opening)
 		return
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(density)
 		opening = 1
 		// Open wall

@@ -994,7 +994,7 @@
 	if(!check_spirit())
 		to_chat(user, "The rune fizzles uselessly. There is no spirit nearby.")
 		return
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	var/mob/living/carbon/human/golem/G = new(loc)
 	G.attack_log = spirit.attack_log //Preserve attack log, if there is any...
 	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"

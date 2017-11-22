@@ -268,6 +268,7 @@
 
 /obj/structure/table/attack_hand(mob/user)
 	if(HULK in user.mutations)
+		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		destroy()
@@ -684,6 +685,7 @@
 
 /obj/structure/table/attack_hand(mob/user)
 	if(HULK in user.mutations)
+		user.SetNextMove(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))

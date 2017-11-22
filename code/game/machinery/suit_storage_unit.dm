@@ -482,6 +482,7 @@
 		var/obj/item/weapon/grab/G = I
 		if( !(ismob(G.affecting)) )
 			return
+		user.SetNextMove(CLICK_CD_MELEE)
 		if (!src.isopen)
 			to_chat(usr, "<font color='red'>The unit's doors are shut.</font>")
 			return

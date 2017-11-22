@@ -154,12 +154,7 @@
 		spawn(25) increase_tension(user)
 
 /obj/item/weapon/crossbow/afterattack(atom/target, mob/living/user, flag, params)
-
-	if (istype(target, /obj/item/weapon/storage/backpack ))
-		src.dropped()
-		return
-
-	else if (target.loc == user.loc)
+	if (target.loc == user.loc)
 		return
 
 	else if (locate (/obj/structure/table, src.loc))

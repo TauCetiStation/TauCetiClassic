@@ -126,17 +126,18 @@
 	..()
 	return
 
-/obj/effect/alien/resin/attack_hand()
-	usr.do_attack_animation(src)
-	if (HULK in usr.mutations)
-		to_chat(usr, "\blue You easily destroy the [name].")
+/obj/effect/alien/resin/attack_hand(mob/user)
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
+	if (HULK in user.mutations)
+		to_chat(user, "\blue You easily destroy the [name].")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] destroys the [name]!", 1)
+			O.show_message("\red [user] destroys the [name]!", 1)
 		health = 0
 	else
-		to_chat(usr, "\blue You claw at the [name].")
+		to_chat(user, "\blue You claw at the [name].")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] claws at the [name]!", 1)
+			O.show_message("\red [user] claws at the [name]!", 1)
 		health -= rand(5,10)
 	healthcheck()
 	return
@@ -450,8 +451,9 @@
 	else
 		return attack_hand(user)
 
-/obj/effect/alien/egg/attack_hand(user)
+/obj/effect/alien/egg/attack_hand(mob/user)
 	to_chat(user, "It feels slimy.")
+	user.SetNextMove(CLICK_CD_MELEE)
 
 /obj/effect/alien/egg/proc/Grow()
 	icon_state = "egg"

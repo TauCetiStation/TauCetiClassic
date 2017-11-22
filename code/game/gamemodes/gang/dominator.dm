@@ -238,7 +238,7 @@
 /obj/machinery/dominator/attackby(obj/item/weapon/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon))
 		add_fingerprint(user)
-		//user.changeNext_move(CLICK_CD_MELEE)
+		user.SetNextMove(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		if( (I.flags&NOBLUDGEON) || !I.force )
 			return

@@ -54,6 +54,7 @@
 		return
 
 	on = !on
+	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(src, 'sound/items/buttonclick.ogg', 20, 1, 1)
 
 	for(var/area/A in area.master.related)

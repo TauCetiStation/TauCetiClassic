@@ -14,6 +14,7 @@
 	var/d_state = 0
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations) //#Z2
 		if(user.a_intent == "hurt")
 			to_chat(user, text("\blue You punch the wall."))

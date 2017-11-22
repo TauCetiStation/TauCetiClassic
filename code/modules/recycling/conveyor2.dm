@@ -147,6 +147,7 @@
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user)
 	user.Move_Pulled(src)
+	user.SetNextMove(CLICK_CD_RAPID)
 
 
 // make the conveyor broken
@@ -249,6 +250,7 @@
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
 	add_fingerprint(user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(!allowed(user))
 		to_chat(user, "<span class='warning'>Access denied.</span>")

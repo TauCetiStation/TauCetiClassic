@@ -112,6 +112,7 @@ var/list/cult_datums = list()
 		user.forceMove(get_turf(pick(allrunes)))
 
 /obj/effect/rune/attack_hand(mob/living/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(!iscultist(user))
 		to_chat(user, "You can't mouth the arcane scratchings without fumbling over them.")
 		return

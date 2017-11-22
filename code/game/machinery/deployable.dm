@@ -67,6 +67,7 @@ for reference:
 
 /obj/structure/barricade/wooden/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/stack/sheet/wood))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.health < src.maxhealth)
 			visible_message("\red [user] begins to repair \the [src]!")
 			if(do_after(user,20,target = src))
@@ -78,6 +79,7 @@ for reference:
 			return
 		return
 	else
+		user.SetNextMove(CLICK_CD_MELEE)
 		switch(W.damtype)
 			if("fire")
 				src.health -= W.force * 1
@@ -177,6 +179,7 @@ for reference:
 				return
 		return
 	else if (istype(W, /obj/item/weapon/card/emag))
+		user.SetNextMove(CLICK_CD_MELEE)
 		if (src.emagged == 0)
 			src.emagged = 1
 			src.req_access = null
@@ -195,6 +198,7 @@ for reference:
 			visible_message("\red BZZzZZzZZzZT")
 			return
 	else if (istype(W, /obj/item/weapon/wrench))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.health < src.maxhealth)
 			src.health = src.maxhealth
 			src.emagged = 0
@@ -208,6 +212,7 @@ for reference:
 			return
 		return
 	else
+		user.SetNextMove(CLICK_CD_MELEE)
 		switch(W.damtype)
 			if("fire")
 				src.health -= W.force * 0.75

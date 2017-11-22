@@ -18,8 +18,9 @@
 	update_icon()
 
 /obj/structure/toilet/attack_hand(mob/living/user)
+	user.SetNextMove(CLICK_CD_MELEE * 1.5)
 	if(swirlie)
-		usr.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie.name]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie.name]'s head!</span>", "You hear reverberating porcelain.")
+		user.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie.name]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie.name]'s head!</span>", "You hear reverberating porcelain.")
 		swirlie.adjustBruteLoss(8)
 		return
 
@@ -141,8 +142,8 @@
 	if(busy)
 		to_chat(user, "\red Someone's already drying here.")
 		return
-
-	to_chat(usr, "\blue You start drying your hands.")
+	user.SetNextMove(CLICK_CD_INTERACT)
+	to_chat(user, "\blue You start drying your hands.")
 	playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
 	add_fingerprint(user)
 	busy = 1
@@ -290,20 +291,21 @@
 	anchored = 1
 	mouse_opacity = 0
 
-/obj/machinery/shower/attack_hand(mob/M)
+/obj/machinery/shower/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	if(is_payed)
 		on = !on
 		update_icon()
 		if(on)
-			if (M.loc == loc)
-				wash(M)
-				check_heat(M)
+			if (user.loc == loc)
+				wash(user)
+				check_heat(user)
 			for (var/atom/movable/G in src.loc)
 				G.clean_blood()
 		else
 			is_payed = 0 // ≈сли игрок выключил раньше времени - принудительное аннулирование платы.
 	else
-		to_chat(M, "You didn't pay for that. Swipe a card against [src].")
+		to_chat(user, "You didn't pay for that. Swipe a card against [src].")
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
 	if(I.type == /obj/item/device/analyzer) // istype?
@@ -574,10 +576,10 @@
 	if(busy)
 		to_chat(user, "\red Someone's already washing here.")
 		return
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(src, 'sound/items/wash.ogg', 50, 1, 1)
 
-	to_chat(usr, "\blue You start washing your hands.")
+	to_chat(user, "\blue You start washing your hands.")
 
 	busy = 1
 	sleep(40)

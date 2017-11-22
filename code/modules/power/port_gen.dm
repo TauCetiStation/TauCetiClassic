@@ -46,6 +46,7 @@
 		return
 	if(!anchored)
 		return
+	interact(user)
 
 /obj/machinery/power/port_gen/examine(mob/user)
 	..()

@@ -68,6 +68,7 @@
 /obj/vehicle/space/spacebike/attack_hand(mob/user)
 	if(!load)
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(load != user)
 		if(do_after(user, 20, target=src))
 			load.visible_message(\

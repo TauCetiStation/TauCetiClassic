@@ -290,6 +290,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 
 		var/willing = null //We don't want to allow people to be forced into despawning.
 		var/mob/M = grab.affecting
+		user.SetNextMove(CLICK_CD_MELEE)
 
 		if(M.client)
 			if(alert(M,"Would you like to enter cryosleep?",,"Yes","No") == "Yes")

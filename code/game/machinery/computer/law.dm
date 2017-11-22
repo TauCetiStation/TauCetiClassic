@@ -45,9 +45,9 @@
 	src.current = select_active_ai(user)
 
 	if (!src.current)
-		to_chat(usr, "No active AIs detected.")
+		to_chat(user, "No active AIs detected.")
 	else
-		to_chat(usr, "[src.current.name] selected for law changes.")
+		to_chat(user, "[src.current.name] selected for law changes.")
 	return
 
 
@@ -75,7 +75,7 @@
 	src.current = freeborg()
 
 	if (!src.current)
-		to_chat(usr, "No free cyborgs detected.")
+		to_chat(user, "No free cyborgs detected.")
 	else
-		to_chat(usr, "[src.current.name] selected for law changes.")
+		to_chat(user, "[src.current.name] selected for law changes.")
 	return

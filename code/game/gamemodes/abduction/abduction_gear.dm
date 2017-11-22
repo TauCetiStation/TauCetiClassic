@@ -603,14 +603,14 @@
 	belt = image("icons/obj/abductor.dmi", "belt", layer = FLY_LAYER)
 	. = ..()
 
-/obj/machinery/optable/abductor/attack_hand()
+/obj/machinery/optable/abductor/attack_hand(mob/living/carbon/C)
 	if(!victim && !fastened)
 		return
 
 	//exclusion any bugs with grab
-	var/mob/living/carbon/C = usr
 	if(!istype(C))
 		return
+	C.SetNextMove(CLICK_CD_MELEE)
 
 	if(istype(C.get_active_hand(),/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = C.get_active_hand()
@@ -733,12 +733,12 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/item/weapon/lazarus_injector/alien/afterattack(atom/target, mob/user)
 	if(!loaded)
 		return
-	if(istype(target, /mob/living))
+	if(isliving(target))
 		var/mob/living/M = target
 		M.revive()
 		loaded = 0
 		user.visible_message("<span class='notice'>[user] injects [M] with [src], fully heal it.</span>")
-		playsound(src,'sound/effects/refill.ogg',50,1)
+		playsound(src, 'sound/effects/refill.ogg', 50, 1)
 		icon_state = "abductor_empty"
 
 /obj/machinery/recharger/wallcharger/alien

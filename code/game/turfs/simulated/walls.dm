@@ -262,6 +262,7 @@
 			return
 
 /turf/simulated/wall/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations) //#Z2 No more chances, just randomized damage and hurt intent
 		if(user.a_intent == "hurt")
 			playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
@@ -279,7 +280,6 @@
 	to_chat(user, "\blue You push the wall but nothing happens!")
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
-	..()
 	return
 
 /turf/simulated/wall/attackby(obj/item/weapon/W, mob/user)

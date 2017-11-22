@@ -314,7 +314,7 @@ Class Procs:
 	if((user.lying || user.stat) && !isobserver(user))
 		return 1
 	if ( !(ishuman(user) || issilicon(user) || ismonkey(user) || isalienqueen(user) || isobserver(user)) )
-		to_chat(usr, "<span class='danger'>You don't have the dexterity to do this!</span>")
+		to_chat(user, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return 1
 /*
 	//distance checks are made by atom/proc/DblClick

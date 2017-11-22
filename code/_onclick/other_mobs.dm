@@ -5,7 +5,12 @@
 	Otherwise pretty standard.
 */
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
-	..()
+	var/obj/item/organ/external/BP = bodyparts_by_name[hand ? BP_L_HAND : BP_R_HAND]
+	if(BP && !BP.is_usable())
+		to_chat(src, "<span class='notice'>You try to move your [BP.name], but cannot!</span>")
+		return
+	if(ismob(A))
+		SetNextMove(CLICK_CD_MELEE)
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
 
 	// Special glove functions:
@@ -49,6 +54,7 @@
 	if(a_intent != "harm" || !ismob(A)) return
 	if(istype(wear_mask, /obj/item/clothing/mask/muzzle))
 		return
+	SetNextMove(CLICK_CD_MELEE)
 	var/mob/living/carbon/ML = A
 	var/dam_zone = ran_zone(pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG))
 	var/armor = ML.run_armor_check(dam_zone, "melee")

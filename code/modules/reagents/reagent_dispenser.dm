@@ -139,9 +139,10 @@
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W,/obj/item/weapon/wrench))
+		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
-		modded = modded ? 0 : 1
+		modded = !modded
 		if (modded)
 			leak_fuel(amount_per_transfer_from_this)
 	if (istype(W,/obj/item/device/assembly_holder))

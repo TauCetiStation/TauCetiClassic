@@ -37,6 +37,7 @@ var/global/list/rad_collectors = list()
 	if(anchored)
 		if(!src.locked || isobserver(user))
 			toggle_power()
+			user.SetNextMove(CLICK_CD_RAPID)
 			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
 			"You turn the [src.name] [active? "on":"off"].")
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.gas["phoron"]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")

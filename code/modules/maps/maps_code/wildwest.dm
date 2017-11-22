@@ -22,7 +22,7 @@
 
 /obj/machinery/wish_granter_dark/attack_hand(var/mob/living/carbon/human/user as mob)
 	usr.set_machine(src)
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(chargesa <= 0)
 		user << "The Wish Granter lies silent."
 		return

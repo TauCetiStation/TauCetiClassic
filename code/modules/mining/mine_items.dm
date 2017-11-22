@@ -882,6 +882,7 @@ obj/item/projectile/kinetic/atom_init()
 /obj/structure/sign/mining/attack_hand(mob/user)
 	if(..(user))
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	user.visible_message("[user] removes the sign.", "You remove the sign.")
 	qdel(src)
 

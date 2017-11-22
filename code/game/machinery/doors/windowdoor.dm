@@ -271,8 +271,9 @@
 
 	if( istype(I,/obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/W = I
-		if(W.use_charge(user,6))
-			visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
+		user.SetNextMove(CLICK_CD_MELEE)
+		if(W.use_charge(user, 6))
+			visible_message("<span class='danger'>[user]</B> has punched [src]!</span>")
 			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 			shatter()
 		return
@@ -280,6 +281,7 @@
 	//Emags and ninja swords? You may pass.
 	if (density && ((istype(I, /obj/item/weapon/card/emag) && hasPower()) || istype(I, /obj/item/weapon/melee/energy/blade)))
 		flick("[src.base_state]spark", src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		sleep(6)
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
@@ -360,6 +362,7 @@
 	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
 	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
 		if(!hasPower())
+			user.SetNextMove(CLICK_CD_INTERACT)
 			if(density)
 				open(1)
 			else
@@ -369,6 +372,7 @@
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		if( (I.flags&NOBLUDGEON) || !I.force )
 			return
 		var/aforce = I.force

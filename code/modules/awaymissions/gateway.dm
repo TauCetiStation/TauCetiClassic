@@ -114,6 +114,7 @@ obj/machinery/gateway/centerstation/process()
 	update_icon()
 
 /obj/machinery/gateway/centerstation/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(!ready)
 		detect()
 		return
@@ -216,6 +217,7 @@ obj/machinery/gateway/centerstation/process()
 	update_icon()
 
 /obj/machinery/gateway/centeraway/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(!ready)
 		detect()
 		return

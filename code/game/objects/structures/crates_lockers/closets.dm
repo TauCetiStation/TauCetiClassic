@@ -271,6 +271,7 @@
 
 /obj/structure/closet/attack_hand(mob/user)
 	src.add_fingerprint(user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	src.toggle(user)
 
 // tk grab then use on self

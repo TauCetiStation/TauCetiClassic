@@ -344,7 +344,7 @@ obj/structure/stool/bed/chair/holochair
 		return
 
 	ready = !ready
-
+	user.SetNextMove(CLICK_CD_RAPID)
 	update_icon()
 
 	var/numbuttons = 0

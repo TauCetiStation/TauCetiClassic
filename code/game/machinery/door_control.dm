@@ -27,6 +27,7 @@
 		return
 	if(istype(W, /obj/item/weapon/card/emag))
 		req_access = list()
+		user.SetNextMove(CLICK_CD_INTERACT)
 		req_one_access = list()
 		playsound(src.loc, "sparks", 100, 1)
 	return src.attack_hand(user)
@@ -36,6 +37,7 @@
 		return
 
 	playsound(src, 'sound/items/buttonswitch.ogg', 20, 1, 1)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(!allowed(user))
 		to_chat(user, "\red Access Denied")
@@ -119,6 +121,7 @@
 		return
 
 	use_power(5)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	active = 1
 	icon_state = "launcheract"

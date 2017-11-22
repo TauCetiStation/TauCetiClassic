@@ -30,6 +30,7 @@
 /obj/machinery/scrap/stacking_machine/attack_hand(mob/user)
 	if(scrap_amount < 1)
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	visible_message("<span class='notice'>\The [src] was forced to release everything inside.</span>")
 	new /obj/item/stack/sheet/refined_scrap(loc, scrap_amount)
 	scrap_amount = 0

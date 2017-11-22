@@ -298,6 +298,7 @@
 /obj/vehicle/attack_hand(mob/user, damage, attack_message)
 	if(!damage)
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	visible_message("<span class='danger'>[user] [attack_message] the [src]!</span>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	src.health -= damage

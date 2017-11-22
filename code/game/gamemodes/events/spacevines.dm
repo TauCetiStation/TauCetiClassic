@@ -47,6 +47,8 @@
 
 /obj/effect/spacevine/attack_hand(mob/user)
 	user_unbuckle_mob(user)
+	user.SetNextMove(CLICK_CD_MELEE)
+
 
 /obj/effect/spacevine/attack_paw(mob/user)
 	user_unbuckle_mob(user)

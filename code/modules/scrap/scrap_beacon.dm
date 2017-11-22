@@ -14,6 +14,7 @@
 	var/active = 0
 
 /obj/structure/scrap_beacon/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if((last_summon + summon_cooldown) >= world.time)
 		to_chat(user, "<span class='notice'>[src.name] not charged yet.</span>")
 		return

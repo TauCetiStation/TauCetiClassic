@@ -115,6 +115,7 @@ var/global/loopModeNames=list(
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
 
 /obj/machinery/media/jukebox/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(stat & NOPOWER)
 		to_chat(usr, "\red You don't see anything to mess with.")
 		return

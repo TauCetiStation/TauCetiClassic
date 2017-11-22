@@ -80,6 +80,7 @@
 
 /obj/structure/inflatable/attack_hand(mob/user)
 	add_fingerprint(user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	return
 
 

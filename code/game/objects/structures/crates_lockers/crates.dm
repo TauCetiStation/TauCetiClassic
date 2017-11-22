@@ -178,6 +178,7 @@
 
 /obj/structure/closet/crate/secure/attack_hand(mob/user)
 	src.add_fingerprint(user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	if(locked)
 		src.togglelock(user)
 	else

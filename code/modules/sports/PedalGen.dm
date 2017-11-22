@@ -70,6 +70,7 @@
 			unbuckle_mob()
 			src.add_fingerprint(user)
 		else
+			user.SetNextMove(CLICK_CD_INTERACT)
 			if(buckled_mob.nutrition > 10)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 20, 1)
 				Generator.Rotated()

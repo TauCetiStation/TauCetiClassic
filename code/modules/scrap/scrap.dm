@@ -212,11 +212,12 @@ var/global/list/scrap_base_cache = list()
 	return 0
 
 /obj/structure/scrap/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(hurt_hand(user))
 		return
 	try_make_loot()
 	loot.open(user)
-	..(user)
+	..()
 
 /obj/structure/scrap/attack_paw(mob/user)
 	loot.open(user)

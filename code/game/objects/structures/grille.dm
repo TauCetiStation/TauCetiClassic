@@ -31,6 +31,7 @@
 
 /obj/structure/grille/attack_hand(mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
 						 "<span class='warning'>You kick [src].</span>", \

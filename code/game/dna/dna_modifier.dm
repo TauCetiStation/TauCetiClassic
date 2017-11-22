@@ -316,7 +316,7 @@
 	I.buf = buffer
 	return 1
 
-/obj/machinery/computer/scan_consolenew/attack_hand(user)
+/obj/machinery/computer/scan_consolenew/attack_hand(mob/user)
 	if(..())
 		return
 	if(ishuman(user)) //#Z2 Hulk </3 computers
@@ -324,6 +324,7 @@
 		if(HULK in H.mutations)
 			if(stat & (BROKEN))
 				return
+			user.SetNextMove(CLICK_CD_MELEE)
 			if(H.a_intent == "hurt")
 				H.visible_message("\red [H.name] smashes [src] with \his mighty arms!")
 				set_broken()

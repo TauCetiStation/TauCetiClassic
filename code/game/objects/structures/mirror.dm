@@ -10,6 +10,7 @@
 
 
 /obj/structure/mirror/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.a_intent == "hurt")

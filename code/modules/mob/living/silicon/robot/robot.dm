@@ -924,7 +924,6 @@
 /mob/living/silicon/robot/attack_hand(mob/user)
 
 	add_fingerprint(user)
-
 	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon)))
 		var/datum/robot_component/cell_component = components["power cell"]
 		if(cell)

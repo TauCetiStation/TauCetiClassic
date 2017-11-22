@@ -20,7 +20,7 @@
 /obj/machinery/igniter/attack_hand(mob/user)
 	if(..())
 		return
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	use_power(50)
 	on = !on
 	icon_state = text("igniter[]", on)
@@ -69,6 +69,7 @@
 	if (istype(W, /obj/item/weapon/screwdriver))
 		add_fingerprint(user)
 		src.disable = !src.disable
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.disable)
 			user.visible_message("\red [user] has disabled the [src]!", "\red You disable the connection to the [src].")
 			icon_state = "[base_state]-d"
@@ -129,6 +130,7 @@
 		return
 
 	use_power(5)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	active = 1
 	icon_state = "launcheract"

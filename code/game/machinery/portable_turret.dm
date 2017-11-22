@@ -399,6 +399,7 @@ var/list/turret_icons
 	else
 		//if the turret was attacked with the intention of harming it:
 		take_damage(I.force * 0.5)
+		user.SetNextMove(CLICK_CD_MELEE)
 		if((I.force * 0.5) > 1) //if the force of impact dealt at least 1 damage, the turret gets pissed off
 			if(!attacked && !emagged)
 				attacked = TRUE

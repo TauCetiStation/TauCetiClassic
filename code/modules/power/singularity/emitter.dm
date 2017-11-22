@@ -81,6 +81,7 @@
 /obj/machinery/power/emitter/attack_hand(mob/user)
 	if(..())
 		return
+	user.SetNextMove(CLICK_CD_RAPID)
 	activate(user)
 
 /obj/machinery/power/emitter/proc/activate(mob/user)

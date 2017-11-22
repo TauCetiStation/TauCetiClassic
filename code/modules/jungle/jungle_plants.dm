@@ -104,6 +104,7 @@ var/jungle_plants_init = 0
 
 /obj/structure/jungle_plant/attack_hand(mob/user)
 	if(fruits_left > 0)
+		user.SetNextMove(CLICK_CD_INTERACT)
 		fruits_left--
 		to_chat(user, "\blue You pick a fruit off [src].")
 

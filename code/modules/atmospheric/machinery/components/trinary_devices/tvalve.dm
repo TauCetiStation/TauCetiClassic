@@ -85,6 +85,7 @@
 /obj/machinery/atmospherics/components/trinary/tvalve/attack_hand(mob/user)
 	src.add_fingerprint(usr)
 	update_icon(1)
+	user.SetNextMove(CLICK_CD_RAPID)
 	sleep(10)
 	if (src.state)
 		src.go_straight()

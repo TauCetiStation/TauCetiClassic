@@ -106,6 +106,7 @@
 /obj/structure/closet/fireaxecabinet/attack_hand(mob/user)
 	if(user.is_busy(src))
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(locked)
 		to_chat(user, "<span class='warning'>The cabinet won't budge!</span>")

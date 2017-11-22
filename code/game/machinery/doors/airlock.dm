@@ -587,6 +587,7 @@ var/list/airlock_overlays = list()
 /obj/machinery/door/airlock/proc/hulk_break_reaction(mob/living/carbon/user)
 	if(!density)
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(user.a_intent == "hurt")
 		if(user.hulk_scream(src, 90))
 			door_rupture(user)

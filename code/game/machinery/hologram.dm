@@ -72,6 +72,7 @@ var/const/HOLOPAD_MODE = 0
 /obj/machinery/hologram/holopad/attack_hand(mob/user) //Carn: Hologram requests.
 	if(!ishuman(user) && !IsAdminGhost(user))
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(alert(user,"Would you like to request an AI's presence?",,"Yes","No") == "Yes")
 		if(last_request + 200 < world.time) //don't spam the AI with requests you jerk!
 			last_request = world.time

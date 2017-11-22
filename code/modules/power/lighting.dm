@@ -506,6 +506,7 @@
 /obj/machinery/light/attack_hand(mob/user)
 
 	add_fingerprint(user)
+	user.SetNextMove(CLICK_CD_RAPID)
 
 	if(status == LIGHT_EMPTY)
 		to_chat(user, "There is no [fitting] in this light.")

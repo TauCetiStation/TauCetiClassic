@@ -18,6 +18,7 @@
 
 /obj/effect/decal/cleanable/ash/attack_hand(mob/user)
 	to_chat(user, "<span class='notice'>[src] sifts through your fingers.</span>")
+	user.SetNextMove(CLICK_CD_RAPID)
 	var/turf/simulated/floor/F = get_turf(src)
 	if (istype(F))
 		F.dirt += 4

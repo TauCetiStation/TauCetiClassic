@@ -159,6 +159,7 @@
 	return
 
 /obj/machinery/singularity_beacon/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(stat & SCREWED)
 		return active ? Deactivate(user) : Activate(user)
 	else

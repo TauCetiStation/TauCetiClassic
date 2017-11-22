@@ -67,6 +67,7 @@
 	return src.attack_hand(user)
 
 /obj/structure/morgue/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if (src.connected)
 		for(var/atom/movable/A as mob|obj in src.connected.loc)
 			if (!( A.anchored ))
@@ -160,18 +161,15 @@
 	return src.attack_hand(user)
 
 /obj/structure/m_tray/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if (src.connected)
-		for(var/atom/movable/A as mob|obj in src.loc)
-			if (!( A.anchored ))
+		for(var/atom/movable/A in loc)
+			if(!A.anchored)
 				A.loc = src.connected
-			//Foreach goto(26)
 		src.connected.connected = null
 		src.connected.update()
 		add_fingerprint(user)
-		//SN src = null
 		qdel(src)
-		return
-	return
 
 /obj/structure/m_tray/MouseDrop_T(atom/movable/O, mob/user)
 	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
@@ -257,12 +255,13 @@
 //		src:loc:poison += 20000000
 //		src:loc:firelevel = src:loc:poison
 //		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if (cremating)
-		to_chat(usr, "<span class='rose'>It's locked.</span>")
+		to_chat(user, "<span class='rose'>It's locked.</span>")
 		return
 	if ((src.connected) && (src.locked == 0))
-		for(var/atom/movable/A as mob|obj in src.connected.loc)
-			if (!( A.anchored ))
+		for(var/atom/movable/A in src.connected.loc)
+			if(!A.anchored)
 				A.loc = src
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		qdel(src.connected)
@@ -382,18 +381,15 @@
 	return src.attack_hand(user)
 
 /obj/structure/c_tray/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	if (src.connected)
-		for(var/atom/movable/A as mob|obj in src.loc)
-			if (!( A.anchored ))
+		for(var/atom/movable/A in loc)
+			if (!A.anchored)
 				A.loc = src.connected
-			//Foreach goto(26)
 		src.connected.connected = null
 		src.connected.update()
 		add_fingerprint(user)
-		//SN src = null
 		qdel(src)
-		return
-	return
 
 /obj/structure/c_tray/MouseDrop_T(atom/movable/O, mob/user)
 	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
@@ -411,6 +407,7 @@
 	return
 
 /obj/machinery/crema_switch/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(allowed(user))
 		for (var/obj/structure/crematorium/C in world)
 			if (C.id == id)

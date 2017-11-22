@@ -13,7 +13,7 @@
 
 /obj/machinery/wish_granter/attack_hand(mob/user)
 	usr.set_machine(src)
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(charges <= 0)
 		to_chat(user, "The Wish Granter lies silent.")
 		return

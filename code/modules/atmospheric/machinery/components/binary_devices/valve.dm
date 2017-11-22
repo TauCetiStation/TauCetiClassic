@@ -78,6 +78,7 @@
 /obj/machinery/atmospherics/components/binary/valve/attack_hand(mob/user)
 	add_fingerprint(usr)
 	update_icon(1)
+	user.SetNextMove(CLICK_CD_RAPID)
 	sleep(10)
 	if (open)
 		close()

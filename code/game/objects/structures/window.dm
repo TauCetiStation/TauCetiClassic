@@ -161,6 +161,7 @@
 	playsound(loc, 'sound/effects/Glasshit.ogg', 50, 1)
 
 /obj/structure/window/attack_hand(mob/user)	//specflags please!!
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 		user.do_attack_animation(src)
@@ -168,17 +169,16 @@
 	else if(user.dna && user.dna.mutantrace == "adamantine")
 		user.do_attack_animation(src)
 		take_damage(rand(15,25), "generic")
-	else if (usr.a_intent == "hurt")
+	else if (user.a_intent == "hurt")
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
-		usr.visible_message("<span class='danger'>[usr.name] bangs against the [src.name]!</span>", \
+		user.visible_message("<span class='danger'>[usr.name] bangs against the [src.name]!</span>", \
 							"<span class='danger'>You bang against the [src.name]!</span>", \
 							"You hear a banging sound.")
 	else
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
-		usr.visible_message("[usr.name] knocks on the [src.name].", \
+		user.visible_message("[usr.name] knocks on the [src.name].", \
 							"You knock on the [src.name].", \
 							"You hear a knocking sound.")
-	return
 
 
 /obj/structure/window/attack_paw(mob/user)

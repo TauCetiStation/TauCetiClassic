@@ -261,6 +261,7 @@ var/list/valid_secondary_effect_types = list(\
 		return
 
 	src.add_fingerprint(user)
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(my_effect.trigger == TRIGGER_TOUCH)
 		to_chat(user, "<b>You touch [src].<b>")
@@ -278,7 +279,7 @@ var/list/valid_secondary_effect_types = list(\
 		secondary_effect.DoEffectTouch(user)
 
 /obj/machinery/artifact/attackby(obj/item/weapon/W, mob/living/user)
-	user.SetNextMove(CLICK_CD_INTERACT)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if (istype(W, /obj/item/weapon/reagent_containers/))
 		if(W.reagents.has_reagent("hydrogen", 1) || W.reagents.has_reagent("water", 1))
 			if(my_effect.trigger == TRIGGER_WATER)

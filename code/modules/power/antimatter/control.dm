@@ -189,8 +189,6 @@
 /obj/machinery/power/am_control_unit/attack_hand(mob/user)
 	if(anchored)
 		interact(user)
-	return
-
 
 /obj/machinery/power/am_control_unit/proc/add_shielding(obj/machinery/am_shielding/AMS, AMS_linking = 0)
 	if(!istype(AMS)) return 0

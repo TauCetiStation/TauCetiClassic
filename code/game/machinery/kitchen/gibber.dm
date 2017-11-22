@@ -91,6 +91,7 @@
 /obj/machinery/gibber/attack_hand(mob/user)
 	if(..())
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(operating)
 		to_chat(user, "<span class='danger'>The gibber is locked and running, wait for it to finish.</span>")
 		return
