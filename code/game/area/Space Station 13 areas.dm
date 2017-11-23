@@ -862,10 +862,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Vault"
 	icon_state = "nuke_storage"
 
-/area/security/heads_vault
-	name = "Heads Vault"
-	icon_state = "nuke_storage"
-
 /area/security/checkpoint
 	name = "Security Checkpoint"
 	icon_state = "security"
