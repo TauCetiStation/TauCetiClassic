@@ -45,7 +45,6 @@
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
-	ghost_must_be_admin = TRUE
 	var/damage_coeff
 	var/scan_level
 	var/precision_coeff
@@ -314,23 +313,6 @@
 	I.block = id
 	I.buf = buffer
 	return 1
-
-/obj/machinery/computer/scan_consolenew/attack_hand(user)
-	if(..())
-		return
-	if(ishuman(user)) //#Z2 Hulk </3 computers
-		var/mob/living/carbon/human/H = user
-		if(HULK in H.mutations)
-			if(stat & (BROKEN))
-				return
-			if(H.a_intent == "hurt")
-				H.visible_message("\red [H.name] smashes [src] with \his mighty arms!")
-				set_broken()
-				return
-			else
-				H.visible_message("\red [H.name] stares cluelessly at [src] and drools.")
-				return//##Z2
-	ui_interact(user)
 
  /**
   * The ui_interact proc is used to open and update Nano UIs

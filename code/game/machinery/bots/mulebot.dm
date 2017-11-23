@@ -20,20 +20,22 @@
 	maxhealth = 150
 	fire_dam_coeff = 0.7
 	brute_dam_coeff = 0.5
-	var/atom/movable/load = null		// the loaded crate (usually)
-	var/beacon_freq = 1400
-	var/control_freq = 1447
+
 	can_buckle = 1
 	buckle_lying = 0
 
 	suffix = ""
+	req_access = list(access_cargo) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
 
+	var/atom/movable/load = null		// the loaded crate (usually)
+	var/beacon_freq = 1400
+	var/control_freq = 1447
 	var/turf/target				// this is turf to navigate to (location of beacon)
 	var/loaddir = 0				// this the direction to unload onto/load from
 	var/new_destination = ""	// pending new destination (waiting for beacon response)
 	var/destination = ""		// destination description
 	var/home_destination = "" 	// tag of home beacon
-	req_access = list(access_cargo) // added robotics access so assembly line drop-off works properly -veyveyr //I don't think so, Tim. You need to add it to the MULE's hidden robot ID card. -NEO
+
 	var/path[] = new()
 
 	var/mode = 0		//0 = idle/ready
@@ -122,6 +124,8 @@
 			icon_state = "mulebot0"
 
 		updateDialog()
+	else if(is_wire_tool(I))
+		wires.interact(user)
 	else if (istype(I, /obj/item/weapon/wrench))
 		if (src.health < maxhealth)
 			src.health = min(maxhealth, src.health+25)
@@ -162,27 +166,10 @@
 		wires.random_cut()
 	..()
 
-
-/obj/machinery/bot/mulebot/attack_ai(mob/user)
-	user.set_machine(src)
-	interact(user, 1)
-
-/obj/machinery/bot/mulebot/attack_ghost(mob/user)
-	if(user.client.machine_interactive_ghost)
-		user.set_machine(src)
-		interact(user, 1)
-
-/obj/machinery/bot/mulebot/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	if(wires.interact(user))
-		return
-	user.set_machine(src)
-	interact(user, 0)
-
-/obj/machinery/bot/mulebot/interact(mob/user, ai=0)
+/obj/machinery/bot/mulebot/ui_interact(mob/user)
+	var/ai = isAI(user) || isobserver(user)
 	var/dat
+
 	dat += "<TT><B>Multiple Utility Load Effector Mk. III</B></TT><BR><BR>"
 	dat += "ID: [suffix]<BR>"
 	dat += "Power: [on ? "On" : "Off"]<BR>"
@@ -242,7 +229,6 @@
 
 	user << browse("<HEAD><TITLE>Mulebot [suffix ? "([suffix])" : ""]</TITLE></HEAD>[dat]", "window=mulebot;size=350x500")
 	onclose(user, "mulebot")
-	return
 
 /obj/machinery/bot/mulebot/Topic(href, href_list)
 	. = ..()

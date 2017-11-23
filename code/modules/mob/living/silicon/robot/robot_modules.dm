@@ -20,12 +20,6 @@
 	..()
 	return
 
-
-/obj/item/weapon/robot_module/atom_init()
-	emag = new /obj/item/toy/sword(src)
-	emag.name = "Placeholder Emag Item"
-	. = ..()
-
 /obj/item/weapon/robot_module/Destroy()
 	for(var/obj/O in modules)
 		qdel(O)
@@ -76,6 +70,7 @@
 	name = "standard robot module"
 
 /obj/item/weapon/robot_module/standard/atom_init()
+	. = ..()
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/melee/baton(src)
 	modules += new /obj/item/weapon/extinguisher(src)
@@ -83,7 +78,6 @@
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	emag = new /obj/item/weapon/melee/energy/sword(src)
-	. = ..()
 
 /obj/item/weapon/robot_module/standard/respawn_consumable(mob/living/silicon/robot/R)
 	..()
@@ -99,6 +93,7 @@
 		)
 
 /obj/item/weapon/robot_module/surgeon/atom_init()
+	. = ..()
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/device/healthanalyzer(src)
 	modules += new /obj/item/borg/sight/hud/med(src)
@@ -121,7 +116,6 @@
 
 	emag.reagents.add_reagent("pacid", 250)
 	emag.name = "Polyacid spray"
-	. = ..()
 
 /obj/item/weapon/robot_module/surgeon/respawn_consumable(mob/living/silicon/robot/R)
 	if(src.emag)
@@ -138,6 +132,7 @@
 		)
 
 /obj/item/weapon/robot_module/crisis/atom_init()
+	. = ..()
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/weapon/gripper/chemistry(src)
@@ -159,7 +154,6 @@
 
 	emag.reagents.add_reagent("pacid", 250)
 	emag.name = "Polyacid spray"
-	. = ..()
 
 /obj/item/weapon/robot_module/crisis/respawn_consumable(mob/living/silicon/robot/R)
 
@@ -189,6 +183,7 @@
 		)
 
 /obj/item/weapon/robot_module/engineering/atom_init()
+	. = ..()
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/borg/sight/meson(src)
 	modules += new /obj/item/weapon/extinguisher(src)
@@ -211,12 +206,12 @@
 		var/obj/item/stack/W = new T(src)
 		W.set_amount(stacktypes[T])
 		modules += W
-	. = ..()
 
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
 
 /obj/item/weapon/robot_module/security/atom_init()
+	. = ..()
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/handcuffs/cyborg(src)
 	modules += new /obj/item/weapon/melee/baton(src)
@@ -224,7 +219,6 @@
 	modules += new /obj/item/taperoll/police(src)
 	modules += new /obj/item/borg/sight/hud/sec(src)
 	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
-	. = ..()
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
 	..()
@@ -243,6 +237,7 @@
 	name = "janitorial robot module"
 
 /obj/item/weapon/robot_module/janitor/atom_init()
+	. = ..()
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/soap/nanotrasen(src)
 	modules += new /obj/item/weapon/storage/bag/trash(src)
@@ -252,7 +247,6 @@
 
 	emag.reagents.add_reagent("lube", 250)
 	emag.name = "Lube spray"
-	. = ..()
 
 /obj/item/weapon/robot_module/janitor/respawn_consumable(mob/living/silicon/robot/R)
 	..()
@@ -266,6 +260,7 @@
 	name = "service robot module"
 
 /obj/item/weapon/robot_module/butler/atom_init()
+	. = ..()
 	modules += new /obj/item/device/flash(src)
 	modules += new /obj/item/weapon/gripper/service(src)
 	modules += new /obj/item/weapon/gripper/paperwork(src)
@@ -294,7 +289,6 @@
 	R.my_atom = emag
 	R.add_reagent("beer2", 50)
 	emag.name = "Mickey Finn's Special Brew"
-	. = ..()
 
 /obj/item/weapon/robot_module/butler/add_languages(mob/living/silicon/robot/R)
 	//full set of languages

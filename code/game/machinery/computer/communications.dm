@@ -8,6 +8,7 @@
 	light_color = "#0099ff"
 	req_access = list(access_heads)
 	circuit = /obj/item/weapon/circuitboard/communications
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()
@@ -266,14 +267,11 @@
 		..()
 	return
 
-/obj/machinery/computer/communications/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/communications/ui_interact(mob/user)
 	if (src.z > ZLEVEL_EMPTY)
 		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
 
-	user.set_machine(src)
 	var/dat = "<head><title>Communications Console</title></head><body>"
 	if (SSshuttle.online && SSshuttle.location==0)
 		var/timeleft = SSshuttle.timeleft()

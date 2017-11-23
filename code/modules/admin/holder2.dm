@@ -89,6 +89,14 @@ you will have to do something like if(client.holder.rights & R_ADMIN) yourself.
 		to_chat(usr, "<font color='red'>Error: Cannot proceed. They have more or equal rights to us.</font>")
 	return 0
 
+//This proc checks whether subject has at least ONE of the rights specified in rights_required.
+/proc/check_rights_for(client/subject, rights_required)
+	if(subject && subject.holder)
+		if(rights_required && !(rights_required & subject.holder.rights))
+			return FALSE
+		return TRUE
+	return FALSE
+
 /client/proc/deadmin()
 	if(holder)
 		holder.disassociate()
