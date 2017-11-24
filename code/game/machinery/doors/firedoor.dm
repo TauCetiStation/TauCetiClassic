@@ -105,10 +105,10 @@
 			return
 		else if(!density)
 			return
-		else
+		else if(!user.is_busy(src))
 			to_chat(user, "\red You force your claws between the doors and begin to pry them open...")
 			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
-			if (!user.is_busy() && do_after(user,40,target = src) && src)
+			if (do_after(user,40,target = src) && src)
 				open(1)
 	return
 

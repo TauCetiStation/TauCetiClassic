@@ -233,6 +233,7 @@
 /mob/proc/CtrlClickOn(atom/A)
 	A.CtrlClick(src)
 	return
+
 /atom/proc/CtrlClick(mob/user)
 	return
 
