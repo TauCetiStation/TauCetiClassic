@@ -1482,8 +1482,9 @@ It is possible to destroy the net by the occupant or someone else.
 		..()
 		return
 
-	attack_hand()
-		if (HULK in usr.mutations)
+	attack_hand(mob/living/carbon/human/user)
+		if (HULK in user.mutations)
+			user.SetNextMove(CLICK_CD_MELEE)
 			to_chat(usr, text("\blue You easily destroy the energy net."))
 			for(var/mob/O in oviewers(src))
 				O.show_message(text("\red [] rips the energy net apart!", usr), 1)
@@ -1494,9 +1495,10 @@ It is possible to destroy the net by the occupant or someone else.
 	attack_paw()
 		return attack_hand()
 
-	attack_alien()
-		usr.do_attack_animation(src)
-		if (islarva(usr) || isfacehugger(usr))
+	attack_alien(mob/user)
+		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
+		if (islarva(user) || isfacehugger(user))
 			return
 		to_chat(usr, text("\green You claw at the net."))
 		for(var/mob/O in oviewers(src))
@@ -1512,6 +1514,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 	attackby(obj/item/weapon/W, mob/user)
 		var/aforce = W.force
+		user.SetNextMove(CLICK_CD_MELEE)
 		health = max(0, health - aforce)
 		healthcheck()
 		..()

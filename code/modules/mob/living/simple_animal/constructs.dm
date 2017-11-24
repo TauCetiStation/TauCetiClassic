@@ -55,21 +55,12 @@
 	to_chat(user, msg)
 
 /mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M)
+	if(..())
+		return
+
 	if(istype(M, /mob/living/simple_animal/construct/builder))
 		health += 5
 		M.emote("mends some of \the <EM>[src]'s</EM> wounds.")
-	else
-		if(M.melee_damage_upper <= 0)
-			M.emote("[M.friendly] \the <EM>[src]</EM>")
-		else
-			if(M.attack_sound)
-				playsound(loc, M.attack_sound, 50, 1, 1)
-			visible_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>")
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
-
-			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-			adjustBruteLoss(damage)
 
 /mob/living/simple_animal/construct/attackby(obj/item/O, mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)

@@ -484,6 +484,7 @@
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		for(var/mob/M in viewers(src))
 			M.show_message("\red [user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
 		broken()
@@ -495,11 +496,10 @@
 		to_chat(M, "\red That object is useless to you.")
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
-		M.do_attack_animation(src)
+		..()
 		for(var/mob/O in viewers(src))
 			O.show_message("\red [M.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
 		broken()
-	return
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
 

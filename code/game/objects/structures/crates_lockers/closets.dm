@@ -165,18 +165,16 @@
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
+		..()
 		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
-		user.do_attack_animation(src)
 		visible_message("\red [user] destroys the [src]. ")
-		for(var/atom/movable/A as mob|obj in src)
-			A.forceMove(src.loc)
+		open()
 		qdel(src)
 
 // this should probably use dump_contents()
 /obj/structure/closet/blob_act()
 	if(prob(75))
-		for(var/atom/movable/A as mob|obj in src)
-			A.forceMove(src.loc)
+		open()
 		qdel(src)
 
 /obj/structure/closet/meteorhit(obj/O)

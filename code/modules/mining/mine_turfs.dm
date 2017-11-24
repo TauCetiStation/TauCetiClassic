@@ -461,10 +461,9 @@
 	. = ..()
 
 /turf/simulated/mineral/attack_animal(mob/living/simple_animal/user)
+	..()
 	if(user.environment_smash >= 2)
 		GetDrilled()
-	..()
-
 /**********************Caves**************************/
 /turf/simulated/floor/plating/airless/asteroid
 	basetype = /turf/simulated/floor/plating/airless/asteroid

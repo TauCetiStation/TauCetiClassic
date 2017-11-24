@@ -76,6 +76,8 @@
 	deflate(1)
 
 /obj/structure/inflatable/attack_paw(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	return attack_generic(user, 15)
 
 /obj/structure/inflatable/attack_hand(mob/user)
@@ -95,12 +97,16 @@
 /obj/structure/inflatable/attack_alien(mob/user)
 	if(islarva(user) || isfacehugger(user))
 		return
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 15)
 
 /obj/structure/inflatable/attack_animal(mob/user)
 	if(!isanimal(user))
 		return
 	var/mob/living/simple_animal/M = user
+	..()
+
 	if(M.melee_damage_upper <= 0)
 		return
 	attack_generic(M, M.melee_damage_upper)
@@ -109,6 +115,8 @@
 /obj/structure/inflatable/attack_slime(mob/user)
 	if(!isslimeadult(user))
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	attack_generic(user, rand(10, 15))
 
 

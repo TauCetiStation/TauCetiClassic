@@ -203,6 +203,18 @@
 			else
 		return
 
+/obj/structure/girder/attack_animal(mob/living/simple_animal/M)
+	if(M.environment_smash)
+		..()
+		M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
+			 "<span class='warning'>You smash against [src].</span>", \
+			 "You hear twisting metal.")
+		playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
+		health -= M.melee_damage_upper
+		if(health <= 0)
+			new /obj/item/stack/sheet/metal(get_turf(src))
+			qdel(src)
+
 /obj/structure/girder/displaced
 	icon_state = "displaced"
 	anchored = 0

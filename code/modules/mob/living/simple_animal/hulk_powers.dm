@@ -412,6 +412,7 @@
 	return
 
 /obj/structure/girder/attack_animal(mob/user)
+	..()
 	if(istype(user, /mob/living/simple_animal/hulk))
 		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if (prob(75))
@@ -635,6 +636,7 @@
 	msg_admin_attack("[key_name(usr)] uses hulk_lazor")
 
 /obj/item/weapon/organ/attack_animal(mob/user)
+	..()
 	if(istype(user, /mob/living/simple_animal/hulk))
 		if(istype(src, /obj/item/weapon/organ/head))
 			to_chat(usr, "\blue Head? Ewww..")

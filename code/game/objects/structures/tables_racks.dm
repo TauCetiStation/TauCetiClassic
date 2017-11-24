@@ -238,6 +238,7 @@
 
 /obj/structure/table/attack_paw(mob/user)
 	if(HULK in user.mutations)
+		user.SetNextMove(CLICK_CD_MELEE)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes the [src] apart!</span>")
 		destroy()
@@ -245,6 +246,7 @@
 
 /obj/structure/table/attack_alien(mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	if(istype(src, /obj/structure/table/reinforced))
 		return
@@ -259,8 +261,8 @@
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
+		..()
 		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
-		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		destroy()
 
@@ -693,6 +695,7 @@
 
 /obj/structure/rack/attack_paw(mob/user)
 	if(HULK in user.mutations)
+		user.SetNextMove(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
@@ -700,11 +703,13 @@
 
 /obj/structure/rack/attack_alien(mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	destroy()
 
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
+		..()
 		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")

@@ -653,6 +653,7 @@
 	if(!user)
 		return
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	user.visible_message("\red [user.name] slashes at the [src.name]!", "\blue You slash at the [src.name]!")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 

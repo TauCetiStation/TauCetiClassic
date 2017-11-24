@@ -145,8 +145,9 @@
 /obj/effect/alien/resin/attack_paw()
 	return attack_hand()
 
-/obj/effect/alien/resin/attack_alien()
-	usr.do_attack_animation(src)
+/obj/effect/alien/resin/attack_alien(mob/user)
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if (islarva(usr) || isfacehugger(usr))//Safety check for larva. /N
 		return
 	to_chat(usr, "\green You claw at the [name].")
@@ -437,7 +438,7 @@
 	. = ..()
 	addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
 
-/obj/effect/alien/egg/attack_paw(user)
+/obj/effect/alien/egg/attack_paw(mob/user)
 	if(isalien(user))
 		switch(status)
 			if(GROWING)
@@ -445,6 +446,7 @@
 				return
 			if(BURST)
 				to_chat(user, "You clear the hatched egg.")
+				user.SetNextMove(CLICK_CD_MELEE)
 				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 				qdel(src)
 				return

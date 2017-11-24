@@ -677,7 +677,7 @@ var/list/turret_icons
 
 
 /obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
+	..()
 	if(M.melee_damage_upper == 0)
 		return
 	if(!(stat & BROKEN))
@@ -692,6 +692,7 @@ var/list/turret_icons
 
 /obj/machinery/porta_turret/attack_alien(mob/living/carbon/alien/humanoid/M)
 	M.do_attack_animation(src)
+	M.SetNextMove(CLICK_CD_MELEE)
 	if(!(stat & BROKEN))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 		visible_message("<span class='danger'>[M] has slashed at [src]!</span>")

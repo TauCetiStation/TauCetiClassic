@@ -1428,8 +1428,8 @@
 // hostile mob escape from disposals
 /obj/machinery/disposal/attack_animal(mob/living/simple_animal/M)
 	if(M.environment_smash)
+		..()
 		playsound(M.loc, 'sound/effects/grillehit.ogg', 50, 1)
-		M.do_attack_animation(src)
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 		qdel(src)
 	return

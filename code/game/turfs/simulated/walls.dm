@@ -238,7 +238,7 @@
 	return */
 
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
+	..()
 	if(M.environment_smash >= 2)
 		if(istype(M, /mob/living/simple_animal/hulk))
 			var/mob/living/simple_animal/hulk/Hulk = M

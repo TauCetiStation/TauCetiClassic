@@ -236,11 +236,13 @@
 /obj/machinery/door/window/attack_alien(mob/user)
 	if(islarva(user))
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)
 
 /obj/machinery/door/window/attack_animal(mob/user)
 	if(!isanimal(user))
 		return
+	..()
 	var/mob/living/simple_animal/M = user
 	if(M.melee_damage_upper <= 0)
 		return
@@ -250,6 +252,7 @@
 /obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user)
 	if(!istype(user, /mob/living/carbon/slime/adult))
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)
 
 /obj/machinery/door/window/attack_paw(mob/user)

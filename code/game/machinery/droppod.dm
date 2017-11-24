@@ -501,7 +501,7 @@
 		qdel(src)
 
 /obj/structure/droppod/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
+	..()
 	playsound(src, 'sound/effects/bang.ogg', 50, 1)
 	take_damage(rand(M.melee_damage_lower, M.melee_damage_upper))
 

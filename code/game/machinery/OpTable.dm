@@ -47,6 +47,7 @@
 
 /obj/machinery/optable/attack_paw(mob/user)
 	if ((HULK in usr.mutations))
+		user.SetNextMove(CLICK_CD_MELEE)
 		to_chat(usr, text("<span class='notice'>You destroy the operating table.</span>"))
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
 		src.density = 0

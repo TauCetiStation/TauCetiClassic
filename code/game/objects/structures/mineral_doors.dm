@@ -303,6 +303,7 @@
 /obj/structure/mineral_door/resin/attack_paw(mob/user)
 	if(isalienadult(user) && user.a_intent == "hurt")
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		health -= rand(40, 60)
 		if(health <= 0)
 			user.visible_message("<span class='danger'>[user] slices the [name] to pieces!</span>")

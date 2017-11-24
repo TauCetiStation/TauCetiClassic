@@ -47,6 +47,7 @@
 
 /obj/structure/grille/attack_alien(mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(istype(user, /mob/living/carbon/alien/larva))	return
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -61,8 +62,8 @@
 
 /obj/structure/grille/attack_slime(mob/user)
 	if(!istype(user, /mob/living/carbon/slime/adult))	return
+	user.SetNextMove(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] smashes against [src].</span>", \
 						 "<span class='warning'>You smash against [src].</span>", \
@@ -73,14 +74,13 @@
 	return
 
 /obj/structure/grille/attack_animal(mob/living/simple_animal/M)
-	if(M.melee_damage_upper == 0)	return
-	M.do_attack_animation(src)
-
+	if(M.melee_damage_upper == 0)
+		return
+	..()
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
 					  "<span class='warning'>You smash against [src].</span>", \
 					  "You hear twisting metal.")
-
 	health -= M.melee_damage_upper
 	healthcheck()
 	return

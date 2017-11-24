@@ -112,6 +112,7 @@
 		return
 	if(status)
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
 		playsound(src, 'sound/weapons/slash.ogg', 100, 1)
 		toggle_cam(FALSE, user)

@@ -41,9 +41,7 @@
 	return src.attack_hand(user)
 
 /obj/machinery/computer/curer/attack_paw(mob/user)
-
 	return src.attack_hand(user)
-	return
 
 /obj/machinery/computer/curer/attack_hand(mob/user)
 	if(..())

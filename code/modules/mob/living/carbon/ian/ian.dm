@@ -650,6 +650,7 @@
 			updatehealth()
 
 /mob/living/carbon/ian/attack_animal(mob/living/simple_animal/M)
+	M.do_attack_animation(src)
 	if(!M.melee_damage_upper)
 		M.emote("[M.friendly] [src]")
 	else

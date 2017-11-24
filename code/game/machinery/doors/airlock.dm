@@ -542,11 +542,10 @@ var/list/airlock_overlays = list()
 			return
 		else if(!density)
 			return
-		else
+		else if(!user.is_busy(src))
 			to_chat(user, "<span class='red'>You force your claws between the doors and begin to pry them open...</span>")
 			playsound(src, door_forced_sound, 30, 1, -4)
-			if (do_after(user,40, target = src))
-				if(!src) return
+			if(do_after(user,40, target = src) && src)
 				open(1)
 	return
 

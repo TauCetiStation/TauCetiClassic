@@ -9,8 +9,7 @@
 	if(BP && !BP.is_usable())
 		to_chat(src, "<span class='notice'>You try to move your [BP.name], but cannot!</span>")
 		return
-	if(ismob(A))
-		SetNextMove(CLICK_CD_MELEE)
+	..()
 	var/obj/item/clothing/gloves/G = gloves // not typecast specifically enough in defines
 
 	// Special glove functions:
@@ -27,9 +26,10 @@
 	Animals & All Unspecified
 */
 /atom/proc/attack_animal(mob/user)
-	return
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE) // animals only punching things.
 
-/mob/living/UnarmedAttack(atom/A)
+/mob/living/simple_animal/UnarmedAttack(atom/A)
 	..()
 	A.attack_animal(src)
 

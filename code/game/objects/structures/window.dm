@@ -198,7 +198,7 @@
 
 
 /obj/structure/window/attack_alien(mob/user)
-	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(islarva(user) || isfacehugger(user))
 		return
 	attack_generic(user, 15)
@@ -206,17 +206,18 @@
 /obj/structure/window/attack_animal(mob/user)
 	if(!isanimal(user))
 		return
+	..()
 	var/mob/living/simple_animal/M = user
-	M.do_attack_animation(src)
 	if(M.melee_damage_upper <= 0)
 		return
 	attack_generic(M, M.melee_damage_upper)
 
 
 /obj/structure/window/attack_slime(mob/user)
-	user.do_attack_animation(src)
 	if(!isslimeadult(user))
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	attack_generic(user, rand(10, 15))
 
 
