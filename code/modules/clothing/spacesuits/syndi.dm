@@ -8,6 +8,7 @@
 	action_button_name = "Toggle Helmet Light"
 	var/brightness = 3 //luminosity when on
 	var/lit = FALSE
+	species_restricted = list("exclude" , DIONA , VOX)
 
 /obj/item/clothing/suit/space/syndicate
 	name = "Red Space Suit"
@@ -18,6 +19,7 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	species_restricted = list("exclude" , DIONA , VOX)
 
 
 /obj/item/clothing/head/helmet/space/syndicate/attack_self(mob/user)
@@ -41,6 +43,7 @@
 	icon_state = "syndicate-helm-civ"
 	item_state = "syndicate-helm-jailbreaker"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 20)
+	species_restricted = list("exclude" , UNATHI , TAJARAN , SKRELL , DIONA , VOX)
 
 /obj/item/clothing/suit/space/syndicate/civilian
 	name = "Civilian Space Suit"
