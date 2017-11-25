@@ -15,7 +15,7 @@
 	set category = "Object"
 	set src in view(0)
 
-	if(do_after(usr, 20))
+	if(!usr.is_busy() && do_after(usr,20))
 		if(brainmob)
 			brainmob.container = null
 			brainmob.loc = headobj

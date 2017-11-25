@@ -249,8 +249,8 @@ datum/objective/debrain//I want braaaainssss
 				return 1
 		return 0
 
-datum/objective/deheading
-	find_target()
+/datum/objective/deheading
+	/datum/objective/deheading/find_target()
 		..()
 		if(target && target.current)
 			explanation_text = "Put the brain of [target.current.real_name] in biogel can and steal it."
@@ -258,15 +258,15 @@ datum/objective/deheading
 			explanation_text = "Free Objective"
 		return target
 
-	find_target_by_role(role, role_type=0)
-		..(role, role_type)
+	/datum/objective/deheading/find_target_by_role(role, role_type=0)
+		..()
 		if(target && target.current)
 			explanation_text = "Steal the head of [target.current.real_name] the [!role_type ? target.assigned_role : target.special_role], make shure that head is stored in the biogel can."
 		else
 			explanation_text = "Free Objective"
 		return target
 
-	check_completion()
+	/datum/objective/deheading/check_completion()
 		if(!target)//If it's a free objective.
 			return 1
 		if( !owner.current || owner.current.stat==DEAD )//If you're otherwise dead.
