@@ -221,7 +221,7 @@ datum/objective/debrain//I want braaaainssss
 	find_target()
 		..()
 		if(target && target.current)
-			explanation_text = "Steal the brain of [target.current.real_name]."
+			explanation_text = "Put the brain of [target.current.real_name] in biogel can and steal it."
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -230,7 +230,7 @@ datum/objective/debrain//I want braaaainssss
 	find_target_by_role(role, role_type=0)
 		..(role, role_type)
 		if(target && target.current)
-			explanation_text = "Steal the brain of [target.current.real_name] the [!role_type ? target.assigned_role : target.special_role]."
+			explanation_text = "Steal the head of [target.current.real_name] the [!role_type ? target.assigned_role : target.special_role], make shure that head is stored in the biogel can."
 		else
 			explanation_text = "Free Objective"
 		return target
@@ -240,15 +240,12 @@ datum/objective/debrain//I want braaaainssss
 			return 1
 		if( !owner.current || owner.current.stat==DEAD )//If you're otherwise dead.
 			return 0
-		if( !target.current || !isbrain(target.current) )
-			return 0
-		var/atom/A = target.current
-		while(A.loc)			//check to see if the brainmob is on our person
-			A = A.loc
-			if(A == owner.current)
+		var/list/all_items = owner.current.get_contents()
+		for(var/obj/item/device/biocan/B in all_items)
+			if(B.brainmob && B.brainmob == target.current)
 				return 1
+			return 0
 		return 0
-
 
 datum/objective/protect//The opposite of killing a dude.
 	find_target()
