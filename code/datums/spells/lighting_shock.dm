@@ -50,7 +50,7 @@
 
 	// don't let target pick up items, overlays for lighting effects
 	target.overlays += image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
-	target.next_move = world.time + 50
+	target.next_click = world.time + 50
 	// after time let target pick up items, removing overlays
 	
 	sleep(50)
