@@ -1,3 +1,4 @@
+
 /mob/living/carbon/brain/say(var/message)
 	if (silent)
 		return
@@ -25,4 +26,3 @@
 				..(message, sanitize = 0)
 			else
 				return
-	return

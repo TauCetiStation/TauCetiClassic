@@ -7,8 +7,7 @@
 	appearance_flags = KEEP_TOGETHER
 	var/obj/item/weapon/organ/head/headobj = null
 	var/image/display_headobj = null
-	var/mob/living/carbon/brain/brainmob = null//The current occupant.
-	var/atom/dest = null
+	var/mob/living/carbon/brain/brainmob = null
 	var/commutator_enabled = FALSE
 
 /obj/item/device/biocan/verb/safe_eject()
@@ -16,30 +15,31 @@
 	set category = "Object"
 	set src in view(0)
 
-	if(brainmob)
-		brainmob.container = null
-		brainmob.loc = headobj
-		headobj.brainmob = brainmob
-		brainmob.timeofhostdeath = world.time
-		living_mob_list -= brainmob
-	if(headobj)
-		headobj.forceMove(get_turf(src))
-		headobj = null
-	if(display_headobj)
-		QDEL_NULL(display_headobj)
-		underlays.Cut()
+	if(do_after(usr, 20))
+		if(brainmob)
+			brainmob.container = null
+			brainmob.loc = headobj
+			headobj.brainmob = brainmob
+			brainmob.timeofhostdeath = world.time
+			living_mob_list -= brainmob
+			brainmob = null
+			headobj.forceMove(get_turf(src))
+			headobj = null
+		if(display_headobj)
+			QDEL_NULL(display_headobj)
+			underlays.Cut()
 
-/obj/item/device/biocan/verb/speech()
+/obj/item/device/biocan/verb/toggle_speech()
 	set name = "Disable commutator"
 	set category = "Object"
 	set src in view(0)
 
 	if(commutator_enabled)
 		commutator_enabled = FALSE
-		to_chat(usr, "\red You disable text to speech device, preventing [src.name]'s occupant from shouting ")
+		to_chat(usr, "<span class='warning'>You disable text to speech device, preventing [src.name]'s occupant from shouting.</span>")
 	else
 		commutator_enabled = TRUE
-		to_chat(usr, "\red You activate text to speech module")
+		to_chat(usr, "<span class='warning'>You enable commutating device, allowing your prisoner to speak.</span>")
 
 /obj/item/device/biocan/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/organ/head))
@@ -47,7 +47,7 @@
 			headobj = W
 			user.drop_item()
 			headobj.loc = src
-			if(headobj.brainmob && !brainmob)
+			if(headobj.brainmob)
 				brainmob = headobj.brainmob
 				headobj.brainmob = null
 				brainmob.loc = src
@@ -68,18 +68,16 @@
 
 /obj/item/device/biocan/attack_self(mob/user)
 	visible_message("<cpan class='red'>\The [src.name] contents has been splashed over the floor. </span>", "<span class='rose'> You hear a splash. </span>")
-	headobj.forceMove(get_turf(src))
 	if(brainmob)
 		living_mob_list -= headobj.brainmob
 		brainmob.ghostize(can_reenter_corpse = FALSE)
 		brainmob = null
-	if(headobj)
 		headobj.forceMove(get_turf(src))
 		headobj = null
 	if(display_headobj)
 		QDEL_NULL(display_headobj)
 		underlays.Cut()
-	return ..()
+	return
 
 /obj/item/device/biocan/throw_impact(atom/hit_atom)
 	visible_message("<cpan class='red'>\The [src.name] contents has been splashed over the floor. </span>", "<span class='rose'> You hear a splash. </span>")
@@ -93,4 +91,3 @@
 	new /obj/item/weapon/shard(loc)
 	playsound(src, "shatter", 50, 1)
 	qdel(src)
-	return ..()
