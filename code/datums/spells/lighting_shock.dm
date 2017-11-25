@@ -59,4 +59,5 @@
 	sleep(50)
 
 	target.overlays -= image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
+	target.handcuffed = null
 	qdel(disarms)
