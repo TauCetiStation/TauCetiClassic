@@ -7,6 +7,7 @@
 	var/inflatable_type = /obj/structure/inflatable
 
 /obj/item/inflatable/attack_self(mob/user)
+	if(user.is_busy()) return
 	user.visible_message(
 		"<span class='notice'>[user] starts inflating \the [src]...</span>",
 		"<span class='notice'>You start inflating \the [src]...</span>"

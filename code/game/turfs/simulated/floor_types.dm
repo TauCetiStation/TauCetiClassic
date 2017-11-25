@@ -57,8 +57,8 @@
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
 	if(istype(C, /obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		to_chat(user, "\blue Removing rods...")
-		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30, target = src))
 			new /obj/item/stack/rods(src, 2)

@@ -174,6 +174,7 @@
 		if(istype(src, /obj/item/weapon/gun/magic/staff))
 			to_chat(user, "<span class='notice'>Get rid of the habit of holding different sticks in your mouth.</span>")
 			return
+		if(user.is_busy()) return
 		mouthshoot = 1
 		M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
 		if(!do_after(user, 40, target = user))

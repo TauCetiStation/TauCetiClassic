@@ -139,6 +139,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(chained && src == H.shoes)
+			if(user.is_busy()) return
 			confirmed = 0
 			H.visible_message("<span class='notice'>[H] attempts to remove the [src]!</span>",
 			"<span class='notice'>You attempt to remove the [src]. (This will take around 2 minutes and you need to stand still)</span>")

@@ -209,6 +209,7 @@
 			if(0)
 				to_chat(user, "\red The [src.name] needs to be wrenched to the floor.")
 			if(1)
+				if(user.is_busy()) return
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
@@ -222,6 +223,7 @@
 				else
 					to_chat(user, "\red You need more welding fuel to complete this task.")
 			if(2)
+				if(user.is_busy()) return
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \

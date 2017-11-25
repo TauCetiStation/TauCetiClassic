@@ -170,6 +170,7 @@ var/global/loopModeNames=list(
 			update_icon()
 			update_music()
 	else if(istype(W,/obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		var/un = !anchored ? "" : "un"
 		user.visible_message("\blue [user.name] begins [un]locking \the [src.name]'s casters.","\blue You begin [un]locking \the [src.name]'s casters.")
 		if(do_after(user,30, target = src))

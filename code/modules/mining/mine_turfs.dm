@@ -162,6 +162,7 @@
 		return
 
 	if (istype(W, /obj/item/device/measuring_tape))
+		if(user.is_busy()) return
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
 		if(do_after(user,25, target = src))
@@ -212,7 +213,7 @@
 				if(prob(50))
 					artifact_debris()
 
-		if(do_after(user,P.digspeed, target = src))
+		if(!user.is_busy() && do_after(user,P.digspeed, target = src))
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
 			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
@@ -624,7 +625,7 @@
 		if (dug)
 			to_chat(user, "<span class='danger'>This area has already been dug.</span>")
 			return
-		user.SetNextMove(CLICK_CD_INTERACT)
+		if(user.is_busy()) return
 		to_chat(user, "<span class='warning'>You start digging.</span>")
 		playsound(user.loc, 'sound/effects/digging.ogg', 50, 1)
 

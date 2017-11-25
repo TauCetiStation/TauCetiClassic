@@ -75,6 +75,7 @@
 
 /obj/structure/transit_tube_pod/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
+	if(user.is_busy()) return
 	if(contents.len)
 		to_chat(user, "<span class='notice'>You started to get everything out of the [src].</span>")
 

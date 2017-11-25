@@ -278,11 +278,11 @@ update_flag
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user)
 	if(user.a_intent != I_HURT && istype(W, /obj/item/weapon/weldingtool))
+		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if(stat & BROKEN)
 			if(!WT.remove_fuel(0, user))
 				return
-			user.SetNextMove(CLICK_CD_INTERACT)
 			playsound(src, 'sound/items/Welder2.ogg', 40, 1)
 			to_chat(user, "<span class='notice'>You begin cutting [src] apart...</span>")
 			if(do_after(user, 30, target = src))

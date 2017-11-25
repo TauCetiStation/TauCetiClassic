@@ -38,6 +38,7 @@
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(!src.buckled_mob)
+			if(user.is_busy()) return
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 			if(do_after(user, 20, target = src))
 				to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
@@ -87,6 +88,7 @@
 	if(buckled_mob)
 		var/mob/living/L = buckled_mob
 		if(L != user)
+			if(user.is_busy()) return
 			L.visible_message(\
 				"<span class='notice'>[user.name] tries to pull [L.name] free of the [src]!</span>",\
 				"<span class='warning'>[user.name] is trying to pull you off the [src], opening up fresh wounds!</span>",\

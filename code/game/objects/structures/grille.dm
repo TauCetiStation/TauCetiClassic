@@ -150,6 +150,7 @@
 			if(WINDOW.dir == dir_to_set)
 				to_chat(user, "<span class='notice'>There is already a window facing this way there.</span>")
 				return
+		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You start placing the window.</span>")
 		if(do_after(user,20,target = src))
 			if(QDELETED(src))

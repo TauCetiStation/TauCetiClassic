@@ -311,6 +311,7 @@
 
 		if(istype(I, /obj/item/weapon/crowbar))
 			if(p_open && !src.density)
+				if(user.is_busy(src)) return
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 				user.visible_message("<span class='warning'>[user] removes the electronics from the [src.name].</span>", \
 									 "You start to remove electronics from the [src.name].")

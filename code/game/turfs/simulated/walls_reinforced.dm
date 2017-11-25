@@ -52,6 +52,7 @@
 	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
 	user.SetNextMove(CLICK_CD_MELEE)
+	if(user.is_busy()) return
 
 	if(rotting)
 		if(istype(W, /obj/item/weapon/weldingtool))

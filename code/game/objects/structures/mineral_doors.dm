@@ -106,6 +106,7 @@
 
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/pickaxe))
+		if(user.is_busy()) return
 		var/obj/item/weapon/pickaxe/digTool = W
 		to_chat(user, "You start digging the [name].")
 		if(do_after(user,digTool.digspeed, target = src) && src)
@@ -120,6 +121,7 @@
 			var/obj/item/weapon/weldingtool/WT = W
 			if(!src || !WT.isOn())
 				return ..()
+			if(user.is_busy()) return
 			if(WT.remove_fuel(0, user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 				user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
@@ -136,6 +138,7 @@
 				health -= W.force
 				CheckHealth()
 				return ..()
+			if(user.is_busy()) return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
 			if(do_after(user, 40, target = src))

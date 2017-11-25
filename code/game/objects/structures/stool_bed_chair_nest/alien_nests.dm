@@ -19,6 +19,7 @@
 				buckled_mob.pixel_y = 0
 				unbuckle_mob()
 			else
+				if(user.is_busy()) return
 				buckled_mob.visible_message(\
 					"<span class='warning'>[buckled_mob.name] struggles to break free of the gelatinous resin...</span>",\
 					"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",\

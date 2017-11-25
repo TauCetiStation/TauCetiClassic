@@ -335,6 +335,7 @@
 
 	//DECONSTRUCTION
 	if(istype(W, /obj/item/weapon/weldingtool))
+		if(user.is_busy()) return
 
 		var/response = "Dismantle"
 		if(damage)
@@ -367,6 +368,7 @@
 			return
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+		if(user.is_busy()) return
 
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -386,6 +388,7 @@
 
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+		if(user.is_busy()) return
 
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
 
@@ -403,6 +406,7 @@
 		return
 
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
+		if(user.is_busy()) return
 		var/obj/item/weapon/melee/energy/blade/EB = W
 
 		EB.spark_system.start()

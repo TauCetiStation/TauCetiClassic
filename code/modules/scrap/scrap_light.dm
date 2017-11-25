@@ -128,7 +128,7 @@
 	if(burning)
 		to_chat(user, "<span class='warning'>You need to extinguish [src] before removing it!</span>")
 		return
-	if(!has_buckled_mobs() && do_after(user, 50, target = src))
+	if(!has_buckled_mobs()&& !user.is_busy() && do_after(user, 50, target = src))
 		if(can_buckle || grill)
 			new /obj/item/stack/rods(loc, 1)
 		qdel(src)

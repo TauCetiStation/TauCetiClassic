@@ -128,11 +128,11 @@
 		if(rig)
 			to_chat(user, "<span class='notice'>There is some kind of device rigged to the tank.</span>")
 
-/obj/structure/reagent_dispensers/fueltank/attack_hand()
-	if (rig)
-		usr.visible_message("[usr] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
-		if(do_after(usr, 20, target = src))
-			usr.visible_message("\blue [usr] detaches [rig] from \the [src].", "\blue  You detach [rig] from \the [src]")
+/obj/structure/reagent_dispensers/fueltank/attack_hand(mob/user)
+	if (rig && !user.is_busy())
+		user.visible_message("[user] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
+		if(do_after(user, 20, target = src))
+			user.visible_message("\blue [user] detaches [rig] from \the [src].", "\blue  You detach [rig] from \the [src]")
 			rig.loc = get_turf(usr)
 			rig = null
 			overlays = new/list()
@@ -149,6 +149,7 @@
 		if (rig)
 			to_chat(user, "\red There is another device in the way.")
 			return ..()
+		if(user.is_busy()) return
 		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
 		if(do_after(user, 20, target = src))
 			user.visible_message("\blue [user] rigs [W] to \the [src].", "\blue  You rig [W] to \the [src]")

@@ -301,6 +301,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 			willing = TRUE
 
 		if(willing)
+			if(user.is_busy()) return
 			visible_message("[user] starts putting [M.name] into the cryo pod.", 3)
 
 			if(do_after(user, 20, target = src))
@@ -370,7 +371,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 		if(M.Victim == usr)
 			to_chat(usr, "You're too busy getting your life sucked out of you.")
 			return
-
+	if(usr.is_busy()) return
 	visible_message("[usr] starts climbing into the cryo pod.", 3)
 
 	if(do_after(usr, 20, target = src))

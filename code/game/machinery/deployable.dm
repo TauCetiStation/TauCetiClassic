@@ -69,6 +69,7 @@ for reference:
 	if (istype(W, /obj/item/stack/sheet/wood))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.health < src.maxhealth)
+			if(user.is_busy()) return
 			visible_message("\red [user] begins to repair \the [src]!")
 			if(do_after(user,20,target = src))
 				src.health = src.maxhealth

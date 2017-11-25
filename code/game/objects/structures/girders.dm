@@ -18,10 +18,12 @@
 			return
 
 	attackby(obj/item/W, mob/user)
+		if(user.is_busy()) return
 		if(istype (W,/obj/item/weapon/changeling_hammer))
 			var/obj/item/weapon/changeling_hammer/C = W
 			visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
 			user.do_attack_animation(src)
+			user.SetNextMove(CLICK_CD_MELEE)
 			if(C.use_charge(user, 1) && prob(40))
 				playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 				qdel(src)
@@ -234,6 +236,7 @@
 	var/health = 250
 
 	attackby(obj/item/W, mob/user)
+		if(user.is_busy()) return
 		if(istype(W, /obj/item/weapon/wrench))
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			to_chat(user, "\blue Now disassembling the girder")

@@ -383,6 +383,7 @@
 			if (terminal)
 				to_chat(user, "\red Disconnect wires first.")
 				return
+			if(user.is_busy()) return
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			to_chat(user, "You are trying to remove the power control board...")//lpeters - fixed grammar issues
 			if(do_after(user, 50, target = src))
@@ -475,6 +476,7 @@
 		else if(stat & (BROKEN|MAINT))
 			to_chat(user, "Nothing happens.")
 		else
+			if(user.is_busy()) return
 			flick("apc-spark", src)
 			if (do_after(user,6,target = src))
 				if(prob(50))
@@ -492,6 +494,7 @@
 		if(C.get_amount() < 10)
 			to_chat(user, "\red You need more wires.")
 			return
+		if(user.is_busy()) return
 		to_chat(user, "You start adding cables to the APC frame...")
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
@@ -511,6 +514,7 @@
 	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened && has_electronics!=2)
 		terminal.dismantle(user)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
+		if(user.is_busy()) return
 		to_chat(user, "You trying to insert the power control board into the frame...")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 10, target = src))
@@ -521,6 +525,7 @@
 		to_chat(user, "\red You cannot put the board inside, the frame is damaged.")
 		return
 	else if (istype(W, /obj/item/weapon/weldingtool) && opened && has_electronics==0 && !terminal)
+		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.get_fuel() < 3)
 			to_chat(user, "\blue You need more welding fuel to complete this task.")
@@ -556,6 +561,7 @@
 		if (has_electronics)
 			to_chat(user, "You cannot repair this APC until you remove the electronics still inside.")
 			return
+		if(user.is_busy()) return
 		to_chat(user, "You begin to replace the damaged APC frame...")
 		if(do_after(user, 50, target = src))
 			user.visible_message(\

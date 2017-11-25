@@ -152,6 +152,7 @@
 /obj/structure/stool/bed/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/grab))
+		if(user.is_busy()) return
 		var/obj/item/weapon/grab/G = W
 		var/mob/living/L = G.affecting
 		user.visible_message("<span class='notice'>[user] attempts to buckle [L] into \the [src]!</span>")

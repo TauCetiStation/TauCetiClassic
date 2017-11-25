@@ -410,6 +410,7 @@
 /obj/machinery/suit_storage_unit/container_resist()
 	var/mob/living/user = usr
 	if(islocked)
+		if(user.is_busy()) return
 		user.next_move = world.time + 100
 		user.last_special = world.time + 100
 		var/breakout_time = 2
@@ -447,6 +448,7 @@
 	if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) )
 		to_chat(usr, "<font color='red'>It's too cluttered inside for you to fit in!</font>")
 		return
+	if(usr.is_busy()) return
 	visible_message("[usr] starts squeezing into the suit storage unit!", 3)
 	if(do_after(usr, 10, target = src))
 		usr.stop_pulling()
@@ -492,6 +494,7 @@
 		if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) ) //Unit needs to be absolutely empty
 			to_chat(user, "<font color='red'>The unit's storage area is too cluttered.</font>")
 			return
+		if(user.is_busy()) return
 		visible_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.", 3)
 		if(do_after(user, 20, target = src))
 			if(!G || !G.affecting) return //derpcheck

@@ -48,6 +48,7 @@
 
 /obj/item/device/debugger/afterattack(obj/O, mob/user, proximity)
 	if(!proximity) return
+	if(user.is_busy()) return
 	if(istype(O, /obj/machinery/power/apc))
 		var/obj/machinery/power/apc/apc = O
 		if(apc.opened || apc.wiresexposed)

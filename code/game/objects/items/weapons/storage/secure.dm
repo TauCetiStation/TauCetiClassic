@@ -61,7 +61,7 @@
 				return
 
 			if (istype(W, /obj/item/weapon/screwdriver))
-				if (do_after(user, 20, target = src))
+				if (!user.is_busy(src) && do_after(user, 20, target = src))
 					src.open =! src.open
 					user.show_message(text("\blue You [] the service panel.", (src.open ? "open" : "close")))
 				return

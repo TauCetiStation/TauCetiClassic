@@ -380,6 +380,7 @@
 			return
 
 	if (istype(W, /obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		to_chat(user, "\blue Now disassembling table")
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user,50, target = src))
@@ -577,6 +578,7 @@
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
+		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)

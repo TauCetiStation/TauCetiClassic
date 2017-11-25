@@ -714,6 +714,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				src.screen=2*/  //Obsolete after autorecognition
 
 	if(istype(I, /obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>")
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 60, target = src))

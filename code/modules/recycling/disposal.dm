@@ -77,6 +77,7 @@
 			if(contents.len > 0)
 				to_chat(user, "<span class='warning'>Eject the items first!</span>")
 				return
+			if(user.is_busy()) return
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
@@ -115,6 +116,7 @@
 		if(ismob(G.affecting))
 			var/mob/GM = G.affecting
 			user.SetNextMove(CLICK_CD_MELEE)
+			if(user.is_busy()) return
 			for (var/mob/V in viewers(usr))
 				V.show_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>", 3)
 			if(do_after(usr, 20, target = src))
@@ -162,7 +164,7 @@
 		if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 			if(target.anchored) return
 			V.show_message("<span class='red'>[usr] starts stuffing [target.name] into the disposal.</span>", 3)
-	if(!do_after(usr, 20, target = usr))
+	if(user.is_busy() || !do_after(usr, 20, target = usr))
 		return
 	if(target_loc != target.loc)
 		return
@@ -207,7 +209,7 @@
 		if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis) return
 		for (var/mob/V in viewers(usr))
 			V.show_message("<span class='notice'>[usr] starts stuffing [target.name] into the disposal.</span>", 3)
-		if(!do_after(usr, 20, target = src))
+		if(user.is_busy() || !do_after(usr, 20, target = src))
 			return
 		if(target_loc != target.loc)
 			return
@@ -911,6 +913,7 @@
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
 	src.add_fingerprint(user)
+	if(user.is_busy()) return
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 
@@ -1251,7 +1254,7 @@
 	src.add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
-
+		if(user.is_busy()) return
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			// check if anything changed over 2 seconds
@@ -1374,7 +1377,7 @@
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			to_chat(user, "You attach the screws around the power connection.")
 			return
-	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
+	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1 && !user.is_busy())
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)

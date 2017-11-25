@@ -27,8 +27,8 @@
 
 /obj/structure/device/piano/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-		user.SetNextMove(CLICK_CD_INTERACT)
 
 		if (anchored)
 			to_chat(user, "<span class='notice'>You begin to loosen \the [src]'s casters...</span>")

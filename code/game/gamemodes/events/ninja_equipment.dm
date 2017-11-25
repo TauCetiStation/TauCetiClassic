@@ -864,8 +864,10 @@ ________________________________________________________________________________
 			return
 		else if(istype(I, /obj/item/weapon/stock_parts/cell))
 			if(I:maxcharge>cell.maxcharge&&n_gloves&&n_gloves.candrain)
+				if(U.is_busy(src))
+					return
 				to_chat(U, "\blue Higher maximum capacity detected.\nUpgrading...")
-				if (n_gloves&&n_gloves.candrain&&do_after(U,s_delay, target = U))
+				if (n_gloves && n_gloves.candrain && do_after(U,s_delay, target = U))
 					U.drop_item()
 					I.loc = src
 					I:charge = min(I:charge+cell.charge, I:maxcharge)
@@ -883,6 +885,8 @@ ________________________________________________________________________________
 		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
 			var/obj/item/weapon/disk/tech_disk/TD = I
 			if(TD.stored)//If it has something on it.
+				if(U.is_busy(src))
+					return
 				to_chat(U, "Research information detected, processing...")
 				if(do_after(U,s_delay,target = U))
 					for(var/datum/tech/current_data in stored_research)
@@ -1005,6 +1009,7 @@ ________________________________________________________________________________
 					if(S.cell.charge+drain>S.cell.maxcharge)
 						drain = S.cell.maxcharge-S.cell.charge
 						maxcapacity = 1//Reached maximum battery capacity.
+
 					if (do_after(U,10,target = A))
 						spark_system.start()
 						playsound(A.loc, "sparks", 50, 1)

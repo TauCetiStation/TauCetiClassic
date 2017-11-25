@@ -26,7 +26,6 @@
 
 	var/light_disabled = 0
 	var/alarm_on = 0
-	var/busy = 0
 
 /obj/machinery/camera/atom_init()
 	. = ..()
@@ -318,22 +317,17 @@
 
 /obj/machinery/camera/proc/weld(obj/item/weapon/weldingtool/WT, mob/user)
 
-	if(busy)
-		return 0
 	if(!WT.isOn())
 		return 0
-
+	if(user.is_busy(src)) return
 	// Do after stuff here
 	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
-	busy = 1
 	if(do_after(user, 100, target = src))
-		busy = 0
 		if(!WT.isOn())
 			return 0
 		return 1
-	busy = 0
 	return 0
 
 /obj/machinery/camera/proc/add_network(network_name)

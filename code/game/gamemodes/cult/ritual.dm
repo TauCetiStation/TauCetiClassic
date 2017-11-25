@@ -364,7 +364,7 @@ var/list/cult_datums = list()
 		if(w3 in cultwords)
 			w3 = cultwords[w3]
 
-	if(user.get_active_hand() != src)
+	if(user.get_active_hand() != src || user.is_busy())
 		return
 	user.visible_message("<span class='danger'> [user] slices open a finger and begins to chant and paint symbols on the floor.</span>",\
 	"<span class='danger'> You hear chanting.</span>")

@@ -126,7 +126,7 @@
 				unbuckle_mob()
 				L.apply_effect(2, WEAKEN, 0)
 				L.apply_damage(3, BRUTE, BP_HEAD)
-		else if(do_after(user, flip_time, target = usr))
+		else if(!user.is_busy() && do_after(user, flip_time, target = usr))
 			user.visible_message("<span class='notice'>[user] flips \the [src] up.</span>","<span class='notice'>You flips \the [src] up.")
 			flip()
 	else
