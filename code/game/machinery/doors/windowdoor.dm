@@ -3,17 +3,16 @@
 	desc = "A strong door."
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
-	var/base_state = "left"
-	var/health = 150.0 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
 	visible = 0.0
 	flags = ON_BORDER
 	opacity = 0
-	var/obj/item/weapon/airlock_electronics/electronics = null
 	explosion_resistance = 5
 	air_properties_vary_with_direction = 1
 	door_open_sound  = 'sound/machines/windowdoor.ogg'
 	door_close_sound = 'sound/machines/windowdoor.ogg'
-	ghost_must_be_admin = TRUE //currently not needed, but what if someone deleted allowed() in attack_hand() proc?
+	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/base_state = "left"
+	var/health = 150.0 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
 
 /obj/machinery/door/window/atom_init()
 	. = ..()
@@ -220,10 +219,6 @@
 	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
 	return
 
-
-/obj/machinery/door/window/attack_ai(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/door/window/proc/attack_generic(mob/user, damage = 0)
 	if(src.operating)
 		return
@@ -248,19 +243,11 @@
 		return
 	attack_generic(M, M.melee_damage_upper)
 
-
 /obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user)
 	if(!istype(user, /mob/living/carbon/slime/adult))
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)
-
-/obj/machinery/door/window/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-
-/obj/machinery/door/window/attack_hand(mob/user)
-	return src.attackby(user, user)
 
 /obj/machinery/door/window/attackby(obj/item/weapon/I, mob/user)
 

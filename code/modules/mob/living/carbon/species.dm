@@ -425,6 +425,7 @@
 	flesh_color = "#907E4A"
 
 	reagent_tag = IS_DIONA
+	has_gendered_icons = FALSE
 
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER

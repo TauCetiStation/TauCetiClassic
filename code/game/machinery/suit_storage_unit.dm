@@ -100,10 +100,9 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/attack_hand(mob/user)
+/obj/machinery/suit_storage_unit/ui_interact(mob/user)
 	var/dat
-	if(..())
-		return
+
 	if(src.panelopen) //The maintenance panel is open. Time for some shady stuff
 		dat+= "<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>"
 		dat+= "<Font color ='black'><B>Maintenance panel controls</B></font><HR>"
@@ -156,7 +155,6 @@
 
 	user << browse(dat, "window=suit_storage_unit;size=400x500")
 	onclose(user, "suit_storage_unit")
-	return
 
 
 /obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
@@ -559,10 +557,6 @@
 	src.update_icon()
 	src.updateUsrDialog()
 	return
-
-
-/obj/machinery/suit_storage_unit/attack_ai(mob/user)
-	return src.attack_hand(user)
 
 
 /obj/machinery/suit_storage_unit/attack_paw(mob/user)

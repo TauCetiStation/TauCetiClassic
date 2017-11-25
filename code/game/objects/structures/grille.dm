@@ -6,7 +6,7 @@
 	density = 1
 	anchored = 1
 	flags = CONDUCT
-	layer = 2.9
+	layer = BELOW_MACHINERY_LAYER
 	explosion_resistance = 5
 	var/health = 10
 	var/destroyed = 0

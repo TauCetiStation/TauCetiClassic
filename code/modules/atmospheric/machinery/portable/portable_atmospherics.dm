@@ -2,6 +2,7 @@
 /obj/machinery/portable_atmospherics
 	name = "atmoalter"
 	use_power = 0
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/datum/gas_mixture/air_contents
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port

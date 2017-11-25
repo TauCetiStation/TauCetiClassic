@@ -5,14 +5,16 @@
 
 /datum/gear/accessory/scarf
 	display_name = "Scarf selection"
-	path = /obj/item/clothing/mask/bluescarf
+	path = /obj/item/clothing/mask/scarf/blue
 
 /datum/gear/accessory/scarf/New()
 	..()
 	var/scarfs = list()
-	scarfs["blue"] = /obj/item/clothing/mask/bluescarf
-	scarfs["red"] = /obj/item/clothing/mask/redscarf
-	scarfs["green"] = /obj/item/clothing/mask/greenscarf
+	scarfs["blue"] = /obj/item/clothing/mask/scarf/blue
+	scarfs["red"] = /obj/item/clothing/mask/scarf/red
+	scarfs["green"] = /obj/item/clothing/mask/scarf/green
+	scarfs["yellow"] = /obj/item/clothing/mask/scarf/yellow
+	scarfs["violet"] = /obj/item/clothing/mask/scarf/violet
 	gear_tweaks += new/datum/gear_tweak/path(scarfs)
 
 /datum/gear/accessory/headwear

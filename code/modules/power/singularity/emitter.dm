@@ -12,7 +12,7 @@
 	use_power = 0
 	idle_power_usage = 10
 	active_power_usage = 300
-	ghost_must_be_admin = TRUE
+	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/active = FALSE
 	var/powered = FALSE
@@ -79,7 +79,8 @@
 		icon_state = "emitter-off"
 
 /obj/machinery/power/emitter/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	user.SetNextMove(CLICK_CD_RAPID)
 	activate(user)

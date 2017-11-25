@@ -3,22 +3,16 @@
 	desc = "It's useful for igniting flammable items."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "igniter1"
-	var/id = null
-	var/on = TRUE
 	anchored = TRUE
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
-	ghost_must_be_admin = TRUE
-
-/obj/machinery/igniter/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/igniter/attack_paw(mob/user)
-	return
+	var/id = null
+	var/on = TRUE
 
 /obj/machinery/igniter/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	user.SetNextMove(CLICK_CD_INTERACT)
 	use_power(50)
@@ -86,10 +80,6 @@
 	else
 		return
 
-/obj/machinery/sparker/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_ai()
-
 /obj/machinery/sparker/proc/ignite()
 	if (!powered())
 		return
@@ -116,18 +106,15 @@
 	ignite()
 	..(severity)
 
-/obj/machinery/ignition_switch/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/ignition_switch/attack_paw(mob/user)
-	return attack_hand(user)
-
 /obj/machinery/ignition_switch/attackby(obj/item/weapon/W, mob/user)
 	return attack_hand(user)
 
 /obj/machinery/ignition_switch/attack_hand(mob/user)
-	if(..() || active)
+	. = ..()
+	if(.)
 		return
+	if(active)
+		return 1
 
 	use_power(5)
 	user.SetNextMove(CLICK_CD_INTERACT)

@@ -66,9 +66,7 @@ var/global/loopModeNames=list(
 
 	anchored = 1
 	luminosity = 4 // Why was this 16
-	ghost_must_be_admin = TRUE
-
-	playing=0
+	playing = 0
 
 	var/loop_mode = JUKEMODE_SHUFFLE
 
@@ -83,11 +81,6 @@ var/global/loopModeNames=list(
 	var/autoplay      = 0
 	var/last_reload   = 0
 	var/state_base = "jukebox2"
-
-
-/obj/machinery/media/jukebox/attack_ai(mob/user)
-	attack_hand(user)
-
 
 /obj/machinery/media/jukebox/power_change()
 	..()
@@ -114,7 +107,7 @@ var/global/loopModeNames=list(
 /obj/machinery/media/jukebox/proc/check_reload()
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
 
-/obj/machinery/media/jukebox/attack_hand(mob/user)
+/obj/machinery/media/jukebox/ui_interact(mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	if(stat & NOPOWER)
 		to_chat(usr, "\red You don't see anything to mess with.")
@@ -148,7 +141,7 @@ var/global/loopModeNames=list(
 			var/datum/song_info/song=playlist[i]
 			t += "<tr><th>#[i]</th><td><A href='?src=\ref[src];song=[i]' class='nobg'>[song.displaytitle()]</A></td><td>[song.album]</td></tr>"
 		t += "</table>"
-	user.set_machine(src)
+
 	var/datum/browser/popup = new (user,"jukebox",name,420,700)
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))

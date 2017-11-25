@@ -82,7 +82,7 @@
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		src.connected = new /obj/structure/m_tray( src.loc )
 		step(src.connected, src.dir)
-		src.connected.layer = OBJ_LAYER
+		src.connected.layer = BELOW_CONTAINERS_LAYER
 		var/turf/T = get_step(src, src.dir)
 		if (T.contents.Find(src.connected))
 			src.connected.connected = src
@@ -123,7 +123,7 @@
 		return
 	src.connected = new /obj/structure/m_tray( src.loc )
 	step(src.connected, src.dir)
-	src.connected.layer = OBJ_LAYER
+	src.connected.layer = BELOW_CONTAINERS_LAYER
 	var/turf/T = get_step(src, src.dir)
 	if (T.contents.Find(src.connected))
 		src.connected.connected = src
@@ -202,7 +202,12 @@
 	var/id = 1
 	var/locked = 0
 
+/obj/structure/crematorium/atom_init()
+	. = ..()
+	crematorium_list += src
+
 /obj/structure/crematorium/Destroy()
+	crematorium_list -= src
 	if(connected)
 		qdel(connected)
 		connected = null
@@ -270,7 +275,7 @@
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		src.connected = new /obj/structure/c_tray( src.loc )
 		step(src.connected, SOUTH)
-		src.connected.layer = OBJ_LAYER
+		src.connected.layer = BELOW_CONTAINERS_LAYER
 		var/turf/T = get_step(src, SOUTH)
 		if (T.contents.Find(src.connected))
 			src.connected.connected = src
@@ -305,7 +310,7 @@
 		return
 	src.connected = new /obj/structure/c_tray( src.loc )
 	step(src.connected, SOUTH)
-	src.connected.layer = OBJ_LAYER
+	src.connected.layer = BELOW_CONTAINERS_LAYER
 	var/turf/T = get_step(src, SOUTH)
 	if (T.contents.Find(src.connected))
 		src.connected.connected = src
@@ -407,15 +412,14 @@
 	return
 
 /obj/machinery/crema_switch/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(allowed(user))
-		for (var/obj/structure/crematorium/C in world)
-			if (C.id == id)
-				if (!C.cremating)
-					for(var/mob/living/M in C.contents)
-						user.attack_log += "\[[time_stamp()]\]<font color='red'> Cremated [M.name] ([M.ckey])</font>"
-						message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-					C.cremate(user)
-	else
-		to_chat(user, "<span class='rose'>Access denied.</span>")
-	return
+	for (var/obj/structure/crematorium/C in crematorium_list)
+		if (C.id == id)
+			if (!C.cremating)
+				for(var/mob/living/M in C.contents)
+					user.attack_log += "\[[time_stamp()]\]<font color='red'> Cremated [M.name] ([M.ckey])</font>"
+					message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				C.cremate(user)

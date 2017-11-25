@@ -275,13 +275,13 @@
 	density = 0
 	anchored = 1
 	use_power = 0
-	ghost_must_be_admin = TRUE
 	var/on = 0
 	var/obj/effect/mist/mymist = null
 	var/ismist = 0				//needs a var so we can make it linger~
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
 	var/is_payed = 0
+	var/cost_per_activation = 150
 
 //add heat controls? when emagged, you can freeze to death in it?
 
@@ -294,6 +294,9 @@
 	mouse_opacity = 0
 
 /obj/machinery/shower/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	user.SetNextMove(CLICK_CD_RAPID)
 	if(is_payed)
 		on = !on
@@ -327,7 +330,7 @@
 			add_fingerprint(user)
 	else if(istype(I, /obj/item/weapon/card))
 		user.SetNextMove(CLICK_CD_INTERACT)
-		if(!is_payed)
+		if(!is_payed && cost_per_activation)
 			if(!on)
 				var/obj/item/weapon/card/C = I
 				visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
@@ -339,7 +342,7 @@
 					if(attempt_pin)
 						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
 					if(D)
-						var/transaction_amount = 150
+						var/transaction_amount = cost_per_activation
 						if(transaction_amount <= D.money)
 							//transfer the money
 							D.money -= transaction_amount

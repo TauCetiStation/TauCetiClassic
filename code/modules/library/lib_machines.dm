@@ -34,13 +34,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/author
 	var/page = 0
 
-/obj/machinery/computer/libraryconsole/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/libraryconsole/interact(mob/user)
-	user.set_machine(src)
+/obj/machinery/computer/libraryconsole/ui_interact(mob/user)
 	var/dat = "<HEAD><TITLE>Library Visitor</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
@@ -437,8 +431,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		user.drop_item()
 		O.loc = src
 
-/obj/machinery/libraryscanner/attack_hand(mob/user)
-	usr.set_machine(src)
+/obj/machinery/libraryscanner/ui_interact(mob/user)
 	var/dat = "<HEAD><TITLE>Scanner Control Interface</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	if(cache)
 		dat += "<FONT color=#005500>Data stored in memory.</FONT><BR>"

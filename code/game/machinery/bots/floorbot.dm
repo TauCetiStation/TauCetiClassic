@@ -66,14 +66,7 @@
 	src.path = new()
 	src.updateUsrDialog()
 
-/obj/machinery/bot/floorbot/attack_hand(mob/user)
-	. = ..()
-	if (.)
-		return
-	usr.set_machine(src)
-	interact(user)
-
-/obj/machinery/bot/floorbot/interact(mob/user)
+/obj/machinery/bot/floorbot/ui_interact(mob/user)
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A><BR>"
@@ -93,7 +86,6 @@
 
 	user << browse("<HEAD><TITLE>Repairbot v1.0 controls</TITLE></HEAD>[dat]", "window=autorepair")
 	onclose(user, "autorepair")
-	return
 
 
 /obj/machinery/bot/floorbot/attackby(obj/item/W , mob/user)

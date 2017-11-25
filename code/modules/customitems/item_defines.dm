@@ -761,6 +761,13 @@
 	item_state = "maid"
 	item_color = "maid"
 
+/obj/item/clothing/under/fluff/maid_suit/sakuya
+	name = "maid suit"
+	desc = "For a women who like to throw knifes"
+	icon_state = "sakuya"
+	item_state = "sakuya"
+	item_color = "sakuya"
+
 /obj/item/clothing/under/rank/medical/fluff/rosa
 	name = "short sleeve medical dress"
 	desc = "Made of a special fiber that gives special protection against biohazards. Has a cross on the chest denoting that the wearer is trained medical personnel and short sleeves."

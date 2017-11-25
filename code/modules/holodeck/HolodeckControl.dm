@@ -35,11 +35,7 @@
 	)
 	var/list/restricted_programs = list("Wildlife Simulation" = "wildlifecarp")// "Atmospheric Burn Simulation" = "burntest", - no, Dave
 
-/obj/machinery/computer/HolodeckControl/attack_hand(mob/user)
-	if(..())
-		return
-
-	user.set_machine(src)
+/obj/machinery/computer/HolodeckControl/ui_interact(mob/user)
 	var/dat
 
 	dat += "<B>Holodeck Control System</B><BR>"
@@ -83,8 +79,6 @@
 
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
-
-	return
 
 
 /obj/machinery/computer/HolodeckControl/Topic(href, href_list)

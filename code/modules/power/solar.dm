@@ -315,13 +315,6 @@
 		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
 	return
 
-
-/obj/machinery/power/solar_control/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-
 /obj/machinery/power/solar_control/attackby(I, mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver))
 		if(user.is_busy()) return
@@ -384,15 +377,13 @@
 	src.updateDialog()
 
 
-/obj/machinery/power/solar_control/interact(mob/user)
-	if(stat & (BROKEN | NOPOWER)) return
-	if (get_dist(src, user) > 1 && !issilicon(user) && !isobserver(user))
+/obj/machinery/power/solar_control/ui_interact(mob/user)
+	if(stat & (BROKEN | NOPOWER))
+		return
+	if (!in_range(src, user) && !issilicon(user) && !isobserver(user))
 		user.unset_machine()
 		user << browse(null, "window=solcon")
 		return
-
-	add_fingerprint(user)
-	user.set_machine(src)
 
 	var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
 	t += "<B>Generated power</B> : [round(lastgen)] W<BR>"
@@ -420,7 +411,6 @@
 	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
 	user << browse(t, "window=solcon")
 	onclose(user, "solcon")
-	return
 
 
 /obj/machinery/power/solar_control/Topic(href, href_list)

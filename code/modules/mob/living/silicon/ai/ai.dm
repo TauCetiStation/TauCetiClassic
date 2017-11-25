@@ -43,6 +43,8 @@ var/list/ai_verbs_default = list(
 	//var/list/laws = list()
 	var/viewalerts = 0
 	var/lawcheck[1]
+	var/holohack = FALSE
+	var/datum/AI_Module/active_module = null
 	var/ioncheck[1]
 	var/lawchannel = "Common" // Default channel on which to state laws
 	var/icon/holo_icon//Default is assigned when AI is created.
@@ -52,7 +54,6 @@ var/list/ai_verbs_default = list(
 //Hud stuff
 
 	//MALFUNCTION
-	var/datum/AI_Module/module_picker/malf_picker
 	var/processing_time = 100
 	var/list/datum/AI_Module/current_modules = list()
 	var/fire_res_on_core = 0
@@ -73,10 +74,20 @@ var/list/ai_verbs_default = list(
 	var/wipe_timer_id = 0
 
 /mob/living/silicon/ai/proc/add_ai_verbs()
-	src.verbs |= ai_verbs_default
+	verbs |= ai_verbs_default
+
+/mob/living/silicon/ai/proc/hcattack_ai(atom/A)
+	if(!isliving(A) || !in_range(eyeobj, A))
+		return 1
+	var/mob/living/L = A
+	eyeobj.visible_message("<span class='userdanger'>space carp nashes at [A]</span>")
+	L.apply_damage(15, BRUTE, BP_CHEST, run_armor_check(BP_CHEST, "melee"), DAM_SHARP|DAM_EDGE)
+	for(var/mob/M in hearers(15, get_turf(eyeobj)))
+		M.playsound_local(get_turf(src.eyeobj), 'sound/weapons/bite.ogg', 100, falloff = 5)
+	playsound_local(get_turf(src), 'sound/weapons/bite.ogg', 30, falloff = 1)
 
 /mob/living/silicon/ai/proc/remove_ai_verbs()
-	src.verbs -= ai_verbs_default
+	verbs -= ai_verbs_default
 
 /mob/living/silicon/ai/atom_init(mapload, datum/ai_laws/L, obj/item/device/mmi/B, safety = 0)
 	. = ..()
@@ -282,8 +293,8 @@ var/list/ai_verbs_default = list(
 		var/datum/game_mode/malfunction/malf = ticker.mode
 		for (var/datum/mind/malfai in malf.malf_ai)
 			if (mind == malfai) // are we the evil one?
-				if (malf.apcs >= APC_MIN_TO_MALDF_DECLARE)
-					stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALDF_DECLARE), 0)] seconds")
+				if (malf.apcs >= APC_MIN_TO_MALF_DECLARE)
+					stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/APC_MIN_TO_MALF_DECLARE), 0)] seconds")
 
 
 /mob/living/silicon/ai/show_alerts()
@@ -683,11 +694,7 @@ var/list/ai_verbs_default = list(
 //End of code by Mord_Sith
 
 
-/mob/living/silicon/ai/proc/choose_modules()
-	set category = "Malfunction"
-	set name = "Choose Module"
 
-	malf_picker.use(src)
 
 /mob/living/silicon/ai/proc/ai_statuschange()
 	set category = "AI Commands"
@@ -872,6 +879,21 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/proc/is_in_chassis()
 	return istype(loc, /turf)
+
+/mob/living/silicon/ai/proc/toggle_small_alt_click_module(new_mod_name)
+	var/datum/AI_Module/small/new_mod = current_modules[new_mod_name]
+	if(!new_mod)
+		to_chat(src, "<span class='warning'>ERROR: CAN'T FIND MODULE!</span>")
+		return
+	if(new_mod.uses)
+		if(active_module != new_mod)
+			active_module = new_mod
+			to_chat(src, "[new_mod_name] module active. Alt+click to choose a machine to overload.")
+		else
+			active_module = null
+			to_chat(src, "[new_mod_name] module deactivated.")
+	else
+		to_chat(src, "[new_mod_name] module activation failed. Out of uses.")
 
 #undef AI_CHECK_WIRELESS
 #undef AI_CHECK_RADIO

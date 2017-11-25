@@ -8,11 +8,13 @@
 	anchored = FALSE
 	density = TRUE
 	req_access = list(access_research)
+	frequency = 1
 
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 300
-	ghost_must_be_admin = TRUE
+	interact_offline = TRUE
+	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/active = FALSE
 	var/fire_delay = 100
@@ -20,10 +22,7 @@
 	var/shot_number = 0
 	var/state = 0
 	var/locked = FALSE
-
 	var/energy = 0.0001
-	frequency = 1
-
 	var/freq = 50000
 	var/id
 
@@ -45,24 +44,28 @@
 		icon_state = "laser"//"emitter"
 
 /obj/machinery/zero_point_emitter/attack_hand(mob/user)
-	src.add_fingerprint(user)
+	. = ..()
+	if(.)
+		return
+
 	if(state == 2)
-		if(!src.locked || isobserver(user))
-			if(src.active==1)
-				src.active = 0
+		if(!locked || IsAdminGhost(user))
+			if(active == 1)
+				active = 0
 				to_chat(user, "You turn off the [src].")
-				src.use_power = 1
+				use_power = 1
 			else
-				src.active = 1
+				active = 1
 				to_chat(user, "You turn on the [src].")
-				src.shot_number = 0
-				src.fire_delay = 100
-				src.use_power = 2
+				shot_number = 0
+				fire_delay = 100
+				use_power = 2
 			update_icon()
 		else
-			to_chat(user, "\red The controls are locked!")
+			to_chat(user, "<span class='warning'>The controls are locked!</span>")
+			return 1
 	else
-		to_chat(user, "\red The [src] needs to be firmly secured to the floor first.")
+		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first.</span>")
 		return 1
 
 

@@ -65,7 +65,7 @@
 				qdel(O) //Commented out for now. -Durandan
 
 
-/obj/machinery/mineral/mint/attack_hand(user)
+/obj/machinery/mineral/mint/ui_interact(user)
 
 	var/dat = "<b>Coin Press</b><br>"
 

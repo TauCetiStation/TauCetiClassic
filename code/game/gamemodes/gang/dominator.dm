@@ -6,6 +6,7 @@
 	density = 1
 	anchored = 1.0
 	layer = 3.6
+	interact_offline = TRUE
 	var/maxhealth = 200
 	var/health = 200
 	var/gang
@@ -154,10 +155,10 @@
 /obj/machinery/dominator/attackby(I, user, params)
 	return
 
-/obj/machinery/dominator/attack_ghost(mob/user)
-	return
-
 /obj/machinery/dominator/attack_hand(mob/user)
+	if(..())
+		return
+
 	if(operating)
 		user.examinate(src)
 		return

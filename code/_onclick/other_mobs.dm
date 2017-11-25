@@ -15,8 +15,12 @@
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
-	if(istype(G) && G.Touch(A, 1))
+	if(proximity && istype(G) && G.Touch(A,1))
 		return
+
+	//if(!A.can_mob_interact(src)) maybe in future...
+	//	return
+
 	A.attack_hand(src)
 
 /atom/proc/attack_hand(mob/user)

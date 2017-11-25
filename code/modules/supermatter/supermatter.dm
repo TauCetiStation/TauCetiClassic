@@ -215,11 +215,6 @@
 		damage += Proj.damage * config_bullet_energy
 	return 0
 
-
-/obj/machinery/power/supermatter/attack_paw(mob/user)
-	return attack_hand(user)
-
-
 /obj/machinery/power/supermatter/attack_robot(mob/user)
 	if(Adjacent(user))
 		return attack_hand(user)
