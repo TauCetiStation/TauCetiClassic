@@ -39,9 +39,6 @@
 		to_chat(user, "<span class='notice'>They are too far away!</span>")
 		return
 
-	// invisible handcuffs to don't let target to pick up items.
-	var/obj/item/weapon/handcuffs/disarms = new /obj/item/weapon/handcuffs
-
 	target.visible_message("<span class='danger'>[target] looks like is being blocked by something from the outside world...</span>", \
 						   "<span class='danger'>You feel how strange powers holding you...</span>")
 
@@ -52,12 +49,9 @@
 	target.drop_from_inventory(target.r_hand)
 
 	// don't let target pick up items, overlays for lighting effects
-	target.handcuffed = disarms
 	target.overlays += image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
-
+	target.next_move = world.time + 50
 	// after time let target pick up items, removing overlays
+	
 	sleep(50)
-
 	target.overlays -= image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
-	target.handcuffed = null
-	qdel(disarms)
