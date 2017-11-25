@@ -54,21 +54,9 @@
 	// don't let target pick up items, overlays for lighting effects
 	target.handcuffed = disarms
 	target.overlays += image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
-	sleep(5)
-	target.overlays += image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
-	sleep(5)
-	target.overlays += image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
-	sleep(5)
-	target.overlays += image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
-	sleep(5)
-	target.overlays += image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
 
 	// after time let target pick up items, removing overlays
-	sleep(30)
+	sleep(50)
 
 	target.overlays -= image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
-	target.overlays -= image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
-	target.overlays -= image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
-	target.overlays -= image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
-	target.overlays -= image(icon = 'icons/effects/effects.dmi', icon_state = "electricity")
-	qdel(target.handcuffed)
+	qdel(disarms)
