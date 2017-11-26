@@ -257,7 +257,7 @@ datum/objective/debrain//I want braaaainssss
 		explanation_text = "Free Objective"
 	return target
 
-/datum/objective/dehead/find_target_by_role(role_type=0)
+/datum/objective/dehead/find_target_by_role(role, role_type=0)
 	..()
 	if(target && target.current)
 		explanation_text = "Steal the head of [target.current.real_name] the [!role_type ? target.assigned_role : target.special_role], make shure that head is stored in the biogel can."
