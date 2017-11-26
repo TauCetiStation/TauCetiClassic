@@ -132,7 +132,7 @@
 			steal_objective.find_target()
 			traitor.objectives += steal_objective
 		else
-			var/datum/objective/deheading/dehead_objective = new
+			var/datum/objective/dehead/dehead_objective = new
 			dehead_objective.owner = traitor
 			dehead_objective.find_target()
 			traitor.objectives += dehead_objective
@@ -316,7 +316,7 @@
 			to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
 			traitor_mob.mind.total_TC += R.hidden_uplink.uses
-	for(var/datum/objective/deheading/D in traitor_mob.mind.objectives)
+	for(var/datum/objective/dehead/D in traitor_mob.mind.objectives)
 		var/obj/item/device/biocan/B = new (traitor_mob.loc)
 		var/list/slots = list (
 		"backpack" = slot_in_backpack,

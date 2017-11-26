@@ -16,16 +16,16 @@
 	set src in view(0)
 
 	if(!usr.is_busy() && do_after(usr,20))
-		if(brainmob)
-			brainmob.container = null
-			brainmob.loc = headobj
-			headobj.brainmob = brainmob
-			brainmob.timeofhostdeath = world.time
-			living_mob_list -= brainmob
-			brainmob = null
+		if(headobj)
+			if(brainmob)
+				brainmob.container = null
+				brainmob.loc = headobj
+				headobj.brainmob = brainmob
+				brainmob.timeofhostdeath = world.time
+				living_mob_list -= brainmob
+				brainmob = null
 			headobj.forceMove(get_turf(src))
 			headobj = null
-		if(display_headobj)
 			QDEL_NULL(display_headobj)
 			underlays.Cut()
 
@@ -37,9 +37,11 @@
 	if(commutator_enabled)
 		commutator_enabled = FALSE
 		to_chat(usr, "<span class='warning'>You disable text to speech device, preventing [src.name]'s occupant from shouting.</span>")
+		to_chat(brainmob, "<span class='warning'>Your commutating device is now disabled.</span>")
 	else
 		commutator_enabled = TRUE
 		to_chat(usr, "<span class='warning'>You enable commutating device, allowing your prisoner to speak.</span>")
+		to_chat(brainmob, "<span class='warning'>Your commutating device is now enabled.</span>")
 
 /obj/item/device/biocan/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/organ/head))
@@ -67,25 +69,31 @@
 			update_icon()
 
 /obj/item/device/biocan/attack_self(mob/user)
-	visible_message("<cpan class='red'>\The [src.name] contents has been splashed over the floor. </span>", "<span class='rose'> You hear a splash. </span>")
-	if(brainmob)
-		living_mob_list -= headobj.brainmob
-		brainmob.ghostize(can_reenter_corpse = FALSE)
-		brainmob = null
+	visible_message("<span class='red'>\The [src.name] contents has been splashed over the floor. </span>")
+	if(headobj)
+		if(brainmob)
+			living_mob_list -= headobj.brainmob
+			brainmob.ghostize(can_reenter_corpse = FALSE)
+			brainmob.loc = headobj
+			brainmob.container = headobj
+			headobj.brainmob = brainmob
+			brainmob = null
 		headobj.forceMove(get_turf(src))
 		headobj = null
-	if(display_headobj)
 		QDEL_NULL(display_headobj)
 		underlays.Cut()
 	return
 
 /obj/item/device/biocan/throw_impact(atom/hit_atom)
-	visible_message("<cpan class='red'>\The [src.name] contents has been splashed over the floor. </span>", "<span class='rose'> You hear a splash. </span>")
-	if(brainmob)
-		living_mob_list -= headobj.brainmob
-		brainmob.ghostize(can_reenter_corpse = FALSE)
-		brainmob = null
+	visible_message("<span class='red'>\The [src.name] has been shattered. </span>")
 	if(headobj)
+		if(brainmob)
+			living_mob_list -= headobj.brainmob
+			brainmob.ghostize(can_reenter_corpse = FALSE)
+			brainmob.loc = headobj
+			brainmob.container = headobj
+			headobj.brainmob = brainmob
+			brainmob = null
 		headobj.forceMove(get_turf(src))
 		headobj = null
 	new /obj/item/weapon/shard(loc)
