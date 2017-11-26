@@ -64,7 +64,7 @@
 			display_headobj.pixel_y = 0
 			display_headobj.pixel_x = 0
 			display_headobj.layer = FLOAT_LAYER
-			display_headobj.plane = -32767
+			display_headobj.plane = FLOAT_PLANE
 			underlays.Add(display_headobj)
 			update_icon()
 
