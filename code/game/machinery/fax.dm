@@ -12,7 +12,8 @@ var/list/alldepartments = list("Central Command")
 	idle_power_usage = 30
 	active_power_usage = 200
 	power_channel = EQUIP
-
+	interact_offline = TRUE
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/weapon/card/id/scan = null // identification
 	var/authenticated = 0
 
@@ -35,15 +36,7 @@ var/list/alldepartments = list("Central Command")
 	QDEL_NULL(tofax)
 	return ..()
 
-/obj/machinery/faxmachine/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/faxmachine/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/faxmachine/attack_hand(mob/user)
-	user.set_machine(src)
-
+/obj/machinery/faxmachine/ui_interact(mob/user)
 	var/dat
 
 	var/scan_name
@@ -91,7 +84,6 @@ var/list/alldepartments = list("Central Command")
 	var/datum/browser/popup = new(user, "window=copier", "Fax Machine", 450, 300)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/faxmachine/is_operational_topic()
 	return TRUE

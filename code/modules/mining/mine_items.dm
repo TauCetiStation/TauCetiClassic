@@ -116,10 +116,7 @@ proc/move_mining_shuttle()
 	circuit = "/obj/item/weapon/circuitboard/mining_shuttle"
 	var/location = 0 //0 = station, 1 = mining base
 
-/obj/machinery/computer/mining_shuttle/attack_hand(user)
-	if(..(user))
-		return
-	src.add_fingerprint(usr)
+/obj/machinery/computer/mining_shuttle/ui_interact(user)
 	var/dat
 
 	dat = "<center>Mining Shuttle Control<hr>"
@@ -130,8 +127,6 @@ proc/move_mining_shuttle()
 		dat += "Location: [mining_shuttle_location ? "Outpost" : "Station"] <br>"
 
 	dat += "<b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>"
-
-
 	user << browse("[dat]", "window=miningshuttle;size=200x150")
 
 /obj/machinery/computer/mining_shuttle/Topic(href, href_list)

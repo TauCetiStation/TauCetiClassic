@@ -628,7 +628,7 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom)
 	..()
 	new/obj/effect/decal/cleanable/tomato_smudge(loc)
 	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
@@ -678,11 +678,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato/throw_impact(atom/hit_atom)
 	..()
-	new/obj/effect/decal/cleanable/blood/splatter(src.loc)
-	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
-	src.reagents.reaction(get_turf(hit_atom))
+	new/obj/effect/decal/cleanable/blood/splatter(loc)
+	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
-		src.reagents.reaction(A)
+		reagents.reaction(A)
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
@@ -701,11 +701,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom)
 	..()
-	new/obj/effect/decal/cleanable/blood/oil(src.loc)
-	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
-	src.reagents.reaction(get_turf(hit_atom))
+	new/obj/effect/decal/cleanable/blood/oil(loc)
+	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
-		src.reagents.reaction(A)
+		reagents.reaction(A)
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(AM)

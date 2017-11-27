@@ -96,7 +96,7 @@
 				return
 			I.loc = src
 			inserted_id = I
-			interact(user)
+			updateUsrDialog()
 		return
 	if(exchange_parts(user, W))
 		return
@@ -124,12 +124,7 @@
 	qdel(O)//No refined type? Purge it.
 	return
 
-/obj/machinery/mineral/ore_redemption/attack_hand(user)
-	if(..())
-		return
-	interact(user)
-
-obj/machinery/mineral/ore_redemption/interact(mob/user)
+/obj/machinery/mineral/ore_redemption/ui_interact(mob/user)
 	var/obj/item/stack/sheet/mineral/s
 	var/dat
 
@@ -154,7 +149,6 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	var/datum/browser/popup = new(user, "console_stacking_machine", "Ore Redemption Machine", 400, 500)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/mineral/ore_redemption/proc/get_ore_values()
 	var/dat = "<table border='0' width='300'>"
@@ -300,12 +294,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		icon_state = "[initial(icon_state)]-off"
 	return
 
-/obj/machinery/mineral/equipment_locker/attack_hand(user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/mineral/equipment_locker/interact(mob/user)
+/obj/machinery/mineral/equipment_locker/ui_interact(mob/user)
 	var/dat
 	dat +="<div class='statusDisplay'>"
 	if(istype(inserted_id))
@@ -321,7 +310,6 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 680)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/mineral/equipment_locker/Topic(href, href_list)
 	. = ..()
@@ -365,7 +353,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			usr.drop_item()
 			C.loc = src
 			inserted_id = C
-			interact(user)
+			updateUsrDialog()
 		return
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
 		updateUsrDialog()

@@ -8,6 +8,7 @@
 	idle_power_usage = 5
 	active_power_usage = 60
 	power_channel = EQUIP
+	interact_offline = TRUE
 	var/obj/item/weapon/stock_parts/cell/charging = null
 	var/chargelevel = -1
 	var/efficiency = 0.875	//<1.0 means some power is lost in the charging process, >1.0 means free energy.
@@ -66,21 +67,23 @@
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 
 /obj/machinery/cell_charger/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	if(charging)
 		usr.put_in_hands(charging)
 		charging.add_fingerprint(user)
 		charging.updateicon()
 
-		src.charging = null
+		charging = null
 		user.visible_message("[user] removes the cell from the charger.", "You remove the cell from the charger.")
 		chargelevel = -1
 		updateicon()
 
 /obj/machinery/cell_charger/attack_ai(mob/user)
-	return
-
-/obj/machinery/cell_charger/attack_ghost(mob/user)
-	return
+	if(IsAdminGhost(user)) // why not?
+		return ..()
 
 /obj/machinery/cell_charger/emp_act(severity)
 	if(stat & (BROKEN|NOPOWER))

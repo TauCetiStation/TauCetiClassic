@@ -49,11 +49,9 @@
 			return
 	return
 
-/obj/machinery/ai_slipper/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/ai_slipper/ui_interact(mob/user)
 	var/area/area = get_area(src)
+
 	if (!istype(area))
 		to_chat(user, text("Turret badly positioned - area is [].", area))
 		return
@@ -67,7 +65,6 @@
 
 	user << browse(t, "window=computer;size=575x450")
 	onclose(user, "computer")
-	return
 
 /obj/machinery/ai_slipper/Topic(href, href_list)
 	. = ..()
