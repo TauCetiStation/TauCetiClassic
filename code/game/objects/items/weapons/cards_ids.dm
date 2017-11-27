@@ -202,11 +202,111 @@
 	icon_state = "gold"
 	item_state = "gold_id"
 
+/obj/item/weapon/card/id/civ
+	name = "identification card"
+	desc = "A card issued to civilian staff."
+	icon_state = "civ"
+	item_state = "civ_id"
+
+/obj/item/weapon/card/id/civGold //This is not the HoP. There's no position that uses this right now.
+	name = "identification card"
+	desc = "A card which represents common sense and responsibility."
+	icon_state = "civGold"
+	item_state = "civGold_id"
+
+/obj/item/weapon/card/id/sec
+	name = "identification card"
+	desc = "A card issued to security staff."
+	icon_state = "sec"
+	item_state = "sec_id"
+
+/obj/item/weapon/card/id/secGold
+	name = "identification card"
+	desc = "A card which represents honor and protection."
+	icon_state = "secGold"
+	item_state = "secGold_id"
+
+/obj/item/weapon/card/id/eng
+	name = "identification card"
+	desc = "A card issued to engineering staff."
+	icon_state = "eng"
+	item_state = "eng_id"
+
+/obj/item/weapon/card/id/engGold
+	name = "identification card"
+	desc = "A card which represents creativity and ingenuity."
+	icon_state = "engGold"
+	item_state = "engGold_id"
+
+/obj/item/weapon/card/id/med
+	name = "identification card"
+	desc = "A card issued to medical staff."
+	icon_state = "med"
+	item_state = "med_id"
+
+/obj/item/weapon/card/id/medGold
+	name = "identification card"
+	desc = "A card which represents care and compassion."
+	icon_state = "medGold"
+	item_state = "medGold_id"
+
+/obj/item/weapon/card/id/sci
+	name = "identification card"
+	desc = "A card issued to science staff."
+	icon_state = "sci"
+	item_state = "sci_id"
+
+/obj/item/weapon/card/id/sciGold
+	name = "identification card"
+	desc = "A card which represents knowledge and reasoning."
+	icon_state = "sciGold"
+	item_state = "sciGold_id"
+
+/obj/item/weapon/card/id/clown
+	name = "identification card"
+	desc = "A card which represents laugh and robust."
+	icon_state = "clown"
+	item_state = "clown_id"
+
+/obj/item/weapon/card/id/clownGold //not in use
+	name = "identification card"
+	desc = "A golden card which represents laugh and robust."
+	icon_state = "clownGold"
+	item_state = "clownGold_id"
+
+/obj/item/weapon/card/id/mime
+	name = "identification card"
+	desc = "A card which represents tears and silence."
+	icon_state = "mime"
+	item_state = "mime_id"
+
+/obj/item/weapon/card/id/mimeGold //not in use
+	name = "identification card"
+	desc = "A golden card which represents tears and silence."
+	icon_state = "mimeGold"
+	item_state = "mimeGold_id"
+
+/obj/item/weapon/card/id/cargo
+	name = "identification card"
+	desc = "A card issued to cargo staff."
+	icon_state = "cargo"
+	item_state = "cargo_id"
+
+/obj/item/weapon/card/id/cargoGold
+	name = "identification card"
+	desc = "A card which represents service and planning."
+	icon_state = "cargoGold"
+	item_state = "cargoGold_id"
+
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate, access_external_airlocks)
 	origin_tech = "syndicate=3"
 	var/registered_user=null
+	var/list/colorlist = list()
+	var/obj/item/weapon/card/id/scard = null
+
+
 
 /obj/item/weapon/card/id/syndicate/atom_init()
 	. = ..()
@@ -249,7 +349,7 @@
 
 		if(!registered_user) registered_user = user  //
 
-		switch(alert("Would you like to display the ID, or retitle it?","Choose.","Rename","Show"))
+		switch(alert("Would you like to display the ID, change its look, or retitle it?","Choose.","Rename", "Change look","Show"))
 			if("Rename")
 				var t = sanitize(copytext(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name),1,26))
 				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/dead/new_player/prefrences.dm
@@ -265,6 +365,30 @@
 				src.name = "[src.registered_name]'s ID Card ([src.assignment])"
 				to_chat(user, "\blue You successfully forge the ID card.")
 				return
+			if("Change look")
+			/*	var/obj/item/weapon/card/id/C
+				C = input(user, "Select your type!", "Card Changing") as null|anything in colorlist
+				if(!C)
+					return
+				storedcard.icon = 'icons/obj/card.dmi'
+				storedcard.icon_state = C.icon_state
+				storedcard.desc = C.desc*/
+				var/blocked = list(/obj/item/weapon/card/id/guest,/obj/item/weapon/card/id/fluff/lifetime, /obj/item/weapon/card/id/fluff/asher_spock_2)
+				for(var/P in typesof(/obj/item/weapon/card/id)-blocked)
+					var/obj/item/weapon/card/id/C = new P
+					C.name = C.icon_state
+					colorlist += C
+
+				var/obj/item/weapon/card/id/newc
+				newc = input(user, "Select your type!", "Card Changing") as null|anything in colorlist
+				if (newc)
+					src.icon = 'icons/obj/card.dmi'
+					src.icon_state = newc.icon_state
+					src.desc = newc.desc
+				src.update_icon()
+				to_chat(user, "\blue You successfully change the look of the ID card.")
+				return
+
 			if("Show")
 				..()
 	else
