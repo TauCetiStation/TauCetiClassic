@@ -4,6 +4,7 @@
 	layer = EMBEDDED_CONTROLLER_LAYER
 	name = "Embedded Controller"
 	anchored = 1
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/on = 1
 
@@ -27,34 +28,13 @@
 		program.process()
 
 	update_icon()
-	updateDialog()
+	updateUsrDialog()
 
 /obj/machinery/embedded_controller/attack_paw(mob/user)
 	to_chat(user, "You do not have the dexterity to use this.")
 
-/obj/machinery/embedded_controller/attack_hand(mob/user)
-	if(..())
-		return
-
-	ui_interact(user)
-
-/obj/machinery/embedded_controller/ex_act()
-	return
-
-/obj/machinery/embedded_controller/blob_act()
-	return
-
 /obj/machinery/embedded_controller/attackby()
 	attack_hand()
-
-/obj/machinery/embedded_controller/Topic()
-	. = ..()
-	if(!.)
-		return
-	
-	if(!allowed(usr))
-		to_chat(usr, "<span class='warning'>Access denied.</span>")
-		return FALSE
 
 /obj/machinery/embedded_controller/radio
 	icon = 'icons/obj/airlock_machines.dmi'

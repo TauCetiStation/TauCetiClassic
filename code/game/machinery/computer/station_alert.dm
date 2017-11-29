@@ -7,16 +7,7 @@
 	circuit = /obj/item/weapon/circuitboard/stationalert
 	var/alarms = list("Fire"=list(), "Atmosphere"=list(), "Power"=list())
 
-
-/obj/machinery/computer/station_alert/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-	return
-
-
-/obj/machinery/computer/station_alert/interact(mob/user)
-	usr.set_machine(src)
+/obj/machinery/computer/station_alert/ui_interact(mob/user)
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
 	dat += "<A HREF='?src=\ref[user];mach_close=alerts'>Close</A><br><br>"
 	for (var/cat in src.alarms)

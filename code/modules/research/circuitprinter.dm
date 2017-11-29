@@ -87,6 +87,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 				new /obj/item/stack/sheet/mineral/diamond(loc, round(diamond_amount / 2000))
 			default_deconstruction_crowbar(O)
 			return
+		else if(is_wire_tool(O) && wires.interact(user))
+			return
 		else
 			to_chat(user, "\red You can't load the [src.name] while it's opened.")
 			return

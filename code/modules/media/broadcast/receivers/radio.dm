@@ -13,14 +13,7 @@
 		update_on()
 	update_icon()
 
-/obj/machinery/media/receiver/boombox/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
-		to_chat(usr, "\red You don't see anything to mess with.")
-		return
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/media/receiver/boombox/interact(mob/user)
+/obj/machinery/media/receiver/boombox/ui_interact(mob/user)
 	var/dat = "<html><head><title>[src]</title></head><body><TT>"
 	dat += {"
 				Power: <a href="?src=\ref[src];power=1">[on ? "On" : "Off"]</a><BR>
@@ -29,7 +22,6 @@
 	dat+={"</TT></body></html>"}
 	user << browse(dat, "window=radio-recv")
 	onclose(user, "radio-recv")
-	return
 
 /obj/machinery/media/receiver/boombox/proc/update_on()
 	if(on)

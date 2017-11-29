@@ -23,8 +23,7 @@
 	add_implants()
 
 
-/obj/machinery/implantchair/attack_hand(mob/user)
-	user.set_machine(src)
+/obj/machinery/implantchair/ui_interact(mob/user)
 	var/health_text = ""
 	if(src.occupant)
 		if(src.occupant.health <= -100)

@@ -20,13 +20,7 @@
 	else
 		qdel(src)
 
-/obj/machinery/mineral/stacking_unit_console/attack_hand(mob/user)
-	add_fingerprint(user)
-	interact(user)
-
-/obj/machinery/mineral/stacking_unit_console/interact(mob/user)
-	user.set_machine(src)
-
+/obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user)
 	var/dat
 
 	dat += text("<table>")
@@ -40,7 +34,6 @@
 	var/datum/browser/popup = new(user, "window=processor_console", "Stacking Unit Console", 400, 400)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/mineral/stacking_unit_console/Topic(href, href_list)
 	. = ..()
