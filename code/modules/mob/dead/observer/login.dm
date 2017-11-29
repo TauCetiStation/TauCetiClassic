@@ -13,5 +13,5 @@
 	if(client.media)
 		client.media.stop_music()
 
-	if(is_alien_whitelisted(src, "ian"))
+	if(is_alien_whitelisted(src, "ian") || (config.allow_donators && client.donator))
 		verbs += /mob/dead/observer/proc/ianize

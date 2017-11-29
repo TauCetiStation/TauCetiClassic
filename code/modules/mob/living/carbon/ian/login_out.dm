@@ -1,7 +1,7 @@
 /mob/living/carbon/ian/Login()
 	..()
 
-	if(!is_alien_whitelisted(src, "ian"))
+	if(!is_alien_whitelisted(src, "ian") || (config.allow_donators && client.donator))
 		return
 
 	update_hud()
