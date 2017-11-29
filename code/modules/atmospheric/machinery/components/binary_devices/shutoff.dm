@@ -18,7 +18,8 @@
 	icon_state = "vclamp[open]"
 
 /obj/machinery/atmospherics/components/binary/valve/shutoff/attack_hand(mob/user)
-	..()
+	if(..())
+		return
 	override_counter = 3
 
 /obj/machinery/atmospherics/components/binary/valve/shutoff/process_atmos()

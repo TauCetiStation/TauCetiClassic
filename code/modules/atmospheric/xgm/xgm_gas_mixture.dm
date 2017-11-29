@@ -265,6 +265,9 @@
 
 //Removes moles from the gas mixture, limited by a given flag.  Returns a gax_mixture containing the removed air.
 /datum/gas_mixture/proc/remove_by_flag(flag, amount)
+	var/datum/gas_mixture/removed = new
+	. = removed
+
 	if(!flag || amount <= 0)
 		return
 
@@ -272,8 +275,6 @@
 	for(var/g in gas)
 		if(gas_data.flags[g] & flag)
 			sum += gas[g]
-
-	var/datum/gas_mixture/removed = new
 
 	for(var/g in gas)
 		if(gas_data.flags[g] & flag)
@@ -283,8 +284,6 @@
 	removed.temperature = temperature
 	update_values()
 	removed.update_values()
-
-	return removed
 
 //Returns the amount of gas that has the given flag, in moles
 /datum/gas_mixture/proc/get_by_flag(flag)

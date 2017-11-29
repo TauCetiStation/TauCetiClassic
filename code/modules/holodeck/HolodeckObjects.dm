@@ -307,38 +307,40 @@ obj/structure/stool/bed/chair/holochair
 	desc = "This device is used to declare ready. If all devices in an area are ready, the event will begin!"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
-	var/ready = 0
-	var/area/currentarea = null
-	var/eventstarted = 0
-
 	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
-	ghost_must_be_admin = TRUE
+	var/ready = 0
+	var/area/currentarea = null
+	var/eventstarted = 0
+
 
 /obj/machinery/readybutton/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
 	to_chat(user, "The station AI is not to interact with these devices!")
-	return
 
 /obj/machinery/readybutton/attackby(obj/item/weapon/W, mob/user)
 	to_chat(user, "The device is a solid button, there's nothing you can do with it!")
 
 /obj/machinery/readybutton/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	if(!user.IsAdvancedToolUser())
-		return 0
+		return 1
 
-	currentarea = get_area(src.loc)
+	currentarea = get_area(loc)
 	if(!currentarea)
 		qdel(src)
+		return 1
 
 	if(eventstarted)
 		to_chat(usr, "The event has already begun!")
-		return
+		return 1
 
 	ready = !ready
 

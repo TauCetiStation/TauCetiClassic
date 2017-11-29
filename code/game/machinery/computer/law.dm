@@ -5,11 +5,9 @@
 	desc = "Used to upload laws to the AI."
 	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/aiupload
-	ghost_must_be_admin = TRUE
+	light_color = "#FFFFFF"
 	var/mob/living/silicon/ai/current = null
 	var/opened = FALSE
-
-	light_color = "#FFFFFF"
 
 
 /obj/machinery/computer/aiupload/verb/AccessInternals()
@@ -39,16 +37,16 @@
 
 
 /obj/machinery/computer/aiupload/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
-	src.current = select_active_ai(user)
+	current = select_active_ai(user)
 
-	if (!src.current)
+	if (!current)
 		to_chat(usr, "No active AIs detected.")
 	else
-		to_chat(usr, "[src.current.name] selected for law changes.")
-	return
+		to_chat(usr, "[current.name] selected for law changes.")
 
 
 
@@ -57,7 +55,6 @@
 	desc = "Used to upload laws to Cyborgs."
 	icon_state = "command"
 	circuit = /obj/item/weapon/circuitboard/borgupload
-	ghost_must_be_admin = TRUE
 	var/mob/living/silicon/robot/current = null
 
 
@@ -69,13 +66,13 @@
 
 
 /obj/machinery/computer/borgupload/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
-	src.current = freeborg()
+	current = freeborg()
 
-	if (!src.current)
+	if (!current)
 		to_chat(usr, "No free cyborgs detected.")
 	else
-		to_chat(usr, "[src.current.name] selected for law changes.")
-	return
+		to_chat(usr, "[current.name] selected for law changes.")

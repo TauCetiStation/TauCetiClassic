@@ -81,6 +81,7 @@
 	var/usealienwhitelist = 0
 	var/limitalienplayers = 0
 	var/alien_to_human_ratio = 0.5
+	var/list/whitelisted_species_by_time = list()
 
 	var/server
 	var/banappeals
@@ -445,6 +446,21 @@
 
 				if("usealienwhitelist")
 					usealienwhitelist = 1
+
+				if("alien_available_by_time") //totally not copypaste from probabilities
+					var/avail_time_sep = findtext(value, " ")
+					var/avail_alien_name = null
+					var/avail_alien_ingame_time = null
+
+					if (avail_time_sep)
+						avail_alien_name = lowertext(copytext(value, 1, avail_time_sep))
+						avail_alien_ingame_time = text2num(copytext(value, avail_time_sep + 1))
+						if (avail_alien_name in whitelisted_roles)
+							config.whitelisted_species_by_time[avail_alien_name] = avail_alien_ingame_time
+						else
+							log_misc("Incorrect species whitelist for experienced players configuration definition, species missing in whitelisted_spedcies: [avail_alien_name].")
+					else
+						log_misc("Incorrect species whitelist for experienced players configuration definition: [value].")
 
 				if("alien_player_ratio")
 					limitalienplayers = 1

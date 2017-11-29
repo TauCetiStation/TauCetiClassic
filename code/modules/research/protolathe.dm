@@ -123,9 +123,12 @@ Note: Must be placed west/left of and R&D console to function.
 				G.set_amount(round(clown_amount / G.perunit))
 			default_deconstruction_crowbar(I)
 			return 1
+		else if (is_wire_tool(I) && wires.interact(user))
+			return 1
 		else
 			to_chat(user, "\red You can't load the [src.name] while it's opened.")
 			return 1
+
 	if (disabled)
 		return
 	if (!linked_console)

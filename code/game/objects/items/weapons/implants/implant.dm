@@ -11,6 +11,14 @@
 	var/allow_reagents = 0
 	var/malfunction = 0
 
+/obj/item/weapon/implant/atom_init()
+	. = ..()
+	implant_list += src
+
+/obj/item/weapon/implant/Destroy()
+	implant_list -= src
+	return ..()
+
 /obj/item/weapon/implant/proc/trigger(emote, source)
 	return
 

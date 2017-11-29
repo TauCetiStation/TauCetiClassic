@@ -46,6 +46,7 @@
 	anchored = 1
 	use_power = 0
 	req_access = list(access_engine_equip)
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell
@@ -582,22 +583,15 @@
 		else
 			if (istype(user, /mob/living/silicon))
 				return src.attack_hand(user)
-			if (!opened && wiresexposed && \
-				(istype(W, /obj/item/device/multitool) || \
-				istype(W, /obj/item/weapon/wirecutters)))
-				return src.attack_hand(user)
+			if (!opened && wiresexposed && is_wire_tool(W))
+				return wires.interact(user)
 			user.visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!", \
 				"\red You hit the [src.name] with your [W.name]!", \
 				"You hear bang")
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
-/obj/machinery/power/apc/attack_hand(mob/user)
-//	if (!can_use(user)) This already gets called in interact() and in topic()
-//		return
-	if(..())
-		return
-
+/obj/machinery/power/apc/interact(mob/user)
 	//Synthetic human mob goes here.
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -641,12 +635,8 @@
 			charging = 0
 			src.update_icon()
 		return
-	if(stat & (BROKEN|MAINT))
-		return
-
 	// do APC interaction
-	user.set_machine(src)
-	src.interact(user)
+	..()
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
 	if(!user)
@@ -667,15 +657,6 @@
 	else
 		beenhit += 1
 	return
-
-
-
-/obj/machinery/power/apc/interact(mob/user)
-	if(!user)
-		return
-	if(wires.interact(user))
-		return
-	ui_interact(user)
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
 	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
@@ -704,7 +685,7 @@
 		"chargingStatus" = charging,
 		"totalLoad" = round(lastused_equip) + lastused_light + round(lastused_environ),
 		"coverLocked" = coverlocked,
-		"siliconUser" = issilicon(user) | isobserver(user),
+		"siliconUser" = issilicon(user) || isobserver(user),
 		"malfStatus" = get_malf_status(user),
 
 		"powerChannels" = list(

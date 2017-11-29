@@ -35,11 +35,7 @@
 	)
 	var/list/restricted_programs = list("Wildlife Simulation" = "wildlifecarp")// "Atmospheric Burn Simulation" = "burntest", - no, Dave
 
-/obj/machinery/computer/HolodeckControl/attack_hand(mob/user)
-	if(..())
-		return
-
-	user.set_machine(src)
+/obj/machinery/computer/HolodeckControl/ui_interact(mob/user)
 	var/dat
 
 	dat += "<B>Holodeck Control System</B><BR>"
@@ -83,8 +79,6 @@
 
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
-
-	return
 
 
 /obj/machinery/computer/HolodeckControl/Topic(href, href_list)
@@ -217,7 +211,7 @@
 					s.set_up(2, 1, T)
 					s.start()
 				T.ex_act(3)
-				T.hotspot_expose(1000,500,1)
+				T.hotspot_expose(1000, 500)
 
 /obj/machinery/computer/HolodeckControl/proc/derez(obj/obj , silent = 1)
 	holographic_objs.Remove(obj)
@@ -314,7 +308,7 @@
 	s.start()
 	if(T)
 		T.temperature = 5000
-		T.hotspot_expose(50000,50000,1)
+		T.hotspot_expose(50000, 50000)
 
 /obj/machinery/computer/HolodeckControl/proc/toggleGravity(area/A)
 	if(world.time < (last_gravity_change + 25))

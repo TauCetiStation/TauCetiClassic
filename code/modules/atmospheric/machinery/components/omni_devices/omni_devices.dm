@@ -100,14 +100,6 @@
 		new /obj/item/pipe(loc, null, null, src)
 		qdel(src)
 
-/obj/machinery/atmospherics/components/omni/attack_hand(user)
-	if(..())
-		return
-
-	src.add_fingerprint(usr)
-	ui_interact(user)
-	return
-
 /obj/machinery/atmospherics/components/omni/proc/build_icons()
 	if(!check_icon_cache())
 		return

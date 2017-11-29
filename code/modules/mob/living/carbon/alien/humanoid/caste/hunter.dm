@@ -127,7 +127,10 @@
 	if(isliving(A))
 		var/mob/living/L = A
 		L.visible_message("<span class='danger'>[src] pounces on [L]!</span>", "<span class='userdanger'>[src] pounces on you!</span>")
-		L.Weaken(5)
+		if(issilicon(A))
+			L.Weaken(1) //Only brief stun
+		else
+			L.Weaken(5)
 		sleep(2)  // Runtime prevention (infinite bump() calls on hulks)
 		step_towards(src, L)
 		toggle_leap(FALSE)

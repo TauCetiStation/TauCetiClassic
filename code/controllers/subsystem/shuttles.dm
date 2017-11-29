@@ -390,6 +390,7 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					start_location = locate(/area/shuttle/escape_pod5/station)
 					end_location = locate(/area/shuttle/escape_pod5/transit)
+					end_location.parallax_movedir = WEST
 					start_location.move_contents_to(end_location, null, EAST)
 					for(var/obj/machinery/door/D in end_location)
 						D.close()
