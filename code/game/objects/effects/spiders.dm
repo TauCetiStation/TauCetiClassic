@@ -25,6 +25,7 @@
 		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
 		visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	var/damage = W.force / 4.0
 

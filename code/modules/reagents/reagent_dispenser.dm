@@ -72,6 +72,7 @@
 		to_chat(user, "\red Water faucet is wrenched open, leaking the water!")
 
 /obj/structure/reagent_dispensers/watertank/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if (istype(W,/obj/item/weapon/wrench))
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
