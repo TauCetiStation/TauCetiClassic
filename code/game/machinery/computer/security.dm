@@ -79,7 +79,7 @@
 									background = "'background-color:#DC143C;'"
 								if("Incarcerated")
 									background = "'background-color:#CD853F;'"
-								if("Parolled")
+								if("Paroled")
 									background = "'background-color:#CD853F;'"
 								if("Released")
 									background = "'background-color:#3BB9FF;'"
@@ -169,7 +169,7 @@
 									background = "'background-color:#DC143C;'"
 								if("Incarcerated")
 									background = "'background-color:#CD853F;'"
-								if("Parolled")
+								if("Paroled")
 									background = "'background-color:#CD853F;'"
 								if("Released")
 									background = "'background-color:#3BB9FF;'"
@@ -486,7 +486,7 @@ What a mess.*/
 						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=none'>None</a></li>"
 						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=arrest'>*Arrest*</a></li>"
 						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=incarcerated'>Incarcerated</a></li>"
-						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=parolled'>Parolled</a></li>"
+						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=paroled'>Paroled</a></li>"
 						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=released'>Released</a></li>"
 						temp += "</ul>"
 				if("rank")
@@ -545,8 +545,8 @@ What a mess.*/
 								active2.fields["criminal"] = "*Arrest*"
 							if("incarcerated")
 								active2.fields["criminal"] = "Incarcerated"
-							if("parolled")
-								active2.fields["criminal"] = "Parolled"
+							if("paroled")
+								active2.fields["criminal"] = "Paroled"
 							if("released")
 								active2.fields["criminal"] = "Released"
 
@@ -606,7 +606,7 @@ What a mess.*/
 				if(3)
 					R.fields["age"] = rand(5, 85)
 				if(4)
-					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Parolled", "Released")
+					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Paroled", "Released")
 				if(5)
 					R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
 				if(6)
