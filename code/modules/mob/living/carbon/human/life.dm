@@ -1847,7 +1847,7 @@
 						holder.icon_state = "hudprisoner"
 						break
 					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Paroled"))
-						holder.icon_state = "hudparolled"
+						holder.icon_state = "hudparoled"
 						break
 					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Released"))
 						holder.icon_state = "hudreleased"
