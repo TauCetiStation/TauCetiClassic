@@ -358,24 +358,14 @@
 		dat += "<font color = 'red'>No product loaded!</font>"
 
 	else
-		var/list/display_records = product_records
-		if(extended_inventory)
-			display_records += hidden_records
-		if(coin)
-			display_records += coin_records
-
 		dat += "<ul>"
-		for (var/datum/data/vending_product/R in display_records)
-			dat += "<li>"
-			if (R.amount > 0)
-				dat += " <a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A>"
-			else
-				dat += " <font color = 'red'>SOLD OUT</font>"
-			dat += "<font color = '[R.display_color]'><B>[R.product_name]</B>:"
-			dat += " <b>[R.amount]</b> </font>"
-			if(R.price)
-				dat += " <b>(Price: [R.price])</b>"
-			dat += "</li>"
+
+		dat += print_recors(product_records)
+		if(extended_inventory)
+			dat += print_recors(hidden_records)
+		if(coin)
+			dat += print_recors(coin_records)
+
 		dat += "</ul>"
 	dat += "</div>"
 
@@ -388,6 +378,21 @@
 	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 500)
 	popup.set_content(dat)
 	popup.open()
+
+/obj/machinery/vending/proc/print_recors(list/record)
+	var/dat
+	for (var/datum/data/vending_product/R in record)
+		dat += "<li>"
+		if (R.amount > 0)
+			dat += " <a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A>"
+		else
+			dat += " <font color = 'red'>SOLD OUT</font>"
+		dat += "<font color = '[R.display_color]'><B>[R.product_name]</B>:"
+		dat += " <b>[R.amount]</b> </font>"
+		if(R.price)
+			dat += " <b>(Price: [R.price])</b>"
+		dat += "</li>"
+	return dat
 
 /obj/machinery/vending/Topic(href, href_list)
 	. = ..()
