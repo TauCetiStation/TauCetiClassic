@@ -23,6 +23,6 @@
 		if(istype(container, /obj/item/device/biocan))
 			var/obj/item/device/biocan/B = container
 			if(B.commutator_enabled)
-				..(trim(sanitize_plus_chat(message)), sanitize = 0)
+				..(trim(sanitize(copytext(message, 1, MAX_MESSAGE_LEN))), sanitize = 0)
 			else
 				return

@@ -197,6 +197,7 @@
 
 	if(config.allow_donators && ckey in donators)
 		donator = 1
+		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting us! You have access to all the additional donator-only features this month.</span>")
 		
 	log_client_to_db(tdata)
 

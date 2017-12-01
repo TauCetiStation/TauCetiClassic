@@ -58,7 +58,7 @@
 /obj/item/weapon/gun/projectile/sigi/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
-		if ((!magazine && istype(AM, mag_type) || istype(AM, mag_type2)))
+		if ((!magazine && (istype(AM, mag_type) || istype(AM, mag_type2))))
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
