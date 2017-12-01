@@ -351,6 +351,7 @@
 	if(equipped_on_head && camera && (on || combat_mode))
 		lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "terror[combat_mode ? "_combat" : ""]_glow", layer = ABOVE_LIGHTING_LAYER)
 		lamp.plane = LIGHTING_PLANE + 1
+		lamp.alpha = on ? 255 : 127
 		user.overlays += lamp
 	icon_state = "rig[on]-syndie[combat_mode ? "-combat" : ""]"
 	user.update_inv_head()
