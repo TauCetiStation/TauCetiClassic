@@ -30,20 +30,12 @@
 
 /obj/machinery/idpainter/atom_init()
 	. = ..()
-	var/blocked = list(
-		/obj/item/weapon/card/data,
-		/obj/item/weapon/card/data/clown,
-		/obj/item/weapon/card/emag,/obj/item/weapon/card/id/ert,
-		/obj/item/weapon/card/id/centcom,/obj/item/weapon/card/id/syndicate/nuker,
-		/obj/item/weapon/card/id/syndicate/commander,
-		/obj/item/weapon/card/id/syndicate_command, /obj/item/weapon/card/id/guest,
-		/obj/item/weapon/card/id/fluff/lifetime, /obj/item/weapon/card/id/fluff/asher_spock_2
-		)
 
-	for(var/P in typesof(/obj/item/weapon/card/id)-blocked)
+	for(var/P in typesof(/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = new P
-		C.name = C.icon_state
-		colorlist += C
+		if (C.customizable_view == 1) //only "allowed-for-everything"
+			C.name = C.icon_state
+			colorlist += C
 
 
 /obj/machinery/idpainter/attackby(obj/item/O, mob/user)

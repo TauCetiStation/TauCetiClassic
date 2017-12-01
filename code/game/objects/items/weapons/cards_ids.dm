@@ -130,6 +130,7 @@
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
 	slot_flags = SLOT_ID
+	var/customizable_view = 1 //0 - forbidden, 1 - for all devices, 2 - agent card-only
 
 	var/blood_type = "\[UNSET\]"
 	var/dna_hash = "\[UNSET\]"
@@ -305,6 +306,7 @@
 	var/registered_user=null
 	var/list/colorlist = list()
 	var/obj/item/weapon/card/id/scard = null
+	customizable_view = 2
 
 
 
@@ -366,18 +368,11 @@
 				to_chat(user, "\blue You successfully forge the ID card.")
 				return
 			if("Change look")
-			/*	var/obj/item/weapon/card/id/C
-				C = input(user, "Select your type!", "Card Changing") as null|anything in colorlist
-				if(!C)
-					return
-				storedcard.icon = 'icons/obj/card.dmi'
-				storedcard.icon_state = C.icon_state
-				storedcard.desc = C.desc*/
-				var/blocked = list(/obj/item/weapon/card/id/guest,/obj/item/weapon/card/id/fluff/lifetime, /obj/item/weapon/card/id/fluff/asher_spock_2)
-				for(var/P in typesof(/obj/item/weapon/card/id)-blocked)
+				for(var/P in typesof(/obj/item/weapon/card/id))
 					var/obj/item/weapon/card/id/C = new P
-					C.name = C.icon_state
-					colorlist += C
+					if (C.customizable_view != 0) //everything except forbidden
+						C.name = C.icon_state
+						colorlist += C
 
 				var/obj/item/weapon/card/id/newc
 				newc = input(user, "Select your type!", "Card Changing") as null|anything in colorlist
@@ -386,7 +381,7 @@
 					src.icon_state = newc.icon_state
 					src.desc = newc.desc
 				src.update_icon()
-				to_chat(user, "\blue You successfully change the look of the ID card.")
+				to_chat(user, "<span class='notice'>You successfully change the look of the ID card!</span>")
 				return
 
 			if("Show")
@@ -402,12 +397,14 @@
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate, access_external_airlocks)
+	customizable_view = 2
 
 /obj/item/weapon/card/id/syndicate/commander
 	name = "syndicate commander ID card"
 	assignment = "Syndicate Commander"
 	icon_state = "syndicate-command"
 	access = list(access_maint_tunnels, access_syndicate, access_syndicate_commander, access_external_airlocks)
+
 
 /obj/item/weapon/card/id/syndicate/nuker
 	icon_state = "syndicate"
@@ -431,6 +428,7 @@
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
+	customizable_view = 2
 
 /obj/item/weapon/card/id/centcom/atom_init()
 	access = get_all_centcom_access()
@@ -441,6 +439,7 @@
 	icon_state = "ert"
 	registered_name = "Central Command"
 	assignment = "Emergency Response Team"
+	customizable_view = 2
 
 /obj/item/weapon/card/id/ert/atom_init()
 	access = get_all_accesses()

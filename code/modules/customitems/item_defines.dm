@@ -283,11 +283,11 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "reesemackenzie"
 
-/obj/item/weapon/card/id/fluff/lifetime	//fastler: Fastler Greay; it seemed like something multiple people would have
+/*/obj/item/weapon/card/id/fluff/lifetime	//fastler: Fastler Greay; it seemed like something multiple people would have
 	name = "Lifetime ID Card"
 	desc = "A modified ID card given only to those people who have devoted their lives to the better interests of NanoTrasen. It sparkles blue."
 	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "lifetimeid"
+	icon_state = "lifetimeid"*/
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/shinyflask //lexusjjss: Lexus Langg & Zachary Tomlinson
 	name = "shiny flask"
@@ -399,11 +399,11 @@
 
 //End strange penlight
 
-/obj/item/weapon/card/id/fluff/asher_spock_2 //Nerezza: Asher Spock
+/*/obj/item/weapon/card/id/fluff/asher_spock_2 //Nerezza: Asher Spock
 	name = "Odysses Specialist ID card"
 	desc = "A special identification card with a red cross signifying an emergency physician has specialised in Odysseus operations and maintenance.\nIt grants the owner recharge bay access."
 	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "odysseus_spec_id"
+	icon_state = "odysseus_spec_id"*/
 
 /obj/item/weapon/clipboard/fluff/mcreary_journal //sirribbot: James McReary
 	name = "McReary's journal"
