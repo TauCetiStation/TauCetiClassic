@@ -6,9 +6,10 @@
 	desc = "Has a tag: Totally not property of an enemy corporation, honest."
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	action_button_name = "Toggle Helmet Light"
-	var/brightness = 3 //luminosity when on
+	var/brightness = 3 //light_range when on
 	var/lit = FALSE
 	species_restricted = list("exclude" , DIONA , VOX)
+	var/image/lamp = null
 
 /obj/item/clothing/suit/space/syndicate
 	name = "Red Space Suit"
@@ -16,24 +17,27 @@
 	item_state = "space_suit_syndicate"
 	desc = "Has a tag on it: Totally not property of of a hostile corporation, honest!"
 	w_class = 3
-	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank/emergency_oxygen)
+	allowed = list(/obj/item/weapon/gun,
+	               /obj/item/ammo_box/magazine,
+	               /obj/item/ammo_casing,
+	               /obj/item/weapon/melee/baton,
+	               /obj/item/weapon/melee/energy/sword,
+	               /obj/item/weapon/handcuffs,
+	               /obj/item/weapon/tank/emergency_oxygen)
 	slowdown = 1
 	armor = list(melee = 60, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	species_restricted = list("exclude" , DIONA , VOX)
 
+/obj/item/clothing/head/helmet/space/syndicate/update_icon(mob/user)
+	. = ..()
+	icon_state = "[initial(icon_state)][lit ? "-lit" : ""]"
+	user.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/syndicate/attack_self(mob/user)
+	. = ..()
 	lit = !lit
-	if(lit)
-		set_light(brightness)
-		icon_state += "-lit"
-	else
-		set_light(0)
-		icon_state = initial(icon_state)
-
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		H.update_inv_head()
+	set_light(lit ? brightness : 0)
+	update_icon(user)
 
 
 //Civilian syndicate space suit
@@ -90,47 +94,48 @@
 	name = "Infiltrator Space Helmet"
 	desc = "Space helmet made by unknown manufacturer. It's made from some strange composite material."
 	icon_state = "syndicate-helm-infiltrator"
-	item_state = "syndicate-helm-trooper"
+	item_state = "syndicate-helm-elite"
 	action_button_name = null
 
 /obj/item/clothing/suit/space/syndicate/infiltrator
 	name = "Infiltrator Space Suit"
 	desc = "Space suit made by unknown manufacturer. It's made from some strange composite material."
-	icon_state = "syndicate-trooper"
-	item_state = "syndicate-trooper"
+	icon_state = "syndicate-infiltrator"
+	item_state = "syndicate-elite"
 
 /obj/item/clothing/head/helmet/space/syndicate/infiltrator/attack_self(mob/user)
 	return
 
 
 //Striketeam syndicate space suit
-/obj/item/clothing/head/helmet/space/syndicate/edgy
-	name = "Edgy Trooper Space Helmet"
+/obj/item/clothing/head/helmet/space/syndicate/elite
+	name = "Elite Striker Space Helmet"
 	desc = "It looks like the person wearing this should be death incarnate wannabe."
-	icon_state = "syndicate-helm-edgy-trooper"
-	item_state = "syndicate-helm-trooper"
+	icon_state = "syndicate-helm-elite"
+	item_state = "syndicate-helm-elite"
 	armor = list(melee = 75, bullet = 65, laser = 65, energy = 65, bomb = 70, bio = 100, rad = 20)
+	action_button_name = null
 
-/obj/item/clothing/head/helmet/space/syndicate/edgy/attack_self(mob/user)
+/obj/item/clothing/head/helmet/space/syndicate/elite/attack_self(mob/user)
 	return
 
-/obj/item/clothing/suit/space/syndicate/edgy
-	name = "Edgy Trooper Space Suit"
+/obj/item/clothing/suit/space/syndicate/elite
+	name = "Elite Striker Space Suit"
 	desc = "It looks like the person wearing this should be death incarnate wannabe."
-	icon_state = "syndicate-trooper"
-	item_state = "syndicate-trooper"
+	icon_state = "syndicate-elite"
+	item_state = "syndicate-elite"
 	armor = list(melee = 75, bullet = 65, laser = 65, energy = 65, bomb = 70, bio = 100, rad = 20)
 	breach_threshold = 32
 
 
-/obj/item/clothing/head/helmet/space/syndicate/edgy/leader
-	name = "Edgy Leader Space Helmet"
+/obj/item/clothing/head/helmet/space/syndicate/elite/commander
+	name = "Striker Commander Space Helmet"
 	desc = "Person wearing this was the death incarnate. You still feel edgy vibes coming from the inside."
-	icon_state = "syndicate-helm-edgy-leader"
-	item_state = "syndicate-helm-edgy-leader"
+	icon_state = "syndicate-helm-commander"
+	item_state = "syndicate-helm-commander"
 
-/obj/item/clothing/suit/space/syndicate/edgy/leader
-	name = "Edgy Leader Space Suit"
+/obj/item/clothing/suit/space/syndicate/elite/commander
+	name = "Striker Commander Space Suit"
 	desc = "Person wearing this was the death incarnate. You still feel edgy vibes coming from the inside."
-	icon_state = "syndicate-edgy"
-	item_state = "syndicate-edgy"
+	icon_state = "syndicate-commander"
+	item_state = "syndicate-commander"
