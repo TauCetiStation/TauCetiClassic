@@ -131,8 +131,9 @@
 /obj/structure/stool/bed/roller/post_buckle_mob(mob/living/M)
 	if(M == buckled_mob)
 		if(M.crawling)
-			M.pass_flags ^= PASSCRAWL
-			M.crawling = 0
+			M.pass_flags &= ~PASSCRAWL
+			M.crawling = FALSE
+			M.layer = 4.0
 		density = 1
 		icon_state = "up"
 	else
