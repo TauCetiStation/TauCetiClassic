@@ -792,10 +792,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Operating Theatre 2"
 	icon_state = "surgery"
 
-/area/medical/surgerystorage
-	name = "Operating Storage"
-	icon_state = "surgery2"
-
 /area/medical/surgeryobs
 	name = "Operation Observation Room"
 	icon_state = "surgery"
