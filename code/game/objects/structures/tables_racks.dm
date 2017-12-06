@@ -349,6 +349,7 @@
 
 
 /obj/structure/table/attackby(obj/item/W, mob/user, params)
+	. = TRUE
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user) < 2)
 		var/obj/item/weapon/grab/G = W
 		if(isliving(G.affecting))
@@ -395,7 +396,7 @@
 			if(istype(src, /obj/structure/table/reinforced) && W:active)
 				..()
 				to_chat(user, "<span class='notice'>You tried to slice through [src] but [W] is too weak.</span>")
-				return
+				return FALSE
 			user.do_attack_animation(src)
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
@@ -405,7 +406,7 @@
 			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
 			user.SetNextMove(CLICK_CD_MELEE)
 			destroy()
-			return
+			return FALSE
 
 	if(!(W.flags & ABSTRACT))
 		if(user.drop_item())
@@ -578,7 +579,7 @@
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
-		if(user.is_busy()) return
+		if(user.is_busy()) return FALSE
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
@@ -595,14 +596,14 @@
 					if(!src || !WT.isOn()) return
 					to_chat(user, "\blue Table strengthened")
 					src.status = 2
-			return
-		return
+			return FALSE
+		return TRUE
 
 	if (istype(W, /obj/item/weapon/wrench))
 		if(src.status == 2)
-			return
+			return TRUE
 
-	..()
+ return ..()
 
 /*
  * Racks

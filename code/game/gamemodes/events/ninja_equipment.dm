@@ -863,7 +863,7 @@ ________________________________________________________________________________
 			to_chat(U, "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units.")//Let the player know how much total volume was added.
 			return
 		else if(istype(I, /obj/item/weapon/stock_parts/cell))
-			if(I:maxcharge>cell.maxcharge&&n_gloves&&n_gloves.candrain)
+			if(I:maxcharge > cell.maxcharge && n_gloves && n_gloves.candrain)
 				if(U.is_busy(src))
 					return
 				to_chat(U, "\blue Higher maximum capacity detected.\nUpgrading...")
@@ -999,10 +999,10 @@ ________________________________________________________________________________
 
 		if("APC")
 			var/obj/machinery/power/apc/A = target
-			if(A.cell&&A.cell.charge)
+			if(A.cell && A.cell.charge)
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 				spark_system.set_up(5, 0, A.loc)
-				while(G.candrain&&A.cell.charge>0&&!maxcapacity)
+				while(G.candrain && A.cell.charge > 0 && !maxcapacity)
 					drain = rand(G.mindrain,G.maxdrain)
 					if(A.cell.charge<drain)
 						drain = A.cell.charge
@@ -1052,7 +1052,7 @@ ________________________________________________________________________________
 		if("CELL")
 			var/obj/item/weapon/stock_parts/cell/A = target
 			if(A.charge)
-				if (G.candrain&&do_after(U,30,target = A))
+				if (G.candrain && do_after(U,30,target = A))
 					to_chat(U, "\blue Gained <B>[A.charge]</B> energy from the cell.")
 					if(S.cell.charge+A.charge>S.cell.maxcharge)
 						S.cell.charge=S.cell.maxcharge

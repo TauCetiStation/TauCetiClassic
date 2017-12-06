@@ -4,7 +4,7 @@
 
 	Otherwise pretty standard.
 */
-/mob/living/carbon/human/UnarmedAttack(atom/A, proximity)
+/mob/living/carbon/human/UnarmedAttack(atom/A)
 	var/obj/item/organ/external/BP = bodyparts_by_name[hand ? BP_L_HAND : BP_R_HAND]
 	if(BP && !BP.is_usable())
 		to_chat(src, "<span class='notice'>You try to move your [BP.name], but cannot!</span>")
@@ -15,7 +15,7 @@
 	// Special glove functions:
 	// If the gloves do anything, have them return 1 to stop
 	// normal attack_hand() here.
-	if(proximity && istype(G) && G.Touch(A,1))
+	if(istype(G) && G.Touch(A,1))
 		return
 
 	//if(!A.can_mob_interact(src)) maybe in future...
