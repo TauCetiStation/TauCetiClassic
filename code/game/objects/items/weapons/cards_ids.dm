@@ -6,8 +6,6 @@
  *		FINGERPRINT CARD
  */
 
-
-
 /*
  * DATA CARDS - Used for the teleporter
  */
@@ -130,8 +128,7 @@
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
 	slot_flags = SLOT_ID
-	var/customizable_view = 1 //0 - forbidden, 1 - for all devices, 2 - agent card-only
-
+	var/customizable_view = UNIVERSAL_VIEW
 	var/blood_type = "\[UNSET\]"
 	var/dna_hash = "\[UNSET\]"
 	var/fingerprint_hash = "\[UNSET\]"
@@ -306,7 +303,7 @@
 	var/registered_user=null
 	var/list/colorlist = list()
 	var/obj/item/weapon/card/id/scard = null
-	customizable_view = 2
+	customizable_view = TRAITOR_VIEW
 
 
 
@@ -370,7 +367,7 @@
 			if("Change look")
 				for(var/P in typesof(/obj/item/weapon/card/id))
 					var/obj/item/weapon/card/id/C = new P
-					if (C.customizable_view != 0) //everything except forbidden
+					if (C.customizable_view != FORDBIDDEN_VIEW) //everything except forbidden
 						C.name = C.icon_state
 						colorlist += C
 
@@ -397,7 +394,7 @@
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate, access_external_airlocks)
-	customizable_view = 2
+	customizable_view = TRAITOR_VIEW
 
 /obj/item/weapon/card/id/syndicate/commander
 	name = "syndicate commander ID card"
@@ -428,7 +425,7 @@
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
-	customizable_view = 2
+	customizable_view = TRAITOR_VIEW
 
 /obj/item/weapon/card/id/centcom/atom_init()
 	access = get_all_centcom_access()
@@ -439,7 +436,7 @@
 	icon_state = "ert"
 	registered_name = "Central Command"
 	assignment = "Emergency Response Team"
-	customizable_view = 2
+	customizable_view = TRAITOR_VIEW
 
 /obj/item/weapon/card/id/ert/atom_init()
 	access = get_all_accesses()

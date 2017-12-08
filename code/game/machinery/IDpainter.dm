@@ -33,7 +33,7 @@
 
 	for(var/P in typesof(/obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/C = new P
-		if (C.customizable_view == 1) //only "allowed-for-everything"
+		if (C.customizable_view == UNIVERSAL_VIEW)
 			C.name = C.icon_state
 			colorlist += C
 
