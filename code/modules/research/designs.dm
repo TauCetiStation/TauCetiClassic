@@ -1793,7 +1793,7 @@ datum/design/scalpel_manager
 	name = "Biogel can"
 	desc = "Medical device for sustaining life in head"
 	id = "biocan"
-	req_tech = list("biotech " = 3, "syndicate" = 2)
+	req_tech = list("biotech " = 3, "magnets" = 3, "materials" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 1200, MAT_GLASS = 1000)
 	build_path = /obj/item/device/biocan
