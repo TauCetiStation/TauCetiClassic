@@ -252,7 +252,7 @@ datum/objective/debrain//I want braaaainssss
 /datum/objective/dehead/find_target()
 	..()
 	if(target && target.current)
-		explanation_text = "Put the brain of [target.current.real_name] in biogel can and steal it."
+		explanation_text = "Put the head of [target.current.real_name] in biogel can and steal it."
 	else
 		explanation_text = "Free Objective"
 	return target

@@ -126,7 +126,7 @@
 			harm_objective.owner = traitor
 			harm_objective.find_target()
 			traitor.objectives += harm_objective
-		if(51 to 100)
+		if(51 to 115)
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = traitor
 			steal_objective.find_target()

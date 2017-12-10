@@ -3,7 +3,7 @@
 	desc = "Biogel jar for supporting life in head. Extremely fragile!"
 	icon = 'icons/obj/biocan.dmi'
 	icon_state = "biocan"
-	origin_tech = "biotech=3;syndicate=2"
+	origin_tech = "biotech=3;materials=3;magnets=3"
 	w_class = 3
 	appearance_flags = KEEP_TOGETHER
 	var/obj/item/weapon/organ/head/headobj = null
