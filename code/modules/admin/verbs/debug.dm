@@ -1457,7 +1457,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/botanic_leather(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/apron(M), slot_wear_suit)
-			M.equip_to_slot_or_del(new /obj/item/device/analyzer/plant_analyzer(M), slot_s_store)
+			M.equip_to_slot_or_del(new /obj/item/device/plant_analyzer(M), slot_s_store)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_l_ear)
 
 			var/obj/item/device/pda/botanist/pda = new(M)

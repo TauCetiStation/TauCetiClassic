@@ -1,6 +1,6 @@
 // Plant analyzer
 
-/obj/item/device/analyzer/plant_analyzer
+/obj/item/device/plant_analyzer
 	name = "plant analyzer"
 	desc = "A hand-held scanner which reports condition of the plant."
 	icon = 'icons/obj/device.dmi'
@@ -35,7 +35,7 @@
 	var/list/mutatelist = list()
 
 /obj/item/seeds/attackby(obj/item/O, mob/user)
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if (istype(O, /obj/item/device/plant_analyzer))
 		to_chat(user, "*** <B>[plantname]</B> ***")
 		to_chat(user, "-Plant Endurance: \blue [endurance]")
 		to_chat(user, "-Plant Lifespan: \blue [lifespan]")

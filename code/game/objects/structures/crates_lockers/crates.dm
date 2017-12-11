@@ -503,7 +503,7 @@
 
 /obj/structure/closet/crate/dwarf_agriculture/PopulateContents()
 	new /obj/item/weapon/storage/bag/plants(src)
-	new /obj/item/device/analyzer/plant_analyzer(src)
+	new /obj/item/device/plant_analyzer(src)
 	new /obj/item/weapon/minihoe(src)
 	new /obj/item/weapon/hatchet(src)
 	new /obj/item/seeds/reishimycelium(src)

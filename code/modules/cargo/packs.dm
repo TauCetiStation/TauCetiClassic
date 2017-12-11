@@ -913,7 +913,7 @@ datum/supply_pack/New()
 					/obj/item/weapon/reagent_containers/glass/bottle/ammonia,
 					/obj/item/weapon/hatchet,
 					/obj/item/weapon/minihoe,
-					/obj/item/device/analyzer/plant_analyzer,
+					/obj/item/device/plant_analyzer,
 					/obj/item/clothing/gloves/botanic_leather,
 					/obj/item/clothing/suit/apron) // Updated with new things
 	cost = 1500
