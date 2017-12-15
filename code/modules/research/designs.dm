@@ -1691,6 +1691,41 @@ datum/design/chameleon
 	materials = list(MAT_METAL = 5000)
 	build_path = /obj/item/weapon/storage/box/syndie_kit/chameleon
 
+datum/design/cardboard_dolls
+	name = "Adaptive Cardboard Cutouts"
+	desc = "Cardboard 1:1 human-shaped figures."
+	id = "cardboard_dolls"
+	req_tech = list("syndicate" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 3000)
+	build_path = /obj/item/weapon/storage/box/syndie_kit/cutouts
+
+datum/design/ai_detector
+	name = "Artifical Intellegence Detector"
+	desc = "This modified multitool can detect AIs watching you through cameras."
+	id = "ai_detector"
+	req_tech = list("syndicate" = 4, "magnets" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 20, MAT_GLASS = 50, MAT_GOLD = 100)
+	build_path = /obj/item/device/multitool/ai_detect
+
+datum/design/camera_bug
+	name = "Camera Bug"
+	desc = "Device used to track people on cameras and hack them (cameras, not people)."
+	id = "camera_bug"
+	req_tech = list("syndicate" = 3, "programming" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 3000, MAT_GOLD = 1000)
+	build_path = /obj/item/device/camera_bug
+
+datum/design/imp_compress
+	name = "Compressed Implant"
+	desc = "Allows to keep items literally inside you."
+	id = "imp_compress"
+	req_tech = list("syndicate" = 3, "materials" = 5, "bluespace" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_PHORON = 5000)
+	build_path = /obj/item/weapon/storage/box/syndie_kit/imp_compress
 
 datum/design/bluespacebeaker
 	name = "bluespace beaker"
@@ -1788,15 +1823,6 @@ datum/design/scalpel_manager
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500, MAT_SILVER = 1500, MAT_GOLD = 1500, MAT_DIAMOND = 750)
 	build_path = /obj/item/weapon/scalpel/manager
-
-/datum/design/biocan
-	name = "Biogel can"
-	desc = "Medical device for sustaining life in head"
-	id = "biocan"
-	req_tech = list("biotech " = 3, "magnets" = 3, "materials" = 3)
-	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1200, MAT_GLASS = 1000)
-	build_path = /obj/item/device/biocan
 
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
