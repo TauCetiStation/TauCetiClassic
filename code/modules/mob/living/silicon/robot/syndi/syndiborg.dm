@@ -22,6 +22,7 @@
 	if(!sword_overlay)
 		sword_overlay = image(icon, "syndie_android_sword", "layer" = 4.5)
 		sword_overlay.plane = sword_overlay.layer
+	nuclear_holo += src
 
 /mob/living/silicon/robot/syndicate/updateicon()
 	..()
@@ -69,3 +70,7 @@
 				chambered = shot
 				chambered.newshot()
 	return
+
+/mob/living/silicon/robot/syndicate/Destroy()
+	nuclear_holo -= src
+	return ..()

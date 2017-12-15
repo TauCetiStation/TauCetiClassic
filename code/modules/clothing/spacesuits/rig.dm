@@ -325,6 +325,13 @@
 	var/equipped_on_head = FALSE
 	flags = BLOCKHAIR | THICKMATERIAL | PHORONGUARD
 	light_color = "#00f397"
+	var/datum/holomap_interface/nuclear/holo = null
+	var/ON = FALSE
+
+/obj/item/clothing/head/helmet/space/rig/syndi/atom_init()
+	nuclear_holo += src
+	holo = new(src)
+	. = ..()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/equipped(mob/user, slot)
 	. = ..()
@@ -332,11 +339,26 @@
 		equipped_on_head = TRUE
 		update_icon(user)
 
+/obj/item/clothing/head/helmet/space/rig/syndi/ui_action_click()
+	if(on)
+		to_chat(usr, "<span class='notice'>You deactivate the holomap.</span>")
+		holo.deactivate_holomap()
+	else
+		to_chat(usr, "<span class='notice'>You activate the holomap.</span>")
+		holo.activate(usr, "nuclear")
+	on = !on
+
 /obj/item/clothing/head/helmet/space/rig/syndi/dropped(mob/user)
 	. = ..()
 	if(equipped_on_head)
 		equipped_on_head = FALSE
 		update_icon(user)
+	holo.deactivate_holomap()
+	on = FALSE
+
+/obj/item/clothing/head/helmet/space/rig/syndi/Destroy()
+	nuclear_holo -= src
+	return ..()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/proc/checklight()
 	if(on)

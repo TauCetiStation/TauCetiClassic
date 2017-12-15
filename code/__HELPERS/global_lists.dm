@@ -94,3 +94,7 @@
 				continue
 			L+= path
 		return L
+
+//HOLOMAPS
+var/list/holoMiniMaps = list()
+var/list/centcommMiniMaps = list()

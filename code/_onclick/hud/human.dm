@@ -443,10 +443,20 @@
 				src.adding += mymob.gun_run_icon
 			src.adding += mymob.gun_move_icon
 
+	holomap_obj = new /obj/screen/holomap()
+	holomap_obj.name = "holomap"
+	holomap_obj.icon = null
+	holomap_obj.icon_state = ""
+	holomap_obj.screen_loc = ui_holomap
+	holomap_obj.plane = HUD_PLANE
+	holomap_obj.layer = HUD_LAYER
+	holomap_obj.color = ui_color
+	holomap_obj.mouse_opacity = 0
+	holomap_obj.alpha = 255
 
 	mymob.client.screen = list()
 
-	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
+	mymob.client.screen += list( mymob.throw_icon, mymob.zone_sel, mymob.internals, mymob.healths, mymob.healthdoll, mymob.pullin, mymob.gun_setting_icon, lingchemdisplay, lingstingdisplay, src.holomap_obj) //, mymob.hands, mymob.rest, mymob.sleep) //, mymob.mach )
 	mymob.client.screen += src.adding + src.hotkeybuttons
 	mymob.client.screen += mymob.client.void
 	inventory_shown = 0

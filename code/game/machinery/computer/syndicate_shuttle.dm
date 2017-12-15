@@ -16,6 +16,7 @@
 
 /obj/machinery/computer/syndicate_station/atom_init()
 	..()
+	nuclear_holo += src
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/syndicate_station/atom_init_late()

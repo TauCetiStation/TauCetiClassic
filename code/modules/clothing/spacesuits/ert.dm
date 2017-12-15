@@ -6,6 +6,9 @@
 	armor = list(melee = 50, bullet = 35, laser = 30,energy = 15, bomb = 30, bio = 100, rad = 60)
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 	var/obj/machinery/camera/camera
+	var/datum/holomap_interface/ert/holo = null
+	var/holo_enabled = FALSE
+
 
 /obj/item/clothing/head/helmet/space/rig/ert/attack_self(mob/user)
 	if(camera)
@@ -16,6 +19,29 @@
 		cameranet.removeCamera(camera)
 		camera.c_tag = user.name
 		to_chat(user, "\blue User scanned as [camera.c_tag]. Camera activated.")
+
+/obj/item/clothing/head/helmet/space/rig/ert/atom_init()
+	ert_helmets += src
+	holo = new(src)
+	. = ..()
+
+/obj/item/clothing/head/helmet/space/rig/ert/Destroy()
+	ert_helmets -= src
+	return ..()
+
+/obj/item/clothing/head/helmet/space/rig/ert/ui_action_click()
+	if(holo_enabled)
+		holo.deactivate_holomap()
+		to_chat(usr, "<span class='notice'>You deactivate the holomap.</span>")
+	else
+		holo.activate(usr, "ert")
+		to_chat(usr, "<span class='notice'>You activate the holomap.</span>")
+	holo_enabled = !holo_enabled
+
+/obj/item/clothing/head/helmet/space/rig/ert/dropped(mob/M)
+	holo.deactivate_holomap()
+	on = FALSE
+	return ..()
 
 /obj/item/clothing/head/helmet/space/rig/ert/examine(mob/user)
 	..()

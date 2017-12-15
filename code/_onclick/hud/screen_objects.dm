@@ -649,3 +649,6 @@
 /obj/screen/inventory/craft/Click()
 	var/mob/living/M = usr
 	M.OpenCraftingMenu()
+
+/obj/screen/holomap
+	name = "Holomap"
