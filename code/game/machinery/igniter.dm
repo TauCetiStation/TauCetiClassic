@@ -3,38 +3,31 @@
 	desc = "It's useful for igniting flammable items."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "igniter1"
-	var/id = null
-	var/on = 1.0
-	anchored = 1.0
+	anchored = TRUE
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
-
-/obj/machinery/igniter/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/igniter/attack_paw(mob/user)
-	return
+	var/id = null
+	var/on = TRUE
 
 /obj/machinery/igniter/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
-	add_fingerprint(user)
 
 	use_power(50)
-	src.on = !( src.on )
-	src.icon_state = text("igniter[]", src.on)
-	return
+	on = !on
+	icon_state = text("igniter[]", on)
 
 /obj/machinery/igniter/process()	//ugh why is this even in process()?
-	if (src.on && !(stat & NOPOWER) )
+	if (on && !(stat & NOPOWER))
 		var/turf/location = src.loc
 		if (isturf(location))
-			location.hotspot_expose(1000,500,1)
+			location.hotspot_expose(1000, 500)
 	return 1
 
-/obj/machinery/igniter/New()
-	..()
+/obj/machinery/igniter/atom_init()
+	. = ..()
 	icon_state = "igniter[on]"
 
 /obj/machinery/igniter/power_change()
@@ -56,18 +49,13 @@
 	var/base_state = "migniter"
 	anchored = 1
 
-/obj/machinery/sparker/New()
-	..()
-
 /obj/machinery/sparker/power_change()
 	if ( powered() && disable == 0 )
 		stat &= ~NOPOWER
 		icon_state = "[base_state]"
-//		src.sd_SetLuminosity(2)
 	else
 		stat |= ~NOPOWER
 		icon_state = "[base_state]-p"
-//		src.sd_SetLuminosity(0)
 
 /obj/machinery/sparker/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/detective_scanner))
@@ -86,16 +74,16 @@
 				icon_state = "[base_state]-p"
 
 /obj/machinery/sparker/attack_ai()
-	if (src.anchored)
-		return src.ignite()
+	if (anchored)
+		return ignite()
 	else
 		return
 
 /obj/machinery/sparker/proc/ignite()
-	if (!(powered()))
+	if (!powered())
 		return
 
-	if ((src.disable) || (src.last_spark && world.time < src.last_spark + 50))
+	if (disable || (last_spark && world.time < last_spark + 50))
 		return
 
 
@@ -103,11 +91,11 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(2, 1, src)
 	s.start()
-	src.last_spark = world.time
+	last_spark = world.time
 	use_power(1000)
-	var/turf/location = src.loc
+	var/turf/location = loc
 	if (isturf(location))
-		location.hotspot_expose(1000,500,1)
+		location.hotspot_expose(1000, 500)
 	return 1
 
 /obj/machinery/sparker/emp_act(severity)
@@ -117,21 +105,15 @@
 	ignite()
 	..(severity)
 
-/obj/machinery/ignition_switch/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/ignition_switch/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/ignition_switch/attackby(obj/item/weapon/W, mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/ignition_switch/attack_hand(mob/user)
-
-	if(stat & (NOPOWER|BROKEN))
+	. = ..()
+	if(.)
 		return
 	if(active)
-		return
+		return 1
 
 	use_power(5)
 
@@ -139,19 +121,17 @@
 	icon_state = "launcheract"
 
 	for(var/obj/machinery/sparker/M in machines)
-		if (M.id == src.id)
-			spawn( 0 )
+		if (M.id == id)
+			spawn(0)
 				M.ignite()
 
 	for(var/obj/machinery/igniter/M in machines)
-		if(M.id == src.id)
+		if(M.id == id)
 			use_power(50)
-			M.on = !( M.on )
+			M.on = !M.on
 			M.icon_state = text("igniter[]", M.on)
 
 	sleep(50)
 
 	icon_state = "launcherbtt"
 	active = 0
-
-	return

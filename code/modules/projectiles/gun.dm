@@ -98,10 +98,15 @@
 			if(user.dna && user.dna.mutantrace == "adamantine")
 				to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
 				return
-			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
-					if(V.stealth_active)
-						V.DeactivateStealth()
+			if(H.wear_suit)
+				if(istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
+					for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
+						if(V.stealth_active)
+							V.DeactivateStealth()
+				if(istype(H.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
+					for(var/obj/item/clothing/suit/space/vox/stealth/V in list(H.wear_suit))
+						if(V.on)
+							V.overload()
 
 			if(clumsy_check) //it should be AFTER hulk or monkey check.
 				var/going_to_explode = 0
@@ -162,9 +167,12 @@
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
 	//Suicide handling.
-	if (M == user && user.zone_sel.selecting == O_MOUTH && !mouthshoot)
+	if (M == user && def_zone == O_MOUTH && !mouthshoot)
 		if(isrobot(user))
 			to_chat(user, "<span class='notice'>You have tried to commit suicide, but couldn't do it.</span>")
+			return
+		if(istype(src, /obj/item/weapon/gun/magic/staff))
+			to_chat(user, "<span class='notice'>Get rid of the habit of holding different sticks in your mouth.</span>")
 			return
 		mouthshoot = 1
 		M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")

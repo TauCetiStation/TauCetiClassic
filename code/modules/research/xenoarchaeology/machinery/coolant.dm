@@ -21,9 +21,10 @@ datum/chemical_reaction/coolant
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "coolanttank"
 	amount_per_transfer_from_this = 10
-	New()
-		..()
-		reagents.add_reagent("coolant",1000)
+
+/obj/structure/reagent_dispensers/coolanttank/atom_init()
+	. = ..()
+	reagents.add_reagent("coolant",1000)
 
 /obj/structure/reagent_dispensers/coolanttank/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))

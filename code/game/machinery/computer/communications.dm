@@ -8,6 +8,7 @@
 	light_color = "#0099ff"
 	req_access = list(access_heads)
 	circuit = /obj/item/weapon/circuitboard/communications
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()
@@ -58,15 +59,18 @@
 			src.state = STATE_DEFAULT
 		if("login")
 			var/mob/M = usr
-			var/obj/item/weapon/card/id/I = M.get_active_hand()
-			if (istype(I, /obj/item/device/pda))
-				var/obj/item/device/pda/pda = I
-				I = pda.id
-			if (I && istype(I))
-				if(src.check_access(I))
-					authenticated = 1
-				if(20 in I.access || 57 in I.access || 58 in I.access)//cap, hop, hos
-					authenticated = 2
+			if(isobserver(M))
+				authenticated = 2
+			else
+				var/obj/item/weapon/card/id/I = M.get_active_hand()
+				if (istype(I, /obj/item/device/pda))
+					var/obj/item/device/pda/pda = I
+					I = pda.id
+				if (I && istype(I))
+					if(src.check_access(I))
+						authenticated = 1
+					if(20 in I.access || 57 in I.access || 58 in I.access)//cap, hop, hos
+						authenticated = 2
 		if("logout")
 			authenticated = 0
 
@@ -263,23 +267,20 @@
 		..()
 	return
 
-/obj/machinery/computer/communications/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/communications/ui_interact(mob/user)
 	if (src.z > ZLEVEL_EMPTY)
 		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
 
-	user.set_machine(src)
 	var/dat = "<head><title>Communications Console</title></head><body>"
 	if (SSshuttle.online && SSshuttle.location==0)
 		var/timeleft = SSshuttle.timeleft()
 		dat += "<B>Emergency shuttle</B>\n<BR>\nETA: [timeleft / 60 % 60]:[add_zero(num2text(timeleft % 60), 2)]<BR>"
 
-	if (istype(user, /mob/living/silicon))
+	if (issilicon(user))
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
-			dat +=  dat2
+			dat += dat2
 			user << browse(dat, "window=communications;size=400x500")
 			onclose(user, "communications")
 		return

@@ -76,28 +76,29 @@
 			W.forceMove(src.loc)
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))	//OOP? Doesn't heard.
 		return
-	else if(istype(W, /obj/item/weapon/cable_coil))
+	else if(istype(W, /obj/item/stack/cable_coil))
 		if(rigged)
 			to_chat(user, "<span class='notice'>[src] is already rigged!</span>")
 			return
+
+		var/obj/item/stack/cable_coil/C = W
+		if(!C.use(1))
+			return
+
 		to_chat(user, "<span class='notice'>You rig [src].</span>")
-		user.drop_item()
-		qdel(W)
 		rigged = 1
-		return
 	else if(istype(W, /obj/item/device/radio/electropack))
 		if(rigged)
 			to_chat(user, "<span class='notice'>You attach [W] to [src].</span>")
 			user.drop_item()
 			W.forceMove(src)
-			return
 	else if(istype(W, /obj/item/weapon/wirecutters))
 		if(rigged)
 			to_chat(user, "<span class='notice'>You cut away the wiring.</span>")
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 			rigged = 0
-			return
-	else return attack_hand(user)
+	else
+		return attack_hand(user)
 
 /obj/structure/closet/crate/ex_act(severity)
 	switch(severity)
@@ -132,8 +133,8 @@
 	broken = 0
 	locked = 1
 
-/obj/structure/closet/crate/secure/New()
-	..()
+/obj/structure/closet/crate/secure/atom_init()
+	. = ..()
 	if(locked)
 		overlays.Cut()
 		overlays += redlight
@@ -183,7 +184,7 @@
 		src.toggle(user)
 
 /obj/structure/closet/crate/secure/attackby(obj/item/weapon/W, mob/user)
-	if(is_type_in_list(W, list(/obj/item/weapon/packageWrap, /obj/item/weapon/cable_coil, /obj/item/device/radio/electropack, /obj/item/weapon/wirecutters)))
+	if(is_type_in_list(W, list(/obj/item/weapon/packageWrap, /obj/item/stack/cable_coil, /obj/item/device/radio/electropack, /obj/item/weapon/wirecutters)))
 		return ..()
 	if(locked && (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)))
 		overlays.Cut()
@@ -295,39 +296,17 @@
 	icon_opened = "crateopen"
 	icon_closed = "crate"
 
-/obj/structure/closet/crate/rcd/New()
-	..()
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd_ammo(src)
-	new /obj/item/weapon/rcd_ammo(src)
+/obj/structure/closet/crate/rcd/PopulateContents()
+	for(var/i in 1 to 3)
+		new /obj/item/weapon/rcd_ammo(src)
 	new /obj/item/weapon/rcd(src)
 
 /obj/structure/closet/crate/solar
 	name = "Solar Pack crate"
 
-/obj/structure/closet/crate/solar/New()
-	..()
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
-	new /obj/item/solar_assembly(src)
+/obj/structure/closet/crate/solar/PopulateContents()
+	for(var/i in 1 to 21)
+		new /obj/item/solar_assembly(src)
 	new /obj/item/weapon/circuitboard/solar_control(src)
 	new /obj/item/weapon/tracker_electronics(src)
 	new /obj/item/weapon/paper/solar(src)
@@ -341,33 +320,29 @@
 	var/target_temp = T0C - 40
 	var/cooling_power = 40
 
-	return_air()
-		var/datum/gas_mixture/gas = (..())
-		if(!gas)	return null
-		var/datum/gas_mixture/newgas = new/datum/gas_mixture()
-		newgas.oxygen = gas.oxygen
-		newgas.carbon_dioxide = gas.carbon_dioxide
-		newgas.nitrogen = gas.nitrogen
-		newgas.phoron = gas.phoron
-		newgas.volume = gas.volume
-		newgas.temperature = gas.temperature
-		if(newgas.temperature <= target_temp)	return
+/obj/structure/closet/crate/freezer/return_air()
+	var/datum/gas_mixture/gas = (..())
+	if(!gas)
+		return null
+	var/datum/gas_mixture/newgas = new/datum/gas_mixture()
+	newgas.copy_from(gas)
+	if(newgas.temperature <= target_temp)
+		return
 
-		if((newgas.temperature - cooling_power) > target_temp)
-			newgas.temperature -= cooling_power
-		else
-			newgas.temperature = target_temp
-		return newgas
+	if((newgas.temperature - cooling_power) > target_temp)
+		newgas.temperature -= cooling_power
+	else
+		newgas.temperature = target_temp
+	return newgas
 
 /obj/structure/closet/crate/freezer/rations //Fpr use in the escape shuttle
 	desc = "A crate of emergency rations."
 	name = "Emergency Rations"
 
 
-/obj/structure/closet/crate/freezer/rations/New()
-	..()
-	new /obj/item/weapon/storage/box/donkpockets(src)
-	new /obj/item/weapon/storage/box/donkpockets(src)
+/obj/structure/closet/crate/freezer/rations/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/weapon/storage/box/donkpockets(src)
 
 /obj/structure/closet/crate/bin
 	desc = "A large bin."
@@ -383,16 +358,11 @@
 	icon_opened = "radiationopen"
 	icon_closed = "radiation"
 
-/obj/structure/closet/crate/radiation/New()
-	..()
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
-	new /obj/item/clothing/suit/radiation(src)
-	new /obj/item/clothing/head/radiation(src)
+/obj/structure/closet/crate/radiation/PopulateContents()
+	for(var/i in 1 to 4)
+		new /obj/item/clothing/suit/radiation(src)
+	for(var/i in 1 to 4)
+		new /obj/item/clothing/head/radiation(src)
 
 /obj/structure/closet/crate/secure/weapon
 	desc = "A secure weapons crate."
@@ -519,29 +489,28 @@
 /obj/structure/closet/crate/hydroponics/prespawned
 	//This exists so the prespawned hydro crates spawn with their contents.
 
-	New()
-		..()
+/obj/structure/closet/crate/hydroponics/prespawned/PopulateContents()
+	for(var/i in 1 to 2)
 		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
-		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
-		new /obj/item/weapon/minihoe(src)
-//		new /obj/item/weapon/weedspray(src)
-//		new /obj/item/weapon/weedspray(src)
-//		new /obj/item/weapon/pestspray(src)
-//		new /obj/item/weapon/pestspray(src)
-//		new /obj/item/weapon/pestspray(src)
+	new /obj/item/weapon/minihoe(src)
+//	new /obj/item/weapon/weedspray(src)
+//	new /obj/item/weapon/weedspray(src)
+//	new /obj/item/weapon/pestspray(src)
+//	new /obj/item/weapon/pestspray(src)
+//	new /obj/item/weapon/pestspray(src)
 
 /obj/structure/closet/crate/dwarf_agriculture
-	New()
-		..()
-		new /obj/item/weapon/storage/bag/plants(src)
-		new /obj/item/device/analyzer/plant_analyzer(src)
-		new /obj/item/weapon/minihoe(src)
-		new /obj/item/weapon/hatchet(src)
-		new /obj/item/seeds/reishimycelium(src)
-		new /obj/item/seeds/glowshroom(src)
-		new /obj/item/seeds/amanitamycelium(src)
-		new /obj/item/seeds/angelmycelium(src)
-		new /obj/item/seeds/libertymycelium(src)
-		new /obj/item/seeds/plastiseed(src)
-		new /obj/item/seeds/plumpmycelium(src)
-		new /obj/item/seeds/chantermycelium(src)
+
+/obj/structure/closet/crate/dwarf_agriculture/PopulateContents()
+	new /obj/item/weapon/storage/bag/plants(src)
+	new /obj/item/device/analyzer/plant_analyzer(src)
+	new /obj/item/weapon/minihoe(src)
+	new /obj/item/weapon/hatchet(src)
+	new /obj/item/seeds/reishimycelium(src)
+	new /obj/item/seeds/glowshroom(src)
+	new /obj/item/seeds/amanitamycelium(src)
+	new /obj/item/seeds/angelmycelium(src)
+	new /obj/item/seeds/libertymycelium(src)
+	new /obj/item/seeds/plastiseed(src)
+	new /obj/item/seeds/plumpmycelium(src)
+	new /obj/item/seeds/chantermycelium(src)

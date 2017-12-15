@@ -5,14 +5,16 @@
 
 /datum/gear/accessory/scarf
 	display_name = "Scarf selection"
-	path = /obj/item/clothing/mask/bluescarf
+	path = /obj/item/clothing/mask/scarf/blue
 
 /datum/gear/accessory/scarf/New()
 	..()
 	var/scarfs = list()
-	scarfs["blue"] = /obj/item/clothing/mask/bluescarf
-	scarfs["red"] = /obj/item/clothing/mask/redscarf
-	scarfs["green"] = /obj/item/clothing/mask/greenscarf
+	scarfs["blue"] = /obj/item/clothing/mask/scarf/blue
+	scarfs["red"] = /obj/item/clothing/mask/scarf/red
+	scarfs["green"] = /obj/item/clothing/mask/scarf/green
+	scarfs["yellow"] = /obj/item/clothing/mask/scarf/yellow
+	scarfs["violet"] = /obj/item/clothing/mask/scarf/violet
 	gear_tweaks += new/datum/gear_tweak/path(scarfs)
 
 /datum/gear/accessory/headwear
@@ -59,3 +61,11 @@
 /datum/gear/accessory/left_black_glove
 	display_name = "Left Black Glove"
 	path = /obj/item/clothing/gloves/fluff/chal_appara_1
+
+/datum/gear/accessory/silver_collar
+	display_name = "Silver Collar"
+	path = /obj/item/clothing/mask/tie/collar
+
+/datum/gear/accessory/gold_collar
+	display_name = "Gold Collar"
+	path = /obj/item/clothing/mask/tie/collar2

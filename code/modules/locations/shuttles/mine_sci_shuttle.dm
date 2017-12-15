@@ -15,17 +15,7 @@ var/global/area/mine_sci_curr_location = null
 	icon_state = "shuttle"
 	circuit = /obj/item/weapon/circuitboard/mine_sci_shuttle
 
-/obj/machinery/computer/mine_sci_shuttle/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/mine_sci_shuttle/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/mine_sci_shuttle/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
-
+/obj/machinery/computer/mine_sci_shuttle/ui_interact(mob/user)
 	var/dat
 	if(autopilot)
 		var/shuttle_location = "NSS Exodus"
@@ -44,7 +34,6 @@ var/global/area/mine_sci_curr_location = null
 
 	user << browse(dat, "window=flightcomputer;size=575x450")
 	onclose(user, "flightcomputer")
-	return
 
 /obj/machinery/computer/mine_sci_shuttle/Topic(href, href_list)
 	. = ..()
@@ -82,8 +71,8 @@ var/global/area/mine_sci_curr_location = null
 	var/moving = 0
 	var/lastMove = 0
 
-/obj/machinery/computer/mine_sci_shuttle/flight_comp/New()
-	..()
+/obj/machinery/computer/mine_sci_shuttle/flight_comp/atom_init()
+	. = ..()
 	var/area/my_area = get_area(src)
 	if(istype(get_turf(src),M_S_SHUTTLE_FLOOR) &&\
 		   is_type_in_list(my_area,list(STATION_DOCK, MINE_DOCK, SCI_DOCK))) //if we build console not in shuttle area

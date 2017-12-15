@@ -208,6 +208,7 @@
 					return
 				SSshuttle.incall()
 				captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+				world << sound('sound/AI/shuttlecalled.ogg')
 				log_admin("[key_name(usr)] called the Emergency Shuttle")
 				message_admins("\blue [key_name_admin(usr)] called the Emergency Shuttle to the station")
 				make_maint_all_access(FALSE)
@@ -331,9 +332,6 @@
 
 	else if(href_list["warn"])
 		usr.client.warn(href_list["warn"])
-
-	else if(href_list["unwarn"])
-		usr.client.unwarn(href_list["unwarn"])
 
 	else if(href_list["unbane"])
 		if(!check_rights(R_BAN))	return
@@ -1097,7 +1095,8 @@
 		usr << browse(dat, "window=c_mode")
 
 	else if(href_list["f_secret"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		if(ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
@@ -1111,7 +1110,8 @@
 		usr << browse(dat, "window=f_secret")
 
 	else if(href_list["c_mode2"])
-		if(!check_rights(R_ADMIN|R_SERVER))	return
+		if(!check_rights(R_ADMIN|R_SERVER))
+			return
 
 		if (ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
@@ -1124,7 +1124,8 @@
 		.(href, list("c_mode"=1))
 
 	else if(href_list["f_secret2"])
-		if(!check_rights(R_ADMIN|R_SERVER))	return
+		if(!check_rights(R_ADMIN|R_SERVER))
+			return
 
 		if(ticker && ticker.mode)
 			return alert(usr, "The game has already started.", null, null, null, null)
@@ -1161,7 +1162,8 @@
 		H.corgize()
 
 	else if(href_list["forcespeech"])
-		if(!check_rights(R_FUN))	return
+		if(!check_rights(R_FUN))
+			return
 
 		var/mob/M = locate(href_list["forcespeech"])
 		if(!ismob(M))
@@ -1216,7 +1218,8 @@
 		message_admins("\blue [key_name_admin(usr)] sent [key_name_admin(M)] to the prison station.")
 
 	else if(href_list["tdome1"])
-		if(!check_rights(R_FUN))	return
+		if(!check_rights(R_FUN))
+			return
 
 		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
 			return
@@ -1241,7 +1244,8 @@
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 1)")
 
 	else if(href_list["tdome2"])
-		if(!check_rights(R_FUN))	return
+		if(!check_rights(R_FUN))
+			return
 
 		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
 			return
@@ -1266,7 +1270,8 @@
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Team 2)")
 
 	else if(href_list["tdomeadmin"])
-		if(!check_rights(R_FUN))	return
+		if(!check_rights(R_FUN))
+			return
 
 		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
 			return
@@ -1288,7 +1293,8 @@
 		message_admins("[key_name_admin(usr)] has sent [key_name_admin(M)] to the thunderdome. (Admin.)")
 
 	else if(href_list["tdomeobserve"])
-		if(!check_rights(R_FUN))	return
+		if(!check_rights(R_FUN))
+			return
 
 		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")
 			return
@@ -1388,7 +1394,7 @@
 
 		var/mob/M = locate(href_list["makeanimal"])
 		if(isnewplayer(M))
-			to_chat(usr, "This cannot be used on instances of type /mob/new_player")
+			to_chat(usr, "This cannot be used on instances of type /mob/dead/new_player")
 			return
 
 		usr.client.cmd_admin_animalize(M)
@@ -1407,13 +1413,15 @@
 		//H.regenerate_icons()
 
 	else if(href_list["adminplayeropts"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		var/mob/M = locate(href_list["adminplayeropts"])
 		show_player_panel(M)
 
 	else if(href_list["adminplayerobservejump"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		var/mob/M = locate(href_list["adminplayerobservejump"])
 
@@ -1424,12 +1432,14 @@
 		C.jumptomob(M)
 
 	else if(href_list["check_antagonist"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		check_antagonists()
 
 	else if(href_list["adminplayerobservefollow"])
-		if(!isobserver(usr) && !check_rights(R_ADMIN))	return
+		if(!isobserver(usr) && !check_rights(R_ADMIN))
+			return
 
 		var/atom/movable/AM = locate(href_list["adminplayerobservefollow"])
 
@@ -1439,7 +1449,8 @@
 		A.ManualFollow(AM)
 
 	else if(href_list["adminplayerobservecoodjump"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		var/x = text2num(href_list["X"])
 		var/y = text2num(href_list["Y"])
@@ -1454,7 +1465,8 @@
 		output_ai_laws()
 
 	else if(href_list["adminmoreinfo"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		var/mob/M = locate(href_list["adminmoreinfo"])
 		if(!ismob(M))
@@ -1506,7 +1518,8 @@
 		to_chat(src.owner, "(<a href='?src=\ref[usr];priv_msg=\ref[M]'>PM</a>) (<A HREF='?src=\ref[src];adminplayeropts=\ref[M]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[M]'>VV</A>) (<A HREF='?src=\ref[src];subtlemessage=\ref[M]'>SM</A>) (<A HREF='?src=\ref[src];adminplayerobservejump=\ref[M]'>JMP</A>) (<A HREF='?src=\ref[src];secretsadmin=check_antagonist'>CA</A>)")
 
 	else if(href_list["adminspawncookie"])
-		if(!check_rights(R_ADMIN|R_FUN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		var/mob/living/carbon/human/H = locate(href_list["adminspawncookie"])
 		if(!ishuman(H))
@@ -1530,7 +1543,8 @@
 		to_chat(H, "\blue Your prayers have been answered!! You received the <b>best cookie</b>!")
 
 	else if(href_list["BlueSpaceArtillery"])
-		if(!check_rights(R_ADMIN|R_FUN))	return
+		if(!check_rights(R_ADMIN|R_FUN))
+			return
 
 		var/mob/living/M = locate(href_list["BlueSpaceArtillery"])
 		if(!isliving(M))
@@ -1632,38 +1646,44 @@
 
 
 	else if(href_list["jumpto"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		var/mob/M = locate(href_list["jumpto"])
 		usr.client.jumptomob(M)
 
 	else if(href_list["getmob"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		if(alert(usr, "Confirm?", "Message", "Yes", "No") != "Yes")	return
 		var/mob/M = locate(href_list["getmob"])
 		usr.client.Getmob(M)
 
 	else if(href_list["sendmob"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		var/mob/M = locate(href_list["sendmob"])
 		usr.client.sendmob(M)
 
 	else if(href_list["narrateto"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		var/mob/M = locate(href_list["narrateto"])
 		usr.client.cmd_admin_direct_narrate(M)
 
 	else if(href_list["subtlemessage"])
-		if(!check_rights(R_ADMIN))  return
+		if(!check_rights(R_ADMIN))
+			return
 
 		var/mob/M = locate(href_list["subtlemessage"])
 		usr.client.cmd_admin_subtle_message(M)
 
 	else if(href_list["traitor"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		if(!ticker || !ticker.mode)
 			alert("The game hasn't started yet!")
@@ -2195,6 +2215,14 @@
 				feedback_add_details("admin_secrets_fun_used","IR")
 				message_admins("[key_name_admin(usr)] has sent an immovable rod to the station")
 				immovablerod()
+			if("spawnguns")
+				feedback_inc("admin_secrets_fun_used", 1)
+				feedback_add_details("admin_secrets_fun_used", "SG")
+				rightandwrong(0, usr)
+			if("spawnspells")
+				feedback_inc("admin_secrets_fun_used", 1)
+				feedback_add_details("admin_secrets_fun_used", "SP")
+				rightandwrong(1, usr)
 			if("prison_break")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","PB")
@@ -2219,7 +2247,7 @@
 			if("friendai")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","FA")
-				for(var/mob/camera/aiEye/aE in mob_list)
+				for(var/mob/camera/Eye/ai/aE in mob_list)
 					aE.icon_state = "ai_friend"
 				for(var/obj/machinery/M in machines)
 					if(istype(M, /obj/machinery/ai_status_display))
@@ -2230,60 +2258,9 @@
 						A.friendc = 1
 				message_admins("[key_name_admin(usr)] turned all AIs into best friends.")
 			if("floorlava")
-				if(floorIsLava)
-					to_chat(usr, "The floor is lava already.")
-					return
-				feedback_inc("admin_secrets_fun_used",1)
-				feedback_add_details("admin_secrets_fun_used","LF")
-
-				//Options
-				var/length = input(usr, "How long will the lava last? (in seconds)", "Length", 180) as num
-				length = min(abs(length), 1200)
-
-				var/damage = input(usr, "How deadly will the lava be?", "Damage", 2) as num
-				damage = min(abs(damage), 100)
-
-				var/sure = alert(usr, "Are you sure you want to do this?", "Confirmation", "YES!", "Nah")
-				if(sure == "Nah")
-					return
-				floorIsLava = 1
-
-				message_admins("[key_name_admin(usr)] made the floor LAVA! It'll last [length] seconds and it will deal [damage] damage to everyone.")
-
-				for(var/turf/simulated/floor/F in world)
-					if(F.z == ZLEVEL_STATION)
-						F.name = "lava"
-						F.desc = "The floor is LAVA!"
-						F.overlays += "lava"
-						F.lava = 1
-
-				spawn(0)
-					for(var/i = i, i < length, i++) // 180 = 3 minutes
-						if(damage)
-							for(var/mob/living/carbon/L in living_mob_list)
-								if(istype(L.loc, /turf/simulated/floor)) // Are they on LAVA?!
-									var/turf/simulated/floor/F = L.loc
-									if(F.lava)
-										var/safe = 0
-										for(var/obj/structure/O in F.contents)
-											if(O.level > F.level && !istype(O, /obj/structure/window)) // Something to stand on and it isn't under the floor!
-												safe = 1
-												break
-										if(!safe)
-											L.adjustFireLoss(damage)
-
-
-						sleep(10)
-
-					for(var/turf/simulated/floor/F in world) // Reset everything.
-						if(F.z == ZLEVEL_STATION)
-							F.name = initial(F.name)
-							F.desc = initial(F.desc)
-							F.overlays.Cut()
-							F.lava = 0
-							F.update_icon()
-					floorIsLava = 0
-				return
+				SSweather.run_weather("the floor is lava", ZLEVEL_STATION)
+			if("advanceddarkness")
+				SSweather.run_weather("advanced darkness", ZLEVEL_STATION)
 			if("virus")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","V")
@@ -2361,7 +2338,8 @@
 				to_chat(world, text("<B>A secret has been activated by []!</B>", usr.key))
 
 	else if(href_list["secretsadmin"])
-		if(!check_rights(R_ADMIN))	return
+		if(!check_rights(R_ADMIN))
+			return
 
 		var/ok = 0
 		switch(href_list["secretsadmin"])
@@ -2387,19 +2365,21 @@
 							var/obj/effect/decal/cleanable/mucus/N = O
 							if(N.virus2.len)
 								N.virus2.Cut()
-			if("restore_air")
+			if("restore_air") // this is unproper way to restore turfs default gas values, since you can delete sleeping agent for example.
 				var/turf/simulated/T = get_turf(usr)
-				if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/shuttle/floor))
-					T.zone.air.carbon_dioxide = 0
-					T.zone.air.phoron = 0
-					if(T.zone.air.trace_gases.len>0)
-						for(var/datum/gas/trace_gas in T.zone.air.trace_gases)
-							if(istype(trace_gas, /datum/gas/sleeping_agent))
-								T.zone.air.trace_gases -= trace_gas
-					T.zone.air.temperature = 293
-					T.zone.air.nitrogen = 80
-					T.zone.air.oxygen = 21
-					T.zone.air.total_moles = 101
+				if((istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/shuttle/floor)) && T.zone.air)
+					var/datum/gas_mixture/GM = T.zone.air
+
+					for(var/g in gas_data.gases)
+						GM.gas -= g
+
+					GM.gas["carbon_dioxide"] = T.carbon_dioxide
+					GM.gas["phoron"] = T.phoron
+					GM.gas["nitrogen"] = T.nitrogen
+					GM.gas["oxygen"] = T.oxygen
+					GM.temperature = 293
+					GM.update_values()
+
 					message_admins("[key_name_admin(usr)] has restored air in [T.x] [T.y] [T.z] <a href='?_src_=holder;adminplayerobservecoodjump=1;X=[T.x];Y=[T.y];Z=[T.z]'>JMP</a>.")
 				else
 					to_chat(usr, "<span class='userdanger'>You are staying on incorrect turf.</span>")
@@ -2750,14 +2730,14 @@
 		var/add = input("Add Player Info") as null|text
 		if(!add) return
 
-		notes_add(key,add,usr)
+		notes_add(key, add, usr.client)
 		show_player_info(key)
 
 	if(href_list["remove_player_info"])
 		var/key = href_list["remove_player_info"]
 		var/index = text2num(href_list["remove_index"])
 
-		notes_del(key, index)
+		notes_del(key, index, usr.client)
 		show_player_info(key)
 
 	if(href_list["notes"])

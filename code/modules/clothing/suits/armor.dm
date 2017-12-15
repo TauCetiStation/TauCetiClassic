@@ -40,8 +40,8 @@
 	siemens_coefficient = 0.4
 	armor = list(melee = 50, bullet = 45, laser = 23, energy = 25, bomb = 35, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/storage/flak/New()
-	..()
+/obj/item/clothing/suit/storage/flak/atom_init()
+	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.storage_slots = 4
 
@@ -70,7 +70,7 @@
 /obj/item/clothing/suit/armor/vest/leather
 	name = "security overcoat"
 	desc = "Lightly armored leather overcoat meant as casual wear for high-ranking officers. Bears the crest of Nanotrasen Security."
-	icon_state = "leathercoat-sec"
+	icon_state = "leather_overcoat-sec"
 	item_state = "hostrench"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
@@ -112,8 +112,8 @@
 	blood_overlay_type = "armor"
 	armor = list(melee = 10, bullet = 80, laser = 25, energy = 20, bomb = 35, bio = 0, rad = 0)
 
-/obj/item/clothing/suit/storage/flak/bulletproof/New()
-	..()
+/obj/item/clothing/suit/storage/flak/bulletproof/atom_init()
+	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
 	pockets.storage_slots = 5
 
@@ -295,3 +295,16 @@
 				"\blue You draw \the [holstered], pointing it at the ground.")
 			usr.put_in_hands(holstered)
 		holstered = null
+
+/obj/item/clothing/suit/armor/syndiassault
+	name = "Assault Armor"
+	icon_state = "assaultarmor"
+	item_state = "assaultarmor"
+	flags = THICKMATERIAL
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
+	slowdown = 0.5
+	armor = list(melee = 50, bullet = 60, laser = 40, energy = 70, bomb = 50, bio = 0, rad = 50)
+	siemens_coefficient = 0.2
+	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
+	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
+	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE

@@ -14,8 +14,8 @@
 
 	var/sun_angle = 0		// sun angle as set by sun datum
 
-/obj/machinery/power/tracker/New(var/turf/loc, var/obj/item/solar_assembly/S)
-	..(loc)
+/obj/machinery/power/tracker/atom_init(mapload, obj/item/solar_assembly/S)
+	. = ..()
 	if(!S)
 		S = new /obj/item/solar_assembly(src)
 		S.glass_type = /obj/item/stack/sheet/glass

@@ -6,6 +6,7 @@
 	density = 1
 	anchored = 1.0
 	layer = 3.6
+	interact_offline = TRUE
 	var/maxhealth = 200
 	var/health = 200
 	var/gang
@@ -14,11 +15,10 @@
 /obj/machinery/dominator/tesla_act()
 	qdel(src)
 
-/obj/machinery/dominator/New()
-	..()
+/obj/machinery/dominator/atom_init()
+	. = ..()
 	if(!istype(ticker.mode, /datum/game_mode/gang))
-		qdel(src)
-		return
+		return INITIALIZE_HINT_QDEL
 	set_light(2)
 	poi_list |= src
 
@@ -80,7 +80,7 @@
 			icon_state = iconname
 
 	if(health <= -100)
-		new /obj/item/stack/sheet/plasteel(src.loc)
+		new /obj/item/stack/sheet/plasteel(loc)
 		qdel(src)
 
 /obj/machinery/dominator/proc/set_broken()
@@ -153,10 +153,12 @@
 	healthcheck(110)
 
 /obj/machinery/dominator/attackby(I, user, params)
-
 	return
 
 /obj/machinery/dominator/attack_hand(mob/user)
+	if(..())
+		return
+
 	if(operating)
 		user.examinate(src)
 		return

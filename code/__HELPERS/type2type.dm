@@ -203,6 +203,7 @@
 	if(rights & R_SOUNDS)      . += "[seperator]+SOUND"
 	if(rights & R_SPAWN)       . += "[seperator]+SPAWN"
 	if(rights & R_WHITELIST)   . += "[seperator]+WHITELIST"
+	if(rights & R_EVENT)       . += "[seperator]+EVENT"
 	return .
 
 /proc/ui_style2icon(ui_style)

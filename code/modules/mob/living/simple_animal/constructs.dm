@@ -26,8 +26,8 @@
 	faction = "cult"
 	var/list/construct_spells = list()
 
-/mob/living/simple_animal/construct/New()
-	..()
+/mob/living/simple_animal/construct/atom_init()
+	. = ..()
 	name = text("[initial(name)] ([rand(1, 1000)])")
 	real_name = name
 	for(var/spell in construct_spells)
@@ -81,13 +81,6 @@
 	else
 		to_chat(usr, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
 		visible_message("<span class='red'>[user] gently taps [src] with [O].</span>")
-
-/mob/living/simple_animal/construct/airflow_stun()
-	return
-
-/mob/living/simple_animal/construct/airflow_hit(atom/A)
-	return
-
 
 /////////////////Juggernaut///////////////
 /mob/living/simple_animal/construct/armoured

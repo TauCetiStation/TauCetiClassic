@@ -187,6 +187,15 @@
 	item_state = "bl_suit"
 	item_color = "black_suit"
 
+/obj/item/clothing/under/suit_jacket/reinforced //armored jackets for special agents
+	name = "black suit"
+	desc = "A black suit and red tie. Very formal. This one looks a bit stronger than others."
+	icon_state = "black_suit"
+	item_state = "bl_suit"
+	item_color = "black_suit"
+	body_parts_covered = UPPER_TORSO|ARMS
+	armor = list(melee = 18, bullet = 12, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)
+
 /obj/item/clothing/under/suit_jacket/really_black
 	name = "executive suit"
 	desc = "A formal black suit and red tie, intended for the station's finest."
@@ -646,3 +655,79 @@
 	item_state = "dg_suit"
 	item_color = "centcom"
 	displays_id = 0
+
+/obj/item/clothing/under/roman
+	name = "roman armor"
+	desc = "Ancient Roman armor. Made of metallic and leather straps."
+	icon_state = "roman"
+	item_state = "roman"
+	item_color = "roman"
+
+/obj/item/clothing/under/patient_gown
+	name = "Patient Gown"
+	desc = "A long loose piece of clothing worn in a hospital by someone doing or having an operation. It can be used as clothing for bedridden patients."
+	icon_state = "patient_gown"
+	item_color = "patient_gown"
+
+/obj/item/clothing/under/pretty_dress
+	name = "Pretty Dress"
+	desc = "An Enchanting blue dress."
+	icon_state = "pretty_dress"
+	item_color = "pretty_dress"
+
+/obj/item/clothing/under/sukeban_pants
+	name = "Sukeban Pants"
+	desc = "A white shirt with wide baggy pants"
+	icon_state = "sukeban_pants"
+	item_color = "sukeban_pants"
+
+/obj/item/clothing/under/sukeban_dress
+	name = "Sukeban Dress"
+	desc = "A Dress of Japanese schoolgirls"
+	icon_state = "sukeban_dress"
+	item_color = "sukeban_dress"
+
+/obj/item/clothing/under/karate
+	name = "Karate Underwear"
+	icon_state = "karate"
+	item_color = "karate"
+
+/obj/item/clothing/under/smoking
+	name = "Smoking"
+	icon_state = "smoking_new"
+	item_color = "smoking_new"
+
+/obj/item/clothing/under/popking
+	name = "Popking Suit"
+	desc = "Classic costume of the King of Pop. A great choice if you want to twist again, watching Pretty Woman."
+	icon_state = "popking"
+	item_color = "popking"
+
+/obj/item/clothing/under/popking/alternate
+	icon_state = "popking2"
+	item_color = "popking2"
+
+/obj/item/clothing/under/pinkpolo
+	name = "Pink Polo"
+	desc = "The classic image of an American gangster 80. Hello from Miami."
+	icon_state = "pinkpolo"
+	item_color = "pinkpolo"
+
+/obj/item/clothing/under/bathrobe
+	name = "Bath Robe"
+	icon_state = "bathrobe"
+	item_color = "bathrobe"
+
+/obj/item/clothing/under/bathtowel
+	name = "Bath Towel"
+	icon_state = "bathtowel"
+	item_color = "bathtowel"
+	slot_flags = SLOT_HEAD | SLOT_ICLOTHING
+
+/obj/item/clothing/under/bathtowel/equipped(mob/living/carbon/human/user, slot)
+	..()
+	if(slot == slot_w_uniform)
+		body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	else if(slot == slot_head)
+		body_parts_covered = HEAD
+

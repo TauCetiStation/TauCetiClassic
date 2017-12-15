@@ -11,15 +11,15 @@
 	var/efficiency
 	var/obj/machinery/computer/telescience/computer
 
-/obj/machinery/telepad/New()
-	..()
+/obj/machinery/telepad/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/telesci_pad(null)
 	component_parts += new /obj/item/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil/random(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
 	RefreshParts()
 
 /obj/machinery/telepad/Destroy()
@@ -125,8 +125,8 @@
 	var/emagged = 0
 	var/teleporting = 0
 
-/obj/item/weapon/rcs/New()
-	..()
+/obj/item/weapon/rcs/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/rcs/examine(mob/user)

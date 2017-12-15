@@ -1,3 +1,4 @@
+/* disabled due to pirate gamemode switching back to vox, leaving this for reference.
 var/global/raider_tick = 1
 
 /mob/living/carbon/human/proc/equip_raider()
@@ -38,7 +39,7 @@ var/global/raider_tick = 1
 	equip_to_slot_or_del(W, slot_wear_id)
 
 	raider_tick = 2
-	return 1
+	return 1*/
 
 /obj/item/weapon/gun/projectile/automatic/a28/nonlethal
 	name = "A28 assault rifle NL"
@@ -53,12 +54,6 @@ var/global/raider_tick = 1
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "silenced_pistol_nl"
 	mag_type = /obj/item/ammo_box/magazine/sm45/nonlethal
-
-/obj/item/weapon/gun/projectile/automatic/a28/nonlethal/update_icon()
-	src.overlays = 0
-	update_magazine()
-	icon_state = "a28w[chambered ? "" : "-e"]"
-	return
 
 /obj/item/ammo_box/magazine/m556/nonlethal
 	name = "A28 magazine (.556NL)"

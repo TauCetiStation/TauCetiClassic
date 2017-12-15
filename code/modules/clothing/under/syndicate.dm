@@ -9,6 +9,13 @@
 	siemens_coefficient = 0.9
 	flags = ONESIZEFITSALL
 
+/obj/item/clothing/under/syndicate/equipped(mob/M)
+	if(M.gender == "male")
+		item_color = "syndicate"
+	else
+		item_color = "syndicate_f"
+	return ..()
+
 /obj/item/clothing/under/syndicate/combat
 	name = "combat turtleneck"
 
@@ -19,5 +26,3 @@
 	item_state = "bl_suit"
 	item_color = "tactifool"
 	siemens_coefficient = 1
-
-

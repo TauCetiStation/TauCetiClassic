@@ -182,8 +182,8 @@
 	edible = 0
 	validSurfaces = list(/turf/simulated/floor,/turf/simulated/wall)
 
-/obj/item/toy/crayon/spraycan/New()
-	..()
+/obj/item/toy/crayon/spraycan/atom_init()
+	. = ..()
 	name = "spray can"
 	update_icon()
 
@@ -214,26 +214,29 @@
 	if(capped)
 		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
-	else
-		if(iscarbon(target))
-			if(uses-10 > 0)
-				uses = uses - 10
-				var/mob/living/carbon/human/C = target
-				user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
-				if(C.client)
-					C.eye_blurry = max(C.eye_blurry, 3)
-					C.eye_blind = max(C.eye_blind, 1)
-					//if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS. Need fix
-					//	C.confused = max(C.confused, 3)
-					//	C.Weaken(3)
-				if(ishuman(C))
-					var/mob/living/carbon/human/H = C
-					C.lip_style = "spray_face"
-					C.lip_color = colour
-					H.update_body()
-				C.update_body()
-		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-		..()
+	if(iscarbon(target) && uses - 10 > 0)
+		uses -= 10
+		var/mob/living/carbon/C = target
+		user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
+		if(C.client)
+			C.eye_blurry = max(C.eye_blurry, 3)
+			C.eye_blind = max(C.eye_blind, 1)
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			H.lip_style = "spray_face"
+			H.lip_color = colour
+			H.update_body()
+	else if(istype(target, /obj/machinery/nuclearbomb))
+		var/obj/machinery/nuclearbomb/N = target
+		var/choice = input(user, "Spraycan options") as null|anything in list("fish", "peace", "shark", "nuke", "nt", "heart", "woman", "smile")
+		if(!choice)
+			return
+		uses -= 5
+		N.overlays -= image('icons/effects/Nuke_sprays.dmi', N.spray_icon_state)
+		N.overlays += image('icons/effects/Nuke_sprays.dmi', choice)
+		N.spray_icon_state = choice
+	playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+	..()
 
 /obj/item/toy/crayon/spraycan/update_icon()
 	overlays.Cut()

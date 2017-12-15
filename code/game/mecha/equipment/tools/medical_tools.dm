@@ -19,16 +19,15 @@
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/atom_init()
+	. = ..()
 	pr_mech_sleeper = new /datum/global_iterator/mech_sleeper(list(src),0)
 	pr_mech_sleeper.set_delay(equip_cooldown)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/allow_drop()
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/destroy()
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/Destroy()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(get_turf(src))
 	return ..()
@@ -248,13 +247,13 @@
 	var/datum/event/event
 	var/turf/old_turf
 	var/obj/structure/cable/last_piece
-	var/obj/item/weapon/cable_coil/cable
+	var/obj/item/stack/cable_coil/cable
 	var/max_cable = 1000
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/New()
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/atom_init()
 	cable = new(src)
 	cable.amount = 0
-	..()
+	. = ..()
 
 /obj/item/mecha_parts/mecha_equipment/tool/cable_layer/can_attach(obj/mecha/working/M)
 	if(..())
@@ -271,11 +270,11 @@
 	chassis.events.clearEvent("onMove",event)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/destroy()
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/Destroy()
 	chassis.events.clearEvent("onMove",event)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/action(obj/item/weapon/cable_coil/target)
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/action(obj/item/stack/cable_coil/target)
 	if(!action_checks(target))
 		return
 	var/result = load_cable(target)
@@ -303,8 +302,7 @@
 			m = min(m, cable.amount)
 			if(m)
 				use_cable(m)
-				var/obj/item/weapon/cable_coil/CC = new (get_turf(chassis))
-				CC.amount = m
+				new/obj/item/stack/cable_coil(get_turf(chassis), m)
 		else
 			occupant_message("There's no more cable on the reel.")
 	return
@@ -315,12 +313,12 @@
 		return "[output] \[Cable: [cable ? cable.amount : 0] m\][(cable && cable.amount) ? "- <a href='?src=\ref[src];toggle=1'>[!equip_ready?"Dea":"A"]ctivate</a>|<a href='?src=\ref[src];cut=1'>Cut</a>" : null]"
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/load_cable(obj/item/weapon/cable_coil/CC)
-	if(istype(CC) && CC.amount)
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/proc/load_cable(obj/item/stack/cable_coil/CC)
+	if(istype(CC) && CC.get_amount())
 		var/cur_amount = cable? cable.amount : 0
 		var/to_load = max(max_cable - cur_amount,0)
 		if(to_load)
-			to_load = min(CC.amount, to_load)
+			to_load = min(CC.get_amount(), to_load)
 			if(!cable)
 				cable = new(src)
 				cable.amount = 0
@@ -408,8 +406,8 @@
 	equip_cooldown = 10
 	origin_tech = "materials=3;biotech=4;magnets=4;programming=3"
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/atom_init()
+	. = ..()
 	flags |= NOREACT
 	syringes = new
 	accessible_reagents = list("inaprovaline","anti_toxin", "alkysine", "arithrazine", "bicaridine", "citalopram", "dermaline",

@@ -7,9 +7,11 @@
 	anchored = 1
 	var/notices = 0
 
-/obj/structure/noticeboard/initialize()
+/obj/structure/noticeboard/atom_init()
+	. = ..()
 	for(var/obj/item/I in loc)
-		if(notices > 4) break
+		if(notices > 4)
+			break
 		if(istype(I, /obj/item/weapon/paper))
 			I.loc = src
 			notices++

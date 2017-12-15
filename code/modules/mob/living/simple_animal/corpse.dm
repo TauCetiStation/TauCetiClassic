@@ -2,7 +2,7 @@
 
 //If someone can do this in a neater way, be my guest-Kor
 
-//This has to be seperate from the Away Mission corpses, because New() doesn't work for those, and initialize() doesn't work for these.
+//This has to be seperate from the Away Mission corpses, because New() doesn't work for those, and initialize() doesn't work for these. (probably not a problem now)
 
 //To do: Allow corpses to appear mangled, bloody, etc. Allow customizing the bodies appearance (they're all bald and white right now).
 
@@ -27,8 +27,10 @@
 	var/corpseidaccess = null //This is for access. See access.dm for which jobs give what access. Again, put in quotes. Use "Captain" if you want it to be all access.
 	var/corpseidicon = null //For setting it to be a gold, silver, centcomm etc ID
 
-/obj/effect/landmark/mobcorpse/New()
+/obj/effect/landmark/mobcorpse/atom_init()
+	..()
 	createCorpse()
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/mobcorpse/proc/createCorpse() //Creates a mob and checks for gear in each slot before attempting to equip it.
 	var/mob/living/carbon/human/M = new /mob/living/carbon/human (src.loc)
@@ -78,7 +80,6 @@
 			W.assignment = corpseidjob
 		W.registered_name = M.real_name
 		M.equip_to_slot_or_del(W, slot_wear_id)
-	qdel(src)
 
 
 

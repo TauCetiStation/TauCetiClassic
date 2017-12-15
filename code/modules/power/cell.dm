@@ -1,8 +1,8 @@
 // the power cell
 // charge from 0 to 100%
 // fits in APC to provide backup power
-/obj/item/weapon/stock_parts/cell/New()
-	..()
+/obj/item/weapon/stock_parts/cell/atom_init()
+	. = ..()
 	charge = maxcharge
 	addtimer(CALLBACK(src, .proc/updateicon), 5)
 
@@ -19,15 +19,15 @@
 /obj/item/weapon/stock_parts/cell/proc/percent()		// return % charge of cell
 	return 100.0*charge/maxcharge
 
-// use power from a cell
+// use power from a cell, returns the amount actually used
 /obj/item/weapon/stock_parts/cell/proc/use(amount)
 	if(rigged && amount > 0)
 		explode()
 		return 0
 
-	if(charge < amount)	return 0
-	charge = (charge - amount)
-	return 1
+	var/used = min(charge, amount)
+	charge -= used
+	return used
 
 // recharge the cell
 /obj/item/weapon/stock_parts/cell/proc/give(amount)

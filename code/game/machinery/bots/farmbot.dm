@@ -52,17 +52,19 @@
 	var/path[] = new() // used for pathing
 	var/frustration
 
-/obj/machinery/bot/farmbot/New()
+/obj/machinery/bot/farmbot/atom_init()
 	..()
-	src.icon_state = "farmbot[src.on]"
-	spawn (4)
-		src.botcard = new /obj/item/weapon/card/id(src)
-		src.botcard.access = req_access
+	icon_state = "farmbot[src.on]"
+	return INITIALIZE_HINT_LATELOAD
 
-		if ( !tank ) //Should be set as part of making it... but lets check anyway
-			tank = locate(/obj/structure/reagent_dispensers/watertank/) in contents
-		if ( !tank ) //An admin must have spawned the farmbot! Better give it a tank.
-			tank = new /obj/structure/reagent_dispensers/watertank(src)
+/obj/machinery/bot/farmbot/atom_init_late()
+	botcard = new /obj/item/weapon/card/id(src)
+	botcard.access = req_access
+
+	if ( !tank ) //Should be set as part of making it... but lets check anyway
+		tank = locate(/obj/structure/reagent_dispensers/watertank/) in contents
+	if ( !tank ) //An admin must have spawned the farmbot! Better give it a tank.
+		tank = new /obj/structure/reagent_dispensers/watertank(src)
 
 /obj/machinery/bot/farmbot/Bump(atom/M) //Leave no door unopened!
 	if ((istype(M, /obj/machinery/door)) && (!isnull(src.botcard)))
@@ -82,20 +84,13 @@
 	src.icon_state = "farmbot[src.on]"
 	src.updateUsrDialog()
 
-/obj/machinery/bot/farmbot/attack_paw(mob/user)
-	return attack_hand(user)
-
-
 /obj/machinery/bot/farmbot/proc/get_total_ferts()
 	var total_fert = 0
 	for (var/obj/item/nutrient/fert in contents)
 		total_fert++
 	return total_fert
 
-/obj/machinery/bot/farmbot/attack_hand(mob/user)
-	. = ..()
-	if (.)
-		return
+/obj/machinery/bot/farmbot/ui_interact(mob/user)
 	var/dat
 	dat += "<TT><B>Automatic Hyrdoponic Assisting Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
@@ -109,7 +104,7 @@
 	dat += "<br>Fertilizer Storage: <A href='?src=\ref[src];eject=1'>\[[get_total_ferts()]/[Max_Fertilizers]\]</a>"
 
 	dat += "<br>Behaviour controls are [src.locked ? "locked" : "unlocked"]<hr>"
-	if(!src.locked)
+	if(!src.locked || issilicon(user) || isobserver(user))
 		dat += "<TT>Watering Controls:<br>"
 		dat += " Water Plants : <A href='?src=\ref[src];water=1'>[src.setting_water ? "Yes" : "No"]</A><BR>"
 		dat += " Refill Watertank : <A href='?src=\ref[src];refill=1'>[src.setting_refill ? "Yes" : "No"]</A><BR>"
@@ -123,7 +118,6 @@
 
 	user << browse("<HEAD><TITLE>Farmbot v1.0 controls</TITLE></HEAD>[dat]", "window=autofarm")
 	onclose(user, "autofarm")
-	return
 
 /obj/machinery/bot/farmbot/Topic(href, href_list)
 	. = ..()
@@ -135,22 +129,23 @@
 			turn_off()
 		else
 			turn_on()
-	else if((href_list["water"]) && (!src.locked))
-		setting_water = !setting_water
-	else if((href_list["refill"]) && (!src.locked))
-		setting_refill = !setting_refill
-	else if((href_list["fertilize"]) && (!src.locked))
-		setting_fertilize = !setting_fertilize
-	else if((href_list["weed"]) && (!src.locked))
-		setting_weed = !setting_weed
-	else if((href_list["ignoreWeed"]) && (!src.locked))
-		setting_ignoreWeeds = !setting_ignoreWeeds
-	else if((href_list["ignoreMush"]) && (!src.locked))
-		setting_ignoreMushrooms = !setting_ignoreMushrooms
-	else if (href_list["eject"] )
-		flick("farmbot_hatch",src)
-		for (var/obj/item/nutrient/fert in contents)
-			fert.loc = get_turf(src)
+	else if(!locked || issilicon(usr) || isobserver(usr))
+		if(href_list["water"])
+			setting_water = !setting_water
+		else if(href_list["refill"])
+			setting_refill = !setting_refill
+		else if(href_list["fertilize"])
+			setting_fertilize = !setting_fertilize
+		else if(href_list["weed"])
+			setting_weed = !setting_weed
+		else if(href_list["ignoreWeed"])
+			setting_ignoreWeeds = !setting_ignoreWeeds
+		else if(href_list["ignoreMush"])
+			setting_ignoreMushrooms = !setting_ignoreMushrooms
+		else if(href_list["eject"])
+			flick("farmbot_hatch",src)
+			for (var/obj/item/nutrient/fert in contents)
+				fert.loc = get_turf(src)
 
 	src.updateUsrDialog()
 
@@ -516,12 +511,15 @@
 	var/created_name = "Farmbot" //To preserve the name if it's a unique farmbot I guess
 	w_class = 3.0
 
-	New()
-		..()
-		spawn(4) // If an admin spawned it, it won't have a watertank it, so lets make one for em!
-			var tank = locate(/obj/structure/reagent_dispensers/watertank) in contents
-			if( !tank )
-				new /obj/structure/reagent_dispensers/watertank(src)
+/obj/item/weapon/farmbot_arm_assembly/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/farmbot_arm_assembly/atom_init_late()
+	// If an admin spawned it, it won't have a watertank it, so lets make one for em!
+	var/tank = locate(/obj/structure/reagent_dispensers/watertank) in contents
+	if(!tank)
+		new /obj/structure/reagent_dispensers/watertank(src)
 
 
 /obj/structure/reagent_dispensers/watertank/attackby(obj/item/robot_parts/S, mob/user)

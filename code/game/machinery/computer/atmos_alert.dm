@@ -12,8 +12,8 @@
 	var/receive_frequency = 1437
 
 
-/obj/machinery/computer/atmos_alert/initialize()
-	..()
+/obj/machinery/computer/atmos_alert/atom_init()
+	. = ..()
 	set_frequency(receive_frequency)
 
 /obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
@@ -40,11 +40,8 @@
 	radio_connection = radio_controller.add_object(src, receive_frequency, RADIO_ATMOSIA)
 
 
-/obj/machinery/computer/atmos_alert/attack_hand(mob/user)
-	if(..(user))
-		return
+/obj/machinery/computer/atmos_alert/ui_interact(mob/user)
 	user << browse(return_text(),"window=computer")
-	user.set_machine(src)
 	onclose(user, "computer")
 
 /obj/machinery/computer/atmos_alert/process()

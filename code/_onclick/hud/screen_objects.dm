@@ -298,21 +298,21 @@
 																		//These tanks we're sure of their contents
 										if("nitrogen") 							//So we're a bit more picky about them.
 
-											if(t.air_contents.nitrogen && !t.air_contents.oxygen)
-												contents.Add(t.air_contents.nitrogen)
+											if(t.air_contents.gas["nitrogen"] && !t.air_contents.gas["oxygen"])
+												contents.Add(t.air_contents.gas["nitrogen"])
 											else
 												contents.Add(0)
 
 										if ("oxygen")
-											if(t.air_contents.oxygen && !t.air_contents.phoron)
-												contents.Add(t.air_contents.oxygen)
+											if(t.air_contents.gas["oxygen"] && !t.air_contents.gas["phoron"])
+												contents.Add(t.air_contents.gas["oxygen"])
 											else
 												contents.Add(0)
 
 										// No races breath this, but never know about downstream servers.
 										if ("carbon dioxide")
-											if(t.air_contents.carbon_dioxide && !t.air_contents.phoron)
-												contents.Add(t.air_contents.carbon_dioxide)
+											if(t.air_contents.gas["carbon_dioxide"] && !t.air_contents.gas["phoron"])
+												contents.Add(t.air_contents.gas["carbon_dioxide"])
 											else
 												contents.Add(0)
 
@@ -439,14 +439,14 @@
 				AI.control_integrated_radio()
 
 		if("Show Crew Manifest")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.ai_roster()
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				S.show_station_manifest()
 
 		if("Show Alerts")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.ai_alerts()
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				S.show_alerts()
 
 		if("Announcement")
 			if(isAI(usr))
@@ -459,38 +459,93 @@
 				AI.ai_call_shuttle()
 
 		if("State Laws")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.checklaws()
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				S.checklaws()
+
+		if("Show Laws")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.show_laws()
+
+		if("Toggle Lights")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.toggle_lights()
+
+		if("Self Diagnosis")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.self_diagnosis()
+
+		if("Namepick")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.Namepick()
+
+		if("Show Pda Screens")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.shown_robot_pda = !R.shown_robot_pda
+				R.hud_used.toggle_robot_additional_screens(0, R.shown_robot_pda)
+
+		if("Show Foto Screens")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.shown_robot_foto = !R.shown_robot_foto
+				R.hud_used.toggle_robot_additional_screens(1, R.shown_robot_foto)
+
+		if("Toggle Components")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				R.toggle_component()
 
 		if("PDA - Send Message")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				var/obj/item/device/pda/ai/PDA = AI.aiPDA
-				PDA.cmd_send_pdamesg(usr)
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				var/obj/item/device/pda/silicon/PDA = S.pda
+				PDA.cmd_send_pdamesg(S)
 
 		if("PDA - Show Message Log")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				var/obj/item/device/pda/ai/PDA = AI.aiPDA
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				var/obj/item/device/pda/silicon/PDA = S.pda
 				PDA.cmd_show_message_log(usr)
 
+		if("Pda - Ringtone")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				var/obj/item/device/pda/silicon/PDA = R.pda
+				PDA.cmd_toggle_pda_silent()
+
+		if("Pda - Toggle")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				var/obj/item/device/pda/silicon/PDA = R.pda
+				PDA.cmd_toggle_pda_receiver()
+
 		if("Take Image")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				var/obj/item/device/camera/siliconcam/ai_camera/camera = AI.aiCamera
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				var/obj/item/device/camera/siliconcam/camera = S.aiCamera
 				camera.take_image()
 
 		if("View Images")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				var/obj/item/device/camera/siliconcam/ai_camera/camera = AI.aiCamera
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				var/obj/item/device/camera/siliconcam/camera = S.aiCamera
 				camera.view_images()
 
+		if("Delete Image")
+			if(isrobot(usr))
+				var/mob/living/silicon/robot/R = usr
+				var/obj/item/device/camera/siliconcam/ai_camera/camera = R.aiCamera
+				camera.deletepicture(camera)
+
 		if("Sensor Augmentation")
-			if(isAI(usr))
-				var/mob/living/silicon/ai/AI = usr
-				AI.sensor_mode()
+			if(issilicon(usr))
+				var/mob/living/silicon/S = usr
+				S.toggle_sensor_mode()
 
 		if("Allow Walking")
 			if(gun_click_time > world.time - 30)	//give them 3 seconds between mode changes.
@@ -584,3 +639,13 @@
 				usr.update_inv_r_hand()
 				usr.next_move = world.time+6
 	return 1
+
+/obj/screen/inventory/craft
+	name = "crafting menu"
+	icon = 'icons/mob/screen1_Midnight.dmi'
+	icon_state = "craft"
+	screen_loc = ui_crafting
+
+/obj/screen/inventory/craft/Click()
+	var/mob/living/M = usr
+	M.OpenCraftingMenu()

@@ -13,8 +13,8 @@
 
 	var/obj/machinery/computer/operating/computer = null
 
-/obj/machinery/optable/New()
-	..()
+/obj/machinery/optable/atom_init()
+	. = ..()
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
 		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
 		if (computer)
@@ -51,11 +51,6 @@
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		qdel(src)
-	if (!( locate(/obj/machinery/optable, user.loc) ))
-		step(user, get_dir(user, src))
-		if (user.loc == src.loc)
-			user.layer = TURF_LAYER
-			visible_message("<span class='notice'>The monkey hides under the table!</span>")
 	return
 
 /obj/machinery/optable/attack_hand(mob/user)
@@ -64,7 +59,8 @@
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		qdel(src)
-	return
+	else
+		return ..() // for fun, for braindamage and fingerprints.
 
 /obj/machinery/optable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1

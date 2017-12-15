@@ -79,8 +79,8 @@
 	var/sheets_refunded = 2
 	var/obj/machinery/light/newlight = null
 
-/obj/machinery/light_construct/New()
-	..()
+/obj/machinery/light_construct/atom_init()
+	. = ..()
 	if (fixture_type == "bulb")
 		icon_state = "bulb-construct-stage1"
 
@@ -125,15 +125,16 @@
 				src.icon_state = "tube-construct-stage1"
 			if("bulb")
 				src.icon_state = "bulb-construct-stage1"
-		new /obj/item/weapon/cable_coil/random(get_turf(src.loc), 1)
+		new /obj/item/stack/cable_coil/random(get_turf(src.loc), 1)
 		user.visible_message("[user.name] removes the wiring from [src].", \
 			"You remove the wiring from [src].", "You hear a noise.")
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		return
 
-	if(istype(W, /obj/item/weapon/cable_coil))
-		if (src.stage != 1) return
-		var/obj/item/weapon/cable_coil/coil = W
+	if(istype(W, /obj/item/stack/cable_coil))
+		if (src.stage != 1)
+			return
+		var/obj/item/stack/cable_coil/coil = W
 		if(!coil.use(1))
 			return
 		switch(fixture_type)
@@ -195,6 +196,7 @@
 	idle_power_usage = 2
 	active_power_usage = 20
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
+	interact_offline = TRUE
 	var/on = 0					// 1 if on, 0 if off
 	var/on_gs = 0
 	var/static_power_used = 0
@@ -234,31 +236,32 @@
 	brightness_range = 12
 	brightness_power = 4
 
-/obj/machinery/light/built/New()
+/obj/machinery/light/built/atom_init()
 	status = LIGHT_EMPTY
 	update(0)
-	..()
+	. = ..()
 
-/obj/machinery/light/small/built/New()
+/obj/machinery/light/small/built/atom_init()
 	status = LIGHT_EMPTY
 	update(0)
-	..()
+	. = ..()
 
 // create a new lighting fixture
-/obj/machinery/light/New()
+/obj/machinery/light/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
 
-	spawn(2)
-		var/area/A = get_area(src)
-		if(A && !A.requires_power)
-			on = 1
+/obj/machinery/light/atom_init_late()
+	var/area/A = get_area(src)
+	if(A && !A.requires_power)
+		on = 1
 
-		if(src.z == ZLEVEL_STATION || src.z == ZLEVEL_ASTEROID)
-			switch(fitting)
-				if("tube","bulb")
-					if(prob(2))
-						broken(1)
-		addtimer(CALLBACK(src, .proc/update, 0), 1)
+	if(src.z == ZLEVEL_STATION || src.z == ZLEVEL_ASTEROID)
+		switch(fitting)
+			if("tube","bulb")
+				if(prob(2))
+					broken(1)
+	addtimer(CALLBACK(src, .proc/update, 0), 1)
 
 /obj/machinery/light/Destroy()
 	var/area/A = get_area(src)
@@ -466,8 +469,7 @@
 // ai attack - make lights flicker, because why not
 
 /obj/machinery/light/attack_ai(mob/user)
-	src.flicker(1)
-	return
+	flicker(1)
 
 // Aliens smash the bulb but do not get electrocuted./N
 /obj/machinery/light/attack_alien(mob/living/carbon/alien/humanoid/user)//So larva don't go breaking light bulbs.
@@ -496,12 +498,13 @@
 // if hands aren't protected and the light is on, burn the player
 
 /obj/machinery/light/attack_hand(mob/user)
-
-	add_fingerprint(user)
+	. = ..()
+	if(.)
+		return
 
 	if(status == LIGHT_EMPTY)
 		to_chat(user, "There is no [fitting] in this light.")
-		return
+		return 1
 
 	// make it burn hands if not wearing fire-insulated gloves
 	if(on)
@@ -509,7 +512,6 @@
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
-
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
 				if(G.max_heat_protection_temperature)
@@ -523,7 +525,7 @@
 			to_chat(user, "You telekinetically remove the light [fitting].")
 		else
 			to_chat(user, "You try to remove the light [fitting], but it's too hot and you don't want to burn your hand.")
-			return				// if burned, don't remove the light
+			return 1			// if burned, don't remove the light
 	else
 		to_chat(user, "You remove the light [fitting].")
 
@@ -721,8 +723,8 @@
 			desc = "A broken [name]."
 
 
-/obj/item/weapon/light/New()
-	..()
+/obj/item/weapon/light/atom_init()
+	. = ..()
 	switch(name)
 		if("light tube")
 			brightness_range = rand(6,9)

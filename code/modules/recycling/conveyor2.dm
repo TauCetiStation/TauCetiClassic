@@ -7,6 +7,8 @@
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = 1
+	interact_offline = TRUE
+	layer = BELOW_CONTAINERS_LAYER
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
@@ -19,8 +21,8 @@
 
 // Auto conveyour is always on unless unpowered
 
-/obj/machinery/conveyor/auto/New(loc, newdir)
-	..(loc, newdir)
+/obj/machinery/conveyor/auto/atom_init(mapload, newdir)
+	. = ..(mapload, newdir)
 	operating = 1
 	update_move_direction()
 
@@ -38,8 +40,8 @@
 	icon_state = "conveyor[operating * verted]"
 
 // create a conveyor
-/obj/machinery/conveyor/New(loc, newdir)
-	..(loc)
+/obj/machinery/conveyor/atom_init(mapload, newdir)
+	. = ..()
 	if(newdir)
 		dir = newdir
 	update_move_direction()
@@ -141,6 +143,10 @@
 
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	user.Move_Pulled(src)
 
 
@@ -192,29 +198,32 @@
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
+	use_power = 0
+	anchored = TRUE
+
 	var/position = 0			// 0 off, -1 reverse, 1 forward
 	var/last_pos = -1			// last direction setting
-	var/operated = 1			// true if just operated
+	var/operated = TRUE			// true if just operated
 	var/convdir = 0				// 0 is two way switch, 1 and -1 means one way
 
 	var/id = "" 				// must match conveyor IDs to control them
 
 	var/list/conveyors		// the list of converyors that are controlled by this switch
-	anchored = 1
 
 
 
-/obj/machinery/conveyor_switch/New(newloc, newid)
-	..(newloc)
+/obj/machinery/conveyor_switch/atom_init(mapload, newid)
+	..()
 	if(!id)
 		id = newid
 	update()
+	return INITIALIZE_HINT_LATELOAD
 
-	spawn(5)		// allow map load
-		conveyors = list()
-		for(var/obj/machinery/conveyor/C in machines)
-			if(C.id == id)
-				conveyors += C
+/obj/machinery/conveyor_switch/atom_init_late()
+	conveyors = list()
+	for(var/obj/machinery/conveyor/C in machines)
+		if(C.id == id)
+			conveyors += C
 
 // update the icon depending on the position
 
@@ -241,10 +250,8 @@
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
-	add_fingerprint(user)
-
-	if(!allowed(user))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
+	. = ..()
+	if(.)
 		return
 
 	if(position == 0)
@@ -321,8 +328,8 @@
 	w_class = 4
 	var/id = "" //inherited by the switch
 
-/obj/item/conveyor_switch_construct/New()
-	..()
+/obj/item/conveyor_switch_construct/atom_init()
+	. = ..()
 	id = rand() //this couldn't possibly go wrong
 
 /obj/item/conveyor_switch_construct/afterattack(atom/A, mob/user, proximity)

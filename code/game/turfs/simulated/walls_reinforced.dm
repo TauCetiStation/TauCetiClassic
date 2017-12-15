@@ -137,14 +137,12 @@
 			//REPAIRING (replacing the outer grille for cosmetic damage)
 			else if(istype(W, /obj/item/stack/rods))
 				var/obj/item/stack/O = W
+				if(!O.use(1))
+					return
 				src.d_state = 0
 				src.icon_state = "r_wall"
 				relativewall_neighbours()	//call smoothwall stuff
 				to_chat(user, "<span class='notice'>You replace the outer grille.</span>")
-				if (O.amount > 1)
-					O.amount--
-				else
-					qdel(O)
 				return
 
 		if(2)
@@ -300,14 +298,12 @@
 				return
 
 			if(user.loc == T && user.get_active_hand() == MS && d_state)
+				if(!MS.use(1))
+					return
 				src.d_state = 0
 				src.icon_state = "r_wall"
 				relativewall_neighbours()	//call smoothwall stuff
 				to_chat(user, "<span class='notice'>You repair the last of the damage.</span>")
-				if (MS.amount > 1)
-					MS.amount--
-				else
-					qdel(MS)
 
 	//APC
 	else if(istype(W,/obj/item/apc_frame))

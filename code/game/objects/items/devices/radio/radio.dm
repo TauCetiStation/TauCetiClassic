@@ -45,14 +45,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		frequency = new_frequency
 		radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
 
-/obj/item/device/radio/New()
-	..()
-	if(radio_controller)
-		initialize()
+/obj/item/device/radio/atom_init()
+	. = ..()
+
 	wires = new(src)
-
-
-/obj/item/device/radio/initialize()
 
 	if(freerange)
 		if(frequency < 1200 || frequency > 1600)

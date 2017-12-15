@@ -58,9 +58,12 @@
 	desc = "Some sort of purple substance in an egglike shape. It pulses and throbs from within and seems impenetrable."
 	health = INFINITY
 
-/obj/effect/alien/resin/New()
+/obj/effect/alien/resin/atom_init()
 	relativewall_neighbours()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/alien/resin/atom_init_late()
 	var/turf/T = get_turf(src)
 	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
@@ -199,23 +202,25 @@
 	var/node_range = NODERANGE
 	light_color = "#24C1FF"
 
-/obj/structure/alien/weeds/node/New()
-	..(src.loc, src)
+/obj/structure/alien/weeds/node/atom_init(mapload)
+	. = ..(mapload, src)
+
+/obj/structure/alien/weeds/node/atom_init_late()
 	for (var/obj/structure/alien/weeds/W in loc)
 		if (W != src)
 			qdel(W)
 	set_light(2)
 
-/obj/structure/alien/weeds/New(pos, node)
+/obj/structure/alien/weeds/atom_init(mapload, node)
 	..()
 	if(istype(loc, /turf/space))
-		qdel(src)
-		return
-
+		return INITIALIZE_HINT_QDEL
 	linked_node = node
 	if(icon_state == "weeds")
 		icon_state = pick("weeds", "weeds1", "weeds2")
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/structure/alien/weeds/atom_init_late()
 	if(!weedImageCache)
 		weedImageCache = list()
 		weedImageCache["[WEED_NORTH_EDGING]"] = image('icons/mob/xenomorph.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
@@ -354,13 +359,15 @@
 	var/ticks = 0
 	var/target_strength = 0
 
-/obj/effect/alien/acid/New(loc, target)
-	..(loc)
+/obj/effect/alien/acid/atom_init(mapload, target)
+	..()
 	src.target = target
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/effect/alien/acid/atom_init_late()
 	if(isturf(target)) // Turf take twice as long to take down.
 		target_strength = 8
-	else if(istype(target, /obj/machinery/atmospherics/unary/vent_pump))
+	else if(istype(target, /obj/machinery/atmospherics/components/unary/vent_pump))
 		target_strength = 2 //Its just welded, what??
 	else
 		target_strength = 4
@@ -380,8 +387,8 @@
 		if(istype(target, /turf/simulated/wall)) // I hate turf code.
 			var/turf/simulated/wall/W = target
 			W.dismantle_wall(1)
-		else if(istype(target, /obj/machinery/atmospherics/unary/vent_pump))
-			var/obj/machinery/atmospherics/unary/vent_pump/VP = target
+		else if(istype(target, /obj/machinery/atmospherics/components/unary/vent_pump))
+			var/obj/machinery/atmospherics/components/unary/vent_pump/VP = target
 			VP.welded = 0
 			VP.update_icon()
 		else
@@ -423,37 +430,39 @@
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	var/used = 0
 
-	New()
-		..()
-		spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
-			Grow()
+/obj/effect/alien/egg/atom_init()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
 
-	attack_paw(user)
-		if(isalien(user))
-			switch(status)
-				if(GROWING)
-					to_chat(user, "\red The child is not developed yet.")
-					return
-		else
-			return attack_hand(user)
+/obj/effect/alien/egg/attack_paw(user)
+	if(isalien(user))
+		switch(status)
+			if(GROWING)
+				to_chat(user, "\red The child is not developed yet.")
+				return
+			if(BURST)
+				to_chat(user, "You clear the hatched egg.")
+				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+				qdel(src)
+				return
+	else
+		return attack_hand(user)
 
-	attack_hand(user)
-		to_chat(user, "It feels slimy.")
-		return
+/obj/effect/alien/egg/attack_hand(user)
+	to_chat(user, "It feels slimy.")
 
-	proc/Grow()
-		icon_state = "egg"
-		status = GROWN
-		new /obj/item/clothing/mask/facehugger(src)
-		return
+/obj/effect/alien/egg/proc/Grow()
+	icon_state = "egg"
+	status = GROWN
+	new /obj/item/clothing/mask/facehugger(src)
 
-	proc/Burst()
-		if(status == GROWN || status == GROWING)
-			icon_state = "egg_hatched"
-			flick("egg_opening", src)
-			status = BURSTING
-			spawn(15)
-				status = BURST
+/obj/effect/alien/egg/proc/Burst()
+	if(status == GROWN || status == GROWING)
+		icon_state = "egg_hatched"
+		flick("egg_opening", src)
+		status = BURSTING
+		spawn(15)
+			status = BURST
 
 /obj/effect/alien/egg/attack_ghost(mob/living/user)
 	if(!(src in view()))

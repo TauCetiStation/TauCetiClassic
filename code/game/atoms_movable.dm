@@ -20,12 +20,32 @@
 	var/inertia_move_delay = 5
 
 	var/list/client_mobs_in_contents
+	var/freeze_movement = FALSE
 
-/atom/movable/New()
-	. = ..()
+/atom/movable/Destroy()
+	//If we have opacity, make sure to tell (potentially) affected light sources.
+	var/turf/T = loc
+	if(opacity && istype(T))
+		opacity = 0
+		T.recalc_atom_opacity()
+		T.reconsider_lights()
+
+	unbuckle_mob()
+
+	if(loc)
+		loc.handle_atom_del(src)
+	for(var/atom/movable/AM in contents)
+		qdel(AM)
+	loc = null
+	invisibility = 101
+	if(pulledby)
+		pulledby.stop_pulling()
+	return ..()
 
 /atom/movable/Move(atom/newloc, direct = 0)
-	if(!loc || !newloc) return 0
+	if(!loc || !newloc || freeze_movement)
+		return FALSE
+
 	var/atom/oldloc = loc
 
 	if(loc != newloc)
@@ -55,10 +75,9 @@
 					else if (step(src, WEST))
 						. = step(src, SOUTH)
 
-
 	if(!loc || (loc == oldloc && oldloc != newloc))
 		last_move = 0
-		return
+		return FALSE
 
 	src.move_speed = world.time - src.l_move_time
 	src.l_move_time = world.time
@@ -89,33 +108,8 @@
 /atom/movable/proc/setLoc(T, teleported=0)
 	loc = T
 
-/atom/movable/Destroy()
-	//If we have opacity, make sure to tell (potentially) affected light sources.
-	var/turf/T = loc
-	if(opacity && istype(T))
-		opacity = 0
-		T.recalc_atom_opacity()
-		T.reconsider_lights()
-
-	unbuckle_mob()
-
-	if(loc)
-		loc.handle_atom_del(src)
-	if(reagents)
-		qdel(reagents)
-	for(var/atom/movable/AM in contents)
-		qdel(AM)
-	loc = null
-	invisibility = 101
-	if(pulledby)
-		pulledby.stop_pulling()
-	return ..()
-
 /atom/movable/Bump(atom/A, non_native_bump)
-	if(throwing)
-		throwing = FALSE
-		throw_impact(A)
-		fly_speed = 0
+	STOP_THROWING(src, A)
 
 	if(A && non_native_bump)
 		A.last_bumped = world.time
@@ -175,12 +169,12 @@
 	if(isobj(hit_atom))
 		var/obj/O = hit_atom
 		if(!O.anchored)
-			step(O, dir)
+			O.Move(get_step(O, dir))
 
 	if(isturf(hit_atom) && hit_atom.density)
-		step(src, turn(dir, 180))
+		Move(get_step(src, turn(dir, 180)))
 
-/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
+/atom/movable/proc/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback, datum/callback/early_callback)
 	if (!target || speed <= 0)
 		return
 
@@ -221,6 +215,7 @@
 	TT.thrower = thrower
 	TT.diagonals_first = diagonals_first
 	TT.callback = callback
+	TT.early_callback = early_callback
 
 	var/dist_x = abs(target.x - src.x)
 	var/dist_y = abs(target.y - src.y)
@@ -247,6 +242,8 @@
 	if(pulledby)
 		pulledby.stop_pulling()
 
+	src.thrower = thrower
+	throw_source = get_turf(loc)
 	fly_speed = speed
 	throwing = TRUE
 	if(spin)
@@ -296,10 +293,10 @@
 	var/atom/master = null
 	anchored = 1
 
-/atom/movable/overlay/New()
-	for(var/x in src.verbs)
-		src.verbs -= x
-	return
+/atom/movable/overlay/atom_init()
+	. = ..()
+	for(var/x in verbs)
+		verbs -= x
 
 /atom/movable/overlay/attackby(a, b, params)
 	if (src.master)

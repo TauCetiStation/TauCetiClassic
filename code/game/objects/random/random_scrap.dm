@@ -13,6 +13,7 @@
 						/obj/structure/scrap/guns/large,\
 						/obj/structure/scrap/cloth/large,\
 						/obj/structure/scrap/syndie/large,\
+						/obj/structure/scrap/poor/structure,\
 						/obj/structure/scrap/science/large\
 					)
 
@@ -23,13 +24,14 @@
 	icon_state = "welder"
 /obj/random/scrap/dense_weighted/item_to_spawn()
 		return pick(\
-						prob(105);/obj/structure/scrap/poor/large,\
-						prob(18);/obj/structure/scrap/large,\
-						prob(12);/obj/structure/scrap/medical/large,\
-						prob(12);/obj/structure/scrap/science/large,\
-						prob(18);/obj/structure/scrap/vehicle/large,\
-						prob(24);/obj/structure/scrap/cloth/large,\
-						prob(36);/obj/structure/scrap/food/large,\
+						prob(70);/obj/structure/scrap/poor/large,\
+						prob(70);/obj/structure/scrap/poor/structure,\
+						prob(20);/obj/structure/scrap/large,\
+						prob(14);/obj/structure/scrap/medical/large,\
+						prob(14);/obj/structure/scrap/science/large,\
+						prob(20);/obj/structure/scrap/vehicle/large,\
+						prob(26);/obj/structure/scrap/cloth/large,\
+						prob(40);/obj/structure/scrap/food/large,\
 						prob(1);/obj/structure/scrap/syndie/large,\
 						prob(3);/obj/structure/scrap/guns/large\
 					)

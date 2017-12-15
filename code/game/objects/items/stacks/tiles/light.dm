@@ -14,8 +14,8 @@
 	var/on = 1
 	var/state //0 = fine, 1 = flickering, 2 = breaking, 3 = broken
 
-/obj/item/stack/tile/light/New(var/loc, var/amount=null)
-	..()
+/obj/item/stack/tile/light/atom_init()
+	. = ..()
 	if(prob(5))
 		state = 3 //broken
 	else if(prob(5))

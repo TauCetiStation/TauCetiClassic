@@ -20,8 +20,8 @@
 	var/force_divisor = 400                             // Force equates to speed. Speed/5 equates to a damage multiplier for whoever you hit.
 	                                                    // For reference, a fully pressurized oxy tank at 50% gas release firing a health
 	                                                    // analyzer with a force_divisor of 10 hit with a damage multiplier of 3000+.
-/obj/item/weapon/storage/pneumatic/New()
-	..()
+/obj/item/weapon/storage/pneumatic/atom_init()
+	. = ..()
 	tank_container = new(src)
 	tank_container.tag = "gas_tank_holder"
 
@@ -181,8 +181,7 @@
 	else if(istype(W,/obj/item/stack/sheet/metal))
 		if(buildstate == 2)
 			var/obj/item/stack/sheet/metal/M = W
-			if(M.amount >= 5)
-				M.use(5)
+			if(M.use(5))
 				to_chat(user, "\blue You assemble a chassis around the cannon frame.")
 				buildstate++
 				update_icon()

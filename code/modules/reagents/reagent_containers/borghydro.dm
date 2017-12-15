@@ -23,8 +23,8 @@
 /obj/item/weapon/reagent_containers/borghypo/crisis
 	reagent_ids = list("tricordrazine", "inaprovaline", "tramadol")
 
-/obj/item/weapon/reagent_containers/borghypo/New()
-	..()
+/obj/item/weapon/reagent_containers/borghypo/atom_init()
+	. = ..()
 	for(var/R in reagent_ids)
 		add_reagent(R)
 
@@ -72,13 +72,10 @@
 	if(!R.total_volume)
 		to_chat(user, "\red The injector is empty.")
 		return
-	if (!(istype(M)))
+	if (!istype(M))
 		return
 
-	if (R.total_volume && M.can_inject(user,1))
-		to_chat(user, "\blue You inject [M] with the injector.")
-		to_chat(M, "\red You feel a tiny prick!")
-
+	if (R.total_volume && M.try_inject(user, TRUE, TRUE, TRUE))
 		R.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = R.trans_to(M, amount_per_transfer_from_this)

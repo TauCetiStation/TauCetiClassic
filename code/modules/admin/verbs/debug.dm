@@ -144,11 +144,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 	var/datum/gas_mixture/env = T.return_air()
 
-	var/t = ""
-	t+= "Nitrogen : [env.nitrogen]\n"
-	t+= "Oxygen : [env.oxygen]\n"
-	t+= "Phoron : [env.phoron]\n"
-	t+= "CO2: [env.carbon_dioxide]\n"
+	var/t = "<span class='notice'>Coordinates: [T.x],[T.y],[T.z]</span>\n"
+	t += "<span class='warning'>Temperature: [env.temperature]</span>\n"
+	t += "<span class='warning'>Pressure: [env.return_pressure()]kPa</span>\n"
+	for(var/g in env.gas)
+		t += "<span class='notice'>[g]: [env.gas[g]] / [env.gas[g] * R_IDEAL_GAS_EQUATION * env.temperature / env.volume]kPa</span>\n"
+
 
 	usr.show_message(t, 1)
 	feedback_add_details("admin_verb","ASL") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
@@ -382,6 +383,17 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.")
 	feedback_add_details("admin_verb","MPWN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+
+/client/proc/cmd_debug_load_junkyard()
+	set category = "Debug"
+	set name = "Load Junkyard"
+	SSjunkyard.populate_junkyard()
+	log_admin("[key_name(src)] pupulated junkyard. SSjunkyard.populate_junkyard() called.")
+	message_admins("[key_name_admin(src)] pupulated junkyard. SSjunkyard.populate_junkyard() called.")
+	feedback_add_details("admin_verb","PPJYD") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
+
 /client/proc/cmd_debug_tog_aliens()
 	set category = "Server"
 	set name = "Toggle Aliens"
@@ -445,7 +457,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Assume direct control"
 	set desc = "Direct intervention."
 
-	if(!check_rights(R_DEBUG|R_ADMIN))	return
+	if(!check_rights(R_DEBUG|R_ADMIN))
+		return
 	if(M.ckey)
 		if(alert("This mob is being controlled by [M.ckey]. Are you sure you wish to assume control of it? [M.ckey] will be made a ghost.",,"Yes","No") != "Yes")
 			return
@@ -1704,7 +1717,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		if(Rad.anchored)
 			if(!Rad.P)
 				var/obj/item/weapon/tank/phoron/Phoron = new/obj/item/weapon/tank/phoron(Rad)
-				Phoron.air_contents.phoron = 70
+				Phoron.air_contents.gas["phoron"] = 70
 				Rad.drainratio = 0
 				Rad.P = Phoron
 				Phoron.loc = Rad
@@ -1721,7 +1734,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	set name = "Setup supermatter"
 	set desc = "Sets up the supermatter engine."
 
-	if(!check_rights(R_DEBUG|R_ADMIN))      return
+	if(!check_rights(R_DEBUG))
+		return
 
 	var/response = alert("Are you sure? This will start up the engine. Should only be used during debug!",,"Setup Completely","Setup except coolant","No")
 
@@ -1746,7 +1760,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/weapon/tank/phoron/Phoron = new/obj/item/weapon/tank/phoron(Rad)
 
-			Phoron.air_contents.phoron = 29.1154	//This is a full tank if you filled it from a canister
+			Phoron.air_contents.gas["phoron"] = 29.1154	//This is a full tank if you filled it from a canister
 			Rad.P = Phoron
 
 			Phoron.loc = Rad
@@ -1755,14 +1769,16 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 				Rad.toggle_power()
 			Rad.update_icon()
 
-		else if(istype(M,/obj/machinery/atmospherics/binary/pump))	//Turning on every pump.
-			var/obj/machinery/atmospherics/binary/pump/Pump = M
+		else if(istype(M,/obj/machinery/atmospherics/components/binary/pump))	//Turning on every pump.
+			var/obj/machinery/atmospherics/components/binary/pump/Pump = M
 			if(Pump.name == "Engine Feed" && response == "Setup Completely")
+				var/datum/gas_mixture/air2 = Pump.AIR2
+
 				found_the_pump = 1
-				Pump.air2.nitrogen = 3750	//The contents of 2 canisters.
-				Pump.air2.temperature = 50
-				Pump.air2.update_values()
-			Pump.on=1
+				air2.gas["nitrogen"] = 3750	//The contents of 2 canisters.
+				air2.temperature = 50
+				air2.update_values()
+			//Pump.on=1
 			Pump.target_pressure = 4500
 			Pump.update_icon()
 
@@ -1780,7 +1796,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 	if(!found_the_pump && response == "Setup Completely")
 		to_chat(src, "\red Unable to locate air supply to fill up with coolant, adding some coolant around the supermatter")
 		var/turf/simulated/T = SM.loc
-		T.zone.air.nitrogen += 450
+		T.zone.air.gas["nitrogen"] += 450
 		T.zone.air.temperature = 50
 		T.zone.air.update_values()
 
@@ -1811,6 +1827,43 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			to_chat(usr, jointext(clients,","))
 		if("Joined Clients")
 			to_chat(usr, jointext(joined_player_list,","))
+
+/client/proc/cmd_display_del_log()
+	set category = "Debug"
+	set name = "Display del() Log"
+	set desc = "Display del's log of everything that's passed through it."
+
+	var/list/dellog = list("<B>List of things that have gone through qdel this round</B><BR><BR><ol>")
+	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
+	for(var/path in SSgarbage.items)
+		var/datum/qdel_item/I = SSgarbage.items[path]
+		dellog += "<li><u>[path]</u><ul>"
+		if (I.failures)
+			dellog += "<li>Failures: [I.failures]</li>"
+		dellog += "<li>qdel() Count: [I.qdels]</li>"
+		dellog += "<li>Destroy() Cost: [I.destroy_time]ms</li>"
+		if (I.hard_deletes)
+			dellog += "<li>Total Hard Deletes [I.hard_deletes]</li>"
+			dellog += "<li>Time Spent Hard Deleting: [I.hard_delete_time]ms</li>"
+		if (I.slept_destroy)
+			dellog += "<li>Sleeps: [I.slept_destroy]</li>"
+		if (I.no_hint)
+			dellog += "<li>No hint: [I.no_hint]</li>"
+		dellog += "</ul></li>"
+
+	dellog += "</ol>"
+
+	usr << browse(dellog.Join(), "window=dellog")
+
+/client/proc/cmd_display_init_log()
+	set category = "Debug"
+	set name = "Display Initialzie() Log"
+	set desc = "Displays a list of things that didn't handle Initialize() properly"
+
+	if(!LAZYLEN(SSatoms.BadInitializeCalls))
+		to_chat(usr, "<span class='notice'>There is no bad initializations found in log.</span>")
+	else
+		usr << browse(replacetext(SSatoms.InitLog(), "\n", "<br>"), "window=initlog")
 
 // DNA2 - Admin Hax
 /client/proc/cmd_admin_toggle_block(mob/M,block)

@@ -17,9 +17,9 @@
 	var/rigged = 0		// true if rigged to explode
 	var/minor_fault = 0 //If not 100% reliable, it will build up faults.
 
-	suicide_act(mob/user)
-		to_chat(viewers(user), "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>")
-		return (FIRELOSS)
+/obj/item/weapon/stock_parts/cell/suicide_act(mob/user)
+	to_chat(viewers(user), "\red <b>[user] is licking the electrodes of the [src.name]! It looks like \he's trying to commit suicide.</b>")
+	return (FIRELOSS)
 
 /obj/item/weapon/stock_parts/cell/crap
 	name = "\improper Nanotrasen brand rechargable AA battery"
@@ -29,8 +29,8 @@
 	g_amt = 40
 	rating = 2
 
-/obj/item/weapon/stock_parts/cell/crap/empty/New()
-	..()
+/obj/item/weapon/stock_parts/cell/crap/empty/atom_init()
+	. = ..()
 	charge = 0
 
 /obj/item/weapon/stock_parts/cell/secborg
@@ -40,9 +40,16 @@
 	g_amt = 40
 	rating = 2.5
 
-/obj/item/weapon/stock_parts/cell/secborg/empty/New()
-	..()
+/obj/item/weapon/stock_parts/cell/secborg/empty/atom_init()
+	. = ..()
 	charge = 0
+
+/obj/item/weapon/stock_parts/cell/apc
+	name = "APC power cell"
+	desc = "A special power cell designed for heavy-duty use in area power controllers."
+	origin_tech = "powerstorage=1"
+	maxcharge = 500
+	g_amt = 40
 
 /obj/item/weapon/stock_parts/cell/high
 	name = "high-capacity power cell"
@@ -52,8 +59,8 @@
 	g_amt = 60
 	rating = 3
 
-/obj/item/weapon/stock_parts/cell/high/empty/New()
-	..()
+/obj/item/weapon/stock_parts/cell/high/empty/atom_init()
+	. = ..()
 	charge = 0
 
 /obj/item/weapon/stock_parts/cell/super
@@ -64,8 +71,8 @@
 	g_amt = 70
 	rating = 4
 
-/obj/item/weapon/stock_parts/cell/super/empty/New()
-	..()
+/obj/item/weapon/stock_parts/cell/super/empty/atom_init()
+	. = ..()
 	charge = 0
 
 /obj/item/weapon/stock_parts/cell/hyper
@@ -76,8 +83,8 @@
 	g_amt = 80
 	rating = 5
 
-/obj/item/weapon/stock_parts/cell/hyper/empty/New()
-	..()
+/obj/item/weapon/stock_parts/cell/hyper/empty/atom_init()
+	. = ..()
 	charge = 0
 
 /obj/item/weapon/stock_parts/cell/bluespace
@@ -89,8 +96,8 @@
 	rating = 6
 	//chargerate = 4000
 
-/obj/item/weapon/stock_parts/cell/bluespace/empty/New()
-	..()
+/obj/item/weapon/stock_parts/cell/bluespace/empty/atom_init()
+	. = ..()
 	charge = 0
 
 /obj/item/weapon/stock_parts/cell/infinite
@@ -100,8 +107,9 @@
 	maxcharge = 30000
 	g_amt = 80
 	rating = 6
-	use()
-		return 1
+
+/obj/item/weapon/stock_parts/cell/infinite/use()
+	return 1
 
 /obj/item/weapon/stock_parts/cell/potato
 	name = "potato battery"

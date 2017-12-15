@@ -37,7 +37,6 @@
 
 /obj/item/projectile/bullet/midbullet //.45 ACP
 	damage = 20
-	stoping_power = 5
 
 /obj/item/projectile/bullet/midbullet2 // 9x19
 	damage = 25
@@ -52,6 +51,10 @@
 
 /obj/item/projectile/bullet/rifle2
 	damage = 45
+	embed = 0
+
+/obj/item/projectile/bullet/rifle3
+	damage = 35
 	embed = 0
 
 /obj/item/projectile/bullet/heavy/a145
@@ -83,8 +86,8 @@
 
 /obj/item/projectile/bullet/chem/teargas
 
-/obj/item/projectile/bullet/chem/teargas/New()
-	..()
+/obj/item/projectile/bullet/chem/teargas/atom_init()
+	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 	B1.reagents.add_reagent("condensedcapsaicin", 15)
@@ -99,8 +102,8 @@
 
 /obj/item/projectile/bullet/chem/EMP
 
-/obj/item/projectile/bullet/chem/EMP/New()
-	..()
+/obj/item/projectile/bullet/chem/EMP/atom_init()
+	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 	B1.reagents.add_reagent("uranium", 15)
@@ -114,8 +117,8 @@
 	damage = 20
 	stun = 5
 
-/obj/item/projectile/bullet/chem/Exp/New()
-	..()
+/obj/item/projectile/bullet/chem/Exp/atom_init()
+	. = ..()
 	var/obj/item/weapon/reagent_containers/glass/beaker/B1 = new(src)
 	var/obj/item/weapon/reagent_containers/glass/beaker/B2 = new(src)
 	B1.reagents.add_reagent("glycerol", 15)

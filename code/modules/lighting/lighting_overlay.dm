@@ -17,13 +17,16 @@
 
 	var/needs_update = FALSE
 
-/atom/movable/lighting_overlay/New(var/atom/loc, var/no_update = FALSE)
+/atom/movable/lighting_overlay/atom_init(mapload, no_update = FALSE)
 	. = ..()
 	verbs.Cut()
 
 	var/turf/T         = loc // If this runtimes atleast we'll know what's creating overlays in things that aren't turfs.
 	T.lighting_overlay = src
 	T.luminosity       = FALSE
+
+	for(var/turf/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+		S.update_starlight()
 
 	if(no_update)
 		return

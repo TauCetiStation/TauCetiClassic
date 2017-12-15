@@ -214,13 +214,13 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 // Special AI/pAI PDAs that cannot explode.
-/obj/item/device/pda/ai
+/obj/item/device/pda/silicon
 	icon_state = "NONE"
 	ttone = "data"
 	detonate = 0
 
 
-/obj/item/device/pda/ai/proc/set_name_and_job(newname, newjob, newrank)
+/obj/item/device/pda/silicon/proc/set_name_and_job(newname, newjob, newrank)
 	owner = newname
 	ownjob = newjob
 	if(newrank)
@@ -231,7 +231,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 //AI verb and proc for sending PDA messages.
-/obj/item/device/pda/ai/verb/cmd_send_pdamesg()
+/obj/item/device/pda/silicon/verb/cmd_send_pdamesg()
 	set category = "AI Commands"
 	set name = "Send Message"
 	set src in usr
@@ -248,7 +248,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		create_message(usr, selected)
 
 
-/obj/item/device/pda/ai/verb/cmd_toggle_pda_receiver()
+/obj/item/device/pda/silicon/verb/cmd_toggle_pda_receiver()
 	set category = "AI Commands"
 	set name = "Toggle Sender/Receiver"
 	set src in usr
@@ -259,18 +259,18 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	to_chat(usr, "<span class='notice'>PDA sender/receiver toggled [(toff ? "Off" : "On")]!</span>")
 
 
-/obj/item/device/pda/ai/verb/cmd_toggle_pda_silent()
+/obj/item/device/pda/silicon/verb/cmd_toggle_pda_silent()
 	set category = "AI Commands"
 	set name = "Toggle Ringer"
 	set src in usr
 	if(usr.stat == DEAD)
 		to_chat(usr, "You can't do that because you are dead!")
 		return
-	message_silent=!message_silent
+	message_silent = !message_silent
 	to_chat(usr, "<span class='notice'>PDA ringer toggled [(message_silent ? "Off" : "On")]!</span>")
 
 
-/obj/item/device/pda/ai/verb/cmd_show_message_log()
+/obj/item/device/pda/silicon/verb/cmd_show_message_log()
 	set category = "AI Commands"
 	set name = "Show Message Log"
 	set src in usr
@@ -288,36 +288,29 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	usr << browse(HTML, "window=log;size=400x444;border=1;can_resize=1;can_close=1;can_minimize=0")
 
 
-/obj/item/device/pda/ai/can_use()
+/obj/item/device/pda/silicon/can_use()
 	return 1
 
 
-/obj/item/device/pda/ai/attack_self(mob/user)
+/obj/item/device/pda/silicon/attack_self(mob/user)
 	if ((honkamt > 0) && (prob(60)))//For clown virus.
 		honkamt--
 		playsound(loc, 'sound/items/bikehorn.ogg', 30, 1)
 	return
 
 //Special PDA for robots
-/obj/item/device/pda/ai/robot/cmd_send_pdamesg()
+
+/obj/item/device/pda/silicon/robot/cmd_toggle_pda_receiver()
 	set category = "Robot Commands"
-	set hidden = 0
+	set hidden = 1
 	..()
 
-/obj/item/device/pda/ai/robot/cmd_toggle_pda_receiver()
+/obj/item/device/pda/silicon/robot/cmd_toggle_pda_silent()
 	set category = "Robot Commands"
+	set hidden = 1
 	..()
 
-/obj/item/device/pda/ai/robot/cmd_toggle_pda_silent()
-	set category = "Robot Commands"
-	..()
-
-/obj/item/device/pda/ai/robot/cmd_show_message_log()
-	set category = "Robot Commands"
-	set hidden = 0
-	..()
-
-/obj/item/device/pda/ai/pai
+/obj/item/device/pda/silicon/pai
 	ttone = "assist"
 
 
@@ -325,8 +318,8 @@ var/global/list/obj/item/device/pda/PDAs = list()
  *	The Actual PDA
  */
 
-/obj/item/device/pda/New()
-	..()
+/obj/item/device/pda/atom_init()
+	. = ..()
 	PDAs += src
 	PDAs = sortAtom(PDAs)
 	if(default_cartridge)
@@ -474,23 +467,23 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			var/datum/gas_mixture/environment = T.return_air()
 
 			var/pressure = environment.return_pressure()
-			var/total_moles = environment.total_moles()
+			var/total_moles = environment.total_moles
 
 			if (total_moles)
-				var/o2_level = environment.oxygen/total_moles
-				var/n2_level = environment.nitrogen/total_moles
-				var/co2_level = environment.carbon_dioxide/total_moles
-				var/phoron_level = environment.phoron/total_moles
-				var/unknown_level =  1-(o2_level+n2_level+co2_level+phoron_level)
-				data["aircontents"] = list(\
-					"pressure" = "[round(pressure,0.1)]",\
-					"nitrogen" = "[round(n2_level*100,0.1)]",\
-					"oxygen" = "[round(o2_level*100,0.1)]",\
-					"carbon_dioxide" = "[round(co2_level*100,0.1)]",\
-					"phoron" = "[round(phoron_level*100,0.01)]",\
-					"other" = "[round(unknown_level, 0.01)]",\
-					"temp" = "[round(environment.temperature-T0C,0.1)]",\
-					"reading" = 1\
+				var/o2_level = environment.gas["oxygen"] / total_moles
+				var/n2_level = environment.gas["nitrogen"] / total_moles
+				var/co2_level = environment.gas["carbon_dioxide"] / total_moles
+				var/phoron_level = environment.gas["phoron"] / total_moles
+				var/unknown_level =  1 - (o2_level + n2_level + co2_level + phoron_level)
+				data["aircontents"] = list(
+					"pressure" = "[round(pressure,0.1)]",
+					"nitrogen" = "[round(n2_level*100,0.1)]",
+					"oxygen" = "[round(o2_level*100,0.1)]",
+					"carbon_dioxide" = "[round(co2_level*100,0.1)]",
+					"phoron" = "[round(phoron_level*100,0.01)]",
+					"other" = "[round(unknown_level, 0.01)]",
+					"temp" = "[round(environment.temperature-T0C,0.1)]",
+					"reading" = 1
 					)
 		if(isnull(data["aircontents"]))
 			data["aircontents"] = list("reading" = 0)
@@ -1003,9 +996,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 			var/who = src.owner
 			if(prob(50))
 				who = P.owner
-			for(var/mob/living/silicon/ai/ai in mob_list)
+			for(var/mob/living/silicon/ai/ai in ai_list)
 				// Allows other AIs to intercept the message but the AI won't intercept their own message.
-				if(ai.aiPDA != P && ai.aiPDA != src)
+				if(ai.pda != P && ai.pda != src)
 					ai.show_message("<i>Intercepted message from <b>[who]</b>: [sanitize_chat(t)]</i>")
 
 		nanomanager.update_user_uis(U, src) // Update the sending user's PDA UI so that they can see the new message
@@ -1238,62 +1231,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 				to_chat(user, "\blue No significant chemical agents found in [A].")
 
 		if(5)
-			if((istype(A, /obj/item/weapon/tank)) || (istype(A, /obj/machinery/portable_atmospherics)))
-				var/obj/icon = A
-				for (var/mob/O in viewers(user, null))
-					to_chat(O, "\red [user] has used [src] on [bicon(icon)] [A]")
-				var/pressure = A:air_contents.return_pressure()
-
-				var/total_moles = A:air_contents.total_moles()
-
-				to_chat(user, "\blue Results of analysis of [bicon(icon)]")
-				if (total_moles>0)
-					var/o2_concentration = A:air_contents.oxygen/total_moles
-					var/n2_concentration = A:air_contents.nitrogen/total_moles
-					var/co2_concentration = A:air_contents.carbon_dioxide/total_moles
-					var/phoron_concentration = A:air_contents.phoron/total_moles
-
-					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
-
-					to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
-					to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
-					to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
-					to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
-					to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
-					if(unknown_concentration>0.01)
-						to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
-					to_chat(user, "\blue Temperature: [round(A:air_contents.temperature-T0C)]&deg;C")
-				else
-					to_chat(user, "\blue Tank is empty!")
-
-			if (istype(A, /obj/machinery/atmospherics/pipe/tank))
-				var/obj/icon = A
-				for (var/mob/O in viewers(user, null))
-					to_chat(O, "\red [user] has used [src] on [bicon(icon)] [A]")
-
-				var/obj/machinery/atmospherics/pipe/tank/T = A
-				var/pressure = T.parent.air.return_pressure()
-				var/total_moles = T.parent.air.total_moles()
-
-				to_chat(user, "\blue Results of analysis of [bicon(icon)]")
-				if (total_moles>0)
-					var/o2_concentration = T.parent.air.oxygen/total_moles
-					var/n2_concentration = T.parent.air.nitrogen/total_moles
-					var/co2_concentration = T.parent.air.carbon_dioxide/total_moles
-					var/phoron_concentration = T.parent.air.phoron/total_moles
-
-					var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
-
-					to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
-					to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
-					to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
-					to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
-					to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
-					if(unknown_concentration>0.01)
-						to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
-					to_chat(user, "\blue Temperature: [round(T.parent.air.temperature-T0C)]&deg;C")
-				else
-					to_chat(user, "\blue Tank is empty!")
+			analyze_gases(A, user)
 
 	if (!scanmode && istype(A, /obj/item/weapon/paper) && owner)
 		note = A:info

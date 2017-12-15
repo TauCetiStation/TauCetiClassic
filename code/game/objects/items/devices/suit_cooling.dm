@@ -24,7 +24,8 @@
 
 	//TODO: make it heat up the surroundings when not in space
 
-/obj/item/device/suit_cooling_unit/New()
+/obj/item/device/suit_cooling_unit/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 	cell = new/obj/item/weapon/stock_parts/cell()	//comes with the crappy default power cell - high-capacity ones shouldn't be hard to find
@@ -64,9 +65,10 @@
 		if(istype(H.loc, /obj/mecha))
 			var/obj/mecha/M = H.loc
 			return M.return_temperature()
-		else if(istype(H.loc, /obj/machinery/atmospherics/unary/cryo_cell))
-			var/obj/machinery/atmospherics/unary/cryo_cell/cryo = H.loc
-			return cryo.air_contents.temperature
+		else if(istype(H.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+			var/obj/machinery/atmospherics/components/unary/cryo_cell/cryo = H.loc
+			var/datum/gas_mixture/G = cryo.AIR1
+			return G.temperature
 
 	var/turf/T = get_turf(src)
 	if(istype(T, /turf/space))

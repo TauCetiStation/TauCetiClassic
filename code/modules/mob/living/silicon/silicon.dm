@@ -7,6 +7,7 @@
 	immune_to_ssd = 1
 	var/list/hud_list[9]
 	var/list/speech_synthesizer_langs = list()	//which languages can be vocalized by the speech synthesizer
+	var/obj/item/device/pda/silicon/pda = null
 
 
 
@@ -20,6 +21,12 @@
 	#define MED_HUD 2 //Medical HUD mode
 
 /mob/living/silicon/proc/show_laws()
+	return
+
+/mob/living/silicon/proc/checklaws()
+	return
+
+/mob/living/silicon/proc/show_alerts()
 	return
 
 /mob/living/silicon/drop_item()
@@ -87,40 +94,26 @@
 		return 1
 	return 0
 
-
-// this function shows the health of the pAI in the Status panel
-/mob/living/silicon/proc/show_system_integrity()
-	if(!src.stat)
-		stat(null, text("System integrity: [round((health/maxHealth)*100)]%"))
-	else
-		stat(null, text("Systems nonfunctional"))
-
-
 // This is a pure virtual function, it should be overwritten by all subclasses
 /mob/living/silicon/proc/show_malf_ai()
 	return 0
-
-
-// this function displays the station time in the status panel
-/mob/living/silicon/proc/show_station_time()
-	stat(null, "Station Time: [worldtime2text()]")
-
-
-// this function displays the shuttles ETA in the status panel if the shuttle has been called
-/mob/living/silicon/proc/show_SSshuttle_eta()
-	if(SSshuttle.online && SSshuttle.location < 2)
-		var/timeleft = SSshuttle.timeleft()
-		if (timeleft)
-			stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
-
 
 // This adds the basic clock, shuttle recall timer, and malf_ai info to all silicon lifeforms
 /mob/living/silicon/Stat()
 	..()
 	if(statpanel("Status"))
-		show_station_time()
-		show_SSshuttle_eta()
-		show_system_integrity()
+		stat(null, "Station Time: [worldtime2text()]")
+
+		if(SSshuttle.online && SSshuttle.location < 2)
+			var/timeleft = SSshuttle.timeleft()
+			if (timeleft)
+				stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+
+		if(stat == CONSCIOUS)
+			stat(null, text("System integrity: [round((health / maxHealth) * 100)]%"))
+		else
+			stat(null, text("Systems nonfunctional"))
+
 		show_malf_ai()
 
 // this function displays the stations manifest in a separate window
@@ -134,10 +127,10 @@
 	onclose(src, "airoster")
 
 //can't inject synths
-/mob/living/silicon/can_inject(mob/user, error_msg)
+/mob/living/silicon/try_inject(mob/user, error_msg)
 	if(error_msg)
 		to_chat(user, "<span class='alert'>The armoured plating is too tough.</span>")
-	return 0
+	return FALSE
 
 
 //Silicon mob language procs
@@ -164,7 +157,10 @@
 	var/dat = "<b><font size = 5>Known Languages</font></b><br/><br/>"
 
 	for(var/datum/language/L in languages)
-		dat += "<b>[L.name] (:[L.key])</b><br/>Speech Synthesizer: <i>[(L in speech_synthesizer_langs)? "YES":"NOT SUPPORTED"]</i><br/>[L.desc]<br/><br/>"
+		dat += "<b>[L.name] "
+		for(var/l_key in L.key)
+			dat += "(:[l_key])"
+		dat += " </b><br/>Speech Synthesizer: <i>[(L in speech_synthesizer_langs)? "YES":"NOT SUPPORTED"]</i><br/>[L.desc]<br/><br/>"
 
 	src << browse(dat, "window=checklanguage")
 	return

@@ -39,10 +39,12 @@
 		else
 			message = copytext(message,3)
 
-	//parse the language code and consume it
+	//parse the language code and consume it or use default racial language if forced.
 	var/datum/language/speaking = parse_language(message)
 	if (speaking)
 		message = copytext(message,2+length(speaking.key))
+	else if(species.force_racial_language)
+		speaking = all_languages[species.language]
 	else
 		switch(species.name)
 			if(TAJARAN)
@@ -258,15 +260,9 @@
 		message = ""
 		handled = 1
 	if(wear_mask)
-		if(istype(wear_mask, /obj/item/clothing/mask/horsehead))
-			var/obj/item/clothing/mask/horsehead/hoers = wear_mask
-			if(hoers.voicechange)
-				//if(mind && mind.changeling && department_radio_keys[copytext(message, 1, 3)] != "changeling")
-				if(message_mode != "changeling")
-					message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
-					verb = pick("whinnies","neighs", "says")
-					//handled = 1
-				handled = 1
+		if(message_mode != "changeling")
+			message = wear_mask.speechModification(message)
+		handled = 1
 
 	if((HULK in mutations) && health >= 25 && length(message))
 		message = "[uppertext_plus(message)]!!!"

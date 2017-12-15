@@ -599,9 +599,9 @@
 	var/belt = null
 	var/mob/living/carbon/fastened = null
 
-/obj/machinery/optable/abductor/New()
+/obj/machinery/optable/abductor/atom_init()
 	belt = image("icons/obj/abductor.dmi", "belt", layer = FLY_LAYER)
-	return ..()
+	. = ..()
 
 /obj/machinery/optable/abductor/attack_hand()
 	if(!victim && !fastened)
@@ -609,6 +609,9 @@
 
 	//exclusion any bugs with grab
 	var/mob/living/carbon/C = usr
+	if(!istype(C))
+		return
+
 	if(istype(C.get_active_hand(),/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = C.get_active_hand()
 		if(istype(C.l_hand, G))
@@ -677,9 +680,9 @@
 	desc = "Advanced flat surface technology at work!"
 	icon = 'icons/obj/abductor.dmi'
 
-/obj/structure/table/abductor/New()		// Fuck this shit, I am out...
+/obj/structure/table/abductor/atom_init()		// Fuck this shit, I am out...
+	. = ..()
 	verbs -= /obj/structure/table/verb/do_flip
-	return
 
 /obj/structure/closet/abductor
 	name = "alien locker"
@@ -714,8 +717,8 @@
 <br>
 Congratulations! You are now trained for xenobiology research!"}
 
-/obj/item/weapon/paper/abductor/New()
-	..()
+/obj/item/weapon/paper/abductor/atom_init()
+	. = ..()
 	verbs -= /obj/item/weapon/paper/verb/crumple
 
 /obj/item/weapon/paper/abductor/update_icon()

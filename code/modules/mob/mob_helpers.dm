@@ -1,5 +1,48 @@
+#define CHANGELING_STATPANEL_STATS(BYOND) \
+	if(mind && mind.changeling) \
+	{ \
+		stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]"); \
+		stat("Genetic Damage Time", mind.changeling.geneticdamage); \
+		stat("Absorbed DNA", mind.changeling.absorbedcount); \
+	}
+
+
+#define CHANGELING_STATPANEL_POWERS(BYOND) \
+	if(mind && mind.changeling && mind.changeling.purchasedpowers.len) \
+	{ \
+		for(var/P in mind.changeling.purchasedpowers) \
+		{ \
+			var/obj/effect/proc_holder/changeling/S = P; \
+			if(S.chemical_cost >=0 && S.can_be_used_by(src)) \
+			{ \
+				statpanel("[S.panel]", ((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""), S); \
+			} \
+		} \
+	}
+
 // see _DEFINES/is_helpers.dm for mob type checks
 #define SAFE_PERP -50
+
+/mob/living/proc/isSynthetic()
+	return FALSE
+
+/mob/living/carbon/human/isSynthetic(target_zone)
+	if(isnull(full_prosthetic))
+		robolimb_count = 0
+		for(var/obj/item/organ/external/BP in bodyparts)
+			if(BP.status & ORGAN_ROBOT)
+				robolimb_count++
+		full_prosthetic = (robolimb_count == bodyparts.len)
+
+	if(!full_prosthetic && target_zone)
+		var/obj/item/organ/external/BP = get_bodypart(target_zone)
+		if(BP)
+			return BP.status & ORGAN_ROBOT
+
+	return full_prosthetic
+
+/mob/living/silicon/isSynthetic()
+	return TRUE
 
 /proc/hsl2rgb(h, s, l)
 	return
@@ -430,15 +473,26 @@ var/list/intents = list("help","disarm","grab","hurt")
 
 #undef SAFE_PERP
 
-/proc/IsAdminGhost(var/mob/user)
-	if(check_rights(R_ADMIN, 0) && istype(user, /mob/dead/observer) && user.client.AI_Interact)
-		return 1
-	else
-		return 0
+/proc/IsAdminGhost(mob/user)
+	if(!user) // Are they a mob? Auto interface updates call this with a null src
+		return
+	if(!user.client) // Do they have a client?
+		return
+	if(!isobserver(user)) // Are they a ghost?
+		return
+	if(!check_rights_for(user.client, R_ADMIN)) // Are they allowed?
+		return
+	if(!user.client.AI_Interact) // Do they have it enabled?
+		return
+	return TRUE
 
-/mob/proc/is_busy(show_warning = TRUE)
+/mob/proc/is_busy(atom/target, show_warning = TRUE)
 	if(busy_with_action)
 		if(show_warning)
 			to_chat(src, "<span class='warning'>You are busy. Please finish or cancel your current action.</span>")
+		return TRUE
+	if(target && target.in_use_action)
+		if(show_warning)
+			to_chat(src, "<span class='warning'>Please wait while someone else will finish interacting with [target].</span>")
 		return TRUE
 	return FALSE

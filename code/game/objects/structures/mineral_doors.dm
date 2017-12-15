@@ -18,11 +18,11 @@
 
 	var/health = 100
 
-/obj/structure/mineral_door/New(location)
-	..()
+/obj/structure/mineral_door/atom_init()
+	. = ..()
 	icon_state = mineralType
 	name = "[mineralType] door"
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles(need_rebuild = 1)
 
 /obj/structure/mineral_door/Destroy()
 	update_nearby_tiles()
@@ -80,7 +80,7 @@
 	flick("[mineralType]opening",src)
 	sleep(10)
 	density = 0
-	opacity = 0
+	set_opacity(0)
 	state = 1
 	update_icon()
 	isSwitchingStates = 0
@@ -92,7 +92,7 @@
 	flick("[mineralType]closing",src)
 	sleep(10)
 	density = 1
-	opacity = 1
+	set_opacity(1)
 	state = 0
 	update_icon()
 	isSwitchingStates = 0
@@ -190,12 +190,6 @@
 			CheckHealth()
 	return
 
-/obj/structure/mineral_door/proc/update_nearby_tiles(need_rebuild) //Copypasta from airlock code
-	if(!SSair)
-		return 0
-	SSair.mark_for_update(get_turf(src))
-	return 1
-
 /obj/structure/mineral_door/iron
 	mineralType = "metal"
 	health = 300
@@ -240,15 +234,10 @@
 /obj/structure/mineral_door/transparent/phoron/proc/TemperatureAct(temperature)
 	for(var/turf/simulated/floor/target_tile in range(2,loc))
 
-		var/datum/gas_mixture/napalm = new
-
 		var/phoronToDeduce = temperature/10
 
-		napalm.phoron = phoronToDeduce
-		napalm.temperature = 200+T0C
-
-		target_tile.assume_air(napalm)
-		spawn (0) target_tile.hotspot_expose(temperature, 400)
+		target_tile.assume_gas("phoron", phoronToDeduce)
+		target_tile.hotspot_expose(temperature, 400)
 
 		health -= phoronToDeduce/100
 		CheckHealth()
@@ -274,11 +263,11 @@
 	health = 150
 	var/close_delay = 100
 
-/obj/structure/mineral_door/resin/New()
+/obj/structure/mineral_door/resin/atom_init()
 	var/turf/T = get_turf(loc)
 	if(T)
 		T.blocks_air = TRUE
-	..()
+	. = ..()
 
 /obj/structure/mineral_door/resin/Destroy()
 	var/turf/T = get_turf(loc)
@@ -310,3 +299,15 @@
 	..()
 	CheckHealth()
 	return
+
+/obj/structure/mineral_door/resin/attack_paw(mob/user)
+	if(isalienadult(user) && user.a_intent == "hurt")
+		user.do_attack_animation(src)
+		health -= rand(40, 60)
+		if(health <= 0)
+			user.visible_message("<span class='danger'>[user] slices the [name] to pieces!</span>")
+		else
+			user.visible_message("<span class='danger'>[user] claws at the resin!</span>")
+		CheckHealth()
+	else
+		return ..()

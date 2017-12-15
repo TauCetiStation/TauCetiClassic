@@ -17,6 +17,9 @@ var/global/list/geoip_ckey_updated = list()
 	var/ip = null
 
 /datum/geoip_data/New(client/C, addr)
+	INVOKE_ASYNC(src, .proc/get_geoip_data, C, addr)
+
+/datum/geoip_data/proc/get_geoip_data(client/C, addr)
 	set background = BACKGROUND_ENABLED
 
 	if(!C || !addr)

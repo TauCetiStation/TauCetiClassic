@@ -32,7 +32,7 @@
 		if(1)
 			command_alert("Meteors have been detected on collision course with the station.", "Meteor Alert")
 			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
+				if(!isnewplayer(M))
 					M << sound('sound/AI/meteors.ogg')
 			spawn(100)
 				meteor_wave()
@@ -44,7 +44,7 @@
 		if(2)
 			command_alert("Gravitational anomalies detected on the station. There is no additional data.", "Anomaly Alert")
 			for(var/mob/M in player_list)
-				if(!istype(M,/mob/new_player))
+				if(!isnewplayer(M))
 					M << sound('sound/AI/granomalies.ogg')
 			var/turf/T = pick(blobstart)
 			var/obj/effect/bhole/bh = new /obj/effect/bhole( T.loc, 30 )
@@ -186,10 +186,19 @@
 	//command_alert("Unidentified lifesigns detected coming aboard [station_name()]. Secure any exterior access, including ducting and ventilation.", "Lifesign Alert")
 	//world << sound('sound/AI/aliens.ogg')
 	var/list/vents = list()
-	for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in machines)
-		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded && temp_vent.network)
-			if(temp_vent.network.normal_members.len > 50) // Stops Aliens getting stuck in small networks. See: Security, Virology
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in machines)
+		if(QDELETED(temp_vent))
+			continue
+		if(temp_vent.loc.z == ZLEVEL_STATION && !temp_vent.welded)
+			var/datum/pipeline/temp_vent_parent = temp_vent.PARENT1
+			//Stops Aliens getting stuck in small networks.
+			//See: Security, Virology
+			if(temp_vent_parent.other_atmosmch.len > 50)
 				vents += temp_vent
+
+	if(!vents.len)
+		message_admins("An event attempted to spawn an alien but no suitable vents were found. Shutting down.")
+		return
 
 	var/list/candidates = get_alien_candidates()
 

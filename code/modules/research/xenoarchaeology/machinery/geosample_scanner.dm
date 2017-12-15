@@ -44,8 +44,8 @@
 	var/t_left_radspike = 0
 	var/rad_shield = 0
 
-/obj/machinery/radiocarbon_spectrometer/New()
-	..()
+/obj/machinery/radiocarbon_spectrometer/atom_init()
+	. = ..()
 	create_reagents(500)
 	coolant_reagents_purity["water"] = 0.5
 	coolant_reagents_purity["icecoffee"] = 0.6
@@ -60,9 +60,6 @@
 	coolant_reagents_purity["coolant"] = 1
 	coolant_reagents_purity["adminordrazine"] = 2
 
-/obj/machinery/radiocarbon_spectrometer/attack_hand(mob/user)
-	ui_interact(user)
-
 /obj/machinery/radiocarbon_spectrometer/attackby(obj/I, mob/user)
 	if(scanning)
 		to_chat(user, "<span class='warning'>You can't do that while [src] is scanning!</span>")
@@ -71,7 +68,7 @@
 			var/choice = alert("What do you want to do with the nanopaste?","Radiometric Scanner","Scan nanopaste","Fix seal integrity")
 			if(choice == "Fix seal integrity")
 				var/obj/item/stack/nanopaste/N = I
-				var/amount_used = min(N.amount, 10 - scanner_seal_integrity / 10)
+				var/amount_used = min(N.get_amount(), 10 - scanner_seal_integrity / 10)
 				N.use(amount_used)
 				scanner_seal_integrity = round(scanner_seal_integrity + amount_used * 10)
 				return
@@ -116,7 +113,7 @@
 
 /obj/machinery/radiocarbon_spectrometer/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 
-	if(user.stat)
+	if(user.stat && !isobserver(user))
 		return
 
 	// this is the data which will be sent to the ui

@@ -23,9 +23,6 @@
 	var/walltype = "metal"
 	var/sheet_type = /obj/item/stack/sheet/metal
 
-/turf/simulated/wall/New()
-	..()
-
 /turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
@@ -33,11 +30,11 @@
 	dismantle_wall()
 	return ..()
 
-/turf/simulated/wall/ChangeTurf(newtype)
+/turf/simulated/wall/ChangeTurf()
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
 			qdel(E)
-	..(newtype)
+	. = ..()
 	relativewall_neighbours()
 
 //Appearance
@@ -59,7 +56,7 @@
 	if(rotting)
 		to_chat(user, "<span class='warning'>There is fungus growing on [src].</span>")
 
-/turf/simulated/wall/proc/update_icon()
+/turf/simulated/wall/update_icon()
 	if(!damage_overlays[1]) //list hasn't been populated
 		generate_overlays()
 
@@ -136,8 +133,7 @@
 		new /obj/effect/decal/cleanable/blood(src)
 		return (new /obj/structure/cultgirder(src))
 
-	var/obj/item/stack/sheet/sheet = new sheet_type(src)
-	sheet.amount = 2
+	new sheet_type(src, 2)
 	return (new /obj/structure/girder(src))
 
 /turf/simulated/wall/proc/devastate_wall()
@@ -145,14 +141,13 @@
 		new /obj/effect/decal/cleanable/blood(src)
 		new /obj/effect/decal/remains/human(src)
 
-	var/obj/item/stack/sheet/sheet = new sheet_type(src)
-	sheet.amount = 2
+	new sheet_type(src, 2)
 	new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(basetype)
 			return
 		if(2.0)
 			if(prob(75))

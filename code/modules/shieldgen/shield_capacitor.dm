@@ -23,13 +23,15 @@
 	var/charge_rate = 100
 	var/obj/machinery/shield_gen/owned_gen
 
-/obj/machinery/shield_capacitor/New()
-	spawn(10)
-		for(var/obj/machinery/shield_gen/possible_gen in range(1, src))
-			if(get_dir(src, possible_gen) == src.dir)
-				possible_gen.owned_capacitor = src
-				break
+/obj/machinery/shield_capacitor/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/shield_capacitor/atom_init_late()
+	for(var/obj/machinery/shield_gen/possible_gen in range(1, src))
+		if(get_dir(src, possible_gen) == src.dir)
+			possible_gen.owned_capacitor = src
+			break
 
 /obj/machinery/shield_capacitor/attackby(obj/item/W, mob/user)
 
@@ -68,25 +70,14 @@
 	else
 		..()
 
-/obj/machinery/shield_capacitor/attack_paw(user)
-	return src.attack_hand(user)
-
-/obj/machinery/shield_capacitor/attack_ai(user)
-	return src.attack_hand(user)
-
-/obj/machinery/shield_capacitor/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
-		return
-	interact(user)
-
-/obj/machinery/shield_capacitor/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-		if (!istype(user, /mob/living/silicon))
+/obj/machinery/shield_capacitor/ui_interact(mob/user)
+	if ( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )
+		if (!issilicon(user) && !isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=shield_capacitor")
 			return
 	var/t = "<B>Shield Capacitor Control Console</B><br><br>"
-	if(locked)
+	if(locked && !isobserver(user))
 		t += "<i>Swipe your ID card to begin.</i>"
 	else
 		t += "This capacitor is: [active ? "<font color=green>Online</font>" : "<font color=red>Offline</font>" ] <a href='?src=\ref[src];toggle=1'>[active ? "\[Deactivate\]" : "\[Activate\]"]</a><br>"
@@ -106,7 +97,6 @@
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 
 	user << browse(t, "window=shield_capacitor;size=500x400")
-	user.set_machine(src)
 
 /obj/machinery/shield_capacitor/process()
 	//

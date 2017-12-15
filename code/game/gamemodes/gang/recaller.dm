@@ -15,7 +15,8 @@
 	var/outfits = 3
 	var/free_pen = 0
 
-/obj/item/device/gangtool/New() //Initialize supply point income if it hasn't already been started
+/obj/item/device/gangtool/atom_init() //Initialize supply point income if it hasn't already been started
+	. = ..()
 	if(!ticker.mode.gang_points)
 		ticker.mode.gang_points = new /datum/gang_points(ticker.mode)
 		ticker.mode.gang_points.start()

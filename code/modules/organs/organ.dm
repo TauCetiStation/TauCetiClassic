@@ -23,7 +23,7 @@
 	// Damage vars.
 	var/min_broken_damage = 30         // Damage before becoming broken
 
-/obj/item/organ/New(loc, mob/living/carbon/human/H)
+/obj/item/organ/atom_init(mapload, mob/living/carbon/human/H)
 	if(istype(H))
 		insert_organ(H)
 
@@ -83,7 +83,6 @@
 // Takes care of bodypart and their organs related updates, such as broken and missing limbs
 /mob/living/carbon/human/proc/handle_bodyparts()
 	number_wounds = 0
-	var/leg_tally = 2
 	var/force_process = 0
 	var/damage_this_tick = getBruteLoss() + getFireLoss() + getToxLoss()
 	if(damage_this_tick > last_dam)
@@ -97,6 +96,8 @@
 	//processing organs is pretty cheap, do that first.
 	for(var/obj/item/organ/internal/IO in organs)
 		IO.process()
+
+	handle_stance()
 
 	if(!force_process && !bad_bodyparts.len)
 		return
@@ -124,23 +125,51 @@
 						if (W.infection_check())
 							W.germ_level += 1
 
-			if((BP.body_zone in list(BP_L_LEG , BP_L_FOOT , BP_R_LEG , BP_R_FOOT)) && !lying)
-				if (!BP.is_usable() || BP.is_malfunctioning() || (BP.is_broken() && !(BP.status & ORGAN_SPLINTED)))
-					leg_tally--			// let it fail even if just foot&leg
+/mob/living/carbon/human/proc/handle_stance()
+	// Don't need to process any of this if they aren't standing anyways
+	// unless their stance is damaged, and we want to check if they should stay down
+	if(!stance_damage && (lying || resting) && (life_tick % 4) != 0)
+		return
+
+	stance_damage = 0
+
+	// Buckled to a bed/chair. Stance damage is forced to 0 since they're sitting on something solid
+	if(istype(buckled, /obj/structure/stool))
+		return
+
+	for(var/limb_tag in list(BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT))
+		var/obj/item/organ/external/E = bodyparts_by_name[limb_tag]
+		if(!E || !E.is_usable())
+			stance_damage += 2 // let it fail even if just foot&leg
+		else if(E.is_malfunctioning())
+			//malfunctioning only happens intermittently so treat it as a missing limb when it procs
+			stance_damage += 2
+			if(prob(10))
+				visible_message("\The [src]'s [E.name] [pick("twitches", "shudders")] and sparks!")
+				var/datum/effect/effect/system/spark_spread/spark_system = new ()
+				spark_system.set_up(5, 0, src)
+				spark_system.attach(src)
+				spark_system.start()
+				spawn(10)
+					qdel(spark_system)
+		else if(E.is_broken())
+			if(!(E.status & ORGAN_SPLINTED))
+				stance_damage += 1
+			else
+				stance_damage += 0.5
+
+	// Canes and crutches help you stand (if the latter is ever added)
+	// One cane mitigates a broken leg+foot, or a missing foot.
+	// Two canes are needed for a lost leg. If you are missing both legs, canes aren't gonna help you.
+	if (l_hand && istype(l_hand, /obj/item/weapon/cane))
+		stance_damage -= 2
+	if (r_hand && istype(r_hand, /obj/item/weapon/cane))
+		stance_damage -= 2
 
 	// standing is poor
-	if(leg_tally <= 0 && !paralysis && !(lying || resting) && prob(5))
-		if(species && species.flags[NO_PAIN])
-			emote("scream",,, 1)
-		emote("collapse")
-		paralysis = 10
-
-	//Check arms and legs for existence
-	can_stand = 2 //can stand on both legs
-	var/obj/item/organ/external/BP = bodyparts_by_name[BP_L_FOOT]
-	if(BP.status & ORGAN_DESTROYED)
-		can_stand--
-
-	BP = bodyparts_by_name[BP_R_FOOT]
-	if(BP.status & ORGAN_DESTROYED)
-		can_stand--
+	if(stance_damage >= 4 || (stance_damage >= 2 && prob(5)))
+		if(!(lying || resting))
+			if(species && !species.flags[NO_PAIN])
+				emote("scream", auto = TRUE)
+			emote("collapse")
+		Weaken(5) //can't emote while weakened, apparently.

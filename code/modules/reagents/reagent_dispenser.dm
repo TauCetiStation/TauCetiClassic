@@ -6,7 +6,6 @@
 	density = 1
 	anchored = 0
 	flags = OPENCONTAINER
-	pressure_resistance = 2*ONE_ATMOSPHERE
 
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
@@ -14,13 +13,13 @@
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
 	return
 
-/obj/structure/reagent_dispensers/New()
+/obj/structure/reagent_dispensers/atom_init()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
 	if (!possible_transfer_amounts)
 		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
-	..()
+	. = ..()
 
 /obj/structure/reagent_dispensers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
@@ -63,8 +62,8 @@
 	amount_per_transfer_from_this = 10
 	var/modded = 0
 
-/obj/structure/reagent_dispensers/watertank/New()
-	..()
+/obj/structure/reagent_dispensers/watertank/atom_init()
+	. = ..()
 	reagents.add_reagent("water",1000)
 
 /obj/structure/reagent_dispensers/watertank/examine(mob/user)
@@ -101,10 +100,7 @@
 
 	amount = min(amount, reagents.total_volume)
 	reagents.remove_reagent("water",amount)
-
-	create_water(src)
-
-
+	spawn_fluid(loc, amount * 50)
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
@@ -115,8 +111,8 @@
 	var/modded = 0
 	var/obj/item/device/assembly_holder/rig = null
 
-/obj/structure/reagent_dispensers/fueltank/New()
-	..()
+/obj/structure/reagent_dispensers/fueltank/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(300)
 	reagents = R
 	R.my_atom = src
@@ -227,8 +223,8 @@
 	density = 0
 	amount_per_transfer_from_this = 45
 
-/obj/structure/reagent_dispensers/peppertank/New()
-	..()
+/obj/structure/reagent_dispensers/peppertank/atom_init()
+	. = ..()
 	reagents.add_reagent("condensedcapsaicin",1000)
 
 
@@ -242,8 +238,8 @@
 	possible_transfer_amounts = null
 	anchored = 1
 
-/obj/structure/reagent_dispensers/water_cooler/New()
-	..()
+/obj/structure/reagent_dispensers/water_cooler/atom_init()
+	. = ..()
 	reagents.add_reagent("water",500)
 
 
@@ -254,8 +250,8 @@
 	icon_state = "beertankTEMP"
 	amount_per_transfer_from_this = 10
 
-/obj/structure/reagent_dispensers/beerkeg/New()
-	..()
+/obj/structure/reagent_dispensers/beerkeg/atom_init()
+	. = ..()
 	reagents.add_reagent("beer",1000)
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
@@ -270,8 +266,8 @@
 	amount_per_transfer_from_this = 10
 	anchored = 1
 
-/obj/structure/reagent_dispensers/virusfood/New()
-	..()
+/obj/structure/reagent_dispensers/virusfood/atom_init()
+	. = ..()
 	reagents.add_reagent("virusfood", 1000)
 
 /obj/structure/reagent_dispensers/acid
@@ -282,6 +278,6 @@
 	amount_per_transfer_from_this = 10
 	anchored = 1
 
-/obj/structure/reagent_dispensers/acid/New()
-	..()
+/obj/structure/reagent_dispensers/acid/atom_init()
+	. = ..()
 	reagents.add_reagent("sacid", 1000)

@@ -15,9 +15,9 @@ RSF
 	var/mode = 1
 	w_class = 3.0
 
-/obj/item/weapon/rsf/New()
+/obj/item/weapon/rsf/atom_init()
+	. = ..()
 	desc = "A RSF. It currently holds [matter]/30 fabrication-units."
-	return
 
 /obj/item/weapon/rsf/attackby(obj/item/weapon/W, mob/user)
 	..()

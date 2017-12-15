@@ -8,7 +8,7 @@
 	amount = 10
 
 
-/obj/item/stack/nanopaste/attack(mob/living/M, mob/user)
+/obj/item/stack/nanopaste/attack(mob/living/M, mob/user, def_zone)
 	if (!istype(M) || !istype(user))
 		return 0
 	if (istype(M,/mob/living/silicon/robot))	//Repairing cyborgs
@@ -25,9 +25,9 @@
 		else
 			to_chat(user, "<span class='notice'>All [R]'s systems are nominal.</span>")
 
-	if (istype(M,/mob/living/carbon/human))		//Repairing robolimbs
+	if (ishuman(M))		//Repairing robolimbs
 		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 
 		if (BP && (BP.status & ORGAN_ROBOT))
 			if(BP.get_damage())

@@ -35,11 +35,7 @@
 	)
 	var/list/restricted_programs = list("Wildlife Simulation" = "wildlifecarp")// "Atmospheric Burn Simulation" = "burntest", - no, Dave
 
-/obj/machinery/computer/HolodeckControl/attack_hand(mob/user)
-	if(..())
-		return
-
-	user.set_machine(src)
+/obj/machinery/computer/HolodeckControl/ui_interact(mob/user)
 	var/dat
 
 	dat += "<B>Holodeck Control System</B><BR>"
@@ -55,7 +51,7 @@
 	dat += "<BR>"
 	dat += "Please ensure that only holographic weapons are used in the holodeck if a combat simulation has been loaded.<BR>"
 
-	if(issilicon(user))
+	if(issilicon(user) || isobserver(user))
 		dat += "<BR>"
 		if(safety_disabled)
 			if (emagged)
@@ -84,8 +80,6 @@
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
 
-	return
-
 
 /obj/machinery/computer/HolodeckControl/Topic(href, href_list)
 	. = ..()
@@ -98,7 +92,7 @@
 			loadIdProgram(prog)
 
 	else if(href_list["AIoverride"])
-		if(!issilicon_allowed(usr))
+		if(!issilicon_allowed(usr) && !isobserver(usr))
 			return FALSE
 
 		if(safety_disabled && emagged)
@@ -149,8 +143,11 @@
 		if (last_to_emag)
 			C.friends = list(last_to_emag)
 
-/obj/machinery/computer/HolodeckControl/New()
+/obj/machinery/computer/HolodeckControl/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/HolodeckControl/atom_init_late()
 	linkedholodeck = locate(/area/holodeck/alphadeck)
 
 //This could all be done better, but it works for now.
@@ -214,7 +211,7 @@
 					s.set_up(2, 1, T)
 					s.start()
 				T.ex_act(3)
-				T.hotspot_expose(1000,500,1)
+				T.hotspot_expose(1000, 500)
 
 /obj/machinery/computer/HolodeckControl/proc/derez(obj/obj , silent = 1)
 	holographic_objs.Remove(obj)
@@ -286,6 +283,7 @@
 
 	for(var/obj/holo_obj in holographic_objs)
 		holo_obj.alpha *= 0.8 //give holodeck objs a slight transparency
+		holo_obj.flags_2 |= HOLOGRAM_2
 
 	addtimer(CALLBACK(src, .proc/initEnv), 30, TIMER_UNIQUE)
 
@@ -310,7 +308,7 @@
 	s.start()
 	if(T)
 		T.temperature = 5000
-		T.hotspot_expose(50000,50000,1)
+		T.hotspot_expose(50000, 50000)
 
 /obj/machinery/computer/HolodeckControl/proc/toggleGravity(area/A)
 	if(world.time < (last_gravity_change + 25))

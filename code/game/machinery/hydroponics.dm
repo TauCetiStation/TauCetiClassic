@@ -6,6 +6,7 @@
 	icon_state = "hydrotray"
 	density = 1
 	anchored = 1
+	interact_offline = TRUE
 	var/waterlevel = 100 // The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
 	var/nutrilevel = 10 // The amount of nutrient in the tray (max 10)
@@ -34,8 +35,8 @@
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "hydrotray3"
 
-/obj/machinery/hydroponics/constructable/New()
-	..()
+/obj/machinery/hydroponics/constructable/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/hydroponics(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -741,16 +742,19 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	else if(dead)
 		planted = 0
 		dead = 0
-		to_chat(usr, text("You remove the dead plant from the [src]."))
+		to_chat(user, text("You remove the dead plant from the [src]."))
 		qdel(myseed)
 		update_icon()
 
 /obj/machinery/hydroponics/attack_hand(mob/user)
-	if(istype(usr,/mob/living/silicon))		//How does AI know what plant is?
+	. = ..()
+	if(.)
 		return
+	if(issilicon(user)) //How does AI know what plant is?
+		return 1
 	if(harvest)
 		if(!(user in range(1,src)))
-			return
+			return 1
 		myseed.harvest()
 	else if(dead)
 		planted = 0
@@ -811,8 +815,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	var/t_yield = round(yield*parent.yieldmod)
 
 	if(t_yield > 0)
-		var/obj/item/stack/tile/grass/new_grass = new/obj/item/stack/tile/grass(user.loc)
-		new_grass.amount = t_yield
+		new/obj/item/stack/tile/grass(user.loc, t_yield)
 
 	parent.update_tray()
 

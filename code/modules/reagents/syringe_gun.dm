@@ -100,7 +100,7 @@
 
 					M.visible_message("<span class='danger'>[M] is hit by the syringe!</span>")
 
-					if(T && istype(T) && T.can_inject())
+					if(T && istype(T) && T.try_inject())
 						if(D.reagents)
 							D.reagents.trans_to(M, 15)
 					else
@@ -135,7 +135,8 @@
 	anchored = 1
 	density = 0
 
-/obj/effect/syringe_gun_dummy/New()
+/obj/effect/syringe_gun_dummy/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(15)
 	reagents = R
 	R.my_atom = src

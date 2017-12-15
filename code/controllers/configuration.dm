@@ -81,6 +81,7 @@
 	var/usealienwhitelist = 0
 	var/limitalienplayers = 0
 	var/alien_to_human_ratio = 0.5
+	var/list/whitelisted_species_by_time = list()
 
 	var/server
 	var/banappeals
@@ -151,8 +152,13 @@
 	var/slack_team = 0
 	var/antigrief_alarm_level = 1
 
+	var/allow_donators = 0
+	var/donate_info_url = 0
+
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
+
+	var/craft_recipes_visibility = FALSE // If false, then users won't see crafting recipes in personal crafting menu until they have all required components and then it will show up.
 
 /datum/configuration/New()
 	var/list/L = typesof(/datum/game_mode) - /datum/game_mode
@@ -441,6 +447,21 @@
 				if("usealienwhitelist")
 					usealienwhitelist = 1
 
+				if("alien_available_by_time") //totally not copypaste from probabilities
+					var/avail_time_sep = findtext(value, " ")
+					var/avail_alien_name = null
+					var/avail_alien_ingame_time = null
+
+					if (avail_time_sep)
+						avail_alien_name = lowertext(copytext(value, 1, avail_time_sep))
+						avail_alien_ingame_time = text2num(copytext(value, avail_time_sep + 1))
+						if (avail_alien_name in whitelisted_roles)
+							config.whitelisted_species_by_time[avail_alien_name] = avail_alien_ingame_time
+						else
+							log_misc("Incorrect species whitelist for experienced players configuration definition, species missing in whitelisted_spedcies: [avail_alien_name].")
+					else
+						log_misc("Incorrect species whitelist for experienced players configuration definition: [value].")
+
 				if("alien_player_ratio")
 					limitalienplayers = 1
 					alien_to_human_ratio = text2num(value)
@@ -520,6 +541,12 @@
 				if("antigrief_alarm_level")
 					config.antigrief_alarm_level = value
 
+				if("allow_donators")
+					config.allow_donators = 1
+
+				if("donate_info_url")
+					config.donate_info_url = value
+
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
@@ -561,6 +588,8 @@
 					config.organ_health_multiplier = value / 100
 				if("organ_regeneration_multiplier")
 					config.organ_regeneration_multiplier = value / 100
+				if("craft_recipes_visibility")
+					config.craft_recipes_visibility = TRUE
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
 
@@ -716,6 +745,6 @@
 
 /datum/configuration/proc/stat_entry()
 	if(!statclick)
-		statclick = new/obj/effect/statclick/debug("Edit", src)
+		statclick = new/obj/effect/statclick/debug(null, "Edit", src)
 
 	stat("[name]:", statclick)

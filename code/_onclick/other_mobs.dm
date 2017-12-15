@@ -13,7 +13,11 @@
 	if(proximity && istype(G) && G.Touch(A,1))
 		return
 
+	//if(!A.can_mob_interact(src)) maybe in future...
+	//	return
+
 	A.attack_hand(src)
+
 /atom/proc/attack_hand(mob/user)
 	return
 
@@ -80,5 +84,5 @@
 	New Players:
 	Have no reason to click on anything at all.
 */
-/mob/new_player/ClickOn()
+/mob/dead/new_player/ClickOn()
 	return

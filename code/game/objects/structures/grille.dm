@@ -6,8 +6,7 @@
 	density = 1
 	anchored = 1
 	flags = CONDUCT
-	pressure_resistance = 5*ONE_ATMOSPHERE
-	layer = 2.9
+	layer = BELOW_MACHINERY_LAYER
 	explosion_resistance = 5
 	var/health = 10
 	var/destroyed = 0
@@ -125,7 +124,7 @@
 //window placing begin
 	else if( istype(W,/obj/item/stack/sheet/rglass) || istype(W,/obj/item/stack/sheet/glass) )
 		var/obj/item/stack/ST = W
-		if(ST.amount < 1)
+		if(ST.get_amount() < 1)
 			return
 		var/dir_to_set = 1
 		if(loc == user.loc)
@@ -151,7 +150,8 @@
 				return
 		to_chat(user, "<span class='notice'>You start placing the window.</span>")
 		if(do_after(user,20,target = src))
-			if(!src) return //Grille destroyed while waiting
+			if(QDELETED(src))
+				return //Grille destroyed while waiting
 			for(var/obj/structure/window/WINDOW in loc)
 				if(WINDOW.dir == dir_to_set)//checking this for a 2nd time to check if a window was made while we were waiting.
 					to_chat(user, "<span class='notice'>There is already a window facing this way there.</span>")

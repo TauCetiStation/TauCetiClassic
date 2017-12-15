@@ -49,6 +49,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
 
 	req_access = list(access_research)	//Data and setting manipulation requires scientist access.
+	allowed_checks = ALLOWED_CHECK_NONE
 
 
 /obj/machinery/computer/rdconsole/proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
@@ -126,15 +127,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		C.files.RefreshResearch()
 
 
-/obj/machinery/computer/rdconsole/New()
-	..()
+/obj/machinery/computer/rdconsole/atom_init()
+	. = ..()
 	files = new /datum/research(src) //Setup the research data holder.
 	if(!id)
 		for(var/obj/machinery/r_n_d/server/centcom/S in machines)
-			S.initialize()
+			S.atom_init()
 			break
 
-/obj/machinery/computer/rdconsole/initialize()
+/obj/machinery/computer/rdconsole/atom_init()
+	. = ..()
 	SyncRDevices()
 
 /*	Instead of calling this every tick, it is only being called when needed
@@ -290,7 +292,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 									S.amount--
 									linked_destroy.loaded_item = S
 								else
-									qdel(S)
 									linked_destroy.icon_state = "d_analyzer"
 							else
 								if(!(I in linked_destroy.component_parts))
@@ -507,8 +508,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			var/obj/item/stack/sheet/sheet = new type(linked_lathe.loc)
 			var/available_num_sheets = round(linked_lathe.vars[res_amount] / sheet.perunit)
 			if(available_num_sheets > 0)
-				sheet.amount = min(available_num_sheets, desired_num_sheets)
-				linked_lathe.vars[res_amount] = max(0, (linked_lathe.vars[res_amount] - sheet.amount * sheet.perunit))
+				sheet.set_amount(min(available_num_sheets, desired_num_sheets))
+				linked_lathe.vars[res_amount] = max(0, (linked_lathe.vars[res_amount] - sheet.get_amount() * sheet.perunit))
 			else
 				qdel(sheet)
 	else if(href_list["imprinter_ejectsheet"] && linked_imprinter) //Causes the protolathe to eject a sheet of material
@@ -531,8 +532,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			var/obj/item/stack/sheet/sheet = new type(linked_imprinter.loc)
 			var/available_num_sheets = round(linked_imprinter.vars[res_amount] / sheet.perunit)
 			if(available_num_sheets > 0)
-				sheet.amount = min(available_num_sheets, desired_num_sheets)
-				linked_imprinter.vars[res_amount] = max(0, (linked_imprinter.vars[res_amount]-sheet.amount * sheet.perunit))
+				sheet.set_amount(min(available_num_sheets, desired_num_sheets))
+				linked_imprinter.vars[res_amount] = max(0, (linked_imprinter.vars[res_amount]-sheet.get_amount() * sheet.perunit))
 			else
 				qdel(sheet)
 
@@ -567,13 +568,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				updateUsrDialog()
 	updateUsrDialog()
 
-/obj/machinery/computer/rdconsole/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/rdconsole/interact(mob/user)
-	user.set_machine(src)
+/obj/machinery/computer/rdconsole/ui_interact(mob/user)
 	var/dat = ""
 	files.RefreshResearch()
 	switch(screen) //A quick check to make sure you get the right screen when a device is disconnected.
@@ -680,13 +675,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "Name: [d_disk.blueprint.name]<BR>"
 				dat += "Level: [between(0, (d_disk.blueprint.reliability + rand(-15,15)), 100)]<BR>"
 				switch(d_disk.blueprint.build_type)
-					if(IMPRINTER) dat += "Lathe Type: Circuit Imprinter<BR>"
-					if(PROTOLATHE) dat += "Lathe Type: Proto-lathe<BR>"
-					if(AUTOLATHE) dat += "Lathe Type: Auto-lathe<BR>"
+					if(IMPRINTER)
+						dat += "Lathe Type: Circuit Imprinter<BR>"
+					if(PROTOLATHE)
+						dat += "Lathe Type: Proto-lathe<BR>"
+					if(AUTOLATHE)
+						dat += "Lathe Type: Auto-lathe<BR>"
 				dat += "Required Materials:<BR>"
 				for(var/M in d_disk.blueprint.materials)
-					if(copytext(M, 1, 2) == "$") dat += "* [copytext(M, 2)] x [d_disk.blueprint.materials[M]]<BR>"
-					else dat += "* [M] x [d_disk.blueprint.materials[M]]<BR>"
+					if(copytext(M, 1, 2) == "$")
+						dat += "* [copytext(M, 2)] x [d_disk.blueprint.materials[M]]<BR>"
+					else
+						dat += "* [M] x [d_disk.blueprint.materials[M]]<BR>"
 				dat += "</div>Operations: "
 				dat += "<A href='?src=\ref[src];updt_design=1'>Upload to Database</A>"
 				dat += "<A href='?src=\ref[src];clear_design=1'>Clear Disk</A>"
@@ -920,7 +920,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/datum/browser/popup = new(user, "rndconsole", name, 420, 450)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"
@@ -928,8 +927,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_access = null
 	req_access_txt = "29"
 
-/obj/machinery/computer/rdconsole/robotics/New()
-	..()
+/obj/machinery/computer/rdconsole/robotics/atom_init()
+	. = ..()
 	if(circuit)
 		circuit.name = "circuit board (RD Console - Robotics)"
 		circuit.build_path = /obj/machinery/computer/rdconsole/robotics
@@ -944,8 +943,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	req_access = null
 	req_access_txt = "48"
 
-/obj/machinery/computer/rdconsole/mining/New()
-	..()
+/obj/machinery/computer/rdconsole/mining/atom_init()
+	. = ..()
 	if(circuit)
 		circuit.name = "circuit board (RD Console - Mining)"
 		circuit.build_path = /obj/machinery/computer/rdconsole/mining

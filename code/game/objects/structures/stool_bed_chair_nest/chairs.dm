@@ -34,33 +34,33 @@
 /obj/structure/stool/bed/chair/metal/black
 	icon_state = "chair_bla"
 
-/obj/structure/stool/bed/chair/metal/New()
+/obj/structure/stool/bed/chair/metal/atom_init()
 	behind = "chair_behind_g"
-	return ..()
+	. = ..()
 
-/obj/structure/stool/bed/chair/metal/blue/New()
+/obj/structure/stool/bed/chair/metal/blue/atom_init()
 	behind = "chair_behind_blu"
-	return ..()
+	. = ..()
 
-/obj/structure/stool/bed/chair/metal/yellow/New()
+/obj/structure/stool/bed/chair/metal/yellow/atom_init()
 	behind = "chair_behind_y"
-	return ..()
+	. = ..()
 
-/obj/structure/stool/bed/chair/metal/red/New()
+/obj/structure/stool/bed/chair/metal/red/atom_init()
 	behind = "chair_behind_r"
-	return ..()
+	. = ..()
 
-/obj/structure/stool/bed/chair/metal/green/New()
+/obj/structure/stool/bed/chair/metal/green/atom_init()
 	behind = "chair_behind_gr"
-	return ..()
+	. = ..()
 
-/obj/structure/stool/bed/chair/metal/white/New()
+/obj/structure/stool/bed/chair/metal/white/atom_init()
 	behind = "chair_behind_w"
-	return ..()
+	. = ..()
 
-/obj/structure/stool/bed/chair/metal/black/New()
+/obj/structure/stool/bed/chair/metal/black/atom_init()
 	behind = "chair_behind_bla"
-	return ..()
+	. = ..()
 
 /obj/structure/stool/bed/chair/Move(atom/newloc, direct)
 	..()
@@ -79,9 +79,9 @@
 	icon_state = "schair"
 	var/sarmrest = null
 
-/obj/structure/stool/bed/chair/schair/New()
+/obj/structure/stool/bed/chair/schair/atom_init()
 	sarmrest = image("icons/obj/objects.dmi", "schair_armrest", layer = FLY_LAYER)
-	return ..()
+	. = ..()
 
 /obj/structure/stool/bed/chair/schair/post_buckle_mob(mob/living/M)
 	if(buckled_mob)
@@ -89,11 +89,12 @@
 	else
 		overlays -= sarmrest
 
-/obj/structure/stool/bed/chair/New()
+/obj/structure/stool/bed/chair/atom_init()
 	..()
-	spawn(3)	//sorry. i don't think there's a better way to do this.
-		handle_rotation()
-	return
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/stool/bed/chair/atom_init_late()
+	handle_rotation()
 
 /obj/structure/stool/bed/chair/attackby(obj/item/weapon/W, mob/user)
 	..()
@@ -223,7 +224,7 @@
 /obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		new /obj/item/stack/sheet/wood(src.loc)
+		new /obj/item/stack/sheet/wood(loc)
 		qdel(src)
 	if(istype(W, /obj/item/weapon/melee/energy))
 		if(istype(W, /obj/item/weapon/melee/energy/blade) || W:active)
@@ -235,7 +236,7 @@
 			playsound(src.loc, "sparks", 50, 1)
 			for(var/mob/O in viewers(user, 4))
 				O.show_message("\blue [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
-			new /obj/item/stack/sheet/wood(src.loc)
+			new /obj/item/stack/sheet/wood(loc)
 			qdel(src)
 	else
 		..()
@@ -247,9 +248,9 @@
 	color = rgb(255,255,255)
 	var/armrest = null
 
-/obj/structure/stool/bed/chair/comfy/New()
+/obj/structure/stool/bed/chair/comfy/atom_init()
 	armrest = image("icons/obj/objects.dmi", "comfychair_armrest", layer = FLY_LAYER)
-	return ..()
+	. = ..()
 
 /obj/structure/stool/bed/chair/comfy/post_buckle_mob(mob/living/M)
 	if(buckled_mob)

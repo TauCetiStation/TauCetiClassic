@@ -13,7 +13,7 @@
 
 /obj/effect/proc_holder/changeling/biodegrade/sting_action(mob/living/carbon/human/user)
 	var/used = FALSE // only one form of shackles removed per use
-	if(user.back && istype(user.back,/obj/item/device/radio/electropack))
+	if(user.back && istype(user.back, /obj/item/device/radio/electropack))
 		user.visible_message("<span class='warning'>[user] vomits a glob of \
 			acid on \his [user.back]!</span>", \
 			"<span class='warning'>We vomit acidic ooze onto our \
@@ -21,7 +21,9 @@
 		addtimer(CALLBACK(src, .proc/dissolve_electropack, user, user.back), 30)
 		used = TRUE
 
-	if(user.wear_mask  && istype(user.wear_mask ,/obj/item/clothing/mask/horsehead))
+	if(!used && user.wear_mask && (istype(user.wear_mask, /obj/item/clothing/mask/horsehead)|| \
+		istype(user.wear_mask, /obj/item/clothing/mask/pig) || istype(user.wear_mask, /obj/item/clothing/mask/cowmask) \
+		|| istype(user.wear_mask, /obj/item/clothing/head/chicken)))
 		user.visible_message("<span class='warning'>[user] vomits a glob of \
 			acid on \his [user.wear_mask ]!</span>", \
 			"<span class='warning'>We vomit acidic ooze onto our \
@@ -99,7 +101,9 @@
 		O.visible_message("<span class='warning'>[O] dissolves into a puddle of sizzling goop.</span>")
 		qdel(O)
 
-/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_horsehead(mob/living/carbon/human/user, obj/item/clothing/mask/horsehead/O)
-	if(istype(O) && user.wear_mask == O)
+/obj/effect/proc_holder/changeling/biodegrade/proc/dissolve_horsehead(mob/living/carbon/human/user, obj/item/clothing/mask/O)
+	if(user.wear_mask == O && (istype(O, /obj/item/clothing/mask/horsehead)|| \
+		istype(O, /obj/item/clothing/mask/pig) || istype(O, /obj/item/clothing/mask/cowmask) \
+		|| istype(O, /obj/item/clothing/head/chicken)))
 		O.visible_message("<span class='warning'>[O] dissolves into a puddle of sizzling goop.</span>")
 		qdel(O)

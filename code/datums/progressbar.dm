@@ -14,6 +14,7 @@
 	bar = image('icons/effects/progessbar.dmi', target, "prog_bar_0")
 	bar.pixel_y = 32
 	bar.layer = LIGHTING_LAYER+1	//Above lighting.
+	bar.plane = LIGHTING_PLANE+1	//Above lighting.
 	bar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	user = User
 	if (user)

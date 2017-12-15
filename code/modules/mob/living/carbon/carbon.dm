@@ -118,11 +118,11 @@
 	if(status_flags & GODMODE)	return 0	//godmode
 
 	var/turf/T = get_turf(src)
-	var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
-	if(W)
+	var/obj/effect/fluid/F = locate() in T
+	if(F)
 		attack_log += "\[[time_stamp()]\]<font color='red'> [src] was shocked by the [source] and started chain-reaction with water!</font>"
-		msg_admin_attack("[key_name(src)] was shocked by the [source] and started chain-reaction with water! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-		W.electrocute_act(shock_damage)
+		msg_admin_attack("[key_name(src)] was shocked by the [source] and started chain-reaction with water! [ADMIN_JMP(src)]")
+		F.electrocute_act(shock_damage)
 
 	shock_damage *= siemens_coeff
 	if(shock_damage<1)
@@ -279,7 +279,7 @@
 	set name = "Crawl"
 	set category = "IC"
 
-	if( stat || weakened || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
+	if( stat || weakened || stunned || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
 		return
 	if(crawl_getup)
 		return
@@ -408,6 +408,13 @@
 
 		item.throw_at(target, item.throw_range, item.throw_speed, src)
 
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
+				for(var/obj/item/clothing/suit/space/vox/stealth/V in list(H.wear_suit))
+					if(V.on)
+						V.overload()
+
 /mob/living/carbon/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
 	bodytemperature = max(bodytemperature, BODYTEMP_HEAT_DAMAGE_LIMIT+10)
@@ -486,11 +493,11 @@
 	set name = "Sleep"
 	set category = "IC"
 
-	if(usr.sleeping)
-		to_chat(usr, "<span class='rose'>You are already sleeping")
+	if(sleeping)
+		to_chat(src, "<span class='rose'>You are already sleeping</span>")
 		return
-	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
-		usr.sleeping = 20 //Short nap
+	if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
+		sleeping = 20 //Short nap
 
 /mob/living/carbon/slip(slipped_on, stun_duration=4, weaken_duration=2)
 	if(buckled || sleeping || weakened || paralysis || stunned || resting || crawling)

@@ -48,10 +48,6 @@ var/global/list/empty_playable_ai_cores = list()
 		if(mind.objectives.len)
 			qdel(mind.objectives)
 			mind.special_role = null
-	if(ticker.mode.name == "AutoTraitor")
-		var/datum/game_mode/traitor/autotraitor/current_mode = ticker.mode
-		if(current_mode.possible_traitors.len)
-			current_mode.possible_traitors -= src
 
 	timeofdeath = world.time
 	ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)

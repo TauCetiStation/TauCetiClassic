@@ -26,6 +26,11 @@ var/global/dmm_suite/preloader/_preloader = new
  *
  */
 /dmm_suite/load_map(dmm_file as file, x_offset as num, y_offset as num, z_offset as num, cropMap as num, measureOnly as num)
+	Master.StartLoadingMap()
+	. = load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly)
+	Master.StopLoadingMap()
+
+/dmm_suite/proc/load_map_impl(dmm_file, x_offset, y_offset, z_offset, cropMap, measureOnly)
 	var/tfile = dmm_file//the map file we're creating
 	if(isfile(tfile))
 		tfile = file2text(tfile)
@@ -217,15 +222,14 @@ var/global/dmm_suite/preloader/_preloader = new
 	////////////////
 
 	//The next part of the code assumes there's ALWAYS an /area AND a /turf on a given tile
+	var/turf/crds = locate(xcrd,ycrd,zcrd)
 
 	//first instance the /area and remove it from the members list
 	index = members.len
 	if(members[index] != /area/template_noop)
 		var/atom/instance
 		_preloader.setup(members_attributes[index])//preloader for assigning  set variables on atom creation
-
 		instance = locate(members[index])
-		var/turf/crds = locate(xcrd,ycrd,zcrd)
 		if(crds)
 			instance.contents.Add(crds)
 
@@ -238,52 +242,79 @@ var/global/dmm_suite/preloader/_preloader = new
 	while(!ispath(members[first_turf_index],/turf)) //find first /turf object in members
 		first_turf_index++
 
+	//turn off base new Initialization until the whole thing is loaded
+	SSatoms.map_loader_begin()
 	//instanciate the first /turf
 	var/turf/T
 	if(members[first_turf_index] != /turf/template_noop)
-		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],xcrd,ycrd,zcrd)
+		T = instance_atom(members[first_turf_index],members_attributes[first_turf_index],crds)
 
 	if(T)
 		//if others /turf are presents, simulates the underlays piling effect
 		index = first_turf_index + 1
 		while(index <= members.len - 1) // Last item is an /area
 			var/underlay = T.appearance
-			T = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)//instance new turf
+			T = instance_atom(members[index],members_attributes[index],crds)//instance new turf
 			T.underlays += underlay
 			index++
 
 	//finally instance all remainings objects/mobs
-	var/list/objs = list()
+	. = list()
 	var/inst
 	for(index in 1 to first_turf_index-1)
-		inst = instance_atom(members[index],members_attributes[index],xcrd,ycrd,zcrd)
+		inst = instance_atom(members[index],members_attributes[index],crds)
 		if(isobj(inst))
-			objs += inst
+			. += inst
 		CHECK_TICK
 
-	return objs
+	//Restore initialization to the previous value
+	SSatoms.map_loader_stop()
 
 ////////////////
 //Helpers procs
 ////////////////
 
+/dmm_suite/proc/load_new_z_level(mappath)
+	var/file = file(mappath)
+	if(isfile(file))
+		var/list/loaded_stuff = load_map(file)
+		if(!loaded_stuff || !loaded_stuff.len)
+			return FALSE
+
+		var/list/bounds = loaded_stuff["bounds"]
+		if(!bounds || !bounds.len)
+			return FALSE
+
+		//initialize things that are normally initialized after map load
+		initTemplateBounds(bounds)
+		log_game("Z-level loaded [world.maxz]")
+		return TRUE
+	else
+		return FALSE
+
+
 //Instance an atom at (x,y,z) and gives it the variables in attributes
-/dmm_suite/proc/instance_atom(path,list/attributes, x, y, z)
-	var/atom/instance
+/dmm_suite/proc/instance_atom(path, list/attributes, turf/crds)
 	_preloader.setup(attributes, path)
 
-	var/turf/T = locate(x,y,z)
-	if(T)
+	if(crds)
 		if(ispath(path, /turf))
-			T.ChangeTurf(path)
-			instance = T
+			. = crds.ChangeTurf(path)
 		else
-			instance = new path (T)//first preloader pass
+			. = create_atom(path, crds) // first preloader pass
 
-	if(use_preloader && instance)//second preloader pass, for those atoms that don't ..() in New()
-		_preloader.load(instance)
+	if(use_preloader && .)//second preloader pass, for those atoms that don't ..() in New()
+		_preloader.load(.)
 
-	return instance
+	//custom CHECK_TICK here because we don't want things created while we're sleeping to not initialize
+	if(TICK_CHECK)
+		SSatoms.map_loader_stop()
+		stoplag()
+		SSatoms.map_loader_begin()
+
+/dmm_suite/proc/create_atom(path, crds)
+	set waitfor = FALSE
+	. = new path (crds)
 
 //text trimming (both directions) helper proc
 //optionally removes quotes before and after the text (for variable name)
@@ -363,13 +394,6 @@ var/global/dmm_suite/preloader/_preloader = new
 	while(position != 0)
 
 	return to_return
-
-//atom creation method that preloads variables at creation
-/atom/New()
-	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
-		_preloader.load(src)
-
-	. = ..()
 
 /dmm_suite/Destroy()
 	..()

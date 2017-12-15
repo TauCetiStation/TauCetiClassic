@@ -14,12 +14,16 @@
 	var/obj/machinery/artifact_scanpad/owned_scanner = null
 	var/last_process = 0
 
-/obj/machinery/artifact_harvester/New()
+/obj/machinery/artifact_harvester/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/artifact_harvester/atom_init_late()
 	//connect to a nearby scanner pad
 	owned_scanner = locate(/obj/machinery/artifact_scanpad) in get_step(src, dir)
 	if(!owned_scanner)
 		owned_scanner = locate(/obj/machinery/artifact_scanpad) in orange(1, src)
+
 
 /obj/machinery/artifact_harvester/attackby(obj/I, mob/user)
 	if(istype(I,/obj/item/weapon/anobattery))
@@ -35,14 +39,10 @@
 		return..()
 
 
-/obj/machinery/artifact_harvester/attack_hand(mob/user)
-	src.add_fingerprint(user)
-	interact(user)
-
-/obj/machinery/artifact_harvester/interact(mob/user)
+/obj/machinery/artifact_harvester/ui_interact(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	user.set_machine(src)
+
 	var/dat = "<B>Artifact Power Harvester</B><BR>"
 	dat += "<HR><BR>"
 	//

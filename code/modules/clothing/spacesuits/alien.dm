@@ -84,8 +84,8 @@
 /obj/item/clothing/suit/space/vox
 	w_class = 3
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
-	slowdown = 2
-	armor = list(melee = 60, bullet = 30, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
+	slowdown = 1.5
+	armor = list(melee = 60, bullet = 50, laser = 40,energy = 15, bomb = 30, bio = 30, rad = 30)
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = list(VOX , VOX_ARMALIS)
@@ -95,7 +95,7 @@
 		)
 
 /obj/item/clothing/head/helmet/space/vox
-	armor = list(melee = 60, bullet = 30, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 50, laser = 40, energy = 15, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES
 	species_restricted = list(VOX , VOX_ARMALIS)
 	sprite_sheets = list(
@@ -134,11 +134,78 @@
 	item_state = "vox-stealth"
 	desc = "A smoothly contoured, matte-black alien helmet."
 
+	armor = list(melee = 60, bullet = 30, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
+
 /obj/item/clothing/suit/space/vox/stealth
 	name = "alien stealth suit"
 	icon_state = "vox-stealth"
 	item_state = "vox-stealth"
 	desc = "A sleek black suit. It seems to have a tail, and is very heavy."
+
+	armor = list(melee = 60, bullet = 30, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
+	slowdown = 0.5
+
+	action_button_name = "Toggle Stealth Technology"
+	var/on = FALSE
+	var/mob/living/carbon/human/wearer
+
+/obj/item/clothing/suit/space/vox/stealth/ui_action_click()
+	toggle_stealth()
+
+/obj/item/clothing/suit/space/vox/stealth/process()
+	if(!on)
+		return
+
+	if(is_damaged())
+		toggle_stealth(TRUE)
+	else
+		wearer.alpha = 4
+
+/obj/item/clothing/suit/space/vox/stealth/equipped(mob/user, slot)
+	..()
+	if(slot == slot_wear_suit)
+		wearer = user
+
+/obj/item/clothing/suit/space/vox/stealth/dropped(mob/user)
+	toggle_stealth(TRUE)
+	wearer = null
+	..()
+
+/obj/item/clothing/suit/space/vox/stealth/proc/toggle_stealth(deactive = FALSE)
+	if(on)
+		on = FALSE
+		STOP_PROCESSING(SSobj, src)
+		wearer.alpha = 255
+	else if(!deactive)
+		to_chat(wearer, "<span class='notice'>Turning on stealth mode...</span>")
+		if(do_after(wearer, 40, target = wearer))
+			if(!istype(wearer) || wearer.wear_suit != src)
+				return
+			if(is_damaged())
+				return
+			on = TRUE
+			to_chat(wearer, "<span class='notice'>Stealth mode in now on!</span>")
+			START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/suit/space/vox/stealth/proc/is_damaged()
+	if(damage >= 2)
+		to_chat(wearer, "<span class='warning'>[src] is too damaged to support stealth mode!</span>")
+		var/datum/effect/effect/system/spark_spread/s = new
+		s.set_up(5, 1, src)
+		s.start()
+		return TRUE
+	else
+		return FALSE
+
+/obj/item/clothing/suit/space/vox/stealth/proc/overload()
+	wearer.visible_message(
+	"<span class='warning'>[wearer] appears from nowhere!",
+	"<span class='warning'>Your stealth got overloaded and no longer can sustain itself!</span>"
+	)
+	var/datum/effect/effect/system/spark_spread/s = new
+	s.set_up(5, 1, src)
+	s.start()
+	toggle_stealth()
 
 /obj/item/clothing/head/helmet/space/vox/medic
 	name = "alien goggled helmet"

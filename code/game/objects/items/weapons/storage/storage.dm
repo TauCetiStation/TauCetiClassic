@@ -296,7 +296,8 @@
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
 				else if (W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
-
+		if(crit_fail && prob(25))
+			remove_from_storage(W, get_turf(src))
 		src.orient2hud(usr)
 		for(var/mob/M in can_see_contents())
 			show_to(M)
@@ -425,8 +426,8 @@
 	for(var/obj/item/I in contents)
 		remove_from_storage(I, T)
 
-/obj/item/weapon/storage/New()
-	..()
+/obj/item/weapon/storage/atom_init()
+	. = ..()
 	if(allow_quick_empty)
 		verbs += /obj/item/weapon/storage/verb/quick_empty
 	else

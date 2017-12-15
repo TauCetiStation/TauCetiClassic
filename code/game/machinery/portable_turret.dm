@@ -23,6 +23,7 @@
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
+	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/raised = FALSE			//if the turret cover is "open" and the turret is raised
 	var/raising= FALSE			//if the turret is currently opening or closing its cover
@@ -85,7 +86,7 @@
 /obj/machinery/porta_turret/AI_special
 	special_control = TRUE
 
-/obj/machinery/porta_turret/New()
+/obj/machinery/porta_turret/atom_init()
 	..()
 	req_one_access = list(access_security, access_heads)
 
@@ -94,10 +95,13 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/porta_turret/atom_init_late()
 	setup()
 
-/obj/machinery/porta_turret/crescent/New()
-	..()
+/obj/machinery/porta_turret/crescent/atom_init()
+	. = ..()
 	req_one_access.Cut()
 	req_access = list(access_cent_specops)
 
@@ -154,7 +158,7 @@
 		if(/obj/item/weapon/gun/energy/laser/retro)
 			iconholder = TRUE
 
-		if(/obj/item/weapon/gun/energy/laser/captain)
+		if(/obj/item/weapon/gun/energy/laser/selfcharging/captain)
 			iconholder = TRUE
 
 		if(/obj/item/weapon/gun/energy/lasercannon)
@@ -207,68 +211,57 @@ var/list/turret_icons
 		to_chat(user, "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>")
 		return TRUE
 
-	if(locked && !issilicon(user) && !IsAdminGhost(user))
+	if(locked && !issilicon(user) && !isobserver(user))
 		to_chat(user, "<span class='notice'>Access denied.</span>")
 		return TRUE
 
 	return FALSE
 
-/obj/machinery/porta_turret/attack_ai(mob/user)
+/obj/machinery/porta_turret/ui_interact(mob/user)
 	if(isLocked(user))
 		return
-
-	interact(user)
-
-/obj/machinery/porta_turret/attack_hand(mob/user)
-	if(isLocked(user))
-		return
-
-	interact(user)
-
-/obj/machinery/porta_turret/interact(mob/user)
-	user.set_machine(src)
 
 	var/dat = text({"
-<table width="100%" cellspacing="0" cellpadding="4">
-	<tr>
-		<td>Status: </td><td>[]</td>
-	</tr>
-	<tr></tr>
-	<tr>
-		<td>Lethal Mode: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Neutralize All Non-Synthetics: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Neutralize All Cyborgs: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Weapon Authorization: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Security Records: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Arrest Status: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Access Authorization: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check misc. Lifeforms: </td><td>[]</td>
-	</tr>
-</table>"},
+		<table width="100%" cellspacing="0" cellpadding="4">
+			<tr>
+				<td>Status: </td><td>[]</td>
+			</tr>
+			<tr></tr>
+			<tr>
+				<td>Lethal Mode: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Neutralize All Non-Synthetics: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Neutralize All Cyborgs: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Weapon Authorization: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Security Records: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Arrest Status: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Access Authorization: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check misc. Lifeforms: </td><td>[]</td>
+			</tr>
+		</table>"},
 
-"<A href='?src=\ref[src];command=enable'>[enabled ? "On" : "Off"]</A>",
-"<A href='?src=\ref[src];command=lethal'>[lethal ? "On" : "Off"]</A>",
-"<A href='?src=\ref[src];command=check_n_synth'>[check_n_synth ? "Yes" : "No"]</A>",
-"[(special_control && isAI(user)) ? "<A href='?src=\ref[src];command=shot_synth'>[shot_synth ? "Yes" : "No"]</A>" : "NOT ALLOWED"]",
-"<A href='?src=\ref[src];command=check_weapons'>[check_weapons ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_records'>[check_records ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_arrest'>[check_arrest ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_access'>[check_access ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>")
+		"<A href='?src=\ref[src];command=enable'>[enabled ? "On" : "Off"]</A>",
+		"<A href='?src=\ref[src];command=lethal'>[lethal ? "On" : "Off"]</A>",
+		"<A href='?src=\ref[src];command=check_n_synth'>[check_n_synth ? "Yes" : "No"]</A>",
+		"[(special_control && isAI(user)) ? "<A href='?src=\ref[src];command=shot_synth'>[shot_synth ? "Yes" : "No"]</A>" : "NOT ALLOWED"]",
+		"<A href='?src=\ref[src];command=check_weapons'>[check_weapons ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_records'>[check_records ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_arrest'>[check_arrest ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_access'>[check_access ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>")
 
 	var/datum/browser/popup = new(user, "window=autosec", "Automatic Portable Turret Installation", 400, 320)
 	popup.set_content(dat)
@@ -661,6 +654,7 @@ var/list/turret_icons
 	use_power(reqpower * (2 * (emagged || lethal)) * (2 * emagged))
 
 	A.original = target
+	A.def_zone = ran_zone()
 	A.current = T
 	A.starting = T
 	A.fake = TRUE
@@ -743,6 +737,7 @@ var/list/turret_icons
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turret_frame"
 	density = TRUE
+	use_power = 0
 	var/build_step = 0			//the current step in the building process
 	var/finish_name="turret"	//the name applied to the product turret
 	var/installation = null		//the gun type installed
@@ -770,8 +765,7 @@ var/list/turret_icons
 		if(1)
 			if(istype(I, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/M = I
-				if(M.amount >= 2)
-					M.use(2)
+				if(M.use(2))
 					to_chat(user, "<span class='notice'>You add some metal armor to the interior frame.</span>")
 					build_step = 2
 					icon_state = "turret_frame2"
@@ -856,8 +850,7 @@ var/list/turret_icons
 		if(6)
 			if(istype(I, /obj/item/stack/sheet/metal))
 				var/obj/item/stack/sheet/metal/M = I
-				if(M.amount >= 2)
-					M.use(2)
+				if(M.use(2))
 					to_chat(user, "<span class='notice'>You add some metal armor to the exterior frame.</span>")
 					build_step = 7
 				else
@@ -915,7 +908,15 @@ var/list/turret_icons
 	..()
 
 
+/obj/machinery/porta_turret_construct/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
+	return 0
+
 /obj/machinery/porta_turret_construct/attack_hand(mob/user)
+	if(..())
+		return 1
+
 	switch(build_step)
 		if(4)
 			if(!installation)
@@ -933,8 +934,6 @@ var/list/turret_icons
 			new /obj/item/device/assembly/prox_sensor(loc)
 			build_step = 4
 
-/obj/machinery/porta_turret_construct/attack_ai()
-	return
 
 /obj/effect/porta_turret_cover
 	icon = 'icons/obj/turrets.dmi'

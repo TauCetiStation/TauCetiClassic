@@ -27,7 +27,7 @@
 	var/door_open_sound  = 'sound/machines/airlock/airlockToggle_2.ogg'
 	var/door_close_sound = 'sound/machines/airlock/airlockToggle_2.ogg'
 
-/obj/machinery/door/New()
+/obj/machinery/door/atom_init()
 	. = ..()
 	if(density)
 		layer = base_layer + DOOR_CLOSED_MOD //Above most items if closed
@@ -38,7 +38,6 @@
 		explosion_resistance = 0
 
 	update_nearby_tiles(need_rebuild=1)
-	return
 
 
 /obj/machinery/door/Destroy()
@@ -112,33 +111,26 @@
 	src.open()
 	return
 
-
-/obj/machinery/door/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-
-/obj/machinery/door/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-
 /obj/machinery/door/attack_hand(mob/user)
-	return src.attackby(user, user)
+	return attackby(user, user)
 
 /obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
 		return
 	..()
 
+/obj/machinery/door/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		if(density)
+			open()
+		else
+			close()
 
 /obj/machinery/door/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
-	if(src.operating || isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
-	src.add_fingerprint(user)
-	if(!Adjacent(user))
-		user = null
-	if(!src.requiresID())
-		user = null
+	if(src.operating)
+		return
 	if(src.density && hasPower() && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
 		update_icon(AIRLOCK_EMAG)
 		sleep(6)
@@ -146,6 +138,12 @@
 			update_icon(AIRLOCK_CLOSED)
 		operating = -1
 		return 1
+	if(isrobot(user))
+		return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
+	if(!Adjacent(user))
+		user = null
+	if(!src.requiresID())
+		user = null
 	if(src.allowed(user))
 		if(src.density)
 			open()
@@ -354,15 +352,12 @@
 /obj/machinery/door/proc/requiresID()
 	return 1
 
-/obj/machinery/door/proc/update_nearby_tiles(need_rebuild)
-	if(!SSair)
-		return 0
+/obj/machinery/door/update_nearby_tiles(need_rebuild)
+	. = ..()
 
-	for(var/turf/simulated/turf in locs)
-		update_heat_protection(turf)
-		SSair.mark_for_update(turf)
-
-	return 1
+	if(.)
+		for(var/turf/simulated/turf in locs)
+			update_heat_protection(turf)
 
 /obj/machinery/door/proc/update_heat_protection(turf/simulated/source)
 	if(istype(source))

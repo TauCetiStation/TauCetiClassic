@@ -164,6 +164,20 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 /datum/asset/simple/send(client)
 	send_asset_list(client,assets,verify)
 
+/datum/asset/simple/goonchat
+	assets = list(
+		"jquery.min.js" = 'code/modules/goonchat/browserassets/js/jquery.min.js',
+		"jquery.mark.min.js" = 'code/modules/goonchat/browserassets/js/jquery.mark.min.js',
+		"json2.min.js" = 'code/modules/goonchat/browserassets/js/json2.min.js',
+		"browserOutput.js" = 'code/modules/goonchat/browserassets/js/browserOutput.js',
+		"fontawesome-webfont.eot" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.eot',
+		"fontawesome-webfont.svg" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.svg',
+		"fontawesome-webfont.ttf" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.ttf',
+		"fontawesome-webfont.woff" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.woff',
+		"font-awesome.css" = 'code/modules/goonchat/browserassets/css/font-awesome.css',
+		"emojib64.css" = 'code/modules/goonchat/browserassets/css/emojib64.css',
+		"browserOutput.css" = 'code/modules/goonchat/browserassets/css/browserOutput.css'
+	)
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 /datum/asset/simple/spider_os
@@ -189,6 +203,25 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"paper_dickbutt.png" = 'icons/paper_icons/dickbutt.png'
 	)
 
+/datum/asset/simple/chess
+	assets = list(
+		"BR.png" = 'icons/obj/chess/board_BR.png',
+		"BN.png" = 'icons/obj/chess/board_BN.png',
+		"BI.png" = 'icons/obj/chess/board_BI.png',
+		"BQ.png" = 'icons/obj/chess/board_BQ.png',
+		"BK.png" = 'icons/obj/chess/board_BK.png',
+		"BP.png" = 'icons/obj/chess/board_BP.png',
+		"WR.png" = 'icons/obj/chess/board_WR.png',
+		"WN.png" = 'icons/obj/chess/board_WN.png',
+		"WI.png" = 'icons/obj/chess/board_WI.png',
+		"WQ.png" = 'icons/obj/chess/board_WQ.png',
+		"WK.png" = 'icons/obj/chess/board_WK.png',
+		"WP.png" = 'icons/obj/chess/board_WP.png',
+		"CB.png" = 'icons/obj/chess/board_CB.png',
+		"CR.png" = 'icons/obj/chess/board_CR.png',
+		"none.png" = 'icons/obj/chess/board_none.png'
+	)
+
 /datum/asset/nanoui
 	var/list/common = list()
 
@@ -201,6 +234,8 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 	var/list/uncommon_dirs = list(
 		"nano/templates/"
 	)
+
+
 
 /datum/asset/nanoui/register()
 	// Crawl the directories to find files.

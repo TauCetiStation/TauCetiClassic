@@ -193,7 +193,8 @@
 /obj/item/clothing/mask/gas/syndicate
 	name = "syndicate mask"
 	desc = "A close-fitting tactical mask that can be connected to an air supply."
-	icon_state = "swat"
+	icon_state = "mask_syndi"
+	item_state = "mask_syndi"
 	siemens_coefficient = 0.7
 
 /obj/item/clothing/mask/gas/voice
@@ -229,6 +230,11 @@
 	name = "mime mask"
 	desc = "The traditional mime's mask. It has an eerie facial posture."
 	icon_state = "mime"
+
+/obj/item/clothing/mask/gas/fawkes //--getup1
+	name = "strange mask"
+	desc = "Remember, remember, the fifth of November"
+	icon_state = "fawkes"
 
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
@@ -266,6 +272,7 @@
 	if(src in user)
 		to_chat(user, "The small label on the back side tells: \"Designed by W&J Company\".")
 
-/obj/item/clothing/mask/gas/coloured/New()
+/obj/item/clothing/mask/gas/coloured/atom_init()
+	. = ..()
 	var/color = pick("orange", "blue")
 	icon_state = "gas_mask_[color]"

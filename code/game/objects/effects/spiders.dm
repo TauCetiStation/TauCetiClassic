@@ -54,9 +54,11 @@
 
 /obj/effect/spider/stickyweb
 	icon_state = "stickyweb1"
-	New()
-		if(prob(50))
-			icon_state = "stickyweb2"
+
+/obj/effect/spider/stickyweb/atom_init()
+	. = ..()
+	if(prob(50))
+		icon_state = "stickyweb2"
 
 /obj/effect/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
@@ -75,10 +77,12 @@
 	desc = "They seem to pulse slightly with an inner life."
 	icon_state = "eggs"
 	var/amount_grown = 0
-	New()
-		pixel_x = rand(3,-3)
-		pixel_y = rand(3,-3)
-		START_PROCESSING(SSobj, src)
+
+/obj/effect/spider/eggcluster/atom_init()
+	. = ..()
+	pixel_x = rand(3,-3)
+	pixel_y = rand(3,-3)
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/spider/eggcluster/process()
 	amount_grown += rand(0,2)
@@ -96,15 +100,17 @@
 	layer = 2.7
 	health = 3
 	var/amount_grown = -1
-	var/obj/machinery/atmospherics/unary/vent_pump/entry_vent
+	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
-	New()
-		pixel_x = rand(6,-6)
-		pixel_y = rand(6,-6)
-		START_PROCESSING(SSobj, src)
-		//50% chance to grow up
-		if(prob(50))
-			amount_grown = 1
+
+/obj/effect/spider/spiderling/atom_init()
+	. = ..()
+	pixel_x = rand(6,-6)
+	pixel_y = rand(6,-6)
+	START_PROCESSING(SSobj, src)
+	//50% chance to grow up
+	if(prob(50))
+		amount_grown = 1
 
 /obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
@@ -128,42 +134,40 @@
 			entry_vent = null
 	else if(entry_vent)
 		if(get_dist(src, entry_vent) <= 1)
-			if(entry_vent.network && entry_vent.network.normal_members.len)
-				var/list/vents = list()
-				for(var/obj/machinery/atmospherics/unary/vent_pump/temp_vent in entry_vent.network.normal_members)
-					vents.Add(temp_vent)
-				if(!vents.len)
-					entry_vent = null
-					return
-				var/obj/machinery/atmospherics/unary/vent_pump/exit_vent = pick(vents)
-				/*if(prob(50))
-					src.visible_message("<B>[src] scrambles into the ventillation ducts!</B>")*/
-
-				spawn(rand(20,60))
-					loc = exit_vent
-					var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
-					spawn(travel_time)
-
-						if(!exit_vent || exit_vent.welded)
-							loc = entry_vent
-							entry_vent = null
-							return
-
-						if(prob(50))
-							src.visible_message("\blue You hear something squeezing through the ventilation ducts.",2)
-						sleep(travel_time)
-
-						if(!exit_vent || exit_vent.welded)
-							loc = entry_vent
-							entry_vent = null
-							return
-						loc = exit_vent.loc
-						entry_vent = null
-						var/area/new_area = get_area(loc)
-						if(new_area)
-							new_area.Entered(src)
-			else
+			var/list/vents = list()
+			var/datum/pipeline/entry_vent_parent = entry_vent.PARENT1
+			for(var/obj/machinery/atmospherics/components/unary/vent_pump/temp_vent in entry_vent_parent.other_atmosmch)
+				vents.Add(temp_vent)
+			if(!vents.len)
 				entry_vent = null
+				return
+			var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = pick(vents)
+			/*if(prob(50))
+				src.visible_message("<B>[src] scrambles into the ventillation ducts!</B>")*/
+
+			spawn(rand(20,60))
+				loc = exit_vent
+				var/travel_time = round(get_dist(loc, exit_vent.loc) / 2)
+				spawn(travel_time)
+
+					if(!exit_vent || exit_vent.welded)
+						loc = entry_vent
+						entry_vent = null
+						return
+
+					if(prob(50))
+						src.visible_message("\blue You hear something squeezing through the ventilation ducts.",2)
+					sleep(travel_time)
+
+					if(!exit_vent || exit_vent.welded)
+						loc = entry_vent
+						entry_vent = null
+						return
+					loc = exit_vent.loc
+					entry_vent = null
+					var/area/new_area = get_area(loc)
+					if(new_area)
+						new_area.Entered(src)
 	//=================
 
 	else if(prob(25))
@@ -175,7 +179,7 @@
 				src.visible_message("\blue \the [src] skitters[pick(" away"," around","")].")
 	else if(prob(5))
 		//ventcrawl!
-		for(var/obj/machinery/atmospherics/unary/vent_pump/v in view(7,src))
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/v in view(7,src))
 			if(!v.welded)
 				entry_vent = v
 				walk_to(src, entry_vent, 5)
@@ -202,7 +206,8 @@
 	icon_state = "cocoon1"
 	health = 60
 
-/obj/effect/spider/cocoon/New()
+/obj/effect/spider/cocoon/atom_init()
+	. = ..()
 	icon_state = pick("cocoon1","cocoon2","cocoon3")
 
 /obj/effect/spider/cocoon/container_resist()

@@ -56,15 +56,6 @@
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
 
-/mob/living/simple_animal/New()
-	..()
-	verbs -= /mob/verb/observe
-
-/mob/living/simple_animal/Login()
-	if(src && src.client)
-		src.client.screen = null
-	..()
-
 /mob/living/simple_animal/updatehealth()
 	return
 
@@ -157,10 +148,10 @@
 		if(istype(T,/turf/simulated))
 			var/turf/simulated/ST = T
 			if(ST.air)
-				var/tox = ST.air.phoron
-				var/oxy = ST.air.oxygen
-				var/n2  = ST.air.nitrogen
-				var/co2 = ST.air.carbon_dioxide
+				var/tox = ST.air.gas["phoron"]
+				var/oxy = ST.air.gas["oxygen"]
+				var/n2  = ST.air.gas["nitrogen"]
+				var/co2 = ST.air.gas["carbon_dioxide"]
 
 				if(min_oxy)
 					if(oxy < min_oxy)

@@ -181,6 +181,9 @@
 	item_state = "electronic"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
+	m_amt = 3000
+	g_amt = 1300
+	origin_tech = "materials=1;engineering=1"
 
 /obj/item/device/destTagger/proc/openwindow(mob/user)
 	var/dat = "<tt><center><h1><b>TagMaster 2.3</b></h1></center>"
@@ -215,12 +218,14 @@
 
 	var/c_mode = 0
 
-/obj/machinery/disposal/deliveryChute/New()
+/obj/machinery/disposal/deliveryChute/atom_init()
 	..()
-	spawn(5)
-		trunk = locate() in src.loc
-		if(trunk)
-			trunk.linked = src	// link the pipe trunk to self
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/disposal/deliveryChute/atom_init_late()
+	trunk = locate() in loc
+	if(trunk)
+		trunk.linked = src	// link the pipe trunk to self
 
 /obj/machinery/disposal/deliveryChute/Destroy()
 	if(trunk)

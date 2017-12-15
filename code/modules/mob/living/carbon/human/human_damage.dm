@@ -284,8 +284,8 @@ This function restores the subjects blood to max.
 */
 /mob/living/carbon/human/proc/restore_blood()
 	if(!species.flags[NO_BLOOD])
-		var/blood_volume = vessel.get_reagent_amount("blood")
-		vessel.add_reagent("blood",560.0-blood_volume)
+		vessel.add_reagent("blood", 560 - vessel.total_volume)
+		fixblood()
 
 
 /*
@@ -312,8 +312,8 @@ This function restores all bodyparts.
 
 /mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null)
 
-	//Handle other types of damage
-	if((damagetype != BRUTE) && (damagetype != BURN))
+	//Handle other types of damage or healing
+	if(damage < 0 || !(damagetype in list(BRUTE, BURN)))
 		..(damage, damagetype, def_zone, blocked)
 		return TRUE
 

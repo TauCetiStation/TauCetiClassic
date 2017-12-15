@@ -14,6 +14,7 @@
 	var/agent = 0
 	var/team = 0
 	var/metadata
+	var/seer = 0 // used in cult datum /cult/seer
 
 	throw_range = 2
 
@@ -21,40 +22,42 @@
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 
-/mob/living/carbon/human/skrell/New(var/new_loc)
+INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
+
+/mob/living/carbon/human/skrell/atom_init(mapload)
 	h_style = "Skrell Male Tentacles"
-	..(new_loc, SKRELL)
+	. = ..(mapload, SKRELL)
 
-/mob/living/carbon/human/tajaran/New(var/new_loc)
+/mob/living/carbon/human/tajaran/atom_init(mapload)
 	h_style = "Tajaran Ears"
-	..(new_loc, TAJARAN)
+	. = ..(mapload, TAJARAN)
 
-/mob/living/carbon/human/unathi/New(var/new_loc)
+/mob/living/carbon/human/unathi/atom_init(mapload)
 	h_style = "Unathi Horns"
-	..(new_loc, UNATHI)
+	. = ..(mapload, UNATHI)
 
-/mob/living/carbon/human/vox/New(var/new_loc)
+/mob/living/carbon/human/vox/atom_init(mapload)
 	h_style = "Short Vox Quills"
-	..(new_loc, VOX)
+	. = ..(mapload, VOX)
 
-/mob/living/carbon/human/voxarmalis/New(var/new_loc)
+/mob/living/carbon/human/voxarmalis/atom_init(mapload)
 	h_style = "Bald"
-	..(new_loc, VOX_ARMALIS)
+	. = ..(mapload, VOX_ARMALIS)
 
-/mob/living/carbon/human/diona/New(var/new_loc)
-	..(new_loc, DIONA)
+/mob/living/carbon/human/diona/atom_init(mapload)
+	. = ..(mapload, DIONA)
 
-/mob/living/carbon/human/machine/New(var/new_loc)
+/mob/living/carbon/human/machine/atom_init(mapload)
 	h_style = "blue IPC screen"
-	..(new_loc, IPC)
+	. = ..(mapload, IPC)
 
-/mob/living/carbon/human/abductor/New(var/new_loc)
-	..(new_loc, ABDUCTOR)
+/mob/living/carbon/human/abductor/atom_init(mapload)
+	. = ..(mapload, ABDUCTOR)
 
-/mob/living/carbon/human/golem/New(loc)
-	..(loc, GOLEM)
+/mob/living/carbon/human/golem/atom_init(mapload)
+	. = ..(mapload, GOLEM)
 
-/mob/living/carbon/human/New(new_loc, new_species)
+/mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
 
@@ -70,8 +73,6 @@
 	reagents = R
 	R.my_atom = src
 
-
-
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
 	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealthy")
 	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudunknown")
@@ -82,16 +83,21 @@
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
 
-	..()
+	. = ..()
 
 	if(dna)
 		dna.real_name = real_name
+
+	handcrafting = new()
 
 	verbs += /mob/living/carbon/proc/crawl
 
 	prev_gender = gender // Debug for plural genders
 	make_blood()
 	regenerate_icons()
+
+/mob/living/carbon/human/OpenCraftingMenu()
+	handcrafting.ui_interact(src)
 
 /mob/living/carbon/human/Stat()
 	..()
@@ -106,11 +112,9 @@
 				stat("Internal Atmosphere Info", internal.name)
 				stat("Tank Pressure", internal.air_contents.return_pressure())
 				stat("Distribution Pressure", internal.distribute_pressure)
-		if(mind)
-			if(mind.changeling)
-				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Genetic Damage Time", mind.changeling.geneticdamage)
-				stat("Absorbed DNA", mind.changeling.absorbedcount)
+
+		CHANGELING_STATPANEL_STATS(null)
+
 		if(istype(wear_suit, /obj/item/clothing/suit/space/space_ninja))
 			var/obj/item/clothing/suit/space/space_ninja/SN = wear_suit
 			stat("SpiderOS Status:","[SN.s_initialized ? "Initialized" : "Disabled"]")
@@ -131,6 +135,7 @@
 				stat("Radiation Levels:","[radiation] rad")
 				stat("Body Temperature:","[bodytemperature-T0C] degrees C ([bodytemperature*1.8-459.67] degrees F)")
 
+	CHANGELING_STATPANEL_POWERS(null)
 
 /mob/living/carbon/human/ex_act(severity)
 	if(!blinded)
@@ -327,13 +332,15 @@
 	return
 
 
-/mob/living/carbon/human/restrained()
-	if (handcuffed)
-		return 1
+/mob/living/carbon/human/restrained(check_type = HANDS)
+	if ((check_type & HANDS) && handcuffed)
+		return TRUE
+	if ((check_type & LEGS) && legcuffed)
+		return TRUE
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-		return 1
+		return TRUE
 	if (istype(buckled, /obj/structure/stool/bed/nest))
-		return 1
+		return TRUE
 	return 0
 
 
@@ -363,7 +370,7 @@
 	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=s_store'>[(s_store ? s_store : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(s_store, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
 	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
 	<BR>[(legcuffed ? text("<A href='?src=\ref[src];item=legcuff'>Legcuffed</A>") : text(""))]
-	<BR>[(suit) ? ((suit.hastie) ? text(" <A href='?src=\ref[];item=tie'>Remove Accessory</A>", src) : "") :]
+	<BR>[(suit) ? ((suit.accessories.len) ? text(" <A href='?src=\ref[];item=tie'>Remove Accessory</A>", src) : "") :]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=bandages'>Remove Bandages</A>
 	<BR><A href='?src=\ref[src];item=splints'>Remove Splints</A>
@@ -510,10 +517,13 @@
 		src << browse(null, t1)
 
 	if ((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) //if game hasn't started, can't make an equip_e
+		var/obj/item/item = usr.get_active_hand()
+		if(item && (item.flags & (ABSTRACT | DROPDEL)))
+			return
 		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
 		O.source = usr
 		O.target = src
-		O.item = usr.get_active_hand()
+		O.item = item
 		O.s_loc = usr.loc
 		O.t_loc = loc
 		O.place = href_list["item"]
@@ -542,7 +552,7 @@
 						for (var/datum/data/record/R in data_core.security)
 							if (R.fields["id"] == E.fields["id"])
 
-								var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Released", "Cancel")
+								var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Paroled", "Released", "Cancel")
 
 								if(hasHUD(usr, "security"))
 									if(setcriminal != "Cancel")
@@ -797,7 +807,7 @@
 	if(istype(src.head, /obj/item/clothing/head/welding))
 		if(!src.head:up)
 			number += 2
-	if(istype(src.head, /obj/item/clothing/head/helmet/space))
+	if(istype(src.head, /obj/item/clothing/head/helmet/space) && !istype(src.head, /obj/item/clothing/head/helmet/space/sk))
 		number += 2
 	if(istype(src.glasses, /obj/item/clothing/glasses/thermal))
 		number -= 1
@@ -1086,44 +1096,6 @@
 	else
 		germ_level += n
 
-/mob/living/carbon/human/revive()
-	for (var/obj/item/organ/external/BP in bodyparts)
-		BP.status &= ~ORGAN_BROKEN
-		BP.status &= ~ORGAN_BLEEDING
-		BP.status &= ~ORGAN_SPLINTED
-		BP.status &= ~ORGAN_CUT_AWAY
-		BP.status &= ~ORGAN_ATTACHABLE
-		if (!BP.amputated)
-			BP.status &= ~ORGAN_DESTROYED
-			BP.destspawn = 0
-		BP.wounds.Cut()
-		BP.heal_damage(1000,1000,1,1)
-
-	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-	BP.disfigured = 0
-
-	if(species && !species.flags[NO_BLOOD])
-		vessel.add_reagent("blood",560-vessel.total_volume)
-		fixblood()
-
-	for (var/obj/item/weapon/organ/head/H in world)
-		if(H.brainmob)
-			if(H.brainmob.real_name == src.real_name)
-				if(H.brainmob.mind)
-					H.brainmob.mind.transfer_to(src)
-					qdel(H)
-
-	for(var/obj/item/organ/internal/IO in organs)
-		IO.damage = 0
-
-	for (var/datum/disease/virus in viruses)
-		virus.cure()
-	for (var/ID in virus2)
-		var/datum/disease2/disease/V = virus2[ID]
-		V.cure(src)
-
-	..()
-
 /mob/living/carbon/human/proc/is_lung_ruptured()
 	var/obj/item/organ/internal/lungs/IO = organs_by_name[O_LUNGS]
 	return IO.is_bruised()
@@ -1294,6 +1266,7 @@
 	species.on_gain(src)
 
 	regenerate_icons()
+	full_prosthetic = null
 
 	if(species)
 		return 1
@@ -1383,90 +1356,189 @@
 	else
 		to_chat(usr, "<font color='purple'>Nothing of interest...</font>")
 
-/mob/living/carbon/human/can_inject(mob/user, error_msg, target_zone)
-	. = 1
-
-	if(!user)
-		target_zone = pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_L_LEG , BP_R_LEG , BP_L_ARM , BP_R_ARM , BP_HEAD)
-	else if(!target_zone)
-		target_zone = user.zone_sel.selecting
-
-	switch(target_zone)
-		if(BP_HEAD)
-			if(head && head.flags & THICKMATERIAL)
-				. = 0
-		else
-			if(wear_suit && wear_suit.flags & THICKMATERIAL)
-				. = 0
-	if(!. && error_msg && user)
- 		// Might need re-wording.
-		to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [target_zone == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
-
-
-//Putting a couple of procs here that I don't know where else to dump.
-//Mostly going to be used for Vox and Vox Armalis, but other human mobs might like them (for adminbuse).
-
-/mob/living/carbon/human/proc/leap()
-	set category = "IC"
-	set name = "Leap"
-	set desc = "Leap at a target and grab them aggressively."
-
-	if(last_special > world.time)
-		return
-
-	if(stat || paralysis || stunned || weakened || lying)
-		to_chat(src, "You cannot leap in your current state.")
-		return
-
-	var/list/choices = list()
-	for(var/mob/living/M in view(6,src))
-		if(!istype(M,/mob/living/silicon))
-			choices += M
-	choices -= src
-
-	var/mob/living/T = input(src,"Who do you wish to leap at?") in null|choices
-
-	if(!T || !src || src.stat) return
-
-	if(get_dist(get_turf(T), get_turf(src)) > 6) return
-
-	last_special = world.time + 100
-	status_flags |= LEAPING
-
-	src.visible_message("<span class='warning'><b>\The [src]</b> leaps at [T]!</span>")
-	src.throw_at(get_step(get_turf(T),get_turf(src)), 5, 1, src, spin = FALSE, callback = CALLBACK(src, .end_leaping, T))
-	playsound(src.loc, 'sound/voice/shriek1.ogg', 50, 1)
-
-
-/mob/living/carbon/human/proc/end_leaping(mob/living/T)
-	if(status_flags & LEAPING)
-		status_flags &= ~LEAPING
-
-	if(!src.Adjacent(T))
-		to_chat(src, "<span class='warning'>You miss!</span>")
-		return
-
-	T.Weaken(5)
-
-	var/use_hand = "left"
-	if(l_hand)
-		if(r_hand)
-			to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
+/mob/living/carbon/try_inject(mob/living/user, error_msg, instant, stealth, pierce_armor)
+	if(istype(user))
+		if(user.is_busy())
 			return
+
+		if(!user.IsAdvancedToolUser())
+			if(error_msg)
+				to_chat(user, "<span class='warning'>You have no idea, how to use this!</span>")
+			return FALSE
+
+		if (HULK in user.mutations) // TODO - meaty fingers or something like that.
+			if(error_msg)
+				to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
+			return FALSE
+
+		var/hunt_injection_port = FALSE
+
+		switch(check_thickmaterial(target_zone = user.zone_sel.selecting))
+			if(NOLIMB)
+				if(error_msg)
+					to_chat(user, "<span class='warning'>[src] has no such body part, try to inject somewhere else.</span>")
+				return FALSE
+			if(THICKMATERIAL)
+				if(!pierce_armor)
+					if(error_msg)
+						to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+					return FALSE
+			if(PHORONGUARD)
+				if(!pierce_armor)
+					if(user.a_intent == I_HURT)
+						if(error_msg)
+							to_chat(user, "<span class='alert'>There is no exposed flesh or thin material [user.zone_sel.selecting == BP_HEAD ? "on their head" : "on their body"] to inject into.</span>")
+						return FALSE
+					hunt_injection_port = TRUE
+
+		if(isSynthetic(user.zone_sel.selecting))
+			if(error_msg)
+				to_chat(user, "<span class='warning'>You are trying to inject [src]'s synthetic body part!</span>")
+			return FALSE
+
+		if(!instant)
+			var/time_to_inject = HUMAN_STRIP_DELAY
+			if(hunt_injection_port) // takes additional time
+				if(!stealth)
+					user.visible_message("<span class='danger'>[user] begins hunting for an injection port on [src]'s suit!</span>")
+				if(!do_mob(user, src, time_to_inject / 2, TRUE))
+					return FALSE
+
+			if(!stealth)
+				user.visible_message("<span class='danger'>[user] is trying to inject [src]!</span>")
+
+			if(!do_mob(user, src, time_to_inject, TRUE))
+				return FALSE
+
+		if(!stealth)
+			if(user != src)
+				user.visible_message("<span class='warning'>[user] injects [src] with the syringe!</span>")
 		else
-			use_hand = "right"
+			to_chat(user, "<span class'notice'>You inject [src] with the injector.</span>")
+			to_chat(src, "<span class='warning'>You feel a tiny prick!</span>")
 
-	visible_message("<span class='warning'><b>\The [src]</b> seizes [T] aggressively!</span>")
+	return TRUE
 
-	var/obj/item/weapon/grab/G = new(src,T)
-	if(use_hand == "left")
-		l_hand = G
+/obj/screen/leap
+	name = "toggle leap"
+	icon = 'icons/mob/screen1_action.dmi'
+	icon_state = "action"
+
+	var/on = FALSE
+	var/time_used = 0
+	var/cooldown = 10 SECONDS
+
+
+/obj/screen/leap/atom_init()
+	. = ..()
+	overlays += image(icon, "leap")
+	update_icon()
+
+/obj/screen/leap/update_icon()
+	icon_state = "[initial(icon_state)]_[on]"
+
+/obj/screen/leap/Click()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		H.toggle_leap()
+
+/mob/living/carbon/human/proc/toggle_leap(message = 1)
+	leap_icon.on = !leap_icon.on
+	leap_icon.update_icon()
+	if(message)
+		to_chat(src, "<span class='notice'>You will [leap_icon.on ? "now" : "no longer"] leap at enemies!</span>")
+
+/mob/living/carbon/human/ClickOn(atom/A, params)
+	if(leap_icon && leap_icon.on && A != src)
+		leap_at(A)
 	else
-		r_hand = G
+		..()
 
-	G.state = GRAB_AGGRESSIVE
-	G.icon_state = "grabbed1"
-	G.synch()
+#define MAX_LEAP_DIST 4
+
+/mob/living/carbon/human/proc/leap_at(atom/A)
+	if(leap_icon.time_used > world.time)
+		to_chat(src, "<span class='warning'>You are too fatigued to leap right now!</span>")
+		return
+
+	if(status_flags & LEAPING) // Leap while you leap, so you can leap while you leap
+		return
+
+	if(!has_gravity(src))
+		to_chat(src, "<span class='notice'>It is unsafe to leap without gravity!</span>")
+		return
+
+	if(incapacitated(LEGS) || buckled || pinned.len || stance_damage >= 4) //because you need !restrained legs to leap
+		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
+		return
+
+	leap_icon.time_used = world.time + leap_icon.cooldown
+	status_flags |= LEAPING
+	stop_pulling()
+
+
+	var/prev_intent = a_intent
+	a_intent_change("hurt")
+
+	if(wear_suit && istype(wear_suit, /obj/item/clothing/suit/space/vox/stealth))
+		for(var/obj/item/clothing/suit/space/vox/stealth/V in list(wear_suit))
+			if(V.on)
+				V.overload()
+
+	toggle_leap()
+
+	throw_at(A, MAX_LEAP_DIST, 2, null, FALSE, TRUE, CALLBACK(src, .leap_end, prev_intent))
+
+/mob/living/carbon/human/proc/leap_end(prev_intent)
+	status_flags &= ~LEAPING
+	a_intent_change(prev_intent)
+
+/mob/living/carbon/human/throw_impact(atom/A)
+	if(!(status_flags & LEAPING))
+		return ..()
+
+	if(isliving(A))
+		var/mob/living/L = A
+		L.visible_message("<span class='danger'>\The [src] leaps at [L]!</span>", "<span class='userdanger'>[src] leaps on you!</span>")
+		if(issilicon(A))
+			L.Weaken(1) //Only brief stun
+			step_towards(src, L)
+		else
+			L.Weaken(5)
+			sleep(2) // Runtime prevention (infinite bump() calls on hulks)
+			step_towards(src, L)
+
+			if(restrained()) //You can leap when you hands are cuffed, but you can't grab
+				return
+
+			var/use_hand = "left"
+			if(l_hand)
+				if(r_hand)
+					to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
+					return
+				else
+					use_hand = "right"
+
+			visible_message("<span class='warning'><b>\The [src]</b> seizes [L] aggressively!</span>")
+
+			var/obj/item/weapon/grab/G = new(src, L)
+			if(use_hand == "left")
+				l_hand = G
+			else
+				r_hand = G
+
+			G.state = GRAB_AGGRESSIVE
+			G.icon_state = "grabbed1"
+			G.synch()
+			L.grabbed_by += G
+
+	else if(A.density)
+		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='danger'>You smashes into [A]!</span>")
+		weakened = 2
+
+	update_canmove()
+
+#undef MAX_LEAP_DIST
 
 /mob/living/carbon/human/proc/gut()
 	set category = "IC"

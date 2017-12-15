@@ -46,6 +46,7 @@
 	anchored = 1
 	use_power = 0
 	req_access = list(access_engine_equip)
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell
@@ -98,8 +99,8 @@
 		return
 	..()
 
-/obj/machinery/power/apc/New(turf/loc, ndir, building=0)
-	..()
+/obj/machinery/power/apc/atom_init(mapload, ndir, building = 0)
+	. = ..()
 
 	wires = new(src)
 
@@ -107,21 +108,21 @@
 	// this allows the APC to be embedded in a wall, yet still inside an area
 	if (building)
 		dir = ndir
-	src.tdir = dir		// to fix Vars bug
+	tdir = dir		// to fix Vars bug
 	dir = SOUTH
 
-	pixel_x = (src.tdir & 3)? 0 : (src.tdir == 4 ? 24 : -24)
-	pixel_y = (src.tdir & 3)? (src.tdir ==1 ? 24 : -24) : 0
-	if (building==0)
+	pixel_x = (tdir & 3)? 0 : (tdir == 4 ? 24 : -24)
+	pixel_y = (tdir & 3)? (tdir == 1 ? 24 : -24) : 0
+	if (building == 0)
 		init()
 	else
-		area = src.loc.loc:master
+		area = loc.loc:master
 		area.apc = src
 		opened = 1
 		operating = 0
 		name = "[area.name] APC"
 		stat |= MAINT
-		src.update_icon()
+		update_icon()
 		addtimer(CALLBACK(src, .proc/update), 5)
 
 /obj/machinery/power/apc/Destroy()
@@ -484,17 +485,17 @@
 					update_icon()
 				else
 					to_chat(user, "You fail to [ locked ? "unlock" : "lock"] the APC interface.")
-	else if (istype(W, /obj/item/weapon/cable_coil) && !terminal && opened && has_electronics!=2)
+	else if (istype(W, /obj/item/stack/cable_coil) && !terminal && opened && has_electronics != 2)
 		if (src.loc:intact)
 			to_chat(user, "\red You must remove the floor plating in front of the APC first.")
 			return
-		var/obj/item/weapon/cable_coil/C = W
-		if(C.amount < 10)
+		var/obj/item/stack/cable_coil/C = W
+		if(C.get_amount() < 10)
 			to_chat(user, "\red You need more wires.")
 			return
 		to_chat(user, "You start adding cables to the APC frame...")
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		if(do_after(user, 20, target = src) && C.amount >= 10)
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
 			var/turf/T = get_turf_loc(src)
 			var/obj/structure/cable/N = T.get_cable_node()
 			if (prob(50) && electrocute_mob(usr, N, N))
@@ -582,25 +583,17 @@
 		else
 			if (istype(user, /mob/living/silicon))
 				return src.attack_hand(user)
-			if (!opened && wiresexposed && \
-				(istype(W, /obj/item/device/multitool) || \
-				istype(W, /obj/item/weapon/wirecutters)))
-				return src.attack_hand(user)
+			if (!opened && wiresexposed && is_wire_tool(W))
+				return wires.interact(user)
 			user.visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!", \
 				"\red You hit the [src.name] with your [W.name]!", \
 				"You hear bang")
 
 // attack with hand - remove cell (if cover open) or interact with the APC
 
-/obj/machinery/power/apc/attack_hand(mob/user)
-//	if (!can_use(user)) This already gets called in interact() and in topic()
-//		return
-	if(!user)
-		return
-	src.add_fingerprint(user)
-
+/obj/machinery/power/apc/interact(mob/user)
 	//Synthetic human mob goes here.
-	if(istype(user,/mob/living/carbon/human))
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == "grab")
 			if(emagged || (stat & BROKEN))
@@ -630,7 +623,7 @@
 				to_chat(user, "There is no charge to draw from that APC.")
 			return
 
-	if(usr == user && opened && (!issilicon(user)))
+	if(usr == user && opened && !issilicon(user) && !isobserver(user))
 		if(cell)
 			user.put_in_hands(cell)
 			cell.add_fingerprint(user)
@@ -642,12 +635,8 @@
 			charging = 0
 			src.update_icon()
 		return
-	if(stat & (BROKEN|MAINT))
-		return
-
 	// do APC interaction
-	user.set_machine(src)
-	src.interact(user)
+	..()
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
 	if(!user)
@@ -668,15 +657,6 @@
 	else
 		beenhit += 1
 	return
-
-
-
-/obj/machinery/power/apc/interact(mob/user)
-	if(!user)
-		return
-	if(wires.interact(user))
-		return
-	ui_interact(user)
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)
 	if (ticker && ticker.mode && (user.mind in ticker.mode.malf_ai) && istype(user, /mob/living/silicon/ai))
@@ -703,15 +683,15 @@
 		"powerCellStatus" = cell ? cell.percent() : null,
 		"chargeMode" = chargemode,
 		"chargingStatus" = charging,
-		"totalLoad" = lastused_equip + lastused_light + lastused_environ,
+		"totalLoad" = round(lastused_equip) + lastused_light + round(lastused_environ),
 		"coverLocked" = coverlocked,
-		"siliconUser" = istype(user, /mob/living/silicon),
+		"siliconUser" = issilicon(user) || isobserver(user),
 		"malfStatus" = get_malf_status(user),
 
 		"powerChannels" = list(
 			list(
 				"title" = "Equipment",
-				"powerLoad" = lastused_equip,
+				"powerLoad" = round(lastused_equip),
 				"status" = equipment,
 				"topicParams" = list(
 					"auto" = list("eqp" = 3),
@@ -731,7 +711,7 @@
 			),
 			list(
 				"title" = "Environment",
-				"powerLoad" = lastused_environ,
+				"powerLoad" = round(lastused_environ),
 				"status" = environ,
 				"topicParams" = list(
 					"auto" = list("env" = 3),
@@ -861,12 +841,12 @@
 		return FALSE
 
 	else if (href_list["overload"])
-		if( istype(usr, /mob/living/silicon) && !src.aidisabled )
+		if( (issilicon(usr) && !src.aidisabled) || isobserver(usr) )
 			src.overload_lighting()
 
 	else if (href_list["malfhack"])
 		var/mob/living/silicon/ai/malfai = usr
-		if( istype(malfai, /mob/living/silicon/ai) && !src.aidisabled )
+		if( issilicon(usr) && !src.aidisabled )
 			if (malfai.malfhacking)
 				to_chat(malfai, "You are already hacking an APC.")
 				return FALSE

@@ -34,7 +34,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		burn_out()
 		return
 	if(location)
-		location.hotspot_expose(700, 5, 0, src)
+		location.hotspot_expose(700, 5, src)
 		return
 
 /obj/item/weapon/match/dropped(mob/user)
@@ -73,8 +73,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/chem_volume = 15
 	body_parts_covered = 0
 
-/obj/item/clothing/mask/cigarette/New()
-	..()
+/obj/item/clothing/mask/cigarette/atom_init()
+	. = ..()
 	flags |= NOREACT // so it doesn't react until you light it
 	create_reagents(chem_volume) // making the cigarrete a chemical holder with a maximum volume of 15
 
@@ -168,7 +168,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		die()
 		return
 	if(location)
-		location.hotspot_expose(700, 5, 0, src)
+		location.hotspot_expose(700, 5, src)
 	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
 		if(iscarbon(loc) && (src == loc:wear_mask)) // if it's in the human/monkey mouth, transfer reagents to the mob
 			if(istype(loc, /mob/living/carbon/human))
@@ -243,8 +243,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	w_class = 1
 	throwforce = 1
 
-/obj/item/weapon/cigbutt/New()
-	..()
+/obj/item/weapon/cigbutt/atom_init()
+	. = ..()
 	pixel_x = rand(-10,10)
 	pixel_y = rand(-10,10)
 	transform = turn(transform,rand(0,360))
@@ -404,11 +404,13 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_off = "zippo"
 
 /obj/item/weapon/lighter/random
-	New()
-		var/color = pick("r","c","y","g")
-		icon_on = "lighter-[color]-on"
-		icon_off = "lighter-[color]"
-		icon_state = icon_off
+
+/obj/item/weapon/lighter/random/atom_init()
+	. = ..()
+	var/color = pick("r","c","y","g")
+	icon_on = "lighter-[color]-on"
+	icon_off = "lighter-[color]"
+	icon_state = icon_off
 
 /obj/item/weapon/lighter/attack_self(mob/living/user)
 	if(user.r_hand == src || user.l_hand == src)
@@ -451,11 +453,11 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return
 
 
-/obj/item/weapon/lighter/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/weapon/lighter/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M, /mob))
 		return
 	M.IgniteMob()	//Lighters can ignite mobs splashed with fuel
-	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && user.zone_sel.selecting == O_MOUTH && lit)
+	if(istype(M.wear_mask, /obj/item/clothing/mask/cigarette) && def_zone == O_MOUTH && lit)
 		var/obj/item/clothing/mask/cigarette/cig = M.wear_mask
 		if(M == user)
 			cig.attackby(src, user)
@@ -470,5 +472,5 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/lighter/process()
 	var/turf/location = get_turf(src)
 	if(location)
-		location.hotspot_expose(700, 5, 0, src)
+		location.hotspot_expose(700, 5, src)
 	return

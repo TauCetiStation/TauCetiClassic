@@ -4,7 +4,7 @@
 	set desc = "Allows you to view whitelist and maybe add or edit users."
 
 	src = usr.client.holder
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_ADMIN|R_WHITELIST))
 		return
 
 	var/output = {"<!DOCTYPE html>
@@ -36,7 +36,7 @@
 
 /datum/admins/proc/whitelist_view(user_ckey)
 	src = usr.client.holder
-	if(!check_rights(R_ADMIN))
+	if(!check_rights(R_ADMIN|R_WHITELIST))
 		return
 	if(!user_ckey)
 		to_chat(usr, "<span class='alert'>Error: Topic 'whitelist': No valid ckey</span>")
@@ -289,7 +289,7 @@
 /proc/is_alien_whitelisted(mob/M, role)
 	if(!config.usealienwhitelist)
 		return TRUE
-	if(!M || !role || !role_whitelist || !role_whitelist[M.ckey])
+	if(!M || !role || !role_whitelist)
 		return FALSE
 
 	role = lowertext(role)
@@ -305,6 +305,34 @@
 		if("skrellian")
 			role = "skrell"
 
-	if(role_whitelist[M.ckey][role] && !role_whitelist[M.ckey][role]["ban"])
+	if(role_whitelist[M.ckey] && role_whitelist[M.ckey][role])
+		if(role_whitelist[M.ckey][role]["ban"])
+			return FALSE
 		return TRUE
+
+	if(M.client && config.whitelisted_species_by_time[role] && M.client.player_ingame_age >= config.whitelisted_species_by_time[role])
+		return TRUE
+
 	return FALSE
+
+//true if whitelist enabled & mob in it & has ban, false othervise
+//temporary solution, because we don't have separate bans currently
+/proc/is_alien_whitelisted_banned(mob/M, role)
+	if(!config.usealienwhitelist || !M || !role || !role_whitelist)
+		return FALSE
+
+	if(role == "human")
+		return FALSE
+
+	switch(role) //We don't use separate whitelist for languages, lets transform lang name to their race name.
+		if("sinta'unathi")
+			role = "unathi"
+		if("siik'maas","siik'tajr")
+			role = "tajaran"
+		if("skrellian")
+			role = "skrell"
+
+	if(role_whitelist[M.ckey] && role_whitelist[M.ckey][role])
+		if(role_whitelist[M.ckey][role]["ban"])
+			return TRUE
+		return FALSE

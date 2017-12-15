@@ -3,12 +3,11 @@
 	desc = "Summon things."
 	var/activation_emote = "chuckle"
 
-/obj/item/weapon/implant/uplink/New()
+/obj/item/weapon/implant/uplink/atom_init()
 	activation_emote = pick("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
 	hidden_uplink = new(src)
 	hidden_uplink.uses = 10
-	..()
-	return
+	. = ..()
 
 /obj/item/weapon/implant/uplink/implanted(mob/source)
 	activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")

@@ -18,12 +18,12 @@
 		//SN src = null
 		qdel(src)
 	if (istype(W, /obj/item/stack/rods))
-		if (W:amount >= 4)
+		var/obj/item/stack/rods/R = W
+		if (R.use(4))
 			new /obj/item/weapon/table_parts/reinforced( user.loc )
 			to_chat(user, "\blue You reinforce the [name].")
-			W:use(4)
 			qdel(src)
-		else if (W:amount < 4)
+		else
 			to_chat(user, "\red You need at least four rods to do this.")
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
@@ -58,10 +58,7 @@
 
 	if (istype(W, /obj/item/stack/tile/grass))
 		var/obj/item/stack/tile/grass/Grass = W
-		if(Grass.amount > 1)
-			Grass.amount -= 1
-		else
-			qdel(Grass)
+		Grass.use(1)
 		new /obj/item/weapon/table_parts/wood/poker( src.loc )
 		visible_message("<span class='notice'>[user] adds grass to the wooden table parts</span>")
 		qdel(src)

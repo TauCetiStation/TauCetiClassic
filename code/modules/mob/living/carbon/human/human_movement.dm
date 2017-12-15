@@ -38,17 +38,20 @@
 			else if(BP.status & ORGAN_BROKEN)
 				tally += 1.5
 	else
-		if(!species.flags[NO_BLOOD] && !( reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola") )) // hyperzine removes equipment slowdowns (no blood = no chemical effects).
+		var/chem_nullify_debuff = FALSE
+		if(!species.flags[NO_BLOOD] && ( reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola") )) // hyperzine removes equipment slowdowns (no blood = no chemical effects).
+			chem_nullify_debuff = TRUE
 
-			if(wear_suit && wear_suit.slowdown)
-				tally += wear_suit.slowdown
+		if(wear_suit && wear_suit.slowdown && !(wear_suit.slowdown > 0 && chem_nullify_debuff))
+			tally += wear_suit.slowdown
 
-			if(back && back.slowdown)
-				tally += back.slowdown
+		if(back && back.slowdown && !(back.slowdown > 0 && chem_nullify_debuff))
+			tally += back.slowdown
 
-			if(shoes && shoes.slowdown)
-				tally += shoes.slowdown
+		if(shoes && shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
+			tally += shoes.slowdown
 
+		if(!chem_nullify_debuff)
 			for(var/x in list(l_hand, r_hand))
 				var/obj/item/O = x
 				if(O && !(O.flags & ABSTRACT) && O.w_class >= ITEM_SIZE_NORMAL)
@@ -77,6 +80,8 @@
 
 	if(bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
+
+	tally += max(2 * stance_damage, 0) //damaged/missing feet or legs is slow
 
 	return (tally + config.human_delay)
 

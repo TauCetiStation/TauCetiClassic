@@ -30,8 +30,8 @@
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control = null
 
-/obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S, var/process = 1)
-	..(loc)
+/obj/machinery/power/solar/atom_init(mapload, obj/item/solar_assembly/S, process = 1)
+	. = ..()
 	Make(S)
 	connect_to_network(process)
 
@@ -176,8 +176,8 @@
 		src.density = 0
 
 
-/obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
-	..(loc, S, 0)
+/obj/machinery/power/solar/fake/atom_init(mapload, obj/item/solar_assembly/S)
+	. = ..(mapload, S, 0)
 
 /obj/machinery/power/solar/fake/process()
 	. = PROCESS_KILL
@@ -206,8 +206,7 @@
 // Give back the glass type we were supplied with
 /obj/item/solar_assembly/proc/give_glass()
 	if(glass_type)
-		var/obj/item/stack/sheet/S = new glass_type(src.loc)
-		S.amount = 2
+		new glass_type(src.loc, 2)
 		glass_type = null
 
 
@@ -228,9 +227,8 @@
 
 		if(istype(W, /obj/item/stack/sheet/glass) || istype(W, /obj/item/stack/sheet/rglass))
 			var/obj/item/stack/sheet/S = W
-			if(S.amount >= 2)
+			if(S.use(2))
 				glass_type = W.type
-				S.use(2)
 				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				user.visible_message("<span class='notice'>[user] places the glass on the solar assembly.</span>")
 				if(tracker)
@@ -280,12 +278,12 @@
 	var/trackdir = 1		// -1=CCW, 1=CW
 	var/nexttime = 0		// Next clock time that manual tracking will move the array
 
-
-/obj/machinery/power/solar_control/New()
-	..()
-	if(ticker)
-		initialize()
+/obj/machinery/power/solar_control/atom_init()
+	. = ..()
 	connect_to_network()
+	if(!powernet)
+		return
+	set_panels(cdir)
 
 /obj/machinery/power/solar_control/disconnect_from_network()
 	..()
@@ -296,11 +294,6 @@
 	if(powernet)
 		SSsun.solars.Add(src)
 	return to_return
-
-/obj/machinery/power/solar_control/initialize()
-	..()
-	if(!powernet) return
-	set_panels(cdir)
 
 /obj/machinery/power/solar_control/update_icon()
 	if(stat & BROKEN)
@@ -319,19 +312,6 @@
 	if(cdir > 0)
 		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
 	return
-
-
-/obj/machinery/power/solar_control/attack_ai(mob/user)
-	add_fingerprint(user)
-	if(stat & (BROKEN | NOPOWER)) return
-	interact(user)
-
-
-/obj/machinery/power/solar_control/attack_hand(mob/user)
-	add_fingerprint(user)
-	if(stat & (BROKEN | NOPOWER)) return
-	interact(user)
-
 
 /obj/machinery/power/solar_control/attackby(I, user)
 	if(istype(I, /obj/item/weapon/screwdriver))
@@ -394,16 +374,13 @@
 	src.updateDialog()
 
 
-/obj/machinery/power/solar_control/interact(mob/user)
-	if(stat & (BROKEN | NOPOWER)) return
-	if ( (get_dist(src, user) > 1 ))
-		if (!istype(user, /mob/living/silicon))
-			user.unset_machine()
-			user << browse(null, "window=solcon")
-			return
-
-	add_fingerprint(user)
-	user.set_machine(src)
+/obj/machinery/power/solar_control/ui_interact(mob/user)
+	if(stat & (BROKEN | NOPOWER))
+		return
+	if (!in_range(src, user) && !issilicon(user) && !isobserver(user))
+		user.unset_machine()
+		user << browse(null, "window=solcon")
+		return
 
 	var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
 	t += "<B>Generated power</B> : [round(lastgen)] W<BR>"
@@ -431,7 +408,6 @@
 	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
 	user << browse(t, "window=solcon")
 	onclose(user, "solcon")
-	return
 
 
 /obj/machinery/power/solar_control/Topic(href, href_list)

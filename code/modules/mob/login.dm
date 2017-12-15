@@ -24,19 +24,19 @@
 						log_access("Notice: [key_name(src)] has the same [matches] as [key_name(M)] (no longer logged in).")
 
 /mob/Login()
-
 	player_list |= src
 	update_Login_details()
 	world.update_status()
 
 	client.images = null				//remove the images such as AIs being unable to see runes
 	client.screen = list()				//remove hud items just in case
-	if(hud_used)	qdel(hud_used)		//remove the hud objects
+	if(hud_used)
+		qdel(hud_used)		//remove the hud objects
 	hud_used = new /datum/hud(src)
 	client.pixel_x = 0
 	client.pixel_y = 0
 	next_move = 1
-	sight |= SEE_SELF
+
 	..()
 
 	if(loc && !isturf(loc))
@@ -45,8 +45,6 @@
 	else
 		client.eye = src
 		client.perspective = MOB_PERSPECTIVE
-
-	client.screen += client.void
 
 	//Some weird magic to block users who cant see lighting normally
 	var/obj/screen/blocker = new /obj/screen()
