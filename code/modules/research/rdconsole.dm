@@ -288,7 +288,8 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								M.death()
 							if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
 								var/obj/item/stack/sheet/S = I
-								if(S.use(1))
+								if(S.amount >= 2)
+									S.amount--
 									linked_destroy.loaded_item = S
 								else
 									linked_destroy.icon_state = "d_analyzer"
