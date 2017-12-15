@@ -67,7 +67,7 @@
 
 /datum/gear/under/maid_suit
 	display_name = "Maid dress selection"
-	path = /obj/item/clothing/under/suit_jacket/navy
+	path = /obj/item/clothing/under/fluff/maid_suit
 	cost = 2
 
 /datum/gear/under/maid_suit/New()

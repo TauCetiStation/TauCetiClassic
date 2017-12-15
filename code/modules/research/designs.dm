@@ -1789,6 +1789,15 @@ datum/design/scalpel_manager
 	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500, MAT_SILVER = 1500, MAT_GOLD = 1500, MAT_DIAMOND = 750)
 	build_path = /obj/item/weapon/scalpel/manager
 
+/datum/design/biocan
+	name = "Biogel can"
+	desc = "Medical device for sustaining life in head"
+	id = "biocan"
+	req_tech = list("biotech " = 3, "magnets" = 3, "materials" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1200, MAT_GLASS = 1000)
+	build_path = /obj/item/device/biocan
+
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
 /////////////////////////////////////////

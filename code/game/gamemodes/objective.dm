@@ -252,7 +252,7 @@ datum/objective/debrain//I want braaaainssss
 /datum/objective/dehead/find_target()
 	..()
 	if(target && target.current)
-		explanation_text = "Put the brain of [target.current.real_name] in biogel can and steal it."
+		explanation_text = "Put the head of [target.current.real_name] in biogel can and steal it."
 	else
 		explanation_text = "Free Objective"
 	return target
@@ -388,7 +388,7 @@ datum/objective/escape
 		if(istype(location, /turf/simulated/shuttle/floor4)) // Fails traitors if they are in the shuttle brig -- Polymorph
 			if(istype(owner.current, /mob/living/carbon))
 				var/mob/living/carbon/C = owner.current
-				if (!C.handcuffed)
+				if (!C.restrained())
 					return 1
 			return 0
 

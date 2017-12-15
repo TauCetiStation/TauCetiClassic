@@ -3,6 +3,7 @@
 	desc = "Biogel jar for supporting life in head. Extremely fragile!"
 	icon = 'icons/obj/biocan.dmi'
 	icon_state = "biocan"
+	origin_tech = "biotech=3;materials=3;magnets=3"
 	w_class = 3
 	appearance_flags = KEEP_TOGETHER
 	var/obj/item/weapon/organ/head/headobj = null
@@ -15,8 +16,10 @@
 	set category = "Object"
 	set src in view(0)
 
+	to_chat(usr, "<span class='notice'>You began to carefully extract [headobj] from the can.</span>")
 	if(!usr.is_busy() && do_after(usr,20))
 		if(headobj)
+			to_chat(usr, "<span class='notice'>You have successfully extracted [headobj].</span>")
 			if(brainmob)
 				brainmob.container = null
 				brainmob.loc = headobj
@@ -30,7 +33,7 @@
 			underlays.Cut()
 
 /obj/item/device/biocan/verb/toggle_speech()
-	set name = "Disable commutator"
+	set name = "Toggle commutator"
 	set category = "Object"
 	set src in view(0)
 
@@ -69,7 +72,9 @@
 			update_icon()
 
 /obj/item/device/biocan/attack_self(mob/user)
-	visible_message("<span class='red'>\The [src.name] contents has been splashed over the floor. </span>")
+	if(alert(user, "Are you sure you want to pour it on the floor? This will kill this head!",,"Cancel","Continue") != "Continue")
+		return
+	user.visible_message("<span class='red'>\The [src.name] contents has been splashed over the floor. </span>")
 	if(headobj)
 		if(brainmob)
 			living_mob_list -= headobj.brainmob
