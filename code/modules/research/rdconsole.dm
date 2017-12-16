@@ -258,7 +258,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				linked_destroy.busy = 1
 				screen = 0.1
 				updateUsrDialog()
-				flick("d_analyzer_process", linked_destroy)
+				linked_destroy.update_icon()
 				spawn(24)
 					if(linked_destroy)
 						linked_destroy.busy = 0
@@ -266,6 +266,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 							if(!linked_destroy.loaded_item)
 								to_chat(usr, "\red The destructive analyzer appears to be empty.")
 								screen = 1.0
+								linked_destroy.update_icon()
 								return
 							if((linked_destroy.loaded_item.reliability >= 99 - (linked_destroy.decon_mod * 3)) || linked_destroy.loaded_item.crit_fail)
 								for(var/T in temp_tech)
@@ -279,6 +280,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								linked_lathe.m_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.m_amt*(linked_destroy.decon_mod/10)))
 								linked_lathe.g_amount += min((linked_lathe.max_material_storage - linked_lathe.TotalMaterials()), (linked_destroy.loaded_item.g_amt*(linked_destroy.decon_mod/10)))
 							linked_destroy.loaded_item = null
+							linked_destroy.update_icon()
 						else
 							screen = 1.0
 						for(var/obj/I in linked_destroy.contents)
@@ -286,16 +288,17 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 								M.death()
 							if(istype(I,/obj/item/stack/sheet))//Only deconsturcts one sheet at a time instead of the entire stack
 								var/obj/item/stack/sheet/S = I
-								if(S.amount > 1)
+								if(S.amount >= 2)
 									S.amount--
 									linked_destroy.loaded_item = S
 								else
 									qdel(S)
-									linked_destroy.icon_state = "d_analyzer"
+									linked_destroy.loaded_item = null
 							else
 								if(!(I in linked_destroy.component_parts))
 									qdel(I)
-									linked_destroy.icon_state = "d_analyzer"
+									linked_destroy.loaded_item = null
+									linked_destroy.update_icon()
 						use_power(250)
 						updateUsrDialog()
 
