@@ -211,7 +211,7 @@
 	new /obj/item/weapon/stamp/chameleon(src)
 
 /obj/item/weapon/storage/box/syndie_kit/posters
-	name = "box (P)
+	name = "box (P)"
 
 /obj/item/weapon/storage/box/syndie_kit/posters/atom_init()
 	..()
