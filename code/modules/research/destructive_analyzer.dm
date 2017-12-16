@@ -32,6 +32,16 @@ Note: Must be placed within 3 tiles of the R&D Console
 	qdel(src)
 	return
 
+obj/machinery/r_n_d/destructive_analyzer/update_icon()
+	if(stat & (NOPOWER|BROKEN) || (!loaded_item))
+		icon_state = "d_analyzer"
+	else if(panel_open)
+		icon_state = "d_analyzer_t"
+	else if(busy)
+		flick("d_analyzer_process",src)
+	else if(loaded_item)
+		flick("d_analyzer_la",src)
+
 /obj/machinery/r_n_d/destructive_analyzer/proc/ConvertReqString2List(list/source_list)
 	var/list/temp_list = params2list(source_list)
 	for(var/O in temp_list)
@@ -58,10 +68,10 @@ Note: Must be placed within 3 tiles of the R&D Console
 	if (disabled)
 		return
 	if (!linked_console)
-		to_chat(user, "<span class='warning'>The protolathe must be linked to an R&D console first!</span>")
+		to_chat(user, "<span class='warning'>The destructive analyzer must be linked to an R&D console first!</span>")
 		return
 	if (busy)
-		to_chat(user, "<span class='warning'> The protolathe is busy right now.</span>")
+		to_chat(user, "<span class='warning'> The destructive analyzer is busy right now.</span>")
 		return
 	if (istype(O, /obj/item) && !loaded_item)
 		if(isrobot(user)) //Don't put your module items in there!
@@ -73,12 +83,12 @@ Note: Must be placed within 3 tiles of the R&D Console
 		if (temp_tech.len == 0)
 			to_chat(user, "<span class='warning'> You cannot deconstruct this item!</span>")
 			return
-		busy = 1
 		loaded_item = O
+		update_icon()
+		busy = 1
 		user.drop_item()
 		O.loc = src
 		to_chat(user, "<span class='notice'>You add the [O.name] to the machine!</span>")
-		flick("d_analyzer_la", src)
 		addtimer(CALLBACK(src, .proc/unbusy), 10)
 		return 1
 	return
