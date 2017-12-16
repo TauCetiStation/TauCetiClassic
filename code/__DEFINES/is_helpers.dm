@@ -5,6 +5,13 @@
 #define ishuman(A) (istype(A, /mob/living/carbon/human))
 
 // CARBON
+#define isalienqueen(A) (istype(A, /mob/living/carbon/alien/humanoid/queen))
+
+#define isaliendrone(A) (istype(A, /mob/living/carbon/alien/humanoid/drone))
+
+#define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/humanoid/sentinel))
+
+#define isalienhunter(A) (istype(A, /mob/living/carbon/alien/humanoid/hunter))
 
 #define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
 
@@ -64,7 +71,7 @@
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
 
-#define isnewplayer(A) (istype(A, /mob/new_player))
+#define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
 // ELSE
 
@@ -73,6 +80,10 @@
 #define isbot(A) (istype(A, /obj/machinery/bot))
 
 #define islist(A) (istype(A, /list))
+
+#define ismachinery(A) (istype(A, /obj/machinery))
+
+#define ismovableatom(A) (istype(A, /atom/movable))
 
 // GOONCHAT PORT
 

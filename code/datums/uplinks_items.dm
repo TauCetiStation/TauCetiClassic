@@ -147,7 +147,7 @@
 	name = "L6 Squad Automatic Weapon"
 	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62x51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
-	cost = 50
+	cost = 45
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -170,11 +170,11 @@
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
 
-/datum/uplink_item/dangerous/a28
-	name = "A28 Assault Rifle"
-	desc = "A bullpup automatic assault rifle. Great for range combat and fire suppresion. Uses 30-round magazine of 5.56mm ammunition."
-	item = /obj/item/weapon/gun/projectile/automatic/a28
-	cost = 24
+/datum/uplink_item/dangerous/a74
+	name = "A74 Assault Rifle"
+	desc = "A bullpup automatic assault rifle. Great for range combat and fire suppresion. Uses 30-round magazine of 7.74mm ammunition."
+	item = /obj/item/weapon/gun/projectile/automatic/a74
+	cost = 20
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -308,20 +308,11 @@
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
 
-/datum/uplink_item/ammo/a28standard
-	name = "Ammo-5.56mm"
-	desc = "A 30-round 5.56 magazine for use in the A28 assault rifle."
-	item = /obj/item/ammo_box/magazine/m556
+/datum/uplink_item/ammo/a74standart
+	name = "Ammo-7.74mm"
+	desc = "A 30-round 7.74 magazine for use in the A74 assault rifle."
+	item = /obj/item/ammo_box/magazine/a74mm
 	cost = 7
-	gamemodes = list(/datum/game_mode/nuclear)
-	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
-
-/datum/uplink_item/ammo/a28fire
-	name = "Ammo-5.56mm Incendiary"
-	desc = "A 30-round 5.56 Incendiary magazine for use in the A28 assault rifle."
-	item = /obj/item/ammo_box/magazine/m556/incendiary
-	cost = 8
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 	excludefrom_uplinks = list("traitor")
@@ -465,13 +456,12 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	cost = 2
 //	excludefrom = list(/datum/game_mode/nuclear)
-/*
-/datum/uplink_item/stealthy_tools/chameleon_stamp
-	name = "Chameleon Stamp"
-	desc = "A stamp that can be activated to imitate an official Nanotrasen Stamp. The disguised stamp will work exactly like the real stamp and will allow you to forge false documents to gain access or equipment; \
-	it can also be used in a washing machine to forge clothing."
-	item = /obj/item/weapon/stamp/chameleon
-	cost = 1 */
+
+/datum/uplink_item/stealthy_tools/chameleon_penstamp
+	name = "Fake Bureucracy Set"
+	desc = "This set allows you to forge various documents at the station."
+	item = /obj/item/weapon/storage/box/syndie_kit/fake
+	cost = 4
 
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
@@ -607,7 +597,7 @@
 	name = "Syndicate Space Suit"
 	desc = "The red syndicate space suit is less encumbering than Nanotrasen variants, fits inside bags, and has a weapon slot. Nanotrasen crewmembers are trained to report red space suit sightings."
 	item = /obj/item/weapon/storage/box/syndie_kit/space
-	cost = 5
+	cost = 4
 
 /datum/uplink_item/device_tools/thermal
 	name = "Thermal Imaging Glasses"
@@ -636,6 +626,12 @@
 			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
 	item = /obj/item/device/encryptionkey/syndicate
 	cost = 2
+
+/datum/uplink_item/device_tools/headcan
+	name = "Biogel can"
+	desc = "Sophisticated device for sustaining life in head for a long period"
+	item = /obj/item/device/biocan
+	cost = 1
 
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector" // changed name in case newfriends thought it detected disguised ai's
@@ -690,14 +686,6 @@
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
-/datum/uplink_item/device_tools/teleporter
-	name = "Teleporter Circuit Board"
-	desc = "A printed circuit board that completes the teleporter onboard the mothership. Advise you test fire the teleporter before entering it, as malfunctions can occur."
-	item = /obj/item/weapon/circuitboard/teleporter
-	cost = 40
-	gamemodes = list(/datum/game_mode/nuclear)
-	uplink_types = list("nuclear")
-
 /datum/uplink_item/device_tools/shield
 	name = "Energy Shield"
 	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending against other attacks."
@@ -706,6 +694,13 @@
 	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
+/datum/uplink_item/device_tools/traitor_caller
+	name = "Traitor Caller"
+	desc = "Allows you to request an additional agent selected from the stealthy traitors."
+	item = /obj/item/device/traitor_caller
+	cost = 55
+	gamemodes = list(/datum/game_mode/nuclear)
+	uplink_types = list("nuclear")
 
 // IMPLANTS
 

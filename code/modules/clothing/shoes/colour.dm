@@ -146,3 +146,11 @@
 				confirmed = 1
 	if(confirmed)
 		return ..()
+
+/obj/item/clothing/shoes/orange/candals/atom_init()
+	. = ..()
+	chained = new /obj/item/weapon/handcuffs(src)
+	slowdown = 15
+	name = "shackles"
+	icon_state = "orange1"
+	item_state = "o_shoes1"

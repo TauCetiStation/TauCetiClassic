@@ -4,20 +4,8 @@
 	living_mob_list -= src
 	ghostize(bancheck = TRUE)
 	return ..()
-/*
-/mob/Destroy()//This makes sure that mobs with clients/keys are not just deleted from the game.
-	mob_list -= src
-	dead_mob_list -= src
-	living_mob_list -= src
-	qdel(hud_used)
-	if(mind && mind.current == src)
-		spellremove(src)
-	for(var/infection in viruses)
-		qdel(infection)
-	ghostize()
-	..()
-*/
-/mob/New()
+
+/mob/atom_init()
 	spawn()
 		if(client) animate(client, color = null, time = 0)
 	mob_list += src
@@ -25,25 +13,24 @@
 		dead_mob_list += src
 	else
 		living_mob_list += src
-	..()
+	. = ..()
 
 /mob/proc/Cell()
 	set category = "Admin"
 	set hidden = TRUE
 
-	if(!loc)
+	if(!isturf(loc))
 		return 0
 
-	var/datum/gas_mixture/environment = loc.return_air()
+	var/turf/T = loc
 
-	var/t = "\blue Coordinates: [x],[y] \n"
-	t+= "\red Temperature: [environment.temperature] \n"
-	t+= "\blue Nitrogen: [environment.nitrogen] \n"
-	t+= "\blue Oxygen: [environment.oxygen] \n"
-	t+= "\blue Phoron : [environment.phoron] \n"
-	t+= "\blue Carbon Dioxide: [environment.carbon_dioxide] \n"
-	for(var/datum/gas/trace_gas in environment.trace_gases)
-		to_chat(usr, "\blue [trace_gas.type]: [trace_gas.moles] \n")
+	var/datum/gas_mixture/env = T.return_air()
+
+	var/t = "<span class='notice'>Coordinates: [T.x],[T.y],[T.z]</span>\n"
+	t += "<span class='warning'>Temperature: [env.temperature]</span>\n"
+	t += "<span class='warning'>Pressure: [env.return_pressure()]kPa</span>\n"
+	for(var/g in env.gas)
+		t += "<span class='notice'>[g]: [env.gas[g]] / [env.gas[g] * R_IDEAL_GAS_EQUATION * env.temperature / env.volume]kPa</span>\n"
 
 	usr.show_message(t, 1)
 
@@ -138,7 +125,7 @@
 	set waitfor = 0
 	return
 
-/mob/proc/incapacitated()
+/mob/proc/incapacitated(restrained_type = HANDS)
 	return
 
 /mob/proc/restrained()
@@ -397,7 +384,7 @@
 		log_game("[usr.key] AM failed due to disconnect.")
 		return
 
-	var/mob/new_player/M = new /mob/new_player()
+	var/mob/dead/new_player/M = new /mob/dead/new_player()
 	if(!client)
 		log_game("[usr.key] AM failed due to disconnect.")
 		qdel(M)
@@ -414,7 +401,7 @@
 
 	if(client.holder && (client.holder.rights & R_ADMIN))
 		is_admin = TRUE
-	else if(stat != DEAD || istype(src, /mob/new_player) || jobban_isbanned(src, "Observer"))
+	else if(stat != DEAD || isnewplayer(src) || jobban_isbanned(src, "Observer"))
 		to_chat(usr, "\blue You must be observing to use this!")
 		return
 
@@ -451,6 +438,19 @@
 		var/mob/living/M = src
 		if(M.cameraFollow)
 			M.cameraFollow = null
+
+//suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
+/mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
+	set name = ".click"
+	set hidden = TRUE
+	set category = null
+	return
+
+/mob/verb/DisDblClick(argu = null as anything, sec = "" as text, number1 = 0 as num, number2 = 0 as num)
+	set name = ".dblclick"
+	set hidden = TRUE
+	set category = null
+	return
 
 /mob/Topic(href, href_list)
 	if(href_list["mach_close"])
@@ -638,13 +638,16 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 /mob/Stat()
 	..()
+
 	if(statpanel("Status"))
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
-		if(client && client.holder)
-			if(ticker && ticker.mode && ticker.mode.name == "AI malfunction")
-				if(ticker.mode:malf_mode_declared)
-					stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/APC_MIN_TO_MALDF_DECLARE), 0)]")
-			if(SSshuttle)
+		if(client)
+			stat(null, "Your in-game age: [client.player_ingame_age]")
+			if(client.holder)
+				if(ticker.mode && ticker.mode.config_tag == "malfunction")
+					var/datum/game_mode/malfunction/GM = ticker.mode
+					if(GM.malf_mode_declared)
+						stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
 				if(SSshuttle.online && SSshuttle.location < 2)
 					var/timeleft = SSshuttle.timeleft()
 					if(timeleft)
@@ -687,11 +690,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 					continue
 				statpanel(listed_turf.name, null, A)
 
-	if(mind)
-		if(mind.changeling)
-			add_stings_to_statpanel(mind.changeling.purchasedpowers)
-
-	if(spell_list && spell_list.len)
+	if(spell_list.len)
 		for(var/obj/effect/proc_holder/spell/S in spell_list)
 			switch(S.charge_type)
 				if("recharge")
@@ -700,13 +699,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 					statpanel(S.panel,"[S.charge_counter]/[S.charge_max]",S)
 				if("holdervar")
 					statpanel(S.panel,"[S.holder_var_type] [S.holder_var_amount]",S)
-
-/mob/proc/add_stings_to_statpanel(list/stings)
-	for(var/obj/effect/proc_holder/changeling/S in stings)
-		if(S.chemical_cost >=0 && S.can_be_used_by(src))
-			statpanel("[S.panel]",((S.chemical_cost > 0) ? "[S.chemical_cost]" : ""),S)
-
-
 
 // facing verbs
 /mob/proc/canface()
@@ -725,14 +717,15 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	var/ko = weakened || paralysis || stat || (status_flags & FAKEDEATH)
 
-	lying = (ko || crawling || resting) && !captured && !buckled
-	canmove = !(ko || resting || stunned || captured)
+	lying = (ko || crawling || resting) && !captured && !buckled && !pinned.len
+	canmove = !(ko || resting || stunned || captured || pinned.len)
+	anchored = captured || pinned.len
 
 	if(buckled)
 		if(buckled.buckle_lying != -1)
 			lying = buckled.buckle_lying
 		canmove = canmove && buckled.buckle_movable
-		anchored = buckled.buckle_movable
+		anchored = anchored || buckled.buckle_movable
 
 		if(istype(buckled, /obj/vehicle))
 			var/obj/vehicle/V = buckled
@@ -746,7 +739,6 @@ note dizziness decrements automatically in the mob's Life() proc.
 				if(C.flipped)
 					lying = 1
 
-	anchored = anchored || captured
 	density = !lying
 
 	if(lying && ((l_hand && l_hand.canremove) || (r_hand && r_hand.canremove)) && !isalien(src))
@@ -756,6 +748,9 @@ note dizziness decrements automatically in the mob's Life() proc.
 	for(var/obj/item/weapon/grab/G in grabbed_by)
 		if(G.state >= GRAB_AGGRESSIVE)
 			canmove = FALSE
+			if(G.state == GRAB_NECK && G.assailant.zone_sel.selecting == BP_CHEST)
+				lying = FALSE
+				density = TRUE
 			break
 
 	//Temporarily moved here from the various life() procs
@@ -805,21 +800,51 @@ note dizziness decrements automatically in the mob's Life() proc.
 	return 0
 
 // ========== STUN ==========
-/mob/proc/Stun(amount)
-	if(status_flags & CANSTUN)
+/mob/proc/Stun(amount, updating = 1, ignore_canstun = 0, lock = null)
+	if(!isnull(lock))
+		if(lock)
+			status_flags |= LOCKSTUN
+		else
+			status_flags &= ~LOCKSTUN
+	else if(status_flags & LOCKSTUN)
+		return
+
+	if(status_flags & CANSTUN || ignore_canstun)
 		stunned = max(max(stunned, amount), 0) //can't go below 0, getting a low amount of stun doesn't lower your current stun
+		if(updating)
+			update_canmove()
 	else
 		stunned = 0
 
-/mob/proc/SetStunned(amount) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
-	if(status_flags & CANSTUN)
+/mob/proc/SetStunned(amount, updating = 1, ignore_canstun = 0, lock = null) //if you REALLY need to set stun to a set amount without the whole "can't go below current stunned"
+	if(!isnull(lock))
+		if(lock)
+			status_flags |= LOCKSTUN
+		else
+			status_flags &= ~LOCKSTUN
+	else if(status_flags & LOCKSTUN)
+		return
+
+	if(status_flags & CANSTUN || ignore_canstun)
 		stunned = max(amount, 0)
+		if(updating)
+			update_canmove()
 	else
 		stunned = 0
 
-/mob/proc/AdjustStunned(amount)
-	if(status_flags & CANSTUN)
+/mob/proc/AdjustStunned(amount, updating = 1, ignore_canstun = 0, lock = null)
+	if(!isnull(lock))
+		if(lock)
+			status_flags |= LOCKSTUN
+		else
+			status_flags &= ~LOCKSTUN
+	else if(status_flags & LOCKSTUN)
+		return
+
+	if(status_flags & CANSTUN || ignore_canstun)
 		stunned = max(stunned + amount, 0)
+		if(updating)
+			update_canmove()
 	else
 		stunned = 0
 

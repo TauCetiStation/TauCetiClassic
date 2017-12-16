@@ -19,7 +19,8 @@
 	density = 1
 	opacity = 1
 
-/obj/structure/bookcase/initialize()
+/obj/structure/bookcase/atom_init()
+	. = ..()
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/weapon/book))
 			I.loc = src
@@ -84,20 +85,19 @@
 /obj/structure/bookcase/manuals/medical
 	name = "Medical Manuals bookcase"
 
-/obj/structure/bookcase/manuals/medical/New()
-	..()
+/obj/structure/bookcase/manuals/medical/atom_init()
+	. = ..()
 	new /obj/item/weapon/book/manual/medical_cloning(src)
-	new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
-	new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
-	new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
 	update_icon()
 
 
 /obj/structure/bookcase/manuals/engineering
 	name = "Engineering Manuals bookcase"
 
-/obj/structure/bookcase/manuals/engineering/New()
-	..()
+/obj/structure/bookcase/manuals/engineering/atom_init()
+	. = ..()
 	new /obj/item/weapon/book/manual/engineering_construction(src)
 	new /obj/item/weapon/book/manual/engineering_particle_accelerator(src)
 	new /obj/item/weapon/book/manual/engineering_hacking(src)
@@ -111,8 +111,8 @@
 /obj/structure/bookcase/manuals/research_and_development
 	name = "R&D Manuals bookcase"
 
-/obj/structure/bookcase/manuals/research_and_development/New()
-	..()
+/obj/structure/bookcase/manuals/research_and_development/atom_init()
+	. = ..()
 	new /obj/item/weapon/book/manual/research_and_development(src)
 	update_icon()
 
@@ -237,8 +237,8 @@
 	else
 		..()
 
-/obj/item/weapon/book/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(user.zone_sel.selecting == O_EYES)
+/obj/item/weapon/book/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+	if(def_zone == O_EYES)
 		user.visible_message("<span class='notice'>You open up the book and show it to [M]. </span>", \
 			"<span class='notice'> [user] opens up a book and shows it to [M]. </span>")
 		M << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")

@@ -29,8 +29,8 @@
 	var/stored_power = 0//Power to deploy per tick
 
 
-/obj/machinery/power/am_control_unit/New()
-	..()
+/obj/machinery/power/am_control_unit/atom_init()
+	. = ..()
 	linked_shielding = list()
 	linked_cores = list()
 
@@ -185,11 +185,9 @@
 	return
 
 
-/obj/machinery/power/am_control_unit/attack_hand(mob/user)
+/obj/machinery/power/am_control_unit/interact(mob/user)
 	if(anchored)
-		interact(user)
-	return
-
+		..()
 
 /obj/machinery/power/am_control_unit/proc/add_shielding(obj/machinery/am_shielding/AMS, AMS_linking = 0)
 	if(!istype(AMS)) return 0
@@ -257,13 +255,12 @@
 	return
 
 
-/obj/machinery/power/am_control_unit/interact(mob/user)
-	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)))
+/obj/machinery/power/am_control_unit/ui_interact(mob/user)
+	if((get_dist(src, user) > 1) || (stat & (BROKEN|NOPOWER)) || !anchored)
 		if(!istype(user, /mob/living/silicon/ai))
 			user.unset_machine()
 			user << browse(null, "window=AMcontrol")
 			return
-	user.set_machine(src)
 
 	var/dat = ""
 	dat += "AntiMatter Control Panel<BR>"
@@ -293,7 +290,6 @@
 
 	user << browse(dat, "window=AMcontrol;size=420x500")
 	onclose(user, "AMcontrol")
-	return
 
 
 /obj/machinery/power/am_control_unit/Topic(href, href_list)

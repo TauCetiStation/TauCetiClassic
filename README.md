@@ -1,6 +1,7 @@
 # Tau Ceti Classic
-[tauceti.ru](http://tauceti.ru/)  
-[RocketChat](https://chat.tauceti.ru/channel/rnd)
+
+[![tauceti.ru](https://img.shields.io/badge/site-tauceti.ru-blue.svg)](http://tauceti.ru/)
+[![RocketChat](https://chat.tauceti.ru/api/v1/shield.svg?type=channel&name=Rocket.Chat&channel=rnd)](http://chat.tauceti.ru/channel/rnd)
 
 ---
 

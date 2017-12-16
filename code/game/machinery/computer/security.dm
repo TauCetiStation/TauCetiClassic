@@ -7,6 +7,7 @@
 	light_color = "#a91515"
 	req_one_access = list(access_security, access_forensics_lockers)
 	circuit = /obj/item/weapon/circuitboard/secure_data
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -34,14 +35,12 @@
 		..()
 
 //Someone needs to break down the dat += into chunks instead of long ass lines.
-/obj/machinery/computer/secure_data/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/secure_data/ui_interact(mob/user)
 	if (src.z > ZLEVEL_EMPTY)
 		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
-	var/dat
 
+	var/dat
 	if (temp)
 		dat = text("<TT>[]</TT><BR><BR><A href='?src=\ref[];choice=Clear Screen'>Clear Screen</A>", temp, src)
 	else
@@ -50,24 +49,24 @@
 			switch(screen)
 				if(1.0)
 					dat += {"
-<p style='text-align:center;'>"}
+						<p style='text-align:center;'>"}
 					dat += text("<A href='?src=\ref[];choice=Search Records'>Search Records</A><BR>", src)
 					dat += text("<A href='?src=\ref[];choice=New Record (General)'>New Record</A><BR>", src)
 					dat += {"
-</p>
-<table style="text-align:center;" cellspacing="0" width="100%">
-<tr>
-<th>Records:</th>
-</tr>
-</table>
-<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-<tr>
-<th><A href='?src=\ref[src];choice=Sorting;sort=name'>Name</A></th>
-<th><A href='?src=\ref[src];choice=Sorting;sort=id'>ID</A></th>
-<th><A href='?src=\ref[src];choice=Sorting;sort=rank'>Rank</A></th>
-<th><A href='?src=\ref[src];choice=Sorting;sort=fingerprint'>Fingerprints</A></th>
-<th>Criminal Status</th>
-</tr>"}
+						</p>
+						<table style="text-align:center;" cellspacing="0" width="100%">
+						<tr>
+						<th>Records:</th>
+						</tr>
+						</table>
+						<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+						<tr>
+						<th><A href='?src=\ref[src];choice=Sorting;sort=name'>Name</A></th>
+						<th><A href='?src=\ref[src];choice=Sorting;sort=id'>ID</A></th>
+						<th><A href='?src=\ref[src];choice=Sorting;sort=rank'>Rank</A></th>
+						<th><A href='?src=\ref[src];choice=Sorting;sort=fingerprint'>Fingerprints</A></th>
+						<th>Criminal Status</th>
+						</tr>"}
 					if(!isnull(data_core.general))
 						for(var/datum/data/record/R in sortRecord(data_core.general, sortBy, order))
 							var/crimstat = ""
@@ -80,7 +79,7 @@
 									background = "'background-color:#DC143C;'"
 								if("Incarcerated")
 									background = "'background-color:#CD853F;'"
-								if("Parolled")
+								if("Paroled")
 									background = "'background-color:#CD853F;'"
 								if("Released")
 									background = "'background-color:#3BB9FF;'"
@@ -110,21 +109,21 @@
 							var/icon/side = active1.fields["photo_s"]
 							user << browse_rsc(side, "side.png")
 						dat += text("<table><tr><td>	\
-						Name: <A href='?src=\ref[src];choice=Edit Field;field=name'>[active1.fields["name"]]</A><BR> \
-						ID: <A href='?src=\ref[src];choice=Edit Field;field=id'>[active1.fields["id"]]</A><BR>\n	\
-						Sex: <A href='?src=\ref[src];choice=Edit Field;field=sex'>[active1.fields["sex"]]</A><BR>\n	\
-						Age: <A href='?src=\ref[src];choice=Edit Field;field=age'>[active1.fields["age"]]</A><BR>\n	\
-						Home system: [active1.fields["home_system"]]<BR>\n	\
-						Citizenship: [active1.fields["citizenship"]]<BR>\n	\
-						Faction: [active1.fields["faction"]]<BR>\n	\
-						Religion: [active1.fields["religion"]]<BR>\n	\
-						Rank: <A href='?src=\ref[src];choice=Edit Field;field=rank'>[active1.fields["rank"]]</A><BR>\n	\
-						Fingerprint: <A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
-						Physical Status: [active1.fields["p_stat"]]<BR>\n	\
-						Mental Status: [active1.fields["m_stat"]]<BR></td>	\
-						<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4>	\
-						<img src=side.png height=80 width=80 border=4><BR>\n	\
-						Upload new photo: <A href='?src=\ref[src];choice=Edit Field;field=photo_f'>front</A> <A href='?src=\ref[src];choice=Edit Field;field=photo_s'>side</A></td></tr></table>")
+							Name: <A href='?src=\ref[src];choice=Edit Field;field=name'>[active1.fields["name"]]</A><BR> \
+							ID: <A href='?src=\ref[src];choice=Edit Field;field=id'>[active1.fields["id"]]</A><BR>\n	\
+							Sex: <A href='?src=\ref[src];choice=Edit Field;field=sex'>[active1.fields["sex"]]</A><BR>\n	\
+							Age: <A href='?src=\ref[src];choice=Edit Field;field=age'>[active1.fields["age"]]</A><BR>\n	\
+							Home system: [active1.fields["home_system"]]<BR>\n	\
+							Citizenship: [active1.fields["citizenship"]]<BR>\n	\
+							Faction: [active1.fields["faction"]]<BR>\n	\
+							Religion: [active1.fields["religion"]]<BR>\n	\
+							Rank: <A href='?src=\ref[src];choice=Edit Field;field=rank'>[active1.fields["rank"]]</A><BR>\n	\
+							Fingerprint: <A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
+							Physical Status: [active1.fields["p_stat"]]<BR>\n	\
+							Mental Status: [active1.fields["m_stat"]]<BR></td>	\
+							<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4>	\
+							<img src=side.png height=80 width=80 border=4><BR>\n	\
+							Upload new photo: <A href='?src=\ref[src];choice=Edit Field;field=photo_f'>front</A> <A href='?src=\ref[src];choice=Edit Field;field=photo_s'>side</A></td></tr></table>")
 					else
 						dat += "<B>General Record Lost!</B><BR>"
 					if ((istype(active2, /datum/data/record) && data_core.security.Find(active2)))
@@ -144,20 +143,20 @@
 						dat += text("ERROR.  String could not be located.<br><br><A href='?src=\ref[];choice=Return'>Back</A>", src)
 					else
 						dat += {"
-<table style="text-align:center;" cellspacing="0" width="100%">
-<tr>					"}
+							<table style="text-align:center;" cellspacing="0" width="100%">
+							<tr>					"}
 						dat += text("<th>Search Results for '[]':</th>", tempname)
 						dat += {"
-</tr>
-</table>
-<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-<tr>
-<th>Name</th>
-<th>ID</th>
-<th>Rank</th>
-<th>Fingerprints</th>
-<th>Criminal Status</th>
-</tr>					"}
+							</tr>
+							</table>
+							<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+							<tr>
+							<th>Name</th>
+							<th>ID</th>
+							<th>Rank</th>
+							<th>Fingerprints</th>
+							<th>Criminal Status</th>
+							</tr>					"}
 						for(var/i=1, i<=Perp.len, i += 2)
 							var/crimstat = ""
 							var/datum/data/record/R = Perp[i]
@@ -170,7 +169,7 @@
 									background = "'background-color:#DC143C;'"
 								if("Incarcerated")
 									background = "'background-color:#CD853F;'"
-								if("Parolled")
+								if("Paroled")
 									background = "'background-color:#CD853F;'"
 								if("Released")
 									background = "'background-color:#3BB9FF;'"
@@ -191,7 +190,6 @@
 			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
 	user << browse(text("<HEAD><TITLE>Security Records</TITLE></HEAD><TT>[]</TT>", dat), "window=secure_rec;size=600x400")
 	onclose(user, "secure_rec")
-	return
 
 /*Revised /N
 I can't be bothered to look more of the actual code outside of switch but that probably needs revising too.
@@ -262,6 +260,12 @@ What a mess.*/
 				var/mob/living/silicon/robot/R = usr
 				src.rank = "[R.modtype] [R.braintype]"
 				src.screen = 1
+			else if (isobserver(usr))
+				src.active1 = null
+				src.active2 = null
+				src.authenticated = "Centcomm Agent"
+				src.rank = "Overseer"
+				src.screen = 1
 			else if (istype(scan, /obj/item/weapon/card/id))
 				active1 = null
 				active2 = null
@@ -314,7 +318,7 @@ What a mess.*/
 
 /*			if ("Search Fingerprints")
 			var/t1 = input("Search String: (Fingerprint)", "Secure. records", null, null)  as text
-			if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || (!in_range(src, usr)) && (!istype(usr, /mob/living/silicon))))
+			if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || (!in_range(src, usr)) && !issilicon(usr) && !isobserver(usr)))
 				return
 			active1 = null
 			active2 = null
@@ -376,7 +380,7 @@ What a mess.*/
 				return
 			var/a2 = active2
 			var/t1 = sanitize(copytext(input("Add Comment:", "Secure. records", null, null)  as message,1,MAX_MESSAGE_LEN))
-			if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!istype(usr, /mob/living/silicon))) || active2 != a2))
+			if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active2 != a2))
 				return FALSE
 			var/counter = 1
 			while(active2.fields[text("com_[]", counter)])
@@ -482,7 +486,7 @@ What a mess.*/
 						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=none'>None</a></li>"
 						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=arrest'>*Arrest*</a></li>"
 						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=incarcerated'>Incarcerated</a></li>"
-						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=parolled'>Parolled</a></li>"
+						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=paroled'>Paroled</a></li>"
 						temp += "<li><a href='?src=\ref[src];choice=Change Criminal Status;criminal2=released'>Released</a></li>"
 						temp += "</ul>"
 				if("rank")
@@ -541,8 +545,8 @@ What a mess.*/
 								active2.fields["criminal"] = "*Arrest*"
 							if("incarcerated")
 								active2.fields["criminal"] = "Incarcerated"
-							if("parolled")
-								active2.fields["criminal"] = "Parolled"
+							if("paroled")
+								active2.fields["criminal"] = "Paroled"
 							if("released")
 								active2.fields["criminal"] = "Released"
 
@@ -565,7 +569,7 @@ What a mess.*/
 	updateUsrDialog()
 
 /obj/machinery/computer/secure_data/proc/is_not_allowed(mob/user)
-	return !src.authenticated || user.stat || user.restrained() || (!in_range(src, user) && (!istype(user, /mob/living/silicon)))
+	return !src.authenticated || user.stat || user.restrained() || (!in_range(src, user) && !issilicon(usr) && !isobserver(usr))
 
 /obj/machinery/computer/secure_data/proc/get_photo(var/mob/user)
 	var/icon/I = null
@@ -602,7 +606,7 @@ What a mess.*/
 				if(3)
 					R.fields["age"] = rand(5, 85)
 				if(4)
-					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Parolled", "Released")
+					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Paroled", "Released")
 				if(5)
 					R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
 				if(6)

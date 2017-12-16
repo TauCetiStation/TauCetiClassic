@@ -35,6 +35,8 @@
 	if(control_disabled || stat)
 		return
 
+	A.add_hiddenprint(src)
+
 	var/list/modifiers = params2list(params)
 	if(modifiers["shift"] && modifiers["ctrl"])
 		CtrlShiftClickOn(A)
@@ -67,7 +69,10 @@
 		RestrainedClickOn(A)
 	else
 	*/
-	A.add_hiddenprint(src)
+	if (holohack)
+		if(!hcattack_ai(A))
+			return
+
 	A.attack_ai(src)
 
 /*
@@ -94,6 +99,9 @@
 /mob/living/silicon/ai/CtrlClickOn(atom/A)
 	A.AICtrlClick(src)
 /mob/living/silicon/ai/AltClickOn(atom/A)
+	if(active_module)
+		if(!active_module.AIAltClickHandle(A))
+			return
 	A.AIAltClick(src)
 
 /*

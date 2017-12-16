@@ -39,4 +39,11 @@
 /datum/gear/shoes/kung
 	display_name = "Kung shoes"
 	path = /obj/item/clothing/shoes/fluff/kung
-	cost = 1
+
+/datum/gear/shoes/heels
+	display_name = "Red Heels"
+	path = /obj/item/clothing/shoes/heels
+
+/datum/gear/shoes/heels2
+	display_name = "Heels"
+	path = /obj/item/clothing/shoes/heels/alternate

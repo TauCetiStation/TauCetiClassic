@@ -44,14 +44,16 @@
 	SUIT_TYPE = /obj/item/clothing/suit/space/globose/science
 	HELMET_TYPE = /obj/item/clothing/head/helmet/space/globose/science
 	MASK_TYPE = /obj/item/clothing/mask/breath
-/obj/machinery/suit_storage_unit/New()
-	src.update_icon()
+
+/obj/machinery/suit_storage_unit/atom_init()
+	. = ..()
 	if(SUIT_TYPE)
 		SUIT = new SUIT_TYPE(src)
 	if(HELMET_TYPE)
 		HELMET = new HELMET_TYPE(src)
 	if(MASK_TYPE)
 		MASK = new MASK_TYPE(src)
+	update_icon()
 
 /obj/machinery/suit_storage_unit/update_icon()
 	var/hashelmet = 0
@@ -98,12 +100,9 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/attack_hand(mob/user)
+/obj/machinery/suit_storage_unit/ui_interact(mob/user)
 	var/dat
-	if(..())
-		return
-	if(stat & NOPOWER)
-		return
+
 	if(src.panelopen) //The maintenance panel is open. Time for some shady stuff
 		dat+= "<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>"
 		dat+= "<Font color ='black'><B>Maintenance panel controls</B></font><HR>"
@@ -156,7 +155,6 @@
 
 	user << browse(dat, "window=suit_storage_unit;size=400x500")
 	onclose(user, "suit_storage_unit")
-	return
 
 
 /obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
@@ -555,10 +553,6 @@
 	src.update_icon()
 	src.updateUsrDialog()
 	return
-
-
-/obj/machinery/suit_storage_unit/attack_ai(mob/user)
-	return src.attack_hand(user)
 
 
 /obj/machinery/suit_storage_unit/attack_paw(mob/user)

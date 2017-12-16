@@ -18,9 +18,9 @@ var/const/SAFETY_COOLDOWN = 100
 	var/extra_materials = 0
 	var/list/blacklist = list(/obj/item/pipe, /obj/item/pipe_meter, /obj/structure/disposalconstruct, /obj/item/weapon/reagent_containers, /obj/item/weapon/paper, /obj/item/stack/, /obj/item/weapon/pen, /obj/item/weapon/storage/, /obj/item/clothing/mask/cigarette) // Don't allow us to grind things we can poop out at 200 a second for free.
 
-/obj/machinery/recycler/New()
+/obj/machinery/recycler/atom_init()
 	// On us
-	..()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/recycler(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -126,33 +126,24 @@ var/const/SAFETY_COOLDOWN = 100
 		return
 	qdel(I)
 	if(prob(15 + probability_mod))
-		var/obj/item/stack/sheet/metal/M = new /obj/item/stack/sheet/metal(loc)
-		M.amount = amount_produced
+		new /obj/item/stack/sheet/metal(loc, amount_produced)
 	if(prob(10 + probability_mod))
-		var/obj/item/stack/sheet/glass/G = new /obj/item/stack/sheet/glass(loc)
-		G.amount = amount_produced
+		new /obj/item/stack/sheet/glass(loc, amount_produced)
 	if(prob(2 + probability_mod))
-		var/obj/item/stack/sheet/plasteel/P = new /obj/item/stack/sheet/plasteel(loc)
-		P.amount = amount_produced
+		new /obj/item/stack/sheet/plasteel(loc, amount_produced)
 	if(prob(1 + probability_mod))
-		var/obj/item/stack/sheet/rglass/R = new /obj/item/stack/sheet/rglass(loc)
-		R.amount = amount_produced
+		new /obj/item/stack/sheet/rglass(loc, amount_produced)
 	if(extra_materials)
 		if(prob(4 + probability_mod))
-			var/obj/item/stack/sheet/mineral/plasma/PS = new /obj/item/stack/sheet/mineral/plasma(loc)
-			PS.amount = amount_produced
+			new /obj/item/stack/sheet/mineral/plasma(loc, amount_produced)
 		if(prob(3 + probability_mod))
-			var/obj/item/stack/sheet/mineral/gold/GS = new /obj/item/stack/sheet/mineral/gold(loc)
-			GS.amount = amount_produced
+			new /obj/item/stack/sheet/mineral/gold(loc, amount_produced)
 		if(prob(2 + probability_mod))
-			var/obj/item/stack/sheet/mineral/silver/S = new /obj/item/stack/sheet/mineral/silver(loc)
-			S.amount = amount_produced
+			new /obj/item/stack/sheet/mineral/silver(loc, amount_produced)
 		if(prob(1 + probability_mod))
-			var/obj/item/stack/sheet/mineral/bananium/B = new /obj/item/stack/sheet/mineral/bananium(loc)
-			B.amount = amount_produced
+			new /obj/item/stack/sheet/mineral/bananium(loc, amount_produced)
 		if(prob(1 + probability_mod))
-			var/obj/item/stack/sheet/mineral/diamond/D = new /obj/item/stack/sheet/mineral/diamond(loc)
-			D.amount = amount_produced
+			new /obj/item/stack/sheet/mineral/diamond(loc, amount_produced)
 	if(sound)
 		playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 

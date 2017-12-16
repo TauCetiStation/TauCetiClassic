@@ -14,36 +14,40 @@
 	update_icon()
 	..()
 
-/obj/item/weapon/gun/energy/New()
-	..()
+/obj/item/weapon/gun/energy/atom_init()
+	. = ..()
 	if(cell_type)
 		power_supply = new cell_type(src)
 	else
 		power_supply = new(src)
 	power_supply.give(power_supply.maxcharge)
 	var/obj/item/ammo_casing/energy/shot
-	for (var/i = 1, i <= ammo_type.len, i++)
+	for (var/i in 1 to ammo_type.len)
 		var/shottype = ammo_type[i]
 		shot = new shottype(src)
 		ammo_type[i] = shot
 	shot = ammo_type[select]
 	fire_sound = shot.fire_sound
 	update_icon()
-	return
 
 /obj/item/weapon/gun/energy/Fire(atom/target, mob/living/user, params, reflex = 0)
 	newshot()
 	..()
 
 /obj/item/weapon/gun/energy/proc/newshot()
-	if (!ammo_type || !power_supply)	return
+	if (!ammo_type || !power_supply)
+		return
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
-	if (!power_supply.use(shot.e_cost))	return
+	if (power_supply.charge < shot.e_cost)
+		return
 	chambered = shot
 	chambered.newshot()
 	return
 
 /obj/item/weapon/gun/energy/process_chamber()
+	if (chambered) // incase its out of energy - since then this will be null.
+		var/obj/item/ammo_casing/energy/shot = chambered
+		power_supply.use(shot.e_cost)
 	chambered = null
 	return
 

@@ -64,10 +64,9 @@
 	icon_state = "cart-s"
 	access_security = 1
 
-/obj/item/weapon/cartridge/security/New()
-	..()
-	spawn(5)
-		radio = new /obj/item/radio/integrated/beepsky(src)
+/obj/item/weapon/cartridge/security/atom_init()
+	. = ..()
+	radio = new /obj/item/radio/integrated/beepsky(src)
 
 /obj/item/weapon/cartridge/detective
 	name = "D.E.T.E.C.T. Cartridge"
@@ -116,10 +115,9 @@
 	access_reagent_scanner = 1
 	access_atmos = 1
 
-/obj/item/weapon/cartridge/signal/New()
-	..()
-	spawn(5)
-		radio = new /obj/item/radio/integrated/signal(src)
+/obj/item/weapon/cartridge/signal/atom_init()
+	. = ..()
+	radio = new /obj/item/radio/integrated/signal(src)
 
 /obj/item/weapon/cartridge/quartermaster
 	name = "Space Parts & Space Vendors Cartridge"
@@ -127,10 +125,9 @@
 	icon_state = "cart-q"
 	access_quartermaster = 1
 
-/obj/item/weapon/cartridge/quartermaster/New()
-	..()
-	spawn(5)
-		radio = new /obj/item/radio/integrated/mule(src)
+/obj/item/weapon/cartridge/quartermaster/atom_init()
+	. = ..()
+	radio = new /obj/item/radio/integrated/mule(src)
 
 /obj/item/weapon/cartridge/head
 	name = "Easy-Record DELUXE"
@@ -145,10 +142,9 @@
 	access_janitor = 1
 	access_security = 1
 
-/obj/item/weapon/cartridge/hop/New()
-	..()
-	spawn(5)
-		radio = new /obj/item/radio/integrated/mule(src)
+/obj/item/weapon/cartridge/hop/atom_init()
+	. = ..()
+	radio = new /obj/item/radio/integrated/mule(src)
 
 /obj/item/weapon/cartridge/hos
 	name = "R.O.B.U.S.T. DELUXE"
@@ -156,10 +152,9 @@
 	access_status_display = 1
 	access_security = 1
 
-/obj/item/weapon/cartridge/hos/New()
-	..()
-	spawn(5)
-		radio = new /obj/item/radio/integrated/beepsky(src)
+/obj/item/weapon/cartridge/hos/atom_init()
+	. = ..()
+	radio = new /obj/item/radio/integrated/beepsky(src)
 
 /obj/item/weapon/cartridge/ce
 	name = "Power-On DELUXE"
@@ -182,10 +177,9 @@
 	access_reagent_scanner = 1
 	access_atmos = 1
 
-/obj/item/weapon/cartridge/rd/New()
-	..()
-	spawn(5)
-		radio = new /obj/item/radio/integrated/signal(src)
+/obj/item/weapon/cartridge/rd/atom_init()
+	. = ..()
+	radio = new /obj/item/radio/integrated/signal(src)
 
 /obj/item/weapon/cartridge/captain
 	name = "Value-PAK Cartridge"

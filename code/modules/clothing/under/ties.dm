@@ -10,8 +10,8 @@
 	var/obj/item/clothing/under/has_suit = null		//the suit the tie may be attached to
 	var/image/inv_overlay = null	//overlay used when attached to clothing.
 
-/obj/item/clothing/tie/New()
-	..()
+/obj/item/clothing/tie/atom_init()
+	. = ..()
 	inv_overlay = image("icon" = 'icons/obj/clothing/ties_overlay.dmi', "icon_state" = "[item_color? "[item_color]" : "[icon_state]"]")
 
 //when user attached an accessory to S
@@ -66,10 +66,10 @@
 	icon_state = "stethoscope"
 	item_color = "stethoscope"
 
-/obj/item/clothing/tie/stethoscope/attack(mob/living/carbon/human/M, mob/living/user)
+/obj/item/clothing/tie/stethoscope/attack(mob/living/carbon/human/M, mob/living/user, def_zone)
 	if(ishuman(M) && isliving(user))
 		if(user.a_intent == "help")
-			var/target_zone = parse_zone(user.zone_sel.selecting)
+			var/target_zone = parse_zone(def_zone)
 			if(target_zone)
 				var/their = "their"
 				switch(M.gender)
@@ -320,8 +320,8 @@
 	var/slots = 3
 	var/obj/item/weapon/storage/internal/hold
 
-/obj/item/clothing/tie/storage/New()
-	..()
+/obj/item/clothing/tie/storage/atom_init()
+	. = ..()
 	hold = new/obj/item/weapon/storage/internal(src)
 	hold.storage_slots = slots
 
@@ -377,6 +377,13 @@
 	desc = "Worn brownish synthcotton vest with lots of pockets to unload your hands."
 	icon_state = "vest_brown"
 	item_color = "vest_brown"
+	slots = 5
+
+/obj/item/clothing/tie/storage/syndi_vest
+	name = "suspicious webbing vest"
+	desc = "A villainous red synthcotton vest with lots of pockets to unload your hands."
+	icon_state = "syndi_vest"
+	item_color = "syndi_vest"
 	slots = 5
 /*
 	Holobadges are worn on the belt or neck, and can be used to show that the holder is an authorized
@@ -449,8 +456,8 @@
 	item_color = "unathiharness2"
 	slots = 2
 
-/obj/item/clothing/tie/storage/knifeharness/New()
-	..()
+/obj/item/clothing/tie/storage/knifeharness/atom_init()
+	. = ..()
 	hold.max_combined_w_class = 4
 	hold.can_hold = list("/obj/item/weapon/hatchet/unathiknife",\
 	"/obj/item/weapon/kitchen/utensil/knife",\

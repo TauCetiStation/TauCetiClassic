@@ -13,8 +13,9 @@
 	var/mopcount = 0
 
 
-/obj/item/weapon/mop/New()
+/obj/item/weapon/mop/atom_init()
 	create_reagents(5)
+	. = ..()
 
 
 obj/item/weapon/mop/proc/clean(turf/simulated/A)

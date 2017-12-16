@@ -22,9 +22,7 @@
 	if(newAnomaly.loc)//Kill the anomaly if it still exists at the end.
 		var/turf/simulated/T = get_turf(newAnomaly)
 		if(istype(T))
-			var/datum/gas_mixture/payload = new
-			payload.phoron = 200
-			T.zone.air.merge(payload)
+			T.assume_gas("phoron", 200)
 			T.hotspot_expose(1000, CELL_VOLUME)
 
 		var/mob/living/carbon/slime/S

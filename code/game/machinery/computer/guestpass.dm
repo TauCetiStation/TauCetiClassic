@@ -55,8 +55,8 @@
 	var/list/internal_log = list()
 	var/mode = 0  // 0 - making pass, 1 - viewing logs
 
-/obj/machinery/computer/guestpass/New()
-	..()
+/obj/machinery/computer/guestpass/atom_init()
+	. = ..()
 	uid = "[rand(100,999)]-G[rand(10,99)]"
 
 /obj/machinery/computer/guestpass/attackby(obj/O, mob/user)
@@ -69,17 +69,7 @@
 		else
 			to_chat(user, "<span class='warning'>There is already ID card inside.</span>")
 
-/obj/machinery/computer/guestpass/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/guestpass/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/guestpass/attack_hand(mob/user)
-	if(..())
-		return
-
-	user.set_machine(src)
+/obj/machinery/computer/guestpass/ui_interact(mob/user)
 	var/dat
 
 	if (mode == 1) //Logs

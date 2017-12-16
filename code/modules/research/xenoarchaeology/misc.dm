@@ -5,7 +5,8 @@
 	notices = 5
 	icon_state = "nboard05"
 
-/obj/structure/noticeboard/anomaly/New()
+/obj/structure/noticeboard/anomaly/atom_init()
+	. = ..()
 	//add some memos
 	var/obj/item/weapon/stamp/rd/S = new
 
@@ -44,15 +45,15 @@
 /obj/structure/bookcase/manuals/xenoarchaeology
 	name = "Xenoarchaeology Manuals bookcase"
 
-	New()
-		..()
-		new /obj/item/weapon/book/manual/excavation(src)
-		new /obj/item/weapon/book/manual/mass_spectrometry(src)
-		new /obj/item/weapon/book/manual/materials_chemistry_analysis(src)
-		new /obj/item/weapon/book/manual/anomaly_testing(src)
-		new /obj/item/weapon/book/manual/anomaly_spectroscopy(src)
-		new /obj/item/weapon/book/manual/stasis(src)
-		update_icon()
+/obj/structure/bookcase/manuals/xenoarchaeology/atom_init()
+	. = ..()
+	new /obj/item/weapon/book/manual/excavation(src)
+	new /obj/item/weapon/book/manual/mass_spectrometry(src)
+	new /obj/item/weapon/book/manual/materials_chemistry_analysis(src)
+	new /obj/item/weapon/book/manual/anomaly_testing(src)
+	new /obj/item/weapon/book/manual/anomaly_spectroscopy(src)
+	new /obj/item/weapon/book/manual/stasis(src)
+	update_icon()
 
 //---- Lockers and closets
 
@@ -66,17 +67,14 @@
 	icon_broken = "secureresbroken"
 	icon_off = "secureresoff"
 
-	New()
-		..()
-		sleep(2)
-		new /obj/item/clothing/under/rank/scientist(src)
-		new /obj/item/clothing/suit/storage/labcoat(src)
-		new /obj/item/clothing/shoes/white(src)
-		new /obj/item/clothing/glasses/science(src)
-		new /obj/item/device/radio/headset/headset_sci(src)
-		new /obj/item/weapon/storage/belt/archaeology(src)
-		new /obj/item/weapon/storage/box/excavation(src)
-		return
+/obj/structure/closet/secure_closet/xenoarchaeologist/PopulateContents()
+	new /obj/item/clothing/under/rank/scientist(src)
+	new /obj/item/clothing/suit/storage/labcoat(src)
+	new /obj/item/clothing/shoes/white(src)
+	new /obj/item/clothing/glasses/science(src)
+	new /obj/item/device/radio/headset/headset_sci(src)
+	new /obj/item/weapon/storage/belt/archaeology(src)
+	new /obj/item/weapon/storage/box/excavation(src)
 
 /obj/structure/closet/excavation
 	name = "Excavation tools"
@@ -84,23 +82,20 @@
 	icon_closed = "toolcloset"
 	icon_opened = "toolclosetopen"
 
-	New()
-		..()
-		sleep(2)
-		new /obj/item/weapon/storage/belt/archaeology(src)
-		new /obj/item/weapon/storage/box/excavation(src)
-		new /obj/item/device/flashlight/lantern(src)
-		new /obj/item/device/ano_scanner(src)
-		new /obj/item/device/depth_scanner(src)
-		new /obj/item/device/core_sampler(src)
-		new /obj/item/device/gps(src)
-		new /obj/item/device/beacon_locator(src)
-		new /obj/item/device/radio/beacon(src)
-		new /obj/item/clothing/glasses/hud/mining(src)
-		new /obj/item/device/measuring_tape(src)
-		new /obj/item/weapon/pickaxe/hand(src)
-		new /obj/item/weapon/storage/bag/fossils(src)
-		return
+/obj/structure/closet/excavation/PopulateContents()
+	new /obj/item/weapon/storage/belt/archaeology(src)
+	new /obj/item/weapon/storage/box/excavation(src)
+	new /obj/item/device/flashlight/lantern(src)
+	new /obj/item/device/ano_scanner(src)
+	new /obj/item/device/depth_scanner(src)
+	new /obj/item/device/core_sampler(src)
+	new /obj/item/device/gps(src)
+	new /obj/item/device/beacon_locator(src)
+	new /obj/item/device/radio/beacon(src)
+	new /obj/item/clothing/glasses/hud/mining(src)
+	new /obj/item/device/measuring_tape(src)
+	new /obj/item/weapon/pickaxe/hand(src)
+	new /obj/item/weapon/storage/bag/fossils(src)
 
 //---- Isolation room air alarms
 

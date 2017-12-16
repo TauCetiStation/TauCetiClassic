@@ -262,7 +262,7 @@
 				else
 					M_job = "Living"
 
-			else if(istype(M,/mob/new_player))
+			else if(isnewplayer(M))
 				M_job = "New player"
 
 			else if(isobserver(M))
@@ -562,9 +562,9 @@
 			dat += "<br><table cellspacing=5><tr><td align=center><font color='green'><B>Heist:</font></B></td><td></td><td></td></tr>"
 			if(mode.raid_objectives && mode.raid_objectives.len)
 				for(var/datum/objective/heist/H in mode.raid_objectives)
-					heist_get_shuttle_price()
+					//heist_get_shuttle_price()
 					dat += "<tr><td><B>[H.explanation_text]</B></td></tr>"
-					dat += "<tr><td><i>Progress: [num2text(heist_rob_total,9)]/[num2text(H.target_amount,9)]</i></td></tr>"
+					//dat += "<tr><td><i>Progress: [num2text(heist_rob_total,9)]/[num2text(H.target_amount,9)]</i></td></tr>"
 			dat += check_role_table("Raiders", ticker.mode.raiders, src)
 
 		if(ticker.mode.ninjas.len)

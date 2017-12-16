@@ -9,34 +9,23 @@
 	icon_state = "red"
 	icon_closed = "red"
 
-/obj/structure/closet/wardrobe/red/New()
-	..()
-	new /obj/item/clothing/under/rank/security(src)
-	new /obj/item/clothing/under/rank/security(src)
-	new /obj/item/clothing/under/rank/security(src)
-	new /obj/item/clothing/shoes/jackboots(src)
-	new /obj/item/clothing/shoes/jackboots(src)
-	new /obj/item/clothing/shoes/jackboots(src)
-	new /obj/item/clothing/head/soft/sec(src)
-	new /obj/item/clothing/head/soft/sec(src)
-	new /obj/item/clothing/head/soft/sec(src)
-	new /obj/item/clothing/mask/bandana/red(src)
-	new /obj/item/clothing/mask/bandana/red(src)
-	new /obj/item/clothing/head/beret/sec(src)
-	new /obj/item/clothing/head/beret/sec(src)
-	new /obj/item/clothing/head/beret/sec(src)
-	/*/New year part
-	new /obj/item/clothing/head/santa(src)
-	new /obj/item/clothing/head/santa(src)
-	new /obj/item/clothing/head/santa(src)
-	new /obj/item/clothing/suit/wintercoat/security(src)
-	new /obj/item/clothing/suit/wintercoat/security(src)
-	new /obj/item/clothing/suit/wintercoat/security(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	*/
-	return
+/obj/structure/closet/wardrobe/red/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/security(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/shoes/jackboots(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/head/soft/sec(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/mask/bandana/red(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/head/beret/sec(src)
+	#ifdef NEWYEARCONTENT
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/head/santa(src)
+		new /obj/item/clothing/suit/wintercoat/security(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+	#endif
 
 
 /obj/structure/closet/wardrobe/pink
@@ -44,43 +33,31 @@
 	icon_state = "pink"
 	icon_closed = "pink"
 
-/obj/structure/closet/wardrobe/pink/New()
-	..()
-	new /obj/item/clothing/under/color/pink(src)
-	new /obj/item/clothing/under/color/pink(src)
-	new /obj/item/clothing/under/color/pink(src)
-	new /obj/item/clothing/shoes/brown(src)
-	new /obj/item/clothing/shoes/brown(src)
-	new /obj/item/clothing/shoes/brown(src)
-	return
+/obj/structure/closet/wardrobe/pink/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/under/color/pink(src)
+		new /obj/item/clothing/shoes/brown(src)
 
 /obj/structure/closet/wardrobe/black
 	name = "black wardrobe"
 	icon_state = "black"
 	icon_closed = "black"
 
-/obj/structure/closet/wardrobe/black/New()
-	..()
-	new /obj/item/clothing/under/color/black(src)
-	new /obj/item/clothing/under/color/black(src)
-	new /obj/item/clothing/under/color/black(src)
+/obj/structure/closet/wardrobe/black/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/under/color/black(src)
 	if(prob(25))
 		new /obj/item/clothing/suit/jacket/leather(src)
 	if(prob(20))
 		new /obj/item/clothing/suit/jacket/leather/overcoat(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/shoes/black(src)
-	/*/New year part
-	new /obj/item/clothing/suit/wintercoat(src)
-	new /obj/item/clothing/suit/wintercoat(src)
-	new /obj/item/clothing/suit/wintercoat(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/santa(src)
-	*/
-	return
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/shoes/black(src)
+	#ifdef NEWYEARCONTENT
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/suit/wintercoat(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
+	#endif
 
 
 /obj/structure/closet/wardrobe/chaplain_black
@@ -89,8 +66,7 @@
 	icon_state = "black"
 	icon_closed = "black"
 
-/obj/structure/closet/wardrobe/chaplain_black/New()
-	..()
+/obj/structure/closet/wardrobe/chaplain_black/PopulateContents()
 	new /obj/item/clothing/under/rank/chaplain(src)
 	new /obj/item/clothing/shoes/black(src)
 	new /obj/item/clothing/suit/nun(src)
@@ -100,9 +76,8 @@
 	new /obj/item/clothing/suit/holidaypriest(src)
 	new /obj/item/clothing/under/wedding/bride_white(src)
 	new /obj/item/weapon/storage/backpack/cultpack (src)
-	new /obj/item/weapon/storage/fancy/candle_box(src)
-	new /obj/item/weapon/storage/fancy/candle_box(src)
-	return
+	for (var/i in 1 to 2)
+		new /obj/item/weapon/storage/fancy/candle_box(src)
 
 
 /obj/structure/closet/wardrobe/green
@@ -110,31 +85,25 @@
 	icon_state = "green"
 	icon_closed = "green"
 
-/obj/structure/closet/wardrobe/green/New()
-	..()
-	new /obj/item/clothing/under/color/green(src)
-	new /obj/item/clothing/under/color/green(src)
-	new /obj/item/clothing/under/color/green(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/shoes/black(src)
-	//new /obj/item/clothing/mask/bandana/green(src)
-	//new /obj/item/clothing/mask/bandana/green(src)
-	return
+/obj/structure/closet/wardrobe/green/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/under/color/green(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/shoes/black(src)
+	//for (var/i in 1 to 2)
+	//	new /obj/item/clothing/mask/bandana/green(src)
+
 
 /obj/structure/closet/wardrobe/xenos
 	name = "xenos wardrobe"
 	icon_state = "green"
 	icon_closed = "green"
 
-/obj/structure/closet/wardrobe/xenos/New()
-	..()
+/obj/structure/closet/wardrobe/xenos/PopulateContents()
 	new /obj/item/clothing/suit/unathi/mantle(src)
 	new /obj/item/clothing/suit/unathi/robe(src)
-	new /obj/item/clothing/shoes/sandal(src)
-	new /obj/item/clothing/shoes/sandal(src)
-	new /obj/item/clothing/shoes/sandal(src)
-	return
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/shoes/sandal(src)
 
 
 /obj/structure/closet/wardrobe/orange
@@ -143,15 +112,10 @@
 	icon_state = "orange"
 	icon_closed = "orange"
 
-/obj/structure/closet/wardrobe/orange/New()
-	..()
-	new /obj/item/clothing/under/color/orange(src)
-	new /obj/item/clothing/under/color/orange(src)
-	new /obj/item/clothing/under/color/orange(src)
-	new /obj/item/clothing/shoes/orange(src)
-	new /obj/item/clothing/shoes/orange(src)
-	new /obj/item/clothing/shoes/orange(src)
-	return
+/obj/structure/closet/wardrobe/orange/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/under/color/orange(src)
+		new /obj/item/clothing/shoes/orange(src)
 
 
 /obj/structure/closet/wardrobe/yellow
@@ -159,17 +123,12 @@
 	icon_state = "wardrobe-y"
 	icon_closed = "wardrobe-y"
 
-/obj/structure/closet/wardrobe/yellow/New()
-	..()
-	new /obj/item/clothing/under/color/yellow(src)
-	new /obj/item/clothing/under/color/yellow(src)
-	new /obj/item/clothing/under/color/yellow(src)
-	new /obj/item/clothing/shoes/orange(src)
-	new /obj/item/clothing/shoes/orange(src)
-	new /obj/item/clothing/shoes/orange(src)
-	//new /obj/item/clothing/mask/bandana/gold(src)
-	//new /obj/item/clothing/mask/bandana/gold(src)
-	return
+/obj/structure/closet/wardrobe/yellow/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/under/color/yellow(src)
+		new /obj/item/clothing/shoes/orange(src)
+	//for (var/i in 1 to 2)
+	//	new /obj/item/clothing/mask/bandana/gold(src)
 
 
 /obj/structure/closet/wardrobe/atmospherics_yellow
@@ -177,29 +136,20 @@
 	icon_state = "yellow"
 	icon_closed = "yellow"
 
-/obj/structure/closet/wardrobe/atmospherics_yellow/New()
-	..()
-	new /obj/item/clothing/under/rank/atmospheric_technician(src)
-	new /obj/item/clothing/under/rank/atmospheric_technician(src)
-	new /obj/item/clothing/under/rank/atmospheric_technician(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/head/hardhat/red(src)
-	new /obj/item/clothing/head/hardhat/red(src)
-	new /obj/item/clothing/head/hardhat/red(src)
-	new /obj/item/clothing/head/beret/eng(src)
-	new /obj/item/clothing/head/beret/eng(src)
-	new /obj/item/clothing/head/beret/eng(src)
-	/*/New year part
-	new /obj/item/clothing/suit/wintercoat/engineering/atmos(src)
-	new /obj/item/clothing/suit/wintercoat/engineering/atmos(src)
-	new /obj/item/clothing/suit/wintercoat/engineering/atmos(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	*/
-	return
+/obj/structure/closet/wardrobe/atmospherics_yellow/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/atmospheric_technician(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/shoes/black(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/head/hardhat/red(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/head/beret/eng(src)
+	#ifdef NEWYEARCONTENT
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/suit/wintercoat/engineering/atmos(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+	#endif
 
 
 
@@ -208,31 +158,23 @@
 	icon_state = "yellow"
 	icon_closed = "yellow"
 
-/obj/structure/closet/wardrobe/engineering_yellow/New()
-	..()
-	new /obj/item/clothing/under/rank/engineer(src)
-	new /obj/item/clothing/under/rank/engineer(src)
-	new /obj/item/clothing/under/rank/engineer(src)
-	new /obj/item/clothing/shoes/workboots(src)
-	new /obj/item/clothing/shoes/workboots(src)
-	new /obj/item/clothing/shoes/workboots(src)
+/obj/structure/closet/wardrobe/engineering_yellow/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/engineer(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/shoes/workboots(src)
 	for(var/i = 1 to 3)
 		if(prob(75))
 			new /obj/item/clothing/head/hardhat/yellow(src)
 		else
 			new /obj/item/clothing/head/hardhat/yellow/visor(src)
-	new /obj/item/clothing/head/beret/eng(src)
-	new /obj/item/clothing/head/beret/eng(src)
-	new /obj/item/clothing/head/beret/eng(src)
-	/*/New year part
-	new /obj/item/clothing/suit/wintercoat/engineering(src)
-	new /obj/item/clothing/suit/wintercoat/engineering(src)
-	new /obj/item/clothing/suit/wintercoat/engineering(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	*/
-	return
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/head/beret/eng(src)
+	#ifdef NEWYEARCONTENT
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/suit/wintercoat/engineering(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+	#endif
 
 
 /obj/structure/closet/wardrobe/white
@@ -240,15 +182,10 @@
 	icon_state = "white"
 	icon_closed = "white"
 
-/obj/structure/closet/wardrobe/white/New()
-	..()
-	new /obj/item/clothing/under/color/white(src)
-	new /obj/item/clothing/under/color/white(src)
-	new /obj/item/clothing/under/color/white(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/shoes/white(src)
-	return
+/obj/structure/closet/wardrobe/white/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/under/color/white(src)
+		new /obj/item/clothing/shoes/white(src)
 
 
 /obj/structure/closet/wardrobe/pjs
@@ -256,17 +193,15 @@
 	icon_state = "white"
 	icon_closed = "white"
 
-/obj/structure/closet/wardrobe/pjs/New()
-	..()
-	new /obj/item/clothing/under/pj/red(src)
-	new /obj/item/clothing/under/pj/red(src)
-	new /obj/item/clothing/under/pj/blue(src)
-	new /obj/item/clothing/under/pj/blue(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/shoes/slippers(src)
-	new /obj/item/clothing/shoes/slippers(src)
-	return
+/obj/structure/closet/wardrobe/pjs/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/under/pj/red(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/under/pj/blue(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/shoes/white(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/shoes/slippers(src)
 
 
 /obj/structure/closet/wardrobe/science_white
@@ -274,21 +209,15 @@
 	icon_state = "white"
 	icon_closed = "white"
 
-/obj/structure/closet/wardrobe/toxins_white/New()
-	..()
-	new /obj/item/clothing/under/rank/scientist(src)
-	new /obj/item/clothing/under/rank/scientist(src)
-	new /obj/item/clothing/under/rank/scientist(src)
-	new /obj/item/clothing/suit/storage/labcoat(src)
-	new /obj/item/clothing/suit/storage/labcoat(src)
-	new /obj/item/clothing/suit/storage/labcoat(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/shoes/slippers(src)
-	new /obj/item/clothing/shoes/slippers(src)
-	new /obj/item/clothing/shoes/slippers(src)
-	return
+/obj/structure/closet/wardrobe/toxins_white/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/under/rank/scientist(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/suit/storage/labcoat(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/shoes/white(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/shoes/slippers(src)
 
 
 /obj/structure/closet/wardrobe/robotics_black
@@ -296,24 +225,21 @@
 	icon_state = "black"
 	icon_closed = "black"
 
-/obj/structure/closet/wardrobe/robotics_black/New()
-	..()
-	new /obj/item/clothing/under/rank/roboticist(src)
-	new /obj/item/clothing/under/rank/roboticist(src)
-	new /obj/item/clothing/suit/storage/labcoat(src)
-	new /obj/item/clothing/suit/storage/labcoat(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/gloves/black(src)
-	new /obj/item/clothing/gloves/black(src)
-	/*/New year part
-	new /obj/item/clothing/suit/wintercoat/science(src)
-	new /obj/item/clothing/suit/wintercoat/science(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/santa(src)
-	*/
-	return
+/obj/structure/closet/wardrobe/robotics_black/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/under/rank/roboticist(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/suit/storage/labcoat(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/shoes/black(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/gloves/black(src)
+	#ifdef NEWYEARCONTENT
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/suit/wintercoat/science(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
+	#endif
 
 
 /obj/structure/closet/wardrobe/chemistry_white
@@ -321,15 +247,13 @@
 	icon_state = "white"
 	icon_closed = "white"
 
-/obj/structure/closet/wardrobe/chemistry_white/New()
-	..()
-	new /obj/item/clothing/under/rank/chemist(src)
-	new /obj/item/clothing/under/rank/chemist(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/suit/storage/labcoat/chemist(src)
-	new /obj/item/clothing/suit/storage/labcoat/chemist(src)
-	return
+/obj/structure/closet/wardrobe/chemistry_white/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/under/rank/chemist(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/shoes/white(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/suit/storage/labcoat/chemist(src)
 
 
 /obj/structure/closet/wardrobe/genetics_white
@@ -337,22 +261,19 @@
 	icon_state = "white"
 	icon_closed = "white"
 
-/obj/structure/closet/wardrobe/genetics_white/New()
-	..()
-	new /obj/item/clothing/under/rank/geneticist(src)
-	new /obj/item/clothing/under/rank/geneticist(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/suit/storage/labcoat/genetics(src)
-	new /obj/item/clothing/suit/storage/labcoat/genetics(src)
-	/*/New year part
-	new /obj/item/clothing/suit/wintercoat/science(src)
-	new /obj/item/clothing/suit/wintercoat/science(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/santa(src)
-	*/
-	return
+/obj/structure/closet/wardrobe/genetics_white/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/under/rank/geneticist(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/shoes/white(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/suit/storage/labcoat/genetics(src)
+	#ifdef NEWYEARCONTENT
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/suit/wintercoat/science(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
+	#endif
 
 
 /obj/structure/closet/wardrobe/virology_white
@@ -360,22 +281,20 @@
 	icon_state = "white"
 	icon_closed = "white"
 
-/obj/structure/closet/wardrobe/virology_white/New()
-	..()
-	new /obj/item/clothing/under/rank/virologist(src)
-	new /obj/item/clothing/under/rank/virologist(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/suit/storage/labcoat/virologist(src)
-	new /obj/item/clothing/suit/storage/labcoat/virologist(src)
-	new /obj/item/clothing/mask/surgical(src)
-	new /obj/item/clothing/mask/surgical(src)
-	/*/New year part
+/obj/structure/closet/wardrobe/virology_white/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/under/rank/virologist(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/shoes/white(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/suit/storage/labcoat/virologist(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/mask/surgical(src)
+	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/medical(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
-	*/
-	return
+	#endif
 
 
 /obj/structure/closet/wardrobe/medic_white
@@ -383,26 +302,24 @@
 	icon_state = "white"
 	icon_closed = "white"
 
-/obj/structure/closet/wardrobe/medic_white/New()
-	..()
-	new /obj/item/clothing/under/rank/medical(src)
-	new /obj/item/clothing/under/rank/medical(src)
+/obj/structure/closet/wardrobe/medic_white/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/under/rank/medical(src)
 	new /obj/item/clothing/under/rank/medical/blue(src)
 	new /obj/item/clothing/under/rank/medical/green(src)
 	new /obj/item/clothing/under/rank/medical/purple(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/shoes/white(src)
-	new /obj/item/clothing/suit/storage/labcoat(src)
-	new /obj/item/clothing/suit/storage/labcoat(src)
-	new /obj/item/clothing/mask/surgical(src)
-	new /obj/item/clothing/mask/surgical(src)
-	/*/New year part
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/shoes/white(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/suit/storage/labcoat(src)
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/mask/surgical(src)
+	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/medical(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
 	new /obj/item/clothing/suit/storage/labcoat/winterlabcoat(src)
-	*/
-	return
+	#endif
 
 
 /obj/structure/closet/wardrobe/grey
@@ -410,25 +327,19 @@
 	icon_state = "grey"
 	icon_closed = "grey"
 
-/obj/structure/closet/wardrobe/grey/New()
-	..()
-	new /obj/item/clothing/under/color/grey(src)
-	new /obj/item/clothing/under/color/grey(src)
-	new /obj/item/clothing/under/color/grey(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/shoes/black(src)
-	new /obj/item/clothing/head/soft/grey(src)
-	new /obj/item/clothing/head/soft/grey(src)
-	new /obj/item/clothing/head/soft/grey(src)
-	/*//New year part
-	new /obj/item/clothing/suit/wintercoat(src)
-	new /obj/item/clothing/suit/wintercoat(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/shoes/winterboots(src)
-	new /obj/item/clothing/head/santa(src)
-	*/
-	return
+/obj/structure/closet/wardrobe/grey/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/under/color/grey(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/shoes/black(src)
+	for (var/i in 1 to 3)
+		new /obj/item/clothing/head/soft/grey(src)
+	#ifdef NEWYEARCONTENT
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/suit/wintercoat(src)
+		new /obj/item/clothing/shoes/winterboots(src)
+		new /obj/item/clothing/head/santa(src)
+	#endif
 
 
 /obj/structure/closet/wardrobe/mixed
@@ -436,12 +347,10 @@
 	icon_state = "mixed"
 	icon_closed = "mixed"
 
-/obj/structure/closet/wardrobe/mixed/New()
-	..()
-	if(prob(25))
-		new /obj/item/clothing/suit/jacket(src)
-	if(prob(25))
-		new /obj/item/clothing/suit/jacket(src)
+/obj/structure/closet/wardrobe/mixed/PopulateContents()
+	for (var/i in 1 to 2)
+		if(prob(25))
+			new /obj/item/clothing/suit/jacket(src)
 	new /obj/item/clothing/under/color/blue(src)
 	new /obj/item/clothing/under/color/yellow(src)
 	new /obj/item/clothing/under/color/green(src)
@@ -472,12 +381,11 @@
 	new /obj/item/clothing/shoes/purple(src)
 	new /obj/item/clothing/shoes/red(src)
 	new /obj/item/clothing/shoes/leather(src)
-	/*/New year part
+	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat(src)
 	new /obj/item/clothing/shoes/winterboots(src)
 	new /obj/item/clothing/head/santa(src)
-	*/
-	return
+	#endif
 
 /obj/structure/closet/wardrobe/tactical
 	name = "tactical equipment"
@@ -485,8 +393,7 @@
 	icon_closed = "syndicate1"
 	icon_opened = "syndicate1open"
 
-/obj/structure/closet/wardrobe/tactical/New()
-	..()
+/obj/structure/closet/wardrobe/tactical/PopulateContents()
 	new /obj/item/device/radio/headset/headset_sec/marinad(src)
 	new /obj/item/weapon/storage/backpack/dufflebag/marinad(src)
 	new /obj/item/clothing/gloves/security/marinad(src)
@@ -497,4 +404,3 @@
 	new /obj/item/clothing/glasses/sunglasses/sechud/tactical(src)
 	new /obj/item/weapon/storage/belt/security/tactical(src)
 	new /obj/item/clothing/shoes/workboots(src)
-	return

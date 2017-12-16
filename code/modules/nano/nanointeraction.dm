@@ -13,7 +13,7 @@
 	return STATUS_CLOSE // By default no mob can do anything with NanoUI
 
 /mob/dead/observer/can_use_topic()
-	if(check_rights(R_ADMIN, 0, src))
+	if(IsAdminGhost(src))
 		return STATUS_INTERACTIVE				// Admins are more equal
 	return STATUS_UPDATE						// Ghosts can view updates
 
@@ -35,7 +35,7 @@
 	if(custom_state && (custom_state.flags & NANO_IGNORE_DISTANCE))
 		return STATUS_INTERACTIVE
 	// robots can interact with things they can see within their view range
-	if((src_object in view(src)) && get_dist(src_object, src) <= src.client.view)
+	if((src_object in view(src)) && get_dist(src_object, src) <= client.view)
 		return STATUS_INTERACTIVE	// interactive (green visibility)
 	return STATUS_DISABLED			// no updates, completely disabled (red visibility)
 
@@ -81,7 +81,7 @@
 	return 	STATUS_CLOSE
 
 /mob/living/proc/shared_living_nano_interaction(src_object)
-	if (src.stat != CONSCIOUS)
+	if (stat != CONSCIOUS)
 		return STATUS_CLOSE						// no updates, close the interface
 	else if (restrained() || lying || stat || stunned || weakened)
 		return STATUS_UPDATE					// update only (orange visibility)
@@ -95,7 +95,7 @@
 	if(!isturf(src_object.loc))
 		if(src_object.loc == src)				// Item in the inventory
 			return STATUS_INTERACTIVE
-		if(src.contents.Find(src_object.loc))	// A hidden uplink inside an item
+		if(contents.Find(src_object.loc))	// A hidden uplink inside an item
 			return STATUS_INTERACTIVE
 
 	if (!(src_object in view(4, src))) 	// If the src object is not in visable, disable updates

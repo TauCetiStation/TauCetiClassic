@@ -5,47 +5,53 @@
 	layer = 2.1
 	anchored = 1
 
-	New(location,main = "#FFFFFF",shade = "#000000",var/type = "rune", var/e_name = "rune", var/override_color = 0)
-		..()
-		loc = location
+var/list/crayon_overlay_cache = list()
 
-		//name = type
-		name = e_name
-		desc = "A [type] drawn in crayon."
-		if(type == "poseur tag")
-			gang_name() //Generate gang names so they get removed from the pool
-			type = pick(gang_name_pool)
-		icon_state = type
+/obj/effect/decal/cleanable/crayon/atom_init(mapload, main = "#FFFFFF", shade = "#000000", type = "rune", e_name = "rune", override_color = 0)
+	. = ..()
 
-		switch(type)
-			if("rune")
-				type = "rune[rand(1,6)]"
-			if("graffiti")
-				type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","poseur tag")
+	name = e_name
+	desc = "A [type] drawn in crayon."
+	if(type == "poseur tag")
+		gang_name() //Generate gang names so they get removed from the pool
+		type = pick(gang_name_pool)
 
-		var/icon/mainOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]",2.1)
-		var/icon/shadeOverlay = new/icon('icons/effects/crayondecal.dmi',"[type]s",2.1)
+	icon_state = type
 
+	switch(type)
+		if("rune")
+			type = "rune[rand(1,6)]"
+		if("graffiti")
+			type = pick("amyjon","face","matt","revolution","engie","guy","end","dwarf","uboa","poseur tag")
+
+	var/icon/mainOverlay = crayon_overlay_cache["[type]"]
+	if(!mainOverlay)
+		mainOverlay = crayon_overlay_cache["[type]"] = new/icon('icons/effects/crayondecal.dmi', "[type]", 2.1)
 		mainOverlay.Blend(main,ICON_ADD)
-		shadeOverlay.Blend(shade,ICON_ADD)
 
-		overlays += mainOverlay
+	overlays += mainOverlay
+
+	if(type == "rune" || type == "graffiti")
+
+		var/icon/shadeOverlay = crayon_overlay_cache["[type]s"]
+
+		if(!shadeOverlay)
+			shadeOverlay = crayon_overlay_cache["[type]s"] = new/icon('icons/effects/crayondecal.dmi', "[type]s", 2.1)
+			shadeOverlay.Blend(shade, ICON_ADD)
+
 		overlays += shadeOverlay
 
-		if(override_color)
-			color = main
-		add_hiddenprint(usr)
+	if(override_color)
+		color = main
+	add_hiddenprint(usr)
 
 
 /obj/effect/decal/cleanable/crayon/gang
 	layer = 3.6 //Harder to hide
 	var/gang
 
-/obj/effect/decal/cleanable/crayon/gang/New(location, var/type, var/e_name = "gang tag")
-	if(!type)
-		qdel(src)
-
-	var/area/territory = get_area(location)
+/obj/effect/decal/cleanable/crayon/gang/atom_init(mapload, type, e_name = "gang tag")
+	var/area/territory = get_area(loc)
 	var/color
 
 	if(type == "A")
@@ -61,7 +67,7 @@
 		ticker.mode.B_territory_new |= list(territory.type = territory.name)
 		ticker.mode.B_territory_lost -= territory.type
 
-	..(location, color, color, icon_state, gang, e_name, 1)
+	. = ..(mapload, color, color, icon_state, e_name)
 
 /obj/effect/decal/cleanable/crayon/gang/Destroy()
 	var/area/territory = get_area(src)

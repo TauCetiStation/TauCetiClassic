@@ -4,6 +4,7 @@
 	anchored = 1
 	icon = 'icons/obj/virology.dmi'
 	icon_state = "incubator"
+	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/obj/item/weapon/virusdish/dish
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/radiation = 0
@@ -46,13 +47,7 @@
 
 		src.attack_hand(user)
 
-/obj/machinery/disease2/incubator/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN)) return
-	ui_interact(user)
-
 /obj/machinery/disease2/incubator/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
-	user.set_machine(src)
-
 	var/data[0]
 	data["chemicals_inserted"] = !!beaker
 	data["dish_inserted"] = !!dish
@@ -127,9 +122,11 @@
 		nanomanager.update_uis(src)
 
 	if(beaker)
-		if(!beaker.reagents.remove_reagent("virusfood",5))
-			foodsupply += 10
+		if(beaker.reagents.get_reagent_amount("virusfood"))
+			foodsupply += (min(beaker.reagents.get_reagent_amount("virusfood"), 5))*2
+			beaker.reagents.remove_reagent("virusfood", 5)
 			nanomanager.update_uis(src)
+
 
 		if (locate(/datum/reagent/toxin) in beaker.reagents.reagent_list)
 			for(var/datum/reagent/toxin/T in beaker.reagents.reagent_list)

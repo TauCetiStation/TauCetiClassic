@@ -9,9 +9,9 @@
 	var/mineral = "metal"
 	var/opening = 0
 
-/obj/structure/falsewall/New()
+/obj/structure/falsewall/atom_init()
 	relativewall_neighbours()
-	..()
+	. = ..()
 
 /obj/structure/falsewall/Destroy()
 
@@ -170,9 +170,9 @@
 	var/mineral = "metal"
 	var/opening = 0
 
-/obj/structure/falserwall/New()
+/obj/structure/falserwall/atom_init()
 	relativewall_neighbours()
-	..()
+	. = ..()
 
 
 /obj/structure/falserwall/attack_hand(mob/user)

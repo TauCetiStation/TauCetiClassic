@@ -62,15 +62,15 @@
 				to_chat(user, "\blue You unfasten the circuit board.")
 				state = 1
 				icon_state = "1"
-			if(istype(P, /obj/item/weapon/cable_coil))
-				if(P:amount >= 5)
-					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			if(istype(P, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/C = P
+				if(C.get_amount() >= 5)
+					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20, target = src))
-						P:amount -= 5
-						if(!P:amount) qdel(P)
-						to_chat(user, "\blue You add cables to the frame.")
-						state = 3
-						icon_state = "3"
+						if(C.use(5))
+							to_chat(user, "\blue You add cables to the frame.")
+							state = 3
+							icon_state = "3"
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
 				if (brain)
@@ -80,16 +80,14 @@
 					to_chat(user, "\blue You remove the cables.")
 					state = 2
 					icon_state = "2"
-					var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil/red(loc)
-					A.amount = 5
+					new /obj/item/stack/cable_coil/red(loc, 5)
 
 			if(istype(P, /obj/item/stack/sheet/rglass))
-				if(P:amount >= 2)
-					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				var/obj/item/stack/sheet/rglass/RG = P
+				if(RG.get_amount() >= 2)
+					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20, target = src))
-						if (P)
-							P:amount -= 2
-							if(!P:amount) qdel(P)
+						if (RG.use(2))
 							to_chat(user, "\blue You put in the glass panel.")
 							state = 4
 							icon_state = "4"

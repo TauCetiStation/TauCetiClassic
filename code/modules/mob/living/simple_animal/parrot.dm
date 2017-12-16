@@ -83,8 +83,8 @@
 	var/obj/item/held_item = null
 
 
-/mob/living/simple_animal/parrot/New()
-	..()
+/mob/living/simple_animal/parrot/atom_init()
+	. = ..()
 	if(!ears)
 		var/headset = pick(/obj/item/device/radio/headset/headset_sec, \
 						/obj/item/device/radio/headset/headset_eng, \
@@ -706,8 +706,7 @@
 	var/longest_survival = 0
 	var/longest_deathstreak = 0
 
-
-/mob/living/simple_animal/parrot/Poly/New()
+/mob/living/simple_animal/parrot/Poly/atom_init()
 	ears = new /obj/item/device/radio/headset/headset_eng(src)
 	available_channels = list(":e")
 	Read_Memory()
@@ -725,7 +724,7 @@
 		desc += " Over [rounds_survived] shifts without a \"terrible\" \"accident\"!"
 	else
 		speak += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
-	..()
+	. = ..()
 
 /mob/living/simple_animal/parrot/Poly/Life()
 	if(!stat && ticker.current_state == GAME_STATE_FINISHED && !memory_saved)
@@ -781,9 +780,10 @@
 	status_flags = GODMODE
 	incorporeal_move = 1
 	meat_type = list(/obj/item/weapon/ectoplasm = 1)
-/mob/living/simple_animal/parrot/Poly/ghost/New()
+
+/mob/living/simple_animal/parrot/Poly/ghost/atom_init()
 	memory_saved = 1 //At this point nothing is saved
-	..()
+	. = ..()
 
 /mob/living/simple_animal/parrot/say(var/message)
 

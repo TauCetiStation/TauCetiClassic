@@ -2,6 +2,9 @@
 	..()
 	return QDEL_HINT_HARDDEL_NOW
 
+/mob/living/proc/OpenCraftingMenu()
+	return
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
@@ -29,6 +32,9 @@
 		var/mob/living/carbon/C = src
 		C.spread_disease_to(M, "Contact")
 
+	if(M.pulling == src)
+		M.stop_pulling()
+
 	//BubbleWrap: Should stop you pushing a restrained person out of the way
 	if(ishuman(M))
 		for(var/mob/MM in range(M, 1))
@@ -49,12 +55,6 @@
 			if(prob(ran))
 				to_chat(src, "<span class='danger'>You fail to push [M]'s fat ass out of the way.</span>")
 			return 1
-
-	//Leaping mobs just land on the tile, no pushing, no anything.
-	if(status_flags & LEAPING)
-		loc = M.loc
-		status_flags &= ~LEAPING
-		return 1
 
 	//switch our position with M
 	//BubbleWrap: people in handcuffs are always switched around as if they were on 'help' intent to prevent a person being pulled from being seperated from their puller
@@ -396,8 +396,35 @@
 /mob/living/singularity_pull(S)
 	step_towards(src,S)
 
-/mob/living/proc/can_inject()
-	return 1
+/mob/living/proc/try_inject()
+	return TRUE
+
+/mob/living/proc/get_temperature(datum/gas_mixture/environment)
+	var/loc_temp = T0C
+	if(istype(loc, /obj/mecha))
+		var/obj/mecha/M = loc
+		loc_temp =  M.return_temperature()
+
+	else if(istype(loc, /obj/structure/transit_tube_pod))
+		loc_temp = environment.temperature
+
+	else if(istype(get_turf(src), /turf/space))
+		var/turf/heat_turf = get_turf(src)
+		loc_temp = heat_turf.temperature
+
+	else if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+		var/obj/machinery/atmospherics/components/unary/cryo_cell/C = loc
+		var/datum/gas_mixture/G = C.AIR1
+
+		if(G.total_moles < 10)
+			loc_temp = environment.temperature
+		else
+			loc_temp = G.temperature
+
+	else
+		loc_temp = environment.temperature
+
+	return loc_temp
 
 // heal ONE bodypart, bodypart gets randomly selected from damaged ones.
 /mob/living/proc/heal_bodypart_damage(brute, burn)
@@ -428,8 +455,6 @@
 /mob/living/proc/restore_all_bodyparts()
 	return
 
-
-
 /mob/living/proc/revive()
 	rejuvenate()
 	buckled = initial(src.buckled)
@@ -458,9 +483,6 @@
 	SetParalysis(0)
 	SetStunned(0)
 	SetWeakened(0)
-	if(iscarbon(src))
-		var/mob/living/carbon/C = src
-		C.shock_stage=0
 
 	// shut down ongoing problems
 	radiation = 0
@@ -471,6 +493,11 @@
 	ExtinguishMob()
 	fire_stacks = 0
 
+	if(pinned.len)
+		for(var/obj/O in pinned)
+			O.forceMove(loc)
+		pinned.Cut()
+
 	// fix blindness and deafness
 	blinded = 0
 	eye_blind = 0
@@ -479,13 +506,17 @@
 	ear_damage = 0
 	heal_overall_damage(getBruteLoss(), getFireLoss())
 
-	// restore all of a human's blood
-	if(ishuman(src))
-		var/mob/living/carbon/human/human_mob = src
-		human_mob.restore_blood()
+	if(iscarbon(src))
+		var/mob/living/carbon/C = src
+		C.shock_stage = 0
 
-	// fix all of our bodyparts
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.restore_blood()
+			H.full_prosthetic = null
+
 	restore_all_bodyparts()
+	cure_all_viruses()
 
 	// remove the character from the list of the dead
 	if(stat == DEAD)
@@ -507,7 +538,18 @@
 		mutations.Remove(HUSK)
 	regenerate_icons()
 	update_health_hud()
-	return
+
+/mob/living/carbon/human/rejuvenate()
+	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
+	BP.disfigured = FALSE
+
+	for (var/obj/item/weapon/organ/head/H in world) // damn son, where'd you get this?
+		if(H.brainmob)
+			if(H.brainmob.real_name == src.real_name)
+				if(H.brainmob.mind)
+					H.brainmob.mind.transfer_to(src)
+					qdel(H)
+	..()
 
 /mob/living/proc/update_health_hud()
 	hud_updateflag |= 1 << HEALTH_HUD
@@ -516,6 +558,32 @@
 /mob/living/proc/UpdateDamageIcon()
 	return
 
+/mob/living/proc/cure_all_viruses()
+	for(var/datum/disease/virus in viruses)
+		virus.cure()
+
+/mob/living/carbon/cure_all_viruses()
+	for(var/ID in virus2)
+		var/datum/disease2/disease/V = virus2[ID]
+		V.cure(src)
+
+	..()
+
+/mob/living/proc/remove_any_mutations()
+	dna.ResetSE()
+	for(var/datum/dna/gene/gene in dna_genes)
+		if(!gene.block)
+			continue
+		genemutcheck(src, gene.block, null, MUTCHK_FORCED)
+
+/mob/living/carbon/human/remove_any_mutations()
+	var/needs_update = mutations.len > 0
+
+	..()
+
+	// Might need to update appearance for hulk etc.
+	if(needs_update)
+		update_mutations()
 
 /mob/living/proc/Examine_OOC()
 	set name = "Examine Meta-Info (OOC)"
@@ -1011,14 +1079,12 @@
 /mob/living/Stat()
 	..()
 	if(statpanel("Status"))
-		if(ticker)
-			if(ticker.mode)
-				if(istype(ticker.mode, /datum/game_mode/gang))
-					var/datum/game_mode/gang/mode = ticker.mode
-					if(isnum(mode.A_timer))
-						stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
-					if(isnum(mode.B_timer))
-						stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
+		if(ticker.mode && ticker.mode.config_tag == "gang")
+			var/datum/game_mode/gang/mode = ticker.mode
+			if(isnum(mode.A_timer))
+				stat(null, "[gang_name("A")] Gang Takeover: [max(mode.A_timer, 0)]")
+			if(isnum(mode.B_timer))
+				stat(null, "[gang_name("B")] Gang Takeover: [max(mode.B_timer, 0)]")
 
 /mob/living/update_gravity(has_gravity)
 	if(!ticker)

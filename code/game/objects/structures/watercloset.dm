@@ -12,7 +12,8 @@
 	var/w_items = 0			//the combined w_class of all the items in the cistern
 	var/mob/living/swirlie = null	//the mob being given a swirlie
 
-/obj/structure/toilet/New()
+/obj/structure/toilet/atom_init()
+	. = ..()
 	open = round(rand(0, 1))
 	update_icon()
 
@@ -268,6 +269,7 @@
 	var/watertemp = "normal"	//freezing, normal, or boiling
 	var/mobpresent = 0		//true if there is a mob on the shower's loc, this is to ease process()
 	var/is_payed = 0
+	var/cost_per_activation = 150
 
 //add heat controls? when emagged, you can freeze to death in it?
 
@@ -280,6 +282,10 @@
 	mouse_opacity = 0
 
 /obj/machinery/shower/attack_hand(mob/M)
+	. = ..()
+	if(.)
+		return
+
 	if(is_payed)
 		on = !on
 		update_icon()
@@ -290,7 +296,7 @@
 			for (var/atom/movable/G in src.loc)
 				G.clean_blood()
 		else
-			is_payed = 0 // Р•СЃР»Рё РёРіСЂРѕРє РІС‹РєР»СЋС‡РёР» СЂР°РЅСЊС€Рµ РІСЂРµРјРµРЅРё - РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕРµ Р°РЅРЅСѓР»РёСЂРѕРІР°РЅРёРµ РїР»Р°С‚С‹.
+			is_payed = 0 // Если игрок выключил раньше времени - принудительное аннулирование платы.
 	else
 		to_chat(M, "You didn't pay for that. Swipe a card against [src].")
 
@@ -310,7 +316,7 @@
 			user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I].</span>")
 			add_fingerprint(user)
 	else if(istype(I, /obj/item/weapon/card))
-		if(!is_payed)
+		if(!is_payed && cost_per_activation)
 			if(!on)
 				var/obj/item/weapon/card/C = I
 				visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
@@ -322,7 +328,7 @@
 					if(attempt_pin)
 						D = attempt_account_access(C.associated_account_number, attempt_pin, 2)
 					if(D)
-						var/transaction_amount = 150
+						var/transaction_amount = cost_per_activation
 						if(transaction_amount <= D.money)
 							//transfer the money
 							D.money -= transaction_amount
@@ -492,7 +498,7 @@
 		var/turf/tile = loc
 		loc.clean_blood()
 		for(var/obj/effect/E in tile)
-			if((istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay)) && !istype(E, /obj/effect/decal/cleanable/water))
+			if((istype(E,/obj/effect/rune) || istype(E,/obj/effect/decal/cleanable) || istype(E,/obj/effect/overlay)) && !istype(E, /obj/effect/fluid))
 				qdel(E)
 
 /obj/machinery/shower/process()
@@ -504,7 +510,7 @@
 	else
 		is_payed--
 
-	create_water(src)
+	spawn_fluid(loc, 15)
 
 	if(!mobpresent) return
 
@@ -584,7 +590,7 @@
 		to_chat(user, "\red Someone's already washing here.")
 		return
 
-	if (istype(O, /obj/item/weapon/reagent_containers))
+	if (istype(O, /obj/item/weapon/reagent_containers) && O.is_open_container())
 		var/obj/item/weapon/reagent_containers/RG = O
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		user.visible_message("\blue [user] fills \the [RG] using \the [src].","\blue You fill \the [RG] using \the [src].")

@@ -13,7 +13,7 @@
 	var/toggleable = 0
 	var/off_state = "degoggles"
 	var/active = 1
-	var/activation_sound = 'sound/effects/glasses_switch.ogg'
+	var/activation_sound = 'sound/items/buttonclick.ogg'
 
 /obj/item/clothing/glasses/attack_self(mob/user)
 	if(toggleable)
@@ -95,11 +95,30 @@
 	action_button_name = "Toggle Goggles"
 	vision_flags = SEE_OBJS
 
-/obj/item/clothing/glasses/aviator
+/obj/item/clothing/glasses/aviator_orange
 	name = "Aviator glasses"
 	desc = "Stylish glasses with orange lenses"
-	icon_state = "orange_aviators"
-	item_state = "orange_aviators"
+	icon_state = "aviators_orange"
+
+/obj/item/clothing/glasses/aviator_black
+	name = "Aviator glasses"
+	desc = "Stylish glasses with black lenses"
+	icon_state = "aviators_black"
+
+/obj/item/clothing/glasses/aviator_red
+	name = "Aviator glasses"
+	desc = "Stylish glasses with red lenses"
+	icon_state = "aviators_red"
+
+/obj/item/clothing/glasses/aviator_mirror
+	name = "Aviator glasses"
+	desc = "Stylish glasses with transparent lenses"
+	icon_state = "aviators_mirror"
+
+/obj/item/clothing/glasses/jerusalem
+	name = "Jerusalem Glasses"
+	desc = "Here you can see a small inscription: I hate it here"
+	icon_state = "spider_jerusalem"
 
 /obj/item/clothing/glasses/regular
 	name = "Prescription Glasses"
@@ -199,10 +218,9 @@
 	icon_state = "sunhud"
 	var/obj/item/clothing/glasses/hud/security/hud = null
 
-/obj/item/clothing/glasses/sunglasses/sechud/New()
-	..()
-	src.hud = new/obj/item/clothing/glasses/hud/security(src)
-	return
+/obj/item/clothing/glasses/sunglasses/sechud/atom_init()
+	. = ..()
+	hud = new/obj/item/clothing/glasses/hud/security(src)
 
 /obj/item/clothing/glasses/sunglasses/sechud/tactical
 	name = "tactical HUD"
@@ -244,8 +262,9 @@
 	icon_state = "thermoncle"
 	flags = null //doesn't protect eyes because it's a monocle, duh
 	body_parts_covered = 0
-	toggleable = 0
-	action_button_name = null
+	toggleable = 1
+	off_state = "thermoncle_off"
+	action_button_name = "Toggle Monocle"
 
 /obj/item/clothing/glasses/thermal/eyepatch
 	name = "Optical Thermal Eyepatch"

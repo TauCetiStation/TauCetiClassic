@@ -65,6 +65,18 @@
 	slot = slot_w_uniform
 	sort_category = "Suits and Overwear"
 
+/datum/gear/under/maid_suit
+	display_name = "Maid dress selection"
+	path = /obj/item/clothing/under/fluff/maid_suit
+	cost = 2
+
+/datum/gear/under/maid_suit/New()
+	..()
+	var/suits = list()
+	suits["black"] = /obj/item/clothing/under/fluff/maid_suit
+	suits["blue"] = /obj/item/clothing/under/fluff/maid_suit/sakuya
+	gear_tweaks += new/datum/gear_tweak/path(suits)
+
 /datum/gear/under/suit_jacket
 	display_name = "Suit jacket selection"
 	path = /obj/item/clothing/under/suit_jacket/navy
@@ -111,3 +123,15 @@
 	display_name = "Kung under"
 	path = /obj/item/clothing/under/fluff/kung
 	cost = 1
+
+/datum/gear/suit/m65
+	display_name = "M65 Jacket Selection"
+	path = 	/obj/item/clothing/suit/storage/miljacket_army
+
+/datum/gear/suit/m65/New()
+	..()
+	var/m65s = list()
+	m65s["army"] = /obj/item/clothing/suit/storage/miljacket_army
+	m65s["ranger"] = /obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger
+	m65s["navy"] = /obj/item/clothing/suit/storage/miljacket_army/miljacket_navy
+	gear_tweaks += new/datum/gear_tweak/path(m65s)

@@ -586,7 +586,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				data_core.manifest_inject(new_character)
 
 			if(alert(new_character,"Would you like an active AI to announce this character?",,"No","Yes")=="Yes")
-				call(/mob/new_player/proc/AnnounceArrival)(new_character, new_character.mind.assigned_role)
+				call(/mob/dead/new_player/proc/AnnounceArrival)(new_character, new_character.mind.assigned_role)
 
 	message_admins("\blue [admin] has respawned [player_key] as [new_character.real_name].")
 
@@ -756,7 +756,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Gib"
 
-	if(!check_rights(R_ADMIN|R_FUN))	return
+	if(!check_rights(R_ADMIN|R_FUN))
+		return
 
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
 	if(confirm != "Yes") return
@@ -942,11 +943,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		var/eaccess = alert(src, "Grant acces to maints for everyone?", "Confirm", "Yes", "No")
 		SSshuttle.incall()
 		captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+		world << sound('sound/AI/shuttlecalled.ogg')
 
 		if(eaccess == "Yes")
 			make_maint_all_access(FALSE)
 
-	world << sound('sound/AI/shuttlecalled.ogg')
 	feedback_add_details("admin_verb","CSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] admin-called the emergency shuttle.")
 	message_admins("\blue [key_name_admin(usr)] admin-called the emergency shuttle.")
@@ -956,7 +957,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Cancel Shuttle"
 
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN))
+		return
 
 	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes") return
 
@@ -982,7 +984,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if (!ticker)
 		return
 
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN))
+		return
 
 	SSshuttle.deny_shuttle = !SSshuttle.deny_shuttle
 

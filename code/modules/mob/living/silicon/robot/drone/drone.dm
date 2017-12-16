@@ -27,9 +27,10 @@
 	var/mail_destination = ""
 
 	holder_type = /obj/item/weapon/holder/drone
-/mob/living/silicon/robot/drone/New()
 
-	..()
+/mob/living/silicon/robot/drone/atom_init()
+
+	. = ..()
 
 	if(camera && "Robots" in camera.network)
 		camera.add_network("Engineering")
@@ -46,7 +47,6 @@
 		var/datum/robot_component/C = components[V]
 		C.max_damage = 10
 
-	verbs -= /mob/living/silicon/robot/verb/Namepick
 	module = new /obj/item/weapon/robot_module/drone(src)
 
 	//Grab stacks.
@@ -345,10 +345,6 @@
 	else
 		to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
 		return
-
-/mob/living/silicon/robot/drone/add_robot_verbs()
-
-/mob/living/silicon/robot/drone/remove_robot_verbs()
 
 /mob/living/simple_animal/drone/mob_negates_gravity()
 	return 1

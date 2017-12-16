@@ -7,8 +7,9 @@
 	max_plasma = 250
 	icon_state = "aliens_s"
 	plasma_rate = 10
+	heal_rate = 2
 
-/mob/living/carbon/alien/humanoid/sentinel/New()
+/mob/living/carbon/alien/humanoid/sentinel/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
@@ -16,7 +17,7 @@
 		name = text("alien sentinel ([rand(1, 1000)])")
 	real_name = name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin)
-	..()
+	. = ..()
 
 /mob/living/carbon/alien/humanoid/sentinel/handle_hud_icons_health()
 	if (healths)
@@ -38,3 +39,6 @@
 					healths.icon_state = "health6"
 		else
 			healths.icon_state = "health7"
+
+/mob/living/carbon/alien/humanoid/sentinel/movement_delay()
+	return(1 + move_delay_add + config.alien_delay)

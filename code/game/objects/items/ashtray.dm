@@ -8,11 +8,10 @@
 		icon_full  	= ""
 		icon_broken	= ""
 
-/obj/item/ashtray/New()
-	..()
-	src.pixel_y = rand(-5, 5)
-	src.pixel_x = rand(-6, 6)
-	return
+/obj/item/ashtray/atom_init()
+	. = ..()
+	pixel_y = rand(-5, 5)
+	pixel_x = rand(-6, 6)
 
 /obj/item/ashtray/attackby(obj/item/weapon/W, mob/user)
 	if (health < 1)

@@ -33,7 +33,8 @@
 	max_water = 30
 	sprite_name = "miniFE"
 
-/obj/item/weapon/extinguisher/New()
+/obj/item/weapon/extinguisher/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(max_water)
 	reagents = R
 	R.my_atom = src
@@ -128,6 +129,7 @@
 					step_towards(W,my_target)
 					if(!W) return
 					if(!W.reagents) break
+					spawn_fluid(loc, spray_amount)
 					W.reagents.reaction(get_turf(W))
 					for(var/atom/atm in get_turf(W))
 						if(!W) return

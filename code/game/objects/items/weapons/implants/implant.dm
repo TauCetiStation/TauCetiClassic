@@ -11,6 +11,14 @@
 	var/allow_reagents = 0
 	var/malfunction = 0
 
+/obj/item/weapon/implant/atom_init()
+	. = ..()
+	implant_list += src
+
+/obj/item/weapon/implant/Destroy()
+	implant_list -= src
+	return ..()
+
 /obj/item/weapon/implant/proc/trigger(emote, source)
 	return
 
@@ -273,8 +281,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	return dat
 
 
-/obj/item/weapon/implant/chem/New()
-	..()
+/obj/item/weapon/implant/chem/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(50)
 	reagents = R
 	R.my_atom = src
@@ -359,8 +367,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	START_PROCESSING(SSobj, src)
 	return 1
 
-/obj/item/weapon/implant/loyalty/New()
-	..()
+/obj/item/weapon/implant/loyalty/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/implant/loyalty/process()
@@ -562,8 +570,8 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	action_button_name = "Bluespace pocket"
 	var/obj/item/weapon/storage/internal/imp/storage
 
-/obj/item/weapon/implant/storage/New()
-	..()
+/obj/item/weapon/implant/storage/atom_init()
+	. = ..()
 	storage = new /obj/item/weapon/storage/internal/imp(src)
 
 /obj/item/weapon/implant/storage/ui_action_click()

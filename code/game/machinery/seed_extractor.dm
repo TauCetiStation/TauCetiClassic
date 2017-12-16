@@ -8,8 +8,8 @@
 	var/max_seeds = 1000
 	var/seed_multiplier = 1
 
-/obj/machinery/seed_extractor/New()
-	..()
+/obj/machinery/seed_extractor/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/seed_extractor(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -23,7 +23,7 @@
 		seed_multiplier = M.rating
 
 
-obj/machinery/seed_extractor/attackby(obj/item/O, mob/user)
+/obj/machinery/seed_extractor/attackby(obj/item/O, mob/user)
 
 	if(default_deconstruction_screwdriver(user, "sextractor_open", "sextractor", O))
 		return

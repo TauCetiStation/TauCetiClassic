@@ -8,10 +8,15 @@
 								  //if TESTING is enabled, qdel will call this object's find_references() verb.
 
 //defines for the gc_destroyed var
-#define GC_QUEUED_FOR_QUEUING       -1
-#define GC_QUEUED_FOR_HARD_DEL      -2
-#define GC_CURRENTLY_BEING_QDELETED -3
 
+#define GC_QUEUE_PREQUEUE 1
+#define GC_QUEUE_CHECK 2
+#define GC_QUEUE_HARDDELETE 3
+#define GC_QUEUE_COUNT 3      // increase this when adding more steps.
+
+#define GC_QUEUED_FOR_QUEUING -1
+#define GC_QUEUED_FOR_HARD_DEL -2
+#define GC_CURRENTLY_BEING_QDELETED -3
 
 /**
  * Delete `item` after `time` passed.
@@ -27,7 +32,12 @@
 /**
  * Return `TRUE` if `X` already passed `Destroy()` phase.
  */
-#define QDELETED(X) (!X || X.gc_destroyed)
+#define QDELING(X) (X.gc_destroyed)
+
+/**
+ * Same as above plus sanitization that checks if atom exist.
+ */
+#define QDELETED(X) (!X || QDELING(X))
 
 /**
  * Return `TRUE` if `X` is in `Destroy()` phase.

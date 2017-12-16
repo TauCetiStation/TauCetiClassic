@@ -30,9 +30,10 @@ datum/genesequence
 	var/list/discovered_genomes = list("! Clear !")
 	var/list/accepted_fossil_types = list(/obj/item/weapon/fossil/plant)
 
-/obj/machinery/computer/reconstitutor/initialize()
-	..()
-	undiscovered_genesequences = SSxenoarch.all_plant_genesequences.Copy()
+/obj/machinery/computer/reconstitutor/atom_init()
+	. = ..()
+	if(!undiscovered_genesequences)
+		undiscovered_genesequences = SSxenoarch.all_plant_genesequences.Copy()
 
 /obj/machinery/computer/reconstitutor/animal
 	name = "Fauna reconstitution console"
@@ -40,9 +41,9 @@ datum/genesequence
 	pod1 = null
 	circuit = /obj/item/weapon/circuitboard/reconstitutor/animal
 
-/obj/machinery/computer/reconstitutor/animal/initialize()
-	..()
+/obj/machinery/computer/reconstitutor/animal/atom_init()
 	undiscovered_genesequences = SSxenoarch.all_animal_genesequences.Copy()
+	. = ..()
 
 /obj/machinery/computer/reconstitutor/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/fossil))
@@ -86,12 +87,8 @@ datum/genesequence
 	else
 		..()
 
-/obj/machinery/computer/reconstitutor/attack_hand(mob/user)
-	src.add_fingerprint(user)
-	interact(user)
-
-/obj/machinery/computer/reconstitutor/interact(mob/user)
-	if(stat & (NOPOWER|BROKEN) || get_dist(src, user) > 1)
+/obj/machinery/computer/reconstitutor/ui_interact(mob/user)
+	if(stat & (NOPOWER|BROKEN) || get_dist(src, user) > 1 && !issilicon(user) && !isobserver(user))
 		user.unset_machine(src)
 		return
 
@@ -136,7 +133,7 @@ datum/genesequence
 						discovered_genesequences -= cur_genesequence
 						completed_genesequences += cur_genesequence
 						manually_placed_genomes[sequence_num] = new/list(7)
-						interact(user)
+						updateDialog()
 						return
 				//yellow background if adjacent to correct slot
 				if(curindex > 1 && manually_placed_genomes[sequence_num][curindex] == cur_genesequence.full_genome_sequence[curindex - 1])
@@ -169,7 +166,6 @@ datum/genesequence
 	dat += "<hr>"
 	dat += "<a href='?src=\ref[src];close=1'>Close</a>"
 	user << browse(dat, "window=reconstitutor;size=600x500")
-	user.set_machine(src)
 	onclose(user, "reconstitutor")
 
 /obj/machinery/computer/reconstitutor/Topic(href, href_list)

@@ -21,17 +21,18 @@
 	var/brain_mod = 1                                    // Brainloss multiplier.
 	var/speed_mod =  0                                   // How fast or slow specific specie.
 
-	var/primitive                // Lesser form, if any (ie. monkey for humans)
-	var/tail                     // Name of tail image in species effects icon file.
-	var/language                 // Default racial language, if any.
-	var/secondary_langs = list() // The names of secondary languages that are available to this species.
-	var/attack_verb = "punch"    // Empty hand hurt intent verb.
-	var/punch_damage = 0		 // Extra empty hand attack damage.
-	var/mutantrace               // Safeguard due to old code.
+	var/primitive                     // Lesser form, if any (ie. monkey for humans)
+	var/tail                          // Name of tail image in species effects icon file.
+	var/language                      // Default racial language, if any.
+	var/force_racial_language = FALSE // If TRUE, racial language will be forced by default when speaking.
+	var/secondary_langs = list()      // The names of secondary languages that are available to this species.
+	var/attack_verb = "punch"         // Empty hand hurt intent verb.
+	var/punch_damage = 0              // Extra empty hand attack damage.
+	var/mutantrace                    // Safeguard due to old code.
 
-	var/breath_type = "oxygen"   // Non-oxygen gas breathed, if any.
-	var/poison_type = "phoron"   // Poisonous air.
-	var/exhale_type = "C02"      // Exhaled gas type.
+	var/breath_type = "oxygen"           // Non-oxygen gas breathed, if any.
+	var/poison_type = "phoron"           // Poisonous air.
+	var/exhale_type = "carbon_dioxide"   // Exhaled gas type.
 
 	var/cold_level_1 = 260  // Cold damage level 1 below this point.
 	var/cold_level_2 = 200  // Cold damage level 2 below this point.
@@ -259,6 +260,15 @@
 	,HAS_SKIN_COLOR = TRUE
 	)
 
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart,
+		O_BRAIN   = /obj/item/organ/internal/brain,
+		O_EYES    = /obj/item/organ/internal/eyes,
+		O_LUNGS   = /obj/item/organ/internal/lungs/skrell,
+		O_LIVER   = /obj/item/organ/internal/liver,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys
+		)
+
 	eyes = "skrell_eyes"
 
 	flesh_color = "#8CD7A3"
@@ -270,6 +280,7 @@
 	icobase = 'icons/mob/human_races/r_vox.dmi'
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = "Vox-pidgin"
+	force_racial_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
 
 	warning_low_pressure = 50
@@ -285,8 +296,7 @@
 	poison_type = "oxygen"
 
 	flags = list(
-	 NO_SCAN = TRUE
-	,NO_BLOOD = TRUE
+		NO_SCAN = TRUE
 	)
 
 	blood_color = "#2299FC"
@@ -301,15 +311,34 @@
 		"gloves" = 'icons/mob/species/vox/gloves.dmi'
 		)
 
-/datum/species/vox/handle_post_spawn(mob/living/carbon/human/H)
+/datum/species/vox/on_gain(mob/living/carbon/human/H)
+	if(name != VOX_ARMALIS)
+		H.leap_icon = new /obj/screen/leap()
+		H.leap_icon.screen_loc = "CENTER+3:20,SOUTH:5"
 
-	H.verbs += /mob/living/carbon/human/proc/leap
-	..()
+		if(H.hud_used)
+			H.hud_used.adding += H.leap_icon
+		if(H.client)
+			H.client.screen += H.leap_icon
 
-/datum/species/vox/armalis/handle_post_spawn(mob/living/carbon/human/H)
+	else
+		H.verbs += /mob/living/carbon/human/proc/gut
 
-	H.verbs += /mob/living/carbon/human/proc/gut
-	..()
+	return ..()
+
+/datum/species/vox/on_loose(mob/living/carbon/human/H)
+	if(name != VOX_ARMALIS)
+		if(H.leap_icon)
+			if(H.hud_used)
+				H.hud_used.adding -= H.leap_icon
+			if(H.client)
+				H.client.screen -= H.leap_icon
+			QDEL_NULL(H.leap_icon)
+
+	else
+		H.verbs -= /mob/living/carbon/human/proc/gut
+
+	return ..()
 
 /datum/species/vox/armalis
 	name = VOX_ARMALIS
@@ -396,6 +425,7 @@
 	flesh_color = "#907E4A"
 
 	reagent_tag = IS_DIONA
+	has_gendered_icons = FALSE
 
 /datum/species/diona/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER

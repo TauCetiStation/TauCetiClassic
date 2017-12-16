@@ -8,32 +8,36 @@
 	//var/advanced = 0
 
 /obj/machinery/computer/lasercon
-	New()
-		spawn(1)
-			for(var/obj/machinery/zero_point_emitter/las in machines)
-				if(las.id == src.id)
-					lasers += las
 
-	process()
-		..()
-		updateDialog()
+/obj/machinery/computer/lasercon/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
 
-	interact(mob/user)
-		if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
-			if (!istype(user, /mob/living/silicon))
-				user.machine = null
-				user << browse(null, "window=laser_control")
-				return
-		var/t = "<TT><B>Laser status monitor</B><HR>"
-		for(var/obj/machinery/zero_point_emitter/laser in lasers)
-			t += "Zero Point Laser<br>"
-			t += "Power level: <A href = '?src=\ref[laser];input=-0.005'>-</A> <A href = '?src=\ref[laser];input=-0.001'>-</A> <A href = '?src=\ref[laser];input=-0.0005'>-</A> <A href = '?src=\ref[laser];input=-0.0001'>-</A> [laser.energy]MeV <A href = '?src=\ref[laser];input=0.0001'>+</A> <A href = '?src=\ref[laser];input=0.0005'>+</A> <A href = '?src=\ref[laser];input=0.001'>+</A> <A href = '?src=\ref[laser];input=0.005'>+</A><BR>"
-			t += "Frequency: <A href = '?src=\ref[laser];freq=-10000'>-</A> <A href = '?src=\ref[laser];freq=-1000'>-</A> [laser.freq] <A href = '?src=\ref[laser];freq=1000'>+</A> <A href = '?src=\ref[laser];freq=10000'>+</A><BR>"
-			t += "Output: [laser.active ? "<B>Online</B> <A href = '?src=\ref[laser];online=1'>Offline</A>" : "<A href = '?src=\ref[laser];online=1'>Online</A> <B>Offline</B> "]<BR>"
-		t += "<hr>"
-		t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-		user << browse(t, "window=laser_control;size=500x800")
-		user.machine = src
+/obj/machinery/computer/lasercon/atom_init_late()
+	for(var/obj/machinery/zero_point_emitter/las in machines)
+		if(las.id == src.id)
+			lasers += las
+
+/obj/machinery/computer/lasercon/process()
+	..()
+	updateDialog()
+
+/obj/machinery/computer/lasercon/interact(mob/user)
+	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+		if (!istype(user, /mob/living/silicon))
+			user.machine = null
+			user << browse(null, "window=laser_control")
+			return
+	var/t = "<TT><B>Laser status monitor</B><HR>"
+	for(var/obj/machinery/zero_point_emitter/laser in lasers)
+		t += "Zero Point Laser<br>"
+		t += "Power level: <A href = '?src=\ref[laser];input=-0.005'>-</A> <A href = '?src=\ref[laser];input=-0.001'>-</A> <A href = '?src=\ref[laser];input=-0.0005'>-</A> <A href = '?src=\ref[laser];input=-0.0001'>-</A> [laser.energy]MeV <A href = '?src=\ref[laser];input=0.0001'>+</A> <A href = '?src=\ref[laser];input=0.0005'>+</A> <A href = '?src=\ref[laser];input=0.001'>+</A> <A href = '?src=\ref[laser];input=0.005'>+</A><BR>"
+		t += "Frequency: <A href = '?src=\ref[laser];freq=-10000'>-</A> <A href = '?src=\ref[laser];freq=-1000'>-</A> [laser.freq] <A href = '?src=\ref[laser];freq=1000'>+</A> <A href = '?src=\ref[laser];freq=10000'>+</A><BR>"
+		t += "Output: [laser.active ? "<B>Online</B> <A href = '?src=\ref[laser];online=1'>Offline</A>" : "<A href = '?src=\ref[laser];online=1'>Online</A> <B>Offline</B> "]<BR>"
+	t += "<hr>"
+	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
+	user << browse(t, "window=laser_control;size=500x800")
+	user.machine = src
 
 /*
 /obj/machinery/computer/lasercon/proc/interact(mob/user)

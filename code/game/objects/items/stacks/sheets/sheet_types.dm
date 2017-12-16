@@ -102,9 +102,9 @@ var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	throwforce = 14.0
 	flags = CONDUCT
 
-/obj/item/stack/sheet/metal/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/metal/atom_init()
 	recipes = metal_recipes
-	return ..()
+	. = ..()
 
 
 /*
@@ -126,9 +126,9 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 	flags = CONDUCT
 	origin_tech = "materials=2"
 
-/obj/item/stack/sheet/plasteel/New(var/loc, var/amount=null)
-		recipes = plasteel_recipes
-		return ..()
+/obj/item/stack/sheet/plasteel/atom_init()
+	recipes = plasteel_recipes
+	. = ..()
 
 /*
  * Wood
@@ -141,6 +141,7 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("crossbow frame", /obj/item/weapon/crossbowframe, 5, time = 25, one_per_turf = 0, on_floor = 0), \
 	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("bonfire", /obj/structure/bonfire, 10, time = 20, one_per_turf = 1, on_floor = 1), \
 	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = 1, on_floor = 1), \
 //	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, one_per_turf = 0, on_floor = 0)
 	)
@@ -158,9 +159,9 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
 	singular_name = "wood plank"
 	icon_state = "sheet-wood"
 
-/obj/item/stack/sheet/wood/New(var/loc, var/amount=null)
+/obj/item/stack/sheet/wood/atom_init()
 	recipes = wood_recipes
-	return ..()
+	. = ..()
 
 /*
  * Cloth
@@ -202,6 +203,6 @@ var/global/list/datum/stack_recipe/cardboard_recipes = list ( \
 	icon_state = "sheet-card"
 	origin_tech = "materials=1"
 
-/obj/item/stack/sheet/cardboard/New(var/loc, var/amount=null)
-		recipes = cardboard_recipes
-		return ..()
+/obj/item/stack/sheet/cardboard/atom_init()
+	recipes = cardboard_recipes
+	. = ..()

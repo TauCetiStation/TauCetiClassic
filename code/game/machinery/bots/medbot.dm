@@ -58,27 +58,28 @@
 	var/skin = null //Same as medbot, set to tox or ointment for the respective kits.
 	w_class = 3.0
 
-	New()
-		..()
-		spawn(5)
-			if(src.skin)
-				src.overlays += image('icons/obj/aibots.dmi', "kit_skin_[src.skin]")
-
-
-/obj/machinery/bot/medbot/New()
+/obj/item/weapon/firstaid_arm_assembly/atom_init()
 	..()
-	src.icon_state = "medibot[src.on]"
+	return INITIALIZE_HINT_LATELOAD
 
-	spawn(4)
-		if(src.skin)
-			src.overlays += image('icons/obj/aibots.dmi', "medskin_[src.skin]")
+/obj/item/weapon/firstaid_arm_assembly/atom_init_late()
+	if(skin)
+		overlays += image('icons/obj/aibots.dmi', "kit_skin_[skin]")
 
-		src.botcard = new /obj/item/weapon/card/id(src)
-		if(isnull(src.botcard_access) || (src.botcard_access.len < 1))
-			var/datum/job/doctor/J = new/datum/job/doctor
-			src.botcard.access = J.get_access()
-		else
-			src.botcard.access = src.botcard_access
+/obj/machinery/bot/medbot/atom_init()
+	..()
+	botcard = new /obj/item/weapon/card/id(src)
+	if(isnull(botcard_access) || (botcard_access.len < 1))
+		var/datum/job/doctor/J = new/datum/job/doctor
+		botcard.access = J.get_access()
+	else
+		botcard.access = botcard_access
+	icon_state = "medibot[on]"
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/bot/medbot/atom_init_late()
+	if(skin)
+		overlays += image('icons/obj/aibots.dmi', "medskin_[skin]")
 
 /obj/machinery/bot/medbot/turn_on()
 	. = ..()
@@ -96,13 +97,7 @@
 	src.icon_state = "medibot[src.on]"
 	src.updateUsrDialog()
 
-/obj/machinery/bot/medbot/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/bot/medbot/attack_hand(mob/user)
-	. = ..()
-	if (.)
-		return
+/obj/machinery/bot/medbot/ui_interact(mob/user)
 	var/dat
 	dat += "<TT><B>Automatic Medical Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
@@ -113,7 +108,7 @@
 	else
 		dat += "None Loaded"
 	dat += "<br>Behaviour controls are [src.locked ? "locked" : "unlocked"]<hr>"
-	if(!src.locked || issilicon(user))
+	if(!src.locked || issilicon(user) || isobserver(user))
 		dat += "<TT>Healing Threshold: "
 		dat += "<a href='?src=\ref[src];adj_threshold=-10'>--</a> "
 		dat += "<a href='?src=\ref[src];adj_threshold=-5'>-</a> "
@@ -137,7 +132,6 @@
 
 	user << browse("<HEAD><TITLE>Medibot v1.0 controls</TITLE></HEAD>[dat]", "window=automed")
 	onclose(user, "automed")
-	return
 
 /obj/machinery/bot/medbot/Topic(href, href_list)
 	. = ..()
@@ -150,7 +144,10 @@
 		else
 			turn_on()
 
-	else if((href_list["adj_threshold"]) && (!src.locked || issilicon(usr)))
+	else if(src.locked && !issilicon(usr) && !isobserver(usr))
+		return
+
+	else if(href_list["adj_threshold"])
 		var/adjust_num = text2num(href_list["adj_threshold"])
 		src.heal_threshold += adjust_num
 		if(src.heal_threshold < 5)
@@ -158,7 +155,7 @@
 		if(src.heal_threshold > 75)
 			src.heal_threshold = 75
 
-	else if((href_list["adj_inject"]) && (!src.locked || issilicon(usr)))
+	else if(href_list["adj_inject"])
 		var/adjust_num = text2num(href_list["adj_inject"])
 		src.injection_amount += adjust_num
 		if(src.injection_amount < 5)
@@ -166,20 +163,17 @@
 		if(src.injection_amount > 15)
 			src.injection_amount = 15
 
-	else if((href_list["use_beaker"]) && (!src.locked || issilicon(usr)))
+	else if(href_list["use_beaker"])
 		src.use_beaker = !src.use_beaker
 
-	else if (href_list["eject"] && (!isnull(src.reagent_glass)))
-		if(!src.locked)
-			src.reagent_glass.loc = get_turf(src)
-			src.reagent_glass = null
-		else
-			to_chat(usr, "<span class='notice'>You cannot eject the beaker because the panel is locked.</span>")
+	else if (href_list["eject"] && reagent_glass)
+		src.reagent_glass.loc = get_turf(src)
+		src.reagent_glass = null
 
-	else if ((href_list["togglevoice"]) && (!src.locked || issilicon(usr)))
+	else if (href_list["togglevoice"])
 		src.shut_up = !src.shut_up
 
-	else if ((href_list["declaretreatment"]) && (!src.locked || issilicon(usr)))
+	else if (href_list["declaretreatment"])
 		src.declare_treatment = !src.declare_treatment
 
 	src.updateUsrDialog()
@@ -458,7 +452,7 @@
 	return
 
 /obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj)
-	if(Proj.flag == "taser")
+	if(is_type_in_list(Proj, taser_projectiles)) //taser_projectiles defined in projectile.dm
 		src.stunned = min(stunned+10,20)
 	..()
 

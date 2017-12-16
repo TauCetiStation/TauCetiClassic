@@ -9,15 +9,21 @@
 	m_amt = 50
 	g_amt = 50
 	origin_tech = "engineering=1"
-	var/list/modes = list("grey","red","blue","cyan","green","yellow","purple")
-	var/mode = "grey"
 
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 
-	var/obj/item/device/toner/ink = null
+	var/static/list/modes // used to dye pipes, contains pipe colors.
+	var/obj/item/device/toner/ink
 
-/obj/item/weapon/airlock_painter/New()
+/obj/item/weapon/airlock_painter/atom_init()
+	. = ..()
+
+	if(!modes)
+		modes = new()
+		for(var/C in pipe_colors)
+			modes += "[C]"
+
 	ink = new /obj/item/device/toner(src)
 
 	//This proc doesn't just check if the painter can be used, but also uses it.
@@ -79,14 +85,23 @@
 		to_chat(user, "<span class='notice'>You remove \the [ink] from \the [name].</span>")
 		ink = null
 
-/obj/item/weapon/airlock_painter/afterattack(atom/A, mob/user)
-	if(user && user.client)
-		if(!istype(A,/obj/machinery/atmospherics/pipe) || istype(A,/obj/machinery/atmospherics/pipe/tank) || istype(A,/obj/machinery/atmospherics/pipe/vent) || istype(A,/obj/machinery/atmospherics/pipe/simple/heat_exchanging) || istype(A,/obj/machinery/atmospherics/pipe/simple/insulated))
-			return
-		else
-			mode = input("Which colour do you want to use?","Universal painter") in modes
-			var/obj/machinery/atmospherics/pipe/P = A
-			P.pipe_color = mode
-			user.visible_message("<span class='notice'>[user] paints \the [P] [mode].</span>","<span class='notice'>You paint \the [P] [mode].</span>")
-			P.update_icon()
-	return
+/obj/item/weapon/airlock_painter/afterattack(atom/A, mob/user, proximity)
+	if(!proximity)
+		return
+
+	if(!istype(A, /obj/machinery/atmospherics/pipe) || \
+		istype(A, /obj/machinery/atmospherics/components/unary/tank) || \
+		istype(A, /obj/machinery/atmospherics/pipe/simple/heat_exchanging) || \
+		!in_range(user, A))
+	{
+		return
+	}
+
+	var/obj/machinery/atmospherics/pipe/P = A
+
+	var/selected_color = input("Which colour do you want to use?", "Universal painter") in modes
+	if(!selected_color)
+		return
+
+	user.visible_message("<span class='notice'>[user] paints \the [P] [selected_color].</span>", "<span class='notice'>You paint \the [P] [selected_color].</span>")
+	P.change_color(pipe_colors[selected_color])

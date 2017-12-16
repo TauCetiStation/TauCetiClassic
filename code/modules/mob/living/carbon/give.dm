@@ -17,6 +17,9 @@
 	if(!I)
 		to_chat(usr, "<span class='red'>You don't have anything in your hand to give to [src.name]</span>")
 		return
+	if(I.flags & (ABSTRACT | DROPDEL))
+		to_chat(usr, "<span class='red'>You can't give this to [name]</span>")
+		return
 	if(!src.get_active_hand() || !src.get_inactive_hand())
 		switch(alert(src,"[usr] wants to give you \a [I]?",,"Yes","No"))
 			if("Yes")

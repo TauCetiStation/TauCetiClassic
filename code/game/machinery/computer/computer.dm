@@ -6,22 +6,20 @@
 	use_power = 1
 	idle_power_usage = 300
 	active_power_usage = 300
+	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
 	var/processing = 0
 
 	var/light_range_on = 1.5
 	var/light_power_on = 3
 
-/obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
-	..(location)
+/obj/machinery/computer/atom_init(mapload, obj/item/weapon/circuitboard/C)
+	. = ..()
 	if(C && istype(C))
 		circuit = C
 	else
 		if(circuit)
 			circuit = new circuit(null)
-	power_change()
-
-/obj/machinery/computer/initialize()
 	power_change()
 
 /obj/machinery/computer/process()
@@ -136,8 +134,19 @@
 	return
 
 /obj/machinery/computer/attack_hand(user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(HULK in H.mutations)
+			if(stat & (BROKEN))
+				return 1
+			if(H.a_intent == "hurt")
+				H.visible_message("\red [H.name] smashes [src] with \his mighty arms!")
+				set_broken()
+				return 1
+			else
+				H.visible_message("\red [H.name] stares cluelessly at [src] and drools.")
+				return 1
 	. = ..()
-	return
 
 /obj/machinery/computer/attack_paw(mob/user)
 	if(circuit)

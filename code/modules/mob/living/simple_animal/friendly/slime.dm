@@ -30,8 +30,8 @@
 	emote_see = list("jiggles", "bounces in place")
 	var/colour = "grey"
 
-/mob/living/simple_animal/adultslime/New()
-	..()
+/mob/living/simple_animal/adultslime/atom_init()
+	. = ..()
 	overlays += "aslime-:33"
 
 

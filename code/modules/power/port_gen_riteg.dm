@@ -29,27 +29,11 @@
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
-/obj/machinery/power/port_gen/riteg/attack_hand(mob/user)
-	..()
-	if (!anchored)
+/obj/machinery/power/port_gen/riteg/ui_interact(mob/user)
+	if ((get_dist(src, user) > 1) && !issilicon(user) && !isobserver(user))
+		user.unset_machine(src)
+		user << browse(null, "window=port_gen")
 		return
-
-	interact(user)
-
-/obj/machinery/power/port_gen/riteg/attack_ai(mob/user)
-	interact(user)
-
-/obj/machinery/power/port_gen/riteg/attack_paw(mob/user)
-	interact(user)
-
-/obj/machinery/power/port_gen/riteg/interact(mob/user)
-	if (get_dist(src, user) > 1 )
-		if (!istype(user, /mob/living/silicon/ai))
-			user.unset_machine(src)
-			user << browse(null, "window=port_gen")
-			return
-
-	user.set_machine(src)
 
 	var/dat = text("<b>[name]</b><br>")
 	if (active)

@@ -7,8 +7,8 @@
 	door_open_sound  = 'sound/machines/shutter_open.ogg'
 	door_close_sound = 'sound/machines/shutter_close.ogg'
 
-/obj/machinery/door/poddoor/shutters/New()
-	..()
+/obj/machinery/door/poddoor/shutters/atom_init()
+	. = ..()
 	layer = SHUTTERS_LAYER
 
 /obj/machinery/door/poddoor/shutters/do_animate(animation)
@@ -17,4 +17,9 @@
 			flick("shutterc0", src)
 		if("closing")
 			flick("shutterc1", src)
+	return
+
+/obj/machinery/door/poddoor/shutters/syndi
+
+/obj/machinery/door/poddoor/shutters/syndi/ex_act()
 	return

@@ -35,7 +35,7 @@
 
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 0, bio = 10, rad = 0)
 
-/obj/item/clothing/tie/storage/black_vest/mauser_belt
+/obj/item/clothing/accessory/storage/black_vest/mauser_belt
 	name = "Mauser holster"
 	desc = "A gun holster."
 
@@ -46,8 +46,8 @@
 	item_state = "Leather_belt_Mauser"
 	item_color = "Leather_belt_Mauser"
 
-/obj/item/clothing/tie/storage/black_vest/mauser_belt/New()
-	..()
+/obj/item/clothing/accessory/storage/black_vest/mauser_belt/atom_init()
+	. = ..()
 	inv_overlay = image("icon" = 'code/game/objects/WalterJ_Items_Pack/WERMAHT UNIFORMS/WJ_Wermaht_uniforms.dmi', "icon_state" = "Leather_belt_Mauser")
 
 /obj/item/clothing/head/helmet/M35_Helmet

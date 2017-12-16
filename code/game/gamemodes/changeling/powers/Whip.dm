@@ -20,8 +20,8 @@
 	item_state = "arm_whip"
 	var/next_click
 
-/obj/item/weapon/changeling_whip/New()
-	..()
+/obj/item/weapon/changeling_whip/atom_init()
+	. = ..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly elastic whip.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 
@@ -39,9 +39,7 @@
 	if(!use_charge(user, 2))
 		return
 	next_click = world.time + 10
-	var/turf/T = get_turf(src)
-	var/turf/U = get_turf(A)
-	var/obj/item/projectile/changeling_whip/LE = new /obj/item/projectile/changeling_whip(T)
+	var/obj/item/projectile/changeling_whip/LE = new (get_turf(src))
 	if(user.a_intent == "grab")
 		LE.grabber = 1
 	else if(user.a_intent == "disarm" && prob(65))
@@ -51,15 +49,7 @@
 	else
 		LE.agony = 25
 	LE.host = user
-	LE.firer = user
-	LE.def_zone = check_zone(user.zone_sel.selecting)
-	LE.starting = T
-	LE.original = A
-	LE.current = T
-	LE.yo = U.y - T.y
-	LE.xo = U.x - T.x
-	spawn( 1 )
-		LE.process()
+	LE.Fire(A, user)
 
 /obj/item/projectile/changeling_whip
 	name = "Whip"

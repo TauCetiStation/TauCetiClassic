@@ -43,8 +43,8 @@
 	var/next_dest
 	var/next_dest_loc
 
-/obj/machinery/bot/cleanbot/New()
-	..()
+/obj/machinery/bot/cleanbot/atom_init()
+	. = ..()
 	src.get_targets()
 	src.icon_state = "cleanbot[src.on]"
 
@@ -80,35 +80,27 @@
 	src.path = new()
 	src.updateUsrDialog()
 
-/obj/machinery/bot/cleanbot/attack_hand(mob/user)
-	. = ..()
-	if (.)
-		return
-	usr.set_machine(src)
-	interact(user)
-
-/obj/machinery/bot/cleanbot/interact(mob/user)
+/obj/machinery/bot/cleanbot/ui_interact(mob/user)
 	var/dat
 	dat += text({"
-<TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>
-Status: []<BR>
-Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>
-Maintenance panel is [src.open ? "opened" : "closed"]"},
-text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
-	if(!src.locked || issilicon(user))
+		<TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>
+		Status: []<BR>
+		Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>
+		Maintenance panel is [src.open ? "opened" : "closed"]"},
+		text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
+	if(!src.locked || issilicon(user) || isobserver(user))
 		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[src.blood ? "Yes" : "No"]</A>"))
 		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[src.should_patrol ? "Yes" : "No"]</A>"))
 	//	dat += text({"<BR>Beacon frequency: []<BR>"}, text("<A href='?src=\ref[src];operation=freq'>[src.beacon_freq]</A>"))
 	if(src.open && !src.locked)
 		dat += text({"
-Odd looking screw twiddled: []<BR>
-Weird button pressed: []"},
-text("<A href='?src=\ref[src];operation=screw'>[src.screwloose ? "Yes" : "No"]</A>"),
-text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"]</A>"))
+			Odd looking screw twiddled: []<BR>
+			Weird button pressed: []"},
+			text("<A href='?src=\ref[src];operation=screw'>[src.screwloose ? "Yes" : "No"]</A>"),
+			text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"]</A>"))
 
 	user << browse("<HEAD><TITLE>Cleaner v1.0 controls</TITLE></HEAD>[dat]", "window=autocleaner")
 	onclose(user, "autocleaner")
-	return
 
 /obj/machinery/bot/cleanbot/Topic(href, href_list)
 	. = ..()
@@ -208,7 +200,6 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 
 			closest_dist = 9999
 			closest_loc = null
-			next_dest_loc = null
 
 			var/datum/signal/signal = new()
 			signal.source = src
@@ -228,7 +219,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	if(target && path.len == 0)
 		spawn(0)
 			if(!src || !target) return
-			src.path = get_path_to(src, src.target, /turf/proc/Distance_cardinal, 0, 30, id=botcard)
+			src.path = get_path_to(src, get_turf(src.target), /turf/proc/Distance_cardinal, 0, 30, id=botcard)
 			if(src.path.len == 0)
 				src.oldtarget = src.target
 				target.targeted_by = null
@@ -274,20 +265,21 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	var/valid = signal.data["patrol"]
 	if(!recv || !valid)
 		return
-
 	var/dist = get_dist(src, signal.source.loc)
+	var/closest_dest = null
 	if (dist < closest_dist && signal.source.loc != src.loc)
 		closest_dist = dist
 		closest_loc = signal.source.loc
-		next_dest = signal.data["next_patrol"]
-
-	if (recv == next_dest)
+		closest_dest = recv
+	if(next_dest == null || patrol_path == null || next_dest_loc == null)
+		next_dest_loc = closest_loc
+		next_dest = closest_dest
+	if(next_dest_loc == src.loc && recv == next_dest)
 		next_dest_loc = signal.source.loc
 		next_dest = signal.data["next_patrol"]
 
 /obj/machinery/bot/cleanbot/proc/get_targets()
 	src.target_types = new/list()
-
 	target_types += /obj/effect/decal/cleanable/blood/oil
 	target_types += /obj/effect/decal/cleanable/blood/gibs/robot
 	target_types += /obj/effect/decal/cleanable/vomit
@@ -299,16 +291,20 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 	target_types += /obj/effect/decal/cleanable/tomato_smudge
 	target_types += /obj/effect/decal/cleanable/egg_smudge
 	target_types += /obj/effect/decal/cleanable/pie_smudge
-	target_types += /obj/effect/decal/cleanable/water
+	target_types += /obj/effect/fluid
 	target_types += /obj/effect/decal/cleanable/molten_item
 	target_types += /obj/effect/decal/cleanable/ash
 	target_types += /obj/effect/decal/cleanable/greenglow
-
+	target_types += /obj/effect/decal/cleanable/spiderling_remains
 	if(src.blood)
 		target_types += /obj/effect/decal/cleanable/blood/
 		target_types += /obj/effect/decal/cleanable/blood/gibs/
 		target_types += /obj/effect/decal/cleanable/blood/tracks
 		target_types += /obj/effect/decal/cleanable/blood/tracks/footprints
+		target_types += /obj/effect/decal/cleanable/blood/tracks/wheels
+		target_types += /obj/effect/decal/cleanable/blood/splatter
+		target_types += /obj/effect/decal/cleanable/blood/drip
+		target_types += /obj/effect/decal/cleanable/blood/trail_holder
 
 /obj/machinery/bot/cleanbot/proc/clean(obj/effect/decal/cleanable/target)
 	anchored = 1

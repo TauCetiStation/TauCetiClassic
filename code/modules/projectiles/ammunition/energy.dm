@@ -134,3 +134,8 @@
 	e_cost = 250
 	fire_sound = 'sound/weapons/marauder.ogg'
 
+/obj/item/ammo_casing/energy/rails
+	projectile_type = /obj/item/projectile/beam/rails
+	select_name = "rails"
+	e_cost = 100
+	fire_sound = 'sound/weapons/railgun.ogg'

@@ -7,6 +7,8 @@ var/game_version = "TauCetiStation"
 var/game_year = (text2num(time2text(world.realtime, "YYYY")) + 544)
 var/changelog_hash = ""
 
+var/list/donators = list()
+
 var/aliens_allowed = 0
 var/ooc_allowed = 1
 var/looc_allowed = 1

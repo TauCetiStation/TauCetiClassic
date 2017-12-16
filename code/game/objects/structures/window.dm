@@ -4,7 +4,6 @@
 	icon = 'icons/obj/window.dmi'
 	density = 1
 	layer = 3.2//Just above doors
-	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1.0
 	flags = ON_BORDER
 	var/maxhealth = 14.0
@@ -373,8 +372,8 @@
 */
 
 
-/obj/structure/window/New(Loc)
-	..()
+/obj/structure/window/atom_init()
+	. = ..()
 
 	ini_dir = dir
 
@@ -382,7 +381,7 @@
 
 	color = color_windows()
 
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles(need_rebuild = 1)
 	update_nearby_icons()
 
 
@@ -399,15 +398,6 @@
 	..()
 	dir = ini_dir
 	update_nearby_tiles(need_rebuild=1)
-
-
-//This proc has to do with airgroups and atmos, it has nothing to do with smoothwindows, that's update_nearby_tiles().
-/obj/structure/window/proc/update_nearby_tiles(need_rebuild)
-	if(!SSair)
-		return 0
-	SSair.mark_for_update(get_turf(src))
-
-	return 1
 
 //checks if this window is full-tile one
 /obj/structure/window/proc/is_fulltile()

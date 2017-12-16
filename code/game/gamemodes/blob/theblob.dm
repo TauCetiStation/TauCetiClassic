@@ -13,15 +13,13 @@
 	var/fire_resist = 1
 
 
-/obj/effect/blob/New(loc)
+/obj/effect/blob/atom_init()
 	blobs += src
-	src.dir = pick(1, 2, 4, 8)
-	src.update_icon()
-	..(loc)
+	dir = pick(1, 2, 4, 8)
+	update_icon()
+	. = ..()
 	for(var/atom/A in loc)
 		A.blob_act()
-	return
-
 
 /obj/effect/blob/Destroy()
 	blobs -= src
@@ -31,7 +29,7 @@
 
 
 /obj/effect/blob/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0))	return 1
+	if(air_group || (height==0))	return 0
 	if(istype(mover) && mover.checkpass(PASSBLOB))	return 1
 	return 0
 

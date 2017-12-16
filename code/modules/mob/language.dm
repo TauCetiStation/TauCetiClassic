@@ -197,9 +197,9 @@
 
 	for(var/datum/language/L in languages)
 		dat += "<b>[L.name] "
-		if (L.key.len)
-			dat += "(:[L.key[1]])"
-		dat += "</b><br/>[L.desc]<br/><br/>"
+		for(var/l_key in L.key)
+			dat += "(:[l_key])"
+		dat += " </b><br/>[L.desc]<br/><br/>"
 
 	src << browse(dat, "window=checklanguage")
 	return

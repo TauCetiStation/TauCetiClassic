@@ -16,7 +16,6 @@
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
-	pressure_resistance = 5
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
 
@@ -156,7 +155,8 @@
 	to_chat(user, "[open_span]It's a[wet_status] [size] item.[close_span]")
 
 /obj/item/attack_hand(mob/user)
-	if (!user) return
+	if (!user || anchored)
+		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
 		if(istype(src, /obj/item/weapon/melee/))
@@ -219,6 +219,10 @@
 		if(isliving(src.loc))
 			return
 		user.next_move = max(user.next_move+2,world.time + 2)
+
+	if(QDELETED(src) || freeze_movement) // remove_from_mob() may remove DROPDEL items, so...
+		return
+
 	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
@@ -226,6 +230,8 @@
 
 
 /obj/item/attack_paw(mob/user)
+	if (!user || anchored)
+		return
 
 	if(isalien(user)) // -- TLE
 		var/mob/living/carbon/alien/A = user
@@ -251,9 +257,13 @@
 	else
 		if(istype(src.loc, /mob/living))
 			return
-		src.pickup(user)
+
 		user.next_move = max(user.next_move+2,world.time + 2)
 
+	if(QDELETED(src) || freeze_movement) // no item - no pickup, you dummy!
+		return
+
+	src.pickup(user)
 	user.put_in_active_hand(src)
 	return
 
@@ -515,6 +525,19 @@
 					if(B.contents.len < B.storage_slots && w_class <= B.max_w_class)
 						return 1
 				return 0
+			if(slot_tie)
+				if(!H.w_uniform)
+					if(!disable_warning)
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
+					return FALSE
+				var/obj/item/clothing/under/uniform = H.w_uniform
+				if(uniform.accessories.len && !uniform.can_attach_accessory(src))
+					if (!disable_warning)
+						to_chat(H, "<span class='warning'>You already have an accessory of this type attached to your [uniform].</span>")
+					return FALSE
+				if( !(slot_flags & SLOT_TIE) )
+					return FALSE
+				return TRUE
 		return 0 //Unsupported slot
 		//END HUMAN
 

@@ -43,7 +43,7 @@
 	uni_append = list(0x044,0xC5D) // 044C5D
 	holder_type = /obj/item/weapon/holder/monkey/stok
 
-/mob/living/carbon/monkey/New()
+/mob/living/carbon/monkey/atom_init()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
@@ -79,34 +79,34 @@
 
 		update_muts=1
 
-	..()
+	. = ..()
+
 	update_icons()
-	return
 
-/mob/living/carbon/monkey/unathi/New()
+/mob/living/carbon/monkey/unathi/atom_init()
 
-	..()
+	. = ..()
 	dna.mutantrace = "lizard"
 	greaterform = UNATHI
 	add_language("Sinta'unathi")
 
-/mob/living/carbon/monkey/skrell/New()
+/mob/living/carbon/monkey/skrell/atom_init()
 
-	..()
+	. = ..()
 	dna.mutantrace = "skrell"
 	greaterform = SKRELL
 	add_language("Skrellian")
 
-/mob/living/carbon/monkey/tajara/New()
+/mob/living/carbon/monkey/tajara/atom_init()
 
-	..()
+	. = ..()
 	dna.mutantrace = "tajaran"
 	greaterform = TAJARAN
 	add_language("Siik'tajr")
 
-/mob/living/carbon/monkey/diona/New()
+/mob/living/carbon/monkey/diona/atom_init()
 
-	..()
+	. = ..()
 	alien = 1
 	gender = NEUTER
 	dna.mutantrace = "plant"
@@ -137,10 +137,13 @@
 		unset_machine()
 		src << browse(null, t1)
 	if ((href_list["item"] && !( usr.stat ) && !( usr.restrained() ) && in_range(src, usr) ))
+		var/obj/item/item = usr.get_active_hand()
+		if(item && (item.flags & (ABSTRACT | DROPDEL)))
+			return
 		var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
 		O.source = usr
 		O.target = src
-		O.item = usr.get_active_hand()
+		O.item = item
 		O.s_loc = usr.loc
 		O.t_loc = loc
 		O.place = href_list["item"]
@@ -431,13 +434,9 @@
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
-		if(client && mind)
-			if(mind.changeling)
-				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Genetic Damage Time", mind.changeling.geneticdamage)
-				stat("Absorbed DNA", mind.changeling.absorbedcount)
-	return
+		CHANGELING_STATPANEL_STATS(null)
 
+	CHANGELING_STATPANEL_POWERS(null)
 
 /mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"

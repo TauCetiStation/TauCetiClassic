@@ -8,8 +8,9 @@
 	origin_tech = "programming=3;materials=3;magnets=3"
 	var/obj/nano_module/crew_monitor/crew_monitor
 
-/obj/item/device/sensor_device/New()
+/obj/item/device/sensor_device/atom_init()
 	crew_monitor = new(src)
+	. = ..()
 
 /obj/item/device/sensor_device/Destroy()
 	qdel(crew_monitor)

@@ -72,18 +72,14 @@
 	else
 		icon_state = normal_icon
 
-/obj/machinery/computer/message_monitor/initialize()
+/obj/machinery/computer/message_monitor/atom_init()
+	. = ..()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
 		if(message_servers && message_servers.len > 0)
 			linkedServer = message_servers[1]
-	return
 
-/obj/machinery/computer/message_monitor/attack_hand(mob/living/user)
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(!istype(user))
-		return
+/obj/machinery/computer/message_monitor/ui_interact(mob/user)
 	//If the computer is being hacked or is emagged, display the reboot message.
 	if(hacking || emag)
 		message = rebootmsg
@@ -123,7 +119,7 @@
 			else
 				for(var/n = ++i; n <= optioncount; n++)
 					dat += "<dd><font color='blue'>&#09;[n]. ---------------</font><br></dd>"
-			if((istype(user, /mob/living/silicon/ai) || istype(user, /mob/living/silicon/robot)) && (user.mind.special_role && user.mind.original == user))
+			if((isAI(user) || isrobot(user)) && (user.mind.special_role && user.mind.original == user))
 				//Malf/Traitor AIs can bruteforce into the system to gain the Key.
 				dat += "<dd><A href='?src=\ref[src];hack=1'><i><font color='Red'>*&@#. Bruteforce Key</font></i></font></a><br></dd>"
 			else
@@ -153,7 +149,7 @@
 			dat += "</table>"
 		//Hacking screen.
 		if(2)
-			if(istype(user, /mob/living/silicon/ai) || istype(user, /mob/living/silicon/robot))
+			if(isAI(user) || isrobot(user))
 				dat += "Brute-forcing for server key.<br> It will take 20 seconds for every character that the password has."
 				dat += "In the meantime, this console can reveal your true intentions if you let someone access it. Make sure no humans enter the room during that time."
 			else
@@ -243,7 +239,6 @@
 	message = defaultmsg
 	user << browse(dat, "window=message;size=700x700")
 	onclose(user, "message")
-	return
 
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user)
 	if(isnull(linkedServer))
@@ -343,7 +338,7 @@
 
 	//Hack the Console to get the password
 	if (href_list["hack"])
-		if((istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot)) && (usr.mind.special_role && usr.mind.original == usr))
+		if((isAI(usr) || isrobot(usr)) && (usr.mind.special_role && usr.mind.original == usr))
 			src.hacking = 1
 			src.screen = 2
 			src.icon_state = hack_icon
@@ -488,14 +483,16 @@
 	name = "Monitor Decryption Key"
 	var/obj/machinery/message_server/server = null
 
-/obj/item/weapon/paper/monitorkey/New()
+/obj/item/weapon/paper/monitorkey/atom_init()
 	..()
-	spawn(10)
-		if(message_servers)
-			for(var/obj/machinery/message_server/server in message_servers)
-				if(!isnull(server))
-					if(!isnull(server.decryptkey))
-						info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
-						info_links = info
-						icon_state = "paper_words"
-						break
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/paper/monitorkey/atom_init_late()
+	if(message_servers)
+		for(var/obj/machinery/message_server/server in message_servers)
+			if(!isnull(server))
+				if(!isnull(server.decryptkey))
+					info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
+					info_links = info
+					icon_state = "paper_words"
+					break
