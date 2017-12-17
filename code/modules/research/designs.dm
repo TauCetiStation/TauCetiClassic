@@ -1752,7 +1752,7 @@ datum/design/strip_gloves
 	req_tech = list("syndicate" = 3, "biotech" = 3)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 5000, MAT_URANIUM = 5000)
-	build_path = /obj/item/device/flashlight/emp
+	build_path = /obj/item/clothing/gloves/black/strip
 
 datum/design/bluespacebeaker
 	name = "bluespace beaker"
