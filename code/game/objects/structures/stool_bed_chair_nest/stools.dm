@@ -86,6 +86,8 @@
 	user.visible_message("<span class='notice'>[user] dropped [src].</span>", "<span class='notice'>You dropped [src].</span>")
 
 /obj/item/weapon/stool/dropped(mob/user)
+	if(flags & DROPDEL)
+		origin_stool = null
 	if(origin_stool)
 		origin_stool.loc = src.loc
 		origin_stool = null
