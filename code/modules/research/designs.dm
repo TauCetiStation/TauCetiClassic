@@ -1697,7 +1697,7 @@ datum/design/cardboard_dolls
 	id = "cardboard_dolls"
 	req_tech = list("syndicate" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 3000)
+	materials = list(MAT_METAL = 2000)
 	build_path = /obj/item/weapon/storage/box/syndie_kit/cutouts
 
 datum/design/ai_detector
@@ -1706,7 +1706,7 @@ datum/design/ai_detector
 	id = "ai_detector"
 	req_tech = list("syndicate" = 4, "magnets" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 20, MAT_GLASS = 50, MAT_GOLD = 100)
+	materials = list(MAT_METAL = 20, MAT_GLASS = 50, MAT_GOLD = 100, MAT_URANIUM = 500)
 	build_path = /obj/item/device/multitool/ai_detect
 
 datum/design/camera_bug
@@ -1718,14 +1718,41 @@ datum/design/camera_bug
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 3000, MAT_GOLD = 1000)
 	build_path = /obj/item/device/camera_bug
 
-datum/design/imp_compress
-	name = "Compressed Implant"
-	desc = "Allows to keep items literally inside you."
-	id = "imp_compress"
-	req_tech = list("syndicate" = 3, "materials" = 5, "bluespace" = 3)
+datum/design/detomatix
+	name = "Detomatix PDA Cartridge"
+	desc = "PDA Cartridge which uses power manipulations to blow up PDA devices."
+	id = "detomatix"
+	req_tech = list("syndicate" = 3, "programming" = 4, "magnets" = 5, "combat" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 5000, MAT_PHORON = 5000)
-	build_path = /obj/item/weapon/storage/box/syndie_kit/imp_compress
+	materials = list(MAT_METAL = 7000, MAT_PHORON = 5000, MAT_URANIUM = 3000)
+	build_path = /obj/item/weapon/cartridge/syndicate
+
+datum/design/thermal_glasses
+	name = "Thermal Glasses"
+	desc = "Thermals in the shape of glasses. Allows you to see live entities through things."
+	id = "thermal_glasses"
+	req_tech = list("syndicate" = 3, "magnets" = 4, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 10000, MAT_SILVER = 5000, MAT_URANIUM = 7000)
+	build_path = /obj/item/clothing/glasses/thermal
+
+datum/design/emp_flashlight
+	name = "EMP Flashlight"
+	desc = "Flashlight that emits EMP. Can disable electronic devices on target."
+	id = "emp_flashlight"
+	req_tech = list("syndicate" = 2, "magnets" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 5000, MAT_METAL = 5000, MAT_SILVER = 7000, MAT_URANIUM = 9000, MAT_PHORON = 1500)
+	build_path = /obj/item/device/flashlight/emp
+
+datum/design/strip_gloves
+	name = "Strip gloves"
+	desc = "Doesn't leaves any traces."
+	id = "strip_goves"
+	req_tech = list("syndicate" = 3, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 5000, MAT_URANIUM = 5000)
+	build_path = /obj/item/device/flashlight/emp
 
 datum/design/bluespacebeaker
 	name = "bluespace beaker"
@@ -1828,7 +1855,7 @@ datum/design/scalpel_manager
  	name = "Biogel can"
  	desc = "Medical device for sustaining life in head"
  	id = "biocan"
- 	req_tech = list("biotech " = 3, "magnets" = 3, "materials" = 3)
+ 	req_tech = list("biotech" = 3, "magnets" = 3, "materials" = 3)
  	build_type = PROTOLATHE
  	materials = list(MAT_METAL = 1200, MAT_GLASS = 1000)
  	build_path = /obj/item/device/biocan
