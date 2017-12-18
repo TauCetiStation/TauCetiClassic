@@ -7,7 +7,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "syringegun"
 	item_state = "syringegun"
-	w_class = 4
+	w_class = 3.0
 	throw_speed = 2
 	throw_range = 10
 	force = 4.0
@@ -125,7 +125,6 @@
 	desc = "A modification of the syringe gun design, using a rotating cylinder to store up to four syringes."
 	icon_state = "rapidsyringegun"
 	max_syringes = 4
-	w_class = 3
 
 
 /obj/effect/syringe_gun_dummy
