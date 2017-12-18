@@ -210,6 +210,7 @@
 		if (W != src)
 			qdel(W)
 	set_light(2)
+	..()
 
 /obj/structure/alien/weeds/atom_init(mapload, node)
 	..()
