@@ -89,7 +89,7 @@
 	var/mob/M = G.affecting
 	if(M.buckled)
 		var/obj/O = M.buckled
-		O.user_unbuckle_mob(M)
+		O.user_unbuckle_mob(user)
 	if (M.client)
 		M.client.perspective = EYE_PERSPECTIVE
 		M.client.eye = src
