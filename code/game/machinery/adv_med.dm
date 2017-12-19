@@ -87,6 +87,9 @@
 		to_chat(user, "\blue <B>Subject cannot have abiotic items on.</B>")
 		return
 	var/mob/M = G.affecting
+	if(istype(M.buckled, /obj/structure/stool/bed))
+		var/obj/structure/stool/bed/B = M.buckled
+		B.attack_hand(user)
 	if (M.client)
 		M.client.perspective = EYE_PERSPECTIVE
 		M.client.eye = src
