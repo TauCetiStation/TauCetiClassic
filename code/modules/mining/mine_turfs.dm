@@ -429,6 +429,7 @@
 			mineral = name_to_mineral[mineral_name]
 			UpdateMineral()
 			CaveSpread()
+	. = ..()
 
 /turf/simulated/mineral/random/caves
 	mineralChance = 25
