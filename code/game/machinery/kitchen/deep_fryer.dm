@@ -49,6 +49,9 @@
 	else if(istype(I, /obj/item/weapon/grab))
 		to_chat(user, "<span class='notice'>You cannot fry him.</span>")
 		return
+	else if(istype(I, /obj/item/weapon/stool))
+		to_chat(user, "<span class='notice'>[I] is too big for this.</span>")
+		return
 	else if (ishuman(user))
 		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 		on = TRUE
