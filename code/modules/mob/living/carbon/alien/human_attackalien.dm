@@ -11,7 +11,7 @@ This is what happens, when alien attack.
 
 // Baby aliens
 /mob/living/carbon/alien/facehugger/UnarmedAttack(atom/A)
-	..()
+	SetNextMove(CLICK_CD_MELEE)
 	A.attack_facehugger(src)
 
 /atom/proc/attack_facehugger(mob/user)

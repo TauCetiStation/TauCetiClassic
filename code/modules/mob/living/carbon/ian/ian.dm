@@ -63,6 +63,7 @@
 	verbs += /mob/living/carbon/proc/crawl
 
 /mob/living/carbon/ian/UnarmedAttack(atom/A)
+	..()
 	if(ian_action)
 		if(isHandsBusy)
 			return

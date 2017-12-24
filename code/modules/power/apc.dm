@@ -591,6 +591,7 @@
 				return src.attack_hand(user)
 			if (!opened && wiresexposed && is_wire_tool(W))
 				return wires.interact(user)
+			user.SetNextMove(CLICK_CD_MELEE)
 			user.visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!", \
 				"\red You hit the [src.name] with your [W.name]!", \
 				"You hear bang")

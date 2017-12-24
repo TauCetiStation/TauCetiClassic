@@ -48,7 +48,7 @@
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
-	user.SetNextMove(CLICK_CD_RAPID)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 /turf/attack_animal(mob/user)
 	return
