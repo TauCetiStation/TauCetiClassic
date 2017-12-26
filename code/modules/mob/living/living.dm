@@ -32,6 +32,9 @@
 		var/mob/living/carbon/C = src
 		C.spread_disease_to(M, "Contact")
 
+	if(M.pulling == src)
+		M.stop_pulling()
+
 	//BubbleWrap: Should stop you pushing a restrained person out of the way
 	if(ishuman(M))
 		for(var/mob/MM in range(M, 1))

@@ -627,6 +627,18 @@
 	item = /obj/item/device/encryptionkey/syndicate
 	cost = 2
 
+/datum/uplink_item/device_tools/poster_kit
+	name = "Poster kit"
+	desc = "Box of illegal posters"
+	item = /obj/item/weapon/storage/box/syndie_kit/posters
+	cost = 1
+
+/datum/uplink_item/device_tools/headcan
+	name = "Biogel can"
+	desc = "Sophisticated device for sustaining life in head for a long period"
+	item = /obj/item/device/biocan
+	cost = 1
+
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector" // changed name in case newfriends thought it detected disguised ai's
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its holder. Knowing when an artificial intelligence is watching you is useful for knowing when to maintain cover."

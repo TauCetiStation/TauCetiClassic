@@ -15,7 +15,7 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
 	//Species-specific stuff.
-	species_restricted = list("exclude" , UNATHI , TAJARAN , SKRELL , DIONA , VOX)
+	species_restricted = list("exclude", UNATHI, TAJARAN, SKRELL, DIONA, VOX)
 	sprite_sheets_refit = list(
 		UNATHI = 'icons/mob/species/unathi/helmet.dmi',
 		TAJARAN = 'icons/mob/species/tajaran/helmet.dmi',
@@ -313,24 +313,60 @@
 
 //Syndicate rig
 /obj/item/clothing/head/helmet/space/rig/syndi
-	name = "blood-red hardsuit helmet"
+	name = "blood-red hybrid helmet"
 	desc = "An advanced helmet designed for work in special operations. Property of Gorlex Marauders."
 	icon_state = "rig0-syndie"
-	item_color = "syndie" // used for adjust helmet
-	armor = list(melee = 60, bullet = 65, laser = 55,energy = 45, bomb = 50, bio = 100, rad = 60)
+	item_state = "syndie_helm"
+	armor = list(melee = 60, bullet = 55, laser = 30,energy = 30, bomb = 50, bio = 100, rad = 60)
 	var/obj/machinery/camera/camera
-	var/up = 0
-	species_restricted = list("exclude" , UNATHI , TAJARAN , SKRELL , VOX)
+	var/combat_mode = FALSE
+	species_restricted = list("exclude" , SKRELL , DIONA, VOX)
+	var/image/lamp = null
+	var/equipped_on_head = FALSE
+	flags = BLOCKHAIR | THICKMATERIAL | PHORONGUARD
+	light_color = "#00f397"
+
+/obj/item/clothing/head/helmet/space/rig/syndi/equipped(mob/user, slot)
+	. = ..()
+	if(slot == slot_head)
+		equipped_on_head = TRUE
+		update_icon(user)
+
+/obj/item/clothing/head/helmet/space/rig/syndi/dropped(mob/user)
+	. = ..()
+	if(equipped_on_head)
+		equipped_on_head = FALSE
+		update_icon(user)
+
+/obj/item/clothing/head/helmet/space/rig/syndi/proc/checklight()
+	if(on)
+		set_light(l_range = brightness_on, l_color = light_color)
+	else if(combat_mode)
+		set_light(l_range = 1.23) // Minimal possible light_range that'll make helm lights visible in full dark from distance. Most likely going to break if somebody will touch lightning formulae.
+	else
+		set_light(0)
+
+/obj/item/clothing/head/helmet/space/rig/syndi/update_icon(mob/user)
+	user.overlays -= lamp
+	if(equipped_on_head && camera && (on || combat_mode))
+		lamp = image(icon = 'icons/mob/nuclear_helm_overlays.dmi', icon_state = "terror[combat_mode ? "_combat" : ""]_glow", layer = ABOVE_LIGHTING_LAYER)
+		lamp.plane = LIGHTING_PLANE + 1
+		lamp.alpha = on ? 255 : 127
+		user.overlays += lamp
+	icon_state = "rig[on]-syndie[combat_mode ? "-combat" : ""]"
+	user.update_inv_head()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attack_self(mob/user)
 	if(camera)
-		..(user)
+		on = !on
 	else
 		camera = new /obj/machinery/camera(src)
 		camera.replace_networks(list("NUKE"))
 		cameranet.removeCamera(camera)
 		camera.c_tag = user.name
-		to_chat(user, "\blue User scanned as [camera.c_tag]. Camera activated.")
+		to_chat(user, "<span class='notice'>User scanned as [camera.c_tag]. Camera activated.</span>")
+	checklight()
+	update_icon(user)
 
 /obj/item/clothing/head/helmet/space/rig/syndi/verb/toggle()
 	set category = "Object"
@@ -338,17 +374,19 @@
 	set src in usr
 
 	if(usr.canmove && !usr.stat && !usr.restrained())
-		if(up)
-			src.flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
-			item_color = initial(item_color)
-			to_chat(usr, "You closed helmet")
+		combat_mode = !combat_mode
+		if(combat_mode)
+			armor = list(melee = 60, bullet = 65, laser = 55,energy = 45, bomb = 50, bio = 100, rad = 60)
+			canremove = FALSE
+			flags |= (HEADCOVERSEYES | HEADCOVERSMOUTH)
+			usr.visible_message("<span class='notice'>[usr] moves faceplate of their helmet into combat position, covering their visor and extending cameras.</span>")
 		else
-			src.flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
-			item_color += "-up"
-			to_chat(usr, "You opened helmet")
-		icon_state = "rig[on]-[item_color]"
-		up = !up
-		usr.update_inv_head()
+			armor = list(melee = 60, bullet = 55, laser = 30,energy = 30, bomb = 50, bio = 100, rad = 60)
+			canremove = TRUE
+			flags &= ~(HEADCOVERSEYES | HEADCOVERSMOUTH)
+			usr.visible_message("<span class='notice'>[usr] pulls up faceplate from helmet's visor, retracting cameras</span>")
+		checklight()
+		update_icon(usr)
 
 /obj/item/clothing/head/helmet/space/rig/syndi/examine(mob/user)
 	..()
@@ -356,25 +394,67 @@
 		to_chat(user, "This helmet has a built-in camera. It's [camera ? "" : "in"]active.")
 
 /obj/item/clothing/head/helmet/space/rig/syndi/attackby(obj/item/W, mob/living/carbon/human/user)
-	if(!istype(user) || user.species.flags[IS_SYNTHETIC] || !istype(W, /obj/item/weapon/reagent_containers/pill))
-		return ..()
-	if(up && user.head == src)
+	if(!istype(user) || user.species.flags[IS_SYNTHETIC])
+		return
+	if(!istype(W, /obj/item/weapon/reagent_containers/pill))
+		return
+	if(!combat_mode && equipped_on_head)
 		user.SetNextMove(CLICK_CD_RAPID)
 		var/obj/item/weapon/reagent_containers/pill/P = W
 		P.reagents.trans_to_ingest(user, W.reagents.total_volume)
 		to_chat(user, "<span class='notice'>[src] consumes [W] and injected reagents to you!</span>")
 		qdel(W)
 
+
 /obj/item/clothing/suit/space/rig/syndi
-	icon_state = "rig-syndie"
-	name = "blood-red hardsuit"
+	name = "blood-red hybrid suit"
 	desc = "An advanced suit that protects against injuries during special operations. Property of Gorlex Marauders."
+	icon_state = "rig-syndie"
 	item_state = "syndie_hardsuit"
 	slowdown = 1.4
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 45, bomb = 50, bio = 100, rad = 60)
-	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs)
-	breach_threshold = 28
-	species_restricted = list("exclude" , UNATHI , TAJARAN , SKRELL , VOX)
+	allowed = list(/obj/item/device/flashlight,
+	               /obj/item/weapon/tank,
+	               /obj/item/device/suit_cooling_unit,
+	               /obj/item/weapon/gun,
+	               /obj/item/ammo_box/magazine,
+	               /obj/item/ammo_casing,
+	               /obj/item/weapon/melee/baton,
+	               /obj/item/weapon/melee/energy/sword,
+	               /obj/item/weapon/handcuffs)
+	species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA, VOX)
+	action_button_name = "Toggle space suit mode"
+	var/combat_mode = FALSE
+
+/obj/item/clothing/suit/space/rig/syndi/update_icon(mob/user)
+	..()
+	icon_state = "rig-syndie[combat_mode ? "-combat" : ""]"
+	user.update_inv_wear_suit()
+
+/obj/item/clothing/suit/space/rig/syndi/ui_action_click()
+	toggle_mode()
+
+/obj/item/clothing/suit/space/rig/syndi/verb/toggle_mode()
+	set category = "Object"
+	set name = "Adjust space suit"
+	set src in usr
+
+	if(usr.canmove && !usr.stat && !usr.restrained())
+		combat_mode = !combat_mode
+		if(combat_mode)
+			canremove = FALSE
+			can_breach = FALSE
+			flags_pressure &= ~STOPS_PRESSUREDMAGE
+			playsound(usr, "sound/effects/air_release.ogg", 50)
+			usr.visible_message("<span class='notice'>[usr]'s suit depressurizes, exposing armor plates.</span>")
+		else
+			canremove = TRUE
+			can_breach = TRUE
+			flags_pressure |= STOPS_PRESSUREDMAGE
+			playsound(usr, "sound/effects/inflate.ogg", 30)
+			usr.visible_message("<span class='notice'>[usr]'s suit inflates and pressurizes.</span>")
+		update_icon(usr)
+
 
 //Wizard Rig
 /obj/item/clothing/head/helmet/space/rig/wizard

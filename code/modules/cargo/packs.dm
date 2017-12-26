@@ -45,7 +45,7 @@ datum/supply_pack/New()
 /datum/supply_pack/proc/fill(obj/structure/closet/crate/C)
 	for(var/item in contains)
 		var/n_item = new item(C)
-		if(amount && istype(n_item, /obj/item/stack/sheet))
+		if(amount && (istype(n_item, /obj/item/stack/sheet) || istype(n_item, /obj/item/stack/tile)))
 			var/obj/item/stack/sheet/n_sheet = n_item
 			n_sheet.set_amount(amount)
 
@@ -487,6 +487,15 @@ datum/supply_pack/New()
 	cost = 1000
 	crate_type = /obj/structure/closet/crate/engi
 	crate_name = "Wooden planks crate"
+	group = "Engineering"
+
+/datum/supply_pack/carpet50
+	name = "50 carpet tiles"
+	contains = list(/obj/item/stack/tile/carpet)
+	amount = 50
+	cost = 2500
+	crate_type = /obj/structure/closet/crate
+	crate_name = "Carpet crate"
 	group = "Engineering"
 
 /datum/supply_pack/electrical

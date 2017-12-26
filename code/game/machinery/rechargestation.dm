@@ -7,7 +7,6 @@
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 50
-	req_access = list(access_robotics)
 	var/max_internal_charge = 15000 		// Two charged borgs in a row with default cell
 	var/current_internal_charge = 15000 	// Starts charged, to prevent power surges on round start
 	var/charging_cap_active = 25000			// Active Cap - When cyborg is inside

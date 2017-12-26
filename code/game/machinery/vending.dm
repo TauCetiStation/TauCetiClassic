@@ -359,24 +359,14 @@
 		dat += "<font color = 'red'>No product loaded!</font>"
 
 	else
-		var/list/display_records = product_records
-		if(extended_inventory)
-			display_records += hidden_records
-		if(coin)
-			display_records += coin_records
-
 		dat += "<ul>"
-		for (var/datum/data/vending_product/R in display_records)
-			dat += "<li>"
-			if (R.amount > 0)
-				dat += " <a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A>"
-			else
-				dat += " <font color = 'red'>SOLD OUT</font>"
-			dat += "<font color = '[R.display_color]'><B>[R.product_name]</B>:"
-			dat += " <b>[R.amount]</b> </font>"
-			if(R.price)
-				dat += " <b>(Price: [R.price])</b>"
-			dat += "</li>"
+
+		dat += print_recors(product_records)
+		if(extended_inventory)
+			dat += print_recors(hidden_records)
+		if(coin)
+			dat += print_recors(coin_records)
+
 		dat += "</ul>"
 	dat += "</div>"
 
@@ -389,6 +379,21 @@
 	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 500)
 	popup.set_content(dat)
 	popup.open()
+
+/obj/machinery/vending/proc/print_recors(list/record)
+	var/dat
+	for (var/datum/data/vending_product/R in record)
+		dat += "<li>"
+		if (R.amount > 0)
+			dat += " <a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A>"
+		else
+			dat += " <font color = 'red'>SOLD OUT</font>"
+		dat += "<font color = '[R.display_color]'><B>[R.product_name]</B>:"
+		dat += " <b>[R.amount]</b> </font>"
+		if(R.price)
+			dat += " <b>(Price: [R.price])</b>"
+		dat += "</li>"
+	return dat
 
 /obj/machinery/vending/Topic(href, href_list)
 	. = ..()
@@ -824,12 +829,12 @@
 	light_color = "#34ff7b"
 	products = list(/obj/item/seeds/ambrosiavulgarisseed = 3,/obj/item/seeds/appleseed = 3,/obj/item/seeds/bananaseed = 3,/obj/item/seeds/berryseed = 3,
 						/obj/item/seeds/cabbageseed = 3,/obj/item/seeds/carrotseed = 3,/obj/item/seeds/cherryseed = 3,/obj/item/seeds/chantermycelium = 3,
-						/obj/item/seeds/chiliseed = 3,/obj/item/seeds/cocoapodseed = 3,/obj/item/seeds/cornseed = 3,
+						/obj/item/seeds/chiliseed = 3,/obj/item/seeds/cocoapodseed = 3,/obj/item/seeds/cornseed = 3,/obj/item/seeds/replicapod = 3,
 						/obj/item/seeds/eggplantseed = 3,/obj/item/seeds/grapeseed = 3,/obj/item/seeds/grassseed = 3,/obj/item/seeds/lemonseed = 3,
 						/obj/item/seeds/limeseed = 3,/obj/item/seeds/orangeseed = 3,/obj/item/seeds/potatoseed = 3,/obj/item/seeds/poppyseed = 3,
-						/obj/item/seeds/pumpkinseed = 3,/obj/item/seeds/replicapod = 3,/obj/item/seeds/soyaseed = 3,/obj/item/seeds/sunflowerseed = 3,
-						/obj/item/seeds/tomatoseed = 3,
-						/obj/item/seeds/towermycelium = 3,/obj/item/seeds/watermelonseed = 3,/obj/item/seeds/wheatseed = 3,/obj/item/seeds/whitebeetseed = 3)
+						/obj/item/seeds/pumpkinseed = 3,/obj/item/seeds/riceseed= 3,/obj/item/seeds/soyaseed = 3,/obj/item/seeds/sunflowerseed = 3,
+						/obj/item/seeds/tomatoseed = 3,/obj/item/seeds/towermycelium = 3,/obj/item/seeds/watermelonseed = 3,/obj/item/seeds/wheatseed = 3,
+						/obj/item/seeds/whitebeetseed = 3)
 	contraband = list(/obj/item/seeds/amanitamycelium = 2,/obj/item/seeds/glowshroom = 2,/obj/item/seeds/libertymycelium = 2,/obj/item/seeds/mtearseed = 2,
 					  /obj/item/seeds/nettleseed = 2,/obj/item/seeds/reishimycelium = 2,/obj/item/seeds/reishimycelium = 2,/obj/item/seeds/shandseed = 2,)
 	premium = list(/obj/item/toy/waterflower = 1)
