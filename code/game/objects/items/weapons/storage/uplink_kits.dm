@@ -209,3 +209,11 @@
 	. = ..()
 	new /obj/item/weapon/pen/chameleon(src)
 	new /obj/item/weapon/stamp/chameleon(src)
+
+/obj/item/weapon/storage/box/syndie_kit/posters
+	name = "box (P)"
+
+/obj/item/weapon/storage/box/syndie_kit/posters/atom_init()
+	. = ..()
+	for(var/i in 0 to 6)
+		new /obj/item/weapon/poster/contraband(src)
