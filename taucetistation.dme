@@ -456,6 +456,7 @@
 #include "code\game\machinery\holosign.dm"
 #include "code\game\machinery\hydroponics.dm"
 #include "code\game\machinery\icecream_vat.dm"
+#include "code\game\machinery\IDpainter.dm"
 #include "code\game\machinery\igniter.dm"
 #include "code\game\machinery\iv_drip.dm"
 #include "code\game\machinery\lightswitch.dm"

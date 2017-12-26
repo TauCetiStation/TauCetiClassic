@@ -91,3 +91,9 @@
 #define SLOT_DENYPOCKET   4096    // This is to deny items with a w_class of 2 or 1 to fit in pockets.
 #define SLOT_TWOEARS      8192
 #define SLOT_TIE         16384
+
+
+//flags for customizing id-cards
+#define FORDBIDDEN_VIEW      1
+#define UNIVERSAL_VIEW       2
+#define TRAITOR_VIEW         4
