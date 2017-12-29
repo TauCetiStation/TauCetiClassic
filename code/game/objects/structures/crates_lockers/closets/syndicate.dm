@@ -17,7 +17,10 @@
 	new /obj/item/clothing/gloves/combat(src)
 	new /obj/item/clothing/accessory/storage/syndi_vest(src)
 	new /obj/item/clothing/mask/gas/syndicate(src)
-
+	if(prob(50))
+		new /obj/item/clothing/head/santahat
+	if(prob(20))
+		new /obj/item/clothing/suit/santa
 
 /obj/structure/closet/syndicate/nuclear
 	desc = "It's a storage unit for nuclear-operative gear."

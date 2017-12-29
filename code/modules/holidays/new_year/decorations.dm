@@ -10,27 +10,31 @@
 	name = "garland"
 	desc = "Beautiful lights! Shinee!"
 	icon_state = "garland"
-	var/on = 0
+	var/on = 1
 	var/brightness = 2
 
 /obj/item/decoration/garland/atom_init()
 	. = ..()
-	if(on)
+	/*if(on)
 		icon_state = "[initial(icon_state)]_on"
 		set_light(brightness)
 	else
 		icon_state = initial(icon_state)
 		set_light(0)
+	*/
+	icon_state = "[initial(icon_state)]_on"
+	set_light(brightness)
 
 /obj/item/decoration/garland/atom_init()
 	. = ..()
 	on = 1
 	light_color = pick("#FF0000","#6111FF","#FFA500","#44FAFF")
-	initialize()
+	//initialize()
 
 /obj/item/decoration/garland/attack_hand()
-	on = !on
-	initialize()
+	//on = !on
+	//initialize()
+	return
 
 ///Tinsels
 /obj/item/decoration/tinsel
@@ -135,11 +139,11 @@
 
 			C.visible_message("[C] shakes [src].","<span class='notice'>You shake [src].</span>")
 
-			if(!C.client.prefs.warnbans)
+			/*if(!C.client.prefs.warnbans)
 				to_chat(C, "<span class='notice'>You understand that this year you was good boy!</span>")
 				C.adjustBruteLoss(-10)
 				C.adjustToxLoss(-10)
-				C.adjustFireLoss(-10)
+				C.adjustFireLoss(-10)*/
 
 			new /obj/item/weapon/present(src.loc)
 			new /obj/item/weapon/present(src.loc)

@@ -15,6 +15,10 @@
 	new /obj/item/clothing/under/swimsuit/blue(src)
 	new /obj/item/clothing/under/swimsuit/green(src)
 	new /obj/item/clothing/under/swimsuit/purple(src)
+	if(prob(50))
+		new /obj/item/clothing/head/santahat
+	if(prob(20))
+		new /obj/item/clothing/suit/santa
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/mask/snorkel(src)
 		new /obj/item/clothing/shoes/swimmingfins(src)
@@ -30,7 +34,10 @@
 	new /obj/item/clothing/gloves/boxing/green(src)
 	new /obj/item/clothing/gloves/boxing/yellow(src)
 	new /obj/item/clothing/gloves/boxing(src)
-
+	if(prob(50))
+		new /obj/item/clothing/head/santahat
+	if(prob(20))
+		new /obj/item/clothing/suit/santa
 
 /obj/structure/closet/masks
 	name = "mask closet"
