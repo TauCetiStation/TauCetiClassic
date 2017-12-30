@@ -87,6 +87,9 @@
 		to_chat(user, "\blue <B>Subject cannot have abiotic items on.</B>")
 		return
 	var/mob/M = G.affecting
+	if(M.buckled)
+		var/obj/O = M.buckled
+		O.user_unbuckle_mob(user)
 	if (M.client)
 		M.client.perspective = EYE_PERSPECTIVE
 		M.client.eye = src
