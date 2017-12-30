@@ -284,7 +284,7 @@
 	var/admin_rank = "Player"
 	if (src.holder)
 		admin_rank = src.holder.rank
-	else if (check_randomizer(connectiontopic))
+	else if (config.check_randomizer && check_randomizer(connectiontopic))
 		return
 
 	//Just the standard check to see if it's actually a number

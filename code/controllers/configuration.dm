@@ -151,6 +151,7 @@
 	var/use_slack_bot = 0
 	var/slack_team = 0
 	var/antigrief_alarm_level = 1
+	var/check_randomizer = 0
 
 	var/allow_donators = 0
 	var/donate_info_url = 0
@@ -540,6 +541,9 @@
 
 				if("antigrief_alarm_level")
 					config.antigrief_alarm_level = value
+
+				if("check_randomizer")
+					config.check_randomizer = value
 
 				if("allow_donators")
 					config.allow_donators = 1
