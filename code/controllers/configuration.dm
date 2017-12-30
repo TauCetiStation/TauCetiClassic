@@ -642,8 +642,6 @@
 				sqlfdbklogin = value
 			if ("feedback_password")
 				sqlfdbkpass = value
-			if ("enable_stat_tracking")
-				sqllogging = 1
 			else
 				log_misc("Unknown setting in configuration: '[name]'")
 
