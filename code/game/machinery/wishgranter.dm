@@ -16,6 +16,7 @@
 	if(.)
 		return
 
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(charges <= 0)
 		to_chat(user, "The Wish Granter lies silent.")
 		return 1

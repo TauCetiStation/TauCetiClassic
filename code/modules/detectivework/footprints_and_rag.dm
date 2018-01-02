@@ -38,6 +38,7 @@
 
 /obj/item/weapon/reagent_containers/glass/rag/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
+	if(user.is_busy()) return
 	if(istype(A) && src in user)
 		user.visible_message("[user] starts to wipe down [A] with [src]!")
 		if(do_after(user,30,target = A))

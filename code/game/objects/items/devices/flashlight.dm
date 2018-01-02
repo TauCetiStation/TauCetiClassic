@@ -259,7 +259,7 @@
 		return
 
 	if(emp_cur_charges)
-		emp_cur_charges -= 1
+		emp_cur_charges--
 
 		if(ismob(A))
 			var/mob/M = A

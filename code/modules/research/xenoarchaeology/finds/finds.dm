@@ -47,6 +47,7 @@
 /obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/weldingtool/))
 		var/obj/item/weapon/weldingtool/w = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(w.isOn())
 			if(w.get_fuel() >= 4 && !src.method)
 				if(inside)
@@ -67,6 +68,7 @@
 	else if(istype(W,/obj/item/device/core_sampler/))
 		var/obj/item/device/core_sampler/S = W
 		S.sample_item(src, user)
+		user.SetNextMove(CLICK_CD_INTERACT)
 		return
 
 	..()

@@ -242,7 +242,8 @@
 //Simple animals
 /mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M)
 	if(client) return
-
+	if(..())
+		return
 
 	if(parrot_state == PARROT_PERCH)
 		parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched

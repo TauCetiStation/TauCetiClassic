@@ -37,7 +37,7 @@ var/global/list/rad_collectors = list()
 	. = ..()
 	if(.)
 		return
-
+	user.SetNextMove(CLICK_CD_RAPID)
 	if(anchored)
 		if(!locked || IsAdminGhost(user))
 			toggle_power()

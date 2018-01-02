@@ -19,6 +19,7 @@
 				buckled_mob.pixel_y = 0
 				unbuckle_mob()
 			else
+				if(user.is_busy()) return
 				buckled_mob.visible_message(\
 					"<span class='warning'>[buckled_mob.name] struggles to break free of the gelatinous resin...</span>",\
 					"<span class='warning'>You struggle to break free from the gelatinous resin...</span>",\
@@ -53,9 +54,9 @@
 /obj/structure/stool/bed/nest/attackby(obj/item/weapon/W, mob/user)
 	var/aforce = W.force
 	health = max(0, health - aforce)
+	user.SetNextMove(CLICK_CD_MELEE)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-	for(var/mob/M in viewers(src, 7))
-		M.show_message("<span class='warning'>[user] hits [src] with [W]!</span>", 1)
+	visible_message("<span class='warning'>[user] hits [src] with [W]!</span>")
 	healthcheck()
 
 /obj/structure/stool/bed/nest/proc/healthcheck()

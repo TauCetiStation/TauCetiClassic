@@ -18,6 +18,7 @@
 /atom/Click(location,control,params)
 	if(src)
 		usr.ClickOn(src, params)
+
 /atom/DblClick(location,control,params)
 	if(src)
 		usr.DblClickOn(src,params)
@@ -35,6 +36,12 @@
 	* item/afterattack(atom,user,adjacent,params) - used both ranged and adjacent
 	* mob/RangedAttack(atom,params) - used only ranged, only used for tk and laser eyes but could be changed
 */
+/mob/var/next_move_modifier = 0 // for now just used for species
+
+
+/mob/proc/SetNextMove(num)
+	next_move = world.time + num + next_move_modifier
+
 /mob/proc/ClickOn( atom/A, params )
 	if(world.time <= next_click)
 		return
@@ -75,10 +82,10 @@
 		return
 
 	if(istype(loc,/obj/mecha))
-		if(!locate(/turf) in list(A,A.loc)) // Prevents inventory from being drilled
+		if(!locate(/turf) in list(A, A.loc)) // Prevents inventory from being drilled
 			return
 		var/obj/mecha/M = loc
-		return M.click_action(A,src)
+		return M.click_action(A, src)
 
 	if(restrained())
 		RestrainedClickOn(A)
@@ -94,35 +101,23 @@
 	var/obj/item/W = get_active_hand()
 
 	if(W == A)
-		next_move = world.time + 6
-		if(W.flags&USEDELAY)
-			next_move += 5
 		W.attack_self(src)
 		if(hand)
 			update_inv_l_hand()
 		else
 			update_inv_r_hand()
-
 		return
 
 	// operate two STORAGE levels deep here (item in backpack in src; NOT item in box in backpack in src)
 	var/sdepth = A.storage_depth(src)
 	if(A == loc || (A in loc) || (sdepth != -1 && sdepth <= 1))
 
-		// faster access to objects already on you
-		if(A in contents)
-			next_move = world.time + 6 // on your person
-		else
-			next_move = world.time + 8 // in a box/bag or in your square
-
 		// No adjacency needed
 		if(W)
-			if(W.flags&USEDELAY)
-				next_move += 5
 
 			var/resolved = A.attackby(W,src,params)
 			if(!resolved && A && W)
-				W.afterattack(A,src,1,params) // 1 indicates adjacency
+				W.afterattack(A, src, 1, params) // 1 indicates adjacency
 		else
 			UnarmedAttack(A)
 		return
@@ -133,45 +128,31 @@
 	// Allows you to click on a box's contents, if that box is on the ground, but no deeper than that
 	sdepth = A.storage_depth_turf()
 	if(isturf(A) || isturf(A.loc) || (sdepth != -1 && sdepth <= 1))
-		next_move = world.time + 10
 
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(W)
-				if(W.flags&USEDELAY)
-					next_move += 5
-
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = A.attackby(W,src,params)
+				var/resolved = A.attackby(W, src, params)
 				if(!resolved && A && W)
-					W.afterattack(A,src,1,params) // 1: clicking something Adjacent
+					W.afterattack(A, src, 1, params) // 1: clicking something Adjacent
 			else
-				UnarmedAttack(A, 1)
-			return
+				UnarmedAttack(A)
 		else // non-adjacent click
 			if(W)
-				W.afterattack(A,src,0,params) // 0: not Adjacent
+				W.afterattack(A, src, 0, params) // 0: not Adjacent
 			else
 				RangedAttack(A, params)
-
-	return
 
 // Default behavior: ignore double clicks, consider them normal clicks instead
 /mob/proc/DblClickOn(atom/A, params)
 	ClickOn(A,params)
 
 
-/*
-	Translates into attack_hand, etc.
+//	Translates into attack_hand, etc.
 
-	Note: proximity_flag here is used to distinguish between normal usage (flag=1),
-	and usage when clicking on things telekinetically (flag=0).  This proc will
-	not be called at ranged except with telekinesis.
-
-	proximity_flag is not currently passed to attack_hand, and is instead used
-	in human click code to allow glove touches only at melee range.
-*/
-/mob/proc/UnarmedAttack(atom/A, proximity_flag)
-	return
+/mob/proc/UnarmedAttack(atom/A)
+	if(ismob(A))
+		SetNextMove(CLICK_CD_MELEE)
 
 /*
 	Ranged unarmed attack:
@@ -187,17 +168,10 @@
 	if(a_intent == "hurt" && (LASEREYES in mutations))
 		LaserEyes(A) // moved into a proc below
 	else if(TK in mutations)
-		switch(get_dist(src, A))
-			if(0)
-				;
-			if(1 to 5) // not adjacent may mean blocked by window
-				next_move += 2
-			if(5 to 7)
-				next_move += 5
-			if(8 to tk_maxrange)
-				next_move += 10
-			else
-				return
+		var/dist = get_dist(src, A)
+		if(dist > tk_maxrange)
+			return
+		SetNextMove(max(dist, CLICK_CD_MELEE))
 		A.attack_tk(src)
 
 /*
@@ -206,7 +180,7 @@
 	Used when you are handcuffed and click things.
 	Not currently used by anything but could easily be.
 */
-/mob/proc/RestrainedClickOn(atom/A)
+/mob/proc/RestrainedClickOn(atom/A) // for now it's overriding in human and monkey.
 	return
 
 /*
@@ -244,6 +218,7 @@
 /mob/proc/CtrlClickOn(atom/A)
 	A.CtrlClick(src)
 	return
+
 /atom/proc/CtrlClick(mob/user)
 	return
 
@@ -296,7 +271,7 @@
 /mob/living/carbon/human/LaserEyes(atom/A)
 	if(nutrition > 300)
 		..()
-		next_move = world.time + 6
+		SetNextMove(CLICK_CD_MELEE)
 		var/obj/item/projectile/beam/LE = new (loc)
 		LE.damage = 20
 		playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)

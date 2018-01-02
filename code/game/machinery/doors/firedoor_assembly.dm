@@ -20,6 +20,7 @@
 		if (cable.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need one length of coil to wire \the [src].</span>")
 			return
+		if(user.is_busy(src)) return
 		user.visible_message("[user] wires \the [src].", "You start to wire \the [src].")
 		if(do_after(user, 40, target = src) && !wired && anchored)
 			if (cable.use(1))
@@ -27,6 +28,7 @@
 				to_chat(user, "<span class='notice'>You wire \the [src].</span>")
 
 	else if(istype(C, /obj/item/weapon/wirecutters) && wired )
+		if(user.is_busy(src)) return
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		user.visible_message("[user] cuts the wires from \the [src].", "You start to cut the wires from \the [src].")
 
@@ -54,6 +56,7 @@
 		update_icon()
 	else if(!anchored && istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = C
+		if(user.is_busy(src)) return
 		if(WT.remove_fuel(0, user))
 			user.visible_message("<span class='warning'>[user] dissassembles \the [src].</span>",
 			"You start to dissassemble \the [src].")

@@ -60,6 +60,7 @@
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user)
 
 	if(iscrowbar(W))
+		if(user.is_busy()) return
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		if(do_after(user, 50,target = src))
 			var/obj/item/solar_assembly/S = locate() in src
@@ -73,6 +74,7 @@
 	else if (W)
 		src.add_fingerprint(user)
 		src.health -= W.force
+		user.SetNextMove(CLICK_CD_MELEE)
 		src.healthcheck()
 	..()
 
@@ -313,8 +315,9 @@
 		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
 	return
 
-/obj/machinery/power/solar_control/attackby(I, user)
+/obj/machinery/power/solar_control/attackby(I, mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver))
+		if(user.is_busy()) return
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
 			if (src.stat & BROKEN)

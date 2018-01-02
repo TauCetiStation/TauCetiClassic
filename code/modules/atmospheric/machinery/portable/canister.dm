@@ -278,6 +278,7 @@ update_flag
 
 /obj/machinery/portable_atmospherics/canister/attackby(obj/item/weapon/W, mob/user)
 	if(user.a_intent != I_HURT && istype(W, /obj/item/weapon/weldingtool))
+		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if(stat & BROKEN)
 			if(!WT.remove_fuel(0, user))
@@ -294,6 +295,7 @@ update_flag
 		visible_message("\red [user] hits the [src] with a [W]!")
 		src.add_fingerprint(user)
 		investigate_log("was smacked with \a [W] by [key_name(user)].", INVESTIGATE_ATMOS)
+		user.SetNextMove(CLICK_CD_MELEE)
 		take_damage(W.force)
 
 	if(istype(user, /mob/living/silicon/robot) && istype(W, /obj/item/weapon/tank/jetpack))

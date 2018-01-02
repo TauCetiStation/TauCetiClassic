@@ -95,6 +95,7 @@ turf/simulated/floor/holofloor/update_icon()
 
 /obj/structure/window/reinforced/holowindow/attackby(obj/item/W, mob/user)
 	if(!istype(W)) return//I really wish I did not need this
+	user.SetNextMove(CLICK_CD_MELEE)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(istype(G.affecting,/mob/living))
@@ -152,10 +153,11 @@ turf/simulated/floor/holofloor/update_icon()
 
 	if (src.operating == 1)
 		return
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
 		var/aforce = I.force
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+
 		visible_message("\red <B>[src] was hit by [I].</B>")
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			take_damage(aforce)
@@ -279,6 +281,7 @@ obj/structure/stool/bed/chair/holochair
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
+		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
 		qdel(W)
 		return
@@ -343,7 +346,7 @@ obj/structure/stool/bed/chair/holochair
 		return 1
 
 	ready = !ready
-
+	user.SetNextMove(CLICK_CD_RAPID)
 	update_icon()
 
 	var/numbuttons = 0

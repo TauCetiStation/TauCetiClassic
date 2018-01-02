@@ -214,6 +214,7 @@ Gunshots/explosions/opening doors/less rare audio (done)
 
 /obj/effect/fake_attacker/attackby(obj/item/weapon/P, mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	step_away(src,my_target,2)
 	for(var/mob/M in oviewers(world.view,my_target))
 		to_chat(M, "\red <B>[my_target] flails around wildly.</B>")

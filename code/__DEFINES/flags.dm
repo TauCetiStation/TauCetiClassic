@@ -7,7 +7,7 @@
 //FLAGS BITMASK
 #define NOBLUDGEON        2    // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 #define MASKINTERNALS     4    // Mask allows internals.
-#define USEDELAY          8    // 1 second extra delay on use. (Can be used once every 2s)
+//#define USEDELAY          8    // 1 second extra delay on use. (Can be used once every 2s) ~ Kursh, Doesn't used for now.
 #define NOSHIELD         16    // Weapon not affected by shield.
 #define CONDUCT          32    // Conducts electricity. (metal etc.)
 #define ABSTRACT         64    // For all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way.

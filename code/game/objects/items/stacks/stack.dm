@@ -167,6 +167,7 @@
 			usr << browse(null, "window=stack")
 			return
 		if (R.time)
+			if(usr.is_busy()) return
 			to_chat(usr, "\blue Building [R.title] ...")
 			if (!do_after(usr, R.time, target = usr))
 				return

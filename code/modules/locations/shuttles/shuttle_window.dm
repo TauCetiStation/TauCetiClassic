@@ -9,7 +9,7 @@
 	if(istype(W, /obj/item/weapon/airlock_painter))
 		change_paintjob(W, user)
 		return
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if (istype(G.affecting, /mob/living))
@@ -43,7 +43,6 @@
 		else
 			playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		..()
-	return
 
 /obj/structure/window/reinforced/shuttle/mining
 	icon = 'code/modules/locations/shuttles/shuttle_mining.dmi'

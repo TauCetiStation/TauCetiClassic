@@ -18,6 +18,7 @@
 
 /obj/structure/scrap_cube/attackby(obj/item/W, mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(istype(W,/obj/item/weapon) && W.force >=8)
 		visible_message("<span class='notice'>\The [user] smashes the [src], restoring it's original form.</span>")
 		make_pile()

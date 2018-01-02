@@ -71,6 +71,7 @@
 
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	src.health -= W.force
 	src.healthcheck()
 	..()
@@ -88,10 +89,8 @@
 		update_icon()
 		return
 	else
-		to_chat(usr, text("\blue You kick the display case."))
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				to_chat(O, text("\red [] kicks the display case.", usr))
+		user.SetNextMove(CLICK_CD_MELEE)
+		visible_message("span class='userdanger'>[user] kicks the display case.</span>")
 		src.health -= 2
 		healthcheck()
 		return

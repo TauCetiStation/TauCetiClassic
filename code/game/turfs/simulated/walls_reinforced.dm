@@ -14,6 +14,7 @@
 	var/d_state = 0
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations) //#Z2
 		if(user.a_intent == "hurt")
 			to_chat(user, text("\blue You punch the wall."))
@@ -43,13 +44,15 @@
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user)
 
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	//get the user's location
-	if(!istype(user.loc, /turf))
+	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(user.is_busy()) return
 
 	if(rotting)
 		if(istype(W, /obj/item/weapon/weldingtool))

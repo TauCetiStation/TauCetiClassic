@@ -10,6 +10,7 @@
 
 
 /obj/structure/mirror/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.a_intent == "hurt")
@@ -45,6 +46,7 @@
 
 /obj/structure/mirror/attackby(obj/item/I, mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
@@ -59,6 +61,7 @@
 
 /obj/structure/mirror/attack_alien(mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(islarva(user) || isfacehugger(user))
 		return
 	if(shattered)
@@ -71,10 +74,11 @@
 /obj/structure/mirror/attack_animal(mob/user)
 	if(!isanimal(user))
 		return
+	..()
+
 	var/mob/living/simple_animal/M = user
 	if(M.melee_damage_upper <= 0)
 		return
-	M.do_attack_animation(src)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
@@ -85,6 +89,7 @@
 /obj/structure/mirror/attack_slime(mob/user)
 	if(!isslimeadult(user))
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)

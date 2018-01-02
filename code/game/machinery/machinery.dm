@@ -403,6 +403,7 @@ Class Procs:
 
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	if(istype(W) &&  !(flags & NODECONSTRUCT))
+		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, time/W.toolspeed, target = src))

@@ -68,6 +68,7 @@
 /obj/item/device/assembly/mousetrap/attack_hand(mob/living/user)
 	if(armed)
 		if(((user.getBrainLoss() >= 60 || CLUMSY in user.mutations)) && prob(50))
+			user.SetNextMove(CLICK_CD_INTERACT)
 			var/which_hand = BP_L_HAND
 			if(!user.hand)
 				which_hand = BP_R_HAND

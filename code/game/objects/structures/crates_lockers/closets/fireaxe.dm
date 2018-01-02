@@ -38,6 +38,7 @@
 				to_chat(user, "<span class='notice'>You disable the locking modules.</span>")
 				update_icon()
 		else if(istype(O, /obj/item/weapon))
+			user.SetNextMove(CLICK_CD_MELEE)
 			if(smashed || localopened)
 				if(localopened)
 					localopened = FALSE
@@ -105,6 +106,7 @@
 /obj/structure/closet/fireaxecabinet/attack_hand(mob/user)
 	if(user.is_busy(src))
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(locked)
 		to_chat(user, "<span class='warning'>The cabinet won't budge!</span>")

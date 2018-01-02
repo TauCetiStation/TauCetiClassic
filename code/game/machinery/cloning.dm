@@ -335,6 +335,7 @@
 	else if (istype(W, /obj/item/weapon/card/emag))
 		if (isnull(src.occupant))
 			return
+		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "You force an emergency ejection.")
 		src.locked = 0
 		src.go_out()

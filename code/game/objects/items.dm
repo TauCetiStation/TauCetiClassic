@@ -185,13 +185,6 @@
 			to_chat(user, "\red \The [src] is far too small for you to pick up.")
 			return
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
-		if(BP && !BP.is_usable())
-			to_chat(H, "<span class='notice'>You try to move your [BP.name], but cannot!")
-			return
-
 	if(istype(src.loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src)
@@ -201,7 +194,7 @@
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
 		if(!src.canremove)
 			return
-		if(istype(user,/mob/living/carbon/human))
+		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
 				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
@@ -218,7 +211,7 @@
 	else
 		if(isliving(src.loc))
 			return
-		user.next_move = max(user.next_move+2,world.time + 2)
+		user.SetNextMove(CLICK_CD_RAPID)
 
 	if(QDELETED(src) || freeze_movement) // remove_from_mob() may remove DROPDEL items, so...
 		return
@@ -280,7 +273,7 @@
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/storage))
+	if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
@@ -307,7 +300,7 @@
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
-	return
+	return FALSE
 
 /obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	callback = CALLBACK(src, .proc/after_throw, callback) // Replace their callback with our own.

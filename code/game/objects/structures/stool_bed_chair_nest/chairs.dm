@@ -112,21 +112,22 @@
 		SK.master = E
 		qdel(src)
 
-/obj/structure/stool/bed/chair/attack_hand()
-	if(can_flip(usr))
+/obj/structure/stool/bed/chair/attack_hand(mob/user)
+	if(can_flip(user))
 		var/flip_time = 20	//2 sec without someone
 		if(!isnull(buckled_mob))
 			flip_time = 60	//6 sec with
+		user.SetNextMove(CLICK_CD_MELEE)
 		if(!flipped)
-			usr.visible_message("<span class='notice'>[usr] flips \the [src] down.</span>","<span class='notice'>You flips \the [src] down.")
+			user.visible_message("<span class='notice'>[usr] flips \the [src] down.</span>","<span class='notice'>You flips \the [src] down.")
 			flip()
 			if(buckled_mob && !buckled_mob.restrained())
 				var/mob/living/L = buckled_mob
 				unbuckle_mob()
 				L.apply_effect(2, WEAKEN, 0)
 				L.apply_damage(3, BRUTE, BP_HEAD)
-		else if(do_after(usr, flip_time, target = usr))
-			usr.visible_message("<span class='notice'>[usr] flips \the [src] up.</span>","<span class='notice'>You flips \the [src] up.")
+		else if(!user.is_busy() && do_after(user, flip_time, target = usr))
+			user.visible_message("<span class='notice'>[user] flips \the [src] up.</span>","<span class='notice'>You flips \the [src] up.")
 			flip()
 	else
 		..()
@@ -224,22 +225,25 @@
 /obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/wood(loc)
 		qdel(src)
-	if(istype(W, /obj/item/weapon/melee/energy))
-		if(istype(W, /obj/item/weapon/melee/energy/blade) || W:active)
+		return
+	else if(istype(W, /obj/item/weapon/melee/energy/blade))
+		var/obj/item/weapon/melee/energy/blade/B = W
+		if(B.active)
 			user.do_attack_animation(src)
+			user.SetNextMove(CLICK_CD_MELEE)
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
-			for(var/mob/O in viewers(user, 4))
-				O.show_message("\blue [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
+			playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(loc, "sparks", 50, 1)
+			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
 			new /obj/item/stack/sheet/wood(loc)
 			qdel(src)
-	else
-		..()
+			return
+	..()
 
 /obj/structure/stool/bed/chair/comfy
 	name = "comfy chair"

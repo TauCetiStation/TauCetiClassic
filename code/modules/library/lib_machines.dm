@@ -267,6 +267,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user)
 	if (src.density && istype(W, /obj/item/weapon/card/emag))
 		src.emagged = 1
+		user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
 		scanner.computer = src
@@ -474,6 +475,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	if(istype(O, /obj/item/weapon/paper))
 		user.drop_item()
 		O.loc = src
+		user.SetNextMove(CLICK_CD_MELEE)
 		user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 		src.visible_message("[src] begins to hum as it warms up its printing drums.")
 		sleep(rand(200,400))

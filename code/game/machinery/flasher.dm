@@ -37,6 +37,7 @@
 	if (istype(W, /obj/item/weapon/wirecutters))
 		add_fingerprint(user)
 		src.disable = !src.disable
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.disable)
 			user.visible_message("\red [user] has disconnected the [src]'s flashbulb!", "\red You disconnect the [src]'s flashbulb!")
 		if (!src.disable)
@@ -107,6 +108,7 @@
 	if (istype(W, /obj/item/weapon/wrench))
 		add_fingerprint(user)
 		src.anchored = !src.anchored
+		user.SetNextMove(CLICK_CD_INTERACT)
 
 		if (!src.anchored)
 			user.show_message(text("\red [src] can now be moved."))
@@ -124,6 +126,7 @@
 		return 1
 
 	use_power(5)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	active = 1
 	icon_state = "launcheract"

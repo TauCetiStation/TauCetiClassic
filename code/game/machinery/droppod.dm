@@ -164,6 +164,7 @@
 	if(intruder)
 		to_chat(usr, "<span class='userdanger'>Someone already inside here!</span>")
 		return
+	if(usr.is_busy()) return
 	if(do_after(usr, 10, 1, src) && !intruder && !usr.buckled && usr != second_intruder)
 		usr.forceMove(src)
 		mob_overlay = image(usr.icon, usr.icon_state)
@@ -203,6 +204,7 @@
 	if(flags & IS_LOCKED)
 		to_chat(usr, "<span class='userdanger'>[src] is lock down!</span>")
 		return
+	if(usr.is_busy()) return
 	if(do_after(usr, 10, 1, src) && !second_intruder && !usr.buckled && !(flags & IS_LOCKED) && !(flags & STATE_DROPING) && usr != intruder)
 		usr.forceMove(src)
 		second_intruder = usr
@@ -406,6 +408,7 @@
 
 	else if(istype(O, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = O
+		user.SetNextMove(CLICK_CD_MELEE)
 		if(obj_integrity < max_integrity && WT.remove_fuel(0, user))
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			obj_integrity = min(obj_integrity + 10, max_integrity)
@@ -413,6 +416,7 @@
 
 	else if(user.a_intent == "hurt" || (O.flags & ABSTRACT))
 		playsound(src, 'sound/weapons/smash.ogg', 50, 1)
+		user.SetNextMove(CLICK_CD_MELEE)
 		take_damage(O.force)
 		return ..()
 
@@ -468,6 +472,7 @@
 	set src in orange(1)
 	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || usr.incapacitated() || usr.lying || flags & STATE_DROPING || !Stored_Nuclear)
 		return
+	if(usr.is_busy()) return
 	visible_message("<span class='notice'>[usr] start ejecting [Stored_Nuclear] from [src]!</span>","<span class='notice'>You start ejecting [Stored_Nuclear] from [src]!</span>")
 	if(do_after(usr, 100, 1, src) && in_range(usr, src) && Stored_Nuclear)
 		EjectNuclear()
@@ -499,7 +504,7 @@
 		qdel(src)
 
 /obj/structure/droppod/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
+	..()
 	playsound(src, 'sound/effects/bang.ogg', 50, 1)
 	take_damage(rand(M.melee_damage_lower, M.melee_damage_upper))
 

@@ -408,6 +408,7 @@
 /obj/mecha/attack_hand(mob/user)
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	if ((HULK in user.mutations) && !prob(src.deflect_chance))
 		src.take_damage(15)
@@ -425,6 +426,7 @@
 /obj/mecha/attack_alien(mob/user)
 	src.log_message("Attack by alien. Attacker - [user].",1)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(!prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
@@ -442,10 +444,11 @@
 
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
 	src.log_message("Attack by simple animal. Attacker - [user].",1)
+	..()
+
 	if(user.melee_damage_upper == 0)
 		user.emote("[user.friendly] [src]")
 	else
-		user.do_attack_animation(src)
 		if(!prob(src.deflect_chance))
 			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 			src.take_damage(damage)
@@ -708,6 +711,7 @@
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "hurt")
 		var/obj/item/weapon/weldingtool/WT = W
+		user.SetNextMove(CLICK_CD_MELEE)
 		if (WT.remove_fuel(0,user))
 			if (hasInternalDamage(MECHA_INT_TANK_BREACH))
 				clearInternalDamage(MECHA_INT_TANK_BREACH)
@@ -757,11 +761,13 @@
 	else if(istype(W, /obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/Ham = W
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
 		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if(prob(50) && Ham.use_charge(user,6))
 			take_damage(Ham.force * 3)
 	else
+		user.SetNextMove(CLICK_CD_MELEE)
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
 /*
 		src.log_message("Attacked by [W]. Attacker - [user]")

@@ -39,7 +39,6 @@
 	receive_frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, receive_frequency, RADIO_ATMOSIA)
 
-
 /obj/machinery/computer/atmos_alert/ui_interact(mob/user)
 	user << browse(return_text(),"window=computer")
 	onclose(user, "computer")

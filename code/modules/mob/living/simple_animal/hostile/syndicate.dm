@@ -59,6 +59,7 @@
 	status_flags = 0
 
 /mob/living/simple_animal/hostile/syndicate/melee/attackby(obj/item/O, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(O.force)
 		if(prob(80))
 			var/damage = O.force

@@ -144,6 +144,7 @@
 		user = null
 	if(!src.requiresID())
 		user = null
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(src.allowed(user))
 		if(src.density)
 			open()

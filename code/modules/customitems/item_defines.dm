@@ -884,14 +884,14 @@
 /obj/item/clothing/accessory/fluff/konaa_hirano/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/weapon/paper))
 		if(held)
-			to_chat(usr, "[src] already has something inside it.")
+			to_chat(user, "[src] already has something inside it.")
 		else
-			to_chat(usr, "You slip [O] into [src].")
+			to_chat(user, "You slip [O] into [src].")
 			user.drop_item()
 			O.loc = src
 			src.held = O
-		return
-	..()
+	else
+		..()
 
 //////  Medallion - Nasir Khayyam - Jamini
 

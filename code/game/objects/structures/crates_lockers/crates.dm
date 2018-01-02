@@ -178,6 +178,7 @@
 
 /obj/structure/closet/crate/secure/attack_hand(mob/user)
 	src.add_fingerprint(user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	if(locked)
 		src.togglelock(user)
 	else
@@ -187,6 +188,7 @@
 	if(is_type_in_list(W, list(/obj/item/weapon/packageWrap, /obj/item/stack/cable_coil, /obj/item/device/radio/electropack, /obj/item/weapon/wirecutters)))
 		return ..()
 	if(locked && (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)))
+		user.SetNextMove(CLICK_CD_MELEE)
 		overlays.Cut()
 		overlays += emag
 		overlays += sparks

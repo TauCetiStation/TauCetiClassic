@@ -216,7 +216,7 @@
 
 			if(!istype(D))
 				return
-
+			if(user.is_busy()) return
 			to_chat(D, "\red You begin decompiling the other drone.")
 
 			if(!do_after(D,50,target = M))

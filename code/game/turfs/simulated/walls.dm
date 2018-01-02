@@ -238,7 +238,7 @@
 	return */
 
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
+	..()
 	if(M.environment_smash >= 2)
 		if(istype(M, /mob/living/simple_animal/hulk))
 			var/mob/living/simple_animal/hulk/Hulk = M
@@ -262,6 +262,7 @@
 			return
 
 /turf/simulated/wall/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations) //#Z2 No more chances, just randomized damage and hurt intent
 		if(user.a_intent == "hurt")
 			playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
@@ -279,18 +280,18 @@
 	to_chat(user, "\blue You push the wall but nothing happens!")
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
-	..()
 	return
 
 /turf/simulated/wall/attackby(obj/item/weapon/W, mob/user)
 
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!(ishuman(user)|| ticker) && ticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	//get the user's location
-	if(!istype(user.loc, /turf))
+	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(rotting)
 		if(istype(W, /obj/item/weapon/weldingtool))
@@ -334,6 +335,7 @@
 
 	//DECONSTRUCTION
 	if(istype(W, /obj/item/weapon/weldingtool))
+		if(user.is_busy()) return
 
 		var/response = "Dismantle"
 		if(damage)
@@ -366,6 +368,7 @@
 			return
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+		if(user.is_busy()) return
 
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -385,6 +388,7 @@
 
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+		if(user.is_busy()) return
 
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
 
@@ -402,6 +406,7 @@
 		return
 
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
+		if(user.is_busy()) return
 		var/obj/item/weapon/melee/energy/blade/EB = W
 
 		EB.spark_system.start()
@@ -424,7 +429,7 @@
 		return
 	else if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
 		var/obj/item/weapon/changeling_hammer/C = W
-		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
+		visible_message("<span class='danger'>[user] has punched the[src]!</span>")
 		user.do_attack_animation(src)
 		if(C.use_charge(user))
 			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
@@ -468,7 +473,6 @@
 
 	else
 		return attack_hand(user)
-	return
 
 /turf/simulated/wall/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

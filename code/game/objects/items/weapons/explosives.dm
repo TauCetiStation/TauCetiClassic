@@ -8,8 +8,9 @@
 /obj/item/weapon/plastique/afterattack(atom/target, mob/user, flag)
 	if (!flag)
 		return
-	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/) || istype(target, /obj/machinery/nuclearbomb))
+	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/machinery/nuclearbomb))
 		return
+	if(user.is_busy()) return
 	to_chat(user, "Planting explosives...")
 	if(ismob(target))
 		var/mob/living/M = target

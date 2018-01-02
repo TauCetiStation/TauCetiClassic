@@ -103,6 +103,7 @@
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
+				user.SetNextMove(CLICK_CD_RAPID)
 				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 				user.visible_message(
 					"[user] disconnects [src].",
@@ -117,6 +118,7 @@
 				if(!connect(possible_port))
 					to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
 					return
+				user.SetNextMove(CLICK_CD_RAPID)
 				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 				user.visible_message(
 					"[user] connects [src].",

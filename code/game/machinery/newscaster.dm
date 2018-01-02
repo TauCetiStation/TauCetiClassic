@@ -716,6 +716,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				src.screen=2*/  //Obsolete after autorecognition
 
 	if(istype(I, /obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>")
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 60, target = src))
@@ -731,6 +732,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	else
 		if(istype(I, /obj/item/weapon) )
 			user.do_attack_animation(src)
+			user.SetNextMove(CLICK_CD_MELEE)
 			var/obj/item/weapon/W = I
 			if(W.force <15)
 				for (var/mob/O in hearers(5, src.loc))

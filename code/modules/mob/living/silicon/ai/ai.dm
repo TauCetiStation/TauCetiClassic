@@ -574,13 +574,13 @@ var/list/ai_verbs_default = list(
 	return
 
 /mob/living/silicon/ai/attack_animal(mob/living/simple_animal/M)
+	M.do_attack_animation(src)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -835,6 +835,7 @@ var/list/ai_verbs_default = list(
 
 /mob/living/silicon/ai/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		if(anchored)
 			user.visible_message("\blue \The [user] starts to unbolt \the [src] from the plating...")
 			if(!do_after(user,40,target = src))

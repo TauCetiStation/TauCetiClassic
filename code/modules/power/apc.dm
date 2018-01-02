@@ -376,14 +376,15 @@
 
 /obj/machinery/power/apc/attackby(obj/item/W, mob/user)
 
-	if (istype(user, /mob/living/silicon) && get_dist(src,user)>1)
+	if (issilicon(user) && get_dist(src,user)>1)
 		return src.attack_hand(user)
 	src.add_fingerprint(user)
 	if (istype(W, /obj/item/weapon/crowbar) && opened)
-		if (has_electronics==1)
+		if(has_electronics == 1)
 			if (terminal)
 				to_chat(user, "\red Disconnect wires first.")
 				return
+			if(user.is_busy()) return
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			to_chat(user, "You are trying to remove the power control board...")//lpeters - fixed grammar issues
 			if(do_after(user, 50, target = src))
@@ -476,6 +477,7 @@
 		else if(stat & (BROKEN|MAINT))
 			to_chat(user, "Nothing happens.")
 		else
+			if(user.is_busy()) return
 			flick("apc-spark", src)
 			if (do_after(user,6,target = src))
 				if(prob(50))
@@ -493,6 +495,7 @@
 		if(C.get_amount() < 10)
 			to_chat(user, "\red You need more wires.")
 			return
+		if(user.is_busy()) return
 		to_chat(user, "You start adding cables to the APC frame...")
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 20, target = src) && C.get_amount() >= 10)
@@ -512,6 +515,7 @@
 	else if (istype(W, /obj/item/weapon/wirecutters) && terminal && opened && has_electronics!=2)
 		terminal.dismantle(user)
 	else if (istype(W, /obj/item/weapon/module/power_control) && opened && has_electronics==0 && !((stat & BROKEN) || malfhack))
+		if(user.is_busy()) return
 		to_chat(user, "You trying to insert the power control board into the frame...")
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		if(do_after(user, 10, target = src))
@@ -522,6 +526,7 @@
 		to_chat(user, "\red You cannot put the board inside, the frame is damaged.")
 		return
 	else if (istype(W, /obj/item/weapon/weldingtool) && opened && has_electronics==0 && !terminal)
+		if(user.is_busy()) return
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.get_fuel() < 3)
 			to_chat(user, "\blue You need more welding fuel to complete this task.")
@@ -557,6 +562,7 @@
 		if (has_electronics)
 			to_chat(user, "You cannot repair this APC until you remove the electronics still inside.")
 			return
+		if(user.is_busy()) return
 		to_chat(user, "You begin to replace the damaged APC frame...")
 		if(do_after(user, 50, target = src))
 			user.visible_message(\
@@ -585,6 +591,7 @@
 				return src.attack_hand(user)
 			if (!opened && wiresexposed && is_wire_tool(W))
 				return wires.interact(user)
+			user.SetNextMove(CLICK_CD_MELEE)
 			user.visible_message("\red The [src.name] has been hit with the [W.name] by [user.name]!", \
 				"\red You hit the [src.name] with your [W.name]!", \
 				"You hear bang")
@@ -596,6 +603,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.species.flags[IS_SYNTHETIC] && H.a_intent == "grab")
+			user.SetNextMove(CLICK_CD_MELEE)
 			if(emagged || (stat & BROKEN))
 				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 				s.set_up(3, 1, src)
@@ -642,6 +650,7 @@
 	if(!user)
 		return
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	user.visible_message("\red [user.name] slashes at the [src.name]!", "\blue You slash at the [src.name]!")
 	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
 

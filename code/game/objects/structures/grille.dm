@@ -31,6 +31,7 @@
 
 /obj/structure/grille/attack_hand(mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
 						 "<span class='warning'>You kick [src].</span>", \
@@ -46,6 +47,7 @@
 
 /obj/structure/grille/attack_alien(mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(istype(user, /mob/living/carbon/alien/larva))	return
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -60,8 +62,8 @@
 
 /obj/structure/grille/attack_slime(mob/user)
 	if(!istype(user, /mob/living/carbon/slime/adult))	return
+	user.SetNextMove(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] smashes against [src].</span>", \
 						 "<span class='warning'>You smash against [src].</span>", \
@@ -72,14 +74,13 @@
 	return
 
 /obj/structure/grille/attack_animal(mob/living/simple_animal/M)
-	if(M.melee_damage_upper == 0)	return
-	M.do_attack_animation(src)
-
+	if(M.melee_damage_upper == 0)
+		return
+	..()
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
 					  "<span class='warning'>You smash against [src].</span>", \
 					  "You hear twisting metal.")
-
 	health -= M.melee_damage_upper
 	healthcheck()
 	return
@@ -108,6 +109,7 @@
 	return 0
 
 /obj/structure/grille/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(iswirecutter(W))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
@@ -148,6 +150,7 @@
 			if(WINDOW.dir == dir_to_set)
 				to_chat(user, "<span class='notice'>There is already a window facing this way there.</span>")
 				return
+		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You start placing the window.</span>")
 		if(do_after(user,20,target = src))
 			if(QDELETED(src))

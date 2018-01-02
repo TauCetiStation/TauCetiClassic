@@ -473,9 +473,10 @@
 		playsound(src,'sound/effects/sparks4.ogg',50,1)
 		qdel(src)
 
-/obj/item/device/wormhole_jaunter/attackby(obj/item/B)
+/obj/item/device/wormhole_jaunter/attackby(obj/item/B, mob/user)
 	if(istype(B, /obj/item/device/radio/beacon))
-		usr.visible_message("<span class='notice'>[usr.name] spent [B.name] above [src.name], scanning the serial code.</span>",
+		user.SetNextMove(CLICK_CD_INTERACT)
+		user.visible_message("<span class='notice'>[user.name] spent [B.name] above [src.name], scanning the serial code.</span>",
 							"<span class='notice'>You scanned serial code of [B.name], now [src.name] is locked.</span>")
 		src.chosen_beacon = B
 		icon_state = "Jaunter_locked"
@@ -651,6 +652,7 @@
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(W.welding && !stat)
 			if(stance != HOSTILE_STANCE_IDLE)
 				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
