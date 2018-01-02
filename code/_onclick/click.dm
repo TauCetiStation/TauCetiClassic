@@ -148,16 +148,8 @@
 	ClickOn(A,params)
 
 
-/*
-	Translates into attack_hand, etc.
+//	Translates into attack_hand, etc.
 
-	Note: proximity_flag here is used to distinguish between normal usage (flag=1),
-	and usage when clicking on things telekinetically (flag=0).  This proc will
-	not be called at ranged except with telekinesis.
-
-	proximity_flag is not currently passed to attack_hand, and is instead used
-	in human click code to allow glove touches only at melee range.
-*/
 /mob/proc/UnarmedAttack(atom/A)
 	if(ismob(A))
 		SetNextMove(CLICK_CD_MELEE)
