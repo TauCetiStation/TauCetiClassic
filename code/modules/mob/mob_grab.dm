@@ -27,6 +27,7 @@
 
 	if(affecting.anchored)
 		return INITIALIZE_HINT_QDEL
+	last_action = world.time - 10
 
 	hud = new /obj/screen/grab(src)
 	hud.icon_state = "reinforce"
