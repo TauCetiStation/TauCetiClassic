@@ -60,14 +60,14 @@
 
 /obj/item/weapon/gun/projectile/revolver/detective/special_check(mob/living/carbon/human/M)
 	if(magazine.caliber == initial(magazine.caliber))
-		return 1
+		return ..()
 	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 		to_chat(M, "<span class='danger'>[src] blows up in your face!</span>")
 		M.take_bodypart_damage(0, 20)
 		M.drop_item()
 		qdel(src)
 		return 0
-	return 1
+	return ..()
 
 /obj/item/weapon/gun/projectile/revolver/detective/verb/rename_gun()
 	set name = "Name Gun"
