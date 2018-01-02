@@ -174,12 +174,12 @@ datum/supply_pack/New()
 	access = access_armory
 	group = "Security"
 
-/datum/supply_pack/loyalty
-	name = "Loyalty implant crate"
-	contains = list (/obj/item/weapon/storage/lockbox/loyalty)
+/datum/supply_pack/mind_shields
+	name = "Mind shields implant crate"
+	contains = list (/obj/item/weapon/storage/lockbox/mind_shields)
 	cost = 6000
 	crate_type = /obj/structure/closet/crate/secure
-	crate_name = "Loyalty implant crate"
+	crate_name = "Mind shields implant crate"
 	access = access_armory
 	group = "Security"
 

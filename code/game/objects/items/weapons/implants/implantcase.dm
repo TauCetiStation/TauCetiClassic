@@ -101,14 +101,14 @@
 
 
 
-/obj/item/weapon/implantcase/loyalty
-	name = "Glass Case- 'Loyalty'"
-	desc = "A case containing a loyalty implant."
+/obj/item/weapon/implantcase/mindshield
+	name = "Glass Case- 'MindShield'"
+	desc = "A case containing a mindshield implant."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-r"
 
 /obj/item/weapon/implantcase/loyalty/atom_init()
-	imp = new /obj/item/weapon/implant/loyalty(src)
+	imp = new /obj/item/weapon/implant/mindshield(src)
 	. = ..()
 
 

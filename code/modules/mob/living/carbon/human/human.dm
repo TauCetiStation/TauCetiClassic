@@ -263,7 +263,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/proc/is_loyalty_implanted(mob/living/carbon/human/M)
 	for(var/L in M.contents)
-		if(istype(L, /obj/item/weapon/implant/loyalty))
+		if(istype(L, /obj/item/weapon/implant/mindshield))
 			for(var/obj/item/organ/external/BP in M.bodyparts)
 				if(L in BP.implants)
 					return 1

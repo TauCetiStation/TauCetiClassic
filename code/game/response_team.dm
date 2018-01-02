@@ -262,10 +262,6 @@ var/can_call_ert
 		W.icon_state = "ert"
 		equip_to_slot_or_del(W, slot_wear_id)
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(src)
-	L.imp_in = src
-	L.implanted = 1
-	var/obj/item/organ/external/BP = bodyparts_by_name[BP_HEAD]
-	BP.implants += L
-	L.part = BP
+	var/obj/item/weapon/implant/mindshield/L = new(src)
+	L.inject(src)
 	return 1

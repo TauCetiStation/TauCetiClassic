@@ -115,7 +115,7 @@
 	new /obj/item/clothing/gloves/black/hos(src)
 	new /obj/item/clothing/glasses/thermal/hos_thermals(src)
 	new /obj/item/weapon/shield/riot/tele(src)
-	new /obj/item/weapon/storage/lockbox/loyalty(src)
+	new /obj/item/weapon/storage/lockbox/mind_shields(src)
 	new /obj/item/weapon/storage/box/flashbangs(src)
 	new /obj/item/device/flash(src)
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
