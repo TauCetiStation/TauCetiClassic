@@ -44,7 +44,8 @@
 		to_chat(user, "-Plant Production: \blue [production]")
 		if(potency != -1)
 			to_chat(user, "-Plant Potency: \blue [potency]")
-		return user.SetNextMove(CLICK_CD_INTERACT)
+		user.SetNextMove(CLICK_CD_INTERACT)
+		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
 /obj/item/seeds/chiliseed

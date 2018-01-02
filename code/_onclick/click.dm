@@ -176,17 +176,10 @@
 	if(a_intent == "hurt" && (LASEREYES in mutations))
 		LaserEyes(A) // moved into a proc below
 	else if(TK in mutations)
-		switch(get_dist(src, A))
-			if(0)
-				;
-			if(1 to 5) // not adjacent may mean blocked by window
-				next_move += 2
-			if(5 to 7)
-				next_move += 5
-			if(8 to tk_maxrange)
-				next_move += 10
-			else
-				return
+		var/dist = get_dist(src, A)
+		if(dist > tk_maxrange)
+			return
+		SetNextMove(max(dist, CLICK_CD_MELEE))
 		A.attack_tk(src)
 
 /*

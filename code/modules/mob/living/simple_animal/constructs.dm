@@ -51,16 +51,14 @@
 			msg += "<B>It looks severely dented!</B>\n"
 		msg += "</span>"
 	msg += "*---------*</span>"
-
 	to_chat(user, msg)
 
 /mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M)
-	if(..())
+	if(istype(M, /mob/living/simple_animal/construct/builder) && health <  maxHealth)
+		health += min(health + 5, maxHealth)
+		M.visible_message("[M] mends some of the <EM>[src]'s</EM> wounds.")
 		return
-
-	if(istype(M, /mob/living/simple_animal/construct/builder))
-		health += 5
-		M.emote("mends some of \the <EM>[src]'s</EM> wounds.")
+	return ..()
 
 /mob/living/simple_animal/construct/attackby(obj/item/O, mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
