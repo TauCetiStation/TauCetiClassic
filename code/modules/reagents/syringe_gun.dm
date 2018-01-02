@@ -7,7 +7,7 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "syringegun"
 	item_state = "syringegun"
-	w_class = 3.0
+	w_class = 4.0
 	throw_speed = 2
 	throw_range = 10
 	force = 4.0
