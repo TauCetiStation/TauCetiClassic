@@ -284,7 +284,7 @@
 /datum/game_mode/proc/add_gangster(datum/mind/gangster_mind, gang, check = 1)
 	if(gangster_mind in (A_bosses | A_gang | B_bosses | B_gang))
 		return 0
-	if(check && isloyal(gangster_mind.current)) //Check to see if the potential gangster is implanted
+	if(check && ismindshielded(gangster_mind.current)) //Check to see if the potential gangster is implanted
 		return 1
 	if(gang == "A")
 		A_gang += gangster_mind

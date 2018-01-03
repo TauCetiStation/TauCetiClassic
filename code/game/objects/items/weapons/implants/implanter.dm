@@ -33,7 +33,7 @@
 			msg_admin_attack("[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 			if(imp.implanted(M))
 				user.visible_message("<span class ='userdanger'>[M] has been implanted by [user].</span>", "You implanted the implant into [M].")
-				imp.inject(M)
+				imp.inject(M, def_zone)
 				imp = null
 				update()
 
@@ -47,7 +47,13 @@
 	. = ..()
 	update()
 
+/obj/item/weapon/implanter/loyalty
+	name = "implanter-loyalty"
 
+/obj/item/weapon/implanter/loyalty/atom_init()
+	imp = new /obj/item/weapon/implant/mindshield/loyalty(src)
+	. = ..()
+	update()
 
 /obj/item/weapon/implanter/explosive
 	name = "implanter (E)"

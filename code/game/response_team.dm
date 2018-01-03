@@ -262,6 +262,7 @@ var/can_call_ert
 		W.icon_state = "ert"
 		equip_to_slot_or_del(W, slot_wear_id)
 
-	var/obj/item/weapon/implant/mindshield/L = new(src)
+	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
 	L.inject(src)
+	START_PROCESSING(SSobj, L)
 	return 1

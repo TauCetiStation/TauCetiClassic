@@ -44,8 +44,9 @@
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
-	var/obj/item/weapon/implant/mindshield/L = new(H)
+	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
 	L.inject(H)
+	START_PROCESSING(SSobj, L)
 	return 1
 
 

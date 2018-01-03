@@ -159,8 +159,9 @@ var/global/sent_strike_team = 0
 	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(src), slot_r_hand)
 
 
-	var/obj/item/weapon/implant/mindshield/L = new(src)
+	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
 	L.inject(src)
+	START_PROCESSING(SSobj, L)
 
 
 

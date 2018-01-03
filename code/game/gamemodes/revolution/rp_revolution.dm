@@ -105,7 +105,7 @@
 /datum/game_mode/revolution/rp_revolution/add_revolutionary(datum/mind/rev_mind)
 	// overwrite this func to make it so even heads can be converted
 	var/mob/living/carbon/human/H = rev_mind.current//Check to see if the potential rev is implanted
-	if(isloyal(H))
+	if(ismindshielded(H))
 		return 0
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
 		return 0
@@ -171,7 +171,7 @@
 	if(((src.mind in ticker.mode:head_revolutionaries) || (src.mind in ticker.mode:revolutionaries)))
 		if((M.mind in ticker.mode:head_revolutionaries) || (M.mind in ticker.mode:revolutionaries))
 			to_chat(src, "\red <b>[M] is already be a revolutionary!</b>")
-		else if(isloyal(M))
+		else if(ismindshielded(M))
 			to_chat(src, "\red <b>[M] is implanted with a loyalty implant - Remove it first!</b>")
 		else if(jobban_isbanned(M, ROLE_REV) || jobban_isbanned(M, "Syndicate") || role_available_in_minutes(M, ROLE_REV))
 			to_chat(src, "\red <b>[M] is a blacklisted player!</b>")

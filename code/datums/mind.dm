@@ -159,7 +159,7 @@
 	if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
 		/** Impanted**/
 		if(istype(current, /mob/living/carbon/human))
-			if(H.is_loyalty_implanted(H))
+			if(isloyal(H))
 				text = "Loyalty Implant:<a href='?src=\ref[src];implant=remove'>Remove</a>|<b>Implanted</b></br>"
 			else
 				text = "Loyalty Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=add'>Implant him!</a></br>"
@@ -171,7 +171,7 @@
 		if (ticker.mode.config_tag=="revolution")
 			text += uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (istype(current, /mob/living/carbon/monkey) || H.is_loyalty_implanted(H))
+		if (istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
 			text += "<b>LOYAL EMPLOYEE</b>|headrev|rev"
 		else if (src in ticker.mode.head_revolutionaries)
 			text += "<a href='?src=\ref[src];revolution=clear'>employee</a>|<b>HEADREV</b>|<a href='?src=\ref[src];revolution=rev'>rev</a>"
@@ -190,7 +190,7 @@
 			text += " <a href='?src=\ref[src];revolution=reequip'>Reequip</a> (gives traitor uplink)."
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];revolution=autoobjectives'>Set to kill all heads</a>."
-		else if(isloyal(current))
+		else if(ismindshielded(current))
 			text += "head|<b>LOYAL</b>|employee|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|rev"
 		else if (src in ticker.mode.revolutionaries)
 			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
@@ -233,7 +233,7 @@
 			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|<B>(A) GANGSTER</B> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
 		else if (src in ticker.mode.B_gang)
 			text += "loyal|<a href='?src=\ref[src];gang=clear'>none</a>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|<B>(B) GANGSTER</B> <a href='?src=\ref[src];gang=bboss'>boss</a>"
-		else if(isloyal(current))
+		else if(ismindshielded(current))
 			text += "<B>LOYAL</B>|none|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
 		else
 			text += "loyal|<B>NONE</B>|(A) <a href='?src=\ref[src];gang=agang'>gangster</a> <a href='?src=\ref[src];gang=aboss'>boss</a>|(B) <a href='?src=\ref[src];gang=bgang'>gangster</a> <a href='?src=\ref[src];gang=bboss'>boss</a>"
@@ -244,7 +244,7 @@
 		if (ticker.mode.config_tag=="cult")
 			text = uppertext(text)
 		text = "<i><b>[text]</b></i>: "
-		if (istype(current, /mob/living/carbon/monkey) || H.is_loyalty_implanted(H))
+		if (istype(current, /mob/living/carbon/monkey) || ismindshielded(H))
 			text += "<B>LOYAL EMPLOYEE</B>|cultist"
 		else if (src in ticker.mode.cult)
 			text += "<a href='?src=\ref[src];cult=clear'>employee</a>|<b>CULTIST</b>"
@@ -365,7 +365,7 @@
 		text = uppertext(text)
 	text = "<i><b>[text]</b></i>: "
 	if(istype(current, /mob/living/carbon/human))
-		if (H.is_loyalty_implanted(H))
+		if (isloyal(H))
 			text +="traitor|<b>LOYAL EMPLOYEE</b>"
 		else
 			if (src in ticker.mode.traitors)
@@ -639,15 +639,16 @@
 
 		switch(href_list["implant"])
 			if("remove")
-				for(var/obj/item/weapon/implant/mindshield/I in H.contents)
+				for(var/obj/item/weapon/implant/mindshield/loyalty/I in H.contents)
 					for(var/obj/item/organ/external/BP in H.bodyparts)
 						if(I in BP.implants)
 							I.Destroy()
 							break
 				to_chat(H, "\blue <Font size =3><B>Your loyalty implant has been deactivated.</B></FONT>")
 			if("add")
-				var/obj/item/weapon/implant/mindshield/L = new(H)
+				var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
 				L.inject(H)
+				START_PROCESSING(SSobj, L)
 				to_chat(H, "\red <Font size =3><B>You somehow have become the recepient of a loyalty transplant, and it just activated!</B></FONT>")
 				if(src in ticker.mode.revolutionaries)
 					special_role = null

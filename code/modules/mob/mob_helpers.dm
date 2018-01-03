@@ -47,11 +47,17 @@
 /proc/hsl2rgb(h, s, l)
 	return
 
-/proc/isloyal(A) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
+/proc/ismindshielded(A) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
 	for(var/obj/item/weapon/implant/mindshield/L in A)
 		if(L.implanted)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
+
+/proc/isloyal(A)
+	for(var/obj/item/weapon/implant/mindshield/loyalty/L in A)
+		if(L.implanted)
+			return TRUE
+	return FALSE
 
 /proc/check_zone(zone)
 	if(!zone)

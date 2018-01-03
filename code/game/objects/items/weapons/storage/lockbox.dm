@@ -76,6 +76,16 @@
 		new /obj/item/weapon/implantcase/mindshield(src)
 	new /obj/item/weapon/implanter/mindshield(src)
 
+/obj/item/weapon/storage/lockbox/loyalty
+	name = "lockbox of Loyalty implants"
+	req_access = list(access_brig)
+
+/obj/item/weapon/storage/lockbox/loyalty/atom_init()
+	. = ..()
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/implantcase/loyalty(src)
+	new /obj/item/weapon/implanter/loyalty(src)
+
 
 /obj/item/weapon/storage/lockbox/clusterbang
 	name = "lockbox of clusterbangs"

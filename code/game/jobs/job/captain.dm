@@ -42,8 +42,9 @@
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
 
-	var/obj/item/weapon/implant/mindshield/L = new(H)
+	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
 	L.inject(H)
+	START_PROCESSING(SSobj, L)
 	to_chat(world, "<b>[H.real_name] is the captain!</b>")
 	return 1
 
