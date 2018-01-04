@@ -294,6 +294,6 @@
 			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
 		client.screen += hud_used.hide_actions_toggle
 
-/mob/living/incapacitated(restrained_type = HANDS)
+/mob/living/incapacitated(restrained_type = ARMS)
 	if(stat || paralysis || stunned || weakened || restrained(restrained_type))
 		return 1

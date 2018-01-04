@@ -60,7 +60,7 @@
 	allowed = list(/obj/item/weapon/teleportation_scroll)
 	flags_inv = HIDEJUMPSUIT
 	siemens_coefficient = 0.4
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
 /obj/item/clothing/suit/wizrobe/wiz_blue
 	name = "Blue Jacket"
@@ -92,14 +92,14 @@
 	desc = "A set of armoured robes that seem to radiate a dark power."
 	icon_state = "magusblue"
 	item_state = "magusblue"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|HANDS|LEGS|FEET
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/clothing/suit/wizrobe/magusred
 	name = "Magus Robe"
 	desc = "A set of armoured robes that seem to radiate a dark power."
 	icon_state = "magusred"
 	item_state = "magusred"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|HANDS|LEGS|FEET
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/clothing/suit/wizrobe/psypurple
 	name = "purple robes"

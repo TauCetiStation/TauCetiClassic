@@ -826,18 +826,10 @@
 			thermal_protection += THERMAL_PROTECTION_LEG_LEFT
 		if(thermal_protection_flags & LEG_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_LEG_RIGHT
-		if(thermal_protection_flags & FOOT_LEFT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_LEFT
-		if(thermal_protection_flags & FOOT_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_RIGHT
 		if(thermal_protection_flags & ARM_LEFT)
 			thermal_protection += THERMAL_PROTECTION_ARM_LEFT
 		if(thermal_protection_flags & ARM_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_ARM_RIGHT
-		if(thermal_protection_flags & HAND_LEFT)
-			thermal_protection += THERMAL_PROTECTION_HAND_LEFT
-		if(thermal_protection_flags & HAND_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
 
 
 	return min(1,thermal_protection)
@@ -888,18 +880,10 @@
 			thermal_protection += THERMAL_PROTECTION_LEG_LEFT
 		if(thermal_protection_flags & LEG_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_LEG_RIGHT
-		if(thermal_protection_flags & FOOT_LEFT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_LEFT
-		if(thermal_protection_flags & FOOT_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_RIGHT
 		if(thermal_protection_flags & ARM_LEFT)
 			thermal_protection += THERMAL_PROTECTION_ARM_LEFT
 		if(thermal_protection_flags & ARM_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_ARM_RIGHT
-		if(thermal_protection_flags & HAND_LEFT)
-			thermal_protection += THERMAL_PROTECTION_HAND_LEFT
-		if(thermal_protection_flags & HAND_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
 
 	return min(1,thermal_protection)
 

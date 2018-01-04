@@ -332,8 +332,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return
 
 
-/mob/living/carbon/human/restrained(check_type = HANDS)
-	if ((check_type & HANDS) && handcuffed)
+/mob/living/carbon/human/restrained(check_type = ARMS)
+	if ((check_type & ARMS) && handcuffed)
 		return TRUE
 	if ((check_type & LEGS) && legcuffed)
 		return TRUE

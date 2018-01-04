@@ -328,7 +328,7 @@
 			if(H.species.flags[IS_SYNTHETIC])
 				return
 
-			if(!H.shoes && (!H.wear_suit || !(H.wear_suit.body_parts_covered & FEET)))
+			if(!H.shoes && (!H.wear_suit || !(H.wear_suit.body_parts_covered & LEGS)))
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 				if(BP.status & ORGAN_ROBOT)
 					return

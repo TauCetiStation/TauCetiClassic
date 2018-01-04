@@ -55,7 +55,7 @@
 	icon_state = "coatwinter"
 	item_state = "coatwinter"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
-	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HANDS|HEAD
+	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS|HEAD
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
@@ -119,9 +119,9 @@
 	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_state = "winterboots"
 	item_state = "winterboots"
-	cold_protection = FEET|LEGS
+	cold_protection = LEGS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = FEET|LEGS
+	heat_protection = LEGS
 
 
 /obj/item/clothing/suit/storage/labcoat/winterlabcoat
@@ -132,7 +132,7 @@
 	icon_state = "labcoat_emt"
 	item_state = "labcoat_emt"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
-	cold_protection = UPPER_TORSO | LOWER_TORSO | ARMS | HANDS
+	cold_protection = UPPER_TORSO | LOWER_TORSO | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)

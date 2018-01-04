@@ -157,7 +157,7 @@ var/image/contamination_overlay = image('icons/effects/contamination.dmi')
 	if(vsc.plc.PHORONGUARD_ONLY)
 		return TRUE
 
-	return BIT_TEST_ALL(coverage, UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS)
+	return BIT_TEST_ALL(coverage, UPPER_TORSO|LOWER_TORSO|LEGS|ARMS)
 
 /mob/living/carbon/human/proc/suit_contamination()
 	//Runs over the things that can be contaminated and does so.

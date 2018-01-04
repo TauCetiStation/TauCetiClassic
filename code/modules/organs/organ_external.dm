@@ -784,14 +784,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 ****************************************************/
 
 /obj/item/organ/external/proc/release_restraints()
-	if (owner.handcuffed && body_part in list(ARM_LEFT, ARM_RIGHT, HAND_LEFT, HAND_RIGHT))
+	if (owner.handcuffed && body_part in list(ARM_LEFT, ARM_RIGHT))
 		owner.visible_message(\
 			"\The [owner.handcuffed.name] falls off of [owner.name].",\
 			"\The [owner.handcuffed.name] falls off you.")
 
 		owner.drop_from_inventory(owner.handcuffed)
 
-	if (owner.legcuffed && body_part in list(FOOT_LEFT, FOOT_RIGHT, LEG_LEFT, LEG_RIGHT))
+	if (owner.legcuffed && body_part in list(LEG_LEFT, LEG_RIGHT))
 		owner.visible_message(\
 			"\The [owner.legcuffed.name] falls off of [owner.name].",\
 			"\The [owner.legcuffed.name] falls off you.")
@@ -1069,7 +1069,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "left arm"
 	artery_name = "basilic vein"
 
-	body_part = ARM_LEFT | HAND_LEFT
+	body_part = ARM_LEFT
 	body_zone = BP_L_ARM
 	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_L_ARM_LAYER
@@ -1088,7 +1088,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "right arm"
 	artery_name = "basilic vein"
 
-	body_part = ARM_RIGHT | HAND_RIGHT
+	body_part = ARM_RIGHT
 	body_zone = BP_R_ARM
 	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_R_ARM_LAYER
@@ -1106,7 +1106,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "left leg"
 	artery_name = "femoral artery"
 
-	body_part = LEG_LEFT | FOOT_LEFT
+	body_part = LEG_LEFT
 	body_zone = BP_L_LEG
 	parent_bodypart = BP_GROIN
 	limb_layer = LIMB_L_LEG_LAYER
@@ -1122,7 +1122,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	name = "right leg"
 	artery_name = "femoral artery"
 
-	body_part = LEG_RIGHT | FOOT_RIGHT
+	body_part = LEG_RIGHT
 	body_zone = BP_R_LEG
 	parent_bodypart = BP_GROIN
 	limb_layer = LIMB_R_LEG_LAYER

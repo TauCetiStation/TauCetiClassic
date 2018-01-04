@@ -135,18 +135,14 @@ Please contact me on #coderbus IRC. ~Carn x
 #define TOTAL_LAYERS			27
 //////////////////////////////////
 //Human Limb Overlays Indexes/////
-#define LIMB_HEAD_LAYER			11
-#define LIMB_TORSO_LAYER		10
-#define LIMB_L_ARM_LAYER		9
-#define LIMB_L_HAND_LAYER		8
-#define LIMB_R_ARM_LAYER		7
-#define LIMB_R_HAND_LAYER		6
-#define LIMB_GROIN_LAYER		5
-#define LIMB_L_LEG_LAYER		4
-#define LIMB_L_FOOT_LAYER		3
-#define LIMB_R_LEG_LAYER		2
-#define LIMB_R_FOOT_LAYER		1
-#define TOTAL_LIMB_LAYERS		11
+#define LIMB_HEAD_LAYER			7
+#define LIMB_TORSO_LAYER		6
+#define LIMB_L_ARM_LAYER		5
+#define LIMB_R_ARM_LAYER		4
+#define LIMB_GROIN_LAYER		3
+#define LIMB_L_LEG_LAYER		2
+#define LIMB_R_LEG_LAYER		1
+#define TOTAL_LIMB_LAYERS		7
 //////////////////////////////////
 
 /mob/living/carbon/human
