@@ -64,8 +64,8 @@ var/global/list/image/splatter_cache=list()
 	var/skip = FALSE
 	if (ishuman(perp))
 		var/mob/living/carbon/human/H = perp
-		var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_FOOT]
-		var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_FOOT]
+		var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
+		var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
 		if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
 			hasfeet = FALSE
 		if(perp.shoes && !perp.buckled)//Adding blood to shoes

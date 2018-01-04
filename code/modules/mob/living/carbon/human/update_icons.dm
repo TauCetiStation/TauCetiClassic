@@ -342,12 +342,11 @@ Please contact me on #coderbus IRC. ~Carn x
 			stand_icon.Blend(new /icon('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
 	standing	+= image("icon"=stand_icon, "layer"=-BODY_LAYER)
 
-	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
-		if(!fat && bodyparts_by_name[BP_R_FOOT] && bodyparts_by_name[BP_L_FOOT]) //shit
-			var/obj/item/organ/external/rfoot = bodyparts_by_name[BP_R_FOOT]
-			var/obj/item/organ/external/lfoot = bodyparts_by_name[BP_L_FOOT]
-			if(!(rfoot.status & ORGAN_DESTROYED) && !(lfoot.status & ORGAN_DESTROYED))
-				standing += image("icon"='icons/mob/human_socks.dmi', "icon_state"="socks[socks]_s", "layer"=-BODY_LAYER)
+	if(!fat && socks > 0 && socks < socks_t.len && species.flags[HAS_UNDERWEAR])
+		var/obj/item/organ/external/r_foot = bodyparts_by_name[BP_R_LEG]
+		var/obj/item/organ/external/l_foot = bodyparts_by_name[BP_L_LEG]
+		if(r_foot && !(r_foot.status & ORGAN_DESTROYED) && l_foot && !(l_foot.status & ORGAN_DESTROYED))
+			standing += image("icon"='icons/mob/human_socks.dmi', "icon_state"="socks[socks]_s", "layer"=-BODY_LAYER)
 
 	if(has_head)
 		//Eyes

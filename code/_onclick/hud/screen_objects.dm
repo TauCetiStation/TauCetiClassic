@@ -119,9 +119,9 @@
 		if(1 to 3) //Feet
 			switch(icon_x)
 				if(10 to 15)
-					selecting = BP_R_FOOT
+					selecting = BP_R_LEG
 				if(17 to 22)
-					selecting = BP_L_FOOT
+					selecting = BP_L_LEG
 				else
 					return 1
 		if(4 to 9) //Legs
@@ -132,14 +132,14 @@
 					selecting = BP_L_LEG
 				else
 					return 1
-		if(10 to 13) //Hands and groin
+		if(10 to 13) //Arms and groin
 			switch(icon_x)
 				if(8 to 11)
-					selecting = BP_R_HAND
+					selecting = BP_R_ARM
 				if(12 to 20)
 					selecting = BP_GROIN
 				if(21 to 24)
-					selecting = BP_L_HAND
+					selecting = BP_L_ARM
 				else
 					return 1
 		if(14 to 22) //Chest and arms to shoulders

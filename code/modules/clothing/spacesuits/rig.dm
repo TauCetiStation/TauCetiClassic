@@ -216,7 +216,7 @@
 			else
 				return ..()
 
-		else if(target_zone == BP_L_LEG || target_zone == BP_R_LEG || target_zone == BP_L_FOOT || target_zone == BP_R_FOOT)
+		else if(target_zone == BP_L_LEG || target_zone == BP_R_LEG)
 
 			//Installing a component into or modifying the contents of the feet.
 			if(!attached_boots)

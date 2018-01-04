@@ -99,13 +99,13 @@
 					if(BP_CHEST , BP_GROIN , BP_L_LEG , BP_R_LEG , BP_R_ARM , BP_L_ARM)
 						if(T.wear_suit || (T.w_uniform && !istype(T.w_uniform, /obj/item/clothing/under/patient_gown)))
 							return 0
-					if(BP_R_FOOT , BP_L_FOOT)
+					if(BP_R_LEG , BP_L_LEG)
 						if(T.shoes)
 							return 0
 					if(O_EYES)
 						if(T.glasses)
 							return 0
-					if(BP_R_HAND , BP_L_HAND)
+					if(BP_R_ARM , BP_L_ARM)
 						if(T.gloves)
 							return 0
 

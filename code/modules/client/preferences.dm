@@ -335,9 +335,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.overeatduration = 2000
 
 	// Wheelchair necessary?
-	var/obj/item/organ/external/l_foot = character.bodyparts_by_name[BP_L_FOOT]
-	var/obj/item/organ/external/r_foot = character.bodyparts_by_name[BP_R_FOOT]
-	if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED)) // TODO cane if its only single leg.
+	var/obj/item/organ/external/l_leg = character.bodyparts_by_name[BP_L_LEG]
+	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
+	if((!l_leg || l_leg.status & ORGAN_DESTROYED) && (!r_leg || r_leg.status & ORGAN_DESTROYED)) // TODO cane if its only single leg.
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
 		character.buckled = W
 		character.update_canmove()

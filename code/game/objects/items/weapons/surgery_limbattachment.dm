@@ -1,5 +1,4 @@
 /obj/item/robot_parts/attack(mob/living/carbon/human/M, mob/living/carbon/user, def_zone)
-	var/child = null
 
 	if(!ishuman(M))
 		return ..()
@@ -7,15 +6,7 @@
 	if(!((locate(/obj/machinery/optable, M.loc) && M.resting) || (locate(/obj/structure/stool/bed/roller, M.loc) && (M.buckled || M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat)) && prob(75) || (locate(/obj/structure/table/, M.loc) && (M.lying || M.weakened || M.stunned || M.paralysis || M.sleeping || M.stat) && prob(66))))
 		return ..()
 
-	if((def_zone == BP_L_ARM) && (istype(src, /obj/item/robot_parts/l_arm)))
-		child = BP_L_HAND
-	else if((def_zone == BP_R_ARM) && (istype(src, /obj/item/robot_parts/r_arm)))
-		child = BP_R_HAND
-	else if((def_zone == BP_R_LEG) && (istype(src, /obj/item/robot_parts/r_leg)))
-		child = BP_R_FOOT
-	else if((def_zone == BP_L_LEG) && (istype(src, /obj/item/robot_parts/l_leg)))
-		child = BP_L_FOOT
-	else
+	if(user.zone_sel.selecting != part)
 		to_chat(user, "\red That doesn't fit there!")
 		return ..()
 
@@ -48,17 +39,7 @@
 				to_chat(user, "\red You mess up!")
 				BP.take_damage(15)
 
-			BP.status &= ~ORGAN_BROKEN
-			BP.status &= ~ORGAN_SPLINTED
-			BP.status &= ~ORGAN_ATTACHABLE
-			BP.status &= ~ORGAN_DESTROYED
-			BP.status |= ORGAN_ROBOT
-			var/obj/item/organ/external/T = H.bodyparts_by_name[child]
-			T.status &= ~ORGAN_BROKEN
-			T.status &= ~ORGAN_SPLINTED
-			T.status &= ~ORGAN_ATTACHABLE
-			T.status &= ~ORGAN_DESTROYED
-			T.status |= ORGAN_ROBOT
+			BP.status = ORGAN_ROBOT // in this situtation, we can simply set exact flag.
 			H.update_body()
 			M.updatehealth()
 			M.UpdateDamageIcon(BP)

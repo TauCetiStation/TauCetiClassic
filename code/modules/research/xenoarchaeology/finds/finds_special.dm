@@ -128,7 +128,7 @@
 		playsound(src.loc, pick('sound/hallucinations/wail.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/far_noise.ogg'), 50, 1, -3)
 		nearby_mobs.Add(M)
 
-		var/target = pick(BP_CHEST , BP_GROIN , BP_HEAD , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG , BP_L_HAND , BP_R_HAND , BP_L_FOOT , BP_R_FOOT)
+		var/target = pick(BP_CHEST , BP_GROIN , BP_HEAD , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG)
 		M.apply_damage(rand(5, 10), BRUTE, target)
 		to_chat(M, "\red The skin on your [parse_zone(target)] feels like it's ripping apart, and a stream of blood flies out.")
 		var/obj/effect/decal/cleanable/blood/splatter/animated/B = new(M.loc)
