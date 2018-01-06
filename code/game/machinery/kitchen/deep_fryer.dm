@@ -54,9 +54,6 @@
 			default_unfasten_wrench(user, I)
 			return
 	if (ishuman(user) && !(I.flags & DROPDEL))
-		if(istype(I, /obj/item/weapon/stool))
-			var/obj/item/weapon/stool/S = I
-			S.origin_stool = null
 		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 		on = TRUE
 		user.drop_item()
@@ -103,7 +100,6 @@
 		qdel(frying)
 		icon_state = "fryer_off"
 		user.put_in_hands(S)
-		S.invisibility = 0
 		frying = null
 		on = FALSE
 		fry_time = 0
