@@ -55,13 +55,15 @@
 			return
 	if (ishuman(user) && !(I.flags & DROPDEL))
 		if(istype(I, /obj/item/weapon/stool))
-			I.flags ^= DROPDEL
+			var/obj/item/weapon/stool/S = I
+			S.origin_stool = null
 		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 		on = TRUE
 		user.drop_item()
 		frying = I
 		frying.loc = src
 		icon_state = "fryer_on"
+
 
 /obj/machinery/deepfryer/process()
 	..()
@@ -99,8 +101,6 @@
 				S.desc = "A heavily fried...something.  Who can tell anymore?"
 		S.filling_color = S.color
 		qdel(frying)
-
-
 		icon_state = "fryer_off"
 		user.put_in_hands(S)
 		S.invisibility = 0
