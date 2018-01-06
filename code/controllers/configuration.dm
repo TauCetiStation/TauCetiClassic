@@ -229,7 +229,7 @@
 					config.log_access = 1
 
 				if ("sql_enabled")
-					config.sql_enabled = text2num(value)
+					config.sql_enabled = 1
 
 				if ("log_say")
 					config.log_say = 1
