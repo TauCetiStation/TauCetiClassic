@@ -77,3 +77,23 @@
 /obj/structure/closet/critter/pug
 	name = "pug crate"
 	content_mob = /mob/living/simple_animal/pug
+
+/obj/structure/closet/critter/pig
+	name = "pig crate"
+	content_mob = /mob/living/simple_animal/pig
+
+/obj/structure/closet/critter/turkey
+	name = "turkey crate"
+	content_mob = /mob/living/simple_animal/turkey
+
+/obj/structure/closet/critter/goose
+	name = "goose crate"
+	content_mob = /mob/living/simple_animal/goose
+
+/obj/structure/closet/critter/seal
+	name = "seal crate"
+	content_mob = /mob/living/simple_animal/seal
+
+/obj/structure/closet/critter/walrus
+	name = "walrus crate"
+	content_mob = /mob/living/simple_animal/walrus

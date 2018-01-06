@@ -12,8 +12,9 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 4
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 4)
+	//meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	//meat_amount = 4
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
@@ -102,8 +103,9 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 6
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 6)
+	//meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	//meat_amount = 6
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
@@ -174,8 +176,9 @@
 	emote_see = list("pecks at the ground","flaps its tiny wings")
 	speak_chance = 2
 	turns_per_move = 2
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 1
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 1)
+	//meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	//meat_amount = 1
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
@@ -215,8 +218,9 @@ var/global/chicken_count = 0
 	emote_see = list("pecks at the ground","flaps its wings viciously")
 	speak_chance = 2
 	turns_per_move = 3
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 2
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 2)
+	//meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	//meat_amount = 2
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
@@ -280,3 +284,103 @@ var/global/chicken_count = 0
 			qdel(src)
 	else
 		STOP_PROCESSING(SSobj, src)
+
+/mob/living/simple_animal/pig
+	name = "pig"
+	desc = "Oink oink."
+	icon_state = "pig"
+	icon_living = "pig"
+	icon_dead = "pig_dead"
+	speak = list("oink?","oink","OINK")
+	speak_emote = list("oinks")
+//	emote_hear = list("brays")
+	emote_see = list("rolls around")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/ham = 6)
+	response_help  = "pets the"
+	response_disarm = "gently pushes aside the"
+	response_harm   = "kicks the"
+	attacktext = "kicks"
+	health = 50
+
+/mob/living/simple_animal/turkey
+	name = "turkey"
+	desc = "Benjamin Franklin would be proud."
+	icon_state = "turkey"
+	icon_living = "turkey"
+	icon_dead = "turkey_dead"
+	icon_resting = "turkey_rest"
+	speak = list("gobble?","gobble","GOBBLE")
+	speak_emote = list("gobble")
+	emote_see = list("struts around")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 4)
+	response_help  = "pets the"
+	response_disarm = "gently pushes aside the"
+	response_harm   = "kicks the"
+	attacktext = "pecks"
+	health = 50
+
+/mob/living/simple_animal/goose
+	name = "goose"
+	desc = "A pretty goose. Would make a nice comforter."
+	icon_state = "goose"
+	icon_living = "goose"
+	icon_dead = "goose_dead"
+	speak = list("quack?","quack","QUACK")
+	speak_emote = list("quacks")
+//	emote_hear = list("brays")
+	emote_see = list("flaps it's wings")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
+	response_help  = "pets the"
+	response_disarm = "gently pushes aside the"
+	response_harm   = "kicks the"
+	attacktext = "kicks"
+	health = 50
+
+/mob/living/simple_animal/seal
+	name = "seal"
+	desc = "A beautiful white seal."
+	icon_state = "seal"
+	icon_living = "seal"
+	icon_dead = "seal_dead"
+	speak = list("Urk?","urk","URK")
+	speak_emote = list("urks")
+//	emote_hear = list("brays")
+	emote_see = list("flops around")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
+	response_help  = "pets the"
+	response_disarm = "gently pushes aside the"
+	response_harm   = "kicks the"
+	attacktext = "kicks"
+	health = 50
+
+/mob/living/simple_animal/walrus
+	name = "walrus"
+	desc = "A big brown walrus."
+	icon_state = "walrus"
+	icon_living = "walrus"
+	icon_dead = "walrus_dead"
+	speak = list("Urk?","urk","URK")
+	speak_emote = list("urks")
+//	emote_hear = list("brays")
+	emote_see = list("flops around")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
+	response_help  = "pets the"
+	response_disarm = "gently pushes aside the"
+	response_harm   = "kicks the"
+	attacktext = "kicks"
+	health = 50
