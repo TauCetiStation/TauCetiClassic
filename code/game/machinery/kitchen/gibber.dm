@@ -191,7 +191,7 @@
 	var/slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	var/slab_nutrition = src.occupant.nutrition / 15
 
-	// Some mobs have specific meat item types.
+/*	// Some mobs have specific meat item types.
 	if(istype(src.occupant,/mob/living/simple_animal))
 		var/mob/living/simple_animal/critter = src.occupant
 		if(critter.meat_amount)
@@ -203,7 +203,7 @@
 		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/human
 	else if(istype(src.occupant, /mob/living/carbon/monkey))
 		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
-
+*/
 	// Small mobs don't give as much nutrition.
 	if(src.occupant.small)
 		slab_nutrition *= 0.5

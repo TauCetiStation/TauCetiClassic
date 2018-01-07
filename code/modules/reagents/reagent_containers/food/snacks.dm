@@ -680,6 +680,27 @@
 	reagents.add_reagent("nutriment", 3)
 	src.bitesize = 6
 
+/obj/item/weapon/reagent_containers/food/snacks/spidermeat
+	name = "spider meat"
+	desc = "A slab of spider meat."
+	icon_state = "spidermeat"
+
+/obj/item/weapon/reagent_containers/food/snacks/spidermeat/atom_init()
+	. = ..()
+	src.bitesize = 3
+	reagents.add_reagent("nutriment", 3)
+	//list_reagents = list("protein" = 3, "toxin" = 3, "vitamin" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/spiderleg
+	name = "spider leg"
+	desc = "A still twitching leg of a giant spider... you don't really want to eat this, do you?"
+	icon_state = "spiderleg"
+
+/obj/item/weapon/reagent_containers/food/snacks/spiderleg/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 2)
+	//list_reagents = list("protein" = 2, "toxin" = 2)
+
 /obj/item/weapon/reagent_containers/food/snacks/meatball
 	name = "meatball"
 	desc = "A great meal all round."
@@ -1715,6 +1736,17 @@
 	. = ..()
 	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("carpotoxin", 3)
+	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/sashimi
+	name = "Carp sashimi"
+	desc = "Celebrate surviving attack from hostile alien lifeforms by hospitalising yourself."
+	icon_state = "sashimi"
+
+/obj/item/weapon/reagent_containers/food/snacks/sashimi/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 6)
+	reagents.add_reagent("capsaicin", 3)
 	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/sandwich
@@ -2857,6 +2889,40 @@
 	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("radium", 2)
 	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg
+	name = "boiled spider leg"
+	desc = "A giant spider's leg that's still twitching after being cooked. Gross!"
+	icon_state = "spiderlegcooked"
+	trash = /obj/item/trash/plate
+
+/obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("capsaicin", 2)
+	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/spidereggs
+	name = "spider eggs"
+	desc = "A cluster of juicy spider eggs. A great side dish for when you care not for your health."
+	icon_state = "spidereggs"
+
+/obj/item/weapon/reagent_containers/food/snacks/spidereggs/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 2)//"protein"
+	reagents.add_reagent("toxin", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/spidereggsham
+	name = "green eggs and ham"
+	desc = "Would you eat them on a train? Would you eat them on a plane? Would you eat them on a state of the art corporate deathtrap floating through space?"
+	icon_state = "spidereggsham"
+	trash = /obj/item/trash/plate
+
+
+/obj/item/weapon/reagent_containers/food/snacks/spidereggsham/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 6)
+	bitesize = 4
 
 ///////////////////////////////////////////
 // new old food stuff from bs12
