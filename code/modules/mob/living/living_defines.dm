@@ -47,5 +47,3 @@
 	var/list/butcher_results = null
 
 	var/isHandsBusy = FALSE
-
-	var/list/butcher_results = null

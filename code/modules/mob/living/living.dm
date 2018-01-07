@@ -1118,14 +1118,20 @@
 	//reset the pixel offsets to zero
 	floating = 0
 
-/mob/living/proc/harvest(mob/living/user)
+/mob/living/proc/harvest(obj/item/I, mob/living/user)
 	if(QDELETED(src))
 		return
-	if(butcher_results)
-		if(butcher_results.len)
-			for(var/path in butcher_results)
-				for(var/i = 1 to butcher_results[path])
-					new path(src.loc)
-				butcher_results.Remove(path)
-			visible_message("<span class='notice'>[user] butchers [src].</span>")
-			gib()
+	if(stat == DEAD && !isnull(butcher_results)) //can we butcher it?
+		if(istype(I, /obj/item/weapon/kitchenknife)|| istype(I, /obj/item/weapon/butch))
+			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
+			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+			if(do_mob(user, src, 80))
+				if(butcher_results.len)
+					for(var/path in butcher_results)
+						for(var/i = 1, i <= butcher_results[path], i++)
+							new path(src.loc)
+						butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
+					visible_message("<span class='notice'>[user] butchers [src].</span>")
+					gib()
+
+

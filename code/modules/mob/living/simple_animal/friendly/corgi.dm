@@ -12,8 +12,9 @@
 	emote_see = list("shakes its head", "shivers")
 	speak_chance = 1
 	turns_per_move = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
-	meat_amount = 3
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi = 3)
+	//meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
+	//meat_amount = 3
 	response_help  = "pets the"
 	response_disarm = "bops the"
 	response_harm   = "kicks the"
@@ -110,7 +111,7 @@
 	icon_state = "borgi"
 	icon_living = "borgi"
 	icon_dead = "borgi_dead"
-	meat_type = null
+	//meat_type = null
 	var/emagged = 0
 
 /mob/living/simple_animal/corgi/borgi/attackby(obj/item/weapon/W, mob/user)
