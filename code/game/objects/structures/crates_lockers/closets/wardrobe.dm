@@ -37,6 +37,10 @@
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/under/color/pink(src)
 		new /obj/item/clothing/shoes/brown(src)
+	if(prob(50))
+		new /obj/item/clothing/head/santahat
+	if(prob(15))
+		new /obj/item/clothing/suit/santa
 
 /obj/structure/closet/wardrobe/black
 	name = "black wardrobe"

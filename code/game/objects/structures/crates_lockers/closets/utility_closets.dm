@@ -58,7 +58,10 @@
 	..()
 	new /obj/item/weapon/tank/oxygen(src)
 	new /obj/item/clothing/mask/gas/coloured(src)
-
+	if(prob(25))
+		new /obj/item/clothing/head/santahat
+	if(prob(15))
+		new /obj/item/clothing/suit/santa
 /*
  * Fire Closet
  */
@@ -75,6 +78,10 @@
 	new /obj/item/weapon/tank/oxygen/red(src)
 	new /obj/item/weapon/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
+	if(prob(30))
+		new /obj/item/clothing/head/santahat
+	if(prob(15))
+		new /obj/item/clothing/suit/santa
 
 /obj/structure/closet/firecloset/full/PopulateContents()
 	new /obj/item/clothing/suit/fire/firefighter(src)
@@ -83,6 +90,10 @@
 	new /obj/item/weapon/tank/oxygen/red(src)
 	new /obj/item/weapon/extinguisher(src)
 	new /obj/item/clothing/head/hardhat/red(src)
+	if(prob(30))
+		new /obj/item/clothing/head/santahat
+	if(prob(15))
+		new /obj/item/clothing/suit/santa
 
 /obj/structure/closet/firecloset/update_icon()
 	if(!opened)
@@ -132,6 +143,10 @@
 			new /obj/item/clothing/head/hardhat/yellow(src)
 		else
 			new /obj/item/clothing/head/hardhat/yellow/visor(src)
+	if(prob(50))
+		new /obj/item/clothing/head/santahat
+	if(prob(15))
+		new /obj/item/clothing/suit/santa
 
 
 /*

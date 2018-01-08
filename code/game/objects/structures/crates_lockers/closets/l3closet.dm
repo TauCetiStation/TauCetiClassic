@@ -55,3 +55,7 @@
 /obj/structure/closet/l3closet/scientist/PopulateContents()
 	new /obj/item/clothing/suit/bio_suit/new_hazmat/scientist(src)
 	new /obj/item/clothing/head/bio_hood/new_hazmat/scientist(src)
+	if(prob(50))
+		new /obj/item/clothing/head/santahat
+	if(prob(20))
+		new /obj/item/clothing/suit/santa
