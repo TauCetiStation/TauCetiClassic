@@ -51,6 +51,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
 	if(current_version < 17)
+		ResetJobs()
 		if(language && species && language != "None")
 			var/datum/language/lang = all_languages[language]
 			if(!(species in lang.allowed_species))

@@ -15,7 +15,7 @@
 	var/native                       // If set, non-native speakers will have trouble speaking.
 	var/list/syllables               // Used when scrambling text for a non-speaker.
 	var/list/space_chance = 55 // Likelihood of getting a space in the random scramble string.
-	var/allowed_species	 // A name of species, Which can use this lang as secondary.
+	var/list/allowed_species	 // A name of species, Which can use this lang as secondary.
 
 
 /datum/language/proc/format_message(message, verb)

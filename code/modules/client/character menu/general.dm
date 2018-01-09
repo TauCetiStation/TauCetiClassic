@@ -272,7 +272,7 @@
 				if("species")
 					var/list/new_species = list(HUMAN)
 					var/prev_species = species
-					var/whitelisted = 0
+					/*var/whitelisted = 0
 
 					if(config.usealienwhitelist) //If we're using the whitelist, make sure to check it!
 						for(var/S in whitelisted_species)
@@ -281,15 +281,16 @@
 								whitelisted = 1
 						if(!whitelisted)
 							alert(user, "You cannot change your species as you need to be whitelisted. If you wish to be whitelisted contact an admin in-game, on the forums, or on IRC.")
-					else //Not using the whitelist? Aliens for everyone!
-						new_species = whitelisted_species
+					else*/ //Not using the whitelist? Aliens for everyone!
+					new_species = whitelisted_species
 
 					species = input("Please select a species", "Character Generation", null) in new_species
 
 					if(prev_species != species)
 						f_style = random_facial_hair_style(gender, species)
 						h_style = random_hair_style(gender, species)
-						if(language)
+						ResetJobs()
+						if(language && language != "None")
 							var/datum/language/lang = all_languages[language]
 							if(!(species in lang.allowed_species))
 								language = "None"
