@@ -636,3 +636,6 @@
 
 /mob/living/carbon/proc/bloody_body(mob/living/source)
 	return
+
+/mob/living/carbon/proc/can_eat(flags = 255)
+	return 1

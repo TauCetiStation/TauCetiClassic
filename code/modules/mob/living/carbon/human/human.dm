@@ -1624,3 +1624,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(BP && (BP.status & ORGAN_ROBOT))
 		return FALSE
 	return species.has_organ[organ_check]
+
+/mob/living/carbon/human/can_eat(flags = 255)
+	return species && (species.dietflags & flags)
