@@ -88,10 +88,7 @@
 				var/datum/transaction/T = new()
 				T.target_name = "[station_account.owner_name] (via [src.name])"
 				T.purpose = "Purchase of haircut"
-				if(transaction_amount > 0)
-					T.amount = "([transaction_amount])"
-				else
-					T.amount = "[transaction_amount]"
+				T.amount = "[transaction_amount]"
 				T.source_terminal = src.name
 				T.date = current_date_string
 				T.time = worldtime2text()
