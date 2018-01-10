@@ -939,6 +939,18 @@ var/global/BSACooldown = 0
 
 	world.Reboot()
 
+/datum/admins/proc/toggle_job_restriction()
+	set category = "Server"
+	set desc="Toggles job restrictions for aliens"
+	set name="Toggle Job Restriction"
+
+	if(!check_rights(R_WHITELIST))
+		return
+	config.use_alien_job_restriction = !config.use_alien_job_restriction
+	to_chat(world, "Job restrictions for xenos was [config.use_alien_job_restriction ? "en" : "dis"]abled.")
+	message_admins("[key_name(usr)] toggled Job restrictions for xenos.")
+	feedback_add_details("admin_verb","TJR") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
 /datum/admins/proc/unprison(mob/M in mob_list)
 	set category = "Admin"
 	set name = "Unprison"
