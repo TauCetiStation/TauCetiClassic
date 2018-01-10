@@ -250,3 +250,5 @@ ANTIGRIEF_ALARM_LEVEL 1
 
 ## Your link to donan informations
 #DONATE_INFO_URL http://you-url
+
+USE_ALIEN_JOB_RESTRICTION
