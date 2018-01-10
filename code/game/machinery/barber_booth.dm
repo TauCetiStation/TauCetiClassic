@@ -33,6 +33,7 @@
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 		if(!anchored)
 			stat |= NOPOWER
+			icon_state = "booth_off"
 		else
 			stat &= ~NOPOWER
 	else if(istype(W, /obj/item/device/pda) && W.GetID())
@@ -63,8 +64,8 @@
 		else
 			open_machine()
 
-/obj/machinery/newscaster/update_icon()
-	if(!ispowered || isbroken)
+/obj/machinery/barber_booth/update_icon()
+	if(stat & (NOPOWER|BROKEN))
 		icon_state = "booth_off"
 		return
 
@@ -111,6 +112,8 @@
 /obj/machinery/barber_booth/attack_hand(mob/user)
 	if(panel_open)
 		return
+	if(!anchored)
+		return
 	else if(state_open)
 		close_machine()
 	else
@@ -136,28 +139,25 @@
 	perform_haircut()
 
 /obj/machinery/barber_booth/proc/perform_haircut()
-	if(occupant && istype(occupant, /mob/living/carbon/human/) && is_operational())
+	if(occupant && ishuman(occupant) && is_operational())
 		var/mob/living/carbon/human/M = occupant
-		if((M.head && (M.head.flags & BLOCKHAIR)) || (M.head && (M.head.flags & HIDEEARS)))
+		if(M.head && M.head.flags & (BLOCKHAIR|HIDEEARS))
 			to_chat(M, "<span class='warning'>Please, take the headgear off!</span>")
 			open_machine()
 			return
 		else
-			var/list/all_hairs = typesof(/datum/sprite_accessory/hair) - /datum/sprite_accessory/hair
-			var/list/all_fhairs = typesof(/datum/sprite_accessory/facial_hair) - /datum/sprite_accessory/facial_hair
 			var/list/hairs = list()
-			for(var/x in all_hairs)
-				var/datum/sprite_accessory/hair/H = new x
-				hairs.Add(H.name)
-				qdel(H)
+			for(var/x in subtypesof(/datum/sprite_accessory/hair))
+				var/datum/sprite_accessory/hair/H = x
+				hairs += initial(H.name)
 			var/list/fhairs = list()
-			for(var/x in all_fhairs)
-				var/datum/sprite_accessory/facial_hair/H = new x
-				fhairs.Add(H.name)
-				qdel(H)
+			for(var/x in subtypesof(/datum/sprite_accessory/facial_hair))
+				var/datum/sprite_accessory/facial_hair/H = x
+				fhairs += initial(H.name)
 			if(emagged)
 				is_working = TRUE
-				spawn(HAIRCUT_TIME)
+				audible_message("[src.name] boozes loudly")
+				if(do_after(M, HAIRCUT_TIME, target = M))
 					audible_message("[src.name] clanks violently")
 					if(prob(50))
 						M.apply_damage(25, BRUTE, BP_HEAD)
@@ -210,4 +210,4 @@
 
 /obj/machinery/barber_booth/Destroy()
 	dropContents()
-	..()
+	return ..()
