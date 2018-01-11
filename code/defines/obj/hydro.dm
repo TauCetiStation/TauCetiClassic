@@ -4,6 +4,10 @@
 	name = "plant analyzer"
 	desc = "A hand-held scanner which reports condition of the plant."
 	icon = 'icons/obj/device.dmi'
+	w_class = 1.0
+	m_amt = 200
+	g_amt = 50
+	origin_tech = "materials=1;biotech=1"
 	icon_state = "hydro"
 	item_state = "plantanalyzer"
 

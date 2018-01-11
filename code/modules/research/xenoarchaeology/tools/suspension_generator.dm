@@ -342,6 +342,18 @@
 	else
 		dir = turn(dir, -90)
 
+/obj/machinery/suspension_gen/verb/ejectid()
+	set name = "Eject ID"
+	set category = "Object"
+	set src in oview(1)
+
+	if(auth_card)
+		auth_card.loc = get_turf(src.loc)
+		auth_card = null
+		update_icon()
+	else
+		to_chat(usr, "<span class='notice'>The [src] is empty.</span>")
+
 /obj/effect/suspension_field
 	name = "energy field"
 	icon = 'icons/effects/effects.dmi'
