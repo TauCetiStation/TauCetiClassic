@@ -105,6 +105,7 @@ datum
 			id = "blood"
 			reagent_state = LIQUID
 			color = "#c80000" // rgb: 200, 0, 0
+			taste_message = "blood"
 
 			reaction_mob(mob/M, method=TOUCH, volume)
 				var/datum/reagent/blood/self = src
@@ -480,6 +481,7 @@ datum
 			description = "A colorless, odorless gas."
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
+			taste_message = null
 
 			custom_metabolism = 0.01
 
@@ -497,6 +499,7 @@ datum
 			id = "copper"
 			description = "A highly ductile metal."
 			color = "#6E3B08" // rgb: 110, 59, 8
+			taste_message = null
 
 			custom_metabolism = 0.01
 
@@ -506,6 +509,7 @@ datum
 			description = "A colorless, odorless, tasteless gas."
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
+			taste_message = null
 
 			custom_metabolism = 0.01
 
@@ -524,6 +528,7 @@ datum
 			description = "A colorless, odorless, nonmetallic, tasteless, highly combustible diatomic gas."
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
+			taste_message = null
 
 			custom_metabolism = 0.01
 
@@ -533,6 +538,7 @@ datum
 			description = "A soft, low-melting solid that can easily be cut with a knife. Reacts violently with water."
 			reagent_state = SOLID
 			color = "#A0A0A0" // rgb: 160, 160, 160
+			taste_message = "bad ideas"
 
 			custom_metabolism = 0.01
 
@@ -543,6 +549,7 @@ datum
 			reagent_state = LIQUID
 			color = "#484848" // rgb: 72, 72, 72
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "druggie poison"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -559,6 +566,7 @@ datum
 			description = "A chemical element with a pungent smell."
 			reagent_state = SOLID
 			color = "#BF8C00" // rgb: 191, 140, 0
+			taste_message = "impulsive decisions"
 
 			custom_metabolism = 0.01
 
@@ -568,6 +576,7 @@ datum
 			description = "A chemical element, the builing block of life."
 			reagent_state = SOLID
 			color = "#1C1300" // rgb: 30, 20, 0
+			taste_message = "like a pencil or something"
 
 			custom_metabolism = 0.01
 
@@ -588,6 +597,7 @@ datum
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "characteristic taste"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -601,6 +611,7 @@ datum
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "toothpaste"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -613,6 +624,7 @@ datum
 			description = "A chemical element, readily reacts with water."
 			reagent_state = SOLID
 			color = "#808080" // rgb: 128, 128, 128
+			taste_message = "horrible misjudgement"
 
 			custom_metabolism = 0.01
 
@@ -622,6 +634,7 @@ datum
 			description = "A chemical element, the backbone of biological energy carriers."
 			reagent_state = SOLID
 			color = "#832828" // rgb: 131, 40, 40
+			taste_message = "misguided choices"
 
 			custom_metabolism = 0.01
 
@@ -632,6 +645,7 @@ datum
 			reagent_state = SOLID
 			color = "#808080" // rgb: 128, 128, 128
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "happiness"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -647,6 +661,7 @@ datum
 			description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 			reagent_state = SOLID
 			color = "#FFFFFF" // rgb: 255, 255, 255
+			taste_message = "sweetness"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -659,6 +674,7 @@ datum
 			description = "Glycerol is a simple polyol compound. Glycerol is sweet-tasting and of low toxicity."
 			reagent_state = LIQUID
 			color = "#808080" // rgb: 128, 128, 128
+			taste_message = "sweetness"
 
 			custom_metabolism = 0.01
 
@@ -668,6 +684,7 @@ datum
 			description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
 			reagent_state = LIQUID
 			color = "#808080" // rgb: 128, 128, 128
+			taste_message = "oil"
 
 			custom_metabolism = 0.01
 
@@ -677,6 +694,7 @@ datum
 			description = "Radium is an alkaline earth metal. It is extremely radioactive."
 			reagent_state = SOLID
 			color = "#C7C7C7" // rgb: 199,199,199
+			taste_message = "bonehurting juice"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -844,6 +862,7 @@ datum
 			reagent_state = SOLID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "metal"
 
 		gold
 			name = "Gold"
@@ -851,6 +870,7 @@ datum
 			description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
 			reagent_state = SOLID
 			color = "#F7C430" // rgb: 247, 196, 48
+			taste_message = "bling"
 
 		silver
 			name = "Silver"
@@ -858,6 +878,7 @@ datum
 			description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
 			reagent_state = SOLID
 			color = "#D0D0D0" // rgb: 208, 208, 208
+			taste_message = "sub-par bling"
 
 		uranium
 			name ="Uranium"
@@ -865,6 +886,7 @@ datum
 			description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
 			reagent_state = SOLID
 			color = "#B8B8C0" // rgb: 184, 184, 192
+			taste_message = "bonehurting juice"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -886,6 +908,7 @@ datum
 			description = "A silvery white and ductile member of the boron group of chemical elements."
 			reagent_state = SOLID
 			color = "#A8A8A8" // rgb: 168, 168, 168
+			taste_message = null
 
 		silicon
 			name = "Silicon"
@@ -893,6 +916,7 @@ datum
 			description = "A tetravalent metalloid, silicon is less reactive than its chemical analog carbon."
 			reagent_state = SOLID
 			color = "#A8A8A8" // rgb: 168, 168, 168
+			taste_message = "a CPU"
 
 		fuel
 			name = "Welding fuel"
@@ -901,6 +925,7 @@ datum
 			reagent_state = LIQUID
 			color = "#660000" // rgb: 102, 0, 0
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "motor oil"
 
 			reaction_obj(var/obj/O, var/volume)
 				var/turf/the_turf = get_turf(O)
@@ -931,6 +956,7 @@ datum
 			reagent_state = LIQUID
 			color = "#A5F0EE" // rgb: 165, 240, 238
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "floor cleaner"
 
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/effect/decal/cleanable))
@@ -993,6 +1019,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1010,6 +1037,7 @@ datum
 			color = "#000055" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
 			custom_metabolism = REAGENTS_METABOLISM * 0.5
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1026,6 +1054,7 @@ datum
 			reagent_state = LIQUID
 			color = "#ffc600" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1042,6 +1071,7 @@ datum
 			reagent_state = LIQUID
 			color = "#ff8000" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE * 0.5
+			taste_message = null
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
@@ -1058,6 +1088,7 @@ datum
 			reagent_state = LIQUID
 			color = "#0080ff" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "oxygen"
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
@@ -1080,6 +1111,7 @@ datum
 			reagent_state = LIQUID
 			color = "#0040ff" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE * 0.5
+			taste_message = "ability to breath"
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
@@ -1100,6 +1132,7 @@ datum
 			description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
 			reagent_state = LIQUID
 			color = "#00b080" // rgb: 200, 165, 220
+			taste_message = null
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
@@ -1122,6 +1155,7 @@ datum
 			description = "Dylovene is a broad-spectrum antitoxin."
 			reagent_state = LIQUID
 			color = "#00a000" // rgb: 200, 165, 220
+			taste_message = null
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
@@ -1138,6 +1172,7 @@ datum
 			description = "It's magic. We don't have to explain it."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
+			taste_message = "admin abuse"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1178,6 +1213,7 @@ datum
 			color = "#99ccff" // rgb: 200, 165, 220
 			custom_metabolism = 0.01
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1199,6 +1235,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1219,6 +1256,7 @@ datum
 			color = "#408000" // rgb: 200, 165, 220
 			custom_metabolism = 0.05
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1233,6 +1271,7 @@ datum
 			color = "#008000" // rgb: 200, 165, 220
 			custom_metabolism = 0.05
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1252,6 +1291,7 @@ datum
 			color = "#8b00ff" // rgb: 200, 165, 220
 			custom_metabolism = 0.05
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1265,6 +1305,7 @@ datum
 			reagent_state = LIQUID
 			color = "#a0dbff" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "carrot"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1285,6 +1326,7 @@ datum
 			reagent_state = LIQUID
 			color = "#561ec3" // rgb: 200, 165, 220
 			overdose = 10
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1307,6 +1349,7 @@ datum
 			custom_metabolism = 0.07
 			var/heal_time = 0
 			var/obj/item/organ/external/External
+			taste_message = "machines"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1370,6 +1413,7 @@ datum
 			reagent_state = LIQUID
 			color = "#bf0000" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
@@ -1387,6 +1431,7 @@ datum
 			color = "#ff4f00" // rgb: 200, 165, 220
 			custom_metabolism = 0.03
 			overdose = REAGENTS_OVERDOSE * 0.5
+			taste_message = "speed"
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
@@ -1401,6 +1446,7 @@ datum
 			description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
 			reagent_state = LIQUID
 			color = "#80bfff" // rgb: 200, 165, 220
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1417,6 +1463,7 @@ datum
 			description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' the cloning process when used in conjunction with a cryo tube."
 			reagent_state = LIQUID
 			color = "#8080ff" // rgb: 200, 165, 220
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1434,6 +1481,7 @@ datum
 			reagent_state = SOLID
 			color = "#669900" // rgb: 102, 153, 0
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1462,6 +1510,7 @@ datum
 			color = "#FFFFFF" // rgb: 200, 165, 220
 			custom_metabolism = 0.01
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1471,6 +1520,7 @@ datum
 			description = "Microscopic construction robots."
 			reagent_state = LIQUID
 			color = "#535E66" // rgb: 83, 94, 102
+			taste_message = "nanomachines, son"
 
 			reaction_mob(mob/M, method=TOUCH, volume)
 				src = null
@@ -1483,6 +1533,7 @@ datum
 			description = "Microbes with an entirely alien cellular structure."
 			reagent_state = LIQUID
 			color = "#535E66" // rgb: 83, 94, 102
+			taste_message = "something alien"
 
 			reaction_mob(mob/M, method=TOUCH, volume)
 				src = null
@@ -1495,6 +1546,7 @@ datum
 			description = "A perfluoronated sulfonic acid that forms a foam when mixed with water."
 			reagent_state = LIQUID
 			color = "#9E6B38" // rgb: 158, 107, 56
+			taste_message = null
 
 		foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
 			name = "Foaming agent"
@@ -1502,6 +1554,7 @@ datum
 			description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
 			reagent_state = SOLID
 			color = "#664B63" // rgb: 102, 75, 99
+			taste_message = null
 
 		nicotine
 			name = "Nicotine"
@@ -1509,6 +1562,7 @@ datum
 			description = "A highly addictive stimulant extracted from the tobacco plant."
 			reagent_state = LIQUID
 			color = "#181818" // rgb: 24, 24, 24
+			taste_message = null
 
 		ammonia
 			name = "Ammonia"
@@ -1516,12 +1570,14 @@ datum
 			description = "A caustic substance commonly used in fertilizer or household cleaners."
 			reagent_state = GAS
 			color = "#404030" // rgb: 64, 64, 48
+			taste_message = "floor cleaner"
 
 		ultraglue
 			name = "Ultra Glue"
 			id = "glue"
 			description = "An extremely powerful bonding agent."
 			color = "#FFFFCC" // rgb: 255, 255, 204
+			taste_message = null
 
 		diethylamine
 			name = "Diethylamine"
@@ -1529,6 +1585,7 @@ datum
 			description = "A secondary amine, mildly corrosive."
 			reagent_state = LIQUID
 			color = "#604030" // rgb: 96, 64, 48
+			taste_message = null
 
 		ethylredoxrazine	// FUCK YOU, ALCOHOL
 			name = "Ethylredoxrazine"
@@ -1537,6 +1594,7 @@ datum
 			reagent_state = SOLID
 			color = "#605048" // rgb: 96, 80, 72
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1557,6 +1615,7 @@ datum
 			color = "#CF3600" // rgb: 207, 54, 0
 			var/toxpwr = 0.7 // Toxins are really weak, but without being treated, last very long.
 			custom_metabolism = 0.1
+			taste_message = "bitterness"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -2020,24 +2079,38 @@ datum
 /////////////////////////Food Reagents////////////////////////////
 // Part of the food code. Nutriment is used instead of the old "heal_amt" code. Also is where all the food
 // 	condiments, additives, and such go.
-		consumable
-			name = "Consumable"
-			id = "consumable"
+/datum/reagent/consumable
+	name = "Consumable"
+	id = "consumable"
 
-			nutriment
-				name = "Nutriment"
-				id = "nutriment"
-				description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
-				reagent_state = SOLID
-				nutriment_factor = 15 * REAGENTS_METABOLISM
-				color = "#664330" // rgb: 102, 67, 48
+/datum/reagent/consumable/on_mob_life(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.can_eat(diet_flags))	//Make sure the species has it's dietflag set, otherwise it can't digest any nutrients
+			H.nutrition += nutriment_factor	// For hunger and fatness
+	..()
 
-				on_mob_life(mob/living/M)
-					if(!..())
-						return
-					if(prob(50))
-						M.heal_bodypart_damage(1, 0)
-					M.nutrition += nutriment_factor	// For hunger and fatness
+/datum/reagent/consumable/nutriment
+	name = "Nutriment"
+	id = "nutriment"
+	description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
+	reagent_state = SOLID
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+	color = "#664330" // rgb: 102, 67, 48
+	taste_message = "bland food"
+
+/datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
+	if(!..())
+		return
+	//if(prob(50))
+	//	M.heal_bodypart_damage(1, 0)
+	//M.nutrition += nutriment_factor	// For hunger and fatness
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.can_eat(diet_flags))	//Make sure the species has it's dietflag set, otherwise it can't digest any nutrients
+			if(prob(50))
+				M.adjustBruteLoss(-1)
+	..()
 /*
 				// If overeaten - vomit and fall down
 				// Makes you feel bad but removes reagents and some effect
@@ -2058,14 +2131,23 @@ datum
 	id = "protein"
 	description = "Various essential proteins and fats commonly found in animal flesh and blood."
 	diet_flags = DIET_CARN | DIET_OMNI
-	//taste_message = "meat"
+	taste_message = "meat"
+
+/datum/reagent/consumable/nutriment/protein/on_mob_life(mob/living/M)
+	if(!..())
+		return
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species.name == "Skrell")
+			H.adjustToxLoss(2)
+	..()
 
 /datum/reagent/consumable/nutriment/plantmatter		// Plant-based biomatter, digestable by herbivores and omnivores, worthless to carnivores
 	name = "Plant-matter"
 	id = "plantmatter"
 	description = "Vitamin-rich fibers and natural sugars commonly found in fresh produce."
-	//diet_flags = DIET_HERB | DIET_OMNI
-	//taste_message = "plant matter"
+	diet_flags = DIET_HERB | DIET_OMNI
+	taste_message = "plant matter"
 
 /datum/reagent/consumable/vitamin			//Helps to regen blood and hunger
 	name = "Vitamin"
@@ -2073,7 +2155,7 @@ datum
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
 	color = "#664330" // rgb: 102, 67, 48
-	//taste_message = null
+	taste_message = null
 
 /datum/reagent/consumable/vitamin/on_mob_life(mob/living/M)
 	if(prob(50))
@@ -2123,6 +2205,7 @@ datum
 	reagent_state = LIQUID
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300" // rgb: 121, 35, 0
+	taste_message = "salt"
 
 /datum/reagent/consumable/ketchup
 	name = "Ketchup"
@@ -2131,6 +2214,7 @@ datum
 	reagent_state = LIQUID
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#731008" // rgb: 115, 16, 8
+	taste_message = "ketchup"
 
 /datum/reagent/consumable/flour
 	name = "Flour"
@@ -2139,6 +2223,7 @@ datum
 	reagent_state = LIQUID
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#F5EAEA" // rgb: 245, 234, 234
+	taste_message = "flour"
 
 /datum/reagent/consumable/capsaicin
 	name = "Capsaicin Oil"
@@ -2147,6 +2232,7 @@ datum
 	reagent_state = LIQUID
 	color = "#B31008" // rgb: 179, 16, 8
 	custom_metabolism = FOOD_METABOLISM
+	taste_message = "<span class='warning'>HOTNESS</span>"
 
 /datum/reagent/consumable/capsaicin/on_mob_life(mob/living/M)
 	if(!..())
@@ -2176,6 +2262,7 @@ datum
 	description = "A chemical agent used for self-defense and in police work."
 	reagent_state = LIQUID
 	color = "#B31008" // rgb: 179, 16, 8
+	taste_message = "<span class='userdanger'>PURE FIRE</span>"
 
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, volume)
 	if(!istype(M, /mob/living))
@@ -2244,6 +2331,7 @@ datum
 	reagent_state = LIQUID
 	color = "#B31008" // rgb: 139, 166, 233
 	custom_metabolism = FOOD_METABOLISM
+	taste_message = "<font color='lightblue'>cold</span>"
 
 /datum/reagent/consumable/frostoil/on_mob_life(mob/living/M)
 	if(!..())
@@ -2267,6 +2355,7 @@ datum
 	reagent_state = SOLID
 	color = "#FFFFFF" // rgb: 255,255,255
 	overdose = REAGENTS_OVERDOSE
+	taste_message = "salt"
 
 /datum/reagent/consumable/blackpepper
 	name = "Black Pepper"
@@ -2274,6 +2363,7 @@ datum
 	description = "A powder ground from peppercorns. *AAAACHOOO*"
 	reagent_state = SOLID
 	// no color (ie, black)
+	taste_message = "pepper"
 
 /datum/reagent/consumable/coco
 	name = "Coco Powder"
@@ -2282,6 +2372,7 @@ datum
 	reagent_state = SOLID
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
+	taste_message = "cocoa"
 
 /datum/reagent/consumable/coco/on_mob_life(mob/living/M)
 	if(!..())
@@ -2295,6 +2386,7 @@ datum
 	reagent_state = LIQUID
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
+	taste_message = "chocolate"
 
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/M)
 	if(!..())
@@ -2348,6 +2440,7 @@ datum
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#FF00FF" // rgb: 255, 0, 255
+	taste_message = "sweetness"
 
 /datum/reagent/consumable/sprinkles/on_mob_life(mob/living/M)
 	if(!..())
@@ -2387,6 +2480,7 @@ datum
 	reagent_state = LIQUID
 	nutriment_factor = 20 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
+	taste_message = "oil"
 
 /datum/reagent/consumable/cornoil/on_mob_life(mob/living/M)
 	if(!..())
@@ -2413,6 +2507,7 @@ datum
 	reagent_state = LIQUID
 	color = "#365E30" // rgb: 54, 94, 48
 	overdose = REAGENTS_OVERDOSE
+	taste_message = null
 
 /datum/reagent/consumable/dry_ramen
 	name = "Dry Ramen"
@@ -2421,6 +2516,7 @@ datum
 	reagent_state = SOLID
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
+	taste_message = "dry ramen coated with what might just be your tears"
 
 /datum/reagent/consumable/dry_ramen/on_mob_life(mob/living/M)
 	if(!..())
@@ -2434,6 +2530,7 @@ datum
 	reagent_state = LIQUID
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
+	taste_message = "ramen"
 
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/M)
 	if(!..())
@@ -2449,6 +2546,7 @@ datum
 	reagent_state = LIQUID
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
+	taste_message = "SPICY ramen"
 
 /datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/M)
 	if(!..())
@@ -2483,6 +2581,7 @@ datum
 	reagent_state = SOLID
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#FFFFFF" // rgb: 0, 0, 0
+	taste_message = "rice"
 
 /datum/reagent/consumable/rice/on_mob_life(mob/living/M)
 	if(!..())
@@ -2496,6 +2595,7 @@ datum
 	reagent_state = LIQUID
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#801E28" // rgb: 128, 30, 40
+	taste_message = "cherry jelly"
 
 /datum/reagent/consumable/cherryjelly/on_mob_life(mob/living/M)
 	if(!..())
@@ -2539,6 +2639,7 @@ datum
 	id = "orangejuice"
 	description = "Both delicious AND rich in Vitamin C, what more do you need?"
 	color = "#E78108" // rgb: 231, 129, 8
+	taste_message = "orange juice"
 
 /datum/reagent/consumable/drink/orangejuice/on_mob_life(mob/living/M)
 	if(!..())
@@ -2551,6 +2652,7 @@ datum
 	id = "tomatojuice"
 	description = "Tomatoes made into juice. What a waste of big, juicy tomatoes, huh?"
 	color = "#731008" // rgb: 115, 16, 8
+	taste_message = "tomato juice"
 
 /datum/reagent/consumable/drink/tomatojuice/on_mob_life(mob/living/M)
 	if(!..())
@@ -2563,6 +2665,8 @@ datum
 	id = "limejuice"
 	description = "The sweet-sour juice of limes."
 	color = "#365E30" // rgb: 54, 94, 48
+	taste_message = "lime juice"
+
 /datum/reagent/consumable/drink/limejuice/on_mob_life(mob/living/M)
 	if(!..())
 		return
@@ -2574,6 +2678,7 @@ datum
 	id = "carrotjuice"
 	description = "It is just like a carrot but without crunching."
 	color = "#973800" // rgb: 151, 56, 0
+	taste_message = "carrot juice"
 
 /datum/reagent/consumable/drink/carrotjuice/on_mob_life(mob/living/M)
 	if(!..())
@@ -2595,18 +2700,21 @@ datum
 	id = "berryjuice"
 	description = "A delicious blend of several different kinds of berries."
 	color = "#990066" // rgb: 153, 0, 102
+	taste_message = "berry juice"
 
 /datum/reagent/consumable/drink/grapejuice
 	name = "Grape Juice"
 	id = "grapejuice"
 	description = "It's grrrrrape!"
 	color = "#863333" // rgb: 134, 51, 51
+	taste_message = "grape juice"
 
 /datum/reagent/consumable/drink/grapesoda
 	name = "Grape Soda"
 	id = "grapesoda"
 	description = "Grapes made into a fine drank."
 	color = "#421C52" // rgb: 98, 57, 53
+	taste_message = "grape juice"
 	adj_drowsy 	= 	-3
 
 /datum/reagent/consumable/drink/poisonberryjuice
@@ -2614,6 +2722,7 @@ datum
 	id = "poisonberryjuice"
 	description = "A tasty juice blended from various kinds of very deadly and toxic berries."
 	color = "#863353" // rgb: 134, 51, 83
+	taste_message = "bitterness"
 
 /datum/reagent/consumable/drink/poisonberryjuice/on_mob_life(mob/living/M)
 	if(!..())
@@ -2625,23 +2734,27 @@ datum
 	id = "watermelonjuice"
 	description = "Delicious juice made from watermelon."
 	color = "#863333" // rgb: 134, 51, 51
+	taste_message = "watermelon juice"
 
 /datum/reagent/consumable/drink/lemonjuice
 	name = "Lemon Juice"
 	id = "lemonjuice"
 	description = "This juice is VERY sour."
 	color = "#863333" // rgb: 175, 175, 0
+	taste_message = "sour"
 
 /datum/reagent/consumable/drink/banana
 	name = "Banana Juice"
 	id = "banana"
 	description = "The raw essence of a banana."
 	color = "#863333" // rgb: 175, 175, 0
+	taste_message = "banana juice"
 
 /datum/reagent/consumable/drink/nothing
 	name = "Nothing"
 	id = "nothing"
 	description = "Absolutely nothing."
+	taste_message = "nothing... how?"
 
 /datum/reagent/consumable/drink/potato_juice
 	name = "Potato Juice"
@@ -2649,12 +2762,14 @@ datum
 	description = "Juice of the potato. Bleh."
 	nutriment_factor = 2 * FOOD_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
+	taste_message = "puke, you're pretty sure"
 
 /datum/reagent/consumable/drink/milk
 	name = "Milk"
 	id = "milk"
 	description = "An opaque white liquid produced by the mammary glands of mammals."
 	color = "#DFDFDF" // rgb: 223, 223, 223
+	taste_message = "milk"
 
 /datum/reagent/consumable/drink/milk/on_mob_life(mob/living/M)
 	if(!..())
@@ -2669,18 +2784,21 @@ datum
 	id = "soymilk"
 	description = "An opaque white liquid made from soybeans."
 	color = "#DFDFC7" // rgb: 223, 223, 199
+	taste_message = "fake milk"
 
 /datum/reagent/consumable/drink/milk/cream
 	name = "Cream"
 	id = "cream"
 	description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
 	color = "#DFD7AF" // rgb: 223, 215, 175
+	taste_message = "cream"
 
 /datum/reagent/consumable/drink/grenadine
 	name = "Grenadine Syrup"
 	id = "grenadine"
 	description = "Made in the modern day with proper pomegranate substitute. Who uses real fruit, anyways?"
 	color = "#FF004F" // rgb: 255, 0, 79
+	taste_message = "grenadine"
 
 /datum/reagent/consumable/drink/hot_coco
 	name = "Hot Chocolate"
@@ -2689,6 +2807,7 @@ datum
 	nutriment_factor = 2 * FOOD_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
 	adj_temp = 5
+	taste_message = "chocolate"
 
 /datum/reagent/consumable/drink/coffee
 	name = "Coffee"
@@ -2699,6 +2818,7 @@ datum
 	adj_drowsy = -3
 	adj_sleepy = -2
 	adj_temp = 25
+	taste_message = "coffee"
 
 /datum/reagent/consumable/drink/coffee/on_mob_life(mob/living/M)
 	if(!..())
@@ -2714,6 +2834,7 @@ datum
 	description = "Coffee and ice, refreshing and cool."
 	color = "#102838" // rgb: 16, 40, 56
 	adj_temp = -5
+	taste_message = "coffee"
 
 /datum/reagent/consumable/drink/coffee/soy_latte
 	name = "Soy Latte"
@@ -2754,6 +2875,7 @@ datum
 	adj_drowsy = -1
 	adj_sleepy = -3
 	adj_temp = 20
+	taste_message = "tea"
 
 /datum/reagent/consumable/drink/tea/on_mob_life(mob/living/M)
 	if(!..())
@@ -2771,6 +2893,7 @@ datum
 /datum/reagent/consumable/drink/cold
 	name = "Cold drink"
 	adj_temp = -5
+	taste_message = null
 
 /datum/reagent/consumable/drink/cold/tonic
 	name = "Tonic Water"
@@ -2803,6 +2926,7 @@ datum
 	reagent_state = LIQUID
 	color = "#100800" // rgb: 16, 8, 0
 	adj_drowsy 	= 	-3
+	taste_message = "cola"
 
 /datum/reagent/consumable/drink/cold/nuka_cola
 	name = "Nuka Cola"
@@ -2810,6 +2934,7 @@ datum
 	description = "Cola, cola never changes."
 	color = "#100800" // rgb: 16, 8, 0
 	adj_sleepy = -2
+	taste_message = "cola"
 
 /datum/reagent/consumable/drink/cold/nuka_cola/on_mob_life(mob/living/M)
 	if(!..())
@@ -2826,6 +2951,7 @@ datum
 	color = "#102000" // rgb: 16, 32, 0
 	adj_drowsy = -7
 	adj_sleepy = -1
+	taste_message = "lime soda"
 
 /datum/reagent/consumable/drink/cold/dr_gibb
 	name = "Dr. Gibb"
@@ -2833,6 +2959,7 @@ datum
 	description = "A delicious blend of 42 different flavours"
 	color = "#102000" // rgb: 16, 32, 0
 	adj_drowsy = -6
+	taste_message = "cherry soda"
 
 /datum/reagent/consumable/drink/cold/space_up
 	name = "Space-Up"
@@ -2840,6 +2967,7 @@ datum
 	description = "Tastes like a hull breach in your mouth."
 	color = "#202800" // rgb: 32, 40, 0
 	adj_temp = -8
+	taste_message = "lemon soda"
 
 /datum/reagent/consumable/drink/cold/lemon_lime
 	name = "Lemon Lime"
@@ -2847,18 +2975,21 @@ datum
 	id = "lemon_lime"
 	color = "#878F00" // rgb: 135, 40, 0
 	adj_temp = -8
+	taste_message = "citrus soda"
 
 /datum/reagent/consumable/drink/cold/lemonade
 	name = "Lemonade"
 	description = "Oh the nostalgia..."
 	id = "lemonade"
 	color = "#FFFF00" // rgb: 255, 255, 0
+	taste_message = "lemonade"
 
 /datum/reagent/consumable/drink/cold/kiraspecial
 	name = "Kira Special"
 	description = "Long live the guy who everyone had mistaken for a girl. Baka!"
 	id = "kiraspecial"
 	color = "#CCCC99" // rgb: 204, 204, 153
+	taste_message = "citrus soda"
 
 /datum/reagent/consumable/drink/cold/brownstar
 	name = "Brown Star"
@@ -2866,6 +2997,7 @@ datum
 	id = "brownstar"
 	color = "#9F3400" // rgb: 159, 052, 000
 	adj_temp = - 2
+	taste_message = "orange soda"
 
 /datum/reagent/consumable/drink/cold/milkshake
 	name = "Milkshake"
@@ -2873,6 +3005,7 @@ datum
 	id = "milkshake"
 	color = "#AEE5E4" // rgb" 174, 229, 228
 	adj_temp = -9
+	taste_message = "milkshake"
 
 /datum/reagent/consumable/drink/cold/milkshake/on_mob_life(mob/living/M)
 	if(!..())
@@ -2903,6 +3036,7 @@ datum
 	description = "The secret of the sanctuary of the Libarian..."
 	id = "rewriter"
 	color = "#485000" // rgb:72, 080, 0
+	taste_message = "coffee...soda?"
 
 /datum/reagent/consumable/drink/cold/rewriter/on_mob_life(var/mob/living/M as mob)
 	if(!..())
@@ -2917,6 +3051,7 @@ datum
 	color = "#FF8CFF" // rgb: 255, 140, 255
 	custom_metabolism = FOOD_METABOLISM
 	nutriment_factor = 1 * FOOD_METABOLISM
+	taste_message = "healthy dietary choices"
 
 /datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/M)
 	if(!..())
@@ -2943,6 +3078,7 @@ datum
 	description = "Nuclear proliferation never tasted so good."
 	reagent_state = LIQUID
 	color = "#666300" // rgb: 102, 99, 0
+	taste_message = "fruity alcohol"
 
 /datum/reagent/consumable/atomicbomb/on_mob_life(mob/living/M)
 	if(!..())
@@ -2969,6 +3105,7 @@ datum
 	description = "Whoah, this stuff looks volatile!"
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
+	taste_message = "the number fourty two"
 
 /datum/reagent/consumable/gargle_blaster/on_mob_life(mob/living/M)
 	if(!..())
@@ -2994,6 +3131,7 @@ datum
 	description = "A strong neurotoxin that puts the subject into a death-like state."
 	reagent_state = LIQUID
 	color = "#2E2E61" // rgb: 46, 46, 97
+	taste_message = "brain damageeeEEeee"
 
 /datum/reagent/consumable/neurotoxin/on_mob_life(mob/living/M)
 	if(!..())
@@ -3089,6 +3227,7 @@ datum
 	var/confused_start = 150	//amount absorbed after which mob starts confusing directions
 	var/blur_start = 300	//amount absorbed after which mob starts getting blurred vision
 	var/pass_out = 400	//amount absorbed after which mob starts passing out
+	taste_message = "liquid fire"
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/M, alien)
 	if(!..())
@@ -3169,6 +3308,7 @@ datum
 	color = "#FBBF0D" // rgb: 251, 191, 13
 	boozepwr = 1
 	nutriment_factor = 1 * FOOD_METABOLISM
+	taste_message = "beer"
 
 /datum/reagent/consumable/ethanol/beer/on_mob_life(mob/living/M)
 	if(!..())
@@ -3206,6 +3346,7 @@ datum
 	boozepwr = 2
 	dizzy_adj = 4
 	slur_start = 30		//amount absorbed after which mob starts slurring
+	taste_message = "class"
 
 /datum/reagent/consumable/ethanol/thirteenloko
 	name = "Thirteen Loko"
@@ -3214,6 +3355,7 @@ datum
 	color = "#102000" // rgb: 16, 32, 0
 	boozepwr = 2
 	nutriment_factor = 1 * FOOD_METABOLISM
+	taste_message = "party"
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/M)
 	if(!..())
@@ -3242,6 +3384,7 @@ datum
 	color = "#895C4C" // rgb: 137, 92, 76
 	boozepwr = 1
 	nutriment_factor = 2 * FOOD_METABOLISM
+	taste_message = "bilk"
 
 /datum/reagent/consumable/ethanol/threemileisland
 	name = "Three Mile Island Iced Tea"
@@ -3249,6 +3392,7 @@ datum
 	description = "Made for a woman, strong enough for a man."
 	color = "#666340" // rgb: 102, 99, 64
 	boozepwr = 5
+	taste_message = "fruity alcohol"
 
 /datum/reagent/consumable/ethanol/threemileisland/on_mob_life(mob/living/M)
 	if(!..())
@@ -3262,6 +3406,7 @@ datum
 	color = "#CDD1DA" // rgb: 205, 209, 218
 	boozepwr = 1
 	dizzy_adj = 3
+	taste_message = "gin"
 
 /datum/reagent/consumable/ethanol/rum
 	name = "Rum"
@@ -3269,6 +3414,7 @@ datum
 	description = "Yohoho and all that."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 1.5
+	taste_message = "rum"
 
 /datum/reagent/consumable/ethanol/tequilla
 	name = "Tequila"
@@ -3276,6 +3422,7 @@ datum
 	description = "A strong and mildly flavoured, mexican produced spirit. Feeling thirsty hombre?"
 	color = "#FFFF91" // rgb: 255, 255, 145
 	boozepwr = 2
+	taste_message = "tequilla"
 
 /datum/reagent/consumable/ethanol/vermouth
 	name = "Vermouth"
@@ -3283,6 +3430,7 @@ datum
 	description = "You suddenly feel a craving for a martini..."
 	color = "#91FF91" // rgb: 145, 255, 145
 	boozepwr = 1.5
+	taste_message = "vermouth"
 
 /datum/reagent/consumable/ethanol/wine
 	name = "Wine"
@@ -3293,6 +3441,7 @@ datum
 	dizzy_adj = 2
 	slur_start = 65			//amount absorbed after which mob starts slurring
 	confused_start = 145	//amount absorbed after which mob starts confusing directions
+	taste_message = "wine"
 
 /datum/reagent/consumable/ethanol/cognac
 	name = "Cognac"
@@ -3302,6 +3451,7 @@ datum
 	boozepwr = 1.5
 	dizzy_adj = 4
 	confused_start = 115	//amount absorbed after which mob starts confusing directions
+	taste_message = "cognac"
 
 /datum/reagent/consumable/ethanol/hooch
 	name = "Hooch"
@@ -3313,6 +3463,7 @@ datum
 	slurr_adj = 5
 	slur_start = 35			//amount absorbed after which mob starts slurring
 	confused_start = 90	//amount absorbed after which mob starts confusing directions
+	taste_message = "puke"
 
 /datum/reagent/consumable/ethanol/ale
 	name = "Ale"
@@ -3320,6 +3471,7 @@ datum
 	description = "A dark alchoholic beverage made by malted barley and yeast."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 1
+	taste_message = "ale"
 
 /datum/reagent/consumable/ethanol/absinthe
 	name = "Absinthe"
@@ -3330,6 +3482,7 @@ datum
 	dizzy_adj = 5
 	slur_start = 15
 	confused_start = 30
+	taste_message = "absinthe"
 
 
 /datum/reagent/consumable/ethanol/pwine
@@ -3341,6 +3494,7 @@ datum
 	dizzy_adj = 1
 	slur_start = 1
 	confused_start = 1
+	taste_message = "bitter wine"
 
 /datum/reagent/consumable/ethanol/pwine/on_mob_life(mob/living/M)
 	if(!..())
@@ -3406,6 +3560,7 @@ datum
 	description = "Popular with the sailors. Not very popular with everyone else."
 	color = "#F09F42" // rgb: 240, 159, 66
 	boozepwr = 1
+	taste_message = "rum"
 
 /datum/reagent/consumable/ethanol/deadrum/on_mob_life(mob/living/M)
 	if(!..())
@@ -3418,6 +3573,7 @@ datum
 	description = "Anime's favorite drink."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 2
+	taste_message = "sake"
 
 
 /////////////////////////////////////////////////////////////////cocktail entities//////////////////////////////////////////////
@@ -3450,6 +3606,7 @@ datum
 	description = "Rum, mixed with cola. Viva la revolucion."
 	color = "#3E1B00" // rgb: 62, 27, 0
 	boozepwr = 1.5
+	taste_message = "fruity alcohol"
 
 /datum/reagent/consumable/ethanol/whiskey_cola
 	name = "Whiskey Cola"
@@ -3457,6 +3614,7 @@ datum
 	description = "Whiskey, mixed with cola. Surprisingly refreshing."
 	color = "#3E1B00" // rgb: 62, 27, 0
 	boozepwr = 2
+	taste_message = "whiskey and coke"
 
 /datum/reagent/consumable/ethanol/martini
 	name = "Classic Martini"
@@ -3464,6 +3622,7 @@ datum
 	description = "Vermouth with Gin. Not quite how 007 enjoyed it, but still delicious."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 2
+	taste_message = "martini"
 
 /datum/reagent/consumable/ethanol/vodkamartini
 	name = "Vodka Martini"
@@ -3472,12 +3631,14 @@ datum
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 4
 
+
 /datum/reagent/consumable/ethanol/white_russian
 	name = "White Russian"
 	id = "whiterussian"
 	description = "That's just, like, your opinion, man..."
 	color = "#A68340" // rgb: 166, 131, 64
 	boozepwr = 3
+	taste_message = "creamy alcohol"
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail
 	name = "Screwdriver"
@@ -3485,6 +3646,7 @@ datum
 	description = "Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious."
 	color = "#A68310" // rgb: 166, 131, 16
 	boozepwr = 3
+	taste_message = "fruity alcohol"
 
 /datum/reagent/consumable/ethanol/booger
 	name = "Booger"
@@ -3492,6 +3654,7 @@ datum
 	description = "Ewww..."
 	color = "#8CFF8C" // rgb: 140, 255, 140
 	boozepwr = 1.5
+	taste_message = "sweet alcohol"
 
 /datum/reagent/consumable/ethanol/bloody_mary
 	name = "Bloody Mary"
@@ -3499,6 +3662,7 @@ datum
 	description = "A strange yet pleasurable mixture made of vodka, tomato and lime juice. Or at least you THINK the red stuff is tomato juice."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 3
+	taste_message = "tomatoes with booze"
 
 /datum/reagent/consumable/ethanol/brave_bull
 	name = "Brave Bull"
@@ -3506,6 +3670,7 @@ datum
 	description = "It's just as effective as Dutch-Courage!."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 3
+	taste_message = "sweet alcohol"
 
 /datum/reagent/consumable/ethanol/tequilla_sunrise
 	name = "Tequila Sunrise"
@@ -3513,6 +3678,7 @@ datum
 	description = "Tequila and orange juice. Much like a Screwdriver, only Mexican~"
 	color = "#FFE48C" // rgb: 255, 228, 140
 	boozepwr = 2
+	taste_message = "fruity alcohol"
 
 /datum/reagent/consumable/ethanol/toxins_special
 	name = "Toxins Special"
@@ -3521,6 +3687,7 @@ datum
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 5
+	taste_message = "FIRE"
 
 /datum/reagent/consumable/ethanol/toxins_special/on_mob_life(mob/living/M)
 	if(!..())
@@ -3535,6 +3702,7 @@ datum
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 4
+	taste_message = "THE LAW"
 
 /datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/M)
 	if(!..())
@@ -3547,6 +3715,7 @@ datum
 	description = "Whiskey-imbued cream, what else would you expect from the Irish."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 2
+	taste_message = "creamy alcohol"
 
 /datum/reagent/consumable/ethanol/manly_dorf
 	name = "The Manly Dorf"
@@ -3554,6 +3723,7 @@ datum
 	description = "Beer and Ale, brought together in a delicious mix. Intended for true men only."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 2
+	taste_message = "manliness"
 
 /datum/reagent/consumable/ethanol/longislandicedtea
 	name = "Long Island Iced Tea"
@@ -3561,6 +3731,7 @@ datum
 	description = "The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 4
+	taste_message = "fruity alcohol"
 
 /datum/reagent/consumable/ethanol/moonshine
 	name = "Moonshine"
@@ -3568,6 +3739,7 @@ datum
 	description = "You've really hit rock bottom now... your liver packed its bags and left last night."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 4
+	taste_message = "prohibition"
 
 /datum/reagent/consumable/ethanol/b52
 	name = "B-52"
@@ -3575,6 +3747,7 @@ datum
 	description = "Coffee, Irish Cream, and cognac. You will get bombed."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 4
+	taste_message = "creamy alcohol"
 
 /datum/reagent/consumable/ethanol/irishcoffee
 	name = "Irish Coffee"
@@ -3582,6 +3755,7 @@ datum
 	description = "Coffee, and alcohol. More fun than a Mimosa to drink in the morning."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 3
+	taste_message = "coffee and booze"
 
 /datum/reagent/consumable/ethanol/margarita
 	name = "Margarita"
@@ -3589,6 +3763,7 @@ datum
 	description = "On the rocks with salt on the rim. Arriba~!"
 	color = "#8CFF8C" // rgb: 140, 255, 140
 	boozepwr = 3
+	taste_message = "fruity alcohol"
 
 /datum/reagent/consumable/ethanol/black_russian
 	name = "Black Russian"
@@ -3596,6 +3771,7 @@ datum
 	description = "For the lactose-intolerant. Still as classy as a White Russian."
 	color = "#360000" // rgb: 54, 0, 0
 	boozepwr = 3
+	taste_message = "sweet alcohol"
 
 /datum/reagent/consumable/ethanol/manhattan
 	name = "Manhattan"
@@ -3603,6 +3779,7 @@ datum
 	description = "The Detective's undercover drink of choice. He never could stomach gin..."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 3
+	taste_message = "bitter alcohol"
 
 /datum/reagent/consumable/ethanol/manhattan_proj
 	name = "Manhattan Project"
@@ -3610,6 +3787,7 @@ datum
 	description = "A scientist's drink of choice, for pondering ways to blow up the station."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 5
+	taste_message = "bitter alcohol"
 
 /datum/reagent/consumable/ethanol/manhattan_proj/on_mob_life(mob/living/M)
 	if(!..())
@@ -3622,6 +3800,7 @@ datum
 	description = "For the more refined griffon."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 3
+	taste_message = "mediocrity"
 
 /datum/reagent/consumable/ethanol/antifreeze
 	name = "Anti-freeze"
@@ -3629,6 +3808,7 @@ datum
 	description = "Ultimate refreshment."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 4
+	taste_message = "poor life choices"
 
 /datum/reagent/consumable/ethanol/antifreeze/on_mob_life(mob/living/M)
 	if(!..())
@@ -3642,6 +3822,7 @@ datum
 	description = "Barefoot and pregnant"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 1.5
+	taste_message = "sweet alcohol"
 
 /datum/reagent/consumable/ethanol/snowwhite
 	name = "Snow White"
@@ -3649,6 +3830,7 @@ datum
 	description = "A cold refreshment"
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	boozepwr = 1.5
+	taste_message = "refreshing alcohol"
 
 /datum/reagent/consumable/ethanol/melonliquor
 	name = "Melon Liquor"
@@ -3656,6 +3838,7 @@ datum
 	description = "A relatively sweet and fruity 46 proof liquor."
 	color = "#138808" // rgb: 19, 136, 8
 	boozepwr = 1
+	taste_message = "sweet alcohol"
 
 /datum/reagent/consumable/ethanol/bluecuracao
 	name = "Blue Curacao"
@@ -3663,6 +3846,7 @@ datum
 	description = "Exotically blue, fruity drink, distilled from oranges."
 	color = "#0000CD" // rgb: 0, 0, 205
 	boozepwr = 1.5
+	taste_message = "sweet alcohol"
 
 /datum/reagent/consumable/ethanol/suidream
 	name = "Sui Dream"
@@ -3670,6 +3854,7 @@ datum
 	description = "Comprised of: White soda, blue curacao, melon liquor."
 	color = "#00A86B" // rgb: 0, 168, 107
 	boozepwr = 0.5
+	taste_message = "sweet alcohol"
 
 /datum/reagent/consumable/ethanol/demonsblood
 	name = "Demons Blood"
@@ -3677,6 +3862,7 @@ datum
 	description = "AHHHH!!!!"
 	color = "#820000" // rgb: 130, 0, 0
 	boozepwr = 3
+	taste_message = "<span class='warning'>evil</span>"
 
 /datum/reagent/consumable/ethanol/vodkatonic
 	name = "Vodka and Tonic"
@@ -3686,6 +3872,7 @@ datum
 	boozepwr = 3
 	dizzy_adj = 4
 	slurr_adj = 3
+	taste_message = "fizzy alcohol"
 
 /datum/reagent/consumable/ethanol/ginfizz
 	name = "Gin Fizz"
@@ -3695,6 +3882,7 @@ datum
 	boozepwr = 1.5
 	dizzy_adj = 4
 	slurr_adj = 3
+	taste_message = "fizzy alcohol"
 
 /datum/reagent/consumable/ethanol/bahama_mama
 	name = "Bahama mama"
@@ -3702,6 +3890,7 @@ datum
 	description = "Tropical cocktail."
 	color = "#FF7F3B" // rgb: 255, 127, 59
 	boozepwr = 2
+	taste_message = "fruity alcohol"
 
 /datum/reagent/consumable/ethanol/singulo
 	name = "Singulo"
@@ -3711,6 +3900,7 @@ datum
 	boozepwr = 5
 	dizzy_adj = 15
 	slurr_adj = 15
+	taste_message = "infinity"
 
 /datum/reagent/consumable/ethanol/sbiten
 	name = "Sbiten"
@@ -3718,6 +3908,7 @@ datum
 	description = "A spicy Vodka! Might be a little hot for the little guys!"
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 3
+	taste_message = "spicy alcohol"
 
 /datum/reagent/consumable/ethanol/sbiten/on_mob_life(mob/living/M)
 	if(!..())
@@ -3731,6 +3922,7 @@ datum
 	description = "Creepy time!"
 	color = "#A68310" // rgb: 166, 131, 16
 	boozepwr = 3
+	taste_message = "blood"
 
 /datum/reagent/consumable/ethanol/red_mead
 	name = "Red Mead"
@@ -3738,6 +3930,7 @@ datum
 	description = "The true Viking's drink! Even though it has a strange red color."
 	color = "#C73C00" // rgb: 199, 60, 0
 	boozepwr = 1.5
+	taste_message = "blood"
 
 /datum/reagent/consumable/ethanol/mead
 	name = "Mead"
@@ -3747,6 +3940,7 @@ datum
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 1.5
 	nutriment_factor = 1 * FOOD_METABOLISM
+	taste_message = "sweet alcohol"
 
 /datum/reagent/consumable/ethanol/iced_beer
 	name = "Iced Beer"
@@ -3754,6 +3948,7 @@ datum
 	description = "A beer which is so cold the air around it freezes."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 1
+	taste_message = "refreshing alcohol"
 
 /datum/reagent/consumable/ethanol/iced_beer/on_mob_life(mob/living/M)
 	if(!..())
@@ -3768,6 +3963,7 @@ datum
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 0.5
+	taste_message = "rum"
 
 /datum/reagent/consumable/ethanol/aloe
 	name = "Aloe"
@@ -3775,6 +3971,7 @@ datum
 	description = "So very, very, very good."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 3
+	taste_message = "sweet alcohol"
 
 /datum/reagent/consumable/ethanol/andalusia
 	name = "Andalusia"
@@ -3783,12 +3980,14 @@ datum
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 3
 
+
 /datum/reagent/consumable/ethanol/alliescocktail
 	name = "Allies Cocktail"
 	id = "alliescocktail"
 	description = "A drink made from your allies, not as sweet as when made from your enemies."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 2
+	taste_message = "bitter alcohol"
 
 /datum/reagent/consumable/ethanol/acid_spit
 	name = "Acid Spit"
@@ -3797,6 +3996,7 @@ datum
 	reagent_state = LIQUID
 	color = "#365000" // rgb: 54, 80, 0
 	boozepwr = 1.5
+	taste_message = "PAIN"
 
 /datum/reagent/consumable/ethanol/amasec
 	name = "Amasec"
@@ -3805,6 +4005,7 @@ datum
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 2
+	taste_message = "a stunbaton"
 
 /datum/reagent/consumable/ethanol/changelingsting
 	name = "Changeling Sting"
@@ -3812,6 +4013,7 @@ datum
 	description = "You take a tiny sip and feel a burning sensation..."
 	color = "#2E6671" // rgb: 46, 102, 113
 	boozepwr = 5
+	taste_message = "a tiny prick"
 
 /datum/reagent/consumable/ethanol/irishcarbomb
 	name = "Irish Car Bomb"
@@ -3820,6 +4022,7 @@ datum
 	color = "#2E6671" // rgb: 46, 102, 113
 	boozepwr = 3
 	dizzy_adj = 5
+	taste_message = "creamy alcohol"
 
 /datum/reagent/consumable/ethanol/syndicatebomb
 	name = "Syndicate Bomb"
@@ -3827,6 +4030,7 @@ datum
 	description = "Tastes like terrorism!"
 	color = "#2E6671" // rgb: 46, 102, 113
 	boozepwr = 5
+	taste_message = "a job offer"
 
 /datum/reagent/consumable/ethanol/erikasurprise
 	name = "Erika Surprise"
@@ -3834,6 +4038,7 @@ datum
 	description = "The surprise is it's green!"
 	color = "#2E6671" // rgb: 46, 102, 113
 	boozepwr = 3
+	taste_message = "sweet alcohol"
 
 /datum/reagent/consumable/ethanol/driestmartini
 	name = "Driest Martini"
@@ -3842,6 +4047,7 @@ datum
 	nutriment_factor = 1 * FOOD_METABOLISM
 	color = "#2E6671" // rgb: 46, 102, 113
 	boozepwr = 4
+	taste_message = "bitter alcohol"
 
 /datum/reagent/consumable/ethanol/bananahonk
 	name = "Banana Mama"
@@ -3850,6 +4056,7 @@ datum
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#FFFF91" // rgb: 255, 255, 140
 	boozepwr = 4
+	taste_message = "honks"
 
 /datum/reagent/consumable/ethanol/silencer
 	name = "Silencer"
@@ -3858,6 +4065,7 @@ datum
 	nutriment_factor = 1 * FOOD_METABOLISM
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 4
+	taste_message = "mphhhh"
 
 /datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/M)
 	if(!..())
@@ -3885,6 +4093,7 @@ datum
 	nutriment_factor = 0.2
 	color = "#ffffff"
 	custom_metabolism = 0.2
+	taste_message = "bitterness"
 
 /datum/reagent/luminophore
 	name = "Luminophore"
@@ -3893,6 +4102,7 @@ datum
 	reagent_state = LIQUID
 	color = "#ffffff"
 	custom_metabolism = 0.2
+	taste_message = "bitterness"
 
 /datum/reagent/luminophore/on_mob_life(mob/living/M)
 	if(!..())
@@ -3911,6 +4121,7 @@ datum
 	description = "Friendly microscopic construction robots."
 	reagent_state = LIQUID
 	color = "#535E66" //rgb: 83, 94, 102
+	taste_message = "nanomachines, son"
 
 /datum/reagent/nanobots
 	name = "Nanobots"
@@ -3918,6 +4129,7 @@ datum
 	description = "Microscopic robots intended for use in humans. Must be loaded with further chemicals to be useful."
 	reagent_state = LIQUID
 	color = "#3E3959" //rgb: 62, 57, 89
+	taste_message = "nanomachines, son"
 
 //Great healing powers. Metabolizes extremely slowly, but gets used up when it heals damage.
 //Dangerous in amounts over 5 units, healing that occurs while over 5 units adds to a counter. That counter affects gib chance. Guaranteed gib over 20 units.
@@ -3930,6 +4142,7 @@ datum
 	custom_metabolism = 0.005
 	var/spawning_horror = 0
 	var/percent_machine = 0
+	taste_message = "nanomachines, son"
 
 /datum/reagent/mednanobots/on_mob_life(mob/living/M)
 	if(!..())
@@ -4100,6 +4313,7 @@ datum
 	color = "#792300" //rgb: 207, 54, 0
 	custom_metabolism = 0.01
 	data = 1 //Used as a tally
+	taste_message = "DEATH"
 
 /datum/reagent/chefspecial/on_mob_life(mob/living/M, alien)
 	if(!..() || (alien && alien == IS_DIONA))
