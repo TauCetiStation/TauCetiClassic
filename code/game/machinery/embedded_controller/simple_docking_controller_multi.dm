@@ -3,7 +3,7 @@
 #define STATE_UNDOCKING		2
 #define STATE_DOCKED		3
 
-/obj/machinery/embedded_controller/radio/simple_docking_controller/multi
+/obj/machinery/embedded_controller/radio/simple_docking_controller/multi_slave
 	var/master_tag //for mapping
 	progtype = /datum/computer/file/embedded_program/docking/simple/multi
 
@@ -16,8 +16,8 @@
 /datum/computer/file/embedded_program/docking/simple/multi/New(obj/machinery/embedded_controller/M)
 	..()
 
-	if (istype(M, /obj/machinery/embedded_controller/radio/simple_docking_controller/multi))	//if our parent controller is the right type, then we can auto-init stuff at construction
-		var/obj/machinery/embedded_controller/radio/simple_docking_controller/multi/controller = M
+	if (istype(M, /obj/machinery/embedded_controller/radio/simple_docking_controller/multi_slave))	//if our parent controller is the right type, then we can auto-init stuff at construction
+		var/obj/machinery/embedded_controller/radio/simple_docking_controller/multi_slave/controller = M
 		master_tag = controller.master_tag
 
 /datum/computer/file/embedded_program/docking/simple/multi/receive_signal(datum/signal/signal, receive_method, receive_param)

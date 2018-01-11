@@ -118,8 +118,8 @@
 /datum/computer/file/embedded_program/airlock/multi_docking/New(obj/machinery/embedded_controller/M)
 	..()
 
-	if (istype(M, /obj/machinery/embedded_controller/radio/airlock/docking_port_multi))	//if our parent controller is the right type, then we can auto-init stuff at construction
-		var/obj/machinery/embedded_controller/radio/airlock/docking_port_multi/controller = M
+	if (istype(M, /obj/machinery/embedded_controller/radio/airlock/docking_port_multi_slave))	//if our parent controller is the right type, then we can auto-init stuff at construction
+		var/obj/machinery/embedded_controller/radio/airlock/docking_port_multi_slave/controller = M
 		master_tag = controller.master_tag
 
 /datum/computer/file/embedded_program/airlock/multi_docking/receive_user_command(command)

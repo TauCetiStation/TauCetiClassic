@@ -12,11 +12,11 @@
 	name = "Arrival Shuttle"
 	location = 1
 	warmup_time = 10
-	shuttle_area = /area/shuttle/arrival/pre_game
+	shuttle_area = /area/shuttle/arrival
 	dock_target = "arrival_shuttle"
-	waypoint_station = "nav_arrival_start"
-	waypoint_offsite = "nav_arrival_out"
-	landmark_transition = "nav_arrival_inter"
+	waypoint_station = "nav_arrival_station"
+	waypoint_offsite = "nav_arrival_velocity"
+	landmark_transition = "nav_arrival_trans"
 	move_time = ARRIVAL_SHUTTLE_MOVE_TIME
 	move_cooldown = ARRIVAL_SHUTTLE_COOLDOWN
 	var/obj/item/device/radio/intercom/announcer
@@ -31,14 +31,19 @@
 	QDEL_NULL(announcer)
 	return ..()
 
-/datum/shuttle/autodock/ferry/arrival/proc/try_move_from_station()
-	if(moving_status != SHUTTLE_IDLE || location)
+/datum/shuttle/autodock/ferry/arrival/can_launch()
+	. = ..()
+	if(!. || location)
 		return
 	for(var/check_area in shuttle_area)
 		if(SSshuttle.forbidden_atoms_check(check_area))
-			addtimer(CALLBACK(src, .proc/try_move_from_station), 600)
-			return
-	launch(src) //Yes, we use ourself
+			return FALSE
+
+/datum/shuttle/autodock/ferry/arrival/proc/try_move_from_station()
+	if(location)
+		return
+	if(!launch(src)) //Yes, we use ourself
+		addtimer(CALLBACK(src, .proc/try_move_from_station), 600)
 
 /datum/shuttle/autodock/ferry/arrival/pre_move(obj/effect/shuttle_landmark/destination)
 	..()
@@ -74,41 +79,46 @@
 			L.color = "#00ff00"
 			L.update(0)
 
-//Shuttle onboard controller
-/obj/machinery/embedded_controller/radio/simple_docking_controller/arrival/shuttle
-	id_tag = "arrival_shuttle"
+/*
+Tags:
+	shuttle:
+		simple_docking_controller:
+			id_tag: "arrival_shuttle"
+			name: "Arrival Shuttle Docking Port Controller"
+
+	velocity dock:
+		simple_docking_controller:
+			id_tag: "arrival_velocity"
+			name: "Arrival Shuttle Docking Port Controller"
+
+	station dock:
+		docking_port_multi:
+			id_tag: "arrival_dock"
+			name: "Arrival Shuttle Docking Port Controller"
+		airlock/docking_port_multi_slave: (west)
+			master_tag: "arrival_dock"
+			id_tag: "arrival_dock1"
+			name: "Arrival Shuttle Docking Port Controller #1"
+		airlock/docking_port_multi_slave: (east)
+			master_tag: "arrival_dock"
+			id_tag: "arrival_dock2"
+			name: "Arrival Shuttle Docking Port Controller #2"
+*/
 
 //Station dock
 /obj/effect/shuttle_landmark/arrival/start
 	name = "Station"
-	landmark_tag = "nav_arrival_start"
+	landmark_tag = "nav_arrival_station"
 	docking_controller = "arrival_dock"
 
-/obj/machinery/embedded_controller/radio/docking_port_multi/arrival/station
-	id_tag = "arrival_dock"
-	child_tags_txt = "arrival_dock1;arrival_dock2"
-	child_names_txt = "Airlock 1 ;Airlock 2 "
-
-/obj/machinery/embedded_controller/radio/airlock/docking_port_multi/arrival/slave1
-	id_tag = "arrival_dock1"
-	master_tag = "arrival_dock"
-
-/obj/machinery/embedded_controller/radio/airlock/docking_port_multi/arrival/slave2
-	id_tag = "arrival_dock2"
-	master_tag = "arrival_dock"
-
-//Offsite dock
-/obj/effect/shuttle_landmark/arrival/out
+/obj/effect/shuttle_landmark/arrival/velocity
 	name = "Velocity"
-	landmark_tag = "nav_arrival_out"
+	landmark_tag = "nav_arrival_velocity"
 	docking_controller = "arrival_velocity"
 
-/obj/machinery/embedded_controller/radio/simple_docking_controller/arrival/velocity
-	id_tag = "arrival_velocity"
-
-/obj/effect/shuttle_landmark/arrival/inter
+/obj/effect/shuttle_landmark/arrival/transition
 	name = "Transit Area"
-	landmark_tag = "nav_arrival_inter"
+	landmark_tag = "nav_arrival_trans"
 
 #undef ARRIVAL_SHUTTLE_MOVE_TIME
 #undef ARRIVAL_SHUTTLE_COOLDOWN

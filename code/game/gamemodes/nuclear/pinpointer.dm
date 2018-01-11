@@ -133,8 +133,8 @@
 /obj/item/weapon/pinpointer/nukeop/process()
 	if(bomb_set)
 		mode = SEARCH_FOR_OBJECT
-		if(!istype(target, /obj/machinery/computer/syndicate_station))
-			target = locate(/obj/machinery/computer/syndicate_station)
+		if(!istype(target, /obj/machinery/computer/shuttle_control/multi/antag/syndicate))
+			target = locate(/obj/machinery/computer/shuttle_control/multi/antag/syndicate)
 			if(!target)
 				icon_state = "pinonnull"
 				return
@@ -142,7 +142,7 @@
 			visible_message("Shuttle Locator active.")			//Lets the mob holding it know that the mode has changed
 	else
 		mode = SEARCH_FOR_DISK
-		if(istype(target, /obj/machinery/computer/syndicate_station))
+		if(istype(target, /obj/machinery/computer/shuttle_control/multi/antag/syndicate))
 			playsound(loc, 'sound/machines/twobeep.ogg', 50, 1)
 			visible_message("<span class='notice'>Authentication Disk Locator active.</span>")
 			target = null

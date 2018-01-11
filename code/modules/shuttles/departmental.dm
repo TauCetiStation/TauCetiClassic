@@ -3,6 +3,10 @@
 	shuttle_tag = "Mine-Sci shuttle"
 	req_access = list()
 
+/obj/machinery/computer/shuttle_control/multi/mine_sci/cool_sprite
+	icon = 'code/modules/locations/shuttles/computer_shuttle_mining.dmi'
+	icon_state = "shuttle"
+
 /datum/shuttle/autodock/multi/mine_sci
 	name = "Mine-Sci shuttle"
 	warmup_time = 10
@@ -11,7 +15,7 @@
 		"nav_mine_sci_mining",
 		"nav_mine_sci_research"
 		)
-	shuttle_area = /area/shuttle/mining/station
+	shuttle_area = /area/shuttle/mine_sci
 	dock_target = "mine_sci_shuttle"
 	current_location = "nav_mine_sci_station"
 

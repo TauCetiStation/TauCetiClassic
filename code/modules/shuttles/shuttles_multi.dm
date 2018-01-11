@@ -22,18 +22,18 @@
 		if(istype(landmark))
 			destinations_cache["[landmark.name]"] = landmark
 
-/*
+
 //Antag play announcements when they leave/return to their home area
 /datum/shuttle/autodock/multi/antag
 	warmup_time = 10 SECONDS //replaced the old move cooldown
 
 	var/obj/effect/shuttle_landmark/home_waypoint
 
-	var/cloaked = 1
+	var/cloaked = TRUE
 	var/announcer
 	var/arrival_message
 	var/departure_message
-	var/return_warning = 0
+	var/return_warning = FALSE
 
 /datum/shuttle/autodock/multi/antag/New()
 	..()
@@ -42,7 +42,7 @@
 	else
 		home_waypoint = current_location
 
-/datum/shuttle/autodock/multi/antag/shuttle_moved()
+/datum/shuttle/autodock/multi/antag/post_move(destination)
 	if(current_location == home_waypoint)
 		announce_arrival()
 	else if(next_location == home_waypoint)
@@ -50,19 +50,22 @@
 	..()
 
 /datum/shuttle/autodock/multi/antag/proc/announce_departure()
-	if(cloaked || isnull(departure_message))
+	if(cloaked || !departure_message || !announcer)
 		return
-	command_announcement.Announce(departure_message, announcer || "[GLOB.using_map.boss_name]")
+	command_alert(departure_message, announcer)
 
 /datum/shuttle/autodock/multi/antag/proc/announce_arrival()
-	if(cloaked || isnull(arrival_message))
+	if(cloaked || !arrival_message || !announcer)
 		return
-	command_announcement.Announce(arrival_message, announcer || "[GLOB.using_map.boss_name]")
+	command_alert(arrival_message, announcer)
 
-/datum/shuttle/autodock/multi/antag/set_destination(var/destination_key, mob/user)
-	if(!return_warning && destination_key == home_waypoint.name)
+/datum/shuttle/autodock/multi/antag/set_destination(destination_key, mob/user)
+	if(return_warning && destination_key == home_waypoint.name)
 		to_chat(user, "<span class='danger'>Returning to your home base will end your mission. If you are sure, press the button again.</span>")
-		return_warning = 1
+		return_warning = FALSE
+		addtimer(CALLBACK(src, .proc/reset_warning), 10 SECONDS)
 		return
 	..()
-*/
+
+/datum/shuttle/autodock/multi/antag/proc/reset_warning()
+	return_warning = TRUE

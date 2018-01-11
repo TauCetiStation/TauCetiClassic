@@ -21,7 +21,6 @@
 			return
 		shuttle.set_destination(dest_key, usr)
 
-/*
 /obj/machinery/computer/shuttle_control/multi/antag
 	ui_template = "shuttle_control_console_antag.tmpl"
 
@@ -30,6 +29,7 @@
 	if(istype(shuttle))
 		. += list(
 			"cloaked" = shuttle.cloaked,
+			"need_cloak" = !shuttle.announcer
 		)
 
 /obj/machinery/computer/shuttle_control/multi/antag/handle_topic_href(datum/shuttle/autodock/multi/antag/shuttle, list/href_list)
@@ -39,5 +39,7 @@
 		return
 
 	if(href_list["toggle_cloaked"])
-		shuttle.cloaked = !shuttle.cloaked
-*/
+		toggle_stealth(shuttle)
+
+/obj/machinery/computer/shuttle_control/multi/antag/proc/toggle_stealth(datum/shuttle/autodock/multi/antag/shuttle)
+	shuttle.cloaked = !shuttle.cloaked

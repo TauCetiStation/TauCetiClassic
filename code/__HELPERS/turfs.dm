@@ -48,6 +48,6 @@
 	for(var/mob/M in source)
 		if(istype(M, /mob/camera/Eye))
 			continue
-		M.forceMove(new_turf)
+		M.forceMove(new_turf, TRUE)
 		M.update_parallax_contents()
 

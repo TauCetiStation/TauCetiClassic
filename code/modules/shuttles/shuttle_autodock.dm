@@ -3,7 +3,7 @@
 /datum/shuttle/autodock
 	var/in_use = null	//tells the controller whether this shuttle needs processing, also attempts to prevent double-use
 	var/last_dock_attempt_time = 0
-	var/move_cooldown = 0
+	var/move_cooldown = 0	//time between moves
 	var/next_jump_time = 0
 	var/current_dock_target
 	//ID of the controller on the shuttle
@@ -124,13 +124,14 @@
 */
 /datum/shuttle/autodock/proc/launch(user)
 	if(!can_launch())
-		return
+		return FALSE
 
 	in_use = user	//obtain an exclusive lock on the shuttle
 
 	process_state = WAIT_LAUNCH
 	launch_initiated()
 	undock()
+	return TRUE
 
 /datum/shuttle/autodock/proc/force_launch(user)
 	if(!can_force())

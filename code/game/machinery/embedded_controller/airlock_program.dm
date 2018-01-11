@@ -24,7 +24,7 @@
 	var/state = STATE_WAIT
 	var/target_state = TARGET_NONE
 
-	var/cycle_to_external_air = 0
+	var/cycle_to_external_air = FALSE
 	var/tag_pump_out_external
 	var/tag_pump_out_internal
 

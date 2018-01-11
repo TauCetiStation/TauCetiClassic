@@ -59,7 +59,7 @@
 		</div>
 		<div class="itemContent">
 			{{if data.ready_to_next_jump}}
-				<span class="idle">NOW</span>
+				<span class="good">NOW</span>
 			{{else data.next_jump_possible_in > 0}}
 				<span style="font-weight: bold;color: #336699">IN {{:data.next_jump_possible_in}} SECOND(S)</span>
 			{{else}}
@@ -68,7 +68,6 @@
 		</div>
 	</div>
 </div>
-
 <div class="item" style="padding-top: 10px">
 	<div class="itemLabel">
 	    Current Destination:

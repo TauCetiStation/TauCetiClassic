@@ -48,18 +48,18 @@
 
 
 //a docking port based on an airlock
-/obj/machinery/embedded_controller/radio/airlock/docking_port_multi
+/obj/machinery/embedded_controller/radio/airlock/docking_port_multi_slave
 	name = "docking port controller"
 	var/master_tag	//for mapping
 	var/datum/computer/file/embedded_program/airlock/multi_docking/airlock_program
 	program = /datum/computer/file/embedded_program/airlock/multi_docking
 	tag_secure = 1
 
-/obj/machinery/embedded_controller/radio/airlock/docking_port_multi/atom_init()
+/obj/machinery/embedded_controller/radio/airlock/docking_port_multi_slave/atom_init()
 	. = ..()
 	airlock_program = program
 
-/obj/machinery/embedded_controller/radio/airlock/docking_port_multi/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
+/obj/machinery/embedded_controller/radio/airlock/docking_port_multi_slave/ui_interact(mob/user, ui_key = "main", var/datum/nanoui/ui = null)
 	var/data[0]
 
 	data = list(
@@ -80,7 +80,7 @@
 		ui.open()
 		ui.set_auto_update(1)
 
-/obj/machinery/embedded_controller/radio/airlock/docking_port_multi/Topic(href, href_list)
+/obj/machinery/embedded_controller/radio/airlock/docking_port_multi_slave/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return

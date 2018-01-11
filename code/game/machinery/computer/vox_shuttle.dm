@@ -4,7 +4,6 @@
 // human and know vox language (and ghosts, because ghosts see everything).
 
 //Copied from Syndicate shuttle.
-var/global/vox_shuttle_location
 var/global/announce_vox_departure = FALSE // Stealth systems - give an announcement or not.
 
 /obj/machinery/proc/console_say(text)

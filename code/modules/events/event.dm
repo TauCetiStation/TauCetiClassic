@@ -96,10 +96,7 @@
 	/area/shuttle/escape_pod2/station,
 	/area/shuttle/escape_pod3/station,
 	/area/shuttle/escape_pod5/station,
-	/area/shuttle/mining/station,
-	/area/shuttle/transport1/station,
-	/area/shuttle/administration/station,
-	/area/shuttle/specops/station,
+	/area/shuttle/mine_sci,
 	/area/atmos)
 
 	//These are needed because /area/engine has to be removed from the list, but we still want these areas to get fucked up.

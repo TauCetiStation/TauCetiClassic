@@ -127,7 +127,7 @@
 
 		if(oldloc && !same_loc)
 			oldloc.Exited(src, destination)
-			if(old_area)
+			if(old_area && old_area != destarea)
 				old_area.Exited(src, destination)
 
 		loc = destination
@@ -146,11 +146,11 @@
 		return TRUE
 	return FALSE
 
-/mob/living/forceMove()
+/mob/forceMove(atom/destination, keep_buckling = FALSE)
 	stop_pulling()
-	if(buckled)
+	if(!keep_buckling && buckled)
 		buckled.unbuckle_mob()
-	. = ..()
+	. = ..(destination)
 	update_canmove()
 
 /mob/dead/observer/forceMove(atom/destination)

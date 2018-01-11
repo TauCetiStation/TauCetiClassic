@@ -211,21 +211,6 @@
 	name = "Circuit board (Disease Splicer)"
 	build_path = /obj/machinery/computer/diseasesplicer
 
-/*/obj/item/weapon/circuitboard/mining_shuttle
-	name = "Circuit board (Mining Shuttle)"
-	build_path = /obj/machinery/computer/mining_shuttle
-	origin_tech = "programming=2"*/
-
-/obj/item/weapon/circuitboard/mine_sci_shuttle
-	name = "Circuit board (Mining Shuttle)"
-	build_path = /obj/machinery/computer/mine_sci_shuttle
-	origin_tech = "programming=2"
-
-/obj/item/weapon/circuitboard/mine_sci_shuttle/flight_comp
-	name = "Circuit board (Mining Shuttle flight computer)"
-	build_path = /obj/machinery/computer/mine_sci_shuttle/flight_comp
-	origin_tech = "programming=2"
-
 /obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
 	name = "Circuit board (Holodeck Control)"
 	build_path = /obj/machinery/computer/HolodeckControl

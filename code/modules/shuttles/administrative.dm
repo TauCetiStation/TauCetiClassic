@@ -1,5 +1,6 @@
+//
 //Transport shuttle
-
+//
 /obj/machinery/computer/shuttle_control/transport
 	name = "Transport shuttle console"
 	shuttle_tag = "Transport shuttle"
@@ -7,26 +8,61 @@
 
 /datum/shuttle/autodock/ferry/transport
 	name = "Transport shuttle"
-	location = 1
+	location = SHUTTLE_LOCATION_OFFSITE
 	warmup_time = 10
-	shuttle_area = /area/shuttle/transport1/centcom
-	dock_target = "transport_shuttle_centcom_shuttle"
+	shuttle_area = /area/shuttle/transport1
+	dock_target = "transport_shuttle"
 	waypoint_station = "nav_transport_start"
 	waypoint_offsite = "nav_transport_out"
 
+/*
+Tags:
+	shuttle:
+		docking_port_multi:
+			id_tag: "transport_shuttle"
+			name: "Transport Shuttle Docking Controller"
+		simple_docking_controller/multi_slave: (south)
+			master_tag: "transport_shuttle"
+			id_tag: "transport_shuttle1"
+			name: "Transport Shuttle Hatch Controller #1"
+		simple_docking_controller/multi_slave: (north)
+			master_tag: "transport_shuttle"
+			id_tag: "transport_shuttle2"
+			name: "Transport Shuttle Hatch Controller #2"
+
+	centcom dock:
+		simple_docking_controller:
+			id_tag: "transport_centcom"
+			name: "Transport Shuttle Dock Controller"
+
+	station dock:
+		docking_port_multi:
+			id_tag: "station_dock_2"
+			name: "Docking Port Controller #2"
+		airlock/docking_port_multi: (south)
+			master_tag: "station_dock_2"
+			id_tag: "station_dock_21"
+			name: "Docking Port Controller #2-1"
+		airlock/docking_port_multi: (north)
+			master_tag: "station_dock_2"
+			id_tag: "station_dock_22"
+			name: "Docking Port Controller #2-2"
+*/
+
 /obj/effect/shuttle_landmark/transport/start
 	name = "Station"
-	landmark_tag = "nav_transport_start"
-	docking_controller = "transport_shuttle_dock"
+	landmark_tag = "nav_station_dock_2"
+	docking_controller = "station_dock_2"
 
 /obj/effect/shuttle_landmark/transport/out
 	name = "Centcom"
 	landmark_tag = "nav_transport_out"
-	docking_controller = "transport_shuttle_centcom"
-	special_dock_targets = list("Transport shuttle" = "transport_shuttle_centcom_shuttle2")
+	docking_controller = "transport_centcom"
+	special_dock_targets = list("Transport shuttle" = "transport_shuttle2")
 
-
-//Administration shuttle
+//
+// Administration shuttle
+//
 /obj/machinery/computer/shuttle_control/administration
 	name = "Administration shuttle console"
 	shuttle_tag = "Administration shuttle"
@@ -34,9 +70,9 @@
 
 /datum/shuttle/autodock/ferry/administration
 	name = "Administration shuttle"
-	location = 1
+	location = SHUTTLE_LOCATION_OFFSITE
 	warmup_time = 10
-	shuttle_area = /area/shuttle/administration/centcom
+	shuttle_area = /area/shuttle/administration
 	dock_target = "administration_shuttle"
 	waypoint_station = "nav_administration_start"
 	waypoint_offsite = "nav_administration_out"
@@ -52,8 +88,9 @@
 	docking_controller = "administration_shuttle_centcom"
 	base_turf = /turf/unsimulated/floor
 
-
-//Centcom-Velocity-Station
+//
+// Centcom-Velocity-Station
+//
 /obj/machinery/computer/shuttle_control/multi/centcom_ferry
 	name = "Shuttle console"
 	shuttle_tag = "Centcom ferry shuttle"
@@ -67,9 +104,10 @@
 		"nav_centcom_ferry_velocity",
 		"nav_centcom_ferry_centcom"
 		)
-	shuttle_area = /area/shuttle/officer/velocity
+	shuttle_area = /area/shuttle/officer
 	dock_target = "centcom_ferry_shuttle"
 	current_location = "nav_centcom_ferry_velocity"
+	landmark_transition = "nav_centcom_ferry_trans"
 
 
 /obj/effect/shuttle_landmark/centcom_ferry/stataion
@@ -87,6 +125,10 @@
 	landmark_tag = "nav_centcom_ferry_centcom"
 	docking_controller = "centcom_ferry_centcom"
 
+/obj/effect/shuttle_landmark/centcom_ferry/transit
+	name = "Hyperspace"
+	landmark_tag = "nav_centcom_ferry_trans"
+
 
 //SpecOps
 /obj/machinery/computer/shuttle_control/specops
@@ -94,14 +136,14 @@
 	shuttle_tag = "Special Operations"
 	req_access = list(access_cent_specops)
 
-/obj/machinery/computer/shuttle_control/specops/attack_ai(mob/user as mob)
+/obj/machinery/computer/shuttle_control/specops/attack_ai(mob/user)
 	to_chat(user, "<span class='warning'>Access Denied.</span>")
 	return 1
 
 /datum/shuttle/autodock/ferry/specops
 	name = "Special Operations"
-	location = 1
-	shuttle_area = /area/shuttle/specops/centcom
+	location = SHUTTLE_LOCATION_OFFSITE
+	shuttle_area = /area/shuttle/specops
 	dock_target = "specops_shuttle"
 	waypoint_station = "nav_specops_start"
 	waypoint_offsite = "nav_specops_out"
@@ -125,7 +167,7 @@
 /datum/shuttle/autodock/ferry/specops/launch(user)
 	set waitfor = 0
 	if (!can_launch())
-		return
+		return FALSE
 
 	if (istype(user, /obj/machinery/computer))
 		var/obj/machinery/computer/C = user
@@ -136,7 +178,7 @@
 				C.visible_message("<span class='notice'>[-((world.time - reset_time)*0.1)/60] minutes remain!</span>")
 			else
 				C.visible_message("<span class='notice'>[-(world.time - reset_time)*0.1] seconds remain!</span>")
-			return
+			return FALSE
 
 		C.visible_message("<span class='notice'>The Special Operations shuttle will depart in [(specops_countdown_time*0.1)] seconds.</span>")
 
@@ -147,11 +189,11 @@
 
 	sleep_until_launch()
 	if(cancel_countdown)
-		return
+		return FALSE
 
 	//launch
 	radio_announce("ALERT: INITIATING LAUNCH SEQUENCE")
-	..(user)
+	return ..()
 
 /datum/shuttle/autodock/ferry/specops/post_move()
 	..()

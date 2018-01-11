@@ -809,7 +809,7 @@ datum/objective/meme_attune
 			return FALSE // They're dead. Fail.
 		//if (!target.current.restrained())
 		//	return 0 // They're loose. Close but no cigar.
-		if(get_area(target) == locate(/area/shuttle/vox/station))
+		if(get_area(target) == locate(/area/shuttle/vox))
 			return TRUE
 	else
 		return FALSE
@@ -855,7 +855,7 @@ datum/objective/meme_attune
 /datum/objective/heist/loot/check_completion()
 	var/total_amount = 0
 
-	for(var/obj/O in locate(/area/shuttle/vox/station))
+	for(var/obj/O in locate(/area/shuttle/vox))
 		if(istype(O,target)) total_amount++
 		for(var/obj/I in O.contents)
 			if(istype(I, target))
@@ -906,7 +906,7 @@ datum/objective/meme_attune
 /datum/objective/heist/salvage/check_completion()
 	var/total_amount = 0
 
-	for(var/obj/item/O in locate(/area/shuttle/vox/station))
+	for(var/obj/item/O in locate(/area/shuttle/vox))
 
 		var/obj/item/stack/sheet/S
 		if(istype(O, /obj/item/stack/sheet))
@@ -963,7 +963,7 @@ var/heist_rob_total = 0
 	explanation_text = "Ransack the station for any valuables."
 /datum/objective/heist/robbery/check_completion()
 	heist_rob_total = 0
-	for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
+	for(var/atom/movable/AM in locate(/area/shuttle/vox))
 		heist_recursive_price_check(AM)
 	if(heist_rob_total >= target_amount) return 1
 	return 0*/
