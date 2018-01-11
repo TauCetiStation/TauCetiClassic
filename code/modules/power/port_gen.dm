@@ -169,6 +169,7 @@
 		return
 	else if (istype(O, /obj/item/weapon/card/emag))
 		emagged = 1
+		user.SetNextMove(CLICK_CD_INTERACT)
 		emp_act(1)
 	else if(!active)
 

@@ -562,11 +562,10 @@ var/list/airlock_overlays = list()
 			return
 		else if(!density)
 			return
-		else
+		else if(!user.is_busy(src))
 			to_chat(user, "<span class='red'>You force your claws between the doors and begin to pry them open...</span>")
 			playsound(src, door_forced_sound, 30, 1, -4)
-			if (do_after(user,40, target = src))
-				if(!src) return
+			if(do_after(user,40, target = src) && src)
 				open(1)
 	return
 
@@ -607,6 +606,7 @@ var/list/airlock_overlays = list()
 /obj/machinery/door/airlock/proc/hulk_break_reaction(mob/living/carbon/user)
 	if(!density)
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(user.a_intent == "hurt")
 		if(user.hulk_scream(src, 90))
 			door_rupture(user)
@@ -621,6 +621,7 @@ var/list/airlock_overlays = list()
 			break
 	if(!passed)
 		return
+	if(user.is_busy(src)) return
 	var/cur_dir = user.dir
 	user.visible_message("<span class='userdanger'>The [user] starts to force the [src] open with a bare hands!</span>",\
 			"<span class='userdanger'>You start forcing the [src] open with a bare hands!</span>",\
@@ -877,6 +878,7 @@ var/list/airlock_overlays = list()
 	if(istype(C,/obj/item/weapon/changeling_hammer) && !operating && density) // yeah, hammer ignore electrify
 		var/obj/item/weapon/changeling_hammer/W = C
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='userdanger'>[user] has punched the [src]!</span>")
 		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if(W.use_charge(user) && prob(20))
@@ -920,6 +922,7 @@ var/list/airlock_overlays = list()
 		else
 			beingcrowbarred = 0
 		if( beingcrowbarred && (operating == -1 || density && welded && operating != 1 && p_open && !hasPower() && !locked) )
+			if(user.is_busy(src)) return
 			playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 			user.visible_message("[user] removes the electronics from the airlock assembly.", "You start to remove electronics from the airlock assembly.")
 			if(do_after(user,40,target = src))

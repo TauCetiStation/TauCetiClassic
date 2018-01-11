@@ -162,6 +162,7 @@
 
 /obj/item/device/camera/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/device/camera_film))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(pictures_left)
 			to_chat(user, "<span class='notice'>[src] still has some film in it!</span>")
 			return

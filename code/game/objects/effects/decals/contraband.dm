@@ -209,7 +209,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		PO.pixel_y == (y - user.y) * P.resulting_poster.bound_height)
 			to_chat(user, "<span class='notice'>The wall is already has a poster!</span>")
 			return
-
+	if(user.is_busy(src)) return
 	to_chat(user, "<span class='notice'>You start placing the poster on the wall...</span>")//Looks like it's uncluttered enough. Place the poster.
 
 	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster

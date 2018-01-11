@@ -557,6 +557,7 @@
 		if (!getBruteLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
+		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0))
 			adjustBruteLoss(-30)
@@ -572,6 +573,7 @@
 		if (!getFireLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
+		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/stack/cable_coil/coil = W
 		if(!coil.use(1))
 			return
@@ -695,6 +697,7 @@
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
 		if(!opened)//Cover is closed
 			if(locked)
+				user.SetNextMove(CLICK_CD_MELEE)
 				if(prob(90))
 					var/obj/item/weapon/card/emag/emag = W
 					emag.uses--
@@ -904,13 +907,13 @@
 	return
 
 /mob/living/silicon/robot/attack_animal(mob/living/simple_animal/M)
+	M.do_attack_animation(src)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -921,7 +924,6 @@
 /mob/living/silicon/robot/attack_hand(mob/user)
 
 	add_fingerprint(user)
-
 	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon)))
 		var/datum/robot_component/cell_component = components["power cell"]
 		if(cell)

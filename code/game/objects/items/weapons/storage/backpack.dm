@@ -25,7 +25,7 @@
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user)
 	if (src.use_sound)
 		playsound(src.loc, src.use_sound, 50, 1, -5)
-	..()
+	return ..()
 
 /obj/item/weapon/storage/backpack/equipped(mob/user, slot)
 	if (slot == slot_back && src.use_sound)

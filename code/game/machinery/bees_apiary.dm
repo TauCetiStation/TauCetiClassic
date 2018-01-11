@@ -69,6 +69,7 @@
 			angry_swarm(user)
 		else
 			to_chat(user, "\blue You begin to dislodge the dead apiary from the tray.")
+		if(user.is_busy()) return
 		if(do_after(user, 50, target = src))
 			new hydrotray_type(src.loc)
 			new /obj/item/apiary(src.loc)
@@ -89,6 +90,7 @@
 				to_chat(user, "\red You begin to harvest the honey. The bees don't seem to like it.")
 				angry_swarm(user)
 			else
+				if(user.is_busy()) return
 				to_chat(user, "\blue You begin to harvest the honey.")
 			if(do_after(user,50,target = src))
 				G.reagents.add_reagent("honey",harvestable_honey)

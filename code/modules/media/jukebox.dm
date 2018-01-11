@@ -108,6 +108,7 @@ var/global/loopModeNames=list(
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
 
 /obj/machinery/media/jukebox/ui_interact(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(stat & NOPOWER)
 		to_chat(usr, "\red You don't see anything to mess with.")
 		return
@@ -148,8 +149,9 @@ var/global/loopModeNames=list(
 
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user, params)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/card/emag))
-		current_song=0
+		current_song = 0
 		if(!emagged)
 			playlist_id = "emagged"
 			last_reload=world.time
@@ -161,6 +163,7 @@ var/global/loopModeNames=list(
 			update_icon()
 			update_music()
 	else if(istype(W,/obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		var/un = !anchored ? "" : "un"
 		user.visible_message("\blue [user.name] begins [un]locking \the [src.name]'s casters.","\blue You begin [un]locking \the [src.name]'s casters.")
 		if(do_after(user,30, target = src))
@@ -170,6 +173,8 @@ var/global/loopModeNames=list(
 			playing = emagged
 			update_music()
 			update_icon()
+	else
+		..()
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	. = ..()

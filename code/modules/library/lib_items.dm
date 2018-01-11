@@ -229,6 +229,7 @@
 					to_chat(user, "[W]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'")
 	else if(istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/wirecutters))
 		if(carved)	return
+		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin to carve out [title].</span>")
 		if(do_after(user, 30, target = user))
 			to_chat(user, "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>")

@@ -6,6 +6,7 @@
 	desc = "Allows temporary access to station areas."
 	icon_state = "guest"
 	light_color = "#0099ff"
+	customizable_view = FORDBIDDEN_VIEW
 
 	var/temp_access = list() //to prevent agent cards stealing access as permanent
 	var/expiration_time = 0

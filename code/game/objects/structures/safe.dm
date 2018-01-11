@@ -145,6 +145,8 @@ FLOOR SAFES
 
 
 /obj/structure/safe/attackby(obj/item/I, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
+	add_fingerprint(user)
 	if(open)
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
@@ -152,14 +154,11 @@ FLOOR SAFES
 			I.loc = src
 			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 			updateUsrDialog()
-			return
 		else
 			to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
-			return
 	else
 		if(istype(I, /obj/item/clothing/accessory/stethoscope))
 			to_chat(user, "Hold [I] in one of your hands while you manipulate the dial.")
-			return
 
 
 obj/structure/safe/blob_act()

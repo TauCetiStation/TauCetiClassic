@@ -826,6 +826,8 @@
 				return
 
 			else if(istype(W, /obj/item/weapon/crowbar))
+				if(user.is_busy())
+					return
 				to_chat(user, "You start prying out the circuit.")
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user,20,target = src))
@@ -894,6 +896,7 @@ Code shamelessly copied from apc_frame
 
 /obj/item/alarm_frame/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
+		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
 		return
@@ -1194,6 +1197,7 @@ Code shamelessly copied from apc_frame
 
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
+		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
 		return

@@ -148,9 +148,8 @@
 
 
 /obj/effect/blob/attackby(obj/item/weapon/W, mob/user)
-	user.do_attack_animation(src)
+	..()
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
-	src.visible_message("\red <B>The [src.name] has been attacked with \the [W][(user ? " by [user]." : ".")]")
 	var/damage = 0
 	switch(W.damtype)
 		if("fire")
@@ -165,7 +164,7 @@
 	return
 
 /obj/effect/blob/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
+	..()
 	playsound(src.loc, 'sound/effects/attackblob.ogg', 50, 1)
 	src.visible_message("\red <B>The [src.name] has been attacked by \the [M].")
 	var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)

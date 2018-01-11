@@ -231,11 +231,13 @@
 /obj/machinery/door/window/attack_alien(mob/user)
 	if(islarva(user))
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)
 
 /obj/machinery/door/window/attack_animal(mob/user)
 	if(!isanimal(user))
 		return
+	..()
 	var/mob/living/simple_animal/M = user
 	if(M.melee_damage_upper <= 0)
 		return
@@ -244,6 +246,7 @@
 /obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user)
 	if(!istype(user, /mob/living/carbon/slime/adult))
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)
 
 /obj/machinery/door/window/attackby(obj/item/weapon/I, mob/user)
@@ -258,8 +261,9 @@
 
 	if( istype(I,/obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/W = I
-		if(W.use_charge(user,6))
-			visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
+		user.SetNextMove(CLICK_CD_MELEE)
+		if(W.use_charge(user, 6))
+			visible_message("<span class='danger'>[user]</B> has punched [src]!</span>")
 			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
 			shatter()
 		return
@@ -267,6 +271,7 @@
 	//Emags and ninja swords? You may pass.
 	if (density && ((istype(I, /obj/item/weapon/card/emag) && hasPower()) || istype(I, /obj/item/weapon/melee/energy/blade)))
 		flick("[src.base_state]spark", src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		sleep(6)
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
@@ -293,6 +298,7 @@
 
 		if(istype(I, /obj/item/weapon/crowbar))
 			if(p_open && !src.density)
+				if(user.is_busy(src)) return
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 				user.visible_message("<span class='warning'>[user] removes the electronics from the [src.name].</span>", \
 									 "You start to remove electronics from the [src.name].")
@@ -347,6 +353,7 @@
 	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
 	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
 		if(!hasPower())
+			user.SetNextMove(CLICK_CD_INTERACT)
 			if(density)
 				open(1)
 			else
@@ -356,6 +363,7 @@
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		if( (I.flags&NOBLUDGEON) || !I.force )
 			return
 		var/aforce = I.force

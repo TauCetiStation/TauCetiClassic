@@ -18,8 +18,9 @@
 	update_icon()
 
 /obj/structure/toilet/attack_hand(mob/living/user)
+	user.SetNextMove(CLICK_CD_MELEE * 1.5)
 	if(swirlie)
-		usr.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie.name]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie.name]'s head!</span>", "You hear reverberating porcelain.")
+		user.visible_message("<span class='danger'>[user] slams the toilet seat onto [swirlie.name]'s head!</span>", "<span class='notice'>You slam the toilet seat onto [swirlie.name]'s head!</span>", "You hear reverberating porcelain.")
 		swirlie.adjustBruteLoss(8)
 		return
 
@@ -45,6 +46,7 @@
 
 /obj/structure/toilet/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/weapon/crowbar))
+		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You start to [cistern ? "replace the lid on the cistern" : "lift the lid off the cistern"].</span>")
 		playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 50, 1)
 		if(do_after(user, 30, target = src))
@@ -53,17 +55,19 @@
 			update_icon()
 			return
 
-	if(istype(I, /obj/item/weapon/grab))
+	else if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 
 		if(isliving(G.affecting))
 			var/mob/living/GM = G.affecting
+			user.SetNextMove(CLICK_CD_MELEE)
 
 			if(G.state>1)
 				if(!GM.loc == get_turf(src))
 					to_chat(user, "<span class='notice'>[GM.name] needs to be on the toilet.</span>")
 					return
 				if(open && !swirlie)
+					if(user.is_busy()) return
 					user.visible_message("<span class='danger'>[user] starts to give [GM.name] a swirlie!</span>", "<span class='notice'>You start to give [GM.name] a swirlie!</span>")
 					swirlie = GM
 					if(do_after(user, 30, 5, 0, target = src))
@@ -87,6 +91,8 @@
 		user.drop_item()
 		I.loc = src
 		w_items += I.w_class
+		user.SetNextMove(CLICK_CD_INTERACT)
+		add_fingerprint(user)
 		to_chat(user, "You carefully place \the [I] into the cistern.")
 		return
 
@@ -104,6 +110,7 @@
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
 		if(isliving(G.affecting))
+			user.SetNextMove(CLICK_CD_MELEE)
 			var/mob/living/GM = G.affecting
 			if(G.state>1)
 				if(!GM.loc == get_turf(src))
@@ -113,6 +120,8 @@
 				GM.adjustBruteLoss(8)
 			else
 				to_chat(user, "<span class='notice'>You need a tighter grip.</span>")
+	else
+		..()
 
 /obj/structure/dryer
 	name = "hand dryer"
@@ -135,8 +144,8 @@
 	if(busy)
 		to_chat(user, "\red Someone's already drying here.")
 		return
-
-	to_chat(usr, "\blue You start drying your hands.")
+	user.SetNextMove(CLICK_CD_INTERACT)
+	to_chat(user, "\blue You start drying your hands.")
 	playsound(src, 'sound/items/drying.ogg', 30, 1, 1)
 	add_fingerprint(user)
 	busy = 1
@@ -161,6 +170,7 @@
 /obj/structure/dryer/attackby(obj/item/O, mob/user)
 
 	if (istype(O, /obj/item/weapon/card/emag))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if (emagged)
 			to_chat(user, "\red [src] is already cracked.")
 			return
@@ -177,6 +187,7 @@
 		var/obj/item/weapon/grab/G = O
 		if(isliving(G.affecting))
 			var/mob/living/GM = G.affecting
+			user.SetNextMove(CLICK_CD_MELEE)
 			if(G.state>1)
 				if(!GM.loc == get_turf(src))
 					to_chat(user, "<span class='notice'>[GM.name] needs to be on the urinal.</span>")
@@ -205,6 +216,7 @@
 
 		if(istype(O, /obj/item/weapon/grab))	//Holding someone under dryer
 			var/obj/item/weapon/grab/G = O
+			user.SetNextMove(CLICK_CD_MELEE)
 			if(isliving(G.affecting))
 				var/mob/living/GM = G.affecting
 				if(G.state>2)
@@ -281,29 +293,30 @@
 	anchored = 1
 	mouse_opacity = 0
 
-/obj/machinery/shower/attack_hand(mob/M)
+/obj/machinery/shower/attack_hand(mob/user)
 	. = ..()
 	if(.)
 		return
-
+	user.SetNextMove(CLICK_CD_RAPID)
 	if(is_payed)
 		on = !on
 		update_icon()
 		if(on)
-			if (M.loc == loc)
-				wash(M)
-				check_heat(M)
+			if (user.loc == loc)
+				wash(user)
+				check_heat(user)
 			for (var/atom/movable/G in src.loc)
 				G.clean_blood()
 		else
 			is_payed = 0 // ≈сли игрок выключил раньше времени - принудительное аннулирование платы.
 	else
-		to_chat(M, "You didn't pay for that. Swipe a card against [src].")
+		to_chat(user, "You didn't pay for that. Swipe a card against [src].")
 
 /obj/machinery/shower/attackby(obj/item/I, mob/user)
-	if(I.type == /obj/item/device/analyzer)
+	if(I.type == /obj/item/device/analyzer) // istype?
 		to_chat(user, "<span class='notice'>The water temperature seems to be [watertemp].</span>")
 	else if(istype(I, /obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin to adjust the temperature valve with \the [I].</span>")
 		if(do_after(user, 50, target = src))
 			switch(watertemp)
@@ -316,6 +329,7 @@
 			user.visible_message("<span class='notice'>[user] adjusts the shower with \the [I].</span>", "<span class='notice'>You adjust the shower with \the [I].</span>")
 			add_fingerprint(user)
 	else if(istype(I, /obj/item/weapon/card))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!is_payed && cost_per_activation)
 			if(!on)
 				var/obj/item/weapon/card/C = I
@@ -568,10 +582,10 @@
 	if(busy)
 		to_chat(user, "\red Someone's already washing here.")
 		return
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(src, 'sound/items/wash.ogg', 50, 1, 1)
 
-	to_chat(usr, "\blue You start washing your hands.")
+	to_chat(user, "\blue You start washing your hands.")
 
 	busy = 1
 	sleep(40)
@@ -594,6 +608,7 @@
 		var/obj/item/weapon/reagent_containers/RG = O
 		RG.reagents.add_reagent("water", min(RG.volume - RG.reagents.total_volume, RG.amount_per_transfer_from_this))
 		user.visible_message("\blue [user] fills \the [RG] using \the [src].","\blue You fill \the [RG] using \the [src].")
+		user.SetNextMove(CLICK_CD_INTERACT)
 		return
 
 	else if (istype(O, /obj/item/weapon/melee/baton))

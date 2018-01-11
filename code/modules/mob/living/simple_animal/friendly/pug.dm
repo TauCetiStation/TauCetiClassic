@@ -32,6 +32,7 @@
 
 /mob/living/simple_animal/pug/attackby(obj/item/O, mob/user)  //Marker -Agouri
 	if(istype(O, /obj/item/weapon/newspaper))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!stat)
 			user.visible_message("\blue [user] baps [name] on the nose with the rolled up [O]")
 			spawn(0)

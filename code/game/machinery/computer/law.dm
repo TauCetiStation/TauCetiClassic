@@ -42,13 +42,10 @@
 		return
 
 	current = select_active_ai(user)
-
 	if (!current)
-		to_chat(usr, "No active AIs detected.")
+		to_chat(user, "No active AIs detected.")
 	else
-		to_chat(usr, "[current.name] selected for law changes.")
-
-
+		to_chat(user, "[current.name] selected for law changes.")
 
 /obj/machinery/computer/borgupload
 	name = "Cyborg Upload"
@@ -73,6 +70,6 @@
 	current = freeborg()
 
 	if (!current)
-		to_chat(usr, "No free cyborgs detected.")
+		to_chat(user, "No free cyborgs detected.")
 	else
-		to_chat(usr, "[current.name] selected for law changes.")
+		to_chat(user, "[src.current.name] selected for law changes.")

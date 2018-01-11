@@ -88,7 +88,7 @@
 		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it is too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return TRUE
-
+	if(user.is_busy()) return
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 

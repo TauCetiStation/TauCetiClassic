@@ -64,15 +64,15 @@
 
 /obj/structure/stool/bed/roller/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,src) || istype(W, /obj/item/roller_holder))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(buckled_mob)
 			user_unbuckle_mob()
 		else
 			visible_message("[user] collapses \the [src.name].")
 			new type_roller(get_turf(src))
-			spawn(0)
-				qdel(src)
-		return
-	..()
+			qdel(src)
+	else
+		..()
 
 /obj/structure/stool/bed/roller/CanPass(atom/movable/mover)
 	if(iscarbon(mover) && mover.checkpass(PASSCRAWL))
@@ -156,6 +156,7 @@
 /obj/structure/stool/bed/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/grab))
+		if(user.is_busy()) return
 		var/obj/item/weapon/grab/G = W
 		var/mob/living/L = G.affecting
 		user.visible_message("<span class='notice'>[user] attempts to buckle [L] into \the [src]!</span>")
@@ -166,4 +167,3 @@
 					"<span class='danger'>[L.name] is buckled to [src] by [user.name]!</span>",\
 					"<span class='danger'>You are buckled to [src] by [user.name]!</span>",\
 					"<span class='notice'>You hear metal clanking.</span>")
-	return

@@ -77,6 +77,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(obj/item/O, mob/user)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>")
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
@@ -121,6 +122,7 @@
 
 /mob/living/simple_animal/cow/attackby(obj/item/O, mob/user)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>")
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
@@ -242,6 +244,7 @@ var/global/chicken_count = 0
 
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) //feedin' dem chickens
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!stat && eggsleft < 8)
 			user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","\blue You feed [O] to [name]! It clucks happily.")
 			user.drop_item()

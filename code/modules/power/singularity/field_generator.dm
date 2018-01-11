@@ -129,7 +129,7 @@ field_generator power level display
 			if(FG_UNSECURED)
 				to_chat(user, "<span class='red'>The [src] needs to be wrenched to the floor.</span>")
 			if(FG_SECURED)
-				if (WT.remove_fuel(0, user))
+				if (!user.is_busy() && WT.remove_fuel(0, user))
 					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message(
 						"<span class='notice'>[user.name] starts to weld the [src.name] to the floor.</span>",
@@ -141,7 +141,7 @@ field_generator power level display
 						state = FG_WELDED
 						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
 			if(FG_WELDED)
-				if (WT.remove_fuel(0, user))
+				if (!user.is_busy() && WT.remove_fuel(0, user))
 					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message(
 						"<span class='notice'>[user.name] starts to cut the [src.name] free from the floor.</span>",

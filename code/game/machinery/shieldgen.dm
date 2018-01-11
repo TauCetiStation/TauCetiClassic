@@ -36,7 +36,7 @@
 	//Play a fitting sound
 	playsound(src.loc, 'sound/effects/EMPulse.ogg', 75, 1)
 
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	if (src.health <= 0)
 		visible_message("\blue The [src] dissipates!")
 		qdel(src)
@@ -229,7 +229,7 @@
 	if(is_open)
 		to_chat(user, "The panel must be closed before operating this machine.")
 		return 1
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if (src.active)
 		user.visible_message("\blue [bicon(src)] [user] deactivated the shield generator.", \
 			"\blue [bicon(src)] You deactivate the shield generator.", \
@@ -247,6 +247,7 @@
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/card/emag))
 		malfunction = 1
+		user.SetNextMove(CLICK_CD_MELEE)
 		update_icon()
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
@@ -260,6 +261,7 @@
 
 	else if(istype(W, /obj/item/stack/cable_coil) && malfunction && is_open)
 		var/obj/item/stack/cable_coil/coil = W
+		if(user.is_busy(src)) return
 		to_chat(user, "\blue You begin to replace the wires.")
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
 		if(do_after(user, 30, target = src))
@@ -372,6 +374,7 @@
 		to_chat(user, "\red The shield generator needs to be powered by wire underneath.")
 		return 1
 
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(src.active >= 1)
 		src.active = 0
 		icon_state = "Shield_Gen"
@@ -495,6 +498,7 @@
 	else
 		src.add_fingerprint(user)
 		visible_message("\red The [src.name] has been hit with \the [W.name] by [user.name]!")
+		user.SetNextMove(CLICK_CD_MELEE)
 
 /obj/machinery/shieldwallgen/proc/cleanup(NSEW)
 	var/obj/machinery/shieldwall/F

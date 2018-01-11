@@ -261,7 +261,7 @@ var/list/valid_secondary_effect_types = list(\
 	if(ishuman(user) && user:gloves)
 		to_chat(user, "<b>You touch [src]</b> with your gloved hands, [pick("but nothing of note happens","but nothing happens","but nothing interesting happens","but you notice nothing different","but nothing seems to have happened")].")
 		return
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(my_effect.trigger == TRIGGER_TOUCH)
 		to_chat(user, "<b>You touch [src].<b>")
 		my_effect.ToggleActivate()
@@ -278,6 +278,7 @@ var/list/valid_secondary_effect_types = list(\
 		secondary_effect.DoEffectTouch(user)
 
 /obj/machinery/artifact/attackby(obj/item/weapon/W, mob/living/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(istype(W, /obj/item/weapon/reagent_containers/))
 		if(W.reagents.has_reagent("hydrogen", 1) || W.reagents.has_reagent("water", 1))
 			if(my_effect.trigger == TRIGGER_WATER)
@@ -304,6 +305,7 @@ var/list/valid_secondary_effect_types = list(\
 			istype(W,/obj/item/weapon/melee/cultblade) ||\
 			istype(W,/obj/item/weapon/card/emag) ||\
 			istype(W,/obj/item/device/multitool))
+
 		if (my_effect.trigger == TRIGGER_ENERGY)
 			my_effect.ToggleActivate()
 		if(secondary_effect && secondary_effect.trigger == TRIGGER_ENERGY && prob(25))

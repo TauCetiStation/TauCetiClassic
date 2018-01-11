@@ -11,6 +11,7 @@
 
 /obj/item/device/flashlight/flare/torch/attackby(obj/item/W, mob/user, params) // ravioli ravioli here comes stupid copypastoli
 	..()
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(is_hot(W))
 		light(user)
 
@@ -127,7 +128,7 @@
 	if(burning)
 		to_chat(user, "<span class='warning'>You need to extinguish [src] before removing it!</span>")
 		return
-	if(!has_buckled_mobs() && do_after(user, 50, target = src))
+	if(!has_buckled_mobs()&& !user.is_busy() && do_after(user, 50, target = src))
 		if(can_buckle || grill)
 			new /obj/item/stack/rods(loc, 1)
 		qdel(src)

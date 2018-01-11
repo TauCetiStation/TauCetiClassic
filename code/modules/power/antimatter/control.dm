@@ -180,6 +180,7 @@
 
 	if(W.force >= 20)
 		stability -= W.force/2
+		user.SetNextMove(CLICK_CD_MELEE)
 		check_stability()
 	..()
 	return

@@ -56,11 +56,8 @@
 	heat_capacity = 325000
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
-	if(!C)
-		return
-	if(!user)
-		return
 	if(istype(C, /obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		to_chat(user, "\blue Removing rods...")
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30, target = src))
@@ -304,9 +301,8 @@
 
 
 /turf/simulated/floor/plating/airless/catwalk/attackby(obj/item/C, mob/user)
-	if(!C || !user)
-		return 0
 	if(istype(C, /obj/item/weapon/screwdriver))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		ReplaceWithLattice()
 		playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 		return

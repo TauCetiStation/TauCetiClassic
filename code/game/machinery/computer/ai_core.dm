@@ -14,6 +14,7 @@
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
+				if(user.is_busy(src)) return
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
 					to_chat(user, "\blue You wrench the frame into place.")
@@ -24,6 +25,7 @@
 				if(!WT.isOn())
 					to_chat(user, "The welder must be on for this task.")
 					return
+				if(user.is_busy(src)) return
 				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
 					if(!src || !WT.remove_fuel(0, user)) return
@@ -32,6 +34,7 @@
 					qdel(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
+				if(user.is_busy(src)) return
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
 					to_chat(user, "\blue You unfasten the frame.")
@@ -64,6 +67,7 @@
 				icon_state = "1"
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
+				if(user.is_busy(src)) return
 				if(C.get_amount() >= 5)
 					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20, target = src))
@@ -84,6 +88,7 @@
 
 			if(istype(P, /obj/item/stack/sheet/rglass))
 				var/obj/item/stack/sheet/rglass/RG = P
+				if(user.is_busy(src)) return
 				if(RG.get_amount() >= 2)
 					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20, target = src))

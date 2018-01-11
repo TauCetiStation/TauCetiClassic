@@ -151,6 +151,7 @@
 		if(C.get_amount() < 10)
 			to_chat(user, "<span class='warning'>You need more wires!</span>")
 			return
+		if(user.is_busy()) return
 
 		to_chat(user, "<span class='notice'>You start building the power terminal...</span>")
 		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)

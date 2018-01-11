@@ -122,6 +122,7 @@
 			var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
 			C.id = id
 			transfer_fingerprints_to(C)
+		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
 		qdel(src)
 		return
@@ -148,6 +149,7 @@
 		return
 
 	user.Move_Pulled(src)
+	user.SetNextMove(CLICK_CD_RAPID)
 
 
 // make the conveyor broken
@@ -253,6 +255,7 @@
 	. = ..()
 	if(.)
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(position == 0)
 		if(convdir)   //is it a oneway switch
@@ -282,6 +285,7 @@
 		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 		C.id = id
 		transfer_fingerprints_to(C)
+		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "<span class='notice'>You deattach the conveyor switch.</span>")
 		qdel(src)
 

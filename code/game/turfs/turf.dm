@@ -51,6 +51,14 @@
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
+	user.SetNextMove(CLICK_CD_INTERACT)
+
+/turf/attack_animal(mob/user)
+	return
+
+/turf/attack_robot(mob/user)
+	if(Adjacent(user))
+		return attack_hand(user)
 
 /turf/ex_act(severity)
 	return 0

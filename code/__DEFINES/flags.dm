@@ -7,7 +7,7 @@
 //FLAGS BITMASK
 #define NOBLUDGEON        2    // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 #define MASKINTERNALS     4    // Mask allows internals.
-#define USEDELAY          8    // 1 second extra delay on use. (Can be used once every 2s)
+//#define USEDELAY          8    // 1 second extra delay on use. (Can be used once every 2s) ~ Kursh, Doesn't used for now.
 #define NOSHIELD         16    // Weapon not affected by shield.
 #define CONDUCT          32    // Conducts electricity. (metal etc.)
 #define ABSTRACT         64    // For all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way.
@@ -91,3 +91,9 @@
 #define SLOT_DENYPOCKET   4096    // This is to deny items with a w_class of 2 or 1 to fit in pockets.
 #define SLOT_TWOEARS      8192
 #define SLOT_TIE         16384
+
+
+//flags for customizing id-cards
+#define FORDBIDDEN_VIEW      1
+#define UNIVERSAL_VIEW       2
+#define TRAITOR_VIEW         4

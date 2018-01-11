@@ -77,7 +77,7 @@
 	src.icon_state = "body_scanner_0"
 	return
 
-/obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, user)
+/obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, mob/user)
 	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
 		return
 	if (src.occupant)
@@ -86,7 +86,11 @@
 	if (G.affecting.abiotic())
 		to_chat(user, "\blue <B>Subject cannot have abiotic items on.</B>")
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	var/mob/M = G.affecting
+	if(M.buckled)
+		var/obj/O = M.buckled
+		O.user_unbuckle_mob(user)
 	if (M.client)
 		M.client.perspective = EYE_PERSPECTIVE
 		M.client.eye = src

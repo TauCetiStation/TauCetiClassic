@@ -413,7 +413,8 @@ This is facehugger Attach procs
 	if (sterile)
 		to_chat(user, "<span class='danger'>It looks like the proboscis has been removed.</span>")
 
-/obj/item/clothing/mask/facehugger/attackby()
+/obj/item/clothing/mask/facehugger/attackby(obj/item/W, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	Die()
 	return
 

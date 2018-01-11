@@ -154,7 +154,8 @@
 			return
 
 		else
-			//user.say("Heeeeeeeeeerrre's Johnny!")
+			if(prob(10))
+				user.say("Heeeeeeeeeerrre's Johnny!") // ^^
 			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
 			A.open(1)
 

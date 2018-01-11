@@ -110,8 +110,10 @@
 	text = replacetext(text, "\n", "<BR>")
 	return text
 
-/obj/machinery/computer/attackby(I, user)
+/obj/machinery/computer/attackby(obj/item/I, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
+		if(user.is_busy(src)) return
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
@@ -131,7 +133,6 @@
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
-	return
 
 /obj/machinery/computer/attack_hand(user)
 	if(ishuman(user))
@@ -150,6 +151,8 @@
 
 /obj/machinery/computer/attack_paw(mob/user)
 	if(circuit)
+		user.SetNextMove(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
 		if(prob(10))
 			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with /his paws.</span>",\
 			"<span class='danger'>You smash the [src.name] with your paws.</span>",\
@@ -165,6 +168,8 @@
 		attack_hand(user)
 		return
 	if(circuit)
+		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		if(prob(80))
 			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with /his claws.</span>",\
 			"<span class='danger'>You smash the [src.name] with your claws.</span>",\

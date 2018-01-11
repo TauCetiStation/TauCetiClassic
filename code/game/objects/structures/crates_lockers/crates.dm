@@ -178,6 +178,7 @@
 
 /obj/structure/closet/crate/secure/attack_hand(mob/user)
 	src.add_fingerprint(user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	if(locked)
 		src.togglelock(user)
 	else
@@ -187,6 +188,7 @@
 	if(is_type_in_list(W, list(/obj/item/weapon/packageWrap, /obj/item/stack/cable_coil, /obj/item/device/radio/electropack, /obj/item/weapon/wirecutters)))
 		return ..()
 	if(locked && (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)))
+		user.SetNextMove(CLICK_CD_MELEE)
 		overlays.Cut()
 		overlays += emag
 		overlays += sparks
@@ -503,7 +505,7 @@
 
 /obj/structure/closet/crate/dwarf_agriculture/PopulateContents()
 	new /obj/item/weapon/storage/bag/plants(src)
-	new /obj/item/device/analyzer/plant_analyzer(src)
+	new /obj/item/device/plant_analyzer(src)
 	new /obj/item/weapon/minihoe(src)
 	new /obj/item/weapon/hatchet(src)
 	new /obj/item/seeds/reishimycelium(src)

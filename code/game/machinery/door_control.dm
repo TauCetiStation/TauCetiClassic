@@ -24,6 +24,7 @@
 		return
 	if(istype(W, /obj/item/weapon/card/emag))
 		req_access = list()
+		user.SetNextMove(CLICK_CD_INTERACT)
 		req_one_access = list()
 		playsound(src.loc, "sparks", 100, 1)
 	return src.attack_hand(user)
@@ -32,7 +33,7 @@
 	. = ..()
 	if(.)
 		return
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(src, 'sound/items/buttonswitch.ogg', 20, 1, 1)
 	use_power(5)
 	icon_state = "doorctrl1"
@@ -104,6 +105,7 @@
 		return 1
 
 	use_power(5)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	active = 1
 	icon_state = "launcheract"

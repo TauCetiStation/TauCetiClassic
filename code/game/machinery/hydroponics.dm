@@ -629,7 +629,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 		else
 			to_chat(user, "<span class='warning'>[src] already has seeds in it!</span>")
 
-	else if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	else if (istype(O, /obj/item/device/plant_analyzer))
 		if(planted && myseed)
 			to_chat(user, "*** <B>[myseed.plantname]</B> ***")//Carn: now reports the plants growing, not the seeds.
 			to_chat(user, "-Plant Age: \blue [age]")

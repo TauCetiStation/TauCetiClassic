@@ -30,6 +30,7 @@
 		qdel(src)
 
 /obj/item/weapon/holder/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	for(var/mob/M in src.contents)
 		M.attackby(W,user)
 

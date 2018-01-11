@@ -86,6 +86,7 @@
 	. = ..()
 	if(.)
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(operating)
 		to_chat(user, "<span class='danger'>The gibber is locked and running, wait for it to finish.</span>")
 		return 1
@@ -134,7 +135,7 @@
 	if(victim.abiotic(1) && !ignore_clothing)
 		to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
 		return
-
+	if(user.is_busy(src)) return
 	user.visible_message("\red [user] starts to put [victim] into the gibber!")
 	src.add_fingerprint(user)
 	if(do_after(user, 30, target = src) && victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user) && !occupant)

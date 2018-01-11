@@ -90,6 +90,8 @@
 	add_fingerprint(user)
 	if (istype(I, /obj/item/weapon/card/emag))
 		emag_act(user)
+		user.SetNextMove(CLICK_CD_INTERACT)
+
 	if(default_deconstruction_screwdriver(user, "grinder-bOpen", "grinder-b0", I))
 		return
 
@@ -102,9 +104,8 @@
 	if(default_unfasten_wrench(user, I))
 		return
 
-	default_deconstruction_crowbar(I)
-	..()
-	return
+	else
+		default_deconstruction_crowbar(I)
 
 /obj/machinery/pile_ripper/proc/emag_act(mob/user)
 	if(!emagged)

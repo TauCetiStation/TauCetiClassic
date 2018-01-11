@@ -10,6 +10,7 @@
 
 /obj/structure/pit/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/shovel))
+		if(user.is_busy()) return
 		visible_message("<span class='notice'>\The [user] starts [open ? "filling" : "digging open"] \the [src]</span>")
 		if(do_after(user, 50, target = src) )
 			visible_message("<span class='notice'>\The [user] [open ? "fills" : "digs open"] \the [src]!</span>")
@@ -27,6 +28,7 @@
 			var/obj/item/stack/sheet/wood/plank = W
 			if(plank.get_amount() < 1)
 				return
+			if(user.is_busy()) return
 			visible_message("<span class='notice'>\The [user] starts making a grave marker on top of \the [src]</span>")
 			if(do_after(user, 50, target = src))
 				if(!plank.use(1))
@@ -200,6 +202,7 @@
 
 /obj/structure/gravemarker/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/hatchet))
+		if(user.is_busy()) return
 		visible_message("<span class = 'warning'>\The [user] starts hacking away at \the [src] with \the [W].</span>")
 		if(do_after(user, 30, target = src))
 			visible_message("<span class = 'warning'>\The [user] hacks \the [src] apart.</span>")
@@ -208,6 +211,7 @@
 			return
 	if(istype(W,/obj/item/weapon/pen))
 		var/msg = sanitize(input(user, "What should it say?", "Grave marker", message) as text|null)
+		add_fingerprint(user)
 		if(msg)
 			message = msg
 

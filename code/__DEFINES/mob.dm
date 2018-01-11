@@ -110,3 +110,9 @@
 #define IAN_STANDARD 0
 #define IAN_LICK     1
 #define IAN_SNIFF    2
+
+// CLicks Cooldowns
+#define CLICK_CD_MELEE 8
+#define CLICK_CD_INTERACT 4
+#define CLICK_CD_RAPID 2
+#define CLICK_CD_AI 9

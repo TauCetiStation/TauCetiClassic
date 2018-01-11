@@ -179,26 +179,11 @@
 
 	to_chat(user, msg)
 
-/mob/living/simple_animal/hulk/attack_animal(mob/living/simple_animal/M)
-	if(M == src) //No punching myself to avoid hulk transformation!
-		return
-	if(M.melee_damage_upper <= 0)
-		M.emote("[M.friendly] \the <EM>[src]</EM>")
-	else
-		if(M.attack_sound)
-			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>", 1)
-		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
-
-		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		adjustBruteLoss(damage)
-
 //mob/living/simple_animal/hulk/Process_Spacemove(movement_dir = 0)
 //	return 1 //copypasta from carp code
 
 /mob/living/simple_animal/hulk/attackby(obj/item/O, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(O.force)
 		if(O.force >= 10)
 			var/damage = O.force
@@ -224,6 +209,9 @@
 		health -= P.agony / 10
 
 /mob/living/simple_animal/hulk/proc/attack_hulk(obj/machinery/door/D)
+	do_attack_animation(D)
+	SetNextMove(CLICK_CD_MELEE)
+
 	if(istype(D,/obj/machinery/door/airlock))
 		var/obj/machinery/door/airlock/A = D
 		if(A.welded || A.locked)
@@ -240,8 +228,7 @@
 		to_chat(src, "<span class='userdanger'>You force your fingers between \
 		 the doors and begin to pry them open...</span>")
 		playsound(D, 'sound/machines/electric_door_open.ogg', 30, 1, -4)
-		if (do_after(src,40,target = D))
-			if(!D) return
+		if (!is_busy() && do_after(src, 40, target = D) && D)
 			D.open(1)
 
 /mob/living/proc/hulk_scream(obj/target, chance)
