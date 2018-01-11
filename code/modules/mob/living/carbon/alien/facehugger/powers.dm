@@ -6,8 +6,8 @@
 	if(stat != CONSCIOUS)
 		return
 
-	if (layer != TURF_LAYER+0.2)
-		layer = TURF_LAYER+0.2
+	if (layer != TURF_LAYER+0.5)
+		layer = TURF_LAYER+0.5
 		to_chat(src, text("\green You are now hiding."))
 		for(var/mob/O in oviewers(src, null))
 			if ((O.client && !( O.blinded )))
