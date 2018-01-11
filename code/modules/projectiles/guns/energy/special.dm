@@ -296,6 +296,8 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	charge(user)
 
 /obj/item/weapon/gun/tesla/special_check(mob/user, atom/target)
+	if(!..())
+		return FALSE
 	if(!charge)
 		to_chat(user, "<span class='red'>Tesla Cannon is not charged!</span>")
 	else if(!istype(target, /mob/living))
