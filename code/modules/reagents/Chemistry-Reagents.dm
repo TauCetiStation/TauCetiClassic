@@ -2084,11 +2084,13 @@ datum
 	id = "consumable"
 
 /datum/reagent/consumable/on_mob_life(mob/living/M)
+	if(!..())
+		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.can_eat(diet_flags))	//Make sure the species has it's dietflag set, otherwise it can't digest any nutrients
 			H.nutrition += nutriment_factor	// For hunger and fatness
-	..()
+	return TRUE
 
 /datum/reagent/consumable/nutriment
 	name = "Nutriment"
@@ -2107,10 +2109,11 @@ datum
 	//M.nutrition += nutriment_factor	// For hunger and fatness
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.can_eat(diet_flags))	//Make sure the species has it's dietflag set, otherwise it can't digest any nutrients
+		if(H.can_eat(diet_flags))
 			if(prob(50))
 				M.adjustBruteLoss(-1)
-	..()
+	return TRUE
+
 /*
 				// If overeaten - vomit and fall down
 				// Makes you feel bad but removes reagents and some effect
@@ -2138,9 +2141,8 @@ datum
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.species.name == "Skrell")
-			H.adjustToxLoss(2)
-	..()
+		if(H.species.name == SKRELL)
+			H.adjustToxLoss(2 * REM)
 
 /datum/reagent/consumable/nutriment/plantmatter		// Plant-based biomatter, digestable by herbivores and omnivores, worthless to carnivores
 	name = "Plant-matter"
@@ -2158,6 +2160,8 @@ datum
 	taste_message = null
 
 /datum/reagent/consumable/vitamin/on_mob_life(mob/living/M)
+	if(!..())
+		return
 	if(prob(50))
 		M.adjustBruteLoss(-1)
 		M.adjustFireLoss(-1)
@@ -2176,10 +2180,7 @@ datum
 								B = D
 								break
 					B.volume += 0.5
-			/*if(H.vessel.get_reagent_amount("blood")< BLOOD_VOLUME_NORMAL)
-				//H.vessel.reagent_list(datum/reagent/blood/).volume += 0.5
-				blood.volume in H.vessel.reagent_list += 0.5*/
-	..()
+
 
 /datum/reagent/consumable/lipozine
 	name = "Lipozine" // The anti-nutriment.
