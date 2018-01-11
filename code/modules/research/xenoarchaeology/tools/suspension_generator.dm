@@ -346,11 +346,16 @@
 	set name = "Eject ID"
 	set category = "Object"
 	set src in oview(1)
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return
 
 	if(auth_card)
 		auth_card.loc = get_turf(src.loc)
 		auth_card = null
 		update_icon()
+		to_chat(usr, "<span class='notice'>Card is removed from [src].</span>")
+		return
+
 	else
 		to_chat(usr, "<span class='notice'>The [src] is empty.</span>")
 
