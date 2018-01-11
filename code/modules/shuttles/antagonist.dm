@@ -133,6 +133,7 @@ var/global/vox_shuttle_location
 		"syndicate_mining"
 		)
 	shuttle_area = /area/syndicate_station/shuttle
+	dock_target = "syndicate_shuttle"
 	current_location = "syndicate_home"
 	landmark_transition = "syndicate_trans"
 
@@ -148,9 +149,22 @@ var/global/vox_shuttle_location
 		for(var/area/s_area in shuttle_area)
 			addtimer(CALLBACK(s_area, /area.proc/parallax_slowdown), move_time - PARALLAX_LOOP_TIME)
 
+
+/*
+Vars:
+	shuttle:
+		airlock/docking_port:
+			id_tag: "syndicate_shuttle"
+
+	syndicate dock:
+		simple_docking_controller:
+			id_tag: "syndicate_base"
+*/
+
 /obj/effect/shuttle_landmark/syndicate/home
 	name = "Syndicate Space"
 	landmark_tag = "syndicate_home"
+	docking_controller = "syndicate_base"
 
 /obj/effect/shuttle_landmark/syndicate/station/north_west
 	name = "North West of SS13"

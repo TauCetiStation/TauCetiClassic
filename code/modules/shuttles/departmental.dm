@@ -19,6 +19,28 @@
 	dock_target = "mine_sci_shuttle"
 	current_location = "nav_mine_sci_station"
 
+/*
+Tags:
+	shuttle:
+		simple_docking_controller:
+			id_tag: "mine_sci_shuttle"
+			name: "Mine-Sci Shuttle Docking Port Controller"
+
+	mining outpost dock:
+		airlock/docking_port:
+			id_tag: "mine_sci_mining"
+			name: "Mine-Sci Shuttle Docking Port Controller"
+
+	research outpost dock:
+		simple_docking_controller:
+			id_tag: "mine_sci_research"
+			name: "Mine-Sci Shuttle Docking Port Controller"
+
+	station dock:
+		simple_docking_controller:
+			id_tag: "mine_sci_station"
+			name: "Mine-Sci Shuttle Docking Port Controller"
+*/
 
 /obj/effect/shuttle_landmark/mine_sci/station
 	name = "Station"

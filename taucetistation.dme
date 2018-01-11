@@ -1750,7 +1750,6 @@
 #include "code\modules\shieldgen\shield_capacitor.dm"
 #include "code\modules\shieldgen\shield_gen.dm"
 #include "code\modules\shieldgen\shield_gen_external.dm"
-#include "code\modules\shuttles\_defines.dm"
 #include "code\modules\shuttles\administrative.dm"
 #include "code\modules\shuttles\antagonist.dm"
 #include "code\modules\shuttles\arrival.dm"

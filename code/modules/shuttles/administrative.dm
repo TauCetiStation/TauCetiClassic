@@ -16,7 +16,7 @@
 	waypoint_offsite = "nav_transport_out"
 
 /*
-Tags:
+Vars:
 	shuttle:
 		docking_port_multi:
 			id_tag: "transport_shuttle"
@@ -39,11 +39,11 @@ Tags:
 		docking_port_multi:
 			id_tag: "station_dock_2"
 			name: "Docking Port Controller #2"
-		airlock/docking_port_multi: (south)
+		airlock/docking_port_multi_slave: (south)
 			master_tag: "station_dock_2"
 			id_tag: "station_dock_21"
 			name: "Docking Port Controller #2-1"
-		airlock/docking_port_multi: (north)
+		airlock/docking_port_multi_slave: (north)
 			master_tag: "station_dock_2"
 			id_tag: "station_dock_22"
 			name: "Docking Port Controller #2-2"
@@ -74,18 +74,36 @@ Tags:
 	warmup_time = 10
 	shuttle_area = /area/shuttle/administration
 	dock_target = "administration_shuttle"
-	waypoint_station = "nav_administration_start"
-	waypoint_offsite = "nav_administration_out"
+	waypoint_station = "nav_administration_station"
+	waypoint_offsite = "nav_administration_centcom"
+
+/*
+Vars:
+	shuttle:
+		simple_docking_controller:
+			id_tag: "administration_shuttle"
+			name: "Administration Shuttle Docking Port Controller"
+
+	centcom dock:
+		simple_docking_controller:
+			id_tag: "administration_centcom"
+			name: "Administration Shuttle Docking Port Controller"
+
+	station dock:
+		simple_docking_controller:
+			id_tag: "administration_station"
+			name: "Docking Port Controller #4"
+*/
 
 /obj/effect/shuttle_landmark/administration/start
 	name = "Station"
-	landmark_tag = "nav_administration_start"
-	docking_controller = "administration_shuttle_dock"
+	landmark_tag = "nav_administration_station"
+	docking_controller = "administration_station"
 
 /obj/effect/shuttle_landmark/administration/out
 	name = "Centcom"
-	landmark_tag = "nav_administration_out"
-	docking_controller = "administration_shuttle_centcom"
+	landmark_tag = "nav_administration_centcom"
+	docking_controller = "administration_centcom"
 	base_turf = /turf/unsimulated/floor
 
 //
@@ -100,37 +118,60 @@ Tags:
 	name = "Centcom ferry shuttle"
 	warmup_time = 10
 	destination_tags = list(
-		"nav_centcom_ferry_station",
-		"nav_centcom_ferry_velocity",
-		"nav_centcom_ferry_centcom"
+		"nav_officer_station",
+		"nav_officer_velocity",
+		"nav_officer_centcom"
 		)
 	shuttle_area = /area/shuttle/officer
-	dock_target = "centcom_ferry_shuttle"
-	current_location = "nav_centcom_ferry_velocity"
-	landmark_transition = "nav_centcom_ferry_trans"
+	dock_target = "officer_shuttle"
+	current_location = "nav_officer_velocity"
+	landmark_transition = "nav_officer_trans"
 
+/*
+Vars:
+	shuttle:
+		simple_docking_controller:
+			id_tag: "officer_shuttle"
+			name: "Velocity Shuttle Docking Port Controller"
 
-/obj/effect/shuttle_landmark/centcom_ferry/stataion
+	centcom dock:
+		simple_docking_controller:
+			id_tag: "officer_centcom"
+			name: "Velocity Shuttle Docking Port Controller"
+
+	velocity dock:
+		simple_docking_controller:
+			id_tag: "officer_velocity"
+			name: "Velocity Shuttle Docking Port Controller"
+
+	station dock:
+		simple_docking_controller:
+			id_tag: "officer_station"
+			name: "Docking Port Controller #1"
+*/
+
+/obj/effect/shuttle_landmark/officer/station
 	name = "NSS Exodus"
-	landmark_tag = "nav_centcom_ferry_station"
-	docking_controller = "centcom_ferry_station"
+	landmark_tag = "nav_officer_station"
+	docking_controller = "officer_station"
 
-/obj/effect/shuttle_landmark/centcom_ferry/velocity
+/obj/effect/shuttle_landmark/officer/velocity
 	name = "NTS Velocity"
-	landmark_tag = "nav_centcom_ferry_velocity"
-	docking_controller = "centcom_ferry_velocity"
+	landmark_tag = "nav_officer_velocity"
+	docking_controller = "officer_velocity"
 
-/obj/effect/shuttle_landmark/centcom_ferry/centcom
+/obj/effect/shuttle_landmark/officer/centcom
 	name = "Central Command"
-	landmark_tag = "nav_centcom_ferry_centcom"
-	docking_controller = "centcom_ferry_centcom"
+	landmark_tag = "nav_officer_centcom"
+	docking_controller = "officer_centcom"
 
-/obj/effect/shuttle_landmark/centcom_ferry/transit
+/obj/effect/shuttle_landmark/officer/transit
 	name = "Hyperspace"
-	landmark_tag = "nav_centcom_ferry_trans"
+	landmark_tag = "nav_officer_trans"
 
-
+//
 //SpecOps
+//
 /obj/machinery/computer/shuttle_control/specops
 	name = "Special operations shuttle console"
 	shuttle_tag = "Special Operations"
@@ -145,8 +186,8 @@ Tags:
 	location = SHUTTLE_LOCATION_OFFSITE
 	shuttle_area = /area/shuttle/specops
 	dock_target = "specops_shuttle"
-	waypoint_station = "nav_specops_start"
-	waypoint_offsite = "nav_specops_out"
+	waypoint_station = "nav_specops_station"
+	waypoint_offsite = "nav_specops_centcom"
 	var/specops_return_delay = 6000		//After moving, the amount of time that must pass before the shuttle may move again
 	var/specops_countdown_time = 600	//Length of the countdown when moving the shuttle
 
@@ -259,13 +300,47 @@ Tags:
 
 	launch_prep = FALSE
 
-/obj/effect/shuttle_landmark/specops/start
-	name = "Station"
-	landmark_tag = "nav_specops_start"
-	docking_controller = "specops_shuttle_dock"
+/*
+Vars:
+	shuttle:
+		docking_port_multi:
+			id_tag: "specops_shuttle"
+			name: "Special Operations Shuttle Docking Port Controller"
+		simple_docking_controller/multi_slave: (south)
+			master_tag: "specops_shuttle"
+			id_tag: "specops_shuttle1"
+			name: "Special Operations Shuttle Hatch Controller #1"
+		simple_docking_controller/multi_slave: (east)
+			master_tag: "specops_shuttle"
+			id_tag: "specops_shuttle2"
+			name: "Special Operations Shuttle Hatch Controller #2"
 
-/obj/effect/shuttle_landmark/specops/out
+	centcom dock:
+		simple_docking_controller:
+			id_tag: "specops_centcom"
+			name: "Special Operations Shuttle Docking Port Controller"
+
+	station dock:
+		docking_port_multi:
+			id_tag: "specops_station"
+			name: "Docking Port Controller #3"
+		simple_docking_controller/multi_slave: (south)
+			master_tag: "specops_station"
+			id_tag: "specops_station1"
+			name: "Docking Port Controller #3-1"
+		simple_docking_controller/multi_slave: (east)
+			master_tag: "specops_station"
+			id_tag: "specops_station2"
+			name: "Docking Port Controller #3-2"
+*/
+
+/obj/effect/shuttle_landmark/specops/station
+	name = "Station"
+	landmark_tag = "nav_specops_station"
+	docking_controller = "specops_station"
+
+/obj/effect/shuttle_landmark/specops/centcom
 	name = "Centcom"
-	landmark_tag = "nav_specops_out"
-	docking_controller = "specops_shuttle_centcom"
+	landmark_tag = "nav_specops_centcom"
+	docking_controller = "specops_centcom"
 	special_dock_targets = list("Special Operations" = "specops_shuttle1")
