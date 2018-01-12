@@ -1,4 +1,4 @@
-//shuttle moving state defines are in setup.dm
+//shuttle moving state defines are in code/__DEFINES/shuttles.dm
 
 /datum/shuttle
 	var/name = ""

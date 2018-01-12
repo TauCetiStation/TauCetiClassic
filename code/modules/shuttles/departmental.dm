@@ -1,3 +1,6 @@
+//
+// Mine-Sci
+//
 /obj/machinery/computer/shuttle_control/multi/mine_sci
 	name = "Mine-Sci shuttle console"
 	shuttle_tag = "Mine-Sci shuttle"
@@ -21,7 +24,7 @@
 	current_location = "nav_mine_sci_station"
 
 /*
-Tags:
+Vars:
 	shuttle:
 		simple_docking_controller:
 			id_tag: "mine_sci_shuttle"
