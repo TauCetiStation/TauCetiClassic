@@ -2387,7 +2387,7 @@
 "lYb" = (/obj/structure/centcom_barrier,/turf/unsimulated/floor{icon_state = "brownold"; dir = 4},/area/centcom/arrival)
 "lZb" = (/turf/unsimulated/floor{icon_state = "loadingarea"; dir = 1},/area/centcom/arrival)
 "mab" = (/obj/machinery/embedded_controller/radio/simple_docking_controller/multi_slave{id_tag = "specops_shuttle1"; master_tag = "specops_shuttle"; name = "Special Operations Shuttle Hatch Controller #1"; pixel_y = -25; req_access_txt = "103"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/specops)
-"mbb" = (/obj/machinery/computer/shuttle_control/multi/centcom_ferry,/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/shuttle/floor/shuttle_new{icon_state = "vel_f01"; dir = 8},/area/shuttle/officer)
+"mbb" = (/obj/machinery/computer/shuttle_control/multi/officer,/obj/machinery/light{icon_state = "tube1"; dir = 8},/turf/simulated/shuttle/floor/shuttle_new{icon_state = "vel_f01"; dir = 8},/area/shuttle/officer)
 "mcb" = (/obj/machinery/door/window/westleft{dir = 4},/obj/structure/stool/bed/chair/schair/velocity_s_chair{dir = 8; icon_state = "vel_s"; name = "shuttle chair"},/turf/simulated/shuttle/floor/shuttle_new{icon_state = "vel_f01"; dir = 8},/area/shuttle/officer)
 "mdb" = (/turf/simulated/shuttle/floor/shuttle_new{icon_state = "vel_f01"; dir = 8},/area/shuttle/officer)
 "meb" = (/obj/machinery/embedded_controller/radio/simple_docking_controller{id_tag = "officer_shuttle"; name = "Velocity Shuttle Docking Port Controller"; pixel_x = 25; pixel_y = -25; req_access_txt = "103"},/turf/simulated/shuttle/floor/shuttle_new{icon_state = "vel_f01"; dir = 8},/area/shuttle/officer)

@@ -1,3 +1,6 @@
+#define OFFICER_SHUTTLE_MOVE_TIME 60 SECONDS
+#define OFFICER_SHUTTLE_COOLDOWN 40 SECONDS
+
 //
 //Transport shuttle
 //
@@ -109,13 +112,14 @@ Vars:
 //
 // Centcom-Velocity-Station
 //
-/obj/machinery/computer/shuttle_control/multi/centcom_ferry
+/obj/machinery/computer/shuttle_control/multi/officer
 	name = "Shuttle console"
-	shuttle_tag = "Centcom ferry shuttle"
-	req_access = list(access_cent_specops)
+	shuttle_tag = "Velocity ferry shuttle"
 
-/datum/shuttle/autodock/multi/centcom_ferry
-	name = "Centcom ferry shuttle"
+/datum/shuttle/autodock/multi/officer
+	name = "Velocity ferry shuttle"
+	move_cooldown = OFFICER_SHUTTLE_COOLDOWN
+	move_time = OFFICER_SHUTTLE_MOVE_TIME
 	warmup_time = 10
 	destination_tags = list(
 		"nav_officer_station",
@@ -126,6 +130,24 @@ Vars:
 	dock_target = "officer_shuttle"
 	current_location = "nav_officer_velocity"
 	landmark_transition = "nav_officer_trans"
+	var/obj/item/device/radio/intercom/announcer
+	var/arrival_note = "Velocity transport shuttle docked with - dock 1."
+	var/department_note = "Velocity transport shuttle departed from station."
+
+/datum/shuttle/autodock/multi/officer/New(_name, obj/effect/shuttle_landmark/start_waypoint)
+	..()
+	announcer = new ()
+
+/datum/shuttle/autodock/multi/officer/Destroy()
+	QDEL_NULL(announcer)
+	return ..()
+
+/datum/shuttle/autodock/multi/officer/post_move(obj/effect/shuttle_landmark/destination)
+	..()
+	if(destination.landmark_tag == "nav_officer_station")
+		announcer.autosay(arrival_note, "Arrivals Alert System")
+	else if(current_location.landmark_tag == "nav_officer_station")
+		announcer.autosay(department_note, "Arrivals Alert System")
 
 /*
 Vars:
