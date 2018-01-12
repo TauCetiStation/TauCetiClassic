@@ -16,12 +16,13 @@
 	shuttle_area = /area/shuttle/transport1
 	dock_target = "transport_shuttle"
 	waypoint_station = "nav_transport_start"
-	waypoint_offsite = "nav_transport_out"
+	waypoint_offsite = "nav_station_dock_2"
 
 /*
 Vars:
 	shuttle:
 		docking_port_multi:
+			child_tags_txt: "transport_shuttle1;transport_shuttle2"
 			id_tag: "transport_shuttle"
 			name: "Transport Shuttle Docking Controller"
 		simple_docking_controller/multi_slave: (south)
@@ -40,6 +41,7 @@ Vars:
 
 	station dock:
 		docking_port_multi:
+			child_tags_txt: "station_dock_21;station_dock_22"
 			id_tag: "station_dock_2"
 			name: "Docking Port Controller #2"
 		airlock/docking_port_multi_slave: (south)
@@ -325,6 +327,7 @@ Vars:
 Vars:
 	shuttle:
 		docking_port_multi:
+			child_tags_txt: "specops_station1;specops_station2"
 			id_tag: "specops_shuttle"
 			name: "Special Operations Shuttle Docking Port Controller"
 		simple_docking_controller/multi_slave: (south)

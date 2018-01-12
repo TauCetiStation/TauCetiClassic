@@ -2809,7 +2809,7 @@
 "ueb" = (/obj/machinery/embedded_controller/radio/simple_docking_controller{id_tag = "officer_centcom"; name = "Velocity Shuttle Docking Port Controller"; pixel_y = -25; req_access_txt = "103"},/turf/unsimulated/floor,/area/centcom/evac)
 "ufb" = (/obj/structure/sign/marksymbol_b{icon_state = "T"},/turf/unsimulated/wall,/area/tdome)
 "ugb" = (/obj/machinery/light/small{dir = 8},/obj/machinery/embedded_controller/radio/simple_docking_controller/multi_slave{id_tag = "transport_shuttle2"; master_tag = "transport_shuttle"; name = "Transport Shuttle Hatch Controller #2"; pixel_y = 28; req_access_txt = "103"},/turf/simulated/shuttle/floor/erokez,/area/shuttle/transport1)
-"uhb" = (/obj/machinery/embedded_controller/radio/docking_port_multi{id_tag = "transport_shuttle"; name = "Transport Shuttle Docking Controller"; pixel_x = 25; req_access_txt = "103"},/turf/simulated/shuttle/floor/erokez,/area/shuttle/transport1)
+"uhb" = (/obj/machinery/embedded_controller/radio/docking_port_multi{child_tags_txt = "transport_shuttle1;transport_shuttle2";id_tag = "transport_shuttle"; name = "Transport Shuttle Docking Controller"; pixel_x = 25; req_access_txt = "103"},/turf/simulated/shuttle/floor/erokez,/area/shuttle/transport1)
 "uib" = (/obj/structure/sign/marksymbol_b{icon_state = "O"},/turf/unsimulated/wall,/area/tdome)
 "ujb" = (/turf/unsimulated/floor{icon_state = "redcorner"; dir = 8},/area/tdome)
 "ukb" = (/obj/machinery/light/small{dir = 8},/obj/machinery/embedded_controller/radio/simple_docking_controller/multi_slave{id_tag = "transport_shuttle1"; master_tag = "transport_shuttle"; name = "Transport Shuttle Hatch Controller #1"; pixel_y = -25; req_access_txt = "103"},/turf/simulated/shuttle/floor/erokez,/area/shuttle/transport1)

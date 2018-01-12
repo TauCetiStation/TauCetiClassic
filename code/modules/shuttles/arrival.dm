@@ -93,6 +93,7 @@ Tags:
 
 	station dock:
 		docking_port_multi:
+			child_tags_txt: "arrival_dock1;arrival_dock2"
 			id_tag: "arrival_dock"
 			name: "Arrival Shuttle Docking Port Controller"
 		airlock/docking_port_multi_slave: (west)
