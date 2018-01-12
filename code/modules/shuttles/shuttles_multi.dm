@@ -25,7 +25,7 @@
 
 //Antag play announcements when they leave/return to their home area
 /datum/shuttle/autodock/multi/antag
-	warmup_time = 10 SECONDS //replaced the old move cooldown
+	warmup_time = 3 //SECONDS
 
 	var/obj/effect/shuttle_landmark/home_waypoint
 

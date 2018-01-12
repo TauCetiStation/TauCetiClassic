@@ -4,7 +4,7 @@
 		{{:data.shuttle_status}}
 	</div>
 	<div class="item">
-		Cloaking field is {{ cloaked? "enabled" : "disabled" }}. {{if data.need_cloak}}{{:helper.link('Toggle', 'arrowreturn-1-s', {'toggle_cloaked' : '1'} }}{{/if}}
+		Cloaking field is {{:data.cloaked ? "enabled" : "disabled" }}. {{if data.need_cloak}}{{:helper.link("Toggle", 'arrowreturn-1-s', {'toggle_cloaked' : '1'}) }}{{/if}}
 	</div>
 </div>
 <div class="item" style="padding-top: 10px">

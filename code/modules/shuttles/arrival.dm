@@ -1,5 +1,5 @@
-#define ARRIVAL_SHUTTLE_MOVE_TIME 20
-#define ARRIVAL_SHUTTLE_COOLDOWN 25
+#define ARRIVAL_SHUTTLE_MOVE_TIME 20 //seconds
+#define ARRIVAL_SHUTTLE_COOLDOWN 25 //seconds
 
 //Arrival Shuttle
 /obj/machinery/computer/shuttle_control/arrival
@@ -10,8 +10,8 @@
 //Shuttle datum
 /datum/shuttle/autodock/ferry/arrival
 	name = "Arrival Shuttle"
-	location = 1
-	warmup_time = 10
+	location = SHUTTLE_LOCATION_OFFSITE
+	warmup_time = 10 //seconds
 	shuttle_area = /area/shuttle/arrival
 	dock_target = "arrival_shuttle"
 	waypoint_station = "nav_arrival_station"

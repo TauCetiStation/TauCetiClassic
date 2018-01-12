@@ -1,5 +1,5 @@
-#define OFFICER_SHUTTLE_MOVE_TIME 60 SECONDS
-#define OFFICER_SHUTTLE_COOLDOWN 40 SECONDS
+#define OFFICER_SHUTTLE_MOVE_TIME 60 //seconds
+#define OFFICER_SHUTTLE_COOLDOWN 40 //seconds
 
 //
 //Transport shuttle
@@ -12,7 +12,7 @@
 /datum/shuttle/autodock/ferry/transport
 	name = "Transport shuttle"
 	location = SHUTTLE_LOCATION_OFFSITE
-	warmup_time = 10
+	warmup_time = 5 //seconds
 	shuttle_area = /area/shuttle/transport1
 	dock_target = "transport_shuttle"
 	waypoint_station = "nav_transport_start"
@@ -74,7 +74,6 @@ Vars:
 /datum/shuttle/autodock/ferry/administration
 	name = "Administration shuttle"
 	location = SHUTTLE_LOCATION_OFFSITE
-	warmup_time = 10
 	shuttle_area = /area/shuttle/administration
 	dock_target = "administration_shuttle"
 	waypoint_station = "nav_administration_station"
@@ -120,7 +119,7 @@ Vars:
 	name = "Velocity ferry shuttle"
 	move_cooldown = OFFICER_SHUTTLE_COOLDOWN
 	move_time = OFFICER_SHUTTLE_MOVE_TIME
-	warmup_time = 10
+	warmup_time = 10 //seconds
 	destination_tags = list(
 		"nav_officer_station",
 		"nav_officer_velocity",
@@ -210,8 +209,8 @@ Vars:
 	dock_target = "specops_shuttle"
 	waypoint_station = "nav_specops_station"
 	waypoint_offsite = "nav_specops_centcom"
-	var/specops_return_delay = 6000		//After moving, the amount of time that must pass before the shuttle may move again
-	var/specops_countdown_time = 600	//Length of the countdown when moving the shuttle
+	var/specops_return_delay = 10 MINUTES //After moving, the amount of time that must pass before the shuttle may move again
+	var/specops_countdown_time = 60 SECONDS //Length of the countdown when moving the shuttle
 
 	var/obj/item/device/radio/intercom/announcer = null
 	var/reset_time = 0	//the world.time at which the shuttle will be ready to move again.

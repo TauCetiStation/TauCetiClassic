@@ -29,7 +29,7 @@
 	if(istype(shuttle))
 		. += list(
 			"cloaked" = shuttle.cloaked,
-			"need_cloak" = !shuttle.announcer
+			"need_cloak" = shuttle.announcer
 		)
 
 /obj/machinery/computer/shuttle_control/multi/antag/handle_topic_href(datum/shuttle/autodock/multi/antag/shuttle, list/href_list)

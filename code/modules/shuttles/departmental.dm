@@ -13,7 +13,7 @@
 
 /datum/shuttle/autodock/multi/mine_sci
 	name = "Mine-Sci shuttle"
-	warmup_time = 10
+	warmup_time = 12 //seconds
 	destination_tags = list(
 		"nav_mine_sci_station",
 		"nav_mine_sci_mining",
