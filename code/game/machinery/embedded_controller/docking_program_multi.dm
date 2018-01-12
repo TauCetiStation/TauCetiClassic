@@ -11,7 +11,7 @@
 	var/list/children_ready
 	var/list/children_override
 
-/datum/computer/file/embedded_program/docking/multi/New(var/obj/machinery/embedded_controller/M)
+/datum/computer/file/embedded_program/docking/multi/New(obj/machinery/embedded_controller/M)
 	..()
 
 	if(istype(M,/obj/machinery/embedded_controller/radio/docking_port_multi))	//if our parent controller is the right type, then we can auto-init stuff at construction

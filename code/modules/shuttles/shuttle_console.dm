@@ -88,7 +88,7 @@
 
 	handle_topic_href(SSshuttle.shuttles[shuttle_tag], href_list)
 
-/obj/machinery/computer/shuttle_control/bullet_act(var/obj/item/projectile/Proj)
+/obj/machinery/computer/shuttle_control/bullet_act(obj/item/projectile/Proj)
 	visible_message("\The [Proj] ricochets off \the [src]!")
 
 /obj/machinery/computer/shuttle_control/ex_act()

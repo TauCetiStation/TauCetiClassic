@@ -259,7 +259,7 @@
 /datum/computer/file/embedded_program/docking/proc/can_launch()
 	return undocked()
 
-/datum/computer/file/embedded_program/docking/proc/send_docking_command(var/recipient, var/command)
+/datum/computer/file/embedded_program/docking/proc/send_docking_command(recipient, command)
 	var/datum/signal/signal = new
 	signal.data["tag"] = id_tag
 	signal.data["command"] = command

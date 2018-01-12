@@ -28,7 +28,7 @@
 	force_undock() //bye!
 	..()
 
-/datum/shuttle/autodock/proc/get_docking_target(var/obj/effect/shuttle_landmark/location)
+/datum/shuttle/autodock/proc/get_docking_target(obj/effect/shuttle_landmark/location)
 	if(location && location.special_dock_targets)
 		if(location.special_dock_targets[name])
 			return location.special_dock_targets[name]

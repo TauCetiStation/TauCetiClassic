@@ -30,7 +30,7 @@
 		remote_state = null
 	return ..()
 
-/obj/machinery/dummy_airlock_controller/attack_hand(var/mob/user)
+/obj/machinery/dummy_airlock_controller/attack_hand(mob/user)
 	if(..())
 		return
 	if(master_controller)
@@ -38,6 +38,6 @@
 			return
 		open_remote_ui(user)
 
-/obj/machinery/dummy_airlock_controller/proc/open_remote_ui(var/mob/user)
+/obj/machinery/dummy_airlock_controller/proc/open_remote_ui(mob/user)
 	if(master_controller)
 		return master_controller.ui_interact(user, state = remote_state)
