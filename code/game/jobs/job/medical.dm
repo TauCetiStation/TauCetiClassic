@@ -10,7 +10,7 @@
 	idtype = /obj/item/weapon/card/id/medGold
 	req_admin_notify = 1
 	access = list(
-		access_medical, access_morgue, access_genetics, access_heads,
+		access_medical, access_morgue, access_genetics, access_heads, access_eva,
 		access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 		access_keycard_auth, access_sec_doors, access_psychiatrist, access_maint_tunnels
 	)
@@ -52,7 +52,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels)
+	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels, access_eva)
 	alt_titles = list("Surgeon","Emergency Physician","Nurse")
 	minimal_player_ingame_minutes = 960
 
@@ -121,7 +121,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_chemistry)
+	access = list(access_medical, access_chemistry, access_eva)
 	alt_titles = list("Pharmacist")
 	minimal_player_ingame_minutes = 960
 
@@ -156,7 +156,7 @@
 	supervisors = "the chief medical officer and research director"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_morgue, access_genetics, access_research)
+	access = list(access_medical, access_morgue, access_genetics, access_research, access_eva)
 	minimal_player_ingame_minutes = 960
 
 /datum/job/geneticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -191,7 +191,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_virology)
+	access = list(access_medical, access_virology, access_eva)
 	alt_titles = list("Pathologist","Microbiologist")
 	minimal_player_ingame_minutes = 960
 
@@ -230,7 +230,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_psychiatrist)
+	access = list(access_medical, access_psychiatrist, access_eva)
 	alt_titles = list("Psychologist")
 	minimal_player_ingame_minutes = 960
 
