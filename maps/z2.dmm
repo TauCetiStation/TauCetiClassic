@@ -2370,7 +2370,7 @@
 "lHb" = (/obj/structure/rail_centcomm{icon_state = "rail_01"},/obj/machinery/door/poddoor,/turf/unsimulated/floor{icon_state = "circuit"},/area/space)
 "lIb" = (/obj/structure/shuttle/engine/propulsion{icon_state = "propulsion"; dir = 4},/turf/space,/area/shuttle/specops)
 "lJb" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/shuttle/engine/heater{icon_state = "heater"; dir = 8},/turf/unsimulated/floor,/area/shuttle/specops)
-"lKb" = (/obj/structure/table/reinforced,/obj/item/device/radio/intercom{broadcasting = 0; dir = 1; frequency = 1443; listening = 1; name = "Spec Ops Intercom"; pixel_y = 28},/obj/machinery/embedded_controller/radio/docking_port_multi{id_tag = "specops_shuttle"; pixel_x = -25; pixel_y = 28; req_access_txt = "103"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/specops)
+"lKb" = (/obj/structure/table/reinforced,/obj/item/device/radio/intercom{broadcasting = 0; dir = 1; frequency = 1443; listening = 1; name = "Spec Ops Intercom"; pixel_y = 28},/obj/machinery/embedded_controller/radio/docking_port_multi{child_tags_txt = "specops_shuttle1;specops_shuttle2"; id_tag = "specops_shuttle"; pixel_x = -25; pixel_y = 28; req_access_txt = "103"},/turf/simulated/shuttle/floor{icon_state = "floor4"},/area/shuttle/specops)
 "lLb" = (/obj/structure/object_wall/velocity{icon_state = "vel_wall02"; dir = 8},/turf/space,/area/shuttle/officer)
 "lMb" = (/obj/structure/object_wall/velocity{icon_state = "vel_wall01"; dir = 8},/turf/space,/area/shuttle/officer)
 "lNb" = (/obj/structure/object_wall/velocity{icon_state = "vel_wall01"; dir = 8},/obj/structure/sign/velocity_shuttle{icon_state = "vel_s01"; dir = 1},/turf/space,/area/shuttle/officer)

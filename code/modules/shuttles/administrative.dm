@@ -15,8 +15,8 @@
 	warmup_time = 5 //seconds
 	shuttle_area = /area/shuttle/transport1
 	dock_target = "transport_shuttle"
-	waypoint_station = "nav_transport_start"
-	waypoint_offsite = "nav_station_dock_2"
+	waypoint_station = "station_dock_2"
+	waypoint_offsite = "transport_centcom"
 
 /*
 Vars:
