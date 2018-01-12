@@ -198,10 +198,6 @@ Vars:
 	name = "Hyperspace"
 	landmark_tag = "syndicate_trans"
 
-/obj/item/weapon/circuitboard/computer/syndicate_shuttle
-	name = "Syndicate Shuttle (Computer Board)"
-	build_path = /obj/machinery/computer/shuttle_control/multi/antag/syndicate
-
 #undef VOX_CAN_USE
 #undef VOX_SHUTTLE_MOVE_TIME
 #undef VOX_SHUTTLE_COOLDOWN

@@ -9,6 +9,7 @@
 
 /datum/shuttle/autodock/multi/mine_sci
 	name = "Mine-Sci shuttle"
+	circuit = /obj/item/weapon/circuitboard/mine-sci_shuttle
 	warmup_time = 10
 	destination_tags = list(
 		"nav_mine_sci_station",

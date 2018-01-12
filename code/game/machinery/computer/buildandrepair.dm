@@ -187,10 +187,13 @@
 	name = "Circuit board (Stock exchange computer)"
 	build_path = /obj/machinery/computer/stockexchange
 	origin_tech = "programming=3"
-/*/obj/item/weapon/circuitboard/research_shuttle
-	name = "Circuit board (Research Shuttle)"
+/obj/item/weapon/circuitboard/mine-sci_shuttle
+	name = "Circuit board (Mine-Sci Shuttle)"
 	build_path = /obj/machinery/computer/research_shuttle
-	origin_tech = "programming=2"*/
+	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/computer/syndicate_shuttle
+	name = "Syndicate Shuttle (Computer Board)"
+	build_path = /obj/machinery/computer/syndicate_station
 /obj/item/weapon/circuitboard/operating
 	name = "Circuit board (Operating Computer)"
 	build_path = /obj/machinery/computer/operating
