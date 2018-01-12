@@ -1,6 +1,7 @@
 #define LIGHTING_FALLOFF        1    // Type of falloff to use for lighting; 1 for circular, 2 for square.
 #define LIGHTING_LAMBERTIAN     0    // Use lambertian shading for light sources.
 #define LIGHTING_HEIGHT         1    // Height off the ground of light sources on the pseudo-z-axis, you should probably leave this alone.
+#define LIGHTING_ANIMATE_TIME   1.5
 
 #define INVISIBILITY_LIGHTING   20
 
