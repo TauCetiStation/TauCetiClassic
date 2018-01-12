@@ -366,3 +366,6 @@ Vars:
 	landmark_tag = "nav_specops_centcom"
 	docking_controller = "specops_centcom"
 	special_dock_targets = list("Special Operations" = "specops_shuttle1")
+
+#undef OFFICER_SHUTTLE_MOVE_TIME
+#undef OFFICER_SHUTTLE_COOLDOWN
