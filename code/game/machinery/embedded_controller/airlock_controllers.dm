@@ -139,6 +139,7 @@
 
 	name = "Access Controller"
 	tag_secure = 1
+	req_access_txt = "0" //Not an airlock
 
 
 /obj/machinery/embedded_controller/radio/airlock/access_controller/update_icon()
