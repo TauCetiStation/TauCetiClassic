@@ -1,12 +1,13 @@
-//
-// Vox Shuttle
-//
 #define VOX_CAN_USE(A) (ishuman(A) && A.can_speak(all_languages["Vox-pidgin"]) || isobserver(A))
 #define VOX_SHUTTLE_MOVE_TIME 40 SECONDS
 #define VOX_SHUTTLE_COOLDOWN 120 SECONDS
 
 #define SYNDICATE_SHUTTLE_MOVE_TIME 24 SECONDS
 #define SYNDICATE_SHUTTLE_COOLDOWN 20 SECONDS
+
+//
+// Vox Shuttle
+//
 
 /obj/machinery/computer/shuttle_control/multi/antag/vox
 	name = "skipjack control console"
