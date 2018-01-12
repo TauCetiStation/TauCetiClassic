@@ -5,6 +5,7 @@
 	name = "Embedded Controller"
 	anchored = 1
 	allowed_checks = ALLOWED_CHECK_TOPIC
+	req_access_txt = "18" //EVA
 
 	var/on = 1
 
