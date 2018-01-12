@@ -10,6 +10,7 @@
 	var/obj/effect/shuttle_landmark/current_location
 	var/obj/effect/shuttle_landmark/landmark_transition
 	var/obj/effect/shuttle_landmark/next_location
+	var/transition_parallax_movedir = 0 //parallax_movedir for transition "area"; 0 - no parallax
 	var/move_time = 240 //the time spent in the transition area. In seconds
 
 	var/arrive_time = 0 //the time at which the shuttle arrives when long jumping
@@ -136,7 +137,9 @@
 
 
 /datum/shuttle/proc/pre_move(obj/effect/shuttle_landmark/destination)
-	return
+	if(transition_parallax_movedir)
+		for(var/area/s_area in shuttle_area)
+			s_area.parallax_movedir = destination == landmark_transition ? transition_parallax_movedir : 0
 
 
 /datum/shuttle/proc/move(obj/effect/shuttle_landmark/destination, list/turf_translation)
@@ -189,7 +192,9 @@
 
 
 /datum/shuttle/proc/post_move(obj/effect/shuttle_landmark/destination)
-	return
+	if(transition_parallax_movedir && destination == landmark_transition)
+		for(var/area/s_area in shuttle_area)
+			addtimer(CALLBACK(s_area, /area.proc/parallax_slowdown), move_time * 10 - PARALLAX_LOOP_TIME)
 
 //returns 1 if the shuttle has a valid arrive time
 /datum/shuttle/proc/has_arrive_time()

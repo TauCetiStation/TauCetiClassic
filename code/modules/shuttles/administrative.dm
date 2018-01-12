@@ -15,8 +15,8 @@
 	warmup_time = 5 //seconds
 	shuttle_area = /area/shuttle/transport1
 	dock_target = "transport_shuttle"
-	waypoint_station = "station_dock_2"
-	waypoint_offsite = "transport_centcom"
+	waypoint_station = "nav_station_dock_2"
+	waypoint_offsite = "nav_transport_out"
 
 /*
 Vars:
@@ -131,6 +131,7 @@ Vars:
 	dock_target = "officer_shuttle"
 	current_location = "nav_officer_velocity"
 	landmark_transition = "nav_officer_trans"
+	transition_parallax_movedir = WEST
 	var/obj/item/device/radio/intercom/announcer
 	var/arrival_note = "Velocity transport shuttle docked with - dock 1."
 	var/department_note = "Velocity transport shuttle departed from station."

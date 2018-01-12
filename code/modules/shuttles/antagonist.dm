@@ -55,6 +55,7 @@ var/global/vox_shuttle_location
 	shuttle_area = /area/shuttle/vox
 	current_location = "vox_home"
 	landmark_transition = "vox_trans"
+	transition_parallax_movedir = NORTH
 	announcer = "NSV Icarus"
 	arrival_message = "Внимание, КСН \"Исход\", неподалёку от вашей станции проходит корабль. По последним данным этот корабль принадлежит Торговой Конфедерации."
 	departure_message = "Your guests are pulling away, Exodus - moving too fast for us to draw a bead on them. Looks like they're heading out of Tau Ceti at a rapid clip."
@@ -66,18 +67,6 @@ var/global/vox_shuttle_location
 	else if(next_location == home_waypoint)
 		vox_shuttle_location = "start"
 	..()
-
-/datum/shuttle/autodock/multi/antag/vox/pre_move(obj/effect/shuttle_landmark/destination)
-	..()
-	var/dest_is_trans = destination == landmark_transition
-	for(var/area/s_area in shuttle_area)
-		s_area.parallax_movedir = dest_is_trans ? NORTH : 0
-
-/datum/shuttle/autodock/multi/antag/vox/post_move(obj/effect/shuttle_landmark/destination)
-	..()
-	if(destination == landmark_transition)
-		for(var/area/s_area in shuttle_area)
-			addtimer(CALLBACK(s_area, /area.proc/parallax_slowdown), move_time - PARALLAX_LOOP_TIME)
 
 /obj/effect/shuttle_landmark/vox/home
 	name = "Dark Space"
@@ -137,19 +126,7 @@ var/global/vox_shuttle_location
 	dock_target = "syndicate_shuttle"
 	current_location = "syndicate_home"
 	landmark_transition = "syndicate_trans"
-
-/datum/shuttle/autodock/multi/antag/syndicate/pre_move(obj/effect/shuttle_landmark/destination)
-	..()
-	var/dest_is_trans = destination == landmark_transition
-	for(var/area/s_area in shuttle_area)
-		s_area.parallax_movedir = dest_is_trans ? NORTH : 0
-
-/datum/shuttle/autodock/multi/antag/syndicate/post_move(obj/effect/shuttle_landmark/destination)
-	..()
-	if(destination == landmark_transition)
-		for(var/area/s_area in shuttle_area)
-			addtimer(CALLBACK(s_area, /area.proc/parallax_slowdown), move_time - PARALLAX_LOOP_TIME)
-
+	transition_parallax_movedir = NORTH
 
 /*
 Vars:

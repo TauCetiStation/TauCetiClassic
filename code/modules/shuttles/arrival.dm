@@ -17,6 +17,7 @@
 	waypoint_station = "nav_arrival_station"
 	waypoint_offsite = "nav_arrival_velocity"
 	landmark_transition = "nav_arrival_trans"
+	transition_parallax_movedir = WEST
 	move_time = ARRIVAL_SHUTTLE_MOVE_TIME
 	move_cooldown = ARRIVAL_SHUTTLE_COOLDOWN
 	var/obj/item/device/radio/intercom/announcer
@@ -47,23 +48,15 @@
 
 /datum/shuttle/autodock/ferry/arrival/pre_move(obj/effect/shuttle_landmark/destination)
 	..()
-	var/dest_is_trans = destination == landmark_transition
-	for(var/area/s_area in shuttle_area)
-		s_area.parallax_movedir = dest_is_trans ? WEST : 0
-		if(dest_is_trans)
+	if(destination == landmark_transition)
+		for(var/area/s_area in shuttle_area)
 			for(var/obj/machinery/light/small/L in s_area)
 				L.brightness_color = initial(L.brightness_color)
 				L.color = initial(L.color)
 				L.update(0)
 
-	if(direction && dest_is_trans) //Moving from station
-		announcer.autosay(department_note, "Arrivals Alert System")
-
-/datum/shuttle/autodock/ferry/arrival/post_move(obj/effect/shuttle_landmark/destination)
-	..()
-	if(destination == landmark_transition)
-		for(var/area/s_area in shuttle_area)
-			addtimer(CALLBACK(s_area, /area.proc/parallax_slowdown), ARRIVAL_SHUTTLE_MOVE_TIME*10 - PARALLAX_LOOP_TIME)
+		if(direction) //Moving from station
+			announcer.autosay(department_note, "Arrivals Alert System")
 
 /datum/shuttle/autodock/ferry/arrival/arrived()
 	..()
