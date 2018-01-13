@@ -46,14 +46,6 @@
 		if(!(user_area in shuttle_area))
 			return FALSE
 
-/datum/shuttle/autodock/ferry/arrival/can_force(user)
-	. = ..()
-	if(!.)
-		return
-	var/area/user_area = get_area(user)
-	if(!(user_area in shuttle_area))
-		return FALSE
-
 /datum/shuttle/autodock/ferry/arrival/can_cancel(user)
 	. = ..()
 	if(!.)
