@@ -93,6 +93,7 @@
 	dock()
 
 	next_location = null
+	start_location = null
 	in_use = null	//release lock
 
 
@@ -110,20 +111,20 @@
 /*
 	Guards
 */
-/datum/shuttle/autodock/proc/can_launch()
-	return (next_location && moving_status == SHUTTLE_IDLE && !in_use && world.time > next_jump_time)
+/datum/shuttle/autodock/proc/can_launch(user)
+	return (next_location && moving_status == SHUTTLE_IDLE && process_state == IDLE_STATE && !in_use && world.time > next_jump_time)
 
-/datum/shuttle/autodock/proc/can_force()
+/datum/shuttle/autodock/proc/can_force(user)
 	return (next_location && moving_status == SHUTTLE_IDLE && process_state == WAIT_LAUNCH && world.time > next_jump_time)
 
-/datum/shuttle/autodock/proc/can_cancel()
+/datum/shuttle/autodock/proc/can_cancel(user)
 	return (moving_status == SHUTTLE_WARMUP || process_state == WAIT_LAUNCH || process_state == FORCE_LAUNCH)
 
 /*
 	"Public" procs
 */
 /datum/shuttle/autodock/proc/launch(user)
-	if(!can_launch())
+	if(!can_launch(user))
 		return FALSE
 
 	in_use = user	//obtain an exclusive lock on the shuttle
@@ -134,7 +135,7 @@
 	return TRUE
 
 /datum/shuttle/autodock/proc/force_launch(user)
-	if(!can_force())
+	if(!can_force(user))
 		return
 
 	in_use = user	//obtain an exclusive lock on the shuttle
@@ -146,7 +147,7 @@
 	return	//Nothing. For use in subclasses
 
 /datum/shuttle/autodock/proc/cancel_launch(user)
-	if(!can_cancel())
+	if(!can_cancel(user))
 		return
 
 	moving_status = SHUTTLE_IDLE

@@ -301,6 +301,9 @@
 		if(!is_type_in_list(disk_area, centcom_areas))
 			disk_rescued = 0
 			break
+		else if(D.z != ZLEVEL_CENTCOM) //Uhm...
+			disk_rescued = 0
+			break
 	var/crew_evacuated = (SSshuttle.location==2)
 	//var/operatives_are_dead = is_operatives_are_dead()
 

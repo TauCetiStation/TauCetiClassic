@@ -91,7 +91,6 @@
 	/area/solar,
 	/area/holodeck,
 	/area/shuttle/arrival,
-	/area/shuttle/escape/station,
 	/area/shuttle/escape_pod1/station,
 	/area/shuttle/escape_pod2/station,
 	/area/shuttle/escape_pod3/station,

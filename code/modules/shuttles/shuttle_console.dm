@@ -45,9 +45,9 @@
 		"has_docking" = shuttle.active_docking_controller? 1 : 0,
 		"docking_status" = shuttle.active_docking_controller? shuttle.active_docking_controller.get_docking_status() : null,
 		"docking_override" = shuttle.active_docking_controller? shuttle.active_docking_controller.override_enabled : null,
-		"can_launch" = shuttle.can_launch(),
-		"can_cancel" = shuttle.can_cancel(),
-		"can_force" = shuttle.can_force(),
+		"can_launch" = shuttle.can_launch(src),
+		"can_cancel" = shuttle.can_cancel(src),
+		"can_force" = shuttle.can_force(src),
 		"ready_to_next_jump" = (world.time - shuttle.next_jump_time >= 0) ? TRUE : FALSE,
 		"next_jump_possible_in" = max(ceil((shuttle.next_jump_time - world.time) * 0.1), 0),
 	)

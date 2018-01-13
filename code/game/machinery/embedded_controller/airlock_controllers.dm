@@ -45,7 +45,7 @@
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 
 	if (!ui)
-		ui = new(user, src, ui_key, "advanced_airlock_console.tmpl", name, 470, 290)
+		ui = new(user, src, ui_key, "advanced_airlock_console.tmpl", name, 520, 290)
 
 		ui.set_initial_data(data)
 
@@ -100,7 +100,7 @@
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 
 	if (!ui)
-		ui = new(user, src, ui_key, "simple_airlock_console.tmpl", name, 470, 290)
+		ui = new(user, src, ui_key, "simple_airlock_console.tmpl", name, 520, 290)
 
 		ui.set_initial_data(data)
 

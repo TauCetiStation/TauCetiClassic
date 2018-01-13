@@ -37,7 +37,7 @@
 				if(findtext(thing, "<font color='orange'>"))
 					score["clownabuse"]++
 
-	var/area/escape_zone = locate(/area/shuttle/escape/centcom)
+	var/area/escape_zone = locate(/area/shuttle/escape)
 
 	for(var/mob/living/player in living_mob_list)
 		if (player.client)

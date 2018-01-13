@@ -21,6 +21,10 @@
 	var/sound_takeoff = 'sound/effects/shuttle_takeoff.ogg'
 	var/sound_landing = 'sound/effects/shuttle_landing.ogg'
 
+	var/finish_sound_timer
+	var/finish_jump_timer
+	var/obj/effect/shuttle_landmark/start_location //for manipulations with timers only
+
 /datum/shuttle/New(_name, obj/effect/shuttle_landmark/initial_location)
 	if(_name)
 		name = _name
@@ -61,6 +65,7 @@
 	current_location = null
 	landmark_transition = null
 	next_location = null
+	start_location = null
 
 	SSshuttle.shuttles -= name
 	if(flags & SHUTTLE_FLAGS_PROCESS)
@@ -82,45 +87,47 @@
 		if(!next_location)
 			CRASH("[src.name] initiated jump from [current_location.name] without destination.")
 		destination = next_location
+	else
+		next_location = destination
 
 	moving_status = SHUTTLE_WARMUP
 	if(sound_takeoff)
 		playsound(current_location, sound_takeoff, 100, 20, 0.2)
 	if(jump_dist == SHUTTLE_JUMP_SHORT)
-		addtimer(CALLBACK(src, .proc/jump_process, jump_dist, destination), warmup_time * 10)
+		addtimer(CALLBACK(src, .proc/jump_process, jump_dist), warmup_time * 10)
 	else
 		if(!interim)
 			if(!landmark_transition)
 				CRASH("[src.name] initiated long jump from [current_location.name] to [destination.name] without transit location.")
 			interim = landmark_transition
-		
+
 		if(!travel_time)
 			if(!move_time)
 				CRASH("[src.name] initiated long jump from [current_location.name] to [destination.name] without correct travel time.")
 			travel_time = move_time
 
-		addtimer(CALLBACK(src, .proc/jump_process, jump_dist, destination, interim, travel_time), warmup_time * 10)
+		addtimer(CALLBACK(src, .proc/jump_process, jump_dist, interim, travel_time), warmup_time * 10)
 
-/datum/shuttle/proc/jump_process(jump_dist, obj/effect/shuttle_landmark/destination, obj/effect/shuttle_landmark/interim, travel_time)
+/datum/shuttle/proc/jump_process(jump_dist, obj/effect/shuttle_landmark/interim, travel_time)
 	if(moving_status == SHUTTLE_IDLE)
 		return //someone cancelled the launch
 
 	moving_status = SHUTTLE_INTRANSIT
 	if(jump_dist == SHUTTLE_JUMP_SHORT)
-		attempt_move(destination)
+		attempt_move(next_location)
 		moving_status = SHUTTLE_IDLE
 	else
 		arrive_time = world.time + travel_time*10
-		var/obj/effect/shuttle_landmark/start_location = current_location
+		start_location = current_location
 		if(attempt_move(interim))
 			if(sound_landing)
-				addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, destination, sound_landing, 100, 0, 7), max(travel_time * 10 - 100, 5))
-			addtimer(CALLBACK(src, .proc/long_jump_end, destination, start_location), travel_time * 10)
+				finish_sound_timer = addtimer(CALLBACK(GLOBAL_PROC, .proc/playsound, next_location, sound_landing, 100, 0, 7), max(travel_time * 10 - 100, 5), TIMER_STOPPABLE)
+			finish_jump_timer = addtimer(CALLBACK(src, .proc/long_jump_end), travel_time * 10, TIMER_STOPPABLE)
 
 
-/datum/shuttle/proc/long_jump_end(obj/effect/shuttle_landmark/destination, obj/effect/shuttle_landmark/start)
-	if(!attempt_move(destination))
-		attempt_move(start) //try to go back to where we started. If that fails, I guess we're stuck in the interim location
+/datum/shuttle/proc/long_jump_end()
+	if(!attempt_move(next_location))
+		attempt_move(start_location) //try to go back to where we started. If that fails, I guess we're stuck in the interim location
 	moving_status = SHUTTLE_IDLE
 
 

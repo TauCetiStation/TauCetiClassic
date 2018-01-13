@@ -47,19 +47,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Emergency Shuttle"
 	music = "music/escape.ogg"
 
-/area/shuttle/escape/station
-	name = "Emergency Shuttle Station"
-	icon_state = "shuttle2"
-
-/area/shuttle/escape/centcom
-	name = "Emergency Shuttle Centcom"
-	icon_state = "shuttle"
-
-/area/shuttle/escape/transit // the area to pass through for 3 minute transit
-	name = "Emergency Shuttle Transit"
-	icon_state = "shuttle"
-	parallax_movedir = WEST
-
 /area/shuttle/escape_pod1
 	name = "Escape Pod One"
 	music = "music/escape.ogg"
@@ -1214,7 +1201,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 // CENTCOM
 var/list/centcom_areas = list (
 	/area/centcom,
-	/area/shuttle/escape/centcom,
+	/area/shuttle/escape,
 	/area/shuttle/escape_pod1/centcom,
 	/area/shuttle/escape_pod2/centcom,
 	/area/shuttle/escape_pod3/centcom,
@@ -1226,7 +1213,6 @@ var/list/centcom_areas = list (
 
 //SPACE STATION 13
 var/list/the_station_areas = list (
-	/area/shuttle/escape/station,
 	/area/shuttle/escape_pod1/station,
 	/area/shuttle/escape_pod2/station,
 	/area/shuttle/escape_pod3/station,

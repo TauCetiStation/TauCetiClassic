@@ -231,7 +231,7 @@ Vars:
 
 /datum/shuttle/autodock/ferry/specops/launch(user)
 	set waitfor = 0
-	if (!can_launch())
+	if (!can_launch(user))
 		return FALSE
 
 	if (istype(user, /obj/machinery/computer))
@@ -284,7 +284,7 @@ Vars:
 	..()
 
 
-/datum/shuttle/autodock/ferry/specops/can_launch()
+/datum/shuttle/autodock/ferry/specops/can_launch(user)
 	if(launch_prep)
 		return FALSE
 	return ..()

@@ -32,13 +32,16 @@
 	QDEL_NULL(announcer)
 	return ..()
 
-/datum/shuttle/autodock/ferry/arrival/can_launch()
+/datum/shuttle/autodock/ferry/arrival/can_launch(user)
 	. = ..()
-	if(!. || location)
+	if(!.)
 		return
-	for(var/check_area in shuttle_area)
-		if(SSshuttle.forbidden_atoms_check(check_area))
-			return FALSE
+	if(location == SHUTTLE_LOCATION_STATION)
+		var/area/user_area = get_area(user)
+		if(user_area in shuttle_area)
+			for(var/check_area in shuttle_area)
+				if(SSshuttle.forbidden_atoms_check(check_area))
+					return FALSE
 
 /datum/shuttle/autodock/ferry/arrival/proc/try_move_from_station()
 	if(location)
@@ -73,7 +76,7 @@
 			L.update(0)
 
 /*
-Tags:
+Vars:
 	shuttle:
 		simple_docking_controller:
 			id_tag: "arrival_shuttle"

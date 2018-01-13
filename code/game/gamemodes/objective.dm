@@ -316,7 +316,7 @@ datum/objective/hijack
 			return 0
 		if(issilicon(owner.current))
 			return 0
-		var/area/shuttle = locate(/area/shuttle/escape/centcom)
+		var/area/shuttle = locate(/area/shuttle/escape)
 		var/list/protected_mobs = list(/mob/living/silicon/ai, /mob/living/silicon/pai)
 		for(var/mob/living/player in player_list)
 			if(player.type in protected_mobs)	continue
@@ -338,7 +338,7 @@ datum/objective/block
 			return 0
 		if(!owner.current)
 			return 0
-		var/area/shuttle = locate(/area/shuttle/escape/centcom)
+		var/area/shuttle = locate(/area/shuttle/escape)
 		var/protected_mobs[] = list(/mob/living/silicon/ai, /mob/living/silicon/pai, /mob/living/silicon/robot)
 		for(var/mob/living/player in player_list)
 			if(player.type in protected_mobs)	continue
@@ -363,7 +363,7 @@ datum/objective/silence
 					var/turf/T = get_turf(player)
 					if(!T)	continue
 					switch(T.loc.type)
-						if(/area/shuttle/escape/centcom, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom)
+						if(/area/shuttle/escape, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom)
 							return 0
 		return 1
 
@@ -393,7 +393,7 @@ datum/objective/escape
 			return 0
 
 		var/area/check_area = location.loc
-		if(istype(check_area, /area/shuttle/escape/centcom))
+		if(istype(check_area, /area/shuttle/escape))
 			return 1
 		if(istype(check_area, /area/shuttle/escape_pod1/centcom))
 			return 1
@@ -609,7 +609,7 @@ datum/objective/steal
 				for(var/mob/living/silicon/ai/ai in living_mob_list)
 					if(istype(ai.loc, /turf))
 						var/area/check_area = get_area(ai)
-						if(istype(check_area, /area/shuttle/escape/centcom))
+						if(istype(check_area, /area/shuttle/escape))
 							return 1
 						if(istype(check_area, /area/shuttle/escape_pod1/centcom))
 							return 1
