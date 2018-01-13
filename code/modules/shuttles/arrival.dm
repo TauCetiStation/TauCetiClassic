@@ -36,12 +36,31 @@
 	. = ..()
 	if(!.)
 		return
+	var/area/user_area = get_area(user)
 	if(location == SHUTTLE_LOCATION_STATION)
-		var/area/user_area = get_area(user)
 		if(user_area in shuttle_area)
 			for(var/check_area in shuttle_area)
 				if(SSshuttle.forbidden_atoms_check(check_area))
 					return FALSE
+	else
+		if(!(user_area in shuttle_area))
+			return FALSE
+
+/datum/shuttle/autodock/ferry/arrival/can_force(user)
+	. = ..()
+	if(!.)
+		return
+	var/area/user_area = get_area(user)
+	if(!(user_area in shuttle_area))
+		return FALSE
+
+/datum/shuttle/autodock/ferry/arrival/can_cancel(user)
+	. = ..()
+	if(!.)
+		return
+	var/area/user_area = get_area(user)
+	if(!(user_area in shuttle_area) && location == SHUTTLE_LOCATION_OFFSITE)
+		return FALSE
 
 /datum/shuttle/autodock/ferry/arrival/proc/try_move_from_station()
 	if(location)
@@ -73,6 +92,14 @@
 		for(var/obj/machinery/light/small/L in s_area)
 			L.brightness_color = "#00ff00"
 			L.color = "#00ff00"
+			L.update(0)
+
+/datum/shuttle/autodock/ferry/arrival/cancel_launch()
+	..()
+	for(var/area/s_area in shuttle_area)
+		for(var/obj/machinery/light/small/L in s_area)
+			L.brightness_color = initial(L.brightness_color)
+			L.color = initial(L.color)
 			L.update(0)
 
 /*
