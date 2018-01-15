@@ -10,12 +10,12 @@
 
 /obj/item/weapon/gun/projectile/sigi
 	name = "\improper pistol"
-	desc = "A W&J Company designed SIGI p250, found pretty much everywhere humans are. Looks like SIG 250, but it's not. Uses 9mm rounds."
+	desc = "A W&J Company designed SIGI p250, found pretty much everywhere humans are. Looks like SIG 250, but it's not. Uses 9x19mm rounds."
 	icon_state = "sigi250"
 	item_state = "sigi250"
 	origin_tech = "combat=2;materials=2"
-	mag_type = /obj/item/ammo_box/magazine/m9mmr_2
-	var/mag_type2 = /obj/item/ammo_box/magazine/m9mm_2
+	mag_type = /obj/item/ammo_box/magazine/m9x19mm_rub
+	var/mag_type2 = /obj/item/ammo_box/magazine/m9x19mm
 	fire_sound = 'sound/weapons/Gunshot.ogg'
 
 	var/mag = null
@@ -153,12 +153,12 @@
 
 /obj/item/weapon/gun/projectile/automatic/pistol
 	name = "\improper Stechkin pistol"
-	desc = "A small, easily concealable gun. Uses 9mm rounds."
+	desc = "A small, easily concealable handgun is compatible with suppressors. Uses 9x18mm rounds."
 	icon_state = "pistol"
 	w_class = 2
 	silenced = 0
 	origin_tech = "combat=2;materials=2;syndicate=2"
-	mag_type = /obj/item/ammo_box/magazine/m9mm
+	mag_type = /obj/item/ammo_box/magazine/m9x18mm
 
 /obj/item/weapon/gun/projectile/automatic/pistol/isHandgun()
 	return 1

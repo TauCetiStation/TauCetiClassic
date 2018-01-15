@@ -7,7 +7,7 @@
 	m_amt = 1000
 	fire_delay = 0
 	recoil = 1
-	var/mag_type = /obj/item/ammo_box/magazine/m9mm //Removes the need for max_ammo and caliber info
+	var/mag_type = /obj/item/ammo_box/magazine/m9x18mm //Removes the need for max_ammo and caliber info
 	var/obj/item/ammo_box/magazine/magazine
 	var/energy_gun = 0 //Used in examine, if 1 - no ammo count.
 

@@ -118,8 +118,8 @@
 	max_ammo = 5
 
 ///////////EXTERNAL MAGAZINES////////////////
-/obj/item/ammo_box/magazine/m9mm
-	name = "magazine (9mm)"
+/obj/item/ammo_box/magazine/m9x18mm
+	name = "magazine (9x18mm)"
 	icon_state = "9x19p"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mm
@@ -127,8 +127,8 @@
 	max_ammo = 8
 	multiple_sprites = 2
 
-/obj/item/ammo_box/magazine/m9mm_2
-	name = "magazine (9mm)"
+/obj/item/ammo_box/magazine/m9x19mm
+	name = "magazine (9x19mm)"
 	icon_state = "9mm_mag"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mm
@@ -136,8 +136,8 @@
 	max_ammo = 8
 	multiple_sprites = 2
 
-/obj/item/ammo_box/magazine/m9mmr_2
-	name = "magazine (9mm rubber)"
+/obj/item/ammo_box/magazine/m9x19mm_rub
+	name = "magazine (9x19mm rubber)"
 	icon_state = "9mm_mag"
 	origin_tech = "combat=2"
 	ammo_type = /obj/item/ammo_casing/c9mmr
