@@ -166,7 +166,7 @@
 	language = "Sol Common"
 	primitive = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
-	dietflags = DIET_OMNI //everything
+	dietflags = DIET_OMNI
 
 	flags = list(
 	 HAS_SKIN_TONE = TRUE
@@ -185,7 +185,7 @@
 	language = "Sinta'unathi"
 	tail = "sogtail"
 	unarmed_type = /datum/unarmed_attack/claws
-	dietflags = DIET_CARN //meat
+	dietflags = DIET_CARN
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
 
@@ -260,7 +260,7 @@
 	language = "Skrellian"
 	primitive = /mob/living/carbon/monkey/skrell
 	unarmed_type = /datum/unarmed_attack/punch
-	dietflags = DIET_HERB //VEGANS!
+	dietflags = DIET_HERB
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
 	flags = list(

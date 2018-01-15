@@ -1123,13 +1123,15 @@
 		return
 	if(stat == DEAD && !isnull(butcher_results)) //can we butcher it?
 		if(istype(I, /obj/item/weapon/kitchenknife)|| istype(I, /obj/item/weapon/butch))
+			if(user.is_busy()) return
 			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 			if(do_mob(user, src, 80))
 				if(butcher_results.len)
 					for(var/path in butcher_results)
-						for(var/i = 1, i <= butcher_results[path], i++)
+						for(var/i = 1 to butcher_results[path])
 							new path(src.loc)
+							user.SetNextMove(CLICK_CD_MELEE)
 						butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
 					visible_message("<span class='notice'>[user] butchers [src].</span>")
 					gib()
@@ -1138,7 +1140,8 @@
 	return 1
 
 /mob/living/proc/taste_reagents(datum/reagents/tastes)
-	if(!get_taste_sensitivity())//this also works for IPCs and stuff that returns 0 here
+	var/t_sens = get_taste_sensitivity()
+	if(!t_sens)//this also works for IPCs and stuff that returns 0 here
 		return
 
 	var/do_not_taste_at_all = 1//so we don't spam with recent tastes
@@ -1159,7 +1162,7 @@
 
 		do_not_taste_at_all = 0//something was fresh enough to taste; could still be bland enough to be unrecognizable
 
-		if(taste_list[R] / taste_sum >= 0.15 / get_taste_sensitivity())//we return earlier if the proc returns a 0; won't break the universe
+		if(taste_list[R] / taste_sum >= 0.15 / t_sens)//we return earlier if the proc returns a 0; won't break the universe
 			final_taste_list += R
 			recent_tastes[R] = world.time
 
