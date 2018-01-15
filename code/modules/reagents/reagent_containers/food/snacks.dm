@@ -94,7 +94,7 @@
 
 		if(reagents)								//Handle ingestion of the reagent.
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-			if(istype(M,/mob/living))
+			if(isliving(M))
 				var/mob/living/L = M
 				if(taste)
 					L.taste_reagents(src.reagents)
@@ -1552,7 +1552,7 @@
 	reagents.add_reagent("water", 10)
 	bitesize = 5
 	if(prob(25))
-		src.desc = "A wish come true!" //hue-hue
+		src.desc = "A wish come true!"
 		reagents.add_reagent("nutriment", 8)
 		reagents.add_reagent("vitamin", 1)
 

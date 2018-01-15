@@ -2104,9 +2104,6 @@ datum
 /datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
 	if(!..())
 		return
-	//if(prob(50))
-	//	M.heal_bodypart_damage(1, 0)
-	//M.nutrition += nutriment_factor	// For hunger and fatness
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.can_eat(diet_flags))
@@ -2173,13 +2170,7 @@ datum
 		if(!(NO_BLOOD in H.species.flags))//do not restore blood on things with no blood by nature.
 			if(blood_volume < BLOOD_VOLUME_NORMAL && blood_volume)
 				var/datum/reagent/blood/B = locate() in H.vessel.reagent_list //Grab some blood
-				if(B) // Make sure there's some blood at all
-					if(B.data["donor"] != src) //If it's not theirs, then we look for theirs
-						for(var/datum/reagent/blood/D in H.vessel.reagent_list)
-							if(D.data["donor"] == src)
-								B = D
-								break
-					B.volume += 0.5
+				B.volume += 0.5
 
 
 /datum/reagent/consumable/lipozine
@@ -2196,8 +2187,6 @@ datum
 		return
 	M.nutrition = max(M.nutrition - nutriment_factor, 0)
 	M.overeatduration = 0
-	if(M.nutrition < 0)//Prevent from going into negatives.
-		M.nutrition = 0
 
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
@@ -2253,7 +2242,7 @@ datum
 				M.bodytemperature += rand(10,20)
 		if(25 to INFINITY)
 			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(istype(M, /mob/living/carbon/slime))
+			if(isslime(M))
 				M.bodytemperature += rand(15,20)
 	data++
 
@@ -2266,58 +2255,54 @@ datum
 	taste_message = "<span class='userdanger'>PURE FIRE</span>"
 
 /datum/reagent/consumable/condensedcapsaicin/reaction_mob(mob/living/M, method=TOUCH, volume)
-	if(!istype(M, /mob/living))
+	if(!isliving(M))
 		return
 	if(method == TOUCH)
-		if(istype(M, /mob/living/carbon/human))
+		if(ishuman(M))
 			var/mob/living/carbon/human/victim = M
 			var/mouth_covered = 0
 			var/eyes_covered = 0
 			var/obj/item/safe_thing = null
-			if( victim.wear_mask )
-				if ( victim.wear_mask.flags & MASKCOVERSEYES )
+			if(victim.wear_mask)
+				if (victim.wear_mask.flags & MASKCOVERSEYES)
 					eyes_covered = 1
 					safe_thing = victim.wear_mask
-				if ( victim.wear_mask.flags & MASKCOVERSMOUTH )
+				if (victim.wear_mask.flags & MASKCOVERSMOUTH)
 					mouth_covered = 1
 					safe_thing = victim.wear_mask
-			if( victim.head )
-				if ( victim.head.flags & MASKCOVERSEYES )
+			if(victim.head)
+				if (victim.head.flags & MASKCOVERSEYES)
 					eyes_covered = 1
 					safe_thing = victim.head
-				if ( victim.head.flags & MASKCOVERSMOUTH )
+				if (victim.head.flags & MASKCOVERSMOUTH)
 					mouth_covered = 1
 					safe_thing = victim.head
 			if(victim.glasses)
 				eyes_covered = 1
-				if ( !safe_thing )
+				if (!safe_thing)
 					safe_thing = victim.glasses
-			if ( eyes_covered && mouth_covered )
-				to_chat(victim, "\red Your [safe_thing] protects you from the pepperspray!")
+			if (eyes_covered && mouth_covered)
+				to_chat(victim, "<span class='userdanger'>Your [safe_thing] protects you from the pepperspray!</span>")
 				return
-			else if ( mouth_covered )	// Reduced effects if partially protected
-				to_chat(victim, "\red Your [safe_thing] protect you from most of the pepperspray!")
+			else if (mouth_covered)	// Reduced effects if partially protected
+				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protect you from most of the pepperspray!</span>")
 				victim.eye_blurry = max(M.eye_blurry, 15)
 				victim.eye_blind = max(M.eye_blind, 5)
 				victim.Stun(5)
 				victim.Weaken(5)
-				//victim.Paralyse(10)
-				//victim.drop_item()
 				return
-			else if ( eyes_covered ) // Eye cover is better than mouth cover
-				to_chat(victim, "\red Your [safe_thing] protects your eyes from the pepperspray!")
+			else if (eyes_covered) // Eye cover is better than mouth cover
+				to_chat(victim, "<span class='userdanger'> Your [safe_thing] protects your eyes from the pepperspray!</span>")
 				victim.emote("scream",,, 1)
 				victim.eye_blurry = max(M.eye_blurry, 5)
 				return
 			else // Oh dear :D
 				victim.emote("scream",,, 1)
-				to_chat(victim, "\red You're sprayed directly in the eyes with pepperspray!")
+				to_chat(victim, "<span class='userdanger'> You're sprayed directly in the eyes with pepperspray!</span>")
 				victim.eye_blurry = max(M.eye_blurry, 25)
 				victim.eye_blind = max(M.eye_blind, 10)
 				victim.Stun(5)
 				victim.Weaken(5)
-				//victim.Paralyse(10)
-				//victim.drop_item()
 
 /datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/M)
 	if(!..())
