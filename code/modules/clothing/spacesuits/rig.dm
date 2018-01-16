@@ -115,6 +115,24 @@
 				H.drop_from_inventory(boots)
 				boots.loc = src
 
+/obj/item/clothing/suit/space/rig/proc/helmetonhead()
+
+	var/mob/living/carbon/human/H = usr
+	if(H.head == helmet)
+		helmet.canremove = 1
+		H.drop_from_inventory(helmet)
+		helmet.loc = src
+		to_chat(H, "\blue You retract your hardsuit helmet.")
+	else
+		if(H.head)
+			to_chat(H, "\red You cannot deploy your helmet while wearing another helmet.")
+			return
+		//TODO: Species check, skull damage for forcing an unfitting helmet on?
+		helmet.loc = H
+		H.equip_to_slot(helmet, slot_head)
+		helmet.canremove = 0
+		to_chat(H, "\blue You deploy your hardsuit helmet, sealing you off from the world.")
+
 /obj/item/clothing/suit/space/rig/verb/toggle_helmet()
 
 	set name = "Toggle Helmet"
@@ -133,20 +151,23 @@
 	if(H.stat) return
 	if(H.wear_suit != src) return
 
-	if(H.head == helmet)
-		helmet.canremove = 1
-		H.drop_from_inventory(helmet)
-		helmet.loc = src
-		to_chat(H, "\blue You retract your hardsuit helmet.")
-	else
-		if(H.head)
-			to_chat(H, "\red You cannot deploy your helmet while wearing another helmet.")
+	if(H.species)
+		var/wearable = null
+		var/exclusive = null
+		if("exclude" in helmet.species_restricted)
+			exclusive = 1
+		if(exclusive)
+			if(!(H.species.name in helmet.species_restricted))
+				wearable = 1
+		else if(!exclusive)
+			if(H.species.name in helmet.species_restricted)
+				wearable = 1
+		if(!wearable)
+			to_chat(H, "\red Your species cannot wear [src].")
 			return
-		//TODO: Species check, skull damage for forcing an unfitting helmet on?
-		helmet.loc = H
-		H.equip_to_slot(helmet, slot_head)
-		helmet.canremove = 0
-		to_chat(H, "\blue You deploy your hardsuit helmet, sealing you off from the world.")
+		else if(wearable)
+			helmetonhead()
+		return
 
 /obj/item/clothing/suit/space/rig/verb/toggle_magboots()
 
