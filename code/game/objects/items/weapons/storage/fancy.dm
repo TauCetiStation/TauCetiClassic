@@ -237,6 +237,11 @@
 		reagents.add_reagent("tricordrazine",15)
 	name = "cigarette packet"
 
+/obj/item/weapon/storage/fancy/cigarettes/menthol
+	name = "Uplit Cigs"
+	desc = "A packet of six menthol cigarettes."
+	icon_state = "ucig"
+
 /*
  * Vial Box
  */
