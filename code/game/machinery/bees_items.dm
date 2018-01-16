@@ -75,13 +75,14 @@
 	name = "honeycomb"
 	icon_state = "honeycomb"
 	desc = "Dripping with sugary sweetness."
+	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/honeycomb/atom_init()
 	. = ..()
 	reagents.add_reagent("honey",10)
 	reagents.add_reagent("nutriment", 0.5)
 	reagents.add_reagent("sugar", 2)
-	bitesize = 2
+
 
 /datum/reagent/honey
 	name = "Honey"

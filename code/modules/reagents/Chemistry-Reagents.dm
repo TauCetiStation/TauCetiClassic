@@ -2234,11 +2234,11 @@ datum
 			M.bodytemperature += 5 * TEMPERATURE_DAMAGE_COEFFICIENT
 			if(holder.has_reagent("frostoil"))
 				holder.remove_reagent("frostoil", 5)
-			if(istype(M, /mob/living/carbon/slime))
+			if(isslime(M))
 				M.bodytemperature += rand(5,20)
 		if(15 to 25)
 			M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
-			if(istype(M, /mob/living/carbon/slime))
+			if(isslime(M))
 				M.bodytemperature += rand(10,20)
 		if(25 to INFINITY)
 			M.bodytemperature += 15 * TEMPERATURE_DAMAGE_COEFFICIENT
