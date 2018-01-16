@@ -3017,6 +3017,23 @@ datum
 				M.bodytemperature -= rand(15,20)
 	data++
 
+/datum/reagent/consumable/drink/cold/milkshake/chocolate
+	name = "Chocolate Milkshake"
+	description = "Glorious brainfreezing mixture. Now with cocoa!"
+	id = "milkshake_chocolate"
+	color = "#AEE5E4" // rgb" 174, 229, 228
+	adj_temp = -9
+	taste_message = "chocolate milk"
+
+/datum/reagent/consumable/drink/cold/milkshake/strawberry
+	name = "Strawberry Milkshake"
+	description = "Glorious brainfreezing mixture. So sweet!"
+	id = "milkshake_strawberry"
+	color = "#AEE5E4" // rgb" 174, 229, 228
+	adj_temp = -9
+	taste_message = "strawberry milk"
+
+
 /datum/reagent/consumable/drink/cold/rewriter
 	name = "Rewriter"
 	description = "The secret of the sanctuary of the Libarian..."
@@ -3401,6 +3418,14 @@ datum
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 1.5
 	taste_message = "rum"
+
+/datum/reagent/consumable/ethanol/champagne
+	name = "Champagne"
+	id = "champagne"
+	description = "Une delicieuse boisson."
+	color = "#FCFCEE" // rgb: 252, 252, 238
+	boozepwr = 1
+	taste_message = "champagne"
 
 /datum/reagent/consumable/ethanol/tequilla
 	name = "Tequila"

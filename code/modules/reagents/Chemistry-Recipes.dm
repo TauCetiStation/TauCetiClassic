@@ -405,7 +405,7 @@ datum
 			required_reagents = list("aluminum" = 1, "phoron" = 1, "sacid" = 1 )
 			result_amount = 1
 			on_reaction(datum/reagents/holder, created_volume)
-				var/turf/simulated/T = get_turf(holder.my_atom.loc)	
+				var/turf/simulated/T = get_turf(holder.my_atom.loc)
 				for(var/turf/simulated/target_tile in range(1, T))
 					if(!target_tile.blocks_air && !target_tile.density)
 						target_tile.assume_gas("phoron", created_volume * 0.2)
@@ -2126,6 +2126,20 @@ datum
 			result = "milkshake"
 			required_reagents = list("cream" = 1, "ice" = 2, "milk" = 2)
 			result_amount = 5
+
+		chocolatemilkshake
+			name = "Chocolate Milkshake"
+			id = "milkshake_chocolate"
+			result = "milkshake_chocolate"
+			required_reagents = list("cream" = 1, "ice" = 2, "milk" = 2, "hot_coco" = 1)
+			result_amount = 6
+
+		strawberrymilkshake
+			name = "Strawberry Milkshake"
+			id = "milkshake_strawberry"
+			result = "milkshake_strawberry"
+			required_reagents = list("cream" = 1, "ice" = 2, "milk" = 2, "berryjuice" = 1)
+			result_amount = 6
 
 		rewriter
 			name = "Rewriter"
