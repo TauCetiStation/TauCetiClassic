@@ -10,7 +10,6 @@
 	maxHealth = 5
 	health = 5
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice = 1)
-	//meat_type = /obj/item/weapon/reagent_containers/food/snacks/hugemushroomslice
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "whacks the"
