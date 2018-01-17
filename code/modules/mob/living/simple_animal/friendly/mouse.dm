@@ -17,7 +17,6 @@
 	maxHealth = 5
 	health = 5
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 1)
-//	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "stamps on the"
