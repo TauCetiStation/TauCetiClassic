@@ -43,8 +43,7 @@
 	speak_chance = 1//1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/cracker = 2)
-	//meat_type = /obj/item/weapon/reagent_containers/food/snacks/cracker/
-
+	
 	response_help  = "pets the"
 	response_disarm = "gently moves aside the"
 	response_harm   = "swats the"
@@ -782,8 +781,7 @@
 	status_flags = GODMODE
 	incorporeal_move = 1
 	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
-	//meat_type = list(/obj/item/weapon/ectoplasm = 1)
-
+	
 /mob/living/simple_animal/parrot/Poly/ghost/atom_init()
 	memory_saved = 1 //At this point nothing is saved
 	. = ..()
