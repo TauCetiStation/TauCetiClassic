@@ -140,14 +140,9 @@
 		to_chat(H, "\blue You retract your hardsuit helmet.")
 
 	else if(H.equip_to_slot_if_possible(helmet, slot_head))
-		if(H.head != helmet)
-			to_chat(H, "\red You cannot deploy your helmet while wearing another helmet.")
-			return
-		//TODO: Species check, skull damage for forcing an unfitting helmet on?
 		helmet.loc = H
-		H.equip_to_slot(helmet, slot_head)
 		helmet.canremove = 0
-		to_chat(H, "\blue You deploy your hardsuit helmet, sealing you off from the world.")
+		to_chat(H, "<span class='notice'> You deploy your hardsuit helmet, sealing you off from the world.</span>")
 		return
 
 /obj/item/clothing/suit/space/rig/verb/toggle_magboots()
