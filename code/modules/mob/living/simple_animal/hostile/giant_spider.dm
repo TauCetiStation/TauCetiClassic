@@ -18,7 +18,6 @@
 	turns_per_move = 5
 	see_in_dark = 10
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/spidermeat = 2, /obj/item/weapon/reagent_containers/food/snacks/spiderleg = 8)
-	//meat_type = /obj/item/weapon/reagent_containers/food/snacks/bearmeat
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "pokes the"
