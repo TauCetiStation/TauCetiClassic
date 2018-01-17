@@ -11,7 +11,6 @@
 	response_harm = "hits the"
 	speed = -1
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/xenomeat = 3)
-	//meat_type = /obj/item/weapon/reagent_containers/food/snacks/xenomeat
 	maxHealth = 100
 	health = 100
 	harm_intent_damage = 5
