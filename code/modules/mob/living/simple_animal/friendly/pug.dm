@@ -13,8 +13,6 @@
 	speak_chance = 1
 	turns_per_move = 10
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/pug = 3)
-	//meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/pug
-	//meat_amount = 3
 	response_help  = "pets"
 	response_disarm = "bops"
 	response_harm   = "kicks"
