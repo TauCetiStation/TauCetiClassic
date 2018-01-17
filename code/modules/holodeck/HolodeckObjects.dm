@@ -400,8 +400,6 @@ obj/structure/stool/bed/chair/holochair
 	alpha = 127
 	icon_gib = null
 	butcher_results = list()
-	//meat_amount = 0
-	//meat_type = null
 
 /mob/living/simple_animal/hostile/carp/holodeck/atom_init()
 	. = ..()
