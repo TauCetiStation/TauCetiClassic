@@ -31,12 +31,6 @@
 /obj/structure/extinguisher_cabinet/attack_hand(mob/user)
 	if(isrobot(user) || isalien(user))
 		return
-	if (ishuman(user))
-		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/external/BP = H.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
-		if(BP && !BP.is_usable())
-			to_chat(user, "<span class='notice'>You try to move your [BP.name], but cannot!")
-			return
 	if(has_extinguisher)
 		user.put_in_hands(has_extinguisher)
 		to_chat(user, "<span class='notice'>You take [has_extinguisher] from [src].</span>")

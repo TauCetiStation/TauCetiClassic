@@ -25,12 +25,6 @@
 
 
 /obj/item/weapon/paper_bin/attack_hand(mob/user)
-	if (ishuman(user))
-		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
-		if(BP && !BP.is_usable())
-			to_chat(H, "<span class='notice'>You try to move your [BP.name], but cannot!")
-			return
 	var/response = ""
 	if(!papers.len > 0)
 		response = alert(user, "Do you take regular paper, or Carbon copy paper?", "Paper type request", "Regular", "Carbon-Copy", "Cancel")
