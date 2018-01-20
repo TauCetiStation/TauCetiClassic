@@ -657,7 +657,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			var/obj/bodypart // Dropped limb object
 			add_blood(owner)
 
-			switch(body_part)
+			switch(body_zone)
 				if(BP_HEAD)
 					if(owner.species.flags[IS_SYNTHETIC])
 						bodypart = new /obj/item/weapon/organ/head/posi(owner.loc, owner)
