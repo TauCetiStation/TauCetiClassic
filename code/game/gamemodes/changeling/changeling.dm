@@ -281,6 +281,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/space_suit_active = 0
 	var/instatis = 0
 	var/strained_muscles = 0
+	var/list/essences = list()
+	var/mob/living/parasite/essence/trusted_entity
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()

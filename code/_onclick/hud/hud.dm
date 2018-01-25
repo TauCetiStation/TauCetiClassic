@@ -156,6 +156,8 @@
 		ghost_hud()
 	else if(isovermind(mymob))
 		blob_hud()
+	else if(isessence(mymob))
+		changeling_essence_hud()
 
 	if(istype(mymob.loc,/obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)

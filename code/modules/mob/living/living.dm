@@ -768,8 +768,8 @@
 			H.forceMove(get_turf(H))
 
 		if(istype(M))
-			for(var/atom/A in M.contents)
-				if(istype(A,/mob/living/simple_animal/borer) || istype(A,/obj/item/weapon/holder))
+			for(var/A in M.contents)
+				if(ismob(A) || istype(A,/obj/item/weapon/holder))
 					return
 
 		if(ismob(M))
@@ -1129,3 +1129,32 @@
 				butcher_results.Remove(path)
 			visible_message("<span class='notice'>[user] butchers [src].</span>")
 			gib()
+
+
+/mob/living/relaymove(mob/living/mob, direct)
+	if(!isessence(mob))
+		return FALSE
+
+	mob.setMoveCooldown(1)
+	var/mob/living/parasite/essence/essence = mob
+	if(!(essence.flags_allowed & ESSENCE_PHANTOM))
+		to_chat(mob, "<span class='userdanger'>Your host forbrade you to own phantom</span>")
+		return TRUE
+
+	if(!essence.phantom.showed)
+		essence.phantom.show_phantom()
+		return TRUE
+	var/tile = get_turf(get_step(essence.phantom, direct))
+	if(get_dist(tile, essence.host) < 8)
+		essence.phantom.dir = direct
+		essence.phantom.loc = tile
+	return TRUE
+
+/mob/living/proc/handle_phantom_move(NewLoc, direct)
+	if(!mind || !mind.changeling || length(mind.changeling.essences) < 1)
+		return
+	if(loc == NewLoc)
+		for(var/mob/living/parasite/essence/essence in mind.changeling.essences)
+			if(essence.phantom.showed)
+				essence.phantom.loc = get_turf(get_step(essence.phantom, direct))
+

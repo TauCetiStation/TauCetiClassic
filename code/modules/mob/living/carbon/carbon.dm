@@ -20,6 +20,8 @@
 			germ_level++
 
 /mob/living/carbon/relaymove(mob/user, direction)
+	if(..())
+		return
 	if(user in src.stomach_contents)
 		if(prob(40))
 			for(var/mob/M in hearers(4, src))

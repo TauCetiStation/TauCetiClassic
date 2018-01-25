@@ -92,8 +92,8 @@
 	src.verbs += /mob/living/carbon/monkey/diona/proc/merge
 
 	if(istype(M))
-		for(var/atom/A in M.contents)
-			if(istype(A,/mob/living/simple_animal/borer) || istype(A,/obj/item/weapon/holder))
+		for(var/A in M.contents)
+			if(ismob(A) || istype(A,/obj/item/weapon/holder))
 				return
 	M.status_flags &= ~PASSEMOTES
 

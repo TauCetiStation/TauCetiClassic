@@ -86,6 +86,8 @@
 
 			changeling.geneticpoints += target.mind.changeling.geneticpoints
 			target.mind.changeling.absorbedcount = 0
+		new /mob/living/parasite/essence(user, user, target)
+
 	else
 		changeling.chem_charges += 10
 

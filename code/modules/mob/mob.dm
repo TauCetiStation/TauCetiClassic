@@ -42,24 +42,36 @@
 	if(type)
 		if((type & 1) && ((sdisabilities & BLIND) || blinded || paralysis) )//Vision related
 			if(!alt)
-				return
+				return FALSE
 			else
 				msg = alt
 				type = alt_type
 		if((type & 2) && ((sdisabilities & DEAF) || ear_deaf))//Hearing related
 			if (!alt)
-				return
+				return FALSE
 			else
 				msg = alt
 				type = alt_type
 				if (((type & 1) && (sdisabilities & BLIND)))
-					return
+					return FALSE
 	// Added voice muffling for Issue 41.
 	if(stat == UNCONSCIOUS || sleeping > 0)
 		to_chat(src, "<I>... You can almost hear someone talking ...</I>")
+		if(status_flags & PASSEMOTES)
+			for(var/mob/living/L in src)
+				to_chat(L, "<I>... Your host can almost hear someone talking ...</I>")
 	else
 		to_chat(src, msg)
-	return
+		if(status_flags & PASSEMOTES)
+			for(var/mob/living/L in src)
+				to_chat(L, msg)
+	return msg
+
+/mob/living/carbon/show_message(msg, type, alt, alt_type)
+	. = ..()
+	if(. && length(parasites))
+		for(var/M in parasites)
+			to_chat(M, .)
 
 // Show a message to all mobs in sight of this one
 // This would be for visible actions by the src mob

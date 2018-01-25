@@ -1,9 +1,8 @@
-/mob/living/carbon/human/say(message)
+/mob/living/carbon/human/say(message, ignoring_appearance)
 	var/verb = "says"
-	var/alt_name = ""
 	var/message_range = world.view
 	var/italics = 0
-
+	var/alt_name = ""
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "\red You cannot speak in IC (Muted).")
@@ -23,13 +22,13 @@
 
 	var/message_mode = parse_message_mode(message, "headset")
 
-	if (istype(wear_mask, /obj/item/clothing/mask/muzzle) && message_mode != "changeling")  //Todo:  Add this to speech_problem_flag checks.
+	if (istype(wear_mask, /obj/item/clothing/mask/muzzle) && !(message_mode == "changeling" || message_mode == "alientalk"))  //Todo:  Add this to speech_problem_flag checks.
 		return
 
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))
 
-	if(name != GetVoice())
+	if(!ignoring_appearance && name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"
 
 	//parse the radio code and consume it
@@ -148,9 +147,23 @@
 			return
 		if("changeling")
 			if(mind && mind.changeling)
+				var/n_message = sanitize_plus_chat(message)
 				for(var/mob/Changeling in mob_list)
-					if((Changeling.mind && Changeling.mind.changeling) || istype(Changeling, /mob/dead/observer))
-						to_chat(Changeling, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [sanitize_plus_chat(message)]</span>")
+					if(Changeling.mind && Changeling.mind.changeling)
+						to_chat(Changeling, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+						for(var/M in Changeling.mind.changeling.essences)
+							to_chat(M, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+
+					else if(isobserver(Changeling))
+						to_chat(Changeling, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+			return
+		if("alientalk")
+			if(mind && mind.changeling)
+				var/n_message = sanitize_plus_chat(message)
+				for(var/M in mind.changeling.essences)
+					to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+				to_chat(src, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+				log_say("Changeling Mind: [mind.name]/[key] : [n_message]")
 			return
 		else
 			if(message_mode)
@@ -204,22 +217,9 @@
 			return name
 	if(mind && mind.changeling && mind.changeling.mimicing)
 		return mind.changeling.mimicing
-	if(GetSpecialVoice())
-		return GetSpecialVoice()
+	if(special_voice)
+		return special_voice
 	return real_name
-
-/mob/living/carbon/human/proc/SetSpecialVoice(new_voice)
-	if(new_voice)
-		special_voice = new_voice
-	return
-
-/mob/living/carbon/human/proc/UnsetSpecialVoice()
-	special_voice = ""
-	return
-
-/mob/living/carbon/human/proc/GetSpecialVoice()
-	return special_voice
-
 
 /*
    ***Deprecated***

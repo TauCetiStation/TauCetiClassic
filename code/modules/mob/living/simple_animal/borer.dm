@@ -334,8 +334,8 @@ mob/living/simple_animal/borer/proc/detatch()
 	var/mob/living/H = host
 	host = null
 
-	for(var/atom/A in H.contents)
-		if(istype(A,/mob/living/simple_animal/borer) || istype(A,/obj/item/weapon/holder))
+	for(var/A in H.contents)
+		if(ismob(A) || istype(A,/obj/item/weapon/holder))
 			return
 	H.status_flags &= ~PASSEMOTES
 
