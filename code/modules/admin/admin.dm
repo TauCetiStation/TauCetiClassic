@@ -168,7 +168,7 @@ var/global/BSACooldown = 0
 				<br>
 			"}
 
-	if (M.client)
+	if (M/*.client*/)
 		body += {"<br><br>
 			<b>Other actions:</b>
 			<br>

@@ -1,20 +1,11 @@
-#define ESSENCE_SPEAK 1
-#define ESSENCE_WHISP 2
-#define ESSENCE_SPEAK_IN_RADIO 4
-#define ESSENCE_HIVEMIND 8
-#define ESSENCE_SPEAK_TO_HOST 16
-#define ESSENCE_SELF_VOICE 32
-#define ESSENCE_PHANTOM 64
-#define ESSENCE_POINT 128
-#define ESSENCE_EMOTE 256
-#define ESSENCE_ALL 511
-
 /mob/living/parasite/essence
 	var/datum/changeling/changeling
 	var/flags_allowed = (ESSENCE_HIVEMIND | ESSENCE_PHANTOM | ESSENCE_POINT | ESSENCE_SPEAK_TO_HOST)
 	var/obj/effect/essence_phantom/phantom
 	var/self_voice = FALSE
-	var/is_master_controlled
+	var/is_controling_body = FALSE
+	var/obj/screen/essence_voice/voice
+	var/obj/screen/essence_phantom/phantom_s
 
 /mob/living/parasite/essence/atom_init(mapload, mob/living/carbon/host, mob/living/carbon/victim)
 	. = ..()
@@ -38,6 +29,14 @@
 	..()
 	if(hud_used)
 		hud_used.reload_fullscreen()
+	if(changeling)
+		for(var/mob/living/parasite/essence/E in changeling.essences)
+			if(E.phantom && E.phantom.showed)
+				client.images += E.phantom.overlay
+
+/mob/living/parasite/essence/Logout()
+	phantom.hide_phantom()
+	return ..()
 
 /mob/living/parasite/essence/exit_host()
 	..()
@@ -45,7 +44,6 @@
 	if(client)
 		client.images.Cut()
 		client.screen.Cut()
-
 
 /mob/living/parasite/essence/proc/transfer(atom/new_host)
 	exit_host()
@@ -138,7 +136,7 @@
 
 /mob/living/parasite/essence/say_understands(mob/other, datum/language/speaking)
 	if(!host)
-		return 0
+		return FALSE
 
 	return host.say_understands(other, speaking)
 
@@ -187,6 +185,7 @@
 			client.images.Remove(hud)
 	if(ishuman(host))
 		var/mob/living/carbon/human/H = host
+		set_EyesVision(H.sightglassesmod)
 		if(H.glasses)
 			if(istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
 				var/obj/item/clothing/glasses/sunglasses/sechud/O = H.glasses
@@ -243,11 +242,17 @@
 
 /obj/effect/proc_holder/changeling/manage_essencies/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
+	if(changeling.is_controled_by_essence)
+		return
 	var/dat = ""
 	for(var/mob/living/parasite/essence/M in changeling.essences)
 		dat += "Essence of [M.name] is [M.client ? "<font color='green'>active</font>" : "<font color='red'>hibernating</font>"]<BR> \
 		<a href ='?src=\ref[src];permissions=\ref[M]'>(See permissions)</a>\
-		 <a href ='?src=\ref[src];trusted=\ref[M]'>[changeling.trusted_entity == M ? "T" : "unt"]rusted</a><BR>"
+		 <a href ='?src=\ref[src];trusted=\ref[M]'>[changeling.trusted_entity == M ? "T" : "unt"]rusted</a>"
+		if(M.client)
+			dat += " <a href ='?src=\ref[src];share_body=\ref[M]>Delegate Control</a><BR>'>"
+		else
+			dat += "<BR><BR>"
 		if(M != choosen_essence)
 			continue
 
@@ -292,7 +297,17 @@
 	popup.open()
 
 /obj/effect/proc_holder/changeling/manage_essencies/Topic(href, href_list)
-	if(href_list["trusted"])
+	if(href_list["share_body"])
+		var/mob/living/parasite/essence/M = locate(href_list["share_body"])
+		if(!M.client)
+			sting_action(usr)
+			return
+		M.is_controling_body = TRUE
+		M.flags_allowed = ESSENCE_ALL
+		var/temp_key = usr.key
+		usr.key = M.key
+		M.key = temp_key
+	else if(href_list["trusted"])
 		var/T = locate(href_list["trusted"])
 		if(T == usr.mind.changeling.trusted_entity)
 			usr.mind.changeling.trusted_entity = null
@@ -318,10 +333,10 @@
 	else if(href_list["toggle_voice"])
 		choosen_essence.flags_allowed ^= ESSENCE_SELF_VOICE
 		choosen_essence.self_voice = FALSE
+		choosen_essence.voice.icon_state = "voice_off"
 	else if(href_list["toggle_phantom"])
 		choosen_essence.flags_allowed ^= ESSENCE_PHANTOM
-		if(!isessence(choosen_essence.phantom.loc))
-			choosen_essence.phantom.hide_phantom()
+		choosen_essence.phantom.hide_phantom()
 	else if(href_list["toggle_point"])
 		choosen_essence.flags_allowed ^= ESSENCE_POINT
 	else if(href_list["toggle_emote"])
@@ -351,8 +366,12 @@
 	overlay.loc = src
 
 /obj/effect/essence_phantom/proc/show_phantom(atom/place)
+	if(!host || !host.host)
+		return
 	if(showed)
 		return
+	if(host.phantom_s)
+		host.phantom_s.icon_state = "phantom_on"
 	loc = get_turf(place ? place : host)
 	showed = TRUE
 	for(var/mob/living/M in host.changeling.essences)
@@ -364,8 +383,11 @@
 
 
 /obj/effect/essence_phantom/proc/hide_phantom()
+	if(!host || !host.host)
+		return
 	if(!showed)
 		return
+	host.phantom_s.icon_state = "phantom_off"
 	showed = FALSE
 	loc = host
 	for(var/mob/living/M in host.changeling.essences)

@@ -96,13 +96,12 @@ var/const/FALLOFF_SOUNDS = 0.5
 	if(!is_global)
 		S.environment = 2
 	src << S
-	return S
 
-/mob/living/carbon/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
-	. = ..()
-	if(. && length(parasites))
-		for(var/mob/living/L in src)
-			L << .
+/mob/living/parasite/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
+	if(!host || host.ear_deaf > 0)
+		return FALSE
+	return ..()
+
 
 /client/proc/playtitlemusic()
 	if(!ticker || !ticker.login_music)	return

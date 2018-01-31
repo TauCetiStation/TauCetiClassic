@@ -48,7 +48,6 @@
 
 	var/darksight = 2
 	var/nighteyes = 0
-	var/sightglassesmod = 0
 	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE   // Dangerously high pressure.
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE // High pressure warning.
 	var/warning_low_pressure = WARNING_LOW_PRESSURE   // Low pressure warning.

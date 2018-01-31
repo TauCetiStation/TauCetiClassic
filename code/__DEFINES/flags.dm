@@ -97,3 +97,15 @@
 #define FORDBIDDEN_VIEW      1
 #define UNIVERSAL_VIEW       2
 #define TRAITOR_VIEW         4
+
+// changeling essences flags
+#define ESSENCE_SPEAK 1
+#define ESSENCE_WHISP 2
+#define ESSENCE_SPEAK_IN_RADIO 4
+#define ESSENCE_HIVEMIND 8
+#define ESSENCE_SPEAK_TO_HOST 16
+#define ESSENCE_SELF_VOICE 32
+#define ESSENCE_PHANTOM 64
+#define ESSENCE_POINT 128
+#define ESSENCE_EMOTE 256
+#define ESSENCE_ALL 511

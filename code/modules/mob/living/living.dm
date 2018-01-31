@@ -1157,4 +1157,3 @@
 		for(var/mob/living/parasite/essence/essence in mind.changeling.essences)
 			if(essence.phantom.showed)
 				essence.phantom.loc = get_turf(get_step(essence.phantom, direct))
-

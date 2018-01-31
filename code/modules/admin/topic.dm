@@ -297,7 +297,7 @@
 				newmeme.clearHUD()
 
 				var/found = 0
-				for(var/mob/living/carbon/human/H in mob_list) if(H.client && !H.parasites.len)
+				for(var/mob/living/carbon/human/H in mob_list) if(H.mind && !H.parasites.len)
 					found = 1
 					newmeme.enter_host(H)
 
