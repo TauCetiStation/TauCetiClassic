@@ -10,17 +10,19 @@
 	var/on = FALSE
 
 /obj/item/clothing/head/helmet/space/deathsquad/atom_init()
+	. = ..()
 	deathsquad_helmets += src
 	holo = new(src)
-	. = ..()
 
 /obj/item/clothing/head/helmet/space/deathsquad/Destroy()
 	deathsquad_helmets -= src
+	qdel(holo)
 	return ..()
 
 /obj/item/clothing/head/helmet/space/deathsquad/ui_action_click()
-	if(usr.mind.special_role != "Death Commando")
+	if(!(usr.mind.special_role == "Death Commando"))
 		to_chat(usr, "<span class='notice'>You try to activate the holomap, but nothing happens. Perhaps it is broken?</span>")
+		return
 	if(on)
 		holo.deactivate_holomap()
 		to_chat(usr, "<span class='notice'>You deactivate the holomap.</span>")

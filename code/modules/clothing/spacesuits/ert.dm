@@ -21,12 +21,13 @@
 		to_chat(user, "\blue User scanned as [camera.c_tag]. Camera activated.")
 
 /obj/item/clothing/head/helmet/space/rig/ert/atom_init()
+	. = ..()
 	ert_helmets += src
 	holo = new(src)
-	. = ..()
 
 /obj/item/clothing/head/helmet/space/rig/ert/Destroy()
 	ert_helmets -= src
+	qdel(holo)
 	return ..()
 
 /obj/item/clothing/head/helmet/space/rig/ert/ui_action_click()

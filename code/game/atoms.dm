@@ -513,6 +513,3 @@
 
 	if(changed)
 		animate(src, transform = ntransform, time = 2, easing = EASE_IN|EASE_OUT)
-
-/atom/proc/holomapAlwaysDraw()
-	return 1

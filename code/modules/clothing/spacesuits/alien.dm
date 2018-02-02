@@ -107,12 +107,13 @@
 	action_button_name = "Toggle holomap"
 
 /obj/item/clothing/head/helmet/space/vox/atom_init()
+	. = ..()
 	vox_helmets += src
 	holo = new(src)
-	. = ..()
 
 /obj/item/clothing/head/helmet/space/vox/Destroy()
 	vox_helmets -= src
+	qdel(holo)
 	return ..()
 
 /obj/item/clothing/head/helmet/space/vox/ui_action_click()

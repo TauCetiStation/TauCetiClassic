@@ -329,9 +329,9 @@
 	var/ON = FALSE
 
 /obj/item/clothing/head/helmet/space/rig/syndi/atom_init()
+	. = ..()
 	nuclear_holo += src
 	holo = new(src)
-	. = ..()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/equipped(mob/user, slot)
 	. = ..()
@@ -340,13 +340,13 @@
 		update_icon(user)
 
 /obj/item/clothing/head/helmet/space/rig/syndi/ui_action_click()
-	if(on)
+	if(ON)
 		to_chat(usr, "<span class='notice'>You deactivate the holomap.</span>")
 		holo.deactivate_holomap()
 	else
 		to_chat(usr, "<span class='notice'>You activate the holomap.</span>")
 		holo.activate(usr, "nuclear")
-	on = !on
+	ON = !ON
 
 /obj/item/clothing/head/helmet/space/rig/syndi/dropped(mob/user)
 	. = ..()
@@ -354,10 +354,11 @@
 		equipped_on_head = FALSE
 		update_icon(user)
 	holo.deactivate_holomap()
-	on = FALSE
+	ON = FALSE
 
 /obj/item/clothing/head/helmet/space/rig/syndi/Destroy()
 	nuclear_holo -= src
+	qdel(holo)
 	return ..()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/proc/checklight()
@@ -389,6 +390,13 @@
 		to_chat(user, "<span class='notice'>User scanned as [camera.c_tag]. Camera activated.</span>")
 	checklight()
 	update_icon(user)
+
+/obj/item/clothing/head/helmet/space/rig/syndi/verb/toggle_camera()
+	set category = "Object"
+	set name = "Toggle camera"
+	set src in usr
+
+	attack_self(usr)
 
 /obj/item/clothing/head/helmet/space/rig/syndi/verb/toggle()
 	set category = "Object"

@@ -19,6 +19,10 @@
 	nuclear_holo += src
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/computer/syndicate_station/Destroy()
+	nuclear_holo -= src
+	return ..()
+
 /obj/machinery/computer/syndicate_station/atom_init_late()
 	var/obj/O = locate(/obj/effect/landmark/syndi_shuttle) in landmarks_list
 	curr_location = get_area(O)

@@ -13,7 +13,9 @@
 	..()
 
 /datum/holomap_interface/Destroy()
-	QDEL_NULL(holder)
+	holder = null
+	activator = null
+	QDEL_LIST(holomap_images)
 	return ..()
 
 /datum/holomap_interface/process()
@@ -22,13 +24,13 @@
 /datum/holomap_interface/proc/draw_special()
 	return
 
-/datum/holomap_interface/proc/draw_special_icon(var/filter, var/obj/holomap_holder)
+/datum/holomap_interface/proc/draw_special_icon(filter, obj/holomap_holder)
 	var/image/indicator = image('icons/holomap_markers.dmi', (filter))
 	indicator.plane = ABOVE_HUD_PLANE
 	indicator.layer = ABOVE_HUD_LAYER
 	indicator.loc = activator.hud_used.holomap_obj
 	var/turf/location = get_turf(holomap_holder)
-	if(!(location.z == 1))
+	if(!(location.z == ZLEVEL_STATION))
 		indicator.icon_state = "error"
 	if(holomap_holder == holder)
 		indicator.icon_state = "you"
@@ -71,6 +73,7 @@
 		qdel(i)
 	holomap_images.Cut()
 	activator = null
+	STOP_PROCESSING(SSobj, src)
 
 /datum/holomap_interface/proc/update_holomap()
 	if(!activator || !activator.client)
@@ -79,8 +82,7 @@
 
 	if(length(holomap_images))
 		activator.client.images -= holomap_images
-		for(var/i in holomap_images)
-			qdel(i)
+		QDEL_LIST(holomap_images)
 		holomap_images.Cut()
 
 	draw_special()
@@ -99,13 +101,13 @@
 	for(var/obj/machinery/computer/syndicate_station/SS in nuclear_holo)
 		draw_shuttle_icon("syndishuttle", SS)
 
-/datum/holomap_interface/proc/draw_shuttle_icon(var/filter, var/shuttle_loc)
+/datum/holomap_interface/proc/draw_shuttle_icon(filter, shuttle_loc)
 	var/image/indicator = image('icons/holomap_markers_32x32.dmi', (filter))
 	indicator.plane = ABOVE_HUD_PLANE
 	indicator.layer = ABOVE_HUD_LAYER
 	indicator.loc = activator.hud_used.holomap_obj
 	var/turf/location = get_turf(shuttle_loc)
-	if(!(location.z == 1))
+	if(!(location.z == ZLEVEL_STATION))
 		return
 	indicator.pixel_x = (location.x - 6) * PIXEL_MULTIPLIER
 	indicator.pixel_y = (location.y - 6) * PIXEL_MULTIPLIER
@@ -143,7 +145,7 @@
 	for(var/obj/item/clothing/head/helmet/space/rig/ert/medical/M in ert_helmets)
 		draw_special_icon_mob("ertm", M)
 
-/datum/holomap_interface/proc/draw_special_icon_mob(var/filter, var/obj/holomap_holder)
+/datum/holomap_interface/proc/draw_special_icon_mob(filter, obj/holomap_holder)
 	if(!ishuman(holomap_holder.loc))
 		return
 	var/mob_indicator = null
@@ -157,7 +159,7 @@
 			mob_indicator = (filter+"_1")
 	draw_special_icon(mob_indicator, holomap_holder)
 
-/datum/holomap_interface/proc/draw_special_icon_robot(var/filter, var/obj/holomap_holder)
+/datum/holomap_interface/proc/draw_special_icon_robot(filter, obj/holomap_holder)
 	if(!isrobot(holomap_holder))
 		return
 	var/robot_indicator = null
