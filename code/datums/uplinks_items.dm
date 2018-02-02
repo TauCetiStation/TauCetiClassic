@@ -627,6 +627,12 @@
 	item = /obj/item/device/encryptionkey/syndicate
 	cost = 2
 
+/datum/uplink_item/device_tools/poster_kit
+	name = "Poster kit"
+	desc = "Box of illegal posters"
+	item = /obj/item/weapon/storage/box/syndie_kit/posters
+	cost = 1
+
 /datum/uplink_item/device_tools/headcan
 	name = "Biogel can"
 	desc = "Sophisticated device for sustaining life in head for a long period"
