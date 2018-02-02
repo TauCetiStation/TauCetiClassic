@@ -19,8 +19,12 @@ datum
 		var/reagent_state = SOLID
 		var/list/data = null
 		var/volume = 0
-		var/nutriment_factor = 0
+		var/nutriment_factor = 1 * REAGENTS_METABOLISM
+		var/diet_flags = DIET_OMNI | DIET_HERB | DIET_CARN
 		var/custom_metabolism = REAGENTS_METABOLISM
+		var/taste_strength = 1 //how easy it is to taste - the more the easier
+		var/taste_message = "bitterness" //life's bitter by default. Cool points for using a span class for when you're tasting <span class='userdanger'>LIQUID FUCKING DEATH</span>
+
 		var/overdose = 0
 		var/overdose_dam = 1
 		//var/list/viruses = list()
@@ -101,6 +105,7 @@ datum
 			id = "blood"
 			reagent_state = LIQUID
 			color = "#c80000" // rgb: 200, 0, 0
+			taste_message = "blood"
 
 			reaction_mob(mob/M, method=TOUCH, volume)
 				var/datum/reagent/blood/self = src
@@ -476,6 +481,7 @@ datum
 			description = "A colorless, odorless gas."
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
+			taste_message = null
 
 			custom_metabolism = 0.01
 
@@ -493,6 +499,7 @@ datum
 			id = "copper"
 			description = "A highly ductile metal."
 			color = "#6E3B08" // rgb: 110, 59, 8
+			taste_message = null
 
 			custom_metabolism = 0.01
 
@@ -502,6 +509,7 @@ datum
 			description = "A colorless, odorless, tasteless gas."
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
+			taste_message = null
 
 			custom_metabolism = 0.01
 
@@ -520,6 +528,7 @@ datum
 			description = "A colorless, odorless, nonmetallic, tasteless, highly combustible diatomic gas."
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
+			taste_message = null
 
 			custom_metabolism = 0.01
 
@@ -529,6 +538,7 @@ datum
 			description = "A soft, low-melting solid that can easily be cut with a knife. Reacts violently with water."
 			reagent_state = SOLID
 			color = "#A0A0A0" // rgb: 160, 160, 160
+			taste_message = "bad ideas"
 
 			custom_metabolism = 0.01
 
@@ -539,6 +549,7 @@ datum
 			reagent_state = LIQUID
 			color = "#484848" // rgb: 72, 72, 72
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "druggie poison"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -555,6 +566,7 @@ datum
 			description = "A chemical element with a pungent smell."
 			reagent_state = SOLID
 			color = "#BF8C00" // rgb: 191, 140, 0
+			taste_message = "impulsive decisions"
 
 			custom_metabolism = 0.01
 
@@ -564,6 +576,7 @@ datum
 			description = "A chemical element, the builing block of life."
 			reagent_state = SOLID
 			color = "#1C1300" // rgb: 30, 20, 0
+			taste_message = "like a pencil or something"
 
 			custom_metabolism = 0.01
 
@@ -584,6 +597,7 @@ datum
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "characteristic taste"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -597,6 +611,7 @@ datum
 			reagent_state = GAS
 			color = "#808080" // rgb: 128, 128, 128
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "toothpaste"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -609,6 +624,7 @@ datum
 			description = "A chemical element, readily reacts with water."
 			reagent_state = SOLID
 			color = "#808080" // rgb: 128, 128, 128
+			taste_message = "horrible misjudgement"
 
 			custom_metabolism = 0.01
 
@@ -618,6 +634,7 @@ datum
 			description = "A chemical element, the backbone of biological energy carriers."
 			reagent_state = SOLID
 			color = "#832828" // rgb: 131, 40, 40
+			taste_message = "misguided choices"
 
 			custom_metabolism = 0.01
 
@@ -628,6 +645,7 @@ datum
 			reagent_state = SOLID
 			color = "#808080" // rgb: 128, 128, 128
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "happiness"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -643,6 +661,7 @@ datum
 			description = "The organic compound commonly known as table sugar and sometimes called saccharose. This white, odorless, crystalline powder has a pleasing, sweet taste."
 			reagent_state = SOLID
 			color = "#FFFFFF" // rgb: 255, 255, 255
+			taste_message = "sweetness"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -655,6 +674,7 @@ datum
 			description = "Glycerol is a simple polyol compound. Glycerol is sweet-tasting and of low toxicity."
 			reagent_state = LIQUID
 			color = "#808080" // rgb: 128, 128, 128
+			taste_message = "sweetness"
 
 			custom_metabolism = 0.01
 
@@ -664,6 +684,7 @@ datum
 			description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
 			reagent_state = LIQUID
 			color = "#808080" // rgb: 128, 128, 128
+			taste_message = "oil"
 
 			custom_metabolism = 0.01
 
@@ -673,6 +694,7 @@ datum
 			description = "Radium is an alkaline earth metal. It is extremely radioactive."
 			reagent_state = SOLID
 			color = "#C7C7C7" // rgb: 199,199,199
+			taste_message = "bonehurting juice"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -840,6 +862,7 @@ datum
 			reagent_state = SOLID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "metal"
 
 		gold
 			name = "Gold"
@@ -847,6 +870,7 @@ datum
 			description = "Gold is a dense, soft, shiny metal and the most malleable and ductile metal known."
 			reagent_state = SOLID
 			color = "#F7C430" // rgb: 247, 196, 48
+			taste_message = "bling"
 
 		silver
 			name = "Silver"
@@ -854,6 +878,7 @@ datum
 			description = "A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal."
 			reagent_state = SOLID
 			color = "#D0D0D0" // rgb: 208, 208, 208
+			taste_message = "sub-par bling"
 
 		uranium
 			name ="Uranium"
@@ -861,6 +886,7 @@ datum
 			description = "A silvery-white metallic chemical element in the actinide series, weakly radioactive."
 			reagent_state = SOLID
 			color = "#B8B8C0" // rgb: 184, 184, 192
+			taste_message = "bonehurting juice"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -882,6 +908,7 @@ datum
 			description = "A silvery white and ductile member of the boron group of chemical elements."
 			reagent_state = SOLID
 			color = "#A8A8A8" // rgb: 168, 168, 168
+			taste_message = null
 
 		silicon
 			name = "Silicon"
@@ -889,6 +916,7 @@ datum
 			description = "A tetravalent metalloid, silicon is less reactive than its chemical analog carbon."
 			reagent_state = SOLID
 			color = "#A8A8A8" // rgb: 168, 168, 168
+			taste_message = "a CPU"
 
 		fuel
 			name = "Welding fuel"
@@ -897,6 +925,7 @@ datum
 			reagent_state = LIQUID
 			color = "#660000" // rgb: 102, 0, 0
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "motor oil"
 
 			reaction_obj(var/obj/O, var/volume)
 				var/turf/the_turf = get_turf(O)
@@ -927,6 +956,7 @@ datum
 			reagent_state = LIQUID
 			color = "#A5F0EE" // rgb: 165, 240, 238
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "floor cleaner"
 
 			reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/effect/decal/cleanable))
@@ -989,6 +1019,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1006,6 +1037,7 @@ datum
 			color = "#000055" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
 			custom_metabolism = REAGENTS_METABOLISM * 0.5
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1022,6 +1054,7 @@ datum
 			reagent_state = LIQUID
 			color = "#ffc600" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1038,6 +1071,7 @@ datum
 			reagent_state = LIQUID
 			color = "#ff8000" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE * 0.5
+			taste_message = null
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
@@ -1054,6 +1088,7 @@ datum
 			reagent_state = LIQUID
 			color = "#0080ff" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "oxygen"
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
@@ -1076,6 +1111,7 @@ datum
 			reagent_state = LIQUID
 			color = "#0040ff" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE * 0.5
+			taste_message = "ability to breath"
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
@@ -1096,6 +1132,7 @@ datum
 			description = "Tricordrazine is a highly potent stimulant, originally derived from cordrazine. Can be used to treat a wide range of injuries."
 			reagent_state = LIQUID
 			color = "#00b080" // rgb: 200, 165, 220
+			taste_message = null
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
@@ -1118,6 +1155,7 @@ datum
 			description = "Dylovene is a broad-spectrum antitoxin."
 			reagent_state = LIQUID
 			color = "#00a000" // rgb: 200, 165, 220
+			taste_message = null
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
@@ -1134,6 +1172,7 @@ datum
 			description = "It's magic. We don't have to explain it."
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
+			taste_message = "admin abuse"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1174,6 +1213,7 @@ datum
 			color = "#99ccff" // rgb: 200, 165, 220
 			custom_metabolism = 0.01
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1195,6 +1235,7 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1215,6 +1256,7 @@ datum
 			color = "#408000" // rgb: 200, 165, 220
 			custom_metabolism = 0.05
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1229,6 +1271,7 @@ datum
 			color = "#008000" // rgb: 200, 165, 220
 			custom_metabolism = 0.05
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1248,6 +1291,7 @@ datum
 			color = "#8b00ff" // rgb: 200, 165, 220
 			custom_metabolism = 0.05
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1261,6 +1305,7 @@ datum
 			reagent_state = LIQUID
 			color = "#a0dbff" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "carrot"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1281,6 +1326,7 @@ datum
 			reagent_state = LIQUID
 			color = "#561ec3" // rgb: 200, 165, 220
 			overdose = 10
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1303,6 +1349,7 @@ datum
 			custom_metabolism = 0.07
 			var/heal_time = 0
 			var/obj/item/organ/external/External
+			taste_message = "machines"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1366,6 +1413,7 @@ datum
 			reagent_state = LIQUID
 			color = "#bf0000" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
@@ -1383,6 +1431,7 @@ datum
 			color = "#ff4f00" // rgb: 200, 165, 220
 			custom_metabolism = 0.03
 			overdose = REAGENTS_OVERDOSE * 0.5
+			taste_message = "speed"
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
@@ -1397,6 +1446,7 @@ datum
 			description = "A chemical mixture with almost magical healing powers. Its main limitation is that the targets body temperature must be under 170K for it to metabolise correctly."
 			reagent_state = LIQUID
 			color = "#80bfff" // rgb: 200, 165, 220
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1413,6 +1463,7 @@ datum
 			description = "A liquid compound similar to that used in the cloning process. Can be used to 'finish' the cloning process when used in conjunction with a cryo tube."
 			reagent_state = LIQUID
 			color = "#8080ff" // rgb: 200, 165, 220
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1430,6 +1481,7 @@ datum
 			reagent_state = SOLID
 			color = "#669900" // rgb: 102, 153, 0
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1458,6 +1510,7 @@ datum
 			color = "#FFFFFF" // rgb: 200, 165, 220
 			custom_metabolism = 0.01
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1467,6 +1520,7 @@ datum
 			description = "Microscopic construction robots."
 			reagent_state = LIQUID
 			color = "#535E66" // rgb: 83, 94, 102
+			taste_message = "nanomachines, son"
 
 			reaction_mob(mob/M, method=TOUCH, volume)
 				src = null
@@ -1479,6 +1533,7 @@ datum
 			description = "Microbes with an entirely alien cellular structure."
 			reagent_state = LIQUID
 			color = "#535E66" // rgb: 83, 94, 102
+			taste_message = "something alien"
 
 			reaction_mob(mob/M, method=TOUCH, volume)
 				src = null
@@ -1491,6 +1546,7 @@ datum
 			description = "A perfluoronated sulfonic acid that forms a foam when mixed with water."
 			reagent_state = LIQUID
 			color = "#9E6B38" // rgb: 158, 107, 56
+			taste_message = null
 
 		foaming_agent// Metal foaming agent. This is lithium hydride. Add other recipes (e.g. LiH + H2O -> LiOH + H2) eventually.
 			name = "Foaming agent"
@@ -1498,6 +1554,7 @@ datum
 			description = "A agent that yields metallic foam when mixed with light metal and a strong acid."
 			reagent_state = SOLID
 			color = "#664B63" // rgb: 102, 75, 99
+			taste_message = null
 
 		nicotine
 			name = "Nicotine"
@@ -1505,6 +1562,7 @@ datum
 			description = "A highly addictive stimulant extracted from the tobacco plant."
 			reagent_state = LIQUID
 			color = "#181818" // rgb: 24, 24, 24
+			taste_message = null
 
 		ammonia
 			name = "Ammonia"
@@ -1512,12 +1570,14 @@ datum
 			description = "A caustic substance commonly used in fertilizer or household cleaners."
 			reagent_state = GAS
 			color = "#404030" // rgb: 64, 64, 48
+			taste_message = "floor cleaner"
 
 		ultraglue
 			name = "Ultra Glue"
 			id = "glue"
 			description = "An extremely powerful bonding agent."
 			color = "#FFFFCC" // rgb: 255, 255, 204
+			taste_message = null
 
 		diethylamine
 			name = "Diethylamine"
@@ -1525,6 +1585,7 @@ datum
 			description = "A secondary amine, mildly corrosive."
 			reagent_state = LIQUID
 			color = "#604030" // rgb: 96, 64, 48
+			taste_message = null
 
 		ethylredoxrazine	// FUCK YOU, ALCOHOL
 			name = "Ethylredoxrazine"
@@ -1533,6 +1594,7 @@ datum
 			reagent_state = SOLID
 			color = "#605048" // rgb: 96, 80, 72
 			overdose = REAGENTS_OVERDOSE
+			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1541,7 +1603,7 @@ datum
 				M.drowsyness = 0
 				M.stuttering = 0
 				M.confused = 0
-				M.reagents.remove_all_type(/datum/reagent/ethanol, 1 * REM, 0, 1)
+				M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 1 * REM, 0, 1)
 
 //////////////////////////Poison stuff///////////////////////
 
@@ -1553,6 +1615,7 @@ datum
 			color = "#CF3600" // rgb: 207, 54, 0
 			var/toxpwr = 0.7 // Toxins are really weak, but without being treated, last very long.
 			custom_metabolism = 0.1
+			taste_message = "bitterness"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -4060,7 +4123,6 @@ datum
 		H.vomit()
 		H.apply_effect(1,IRRADIATE,0)
 
-
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Nanobots /////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -4070,6 +4132,7 @@ datum
 	description = "Friendly microscopic construction robots."
 	reagent_state = LIQUID
 	color = "#535E66" //rgb: 83, 94, 102
+	taste_message = "nanomachines, son"
 
 /datum/reagent/nanobots
 	name = "Nanobots"
@@ -4077,6 +4140,7 @@ datum
 	description = "Microscopic robots intended for use in humans. Must be loaded with further chemicals to be useful."
 	reagent_state = LIQUID
 	color = "#3E3959" //rgb: 62, 57, 89
+	taste_message = "nanomachines, son"
 
 //Great healing powers. Metabolizes extremely slowly, but gets used up when it heals damage.
 //Dangerous in amounts over 5 units, healing that occurs while over 5 units adds to a counter. That counter affects gib chance. Guaranteed gib over 20 units.
@@ -4089,6 +4153,7 @@ datum
 	custom_metabolism = 0.005
 	var/spawning_horror = 0
 	var/percent_machine = 0
+	taste_message = "nanomachines, son"
 
 /datum/reagent/mednanobots/on_mob_life(mob/living/M)
 	if(!..())
@@ -4259,6 +4324,7 @@ datum
 	color = "#792300" //rgb: 207, 54, 0
 	custom_metabolism = 0.01
 	data = 1 //Used as a tally
+	taste_message = "DEATH"
 
 /datum/reagent/chefspecial/on_mob_life(mob/living/M, alien)
 	if(!..() || (alien && alien == IS_DIONA))
