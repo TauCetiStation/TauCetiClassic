@@ -1131,7 +1131,6 @@
 					for(var/path in butcher_results)
 						for(var/i = 1 to butcher_results[path])
 							new path(src.loc)
-							user.SetNextMove(CLICK_CD_MELEE)
 						butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
 					visible_message("<span class='notice'>[user] butchers [src].</span>")
 					gib()
@@ -1158,11 +1157,12 @@
 
 	for(var/R in taste_list)
 		if(recent_tastes[R] && (world.time - recent_tastes[R] < 12 SECONDS))
+			recent_tastes -= R
 			continue
 
 		do_not_taste_at_all = 0//something was fresh enough to taste; could still be bland enough to be unrecognizable
 
-		if(taste_list[R] / taste_sum >= 0.15 / t_sens)//we return earlier if the proc returns a 0; won't break the universe
+		if(taste_list[R] / taste_sum >= 0.15 / t_sens)
 			final_taste_list += R
 			recent_tastes[R] = world.time
 

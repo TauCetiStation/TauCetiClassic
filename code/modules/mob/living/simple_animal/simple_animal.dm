@@ -352,9 +352,8 @@
 			if(do_mob(user, src, 80))
 				if(butcher_results.len)
 					for(var/path in butcher_results)
-						for(var/i = 1, i <= butcher_results[path], i++)
+						for(var/i = 1 to butcher_results[path])
 							new path(src.loc)
-							user.SetNextMove(CLICK_CD_MELEE)
 						butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
 					visible_message("<span class='notice'>[user] butchers [src].</span>")
 					gib()

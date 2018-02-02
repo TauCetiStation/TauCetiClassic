@@ -192,7 +192,7 @@
 	var/slab_nutrition = src.occupant.nutrition / 15
 
 	// Some mobs have specific meat item types.
-	if(istype(src.occupant,/mob/living/carbon/human))
+	if(ishuman(src.occupant))
 		slab_name = src.occupant.real_name
 		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/human
 	else if(istype(src.occupant, /mob/living/carbon/monkey))
@@ -211,7 +211,7 @@
 				new_meat.reagents.add_reagent("nutriment", slab_nutrition)
 
 				if(src.occupant.reagents)
-					src.occupant.reagents.trans_to(new_meat, round(occupant.reagents.total_volume/slab_count,1))
+					src.occupant.reagents.trans_to(new_meat, round(occupant.reagents.total_volume/slab_count, 1))
 
 		src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
 		user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
