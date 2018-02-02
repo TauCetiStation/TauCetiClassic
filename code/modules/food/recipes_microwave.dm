@@ -682,6 +682,29 @@ datum/recipe/microwave/slimesandwich
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/tofurkey
 
+/datum/recipe/microwave/boiledspiderleg
+	reagents = list("water" = 10)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/spiderleg,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/boiledspiderleg
+
+/datum/recipe/microwave/spidereggsham
+	reagents = list("sodiumchloride" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/spidereggs,
+		/obj/item/weapon/reagent_containers/food/snacks/spidermeat,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/spidereggsham
+
+/datum/recipe/microwave/sashimi
+	reagents = list("soysauce" = 5)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/spidereggs,
+		/obj/item/weapon/reagent_containers/food/snacks/carpmeat,
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/sashimi
+
 //////////////////////////////////////////
 // bs12 food port stuff
 //////////////////////////////////////////
