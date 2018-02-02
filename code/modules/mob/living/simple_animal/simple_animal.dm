@@ -192,7 +192,7 @@
 	if(butcher_results)
 		for(var/path in butcher_results)
 			for(var/i = 0 to butcher_results[path])
-				new path(src.loc)
+				new path(loc)
 	..()
 
 /mob/living/simple_animal/emote(act, type, desc)

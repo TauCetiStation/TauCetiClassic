@@ -14,6 +14,11 @@
 	//Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M)
 	if(!usr)	return
+	if(isliving(M))
+		var/mob/living/L = M
+		if(taste)
+			L.taste_reagents(src.reagents)
+
 	if(!reagents.total_volume)
 		if(M == usr)
 			to_chat(usr, "<span class='notice'>You finish eating \the [src].</span>")
@@ -94,10 +99,6 @@
 
 		if(reagents)								//Handle ingestion of the reagent.
 			playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-			if(isliving(M))
-				var/mob/living/L = M
-				if(taste)
-					L.taste_reagents(src.reagents)
 			if(reagents.total_volume)
 				if(reagents.total_volume > bitesize)
 					/*

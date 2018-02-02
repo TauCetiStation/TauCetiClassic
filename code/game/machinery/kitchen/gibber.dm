@@ -204,27 +204,27 @@
 	slab_nutrition /= slab_count
 
 	spawn(gibtime)
-		if(iscarbon(src.occupant))
+		if(iscarbon(occupant))
 			for(var/i=1 to slab_count)
 				var/obj/item/weapon/reagent_containers/food/snacks/meat/new_meat = new slab_type(get_turf(get_step(src, 8)))
 				new_meat.name = "[slab_name] [new_meat.name]"
 				new_meat.reagents.add_reagent("nutriment", slab_nutrition)
 
-				if(src.occupant.reagents)
-					src.occupant.reagents.trans_to(new_meat, round(occupant.reagents.total_volume/slab_count, 1))
+				if(occupant.reagents)
+					occupant.reagents.trans_to(new_meat, round(occupant.reagents.total_volume/slab_count, 1))
 
-		src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
+		occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
 		user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
 		msg_admin_attack("[user.name] ([user.ckey]) gibbed [src.occupant] ([src.occupant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		src.occupant.ghostize(bancheck = TRUE)
+		occupant.ghostize(bancheck = TRUE)
 
-		src.operating = 0
-		src.occupant.gib()
-		qdel(src.occupant)
-		src.occupant = null
+		operating = 0
+		occupant.gib()
+		qdel(occupant)
+		occupant = null
 
-		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
+		playsound(loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = 0
 		for (var/obj/item/thing in contents)
 			thing.loc = get_turf(thing) // Drop it onto the turf for throwing.
