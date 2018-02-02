@@ -4,11 +4,11 @@
 	icon_state = "meat"
 	health = 180
 	filling_color = "#FF1C1C"
+	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/atom_init()
 	. = ..()
 	reagents.add_reagent("nutriment", 3)
-	bitesize = 3
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/kitchenknife))
@@ -29,6 +29,9 @@
 	var/subjectname = ""
 	var/subjectjob = null
 
+/obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct
+	name = "meat product"
+	desc = "A slab of station reclaimed and chemically processed meat product."
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
 	//same as plain meat
@@ -40,3 +43,20 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/pug
 	name = "meat"
 	desc = "Tastes like... well you know..."
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/ham
+	name = "Ham"
+	desc = "Taste like bacon."
+//	list_reagents = list("protein" = 3, "porktonium" = 10)
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat
+	name = "meatwheat clump"
+	desc = "This doesn't look like meat, but your standards aren't <i>that</i> high to begin with."
+//	list_reagents = list("nutriment" = 3, "vitamin" = 2, "blood" = 5)
+	filling_color = rgb(150, 0, 0)
+	icon_state = "meatwheat_clump"
+	bitesize = 4
+
+/obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 3)

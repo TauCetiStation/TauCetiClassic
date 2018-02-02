@@ -106,6 +106,15 @@
 // all effects according to how they originally were with the 0.4 metabolism
 #define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
 
+// Factor of how fast mob nutrition decreases
+#define	HUNGER_FACTOR 0.1
+
+// Taste sensitivity - the more the more reagents you'll taste
+#define TASTE_SENSITIVITY_NORMAL 1
+#define TASTE_SENSITIVITY_SHARP 1.5
+#define TASTE_SENSITIVITY_DULL 0.75
+#define TASTE_SENSITIVITY_NO_TASTE 0
+
 //Ian can lick or sniff
 #define IAN_STANDARD 0
 #define IAN_LICK     1
