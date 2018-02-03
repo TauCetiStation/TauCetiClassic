@@ -126,9 +126,9 @@ var/global/sent_strike_team = 0
 
 	equip_to_slot_or_del(new /obj/item/device/radio/headset/deathsquad(src), slot_l_ear)
 	if (leader_selected == 0)
-		equip_to_slot_or_del(new /obj/item/clothing/under/color/green(src), slot_w_uniform)
+		equip_to_slot_or_del(new /obj/item/clothing/under/deathsquad(src), slot_w_uniform)
 	else
-		equip_to_slot_or_del(new /obj/item/clothing/under/rank/centcom_officer(src), slot_w_uniform)
+		equip_to_slot_or_del(new /obj/item/clothing/under/deathsquad(src), slot_w_uniform)
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), slot_shoes)
 	equip_to_slot_or_del(new /obj/item/clothing/suit/armor/swat(src), slot_wear_suit)
 	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), slot_gloves)
