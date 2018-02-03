@@ -731,3 +731,12 @@
 	else if(slot == slot_head)
 		body_parts_covered = HEAD
 
+/obj/item/clothing/under/deathsquad
+	name = "Deathsquad uniform"
+	desc = "The most tacticool NT uniform"
+	icon_state = "deathsquad"
+	item_state = "deathsquad"
+	item_color = "deathsquad"
+	has_sensor = 0
+	armor = list(melee = 10, bullet = 5, laser = 5,energy = 5, bomb = 5, bio = 5, rad = 5)
+	flags = ONESIZEFITSALL
