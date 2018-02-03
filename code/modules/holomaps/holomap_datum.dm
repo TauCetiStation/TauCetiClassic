@@ -13,9 +13,8 @@
 	..()
 
 /datum/holomap_interface/Destroy()
+	deactivate_holomap()
 	holder = null
-	activator = null
-	QDEL_LIST(holomap_images)
 	return ..()
 
 /datum/holomap_interface/process()
@@ -63,14 +62,13 @@
 	START_PROCESSING(SSobj, src)
 
 /datum/holomap_interface/proc/deactivate_holomap()
-	STOP_PROCESSING(SSobj, src)
 	if(!activator)
 		return
 	activator.hud_used.holomap_obj.overlays -= holomap_base
+	qdel(holomap_base)
 	if(activator.client)
 		activator.client.images -= holomap_images
-	for(var/i in holomap_images)
-		qdel(i)
+	QDEL_LIST(holomap_images)
 	holomap_images.Cut()
 	activator = null
 	STOP_PROCESSING(SSobj, src)
