@@ -729,3 +729,4 @@
 	if(slot == slot_w_uniform)
 		body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	else if(slot == slot_head)
+		body_parts_covered = HEAD

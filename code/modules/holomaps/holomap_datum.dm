@@ -94,12 +94,13 @@
 		draw_special_icon_mob("deathsquad", D)
 
 /datum/holomap_interface/nuclear/draw_special()
-	for(var/obj/item/clothing/head/helmet/space/rig/syndi/S in nuclear_holo)
-		draw_special_icon_mob("nuclear", S)
-	for(var/mob/living/silicon/robot/syndicate/R in nuclear_holo)
-		draw_special_icon_robot("syborg", R)
-	for(var/obj/machinery/computer/syndicate_station/SS in nuclear_holo)
-		draw_shuttle_icon("syndishuttle", SS)
+	for(var/S in nuclear_holo)
+		if(istype(S, /mob/living/silicon/robot/syndicate))
+			draw_special_icon_mob("syborg", S)
+		else if(istype(S, /obj/machinery/computer/syndicate_station))
+			draw_shuttle_icon("syndishuttle", S)
+		else if(istype(S, /obj/item/clothing/head/helmet/space/rig/syndi))
+			draw_special_icon_mob("nuclear", S)
 
 /datum/holomap_interface/proc/draw_shuttle_icon(filter, shuttle_loc)
 	var/image/indicator = image('icons/holomap_markers_32x32.dmi', (filter))
@@ -114,36 +115,33 @@
 	holomap_images += indicator
 
 /datum/holomap_interface/vox/draw_special()
-	for(var/obj/item/clothing/head/helmet/space/vox/pressure/P in vox_helmets)
+	for(var/obj/item/clothing/head/helmet/space/vox/V in vox_helmets)
+		var/filter = null
+		if(istype(V, /obj/item/clothing/head/helmet/space/vox/pressure))
+			filter = "voxp"
+		else if(istype(V, /obj/item/clothing/head/helmet/space/vox/carapace))
+			filter = "voxc"
+		else if(istype(V, /obj/item/clothing/head/helmet/space/vox/stealth))
+			filter = "voxs"
+		else if(istype(V, /obj/item/clothing/head/helmet/space/vox/medic))
+			filter = "voxm"
 		if(prob(25))
-			draw_special_icon_mob("chick"+pick("a","b","c"), P)
+			draw_special_icon_mob("chick"+pick("a","b","c"), V)
 		else
-			draw_special_icon_mob("voxp", P)
-	for(var/obj/item/clothing/head/helmet/space/vox/carapace/C in vox_helmets)
-		if(prob(25))
-			draw_special_icon_mob("chick"+pick("a","b","c"), C)
-		else
-			draw_special_icon_mob("voxc", C)
-	for(var/obj/item/clothing/head/helmet/space/vox/stealth/S in vox_helmets)
-		if(prob(25))
-			draw_special_icon_mob("chick"+pick("a","b","c"), S)
-		else
-			draw_special_icon_mob("voxs", S)
-	for(var/obj/item/clothing/head/helmet/space/vox/medic/M in vox_helmets)
-		if(prob(25))
-			draw_special_icon_mob("chick"+pick("a","b","c"), M)
-		else
-			draw_special_icon_mob("voxm", M)
+			draw_special_icon_mob(filter, V)
 
 /datum/holomap_interface/ert/draw_special()
-	for(var/obj/item/clothing/head/helmet/space/rig/ert/commander/C in ert_helmets)
-		draw_special_icon_mob("ertc", C)
-	for(var/obj/item/clothing/head/helmet/space/rig/ert/security/S in ert_helmets)
-		draw_special_icon_mob("erts", S)
-	for(var/obj/item/clothing/head/helmet/space/rig/ert/engineer/E in ert_helmets)
-		draw_special_icon_mob("erte", E)
-	for(var/obj/item/clothing/head/helmet/space/rig/ert/medical/M in ert_helmets)
-		draw_special_icon_mob("ertm", M)
+	for(var/obj/item/clothing/head/helmet/space/rig/ert/E in ert_helmets)
+		var/filter = null
+		if(istype(E, /obj/item/clothing/head/helmet/space/rig/ert/commander))
+			filter = "ertc"
+		else if(istype(E, /obj/item/clothing/head/helmet/space/rig/ert/security))
+			filter = "erts"
+		else if(istype(E, /obj/item/clothing/head/helmet/space/rig/ert/engineer))
+			filter = "erte"
+		else if(istype(E, /obj/item/clothing/head/helmet/space/rig/ert/medical))
+			filter = "ertm"
+		draw_special_icon_mob(filter, E)
 
 /datum/holomap_interface/proc/draw_special_icon_mob(filter, obj/holomap_holder)
 	if(!ishuman(holomap_holder.loc))
