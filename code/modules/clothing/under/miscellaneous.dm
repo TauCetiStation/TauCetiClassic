@@ -729,11 +729,3 @@
 	if(slot == slot_w_uniform)
 		body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	else if(slot == slot_head)
-		body_parts_covered = HEAD
-
-/obj/item/clothing/under/deathsquad
-	name = "Deathsquad uniform"
-	desc = "The most tacticool NT uniform"
-	icon_state = "deathsquad"
-	item_state = "deathsquad"
-	item_color = "deathsquad"
