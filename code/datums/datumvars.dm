@@ -327,7 +327,7 @@ body
 	font-size: 8pt;
 }
 </style>"}
-	html += "</head><body>"
+	html += "</head>"
 	html += body
 
 	html += {"
