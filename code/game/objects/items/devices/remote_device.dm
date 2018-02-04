@@ -12,36 +12,40 @@
 	var/mode = REMOTE_OPEN
 	var/region_access = 1 // look at access.dm
 	var/obj/item/weapon/card/id/ID
-	var/emagged = 0
-	var/disabled = 0
+	var/emagged = FALSE
+	var/disabled = FALSE
 
 /obj/item/device/remote_device/atom_init()
-	.=..()
+	. = ..()
 	ID = new/obj/item/weapon/card/id
 	ID.access = get_region_accesses(region_access)
 
+/obj/item/device/remote_device/Destroy()
+	QDEL_NULL(ID)
+	return ..()
+
 /obj/item/device/remote_device/attackby(obj/item/weapon/card/emag/W, mob/user)
 	if((istype(W, /obj/item/weapon/card/emag)) && !emagged)
-		emagged = 1
+		emagged = TRUE
 		to_chat(user, "This device now can electrify doors")
 
 /obj/item/device/remote_device/attack_self(mob/user)
-	if(REMOTE_OPEN)
+	if(mode == REMOTE_OPEN)
 		if(emagged)
 			mode = REMOTE_ELECT
 		else mode = REMOTE_BOLT
-	else if(REMOTE_BOLT)
+	else if(mode == REMOTE_BOLT)
 		mode = REMOTE_EMERGENCY
-	else if(REMOTE_EMERGENCY)
+	else if(mode == REMOTE_EMERGENCY)
 		mode = REMOTE_OPEN
-	else if(REMOTE_ELECT)
+	else if(mode == REMOTE_ELECT)
 		mode = REMOTE_BOLT
 	to_chat(user, "Now in mode: [mode].")
 
 /obj/item/device/remote_device/afterattack(obj/machinery/door/airlock/D, mob/user)
 	if(!istype(D) || disabled || user.client.eye != user.client.mob)
 		return
-	if(!(D.hasPower()))
+	if(!D.hasPower())
 		to_chat(user, "<span class='danger'>[D] has no power!</span>")
 		return
 	if(!D.requiresID())
@@ -109,10 +113,10 @@
 	icon_state = "rdc_cmo"
 	region_access = 2
 
-/obj/item/device/remote_device/civillian
-	name = "civillian and supply door remote"
+/obj/item/device/remote_device/head_of_personal
+	name = "civillian door remote"
 	icon_state = "rdc_hop"
-	region_access = list(6, 7)
+	region_access = 6
 
 #undef REMOTE_OPEN
 #undef REMOTE_BOLT
