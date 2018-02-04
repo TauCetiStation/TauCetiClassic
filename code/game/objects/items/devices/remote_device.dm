@@ -109,7 +109,7 @@
 	icon_state = "rdc_cmo"
 	region_access = 2
 
-/obj/item/device/remote_device/civillian
+/obj/item/device/remote_device/head_of_personal
 	name = "civillian and supply door remote"
 	icon_state = "rdc_hop"
 	region_access = list(6, 7)
