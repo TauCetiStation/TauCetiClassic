@@ -100,7 +100,7 @@
 
 	handle_stasis_bag()
 
-	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
+	if(life_tick > 5 && stat == DEAD && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
 		return											//We go ahead and process them 5 times for HUD images and other stuff though.
 
 	//Handle temperature/pressure differences between body and environment
@@ -1438,8 +1438,8 @@
 			else
 				healthdoll.icon_state = "healthdoll_OVERLAY"
 				for(var/obj/item/organ/external/BP in bodyparts)
-					var/damage = BP.burn_dam + BP.brute_dam
-					var/comparison = (BP.max_damage / 5)
+					var/damage = (BP.burn_dam + BP.brute_dam) * BP.damage_coefficient
+					var/comparison = (BP.max_damage / 5) * BP.damage_coefficient
 					var/icon_num = 0
 					if(damage)
 						icon_num = 1

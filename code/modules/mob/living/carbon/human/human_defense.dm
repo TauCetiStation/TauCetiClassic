@@ -41,10 +41,11 @@
 
 	if(istype(P, /obj/item/projectile/energy/electrode) || istype(P, /obj/item/projectile/beam/stun) || istype(P, /obj/item/projectile/bullet/stunslug))
 		var/obj/item/organ/external/BP = get_bodypart(def_zone) // We're checking the outside, buddy!
-		P.agony *= get_siemens_coefficient_organ(BP)
-		P.stun *= get_siemens_coefficient_organ(BP)
-		P.weaken *= get_siemens_coefficient_organ(BP)
-		P.stutter *= get_siemens_coefficient_organ(BP)
+		var/organ_siemens_coefficient = get_siemens_coefficient_organ(BP)
+		P.agony *= organ_siemens_coefficient
+		P.stun *= organ_siemens_coefficient
+		P.weaken *= organ_siemens_coefficient
+		P.stutter *= organ_siemens_coefficient
 
 		if(P.agony) // No effect against full protection.
 			if(prob(max(P.agony, 20)))
@@ -173,10 +174,10 @@
 				var/turf/T = get_turf(src)
 				var/obj/effect/fluid/F = locate() in T
 				if(F)
-					F.electrocute_act(60)
+					F.electrocute_act(60)//why is it HERE???
 			siemens_coefficient *= C.siemens_coefficient
 
-	return siemens_coefficient
+	return siemens_coefficient*BP.siemens_coefficient
 
 //this proc returns the armour value for a particular external organ.
 /mob/living/carbon/human/proc/getarmor_organ(obj/item/organ/external/BP, type)

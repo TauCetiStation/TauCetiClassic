@@ -4,17 +4,15 @@
 		health = maxHealth
 		stat = CONSCIOUS
 		return
-
 	var/total_burn = 0
 	var/total_brute = 0
 	for(var/obj/item/organ/external/BP in bodyparts) // hardcoded to streamline things a bit
 		if((BP.status & ORGAN_ROBOT) && !BP.vital)
 			continue // *non-vital* robot limbs don't count towards shock and crit
-		total_brute += BP.brute_dam
-		total_burn += BP.burn_dam
+		total_brute += BP.brute_dam * BP.damage_coefficient
+		total_burn += BP.burn_dam * BP.damage_coefficient
 
 	health = maxHealth - getOxyLoss() - getToxLoss() - getCloneLoss() - total_burn - total_brute
-
 	//TODO: fix husking
 	if( ((maxHealth - total_burn) < config.health_threshold_dead) && stat == DEAD)
 		ChangeToHusk()
@@ -64,7 +62,7 @@
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if((BP.status & ORGAN_ROBOT) && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
-		amount += BP.brute_dam
+		amount += BP.brute_dam * BP.damage_coefficient
 	return amount
 
 /mob/living/carbon/human/adjustBruteLoss(amount)
@@ -80,7 +78,7 @@
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if((BP.status & ORGAN_ROBOT) && !BP.vital)
 			continue // robot limbs don't count towards shock and crit
-		amount += BP.burn_dam
+		amount += BP.burn_dam * BP.damage_coefficient
 	return amount
 
 /mob/living/carbon/human/adjustFireLoss(amount)

@@ -33,15 +33,14 @@
 		var/mob/living/carbon/human/M = src
 		for(var/obj/item/organ/external/BP in M.bodyparts)
 			if((BP.status & ORGAN_DESTROYED) && !BP.amputated)
-				src.traumatic_shock += 60
+				src.traumatic_shock += 60 * BP.shock_coefficient
 			else if((BP.status & ORGAN_BROKEN) || BP.open)
-				src.traumatic_shock += 30
+				src.traumatic_shock += 30 * BP.shock_coefficient
 				if(BP.status & ORGAN_SPLINTED)
-					src.traumatic_shock -= 25
+					src.traumatic_shock -= 25 * BP.shock_coefficient
 
 	if(src.traumatic_shock < 0)
 		src.traumatic_shock = 0
-
 	return src.traumatic_shock
 
 

@@ -47,6 +47,10 @@
 	var/limb_layer = 0
 	var/damage_msg = "\red You feel an intense pain"
 
+	siemens_coefficient = 1.0 //only for balance purpose, to prevent abuse of shooting on the heels
+	var/damage_coefficient = 1.0
+	var/shock_coefficient = 1.0
+
 /obj/item/organ/external/insert_organ()
 	..()
 
@@ -1073,6 +1077,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
+	siemens_coefficient = 0.75
+	damage_coefficient = 0.75
+	shock_coefficient = 0.75
+
 /obj/item/organ/external/l_arm/process()
 	..()
 	process_grasp(owner.l_hand, "left hand")
@@ -1092,6 +1100,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
+	siemens_coefficient = 0.75
+	damage_coefficient = 0.75
+	shock_coefficient = 0.75
+
 /obj/item/organ/external/r_arm/process()
 	..()
 	process_grasp(owner.r_hand, "right hand")
@@ -1110,6 +1122,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 15
 	w_class = ITEM_SIZE_SMALL
 
+	siemens_coefficient = 0.5
+	damage_coefficient = 0.25
+	shock_coefficient = 0.25
+
 /obj/item/organ/external/l_hand/process()
 	..()
 	process_grasp(owner.l_hand, "left hand")
@@ -1127,6 +1143,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 30
 	min_broken_damage = 15
 	w_class = ITEM_SIZE_SMALL
+
+	siemens_coefficient = 0.5
+	damage_coefficient = 0.25
+	shock_coefficient = 0.25
 
 /obj/item/organ/external/r_hand/process()
 	..()
@@ -1148,6 +1168,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
+	siemens_coefficient = 0.75
+	damage_coefficient = 0.75
+	shock_coefficient = 0.75
+
 
 /obj/item/organ/external/r_leg
 	name = "right leg"
@@ -1165,6 +1189,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
+	siemens_coefficient = 0.75
+	damage_coefficient = 0.75
+	shock_coefficient = 0.75
+
 
 /obj/item/organ/external/l_foot
 	name = "left foot"
@@ -1179,6 +1207,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 30
 	min_broken_damage = 15
 	w_class = ITEM_SIZE_SMALL
+
+	siemens_coefficient = 0.5
+	damage_coefficient = 0.25
+	shock_coefficient = 0.25
 
 
 /obj/item/organ/external/r_foot
@@ -1195,6 +1227,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 15
 	w_class = ITEM_SIZE_SMALL
 
+	siemens_coefficient = 0.5
+	damage_coefficient = 0.25
+	shock_coefficient = 0.25
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)
