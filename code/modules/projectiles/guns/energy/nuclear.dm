@@ -22,8 +22,8 @@
 	icon_state = "ecar"
 	icon_custom = null
 
-/obj/item/weapon/gun/energy/gun/carbine/New()
-	..()
+/obj/item/weapon/gun/energy/gun/carbine/atom_init()
+	. = ..()
 	if(power_supply)
 		power_supply.maxcharge = 1500
 		power_supply.charge = 1500
@@ -45,8 +45,8 @@
 	var/charge_tick = 0
 	modifystate = 0
 
-/obj/item/weapon/gun/energy/gun/nuclear/New()
-	..()
+/obj/item/weapon/gun/energy/gun/nuclear/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 

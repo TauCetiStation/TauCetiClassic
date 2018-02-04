@@ -557,16 +557,19 @@ Please contact me on #coderbus IRC. ~Carn x
 			bloodsies.color		= U.blood_color
 			standing.overlays	+= bloodsies
 
-		if(U.hastie)
-			var/tie_color = U.hastie.item_color
-			if(!tie_color) tie_color = U.hastie.icon_state
-			var/image/tie
-			if(U.hastie.icon_custom)
-				tie = image("icon"=U.hastie.icon_custom, "icon_state"="[tie_color]_mob", "layer"=-UNIFORM_LAYER)
-			else
-				tie = image("icon"='icons/mob/ties.dmi', "icon_state"="[tie_color]", "layer"=-UNIFORM_LAYER)
-			tie.color = U.hastie.color
-			standing.overlays += tie
+		if(U.accessories.len)
+			for(var/obj/item/clothing/accessory/A in w_uniform:accessories)
+				var/tie_color = A.item_color
+				if(!tie_color)
+					tie_color = A.icon_state
+				var/image/tie
+				if(A.icon_custom)
+					tie = image("icon" = A.icon_custom, "icon_state" = "[tie_color]_mob", "layer" = -UNIFORM_LAYER + A.layer_priority)
+				else
+					tie = image("icon" = 'icons/mob/ties.dmi', "icon_state" = "[tie_color]", "layer" = -UNIFORM_LAYER + A.layer_priority)
+				tie.color = A.color
+				standing.overlays += tie
+
 		if(FAT in mutations)
 			if(U.flags & ONESIZEFITSALL)
 				standing.icon	= 'icons/mob/uniform_fat.dmi'
@@ -838,7 +841,7 @@ Please contact me on #coderbus IRC. ~Carn x
 /mob/living/carbon/human/update_inv_wear_mask()
 	remove_overlay(FACEMASK_LAYER)
 
-	if(istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/tie))
+	if(istype(wear_mask, /obj/item/clothing/mask) || istype(wear_mask, /obj/item/clothing/accessory))
 		if(client && hud_used && hud_used.hud_shown)
 			if(hud_used.inventory_shown)			//if the inventory is open ...
 				wear_mask.screen_loc = ui_mask		//...draw the item in the inventory screen

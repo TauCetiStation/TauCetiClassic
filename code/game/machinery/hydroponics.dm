@@ -6,6 +6,7 @@
 	icon_state = "hydrotray"
 	density = 1
 	anchored = 1
+	interact_offline = TRUE
 	var/waterlevel = 100 // The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
 	var/nutrilevel = 10 // The amount of nutrient in the tray (max 10)
@@ -34,8 +35,8 @@
 	icon = 'icons/obj/hydroponics.dmi'
 	icon_state = "hydrotray3"
 
-/obj/machinery/hydroponics/constructable/New()
-	..()
+/obj/machinery/hydroponics/constructable/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/hydroponics(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -628,7 +629,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 		else
 			to_chat(user, "<span class='warning'>[src] already has seeds in it!</span>")
 
-	else if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	else if (istype(O, /obj/item/device/plant_analyzer))
 		if(planted && myseed)
 			to_chat(user, "*** <B>[myseed.plantname]</B> ***")//Carn: now reports the plants growing, not the seeds.
 			to_chat(user, "-Plant Age: \blue [age]")
@@ -746,11 +747,14 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 		update_icon()
 
 /obj/machinery/hydroponics/attack_hand(mob/user)
-	if(issilicon(user) || isobserver(user)) //How does AI/ghosts know what plant is?
+	. = ..()
+	if(.)
 		return
+	if(issilicon(user)) //How does AI know what plant is?
+		return 1
 	if(harvest)
 		if(!(user in range(1,src)))
-			return
+			return 1
 		myseed.harvest()
 	else if(dead)
 		planted = 0

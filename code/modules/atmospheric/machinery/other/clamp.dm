@@ -4,14 +4,15 @@
 	icon = 'icons/atmos/clamp.dmi'
 	icon_state = "pclamp0"
 	anchored = TRUE
+	use_power = 0
 
 	var/obj/machinery/atmospherics/pipe/simple/target = null
 	var/open = TRUE
 	var/datum/pipe_network/network_node1
 	var/datum/pipe_network/network_node2
 
-/obj/machinery/clamp/New(loc, obj/machinery/atmospherics/pipe/simple/to_attach = null)
-	..()
+/obj/machinery/clamp/atom_init(mapload, obj/machinery/atmospherics/pipe/simple/to_attach = null)
+	. = ..()
 
 	if(istype(to_attach))
 		target = to_attach
@@ -38,8 +39,12 @@
 		network_node2 = P2.network
 
 /obj/machinery/clamp/attack_hand(mob/user)
-	if(!target || !user)
+	. = ..()
+	if(.)
 		return
+
+	if(!target || !user)
+		return 1
 
 	if(!open)
 		open()

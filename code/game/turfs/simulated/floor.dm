@@ -38,7 +38,6 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
-	var/lava = 0
 	var/broken = 0
 	var/burnt = 0
 	var/mineral = "metal"
@@ -63,8 +62,8 @@ var/list/wood_icons = list("wood","wood-broken")
 	proc/toggle_lightfloor_on()
 		lightfloor_state ^= LIGHTFLOOR_ON_BIT
 
-/turf/simulated/floor/New()
-	..()
+/turf/simulated/floor/atom_init()
+	. = ..()
 	if(icon_state in icons_to_ignore_at_floor_init) //so damaged/burned tiles or plating icons aren't saved as the default
 		icon_regular_floor = "floor"
 	else
@@ -85,14 +84,14 @@ var/list/wood_icons = list("wood","wood-broken")
 	//set src in oview(1)
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(basetype)
 		if(2.0)
 			switch(pick(1,2;75,3))
 				if (1)
 					src.ReplaceWithLattice()
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 				if(2)
-					src.ChangeTurf(/turf/space)
+					src.ChangeTurf(basetype)
 				if(3)
 					if(prob(80))
 						src.break_tile_to_plating()
@@ -144,9 +143,7 @@ var/list/wood_icons = list("wood","wood-broken")
 			ReplaceWithLattice()
 
 /turf/simulated/floor/update_icon()
-	if(lava)
-		return
-	else if(is_plasteel_floor())
+	if(is_plasteel_floor())
 		if(!broken && !burnt)
 			icon_state = icon_regular_floor
 	else if(is_plating())
@@ -487,6 +484,7 @@ var/list/wood_icons = list("wood","wood-broken")
 
 	if(!C || !user)
 		return 0
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles
 		if(is_light_floor())
@@ -541,6 +539,7 @@ var/list/wood_icons = list("wood","wood-broken")
 		var/obj/item/stack/rods/R = C
 		if (is_plating())
 			if (R.get_amount() >= 2)
+				if(user.is_busy()) return
 				to_chat(user, "\blue Reinforcing the floor...")
 				if(do_after(user, 30, target = src) && R.use(2) && is_plating())
 					ChangeTurf(/turf/simulated/floor/engine)

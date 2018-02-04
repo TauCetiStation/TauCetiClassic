@@ -7,6 +7,7 @@
 	light_color = "#315ab4"
 	req_one_access = list(access_medical, access_forensics_lockers)
 	circuit = /obj/item/weapon/circuitboard/med_data
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -25,9 +26,7 @@
 		to_chat(user, "You insert [O].")
 	..()
 
-/obj/machinery/computer/med_data/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/med_data/ui_interact(mob/user)
 	var/dat
 	if (src.temp)
 		dat = text("<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>")
@@ -37,15 +36,15 @@
 			switch(src.screen)
 				if(1.0)
 					dat += {"
-<A href='?src=\ref[src];search=1'>Search Records</A>
-<BR><A href='?src=\ref[src];screen=2'>List Records</A>
-<BR>
-<BR><A href='?src=\ref[src];screen=5'>Virus Database</A>
-<BR><A href='?src=\ref[src];screen=6'>Medbot Tracking</A>
-<BR>
-<BR><A href='?src=\ref[src];screen=3'>Record Maintenance</A>
-<BR><A href='?src=\ref[src];logout=1'>{Log Out}</A><BR>
-"}
+						<A href='?src=\ref[src];search=1'>Search Records</A>
+						<BR><A href='?src=\ref[src];screen=2'>List Records</A>
+						<BR>
+						<BR><A href='?src=\ref[src];screen=5'>Virus Database</A>
+						<BR><A href='?src=\ref[src];screen=6'>Medbot Tracking</A>
+						<BR>
+						<BR><A href='?src=\ref[src];screen=3'>Record Maintenance</A>
+						<BR><A href='?src=\ref[src];logout=1'>{Log Out}</A><BR>
+						"}
 				if(2.0)
 					dat += "<B>Record List</B>:<HR>"
 					if(!isnull(data_core.general))
@@ -125,7 +124,6 @@
 			dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
 	user << browse(text("<HEAD><TITLE>Medical Records</TITLE></HEAD><TT>[]</TT>", dat), "window=med_rec")
 	onclose(user, "med_rec")
-	return
 
 /obj/machinery/computer/med_data/Topic(href, href_list)
 	. = ..()

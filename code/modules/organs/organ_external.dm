@@ -202,11 +202,11 @@
 		if(brute == 0 && burn == 0)
 			break
 
-		// heal brute damage
-		if(W.damage_type == CUT || W.damage_type == BRUISE)
-			brute = W.heal_damage(brute)
-		else if(W.damage_type == BURN)
-			burn = W.heal_damage(burn)
+		switch(W.damage_type)
+			if(BURN, LASER) // heal burn damage
+				burn = W.heal_damage(burn)
+			else // heal brute damage
+				brute = W.heal_damage(brute)
 
 	if(internal)
 		status &= ~ORGAN_BROKEN
@@ -413,8 +413,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		for(var/datum/wound/W in wounds)
 			//Infected wounds raise the organ's germ level
 			if (W.germ_level > germ_level)
-				germ_level++
-				break	//limit increase to a maximum of one per second
+				germ_level = min(W.amount + germ_level, W.germ_level) //faster infections from dirty wounds, but not faster than natural wound germification.
 
 /obj/item/organ/external/proc/handle_germ_effects()
 	var/antibiotics = owner.reagents.get_reagent_amount("spaceacillin")
@@ -645,7 +644,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(BP.parent == src)
 			BP.droplimb(null, clean, disintegrate)
 
-	if(parent && disintegrate != DROPLIMB_BURN)
+	if(parent && !(parent.status & ORGAN_DESTROYED) && disintegrate != DROPLIMB_BURN)
 		if(clean)
 			if(prob(10))
 				parent.sever_artery()
@@ -715,7 +714,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 				if(!clean)
 					// Throw limb around.
 					if(isturf(bodypart.loc))
-						bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), rand(1, 3), 30)
+						bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), rand(1, 3), throw_speed)
 					dir = 2
 		if(DROPLIMB_BURN)
 			new /obj/effect/decal/cleanable/ash(get_turf(owner))
@@ -732,11 +731,11 @@ Note that amputating the affected organ does in fact remove the infection from t
 				gore.basecolor =  owner.species.blood_color
 				gore.update_icon()
 
-			gore.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), 30)
+			gore.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), throw_speed)
 
 			for(var/obj/item/I in src)
 				I.loc = get_turf(src)
-				I.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), 30)
+				I.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), throw_speed)
 
 	switch(body_part)
 		if(HEAD)
@@ -1227,8 +1226,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/weapon/organ
 	icon = 'icons/mob/human_races/r_human.dmi'
 
-/obj/item/weapon/organ/New(loc, mob/living/carbon/human/H)
-	..(loc)
+/obj/item/weapon/organ/atom_init(mapload, mob/living/carbon/human/H)
+	. = ..()
 	if(!istype(H))
 		return
 	if(H.dna)
@@ -1299,10 +1298,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/weapon/organ/head/posi
 	name = "robotic head"
 
-/obj/item/weapon/organ/head/New(loc, mob/living/carbon/human/H)
+/obj/item/weapon/organ/head/atom_init(mapload, mob/living/carbon/human/H)
 	if(istype(H))
 		src.icon_state = H.gender == MALE? "head_m" : "head_f"
-	..()
+	. = ..()
 	//Add (facial) hair.
 	if(H.f_style)
 		var/datum/sprite_accessory/facial_hair_style = facial_hair_styles_list[H.f_style]
@@ -1345,6 +1344,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 				if(istype(crab))
 					crab.sting_action(brainmob)
 					H.gib()
+
 /obj/item/weapon/organ/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)
 	brainmob.name = H.real_name
@@ -1355,6 +1355,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	brainmob.container = src
 
 /obj/item/weapon/organ/head/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(istype(W,/obj/item/weapon/scalpel))
 		switch(brain_op_stage)
 			if(0)

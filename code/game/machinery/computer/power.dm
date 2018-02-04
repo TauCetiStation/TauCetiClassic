@@ -16,8 +16,8 @@
 
 //fix for issue 521, by QualityVan.
 //someone should really look into why circuits have a powernet var, it's several kinds of retarded.
-/obj/machinery/computer/monitor/New()
-	..()
+/obj/machinery/computer/monitor/atom_init()
+	. = ..()
 	var/obj/structure/cable/attached = null
 	var/turf/T = loc
 	if(isturf(T))
@@ -35,12 +35,7 @@
 			powernet = attached.get_powernet()
 	return
 
-/obj/machinery/computer/monitor/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/monitor/interact(mob/user)
+/obj/machinery/computer/monitor/ui_interact(mob/user)
 
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
 		if (!issilicon(user) && !isobserver(user))
@@ -49,7 +44,6 @@
 			return
 
 
-	user.set_machine(src)
 	var/t = "<TT><B>Power Monitoring</B><HR>"
 
 	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"

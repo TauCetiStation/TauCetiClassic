@@ -199,6 +199,11 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/barnyardcurse
 	log_name = "BC"
 
+/datum/spellbook_entry/lighting_shock
+	name = "Lighting Shock"
+	spell_type = /obj/effect/proc_holder/spell/targeted/lighting_shock
+	log_name = "LS"
+
 /datum/spellbook_entry/charge
 	name = "Charge"
 	spell_type = /obj/effect/proc_holder/spell/targeted/charge
@@ -380,8 +385,11 @@
 	else
 		to_chat(user, "It appears to have no author.")
 
-/obj/item/weapon/spellbook/New()
+/obj/item/weapon/spellbook/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/spellbook/atom_init_late()
 	var/entry_types = subtypesof(/datum/spellbook_entry) - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
 	for(var/T in entry_types)
 		var/datum/spellbook_entry/E = new T

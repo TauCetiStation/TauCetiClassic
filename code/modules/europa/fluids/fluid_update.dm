@@ -10,7 +10,7 @@
 	. = ..()
 	fluid_update()
 
-/obj/structure/New()
+/obj/structure/atom_init()
 	. = ..()
 	fluid_update()
 
@@ -22,7 +22,7 @@
 	. = ..()
 	fluid_update()
 
-/obj/effect/New()
+/obj/effect/atom_init()
 	. = ..()
 	fluid_update()
 

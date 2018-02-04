@@ -6,7 +6,7 @@
 	desc = "A pipe valve."
 
 	can_unwrench = TRUE
-	ghost_must_be_admin = TRUE
+	interact_offline = TRUE
 
 	var/state = 0 // 0 = go straight, 1 = go to side
 
@@ -80,16 +80,21 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/trinary/tvalve/attack_ai(mob/user)
-	return
+	if(IsAdminGhost(user) || !interact_offline)
+		return ..()
 
 /obj/machinery/atmospherics/components/trinary/tvalve/attack_hand(mob/user)
-	src.add_fingerprint(usr)
+	. = ..()
+	if(.)
+		return
+
 	update_icon(1)
+	user.SetNextMove(CLICK_CD_RAPID)
 	sleep(10)
-	if (src.state)
-		src.go_straight()
+	if (state)
+		go_straight()
 	else
-		src.go_to_side()
+		go_to_side()
 
 /obj/machinery/atmospherics/components/trinary/tvalve/process_atmos()
 	return PROCESS_KILL
@@ -99,6 +104,7 @@
 	desc = "A digitally controlled valve."
 	icon = 'icons/atmos/digital_tvalve.dmi'
 
+	interact_offline = FALSE
 	frequency = 0
 	var/id = null
 
@@ -110,17 +116,6 @@
 	..()
 	if(!powered())
 		icon_state = "tvalvenopower"
-
-/obj/machinery/atmospherics/components/trinary/tvalve/digital/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/atmospherics/components/trinary/tvalve/digital/attack_hand(mob/user as mob)
-	if(!powered())
-		return
-	if(!src.allowed(user))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
-		return
-	..()
 
 //Radio remote control
 
@@ -183,6 +178,7 @@
 	desc = "A digitally controlled valve."
 	icon = 'icons/atmos/digital_tvalve.dmi'
 
+	interact_offline = FALSE
 	frequency = 0
 	var/id = null
 
@@ -194,17 +190,6 @@
 	..()
 	if(!powered())
 		icon_state = "tvalvemnopower"
-
-/obj/machinery/atmospherics/components/trinary/tvalve/mirrored/digital/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/atmospherics/components/trinary/tvalve/mirrored/digital/attack_hand(mob/user)
-	if(!powered())
-		return
-	if(!src.allowed(user))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
-		return
-	..()
 
 //Radio remote control -eh?
 

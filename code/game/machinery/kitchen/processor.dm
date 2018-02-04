@@ -5,17 +5,16 @@
 	layer = 2.9
 	density = TRUE
 	anchored = TRUE
-	var/broken = FALSE
-	var/processing = FALSE
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 50
-	ghost_must_be_admin = TRUE
+	var/broken = FALSE
+	var/processing = FALSE
 	var/rating_speed = 1
 	var/rating_amount = 1
 
-/obj/machinery/processor/New()
-	..()
+/obj/machinery/processor/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/processor(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -34,9 +33,9 @@
 	var/time = 40
 
 /datum/food_processor_process/proc/process_food(loc, what, obj/machinery/processor/processor)
-	if (src.output && loc && processor)
+	if (output && loc && processor)
 		for(var/i = 0, i < processor.rating_amount, i++)
-			new src.output(loc)
+			new output(loc)
 	if (what)
 		qdel(what)
 
@@ -132,7 +131,7 @@
 	return 0
 
 /obj/machinery/processor/attackby(obj/item/O, mob/user)
-	if(src.processing)
+	if(processing)
 		to_chat(user, "\red The processor is in the process of processing.")
 		return 1
 	if(default_deconstruction_screwdriver(user, "processor1", "processor", O))
@@ -149,7 +148,7 @@
 
 	default_deconstruction_crowbar(O)
 
-	if(src.contents.len > 0) //TODO: several items at once? several different items?
+	if(contents.len > 0) //TODO: several items at once? several different items?
 		to_chat(user, "\red Something is already in the processing chamber.")
 		return 1
 	var/what = O
@@ -168,34 +167,36 @@
 	return
 
 /obj/machinery/processor/attack_hand(mob/user)
-	if (src.stat != CONSCIOUS) //NOPOWER etc
+	. = ..()
+	if(.)
 		return
-	if(src.processing)
+	if(processing)
 		to_chat(user, "\red The processor is in the process of processing.")
 		return 1
-	if(src.contents.len == 0)
+	if(contents.len == 0)
 		to_chat(user, "\red The processor is empty.")
 		return 1
-	src.processing = 1
+	user.SetNextMove(CLICK_CD_INTERACT)
+	processing = TRUE
 	user.visible_message("[user] turns on [src].", \
 		"<span class='notice'>You turn on [src].</span>", \
 		"<span class='italics'>You hear a food processor.</span>")
-	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+	playsound(loc, 'sound/machines/blender.ogg', 50, 1)
 	use_power(500)
 	var/total_time = 0
-	for(var/O in src.contents)
+	for(var/O in contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
 			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") //-rastaf0 // DEAR GOD THIS BURNS MY EYES HAVE YOU EVER LOOKED IN AN ENGLISH DICTONARY BEFORE IN YOUR LIFE AAAAAAAAAAAAAAAAAAAAA - Iamgoofball
 			continue
 		total_time += P.time
 	sleep(total_time / rating_speed)
-	for(var/O in src.contents)
+	for(var/O in contents)
 		var/datum/food_processor_process/P = select_recipe(O)
 		if (!P)
 			log_admin("DEBUG: [O] in processor havent suitable recipe. How do you put it in?") //-rastaf0
 			continue
-		P.process_food(src.loc, O, src)
-	src.processing = 0
-	src.visible_message("\blue \the [src] finished processing.", \
+		P.process_food(loc, O, src)
+	processing = FALSE
+	visible_message("\blue \the [src] finished processing.", \
 		"You hear the food processor stopping/")

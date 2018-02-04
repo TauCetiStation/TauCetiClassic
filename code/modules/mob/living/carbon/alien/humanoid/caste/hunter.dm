@@ -9,14 +9,14 @@
 	plasma_rate = 5
 	heal_rate = 3
 
-/mob/living/carbon/alien/humanoid/hunter/New()
+/mob/living/carbon/alien/humanoid/hunter/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
 	if(name == "alien hunter")
 		name = text("alien hunter ([rand(1, 1000)])")
 	real_name = name
-	..()
+	. = ..()
 
 /mob/living/carbon/alien/humanoid/hunter
 	handle_environment()
@@ -127,7 +127,10 @@
 	if(isliving(A))
 		var/mob/living/L = A
 		L.visible_message("<span class='danger'>[src] pounces on [L]!</span>", "<span class='userdanger'>[src] pounces on you!</span>")
-		L.Weaken(5)
+		if(issilicon(A))
+			L.Weaken(1) //Only brief stun
+		else
+			L.Weaken(5)
 		sleep(2)  // Runtime prevention (infinite bump() calls on hulks)
 		step_towards(src, L)
 		toggle_leap(FALSE)

@@ -22,11 +22,6 @@
 	base_state = "pflash"
 	density = TRUE
 
-/*
-/obj/machinery/flasher/New()
-	sleep(4)					//<--- What the fuck are you doing? D=
-	src.sd_SetLuminosity(2)
-*/
 /obj/machinery/flasher/power_change()
 	if ( powered() )
 		stat &= ~NOPOWER
@@ -42,6 +37,7 @@
 	if (istype(W, /obj/item/weapon/wirecutters))
 		add_fingerprint(user)
 		src.disable = !src.disable
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.disable)
 			user.visible_message("\red [user] has disconnected the [src]'s flashbulb!", "\red You disconnect the [src]'s flashbulb!")
 		if (!src.disable)
@@ -49,14 +45,10 @@
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai(mob/user)
-	if (src.anchored)
-		return src.flash()
+	if (anchored)
+		return flash()
 	else
 		return
-
-/obj/machinery/flasher/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		attack_ai(user)
 
 /obj/machinery/flasher/proc/flash()
 	if (!(powered()))
@@ -116,6 +108,7 @@
 	if (istype(W, /obj/item/weapon/wrench))
 		add_fingerprint(user)
 		src.anchored = !src.anchored
+		user.SetNextMove(CLICK_CD_INTERACT)
 
 		if (!src.anchored)
 			user.show_message(text("\red [src] can now be moved."))
@@ -125,20 +118,15 @@
 			user.show_message(text("\red [src] is now secured."))
 			src.overlays += "[base_state]-s"
 
-/obj/machinery/flasher_button/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/flasher_button/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/flasher_button/attackby(obj/item/weapon/W, mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/flasher_button/attack_hand(mob/user)
 	if(..() || active)
-		return
+		return 1
 
 	use_power(5)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	active = 1
 	icon_state = "launcheract"
@@ -152,5 +140,3 @@
 
 	icon_state = "launcherbtt"
 	active = 0
-
-	return

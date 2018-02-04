@@ -154,12 +154,7 @@
 		spawn(25) increase_tension(user)
 
 /obj/item/weapon/crossbow/afterattack(atom/target, mob/living/user, flag, params)
-
-	if (istype(target, /obj/item/weapon/storage/backpack ))
-		src.dropped()
-		return
-
-	else if (target.loc == user.loc)
+	if (target.loc == user.loc)
 		return
 
 	else if (locate (/obj/structure/table, src.loc))
@@ -233,7 +228,7 @@
 			to_chat(user, "It has a steel cable loosely strung across the lath.")
 
 /obj/item/weapon/crossbowframe/attackby(obj/item/W, mob/user) // its better to implement this in personal crafting later.
-	if(istype(user, /mob/living/silicon/robot))
+	if(isrobot(user))
 		return
 
 	if(istype(W, /obj/item/stack))

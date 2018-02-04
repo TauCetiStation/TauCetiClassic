@@ -13,7 +13,8 @@
 	var/indestructable = 0
 	var/stump = 0
 
-/obj/structure/bush/New()
+/obj/structure/bush/atom_init()
+	. = ..()
 	if(prob(20))
 		opacity = 1
 
@@ -28,6 +29,7 @@
 /obj/structure/bush/attackby(obj/I, mob/user)
 	//hatchets can clear away undergrowth
 	if(istype(I, /obj/item/weapon/hatchet) && !stump)
+		user.SetNextMove(CLICK_CD_MELEE)
 		if(indestructable)
 			//this bush marks the edge of the map, you can't destroy it
 			to_chat(user, "\red You flail away at the undergrowth, but it's too thick here.")
@@ -84,7 +86,8 @@ var/jungle_plants_init = 0
 	var/fruit_b
 
 
-/obj/structure/jungle_plant/New()
+/obj/structure/jungle_plant/atom_init()
+	. = ..()
 	if(!jungle_plants_init)
 		init_jungle_plants()
 
@@ -101,6 +104,7 @@ var/jungle_plants_init = 0
 
 /obj/structure/jungle_plant/attack_hand(mob/user)
 	if(fruits_left > 0)
+		user.SetNextMove(CLICK_CD_INTERACT)
 		fruits_left--
 		to_chat(user, "\blue You pick a fruit off [src].")
 

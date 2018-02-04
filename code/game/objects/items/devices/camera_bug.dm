@@ -27,8 +27,8 @@
 	var/last_found = null
 	var/last_seen = null
 
-/obj/item/device/camera_bug/New()
-	..()
+/obj/item/device/camera_bug/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/camera_bug/Destroy()

@@ -14,6 +14,8 @@ the HUD updates properly! */
 		if(crit_fail)
 			P.Client.images += image('icons/mob/hud.dmi', loc = patient, icon_state = pick("hudbroken6", "hudbroken7"))
 			continue
+		if(patient.digitalcamo)
+			continue
 		if(!local_scanner)
 			if(istype(patient.w_uniform, /obj/item/clothing/under))
 				var/obj/item/clothing/under/U = patient.w_uniform
@@ -33,6 +35,8 @@ the HUD updates properly! */
 	var/datum/arranged_hud_process/P = arrange_hud_process(M, Alt, sec_hud_users)
 	for(var/mob/living/carbon/human/perp in P.Mob.in_view(P.Turf))
 		if(P.Mob.see_invisible < perp.invisibility)
+			continue
+		if(perp.digitalcamo)
 			continue
 		if(crit_fail)
 			P.Client.images += image('icons/mob/hud.dmi', loc = perp, icon_state = pick("hudbroken4", "hudbroken5"))

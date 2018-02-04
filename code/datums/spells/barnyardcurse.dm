@@ -14,8 +14,8 @@
 	action_icon_state = "barn"
 	var/static/list/compatible_mobs = null
 
-/obj/effect/proc_holder/spell/targeted/barnyardcurse/New()
-	..()
+/obj/effect/proc_holder/spell/targeted/barnyardcurse/atom_init()
+	. = ..()
 	if(!compatible_mobs)
 		compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 

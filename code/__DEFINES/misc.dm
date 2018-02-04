@@ -63,16 +63,6 @@
 // Doors!
 #define DOOR_CRUSH_DAMAGE 10
 
-#define DOOR_LAYER          2.82
-#define DOOR_CLOSED_MOD     0.3 //how much the layer is increased when the door is closed
-
-#define PODDOOR_CLOSED_MOD  0.3
-
-#define SHUTTERS_LAYER      3.1
-
-#define FIREDOOR_LAYER      2.5
-#define FIREDOOR_CLOSED_MOD 0.31
-
 #define FIREDOOR_MAX_PRESSURE_DIFF 25 // kPa
 
 #define FIREDOOR_MAX_TEMP 50 // °C
@@ -153,8 +143,15 @@
 #define MINERAL_MATERIAL_AMOUNT 2000
 //The amount of materials you get from a sheet of mineral like iron/diamond/glass etc
 
-#define APC_MIN_TO_MALDF_DECLARE 3
-//if malf apcs < than this, makf can't begin the takeover attempt
+#define APC_MIN_TO_MALF_DECLARE 5
+//if malf apcs < than this, malf can't begin the takeover attempt
+
+#define APC_BONUS_WITH_INTERCEPT 4
+//If AI intercepts message, he can hack additional APC_BONUS_WITH_INTERCEPT APCs without attracting attention
+
+#define MALF_SMALL_MODULE_PRICE 10
+#define MALF_LARGE_MODULE_PRICE 50
+//Malf modules prices
 
 // Maploader bounds indices
 #define MAP_MINX 1
@@ -176,9 +173,6 @@
 #define MANIFEST_ERROR_CONTENTS		2
 #define MANIFEST_ERROR_ITEM			4
 
-// from /tg/
-#define ABOVE_NORMAL_TURF_LAYER 2.08
-#define BELOW_MOB_LAYER 3.7
 
 //teleport checks
 #define TELE_CHECK_NONE 0
@@ -197,6 +191,9 @@
 //Wet floor states/severity
 #define WATER_FLOOR 1
 #define LUBE_FLOOR  2
+
+#define WORLD_ICON_SIZE 32
+#define PIXEL_MULTIPLIER WORLD_ICON_SIZE/32
 
 // (Bay12 = -2), but we don't have that projectile code, so...
 #define PROJECTILE_FORCE_MISS -1

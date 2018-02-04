@@ -405,11 +405,12 @@ datum
 			required_reagents = list("aluminum" = 1, "phoron" = 1, "sacid" = 1 )
 			result_amount = 1
 			on_reaction(datum/reagents/holder, created_volume)
-				var/turf/simulated/T = get_turf(holder.my_atom)
-				for(var/turf/simulated/turf in range(created_volume/10,T))
-					new /obj/fire(turf)
+				var/turf/simulated/T = get_turf(holder.my_atom.loc)	
+				for(var/turf/simulated/target_tile in range(1, T))
+					if(!target_tile.blocks_air && !target_tile.density)
+						target_tile.assume_gas("phoron", created_volume * 0.2)
+						INVOKE_ASYNC(target_tile, /turf/simulated.proc/hotspot_expose, 700, 400, holder.my_atom)
 				holder.del_reagent("napalm")
-				return
 
 		/*
 		smoke
@@ -2199,3 +2200,18 @@ datum
 	result = "mednanobots"
 	required_reagents = list("nanobots" = 1, "doctorsdelight" = 5)
 	result_amount = 1
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/chemical_reaction/deuterium
+	name = "Deuterium"
+	result = null
+	required_reagents = list("water" = 70, "oxygen" = 30)
+	result_amount = 1
+
+/datum/chemical_reaction/deuterium/on_reaction(datum/reagents/holder, created_volume)
+	var/turf/T = get_turf(holder.my_atom)
+	if(istype(T))
+		new /obj/item/stack/sheet/mineral/deuterium(T, created_volume)

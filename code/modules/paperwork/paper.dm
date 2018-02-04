@@ -35,15 +35,15 @@
 
 //lipstick wiping is in code/game/objects/items/weapons/cosmetics.dm!
 
-/obj/item/weapon/paper/New()
-	..()
+/obj/item/weapon/paper/atom_init()
+	. = ..()
 	pixel_y = rand(-8, 8)
 	pixel_x = rand(-9, 9)
 	stamp_text = ""
+
 	spawn(2)
 		update_icon()
 		updateinfolinks()
-		return
 
 /obj/item/weapon/paper/update_icon()
 	if(icon_state == "scrap_bloodied")
@@ -159,20 +159,21 @@
 		show_content(user, forcestars = TRUE)
 	return
 
-/obj/item/weapon/paper/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(user.zone_sel.selecting == O_EYES)
+/obj/item/weapon/paper/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(def_zone == O_EYES)
 		user.visible_message("<span class='notice'>You show the paper to [M]. </span>", \
 			"<span class='notice'> [user] holds up a paper and shows it to [M]. </span>")
 		to_chat(M, examine())
 
-	else if(user.zone_sel.selecting == O_MOUTH) // lipstick wiping
+	else if(def_zone == O_MOUTH) // lipstick wiping
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H == user)
 				to_chat(user, "<span class='notice'>You wipe off the lipstick with [src].</span>")
 				H.lip_style = null
 				H.update_body()
-			else
+			else if(!user.is_busy())
 				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
 								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick.</span>")
 				if(do_after(user, 10, target = H))	//user needs to keep their active hand, H does not.
@@ -256,8 +257,17 @@
 
 	return P
 
+/obj/item/weapon/paper/proc/get_signature(obj/item/weapon/pen/P, mob/user)
+	if(P && istype(P, /obj/item/weapon/pen))
+		return P.get_signature(user)
+	return (user && user.real_name) ? user.real_name : "Anonymous"
+
 /obj/item/weapon/paper/proc/parsepencode(t, obj/item/weapon/pen/P, mob/user, iscrayon = 0)
-//	t = copytext(sanitize(t),1,MAX_MESSAGE_LEN)
+	if(length(t) == 0)
+		return ""
+
+	if(findtext(t, "\[sign\]"))
+		t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[get_signature(P, user)]</i></font>")
 
 	t = replacetext(t, "\[center\]", "<center>")
 	t = replacetext(t, "\[/center\]", "</center>")
@@ -270,7 +280,6 @@
 	t = replacetext(t, "\[/u\]", "</U>")
 	t = replacetext(t, "\[large\]", "<font size=\"4\">")
 	t = replacetext(t, "\[/large\]", "</font>")
-	t = replacetext(t, "\[sign\]", "<font face=\"[signfont]\"><i>[user.real_name]</i></font>")
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 
 	if(!iscrayon)
@@ -336,7 +345,7 @@
 	if(!is_type_in_list(src, burnable))
 		return
 
-	if(P.lit && !user.restrained())
+	if(P.lit && !user.restrained() && !user.is_busy())
 		var/class = "<span class='red'>"
 		if(istype(P, /obj/item/weapon/lighter/zippo))
 			class = "<span class='rose'>"
@@ -417,6 +426,7 @@
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/user)
 	..()
+	user.SetNextMove(CLICK_CD_INTERACT)
 	var/clown = 0
 	if(user.mind && (user.mind.assigned_role == "Clown"))
 		clown = 1
@@ -559,8 +569,8 @@
 /obj/item/weapon/paper/wires
 	name = "paper - 'Airlock wires documentation'"
 
-/obj/item/weapon/paper/wires/New()
-	..()
+/obj/item/weapon/paper/wires/atom_init()
+	. = ..()
 	identify_wires()
 
 /obj/item/weapon/paper/wires/proc/identify_wires()

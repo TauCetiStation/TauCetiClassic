@@ -57,17 +57,13 @@ var/list/ingredients_source = list(
 	var/dispense_flavour = ICECREAM_VANILLA
 	var/obj/item/weapon/reagent_containers/glass/held_container
 
-/obj/machinery/icecream_vat/New()
-	..()
+/obj/machinery/icecream_vat/atom_init()
+	. = ..()
 
 	while(ingredients.len < 11)
 		ingredients.Add(5)
 
-/obj/machinery/icecream_vat/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/icecream_vat/interact(mob/user)
+/obj/machinery/icecream_vat/ui_interact(mob/user)
 	var/dat
 	dat += "<a href='?src=\ref[src];dispense=[ICECREAM_VANILLA]'><b>Dispense vanilla icecream</b></a> There is [ingredients[ICECREAM_VANILLA]] scoops of vanilla icecream left (made from milk and ice).<br>"
 	dat += "<a href='?src=\ref[src];dispense=[FLAVOUR_STRAWBERRY]'><b>Dispense strawberry icecream</b></a> There is [ingredients[FLAVOUR_STRAWBERRY]] dollops of strawberry flavouring left (obtained from berry juice.<br>"
@@ -220,7 +216,8 @@ var/list/ingredients_source = list(
 	var/cone_type
 	bitesize = 3
 
-/obj/item/weapon/reagent_containers/food/snacks/icecream/New()
+/obj/item/weapon/reagent_containers/food/snacks/icecream/atom_init()
+	. = ..()
 	create_reagents(20)
 	reagents.add_reagent("nutriment", 5)
 

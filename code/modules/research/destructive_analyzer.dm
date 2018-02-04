@@ -13,8 +13,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 	var/obj/item/weapon/loaded_item = null
 	var/decon_mod = 0
 
-/obj/machinery/r_n_d/destructive_analyzer/New()
-	..()
+/obj/machinery/r_n_d/destructive_analyzer/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/destructive_analyzer(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
@@ -53,6 +53,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 	default_deconstruction_crowbar(O)
 
+	if (panel_open && is_wire_tool(O) && wires.interact(user))
+		return
 	if (disabled)
 		return
 	if (!linked_console)

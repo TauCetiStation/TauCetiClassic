@@ -6,8 +6,8 @@
 	var/show_tool_desc
 	var/obj/item/stored_uplink
 
-/obj/machinery/computer/intruder_station/New()
-	..()
+/obj/machinery/computer/intruder_station/atom_init()
+	. = ..()
 	for(var/Dat in subtypesof(/datum/intruder_tools))
 		tools += new Dat
 
@@ -24,10 +24,7 @@
 	to_chat(user, "<span class='notice'>You insert [O] in [src]!</span>")
 	updateUsrDialog()
 
-/obj/machinery/computer/intruder_station/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/computer/intruder_station/ui_interact(mob/user)
 	var/dat = ""
 	var/available_telecrystalls = 0
 	if(stored_uplink && stored_uplink.hidden_uplink)
@@ -51,7 +48,6 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/intruder_station/Topic(href, href_list)
 	. = ..()

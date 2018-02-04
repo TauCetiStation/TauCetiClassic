@@ -43,7 +43,7 @@
 	uni_append = list(0x044,0xC5D) // 044C5D
 	holder_type = /obj/item/weapon/holder/monkey/stok
 
-/mob/living/carbon/monkey/New()
+/mob/living/carbon/monkey/atom_init()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
@@ -79,34 +79,34 @@
 
 		update_muts=1
 
-	..()
+	. = ..()
+
 	update_icons()
-	return
 
-/mob/living/carbon/monkey/unathi/New()
+/mob/living/carbon/monkey/unathi/atom_init()
 
-	..()
+	. = ..()
 	dna.mutantrace = "lizard"
 	greaterform = UNATHI
 	add_language("Sinta'unathi")
 
-/mob/living/carbon/monkey/skrell/New()
+/mob/living/carbon/monkey/skrell/atom_init()
 
-	..()
+	. = ..()
 	dna.mutantrace = "skrell"
 	greaterform = SKRELL
 	add_language("Skrellian")
 
-/mob/living/carbon/monkey/tajara/New()
+/mob/living/carbon/monkey/tajara/atom_init()
 
-	..()
+	. = ..()
 	dna.mutantrace = "tajaran"
 	greaterform = TAJARAN
 	add_language("Siik'tajr")
 
-/mob/living/carbon/monkey/diona/New()
+/mob/living/carbon/monkey/diona/atom_init()
 
-	..()
+	. = ..()
 	alien = 1
 	gender = NEUTER
 	dna.mutantrace = "plant"
@@ -355,13 +355,14 @@
 	return
 
 /mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
+	if(..())
+		return
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)

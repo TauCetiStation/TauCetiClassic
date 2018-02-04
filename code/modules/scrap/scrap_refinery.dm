@@ -23,9 +23,9 @@ var/const/SAFETY_COOLDOWN = 100
 	var/eat_dir = WEST
 	var/chance_to_recycle = 1
 
-/obj/machinery/recycler/New()
+/obj/machinery/recycler/atom_init()
 	// On us
-	..()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/recycler(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
@@ -52,6 +52,8 @@ var/const/SAFETY_COOLDOWN = 100
 	add_fingerprint(user)
 	if (istype(I, /obj/item/weapon/card/emag))
 		emag_act(user)
+		user.SetNextMove(CLICK_CD_INTERACT)
+		return
 	if(default_deconstruction_screwdriver(user, "grinder-oOpen", "grinder-o0", I))
 		return
 

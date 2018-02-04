@@ -10,6 +10,7 @@
 	active_power_usage = 25000
 	req_access = list(access_mining)
 	build_type = MINEFAB
+	allowed_checks = ALLOWED_CHECK_TOPIC
 	resources = list(
 						MAT_METAL=0,
 						MAT_GLASS=0,

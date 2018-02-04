@@ -70,8 +70,8 @@
 	var/max_equip = 3
 	var/datum/events/events
 
-/obj/mecha/New()
-	..()
+/obj/mecha/atom_init()
+	. = ..()
 	events = new
 	icon_state += "-open"
 	add_radio()
@@ -88,11 +88,14 @@
 	log_message("[src.name] created.")
 	loc.Entered(src)
 	mechas_list += src //global mech list
-	return
 
 /obj/mecha/Destroy()
 	go_out()
 	poi_list.Remove(src)
+	for(var/mob/M in src)
+		M.loc = get_turf(src)
+		M.loc.Entered(M)
+		step_rand(M)
 	mechas_list -= src //global mech list
 	return ..()
 
@@ -349,7 +352,7 @@
 		if(ignore_threshold || src.health*100/initial(src.health)<src.internal_damage_threshold)
 			var/obj/item/mecha_parts/mecha_equipment/destr = safepick(equipment)
 			if(destr)
-				destr.destroy()
+				qdel(destr)
 	return
 
 /obj/mecha/proc/hasInternalDamage(int_dam_flag=null)
@@ -405,6 +408,7 @@
 /obj/mecha/attack_hand(mob/user)
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	if ((HULK in user.mutations) && !prob(src.deflect_chance))
 		src.take_damage(15)
@@ -422,6 +426,7 @@
 /obj/mecha/attack_alien(mob/user)
 	src.log_message("Attack by alien. Attacker - [user].",1)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(!prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
@@ -439,10 +444,11 @@
 
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
 	src.log_message("Attack by simple animal. Attacker - [user].",1)
+	..()
+
 	if(user.melee_damage_upper == 0)
 		user.emote("[user.friendly] [src]")
 	else
-		user.do_attack_animation(src)
 		if(!prob(src.deflect_chance))
 			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 			src.take_damage(damage)
@@ -496,7 +502,7 @@
 		src.log_append_to_last("Armor saved.")
 		return
 	var/ignore_threshold
-	if(Proj.flag == "taser")
+	if(is_type_in_list(Proj, taser_projectiles)) //taser_projectiles defined in projectile.dm
 		use_power(200)
 		return
 	if(istype(Proj, /obj/item/projectile/beam/pulse))
@@ -507,50 +513,25 @@
 	return
 
 /obj/mecha/proc/destroy()
-	spawn()
-		go_out()
-		var/turf/T = get_turf(src)
-		tag = "\ref[src]" //better safe then sorry
-		if(loc)
-			loc.Exited(src)
-		loc = null
-		if(T)
-			if(istype(src, /obj/mecha/working/ripley/))
-				var/obj/mecha/working/ripley/R = src
-				if(R.cargo)
-					for(var/obj/O in R.cargo) //Dump contents of stored cargo
-						O.loc = T
-						R.cargo -= O
-						T.Entered(O)
+	go_out()
+	var/turf/T = get_turf(src)
+	if(wreckage)
+		var/obj/effect/decal/mecha_wreckage/WR = new wreckage(T)
+		WR.reliability = rand(33) + 15
+		for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+			WR.salvage["crowbar"] += E.type
+		if(cell)
+			WR.salvage["crowbar"] += cell.type
+			qdel(cell)
+		if(internal_tank)
+			WR.salvage["crowbar"] += internal_tank.type
+			qdel(internal_tank)
+	for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
+		qdel(E)
+	if(prob(60))
+		explosion(T, 0, 0, 1, 3)
+	qdel(src)
 
-			if(prob(30))
-				explosion(T, 0, 0, 1, 3)
-			spawn(0)
-				if(wreckage)
-					var/obj/effect/decal/mecha_wreckage/WR = new wreckage(T)
-					for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
-						if(E.salvageable && prob(30))
-							WR.crowbar_salvage += E
-							E.forceMove(WR)
-							E.equip_ready = 1
-							E.reliability = round(rand(E.reliability/3,E.reliability))
-						else
-							E.forceMove(T)
-							E.destroy()
-					if(cell)
-						WR.crowbar_salvage += cell
-						cell.forceMove(WR)
-						cell.charge = rand(0, cell.charge)
-					if(internal_tank)
-						WR.crowbar_salvage += internal_tank
-						internal_tank.forceMove(WR)
-				else
-					for(var/obj/item/mecha_parts/mecha_equipment/E in equipment)
-						E.forceMove(T)
-						E.destroy()
-		spawn(0)
-			qdel(src)
-	return
 
 /obj/mecha/ex_act(severity)
 	src.log_message("Affected by explosion of severity: [severity].",1)
@@ -559,16 +540,16 @@
 		src.log_append_to_last("Armor saved, changing severity to [severity].")
 	switch(severity)
 		if(1.0)
-			src.destroy()
+			destroy()
 		if(2.0)
 			if (prob(30))
-				src.destroy()
+				destroy()
 			else
 				src.take_damage(initial(src.health)/2)
 				src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
 		if(3.0)
 			if (prob(5))
-				src.destroy()
+				destroy()
 			else
 				src.take_damage(initial(src.health)/5)
 				src.check_for_internal_damage(list(MECHA_INT_FIRE,MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST,MECHA_INT_SHORT_CIRCUIT),1)
@@ -730,6 +711,7 @@
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "hurt")
 		var/obj/item/weapon/weldingtool/WT = W
+		user.SetNextMove(CLICK_CD_MELEE)
 		if (WT.remove_fuel(0,user))
 			if (hasInternalDamage(MECHA_INT_TANK_BREACH))
 				clearInternalDamage(MECHA_INT_TANK_BREACH)
@@ -779,11 +761,13 @@
 	else if(istype(W, /obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/Ham = W
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
 		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if(prob(50) && Ham.use_charge(user,6))
 			take_damage(Ham.force * 3)
 	else
+		user.SetNextMove(CLICK_CD_MELEE)
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
 /*
 		src.log_message("Attacked by [W]. Attacker - [user]")

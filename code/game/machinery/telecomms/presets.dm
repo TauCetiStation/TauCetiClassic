@@ -70,10 +70,10 @@
 	freq_listening = list(1353, 1357, 1359) //command, engineering, security
 
 	//Common and other radio frequencies for people to freely use
-	New()
-		for(var/i = 1441, i < 1489, i += 2)
-			freq_listening |= i
-		..()
+/obj/machinery/telecomms/receiver/preset_right/atom_init()
+	for(var/i = 1441, i < 1489, i += 2)
+		freq_listening |= i
+	. = ..()
 
 /obj/machinery/telecomms/receiver/preset_cent
 	id = "CentComm Receiver"
@@ -109,10 +109,10 @@
 	freq_listening = list(1357)
 	autolinkers = list("processor4", "engineering", "common")
 
-/obj/machinery/telecomms/bus/preset_four/New()
+/obj/machinery/telecomms/bus/preset_four/atom_init()
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
-	..()
+	. = ..()
 
 /obj/machinery/telecomms/bus/preset_cent
 	id = "CentComm Bus"
@@ -177,10 +177,10 @@
 
 	//Common and other radio frequencies for people to freely use
 	// 1441 to 1489
-/obj/machinery/telecomms/server/presets/common/New()
+/obj/machinery/telecomms/server/presets/common/atom_init()
 	for(var/i = 1441, i < 1489, i += 2)
 		freq_listening |= i
-	..()
+	. = ..()
 
 /obj/machinery/telecomms/server/presets/command
 	id = "Command Server"

@@ -35,8 +35,8 @@
 	var/static/initial_eyeobj_location = null
 	var/image/mob_overlay
 
-/obj/structure/droppod/New()
-	..()
+/obj/structure/droppod/atom_init()
+	. = ..()
 	if(!initial_eyeobj_location)
 		initial_eyeobj_location = locate(/obj/effect/landmark/droppod) in landmarks_list
 	if(!allowed_areas)
@@ -103,10 +103,35 @@
 /datum/droppod_allowed/New()
 	..()
 	if(!black_list_areas)
-		black_list_areas = list(/area/aisat, /area/turret_protected/aisat, /area/turret_protected/ai, /area/ai_monitored/storage/secure, /area/tcommsat/computer, /area/AIsattele,
-	/area/tcommsat/chamber, /area/turret_protected/ai_upload, /area/crew_quarters/captain, /area/bridge, /area/bridge/meeting_room, /area/teleporter, /area/security/nuke_storage,
-	/area/crew_quarters/heads, /area/security/armoury, /area/security/warden, /area/turret_protected/aisat_interior,/area/security/main, /area/security/brig, /area/security/range,
-	/area/security/hos,	/area/security/prison, /area/security/execution, /area/security/forensic_office, /area/security/detectives_office, /area/server, /area/comms, /area/tcommsat/computer)
+		black_list_areas = list(
+			/area/aisat,
+			/area/turret_protected/aisat,
+			/area/turret_protected/ai,
+			/area/turret_protected/ai_upload,
+			/area/turret_protected/aisat_interior,
+			/area/ai_monitored/storage/secure,
+			/area/tcommsat/computer,
+			/area/tcommsat/chamber,
+			/area/AIsattele,
+			/area/crew_quarters/captain,
+			/area/crew_quarters/heads,
+			/area/bridge,
+			/area/bridge/meeting_room,
+			/area/teleporter,
+			/area/security/nuke_storage,
+			/area/security/armoury,
+			/area/security/warden,
+			/area/security/main,
+			/area/security/brig,
+			/area/security/range,
+			/area/security/hos,
+			/area/security/prison,
+			/area/security/execution,
+			/area/security/forensic_office,
+			/area/security/detectives_office,
+			/area/server,
+			/area/comms
+			)
 	if(!areas)
 		areas = teleportlocs
 		for(var/i in areas)
@@ -139,6 +164,7 @@
 	if(intruder)
 		to_chat(usr, "<span class='userdanger'>Someone already inside here!</span>")
 		return
+	if(usr.is_busy()) return
 	if(do_after(usr, 10, 1, src) && !intruder && !usr.buckled && usr != second_intruder)
 		usr.forceMove(src)
 		mob_overlay = image(usr.icon, usr.icon_state)
@@ -178,6 +204,7 @@
 	if(flags & IS_LOCKED)
 		to_chat(usr, "<span class='userdanger'>[src] is lock down!</span>")
 		return
+	if(usr.is_busy()) return
 	if(do_after(usr, 10, 1, src) && !second_intruder && !usr.buckled && !(flags & IS_LOCKED) && !(flags & STATE_DROPING) && usr != intruder)
 		usr.forceMove(src)
 		second_intruder = usr
@@ -381,6 +408,7 @@
 
 	else if(istype(O, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = O
+		user.SetNextMove(CLICK_CD_MELEE)
 		if(obj_integrity < max_integrity && WT.remove_fuel(0, user))
 			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			obj_integrity = min(obj_integrity + 10, max_integrity)
@@ -388,6 +416,7 @@
 
 	else if(user.a_intent == "hurt" || (O.flags & ABSTRACT))
 		playsound(src, 'sound/weapons/smash.ogg', 50, 1)
+		user.SetNextMove(CLICK_CD_MELEE)
 		take_damage(O.force)
 		return ..()
 
@@ -443,6 +472,7 @@
 	set src in orange(1)
 	if(!(ishuman(usr) || isrobot(usr)) || usr.stat == DEAD || usr.incapacitated() || usr.lying || flags & STATE_DROPING || !Stored_Nuclear)
 		return
+	if(usr.is_busy()) return
 	visible_message("<span class='notice'>[usr] start ejecting [Stored_Nuclear] from [src]!</span>","<span class='notice'>You start ejecting [Stored_Nuclear] from [src]!</span>")
 	if(do_after(usr, 100, 1, src) && in_range(usr, src) && Stored_Nuclear)
 		EjectNuclear()
@@ -474,7 +504,7 @@
 		qdel(src)
 
 /obj/structure/droppod/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
+	..()
 	playsound(src, 'sound/effects/bang.ogg', 50, 1)
 	take_damage(rand(M.melee_damage_lower, M.melee_damage_upper))
 

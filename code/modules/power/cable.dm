@@ -57,8 +57,8 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/structure/cable/white
 	color = COLOR_WHITE
 
-/obj/structure/cable/New()
-	..()
+/obj/structure/cable/atom_init()
+	. = ..()
 
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
 	var/dash = findtext(icon_state, "-")
@@ -69,7 +69,8 @@ By design, d1 is the smallest direction and d2 is the highest
 
 	var/turf/T = src.loc			// hide if turf is not intact
 
-	if(level==1) hide(T.intact)
+	if(level==1)
+		hide(T.intact)
 	cable_list += src //add it to the global cable list
 	update_icon()
 
@@ -125,6 +126,7 @@ By design, d1 is the smallest direction and d2 is the highest
 		else
 			newcable = new /obj/item/stack/cable_coil(T, 1, color)
 		newcable.fingerprintslast = user.key
+		user.SetNextMove(CLICK_CD_RAPID)
 
 		user.visible_message("<span class='warning'>[user] cuts the cable.</span>")
 
@@ -404,8 +406,8 @@ By design, d1 is the smallest direction and d2 is the highest
 	m_amt = 0
 	g_amt = 0
 
-/obj/item/stack/cable_coil/New(loc, new_amount = null, param_color = null)
-	..()
+/obj/item/stack/cable_coil/atom_init(mapload, new_amount = null, param_color = null)
+	. = ..()
 
 	if(param_color)
 		color = param_color
@@ -422,11 +424,11 @@ By design, d1 is the smallest direction and d2 is the highest
 ///////////////////////////////////
 
 //you can use wires to heal robotics
-/obj/item/stack/cable_coil/attack(mob/M, mob/user)
+/obj/item/stack/cable_coil/attack(mob/M, mob/user, def_zone)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 
-		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")
 			return ..()
 
@@ -645,8 +647,8 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/cable_coil/cut
 	item_state = "coil2"
 
-/obj/item/stack/cable_coil/cut/New(loc)
-	..(loc, rand(1,2))
+/obj/item/stack/cable_coil/cut/atom_init(mapload)
+	. = ..(mapload, rand(1,2))
 
 /obj/item/stack/cable_coil/cut/red
 	color = COLOR_RED
@@ -672,6 +674,6 @@ By design, d1 is the smallest direction and d2 is the highest
 /obj/item/stack/cable_coil/red
 	color = COLOR_RED
 
-/obj/item/stack/cable_coil/random/New()
+/obj/item/stack/cable_coil/random/atom_init()
 	color = pick(COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_PINK, COLOR_YELLOW, COLOR_ORANGE, COLOR_WHITE, COLOR_GRAY)
-	..()
+	. = ..()

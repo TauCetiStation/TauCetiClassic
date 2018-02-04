@@ -11,8 +11,8 @@
 	var/efficiency
 	var/obj/machinery/computer/telescience/computer
 
-/obj/machinery/telepad/New()
-	..()
+/obj/machinery/telepad/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/telesci_pad(null)
 	component_parts += new /obj/item/bluespace_crystal/artificial(null)
@@ -64,7 +64,6 @@
 	var/stage = 0
 /obj/machinery/telepad_cargo/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
-		anchored = 0
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 		if(anchored)
 			anchored = 0
@@ -125,8 +124,8 @@
 	var/emagged = 0
 	var/teleporting = 0
 
-/obj/item/weapon/rcs/New()
-	..()
+/obj/item/weapon/rcs/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/rcs/examine(mob/user)
@@ -163,5 +162,6 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
+		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "<span class='notice'>You emag the RCS. Click on it to toggle between modes.</span>")
 		return

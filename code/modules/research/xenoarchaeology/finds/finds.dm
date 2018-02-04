@@ -32,12 +32,12 @@
 	var/method = 0// 0 = fire, 1 = brush, 2 = pick
 	origin_tech = "materials=5"
 
-/obj/item/weapon/ore/strangerock/New(loc, var/inside_item_type = 0)
-	..(loc)
+/obj/item/weapon/ore/strangerock/atom_init(mapload, inside_item_type = 0)
+	. = ..()
 
 	//method = rand(0,2)
 	if(inside_item_type)
-		new/obj/item/weapon/archaeological_find(src, new_item_type = inside_item_type)
+		new/obj/item/weapon/archaeological_find(src, inside_item_type)
 		inside = locate() in contents
 
 /*/obj/item/weapon/ore/strangerock/ex_act(var/severity)
@@ -47,6 +47,7 @@
 /obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/weldingtool/))
 		var/obj/item/weapon/weldingtool/w = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(w.isOn())
 			if(w.get_fuel() >= 4 && !src.method)
 				if(inside)
@@ -67,6 +68,7 @@
 	else if(istype(W,/obj/item/device/core_sampler/))
 		var/obj/item/device/core_sampler/S = W
 		S.sample_item(src, user)
+		user.SetNextMove(CLICK_CD_INTERACT)
 		return
 
 	..()
@@ -83,7 +85,9 @@
 	icon_state = "ano01"
 	var/find_type = 0
 
-/obj/item/weapon/archaeological_find/New(loc, var/new_item_type)
+/obj/item/weapon/archaeological_find/atom_init(mapload, new_item_type)
+	. = ..()
+
 	if(new_item_type)
 		find_type = new_item_type
 	else
@@ -544,7 +548,7 @@
 			new_item.talking_atom = new()
 			talking_atom.init(new_item)
 
-		qdel(src)
+		return INITIALIZE_HINT_QDEL
 
 	else if(talkative)
 		src.talking_atom = new()

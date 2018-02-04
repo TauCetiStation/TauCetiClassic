@@ -855,7 +855,7 @@ var/global/list/humanoid_icon_cache = list()
 //For creating consistent icons for human looking simple animals
 /proc/get_flat_human_icon(icon_id,datum/job/J,datum/preferences/prefs)
 	if(!icon_id || !humanoid_icon_cache[icon_id])
-		var/mob/living/carbon/human/dummy/body = new(new_species = prefs.species)
+		var/mob/living/carbon/human/dummy/body = new(null, prefs.species)
 
 		if(prefs)
 			prefs.copy_to(body)

@@ -15,7 +15,7 @@
 		return
 
 	if(control_disabled || stat) return
-	next_move = world.time + 9
+	SetNextMove(CLICK_CD_AI)
 
 	if(ismob(A))
 		ai_actual_track(A)
@@ -56,7 +56,7 @@
 
 	if(world.time <= next_move)
 		return
-	next_move = world.time + 9
+	SetNextMove(CLICK_CD_AI)
 
 	if(aiCamera.in_camera_mode)
 		aiCamera.camera_mode_off()
@@ -69,6 +69,9 @@
 		RestrainedClickOn(A)
 	else
 	*/
+	if(holohack && hcattack_ai(A))
+		return
+
 	A.attack_ai(src)
 
 /*
@@ -95,6 +98,9 @@
 /mob/living/silicon/ai/CtrlClickOn(atom/A)
 	A.AICtrlClick(src)
 /mob/living/silicon/ai/AltClickOn(atom/A)
+	if(active_module)
+		if(!active_module.AIAltClickHandle(A))
+			return
 	A.AIAltClick(src)
 
 /*

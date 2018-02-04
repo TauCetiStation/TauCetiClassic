@@ -128,14 +128,13 @@ steam.start() -- spawns the effect
 	anchored = 1.0
 	mouse_opacity = 0
 
-/obj/effect/effect/sparks/New()
-	..()
-	playsound(src.loc, "sparks", 100, 1)
-	var/turf/T = src.loc
+/obj/effect/effect/sparks/atom_init()
+	. = ..()
+	playsound(src, "sparks", 100, 1)
+	var/turf/T = loc
 	if (istype(T, /turf))
 		T.hotspot_expose(1000,100)
 	QDEL_IN(src, 100)
-	return
 
 /obj/effect/effect/sparks/Destroy()
 	var/turf/T = src.loc
@@ -209,10 +208,9 @@ steam.start() -- spawns the effect
 	pixel_x = -32
 	pixel_y = -32
 
-/obj/effect/effect/smoke/New()
-	..()
+/obj/effect/effect/smoke/atom_init()
+	. = ..()
 	QDEL_IN(src, time_to_live)
-	return
 
 /obj/effect/effect/smoke/Crossed(mob/living/carbon/M as mob )
 	..()
@@ -473,27 +471,32 @@ steam.start() -- spawns the effect
 	var/metal = 0
 
 
-/obj/effect/effect/foam/New(loc, var/ismetal=0)
-	..(loc)
+/obj/effect/effect/foam/atom_init(mapload, ismetal = 0)
+	. = ..()
 	icon_state = "[ismetal ? "m":""]foam"
 	metal = ismetal
 	playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
-	spawn(3 + metal*3)
-		process()
-		checkReagents()
-	spawn(120)
-		STOP_PROCESSING(SSobj, src)
-		sleep(30)
+	addtimer(CALLBACK(src, .proc/disolve_stage, 1), 3 + metal * 3)
 
-		if(metal)
-			var/obj/structure/foamedmetal/M = new(src.loc)
-			M.metal = metal
-			M.updateicon()
+/obj/effect/effect/foam/proc/disolve_stage(stage)
+	switch(stage)
+		if(1)
+			process()
+			checkReagents()
+			addtimer(CALLBACK(src, .proc/disolve_stage, 2), 120)
+		if(2)
+			STOP_PROCESSING(SSobj, src)
+			addtimer(CALLBACK(src, .proc/disolve_stage, 3), 30)
 
-		flick("[icon_state]-disolve", src)
-		sleep(5)
-		qdel(src)
-	return
+		if(3)
+			if(metal)
+				var/obj/structure/foamedmetal/M = new(loc)
+				M.metal = metal
+				M.updateicon()
+
+			flick("[icon_state]-disolve", src)
+			sleep(5)
+			qdel(src)
 
 // transfer any reagents to the floor
 /obj/effect/effect/foam/proc/checkReagents()
@@ -615,75 +618,75 @@ steam.start() -- spawns the effect
 	desc = "A lightweight foamed metal wall."
 	var/metal = 1		// 1=aluminum, 2=iron
 
-	New()
-		..()
-		update_nearby_tiles(1)
+/obj/structure/foamedmetal/atom_init()
+	. = ..()
+	update_nearby_tiles(1)
 
 
 
-	Destroy()
-		density = 0
-		update_nearby_tiles(1)
-		return ..()
+/obj/structure/foamedmetal/Destroy()
+	density = 0
+	update_nearby_tiles(1)
+	return ..()
 
-	proc/updateicon()
-		if(metal == 1)
-			icon_state = "metalfoam"
-		else
-			icon_state = "ironfoam"
+/obj/structure/foamedmetal/proc/updateicon()
+	if(metal == 1)
+		icon_state = "metalfoam"
+	else
+		icon_state = "ironfoam"
 
 
-	ex_act(severity)
+/obj/structure/foamedmetal/ex_act(severity)
+	qdel(src)
+
+/obj/structure/foamedmetal/blob_act()
+	qdel(src)
+
+/obj/structure/foamedmetal/bullet_act()
+	if(metal == 1 || prob(50))
 		qdel(src)
 
-	blob_act()
+/obj/structure/foamedmetal/attack_paw(mob/user)
+	attack_hand(user)
+	return
+
+/obj/structure/foamedmetal/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
+	if ((HULK in user.mutations) || (prob(75 - metal*25)))
+		to_chat(user, "\blue You smash through the metal foam wall.")
+		for(var/mob/O in oviewers(user))
+			if ((O.client && !( O.blinded )))
+				to_chat(O, "\red [user] smashes through the foamed metal.")
+
+		qdel(src)
+	else
+		to_chat(user, "\blue You hit the metal foam but bounce off it.")
+
+
+/obj/structure/foamedmetal/attackby(obj/item/I, mob/user)
+
+	if (istype(I, /obj/item/weapon/grab))
+		var/obj/item/weapon/grab/G = I
+		G.affecting.loc = src.loc
+		for(var/mob/O in viewers(src))
+			if (O.client)
+				to_chat(O, "\red [G.assailant] smashes [G.affecting] through the foamed metal wall.")
+		qdel(I)
 		qdel(src)
 
-	bullet_act()
-		if(metal==1 || prob(50))
-			qdel(src)
+	else if(prob(I.force*20 - metal*25))
+		to_chat(user, "\blue You smash through the foamed metal with \the [I].")
+		for(var/mob/O in oviewers(user))
+			if ((O.client && !( O.blinded )))
+				to_chat(O, "\red [user] smashes through the foamed metal.")
+		qdel(src)
+	else
+		to_chat(user, "\blue You hit the metal foam to no effect.")
 
-	attack_paw(mob/user)
-		attack_hand(user)
-		return
-
-	attack_hand(mob/user)
-		if ((HULK in user.mutations) || (prob(75 - metal*25)))
-			to_chat(user, "\blue You smash through the metal foam wall.")
-			for(var/mob/O in oviewers(user))
-				if ((O.client && !( O.blinded )))
-					to_chat(O, "\red [user] smashes through the foamed metal.")
-
-			qdel(src)
-		else
-			to_chat(user, "\blue You hit the metal foam but bounce off it.")
-		return
-
-
-	attackby(obj/item/I, mob/user)
-
-		if (istype(I, /obj/item/weapon/grab))
-			var/obj/item/weapon/grab/G = I
-			G.affecting.loc = src.loc
-			for(var/mob/O in viewers(src))
-				if (O.client)
-					to_chat(O, "\red [G.assailant] smashes [G.affecting] through the foamed metal wall.")
-			qdel(I)
-			qdel(src)
-			return
-
-		if(prob(I.force*20 - metal*25))
-			to_chat(user, "\blue You smash through the foamed metal with \the [I].")
-			for(var/mob/O in oviewers(user))
-				if ((O.client && !( O.blinded )))
-					to_chat(O, "\red [user] smashes through the foamed metal.")
-			qdel(src)
-		else
-			to_chat(user, "\blue You hit the metal foam to no effect.")
-
-	CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-		if(air_group) return 0
-		return !density
+/obj/structure/foamedmetal/CanPass(atom/movable/mover, turf/target, height = 1.5, air_group = 0)
+	if(air_group)
+		return 0
+	return !density
 
 /datum/effect/effect/system/reagents_explosion
 	var/amount 						// TNT equivalent

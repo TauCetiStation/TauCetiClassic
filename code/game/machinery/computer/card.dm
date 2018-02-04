@@ -7,29 +7,30 @@
 	light_color = "#0099ff"
 	req_access = list(access_change_ids)
 	circuit = /obj/item/weapon/circuitboard/card
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/weapon/card/id/scan = null
 	var/obj/item/weapon/card/id/modify = null
 	var/mode = 0.0
 	var/printing = null
 
-	proc/is_centcom()
-		return istype(src, /obj/machinery/computer/card/centcom)
+/obj/machinery/computer/card/proc/is_centcom()
+	return istype(src, /obj/machinery/computer/card/centcom)
 
-	proc/is_authenticated()
-		return scan ? check_access(scan) : 0
+/obj/machinery/computer/card/proc/is_authenticated()
+	return scan ? check_access(scan) : 0
 
-	proc/get_target_rank()
-		return modify && modify.assignment ? modify.assignment : "Unassigned"
+/obj/machinery/computer/card/proc/get_target_rank()
+	return modify && modify.assignment ? modify.assignment : "Unassigned"
 
-	proc/format_jobs(list/jobs)
-		var/list/formatted = list()
-		for(var/job in jobs)
-			formatted.Add(list(list(
-				"display_name" = replacetext(job, " ", "&nbsp"),
-				"target_rank" = get_target_rank(),
+/obj/machinery/computer/card/proc/format_jobs(list/jobs)
+	var/list/formatted = list()
+	for(var/job in jobs)
+		formatted.Add(list(list(
+			"display_name" = replacetext(job, " ", "&nbsp"),
+			"target_rank" = get_target_rank(),
 				"job" = job)))
 
-		return formatted
+	return formatted
 
 /obj/machinery/computer/card/verb/eject_id()
 	set category = "Object"
@@ -70,13 +71,7 @@
 	nanomanager.update_uis(src)
 	attack_hand(user)
 
-/obj/machinery/computer/card/attack_hand(mob/user)
-	if(..())
-		return
-	ui_interact(user)
-
 /obj/machinery/computer/card/ui_interact(mob/user, ui_key="main", datum/nanoui/ui=null)
-	user.set_machine(src)
 	var/data[0]
 	data["src"] = "\ref[src]"
 	data["station_name"] = station_name()

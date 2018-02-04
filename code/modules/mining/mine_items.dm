@@ -17,9 +17,7 @@
 	icon_off = "miningsecoff"
 	req_access = list(access_mining)
 
-/obj/structure/closet/secure_closet/miner/New()
-	..()
-	sleep(2)
+/obj/structure/closet/secure_closet/miner/PopulateContents()
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/industrial(src)
 	else
@@ -34,11 +32,11 @@
 	new /obj/item/weapon/shovel(src)
 //	new /obj/item/weapon/pickaxe(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
-	/*/New year part
+	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/cargo
 	new /obj/item/clothing/head/santa(src)
 	new /obj/item/clothing/shoes/winterboots(src)
-	*/
+	#endif
 
 /**********************Shuttle Computer**************************/
 /*var/mining_shuttle_tickstomove = 10
@@ -118,10 +116,7 @@ proc/move_mining_shuttle()
 	circuit = "/obj/item/weapon/circuitboard/mining_shuttle"
 	var/location = 0 //0 = station, 1 = mining base
 
-/obj/machinery/computer/mining_shuttle/attack_hand(user)
-	if(..(user))
-		return
-	src.add_fingerprint(usr)
+/obj/machinery/computer/mining_shuttle/ui_interact(user)
 	var/dat
 
 	dat = "<center>Mining Shuttle Control<hr>"
@@ -132,8 +127,6 @@ proc/move_mining_shuttle()
 		dat += "Location: [mining_shuttle_location ? "Outpost" : "Station"] <br>"
 
 	dat += "<b><A href='?src=\ref[src];move=[1]'>Send</A></b></center>"
-
-
 	user << browse("[dat]", "window=miningshuttle;size=200x150")
 
 /obj/machinery/computer/mining_shuttle/Topic(href, href_list)
@@ -295,14 +288,13 @@ proc/move_mining_shuttle()
 	var/cell_type = /obj/item/weapon/stock_parts/cell
 	var/mode = 0
 
-/obj/item/weapon/pickaxe/drill/New()
-	..()
+/obj/item/weapon/pickaxe/drill/atom_init()
+	. = ..()
 	if(cell_type)
 		power_supply = new cell_type(src)
 	else
 		power_supply = new(src)
 	power_supply.give(power_supply.maxcharge)
-	return
 
 /obj/item/weapon/pickaxe/drill/update_icon()
 	if(!state)
@@ -425,6 +417,7 @@ proc/move_mining_shuttle()
 	if (!istype(target, /turf/simulated/mineral))
 		to_chat(user, "<span class='notice'>You can't plant [src] on [target.name].</span>")
 		return
+	if(user.is_busy()) return
 	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 
 	if(do_after(user, 50, target = target) && in_range(user, target))
@@ -499,7 +492,7 @@ proc/move_mining_shuttle()
 	var/range = 3
 	var/power = 4
 
-obj/item/projectile/kinetic/New()
+obj/item/projectile/kinetic/atom_init()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
 		return
@@ -508,7 +501,7 @@ obj/item/projectile/kinetic/New()
 	if(pressure < 50)
 		name = "full strength kinetic force"
 		damage *= 4
-	..()
+	. = ..()
 
 /obj/item/projectile/kinetic/Range()
 	range--
@@ -530,9 +523,12 @@ obj/item/projectile/kinetic/New()
 	icon_state = "kinetic_blast"
 	layer = 4.1
 
-/obj/item/effect/kinetic_blast/New()
-	spawn(4)
-		qdel(src)
+/obj/item/effect/kinetic_blast/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/effect/kinetic_blast/atom_init_late()
+	QDEL_IN(src, 4)
 
 
 /*****************************Survival Pod********************************/
@@ -577,7 +573,7 @@ obj/item/projectile/kinetic/New()
 	get_template()
 	if(!used)
 		var/turf/T = get_turf(src)
-		if((T.z != ZLEVEL_ASTEROID) && !istype(T.loc, /area/space)) //we don't need complete all checks
+		if((T.z != ZLEVEL_ASTEROID) && (T.z != ZLEVEL_JUNKYARD) && !istype(T.loc, /area/space)  && !istype(T.loc, /area/shuttle)) //we don't need complete all checks
 			src.loc.visible_message("<span class='warning'>You must use shelter at asteroid or in space! Grab this shit \
 			and shut up!</span>")
 			used = TRUE
@@ -653,8 +649,8 @@ obj/item/projectile/kinetic/New()
 	icon_state = "surv_wall0"
 	var/basestate = "surv_wall"
 
-/obj/structure/inflatable/survival/New()
-	..()
+/obj/structure/inflatable/survival/atom_init()
+	. = ..()
 	update_nearby_icons()
 
 /obj/structure/inflatable/survival/Destroy()
@@ -717,6 +713,7 @@ obj/item/projectile/kinetic/New()
 
 /obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+		if(user.is_busy()) return
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
 						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
@@ -753,17 +750,25 @@ obj/item/projectile/kinetic/New()
 	name = "dusty survival pod storage"
 	desc = "A heated storage unit. This one's seen better days."
 
-/obj/machinery/smartfridge/survival_pod/empty/New()
-	return()
+/obj/machinery/smartfridge/survival_pod/empty/atom_init_late()
+	stat = 0
+	ispowered = 1
+	return
 
 /obj/machinery/smartfridge/survival_pod/accept_check(obj/item/O)
 	if(istype(O, /obj/item))
 		return 1
 	return 0
 
-/obj/machinery/smartfridge/survival_pod/New()
+/obj/machinery/smartfridge/survival_pod/atom_init()
 	..()
 	set_light(luminosity)
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/smartfridge/survival_pod/atom_init_late()
+	stat = 0
+	ispowered = 1
+
 	for(var/i in 1 to 5)
 		var/obj/item/weapon/reagent_containers/food/snacks/donkpocket/W = new /obj/item/weapon/reagent_containers/food/snacks/donkpocket(src)
 		W.warm = 1
@@ -784,13 +789,11 @@ obj/item/projectile/kinetic/New()
 	forbidden_tools += typecacheof(/obj/item/weapon/screwdriver)
 	forbidden_tools += typecacheof(/obj/item/weapon/wrench)
 	forbidden_tools += typecacheof(/obj/item/weapon/wirecutters)
-	spawn(20)
-		stat = 0
-		ispowered = 1
 
 /obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
 	if(is_type_in_typecache(O,forbidden_tools))
 		if(istype(O,/obj/item/weapon/wrench))
+			if(user.is_busy()) return
 			to_chat(user, "\blue You start to disassemble the storage unit...")
 			if(do_after(user,20,target = src))
 				if(!src)
@@ -826,6 +829,7 @@ obj/item/projectile/kinetic/New()
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+		if(user.is_busy()) return
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
@@ -842,11 +846,11 @@ obj/item/projectile/kinetic/New()
 	density = 0
 	icon_state = "fan_tiny"
 
-/obj/structure/fans/tiny/New()
+/obj/structure/fans/tiny/atom_init()
 	var/turf/T = get_turf(loc)
 	if(T)
 		T.blocks_air = 1
-	..()
+	. = ..()
 
 /obj/structure/fans/tiny/Destroy()
 	var/turf/T = get_turf(loc)
@@ -855,9 +859,6 @@ obj/item/projectile/kinetic/New()
 		if(SSair)
 			SSair.mark_for_update(get_turf(loc))
 	return ..()
-
-/obj/structure/fans/New(loc)
-	..()
 
 /obj/structure/fans/Destroy()
 	return ..()
@@ -878,6 +879,7 @@ obj/item/projectile/kinetic/New()
 /obj/structure/sign/mining/attack_hand(mob/user)
 	if(..(user))
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	user.visible_message("[user] removes the sign.", "You remove the sign.")
 	qdel(src)
 

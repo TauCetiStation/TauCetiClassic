@@ -26,10 +26,10 @@
 	origin_tech = "materials=1"
 	attack_verb = list("attacked", "stabbed", "poked")
 
-/obj/item/weapon/kitchen/utensil/New()
+/obj/item/weapon/kitchen/utensil/atom_init()
+	. = ..()
 	if (prob(60))
-		src.pixel_y = rand(0, 4)
-	return
+		pixel_y = rand(0, 4)
 
 /*
  * Spoons
@@ -55,11 +55,11 @@
 	force = 3
 	icon_state = "fork"
 
-/obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M))
 		return ..()
 
-	if(user.zone_sel.selecting != O_EYES && user.zone_sel.selecting != BP_HEAD)
+	if(def_zone != O_EYES && def_zone != BP_HEAD)
 		return ..()
 
 	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
@@ -83,13 +83,11 @@
 	if(!proximity) return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
-	if(istype(target,/obj/effect/decal/cleanable))
+	if(istype(target,/obj/effect/decal/cleanable) && !user.is_busy(target))
 		user.visible_message("<span class='warning'>[user] begins to clean \the [target.name].</span>","<span class='notice'>You begin to clean \the [target.name].</span>")
 		if(do_after(user, 60, target = target))
 			user.visible_message("<span class='warning'>[user] scrub \the [target.name] out.</span>","<span class='notice'>You scrub \the [target.name] out.</span>")
 			qdel(target)
-		else
-			return
 
 /obj/item/weapon/kitchen/utensil/pfork
 	name = "plastic fork"
@@ -97,11 +95,11 @@
 	icon_state = "pfork"
 	force = 0
 
-/obj/item/weapon/kitchen/utensil/pfork/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/weapon/kitchen/utensil/pfork/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M))
 		return ..()
 
-	if(user.zone_sel.selecting != O_EYES && user.zone_sel.selecting != BP_HEAD)
+	if(def_zone != O_EYES && def_zone != BP_HEAD)
 		return ..()
 
 	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
@@ -300,7 +298,7 @@
 					   // w_class = 2 -- takes up 3
 					   // w_class = 3 -- takes up 5
 
-/obj/item/weapon/tray/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/weapon/tray/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 
 	// Drop all the things. All of them.
 	overlays.Cut()
@@ -329,7 +327,7 @@
 	var/mob/living/carbon/human/H = M      ///////////////////////////////////// /Let's have this ready for later.
 
 
-	if(!(user.zone_sel.selecting == (O_EYES || BP_HEAD))) //////////////hitting anything else other than the eyes
+	if(!(def_zone == O_EYES || def_zone == BP_HEAD)) //////////////hitting anything else other than the eyes
 		if(prob(33))
 			src.add_blood(H)
 			var/turf/location = H.loc

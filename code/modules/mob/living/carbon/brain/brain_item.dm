@@ -13,29 +13,28 @@
 
 	var/mob/living/carbon/brain/brainmob = null
 
-	New()
-		..()
-		//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
-		//WASSSSSUUUPPPP /N
-		spawn(5)
-			if(brainmob && brainmob.client)
-				brainmob.client.screen.len = null //clear the hud
+/obj/item/brain/atom_init()
+	. = ..()
+	//Shifting the brain "mob" over to the brain object so it's easier to keep track of. --NEO
+	//WASSSSSUUUPPPP /N
+	spawn(5)
+		if(brainmob && brainmob.client)
+			brainmob.client.screen.len = null //clear the hud
 
-	proc
-		transfer_identity(mob/living/carbon/H)
-			name = "[H]'s brain"
-			brainmob = new(src)
-			brainmob.name = H.real_name
-			brainmob.real_name = H.real_name
-			brainmob.dna = H.dna.Clone()
-			brainmob.timeofhostdeath = H.timeofdeath
-			if(H.mind)
-				H.mind.transfer_to(brainmob)
+/obj/item/brain/proc/transfer_identity(mob/living/carbon/H)
+	name = "[H]'s brain"
+	brainmob = new(src)
+	brainmob.name = H.real_name
+	brainmob.real_name = H.real_name
+	brainmob.dna = H.dna.Clone()
+	brainmob.timeofhostdeath = H.timeofdeath
+	if(H.mind)
+		H.mind.transfer_to(brainmob)
 
-			to_chat(brainmob, "\blue You feel slightly disoriented. That's normal when you're just a brain.")
-			var/datum/game_mode/mutiny/mode = get_mutiny_mode()
-			if(mode)
-				mode.debrain_directive(src)
+	to_chat(brainmob, "\blue You feel slightly disoriented. That's normal when you're just a brain.")
+	var/datum/game_mode/mutiny/mode = get_mutiny_mode()
+	if(mode)
+		mode.debrain_directive(src)
 
 /obj/item/brain/examine(mob/user) // -- TLE
 	..()
@@ -44,20 +43,20 @@
 	else
 		to_chat(user, "This one seems particularly lifeless. Perhaps it will regain some of its luster later..")
 
-/obj/item/brain/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!istype(M, /mob))
-		return
+/obj/item/brain/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+	if(!ishuman(M))
+		return ..()
 
 	add_fingerprint(user)
 
-	if(!(user.zone_sel.selecting == BP_HEAD) || !istype(M, /mob/living/carbon/human))
+	if(!(def_zone == BP_HEAD))
 		return ..()
 
 	if(	!(locate(/obj/machinery/optable, M.loc) && M.resting) && ( !(locate(/obj/structure/table/, M.loc) && M.lying) && prob(50) ) )
 		return ..()
 
 	var/mob/living/carbon/human/H = M
-	if(istype(M, /mob/living/carbon/human) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
+	if(ishuman(M) && ((H.head && H.head.flags & HEADCOVERSEYES) || (H.wear_mask && H.wear_mask.flags & MASKCOVERSEYES) || (H.glasses && H.glasses.flags & GLASSESCOVERSEYES)))
 		// you can't stab someone in the eyes wearing a mask!
 		to_chat(user, "\blue You're going to need to remove their head cover first.")
 		return

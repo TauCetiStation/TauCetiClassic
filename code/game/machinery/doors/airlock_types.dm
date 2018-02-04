@@ -327,8 +327,8 @@
 /obj/machinery/door/airlock/multi_tile
 	var/width = 2
 
-/obj/machinery/door/airlock/multi_tile/New()
-	..()
+/obj/machinery/door/airlock/multi_tile/atom_init()
+	. = ..()
 	if(dir in list(EAST, WEST))
 		bound_width  = world.icon_size
 		bound_height = width * world.icon_size

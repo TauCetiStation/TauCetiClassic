@@ -13,6 +13,7 @@
 /obj/item/cardboard_cutout/attack_hand(mob/living/user)
 	if(user.a_intent == "help" || pushed_over)
 		return ..()
+	user.SetNextMove(CLICK_CD_MELEE)
 	user.visible_message("<span class='warning'>[user] pushes over [src]!</span>", "<span class='danger'>You push over [src]!</span>")
 	playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 	push_over()

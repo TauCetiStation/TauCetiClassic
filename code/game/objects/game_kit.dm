@@ -5,7 +5,7 @@
 	desc = "Allows you play chess, checkers, or whichever game involving those pieces."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "game_kit"
-	var/selected = null	
+	var/selected = null
 	var/board_stat = null		//Core string
 	var/data = ""
 	force = 8
@@ -14,7 +14,8 @@
 	item_state = "sheet-metal"
 	w_class = 5.0
 
-/obj/item/weapon/game_kit/New()
+/obj/item/weapon/game_kit/atom_init()
+	. = ..()
 	//Parts of this terrible string is being changed into codename of pieces, and then - transformed into pictures
 	board_stat = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 	selected = "CR"
@@ -25,7 +26,7 @@
 
 /obj/item/weapon/game_kit/proc/update()
 	var/dat = text("<CENTER><B>Game Board</B></CENTER><BR><a href='?src=\ref[];mode=hia'>[]</a> <a href='?src=\ref[];mode=remove'>remove</a> <a href='?src=\ref[];reverse=\ref[src]'>invert board</a> <HR><table width= 256  border= 0  height= 256  cellspacing= 0  cellpadding= 0 >", src, (selected ? text("Selected: []", selected) : "Nothing Selected"), src, src)
-	//Making the board
+	//board interface update
 	for (var/y = 1 to 8)
 		dat += "<tr>"
 
@@ -40,10 +41,10 @@
 				dat += "<a href='?src=\ref[src];s_board=[x] [y]'><img src=none.png width=32 height=32 border=0>"
 			dat += "</td>"
 		dat += "</tr>"
-		
+
 	//Pieces for people to click and place on the board
 	dat += "</table><HR><B>Chips:</B><BR>"
-	for (var/piece in list("CB", "CR"))	
+	for (var/piece in list("CB", "CR"))
 		dat += "<a href='?src=\ref[src];s_piece=[piece]'><img src=[piece].png width=32 height=32 border=0></a>"
 
 	dat += "<HR><B>Chess pieces:</B><BR>"

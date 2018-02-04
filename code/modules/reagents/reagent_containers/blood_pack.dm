@@ -7,8 +7,8 @@
 
 	var/blood_type = null
 
-/obj/item/weapon/reagent_containers/blood/New()
-	..()
+/obj/item/weapon/reagent_containers/blood/atom_init()
+	. = ..()
 	if(blood_type != null)
 		reagents.add_reagent("blood", 200, list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=blood_type,"resistances"=null,"trace_chem"=null))
 		update_icon()

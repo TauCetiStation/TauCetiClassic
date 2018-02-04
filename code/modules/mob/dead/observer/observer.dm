@@ -120,6 +120,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 /mob/dead/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/book/tome))
+		user.SetNextMove(CLICK_CD_MELEE)
 		var/mob/dead/M = src
 		if(src.invisibility != 0)
 			M.invisibility = 0
@@ -557,7 +558,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	src << browse(dat, "window=manifest;size=370x420;can_close=1")
 
 //Used for drawing on walls with blood puddles as a spooky ghost.
-/mob/dead/verb/bloody_doodle()
+/mob/dead/observer/verb/bloody_doodle()
 
 	set category = "Ghost"
 	set name = "Write in blood"

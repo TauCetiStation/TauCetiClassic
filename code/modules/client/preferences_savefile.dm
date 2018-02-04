@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 15
+#define SAVEFILE_VERSION_MAX 16
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -45,6 +45,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["warns"]    << null
 		S["warnbans"] << null
 
+	if(current_version < 16)
+		S["aooccolor"] << S["ooccolor"]
+		aooccolor = ooccolor
+
 //datum/preferences/proc/update_character(current_version, savefile/S)
 	/* JUST AN EXAMPLE
 	if(current_version < 10)
@@ -76,6 +80,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//General preferences
 	S["ooccolor"]			>> ooccolor
+	S["aooccolor"]			>> aooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
 	S["default_slot"]		>> default_slot
@@ -98,6 +103,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Sanitize
 	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
+	aooccolor		= sanitize_hexcolor(aooccolor, initial(aooccolor))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, list("White", "Midnight","Orange","old"), initial(UI_style))
 	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
@@ -128,6 +134,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//general preferences
 	S["ooccolor"]			<< ooccolor
+	S["aooccolor"]			<< aooccolor
 	S["lastchangelog"]		<< lastchangelog
 	S["UI_style"]			<< UI_style
 	S["be_role"]			<< be_role

@@ -296,7 +296,8 @@
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
 				else if (W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
-
+		if(crit_fail && prob(25))
+			remove_from_storage(W, get_turf(src))
 		src.orient2hud(usr)
 		for(var/mob/M in can_see_contents())
 			show_to(M)
@@ -345,20 +346,20 @@
 
 	if(isrobot(user))
 		to_chat(user, "\blue You're a robot. No.")
-		return //Robots can't interact with storage items.
+		return //Robots can't interact with storage items. FALSE
 
 	if(!can_be_inserted(W))
-		return
+		return FALSE
 
 	if(istype(W, /obj/item/weapon/implanter/compressed))
-		return
+		return FALSE
 
 	if(istype(W, /obj/item/weapon/tray))
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			if(prob(85))
 				to_chat(user, "\red The tray won't fit in [src].")
-				return
+				return FALSE
 			else
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
@@ -367,11 +368,11 @@
 				to_chat(user, "\red God damnit!")
 
 	if(istype(W, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
-		return
+		return FALSE
 
 	W.add_fingerprint(user)
 	handle_item_insertion(W)
-	return
+	return TRUE
 
 /obj/item/weapon/storage/dropped(mob/user)
 	return
@@ -425,8 +426,8 @@
 	for(var/obj/item/I in contents)
 		remove_from_storage(I, T)
 
-/obj/item/weapon/storage/New()
-	..()
+/obj/item/weapon/storage/atom_init()
+	. = ..()
 	if(allow_quick_empty)
 		verbs += /obj/item/weapon/storage/verb/quick_empty
 	else

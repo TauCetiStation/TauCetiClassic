@@ -27,7 +27,7 @@
 	var/door_open_sound  = 'sound/machines/airlock/airlockToggle_2.ogg'
 	var/door_close_sound = 'sound/machines/airlock/airlockToggle_2.ogg'
 
-/obj/machinery/door/New()
+/obj/machinery/door/atom_init()
 	. = ..()
 	if(density)
 		layer = base_layer + DOOR_CLOSED_MOD //Above most items if closed
@@ -38,7 +38,6 @@
 		explosion_resistance = 0
 
 	update_nearby_tiles(need_rebuild=1)
-	return
 
 
 /obj/machinery/door/Destroy()
@@ -112,17 +111,8 @@
 	src.open()
 	return
 
-
-/obj/machinery/door/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-
-/obj/machinery/door/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-
 /obj/machinery/door/attack_hand(mob/user)
-	return src.attackby(user, user)
+	return attackby(user, user)
 
 /obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
@@ -154,6 +144,7 @@
 		user = null
 	if(!src.requiresID())
 		user = null
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(src.allowed(user))
 		if(src.density)
 			open()

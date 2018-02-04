@@ -10,6 +10,7 @@ var/datum/subsystem/lighting/SSlighting
 
 	flags = SS_POST_FIRE_TIMING
 
+	var/initialized = FALSE
 	var/list/changed_lights = list()		//list of all datum/light_source that need updating
 	var/changed_lights_workload = 0			//stats on the largest number of lights (max changed_lights.len)
 	var/list/changed_overlays = list()		//list of all turfs which may have a different light level
@@ -25,44 +26,48 @@ var/datum/subsystem/lighting/SSlighting
 
 //Does not loop. Should be run prior to process() being called for the first time.
 /datum/subsystem/lighting/Initialize(timeofday)
-	var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
+	if(!initialized)
+		var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
 
-	for(var/thing in turfs_to_init)
-		var/turf/T = thing
-		if(!T.dynamic_lighting)
-			continue
-		else
-			var/area/A = T.loc
-			if(!A.dynamic_lighting)
+		for(var/thing in turfs_to_init)
+			var/turf/T = thing
+			if(!T.dynamic_lighting)
 				continue
-		T.init_lighting_overlays()
-		T.init_lighting_corners()
-		CHECK_TICK
+			else
+				var/area/A = T.loc
+				if(!A.dynamic_lighting)
+					continue
+			T.init_lighting_overlays()
+			T.init_lighting_corners()
+			CHECK_TICK
 
-	var/list/changed_lights = src.changed_lights
-	while (changed_lights.len)
-		var/datum/light_source/LS = changed_lights[changed_lights.len]
-		changed_lights.len--
-		if(LS.check() || LS.destroyed || LS.force_update)
-			LS.remove_lum()
-			if(!LS.destroyed)
-				LS.apply_lum()
+		var/list/changed_lights = src.changed_lights
+		while (changed_lights.len)
+			var/datum/light_source/LS = changed_lights[changed_lights.len]
+			changed_lights.len--
+			if(LS.check() || LS.destroyed || LS.force_update)
+				LS.remove_lum()
+				if(!LS.destroyed)
+					LS.apply_lum()
 
-		else if(LS.vis_update)	// We smartly update only tiles that became (in) visible to use.
-			LS.smart_vis_update()
+			else if(LS.vis_update)	// We smartly update only tiles that became (in) visible to use.
+				LS.smart_vis_update()
 
-		LS.vis_update   = FALSE
-		LS.force_update = FALSE
-		LS.needs_update = FALSE
-		CHECK_TICK
+			LS.vis_update   = FALSE
+			LS.force_update = FALSE
+			LS.needs_update = FALSE
+			CHECK_TICK
 
-	var/list/changed_overlays = src.changed_overlays
-	while (changed_overlays.len)
-		var/atom/movable/lighting_overlay/LO = changed_overlays[changed_overlays.len]
-		changed_overlays.len--
-		LO.update_overlay()
-		LO.needs_update = FALSE
-		CHECK_TICK
+		var/list/changed_overlays = src.changed_overlays
+		while (changed_overlays.len)
+			var/atom/movable/lighting_overlay/LO = changed_overlays[changed_overlays.len]
+			changed_overlays.len--
+			LO.update_overlay()
+			LO.needs_update = FALSE
+			CHECK_TICK
+
+		initialized = TRUE
+
 	..()
 
 //Workhorse of lighting. It cycles through each light that needs updating. It updates their
@@ -121,6 +126,8 @@ var/datum/subsystem/lighting/SSlighting
 //does not crash
 //Not sure if i done this right. ~Zve
 /datum/subsystem/lighting/Recover()
+	initialized = SSlighting.initialized
+
 	if(!istype(SSlighting.changed_overlays))
 		SSlighting.changed_overlays = list()
 	if(!istype(SSlighting.changed_lights))

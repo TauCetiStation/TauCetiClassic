@@ -1411,6 +1411,15 @@ datum/design/circuit_imprinter
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/circuit_imprinter
 
+datum/design/emitter
+	name = "Circuit Board Emitter"
+	desc = "The circuit board for a emitter."
+	id = "emitter"
+	req_tech = list("programming" = 5, "engineering" = 5, "powerstorage" = 5)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/emitter
+
 datum/design/autolathe
 	name = "Autolathe Board"
 	desc = "The circuit board for an autolathe."
@@ -1714,15 +1723,34 @@ datum/design/noreactbeaker
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = list("Misc")
 
-datum/design/defibrillators
+datum/design/defibrillators_back
 	name = "Defibrillators"
 	desc = "Defibrillators to revive people."
-	id = "defibrillators"
-	req_tech = list("combat" = 2,"biotech" = 2)
+	id = "defibrillators_back"
+	req_tech = list("biotech" = 3, "powerstorage" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
 	reliability = 76
 	build_path = /obj/item/weapon/defibrillator
+
+datum/design/defibrillators_belt
+	name = "Compact defibrillators"
+	desc = "Defibrillators to revive people."
+	id = "defibrillators_compact"
+	req_tech = list("biotech" = 3, "powerstorage" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
+	reliability = 76
+	build_path = /obj/item/weapon/defibrillator/compact
+
+datum/design/defibrillators_standalone
+	name = "Standalone defibrillators"
+	desc = "Defibrillators to revive people."
+	id = "defibrillators_standalone"
+	req_tech = list("biotech" = 4, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000)
+	build_path = /obj/item/weapon/twohanded/shockpaddles/standalone
 
 /datum/design/sensor_device
 	name = "Handheld Crew Monitor"
@@ -1769,6 +1797,15 @@ datum/design/scalpel_manager
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500, MAT_SILVER = 1500, MAT_GOLD = 1500, MAT_DIAMOND = 750)
 	build_path = /obj/item/weapon/scalpel/manager
+
+/datum/design/biocan
+	name = "Biogel can"
+	desc = "Medical device for sustaining life in head"
+	id = "biocan"
+	req_tech = list("biotech" = 3, "materials" = 3, "magnets" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1200, MAT_GLASS = 1000)
+	build_path = /obj/item/device/biocan
 
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
@@ -2090,6 +2127,15 @@ datum/design/security_hud
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
 
+datum/design/secmed_hud
+	name = "Mixed HUD"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and health status."
+	id = "secmed_hud"
+	req_tech = list("magnets" = 4, "combat" = 3, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	build_path = /obj/item/clothing/glasses/sunglasses/hud/secmed
+
 datum/design/mining_hud
 	name = "Geological Optical Scanner"
 	desc = "A heads-up display that scans the rocks in view and provides some data about their composition."
@@ -2127,9 +2173,10 @@ datum/design/mining_hud
 	g_amt = 10
 	var/datum/design/blueprint
 
-/obj/item/weapon/disk/design_disk/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+/obj/item/weapon/disk/design_disk/atom_init()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 
 /////////////////////////////////////////
@@ -2363,10 +2410,12 @@ datum/design/body_warp
 	construction_time=100
 	category = list("Support")
 
-datum/design/spraycan
+/datum/design/spraycan
 	name = "Spraycan"
 	id = "spraycan"
-	build_type = AUTOLATHE
+	desc = "A metallic container containing tasty paint."
+	req_tech = list("materials" = 1)
+	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	build_path = /obj/item/toy/crayon/spraycan
 

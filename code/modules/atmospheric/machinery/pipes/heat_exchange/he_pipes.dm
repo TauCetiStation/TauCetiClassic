@@ -19,8 +19,8 @@
 	can_buckle = 1
 	buckle_lying = 1
 
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/New()
-	..()
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging/atom_init()
+	. = ..()
 	color = "#404040" //we don't make use of the fancy overlay system for colours, use this to set the default.
 
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/atmos_init()

@@ -100,7 +100,7 @@
 /obj/item/clothing/suit/wintercoat/hydro
 	name = "hydroponics winter coat"
 	icon_state = "coathydro"
-	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/analyzer/plant_analyzer,/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/minihoe,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants)
+	allowed = list(/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/plant_analyzer,/obj/item/seeds,/obj/item/weapon/reagent_containers/glass/bottle,/obj/item/weapon/minihoe,/obj/item/weapon/hatchet,/obj/item/weapon/storage/bag/plants)
 
 /obj/item/clothing/suit/wintercoat/cargo
 	name = "cargo winter coat"

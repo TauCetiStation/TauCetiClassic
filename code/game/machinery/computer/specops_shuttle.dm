@@ -194,39 +194,24 @@ var/specops_shuttle_timeleft = 0
 			return 0
 	return 1
 
-/obj/machinery/computer/specops_shuttle/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/specops_shuttle/attack_paw(mob/user)
-	return attack_hand(user)
-
 /obj/machinery/computer/specops_shuttle/attackby(I, user)
 	if(istype(I,/obj/item/weapon/card/emag))
 		to_chat(user, "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals.")
 	else
 		return attack_hand(user)
 
-/obj/machinery/computer/specops_shuttle/attack_hand(mob/user)
-	if(!allowed(user))
-		to_chat(user, "\red Access Denied.")
-		return
-
-	if(..())
-		return
-
-	user.machine = src
+/obj/machinery/computer/specops_shuttle/ui_interact(mob/user)
 	var/dat
 	if (temp)
 		dat = temp
 	else
 		dat += {"<BR><B>Special Operations Shuttle</B><HR>
-		\nLocation: [specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "Departing for [station_name] in ([specops_shuttle_timeleft] seconds.)":specops_shuttle_at_station ? "Station":"Dock"]<BR>
-		[specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "\n*The Special Ops. shuttle is already leaving.*<BR>\n<BR>":specops_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Shuttle standing by...</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Depart to [station_name]</A><BR>\n<BR>"]
-		\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
+			\nLocation: [specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "Departing for [station_name] in ([specops_shuttle_timeleft] seconds.)":specops_shuttle_at_station ? "Station":"Dock"]<BR>
+			[specops_shuttle_moving_to_station || specops_shuttle_moving_to_centcom ? "\n*The Special Ops. shuttle is already leaving.*<BR>\n<BR>":specops_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Shuttle standing by...</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Depart to [station_name]</A><BR>\n<BR>"]
+			\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 
 	user << browse(dat, "window=computer;size=575x450")
 	onclose(user, "computer")
-	return
 
 /obj/machinery/computer/specops_shuttle/Topic(href, href_list)
 	. = ..()

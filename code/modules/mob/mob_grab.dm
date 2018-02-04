@@ -20,15 +20,14 @@
 	w_class = 5.0
 
 
-/obj/item/weapon/grab/New(mob/user, mob/victim)
-	..()
-	loc = user
-	assailant = user
+/obj/item/weapon/grab/atom_init(mapload, mob/victim)
+	. = ..()
+	assailant = loc
 	affecting = victim
 
 	if(affecting.anchored)
-		qdel(src)
-		return
+		return INITIALIZE_HINT_QDEL
+	last_action = world.time - 10
 
 	hud = new /obj/screen/grab(src)
 	hud.icon_state = "reinforce"

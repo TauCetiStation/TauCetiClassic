@@ -22,7 +22,7 @@
 "av" = (/obj/structure/transit_tube{icon_state = "D-NE"},/turf/simulated/wall/r_wall,/area/research_outpost/maintstore1)
 "aw" = (/obj/structure/transit_tube{icon_state = "NW-SE"},/turf/simulated/wall/r_wall,/area/research_outpost/maintstore1)
 "ax" = (/obj/structure/transit_tube{icon_state = "D-SE"},/turf/simulated/mineral,/area/mine/unexplored)
-"ay" = (/obj/structure/table,/obj/item/device/analyzer/plant_analyzer,/obj/item/weapon/stock_parts/cell,/obj/item/stack/cable_coil/random,/obj/item/stack/cable_coil/random,/turf/simulated/floor/plating,/area/research_outpost/maintstore1)
+"ay" = (/obj/structure/table,/obj/item/device/plant_analyzer,/obj/item/weapon/stock_parts/cell,/obj/item/stack/cable_coil/random,/obj/item/stack/cable_coil/random,/turf/simulated/floor/plating,/area/research_outpost/maintstore1)
 "az" = (/obj/structure/transit_tube,/turf/simulated/floor/plating/airless/asteroid,/area/mine/unexplored)
 "aA" = (/obj/structure/transit_tube,/obj/effect/glowshroom,/turf/simulated/floor/plating/airless/asteroid,/area/mine/unexplored)
 "aB" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/obj/machinery/door/firedoor,/obj/structure/transit_tube,/turf/simulated/floor/plating,/area/research_outpost/hallway)
@@ -936,7 +936,7 @@
 "rZ" = (/obj/item/clothing/shoes/western,/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)
 "sa" = (/obj/item/weapon/bedsheet/orange,/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)
 "sb" = (/obj/machinery/light_construct/small{dir = 1},/obj/structure/stool/bed/chair/wood/normal,/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)
-"sc" = (/obj/item/clothing/tie/holster/waist,/obj/item/clothing/head/western,/obj/structure/table/woodentable,/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)
+"sc" = (/obj/item/clothing/accessory/holster/waist,/obj/item/clothing/head/western,/obj/structure/table/woodentable,/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)
 "sd" = (/obj/structure/stool/bed,/obj/effect/decal/remains/human,/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)
 "se" = (/obj/item/weapon/table_parts/wood,/obj/item/weapon/broken_bottle,/mob/living/simple_animal/hostile/asteroid/goliath,/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)
 "sf" = (/turf/simulated/floor/airless{icon_state = "wood"},/area/mine/explored)
@@ -1045,7 +1045,7 @@
 "ue" = (/obj/item/weapon/storage/toolbox/mechanical{pixel_x = -2; pixel_y = -1},/obj/structure/table,/obj/machinery/cell_charger,/turf/simulated/floor,/area/mine/eva)
 "uf" = (/obj/structure/grille,/obj/structure/window/reinforced,/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced{dir = 1},/turf/simulated/floor/plating,/area/mine/explored)
 "ug" = (/obj/structure/lattice,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/turf/space,/area/mine/explored)
-"uh" = (/obj/structure/lattice,/obj/structure/lattice,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/turf/space,/area/mine/explored)
+"uh" = (/obj/structure/lattice,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced{dir = 1},/turf/space,/area/mine/explored)
 "ui" = (/obj/structure/dispenser/oxygen,/turf/simulated/floor,/area/mine/eva)
 "uj" = (/obj/structure/cable{d1 = 2; d2 = 8; icon_state = "2-8"},/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 6},/turf/simulated/floor{icon_state = "dark"},/area/mine/maintenance)
 "uk" = (/obj/structure/closet/emcloset,/obj/machinery/atmospherics/components/unary/vent_pump/high_volume{frequency = 1379; id_tag = "mining_east_pump"; name = "Mining East Large Air Vent"},/turf/simulated/floor{dir = 4; icon_state = "warning"},/area/mine/eva)
@@ -1226,6 +1226,8 @@
 "xD" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply{dir = 9},/turf/simulated/floor,/area/mine/production)
 "xE" = (/obj/machinery/atmospherics/pipe/simple/hidden/supply,/turf/simulated/floor,/area/mine/eva)
 "xF" = (/obj/machinery/atmospherics/components/unary/vent_pump/on{dir = 4},/turf/simulated/floor{dir = 10; icon_state = "warning"},/area/mine/production)
+"xG" = (/obj/structure/lattice,/obj/structure/disposalpipe/segment{dir = 4},/turf/space,/area/space)
+"xH" = (/obj/machinery/vending/eva/mining,/turf/simulated/floor,/area/mine/production)
 "xK" = (/obj/machinery/access_button{command = "cycle_exterior"; frequency = 1379; master_tag = "mining_east_airlock"; name = "exterior access button"; pixel_x = -25; pixel_y = -25; req_access_txt = null},/turf/simulated/floor/airless{icon_state = "asteroidwarning"; dir = 4},/area/mine/explored)
 "xM" = (/obj/structure/sign/securearea{desc = "A warning sign which reads 'HIGH VOLTAGE'"; icon_state = "shock"; name = "HIGH VOLTAGE"},/turf/simulated/wall,/area/mine/west_outpost)
 "xO" = (/obj/machinery/conveyor{backwards = 2; dir = 2; forwards = 1; id = "mining_west"},/obj/structure/plasticflaps/mining,/turf/simulated/floor,/area/mine/west_outpost)
@@ -1342,8 +1344,6 @@
 "Bu" = (/obj/machinery/camera{c_tag = "Shuttle Dock"; dir = 1; network = list("MINE")},/turf/simulated/floor,/area/mine/production)
 "Bv" = (/obj/structure/window/reinforced{dir = 4},/obj/structure/window/reinforced,/obj/structure/window/reinforced{dir = 1},/obj/structure/grille,/obj/machinery/door/firedoor,/turf/simulated/floor/plating,/area/mine/production)
 "Bx" = (/obj/machinery/computer/mine_sci_shuttle,/turf/simulated/floor,/area/mine/production)
-"By" = (/obj/structure/lattice,/obj/structure/disposalpipe/segment{dir = 4},/obj/structure/lattice,/turf/space,/area/space)
-"Bz" = (/obj/machinery/mineral/equipment_locker,/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/floor,/area/mine/production)
 "BA" = (/obj/structure/disposalpipe/segment{dir = 4},/turf/simulated/wall,/area/mine/production)
 "BB" = (/obj/machinery/light,/obj/structure/disposalpipe/segment{dir = 8; icon_state = "pipe-c"},/turf/simulated/floor,/area/mine/production)
 
@@ -1540,7 +1540,7 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacacacadacadadacacacacadadadadadadadadadadadadadadacacacacacackOkOkOlAlAlAkOkOkOkOkOacacacacacadadadadadadadadadadadadadadadadadadacacacacackOlAlAlAlArFrHrHrHrHrHrHrHrHrHrHrHrHrHrHrHrHrHrGlAlAlAlAlAaaaaaaaaaaaraaaaaakckckckckckcxFxDAewNwNwNANAowNwNAkAOwslAlAlAlAkOacacacacpxpxpxpxpxpxpxpxacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamYacacadadadadadadadadadadaIadadadadadadadadadadadadadacacacacacackOkOkOkOkOacacacacacacacadadadadadadadadadadadadadadadadadadadadacacacacackOkOkOlAlAlAlAlAlAlAlAlAlAlAlAlAlAlAlAlAlAlAlArplAlAlAlAlAaaaaaaaaaaaraaaaaaaaaaaaaraakckcBxAewNwNwNBtBsBvAVATAhwslAlAlAlAkOacacacacpxpxpxpxpxpxpxpxmYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamYacacadadadadadadadadadadadadadadadadadadadadadadadadadacacacacacacacacacacacacacacacadadadadadadadaIadadadadadadadadadaIadadadadacacacacacackOkOkOlAlAlAlAlAlAlAlAlAlAlAlAlAlAlAlAlAlArplAlAlAlAlAlAlAqhqhaaaraaaaaaaaaaaaaraaaawsAPAewNwNwNAWAXAYzpBaztwslAlAkOkOkOacacpxpxpxpxpxpxpxpxpxacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamYacadadadadadadadadadadadadadadadadadadadadadadadadadacacacacacacacacacadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadacacacacackOkOkOlAlAlAlAlAlAlAkOkOlAlAlAlAlAlAlArFrHrHrHrHrHrHzKzJzJBeBeBeBeBeBeBeBeByBeBeBABzBBwNwNwswswswswswswswslAlAkOacacacpxpxpxpxpxpxpxpxpxacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamYacadadadadadadadadadadadadadadadadadadadadadadadadadacacacacacacacacacadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadacacacacackOkOkOlAlAlAlAlAlAlAkOkOlAlAlAlAlAlAlArFrHrHrHrHrHrHzKzJzJBeBeBeBeBeBeBeBexGBeBeBAxHBBwNwNwswswswswswswswslAlAkOacacacpxpxpxpxpxpxpxpxpxacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaacadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadacackOkOkOkOkOkOkOkOkOkOkOkOkOkOkOlAlAlAlAlAlAlAlAlAlAqhqharararararararararararBhBhkckcwswslAlAlAlAlAlAlAlAlAkOacacacpxpxpxpxpxpxpxpxacmYaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamYacadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadaIadadadadadadadadadadadadadadadadadadadadadadadadadadadadacacacacacacacacacacacacacackOkOkOlAlAlAlAlAlAlArtlAlAlAaaaaaaaaaaaaaaaaaaaaBhBhlAlAlAlAlAlAlAlAlAlAlAlAkOkOacacpxpxpxpxpxpxacacacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaamYacadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadaIadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadadackOkOkOkOkOkOkOkOkOjSkOkOlAaaaaaaaaaaaaaaaaaaaaaaaalAlAlAlAlAlAlAlAlAlAnGjSkOacacpxpxpxpxpxpxpxacacaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa

@@ -2,75 +2,71 @@
 	name = "Pipe Dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = 0 // i see no point in that, better implement battery feature.
+	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/unwrenched = 0
 	var/wait = 0
 
-/obj/machinery/pipedispenser/attack_paw(user)
-	return src.attack_hand(user)
-
-/obj/machinery/pipedispenser/attack_hand(user)
-	if(..())
-		return
+/obj/machinery/pipedispenser/ui_interact(user)
 	var/dat = {"
-<b>Regular pipes:</b><BR>
-<A href='?src=\ref[src];make=0;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=1;dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=5;dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=8;dir=1'>Manual Valve</A><BR>
-<A href='?src=\ref[src];make=9;dir=1'>Digital Valve</A><BR>
-<A href='?src=\ref[src];make=44;dir=1'>Automatic Shutoff Valve</A><BR>
-<A href='?src=\ref[src];make=20;dir=1'>Pipe Cap</A><BR>
-<A href='?src=\ref[src];make=19;dir=1'>4-Way Manifold</A><BR>
-<A href='?src=\ref[src];make=18;dir=1'>Manual T-Valve</A><BR>
-<A href='?src=\ref[src];make=43;dir=1'>Manual T-Valve - Mirrored</A><BR>
-<b>Supply pipes:</b><BR>
-<A href='?src=\ref[src];make=29;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=30;dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=33;dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=41;dir=1'>Pipe Cap</A><BR>
-<A href='?src=\ref[src];make=35;dir=1'>4-Way Manifold</A><BR>
-<b>Scrubbers pipes:</b><BR>
-<A href='?src=\ref[src];make=31;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=32;dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=34;dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=42;dir=1'>Pipe Cap</A><BR>
-<A href='?src=\ref[src];make=36;dir=1'>4-Way Manifold</A><BR>
-<b>Fuel pipes:</b><BR>
-<A href='?src=\ref[src];make=45;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=46;dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=47;dir=1'>Manifold</A><BR>
-<A href='?src=\ref[src];make=51;dir=1'>Pipe Cap</A><BR>
-<A href='?src=\ref[src];make=48;dir=1'>4-Way Manifold</A><BR>
-<b>Devices:</b><BR>
-<A href='?src=\ref[src];make=28;dir=1'>Universal pipe adapter</A><BR>
-<A href='?src=\ref[src];make=4;dir=1'>Connector</A><BR>
-<A href='?src=\ref[src];make=7;dir=1'>Unary Vent</A><BR>
-<A href='?src=\ref[src];make=10;dir=1'>Gas Pump</A><BR>
-<A href='?src=\ref[src];make=15;dir=1'>Pressure Regulator</A><BR>
-<A href='?src=\ref[src];make=16;dir=1'>High Power Gas Pump</A><BR>
-<A href='?src=\ref[src];make=11;dir=1'>Scrubber</A><BR>
-<A href='?src=\ref[src];makemeter=1'>Meter</A><BR>
-<A href='?src=\ref[src];make=13;dir=1'>Gas Filter</A><BR>
-<A href='?src=\ref[src];make=23;dir=1'>Gas Filter - Mirrored</A><BR>
-<A href='?src=\ref[src];make=14;dir=1'>Gas Mixer</A><BR>
-<A href='?src=\ref[src];make=25;dir=1'>Gas Mixer - Mirrored</A><BR>
-<A href='?src=\ref[src];make=24;dir=1'>Gas Mixer - T</A><BR>
-<A href='?src=\ref[src];make=26;dir=1'>Omni Gas Mixer</A><BR>
-<A href='?src=\ref[src];make=27;dir=1'>Omni Gas Filter</A><BR>
-<b>Heat exchange:</b><BR>
-<A href='?src=\ref[src];make=2;dir=1'>Pipe</A><BR>
-<A href='?src=\ref[src];make=3;dir=5'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];make=6;dir=1'>Junction</A><BR>
-<A href='?src=\ref[src];make=17;dir=1'>Heat Exchanger</A><BR>
+		<b>Regular pipes:</b><BR>
+		<A href='?src=\ref[src];make=0;dir=1'>Pipe</A><BR>
+		<A href='?src=\ref[src];make=1;dir=5'>Bent Pipe</A><BR>
+		<A href='?src=\ref[src];make=5;dir=1'>Manifold</A><BR>
+		<A href='?src=\ref[src];make=8;dir=1'>Manual Valve</A><BR>
+		<A href='?src=\ref[src];make=9;dir=1'>Digital Valve</A><BR>
+		<A href='?src=\ref[src];make=44;dir=1'>Automatic Shutoff Valve</A><BR>
+		<A href='?src=\ref[src];make=20;dir=1'>Pipe Cap</A><BR>
+		<A href='?src=\ref[src];make=19;dir=1'>4-Way Manifold</A><BR>
+		<A href='?src=\ref[src];make=18;dir=1'>Manual T-Valve</A><BR>
+		<A href='?src=\ref[src];make=43;dir=1'>Manual T-Valve - Mirrored</A><BR>
+		<b>Supply pipes:</b><BR>
+		<A href='?src=\ref[src];make=29;dir=1'>Pipe</A><BR>
+		<A href='?src=\ref[src];make=30;dir=5'>Bent Pipe</A><BR>
+		<A href='?src=\ref[src];make=33;dir=1'>Manifold</A><BR>
+		<A href='?src=\ref[src];make=41;dir=1'>Pipe Cap</A><BR>
+		<A href='?src=\ref[src];make=35;dir=1'>4-Way Manifold</A><BR>
+		<b>Scrubbers pipes:</b><BR>
+		<A href='?src=\ref[src];make=31;dir=1'>Pipe</A><BR>
+		<A href='?src=\ref[src];make=32;dir=5'>Bent Pipe</A><BR>
+		<A href='?src=\ref[src];make=34;dir=1'>Manifold</A><BR>
+		<A href='?src=\ref[src];make=42;dir=1'>Pipe Cap</A><BR>
+		<A href='?src=\ref[src];make=36;dir=1'>4-Way Manifold</A><BR>
+		<b>Fuel pipes:</b><BR>
+		<A href='?src=\ref[src];make=45;dir=1'>Pipe</A><BR>
+		<A href='?src=\ref[src];make=46;dir=5'>Bent Pipe</A><BR>
+		<A href='?src=\ref[src];make=47;dir=1'>Manifold</A><BR>
+		<A href='?src=\ref[src];make=51;dir=1'>Pipe Cap</A><BR>
+		<A href='?src=\ref[src];make=48;dir=1'>4-Way Manifold</A><BR>
+		<b>Devices:</b><BR>
+		<A href='?src=\ref[src];make=28;dir=1'>Universal pipe adapter</A><BR>
+		<A href='?src=\ref[src];make=4;dir=1'>Connector</A><BR>
+		<A href='?src=\ref[src];make=7;dir=1'>Unary Vent</A><BR>
+		<A href='?src=\ref[src];make=10;dir=1'>Gas Pump</A><BR>
+		<A href='?src=\ref[src];make=15;dir=1'>Pressure Regulator</A><BR>
+		<A href='?src=\ref[src];make=16;dir=1'>High Power Gas Pump</A><BR>
+		<A href='?src=\ref[src];make=11;dir=1'>Scrubber</A><BR>
+		<A href='?src=\ref[src];makemeter=1'>Meter</A><BR>
+		<A href='?src=\ref[src];make=13;dir=1'>Gas Filter</A><BR>
+		<A href='?src=\ref[src];make=23;dir=1'>Gas Filter - Mirrored</A><BR>
+		<A href='?src=\ref[src];make=14;dir=1'>Gas Mixer</A><BR>
+		<A href='?src=\ref[src];make=25;dir=1'>Gas Mixer - Mirrored</A><BR>
+		<A href='?src=\ref[src];make=24;dir=1'>Gas Mixer - T</A><BR>
+		<A href='?src=\ref[src];make=26;dir=1'>Omni Gas Mixer</A><BR>
+		<A href='?src=\ref[src];make=27;dir=1'>Omni Gas Filter</A><BR>
+		<b>Heat exchange:</b><BR>
+		<A href='?src=\ref[src];make=2;dir=1'>Pipe</A><BR>
+		<A href='?src=\ref[src];make=3;dir=5'>Bent Pipe</A><BR>
+		<A href='?src=\ref[src];make=6;dir=1'>Junction</A><BR>
+		<A href='?src=\ref[src];make=17;dir=1'>Heat Exchanger</A><BR>
 
-"}
+		"}
 //What number the make points to is in the define # at the top of construction.dm in same folder
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	onclose(user, "pipedispenser")
-	return
 
 /obj/machinery/pipedispenser/is_operational_topic()
 	return TRUE
@@ -88,7 +84,7 @@
 		if(!wait)
 			var/p_type = text2num(href_list["make"])
 			var/p_dir = text2num(href_list["dir"])
-			var/obj/item/pipe/P = new (src.loc, pipe_type = p_type, dir = p_dir)
+			var/obj/item/pipe/P = new (loc, p_type, p_dir)
 			P.update()
 			P.add_fingerprint(usr)
 			wait = 1
@@ -108,7 +104,7 @@
 		user.drop_item()
 		qdel(W)
 		return
-	else if (istype(W, /obj/item/weapon/wrench))
+	else if (istype(W, /obj/item/weapon/wrench) && !user.is_busy(src))
 		if (unwrenched == 0)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			to_chat(user, "<span class='notice'>You begin to unfasten \the [src] from the floor...</span>")
@@ -141,8 +137,9 @@
 	name = "Disposal Pipe Dispenser"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pipe_d"
-	density = 1
-	anchored = 1.0
+	density = TRUE
+	anchored = TRUE
+	use_power = 0
 
 /*
 //Allow you to push disposal pipes into it (for those with density 1)
@@ -166,23 +163,19 @@ Nah
 
 	qdel(pipe)
 
-/obj/machinery/pipedispenser/disposal/attack_hand(user)
-	if(..())
-		return
-
+/obj/machinery/pipedispenser/disposal/ui_interact(user)
 	var/dat = {"<b>Disposal Pipes</b><br><br>
-<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
-<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
-<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
-<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
-<A href='?src=\ref[src];dmake=5'>Bin</A><BR>
-<A href='?src=\ref[src];dmake=6'>Outlet</A><BR>
-<A href='?src=\ref[src];dmake=7'>Chute</A><BR>
-"}
+		<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
+		<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
+		<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
+		<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
+		<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
+		<A href='?src=\ref[src];dmake=5'>Bin</A><BR>
+		<A href='?src=\ref[src];dmake=6'>Outlet</A><BR>
+		<A href='?src=\ref[src];dmake=7'>Chute</A><BR>
+		"}
 
 	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
-	return
 
 // 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk
 

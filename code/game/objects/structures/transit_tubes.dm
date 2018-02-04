@@ -51,8 +51,8 @@
 	move_out_content()
 	return ..()
 
-/obj/structure/transit_tube_pod/New()
-	..()
+/obj/structure/transit_tube_pod/atom_init()
+	. = ..()
 
 	air_contents.adjust_multi("oxygen", MOLES_O2STANDARD * 2, "nitrogen", MOLES_N2STANDARD)
 	air_contents.temperature = T20C
@@ -74,6 +74,8 @@
 		AM.forceMove(loc)
 
 /obj/structure/transit_tube_pod/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(user.is_busy()) return
 	if(contents.len)
 		to_chat(user, "<span class='notice'>You started to get everything out of the [src].</span>")
 
@@ -85,8 +87,8 @@
 			visible_message("<span class='notice'>[user] took out everything from the [src].</span>")
 			move_out_content()
 
-/obj/structure/transit_tube/New()
-	..()
+/obj/structure/transit_tube/atom_init()
+	. = ..()
 	if(tube_dirs == null)
 		init_dirs()
 
@@ -110,6 +112,7 @@
 				return
 
 /obj/structure/transit_tube/station/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(!pod_moving)
 		for(var/obj/structure/transit_tube_pod/pod in loc)
 			if(!pod.moving && pod.dir in directions())

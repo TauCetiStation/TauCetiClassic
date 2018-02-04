@@ -1,16 +1,30 @@
-/obj/item/proc/make_old()
+/obj/proc/make_old()
 	color = pick("#996633", "#663300", "#666666")
+	light_color = color
 	name = pick("old ", "expired ", "dirty ") + initial(name)
 	desc += pick(" Warranty has expired.", " The inscriptions on this thing were erased by time.", " Looks completely wasted.")
 	if(prob(75))
 		origin_tech = null
 	reliability = rand(100)
-	if(prob(50))
-		crit_fail = 1
+	germ_level = pick(80,110,160)
+	if(prob(40))
+		if(prob(70))
+			light_power = light_power / pick(1.5, 2, 2.5)
+		if(prob(70))
+			light_range = light_range / pick(1.5, 2, 2.5)
+		if(prob(15))
+			light_range = 0
+			light_power = 0
 	for(var/obj/item/sub_item in contents)
 		sub_item.make_old()
-	siemens_coefficient += 0.3
+	if(prob(50))
+		crit_fail = 1
 	update_icon()
+
+/obj/item/make_old()
+	..()
+	siemens_coefficient += 0.3
+
 
 /obj/item/weapon/storage/make_old()
 	var/del_count = rand(0,contents.len)
@@ -18,6 +32,10 @@
 		var/removed_item = pick(contents)
 		contents -= removed_item
 		qdel(removed_item)
+	if(prob(75))
+		storage_slots = max(contents.len, max(0, storage_slots - pick(2, 2, 2, 3, 3, 4)))
+	if(prob(75))
+		max_combined_w_class = max_combined_w_class / 2
 	..()
 
 /obj/item/weapon/reagent_containers/make_old()
@@ -121,10 +139,10 @@
 	name = "\improper broken core AI module"
 	desc = "broken Core AI Module: 'Reconfigures the AI's core laws.'"
 
-/obj/machinery/broken/New()
+/obj/machinery/broken/atom_init()
 	..()
-	explosion(src.loc, 1, 2, 3, 3)
-	qdel(src)
+	explosion(loc, 1, 2, 3, 3)
+	return INITIALIZE_HINT_QDEL
 
 /obj/machinery/broken/Destroy()
 	contents.Cut()
@@ -165,7 +183,73 @@
 	if(prob(75))
 		darkness_view = -1
 
+/obj/item/clothing/glasses/make_old()
+	..()
+	if(prob(75))
+		vision_flags = 0
+	if(prob(75))
+		darkness_view = -1
+
+/obj/item/device/flashlight/flare/make_old()
+	..()
+	if(prob(75))
+		fuel = rand(100,fuel)
+
+/obj/item/device/flashlight/make_old()
+	..()
+	if(prob(75))
+		brightness_on = brightness_on / 2
+
+/obj/machinery/floodlight/make_old()
+	..()
+	if(prob(75))
+		brightness_on = brightness_on / 2
+
+/obj/machinery/make_old()
+	..()
+	if(prob(60))
+		stat |= BROKEN
+	if(prob(60))
+		emagged = 1
+
+/obj/machinery/vending/make_old()
+	..()
+	if(prob(60))
+		seconds_electrified = -1
+	if(prob(60))
+		shut_up = 0
+	if(prob(60))
+		shoot_inventory = 1
+	if(prob(75))
+		var/del_count = rand(0,product_records.len)
+		for(var/i = 1 to del_count)
+			var/removed_item = pick(contents)
+			contents -= removed_item
+
+/obj/structure/closet/critter/make_old()
+	..()
+	if(prob(50))
+		content_mob = /mob/living/simple_animal/hostile/giant_spider
+
+/obj/machinery/vending/make_old()
+	..()
+	if(prob(60))
+		seconds_electrified = -1
+	if(prob(60))
+		shut_up = 0
+	if(prob(60))
+		shoot_inventory = 1
+	if(prob(75))
+		var/del_count = rand(0,product_records.len)
+		for(var/i = 1 to del_count)
+			var/removed_item = pick(product_records)
+			product_records -= removed_item
+
+
 /obj/item/clothing/glasses/sunglasses/sechud/make_old()
 	..()
 	if(hud && prob(75))
 		hud = new /obj/item/clothing/glasses/hud/broken
+
+/obj/effect/decal/mecha_wreckage/make_old()
+	salvage_num = 8

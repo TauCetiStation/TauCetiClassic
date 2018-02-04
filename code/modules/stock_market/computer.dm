@@ -5,8 +5,8 @@
 	var/logged_in = "Cargo Department"
 	var/vmode = 1
 
-/obj/machinery/computer/stockexchange/New()
-	..()
+/obj/machinery/computer/stockexchange/atom_init()
+	. = ..()
 	logged_in = "[world.name] Cargo Department"
 
 /obj/machinery/computer/stockexchange/proc/balance()
@@ -14,43 +14,37 @@
 		return 0
 	return SSshuttle.points
 
-/obj/machinery/computer/cargo/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/stockexchange/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/computer/stockexchange/ui_interact(mob/user)
 	var/css={"<style>
-.change {
-	font-weight: bold;
-	font-family: monospace;
-}
-.up {
-	background: #00a000;
-}
-.down {
-	background: #a00000;
-}
-.stable {
-	width: 100%
-	border-collapse: collapse;
-	border: 1px solid #305260;
-	border-spacing: 4px 4px;
-}
-.stable td, .stable th {
-	border: 1px solid #305260;
-	padding: 0px 3px;
-}
-.bankrupt {
-	border: 1px solid #a00000;
-	background: #a00000;
-}
+		.change {
+			font-weight: bold;
+			font-family: monospace;
+		}
+		.up {
+			background: #00a000;
+		}
+		.down {
+			background: #a00000;
+		}
+		.stable {
+			width: 100%
+			border-collapse: collapse;
+			border: 1px solid #305260;
+			border-spacing: 4px 4px;
+		}
+		.stable td, .stable th {
+			border: 1px solid #305260;
+			padding: 0px 3px;
+		}
+		.bankrupt {
+			border: 1px solid #a00000;
+			background: #a00000;
+		}
 
-a.updated {
-	color: red;
-}
-</style>"}
+		a.updated {
+			color: red;
+		}
+		</style>"}
 	var/dat = "<html><head><title>[station_name()] Stock Exchange</title>[css]</head><body>"
 
 	dat += "<span>Welcome, <b>[logged_in]</b></span><br>"
@@ -158,11 +152,11 @@ a.updated {
 
 	dat += "<A href='?src=\ref[user];mach_close=stock_comp'>Close</A> <A href='?src=\ref[src];refresh=1'>Refresh</A>"
 	dat += "</body></html>"
+
 	var/datum/browser/popup = new(user, "stock_comp", "Stock Exchange", 600, 700)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/stockexchange/proc/sell_some_shares(datum/stock/S, mob/user)
 	if(!user || !S)

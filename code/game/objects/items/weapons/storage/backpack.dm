@@ -25,7 +25,7 @@
 /obj/item/weapon/storage/backpack/attackby(obj/item/weapon/W, mob/user)
 	if (src.use_sound)
 		playsound(src.loc, src.use_sound, 50, 1, -5)
-	..()
+	return ..()
 
 /obj/item/weapon/storage/backpack/equipped(mob/user, slot)
 	if (slot == slot_back && src.use_sound)
@@ -51,9 +51,6 @@
 	max_w_class = 4
 	max_combined_w_class = 84
 	storage_slots = 21
-/obj/item/weapon/storage/backpack/holding/New()
-	..()
-	return
 
 /obj/item/weapon/storage/backpack/holding/attackby(obj/item/weapon/W, mob/user)
 	if(crit_fail)
@@ -138,9 +135,11 @@
 	item_state = "satchel"
 
 /obj/item/weapon/storage/backpack/satchel/withwallet
-	New()
-		..()
-		new /obj/item/weapon/storage/wallet/random( src )
+
+
+/obj/item/weapon/storage/backpack/satchel/withwallet/atom_init()
+	. = ..()
+	new /obj/item/weapon/storage/wallet/random(src)
 
 /obj/item/weapon/storage/backpack/satchel/norm
 	name = "satchel"
@@ -294,8 +293,8 @@
 		anchored = 0
 		icon_state = initial(icon_state)
 
-/obj/item/weapon/storage/backpack/satchel/flat/New()
-	..()
+/obj/item/weapon/storage/backpack/satchel/flat/atom_init()
+	. = ..()
 	new /obj/item/stack/tile/plasteel(src)
 	new /obj/item/weapon/crowbar(src)
 
@@ -316,11 +315,10 @@
 	item_state = "marinad_duffle"
 	origin_tech = ""
 
-/obj/item/weapon/storage/backpack/dufflebag/c4/New()
-	..()
+/obj/item/weapon/storage/backpack/dufflebag/c4/atom_init()
+	. = ..()
 	for(var/i = 1 to 5)
 		new /obj/item/weapon/plastique(src)
-	return
 
 /obj/item/weapon/storage/backpack/dufflebag/med
 	name = "medical dufflebag"
@@ -336,8 +334,8 @@
 	max_combined_w_class = 40
 	storage_slots = 12
 
-/obj/item/weapon/storage/backpack/dufflebag/surgery/New()
-	..()
+/obj/item/weapon/storage/backpack/dufflebag/surgery/atom_init()
+	. = ..()
 	new /obj/item/weapon/scalpel(src)
 	new /obj/item/weapon/hemostat(src)
 	new /obj/item/weapon/retractor(src)
@@ -350,4 +348,3 @@
 	new /obj/item/clothing/suit/straight_jacket(src)
 	new /obj/item/clothing/mask/muzzle(src)
 	new /obj/item/device/mmi(src)
-	return

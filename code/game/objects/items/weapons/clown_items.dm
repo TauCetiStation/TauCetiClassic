@@ -33,8 +33,8 @@
 		target.clean_blood()
 	return
 
-/obj/item/weapon/soap/attack(mob/target, mob/user)
-	if(target && user && ishuman(target) && ishuman(user) && !target.stat && !user.stat && user.zone_sel && user.zone_sel.selecting == O_MOUTH)
+/obj/item/weapon/soap/attack(mob/target, mob/user, def_zone)
+	if(target && user && ishuman(target) && ishuman(user) && !target.stat && !user.stat && user.zone_sel && def_zone == O_MOUTH)
 		user.visible_message("<span class='red'>\the [user] washes \the [target]'s mouth out with soap!</span>")
 		return
 	..()

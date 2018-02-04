@@ -30,6 +30,8 @@
 	//Detective Work, used for the duplicate data points kept in the scanners
 	var/list/original_atom
 
+	var/in_use_action = FALSE // do_after sets this to TRUE and is_busy() can check for that to disallow multiple users to interact with this at the same time.
+
 /atom/New(loc, ...)
 	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
 		_preloader.load(src)
@@ -58,9 +60,8 @@
 // /turf/atom_init
 // /turf/space/atom_init
 // /mob/dead/atom_init
-// /mob/new_player/atom_init
 
-//Do also note that this proc always runs in New for /mob/dead && /mob/new_player
+//Do also note that this proc always runs in New for /mob/dead
 /atom/proc/atom_init(mapload, ...)
 	if(initialized)
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
@@ -144,6 +145,16 @@
 		return flags & INSERT_CONTAINER
 */
 
+/atom/proc/can_mob_interact(mob/user)
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.getBrainLoss() >= 60)
+			user.visible_message("<span class='warning'>[H] stares cluelessly at [isturf(loc) ? src : ismob(loc) ? src : "something"] and drools.</span>")
+			return FALSE
+		else if(prob(H.getBrainLoss()))
+			to_chat(user, "<span class='warning'>You momentarily forget how to use [src].</span>")
+			return FALSE
+	return TRUE
 
 /atom/proc/meteorhit(obj/meteor)
 	return
@@ -235,7 +246,7 @@
 		else
 			to_chat(user, "Nothing.")
 
-	return distance == -1 || (get_dist(src, user) <= distance)
+	return distance == -1 || isobserver(user) || (get_dist(src, user) <= distance)
 
 //called to set the atom's dir and used to add behaviour to dir-changes
 /atom/proc/set_dir(new_dir)

@@ -20,27 +20,24 @@
 	use_power = 1
 	idle_power_usage = 200
 	active_power_usage = 1000
-	ghost_must_be_admin = TRUE
 	var/on = 1
 	var/list/localareas = list()
 	var/effectiverange = 25
 
 	// Borrows code from cloning computer
-/obj/machinery/computer/gravity_control_computer/New()
+/obj/machinery/computer/gravity_control_computer/atom_init()
 	..()
-	spawn(5)
-		updatemodules()
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/gravity_generator/New()
+/obj/machinery/computer/gravity_control_computer/atom_init_late()
+	updatemodules()
+
+/obj/machinery/gravity_generator/atom_init()
 	..()
-	spawn(5)
-		locatelocalareas()
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
 
-
+/obj/machinery/gravity_generator/atom_init_late()
+	locatelocalareas()
 
 /obj/machinery/computer/gravity_control_computer/proc/updatemodules()
 	src.gravity_generator = findgenerator()
@@ -64,17 +61,7 @@
 			break
 	return foundgenerator
 
-
-/obj/machinery/computer/gravity_control_computer/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/gravity_control_computer/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/gravity_control_computer/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/computer/gravity_control_computer/ui_interact(mob/user)
 	updatemodules()
 
 	var/dat = "<h3>Generator Control System</h3>"

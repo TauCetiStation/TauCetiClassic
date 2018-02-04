@@ -20,7 +20,7 @@
 	var/log_fax = 0						// log fax messages
 	var/log_hrefs = 0					// logs all links clicked in-game. Could be used for debugging and tracking down exploits
 	var/log_runtime = 0					// logs world.log to a file
-	var/sql_enabled = 1					// for sql switching
+	var/sql_enabled = 0					// for sql switching
 	var/allow_admin_ooccolor = 0		// Allows admins with relevant permissions to have their own ooc colour
 	var/allow_vote_restart = 0 			// allow votes to restart
 	var/ert_admin_call_only = 0
@@ -81,6 +81,7 @@
 	var/usealienwhitelist = 0
 	var/limitalienplayers = 0
 	var/alien_to_human_ratio = 0.5
+	var/list/whitelisted_species_by_time = list()
 
 	var/server
 	var/banappeals
@@ -150,6 +151,10 @@
 	var/use_slack_bot = 0
 	var/slack_team = 0
 	var/antigrief_alarm_level = 1
+	var/check_randomizer = 0
+
+	var/allow_donators = 0
+	var/donate_info_url = 0
 
 	// The object used for the clickable stat() button.
 	var/obj/effect/statclick/statclick
@@ -224,7 +229,7 @@
 					config.log_access = 1
 
 				if ("sql_enabled")
-					config.sql_enabled = text2num(value)
+					config.sql_enabled = 1
 
 				if ("log_say")
 					config.log_say = 1
@@ -443,6 +448,21 @@
 				if("usealienwhitelist")
 					usealienwhitelist = 1
 
+				if("alien_available_by_time") //totally not copypaste from probabilities
+					var/avail_time_sep = findtext(value, " ")
+					var/avail_alien_name = null
+					var/avail_alien_ingame_time = null
+
+					if (avail_time_sep)
+						avail_alien_name = lowertext(copytext(value, 1, avail_time_sep))
+						avail_alien_ingame_time = text2num(copytext(value, avail_time_sep + 1))
+						if (avail_alien_name in whitelisted_roles)
+							config.whitelisted_species_by_time[avail_alien_name] = avail_alien_ingame_time
+						else
+							log_misc("Incorrect species whitelist for experienced players configuration definition, species missing in whitelisted_spedcies: [avail_alien_name].")
+					else
+						log_misc("Incorrect species whitelist for experienced players configuration definition: [value].")
+
 				if("alien_player_ratio")
 					limitalienplayers = 1
 					alien_to_human_ratio = text2num(value)
@@ -521,6 +541,15 @@
 
 				if("antigrief_alarm_level")
 					config.antigrief_alarm_level = value
+
+				if("check_randomizer")
+					config.check_randomizer = value
+
+				if("allow_donators")
+					config.allow_donators = 1
+
+				if("donate_info_url")
+					config.donate_info_url = value
 
 				else
 					log_misc("Unknown setting in configuration: '[name]'")
@@ -613,8 +642,6 @@
 				sqlfdbklogin = value
 			if ("feedback_password")
 				sqlfdbkpass = value
-			if ("enable_stat_tracking")
-				sqllogging = 1
 			else
 				log_misc("Unknown setting in configuration: '[name]'")
 

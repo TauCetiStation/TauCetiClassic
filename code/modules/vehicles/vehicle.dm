@@ -37,9 +37,6 @@
 //-------------------------------------------
 // Standard procs
 //-------------------------------------------
-/obj/vehicle/New()
-	..()
-
 /obj/vehicle/Move()
 	if(can_move())
 		var/old_loc = get_turf(src)
@@ -83,6 +80,7 @@
 		to_chat(user, "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>")
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/T = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(T.welding)
 			if(health < maxhealth)
 				if(open)
@@ -300,6 +298,7 @@
 /obj/vehicle/attack_hand(mob/user, damage, attack_message)
 	if(!damage)
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	visible_message("<span class='danger'>[user] [attack_message] the [src]!</span>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	src.health -= damage

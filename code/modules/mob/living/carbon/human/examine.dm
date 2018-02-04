@@ -55,11 +55,12 @@
 	//uniform
 	if(w_uniform && !skipjumpsuit)
 		//Ties
-		var/tie_msg
+		var/list/ties = list()
 		if(istype(w_uniform,/obj/item/clothing/under))
 			var/obj/item/clothing/under/U = w_uniform
-			if(U.hastie)
-				tie_msg += " with [bicon(U.hastie)] \a [U.hastie]"
+			for(var/accessory in U.accessories)
+				ties += "[bicon(accessory)] \a [accessory]"
+		var/tie_msg = ties.len ? ". Attached to it is [english_list(ties)]" : ""
 
 		if(w_uniform.blood_DNA)
 			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(w_uniform)] [w_uniform.gender==PLURAL?"some":"a"] [(w_uniform.blood_color != "#030303") ? "blood" : "oil"]-stained [w_uniform.name][tie_msg]!</span>\n"
@@ -432,6 +433,8 @@
 			msg += "<span class = 'deptradio'>Security records:</span> <a href='?src=\ref[src];secrecord=`'>\[View\]</a>  <a href='?src=\ref[src];secrecordadd=`'>\[Add comment\]</a>\n"
 
 	if(hasHUD(user,"medical"))
+		if(hasHUD(user,"security"))
+			msg += "---------\n"
 		var/perpname = "wot"
 		var/medical = "None"
 
@@ -482,9 +485,9 @@
 		var/mob/living/carbon/human/H = M
 		switch(hudtype)
 			if("security")
-				return istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud)
+				return istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/hud/secmed)
 			if("medical")
-				return istype(H.glasses, /obj/item/clothing/glasses/hud/health)
+				return istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(H.glasses, /obj/item/clothing/glasses/sunglasses/hud/secmed)
 			else
 				return 0
 	else if(istype(M, /mob/living/silicon/robot))

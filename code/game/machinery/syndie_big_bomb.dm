@@ -21,7 +21,7 @@
 	density = FALSE
 	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
 	unacidable = TRUE
-	ghost_must_be_admin = TRUE
+	use_power = 0
 
 	var/datum/wires/syndicatebomb/wires = null
 	var/timer = 60
@@ -45,9 +45,9 @@
 		STOP_PROCESSING(SSobj, src)
 		return
 
-/obj/machinery/syndicatebomb/New()
+/obj/machinery/syndicatebomb/atom_init()
 	wires = new(src)
-	..()
+	. = ..()
 
 /obj/machinery/syndicatebomb/examine(mob/user)
 	..()
@@ -80,10 +80,10 @@
 			icon_state = "syndicate-bomb-active[open_panel ? "-wires" : ""]"
 		to_chat(user, "<span class='notice'>You [open_panel ? "open" : "close"] the wire panel.</span>")
 
-	else if(istype(I, /obj/item/weapon/wirecutters) || istype(I, /obj/item/device/multitool) || istype(I, /obj/item/device/assembly/signaler ))
+	else if(is_wire_tool(I) && open_panel)
 		if(degutted)
 			to_chat(user, "<span class='notice'>The wires aren't connected to anything!<span>")
-		else if(open_panel)
+		else
 			wires.interact(user)
 
 	else if(istype(I, /obj/item/weapon/crowbar))
@@ -109,15 +109,18 @@
 		..()
 
 /obj/machinery/syndicatebomb/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(degutted)
 		to_chat(user, "<span class='notice'>The bomb's explosives have been removed, the [open_panel ? "wires" : "buttons"] are useless now.</span>")
-	else if(anchored)
-		if(open_panel)
-			wires.interact(user)
-		else if(!active)
+		return 1
+	if(anchored)
+		if(!active)
 			settings(user)
 		else
 			to_chat(user, "<span class='notice'>The bomb is bolted to the floor!</span>")
+			return 1
 	else if(!active)
 		settings(user)
 

@@ -28,7 +28,7 @@
 		for(var/mob/M in player_list)
 			if(!M.client)
 				continue //skip monkeys and leavers
-			if(istype(M, /mob/new_player))
+			if(isnewplayer(M))
 				continue
 			if(findtext(message," snores.")) //Because we have so many sleeping people.
 				break

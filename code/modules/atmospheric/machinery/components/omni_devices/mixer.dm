@@ -8,6 +8,7 @@
 	use_power = 1
 	idle_power_usage = 150		//internal circuitry, friction losses and stuff
 	power_rating = 3700			//3700 W ~ 5 HP
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/list/inputs = new()
 	var/datum/omni_port/output
@@ -24,8 +25,8 @@
 
 	var/list/mixing_inputs = list()
 
-/obj/machinery/atmospherics/components/omni/mixer/New()
-	..()
+/obj/machinery/atmospherics/components/omni/mixer/atom_init()
+	. = ..()
 	if(mapper_set())
 		var/con = 0
 		for(var/datum/omni_port/P in ports)

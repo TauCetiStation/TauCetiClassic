@@ -23,6 +23,7 @@ Thus, the two variables affect pump operation are set in New():
 	use_power = 0
 	idle_power_usage = 150 // internal circuitry, friction losses and stuff
 	power_rating = 7500    // 7500 W ~ 10 HP
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/target_pressure = ONE_ATMOSPHERE
 	var/max_pressure_setting = MAX_PUMP_PRESSURE
@@ -30,8 +31,8 @@ Thus, the two variables affect pump operation are set in New():
 	frequency = 0
 	var/id = null
 
-/obj/machinery/atmospherics/components/binary/pump/New()
-	..()
+/obj/machinery/atmospherics/components/binary/pump/atom_init()
+	. = ..()
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
@@ -172,16 +173,6 @@ Thus, the two variables affect pump operation are set in New():
 
 	broadcast_status()
 	update_icon()
-
-/obj/machinery/atmospherics/components/binary/pump/attack_hand(user)
-	if(..())
-		return
-	add_fingerprint(usr)
-	if(!allowed(user))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
-		return
-	usr.set_machine(src)
-	ui_interact(user)
 
 /obj/machinery/atmospherics/components/binary/pump/Topic(href, href_list)
 	if(!..())

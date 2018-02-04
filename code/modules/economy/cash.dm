@@ -16,8 +16,8 @@
 	access = access_crate_cash
 	var/worth = 0
 
-/obj/item/weapon/spacecash/New()
-	..()
+/obj/item/weapon/spacecash/atom_init()
+	. = ..()
 	price = worth
 
 /obj/item/weapon/spacecash/c1

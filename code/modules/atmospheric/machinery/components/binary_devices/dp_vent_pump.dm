@@ -43,8 +43,8 @@
 	//2: Do not pass input_pressure_min
 	//4: Do not pass output_pressure_max
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/New()
-	..()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/atom_init()
+	. = ..()
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
@@ -56,8 +56,8 @@
 /obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume
 	name = "Large Dual Port Air Vent"
 
-/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/New()
-	..()
+/obj/machinery/atmospherics/components/binary/dp_vent_pump/high_volume/atom_init()
+	. = ..()
 
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2

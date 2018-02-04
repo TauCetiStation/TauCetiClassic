@@ -24,10 +24,14 @@
 	melee_damage_upper = 5
 	var/datum/reagents/udder = null
 
-/mob/living/simple_animal/hostile/retaliate/goat/New()
+/mob/living/simple_animal/hostile/retaliate/goat/atom_init()
 	udder = new(50)
 	udder.my_atom = src
-	..()
+	. = ..()
+
+/mob/living/simple_animal/hostile/retaliate/goat/Destroy()
+	QDEL_NULL(udder)
+	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life()
 	. = ..()
@@ -73,6 +77,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(obj/item/O, mob/user)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>")
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
@@ -106,13 +111,18 @@
 	health = 50
 	var/datum/reagents/udder = null
 
-/mob/living/simple_animal/cow/New()
+/mob/living/simple_animal/cow/atom_init()
 	udder = new(50)
 	udder.my_atom = src
-	..()
+	. = ..()
+
+/mob/living/simple_animal/cow/Destroy()
+	QDEL_NULL(udder)
+	return ..()
 
 /mob/living/simple_animal/cow/attackby(obj/item/O, mob/user)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>")
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
@@ -175,13 +185,13 @@
 	pass_flags = PASSTABLE | PASSGRILLE
 	small = 1
 
-/mob/living/simple_animal/chick/New()
-	..()
+/mob/living/simple_animal/chick/atom_init()
+	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
 /mob/living/simple_animal/chick/Life()
-	. =..()
+	. = ..()
 	if(!.)
 		return
 	if(!stat)
@@ -217,8 +227,8 @@ var/global/chicken_count = 0
 	pass_flags = PASSTABLE
 	small = 1
 
-/mob/living/simple_animal/chicken/New()
-	..()
+/mob/living/simple_animal/chicken/atom_init()
+	. = ..()
 	if(!body_color)
 		body_color = pick( list("brown","black","white") )
 	icon_state = "chicken_[body_color]"
@@ -234,6 +244,7 @@ var/global/chicken_count = 0
 
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) //feedin' dem chickens
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!stat && eggsleft < 8)
 			user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","\blue You feed [O] to [name]! It clucks happily.")
 			user.drop_item()

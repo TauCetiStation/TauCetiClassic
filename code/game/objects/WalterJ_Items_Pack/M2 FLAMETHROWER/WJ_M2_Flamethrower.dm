@@ -136,11 +136,6 @@
 			var/turflist = getline(user, target_turf)
 			flame_turf(turflist)
 
-/obj/item/weapon/flamethrower_M2/attackby(obj/item/W, mob/user)
-	..()
-	return
-
-
 /obj/item/weapon/flamethrower_M2/attack_self(mob/user)
 	if(user.stat || user.restrained() || user.lying)	return
 	if(!Connected_tank)

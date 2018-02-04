@@ -32,6 +32,7 @@
 		return
 	var/num_loaded = magazine.attackby(A, user, 1)
 	if(num_loaded)
+		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src.loc, 'sound/weapons/heavybolt_in.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You load [num_loaded] shell\s into \the [src]!</span>")
 		var/obj/item/ammo_casing/AC = magazine.get_round() //load next casing.

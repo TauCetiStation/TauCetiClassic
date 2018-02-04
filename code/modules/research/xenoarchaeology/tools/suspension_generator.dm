@@ -15,9 +15,9 @@
 	var/obj/effect/suspension_field/suspension_field
 	var/list/secured_mobs = list()
 
-/obj/machinery/suspension_gen/New()
-	src.cell = new/obj/item/weapon/stock_parts/cell/high(src)
-	..()
+/obj/machinery/suspension_gen/atom_init()
+	cell = new/obj/item/weapon/stock_parts/cell/high(src)
+	. = ..()
 
 /obj/machinery/suspension_gen/process()
 	//set background = 1
@@ -55,7 +55,7 @@
 		if(cell.charge <= 0)
 			deactivate()
 
-/obj/machinery/suspension_gen/interact(mob/user)
+/obj/machinery/suspension_gen/ui_interact(mob/user)
 	var/dat = "<b>Multi-phase mobile suspension field generator MK II \"Steadfast\"</b><br>"
 	if(cell)
 		var/colour = "red"
@@ -159,10 +159,10 @@
 
 	updateUsrDialog()
 
-/obj/machinery/suspension_gen/attack_hand(mob/user)
+/obj/machinery/suspension_gen/interact(mob/user)
 	if(!open)
-		interact(user)
-	else if(cell && !isobserver(user))
+		..()
+	else if(cell)
 		cell.loc = loc
 		cell.add_fingerprint(user)
 		cell.updateicon()

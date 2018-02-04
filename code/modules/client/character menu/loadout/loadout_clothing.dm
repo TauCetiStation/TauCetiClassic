@@ -65,6 +65,18 @@
 	slot = slot_w_uniform
 	sort_category = "Suits and Overwear"
 
+/datum/gear/under/maid_suit
+	display_name = "Maid dress selection"
+	path = /obj/item/clothing/under/fluff/maid_suit
+	cost = 2
+
+/datum/gear/under/maid_suit/New()
+	..()
+	var/suits = list()
+	suits["black"] = /obj/item/clothing/under/fluff/maid_suit
+	suits["blue"] = /obj/item/clothing/under/fluff/maid_suit/sakuya
+	gear_tweaks += new/datum/gear_tweak/path(suits)
+
 /datum/gear/under/suit_jacket
 	display_name = "Suit jacket selection"
 	path = /obj/item/clothing/under/suit_jacket/navy

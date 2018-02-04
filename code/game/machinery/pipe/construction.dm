@@ -18,8 +18,8 @@ Buildable meters
 	var/pipename
 	var/connect_types = CONNECT_TYPE_REGULAR
 
-/obj/item/pipe/New(loc, pipe_type, dir, obj/machinery/atmospherics/make_from)
-	..()
+/obj/item/pipe/atom_init(mapload, pipe_type, dir, obj/machinery/atmospherics/make_from)
+	. = ..()
 	if (make_from)
 
 		src.set_dir(make_from.dir)

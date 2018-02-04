@@ -46,7 +46,8 @@
 /obj/effect/landmark/sc_bible_spawner
 	name = "Safecode hint spawner"
 
-/obj/effect/landmark/sc_bible_spawner/New()
+/obj/effect/landmark/sc_bible_spawner/atom_init()
+	..()
 	var/obj/item/weapon/storage/bible/B = new /obj/item/weapon/storage/bible/booze(src.loc)
 	B.name = "The Holy book of the Geometer"
 	B.deity_name = "Narsie"
@@ -54,7 +55,7 @@
 	B.item_state = "melted"
 	new /obj/item/weapon/paper/sc_safehint_paper_bible(B)
 	new /obj/item/weapon/pen(B)
-	del(src)
+	return INITIALIZE_HINT_QDEL
 
 /*
  * Guns - I'm making these specifically so that I dont spawn a pile of fully loaded weapons on the map.
@@ -71,7 +72,8 @@
 /obj/item/weapon/gun/projectile/silenced/sc_silenced
 
 //Make it so that these guns only spawn with a couple bullets... if any
-/obj/item/weapon/gun/projectile/silenced/sc_silenced/New()
+/obj/item/weapon/gun/projectile/silenced/sc_silenced/atom_init()
+	. = ..()
 	for(var/ammo in loaded)
 		if(prob(95)) //95% chance
 			loaded -= ammo
@@ -79,7 +81,8 @@
 //Syndicate sub-machine guns.
 /obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r
 
-/obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r/New()
+/obj/item/weapon/gun/projectile/automatic/c20r/sc_c20r/atom_init()
+	. = ..()
 	for(var/ammo in loaded)
 		if(prob(95)) //95% chance
 			loaded -= ammo
@@ -87,7 +90,8 @@
 //Barman's shotgun
 /obj/item/weapon/gun/projectile/shotgun/pump/sc_pump
 
-/obj/item/weapon/gun/projectile/shotgun/pump/sc_pump/New()
+/obj/item/weapon/gun/projectile/shotgun/pump/sc_pump/atom_init()
+	. = ..()
 	for(var/ammo in loaded)
 		if(prob(95)) //95% chance
 			loaded -= ammo
@@ -112,22 +116,25 @@ var/sc_safecode5 = "[rand(0,9)]"
 /obj/item/weapon/paper/sc_safehint_paper_prison
 	name = "smudged paper"
 
-/obj/item/weapon/paper/sc_safehint_paper_prison/New()
+/obj/item/weapon/paper/sc_safehint_paper_prison/atom_init()
+	. = ..()
 	info = "<i>The ink is smudged, you can only make out a couple numbers:</i> '[sc_safecode1]**[sc_safecode4]*'"
 
 /obj/item/weapon/paper/sc_safehint_paper_hydro
 	name = "shredded paper"
-/obj/item/weapon/paper/sc_safehint_paper_hydro/New()
+/obj/item/weapon/paper/sc_safehint_paper_hydro/atom_init()
+	. = ..()
 	info = "<i>Although the paper is shredded, you can clearly see the number:</i> '[sc_safecode2]'"
 
 /obj/item/weapon/paper/sc_safehint_paper_caf
 	name = "blood-soaked paper"
-	//This does not have to be in New() because it is a constant. There are no variables in it i.e. [sc_safcode]
+	//This does not have to be in atom_init() because it is a constant. There are no variables in it i.e. [sc_safcode]
 	info = "<font color=red><i>This paper is soaked in blood, it is impossible to read any text.</i></font>"
 
 /obj/item/weapon/paper/sc_safehint_paper_bible
 	name = "hidden paper"
-/obj/item/weapon/paper/sc_safehint_paper_bible/New()
+/obj/item/weapon/paper/sc_safehint_paper_bible/atom_init()
+	. = ..()
 	info = {"<i>It would appear that the pen hidden with the paper had leaked ink over the paper.
 			However you can make out the last three digits:</i>'[sc_safecode3][sc_safecode4][sc_safecode5]'
 			"}
@@ -151,8 +158,8 @@ var/sc_safecode5 = "[rand(0,9)]"
 /obj/item/weapon/storage/secure/safe/sc_ssafe
 	name = "Captain's secure safe"
 
-/obj/item/weapon/storage/secure/safe/sc_ssafe/New()
-	..()
+/obj/item/weapon/storage/secure/safe/sc_ssafe/atom_init()
+	. = ..()
 	l_code = "[sc_safecode1][sc_safecode2][sc_safecode3][sc_safecode4][sc_safecode5]"
 	l_set = 1
 	new /obj/item/weapon/gun/energy/mindflayer(src)

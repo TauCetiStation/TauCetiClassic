@@ -48,7 +48,7 @@
 		restricted_jobs += protected_jobs
 
 	var/head_check = 0
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		if(player.mind.assigned_role in command_positions)
 			head_check = 1
 			break

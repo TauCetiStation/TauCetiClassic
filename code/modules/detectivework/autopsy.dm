@@ -177,7 +177,7 @@
 		usr:update_inv_l_hand()
 		usr:update_inv_r_hand()
 
-/obj/item/weapon/autopsy_scanner/attack(mob/living/carbon/human/M, mob/living/carbon/user)
+/obj/item/weapon/autopsy_scanner/attack(mob/living/carbon/human/M, mob/living/carbon/user, def_zone)
 	if(!istype(M))
 		return
 
@@ -193,7 +193,7 @@
 
 	src.timeofdeath = M.timeofdeath
 
-	var/obj/item/organ/external/BP = M.get_bodypart(user.zone_sel.selecting)
+	var/obj/item/organ/external/BP = M.get_bodypart(def_zone)
 	if(!BP)
 		to_chat(usr, "<b>You can't scan this body part.</b>")
 		return

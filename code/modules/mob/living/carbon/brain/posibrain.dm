@@ -133,17 +133,17 @@
 		for (var/mob/M in viewers(T))
 			M.show_message("<span class='notice'>\The [src] pings softly.</span>")
 
-/obj/item/device/mmi/posibrain/New()
+/obj/item/device/mmi/posibrain/atom_init()
 
-	src.brainmob = new(src)
-	src.brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI"))]-[rand(100, 999)]"
-	src.brainmob.real_name = src.brainmob.name
-	src.brainmob.loc = src
-	src.brainmob.container = src
-	src.brainmob.robot_talk_understand = 1
-	src.brainmob.stat = CONSCIOUS
-	src.brainmob.silent = 0
-	src.brainmob.brain_op_stage = 4.0
-	dead_mob_list -= src.brainmob
+	brainmob = new(src)
+	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","CHRI","CDB","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD","XHS","BOB","EXAD","JMAD"))]-[rand(100, 999)]"
+	brainmob.real_name = brainmob.name
+	brainmob.loc = src
+	brainmob.container = src
+	brainmob.robot_talk_understand = 1
+	brainmob.stat = CONSCIOUS
+	brainmob.silent = 0
+	brainmob.brain_op_stage = 4.0
+	dead_mob_list -= brainmob
 
-	..()
+	. = ..()

@@ -60,7 +60,7 @@
 	if (istype(W, /obj/item/weapon/coin))
 		var/obj/item/weapon/coin/C = W
 		to_chat(user, "\blue You add the [C.name] into the bag.")
-		usr.drop_item()
+		user.drop_item()
 		contents += C
 	if (istype(W, /obj/item/weapon/moneybag))
 		var/obj/item/weapon/moneybag/C = W
@@ -102,12 +102,10 @@
 
 /obj/item/weapon/moneybag/vault
 
-/obj/item/weapon/moneybag/vault/New()
-	..()
-	new /obj/item/weapon/coin/silver(src)
-	new /obj/item/weapon/coin/silver(src)
-	new /obj/item/weapon/coin/silver(src)
-	new /obj/item/weapon/coin/silver(src)
-	new /obj/item/weapon/coin/gold(src)
-	new /obj/item/weapon/coin/gold(src)
+/obj/item/weapon/moneybag/vault/atom_init()
+	. = ..()
+	for (var/i in 1 to 4)
+		new /obj/item/weapon/coin/silver(src)
+	for (var/i in 1 to 2)
+		new /obj/item/weapon/coin/gold(src)
 	new /obj/item/weapon/coin/platinum(src)

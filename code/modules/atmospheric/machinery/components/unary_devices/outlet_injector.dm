@@ -28,8 +28,8 @@
 	use_power = 1
 	icon_state = "map_injector_on"
 
-/obj/machinery/atmospherics/components/unary/outlet_injector/New()
-	..()
+/obj/machinery/atmospherics/components/unary/outlet_injector/atom_init()
+	. = ..()
 	var/datum/gas_mixture/air1 = AIR1
 	air1.volume = ATMOS_DEFAULT_VOLUME_PUMP + 500	//Give it a small reservoir for injecting. Also allows it to have a higher flow rate limit than vent pumps, to differentiate injectors a bit more.
 

@@ -30,8 +30,8 @@
 	var/turn_angle = 0
 	var/obj/machinery/power/solar_control/control = null
 
-/obj/machinery/power/solar/New(var/turf/loc, var/obj/item/solar_assembly/S, var/process = 1)
-	..(loc)
+/obj/machinery/power/solar/atom_init(mapload, obj/item/solar_assembly/S, process = 1)
+	. = ..()
 	Make(S)
 	connect_to_network(process)
 
@@ -60,6 +60,7 @@
 /obj/machinery/power/solar/attackby(obj/item/weapon/W, mob/user)
 
 	if(iscrowbar(W))
+		if(user.is_busy()) return
 		playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 		if(do_after(user, 50,target = src))
 			var/obj/item/solar_assembly/S = locate() in src
@@ -73,6 +74,7 @@
 	else if (W)
 		src.add_fingerprint(user)
 		src.health -= W.force
+		user.SetNextMove(CLICK_CD_MELEE)
 		src.healthcheck()
 	..()
 
@@ -176,8 +178,8 @@
 		src.density = 0
 
 
-/obj/machinery/power/solar/fake/New(var/turf/loc, var/obj/item/solar_assembly/S)
-	..(loc, S, 0)
+/obj/machinery/power/solar/fake/atom_init(mapload, obj/item/solar_assembly/S)
+	. = ..(mapload, S, 0)
 
 /obj/machinery/power/solar/fake/process()
 	. = PROCESS_KILL
@@ -313,15 +315,9 @@
 		overlays += image('icons/obj/computer.dmi', "solcon-o", FLY_LAYER, angle2dir(cdir))
 	return
 
-
-/obj/machinery/power/solar_control/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-
-/obj/machinery/power/solar_control/attackby(I, user)
+/obj/machinery/power/solar_control/attackby(I, mob/user)
 	if(istype(I, /obj/item/weapon/screwdriver))
+		if(user.is_busy()) return
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
 			if (src.stat & BROKEN)
@@ -381,15 +377,13 @@
 	src.updateDialog()
 
 
-/obj/machinery/power/solar_control/interact(mob/user)
-	if(stat & (BROKEN | NOPOWER)) return
-	if (get_dist(src, user) > 1 && !issilicon(user) && !isobserver(user))
+/obj/machinery/power/solar_control/ui_interact(mob/user)
+	if(stat & (BROKEN | NOPOWER))
+		return
+	if (!in_range(src, user) && !issilicon(user) && !isobserver(user))
 		user.unset_machine()
 		user << browse(null, "window=solcon")
 		return
-
-	add_fingerprint(user)
-	user.set_machine(src)
 
 	var/t = "<TT><B>Solar Generator Control</B><HR><PRE>"
 	t += "<B>Generated power</B> : [round(lastgen)] W<BR>"
@@ -417,7 +411,6 @@
 	t += "<A href='?src=\ref[src];close=1'>Close</A></TT>"
 	user << browse(t, "window=solcon")
 	onclose(user, "solcon")
-	return
 
 
 /obj/machinery/power/solar_control/Topic(href, href_list)

@@ -23,6 +23,7 @@
 	idle_power_usage = 50		//when inactive, this turret takes up constant 50 Equipment power
 	active_power_usage = 300	//when active, this turret takes up constant 300 Equipment power
 	power_channel = EQUIP	//drains power from the EQUIPMENT channel
+	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/raised = FALSE			//if the turret cover is "open" and the turret is raised
 	var/raising= FALSE			//if the turret is currently opening or closing its cover
@@ -63,7 +64,6 @@
 
 	var/datum/effect/effect/system/spark_spread/spark_system	//the spark system, used for generating... sparks?
 
-	var/wrenching = FALSE
 	var/last_target			//last target fired at, prevents turrets from erratically firing at all valid targets in range
 
 /obj/machinery/porta_turret/station_default
@@ -85,7 +85,7 @@
 /obj/machinery/porta_turret/AI_special
 	special_control = TRUE
 
-/obj/machinery/porta_turret/New()
+/obj/machinery/porta_turret/atom_init()
 	..()
 	req_one_access = list(access_security, access_heads)
 
@@ -94,10 +94,13 @@
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
 
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/porta_turret/atom_init_late()
 	setup()
 
-/obj/machinery/porta_turret/crescent/New()
-	..()
+/obj/machinery/porta_turret/crescent/atom_init()
+	. = ..()
 	req_one_access.Cut()
 	req_access = list(access_cent_specops)
 
@@ -213,56 +216,51 @@ var/list/turret_icons
 
 	return FALSE
 
-/obj/machinery/porta_turret/attack_hand(mob/user)
-	if(..() || isLocked(user))
+/obj/machinery/porta_turret/ui_interact(mob/user)
+	if(isLocked(user))
 		return
 
-	interact(user)
-
-/obj/machinery/porta_turret/interact(mob/user)
-	user.set_machine(src)
-
 	var/dat = text({"
-<table width="100%" cellspacing="0" cellpadding="4">
-	<tr>
-		<td>Status: </td><td>[]</td>
-	</tr>
-	<tr></tr>
-	<tr>
-		<td>Lethal Mode: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Neutralize All Non-Synthetics: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Neutralize All Cyborgs: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Weapon Authorization: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Security Records: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Arrest Status: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Access Authorization: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check misc. Lifeforms: </td><td>[]</td>
-	</tr>
-</table>"},
+		<table width="100%" cellspacing="0" cellpadding="4">
+			<tr>
+				<td>Status: </td><td>[]</td>
+			</tr>
+			<tr></tr>
+			<tr>
+				<td>Lethal Mode: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Neutralize All Non-Synthetics: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Neutralize All Cyborgs: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Weapon Authorization: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Security Records: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Arrest Status: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Access Authorization: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check misc. Lifeforms: </td><td>[]</td>
+			</tr>
+		</table>"},
 
-"<A href='?src=\ref[src];command=enable'>[enabled ? "On" : "Off"]</A>",
-"<A href='?src=\ref[src];command=lethal'>[lethal ? "On" : "Off"]</A>",
-"<A href='?src=\ref[src];command=check_n_synth'>[check_n_synth ? "Yes" : "No"]</A>",
-"[(special_control && isAI(user)) ? "<A href='?src=\ref[src];command=shot_synth'>[shot_synth ? "Yes" : "No"]</A>" : "NOT ALLOWED"]",
-"<A href='?src=\ref[src];command=check_weapons'>[check_weapons ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_records'>[check_records ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_arrest'>[check_arrest ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_access'>[check_access ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>")
+		"<A href='?src=\ref[src];command=enable'>[enabled ? "On" : "Off"]</A>",
+		"<A href='?src=\ref[src];command=lethal'>[lethal ? "On" : "Off"]</A>",
+		"<A href='?src=\ref[src];command=check_n_synth'>[check_n_synth ? "Yes" : "No"]</A>",
+		"[(special_control && isAI(user)) ? "<A href='?src=\ref[src];command=shot_synth'>[shot_synth ? "Yes" : "No"]</A>" : "NOT ALLOWED"]",
+		"<A href='?src=\ref[src];command=check_weapons'>[check_weapons ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_records'>[check_records ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_arrest'>[check_arrest ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_access'>[check_access ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>")
 
 	var/datum/browser/popup = new(user, "window=autosec", "Automatic Portable Turret Installation", 400, 320)
 	popup.set_content(dat)
@@ -325,6 +323,7 @@ var/list/turret_icons
 		if(istype(I, /obj/item/weapon/crowbar))
 			//If the turret is destroyed, you can remove it with a crowbar to
 			//try and salvage its components
+			if(user.is_busy()) return
 			to_chat(user, "<span class='notice'>You begin prying the metal coverings off.</span>")
 			if(do_after(user, 20, src))
 				if(prob(70))
@@ -346,7 +345,7 @@ var/list/turret_icons
 		if(enabled || raised)
 			to_chat(user, "<span class='warning'>You cannot unsecure an active turret!</span>")
 			return
-		if(wrenching)
+		if(user.is_busy(src, FALSE))
 			to_chat(user, "<span class='warning'>Someone is already [anchored ? "un" : ""]securing the turret!</span>")
 			return
 		if(!anchored && isinspace())
@@ -358,7 +357,6 @@ var/list/turret_icons
 				"<span class='notice'>You begin [anchored ? "un" : ""]securing the turret.</span>" \
 			)
 
-		wrenching = TRUE
 		if(do_after(user, 50, src))
 			//This code handles moving the turret around. After all, it's a portable turret!
 			if(!anchored)
@@ -371,7 +369,6 @@ var/list/turret_icons
 				anchored = FALSE
 				to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 				update_icon()
-		wrenching = FALSE
 
 	else if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		//Behavior lock/unlock mangement
@@ -396,6 +393,7 @@ var/list/turret_icons
 	else
 		//if the turret was attacked with the intention of harming it:
 		take_damage(I.force * 0.5)
+		user.SetNextMove(CLICK_CD_MELEE)
 		if((I.force * 0.5) > 1) //if the force of impact dealt at least 1 damage, the turret gets pissed off
 			if(!attacked && !emagged)
 				attacked = TRUE
@@ -673,7 +671,7 @@ var/list/turret_icons
 
 
 /obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
+	..()
 	if(M.melee_damage_upper == 0)
 		return
 	if(!(stat & BROKEN))
@@ -688,6 +686,7 @@ var/list/turret_icons
 
 /obj/machinery/porta_turret/attack_alien(mob/living/carbon/alien/humanoid/M)
 	M.do_attack_animation(src)
+	M.SetNextMove(CLICK_CD_MELEE)
 	if(!(stat & BROKEN))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 		visible_message("<span class='danger'>[M] has slashed at [src]!</span>")
@@ -738,6 +737,7 @@ var/list/turret_icons
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turret_frame"
 	density = TRUE
+	use_power = 0
 	var/build_step = 0			//the current step in the building process
 	var/finish_name="turret"	//the name applied to the product turret
 	var/installation = null		//the gun type installed
@@ -795,7 +795,7 @@ var/list/turret_icons
 				if(WT.get_fuel() < 5) //uses up 5 fuel.
 					to_chat(user, "<span class='notice'>You need more fuel to complete this task.</span>")
 					return
-
+				if(user.is_busy(src)) return
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				if(do_after(user, 20, src))
 					if(!src || !WT.remove_fuel(5, user)) return
@@ -869,7 +869,7 @@ var/list/turret_icons
 				if(!WT.isOn()) return
 				if(WT.get_fuel() < 5)
 					to_chat(user, "<span class='notice'>You need more fuel to complete this task.</span>")
-
+				if(user.is_busy(src)) return
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				if(do_after(user, 30, src))
 					if(!src || !WT.remove_fuel(5, user))
@@ -908,15 +908,15 @@ var/list/turret_icons
 	..()
 
 
-/obj/machinery/porta_turret_construct/attack_ai()
-	return
-
-
-/obj/machinery/porta_turret_construct/attack_ghost()
-	return
-
+/obj/machinery/porta_turret_construct/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
+	return 0
 
 /obj/machinery/porta_turret_construct/attack_hand(mob/user)
+	if(..())
+		return 1
+
 	switch(build_step)
 		if(4)
 			if(!installation)

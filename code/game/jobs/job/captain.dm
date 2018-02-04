@@ -22,11 +22,10 @@
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 
 	var/obj/item/clothing/under/U = new /obj/item/clothing/under/rank/captain(H)
-	if(H.age>49)
-		var/obj/item/clothing/tie/medal/gold/captain/new_medal = new(U)
-		U.hastie = new_medal
-		new_medal.has_suit = U
-		U.overlays += new_medal.inv_overlay
+	if(H.age > 49)
+		var/obj/item/clothing/accessory/medal/gold/captain/new_medal = new
+		U.accessories += new_medal
+		new_medal.on_attached(U, H, TRUE)
 	H.equip_to_slot_or_del(U, slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/caphat(H), slot_head)

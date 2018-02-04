@@ -43,8 +43,8 @@
 	var/next_dest
 	var/next_dest_loc
 
-/obj/machinery/bot/cleanbot/New()
-	..()
+/obj/machinery/bot/cleanbot/atom_init()
+	. = ..()
 	src.get_targets()
 	src.icon_state = "cleanbot[src.on]"
 
@@ -80,34 +80,27 @@
 	src.path = new()
 	src.updateUsrDialog()
 
-/obj/machinery/bot/cleanbot/attack_hand(mob/user)
-	. = ..()
-	if (.)
-		return
-	interact(user)
-
-/obj/machinery/bot/cleanbot/interact(mob/user)
+/obj/machinery/bot/cleanbot/ui_interact(mob/user)
 	var/dat
 	dat += text({"
-<TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>
-Status: []<BR>
-Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>
-Maintenance panel is [src.open ? "opened" : "closed"]"},
-text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
+		<TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>
+		Status: []<BR>
+		Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>
+		Maintenance panel is [src.open ? "opened" : "closed"]"},
+		text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
 	if(!src.locked || issilicon(user) || isobserver(user))
 		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[src.blood ? "Yes" : "No"]</A>"))
 		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[src.should_patrol ? "Yes" : "No"]</A>"))
 	//	dat += text({"<BR>Beacon frequency: []<BR>"}, text("<A href='?src=\ref[src];operation=freq'>[src.beacon_freq]</A>"))
 	if(src.open && !src.locked)
 		dat += text({"
-Odd looking screw twiddled: []<BR>
-Weird button pressed: []"},
-text("<A href='?src=\ref[src];operation=screw'>[src.screwloose ? "Yes" : "No"]</A>"),
-text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"]</A>"))
+			Odd looking screw twiddled: []<BR>
+			Weird button pressed: []"},
+			text("<A href='?src=\ref[src];operation=screw'>[src.screwloose ? "Yes" : "No"]</A>"),
+			text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"]</A>"))
 
 	user << browse("<HEAD><TITLE>Cleaner v1.0 controls</TITLE></HEAD>[dat]", "window=autocleaner")
 	onclose(user, "autocleaner")
-	return
 
 /obj/machinery/bot/cleanbot/Topic(href, href_list)
 	. = ..()

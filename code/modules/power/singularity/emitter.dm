@@ -4,7 +4,7 @@
 	name = "Emitter"
 	desc = "It is a heavy duty industrial laser."
 	icon = 'icons/obj/singularity.dmi'
-	icon_state = "emitter"
+	icon_state = "emitter-off"
 	anchored = FALSE
 	density = TRUE
 	req_access = list(access_engine_equip)
@@ -12,7 +12,7 @@
 	use_power = 0
 	idle_power_usage = 10
 	active_power_usage = 300
-	ghost_must_be_admin = TRUE
+	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/active = FALSE
 	var/powered = FALSE
@@ -24,18 +24,18 @@
 	var/state = 0
 	var/locked = FALSE
 
-/obj/machinery/power/emitter/New()
-	..()
-	component_parts = list()
-	component_parts += new /obj/item/weapon/circuitboard/emitter(null)
-	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	RefreshParts()
-
 /obj/machinery/power/emitter/atom_init()
 	. = ..()
 	if(state == 2 && anchored)
 		connect_to_network()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/power/emitter/atom_init_late(board_path = /obj/item/weapon/circuitboard/emitter)
+	component_parts = list()
+	component_parts += new board_path(null)
+	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
+	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	RefreshParts()
 
 /obj/machinery/power/emitter/RefreshParts()
 	var/max_firedelay = 120
@@ -71,14 +71,21 @@
 	return ..()
 
 /obj/machinery/power/emitter/update_icon()
-	if (active && powernet && avail(active_power_usage))
-		icon_state = "emitter_+a"
+	if (active && avail(active_power_usage))
+		icon_state = "emitter-active"
+	else if(panel_open)
+		icon_state = "emitter-open"
 	else
-		icon_state = "emitter"
+		icon_state = "emitter-off"
 
 /obj/machinery/power/emitter/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
+	user.SetNextMove(CLICK_CD_RAPID)
+	activate(user)
+
+/obj/machinery/power/emitter/proc/activate(mob/user)
 	if(state == 2)
 		if(!powernet)
 			to_chat(user, "The emitter isn't connected to a wire.")
@@ -91,6 +98,9 @@
 				log_game("Emitter turned off by [user.ckey]([user]) in ([x],[y],[z])")
 				investigate_log("turned <font color='red'>off</font> by [user.key]","singulo")
 			else
+				if(panel_open)
+					to_chat(user, "<span class='notice'>Close the maintenance panel first.</span>")
+					return
 				active = 1
 				to_chat(user, "You turn on the [src].")
 				shot_number = 0
@@ -141,12 +151,12 @@
 
 		src.last_shot = world.time
 		if(src.shot_number < 3)
-			src.fire_delay = 2
+			src.fire_delay = get_burst_delay()
 			src.shot_number ++
 		else
-			src.fire_delay = rand(minimum_fire_delay,maximum_fire_delay)
+			src.fire_delay = get_rand_burst_delay()
 			src.shot_number = 0
-		var/obj/item/projectile/beam/emitter/A = new /obj/item/projectile/beam/emitter( src.loc )
+		var/obj/item/projectile/beam/emitter/A = get_emitter_beam()
 		playsound(src.loc, 'sound/weapons/emitter.ogg', 25, 1)
 		if(prob(35))
 			var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -200,6 +210,7 @@
 			if(0)
 				to_chat(user, "\red The [src.name] needs to be wrenched to the floor.")
 			if(1)
+				if(user.is_busy()) return
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
@@ -213,6 +224,7 @@
 				else
 					to_chat(user, "\red You need more welding fuel to complete this task.")
 			if(2)
+				if(user.is_busy()) return
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
@@ -249,8 +261,12 @@
 		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
 		return
 
-	if(default_deconstruction_screwdriver(user, "emitter_open", "emitter", W))
-		return
+	if(istype(W, /obj/item/weapon/screwdriver))
+		if(active)
+			to_chat(user, "Turn off the [src] first.")
+			return
+		if(default_deconstruction_screwdriver(user, "emitter-open", "emitter-off", W))
+			return
 
 	if(exchange_parts(user, W))
 		return
@@ -262,3 +278,12 @@
 
 	..()
 	return
+
+/obj/machinery/power/emitter/proc/get_rand_burst_delay()
+	return rand(minimum_fire_delay, maximum_fire_delay)
+
+/obj/machinery/power/emitter/proc/get_burst_delay()
+	return 2
+
+/obj/machinery/power/emitter/proc/get_emitter_beam()
+	return new /obj/item/projectile/beam/emitter(get_turf(src))

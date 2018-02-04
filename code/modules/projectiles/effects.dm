@@ -5,9 +5,8 @@
 	plane = ABOVE_HUD_PLANE
 	var/time_to_live = 3
 
-/obj/effect/projectile/New(var/turf/location)
-	if(istype(location))
-		loc = location
+/obj/effect/projectile/atom_init()
+	. = ..()
 	if(light_color)
 		set_light(light_range,light_power,light_color)
 

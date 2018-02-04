@@ -11,7 +11,7 @@
 	var/department*/
 	var/list/displayedNetworks
 
-/obj/machinery/computer/lockdown/New()
+/obj/machinery/computer/lockdown/atom_init()
 	..()
 	connected_doors = new/list()
 	displayedNetworks  = new/list()
@@ -45,27 +45,23 @@
 	for(var/net in connected_doors)
 		connected_doors[net] = new/list()
 
-	//loop through the world, grabbing all the relevant doors
-	spawn(1)
-		ConnectDoors()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/lockdown/atom_init_late()
+	//loop through the machines, grabbing all the relevant doors
+	ConnectDoors()
 
 /obj/machinery/computer/lockdown/proc/ConnectDoors()
 	for(var/list/L in connected_doors)
 		for(var/item in L)
 			L.Remove(item)
 	//
-	for(var/obj/machinery/door/poddoor/D in world)
+	for(var/obj/machinery/door/poddoor/D in machines)
 		if(D.network in connected_doors)
 			var/list/L = connected_doors[D.network]
 			L.Add(D)
 
-/obj/machinery/computer/lockdown/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/computer/lockdown/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/computer/lockdown/ui_interact(mob/user)
 	var/t = "<B>Lockdown Control</B><BR>"
 	t += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"

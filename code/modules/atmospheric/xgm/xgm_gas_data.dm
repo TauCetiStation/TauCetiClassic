@@ -15,6 +15,8 @@
 	var/list/overlay_limit = list()
 	//Flags.
 	var/list/flags = list()
+	//Products created when burned. For fuel only for now (not oxidizers)
+	var/list/burn_product = list()
 	//Dangerous Gases
 	var/list/gases_dangerous = list()
 
@@ -28,6 +30,7 @@
 	var/overlay_limit = null
 
 	var/flags = 0
+	var/burn_product = "carbon_dioxide"
 	var/dangerous = FALSE // currently used by canisters
 
 /proc/generateGasData()
@@ -48,6 +51,7 @@
 		if(gas.overlay_limit)
 			gas_data.overlay_limit[gas.id] = gas.overlay_limit
 		gas_data.flags[gas.id] = gas.flags
+		gas_data.burn_product[gas.id] = gas.burn_product
 		gas_data.gases_dangerous[gas.id] = gas.dangerous
 
 	return gas_data

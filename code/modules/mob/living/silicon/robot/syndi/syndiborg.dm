@@ -10,8 +10,8 @@
 
 	var/static/image/sword_overlay
 
-/mob/living/silicon/robot/syndicate/New(loc)
-	..()
+/mob/living/silicon/robot/syndicate/atom_init()
+	. = ..()
 	updatename("Syndicate")
 	connected_ai = null
 	cell.maxcharge = 25000
@@ -34,8 +34,8 @@
 	syndie = 1
 	keyslot = new /obj/item/device/encryptionkey/syndicate
 
-/obj/item/device/radio/borg/syndicate/New()
-	..()
+/obj/item/device/radio/borg/syndicate/atom_init()
+	. = ..()
 	set_frequency(SYND_FREQ)
 
 /obj/item/weapon/melee/energy/sword/cyborg

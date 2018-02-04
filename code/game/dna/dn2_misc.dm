@@ -443,6 +443,7 @@
 
 /obj/structure/girder/attack_hand(mob/user)
 	if (HULK in user.mutations)
+		user.SetNextMove(CLICK_CD_MELEE)
 		if(user.a_intent == "hurt")
 			playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 			if (prob(75))

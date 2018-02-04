@@ -1,7 +1,7 @@
 /turf
 	icon = 'icons/turf/floors.dmi'
 	level = 1.0
-
+	var/basetype = /turf/space
 	//for floors, use is_plating(), is_plasteel_floor() and is_light_floor()
 	var/intact = 1
 
@@ -48,6 +48,14 @@
 
 /turf/attack_hand(mob/user)
 	user.Move_Pulled(src)
+	user.SetNextMove(CLICK_CD_INTERACT)
+
+/turf/attack_animal(mob/user)
+	return
+
+/turf/attack_robot(mob/user)
+	if(Adjacent(user))
+		return attack_hand(user)
 
 /turf/ex_act(severity)
 	return 0
@@ -170,8 +178,8 @@
 		qdel(L)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(turf/N, force_lighting_update = 0)
-	if (!N)
+/turf/proc/ChangeTurf(path, force_lighting_update)
+	if (!path)
 		return
 
 	// Back all this data up, so we can set it after the turf replace.
@@ -184,68 +192,85 @@
 	var/old_lighting_overlay = lighting_overlay // Not even a need to cast this, honestly.
 	var/list/old_lighting_corners = corners
 
+	var/old_basetype = basetype
+	var/old_flooded = flooded
+	var/obj/effect/fluid/F = locate() in src
+
+	var/list/temp_res = resources
+
 	//world << "Replacing [src.type] with [N]"
 
-	if(connections) connections.erase_all()
+	if(connections)
+		connections.erase_all()
 
-	if(istype(src,/turf/simulated))
+	if(istype(src, /turf/simulated))
 		//Yeah, we're just going to rebuild the whole thing.
 		//Despite this being called a bunch during explosions,
 		//the zone will only really do heavy lifting once.
 		var/turf/simulated/S = src
-		if(S.zone) S.zone.rebuild()
+		if(S.zone)
+			S.zone.rebuild()
 
-	if(ispath(N, /turf/simulated/floor))
+	var/turf/W = new path(src)
 
-		var/turf/simulated/W = new N( locate(src.x, src.y, src.z) )
-		//W.Assimilate_Air()
+	W.has_resources = has_resources
+	W.resources = temp_res
 
-		if (istype(W,/turf/simulated/floor))
+	if(ispath(path, /turf/simulated/floor))
+		if (istype(W, /turf/simulated/floor))
 			W.RemoveLattice()
 
-		if(SSair)
-			SSair.mark_for_update(src) //handle the addition of the new turf.
+	if(SSair)
+		SSair.mark_for_update(W)
 
-		for(var/turf/space/S in RANGE_TURFS(1, W))
+	W.levelupdate()
+
+	if(SSlighting.initialized)
+		lighting_overlay = old_lighting_overlay
+		affecting_lights = old_affecting_lights
+		corners = old_lighting_corners
+		basetype = old_basetype
+
+		for(var/atom/A in contents)
+			if(A.light)
+				A.light.force_update = 1
+
+		for(var/i = 1 to 4)//Generate more light corners when needed. If removed - pitch black shuttles will come for your soul!
+			if(corners[i]) // Already have a corner on this direction.
+				continue
+			corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
+
+		if((old_opacity != opacity) || (dynamic_lighting != old_dynamic_lighting) || force_lighting_update)
+			reconsider_lights()
+		if(dynamic_lighting != old_dynamic_lighting)
+			if(dynamic_lighting)
+				lighting_build_overlay()
+			else
+				lighting_clear_overlay()
+
+		for(var/turf/space/S in RANGE_TURFS(1, src))
 			S.update_starlight()
 
-		W.levelupdate()
-		. = W
+	if(F)
+		F.forceMove(src)
+		F.start_loc = src
+		fluid_update()
 
+	if(old_flooded)
+		flooded = 1
+		update_icon()
+
+	return W
+
+/turf/proc/MoveTurf(turf/target, move_unmovable = 0)
+	if(type != basetype || move_unmovable)
+		. = target.ChangeTurf(src.type)
+		ChangeTurf(basetype)
 	else
+		return target
 
-		var/turf/W = new N( locate(src.x, src.y, src.z) )
-
-		for(var/turf/space/S in RANGE_TURFS(1, W))
-			S.update_starlight()
-
-		if(SSair)
-			SSair.mark_for_update(src)
-
-		W.levelupdate()
-		. =  W
-
-	lighting_overlay = old_lighting_overlay
-	affecting_lights = old_affecting_lights
-	corners = old_lighting_corners
-
-	for(var/atom/A in contents)
-		if(A.light)
-			A.light.force_update = 1
-
-	for(var/i = 1 to 4)//Generate more light corners when needed. If removed - pitch black shuttles will come for your soul!
-		if(corners[i]) // Already have a corner on this direction.
-			continue
-		corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
-
-	if((old_opacity != opacity) || (dynamic_lighting != old_dynamic_lighting) || force_lighting_update)
-		reconsider_lights()
-	if(dynamic_lighting != old_dynamic_lighting)
-		if(dynamic_lighting)
-			lighting_build_overlay()
-		else
-			lighting_clear_overlay()
-
+/turf/proc/BreakToBase()
+	ChangeTurf(basetype)
 
 //Commented out by SkyMarshal 5/10/13 - If you are patching up space, it should be vacuum.
 //  If you are replacing a wall, you have increased the volume of the room without increasing the amount of gas in it.
@@ -300,7 +325,7 @@
 
 
 /turf/proc/ReplaceWithLattice()
-	src.ChangeTurf(/turf/space)
+	src.ChangeTurf(basetype)
 	spawn()
 		new /obj/structure/lattice( locate(src.x, src.y, src.z) )
 

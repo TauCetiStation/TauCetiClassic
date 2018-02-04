@@ -85,20 +85,19 @@
 /obj/structure/bookcase/manuals/medical
 	name = "Medical Manuals bookcase"
 
-/obj/structure/bookcase/manuals/medical/New()
-	..()
+/obj/structure/bookcase/manuals/medical/atom_init()
+	. = ..()
 	new /obj/item/weapon/book/manual/medical_cloning(src)
-	new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
-	new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
-	new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
 	update_icon()
 
 
 /obj/structure/bookcase/manuals/engineering
 	name = "Engineering Manuals bookcase"
 
-/obj/structure/bookcase/manuals/engineering/New()
-	..()
+/obj/structure/bookcase/manuals/engineering/atom_init()
+	. = ..()
 	new /obj/item/weapon/book/manual/engineering_construction(src)
 	new /obj/item/weapon/book/manual/engineering_particle_accelerator(src)
 	new /obj/item/weapon/book/manual/engineering_hacking(src)
@@ -112,8 +111,8 @@
 /obj/structure/bookcase/manuals/research_and_development
 	name = "R&D Manuals bookcase"
 
-/obj/structure/bookcase/manuals/research_and_development/New()
-	..()
+/obj/structure/bookcase/manuals/research_and_development/atom_init()
+	. = ..()
 	new /obj/item/weapon/book/manual/research_and_development(src)
 	update_icon()
 
@@ -230,6 +229,7 @@
 					to_chat(user, "[W]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'")
 	else if(istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/wirecutters))
 		if(carved)	return
+		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin to carve out [title].</span>")
 		if(do_after(user, 30, target = user))
 			to_chat(user, "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>")
@@ -238,8 +238,8 @@
 	else
 		..()
 
-/obj/item/weapon/book/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(user.zone_sel.selecting == O_EYES)
+/obj/item/weapon/book/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+	if(def_zone == O_EYES)
 		user.visible_message("<span class='notice'>You open up the book and show it to [M]. </span>", \
 			"<span class='notice'> [user] opens up a book and shows it to [M]. </span>")
 		M << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")

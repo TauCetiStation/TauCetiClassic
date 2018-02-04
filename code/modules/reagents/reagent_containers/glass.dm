@@ -46,8 +46,8 @@
 		/obj/machinery/hydroponics,
 		/obj/machinery/constructable_frame)
 
-/obj/item/weapon/reagent_containers/glass/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/atom_init()
+	. = ..()
 	base_name = name
 
 /obj/item/weapon/reagent_containers/glass/examine(mob/user)
@@ -177,14 +177,6 @@
 /obj/item/weapon/reagent_containers/glass/beaker/on_reagent_change()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/glass/beaker/pickup(mob/user)
-	..()
-	update_icon()
-
-/obj/item/weapon/reagent_containers/glass/beaker/dropped(mob/user)
-	..()
-	update_icon()
-
 /obj/item/weapon/reagent_containers/glass/beaker/attack_hand()
 	..()
 	update_icon()
@@ -253,22 +245,25 @@
 	flags = OPENCONTAINER
 
 /obj/item/weapon/reagent_containers/glass/beaker/cryoxadone
-	New()
-		..()
-		reagents.add_reagent("cryoxadone", 30)
-		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/cryoxadone/atom_init()
+	. = ..()
+	reagents.add_reagent("cryoxadone", 30)
+	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/sulphuric
-	New()
-		..()
-		reagents.add_reagent("sacid", 50)
-		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/sulphuric/atom_init()
+	. = ..()
+	reagents.add_reagent("sacid", 50)
+	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/slime
-	New()
-		..()
-		reagents.add_reagent("slimejelly", 50)
-		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/slime/atom_init()
+	. = ..()
+	reagents.add_reagent("slimejelly", 50)
+	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/bucket
 	desc = "It's a bucket."
@@ -312,7 +307,7 @@
 /obj/item/weapon/reagent_containers/glass/bucket/on_reagent_change()
 	update_icon()
 
-/obj/item/weapon/reagent_containers/glass/bucket/full/New()
-	..()
+/obj/item/weapon/reagent_containers/glass/bucket/full/atom_init()
+	. = ..()
 	reagents.add_reagent("water", volume)
 	update_icon()

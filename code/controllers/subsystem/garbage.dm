@@ -9,35 +9,40 @@ var/datum/subsystem/garbage_collector/SSgarbage
 
 	flags = SS_FIRE_IN_LOBBY | SS_POST_FIRE_TIMING | SS_BACKGROUND | SS_NO_INIT
 
-	var/collection_timeout = 3000// deciseconds to wait to let running procs finish before we just say fuck it and force del() the object
-	var/delslasttick = 0		// number of del()'s we've done this tick
-	var/gcedlasttick = 0		// number of things that gc'ed last tick
+	var/list/collection_timeout = list(0, 2 MINUTES, 10 SECONDS)	// deciseconds to wait before moving something up in the queue to the next level
+
+	//Stat tracking
+	var/delslasttick = 0			// number of del()'s we've done this tick
+	var/gcedlasttick = 0			// number of things that gc'ed last tick
 	var/totaldels = 0
 	var/totalgcs = 0
 
 	var/highest_del_time = 0
 	var/highest_del_tickusage = 0
 
-	var/list/queue = list() 	// list of refID's of things that should be garbage collected
-								// refID's are associated with the time at which they time out and need to be manually del()
-								// we do this so we aren't constantly locating them and preventing them from being gc'd
+	var/list/pass_counts
+	var/list/fail_counts
 
-	var/list/tobequeued = list()	//We store the references of things to be added to the queue seperately so we can spread out GC overhead over a few ticks
+	var/list/items = list()			// Holds our qdel_item statistics datums
 
-	var/list/didntgc = list()	// list of all types that have failed to GC associated with the number of times that's happened.
-								// the types are stored as strings
-
-	var/list/noqdelhint = list()// list of all types that do not return a QDEL_HINT
-
-#ifdef TESTING
-	var/list/qdel_list = list()	// list of all types that have been qdel()eted
-#endif
+	//Queue
+	var/list/queues
 
 /datum/subsystem/garbage_collector/New()
+	queues = new(GC_QUEUE_COUNT)
+	pass_counts = new(GC_QUEUE_COUNT)
+	fail_counts = new(GC_QUEUE_COUNT)
+	for(var/i in 1 to GC_QUEUE_COUNT)
+		queues[i] = list()
+		pass_counts[i] = 0
+		fail_counts[i] = 0
 	NEW_SS_GLOBAL(SSgarbage)
 
 /datum/subsystem/garbage_collector/stat_entry(msg)
-	msg += "Q:[queue.len]|D:[delslasttick]|G:[gcedlasttick]|"
+	var/list/counts = list()
+	for (var/list/L in queues)
+		counts += length(L)
+	msg += "Q:[counts.Join(",")]|D:[delslasttick]|G:[gcedlasttick]|"
 	msg += "GR:"
 	if (!(delslasttick+gcedlasttick))
 		msg += "n/a|"
@@ -49,144 +54,239 @@ var/datum/subsystem/garbage_collector/SSgarbage
 		msg += "n/a|"
 	else
 		msg += "TGR:[round((totalgcs/(totaldels+totalgcs))*100, 0.01)]%"
+	msg += " P:[pass_counts.Join(",")]"
+	msg += "|F:[fail_counts.Join(",")]"
 	..(msg)
 
 /datum/subsystem/garbage_collector/fire()
-	HandleToBeQueued()
-	if (state == SS_RUNNING)
-		HandleQueue()
+	//the fact that this resets its processing each fire (rather then resume where it left off) is intentional.
+	var/queue = GC_QUEUE_PREQUEUE
+
+	while (state == SS_RUNNING)
+		switch (queue)
+			if (GC_QUEUE_PREQUEUE)
+				HandlePreQueue()
+				queue = GC_QUEUE_PREQUEUE+1
+			if (GC_QUEUE_CHECK)
+				HandleQueue(GC_QUEUE_CHECK)
+				queue = GC_QUEUE_CHECK+1
+			if (GC_QUEUE_HARDDELETE)
+				HandleQueue(GC_QUEUE_HARDDELETE)
+				break
+
+	if (state == SS_PAUSED) //make us wait again before the next run.
+		state = SS_RUNNING
 
 //If you see this proc high on the profile, what you are really seeing is the garbage collection/soft delete overhead in byond.
 //Don't attempt to optimize, not worth the effort.
-/datum/subsystem/garbage_collector/proc/HandleToBeQueued()
-	var/list/tobequeued = src.tobequeued
-	var/starttime = world.time
-	var/starttimeofday = world.timeofday
-	while(tobequeued.len && starttime == world.time && starttimeofday == world.timeofday)
-		if (MC_TICK_CHECK)
-			break
-		var/ref = tobequeued[1]
-		Queue(ref)
-		tobequeued.Cut(1, 2)
+/datum/subsystem/garbage_collector/proc/HandlePreQueue()
+	var/list/tobequeued = queues[GC_QUEUE_PREQUEUE]
+	var/static/count = 0
+	if (count)
+		var/c = count
+		count = 0 //so if we runtime on the Cut, we don't try again.
+		tobequeued.Cut(1,c+1)
 
-/datum/subsystem/garbage_collector/proc/HandleQueue(time_to_stop)
-	delslasttick = 0
-	gcedlasttick = 0
-	var/time_to_kill = world.time - collection_timeout // Anything qdel() but not GC'd BEFORE this time needs to be manually del()
-	var/list/queue = src.queue
-	var/starttime = world.time
-	var/starttimeofday = world.timeofday
-	while(queue.len && starttime == world.time && starttimeofday == world.timeofday)
+	for (var/ref in tobequeued)
+		count++
+		Queue(ref, GC_QUEUE_PREQUEUE+1)
 		if (MC_TICK_CHECK)
 			break
-		var/refID = queue[1]
+	if (count)
+		tobequeued.Cut(1,count+1)
+		count = 0
+
+/datum/subsystem/garbage_collector/proc/HandleQueue(level = GC_QUEUE_CHECK)
+	if (level == GC_QUEUE_CHECK)
+		delslasttick = 0
+		gcedlasttick = 0
+	var/cut_off_time = world.time - collection_timeout[level] //ignore entries newer then this
+	var/list/queue = queues[level]
+	var/static/lastlevel
+	var/static/count = 0
+	if (count) //runtime last run before we could do this.
+		var/c = count
+		count = 0 //so if we runtime on the Cut, we don't try again.
+		var/list/lastqueue = queues[lastlevel]
+		lastqueue.Cut(1, c+1)
+
+	lastlevel = level
+
+	for (var/refID in queue)
 		if (!refID)
-			queue.Cut(1, 2)
+			count++
+			if (MC_TICK_CHECK)
+				break
 			continue
 
 		var/GCd_at_time = queue[refID]
-		if(GCd_at_time > time_to_kill)
+		if(GCd_at_time > cut_off_time)
 			break // Everything else is newer, skip them
-		queue.Cut(1, 2)
-		var/datum/A
-		if (!istext(refID))
-			del(refID)
-		else
-			A = locate(refID)
-			if (A && A.gc_destroyed == GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
-				// Something's still referring to the qdel'd object.  Kill it.
-				var/type = A.type
-				testing("GC: -- \ref[A] | [type] was unable to be GC'd and was deleted --")
-				didntgc["[type]"]++
-				var/time = world.timeofday
-				var/tick = world.tick_usage
-				var/ticktime = world.time
-				del(A)
-				tick = (world.tick_usage-tick+((world.time-ticktime)/world.tick_lag*100))
-				if (tick > highest_del_tickusage)
-					highest_del_tickusage = tick
-				time = world.timeofday - time
-				if (time > highest_del_time)
-					highest_del_time = time
-				if (time > 15)
-					log_game("Error: [type]([refID]) took longer then 1.5 seconds to delete (took [time/10] seconds to delete)")
-					message_admins("Error: [type]([refID]) took longer then 1.5 seconds to delete (took [time/10] seconds to delete).")
-					postpone(time/5)
+		count++
+
+		var/datum/D
+		D = locate(refID)
+
+		if (!D || D.gc_destroyed != GCd_at_time) // So if something else coincidently gets the same ref, it's not deleted by mistake
+			++gcedlasttick
+			++totalgcs
+			pass_counts[level]++
+			if (MC_TICK_CHECK)
+				break
+			continue
+
+		// Something's still referring to the qdel'd object.
+		fail_counts[level]++
+		switch (level)
+			if (GC_QUEUE_CHECK)
+				#ifdef GC_FAILURE_HARD_LOOKUP
+				D.find_references()
+				#endif
+				var/type = D.type
+				var/datum/qdel_item/I = items[type]
+				testing("GC: -- \ref[D] | [type] was unable to be GC'd --")
+				I.failures++
+			if (GC_QUEUE_HARDDELETE)
+				HardDelete(D)
+				if (MC_TICK_CHECK)
 					break
-				++delslasttick
-				++totaldels
-			else
-				++gcedlasttick
-				++totalgcs
+				continue
 
-/datum/subsystem/garbage_collector/proc/QueueForQueuing(datum/A)
-	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
-		tobequeued += A
-		A.gc_destroyed = GC_QUEUED_FOR_QUEUING
+		Queue(D, level+1)
 
-/datum/subsystem/garbage_collector/proc/Queue(datum/A)
-	if (!istype(A) || (!isnull(A.gc_destroyed) && A.gc_destroyed >= 0))
+		if (MC_TICK_CHECK)
+			break
+	if (count)
+		queue.Cut(1,count+1)
+		count = 0
+
+/datum/subsystem/garbage_collector/proc/PreQueue(datum/D)
+	if (D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
+		queues[GC_QUEUE_PREQUEUE] += D
+		D.gc_destroyed = GC_QUEUED_FOR_QUEUING
+
+/datum/subsystem/garbage_collector/proc/Queue(datum/D, level = GC_QUEUE_CHECK)
+	if (isnull(D))
 		return
-	if (A.gc_destroyed == GC_QUEUED_FOR_HARD_DEL)
-		del(A)
+	if (D.gc_destroyed == GC_QUEUED_FOR_HARD_DEL)
+		level = GC_QUEUE_HARDDELETE
+	if (level > GC_QUEUE_COUNT)
+		HardDelete(D)
 		return
 	var/gctime = world.time
-	var/refid = "\ref[A]"
+	var/refid = "\ref[D]"
 
-	A.gc_destroyed = gctime
-
+	D.gc_destroyed = gctime
+	var/list/queue = queues[level]
 	if (queue[refid])
 		queue -= refid // Removing any previous references that were GC'd so that the current object will be at the end of the list.
 
 	queue[refid] = gctime
 
-/datum/subsystem/garbage_collector/proc/HardQueue(datum/A)
-	if (istype(A) && A.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
-		tobequeued += A
-		A.gc_destroyed = GC_QUEUED_FOR_HARD_DEL
+//this is mainly to separate things profile wise.
+/datum/subsystem/garbage_collector/proc/HardDelete(datum/D)
+	var/time = world.timeofday
+	var/tick = TICK_USAGE
+	var/ticktime = world.time
+	++delslasttick
+	++totaldels
+	var/type = D.type
+	var/refID = "\ref[D]"
+
+	del(D)
+
+	tick = (TICK_USAGE-tick+((world.time-ticktime)/world.tick_lag*100))
+
+	var/datum/qdel_item/I = items[type]
+
+	I.hard_deletes++
+	I.hard_delete_time += TICK_DELTA_TO_MS(tick)
+
+
+	if (tick > highest_del_tickusage)
+		highest_del_tickusage = tick
+	time = world.timeofday - time
+	if (!time && TICK_DELTA_TO_MS(tick) > 1)
+		time = TICK_DELTA_TO_MS(tick)/100
+	if (time > highest_del_time)
+		highest_del_time = time
+	if (time > 10)
+		log_game("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete)")
+		message_admins("Error: [type]([refID]) took longer than 1 second to delete (took [time/10] seconds to delete).")
+		postpone(time)
+
+/datum/subsystem/garbage_collector/proc/HardQueue(datum/D)
+	if (D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
+		queues[GC_QUEUE_PREQUEUE] += D
+		D.gc_destroyed = GC_QUEUED_FOR_HARD_DEL
 
 /datum/subsystem/garbage_collector/Recover()
-	if (istype(SSgarbage.queue))
-		queue |= SSgarbage.queue
-	if (istype(SSgarbage.tobequeued))
-		tobequeued |= SSgarbage.tobequeued
+	if (istype(SSgarbage.queues))
+		for (var/i in 1 to SSgarbage.queues.len)
+			queues[i] |= SSgarbage.queues[i]
+
+
+/datum/qdel_item
+	var/name = ""
+	var/qdels = 0			//Total number of times it's passed thru qdel.
+	var/destroy_time = 0	//Total amount of milliseconds spent processing this type's Destroy()
+	var/failures = 0		//Times it was queued for soft deletion but failed to soft delete.
+	var/hard_deletes = 0 	//Different from failures because it also includes QDEL_HINT_HARDDEL deletions
+	var/hard_delete_time = 0//Total amount of milliseconds spent hard deleting this type.
+	var/no_hint = 0			//Number of times it's not even bother to give a qdel hint
+	var/slept_destroy = 0	//Number of times it's slept in its destroy
+
+/datum/qdel_item/New(mytype)
+	name = "[mytype]"
+
 
 // Should be treated as a replacement for the 'del' keyword.
 // Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
 /proc/qdel(datum/D)
-	if(!D)
-		return
-#ifdef TESTING
-	SSgarbage.qdel_list += "[D.type]"
-#endif
 	if(!istype(D))
 		del(D)
-	else if(isnull(D.gc_destroyed))
+		return
+	var/datum/qdel_item/I = SSgarbage.items[D.type]
+	if (!I)
+		I = SSgarbage.items[D.type] = new /datum/qdel_item(D.type)
+	I.qdels++
+
+
+	if(isnull(D.gc_destroyed))
 		D.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
+		var/start_time = world.time
+		var/start_tick = world.tick_usage
 		var/hint = D.Destroy() // Let our friend know they're about to get fucked up.
+		if(world.time != start_time)
+			I.slept_destroy++
+		else
+			I.destroy_time += TICK_USAGE_TO_MS(start_tick)
 		if(!D)
 			return
 		switch(hint)
 			if (QDEL_HINT_QUEUE)		//qdel should queue the object for deletion.
-				SSgarbage.QueueForQueuing(D)
+				SSgarbage.PreQueue(D)
+			if (QDEL_HINT_IWILLGC)
+				D.gc_destroyed = world.time
+				return
 			if (QDEL_HINT_LETMELIVE)	//qdel should let the object live after calling destory.
-				return
-			if (QDEL_HINT_IWILLGC)		//functionally the same as the above. qdel should assume the object will gc on its own, and not check it.
-				return
+				D.gc_destroyed = null //clear the gc variable (important!)
 			if (QDEL_HINT_HARDDEL)		//qdel should assume this object won't gc, and queue a hard delete using a hard reference to save time from the locate()
 				SSgarbage.HardQueue(D)
 			if (QDEL_HINT_HARDDEL_NOW)	//qdel should assume this object won't gc, and hard del it post haste.
-				del(D)
+				SSgarbage.HardDelete(D)
 			if (QDEL_HINT_FINDREFERENCE)//qdel will, if TESTING is enabled, display all references to this object, then queue the object for deletion.
-				SSgarbage.QueueForQueuing(D)
+				SSgarbage.PreQueue(D)
 				#ifdef TESTING
 				D.find_references()
 				#endif
 			else
-				if(!("[D.type]" in SSgarbage.noqdelhint))
-					SSgarbage.noqdelhint += "[D.type]"
+				#ifdef TESTING
+				if(!I.no_hint)
 					testing("WARNING: [D.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
-				SSgarbage.QueueForQueuing(D)
+				#endif
+				I.no_hint++
+				SSgarbage.PreQueue(D)
 	else if(D.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
 		CRASH("[D.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
 

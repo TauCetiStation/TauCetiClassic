@@ -18,8 +18,8 @@
 	var/duration = 14 SECONDS
 	alpha = 125
 
-/obj/effect/timestop/New()
-	..()
+/obj/effect/timestop/atom_init()
+	. = ..()
 
 	playsound(src, 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
 	timestop()

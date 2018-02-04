@@ -11,9 +11,11 @@
 	var/min = 1
 	var/max = 10
 
-/obj/structure/closet/crate/secure/loot/New()
-	..()
+/obj/structure/closet/crate/secure/loot/atom_init()
+	. = ..()
 	code = rand(min,max)
+
+/obj/structure/closet/crate/secure/loot/PopulateContents()
 	var/loot = rand(1,30)
 	switch(loot)
 		if(1)
@@ -31,20 +33,20 @@
 		if(4)
 			new/obj/item/weapon/reagent_containers/glass/beaker/bluespace(src)
 		if(5 to 6)
-			for(var/i = 0, i < 10, i++)
+			for (var/i in 1 to 10)
 				new/obj/item/weapon/ore/diamond(src)
 		if(7)
 			return
 		if(8)
 			return
 		if(9)
-			for(var/i = 0, i < 3, i++)
+			for (var/i in 1 to 3)
 				new/obj/machinery/hydroponics/constructable(src)
 		if(10)
-			for(var/i = 0, i < 3, i++)
+			for (var/i in 1 to 3)
 				new/obj/item/weapon/reagent_containers/glass/beaker/noreact(src)
 		if(11 to 12)
-			for(var/i = 0, i < 9, i++)
+			for (var/i in 1 to 9)
 				new/obj/item/bluespace_crystal(src)
 		if(13)
 			new/obj/item/weapon/melee/classic_baton(src)
@@ -52,8 +54,8 @@
 			return
 		if(15)
 			new/obj/item/clothing/under/chameleon(src)
-			for(var/i = 0, i < 7, i++)
-				new/obj/item/clothing/tie/horrible(src)
+			for (var/i in 1 to 7)
+				new/obj/item/clothing/accessory/tie/horrible(src)
 		if(16)
 			new/obj/item/clothing/under/shorts(src)
 			new/obj/item/clothing/under/shorts/red(src)
@@ -96,6 +98,7 @@
 
 /obj/structure/closet/crate/secure/loot/attackby(obj/item/weapon/W, mob/user)
 	if(locked)
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if (istype(W, /obj/item/weapon/card/emag))
 			to_chat(user, "<span class='notice'>The crate unlocks!</span>")
 			locked = 0
@@ -113,5 +116,7 @@
 				to_chat(user, "<span class='notice'>* Last access attempt lower than expected code.</span>")
 			else
 				to_chat(user, "<span class='notice'>* Last access attempt higher than expected code.</span>")
-		else ..()
-	else ..()
+		else
+			..()
+	else
+		..()

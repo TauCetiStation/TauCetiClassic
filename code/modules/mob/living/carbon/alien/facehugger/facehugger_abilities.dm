@@ -123,10 +123,9 @@ This is chestburster mechanic for damaging
 	w_class = 5.0
 
 
-/obj/item/weapon/larva_bite/New(mob/user, mob/victim)
-	..()
-	loc = user
-	chestburster = user
+/obj/item/weapon/larva_bite/atom_init(mapload, mob/victim)
+	. = ..()
+	chestburster = loc
 	affecting = victim
 
 	hud = new /obj/screen/larva_bite(src)
@@ -253,12 +252,15 @@ This is emryo growth procs
 	var/mob/living/baby
 	var/stage = 0
 
-/obj/item/alien_embryo/New()
+/obj/item/alien_embryo/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/alien_embryo/atom_init_late()
 	if(istype(loc, /mob/living))
 		affected_mob = loc
 		START_PROCESSING(SSobj, src)
-		spawn(0)
-			AddInfectionImages(affected_mob)
+		AddInfectionImages(affected_mob)
 	else
 		qdel(src)
 
@@ -266,8 +268,7 @@ This is emryo growth procs
 	if(affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
 		STOP_PROCESSING(SSobj, src)
-		spawn(0)
-			RemoveInfectionImages(affected_mob)
+		RemoveInfectionImages(affected_mob)
 	return ..()
 
 /obj/item/alien_embryo/proc/show_message(message, m_type)
@@ -365,9 +366,12 @@ This is facehugger Attach procs
 	var/strength = 5
 	var/current_hugger
 
-/obj/item/clothing/mask/facehugger/New()
-	START_PROCESSING(SSobj, src)
+/obj/item/clothing/mask/facehugger/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/clothing/mask/facehugger/atom_init_late()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/mask/facehugger/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -409,7 +413,8 @@ This is facehugger Attach procs
 	if (sterile)
 		to_chat(user, "<span class='danger'>It looks like the proboscis has been removed.</span>")
 
-/obj/item/clothing/mask/facehugger/attackby()
+/obj/item/clothing/mask/facehugger/attackby(obj/item/W, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	Die()
 	return
 
@@ -541,10 +546,9 @@ When we finish, facehugger's player will be transfered inside embryo.
 	w_class = 5.0
 
 
-/obj/item/weapon/fh_grab/New(mob/user, mob/victim)
-	..()
-	loc = user
-	assailant = user
+/obj/item/weapon/fh_grab/atom_init(mapload, mob/victim)
+	. = ..()
+	assailant = loc
 	affecting = victim
 
 	hud = new /obj/screen/fh_grab(src)

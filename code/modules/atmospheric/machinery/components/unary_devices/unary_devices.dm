@@ -3,8 +3,8 @@
 	initialize_directions = SOUTH
 	device_type = UNARY
 
-/obj/machinery/atmospherics/components/unary/New()
-	..()
+/obj/machinery/atmospherics/components/unary/atom_init()
+	. = ..()
 
 	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = 200

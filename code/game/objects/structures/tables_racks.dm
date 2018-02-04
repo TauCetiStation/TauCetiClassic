@@ -17,7 +17,7 @@
 	icon_state = "table"
 	density = 1
 	anchored = 1.0
-	layer = 2.8
+	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.")
 	climbable = 1
 
@@ -31,8 +31,8 @@
 			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
 			T.update_icon()
 
-/obj/structure/table/New()
-	..()
+/obj/structure/table/atom_init()
+	. = ..()
 	for(var/obj/structure/table/T in src.loc)
 		if(T != src)
 			qdel(T)
@@ -238,6 +238,7 @@
 
 /obj/structure/table/attack_paw(mob/user)
 	if(HULK in user.mutations)
+		user.SetNextMove(CLICK_CD_MELEE)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes the [src] apart!</span>")
 		destroy()
@@ -245,6 +246,7 @@
 
 /obj/structure/table/attack_alien(mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	if(istype(src, /obj/structure/table/reinforced))
 		return
@@ -259,8 +261,8 @@
 
 /obj/structure/table/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
+		..()
 		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
-		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		destroy()
 
@@ -268,6 +270,7 @@
 
 /obj/structure/table/attack_hand(mob/user)
 	if(HULK in user.mutations)
+		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		destroy()
@@ -346,12 +349,13 @@
 
 
 /obj/structure/table/attackby(obj/item/W, mob/user, params)
-	if (!W) return
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	. = TRUE
+	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user) < 2)
 		var/obj/item/weapon/grab/G = W
-		if (istype(G.affecting, /mob/living))
+		if(isliving(G.affecting))
 			var/mob/living/M = G.affecting
 			var/mob/living/A = G.assailant
+			user.SetNextMove(CLICK_CD_MELEE)
 			if (G.state < GRAB_AGGRESSIVE)
 				if(user.a_intent == "hurt")
 					if (prob(15))
@@ -377,6 +381,7 @@
 			return
 
 	if (istype(W, /obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		to_chat(user, "\blue Now disassembling table")
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user,50, target = src))
@@ -391,17 +396,17 @@
 			if(istype(src, /obj/structure/table/reinforced) && W:active)
 				..()
 				to_chat(user, "<span class='notice'>You tried to slice through [src] but [W] is too weak.</span>")
-				return
+				return FALSE
 			user.do_attack_animation(src)
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			playsound(src.loc, "sparks", 50, 1)
-			for(var/mob/O in viewers(user, 4))
-				O.show_message("<span class='notice'>[src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.</span>", 2)
+			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
+			user.SetNextMove(CLICK_CD_MELEE)
 			destroy()
-			return
+			return FALSE
 
 	if(!(W.flags & ABSTRACT))
 		if(user.drop_item())
@@ -574,6 +579,7 @@
 
 /obj/structure/table/reinforced/attackby(obj/item/weapon/W, mob/user, params)
 	if (istype(W, /obj/item/weapon/weldingtool))
+		if(user.is_busy()) return FALSE
 		var/obj/item/weapon/weldingtool/WT = W
 		if(WT.remove_fuel(0, user))
 			if(src.status == 2)
@@ -590,14 +596,14 @@
 					if(!src || !WT.isOn()) return
 					to_chat(user, "\blue Table strengthened")
 					src.status = 2
-			return
-		return
+			return FALSE
+		return TRUE
 
 	if (istype(W, /obj/item/weapon/wrench))
 		if(src.status == 2)
-			return
+			return TRUE
 
-	..()
+ return ..()
 
 /*
  * Racks
@@ -609,6 +615,7 @@
 	icon_state = "rack"
 	density = 1
 	anchored = 1.0
+	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.
 	var/parts = /obj/item/weapon/rack_parts
 
@@ -662,13 +669,13 @@
 	if(istype(W, /obj/item/weapon/melee/energy)||istype(W, /obj/item/weapon/twohanded/dualsaber))
 		if(istype(W, /obj/item/weapon/melee/energy/blade) || (W:active && user.a_intent == "hurt"))
 			user.do_attack_animation(src)
+			user.SetNextMove(CLICK_CD_MELEE)
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
 			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
 			playsound(src.loc, "sparks", 50, 1)
-			for(var/mob/O in viewers(user, 4))
-				O.show_message("\blue [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
+			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'> You hear [src] coming apart.</span>")
 			destroy()
 			return
 	if(isrobot(user))
@@ -683,6 +690,7 @@
 
 /obj/structure/table/attack_hand(mob/user)
 	if(HULK in user.mutations)
+		user.SetNextMove(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
@@ -690,6 +698,7 @@
 
 /obj/structure/rack/attack_paw(mob/user)
 	if(HULK in user.mutations)
+		user.SetNextMove(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
@@ -697,11 +706,13 @@
 
 /obj/structure/rack/attack_alien(mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	visible_message("<span class='danger'>[user] slices [src] apart!</span>")
 	destroy()
 
 /obj/structure/rack/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
+		..()
 		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		user.do_attack_animation(src)
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")

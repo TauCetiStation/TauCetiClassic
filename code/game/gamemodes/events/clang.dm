@@ -16,15 +16,20 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	density = 1
 	anchored = 1
 
-/obj/effect/immovablerod/New(turf/start, turf/end)
-	..()
+/obj/effect/immovablerod/atom_init(mapload, turf/start, turf/end)
+	. = ..()
+	INVOKE_ASYNC(src, .proc/check_location, start, end)
+
+/obj/effect/immovablerod/proc/check_location(turf/start, turf/end)
 	var/z_original = z
 	if(end && end.z == z_original)
 		walk_towards(src, end, 1)
-	spawn while(src)
+	while(!QDELETED(src))
 		if(loc == end || z != z_original)
 			qdel(src)
+			return
 		sleep(1)
+
 /obj/effect/immovablerod/Bump(atom/clong)
 	if(istype(clong, /turf/simulated/shuttle) || clong == src) //Skip shuttles without actually deleting the rod
 		return

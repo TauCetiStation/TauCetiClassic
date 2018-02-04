@@ -123,7 +123,7 @@
 		to_chat(user, "You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name].")
 		if(instant)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-		if((instant>0) || do_after(user, 50, target = target))
+		if(instant > 0 || (!user.is_busy(src) && do_after(user, 50, target = target)))
 
 			//Gang functions
 			if(gangID)
@@ -182,8 +182,8 @@
 	edible = 0
 	validSurfaces = list(/turf/simulated/floor,/turf/simulated/wall)
 
-/obj/item/toy/crayon/spraycan/New()
-	..()
+/obj/item/toy/crayon/spraycan/atom_init()
+	. = ..()
 	name = "spray can"
 	update_icon()
 

@@ -14,6 +14,7 @@
 
 	anchored = 1
 	density = 1
+	use_power = 0
 
 	var/temptext = ""
 	var/selfdestructing = 0
@@ -22,8 +23,7 @@
 /obj/machinery/syndicate_beacon/attack_ghost(mob/user) //Not needed, but showing of truncated string is not good
 	return
 
-/obj/machinery/syndicate_beacon/attack_hand(mob/user)
-	usr.set_machine(src)
+/obj/machinery/syndicate_beacon/ui_interact(mob/user)
 	var/dat = "<font color=#005500><i>Scanning [pick("retina pattern", "voice print", "fingerprints", "dna sequence")]...<br>Identity confirmed,<br></i></font>"
 	if(ishuman(user) || isAI(user))
 		if(is_special_character(user))
@@ -119,12 +119,11 @@
 	desc = "This looks suspicious..."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "beacon"
-
 	anchored = FALSE
 	density = TRUE
 	layer = MOB_LAYER - 0.1 //so people can't hide it and it's REALLY OBVIOUS
 	stat = 0
-	ghost_must_be_admin = TRUE
+	use_power = 0
 
 	var/active = 0 //It doesn't use up power, so use_power wouldn't really suit it
 	var/icontype = "beacon"
@@ -135,7 +134,7 @@
 	if(!checkWirePower())
 		if(user)
 			to_chat(user, "\blue The connected wire doesn't have enough current.")
-		return
+		return 1
 	for(var/obj/singularity/singulo in world)
 		if(singulo.z == z)
 			singulo.target = src
@@ -156,14 +155,19 @@
 
 
 /obj/machinery/singularity_beacon/attack_ai(mob/user)
-	return
+	if(IsAdminGhost(user))
+		return ..()
 
 /obj/machinery/singularity_beacon/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return 1
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(stat & SCREWED)
 		return active ? Deactivate(user) : Activate(user)
 	else
 		to_chat(user, "\red You need to screw the beacon to the floor first!")
-		return
+		return 1
 
 
 /obj/machinery/singularity_beacon/attackby(obj/item/weapon/W, mob/user)

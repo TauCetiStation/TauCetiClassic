@@ -8,8 +8,8 @@ var/global/media_transmitters=list()
 	var/media_frequency = 1234 // 123.4 MHz
 	var/media_crypto    = null // No crypto keys.
 
-/obj/machinery/media/transmitter/New()
-	..()
+/obj/machinery/media/transmitter/atom_init()
+	. = ..()
 	connect_frequency()
 
 /obj/machinery/media/transmitter/proc/broadcast(url="", start_time=0)

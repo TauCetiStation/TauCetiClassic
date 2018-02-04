@@ -18,9 +18,10 @@
 	var/max_amount = 50                 // also see stack recipes initialisation, param "max_res_amount" must be equal to this max_amount
 	var/merge_type = null               // This path and its children should merge with this stack, defaults to src.type
 	var/full_w_class = ITEM_SIZE_NORMAL // The weight class the stack should have at amount > 2/3rds max_amount
+	var/is_fusion_fuel
 
-/obj/item/stack/New(loc, new_amount = null, merge = FALSE)
-	..()
+/obj/item/stack/atom_init(mapload, new_amount = null, merge = FALSE)
+	. = ..()
 
 	if(new_amount)
 		amount = new_amount
@@ -55,15 +56,19 @@
 /obj/item/stack/examine(mob/user)
 	..()
 	if(src in view(1, user))
-		if(singular_name)
-			if(get_amount() > 1)
-				to_chat(user, "There are [get_amount()] [singular_name]\s in the stack.")
-			else
-				to_chat(user, "There is [get_amount()] [singular_name] in the stack.")
-		else if(get_amount() > 1)
-			to_chat(user, "There are [get_amount()] in the stack.")
+		if(get_amount() > 1)
+			to_chat(user, "There are [get_amount()] [get_stack_name()] in the stack.")
 		else
-			to_chat(user, "There is [get_amount()] in the stack.")
+			to_chat(user, "There is [get_amount()] [get_stack_name()] in the stack.")
+
+/obj/item/stack/proc/get_stack_name()
+	if(singular_name)
+		if(get_amount() > 1)
+			return "[singular_name]\s"
+		else
+			return "[singular_name]"
+	else
+		return ""
 
 /obj/item/stack/attack_self(mob/user)
 	list_recipes(user)
@@ -162,6 +167,7 @@
 			usr << browse(null, "window=stack")
 			return
 		if (R.time)
+			if(usr.is_busy()) return
 			to_chat(usr, "\blue Building [R.title] ...")
 			if (!do_after(usr, R.time, target = usr))
 				return

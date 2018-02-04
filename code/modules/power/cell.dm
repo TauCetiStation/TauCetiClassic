@@ -1,8 +1,8 @@
 // the power cell
 // charge from 0 to 100%
 // fits in APC to provide backup power
-/obj/item/weapon/stock_parts/cell/New()
-	..()
+/obj/item/weapon/stock_parts/cell/atom_init()
+	. = ..()
 	charge = maxcharge
 	addtimer(CALLBACK(src, .proc/updateicon), 5)
 
@@ -62,15 +62,14 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		var/obj/item/clothing/gloves/space_ninja/SNG = H.gloves
-		if(!istype(SNG) || !SNG.candrain || !SNG.draining) return
-
-		SNG.drain("CELL",src,H.wear_suit)
-	return
+		if(istype(SNG) && SNG.candrain && !SNG.draining)
+			SNG.drain("CELL",src,H.wear_suit)
 
 /obj/item/weapon/stock_parts/cell/attackby(obj/item/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = W
+		user.SetNextMove(CLICK_CD_RAPID)
 
 		to_chat(user, "You inject the solution into the power cell.")
 

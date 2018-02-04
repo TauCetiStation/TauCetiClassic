@@ -66,8 +66,8 @@
 	pressure_checks = 2
 	pressure_checks_default = 2
 
-/obj/machinery/atmospherics/components/unary/vent_pump/New()
-	..()
+/obj/machinery/atmospherics/components/unary/vent_pump/atom_init()
+	. = ..()
 
 	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = ATMOS_DEFAULT_VOLUME_PUMP
@@ -103,8 +103,8 @@
 	icon_state = "map_vent_out"
 	use_power = 1
 
-/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/New()
-	..()
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/atom_init()
+	. = ..()
 
 	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = ATMOS_DEFAULT_VOLUME_PUMP + 800
@@ -114,8 +114,8 @@
 	power_channel = ENVIRON
 	power_rating = 30000	//15 kW ~ 20 HP
 
-/obj/machinery/atmospherics/components/unary/vent_pump/engine/New()
-	..()
+/obj/machinery/atmospherics/components/unary/vent_pump/engine/atom_init()
+	. = ..()
 
 	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = ATMOS_DEFAULT_VOLUME_PUMP + 500 //meant to match air injector
@@ -123,8 +123,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/update_icon(safety = 0)
 	if(!check_icon_cache())
 		return
-	if (!NODE1)
-		use_power = 0
 
 	overlays.Cut()
 
@@ -359,6 +357,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_pump/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/weapon/weldingtool))
+		if(user.is_busy()) return
 
 		var/obj/item/weapon/weldingtool/WT = W
 
@@ -369,7 +368,6 @@
 		if(!WT.remove_fuel(0, user))
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 			return
-
 		to_chat(user, "<span class='notice'>Now welding \the [src].</span>")
 		playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 

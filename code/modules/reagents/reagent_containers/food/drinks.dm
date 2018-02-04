@@ -170,11 +170,12 @@
 	desc = "It's milk. White and nutritious goodness!"
 	icon_state = "milk"
 	item_state = "carton"
-	New()
-		..()
-		reagents.add_reagent("milk", 50)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/milk/atom_init()
+	. = ..()
+	reagents.add_reagent("milk", 50)
+	pixel_x = rand(-10.0, 10)
+	pixel_y = rand(-10.0, 10)
 
 /* Flour is no longer a reagent
 /obj/item/weapon/reagent_containers/food/drinks/flour
@@ -183,11 +184,12 @@
 	icon = 'icons/obj/food.dmi'
 	icon_state = "flour"
 	item_state = "flour"
-	New()
-		..()
-		reagents.add_reagent("flour", 30)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/flour/atom_init()
+	. = ..()
+	reagents.add_reagent("flour", 30)
+	pixel_x = rand(-10.0, 10)
+	pixel_y = rand(-10.0, 10)
 */
 
 /obj/item/weapon/reagent_containers/food/drinks/soymilk
@@ -195,63 +197,69 @@
 	desc = "It's soy milk. White and nutritious goodness!"
 	icon_state = "soymilk"
 	item_state = "carton"
-	New()
-		..()
-		reagents.add_reagent("soymilk", 50)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/soymilk/atom_init()
+	. = ..()
+	reagents.add_reagent("soymilk", 50)
+	pixel_x = rand(-10.0, 10)
+	pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/coffee
 	name = "Robust Coffee"
 	desc = "Careful, the beverage you're about to enjoy is extremely hot."
 	icon_state = "coffee"
-	New()
-		..()
-		reagents.add_reagent("coffee", 30)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/coffee/atom_init()
+	. = ..()
+	reagents.add_reagent("coffee", 30)
+	pixel_x = rand(-10.0, 10)
+	pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/tea
 	name = "Duke Purple Tea"
 	desc = "An insult to Duke Purple is an insult to the Space Queen! Any proper gentleman will fight you, if you sully this tea."
 	icon_state = "teacup"
 	item_state = "coffee"
-	New()
-		..()
-		reagents.add_reagent("tea", 30)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(0, 20)       // the teacup is very low on the 32x32 grid so if it's -y then it clips into the tile below it.
+
+/obj/item/weapon/reagent_containers/food/drinks/tea/atom_init()
+	. = ..()
+	reagents.add_reagent("tea", 30)
+	pixel_x = rand(-10.0, 10)
+	pixel_y = rand(0, 20)       // the teacup is very low on the 32x32 grid so if it's -y then it clips into the tile below it.
 
 /obj/item/weapon/reagent_containers/food/drinks/ice
 	name = "Ice Cup"
 	desc = "Careful, cold ice, do not chew."
 	icon_state = "coffee"
-	New()
-		..()
-		reagents.add_reagent("ice", 30)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/ice/atom_init()
+	. = ..()
+	reagents.add_reagent("ice", 30)
+	pixel_x = rand(-10.0, 10)
+	pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/h_chocolate
 	name = "Dutch Hot Coco"
 	desc = "Made in Space South America."
 	icon_state = "hot_coco"
 	item_state = "coffee"
-	New()
-		..()
-		reagents.add_reagent("hot_coco", 30)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/h_chocolate/atom_init()
+	. = ..()
+	reagents.add_reagent("hot_coco", 30)
+	pixel_x = rand(-10.0, 10)
+	pixel_y = rand(-10.0, 10)
 
 /obj/item/weapon/reagent_containers/food/drinks/dry_ramen
 	name = "Cup Ramen"
 	desc = "Just add 10ml water, self heats! A taste that reminds you of your school years."
 	icon_state = "ramen"
-	New()
-		..()
-		reagents.add_reagent("dry_ramen", 30)
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/dry_ramen/atom_init()
+	. = ..()
+	reagents.add_reagent("dry_ramen", 30)
+	pixel_x = rand(-10.0, 10)
+	pixel_y = rand(-10.0, 10)
 
 
 /obj/item/weapon/reagent_containers/food/drinks/sillycup
@@ -260,15 +268,17 @@
 	icon_state = "water_cup_e"
 	possible_transfer_amounts = null
 	volume = 10
-	New()
-		..()
-		src.pixel_x = rand(-10.0, 10)
-		src.pixel_y = rand(-10.0, 10)
-	on_reagent_change()
-		if(reagents.total_volume)
-			icon_state = "water_cup"
-		else
-			icon_state = "water_cup_e"
+
+/obj/item/weapon/reagent_containers/food/drinks/sillycup/atom_init()
+	. = ..()
+	pixel_x = rand(-10.0, 10)
+	pixel_y = rand(-10.0, 10)
+
+/obj/item/weapon/reagent_containers/food/drinks/sillycup/on_reagent_change()
+	if(reagents.total_volume)
+		icon_state = "water_cup"
+	else
+		icon_state = "water_cup_e"
 
 
 //////////////////////////drinkingglass and shaker//

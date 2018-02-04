@@ -31,14 +31,15 @@
 	idle_power_usage = 20
 	active_power_usage = 100
 
-/obj/machinery/shield_gen/New()
-	spawn(10)
-		for(var/obj/machinery/shield_capacitor/possible_cap in range(1, src))
-			if(get_dir(possible_cap, src) == possible_cap.dir)
-				owned_capacitor = possible_cap
-				break
+/obj/machinery/shield_gen/atom_init()
 	field = new/list()
-	..()
+	. = ..()
+
+/obj/machinery/shield_gen/atom_init_late()
+	for(var/obj/machinery/shield_capacitor/possible_cap in range(1, src))
+		if(get_dir(possible_cap, src) == possible_cap.dir)
+			owned_capacitor = possible_cap
+			break
 
 /obj/machinery/shield_gen/Destroy()
 	for(var/obj/effect/energy_field/D in field)
@@ -56,6 +57,7 @@
 		else
 			to_chat(user, "\red Access denied.")
 	else if(istype(W, /obj/item/weapon/card/emag))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(prob(75))
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
@@ -87,19 +89,8 @@
 	else
 		..()
 
-/obj/machinery/shield_gen/attack_paw(user)
-	return src.attack_hand(user)
-
-/obj/machinery/shield_gen/attack_ai(user)
-	return src.attack_hand(user)
-
-/obj/machinery/shield_gen/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN))
-		return
-	interact(user)
-
-/obj/machinery/shield_gen/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+/obj/machinery/shield_gen/ui_interact(mob/user)
+	if ( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )
 		if (!issilicon(user) && !isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=shield_generator")
@@ -137,7 +128,6 @@
 	t += "<A href='?src=\ref[src]'>Refresh</A> "
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 	user << browse(t, "window=shield_generator;size=500x400")
-	user.set_machine(src)
 
 /obj/machinery/shield_gen/process()
 

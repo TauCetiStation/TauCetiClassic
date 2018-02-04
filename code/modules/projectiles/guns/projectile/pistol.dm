@@ -20,11 +20,10 @@
 
 	var/mag = null
 
-/obj/item/weapon/gun/projectile/sigi/New()
-	..()
+/obj/item/weapon/gun/projectile/sigi/atom_init()
+	. = ..()
 	mag = image('icons/obj/gun.dmi', "mag")
 	overlays += mag
-	return
 
 /obj/item/weapon/gun/projectile/sigi/spec
 	name = "\improper pistol"
@@ -59,7 +58,7 @@
 /obj/item/weapon/gun/projectile/sigi/attackby(obj/item/A, mob/user)
 	if (istype(A, /obj/item/ammo_box/magazine))
 		var/obj/item/ammo_box/magazine/AM = A
-		if ((!magazine && istype(AM, mag_type) || istype(AM, mag_type2)))
+		if ((!magazine && (istype(AM, mag_type) || istype(AM, mag_type2))))
 			user.remove_from_mob(AM)
 			magazine = AM
 			magazine.loc = src
@@ -229,10 +228,9 @@
 	fire_sound = 'sound/weapons/guns/at7_shot.wav'
 	mag_type = /obj/item/ammo_box/magazine/at7_45
 
-/obj/item/weapon/gun/projectile/sec_pistol/New()
-	..()
+/obj/item/weapon/gun/projectile/sec_pistol/atom_init()
+	. = ..()
 	update_icon()
-	return
 
 /obj/item/weapon/gun/projectile/sec_pistol/isHandgun()
 	return 1

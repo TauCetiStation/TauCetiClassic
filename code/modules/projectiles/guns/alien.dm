@@ -35,8 +35,8 @@
 	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
-/obj/item/weapon/spikethrower/New()
-	..()
+/obj/item/weapon/spikethrower/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 	last_regen = world.time
 
@@ -68,8 +68,7 @@
 		Fire(A,user,params)
 
 /obj/item/weapon/spikethrower/attack(mob/living/M, mob/living/user, def_zone)
-
-	if (M == user && user.zone_sel.selecting == O_MOUTH)
+	if (M == user && def_zone == O_MOUTH)
 		M.visible_message("\red [user] attempts without success to fit [src] into their mouth.")
 		return
 

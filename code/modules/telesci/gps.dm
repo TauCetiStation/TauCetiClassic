@@ -11,8 +11,8 @@ var/list/GPS_list = list()
 	var/emped = 0
 	var/turf/locked_location
 
-/obj/item/device/gps/New()
-	..()
+/obj/item/device/gps/atom_init()
+	. = ..()
 	GPS_list.Add(src)
 	name = "global positioning system ([gpstag])"
 	overlays += "working"

@@ -89,7 +89,8 @@ var/list/admin_verbs_ban = list(
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
 	/client/proc/play_server_sound,
-	/client/proc/play_sound
+	/client/proc/play_sound,
+	/client/proc/stop_server_sound
 	)
 var/list/admin_verbs_fun = list(
 	/client/proc/object_talk,
@@ -105,7 +106,7 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/make_sound,
 	/client/proc/toggle_random_events,
-	/client/proc/set_ooc,
+	/client/proc/set_global_ooc,
 	/client/proc/editappear,
 	/client/proc/roll_dices,
 	/client/proc/epileptic_anomaly,
@@ -150,6 +151,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/Debug2,
 	/client/proc/ZASSettings,
 	/client/proc/cmd_debug_make_powernets,
+	/client/proc/cmd_debug_load_junkyard,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_admin_delete,
 	/client/proc/cmd_debug_del_all,
@@ -166,7 +168,9 @@ var/list/admin_verbs_debug = list(
 	/*/client/proc/callproc,*/
 //	/proc/machine_upgrade,
 	/client/proc/toggledebuglogs,
-	/client/proc/view_runtimes
+	/client/proc/view_runtimes,
+	/client/proc/cmd_display_del_log,
+	/client/proc/cmd_display_init_log
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -193,7 +197,7 @@ var/list/admin_verbs_event = list(
 
 //verbs which can be hidden - needs work
 var/list/admin_verbs_hideable = list(
-	/client/proc/set_ooc,
+	/client/proc/set_global_ooc,
 	/client/proc/deadmin_self,
 //	/client/proc/deadchat,
 	/client/proc/toggleprayers,
@@ -380,7 +384,7 @@ var/list/admin_verbs_hideable = list(
 
 		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	else if(istype(mob,/mob/new_player))
+	else if(isnewplayer(mob))
 		to_chat(src, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>")
 	else
 		//ghostize
@@ -459,12 +463,15 @@ var/list/admin_verbs_hideable = list(
 	return
 
 /client/proc/colorooc()
-	set category = "Fun"
-	set name = "OOC Text Color"
-	if(!holder)	return
-	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
-	if(new_ooccolor)
-		prefs.ooccolor = new_ooccolor
+	set category = "OOC"
+	set name = "Set Admin OOC Color"
+	if(!holder)
+		return
+	if(!config.allow_admin_ooccolor)
+		to_chat(usr, "<span class='warning'>Currently disabled by config.</span>")
+	var/new_aooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
+	if(new_aooccolor)
+		prefs.aooccolor = new_aooccolor
 		prefs.save_preferences()
 	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
@@ -494,22 +501,22 @@ var/list/admin_verbs_hideable = list(
 /client/proc/warn(warned_ckey)
 	if(!check_rights(R_ADMIN))
 		return
-	
+
 	warned_ckey = ckey(warned_ckey)
-	
+
 	var/reason = input(usr, "Reason?", "Warn Reason","") as text|null
 
 	if(!warned_ckey || !reason)
 		return
-	
+
 	notes_add(warned_ckey, "ADMINWARN: " + reason, src)
-	
+
 	var/client/C = directory[warned_ckey]
 	reason = sanitize(reason)
-	
+
 	if(C)
 		to_chat(C, "<span class='alert'><span class='reallybig bold'>You have been formally warned by an administrator.</span><br>Reason: [reason].</span>")
-	
+
 	log_admin("[src.key] has warned [warned_ckey] with reason: [reason]")
 	message_admins("[key_name_admin(src)] has warned [C ? key_name_admin(C) : warned_ckey] with reason: [reason].")
 
@@ -932,7 +939,7 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Allows you to interact with most machines as an AI would as a ghost"
 
 	AI_Interact = !AI_Interact
-	machine_interactive_ghost = AI_Interact 
+	machine_interactive_ghost = AI_Interact
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
 
@@ -981,12 +988,11 @@ var/list/admin_verbs_hideable = list(
 	message_admins("[key_name_admin(src)] started loading event-map [choice]")
 	log_admin("[key_name_admin(src)] started loading event-map [choice]")
 
-	var/file = file(choice)
-	if(isfile(file))
-		maploader.load_map(file)//, load_speed = 100)
-
-	message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
-	log_admin("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
+	if(maploader.load_new_z_level(choice))//, load_speed = 100)
+		message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
+		log_admin("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
+	else
+		message_admins("[key_name_admin(src)] failed to load event-map [choice].")
 
 //////////////////////////////
 // Noir event

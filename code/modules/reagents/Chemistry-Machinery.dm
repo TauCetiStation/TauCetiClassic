@@ -2,7 +2,7 @@
 #define LIQUID 2
 #define GAS 3
 #define MAX_PILL_SPRITE 20
-#define MAX_BOTTLE_SPRITE 20
+#define MAX_BOTTLE_SPRITE 3
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	density = 1
@@ -49,8 +49,8 @@
 	else
 		recharged -= 1
 
-/obj/machinery/chem_dispenser/New()
-	..()
+/obj/machinery/chem_dispenser/atom_init()
+	. = ..()
 	recharge()
 	dispensable_reagents = sortList(dispensable_reagents)
 
@@ -173,17 +173,6 @@
 		nanomanager.update_uis(src) // update all UIs attached to src
 		return
 
-/obj/machinery/chem_dispenser/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/chem_dispenser/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/chem_dispenser/attack_hand(mob/user)
-	if(stat & BROKEN)
-		return
-	ui_interact(user)
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_dispenser/constructable
@@ -231,8 +220,8 @@
 		)
 	)
 
-/obj/machinery/chem_dispenser/constructable/New()
-	..()
+/obj/machinery/chem_dispenser/constructable/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/chem_dispenser(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -364,8 +353,8 @@
 	var/max_pill_count = 20
 
 
-/obj/machinery/chem_master/New()
-	..()
+/obj/machinery/chem_master/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
@@ -475,7 +464,7 @@
 		return
 
 	else if(href_list["changebottle"])
-		var/dat = "<B>Choose bottle colour</B><BR>"
+		var/dat = "<B>Choose bottle</B><BR>"
 
 		dat += "<TABLE><TR>"
 		for(var/i = 1 to MAX_BOTTLE_SPRITE)
@@ -626,15 +615,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/chem_master/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/chem_master/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/chem_master/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/chem_master/ui_interact(mob/user)
 	if(!(user.client in has_sprites))
 		spawn()
 			has_sprites += user.client
@@ -710,11 +691,11 @@
 	dat += "<LI><A href='?src=\ref[src];createbottle=1'>Create bottle</A> ([condi ? "50" : "30"] units max)"
 	dat += "</UL>"
 	dat += "<BR><A href='?src=\ref[src];close=1'>Close</A>"
+
 	var/datum/browser/popup = new(user, "chem_master", name, 470, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open(1)
-	return
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)
 	if(isnum(num))
@@ -733,8 +714,8 @@
 	name = "ChemMaster 2999"
 	desc = "Used to seperate chemicals and distribute them in a variety of forms."
 
-/obj/machinery/chem_master/constructable/New()
-	..()
+/obj/machinery/chem_master/constructable/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/chem_master(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
@@ -917,9 +898,7 @@
 	src.updateUsrDialog()
 
 
-/obj/machinery/computer/pandemic/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/pandemic/ui_interact(mob/user)
 	var/dat = ""
 	if(src.temphtml)
 		dat = "[src.temphtml]<BR><BR><A href='?src=\ref[src];clear=1'>Main Menu</A>"
@@ -1006,7 +985,6 @@
 
 	user << browse("<TITLE>[src.name]</TITLE><BR>[dat]", "window=pandemic;size=575x400")
 	onclose(user, "pandemic")
-	return
 
 
 /obj/machinery/computer/pandemic/attackby(obj/I, mob/user)
@@ -1098,10 +1076,9 @@
 
 	var/list/holdingitems = list()
 
-/obj/machinery/reagentgrinder/New()
-	..()
+/obj/machinery/reagentgrinder/atom_init()
+	. = ..()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-	return
 
 /obj/machinery/reagentgrinder/update_icon()
 	icon_state = "juicer"+num2text(!isnull(beaker))
@@ -1164,17 +1141,12 @@
 	src.updateUsrDialog()
 	return 0
 
-/obj/machinery/reagentgrinder/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/reagentgrinder/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
 	return 0
 
-/obj/machinery/reagentgrinder/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/reagentgrinder/interact(mob/user) // The microwave Menu
+/obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu
 	var/is_chamber_empty = 0
 	var/is_beaker_ready = 0
 	var/processing_chamber = ""
@@ -1202,10 +1174,10 @@
 
 
 		dat = {"
-	<b>Processing chamber contains:</b><br>
-	[processing_chamber]<br>
-	[beaker_contents]<hr>
-	"}
+			<b>Processing chamber contains:</b><br>
+			[processing_chamber]<br>
+			[beaker_contents]<hr>
+			"}
 		if (is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
 			dat += "<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>"
 			dat += "<A href='?src=\ref[src];action=juice'>Juice the reagents</a><BR><BR>"
@@ -1217,7 +1189,6 @@
 		dat += "Please wait..."
 	user << browse("<HEAD><TITLE>All-In-One Grinder</TITLE></HEAD><TT>[dat]</TT>", "window=reagentgrinder")
 	onclose(user, "reagentgrinder")
-	return
 
 
 /obj/machinery/reagentgrinder/Topic(href, href_list)
@@ -1313,7 +1284,7 @@
 	spawn(50)
 		pixel_x = initial(pixel_x) //return to its spot after shaking
 		inuse = 0
-		interact(usr)
+		updateUsrDialog()
 	//Snacks
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
@@ -1349,7 +1320,7 @@
 	spawn(60)
 		pixel_x = initial(pixel_x) //return to its spot after shaking
 		inuse = 0
-		interact(usr)
+		updateUsrDialog()
 	//Snacks and Plants
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)

@@ -71,22 +71,21 @@
 							"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
 		return(BRUTELOSS)
 
-/obj/item/weapon/screwdriver/New(loc, var/param_color)
-	..()
+/obj/item/weapon/screwdriver/atom_init(mapload, param_color)
+	. = ..()
 	if(!icon_state)
 		if(!param_color)
 			param_color = pick("red", "blue", "purple", "brown", "green", "cyan", "yellow")
 		icon_state = "screwdriver_[param_color]"
 		item_state = "screwdriver_[param_color]"
 
-	src.pixel_y = rand(-6, 6)
-	src.pixel_x = rand(-4, 4)
-	return
+	pixel_y = rand(-6, 6)
+	pixel_x = rand(-4, 4)
 
-/obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/weapon/screwdriver/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M) || user.a_intent == "help")
 		return ..()
-	if(user.zone_sel.selecting != O_EYES && user.zone_sel.selecting != BP_HEAD)
+	if(def_zone != O_EYES && def_zone != BP_HEAD)
 		return ..()
 	if((CLUMSY in user.mutations) && prob(50))
 		M = user
@@ -133,8 +132,8 @@
 	sharp = 1
 	edge = 1
 
-/obj/item/weapon/wirecutters/New(loc, var/param_color)
-	..()
+/obj/item/weapon/wirecutters/atom_init(mapload, param_color)
+	. = ..()
 	if(!icon_state)
 		if(!param_color)
 			param_color = pick("yellow","red")
@@ -201,13 +200,13 @@
 	var/status = 1 		//Whether the welder is secured or unsecured (able to attach rods to it to make a flamethrower)
 	var/max_fuel = 20 	//The max amount of fuel the welder can hold
 
-/obj/item/weapon/weldingtool/New()
+/obj/item/weapon/weldingtool/atom_init()
+	. = ..()
 //	var/random_fuel = min(rand(10,20),max_fuel)
 	var/datum/reagents/R = new/datum/reagents(max_fuel)
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("fuel", max_fuel)
-	return
 
 
 /obj/item/weapon/weldingtool/examine(mob/user)
@@ -293,7 +292,7 @@
 		if(M.l_hand == src || M.r_hand == src)
 			location = get_turf(M)
 	if (istype(location, /turf))
-		location.hotspot_expose(700, 5, 0, src)
+		location.hotspot_expose(700, 5, src)
 
 
 /obj/item/weapon/weldingtool/afterattack(obj/O, mob/user, proximity)
@@ -314,7 +313,7 @@
 		remove_fuel(1)
 		var/turf/location = get_turf(user)
 		if (istype(location, /turf))
-			location.hotspot_expose(700, 50, 1, src)
+			location.hotspot_expose(700, 50, src)
 
 			if(isliving(O))				//Welding can ignite mobs, splashed with fuel
 				var/mob/living/L = O
@@ -542,12 +541,12 @@
 	qdel(src)
 	user.put_in_active_hand(cutjaws)
 
-/obj/item/weapon/weldingtool/attack(mob/M, mob/user)
+/obj/item/weapon/weldingtool/attack(mob/M, mob/user, def_zone)
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 
-		var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 		if(!BP)
 			return
 		if(!(BP.status & ORGAN_ROBOT) || user.a_intent != "help")

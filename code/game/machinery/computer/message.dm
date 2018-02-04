@@ -79,9 +79,7 @@
 		if(message_servers && message_servers.len > 0)
 			linkedServer = message_servers[1]
 
-/obj/machinery/computer/message_monitor/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/message_monitor/ui_interact(mob/user)
 	//If the computer is being hacked or is emagged, display the reboot message.
 	if(hacking || emag)
 		message = rebootmsg
@@ -241,7 +239,6 @@
 	message = defaultmsg
 	user << browse(dat, "window=message;size=700x700")
 	onclose(user, "message")
-	return
 
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user)
 	if(isnull(linkedServer))
@@ -486,14 +483,16 @@
 	name = "Monitor Decryption Key"
 	var/obj/machinery/message_server/server = null
 
-/obj/item/weapon/paper/monitorkey/New()
+/obj/item/weapon/paper/monitorkey/atom_init()
 	..()
-	spawn(10)
-		if(message_servers)
-			for(var/obj/machinery/message_server/server in message_servers)
-				if(!isnull(server))
-					if(!isnull(server.decryptkey))
-						info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
-						info_links = info
-						icon_state = "paper_words"
-						break
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/paper/monitorkey/atom_init_late()
+	if(message_servers)
+		for(var/obj/machinery/message_server/server in message_servers)
+			if(!isnull(server))
+				if(!isnull(server.decryptkey))
+					info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
+					info_links = info
+					icon_state = "paper_words"
+					break

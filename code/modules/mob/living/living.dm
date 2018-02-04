@@ -32,6 +32,9 @@
 		var/mob/living/carbon/C = src
 		C.spread_disease_to(M, "Contact")
 
+	if(M.pulling == src)
+		M.stop_pulling()
+
 	//BubbleWrap: Should stop you pushing a restrained person out of the way
 	if(ishuman(M))
 		for(var/mob/MM in range(M, 1))
@@ -746,7 +749,7 @@
 
 	if(!isliving(usr) || usr.next_move > world.time)
 		return
-	usr.next_move = world.time + 20
+	usr.SetNextMove(20)
 
 	var/mob/living/L = usr
 
@@ -806,7 +809,7 @@
 
 	//resisting grabs (as if it helps anyone...)
 	if (!L.stat && !L.restrained())
-		if(L.stunned > 2 || L.weakened)
+		if(L.stunned > 2 || L.weakened > 2)
 			return
 		var/resisting = 0
 		for(var/obj/O in L.requests)
@@ -819,7 +822,7 @@
 				if(GRAB_PASSIVE)
 					qdel(G)
 				if(GRAB_AGGRESSIVE)
-					if(prob(60)) //same chance of breaking the grab as disarm
+					if(prob(50 - (L.lying ? 35 : 0)))
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				if(GRAB_NECK)

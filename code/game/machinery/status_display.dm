@@ -42,11 +42,9 @@
 	// new display
 	// register for radio system
 
-/obj/machinery/status_display/New()
-	..()
-	spawn(5)	// must wait for map loading to finish
-		if(radio_controller)
-			radio_controller.add_object(src, frequency)
+/obj/machinery/status_display/atom_init()
+	. = ..()
+	radio_controller.add_object(src, frequency)
 
 /obj/machinery/status_display/Destroy()
 	if(radio_controller)

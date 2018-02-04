@@ -26,8 +26,8 @@
 		"/obj/item/taperoll/engineering")
 
 
-/obj/item/weapon/storage/belt/utility/full/New()
-	..()
+/obj/item/weapon/storage/belt/utility/full/atom_init()
+	. = ..()
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
@@ -36,8 +36,8 @@
 	new /obj/item/stack/cable_coil(src, 30, pick(COLOR_RED, COLOR_YELLOW, COLOR_ORANGE))
 
 
-/obj/item/weapon/storage/belt/utility/atmostech/New()
-	..()
+/obj/item/weapon/storage/belt/utility/atmostech/atom_init()
+	. = ..()
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
@@ -102,8 +102,8 @@
 	    "/obj/item/weapon/FixOVein",
 	    "/obj/item/weapon/bonesetter"
 	)
-/obj/item/weapon/storage/belt/medical/surg/full/New()
-	..()
+/obj/item/weapon/storage/belt/medical/surg/full/atom_init()
+	. = ..()
 	new /obj/item/weapon/retractor(src)
 	new /obj/item/weapon/hemostat(src)
 	new /obj/item/weapon/cautery(src)
@@ -155,15 +155,10 @@
 		"/obj/item/device/soulstone"
 		)
 
-/obj/item/weapon/storage/belt/soulstone/full/New()
-	..()
-	new /obj/item/device/soulstone(src)
-	new /obj/item/device/soulstone(src)
-	new /obj/item/device/soulstone(src)
-	new /obj/item/device/soulstone(src)
-	new /obj/item/device/soulstone(src)
-	new /obj/item/device/soulstone(src)
-
+/obj/item/weapon/storage/belt/soulstone/full/atom_init()
+	. = ..()
+	for (var/i in 1 to 6)
+		new /obj/item/device/soulstone(src)
 
 /obj/item/weapon/storage/belt/champion
 	name = "championship belt"

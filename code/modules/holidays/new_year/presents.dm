@@ -11,8 +11,8 @@
 						/obj/item/weapon/poster/contraband				= 2,
 						/obj/item/weapon/poster/legit					= 2,
 						/obj/item/weapon/storage/box/snappops			= 2,
-						/obj/item/clothing/tie/holster/waist			= 2,
-						/obj/item/clothing/tie/medal/gold				= 2,
+						/obj/item/clothing/accessory/holster/waist			= 2,
+						/obj/item/clothing/accessory/medal/gold				= 2,
 						/obj/item/toy/blink								= 2,
 						/obj/item/clothing/under/syndicate/tacticool	= 2,
 						/obj/item/toy/sword								= 2,
@@ -87,7 +87,8 @@
 						/obj/item/toy/prize/poly/polyspecial			= 1
 						)
 
-/obj/item/weapon/present/New()
+/obj/item/weapon/present/atom_init()
+	. = ..()
 	icon_state = "gift[rand(1,9)]"
 	pixel_x = rand(-6,6)
 	pixel_y = rand(-6,6)

@@ -16,9 +16,10 @@ var/lastMove = 0
 	var/obj/item/device/radio/intercom/radio
 
 
-/obj/machinery/computer/arrival_shuttle/New()
+/obj/machinery/computer/arrival_shuttle/atom_init()
 //	curr_location= locate(/area/shuttle/arrival/pre_game)
 	radio = new (src)
+	. = ..()
 
 /obj/machinery/computer/arrival_shuttle/proc/try_move_from_station()
 	if(moving || location != 2 || !SSshuttle)
@@ -155,10 +156,8 @@ var/lastMove = 0
 						break
 					step(L, EAST)
 
-/obj/machinery/computer/arrival_shuttle/attack_hand(user)
-	src.add_fingerprint(usr)
+/obj/machinery/computer/arrival_shuttle/ui_interact(user)
 	var/dat = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"
-
 	user << browse("[dat]", "window=researchshuttle;size=200x100")
 
 /obj/machinery/computer/arrival_shuttle/Topic(href, href_list)
@@ -180,10 +179,8 @@ var/lastMove = 0
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "wagon"
 
-/obj/machinery/computer/arrival_shuttle/dock/attack_hand(user)
-	src.add_fingerprint(usr)
+/obj/machinery/computer/arrival_shuttle/dock/ui_interact(user)
 	var/dat1 = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];back=1'>Send back</A></b></center><br>"
-
 	user << browse("[dat1]", "window=researchshuttle;size=200x100")
 
 /obj/machinery/computer/arrival_shuttle/dock/Topic(href, href_list)

@@ -12,14 +12,13 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
-/obj/item/clothing/under/chameleon/New()
-	..()
+/obj/item/clothing/under/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/clothing/under/chameleon, /obj/item/clothing/under/cloud,
 		/obj/item/clothing/under/golem, /obj/item/clothing/under/gimmick)//Prevent infinite loops and bad jumpsuits.
 	for(var/U in typesof(/obj/item/clothing/under)-blocked)
 		var/obj/item/clothing/under/V = new U
-		src.clothing_choices[V.name] = U
-	return
+		clothing_choices[V.name] = U
 
 /obj/item/clothing/under/chameleon/emp_act(severity)
 	name = "psychedelic"
@@ -73,14 +72,13 @@
 	body_parts_covered = 0
 	var/list/clothing_choices = list()
 
-/obj/item/clothing/head/chameleon/New()
-	..()
+/obj/item/clothing/head/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/clothing/head/chameleon,
 		/obj/item/clothing/head/helmet/space/golem, /obj/item/clothing/head/justice,)//Prevent infinite loops and bad hats.
 	for(var/U in typesof(/obj/item/clothing/head)-blocked)
 		var/obj/item/clothing/head/V = new U
-		src.clothing_choices[V.name] = U
-	return
+		clothing_choices[V.name] = U
 
 /obj/item/clothing/head/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "grey cap"
@@ -132,15 +130,14 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
-/obj/item/clothing/suit/chameleon/New()
-	..()
+/obj/item/clothing/suit/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/clothing/suit/chameleon, /obj/item/clothing/suit/space/space_ninja,
 		/obj/item/clothing/suit/space/golem, /obj/item/clothing/suit/suit, /obj/item/clothing/suit/cyborg_suit, /obj/item/clothing/suit/justice,
 		/obj/item/clothing/suit/greatcoat)//Prevent infinite loops and bad suits.
 	for(var/U in typesof(/obj/item/clothing/suit)-blocked)
 		var/obj/item/clothing/suit/V = new U
-		src.clothing_choices[V.name] = U
-	return
+		clothing_choices[V.name] = U
 
 /obj/item/clothing/suit/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "armor"
@@ -192,14 +189,13 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
-/obj/item/clothing/shoes/chameleon/New()
-	..()
+/obj/item/clothing/shoes/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/clothing/shoes/chameleon,
 		/obj/item/clothing/shoes/golem, /obj/item/clothing/shoes/syndigaloshes, /obj/item/clothing/shoes/cyborg)//prevent infinite loops and bad shoes.
 	for(var/U in typesof(/obj/item/clothing/shoes)-blocked)
 		var/obj/item/clothing/shoes/V = new U
-		src.clothing_choices[V.name] = U
-	return
+		clothing_choices[V.name] = U
 
 /obj/item/clothing/shoes/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "black shoes"
@@ -249,13 +245,12 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
-/obj/item/weapon/storage/backpack/chameleon/New()
-	..()
+/obj/item/weapon/storage/backpack/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/weapon/storage/backpack/chameleon, /obj/item/weapon/storage/backpack/satchel/withwallet)
 	for(var/U in typesof(/obj/item/weapon/storage/backpack)-blocked)//Prevent infinite loops and bad backpacks.
 		var/obj/item/weapon/storage/backpack/V = new U
-		src.clothing_choices[V.name] = U
-	return
+		clothing_choices[V.name] = U
 
 /obj/item/weapon/storage/backpack/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "backpack"
@@ -306,13 +301,12 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
-/obj/item/clothing/gloves/chameleon/New()
-	..()
+/obj/item/clothing/gloves/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/clothing/gloves/chameleon)//Prevent infinite loops and bad hats.
 	for(var/U in typesof(/obj/item/clothing/gloves)-blocked)
 		var/obj/item/clothing/gloves/V = new U
-		src.clothing_choices[V.name] = U
-	return
+		clothing_choices[V.name] = U
 
 /obj/item/clothing/gloves/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "black gloves"
@@ -363,14 +357,13 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
-/obj/item/clothing/mask/chameleon/New()
-	..()
+/obj/item/clothing/mask/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/clothing/mask/chameleon)//Prevent infinite loops and bad hats.
 	for(var/U in typesof(/obj/item/clothing/mask)-blocked)
 		var/obj/item/clothing/mask/V = new U
 		if(V)
-			src.clothing_choices[V.name] = U
-	return
+			clothing_choices[V.name] = U
 
 /obj/item/clothing/mask/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "gas mask"
@@ -421,13 +414,12 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
-/obj/item/clothing/glasses/chameleon/New()
-	..()
+/obj/item/clothing/glasses/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/clothing/glasses/chameleon)//Prevent infinite loops and bad hats.
 	for(var/U in typesof(/obj/item/clothing/glasses)-blocked)
 		var/obj/item/clothing/glasses/V = new U
-		src.clothing_choices[V.name] = U
-	return
+		clothing_choices[V.name] = U
 
 /obj/item/clothing/glasses/chameleon/emp_act(severity) //Because we don't have psych for all slots right now but still want a downside to EMP.  In this case your cover's blown.
 	name = "Optical Meson Scanner"
@@ -476,13 +468,12 @@
 	mag_type = /obj/item/ammo_box/magazine/chameleon
 	var/list/gun_choices = list()
 
-/obj/item/weapon/gun/projectile/chameleon/New()
-	..()
+/obj/item/weapon/gun/projectile/chameleon/atom_init()
+	. = ..()
 	var/blocked = list(/obj/item/weapon/gun/projectile/chameleon)
 	for(var/U in typesof(/obj/item/weapon/gun/)-blocked)
 		var/obj/item/weapon/gun/V = new U
-		src.gun_choices[V.name] = U
-	return
+		gun_choices[V.name] = U
 
 /obj/item/weapon/gun/projectile/chameleon/emp_act(severity)
 	name = "desert eagle"

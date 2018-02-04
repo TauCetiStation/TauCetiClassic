@@ -1,6 +1,5 @@
 
 var/global/BSACooldown = 0
-var/global/floorIsLava = 0
 
 
 ////////////////////////////////
@@ -43,7 +42,7 @@ var/global/floorIsLava = 0
 		body += " played by <b>[M.client]</b> "
 		body += "\[<A href='?src=\ref[src];editrights=show'>[M.client.holder ? M.client.holder.rank : "Player"]</A>\]"
 
-	if(istype(M, /mob/new_player))
+	if(isnewplayer(M))
 		body += " <B>Hasn't Entered Game</B> "
 	else
 		body += " \[<A href='?src=\ref[src];revive=\ref[M]'>Heal</A>\] "
@@ -654,6 +653,7 @@ var/global/floorIsLava = 0
 			<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>
+			<A href='?src=\ref[src];secretsfun=advanceddarkness'>Advanced darkness! (DANGEROUS: extremely dark)</A><BR>
 			<A href='?src=\ref[src];secretsfun=floorlava'>The floor is lava! (DANGEROUS: extremely lame)</A><BR>
 			"}
 
@@ -722,7 +722,7 @@ var/global/floorIsLava = 0
 		if(!check_rights(R_SERVER,0))
 			message = strip_html(message,500)
 		else
-			message = sanitize(message, list("ÿ"=LETTER_255))
+			message = sanitize(message, list("?"=LETTER_255))
 		to_chat(world, "\blue <b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n &emsp; [message]")
 		log_admin("Announce: [key_name(usr)] : [message]")
 	feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

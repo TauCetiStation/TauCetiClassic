@@ -39,16 +39,19 @@
 	icon_state = "xeno_1"
 	random_icon_states = list("xeno_1", "xeno_2","xeno_3","xeno_4","xeno_5","xeno_6","xeno_7","xeno_8","xeno_9","xeno_10","xeno_11","xeno_12","xeno_13")
 
-/obj/structure/cellular_biomass/wall/mine/New()
+/obj/structure/cellular_biomass/wall/mine/atom_init()
+	. = ..()
 	icon_state = "wall"
 
-/obj/structure/cellular_biomass/grass/mine/New()
+/obj/structure/cellular_biomass/grass/mine/atom_init()
+	. = ..()
 	icon_state = "weed[pick(1,2,3)]"
 
-/obj/structure/cellular_biomass/core/mine/New()
+/obj/structure/cellular_biomass/core/mine/atom_init()
+	. = ..()
 	icon_state = "core"
 	set_light(luminosity)
 
-/obj/structure/cellular_biomass/lair/mine/New()
+/obj/structure/cellular_biomass/lair/mine/atom_init(mapload)
 	icon_state = "lair"
-	..(pick(subtypesof(/mob/living/simple_animal/hostile/asteroid) - /mob/living/simple_animal/hostile/asteroid/hivelordbrood ))
+	. = ..(mapload, pick(subtypesof(/mob/living/simple_animal/hostile/asteroid) - /mob/living/simple_animal/hostile/asteroid/hivelordbrood ))

@@ -20,12 +20,12 @@
 	ai = null
 	return ..()
 
-/mob/camera/Eye/New()
+/mob/camera/Eye/atom_init()
 	ghostimage = image(src.icon,src,src.icon_state)
 	ghost_darkness_images |= ghostimage //so ghosts can see the AI eye when they disable darkness
 	ghost_sightless_images |= ghostimage //so ghosts can see the AI eye when they disable ghost sight
 	updateallghostimages()
-	..()
+	. = ..()
 
 /mob/camera/Eye/Destroy()
 	if (ghostimage)
@@ -85,13 +85,12 @@
 	var/obj/machinery/hologram/holopad/holo = null
 
 // Intiliaze the eye by assigning it's "ai" variable to us. Then set it's loc to us.
-/mob/living/silicon/ai/New()
-	..()
+/mob/living/silicon/ai/atom_init()
+	. = ..()
 	eyeobj.master = src
 	eyeobj.ai = src
 	eyeobj.name = "[src.name] (AI Eye)" // Give it a name
-	spawn(5)
-		eyeobj.loc = loc
+	eyeobj.loc = loc
 
 /mob/living/silicon/ai/Destroy()
 	if(eyeobj)

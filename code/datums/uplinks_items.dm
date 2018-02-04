@@ -456,13 +456,12 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	cost = 2
 //	excludefrom = list(/datum/game_mode/nuclear)
-/*
-/datum/uplink_item/stealthy_tools/chameleon_stamp
-	name = "Chameleon Stamp"
-	desc = "A stamp that can be activated to imitate an official Nanotrasen Stamp. The disguised stamp will work exactly like the real stamp and will allow you to forge false documents to gain access or equipment; \
-	it can also be used in a washing machine to forge clothing."
-	item = /obj/item/weapon/stamp/chameleon
-	cost = 1 */
+
+/datum/uplink_item/stealthy_tools/chameleon_penstamp
+	name = "Fake Bureucracy Set"
+	desc = "This set allows you to forge various documents at the station."
+	item = /obj/item/weapon/storage/box/syndie_kit/fake
+	cost = 4
 
 /datum/uplink_item/stealthy_tools/smugglersatchel
 	name = "Smuggler's Satchel"
@@ -627,6 +626,18 @@
 			as well as talk on an encrypted Syndicate channel with other agents that have the same key."
 	item = /obj/item/device/encryptionkey/syndicate
 	cost = 2
+
+/datum/uplink_item/device_tools/poster_kit
+	name = "Poster kit"
+	desc = "Box of illegal posters"
+	item = /obj/item/weapon/storage/box/syndie_kit/posters
+	cost = 1
+
+/datum/uplink_item/device_tools/headcan
+	name = "Biogel can"
+	desc = "Sophisticated device for sustaining life in head for a long period"
+	item = /obj/item/device/biocan
+	cost = 1
 
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector" // changed name in case newfriends thought it detected disguised ai's

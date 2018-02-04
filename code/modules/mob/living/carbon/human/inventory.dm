@@ -80,7 +80,7 @@
 			return has_bodypart(BP_CHEST)
 		if(slot_wear_id)
 			// the only relevant check for this is the uniform check
-			return 1
+			return TRUE
 		if(slot_l_ear)
 			return has_bodypart(BP_HEAD)
 		if(slot_r_ear)
@@ -104,7 +104,9 @@
 		if(slot_s_store)
 			return has_bodypart(BP_CHEST)
 		if(slot_in_backpack)
-			return 1
+			return TRUE
+		if(slot_tie)
+			return TRUE
 
 /mob/living/carbon/human/u_equip(obj/W)
 	if(!W)	return 0
@@ -222,13 +224,6 @@
 	if(!istype(W)) return
 	if(!has_bodypart_for_slot(slot)) return
 
-	if(W == src.l_hand)
-		src.l_hand = null
-		update_inv_l_hand() //So items actually disappear from hands.
-	else if(W == src.r_hand)
-		src.r_hand = null
-		update_inv_r_hand()
-
 	W.screen_loc = null // will get moved if inventory is visible
 
 	W.loc = src
@@ -334,15 +329,23 @@
 			if(src.get_active_hand() == W)
 				src.remove_from_mob(W)
 			W.loc = src.back
+		if(slot_tie)
+			var/obj/item/clothing/under/uniform = w_uniform
+			uniform.attackby(W, src)
 		else
 			to_chat(src, "<span class='warning'>You are trying to eqip this item to an unsupported inventory slot. How the heck did you manage that? Stop it...</span>")
 			return
 
+	if(W == l_hand && slot != slot_l_hand)
+		l_hand = null
+		update_inv_l_hand() // So items actually disappear from hands.
+	else if(W == r_hand && slot != slot_r_hand)
+		r_hand = null
+		update_inv_r_hand()
+
 	W.layer = ABOVE_HUD_LAYER
 	W.plane = ABOVE_HUD_PLANE
 	W.appearance_flags = APPEARANCE_UI
-
-	return
 
 /*
 	MouseDrop human inventory menu
@@ -355,6 +358,7 @@
 	var/t_loc = null	//target location
 	var/obj/item/item = null
 	var/place = null
+	var/obj/item/clothing/holder
 
 /obj/effect/equip_e/human
 	name = "human"
@@ -370,13 +374,21 @@
 /obj/effect/equip_e/proc/done()
 	return
 
-/obj/effect/equip_e/New()
-	if (!ticker)
-		qdel(src)
-	spawn(100)
-		qdel(src)
+/obj/effect/equip_e/atom_init()
 	..()
-	return
+	if (!ticker)
+		return INITIALIZE_HINT_QDEL
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/equip_e/atom_init_late()
+	QDEL_IN(src, 100)
+
+/obj/effect/equip_e/Destroy()
+	source = null
+	s_loc = null
+	t_loc = null
+	item = null
+	return ..()
 
 /obj/effect/equip_e/human/process()
 	if(ismouse(source))
@@ -574,15 +586,17 @@
 					message = "<span class='danger'>[source] is trying to take off \a [target.w_uniform] from [target]'s body!</span>"
 			if("tie")
 				var/obj/item/clothing/under/suit = target.w_uniform
-				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their accessory ([suit.hastie]) removed by [source.name] ([source.ckey])</font>")
-				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) accessory ([suit.hastie])</font>")
-				if(istype(suit.hastie, /obj/item/clothing/tie/holobadge) || istype(suit.hastie, /obj/item/clothing/tie/medal))
-					for(var/mob/M in viewers(target, null))
-						M.show_message("<span class='danger'>[source] tears off \the [suit.hastie] from [target]'s suit!</span>" , 1)
-					done()
-					return
-				else
-					message = "<span class='danger'>[source] is trying to take off \a [suit.hastie] from [target]'s suit!</span>"
+				if(suit.accessories.len)
+					var/obj/item/clothing/accessory/A = suit.accessories[1]
+					target.attack_log += "\[[time_stamp()]\] <font color='orange'>Has had their accessory ([A]) removed by [source.name] ([source.ckey])</font>"
+					source.attack_log += "\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) accessory ([A])</font>"
+					if(istype(A, /obj/item/clothing/accessory/holobadge) || istype(A, /obj/item/clothing/accessory/medal))
+						for(var/mob/M in viewers(target, null))
+							M.show_message("\red <B>[source] tears off \the [A] from [target]'s [suit]!</B>" , 1)
+						done()
+						return
+					else
+						message = "<span class='danger'>[source] is trying to take off \a [A] from [target]'s [suit]!</span>"
 			if("s_store")
 				target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has had their suit storage item ([target.s_store]) removed by [source.name] ([source.ckey])</font>")
 				source.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to remove [target.name]'s ([target.ckey]) suit storage item ([target.s_store])</font>")
@@ -718,17 +732,11 @@ It can still be worn/put on as normal.
 				strip_item = target.wear_suit
 		if("tie")
 			var/obj/item/clothing/under/suit = target.w_uniform
-			//var/obj/item/clothing/tie/tie = suit.hastie
-			/*if(tie)
-				if (istype(tie,/obj/item/clothing/tie/storage))
-					var/obj/item/clothing/tie/storage/W = tie
-					if (W.hold)
-						W.hold.close(usr)
-				usr.put_in_hands(tie)
-				suit.hastie = null*/
-			suit.hastie.on_removed(usr)
-			suit.hastie = null
-			target.update_inv_w_uniform()
+			if(suit && suit.accessories.len)
+				var/obj/item/clothing/accessory/A = suit.accessories[1]
+				A.on_removed(usr)
+				suit.accessories -= A
+				target.update_inv_w_uniform()
 		if("id")
 			slot_to_process = slot_wear_id
 			if (target.wear_id)

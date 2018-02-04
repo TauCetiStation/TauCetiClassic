@@ -77,7 +77,7 @@
 	src.icon_state = "body_scanner_0"
 	return
 
-/obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, user)
+/obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, mob/user)
 	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
 		return
 	if (src.occupant)
@@ -86,7 +86,11 @@
 	if (G.affecting.abiotic())
 		to_chat(user, "\blue <B>Subject cannot have abiotic items on.</B>")
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	var/mob/M = G.affecting
+	if(M.buckled)
+		var/obj/O = M.buckled
+		O.user_unbuckle_mob(user)
 	if (M.client)
 		M.client.perspective = EYE_PERSPECTIVE
 		M.client.eye = src
@@ -182,12 +186,12 @@
 	var/storedinfo = null
 
 
-/obj/machinery/body_scanconsole/New()
+/obj/machinery/body_scanconsole/atom_init()
 	..()
-	spawn( 5 )
-		src.connected = locate(/obj/machinery/bodyscanner, get_step(src, WEST))
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/body_scanconsole/atom_init_late()
+	connected = locate(/obj/machinery/bodyscanner, get_step(src, WEST))
 
 /*
 
@@ -213,19 +217,13 @@
 */
 
 
-/obj/machinery/body_scanconsole/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/body_scanconsole/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/body_scanconsole/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/body_scanconsole/ui_interact(mob/user)
 	if(!ishuman(connected.occupant))
 		to_chat(user, "\red This device can only scan compatible lifeforms.")
 		return
+
 	var/dat
+
 	if (src.delete && src.temphtml) //Window in buffer but its just simple message, so nothing
 		src.delete = src.delete
 	else if (!src.delete && src.temphtml) //Window in buffer - its a menu, dont add clear message
@@ -408,7 +406,6 @@
 			dat = "<font color='red'> Error: No Body Scanner connected.</font>"
 	dat += text("<BR><BR><A href='?src=\ref[];mach_close=scanconsole'>Close</A>", user)
 	user << browse(dat, "window=scanconsole;size=430x600")
-	return
 
 /obj/machinery/body_scanconsole/Topic(href, href_list)
 	. = ..()

@@ -13,8 +13,9 @@
 	var/mopcount = 0
 
 
-/obj/item/weapon/mop/New()
+/obj/item/weapon/mop/atom_init()
 	create_reagents(5)
+	. = ..()
 
 
 obj/item/weapon/mop/proc/clean(turf/simulated/A)
@@ -34,7 +35,7 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 		if(reagents.total_volume < 1)
 			to_chat(user, "<span class='notice'>Your mop is dry!</span>")
 			return
-
+		if(user.is_busy(A)) return
 		user.visible_message("<span class='warning'>[user] begins to clean \the [get_turf(A)].</span>")
 
 		if(do_after(user, 40, target = A))
@@ -45,8 +46,9 @@ obj/item/weapon/mop/proc/clean(turf/simulated/A)
 
 /obj/effect/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/mop) || istype(I, /obj/item/weapon/soap) || istype(I, /obj/item/weapon/kitchen/utensil/fork))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		return
-	..()
+	return ..()
 
 
 /obj/item/weapon/mop/advanced

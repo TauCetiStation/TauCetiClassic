@@ -12,8 +12,8 @@
 //	filling_color = "#24C1FF"
 
 
-/obj/machinery/artifact/bluespace_crystal/New()
-	..()
+/obj/machinery/artifact/bluespace_crystal/atom_init()
+	. = ..()
 	health = rand(150,300)
 	my_effect = new /datum/artifact_effect/tesla(src)
 	my_effect.trigger = 13 //TRIGGER_NEAR
@@ -67,7 +67,7 @@
 	..()
 
 /obj/machinery/artifact/bluespace_crystal/attackby(obj/item/weapon/W, mob/user)
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	get_damage(W.force)
 	..()
 

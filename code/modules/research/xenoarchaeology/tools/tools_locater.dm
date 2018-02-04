@@ -12,8 +12,8 @@
 	var/scan_ticks = 0
 	var/obj/item/device/radio/target_radio
 
-/obj/item/device/beacon_locator/New()
-	..()
+/obj/item/device/beacon_locator/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/device/beacon_locator/Destroy()

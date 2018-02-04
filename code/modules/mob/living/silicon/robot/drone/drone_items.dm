@@ -38,8 +38,37 @@
 		/obj/item/weapon/clipboard,
 		/obj/item/weapon/paper,
 		/obj/item/weapon/paper_bundle,
-		/obj/item/weapon/card/id
+		/obj/item/weapon/card/id,
+		/obj/item/weapon/book,
+		/obj/item/weapon/newspaper
 		)
+
+/obj/item/weapon/gripper/chemistry
+	name = "chemistry gripper"
+	desc = "A simple grasping tool for chemical work."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gripper"
+
+	can_hold = list(
+		/obj/item/weapon/reagent_containers/glass,
+		/obj/item/weapon/storage/pill_bottle
+		)
+
+/obj/item/weapon/gripper/service
+	name = "service gripper"
+	desc = "A simple grasping tool for service work."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gripper"
+
+	can_hold = list(
+		/obj/item/weapon/reagent_containers/glass,
+		/obj/item/weapon/reagent_containers/food
+		)
+
+/obj/item/weapon/gripper/examine(mob/user)
+	..()
+	if(wrapped)
+		to_chat(user, "It is holding \a [wrapped].")
 
 /obj/item/weapon/gripper/attack_self(mob/user)
 	if(wrapped)
@@ -187,7 +216,7 @@
 
 			if(!istype(D))
 				return
-
+			if(user.is_busy()) return
 			to_chat(D, "\red You begin decompiling the other drone.")
 
 			if(!do_after(D,50,target = M))

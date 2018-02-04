@@ -13,16 +13,14 @@
 	var/title = "Mass Driver Controls"
 
 
-/obj/machinery/computer/pod/New()
+/obj/machinery/computer/pod/atom_init()
 	..()
-	spawn( 5 )
-		for(var/obj/machinery/mass_driver/M in machines)
-			if(M.id == id)
-				connected = M
-			else
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/computer/pod/atom_init_late()
+	for(var/obj/machinery/mass_driver/M in machines)
+		if(M.id == id)
+			connected = M
 
 /obj/machinery/computer/pod/proc/alarm()
 	if(stat & (NOPOWER|BROKEN))
@@ -50,12 +48,8 @@
 			return
 	return
 
-/obj/machinery/computer/pod/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/computer/pod/ui_interact(mob/user)
 	var/dat = "<HTML><BODY><TT><B>[title]</B>"
-	user.set_machine(src)
 	if(connected)
 		var/d2
 		if(timing)	//door controls do not need timers.
@@ -78,7 +72,6 @@
 	dat += "<BR><BR><A href='?src=\ref[user];mach_close=computer'>Close</A></TT></BODY></HTML>"
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 
 /obj/machinery/computer/pod/process()
@@ -134,20 +127,11 @@
 	name = "DoorMex Control Computer"
 	title = "Door Controls"
 
-
-
 /obj/machinery/computer/pod/old/syndicate
 	name = "ProComp Executive IIc"
 	desc = "The Syndicate operate on a tight budget. Operates external airlocks."
 	title = "External Airlock Controls"
 	req_access = list(access_syndicate)
-
-/obj/machinery/computer/pod/old/syndicate/attack_hand(mob/user)
-	if(!allowed(user))
-		to_chat(user, "\red Access Denied")
-		return
-	else
-		..()
 
 /obj/machinery/computer/pod/old/swf
 	name = "Magix System IV"

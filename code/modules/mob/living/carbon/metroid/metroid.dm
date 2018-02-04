@@ -73,7 +73,7 @@
 	nutrition = 800 // 1200 = max
 
 
-/mob/living/carbon/slime/New()
+/mob/living/carbon/slime/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
@@ -83,14 +83,11 @@
 	else
 		name = text("[colour] adult slime ([number])")
 	real_name = name
-	spawn (1)
-		regenerate_icons()
-		to_chat(src, "\blue Your icons have been generated!")
-	..()
 
-/mob/living/carbon/slime/adult/New()
-	//verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
-	..()
+	. = ..()
+
+	regenerate_icons()
+
 /mob/living/carbon/slime/Destroy()
 	Victim = null
 	Target = null
@@ -100,6 +97,7 @@
 	if(Friends.len)
 		Friends.Cut()
 	return ..()
+
 /mob/living/carbon/slime/regenerate_icons()
 	overlays.len = 0
 	//var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
@@ -312,13 +310,14 @@
 
 
 /mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M)
+	if(..())
+		return
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -654,11 +653,11 @@
 			enhanced = 1
 			qdel(O)
 
-/obj/item/slime_extract/New()
-		..()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
+/obj/item/slime_extract/atom_init()
+	. = ..()
+	var/datum/reagents/R = new/datum/reagents(100)
+	reagents = R
+	R.my_atom = src
 
 /obj/item/slime_extract/grey
 	name = "grey slime extract"
@@ -948,8 +947,8 @@
 	var/last_ghost_click = 0
 	var/mob/dead/observer/spirit
 
-/obj/effect/golemrune/New()
-	..()
+/obj/effect/golemrune/atom_init()
+	. = ..()
 	announce_to_ghosts()
 
 /obj/effect/golemrune/update_icon()
@@ -996,7 +995,7 @@
 	if(!check_spirit())
 		to_chat(user, "The rune fizzles uselessly. There is no spirit nearby.")
 		return
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	var/mob/living/carbon/human/golem/G = new(loc)
 	G.attack_log = spirit.attack_log //Preserve attack log, if there is any...
 	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"
@@ -1065,25 +1064,25 @@
 	var/Flush = 30
 	var/Uses = 5 // uses before it goes inert
 
-/obj/item/slime_core/New()
-		..()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		POWERFLAG = rand(1,10)
-		Uses = rand(7, 25)
-		//flags |= NOREACT
+/obj/item/slime_core/atom_init()
+	. = ..()
+	var/datum/reagents/R = new/datum/reagents(100)
+	reagents = R
+	R.my_atom = src
+	POWERFLAG = rand(1,10)
+	Uses = rand(7, 25)
+	//flags |= NOREACT
 
-		spawn()
-			Life()
+	spawn()
+		Life()
 
-	proc/Life()
-		while(src)
-			sleep(25)
-			Flush--
-			if(Flush <= 0)
-				reagents.clear_reagents()
-				Flush = 30
+/obj/item/slime_core/proc/Life()
+	while(src)
+		sleep(25)
+		Flush--
+		if(Flush <= 0)
+			reagents.clear_reagents()
+			Flush = 30
 */
 
 
@@ -1097,12 +1096,11 @@
 	origin_tech = "biotech=4"
 	var/grown = 0
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/slime/New()
-	..()
+/obj/item/weapon/reagent_containers/food/snacks/egg/slime/atom_init()
+	. = ..()
 	reagents.add_reagent("nutriment", 4)
 	reagents.add_reagent("slimejelly", 1)
-	spawn(rand(1200,1500))//the egg takes a while to "ripen"
-		Grow()
+	addtimer(CALLBACK(src, .proc/Grow), rand(1200,1500)) // the egg takes a while to "ripen"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Grow()
 	grown = 1

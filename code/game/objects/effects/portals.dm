@@ -6,6 +6,7 @@
 	density = 1
 	unacidable = 1//Can't destroy energy portals.
 	var/failchance = 5
+	var/destroy_after_init = TRUE
 	var/obj/item/target = null
 	var/creator = null
 	anchored = 1.0
@@ -22,11 +23,10 @@
 		return
 	return
 
-/obj/effect/portal/New()
-	spawn(300)
-		qdel(src)
-		return
-	return
+/obj/effect/portal/atom_init()
+	. = ..()
+	if(destroy_after_init)
+		QDEL_IN(src, 300)
 
 /obj/effect/portal/proc/teleport(atom/movable/M, density_check = TELE_CHECK_NONE, respect_entrydir = FALSE, use_forceMove = TRUE)
 	if (istype(M, /obj/effect)) //sparks don't teleport
@@ -50,12 +50,14 @@
 	name = "wormhole"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
+	destroy_after_init = FALSE
 	failchance = 0
 
 	var/obj/effect/portal/tsci_wormhole/linked_portal = null
 	var/obj/machinery/computer/telescience/linked_console = null
 
-/obj/effect/portal/tsci_wormhole/New(loc, turf/exit, other_side_portal = FALSE)
+/obj/effect/portal/tsci_wormhole/atom_init(mapload, turf/exit, other_side_portal = FALSE)
+	. = ..()
 	if(!other_side_portal)
 		linked_portal = new(exit, get_turf(src), TRUE)
 		linked_portal.linked_portal = src

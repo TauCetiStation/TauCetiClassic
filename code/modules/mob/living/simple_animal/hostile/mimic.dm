@@ -137,8 +137,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	var/destroy_objects = 0
 	var/knockdown_people = 0
 
-/mob/living/simple_animal/hostile/mimic/copy/New(loc, var/obj/copy, var/mob/living/creator)
-	..(loc)
+/mob/living/simple_animal/hostile/mimic/copy/atom_init(mapload, obj/copy, mob/living/creator)
+	. = ..()
 	CopyObject(copy, creator)
 
 /mob/living/simple_animal/hostile/mimic/copy/death()

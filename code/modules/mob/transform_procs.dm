@@ -55,7 +55,7 @@
 
 	return O
 
-/mob/new_player/AIize()
+/mob/dead/new_player/AIize()
 	spawning = 1
 	return ..()
 

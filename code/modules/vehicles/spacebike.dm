@@ -34,8 +34,8 @@
 	..()
 	to_chat(user, "There is a small tag reading [id].")
 
-/obj/vehicle/space/spacebike/New()
-	..()
+/obj/vehicle/space/spacebike/atom_init()
+	. = ..()
 	ion = new /datum/effect/effect/system/ion_trail_follow()
 	ion.set_up(src)
 	turn_off()
@@ -68,6 +68,7 @@
 /obj/vehicle/space/spacebike/attack_hand(mob/user)
 	if(!load)
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(load != user)
 		if(do_after(user, 20, target=src))
 			load.visible_message(\
@@ -91,6 +92,7 @@
 			user.drop_item()
 			K.loc = src
 			key = K
+			user.SetNextMove(CLICK_CD_INTERACT)
 			playsound(loc, 'sound/items/insert_key.ogg', 25, 1)
 			to_chat(user, "<span class='notice'>You put the key into the slot.</span>")
 			verbs += /obj/vehicle/space/spacebike/verb/remove_key

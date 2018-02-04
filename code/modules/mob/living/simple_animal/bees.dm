@@ -15,13 +15,17 @@
 	turns_per_move = 6
 	var/obj/machinery/hydroponics/my_hydrotray
 
-/mob/living/simple_animal/bee/New(loc, var/obj/machinery/apiary/new_parent)
-	..()
+/mob/living/simple_animal/bee/atom_init(mapload, obj/machinery/apiary/new_parent)
+	. = ..()
 	parent = new_parent
 
 /mob/living/simple_animal/bee/Destroy()
 	if(parent)
-		parent.owned_bee_swarms.Remove(src)
+		parent.owned_bee_swarms -= src
+		parent = null
+	target_turf = null
+	target_mob = null
+	my_hydrotray = null
 	return ..()
 
 /mob/living/simple_animal/bee/Life()

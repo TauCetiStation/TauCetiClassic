@@ -11,8 +11,8 @@
 
 	device_type = QUATERNARY
 
-/obj/machinery/atmospherics/pipe/manifold4w/New()
-	..()
+/obj/machinery/atmospherics/pipe/manifold4w/atom_init()
+	. = ..()
 	alpha = 255
 	icon = null
 

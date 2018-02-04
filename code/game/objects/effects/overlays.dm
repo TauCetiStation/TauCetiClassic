@@ -12,8 +12,8 @@
 	icon_state="b_beam"
 	var/tmp/atom/BeamSource
 
-/obj/effect/overlay/beam/New()
-	..()
+/obj/effect/overlay/beam/atom_init()
+	. = ..()
 	QDEL_IN(src, 10)
 
 /obj/effect/overlay/palmtree_r
@@ -58,6 +58,6 @@
 	icon = 'icons/obj/structures/droppod.dmi'
 	icon_state = "panel_opening"
 
-/obj/effect/overlay/droppod_open/New()
-	..()
+/obj/effect/overlay/droppod_open/atom_init()
+	. = ..()
 	QDEL_IN(src, 27)

@@ -8,31 +8,29 @@
 	sharp = 1
 	edge = 1
 
-/obj/item/weapon/shard/phoron/New()
+/obj/item/weapon/shard/phoron/atom_init()
+	. = ..()
 
-	src.icon_state = pick("phoronlarge", "phoronmedium", "phoronsmall")
-	switch(src.icon_state)
+	icon_state = pick("phoronlarge", "phoronmedium", "phoronsmall")
+	switch(icon_state)
 		if("phoronsmall")
-			src.pixel_x = rand(-12, 12)
-			src.pixel_y = rand(-12, 12)
+			pixel_x = rand(-12, 12)
+			pixel_y = rand(-12, 12)
 		if("phoronmedium")
-			src.pixel_x = rand(-8, 8)
-			src.pixel_y = rand(-8, 8)
+			pixel_x = rand(-8, 8)
+			pixel_y = rand(-8, 8)
 		if("phoronlarge")
-			src.pixel_x = rand(-5, 5)
-			src.pixel_y = rand(-5, 5)
-		else
-	return
+			pixel_x = rand(-5, 5)
+			pixel_y = rand(-5, 5)
 
 /obj/item/weapon/shard/phoron/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if ( istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(WT.remove_fuel(0, user))
 			new /obj/item/stack/sheet/glass/phoronglass(user.loc, , TRUE)
 			qdel(src)
-			return
-	return ..()
 
 //legacy crystal
 /obj/machinery/crystal
@@ -40,7 +38,8 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "crystal"
 
-/obj/machinery/crystal/New()
+/obj/machinery/crystal/atom_init()
+	. = ..()
 	if(prob(50))
 		icon_state = "crystal2"
 

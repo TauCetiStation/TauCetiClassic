@@ -6,7 +6,7 @@
 	var/spawned_mob = /mob/living/simple_animal/hostile/carp/
 	var/obj/lair_life_monitor/life_monitor = null
 
-/obj/structure/cellular_biomass/lair/New(spawned_mob_type)
+/obj/structure/cellular_biomass/lair/atom_init(mapload, spawned_mob_type)
 	START_PROCESSING(SSobj, src)
 	spawned_mob = spawned_mob_type
 	spawn_mob()
@@ -37,11 +37,10 @@
 /obj/lair_life_monitor
 	var/obj/structure/cellular_biomass/lair/lair_to_report
 
-/obj/lair_life_monitor/New(var/obj/structure/cellular_biomass/lair/lair , var/mob/living/my_mob)
+/obj/lair_life_monitor/atom_init(mapload, obj/structure/cellular_biomass/lair/lair , mob/living/my_mob)
 	if(!lair || ! my_mob)
-		qdel(src)
-		return
-	src.loc = my_mob
+		return INITIALIZE_HINT_QDEL
+	loc = my_mob
 	lair_to_report = lair
 
 /obj/lair_life_monitor/proc/check()

@@ -59,11 +59,11 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	)
 
 
-/obj/item/stack/sheet/mineral/sandstone/New()
+/obj/item/stack/sheet/mineral/sandstone/atom_init()
 	recipes = sandstone_recipes
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
-	..()
+	. = ..()
 
 /obj/item/stack/sheet/mineral
 	force = 5.0
@@ -72,8 +72,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	throw_speed = 3
 	throw_range = 3
 
-/obj/item/stack/sheet/mineral/New()
-	..()
+/obj/item/stack/sheet/mineral/atom_init()
+	. = ..()
 	pixel_x = rand(0,4)-4
 	pixel_y = rand(0,4)-4
 
@@ -90,8 +90,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	perunit = 3750
 
 
-/obj/item/stack/sheet/mineral/iron/New()
-	..()
+/obj/item/stack/sheet/mineral/iron/atom_init()
+	. = ..()
 	recipes = iron_recipes
 
 /*
@@ -108,8 +108,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	sheettype = "sandstone"
 
 
-/obj/item/stack/sheet/mineral/sandstone/New()
-	..()
+/obj/item/stack/sheet/mineral/sandstone/atom_init()
+	. = ..()
 	recipes = sandstone_recipes
 
 /*
@@ -123,8 +123,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	sheettype = "diamond"
 
 
-/obj/item/stack/sheet/mineral/diamond/New()
-	..()
+/obj/item/stack/sheet/mineral/diamond/atom_init()
+	. = ..()
 	recipes = diamond_recipes
 
 /*
@@ -138,8 +138,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	sheettype = "uranium"
 
 
-/obj/item/stack/sheet/mineral/uranium/New()
-	..()
+/obj/item/stack/sheet/mineral/uranium/atom_init()
+	. = ..()
 	recipes = uranium_recipes
 
 /*
@@ -151,10 +151,11 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "phorontech=2;materials=2"
 	perunit = 2000
 	sheettype = "phoron"
+	is_fusion_fuel = TRUE
 
 
-/obj/item/stack/sheet/mineral/phoron/New()
-	..()
+/obj/item/stack/sheet/mineral/phoron/atom_init()
+	. = ..()
 	recipes = phoron_recipes
 
 /*
@@ -172,8 +173,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	perunit = 2000
 
 
-/obj/item/stack/sheet/mineral/plastic/New()
-	..()
+/obj/item/stack/sheet/mineral/plastic/atom_init()
+	. = ..()
 	recipes = plastic_recipes
 
 /*
@@ -193,8 +194,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 
 
 
-/obj/item/stack/sheet/mineral/gold/New()
-	..()
+/obj/item/stack/sheet/mineral/gold/atom_init()
+	. = ..()
 	recipes = gold_recipes
 
 /*
@@ -209,8 +210,8 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 
 
 
-/obj/item/stack/sheet/mineral/silver/New()
-	..()
+/obj/item/stack/sheet/mineral/silver/atom_init()
+	. = ..()
 	recipes = silver_recipes
 
 /*
@@ -227,10 +228,6 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=4"
 	perunit = 2000
 	sheettype = "clown"
-
-
-/obj/item/stack/sheet/mineral/clown/New()
-	..()
 
 
 /****************************** Others ****************************/
@@ -265,6 +262,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=6;powerstorage=5;magnets=5"
 	sheettype = "mhydrogen"
 	perunit = 2000
+	is_fusion_fuel = TRUE
 
 /*
  * Tritium
@@ -277,6 +275,7 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=5"
 	color = "#777777"
 	perunit = 2000
+	is_fusion_fuel = TRUE
 
 /*
  * Osmium
@@ -288,3 +287,13 @@ var/global/list/datum/stack_recipe/silver_recipes = list ( \
 	origin_tech = "materials=5"
 	color = "#9999FF"
 	perunit = 2000
+
+// Fusion fuel.
+/obj/item/stack/sheet/mineral/deuterium
+	name = "deuterium"
+	icon_state = "sheet-silver"
+	sheettype = "deuterium"
+	origin_tech = "materials=3"
+	color = "#999999"
+	perunit = 2000
+	is_fusion_fuel = TRUE

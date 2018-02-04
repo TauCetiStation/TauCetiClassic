@@ -48,47 +48,48 @@
 	icon = 'code/modules/locations/centcomm/monitor_90.dmi'
 	var/icon_state_on
 
-	New()
-		icon_state_on = icon_state
-		..()
+/obj/machinery/information_display/atom_init()
+	icon_state_on = icon_state
+	. = ..()
 
-	process()
-		if(stat & (NOPOWER|BROKEN))
-			switch_display(2)
-			return
-
-	emp_act(severity)
-		if(stat & (BROKEN|NOPOWER))
-			return
+/obj/machinery/information_display/process()
+	if(stat & (NOPOWER|BROKEN))
 		switch_display(2)
-		..(severity)
+		return
 
-	verb/switch_verb()
-		set src in oview(1)
-		set name = "Switch monitor"
-		set category = "Object"
+/obj/machinery/information_display/emp_act(severity)
+	if(stat & (BROKEN|NOPOWER))
+		return
+	switch_display(2)
+	..(severity)
 
-		if (usr.stat != CONSCIOUS || !ishuman(usr))
-			return
+/obj/machinery/information_display/verb/switch_verb()
+	set src in oview(1)
+	set name = "Switch monitor"
+	set category = "Object"
 
-		add_fingerprint(usr)
-		switch_display()
+	if (usr.stat != CONSCIOUS || !ishuman(usr))
+		return
 
-	proc/switch_display(new_mode = 0)
-		switch(new_mode)
-			if(1)//on
-				if(stat & (NOPOWER|BROKEN))		return
-				use_power = 1
-				icon_state = icon_state_on
-				mode = new_mode
+	add_fingerprint(usr)
+	switch_display()
 
-			if(2)//off
-				use_power = 0
-				icon_state = "monitor_off"
-				mode = new_mode
+/obj/machinery/information_display/proc/switch_display(new_mode = 0)
+	switch(new_mode)
+		if(1)//on
+			if(stat & (NOPOWER|BROKEN))
+				return
+			use_power = 1
+			icon_state = icon_state_on
+			mode = new_mode
 
-			else
-				if(mode == 1)
-					switch_display(2)
-				else if(mode == 2)
-					switch_display(1)
+		if(2)//off
+			use_power = 0
+			icon_state = "monitor_off"
+			mode = new_mode
+
+		else
+			if(mode == 1)
+				switch_display(2)
+			else if(mode == 2)
+				switch_display(1)

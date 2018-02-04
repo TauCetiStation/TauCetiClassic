@@ -55,6 +55,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 	name = "\improper High-Res Forensic Scanning Computer"
 	icon_state = "forensic"
 	light_color = "#a91515"
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/scanning
 	var/temp = ""
 	var/canclear = 1
@@ -80,20 +81,12 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 	req_access = list(access_forensics_lockers)
 
 
-/obj/machinery/computer/forensic_scanning/New()
-	..()
+/obj/machinery/computer/forensic_scanning/atom_init()
+	. = ..()
 	new /obj/item/weapon/book/manual/detective(get_turf(src))
-	return
 
 
-/obj/machinery/computer/forensic_scanning/attack_ai(mob/user)
-	return attack_hand(user)
-
-
-/obj/machinery/computer/forensic_scanning/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/forensic_scanning/ui_interact(mob/user)
 	var/dat = ""
 	var/isai = 0
 	if(issilicon(user) || isobserver(user))

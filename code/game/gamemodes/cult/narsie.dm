@@ -35,8 +35,8 @@
 	pixel_y = -32
 	color = "#9C3636"
 
-/obj/effect/effect/sleep_smoke/New()
-	..()
+/obj/effect/effect/sleep_smoke/atom_init()
+	. = ..()
 	spawn (200+rand(10,30))
 		qdel(src)
 	return
@@ -144,8 +144,8 @@
 	grav_pull = 10
 	consume_range = 12 //How many tiles out do we eat
 
-/obj/singularity/narsie/large/New()
-	..()
+/obj/singularity/narsie/large/atom_init()
+	. = ..()
 	to_chat(world, "<font size='15' color='red'><b>NAR-SIE HAS RISEN</b></font>")
 	world << pick(sound('sound/hallucinations/im_here1.ogg'), sound('sound/hallucinations/im_here2.ogg'))
 
@@ -155,10 +155,7 @@
 	narsie_spawn_animation()
 	invisibility = 60
 
-	sleep(70)
-	if(SSshuttle)
-		SSshuttle.incall(0.5)	// Cannot recall
-
+	addtimer(CALLBACK(SSshuttle, /datum/subsystem/shuttle.proc/incall, 0.5), 70)
 
 /obj/singularity/narsie/large/attack_ghost(mob/living/user)
 	if(!(src in view()))

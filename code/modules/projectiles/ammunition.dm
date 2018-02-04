@@ -14,8 +14,8 @@
 	var/pellets = 0								//Pellets for spreadshot
 	var/variance = 0							//Variance for inaccuracy fundamental to the casing
 
-/obj/item/ammo_casing/New()
-	..()
+/obj/item/ammo_casing/atom_init()
+	. = ..()
 	if(projectile_type)
 		BB = new projectile_type(src)
 	pixel_x = rand(-10.0, 10)
@@ -74,8 +74,9 @@
 	var/caliber
 	var/multiload = 1
 
-/obj/item/ammo_box/New()
-	for(var/i = 1, i <= max_ammo, i++)
+/obj/item/ammo_box/atom_init()
+	. = ..()
+	for (var/i in 1 to max_ammo)
 		stored_ammo += new ammo_type(src)
 	update_icon()
 

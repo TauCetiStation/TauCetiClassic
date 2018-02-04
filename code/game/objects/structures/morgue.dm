@@ -67,6 +67,7 @@
 	return src.attack_hand(user)
 
 /obj/structure/morgue/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if (src.connected)
 		for(var/atom/movable/A as mob|obj in src.connected.loc)
 			if (!( A.anchored ))
@@ -81,7 +82,7 @@
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		src.connected = new /obj/structure/m_tray( src.loc )
 		step(src.connected, src.dir)
-		src.connected.layer = OBJ_LAYER
+		src.connected.layer = BELOW_CONTAINERS_LAYER
 		var/turf/T = get_step(src, src.dir)
 		if (T.contents.Find(src.connected))
 			src.connected.connected = src
@@ -101,26 +102,28 @@
 	return
 
 /obj/structure/morgue/attackby(P, mob/user)
-	if (istype(P, /obj/item/weapon/pen))
+	if(istype(P, /obj/item/weapon/pen))
+
 		var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
 		if (user.get_active_hand() != P)
 			return
 		if ((!in_range(src, usr) && src.loc != user))
 			return
+		add_fingerprint(user)
 		t = sanitize(copytext(t,1,MAX_MESSAGE_LEN))
 		if (t)
 			src.name = text("Morgue- '[]'", t)
 		else
 			src.name = "Morgue"
-	src.add_fingerprint(user)
-	return
+	else
+		..()
 
 /obj/structure/morgue/relaymove(mob/user)
 	if (user.stat)
 		return
 	src.connected = new /obj/structure/m_tray( src.loc )
 	step(src.connected, src.dir)
-	src.connected.layer = OBJ_LAYER
+	src.connected.layer = BELOW_CONTAINERS_LAYER
 	var/turf/T = get_step(src, src.dir)
 	if (T.contents.Find(src.connected))
 		src.connected.connected = src
@@ -158,18 +161,15 @@
 	return src.attack_hand(user)
 
 /obj/structure/m_tray/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if (src.connected)
-		for(var/atom/movable/A as mob|obj in src.loc)
-			if (!( A.anchored ))
+		for(var/atom/movable/A in loc)
+			if(!A.anchored)
 				A.loc = src.connected
-			//Foreach goto(26)
 		src.connected.connected = null
 		src.connected.update()
 		add_fingerprint(user)
-		//SN src = null
 		qdel(src)
-		return
-	return
 
 /obj/structure/m_tray/MouseDrop_T(atom/movable/O, mob/user)
 	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
@@ -202,7 +202,12 @@
 	var/id = 1
 	var/locked = 0
 
+/obj/structure/crematorium/atom_init()
+	. = ..()
+	crematorium_list += src
+
 /obj/structure/crematorium/Destroy()
+	crematorium_list -= src
 	if(connected)
 		qdel(connected)
 		connected = null
@@ -255,12 +260,13 @@
 //		src:loc:poison += 20000000
 //		src:loc:firelevel = src:loc:poison
 //		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if (cremating)
-		to_chat(usr, "<span class='rose'>It's locked.</span>")
+		to_chat(user, "<span class='rose'>It's locked.</span>")
 		return
 	if ((src.connected) && (src.locked == 0))
-		for(var/atom/movable/A as mob|obj in src.connected.loc)
-			if (!( A.anchored ))
+		for(var/atom/movable/A in src.connected.loc)
+			if(!A.anchored)
 				A.loc = src
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		qdel(src.connected)
@@ -269,7 +275,7 @@
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		src.connected = new /obj/structure/c_tray( src.loc )
 		step(src.connected, SOUTH)
-		src.connected.layer = OBJ_LAYER
+		src.connected.layer = BELOW_CONTAINERS_LAYER
 		var/turf/T = get_step(src, SOUTH)
 		if (T.contents.Find(src.connected))
 			src.connected.connected = src
@@ -284,26 +290,27 @@
 	update()
 
 /obj/structure/crematorium/attackby(P, mob/user)
-	if (istype(P, /obj/item/weapon/pen))
+	if(istype(P, /obj/item/weapon/pen))
 		var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
 		if (user.get_active_hand() != P)
 			return
 		if ((!in_range(src, usr) > 1 && src.loc != user))
 			return
+		add_fingerprint(user)
 		t = sanitize(copytext(t,1,MAX_MESSAGE_LEN))
 		if (t)
 			src.name = text("Crematorium- '[]'", t)
 		else
 			src.name = "Crematorium"
-	src.add_fingerprint(user)
-	return
+	else
+		..()
 
 /obj/structure/crematorium/relaymove(mob/user)
 	if (user.stat || locked)
 		return
 	src.connected = new /obj/structure/c_tray( src.loc )
 	step(src.connected, SOUTH)
-	src.connected.layer = OBJ_LAYER
+	src.connected.layer = BELOW_CONTAINERS_LAYER
 	var/turf/T = get_step(src, SOUTH)
 	if (T.contents.Find(src.connected))
 		src.connected.connected = src
@@ -379,18 +386,15 @@
 	return src.attack_hand(user)
 
 /obj/structure/c_tray/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	if (src.connected)
-		for(var/atom/movable/A as mob|obj in src.loc)
-			if (!( A.anchored ))
+		for(var/atom/movable/A in loc)
+			if (!A.anchored)
 				A.loc = src.connected
-			//Foreach goto(26)
 		src.connected.connected = null
 		src.connected.update()
 		add_fingerprint(user)
-		//SN src = null
 		qdel(src)
-		return
-	return
 
 /obj/structure/c_tray/MouseDrop_T(atom/movable/O, mob/user)
 	if ((!( istype(O, /atom/movable) ) || O.anchored || get_dist(user, src) > 1 || get_dist(user, O) > 1 || user.contents.Find(src) || user.contents.Find(O)))
@@ -408,14 +412,14 @@
 	return
 
 /obj/machinery/crema_switch/attack_hand(mob/user)
-	if(allowed(user))
-		for (var/obj/structure/crematorium/C in world)
-			if (C.id == id)
-				if (!C.cremating)
-					for(var/mob/living/M in C.contents)
-						user.attack_log += "\[[time_stamp()]\]<font color='red'> Cremated [M.name] ([M.ckey])</font>"
-						message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-					C.cremate(user)
-	else
-		to_chat(user, "<span class='rose'>Access denied.</span>")
-	return
+	. = ..()
+	if(.)
+		return
+	user.SetNextMove(CLICK_CD_MELEE)
+	for (var/obj/structure/crematorium/C in crematorium_list)
+		if (C.id == id)
+			if (!C.cremating)
+				for(var/mob/living/M in C.contents)
+					user.attack_log += "\[[time_stamp()]\]<font color='red'> Cremated [M.name] ([M.ckey])</font>"
+					message_admins("[user.name] ([user.ckey]) <font color='red'>Cremating</font> [M.name] ([M.ckey]). (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+				C.cremate(user)

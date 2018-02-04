@@ -3,8 +3,8 @@
 	var/order_id = 0
 	var/errors = 0
 
-/obj/item/weapon/paper/manifest/New(atom/A, id, cost)
-	..()
+/obj/item/weapon/paper/manifest/atom_init(mapload, id, cost)
+	. = ..()
 	order_id = id
 	order_cost = cost
 

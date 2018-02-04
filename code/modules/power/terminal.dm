@@ -14,11 +14,11 @@
 	layer = 2.6 // a bit above wires
 
 
-/obj/machinery/power/terminal/New()
-	..()
+/obj/machinery/power/terminal/atom_init()
+	. = ..()
 	var/turf/T = src.loc
-	if(level==1) hide(T.intact)
-	return
+	if(level == 1)
+		hide(T.intact)
 
 /obj/machinery/power/terminal/Destroy()
 	if(master)
@@ -56,6 +56,7 @@
 			return
 
 		if((master && master.can_terminal_dismantle()) || !master)
+			if(user.is_busy()) return
 			user.visible_message("<span class='warning'>[user.name] dismantles the power terminal[master ? " from [master]" : ""].</span>", \
 								"You begin to cut the cables...")
 

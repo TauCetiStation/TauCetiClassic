@@ -35,8 +35,8 @@
 	user.visible_message("<span class='userdanger'>[user] is impaling himself with the [name]! It looks like \he's trying to commit suicide.</span>")
 	return (BRUTELOSS|FIRELOSS)
 
-/obj/item/weapon/nullrod/New()
-	..()
+/obj/item/weapon/nullrod/atom_init()
+	. = ..()
 	if(!scum)
 		scum = typecacheof(list(/mob/living/simple_animal/construct, /obj/structure/cult, /obj/effect/rune, /mob/dead/observer))
 	power = new(src)

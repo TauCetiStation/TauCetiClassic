@@ -220,7 +220,7 @@
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)
-	location.hotspot_expose(fire_burn_temperature(), 50, 1)
+	location.hotspot_expose(fire_burn_temperature(), 50)
 
 /mob/living/fire_act()
 	adjust_fire_stacks(0.5)
@@ -294,6 +294,6 @@
 			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
 		client.screen += hud_used.hide_actions_toggle
 
-/mob/living/incapacitated()
-	if(stat || paralysis || stunned || weakened || restrained())
+/mob/living/incapacitated(restrained_type = HANDS)
+	if(stat || paralysis || stunned || weakened || restrained(restrained_type))
 		return 1

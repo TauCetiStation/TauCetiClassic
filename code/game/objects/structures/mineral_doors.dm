@@ -18,11 +18,11 @@
 
 	var/health = 100
 
-/obj/structure/mineral_door/New(location)
-	..()
+/obj/structure/mineral_door/atom_init()
+	. = ..()
 	icon_state = mineralType
 	name = "[mineralType] door"
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles(need_rebuild = 1)
 
 /obj/structure/mineral_door/Destroy()
 	update_nearby_tiles()
@@ -80,7 +80,7 @@
 	flick("[mineralType]opening",src)
 	sleep(10)
 	density = 0
-	opacity = 0
+	set_opacity(0)
 	state = 1
 	update_icon()
 	isSwitchingStates = 0
@@ -92,7 +92,7 @@
 	flick("[mineralType]closing",src)
 	sleep(10)
 	density = 1
-	opacity = 1
+	set_opacity(1)
 	state = 0
 	update_icon()
 	isSwitchingStates = 0
@@ -106,6 +106,7 @@
 
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/pickaxe))
+		if(user.is_busy()) return
 		var/obj/item/weapon/pickaxe/digTool = W
 		to_chat(user, "You start digging the [name].")
 		if(do_after(user,digTool.digspeed, target = src) && src)
@@ -120,6 +121,7 @@
 			var/obj/item/weapon/weldingtool/WT = W
 			if(!src || !WT.isOn())
 				return ..()
+			if(user.is_busy()) return
 			if(WT.remove_fuel(0, user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 				user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
@@ -136,6 +138,7 @@
 				health -= W.force
 				CheckHealth()
 				return ..()
+			if(user.is_busy()) return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
 			if(do_after(user, 40, target = src))
@@ -263,11 +266,11 @@
 	health = 150
 	var/close_delay = 100
 
-/obj/structure/mineral_door/resin/New()
+/obj/structure/mineral_door/resin/atom_init()
 	var/turf/T = get_turf(loc)
 	if(T)
 		T.blocks_air = TRUE
-	..()
+	. = ..()
 
 /obj/structure/mineral_door/resin/Destroy()
 	var/turf/T = get_turf(loc)
@@ -303,6 +306,7 @@
 /obj/structure/mineral_door/resin/attack_paw(mob/user)
 	if(isalienadult(user) && user.a_intent == "hurt")
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		health -= rand(40, 60)
 		if(health <= 0)
 			user.visible_message("<span class='danger'>[user] slices the [name] to pieces!</span>")

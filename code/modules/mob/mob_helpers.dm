@@ -473,15 +473,26 @@ var/list/intents = list("help","disarm","grab","hurt")
 
 #undef SAFE_PERP
 
-/proc/IsAdminGhost(var/mob/user)
-	if(check_rights(R_ADMIN, 0) && isobserver(user) && user.client.AI_Interact)
-		return 1
-	else
-		return 0
+/proc/IsAdminGhost(mob/user)
+	if(!user) // Are they a mob? Auto interface updates call this with a null src
+		return
+	if(!user.client) // Do they have a client?
+		return
+	if(!isobserver(user)) // Are they a ghost?
+		return
+	if(!check_rights_for(user.client, R_ADMIN)) // Are they allowed?
+		return
+	if(!user.client.AI_Interact) // Do they have it enabled?
+		return
+	return TRUE
 
-/mob/proc/is_busy(show_warning = TRUE)
+/mob/proc/is_busy(atom/target, show_warning = TRUE)
 	if(busy_with_action)
 		if(show_warning)
 			to_chat(src, "<span class='warning'>You are busy. Please finish or cancel your current action.</span>")
+		return TRUE
+	if(target && target.in_use_action)
+		if(show_warning)
+			to_chat(src, "<span class='warning'>Please wait while someone else will finish interacting with [target].</span>")
 		return TRUE
 	return FALSE

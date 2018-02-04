@@ -13,15 +13,14 @@
 	//Simple variable to prevent me from doing attack_hand in both this and the child computer
 	var/zone = "This computer is working on a wireless range, the range is currently limited to 25 meters."
 
-/obj/machinery/computer/area_atmos/New()
+/obj/machinery/computer/area_atmos/atom_init()
 	..()
-	//So the scrubbers have time to spawn
-	spawn(10)
-		scanscrubbers()
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/area_atmos/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/area_atmos/atom_init_late()
+	scanscrubbers()
+
+/obj/machinery/computer/area_atmos/ui_interact(mob/user)
 	var/dat = {"
 	<html>
 		<head>

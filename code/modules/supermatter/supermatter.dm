@@ -74,7 +74,7 @@
 		explosion_power = 3 //3,6,9,12? Or is that too small?
 
 
-/obj/machinery/power/supermatter/New()
+/obj/machinery/power/supermatter/atom_init()
 	. = ..()
 	radio = new (src)
 
@@ -215,11 +215,6 @@
 		damage += Proj.damage * config_bullet_energy
 	return 0
 
-
-/obj/machinery/power/supermatter/attack_paw(mob/user)
-	return attack_hand(user)
-
-
 /obj/machinery/power/supermatter/attack_robot(mob/user)
 	if(Adjacent(user))
 		return attack_hand(user)
@@ -252,6 +247,7 @@
 		"<span class=\"warning\">Everything suddenly goes silent.</span>")
 
 	user.drop_from_inventory(W)
+	user.SetNextMove(CLICK_CD_MELEE)
 	Consume(W)
 
 	user.apply_effect(150, IRRADIATE)

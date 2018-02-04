@@ -9,7 +9,6 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
-	ghost_must_be_admin = TRUE
 
 /obj/machinery/ignition_switch
 	name = "ignition switch"
@@ -22,7 +21,6 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
-	ghost_must_be_admin = TRUE
 
 /obj/machinery/flasher_button
 	name = "flasher button"
@@ -35,7 +33,6 @@
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
-	ghost_must_be_admin = TRUE
 
 /obj/machinery/crema_switch
 	desc = "Burn baby burn!"
@@ -44,7 +41,6 @@
 	icon_state = "crema_switch"
 	anchored = TRUE
 	req_access = list(access_crematorium)
-	ghost_must_be_admin = TRUE
 	var/on = FALSE
 	var/area/area = null
 	var/otherarea = null

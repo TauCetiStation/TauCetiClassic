@@ -65,8 +65,8 @@ var/list/cult_datums = list()
 
 // self other technology - Communication rune  //was other hear blood
 // join hide technology - stun rune. Rune color: bright pink.
-/obj/effect/rune/New()
-	..()
+/obj/effect/rune/atom_init()
+	. = ..()
 	cult_runes += src
 	blood_overlay = image('icons/effects/blood.dmi', src, "mfloor[rand(1, 7)]", 2)
 	blood_overlay.override = 1
@@ -112,6 +112,7 @@ var/list/cult_datums = list()
 		user.forceMove(get_turf(pick(allrunes)))
 
 /obj/effect/rune/attack_hand(mob/living/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(!iscultist(user))
 		to_chat(user, "You can't mouth the arcane scratchings without fumbling over them.")
 		return
@@ -234,8 +235,8 @@ var/list/cult_datums = list()
 				</html>
 				"}
 
-/obj/item/weapon/book/tome/New()
-	..()
+/obj/item/weapon/book/tome/atom_init()
+	. = ..()
 	if (icon_state == "book")
 		icon_state = "book[pick(1,2,3,4,5,6)]"
 
@@ -341,29 +342,30 @@ var/list/cult_datums = list()
 	var/w2
 	var/w3
 	var/list/english = list()
-	for (var/w in words)
-		english += words[w]
+	for(var/w in words)
+		english[words[w]] = w
 	if(user)
 		w1 = input("Write your first rune:", "Rune Scribing") in english
 		if(!w1)
 			return
 		if(w1 in cultwords)
-			w1 = cultwords[w1]
+			w1 = english[w1]
 
 	if(user)
 		w2 = input("Write your second rune:", "Rune Scribing") in english
 		if(!w2)
 			return
 		if(w2 in cultwords)
-			w2 = cultwords[w2]
+			w2 = english[w2]
 	if(user)
 		w3 = input("Write your third rune:", "Rune Scribing") in english
 		if(!w3)
 			return
 		if(w3 in cultwords)
-			w3 = cultwords[w3]
+			w3 = english[w3]
 
-	if(user.get_active_hand() != src)
+
+	if(user.get_active_hand() != src || user.is_busy())
 		return
 	user.visible_message("<span class='danger'> [user] slices open a finger and begins to chant and paint symbols on the floor.</span>",\
 	"<span class='danger'> You hear chanting.</span>")
@@ -403,8 +405,8 @@ var/list/cult_datums = list()
 		to_chat(user, "The scriptures of Nar-Sie, The One Who Sees, The Geometer of Blood. Contains the details of every ritual his followers could think of.\
 		Most of these are useless, though.")
 
-obj/item/weapon/book/tome/imbued/New()
-	..()
+obj/item/weapon/book/tome/imbued/atom_init()
+	. = ..()
 	unlocked = TRUE
 	if(!cultwords["travel"])
 		runerandom()

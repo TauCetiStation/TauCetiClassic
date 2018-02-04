@@ -19,15 +19,15 @@
 	return
 
 
-/obj/item/weapon/implanter/attack(mob/M, mob/user)
-	if (!istype(M, /mob/living/carbon))
+/obj/item/weapon/implanter/attack(mob/M, mob/user, def_zone)
+	if (!iscarbon(M))
 		return
 	if (user && src.imp)
 		for (var/mob/O in viewers(M, null))
 			O.show_message("\red [user] is attemping to implant [M].", 1)
 
 		var/turf/T1 = get_turf(M)
-		if (T1 && ((M == user) || do_after(user, 50, target = M)))
+		if (T1 && (M == user || (!user.is_busy() && do_after(user, 50, target = M))))
 			if(user && M && (get_turf(M) == T1) && src && src.imp)
 				for (var/mob/O in viewers(M, null))
 					O.show_message("\red [M] has been implanted by [user].", 1)
@@ -43,7 +43,7 @@
 					src.imp.implanted = 1
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
-						var/obj/item/organ/external/BP = H.get_bodypart(user.zone_sel.selecting)
+						var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 						BP.implants += src.imp
 						imp.part = BP
 
@@ -59,41 +59,37 @@
 /obj/item/weapon/implanter/loyalty
 	name = "implanter-loyalty"
 
-/obj/item/weapon/implanter/loyalty/New()
-	src.imp = new /obj/item/weapon/implant/loyalty( src )
-	..()
+/obj/item/weapon/implanter/loyalty/atom_init()
+	imp = new /obj/item/weapon/implant/loyalty(src)
+	. = ..()
 	update()
-	return
 
 
 
 /obj/item/weapon/implanter/explosive
 	name = "implanter (E)"
 
-/obj/item/weapon/implanter/explosive/New()
-	src.imp = new /obj/item/weapon/implant/explosive( src )
-	..()
+/obj/item/weapon/implanter/explosive/atom_init()
+	imp = new /obj/item/weapon/implant/explosive(src)
+	. = ..()
 	update()
-	return
 
 /obj/item/weapon/implanter/adrenalin
 	name = "implanter-adrenalin"
 
-/obj/item/weapon/implanter/adrenalin/New()
-	src.imp = new /obj/item/weapon/implant/adrenalin(src)
-	..()
+/obj/item/weapon/implanter/adrenalin/atom_init()
+	imp = new /obj/item/weapon/implant/adrenalin(src)
+	. = ..()
 	update()
-	return
 
 /obj/item/weapon/implanter/compressed
 	name = "implanter (C)"
 	icon_state = "cimplanter1"
 
-/obj/item/weapon/implanter/compressed/New()
-	imp = new /obj/item/weapon/implant/compressed( src )
-	..()
+/obj/item/weapon/implanter/compressed/atom_init()
+	imp = new /obj/item/weapon/implant/compressed(src)
+	. = ..()
 	update()
-	return
 
 /obj/item/weapon/implanter/compressed/update()
 	if (imp)
@@ -134,6 +130,6 @@
 	name = "implanter (storage)"
 	icon_state = "cimplanter1"
 
-/obj/item/weapon/implanter/storage/New()
+/obj/item/weapon/implanter/storage/atom_init()
 	imp = new /obj/item/weapon/implant/storage(src)
-	..()
+	. = ..()

@@ -49,13 +49,12 @@
 	origin_tech = "materials=2;syndicate=5"
 
 
-/obj/item/weapon/pen/sleepypen/New()
+/obj/item/weapon/pen/sleepypen/atom_init()
 	var/datum/reagents/R = new/datum/reagents(30) //Used to be 300
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("chloralhydrate", 22)	//Used to be 100 sleep toxin//30 Chloral seems to be fatal, reducing it to 22./N
-	..()
-	return
+	. = ..()
 
 
 /obj/item/weapon/pen/sleepypen/attack(mob/M, mob/user)
@@ -87,14 +86,13 @@
 		reagents.trans_to(M, 50)
 
 
-/obj/item/weapon/pen/paralysis/New()
+/obj/item/weapon/pen/paralysis/atom_init()
 	var/datum/reagents/R = new/datum/reagents(50)
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("zombiepowder", 10)
 	R.add_reagent("cryptobiolin", 15)
-	..()
-	return
+	. = ..()
 
 /obj/item/weapon/pen/edagger
 	origin_tech = "combat=3;syndicate=1"
@@ -132,4 +130,48 @@
 		clean_blood()
 		icon_state = initial(icon_state) //looks like a normal pen when off.
 		item_state = initial(item_state)
+
+/*
+ * Chameleon pen
+ */
+/obj/item/weapon/pen/chameleon
+	var/signature = ""
+
+/obj/item/weapon/pen/chameleon/attack_self(mob/user)
+	signature = sanitize(input("Enter new signature. Leave blank for 'Anonymous'", "New Signature", signature))
+
+/obj/item/weapon/pen/proc/get_signature(mob/user)
+	return (user && user.real_name) ? user.real_name : "Anonymous"
+
+/obj/item/weapon/pen/chameleon/get_signature(mob/user)
+	return signature ? signature : "Anonymous"
+
+/obj/item/weapon/pen/chameleon/verb/set_colour()
+	set name = "Change Pen Colour"
+	set category = "Object"
+
+	var/list/possible_colours = list ("Yellow", "Green", "Pink", "Blue", "Orange", "Cyan", "Red", "Invisible", "Black")
+	var/selected_type = input("Pick new colour.", "Pen Colour", null, null) as null|anything in possible_colours
+
+	if(selected_type)
+		switch(selected_type)
+			if("Yellow")
+				colour = "yellow"
+			if("Green")
+				colour = "lime"
+			if("Pink")
+				colour = "pink"
+			if("Blue")
+				colour = "blue"
+			if("Orange")
+				colour = "orange"
+			if("Cyan")
+				colour = "cyan"
+			if("Red")
+				colour = "red"
+			if("Invisible")
+				colour = "white"
+			else
+				colour = "black"
+		to_chat(usr, "<span class='info'>You select the [lowertext(selected_type)] ink container.</span>")
 

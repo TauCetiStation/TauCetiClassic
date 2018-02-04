@@ -1,5 +1,5 @@
 /world
-	mob = /mob/new_player
+	mob = /mob/dead/new_player
 	turf = /turf/space
 	area = /area/space
 	view = "15x15"
@@ -28,6 +28,8 @@
 	load_motd()
 	load_admins()
 	load_mentors()
+	if(config.allow_donators)
+		load_donators()
 	if(config.usewhitelist)
 		load_whitelist()
 	if(config.usealienwhitelist)
@@ -222,12 +224,25 @@ var/world_topic_spam_protect_time = world.timeofday
 		world.log << initlog
 
 	// Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
-	if(SSgarbage.didntgc.len)
-		var/dellog = ""
-		for(var/path in SSgarbage.didntgc)
-			dellog += "Path : [path] \n"
-			dellog += "Failures : [SSgarbage.didntgc[path]] \n"
-		world.log << dellog
+	var/list/dellog = list()
+
+	//sort by how long it's wasted hard deleting
+	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
+	for(var/path in SSgarbage.items)
+		var/datum/qdel_item/I = SSgarbage.items[path]
+		dellog += "Path: [path]"
+		if (I.failures)
+			dellog += "\tFailures: [I.failures]"
+		dellog += "\tqdel() Count: [I.qdels]"
+		dellog += "\tDestroy() Cost: [I.destroy_time]ms"
+		if (I.hard_deletes)
+			dellog += "\tTotal Hard Deletes [I.hard_deletes]"
+			dellog += "\tTime Spent Hard Deleting: [I.hard_delete_time]ms"
+		if (I.slept_destroy)
+			dellog += "\tSleeps: [I.slept_destroy]"
+		if (I.no_hint)
+			dellog += "\tNo hint: [I.no_hint] times"
+	world.log << dellog.Join("\n")
 
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
@@ -282,9 +297,17 @@ var/world_topic_spam_protect_time = world.timeofday
 	fdel(F)
 	F << the_last_mode
 
-
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
+
+/world/proc/load_donators()
+	var/L = file2list("config/donators.txt")
+	for(var/line in L)
+		if(!length(line))
+			continue
+		if(copytext(line,1,2) == "#")
+			continue
+		donators.Add(ckey(line))
 
 
 /world/proc/load_configuration()

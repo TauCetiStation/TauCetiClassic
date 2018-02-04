@@ -1362,6 +1362,11 @@
 				O.process_hud(src)
 				if(!druggy)
 					see_invisible = SEE_INVISIBLE_LIVING
+			else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/hud/secmed))
+				var/obj/item/clothing/glasses/sunglasses/hud/secmed/O = glasses
+				O.process_hud(src)
+				if(!druggy)
+					see_invisible = SEE_INVISIBLE_LIVING
 
 		else if(!seer)
 			see_invisible = SEE_INVISIBLE_LIVING
@@ -1841,8 +1846,8 @@
 					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
 						holder.icon_state = "hudprisoner"
 						break
-					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Parolled"))
-						holder.icon_state = "hudparolled"
+					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Paroled"))
+						holder.icon_state = "hudparoled"
 						break
 					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Released"))
 						holder.icon_state = "hudreleased"

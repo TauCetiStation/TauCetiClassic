@@ -9,14 +9,14 @@
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
 
-	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
+	var/muzzled = istype(wear_mask, /obj/item/clothing/mask/muzzle)
 	//var/m_type = 1
 
 	for (var/obj/item/weapon/implant/I in src)
 		if (I.implanted)
 			I.trigger(act, src)
 
-	if(src.stat == DEAD && (act != "deathgasp"))
+	if(stat == DEAD && (act != "deathgasp"))
 		return
 	switch(act)
 		if ("airguitar")

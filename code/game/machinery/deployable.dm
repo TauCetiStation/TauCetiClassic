@@ -67,7 +67,9 @@ for reference:
 
 /obj/structure/barricade/wooden/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/stack/sheet/wood))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.health < src.maxhealth)
+			if(user.is_busy()) return
 			visible_message("\red [user] begins to repair \the [src]!")
 			if(do_after(user,20,target = src))
 				src.health = src.maxhealth
@@ -78,6 +80,7 @@ for reference:
 			return
 		return
 	else
+		user.SetNextMove(CLICK_CD_MELEE)
 		switch(W.damtype)
 			if("fire")
 				src.health -= W.force * 1
@@ -152,10 +155,9 @@ for reference:
 	var/locked = 0.0
 //	req_access = list(access_maint_tunnels)
 
-/obj/machinery/deployable/barrier/New()
-	..()
-
-	src.icon_state = "barrier[src.locked]"
+/obj/machinery/deployable/barrier/atom_init()
+	. = ..()
+	icon_state = "barrier[locked]"
 
 /obj/machinery/deployable/barrier/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/id/))
@@ -178,6 +180,7 @@ for reference:
 				return
 		return
 	else if (istype(W, /obj/item/weapon/card/emag))
+		user.SetNextMove(CLICK_CD_MELEE)
 		if (src.emagged == 0)
 			src.emagged = 1
 			src.req_access = null
@@ -196,6 +199,7 @@ for reference:
 			visible_message("\red BZZzZZzZZzZT")
 			return
 	else if (istype(W, /obj/item/weapon/wrench))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if (src.health < src.maxhealth)
 			src.health = src.maxhealth
 			src.emagged = 0
@@ -209,6 +213,7 @@ for reference:
 			return
 		return
 	else
+		user.SetNextMove(CLICK_CD_MELEE)
 		switch(W.damtype)
 			if("fire")
 				src.health -= W.force * 0.75

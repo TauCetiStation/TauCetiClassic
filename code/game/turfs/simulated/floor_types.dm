@@ -5,9 +5,9 @@
 	nitrogen = 0.01
 	temperature = TCMB
 
-	New()
-		..()
-		name = "floor"
+/turf/simulated/floor/airless/atom_init()
+	. = ..()
+	name = "floor"
 
 /turf/simulated/floor/airless/ceiling
 	icon_state = "rockvault"
@@ -18,15 +18,13 @@
 	icon_state = "light_on"
 	floor_type = /obj/item/stack/tile/light
 
-	New()
-		var/n = name //just in case commands rename it in the ..() call
-		..()
-		spawn(4)
-			if(src)
-				update_icon()
-				name = n
+/turf/simulated/floor/light/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
 
-
+/turf/simulated/floor/light/atom_init_late()
+	update_icon()
+	name = initial(name)
 
 /turf/simulated/floor/wood
 	name = "floor"
@@ -40,16 +38,16 @@
 /turf/simulated/floor/vault
 	icon_state = "rockvault"
 
-	New(location,type)
-		..()
-		icon_state = "[type]vault"
+/turf/simulated/floor/vault/atom_init(mapload, type)
+	. = ..()
+	icon_state = "[type]vault"
 
 /turf/simulated/wall/vault
 	icon_state = "rockvault"
 
-	New(location,type)
-		..()
-		icon_state = "[type]vault"
+/turf/simulated/wall/vault/atom_init(mapload, type)
+	. = ..()
+	icon_state = "[type]vault"
 
 /turf/simulated/floor/engine
 	name = "reinforced floor"
@@ -58,11 +56,8 @@
 	heat_capacity = 325000
 
 /turf/simulated/floor/engine/attackby(obj/item/weapon/C, mob/user)
-	if(!C)
-		return
-	if(!user)
-		return
 	if(istype(C, /obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		to_chat(user, "\blue Removing rods...")
 		playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 		if(do_after(user, 30, target = src))
@@ -112,8 +107,8 @@
 	oxygen = 0
 	nitrogen = 0
 
-/turf/simulated/floor/engine/n20/New()
-	..()
+/turf/simulated/floor/engine/n20/atom_init()
+	. = ..()
 
 	if(!air)
 		make_air()
@@ -140,9 +135,9 @@
 	nitrogen = 0.01
 	temperature = TCMB
 
-	New()
-		..()
-		name = "plating"
+/turf/simulated/floor/plating/airless/atom_init()
+	. = ..()
+	name = "plating"
 
 /turf/simulated/floor/bluegrid
 	icon = 'icons/turf/floors.dmi'
@@ -204,8 +199,8 @@
 	light_power = 2
 	light_range = 2
 
-/turf/simulated/floor/beach/water/New()
-	..()
+/turf/simulated/floor/beach/water/atom_init()
+	. = ..()
 	overlays += image("icon"='icons/misc/beach.dmi',"icon_state"="water5","layer"=MOB_LAYER+0.1)
 
 /turf/simulated/floor/grass
@@ -213,42 +208,53 @@
 	icon_state = "grass1"
 	floor_type = /obj/item/stack/tile/grass
 
-	New()
-		icon_state = "grass[pick("1","2","3","4")]"
-		..()
-		spawn(4)
-			if(src)
-				update_icon()
-				for(var/direction in cardinal)
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
+/turf/simulated/floor/grass/atom_init()
+	icon_state = "grass[pick("1","2","3","4")]"
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/simulated/floor/grass/atom_init_late()
+	update_icon()
+	for(var/direction in cardinal)
+		if(istype(get_step(src,direction),/turf/simulated/floor))
+			var/turf/simulated/floor/FF = get_step(src,direction)
+			FF.update_icon() //so siding get updated properly
 
 /turf/simulated/floor/carpet
 	name = "Carpet"
 	icon_state = "carpet"
 	floor_type = /obj/item/stack/tile/carpet
 
-	New()
-		if(!icon_state)
-			icon_state = "carpet"
-		..()
-		spawn(4)
-			if(src)
-				update_icon()
-				for(var/direction in list(1,2,4,8,5,6,9,10))
-					if(istype(get_step(src,direction),/turf/simulated/floor))
-						var/turf/simulated/floor/FF = get_step(src,direction)
-						FF.update_icon() //so siding get updated properly
-
-
-
-/turf/simulated/floor/plating/ironsand/New()
+/turf/simulated/floor/carpet/atom_init()
+	if(!icon_state)
+		icon_state = "carpet"
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/simulated/floor/carpet/atom_init_late()
+	update_icon()
+	for(var/direction in list(1,2,4,8,5,6,9,10))
+		if(istype(get_step(src,direction),/turf/simulated/floor))
+			var/turf/simulated/floor/FF = get_step(src,direction)
+			FF.update_icon() //so siding get updated properly
+
+/turf/simulated/floor/plating/ironsand
 	name = "Iron Sand"
+	icon_state = "ironsand1"
+	basetype = /turf/simulated/floor/plating/ironsand
+
+/turf/simulated/floor/plating/ironsand/ex_act()
+	return 0
+
+/turf/simulated/floor/plating/ironsand/burn_tile()
+	return 0
+
+/turf/simulated/floor/plating/ironsand/atom_init()
+	. = ..()
 	icon_state = "ironsand[rand(1,15)]"
 
 /turf/simulated/floor/plating/snow
+	basetype = /turf/simulated/floor/plating/ironsand
 	name = "snow"
 	icon = 'icons/turf/snow.dmi'
 	icon_state = "snow"
@@ -272,41 +278,40 @@
 
 	intact = 0
 
-	New()
-		..()
-		update_icon(1)
-		set_light(1.5)
+/turf/simulated/floor/plating/airless/catwalk/atom_init()
+	. = ..()
+	update_icon(1)
+	set_light(1.5)
 
-	update_icon(propogate=1)
-		underlays.Cut()
-		var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
-		I.plane = PLANE_SPACE
-		underlays += I
+/turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
+	underlays.Cut()
+	var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
+	I.plane = PLANE_SPACE
+	underlays += I
 
-		var/dirs = 0
-		for(var/direction in cardinal)
-			var/turf/T = get_step(src,direction)
-			if(T.is_catwalk())
-				var/turf/simulated/floor/plating/airless/catwalk/C=T
-				dirs |= direction
-				if(propogate)
-					C.update_icon(0)
-		icon_state="catwalk[dirs]"
+	var/dirs = 0
+	for(var/direction in cardinal)
+		var/turf/T = get_step(src,direction)
+		if(T.is_catwalk())
+			var/turf/simulated/floor/plating/airless/catwalk/C=T
+			dirs |= direction
+			if(propogate)
+				C.update_icon(0)
+	icon_state="catwalk[dirs]"
 
 
-	attackby(obj/item/C, mob/user)
-		if(!C || !user)
-			return 0
-		if(istype(C, /obj/item/weapon/screwdriver))
-			ReplaceWithLattice()
-			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
-			return
+/turf/simulated/floor/plating/airless/catwalk/attackby(obj/item/C, mob/user)
+	if(istype(C, /obj/item/weapon/screwdriver))
+		user.SetNextMove(CLICK_CD_INTERACT)
+		ReplaceWithLattice()
+		playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
+		return
 
-		if(istype(C, /obj/item/stack/cable_coil))
-			var/obj/item/stack/cable_coil/coil = C
-			coil.turf_place(src, user)
+	if(istype(C, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/coil = C
+		coil.turf_place(src, user)
 
-	is_catwalk()
-		return 1
+/turf/simulated/floor/plating/airless/catwalk/is_catwalk()
+	return TRUE
 
 /turf/simulated/floor/exodus

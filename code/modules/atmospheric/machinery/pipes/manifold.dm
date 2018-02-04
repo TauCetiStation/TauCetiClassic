@@ -11,8 +11,8 @@
 
 	device_type = TRINARY
 
-/obj/machinery/atmospherics/pipe/manifold/New()
-	..()
+/obj/machinery/atmospherics/pipe/manifold/atom_init()
+	. = ..()
 	alpha = 255
 	icon = null
 

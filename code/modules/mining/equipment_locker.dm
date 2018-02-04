@@ -31,8 +31,8 @@
 								"uranium" = 20,
 								"osmium" = 	40)
 
-/obj/machinery/mineral/ore_redemption/New()
-	..()
+/obj/machinery/mineral/ore_redemption/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/ore_redemption(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -96,7 +96,7 @@
 				return
 			I.loc = src
 			inserted_id = I
-			interact(user)
+			updateUsrDialog()
 		return
 	if(exchange_parts(user, W))
 		return
@@ -124,12 +124,7 @@
 	qdel(O)//No refined type? Purge it.
 	return
 
-/obj/machinery/mineral/ore_redemption/attack_hand(user)
-	if(..())
-		return
-	interact(user)
-
-obj/machinery/mineral/ore_redemption/interact(mob/user)
+/obj/machinery/mineral/ore_redemption/ui_interact(mob/user)
 	var/obj/item/stack/sheet/mineral/s
 	var/dat
 
@@ -154,7 +149,6 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	var/datum/browser/popup = new(user, "console_stacking_machine", "Ore Redemption Machine", 400, 500)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/mineral/ore_redemption/proc/get_ore_values()
 	var/dat = "<table border='0' width='300'>"
@@ -279,8 +273,8 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	src.equipment_path = path
 	src.cost = cost
 
-/obj/machinery/mineral/equipment_vendor/New()
-	..()
+/obj/machinery/mineral/equipment_vendor/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/mining_equipment_vendor(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -300,12 +294,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		icon_state = "[initial(icon_state)]-off"
 	return
 
-/obj/machinery/mineral/equipment_locker/attack_hand(user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/mineral/equipment_locker/interact(mob/user)
+/obj/machinery/mineral/equipment_locker/ui_interact(mob/user)
 	var/dat
 	dat +="<div class='statusDisplay'>"
 	if(istype(inserted_id))
@@ -321,7 +310,6 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 680)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/mineral/equipment_locker/Topic(href, href_list)
 	. = ..()
@@ -365,7 +353,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			usr.drop_item()
 			C.loc = src
 			inserted_id = C
-			interact(user)
+			updateUsrDialog()
 		return
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
 		updateUsrDialog()
@@ -405,10 +393,11 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 /**********************Mining Equipment Locker Items**************************/
 /**********************Mining Rig Pack**********************/
 
-/obj/item/mining_rig_pack/New()
+/obj/item/mining_rig_pack/atom_init()
+	..()
 	new /obj/item/clothing/head/helmet/space/rig/mining(src.loc)
 	new	/obj/item/clothing/suit/space/rig/mining(src.loc)
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /**********************Mining Equipment Voucher**********************/
 
@@ -484,9 +473,10 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		playsound(src,'sound/effects/sparks4.ogg',50,1)
 		qdel(src)
 
-/obj/item/device/wormhole_jaunter/attackby(obj/item/B)
+/obj/item/device/wormhole_jaunter/attackby(obj/item/B, mob/user)
 	if(istype(B, /obj/item/device/radio/beacon))
-		usr.visible_message("<span class='notice'>[usr.name] spent [B.name] above [src.name], scanning the serial code.</span>",
+		user.SetNextMove(CLICK_CD_INTERACT)
+		user.visible_message("<span class='notice'>[user.name] spent [B.name] above [src.name], scanning the serial code.</span>",
 							"<span class='notice'>You scanned serial code of [B.name], now [src.name] is locked.</span>")
 		src.chosen_beacon = B
 		icon_state = "Jaunter_locked"
@@ -561,7 +551,11 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	var/resonance_damage = 30
 	var/creator = null
 
-/obj/effect/resonance/New()
+/obj/effect/resonance/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/resonance/atom_init_late()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf))
 		return
@@ -602,7 +596,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 /obj/item/clothing/mask/facehugger/toy/Die()
 	return
 
-/obj/item/clothing/mask/facehugger/toy/New()//to prevent deleting it if aliums are disabled
+/obj/item/clothing/mask/facehugger/toy/atom_init_late() // to prevent deleting it if aliums are disabled
 	return
 
 /**********************Mining drone**********************/
@@ -658,6 +652,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(W.welding && !stat)
 			if(stance != HOSTILE_STANCE_IDLE)
 				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")
@@ -678,8 +673,8 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	qdel(src)
 	return
 
-/mob/living/simple_animal/hostile/mining_drone/New()
-	..()
+/mob/living/simple_animal/hostile/mining_drone/atom_init()
+	. = ..()
 	SetCollectBehavior()
 
 /mob/living/simple_animal/hostile/mining_drone/attack_hand(mob/living/carbon/human/M)

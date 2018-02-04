@@ -4,8 +4,8 @@
 	icon_state = "mining_brace"
 	var/obj/machinery/mining/drill/connected
 
-/obj/machinery/mining/brace/New()
-	..()
+/obj/machinery/mining/brace/atom_init()
+	. = ..()
 
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/miningdrillbrace(null)
@@ -31,7 +31,7 @@
 		if(istype(get_turf(src), /turf/space))
 			to_chat(user, "<span class='notice'>You can't anchor something to empty space. Idiot.</span>")
 			return
-
+		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		to_chat(user, "<span class='notice'>You [anchored ? "un" : ""]anchor the brace.</span>")
 

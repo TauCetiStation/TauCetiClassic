@@ -18,8 +18,8 @@
 	var/charge_tick = 0
 	var/recharge_time = 10 //Time it takes for shots to recharge (in ticks)
 
-/obj/item/weapon/gun/energy/taser/cyborg/New()
-	..()
+/obj/item/weapon/gun/energy/taser/cyborg/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/gun/energy/taser/cyborg/Destroy()
@@ -69,8 +69,8 @@
 	var/charge_tick = 0
 
 
-/obj/item/weapon/gun/energy/crossbow/New()
-	..()
+/obj/item/weapon/gun/energy/crossbow/atom_init()
+	. = ..()
 	START_PROCESSING(SSobj, src)
 
 

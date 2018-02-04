@@ -10,8 +10,8 @@
 	var/time_between_triggers = 600 //takes a minute to recharge
 	var/static/list/ignore_typecache
 
-/obj/structure/trap/New()
-	..()
+/obj/structure/trap/atom_init()
+	. = ..()
 	if(!ignore_typecache)
 		ignore_typecache = typecacheof(list(/obj/effect, /mob/dead))
 
@@ -100,8 +100,8 @@
 	density = 1
 	anchored = 1
 
-/obj/structure/rock/New()
-	..()
+/obj/structure/rock/atom_init()
+	. = ..()
 	icon_state += pick("1", "2", "3")
 
 /obj/structure/trap/ward
@@ -112,7 +112,7 @@
 	time_between_triggers = 1200 //Exists for 2 minutes
 
 
-/obj/structure/trap/ward/New()
-	..()
+/obj/structure/trap/ward/atom_init()
+	. = ..()
 	QDEL_IN(src, time_between_triggers)
 

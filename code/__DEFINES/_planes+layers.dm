@@ -82,14 +82,29 @@ What is the naming convention for planes or layers?
 #define ABOVE_HUD_PLANE   20
 #define ABOVE_HUD_LAYER   20
 
-//efine TURF_LAYER               2 // For easy recordkeeping; this is a byond define
-#define GAS_PIPE_HIDDEN_LAYER    2.35
-#define GAS_SCRUBBER_LAYER       2.46
-#define GAS_PIPE_VISIBLE_LAYER   2.47
-#define GAS_FILTER_LAYER         2.48
-#define GAS_PUMP_LAYER           2.49
-#define LOW_OBJ_LAYER            2.5
-//efine OBJ_LAYER                3 // For easy recordkeeping; this is a byond define
-#define ABOVE_WINDOW_LAYER       3.3
-//efine MOB_LAYER                4 // For easy recordkeeping; this is a byond define
-//efine FLY_LAYER                5 // For easy recordkeeping; this is a byond define
+//efine TURF_LAYER                 2 // For easy recordkeeping; this is a byond define
+#define ABOVE_NORMAL_TURF_LAYER    2.08 // Currently used only by /obj/structure/fans/tiny
+#define GAS_PIPE_HIDDEN_LAYER      2.35
+#define GAS_SCRUBBER_LAYER         2.46
+#define GAS_PIPE_VISIBLE_LAYER     2.47
+#define GAS_FILTER_LAYER           2.48
+#define GAS_PUMP_LAYER             2.49
+#define LOW_OBJ_LAYER              2.491 // Currently used only by unused machinery
+#define FIREDOOR_LAYER             2.5
+#define BELOW_CONTAINERS_LAYER     2.7 // Below closets, crates...
+#define CONTAINER_STRUCTURE_LAYER  2.8 // Layer for closets, crates, bags, racks, tables
+#define DOOR_LAYER                 2.82
+#define BELOW_MACHINERY_LAYER      2.83 // Currently for grilles only, because they should be below machinery
+#define DEFAULT_MACHINERY_LAYER    2.85 // Every /obj/machinery by default have this layer
+//efine OBJ_LAYER                  3 // For easy recordkeeping; this is a byond define
+#define SHUTTERS_LAYER             3.1
+#define ABOVE_WINDOW_LAYER         3.3
+#define BELOW_MOB_LAYER            3.7 //Currently used only by fluff struct in bluespace shelter
+//efine MOB_LAYER                  4 // For easy recordkeeping; this is a byond define
+//efine FLY_LAYER                  5 // For easy recordkeeping; this is a byond define
+
+
+//modifiers for /obj/machinery/door (and subtypes) layers
+#define DOOR_CLOSED_MOD     0.3 //how much the layer is increased when the door is closed
+#define PODDOOR_CLOSED_MOD  0.3
+#define FIREDOOR_CLOSED_MOD 0.31

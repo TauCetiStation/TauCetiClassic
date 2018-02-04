@@ -8,20 +8,28 @@
 	var/obj/structure/ladder/down = null	//the ladder below this one
 	var/obj/structure/ladder/up = null		//the ladder above this one
 
-/obj/structure/ladder/New()
-	spawn(8)
-		for(var/obj/structure/ladder/L in world)
-			if(L.id == id)
-				if(L.height == (height - 1))
-					down = L
-					continue
-				if(L.height == (height + 1))
-					up = L
-					continue
+/obj/structure/ladder/atom_init()
+	ladder_list += src
+	..()
+	return INITIALIZE_HINT_LATELOAD
 
-			if(up && down)	//if both our connections are filled
-				break
-		update_icon()
+/obj/structure/ladder/atom_init_late()
+	for(var/obj/structure/ladder/L in ladder_list)
+		if(L.id == id)
+			if(L.height == (height - 1))
+				down = L
+				continue
+			if(L.height == (height + 1))
+				up = L
+				continue
+
+		if(up && down)	//if both our connections are filled
+			break
+	update_icon()
+
+/obj/structure/ladder/Destroy()
+	ladder_list -= src
+	return ..()
 
 /obj/structure/ladder/update_icon()
 	if(up && down)

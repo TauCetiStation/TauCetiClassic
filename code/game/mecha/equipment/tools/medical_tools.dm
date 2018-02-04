@@ -19,16 +19,15 @@
 			return 1
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/atom_init()
+	. = ..()
 	pr_mech_sleeper = new /datum/global_iterator/mech_sleeper(list(src),0)
 	pr_mech_sleeper.set_delay(equip_cooldown)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/allow_drop()
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/destroy()
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/Destroy()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(get_turf(src))
 	return ..()
@@ -251,10 +250,10 @@
 	var/obj/item/stack/cable_coil/cable
 	var/max_cable = 1000
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/New()
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/atom_init()
 	cable = new(src)
 	cable.amount = 0
-	..()
+	. = ..()
 
 /obj/item/mecha_parts/mecha_equipment/tool/cable_layer/can_attach(obj/mecha/working/M)
 	if(..())
@@ -271,7 +270,7 @@
 	chassis.events.clearEvent("onMove",event)
 	return ..()
 
-/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/destroy()
+/obj/item/mecha_parts/mecha_equipment/tool/cable_layer/Destroy()
 	chassis.events.clearEvent("onMove",event)
 	return ..()
 
@@ -407,8 +406,8 @@
 	equip_cooldown = 10
 	origin_tech = "materials=3;biotech=4;magnets=4;programming=3"
 
-/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/tool/syringe_gun/atom_init()
+	. = ..()
 	flags |= NOREACT
 	syringes = new
 	accessible_reagents = list("inaprovaline","anti_toxin", "alkysine", "arithrazine", "bicaridine", "citalopram", "dermaline",

@@ -17,7 +17,6 @@ var/datum/subsystem/mapping/SSmapping
 	// Generate mining.
 	make_mining_asteroid_secrets()
 	populate_distribution_map()
-
 	// Load templates
 	preloadTemplates()
 	..()
@@ -29,6 +28,7 @@ var/datum/subsystem/mapping/SSmapping
 /datum/subsystem/mapping/proc/populate_distribution_map()
 	var/datum/ore_distribution/distro = new
 	distro.populate_distribution_map()
+
 
 /datum/subsystem/mapping/Recover()
 	flags |= SS_NO_INIT

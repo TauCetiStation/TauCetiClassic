@@ -8,7 +8,8 @@
 	var/sides = 6
 	attack_verb = list("diced")
 
-/obj/item/weapon/dice/New()
+/obj/item/weapon/dice/atom_init()
+	. = ..()
 	icon_state = "[initial(icon_state)][rand(1, sides)]"
 
 /obj/item/weapon/dice/d2
@@ -90,12 +91,12 @@
 	icon = 'icons/obj/dice.dmi'
 	icon_state = "dicebag"
 
-	New()
-		..()
-		new /obj/item/weapon/dice/d4( src )
-		new /obj/item/weapon/dice( src )
-		new /obj/item/weapon/dice/d8( src )
-		new /obj/item/weapon/dice/d10( src )
-		new /obj/item/weapon/dice/d00( src )
-		new /obj/item/weapon/dice/d12( src )
-		new /obj/item/weapon/dice/d20( src )
+/obj/item/weapon/storage/pill_bottle/dice/atom_init()
+	. = ..()
+	new /obj/item/weapon/dice/d4( src )
+	new /obj/item/weapon/dice( src )
+	new /obj/item/weapon/dice/d8( src )
+	new /obj/item/weapon/dice/d10( src )
+	new /obj/item/weapon/dice/d00( src )
+	new /obj/item/weapon/dice/d12( src )
+	new /obj/item/weapon/dice/d20( src )

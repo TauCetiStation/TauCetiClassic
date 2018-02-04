@@ -43,6 +43,7 @@
 		if(locked)
 			if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && (!src.emagged))
 				emagged = 1
+				user.SetNextMove(CLICK_CD_MELEE)
 				src.overlays += image('icons/obj/storage.dmi', icon_sparking)
 				sleep(6)
 				overlays.Cut()
@@ -60,14 +61,14 @@
 				return
 
 			if (istype(W, /obj/item/weapon/screwdriver))
-				if (do_after(user, 20, target = src))
+				if (!user.is_busy(src) && do_after(user, 20, target = src))
 					src.open =! src.open
 					user.show_message(text("\blue You [] the service panel.", (src.open ? "open" : "close")))
 				return
 			if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
 				user.show_message(text("\red Now attempting to reset internal memory, please hold."), 1)
 				src.l_hacking = 1
-				if (do_after(usr, 100, target = src))
+				if (!user.is_busy() && do_after(usr, 100, target = src))
 					if (prob(40))
 						src.l_setshort = 1
 						src.l_set = 0
@@ -158,25 +159,24 @@
 	throw_range = 4
 	w_class = 4.0
 
-	New()
+/obj/item/weapon/storage/secure/briefcase/atom_init()
+	. = ..()
+	new /obj/item/weapon/paper(src)
+	new /obj/item/weapon/pen(src)
+
+/obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
+	if ((src.loc == user) && (src.locked == 1))
+		to_chat(usr, "\red [src] is locked and cannot be opened!")
+	else if ((src.loc == user) && (!src.locked))
+		src.open(usr)
+	else
 		..()
-		new /obj/item/weapon/paper(src)
-		new /obj/item/weapon/pen(src)
+		for(var/mob/M in range(1))
+			if (M.s_active == src)
+				src.close(M)
+	src.add_fingerprint(user)
 
-	attack_hand(mob/user)
-		if ((src.loc == user) && (src.locked == 1))
-			to_chat(usr, "\red [src] is locked and cannot be opened!")
-		else if ((src.loc == user) && (!src.locked))
-			src.open(usr)
-		else
-			..()
-			for(var/mob/M in range(1))
-				if (M.s_active == src)
-					src.close(M)
-		src.add_fingerprint(user)
-		return
-
-/obj/item/weapon/storage/secure/briefcase/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/item/weapon/storage/secure/briefcase/attackby(obj/item/weapon/W, mob/user)
 	..()
 	update_icon()
 
@@ -199,10 +199,10 @@
 /obj/item/weapon/storage/secure/briefcase/syndie
 	force = 15.0
 
-/obj/item/weapon/storage/secure/briefcase/syndie/New()
-	for(var/i = 0, i < storage_slots - 2, i++)
+/obj/item/weapon/storage/secure/briefcase/syndie/atom_init()
+	for (var/i in 1 to (storage_slots - 3))
 		new /obj/item/weapon/spacecash/c1000(src)
-	return ..()
+	. = ..()
 
 
 // -----------------------------
@@ -223,14 +223,14 @@
 	density = 0
 	cant_hold = list("/obj/item/weapon/storage/secure/briefcase")
 
-	New()
-		..()
-		new /obj/item/weapon/paper(src)
-		new /obj/item/weapon/pen(src)
+/obj/item/weapon/storage/secure/safe/atom_init()
+	. = ..()
+	new /obj/item/weapon/paper(src)
+	new /obj/item/weapon/pen(src)
 
-	attack_hand(mob/user)
-		return attack_self(user)
+/obj/item/weapon/storage/secure/safe/attack_hand(mob/user)
+	return attack_self(user)
 
-/obj/item/weapon/storage/secure/safe/HoS/New()
-	..()
+//obj/item/weapon/storage/secure/safe/HoS/atom_init()
+//	. = ..()
 	//new /obj/item/weapon/storage/lockbox/clusterbang(src) This item is currently broken... and probably shouldnt exist to begin with (even though it's cool)

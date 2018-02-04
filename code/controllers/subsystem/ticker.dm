@@ -84,7 +84,7 @@ var/datum/subsystem/ticker/ticker
 			//lobby stats for statpanels
 			totalPlayers = 0
 			totalPlayersReady = 0
-			for(var/mob/new_player/player in player_list)
+			for(var/mob/dead/new_player/player in player_list)
 				++totalPlayers
 				if(player.ready)
 					++totalPlayersReady
@@ -214,6 +214,8 @@ var/datum/subsystem/ticker/ticker
 	current_state = GAME_STATE_PLAYING
 	round_start_time = world.time
 
+	setup_economy()
+
 	//start_landmarks_list = shuffle(start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	create_characters() //Create player characters and transfer them
 	collect_minds()
@@ -221,7 +223,6 @@ var/datum/subsystem/ticker/ticker
 	data_core.manifest()
 
 	spawn_empty_ai()
-	setup_economy()
 
 	Master.RoundStart()
 
@@ -340,8 +341,8 @@ var/datum/subsystem/ticker/ticker
 
 
 /datum/subsystem/ticker/proc/create_characters()
-	for(var/mob/new_player/player in player_list)
-		sleep(1)//Maybe remove??
+	for(var/mob/dead/new_player/player in player_list)
+		//sleep(1)//Maybe remove??
 		if(player && player.ready && player.mind)
 			joined_player_list += player.ckey
 			if(player.mind.assigned_role=="AI")
@@ -352,7 +353,7 @@ var/datum/subsystem/ticker/ticker
 			else
 				player.create_character()
 				qdel(player)
-
+		CHECK_TICK // comment/remove this and uncomment sleep, if crashes at round start will come back.
 
 /datum/subsystem/ticker/proc/collect_minds()
 	for(var/mob/living/player in player_list)
@@ -363,7 +364,7 @@ var/datum/subsystem/ticker/ticker
 /datum/subsystem/ticker/proc/equip_characters()
 	var/captainless=1
 	for(var/mob/living/carbon/human/player in player_list)
-		if(player && player.mind && player.mind.assigned_role)
+		if(player && player.mind && player.mind.assigned_role && player.mind.assigned_role != "default")
 			if(player.mind.assigned_role == "Captain")
 				captainless=0
 			if(player.mind.assigned_role != "MODE")
@@ -495,6 +496,9 @@ var/datum/subsystem/ticker/ticker
 	log_game("Antagonists at round end were...")
 	for(var/i in total_antagonists)
 		log_game("[i]s[total_antagonists[i]].")
+
+	if(SSjunkyard)
+		SSjunkyard.save_stats()
 
 	scoreboard(ai_completions)
 

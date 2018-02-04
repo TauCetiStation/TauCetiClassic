@@ -10,6 +10,8 @@
 	icon_state = "sheater-off"
 	name = "space heater"
 	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire."
+	interact_offline = TRUE
+	interact_open = TRUE
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
@@ -21,8 +23,8 @@
 	var/settableTemperatureRange = 30
 
 
-/obj/machinery/space_heater/New()
-	..()
+/obj/machinery/space_heater/atom_init()
+	. = ..()
 	cell = new(src)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/space_heater(null)
@@ -118,17 +120,8 @@
 	else
 		..()
 
-/obj/machinery/space_heater/attack_hand(mob/user)
-	interact(user)
-
-/obj/machinery/space_heater/attack_paw(mob/user)
-	interact(user)
-
-/obj/machinery/space_heater/interact(mob/user)
-	ui_interact(user)
-
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main")
-	if(user.stat)
+	if(user.stat) // this probably handled by nano itself, a check would be nice.
 		return
 
 	var/data[0]
@@ -167,7 +160,6 @@
 	else
 		// The UI is already open so push the new data to it
 		ui.push_data(data)
-		return
 
 /obj/machinery/space_heater/is_operational_topic()
 	return !(stat & BROKEN)

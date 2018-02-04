@@ -17,8 +17,8 @@
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 
 
-/obj/item/weapon/tank/oxygen/New()
-	..()
+/obj/item/weapon/tank/oxygen/atom_init()
+	. = ..()
 	air_contents.adjust_gas("oxygen", (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 /obj/item/weapon/tank/oxygen/yellow
@@ -38,8 +38,8 @@
 	icon_state = "anesthetic"
 	item_state = "an_tank"
 
-/obj/item/weapon/tank/anesthetic/New()
-	..()
+/obj/item/weapon/tank/anesthetic/atom_init()
+	. = ..()
 
 	air_contents.gas["oxygen"] = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
 	air_contents.gas["sleeping_agent"] = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
@@ -53,8 +53,8 @@
 	desc = "Mixed anyone?"
 	icon_state = "oxygen"
 
-/obj/item/weapon/tank/air/New()
-	..()
+/obj/item/weapon/tank/air/atom_init()
+	. = ..()
 	air_contents.adjust_multi("oxygen", (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD, "nitrogen", (6 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD)
 
 /*
@@ -69,14 +69,13 @@
 	slot_flags = null	//they have no straps!
 
 
-/obj/item/weapon/tank/phoron/New()
-	..()
+/obj/item/weapon/tank/phoron/atom_init()
+	. = ..()
 	air_contents.adjust_gas("phoron", (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C))
 
 /obj/item/weapon/tank/phoron/attackby(obj/item/weapon/W, mob/user)
 	..()
-
-	if (istype(W, /obj/item/weapon/flamethrower))
+	if(istype(W, /obj/item/weapon/flamethrower))
 		var/obj/item/weapon/flamethrower/F = W
 		if (!F.status || F.ptank)
 			return
@@ -101,8 +100,8 @@
 	volume = 2 //Tiny. Real life equivalents only have 21 breaths of oxygen in them. They're EMERGENCY tanks anyway -errorage (dangercon 2011)
 
 
-/obj/item/weapon/tank/emergency_oxygen/New()
-	..()
+/obj/item/weapon/tank/emergency_oxygen/atom_init()
+	. = ..()
 	air_contents.adjust_gas("oxygen", (3 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))
 
 /obj/item/weapon/tank/emergency_oxygen/engi
@@ -125,6 +124,6 @@
 	distribute_pressure = ONE_ATMOSPHERE*O2STANDARD
 
 
-/obj/item/weapon/tank/nitrogen/New()
-	..()
+/obj/item/weapon/tank/nitrogen/atom_init()
+	. = ..()
 	air_contents.adjust_gas("nitrogen", (3 * ONE_ATMOSPHERE) * volume / (R_IDEAL_GAS_EQUATION * T20C))

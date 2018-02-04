@@ -137,12 +137,14 @@
 	icon_state = "block"
 	slot_flags = SLOT_EARS | SLOT_TWOEARS
 
-	New(var/obj/O)
-		name = O.name
-		desc = O.desc
-		icon = O.icon
-		icon_state = O.icon_state
-		dir = O.dir
+/obj/item/clothing/ears/offear/atom_init()
+	. = ..()
+	var/obj/O = loc
+	name = O.name
+	desc = O.desc
+	icon = O.icon
+	icon_state = O.icon_state
+	dir = O.dir
 
 /obj/item/clothing/ears/earmuffs
 	name = "earmuffs"
@@ -262,6 +264,8 @@ BLIND     // can't see anything
 				to_chat(user, "<span class='notice'>You have no idea of how to clip [src]!</span>")
 			if(CLIPPED)
 				to_chat(user, "<span class='notice'>[src] have already been clipped!</span>")
+	else
+		..()
 
 /obj/item/proc/negates_gravity()
 	return 0
@@ -368,7 +372,7 @@ BLIND     // can't see anything
 		2 = Report detailed damages
 		3 = Report location
 		*/
-	var/obj/item/clothing/tie/hastie = null
+	var/list/accessories = list()
 	var/displays_id = 1
 	var/rolled_down = 0
 	var/basecolor
@@ -376,44 +380,94 @@ BLIND     // can't see anything
 
 /obj/item/clothing/under/emp_act(severity)
 	..()
-	if(hastie)
-		hastie.emp_act(severity)
+	if(accessories.len)
+		for(var/obj/item/clothing/accessory/A in accessories)
+			A.emp_act(severity)
 
-/obj/item/clothing/under/attackby(obj/item/I, mob/user)
-	if(hastie)
-		hastie.attackby(I, user)
+/obj/item/clothing/under/proc/can_attach_accessory(obj/item/clothing/accessory/A)
+	if(istype(A))
+		. = TRUE
+	else
+		return FALSE
+	if(accessories.len && (A.slot in list("utility","armband")))
+		for(var/obj/item/clothing/accessory/AC in accessories)
+			if (AC.slot == A.slot)
+				return FALSE
+
+/obj/item/clothing/under/proc/remove_accessory(mob/user, obj/item/clothing/accessory/A)
+	if(QDELETED(A) || !(A in accessories))
 		return
 
-	if(!hastie && istype(I, /obj/item/clothing/tie))
-		user.drop_item()
-		hastie = I
-		hastie.on_attached(src, user)
+	A.on_removed(user)
+	accessories -= A
 
-		if(istype(loc, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = loc
-			H.update_inv_w_uniform()
-		action_button_name = "Use inventory."
+	if(istype(loc, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = loc
+		H.update_inv_w_uniform()
+		action_button_name = null
+
+/obj/item/clothing/under/verb/removetie()
+	set name = "Remove Accessory"
+	set category = "Object"
+	set src in usr
+
+	if(!istype(usr, /mob/living))
+		return
+	if(usr.incapacitated())
+		return
+
+	if(!accessories.len)
+		return
+	var/obj/item/clothing/accessory/A
+	if(accessories.len > 1)
+		A = input("Select an accessory to remove from [src]") as null|anything in accessories
+	else
+		A = accessories[1]
+	remove_accessory(usr, A)
+
+/obj/item/clothing/under/attackby(obj/item/I, mob/user)
+	if(I.sharp && !ishuman(loc)) //you can cut only clothes lying on the floor
+		for (var/i in 1 to 3)
+			new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), null, null, crit_fail)
+		qdel(src)
+		return
+
+	if(istype(I, /obj/item/clothing/accessory))
+		var/obj/item/clothing/accessory/A = I
+		if(can_attach_accessory(A))
+			user.drop_item()
+			accessories += A
+			A.on_attached(src, user)
+
+			if(istype(loc, /mob/living/carbon/human))
+				var/mob/living/carbon/human/H = loc
+				H.update_inv_w_uniform()
+			action_button_name = "Use inventory."
+			return
+		else
+			to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src].</span>")
+
+	if(accessories.len)
+		for(var/obj/item/clothing/accessory/A in accessories)
+			A.attackby(I, user)
 		return
 
 	..()
 
 /obj/item/clothing/under/attack_hand(mob/user)
 	//only forward to the attached accessory if the clothing is equipped (not in a storage)
-	if(hastie && src.loc == user)
-		hastie.attack_hand(user)
+	if(accessories.len && loc == user)
+		for(var/obj/item/clothing/accessory/A in accessories)
+			A.attack_hand(user)
+		return
+
+	if ((ishuman(usr) || ismonkey(usr)) && loc == user)	//make it harder to accidentally undress yourself
 		return
 
 	..()
 
-/obj/item/clothing/under/attack_self(mob/user)
-	if(hastie && src.loc == user)
-		if (istype(hastie, /obj/item/clothing/tie/holster))
-			hastie.attack_hand(user)
-		if (istype(hastie, /obj/item/clothing/tie/storage))
-			hastie.attack_hand(user)
-
 //This is to ensure people can take off suits when there is an attached accessory
-/obj/item/clothing/under/MouseDrop(obj/over_object as obj)
+/obj/item/clothing/under/MouseDrop(obj/over_object)
 	if (ishuman(usr) || ismonkey(usr))
 		var/mob/M = usr
 		//makes sure that the clothing is equipped so that we can't drag it into our hand from miles away.
@@ -447,8 +501,9 @@ BLIND     // can't see anything
 			to_chat(user, "Its vital tracker appears to be enabled.")
 		if(3)
 			to_chat(user, "Its vital tracker and tracking beacon appear to be enabled.")
-	if(hastie)
-		to_chat(user, "\A [hastie] is clipped to it.")
+
+	for(var/obj/item/clothing/accessory/A in accessories)
+		to_chat(user, "[bicon(A)] \A [A] is attached to it.")
 
 /obj/item/clothing/under/proc/set_sensors(mob/usr)
 	var/mob/M = usr
@@ -515,27 +570,6 @@ BLIND     // can't see anything
 	else
 		to_chat(usr, "<span class='notice'>You cannot roll down the uniform!</span>")
 
-/obj/item/clothing/under/proc/remove_accessory(mob/user)
-	if(!hastie)
-		return
-
-	hastie.on_removed(user)
-	hastie = null
-
-	if(istype(loc, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = loc
-		H.update_inv_w_uniform()
-		action_button_name = null
-
-/obj/item/clothing/under/verb/removetie()
-	set name = "Remove Accessory"
-	set category = "Object"
-	set src in usr
-	if(!istype(usr, /mob/living)) return
-	if(usr.stat) return
-
-	src.remove_accessory(usr)
-
-/obj/item/clothing/under/rank/New()
+/obj/item/clothing/under/rank/atom_init()
 	sensor_mode = pick(0,1,2,3)
-	..()
+	. = ..()

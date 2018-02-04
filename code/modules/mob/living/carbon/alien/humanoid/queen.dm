@@ -13,22 +13,24 @@
 	ventcrawler = 0
 
 
-/mob/living/carbon/alien/humanoid/queen/New()
+/mob/living/carbon/alien/humanoid/queen/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
 
 	//there should only be one queen
 	for(var/mob/living/carbon/alien/humanoid/queen/Q in living_mob_list)
-		if(Q == src)		continue
-		if(Q.stat == DEAD)	continue
+		if(Q == src)
+			continue
+		if(Q.stat == DEAD)
+			continue
 		if(Q.client)
 			name = "alien princess ([rand(1, 999)])"	//if this is too cutesy feel free to change it/remove it.
 			break
 
 	real_name = src.name
 	verbs.Add(/mob/living/carbon/alien/humanoid/proc/corrosive_acid,/mob/living/carbon/alien/humanoid/proc/neurotoxin,/mob/living/carbon/alien/humanoid/proc/resin,/mob/living/carbon/alien/humanoid/proc/screech)
-	..()
+	. = ..()
 
 
 /mob/living/carbon/alien/humanoid/queen/handle_hud_icons_health()

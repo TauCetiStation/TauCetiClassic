@@ -84,6 +84,7 @@
 
 	if (istype(O, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = O
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if (WT.remove_fuel(0))
 			if(health < maxHealth)
 				health += pick(1,1,1,2,2,3)
@@ -123,6 +124,7 @@
 			to_chat(user, "\red You swipe your card, with no effect.")
 			return 0
 	else if (istype(O, /obj/item/weapon/card/emag))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if (emagged)
 			to_chat(user, "\red [src] is already overloaded - better run.")
 			return 0
@@ -139,6 +141,7 @@
 				src.explode()
 
 	else
+		user.SetNextMove(CLICK_CD_MELEE)
 		if(O.force)
 			var/damage = O.force
 			if (O.damtype == HALLOSS)
@@ -195,14 +198,14 @@
 	eject_brain()
 	return ..()
 
-/mob/living/simple_animal/spiderbot/New()
+/mob/living/simple_animal/spiderbot/atom_init()
 
 	radio = new /obj/item/device/radio/borg(src)
 	camera = new /obj/machinery/camera(src)
 	camera.c_tag = "Spiderbot-[real_name]"
 	camera.replace_networks(list("SS13"))
 
-	..()
+	. = ..()
 
 /mob/living/simple_animal/spiderbot/death()
 

@@ -10,6 +10,7 @@ var/const/MAX_SAVE_SLOTS = 10
 #define RETURN_TO_LOBBY 2
 
 #define MAX_GEAR_COST 5
+#define MAX_GEAR_COST_DONATOR MAX_GEAR_COST+3
 /datum/preferences
 	var/client/parent
 	//doohickeys for savefiles
@@ -34,7 +35,8 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/UI_style = "White"
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
-	var/ooccolor = "#b82e00"
+	var/aooccolor = "#b82e00"
+	var/ooccolor = "#002eb8"
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
@@ -190,7 +192,7 @@ var/const/MAX_SAVE_SLOTS = 10
 		user << browse(null, "window=preferences")
 		return
 
-	if(!istype(user, /mob/new_player))
+	if(!isnewplayer(user))
 		return
 
 	switch(href_list["preference"])

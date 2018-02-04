@@ -68,8 +68,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(icon_state == "req_comp_off")
 			icon_state = "req_comp0"
 
-/obj/machinery/requests_console/New()
-	..()
+/obj/machinery/requests_console/atom_init()
+	. = ..()
 	name = "[department] Requests Console"
 	allConsoles += src
 	//req_console_departments += department
@@ -118,9 +118,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			req_console_information -= department
 	return ..()
 
-/obj/machinery/requests_console/attack_hand(user)
-	if(..())
-		return
+/obj/machinery/requests_console/ui_interact(user)
 	var/dat
 	dat = text("<HEAD><TITLE>Requests Console</TITLE></HEAD><H3>[department] Requests Console</H3>")
 	if(!open)
@@ -219,7 +217,6 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 		user << browse("[dat]", "window=request_console")
 		onclose(user, "req_console")
-	return
 
 /obj/machinery/requests_console/Topic(href, href_list)
 	. = ..()
@@ -263,7 +260,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 		if(!announcementConsole)
 			return FALSE
 		for(var/mob/M in player_list)
-			if(!istype(M, /mob/new_player))
+			if(!isnewplayer(M))
 				to_chat(M, "<b><font size = 3><font color = red>[department] announcement:</font color> [message]</font size></b>")
 		announceAuth = 0
 		message = ""

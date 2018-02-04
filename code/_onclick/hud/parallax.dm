@@ -216,8 +216,8 @@
 	mouse_opacity = 0
 
 
-/obj/screen/parallax_layer/New(view)
-	..()
+/obj/screen/parallax_layer/atom_init(mapload, view)
+	. = ..()
 	if (!view)
 		view = world.view
 	update_o(view)

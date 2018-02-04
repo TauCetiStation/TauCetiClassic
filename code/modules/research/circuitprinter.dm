@@ -17,8 +17,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 	var/efficiency_coeff
 	reagents = new(0)
 
-/obj/machinery/r_n_d/circuit_imprinter/New()
-	..()
+/obj/machinery/r_n_d/circuit_imprinter/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/circuit_imprinter(src)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
@@ -86,6 +86,8 @@ using metal and glass, it uses glass and reagents (usually sulfuric acis).
 			if(diamond_amount >= 2000)
 				new /obj/item/stack/sheet/mineral/diamond(loc, round(diamond_amount / 2000))
 			default_deconstruction_crowbar(O)
+			return
+		else if(is_wire_tool(O) && wires.interact(user))
 			return
 		else
 			to_chat(user, "\red You can't load the [src.name] while it's opened.")

@@ -41,11 +41,9 @@
 		icon_state = initial(icon_state)
 		handleInactive()
 
-/obj/machinery/power/port_gen/attack_hand(mob/user)
-	if(..())
-		return
-	if(!anchored)
-		return
+/obj/machinery/power/port_gen/interact(mob/user)
+	if(anchored)
+		..()
 
 /obj/machinery/power/port_gen/examine(mob/user)
 	..()
@@ -63,8 +61,8 @@
 	var/time_per_sheet = 40
 	var/heat = 0
 
-/obj/machinery/power/port_gen/pacman/New()
-	..()
+/obj/machinery/power/port_gen/pacman/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(src)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(src)
@@ -171,6 +169,7 @@
 		return
 	else if (istype(O, /obj/item/weapon/card/emag))
 		emagged = 1
+		user.SetNextMove(CLICK_CD_INTERACT)
 		emp_act(1)
 	else if(!active)
 
@@ -200,26 +199,11 @@
 		else if(istype(O, /obj/item/weapon/crowbar) && panel_open)
 			default_deconstruction_crowbar(O)
 
-/obj/machinery/power/port_gen/pacman/attack_hand(mob/user)
-	..()
-	if (!anchored)
-		return
-
-	interact(user)
-
-/obj/machinery/power/port_gen/pacman/attack_ai(mob/user)
-	interact(user)
-
-/obj/machinery/power/port_gen/pacman/attack_paw(mob/user)
-	interact(user)
-
-/obj/machinery/power/port_gen/pacman/interact(mob/user)
+/obj/machinery/power/port_gen/pacman/ui_interact(mob/user)
 	if ((get_dist(src, user) > 1) && !issilicon(user) && !isobserver(user))
 		user.unset_machine(src)
 		user << browse(null, "window=port_gen")
 		return
-
-	user.set_machine(src)
 
 	var/dat = text("<b>[name]</b><br>")
 	if (active)

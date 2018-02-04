@@ -6,10 +6,9 @@
 	var/obj/item/assembly/shock_kit/part = null
 	var/last_time = 1.0
 
-/obj/structure/stool/bed/chair/e_chair/New()
-	..()
+/obj/structure/stool/bed/chair/e_chair/atom_init()
+	. = ..()
 	overlays += image('icons/obj/objects.dmi', src, "echair_over", MOB_LAYER + 1, dir)
-	return
 
 /obj/structure/stool/bed/chair/e_chair/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))

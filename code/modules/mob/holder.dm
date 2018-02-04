@@ -5,8 +5,11 @@
 	icon = 'icons/obj/objects.dmi'
 	slot_flags = SLOT_HEAD
 
-/obj/item/weapon/holder/New()
+/obj/item/weapon/holder/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/holder/atom_init_late()
 	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/holder/Destroy()
@@ -27,6 +30,7 @@
 		qdel(src)
 
 /obj/item/weapon/holder/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	for(var/mob/M in src.contents)
 		M.attackby(W,user)
 

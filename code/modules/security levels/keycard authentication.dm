@@ -21,15 +21,12 @@
 	power_channel = ENVIRON
 
 /obj/machinery/keycard_auth/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
 	to_chat(user, "The station AI is not to interact with these devices.")
-	return
 
 /obj/machinery/keycard_auth/attack_paw(mob/user)
 	to_chat(user, "You are too primitive to use this device.")
-	return
-
-/obj/machinery/keycard_auth/attack_ghost(mob/user)
-	to_chat(user, "Only for livings.")
 	return
 
 /obj/machinery/keycard_auth/attackby(obj/item/weapon/W, mob/user)
@@ -55,15 +52,13 @@
 	else
 		stat |= NOPOWER
 
-/obj/machinery/keycard_auth/attack_hand(mob/user)
-	if(user.stat || stat & (NOPOWER|BROKEN))
+/obj/machinery/keycard_auth/ui_interact(mob/user)
+	if(stat & (NOPOWER|BROKEN))
 		to_chat(user, "This device is not powered.")
 		return
 	if(busy)
 		to_chat(user, "This device is busy.")
 		return
-
-	user.set_machine(src)
 
 	var/dat = "<h1>Keycard Authentication Device</h1>"
 
@@ -84,7 +79,6 @@
 		dat += "Please swipe your card to authorize the following event: <b>[event]</b>"
 		dat += "<p><A href='?src=\ref[src];reset=1'>Back</A>"
 		user << browse(dat, "window=keycard_auth;size=500x250")
-	return
 
 
 /obj/machinery/keycard_auth/Topic(href, href_list)

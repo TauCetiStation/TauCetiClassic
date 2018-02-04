@@ -16,12 +16,12 @@
 	var/landmarks_type = /obj/effect/decal/cleanable/cellular
 	var/cores_type =     /obj/structure/cellular_biomass/core
 
-/obj/effect/cellular_biomass_controller/New()
-	if(!istype(src.loc,/turf/simulated/floor))
-		qdel(src)
-		return
-	spawn_cellular_biomass_core(src.loc)
-	spawn_cellular_biomass_piece(src.loc)
+/obj/effect/cellular_biomass_controller/atom_init()
+	. = ..()
+	if(!istype(loc, /turf/simulated/floor))
+		return INITIALIZE_HINT_QDEL
+	spawn_cellular_biomass_core(loc)
+	spawn_cellular_biomass_piece(loc)
 	START_PROCESSING(SSobj, src)
 
 /obj/effect/cellular_biomass_controller/proc/remove_biomass(obj/structure/cellular_biomass/removed)

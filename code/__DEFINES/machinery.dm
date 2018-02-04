@@ -30,6 +30,12 @@
 
 #define NANO_IGNORE_DISTANCE 1
 
+//Where we should check allowed()
+#define ALLOWED_CHECK_NONE       0
+#define ALLOWED_CHECK_A_HAND     1
+#define ALLOWED_CHECK_TOPIC      2
+#define ALLOWED_CHECK_EVERYWHERE ~(ALLOWED_CHECK_NONE)
+
 // Alarm modes for /obj/machinery/alarm
 #define AALARM_MODE_SCRUBBING   1
 #define AALARM_MODE_REPLACEMENT 2 //like scrubbing, but faster.

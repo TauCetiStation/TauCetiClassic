@@ -20,13 +20,14 @@
 	anchored = 1.0
 
 
-/obj/effect/rend/New()
+/obj/effect/rend/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/rend/atom_init_late()
 	spawn(50)
 		new /obj/singularity/narsie/wizard(get_turf(src))
 		qdel(src)
-		return
-	return
-
 
 /obj/item/weapon/veilrender/attack_self(mob/user)
 	if(charged == 1)

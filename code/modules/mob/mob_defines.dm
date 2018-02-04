@@ -216,7 +216,7 @@
 	var/alien_talk_understand = 0
 
 	var/has_limbs = 1 //Whether this mob have any limbs he can move with
-	var/can_stand = 1 //Whether this mob have ability to stand
+	var/stance_damage = 1 //Whether this mob's ability to stand has been affected
 
 	var/immune_to_ssd = 0
 
@@ -227,3 +227,5 @@
 
 	var/fake_death = 0 //New changeling statis
 	var/busy_with_action = FALSE // do_after() and do_mob() sets this to TRUE while in progress, use is_busy() before anything if you want to prevent user to do multiple actions.
+
+	var/list/weather_immunities = list()

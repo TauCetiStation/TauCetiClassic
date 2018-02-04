@@ -14,8 +14,8 @@
 
 	var/charges = 0		//how many restocking "charges" the refill has
 
-/obj/item/weapon/vending_refill/New()
-	..()
+/obj/item/weapon/vending_refill/atom_init()
+	. = ..()
 	name = "\improper [machine_name] restocking unit"
 
 /obj/item/weapon/vending_refill/examine(mob/user)

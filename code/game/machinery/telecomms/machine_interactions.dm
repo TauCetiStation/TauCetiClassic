@@ -58,7 +58,7 @@
 				construct_op --
 				stat &= ~BROKEN // the machine's not borked anymore!
 
-			else if(istype(P, /obj/item/weapon/crowbar))
+			else if(istype(P, /obj/item/weapon/crowbar) && !user.is_busy(src))
 				to_chat(user, "<span class='notice'>You begin prying out the circuit board and components...</span>")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user,60,target = src))
@@ -94,13 +94,7 @@
 					qdel(src)
 
 
-/obj/machinery/telecomms/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/telecomms/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/telecomms/ui_interact(mob/user)
 	// You need a multitool to use this, or be silicon/ghost
 	if(!issilicon(user) && !isobserver(user))
 		// istype returns false if the value is null

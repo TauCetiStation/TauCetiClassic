@@ -20,12 +20,12 @@
 	action_button_name = "Switch Spray"
 
 
-/obj/item/weapon/reagent_containers/spray/New()
-	..()
-	src.verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
+/obj/item/weapon/reagent_containers/spray/atom_init()
+	. = ..()
+	verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A, mob/user)
-	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
+	if(istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
 	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart))
 		return
 
@@ -124,9 +124,10 @@
 	desc = "BLAM!-brand non-foaming space cleaner!"
 	volume = 50
 
-/obj/item/weapon/reagent_containers/spray/cleaner/New()
-	..()
-	reagents.add_reagent("cleaner", src.volume)
+/obj/item/weapon/reagent_containers/spray/cleaner/atom_init()
+	. = ..()
+	reagents.add_reagent("cleaner", volume)
+
 //pepperspray
 /obj/item/weapon/reagent_containers/spray/pepper
 	name = "pepperspray"
@@ -139,8 +140,8 @@
 	safety = 1
 
 
-/obj/item/weapon/reagent_containers/spray/pepper/New()
-	..()
+/obj/item/weapon/reagent_containers/spray/pepper/atom_init()
+	. = ..()
 	reagents.add_reagent("condensedcapsaicin", 40)
 
 /obj/item/weapon/reagent_containers/spray/pepper/examine(mob/user)
@@ -166,8 +167,8 @@
 	possible_transfer_amounts = null
 	volume = 10
 
-/obj/item/weapon/reagent_containers/spray/waterflower/New()
-	..()
+/obj/item/weapon/reagent_containers/spray/waterflower/atom_init()
+	. = ..()
 	reagents.add_reagent("water", 10)
 
 //chemsprayer
@@ -232,6 +233,6 @@
 	volume = 100
 
 
-/obj/item/weapon/reagent_containers/spray/plantbgone/New()
-	..()
+/obj/item/weapon/reagent_containers/spray/plantbgone/atom_init()
+	. = ..()
 	reagents.add_reagent("plantbgone", 100)

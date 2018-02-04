@@ -22,7 +22,9 @@
 	//reset pulling
 	if(M.pulledby)
 		M.pulledby.stop_pulling()
-
+	if(M.grabbed_by.len)
+		for (var/obj/item/weapon/grab/G in M.grabbed_by)
+			qdel(G)
 	M.buckled = src
 	M.set_dir(dir)
 	buckled_mob = M
@@ -99,3 +101,9 @@
 				"<span class='notice'>You hear metal clanking.</span>")
 		add_fingerprint(user)
 	return M
+
+/atom/movable/proc/has_buckled_mobs()
+	if(!buckled_mob)
+		return FALSE
+	if(buckled_mob)
+		return TRUE

@@ -61,28 +61,29 @@
 	var/charge_tick = 0
 	var/mode = 0 //0 = mutate, 1 = yield boost
 
-	New()
-		..()
-		START_PROCESSING(SSobj, src)
+/obj/item/weapon/gun/energy/floragun/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 
-	Destroy()
-		STOP_PROCESSING(SSobj, src)
-		return ..()
+/obj/item/weapon/gun/energy/floragun/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
-	process()
-		charge_tick++
-		if(charge_tick < 4) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(100)
-		update_icon()
-		return 1
+/obj/item/weapon/gun/energy/floragun/process()
+	charge_tick++
+	if(charge_tick < 4)
+		return 0
+	charge_tick = 0
+	if(!power_supply)
+		return 0
+	power_supply.give(100)
+	update_icon()
+	return 1
 
-	attack_self(mob/living/user)
-		select_fire(user)
-		update_icon()
-		return
+/obj/item/weapon/gun/energy/floragun/attack_self(mob/living/user)
+	select_fire(user)
+	update_icon()
 
 /obj/item/weapon/gun/energy/meteorgun
 	name = "meteor gun"
@@ -96,24 +97,26 @@
 	var/charge_tick = 0
 	var/recharge_time = 5 //Time it takes for shots to recharge (in ticks)
 
-	New()
-		..()
-		START_PROCESSING(SSobj, src)
+/obj/item/weapon/gun/energy/meteorgun/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 
-	Destroy()
-		STOP_PROCESSING(SSobj, src)
-		return ..()
+/obj/item/weapon/gun/energy/meteorgun/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
-	process()
-		charge_tick++
-		if(charge_tick < recharge_time) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(100)
+/obj/item/weapon/gun/energy/meteorgun/process()
+	charge_tick++
+	if(charge_tick < recharge_time)
+		return 0
+	charge_tick = 0
+	if(!power_supply)
+		return 0
+	power_supply.give(100)
 
-	update_icon()
-		return
+/obj/item/weapon/gun/energy/meteorgun/update_icon()
+	return
 
 /obj/item/weapon/gun/energy/meteorgun/pen
 	name = "meteor pen"
@@ -171,11 +174,9 @@ obj/item/weapon/gun/energy/staff/focus
 	w_class = 4.0
 	var/zoom = 0
 
-/obj/item/weapon/gun/energy/sniperrifle/New()
-	..()
+/obj/item/weapon/gun/energy/sniperrifle/atom_init()
+	. = ..()
 	update_icon()
-	return
-
 
 /obj/item/weapon/gun/energy/sniperrifle/isHandgun()
 	return 0
@@ -257,8 +258,8 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	var/cooldown = FALSE
 	var/spinspeed = 1
 
-/obj/item/weapon/gun/tesla/New()
-	..()
+/obj/item/weapon/gun/tesla/atom_init()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/gun/tesla/proc/charge(mob/living/user)
@@ -295,6 +296,8 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	charge(user)
 
 /obj/item/weapon/gun/tesla/special_check(mob/user, atom/target)
+	if(!..())
+		return FALSE
 	if(!charge)
 		to_chat(user, "<span class='red'>Tesla Cannon is not charged!</span>")
 	else if(!istype(target, /mob/living))

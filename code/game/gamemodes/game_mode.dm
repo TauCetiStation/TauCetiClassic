@@ -15,7 +15,6 @@
 /datum/game_mode
 	var/name = "invalid"
 	var/config_tag = null
-	var/intercept_hacked = 0
 	var/votable = 1
 	var/playable_mode = 1
 	var/probability = 0
@@ -88,8 +87,8 @@ Implants;
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
-	for(var/mob/new_player/player in player_list)
-		if((player.client)&&(player.ready))
+	for(var/mob/dead/new_player/player in player_list)
+		if(player.client && player.ready)
 			playerC++
 
 	antag_candidates = get_players_for_role(role_type)
@@ -286,7 +285,7 @@ Implants;
 
 /*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 	for(var/mob/M in player_list)
-		if(!istype(M,/mob/new_player))
+		if(!isnewplayer(M))
 			M << sound('sound/AI/intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)*/
@@ -297,7 +296,7 @@ Implants;
 	var/list/candidates = list()
 
 	// Assemble a list of active players without jobbans.
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		if(player.client && player.ready)
 			if(role in player.client.prefs.be_role)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role) && !role_available_in_minutes(player, role))
@@ -307,7 +306,7 @@ Implants;
 	players = shuffle(players)
 
 	// Get a list of all the people who want to be the antagonist for this round
-	for(var/mob/new_player/player in players)
+	for(var/mob/dead/new_player/player in players)
 		if(role in player.client.prefs.be_role)
 			log_debug("[player.key] had [role] enabled, so we are drafting them.")
 			candidates += player.mind
@@ -328,7 +327,7 @@ Implants;
 /datum/game_mode/proc/latespawn(mob)
 
 /*
-/datum/game_mode/proc/check_player_role_pref(role, mob/new_player/player)
+/datum/game_mode/proc/check_player_role_pref(role, mob/dead/new_player/player)
 	if(player.preferences.be_role & role)
 		return 1
 	return 0
@@ -336,7 +335,7 @@ Implants;
 
 /datum/game_mode/proc/num_players()
 	. = 0
-	for(var/mob/new_player/P in player_list)
+	for(var/mob/dead/new_player/P in player_list)
 		if(P.client && P.ready)
 			. ++
 

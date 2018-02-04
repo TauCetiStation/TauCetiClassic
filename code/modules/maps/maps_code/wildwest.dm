@@ -20,19 +20,22 @@
 	var/chargesa = 1
 	var/insistinga = 0
 
-/obj/machinery/wish_granter_dark/attack_hand(var/mob/living/carbon/human/user as mob)
-	usr.set_machine(src)
-
+/obj/machinery/wish_granter_dark/attack_hand(mob/living/carbon/human/user)
+	. = ..()
+	if(.)
+		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(chargesa <= 0)
 		user << "The Wish Granter lies silent."
-		return
+		return 1
 
 	else if(!ishuman(user))
 		user << "You feel a dark stirring inside of the Wish Granter, something you want nothing of. Your instincts are better than any man's."
-		return
+		return 1
 
 	else if(is_special_character(user))
 		user << "Even to a heart as dark as yours, you know nothing good will come of this.  Something instinctual makes you pull away."
+		return 1
 
 	else if (!insistinga)
 		user << "Your first touch makes the Wish Granter stir, listening to you.  Are you really sure you want to do this?"
@@ -110,7 +113,8 @@
 	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered
 	var/triggered = 0
 
-/obj/effect/meatgrinder/New()
+/obj/effect/meatgrinder/atom_init()
+	. = ..()
 	icon_state = "blob"
 
 /obj/effect/meatgrinder/Crossed(AM as mob|obj)

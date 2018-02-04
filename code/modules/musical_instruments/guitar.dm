@@ -11,8 +11,8 @@
 	var/datum/music_player/MP = null
 	var/sound_path = "sound/musical_instruments/guitar"
 
-/obj/item/device/guitar/New()
-	..()
+/obj/item/device/guitar/atom_init()
+	. = ..()
 	MP = new(src, sound_path)
 
 /obj/item/device/guitar/Destroy()

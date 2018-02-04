@@ -65,8 +65,8 @@
 	var/walks_left = 50 //prevents the game from hanging in extreme cases (such as minigun fire)
 	var/static/list/guitar_notes = null
 
-/obj/effect/cross_action/spacetime_dist/New()
-	..()
+/obj/effect/cross_action/spacetime_dist/atom_init()
+	. = ..()
 	if(!guitar_notes)
 		guitar_notes = list("Fn3","F#3","Gb3","Gn3","G#3","Ab3","An3","A#3","Bb3","Bn3","B#3","Cb4","Cn4","C#4","Db4","Dn4",
 							"D#4","Eb4","En4","E#4","Fb4","Fn4","F#4","Gb4","Gn4","G#4","Ab4","An4","A#4","Bb4","Bn4","B#4",

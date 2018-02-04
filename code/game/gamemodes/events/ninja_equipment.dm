@@ -18,8 +18,8 @@ ________________________________________________________________________________
 
 //=======//NEW AND DEL//=======//
 
-/obj/item/clothing/suit/space/space_ninja/New()
-	..()
+/obj/item/clothing/suit/space/space_ninja/atom_init()
+	. = ..()
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/init//suit initialize verb
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_instruction//for AIs
 	verbs += /obj/item/clothing/suit/space/space_ninja/proc/ai_holo
@@ -863,9 +863,11 @@ ________________________________________________________________________________
 			to_chat(U, "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units.")//Let the player know how much total volume was added.
 			return
 		else if(istype(I, /obj/item/weapon/stock_parts/cell))
-			if(I:maxcharge>cell.maxcharge&&n_gloves&&n_gloves.candrain)
+			if(I:maxcharge > cell.maxcharge && n_gloves && n_gloves.candrain)
+				if(U.is_busy(src))
+					return
 				to_chat(U, "\blue Higher maximum capacity detected.\nUpgrading...")
-				if (n_gloves&&n_gloves.candrain&&do_after(U,s_delay, target = U))
+				if (n_gloves && n_gloves.candrain && do_after(U,s_delay, target = U))
 					U.drop_item()
 					I.loc = src
 					I:charge = min(I:charge+cell.charge, I:maxcharge)
@@ -883,6 +885,8 @@ ________________________________________________________________________________
 		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
 			var/obj/item/weapon/disk/tech_disk/TD = I
 			if(TD.stored)//If it has something on it.
+				if(U.is_busy(src))
+					return
 				to_chat(U, "Research information detected, processing...")
 				if(do_after(U,s_delay,target = U))
 					for(var/datum/tech/current_data in stored_research)
@@ -995,16 +999,17 @@ ________________________________________________________________________________
 
 		if("APC")
 			var/obj/machinery/power/apc/A = target
-			if(A.cell&&A.cell.charge)
+			if(A.cell && A.cell.charge)
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 				spark_system.set_up(5, 0, A.loc)
-				while(G.candrain&&A.cell.charge>0&&!maxcapacity)
+				while(G.candrain && A.cell.charge > 0 && !maxcapacity)
 					drain = rand(G.mindrain,G.maxdrain)
 					if(A.cell.charge<drain)
 						drain = A.cell.charge
 					if(S.cell.charge+drain>S.cell.maxcharge)
 						drain = S.cell.maxcharge-S.cell.charge
 						maxcapacity = 1//Reached maximum battery capacity.
+
 					if (do_after(U,10,target = A))
 						spark_system.start()
 						playsound(A.loc, "sparks", 50, 1)
@@ -1047,7 +1052,7 @@ ________________________________________________________________________________
 		if("CELL")
 			var/obj/item/weapon/stock_parts/cell/A = target
 			if(A.charge)
-				if (G.candrain&&do_after(U,30,target = A))
+				if (G.candrain && do_after(U,30,target = A))
 					to_chat(U, "\blue Gained <B>[A.charge]</B> energy from the cell.")
 					if(S.cell.charge+A.charge>S.cell.maxcharge)
 						S.cell.charge=S.cell.maxcharge
@@ -1222,7 +1227,8 @@ ________________________________________________________________________________
 ===================================================================================
 */
 
-/obj/item/clothing/mask/gas/voice/space_ninja/New()
+/obj/item/clothing/mask/gas/voice/space_ninja/atom_init()
+	. = ..()
 	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/togglev
 	verbs += /obj/item/clothing/mask/gas/voice/space_ninja/proc/switchm
 
@@ -1481,8 +1487,9 @@ It is possible to destroy the net by the occupant or someone else.
 		..()
 		return
 
-	attack_hand()
-		if (HULK in usr.mutations)
+	attack_hand(mob/living/carbon/human/user)
+		if (HULK in user.mutations)
+			user.SetNextMove(CLICK_CD_MELEE)
 			to_chat(usr, text("\blue You easily destroy the energy net."))
 			for(var/mob/O in oviewers(src))
 				O.show_message(text("\red [] rips the energy net apart!", usr), 1)
@@ -1493,9 +1500,10 @@ It is possible to destroy the net by the occupant or someone else.
 	attack_paw()
 		return attack_hand()
 
-	attack_alien()
-		usr.do_attack_animation(src)
-		if (islarva(usr) || isfacehugger(usr))
+	attack_alien(mob/user)
+		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
+		if (islarva(user) || isfacehugger(user))
 			return
 		to_chat(usr, text("\green You claw at the net."))
 		for(var/mob/O in oviewers(src))
@@ -1511,6 +1519,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 	attackby(obj/item/weapon/W, mob/user)
 		var/aforce = W.force
+		user.SetNextMove(CLICK_CD_MELEE)
 		health = max(0, health - aforce)
 		healthcheck()
 		..()

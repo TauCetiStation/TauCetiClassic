@@ -25,10 +25,6 @@
 	return 0
 
 
-/obj/item/mecha_parts/mecha_equipment/New()
-	..()
-	return
-
 /obj/item/mecha_parts/mecha_equipment/proc/update_chassis_page()
 	if(chassis)
 		send_byjax(chassis.occupant,"exosuit.browser","eq_list",chassis.get_equipment_list())
@@ -42,7 +38,8 @@
 		return 1
 	return
 
-/obj/item/mecha_parts/mecha_equipment/proc/destroy()//missiles detonating, teleporter creating singularity?
+
+/obj/item/mecha_parts/mecha_equipment/Destroy()//missiles detonating, teleporter creating singularity?
 	if(chassis)
 		chassis.equipment -= src
 		listclearnulls(chassis.equipment)
@@ -55,9 +52,7 @@
 			chassis.occupant << sound('sound/mecha/weapdestr.ogg',volume=50)
 		else
 			chassis.occupant << sound('sound/mecha/critdestr.ogg',volume=50)
-	spawn
-		qdel(src)
-	return
+	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/proc/critfail()
 	if(chassis)
@@ -93,6 +88,8 @@
 
 /obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/mecha/M)
 	if(istype(M))
+		if(istype(src, /obj/item/mecha_parts/mecha_equipment/Drop_system))
+			return 1
 		if(M.equipment.len<M.max_equip)
 			return 1
 	return 0

@@ -15,10 +15,10 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	return null
 
 
-/turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh = 0, atom/firestarter)
+/turf/proc/hotspot_expose(exposed_temperature, exposed_volume, atom/firestarter)
 
 
-/turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, atom/firestarter)
+/turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, atom/firestarter)
 	if(fire_protection > world.time - 300)
 		return FALSE
 	if(locate(/obj/fire) in src)
@@ -191,12 +191,11 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 	animate(src, color = fire_color(air_contents.temperature), 5)
 	set_light(l_color = color)
 
-/obj/fire/New(newLoc,fl)
-	..()
+/obj/fire/atom_init(mapload, fl)
+	. = ..()
 
-	if(!istype(loc, /turf))
-		qdel(src)
-		return
+	if(!isturf(loc))
+		return INITIALIZE_HINT_QDEL
 
 	set_dir(pick(cardinal))
 
@@ -314,8 +313,9 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 
 		//remove_by_flag() and adjust_gas() handle the group_multiplier for us.
 		remove_by_flag(XGM_GAS_OXIDIZER, used_oxidizers)
-		remove_by_flag(XGM_GAS_FUEL, used_gas_fuel)
-		adjust_gas("carbon_dioxide", used_oxidizers)
+		var/datum/gas_mixture/burned_fuel = remove_by_flag(XGM_GAS_FUEL, used_gas_fuel)
+		for(var/g in burned_fuel.gas)
+			adjust_gas(gas_data.burn_product[g], burned_fuel.gas[g])
 
 		if(zone)
 			zone.remove_liquidfuel(used_liquid_fuel, !check_combustability())

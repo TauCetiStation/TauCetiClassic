@@ -66,9 +66,7 @@ var/global/loopModeNames=list(
 
 	anchored = 1
 	luminosity = 4 // Why was this 16
-	ghost_must_be_admin = TRUE
-
-	playing=0
+	playing = 0
 
 	var/loop_mode = JUKEMODE_SHUFFLE
 
@@ -83,11 +81,6 @@ var/global/loopModeNames=list(
 	var/autoplay      = 0
 	var/last_reload   = 0
 	var/state_base = "jukebox2"
-
-
-/obj/machinery/media/jukebox/attack_ai(mob/user)
-	attack_hand(user)
-
 
 /obj/machinery/media/jukebox/power_change()
 	..()
@@ -114,7 +107,8 @@ var/global/loopModeNames=list(
 /obj/machinery/media/jukebox/proc/check_reload()
 	return world.time > last_reload + JUKEBOX_RELOAD_COOLDOWN
 
-/obj/machinery/media/jukebox/attack_hand(mob/user)
+/obj/machinery/media/jukebox/ui_interact(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(stat & NOPOWER)
 		to_chat(usr, "\red You don't see anything to mess with.")
 		return
@@ -147,7 +141,7 @@ var/global/loopModeNames=list(
 			var/datum/song_info/song=playlist[i]
 			t += "<tr><th>#[i]</th><td><A href='?src=\ref[src];song=[i]' class='nobg'>[song.displaytitle()]</A></td><td>[song.album]</td></tr>"
 		t += "</table>"
-	user.set_machine(src)
+
 	var/datum/browser/popup = new (user,"jukebox",name,420,700)
 	popup.set_content(t)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
@@ -155,8 +149,9 @@ var/global/loopModeNames=list(
 
 
 /obj/machinery/media/jukebox/attackby(obj/item/W, mob/user, params)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/card/emag))
-		current_song=0
+		current_song = 0
 		if(!emagged)
 			playlist_id = "emagged"
 			last_reload=world.time
@@ -168,6 +163,7 @@ var/global/loopModeNames=list(
 			update_icon()
 			update_music()
 	else if(istype(W,/obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		var/un = !anchored ? "" : "un"
 		user.visible_message("\blue [user.name] begins [un]locking \the [src.name]'s casters.","\blue You begin [un]locking \the [src.name]'s casters.")
 		if(do_after(user,30, target = src))
@@ -177,6 +173,8 @@ var/global/loopModeNames=list(
 			playing = emagged
 			update_music()
 			update_icon()
+	else
+		..()
 
 /obj/machinery/media/jukebox/Topic(href, href_list)
 	. = ..()

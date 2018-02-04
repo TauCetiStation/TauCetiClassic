@@ -53,19 +53,17 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
-	ghost_must_be_admin = TRUE
 
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
 	var/active = TRUE
 	var/decryptkey = "password"
 
-/obj/machinery/message_server/New()
+/obj/machinery/message_server/atom_init()
 	message_servers += src
 	decryptkey = GenerateKey()
 	send_pda_message("System Administrator", "system", "This is an automated message. The messaging system is functioning correctly.")
-	..()
-	return
+	. = ..()
 
 /obj/machinery/message_server/Destroy()
 	message_servers -= src
@@ -95,12 +93,14 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
 
 /obj/machinery/message_server/attack_hand(user)
+	. = ..()
+	if(.)
+		return
+
 //	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."
 	to_chat(user, "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]")
 	active = !active
 	update_icon()
-
-	return
 
 /obj/machinery/message_server/update_icon()
 	if((stat & (BROKEN|NOPOWER)))
@@ -197,7 +197,8 @@ var/obj/machinery/blackbox_recorder/blackbox
 	var/list/datum/feedback_variable/feedback = new()
 
 	//Only one can exsist in the world!
-/obj/machinery/blackbox_recorder/New()
+/obj/machinery/blackbox_recorder/atom_init()
+	. = ..()
 	if(blackbox)
 		if(istype(blackbox,/obj/machinery/blackbox_recorder))
 			qdel(src)

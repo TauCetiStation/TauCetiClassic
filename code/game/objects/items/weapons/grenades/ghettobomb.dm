@@ -14,8 +14,8 @@
 	var/range = 3
 	var/list/times
 
-/obj/item/weapon/grenade/iedcasing/New()
-	..()
+/obj/item/weapon/grenade/iedcasing/atom_init()
+	. = ..()
 	overlays += image("improvised_grenade_filled")
 	overlays += image("improvised_grenade_wired")
 	times = list("5" = 10, "-1" = 20, "[rand(30, 80)]" = 50, "[rand(65, 180)]" = 20) // "Premature, Dud, Short Fuse, Long Fuse"=[weighting value]

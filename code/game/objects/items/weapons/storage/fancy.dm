@@ -49,11 +49,10 @@
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/donut")
 
 
-/obj/item/weapon/storage/fancy/donut_box/New()
-	..()
-	for(var/i=1; i <= storage_slots; i++)
+/obj/item/weapon/storage/fancy/donut_box/atom_init()
+	. = ..()
+	for (var/i in 1 to storage_slots)
 		new /obj/item/weapon/reagent_containers/food/snacks/donut/normal(src)
-	return
 
 /*
  * Egg Box
@@ -68,11 +67,10 @@
 	max_combined_w_class = 24
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/egg")
 
-/obj/item/weapon/storage/fancy/egg_box/New()
-	..()
-	for(var/i=1; i <= storage_slots; i++)
+/obj/item/weapon/storage/fancy/egg_box/atom_init()
+	. = ..()
+	for (var/i in 1 to storage_slots)
 		new /obj/item/weapon/reagent_containers/food/snacks/egg(src)
-	return
 
 /*
  * Candle Box
@@ -90,11 +88,10 @@
 	slot_flags = SLOT_BELT
 
 
-/obj/item/weapon/storage/fancy/candle_box/New()
-	..()
-	for(var/i=1; i <= storage_slots; i++)
+/obj/item/weapon/storage/fancy/candle_box/atom_init()
+	. = ..()
+	for (var/i in 1 to storage_slots)
 		new /obj/item/candle(src)
-	return
 
 /*
  * Crayon Box
@@ -112,8 +109,8 @@
 		"/obj/item/toy/crayon"
 	)
 
-/obj/item/weapon/storage/fancy/crayons/New()
-	..()
+/obj/item/weapon/storage/fancy/crayons/atom_init()
+	. = ..()
 	new /obj/item/toy/crayon/red(src)
 	new /obj/item/toy/crayon/orange(src)
 	new /obj/item/toy/crayon/yellow(src)
@@ -128,14 +125,14 @@
 	for(var/obj/item/toy/crayon/crayon in contents)
 		overlays += image('icons/obj/crayons.dmi',crayon.colourName)
 
-/obj/item/weapon/storage/fancy/crayons/attackby(obj/item/W, mob/user)
-	if(istype(W,/obj/item/toy/crayon))
-		switch(W:colourName)
+/obj/item/weapon/storage/fancy/crayons/attackby(obj/item/toy/crayon/W, mob/user)
+	if(istype(W))
+		switch(W.colourName)
 			if("mime")
-				to_chat(usr, "This crayon is too sad to be contained in this box.")
+				to_chat(user, "This crayon is too sad to be contained in this box.")
 				return
 			if("rainbow")
-				to_chat(usr, "This crayon is too powerful to be contained in this box.")
+				to_chat(user, "This crayon is too powerful to be contained in this box.")
 				return
 	..()
 
@@ -155,8 +152,8 @@
 		"/obj/item/weapon/reagent_containers/food/snacks/glowstick"
 	)
 
-/obj/item/weapon/storage/fancy/glowsticks/New()
-	..()
+/obj/item/weapon/storage/fancy/glowsticks/atom_init()
+	. = ..()
 	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/green(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/red(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue(src)
@@ -186,8 +183,8 @@
 	can_hold = list("/obj/item/clothing/mask/cigarette","/obj/item/weapon/lighter")
 	icon_type = "cigarette"
 
-/obj/item/weapon/storage/fancy/cigarettes/New()
-	..()
+/obj/item/weapon/storage/fancy/cigarettes/atom_init()
+	. = ..()
 	flags |= NOREACT
 	for(var/i = 1 to storage_slots)
 		new /obj/item/clothing/mask/cigarette(src)
@@ -203,11 +200,11 @@
 			reagents.trans_to(W, (reagents.total_volume/contents.len))
 	..()
 
-/obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!istype(M, /mob))
+/obj/item/weapon/storage/fancy/cigarettes/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+	if(!istype(M))
 		return
 
-	if(M == user && user.zone_sel.selecting == O_MOUTH && contents.len > 0 && !user.wear_mask)
+	if(M == user && def_zone == O_MOUTH && contents.len > 0 && !user.wear_mask)
 		var/has_cigarette = 0
 		for(var/obj/item/I in contents)
 			if(istype(I, /obj/item/clothing/mask/cigarette))
@@ -234,9 +231,9 @@
 	desc = "An obscure brand of cigarettes."
 	icon_state = "syndie"
 
-/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate/New()
-	..()
-	for(var/i = 1 to storage_slots)
+/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate/atom_init()
+	. = ..()
+	for (var/i in 1 to storage_slots)
 		reagents.add_reagent("tricordrazine",15)
 	name = "cigarette packet"
 
@@ -253,11 +250,10 @@
 	can_hold = list("/obj/item/weapon/reagent_containers/glass/beaker/vial")
 
 
-/obj/item/weapon/storage/fancy/vials/New()
-	..()
-	for(var/i=1; i <= storage_slots; i++)
+/obj/item/weapon/storage/fancy/vials/atom_init()
+	. = ..()
+	for (var/i in 1 to storage_slots)
 		new /obj/item/weapon/reagent_containers/glass/beaker/vial(src)
-	return
 
 /obj/item/weapon/storage/lockbox/vials
 	name = "secure vial storage box"
@@ -271,8 +267,8 @@
 	storage_slots = 6
 	req_access = list(access_virology)
 
-/obj/item/weapon/storage/lockbox/vials/New()
-	..()
+/obj/item/weapon/storage/lockbox/vials/atom_init()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/storage/lockbox/vials/update_icon(itemremoved = 0)

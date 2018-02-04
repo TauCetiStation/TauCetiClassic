@@ -113,8 +113,8 @@
 	update_icon()
 
 
-/obj/machinery/door/airlock/New()
-	..()
+/obj/machinery/door/airlock/atom_init()
+	. = ..()
 
 	if(radio_controller)
 		set_frequency(frequency)
@@ -129,9 +129,9 @@
 	icon_state = "airlock_sensor_off"
 	name = "airlock sensor"
 
-	anchored = 1
+	anchored = TRUE
 	power_channel = ENVIRON
-	ghost_must_be_admin = TRUE
+	interact_offline = TRUE // this is very strange that power_channel is defined, use_power = 1 (parent), when this element has no unpowered features and sprites.
 
 	var/id_tag
 	var/master_tag
@@ -152,7 +152,14 @@
 	else
 		icon_state = "airlock_sensor_off"
 
+/obj/machinery/airlock_sensor/allowed_fail()
+	flick("access_button_cycle", src)
+
 /obj/machinery/airlock_sensor/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
 	signal.data["tag"] = master_tag
@@ -204,7 +211,7 @@
 	layer = 3.3	//Above windows
 	anchored = TRUE
 	power_channel = ENVIRON
-	ghost_must_be_admin = TRUE
+	interact_offline = TRUE
 
 	var/master_tag
 	frequency = 1449
@@ -212,25 +219,28 @@
 
 	var/on = TRUE
 
-
 /obj/machinery/access_button/update_icon()
 	if(on)
 		icon_state = "access_button_standby"
 	else
 		icon_state = "access_button_off"
 
-/obj/machinery/access_button/attack_hand(mob/user)
-	add_fingerprint(usr)
-	if(!allowed(user))
-		to_chat(user, "\red Access Denied")
+/obj/machinery/access_button/allowed_fail()
+	flick("access_button_cycle", src)
 
-	else if(radio_connection)
+/obj/machinery/access_button/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
+	if(radio_connection)
 		var/datum/signal/signal = new
 		signal.transmission_method = 1 //radio signal
 		signal.data["tag"] = master_tag
 		signal.data["command"] = command
 
 		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
+
 	flick("access_button_cycle", src)
 
 

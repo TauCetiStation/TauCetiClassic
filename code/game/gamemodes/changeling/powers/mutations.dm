@@ -119,8 +119,8 @@
 	throw_range = 0
 	throw_speed = 0
 
-/obj/item/weapon/melee/arm_blade/New()
-	..()
+/obj/item/weapon/melee/arm_blade/atom_init()
+	. = ..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>A grotesque blade forms around [loc.name]\'s arm!</span>", "<span class='warning'>Our arm twists and mutates, transforming it into a deadly blade.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 
@@ -154,7 +154,8 @@
 			return
 
 		else
-			//user.say("Heeeeeeeeeerrre's Johnny!")
+			if(prob(10))
+				user.say("Heeeeeeeeeerrre's Johnny!") // ^^
 			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
 			A.open(1)
 
@@ -182,8 +183,8 @@
 	block_chance = 80
 	var/remaining_uses = 6
 
-/obj/item/weapon/shield/changeling/New()
-//	..()
+/obj/item/weapon/shield/changeling/atom_init()
+	. = ..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>The end of [loc.name]\'s hand inflates rapidly, forming a huge shield-like mass!</span>", "<span class='warning'>We inflate our hand into a strong shield.</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 		var/mob/M = loc
@@ -233,8 +234,8 @@
 	armor = list(melee = 0, bullet = 0, laser = 0, energy = 0, bomb = 0, bio = 0, rad = 0) // No armor at all.
 	siemens_coefficient = 2 // fleeesh! not a skin! very sensitive!
 
-/obj/item/clothing/suit/space/changeling/New()
-	..()
+/obj/item/clothing/suit/space/changeling/atom_init()
+	. = ..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh rapidly inflates, forming a bloated mass around their body!</span>", "<span class='warning'>We inflate our flesh, creating a spaceproof suit!</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 	START_PROCESSING(SSobj, src)
@@ -288,8 +289,8 @@
 	heat_protection = 0
 	siemens_coefficient = 0.4
 
-/obj/item/clothing/suit/armor/changeling/New()
-	..()
+/obj/item/clothing/suit/armor/changeling/atom_init()
+	. = ..()
 	if(ismob(loc))
 		loc.visible_message("<span class='warning'>[loc.name]\'s flesh turns black, quickly transforming into a hard, chitinous mass!</span>", "<span class='warning'>We harden our flesh, creating a suit of armor!</span>", "<span class='warning'>You hear organic matter ripping and tearing!</span>")
 

@@ -132,13 +132,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	name = "Security Newscaster"
 	securityCaster = 1
 
-/obj/machinery/newscaster/New()         //Constructor, ho~
+/obj/machinery/newscaster/atom_init()         //Constructor, ho~
 	allCasters += src
-	src.paper_remaining = 15            // Will probably change this to something better
+	paper_remaining = 15            // Will probably change this to something better
 	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters) // Let's give it an appropriate unit number
-		src.unit_no++
-	src.update_icon() //for any custom ones on the map...
-	..()                                //I just realised the newscasters weren't in the global machines list. The superconstructor call will tend to that
+		unit_no++
+	update_icon() //for any custom ones on the map...
+	. = ..()                                //I just realised the newscasters weren't in the global machines list. The superconstructor call will tend to that
 
 /obj/machinery/newscaster/Destroy()
 	allCasters -= src
@@ -200,13 +200,15 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			return
 	return
 
-/obj/machinery/newscaster/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/newscaster/attack_hand(mob/user)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
-	if(!src.ispowered || src.isbroken)
+/obj/machinery/newscaster/ui_interact(mob/user)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
+	if(isbroken)
 		return
-	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) )
+
+	if(isobserver(user))
+		to_chat(user, "[src]'s UI has no support for observer.")
+		return
+
+	if(ishuman(user) || issilicon(user)) // need abit of rewriting this to make it work for observers.
 		var/mob/living/human_or_robot_user = user
 		var/dat
 		dat = text("<HEAD><TITLE>Newscaster</TITLE></HEAD><H3>Newscaster Unit #[src.unit_no]</H3>")
@@ -714,6 +716,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				src.screen=2*/  //Obsolete after autorecognition
 
 	if(istype(I, /obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>")
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 60, target = src))
@@ -729,6 +732,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	else
 		if(istype(I, /obj/item/weapon) )
 			user.do_attack_animation(src)
+			user.SetNextMove(CLICK_CD_MELEE)
 			var/obj/item/weapon/W = I
 			if(W.force <15)
 				for (var/mob/O in hearers(5, src.loc))
@@ -748,10 +752,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		else
 			to_chat(user, "<FONT COLOR='blue'>This does nothing.</FONT>")
 	src.update_icon()
-
-/obj/machinery/newscaster/attack_ai(mob/user)
-	return src.attack_hand(user) //or maybe it'll have some special functions? No idea.
-
 
 /obj/machinery/newscaster/attack_paw(mob/user)
 	to_chat(user, "<font color='blue'>The newscaster controls are far too complicated for your tiny brain!</font>")
@@ -803,11 +803,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/scribble=""
 	var/scribble_page = null
 
-/*obj/item/weapon/newspaper/attack_hand(mob/user as mob)
-	..()
-	to_chat(world, "derp")*/
-
-obj/item/weapon/newspaper/attack_self(mob/user)
+/obj/item/weapon/newspaper/attack_self(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/dat

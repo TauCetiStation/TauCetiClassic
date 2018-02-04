@@ -32,7 +32,7 @@
 	if(SSfluids)
 		SSfluids.add_active_fluid(src)
 
-/obj/effect/fluid/New()
+/obj/effect/fluid/atom_init()
 	. = ..()
 	create_reagents(FLUID_MAX_DEPTH)
 	start_loc = get_turf(src)
@@ -55,8 +55,8 @@
 	color = "#66D1FF"
 	icon_state = "shallow_still"
 
-/obj/effect/fluid/mapped/New()
-	..()
+/obj/effect/fluid/mapped/atom_init()
+	. = ..()
 	alpha = 0
 	color = null
 	icon_state = null

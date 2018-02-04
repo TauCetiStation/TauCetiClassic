@@ -11,11 +11,14 @@
 
 	var/last_activation = 0
 
-/obj/effect/landmark/antigrief_alarm/New()
+/obj/effect/landmark/antigrief_alarm/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/landmark/antigrief_alarm/atom_init_late()
 	//todo: check if we have alive db. qdel if not.
 	var/area/A = get_area(src)
 	area_name = A.name
-	return
 
 /obj/effect/landmark/antigrief_alarm/HasProximity(atom/A)
 	if(!isliving(A))

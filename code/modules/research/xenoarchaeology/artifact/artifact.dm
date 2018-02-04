@@ -41,7 +41,8 @@
 	var/datum/artifact_find/artifact_find
 	var/last_act = 0
 
-/obj/structure/boulder/New()
+/obj/structure/boulder/atom_init()
+	. = ..()
 	icon_state = "boulder[rand(1,4)]"
 	excavation_level = rand(5,50)
 
@@ -60,6 +61,7 @@
 		return
 
 	if (istype(W, /obj/item/device/measuring_tape))
+		if(user.is_busy()) return
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
 		if(do_after(user,40,target = src))

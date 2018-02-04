@@ -19,7 +19,7 @@
 		to_chat(B.host, "The captive mind of [src] whispers, \"[message]\"")
 
 		for (var/mob/M in player_list)
-			if (istype(M, /mob/new_player))
+			if (isnewplayer(M))
 				continue
 			else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				to_chat(M, "The captive mind of [src] whispers, \"[message]\"")
@@ -56,6 +56,13 @@
 	var/mob/living/captive_brain/host_brain // Used for swapping control of the body back and forth.
 	var/controlling                         // Used in human death check.
 	var/docile = 0                          // Sugar can stop borers from acting.
+
+/mob/living/simple_animal/borer/atom_init()
+	. = ..()
+	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
+	host_brain = new/mob/living/captive_brain(src)
+
+	request_player()
 
 /mob/living/simple_animal/borer/Life()
 
@@ -94,14 +101,6 @@
 
 				if(prob(host.brainloss/20))
 					host.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
-
-/mob/living/simple_animal/borer/New()
-	..()
-	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
-	host_brain = new/mob/living/captive_brain(src)
-
-	request_player()
-
 
 /mob/living/simple_animal/borer/say(var/message)
 
@@ -373,7 +372,7 @@ mob/living/simple_animal/borer/proc/detatch()
 		if(H.check_head_coverage())
 			to_chat(src, "You cannot get through that host's protective gear.")
 			return
-
+	if(is_busy()) return
 	to_chat(M, "Something slimy begins probing at the opening of your ear canal...")
 	to_chat(src, "You slither up [M] and begin probing at their ear canal...")
 

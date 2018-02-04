@@ -25,8 +25,9 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/poisonberries = "poisonberryjuice",
 	)
 
-/obj/machinery/juicer/New()
+/obj/machinery/juicer/atom_init()
 	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	. = ..()
 
 /obj/machinery/juicer/update_icon()
 	icon_state = "juicer"+num2text(!isnull(beaker))
@@ -56,17 +57,12 @@
 	src.updateUsrDialog()
 	return 0
 
-/obj/machinery/juicer/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/juicer/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
 	return 0
 
-/obj/machinery/juicer/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/juicer/interact(mob/user) // The microwave Menu
+/obj/machinery/juicer/ui_interact(mob/user) // The microwave Menu
 	var/is_chamber_empty = 0
 	var/is_beaker_ready = 0
 	var/processing_chamber = ""
@@ -93,17 +89,16 @@
 		beaker_contents = "\The [src]  has attached a beaker and beaker is full!"
 
 	var/dat = {"
-<b>Processing chamber contains:</b><br>
-[processing_chamber]<br>
-[beaker_contents]<hr>
-"}
+		<b>Processing chamber contains:</b><br>
+		[processing_chamber]<br>
+		[beaker_contents]<hr>
+		"}
 	if (is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
 		dat += "<A href='?src=\ref[src];action=juice'>Turn on!<BR>"
 	if (beaker)
 		dat += "<A href='?src=\ref[src];action=detach'>Detach a beaker!<BR>"
 	user << browse("<HEAD><TITLE>Juicer</TITLE></HEAD><TT>[dat]</TT>", "window=juicer")
 	onclose(user, "juicer")
-	return
 
 
 /obj/machinery/juicer/Topic(href, href_list)
@@ -159,20 +154,10 @@
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
 			break
 
-/obj/structure/closet/crate/juice
-	New()
-		..()
-		new/obj/machinery/juicer(src)
+/obj/structure/closet/crate/juice/PopulateContents()
+	new/obj/machinery/juicer(src)
+	for (var/i in 1 to 3)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
 		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/tomato(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/carrot(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/berries(src)
-		new/obj/item/weapon/reagent_containers/food/snacks/grown/banana(src)
-

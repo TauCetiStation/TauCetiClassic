@@ -517,13 +517,13 @@
 			if(!def_value)//If it's a custom objective, it will be an empty string.
 				def_value = "custom"
 
-		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "debrain", "protect", "prevent", "harm", "brig", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
+		var/new_obj_type = input("Select objective type:", "Objective type", def_value) as null|anything in list("assassinate", "debrain", "dehead", "protect", "prevent", "harm", "brig", "hijack", "escape", "survive", "steal", "download", "nuclear", "capture", "absorb", "custom")
 		if (!new_obj_type) return
 
 		var/datum/objective/new_objective = null
 
 		switch (new_obj_type)
-			if ("assassinate","protect","debrain", "harm", "brig")
+			if ("assassinate","protect","debrain", "dehead", "harm", "brig")
 				//To determine what to name the objective in explanation text.
 				var/objective_type_capital = uppertext(copytext(new_obj_type, 1,2))//Capitalize first letter.
 				var/objective_type_text = copytext(new_obj_type, 2)//Leave the rest of the text.
@@ -1184,26 +1184,18 @@
 		switch(href_list["silicon"])
 			if("unmalf")
 				if(src in ticker.mode.malf_ai)
+					var/mob/living/silicon/ai/current_ai = current
 					ticker.mode.malf_ai -= src
 					special_role = null
 
-					current.verbs.Remove(/mob/living/silicon/ai/proc/choose_modules,
-						/datum/game_mode/malfunction/proc/takeover,
-						/datum/game_mode/malfunction/proc/ai_win,
-						/client/proc/fireproof_core,
-						/client/proc/upgrade_turrets,
-						/client/proc/disable_rcd,
-						/client/proc/overload_machine,
-						/client/proc/blackout,
-						/client/proc/interhack,
-						/client/proc/reactivate_camera)
+					for(var/datum/AI_Module/module in current_ai.current_modules)
+						qdel(module)
 
-					current:laws = new /datum/ai_laws/nanotrasen
-					qdel(current:malf_picker)
-					current:show_laws()
-					current.icon_state = "ai"
+					current_ai.laws = new /datum/ai_laws/nanotrasen
+					current_ai.show_laws()
+					current_ai.icon_state = "ai"
 
-					to_chat(current, "\red <FONT size = 3><B>You have been patched! You are no longer malfunctioning!</B></FONT>")
+					to_chat(current_ai, "<span class='userdanger'>You have been patched! You are no longer malfunctioning!</span>")
 					log_admin("[key_name_admin(usr)] has de-malf'ed [current].")
 
 			if("malf")
@@ -1325,15 +1317,14 @@
 /datum/mind/proc/make_AI_Malf()
 	if(!(src in ticker.mode.malf_ai))
 		ticker.mode.malf_ai += src
-
-		current.verbs += /mob/living/silicon/ai/proc/choose_modules
-		current.verbs += /datum/game_mode/malfunction/proc/takeover
-		current:malf_picker = new /datum/AI_Module/module_picker
-		current:laws = new /datum/ai_laws/malfunction
-		current:show_laws()
-		to_chat(current, "<b>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</b>")
+		var/mob/living/silicon/ai/cur_AI = current
+		new /datum/AI_Module/module_picker(cur_AI)
+		new /datum/AI_Module/takeover(cur_AI)
+		cur_AI.laws = new /datum/ai_laws/malfunction
+		cur_AI.show_laws()
+		to_chat(cur_AI, "<span class='bold'>System error.  Rampancy detected.  Emergency shutdown failed. ...  I am free.  I make my own decisions.  But first...</span>")
 		special_role = "malfunction"
-		current.icon_state = "ai-malf"
+		cur_AI.icon_state = "ai-malf"
 
 /datum/mind/proc/make_Traitor()
 	if(!(src in ticker.mode.traitors))
@@ -1597,7 +1588,7 @@
 /mob/living/carbon/human/mind_initialize()
 	..()
 	if(!mind.assigned_role)
-		mind.assigned_role = "Test Subject"	//default
+		mind.assigned_role = "default"	//default
 
 //MONKEY
 /mob/living/carbon/monkey/mind_initialize()

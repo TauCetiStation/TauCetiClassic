@@ -6,14 +6,15 @@
 	use_power = 1
 	idle_power_usage = 300
 	active_power_usage = 300
+	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
 	var/processing = 0
 
 	var/light_range_on = 1.5
 	var/light_power_on = 3
 
-/obj/machinery/computer/New(location, obj/item/weapon/circuitboard/C)
-	..(location)
+/obj/machinery/computer/atom_init(mapload, obj/item/weapon/circuitboard/C)
+	. = ..()
 	if(C && istype(C))
 		circuit = C
 	else
@@ -109,8 +110,10 @@
 	text = replacetext(text, "\n", "<BR>")
 	return text
 
-/obj/machinery/computer/attackby(I, user)
+/obj/machinery/computer/attackby(obj/item/I, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(I, /obj/item/weapon/screwdriver) && circuit && !(flags&NODECONSTRUCT))
+		if(user.is_busy(src)) return
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		if(do_after(user, 20, target = src))
 			var/obj/structure/computerframe/A = new /obj/structure/computerframe( src.loc )
@@ -130,14 +133,26 @@
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)
-	return
 
 /obj/machinery/computer/attack_hand(user)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(HULK in H.mutations)
+			if(stat & (BROKEN))
+				return 1
+			if(H.a_intent == "hurt")
+				H.visible_message("\red [H.name] smashes [src] with \his mighty arms!")
+				set_broken()
+				return 1
+			else
+				H.visible_message("\red [H.name] stares cluelessly at [src] and drools.")
+				return 1
 	. = ..()
-	return
 
 /obj/machinery/computer/attack_paw(mob/user)
 	if(circuit)
+		user.SetNextMove(CLICK_CD_MELEE)
+		user.do_attack_animation(src)
 		if(prob(10))
 			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with /his paws.</span>",\
 			"<span class='danger'>You smash the [src.name] with your paws.</span>",\
@@ -153,6 +168,8 @@
 		attack_hand(user)
 		return
 	if(circuit)
+		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		if(prob(80))
 			user.visible_message("<span class='danger'>[user.name] smashes the [src.name] with /his claws.</span>",\
 			"<span class='danger'>You smash the [src.name] with your claws.</span>",\

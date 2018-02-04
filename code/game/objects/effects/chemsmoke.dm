@@ -7,12 +7,11 @@
 	time_to_live = 300
 	pass_flags = PASSTABLE | PASSGRILLE | PASSGLASS		//PASSGLASS is fine here, it's just so the visual effect can "flow" around glass
 
-/obj/effect/effect/smoke/chem/New()
-	..()
+/obj/effect/effect/smoke/chem/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(500)
 	reagents = R
 	R.my_atom = src
-	return
 
 /datum/effect/effect/system/smoke_spread/chem
 	smoke_type = /obj/effect/effect/smoke/chem

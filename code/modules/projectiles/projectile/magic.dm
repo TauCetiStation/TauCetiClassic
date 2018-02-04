@@ -19,9 +19,9 @@
 	nodamage = 1
 	flag = "magic"
 
-/obj/item/projectile/magic/New(loc, power_of_spell = 1)
-	src.power_of_spell = power_of_spell
-	..()
+/obj/item/projectile/magic/atom_init(mapload, power_of_spell = 1)
+	power_of_spell = power_of_spell
+	. = ..()
 
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	wabbajack(change)

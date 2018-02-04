@@ -15,12 +15,12 @@
 	var/datum/reagent/liquid_fuel
 	action_button_name = "Break Glowstick"
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/New()
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/atom_init()
 	name = "[colourName] glowstick"
 	desc = "A Nanotrasen issued [colourName] glowstick. There are instructions on the side, it reads 'bend it, make light'."
 	icon_state = "glowstick_[colourName]"
 	item_state = "glowstick_[colourName]"
-	..()
+	. = ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/process()
 	liquid_fuel.volume = max(liquid_fuel.volume - 0.1, 0)
@@ -197,42 +197,42 @@
 	light_color = "#88EBC3"
 	filling_color = "#88EBC3"
 
-	New()
-		..()
-		add_fuel()
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/green/atom_init()
+	. = ..()
+	add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/red
 	colourName = "red"
 	light_color = "#EA0052"
 	filling_color = "#EA0052"
 
-	New()
-		..()
-		add_fuel()
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/red/atom_init()
+	. = ..()
+	add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue
 	colourName = "blue"
 	light_color = "#24C1FF"
 	filling_color = "#24C1FF"
 
-	New()
-		..()
-		add_fuel()
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/blue/atom_init()
+	. = ..()
+	add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow
 	colourName = "yellow"
 	light_color = "#FFFA18"
 	filling_color = "#FFFA18"
 
-	New()
-		..()
-		add_fuel()
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow/atom_init()
+	. = ..()
+	add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange
 	colourName = "orange"
 	light_color = "#FF9318"
 	filling_color = "#FF9318"
 
-	New()
-		..()
-		add_fuel()
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/orange/atom_init()
+	. = ..()
+	add_fuel()

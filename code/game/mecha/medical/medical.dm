@@ -1,9 +1,8 @@
-/obj/mecha/medical/New()
-	..()
+/obj/mecha/medical/atom_init()
+	. = ..()
 	var/turf/T = get_turf(src)
 	if(T.z != ZLEVEL_CENTCOMM)
 		new /obj/item/mecha_parts/mecha_tracking(src)
-	return
 
 
 /obj/mecha/medical/mechturn(direction)

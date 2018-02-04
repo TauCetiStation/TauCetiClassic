@@ -218,10 +218,9 @@
 	icon_state = "sunhud"
 	var/obj/item/clothing/glasses/hud/security/hud = null
 
-/obj/item/clothing/glasses/sunglasses/sechud/New()
-	..()
-	src.hud = new/obj/item/clothing/glasses/hud/security(src)
-	return
+/obj/item/clothing/glasses/sunglasses/sechud/atom_init()
+	. = ..()
+	hud = new/obj/item/clothing/glasses/hud/security(src)
 
 /obj/item/clothing/glasses/sunglasses/sechud/tactical
 	name = "tactical HUD"

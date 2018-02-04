@@ -35,8 +35,8 @@
 	var/lasercolor = ""
 
 
-/obj/machinery/bot/secbot/ed209/New(loc,created_name,created_lasercolor)
-	..()
+/obj/machinery/bot/secbot/ed209/atom_init(mapload, created_name, created_lasercolor)
+	. = ..()
 	if(created_name)
 		name = created_name
 	if(created_lasercolor)
@@ -68,42 +68,37 @@
 			return FALSE
 	return TRUE
 
-/obj/machinery/bot/secbot/ed209/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
+/obj/machinery/bot/secbot/ed209/ui_interact(mob/user)
 	var/dat
 
 	dat += text({"
-<TT><B>Automatic Security Unit v2.5</B></TT><BR><BR>
-Status: []<BR>
-Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-Maintenance panel panel is [open ? "opened" : "closed"]"},
+		<TT><B>Automatic Security Unit v2.5</B></TT><BR><BR>
+		Status: []<BR>
+		Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
+		Maintenance panel panel is [open ? "opened" : "closed"]"},
 
-"<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
+		"<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
 
 	if(!locked || issilicon(user) || isobserver(user))
 		if(!lasercolor)
 			dat += text({"<BR>
-Check for Weapon Authorization: []<BR>
-Check Security Records: []<BR>
-Operating Mode: []<BR>
-Report Arrests: []"},
+				Check for Weapon Authorization: []<BR>
+				Check Security Records: []<BR>
+				Operating Mode: []<BR>
+				Report Arrests: []"},
 
-"<A href='?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
-"<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>" )
+				"<A href='?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
+				"<A href='?src=\ref[src];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
+				"<A href='?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
+				"<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>" )
 
 		dat += text({"<BR>
-Auto Patrol: []"},
+			Auto Patrol: []"},
 
-"<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
-
+			"<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
 	user << browse("<HEAD><TITLE>Securitron v2.5 controls</TITLE></HEAD>[dat]", "window=autosec")
 	onclose(user, "autosec")
-	return
 
 
 /obj/machinery/bot/secbot/ed209/beingAttacked(obj/item/weapon/W, mob/user)
@@ -445,6 +440,7 @@ Auto Patrol: []"},
 		if(6)
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
+				if(user.is_busy(src)) return
 				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
 				if(do_after(user, 40, target = src))
 					if(build_step == 6 && coil.use(1))
@@ -477,6 +473,7 @@ Auto Patrol: []"},
 
 		if(8)
 			if(istype(W, /obj/item/weapon/screwdriver))
+				if(user.is_busy(src)) return
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")
 				if(do_after(user, 40, target = src))
@@ -508,10 +505,12 @@ Auto Patrol: []"},
 /obj/machinery/bot/secbot/ed209/proc/enable()
 	disabled = 0
 
-/obj/machinery/bot/secbot/ed209/bluetag/New()//If desired, you spawn red and bluetag bots easily
+/obj/machinery/bot/secbot/ed209/bluetag/atom_init() // If desired, you spawn red and bluetag bots easily
+	..()
 	new /obj/machinery/bot/secbot/ed209(get_turf(src), null, "b")
-	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
-/obj/machinery/bot/secbot/ed209/redtag/New()
+/obj/machinery/bot/secbot/ed209/redtag/atom_init()
+	..()
 	new /obj/machinery/bot/secbot/ed209(get_turf(src), null, "r")
-	qdel(src)
+	return INITIALIZE_HINT_QDEL

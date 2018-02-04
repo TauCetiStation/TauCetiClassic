@@ -412,6 +412,7 @@
 	return
 
 /obj/structure/girder/attack_animal(mob/user)
+	..()
 	if(istype(user, /mob/living/simple_animal/hulk))
 		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if (prob(75))
@@ -544,8 +545,8 @@
 	return 0
 
 /mob/living/simple_animal/hulk/unathi/AltClickOn(atom/A)
-	if(!src.stat && src.mind && (src.health > 0) && (istype(A, /mob/living)) && (A != src))
-		src.try_to_eat(A)
+	if(!stat && mind && health > 0 && isliving(A) && A != src && Adjacent(A))
+		try_to_eat(A)
 		next_click = world.time + 5
 	else
 		..()
@@ -558,6 +559,8 @@
 		else
 			to_chat(usr, "Tear or Swallow is still recharging.")
 			return
+	else
+		return
 
 	var/mob/living/simple_animal/SA = usr
 	if(target.stat == DEAD)
@@ -633,6 +636,7 @@
 	msg_admin_attack("[key_name(usr)] uses hulk_lazor")
 
 /obj/item/weapon/organ/attack_animal(mob/user)
+	..()
 	if(istype(user, /mob/living/simple_animal/hulk))
 		if(istype(src, /obj/item/weapon/organ/head))
 			to_chat(usr, "\blue Head? Ewww..")

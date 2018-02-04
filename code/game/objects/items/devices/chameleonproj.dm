@@ -13,7 +13,11 @@
 	var/toggled = FALSE
 	var/obj/effect/dummy/chameleon/active_dummy = null
 
-/obj/item/device/chameleon/New()
+/obj/item/device/chameleon/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/device/chameleon/atom_init_late()
 	active_dummy = new
 	active_dummy.master = src
 	init_disguise()

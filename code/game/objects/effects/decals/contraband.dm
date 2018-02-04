@@ -113,7 +113,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
 	official = TRUE
 
-/obj/item/weapon/poster/New(turf/loc, given_serial = 0)
+/obj/item/weapon/poster/atom_init(mapload, given_serial = 0)
 	if(!given_serial)
 		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)
 		resulting_poster = new(serial_number, official)
@@ -121,7 +121,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		serial_number = given_serial
 		//We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
 	name += " - No. [serial_number]"
-	..(loc)
+	. = ..()
 
 
 //############################## THE ACTUAL DECALS ###########################
@@ -138,9 +138,9 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 
 
 
-/obj/structure/sign/poster/New(serial, rolled_official)
+/obj/structure/sign/poster/atom_init(mapload, rolled_official)
 
-	serial_number = serial
+	serial_number = loc
 	if(rolled_official)
 		official = rolled_official
 	if(serial_number == loc)
@@ -153,7 +153,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		icon_state = "poster[serial_number]"
 		name += contrabandposters[serial_number][POSTERNAME]
 		desc += contrabandposters[serial_number][POSTERDESC]
-	..()
+	. = ..()
 
 /obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wirecutters))
@@ -209,7 +209,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		PO.pixel_y == (y - user.y) * P.resulting_poster.bound_height)
 			to_chat(user, "<span class='notice'>The wall is already has a poster!</span>")
 			return
-
+	if(user.is_busy(src)) return
 	to_chat(user, "<span class='notice'>You start placing the poster on the wall...</span>")//Looks like it's uncluttered enough. Place the poster.
 
 	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster

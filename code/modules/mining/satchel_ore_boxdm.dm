@@ -16,6 +16,7 @@
 		src.contents += W
 	if (istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		S.hide_from(usr)
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents

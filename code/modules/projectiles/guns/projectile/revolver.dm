@@ -60,14 +60,14 @@
 
 /obj/item/weapon/gun/projectile/revolver/detective/special_check(mob/living/carbon/human/M)
 	if(magazine.caliber == initial(magazine.caliber))
-		return 1
+		return ..()
 	if(prob(70 - (magazine.ammo_count() * 10)))	//minimum probability of 10, maximum of 60
 		to_chat(M, "<span class='danger'>[src] blows up in your face!</span>")
 		M.take_bodypart_damage(0, 20)
 		M.drop_item()
 		qdel(src)
 		return 0
-	return 1
+	return ..()
 
 /obj/item/weapon/gun/projectile/revolver/detective/verb/rename_gun()
 	set name = "Name Gun"
@@ -91,7 +91,7 @@
 				afterattack(user, user)	//you know the drill
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(do_after(user, 30, target = src))
+			if(!user.is_busy() && do_after(user, 30, target = src))
 				if(magazine.ammo_count())
 					to_chat(user, "<span class='notice'>You can't modify it!</span>")
 					return
@@ -104,7 +104,7 @@
 				afterattack(user, user)	//and again
 				user.visible_message("<span class='danger'>[src] goes off!</span>", "<span class='danger'>[src] goes off in your face!</span>")
 				return
-			if(do_after(user, 30, target = src))
+			if(!user.is_busy() && do_after(user, 30, target = src))
 				if(magazine.ammo_count())
 					to_chat(user, "<span class='notice'>You can't modify it!</span>")
 					return
@@ -128,8 +128,8 @@
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	var/spun = 0
 
-/obj/item/weapon/gun/projectile/revolver/russian/New()
-	..()
+/obj/item/weapon/gun/projectile/revolver/russian/atom_init()
+	. = ..()
 	Spin()
 	update_icon()
 
@@ -142,6 +142,7 @@
 
 /obj/item/weapon/gun/projectile/revolver/russian/attackby(obj/item/A, mob/user)
 	var/num_loaded = ..()
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(num_loaded)
 		user.visible_message("<span class='warning'>[user] loads a single bullet into the revolver and spins the chamber.</span>", "<span class='warning'>You load a single bullet into the chamber and spin it.</span>")
 	else
@@ -177,7 +178,7 @@
 	..()
 	spun = 0
 
-/obj/item/weapon/gun/projectile/revolver/russian/attack(atom/target, mob/living/user)
+/obj/item/weapon/gun/projectile/revolver/russian/attack(atom/target, mob/living/user, def_zone)
 	if(!spun && get_ammo(0,0))
 		user.visible_message("<span class='warning'>[user] spins the chamber of the revolver.</span>", "<span class='warning'>You spin the revolver's chamber.</span>")
 		Spin()
@@ -190,11 +191,10 @@
 			return
 
 		if(isliving(target) && isliving(user))
-			var/target_zone = user.zone_sel.selecting
-			if(target_zone == BP_HEAD)
+			if(def_zone == BP_HEAD)
 				var/obj/item/ammo_casing/AC = chambered
 				if(AC.fire(user, user))
-					user.apply_damage(300, BRUTE, target_zone, null, DAM_SHARP)
+					user.apply_damage(300, BRUTE, def_zone, null, DAM_SHARP)
 					playsound(user, fire_sound, 50, 1)
 					user.visible_message("<span class='danger'>[user.name] fires [src] at \his head!</span>", "<span class='danger'>You fire [src] at your head!</span>", "You hear a [istype(AC.BB, /obj/item/projectile/beam) ? "laser blast" : "gunshot"]!")
 					return

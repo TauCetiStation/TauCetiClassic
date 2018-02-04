@@ -10,8 +10,8 @@
 	var/looking_for_personality = 0
 	var/mob/living/silicon/pai/pai
 
-/obj/item/device/paicard/New()
-	..()
+/obj/item/device/paicard/atom_init()
+	. = ..()
 	overlays += "pai-off"
 
 /obj/item/device/paicard/Destroy()

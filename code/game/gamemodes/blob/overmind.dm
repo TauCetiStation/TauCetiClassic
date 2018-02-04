@@ -15,11 +15,11 @@
 	var/blob_points = 0
 	var/max_blob_points = 100
 
-/mob/camera/blob/New()
+/mob/camera/blob/atom_init()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
-	..()
+	. = ..()
 
 /mob/camera/blob/Login()
 	..()

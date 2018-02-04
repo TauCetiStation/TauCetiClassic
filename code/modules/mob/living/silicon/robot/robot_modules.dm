@@ -11,21 +11,14 @@
 	var/obj/item/borg/upgrade/jetpack = null
 	var/list/stacktypes
 
-	emp_act(severity)
-		if(modules)
-			for(var/obj/O in modules)
-				O.emp_act(severity)
-		if(emag)
-			emag.emp_act(severity)
-		..()
-		return
-
-
-	New()
-		src.modules += new /obj/item/device/flash(src)
-		src.emag = new /obj/item/toy/sword(src)
-		src.emag.name = "Placeholder Emag Item"
-		return
+/obj/item/weapon/robot_module/emp_act(severity)
+	if(modules)
+		for(var/obj/O in modules)
+			O.emp_act(severity)
+	if(emag)
+		emag.emp_act(severity)
+	..()
+	return
 
 /obj/item/weapon/robot_module/Destroy()
 	for(var/obj/O in modules)
@@ -76,15 +69,15 @@
 /obj/item/weapon/robot_module/standard
 	name = "standard robot module"
 
-	New()
-		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/weapon/melee/baton(src)
-		src.modules += new /obj/item/weapon/extinguisher(src)
-		src.modules += new /obj/item/weapon/wrench(src)
-		src.modules += new /obj/item/weapon/crowbar(src)
-		src.modules += new /obj/item/device/healthanalyzer(src)
-		src.emag = new /obj/item/weapon/melee/energy/sword(src)
-		return
+/obj/item/weapon/robot_module/standard/atom_init()
+	. = ..()
+	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/weapon/melee/baton(src)
+	modules += new /obj/item/weapon/extinguisher(src)
+	modules += new /obj/item/weapon/wrench(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/device/healthanalyzer(src)
+	emag = new /obj/item/weapon/melee/energy/sword(src)
 
 /obj/item/weapon/robot_module/standard/respawn_consumable(mob/living/silicon/robot/R)
 	..()
@@ -99,29 +92,30 @@
 		/obj/item/stack/nanopaste = 5
 		)
 
-	New()
-		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/device/healthanalyzer(src)
-		src.modules += new /obj/item/weapon/reagent_containers/borghypo/surgeon(src)
-		src.modules += new /obj/item/weapon/scalpel(src)
-		src.modules += new /obj/item/weapon/FixOVein(src)
-		src.modules += new /obj/item/weapon/hemostat(src)
-		src.modules += new /obj/item/weapon/retractor(src)
-		src.modules += new /obj/item/weapon/cautery(src)
-		src.modules += new /obj/item/weapon/bonegel(src)
-		src.modules += new /obj/item/weapon/bonesetter(src)
-		src.modules += new /obj/item/weapon/circular_saw(src)
-		src.modules += new /obj/item/weapon/surgicaldrill(src)
-		src.modules += new /obj/item/weapon/razor(src)
-		src.modules += new /obj/item/weapon/extinguisher/mini(src)
-		src.modules += new /obj/item/stack/medical/advanced/bruise_pack(src)
-		src.modules += new /obj/item/stack/nanopaste(src)
+/obj/item/weapon/robot_module/surgeon/atom_init()
+	. = ..()
+	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/device/healthanalyzer(src)
+	modules += new /obj/item/borg/sight/hud/med(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/surgeon(src)
+	modules += new /obj/item/weapon/scalpel/manager(src)
+	modules += new /obj/item/weapon/FixOVein(src)
+	modules += new /obj/item/weapon/hemostat(src)
+	modules += new /obj/item/weapon/retractor(src)
+	modules += new /obj/item/weapon/cautery(src)
+	modules += new /obj/item/weapon/bonegel(src)
+	modules += new /obj/item/weapon/bonesetter(src)
+	modules += new /obj/item/weapon/circular_saw(src)
+	modules += new /obj/item/weapon/surgicaldrill(src)
+	modules += new /obj/item/weapon/razor(src)
+	modules += new /obj/item/weapon/extinguisher/mini(src)
+	modules += new /obj/item/stack/medical/advanced/bruise_pack(src)
+	modules += new /obj/item/stack/nanopaste(src)
 
-		src.emag = new /obj/item/weapon/reagent_containers/spray(src)
+	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
-		src.emag.reagents.add_reagent("pacid", 250)
-		src.emag.name = "Polyacid spray"
-		return
+	emag.reagents.add_reagent("pacid", 250)
+	emag.name = "Polyacid spray"
 
 /obj/item/weapon/robot_module/surgeon/respawn_consumable(mob/living/silicon/robot/R)
 	if(src.emag)
@@ -137,25 +131,29 @@
 		/obj/item/stack/medical/splint = 10
 		)
 
-	New()
-		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/device/healthanalyzer(src)
-		src.modules += new /obj/item/device/reagent_scanner/adv(src)
-		src.modules += new /obj/item/roller_holder(src)
-		src.modules += new /obj/item/stack/medical/ointment(src)
-		src.modules += new /obj/item/stack/medical/bruise_pack(src)
-		src.modules += new /obj/item/stack/medical/splint(src)
-		src.modules += new /obj/item/weapon/reagent_containers/borghypo/crisis(src)
-		src.modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
-		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
-		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
-		src.modules += new /obj/item/weapon/extinguisher/mini(src)
+/obj/item/weapon/robot_module/crisis/atom_init()
+	. = ..()
+	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/gripper/chemistry(src)
+	modules += new /obj/item/device/healthanalyzer(src)
+	modules += new /obj/item/borg/sight/hud/med(src)
+	modules += new /obj/item/device/reagent_scanner/adv(src)
+	modules += new /obj/item/roller_holder(src)
+	modules += new /obj/item/stack/medical/ointment(src)
+	modules += new /obj/item/stack/medical/bruise_pack(src)
+	modules += new /obj/item/stack/medical/splint(src)
+	modules += new /obj/item/weapon/reagent_containers/borghypo/crisis(src)
+	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+	modules += new /obj/item/weapon/reagent_containers/robodropper(src)
+	modules += new /obj/item/weapon/reagent_containers/syringe(src)
+	modules += new /obj/item/weapon/extinguisher/mini(src)
+	modules += new /obj/item/weapon/twohanded/shockpaddles/robot(src)
 
-		src.emag = new /obj/item/weapon/reagent_containers/spray(src)
+	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
-		src.emag.reagents.add_reagent("pacid", 250)
-		src.emag.name = "Polyacid spray"
-		return
+	emag.reagents.add_reagent("pacid", 250)
+	emag.name = "Polyacid spray"
 
 /obj/item/weapon/robot_module/crisis/respawn_consumable(mob/living/silicon/robot/R)
 
@@ -184,42 +182,43 @@
 		/obj/item/stack/tile/plasteel = 15
 		)
 
-	New()
-		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/borg/sight/meson(src)
-		src.modules += new /obj/item/weapon/extinguisher(src)
-		src.modules += new /obj/item/weapon/weldingtool/largetank(src)
-		src.modules += new /obj/item/weapon/screwdriver(src)
-		src.modules += new /obj/item/weapon/wrench(src)
-		src.modules += new /obj/item/weapon/crowbar(src)
-		src.modules += new /obj/item/weapon/wirecutters(src)
-		src.modules += new /obj/item/device/multitool(src)
-		src.modules += new /obj/item/weapon/rcd/borg(src)
-		src.modules += new /obj/item/device/t_scanner(src)
-		src.modules += new /obj/item/device/analyzer(src)
-		src.modules += new /obj/item/taperoll/engineering(src)
-		src.modules += new /obj/item/weapon/gripper(src)
-		src.modules += new /obj/item/weapon/matter_decompiler(src)
+/obj/item/weapon/robot_module/engineering/atom_init()
+	. = ..()
+	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/borg/sight/meson(src)
+	modules += new /obj/item/weapon/extinguisher(src)
+	modules += new /obj/item/weapon/weldingtool/largetank(src)
+	modules += new /obj/item/weapon/screwdriver(src)
+	modules += new /obj/item/weapon/wrench(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/wirecutters(src)
+	modules += new /obj/item/device/multitool(src)
+	modules += new /obj/item/weapon/rcd/borg(src)
+	modules += new /obj/item/device/t_scanner(src)
+	modules += new /obj/item/device/analyzer(src)
+	modules += new /obj/item/taperoll/engineering(src)
+	modules += new /obj/item/weapon/gripper(src)
+	modules += new /obj/item/weapon/matter_decompiler(src)
 
+	emag = new /obj/item/borg/stun(src)
 
-		src.emag = new /obj/item/borg/stun(src)
-
-		for(var/T in stacktypes)
-			var/obj/item/stack/W = new T(src)
-			W.set_amount(stacktypes[T])
-			src.modules += W
+	for(var/T in stacktypes)
+		var/obj/item/stack/W = new T(src)
+		W.set_amount(stacktypes[T])
+		modules += W
 
 /obj/item/weapon/robot_module/security
 	name = "security robot module"
 
-	New()
-		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/weapon/handcuffs/cyborg(src)
-		src.modules += new /obj/item/weapon/melee/baton(src)
-		src.modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
-		src.modules += new /obj/item/taperoll/police(src)
-		src.emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
-		return
+/obj/item/weapon/robot_module/security/atom_init()
+	. = ..()
+	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/weapon/handcuffs/cyborg(src)
+	modules += new /obj/item/weapon/melee/baton(src)
+	modules += new /obj/item/weapon/gun/energy/taser/cyborg(src)
+	modules += new /obj/item/taperoll/police(src)
+	modules += new /obj/item/borg/sight/hud/sec(src)
+	emag = new /obj/item/weapon/gun/energy/laser/cyborg(src)
 
 /obj/item/weapon/robot_module/security/respawn_consumable(mob/living/silicon/robot/R)
 	..()
@@ -237,17 +236,17 @@
 /obj/item/weapon/robot_module/janitor
 	name = "janitorial robot module"
 
-	New()
-		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/weapon/soap/nanotrasen(src)
-		src.modules += new /obj/item/weapon/storage/bag/trash(src)
-		src.modules += new /obj/item/weapon/mop(src)
-		src.modules += new /obj/item/device/lightreplacer(src)
-		src.emag = new /obj/item/weapon/reagent_containers/spray(src)
+/obj/item/weapon/robot_module/janitor/atom_init()
+	. = ..()
+	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/weapon/soap/nanotrasen(src)
+	modules += new /obj/item/weapon/storage/bag/trash(src)
+	modules += new /obj/item/weapon/mop(src)
+	modules += new /obj/item/device/lightreplacer(src)
+	emag = new /obj/item/weapon/reagent_containers/spray(src)
 
-		src.emag.reagents.add_reagent("lube", 250)
-		src.emag.name = "Lube spray"
-		return
+	emag.reagents.add_reagent("lube", 250)
+	emag.name = "Lube spray"
 
 /obj/item/weapon/robot_module/janitor/respawn_consumable(mob/living/silicon/robot/R)
 	..()
@@ -260,45 +259,47 @@
 /obj/item/weapon/robot_module/butler
 	name = "service robot module"
 
-	New()
-		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
-		src.modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
+/obj/item/weapon/robot_module/butler/atom_init()
+	. = ..()
+	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/weapon/gripper/service(src)
+	modules += new /obj/item/weapon/gripper/paperwork(src)
+	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
+	modules += new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
 
-		var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
-		M.matter = 30
-		src.modules += M
+	var/obj/item/weapon/rsf/M = new /obj/item/weapon/rsf(src)
+	M.matter = 30
+	modules += M
 
-		src.modules += new /obj/item/weapon/reagent_containers/robodropper(src)
+	modules += new /obj/item/weapon/reagent_containers/robodropper(src)
 
-		var/obj/item/weapon/lighter/zippo/L = new /obj/item/weapon/lighter/zippo(src)
-		L.lit = 1
-		src.modules += L
+	var/obj/item/weapon/lighter/zippo/L = new /obj/item/weapon/lighter/zippo(src)
+	L.lit = 1
+	modules += L
 
-		src.modules += new /obj/item/weapon/tray/robotray(src)
-		src.modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
-		src.modules += new /obj/item/weapon/pen/robopen(src)
-		src.modules += new /obj/item/weapon/razor(src)
+	modules += new /obj/item/weapon/tray/robotray(src)
+	modules += new /obj/item/weapon/reagent_containers/food/drinks/shaker(src)
+	modules += new /obj/item/weapon/pen/robopen(src)
+	modules += new /obj/item/weapon/razor(src)
 
-		src.emag = new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
+	emag = new /obj/item/weapon/reagent_containers/food/drinks/bottle/beer(src)
 
-		var/datum/reagents/R = new/datum/reagents(50)
-		src.emag.reagents = R
-		R.my_atom = src.emag
-		R.add_reagent("beer2", 50)
-		src.emag.name = "Mickey Finn's Special Brew"
-		return
+	var/datum/reagents/R = new/datum/reagents(50)
+	emag.reagents = R
+	R.my_atom = emag
+	R.add_reagent("beer2", 50)
+	emag.name = "Mickey Finn's Special Brew"
 
-	add_languages(mob/living/silicon/robot/R)
-		//full set of languages
-		R.add_language("Sol Common", 1)
-		R.add_language("Sinta'unathi", 1)
-		R.add_language("Siik'maas", 1)
-		R.add_language("Siik'tajr", 0)
-		R.add_language("Skrellian", 1)
-		R.add_language("Rootspeak", 1)
-		R.add_language("Tradeband", 1)
-		R.add_language("Gutter", 1)
+/obj/item/weapon/robot_module/butler/add_languages(mob/living/silicon/robot/R)
+	//full set of languages
+	R.add_language("Sol Common", 1)
+	R.add_language("Sinta'unathi", 1)
+	R.add_language("Siik'maas", 1)
+	R.add_language("Siik'tajr", 0)
+	R.add_language("Skrellian", 1)
+	R.add_language("Rootspeak", 1)
+	R.add_language("Tradeband", 1)
+	R.add_language("Gutter", 1)
 
 /obj/item/weapon/robot_module/butler/respawn_consumable(mob/living/silicon/robot/R)
 	..()
@@ -311,83 +312,81 @@
 /obj/item/weapon/robot_module/miner
 	name = "miner robot module"
 
-	New()
-		..()
-		src.modules += new /obj/item/borg/sight/hud/miner(src)
-		src.modules += new /obj/item/borg/sight/meson(src)
-		src.modules += new /obj/item/weapon/wrench(src)
-		src.modules += new /obj/item/weapon/screwdriver(src)
-		src.modules += new /obj/item/weapon/storage/bag/ore(src)
-		src.modules += new /obj/item/weapon/pickaxe/drill/borgdrill(src)
-		src.modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
-		src.modules += new /obj/item/device/geoscanner(src)
-		src.modules += new /obj/item/weapon/shovel(src)//Need to buff borgdrill, so it can get sand instead shovel
-		src.emag = new /obj/item/borg/stun(src)
-		return
+/obj/item/weapon/robot_module/miner/atom_init()
+	. = ..()
+	modules += new /obj/item/borg/sight/hud/miner(src)
+	modules += new /obj/item/borg/sight/meson(src)
+	modules += new /obj/item/weapon/wrench(src)
+	modules += new /obj/item/weapon/screwdriver(src)
+	modules += new /obj/item/weapon/storage/bag/ore(src)
+	modules += new /obj/item/weapon/pickaxe/drill/borgdrill(src)
+	modules += new /obj/item/weapon/storage/bag/sheetsnatcher/borg(src)
+	modules += new /obj/item/device/geoscanner(src)
+	modules += new /obj/item/weapon/shovel(src)//Need to buff borgdrill, so it can get sand instead shovel
+	emag = new /obj/item/borg/stun(src)
 
 /obj/item/weapon/robot_module/syndicate
 	name = "syndicate robot module"
 
-	New()
-		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/borg/sight/night(src)
-		src.modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
-		src.modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
-		src.modules += new /obj/item/weapon/card/emag(src)
-		src.modules += new /obj/item/weapon/gun/projectile/automatic/borg(src)
-		src.modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
-		src.modules += new /obj/item/weapon/wrench(src)
-		src.modules += new /obj/item/weapon/crowbar(src)
-		src.modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
-		return
+/obj/item/weapon/robot_module/syndicate/atom_init()
+	. = ..()
+	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/weapon/melee/energy/sword/cyborg(src)
+	modules += new /obj/item/weapon/gun/energy/crossbow/cyborg(src)
+	modules += new /obj/item/weapon/card/emag(src)
+	modules += new /obj/item/borg/sight/night(src)
+	modules += new /obj/item/weapon/gun/projectile/automatic/borg(src)
+	modules += new /obj/item/weapon/tank/jetpack/carbondioxide(src)
+	modules += new /obj/item/weapon/wrench(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
 
 /obj/item/weapon/robot_module/combat
 	name = "combat robot module"
 
-	New()
-		src.modules += new /obj/item/device/flash(src)
-		src.modules += new /obj/item/borg/sight/thermal(src)
-		src.modules += new /obj/item/weapon/gun/energy/laser/cyborg(src)
-		src.modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
-		src.modules += new /obj/item/borg/combat/shield(src)
-		src.modules += new /obj/item/borg/combat/mobility(src)
-		src.modules += new /obj/item/weapon/wrench(src)
-		src.emag = new /obj/item/weapon/gun/energy/lasercannon/cyborg(src)
-		return
+/obj/item/weapon/robot_module/combat/atom_init()
+	. = ..()
+	modules += new /obj/item/device/flash(src)
+	modules += new /obj/item/borg/sight/thermal(src)
+	modules += new /obj/item/weapon/gun/energy/laser/cyborg(src)
+	modules += new /obj/item/weapon/pickaxe/plasmacutter(src)
+	modules += new /obj/item/borg/combat/shield(src)
+	modules += new /obj/item/borg/combat/mobility(src)
+	modules += new /obj/item/weapon/wrench(src)
+	emag = new /obj/item/weapon/gun/energy/lasercannon/cyborg(src)
 
 /obj/item/weapon/robot_module/science
 	name = "science robot module"
 
-	New()
-		..()
-		src.modules += new /obj/item/device/analyzer(src)
-		src.modules += new /obj/item/device/assembly/signaler(src)
-		src.modules += new /obj/item/device/ano_scanner(src)
+/obj/item/weapon/robot_module/science/atom_init()
+	. = ..()
+	modules += new /obj/item/device/analyzer(src)
+	modules += new /obj/item/device/assembly/signaler(src)
+	modules += new /obj/item/device/ano_scanner(src)
 
-	//To fuck anomalies up
+//To fuck anomalies up
 
-		src.modules += new /obj/item/device/reagent_scanner/adv(src)
-		src.modules += new /obj/item/weapon/reagent_containers/syringe(src)
-		src.modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src) //To fuck chemistry up
+	modules += new /obj/item/device/reagent_scanner/adv(src)
+	modules += new /obj/item/weapon/reagent_containers/syringe(src)
+	modules += new /obj/item/weapon/reagent_containers/glass/beaker/large(src) //To fuck chemistry up
 
-		src.modules += new /obj/item/device/depth_scanner(src)
-		src.modules += new /obj/item/weapon/pickaxe/cyb(src)
-		src.modules += new /obj/item/device/measuring_tape(src) //To unfuck xenoarcheology up
+	modules += new /obj/item/device/depth_scanner(src)
+	modules += new /obj/item/weapon/pickaxe/cyb(src)
+	modules += new /obj/item/device/measuring_tape(src) //To unfuck xenoarcheology up
 
-		src.modules += new /obj/item/weapon/circular_saw(src)
-		src.modules += new /obj/item/weapon/scalpel(src)
-		src.modules += new /obj/item/weapon/extinguisher/mini(src) //To unfuck xenobiology up
+	modules += new /obj/item/weapon/circular_saw(src)
+	modules += new /obj/item/weapon/scalpel(src)
+	modules += new /obj/item/weapon/extinguisher/mini(src) //To unfuck xenobiology up
 
-		src.modules += new /obj/item/weapon/crowbar/red(src)
-		src.modules += new /obj/item/weapon/wrench(src)
-		src.modules += new /obj/item/weapon/screwdriver(src)
-		src.modules += new /obj/item/weapon/wirecutters(src)
-		src.modules += new /obj/item/weapon/weldingtool/largetank(src) //To fuck and unfuck (but mostly fuck) shit up
+	modules += new /obj/item/weapon/crowbar/red(src)
+	modules += new /obj/item/weapon/wrench(src)
+	modules += new /obj/item/weapon/screwdriver(src)
+	modules += new /obj/item/weapon/wirecutters(src)
+	modules += new /obj/item/weapon/weldingtool/largetank(src) //To fuck and unfuck (but mostly fuck) shit up
 
-		src.emag = new /obj/item/device/lustmodule(src) //To fuck people's shit up
+	emag = new /obj/item/weapon/hand_tele(src) //To fuck people's shit up
 
-		src.emag.name = "Slime bloodlust pulse emitter"
-		return
+	emag.name = "Hand tele"
 
 /obj/item/weapon/robot_module/drone
 	name = "drone module"
@@ -403,28 +402,29 @@
 		/obj/item/stack/cable_coil/cyborg = 30
 		)
 
-	New()
-		src.modules += new /obj/item/weapon/weldingtool(src)
-		src.modules += new /obj/item/weapon/screwdriver(src)
-		src.modules += new /obj/item/weapon/wrench(src)
-		src.modules += new /obj/item/weapon/crowbar(src)
-		src.modules += new /obj/item/weapon/wirecutters(src)
-		src.modules += new /obj/item/device/multitool(src)
-		src.modules += new /obj/item/device/lightreplacer(src)
-		src.modules += new /obj/item/weapon/gripper(src)
-		src.modules += new /obj/item/weapon/matter_decompiler(src)
-		src.modules += new /obj/item/weapon/reagent_containers/spray/cleaner/drone(src)
+/obj/item/weapon/robot_module/drone/atom_init()
+	. = ..()
+	modules += new /obj/item/weapon/weldingtool(src)
+	modules += new /obj/item/weapon/screwdriver(src)
+	modules += new /obj/item/weapon/wrench(src)
+	modules += new /obj/item/weapon/crowbar(src)
+	modules += new /obj/item/weapon/wirecutters(src)
+	modules += new /obj/item/device/multitool(src)
+	modules += new /obj/item/device/lightreplacer(src)
+	modules += new /obj/item/weapon/gripper(src)
+	modules += new /obj/item/weapon/matter_decompiler(src)
+	modules += new /obj/item/weapon/reagent_containers/spray/cleaner/drone(src)
 
-		src.emag = new /obj/item/weapon/pickaxe/plasmacutter(src)
-		src.emag.name = "Plasma Cutter"
+	emag = new /obj/item/weapon/pickaxe/plasmacutter(src)
+	emag.name = "Plasma Cutter"
 
-		for(var/T in stacktypes)
-			var/obj/item/stack/W = new T(src)
-			W.set_amount(stacktypes[T])
-			src.modules += W
+	for(var/T in stacktypes)
+		var/obj/item/stack/W = new T(src)
+		W.set_amount(stacktypes[T])
+		modules += W
 
-	add_languages(mob/living/silicon/robot/R)
-		return	//not much ROM to spare in that tiny microprocessor!
+/obj/item/weapon/robot_module/drone/add_languages(mob/living/silicon/robot/R)
+	return	//not much ROM to spare in that tiny microprocessor!
 
 /obj/item/weapon/robot_module/drone/respawn_consumable(mob/living/silicon/robot/R)
 	var/obj/item/weapon/reagent_containers/spray/cleaner/C = locate() in src.modules

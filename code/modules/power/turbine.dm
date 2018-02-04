@@ -43,7 +43,7 @@
 
 // the inlet stage of the gas turbine electricity generator
 
-/obj/machinery/compressor/New()
+/obj/machinery/compressor/atom_init()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/power_compressor(null)
@@ -56,6 +56,9 @@
 	component_parts += new /obj/item/stack/cable_coil/red(null, 5)
 	RefreshParts()
 	gas_contained = new
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/compressor/atom_init_late()
 	inturf = get_step(src, dir)
 
 	turbine = locate() in get_step(src, get_dir(inturf, src))
@@ -133,7 +136,7 @@
 		overlays += image('icons/obj/pipes.dmi', "comp-o1", FLY_LAYER)
 	 //TODO: DEFERRED
 
-/obj/machinery/power/turbine/New()
+/obj/machinery/power/turbine/atom_init()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/power_turbine(src)
@@ -146,6 +149,9 @@
 	component_parts += new /obj/item/stack/cable_coil/red(src, 5)
 	RefreshParts()
 
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/power/turbine/atom_init_late()
 	outturf = get_step(src, dir)
 
 	compressor = locate() in get_step(src, get_dir(outturf, src))
@@ -191,12 +197,6 @@
 	if(lastgen > 100)
 		overlays += image('icons/obj/pipes.dmi', "turb-o", FLY_LAYER)
 
-/obj/machinery/power/turbine/attack_hand(mob/user)
-	if(..())
-		return
-
-	interact(user)
-
 /obj/machinery/power/turbine/attackby(obj/item/I, mob/user)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		return
@@ -216,14 +216,12 @@
 
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/power/turbine/interact(mob/user)
+/obj/machinery/power/turbine/ui_interact(mob/user)
 
-	if ( !Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && !issilicon(user) && !isobserver(user) )
-		user.machine = null
+	if ( !Adjacent(user) || (stat & (NOPOWER|BROKEN)) && !issilicon(user) && !isobserver(user) )
+		user.unset_machine(src)
 		user << browse(null, "window=turbine")
 		return
-
-	user.machine = src
 
 	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
 
@@ -238,8 +236,6 @@
 	t += "</TT>"
 	user << browse(t, "window=turbine")
 	onclose(user, "turbine")
-
-	return
 
 /obj/machinery/power/turbine/Topic(href, href_list)
 	if(href_list["close"])
@@ -263,8 +259,11 @@
 
 
 
-/obj/machinery/computer/turbine_computer/New()
+/obj/machinery/computer/turbine_computer/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/turbine_computer/atom_init_late()
 	search_turbine()
 	doors = new /list()
 	for(var/obj/machinery/door/poddoor/P in machines)
@@ -274,13 +273,7 @@
 /obj/machinery/computer/turbine_computer/proc/search_turbine()
 	compressor = locate(/obj/machinery/compressor) in range(5)
 
-/obj/machinery/computer/turbine_computer/attack_hand(mob/user)
-	if(..())
-		return
-
-	interact(user)
-
-/obj/machinery/computer/turbine_computer/interact(mob/user)
+/obj/machinery/computer/turbine_computer/ui_interact(mob/user)
 	var/dat
 	if(compressor && compressor.turbine)
 		dat += {"<BR><B>Gas turbine remote control system</B><HR>
@@ -301,7 +294,6 @@
 
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 
 

@@ -25,8 +25,8 @@
 
 	var/list/ports = new()
 
-/obj/machinery/atmospherics/components/omni/New()
-	..()
+/obj/machinery/atmospherics/components/omni/atom_init()
+	. = ..()
 	icon_state = "base"
 
 	ports = new()
@@ -88,7 +88,7 @@
 		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it is too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return TRUE
-
+	if(user.is_busy()) return
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 
@@ -97,16 +97,8 @@
 			"<span class='notice'>\The [user] unfastens \the [src].</span>",
 			"<span class='notice'>You have unfastened \the [src].</span>",
 			"You hear a ratchet.")
-		new /obj/item/pipe(loc, make_from = src)
+		new /obj/item/pipe(loc, null, null, src)
 		qdel(src)
-
-/obj/machinery/atmospherics/components/omni/attack_hand(user)
-	if(..())
-		return
-
-	src.add_fingerprint(usr)
-	ui_interact(user)
-	return
 
 /obj/machinery/atmospherics/components/omni/proc/build_icons()
 	if(!check_icon_cache())

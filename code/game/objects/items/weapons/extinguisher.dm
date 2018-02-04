@@ -33,7 +33,8 @@
 	max_water = 30
 	sprite_name = "miniFE"
 
-/obj/item/weapon/extinguisher/New()
+/obj/item/weapon/extinguisher/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(max_water)
 	reagents = R
 	R.my_atom = src

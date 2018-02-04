@@ -8,12 +8,10 @@
 	anchored = 1
 	density = 1
 
-/obj/structure/closet/wagon/New()
-	..()
-	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
-	new /obj/item/clothing/mask/breath(src)
-	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
-	new /obj/item/clothing/mask/breath(src)
+/obj/structure/closet/wagon/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/weapon/tank/emergency_oxygen/engi(src)
+		new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/storage/toolbox/emergency(src)
 
 /obj/structure/closet/medical_wall/erokez //wall mounted medical closet
@@ -26,13 +24,11 @@
 	anchored = 1
 	density = 1
 
-/obj/structure/closet/medical_wall/erokez/New()
-	..()
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/stack/medical/ointment(src)
+/obj/structure/closet/medical_wall/erokez/PopulateContents()
+	for (var/i in 1 to 3)
+		new /obj/item/stack/medical/bruise_pack(src)
+	for (var/i in 1 to 2)
+		new /obj/item/stack/medical/ointment(src)
 	new /obj/item/device/healthanalyzer(src)
 	new /obj/item/weapon/reagent_containers/hypospray/autoinjector( src )
 

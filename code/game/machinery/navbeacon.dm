@@ -10,6 +10,7 @@
 	level = 1		// underfloor
 	layer = 2.5
 	anchored = 1
+	interact_offline = TRUE
 
 	var/open = 0		// true if cover is open
 	var/locked = 1		// true if controls are locked
@@ -20,17 +21,12 @@
 
 	req_access = list(access_engine)
 
-/obj/machinery/navbeacon/New()
-	..()
-
+/obj/machinery/navbeacon/atom_init()
+	. = ..()
 	set_codes()
-
 	var/turf/T = loc
 	hide(T.intact)
-
-	spawn(5)	// must wait for map loading to finish
-		if(radio_controller)
-			radio_controller.add_object(src, freq, RADIO_NAVBEACONS)
+	radio_controller.add_object(src, freq, RADIO_NAVBEACONS)
 
 /obj/machinery/navbeacon/Destroy()
 	if(radio_controller)
@@ -110,6 +106,7 @@
 
 	if(istype(I, /obj/item/weapon/screwdriver))
 		open = !open
+		user.SetNextMove(CLICK_CD_RAPID)
 
 		user.visible_message("[user] [open ? "opens" : "closes"] the beacon's cover.", "You [open ? "open" : "close"] the beacon's cover.")
 
@@ -127,20 +124,12 @@
 			to_chat(user, "You must open the cover first!")
 	return
 
-/obj/machinery/navbeacon/attack_ai(mob/user)
-	interact(user, 1)
-
 /obj/machinery/navbeacon/attack_paw()
 	return
 
-/obj/machinery/floodlight/attack_ghost(mob/user)
-	if(user.client.machine_interactive_ghost && IsAdminGhost(user))
-		attack_ai(user)
+/obj/machinery/navbeacon/ui_interact(mob/user)
+	var/ai = isAI(user) || isobserver(user)
 
-/obj/machinery/navbeacon/attack_hand(mob/user)
-	interact(user, 0)
-
-/obj/machinery/navbeacon/interact(mob/user, ai = 0)
 	var/turf/T = loc
 	if(T.intact)
 		return		// prevent intraction when T-scanner revealed
@@ -149,15 +138,14 @@
 		to_chat(user, "The beacon's control cover is closed.")
 		return
 
-
 	var/t
 
 	if(locked && !ai)
 		t = {"<TT><B>Navigation Beacon</B><HR><BR>
-<i>(swipe card to unlock controls)</i><BR>
-Frequency: [format_frequency(freq)]<BR><HR>
-Location: [location ? location : "(none)"]</A><BR>
-Transponder Codes:<UL>"}
+			<i>(swipe card to unlock controls)</i><BR>
+			Frequency: [format_frequency(freq)]<BR><HR>
+			Location: [location ? location : "(none)"]</A><BR>
+			Transponder Codes:<UL>"}
 
 		for(var/key in codes)
 			t += "<LI>[key] ... [codes[key]]"
@@ -166,16 +154,16 @@ Transponder Codes:<UL>"}
 	else
 
 		t = {"<TT><B>Navigation Beacon</B><HR><BR>
-<i>(swipe card to lock controls)</i><BR>
-Frequency:
-<A href='byond://?src=\ref[src];freq=-10'>-</A>
-<A href='byond://?src=\ref[src];freq=-2'>-</A>
-[format_frequency(freq)]
-<A href='byond://?src=\ref[src];freq=2'>+</A>
-<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
-<HR>
-Location: <A href='byond://?src=\ref[src];locedit=1'>[location ? location : "(none)"]</A><BR>
-Transponder Codes:<UL>"}
+			<i>(swipe card to lock controls)</i><BR>
+			Frequency:
+			<A href='byond://?src=\ref[src];freq=-10'>-</A>
+			<A href='byond://?src=\ref[src];freq=-2'>-</A>
+			[format_frequency(freq)]
+			<A href='byond://?src=\ref[src];freq=2'>+</A>
+			<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
+			<HR>
+			Location: <A href='byond://?src=\ref[src];locedit=1'>[location ? location : "(none)"]</A><BR>
+			Transponder Codes:<UL>"}
 
 		for(var/key in codes)
 			t += "<LI>[key] ... [codes[key]]"
@@ -186,7 +174,6 @@ Transponder Codes:<UL>"}
 
 	user << browse(t, "window=navbeacon")
 	onclose(user, "navbeacon")
-	return
 
 /obj/machinery/navbeacon/Topic(href, href_list)
 	. = ..()

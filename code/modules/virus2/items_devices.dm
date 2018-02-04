@@ -47,16 +47,17 @@
 /obj/item/weapon/virusdish/random
 	name = "virus sample"
 
-/obj/item/weapon/virusdish/random/New()
-	..()
-	src.virus2 = new /datum/disease2/disease
-	src.virus2.makerandom()
+/obj/item/weapon/virusdish/random/atom_init()
+	. = ..()
+	virus2 = new /datum/disease2/disease
+	virus2.makerandom()
 	growth = rand(5, 50)
 
 /obj/item/weapon/virusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
 	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
 		return
 	..()
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(prob(50))
 		to_chat(user, "\The [src] shatters!")
 		message_admins("Virus dish shattered by [key_name_admin(user)](<A HREF='?_src_=holder;adminmoreinfo=\ref[user]'>?</A>) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>[src.x],[src.y],[src.z]</a>)")
@@ -83,7 +84,7 @@
 /obj/item/weapon/ruinedvirusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
 	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))
 		return ..()
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(prob(50))
 		to_chat(user, "\The [src] shatters!")
 		qdel(src)
@@ -99,7 +100,8 @@
 	var/stage = 1
 	var/analysed = 1
 
-/obj/item/weapon/diseasedisk/premade/New()
+/obj/item/weapon/diseasedisk/premade/atom_init()
+	. = ..()
 	name = "blank GNA disk (stage: [stage])"
 	effect = new /datum/disease2/effectholder
 	effect.effect = new /datum/disease2/effect/invisible

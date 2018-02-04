@@ -45,7 +45,6 @@
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 300
-	ghost_must_be_admin = TRUE
 	var/damage_coeff
 	var/scan_level
 	var/precision_coeff
@@ -53,8 +52,8 @@
 	var/open = 0
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
-/obj/machinery/dna_scannernew/New()
-	..()
+/obj/machinery/dna_scannernew/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/clonescanner(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
@@ -87,7 +86,7 @@
 	if(open || !locked)	//Open and unlocked, no need to escape
 		open = 1
 		return
-	user.next_move = world.time + 100
+	user.SetNextMove(100)
 	user.last_special = world.time + 100
 	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>")
 	user.visible_message("<span class='warning'>You hear a metallic creaking from [src]!</span>")
@@ -170,6 +169,7 @@
 	return
 
 /obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user)
+
 	if(!occupant && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", "[initial(icon_state)]", I))
 		return
 
@@ -197,6 +197,7 @@
 
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!ismob(G.affecting))
 			return
 
@@ -274,7 +275,7 @@
 	var/waiting_for_user_input=0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user)
-	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
+	if(istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
 		if (!disk)
 			user.drop_item()
 			I.loc = src
@@ -284,21 +285,20 @@
 			return
 	else
 		..()
-	return
 
-/obj/machinery/computer/scan_consolenew/New()
+/obj/machinery/computer/scan_consolenew/atom_init()
 	..()
 	for(var/i=0;i<3;i++)
 		buffers[i+1]=new /datum/dna2/record
-	spawn(5)
-		for(dir in list(NORTH,EAST,SOUTH,WEST))
-			connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
-			if(!isnull(connected))
-				break
-		spawn(250)
-			injector_ready = 1
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/scan_consolenew/atom_init_late()
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+		if(!isnull(connected))
+			break
+	spawn(250)
+		injector_ready = 1
 
 /obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(list/buffer)
 	var/list/arr = list()
@@ -314,23 +314,6 @@
 	I.block = id
 	I.buf = buffer
 	return 1
-
-/obj/machinery/computer/scan_consolenew/attack_hand(user)
-	if(..())
-		return
-	if(ishuman(user)) //#Z2 Hulk </3 computers
-		var/mob/living/carbon/human/H = user
-		if(HULK in H.mutations)
-			if(stat & (BROKEN))
-				return
-			if(H.a_intent == "hurt")
-				H.visible_message("\red [H.name] smashes [src] with \his mighty arms!")
-				set_broken()
-				return
-			else
-				H.visible_message("\red [H.name] stares cluelessly at [src] and drools.")
-				return//##Z2
-	ui_interact(user)
 
  /**
   * The ui_interact proc is used to open and update Nano UIs

@@ -19,19 +19,22 @@
 	if(content_mob == null) //making sure we don't spawn anything too eldritch
 		already_opened = 1
 		return ..()
-
+	var/mob/living/to_die
 	if(content_mob != null && already_opened == 0)
 		if(content_mob == /mob/living/simple_animal/chick)
 			var/num = rand(4, 6)
 			for(var/i = 0, i < num, i++)
-				new content_mob(loc)
+				to_die = new content_mob(loc)
+				to_die.health = to_die.health * (!crit_fail)
 		else if(content_mob == /mob/living/simple_animal/corgi)
 			var/num = rand(0, 1)
 			if(num) //No more matriarchy for cargo
 				content_mob = /mob/living/simple_animal/corgi/Lisa
-			new content_mob(loc)
+			to_die = new content_mob(loc)
+			to_die.health = to_die.health * (!crit_fail)
 		else
-			new content_mob(loc)
+			to_die = new content_mob(loc)
+			to_die.health = to_die.health * (!crit_fail)
 		already_opened = 1
 	..()
 
@@ -42,6 +45,7 @@
 
 /obj/structure/closet/critter/attack_hand(mob/user)
 	src.add_fingerprint(user)
+	user.SetNextMove(CLICK_CD_RAPID)
 
 	if(src.loc == user.loc)
 		to_chat(user, "<span class='notice'>It won't budge!</span>")

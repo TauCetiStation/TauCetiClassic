@@ -10,10 +10,13 @@
 	var/static/obj/transit_loc = null
 
 /obj/machinery/gateway/atom_init()
-	. = ..()
+	..()
 	update_icon()
-	if(dir == 2)
-		density = 0
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/gateway/atom_init_late()
+	if(dir & SOUTH)
+		density = FALSE
 	if(!transit_loc)
 		transit_loc = locate(/obj/effect/landmark/gateway_transit) in landmarks_list
 
@@ -42,8 +45,9 @@
 
 /obj/machinery/gateway/centerstation/atom_init()
 	. = ..()
-	update_icon()
 	wait = world.time + config.gateway_delay	//+ thirty minutes default
+
+/obj/machinery/gateway/centerstation/atom_init_late()
 	awaygate = locate(/obj/machinery/gateway/centeraway)
 
 
@@ -110,6 +114,10 @@ obj/machinery/gateway/centerstation/process()
 	update_icon()
 
 /obj/machinery/gateway/centerstation/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
+	. = ..()
+	if(.)
+		return
 	if(!ready)
 		detect()
 		return
@@ -141,6 +149,8 @@ obj/machinery/gateway/centerstation/process()
 /obj/machinery/gateway/centerstation/attackby(obj/item/device/W, mob/user)
 	if(istype(W,/obj/item/device/multitool))
 		to_chat(user, "The gate is already calibrated, there is no work for you to do here.")
+	else
+		..()
 
 /////////////////////////////////////Away////////////////////////
 
@@ -155,9 +165,7 @@ obj/machinery/gateway/centerstation/process()
 	var/obj/machinery/gateway/centerstation/stationgate = null
 
 
-/obj/machinery/gateway/centeraway/atom_init()
-	. = ..()
-	update_icon()
+/obj/machinery/gateway/centeraway/atom_init_late()
 	stationgate = locate(/obj/machinery/gateway/centerstation)
 
 
@@ -212,6 +220,10 @@ obj/machinery/gateway/centerstation/process()
 	update_icon()
 
 /obj/machinery/gateway/centeraway/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
+	. = ..()
+	if(.)
+		return
 	if(!ready)
 		detect()
 		return
@@ -237,11 +249,11 @@ obj/machinery/gateway/centerstation/process()
 	if(istype(W,/obj/item/device/multitool))
 		if(calibrated)
 			to_chat(user, "The gate is already calibrated, there is no work for you to do here.")
-			return
 		else
 			to_chat(user, "<span class='notice'> <b>Recalibration successful!</b>:</span> This gate's systems have been fine tuned.  Travel to this gate will now be on target.")
 			calibrated = 1
-			return
+	else
+		..()
 
 /obj/machinery/gateway/proc/enter_to_transit(atom/movable/entered, turf/target)
 	playsound(src, 'sound/machines/gateway/gateway_enter.ogg', 100, 2)

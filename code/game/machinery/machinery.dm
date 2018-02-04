@@ -96,6 +96,7 @@ Class Procs:
 /obj/machinery
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
+	layer = DEFAULT_MACHINERY_LAYER
 	var/stat = 0
 	var/emagged = 0
 	var/use_power = 1
@@ -114,16 +115,16 @@ Class Procs:
 	var/state_open = 0
 	var/mob/living/occupant = null
 	var/unsecuring_tool = /obj/item/weapon/wrench
+	var/interact_open = FALSE // Can the machine be interacted with when in maint/when the panel is open.
 	var/interact_offline = 0 // Can the machine be interacted with while de-powered.
-	var/ghost_must_be_admin = 0	// 0 - every ghost can see interface (and admins can also interact)
-								// 1 - only admins in ghost form can interact
+	var/allowed_checks = ALLOWED_CHECK_EVERYWHERE // should machine call allowed() in attack_hand(). See machinery/turretid for example.
 	var/frequency = 0
 	var/datum/radio_frequency/radio_connection
 	var/radio_filter_out
 	var/radio_filter_in
 
-/obj/machinery/New()
-	..()
+/obj/machinery/atom_init()
+	. = ..()
 	machines += src
 	START_PROCESSING(SSmachine, src)
 	power_change()
@@ -253,7 +254,7 @@ Class Procs:
 //By default, we check everything.
 //But sometimes, we need to override this check.
 /obj/machinery/proc/is_operational_topic()
-	return !(stat & (NOPOWER|BROKEN|MAINT|EMPED))
+	return !((stat & (NOPOWER|BROKEN|MAINT|EMPED)) || (panel_open && !interact_open))
 
 /obj/machinery/Topic(href, href_list)
 	..()
@@ -262,17 +263,16 @@ Class Procs:
 		usr.unset_machine(src)
 		return FALSE
 
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		if(H.getBrainLoss() >= 60)
-			H.visible_message("<span class='warning'>[H] stares cluelessly at [src] and drools.</span>")
-			return FALSE
-		else if(prob(H.getBrainLoss()))
-			to_chat(H, "<span class='warning'>You momentarily forget how to use [src].</span>")
-			return FALSE
+	if(!can_mob_interact(usr))
+		return FALSE
+
+	if((allowed_checks & ALLOWED_CHECK_TOPIC) && !emagged && !allowed(usr))
+		allowed_fail(usr)
+		to_chat(usr, "<span class='warning'>Access Denied.</span>")
+		return FALSE
 
 	usr.set_machine(src)
-	src.add_fingerprint(usr)
+	add_fingerprint(usr)
 
 	var/area/A = get_area(src)
 	A.master.powerupdate = 1
@@ -287,8 +287,25 @@ Class Procs:
 		return TRUE
 	return FALSE
 
+/obj/machinery/proc/is_interactable()
+	if((stat & (NOPOWER|BROKEN)) && !interact_offline)
+		return FALSE
+	if(panel_open && !interact_open)
+		return FALSE
+	return TRUE
+
+/obj/machinery/proc/allowed_fail(mob/user) // incase you want to add something special when allowed fails.
+	return
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+/obj/machinery/interact(mob/user)
+	if(issilicon(user) || isobserver(user))
+		add_hiddenprint(user)
+	else if(isliving(user))
+		add_fingerprint(user)
+	if(ui_interact(user) != -1)
+		user.set_machine(src)
 
 /obj/machinery/attack_ai(mob/user)
 	if(isrobot(user))
@@ -302,39 +319,31 @@ Class Procs:
 /obj/machinery/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/machinery/attack_ghost(mob/user)
-	if(!user.client.machine_interactive_ghost || (ghost_must_be_admin && !IsAdminGhost(user)))
-		return 1
-	return attack_hand(user)
-
+// set_machine must be 0 if clicking the machinery doesn't bring up a dialog
 /obj/machinery/attack_hand(mob/user)
-	if(stat & (NOPOWER|BROKEN|MAINT))
+	if ((user.lying || user.stat) && !IsAdminGhost(user))
 		return 1
-	if((user.lying || user.stat) && !isobserver(user))
+	if(!is_interactable())
 		return 1
-	if ( !(ishuman(user) || issilicon(user) || ismonkey(user) || isalienqueen(user) || isobserver(user)) )
-		to_chat(usr, "<span class='danger'>You don't have the dexterity to do this!</span>")
+	if (!(ishuman(user) || issilicon(user) || ismonkey(user) || isalienqueen(user) || IsAdminGhost(user)))
+		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return 1
-/*
-	//distance checks are made by atom/proc/DblClick
-	if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !istype(user, /mob/living/silicon))
+	if (!can_mob_interact(user))
 		return 1
-*/
-	if (ishuman(user))
-		var/mob/living/carbon/human/H = user
-		if(H.getBrainLoss() >= 60)
-			visible_message("<span class='danger'>[H] stares cluelessly at [src] and drools.</span>")
-			return 1
-		else if(prob(H.getBrainLoss()))
-			to_chat(user, "<span class='danger'>You momentarily forget how to use [src].</span>")
-			return 1
+	if(hasvar(src, "wires"))              // Lets close wires window if panel is closed.
+		var/datum/wires/DW = vars["wires"] // Wires and machinery that uses this feature actually should be refactored.
+		if(istype(DW) && !DW.can_use(user)) // Many of them do not use panel_open var.
+			DW.Topic("close=1", list("close"="1"))
+	if((allowed_checks & ALLOWED_CHECK_A_HAND) && !emagged && !allowed(user))
+		allowed_fail(user)
+		to_chat(user, "<span class='warning'>Access Denied.</span>")
+		return 1
 
 	var/area/A = get_area(src)
-	A.master.powerupdate = 1
+	A.master.powerupdate = 1 // <- wtf is this var and its comments...
 
-	src.add_fingerprint(user)
-	user.set_machine(src)
-	return ..()
+	interact(user)
+	return 0
 
 /obj/machinery/CheckParts(list/parts_list)
 	..()
@@ -394,6 +403,7 @@ Class Procs:
 
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/weapon/wrench/W, time = 20)
 	if(istype(W) &&  !(flags & NODECONSTRUCT))
+		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "un" : ""]securing [name]...</span>")
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, time/W.toolspeed, target = src))

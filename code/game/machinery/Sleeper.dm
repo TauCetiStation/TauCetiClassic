@@ -18,6 +18,7 @@
 	anchored = 1
 	state_open = 1
 	light_color = "#7BF9FF"
+	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/filtering = 0
 	var/efficiency = 1
@@ -34,8 +35,8 @@
 /obj/machinery/sleeper/upgraded
 	upgraded = TRUE
 
-/obj/machinery/sleeper/New()
-	..()
+/obj/machinery/sleeper/atom_init(mapload)
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/sleeper(null)
 	if(upgraded)
@@ -48,6 +49,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
 	RefreshParts()
+	if(mapload)
+		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
@@ -91,6 +94,7 @@
 		qdel(src)
 
 /obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
+	..()
 	if(M.environment_smash)
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 		qdel(src)
@@ -203,9 +207,7 @@
 	add_fingerprint(usr)
 	return
 
-/obj/machinery/sleeper/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/sleeper/ui_interact(mob/user)
 	var/dat = "<h3>Sleeper Status</h3>"
 
 	dat += "<div class='statusDisplay'>"
@@ -299,12 +301,6 @@
 	else
 		to_chat(usr, "<span class='notice'>ERROR: Subject cannot metabolise chemicals.</span>")
 	updateUsrDialog()
-
-/obj/machinery/sleeper/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/sleeper/attack_paw(mob/user)
-	return attack_hand(user)
 
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)

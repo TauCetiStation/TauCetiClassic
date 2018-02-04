@@ -30,7 +30,7 @@
 *   Initialising
 ********************/
 
-/obj/machinery/kitchen_machine/New()
+/obj/machinery/kitchen_machine/atom_init()
 	..()
 	reagents = new/datum/reagents(100)
 	reagents.my_atom = src
@@ -38,17 +38,20 @@
 		available_recipes = new
 		acceptable_items = new
 		acceptable_reagents = new
-		for(var/type in subtypesof(recipe_type))
-			var/datum/recipe/recipe = new type
-			if(recipe.result) // Ignore recipe subtypes that lack a result
-				available_recipes += recipe
-				for(var/item in recipe.items)
-					acceptable_items |= item
-				for(var/reagent in recipe.reagents)
-					acceptable_reagents |= reagent
-			else
-				qdel(recipe)
-		acceptable_items |= /obj/item/weapon/reagent_containers/food/snacks/grown
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/kitchen_machine/atom_init_late()
+	for(var/type in subtypesof(recipe_type))
+		var/datum/recipe/recipe = new type
+		if(recipe.result) // Ignore recipe subtypes that lack a result
+			available_recipes += recipe
+			for(var/item in recipe.items)
+				acceptable_items |= item
+			for(var/reagent in recipe.reagents)
+				acceptable_reagents |= reagent
+		else
+			qdel(recipe)
+	acceptable_items |= /obj/item/weapon/reagent_containers/food/snacks/grown
 
 /obj/machinery/kitchen_machine/RefreshParts()
 	var/E
@@ -83,18 +86,18 @@
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if (do_after(user,20,target = src))
+			if (!user.is_busy(src) && do_after(user,20,target = src))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes part of the [src].</span>", \
 					"<span class='notice'>You have fixed part of the [src].</span>" \
 				)
 				src.broken = 1 // Fix it a bit
-		else if(src.broken == 1 && istype(O, /obj/item/weapon/weldingtool)) // If it's broken and they're doing the weldingtool.
+		else if(src.broken == 1 && istype(O, /obj/item/weapon/weldingtool) && !user.is_busy(src)) // If it's broken and they're doing the weldingtool.
 			user.visible_message( \
 				"<span class='notice'>[user] starts to fix part of the [src].</span>", \
 				"<span class='notice'>You start to fix part of the [src].</span>" \
 			)
-			if (do_after(user,20,target = src))
+			if (!user.is_busy(src) && do_after(user,20,target = src))
 				user.visible_message( \
 					"<span class='notice'>[user] fixes the [src].</span>", \
 					"<span class='notice'>You have fixed the [src].</span>" \
@@ -131,7 +134,7 @@
 			"<span class='notice'>[user] starts to clean [src].</span>", \
 			"<span class='notice'>You start to clean [src].</span>" \
 		)
-		if (do_after(user,20,target=src))
+		if (!user.is_busy(src) && do_after(user,20,target=src))
 			user.visible_message( \
 				"<span class='notice'>[user]  has cleaned [src].</span>", \
 				"<span class='notice'>You have cleaned [src].</span>" \
@@ -179,23 +182,16 @@
 		return 1
 	src.updateUsrDialog()
 
-/obj/machinery/kitchen_machine/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/kitchen_machine/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
 	return 0
-
-/obj/machinery/kitchen_machine/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
 
 /*******************
 *   Kitchen Machine Menu
 ********************/
 
-/obj/machinery/kitchen_machine/interact(mob/user)
-	if(panel_open)
-		return
+/obj/machinery/kitchen_machine/ui_interact(mob/user)
 	var/dat = "<div class='statusDisplay'>"
 	if(src.broken > 0)
 		dat += "ERROR: >> 0 --Responce input zero<BR>Contact your operator of the device manifactor support.</div>"
@@ -254,8 +250,7 @@
 	var/datum/browser/popup = new(user, name, name, 400, 400)
 	popup.set_content(dat)
 	popup.open(0)
-	onclose(user, "[src.name]")
-	return
+	onclose(user, "[name]")
 
 /***********************************
 *   Kitchen Machine Handling/Cooking
@@ -449,8 +444,8 @@
 	dirty_icon = "mwbloody"
 	open_icon = "mw-o"
 
-/obj/machinery/kitchen_machine/microwave/New()
-	..()
+/obj/machinery/kitchen_machine/microwave/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/microwave(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
@@ -471,8 +466,8 @@
 	dirty_icon = "oven_dirty"
 	open_icon = "oven_open"
 
-/obj/machinery/kitchen_machine/oven/New()
-	..()
+/obj/machinery/kitchen_machine/oven/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/oven(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
@@ -493,8 +488,8 @@
 	dirty_icon = "grill_dirty"
 	open_icon = "grill_open"
 
-/obj/machinery/kitchen_machine/grill/New()
-	..()
+/obj/machinery/kitchen_machine/grill/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/grill(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
@@ -515,8 +510,8 @@
 	dirty_icon = "candymaker_dirty"
 	open_icon = "candymaker_open"
 
-/obj/machinery/kitchen_machine/candymaker/New()
-	..()
+/obj/machinery/kitchen_machine/candymaker/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/candymaker(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)

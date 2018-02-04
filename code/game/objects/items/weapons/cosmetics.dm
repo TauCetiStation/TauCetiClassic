@@ -25,7 +25,8 @@
 /obj/item/weapon/lipstick/random
 	name = "lipstick"
 
-/obj/item/weapon/lipstick/random/New()
+/obj/item/weapon/lipstick/random/atom_init()
+	. = ..()
 	colour = pick("red","purple","jade","black")
 	name = "[colour] lipstick"
 
@@ -54,7 +55,7 @@
 			H.lip_style = "lipstick"
 			H.lip_color = colour
 			H.update_body()
-		else
+		else if(!user.is_busy())
 			user.visible_message("<span class='warning'>[user] begins to do [H]'s lips with \the [src].</span>", \
 								 "<span class='notice'>You begin to apply \the [src].</span>")
 			if(do_after(user, 20, target = H))	//user needs to keep their active hand, H does not.
@@ -67,9 +68,10 @@
 		to_chat(user, "<span class='notice'>Where are the lips on that?</span>")
 
 //you can wipe off lipstick with paper!
-/obj/item/weapon/paper/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(user.zone_sel.selecting == O_MOUTH)
-		if(!istype(M, /mob))	return
+/obj/item/weapon/paper/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+	if(def_zone == O_MOUTH)
+		if(!istype(M))
+			return
 
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -77,7 +79,7 @@
 				to_chat(user, "<span class='notice'>You wipe off the lipstick with [src].</span>")
 				H.lip_style = null
 				H.update_body()
-			else
+			else if(!user.is_busy())
 				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
 								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick.</span>")
 				if(do_after(user, 10, target = H))	//user needs to keep their active hand, H does not.
@@ -110,12 +112,11 @@
 	playsound(loc, 'sound/items/Welder2.ogg', 20, 1)
 
 
-/obj/item/weapon/razor/attack(mob/M, mob/user)
+/obj/item/weapon/razor/attack(mob/M, mob/user, def_zone)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 
-		var/location = user.zone_sel.selecting
-		if(location == O_MOUTH)
+		if(def_zone == O_MOUTH)
 			if(!H.species.flags[HAS_HAIR])
 				to_chat(user, "<span class='warning'>There is no hair!</span>")
 				return
@@ -127,13 +128,14 @@
 				return
 
 			if(H == user) //shaving yourself
+				if(user.is_busy()) return
 				user.visible_message("[user] starts to shave their facial hair with [src].", \
 									 "<span class='notice'>You take a moment to shave your facial hair with [src]...</span>")
 				if(do_after(user, 50, target = H))
 					user.visible_message("[user] shaves his facial hair clean with [src].", \
 										 "<span class='notice'>You finish shaving with [src]. Fast and clean!</span>")
-					shave(H, location)
-			else
+					shave(H, def_zone)
+			else if(!user.is_busy())
 				var/turf/H_loc = H.loc
 				user.visible_message("<span class='warning'>[user] tries to shave [H]'s facial hair with [src].</span>", \
 									 "<span class='notice'>You start shaving [H]'s facial hair...</span>")
@@ -141,9 +143,9 @@
 					if(H_loc == H.loc)
 						user.visible_message("<span class='warning'>[user] shaves off [H]'s facial hair with [src].</span>", \
 											 "<span class='notice'>You shave [H]'s facial hair clean off.</span>")
-						shave(H, location, user)
+						shave(H, def_zone, user)
 
-		else if(location == BP_HEAD)
+		else if(def_zone == BP_HEAD)
 			if(!H.species.flags[HAS_HAIR])
 				to_chat(user, "<span class='warning'>There is no hair!</span>")
 				return
@@ -155,13 +157,14 @@
 				return
 
 			if(H == user) //shaving yourself
+				if(user.is_busy()) return
 				user.visible_message("[user] starts to shave their head with [src].", \
 									 "<span class='notice'>You start to shave your head with [src]...</span>")
 				if(do_after(user, 50, target = H))
 					user.visible_message("[user] shaves his head with [src].", \
 										 "<span class='notice'>You finish shaving with [src].</span>")
-					shave(H, location)
-			else
+					shave(H, def_zone)
+			else if(!user.is_busy())
 				var/turf/H_loc = H.loc
 				user.visible_message("<span class='warning'>[user] tries to shave [H]'s head with [src]!</span>", \
 									 "<span class='notice'>You start shaving [H]'s head...</span>")
@@ -169,7 +172,7 @@
 					if(H_loc == H.loc)
 						user.visible_message("<span class='warning'>[user] shaves [H]'s head bald with [src]!</span>", \
 											 "<span class='notice'>You shave [H]'s head bald.</span>")
-						shave(H, location, user)
+						shave(H, def_zone, user)
 		else
 			..()
 	else

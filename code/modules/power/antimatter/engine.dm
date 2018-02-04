@@ -28,14 +28,13 @@
 
 //injector
 
-/obj/machinery/power/am_engine/injector/New()
+/obj/machinery/power/am_engine/injector/atom_init()
 	..()
-	spawn( 13 )
-		var/loc = get_step(src, NORTH)
-		src.connected = locate(/obj/machinery/power/am_engine/engine, get_step(loc, NORTH))
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/power/am_engine/injector/atom_init_late()
+	var/loc = get_step(src, NORTH)
+	connected = locate(/obj/machinery/power/am_engine/engine, get_step(loc, NORTH))
 
 /obj/machinery/power/am_engine/injector/attackby(obj/item/weapon/fuel/F, mob/user)
 	if( (stat & BROKEN) || !connected) return
@@ -72,14 +71,13 @@
 //engine
 
 
-/obj/machinery/power/am_engine/engine/New()
+/obj/machinery/power/am_engine/engine/atom_init()
 	..()
-	spawn( 7 )
-		var/loc = get_step(src, SOUTH)
-		src.connected = locate(/obj/machinery/power/am_engine/injector, get_step(loc, SOUTH))
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/power/am_engine/engine/atom_init_late()
+	var/loc = get_step(src, SOUTH)
+	connected = locate(/obj/machinery/power/am_engine/injector, get_step(loc, SOUTH))
 
 /obj/machinery/power/am_engine/engine/proc/engine_go()
 

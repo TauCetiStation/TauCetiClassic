@@ -195,14 +195,15 @@
 		add_admin_verbs()
 		admin_memo_show()
 
+	if(config.allow_donators && ckey in donators)
+		donator = 1
+		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting us! You have access to all the additional donator-only features this month.</span>")
+		
 	log_client_to_db(tdata)
 
 	send_resources()
 
-	if(!void)
-		void = new()
-
-	screen += void
+	generate_clickcatcher()
 
 	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
 		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
@@ -283,7 +284,7 @@
 	var/admin_rank = "Player"
 	if (src.holder)
 		admin_rank = src.holder.rank
-	else if (check_randomizer(connectiontopic))
+	else if (config.check_randomizer && check_randomizer(connectiontopic))
 		return
 
 	//Just the standard check to see if it's actually a number
@@ -411,8 +412,9 @@
 
 //checks if a client is afk
 //3000 frames = 5 minutes
-/client/proc/is_afk(duration=3000)
-	if(inactivity > duration)	return inactivity
+/client/proc/is_afk(duration = 3000)
+	if(inactivity > duration)
+		return inactivity
 	return 0
 
 // Byond seemingly calls stat, each tick.
@@ -438,3 +440,17 @@
 	spawn (10) //removing this spawn causes all clients to not get verbs.
 		//Precache the client with all other assets slowly, so as to not block other browse() calls
 		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
+
+/client/proc/generate_clickcatcher()
+	if(!void)
+		void = new()
+		screen += void
+
+//This may help with UI's that were stuck and don't want to open anymore.
+/client/verb/close_nanouis()
+	set name = "Fix NanoUI (Close All)"
+	set category = "OOC"
+	set desc = "Closes all opened NanoUI."
+
+	to_chat(src, "<span class='notice'>You forcibly close any opened NanoUI interfaces.")
+	nanomanager.close_user_uis(usr)

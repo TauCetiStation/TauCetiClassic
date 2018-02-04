@@ -284,21 +284,20 @@
 		force = 4
 	..()
 
-/obj/item/weapon/shard/New()
+/obj/item/weapon/shard/atom_init()
+	. = ..()
 
-	src.icon_state = pick("large", "medium", "small")
-	switch(src.icon_state)
+	icon_state = pick("large", "medium", "small")
+	switch(icon_state)
 		if("small")
-			src.pixel_x = rand(-12, 12)
-			src.pixel_y = rand(-12, 12)
+			pixel_x = rand(-12, 12)
+			pixel_y = rand(-12, 12)
 		if("medium")
-			src.pixel_x = rand(-8, 8)
-			src.pixel_y = rand(-8, 8)
+			pixel_x = rand(-8, 8)
+			pixel_y = rand(-8, 8)
 		if("large")
-			src.pixel_x = rand(-5, 5)
-			src.pixel_y = rand(-5, 5)
-		else
-	return
+			pixel_x = rand(-5, 5)
+			pixel_y = rand(-5, 5)
 
 /obj/item/weapon/shard/attackby(obj/item/weapon/W, mob/user)
 	..()

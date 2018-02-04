@@ -231,6 +231,7 @@
 
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		if(anchored)
+			if(user.is_busy()) return
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)

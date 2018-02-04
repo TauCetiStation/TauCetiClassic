@@ -25,6 +25,7 @@
 		visible_message("\red <B>\The [src] have been [pick(W.attack_verb)] with \the [W][(user ? " by [user]." : ".")]")
 	else
 		visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	var/damage = W.force / 4.0
 
@@ -54,9 +55,11 @@
 
 /obj/effect/spider/stickyweb
 	icon_state = "stickyweb1"
-	New()
-		if(prob(50))
-			icon_state = "stickyweb2"
+
+/obj/effect/spider/stickyweb/atom_init()
+	. = ..()
+	if(prob(50))
+		icon_state = "stickyweb2"
 
 /obj/effect/spider/stickyweb/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
@@ -75,10 +78,12 @@
 	desc = "They seem to pulse slightly with an inner life."
 	icon_state = "eggs"
 	var/amount_grown = 0
-	New()
-		pixel_x = rand(3,-3)
-		pixel_y = rand(3,-3)
-		START_PROCESSING(SSobj, src)
+
+/obj/effect/spider/eggcluster/atom_init()
+	. = ..()
+	pixel_x = rand(3,-3)
+	pixel_y = rand(3,-3)
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/spider/eggcluster/process()
 	amount_grown += rand(0,2)
@@ -98,13 +103,15 @@
 	var/amount_grown = -1
 	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent
 	var/travelling_in_vent = 0
-	New()
-		pixel_x = rand(6,-6)
-		pixel_y = rand(6,-6)
-		START_PROCESSING(SSobj, src)
-		//50% chance to grow up
-		if(prob(50))
-			amount_grown = 1
+
+/obj/effect/spider/spiderling/atom_init()
+	. = ..()
+	pixel_x = rand(6,-6)
+	pixel_y = rand(6,-6)
+	START_PROCESSING(SSobj, src)
+	//50% chance to grow up
+	if(prob(50))
+		amount_grown = 1
 
 /obj/effect/spider/spiderling/Bump(atom/user)
 	if(istype(user, /obj/structure/table))
@@ -200,13 +207,15 @@
 	icon_state = "cocoon1"
 	health = 60
 
-/obj/effect/spider/cocoon/New()
+/obj/effect/spider/cocoon/atom_init()
+	. = ..()
 	icon_state = pick("cocoon1","cocoon2","cocoon3")
 
 /obj/effect/spider/cocoon/container_resist()
 	var/mob/living/user = usr
+	if(user.is_busy()) return
 	var/breakout_time = 2
-	user.next_move = world.time + 100
+	user.SetNextMove(100)
 	user.last_special = world.time + 100
 	to_chat(user, "<span class='notice'>You struggle against the tight bonds! (This will take about [breakout_time] minutes.)</span>")
 	visible_message("You see something struggling and writhing in the [src]!")

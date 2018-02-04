@@ -54,22 +54,23 @@
 	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
 //The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
-var/list/slot_equipment_priority = list( \
-		slot_back,\
-		slot_wear_id,\
-		slot_w_uniform,\
-		slot_wear_suit,\
-		slot_wear_mask,\
-		slot_head,\
-		slot_shoes,\
-		slot_gloves,\
-		slot_l_ear,\
-		slot_r_ear,\
-		slot_glasses,\
-		slot_belt,\
-		slot_s_store,\
-		slot_l_store,\
-		slot_r_store\
+var/list/slot_equipment_priority = list(
+	slot_back,
+	slot_wear_id,
+	slot_w_uniform,
+	slot_wear_suit,
+	slot_wear_mask,
+	slot_head,
+	slot_shoes,
+	slot_gloves,
+	slot_l_ear,
+	slot_r_ear,
+	slot_glasses,
+	slot_belt,
+	slot_s_store,
+	slot_tie,
+	slot_l_store,
+	slot_r_store
 	)
 
 //puts the item "W" into an appropriate slot in a human's inventory

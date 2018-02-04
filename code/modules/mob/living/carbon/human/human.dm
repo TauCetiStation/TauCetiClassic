@@ -22,40 +22,42 @@
 	real_name = "Test Dummy"
 	status_flags = GODMODE|CANPUSH
 
-/mob/living/carbon/human/skrell/New(var/new_loc)
+INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
+
+/mob/living/carbon/human/skrell/atom_init(mapload)
 	h_style = "Skrell Male Tentacles"
-	..(new_loc, SKRELL)
+	. = ..(mapload, SKRELL)
 
-/mob/living/carbon/human/tajaran/New(var/new_loc)
+/mob/living/carbon/human/tajaran/atom_init(mapload)
 	h_style = "Tajaran Ears"
-	..(new_loc, TAJARAN)
+	. = ..(mapload, TAJARAN)
 
-/mob/living/carbon/human/unathi/New(var/new_loc)
+/mob/living/carbon/human/unathi/atom_init(mapload)
 	h_style = "Unathi Horns"
-	..(new_loc, UNATHI)
+	. = ..(mapload, UNATHI)
 
-/mob/living/carbon/human/vox/New(var/new_loc)
+/mob/living/carbon/human/vox/atom_init(mapload)
 	h_style = "Short Vox Quills"
-	..(new_loc, VOX)
+	. = ..(mapload, VOX)
 
-/mob/living/carbon/human/voxarmalis/New(var/new_loc)
+/mob/living/carbon/human/voxarmalis/atom_init(mapload)
 	h_style = "Bald"
-	..(new_loc, VOX_ARMALIS)
+	. = ..(mapload, VOX_ARMALIS)
 
-/mob/living/carbon/human/diona/New(var/new_loc)
-	..(new_loc, DIONA)
+/mob/living/carbon/human/diona/atom_init(mapload)
+	. = ..(mapload, DIONA)
 
-/mob/living/carbon/human/machine/New(var/new_loc)
+/mob/living/carbon/human/machine/atom_init(mapload)
 	h_style = "blue IPC screen"
-	..(new_loc, IPC)
+	. = ..(mapload, IPC)
 
-/mob/living/carbon/human/abductor/New(var/new_loc)
-	..(new_loc, ABDUCTOR)
+/mob/living/carbon/human/abductor/atom_init(mapload)
+	. = ..(mapload, ABDUCTOR)
 
-/mob/living/carbon/human/golem/New(loc)
-	..(loc, GOLEM)
+/mob/living/carbon/human/golem/atom_init(mapload)
+	. = ..(mapload, GOLEM)
 
-/mob/living/carbon/human/New(new_loc, new_species)
+/mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
 
@@ -71,8 +73,6 @@
 	reagents = R
 	R.my_atom = src
 
-
-
 	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudhealth100")
 	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudhealthy")
 	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudunknown")
@@ -83,7 +83,7 @@
 	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudhealthy")
 
-	..()
+	. = ..()
 
 	if(dna)
 		dna.real_name = real_name
@@ -243,14 +243,14 @@
 
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
-	..()
+	if(..())
+		return
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -332,13 +332,15 @@
 	return
 
 
-/mob/living/carbon/human/restrained()
-	if (handcuffed)
-		return 1
+/mob/living/carbon/human/restrained(check_type = HANDS)
+	if ((check_type & HANDS) && handcuffed)
+		return TRUE
+	if ((check_type & LEGS) && legcuffed)
+		return TRUE
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-		return 1
+		return TRUE
 	if (istype(buckled, /obj/structure/stool/bed/nest))
-		return 1
+		return TRUE
 	return 0
 
 
@@ -368,7 +370,7 @@
 	<BR><B>Suit Storage:</B> <A href='?src=\ref[src];item=s_store'>[(s_store ? s_store : "Nothing")]</A> [((istype(wear_mask, /obj/item/clothing/mask) && istype(s_store, /obj/item/weapon/tank) && !( internal )) ? text(" <A href='?src=\ref[];item=internal'>Set Internal</A>", src) : "")]
 	<BR>[(handcuffed ? text("<A href='?src=\ref[src];item=handcuff'>Handcuffed</A>") : text("<A href='?src=\ref[src];item=handcuff'>Not Handcuffed</A>"))]
 	<BR>[(legcuffed ? text("<A href='?src=\ref[src];item=legcuff'>Legcuffed</A>") : text(""))]
-	<BR>[(suit) ? ((suit.hastie) ? text(" <A href='?src=\ref[];item=tie'>Remove Accessory</A>", src) : "") :]
+	<BR>[(suit) ? ((suit.accessories.len) ? text(" <A href='?src=\ref[];item=tie'>Remove Accessory</A>", src) : "") :]
 	<BR>[(internal ? text("<A href='?src=\ref[src];item=internal'>Remove Internal</A>") : "")]
 	<BR><A href='?src=\ref[src];item=bandages'>Remove Bandages</A>
 	<BR><A href='?src=\ref[src];item=splints'>Remove Splints</A>
@@ -550,7 +552,7 @@
 						for (var/datum/data/record/R in data_core.security)
 							if (R.fields["id"] == E.fields["id"])
 
-								var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Released", "Cancel")
+								var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Paroled", "Released", "Cancel")
 
 								if(hasHUD(usr, "security"))
 									if(setcriminal != "Cancel")
@@ -805,7 +807,7 @@
 	if(istype(src.head, /obj/item/clothing/head/welding))
 		if(!src.head:up)
 			number += 2
-	if(istype(src.head, /obj/item/clothing/head/helmet/space))
+	if(istype(src.head, /obj/item/clothing/head/helmet/space) && !istype(src.head, /obj/item/clothing/head/helmet/space/sk))
 		number += 2
 	if(istype(src.glasses, /obj/item/clothing/glasses/thermal))
 		number -= 1
@@ -1427,8 +1429,8 @@
 	var/cooldown = 10 SECONDS
 
 
-/obj/screen/leap/New()
-	..()
+/obj/screen/leap/atom_init()
+	. = ..()
 	overlays += image(icon, "leap")
 	update_icon()
 
@@ -1466,7 +1468,7 @@
 		to_chat(src, "<span class='notice'>It is unsafe to leap without gravity!</span>")
 		return
 
-	if(stat || stunned || lying)
+	if(incapacitated(LEGS) || buckled || pinned.len || stance_damage >= 4) //because you need !restrained legs to leap
 		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
 		return
 
@@ -1498,30 +1500,37 @@
 	if(isliving(A))
 		var/mob/living/L = A
 		L.visible_message("<span class='danger'>\The [src] leaps at [L]!</span>", "<span class='userdanger'>[src] leaps on you!</span>")
-		L.Weaken(5)
-		sleep(2) // Runtime prevention (infinite bump() calls on hulks)
-		step_towards(src, L)
-
-		var/use_hand = "left"
-		if(l_hand)
-			if(r_hand)
-				to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
-				return
-			else
-				use_hand = "right"
-
-		visible_message("<span class='warning'><b>\The [src]</b> seizes [L] aggressively!</span>")
-
-		var/obj/item/weapon/grab/G = new(src, L)
-		if(use_hand == "left")
-			l_hand = G
+		if(issilicon(A))
+			L.Weaken(1) //Only brief stun
+			step_towards(src, L)
 		else
-			r_hand = G
+			L.Weaken(5)
+			sleep(2) // Runtime prevention (infinite bump() calls on hulks)
+			step_towards(src, L)
 
-		G.state = GRAB_AGGRESSIVE
-		G.icon_state = "grabbed1"
-		G.synch()
-		L.grabbed_by += G
+			if(restrained()) //You can leap when you hands are cuffed, but you can't grab
+				return
+
+			var/use_hand = "left"
+			if(l_hand)
+				if(r_hand)
+					to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
+					return
+				else
+					use_hand = "right"
+
+			visible_message("<span class='warning'><b>\The [src]</b> seizes [L] aggressively!</span>")
+
+			var/obj/item/weapon/grab/G = new(src, L)
+			if(use_hand == "left")
+				l_hand = G
+			else
+				r_hand = G
+
+			G.state = GRAB_AGGRESSIVE
+			G.icon_state = "grabbed1"
+			G.synch()
+			L.grabbed_by += G
 
 	else if(A.density)
 		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='danger'>You smashes into [A]!</span>")

@@ -25,8 +25,8 @@
 	var/stored_energy = 0
 
 
-/obj/machinery/atmospherics/components/binary/circulator/New()
-	..()
+/obj/machinery/atmospherics/components/binary/circulator/atom_init()
+	. = ..()
 
 	desc = initial(desc) + " Its outlet port is to the [dir2text(dir)]."
 

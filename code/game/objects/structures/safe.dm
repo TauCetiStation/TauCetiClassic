@@ -22,7 +22,8 @@ FLOOR SAFES
 	var/maxspace = 24	//the maximum combined w_class of stuff in the safe
 
 
-/obj/structure/safe/New()
+/obj/structure/safe/atom_init()
+	. = ..()
 	tumbler_1_pos = rand(0, 72)
 	tumbler_1_open = rand(0, 72)
 
@@ -91,7 +92,7 @@ FLOOR SAFES
 	var/mob/living/carbon/human/user = usr
 
 	var/canhear = 0
-	if(istype(user.l_hand, /obj/item/clothing/tie/stethoscope) || istype(user.r_hand, /obj/item/clothing/tie/stethoscope))
+	if(istype(user.l_hand, /obj/item/clothing/accessory/stethoscope) || istype(user.r_hand, /obj/item/clothing/accessory/stethoscope))
 		canhear = 1
 
 	if(href_list["open"])
@@ -144,6 +145,8 @@ FLOOR SAFES
 
 
 /obj/structure/safe/attackby(obj/item/I, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
+	add_fingerprint(user)
 	if(open)
 		if(I.w_class + space <= maxspace)
 			space += I.w_class
@@ -151,14 +154,11 @@ FLOOR SAFES
 			I.loc = src
 			to_chat(user, "<span class='notice'>You put [I] in [src].</span>")
 			updateUsrDialog()
-			return
 		else
 			to_chat(user, "<span class='notice'>[I] won't fit in [src].</span>")
-			return
 	else
-		if(istype(I, /obj/item/clothing/tie/stethoscope))
+		if(istype(I, /obj/item/clothing/accessory/stethoscope))
 			to_chat(user, "Hold [I] in one of your hands while you manipulate the dial.")
-			return
 
 
 obj/structure/safe/blob_act()

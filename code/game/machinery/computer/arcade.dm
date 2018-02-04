@@ -92,8 +92,8 @@
 /obj/machinery/computer/arcade
 	var/turtle = 0
 
-/obj/machinery/computer/arcade/New()
-	..()
+/obj/machinery/computer/arcade/atom_init()
+	. = ..()
 	var/name_action
 	var/name_part1
 	var/name_part2
@@ -103,14 +103,12 @@
 	name_part1 = pick("the Automatic ", "Farmer ", "Lord ", "Professor ", "the Cuban ", "the Evil ", "the Dread King ", "the Space ", "Lord ", "the Great ", "Duke ", "General ")
 	name_part2 = pick("Melonoid", "Murdertron", "Sorcerer", "Ruin", "Jeff", "Ectoplasm", "Crushulon", "Uhangoid", "Vhakoid", "Peteoid", "slime", "Griefer", "ERPer", "Lizard Man", "Unicorn")
 
-	src.enemy_name = replacetext((name_part1 + name_part2), "the ", "")
-	src.name = (name_action + name_part1 + name_part2)
+	enemy_name = replacetext((name_part1 + name_part2), "the ", "")
+	name = (name_action + name_part1 + name_part2)
 
-/obj/machinery/computer/arcade/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/arcade/ui_interact(mob/user)
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
+
 	dat += "<center><h4>[src.enemy_name]</h4></center>"
 
 	dat += "<br><center><h3>[src.temp]</h3></center>"
@@ -127,7 +125,6 @@
 
 	user << browse(dat, "window=arcade")
 	onclose(user, "arcade")
-	return
 
 /obj/machinery/computer/arcade/Topic(href, href_list)
 	. = ..()

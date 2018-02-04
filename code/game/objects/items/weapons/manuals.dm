@@ -749,7 +749,7 @@
 		</head>
 
 		<body>
-		<iframe width='100%' height='97%' src="http://wiki.tauceti.ru/mwiki/index.php?title=Space_Law&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+		<iframe width='100%' height='95%' src="http://tauceti.ru/w/index.php?title=Space_Law&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
 		</body>
 
 		</html>

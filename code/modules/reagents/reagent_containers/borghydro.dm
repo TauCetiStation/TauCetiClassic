@@ -23,8 +23,8 @@
 /obj/item/weapon/reagent_containers/borghypo/crisis
 	reagent_ids = list("tricordrazine", "inaprovaline", "tramadol")
 
-/obj/item/weapon/reagent_containers/borghypo/New()
-	..()
+/obj/item/weapon/reagent_containers/borghypo/atom_init()
+	. = ..()
 	for(var/R in reagent_ids)
 		add_reagent(R)
 

@@ -8,29 +8,26 @@
 	layer = 2.3 //under pipes
 	//	flags = CONDUCT
 
-/obj/structure/lattice/New()
-	..()
-	if(!istype(src.loc, /turf/space))
-		qdel(src)
-		return
-	for(var/obj/structure/lattice/LAT in src.loc)
+/obj/structure/lattice/atom_init()
+	. = ..()
+	if(!istype(loc, /turf/space))
+		return INITIALIZE_HINT_QDEL
+	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)
 			qdel(LAT)
 	icon = 'icons/obj/smoothlattice.dmi'
 	icon_state = "latticeblank"
 	updateOverlays()
 	for (var/dir in cardinal)
-		var/obj/structure/lattice/L
-		if(locate(/obj/structure/lattice, get_step(src, dir)))
-			L = locate(/obj/structure/lattice, get_step(src, dir))
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, get_step(src, dir))
+		if(L)
 			L.updateOverlays()
 
 /obj/structure/lattice/Destroy()
 	for (var/dir in cardinal)
-		var/obj/structure/lattice/L
-		if(locate(/obj/structure/lattice, get_step(src, dir)))
-			L = locate(/obj/structure/lattice, get_step(src, dir))
-			L.updateOverlays(src.loc)
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, get_step(src, dir))
+		if(L)
+			L.updateOverlays(loc)
 	return ..()
 
 /obj/structure/lattice/blob_act()

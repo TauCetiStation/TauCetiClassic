@@ -11,8 +11,8 @@
 	dir = SOUTH
 	initialize_directions = SOUTH
 
-/obj/machinery/atmospherics/pipe/cap/New()
-	..()
+/obj/machinery/atmospherics/pipe/cap/atom_init()
+	. = ..()
 	initialize_directions = dir
 
 /obj/machinery/atmospherics/pipe/cap/process_atmos()

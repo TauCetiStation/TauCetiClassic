@@ -5,12 +5,12 @@
 	desc = "Tracks the positions of the emergency authentication keys."
 	var/datum/game_mode/mutiny/mutiny
 
-/obj/item/weapon/pinpointer/advpinpointer/auth_key/New()
+/obj/item/weapon/pinpointer/advpinpointer/auth_key/atom_init()
 	if(ticker.mode && istype(ticker.mode, /datum/game_mode/mutiny))
 		mutiny = ticker.mode
 	else
 		mutiny = null
-	..()
+	. = ..()
 
 /obj/item/weapon/pinpointer/advpinpointer/auth_key/attack_self(mob/user)
 	if(!mutiny)

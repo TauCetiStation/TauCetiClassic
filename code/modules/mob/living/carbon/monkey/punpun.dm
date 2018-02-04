@@ -9,7 +9,7 @@
 	var/list/pet_monkey_names = list("Pun Pun", "Bubbles", "Mojo", "George", "Darwin", "Aldo", "Caeser", "Kanzi", "Kong", "Terk", "Grodd", "Mala", "Bojangles", "Coco", "Able", "Baker", "Scatter", "Norbit", "Travis")
 	var/list/rare_pet_monkey_names = list("Professor Bobo", "Deempisi's Revenge", "Furious George", "King Louie", "Dr. Zaius", "Jimmy Rustles", "Dinner", "Lanky")
 
-/mob/living/carbon/monkey/punpun/New()
+/mob/living/carbon/monkey/punpun/atom_init()
 	Read_Memory()
 	if(relic_mask)
 		equip_to_slot_or_del(new relic_mask, slot_wear_mask)
@@ -23,7 +23,7 @@
 		else
 			name = pick(pet_monkey_names)
 		gender = pick(MALE, FEMALE)
-	..()
+	. = ..()
 
 /mob/living/carbon/monkey/punpun/Life()
 	if(ticker.current_state == GAME_STATE_FINISHED && !memory_saved)

@@ -19,8 +19,8 @@
 
 		on = FALSE
 
-/obj/machinery/atmospherics/components/unary/oxygen_generator/New()
-	..()
+/obj/machinery/atmospherics/components/unary/oxygen_generator/atom_init()
+	. = ..()
 
 	var/datum/gas_mixture/air_contents = AIR1
 	air_contents.volume = 50

@@ -68,7 +68,7 @@
 		thetank.forceMove(src)
 
 
-/obj/item/weapon/melee/powerfist/attack(mob/living/target, mob/living/user)
+/obj/item/weapon/melee/powerfist/attack(mob/living/target, mob/living/user, def_zone)
 	if(!tank)
 		to_chat(user,"<span class='warning'>\The [src] can't operate without a source of gas!</span>")
 		return
@@ -76,7 +76,7 @@
 		to_chat(user,"<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>")
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
 		return
-	target.apply_damage(force * fisto_setting, BRUTE, user.zone_sel.selecting)
+	target.apply_damage(force * fisto_setting, BRUTE, def_zone)
 	target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as they punch [target.name]!</span>", \
 		"<span class='userdanger'>You cry out in pain as [user]'s punch flings you backwards!</span>")
 	new /obj/item/effect/kinetic_blast(target.loc)

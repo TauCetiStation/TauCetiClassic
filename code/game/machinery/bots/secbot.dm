@@ -72,21 +72,15 @@
 	var/created_name = "Securitron" //To preserve the name if it's a unique securitron I guess
 
 
-
-/obj/machinery/bot/secbot/New()
-	..()
-	update_icon()
-	addtimer(CALLBACK(src, .proc/post_creation), 3)
-
-
-/obj/machinery/bot/secbot/proc/post_creation()
+/obj/machinery/bot/secbot/atom_init()
+	. = ..()
 	botcard = new /obj/item/weapon/card/id(src)
 	var/datum/job/detective/J = new/datum/job/detective
 	botcard.access = J.get_access()
 	if(radio_controller)
 		radio_controller.add_object(src, control_freq, filter = RADIO_SECBOT)
 		radio_controller.add_object(src, beacon_freq, filter = RADIO_NAVBEACONS)
-
+	update_icon()
 
 /obj/machinery/bot/secbot/turn_on()
 	..()
@@ -104,42 +98,33 @@
 	update_icon()
 	updateUsrDialog()
 
-/obj/machinery/bot/secbot/attack_hand(mob/user)
-	. = ..()
-	if(.)
-		return
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/bot/secbot/interact(mob/user)
+/obj/machinery/bot/secbot/ui_interact(mob/user)
 	var/dat
 
 	dat += text({"
-<TT><B>Automatic Security Unit v1.3</B></TT><BR><BR>
-Status: []<BR>
-Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
-Maintenance panel panel is [open ? "opened" : "closed"]"},
+		<TT><B>Automatic Security Unit v1.3</B></TT><BR><BR>
+		Status: []<BR>
+		Behaviour controls are [locked ? "locked" : "unlocked"]<BR>
+		Maintenance panel panel is [open ? "opened" : "closed"]"},
 
-"<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
+		"<A href='?src=\ref[src];power=1'>[on ? "On" : "Off"]</A>" )
 
 	if(!locked || issilicon(user) || isobserver(user))
 		dat += text({"<BR>
-Check for Weapon Authorization: []<BR>
-Check Security Records: []<BR>
-Operating Mode: []<BR>
-Report Arrests: []<BR>
-Auto Patrol: []"},
+			Check for Weapon Authorization: []<BR>
+			Check Security Records: []<BR>
+			Operating Mode: []<BR>
+			Report Arrests: []<BR>
+			Auto Patrol: []"},
 
-"<A href='?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
-"<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
-
+			"<A href='?src=\ref[src];operation=idcheck'>[idcheck ? "Yes" : "No"]</A>",
+			"<A href='?src=\ref[src];operation=ignorerec'>[check_records ? "Yes" : "No"]</A>",
+			"<A href='?src=\ref[src];operation=switchmode'>[arrest_type ? "Detain" : "Arrest"]</A>",
+			"<A href='?src=\ref[src];operation=declarearrests'>[declare_arrests ? "Yes" : "No"]</A>",
+			"<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
 	user << browse("<HEAD><TITLE>Securitron v1.3 controls</TITLE></HEAD>[dat]", "window=autosec")
 	onclose(user, "autosec")
-	return
 
 /obj/machinery/bot/secbot/Topic(href, href_list)
 	. = ..()

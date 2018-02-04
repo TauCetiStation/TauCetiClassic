@@ -20,6 +20,7 @@
 	a_intent = "harm"
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
+	weather_immunities = list("ash", "acid")
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -284,7 +285,8 @@
 	icon_state = "boiledrorocore"
 	var/inert = 0
 
-/obj/item/asteroid/hivelord_core/New()
+/obj/item/asteroid/hivelord_core/atom_init()
+	. = ..()
 	addtimer(CALLBACK(src, .proc/make_inert), 1200)
 
 /obj/item/asteroid/hivelord_core/proc/make_inert()
@@ -336,8 +338,11 @@
 	environment_smash = 0
 	pass_flags = PASSTABLE
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/atom_init_late()
 	QDEL_IN(src, 100)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/death()
@@ -408,12 +413,13 @@
 		icon_state = icon_aggro
 	return
 
-/obj/effect/goliath_tentacle/
+/obj/effect/goliath_tentacle
 	name = "Goliath tentacle"
 	icon = 'icons/mob/monsters.dmi'
 	icon_state = "Goliath_tentacle"
 
-/obj/effect/goliath_tentacle/New()
+/obj/effect/goliath_tentacle/atom_init()
+	. = ..()
 	var/turftype = get_turf(src)
 	if(istype(turftype, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = turftype
@@ -422,15 +428,14 @@
 
 /obj/effect/goliath_tentacle/original
 
-/obj/effect/goliath_tentacle/original/New()
+/obj/effect/goliath_tentacle/original/atom_init()
+	. = ..()
 	var/list/directions = cardinal.Copy()
-	var/counter
-	for(counter = 1, counter <= 3, counter++)
+	for (var/i in 1 to 3)
 		var/spawndir = pick(directions)
 		directions -= spawndir
-		var/turf/T = get_step(src,spawndir)
+		var/turf/T = get_step(src, spawndir)
 		new /obj/effect/goliath_tentacle(T)
-	..()
 
 /obj/effect/goliath_tentacle/proc/Trip()
 	for(var/mob/living/M in src.loc)

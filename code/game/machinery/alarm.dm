@@ -42,9 +42,10 @@
 	active_power_usage = 1000 // For heating/cooling rooms. 1000 joules equates to about 1 degree every 2 seconds for a single tile of air.
 	power_channel = ENVIRON
 	req_one_access = list(access_atmospherics, access_engine_equip)
+	frequency = 1439
+	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/breach_detection = TRUE // Whether to use automatic breach detection or not
-	frequency = 1439
 	//var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = 1437
 	var/remote_control = FALSE
@@ -79,8 +80,8 @@
 	var/temperature_dangerlevel = 0
 	var/other_dangerlevel = 0
 
-/obj/machinery/alarm/server/New()
-	..()
+/obj/machinery/alarm/server/atom_init()
+	. = ..()
 	req_access = list(access_rd, access_atmospherics, access_engine_equip)
 	TLV["oxygen"] =			list(-1.0, -1.0,-1.0,-1.0) // Partial pressure, kpa
 	TLV["carbon dioxide"] = list(-1.0, -1.0,   5,  10) // Partial pressure, kpa
@@ -91,8 +92,9 @@
 	target_temperature = 90
 
 
-/obj/machinery/alarm/New(var/loc, var/dir, var/building = 0)
-	..()
+/obj/machinery/alarm/atom_init(mapload, dir, building = 0)
+	. = ..()
+	set_frequency(frequency)
 
 	if(building)
 		if(loc)
@@ -106,10 +108,11 @@
 		pixel_x = (dir & 3)? 0 : (dir == 4 ? -24 : 24)
 		pixel_y = (dir & 3)? (dir ==1 ? -24 : 24) : 0
 		update_icon()
-		return
+		return // not sure about this, is constructing initializing it same as first_run()?
 
+	if (!master_is_operating())
+		elect_master()
 	first_run()
-
 
 /obj/machinery/alarm/proc/first_run()
 	alarm_area = get_area(src)
@@ -128,13 +131,6 @@
 	TLV["other"] =			list(-1.0, -1.0, 0.5, 1.0) // Partial pressure, kpa
 	TLV["pressure"] =		list(ONE_ATMOSPHERE*0.80,ONE_ATMOSPHERE*0.90,ONE_ATMOSPHERE*1.10,ONE_ATMOSPHERE*1.20) /* kpa */
 	TLV["temperature"] =	list(T0C-26, T0C, T0C+40, T0C+66) // K
-
-
-/obj/machinery/alarm/atom_init()
-	. = ..()
-	set_frequency(frequency)
-	if (!master_is_operating())
-		elect_master()
 
 /obj/machinery/alarm/Destroy()
 	if(wires)
@@ -311,23 +307,20 @@
 
 /obj/machinery/alarm/update_icon()
 	if(wiresexposed)
-		icon_state = "alarmx"
+		icon_state="alarm_build[buildstage]"
 		return
-	if((stat & (NOPOWER|BROKEN)) || shorted)
-		icon_state = "alarmp"
+
+	if((stat & NOPOWER) || shorted)
+		icon_state = "alarm_unpowered"
+		return
+	if(stat & BROKEN)
+		icon_state = "alarm_broken"
 		return
 
 	var/icon_level = danger_level
 	if (alarm_area.atmosalm)
 		icon_level = max(icon_level, 1)	//if there's an atmos alarm but everything is okay locally, no need to go past yellow
-
-	switch(icon_level)
-		if (0)
-			icon_state = "alarm0"
-		if (1)
-			icon_state = "alarm2" //yes, alarm2 is yellow alarm
-		if (2)
-			icon_state = "alarm1"
+	icon_state = "alarm[icon_level]"
 
 /obj/machinery/alarm/receive_signal(datum/signal/signal)
 	if(stat & (NOPOWER|BROKEN))
@@ -484,19 +477,6 @@
 //END HACKING//
 ///////////////
 
-/obj/machinery/alarm/attack_ai(mob/user)
-	ui_interact(user)
-
-/obj/machinery/alarm/attack_hand(mob/user)
-	. = ..()
-	if (.)
-		return
-	return interact(user)
-
-/obj/machinery/alarm/interact(mob/user)
-	ui_interact(user)
-	wires.interact(user)
-
 /obj/machinery/alarm/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, master_ui = null, datum/topic_state/custom_state)
 	var/data[0]
 	var/remote_connection = 0
@@ -507,7 +487,7 @@
 		remote_connection = href["remote_connection"]	// Remote connection means we're non-adjacent/connecting from another computer
 		remote_access = href["remote_access"]			// Remote access means we also have the privilege to alter the air alarm.
 
-	data["locked"] = locked && !issilicon(user)
+	data["locked"] = locked && !issilicon(user) && !isobserver(user)
 	data["remote_connection"] = remote_connection
 	data["remote_access"] = remote_access
 	data["rcon"] = rcon_setting
@@ -793,26 +773,18 @@
 
 
 /obj/machinery/alarm/attackby(obj/item/W, mob/user)
-/*	if (istype(W, /obj/item/weapon/wirecutters))
-		stat ^= BROKEN
-		add_fingerprint(user)
-		for(var/mob/O in viewers(user, null))
-			O.show_message(text("\red [] has []activated []!", user, (stat&BROKEN) ? "de" : "re", src), 1)
-		update_icon()
-		return
-*/
+
 	add_fingerprint(user)
 
 	switch(buildstage)
 		if(2)
 			if(istype(W, /obj/item/weapon/screwdriver))  // Opening that Air Alarm up.
-				//user << "You pop the Air Alarm's maintence panel open."
 				wiresexposed = !wiresexposed
 				to_chat(user, "The wires have been [wiresexposed ? "exposed" : "unexposed"]")
 				update_icon()
 				return
 
-			if (istype(W, /obj/item/weapon/wirecutters))
+			if (istype(W, /obj/item/weapon/wirecutters) && wiresexposed && wires.is_all_cut())
 				user.visible_message("<span class='warning'>[user] has cut the wires inside \the [src]!</span>", "You have cut the wires inside \the [src].")
 				playsound(loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				new /obj/item/stack/cable_coil/random(loc, 5)
@@ -831,6 +803,11 @@
 						updateUsrDialog()
 					else
 						to_chat(user, "\red Access denied.")
+
+			if(wiresexposed && is_wire_tool(W))
+				wires.interact(user)
+				return
+
 			return
 
 		if(1)
@@ -845,9 +822,12 @@
 				buildstage = 2
 				update_icon()
 				first_run()
+				wires.repair()
 				return
 
 			else if(istype(W, /obj/item/weapon/crowbar))
+				if(user.is_busy())
+					return
 				to_chat(user, "You start prying out the circuit.")
 				playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user,20,target = src))
@@ -916,6 +896,7 @@ Code shamelessly copied from apc_frame
 
 /obj/item/alarm_frame/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
+		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
 		return
@@ -963,26 +944,20 @@ FIRE ALARM
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/last_process = 0
 	var/wiresexposed = 0
 	var/buildstage = 2 // 2 = complete, 1 = no wires,  0 = circuit gone
 
 /obj/machinery/firealarm/update_icon()
 	if(wiresexposed)
-		switch(buildstage)
-			if(2)
-				icon_state="fire_b2"
-			if(1)
-				icon_state="fire_b1"
-			if(0)
-				icon_state="fire_b0"
-
+		icon_state="fire_build[buildstage]"
 		return
 
 	if(stat & BROKEN)
-		icon_state = "firex"
+		icon_state = "fire_broken"
 	else if(stat & NOPOWER)
-		icon_state = "firep"
+		icon_state = "fire_unpowered"
 	else if(!detecting)
 		icon_state = "fire1"
 	else
@@ -1037,13 +1012,15 @@ FIRE ALARM
 					update_icon()
 
 				else if(istype(W, /obj/item/weapon/crowbar))
-					to_chat(user, "You pry out the circuit!")
+					to_chat(user, "You start prying out the circuit.")
 					playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
-					spawn(20)
+					if(do_after(user,20,target = src))
+						to_chat(user, "You pry out the circuit!")
 						var/obj/item/weapon/firealarm_electronics/circuit = new /obj/item/weapon/firealarm_electronics()
 						circuit.loc = user.loc
 						buildstage = 0
 						update_icon()
+
 			if(0)
 				if(istype(W, /obj/item/weapon/firealarm_electronics))
 					to_chat(user, "You insert the circuit!")
@@ -1091,10 +1068,7 @@ FIRE ALARM
 			stat |= NOPOWER
 			update_icon()
 
-/obj/machinery/firealarm/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/firealarm/ui_interact(mob/user)
 	if (buildstage != 2)
 		return
 
@@ -1130,7 +1104,6 @@ FIRE ALARM
 		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>[stars("Fire alarm")]</B> [d1]\n<HR><b>The current alert level is: [stars(get_security_level())]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
 		user << browse(dat, "window=firealarm")
 		onclose(user, "firealarm")
-	return
 
 /obj/machinery/firealarm/Topic(href, href_list)
 	. = ..()
@@ -1173,8 +1146,8 @@ FIRE ALARM
 		FA.detecting = FALSE
 		FA.update_icon()
 
-/obj/machinery/firealarm/New(loc, dir, building)
-	..()
+/obj/machinery/firealarm/atom_init(mapload, dir, building)
+	. = ..()
 
 	if(loc)
 		src.loc = loc
@@ -1224,6 +1197,7 @@ Code shamelessly copied from apc_frame
 
 /obj/item/firealarm_frame/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
+		user.SetNextMove(CLICK_CD_RAPID)
 		new /obj/item/stack/sheet/metal(loc, 2)
 		qdel(src)
 		return
@@ -1253,103 +1227,3 @@ Code shamelessly copied from apc_frame
 	new /obj/machinery/firealarm(loc, ndir, 1)
 
 	qdel(src)
-
-
-/obj/machinery/partyalarm
-	name = "\improper PARTY BUTTON"
-	desc = "Cuban Pete is in the house!"
-	icon = 'icons/obj/monitors.dmi'
-	icon_state = "fire0"
-	var/detecting = 1.0
-	var/working = 1.0
-	var/time = 10.0
-	var/timing = 0.0
-	var/lockdownbyai = 0
-	anchored = 1.0
-	use_power = 1
-	idle_power_usage = 2
-	active_power_usage = 6
-
-/obj/machinery/partyalarm/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/partyalarm/attack_hand(mob/user)
-	if(..())
-		return
-
-	var/area/A = get_area(src)
-	if(!istype(A))
-		return
-	if(A.master)
-		A = A.master
-	var/d1
-	var/d2
-	if (ishuman(user) || issilicon(user) || isobserver(user))
-
-		if (A.party)
-			d1 = text("<A href='?src=\ref[];reset=1'>No Party :(</A>", src)
-		else
-			d1 = text("<A href='?src=\ref[];alarm=1'>PARTY!!!</A>", src)
-		if (timing)
-			d2 = text("<A href='?src=\ref[];time=0'>Stop Time Lock</A>", src)
-		else
-			d2 = text("<A href='?src=\ref[];time=1'>Initiate Time Lock</A>", src)
-		var/second = time % 60
-		var/minute = (time - second) / 60
-		var/dat = text("<HTML><HEAD></HEAD><BODY><TT><B>Party Button</B> []\n<HR>\nTimer System: []<BR>\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT></BODY></HTML>", d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src)
-		user << browse(dat, "window=partyalarm")
-		onclose(user, "partyalarm")
-	else
-		if (A.fire)
-			d1 = text("<A href='?src=\ref[];reset=1'>[]</A>", src, stars("No Party :("))
-		else
-			d1 = text("<A href='?src=\ref[];alarm=1'>[]</A>", src, stars("PARTY!!!"))
-		if (timing)
-			d2 = text("<A href='?src=\ref[];time=0'>[]</A>", src, stars("Stop Time Lock"))
-		else
-			d2 = text("<A href='?src=\ref[];time=1'>[]</A>", src, stars("Initiate Time Lock"))
-		var/second = time % 60
-		var/minute = (time - second) / 60
-		var/dat = text("<HTML><HEAD></HEAD><BODY><TT><B>[]</B> []\n<HR>\nTimer System: []<BR>\nTime Left: [][] <A href='?src=\ref[];tp=-30'>-</A> <A href='?src=\ref[];tp=-1'>-</A> <A href='?src=\ref[];tp=1'>+</A> <A href='?src=\ref[];tp=30'>+</A>\n</TT></BODY></HTML>", stars("Party Button"), d1, d2, (minute ? text("[]:", minute) : null), second, src, src, src, src)
-		user << browse(dat, "window=partyalarm")
-		onclose(user, "partyalarm")
-	return
-
-/obj/machinery/partyalarm/proc/reset()
-	if (!( working ))
-		return
-	var/area/A = get_area(src)
-	ASSERT(isarea(A))
-	if(A.master)
-		A = A.master
-	A.partyreset()
-	return
-
-/obj/machinery/partyalarm/proc/alarm()
-	if (!( working ))
-		return
-	var/area/A = get_area(src)
-	ASSERT(isarea(A))
-	if(A.master)
-		A = A.master
-	A.partyalert()
-	return
-
-/obj/machinery/partyalarm/Topic(href, href_list)
-	. = ..()
-	if(!.)
-		return
-	if (href_list["reset"])
-		reset()
-	else
-		if (href_list["alarm"])
-			alarm()
-		else
-			if (href_list["time"])
-				timing = text2num(href_list["time"])
-			else
-				if (href_list["tp"])
-					var/tp = text2num(href_list["tp"])
-					time += tp
-					time = min(max(round(time), 0), 120)
-	updateUsrDialog()

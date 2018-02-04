@@ -58,9 +58,12 @@
 	desc = "Some sort of purple substance in an egglike shape. It pulses and throbs from within and seems impenetrable."
 	health = INFINITY
 
-/obj/effect/alien/resin/New()
+/obj/effect/alien/resin/atom_init()
 	relativewall_neighbours()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/alien/resin/atom_init_late()
 	var/turf/T = get_turf(src)
 	T.thermal_conductivity = WALL_HEAT_TRANSFER_COEFFICIENT
 
@@ -123,17 +126,18 @@
 	..()
 	return
 
-/obj/effect/alien/resin/attack_hand()
-	usr.do_attack_animation(src)
-	if (HULK in usr.mutations)
-		to_chat(usr, "\blue You easily destroy the [name].")
+/obj/effect/alien/resin/attack_hand(mob/user)
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
+	if (HULK in user.mutations)
+		to_chat(user, "\blue You easily destroy the [name].")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] destroys the [name]!", 1)
+			O.show_message("\red [user] destroys the [name]!", 1)
 		health = 0
 	else
-		to_chat(usr, "\blue You claw at the [name].")
+		to_chat(user, "\blue You claw at the [name].")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] claws at the [name]!", 1)
+			O.show_message("\red [user] claws at the [name]!", 1)
 		health -= rand(5,10)
 	healthcheck()
 	return
@@ -141,8 +145,9 @@
 /obj/effect/alien/resin/attack_paw()
 	return attack_hand()
 
-/obj/effect/alien/resin/attack_alien()
-	usr.do_attack_animation(src)
+/obj/effect/alien/resin/attack_alien(mob/user)
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if (islarva(usr) || isfacehugger(usr))//Safety check for larva. /N
 		return
 	to_chat(usr, "\green You claw at the [name].")
@@ -159,6 +164,7 @@
 
 /obj/effect/alien/resin/attackby(obj/item/weapon/W, mob/user)
 	var/aforce = W.force
+	user.SetNextMove(CLICK_CD_MELEE)
 	health = max(0, health - aforce)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	healthcheck()
@@ -199,23 +205,26 @@
 	var/node_range = NODERANGE
 	light_color = "#24C1FF"
 
-/obj/structure/alien/weeds/node/New()
-	..(src.loc, src)
+/obj/structure/alien/weeds/node/atom_init(mapload)
+	. = ..(mapload, src)
+
+/obj/structure/alien/weeds/node/atom_init_late()
 	for (var/obj/structure/alien/weeds/W in loc)
 		if (W != src)
 			qdel(W)
 	set_light(2)
+	..()
 
-/obj/structure/alien/weeds/New(pos, node)
+/obj/structure/alien/weeds/atom_init(mapload, node)
 	..()
 	if(istype(loc, /turf/space))
-		qdel(src)
-		return
-
+		return INITIALIZE_HINT_QDEL
 	linked_node = node
 	if(icon_state == "weeds")
 		icon_state = pick("weeds", "weeds1", "weeds2")
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/structure/alien/weeds/atom_init_late()
 	if(!weedImageCache)
 		weedImageCache = list()
 		weedImageCache["[WEED_NORTH_EDGING]"] = image('icons/mob/xenomorph.dmi', "weeds_side_n", layer=2.11, pixel_y = -32)
@@ -294,6 +303,7 @@
 		visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
 
 	var/damage = W.force / 4.0
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -354,10 +364,12 @@
 	var/ticks = 0
 	var/target_strength = 0
 
-/obj/effect/alien/acid/New(loc, target)
-	..(loc)
+/obj/effect/alien/acid/atom_init(mapload, target)
+	..()
 	src.target = target
+	return INITIALIZE_HINT_LATELOAD
 
+/obj/effect/alien/acid/atom_init_late()
 	if(isturf(target)) // Turf take twice as long to take down.
 		target_strength = 8
 	else if(istype(target, /obj/machinery/atmospherics/components/unary/vent_pump))
@@ -423,42 +435,41 @@
 	var/status = GROWING //can be GROWING, GROWN or BURST; all mutually exclusive
 	var/used = 0
 
-	New()
-		..()
-		spawn(rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
-			Grow()
+/obj/effect/alien/egg/atom_init()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
 
-	attack_paw(user)
-		if(isalien(user))
-			switch(status)
-				if(GROWING)
-					to_chat(user, "\red The child is not developed yet.")
-					return
-				if(BURST)
-					to_chat(user, "You clear the hatched egg.")
-					playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-					qdel(src)
-					return
-		else
-			return attack_hand(user)
+/obj/effect/alien/egg/attack_paw(mob/user)
+	if(isalien(user))
+		switch(status)
+			if(GROWING)
+				to_chat(user, "\red The child is not developed yet.")
+				return
+			if(BURST)
+				to_chat(user, "You clear the hatched egg.")
+				user.SetNextMove(CLICK_CD_MELEE)
+				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+				qdel(src)
+				return
+	else
+		return attack_hand(user)
 
-	attack_hand(user)
-		to_chat(user, "It feels slimy.")
-		return
+/obj/effect/alien/egg/attack_hand(mob/user)
+	to_chat(user, "It feels slimy.")
+	user.SetNextMove(CLICK_CD_MELEE)
 
-	proc/Grow()
-		icon_state = "egg"
-		status = GROWN
-		new /obj/item/clothing/mask/facehugger(src)
-		return
+/obj/effect/alien/egg/proc/Grow()
+	icon_state = "egg"
+	status = GROWN
+	new /obj/item/clothing/mask/facehugger(src)
 
-	proc/Burst()
-		if(status == GROWN || status == GROWING)
-			icon_state = "egg_hatched"
-			flick("egg_opening", src)
-			status = BURSTING
-			spawn(15)
-				status = BURST
+/obj/effect/alien/egg/proc/Burst()
+	if(status == GROWN || status == GROWING)
+		icon_state = "egg_hatched"
+		flick("egg_opening", src)
+		status = BURSTING
+		spawn(15)
+			status = BURST
 
 /obj/effect/alien/egg/attack_ghost(mob/living/user)
 	if(!(src in view()))
@@ -497,6 +508,7 @@
 	else
 		src.visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")
 	var/damage = W.force / 4.0
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W

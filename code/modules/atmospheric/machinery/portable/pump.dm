@@ -4,6 +4,7 @@
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "psiphon:0"
 	density = TRUE
+	interact_offline = TRUE
 
 	volume = 1000
 
@@ -20,8 +21,8 @@
 /obj/machinery/portable_atmospherics/powered/pump/filled
 	start_pressure = 90 * ONE_ATMOSPHERE
 
-/obj/machinery/portable_atmospherics/powered/pump/New()
-	..()
+/obj/machinery/portable_atmospherics/powered/pump/atom_init()
+	. = ..()
 
 	cell = new/obj/item/weapon/stock_parts/cell/apc(src)
 
@@ -105,18 +106,6 @@
 			update_icon()
 
 	updateDialog()
-
-/obj/machinery/portable_atmospherics/powered/pump/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/portable_atmospherics/powered/pump/attack_ghost(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/portable_atmospherics/powered/pump/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/portable_atmospherics/powered/pump/attack_hand(mob/user)
-	ui_interact(user)
 
 /obj/machinery/portable_atmospherics/powered/pump/ui_interact(mob/user, ui_key = "rcon", datum/nanoui/ui)
 	var/list/data[0]
