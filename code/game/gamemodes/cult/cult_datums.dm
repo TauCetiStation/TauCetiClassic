@@ -1,3 +1,5 @@
+#define BRAINSWAP_TIME 50
+
 var/list/cult_runes = list()
 
 /datum/cult
@@ -993,35 +995,46 @@ var/list/cult_runes = list()
 	word2 = "blood"
 	word3 = "other"
 	only_rune = TRUE
+	var/brainswapping = FALSE
 
 /datum/cult/brainswap/action(mob/living/carbon/user)
-	if(!istype(user))
-		to_chat(user, "Your mind isn't compatible with their.")
-		return fizzle(user)
+	if(brainswapping)
+		to_chat(usr, "<span class='warning'>Someone is already conducting a ritual here</span>")
+		return
 	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	var/bdam = rand(2, 10)
-	for(var/obj/effect/rune/R in cult_runes)
-		if(!istype(R.power, type) || R.power == src)
+	for(var/mob/living/target in holder.loc)
+		if(target == user)
+			to_chat(user, "<span class='warning'>You cant swap minds with yourself.</span>")
 			continue
-		for(var/mob/living/carbon/D in R.loc)
-			if(!(D.type in compatible_mobs))
-				to_chat(user, "Their mind isn't compatible with yours.")
-				continue
-			if(!D.mind)
-				to_chat(user, "No Mind here.")
-				continue
-			to_chat(D, "<span class='danger'>You feel weakened.</span>")
-			D.adjustBrainLoss(bdam)
-			user.adjustBrainLoss(bdam)
-			user.say ("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni n�tim ve rmar aldaron!")
-			to_chat(user, "<span class='danger'>Your mind flows into other body. You feel a lack of intelligence.</span>")
-			var/mob/dead/observer/ghost = D.ghostize(0)
-			user.mind.transfer_to(D)
-			ghost.mind.transfer_to(user)
-			user.Paralyse(7)
-			D.Paralyse(7)
-			ticker.mode.update_all_cult_icons()
+		if(!(target.type in compatible_mobs))
+			to_chat(user, "<span class='warning'>Their mind isn't compatible with yours.")
+			continue
+		if(target.stat == DEAD)
+			to_chat(user, "<span class='warning'>Swapping your mind with a dead body is a bad idea, isn't it?</span>")
+			continue
+		if(!target.mind || !target.key)
+			to_chat(user, "<span class='warning'>He is catatonic, even our magic cant affect him.")
+			continue
+		brainswapping = TRUE
+		to_chat(user, "<span class='warning'>You feel your mind floating away...</span>")
+		to_chat(target, "<span class='warning'>You feel your mind floating away...</span>")
+		var/atom/user_loc = user.loc
+		var/atom/target_loc = target.loc
+		sleep(BRAINSWAP_TIME)
+		if(user.loc != user_loc || target.loc != target_loc)
 			return
+		to_chat(user, "<span class='warning'>You feel weakend.</span>")
+		target.adjustBrainLoss(bdam)
+		user.adjustBrainLoss(bdam)
+		user.say ("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni n?tim ve rmar aldaron!")
+		to_chat(user, "<span class='danger'>Your mind flows into other body. You feel a lack of intelligence.</span>")
+		var/mob/dead/observer/ghost = target.ghostize(FALSE)
+		user.mind.transfer_to(target)
+		ghost.mind.transfer_to(user)
+		user.key = ghost.key
+		brainswapping = FALSE
+		return
 
 /datum/cult/armor
 	word1 = "hell"
@@ -1045,3 +1058,5 @@ var/list/cult_runes = list()
 	user.put_in_hands(new /obj/item/weapon/melee/cultblade(user))
 	playsound(holder, 'sound/magic/cult_equip.ogg', 100, 2)
 	qdel(holder)
+
+#undef BRAINSWAP_TIME
