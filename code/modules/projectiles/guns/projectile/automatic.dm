@@ -472,6 +472,7 @@
 
 /obj/item/weapon/gun/projectile/automatic/a74
 	name = "A74 assault rifle"
+	desc = "Stradi and Practican Maid Bai Spess soviets corporation, bazed he original design of 20 centuriyu fin about baars and vodka vile patrimonial it, saunds of balalaika place minvile, yuzes 7.62 caliber"
 	mag_type = /obj/item/ammo_box/magazine/a74mm
 	w_class = 3.0
 	icon_state = "a74"
