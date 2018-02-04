@@ -164,6 +164,10 @@
 	. = ..()
 	if(!.)
 		return
+	
+	if(locked)
+		to_chat(usr, "<span class='warning'>Console locked!</span>")
+		return
 
 	if(href_list["toggle_field"])
 		if(!suspension_field)
