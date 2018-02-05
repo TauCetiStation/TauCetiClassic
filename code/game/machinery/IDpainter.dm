@@ -80,6 +80,8 @@
 	set name = "Eject ID"
 	set category = "Object"
 	set src in oview(1)
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return
 
 	if(storedcard)
 		storedcard.loc = get_turf(src.loc)
