@@ -89,6 +89,8 @@
 	set name = "Eject PDA"
 	set category = "Object"
 	set src in oview(1)
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return
 
 	if(storedpda)
 		storedpda.loc = get_turf(src.loc)
