@@ -1001,40 +1001,45 @@ var/list/cult_runes = list()
 	if(brainswapping)
 		to_chat(usr, "<span class='warning'>Someone is already conducting a ritual here</span>")
 		return
-	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
 	var/bdam = rand(2, 10)
 	for(var/mob/living/target in holder.loc)
-		if(target == user)
-			to_chat(user, "<span class='warning'>You cant swap minds with yourself.</span>")
-			continue
-		if(!(target.type in compatible_mobs))
-			to_chat(user, "<span class='warning'>Their mind isn't compatible with yours.")
-			continue
-		if(target.stat == DEAD)
-			to_chat(user, "<span class='warning'>Swapping your mind with a dead body is a bad idea, isn't it?</span>")
-			continue
-		if(!target.mind || !target.key)
-			to_chat(user, "<span class='warning'>He is catatonic, even our magic cant affect him.")
-			continue
+		if(!do_checks(user, target))
+			return
 		brainswapping = TRUE
+		user.whisper("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni nótim ve rmar aldaron!")
 		to_chat(user, "<span class='warning'>You feel your mind floating away...</span>")
 		to_chat(target, "<span class='warning'>You feel your mind floating away...</span>")
-		var/atom/user_loc = user.loc
-		var/atom/target_loc = target.loc
-		sleep(BRAINSWAP_TIME)
-		if(user.loc != user_loc || target.loc != target_loc)
-			return
+		if(!do_after(user, BRAINSWAP_TIME, TRUE, target, FALSE, FALSE) && !do_checks(user, target))
+			continue
 		to_chat(user, "<span class='warning'>You feel weakend.</span>")
 		target.adjustBrainLoss(bdam)
 		user.adjustBrainLoss(bdam)
-		user.say ("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni n?tim ve rmar aldaron!")
+		user.say ("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni nótim ve rmar aldaron!")
 		to_chat(user, "<span class='danger'>Your mind flows into other body. You feel a lack of intelligence.</span>")
 		var/mob/dead/observer/ghost = target.ghostize(FALSE)
 		user.mind.transfer_to(target)
 		ghost.mind.transfer_to(user)
 		user.key = ghost.key
 		brainswapping = FALSE
+		ticker.mode.update_all_cult_icons()
 		return
+
+/datum/cult/brainswap/proc/do_checks(mob/user, mob/target)
+	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
+	if(target == user)
+		to_chat(user, "<span class='warning'>You cant swap minds with yourself.</span>")
+		return FALSE
+	else if(!(target.type in compatible_mobs))
+		to_chat(user, "<span class='warning'>Their mind isn't compatible with yours.")
+		return FALSE
+	else if(target.stat == DEAD)
+		to_chat(user, "<span class='warning'>Swapping your mind with a dead body is a bad idea, isn't it?</span>")
+		return FALSE
+	else if(!target.mind || !target.key)
+		to_chat(user, "<span class='warning'>He is catatonic, even our magic cant affect him.")
+		return FALSE
+	else
+		return TRUE
 
 /datum/cult/armor
 	word1 = "hell"
