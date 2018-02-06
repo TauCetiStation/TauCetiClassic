@@ -40,36 +40,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	valid_territory = 0
 
 /area/shuttle/arrival
+	icon_state = "shuttle"
 	name = "Arrival Shuttle"
-
-/area/shuttle/arrival/pre_game
-	name = "Tau Ceti Transfer Station 13"
-	icon_state = "shuttle2"
-
-/area/shuttle/arrival/transit
-	icon_state = "shuttle"
-	parallax_movedir = EAST
-
-/area/shuttle/arrival/station
-	name = "NSS Exodus"
-	icon_state = "shuttle"
 
 /area/shuttle/escape
 	name = "Emergency Shuttle"
 	music = "music/escape.ogg"
-
-/area/shuttle/escape/station
-	name = "Emergency Shuttle Station"
-	icon_state = "shuttle2"
-
-/area/shuttle/escape/centcom
-	name = "Emergency Shuttle Centcom"
-	icon_state = "shuttle"
-
-/area/shuttle/escape/transit // the area to pass through for 3 minute transit
-	name = "Emergency Shuttle Transit"
-	icon_state = "shuttle"
-	parallax_movedir = WEST
 
 /area/shuttle/escape_pod1
 	name = "Escape Pod One"
@@ -127,21 +103,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "shuttle"
 	parallax_movedir = WEST
 
-/area/shuttle/mining
-	name = "Mining Shuttle"
+/area/shuttle/mine_sci
+	icon_state = "shuttle"
+	name = "Mining-Science Shuttle"
 	music = "music/escape.ogg"
 
-/area/shuttle/mining/station
-	icon_state = "shuttle2"
-
-/area/shuttle/mining/outpost
-	icon_state = "shuttle"
-
-/area/shuttle/transport1/centcom
-	icon_state = "shuttle"
-	name = "Transport Shuttle Centcom"
-
-/area/shuttle/transport1/station
+/area/shuttle/transport1
 	icon_state = "shuttle"
 	name = "Transport Shuttle"
 
@@ -155,13 +122,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Alien Shuttle Mine"
 	requires_power = 1
 
-/area/shuttle/specops/centcom
+/area/shuttle/specops
 	name = "Special Ops Shuttle"
 	icon_state = "shuttlered"
-
-/area/shuttle/specops/station
-	name = "Special Ops Shuttle"
-	icon_state = "shuttlered2"
 
 /area/shuttle/syndicate_elite/mothership
 	name = "Syndicate Elite Shuttle"
@@ -171,20 +134,15 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Syndicate Elite Shuttle"
 	icon_state = "shuttlered2"
 
-/area/shuttle/administration/centcom
-	name = "Administration Shuttle Centcom"
+/area/shuttle/administration
+	name = "Administration Shuttle"
 	icon_state = "shuttlered"
 
-/area/shuttle/administration/station
-	name = "Administration Shuttle"
-	icon_state = "shuttlered2"
+/area/shuttle/officer
+	name = "Officer Shuttle"
+	icon_state = "shuttle2"
 
-/area/shuttle/research
-	name = "Research Shuttle"
-	music = "music/escape.ogg"
-	icon_state = "shuttle"
-
-/area/shuttle/vox/station
+/area/shuttle/vox
 	name = "Vox Skipjack"
 	icon_state = "yellow"
 	requires_power = 0
@@ -308,42 +266,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "yellow"
 	requires_power = 0
 
-/area/syndicate_station/start
-	name = "Syndicate Forward Operating Base"
+/area/syndicate_station/shuttle
+	name = "Syndicate Shuttle"
 	icon_state = "yellow"
-
-/area/syndicate_station/southwest
-	name = "south-west of SS13"
-	icon_state = "southwest"
-
-/area/syndicate_station/northwest
-	name = "north-west of SS13"
-	icon_state = "northwest"
-
-/area/syndicate_station/northeast
-	name = "north-east of SS13"
-	icon_state = "northeast"
-
-/area/syndicate_station/southeast
-	name = "south-east of SS13"
-	icon_state = "southeast"
-
-/area/syndicate_station/north
-	name = "north of SS13"
-	icon_state = "north"
-
-/area/syndicate_station/south
-	name = "south of SS13"
-	icon_state = "south"
-
-/area/syndicate_station/mining
-	name = "north east of the mining asteroid"
-	icon_state = "north"
-
-/area/syndicate_station/transit
-	name = "hyperspace"
-	icon_state = "shuttle"
-	parallax_movedir = NORTH
 
 /area/abductor_ship
 	name = "Abductor Ship"
@@ -353,37 +278,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/wizard_station
 	name = "Wizard's Den"
 	icon_state = "yellow"
-	requires_power = 0
-
-/area/vox_station/transit
-	name = "hyperspace"
-	icon_state = "shuttle"
-	requires_power = 0
-	parallax_movedir = NORTH
-
-/area/vox_station/southwest_solars
-	name = "Aft port solars"
-	icon_state = "southwest"
-	requires_power = 0
-
-/area/vox_station/northwest_solars
-	name = "Fore port solars"
-	icon_state = "northwest"
-	requires_power = 0
-
-/area/vox_station/northeast_solars
-	name = "Fore starboard solars"
-	icon_state = "northeast"
-	requires_power = 0
-
-/area/vox_station/southeast_solars
-	name = "Aft starboard solars"
-	icon_state = "southeast"
-	requires_power = 0
-
-/area/vox_station/mining
-	name = "Nearby mining asteroid"
-	icon_state = "north"
 	requires_power = 0
 
 
@@ -1307,28 +1201,23 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 // CENTCOM
 var/list/centcom_areas = list (
 	/area/centcom,
-	/area/shuttle/escape/centcom,
+	/area/shuttle/escape,
 	/area/shuttle/escape_pod1/centcom,
 	/area/shuttle/escape_pod2/centcom,
 	/area/shuttle/escape_pod3/centcom,
 	/area/shuttle/escape_pod5/centcom,
-	/area/shuttle/transport1/centcom,
-	/area/shuttle/administration/centcom,
-	/area/shuttle/specops/centcom,
+	/area/shuttle/transport1,
+	/area/shuttle/administration,
+	/area/shuttle/specops,
 )
 
 //SPACE STATION 13
 var/list/the_station_areas = list (
-	/area/shuttle/arrival,
-	/area/shuttle/escape/station,
 	/area/shuttle/escape_pod1/station,
 	/area/shuttle/escape_pod2/station,
 	/area/shuttle/escape_pod3/station,
 	/area/shuttle/escape_pod5/station,
-	/area/shuttle/mining/station,
-	/area/shuttle/transport1/station,
-	/area/shuttle/administration/station,
-	/area/shuttle/specops/station,
+	/area/shuttle/mine_sci,
 	/area/atmos,
 	/area/maintenance,
 	/area/hallway,

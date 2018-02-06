@@ -187,10 +187,13 @@
 	name = "Circuit board (Stock exchange computer)"
 	build_path = /obj/machinery/computer/stockexchange
 	origin_tech = "programming=3"
-/*/obj/item/weapon/circuitboard/research_shuttle
-	name = "Circuit board (Research Shuttle)"
-	build_path = /obj/machinery/computer/research_shuttle
-	origin_tech = "programming=2"*/
+/obj/item/weapon/circuitboard/computer/mine_sci_shuttle
+	name = "Circuit board (Mine-Sci Shuttle)"
+	build_path = /obj/machinery/computer/shuttle_control/multi/mine_sci
+	origin_tech = "programming=2"
+/obj/item/weapon/circuitboard/computer/syndicate_shuttle
+	name = "Syndicate Shuttle (Computer Board)"
+	build_path = /obj/machinery/computer/shuttle_control/multi/antag/syndicate
 /obj/item/weapon/circuitboard/operating
 	name = "Circuit board (Operating Computer)"
 	build_path = /obj/machinery/computer/operating
@@ -210,21 +213,6 @@
 /obj/item/weapon/circuitboard/splicer
 	name = "Circuit board (Disease Splicer)"
 	build_path = /obj/machinery/computer/diseasesplicer
-
-/*/obj/item/weapon/circuitboard/mining_shuttle
-	name = "Circuit board (Mining Shuttle)"
-	build_path = /obj/machinery/computer/mining_shuttle
-	origin_tech = "programming=2"*/
-
-/obj/item/weapon/circuitboard/mine_sci_shuttle
-	name = "Circuit board (Mining Shuttle)"
-	build_path = /obj/machinery/computer/mine_sci_shuttle
-	origin_tech = "programming=2"
-
-/obj/item/weapon/circuitboard/mine_sci_shuttle/flight_comp
-	name = "Circuit board (Mining Shuttle flight computer)"
-	build_path = /obj/machinery/computer/mine_sci_shuttle/flight_comp
-	origin_tech = "programming=2"
 
 /obj/item/weapon/circuitboard/HolodeckControl // Not going to let people get this, but it's just here for future
 	name = "Circuit board (Holodeck Control)"

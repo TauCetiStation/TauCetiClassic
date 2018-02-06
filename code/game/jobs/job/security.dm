@@ -10,7 +10,7 @@
 	idtype = /obj/item/weapon/card/id/secGold
 	req_admin_notify = 1
 	access = list(
-		access_security, access_sec_doors, access_brig, access_armory, access_court,
+		access_security, access_sec_doors, access_brig, access_armory, access_court, access_eva,
 		access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers,
 		access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
 		access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective
@@ -63,7 +63,7 @@
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
-	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
+	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels, access_eva)
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
 
@@ -107,7 +107,7 @@
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
-	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_court)
+	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_court, access_eva)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 
@@ -151,7 +151,7 @@
 	supervisors = "the head of security"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
-	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
+	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels, access_eva)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
 

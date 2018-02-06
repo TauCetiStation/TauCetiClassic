@@ -1,8 +1,36 @@
+//Default airlock controller
+/obj/machinery/embedded_controller/radio/airlock
+	// Setup parameters only
+	var/tag_exterior_door
+	var/tag_interior_door
+	var/tag_airpump
+	var/tag_chamber_sensor
+	var/tag_exterior_sensor
+	var/tag_interior_sensor
+	var/tag_airlock_mech_sensor
+	var/tag_shuttle_mech_sensor
+	var/tag_secure = 0
+	var/list/dummy_terminals = list()
+	var/cycle_to_external_air = 0
+	program = /datum/computer/file/embedded_program/airlock
+
+/obj/machinery/embedded_controller/radio/airlock/atom_init()
+	. = ..()
+	program = new program(src)
+
+/*
+/obj/machinery/embedded_controller/radio/airlock/Destroy()
+	for(var/obj/machinery/dummy_airlock_controller/dummy in dummy_terminals)
+		dummy.master_controller = null
+	dummy_terminals.Cut()
+	return ..()
+*/
+
 //Advanced airlock controller for when you want a more versatile airlock controller - useful for turning simple access control rooms into airlocks
-/obj/machinery/embedded_controller/radio/advanced_airlock_controller
+/obj/machinery/embedded_controller/radio/airlock/advanced_airlock_controller
 	name = "Advanced Airlock Controller"
 
-/obj/machinery/embedded_controller/radio/advanced_airlock_controller/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
+/obj/machinery/embedded_controller/radio/airlock/advanced_airlock_controller/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	var/data[0]
 
 	data = list(
@@ -17,7 +45,7 @@
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 
 	if (!ui)
-		ui = new(user, src, ui_key, "advanced_airlock_console.tmpl", name, 470, 290)
+		ui = new(user, src, ui_key, "advanced_airlock_console.tmpl", name, 520, 290)
 
 		ui.set_initial_data(data)
 
@@ -25,7 +53,7 @@
 
 		ui.set_auto_update(1)
 
-/obj/machinery/embedded_controller/radio/advanced_airlock_controller/Topic(href, href_list)
+/obj/machinery/embedded_controller/radio/airlock/advanced_airlock_controller/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -54,12 +82,12 @@
 
 
 //Airlock controller for airlock control - most airlocks on the station use this
-/obj/machinery/embedded_controller/radio/airlock_controller
+/obj/machinery/embedded_controller/radio/airlock/airlock_controller
 	name = "Airlock Controller"
 	tag_secure = 1
 	layer = 3.3	//Above windows
 
-/obj/machinery/embedded_controller/radio/airlock_controller/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
+/obj/machinery/embedded_controller/radio/airlock/airlock_controller/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	var/data[0]
 
 	data = list(
@@ -72,7 +100,7 @@
 	ui = nanomanager.try_update_ui(user, src, ui_key, ui, data)
 
 	if (!ui)
-		ui = new(user, src, ui_key, "simple_airlock_console.tmpl", name, 470, 290)
+		ui = new(user, src, ui_key, "simple_airlock_console.tmpl", name, 520, 290)
 
 		ui.set_initial_data(data)
 
@@ -80,7 +108,7 @@
 
 		ui.set_auto_update(1)
 
-/obj/machinery/embedded_controller/radio/airlock_controller/Topic(href, href_list)
+/obj/machinery/embedded_controller/radio/airlock/airlock_controller/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -105,15 +133,16 @@
 
 
 //Access controller for door control - used in virology and the like
-/obj/machinery/embedded_controller/radio/access_controller
+/obj/machinery/embedded_controller/radio/airlock/access_controller
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_control_standby"
 
 	name = "Access Controller"
 	tag_secure = 1
+	req_access_txt = "0" //Not an airlock
 
 
-/obj/machinery/embedded_controller/radio/access_controller/update_icon()
+/obj/machinery/embedded_controller/radio/airlock/access_controller/update_icon()
 	if(on && program)
 		if(program.memory["processing"])
 			icon_state = "access_control_process"
@@ -122,7 +151,7 @@
 	else
 		icon_state = "access_control_off"
 
-/obj/machinery/embedded_controller/radio/access_controller/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
+/obj/machinery/embedded_controller/radio/airlock/access_controller/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	var/data[0]
 
 	data = list(
@@ -142,7 +171,7 @@
 
 		ui.set_auto_update(1)
 
-/obj/machinery/embedded_controller/radio/access_controller/Topic(href, href_list)
+/obj/machinery/embedded_controller/radio/airlock/access_controller/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return

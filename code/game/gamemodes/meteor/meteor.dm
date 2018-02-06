@@ -42,7 +42,7 @@
 			var/turf/location = get_turf(player.loc)
 			if(!location)	continue
 			switch(location.loc.type)
-				if( /area/shuttle/escape/centcom )
+				if( /area/shuttle/escape )
 					text += "<BR><b><font size=2>[player.real_name] escaped on the emergency shuttle</font></b>"
 				if( /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom )
 					text += "<BR><font size=2>[player.real_name] escaped in a life pod.</font>"

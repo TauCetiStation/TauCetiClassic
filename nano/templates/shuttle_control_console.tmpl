@@ -53,6 +53,22 @@
 		</div>
 	</div>
 {{/if}}
+<div class="item" style="padding-top: 10px">
+	<div class="item">
+		<div class="itemLabel">
+			Ready to next move:
+		</div>
+		<div class="itemContent">
+			{{if data.ready_to_next_jump}}
+				<span class="good">NOW</span>
+			{{else data.next_jump_possible_in > 0}}
+				<span style="font-weight: bold;color: #336699">IN {{:data.next_jump_possible_in}} SECOND(S)</span>
+			{{else}}
+				<span class="bad">NOT NOW</span>
+			{{/if}}
+		</div>
+	</div>
+</div>
 
 <h3>Shuttle Control</h3>
 <div class="item" style="padding-top: 10px">

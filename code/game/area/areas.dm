@@ -381,7 +381,7 @@ var/list/ghostteleportlocs = list()
 			sound = pick('sound/ambience/ambimine.ogg', 'sound/ambience/song_game.ogg','sound/ambience/mars.ogg')
 		else if(istype(src, /area/tcommsat))
 			sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
-		else if (istype(src, /area/syndicate_station) || istype(src, /area/syndicate_station/start) || istype(src,/area/syndicate_station/transit))
+		else if (istype(src, /area/syndicate_station) || istype(src, /area/syndicate_station/shuttle))
 			sound = pick('sound/ambience/omega.ogg')
 		else
 			sound = pick('sound/ambience/ambigen1.ogg','sound/ambience/ambigen3.ogg','sound/ambience/ambigen4.ogg','sound/ambience/ambigen5.ogg','sound/ambience/ambigen6.ogg','sound/ambience/ambigen7.ogg','sound/ambience/ambigen8.ogg','sound/ambience/ambigen9.ogg','sound/ambience/ambigen10.ogg','sound/ambience/ambigen11.ogg','sound/ambience/ambigen12.ogg','sound/ambience/ambigen14.ogg')

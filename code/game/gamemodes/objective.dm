@@ -316,7 +316,7 @@ datum/objective/hijack
 			return 0
 		if(issilicon(owner.current))
 			return 0
-		var/area/shuttle = locate(/area/shuttle/escape/centcom)
+		var/area/shuttle = locate(/area/shuttle/escape)
 		var/list/protected_mobs = list(/mob/living/silicon/ai, /mob/living/silicon/pai)
 		for(var/mob/living/player in player_list)
 			if(player.type in protected_mobs)	continue
@@ -338,7 +338,7 @@ datum/objective/block
 			return 0
 		if(!owner.current)
 			return 0
-		var/area/shuttle = locate(/area/shuttle/escape/centcom)
+		var/area/shuttle = locate(/area/shuttle/escape)
 		var/protected_mobs[] = list(/mob/living/silicon/ai, /mob/living/silicon/pai, /mob/living/silicon/robot)
 		for(var/mob/living/player in player_list)
 			if(player.type in protected_mobs)	continue
@@ -363,7 +363,7 @@ datum/objective/silence
 					var/turf/T = get_turf(player)
 					if(!T)	continue
 					switch(T.loc.type)
-						if(/area/shuttle/escape/centcom, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom)
+						if(/area/shuttle/escape, /area/shuttle/escape_pod1/centcom, /area/shuttle/escape_pod2/centcom, /area/shuttle/escape_pod3/centcom, /area/shuttle/escape_pod5/centcom)
 							return 0
 		return 1
 
@@ -393,7 +393,7 @@ datum/objective/escape
 			return 0
 
 		var/area/check_area = location.loc
-		if(istype(check_area, /area/shuttle/escape/centcom))
+		if(istype(check_area, /area/shuttle/escape))
 			return 1
 		if(istype(check_area, /area/shuttle/escape_pod1/centcom))
 			return 1
@@ -609,7 +609,7 @@ datum/objective/steal
 				for(var/mob/living/silicon/ai/ai in living_mob_list)
 					if(istype(ai.loc, /turf))
 						var/area/check_area = get_area(ai)
-						if(istype(check_area, /area/shuttle/escape/centcom))
+						if(istype(check_area, /area/shuttle/escape))
 							return 1
 						if(istype(check_area, /area/shuttle/escape_pod1/centcom))
 							return 1
@@ -809,7 +809,7 @@ datum/objective/meme_attune
 			return FALSE // They're dead. Fail.
 		//if (!target.current.restrained())
 		//	return 0 // They're loose. Close but no cigar.
-		if(get_area(target) == locate(/area/shuttle/vox/station))
+		if(get_area(target) == locate(/area/shuttle/vox))
 			return TRUE
 	else
 		return FALSE
@@ -855,7 +855,7 @@ datum/objective/meme_attune
 /datum/objective/heist/loot/check_completion()
 	var/total_amount = 0
 
-	for(var/obj/O in locate(/area/shuttle/vox/station))
+	for(var/obj/O in locate(/area/shuttle/vox))
 		if(istype(O,target)) total_amount++
 		for(var/obj/I in O.contents)
 			if(istype(I, target))
@@ -906,7 +906,7 @@ datum/objective/meme_attune
 /datum/objective/heist/salvage/check_completion()
 	var/total_amount = 0
 
-	for(var/obj/item/O in locate(/area/shuttle/vox/station))
+	for(var/obj/item/O in locate(/area/shuttle/vox))
 
 		var/obj/item/stack/sheet/S
 		if(istype(O, /obj/item/stack/sheet))
@@ -963,7 +963,7 @@ var/heist_rob_total = 0
 	explanation_text = "Ransack the station for any valuables."
 /datum/objective/heist/robbery/check_completion()
 	heist_rob_total = 0
-	for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
+	for(var/atom/movable/AM in locate(/area/shuttle/vox))
 		heist_recursive_price_check(AM)
 	if(heist_rob_total >= target_amount) return 1
 	return 0*/

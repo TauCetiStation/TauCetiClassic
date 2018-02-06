@@ -649,7 +649,6 @@ var/global/BSACooldown = 0
 			<A href='?src=\ref[src];secretsfun=moveadminshuttle'>Move Administration Shuttle</A><BR>
 			<A href='?src=\ref[src];secretsfun=moveferry'>Move Ferry</A><BR>
 			<A href='?src=\ref[src];secretsfun=movealienship'>Move Alien Dinghy</A><BR>
-			<A href='?src=\ref[src];secretsfun=moveminingshuttle'>Move Mining Shuttle</A><BR>
 			<A href='?src=\ref[src];secretsfun=blackout'>Break all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=whiteout'>Fix all lights</A><BR>
 			<A href='?src=\ref[src];secretsfun=friendai'>Best Friend AI</A><BR>
@@ -1193,85 +1192,21 @@ var/global/BSACooldown = 0
 
 /**********************Administration Shuttle**************************/
 
-var/admin_shuttle_location = 0 // 0 = centcom 13, 1 = station
-
 /proc/move_admin_shuttle()
-	var/area/fromArea
-	var/area/toArea
-	var/static/moving = FALSE
-
-	if(moving)
+	var/datum/shuttle/autodock/admin_shuttle = SSshuttle.shuttles["Administration shuttle"]
+	if(!istype(admin_shuttle))
 		return
-	moving = TRUE
 
-	if (admin_shuttle_location == 1)
-		fromArea = locate(/area/shuttle/administration/station)
-		toArea = locate(/area/shuttle/administration/centcom)
-
-		SSshuttle.undock_act(fromArea)
-		SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_admin")
-	else
-		fromArea = locate(/area/shuttle/administration/centcom)
-		toArea = locate(/area/shuttle/administration/station)
-
-		SSshuttle.undock_act(fromArea)
-		SSshuttle.undock_act(/area/centcom/specops, "centcomm_admin")
-
-	fromArea.move_contents_to(toArea)
-
-	if (admin_shuttle_location)
-		admin_shuttle_location = 0
-
-		SSshuttle.dock_act(toArea)
-		SSshuttle.dock_act(/area/centcom/specops, "centcomm_admin")
-	else
-		admin_shuttle_location = 1
-
-		SSshuttle.dock_act(toArea)
-		SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_admin")
-
-	moving = FALSE
+	admin_shuttle.launch(usr)
 
 /**********************Centcom Ferry**************************/
 
-var/ferry_location = 0 // 0 = centcom , 1 = station
-
 /proc/move_ferry()
-	var/area/fromArea
-	var/area/toArea
-	var/static/moving = FALSE
-
-	if(moving)
+	var/datum/shuttle/autodock/ferry_shuttle = SSshuttle.shuttles["Transport shuttle"]
+	if(!istype(ferry_shuttle))
 		return
-	moving = TRUE
 
-	if (ferry_location == 1)
-		fromArea = locate(/area/shuttle/transport1/station)
-		toArea = locate(/area/shuttle/transport1/centcom)
-
-		SSshuttle.undock_act(fromArea)
-		SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_ferry")
-	else
-		fromArea = locate(/area/shuttle/transport1/centcom)
-		toArea = locate(/area/shuttle/transport1/station)
-
-		SSshuttle.undock_act(fromArea)
-		SSshuttle.undock_act(/area/centcom/evac, "centcomm_ferry")
-
-	fromArea.move_contents_to(toArea)
-
-	if (ferry_location)
-		ferry_location = 0
-
-		SSshuttle.dock_act(toArea)
-		SSshuttle.dock_act(/area/centcom/evac, "centcomm_ferry")
-	else
-		ferry_location = 1
-
-		SSshuttle.dock_act(toArea)
-		SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_ferry")
-
-	moving = FALSE
+	ferry_shuttle.launch(usr)
 
 /**********************Alien ship**************************/
 

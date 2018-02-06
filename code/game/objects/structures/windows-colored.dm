@@ -57,13 +57,7 @@ var/global/wcDw
 	var/wsIgnoreList = list(
 		/area/shuttle,
 		/area/shuttle/arrival,
-		/area/shuttle/arrival/pre_game,
-		/area/shuttle/arrival/transit,
-		/area/shuttle/arrival/station,
 		/area/shuttle/escape,
-		/area/shuttle/escape/station,
-		/area/shuttle/escape/centcom,
-		/area/shuttle/escape/transit,
 		/area/shuttle/escape_pod1,
 		/area/shuttle/escape_pod1/station,
 		/area/shuttle/escape_pod1/centcom,
@@ -80,21 +74,15 @@ var/global/wcDw
 		/area/shuttle/escape_pod5/station,
 		/area/shuttle/escape_pod5/centcom,
 		/area/shuttle/escape_pod5/transit,
-		/area/shuttle/mining,
-		/area/shuttle/mining/station,
-		/area/shuttle/mining/outpost,
-		/area/shuttle/transport1/centcom,
-		/area/shuttle/transport1/station,
+		/area/shuttle/mine_sci,
+		/area/shuttle/transport1,
 		/area/shuttle/alien/base,
 		/area/shuttle/alien/mine,
-		/area/shuttle/specops/centcom,
-		/area/shuttle/specops/station,
+		/area/shuttle/specops,
 		/area/shuttle/syndicate_elite/mothership,
 		/area/shuttle/syndicate_elite/station,
-		/area/shuttle/administration/centcom,
-		/area/shuttle/administration/station,
-		/area/shuttle/research,
-		/area/shuttle/vox/station
+		/area/shuttle/administration,
+		/area/shuttle/vox
 		)
 
 	for(var/A in wsIgnoreList)

@@ -179,6 +179,7 @@
 #define TELE_CHECK_TURFS 1
 #define TELE_CHECK_ALL 2
 
+
 //get_turf(): Returns the turf that contains the atom.
 //Example: A fork inside a box inside a locker will return the turf the locker is standing on.
 #define get_turf(A) (get_step(A, 0))

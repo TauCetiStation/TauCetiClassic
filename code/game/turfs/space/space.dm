@@ -28,6 +28,9 @@
 /turf/space/Destroy()
 	return QDEL_HINT_LETMELIVE
 
+/turf/space/is_solid_structure()
+	return FALSE
+
 /turf/space/proc/update_starlight()
 	for(var/turf/simulated/T in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		set_light(2,2)
