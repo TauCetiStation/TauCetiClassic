@@ -995,31 +995,35 @@ var/list/cult_runes = list()
 	word2 = "blood"
 	word3 = "other"
 	only_rune = TRUE
+	var/brainswapping = FALSE
 
 /datum/cult/brainswap/action(mob/living/carbon/user)
-	if(is_busy())
-		to_chat(user, "<span class='warning'>Someone is already conducting a ritual here</span>")
-		return
 	var/bdam = rand(2, 10)
-	for(var/mob/living/target in holder.loc)
-		if(!do_checks(user, target))
-			return
-		user.whisper("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni nótim ve rmar aldaron!")
-		to_chat(user, "<span class='warning'>You feel your mind floating away...</span>")
-		to_chat(target, "<span class='warning'>You feel your mind floating away...</span>")
-		if(!do_after(user, BRAINSWAP_TIME, TRUE, target, FALSE, FALSE) || !do_checks(user, target || user.is_busy() || in_use_action)
+	for(var/obj/effect/rune/R in cult_runes)
+		if(!istype(R.power, type) || R.power == src)
 			continue
-		to_chat(user, "<span class='warning'>You feel weakend.</span>")
-		target.adjustBrainLoss(bdam)
-		user.adjustBrainLoss(bdam)
-		user.say ("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni nótim ve rmar aldaron!")
-		to_chat(user, "<span class='danger'>Your mind flows into other body. You feel a lack of intelligence.</span>")
-		var/mob/dead/observer/ghost = target.ghostize(FALSE)
-		user.mind.transfer_to(target)
-		ghost.mind.transfer_to(user)
-		user.key = ghost.key
-		ticker.mode.update_all_cult_icons()
-		return
+		for(var/mob/living/target in holder.loc)
+			if(!do_checks(user, target))
+				return
+			user.whisper("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni nótim ve rmar aldaron!")
+			to_chat(user, "<span class='warning'>You feel your mind floating away...</span>")
+			to_chat(target, "<span class='warning'>You feel your mind floating away...</span>")
+			brainswapping = TRUE
+			if(!do_after(user, BRAINSWAP_TIME, FALSE, target, FALSE, FALSE) || !do_checks(user, target) || user.is_busy())
+				brainswapping = FALSE
+				continue
+			to_chat(user, "<span class='warning'>You feel weakend.</span>")
+			target.adjustBrainLoss(bdam)
+			user.adjustBrainLoss(bdam)
+			user.say ("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni nótim ve rmar aldaron!")
+			to_chat(user, "<span class='danger'>Your mind flows into other body. You feel a lack of intelligence.</span>")
+			var/mob/dead/observer/ghost = target.ghostize(FALSE)
+			user.mind.transfer_to(target)
+			ghost.mind.transfer_to(user)
+			user.key = ghost.key
+			ticker.mode.update_all_cult_icons()
+			brainswapping = FALSE
+			return
 
 /datum/cult/brainswap/proc/do_checks(mob/user, mob/target)
 	var/list/compatible_mobs = list(/mob/living/carbon/human, /mob/living/carbon/monkey)
@@ -1034,6 +1038,9 @@ var/list/cult_runes = list()
 		return FALSE
 	else if(!target.mind || !target.key)
 		to_chat(user, "<span class='warning'>He is catatonic, even our magic cant affect him.")
+		return FALSE
+	else if(brainswapping)
+		to_chat(user, "<span class='warning'>Someone is already conducting a ritual here.</span>")
 		return FALSE
 	else
 		return TRUE
