@@ -21,49 +21,40 @@
 
 	if (message)
 		log_emote("[name]/[key] : [message]")
-
  //Hearing gasp and such every five seconds is not good emotes were not global for a reason.
  // Maybe some people are okay with that.
-
-		for(var/mob/M in player_list)
-			if(!M.client)
-				continue //skip monkeys and leavers
-			if(isnewplayer(M))
-				continue
-			if(findtext(message," snores.")) //Because we have so many sleeping people.
-				break
-			if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src,null)))
-				M.show_message(message)
+		if(findtext(message," snores.") == 0)
+			for(var/mob/M in player_list)
+				if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src, null)))
+					M.show_message(message, show_to_parasites = FALSE)
 
 
 		// Type 1 (Visual) emotes are sent to anyone in view of the item
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
-
 				if(O.status_flags & PASSEMOTES)
-
-					for(var/obj/item/weapon/holder/H in O.contents)
-						H.show_message(message, m_type)
-
-					for(var/mob/living/M in O.contents)
-						M.show_message(message, m_type)
-
-				O.show_message(message, m_type)
+					for(var/thing in O.contents)
+						if(istype(thing, /obj/item/weapon/holder))
+							var/obj/item/weapon/holder/H = thing
+							H.show_message(message, m_type, show_to_parasites = FALSE)
+						else if(isliving(thing))
+							var/mob/living/L = thing
+							L.show_message(message, m_type, show_to_parasites = FALSE)
+				O.show_message(message, m_type, show_to_parasites = FALSE)
 
 		// Type 2 (Audible) emotes are sent to anyone in hear range
 		// of the *LOCATION* -- this is important for pAIs to be heard
 		else if (m_type & 2)
 			for (var/mob/O in hearers(get_turf(src), null))
-
 				if(O.status_flags & PASSEMOTES)
-
-					for(var/obj/item/weapon/holder/H in O.contents)
-						H.show_message(message, m_type)
-
-					for(var/mob/living/M in O.contents)
-						M.show_message(message, m_type)
-
-				O.show_message(message, m_type)
+					for(var/thing in O.contents)
+						if(istype(thing, /obj/item/weapon/holder))
+							var/obj/item/weapon/holder/H = thing
+							H.show_message(message, m_type, show_to_parasites = FALSE)
+						else if(isliving(thing))
+							var/mob/living/L = thing
+							L.show_message(message, m_type, show_to_parasites = FALSE)
+				O.show_message(message, m_type, show_to_parasites = FALSE)
 
 /mob/proc/emote_dead(message)
 

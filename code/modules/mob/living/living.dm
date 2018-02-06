@@ -1157,3 +1157,10 @@
 		for(var/mob/living/parasite/essence/essence in mind.changeling.essences)
 			if(essence.phantom.showed)
 				essence.phantom.loc = get_turf(get_step(essence.phantom, direct))
+
+/mob/living/carbon/proc/remove_passemotes_flag()
+	if(length(parasites) > 1)
+		return FALSE
+	if(locate(/obj/item/weapon/holder) in src)
+		return FALSE
+	status_flags &= ~PASSEMOTES

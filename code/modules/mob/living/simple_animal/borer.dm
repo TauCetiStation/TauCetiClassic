@@ -331,13 +331,8 @@ mob/living/simple_animal/borer/proc/detatch()
 		host_brain.name = "host brain"
 		host_brain.real_name = "host brain"
 
-	var/mob/living/H = host
+	host.remove_passemotes_flag()
 	host = null
-
-	for(var/A in H.contents)
-		if(ismob(A) || istype(A,/obj/item/weapon/holder))
-			return
-	H.status_flags &= ~PASSEMOTES
 
 /mob/living/simple_animal/borer/verb/infest()
 	set category = "Alien"

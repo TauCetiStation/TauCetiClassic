@@ -1309,6 +1309,8 @@
 #include "code\modules\mob\living\carbon\carbon.dm"
 #include "code\modules\mob\living\carbon\carbon_defines.dm"
 #include "code\modules\mob\living\carbon\give.dm"
+#include "code\modules\mob\living\carbon\login.dm"
+#include "code\modules\mob\living\carbon\logout.dm"
 #include "code\modules\mob\living\carbon\shock.dm"
 #include "code\modules\mob\living\carbon\species.dm"
 #include "code\modules\mob\living\carbon\update_icons.dm"

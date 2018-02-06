@@ -42,8 +42,7 @@ mob/living/parasite
 
 /mob/living/parasite/proc/exit_host()
 	host.parasites.Remove(src)
-	if(length(host.parasites) < 1)
-		host.status_flags &= ~PASSEMOTES
+	host.remove_passemotes_flag()
 	host = null
 	loc = null
 	return TRUE

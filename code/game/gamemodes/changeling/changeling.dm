@@ -283,7 +283,8 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/strained_muscles = 0
 	var/list/essences = list()
 	var/mob/living/parasite/essence/trusted_entity
-	var/is_controled_by_essence = FALSE
+	var/mob/living/parasite/essence/controled_by
+	var/delegating = FALSE
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()

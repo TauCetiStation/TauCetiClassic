@@ -74,7 +74,7 @@
 
 	mymob.client.screen = list(mymob.internals, mymob.healths, mymob.healthdoll, E.voice, E.phantom_s)
 	mymob.client.screen += mymob.client.void
-	if(E.is_controling_body)
+	if(E.is_changeling)
 		var/obj/screen/using = new /obj/screen/return_to_body()
 		using.icon = 'icons/mob/screen_gen.dmi'
 		using.icon_state = "sting_transform"
@@ -115,8 +115,4 @@
 	var/mob/living/parasite/essence/E = usr
 	if(!E.host)
 		return
-	E.is_controling_body = FALSE
-	E.changeling.is_controled_by_essence = FALSE
-	var/temp_key = E.key
-	E.key = E.host.key
-	E.host.key = temp_key
+	E.host.delegate_body_to_essence(E)

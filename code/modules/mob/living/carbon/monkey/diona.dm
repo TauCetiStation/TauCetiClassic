@@ -85,17 +85,13 @@
 	to_chat(src.loc, "You feel a pang of loss as [src] splits away from your biomass.")
 	to_chat(src, "You wiggle out of the depths of [src.loc]'s biomass and plop to the ground.")
 
-	var/mob/living/M = src.loc
-
 	src.loc = get_turf(src)
 	src.verbs -= /mob/living/carbon/monkey/diona/proc/split
 	src.verbs += /mob/living/carbon/monkey/diona/proc/merge
 
-	if(istype(M))
-		for(var/A in M.contents)
-			if(ismob(A) || istype(A,/obj/item/weapon/holder))
-				return
-	M.status_flags &= ~PASSEMOTES
+	var/mob/living/carbon/C = src.loc
+	if(istype(C))
+		C.remove_passemotes_flag()
 
 /mob/living/carbon/monkey/diona/verb/fertilize_plant()
 

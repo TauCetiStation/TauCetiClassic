@@ -34,10 +34,10 @@
 
 	usr.show_message(t, 1)
 
-/mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+/mob/proc/show_message(msg, type, alt, alt_type, show_to_parasites = TRUE)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
 	if(!client)
-		return
+		return FALSE
 
 	if(type)
 		if((type & 1) && ((sdisabilities & BLIND) || blinded || paralysis) )//Vision related
@@ -56,23 +56,15 @@
 					return FALSE
 	// Added voice muffling for Issue 41.
 	if(stat == UNCONSCIOUS || sleeping > 0)
-		to_chat(src, "<I>... You can almost hear someone talking ...</I>")
-		if(status_flags & PASSEMOTES)
-			for(var/mob/living/L in src)
-				to_chat(L, "<I>... Your host can almost hear someone talking ...</I>")
-	else
-		to_chat(src, msg)
-		if(status_flags & PASSEMOTES)
-			for(var/mob/living/L in src)
-				to_chat(L, msg)
+		msg = "<I>... You can almost hear someone talking ...</I>"
+	to_chat(src, msg)
 	return msg
 
-/mob/living/carbon/show_message(msg, type, alt, alt_type)
+/mob/living/carbon/show_message(msg, type, alt, alt_type, show_to_parasites = TRUE)
 	. = ..()
-	if(. && length(parasites))
+	if(. && show_to_parasites && length(parasites))
 		for(var/M in parasites)
 			to_chat(M, .)
-
 // Show a message to all mobs in sight of this one
 // This would be for visible actions by the src mob
 // message is the message output to anyone who can see e.g. "[src] does something!"

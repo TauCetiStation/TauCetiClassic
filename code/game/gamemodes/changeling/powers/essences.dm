@@ -3,7 +3,7 @@
 	var/flags_allowed = (ESSENCE_HIVEMIND | ESSENCE_PHANTOM | ESSENCE_POINT | ESSENCE_SPEAK_TO_HOST)
 	var/obj/effect/essence_phantom/phantom
 	var/self_voice = FALSE
-	var/is_controling_body = FALSE
+	var/is_changeling = FALSE
 	var/obj/screen/essence_voice/voice
 	var/obj/screen/essence_phantom/phantom_s
 
@@ -242,7 +242,7 @@
 
 /obj/effect/proc_holder/changeling/manage_essencies/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
-	if(changeling.is_controled_by_essence)
+	if(changeling.controled_by)
 		return
 	var/dat = ""
 	for(var/mob/living/parasite/essence/M in changeling.essences)
@@ -250,7 +250,7 @@
 		<a href ='?src=\ref[src];permissions=\ref[M]'>(See permissions)</a>\
 		 <a href ='?src=\ref[src];trusted=\ref[M]'>[changeling.trusted_entity == M ? "T" : "unt"]rusted</a>"
 		if(M.client)
-			dat += " <a href ='?src=\ref[src];share_body=\ref[M]>Delegate Control</a><BR>'>"
+			dat += " <a href ='?src=\ref[src];share_body=\ref[M]'>Delegate Control</a><BR>"
 		else
 			dat += "<BR><BR>"
 		if(M != choosen_essence)
@@ -296,17 +296,35 @@
 	popup.set_content(dat)
 	popup.open()
 
+/mob/living/carbon/proc/delegate_body_to_essence(mob/living/parasite/essence/E)
+	if(!mind || !mind.changeling)
+		return FALSE
+	var/datum/changeling/changeling = mind.changeling
+	if(changeling.delegating)
+		return FALSE
+	changeling.delegating = TRUE
+	if(changeling.controled_by)
+		changeling.controled_by.is_changeling = FALSE
+		var/mob/temp_mob = changeling.controled_by.ghostize(FALSE, FALSE)
+		changeling.controled_by.key = key
+		key = temp_mob.key
+		if(changeling.controled_by == E)
+			changeling.controled_by = null
+			changeling.delegating = FALSE
+			return
+	E.is_changeling = TRUE
+	var/mob/temp_mob = E.ghostize(FALSE, FALSE)
+	E.key = key
+	key = temp_mob.key
+	E.flags_allowed = ESSENCE_ALL
+	changeling.controled_by = E
+	changeling.delegating = FALSE
+
 /obj/effect/proc_holder/changeling/manage_essencies/Topic(href, href_list)
 	if(href_list["share_body"])
 		var/mob/living/parasite/essence/M = locate(href_list["share_body"])
-		if(!M.client)
-			sting_action(usr)
-			return
-		M.is_controling_body = TRUE
-		M.flags_allowed = ESSENCE_ALL
-		var/temp_key = usr.key
-		usr.key = M.key
-		M.key = temp_key
+		var/mob/living/carbon/C = usr
+		C.delegate_body_to_essence(M)
 	else if(href_list["trusted"])
 		var/T = locate(href_list["trusted"])
 		if(T == usr.mind.changeling.trusted_entity)
