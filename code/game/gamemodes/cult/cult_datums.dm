@@ -995,21 +995,19 @@ var/list/cult_runes = list()
 	word2 = "blood"
 	word3 = "other"
 	only_rune = TRUE
-	var/brainswapping = FALSE
 
 /datum/cult/brainswap/action(mob/living/carbon/user)
-	if(brainswapping)
-		to_chat(usr, "<span class='warning'>Someone is already conducting a ritual here</span>")
+	if(is_busy())
+		to_chat(user, "<span class='warning'>Someone is already conducting a ritual here</span>")
 		return
 	var/bdam = rand(2, 10)
 	for(var/mob/living/target in holder.loc)
 		if(!do_checks(user, target))
 			return
-		brainswapping = TRUE
 		user.whisper("Yu[pick("'","`")]Ai! Lauri lantar lassi srinen,ni nótim ve rmar aldaron!")
 		to_chat(user, "<span class='warning'>You feel your mind floating away...</span>")
 		to_chat(target, "<span class='warning'>You feel your mind floating away...</span>")
-		if(!do_after(user, BRAINSWAP_TIME, TRUE, target, FALSE, FALSE) && !do_checks(user, target))
+		if(!do_after(user, BRAINSWAP_TIME, TRUE, target, FALSE, FALSE) || !do_checks(user, target || user.is_busy() || in_use_action)
 			continue
 		to_chat(user, "<span class='warning'>You feel weakend.</span>")
 		target.adjustBrainLoss(bdam)
@@ -1020,7 +1018,6 @@ var/list/cult_runes = list()
 		user.mind.transfer_to(target)
 		ghost.mind.transfer_to(user)
 		user.key = ghost.key
-		brainswapping = FALSE
 		ticker.mode.update_all_cult_icons()
 		return
 
