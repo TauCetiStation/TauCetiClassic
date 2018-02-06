@@ -757,7 +757,7 @@
 
 	if(istype(src.loc,/obj/item/weapon/holder))
 		var/obj/item/weapon/holder/H = src.loc //Get our item holder.
-		var/mob/M = H.loc                      //Get our mob holder (if any).
+		var/mob/living/M = H.loc                      //Get our mob holder (if any).
 
 		if(istype(M))
 			M.drop_from_inventory(H)
@@ -766,14 +766,7 @@
 		else if(istype(H.loc,/obj/item))
 			to_chat(src, "<span class='notice'>You struggle free of [H.loc].</span>")
 			H.forceMove(get_turf(H))
-
-		if(istype(M))
-			for(var/A in M.contents)
-				if(ismob(A) || istype(A,/obj/item/weapon/holder))
-					return
-
-		if(ismob(M))
-			M.status_flags &= ~PASSEMOTES
+		M.remove_passemotes_flag()
 		return
 
 	//Resisting control by an alien mind.
@@ -1158,9 +1151,8 @@
 			if(essence.phantom.showed)
 				essence.phantom.loc = get_turf(get_step(essence.phantom, direct))
 
-/mob/living/carbon/proc/remove_passemotes_flag()
-	if(length(parasites) > 1)
-		return FALSE
+/mob/living/proc/remove_passemotes_flag()
+
 	if(locate(/obj/item/weapon/holder) in src)
 		return FALSE
 	status_flags &= ~PASSEMOTES

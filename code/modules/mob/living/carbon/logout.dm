@@ -11,4 +11,5 @@
 			for(var/mob/living/parasite/essence/E in mind.changeling.essences)
 				if(E.client)
 					pickable += E
-			delegate_body_to_essence(pick(pickable))
+			if(length(pickable) > 0)
+				delegate_body_to_essence(pick(pickable))

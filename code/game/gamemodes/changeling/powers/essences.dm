@@ -426,17 +426,3 @@
 	QDEL_NULL(overlay)
 	host = null
 	return ..()
-
-//////////////////////////////////////
-/obj/structure/test
-	var/type_test = FALSE
-
-/obj/structure/test/atom_init(mapload)
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/structure/test/process()
-	if(type_test)
-		visible_message("This is normal message", 1, "This is blind message")
-	else
-		playsound(src, 'sound/items/buttonclick.ogg', 100)

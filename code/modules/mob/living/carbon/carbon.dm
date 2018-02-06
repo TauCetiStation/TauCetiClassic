@@ -638,3 +638,8 @@
 
 /mob/living/carbon/proc/bloody_body(mob/living/source)
 	return
+
+/mob/living/carbon/remove_passemotes_flag()
+	if(length(parasites) > 1)
+		return FALSE
+	return ..()
