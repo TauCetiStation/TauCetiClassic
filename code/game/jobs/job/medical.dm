@@ -56,7 +56,7 @@
 	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels)
 	alt_titles = list("Surgeon","Emergency Physician","Nurse")
 	minimal_player_ingame_minutes = 960
-	restricted_species = list(DIONA, UNATHI, TAJARAN)
+	restricted_species = list(DIONA)
 
 /datum/job/doctor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
