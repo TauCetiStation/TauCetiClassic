@@ -17,6 +17,10 @@
 
 /obj/item/weapon/implant/Destroy()
 	implant_list -= src
+	if(part)
+		part.implants.Remove(src)
+		part = null
+	imp_in = null
 	return ..()
 
 /obj/item/weapon/implant/proc/trigger(emote, source)
@@ -64,11 +68,6 @@
 	desc = "Charred circuit in melted plastic case. Wonder what that used to be..."
 	icon_state = "implant_melted"
 	malfunction = MALFUNCTION_PERMANENT
-
-/obj/item/weapon/implant/Destroy()
-	if(part)
-		part.implants.Remove(src)
-	return ..()
 
 /obj/item/weapon/implant/tracking
 	name = "tracking implant"

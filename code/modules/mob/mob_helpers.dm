@@ -47,8 +47,11 @@
 /proc/hsl2rgb(h, s, l)
 	return
 
-/proc/ismindshielded(A) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
+/proc/ismindshielded(A, only_mindshield = FALSE) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
+
 	for(var/obj/item/weapon/implant/mindshield/L in A)
+		if(only_mindshield && L.type != /obj/item/weapon/implant/mindshield)
+			continue
 		if(L.implanted)
 			return TRUE
 	return FALSE

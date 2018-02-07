@@ -158,11 +158,16 @@
 	var/mob/living/carbon/human/H = current
 	if (istype(current, /mob/living/carbon/human) || istype(current, /mob/living/carbon/monkey))
 		/** Impanted**/
-		if(istype(current, /mob/living/carbon/human))
-			if(isloyal(H))
-				text = "Loyalty Implant:<a href='?src=\ref[src];implant=remove'>Remove</a>|<b>Implanted</b></br>"
+		if(ishuman(current))
+			if(ismindshielded(H, TRUE))
+				text += "Mind Shield Implant:<a href='?src=\ref[src];implant=m_remove'>Remove</a>|<b>Implanted</b></br>"
 			else
-				text = "Loyalty Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=add'>Implant him!</a></br>"
+				text += "Mind Shield Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=m_add'>Implant him!</a></br>"
+
+			if(isloyal(H))
+				text += "Loyalty Implant:<a href='?src=\ref[src];implant=remove'>Remove</a>|<b>Implanted</b></br>"
+			else
+				text += "Loyalty Implant:<b>No Implant</b>|<a href='?src=\ref[src];implant=add'>Implant him!</a></br>"
 		else
 			text = "Loyalty Implant: Don't implant that monkey!</br>"
 		sections["implant"] = text
@@ -190,8 +195,6 @@
 			text += " <a href='?src=\ref[src];revolution=reequip'>Reequip</a> (gives traitor uplink)."
 			if (objectives.len==0)
 				text += "<br>Objectives are empty! <a href='?src=\ref[src];revolution=autoobjectives'>Set to kill all heads</a>."
-		else if(ismindshielded(current))
-			text += "head|<b>LOYAL</b>|employee|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|rev"
 		else if (src in ticker.mode.revolutionaries)
 			text += "head|loyal|<a href='?src=\ref[src];revolution=clear'>employee</a>|<a href='?src=\ref[src];revolution=headrev'>headrev</a>|<b>REV</b>"
 		else
@@ -333,6 +336,8 @@
 			text += "<b>SHADOWLING</b>|thrall|<a href='?src=\ref[src];shadowling=clear'>human</a>"
 		else if(src in ticker.mode.thralls)
 			text += "shadowling|<b>THRALL</b>|<a href='?src=\ref[src];shadowling=clear'>human</a>"
+		else if(ismindshielded(current))
+			text +="Implanted</b>"
 		else
 			text += "<a href='?src=\ref[src];shadowling=shadowling'>shadowling</a>|<a href='?src=\ref[src];shadowling=thrall'>thrall</a>|<b>HUMAN</b>"
 
@@ -634,46 +639,59 @@
 
 	else if(href_list["implant"])
 		var/mob/living/carbon/human/H = current
-
+		var/is_mind_shield = findtext(href_list["implant"], "m_")
+		if(is_mind_shield)
+			href_list["implant"] = copytext(href_list["implant"], 3)
 		H.hud_updateflag |= (1 << IMPLOYAL_HUD)   // updates that players HUD images so secHUD's pick up they are implanted or not.
-
-		switch(href_list["implant"])
-			if("remove")
+		if(href_list["implant"] == "remove")
+			if(is_mind_shield)
+				for(var/obj/item/weapon/implant/mindshield/I in H.contents)
+					if(I.implanted)
+						qdel(I)
+			else
 				for(var/obj/item/weapon/implant/mindshield/loyalty/I in H.contents)
-					for(var/obj/item/organ/external/BP in H.bodyparts)
-						if(I in BP.implants)
-							I.Destroy()
-							break
-				to_chat(H, "\blue <Font size =3><B>Your loyalty implant has been deactivated.</B></FONT>")
-			if("add")
-				var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
+					if(I.implanted)
+						qdel(I)
+			to_chat(H, "\blue <Font size =3><B>Your [is_mind_shield ? "mind shield" : "loyalty"] implant has been deactivated.</B></FONT>")
+		if(href_list["implant"] == "add")
+			var/obj/item/weapon/implant/mindshield/L
+			if(is_mind_shield)
+				L = new(H)
+				L.inject(H)
+			else
+				L = new /obj/item/weapon/implant/mindshield/loyalty(H)
 				L.inject(H)
 				START_PROCESSING(SSobj, L)
-				to_chat(H, "\red <Font size =3><B>You somehow have become the recepient of a loyalty transplant, and it just activated!</B></FONT>")
-				if(src in ticker.mode.revolutionaries)
-					special_role = null
-					ticker.mode.revolutionaries -= src
-					ticker.mode.update_rev_icons_removed(src)
-					to_chat(src, "\red <Font size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a revolutionary.  Get back to work!</B></Font>")
-				if(src in ticker.mode.head_revolutionaries)
-					special_role = null
-					ticker.mode.head_revolutionaries -=src
-					ticker.mode.update_rev_icons_removed(src)
-					to_chat(src, "\red <Font size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a revolutionary.  Get back to work!</B></Font>")
-				if(src in ticker.mode.cult)
-					ticker.mode.cult -= src
-					ticker.mode.update_cult_icons_removed(src)
-					special_role = null
-					var/datum/game_mode/cult/cult = ticker.mode
-					if (istype(cult))
-						cult.memoize_cult_objectives(src)
-					to_chat(current, "\red <FONT size = 3><B>The nanobots in the loyalty implant remove all thoughts about being in a cult.  Have a productive day!</B></FONT>")
-					memory = ""
-				if(src in ticker.mode.traitors)
-					ticker.mode.traitors -= src
-					special_role = null
-					to_chat(current, "\red <FONT size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a traitor to Nanotrasen.  Have a nice day!</B></FONT>")
-					log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
+
+			to_chat(H, "\red <Font size =3><B>You somehow have become the recepient of a [is_mind_shield ? "mind shield" : "loyalty"] transplant,\
+			 and it just activated!</B></FONT>")
+			if(src in ticker.mode.revolutionaries)
+				special_role = null
+				ticker.mode.revolutionaries -= src
+				ticker.mode.update_rev_icons_removed(src)
+				to_chat(src, "\red <Font size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove \
+				 all thoughts about being a revolutionary.  Get back to work!</B></Font>")
+			if(!is_mind_shield && (src in ticker.mode.head_revolutionaries))
+				special_role = null
+				ticker.mode.head_revolutionaries -=src
+				ticker.mode.update_rev_icons_removed(src)
+				to_chat(src, "\red <Font size = 3><B>The nanobots in the loyalty implant remove \
+				 all thoughts about being a revolutionary.  Get back to work!</B></Font>")
+			if(src in ticker.mode.cult)
+				ticker.mode.cult -= src
+				ticker.mode.update_cult_icons_removed(src)
+				special_role = null
+				var/datum/game_mode/cult/cult = ticker.mode
+				if (istype(cult))
+					cult.memoize_cult_objectives(src)
+				to_chat(current, "\red <FONT size = 3><B>The nanobots in the [is_mind_shield ? "mind shield" : "loyalty"] implant remove all\
+				 thoughts about being in a cult.  Have a productive day!</B></FONT>")
+				memory = ""
+			if(!is_mind_shield && (src in ticker.mode.traitors))
+				ticker.mode.traitors -= src
+				special_role = null
+				to_chat(current, "\red <FONT size = 3><B>The nanobots in the loyalty implant remove all thoughts about being a traitor to Nanotrasen.  Have a nice day!</B></FONT>")
+				log_admin("[key_name_admin(usr)] has de-traitor'ed [current].")
 
 	else if (href_list["revolution"])
 		current.hud_updateflag |= (1 << SPECIALROLE_HUD)
