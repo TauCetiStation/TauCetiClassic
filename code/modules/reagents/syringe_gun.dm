@@ -14,6 +14,7 @@
 	var/list/syringes = new/list()
 	var/max_syringes = 1
 	m_amt = 2000
+	can_suicide_with = FALSE
 
 /obj/item/weapon/gun/syringe/examine(mob/user)
 	..()
@@ -37,7 +38,8 @@
 
 
 /obj/item/weapon/gun/syringe/afterattack(obj/target, mob/user , flag)
-	if(!isturf(target.loc) || target == user) return
+	if(target == user)
+		return
 	..()
 
 /obj/item/weapon/gun/syringe/can_fire()
