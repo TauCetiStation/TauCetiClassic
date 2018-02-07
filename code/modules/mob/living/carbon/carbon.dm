@@ -47,9 +47,12 @@
 					src.gib()
 
 /mob/living/carbon/attack_animal(mob/living/simple_animal/M)
+	..()
 	if(istype(M,/mob/living/simple_animal/headcrab))
 		var/mob/living/simple_animal/headcrab/crab = M
 		crab.Infect(src)
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/gib()
 	for(var/mob/M in src)
@@ -76,7 +79,8 @@
 		..()
 
 /mob/living/carbon/attack_hand(mob/M)
-	if(!istype(M, /mob/living/carbon)) return
+	if(!iscarbon(M))
+		return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
@@ -85,34 +89,25 @@
 			return
 
 	for(var/datum/disease/D in viruses)
-
 		if(D.spread_by_touch())
-
 			M.contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	for(var/datum/disease/D in M.viruses)
-
 		if(D.spread_by_touch())
-
 			contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	return
 
 
 /mob/living/carbon/attack_paw(mob/M)
-	if(!istype(M, /mob/living/carbon)) return
+	if(!iscarbon(M))
+		return
 
 	for(var/datum/disease/D in viruses)
-
 		if(D.spread_by_touch())
 			M.contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	for(var/datum/disease/D in M.viruses)
-
 		if(D.spread_by_touch())
 			contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	return
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	if(status_flags & GODMODE)	return 0	//godmode

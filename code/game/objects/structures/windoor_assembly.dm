@@ -60,6 +60,7 @@ obj/structure/windoor_assembly/Destroy()
 
 /obj/structure/windoor_assembly/attackby(obj/item/W, mob/user)
 	//I really should have spread this out across more states but thin little windoors are hard to sprite.
+	if(user.is_busy()) return
 	switch(state)
 		if("01")
 			if(istype(W, /obj/item/weapon/weldingtool) && !anchored )

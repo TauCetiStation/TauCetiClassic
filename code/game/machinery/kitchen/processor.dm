@@ -176,6 +176,7 @@
 	if(contents.len == 0)
 		to_chat(user, "\red The processor is empty.")
 		return 1
+	user.SetNextMove(CLICK_CD_INTERACT)
 	processing = TRUE
 	user.visible_message("[user] turns on [src].", \
 		"<span class='notice'>You turn on [src].</span>", \

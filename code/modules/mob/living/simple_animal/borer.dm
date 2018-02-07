@@ -372,7 +372,7 @@ mob/living/simple_animal/borer/proc/detatch()
 		if(H.check_head_coverage())
 			to_chat(src, "You cannot get through that host's protective gear.")
 			return
-
+	if(is_busy()) return
 	to_chat(M, "Something slimy begins probing at the opening of your ear canal...")
 	to_chat(src, "You slither up [M] and begin probing at their ear canal...")
 

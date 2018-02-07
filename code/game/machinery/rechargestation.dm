@@ -123,6 +123,7 @@
 	. = ..()
 	if(.)
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(!construct_op)
 		toggle_open()
 	else

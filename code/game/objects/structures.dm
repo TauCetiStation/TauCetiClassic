@@ -57,6 +57,9 @@
 		to_chat(user, "<span class='danger'>You can't climb there, the way is blocked.</span>")
 		return 0
 
+	if(user.is_busy())
+		return 0
+
 	var/obj/occupied = turf_is_crowded()
 	if(occupied)
 		to_chat(user, "<span class='danger'>There's \a [occupied] in the way.</span>")
@@ -78,7 +81,6 @@
 /obj/structure/proc/do_climb(mob/living/user)
 	if (!can_climb(user))
 		return
-
 	usr.visible_message("<span class='warning'>[user] starts climbing onto \the [src]!</span>")
 	climbers |= user
 

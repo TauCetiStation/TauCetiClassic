@@ -432,6 +432,7 @@
 /obj/machinery/teleport/station/proc/toggle(mob/user)
 	if(!teleporter_hub || !teleporter_console)
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if (teleporter_console.target)
 		src.engaged = !src.engaged
 		use_power(5000)

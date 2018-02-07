@@ -280,6 +280,7 @@
 
 
 /obj/machinery/mining/drill/attackby(obj/item/O, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(wires_shocked)
 		shock(user)
 	if(active && wires_protector_disable)
@@ -311,10 +312,14 @@
 		return
 	..()
 
+/obj/machinery/mining/drill/is_interactable()
+	return TRUE
+
 /obj/machinery/mining/drill/attack_hand(mob/user)
 	if(..())
-		return 1
+		return
 	if(issilicon(user))
+		to_chat(user, "This drill didn`t support your iterface")
 		return
 	if(wires_shocked && !isobserver(user))
 		shock(user)

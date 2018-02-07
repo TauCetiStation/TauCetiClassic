@@ -106,6 +106,7 @@
 
 	if(istype(I, /obj/item/weapon/screwdriver))
 		open = !open
+		user.SetNextMove(CLICK_CD_RAPID)
 
 		user.visible_message("[user] [open ? "opens" : "closes"] the beacon's cover.", "You [open ? "open" : "close"] the beacon's cover.")
 

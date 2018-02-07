@@ -8,6 +8,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#d7b088"
+	idtype = /obj/item/weapon/card/id/cargoGold
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
 	minimal_player_ingame_minutes = 1200
 
@@ -42,6 +43,7 @@
 	spawn_positions = 2
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
+	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 	minimal_player_ingame_minutes = 960
 
@@ -73,6 +75,7 @@
 	spawn_positions = 3
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
+	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
 	minimal_player_ingame_minutes = 960
 
@@ -109,6 +112,7 @@
 	spawn_positions = 2
 	supervisors = "the quartermaster and the head of personnel"
 	selection_color = "#d7b088"
+	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mailsorting, access_recycler)
 	minimal_player_ingame_minutes = 960
 
@@ -140,6 +144,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_bar)
 	minimal_player_ingame_minutes = 480
 
@@ -185,6 +190,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_kitchen)
 	alt_titles = list("Cook")
 	minimal_player_ingame_minutes = 480
@@ -215,6 +221,7 @@
 	spawn_positions = 2
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 	alt_titles = list("Hydroponicist")
 	minimal_player_ingame_minutes = 480
@@ -250,6 +257,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#bbe291"
+	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_janitor, access_maint_tunnels)
 	minimal_player_ingame_minutes = 480
 
@@ -280,6 +288,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_library)
 	alt_titles = list("Journalist")
 	minimal_player_ingame_minutes = 480
@@ -312,6 +321,7 @@
 	spawn_positions = 2
 	supervisors = "the captain"
 	selection_color = "#dddddd"
+	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_lawyer, access_court, access_sec_doors)
 	minimal_player_ingame_minutes = 1560
 
@@ -354,6 +364,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	idtype = /obj/item/weapon/card/id/clown
 	access = list(access_clown, access_theatre)
 	minimal_player_ingame_minutes = 480
 
@@ -388,6 +399,7 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
+	idtype = /obj/item/weapon/card/id/mime
 	access = list(access_mime, access_theatre)
 
 /datum/job/mime/equip(mob/living/carbon/human/H, visualsOnly = FALSE)

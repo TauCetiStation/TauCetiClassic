@@ -44,8 +44,10 @@
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
 
-/obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver.
-	return 1
+/obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
+	if(M.mind.special_role == "Wizard")
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
 	to_chat(user, "<span class='warning'>*click*</span>")

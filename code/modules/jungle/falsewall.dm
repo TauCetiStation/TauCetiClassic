@@ -35,7 +35,7 @@
 /obj/structure/temple_falsewall/attack_hand(mob/user)
 	if(opening)
 		return
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(density)
 		opening = 1
 		if(is_metal)

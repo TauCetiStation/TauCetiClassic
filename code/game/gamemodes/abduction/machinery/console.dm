@@ -42,10 +42,11 @@
 
 /obj/machinery/abductor/console/interact(mob/user)
 	if(!IsAbductor(user) && !isAI(user) && !isobserver(user))
+		if(user.is_busy())
+			return
 		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
 		if(do_after(user, 100, target = src))
 			TeleporterSend()
-		return
 	else
 		..()
 

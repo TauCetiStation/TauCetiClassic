@@ -189,7 +189,8 @@
 	return 1 //copypasta from carp code
 
 /mob/living/simple_animal/special/scp173/attackby(obj/item/O, mob/user)
-	to_chat(usr, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
+	user.SetNextMove(CLICK_CD_MELEE)
+	to_chat(user, "<span class='warning'>This weapon is ineffective, it does no damage.</span>")
 	for(var/mob/M in viewers(src, null))
 		if ((M.client && !( M.blinded )))
 			M.show_message("<span class='warning'>[user] gently taps [src] with [O].</span>")

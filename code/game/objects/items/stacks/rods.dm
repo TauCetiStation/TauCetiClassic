@@ -62,6 +62,7 @@
 		if(get_amount() < 2)
 			to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
 			return
+		if(user.is_busy()) return
 		to_chat(usr, "<span class='notice'>Assembling grille...</span>")
 		if (!do_after(usr, 10, target = usr))
 			return

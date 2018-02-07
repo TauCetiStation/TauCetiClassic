@@ -68,7 +68,7 @@
 				if(C.get_amount() < 5)
 					to_chat(user, "<span class='warning'>You need five length of cable to wire the frame!</span>")
 					return
-
+				if(user.is_busy()) return
 				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You start to add cables to the frame.</span>")
 				if(do_after(user, 20/P.toolspeed, target = src))
@@ -81,6 +81,7 @@
 						icon_state = "box_1"
 
 			else if(istype(P, /obj/item/weapon/screwdriver) && !anchored)
+				if(user.is_busy()) return
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				user.visible_message("<span class='warning'>[user] disassembles the frame.</span>", \
 									"<span class='notice'>You start to disassemble the frame...</span>", "You hear banging and clanking.")
@@ -92,6 +93,7 @@
 						qdel(src)
 
 			else if(istype(P, /obj/item/weapon/wrench))
+				if(user.is_busy()) return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				if(do_after(user, 40/P.toolspeed, target = src))
@@ -100,6 +102,7 @@
 						anchored = !anchored
 		if(2)
 			if(istype(P, /obj/item/weapon/wrench))
+				if(user.is_busy()) return
 				to_chat(user, "<span class='notice'>You start [anchored ? "un" : ""]securing [name]...</span>")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				if(do_after(user, 40/P.toolspeed, target = src))

@@ -168,7 +168,7 @@ obj/item/weapon/gun/energy/laser/retro
 /obj/item/weapon/gun/energy/laser/bluetag/special_check(mob/living/carbon/human/M)
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
-			return 1
+			return ..()
 		to_chat(M, "\red You need to be wearing your laser tag vest!")
 	return 0
 
@@ -203,7 +203,7 @@ obj/item/weapon/gun/energy/laser/retro
 /obj/item/weapon/gun/energy/laser/redtag/special_check(mob/living/carbon/human/M)
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
-			return 1
+			return ..()
 		to_chat(M, "\red You need to be wearing your laser tag vest!")
 	return 0
 

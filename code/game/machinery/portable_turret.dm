@@ -64,7 +64,6 @@
 
 	var/datum/effect/effect/system/spark_spread/spark_system	//the spark system, used for generating... sparks?
 
-	var/wrenching = FALSE
 	var/last_target			//last target fired at, prevents turrets from erratically firing at all valid targets in range
 
 /obj/machinery/porta_turret/station_default
@@ -324,6 +323,7 @@ var/list/turret_icons
 		if(istype(I, /obj/item/weapon/crowbar))
 			//If the turret is destroyed, you can remove it with a crowbar to
 			//try and salvage its components
+			if(user.is_busy()) return
 			to_chat(user, "<span class='notice'>You begin prying the metal coverings off.</span>")
 			if(do_after(user, 20, src))
 				if(prob(70))
@@ -345,7 +345,7 @@ var/list/turret_icons
 		if(enabled || raised)
 			to_chat(user, "<span class='warning'>You cannot unsecure an active turret!</span>")
 			return
-		if(wrenching)
+		if(user.is_busy(src, FALSE))
 			to_chat(user, "<span class='warning'>Someone is already [anchored ? "un" : ""]securing the turret!</span>")
 			return
 		if(!anchored && isinspace())
@@ -357,7 +357,6 @@ var/list/turret_icons
 				"<span class='notice'>You begin [anchored ? "un" : ""]securing the turret.</span>" \
 			)
 
-		wrenching = TRUE
 		if(do_after(user, 50, src))
 			//This code handles moving the turret around. After all, it's a portable turret!
 			if(!anchored)
@@ -370,7 +369,6 @@ var/list/turret_icons
 				anchored = FALSE
 				to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
 				update_icon()
-		wrenching = FALSE
 
 	else if(istype(I, /obj/item/weapon/card/id) || istype(I, /obj/item/device/pda))
 		//Behavior lock/unlock mangement
@@ -395,6 +393,7 @@ var/list/turret_icons
 	else
 		//if the turret was attacked with the intention of harming it:
 		take_damage(I.force * 0.5)
+		user.SetNextMove(CLICK_CD_MELEE)
 		if((I.force * 0.5) > 1) //if the force of impact dealt at least 1 damage, the turret gets pissed off
 			if(!attacked && !emagged)
 				attacked = TRUE
@@ -672,7 +671,7 @@ var/list/turret_icons
 
 
 /obj/machinery/porta_turret/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
+	..()
 	if(M.melee_damage_upper == 0)
 		return
 	if(!(stat & BROKEN))
@@ -687,6 +686,7 @@ var/list/turret_icons
 
 /obj/machinery/porta_turret/attack_alien(mob/living/carbon/alien/humanoid/M)
 	M.do_attack_animation(src)
+	M.SetNextMove(CLICK_CD_MELEE)
 	if(!(stat & BROKEN))
 		playsound(src.loc, 'sound/weapons/slash.ogg', 25, 1, -1)
 		visible_message("<span class='danger'>[M] has slashed at [src]!</span>")
@@ -795,7 +795,7 @@ var/list/turret_icons
 				if(WT.get_fuel() < 5) //uses up 5 fuel.
 					to_chat(user, "<span class='notice'>You need more fuel to complete this task.</span>")
 					return
-
+				if(user.is_busy(src)) return
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				if(do_after(user, 20, src))
 					if(!src || !WT.remove_fuel(5, user)) return
@@ -869,7 +869,7 @@ var/list/turret_icons
 				if(!WT.isOn()) return
 				if(WT.get_fuel() < 5)
 					to_chat(user, "<span class='notice'>You need more fuel to complete this task.</span>")
-
+				if(user.is_busy(src)) return
 				playsound(loc, pick('sound/items/Welder.ogg', 'sound/items/Welder2.ogg'), 50, 1)
 				if(do_after(user, 30, src))
 					if(!src || !WT.remove_fuel(5, user))

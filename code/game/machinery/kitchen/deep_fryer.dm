@@ -39,20 +39,21 @@
 				to_chat(user, "You fucked up, man.")
 
 /obj/machinery/deepfryer/attackby(obj/item/I, mob/user)
-	if(on)
-		user << "<span class='notice'>[src] is still active!</span>"
+	if(!anchored)
+		if(istype(I, /obj/item/weapon/wrench))
+			default_unfasten_wrench(user, I)
 		return
-
+	if(on)
+		to_chat(user, "<span class='notice'>[src] is still active!</span>")
+		return
 	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/deepfryholder))
 		to_chat(user, "<span class='notice'>You cannot doublefry.</span>")
 		return
-	else if(istype(I, /obj/item/weapon/grab))
-		to_chat(user, "<span class='notice'>You cannot fry him.</span>")
-		return
-	else if(istype(I, /obj/item/weapon/stool))
-		to_chat(user, "<span class='notice'>[I] is too big for this.</span>")
-		return
-	else if (ishuman(user))
+	else if(istype(I, /obj/item/weapon/wrench))
+		if(alert(user,"How do you want to use [I]?","You think...","Unfasten","Cook") == "Unfasten")
+			default_unfasten_wrench(user, I)
+			return
+	if (ishuman(user) && !(I.flags & DROPDEL))
 		to_chat(user, "<span class='notice'>You put [I] into [src].</span>")
 		on = TRUE
 		user.drop_item()
@@ -97,8 +98,6 @@
 				S.desc = "A heavily fried...something.  Who can tell anymore?"
 		S.filling_color = S.color
 		qdel(frying)
-
-
 		icon_state = "fryer_off"
 		user.put_in_hands(S)
 		frying = null

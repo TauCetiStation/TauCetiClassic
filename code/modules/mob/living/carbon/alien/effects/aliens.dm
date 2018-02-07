@@ -126,17 +126,18 @@
 	..()
 	return
 
-/obj/effect/alien/resin/attack_hand()
-	usr.do_attack_animation(src)
-	if (HULK in usr.mutations)
-		to_chat(usr, "\blue You easily destroy the [name].")
+/obj/effect/alien/resin/attack_hand(mob/user)
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
+	if (HULK in user.mutations)
+		to_chat(user, "\blue You easily destroy the [name].")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] destroys the [name]!", 1)
+			O.show_message("\red [user] destroys the [name]!", 1)
 		health = 0
 	else
-		to_chat(usr, "\blue You claw at the [name].")
+		to_chat(user, "\blue You claw at the [name].")
 		for(var/mob/O in oviewers(src))
-			O.show_message("\red [usr] claws at the [name]!", 1)
+			O.show_message("\red [user] claws at the [name]!", 1)
 		health -= rand(5,10)
 	healthcheck()
 	return
@@ -144,8 +145,9 @@
 /obj/effect/alien/resin/attack_paw()
 	return attack_hand()
 
-/obj/effect/alien/resin/attack_alien()
-	usr.do_attack_animation(src)
+/obj/effect/alien/resin/attack_alien(mob/user)
+	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if (islarva(usr) || isfacehugger(usr))//Safety check for larva. /N
 		return
 	to_chat(usr, "\green You claw at the [name].")
@@ -162,6 +164,7 @@
 
 /obj/effect/alien/resin/attackby(obj/item/weapon/W, mob/user)
 	var/aforce = W.force
+	user.SetNextMove(CLICK_CD_MELEE)
 	health = max(0, health - aforce)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	healthcheck()
@@ -210,6 +213,7 @@
 		if (W != src)
 			qdel(W)
 	set_light(2)
+	..()
 
 /obj/structure/alien/weeds/atom_init(mapload, node)
 	..()
@@ -299,6 +303,7 @@
 		visible_message("\red <B>\The [src] have been attacked with \the [W][(user ? " by [user]." : ".")]")
 
 	var/damage = W.force / 4.0
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
@@ -434,7 +439,7 @@
 	. = ..()
 	addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
 
-/obj/effect/alien/egg/attack_paw(user)
+/obj/effect/alien/egg/attack_paw(mob/user)
 	if(isalien(user))
 		switch(status)
 			if(GROWING)
@@ -442,14 +447,16 @@
 				return
 			if(BURST)
 				to_chat(user, "You clear the hatched egg.")
+				user.SetNextMove(CLICK_CD_MELEE)
 				playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 				qdel(src)
 				return
 	else
 		return attack_hand(user)
 
-/obj/effect/alien/egg/attack_hand(user)
+/obj/effect/alien/egg/attack_hand(mob/user)
 	to_chat(user, "It feels slimy.")
+	user.SetNextMove(CLICK_CD_MELEE)
 
 /obj/effect/alien/egg/proc/Grow()
 	icon_state = "egg"
@@ -501,6 +508,7 @@
 	else
 		src.visible_message("\red <B>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]")
 	var/damage = W.force / 4.0
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W

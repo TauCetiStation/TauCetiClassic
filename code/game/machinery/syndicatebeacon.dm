@@ -162,7 +162,7 @@
 	. = ..()
 	if(.)
 		return 1
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(stat & SCREWED)
 		return active ? Deactivate(user) : Activate(user)
 	else

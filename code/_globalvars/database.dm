@@ -12,10 +12,6 @@ var/sqlfdbkdb = "test"
 var/sqlfdbklogin = "root"
 var/sqlfdbkpass = ""
 
-var/sqllogging = 0 // Should we log deaths, population stats, etc?
-
-
-
 // Forum MySQL configuration (for use with forum account/key authentication)
 // These are all default values that will load should the forumdbconfig.txt
 // file fail to read for whatever reason.

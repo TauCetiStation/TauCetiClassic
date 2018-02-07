@@ -439,19 +439,15 @@
 	return
 
 /obj/item/toy/waterflower/afterattack(atom/A, mob/user)
-
-	if (istype(A, /obj/item/weapon/storage/backpack ))
+	if(locate(/obj/structure/table, loc))
 		return
 
-	else if (locate (/obj/structure/table, src.loc))
-		return
-
-	else if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
+	else if(istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
 		A.reagents.trans_to(src, 10)
 		to_chat(user, "\blue You refill your flower!")
 		return
 
-	else if (src.reagents.total_volume < 1)
+	else if(src.reagents.total_volume < 1)
 		src.empty = 1
 		to_chat(user, "\blue Your flower has run dry!")
 		return
@@ -980,6 +976,7 @@ Owl & Griffin toys
 
 /obj/item/toy/cards/attack_self(mob/user)
 	cards = shuffle(cards)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
 	user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>You shuffle the deck.</span>")
 

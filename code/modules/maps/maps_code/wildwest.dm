@@ -24,7 +24,7 @@
 	. = ..()
 	if(.)
 		return
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(chargesa <= 0)
 		user << "The Wish Granter lies silent."
 		return 1

@@ -57,7 +57,7 @@
 							)
 
 /datum/design/fusion
-	name = "fusion core control console"
+	name = "Fusion Core Control Console"
 	id = "fusion_core_control"
 	build_path = /obj/item/weapon/circuitboard/fusion_core_control
 	req_tech = list("powerstorage" = 3, "engineering" = 3, "materials" = 3)
@@ -65,26 +65,41 @@
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 
 /datum/design/fusion/fuel_compressor
-	name = "fusion fuel compressor"
+	name = "Fusion Fuel Compressor"
 	id = "fusion_fuel_compressor"
 	build_path = /obj/item/weapon/circuitboard/fusion_fuel_compressor
+	req_tech = list("powerstorage" = 4, "engineering" = 4, "materials" = 5)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 
 /datum/design/fusion/fuel_control
-	name = "fusion fuel control console"
+	name = "Fusion Fuel Control Console"
 	id = "fusion_fuel_control"
 	build_path = /obj/item/weapon/circuitboard/fusion_fuel_control
+	req_tech = list("powerstorage" = 5, "engineering" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 
 /datum/design/fusion/gyrotron_control
-	name = "gyrotron control console"
+	name = "Gyrotron Control Console"
 	id = "gyrotron_control"
 	build_path = /obj/item/weapon/circuitboard/gyrotron_control
+	req_tech = list("programming" = 5, "engineering" = 5)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 
 /datum/design/fusion/core
-	name = "fusion core"
+	name = "Fusion Core"
 	id = "fusion_core"
 	build_path = /obj/item/weapon/circuitboard/fusion_core
+	req_tech = list("bluespace" = 4, "magnets" = 5, "powerstorage" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 
 /datum/design/fusion/injector
-	name = "fusion fuel injector"
+	name = "Fusion Fuel Injector"
 	id = "fusion_injector"
 	build_path = /obj/item/weapon/circuitboard/fusion_injector
+	req_tech = list("powerstorage" = 4, "engineering" = 5, "materials" = 5)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)

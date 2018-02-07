@@ -440,6 +440,7 @@
 		if(6)
 			if(istype(W, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/coil = W
+				if(user.is_busy(src)) return
 				to_chat(user, "<span class='notice'>You start to wire [src]...</span>")
 				if(do_after(user, 40, target = src))
 					if(build_step == 6 && coil.use(1))
@@ -472,6 +473,7 @@
 
 		if(8)
 			if(istype(W, /obj/item/weapon/screwdriver))
+				if(user.is_busy(src)) return
 				playsound(loc, 'sound/items/Screwdriver.ogg', 100, 1)
 				to_chat(user, "<span class='notice'>Now attaching the gun to the frame...</span>")
 				if(do_after(user, 40, target = src))

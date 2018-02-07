@@ -417,6 +417,7 @@ proc/move_mining_shuttle()
 	if (!istype(target, /turf/simulated/mineral))
 		to_chat(user, "<span class='notice'>You can't plant [src] on [target.name].</span>")
 		return
+	if(user.is_busy()) return
 	to_chat(user, "<span class='notice'>Planting explosives...</span>")
 
 	if(do_after(user, 50, target = target) && in_range(user, target))
@@ -712,6 +713,7 @@ obj/item/projectile/kinetic/atom_init()
 
 /obj/item/device/gps/computer/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+		if(user.is_busy()) return
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the gps.</span>", \
 						"<span class='notice'>You start to disassemble the gps...</span>", "You hear clanking and banging noises.")
@@ -791,6 +793,7 @@ obj/item/projectile/kinetic/atom_init()
 /obj/machinery/smartfridge/survival_pod/attackby(obj/item/O, mob/user)
 	if(is_type_in_typecache(O,forbidden_tools))
 		if(istype(O,/obj/item/weapon/wrench))
+			if(user.is_busy()) return
 			to_chat(user, "\blue You start to disassemble the storage unit...")
 			if(do_after(user,20,target = src))
 				if(!src)
@@ -826,6 +829,7 @@ obj/item/projectile/kinetic/atom_init()
 
 /obj/structure/fans/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && !(flags&NODECONSTRUCT))
+		if(user.is_busy()) return
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("<span class='warning'>[user] disassembles the fan.</span>", \
 						"<span class='notice'>You start to disassemble the fan...</span>", "You hear clanking and banging noises.")
@@ -875,6 +879,7 @@ obj/item/projectile/kinetic/atom_init()
 /obj/structure/sign/mining/attack_hand(mob/user)
 	if(..(user))
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	user.visible_message("[user] removes the sign.", "You remove the sign.")
 	qdel(src)
 

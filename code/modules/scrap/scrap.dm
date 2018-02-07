@@ -32,7 +32,6 @@ var/global/list/scrap_base_cache = list()
 	var/big_item_chance = 0
 	var/obj/big_item
 	var/list/ways = list("pokes around", "digs through", "rummages through", "goes through","picks through")
-	var/list/diggers = list()
 
 
 
@@ -116,7 +115,6 @@ var/global/list/scrap_base_cache = list()
 	shuffle_loot()
 
 /obj/structure/scrap/Destroy()
-	diggers.Cut()
 	for (var/obj/item in loot)
 		qdel(item)
 	if(big_item)
@@ -212,11 +210,12 @@ var/global/list/scrap_base_cache = list()
 	return 0
 
 /obj/structure/scrap/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(hurt_hand(user))
 		return
 	try_make_loot()
 	loot.open(user)
-	..(user)
+	..()
 
 /obj/structure/scrap/attack_paw(mob/user)
 	loot.open(user)
@@ -240,18 +239,17 @@ var/global/list/scrap_base_cache = list()
 
 /obj/structure/scrap/attackby(obj/item/W, mob/user)
 	var/do_dig = 0
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W,/obj/item/weapon/shovel))
 		do_dig = 30
 	if(istype(W,/obj/item/stack/rods))
 		do_dig = 50
-	if(do_dig  && !(user in diggers))
+	if(do_dig  && !user.is_busy())
 		user.do_attack_animation(src)
-		diggers += user
 		if(do_after(user, do_dig, target = src))
 			visible_message("<span class='notice'>\The [user] [pick(ways)] \the [src].</span>")
 			shuffle_loot()
 			dig_out_lump(user.loc, 0)
-		diggers -= user
 
 
 /obj/structure/scrap/large

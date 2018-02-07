@@ -49,4 +49,4 @@
 				H.apply_damage(force / 2, BRUTE, BP_CHILD.body_zone, H.getarmor(BP_CHILD.body_zone, "melee"))
 			if(BP.parent)
 				H.apply_damage(force / 2, BRUTE, BP.parent.body_zone, H.getarmor(BP.parent.body_zone, "melee"))
-		return..(target,user)
+		return..()

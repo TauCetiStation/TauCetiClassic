@@ -102,7 +102,7 @@ RCD
 					return 1
 				return 0
 
-			if(istype(A, /turf/simulated/floor))
+			if(istype(A, /turf/simulated/floor) && !user.is_busy())
 				if(checkResource(3, user))
 					to_chat(user, "Building Wall ...")
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
@@ -120,7 +120,7 @@ RCD
 					if(AT.density || istype(AT, /obj/machinery/door) || istype(AT, /obj/structure/mineral_door))
 						to_chat(user, "<span class='warning'>You can't build airlock here.</span>")
 						return 0
-				if(checkResource(10, user))
+				if(checkResource(10, user) && !user.is_busy())
 					to_chat(user, "Building Airlock...")
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 50, target = A))
@@ -136,7 +136,7 @@ RCD
 			if(istype(A, /turf/simulated/wall))
 				if(istype(A, /turf/simulated/wall/r_wall) && !canRwall)
 					return 0
-				if(checkResource(5, user))
+				if(checkResource(5, user) && !user.is_busy())
 					to_chat(user, "Deconstructing Wall...")
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 40, target = A))
@@ -148,7 +148,7 @@ RCD
 				return 0
 
 			if(istype(A, /turf/simulated/floor))
-				if(checkResource(5, user))
+				if(checkResource(5, user) && !user.is_busy())
 					to_chat(user, "Deconstructing Floor...")
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 					if(do_after(user, 50, target = A))
@@ -159,7 +159,7 @@ RCD
 						return 1
 				return 0
 
-			if(istype(A, /obj/machinery/door/airlock))
+			if(istype(A, /obj/machinery/door/airlock) && !user.is_busy())
 				if(checkResource(10, user))
 					to_chat(user, "Deconstructing Airlock...")
 					playsound(src.loc, 'sound/machines/click.ogg', 50, 1)

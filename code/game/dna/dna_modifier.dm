@@ -86,7 +86,7 @@
 	if(open || !locked)	//Open and unlocked, no need to escape
 		open = 1
 		return
-	user.next_move = world.time + 100
+	user.SetNextMove(100)
 	user.last_special = world.time + 100
 	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>")
 	user.visible_message("<span class='warning'>You hear a metallic creaking from [src]!</span>")
@@ -169,6 +169,7 @@
 	return
 
 /obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user)
+
 	if(!occupant && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", "[initial(icon_state)]", I))
 		return
 
@@ -196,6 +197,7 @@
 
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!ismob(G.affecting))
 			return
 
@@ -273,7 +275,7 @@
 	var/waiting_for_user_input=0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user)
-	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
+	if(istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
 		if (!disk)
 			user.drop_item()
 			I.loc = src
@@ -283,7 +285,6 @@
 			return
 	else
 		..()
-	return
 
 /obj/machinery/computer/scan_consolenew/atom_init()
 	..()

@@ -5,14 +5,13 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 	desc = "A marker that can be used to extract a target to a Aurora. Anything not bolted down can be moved. Anything living will be dropped off into a holding cell"
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
-	var/is_extracting = 0
 	var/turf/extraction_point
 
 /obj/item/weapon/extraction_pack/afterattack(atom/movable/A, mob/user, proximity)
 	var/extract_time = 70
-	if(!proximity)
+	if(user.is_busy())
 		return
-	if(is_extracting)
+	if(!proximity)
 		return
 	if(!istype(A))
 		return
@@ -29,7 +28,6 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			return
 		if(A.anchored)
 			return
-		is_extracting = 1
 		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
 		if(istype(A, /obj/item))
 			var/obj/item/I = A
@@ -38,7 +36,6 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			else
 				extract_time = w_class * 20 // 3 = 6 seconds, 4 = 8 seconds, 5 = 10 seconds.
 		if(do_after(user, extract_time, target=A))
-			is_extracting = 0
 			if(A.anchored)
 				return
 			to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")
@@ -113,8 +110,6 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			qdel(holder_obj)
 			qdel(BPs)
 			qdel(BPe)
-		else
-			is_extracting = 0
 
 /obj/effect/extraction_holder
 	name = "extraction holder"

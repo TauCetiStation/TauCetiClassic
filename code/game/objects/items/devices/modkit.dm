@@ -22,12 +22,6 @@
 	if (!target_species)
 		return	//it shouldn't be null, okay?
 
-	if(!parts)
-		to_chat(user, "<span class='warning'>This kit has no parts for this modification left.</span>")
-		user.drop_from_inventory(src)
-		qdel(src)
-		return
-
 	var/allowed = 0
 	for (var/permitted_type in permitted_types)
 		if(istype(O, permitted_type) && !(O.type in forbidden_type))
@@ -40,11 +34,21 @@
 
 	var/excluding = ("exclude" in I.species_restricted)
 	var/in_list = (target_species in I.species_restricted)
+
 	if (excluding ^ in_list)
 		to_chat(user, "<span class='notice'>[I] is already modified.</span>")
+		return
 
 	if(!isturf(O.loc))
 		to_chat(user, "<span class='warning'>[O] must be safely placed on the ground for modification.</span>")
+		return
+
+	if(istype(I, /obj/item/clothing/head/helmet) && (parts & MODKIT_HELMET))
+		parts &= ~MODKIT_HELMET
+	else if(istype(I, /obj/item/clothing/suit) && (parts & MODKIT_SUIT))
+		parts &= ~MODKIT_SUIT
+	else
+		to_chat(user, "<span class='warning'>This kit has no parts for this modification left.</span>")
 		return
 
 	playsound(user.loc, 'sound/items/Screwdriver.ogg', 100, 1)
@@ -53,14 +57,10 @@
 
 	I.refit_for_species(target_species)
 
-	if (istype(I, /obj/item/clothing/head/helmet))
-		parts &= ~MODKIT_HELMET
-	if (istype(I, /obj/item/clothing/suit))
-		parts &= ~MODKIT_SUIT
-
 	if(!parts)
 		user.drop_from_inventory(src)
 		qdel(src)
+		return
 
 
 /obj/item/device/modkit/examine(mob/user)
@@ -210,14 +210,17 @@
 /obj/item/device/modkit/syndie/tajaran
 	name = "Tajaran gorlex hardsuit modification kit"
 	target_species = TAJARAN
+	parts = MODKIT_SUIT
 
 /obj/item/device/modkit/syndie/unathi
 	name = "Unathi gorlex hardsuit modification kit"
 	target_species = UNATHI
+	parts = MODKIT_SUIT
 
 /obj/item/device/modkit/syndie/skrell
 	name = "Skrellian gorlex hardsuit modification kit"
 	target_species = SKRELL
+	parts = MODKIT_HELMET
 
 
 /obj/item/device/modkit/wizard

@@ -54,8 +54,9 @@
 	healthcheck()
 	return
 
-/obj/structure/cellular_biomass/attack_hand()
+/obj/structure/cellular_biomass/attack_hand(mob/user)
 	..()
+	user.SetNextMove(CLICK_CD_MELEE)
 	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
 	return
 

@@ -89,6 +89,7 @@
 		return
 
 	update_icon(1)
+	user.SetNextMove(CLICK_CD_RAPID)
 	sleep(10)
 	if (state)
 		go_straight()

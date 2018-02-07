@@ -281,6 +281,7 @@ var/global/list/frozen_items = list()
 
 		var/willing = null //We don't want to allow people to be forced into despawning.
 		var/mob/M = grab.affecting
+		user.SetNextMove(CLICK_CD_MELEE)
 
 		if(M.client)
 			if(alert(M,"Would you like to enter cryosleep?",,"Yes","No") == "Yes")
@@ -291,6 +292,7 @@ var/global/list/frozen_items = list()
 			willing = TRUE
 
 		if(willing)
+			if(user.is_busy()) return
 			visible_message("[user] starts putting [M.name] into the cryo pod.", 3)
 
 			if(do_after(user, 20, target = src))
@@ -360,7 +362,7 @@ var/global/list/frozen_items = list()
 		if(M.Victim == usr)
 			to_chat(usr, "You're too busy getting your life sucked out of you.")
 			return
-
+	if(usr.is_busy()) return
 	visible_message("[usr] starts climbing into the cryo pod.", 3)
 
 	if(do_after(usr, 20, target = src))

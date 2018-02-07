@@ -120,6 +120,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 /mob/dead/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/book/tome))
+		user.SetNextMove(CLICK_CD_MELEE)
 		var/mob/dead/M = src
 		if(src.invisibility != 0)
 			M.invisibility = 0

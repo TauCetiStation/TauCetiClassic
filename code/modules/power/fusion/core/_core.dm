@@ -98,7 +98,7 @@ var/list/fusion_cores = list()
 	. = ..()
 	if(.)
 		return
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	visible_message("<span class='notice'>\The [user] hugs \the [src] to make it feel better!</span>")
 	if(owned_field)
 		Shutdown()
@@ -118,6 +118,7 @@ var/list/fusion_cores = list()
 	else if(iswrench(W))
 		anchored = !anchored
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(anchored)
 			connect_to_network()
 			user.visible_message("[user.name] secures [src.name] to the floor.", \

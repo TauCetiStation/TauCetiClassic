@@ -74,6 +74,7 @@ var/const/HOLOPAD_MODE = 0
 		return 1
 	if(!ishuman(user) && !IsAdminGhost(user))
 		return 1
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(alert(user,"Would you like to request an AI's presence?",,"Yes","No") == "Yes")
 		if(last_request + 200 < world.time) //don't spam the AI with requests you jerk!
 			last_request = world.time
@@ -107,7 +108,7 @@ var/const/HOLOPAD_MODE = 0
 
 			if(user.holohack)
 				change_holo_to_carp(user)
-				
+
 			src.visible_message("A holographic image of [hologram.name] flicks to life right before your eyes!")
 		else
 			to_chat(user, "\red ERROR: \black Image feed in progress.")

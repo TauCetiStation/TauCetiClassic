@@ -207,6 +207,7 @@
 
 /obj/machinery/dominator/attack_alien(mob/living/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	playsound(src, 'sound/effects/bang.ogg', 50, 1)
 	user.visible_message("<span class='danger'>[user] smashes against [src] with its claws.</span>",\
 	"<span class='danger'>You smash against [src] with your claws.</span>",\
@@ -217,10 +218,9 @@
 	if(!isanimal(user))
 		return
 	var/mob/living/simple_animal/M = user
-	M.do_attack_animation(src)
-	if(M.melee_damage_upper <= 0)
-		return
-	healthcheck(M.melee_damage_upper)
+	..()
+	if(M.melee_damage_upper > 0)
+		healthcheck(M.melee_damage_upper)
 
 //obj/machinery/dominator/mech_melee_attack(obj/mecha/M)
 //	if(M.damtype == "brute")
@@ -239,7 +239,7 @@
 /obj/machinery/dominator/attackby(obj/item/weapon/I, mob/living/user, params)
 	if(istype(I, /obj/item/weapon))
 		add_fingerprint(user)
-		//user.changeNext_move(CLICK_CD_MELEE)
+		user.SetNextMove(CLICK_CD_MELEE)
 		user.do_attack_animation(src)
 		if( (I.flags&NOBLUDGEON) || !I.force )
 			return

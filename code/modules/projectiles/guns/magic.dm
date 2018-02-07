@@ -23,14 +23,17 @@
 
 /obj/item/weapon/gun/magic/afterattack(atom/target, mob/living/user, flag)
 	newshot()
-	var/area/A = get_area(user)
-	if(user.mind.special_role != "Wizard" && !global_access)
-		to_chat(user, "<span class='warning'>You have no idea how to use [src].<span>")
-		return
-	if(istype(A, /area/wizard_station))
-		to_chat(user, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].<span>")
-		return
 	..()
+
+/obj/item/weapon/gun/magic/special_check(mob/M, atom/target)
+	var/area/A = get_area(M)
+	if(istype(A, /area/wizard_station))
+		to_chat(M, "<span class='warning'>You know better than to violate the security of The Den, best wait until you leave to use [src].<span>")
+		return FALSE
+	if(M.mind.special_role != "Wizard" && !global_access)
+		to_chat(M, "<span class='warning'>You have no idea how to use [src].<span>")
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/gun/magic/proc/newshot()
 	if (charges && chambered)

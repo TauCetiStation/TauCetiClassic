@@ -102,7 +102,8 @@ var/bomb_set
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
 						to_chat(user, "\red You need more fuel to complete this task.")
 						return
-
+					if(user.is_busy())
+						return
 					user.visible_message("[user] starts cutting thru something on [src] like \he knows what to do.", "With [O] you start cutting thru first layer...")
 
 					if(do_after(user,150,target = src))
@@ -114,7 +115,8 @@ var/bomb_set
 			if(1)
 				if(istype(O,/obj/item/weapon/crowbar))
 					user.visible_message("[user] starts smashing [src].", "You start forcing open the covers with [O]...")
-
+					if(user.is_busy())
+						return
 					if(do_after(user,50,target = src))
 						if(!src || !user) return
 						user.visible_message("[user] finishes smashing [src].", "You force open covers.")
@@ -129,7 +131,8 @@ var/bomb_set
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
 						to_chat(user, "\red You need more fuel to complete this task.")
 						return
-
+					if(user.is_busy())
+						return
 					user.visible_message("[user] starts cutting something on [src].. Again.", "You start cutting apart the safety plate with [O]...")
 
 					if(do_after(user,100,target = src))
@@ -140,7 +143,8 @@ var/bomb_set
 
 			if(3)
 				if(istype(O,/obj/item/weapon/wrench))
-
+					if(user.is_busy())
+						return
 					user.visible_message("[user] begins poking inside [src].", "You begin unwrenching bolts...")
 
 					if(do_after(user,75,target = src))
@@ -151,7 +155,8 @@ var/bomb_set
 
 			if(4)
 				if(istype(O,/obj/item/weapon/crowbar))
-
+					if(user.is_busy())
+						return
 					user.visible_message("[user] begings hitting [src].", "You begin forcing open last safety layer...")
 
 					if(do_after(user,75,target = src))
@@ -454,6 +459,8 @@ var/bomb_set
 /obj/machinery/nuclearbomb/MouseDrop_T(mob/living/M, mob/living/user)
 	if(!ishuman(M) || !ishuman(user))
 		return
+	if(user.is_busy())
+		return
 	if(buckled_mob)
 		do_after(usr, 30, 1, src)
 		unbuckle_mob()
@@ -483,6 +490,8 @@ var/bomb_set
 		return
 	var/obj/structure/droppod/D = over_object
 	if(!timing && !auth && !buckled_mob)
+		if(usr.is_busy())
+			return
 		visible_message("<span class='notice'>[usr] start putting [src] into [D]!</span>","<span class='notice'>You start putting [src] into [D]!</span>")
 		if(do_after(usr, 100, 1, src) && !timing && !auth && !buckled_mob)
 			D.Stored_Nuclear = src

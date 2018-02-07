@@ -138,6 +138,7 @@ proc/cardinalrange(center)
 	if(!istype(W) || !user) return
 	if(W.force > 10)
 		stability -= W.force/2
+		user.SetNextMove(CLICK_CD_MELEE)
 		check_stability()
 	..()
 	return
