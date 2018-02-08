@@ -128,13 +128,37 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser cannon"
 	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
 	icon_state = "lasercannon"
+	item_state = "lasercannon"
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
 
 	fire_delay = 20
 
-	isHandgun()
+/obj/item/weapon/gun/energy/lasercannon/isHandgun()
 		return 0
+
+/obj/item/weapon/gun/energy/lasercannon/update_icon()
+	var/ratio = power_supply.charge / power_supply.maxcharge
+	ratio = ceil(ratio * 4) * 25
+	switch(modifystate)
+		if (0)
+			if(ratio > 100)
+				icon_state = "[initial(icon_state)]100"
+				item_state = "[initial(item_state)]100"
+			else
+				icon_state = "[initial(icon_state)][ratio]"
+				item_state = "[initial(item_state)][ratio]"
+	return
+
+/obj/item/weapon/gun/energy/lasercannon/cyborg/newshot()
+	if(isrobot(src.loc))
+		var/mob/living/silicon/robot/R = src.loc
+		if(R && R.cell)
+			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
+			if(R.cell.use(shot.e_cost))
+				chambered = shot
+				chambered.newshot()
+	return
 
 /obj/item/weapon/gun/energy/lasercannon/cyborg/newshot()
 	if(isrobot(src.loc))
