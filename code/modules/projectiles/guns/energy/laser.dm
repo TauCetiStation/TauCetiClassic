@@ -147,16 +147,6 @@ obj/item/weapon/gun/energy/laser/retro
 				chambered.newshot()
 	return
 
-/obj/item/weapon/gun/energy/lasercannon/cyborg/newshot()
-	if(isrobot(src.loc))
-		var/mob/living/silicon/robot/R = src.loc
-		if(R && R.cell)
-			var/obj/item/ammo_casing/energy/shot = ammo_type[select] //Necessary to find cost of shot
-			if(R.cell.use(shot.e_cost))
-				chambered = shot
-				chambered.newshot()
-	return
-
 /obj/item/weapon/gun/energy/xray
 	name = "xray laser gun"
 	desc = "A high-power laser gun capable of expelling concentrated xray blasts."
