@@ -135,7 +135,7 @@ obj/item/weapon/gun/energy/laser/retro
 	fire_delay = 20
 
 /obj/item/weapon/gun/energy/lasercannon/isHandgun()
-		return 0
+	return 0
 
 /obj/item/weapon/gun/energy/lasercannon/cyborg/newshot()
 	if(isrobot(src.loc))
