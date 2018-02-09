@@ -10,7 +10,7 @@
 	item_state = "electronic"
 	w_class = 2.0
 	var/mode = REMOTE_OPEN
-	var/region_access = 1 // look at access.dm
+	var/region_access = list(0, 1, 2, 3, 4, 5, 6, 7) // look at access.dm
 	var/obj/item/weapon/card/id/ID
 	var/emagged = FALSE
 	var/disabled = FALSE
@@ -18,7 +18,9 @@
 /obj/item/device/remote_device/atom_init()
 	. = ..()
 	ID = new/obj/item/weapon/card/id
-	ID.access = get_region_accesses(region_access)
+	ID.access = list()
+	for(var/access in region_access)
+		ID.access += get_region_accesses(access)
 
 /obj/item/device/remote_device/Destroy()
 	QDEL_NULL(ID)
@@ -116,7 +118,7 @@
 /obj/item/device/remote_device/head_of_personal
 	name = "civillian door remote"
 	icon_state = "rdc_hop"
-	region_access = 6
+	region_access = list(6, 7)
 
 #undef REMOTE_OPEN
 #undef REMOTE_BOLT
