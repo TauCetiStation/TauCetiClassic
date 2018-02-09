@@ -27,7 +27,7 @@
 	return ..()
 
 /obj/item/device/remote_device/attackby(obj/item/weapon/card/emag/W, mob/user)
-	if((istype(W, /obj/item/weapon/card/emag)) && !emagged)
+	if(istype(W) && !emagged)
 		emagged = TRUE
 		to_chat(user, "This device now can electrify doors")
 
