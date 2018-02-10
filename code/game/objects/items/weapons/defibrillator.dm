@@ -575,6 +575,7 @@
 /obj/item/weapon/twohanded/shockpaddles/standalone
 	desc = "A pair of shockpaddles with integrated capacitor" //Good old defib
 	var/charges = 10
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/twohanded/shockpaddles/standalone/check_charge(charge_amt)
 	return charges
@@ -593,6 +594,7 @@
 	charge_time = 1 SECONDS
 	burn_damage_amt = 15
 	charges = 20
+	w_class = ITEM_SIZE_NORMAL
 
 /obj/item/weapon/twohanded/offhand/shockpaddles
 	icon = 'icons/obj/defibrillator.dmi'
