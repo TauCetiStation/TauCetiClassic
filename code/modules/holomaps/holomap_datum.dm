@@ -80,7 +80,6 @@
 	if(length(holomap_images))
 		activator.client.images -= holomap_images
 		QDEL_LIST(holomap_images)
-		holomap_images.Cut()
 
 	draw_special()
 
