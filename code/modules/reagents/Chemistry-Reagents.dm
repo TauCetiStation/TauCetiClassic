@@ -2162,14 +2162,14 @@ datum
 	if(prob(50))
 		M.adjustBruteLoss(-1)
 		M.adjustFireLoss(-1)
-	if(M.nutrition < NUTRITION_LEVEL_WELL_FED) //we are making him WELL FED
-		M.nutrition += 30
+	/*if(M.nutrition < NUTRITION_LEVEL_WELL_FED) //we are making him WELL FED
+		M.nutrition += 30*/  //will remain commented until we can deal with fat
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/blood_volume = H.vessel.get_reagent_amount("blood")
 		if(!(NO_BLOOD in H.species.flags))//do not restore blood on things with no blood by nature.
 			if(blood_volume < BLOOD_VOLUME_NORMAL && blood_volume)
-				var/datum/reagent/blood/B = locate() in H.vessel.reagent_list //Grab some blood
+				var/datum/reagent/blood/B = locate() in H.vessel.reagent_list
 				B.volume += 0.5
 
 
