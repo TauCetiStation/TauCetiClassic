@@ -196,6 +196,23 @@ robot_fabricator
 	else
 		to_chat(src, "<span class='red'>Out of uses.</span>")
 
+/datum/AI_Module/small/disable_dr
+	module_name = "DR disable"
+	description = "Send a specialised pulse to break all DR devices on the station."
+	verb_caller = /mob/living/silicon/ai/proc/disable_dr
+
+/mob/living/silicon/ai/proc/disable_dr()
+	set category = "Malfunction"
+	set name = "Disable DRs"
+	var/datum/AI_Module/small/disable_dr/drmod = current_modules["DR disable"]
+	if(drmod.uses)
+		drmod.uses--
+		for(var/obj/item/device/remote_device/dr in world)
+			dr.disabled = TRUE
+		to_chat(src, "<span class='notice'>DR-disabling pulse emitted.</span>")
+	else
+		to_chat(src, "<span class='red'>Out of uses.</span>")
+
 /datum/AI_Module/small/overload_machine
 	module_name = "Machine overload"
 	description = "Overloads an electrical machine, causing a small explosion. 2 uses."
@@ -326,7 +343,7 @@ robot_fabricator
 	if(!length(disabled_cameras))
 		to_chat(src, "<span class='red'>No cameras found or all cameras in your field of view is either active, or not repairable.</span>")
 		return
-			
+
 	var/obj/machinery/camera/sel_cam = input(src, "Reactivate Camera","Choose Object") in disabled_cameras
 	if(!sel_cam)
 		return

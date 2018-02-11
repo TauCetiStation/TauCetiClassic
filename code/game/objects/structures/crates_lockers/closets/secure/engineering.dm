@@ -20,6 +20,7 @@
 		new /obj/item/clothing/accessory/storage/webbing(src)
 
 	new /obj/item/blueprints(src)
+	new /obj/item/device/remote_device/chief_engineer(src)
 	new /obj/item/clothing/under/rank/chief_engineer(src)
 	new /obj/item/clothing/head/hardhat/white(src)
 	new /obj/item/clothing/head/welding(src)

@@ -107,6 +107,7 @@
 
 	new /obj/item/clothing/suit/bio_suit/new_hazmat/cmo(src)
 	new /obj/item/clothing/head/bio_hood/new_hazmat/cmo(src)
+	new /obj/item/device/remote_device/chief_medical_officer(src)
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/under/rank/chief_medical_officer(src)
 	new /obj/item/clothing/suit/storage/labcoat/cmo(src)
