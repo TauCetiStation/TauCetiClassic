@@ -478,7 +478,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 2)
+	reagents.add_reagent("nutriment", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	..()
@@ -927,7 +927,7 @@
 	//var/herp = 0
 /obj/item/weapon/reagent_containers/food/snacks/omelette/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 6)
+	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("vitamin", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette/attackby(obj/item/weapon/W, mob/user)
@@ -3311,7 +3311,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/benedict/atom_init()
 	. = ..()
-	reagents.add_reagent("protein", 6)
+	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("vitamin", 4)
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbun

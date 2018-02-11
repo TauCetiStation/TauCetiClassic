@@ -38,11 +38,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
 	name = "meat"
-	desc = "Tastes like... well you know..."
+	desc = "Tastes like... something korean..."
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/pug
 	name = "meat"
-	desc = "Tastes like... well you know..."
+	desc = "Tastes like... uhhhh..."
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/ham
 	name = "Ham"
