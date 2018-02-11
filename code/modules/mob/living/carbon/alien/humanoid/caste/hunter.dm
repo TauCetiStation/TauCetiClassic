@@ -96,7 +96,6 @@
 #define MAX_ALIEN_LEAP_DIST 7
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
-
 	if(pounce_cooldown)
 		to_chat(src, "<span class='alertalien'>You are too fatigued to pounce right now!</span>")
 		return
