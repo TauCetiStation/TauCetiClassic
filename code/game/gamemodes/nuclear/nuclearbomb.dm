@@ -242,6 +242,10 @@ var/bomb_set
 		if (!ishuman(user) && !isobserver(user))
 			to_chat(usr, "\red You don't have the dexterity to do this!")
 			return 1
+		var/turf/current_location = get_turf(usr)//What turf is the user on?
+		if(current_location.z == 2 && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
+			to_chat(usr, "<span class='warning'> It's not the best idea to plant a bomb on your own base  </span>")
+			return
 	else if (deployable)
 		if(removal_stage < 5)
 			anchored = TRUE
@@ -344,7 +348,7 @@ var/bomb_set
 			if (href_list["time"])
 				var/time = text2num(href_list["time"])
 				src.timeleft += time
-				src.timeleft = min(max(round(src.timeleft), 180), 600)
+				src.timeleft = min(max(round(src.timeleft), 420), 600)
 			if (href_list["timer"])
 				if (src.timing == -1.0)
 					return FALSE
@@ -356,6 +360,8 @@ var/bomb_set
 					if(!src.lighthack)
 						src.icon_state = "nuclearbomb2"
 					if(!src.safety)
+						var/area/nuclearbombloc = get_area(loc)
+						captain_announce("Bomb has been planted in [initial(nuclearbombloc.name)]. These bastards are trying to blow up the station!")
 						set_security_level("delta")
 						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 					else
