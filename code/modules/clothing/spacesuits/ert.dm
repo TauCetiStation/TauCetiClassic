@@ -27,7 +27,7 @@
 
 /obj/item/clothing/head/helmet/space/rig/ert/Destroy()
 	ert_helmets -= src
-	qdel(holo)
+	QDEL_NULL(holo)
 	return ..()
 
 /obj/item/clothing/head/helmet/space/rig/ert/ui_action_click()

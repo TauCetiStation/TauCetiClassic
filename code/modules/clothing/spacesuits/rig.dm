@@ -358,7 +358,7 @@
 
 /obj/item/clothing/head/helmet/space/rig/syndi/Destroy()
 	nuclear_holo -= src
-	qdel(holo)
+	QDEL_NULL(holo)
 	return ..()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/proc/checklight()

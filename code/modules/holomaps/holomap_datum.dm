@@ -69,7 +69,6 @@
 	if(activator.client)
 		activator.client.images -= holomap_images
 	QDEL_LIST(holomap_images)
-	holomap_images.Cut()
 	activator = null
 	STOP_PROCESSING(SSobj, src)
 

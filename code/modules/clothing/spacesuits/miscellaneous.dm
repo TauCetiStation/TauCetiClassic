@@ -16,7 +16,7 @@
 
 /obj/item/clothing/head/helmet/space/deathsquad/Destroy()
 	deathsquad_helmets -= src
-	qdel(holo)
+	QDEL_NULL(holo)
 	return ..()
 
 /obj/item/clothing/head/helmet/space/deathsquad/ui_action_click()

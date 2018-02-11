@@ -113,7 +113,7 @@
 
 /obj/item/clothing/head/helmet/space/vox/Destroy()
 	vox_helmets -= src
-	qdel(holo)
+	QDEL_NULL(holo)
 	return ..()
 
 /obj/item/clothing/head/helmet/space/vox/ui_action_click()
