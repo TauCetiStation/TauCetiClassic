@@ -83,37 +83,37 @@
 	name = "ERT door remote"
 	desc = "This remote control device can access any door on the station."
 	icon_state = "rdc_white"
-	region_access = 0
+	region_access = list(0)
 
 /obj/item/device/remote_device/captain
 	name = "command door remote"
 	icon_state = "rdc_cap"
-	region_access = 5
+	region_access = list(5)
 
 /obj/item/device/remote_device/chief_engineer
 	name = "engineering door remote"
 	icon_state = "rdc_ce"
-	region_access = 4
+	region_access = list(4)
 
 /obj/item/device/remote_device/research_director
 	name = "research door remote"
 	icon_state = "rdc_rd"
-	region_access = 3
+	region_access = list(3)
 
 /obj/item/device/remote_device/head_of_security
 	name = "security door remote"
 	icon_state = "rdc_hos"
-	region_access = 1
+	region_access = list(1)
 
 /obj/item/device/remote_device/quartermaster
 	name = "supply door remote"
 	icon_state = "rdc_qm"
-	region_access = 7
+	region_access = list(7)
 
 /obj/item/device/remote_device/chief_medical_officer
 	name = "medical door remote"
 	icon_state = "rdc_cmo"
-	region_access = 2
+	region_access = list(2)
 
 /obj/item/device/remote_device/head_of_personal
 	name = "civillian door remote"
