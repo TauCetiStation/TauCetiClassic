@@ -1168,8 +1168,11 @@
 	if(do_not_taste_at_all)
 		return //no message spam
 
-	if(final_taste_list.len == 0)//too many reagents - none meet their thresholds
-		to_chat(src, "<span class='notice'>You can't really make out what you're tasting...</span>")
-		return
+	if(world.time-lasttaste >= 15)//prevent tastes spam
+		if(final_taste_list.len == 0)//too many reagents - none meet their thresholds
+			to_chat(src, "<span class='notice'>You can't really make out what you're tasting...</span>")
+			lasttaste = world.time
+			return
 
-	to_chat(src, "<span class='notice'>You can taste [english_list(final_taste_list)].</span>")
+		to_chat(src, "<span class='notice'>You can taste [english_list(final_taste_list)].</span>")
+		lasttaste = world.time

@@ -3641,7 +3641,7 @@ datum
 	description = "Vodka with Gin. Not quite how 007 enjoyed it, but still delicious."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 4
-
+	taste_message = "bitter martini"
 
 /datum/reagent/consumable/ethanol/white_russian
 	name = "White Russian"
@@ -3990,6 +3990,7 @@ datum
 	description = "A nice, strangely named drink."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 3
+	taste_message = "sweet alcohol"
 
 
 /datum/reagent/consumable/ethanol/alliescocktail
