@@ -44,5 +44,3 @@
 	new /obj/item/weapon/tank/air(src)
 	new /obj/item/clothing/mask/gas/coloured(src)
 	new /obj/item/device/flash(src)
-	new /obj/item/device/remote_device/research_director(src)
-
