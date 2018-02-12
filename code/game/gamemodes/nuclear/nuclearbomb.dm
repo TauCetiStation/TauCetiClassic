@@ -1,3 +1,6 @@
+#define TIMER_MIN 420
+#define TIMER_MAX 600
+
 var/bomb_set
 
 /obj/machinery/nuclearbomb
@@ -244,7 +247,7 @@ var/bomb_set
 			return 1
 		var/turf/current_location = get_turf(usr)//What turf is the user on?
 		if(current_location.z == 2 && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
-			to_chat(usr, "<span class='warning'> It's not the best idea to plant a bomb on your own base  </span>")
+			to_chat(user, "<span class ='warning'>It's not the best idea to plant a bomb on your own base</span>")
 			return
 	else if (deployable)
 		if(removal_stage < 5)
@@ -348,7 +351,7 @@ var/bomb_set
 			if (href_list["time"])
 				var/time = text2num(href_list["time"])
 				src.timeleft += time
-				src.timeleft = min(max(round(src.timeleft), 420), 600)
+				src.timeleft = Clamp(round(timeleft), TIMER_MIN, TIMER_MAX)
 			if (href_list["timer"])
 				if (src.timing == -1.0)
 					return FALSE
@@ -539,3 +542,6 @@ var/bomb_set
 	else
 		throw EXCEPTION("Unable to find a blobstart landmark")
 	return QDEL_HINT_LETMELIVE //Cancel destruction regardless of success
+
+#undef TIMER_MIN
+#undef TIMER_MAX
