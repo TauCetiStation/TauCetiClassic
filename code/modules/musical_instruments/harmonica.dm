@@ -5,6 +5,7 @@
 	icon_state = "harmonica"
 	item_state = "harmonica"
 	force = 5
+	w_class = ITEM_SIZE_SMALL
 	m_amt = 500
 	var/channel
 	var/cooldown = 70
