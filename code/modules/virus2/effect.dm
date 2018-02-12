@@ -351,4 +351,5 @@
 	name = "Headache"
 	stage = 1
 	activate(mob/living/carbon/mob,multiplier)
-		to_chat(mob, "<span class = 'notice'> Your head hurts a bit</span>")
+		if(!(mob.get_species() == DIONA))
+			to_chat(mob, "<span class = 'notice'> Your head hurts a bit</span>")
