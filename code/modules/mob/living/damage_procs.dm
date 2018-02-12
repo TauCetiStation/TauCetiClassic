@@ -31,7 +31,7 @@
 	return TRUE
 	
 /mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, used_weapon = null) // Now we can check for freaking xeno!
-	if(effecttype == HALLOSS && species && species.flags[NO_PAIN])
+	if(damagetype == HALLOSS && species && species.flags[NO_PAIN])
 		flash_weak_pain()
 		updatehealth()
 		return TRUE
