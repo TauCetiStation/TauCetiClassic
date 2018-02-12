@@ -84,13 +84,19 @@
 			return
 	else
 		if(istype(M,/mob/living/carbon))
-//			log_debug("No gloves, [M] is truing to infect [src]")
+//			log_debug("No gloves, [M] is trying to infect [src]")
 			M.spread_disease_to(src, "Contact")
 
 
 	switch(M.a_intent)
 		if("help")
 			if(health < config.health_threshold_crit && health > config.health_threshold_dead)
+				if(M.species && M.species.flags[NO_BREATH])
+					to_chat(M, "\blue <B>Your species can not perform CPR!</B>")
+					return 0
+				if(species && species.flags[NO_BREATH])
+					to_chat(M, "\blue <B>You can not perform CPR on these species!</B>")
+					return 0
 				if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
 					to_chat(M, "\blue <B>Remove your mask!</B>")
 					return 0
