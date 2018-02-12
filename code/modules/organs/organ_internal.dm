@@ -113,7 +113,6 @@
 /****************************************************
 				ORGANS DEFINES
 ****************************************************/
-
 /obj/item/organ/internal/heart
 	name = "heart"
 	organ_tag = O_HEART
@@ -131,6 +130,9 @@
 	name = "respiration sac"
 	has_gills = TRUE
 
+/obj/item/organ/internal/lungs/diona
+	name = "virga inopinatus"
+
 /obj/item/organ/internal/lungs/process()
 	..()
 	if (germ_level > INFECTION_LEVEL_ONE)
@@ -138,12 +140,13 @@
 			owner.emote("cough")		//respitory tract infection
 
 	if(is_bruised())
-		if(prob(2))
-			spawn owner.emote("me", 1, "coughs up blood!")
-			owner.drip(10)
-		if(prob(4))
-			spawn owner.emote("me", 1, "gasps for air!")
-			owner.losebreath += 15
+		if(!(owner.get_species() == DIONA))
+			if(prob(2))
+				spawn owner.emote("me", 1, "coughs up blood!")
+				owner.drip(10)
+			if(prob(4))
+				spawn owner.emote("me", 1, "gasps for air!")
+				owner.losebreath += 15
 
 /obj/item/organ/internal/liver
 	name = "liver"
