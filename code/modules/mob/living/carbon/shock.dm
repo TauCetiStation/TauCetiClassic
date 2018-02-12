@@ -42,6 +42,11 @@
 	if(src.traumatic_shock < 0)
 		src.traumatic_shock = 0
 
+/mob/living/carbon/human/updateshock()
+	if (species && species.flags[NO_PAIN])
+		return 0
+	else
+		..()
 	return src.traumatic_shock
 
 
