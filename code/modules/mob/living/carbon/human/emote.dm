@@ -1,5 +1,6 @@
 /mob/living/carbon/human/emote(act,m_type=1,message = null, auto)
 	var/param = null
+	var/virus_scream = FALSE
 
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
@@ -172,8 +173,12 @@
 				m_type = 1
 			else
 				if (!muzzled)
-					message = "<B>[src]</B> coughs!"
-					m_type = 2
+					if (!(get_species() == DIONA))
+						message = "<B>[src]</B> coughs!"
+						m_type = 2
+					else
+						message = "<B>[src]</B> creaks!"
+						m_type = 2
 				else
 					message = "<B>[src]</B> makes a strong noise."
 					m_type = 2
@@ -529,23 +534,28 @@
 				message = "<B>[src]</B> acts out a scream!"
 				m_type = 1
 			else
-				if (!muzzled)
-					if (auto == 1)
-						if(world.time-lastScream >= 30)//prevent scream spam with things like poly spray
-							message = "<B>[src]</B> screams in agony!"
-							var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
-							if (src.gender == FEMALE) //Females have their own screams. Trannys be damned.
-								screamSound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
-							var/scream = pick(screamSound)//AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
-							playsound(get_turf(src), scream, 50, 0)
+				for (var/V in virus2)
+					if (istype(V, /datum/disease2/effect/scream))
+						virus_scream = TRUE // Found the Loudness Syndrome!
+						return
+				if(virus_scream || !(species && species.flags[NO_PAIN]))
+					if (!muzzled)
+						if (auto == 1)
+							if(world.time-lastScream >= 30)//prevent scream spam with things like poly spray
+								message = "<B>[src]</B> screams in agony!"
+								var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
+								if (src.gender == FEMALE) //Females have their own screams. Trannys be damned.
+									screamSound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
+								var/scream = pick(screamSound)//AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
+								playsound(get_turf(src), scream, 50, 0)
+								m_type = 2
+								lastScream = world.time
+						else
+							message = "<B>[src]</B> screams!"
 							m_type = 2
-							lastScream = world.time
 					else
-						message = "<B>[src]</B> screams!"
+						message = "<B>[src]</B> makes a very loud noise."
 						m_type = 2
-				else
-					message = "<B>[src]</B> makes a very loud noise."
-					m_type = 2
 
 		if ("help")
 			to_chat(src, "blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough,\ncry, custom, deathgasp, drool, eyebrow, frown, gasp, giggle, groan, grumble, handshake, hug-(none)/mob, glare-(none)/mob,\ngrin, laugh, look-(none)/mob, moan, mumble, nod, pale, point-atom, raise, salute, shake, shiver, shrug,\nsigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, whimper,\nwink, yawn")
