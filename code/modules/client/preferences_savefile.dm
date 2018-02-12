@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 17
+#define SAVEFILE_VERSION_MAX 18
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -50,7 +50,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		aooccolor = ooccolor
 
 /datum/preferences/proc/update_character(current_version, savefile/S)
-	if(current_version < 17)
+	if(current_version < 18)
 		ResetJobs()
 		if(language && species && language != "None")
 			var/datum/language/lang = all_languages[language]
