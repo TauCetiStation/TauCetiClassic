@@ -260,15 +260,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		apply_damage(damage, BRUTE, BP, armor)
 		if(armor >= 2)	return
 
-
-/mob/living/carbon/human/proc/is_loyalty_implanted(mob/living/carbon/human/M)
-	for(var/L in M.contents)
-		if(istype(L, /obj/item/weapon/implant/loyalty))
-			for(var/obj/item/organ/external/BP in M.bodyparts)
-				if(L in BP.implants)
-					return 1
-	return 0
-
 /mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M)
 	if(M.Victim) return // can't attack while eating!
 

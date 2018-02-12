@@ -220,13 +220,10 @@ var/datum/subsystem/vote/SSvote
 				popup.set_window_options("can_close=0")
 				popup.set_content(SSvote.interface(C))
 				popup.open(0)
-			addtimer(CALLBACK(src , .proc/return_ooc, ooc_allowed, dsay_allowed), config.vote_period)
+			addtimer(CALLBACK(src , .proc/return_ooc, ooc_allowed), config.vote_period)
 			if(ooc_allowed)
 				ooc_allowed = FALSE
 				to_chat(world, "<B>The OOC channel will be globally disabled during vote!</B>")
-			if(dsay_allowed)
-				dsay_allowed = FALSE
-				to_chat(world, "<B>Deadchat will be globally disabled during vote!</B>")
 		return 1
 	return 0
 
@@ -341,10 +338,7 @@ var/datum/subsystem/vote/SSvote
 	popup.set_content(SSvote.interface(client))
 	popup.open(0)
 
-/datum/subsystem/vote/proc/return_ooc(old_stat_ooc, old_stat_deadchat)
+/datum/subsystem/vote/proc/return_ooc(old_stat_ooc)
 	if(old_stat_ooc && !ooc_allowed)
 		to_chat(world, "<B>The OOC channel has been globally enabled!</B>")
 		ooc_allowed = TRUE
-	if(old_stat_deadchat && !dsay_allowed)
-		to_chat(world, "<B>Deadchat has been globally enabled!</B>")
-		dsay_allowed = TRUE

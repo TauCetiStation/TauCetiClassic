@@ -50,6 +50,9 @@
 				var/available_in_days = job.available_in_days(user.client)
 				. += "<del>[rank]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
 			continue
+		if(!job.is_species_permitted(user.client))
+			. += "<del>[rank]</del></td><td><b> \[SPECIES RESTRICTED]</b></td></tr>"
+			continue
 		if((job_civilian_low & ASSISTANT) && (rank != "Test Subject"))
 			. += "<font color=orange>[rank]</font></td><td></td></tr>"
 			continue

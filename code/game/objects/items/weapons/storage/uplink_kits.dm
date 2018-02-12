@@ -143,6 +143,8 @@
 	. = ..()
 	new /obj/item/clothing/suit/space/syndicate(src)
 	new /obj/item/clothing/head/helmet/space/syndicate(src)
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 
 /obj/item/weapon/storage/box/syndie_kit/chameleon
 	name = "Chameleon Kit"

@@ -15,6 +15,7 @@
 	var/native                       // If set, non-native speakers will have trouble speaking.
 	var/list/syllables               // Used when scrambling text for a non-speaker.
 	var/list/space_chance = 55 // Likelihood of getting a space in the random scramble string.
+	var/list/allowed_species	 // A name of species, Which can use this lang as secondary.
 
 
 /datum/language/proc/format_message(message, verb)
@@ -70,7 +71,7 @@
 	exclaim_verb = "roars"
 	colour = "soghun"
 	key = list("o", "ù")
-	flags = WHITELISTED
+	allowed_species = list(IPC)
 	syllables = list("ss","ss","ss","ss","skak","seeki","resh","las","esi","kor","sh")
 
 /datum/language/tajaran
@@ -80,8 +81,8 @@
 	ask_verb = "mrowls"
 	exclaim_verb = "yowls"
 	colour = "tajaran"
+	allowed_species = list(IPC)
 	key = list("j", "î")
-	flags = WHITELISTED
 	syllables = list("rr","rr","tajr","kir","raj","kii","mir","kra","ahk","nal","vah","khaz","jri","ran","darr", \
 	"mi","jri","dynh","manq","rhe","zar","rrhaz","kal","chur","eech","thaa","dra","jurl","mah","sanu","dra","ii'r", \
 	"ka","aasi","far","wa","baq","ara","qara","zir","sam","mak","hrar","nja","rir","khan","jun","dar","rik","kah", \
@@ -94,10 +95,11 @@
 	ask_verb = "mrowls"
 	exclaim_verb = "yowls"
 	colour = "tajaran_signlang"
+	allowed_species = list(TAJARAN)
 	key = list("y", "í")		//only "dfpqxyz" left.
 	//need to find a way to resolve possesive macros
 	signlang_verb = list("flicks their left ear", "flicks their right ear", "swivels their ears", "twitches their tail", "curls the end of their tail", "arches their tail", "wiggles the end of their tail", "waves their tail about", "holds up a claw", "gestures with their left hand", "gestures with their right hand", "gestures with their tail", "gestures with their ears")
-	flags = WHITELISTED | NONVERBAL
+	flags = NONVERBAL
 
 /datum/language/skrell
 	name = "Skrellian"
@@ -107,7 +109,7 @@
 	exclaim_verb = "warbles"
 	colour = "skrell"
 	key = list("k", "ë")
-	flags = WHITELISTED
+	allowed_species = list(IPC)
 	syllables = list("qr","qrr","xuq","qil","quum","xuqm","vol","xrim","zaoo","qu-uu","qix","qoo","zix","*","!")
 
 /datum/language/vox
@@ -128,9 +130,9 @@
 	speech_verb = "creaks and rustles"
 	ask_verb = "creaks"
 	exclaim_verb = "rustles"
+	allowed_species = list(IPC)
 	colour = "soghun"
 	key = list("q", "é")
-	flags = RESTRICTED
 	syllables = list("hs","zt","kr","st","sh")
 
 /datum/language/human
@@ -138,7 +140,7 @@
 	desc = "A bastardized hybrid of informal English and elements of Mandarin Chinese; the common language of the Sol system."
 	colour = "rough"
 	key = list("1")
-	flags = RESTRICTED
+	allowed_species = list(IPC, DIONA, SKRELL, UNATHI, TAJARAN)
 	syllables = list("tao","shi","tzu","yi","com","be","is","i","op","vi","ed","lec","mo","cle","te","dis","e")
 
 // Galactic common languages (systemwide accepted standards).
@@ -148,6 +150,7 @@
 	speech_verb = "enunciates"
 	colour = "say_quote"
 	key = list("2")
+	allowed_species = list(HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
 	syllables = list("lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit",
 					 "sed", "do", "eiusmod", "tempor", "incididunt", "ut", "labore", "et", "dolore",
 					 "magna", "aliqua", "ut", "enim", "ad", "minim", "veniam", "quis", "nostrud",
@@ -163,6 +166,7 @@
 	speech_verb = "growls"
 	colour = "rough"
 	key = list("3")
+	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI, TAJARAN)
 	syllables = list ("gra","ba","ba","breh","bra","rah","dur","ra","ro","gro","go","ber","bar","geh","heh", "gra")
 
 // Language handling.

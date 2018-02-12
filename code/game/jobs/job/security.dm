@@ -17,6 +17,7 @@
 	)
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
+	restricted_species = list(UNATHI, TAJARAN, DIONA, IPC, SKRELL)
 
 /datum/job/hos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -44,12 +45,9 @@
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
-	L.imp_in = H
-	L.implanted = 1
-	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-	BP.implants += L
-	L.part = BP
+	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
+	L.inject(H)
+	START_PROCESSING(SSobj, L)
 	return 1
 
 
@@ -66,6 +64,7 @@
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
+	restricted_species = list(UNATHI, TAJARAN, DIONA, IPC, SKRELL)
 
 /datum/job/warden/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -94,6 +93,9 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
 
+	var/obj/item/weapon/implant/mindshield/L = new(H)
+	L.inject(H)
+
 	return 1
 
 
@@ -110,6 +112,7 @@
 	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_court)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
+	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/detective/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -154,6 +157,7 @@
 	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
+	restricted_species = list(DIONA, TAJARAN, IPC)
 
 /datum/job/officer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -177,6 +181,9 @@
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
+
+	var/obj/item/weapon/implant/mindshield/L = new(H)
+	L.inject(H)
 
 	return 1
 

@@ -346,9 +346,9 @@
 	name = "Electronic cigarette"
 	desc = "An electronic cigarette. Most of the relief of a real cigarette with none of the side effects. Often used by smokers who are trying to quit the habit."
 	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "cigon"
+	icon_state = "ecig"
 	throw_speed = 0.5
-	item_state = "ciglit"
+	item_state = "ecig"
 	w_class = 1
 	body_parts_covered = null
 

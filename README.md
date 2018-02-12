@@ -13,6 +13,12 @@
 
 ---
 
+### ВНЕСТИ ВКЛАД (CONTRIBUTING)
+
+Обязательно прочитайте [CONTRIBUTING.md](https://github.com/TauCetiStation/TauCetiClassic/blob/master/CONTRIBUTING.md).
+
+---
+
 ### LICENSE
 Build is licensed under the GNU Affero General Public License version 3, which can be found in full in LICENSE-AGPL3.txt.
 
