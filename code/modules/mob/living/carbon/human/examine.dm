@@ -457,7 +457,8 @@
 		msg += "<span class = 'deptradio'>Medical records:</span> <a href='?src=\ref[src];medrecord=`'>\[View\]</a> <a href='?src=\ref[src];medrecordadd=`'>\[Add comment\]</a>\n"
 
 
-	if(print_flavor_text()) msg += "[print_flavor_text()]\n"
+	if(!skipface)
+		if(print_flavor_text()) msg += "[print_flavor_text()]\n"
 
 	msg += "*---------*</span><br>"
 	if(applying_pressure)
