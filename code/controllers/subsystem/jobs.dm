@@ -123,8 +123,8 @@ var/datum/subsystem/job/SSjob
 		if(job.title in command_positions) //If you want a command position, select it!
 			continue
 		
-		if(!job.is_species_permitted(player.client))	
-			continue	
+		if(!job.is_species_permitted(player.client))
+			continue
 
 		if(jobban_isbanned(player, job.title))
 			Debug("GRJ isbanned failed, Player: [player], Job: [job.title]")
