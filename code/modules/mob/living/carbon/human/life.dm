@@ -1863,12 +1863,17 @@
 		holder2.icon_state = "hudblank"
 		holder3.icon_state = "hudblank"
 
+		var/has_loyal_implant = FALSE
 		for(var/obj/item/weapon/implant/I in src)
 			if(I.implanted)
 				if(istype(I,/obj/item/weapon/implant/tracking))
 					holder1.icon_state = "hud_imp_tracking"
-				if(istype(I,/obj/item/weapon/implant/loyalty))
-					holder2.icon_state = "hud_imp_loyal"
+				if(istype(I,/obj/item/weapon/implant/mindshield) && !has_loyal_implant)
+					if(istype(I,/obj/item/weapon/implant/mindshield/loyalty))
+						has_loyal_implant = TRUE
+						holder2.icon_state = "hud_imp_loyal"
+					else
+						holder2.icon_state = "hud_imp_mindshield"
 				if(istype(I,/obj/item/weapon/implant/chem))
 					holder3.icon_state = "hud_imp_chem"
 

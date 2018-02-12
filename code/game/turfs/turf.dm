@@ -196,6 +196,8 @@
 	var/old_flooded = flooded
 	var/obj/effect/fluid/F = locate() in src
 
+	var/list/temp_res = resources
+
 	//world << "Replacing [src.type] with [N]"
 
 	if(connections)
@@ -209,8 +211,10 @@
 		if(S.zone)
 			S.zone.rebuild()
 
-
 	var/turf/W = new path(src)
+
+	W.has_resources = has_resources
+	W.resources = temp_res
 
 	if(ispath(path, /turf/simulated/floor))
 		if (istype(W, /turf/simulated/floor))

@@ -77,14 +77,17 @@ var/list/ai_verbs_default = list(
 	verbs |= ai_verbs_default
 
 /mob/living/silicon/ai/proc/hcattack_ai(atom/A)
-	if(!isliving(A) || !in_range(eyeobj, A))
-		return 1
+	if(!holo || !isliving(A) || !in_range(eyeobj, A))
+		return FALSE
+	if(get_dist(eyeobj, holo) > holo.holo_range) // some scums can catch a moment between ticks in process to make unwanted attack
+		return FALSE
+	SetNextMove(CLICK_CD_MELEE * 3)
 	var/mob/living/L = A
 	eyeobj.visible_message("<span class='userdanger'>space carp nashes at [A]</span>")
-	L.apply_damage(15, BRUTE, BP_CHEST, run_armor_check(BP_CHEST, "melee"), DAM_SHARP|DAM_EDGE)
-	for(var/mob/M in hearers(15, get_turf(eyeobj)))
-		M.playsound_local(get_turf(src.eyeobj), 'sound/weapons/bite.ogg', 100, falloff = 5)
-	playsound_local(get_turf(src), 'sound/weapons/bite.ogg', 30, falloff = 1)
+	L.apply_damage(15, BRUTE, BP_CHEST, L.run_armor_check(BP_CHEST, "melee"), DAM_SHARP|DAM_EDGE)
+	playsound(eyeobj, 'sound/weapons/bite.ogg', 100)
+	return TRUE
+
 
 /mob/living/silicon/ai/proc/remove_ai_verbs()
 	verbs -= ai_verbs_default
