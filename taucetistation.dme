@@ -750,6 +750,7 @@
 #include "code\game\objects\items\weapons\implants\implantfreedom.dm"
 #include "code\game\objects\items\weapons\implants\implantpad.dm"
 #include "code\game\objects\items\weapons\implants\implantuplink.dm"
+#include "code\game\objects\items\weapons\implants\mindshield.dm"
 #include "code\game\objects\items\weapons\melee\energy.dm"
 #include "code\game\objects\items\weapons\melee\misc.dm"
 #include "code\game\objects\items\weapons\storage\backpack.dm"

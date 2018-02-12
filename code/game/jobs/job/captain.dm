@@ -42,13 +42,10 @@
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
-	L.imp_in = H
-	L.implanted = 1
+	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
+	L.inject(H)
+	START_PROCESSING(SSobj, L)
 	to_chat(world, "<b>[H.real_name] is the captain!</b>")
-	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-	BP.implants += L
-	L.part = BP
 	return 1
 
 /datum/job/captain/get_access()

@@ -44,12 +44,9 @@
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
-	L.imp_in = H
-	L.implanted = 1
-	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-	BP.implants += L
-	L.part = BP
+	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
+	L.inject(H)
+	START_PROCESSING(SSobj, L)
 	return 1
 
 
@@ -93,6 +90,9 @@
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
+
+	var/obj/item/weapon/implant/mindshield/L = new(H)
+	L.inject(H)
 
 	return 1
 
@@ -177,6 +177,9 @@
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
+
+	var/obj/item/weapon/implant/mindshield/L = new(H)
+	L.inject(H)
 
 	return 1
 

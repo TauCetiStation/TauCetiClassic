@@ -1036,12 +1036,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
-			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
-			L.imp_in = M
-			L.implanted = 1
-			var/obj/item/organ/external/BP = M.bodyparts_by_name[BP_HEAD]
-			BP.implants += L
-			L.part = BP
+			var/obj/item/weapon/implant/mindshield/loyalty/L = new(M)
+			START_PROCESSING(SSobj, L)
+			L.inject(M)
 		if("hop")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_personnel(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), slot_shoes)
@@ -1088,12 +1085,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
-			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
-			L.imp_in = M
-			L.implanted = 1
-			var/obj/item/organ/external/BP = M.bodyparts_by_name[BP_HEAD]
-			BP.implants += L
-			L.part = BP
+			var/obj/item/weapon/implant/mindshield/loyalty/L = new(M)
+			L.inject(M)
+			START_PROCESSING(SSobj, L)
 		if("cmo")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chief_medical_officer(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(M), slot_shoes)
@@ -1561,12 +1555,9 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 
-			var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(M)
-			L.imp_in = M
-			L.implanted = 1
-			var/obj/item/organ/external/BP = M.bodyparts_by_name[BP_HEAD]
-			BP.implants += L
-			L.part = BP
+			var/obj/item/weapon/implant/mindshield/loyalty/L = new(M)
+			L.inject(M)
+			START_PROCESSING(SSobj, L)
 		if("assistant")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/color/grey(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(M), slot_shoes)
