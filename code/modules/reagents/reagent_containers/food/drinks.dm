@@ -38,6 +38,10 @@
 				to_chat(H, "<span class='warning'>You have a monitor for a head, where do you think you're going to put that?</span>")
 				return
 
+		if(isliving(M))
+			var/mob/living/L = M
+			if(taste)
+				L.taste_reagents(src.reagents)
 		to_chat(M, "<span class='notice'>You swallow a gulp of [src].</span>")
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)

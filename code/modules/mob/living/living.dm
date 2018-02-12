@@ -1168,7 +1168,7 @@
 	if(do_not_taste_at_all)
 		return //no message spam
 
-	if(world.time-lasttaste >= 15)//prevent tastes spam
+	if(world.time-lasttaste >= 18)//prevent tastes spam
 		if(final_taste_list.len == 0)//too many reagents - none meet their thresholds
 			to_chat(src, "<span class='notice'>You can't really make out what you're tasting...</span>")
 			lasttaste = world.time
