@@ -358,6 +358,7 @@
 	reagents.add_reagent("nutriment", 4)
 	reagents.add_reagent("sugar", 2)
 	reagents.add_reagent("coco", 2)
+	reagents.add_reagent("egg", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/donut
 	name = "donut"
@@ -478,7 +479,8 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("egg", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/throw_impact(atom/hit_atom)
 	..()
@@ -546,6 +548,7 @@
 	reagents.add_reagent("nutriment", 3)
 	reagents.add_reagent("sodiumchloride", 1)
 	reagents.add_reagent("blackpepper", 1)
+	reagents.add_reagent("egg", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 	name = "Boiled egg"
@@ -557,6 +560,7 @@
 	. = ..()
 	reagents.add_reagent("nutriment", 2)
 	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("egg", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/flour
 	name = "flour"
@@ -2599,6 +2603,7 @@
 	. = ..()
 	reagents.add_reagent("nutriment", 15)
 	reagents.add_reagent("vitamin", 5)
+	reagents.add_reagent("cheese", 20)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/cheesewedge
@@ -2642,6 +2647,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/sliceable/bread/atom_init()
 	. = ..()
 	reagents.add_reagent("nutriment", 10)
+	reagents.add_reagent("bread", 10)
 	bitesize = 2
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice
@@ -3292,6 +3298,7 @@
 	. = ..()
 	reagents.add_reagent("nutriment", 10)
 	reagents.add_reagent("vitamin", 3)
+	reagents.add_reagent("beans", 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/wrap
 	name = "egg wrap"
@@ -3313,6 +3320,7 @@
 	. = ..()
 	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("vitamin", 4)
+	reagents.add_reagent("egg", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/meatbun
 	name = "meat bun"

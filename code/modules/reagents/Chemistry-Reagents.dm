@@ -105,7 +105,7 @@ datum
 			id = "blood"
 			reagent_state = LIQUID
 			color = "#c80000" // rgb: 200, 0, 0
-			taste_message = "blood"
+			taste_message = "<span class='warning'>blood</span>"
 
 			reaction_mob(mob/M, method=TOUCH, volume)
 				var/datum/reagent/blood/self = src
@@ -193,6 +193,7 @@ datum
 			id = "vaccine"
 			reagent_state = LIQUID
 			color = "#c81040" // rgb: 200, 16, 64
+			taste_message = "health"
 
 			reaction_mob(mob/M, method=TOUCH, volume)
 				var/datum/reagent/vaccine/self = src
@@ -218,6 +219,7 @@ datum
 			reagent_state = LIQUID
 			color = "#0064c8" // rgb: 0, 100, 200
 			custom_metabolism = 0.01
+			taste_message = null
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				spawn_fluid(T, volume) // so if will spawn even in space, just for pure visuals
@@ -276,6 +278,7 @@ datum
 			reagent_state = LIQUID
 			color = "#009ca8" // rgb: 0, 156, 168
 			overdose = REAGENTS_OVERDOSE
+			taste_message = "oil"
 
 			reaction_turf(var/turf/simulated/T, var/volume)
 				if (!istype(T)) return
@@ -290,6 +293,7 @@ datum
 			reagent_state = LIQUID
 			color = "#cf3600" // rgb: 207, 54, 0
 			custom_metabolism = 0.01
+			taste_message = "plastic"
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1213,7 +1217,6 @@ datum
 			color = "#99ccff" // rgb: 200, 165, 220
 			custom_metabolism = 0.01
 			overdose = REAGENTS_OVERDOSE
-			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1235,7 +1238,6 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
-			taste_message = null
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1562,7 +1564,6 @@ datum
 			description = "A highly addictive stimulant extracted from the tobacco plant."
 			reagent_state = LIQUID
 			color = "#181818" // rgb: 24, 24, 24
-			taste_message = null
 
 		ammonia
 			name = "Ammonia"
@@ -1585,7 +1586,6 @@ datum
 			description = "A secondary amine, mildly corrosive."
 			reagent_state = LIQUID
 			color = "#604030" // rgb: 96, 64, 48
-			taste_message = null
 
 		ethylredoxrazine	// FUCK YOU, ALCOHOL
 			name = "Ethylredoxrazine"
@@ -2082,6 +2082,7 @@ datum
 /datum/reagent/consumable
 	name = "Consumable"
 	id = "consumable"
+	taste_message = null
 
 /datum/reagent/consumable/on_mob_life(mob/living/M)
 	if(!..())
@@ -2588,6 +2589,39 @@ datum
 		return
 	M.nutrition += nutriment_factor
 
+/datum/reagent/consumable/egg
+	name = "Egg"
+	id = "egg"
+	description = "A runny and viscous mixture of clear and yellow fluids."
+	reagent_state = LIQUID
+	color = "#F0C814"
+	taste_message = "eggs"
+
+/datum/reagent/consumable/cheese
+	name = "Cheese"
+	id = "cheese"
+	description = "Some cheese. Pour it out to make it solid."
+	reagent_state = SOLID
+	color = "#FFFF00"
+	taste_message = "cheese"
+
+/datum/reagent/consumable/beans
+	name = "Refried beans"
+	id = "beans"
+	description = "A dish made of mashed beans cooked with lard."
+	reagent_state = LIQUID
+	color = "#684435"
+	taste_message = "burritos"
+
+/datum/reagent/consumable/bread
+	name = "Bread"
+	id = "bread"
+	description = "Bread! Yep, bread."
+	reagent_state = SOLID
+	color = "#9C5013"
+	taste_message = "bread"
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////// DRINKS BELOW, Beer is up there though, along with cola. Cap'n Pete's Cuban Spiced Rum////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2879,7 +2913,7 @@ datum
 /datum/reagent/consumable/drink/cold
 	name = "Cold drink"
 	adj_temp = -5
-	taste_message = null
+	taste_message = "coolness"
 
 /datum/reagent/consumable/drink/cold/tonic
 	name = "Tonic Water"
@@ -3162,6 +3196,7 @@ datum
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
 	custom_metabolism = FOOD_METABOLISM * 0.5
+	taste_message = "peeeeeeace"
 
 /datum/reagent/consumable/hippies_delight/on_mob_life(mob/living/M)
 	if(!..())
@@ -3596,6 +3631,7 @@ datum
 	description = "100 proof cinnamon schnapps, made for alcoholic teen girls on spring break."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 3
+	taste_message = "schnapps"
 
 /datum/reagent/consumable/ethanol/patron
 	name = "Patron"
@@ -3603,6 +3639,7 @@ datum
 	description = "Tequila with silver in it, a favorite of alcoholic women in the club scene."
 	color = "#585840" // rgb: 88, 88, 64
 	boozepwr = 1.5
+	taste_message = "light tequila"
 
 /datum/reagent/consumable/ethanol/gintonic
 	name = "Gin and Tonic"
@@ -3610,6 +3647,7 @@ datum
 	description = "An all time classic, mild cocktail."
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 1
+	taste_message = "gin tonic"
 
 /datum/reagent/consumable/ethanol/cuba_libre
 	name = "Cuba Libre"
