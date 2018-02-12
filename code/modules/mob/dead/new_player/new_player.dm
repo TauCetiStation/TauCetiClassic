@@ -142,7 +142,7 @@
 		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
 				to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
-				return 0
+				return FALSE
 
 		LateChoices()
 
@@ -158,8 +158,7 @@
 		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
 				to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
-				return 0
-
+				return FALSE
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
 
@@ -264,11 +263,17 @@
 
 /mob/dead/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
-	if(!job)	return 0
-	if(!job.is_position_available()) return 0
-	if(jobban_isbanned(src,rank))	return 0
-	if(!job.player_old_enough(src.client))	return 0
-	return 1
+	if(!job)
+		return FALSE
+	if(!job.is_position_available())
+		return FALSE
+	if(jobban_isbanned(src, rank))
+		return FALSE
+	if(!job.player_old_enough(client))
+		return FALSE
+	if(!job.is_species_permitted(client))
+		return FALSE
+	return TRUE
 
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
