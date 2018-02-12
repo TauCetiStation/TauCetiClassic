@@ -25,11 +25,35 @@
 	flags = CONDUCT
 	origin_tech = "materials=1"
 	attack_verb = list("attacked", "stabbed", "poked")
+	var/max_contents = 1
 
 /obj/item/weapon/kitchen/utensil/atom_init()
 	. = ..()
 	if (prob(60))
 		pixel_y = rand(0, 4)
+
+/obj/item/weapon/kitchen/utensil/attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	if(!istype(M))
+		return ..()
+
+	if(user.a_intent != "help")
+		if(user.zone_sel.selecting == "head" || user.zone_sel.selecting == "eyes")
+			if((CLUMSY in user.mutations) && prob(50))
+				M = user
+			return eyestab(M,user)
+		else
+			return ..()
+
+	if(contents.len)
+		var/obj/item/weapon/reagent_containers/food/snacks/toEat = contents[1]
+		if(istype(toEat))
+			if(CanEat(user, M, toEat, "eat"))
+				toEat.On_Consume(M, user)
+				spawn(0)
+					if(toEat)
+						qdel(toEat)
+				overlays.Cut()
+				return
 
 /*
  * Spoons
@@ -55,7 +79,7 @@
 	force = 3
 	icon_state = "fork"
 
-/obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+/*/obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M))
 		return ..()
 
@@ -76,7 +100,7 @@
 	else
 		if((CLUMSY in user.mutations) && prob(50))
 			M = user
-		return eyestab(M,user)
+		return eyestab(M,user)*/
 
 /obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
@@ -95,7 +119,7 @@
 	icon_state = "pfork"
 	force = 0
 
-/obj/item/weapon/kitchen/utensil/pfork/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+/*/obj/item/weapon/kitchen/utensil/pfork/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M))
 		return ..()
 
@@ -116,7 +140,7 @@
 	else
 		if((CLUMSY in user.mutations) && prob(50))
 			M = user
-		return eyestab(M,user)
+		return eyestab(M,user)*/
 
 /*
  * Knives

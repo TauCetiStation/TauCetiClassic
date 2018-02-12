@@ -134,8 +134,42 @@
 /obj/item/weapon/reagent_containers/food/snacks/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/storage))
 		..() // -> item/attackby()
-	if(istype(W,/obj/item/weapon/storage))
-		..() // -> item/attackby()
+	if(istype(W,/obj/item/weapon/kitchen/utensil))
+
+		var/obj/item/weapon/kitchen/utensil/U = W
+
+		if(U.contents.len >= U.max_contents)
+			to_chat(user, "<span class='warning'>You cannot fit anything else on your [U].")
+			return
+
+		user.visible_message( \
+			"[user] scoops up some [src] with \the [U]!", \
+			"<span class='notice'>You scoop up some [src] with \the [U]!" \
+		)
+
+		bitecount++
+		U.overlays.Cut()
+		var/image/I = new(U.icon, "loadedfood")
+		I.color = filling_color
+		U.overlays += I
+
+		var/obj/item/weapon/reagent_containers/food/snacks/collected = new type
+		collected.loc = U
+		collected.reagents.remove_any(collected.reagents.total_volume)
+		collected.trash = null
+		if(reagents.total_volume > bitesize)
+			reagents.trans_to(collected, bitesize)
+		else
+			reagents.trans_to(collected, reagents.total_volume)
+			if(trash)
+				var/obj/item/TrashItem
+				if(ispath(trash,/obj/item))
+					TrashItem = new trash(src)
+				else if(istype(trash,/obj/item))
+					TrashItem = trash
+				TrashItem.forceMove(loc)
+			qdel(src)
+		return 1
 	if((slices_num <= 0 || !slices_num) || !slice_path)
 		return 0
 	var/inaccurate = 0
@@ -934,7 +968,7 @@
 	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("vitamin", 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/omelette/attackby(obj/item/weapon/W, mob/user)
+/*/obj/item/weapon/reagent_containers/food/snacks/omelette/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
 		if (W.icon_state == "forkloaded")
 			to_chat(user, "<span class='rose'>You already have omelette on your fork.</span>")
@@ -951,7 +985,7 @@
 		)
 		reagents.remove_reagent("nutriment", 1)
 		if (reagents.total_volume <= 0)
-			qdel(src)
+			qdel(src)*/
 /*
  * Unsused.
 /obj/item/weapon/reagent_containers/food/snacks/omeletteforkload
