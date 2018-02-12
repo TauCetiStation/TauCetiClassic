@@ -364,7 +364,7 @@ var/bomb_set
 						src.icon_state = "nuclearbomb2"
 					if(!src.safety)
 						var/area/nuclearbombloc = get_area(loc)
-						captain_announce("Bomb has been planted in [initial(nuclearbombloc.name)]. These bastards are trying to blow up the station!")
+						captain_announce("Bomb has been planted in [initial(nuclearbombloc.name)]. Someone trying to blow up the station!")
 						set_security_level("delta")
 						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 					else
