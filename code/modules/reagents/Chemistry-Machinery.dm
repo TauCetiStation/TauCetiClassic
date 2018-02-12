@@ -144,8 +144,8 @@
 			energy = max(energy - min(amount, energy * 10, space) / 10, 0)
 
 	if(href_list["ejectBeaker"])
-		if(beaker)			
-			if(!usr.hand && usr.r_hand && usr.l_hand)
+		if(beaker)				
+			if(usr.r_hand && usr.l_hand)
 				var/obj/item/weapon/reagent_containers/B = beaker
 				B.loc = loc
 				beaker = null
