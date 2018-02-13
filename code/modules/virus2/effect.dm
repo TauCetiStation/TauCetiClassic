@@ -350,6 +350,6 @@
 /datum/disease2/effect/headache
 	name = "Headache"
 	stage = 1
-	activate(mob/living/carbon/mob,multiplier)
+	activate(mob/living/carbon/human/mob,multiplier)
 		if(!(mob.species && mob.species.flags[NO_PAIN]))
 			to_chat(mob, "<span class = 'notice'> Your head hurts a bit</span>")
