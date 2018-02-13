@@ -312,6 +312,11 @@ This function restores all bodyparts.
 
 /mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null)
 
+	//Handle HALLOSS for NO_PAIN mobs.
+	if(damagetype == HALLOSS && species && species.flags[NO_PAIN])
+		updatehealth()
+		return FALSE
+
 	//Handle other types of damage or healing
 	if(damage < 0 || !(damagetype in list(BRUTE, BURN)))
 		..(damage, damagetype, def_zone, blocked)
