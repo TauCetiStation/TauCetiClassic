@@ -389,7 +389,11 @@ var/bomb_set
 			if(src.anchored)
 				visible_message("\red With a steely snap, bolts slide out of [src] and anchor it to the flooring.")
 			else
-				visible_message("\red The anchoring bolts slide back into the depths of [src].")
+				icon_state = "nuclearbomb1"
+				safety = 1.0
+				timing = -1.0
+				timeleft = TIMER_MAX
+				visible_message("\red The anchoring bolts slide back into the depths of [src] and timer has stopped")
 
 	updateUsrDialog()
 
