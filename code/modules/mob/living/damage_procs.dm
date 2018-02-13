@@ -68,10 +68,10 @@
 	updatehealth()
 	return 1
 
-/mob/living/carbon/human/apply_effect(effect = 0, effecttype = STUN, blocked = 0) // Now we can check for freaking xeno!
+/mob/living/carbon/human/apply_effect(effect = 0, effecttype = STUN, blocked = FALSE)
 	if((effecttype == AGONY || effecttype == STUTTER) && species && species.flags[NO_PAIN])
 		updatehealth()
-		return 1
+		return TRUE
 	..(effect, effecttype, blocked)
 
 /mob/living/proc/apply_effects(stun = 0, weaken = 0, paralyze = 0, irradiate = 0, stutter = 0, eyeblur = 0, drowsy = 0, agony = 0, blocked = 0)
