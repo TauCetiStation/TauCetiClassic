@@ -140,7 +140,7 @@
 			owner.emote("cough")		//respitory tract infection
 
 	if(is_bruised())
-		if(!(owner.get_species() == DIONA))
+		if(!(owner.get_species() == DIONA || owner.get_species() == IPC))
 			if(prob(2))
 				spawn owner.emote("me", 1, "coughs up blood!")
 				owner.drip(10)
