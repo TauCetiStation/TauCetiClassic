@@ -351,5 +351,5 @@
 	name = "Headache"
 	stage = 1
 	activate(mob/living/carbon/mob,multiplier)
-		if(!(mob.get_species() == DIONA))
+		if(!(mob.species && mob.species.flags[NO_PAIN]))
 			to_chat(mob, "<span class = 'notice'> Your head hurts a bit</span>")
