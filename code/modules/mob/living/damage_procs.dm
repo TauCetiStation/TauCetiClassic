@@ -68,12 +68,6 @@
 	updatehealth()
 	return 1
 
-/mob/living/carbon/human/apply_effect(effect = 0, effecttype = STUN, blocked = FALSE)
-	if((effecttype == AGONY || effecttype == STUTTER) && species && species.flags[NO_PAIN])
-		updatehealth()
-		return TRUE
-	..(effect, effecttype, blocked)
-
 /mob/living/proc/apply_effects(stun = 0, weaken = 0, paralyze = 0, irradiate = 0, stutter = 0, eyeblur = 0, drowsy = 0, agony = 0, blocked = 0)
 	if(blocked >= 100)	return 0
 	if(stun)		apply_effect(stun, STUN, blocked)
