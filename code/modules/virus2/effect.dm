@@ -350,10 +350,6 @@
 /datum/disease2/effect/headache
 	name = "Headache"
 	stage = 1
-	if(!ishuman(mob))
-		activate(mob/living/carbon/mob,multiplier)
+	activate(mob/living/carbon/mob,multiplier)
+		if(!(mob.get_species() == DIONA || mob.get_species() == IPC))
 			to_chat(mob, "<span class = 'notice'> Your head hurts a bit</span>")
-	else
-		activate(mob/living/carbon/human/mob,multiplier)
-			if(!(species && species.flags[NO_PAIN]))
-				to_chat(mob, "<span class = 'notice'> Your head hurts a bit</span>")
