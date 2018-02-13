@@ -536,7 +536,7 @@
 			else
 				for (var/V in virus2)
 					if (istype(V, /datum/disease2/effect/scream))
-						virus_scream = TRUE // Found the Loudness Syndrome!
+						virus_scream = TRUE
 						break
 				if(virus_scream || !(species && species.flags[NO_PAIN]))
 					if (!muzzled)
