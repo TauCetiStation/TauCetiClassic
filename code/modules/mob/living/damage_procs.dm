@@ -29,13 +29,6 @@
 	flash_weak_pain()
 	updatehealth()
 	return TRUE
-	
-/mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, used_weapon = null) // Now we can check for freaking xeno!
-	if(damagetype == HALLOSS && species && species.flags[NO_PAIN])
-		flash_weak_pain()
-		updatehealth()
-		return TRUE
-	..(damage, damagetype, def_zone, blocked)
 
 /mob/living/proc/apply_damages(brute = 0, burn = 0, tox = 0, oxy = 0, clone = 0, halloss = 0, def_zone = null, blocked = 0)
 	if(blocked >= 100)	return 0
@@ -78,7 +71,7 @@
 /mob/living/carbon/human/apply_effect(effect = 0, effecttype = STUN, blocked = 0) // Now we can check for freaking xeno!
 	if((effecttype == AGONY || effecttype == STUTTER) && species && species.flags[NO_PAIN])
 		updatehealth()
-		return 1 
+		return 1
 	..(effect, effecttype, blocked)
 
 /mob/living/proc/apply_effects(stun = 0, weaken = 0, paralyze = 0, irradiate = 0, stutter = 0, eyeblur = 0, drowsy = 0, agony = 0, blocked = 0)
