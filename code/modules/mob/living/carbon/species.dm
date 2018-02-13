@@ -25,6 +25,7 @@
 	var/tail                          // Name of tail image in species effects icon file.
 	var/language                      // Default racial language, if any.
 	var/force_racial_language = FALSE // If TRUE, racial language will be forced by default when speaking.
+	var/secondary_langs = list()      // The names of secondary languages that are available to this species.
 	var/attack_verb = "punch"         // Empty hand hurt intent verb.
 	var/punch_damage = 0              // Extra empty hand attack damage.
 	var/mutantrace                    // Safeguard due to old code.
@@ -212,6 +213,7 @@
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
 	language = "Siik'maas"
+	secondary_langs = list("Siik'tajr")
 	tail = "tajtail"
 	unarmed_type = /datum/unarmed_attack/claws
 	darksight = 8
@@ -418,6 +420,15 @@
 	,NO_BLOOD = TRUE
 	,NO_PAIN = TRUE
 	)
+
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart,
+		O_BRAIN   = /obj/item/organ/internal/brain,
+		O_EYES    = /obj/item/organ/internal/eyes,
+		O_LUNGS   = /obj/item/organ/internal/lungs/diona,
+		O_LIVER   = /obj/item/organ/internal/liver,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys
+		)
 
 	blood_color = "#004400"
 	flesh_color = "#907E4A"
