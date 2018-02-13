@@ -20,6 +20,12 @@
 		ChangeToHusk()
 	return
 
+/mob/living/carbon/human/apply_effect(effect = 0, effecttype = STUN, blocked = 0)
+	if((effecttype == AGONY || effecttype == STUTTER) && species && species.flags[NO_PAIN])
+		updatehealth()
+		return 1
+	..(effect, effecttype, blocked)
+
 // =============================================
 
 /mob/living/carbon/human/getBrainLoss()
