@@ -310,9 +310,8 @@ This function restores all bodyparts.
 		zone = BP_HEAD
 	return bodyparts_by_name[zone]
 
-/mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = 0, damage_flags = 0, obj/used_weapon = null)
+/mob/living/carbon/human/apply_damage(damage = 0, damagetype = BRUTE, def_zone = null, blocked = FALSE, damage_flags = 0, obj/used_weapon = null)
 
-	//Handle HALLOSS for NO_PAIN mobs.
 	if(damagetype == HALLOSS && species && species.flags[NO_PAIN])
 		updatehealth()
 		return FALSE
