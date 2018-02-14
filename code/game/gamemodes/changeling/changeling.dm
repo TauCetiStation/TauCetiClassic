@@ -300,6 +300,12 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	else
 		changelingID = "[honorific] [rand(1,999)]"
 
+/datum/changeling/Destroy()
+	trusted_entity = null
+	controled_by = null
+	QDEL_LIST(essences)
+	return ..()
+
 /datum/changeling/proc/regenerate()
 	chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)
 	geneticdamage = max(0, geneticdamage-1)

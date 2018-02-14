@@ -51,7 +51,8 @@
 
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
 	..()
-
+	if(!iscarbon(usr) && !isrobot(usr))
+		return
 	if(attached)
 		visible_message("[src.attached] is detached from \the [src]")
 		src.attached = null

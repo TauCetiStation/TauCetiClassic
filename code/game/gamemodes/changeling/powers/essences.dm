@@ -6,6 +6,7 @@
 	var/is_changeling = FALSE
 	var/obj/screen/essence_voice/voice
 	var/obj/screen/essence_phantom/phantom_s
+	var/rehost_timer_id = 0
 
 /mob/living/parasite/essence/atom_init(mapload, mob/living/carbon/host, mob/living/carbon/victim)
 	. = ..()
@@ -23,6 +24,8 @@
 		exit_host()
 	changeling = null
 	QDEL_NULL(phantom)
+	if(rehost_timer_id)
+		deltimer(rehost_timer_id)
 	return ..()
 
 /mob/living/parasite/essence/Login()
@@ -33,17 +36,34 @@
 		for(var/mob/living/parasite/essence/E in changeling.essences)
 			if(E.phantom && E.phantom.showed)
 				client.images += E.phantom.overlay
+	if(rehost_timer_id)
+		deltimer(rehost_timer_id)
+		rehost_timer_id = 0
 
 /mob/living/parasite/essence/Logout()
-	phantom.hide_phantom()
+	if(phantom)
+		phantom.hide_phantom()
+	if(is_changeling)
+		rehost_timer_id = addtimer(CALLBACK(src, .proc/change_main_changeling), 10 MINUTES, TIMER_STOPPABLE)
 	return ..()
 
+/mob/living/parasite/essence/proc/change_main_changeling()
+	changeling.controled_by = null
+	is_changeling = FALSE
+	to_chat(host, "<span class='changeling'>The influence on a body of [changeling.changelingID] was weakened,\
+	 giving you the opportunity to become a new master.</span>")
+
 /mob/living/parasite/essence/exit_host()
-	..()
 	phantom.hide_phantom()
+	..()
 	if(client)
-		client.images.Cut()
-		client.screen.Cut()
+		for(var/scr in screens)
+			clear_fullscreen(scr)
+		for(var/alert in alerts)
+			clear_alert(alert)
+		for(var/image/hud in client.images)
+			if(copytext(hud.icon_state, 1, 4) == "hud")
+				client.images.Remove(hud)
 
 /mob/living/parasite/essence/proc/transfer(atom/new_host)
 	exit_host()
@@ -65,7 +85,7 @@
 			to_chat(src, "<span class='userdanger'>Your host forbade you speaking to him</span>")
 			return
 		message = copytext(message, 3) // deleting prefix
-		var/n_message = sanitize_plus_chat(message)
+		var/n_message = sanitize_plus_chat(trim(sanitize_plus(message)))
 		for(var/M in changeling.essences)
 			to_chat(M, "<span class='shadowling'><b>[name]:</b> [n_message]</span>")
 		to_chat(host, "<span class='shadowling'><b>[name]:</b> [n_message]</span>")
@@ -76,7 +96,7 @@
 			to_chat(src, "<span class='userdanger'>Your host forbade you speaking in hivemind</span>")
 			return
 		message = copytext(message, 3) // deleting prefix
-		var/n_message = sanitize_plus_chat(message)
+		var/n_message = sanitize_plus_chat(trim(sanitize_plus(message)))
 		for(var/mob/M in mob_list)
 			if(M.mind && M.mind.changeling)
 				to_chat(M, "<span class='changeling'><b>[changeling.changelingID]'s Essence of [name]:</b> [n_message]</span>")
@@ -94,6 +114,8 @@
 	if(message_mode && !(flags_allowed & ESSENCE_SPEAK_IN_RADIO))
 		to_chat(src, "<span class='userdanger'>Your host forbade you speaking in radio!</span>")
 		return
+	if(host.stat == DEAD)
+		return
 
 	if(ishuman(host) && self_voice)
 		var/mob/living/carbon/human/H = host
@@ -107,6 +129,8 @@
 /mob/living/parasite/essence/whisper(message as text)
 	if(!host)
 		to_chat(src, "<span class='userdanger'>You can't speak without host!</span>")
+		return
+	if(host.stat == DEAD)
 		return
 	if(!(flags_allowed & ESSENCE_WHISP))
 		to_chat(src, "<span class='userdanger'>Your host forbade you whispering!</span>")
@@ -127,6 +151,8 @@
 	if(!host)
 		to_chat(src, "<span class='userdanger'>You can't speak without host!</span>")
 		return
+	if(host.stat == DEAD)
+		return
 
 	if(!(flags_allowed & ESSENCE_EMOTE))
 		to_chat(src, "<span class='userdanger'>Your host forbade you emoting!</span>")
@@ -137,7 +163,6 @@
 /mob/living/parasite/essence/say_understands(mob/other, datum/language/speaking)
 	if(!host)
 		return FALSE
-
 	return host.say_understands(other, speaking)
 
 /mob/living/parasite/essence/ShiftClickOn(atom/A)
@@ -163,7 +188,7 @@
 	point.create_overlay(O)
 	point.pixel_x = A.pixel_x
 	point.pixel_y = A.pixel_y
-	point.layer = 16
+	point.layer = ABOVE_LIGHTING_LAYER
 	point.show_phantom(tile)
 	qdel(O)
 	QDEL_IN(point, 15)
@@ -300,24 +325,30 @@
 	if(!mind || !mind.changeling)
 		return FALSE
 	var/datum/changeling/changeling = mind.changeling
+	var/changing_changeling_key = TRUE
 	if(changeling.delegating)
 		return FALSE
 	changeling.delegating = TRUE
+	sleep(1)
 	if(changeling.controled_by)
-		changeling.controled_by.is_changeling = FALSE
-		var/mob/temp_mob = changeling.controled_by.ghostize(FALSE, FALSE)
-		changeling.controled_by.key = key
-		key = temp_mob.key
-		if(changeling.controled_by == E)
-			changeling.controled_by = null
-			changeling.delegating = FALSE
-			return
-	E.is_changeling = TRUE
+		changing_changeling_key = FALSE
+		if(changeling.controled_by.client)
+			changing_changeling_key = TRUE
+			changeling.controled_by.is_changeling = FALSE
+			var/mob/temp_mob = changeling.controled_by.ghostize(FALSE, FALSE)
+			changeling.controled_by.key = key
+			key = temp_mob.key
+			if(!E)
+				changeling.controled_by = null
+				changeling.delegating = FALSE
+				return
+	if(changing_changeling_key)
+		E.is_changeling = TRUE
+		changeling.controled_by = E
 	var/mob/temp_mob = E.ghostize(FALSE, FALSE)
 	E.key = key
 	key = temp_mob.key
 	E.flags_allowed = ESSENCE_ALL
-	changeling.controled_by = E
 	changeling.delegating = FALSE
 
 /obj/effect/proc_holder/changeling/manage_essencies/Topic(href, href_list)
@@ -362,11 +393,12 @@
 	sting_action(usr)
 
 /obj/effect/essence_phantom
+	anchored = TRUE
+	invisibility = SEE_INVISIBLE_OBSERVER
+	mouse_opacity = 0
 	var/showed = FALSE
 	var/mob/living/parasite/essence/host
 	var/image/overlay
-	anchored = TRUE
-	invisibility = 61
 
 /obj/effect/essence_phantom/atom_init(mapload, mob/living/host)
 	. = ..()

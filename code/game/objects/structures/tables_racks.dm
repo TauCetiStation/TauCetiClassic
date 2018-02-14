@@ -340,7 +340,7 @@
 	..()
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
-	if(isrobot(user))
+	if(isessence(usr) || isrobot(usr))
 		return
 	user.drop_item()
 	if (O.loc != src.loc)
@@ -653,7 +653,7 @@
 /obj/structure/rack/MouseDrop_T(obj/O, mob/user)
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
 		return
-	if(isrobot(user))
+	if(isrobot(user) || isessence(user))
 		return
 	user.drop_item()
 	if (O.loc != src.loc)

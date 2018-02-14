@@ -484,10 +484,14 @@
 
 /mob/MouseDrop(mob/M as mob)
 	..()
-	if(M != usr) return
-	if(usr == src) return
-	if(!Adjacent(usr)) return
-	if(istype(M, /mob/living/silicon/ai)) return
+	if(M != usr)
+		return
+	if(usr == src)
+		return
+	if(!Adjacent(usr))
+		return
+	if(isAI(M))
+		return
 	show_inv(usr)
 
 //this and stop_pulling really ought to be /mob/living procs

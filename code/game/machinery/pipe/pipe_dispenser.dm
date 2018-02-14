@@ -152,6 +152,8 @@ Nah
 
 //Allow you to drag-drop disposal pipes into it
 /obj/machinery/pipedispenser/disposal/MouseDrop_T(obj/structure/disposalconstruct/pipe, mob/usr)
+	if(!iscarbon(usr) && !isrobot(usr))
+		return
 	if(!usr.canmove || usr.stat || usr.restrained())
 		return
 

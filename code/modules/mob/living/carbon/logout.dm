@@ -2,8 +2,6 @@
 	..()
 	if(mind && mind.changeling && !mind.changeling.delegating && length(mind.changeling.essences) > 0)
 
-		if(mind.changeling.controled_by)
-			delegate_body_to_essence(mind.changeling.controled_by)
 		if(mind.changeling.trusted_entity && mind.changeling.trusted_entity.client)
 			delegate_body_to_essence(mind.changeling.trusted_entity)
 		else

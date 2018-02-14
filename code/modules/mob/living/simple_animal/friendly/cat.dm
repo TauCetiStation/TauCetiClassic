@@ -72,7 +72,7 @@
 /mob/living/simple_animal/cat/MouseDrop(atom/over_object)
 
 	var/mob/living/carbon/H = over_object
-	if(!istype(H) || !Adjacent(H))
+	if(!istype(H) || !Adjacent(H) || ismob(H.loc))
 		return ..()
 
 	//This REALLY needs to be moved to a general mob proc somewhere.

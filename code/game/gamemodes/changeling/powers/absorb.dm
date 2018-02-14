@@ -83,6 +83,15 @@
 						continue
 					changeling.absorbed_dna += dna_data
 				target.mind.changeling.absorbed_dna.len = 1
+			for(var/mob/living/parasite/essence/E in target.mind.changeling.essences)
+				E.flags_allowed = (ESSENCE_HIVEMIND | ESSENCE_PHANTOM | ESSENCE_POINT | ESSENCE_SPEAK_TO_HOST)
+				E.self_voice = FALSE
+				if(E.phantom)
+					E.phantom.hide_phantom()
+				E.changeling = changeling
+				E.transfer(user)
+			target.mind.changeling.essences.Cut()
+
 
 			changeling.geneticpoints += target.mind.changeling.geneticpoints
 			target.mind.changeling.absorbedcount = 0

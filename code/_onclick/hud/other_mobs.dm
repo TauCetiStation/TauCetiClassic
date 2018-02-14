@@ -45,10 +45,7 @@
 	E.phantom_s = new /obj/screen/essence_phantom()
 	E.phantom_s.name = "Phantom"
 	E.phantom_s.icon = 'icons/mob/screen_gen.dmi'
-	if(E.phantom && E.phantom.showed)
-		E.phantom_s.icon_state = "phantom_off"
-	else
-		E.phantom_s.icon_state = "phantom_off"
+	E.phantom_s.icon_state = "phantom_[(E.phantom && E.phantom.showed) ? "on" : "off"]"
 	E.phantom_s.screen_loc = ui_lhand
 	E.phantom_s.layer = ABOVE_HUD_LAYER
 	E.phantom_s.plane = ABOVE_HUD_PLANE
@@ -115,4 +112,4 @@
 	var/mob/living/parasite/essence/E = usr
 	if(!E.host)
 		return
-	E.host.delegate_body_to_essence(E)
+	E.host.delegate_body_to_essence()
