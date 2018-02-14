@@ -84,7 +84,7 @@
 			return
 	else
 		if(istype(M,/mob/living/carbon))
-//			log_debug("No gloves, [M] is trying to infect [src]")
+//			log_debug("No gloves, [M] is truing to infect [src]")
 			M.spread_disease_to(src, "Contact")
 
 
@@ -93,16 +93,16 @@
 			if(health < config.health_threshold_crit && health > config.health_threshold_dead)
 				if(M.species && M.species.flags[NO_BREATH])
 					to_chat(M, "\blue <B>Your species can not perform CPR!</B>")
-					return 0
+					return FALSE
 				if(species && species.flags[NO_BREATH])
 					to_chat(M, "\blue <B>You can not perform CPR on these species!</B>")
-					return 0
+					return FALSE
 				if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
 					to_chat(M, "\blue <B>Remove your mask!</B>")
-					return 0
+					return FALSE
 				if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
 					to_chat(M, "\blue <B>Remove his mask!</B>")
-					return 0
+					return FALSE
 
 				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
 				O.source = M
