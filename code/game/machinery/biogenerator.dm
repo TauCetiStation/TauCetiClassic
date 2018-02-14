@@ -138,7 +138,7 @@
 			dat += "<div class='statusDisplay'>"
 			dat += "10 milk: <A href='?src=\ref[src];action=create;item=milk'>Make</A> ([20/efficiency])<BR>"
 			dat += "10 cream: <A href='?src=\ref[src];action=create;item=cream'>Make</A> ([30/efficiency])<BR>"
-			dat += "Monkey cube: <A href='?src=\ref[src];action=create;item=meat'>Make</A> ([250/efficiency])"
+			dat += "Meat: <A href='?src=\ref[src];action=create;item=meat'>Make</A><A href='?src=\ref[src];action=create;item=meat5'>x5</A> ([125/efficiency])<BR>"
 			dat += "</div>"
 			dat += "<h3>Nutrients:</h3>"
 			dat += "<div class='statusDisplay'>"
@@ -212,8 +212,8 @@
 			if (check_cost(30/efficiency)) return 0
 			else beaker.reagents.add_reagent("cream",10)
 		if("meat")
-			if (check_cost(250/efficiency)) return 0
-			else new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
+			if (check_cost(125/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
 		if("ez")
 			if (check_cost(10/efficiency)) return 0
 			else new/obj/item/nutrient/ez(src.loc)
@@ -247,6 +247,14 @@
 				new/obj/item/nutrient/rh(src.loc)
 				new/obj/item/nutrient/rh(src.loc)
 				new/obj/item/nutrient/rh(src.loc)
+		if("meat5")
+			if (check_cost(125/efficiency)) return 0
+			else
+				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
 		if("wallet")
 			if (check_cost(100/efficiency)) return 0
 			else new/obj/item/weapon/storage/wallet(src.loc)
