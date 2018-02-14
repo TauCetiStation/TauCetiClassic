@@ -352,4 +352,4 @@
 	stage = 1
 	activate(mob/living/carbon/mob,multiplier)
 		if(!(mob.get_species() == DIONA || mob.get_species() == IPC))
-			to_chat(mob, "<span class = 'notice'> Your head hurts a bit</span>")
+			to_chat(mob, "<span class = 'notice'>Your head hurts a bit</span>")
