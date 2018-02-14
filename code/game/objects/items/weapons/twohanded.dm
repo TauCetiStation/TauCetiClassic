@@ -102,6 +102,15 @@
 		user.put_in_inactive_hand(O)
 		return
 
+/obj/item/weapon/twohanded/attack_self(mob/living/carbon/human/user)
+	var/obj/item/organ/external/l_hand/BPL = user.bodyparts_by_name[BP_L_HAND]
+	var/obj/item/organ/external/r_hand/BPR = user.bodyparts_by_name[BP_R_HAND]
+	if(!wielded && (BPL.status & ORGAN_DESTROYED || BPR.status & ORGAN_DESTROYED))
+		to_chat(user, "<span class='warning'>You need at least two hands to be intact</span>")
+		return
+	else
+		..(user)
+
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
 	w_class = 5.0
