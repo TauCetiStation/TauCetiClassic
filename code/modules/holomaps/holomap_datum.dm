@@ -64,7 +64,6 @@
 /datum/holomap_interface/proc/deactivate_holomap()
 	if(!activator)
 		return
-	activator.hud_used.holomap_obj.overlays -= holomap_base
 	activator.hud_used.holomap_obj.overlays.Cut()
 	qdel(holomap_base)
 	if(activator.client)
@@ -81,9 +80,6 @@
 	if(length(holomap_images))
 		activator.client.images -= holomap_images
 		QDEL_LIST(holomap_images)
-
-	activator.hud_used.holomap_obj.overlays.Cut()
-	activator.hud_used.holomap_obj.overlays += holomap_base
 
 	draw_special()
 
