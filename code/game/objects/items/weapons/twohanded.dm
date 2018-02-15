@@ -60,7 +60,22 @@
 /obj/item/weapon/twohanded/pickup(mob/user)
 	unwield()
 
+/obj/item/weapon/twohanded/attack_self(mob/living/carbon/human/user)
+	var/obj/item/organ/external/l_hand/BPL = user.bodyparts_by_name[BP_L_HAND]
+	var/obj/item/organ/external/r_hand/BPR = user.bodyparts_by_name[BP_R_HAND]
+	if(BPL.is_broken() || BPR.is_broken() || BPL.is_usable() || BPR.is_usable())
+		return FALSE
+
 /obj/item/weapon/twohanded/attack_self(mob/user)
+	if(istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/external/l_hand/BPL = H.bodyparts_by_name[BP_L_HAND]
+		var/obj/item/organ/external/r_hand/BPR = H.bodyparts_by_name[BP_R_HAND]
+		if(BPL.is_broken() || BPR.is_broken() || !BPL.is_usable() || !BPR.is_usable())
+			H.canwieldtwo = FALSE
+		else
+			H.canwieldtwo = TRUE
+		user = H
 	if(istype(user,/mob/living/carbon/monkey))
 		to_chat(user, "<span class='warning'>It's too heavy for you to wield fully.</span>")
 		return
@@ -83,8 +98,8 @@
 		return
 
 	else //Trying to wield it
-		if(user.get_inactive_hand())
-			to_chat(user, "<span class='warning'>You need your other hand to be empty</span>")
+		if(user.get_inactive_hand() || !user.canwieldtwo)
+			to_chat(user, "<span class='warning'>You need both of your hands to do this.</span>")
 			return
 		wield()
 		to_chat(user, "<span class='notice'>You grab the [initial(name)] with both hands.</span>")
@@ -101,15 +116,6 @@
 		O.desc = "Your second grip on the [initial(name)]"
 		user.put_in_inactive_hand(O)
 		return
-
-/obj/item/weapon/twohanded/attack_self(mob/living/carbon/human/user)
-	var/obj/item/organ/external/l_hand/BPL = user.bodyparts_by_name[BP_L_HAND]
-	var/obj/item/organ/external/r_hand/BPR = user.bodyparts_by_name[BP_R_HAND]
-	if(!wielded && (BPL.is_broken() || BPR.is_broken() || BPL.is_usable() || BPR.is_usable()))
-		to_chat(user, "<span class='warning'>You need at least two hands to be intact</span>")
-		return
-	else
-		..()
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
