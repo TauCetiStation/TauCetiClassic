@@ -16,7 +16,7 @@
 	result = /obj/item/weapon/reagent_containers/food/snacks/boiledegg
 
 /datum/recipe/microwave/dionaroast
-	reagents = list("facid" = 5) //It dissolves the carapace. Still poisonous, though.
+	reagents = list("pacid" = 5) //It dissolves the carapace. Still poisonous, though.
 	items = list(
 		/obj/item/weapon/holder/diona,
 		/obj/item/weapon/reagent_containers/food/snacks/grown/apple

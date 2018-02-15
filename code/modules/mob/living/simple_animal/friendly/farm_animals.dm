@@ -86,6 +86,28 @@
 			to_chat(user, "\red The udder is dry. Wait a bit longer...")
 	else
 		..()
+
+/mob/living/simple_animal
+	name = "animal"
+	desc = "Just simple animal"
+	icon_state = "animal"
+	icon_living = "animal"
+	icon_dead = "animal_dead"
+	icon_gib = "animal_gib"
+	speak = list("what?")
+	speak_emote = list("huh?")
+	emote_hear = list("brays")
+	emote_see = list("shakes")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 6)
+	response_help  = "pets the"
+	response_disarm = "gently pushes aside the"
+	response_harm   = "kicks the"
+	attacktext = "kicks"
+	health = 50
+
 //cow
 /mob/living/simple_animal/cow
 	name = "cow"
@@ -102,10 +124,6 @@
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 6)
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
-	attacktext = "kicks"
 	health = 50
 	var/datum/reagents/udder = null
 
@@ -173,10 +191,6 @@
 	speak_chance = 2
 	turns_per_move = 2
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 1)
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
-	attacktext = "kicks"
 	health = 1
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
@@ -213,10 +227,6 @@ var/global/chicken_count = 0
 	speak_chance = 2
 	turns_per_move = 3
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 2)
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
-	attacktext = "kicks"
 	health = 10
 	var/eggsleft = 0
 	var/body_color
@@ -285,16 +295,11 @@ var/global/chicken_count = 0
 	icon_dead = "pig_dead"
 	speak = list("oink?","oink","OINK")
 	speak_emote = list("oinks")
-//	emote_hear = list("brays")
 	emote_see = list("rolls around")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/ham = 6)
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
-	attacktext = "kicks"
 	health = 50
 
 /mob/living/simple_animal/turkey
@@ -303,7 +308,6 @@ var/global/chicken_count = 0
 	icon_state = "turkey"
 	icon_living = "turkey"
 	icon_dead = "turkey_dead"
-//	icon_resting = "turkey_rest"
 	speak = list("gobble?","gobble","GOBBLE")
 	speak_emote = list("gobble")
 	emote_see = list("struts around")
@@ -311,10 +315,6 @@ var/global/chicken_count = 0
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 4)
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
-	attacktext = "pecks"
 	health = 50
 
 /mob/living/simple_animal/goose
@@ -325,16 +325,11 @@ var/global/chicken_count = 0
 	icon_dead = "goose_dead"
 	speak = list("quack?","quack","QUACK")
 	speak_emote = list("quacks")
-//	emote_hear = list("brays")
 	emote_see = list("flaps it's wings")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
-	attacktext = "kicks"
 	health = 50
 
 /mob/living/simple_animal/seal
@@ -345,16 +340,11 @@ var/global/chicken_count = 0
 	icon_dead = "seal_dead"
 	speak = list("Urk?","urk","URK")
 	speak_emote = list("urks")
-//	emote_hear = list("brays")
 	emote_see = list("flops around")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
-	attacktext = "kicks"
 	health = 50
 
 /mob/living/simple_animal/walrus
@@ -365,14 +355,9 @@ var/global/chicken_count = 0
 	icon_dead = "walrus_dead"
 	speak = list("Urk?","urk","URK")
 	speak_emote = list("urks")
-//	emote_hear = list("brays")
 	emote_see = list("flops around")
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
-	attacktext = "kicks"
 	health = 50

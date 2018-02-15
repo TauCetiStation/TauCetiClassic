@@ -46,9 +46,8 @@
 	var/synth_temp_gain = 0			//IS_SYNTHETIC species will gain this much temperature every second
 	var/reagent_tag                 //Used for metabolizing reagents.
 
-	//var/hunger_drain = HUNGER_FACTOR
 	var/taste_sensitivity = TASTE_SENSITIVITY_NORMAL //the most widely used factor; humans use a different one
-	var/dietflags  = 0	// Make sure you set this, otherwise it won't be able to digest a lot of foods
+	var/dietflags = 0	// Make sure you set this, otherwise it won't be able to digest a lot of foods
 
 	var/darksight = 2
 	var/nighteyes = 0

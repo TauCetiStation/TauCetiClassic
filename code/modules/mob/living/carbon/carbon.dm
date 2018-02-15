@@ -637,5 +637,5 @@
 /mob/living/carbon/proc/bloody_body(mob/living/source)
 	return
 
-/mob/living/carbon/proc/can_eat(flags = 255)
-	return 1
+/mob/living/carbon/proc/can_eat(flags = 255) //I don't know how and why does it work
+	return TRUE
