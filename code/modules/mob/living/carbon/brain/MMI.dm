@@ -166,7 +166,6 @@
 		C.show_message(msg, 3)
 	return
 
-
 /obj/item/device/mmi/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->robot people.
 	brainmob = new(src)
 	brainmob.name = H.real_name
