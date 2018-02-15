@@ -1118,25 +1118,29 @@
 	//reset the pixel offsets to zero
 	floating = 0
 
-/mob/living/proc/harvest(obj/item/I, mob/living/user)
-	if(QDELETED(src))
-		return
-	if(stat == DEAD && !isnull(butcher_results)) //can we butcher it?
-		if(istype(I, /obj/item/weapon/kitchenknife)|| istype(I, /obj/item/weapon/butch))
+/mob/living/proc/attempt_harvest(obj/item/I, mob/user)
+	if(stat == DEAD && !isnull(butcher_results) && !ishuman(src)) //can we butcher it?
+		if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/butch))
 			if(user.is_busy()) return
 			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
 			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
 			if(do_mob(user, src, 80))
-				if(butcher_results.len)
-					for(var/path in butcher_results)
-						for(var/i = 1 to butcher_results[path])
-							new path(src.loc)
-						butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
-					visible_message("<span class='notice'>[user] butchers [src].</span>")
-					gib()
+				harvest(user)
+			return TRUE
+
+/mob/living/proc/harvest(mob/user)
+	if(QDELETED(src))
+		return
+	if(butcher_results.len)
+		for(var/path in butcher_results)
+			for(var/i = 1 to butcher_results[path])
+				new path(src.loc)
+			butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
+		visible_message("<span class='notice'>[user] butchers [src].</span>")
+		gib()
 
 /mob/living/proc/get_taste_sensitivity()
-	return 1
+	return TRUE
 
 /mob/living/proc/taste_reagents(datum/reagents/tastes)
 	var/t_sens = get_taste_sensitivity()

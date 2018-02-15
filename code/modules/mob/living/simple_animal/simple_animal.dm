@@ -344,19 +344,9 @@
 				src.visible_message("<span class='notice'>[user] applies the [MED] on [src]</span>")
 		else
 			to_chat(user, "<span class='notice'> this [src] is dead, medical items won't bring it back to life.</span>")
-	if(butcher_results && (stat == DEAD))	//if the animal has a meat, and if it is dead.
-		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
-			if(user.is_busy()) return
-			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-			if(do_mob(user, src, 80))
-				if(butcher_results.len)
-					for(var/path in butcher_results)
-						for(var/i = 1 to butcher_results[path])
-							new path(src.loc)
-						butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
-					visible_message("<span class='notice'>[user] butchers [src].</span>")
-					gib()
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(attempt_harvest(O, user))
+		return
 	..()
 
 

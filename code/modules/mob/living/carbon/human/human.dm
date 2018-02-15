@@ -1627,3 +1627,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/can_eat(flags = 255)
 	return species && (species.dietflags & flags)
+
+/mob/living/carbon/human/get_taste_sensitivity()
+	if(species)
+		return species.taste_sensitivity
+	else
+		return 1
