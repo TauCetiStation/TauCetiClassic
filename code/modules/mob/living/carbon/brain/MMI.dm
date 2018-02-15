@@ -109,7 +109,7 @@
 		name = "Man-Machine Interface"
 
 /obj/item/device/mmi/MouseDrop_T(mob/living/carbon/monkey/diona/target, mob/user)
-	if(!user.incapacitated() || !istype(target))
+	if(user.incapacitated() || !istype(target))
 		return
 	if(target.buckled || !in_range(user, src) || !in_range(user, target))
 		return
