@@ -13,6 +13,7 @@
 	//Not in use yet
 	var/obj/effect/organstructure/organStructure = null
 
+	var/canwieldtwo = TRUE
 	var/obj/screen/hands = null
 	var/obj/screen/pullin = null
 	var/obj/screen/internals = null
