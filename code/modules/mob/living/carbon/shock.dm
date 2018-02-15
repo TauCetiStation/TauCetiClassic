@@ -46,9 +46,8 @@
 
 /mob/living/carbon/human/updateshock()
 	if (species && species.flags[NO_PAIN])
-		return FALSE
-	else
-		..()
+		return
+	..()
 
 /mob/living/carbon/proc/handle_shock()
 	updateshock()
