@@ -176,8 +176,7 @@
 	if( \
 			istype(W, /obj/item/weapon/kitchenknife) || \
 			istype(W, /obj/item/weapon/butch) || \
-			istype(W, /obj/item/weapon/scalpel) || \
-			istype(W, /obj/item/weapon/kitchen/utensil/knife) \
+			istype(W, /obj/item/weapon/scalpel) \
 		)
 	else if( \
 			istype(W, /obj/item/weapon/circular_saw) || \
@@ -967,35 +966,6 @@
 	. = ..()
 	reagents.add_reagent("nutriment", 6)
 	reagents.add_reagent("vitamin", 1)
-
-/*/obj/item/weapon/reagent_containers/food/snacks/omelette/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/kitchen/utensil/fork))
-		if (W.icon_state == "forkloaded")
-			to_chat(user, "<span class='rose'>You already have omelette on your fork.</span>")
-			return
-		//W.icon = 'icons/obj/kitchen.dmi'
-		W.icon_state = "forkloaded"
-		/*if (herp)
-			to_chat(world, "[user] takes a piece of omelette with his fork!")*/
-			//Why this unecessary check? Oh I know, because I'm bad >:C
-			// Yes, you are. You griefing my badmin toys. --rastaf0
-		user.visible_message( \
-			"<span class='info'>[user] takes a piece of omelette with their fork!</span>", \
-			"<span class='notice'>You take a piece of omelette with your fork!</span>" \
-		)
-		reagents.remove_reagent("nutriment", 1)
-		if (reagents.total_volume <= 0)
-			qdel(src)*/
-/*
- * Unsused.
-/obj/item/weapon/reagent_containers/food/snacks/omeletteforkload
-	name = "Omelette Du Fromage"
-	desc = "That's all you can say!"
-
-/obj/item/weapon/reagent_containers/food/snacks/omeletteforkload/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 1)
-*/
 
 /obj/item/weapon/reagent_containers/food/snacks/muffin
 	name = "Muffin"
@@ -3302,7 +3272,7 @@
 
 // potato + knife = raw sticks
 /obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/kitchen/utensil/knife))
+	if(istype(W,/obj/item/weapon/kitchenknife))
 		new /obj/item/weapon/reagent_containers/food/snacks/rawsticks(src)
 		to_chat(user, "You cut the potato.")
 		qdel(src)

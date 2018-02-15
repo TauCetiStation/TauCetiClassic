@@ -876,7 +876,7 @@
 		/obj/item/weapon/kitchen/mould/coin = 1,
 		/obj/item/weapon/kitchen/mould/loli = 1
 	)
-	contraband = list(/obj/item/weapon/kitchen/utensil/spoon = 2,/obj/item/weapon/kitchen/utensil/knife = 2,/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/butch = 2)
+	contraband = list(/obj/item/weapon/kitchen/utensil/spoon = 2,/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/butch = 2)
 
 /obj/machinery/vending/sovietsoda
 	name = "BODA"
@@ -1077,7 +1077,7 @@
 					/obj/item/weapon/reagent_containers/food/snacks/candy_corn = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/cracker = 20,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle = 12)
-	contraband = list(/obj/item/weapon/kitchen/utensil/knife = 6)
+	contraband = list(/obj/item/weapon/kitchenknife = 6)
 
 //from old nanotrasen
 /obj/machinery/vending/theater
