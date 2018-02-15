@@ -126,12 +126,20 @@
 /obj/item/weapon/gun/projectile/automatic/l6_saw/pickup(mob/user)
 	unwield()
 
-
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
+	if(istype(user,/mob/living/carbon/human))
+		var/mob/living/carbon/human/H = user
+		var/obj/item/organ/external/l_hand/BPL = H.bodyparts_by_name[BP_L_HAND]
+		var/obj/item/organ/external/r_hand/BPR = H.bodyparts_by_name[BP_R_HAND]
+		if(BPL.is_broken() || BPR.is_broken() || !BPL.is_usable() || !BPR.is_usable())
+			H.canwieldtwo = FALSE
+		else
+			H.canwieldtwo = TRUE
+		user = H
 	switch(alert("Would you like to [cover_open ? "open" : "close"], or change grip?","Choose.","Toggle cover","Change grip"))
 		if("Toggle cover")
-			if(wielded || !canwieldsaw)
-				to_chat(user, "<span class='notice'>You need both of your hands to do this.</span>")
+			if(wielded  || !user.canwieldtwo)
+				to_chat(user, "<span class='warning'>You need both of your hands to do this.</span>")
 				return
 			else
 				cover_open = !cover_open
@@ -153,11 +161,8 @@
 				return
 
 			else //Trying to wield it
-				if(!canwieldsaw)
-					to_chat(user, "<span class='warning'>You need at least two hands to be intact</span>")
-					return
-				if(user.get_inactive_hand())
-					to_chat(user, "<span class='warning'>You need your other hand to be empty</span>")
+				if(user.get_inactive_hand()  || !user.canwieldtwo)
+					to_chat(user, "<span class='warning'>You need both of your hands to do this.</span>")
 					return
 				wield()
 				to_chat(user, "<span class='notice'>You grab the [initial(name)] with both hands.</span>")
@@ -172,13 +177,6 @@
 				O.desc = "Your second grip on the [initial(name)]"
 				user.put_in_inactive_hand(O)
 				return
-
-/obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/living/carbon/human/user)
-	var/obj/item/organ/external/l_hand/BPL = user.bodyparts_by_name[BP_L_HAND]
-	var/obj/item/organ/external/r_hand/BPR = user.bodyparts_by_name[BP_R_HAND]
-	if(!(BPL.is_broken() || BPR.is_broken() || BPL.is_usable() || BPR.is_usable()))
-		canwieldsaw = FALSE
-	..()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? ceil(get_ammo(0) / 12.5) * 25 : "-empty"]"
