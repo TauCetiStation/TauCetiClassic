@@ -48,7 +48,7 @@
 
 	if(istype(O,/obj/item/weapon/holder/diona) && !brainmob)
 		for(var/mob/V in viewers(src, null))
-			V.show_message(text("\blue [user] sticks \a [O] into \the [src]."))
+			V.show_message(text("<span class='notice'>[user] sticks \a [O] into \the [src].</span>"))
 
 		for(var/mob/living/carbon/monkey/diona/V in O.contents)
 			brainmob = new(src)
@@ -77,9 +77,9 @@
 	if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
 		if(allowed(user))
 			locked = !locked
-			to_chat(user, "\blue You [locked ? "lock" : "unlock"] the brain holder.")
+			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the brain holder.</span>")
 		else
-			to_chat(user, "\red Access denied.")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	if(brainmob)
 		O.attack(brainmob, user)//Oh noooeeeee
@@ -88,12 +88,12 @@
 
 /obj/item/device/mmi/attack_self(mob/user)
 	if(!brainmob)
-		to_chat(user, "\red You upend the MMI, but there's nothing in it.")
+		to_chat(user, "<span class='warning'>You upend the MMI, but there's nothing in it.</span>")
 	else if(locked)
-		to_chat(user, "\red You upend the MMI, but the brain is clamped into place.")
+		to_chat(user, "<span class='warning'>You upend the MMI, but the brain is clamped into place.</span>")
 	else
 		if(!nymphinside)
-			to_chat(user, "\blue You upend the MMI, spilling the brain onto the floor.")
+			to_chat(user, "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>")
 			var/obj/item/brain/brain = new(user.loc)
 			brainmob.container = null//Reset brainmob mmi var.
 			brainmob.loc = brain//Throw mob into brain.
