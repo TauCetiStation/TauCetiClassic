@@ -152,7 +152,7 @@
 	qdel(target)
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
-	icon_state = "mmi_full"
+	icon_state = "mmi_fullnymph"
 
 	locked = 1
 
