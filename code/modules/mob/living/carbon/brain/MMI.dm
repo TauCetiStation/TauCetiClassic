@@ -51,7 +51,7 @@
 		for(var/mob/living/carbon/monkey/diona/V in O.contents)
 			brainmob = new(src)
 			brainmob.name = V.name
-			brainmob.real_name = V.name
+			brainmob.real_name = V.real_name
 			brainmob.container = src
 			brainmob.dna = V.dna
 			nymphinside = TRUE
@@ -99,6 +99,7 @@
 		else
 			to_chat(user, "<span class='notice'>You uppend the MMI, dropping [brainmob.real_name] onto the floor.</span>")
 			var/mob/living/carbon/monkey/diona/D = new(user.loc)
+			D = brainmob
 			brainmob.container = null
 			brainmob.loc = D
 			if(brainmob.mind)
@@ -135,7 +136,7 @@
 		return
 	brainmob = new(src)
 	brainmob.name = target.name
-	brainmob.real_name = target.name
+	brainmob.real_name = target.real_name
 	brainmob.container = src
 	brainmob.dna = target.dna
 	nymphinside = TRUE
