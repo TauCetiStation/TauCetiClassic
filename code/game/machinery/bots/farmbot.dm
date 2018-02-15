@@ -534,9 +534,9 @@
 
 	A.loc = src.loc
 	to_chat(user, "You add the robot arm to the [src]")
-	qdel(src)
 	user.remove_from_mob(S)
 	qdel(S)
+	qdel(src)
 
 /obj/item/weapon/farmbot_arm_assembly/attackby(obj/item/weapon/W, mob/user)
 	..()
