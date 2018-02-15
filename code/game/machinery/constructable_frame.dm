@@ -791,3 +791,12 @@ obj/item/weapon/circuitboard/biogenerator
 	req_components = list(
 							/obj/item/weapon/stock_parts/console_screen = 1,
 							/obj/item/weapon/stock_parts/matter_bin = 3)
+
+/obj/item/weapon/circuitboard/barber_booth
+	name = "circuit board (Barber booth)"
+	build_path = /obj/machinery/barber_booth
+	board_type = "machine"
+	origin_tech = "programming=1;engineering=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/console_screen = 1,
+							/obj/item/weapon/stock_parts/manipulator = 1)

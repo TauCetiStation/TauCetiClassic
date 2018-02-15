@@ -1525,6 +1525,15 @@ datum/design/cyborgrecharger
 	build_path = /obj/item/weapon/circuitboard/grounding_rod
 	//category = list("Misc. Machinery")
 
+/datum/design/barber_booth
+	name = "Machine Design (Barber booth)"
+	desc = "The circuit board for a barber booth."
+	id = "barber_booth"
+	req_tech = list("programming" = 1, "engineering" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/barber_booth
+
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////
 /////////////////////////////////////////
