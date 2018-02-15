@@ -87,4 +87,3 @@
 	var/robolimb_count = 0 // Number of robot limbs.
 
 	var/datum/personal_crafting/handcrafting
-	var/canwieldsaw = TRUE
