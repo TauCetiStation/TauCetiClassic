@@ -25,7 +25,7 @@
  *		 -Mixed replacement lights -Body bags
  *		 -Holobadge -Evidence bag
  *		 -Solution tray -Spare PDAs
- *		 -Shotgun ammo
+ *		 -Shotgun ammo -Hair sprays
  *
  *		For syndicate call-ins see uplink_kits.dm
  */
@@ -584,6 +584,21 @@
 	. = ..()
 	for(var/i in 1 to 16)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+
+//Hair sprays
+/obj/item/weapon/storage/box/hairsprays
+	name = "hair spray box"
+	desc = "A box full of hair sprays."
+
+/obj/item/weapon/storage/box/hairsprays/atom_init()
+	. = ..()
+	new /obj/item/weapon/hair_color_spray(src)
+	new /obj/item/weapon/hair_color_spray/black(src)
+	new /obj/item/weapon/hair_color_spray/red(src)
+	new /obj/item/weapon/hair_color_spray/blue(src)
+	new /obj/item/weapon/hair_color_spray/green(src)
+	new /obj/item/weapon/hair_color_spray/brown(src)
+	new /obj/item/weapon/hair_color_spray/blond(src)
 
 // Don't know where is original box itself, so just put it here.
 /obj/item/weapon/storage/box/contraband
