@@ -46,14 +46,6 @@
 	unwield()
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/attack_self(mob/user)
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/external/l_hand/BPL = H.bodyparts_by_name[BP_L_HAND]
-		var/obj/item/organ/external/r_hand/BPR = H.bodyparts_by_name[BP_R_HAND]
-		if(BPL.is_broken() || BPR.is_broken() || !BPL.is_usable() || !BPR.is_usable())
-			H.canwieldtwo = FALSE
-		else
-			H.canwieldtwo = TRUE
 	if(wielded) //Trying to unwield it
 		unwield()
 		to_chat(user, "<span class='notice'>You are now carrying the [name] with one hand.</span>")
