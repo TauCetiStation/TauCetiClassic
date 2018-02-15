@@ -23,8 +23,7 @@
 		if(!O:brainmob)
 			to_chat(user, "\red You aren't sure where this brain came from, but you're pretty sure it's a useless brain.")
 			return
-		for(var/mob/V in viewers(src, null))
-			V.show_message(text("\blue [user] sticks \a [O] into \the [src]."))
+		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
 
 		brainmob = O:brainmob
 		O:brainmob = null
@@ -47,8 +46,7 @@
 		return
 
 	if(istype(O,/obj/item/weapon/holder/diona) && !brainmob)
-		for(var/mob/V in viewers(src, null))
-			V.show_message(text("<span class='notice'>[user] sticks \a [O] into \the [src].</span>"))
+		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
 
 		for(var/mob/living/carbon/monkey/diona/V in O.contents)
 			brainmob = new(src)
@@ -56,13 +54,11 @@
 			brainmob.real_name = V.name
 			brainmob.container = src
 			brainmob.dna = V.dna
-			brainmob.stat = CONSCIOUS
 			nymphinside = TRUE
 			if(V.mind)
 				V.mind.transfer_to(brainmob)
 			continue
 
-		user.drop_item()
 		qdel(O)
 
 		name = "Man-Machine Interface: [brainmob.real_name]"
@@ -113,29 +109,27 @@
 		name = "Man-Machine Interface"
 
 /obj/item/device/mmi/MouseDrop_T(mob/living/carbon/monkey/diona/target, mob/user)
-	if(user.stat || !user.canmove || !istype(target))
+	if(!user.incapacitated() || !istype(target))
 		return
-	if(target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1)
+	if(target.buckled || !in_range(user, src) || !in_range(user, target))
 		return
 
 	var/target_loc = target.loc
-	var/msg
-	for (var/mob/V in viewers(usr))
-		if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			V.show_message("<span class='red'>[usr] starts climbing into the MMI.</span>", 3)
-		if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-			if(target.anchored)
-				return
-			V.show_message("<span class='red'>[usr] starts stuffing [target.name] into the MMI.</span>", 3)
+	if(target == user && !user.incapacitated())
+		visible_message("<span class='red'>[usr] starts climbing into the MMI.</span>", 3)
+	if(target != user && !user.incapacitated())
+		if(target.anchored)
+			return
+		visible_message("<span class='red'>[usr] starts stuffing [target.name] into the MMI.</span>", 3)
 	if(user.is_busy() || !do_after(usr, 20, target = usr))
 		return
 	if(target_loc != target.loc)
 		return
-	if(target == user && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-		msg = "<span class='red'>[user.name] climbs into the MMI.</span>"
+	if(target == user && !user.incapacitated())
+		visible_message("<span class='red'>[user.name] climbs into the MMI.</span>")
 		to_chat(user, "<span class='notice'>You climb into the MMI.</span>")
-	else if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
-		msg = "<span class='danger'>[user.name] stuffs [target.name] into the MMI!</span>"
+	else if(target != user && !user.incapacitated())
+		visible_message("<span class='danger'>[user.name] stuffs [target.name] into the MMI!</span>")
 		to_chat(user, "<span class='red'>You stuff [target.name] into the MMI!</span>")
 	else
 		return
@@ -144,7 +138,6 @@
 	brainmob.real_name = target.name
 	brainmob.container = src
 	brainmob.dna = target.dna
-	brainmob.stat = CONSCIOUS
 	nymphinside = TRUE
 	if(target.mind)
 		target.mind.transfer_to(brainmob)
@@ -157,14 +150,6 @@
 	locked = 1
 
 	feedback_inc("cyborg_mmis_filled",1)
-
-
-
-	for (var/mob/C in viewers(src))
-		if(C == user)
-			continue
-		C.show_message(msg, 3)
-	return
 
 /obj/item/device/mmi/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->robot people.
 	brainmob = new(src)
