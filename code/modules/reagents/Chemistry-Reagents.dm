@@ -1028,10 +1028,10 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				if(M.bodytemperature > 310)
-					M.bodytemperature = max(310, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
+				if(M.bodytemperature > BODYTEMP_NORMAL)
+					M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
 				else if(M.bodytemperature < 311)
-					M.bodytemperature = min(310, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
+					M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 		cryptobiolin
 			name = "Cryptobiolin"
@@ -2378,8 +2378,8 @@ datum
 /datum/reagent/consumable/hot_coco/on_mob_life(mob/living/M)
 	if(!..())
 		return
-	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(310, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
+		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.nutrition += nutriment_factor
 
 /datum/reagent/consumable/psilocybin
@@ -2433,7 +2433,7 @@ datum
 	if(!..())
 		return
 	M.nutrition += nutriment_factor
-	/*if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden"))
+	/*if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden")) //if we want some FUN and FEATURES we should uncomment it
 		if(!M) M = holder.my_atom
 		M.heal_bodypart_damage(1, 1)
 		M.nutrition += nutriment_factor
@@ -2523,8 +2523,8 @@ datum
 	if(!..())
 		return
 	M.nutrition += nutriment_factor
-	if (M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-		M.bodytemperature = min(310, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if (M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
+		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 /datum/reagent/consumable/hell_ramen
 	name = "Hell Ramen"
@@ -2540,26 +2540,6 @@ datum
 		return
 	M.nutrition += nutriment_factor
 	M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
-
-	/* We're back to flour bags
-			flour
-				name = "flour"
-				id = "flour"
-				description = "This is what you rub all over yourself to pretend to be a ghost."
-				reagent_state = SOLID
-				nutriment_factor = 1 * REAGENTS_METABOLISM
-				color = "#FFFFFF" // rgb: 0, 0, 0
-
-				on_mob_life(var/mob/living/M as mob)
-					M.nutrition += nutriment_factor
-					..()
-					return
-
-				reaction_turf(var/turf/T, var/volume)
-					src = null
-					if(!istype(T, /turf/space))
-						new /obj/effect/decal/cleanable/flour(T)
-	*/
 
 /datum/reagent/consumable/rice
 	name = "Rice"
@@ -2650,8 +2630,8 @@ datum
 	if(adj_sleepy)
 		M.sleeping = max(0,M.sleeping + adj_sleepy)
 	if(adj_temp)
-		if(M.bodytemperature < 310)//310 is the normal bodytemp. 310.055
-			M.bodytemperature = min(310, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
+		if(M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
+			M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	return TRUE
 
 /datum/reagent/consumable/drink/orangejuice
@@ -3399,8 +3379,8 @@ datum
 	if(!..())
 		return
 	M.drowsyness = max(0, M.drowsyness - 7)
-	if(M.bodytemperature > 310)
-		M.bodytemperature = max(310, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
+	if(M.bodytemperature > BODYTEMP_NORMAL)
+		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.make_jittery(5)
 
 /datum/reagent/consumable/ethanol/vodka
@@ -3962,8 +3942,8 @@ datum
 /datum/reagent/consumable/ethanol/sbiten/on_mob_life(mob/living/M)
 	if(!..())
 		return
-	if (M.bodytemperature < 360)
-		M.bodytemperature = min(360, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
+	if (M.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT)
+		M.bodytemperature = min(BODYTEMP_HEAT_DAMAGE_LIMIT, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 
 /datum/reagent/consumable/ethanol/devilskiss
 	name = "Devils Kiss"
