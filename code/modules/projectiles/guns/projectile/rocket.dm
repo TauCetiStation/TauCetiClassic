@@ -60,7 +60,7 @@
 		return
 
 	else //Trying to wield it
-		if(user.get_inactive_hand() || !user.canwieldtwo)
+		if(user.get_inactive_hand())
 			to_chat(user, "<span class='warning'>You need your other hand to be empty</span>")
 			return
 		wield()
