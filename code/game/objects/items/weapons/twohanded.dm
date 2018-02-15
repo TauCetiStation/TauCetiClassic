@@ -109,7 +109,7 @@
 		to_chat(user, "<span class='warning'>You need at least two hands to be intact</span>")
 		return
 	else
-		..(user)
+		..()
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand
