@@ -195,8 +195,8 @@
 	name = "scissors"
 	desc = "These can cut hair."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "cutters_yellow"
-	item_state = "cutters_yellow"
+	icon_state = "scissors"
+	item_state = "scissors"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	force = 6.0
@@ -256,7 +256,7 @@
 						H.f_style = new_fstyle
 						H.update_hair()
 						user.visible_message("<span class='notice'>[user] finished cutting [H]'s facial hair</span>", \
-									 	 	 "<span class='notice'>You finished cutting [src]'s facial hair</span>")
+									 	 	 "<span class='notice'>You finished cutting [H]'s facial hair</span>")
 				return
 			else
 				to_chat(user, "<span class='notice'>You don't know how to cut the hair of this race!</span>")
@@ -296,7 +296,7 @@
 						H.h_style = new_hstyle
 						H.update_hair()
 						user.visible_message("<span class='notice'>[user] finished cutting [H]'s hair</span>", \
-									 	 	 "<span class='notice'>You finished cutting [src]'s hair</span>")
+									 	 	 "<span class='notice'>You finished cutting [H]'s hair</span>")
 				return
 			else
 				to_chat(user, "<span class='notice'>You don't know how to cut the hair of this race!</span>")
@@ -308,10 +308,10 @@
 
 /obj/item/weapon/hair_growth_accelerator
 	name = "hair growth accelerator"
-	desc = "Revive your hair."
-	icon = 'icons/obj/janitor.dmi'
-	icon_state = "cleaner"
-	item_state = "cleaner"
+	desc = "Revive your hair. Apply directly to a bald head."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "hairaccelerator"
+	item_state = "hairaccelerator"
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 2.0
@@ -408,9 +408,9 @@
 /obj/item/weapon/hair_color_spray
 	name = "white hair color spray"
 	desc = "Changes hair color."
-	icon = 'icons/obj/hydroponics.dmi'
-	icon_state = "weedspray"
-	item_state = "spray"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "hairspraywhite"
+	item_state = "hairspray"
 	slot_flags = SLOT_BELT
 	throwforce = 3
 	w_class = 2.0
@@ -429,7 +429,7 @@
 	if(spraymode==0)
 		to_chat(user, "<span class='notice'>You will fully paint</span>")
 	else if(spraymode==1)
-		to_chat(user, "<span class='notice'>You will add an accent color</span>")
+		to_chat(user, "<span class='notice'>You will mix color</span>")
 	return
 
 /obj/item/weapon/hair_color_spray/attack(mob/M, mob/user, def_zone)
@@ -452,8 +452,9 @@
 					to_chat(user, "<span class='notice'>You can't paint a shaved face</span>")
 					return
 
-				user.visible_message("<span class='notice'>[user] starts to paint [H]'s face hair with a [src]</span>", \
-									 "<span class='notice'>You start painting [H]'s face hair with a [src]</span>")
+				playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+				user.visible_message("<span class='notice'>[user] starts to paint [H]'s face hair with [src]</span>", \
+									 "<span class='notice'>You start painting [H]'s face hair with [src]</span>")
 				if(do_after(user, (100 - spraymode*80), target = H))
 					if(spraymode == 0)
 						H.r_facial = spraycolor_r
@@ -464,8 +465,8 @@
 						H.g_facial = round(H.g_facial*0.9 + spraycolor_g*0.1)
 						H.b_facial = round(H.b_facial*0.9 + spraycolor_b*0.1)
 					H.update_hair()
-					user.visible_message("<span class='notice'>[user] finished painting [H]'s face hair with a [src]</span>", \
-									 	 "<span class='notice'>You finished painting [H]'s face hair with a [src]</span>")
+					user.visible_message("<span class='notice'>[user] finished painting [H]'s face hair with [src]</span>", \
+									 	 "<span class='notice'>You finished painting [H]'s face hair with [src]</span>")
 				return
 			else
 				to_chat(user, "<span class='notice'>You can't paint this race!</span>")
@@ -480,8 +481,9 @@
 					to_chat(user, "<span class='notice'>You can't paint a bald head</span>")
 					return
 
-				user.visible_message("<span class='notice'>[user] starts to paint [H]'s head with a [src]</span>", \
-									 "<span class='notice'>You start painting [H]'s head with a [src]</span>")
+				playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
+				user.visible_message("<span class='notice'>[user] starts to paint [H]'s head with [src]</span>", \
+									 "<span class='notice'>You start painting [H]'s head with [src]</span>")
 				if(do_after(user, (100 - spraymode*80), target = H))
 					if(spraymode == 0)
 						H.r_hair = spraycolor_r
@@ -492,8 +494,8 @@
 						H.g_hair = round(H.g_hair*0.9 + spraycolor_g*0.1)
 						H.b_hair = round(H.b_hair*0.9 + spraycolor_b*0.1)
 					H.update_hair()
-					user.visible_message("<span class='notice'>[user] finished painting [H]'s head with a [src]</span>", \
-									 	 "<span class='notice'>You finished painting [H]'s head with a [src]</span>")
+					user.visible_message("<span class='notice'>[user] finished painting [H]'s head with [src]</span>", \
+									 	 "<span class='notice'>You finished painting [H]'s head with [src]</span>")
 				return
 			else
 				to_chat(user, "<span class='notice'>You can't paint this race!</span>")
@@ -505,36 +507,42 @@
 
 /obj/item/weapon/hair_color_spray/red
 	name = "red hair color spray"
+	icon_state = "hairsprayred"
 	spraycolor_r = 255
 	spraycolor_g = 0
 	spraycolor_b = 0
 
 /obj/item/weapon/hair_color_spray/blue
 	name = "blue hair color spray"
+	icon_state = "hairsprayblue"
 	spraycolor_r = 0
 	spraycolor_g = 0
 	spraycolor_b = 255
 
 /obj/item/weapon/hair_color_spray/green
 	name = "green hair color spray"
+	icon_state = "hairspraygreen"
 	spraycolor_r = 0
 	spraycolor_g = 255
 	spraycolor_b = 0
 
 /obj/item/weapon/hair_color_spray/black
 	name = "black hair color spray"
+	icon_state = "hairsprayblack"
 	spraycolor_r = 0
 	spraycolor_g = 0
 	spraycolor_b = 0
 
 /obj/item/weapon/hair_color_spray/brown
 	name = "brown hair color spray"
+	icon_state = "hairspraybrown"
 	spraycolor_r = 50
 	spraycolor_g = 0
 	spraycolor_b = 0
 
 /obj/item/weapon/hair_color_spray/blond
 	name = "blond hair color spray"
+	icon_state = "hairsprayblond"
 	spraycolor_r = 255
 	spraycolor_g = 225
 	spraycolor_b = 135
