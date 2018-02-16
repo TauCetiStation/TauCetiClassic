@@ -91,7 +91,7 @@
 				to_chat(user, "<span class='warning'>You need both of your hands to be intact to do this.</span>")
 				return
 		if(user.get_inactive_hand())
-			to_chat(user, "<span class='warning'>You need your other hand to be empty to do this.</span>")
+			to_chat(user, "<span class='warning'>You need your other hand to be empty to do this..</span>")
 			return
 		wield()
 		to_chat(user, "<span class='notice'>You grab the [initial(name)] with both hands.</span>")
