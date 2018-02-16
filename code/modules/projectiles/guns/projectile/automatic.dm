@@ -191,6 +191,7 @@
 				user.put_in_inactive_hand(O)
 				return
 
+
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? ceil(get_ammo(0) / 12.5) * 25 : "-empty"]"
 
