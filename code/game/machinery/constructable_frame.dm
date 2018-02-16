@@ -629,7 +629,7 @@ obj/item/weapon/circuitboard/biogenerator
 	name = "Circuit board (Mining Fabricator)"
 	build_path = /obj/machinery/mecha_part_fabricator/mining_fabricator
 	board_type = "machine"
-	origin_tech = "programming=3;engineering=3"
+	origin_tech = "powerstorage=3;programming=3;engineering=4;magnets=4;materials=4"
 	req_components = list(
 							/obj/item/weapon/stock_parts/matter_bin = 2,
 							/obj/item/weapon/stock_parts/manipulator = 1,
