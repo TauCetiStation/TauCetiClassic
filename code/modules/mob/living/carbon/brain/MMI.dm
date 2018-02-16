@@ -50,6 +50,8 @@
 
 		for(var/mob/living/carbon/monkey/diona/V in O.contents)
 			transfer_nymph(V)
+		
+		qdel(O)
 
 		feedback_inc("cyborg_mmis_filled",1)
 
