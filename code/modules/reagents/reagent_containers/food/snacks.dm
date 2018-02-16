@@ -1269,6 +1269,59 @@
 	reagents.add_reagent("nutriment", 1)
 	reagents.add_reagent("sugar", 3)
 
+/obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein
+	name = "chow mein"
+	desc = "What is in this anyways?"
+	icon_state = "chinese1"
+
+/obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("beans", 3)
+	reagents.add_reagent("sugar", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball
+	name = "Sweet & Sour Chicken Balls"
+	desc = "Is this chicken cooked? The odds are better than wok paper scissors."
+	icon_state = "chickenball"
+
+/obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 2)
+	reagents.add_reagent("sugar", 2)
+
+/obj/item/weapon/reagent_containers/food/snacks/chinese/tao
+	name = "Admiral Yamamoto carp"
+	desc = "Tastes like chicken."
+	icon_state = "chinese2"
+
+/obj/item/weapon/reagent_containers/food/snacks/chinese/tao/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("protein", 1)
+	reagents.add_reagent("sugar", 4)
+
+/obj/item/weapon/reagent_containers/food/snacks/chinese/newdles
+	name = "chinese newdles"
+	desc = "Made fresh, weekly!"
+	icon_state = "chinese3"
+
+/obj/item/weapon/reagent_containers/food/snacks/chinese/newdles/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("sugar", 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/chinese/rice
+	name = "fried rice"
+	desc = "A timeless classic."
+	icon_state = "chinese4"
+
+/obj/item/weapon/reagent_containers/food/snacks/chinese/rice/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 1)
+	reagents.add_reagent("sugar", 2)
+	reagents.add_reagent("rice", 3)
+
 /obj/item/weapon/reagent_containers/food/snacks/syndicake
 	name = "Syndi-Cakes"
 	icon_state = "syndi_cakes"
