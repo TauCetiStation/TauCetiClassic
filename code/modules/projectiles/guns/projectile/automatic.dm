@@ -127,14 +127,6 @@
 	unwield()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/external/l_hand/BPL = H.bodyparts_by_name[BP_L_HAND]
-		var/obj/item/organ/external/r_hand/BPR = H.bodyparts_by_name[BP_R_HAND]
-		if(BPL.is_broken() || BPR.is_broken() || !BPL.is_usable() || !BPR.is_usable())
-			H.canwieldtwo = FALSE
-		else
-			H.canwieldtwo = TRUE
 	switch(alert("Would you like to [cover_open ? "open" : "close"], or change grip?","Choose.","Toggle cover","Change grip"))
 		if("Toggle cover")
 			if(wielded || user.get_inactive_hand())
@@ -190,7 +182,6 @@
 				O.desc = "Your second grip on the [initial(name)]"
 				user.put_in_inactive_hand(O)
 				return
-
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
 	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? ceil(get_ammo(0) / 12.5) * 25 : "-empty"]"
