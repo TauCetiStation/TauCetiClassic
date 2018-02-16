@@ -49,22 +49,7 @@
 		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
 
 		for(var/mob/living/carbon/monkey/diona/V in O.contents)
-			brainmob = new(src)
-			brainmob.name = V.name
-			brainmob.real_name = V.real_name
-			brainmob.container = src
-			brainmob.dna = V.dna
-			nymphinside = TRUE
-			if(V.mind)
-				V.mind.transfer_to(brainmob)
-			continue
-
-		qdel(O)
-
-		name = "Man-Machine Interface: [brainmob.real_name]"
-		icon_state = "mmi_fullnymph"
-
-		locked = 1
+			transfer_nymph(V)
 
 		feedback_inc("cyborg_mmis_filled",1)
 
@@ -98,14 +83,13 @@
 			brainmob = null//Set mmi brainmob var to null
 		else
 			to_chat(user, "<span class='notice'>You uppend the MMI, dropping [brainmob.real_name] onto the floor.</span>")
-			var/mob/living/carbon/monkey/diona/D = new(user.loc)
-			D = brainmob
-			brainmob.container = null
-			brainmob.loc = D
-			if(brainmob.mind)
-				brainmob.mind.transfer_to(D)
-			brainmob = null
-			nymphinside = FALSE
+			for(var/mob/living/carbon/monkey/diona/V in contents)
+				V.loc = user.loc
+				if(brainmob.mind)
+					brainmob.mind.transfer_to(V)
+				brainmob.container = null
+				brainmob = null
+				nymphinside = FALSE
 		icon_state = "mmi_empty"
 		name = "Man-Machine Interface"
 
@@ -134,21 +118,7 @@
 		to_chat(user, "<span class='red'>You stuff [target.name] into the MMI!</span>")
 	else
 		return
-	brainmob = new(src)
-	brainmob.name = target.name
-	brainmob.real_name = target.real_name
-	brainmob.container = src
-	brainmob.dna = target.dna
-	nymphinside = TRUE
-	if(target.mind)
-		target.mind.transfer_to(brainmob)
-
-	qdel(target)
-
-	name = "Man-Machine Interface: [brainmob.real_name]"
-	icon_state = "mmi_fullnymph"
-
-	locked = 1
+	transfer_nymph(target)
 
 	feedback_inc("cyborg_mmis_filled",1)
 
@@ -161,6 +131,20 @@
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	icon_state = "mmi_full"
+	locked = 1
+
+/obj/item/device/mmi/proc/transfer_nymph(mob/living/carbon/monkey/diona/H)
+	H.forceMove(src)
+	brainmob = new(src)
+	brainmob.name = H.name
+	brainmob.real_name = H.real_name
+	brainmob.dna = H.dna
+	nymphinside = TRUE
+	if(H.mind)
+		H.mind.transfer_to(brainmob)
+
+	name = "Man-Machine Interface: [brainmob.real_name]"
+	icon_state = "mmi_fullnymph"
 	locked = 1
 
 /obj/item/device/mmi/radio_enabled
