@@ -16,7 +16,6 @@
 	var/mob/living/carbon/brain/brainmob = null//The current occupant.
 	var/mob/living/silicon/robot = null//Appears unused.
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
-	var/nymphinside = FALSE
 
 /obj/item/device/mmi/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
@@ -50,7 +49,7 @@
 
 		for(var/mob/living/carbon/monkey/diona/V in O.contents)
 			transfer_nymph(V)
-		
+
 		qdel(O)
 
 		feedback_inc("cyborg_mmis_filled",1)
@@ -75,26 +74,23 @@
 	else if(locked)
 		to_chat(user, "<span class='warning'>You upend the MMI, but the brain is clamped into place.</span>")
 	else
-		if(!nymphinside)
-			to_chat(user, "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>")
-			var/obj/item/brain/brain = new(user.loc)
-			brainmob.container = null//Reset brainmob mmi var.
-			brainmob.loc = brain//Throw mob into brain.
-			living_mob_list -= brainmob//Get outta here
-			brain.brainmob = brainmob//Set the brain to use the brainmob
-			brainmob = null//Set mmi brainmob var to null
-		else
+		for(var/mob/living/carbon/monkey/diona/V in contents)
+			icon_state = "mmi_empty"
+			name = "Man-Machine Interface"
 			to_chat(user, "<span class='notice'>You uppend the MMI, dropping [brainmob.real_name] onto the floor.</span>")
-			for(var/mob/living/carbon/monkey/diona/V in contents)
-				V.loc = user.loc
-				if(brainmob.mind)
-					brainmob.mind.transfer_to(V)
-				brainmob.container = null
-				brainmob = null
-				nymphinside = FALSE
-		icon_state = "mmi_empty"
-		name = "Man-Machine Interface"
-
+			V.loc = user.loc
+			if(brainmob.mind)
+				brainmob.mind.transfer_to(V)
+			brainmob.container = null
+			brainmob = null
+			return
+		to_chat(user, "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>")
+		var/obj/item/brain/brain = new(user.loc)
+		brainmob.container = null//Reset brainmob mmi var.
+		brainmob.loc = brain//Throw mob into brain.
+		living_mob_list -= brainmob//Get outta here
+		brain.brainmob = brainmob//Set the brain to use the brainmob
+		brainmob = null//Set mmi brainmob var to null
 /obj/item/device/mmi/MouseDrop_T(mob/living/carbon/monkey/diona/target, mob/user)
 	if(user.incapacitated() || !istype(target))
 		return
@@ -141,7 +137,6 @@
 	brainmob.name = H.name
 	brainmob.real_name = H.real_name
 	brainmob.dna = H.dna
-	nymphinside = TRUE
 	if(H.mind)
 		H.mind.transfer_to(brainmob)
 
