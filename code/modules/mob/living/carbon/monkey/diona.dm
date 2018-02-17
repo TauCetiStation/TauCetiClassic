@@ -89,7 +89,6 @@
 	gestalt = null
 
 	loc = get_turf(src)
-	mind.transfer_to(src)
 
 	M.status_flags &= ~PASSEMOTES
 
