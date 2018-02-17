@@ -435,6 +435,8 @@
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
+		if(istype(src, /mob/living/carbon/monkey/diona))
+			stat(null, "Nutriment: [nutrition]/400")
 		CHANGELING_STATPANEL_STATS(null)
 
 	CHANGELING_STATPANEL_POWERS(null)
@@ -491,18 +493,18 @@
 	return 0
 
 /mob/living/carbon/monkey/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list())
-        if(stat)
-                return
+	if(stat)
+		return
 
-        if(copytext(message,1,2) == "*")
-                return emote(copytext(message,2))
+	if(copytext(message,1,2) == "*")
+		return emote(copytext(message,2))
 
-        if(stat)
-                return
+	if(stat)
+		return
 
-        if(speak_emote.len)
-                verb = pick(speak_emote)
+	if(speak_emote.len)
+		verb = pick(speak_emote)
 
-        message = capitalize(trim_left(message))
+	message = capitalize(trim_left(message))
 
-        ..(message, speaking, verb, alt_name, italics, message_range, used_radios)
+	..(message, speaking, verb, alt_name, italics, message_range, used_radios)
