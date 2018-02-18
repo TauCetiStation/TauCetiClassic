@@ -79,8 +79,6 @@
 			name = "Man-Machine Interface"
 			to_chat(user, "<span class='notice'>You uppend the MMI, dropping [brainmob.real_name] onto the floor.</span>")
 			V.loc = user.loc
-			if(brainmob.mind)
-				brainmob.mind.transfer_to(V)
 			brainmob.container = null
 			QDEL_NULL(brainmob)
 			return
