@@ -26,7 +26,7 @@
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
 
 	//Let people pick the little buggers up.
-	if(M.a_intent == "help")
+	if(M.a_intent == "grab")
 		if(M.species && M.species.name == DIONA)
 			visible_message("<span class='notice'>[M] starts to merge [src] into themselves.</span>","<span class='notice'>You start merging [src] into you.</span>")
 			if(M.is_busy() || !do_after(M, 40, target = src))
