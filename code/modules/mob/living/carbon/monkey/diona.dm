@@ -43,13 +43,18 @@
 	add_language("Rootspeak")
 
 /mob/living/carbon/monkey/diona/proc/merging(mob/living/carbon/human/M)
-	to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
 	M.status_flags |= PASSEMOTES
-
+	to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
 	to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
 	src.forceMove(M)
 	gestalt = M
 
+/mob/living/carbon/monkey/diona/proc/splitting(mob/living/carbon/human/M)
+	to_chat(src.loc, "You feel a pang of loss as [src] splits away from your biomass.")
+	to_chat(src, "You wiggle out of the depths of [M]'s biomass and plop to the ground.")
+	gestalt = null
+	loc = get_turf(src)
+	M.status_flags &= ~PASSEMOTES
 //Verbs after this point.
 
 /mob/living/carbon/monkey/diona/verb/merge()
@@ -59,6 +64,13 @@
 	set desc = "Merge with another diona."
 
 	if(gestalt)
+		return
+
+	if(gestalt.incapacitated(null))
+		to_chat(src, "<span class='warning'>[gestalt] must be conscious to do this.</span>")
+		return
+	if(incapacitated(null))
+		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
 		return
 
 	var/list/choices = list()
@@ -90,15 +102,14 @@
 	if(!gestalt)
 		return
 
-	to_chat(src.loc, "You feel a pang of loss as [src] splits away from your biomass.")
-	to_chat(src, "You wiggle out of the depths of [src.loc]'s biomass and plop to the ground.")
+	if(gestalt.incapacitated(null))
+		to_chat(src, "<span class='warning'>[gestalt] must be conscious to do this.</span>")
+		return
+	if(incapacitated(null))
+		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
+		return
 
-	var/mob/living/M = src.loc
-	gestalt = null
-
-	loc = get_turf(src)
-
-	M.status_flags &= ~PASSEMOTES
+	splitting(gestalt)
 
 /mob/living/carbon/monkey/diona/verb/pass_knowledge()
 
