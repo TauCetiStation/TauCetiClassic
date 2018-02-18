@@ -776,7 +776,7 @@
 			M.status_flags &= ~PASSEMOTES
 		return
 
-	if(ishuman(usr) && !incapacitated(usr))
+	if(ishuman(usr) && !incapacitated())
 		var/mob/living/carbon/human/D = usr
 		if(D.get_species() == DIONA)
 			var/choices = list()
