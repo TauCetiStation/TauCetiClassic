@@ -130,7 +130,6 @@
 		to_chat(usr, "<span class='warning'>It would appear [H] is void of consciousness, defeats MMI's purpose.</span>")
 		return
 	brainmob = H
-	brainmob.stat = CONSCIOUS
 	H.forceMove(src)
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
