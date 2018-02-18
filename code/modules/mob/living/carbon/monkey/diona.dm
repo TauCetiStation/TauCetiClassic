@@ -71,6 +71,14 @@
 	if(!M || !src || !(src.Adjacent(M)))
 		return
 
+	var/count = 0
+	for(var/mob/living/carbon/monkey/diona/L in M.contents)
+		count += 1
+
+	if(count >= 3)
+		to_chat(src, "<span class='notice'>You cannot merge with [M], as it already has many nymphs.</span>")
+		return
+
 	merging(M)
 
 /mob/living/carbon/monkey/diona/verb/split()
@@ -305,19 +313,10 @@
 	if(stat == DEAD)
 		return say_dead(message)
 
-	var/datum/language/speaking = null
-
-	if(length(message) >= 2)
-		var/channel_prefix = copytext(message, 1 ,3)
-		if(languages.len)
-			for(var/datum/language/L in languages)
-				if(lowertext(channel_prefix) == ":[L.key]")
-					verb = L.speech_verb
-					speaking = L
-					break
-
+	var/datum/language/speaking = parse_language(message)
 	if(speaking)
-		message = trim(copytext(message,3))
+		verb = speaking.speech_verb
+		message = trim(copytext(message,2+length(speaking.key)))
 
 	if(!message || stat)
 		return
