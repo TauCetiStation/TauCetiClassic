@@ -779,7 +779,10 @@
 	if(ishuman(usr) && !incapacitated(usr))
 		var/mob/living/carbon/human/D = usr
 		if(D.get_species() == DIONA)
-			var/mob/living/carbon/monkey/diona/V = input(src,"Who do you to expel from within?") in null|contents
+			var/choices = list()
+			for(var/mob/living/carbon/monkey/diona/V in contents)
+				choices += V
+			var/mob/living/carbon/monkey/diona/V = input(D,"Who do wish you to expel from within?") in null|choices
 			to_chat(D, "<span class='notice'>You wriggle [V] out of your insides.</span>")
 			V.splitting(D)
 
