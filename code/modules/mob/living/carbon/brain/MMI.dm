@@ -96,7 +96,6 @@
 	if(target.buckled || !in_range(user, src) || !in_range(user, target))
 		return
 
-	var/target_loc = target.loc
 	if(target == user && !user.incapacitated())
 		visible_message("<span class='red'>[usr] starts climbing into the MMI.</span>", 3)
 	if(target != user && !user.incapacitated())
