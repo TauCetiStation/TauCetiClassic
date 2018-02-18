@@ -79,10 +79,8 @@
 			name = "Man-Machine Interface"
 			to_chat(user, "<span class='notice'>You uppend the MMI, dropping [brainmob.real_name] onto the floor.</span>")
 			V.loc = user.loc
-			if(brainmob.mind)
-				brainmob.mind.transfer_to(V)
 			brainmob.container = null
-			brainmob = null
+			QDEL_NULL(brainmob)
 			return
 		to_chat(user, "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>")
 		var/obj/item/brain/brain = new(user.loc)
@@ -90,7 +88,8 @@
 		brainmob.loc = brain//Throw mob into brain.
 		living_mob_list -= brainmob//Get outta here
 		brain.brainmob = brainmob//Set the brain to use the brainmob
-		brainmob = null//Set mmi brainmob var to null
+		QDEL_NULL(brainmob)
+
 /obj/item/device/mmi/MouseDrop_T(mob/living/carbon/monkey/diona/target, mob/user)
 	if(user.incapacitated() || !istype(target))
 		return
@@ -109,11 +108,9 @@
 	if(target_loc != target.loc)
 		return
 	if(target == user && !user.incapacitated())
-		visible_message("<span class='red'>[user.name] climbs into the MMI.</span>")
-		to_chat(user, "<span class='notice'>You climb into the MMI.</span>")
+		visible_message("<span class='red'>[user.name] climbs into the MMI.</span>","<span class='notice'>You climb into the MMI.</span>")
 	else if(target != user && !user.incapacitated())
-		visible_message("<span class='danger'>[user.name] stuffs [target.name] into the MMI!</span>")
-		to_chat(user, "<span class='red'>You stuff [target.name] into the MMI!</span>")
+		visible_message("<span class='danger'>[user.name] stuffs [target.name] into the MMI!</span>","<span class='red'>You stuff [target.name] into the MMI!</span>")
 	else
 		return
 	transfer_nymph(target)
@@ -132,13 +129,12 @@
 	locked = 1
 
 /obj/item/device/mmi/proc/transfer_nymph(mob/living/carbon/monkey/diona/H)
+	if(!H.mind || !H.key)
+		to_chat(usr, "<span class='warning'>It would appear [H] is void of consciousness, defeats MMI's purpose.</span>")
+		return
+	brainmob = H
+	brainmob.stat = CONSCIOUS
 	H.forceMove(src)
-	brainmob = new(src)
-	brainmob.name = H.name
-	brainmob.real_name = H.real_name
-	brainmob.dna = H.dna
-	if(H.mind)
-		H.mind.transfer_to(brainmob)
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	icon_state = "mmi_fullnymph"
