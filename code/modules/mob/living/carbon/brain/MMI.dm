@@ -14,7 +14,6 @@
 
 	var/locked = 0
 	var/mob/living/carbon/brain/brainmob = null//The current occupant.
-	var/mob/living/carbon/monkey/diona/containment = null // Åñëè íå ïðÿòàòü íèìôó êóäà ïîãëóáæå, îíà áóäåò âçàèìîäåéñòâîâàòü ñ ñîáñòâåííûì ÌÌÈ.
 	var/mob/living/silicon/robot = null//Appears unused.
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
@@ -78,12 +77,11 @@
 	else if(locked)
 		to_chat(user, "<span class='warning'>You upend the MMI, but the brain is clamped into place.</span>")
 	else
-		for(var/mob/living/carbon/monkey/diona/V in contents)
+		for(var/mob/living/carbon/monkey/diona/V in brainmob.contents)
 			icon_state = "mmi_empty"
 			name = "Man-Machine Interface"
 			to_chat(user, "<span class='notice'>You uppend the MMI, dropping [brainmob.real_name] onto the floor.</span>")
 			V.loc = user.loc
-			containment = null
 			QDEL_NULL(brainmob)
 			return
 		to_chat(user, "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>")
@@ -99,7 +97,6 @@
 		return
 	if(target.buckled || !in_range(user, src) || !in_range(user, target))
 		return
-
 	if(target == user && !user.incapacitated())
 		visible_message("<span class='red'>[usr] starts climbing into the MMI.</span>", 3)
 	if(target != user && !user.incapacitated())
@@ -130,9 +127,11 @@
 	locked = 1
 
 /obj/item/device/mmi/proc/transfer_nymph(mob/living/carbon/monkey/diona/H)
-	containment = new(src)
-	brainmob = H
-	H.forceMove(src.containment)
+	brainmob = new(src)
+	if(H.mind)
+		H.mind.transfer_to(brainmob)
+		brainmob.stat = CONSCIOUS
+	H.forceMove(brainmob.containment)
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	icon_state = "mmi_fullnymph"
