@@ -14,6 +14,7 @@
 
 	var/locked = 0
 	var/mob/living/carbon/brain/brainmob = null//The current occupant.
+	var/mob/living/carbon/monkey/diona/containment = null // Åñëè íå ïðÿòàòü íèìôó êóäà ïîãëóáæå, îíà áóäåò âçàèìîäåéñòâîâàòü ñ ñîáñòâåííûì ÌÌÈ.
 	var/mob/living/silicon/robot = null//Appears unused.
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
@@ -48,6 +49,9 @@
 		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
 
 		for(var/mob/living/carbon/monkey/diona/V in O.contents)
+			if(!V.mind || !V.key)
+				to_chat(usr, "<span class='warning'>It would appear [V] is void of consciousness, defeats MMI's purpose.</span>")
+				return
 			transfer_nymph(V)
 
 		qdel(O)
@@ -79,7 +83,7 @@
 			name = "Man-Machine Interface"
 			to_chat(user, "<span class='notice'>You uppend the MMI, dropping [brainmob.real_name] onto the floor.</span>")
 			V.loc = user.loc
-			brainmob.container = null
+			containment = null
 			QDEL_NULL(brainmob)
 			return
 		to_chat(user, "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>")
@@ -126,11 +130,9 @@
 	locked = 1
 
 /obj/item/device/mmi/proc/transfer_nymph(mob/living/carbon/monkey/diona/H)
-	if(!H.mind || !H.key)
-		to_chat(usr, "<span class='warning'>It would appear [H] is void of consciousness, defeats MMI's purpose.</span>")
-		return
+	containment = new(src)
 	brainmob = H
-	H.forceMove(src)
+	H.forceMove(src.containment)
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	icon_state = "mmi_fullnymph"
