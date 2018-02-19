@@ -1,190 +1,329 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
+/*
+  Tiny babby plant critter plus procs.
+*/
 
-/obj/item/device/mmi
-	name = "Man-Machine Interface"
-	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity."
-	icon = 'icons/obj/assemblies.dmi'
-	icon_state = "mmi_empty"
-	w_class = 3
-	origin_tech = "biotech=3"
+//Mob defines.
+/mob/living/carbon/monkey/diona
+	name = "diona nymph"
+	voice_name = "diona nymph"
+	speak_emote = list("chirrups")
+	icon_state = "nymph1"
+	var/list/donors = list()
+	var/ready_evolve = 0
+	var/mob/living/carbon/human/gestalt = null
+	var/allowedinjecting = list("nutriment" = /datum/reagent/nutriment,
+                                "ryetalyn" = /datum/reagent/ryetalyn,
+                                "kelotane" = /datum/reagent/kelotane,
+                                "hyronalin" = /datum/reagent/hyronalin,
+                                "alkysine" = /datum/reagent/alkysine,
+                                "imidazoline" = /datum/reagent/imidazoline
+                               )
+	var/datum/reagent/injecting = null
+	universal_understand = 0 // Dionaea do not need to speak to people
+	universal_speak = 0      // before becoming an adult. Use *chirp.
+	holder_type = /obj/item/weapon/holder/diona
 
-	req_access = list(access_robotics)
+/mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
 
-	//Revised. Brainmob is now contained directly within object of transfer. MMI in this case.
-
-	var/locked = 0
-	var/mob/living/carbon/brain/brainmob = null//The current occupant.
-	var/mob/living/carbon/monkey/diona/containment = null // Если не прятать нимфу куда поглубже, она будет взаимодействовать с собственным ММИ.
-	var/mob/living/silicon/robot = null//Appears unused.
-	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
-
-/obj/item/device/mmi/attackby(obj/item/O, mob/user)
-	if(istype(O,/obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
-		if(!O:brainmob)
-			to_chat(user, "\red You aren't sure where this brain came from, but you're pretty sure it's a useless brain.")
-			return
-		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
-
-		brainmob = O:brainmob
-		O:brainmob = null
-		brainmob.loc = src
-		brainmob.container = src
-		brainmob.stat = CONSCIOUS
-		dead_mob_list -= brainmob//Update dem lists
-		living_mob_list += brainmob
-
-		user.drop_item()
-		qdel(O)
-
-		name = "Man-Machine Interface: [brainmob.real_name]"
-		icon_state = "mmi_full"
-
-		locked = 1
-
-		feedback_inc("cyborg_mmis_filled",1)
-
-		return
-
-	if(istype(O,/obj/item/weapon/holder/diona) && !brainmob)
-		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
-
-		for(var/mob/living/carbon/monkey/diona/V in O.contents)
-			if(!V.mind || !V.key)
-				to_chat(usr, "<span class='warning'>It would appear [V] is void of consciousness, defeats MMI's purpose.</span>")
+	//Let people pick the little buggers up.
+	if(M.a_intent == "grab")
+		if(M.species && M.species.name == DIONA)
+			visible_message("<span class='notice'>[M] starts to merge [src] into themselves.</span>","<span class='notice'>You start merging [src] into you.</span>")
+			if(M.is_busy() || !do_after(M, 40, target = src))
 				return
-			transfer_nymph(V)
-
-		qdel(O)
-
-		feedback_inc("cyborg_mmis_filled",1)
-
-		return
-
-	if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
-		if(allowed(user))
-			locked = !locked
-			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the brain holder.</span>")
-		else
-			to_chat(user, "<span class='warning'>Access denied.</span>")
-		return
-	if(brainmob)
-		O.attack(brainmob, user)//Oh noooeeeee
-		return
+			merging(M)
+			return
 	..()
 
-/obj/item/device/mmi/attack_self(mob/user)
-	if(!brainmob)
-		to_chat(user, "<span class='warning'>You upend the MMI, but there's nothing in it.</span>")
-	else if(locked)
-		to_chat(user, "<span class='warning'>You upend the MMI, but the brain is clamped into place.</span>")
-	else
-		for(var/mob/living/carbon/monkey/diona/V in containment.contents)
-			icon_state = "mmi_empty"
-			name = "Man-Machine Interface"
-			to_chat(user, "<span class='notice'>You uppend the MMI, dropping [brainmob.real_name] onto the floor.</span>")
-			V.loc = user.loc
-			containment = null
-			QDEL_NULL(brainmob)
-			return
-		to_chat(user, "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>")
-		var/obj/item/brain/brain = new(user.loc)
-		brainmob.container = null//Reset brainmob mmi var.
-		brainmob.loc = brain//Throw mob into brain.
-		living_mob_list -= brainmob//Get outta here
-		brain.brainmob = brainmob//Set the brain to use the brainmob
-		QDEL_NULL(brainmob)
-
-/obj/item/device/mmi/MouseDrop_T(mob/living/carbon/monkey/diona/target, mob/user)
-	if(user.incapacitated() || !istype(target))
-		return
-	if(target.buckled || !in_range(user, src) || !in_range(user, target))
-		return
-
-	if(target == user && !user.incapacitated())
-		visible_message("<span class='red'>[usr] starts climbing into the MMI.</span>", 3)
-	if(target != user && !user.incapacitated())
-		if(target.anchored)
-			return
-		visible_message("<span class='red'>[usr] starts stuffing [target.name] into the MMI.</span>", 3)
-	if(user.is_busy() || !do_after(usr, 20, target = usr))
-		return
-	if(target == user && !user.incapacitated())
-		visible_message("<span class='red'>[user.name] climbs into the MMI.</span>","<span class='notice'>You climb into the MMI.</span>")
-	else if(target != user && !user.incapacitated())
-		visible_message("<span class='danger'>[user.name] stuffs [target.name] into the MMI!</span>","<span class='red'>You stuff [target.name] into the MMI!</span>")
-	else
-		return
-	transfer_nymph(target)
-
-	feedback_inc("cyborg_mmis_filled",1)
-
-/obj/item/device/mmi/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->robot people.
-	brainmob = new(src)
-	brainmob.name = H.real_name
-	brainmob.real_name = H.real_name
-	brainmob.dna = H.dna
-	brainmob.container = src
-
-	name = "Man-Machine Interface: [brainmob.real_name]"
-	icon_state = "mmi_full"
-	locked = 1
-
-/obj/item/device/mmi/proc/transfer_nymph(mob/living/carbon/monkey/diona/H)
-	containment = new(src)
-	brainmob = H
-	H.forceMove(src.containment)
-
-	name = "Man-Machine Interface: [brainmob.real_name]"
-	icon_state = "mmi_fullnymph"
-	locked = 1
-
-/obj/item/device/mmi/radio_enabled
-	name = "Radio-enabled Man-Machine Interface"
-	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity. This one comes with a built-in radio."
-	origin_tech = "biotech=4"
-
-	var/obj/item/device/radio/radio = null//Let's give it a radio.
-
-/obj/item/device/mmi/radio_enabled/atom_init()
+/mob/living/carbon/monkey/diona/atom_init()
 	. = ..()
-	radio = new(src)//Spawns a radio inside the MMI.
-	radio.broadcasting = 1//So it's broadcasting from the start.
+	gender = NEUTER
+	dna.mutantrace = "plant"
+	greaterform = DIONA
+	add_language("Rootspeak")
 
-/obj/item/device/mmi/radio_enabled/verb/Toggle_Broadcasting() //Allows the brain to toggle the radio functions.
-	set name = "Toggle Broadcasting"
-	set desc = "Toggle broadcasting channel on or off."
-	set category = "MMI"
-	set src = usr.loc//In user location, or in MMI in this case.
-	set popup_menu = 0//Will not appear when right clicking.
+/mob/living/carbon/monkey/diona/proc/merging(mob/living/carbon/human/M)
+	to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
+	M.status_flags |= PASSEMOTES
+	to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
+	src.forceMove(M)
+	gestalt = M
 
-	if(brainmob.stat)//Only the brainmob will trigger these so no further check is necessary.
-		to_chat(brainmob, "Can't do that while incapacitated or dead.")
+/mob/living/carbon/monkey/diona/proc/splitting(mob/living/carbon/human/M)
+	to_chat(src.loc, "You feel a pang of loss as [src] splits away from your biomass.")
+	to_chat(src, "You wiggle out of the depths of [M]'s biomass and plop to the ground.")
+	gestalt = null
+	loc = get_turf(src)
+	M.status_flags &= ~PASSEMOTES
+//Verbs after this point.
 
-	radio.broadcasting = radio.broadcasting==1 ? 0 : 1
-	to_chat(brainmob, "\blue Radio is [radio.broadcasting==1 ? "now" : "no longer"] broadcasting.")
+/mob/living/carbon/monkey/diona/verb/merge()
 
-/obj/item/device/mmi/radio_enabled/verb/Toggle_Listening()
-	set name = "Toggle Listening"
-	set desc = "Toggle listening channel on or off."
-	set category = "MMI"
-	set src = usr.loc
-	set popup_menu = 0
+	set category = "Diona"
+	set name = "Merge with gestalt"
+	set desc = "Merge with another diona."
 
-	if(brainmob.stat)
-		to_chat(brainmob, "Can't do that while incapacitated or dead.")
-
-	radio.listening = radio.listening==1 ? 0 : 1
-	to_chat(brainmob, "\blue Radio is [radio.listening==1 ? "now" : "no longer"] receiving broadcast.")
-
-/obj/item/device/mmi/emp_act(severity)
-	if(!brainmob)
+	if(gestalt)
 		return
+
+	if(incapacitated())
+		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
+		return
+
+	var/list/choices = list()
+	for(var/mob/living/carbon/human/C in view(1,src))
+		if(C.get_species() == DIONA)
+			choices += C
+
+	var/mob/living/carbon/human/M = input(src,"Who do you wish to merge with?") in null|choices
+
+	if(!M || !src || !(src.Adjacent(M)))
+		return
+
+	var/count = 0
+	for(var/mob/living/carbon/monkey/diona/L in M.contents)
+		count += 1
+
+	if(count >= 3)
+		to_chat(src, "<span class='notice'>You cannot merge with [M], as it already has many nymphs.</span>")
+		return
+
+	merging(M)
+
+/mob/living/carbon/monkey/diona/verb/split()
+
+	set category = "Diona"
+	set name = "Split from gestalt"
+	set desc = "Split away from your gestalt as a lone nymph."
+
+	if(!gestalt)
+		return
+
+	if(incapacitated())
+		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
+		return
+
+	splitting(gestalt)
+
+/mob/living/carbon/monkey/diona/verb/pass_knowledge()
+
+	set category = "Diona"
+	set name = "Pass Knowledge"
+	set desc = "Teach the gestalt your own known languages."
+
+	if(!gestalt)
+		return
+
+	if(gestalt.incapacitated(null))
+		to_chat(src, "<span class='warning'>[gestalt] must be conscious to do this.</span>")
+		return
+	if(incapacitated())
+		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
+		return
+
+	if(gestalt.nutrition < 230)
+		to_chat(src, "<span class='notice'>It would appear, that [gestalt] does not have enough nutrition to accept your knowledge.</span>")
+		return
+	if(nutrition < 230)
+		to_chat(src, "<span class='notice'>It would appear, that you do not have enough nutrition to pass knowledge onto [gestalt].</span>")
+		return
+
+	var/langdiff = languages - gestalt.languages
+	var/datum/language/L = pick(langdiff)
+	to_chat(gestalt, "<span class ='notice'>It would seem [src] is trying to pass on their knowledge onto you.</span>")
+	to_chat(src, "<span class='notice'>You concentrate your willpower on transcribing [L.name] onto [gestalt], this may take a while.</span>")
+	if(is_busy() || !do_after(src, 40, target = gestalt))
+		return
+	gestalt.add_language(L.name)
+	nutrition -= 30
+	gestalt.nutrition -= 30
+	to_chat(src, "<span class='notice'>It would seem you have passed on [L.name] onto [gestalt] succesfully.</span>")
+	to_chat(gestalt, "<span class='notice'>It would seem you have acquired knowledge of [L.name]!</span>")
+	if(prob(50))
+		to_chat(src, "<span class='warning'>You momentarily forget [L.name]. Is this how memory wiping feels?</span")
+		remove_language(L.name)
+	L = null
+
+/mob/living/carbon/monkey/diona/verb/synthesize()
+
+	set category = "Diona"
+	set name = "Synthesize"
+	set desc = "Synthesize chemicals inside gestalt's body."
+
+	if(!gestalt)
+		return
+
+	if(incapacitated())
+		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
+		return
+
+	if(nutrition < 210)
+		to_chat(src, "<span class='warning'>You do not have enough nutriments to perform this action.</span>")
+		return
+
+	if(injecting)
+		switch(alert("Would you like to stop injecting, or change chemical?","Choose.","Stop injecting","Change chemical"))
+			if("Stop injecting")
+				injecting = null
+				return
+			if("Change chemical")
+				injecting = null
+	var/datum/reagent/V = input(src,"What do you wish to inject?") in null|allowedinjecting
+
+	if(V)
+		injecting = V
+
+
+/mob/living/carbon/monkey/diona/verb/fertilize_plant()
+
+	set category = "Diona"
+	set name = "Fertilize plant"
+	set desc = "Turn your food into nutrients for plants."
+
+	var/list/trays = list()
+	for(var/obj/machinery/hydroponics/tray in range(1))
+		if(tray.nutrilevel < 10)
+			trays += tray
+
+	var/obj/machinery/hydroponics/target = input("Select a tray:") as null|anything in trays
+
+	if(!src || !target || target.nutrilevel == 10) return //Sanity check.
+
+	src.nutrition -= ((10-target.nutrilevel)*5)
+	target.nutrilevel = 10
+	src.visible_message("\red [src] secretes a trickle of green liquid from its tail, refilling [target]'s nutrient tray.","\red You secrete a trickle of green liquid from your tail, refilling [target]'s nutrient tray.")
+
+/mob/living/carbon/monkey/diona/verb/eat_weeds()
+
+	set category = "Diona"
+	set name = "Eat Weeds"
+	set desc = "Clean the weeds out of soil or a hydroponics tray."
+
+	var/list/trays = list()
+	for(var/obj/machinery/hydroponics/tray in range(1))
+		if(tray.weedlevel > 0)
+			trays += tray
+
+	var/obj/machinery/hydroponics/target = input("Select a tray:") as null|anything in trays
+
+	if(!src || !target || target.weedlevel == 0) return //Sanity check.
+
+	src.reagents.add_reagent("nutriment", target.weedlevel)
+	target.weedlevel = 0
+	src.visible_message("\red [src] begins rooting through [target], ripping out weeds and eating them noisily.","\red You begin rooting through [target], ripping out weeds and eating them noisily.")
+
+/mob/living/carbon/monkey/diona/verb/evolve()
+
+	set category = "Diona"
+	set name = "Evolve"
+	set desc = "Grow to a more complex form."
+
+	if(!is_alien_whitelisted(src, DIONA) && config.usealienwhitelist)
+		to_chat(src, alert("You are currently not whitelisted to play as a full diona."))
+		return 0
+
+	if(donors.len < 5)
+		to_chat(src, "You are not yet ready for your growth...")
+		return
+
+	if(nutrition < 400)
+		to_chat(src, "You have not yet consumed enough to grow...")
+		return
+
+	src.split()
+	src.visible_message("\red [src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.","\red You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.")
+
+	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
+	adult.set_species(DIONA)
+
+	if(istype(loc,/obj/item/weapon/holder/diona))
+		var/obj/item/weapon/holder/diona/L = loc
+		src.loc = L.loc
+		qdel(L)
+
+	for(var/datum/language/L in languages)
+		adult.add_language(L.name)
+	adult.regenerate_icons()
+
+	adult.name = "diona ([rand(100,999)])"
+	adult.real_name = adult.name
+	adult.ckey = src.ckey
+
+	for (var/obj/item/W in src.contents)
+		src.drop_from_inventory(W)
+	qdel(src)
+
+/mob/living/carbon/monkey/diona/verb/steal_blood()
+	set category = "Diona"
+	set name = "Steal Blood"
+	set desc = "Take a blood sample from a suitable donor."
+
+	var/list/choices = list()
+	for(var/mob/living/carbon/human/H in oview(1,src))
+		choices += H
+
+	var/mob/living/carbon/human/M = input(src,"Who do you wish to take a sample from?") in null|choices
+
+	if(!M || !src) return
+
+	if(M.species.flags[NO_BLOOD])
+		to_chat(src, "\red That donor has no blood to take.")
+		return
+
+	if(donors.Find(M.real_name))
+		to_chat(src, "\red That donor offers you nothing new.")
+		return
+
+	src.visible_message("\red [src] flicks out a feeler and neatly steals a sample of [M]'s blood.","\red You flick out a feeler and neatly steal a sample of [M]'s blood.")
+	donors += M.real_name
+	for(var/datum/language/L in M.languages)
+		languages |= L
+
+	spawn(25)
+		update_progression()
+
+/mob/living/carbon/monkey/diona/proc/update_progression()
+
+	if(!donors.len)
+		return
+
+	if(donors.len == 5)
+		ready_evolve = 1
+		to_chat(src, "\green You feel ready to move on to your next stage of growth.")
+	else if(donors.len == 3)
+		universal_understand = 1
+		to_chat(src, "\green You feel your awareness expand, and realize you know how to understand the creatures around you.")
 	else
-		switch(severity)
-			if(1)
-				brainmob.emp_damage += rand(20,30)
-			if(2)
-				brainmob.emp_damage += rand(10,20)
-			if(3)
-				brainmob.emp_damage += rand(0,10)
-	..()
+		to_chat(src, "\green The blood seeps into your small form, and you draw out the echoes of memories and personality from it, working them into your budding mind.")
+
+
+/mob/living/carbon/monkey/diona/say_understands(mob/other,datum/language/speaking = null)
+
+	if (istype(other, /mob/living/carbon/human) && !speaking)
+		if(languages.len >= 2) // They have sucked down some blood.
+			return 1
+	return ..()
+
+/mob/living/carbon/monkey/diona/say(var/message)
+	var/verb = "says"
+	var/message_range = world.view
+
+	if(client)
+		if(client.prefs.muted & MUTE_IC)
+			to_chat(src, "\red You cannot speak in IC (Muted).")
+			return
+
+	message = trim(copytext(message, 1, MAX_MESSAGE_LEN))
+
+	if(stat == DEAD)
+		return say_dead(message)
+
+	var/datum/language/speaking = parse_language(message)
+	if(speaking)
+		verb = speaking.speech_verb
+		message = trim(copytext(message,2+length(speaking.key)))
+
+	if(!message || stat)
+		return
+
+	..(message, speaking, verb, null, null, message_range, null)
