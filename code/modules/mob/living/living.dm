@@ -776,12 +776,13 @@
 			M.status_flags &= ~PASSEMOTES
 		return
 
-	if(ishuman(usr) && !incapacitated())
+	if(ishuman(usr) && (!usr.incapacitated()))
 		var/mob/living/carbon/human/D = usr
 		if(D.get_species() == DIONA)
 			var/choices = list()
-			for(var/mob/living/carbon/monkey/diona/V in contents)
-				choices += V
+			for(var/V in contents)
+				if(istype(V, /mob/living/carbon/monkey/diona))
+					choices += V
 			var/mob/living/carbon/monkey/diona/V = input(D,"Who do wish you to expel from within?") in null|choices
 			to_chat(D, "<span class='notice'>You wriggle [V] out of your insides.</span>")
 			V.splitting(D)
