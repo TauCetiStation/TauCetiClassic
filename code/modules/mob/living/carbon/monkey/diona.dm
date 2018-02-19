@@ -81,8 +81,9 @@
 		return
 
 	var/count = 0
-	for(var/mob/living/carbon/monkey/diona/L in M.contents)
-		count += 1
+	for(var/L in M.contents)
+		if(istype(L, /mob/living/carbon/monkey/diona))
+			count += 1
 
 	if(count >= 3)
 		to_chat(src, "<span class='notice'>You cannot merge with [M], as it already has many nymphs.</span>")
