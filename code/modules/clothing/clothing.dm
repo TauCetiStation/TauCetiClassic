@@ -284,6 +284,9 @@ BLIND     // can't see anything
 	w_class = 3
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/suit.dmi')
 
+/obj/item/clothing/proc/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+	return
+
 //Spacesuit
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
 //      Meaning the the suit is defined directly after the corrisponding helmet. Just like below!

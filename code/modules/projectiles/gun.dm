@@ -100,15 +100,9 @@
 			if(user.dna && user.dna.mutantrace == "adamantine")
 				to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
 				return
-			if(H.wear_suit)
-				if(istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-					for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
-						if(V.stealth_active)
-							V.DeactivateStealth()
-				if(istype(H.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
-					for(var/obj/item/clothing/suit/space/vox/stealth/V in list(H.wear_suit))
-						if(V.on)
-							V.overload()
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+				var/obj/item/clothing/suit/V = H.wear_suit
+				V.attack_reaction(H, REACTION_GUN_FIRE)
 
 			if(clumsy_check) //it should be AFTER hulk or monkey check.
 				var/going_to_explode = 0
