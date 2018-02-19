@@ -131,7 +131,7 @@
 	if(H.mind)
 		H.mind.transfer_to(brainmob)
 		brainmob.stat = CONSCIOUS
-	H.forceMove(brainmob.containment)
+	H.forceMove(brainmob)
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	icon_state = "mmi_fullnymph"
