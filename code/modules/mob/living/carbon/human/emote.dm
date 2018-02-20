@@ -534,10 +534,7 @@
 				message = "<B>[src]</B> acts out a scream!"
 				m_type = 1
 			else
-				for (var/V in virus2)
-					if (istype(V, /datum/disease2/effect/scream))
-						virus_scream = TRUE
-						break
+				virus_scream = locate(/datum/disease2/effect/scream, src) in virus2
 				if(virus_scream || !(species && species.flags[NO_PAIN]))
 					if (!muzzled)
 						if (auto)
