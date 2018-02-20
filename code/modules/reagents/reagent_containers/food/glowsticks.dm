@@ -22,6 +22,7 @@
 	icon_state = "glowstick_[colourName]"
 	item_state = "glowstick_[colourName]"
 	. = ..()
+	add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/process()
 	liquid_fuel.volume = max(liquid_fuel.volume - 0.1, 0)
@@ -187,17 +188,7 @@
 			liquid_fuel = luminophore
 
 	var/datum/reagent/lum = locate(/datum/reagent/luminophore) in R.reagent_list
-	if(lum)
-		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/green))
-			lum.color = "#88EBC3"
-		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/red))
-			lum.color = "#EA0052"
-		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue))
-			lum.color = "#24C1FF"
-		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow))
-			lum.color = "#FFFA18"
-		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange))
-			lum.color = "#FF9318"
+	lum.color = filling_color
 
 ////////////////G L O W S T I C K - C O L O R S////////////////
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/green
@@ -205,45 +196,26 @@
 	light_color = "#88EBC3"
 	filling_color = "#88EBC3"
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/green/atom_init()
-	. = ..()
-	add_fuel()
-
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/red
 	colourName = "red"
 	light_color = "#EA0052"
 	filling_color = "#EA0052"
-
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/red/atom_init()
-	. = ..()
-	add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue
 	colourName = "blue"
 	light_color = "#24C1FF"
 	filling_color = "#24C1FF"
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/blue/atom_init()
-	. = ..()
-	add_fuel()
-
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow
 	colourName = "yellow"
 	light_color = "#FFFA18"
 	filling_color = "#FFFA18"
-
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow/atom_init()
-	. = ..()
-	add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange
 	colourName = "orange"
 	light_color = "#FF9318"
 	filling_color = "#FF9318"
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/orange/atom_init()
-	. = ..()
-	add_fuel()
 
 ///////////////////// POWER GLOWSTICK //////////////////////
 
@@ -270,42 +242,22 @@
 	light_color = "#88EBC3"
 	filling_color = "#88EBC3"
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/green/atom_init()
-	. = ..()
-	add_fuel()
-
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/red
 	colourName = "red"
 	light_color = "#EA0052"
 	filling_color = "#EA0052"
-
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/red/atom_init()
-	. = ..()
-	add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/blue
 	colourName = "blue"
 	light_color = "#24C1FF"
 	filling_color = "#24C1FF"
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/blue/atom_init()
-	. = ..()
-	add_fuel()
-
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/yellow
 	colourName = "yellow"
 	light_color = "#FFFA18"
 	filling_color = "#FFFA18"
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/yellow/atom_init()
-	. = ..()
-	add_fuel()
-
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/orange
 	colourName = "orange"
 	light_color = "#FF9318"
 	filling_color = "#FF9318"
-
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/orange/atom_init()
-	. = ..()
-	add_fuel()
