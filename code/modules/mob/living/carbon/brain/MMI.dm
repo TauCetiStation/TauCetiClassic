@@ -97,7 +97,7 @@
 		return
 	if(target.buckled || !in_range(user, src) || !in_range(user, target))
 		return
-	if(target == user && !user.incapacitated())
+	if(target == user)
 		visible_message("<span class='red'>[user] starts climbing into the MMI.</span>", 3)
 	else
 		if(target.anchored)
@@ -105,7 +105,7 @@
 		visible_message("<span class='red'>[user] starts stuffing [target.name] into the MMI.</span>", 3)
 	if(user.is_busy() || !do_after(user, 20, target = user))
 		return
-	if(target == user && !user.incapacitated())
+	if(target == user)
 		visible_message("<span class='red'>[user.name] climbs into the MMI.</span>","<span class='notice'>You climb into the MMI.</span>")
 	else if(target != user && !user.incapacitated())
 		visible_message("<span class='danger'>[user.name] stuffs [target.name] into the MMI!</span>","<span class='red'>You stuff [target.name] into the MMI!</span>")
