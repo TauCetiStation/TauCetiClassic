@@ -11,12 +11,12 @@
 	var/list/donors = list()
 	var/ready_evolve = 0
 	var/mob/living/carbon/human/gestalt = null
-	var/allowedinjecting = list("nutriment" = /datum/reagent/nutriment,
-                                "ryetalyn" = /datum/reagent/ryetalyn,
-                                "kelotane" = /datum/reagent/kelotane,
-                                "hyronalin" = /datum/reagent/hyronalin,
-                                "alkysine" = /datum/reagent/alkysine,
-                                "imidazoline" = /datum/reagent/imidazoline
+	var/allowedinjecting = list("nutriment",
+                                "ryetalyn",
+                                "kelotane",
+                                "hyronalin",
+                                "alkysine",
+                                "imidazoline"
                                )
 	var/datum/reagent/injecting = null
 	universal_understand = 0 // Dionaea do not need to speak to people
@@ -82,7 +82,7 @@
 
 	var/count = 0
 	for(var/mob/living/carbon/monkey/diona in M)
-			count++
+		count++
 
 	if(count >= 3)
 		to_chat(src, "<span class='notice'>You cannot merge with [M], as it already has many nymphs.</span>")
@@ -142,6 +142,7 @@
 	if(prob(50))
 		to_chat(src, "<span class='warning'>You momentarily forget [L.name]. Is this how memory wiping feels?</span")
 		remove_language(L.name)
+	L = null
 
 /mob/living/carbon/monkey/diona/verb/synthesize()
 
@@ -167,7 +168,7 @@
 				return
 			if("Change chemical")
 				injecting = null
-	var/datum/reagent/V = input(src,"What do you wish to inject?") in null|allowedinjecting
+	var/V = input(src,"What do you wish to inject?") in null|allowedinjecting
 
 	if(V)
 		injecting = V
