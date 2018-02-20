@@ -46,14 +46,14 @@
 	to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
 	M.status_flags |= PASSEMOTES
 	to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
-	src.forceMove(M)
+	forceMove(M)
 	gestalt = M
 
 /mob/living/carbon/monkey/diona/proc/splitting(mob/living/carbon/human/M)
 	to_chat(src.loc, "You feel a pang of loss as [src] splits away from your biomass.")
 	to_chat(src, "You wiggle out of the depths of [M]'s biomass and plop to the ground.")
 	gestalt = null
-	loc = get_turf(src)
+	forceMove(get_turf(src))
 	M.status_flags &= ~PASSEMOTES
 //Verbs after this point.
 
@@ -83,7 +83,7 @@
 	var/count = 0
 	for(var/L in M.contents)
 		if(istype(L, /mob/living/carbon/monkey/diona))
-			count += 1
+			count++
 
 	if(count >= 3)
 		to_chat(src, "<span class='notice'>You cannot merge with [M], as it already has many nymphs.</span>")
@@ -143,7 +143,6 @@
 	if(prob(50))
 		to_chat(src, "<span class='warning'>You momentarily forget [L.name]. Is this how memory wiping feels?</span")
 		remove_language(L.name)
-	L = null
 
 /mob/living/carbon/monkey/diona/verb/synthesize()
 
