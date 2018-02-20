@@ -640,12 +640,10 @@
 			var/turf/T = loc
 			light_amount = round((T.get_lumcount()*10)-5)
 	
-		nutrition += light_amount
+		nutrition = max(nutrition + light_amount, 400)
 		traumatic_shock -= light_amount
-	
-		if(nutrition > 400)
-			nutrition = 400
-		if(light_amount > 2) //if there's enough light, heal
+
+		if(light_amount > 2 && prob(4)) //if there's enough light, heal
 			adjustBruteLoss(-1)
 			adjustToxLoss(-1)
 			adjustOxyLoss(-1)
