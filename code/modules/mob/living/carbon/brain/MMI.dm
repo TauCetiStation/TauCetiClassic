@@ -98,16 +98,16 @@
 	if(target.buckled || !in_range(user, src) || !in_range(user, target))
 		return
 	if(target == user)
-		visible_message("<span class='red'>[user] starts climbing into the MMI.</span>", 3)
+		visible_message("<span class='red'>[usr] starts climbing into the MMI.</span>", 3)
 	else
 		if(target.anchored)
 			return
-		visible_message("<span class='red'>[user] starts stuffing [target.name] into the MMI.</span>", 3)
-	if(user.is_busy() || !do_after(user, 20, target = user))
+		visible_message("<span class='red'>[usr] starts stuffing [target.name] into the MMI.</span>", 3)
+	if(user.is_busy() || !do_after(usr, 20, target = usr))
 		return
 	if(target == user)
 		visible_message("<span class='red'>[user.name] climbs into the MMI.</span>","<span class='notice'>You climb into the MMI.</span>")
-	else if(target != user && !user.incapacitated())
+	else if(target != user)
 		visible_message("<span class='danger'>[user.name] stuffs [target.name] into the MMI!</span>","<span class='red'>You stuff [target.name] into the MMI!</span>")
 	else
 		return
@@ -124,7 +124,7 @@
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	icon_state = "mmi_full"
-	locked = TRUE
+	locked = 1
 
 /obj/item/device/mmi/proc/transfer_nymph(mob/living/carbon/monkey/diona/H)
 	brainmob = new(src)
@@ -135,7 +135,7 @@
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	icon_state = "mmi_fullnymph"
-	locked = 1
+	locked = TRUE
 
 /obj/item/device/mmi/radio_enabled
 	name = "Radio-enabled Man-Machine Interface"
