@@ -914,7 +914,7 @@ ________________________________________________________________________________
 		s_active=!s_active
 		icon_state = U.gender==FEMALE ? "s-ninjasf" : "s-ninjas"
 		U.regenerate_icons()	//update their icons
-		to_chat(U, "\blue You are now invisible to normal detection.")
+		to_chat(U, "<span class='warning'>You are now invisible to normal detection.</span>")
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] vanishes into thin air!",1)
 		U.invisibility = INVISIBILITY_LEVEL_TWO
@@ -930,7 +930,7 @@ ________________________________________________________________________________
 	if(s_active)
 		anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		s_active=!s_active
-		to_chat(U, "\blue You are now visible.")
+		to_chat(U, "<span class='warning'>You are now visible.</span>")
 		U.invisibility = 0
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)
@@ -954,7 +954,7 @@ ________________________________________________________________________________
 		sparks.start()
 
 		s_active=!s_active
-		to_chat(U, "\blue You are now visible.")
+		to_chat(U, "<span class='warning'>You are now visible.</span>")
 		U.invisibility = 0
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] appears from thin air!",1)
@@ -1006,7 +1006,7 @@ ________________________________________________________________________________
 	if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)
 		return
 
-	if(reaction_type == REACTION_HIT_BY_BULLET || reaction_type == REACTION_INTERACT_ARMED || reaction_type == REACTION_INTERACT_UNARMED || reaction_type == REACTION_THROWITEM)
+	if(reaction_type == REACTION_HIT_BY_BULLET || reaction_type == REACTION_INTERACT_ARMED || reaction_type == REACTION_INTERACT_UNARMED || reaction_type == REACTION_THROWITEM || reaction_type == REACTION_ATACKED)
 		pop_stealth()
 		return
 
