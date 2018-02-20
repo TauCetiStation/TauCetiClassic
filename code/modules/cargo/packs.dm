@@ -1206,6 +1206,16 @@ datum/supply_pack/New()
 	crate_name = "Empty box crate"
 	group = "Supply"
 
+/datum/supply_pack/barber
+	name = "Barber supplies"
+	contains = list(/obj/item/weapon/storage/box/hairsprays,
+	/obj/item/weapon/hair_growth_accelerator,
+	/obj/item/weapon/scissors,
+	/obj/item/weapon/razor)
+	cost = 1000
+	crate_name = "Barber supplies"
+	group = "Supply"
+
 //----------------------------------------------
 //--------------MISCELLANEOUS-------------------
 //----------------------------------------------
