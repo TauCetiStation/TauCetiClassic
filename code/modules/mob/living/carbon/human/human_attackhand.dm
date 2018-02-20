@@ -92,16 +92,16 @@
 		if("help")
 			if(health < config.health_threshold_crit && health > config.health_threshold_dead)
 				if(M.species && M.species.flags[NO_BREATH])
-					to_chat(M, "\blue <B>Your species can not perform CPR!</B>")
+					to_chat(M, "<span class='notice bold'>Your species can not perform CPR!</span>")
 					return FALSE
 				if(species && species.flags[NO_BREATH])
-					to_chat(M, "\blue <B>You can not perform CPR on these species!</B>")
+					to_chat(M, "<span class='notice bold'>You can not perform CPR on these species!</span>")
 					return FALSE
 				if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-					to_chat(M, "\blue <B>Remove your mask!</B>")
+					to_chat(M, "<span class='notice bold'>Remove your mask!</span>")
 					return FALSE
 				if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-					to_chat(M, "\blue <B>Remove his mask!</B>")
+					to_chat(M, "<span class='notice bold'>Remove his mask!</span>")
 					return FALSE
 
 				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
