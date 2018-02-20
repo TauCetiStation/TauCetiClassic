@@ -81,8 +81,7 @@
 		return
 
 	var/count = 0
-	for(var/L in M.contents)
-		if(istype(L, /mob/living/carbon/monkey/diona))
+	for(var/mob/living/carbon/monkey/diona in M)
 			count++
 
 	if(count >= 3)
