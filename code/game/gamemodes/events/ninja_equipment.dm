@@ -911,7 +911,7 @@ ________________________________________________________________________________
 		cancel_stealth()
 	else
 		anim(U.loc,U,'icons/mob/mob.dmi',,"cloak",,U.dir)
-		s_active=!s_active
+		s_active=TRUE
 		icon_state = U.gender==FEMALE ? "s-ninjasf" : "s-ninjas"
 		U.regenerate_icons()	//update their icons
 		to_chat(U, "<span class='warning'>You are now invisible to normal detection.</span>")
@@ -929,7 +929,7 @@ ________________________________________________________________________________
 	var/mob/living/carbon/human/U = affecting
 	if(s_active)
 		anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
-		s_active=!s_active
+		s_active=FALSE
 		to_chat(U, "<span class='warning'>You are now visible.</span>")
 		U.invisibility = 0
 		for(var/mob/O in oviewers(U))
@@ -953,7 +953,7 @@ ________________________________________________________________________________
 		sparks.set_up(3, 0, get_turf(U))
 		sparks.start()
 
-		s_active=!s_active
+		s_active=FALSE
 		to_chat(U, "<span class='warning'>You are now visible.</span>")
 		U.invisibility = 0
 		for(var/mob/O in oviewers(U))
