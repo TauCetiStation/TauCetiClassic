@@ -142,6 +142,7 @@
 	if(prob(50))
 		to_chat(src, "<span class='warning'>You momentarily forget [L.name]. Is this how memory wiping feels?</span")
 		remove_language(L.name)
+	L = null
 
 /mob/living/carbon/monkey/diona/verb/synthesize()
 
@@ -220,6 +221,9 @@
 	if(!is_alien_whitelisted(src, DIONA) && config.usealienwhitelist)
 		to_chat(src, alert("You are currently not whitelisted to play as a full diona."))
 		return 0
+
+	if(gestalt)
+		return
 
 	if(donors.len < 5)
 		to_chat(src, "You are not yet ready for your growth...")
