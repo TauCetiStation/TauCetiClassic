@@ -61,7 +61,7 @@
 	prob(50);/obj/item/device/multitool/ai_detect,\
 	prob(50);/obj/item/device/syndicatedetonator,\
 	prob(50);/obj/item/ammo_box/magazine/m12mm,\
-	prob(50);/obj/item/ammo_box/magazine/m9mm,\
+	prob(50);/obj/item/ammo_box/magazine/m9x18mm,\
 	prob(50);/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate,\
 	prob(50);/obj/item/weapon/cartridge/syndicate,\
 	prob(50);/obj/item/toy/carpplushie/dehy_carp,\

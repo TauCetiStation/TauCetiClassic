@@ -87,7 +87,7 @@
 
 		dat += "(10 Influence) "
 		if(points >= 10)
-			dat += "<a href='?src=\ref[src];purchase=9mmammo'>9mm Ammo</a><br>"
+			dat += "<a href='?src=\ref[src];purchase=9mmammo'>9x18mm ammo</a><br>"
 		else
 			dat += "9mm Ammo<br>"
 
@@ -191,7 +191,7 @@
 					points = 25
 			if("9mmammo")
 				if(points >= 10)
-					item_type = /obj/item/ammo_box/magazine/m9mm
+					item_type = /obj/item/ammo_box/magazine/m9x18mm
 					points = 10
 			if("uzi")
 				if(points >= 50)
