@@ -62,9 +62,7 @@
 	else //Trying to wield it
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			var/obj/item/organ/external/l_hand/BPL = H.bodyparts_by_name[BP_L_HAND]
-			var/obj/item/organ/external/r_hand/BPR = H.bodyparts_by_name[BP_R_HAND]
-			if(BPL.is_broken() || BPR.is_broken() || !BPL.is_usable() || !BPR.is_usable())
+			if(!H.canusetwohands())
 				to_chat(user, "<span class='warning'>You need both of your hands to be intact.</span>")
 				return
 		if(user.get_inactive_hand() )
