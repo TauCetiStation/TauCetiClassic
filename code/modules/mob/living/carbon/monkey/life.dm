@@ -9,10 +9,10 @@
 
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
 	if(loc)
-		environment = loc.return_air(
+		environment = loc.return_air()
 
 	if (stat != DEAD)
-		if(!istype(src,/mob/living/carbon/monkey/diona)) //still breathing
+		if(!istype(src,/mob/living/carbon/monkey/diona))
 			//First, resolve location and get a breath
 			if(SSmob.times_fired%4==2)
 				//Only try to take a breath every 4 seconds, unless suffocating
@@ -209,7 +209,7 @@
 			if(reagents.has_reagent("lexorin")) return
 
 		if(!loc) return //probably ought to make a proper fix for this, but :effort: --NeoFite
-		if(istype(loc, /obj/item/weapon/holder)) return // типа быстрофикс на обезьянок что берут на руки, хотя бы не будут умирать.. но нужно нормальное решение.
+		if(istype(loc, /obj/item/weapon/holder)) return // ???? ?????????? ?? ????????? ??? ????? ?? ????, ???? ?? ?? ????? ???????.. ?? ????? ?????????? ???????.
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
@@ -639,11 +639,13 @@
 		else if(isturf(loc)) //else, there's considered to be no light
 			var/turf/T = loc
 			light_amount = round((T.get_lumcount()*10)-5)
-	
-		nutrition = max(nutrition + light_amount, 400)
+
+		nutrition += light_amount
 		traumatic_shock -= light_amount
 
-		if(light_amount > 2 && prob(25)) //if there's enough light, heal
+		if(nutrition > 400)
+			nutrition = 400
+		if(light_amount > 2) //if there's enough light, heal
 			adjustBruteLoss(-1)
 			adjustToxLoss(-1)
 			adjustOxyLoss(-1)
