@@ -914,9 +914,7 @@ ________________________________________________________________________________
 		s_active=TRUE
 		icon_state = U.gender==FEMALE ? "s-ninjasf" : "s-ninjas"
 		U.regenerate_icons()	//update their icons
-		to_chat(U, "<span class='warning'>You are now invisible to normal detection.</span>")
-		for(var/mob/O in oviewers(U))
-			O.show_message("[U.name] vanishes into thin air!",1)
+		U.visible_message("[U.name] vanishes into thin air!", "<span class='notice'>You are now invisible to normal detection.</span>")
 		U.invisibility = INVISIBILITY_LEVEL_TWO
 		if(istype(U.get_active_hand(), /obj/item/weapon/melee/energy/blade))
 			U.drop_item()
@@ -930,11 +928,9 @@ ________________________________________________________________________________
 	if(s_active)
 		anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		s_active=FALSE
-		to_chat(U, "<span class='warning'>You are now visible.</span>")
 		U.invisibility = 0
-		for(var/mob/O in oviewers(U))
-			O.show_message("[U.name] appears from thin air!",1)
-		if(U.mind.protector_role == 1)
+		U.visible_message("[U.name] appears from thin air!", "<span class='notice'>You are now visible.</span>")
+		if(U.mind.protector_role)
 			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
 		else
 			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
@@ -945,7 +941,6 @@ ________________________________________________________________________________
 /obj/item/clothing/suit/space/space_ninja/proc/pop_stealth()
 	var/mob/living/carbon/human/U = affecting
 	if(s_active)
-		//anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
 		var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
 		sparks.set_up(3, 0, get_turf(U))
 		sparks.start()
@@ -954,11 +949,9 @@ ________________________________________________________________________________
 		sparks.start()
 
 		s_active=FALSE
-		to_chat(U, "<span class='warning'>You are now visible.</span>")
 		U.invisibility = 0
-		for(var/mob/O in oviewers(U))
-			O.show_message("[U.name] appears from thin air!",1)
-		if(U.mind.protector_role == 1)
+		U.visible_message("[U.name] appears from thin air!", "<span class='notice'>You are now visible.</span>")
+		if(U.mind.protector_role)
 			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
 		else
 			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
@@ -1002,7 +995,6 @@ ________________________________________________________________________________
 				to_chat(user, "�rr�R �a��a�� No-�-� f��N� 3RR�r")
 
 /obj/item/clothing/suit/space/space_ninja/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
-	..()
 	if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)
 		return
 

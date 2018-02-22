@@ -78,7 +78,6 @@
 	return
 
 /obj/item/clothing/suit/armor/abductor/vest/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
-	..()
 	if(reaction_type == REACTION_ITEM_TAKE)
 		return
 

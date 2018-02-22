@@ -37,8 +37,8 @@
 			P.agony /= 2
 		apply_effect(P.agony,AGONY,0)
 		qdel(P)
-		if(src.wear_suit && istype(src.wear_suit, /obj/item/clothing/suit))
-			var/obj/item/clothing/suit/V = src.wear_suit
+		if(istype(wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
 		return
 
@@ -58,8 +58,8 @@
 		flash_pain()
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
 		qdel(P)
-		if(src.wear_suit && istype(src.wear_suit, /obj/item/clothing/suit))
-			var/obj/item/clothing/suit/V = src.wear_suit
+		if(istype(wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
 		return
 
@@ -84,8 +84,8 @@
 		flash_pain()
 		to_chat(src, "<span class='userdanger'>You have been shot!</span>")
 		qdel(P)
-		if(src.wear_suit && istype(src.wear_suit, /obj/item/clothing/suit))
-			var/obj/item/clothing/suit/V = src.wear_suit
+		if(istype(wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = wear_suit
 			V.attack_reaction(src, REACTION_HIT_BY_BULLET)
 		return
 
@@ -127,8 +127,8 @@
 			apply_effects(B.stun,B.stun,B.stun,0,0,0,0,armor)
 			to_chat(src, "<span class='userdanger'>You feel that yor muscles can`t move!</span>")
 
-	if(src.wear_suit && istype(src.wear_suit, /obj/item/clothing/suit))
-		var/obj/item/clothing/suit/V = src.wear_suit
+	if(istype(wear_suit, /obj/item/clothing/suit))
+		var/obj/item/clothing/suit/V = wear_suit
 		V.attack_reaction(src, REACTION_HIT_BY_BULLET)
 
 	return (..(P , def_zone))

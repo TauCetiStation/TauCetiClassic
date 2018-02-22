@@ -26,13 +26,13 @@
 
 	if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
 		var/mob/living/carbon/human/H = user
-		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+		if(istype(H.wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = H.wear_suit
 			V.attack_reaction(H, REACTION_INTERACT_ARMED, src)
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+		if(istype(H.wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = H.wear_suit
 			V.attack_reaction(src, REACTION_ATACKED, user)
 
