@@ -45,6 +45,7 @@ var/const/CLOWN				=(1<<11)
 var/const/MIME				=(1<<12)
 var/const/ASSISTANT			=(1<<13)
 var/const/RECYCLER			=(1<<14)
+var/const/BARBER			=(1<<15)
 
 var/list/assistant_occupations = list(
 )
@@ -88,6 +89,7 @@ var/list/science_positions = list(
 //BS12 EDIT
 var/list/civilian_positions = list(
 	"Head of Personnel",
+	"Barber",
 	"Bartender",
 	"Botanist",
 	"Chef",
