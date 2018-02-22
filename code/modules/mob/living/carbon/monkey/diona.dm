@@ -142,7 +142,6 @@
 	if(prob(50))
 		to_chat(src, "<span class='warning'>You momentarily forget [L.name]. Is this how memory wiping feels?</span")
 		remove_language(L.name)
-	L = null
 
 /mob/living/carbon/monkey/diona/verb/synthesize()
 
@@ -223,6 +222,7 @@
 		return 0
 
 	if(gestalt)
+		to_chat(src, "You can not grow, while being inside [gestalt].")
 		return
 
 	if(donors.len < 5)
