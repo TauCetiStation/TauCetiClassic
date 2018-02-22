@@ -9,7 +9,7 @@
 
 	var/datum/gas_mixture/environment // Added to prevent null location errors-- TLE
 	if(loc)
-		environment = loc.return_air()
+		environment = loc.return_air(
 
 	if (stat != DEAD)
 		if(!istype(src,/mob/living/carbon/monkey/diona)) //still breathing
@@ -643,7 +643,7 @@
 		nutrition = max(nutrition + light_amount, 400)
 		traumatic_shock -= light_amount
 
-		if(light_amount > 2 && prob(4)) //if there's enough light, heal
+		if(light_amount > 2 && prob(25)) //if there's enough light, heal
 			adjustBruteLoss(-1)
 			adjustToxLoss(-1)
 			adjustOxyLoss(-1)
