@@ -190,6 +190,7 @@
 				var/n = text2num(x)
 				if(n)
 					req_one_access += n
+
 	if(!req_access.len && !req_one_access.len)
 		return TRUE
 	if(!islist(L))
