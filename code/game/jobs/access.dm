@@ -66,6 +66,7 @@
 /var/const/access_minisat = 66
 /var/const/access_recycler = 67
 /var/const/access_detective = 68
+/var/const/access_barber = 69
 
 	//BEGIN CENTCOM ACCESS
 	/*Should leave plenty of room if we need to add more access levels.
@@ -189,7 +190,7 @@
 				var/n = text2num(x)
 				if(n)
 					req_one_access += n
-	
+
 	if(!req_access.len && !req_one_access.len)
 		return TRUE
 	if(!islist(L))
