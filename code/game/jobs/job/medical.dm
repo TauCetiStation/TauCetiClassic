@@ -16,6 +16,7 @@
 	)
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
+	restricted_species = list(UNATHI, TAJARAN, DIONA, IPC)
 
 /datum/job/cmo/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -55,6 +56,7 @@
 	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels)
 	alt_titles = list("Surgeon","Emergency Physician","Nurse")
 	minimal_player_ingame_minutes = 960
+	restricted_species = list(DIONA)
 
 /datum/job/doctor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -158,6 +160,7 @@
 	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_morgue, access_genetics, access_research)
 	minimal_player_ingame_minutes = 960
+	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/geneticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -194,6 +197,7 @@
 	access = list(access_medical, access_virology)
 	alt_titles = list("Pathologist","Microbiologist")
 	minimal_player_ingame_minutes = 960
+	restricted_species = list(UNATHI, TAJARAN)
 
 /datum/job/virologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

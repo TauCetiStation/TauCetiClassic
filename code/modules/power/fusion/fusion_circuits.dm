@@ -103,3 +103,12 @@
 	req_tech = list("powerstorage" = 4, "engineering" = 5, "materials" = 5)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+
+/datum/design/fusion/emitter/gyrotron
+	name = "Circuit Board (Gyrotron)"
+	id = "gyrotron"
+	build_path = /obj/item/weapon/circuitboard/emitter/gyrotron
+	req_tech = list ("powerstorage" = 6, "engineering" = 5, "programming" = 6)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+

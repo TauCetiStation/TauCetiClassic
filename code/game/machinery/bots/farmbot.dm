@@ -534,9 +534,9 @@
 
 	A.loc = src.loc
 	to_chat(user, "You add the robot arm to the [src]")
-	src.loc = A //Place the water tank into the assembly, it will be needed for the finished bot
 	user.remove_from_mob(S)
 	qdel(S)
+	qdel(src)
 
 /obj/item/weapon/farmbot_arm_assembly/attackby(obj/item/weapon/W, mob/user)
 	..()
@@ -565,9 +565,6 @@
 		src.build_step++
 		to_chat(user, "You complete the Farmbot! Beep boop.")
 		var/obj/machinery/bot/farmbot/S = new /obj/machinery/bot/farmbot
-		for ( var/obj/structure/reagent_dispensers/watertank/wTank in src.contents )
-			wTank.loc = S
-			S.tank = wTank
 		S.loc = get_turf(src)
 		S.name = src.created_name
 		user.remove_from_mob(W)

@@ -174,10 +174,19 @@ datum/supply_pack/New()
 	access = access_armory
 	group = "Security"
 
+/datum/supply_pack/mind_shields
+	name = "Mind shields implant crate"
+	contains = list (/obj/item/weapon/storage/lockbox/mind_shields)
+	cost = 5000
+	crate_type = /obj/structure/closet/crate/secure
+	crate_name = "Mind shields implant crate"
+	access = access_armory
+	group = "Security"
+
 /datum/supply_pack/loyalty
 	name = "Loyalty implant crate"
 	contains = list (/obj/item/weapon/storage/lockbox/loyalty)
-	cost = 6000
+	cost = 8000
 	crate_type = /obj/structure/closet/crate/secure
 	crate_name = "Loyalty implant crate"
 	access = access_armory
@@ -1195,6 +1204,16 @@ datum/supply_pack/New()
 	/obj/item/weapon/storage/box)
 	cost = 1000
 	crate_name = "Empty box crate"
+	group = "Supply"
+
+/datum/supply_pack/barber
+	name = "Barber supplies"
+	contains = list(/obj/item/weapon/storage/box/hairsprays,
+	/obj/item/weapon/hair_growth_accelerator,
+	/obj/item/weapon/scissors,
+	/obj/item/weapon/razor)
+	cost = 1000
+	crate_name = "Barber supplies"
 	group = "Supply"
 
 //----------------------------------------------

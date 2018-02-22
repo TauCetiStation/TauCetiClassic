@@ -28,6 +28,7 @@
 	new /obj/item/weapon/melee/telebaton(src)
 	new /obj/item/clothing/under/dress/dress_cap(src)
 	new /obj/item/clothing/under/rank/capcamsole(src)
+	new /obj/item/device/remote_device/captain(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/captain(src)
 	new /obj/item/clothing/head/santa(src)
@@ -45,6 +46,7 @@
 	icon_off = "hopsecureoff"
 
 /obj/structure/closet/secure_closet/hop/PopulateContents()
+	new /obj/item/device/remote_device/head_of_personal(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/clothing/suit/armor/vest(src)
 	new /obj/item/clothing/head/helmet(src)
@@ -102,6 +104,7 @@
 
 	new /obj/item/clothing/head/helmet/HoS(src)
 	new /obj/item/clothing/head/helmet/HoS/dermal(src)
+	new /obj/item/device/remote_device/head_of_security(src)
 	new /obj/item/clothing/under/rank/head_of_security_fem(src)
 	new /obj/item/clothing/suit/armor/hos(src)
 	new /obj/item/clothing/under/rank/head_of_security(src)

@@ -11,6 +11,7 @@
 	idtype = /obj/item/weapon/card/id/cargoGold
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
 	minimal_player_ingame_minutes = 1200
+	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/qm/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -324,6 +325,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_lawyer, access_court, access_sec_doors)
 	minimal_player_ingame_minutes = 1560
+	restricted_species = list(UNATHI, TAJARAN, DIONA, SKRELL)
 
 /datum/job/lawyer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -346,12 +348,9 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
-	L.imp_in = H
-	L.implanted = 1
-	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-	BP.implants += L
-	L.part = BP
+	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
+	L.inject(H)
+	START_PROCESSING(SSobj, L)
 	return 1
 
 

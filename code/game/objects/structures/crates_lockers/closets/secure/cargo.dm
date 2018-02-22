@@ -35,6 +35,7 @@
 
 /obj/structure/closet/secure_closet/quartermaster/PopulateContents()
 	new /obj/item/clothing/under/rank/postal_dude_shirt(src)
+	new /obj/item/device/remote_device/quartermaster(src)
 	new /obj/item/clothing/suit/storage/postal_dude_coat(src)
 	new /obj/item/clothing/under/rank/cargo(src)
 	new /obj/item/clothing/under/rank/cargo_fem(src)

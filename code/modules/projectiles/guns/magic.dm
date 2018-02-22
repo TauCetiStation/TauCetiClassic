@@ -16,6 +16,7 @@
 	var/global_access = FALSE
 	origin_tech = null
 	clumsy_check = 0
+	can_suicide_with = FALSE
 
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi' //not really a gun and some toys use these inhands
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'

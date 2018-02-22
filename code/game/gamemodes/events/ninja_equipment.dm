@@ -918,6 +918,11 @@ ________________________________________________________________________________
 		for(var/mob/O in oviewers(U))
 			O.show_message("[U.name] vanishes into thin air!",1)
 		U.invisibility = INVISIBILITY_LEVEL_TWO
+		if(istype(U.get_active_hand(), /obj/item/weapon/melee/energy/blade))
+			U.drop_item()
+		if(istype(U.get_inactive_hand(), /obj/item/weapon/melee/energy/blade))
+			U.swap_hand()
+			U.drop_item()
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/cancel_stealth()
