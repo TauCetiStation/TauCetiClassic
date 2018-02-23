@@ -90,23 +90,10 @@
 /mob/living/simple_animal
 	name = "animal"
 	desc = "Just simple animal"
-	icon_state = "animal"
-	icon_living = "animal"
-	icon_dead = "animal_dead"
-	icon_gib = "animal_gib"
-	speak = list("what?")
-	speak_emote = list("huh?")
-	emote_hear = list("brays")
-	emote_see = list("shakes")
-	speak_chance = 1
-	turns_per_move = 5
-	see_in_dark = 6
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 6)
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
 	attacktext = "kicks"
-	health = 50
 
 //cow
 /mob/living/simple_animal/cow
