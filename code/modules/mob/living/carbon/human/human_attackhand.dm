@@ -91,10 +91,10 @@
 	switch(M.a_intent)
 		if("help")
 			if(health < config.health_threshold_crit && health > config.health_threshold_dead)
-				if(species && species.flags[NO_BREATHE])
+				if(M.species && M.species.flags[NO_BREATHE])
 					to_chat(M, "<span class='notice bold'>Your species can not perform CPR!</span>")
 					return FALSE
-				if(M.species && M.species.flags[NO_BREATHE])
+				if(species && species.flags[NO_BREATHE])
 					to_chat(M, "<span class='notice bold'>You can not perform CPR on these species!</span>")
 					return FALSE
 				if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
