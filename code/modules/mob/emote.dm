@@ -25,6 +25,8 @@
  // Maybe some people are okay with that.
 		if(findtext(message," snores.") == 0)
 			for(var/mob/M in player_list)
+				if(isnewplayer(M))
+					continue
 				if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src, null)))
 					M.show_message(message, show_to_parasites = FALSE)
 

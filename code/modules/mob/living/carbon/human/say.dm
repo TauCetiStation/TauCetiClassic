@@ -162,6 +162,8 @@
 				var/n_message = sanitize_plus_chat(message)
 				for(var/M in mind.changeling.essences)
 					to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+				for(var/datum/orbit/O in orbiters)
+					to_chat(O.orbiter, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
 				to_chat(src, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
 				log_say("Changeling Mind: [mind.name]/[key] : [n_message]")
 			return

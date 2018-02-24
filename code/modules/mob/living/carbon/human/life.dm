@@ -1534,14 +1534,14 @@
 			if(!isRemoteObserve && client && !client.adminobs)
 				remoteview_target = null
 				reset_view(null)
-/*
+
 
 		if(mind && mind.changeling)
 			hud_used.lingchemdisplay.invisibility = 0
 			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[mind.changeling.chem_charges]</font></div>"
 		else
 			hud_used.lingchemdisplay.invisibility = 101
-*/
+
 	..()
 
 	return 1

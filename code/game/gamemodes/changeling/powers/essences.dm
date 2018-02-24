@@ -88,6 +88,9 @@
 		var/n_message = sanitize_plus_chat(trim(sanitize_plus(message)))
 		for(var/M in changeling.essences)
 			to_chat(M, "<span class='shadowling'><b>[name]:</b> [n_message]</span>")
+		for(var/datum/orbit/O in host.orbiters)
+			to_chat(O.orbiter, "<span class='shadowling'><b>[name]:</b> [n_message]</span>")
+
 		to_chat(host, "<span class='shadowling'><b>[name]:</b> [n_message]</span>")
 		log_say("Changeling Mind: [name]/[key] : [n_message]")
 		return
@@ -200,6 +203,8 @@
 		add_ingame_age()
 	if(!host)
 		return
+	if(changeling)
+		hud_used.lingchemdisplay.maptext = host.hud_used.lingchemdisplay.maptext
 
 	sight = host.sight
 	see_in_dark = host.see_in_dark

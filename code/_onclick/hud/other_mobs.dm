@@ -67,21 +67,32 @@
 	mymob.healthdoll.name = "health doll"
 	mymob.healthdoll.screen_loc = ui_healthdoll
 
+	lingchemdisplay = new /obj/screen()
+	lingchemdisplay.icon = 'icons/mob/screen_gen.dmi'
+	lingchemdisplay.name = "chemical storage"
+	lingchemdisplay.icon_state = "power_display"
+	lingchemdisplay.screen_loc = ui_lingchemdisplay
+	lingchemdisplay.layer = ABOVE_HUD_LAYER
+	lingchemdisplay.plane = ABOVE_HUD_PLANE
 
+	var/obj/screen/using = new /obj/screen/ling_abilities()
+	using.icon = 'icons/mob/screen_gen.dmi'
+	using.icon_state = "power_list"
+	using.name = "Host Abilities"
+	using.screen_loc = ui_belt
+	mymob.client.screen += using
 
-	mymob.client.screen = list(mymob.internals, mymob.healths, mymob.healthdoll, E.voice, E.phantom_s)
+	mymob.client.screen = list(mymob.internals, mymob.healths, mymob.healthdoll, E.voice, E.phantom_s, using)
 	mymob.client.screen += mymob.client.void
 	if(E.is_changeling)
-		var/obj/screen/using = new /obj/screen/return_to_body()
-		using.icon = 'icons/mob/screen_gen.dmi'
-		using.icon_state = "sting_transform"
+		using = new /obj/screen/return_to_body()
+		using.icon = 'icons/mob/screen1.dmi'
+		using.icon_state = "facingOLD"
 		using.name = "Return to Body"
 		using.screen_loc = ui_zonesel
 		mymob.client.screen += using
 
 /obj/screen/essence_voice/Click(location, control, params)
-	if(!isessence(usr))
-		return
 	var/mob/living/parasite/essence/E = usr
 	if(!E.host)
 		return
@@ -95,8 +106,6 @@
 	E.self_voice = !E.self_voice
 
 /obj/screen/essence_phantom/Click(location, control, params)
-	if(!isessence(usr))
-		return
 	var/mob/living/parasite/essence/E = usr
 	if(!E.host)
 		return
@@ -113,3 +122,17 @@
 	if(!E.host)
 		return
 	E.host.delegate_body_to_essence()
+
+/obj/screen/ling_abilities/Click(location, control, params)
+	var/mob/living/parasite/essence/E = usr
+	if(!E.host || !E.changeling)
+		return
+	var/dat = ""
+	for(var/obj/effect/proc_holder/changeling/P in E.changeling.purchasedpowers)
+		if(P.genomecost < 1)
+			continue
+		dat += "[P.name]<br>"
+	var/datum/browser/popup = new(E, "ling_abilities", "Host Abilities", 140)
+	popup.set_content(dat)
+	popup.open()
+
