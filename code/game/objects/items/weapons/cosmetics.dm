@@ -211,6 +211,139 @@
 	var/list/bald_hair_styles_list = list("Bald", "Balding Hair", "Skinhead", "Unathi Horns", "Tajaran Ears")
 	var/list/shaved_facial_hair_styles_list = list("Shaved")
 	var/list/allowed_races = list(HUMAN, UNATHI, TAJARAN)
+	var/mob/living/carbon/human/barber = null
+	var/mob/living/carbon/human/barbertarget = null
+	var/selectedhairstyle = null
+	var/isfacehair = FALSE
+
+/obj/item/weapon/scissors/proc/make_mannequin(mob/living/carbon/human/H)
+	var/mob/living/carbon/human/dummy/mannequin = new(null, H.species.name)
+	mannequin.gender = H.gender
+	mannequin.age = H.age
+	mannequin.b_type = H.b_type
+
+	mannequin.r_eyes = H.r_eyes
+	mannequin.g_eyes = H.g_eyes
+	mannequin.b_eyes = H.b_eyes
+
+	mannequin.r_hair = H.r_hair
+	mannequin.g_hair = H.g_hair
+	mannequin.b_hair = H.b_hair
+
+	mannequin.r_facial = H.r_facial
+	mannequin.g_facial = H.g_facial
+	mannequin.b_facial = H.b_facial
+
+	mannequin.r_skin = H.r_skin
+	mannequin.g_skin = H.g_skin
+	mannequin.b_skin = H.b_skin
+
+	mannequin.s_tone = H.s_tone
+
+	if(!isfacehair && selectedhairstyle)
+		mannequin.h_style = selectedhairstyle
+	else
+		mannequin.h_style = H.h_style
+
+	if(isfacehair && selectedhairstyle)
+		mannequin.f_style = selectedhairstyle
+	else
+		mannequin.f_style = H.f_style
+
+	mannequin.underwear = H.underwear
+	mannequin.undershirt = H.undershirt
+	mannequin.socks = H.socks
+
+	mannequin.update_body()
+	mannequin.update_hair()
+	return mannequin
+
+/obj/item/weapon/scissors/Topic(href, href_list)
+	..()
+	if(!barber || !barbertarget)
+		return
+	switch(href_list["choice"])
+		if("selecthaircut")
+			selectedhairstyle = href_list["haircut"]
+			showui(barbertarget, barber)
+		if("start")
+			barber << browse(null, "window=barber")
+			dohaircut()
+
+/obj/item/weapon/scissors/proc/showui()
+	if(!barber || !barbertarget)
+		return
+	var/mob/living/carbon/human/dummy/mannequin = make_mannequin(barbertarget)
+
+	var/icon/preview_icon = null
+	preview_icon = icon('icons/effects/effects.dmi', "nothing")
+	preview_icon.Scale(150, 70)
+
+
+	mannequin.dir = NORTH
+	var/icon/stamp = getFlatIcon(mannequin)
+	preview_icon.Blend(stamp, ICON_OVERLAY, 109, 19)
+
+	mannequin.dir = WEST
+	stamp = getFlatIcon(mannequin)
+	preview_icon.Blend(stamp, ICON_OVERLAY, 60, 18)
+
+	mannequin.dir = SOUTH
+	stamp = getFlatIcon(mannequin)
+	preview_icon.Blend(stamp, ICON_OVERLAY, 13, 22)
+
+	qdel(mannequin)
+
+	var/list/selected_styles_list = hair_styles_list
+	if(isfacehair)
+		selected_styles_list = facial_hair_styles_list
+
+	var/haircutlist = "<table style='width:100%'><tr>"
+	var/tablei = 0
+	for(var/i in selected_styles_list)
+		var/datum/sprite_accessory/hair/tmp_hair = selected_styles_list[i]
+		if(barbertarget.species.name in tmp_hair.species_allowed)
+			var/styles = ""
+			if(i == selectedhairstyle)
+				styles = "color: rgb(255,0,0)"
+			haircutlist += "<td><a style='[styles]' href='byond://?src=\ref[src];choice=selecthaircut;haircut=[i]'><b>[i]</b></a><br></td>"
+			if(++tablei >= 5)
+				tablei = 0
+				haircutlist+="</tr><tr>"
+	haircutlist+="</tr></table>"
+
+	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2)
+	barber << browse_rsc(preview_icon, "tmp_haircutpreview.png")
+	barber << browse("<html><head><title>Grooming</title></head>" \
+		+ "<body style='margin:0;text-align:center'>" \
+		+ "<img src='tmp_haircutpreview.png' width='450' style='-ms-interpolation-mode:nearest-neighbor' /><br>" \
+		+ "<a href='byond://?src=\ref[src];choice=start'><b>CONFIRM</b></a><br><br>" \
+		+ haircutlist \
+		+ "</body></html>", "window=barber;size=620x680")
+	return
+
+/obj/item/weapon/scissors/proc/dohaircut()
+	if(!barber || !barbertarget || !selectedhairstyle)
+		return
+	if(!in_range(barbertarget, barber) || barber.get_active_hand() != src)
+		return
+	if(isfacehair)
+		barber.visible_message("<span class='notice'>[barber] starts cutting [barbertarget]'s facial hair with [src]!</span>", \
+							   "<span class='notice'>You start cutting [barbertarget]'s facial hair with [src], this might take a minute...</span>")
+		if(do_after(barber, 100, target = barbertarget))
+			barbertarget.f_style = selectedhairstyle
+			barbertarget.update_hair()
+			barber.visible_message("<span class='notice'>[barber] finished cutting [barbertarget]'s facial hair</span>", \
+								   "<span class='notice'>You finished cutting [barbertarget]'s facial hair</span>")
+	else
+		barber.visible_message("<span class='notice'>[barber] starts cutting [barbertarget]'s hair with [src]!</span>", \
+							   "<span class='notice'>You start cutting [barbertarget]'s hair with [src], this might take a minute...</span>")
+		if(do_after(barber, 100, target = barbertarget))
+			barbertarget.h_style = selectedhairstyle
+			barbertarget.update_hair()
+			barber.visible_message("<span class='notice'>[barber] finished cutting [barbertarget]'s hair</span>", \
+								   "<span class='notice'>You finished cutting [barbertarget]'s hair</span>")
+
 
 /obj/item/weapon/scissors/attack(mob/M, mob/user, def_zone)
 	if(user.a_intent == "hurt")
@@ -236,27 +369,11 @@
 					to_chat(user, "<span class='notice'>There are not enough hair to change facial hair style</span>")
 					return
 
-				var/list/species_facial_hair = list()
-				if(H.species)
-					for(var/i in facial_hair_styles_list)
-						var/datum/sprite_accessory/hair/tmp_hair = facial_hair_styles_list[i]
-						if(H.species.name in tmp_hair.species_allowed)
-							species_facial_hair += i
-				else
-					species_facial_hair = facial_hair_styles_list
-
-				if(species_facial_hair.len == 0)
-					to_chat(user, "<span class='notice'>You don't know any facial hair styles for this race!</span>")
-					return
-				var/new_fstyle = input(usr, "Select a facial hair style", "Grooming") as null|anything in species_facial_hair
-				if(new_fstyle)
-					user.visible_message("<span class='notice'>[user] starts cutting [H]'s facial hair with [src]!</span>", \
-									 	 "<span class='notice'>You start cutting [H]'s facial hair with [src], this might take a minute...</span>")
-					if(do_after(user, 100, target = H))
-						H.f_style = new_fstyle
-						H.update_hair()
-						user.visible_message("<span class='notice'>[user] finished cutting [H]'s facial hair</span>", \
-									 	 	 "<span class='notice'>You finished cutting [H]'s facial hair</span>")
+				selectedhairstyle = null
+				isfacehair = TRUE
+				barber = user
+				barbertarget = M
+				showui()
 				return
 			else
 				to_chat(user, "<span class='notice'>You don't know how to cut the hair of this race!</span>")
@@ -276,27 +393,11 @@
 					to_chat(user, "<span class='notice'>There are not enough hair to make a haircut</span>")
 					return
 
-				var/list/species_hair = list()
-				if(H.species)
-					for(var/i in hair_styles_list)
-						var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
-						if(H.species.name in tmp_hair.species_allowed)
-							species_hair += i
-				else
-					species_hair = hair_styles_list
-
-				if(species_hair.len == 0)
-					to_chat(user, "<span class='notice'>You don't know any hair styles for this race!</span>")
-					return
-				var/new_hstyle = input(usr, "Select a hair style", "Grooming") as null|anything in species_hair
-				if(new_hstyle)
-					user.visible_message("<span class='notice'>[user] starts cutting [H]'s hair with [src]!</span>", \
-									 	 "<span class='notice'>You start cutting [H]'s hair with [src], this might take a minute...</span>")
-					if(do_after(user, 100, target = H))
-						H.h_style = new_hstyle
-						H.update_hair()
-						user.visible_message("<span class='notice'>[user] finished cutting [H]'s hair</span>", \
-									 	 	 "<span class='notice'>You finished cutting [H]'s hair</span>")
+				selectedhairstyle = null
+				isfacehair = FALSE
+				barber = user
+				barbertarget = M
+				showui()
 				return
 			else
 				to_chat(user, "<span class='notice'>You don't know how to cut the hair of this race!</span>")
