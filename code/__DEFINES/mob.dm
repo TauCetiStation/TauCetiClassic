@@ -20,12 +20,8 @@
 #define BP_HEAD   "head"
 #define BP_L_ARM  "l_arm"
 #define BP_R_ARM  "r_arm"
-#define BP_L_HAND "l_hand"
-#define BP_R_HAND "r_hand"
 #define BP_L_LEG  "l_leg"
 #define BP_R_LEG  "r_leg"
-#define BP_L_FOOT "l_foot"
-#define BP_R_FOOT "r_foot"
 
 // Organ defines.
 #define O_MOUTH    "mouth"

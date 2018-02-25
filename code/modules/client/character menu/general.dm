@@ -68,14 +68,6 @@
 						organ_name = "left leg"
 					if(BP_R_LEG)
 						organ_name = "right leg"
-					if(BP_L_FOOT)
-						organ_name = "left foot"
-					if(BP_R_FOOT)
-						organ_name = "right foot"
-					if(BP_L_HAND)
-						organ_name = "left hand"
-					if(BP_R_HAND)
-						organ_name = "right hand"
 					if(O_HEART)
 						organ_name = "heart"
 					if(O_EYES)
@@ -126,7 +118,7 @@
 			. += ShowDisabilityState(user,DISABILITY_EPILEPTIC,"Seizures")
 			. += ShowDisabilityState(user,DISABILITY_TOURETTES,"Twitching")
 			. += ShowDisabilityState(user,DISABILITY_NERVOUS,"Nervousness")
-			. += ShowDisabilityState(user,DISABILITY_FATNESS,"Fatness")
+			. += ShowDisabilityState(user, DISABILITY_FATNESS, "Fatness")
 
 		//Gear
 		if("gear")
@@ -473,37 +465,19 @@
 
 					switch(menu_type)
 						if("Limbs")
-							var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm","Left Foot","Right Foot","Left Hand","Right Hand")
+							var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm")
 							if(!limb_name) return
 
 							var/limb = null
-							var/second_limb = null // if you try to change the arm, the hand should also change
-							var/third_limb = null  // if you try to unchange the hand, the arm should also change
 							switch(limb_name)
 								if("Left Leg")
 									limb = BP_L_LEG
-									second_limb = BP_L_FOOT
 								if("Right Leg")
 									limb = BP_R_LEG
-									second_limb = BP_R_FOOT
 								if("Left Arm")
 									limb = BP_L_ARM
-									second_limb = BP_L_HAND
 								if("Right Arm")
 									limb = BP_R_ARM
-									second_limb = BP_R_HAND
-								if("Left Foot")
-									limb = BP_L_FOOT
-									third_limb = BP_L_LEG
-								if("Right Foot")
-									limb = BP_R_FOOT
-									third_limb = BP_R_LEG
-								if("Left Hand")
-									limb = BP_L_HAND
-									third_limb = BP_L_ARM
-								if("Right Hand")
-									limb = BP_R_HAND
-									third_limb = BP_R_ARM
 
 							var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal","Amputated","Prothesis")
 							if(!new_state) return
@@ -511,16 +485,10 @@
 							switch(new_state)
 								if("Normal")
 									organ_data[limb] = null
-									if(third_limb)
-										organ_data[third_limb] = null
 								if("Amputated")
 									organ_data[limb] = "amputated"
-									if(second_limb)
-										organ_data[second_limb] = "amputated"
 								if("Prothesis")
 									organ_data[limb] = "cyborg"
-									if(second_limb)
-										organ_data[second_limb] = "cyborg"
 
 						if("Organs")
 							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")

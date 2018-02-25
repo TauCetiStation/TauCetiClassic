@@ -81,12 +81,6 @@
 /mob/living/carbon/attack_hand(mob/M)
 	if(!iscarbon(M))
 		return
-	if (ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
-		if(BP && !BP.is_usable())
-			to_chat(H, "<span class='rose'>You can't use your [BP.name].</span>")
-			return
 
 	for(var/datum/disease/D in viruses)
 		if(D.spread_by_touch())

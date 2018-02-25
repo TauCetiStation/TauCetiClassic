@@ -5,7 +5,7 @@
 	Otherwise pretty standard.
 */
 /mob/living/carbon/human/UnarmedAttack(atom/A)
-	var/obj/item/organ/external/BP = bodyparts_by_name[hand ? BP_L_HAND : BP_R_HAND]
+	var/obj/item/organ/external/BP = bodyparts_by_name[hand ? BP_L_ARM : BP_R_ARM]
 	if(BP && !BP.is_usable())
 		to_chat(src, "<span class='notice'>You try to move your [BP.name], but cannot!</span>")
 		return
@@ -60,7 +60,7 @@
 		return
 	SetNextMove(CLICK_CD_MELEE)
 	var/mob/living/carbon/ML = A
-	var/dam_zone = ran_zone(pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG))
+	var/dam_zone = ran_zone(pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG))
 	var/armor = ML.run_armor_check(dam_zone, "melee")
 	if(prob(75))
 		ML.apply_damage(rand(1,3), BRUTE, dam_zone, armor)

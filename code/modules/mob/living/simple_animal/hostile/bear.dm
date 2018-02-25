@@ -133,7 +133,7 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/H = target
-		var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
+		var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 		var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(dam_zone)]
 		H.apply_damage(damage, BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP | DAM_EDGE)
 		return H

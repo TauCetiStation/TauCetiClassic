@@ -93,13 +93,9 @@
 		,BP_GROIN  = /obj/item/organ/external/groin
 		,BP_HEAD   = /obj/item/organ/external/head
 		,BP_L_ARM  = /obj/item/organ/external/l_arm
-		,BP_L_HAND = /obj/item/organ/external/l_hand
 		,BP_R_ARM  = /obj/item/organ/external/r_arm
-		,BP_R_HAND = /obj/item/organ/external/r_hand
 		,BP_L_LEG  = /obj/item/organ/external/l_leg
-		,BP_L_FOOT = /obj/item/organ/external/l_foot
 		,BP_R_LEG  = /obj/item/organ/external/r_leg
-		,BP_R_FOOT = /obj/item/organ/external/r_foot
 		)
 
 	var/list/has_organ = list(
@@ -559,7 +555,7 @@
 /datum/species/shadowling
 	name = SHADOWLING
 	icobase = 'icons/mob/human_races/r_shadowling.dmi'
-	deform = 'icons/mob/human_races/r_def_shadowling.dmi'
+	deform = 'icons/mob/human_races/r_shadowling.dmi'
 	language = "Sol Common"
 	unarmed_type = /datum/unarmed_attack/claws
 

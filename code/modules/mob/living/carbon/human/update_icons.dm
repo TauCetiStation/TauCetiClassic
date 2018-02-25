@@ -135,18 +135,14 @@ Please contact me on #coderbus IRC. ~Carn x
 #define TOTAL_LAYERS			27
 //////////////////////////////////
 //Human Limb Overlays Indexes/////
-#define LIMB_HEAD_LAYER			11
-#define LIMB_TORSO_LAYER		10
-#define LIMB_L_ARM_LAYER		9
-#define LIMB_L_HAND_LAYER		8
-#define LIMB_R_ARM_LAYER		7
-#define LIMB_R_HAND_LAYER		6
-#define LIMB_GROIN_LAYER		5
-#define LIMB_L_LEG_LAYER		4
-#define LIMB_L_FOOT_LAYER		3
-#define LIMB_R_LEG_LAYER		2
-#define LIMB_R_FOOT_LAYER		1
-#define TOTAL_LIMB_LAYERS		11
+#define LIMB_HEAD_LAYER			7
+#define LIMB_TORSO_LAYER		6
+#define LIMB_L_ARM_LAYER		5
+#define LIMB_R_ARM_LAYER		4
+#define LIMB_GROIN_LAYER		3
+#define LIMB_L_LEG_LAYER		2
+#define LIMB_R_LEG_LAYER		1
+#define TOTAL_LIMB_LAYERS		7
 //////////////////////////////////
 
 /mob/living/carbon/human
@@ -342,12 +338,11 @@ Please contact me on #coderbus IRC. ~Carn x
 			stand_icon.Blend(new /icon('icons/mob/human_undershirt.dmi', "undershirt[undershirt]_s"), ICON_OVERLAY)
 	standing	+= image("icon"=stand_icon, "layer"=-BODY_LAYER)
 
-	if((socks > 0) && (socks < socks_t.len) && species.flags[HAS_UNDERWEAR])
-		if(!fat && bodyparts_by_name[BP_R_FOOT] && bodyparts_by_name[BP_L_FOOT]) //shit
-			var/obj/item/organ/external/rfoot = bodyparts_by_name[BP_R_FOOT]
-			var/obj/item/organ/external/lfoot = bodyparts_by_name[BP_L_FOOT]
-			if(!(rfoot.status & ORGAN_DESTROYED) && !(lfoot.status & ORGAN_DESTROYED))
-				standing += image("icon"='icons/mob/human_socks.dmi', "icon_state"="socks[socks]_s", "layer"=-BODY_LAYER)
+	if(!fat && socks > 0 && socks < socks_t.len && species.flags[HAS_UNDERWEAR])
+		var/obj/item/organ/external/r_foot = bodyparts_by_name[BP_R_LEG]
+		var/obj/item/organ/external/l_foot = bodyparts_by_name[BP_L_LEG]
+		if(r_foot && !(r_foot.status & ORGAN_DESTROYED) && l_foot && !(l_foot.status & ORGAN_DESTROYED))
+			standing += image("icon"='icons/mob/human_socks.dmi', "icon_state"="socks[socks]_s", "layer"=-BODY_LAYER)
 
 	if(has_head)
 		//Eyes
