@@ -603,3 +603,10 @@
 	name = "Tuxedo"
 	desc = "A semi-formal evening suit distinguished primarily by satin or grosgrain facings on the jacket's lapels"
 	icon_state = "tuxedo"
+
+/obj/item/clothing/suit/syndieshirt
+	name = "red shirt"
+	desc = "Brand new, incredibly comfortable t-shirt with a logo of Syndicate."
+	icon_state = "syndieshirt"
+	item_state = "syndieshirt"
+	body_parts_covered = UPPER_TORSO|ARMS
