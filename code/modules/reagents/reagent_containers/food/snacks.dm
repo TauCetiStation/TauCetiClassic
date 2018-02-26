@@ -17,7 +17,7 @@
 	if(isliving(M))
 		var/mob/living/L = M
 		if(taste)
-			L.taste_reagents(src.reagents)
+			L.taste_reagents(reagents)
 
 	if(!reagents.total_volume)
 		if(M == usr)

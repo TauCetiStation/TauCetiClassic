@@ -8,7 +8,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/atom_init()
 	. = ..()
-	reagents.add_reagent("nutriment", 3)
+	reagents.add_reagent("protein", 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/kitchenknife))
@@ -47,7 +47,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/meat/ham
 	name = "Ham"
 	desc = "Taste like bacon."
-//	list_reagents = list("protein" = 3, "porktonium" = 10)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/meatwheat
 	name = "meatwheat clump"

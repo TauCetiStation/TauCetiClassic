@@ -49,9 +49,8 @@
 		if(istype(toEat))
 			if(CanEat(user, M, toEat, "eat"))
 				toEat.On_Consume(M, user)
-				spawn(0)
-					if(toEat)
-						qdel(toEat)
+				if(toEat)
+					qdel(toEat)
 				overlays.Cut()
 				return
 
