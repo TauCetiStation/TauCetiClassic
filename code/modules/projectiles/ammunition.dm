@@ -52,6 +52,8 @@
 				to_chat(user, "\blue You can only inscribe a metal bullet.")//because inscribing beanbags is silly
 		else
 			to_chat(user, "\blue There is no bullet in the casing to inscribe anything into.")
+	else
+		..()
 
 //Boxes of ammo
 /obj/item/ammo_box
