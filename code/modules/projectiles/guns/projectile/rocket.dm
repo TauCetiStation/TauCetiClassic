@@ -65,7 +65,7 @@
 			if(!H.canusetwohands())
 				to_chat(user, "<span class='warning'>You need both of your hands to be intact.</span>")
 				return
-		if(user.get_inactive_hand() )
+		if(user.get_inactive_hand())
 			to_chat(user, "<span class='warning'>You need your other hand to be empty.</span>")
 			return
 		wield()
