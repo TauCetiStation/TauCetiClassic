@@ -272,7 +272,7 @@
 
 /obj/effect/proc_holder/changeling/manage_essencies/sting_action(mob/user)
 	var/datum/changeling/changeling = user.mind.changeling
-	if(changeling.controled_by)
+	if(!changeling || changeling.controled_by)
 		return
 	var/dat = ""
 	for(var/mob/living/parasite/essence/M in changeling.essences)

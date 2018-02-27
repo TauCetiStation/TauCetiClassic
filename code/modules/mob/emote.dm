@@ -38,7 +38,7 @@
 					for(var/thing in O.contents)
 						if(istype(thing, /obj/item/weapon/holder))
 							var/obj/item/weapon/holder/H = thing
-							H.show_message(message, m_type, show_to_parasites = FALSE)
+							H.show_message(message, m_type)
 						else if(isliving(thing))
 							var/mob/living/L = thing
 							L.show_message(message, m_type, show_to_parasites = FALSE)
@@ -52,7 +52,7 @@
 					for(var/thing in O.contents)
 						if(istype(thing, /obj/item/weapon/holder))
 							var/obj/item/weapon/holder/H = thing
-							H.show_message(message, m_type, show_to_parasites = FALSE)
+							H.show_message(message, m_type)
 						else if(isliving(thing))
 							var/mob/living/L = thing
 							L.show_message(message, m_type, show_to_parasites = FALSE)
