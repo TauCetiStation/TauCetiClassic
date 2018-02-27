@@ -14,7 +14,7 @@ datum/genesequence
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
 	circuit = "/obj/item/weapon/circuitboard/reconstitutor"
-	req_access = list(access_heads) //Only used for record deletion right now.
+	req_access = list(access_xenoarch) //Only used for record deletion right now. //xenoarch couldn't use it when it was access_heads
 	var/obj/machinery/clonepod/pod1 = 1 //Linked cloning pod.
 	var/temp = ""
 	var/menu = 1 //Which menu screen to display

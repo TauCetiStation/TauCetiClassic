@@ -51,7 +51,7 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
-	alt_titles = list("Xenoarcheologist", "Anomalist", "Phoron Researcher")
+	alt_titles = list("Xenoarcheologist", "Phoron Researcher")
 	minimal_player_ingame_minutes = 1560
 	restricted_species = list(UNATHI, DIONA)
 
@@ -70,8 +70,6 @@
 		if("Scientist")
 			access = list(access_tox, access_research)
 		if("Xenoarcheologist")
-			access = list(access_xenoarch, access_research)
-		if("Anomalist")
 			access = list(access_xenoarch, access_research)
 		if("Phoron Researcher")
 			access = list(access_research, access_tox_storage)
