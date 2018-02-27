@@ -17,7 +17,7 @@
 	)
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
-	restricted_species = list(UNATHI, TAJARAN, DIONA)
+	restricted_species = list(UNATHI, TAJARAN, DIONA, IPC)
 
 /datum/job/chief_engineer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -58,6 +58,7 @@
 	alt_titles = list("Maintenance Technician","Engine Technician","Electrician")
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 540
+	restricted_species = list(IPC)
 
 /datum/job/engineer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

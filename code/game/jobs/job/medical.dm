@@ -119,7 +119,7 @@
 	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_morgue, access_genetics, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_engine_equip, access_research, access_mailsorting)
 	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
-	restricted_species = list(SKRELL, IPC, DIONA)
+	restricted_species = list(IPC, DIONA)
 
 /datum/job/emergencyphysician/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
