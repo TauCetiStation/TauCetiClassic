@@ -49,7 +49,7 @@
 
 		for(var/mob/living/carbon/monkey/diona/V in O.contents)
 			if(!V.mind || !V.key)
-				to_chat(usr, "<span class='warning'>It would appear [V] is void of consciousness, defeats MMI's purpose.</span>")
+				to_chat(user, "<span class='warning'>It would appear [V] is void of consciousness, defeats MMI's purpose.</span>")
 				return
 			transfer_nymph(V)
 
