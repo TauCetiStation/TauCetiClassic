@@ -58,6 +58,8 @@
 	icon = 'icons/obj/structures/droppod.dmi'
 	icon_state = "panel_opening"
 
-/obj/effect/overlay/droppod_open/atom_init()
+/obj/effect/overlay/droppod_open/atom_init(mapload, icon_modifier)
 	. = ..()
+	if(icon_modifier)
+		icon_state += icon_modifier
 	QDEL_IN(src, 27)
