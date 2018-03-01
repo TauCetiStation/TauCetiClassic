@@ -27,7 +27,7 @@
 "aA" = (/turf/simulated/floor{icon_state = "damaged1"},/area/derelict/ship)
 "aB" = (/obj/structure/computerframe{anchored = 1},/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
 "aC" = (/turf/simulated/floor{icon_state = "dark"},/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/derelict/ship)
-"aD" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/turf/simulated,/area/derelict/ship)
+"aD" = (/obj/structure/grille,/obj/structure/window/reinforced{dir = 5},/turf/simulated/floor/plating,/area/derelict/ship)
 "aE" = (/turf/simulated/shuttle/wall{icon_state = "swall3"; dir = 2},/area/derelict/ship)
 "aF" = (/obj/machinery/door/airlock/glass{name = "Hibernation Pods"},/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
 "aG" = (/obj/effect/decal/cleanable/blood/oil,/turf/simulated/floor{icon_state = "damaged1"},/area/derelict/ship)
