@@ -50,8 +50,9 @@
 	speak_emote = list("squeaks")
 	ventcrawler = 2
 	speed = -2
+	small = TRUE
 	var/datum/mind/origin
-	var/egg_lain = 0
+	var/egg_lain = FALSE
 
 /mob/living/simple_animal/headcrab/proc/Infect(mob/living/carbon/victim)
 	if(egg_lain)
@@ -70,7 +71,10 @@
 		visible_message("<span class='warning'>[src] plants something in [victim]'s flesh!</span>", \
 					"<span class='danger'>We inject our egg into [victim]'s body!</span>")
 		addtimer(CALLBACK(src, .proc/death), 100)
-		egg_lain = 1
+		egg_lain = TRUE
+
+/mob/living/simple_animal/headcrab/start_pulling(atom/movable/AM)
+	return
 
 /obj/item/changeling_egg
 	name = "changeling egg"
