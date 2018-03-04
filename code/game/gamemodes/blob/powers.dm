@@ -231,6 +231,10 @@
 
 	for(var/mob/living/simple_animal/hostile/blobspore/BS in living_mob_list)
 		if(isturf(BS.loc) && get_dist(BS, T) <= 35)
-			BS.LoseTarget()
-			BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
+			if (BS.ckey)
+				var/area/A = get_area(T)
+				to_chat(BS, "<span class='big'><span class = 'red'>Blob Overmind call you in [A.name]</span></span>")
+			else
+				BS.LoseTarget()
+				BS.Goto(pick(surrounding_turfs), BS.move_to_delay)
 	return

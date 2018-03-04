@@ -88,6 +88,15 @@
 				break
 	..()
 
+/mob/living/simple_animal/hostile/blobspore/say(var/message)
+	return //No talking for you
+
+/mob/living/simple_animal/hostile/blobspore/attack_ghost(mob/dead/observer/user)
+	if (!ckey)
+		ckey = user.ckey
+		qdel(user)
+		LoseTarget()
+
 /mob/living/simple_animal/hostile/blobspore/proc/Zombify(mob/living/carbon/human/H)
 	if(H.wear_suit)
 		var/obj/item/clothing/suit/armor/A = H.wear_suit
