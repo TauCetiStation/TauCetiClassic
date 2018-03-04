@@ -1,3 +1,5 @@
+var/timestop_count = 0
+
 /obj/effect/timestop
 	anchored = 1
 	name = "chronofield"
@@ -20,12 +22,13 @@
 
 /obj/effect/timestop/atom_init()
 	. = ..()
-
+	timestop_count++
 	playsound(src, 'sound/magic/TIMEPARADOX2.ogg', 100, 1, -1)
 	timestop()
 	QDEL_IN(src, duration)
 
 /obj/effect/timestop/Destroy()
+	timestop_count--
 	untimestop()
 	LAZYCLEARLIST(immune)
 	LAZYCLEARLIST(stopped_atoms)

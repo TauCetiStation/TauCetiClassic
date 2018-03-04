@@ -40,39 +40,48 @@
 		return
 	next_click = world.time + 10
 	var/obj/item/projectile/changeling_whip/LE = new (get_turf(src))
-	if(user.a_intent == "grab")
-		LE.grabber = 1
-	else if(user.a_intent == "disarm" && prob(65))
-		LE.weaken = 5
-	else if(user.a_intent == "hurt")
-		LE.damage = 30
-	else
-		LE.agony = 25
+	switch(user.a_intent)
+		if(I_GRAB)
+			LE.grabber = TRUE
+		if(I_DISARM)
+			if(prob(65))
+				LE.weaken = 2.5
+		if(I_HURT)
+			LE.damage = 30
+		else
+			LE.agony = 15
 	LE.host = user
 	LE.Fire(A, user)
 
 /obj/item/projectile/changeling_whip
 	name = "Whip"
-	icon_state = "laser"
+	icon_state = null
 	pass_flags = PASSTABLE
 	damage = 0
 	kill_count = 7
 	damage_type = BRUTE
 	flag = "bullet"
-	hitscan = 1
-	var/grabber = 0
+	var/grabber = FALSE
 	var/mob/living/carbon/human/host
-
-	muzzle_type = /obj/effect/projectile/laser/muzzle/changeling
-	tracer_type = /obj/effect/projectile/laser/tracer/changeling
-	impact_type = /obj/effect/projectile/laser/impact/changeling
+	tracer_list = list()
+	muzzle_type = /obj/effect/projectile/changeling/muzzle
+	tracer_type = /obj/effect/projectile/changeling/tracer
+	impact_type = /obj/effect/projectile/changeling/impact
 
 /obj/item/projectile/changeling_whip/on_hit(atom/target, blocked = 0)
-	..()
+	if(isturf(target))
+		return FALSE
 	var/atom/movable/T = target
-	var/grab_chance = iscarbon(T) ? 50 : 90
-	if(grabber && !T.anchored && prob(grab_chance))
-		T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
+	if(grabber)
+		var/grab_chance
+		if(iscarbon(T))
+			var/mob/living/carbon/C = T
+			grab_chance = 60 - (C.getarmor(BP_CHEST, "melee") * 0.4)
+		else
+			grab_chance = 90
+		if(!T.anchored && prob(grab_chance))
+			T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
+	 return ..()
 
 /obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
 	if(in_range(T, host) && !host.get_inactive_hand() && !host.lying)
@@ -85,14 +94,22 @@
 		else if(istype(T, /obj/item))
 			host.put_in_inactive_hand(T)
 
-/obj/effect/projectile/laser/tracer/changeling
-	icon_state = "changeling"
-	light_range = 0
-	light_power = 0
-	light_color = ""
+/obj/item/projectile/changeling_whip/process()
+	spawn while(src && loc)
+		if(paused)
+			host.Stun(2, TRUE, TRUE)
+		sleep(1)
+	..()
 
-/obj/effect/projectile/laser/muzzle/changeling
+/obj/effect/projectile/changeling
+	time_to_live = 0
+
+/obj/effect/projectile/changeling/tracer
+	icon_state = "changeling"
+
+/obj/effect/projectile/changeling/muzzle
 	icon_state = "muzzle_changeling"
 
-/obj/effect/projectile/laser/impact/changeling
+/obj/effect/projectile/changeling/impact
+	time_to_live = 2
 	icon_state = "impact_changeling"
