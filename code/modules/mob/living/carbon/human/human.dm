@@ -1615,3 +1615,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(BP && (BP.status & ORGAN_ROBOT))
 		return FALSE
 	return species.has_organ[organ_check]
+
+/mob/living/carbon/human/can_eat(flags = DIET_ALL)
+	return species && (species.dietflags & flags)
+
+/mob/living/carbon/human/get_taste_sensitivity()
+	if(species)
+		return species.taste_sensitivity
+	else
+		return 1

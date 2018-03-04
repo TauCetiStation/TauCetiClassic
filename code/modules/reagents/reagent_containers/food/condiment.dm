@@ -28,6 +28,10 @@
 			to_chat(user, "\red None of [src] left, oh no!")
 			return 0
 
+		if(isliving(M))
+			var/mob/living/L = M
+			if(taste)
+				L.taste_reagents(reagents)
 		if(M == user)
 			to_chat(M, "\blue You swallow some of contents of the [src].")
 			if(reagents.total_volume)
