@@ -61,6 +61,7 @@
 #define DIET_CARN		1 //meat
 #define DIET_OMNI		2 //everything
 #define DIET_HERB		4 // VEGANS!
+#define DIET_ALL		255
 
 //bitflags for door switches.
 #define OPEN     1
