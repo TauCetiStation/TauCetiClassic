@@ -27,7 +27,7 @@ var/list/blob_nodes = list()
 	var/blob_point_rate = 3
 
 	//var/blobwincount = 350 //default value
-	var/blobwincount = 500
+	var/blobwincount = 750
 
 	var/list/infected_crew = list()
 
