@@ -281,8 +281,6 @@
 
 	if(copytext(lines[1], 1, 5) == "BPM:")
 		song_tempo = Clamp(text2num(copytext(lines[1], 5)), 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
-		if(usr.get_species() == DIONA)
-			song_tempo *= 2
 		lines.Cut(1, 2)
 
 	if(lines.len > MAX_LINES_COUNT)
