@@ -28,7 +28,7 @@
 #define MAX_LINES_COUNT  150
 #define MAX_REPEAT_COUNT 10
 #define MAX_TEMPO_RATE   600
-#define MAX_DIONATEMPO_RATE 150
+#define MAX_DIONATEMPO_RATE 200
 
 /**
  * Method called before playing of every note, so it's some kinde of
@@ -164,10 +164,7 @@
 			if(!in_range(instrument, usr))
 				return
 
-			if(usr.get_species() == DIONA)
-				song_tempo = Clamp(new_tempo, 1, MAX_DIONATEMPO_RATE)
-			else
-				song_tempo = Clamp(new_tempo, 1, MAX_TEMPO_RATE)
+			song_tempo = Clamp(new_tempo, 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
 
 		else if(href_list["play"])
 			playing = TRUE
@@ -283,10 +280,9 @@
 	var/list/lines = splittext(song_text, "\n")
 
 	if(copytext(lines[1], 1, 5) == "BPM:")
+		song_tempo = Clamp(text2num(copytext(lines[1], 5)), 1, usr.get_species() == DIONA ?  MAX_DIONATEMPO_RATE : MAX_TEMPO_RATE )
 		if(usr.get_species() == DIONA)
-			song_tempo = Clamp(text2num(copytext(lines[1], 5)), 1, MAX_DIONATEMPO_RATE)
-		else
-			song_tempo = Clamp(text2num(copytext(lines[1], 5)), 1, MAX_TEMPO_RATE)
+			song_tempo *= 2
 		lines.Cut(1, 2)
 
 	if(lines.len > MAX_LINES_COUNT)
