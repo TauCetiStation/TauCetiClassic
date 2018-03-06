@@ -322,6 +322,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	return
 
+/mob/living/carbon/human/proc/canusetwohands() // На случай если вернутся к ладошкам, заменить упоминание рук на ладошки.
+	var/obj/item/organ/external/l_arm/BPL = bodyparts_by_name[BP_L_ARM]
+	var/obj/item/organ/external/r_arm/BPR = bodyparts_by_name[BP_R_ARM]
+	if(BPL.is_broken() || BPR.is_broken() || !BPL.is_usable() || !BPR.is_usable())
+		return FALSE
+	return TRUE
 
 /mob/living/carbon/human/restrained(check_type = ARMS)
 	if ((check_type & ARMS) && handcuffed)
