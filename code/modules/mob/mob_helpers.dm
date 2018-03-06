@@ -102,7 +102,7 @@
 // Emulates targetting a specific body part, and miss chances
 // May return null if missed
 // miss_chance_mod may be negative.
-/proc/get_zone_with_miss_chance(zone, var/mob/target, var/miss_chance_mod = 0)
+/proc/get_zone_with_miss_chance(zone, mob/target, miss_chance_mod = 0)
 	zone = check_zone(zone)
 
 	// you can only miss if your target is standing and not restrained
@@ -110,22 +110,16 @@
 		var/miss_chance = 10
 		switch(zone)
 			if(BP_HEAD)
-				miss_chance = 30
-			if(BP_L_LEG)
-				miss_chance = 40
-			if(BP_R_LEG)
-				miss_chance = 40
+				miss_chance = 50
+			if(BP_GROIN)
+				miss_chance = 50
 			if(BP_L_ARM)
-				miss_chance = 40
+				miss_chance = 60
 			if(BP_R_ARM)
-				miss_chance = 40
-			if(BP_L_HAND)
 				miss_chance = 60
-			if(BP_R_HAND)
+			if(BP_L_LEG)
 				miss_chance = 60
-			if(BP_L_FOOT)
-				miss_chance = 60
-			if(BP_R_FOOT)
+			if(BP_R_LEG)
 				miss_chance = 60
 		if(prob(max(miss_chance + miss_chance_mod, 0)))
 			if(prob(max(20, (miss_chance/2))))
@@ -133,28 +127,20 @@
 			else
 				var/t = rand(1, 100)
 				switch(t)
-					if(1 to 50)
+					if(1 to 65)
 						return BP_CHEST
-					if(51 to 61)
+					if(66 to 75)
 						return BP_HEAD
-					if(62 to 66)
+					if(76 to 80)
 						return BP_L_ARM
-					if(67 to 71)
+					if(81 to 85)
 						return BP_R_ARM
-					if(72 to 76)
+					if(86 to 90)
 						return BP_R_LEG
-					if(77 to 81)
+					if(91 to 95)
 						return BP_L_LEG
-					if(82 to 87)
+					if(96 to 100)
 						return BP_GROIN
-					if(88 to 91)
-						return BP_L_FOOT
-					if(92 to 94)
-						return BP_R_FOOT
-					if(95 to 97)
-						return BP_L_HAND
-					if(98 to 100)
-						return BP_R_HAND
 
 	return zone
 

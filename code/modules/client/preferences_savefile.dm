@@ -57,8 +57,11 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(!(species in lang.allowed_species))
 				language = "None"
 				S["language"] << language
-//	if(current_version < 10)
-//		toggles |= MEMBER_PUBLIC
+	if(current_version < 17)
+		for(var/organ_name in organ_data)
+			if(organ_name in list("r_hand", "l_hand", "r_foot", "l_foot"))
+				organ_data -= organ_name
+				S["organ_data"] -= organ_name
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)

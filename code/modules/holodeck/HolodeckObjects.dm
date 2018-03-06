@@ -399,8 +399,7 @@ obj/structure/stool/bed/chair/holochair
 	icon_dead = "holo4"
 	alpha = 127
 	icon_gib = null
-	meat_amount = 0
-	meat_type = null
+	butcher_results = null //we can't butcher it
 
 /mob/living/simple_animal/hostile/carp/holodeck/atom_init()
 	. = ..()

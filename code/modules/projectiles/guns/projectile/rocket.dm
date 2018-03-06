@@ -60,8 +60,13 @@
 		return
 
 	else //Trying to wield it
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(!H.canusetwohands())
+				to_chat(user, "<span class='warning'>You need both of your hands to be intact.</span>")
+				return
 		if(user.get_inactive_hand())
-			to_chat(user, "<span class='warning'>You need your other hand to be empty</span>")
+			to_chat(user, "<span class='warning'>You need your other hand to be empty.</span>")
 			return
 		wield()
 		to_chat(user, "<span class='notice'>You grab the [initial(name)] with both hands.</span>")

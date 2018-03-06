@@ -2,12 +2,6 @@
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
-
-	var/obj/item/organ/external/BPH = M.bodyparts_by_name[M.hand ? BP_L_HAND : BP_R_HAND]
-	if(BPH && !BPH.is_usable())
-		to_chat(M, "\red You can't use your [BPH.name].")
-		return
-
 	..()
 
 	if((M != src) && check_shields(0, M.name, get_dir(M,src)))
@@ -89,12 +83,18 @@
 	switch(M.a_intent)
 		if("help")
 			if(health < config.health_threshold_crit && health > config.health_threshold_dead)
+				if(M.species && M.species.flags[NO_BREATHE])
+					to_chat(M, "<span class='notice bold'>Your species can not perform CPR!</span>")
+					return FALSE
+				if(species && species.flags[NO_BREATHE])
+					to_chat(M, "<span class='notice bold'>You can not perform CPR on these species!</span>")
+					return FALSE
 				if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-					to_chat(M, "\blue <B>Remove your mask!</B>")
-					return 0
+					to_chat(M, "<span class='notice bold'>Remove your mask!</span>")
+					return FALSE
 				if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-					to_chat(M, "\blue <B>Remove his mask!</B>")
-					return 0
+					to_chat(M, "<span class='notice bold'>Remove his mask!</span>")
+					return FALSE
 
 				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
 				O.source = M

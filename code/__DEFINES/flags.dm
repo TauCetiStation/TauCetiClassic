@@ -57,6 +57,12 @@
 #define BIOHAZZARD_IMMUNE  "biohazzard_immune"
 #define HAS_HAIR           "has_hair"
 
+//Species Diet Flags
+#define DIET_CARN		1 //meat
+#define DIET_OMNI		2 //everything
+#define DIET_HERB		4 // VEGANS!
+#define DIET_ALL		255
+
 //bitflags for door switches.
 #define OPEN     1
 #define IDSCAN   2

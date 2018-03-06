@@ -36,14 +36,8 @@
 			var/obj/item/clothing/suit/V = H.wear_suit
 			V.attack_reaction(src, REACTION_ATACKED, user)
 
-	if(butcher_results && stat == DEAD)
-		if(buckled && istype(buckled, /obj/structure/kitchenspike))
-			var/sharpness = is_sharp(I)
-			if(sharpness)
-				to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-				playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-				if(do_mob(user, src, 80/sharpness))
-					harvest(user)
+	if(attempt_harvest(I, user))
+		return
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.

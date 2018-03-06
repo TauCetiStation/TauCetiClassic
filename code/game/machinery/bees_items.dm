@@ -2,7 +2,7 @@
 /obj/item/queen_bee
 	name = "queen bee packet"
 	desc = "Place her into an apiary so she can get busy."
-	icon = 'icons/obj/seeds.dmi'
+	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed-kudzu"
 	w_class = 1
 

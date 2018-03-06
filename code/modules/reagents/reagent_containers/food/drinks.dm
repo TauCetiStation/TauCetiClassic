@@ -21,7 +21,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/drinks/attack(mob/M, mob/user, def_zone)
-	var/datum/reagents/R = src.reagents
+	var/datum/reagents/R = reagents
 	var/fillevel = gulp_size
 
 	if(!R.total_volume || !R)
@@ -38,6 +38,10 @@
 				to_chat(H, "<span class='warning'>You have a monitor for a head, where do you think you're going to put that?</span>")
 				return
 
+		if(isliving(M))
+			var/mob/living/L = M
+			if(taste)
+				L.taste_reagents(reagents)
 		to_chat(M, "<span class='notice'>You swallow a gulp of [src].</span>")
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
@@ -45,8 +49,7 @@
 		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		return 1
 	else
-		if( istype(M, /mob/living/carbon/human) )
-
+		if(istype(M, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags[IS_SYNTHETIC])
 				to_chat(H, "<span class='warning'>They have a monitor for a head, where do you think you're going to put that?</span>")

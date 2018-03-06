@@ -977,6 +977,41 @@ datum/supply_pack/New()
 	crate_name = "Pug crate"
 	group = "Hydroponics"
 
+/datum/supply_pack/pig
+	name = "Pig crate"
+	cost = 3000
+	crate_type = /obj/structure/closet/critter/pig
+	crate_name = "Pig crate"
+	group = "Hydroponics"
+
+/datum/supply_pack/turkey
+	name = "Turkey crate"
+	cost = 2000
+	crate_type = /obj/structure/closet/critter/turkey
+	crate_name = "Turkey crate"
+	group = "Hydroponics"
+
+/datum/supply_pack/goose
+	name = "Goose crate"
+	cost = 2500
+	crate_type = /obj/structure/closet/critter/goose
+	crate_name = "Goose crate"
+	group = "Hydroponics"
+
+/datum/supply_pack/seal
+	name = "Seal crate"
+	cost = 3000
+	crate_type = /obj/structure/closet/critter/seal
+	crate_name = "Seal crate"
+	group = "Hydroponics"
+
+/datum/supply_pack/walrus
+	name = "Walrus crate"
+	cost = 3500
+	crate_type = /obj/structure/closet/critter/walrus
+	crate_name = "Walrus crate"
+	group = "Hydroponics"
+
 /datum/supply_pack/seeds
 	name = "Seeds crate"
 	contains = list(/obj/item/seeds/chiliseed,
@@ -1204,6 +1239,16 @@ datum/supply_pack/New()
 	/obj/item/weapon/storage/box)
 	cost = 1000
 	crate_name = "Empty box crate"
+	group = "Supply"
+
+/datum/supply_pack/barber
+	name = "Barber supplies"
+	contains = list(/obj/item/weapon/storage/box/hairsprays,
+	/obj/item/weapon/hair_growth_accelerator,
+	/obj/item/weapon/scissors,
+	/obj/item/weapon/razor)
+	cost = 1000
+	crate_name = "Barber supplies"
 	group = "Supply"
 
 //----------------------------------------------
