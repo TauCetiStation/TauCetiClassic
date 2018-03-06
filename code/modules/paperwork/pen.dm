@@ -13,7 +13,7 @@
 	desc = "It's a normal black ink pen."
 	name = "pen"
 	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "pen"
+	icon_state = "pen-1"
 	item_state = "pen"
 	slot_flags = SLOT_BELT | SLOT_EARS
 	throwforce = 0
@@ -23,6 +23,9 @@
 	m_amt = 10
 	var/colour = "black"	//what colour the ink is!
 
+/obj/item/weapon/pen/random/atom_init()
+	. = ..()
+	icon_state = "pen-[rand(1, 7)]"
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."

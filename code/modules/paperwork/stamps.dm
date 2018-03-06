@@ -1,8 +1,8 @@
 /obj/item/weapon/stamp
-	name = "rubber stamp"
+	name = "\improper GRANTED rubber stamp"
 	desc = "A rubber stamp for stamping important documents."
 	icon = 'icons/obj/bureaucracy.dmi'
-	icon_state = "stamp-qm"
+	icon_state = "stamp-ok"
 	item_state = "stamp"
 	throwforce = 0
 	w_class = 1.0
