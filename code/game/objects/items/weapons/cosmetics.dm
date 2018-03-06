@@ -265,7 +265,7 @@
 	switch(href_list["choice"])
 		if("selecthaircut")
 			selectedhairstyle = href_list["haircut"]
-			showui(barbertarget, barber)
+			showui()
 		if("start")
 			barber << browse(null, "window=barber")
 			dohaircut()
@@ -275,10 +275,8 @@
 		return
 	var/mob/living/carbon/human/dummy/mannequin = make_mannequin(barbertarget)
 
-	var/icon/preview_icon = null
-	preview_icon = icon('icons/effects/effects.dmi', "nothing")
+	var/icon/preview_icon = icon('icons/effects/effects.dmi', "nothing")
 	preview_icon.Scale(150, 70)
-
 
 	mannequin.dir = NORTH
 	var/icon/stamp = getFlatIcon(mannequin)
@@ -304,7 +302,7 @@
 		var/datum/sprite_accessory/hair/tmp_hair = selected_styles_list[i]
 		if(barbertarget.species.name in tmp_hair.species_allowed)
 			var/styles = ""
-			if(i == selectedhairstyle)
+			if(i == selectedhairstyle || (!selectedhairstyle && ((barbertarget.f_style == i && isfacehair) || (barbertarget.h_style == i && !isfacehair))))
 				styles = "color: rgb(255,0,0)"
 			haircutlist += "<td><a style='[styles]' href='byond://?src=\ref[src];choice=selecthaircut;haircut=[i]'><b>[i]</b></a><br></td>"
 			if(++tablei >= 5)
