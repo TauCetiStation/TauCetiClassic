@@ -51,7 +51,7 @@
 /obj/item/weapon/tank/air
 	name = "air tank"
 	desc = "Mixed anyone?"
-	icon_state = "oxygen"
+	icon_state = "air"
 
 /obj/item/weapon/tank/air/atom_init()
 	. = ..()

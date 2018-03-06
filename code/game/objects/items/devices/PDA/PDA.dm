@@ -324,7 +324,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	PDAs = sortAtom(PDAs)
 	if(default_cartridge)
 		cartridge = new default_cartridge(src)
-	new /obj/item/weapon/pen(src)
+	new /obj/item/weapon/pen/random(src)
 
 /obj/item/device/pda/proc/can_use()
 

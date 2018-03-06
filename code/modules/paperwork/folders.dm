@@ -21,6 +21,10 @@
 	desc = "A white folder."
 	icon_state = "folder_white"
 
+/obj/item/weapon/folder/syndicate
+	icon_state = "folder_syndie"
+	desc = "A folder stamped \"Top Secret - Property of The Syndicate.\""
+
 /obj/item/weapon/folder/update_icon()
 	overlays.Cut()
 	if(contents.len)
