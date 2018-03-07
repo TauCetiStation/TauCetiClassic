@@ -1034,7 +1034,7 @@
 	if (nutrition > 0 && stat != DEAD)
 		nutrition = max (0, nutrition - HUNGER_FACTOR)
 
-	if (nutrition > 450)
+	if (nutrition > NUTRITION_LEVEL_FULL)//this gonna work
 		if(overeatduration < 600) //capped so people don't take forever to unfat
 			overeatduration++
 	else
