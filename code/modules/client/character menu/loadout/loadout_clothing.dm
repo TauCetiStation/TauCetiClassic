@@ -5,6 +5,13 @@
 	sort_category = "Suits and Overwear"
 	cost = 2
 
+/datum/gear/under
+	display_name = "Black tango dress"
+	path = /obj/item/clothing/under/blacktango
+	slot = slot_wear_suit
+	sort_category = "Suits and Overwear"
+	cost = 1
+
 /datum/gear/suit/leather_coat
 	display_name = "Leather coat"
 	path = /obj/item/clothing/suit/leathercoat
@@ -57,13 +64,47 @@
 	path = /obj/item/clothing/suit/serifcoat
 	cost = 1
 
+/datum/gear/suit/labcoat
+	display_name = "Labcoat selection"
+	path = /obj/item/clothing/suit/storage/labcoat
 
+/datum/gear/suit/labcoat/New()
+	..()
+	var/labcoat = list()
+	labcoat["white"] = /obj/item/clothing/suit/storage/labcoat
+	labcoat["red"] = /obj/item/clothing/suit/storage/labcoat/red
+	labcoat["blue"] = /obj/item/clothing/suit/storage/labcoat/blue
+	labcoat["purple"] = /obj/item/clothing/suit/storage/labcoat/purple
+	labcoat["organe"] = /obj/item/clothing/suit/storage/labcoat/orange
+	labcoat["green"] = /obj/item/clothing/suit/storage/labcoat/green
+	labcoat["mad"] = /obj/item/clothing/suit/storage/labcoat/mad
+	gear_tweaks += new/datum/gear_tweak/path(labcoat)
 
-/datum/gear/under
-	path = /obj/item/clothing/under/blacktango
-	display_name = "Black tango dress"
-	slot = slot_w_uniform
-	sort_category = "Suits and Overwear"
+/datum/gear/under/purpledress
+	path = /obj/item/clothing/under/fluff/tian_dress
+	display_name = "Purple dress"
+
+/datum/gear/under/cheongsam
+	path = /obj/item/clothing/under/fluff/mai_yang_dress
+	display_name = "White Cheongsam"
+
+/datum/gear/under/directordress
+	path = /obj/item/clothing/under/dress/dress_hr
+	display_name = "Director dress"
+
+/datum/gear/under/dress
+	path = /obj/item/clothing/under/dress/dress_pink
+	display_name = "Dress selection"
+
+/datum/gear/under/dress/New()
+	..()
+	var/dresses = list()
+	dresses["fire"] = /obj/item/clothing/under/dress/dress_fire
+	dresses["green"] = /obj/item/clothing/under/dress/dress_green
+	dresses["orange"] = /obj/item/clothing/under/dress/dress_orange
+	dresses["yellow"] = /obj/item/clothing/under/dress/dress_yellow
+	dresses["saloon"] = /obj/item/clothing/under/dress/dress_saloon
+	gear_tweaks += new/datum/gear_tweak/path(dresses)
 
 /datum/gear/under/maid_suit
 	display_name = "Maid dress selection"
@@ -126,7 +167,7 @@
 
 /datum/gear/suit/m65
 	display_name = "M65 Jacket Selection"
-	path = 	/obj/item/clothing/suit/storage/miljacket_army
+	path = /obj/item/clothing/suit/storage/miljacket_army
 
 /datum/gear/suit/m65/New()
 	..()
@@ -134,4 +175,16 @@
 	m65s["army"] = /obj/item/clothing/suit/storage/miljacket_army
 	m65s["ranger"] = /obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger
 	m65s["navy"] = /obj/item/clothing/suit/storage/miljacket_army/miljacket_navy
+	gear_tweaks += new/datum/gear_tweak/path(m65s)
+
+/datum/gear/under/m65p
+	display_name = "M65 Pants Selection"
+	path = /obj/item/clothing/under/pants/milipants_army
+
+/datum/gear/under/m65p/New()
+	..()
+	var/m65s = list()
+	m65s["army"] = /obj/item/clothing/under/pants/milipants_army
+	m65s["ranger"] = /obj/item/clothing/under/pants/milipants_army/ranger
+	m65s["navy"] = /obj/item/clothing/under/pants/milipants_army/navy
 	gear_tweaks += new/datum/gear_tweak/path(m65s)
