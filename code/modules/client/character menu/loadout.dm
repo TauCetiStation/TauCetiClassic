@@ -45,7 +45,7 @@
 		if(G.allowed_roles)
 			. += "<tr><td colspan=3><font size=2>Restrictions: "
 			for(var/role in G.allowed_roles)
-				. += role + " "
+				. += role + ", "
 			. += "</font></td></tr>"
 
 		if(ticked)
