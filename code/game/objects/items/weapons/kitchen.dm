@@ -92,7 +92,7 @@
 /obj/item/weapon/kitchen/utensil/fork/sticks
 	name = "wooden chopsticks"
 	desc = "How do people even hold this?"
-	force = w
+	force = 2
 	icon_state = "sticks"
 
 /obj/item/weapon/kitchen/utensil/pfork
