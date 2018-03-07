@@ -89,11 +89,18 @@
 			user.visible_message("<span class='warning'>[user] scrub \the [target.name] out.</span>","<span class='notice'>You scrub \the [target.name] out.</span>")
 			qdel(target)
 
+/obj/item/weapon/kitchen/utensil/fork/sticks
+	name = "wooden chopsticks"
+	desc = "How do people even hold this?"
+	force = 4
+	icon_state = "sticks"
+
 /obj/item/weapon/kitchen/utensil/pfork
 	name = "plastic fork"
 	desc = "Yay, no washing up to do."
 	icon_state = "pfork"
 	force = 0
+
 
 /obj/item/weapon/kitchen/utensil/pfork/afterattack(atom/target, mob/user, proximity)  //make them useful or some slow soap for plastic. Just copy-paste from usual fork
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
