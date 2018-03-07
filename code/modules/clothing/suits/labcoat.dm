@@ -67,6 +67,7 @@
 	desc = "Bluer than the standard model."
 	icon_state = "labcoat_cmo"
 	item_state = "labcoat_cmo"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 70, rad = 10)
 
 /obj/item/clothing/suit/storage/labcoat/mad
 	name = "The Mad's labcoat"
@@ -75,22 +76,28 @@
 	item_state = "labgreen"
 
 /obj/item/clothing/suit/storage/labcoat/genetics
-	name = "Geneticist labcoat"
+	name = "geneticist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a blue stripe on the shoulder."
 	icon_state = "labcoat_gen"
 
 /obj/item/clothing/suit/storage/labcoat/chemist
-	name = "Chemist labcoat"
+	name = "chemist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has an orange stripe on the shoulder."
 	icon_state = "labcoat_chem"
 
 /obj/item/clothing/suit/storage/labcoat/virologist
-	name = "Virologist labcoat"
+	name = "virologist labcoat"
 	desc = "A suit that protects against minor chemical spills. Offers slightly more protection against biohazards than the standard model. Has a green stripe on the shoulder."
 	icon_state = "labcoat_vir"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 60, rad = 0)
 
 /obj/item/clothing/suit/storage/labcoat/science
-	name = "Scientist labcoat"
+	name = "scientist labcoat"
 	desc = "A suit that protects against minor chemical spills. Has a purple stripe on the shoulder."
 	icon_state = "labcoat_tox"
+
+/obj/item/clothing/suit/storage/labcoat/rd
+	name = "research director's labcoat"
+	desc = "It smells like weird science."
+	icon_state = "labcoat_rd"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 20, bio = 50, rad = 50)
