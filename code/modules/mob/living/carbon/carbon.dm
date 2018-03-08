@@ -399,10 +399,9 @@
 
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
-			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
-				for(var/obj/item/clothing/suit/space/vox/stealth/V in list(H.wear_suit))
-					if(V.on)
-						V.overload()
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+				var/obj/item/clothing/suit/V = H.wear_suit
+				V.attack_reaction(H, REACTION_THROWITEM)
 
 /mob/living/carbon/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()

@@ -80,3 +80,13 @@
 #define NO_CLIPPING   -1
 #define CLIPPABLE      0
 #define CLIPPED        1
+
+// attack_reaction types
+#define REACTION_INTERACT_UNARMED 0
+#define REACTION_INTERACT_ARMED 1
+#define REACTION_GUN_FIRE 2
+#define REACTION_ITEM_TAKE 3
+#define REACTION_ITEM_TAKEOFF 4
+#define REACTION_HIT_BY_BULLET 5
+#define REACTION_ATACKED 6
+#define REACTION_THROWITEM 7

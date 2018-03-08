@@ -26,14 +26,16 @@
 
 	if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
 		var/mob/living/carbon/human/H = user
-		if(istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-			var/obj/item/clothing/suit/armor/abductor/vest/V = H.wear_suit
-			if(V.stealth_active)
-				V.DeactivateStealth()
-		else if(istype(H.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
-			var/obj/item/clothing/suit/space/vox/stealth/V = H.wear_suit
-			if(V.on)
-				V.overload()
+		if(istype(H.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = H.wear_suit
+			V.attack_reaction(H, REACTION_INTERACT_ARMED, src)
+
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(istype(H.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = H.wear_suit
+			V.attack_reaction(src, REACTION_ATACKED, user)
+
 	if(attempt_harvest(I, user))
 		return
 

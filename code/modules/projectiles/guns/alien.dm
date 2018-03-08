@@ -84,7 +84,11 @@
 		return ..()
 
 /obj/item/weapon/spikethrower/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
-
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = H.wear_suit
+			V.attack_reaction(H, REACTION_GUN_FIRE)
 	add_fingerprint(user)
 
 	var/turf/curloc = get_turf(user)

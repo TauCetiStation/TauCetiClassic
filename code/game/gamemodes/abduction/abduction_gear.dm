@@ -77,13 +77,11 @@
 		M.regenerate_icons()
 	return
 
-/obj/item/clothing/suit/armor/abductor/vest/Get_shield_chance()
-	DeactivateStealth()
-	return 0
+/obj/item/clothing/suit/armor/abductor/vest/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+	if(reaction_type == REACTION_ITEM_TAKE)
+		return
 
-/obj/item/clothing/suit/armor/abductor/vest/IsReflect()
 	DeactivateStealth()
-	return 0
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/IsAbductor(user)
 	if(ishuman(user))
