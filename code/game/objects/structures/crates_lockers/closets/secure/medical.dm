@@ -49,6 +49,7 @@
 	icon_off = "securemedoff"
 
 /obj/structure/closet/secure_closet/medical3/PopulateContents()
+	new /obj/item/clothing/under/rank/medical/skirt(src)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/medic(src)
 	else
@@ -89,6 +90,7 @@
 	icon_off = "cmosecureoff"
 
 /obj/structure/closet/secure_closet/CMO/PopulateContents()
+	new /obj/item/clothing/under/rank/chief_medical_officer/skirt(src)
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack/medic(src)
 	else
