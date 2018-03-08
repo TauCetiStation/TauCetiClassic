@@ -218,3 +218,8 @@
 	name = "\improper sign TO THE MORGUE"
 	desc = "Current disposal unit leads straight to the morgue. Bring out your dead!"
 	icon_state = "morgue_disposal"
+
+/obj/structure/sign/chinese
+	name = "\improper chinese restaurant sign"
+	desc = "A glowing dragon invites you in."
+	icon_state = "chinese"

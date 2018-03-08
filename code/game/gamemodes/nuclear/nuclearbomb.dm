@@ -1,3 +1,6 @@
+#define TIMER_MIN 420
+#define TIMER_MAX 600
+
 var/bomb_set
 
 /obj/machinery/nuclearbomb
@@ -100,7 +103,7 @@ var/bomb_set
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						to_chat(user, "\red You need more fuel to complete this task.")
+						to_chat(user, "<span class = 'red'>You need more fuel to complete this task.</span>")
 						return
 					if(user.is_busy())
 						return
@@ -129,7 +132,7 @@ var/bomb_set
 					var/obj/item/weapon/weldingtool/WT = O
 					if(!WT.isOn()) return
 					if (WT.get_fuel() < 5) // uses up 5 fuel.
-						to_chat(user, "\red You need more fuel to complete this task.")
+						to_chat(user, "<span class = 'red'>You need more fuel to complete this task.</span>")
 						return
 					if(user.is_busy())
 						return
@@ -240,14 +243,18 @@ var/bomb_set
 
 	if (extended)
 		if (!ishuman(user) && !isobserver(user))
-			to_chat(usr, "\red You don't have the dexterity to do this!")
+			to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 			return 1
+		var/turf/current_location = get_turf(usr)//What turf is the user on?
+		if(current_location.z == ZLEVEL_CENTCOMM && user.mind.special_role == "Syndicate")//If turf was not found or they're on z level 2.
+			to_chat(user, "<span class = 'red'>It's not the best idea to plant a bomb on your own base</span>")
+			return
 	else if (deployable)
 		if(removal_stage < 5)
 			anchored = TRUE
-			visible_message("\red With a steely snap, bolts slide out of [src] and anchor it to the flooring!")
+			visible_message("<span class = 'red'>With a steely snap, bolts slide out of [src] and anchor it to the flooring!</span>")
 		else
-			visible_message("\red \The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.")
+			visible_message("<span class = 'red'>The [src] makes a highly unpleasant crunching noise. It looks like the anchoring bolts have been cut.</span>")
 		if(!lighthack)
 			flick("nuclearbombc", src)
 			icon_state = "nuclearbomb1"
@@ -285,14 +292,14 @@ var/bomb_set
 	if (!usr.canmove || usr.stat || usr.restrained())
 		return
 	if (!ishuman(usr))
-		to_chat(usr, "\red You don't have the dexterity to do this!")
+		to_chat(usr, "<span class = 'red'>You don't have the dexterity to do this!</span>")
 		return 1
 
 	if (src.deployable)
-		to_chat(usr, "\red You close several panels to make [src] undeployable.")
+		to_chat(usr, "<span class = 'red'>You close several panels to make [src] undeployable.</span>")
 		src.deployable = 0
 	else
-		to_chat(usr, "\red You adjust some panels to make [src] deployable.")
+		to_chat(usr, "<span class = 'red'>You adjust some panels to make [src] deployable.</span>")
 		src.deployable = 1
 	return
 
@@ -344,18 +351,20 @@ var/bomb_set
 			if (href_list["time"])
 				var/time = text2num(href_list["time"])
 				src.timeleft += time
-				src.timeleft = min(max(round(src.timeleft), 180), 600)
+				src.timeleft = Clamp(round(timeleft), TIMER_MIN, TIMER_MAX)
 			if (href_list["timer"])
 				if (src.timing == -1.0)
 					return FALSE
 				if (src.safety)
-					to_chat(usr, "\red The safety is still on.")
+					to_chat(usr, "<span class = 'red'>The safety is still on.</span>")
 					return FALSE
 				src.timing = !( src.timing )
 				if (src.timing)
 					if(!src.lighthack)
 						src.icon_state = "nuclearbomb2"
 					if(!src.safety)
+						var/area/nuclearbombloc = get_area(loc)
+						captain_announce("Bomb has been planted in [initial(nuclearbombloc.name)]. Someone trying to blow up the station!")
 						set_security_level("delta")
 						bomb_set = 1//There can still be issues with this reseting when there are multiple bombs. Not a big deal tho for Nuke/N
 					else
@@ -378,9 +387,13 @@ var/bomb_set
 
 			src.anchored = !( src.anchored )
 			if(src.anchored)
-				visible_message("\red With a steely snap, bolts slide out of [src] and anchor it to the flooring.")
+				visible_message("<span class = 'red'>With a steely snap, bolts slide out of [src] and anchor it to the flooring.</span>")
 			else
-				visible_message("\red The anchoring bolts slide back into the depths of [src].")
+				icon_state = "nuclearbomb1"
+				safety = 1.0
+				timing = -1.0
+				timeleft = TIMER_MAX
+				visible_message("<span class = 'red'>The anchoring bolts slide back into the depths of [src] and timer has stopped.</span>")
 
 	updateUsrDialog()
 
@@ -533,3 +546,6 @@ var/bomb_set
 	else
 		throw EXCEPTION("Unable to find a blobstart landmark")
 	return QDEL_HINT_LETMELIVE //Cancel destruction regardless of success
+
+#undef TIMER_MIN
+#undef TIMER_MAX

@@ -1046,6 +1046,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk = list("rice" = -5),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/plastellium = list("plasticide" = 5),
+		/obj/item/weapon/reagent_containers/food/snacks/egg = list("egg" = -5),
 
 
 		//archaeology!

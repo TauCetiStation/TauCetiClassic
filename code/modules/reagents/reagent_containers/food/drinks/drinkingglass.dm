@@ -110,6 +110,10 @@
 					icon_state = "tequillaglass"
 					name = "Glass of Tequilla"
 					desc = "Now all that's missing is the weird colored shades!"
+				if("champagne")
+					icon_state = "chamglass"
+					name = "Glass of Champagne"
+					desc = "Very fine drink"
 				if("patron")
 					icon_state = "patronglass"
 					name = "Glass of Patron"
@@ -450,6 +454,14 @@
 					icon_state = "milkshake"
 					name = "Milkshake"
 					desc = "Glorious brainfreezing mixture."
+				if("milkshake_chocolate")
+					icon_state = "milkshake_chocolate"
+					name = "Cjocolate Milkshake"
+					desc = "Glorious brainfreezing mixture. Now with cocoa!"
+				if("milkshake_strawberry")
+					icon_state = "milkshake_strawberry"
+					name = "Strawberry Milkshake"
+					desc = "Glorious brainfreezing mixture. So sweet!"
 				if("lemonade")
 					icon_state = "lemonadeglass"
 					name = "Lemonade"
