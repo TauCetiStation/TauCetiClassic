@@ -142,7 +142,8 @@
 		"/obj/item/weapon/melee",
 		"/obj/item/taperoll/police",
 		"/obj/item/weapon/gun/energy/taser",
-		"/obj/item/weapon/shield/riot/tele"
+		"/obj/item/weapon/shield/riot/tele",
+		"/obj/item/device/flashlight/seclite"
 		)
 
 /obj/item/weapon/storage/belt/soulstone
@@ -197,7 +198,8 @@
 		"/obj/item/device/pda",
 		"/obj/item/taperoll/police",
 		"/obj/item/device/radio/headset",
-		"/obj/item/weapon/melee"
+		"/obj/item/weapon/melee",
+		"/obj/item/device/flashlight/seclite"
 		)
 
 /obj/item/weapon/storage/belt/military
