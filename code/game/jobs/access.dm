@@ -189,7 +189,7 @@
 				var/n = text2num(x)
 				if(n)
 					req_one_access += n
-	
+
 	if(!req_access.len && !req_one_access.len)
 		return TRUE
 	if(!islist(L))
@@ -362,7 +362,7 @@
 		if(access_library)
 			return "Library"
 		if(access_lawyer)
-			return "Law Office"
+			return "IAA Office"
 		if(access_robotics)
 			return "Robotics"
 		if(access_virology)
