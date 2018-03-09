@@ -509,7 +509,7 @@ var/bomb_set
 		if(do_after(usr, 100, 1, src) && !timing && !auth && !buckled_mob)
 			D.Stored_Nuclear = src
 			loc = D
-			D.icon_state = "dropod_opened_n"
+			D.icon_state = "dropod_opened_n[D.item_state]"
 			visible_message("<span class='notice'>[usr] put [src] into [D]!</span>","<span class='notice'>You succesfully put [src] into [D]!</span>")
 			D.verbs += /obj/structure/droppod/proc/Nuclear
 
