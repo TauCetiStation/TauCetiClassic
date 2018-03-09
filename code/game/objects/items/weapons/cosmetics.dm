@@ -216,6 +216,20 @@
 	var/selectedhairstyle = null
 	var/isfacehair = FALSE
 
+/obj/item/weapon/scissors/proc/calculate_hash(mob/living/carbon/human/H)
+	var/hash = "" + H.species.name + H.gender + num2text(H.r_eyes + H.g_eyes*256 + H.b_eyes*256*256,9) + "_" + num2text(H.r_hair + H.g_hair*256 + H.b_hair*256*256,9) + "_" + num2text(H.r_facial + H.g_facial*256 + H.b_facial*256*256,9) + "_" + num2text(H.r_skin + H.g_skin*256 + H.b_skin*256*256,9) + "_" + num2text(H.s_tone)
+	if(!isfacehair && selectedhairstyle)
+		hash+="_" + selectedhairstyle
+	else
+		hash+="_" + H.h_style
+
+	if(isfacehair && selectedhairstyle)
+		hash+="_" + selectedhairstyle
+	else
+		hash+="_" + H.f_style
+	hash+="_" + num2text(H.underwear) +"_" + num2text(H.undershirt) + "_" + num2text(H.socks)
+	return hash
+
 /obj/item/weapon/scissors/proc/make_mannequin(mob/living/carbon/human/H)
 	var/mob/living/carbon/human/dummy/mannequin = new(null, H.species.name)
 	mannequin.gender = H.gender
@@ -270,27 +284,36 @@
 			barber << browse(null, "window=barber")
 			dohaircut()
 
+var/global/list/scissors_icon_cache = list()
+
 /obj/item/weapon/scissors/proc/showui()
 	if(!barber || !barbertarget)
 		return
-	var/mob/living/carbon/human/dummy/mannequin = make_mannequin(barbertarget)
+	var/icon/preview_icon = null
+	var/hash = calculate_hash(barbertarget)
+	if(!scissors_icon_cache[hash])
+		var/mob/living/carbon/human/dummy/mannequin = make_mannequin(barbertarget)
 
-	var/icon/preview_icon = icon('icons/effects/effects.dmi', "nothing")
-	preview_icon.Scale(150, 70)
+		preview_icon = icon('icons/effects/effects.dmi', "nothing")
+		preview_icon.Scale(150, 70)
 
-	mannequin.dir = NORTH
-	var/icon/stamp = getFlatIcon(mannequin)
-	preview_icon.Blend(stamp, ICON_OVERLAY, 109, 19)
+		mannequin.dir = NORTH
+		var/icon/stamp = getFlatIcon(mannequin)
+		preview_icon.Blend(stamp, ICON_OVERLAY, 109, 19)
 
-	mannequin.dir = WEST
-	stamp = getFlatIcon(mannequin)
-	preview_icon.Blend(stamp, ICON_OVERLAY, 60, 18)
+		mannequin.dir = WEST
+		stamp = getFlatIcon(mannequin)
+		preview_icon.Blend(stamp, ICON_OVERLAY, 60, 18)
 
-	mannequin.dir = SOUTH
-	stamp = getFlatIcon(mannequin)
-	preview_icon.Blend(stamp, ICON_OVERLAY, 13, 22)
+		mannequin.dir = SOUTH
+		stamp = getFlatIcon(mannequin)
+		preview_icon.Blend(stamp, ICON_OVERLAY, 13, 22)
 
-	qdel(mannequin)
+		qdel(mannequin)
+		preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2)
+		scissors_icon_cache[hash] = preview_icon
+	else
+		preview_icon = scissors_icon_cache[hash]
 
 	var/list/selected_styles_list = hair_styles_list
 	if(isfacehair)
@@ -310,7 +333,6 @@
 				haircutlist+="</tr><tr>"
 	haircutlist+="</tr></table>"
 
-	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2)
 	barber << browse_rsc(preview_icon, "tmp_haircutpreview.png")
 	barber << browse("<html><head><title>Grooming</title></head>" \
 		+ "<body style='margin:0;text-align:center'>" \
