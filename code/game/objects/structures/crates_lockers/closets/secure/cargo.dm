@@ -14,6 +14,7 @@
 	new /obj/item/device/radio/headset/headset_cargo(src)
 	new /obj/item/clothing/gloves/brown(src)
 	new /obj/item/clothing/head/soft(src)
+	new /obj/item/weapon/storage/belt/fannypack/yellow(src)
 //	new /obj/item/weapon/cartridge/quartermaster(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/cargo(src)
@@ -51,6 +52,7 @@
 	new /obj/item/clothing/head/soft(src)
 	new /obj/item/weapon/mining_voucher(src)
 	new /obj/item/weapon/survivalcapsule(src)
+	new /obj/item/weapon/storage/belt/fannypack/yellow(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/cargo(src)
 	new /obj/item/clothing/shoes/winterboots(src)
