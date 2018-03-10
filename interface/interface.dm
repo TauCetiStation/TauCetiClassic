@@ -125,3 +125,9 @@ Admin:
 		prefs.lastchangelog = changelog_hash
 		prefs.save_preferences()
 		winset(src, "rpane.changelog", "font-style=;background-color=#FFF;")
+
+/client/verb/discord()
+	set name = "Discord"
+	set desc = "Invite Discord conference."
+	set hidden = TRUE
+	src << link("https://discord.gg/YCWRjkb")
