@@ -402,8 +402,7 @@
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 	primitive = /mob/living/carbon/monkey/diona
 
-	warning_low_pressure = 50
-	hazard_low_pressure = -1
+	hazard_low_pressure = DIONA_HAZARD_LOW_PRESSURE
 
 	cold_level_1 = 50
 	cold_level_2 = -1

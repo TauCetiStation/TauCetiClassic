@@ -8,6 +8,11 @@
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
+	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE
+	var/warning_high_pressure = WARNING_HIGH_PRESSURE
+	var/warning_low_pressure = WARNING_LOW_PRESSURE
+	var/hazard_low_pressure = HAZARD_LOW_PRESSURE
+	blood_color = "#A10808"
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/greaterform = HUMAN                  // Used when humanizing a monkey.
