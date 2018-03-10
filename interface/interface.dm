@@ -2,32 +2,20 @@
 /client/verb/wiki()
 	set name = "wiki"
 	set desc = "Visit the wiki."
-	set hidden = 1
-	if( config.wikiurl )
-		if(alert("This will open the wiki in your browser. Are you sure?",,"Yes","No")=="No")
-			return
-		src << link(config.wikiurl)
-	else
-		to_chat(src, "<span class='danger'>The wiki URL is not set in the server configuration.</span>")
-	return
+	set hidden = TRUE
+	link_with_alert(src, config.wikiurl)
 
 /client/verb/forum()
 	set name = "forum"
 	set desc = "Visit the forum."
-	set hidden = 1
-	if( config.forumurl )
-		if(alert("This will open the forum in your browser. Are you sure?",,"Yes","No")=="No")
-			return
-		src << link(config.forumurl)
-	else
-		to_chat(src, "<span class='danger'>The forum URL is not set in the server configuration.</span>")
-	return
+	set hidden = TRUE
+	link_with_alert(src, config.forumurl)
 
 /client/verb/rules()
 	set name = "Rules"
 	set desc = "Show Server Rules."
-	set hidden = 1
-	src << link("http://tauceti.ru/wiki/Rules")
+	set hidden = TRUE
+	link_with_alert(src, config.server_rules_url)
 
 /client/verb/hotkeys_help()
 	set name = "hotkeys-help"
@@ -130,4 +118,11 @@ Admin:
 	set name = "Discord"
 	set desc = "Invite Discord conference."
 	set hidden = TRUE
-	src << link("https://discord.gg/YCWRjkb")
+	link_with_alert(src, config.discord_invite_url)
+
+/proc/link_with_alert(client/user, link_url)
+	if(link_url)
+		if(alert("This will open your browser. Are you sure?",, "Yes", "No") == "Yes")
+			user << link(link_url)
+	else
+		to_chat(user, "<span class='danger'>The URL is not set in the server configuration. Please tell host about it.</span>")
