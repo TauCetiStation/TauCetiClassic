@@ -153,6 +153,7 @@
 			//dat += "Book bag: <A href='?src=\ref[src];action=create;item=bkbag'>Make</A> ([200/efficiency])<BR>"
 			dat += "Plant bag: <A href='?src=\ref[src];action=create;item=ptbag'>Make</A> ([200/efficiency])<BR>"
 			dat += "Mining satchel: <A href='?src=\ref[src];action=create;item=mnbag'>Make</A> ([200/efficiency])<BR>"
+			dat += "Leather Fannypack: <A href='?src=\ref[src];action=create;item=fannypack'>Make</A> ([200/efficiency])<BR>"
 			dat += "Botanical gloves: <A href='?src=\ref[src];action=create;item=gloves'>Make</A> ([250/efficiency])<BR>"
 			dat += "Utility belt: <A href='?src=\ref[src];action=create;item=tbelt'>Make</A> ([300/efficiency])<BR>"
 			dat += "Leather Satchel: <A href='?src=\ref[src];action=create;item=satchel'>Make</A> ([400/efficiency])<BR>"
@@ -271,6 +272,9 @@
 		if("mnbag")
 			if (check_cost(200/efficiency)) return 0
 			else new/obj/item/weapon/storage/bag/ore(src.loc)
+		if("fannypack")
+			if (check_cost(200/efficiency)) return 0
+			else new/obj/item/weapon/storage/belt/fannypack(src.loc)
 		if("gloves")
 			if (check_cost(250/efficiency)) return 0
 			else new/obj/item/clothing/gloves/botanic_leather(src.loc)

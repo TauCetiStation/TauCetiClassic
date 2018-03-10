@@ -982,7 +982,18 @@
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool=2,/obj/item/clothing/mask/balaclava=2,/obj/item/clothing/head/ushanka=2,/obj/item/clothing/under/soviet=2,/obj/item/clothing/mask/gas/fawkes = 6)
 
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=2,/obj/item/clothing/head/mailman=2,/obj/item/clothing/under/rank/mailman=2,/obj/item/clothing/suit/jacket/leather=2,
-	/obj/item/clothing/suit/jacket/leather/overcoat=2,/obj/item/clothing/under/pants/mustangjeans=2)
+	/obj/item/clothing/suit/jacket/leather/overcoat=2,/obj/item/clothing/under/pants/mustangjeans=2,
+	/obj/item/weapon/storage/belt/fannypack = 2,
+	/obj/item/weapon/storage/belt/fannypack/black = 2,
+	/obj/item/weapon/storage/belt/fannypack/red = 2,
+	/obj/item/weapon/storage/belt/fannypack/purple = 2,
+	/obj/item/weapon/storage/belt/fannypack/blue = 2,
+	/obj/item/weapon/storage/belt/fannypack/orange = 2,
+	/obj/item/weapon/storage/belt/fannypack/white = 2,
+	/obj/item/weapon/storage/belt/fannypack/green = 2,
+	/obj/item/weapon/storage/belt/fannypack/pink = 2,
+	/obj/item/weapon/storage/belt/fannypack/cyan = 2,
+	/obj/item/weapon/storage/belt/fannypack/yellow = 2)
 
 	prices = list(/obj/item/clothing/head/that=419,/obj/item/clothing/head/fedora=419,/obj/item/clothing/glasses/monocle=109,
 	/obj/item/clothing/suit/jacket=299, /obj/item/clothing/suit/jacket/puffer/vest=239, /obj/item/clothing/suit/jacket/puffer=219,
