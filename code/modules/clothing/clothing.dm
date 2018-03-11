@@ -264,6 +264,8 @@ BLIND     // can't see anything
 				to_chat(user, "<span class='notice'>You have no idea of how to clip [src]!</span>")
 			if(CLIPPED)
 				to_chat(user, "<span class='notice'>[src] have already been clipped!</span>")
+	else
+		..()
 
 /obj/item/proc/negates_gravity()
 	return 0
@@ -424,7 +426,7 @@ BLIND     // can't see anything
 	remove_accessory(usr, A)
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
-	if(I.sharp && !istype(loc, /mob/living/carbon/human)) //you can cut only clothes lying on the floor
+	if(I.sharp && !ishuman(loc)) //you can cut only clothes lying on the floor
 		for (var/i in 1 to 3)
 			new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), null, null, crit_fail)
 		qdel(src)
@@ -443,7 +445,7 @@ BLIND     // can't see anything
 			action_button_name = "Use inventory."
 			return
 		else
-			user << "<span class='notice'>You cannot attach more accessories of this type to [src].</span>"
+			to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src].</span>")
 
 	if(accessories.len)
 		for(var/obj/item/clothing/accessory/A in accessories)

@@ -29,7 +29,6 @@ field_generator power level display
 	anchored = FALSE
 	density = TRUE
 	use_power = 0
-	ghost_must_be_admin = TRUE
 
 	var/var_edit_start = FALSE
 	var/var_power      = FALSE
@@ -81,13 +80,14 @@ field_generator power level display
 	return
 
 /obj/machinery/field_generator/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 	if(state == FG_WELDED)
-		if(get_dist(src, user) <= 1 || isobserver(user))//Need to actually touch the thing to turn it on
+		if(in_range(src, user) || isobserver(user))//Need to actually touch the thing to turn it on
 			if(active != FG_OFFLINE)
 				to_chat(user, "<span class='red'>You are unable to turn off the [src] once it is online.</span>")
-				return
+				return 1
 			else
 				user.visible_message(
 					"<span class='notice'>[user] turns on the [src].</span>",
@@ -97,6 +97,7 @@ field_generator power level display
 				investigate_log("<font color='green'>activated</font> by [user.key].","singulo")
 	else
 		to_chat(user, "<span class='notice'>The [src] needs to be firmly secured to the floor first.</span>")
+		return 1
 
 
 /obj/machinery/field_generator/attackby(obj/item/W, mob/user)
@@ -128,7 +129,7 @@ field_generator power level display
 			if(FG_UNSECURED)
 				to_chat(user, "<span class='red'>The [src] needs to be wrenched to the floor.</span>")
 			if(FG_SECURED)
-				if (WT.remove_fuel(0, user))
+				if (!user.is_busy() && WT.remove_fuel(0, user))
 					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message(
 						"<span class='notice'>[user.name] starts to weld the [src.name] to the floor.</span>",
@@ -140,7 +141,7 @@ field_generator power level display
 						state = FG_WELDED
 						to_chat(user, "<span class='notice'>You weld the field generator to the floor.</span>")
 			if(FG_WELDED)
-				if (WT.remove_fuel(0, user))
+				if (!user.is_busy() && WT.remove_fuel(0, user))
 					playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message(
 						"<span class='notice'>[user.name] starts to cut the [src.name] free from the floor.</span>",

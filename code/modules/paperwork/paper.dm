@@ -160,6 +160,7 @@
 	return
 
 /obj/item/weapon/paper/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(def_zone == O_EYES)
 		user.visible_message("<span class='notice'>You show the paper to [M]. </span>", \
 			"<span class='notice'> [user] holds up a paper and shows it to [M]. </span>")
@@ -172,7 +173,7 @@
 				to_chat(user, "<span class='notice'>You wipe off the lipstick with [src].</span>")
 				H.lip_style = null
 				H.update_body()
-			else
+			else if(!user.is_busy())
 				user.visible_message("<span class='warning'>[user] begins to wipe [H]'s lipstick off with \the [src].</span>", \
 								 	 "<span class='notice'>You begin to wipe off [H]'s lipstick.</span>")
 				if(do_after(user, 10, target = H))	//user needs to keep their active hand, H does not.
@@ -344,7 +345,7 @@
 	if(!is_type_in_list(src, burnable))
 		return
 
-	if(P.lit && !user.restrained())
+	if(P.lit && !user.restrained() && !user.is_busy())
 		var/class = "<span class='red'>"
 		if(istype(P, /obj/item/weapon/lighter/zippo))
 			class = "<span class='rose'>"
@@ -425,6 +426,7 @@
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/user)
 	..()
+	user.SetNextMove(CLICK_CD_INTERACT)
 	var/clown = 0
 	if(user.mind && (user.mind.assigned_role == "Clown"))
 		clown = 1

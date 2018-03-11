@@ -1411,6 +1411,15 @@ datum/design/circuit_imprinter
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/circuit_imprinter
 
+datum/design/emitter
+	name = "Circuit Board Emitter"
+	desc = "The circuit board for a emitter."
+	id = "emitter"
+	req_tech = list("programming" = 5, "engineering" = 5, "powerstorage" = 5)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/emitter
+
 datum/design/autolathe
 	name = "Autolathe Board"
 	desc = "The circuit board for an autolathe."
@@ -1788,6 +1797,15 @@ datum/design/scalpel_manager
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500, MAT_SILVER = 1500, MAT_GOLD = 1500, MAT_DIAMOND = 750)
 	build_path = /obj/item/weapon/scalpel/manager
+
+/datum/design/biocan
+	name = "Biogel can"
+	desc = "Medical device for sustaining life in head"
+	id = "biocan"
+	req_tech = list("biotech" = 3, "materials" = 3, "magnets" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1200, MAT_GLASS = 1000)
+	build_path = /obj/item/device/biocan
 
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
@@ -2392,10 +2410,12 @@ datum/design/body_warp
 	construction_time=100
 	category = list("Support")
 
-datum/design/spraycan
+/datum/design/spraycan
 	name = "Spraycan"
 	id = "spraycan"
-	build_type = AUTOLATHE
+	desc = "A metallic container containing tasty paint."
+	req_tech = list("materials" = 1)
+	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	build_path = /obj/item/toy/crayon/spraycan
 

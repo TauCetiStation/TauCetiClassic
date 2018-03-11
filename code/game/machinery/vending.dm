@@ -18,6 +18,7 @@
 	layer = 2.9
 	anchored = 1
 	density = 1
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/active = 1 //No sales pitches if off!
 	var/vend_ready = 1 //Are we ready to vend?? Is it time??
 	var/vend_delay = 10 //How long does it take to vend?
@@ -184,9 +185,7 @@
 		src.updateUsrDialog()
 
 		return
-	else if(istype(W, /obj/item/device/multitool)||istype(W, /obj/item/weapon/wirecutters))
-		if(src.panel_open)
-			attack_hand(user)
+	else if(is_wire_tool(W) && panel_open && wires.interact(user))
 		return
 
 	else if(istype(W, /obj/item/weapon/coin) && premium.len > 0)
@@ -198,6 +197,7 @@
 
 	else if(istype(W, /obj/item/weapon/wrench))	//unwrenching vendomats
 		var/turf/T = user.loc
+		if(user.is_busy(src)) return
 		to_chat(user, "<span class='notice'>You begin [anchored ? "unwrenching" : "wrenching"] the [src].</span>")
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 40, target = src))
@@ -335,16 +335,7 @@
 	else
 		to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access vendor account. Please record the machine ID and call CentComm Support.</span>")
 
-/obj/machinery/vending/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/vending/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/vending/attack_hand(mob/user)
-	if(..() || wires.interact(user))
-		return
-
+/obj/machinery/vending/ui_interact(mob/user)
 	if(seconds_electrified && !issilicon(user) && !isobserver(user))
 		if(shock(user, 100))
 			return
@@ -368,24 +359,14 @@
 		dat += "<font color = 'red'>No product loaded!</font>"
 
 	else
-		var/list/display_records = product_records
-		if(extended_inventory)
-			display_records += hidden_records
-		if(coin)
-			display_records += coin_records
-
 		dat += "<ul>"
-		for (var/datum/data/vending_product/R in display_records)
-			dat += "<li>"
-			if (R.amount > 0)
-				dat += " <a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A>"
-			else
-				dat += " <font color = 'red'>SOLD OUT</font>"
-			dat += "<font color = '[R.display_color]'><B>[R.product_name]</B>:"
-			dat += " <b>[R.amount]</b> </font>"
-			if(R.price)
-				dat += " <b>(Price: [R.price])</b>"
-			dat += "</li>"
+
+		dat += print_recors(product_records)
+		if(extended_inventory)
+			dat += print_recors(hidden_records)
+		if(coin)
+			dat += print_recors(coin_records)
+
 		dat += "</ul>"
 	dat += "</div>"
 
@@ -398,7 +379,21 @@
 	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 500)
 	popup.set_content(dat)
 	popup.open()
-	return
+
+/obj/machinery/vending/proc/print_recors(list/record)
+	var/dat
+	for (var/datum/data/vending_product/R in record)
+		dat += "<li>"
+		if (R.amount > 0)
+			dat += " <a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A>"
+		else
+			dat += " <font color = 'red'>SOLD OUT</font>"
+		dat += "<font color = '[R.display_color]'><B>[R.product_name]</B>:"
+		dat += " <b>[R.amount]</b> </font>"
+		if(R.price)
+			dat += " <b>(Price: [R.price])</b>"
+		dat += "</li>"
+	return dat
 
 /obj/machinery/vending/Topic(href, href_list)
 	. = ..()
@@ -834,12 +829,12 @@
 	light_color = "#34ff7b"
 	products = list(/obj/item/seeds/ambrosiavulgarisseed = 3,/obj/item/seeds/appleseed = 3,/obj/item/seeds/bananaseed = 3,/obj/item/seeds/berryseed = 3,
 						/obj/item/seeds/cabbageseed = 3,/obj/item/seeds/carrotseed = 3,/obj/item/seeds/cherryseed = 3,/obj/item/seeds/chantermycelium = 3,
-						/obj/item/seeds/chiliseed = 3,/obj/item/seeds/cocoapodseed = 3,/obj/item/seeds/cornseed = 3,
+						/obj/item/seeds/chiliseed = 3,/obj/item/seeds/cocoapodseed = 3,/obj/item/seeds/cornseed = 3,/obj/item/seeds/replicapod = 3,
 						/obj/item/seeds/eggplantseed = 3,/obj/item/seeds/grapeseed = 3,/obj/item/seeds/grassseed = 3,/obj/item/seeds/lemonseed = 3,
 						/obj/item/seeds/limeseed = 3,/obj/item/seeds/orangeseed = 3,/obj/item/seeds/potatoseed = 3,/obj/item/seeds/poppyseed = 3,
-						/obj/item/seeds/pumpkinseed = 3,/obj/item/seeds/replicapod = 3,/obj/item/seeds/soyaseed = 3,/obj/item/seeds/sunflowerseed = 3,
-						/obj/item/seeds/tomatoseed = 3,
-						/obj/item/seeds/towermycelium = 3,/obj/item/seeds/watermelonseed = 3,/obj/item/seeds/wheatseed = 3,/obj/item/seeds/whitebeetseed = 3)
+						/obj/item/seeds/pumpkinseed = 3,/obj/item/seeds/riceseed= 3,/obj/item/seeds/soyaseed = 3,/obj/item/seeds/sunflowerseed = 3,
+						/obj/item/seeds/tomatoseed = 3,/obj/item/seeds/towermycelium = 3,/obj/item/seeds/watermelonseed = 3,/obj/item/seeds/wheatseed = 3,
+						/obj/item/seeds/whitebeetseed = 3)
 	contraband = list(/obj/item/seeds/amanitamycelium = 2,/obj/item/seeds/glowshroom = 2,/obj/item/seeds/libertymycelium = 2,/obj/item/seeds/mtearseed = 2,
 					  /obj/item/seeds/nettleseed = 2,/obj/item/seeds/reishimycelium = 2,/obj/item/seeds/reishimycelium = 2,/obj/item/seeds/shandseed = 2,)
 	premium = list(/obj/item/toy/waterflower = 1)
@@ -965,7 +960,8 @@
 	/obj/item/clothing/suit/poncho=2,/obj/item/clothing/suit/ianshirt=1,/obj/item/clothing/shoes/laceup=4,
 	/obj/item/clothing/shoes/sandal=2,
 	/obj/item/clothing/mask/bandana/black=2,/obj/item/clothing/mask/bandana/skull=2,/obj/item/clothing/mask/bandana/green=2,/obj/item/clothing/mask/bandana/gold=2,
-	/obj/item/clothing/mask/bandana/blue=2,/obj/item/clothing/mask/bluescarf=2,/obj/item/clothing/mask/redscarf=2,/obj/item/clothing/mask/greenscarf=2,
+	/obj/item/clothing/mask/bandana/blue=2,/obj/item/clothing/mask/scarf/blue=2,/obj/item/clothing/mask/scarf/red=2,/obj/item/clothing/mask/scarf/green=2,
+	/obj/item/clothing/mask/scarf/yellow=2,/obj/item/clothing/mask/scarf/violet=2,
 	/obj/item/clothing/suit/wintercoat=3,/obj/item/clothing/shoes/winterboots=3,/obj/item/clothing/head/santa=3,
 	/obj/item/clothing/suit/storage/miljacket_army=3,/obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger=2,/obj/item/clothing/suit/storage/miljacket_army/miljacket_navy=2,
 	/obj/item/clothing/suit/student_jacket=3,/obj/item/clothing/suit/shawl=2,/obj/item/clothing/suit/atlas_jacket=4,/obj/item/clothing/under/sukeban_pants=2,
@@ -989,7 +985,8 @@
 	/obj/item/clothing/suit/poncho=295,/obj/item/clothing/suit/ianshirt=4000,/obj/item/clothing/shoes/laceup=99,
 	/obj/item/clothing/shoes/sandal=35,
 	/obj/item/clothing/mask/bandana/black=384,/obj/item/clothing/mask/bandana/skull=399,/obj/item/clothing/mask/bandana/green=384,/obj/item/clothing/mask/bandana/gold=389,
-	/obj/item/clothing/mask/bandana/blue=384,/obj/item/clothing/mask/bluescarf=250,/obj/item/clothing/mask/redscarf=250,/obj/item/clothing/mask/greenscarf=250,
+	/obj/item/clothing/mask/bandana/blue=384,/obj/item/clothing/mask/scarf/blue=250,/obj/item/clothing/mask/scarf/red=250,/obj/item/clothing/mask/scarf/green=250,
+	/obj/item/clothing/mask/scarf/yellow=250,/obj/item/clothing/mask/scarf/violet=250,
 	/obj/item/clothing/suit/wintercoat=130,/obj/item/clothing/shoes/winterboots=70,/obj/item/clothing/head/santa=50,
 	/obj/item/clothing/suit/storage/miljacket_army=655,/obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger=655,/obj/item/clothing/suit/storage/miljacket_army/miljacket_navy=655,
 	/obj/item/clothing/suit/student_jacket=459,/obj/item/clothing/suit/shawl=344,/obj/item/clothing/suit/atlas_jacket=250,/obj/item/clothing/under/sukeban_pants=366,
@@ -1026,6 +1023,19 @@
 	name = "Hardsuit Kits"
 	desc = "Conversion kits for your alien hardsuit needs."
 	products = list(/obj/item/device/modkit/engineering/tajaran = 5, /obj/item/device/modkit/engineering/unathi = 5, /obj/item/device/modkit/engineering/skrell = 5, /obj/item/device/modkit/engineering/chief/skrell = 1, /obj/item/device/modkit/atmos/tajaran = 5, /obj/item/device/modkit/atmos/unathi = 5, /obj/item/device/modkit/atmos/skrell = 5, /obj/item/device/modkit/med/tajaran = 5, /obj/item/device/modkit/med/unathi = 5, /obj/item/device/modkit/med/skrell = 5, /obj/item/device/modkit/sec/tajaran = 5, /obj/item/device/modkit/sec/unathi = 5, /obj/item/device/modkit/sec/skrell = 5, /obj/item/device/modkit/mining/tajaran = 5, /obj/item/device/modkit/mining/unathi = 5, /obj/item/device/modkit/mining/skrell = 5, /obj/item/device/modkit = 10)
+
+/obj/machinery/vending/eva/mining
+	name = "Mining Hardsuit Kits"
+	desc = "Conversion kits for your alien mining hardsuits."
+	icon_state = "evamine"
+	products = list(/obj/item/device/modkit/mining/tajaran = 3, /obj/item/device/modkit/mining/unathi = 3, /obj/item/device/modkit/mining/skrell = 3, /obj/item/device/modkit = 5)
+
+/obj/machinery/vending/eva/engineering
+	name = "Engineering Hardsuit Kits"
+	desc = "Conversion kits for your alien engineering and atmos hardsuits."
+	icon_state = "evaengi"
+	products = list(/obj/item/device/modkit/engineering/tajaran = 3, /obj/item/device/modkit/engineering/unathi = 3, /obj/item/device/modkit/engineering/skrell = 3, /obj/item/device/modkit/engineering/chief/skrell = 1, /obj/item/device/modkit/atmos/tajaran = 3, /obj/item/device/modkit/atmos/unathi = 3, /obj/item/device/modkit/atmos/skrell = 3, /obj/item/device/modkit = 6)
+
 
 //from old nanotrasen
 //i deleted all drugs here, now it's just a joke

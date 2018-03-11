@@ -5,7 +5,6 @@
 	icon_state = "pdapainter"
 	density = TRUE
 	anchored = TRUE
-	ghost_must_be_admin = TRUE
 	var/obj/item/device/pda/storedpda = null
 	var/list/colorlist = list()
 	var/list/tc_pda_list = list(/obj/item/device/pda/forensic)
@@ -70,13 +69,13 @@
 
 /obj/machinery/pdapainter/attack_hand(mob/user)
 	if(..())
-		return
+		return 1
 
 	if(storedpda)
 		var/obj/item/device/pda/P
 		P = input(user, "Select your color!", "PDA Painting") as null|anything in colorlist
 		if(!P)
-			return
+			return 1
 
 		storedpda.icon = 'icons/obj/pda.dmi'
 		storedpda.icon_state = P.icon_state
@@ -90,6 +89,8 @@
 	set name = "Eject PDA"
 	set category = "Object"
 	set src in oview(1)
+	if(!usr.canmove || usr.stat || usr.restrained())
+		return
 
 	if(storedpda)
 		storedpda.loc = get_turf(src.loc)

@@ -116,10 +116,7 @@
 	update_icon()
 	return
 
-/obj/machinery/biogenerator/interact(mob/user)
-	if(stat & BROKEN || panel_open)
-		return
-	user.set_machine(src)
+/obj/machinery/biogenerator/ui_interact(mob/user)
 	var/dat
 	if(processing)
 		dat += "<div class='statusDisplay'>Biogenerator is processing! Please wait...</div><BR>"
@@ -168,19 +165,12 @@
 	var/datum/browser/popup = new(user, "biogen", name, 350, 520)
 	popup.set_content(dat)
 	popup.open()
-	return
-
-/obj/machinery/biogenerator/attack_hand(mob/user)
-	interact(user)
 
 /obj/machinery/biogenerator/proc/activate()
-	if (usr.stat != CONSCIOUS)
-		return
-	if (src.stat != CONSCIOUS) //NOPOWER etc
-		return
-	if(src.processing)
+	if(processing)
 		to_chat(usr, "<span class='warning'>The biogenerator is in the process of working.</span>")
 		return
+
 	var/S = 0
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/I in contents)
 		S += 5
@@ -188,18 +178,18 @@
 			points += 1*productivity
 		else points += I.reagents.get_reagent_amount("nutriment")*10*productivity
 		qdel(I)
+
 	if(S)
 		processing = 1
 		update_icon()
 		updateUsrDialog()
-		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+		playsound(src, 'sound/machines/blender.ogg', 50, 1)
 		use_power(S*30)
 		sleep(S+15/productivity)
 		processing = 0
 		update_icon()
 	else
 		menustat = "void"
-	return
 
 /obj/machinery/biogenerator/proc/check_cost(cost)
 	if (cost > points)

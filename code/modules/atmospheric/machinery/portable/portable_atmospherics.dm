@@ -2,6 +2,7 @@
 /obj/machinery/portable_atmospherics
 	name = "atmoalter"
 	use_power = 0
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/datum/gas_mixture/air_contents
 	var/obj/machinery/atmospherics/components/unary/portables_connector/connected_port
@@ -102,6 +103,7 @@
 		if(!(stat & BROKEN))
 			if(connected_port)
 				disconnect()
+				user.SetNextMove(CLICK_CD_RAPID)
 				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 				user.visible_message(
 					"[user] disconnects [src].",
@@ -116,6 +118,7 @@
 				if(!connect(possible_port))
 					to_chat(user, "<span class='notice'>[name] failed to connect to the port.</span>")
 					return
+				user.SetNextMove(CLICK_CD_RAPID)
 				playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 				user.visible_message(
 					"[user] connects [src].",

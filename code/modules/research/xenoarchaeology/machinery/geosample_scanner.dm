@@ -60,13 +60,11 @@
 	coolant_reagents_purity["coolant"] = 1
 	coolant_reagents_purity["adminordrazine"] = 2
 
-/obj/machinery/radiocarbon_spectrometer/attack_hand(mob/user)
-	ui_interact(user)
-
 /obj/machinery/radiocarbon_spectrometer/attackby(obj/I, mob/user)
 	if(scanning)
 		to_chat(user, "<span class='warning'>You can't do that while [src] is scanning!</span>")
 	else
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(istype(I, /obj/item/stack/nanopaste))
 			var/choice = alert("What do you want to do with the nanopaste?","Radiometric Scanner","Scan nanopaste","Fix seal integrity")
 			if(choice == "Fix seal integrity")

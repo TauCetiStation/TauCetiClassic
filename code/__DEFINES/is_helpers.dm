@@ -81,6 +81,8 @@
 
 #define islist(A) (istype(A, /list))
 
+#define ismachinery(A) (istype(A, /obj/machinery))
+
 #define ismovableatom(A) (istype(A, /atom/movable))
 
 // GOONCHAT PORT

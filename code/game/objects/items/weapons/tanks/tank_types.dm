@@ -75,8 +75,7 @@
 
 /obj/item/weapon/tank/phoron/attackby(obj/item/weapon/W, mob/user)
 	..()
-
-	if (istype(W, /obj/item/weapon/flamethrower))
+	if(istype(W, /obj/item/weapon/flamethrower))
 		var/obj/item/weapon/flamethrower/F = W
 		if (!F.status || F.ptank)
 			return

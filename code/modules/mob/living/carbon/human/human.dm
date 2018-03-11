@@ -243,14 +243,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
-	..()
+	if(..())
+		return
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -259,15 +259,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		var/armor = run_armor_check(BP, "melee")
 		apply_damage(damage, BRUTE, BP, armor)
 		if(armor >= 2)	return
-
-
-/mob/living/carbon/human/proc/is_loyalty_implanted(mob/living/carbon/human/M)
-	for(var/L in M.contents)
-		if(istype(L, /obj/item/weapon/implant/loyalty))
-			for(var/obj/item/organ/external/BP in M.bodyparts)
-				if(L in BP.implants)
-					return 1
-	return 0
 
 /mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M)
 	if(M.Victim) return // can't attack while eating!
@@ -332,13 +323,15 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return
 
 
-/mob/living/carbon/human/restrained()
-	if (handcuffed)
-		return 1
+/mob/living/carbon/human/restrained(check_type = HANDS)
+	if ((check_type & HANDS) && handcuffed)
+		return TRUE
+	if ((check_type & LEGS) && legcuffed)
+		return TRUE
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-		return 1
+		return TRUE
 	if (istype(buckled, /obj/structure/stool/bed/nest))
-		return 1
+		return TRUE
 	return 0
 
 
@@ -550,7 +543,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 						for (var/datum/data/record/R in data_core.security)
 							if (R.fields["id"] == E.fields["id"])
 
-								var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Released", "Cancel")
+								var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Paroled", "Released", "Cancel")
 
 								if(hasHUD(usr, "security"))
 									if(setcriminal != "Cancel")
@@ -1466,7 +1459,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		to_chat(src, "<span class='notice'>It is unsafe to leap without gravity!</span>")
 		return
 
-	if(stat || stunned || lying)
+	if(incapacitated(LEGS) || buckled || pinned.len || stance_damage >= 4) //because you need !restrained legs to leap
 		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
 		return
 
@@ -1498,30 +1491,37 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(isliving(A))
 		var/mob/living/L = A
 		L.visible_message("<span class='danger'>\The [src] leaps at [L]!</span>", "<span class='userdanger'>[src] leaps on you!</span>")
-		L.Weaken(5)
-		sleep(2) // Runtime prevention (infinite bump() calls on hulks)
-		step_towards(src, L)
-
-		var/use_hand = "left"
-		if(l_hand)
-			if(r_hand)
-				to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
-				return
-			else
-				use_hand = "right"
-
-		visible_message("<span class='warning'><b>\The [src]</b> seizes [L] aggressively!</span>")
-
-		var/obj/item/weapon/grab/G = new(src, L)
-		if(use_hand == "left")
-			l_hand = G
+		if(issilicon(A))
+			L.Weaken(1) //Only brief stun
+			step_towards(src, L)
 		else
-			r_hand = G
+			L.Weaken(5)
+			sleep(2) // Runtime prevention (infinite bump() calls on hulks)
+			step_towards(src, L)
 
-		G.state = GRAB_AGGRESSIVE
-		G.icon_state = "grabbed1"
-		G.synch()
-		L.grabbed_by += G
+			if(restrained()) //You can leap when you hands are cuffed, but you can't grab
+				return
+
+			var/use_hand = "left"
+			if(l_hand)
+				if(r_hand)
+					to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
+					return
+				else
+					use_hand = "right"
+
+			visible_message("<span class='warning'><b>\The [src]</b> seizes [L] aggressively!</span>")
+
+			var/obj/item/weapon/grab/G = new(src, L)
+			if(use_hand == "left")
+				l_hand = G
+			else
+				r_hand = G
+
+			G.state = GRAB_AGGRESSIVE
+			G.icon_state = "grabbed1"
+			G.synch()
+			L.grabbed_by += G
 
 	else if(A.density)
 		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='danger'>You smashes into [A]!</span>")

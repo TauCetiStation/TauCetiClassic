@@ -84,20 +84,13 @@
 	src.icon_state = "farmbot[src.on]"
 	src.updateUsrDialog()
 
-/obj/machinery/bot/farmbot/attack_paw(mob/user)
-	return attack_hand(user)
-
-
 /obj/machinery/bot/farmbot/proc/get_total_ferts()
 	var total_fert = 0
 	for (var/obj/item/nutrient/fert in contents)
 		total_fert++
 	return total_fert
 
-/obj/machinery/bot/farmbot/attack_hand(mob/user)
-	. = ..()
-	if (.)
-		return
+/obj/machinery/bot/farmbot/ui_interact(mob/user)
 	var/dat
 	dat += "<TT><B>Automatic Hyrdoponic Assisting Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
@@ -125,7 +118,6 @@
 
 	user << browse("<HEAD><TITLE>Farmbot v1.0 controls</TITLE></HEAD>[dat]", "window=autofarm")
 	onclose(user, "autofarm")
-	return
 
 /obj/machinery/bot/farmbot/Topic(href, href_list)
 	. = ..()
@@ -204,7 +196,7 @@
 	new /obj/item/weapon/minihoe(Tsec)
 	new /obj/item/weapon/reagent_containers/glass/bucket(Tsec)
 	new /obj/item/device/assembly/prox_sensor(Tsec)
-	new /obj/item/device/analyzer/plant_analyzer(Tsec)
+	new /obj/item/device/plant_analyzer(Tsec)
 
 	if ( tank )
 		tank.loc = Tsec
@@ -542,13 +534,13 @@
 
 	A.loc = src.loc
 	to_chat(user, "You add the robot arm to the [src]")
-	src.loc = A //Place the water tank into the assembly, it will be needed for the finished bot
 	user.remove_from_mob(S)
 	qdel(S)
+	qdel(src)
 
 /obj/item/weapon/farmbot_arm_assembly/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if((istype(W, /obj/item/device/analyzer/plant_analyzer)) && (!src.build_step))
+	if((istype(W, /obj/item/device/plant_analyzer)) && (!src.build_step))
 		src.build_step++
 		to_chat(user, "You add the plant analyzer to [src]!")
 		src.name = "farmbot assembly"
@@ -573,9 +565,6 @@
 		src.build_step++
 		to_chat(user, "You complete the Farmbot! Beep boop.")
 		var/obj/machinery/bot/farmbot/S = new /obj/machinery/bot/farmbot
-		for ( var/obj/structure/reagent_dispensers/watertank/wTank in src.contents )
-			wTank.loc = S
-			S.tank = wTank
 		S.loc = get_turf(src)
 		S.name = src.created_name
 		user.remove_from_mob(W)

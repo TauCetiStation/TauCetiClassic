@@ -20,20 +20,11 @@ var/global/list/frozen_items = list()
 	circuit = "/obj/item/weapon/circuitboard/cryopodcontrol"
 	var/mode = null
 
-/obj/machinery/computer/cryopod/attack_paw()
-	attack_hand()
-
-/obj/machinery/computer/cryopod/attack_ai()
-	attack_hand()
-
-obj/machinery/computer/cryopod/attack_hand(mob/user = usr)
-	if(..())
+/obj/machinery/computer/cryopod/ui_interact(mob/user)
+	if(!ticker)
 		return
 
 	var/dat
-
-	if(!ticker)
-		return
 
 	dat += "<hr/><br/><b>Cryogenic Oversight Control</b><br/>"
 	dat += "<i>Welcome, [user.real_name].</i><br/><br/><hr/>"
@@ -45,7 +36,7 @@ obj/machinery/computer/cryopod/attack_hand(mob/user = usr)
 	user << browse(dat, "window=cryopod_console")
 	onclose(user, "cryopod_console")
 
-obj/machinery/computer/cryopod/Topic(href, href_list)
+/obj/machinery/computer/cryopod/Topic(href, href_list)
 	. = ..()
 	if(!.)
 		return
@@ -290,6 +281,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 
 		var/willing = null //We don't want to allow people to be forced into despawning.
 		var/mob/M = grab.affecting
+		user.SetNextMove(CLICK_CD_MELEE)
 
 		if(M.client)
 			if(alert(M,"Would you like to enter cryosleep?",,"Yes","No") == "Yes")
@@ -300,6 +292,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 			willing = TRUE
 
 		if(willing)
+			if(user.is_busy()) return
 			visible_message("[user] starts putting [M.name] into the cryo pod.", 3)
 
 			if(do_after(user, 20, target = src))
@@ -369,7 +362,7 @@ obj/machinery/computer/cryopod/Topic(href, href_list)
 		if(M.Victim == usr)
 			to_chat(usr, "You're too busy getting your life sucked out of you.")
 			return
-
+	if(usr.is_busy()) return
 	visible_message("[usr] starts climbing into the cryo pod.", 3)
 
 	if(do_after(usr, 20, target = src))

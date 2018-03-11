@@ -55,7 +55,7 @@
 /obj/structure/falsewall/attack_hand(mob/user)
 	if(opening)
 		return
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(density)
 		opening = 1
 		icon_state = "[mineral]fwall_open"
@@ -86,6 +86,7 @@
 	if(opening)
 		to_chat(user, "\red You must wait until the door has stopped moving.")
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(density)
 		var/turf/T = get_turf(src)
@@ -102,7 +103,7 @@
 
 		if( istype(W, /obj/item/weapon/weldingtool) )
 			var/obj/item/weapon/weldingtool/WT = W
-			if( WT:welding )
+			if( WT.welding )
 				if(!mineral)
 					T.ChangeTurf(/turf/simulated/wall)
 				else
@@ -178,7 +179,7 @@
 /obj/structure/falserwall/attack_hand(mob/user)
 	if(opening)
 		return
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(density)
 		opening = 1
 		// Open wall
@@ -227,6 +228,7 @@
 	if(opening)
 		to_chat(user, "\red You must wait until the door has stopped moving.")
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(istype(W, /obj/item/weapon/screwdriver))
 		var/turf/T = get_turf(src)

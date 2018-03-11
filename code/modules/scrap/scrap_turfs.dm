@@ -119,16 +119,15 @@
 /turf/simulated/floor/plating/ironsand/junkyard/attackby(obj/item/weapon/W, mob/user)
 	if(!W || !user)
 		return 0
-	if ((istype(W, /obj/item/weapon/shovel)))
+	if(istype(W, /obj/item/weapon/shovel))
 		var/turf/T = user.loc
-		if (!( istype(T, /turf) ))
+		if(!istype(T, /turf))
 			return 0
 		if (!dug)
-			if(do_after(user, 60, target = src))
+			if(!user.is_busy() && do_after(user, 60, target = src))
 				if(!dug) //someone else digged here
 					visible_message("<span class='notice'>\The [user] shovels new grave.</span>")
 					new /obj/structure/pit(src)
 					dug = 1
-				return
 		return
 	..(W,user)

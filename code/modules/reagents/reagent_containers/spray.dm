@@ -25,7 +25,7 @@
 	verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A, mob/user)
-	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
+	if(istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
 	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart))
 		return
 

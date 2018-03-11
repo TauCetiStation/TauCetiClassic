@@ -19,7 +19,8 @@ Passive gate is similar to the regular pump except:
 
 	can_unwrench = TRUE
 	use_power = 0
-	interact_offline = 1
+	interact_offline = TRUE
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/unlocked = 0 // If 0, then the valve is locked closed, otherwise it is open(-able, it's a one-way valve so it closes if gas would flow backwards).
 	var/target_pressure = ONE_ATMOSPHERE
@@ -173,17 +174,6 @@ Passive gate is similar to the regular pump except:
 
 	broadcast_status()
 	update_icon()
-	return
-
-/obj/machinery/atmospherics/components/binary/passive_gate/attack_hand(user)
-	if(..())
-		return
-	add_fingerprint(usr)
-	if(!allowed(user))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
-		return
-	usr.set_machine(src)
-	ui_interact(user)
 	return
 
 /obj/machinery/atmospherics/components/binary/passive_gate/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui)

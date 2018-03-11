@@ -145,9 +145,10 @@
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
 
-	if (!(istype(usr, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
-		to_chat(usr, "<span class='danger'>You don't have the dexterity to do this!</span>")
+	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
+		to_chat(user, "<span class='danger'>You don't have the dexterity to do this!</span>")
 		return
+	user.SetNextMove(CLICK_CD_RAPID)
 
 	if (istype(W, /obj/item/device/core_sampler))
 		geologic_data.UpdateNearbyArtifactInfo(src)
@@ -161,6 +162,7 @@
 		return
 
 	if (istype(W, /obj/item/device/measuring_tape))
+		if(user.is_busy()) return
 		var/obj/item/device/measuring_tape/P = W
 		user.visible_message("<span class='notice'>[user] extends [P] towards [src].</span>","<span class='notice'>You extend [P] towards [src].</span>")
 		if(do_after(user,25, target = src))
@@ -211,7 +213,7 @@
 				if(prob(50))
 					artifact_debris()
 
-		if(do_after(user,P.digspeed, target = src))
+		if(!user.is_busy() && do_after(user,P.digspeed, target = src))
 			to_chat(user, "<span class='notice'>You finish [P.drill_verb] the rock.</span>")
 
 			if(istype(P,/obj/item/weapon/pickaxe/drill/jackhammer))	//Jackhammer will just dig 3 tiles in dir of user
@@ -429,6 +431,7 @@
 			mineral = name_to_mineral[mineral_name]
 			UpdateMineral()
 			CaveSpread()
+	. = ..()
 
 /turf/simulated/mineral/random/caves
 	mineralChance = 25
@@ -460,10 +463,9 @@
 	. = ..()
 
 /turf/simulated/mineral/attack_animal(mob/living/simple_animal/user)
+	..()
 	if(user.environment_smash >= 2)
 		GetDrilled()
-	..()
-
 /**********************Caves**************************/
 /turf/simulated/floor/plating/airless/asteroid
 	basetype = /turf/simulated/floor/plating/airless/asteroid
@@ -624,7 +626,7 @@
 		if (dug)
 			to_chat(user, "<span class='danger'>This area has already been dug.</span>")
 			return
-
+		if(user.is_busy()) return
 		to_chat(user, "<span class='warning'>You start digging.</span>")
 		playsound(user.loc, 'sound/effects/digging.ogg', 50, 1)
 
@@ -633,7 +635,7 @@
 				to_chat(user, "<span class='notice'>You dug a hole.</span>")
 				gets_dug()
 
-	if(istype(W,/obj/item/weapon/storage/bag/ore))
+	else if(istype(W,/obj/item/weapon/storage/bag/ore))
 		var/obj/item/weapon/storage/bag/ore/S = W
 		if(S.collection_mode)
 			for(var/obj/item/weapon/ore/O in contents)
@@ -647,8 +649,7 @@
 				return
 
 	else
-		..(W,user)
-	return
+		..()
 
 /turf/simulated/floor/plating/airless/asteroid/proc/gets_dug()
 	if(dug)

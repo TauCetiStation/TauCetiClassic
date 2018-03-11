@@ -7,6 +7,7 @@
 	light_color = "#00b000"
 	req_one_access = list(access_heads)
 	circuit = "/obj/item/weapon/circuitboard/skills"
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/weapon/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
@@ -31,21 +32,13 @@
 		to_chat(user, "You insert [O].")
 	..()
 
-/obj/machinery/computer/skills/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/skills/attack_paw(mob/user)
-	return attack_hand(user)
-
 //Someone needs to break down the dat += into chunks instead of long ass lines.
-/obj/machinery/computer/skills/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/skills/ui_interact(mob/user)
 	if (src.z > ZLEVEL_EMPTY)
 		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
-	var/dat
 
+	var/dat
 	if (temp)
 		dat = text("<TT>[]</TT><BR><BR><A href='?src=\ref[];choice=Clear Screen'>Clear Screen</A>", temp, src)
 	else
@@ -54,23 +47,23 @@
 			switch(screen)
 				if(1.0)
 					dat += {"
-<p style='text-align:center;'>"}
+						<p style='text-align:center;'>"}
 					dat += text("<A href='?src=\ref[];choice=Search Records'>Search Records</A><BR>", src)
 					dat += text("<A href='?src=\ref[];choice=New Record (General)'>New Record</A><BR>", src)
 					dat += {"
-</p>
-<table style="text-align:center;" cellspacing="0" width="100%">
-<tr>
-<th>Records:</th>
-</tr>
-</table>
-<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-<tr>
-<th><A href='?src=\ref[src];choice=Sorting;sort=name'>Name</A></th>
-<th><A href='?src=\ref[src];choice=Sorting;sort=id'>ID</A></th>
-<th><A href='?src=\ref[src];choice=Sorting;sort=rank'>Rank</A></th>
-<th><A href='?src=\ref[src];choice=Sorting;sort=fingerprint'>Fingerprints</A></th>
-</tr>"}
+						</p>
+						<table style="text-align:center;" cellspacing="0" width="100%">
+						<tr>
+						<th>Records:</th>
+						</tr>
+						</table>
+						<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+						<tr>
+						<th><A href='?src=\ref[src];choice=Sorting;sort=name'>Name</A></th>
+						<th><A href='?src=\ref[src];choice=Sorting;sort=id'>ID</A></th>
+						<th><A href='?src=\ref[src];choice=Sorting;sort=rank'>Rank</A></th>
+						<th><A href='?src=\ref[src];choice=Sorting;sort=fingerprint'>Fingerprints</A></th>
+						</tr>"}
 					if(!isnull(data_core.general))
 						for(var/datum/data/record/R in sortRecord(data_core.general, sortBy, order))
 							for(var/datum/data/record/E in data_core.security)
@@ -93,21 +86,21 @@
 						user << browse_rsc(front, "front.png")
 						user << browse_rsc(side, "side.png")
 						dat += text("<table><tr><td>	\
-						Name: <A href='?src=\ref[src];choice=Edit Field;field=name'>[active1.fields["name"]]</A><BR> \
-						ID: <A href='?src=\ref[src];choice=Edit Field;field=id'>[active1.fields["id"]]</A><BR>\n	\
-						Sex: <A href='?src=\ref[src];choice=Edit Field;field=sex'>[active1.fields["sex"]]</A><BR>\n	\
-						Age: <A href='?src=\ref[src];choice=Edit Field;field=age'>[active1.fields["age"]]</A><BR>\n	\
-						Home system: [active1.fields["home_system"]]<BR>\n	\
-						Citizenship: [active1.fields["citizenship"]]<BR>\n	\
-						Faction: [active1.fields["faction"]]<BR>\n	\
-						Religion: [active1.fields["religion"]]<BR>\n	\
-						Rank: <A href='?src=\ref[src];choice=Edit Field;field=rank'>[active1.fields["rank"]]</A><BR>\n	\
-						Fingerprint: <A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
-						Physical Status: [active1.fields["p_stat"]]<BR>\n	\
-						Mental Status: [active1.fields["m_stat"]]<BR><BR>\n	\
-						Employment/skills summary:<BR> [sanitize_popup(decode(active1.fields["notes"]))]<BR></td>	\
-						<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4>	\
-						<img src=side.png height=80 width=80 border=4></td></tr></table>")
+							Name: <A href='?src=\ref[src];choice=Edit Field;field=name'>[active1.fields["name"]]</A><BR> \
+							ID: <A href='?src=\ref[src];choice=Edit Field;field=id'>[active1.fields["id"]]</A><BR>\n	\
+							Sex: <A href='?src=\ref[src];choice=Edit Field;field=sex'>[active1.fields["sex"]]</A><BR>\n	\
+							Age: <A href='?src=\ref[src];choice=Edit Field;field=age'>[active1.fields["age"]]</A><BR>\n	\
+							Home system: [active1.fields["home_system"]]<BR>\n	\
+							Citizenship: [active1.fields["citizenship"]]<BR>\n	\
+							Faction: [active1.fields["faction"]]<BR>\n	\
+							Religion: [active1.fields["religion"]]<BR>\n	\
+							Rank: <A href='?src=\ref[src];choice=Edit Field;field=rank'>[active1.fields["rank"]]</A><BR>\n	\
+							Fingerprint: <A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
+							Physical Status: [active1.fields["p_stat"]]<BR>\n	\
+							Mental Status: [active1.fields["m_stat"]]<BR><BR>\n	\
+							Employment/skills summary:<BR> [sanitize_popup(decode(active1.fields["notes"]))]<BR></td>	\
+							<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4>	\
+							<img src=side.png height=80 width=80 border=4></td></tr></table>")
 					else
 						dat += "<B>General Record Lost!</B><BR>"
 					dat += text("\n<A href='?src=\ref[];choice=Delete Record (ALL)'>Delete Record (ALL)</A><BR><BR>\n<A href='?src=\ref[];choice=Print Record'>Print Record</A><BR>\n<A href='?src=\ref[];choice=Return'>Back</A><BR>", src, src, src)
@@ -116,19 +109,19 @@
 						dat += text("ERROR.  String could not be located.<br><br><A href='?src=\ref[];choice=Return'>Back</A>", src)
 					else
 						dat += {"
-<table style="text-align:center;" cellspacing="0" width="100%">
-<tr>					"}
+							<table style="text-align:center;" cellspacing="0" width="100%">
+							<tr>					"}
 						dat += text("<th>Search Results for '[]':</th>", tempname)
 						dat += {"
-</tr>
-</table>
-<table style="text-align:center;" border="1" cellspacing="0" width="100%">
-<tr>
-<th>Name</th>
-<th>ID</th>
-<th>Rank</th>
-<th>Fingerprints</th>
-</tr>					"}
+							</tr>
+							</table>
+							<table style="text-align:center;" border="1" cellspacing="0" width="100%">
+							<tr>
+							<th>Name</th>
+							<th>ID</th>
+							<th>Rank</th>
+							<th>Fingerprints</th>
+							</tr>					"}
 						for(var/i=1, i<=Perp.len, i += 2)
 							var/crimstat = ""
 							var/datum/data/record/R = Perp[i]
@@ -149,7 +142,6 @@
 			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
 	user << browse(text("<HEAD><TITLE>Employment Records</TITLE></HEAD><TT>[]</TT>", dat), "window=secure_rec;size=600x400")
 	onclose(user, "secure_rec")
-	return
 
 /*Revised /N
 I can't be bothered to look more of the actual code outside of switch but that probably needs revising too.
@@ -410,7 +402,7 @@ What a mess.*/
 				if(3)
 					R.fields["age"] = rand(5, 85)
 				if(4)
-					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Parolled", "Released")
+					R.fields["criminal"] = pick("None", "*Arrest*", "Incarcerated", "Paroled", "Released")
 				if(5)
 					R.fields["p_stat"] = pick("*Unconcious*", "Active", "Physically Unfit")
 				if(6)

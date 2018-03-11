@@ -7,7 +7,7 @@
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ffddff"
-	idtype = /obj/item/weapon/card/id/silver
+	idtype = /obj/item/weapon/card/id/sciGold
 	req_admin_notify = 1
 	access = list(
 		access_rd, access_heads, access_tox, access_genetics, access_morgue,
@@ -17,6 +17,7 @@
 	)
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
+	restricted_species = list(UNATHI, TAJARAN, DIONA, IPC)
 
 /datum/job/rd/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -48,6 +49,7 @@
 	spawn_positions = 3
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
+	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 	alt_titles = list("Xenoarcheologist", "Anomalist", "Phoron Researcher")
 	minimal_player_ingame_minutes = 1560
@@ -92,6 +94,7 @@
 	spawn_positions = 2
 	supervisors = "the research director"
 	selection_color = "#ffeeff"
+	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_research, access_xenobiology)
 	minimal_player_ingame_minutes = 1560
 
@@ -125,6 +128,7 @@
 	spawn_positions = 2
 	supervisors = "research director"
 	selection_color = "#ffeeff"
+	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_robotics, access_morgue, access_research) //As a job that handles so many corpses, it makes sense for them to have morgue access.
 	alt_titles = list("Biomechanical Engineer","Mechatronic Engineer")
 	minimal_player_ingame_minutes = 1560

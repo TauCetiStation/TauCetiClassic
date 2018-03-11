@@ -113,6 +113,7 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/blood/attack_hand(mob/living/carbon/human/user)
 	..()
 	if (amount && istype(user))
+		user.SetNextMove(CLICK_CD_MELEE)
 		add_fingerprint(user)
 		if (user.gloves)
 			return

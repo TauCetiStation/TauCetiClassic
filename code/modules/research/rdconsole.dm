@@ -49,6 +49,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/sync = 1		//If sync = 0, it doesn't show up on Server Control Console
 
 	req_access = list(access_research)	//Data and setting manipulation requires scientist access.
+	allowed_checks = ALLOWED_CHECK_NONE
 
 
 /obj/machinery/computer/rdconsole/proc/CallTechName(ID) //A simple helper proc to find the name of a tech with a given ID.
@@ -164,6 +165,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	else if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 		playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 		emagged = 1
+		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "\blue You you disable the security protocols")
 	else
 		//The construction/deconstruction of the console code.
@@ -566,13 +568,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				updateUsrDialog()
 	updateUsrDialog()
 
-/obj/machinery/computer/rdconsole/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/rdconsole/interact(mob/user)
-	user.set_machine(src)
+/obj/machinery/computer/rdconsole/ui_interact(mob/user)
 	var/dat = ""
 	files.RefreshResearch()
 	switch(screen) //A quick check to make sure you get the right screen when a device is disconnected.
@@ -679,13 +675,18 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				dat += "Name: [d_disk.blueprint.name]<BR>"
 				dat += "Level: [between(0, (d_disk.blueprint.reliability + rand(-15,15)), 100)]<BR>"
 				switch(d_disk.blueprint.build_type)
-					if(IMPRINTER) dat += "Lathe Type: Circuit Imprinter<BR>"
-					if(PROTOLATHE) dat += "Lathe Type: Proto-lathe<BR>"
-					if(AUTOLATHE) dat += "Lathe Type: Auto-lathe<BR>"
+					if(IMPRINTER)
+						dat += "Lathe Type: Circuit Imprinter<BR>"
+					if(PROTOLATHE)
+						dat += "Lathe Type: Proto-lathe<BR>"
+					if(AUTOLATHE)
+						dat += "Lathe Type: Auto-lathe<BR>"
 				dat += "Required Materials:<BR>"
 				for(var/M in d_disk.blueprint.materials)
-					if(copytext(M, 1, 2) == "$") dat += "* [copytext(M, 2)] x [d_disk.blueprint.materials[M]]<BR>"
-					else dat += "* [M] x [d_disk.blueprint.materials[M]]<BR>"
+					if(copytext(M, 1, 2) == "$")
+						dat += "* [copytext(M, 2)] x [d_disk.blueprint.materials[M]]<BR>"
+					else
+						dat += "* [M] x [d_disk.blueprint.materials[M]]<BR>"
 				dat += "</div>Operations: "
 				dat += "<A href='?src=\ref[src];updt_design=1'>Upload to Database</A>"
 				dat += "<A href='?src=\ref[src];clear_design=1'>Clear Disk</A>"
@@ -919,7 +920,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	var/datum/browser/popup = new(user, "rndconsole", name, 420, 450)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/computer/rdconsole/robotics
 	name = "Robotics R&D Console"

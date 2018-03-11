@@ -63,6 +63,7 @@ var/list/valid_secondary_effect_types = list(\
 	desc = "A large alien device."
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "ano00"
+	interact_offline = TRUE
 	var/icon_num = 0
 	density = 1
 	var/datum/artifact_effect/my_effect
@@ -249,19 +250,18 @@ var/list/valid_secondary_effect_types = list(\
 				if(secondary_effect && secondary_effect.trigger == TRIGGER_VIEW && secondary_effect.activated)
 					secondary_effect.ToggleActivate(0)
 
-/obj/machinery/artifact/attack_ghost(mob/user)
-	return
-
 /obj/machinery/artifact/attack_hand(mob/user)
-	if (get_dist(user, src) > 1)
-		to_chat(user, "\red You can't reach [src] from here.")
+	. = ..()
+	if(.)
 		return
+
+	if(!in_range(src, user) && !IsAdminGhost(user))
+		to_chat(user, "\red You can't reach [src] from here.")
+		return 1
 	if(ishuman(user) && user:gloves)
 		to_chat(user, "<b>You touch [src]</b> with your gloved hands, [pick("but nothing of note happens","but nothing happens","but nothing interesting happens","but you notice nothing different","but nothing seems to have happened")].")
 		return
-
-	src.add_fingerprint(user)
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(my_effect.trigger == TRIGGER_TOUCH)
 		to_chat(user, "<b>You touch [src].<b>")
 		my_effect.ToggleActivate()
@@ -278,8 +278,8 @@ var/list/valid_secondary_effect_types = list(\
 		secondary_effect.DoEffectTouch(user)
 
 /obj/machinery/artifact/attackby(obj/item/weapon/W, mob/living/user)
-
-	if (istype(W, /obj/item/weapon/reagent_containers/))
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(istype(W, /obj/item/weapon/reagent_containers/))
 		if(W.reagents.has_reagent("hydrogen", 1) || W.reagents.has_reagent("water", 1))
 			if(my_effect.trigger == TRIGGER_WATER)
 				my_effect.ToggleActivate()
@@ -305,6 +305,7 @@ var/list/valid_secondary_effect_types = list(\
 			istype(W,/obj/item/weapon/melee/cultblade) ||\
 			istype(W,/obj/item/weapon/card/emag) ||\
 			istype(W,/obj/item/device/multitool))
+
 		if (my_effect.trigger == TRIGGER_ENERGY)
 			my_effect.ToggleActivate()
 		if(secondary_effect && secondary_effect.trigger == TRIGGER_ENERGY && prob(25))

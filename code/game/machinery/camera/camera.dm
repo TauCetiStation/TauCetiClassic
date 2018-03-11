@@ -26,7 +26,6 @@
 
 	var/light_disabled = 0
 	var/alarm_on = 0
-	var/busy = 0
 
 /obj/machinery/camera/atom_init()
 	. = ..()
@@ -104,14 +103,12 @@
 	src.view_range = num
 	cameranet.updateVisibility(src, 0)
 
-/obj/machinery/camera/attack_hand(mob/user)
-	wires.interact(user)
-
 /obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user)
 	if(!istype(user))
 		return
 	if(status)
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
 		playsound(src, 'sound/weapons/slash.ogg', 100, 1)
 		toggle_cam(FALSE, user)
@@ -129,8 +126,8 @@
 		"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
-	else if((iswirecutter(W) || ismultitool(W)) && panel_open)
-		attack_hand(user)
+	else if(is_wire_tool(W) && panel_open)
+		wires.interact(user)
 
 	else if(iswelder(W) && wires.is_deconstructable())
 		if(weld(W, user))
@@ -317,22 +314,17 @@
 
 /obj/machinery/camera/proc/weld(obj/item/weapon/weldingtool/WT, mob/user)
 
-	if(busy)
-		return 0
 	if(!WT.isOn())
 		return 0
-
+	if(user.is_busy(src)) return
 	// Do after stuff here
 	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
-	busy = 1
 	if(do_after(user, 100, target = src))
-		busy = 0
 		if(!WT.isOn())
 			return 0
 		return 1
-	busy = 0
 	return 0
 
 /obj/machinery/camera/proc/add_network(network_name)

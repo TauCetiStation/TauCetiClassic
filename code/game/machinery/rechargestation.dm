@@ -7,7 +7,6 @@
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 50
-	ghost_must_be_admin = TRUE
 	var/max_internal_charge = 15000 		// Two charged borgs in a row with default cell
 	var/current_internal_charge = 15000 	// Starts charged, to prevent power surges on round start
 	var/charging_cap_active = 25000			// Active Cap - When cyborg is inside
@@ -17,7 +16,6 @@
 	var/circuitboard = "/obj/item/weapon/circuitboard/cyborgrecharger"
 	var/locked = TRUE
 	var/open = TRUE
-	req_access = list(access_robotics)
 	var/recharge_speed
 	var/repairs
 
@@ -111,12 +109,6 @@
 	open_machine()
 	..(severity)
 
-/obj/machinery/recharge_station/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/recharge_station/attack_ai(mob/user)
-	return attack_hand(user)
-
 /obj/machinery/recharge_station/attackby(obj/item/P, mob/user)
 	if(open)
 		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
@@ -128,8 +120,10 @@
 	default_deconstruction_crowbar(P)
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(!construct_op)
 		toggle_open()
 	else

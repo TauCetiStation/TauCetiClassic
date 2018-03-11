@@ -289,30 +289,18 @@
 					if(prev_species != species)
 						f_style = random_facial_hair_style(gender, species)
 						h_style = random_hair_style(gender, species)
+						ResetJobs()
+						if(language && language != "None")
+							var/datum/language/lang = all_languages[language]
+							if(!(species in lang.allowed_species))
+								language = "None"
 
 				if("language")
-					var/languages_available
 					var/list/new_languages = list("None")
 					var/datum/species/S = all_species[species]
-
-					//I don't understant, how it works(and does not), so..
-					if(config.usealienwhitelist)
-						for(var/L in all_languages)
-							var/datum/language/lang = all_languages[L]
-							if((!(lang.flags & RESTRICTED)) && (is_alien_whitelisted(user, L)||(!( lang.flags & WHITELISTED ))||(S && (L in S.secondary_langs))))
-								new_languages += lang.name
-								languages_available = 1
-
-						if(!(languages_available))
-							alert(user, "There are not currently any available secondary languages.")
-					else
-						for(var/L in all_languages)
-							var/datum/language/lang = all_languages[L]
-							if(!(lang.flags & RESTRICTED))
-								new_languages += lang.name
 					for(var/L in all_languages)
 						var/datum/language/lang = all_languages[L]
-						if(!(lang.flags & RESTRICTED))
+						if(!(lang.flags & RESTRICTED) && (S.name in lang.allowed_species))
 							new_languages += lang.name
 
 					language = input("Please select a secondary language", "Character Generation", null) in new_languages

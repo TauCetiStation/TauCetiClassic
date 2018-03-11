@@ -231,13 +231,7 @@
 				magnets.Add(M)
 
 
-/obj/machinery/magnetic_controller/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/magnetic_controller/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/magnetic_controller/ui_interact(mob/user)
 	var/dat = "<B>Magnetic Control Console</B><BR><BR>"
 	if(!autolink)
 		dat += {"
@@ -257,7 +251,6 @@
 	dat += "<br>Speed: <a href='?src=\ref[src];operation=minusspeed'>-</a> [speed] <a href='?src=\ref[src];operation=plusspeed'>+</a><br>"
 	dat += "Path: {<a href='?src=\ref[src];operation=setpath'>[path]</a>}<br>"
 	dat += "Moving: <a href='?src=\ref[src];operation=togglemoving'>[moving ? "Enabled":"Disabled"]</a>"
-
 
 	user << browse(dat, "window=magnet;size=400x500")
 	onclose(user, "magnet")

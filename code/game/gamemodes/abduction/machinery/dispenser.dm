@@ -25,12 +25,13 @@
 		gland_colors[i] = random_color()
 		amounts[i] = rand(1,5)
 
-/obj/machinery/abductor/gland_dispenser/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/abductor/gland_dispenser/interact(mob/user)
 	if(!IsAbductor(user) && !isobserver(user))
 		return
-	user.set_machine(src)
+	else
+		..()
+
+/obj/machinery/abductor/gland_dispenser/ui_interact(mob/user)
 	var/box_css = {"
 	<style>
 	a.box.gland {
@@ -54,12 +55,12 @@
 		if(item_count == 3) // Three boxes per line
 			dat +="</br></br>"
 			item_count = 0
+
 	var/datum/browser/popup = new(user, "glands", "Gland Dispenser", 200, 200)
 	popup.add_head_content(box_css)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-	return
 
 /obj/machinery/abductor/gland_dispenser/attackby(obj/item/weapon/W, mob/user, params)
 	if(istype(W, /obj/item/gland))

@@ -66,8 +66,18 @@
 		return
 
 
+/obj/item/weapon/storage/lockbox/mind_shields
+	name = "lockbox of Mind Shields implants"
+	req_access = list(access_brig)
+
+/obj/item/weapon/storage/lockbox/mind_shields/atom_init()
+	. = ..()
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/implantcase/mindshield(src)
+	new /obj/item/weapon/implanter/mindshield(src)
+
 /obj/item/weapon/storage/lockbox/loyalty
-	name = "lockbox of loyalty implants"
+	name = "lockbox of Loyalty implants"
 	req_access = list(access_brig)
 
 /obj/item/weapon/storage/lockbox/loyalty/atom_init()

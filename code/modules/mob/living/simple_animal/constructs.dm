@@ -51,27 +51,17 @@
 			msg += "<B>It looks severely dented!</B>\n"
 		msg += "</span>"
 	msg += "*---------*</span>"
-
 	to_chat(user, msg)
 
 /mob/living/simple_animal/construct/attack_animal(mob/living/simple_animal/M)
-	if(istype(M, /mob/living/simple_animal/construct/builder))
-		health += 5
-		M.emote("mends some of \the <EM>[src]'s</EM> wounds.")
-	else
-		if(M.melee_damage_upper <= 0)
-			M.emote("[M.friendly] \the <EM>[src]</EM>")
-		else
-			if(M.attack_sound)
-				playsound(loc, M.attack_sound, 50, 1, 1)
-			visible_message("<span class='attack'>\The <EM>[M]</EM> [M.attacktext] \the <EM>[src]</EM>!</span>")
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
-			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
-
-			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-			adjustBruteLoss(damage)
+	if(istype(M, /mob/living/simple_animal/construct/builder) && health <  maxHealth)
+		health += min(health + 5, maxHealth)
+		M.visible_message("[M] mends some of the <EM>[src]'s</EM> wounds.")
+		return
+	return ..()
 
 /mob/living/simple_animal/construct/attackby(obj/item/O, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(O.force)
 		var/damage = O.force
 		if (O.damtype == HALLOSS)
@@ -79,7 +69,7 @@
 		adjustBruteLoss(damage)
 		visible_message("<span class='danger'>[src] has been attacked with [O] by [user].</span>")
 	else
-		to_chat(usr, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
+		to_chat(user, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
 		visible_message("<span class='red'>[user] gently taps [src] with [O].</span>")
 
 /////////////////Juggernaut///////////////
@@ -104,6 +94,7 @@
 	construct_spells = list(/obj/effect/proc_holder/spell/aoe_turf/conjure/lesserforcewall)
 
 /mob/living/simple_animal/construct/armoured/attackby(obj/item/O, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(O.force)
 		if(O.force >= 11)
 			var/damage = O.force
@@ -209,6 +200,7 @@
 	var/max_energy = 1000
 
 /mob/living/simple_animal/construct/behemoth/attackby(obj/item/O, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(O.force)
 		if(O.force >= 11)
 			var/damage = O.force
@@ -219,7 +211,7 @@
 		else
 			visible_message("<span class='danger'>[O] bounces harmlessly off of [src].</span>")
 	else
-		to_chat(usr, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
+		to_chat(user, "<span class='red'>This weapon is ineffective, it does no damage.</span>")
 		visible_message("<span class='red'>[user] gently taps [src] with [O].</span>")
 
 

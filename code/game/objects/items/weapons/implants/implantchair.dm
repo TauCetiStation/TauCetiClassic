@@ -11,7 +11,7 @@
 
 	var/ready = 1
 	var/malfunction = 0
-	var/list/obj/item/weapon/implant/loyalty/implant_list = list()
+	var/list/obj/item/weapon/implant/mindshield/implant_list = list()
 	var/max_implants = 5
 	var/injection_cooldown = 600
 	var/replenish_cooldown = 6000
@@ -23,8 +23,7 @@
 	add_implants()
 
 
-/obj/machinery/implantchair/attack_hand(mob/user)
-	user.set_machine(src)
+/obj/machinery/implantchair/ui_interact(mob/user)
 	var/health_text = ""
 	if(src.occupant)
 		if(src.occupant.health <= -100)
@@ -66,19 +65,19 @@
 		return
 
 
-/obj/machinery/implantchair/attackby(obj/item/weapon/G, mob/user)
-	if(istype(G, /obj/item/weapon/grab))
-		if(!ismob(G:affecting))
+/obj/machinery/implantchair/attackby(obj/item/weapon/grab/G, mob/user)
+	if(!istype(G))
+		return
+	if(!ismob(G.affecting))
+		return
+	for(var/mob/living/carbon/slime/M in range(1, G.affecting))
+		if(M.Victim == G.affecting)
+			to_chat(user, "[G.affecting:name] will not fit into the [src.name] because they have a slime latched onto their head.")
 			return
-		for(var/mob/living/carbon/slime/M in range(1,G:affecting))
-			if(M.Victim == G:affecting)
-				to_chat(usr, "[G:affecting:name] will not fit into the [src.name] because they have a slime latched onto their head.")
-				return
-		var/mob/M = G:affecting
-		if(put_mob(M))
-			qdel(G)
+	var/mob/M = G.affecting
+	if(put_mob(M))
+		qdel(G)
 	src.updateUsrDialog()
-	return
 
 
 /obj/machinery/implantchair/proc/go_out(mob/M)
@@ -119,25 +118,17 @@
 /obj/machinery/implantchair/proc/implant(mob/M)
 	if (!istype(M, /mob/living/carbon))
 		return
-	if(!implant_list.len)	return
-	for(var/obj/item/weapon/implant/loyalty/imp in implant_list)
-		if(!imp)	continue
-		if(istype(imp, /obj/item/weapon/implant/loyalty))
-			for (var/mob/O in viewers(M, null))
-				O.show_message("\red [M] has been implanted by the [src.name].", 1)
-
-			if(imp.implanted(M))
-				imp.loc = M
-				imp.imp_in = M
-				imp.implanted = 1
-			implant_list -= imp
-			break
-	return
+	for(var/obj/item/weapon/implant/mindshield/imp in implant_list)
+		visible_message("<span class='userdanger'>[M] has been implanted by the [src.name].</span>")
+		if(imp.implanted(M))
+			imp.inject(M)
+		implant_list -= imp
+		break
 
 
 /obj/machinery/implantchair/proc/add_implants()
 	for(var/i=0, i<src.max_implants, i++)
-		var/obj/item/weapon/implant/loyalty/I = new /obj/item/weapon/implant/loyalty(src)
+		var/obj/item/weapon/implant/mindshield/I = new(src)
 		implant_list += I
 	return
 

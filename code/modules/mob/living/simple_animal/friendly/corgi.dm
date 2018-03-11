@@ -34,6 +34,7 @@
 
 /mob/living/simple_animal/corgi/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/newspaper))
+		user.SetNextMove(CLICK_CD_MELEE)
 		if(!stat)
 			for(var/mob/M in viewers(user, null))
 				if ((M.client && !( M.blinded )))
@@ -114,6 +115,7 @@
 
 /mob/living/simple_animal/corgi/borgi/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
+		user.SetNextMove(CLICK_CD_MELEE)
 		Emag(user)
 	else
 		..()

@@ -15,6 +15,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
 	req_access = list(access_genetics) //For premature unlocking.
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/heal_level = 90 //The clone is released once its health reaches this level.
 	var/locked = 0
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
@@ -146,20 +147,13 @@
 			src.healthstring = "ERROR"
 		return src.healthstring
 
-/obj/machinery/clonepod/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/clonepod/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/clonepod/attack_hand(mob/user)
-	if ((isnull(src.occupant)) || (stat & NOPOWER))
-		return
-	if ((!isnull(src.occupant)) && (src.occupant.stat != DEAD))
-		src.add_hiddenprint(user)
-		var/completion = (100 * ((src.occupant.health + 100) / (src.heal_level + 100)))
-		to_chat(user, "Current clone cycle is [round(completion)]% complete.")
-	return
+/obj/machinery/clonepod/examine(mob/user)
+	if(..(user, 3))
+		if ((isnull(occupant)) || (stat & NOPOWER))
+			return
+		if ((!isnull(occupant)) && (occupant.stat != DEAD))
+			var/completion = (100 * ((occupant.health + 100) / (heal_level + 100)))
+			to_chat(user, "Current clone cycle is [round(completion)]% complete.")
 
 //Clonepod
 
@@ -341,6 +335,7 @@
 	else if (istype(W, /obj/item/weapon/card/emag))
 		if (isnull(src.occupant))
 			return
+		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "You force an emergency ejection.")
 		src.locked = 0
 		src.go_out()

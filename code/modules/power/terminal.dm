@@ -56,6 +56,7 @@
 			return
 
 		if((master && master.can_terminal_dismantle()) || !master)
+			if(user.is_busy()) return
 			user.visible_message("<span class='warning'>[user.name] dismantles the power terminal[master ? " from [master]" : ""].</span>", \
 								"You begin to cut the cables...")
 

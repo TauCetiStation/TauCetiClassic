@@ -47,11 +47,20 @@
 /proc/hsl2rgb(h, s, l)
 	return
 
-/proc/isloyal(A) //Checks to see if the person contains a loyalty implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/loyalty/L in A)
+/proc/ismindshielded(A, only_mindshield = FALSE) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
+
+	for(var/obj/item/weapon/implant/mindshield/L in A)
+		if(only_mindshield && L.type != /obj/item/weapon/implant/mindshield)
+			continue
 		if(L.implanted)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
+
+/proc/isloyal(A)
+	for(var/obj/item/weapon/implant/mindshield/loyalty/L in A)
+		if(L.implanted)
+			return TRUE
+	return FALSE
 
 /proc/check_zone(zone)
 	if(!zone)
@@ -473,11 +482,18 @@ var/list/intents = list("help","disarm","grab","hurt")
 
 #undef SAFE_PERP
 
-/proc/IsAdminGhost(var/mob/user)
-	if(check_rights(R_ADMIN, 0) && isobserver(user) && user.client.AI_Interact)
-		return 1
-	else
-		return 0
+/proc/IsAdminGhost(mob/user)
+	if(!user) // Are they a mob? Auto interface updates call this with a null src
+		return
+	if(!user.client) // Do they have a client?
+		return
+	if(!isobserver(user)) // Are they a ghost?
+		return
+	if(!check_rights_for(user.client, R_ADMIN)) // Are they allowed?
+		return
+	if(!user.client.AI_Interact) // Do they have it enabled?
+		return
+	return TRUE
 
 /mob/proc/is_busy(atom/target, show_warning = TRUE)
 	if(busy_with_action)

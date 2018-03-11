@@ -11,7 +11,7 @@
 		return FALSE
 	if(ishuman(mind.current) && (mind.assigned_role in list("Captain", "Chaplain")))
 		return FALSE
-	if(isloyal(mind.current))
+	if(ismindshielded(mind.current))
 		return FALSE
 	return TRUE
 

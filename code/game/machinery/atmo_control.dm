@@ -82,9 +82,7 @@
 	var/list/sensor_information = list()
 
 
-/obj/machinery/computer/general_air_control/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/general_air_control/ui_interact(mob/user)
 	user << browse(return_text(),"window=computer")
 	onclose(user, "computer")
 

@@ -249,6 +249,34 @@ datum/objective/debrain//I want braaaainssss
 				return 1
 		return 0
 
+/datum/objective/dehead/find_target()
+	..()
+	if(target && target.current)
+		explanation_text = "Put the head of [target.current.real_name] in biogel can and steal it."
+	else
+		explanation_text = "Free Objective"
+	return target
+
+/datum/objective/dehead/find_target_by_role(role, role_type=0)
+	..()
+	if(target && target.current)
+		explanation_text = "Steal the head of [target.current.real_name] the [!role_type ? target.assigned_role : target.special_role], make shure that head is stored in the biogel can."
+	else
+		explanation_text = "Free Objective"
+	return target
+
+/datum/objective/dehead/check_completion()
+	if(!target)//If it's a free objective.
+		return 1
+	if( !owner.current || owner.current.stat==DEAD )//If you're otherwise dead.
+		return 0
+	var/list/all_items = owner.current.get_contents()
+	for(var/obj/item/device/biocan/B in all_items)
+		if(B.brainmob && B.brainmob == target.current)
+			return 1
+		return 0
+	return 0
+
 
 datum/objective/protect//The opposite of killing a dude.
 	find_target()
@@ -360,7 +388,7 @@ datum/objective/escape
 		if(istype(location, /turf/simulated/shuttle/floor4)) // Fails traitors if they are in the shuttle brig -- Polymorph
 			if(istype(owner.current, /mob/living/carbon))
 				var/mob/living/carbon/C = owner.current
-				if (!C.handcuffed)
+				if (!C.restrained())
 					return 1
 			return 0
 
@@ -693,58 +721,42 @@ datum/objective/absorb
 
 /* Isn't suited for global objectives
 /*---------CULTIST----------*/
-
 		eldergod
 			explanation_text = "Summon Nar-Sie via the use of an appropriate rune. It will only work if nine cultists stand on and around it."
-
 			check_completion()
 				if(eldergod) //global var, defined in rune4.dm
 					return 1
 				return 0
-
 		survivecult
 			var/num_cult
-
 			explanation_text = "Our knowledge must live on. Make sure at least 5 acolytes escape on the shuttle to spread their work on an another station."
-
 			check_completion()
 				if(SSshuttle.location<2)
 					return 0
-
 				var/cultists_escaped = 0
-
 				var/area/shuttle/escape/centcom/C = /area/shuttle/escape/centcom
 				for(var/turf/T in	get_area_turfs(C.type))
 					for(var/mob/living/carbon/H in T)
 						if(iscultist(H))
 							cultists_escaped++
-
 				if(cultists_escaped>=5)
 					return 1
-
 				return 0
-
 		sacrifice //stolen from traitor target objective
-
 			proc/find_target() //I don't know how to make it work with the rune otherwise, so I'll do it via a global var, sacrifice_target, defined in rune15.dm
 				var/list/possible_targets = call(/datum/game_mode/cult/proc/get_unconvertables)()
-
 				if(possible_targets.len > 0)
 					sacrifice_target = pick(possible_targets)
-
 				if(sacrifice_target && sacrifice_target.current)
 					explanation_text = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell join blood) and three acolytes to do so."
 				else
 					explanation_text = "Free Objective"
-
 				return sacrifice_target
-
 			check_completion() //again, calling on a global list defined in rune15.dm
 				if(sacrifice_target.current in sacrificed)
 					return 1
 				else
 					return 0
-
 /*-------ENDOF CULTIST------*/
 */
 //Meme objectives
@@ -930,7 +942,6 @@ var/heist_rob_total = 0
 			heist_rob_total += I.get_price()
 			if(I.contents && I.contents.len)
 				heist_recursive_price_check(I,loop)
-
 /proc/heist_recursive_price_reset(atom/movable/AM,loop=0)
 	loop++
 	if(loop > 15) return
@@ -940,24 +951,20 @@ var/heist_rob_total = 0
 			I.price = 0
 			if(I.contents && I.contents.len)
 				heist_recursive_price_reset(I,loop)
-
 /proc/heist_get_shuttle_price()
 	heist_rob_total = 0
 	var/area/A = get_area(locate(/obj/effect/landmark/heist/aurora))
 	if(A)
 		for(var/atom/movable/AM in A)
 			heist_recursive_price_check(AM)
-
 /datum/objective/heist/robbery/choose_target()
 	target = "valuables"
 	target_amount = 1000000
 	explanation_text = "Ransack the station for any valuables."
-
 /datum/objective/heist/robbery/check_completion()
 	heist_rob_total = 0
 	for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
 		heist_recursive_price_check(AM)
-
 	if(heist_rob_total >= target_amount) return 1
 	return 0*/
 

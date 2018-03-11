@@ -1,9 +1,13 @@
 // Plant analyzer
 
-/obj/item/device/analyzer/plant_analyzer
+/obj/item/device/plant_analyzer
 	name = "plant analyzer"
 	desc = "A hand-held scanner which reports condition of the plant."
 	icon = 'icons/obj/device.dmi'
+	w_class = 1.0
+	m_amt = 200
+	g_amt = 50
+	origin_tech = "materials=1;biotech=1"
 	icon_state = "hydro"
 	item_state = "plantanalyzer"
 
@@ -35,7 +39,7 @@
 	var/list/mutatelist = list()
 
 /obj/item/seeds/attackby(obj/item/O, mob/user)
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if (istype(O, /obj/item/device/plant_analyzer))
 		to_chat(user, "*** <B>[plantname]</B> ***")
 		to_chat(user, "-Plant Endurance: \blue [endurance]")
 		to_chat(user, "-Plant Lifespan: \blue [lifespan]")
@@ -44,6 +48,7 @@
 		to_chat(user, "-Plant Production: \blue [production]")
 		if(potency != -1)
 			to_chat(user, "-Plant Potency: \blue [potency]")
+		user.SetNextMove(CLICK_CD_INTERACT)
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
@@ -1182,6 +1187,7 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
 		for(var/i in 1 to 2)

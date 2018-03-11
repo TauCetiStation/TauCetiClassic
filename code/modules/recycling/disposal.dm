@@ -13,8 +13,11 @@
 	desc = "A pneumatic waste disposal unit."
 	icon = 'icons/obj/pipes/disposal.dmi'
 	icon_state = "disposal"
-	anchored = 1
-	density = 1
+	anchored = TRUE
+	density = TRUE
+	interact_open = TRUE
+	active_power_usage = 600
+	idle_power_usage = 100
 	var/datum/gas_mixture/air_contents	// internal reservoir
 	var/mode = 1	// item mode 0=off 1=charging 2=charged
 	var/flush = 0	// true if flush handle is pulled
@@ -24,8 +27,6 @@
 	var/flush_count = 0 //this var adds 1 once per tick. When it reaches flush_every_ticks it resets and tries to flush.
 	var/last_sound = 0
 	var/need_env_pressure = 1
-	active_power_usage = 600
-	idle_power_usage = 100
 
 	// create a new disposal
 	// find the attached trunk (if present) and init gas resvr.
@@ -77,6 +78,7 @@
 			if(contents.len > 0)
 				to_chat(user, "<span class='warning'>Eject the items first!</span>")
 				return
+			if(user.is_busy()) return
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
@@ -114,6 +116,8 @@
 	if(istype(G))	// handle grabbed mob
 		if(ismob(G.affecting))
 			var/mob/GM = G.affecting
+			user.SetNextMove(CLICK_CD_MELEE)
+			if(user.is_busy()) return
 			for (var/mob/V in viewers(usr))
 				V.show_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>", 3)
 			if(do_after(usr, 20, target = src))
@@ -161,7 +165,7 @@
 		if(target != user && !user.restrained() && !user.stat && !user.weakened && !user.stunned && !user.paralysis)
 			if(target.anchored) return
 			V.show_message("<span class='red'>[usr] starts stuffing [target.name] into the disposal.</span>", 3)
-	if(!do_after(usr, 20, target = usr))
+	if(user.is_busy() || !do_after(usr, 20, target = usr))
 		return
 	if(target_loc != target.loc)
 		return
@@ -206,7 +210,7 @@
 		if(user.restrained() || user.stat || user.weakened || user.stunned || user.paralysis) return
 		for (var/mob/V in viewers(usr))
 			V.show_message("<span class='notice'>[usr] starts stuffing [target.name] into the disposal.</span>", 3)
-		if(!do_after(usr, 20, target = src))
+		if(user.is_busy() || !do_after(usr, 20, target = src))
 			return
 		if(target_loc != target.loc)
 			return
@@ -257,28 +261,22 @@
 	update()
 	return
 
-	// ai as human but can't flush
-/obj/machinery/disposal/attack_ai(mob/user)
-	interact(user, 1)
-
 // human interact with machine
-/obj/machinery/disposal/attack_hand(mob/user)
+/obj/machinery/disposal/interact(mob/user)
 	if(user && user.loc == src)
 		to_chat(usr, "<span class='red'>You cannot reach the controls from inside.</span>")
-		return
-	interact(user, 0)
+	else
+		..()
 
 // user interaction
-/obj/machinery/disposal/interact(mob/user, ai=0)
-
-	src.add_fingerprint(user)
+/obj/machinery/disposal/ui_interact(mob/user)
 	if(stat & BROKEN)
-		user.unset_machine()
+		user.unset_machine(src)
 		return
 
 	var/dat = "<head><title>Waste Disposal Unit</title></head><body><TT><B>Waste Disposal Unit</B><HR>"
 
-	if(!ai)  // AI can't pull flush handle
+	if(!isAI(user))  // AI can't pull flush handle
 		if(flush)
 			dat += "Disposal handle: <A href='?src=\ref[src];handle=0'>Disengage</A> <B>Engaged</B>"
 		else
@@ -910,6 +908,7 @@
 	if(T.intact)
 		return		// prevent interaction with T-scanner revealed pipes
 	src.add_fingerprint(user)
+	if(user.is_busy()) return
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
 
@@ -1250,7 +1249,7 @@
 	src.add_fingerprint(user)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
-
+		if(user.is_busy()) return
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
 			// check if anything changed over 2 seconds
@@ -1373,7 +1372,7 @@
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			to_chat(user, "You attach the screws around the power connection.")
 			return
-	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1)
+	else if(istype(I,/obj/item/weapon/weldingtool) && mode==1 && !user.is_busy())
 		var/obj/item/weapon/weldingtool/W = I
 		if(W.remove_fuel(0,user))
 			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
@@ -1427,8 +1426,8 @@
 // hostile mob escape from disposals
 /obj/machinery/disposal/attack_animal(mob/living/simple_animal/M)
 	if(M.environment_smash)
+		..()
 		playsound(M.loc, 'sound/effects/grillehit.ogg', 50, 1)
-		M.do_attack_animation(src)
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 		qdel(src)
 	return

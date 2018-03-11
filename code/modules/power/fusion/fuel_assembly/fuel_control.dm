@@ -2,19 +2,11 @@
 	name = "fuel injection control computer"
 	icon = 'icons/obj/machines/power/fusion.dmi'
 	icon_state = "fuel"
-	ghost_must_be_admin = TRUE
 
 	var/id_tag
 	var/scan_range = 25
 
-/obj/machinery/computer/fusion_fuel_control/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/computer/fusion_fuel_control/attack_hand(mob/user)
-	add_fingerprint(user)
-	interact(user)
-
-/obj/machinery/computer/fusion_fuel_control/interact(mob/user)
+/obj/machinery/computer/fusion_fuel_control/ui_interact(mob/user)
 
 	if(stat & (BROKEN|NOPOWER))
 		user.unset_machine()

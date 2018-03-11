@@ -192,6 +192,7 @@
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/attack_animal(mob/M)
+	..()
 	if(iscorgi(M) || isIAN(M))
 		if(bitecount == 0 || prob(50))
 			M.visible_message("<b>[M]</b> nibbles away at the [src]")

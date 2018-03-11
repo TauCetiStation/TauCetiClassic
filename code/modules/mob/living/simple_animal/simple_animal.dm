@@ -202,17 +202,22 @@
 		..(act, type, desc)
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
+	if(src == M)
+		return TRUE
+	..()
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
+		return TRUE
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)	return
@@ -343,6 +348,7 @@
 	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
 		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
 			new meat_type (get_turf(src))
+			user.SetNextMove(CLICK_CD_MELEE)
 			if(prob(95))
 				qdel(src)
 				return

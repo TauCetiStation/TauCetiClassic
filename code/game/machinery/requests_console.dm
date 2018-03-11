@@ -118,9 +118,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			req_console_information -= department
 	return ..()
 
-/obj/machinery/requests_console/attack_hand(user)
-	if(..())
-		return
+/obj/machinery/requests_console/ui_interact(user)
 	var/dat
 	dat = text("<HEAD><TITLE>Requests Console</TITLE></HEAD><H3>[department] Requests Console</H3>")
 	if(!open)
@@ -219,7 +217,6 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 
 		user << browse("[dat]", "window=request_console")
 		onclose(user, "req_console")
-	return
 
 /obj/machinery/requests_console/Topic(href, href_list)
 	. = ..()

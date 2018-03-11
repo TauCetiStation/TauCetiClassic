@@ -203,9 +203,7 @@
 		C.swap_hand()
 		C.drop_item()
 		C.put_in_hands(Arcane)
-
-		user.next_click = world.time + 4
-		user.next_move = world.time + 4
+		user.SetNextMove(CLICK_CD_INTERACT)
 	else
 		C.drop_item()
 

@@ -187,6 +187,15 @@
 	item_state = "bl_suit"
 	item_color = "black_suit"
 
+/obj/item/clothing/under/suit_jacket/reinforced //armored jackets for special agents
+	name = "black suit"
+	desc = "A black suit and red tie. Very formal. This one looks a bit stronger than others."
+	icon_state = "black_suit"
+	item_state = "bl_suit"
+	item_color = "black_suit"
+	body_parts_covered = UPPER_TORSO|ARMS
+	armor = list(melee = 18, bullet = 12, laser = 5, energy = 5, bomb = 0, bio = 0, rad = 0)
+
 /obj/item/clothing/under/suit_jacket/really_black
 	name = "executive suit"
 	desc = "A formal black suit and red tie, intended for the station's finest."

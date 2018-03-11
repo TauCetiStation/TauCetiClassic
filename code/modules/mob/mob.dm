@@ -125,7 +125,7 @@
 	set waitfor = 0
 	return
 
-/mob/proc/incapacitated()
+/mob/proc/incapacitated(restrained_type = HANDS)
 	return
 
 /mob/proc/restrained()
@@ -641,15 +641,17 @@ note dizziness decrements automatically in the mob's Life() proc.
 
 	if(statpanel("Status"))
 		stat(null, "Server Time: [time2text(world.realtime, "YYYY-MM-DD hh:mm")]")
-		if(client && client.holder)
-			if(ticker.mode && ticker.mode.config_tag == "malfunction")
-				var/datum/game_mode/malfunction/GM = ticker.mode
-				if(GM.malf_mode_declared)
-					stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALDF_DECLARE), 0)]")
-			if(SSshuttle.online && SSshuttle.location < 2)
-				var/timeleft = SSshuttle.timeleft()
-				if(timeleft)
-					stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
+		if(client)
+			stat(null, "Your in-game age: [client.player_ingame_age]")
+			if(client.holder)
+				if(ticker.mode && ticker.mode.config_tag == "malfunction")
+					var/datum/game_mode/malfunction/GM = ticker.mode
+					if(GM.malf_mode_declared)
+						stat(null, "Time left: [max(GM.AI_win_timeleft / (GM.apcs / APC_MIN_TO_MALF_DECLARE), 0)]")
+				if(SSshuttle.online && SSshuttle.location < 2)
+					var/timeleft = SSshuttle.timeleft()
+					if(timeleft)
+						stat(null, "ETA-[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]")
 
 	if(client && client.holder)
 		if((client.holder.rights & R_ADMIN))

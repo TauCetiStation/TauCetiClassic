@@ -6,17 +6,15 @@
 	icon_state = "grinder"
 	density = TRUE
 	anchored = TRUE
+	use_power = 1
+	idle_power_usage = 2
+	active_power_usage = 500
 	var/operating = FALSE //Is it on?
 	var/dirty = FALSE // Does it need cleaning?
-
 	var/gibtime = 80 // Time from starting until meat appears
 	var/gib_throw_dir // Direction to spit meat and gibs in.
 	var/meat_produced = 0
 	var/ignore_clothing = 0
-	use_power = 1
-	idle_power_usage = 2
-	active_power_usage = 500
-	ghost_must_be_admin = TRUE
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
@@ -81,25 +79,22 @@
 	else
 		src.overlays += image('icons/obj/kitchen.dmi', "gridle")
 
-/obj/machinery/gibber/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/gibber/container_resist()
 	go_out()
-	return
 
 /obj/machinery/gibber/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(operating)
 		to_chat(user, "<span class='danger'>The gibber is locked and running, wait for it to finish.</span>")
-		return
+		return 1
 	else
-		src.startgibbing(user)
+		startgibbing(user)
 
 /obj/machinery/gibber/attackby(obj/item/W, mob/user)
-
-	if (istype(W, /obj/item/weapon/grab))
+	if(istype(W, /obj/item/weapon/grab))
 		src.add_fingerprint(user)
 		var/obj/item/weapon/grab/G = W
 		move_into_gibber(user, G.affecting)
@@ -140,7 +135,7 @@
 	if(victim.abiotic(1) && !ignore_clothing)
 		to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
 		return
-
+	if(user.is_busy(src)) return
 	user.visible_message("\red [user] starts to put [victim] into the gibber!")
 	src.add_fingerprint(user)
 	if(do_after(user, 30, target = src) && victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user) && !occupant)

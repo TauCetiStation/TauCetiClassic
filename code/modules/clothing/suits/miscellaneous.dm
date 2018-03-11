@@ -214,7 +214,7 @@
 /obj/item/clothing/suit/jacket/leather/overcoat
 	name = "leather overcoat"
 	desc = "That's a damn fine coat."
-	icon_state = "leathercoat"
+	icon_state = "leather_overcoat"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
@@ -276,13 +276,12 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 //coats
-/*
+
 /obj/item/clothing/suit/leathercoat
 	name = "leather coat"
 	desc = "A flowing, black coat."
 	icon_state = "leathercoat"
 	item_state = "leathercoat"
-	*/
 
 /obj/item/clothing/suit/browncoat
 	name = "brown leather coat"
@@ -447,12 +446,6 @@
 	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Like a navy seal,"
 	icon_state = "miljacket_navy"
 	item_state = "miljacket_navy"
-
-/obj/item/clothing/suit/leathercoat
-	name = "leather coat"
-	desc = "A flowing, black coat."
-	icon_state = "leathercoat"
-	item_state = "leathercoat"
 
 /obj/item/clothing/suit/poncho
 	name = "poncho"

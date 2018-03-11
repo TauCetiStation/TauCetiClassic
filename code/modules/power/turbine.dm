@@ -197,12 +197,6 @@
 	if(lastgen > 100)
 		overlays += image('icons/obj/pipes.dmi', "turb-o", FLY_LAYER)
 
-/obj/machinery/power/turbine/attack_hand(mob/user)
-	if(..())
-		return
-
-	interact(user)
-
 /obj/machinery/power/turbine/attackby(obj/item/I, mob/user)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
 		return
@@ -222,14 +216,12 @@
 
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/power/turbine/interact(mob/user)
+/obj/machinery/power/turbine/ui_interact(mob/user)
 
-	if ( !Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && !issilicon(user) && !isobserver(user) )
-		user.machine = null
+	if ( !Adjacent(user) || (stat & (NOPOWER|BROKEN)) && !issilicon(user) && !isobserver(user) )
+		user.unset_machine(src)
 		user << browse(null, "window=turbine")
 		return
-
-	user.machine = src
 
 	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
 
@@ -244,8 +236,6 @@
 	t += "</TT>"
 	user << browse(t, "window=turbine")
 	onclose(user, "turbine")
-
-	return
 
 /obj/machinery/power/turbine/Topic(href, href_list)
 	if(href_list["close"])
@@ -283,13 +273,7 @@
 /obj/machinery/computer/turbine_computer/proc/search_turbine()
 	compressor = locate(/obj/machinery/compressor) in range(5)
 
-/obj/machinery/computer/turbine_computer/attack_hand(mob/user)
-	if(..())
-		return
-
-	interact(user)
-
-/obj/machinery/computer/turbine_computer/interact(mob/user)
+/obj/machinery/computer/turbine_computer/ui_interact(mob/user)
 	var/dat
 	if(compressor && compressor.turbine)
 		dat += {"<BR><B>Gas turbine remote control system</B><HR>
@@ -310,7 +294,6 @@
 
 	user << browse(dat, "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 
 

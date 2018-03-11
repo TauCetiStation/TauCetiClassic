@@ -57,16 +57,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/computer/am_engine/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/am_engine/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/am_engine/attack_hand(mob/user)
-	if(..())
-		return
-	user.machine = src
+/obj/machinery/computer/am_engine/ui_interact(mob/user)
 	var/dat = "<head><title>Engine Computer</title></head><body>"
 	switch(src.state)
 		if(STATE_DEFAULT)

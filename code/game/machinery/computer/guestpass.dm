@@ -6,6 +6,7 @@
 	desc = "Allows temporary access to station areas."
 	icon_state = "guest"
 	light_color = "#0099ff"
+	customizable_view = FORDBIDDEN_VIEW
 
 	var/temp_access = list() //to prevent agent cards stealing access as permanent
 	var/expiration_time = 0
@@ -69,14 +70,7 @@
 		else
 			to_chat(user, "<span class='warning'>There is already ID card inside.</span>")
 
-/obj/machinery/computer/guestpass/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/guestpass/attack_hand(mob/user)
-	if(..())
-		return
-
-	user.set_machine(src)
+/obj/machinery/computer/guestpass/ui_interact(mob/user)
 	var/dat
 
 	if (mode == 1) //Logs

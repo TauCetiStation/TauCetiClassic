@@ -95,6 +95,7 @@ turf/simulated/floor/holofloor/update_icon()
 
 /obj/structure/window/reinforced/holowindow/attackby(obj/item/W, mob/user)
 	if(!istype(W)) return//I really wish I did not need this
+	user.SetNextMove(CLICK_CD_MELEE)
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if(istype(G.affecting,/mob/living))
@@ -152,10 +153,11 @@ turf/simulated/floor/holofloor/update_icon()
 
 	if (src.operating == 1)
 		return
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
 		var/aforce = I.force
 		playsound(src.loc, 'sound/effects/Glasshit.ogg', 75, 1)
+
 		visible_message("\red <B>[src] was hit by [I].</B>")
 		if(I.damtype == BRUTE || I.damtype == BURN)
 			take_damage(aforce)
@@ -279,6 +281,7 @@ obj/structure/stool/bed/chair/holochair
 			return
 		G.affecting.loc = src.loc
 		G.affecting.Weaken(5)
+		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='warning'>[G.assailant] dunks [G.affecting] into the [src]!</span>", 3)
 		qdel(W)
 		return
@@ -307,41 +310,43 @@ obj/structure/stool/bed/chair/holochair
 	desc = "This device is used to declare ready. If all devices in an area are ready, the event will begin!"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "auth_off"
-	var/ready = 0
-	var/area/currentarea = null
-	var/eventstarted = 0
-
 	anchored = 1.0
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 6
 	power_channel = ENVIRON
-	ghost_must_be_admin = TRUE
+	var/ready = 0
+	var/area/currentarea = null
+	var/eventstarted = 0
+
 
 /obj/machinery/readybutton/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
 	to_chat(user, "The station AI is not to interact with these devices!")
-	return
 
 /obj/machinery/readybutton/attackby(obj/item/weapon/W, mob/user)
 	to_chat(user, "The device is a solid button, there's nothing you can do with it!")
 
 /obj/machinery/readybutton/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	if(!user.IsAdvancedToolUser())
-		return 0
+		return 1
 
-	currentarea = get_area(src.loc)
+	currentarea = get_area(loc)
 	if(!currentarea)
 		qdel(src)
+		return 1
 
 	if(eventstarted)
 		to_chat(usr, "The event has already begun!")
-		return
+		return 1
 
 	ready = !ready
-
+	user.SetNextMove(CLICK_CD_RAPID)
 	update_icon()
 
 	var/numbuttons = 0

@@ -12,6 +12,7 @@
 
 	if (istype(O, /obj/item/weapon/card/emag))
 		emagged = 1
+		user.SetNextMove(CLICK_CD_INTERACT)
 		emp_act(1)
 
 	else if(!active)
@@ -29,26 +30,11 @@
 
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
-/obj/machinery/power/port_gen/riteg/attack_hand(mob/user)
-	..()
-	if (!anchored)
-		return
-
-	interact(user)
-
-/obj/machinery/power/port_gen/riteg/attack_ai(mob/user)
-	interact(user)
-
-/obj/machinery/power/port_gen/riteg/attack_paw(mob/user)
-	interact(user)
-
-/obj/machinery/power/port_gen/riteg/interact(mob/user)
+/obj/machinery/power/port_gen/riteg/ui_interact(mob/user)
 	if ((get_dist(src, user) > 1) && !issilicon(user) && !isobserver(user))
 		user.unset_machine(src)
 		user << browse(null, "window=port_gen")
 		return
-
-	user.set_machine(src)
 
 	var/dat = text("<b>[name]</b><br>")
 	if (active)

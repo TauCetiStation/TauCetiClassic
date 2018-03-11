@@ -164,6 +164,20 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 /datum/asset/simple/send(client)
 	send_asset_list(client,assets,verify)
 
+/datum/asset/simple/goonchat
+	assets = list(
+		"jquery.min.js" = 'code/modules/goonchat/browserassets/js/jquery.min.js',
+		"jquery.mark.min.js" = 'code/modules/goonchat/browserassets/js/jquery.mark.min.js',
+		"json2.min.js" = 'code/modules/goonchat/browserassets/js/json2.min.js',
+		"browserOutput.js" = 'code/modules/goonchat/browserassets/js/browserOutput.js',
+		"fontawesome-webfont.eot" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.eot',
+		"fontawesome-webfont.svg" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.svg',
+		"fontawesome-webfont.ttf" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.ttf',
+		"fontawesome-webfont.woff" = 'code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.woff',
+		"font-awesome.css" = 'code/modules/goonchat/browserassets/css/font-awesome.css',
+		"emojib64.css" = 'code/modules/goonchat/browserassets/css/emojib64.css',
+		"browserOutput.css" = 'code/modules/goonchat/browserassets/css/browserOutput.css'
+	)
 
 //DEFINITIONS FOR ASSET DATUMS START HERE.
 /datum/asset/simple/spider_os

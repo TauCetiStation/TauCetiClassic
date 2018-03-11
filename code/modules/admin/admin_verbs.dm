@@ -89,7 +89,8 @@ var/list/admin_verbs_ban = list(
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
 	/client/proc/play_server_sound,
-	/client/proc/play_sound
+	/client/proc/play_sound,
+	/client/proc/stop_server_sound
 	)
 var/list/admin_verbs_fun = list(
 	/client/proc/object_talk,
@@ -188,7 +189,8 @@ var/list/admin_verbs_rejuv = list(
 var/list/admin_verbs_whitelist = list(
 	/client/proc/get_whitelist, 			//Whitelist
 	/client/proc/add_to_whitelist,
-	/datum/admins/proc/whitelist_panel
+	/datum/admins/proc/whitelist_panel,
+	/datum/admins/proc/toggle_job_restriction
 	)
 var/list/admin_verbs_event = list(
 	/client/proc/event_map_loader

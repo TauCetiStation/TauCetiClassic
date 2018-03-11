@@ -79,9 +79,7 @@
 		if(message_servers && message_servers.len > 0)
 			linkedServer = message_servers[1]
 
-/obj/machinery/computer/message_monitor/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/message_monitor/ui_interact(mob/user)
 	//If the computer is being hacked or is emagged, display the reboot message.
 	if(hacking || emag)
 		message = rebootmsg
@@ -241,7 +239,6 @@
 	message = defaultmsg
 	user << browse(dat, "window=message;size=700x700")
 	onclose(user, "message")
-	return
 
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user)
 	if(isnull(linkedServer))

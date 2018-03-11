@@ -6,7 +6,6 @@
 	icon_state = "console"
 	density = 1
 	anchored = 1
-	ghost_must_be_admin = TRUE //not needed, but better use this than show "Access denied"
 
 	var/obj/machinery/mineral/processing_unit/machine = null
 	var/machinedir = EAST
@@ -40,28 +39,15 @@
 	else
 		qdel(src)
 
-/obj/machinery/mineral/processing_unit_console/attack_hand(mob/user)
-	add_fingerprint(user)
-	interact(user)
-
-/obj/machinery/mineral/processing_unit_console/interact(mob/user)
-
-	if(..())
-		return
-
-	if(!allowed(user))
-		to_chat(user, "\red Access denied.")
-		return
-
-	user.set_machine(src)
-
+/obj/machinery/mineral/processing_unit_console/ui_interact(mob/user)
 	var/dat
 
 	dat += "<hr><table>"
 
 	for(var/ore in machine.ores_processing)
 
-		if(!machine.ores_stored[ore] && !show_all_ores) continue
+		if(!machine.ores_stored[ore] && !show_all_ores)
+			continue
 
 		dat += "<tr><td width = 40><b>[capitalize(ore)]</b></td><td width = 30>[machine.ores_stored[ore]]</td><td width = 100><font color='"
 		if(machine.ores_processing[ore])
@@ -105,7 +91,6 @@
 	var/datum/browser/popup = new(user, "window=processor_console", "Ore Processor Console", 400, 550)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/mineral/processing_unit_console/Topic(href, href_list)
 	. = ..()
@@ -164,7 +149,7 @@
 				return
 			I.loc = src
 			inserted_id = I
-			interact(user)
+			updateUsrDialog()
 	else
 		..()
 

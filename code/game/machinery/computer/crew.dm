@@ -13,14 +13,6 @@
 	crew_monitor = new(src)
 	. = ..()
 
-/obj/machinery/computer/crew/attack_hand(mob/user)
-	if(..())
-		return
-	ui_interact(user)
 
 /obj/machinery/computer/crew/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
 	crew_monitor.ui_interact(user, ui_key, ui, force_open)
-
-
-/obj/machinery/computer/crew/interact(mob/user)
-	crew_monitor.ui_interact(user)

@@ -97,13 +97,7 @@
 	src.icon_state = "medibot[src.on]"
 	src.updateUsrDialog()
 
-/obj/machinery/bot/medbot/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/bot/medbot/attack_hand(mob/user)
-	. = ..()
-	if (.)
-		return
+/obj/machinery/bot/medbot/ui_interact(mob/user)
 	var/dat
 	dat += "<TT><B>Automatic Medical Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
@@ -138,7 +132,6 @@
 
 	user << browse("<HEAD><TITLE>Medibot v1.0 controls</TITLE></HEAD>[dat]", "window=automed")
 	onclose(user, "automed")
-	return
 
 /obj/machinery/bot/medbot/Topic(href, href_list)
 	. = ..()

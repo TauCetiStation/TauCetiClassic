@@ -99,39 +99,24 @@ var/syndicate_elite_shuttle_timeleft = 0
 	if(syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership) return 0
 	else return 1
 
-/obj/machinery/computer/syndicate_elite_shuttle/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/syndicate_elite_shuttle/attack_paw(mob/user)
-	return attack_hand(user)
-
 /obj/machinery/computer/syndicate_elite_shuttle/attackby(I, user)
 	if(istype(I,/obj/item/weapon/card/emag))
 		to_chat(user, "\blue The electronic systems in this console are far too advanced for your primitive hacking peripherals.")
 	else
 		return attack_hand(user)
 
-/obj/machinery/computer/syndicate_elite_shuttle/attack_hand(mob/user)
-	if(..())
-		return
-
-	if(!allowed(user))
-		to_chat(user, "\red Access Denied.")
-		return
-
-	user.set_machine(src)
+/obj/machinery/computer/syndicate_elite_shuttle/ui_interact(mob/user)
 	var/dat
 	if (temp)
 		dat = temp
 	else
 		dat  = {"<BR><B>Special Operations Shuttle</B><HR>
-		\nLocation: [syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "Departing for [station_name] in ([syndicate_elite_shuttle_timeleft] seconds.)":syndicate_elite_shuttle_at_station ? "Station":"Dock"]<BR>
-		[syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "\n*The Syndicate Elite shuttle is already leaving.*<BR>\n<BR>":syndicate_elite_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Shuttle Offline</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Depart to [station_name]</A><BR>\n<BR>"]
-		\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
+			\nLocation: [syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "Departing for [station_name] in ([syndicate_elite_shuttle_timeleft] seconds.)":syndicate_elite_shuttle_at_station ? "Station":"Dock"]<BR>
+			[syndicate_elite_shuttle_moving_to_station || syndicate_elite_shuttle_moving_to_mothership ? "\n*The Syndicate Elite shuttle is already leaving.*<BR>\n<BR>":syndicate_elite_shuttle_at_station ? "\n<A href='?src=\ref[src];sendtodock=1'>Shuttle Offline</A><BR>\n<BR>":"\n<A href='?src=\ref[src];sendtostation=1'>Depart to [station_name]</A><BR>\n<BR>"]
+			\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 
 	user << browse(dat, "window=computer;size=575x450")
 	onclose(user, "computer")
-	return
 
 /obj/machinery/computer/syndicate_elite_shuttle/Topic(href, href_list)
 	. = ..()

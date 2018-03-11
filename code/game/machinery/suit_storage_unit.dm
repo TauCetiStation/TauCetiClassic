@@ -100,10 +100,9 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/attack_hand(mob/user)
+/obj/machinery/suit_storage_unit/ui_interact(mob/user)
 	var/dat
-	if(..())
-		return
+
 	if(src.panelopen) //The maintenance panel is open. Time for some shady stuff
 		dat+= "<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>"
 		dat+= "<Font color ='black'><B>Maintenance panel controls</B></font><HR>"
@@ -156,7 +155,6 @@
 
 	user << browse(dat, "window=suit_storage_unit;size=400x500")
 	onclose(user, "suit_storage_unit")
-	return
 
 
 /obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
@@ -410,6 +408,7 @@
 /obj/machinery/suit_storage_unit/container_resist()
 	var/mob/living/user = usr
 	if(islocked)
+		if(user.is_busy()) return
 		user.next_move = world.time + 100
 		user.last_special = world.time + 100
 		var/breakout_time = 2
@@ -447,6 +446,7 @@
 	if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) )
 		to_chat(usr, "<font color='red'>It's too cluttered inside for you to fit in!</font>")
 		return
+	if(usr.is_busy()) return
 	visible_message("[usr] starts squeezing into the suit storage unit!", 3)
 	if(do_after(usr, 10, target = src))
 		usr.stop_pulling()
@@ -482,6 +482,7 @@
 		var/obj/item/weapon/grab/G = I
 		if( !(ismob(G.affecting)) )
 			return
+		user.SetNextMove(CLICK_CD_MELEE)
 		if (!src.isopen)
 			to_chat(usr, "<font color='red'>The unit's doors are shut.</font>")
 			return
@@ -491,6 +492,7 @@
 		if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) ) //Unit needs to be absolutely empty
 			to_chat(user, "<font color='red'>The unit's storage area is too cluttered.</font>")
 			return
+		if(user.is_busy()) return
 		visible_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.", 3)
 		if(do_after(user, 20, target = src))
 			if(!G || !G.affecting) return //derpcheck
@@ -555,10 +557,6 @@
 	src.update_icon()
 	src.updateUsrDialog()
 	return
-
-
-/obj/machinery/suit_storage_unit/attack_ai(mob/user)
-	return src.attack_hand(user)
 
 
 /obj/machinery/suit_storage_unit/attack_paw(mob/user)

@@ -7,6 +7,8 @@
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = 1
+	interact_offline = TRUE
+	layer = BELOW_CONTAINERS_LAYER
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
 	var/forwards		// this is the default (forward) direction, set by the map dir
@@ -120,6 +122,7 @@
 			var/obj/item/conveyor_construct/C = new/obj/item/conveyor_construct(src.loc)
 			C.id = id
 			transfer_fingerprints_to(C)
+		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "<span class='notice'>You remove the conveyor belt.</span>")
 		qdel(src)
 		return
@@ -139,12 +142,14 @@
 		I.loc = src.loc
 	return
 
-/obj/machinery/conveyor/attack_ghost(mob/user)
-	return
-
 // attack with hand, move pulled object onto conveyor
 /obj/machinery/conveyor/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	user.Move_Pulled(src)
+	user.SetNextMove(CLICK_CD_RAPID)
 
 
 // make the conveyor broken
@@ -195,6 +200,9 @@
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
+	use_power = 0
+	anchored = TRUE
+
 	var/position = 0			// 0 off, -1 reverse, 1 forward
 	var/last_pos = -1			// last direction setting
 	var/operated = TRUE			// true if just operated
@@ -203,8 +211,6 @@
 	var/id = "" 				// must match conveyor IDs to control them
 
 	var/list/conveyors		// the list of converyors that are controlled by this switch
-	anchored = TRUE
-	ghost_must_be_admin = TRUE
 
 
 
@@ -246,11 +252,10 @@
 
 // attack with hand, switch position
 /obj/machinery/conveyor_switch/attack_hand(mob/user)
-	add_fingerprint(user)
-
-	if(!allowed(user))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
+	. = ..()
+	if(.)
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(position == 0)
 		if(convdir)   //is it a oneway switch
@@ -280,6 +285,7 @@
 		var/obj/item/conveyor_switch_construct/C = new/obj/item/conveyor_switch_construct(src.loc)
 		C.id = id
 		transfer_fingerprints_to(C)
+		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "<span class='notice'>You deattach the conveyor switch.</span>")
 		qdel(src)
 

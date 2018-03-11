@@ -10,7 +10,7 @@ var/list/fuel_injectors = list()
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 500
-	ghost_must_be_admin = TRUE
+	interact_offline = TRUE
 
 	var/fuel_usage = 0.0001
 	var/id_tag
@@ -82,20 +82,20 @@ var/list/fuel_injectors = list()
 	return ..()
 
 /obj/machinery/fusion_fuel_injector/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 
 	if(injecting)
 		to_chat(user, "<span class='warning'>Shut \the [src] off before playing with the fuel rod!</span>")
-		return
-
+		return 1
 	if(cur_assembly)
 		cur_assembly.forceMove(get_turf(src))
 		user.put_in_hands(cur_assembly)
 		visible_message("<span class='notice'>\The [user] removes \the [cur_assembly] from \the [src].</span>")
 		cur_assembly = null
-		return
 	else
 		to_chat(user, "<span class='warning'>There is no fuel rod in \the [src].</span>")
-		return
 
 /obj/machinery/fusion_fuel_injector/proc/BeginInjecting()
 	if(!injecting && cur_assembly)
