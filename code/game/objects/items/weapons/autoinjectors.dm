@@ -95,7 +95,7 @@
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine
 	name = "leporazine autoinjector"
 	desc = "Leporazine can be use to stabilize an individuals body temperature."
-	icon_state = "auto_minig"
+	icon_state = "autoinjector"
 	volume = 15
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine/atom_init()
