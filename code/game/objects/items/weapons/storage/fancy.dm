@@ -154,18 +154,31 @@
 
 /obj/item/weapon/storage/fancy/glowsticks/atom_init()
 	. = ..()
+	add_stick()
+	update_icon()
+
+/obj/item/weapon/storage/fancy/glowsticks/proc/add_stick()
 	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/green(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/red(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange(src)
-	update_icon()
 
 /obj/item/weapon/storage/fancy/glowsticks/update_icon()
 	overlays = list() //resets list
 	overlays += image('icons/obj/glowsticks.dmi',"sticksbox")
 	for(var/obj/item/weapon/reagent_containers/food/snacks/glowstick/glowstick in contents)
 		overlays += image('icons/obj/glowsticks.dmi',glowstick.colourName)
+
+/obj/item/weapon/storage/fancy/glowsticks/adv
+	name = "box of advanced glowsticks"
+
+/obj/item/weapon/storage/fancy/glowsticks/adv/add_stick()
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/green(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/red(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/blue(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/yellow(src)
+	new /obj/item/weapon/reagent_containers/food/snacks/glowstick/power/orange(src)
 
 ////////////
 //CIG PACK//
@@ -236,6 +249,11 @@
 	for (var/i in 1 to storage_slots)
 		reagents.add_reagent("tricordrazine",15)
 	name = "cigarette packet"
+
+/obj/item/weapon/storage/fancy/cigarettes/menthol
+	name = "Uplit Cigs"
+	desc = "A packet of six menthol cigarettes."
+	icon_state = "ucig"
 
 /*
  * Vial Box

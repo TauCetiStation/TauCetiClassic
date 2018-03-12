@@ -751,10 +751,10 @@
 	cost = 20
 	excludefrom = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/badass/balloon
-	name = "For showing that you are The Boss"
-	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
-	item = /obj/item/toy/syndicateballoon
+/datum/uplink_item/badass/merch
+	name = "Syndicate Merchandise"
+	desc = "To show your loalty to the Syndicate! Contains new red t-shirt with Syndicate logo, red cap and a fancy baloon!"
+	item = /obj/item/weapon/storage/box/syndie_kit/merch
 	cost = 20
 
 /datum/uplink_item/badass/syndiecigs

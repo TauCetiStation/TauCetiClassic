@@ -16,8 +16,6 @@
 	var/turns_per_move = 1
 	var/turns_since_move = 0
 	universal_speak = 0		//No, just no.
-	var/meat_amount = 0
-	var/meat_type
 	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
 	var/wander = 1	// Does the mob wander around when idle?
 	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
@@ -191,9 +189,10 @@
 /mob/living/simple_animal/gib()
 	if(icon_gib)
 		flick(icon_gib, src)
-	if(meat_amount && meat_type)
-		for(var/i = 0; i < meat_amount; i++)
-			new meat_type(src.loc)
+	if(butcher_results)
+		for(var/path in butcher_results)
+			for(var/i = 0 to butcher_results[path])
+				new path(loc)
 	..()
 
 /mob/living/simple_animal/emote(act, type, desc)
@@ -345,14 +344,9 @@
 				src.visible_message("<span class='notice'>[user] applies the [MED] on [src]</span>")
 		else
 			to_chat(user, "<span class='notice'> this [src] is dead, medical items won't bring it back to life.</span>")
-	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
-		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
-			new meat_type (get_turf(src))
-			user.SetNextMove(CLICK_CD_MELEE)
-			if(prob(95))
-				qdel(src)
-				return
-			gib()
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(attempt_harvest(O, user))
+		return
 	..()
 
 

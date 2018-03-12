@@ -26,23 +26,18 @@
 
 	if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
 		var/mob/living/carbon/human/H = user
-		if(istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-			var/obj/item/clothing/suit/armor/abductor/vest/V = H.wear_suit
-			if(V.stealth_active)
-				V.DeactivateStealth()
-		else if(istype(H.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
-			var/obj/item/clothing/suit/space/vox/stealth/V = H.wear_suit
-			if(V.on)
-				V.overload()
+		if(istype(H.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = H.wear_suit
+			V.attack_reaction(H, REACTION_INTERACT_ARMED, src)
 
-	if(butcher_results && stat == DEAD)
-		if(buckled && istype(buckled, /obj/structure/kitchenspike))
-			var/sharpness = is_sharp(I)
-			if(sharpness)
-				to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-				playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-				if(do_mob(user, src, 80/sharpness))
-					harvest(user)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(istype(H.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = H.wear_suit
+			V.attack_reaction(src, REACTION_ATACKED, user)
+
+	if(attempt_harvest(I, user))
+		return
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.

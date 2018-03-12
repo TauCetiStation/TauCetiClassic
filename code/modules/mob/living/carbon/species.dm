@@ -45,6 +45,9 @@
 	var/synth_temp_gain = 0			//IS_SYNTHETIC species will gain this much temperature every second
 	var/reagent_tag                 //Used for metabolizing reagents.
 
+	var/taste_sensitivity = TASTE_SENSITIVITY_NORMAL //the most widely used factor; humans use a different one
+	var/dietflags = 0	// Make sure you set this, otherwise it won't be able to digest a lot of foods
+
 	var/darksight = 2
 	var/nighteyes = 0
 	var/sightglassesmod = 0
@@ -93,13 +96,9 @@
 		,BP_GROIN  = /obj/item/organ/external/groin
 		,BP_HEAD   = /obj/item/organ/external/head
 		,BP_L_ARM  = /obj/item/organ/external/l_arm
-		,BP_L_HAND = /obj/item/organ/external/l_hand
 		,BP_R_ARM  = /obj/item/organ/external/r_arm
-		,BP_R_HAND = /obj/item/organ/external/r_hand
 		,BP_L_LEG  = /obj/item/organ/external/l_leg
-		,BP_L_FOOT = /obj/item/organ/external/l_foot
 		,BP_R_LEG  = /obj/item/organ/external/r_leg
-		,BP_R_FOOT = /obj/item/organ/external/r_foot
 		)
 
 	var/list/has_organ = list(
@@ -161,6 +160,7 @@
 	language = "Sol Common"
 	primitive = /mob/living/carbon/monkey
 	unarmed_type = /datum/unarmed_attack/punch
+	dietflags = DIET_OMNI
 
 	flags = list(
 	 HAS_SKIN_TONE = TRUE
@@ -179,6 +179,7 @@
 	language = "Sinta'unathi"
 	tail = "sogtail"
 	unarmed_type = /datum/unarmed_attack/claws
+	dietflags = DIET_CARN
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
 
@@ -214,6 +215,8 @@
 	language = "Siik'maas"
 	tail = "tajtail"
 	unarmed_type = /datum/unarmed_attack/claws
+	dietflags = DIET_OMNI
+	taste_sensitivity = TASTE_SENSITIVITY_SHARP
 	darksight = 8
 	nighteyes = 1
 
@@ -250,6 +253,8 @@
 	language = "Skrellian"
 	primitive = /mob/living/carbon/monkey/skrell
 	unarmed_type = /datum/unarmed_attack/punch
+	dietflags = DIET_HERB
+	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -280,6 +285,7 @@
 	language = "Vox-pidgin"
 	force_racial_language = TRUE
 	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
+	dietflags = DIET_OMNI
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -345,6 +351,7 @@
 	damage_mask = FALSE
 	language = "Vox-pidgin"
 	unarmed_type = /datum/unarmed_attack/claws/armalis
+	dietflags = DIET_OMNI	//should inherit this from vox, this is here just in case
 
 	warning_low_pressure = 50
 	hazard_low_pressure = 0
@@ -391,6 +398,8 @@
 	deform = 'icons/mob/human_races/r_def_plant.dmi'
 	language = "Rootspeak"
 	unarmed_type = /datum/unarmed_attack/diona
+	dietflags = 0		//Diona regenerate nutrition in light, no diet necessary
+	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 	primitive = /mob/living/carbon/monkey/diona
 
 	warning_low_pressure = 50
@@ -418,6 +427,15 @@
 	,NO_BLOOD = TRUE
 	,NO_PAIN = TRUE
 	)
+
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart,
+		O_BRAIN   = /obj/item/organ/internal/brain,
+		O_EYES    = /obj/item/organ/internal/eyes,
+		O_LUNGS   = /obj/item/organ/internal/lungs/diona,
+		O_LIVER   = /obj/item/organ/internal/liver,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys
+		)
 
 	blood_color = "#004400"
 	flesh_color = "#907E4A"
@@ -451,6 +469,8 @@
 	deform = 'icons/mob/human_races/r_machine.dmi'
 	language = "Tradeband"
 	unarmed_type = /datum/unarmed_attack/punch
+	dietflags = 0		//IPCs can't eat, so no diet
+	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 
 	eyes = "blank_eyes"
 
@@ -487,6 +507,7 @@
 /datum/species/abductor
 	name = ABDUCTOR
 	darksight = 3
+	dietflags = DIET_OMNI
 
 	icobase = 'icons/mob/human_races/r_abductor.dmi'
 	deform = 'icons/mob/human_races/r_abductor.dmi'
@@ -511,6 +532,7 @@
 	icobase = 'icons/mob/human_races/r_skeleton.dmi'
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
+	dietflags = 0
 
 	flags = list(
 	 NO_BREATHE = TRUE
@@ -559,9 +581,10 @@
 /datum/species/shadowling
 	name = SHADOWLING
 	icobase = 'icons/mob/human_races/r_shadowling.dmi'
-	deform = 'icons/mob/human_races/r_def_shadowling.dmi'
+	deform = 'icons/mob/human_races/r_shadowling.dmi'
 	language = "Sol Common"
 	unarmed_type = /datum/unarmed_attack/claws
+	dietflags = DIET_OMNI
 
 	warning_low_pressure = 50
 	hazard_low_pressure = -1
@@ -600,6 +623,7 @@
 
 	icobase = 'icons/mob/human_races/r_golem.dmi'
 	deform = 'icons/mob/human_races/r_golem.dmi'
+	dietflags = 0 //this is ROCK
 
 	total_health = 200
 	oxy_mod = 0

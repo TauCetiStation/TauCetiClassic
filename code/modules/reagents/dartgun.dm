@@ -138,6 +138,12 @@
 	if (locate (/obj/structure/table, src.loc))
 		return
 	else
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+				var/obj/item/clothing/suit/V = H.wear_suit
+				V.attack_reaction(H, REACTION_GUN_FIRE)
+
 		var/turf/trg = get_turf(target)
 		var/obj/effect/syringe_gun_dummy/D = new/obj/effect/syringe_gun_dummy(get_turf(src))
 		var/obj/item/weapon/reagent_containers/syringe/S = get_mixed_syringe()

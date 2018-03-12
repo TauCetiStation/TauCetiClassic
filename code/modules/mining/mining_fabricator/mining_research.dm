@@ -7,8 +7,8 @@
 	id = "space_suit_cheap"
 	build_type = MINEFAB
 	build_path = /obj/item/clothing/suit/space/cheap
-	materials = list(MAT_METAL=10000,MAT_GLASS=500,MAT_PLASTIC=1000)
-	construction_time = 150
+	materials = list(MAT_METAL=6000,MAT_GLASS=500,MAT_PLASTIC=1000)
+	construction_time = 120
 	category = list("Spacesuit")
 
 /datum/design/space_suit_hlemet_cheap
@@ -17,7 +17,7 @@
 	build_type = MINEFAB
 	build_path = /obj/item/clothing/head/helmet/space/cheap
 	materials = list(MAT_METAL=1000,MAT_GLASS=500)
-	construction_time = 50
+	construction_time = 30
 	category = list("Spacesuit")
 
 //Common buble
@@ -27,8 +27,8 @@
 	build_type = MINEFAB
 	req_tech = list("materials" = 2)
 	build_path = /obj/item/clothing/suit/space/globose
-	materials = list(MAT_METAL=40000,MAT_GLASS=2000,MAT_PLASTIC=5000)
-	construction_time = 500
+	materials = list(MAT_METAL=30000,MAT_GLASS=2000,MAT_PLASTIC=5000)
+	construction_time = 350
 	category = list("Spacesuit")
 
 /datum/design/space_suit_hlemet
@@ -38,7 +38,7 @@
 	req_tech = list("materials" = 2)
 	build_path = /obj/item/clothing/head/helmet/space/globose
 	materials = list(MAT_METAL=5000,MAT_GLASS=3000)
-	construction_time = 100
+	construction_time = 70
 	category = list("Spacesuit")
 
 //Mining buble
@@ -48,8 +48,8 @@
 	build_type = MINEFAB
 	req_tech = list("combat" = 2, "materials" = 3, "engineering" = 2)
 	build_path = /obj/item/clothing/suit/space/globose/mining
-	materials = list(MAT_METAL=50000,MAT_GLASS=2000,MAT_PLASTIC=3000,MAT_SILVER=3000)
-	construction_time = 1200
+	materials = list(MAT_METAL=37500,MAT_GLASS=2000,MAT_PLASTIC=3000,MAT_SILVER=3000)
+	construction_time = 900
 	category = list("Spacesuit")
 
 /datum/design/space_suit_hlemet_mining
@@ -59,7 +59,7 @@
 	req_tech = list("combat" = 2, "materials" = 3, "engineering" = 2)
 	build_path = /obj/item/clothing/head/helmet/space/globose/mining
 	materials = list(MAT_METAL=5000,MAT_GLASS=3000,MAT_SILVER=1000)
-	construction_time = 400
+	construction_time = 300
 	category = list("Spacesuit")
 
 //Engineering rig
@@ -69,8 +69,8 @@
 	build_type = MINEFAB
 	req_tech = list("powerstorage"= 3, "materials" = 4, "engineering" = 3)
 	build_path = /obj/item/clothing/suit/space/rig/engineering
-	materials = list(MAT_METAL=65000,MAT_GLASS=2000,MAT_PLASTIC=5000,MAT_SILVER=6000)
-	construction_time = 1800
+	materials = list(MAT_METAL=40000,MAT_GLASS=2000,MAT_PLASTIC=5000,MAT_SILVER=6000)
+	construction_time = 1350
 	category = list("Spacesuit")
 
 /datum/design/space_suit_hlemet_engineering
@@ -80,7 +80,7 @@
 	req_tech = list("powerstorage"= 3, "materials" = 4, "engineering" = 3)
 	build_path = /obj/item/clothing/head/helmet/space/rig/engineering
 	materials = list(MAT_METAL=7500,MAT_GLASS=3000,MAT_SILVER=4000)
-	construction_time = 600
+	construction_time = 450
 	category = list("Spacesuit")
 
 //Atmospherics rig (bs12)
@@ -90,8 +90,8 @@
 	build_type = MINEFAB
 	req_tech = list("phorontech" = 2, "materials" = 4, "engineering" = 3)
 	build_path = /obj/item/clothing/suit/space/rig/atmos
-	materials = list(MAT_METAL=50000,MAT_GLASS=2000,MAT_PLASTIC=5000,MAT_SILVER=6000)
-	construction_time = 1400
+	materials = list(MAT_METAL=35000,MAT_GLASS=2000,MAT_PLASTIC=5000,MAT_SILVER=6000)
+	construction_time = 1050
 	category = list("Spacesuit")
 
 /datum/design/space_suit_hlemet_atmospherics
@@ -101,7 +101,7 @@
 	req_tech = list("phorontech" = 2, "materials" = 4, "engineering" = 3)
 	build_path = /obj/item/clothing/head/helmet/space/rig/atmos
 	materials = list(MAT_METAL=5000,MAT_GLASS=3000,MAT_SILVER=4000)
-	construction_time = 400
+	construction_time = 300
 	category = list("Spacesuit")
 
 //Medical rig
@@ -111,8 +111,8 @@
 	build_type = MINEFAB
 	req_tech = list("biotech"=3, "materials" = 4, "engineering" = 3)
 	build_path = /obj/item/clothing/suit/space/rig/medical
-	materials = list(MAT_METAL=45000,MAT_GLASS=2000,MAT_PLASTIC=5000,MAT_SILVER=3000)
-	construction_time = 1400
+	materials = list(MAT_METAL=30000,MAT_GLASS=2000,MAT_PLASTIC=5000,MAT_SILVER=3000)
+	construction_time = 1050
 	category = list("Spacesuit")
 
 /datum/design/space_suit_hlemet_medical
@@ -122,7 +122,7 @@
 	req_tech = list("biotech"=3, "materials" = 4, "engineering" = 3)
 	build_path = /obj/item/clothing/head/helmet/space/rig/medical
 	materials = list(MAT_METAL=5000,MAT_GLASS=3000,MAT_SILVER=1500)
-	construction_time = 400
+	construction_time =300
 	category = list("Spacesuit")
 
 //Mining rig
@@ -132,8 +132,8 @@
 	build_type = MINEFAB
 	req_tech = list("combat" = 3, "biotech"=2, "materials" = 4, "engineering" = 3)
 	build_path = /obj/item/clothing/suit/space/rig/mining
-	materials = list(MAT_METAL=75000,MAT_GLASS=6000,MAT_PLASTIC=8000,MAT_GOLD=4000,MAT_DIAMOND=4000,MAT_URANIUM=6000)
-	construction_time = 1800
+	materials = list(MAT_METAL=40000,MAT_GLASS=6000,MAT_PLASTIC=8000,MAT_GOLD=3000,MAT_DIAMOND=2000,MAT_URANIUM=4000)
+	construction_time = 1350
 	category = list("Spacesuit")
 
 /datum/design/space_suit_hlemet_mining_rig
@@ -143,7 +143,7 @@
 	req_tech = list("combat" = 3, "biotech"=2, "materials" = 4, "engineering" = 3)
 	build_path = /obj/item/clothing/head/helmet/space/rig/mining
 	materials = list(MAT_METAL=6000,MAT_GLASS=3000,MAT_PLASTIC=2000,MAT_GOLD=1000,MAT_DIAMOND=500,MAT_URANIUM=1000)
-	construction_time = 600
+	construction_time = 450
 	category = list("Spacesuit")
 
 //Security rig
@@ -153,8 +153,8 @@
 	build_type = MINEFAB
 	req_tech = list("combat" = 5, "biotech"=3, "materials" = 5, "engineering" = 4)
 	build_path = /obj/item/clothing/suit/space/rig/security
-	materials = list(MAT_METAL=80000,MAT_GLASS=6000,MAT_PLASTIC=8000,MAT_GOLD=7000,MAT_DIAMOND=8000,MAT_URANIUM=12000)
-	construction_time = 3600
+	materials = list(MAT_METAL=45000,MAT_GLASS=6000,MAT_PLASTIC=8000,MAT_GOLD=4000,MAT_DIAMOND=4000,MAT_URANIUM=6000)
+	construction_time = 1500
 	category = list("Spacesuit")
 
 /datum/design/space_suit_hlemet_security
@@ -164,7 +164,7 @@
 	req_tech = list("combat" = 5, "biotech"=3, "materials" = 5, "engineering" = 4)
 	build_path = /obj/item/clothing/head/helmet/space/rig/security
 	materials = list(MAT_METAL=8000,MAT_GLASS=4000,MAT_PLASTIC=2000,MAT_GOLD=4000,MAT_DIAMOND=2000,MAT_URANIUM=4000)
-	construction_time = 1600
+	construction_time = 800
 	category = list("Spacesuit")
 
 //------------TOOLS------------
@@ -250,7 +250,7 @@
 	category = list("Tools")
 
 
-//------------SUPPORT------------Support
+//------------SUPPORT------------
 
 /datum/design/mine_radio
 	name = "The supply radio headset"
@@ -268,6 +268,16 @@
 	build_path = /obj/item/weapon/storage/fancy/glowsticks
 	materials = list(MAT_GLASS=250,MAT_PLASTIC=100,MAT_PHORON=150)
 	construction_time = 50
+	category = list("Support")
+
+/datum/design/glowsticks_adv
+	name = "The box of advanced glowsticks"
+	id = "glowsticks_adv"
+	build_type = MINEFAB
+	req_tech = list("phorontech" = 2)
+	build_path = /obj/item/weapon/storage/fancy/glowsticks/adv
+	materials = list(MAT_GLASS=250,MAT_PLASTIC=200,MAT_PHORON=350)
+	construction_time = 100
 	category = list("Support")
 
 /datum/design/stimpack
@@ -338,3 +348,45 @@
 	materials = list(MAT_METAL=2000,MAT_PLASTIC=1000,MAT_DIAMOND=500,MAT_URANIUM=500)
 	construction_time = 800
 	category = list("Support")
+
+//------------Misc------------
+
+/datum/design/beartrap
+	name = "Bear trap"
+	id = "beartrap"
+	build_type = MINEFAB
+	req_tech = list("engineering" = 2)
+	build_path = /obj/item/weapon/legcuffs/beartrap
+	materials = list(MAT_METAL=2000)
+	construction_time = 180
+	category = list("Misc")
+
+/datum/design/riot_shield
+	name = "riot shield"
+	id = "riot_shield"
+	build_type = MINEFAB
+	req_tech = list("combat" = 3, "materials" = 3, "engineering" = 2)
+	build_path = /obj/item/weapon/shield/riot
+	materials = list(MAT_METAL=8000,MAT_DIAMOND=500,MAT_URANIUM=500)
+	construction_time = 1200
+	category = list("Misc")
+
+/datum/design/riot_helmet
+	name = "riot helmet"
+	id = "riot_helmet"
+	build_type = MINEFAB
+	req_tech = list("combat" = 3, "materials" = 3, "engineering" = 2)
+	build_path = /obj/item/clothing/head/helmet/riot
+	materials = list(MAT_METAL=2000,MAT_GLASS=500,MAT_PLASTIC=1000)
+	construction_time = 300
+	category = list("Misc")
+
+/datum/design/riot_suit
+	name = "riot suit"
+	id = "riot_suit"
+	build_type = MINEFAB
+	req_tech = list("combat" = 3, "materials" = 3, "engineering" = 2)
+	build_path = /obj/item/clothing/suit/armor/riot
+	materials = list(MAT_METAL=8000,MAT_GLASS=500,MAT_PLASTIC=5000,MAT_URANIUM=500)
+	construction_time = 900
+	category = list("Misc")

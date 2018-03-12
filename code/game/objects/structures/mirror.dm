@@ -16,7 +16,7 @@
 		if(H.a_intent == "hurt")
 			H.do_attack_animation(src)
 			if(!H.gloves)
-				var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
 				BP.take_damage(rand(0, 4))
 			if(!shattered && prob(20))
 				shatter()

@@ -20,7 +20,7 @@
 	name = "\improper SWAT shoes"
 	desc = "When you want to turn up the heat."
 	icon_state = "swat"
-	armor = list(melee = 80, bullet = 5, laser = 5,energy = 25, bomb = 50, bio = 10, rad = 0)
+	item_state = "wjboots"
 	flags = NOSLIP
 	siemens_coefficient = 0.6
 	clipped_status = CLIPPABLE
@@ -29,15 +29,14 @@
 	name = "combat boots"
 	desc = "When you REALLY want to turn up the heat"
 	icon_state = "swat"
-	item_state = "jackboots"
-	armor = list(melee = 80, bullet = 10, laser = 10,energy = 25, bomb = 50, bio = 10, rad = 0)
+	item_state = "wjboots"
 	flags = NOSLIP
 	siemens_coefficient = 0.6
 	clipped_status = CLIPPABLE
 
-	cold_protection = FEET
+	cold_protection = LEGS
 	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = FEET
+	heat_protection = LEGS
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/shoes/space_ninja
@@ -46,12 +45,11 @@
 	icon_state = "s-ninja"
 	permeability_coefficient = 0.01
 	flags = NOSLIP
-	armor = list(melee = 60, bullet = 50, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
 	siemens_coefficient = 0.2
 
-	cold_protection = FEET
+	cold_protection = LEGS
 	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = FEET
+	heat_protection = LEGS
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = null
 
@@ -74,7 +72,7 @@
 	desc = "A pair of magic, black shoes."
 	name = "magic shoes"
 	icon_state = "black"
-	body_parts_covered = FEET
+	body_parts_covered = LEGS
 
 /obj/item/clothing/shoes/galoshes
 	desc = "Rubber boots."
@@ -112,9 +110,9 @@
 	item_color = "cult"
 	siemens_coefficient = 0.7
 
-	cold_protection = FEET
+	cold_protection = LEGS
 	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = FEET
+	heat_protection = LEGS
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = null
 

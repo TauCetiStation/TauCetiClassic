@@ -12,7 +12,7 @@
 		environment = loc.return_air()
 
 	if (stat != DEAD)
-		if(!istype(src,/mob/living/carbon/monkey/diona)) //still breathing
+		if(!istype(src,/mob/living/carbon/monkey/diona))
 			//First, resolve location and get a breath
 			if(SSmob.times_fired%4==2)
 				//Only try to take a breath every 4 seconds, unless suffocating
@@ -449,22 +449,6 @@
 
 	proc/handle_chemicals_in_body()
 
-		if(alien) //Diona nymphs are the only alien monkey currently.
-			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
-			if(isturf(loc)) //else, there's considered to be no light
-				var/turf/T = loc
-				light_amount = round((T.get_lumcount()*10)-5)
-
-			nutrition += light_amount
-			traumatic_shock -= light_amount
-
-			if(nutrition > 500)
-				nutrition = 500
-			if(light_amount > 2) //if there's enough light, heal
-				adjustBruteLoss(-1)
-				adjustToxLoss(-1)
-				adjustOxyLoss(-1)
-
 		if(reagents && reagents.reagent_list.len)
 			reagents.metabolize(src,alien)
 
@@ -645,3 +629,31 @@
 		adjustFireLoss(6)
 		return
 //END FIRE CODE
+
+/mob/living/carbon/monkey/diona/Life()
+	if(stat != DEAD)
+		var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
+		if(gestalt && isturf(gestalt.loc))
+			var/turf/T = gestalt.loc
+			light_amount = round((T.get_lumcount()*10)-5)
+		else if(isturf(loc)) //else, there's considered to be no light
+			var/turf/T = loc
+			light_amount = round((T.get_lumcount()*10)-5)
+
+		nutrition += light_amount
+		traumatic_shock -= light_amount
+
+		if(nutrition > 400)
+			nutrition = 400
+		if(light_amount > 2) //if there's enough light, heal
+			adjustBruteLoss(-1)
+			adjustToxLoss(-1)
+			adjustOxyLoss(-1)
+
+		if(injecting)
+			if(gestalt && nutrition > 210)
+				gestalt.reagents.add_reagent(injecting,1)
+				nutrition -= 10
+			else
+				injecting = null
+	..()

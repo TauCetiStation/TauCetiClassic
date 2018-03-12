@@ -351,4 +351,7 @@
 	name = "Headache"
 	stage = 1
 	activate(mob/living/carbon/mob,multiplier)
-		to_chat(mob, "<span class = 'notice'> Your head hurts a bit</span>")
+		if(ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			if(H.species && H.species.flags[NO_PAIN])
+				to_chat(mob, "<span class = 'notice'> Your head hurts a bit</span>")
