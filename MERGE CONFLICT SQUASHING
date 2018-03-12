@@ -1,0 +1,304 @@
+Merge branch 'master' of https://github.com/TauCetiStation/TauCetiClassic
+
+# Conflicts:
+#	config/example/config.txt
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#   (use "git push" to publish your local commits)
+#
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	modified:   .gitattributes
+#	modified:   .gitignore
+#	modified:   README.md
+#	modified:   code/__DEFINES/clothing.dm
+#	modified:   code/__DEFINES/flags.dm
+#	modified:   code/__DEFINES/items_clothing.dm
+#	modified:   code/__DEFINES/mob.dm
+#	modified:   code/__HELPERS/unsorted.dm
+#	modified:   code/_onclick/click.dm
+#	modified:   code/_onclick/hud/screen_objects.dm
+#	modified:   code/_onclick/item_attack.dm
+#	modified:   code/_onclick/other_mobs.dm
+#	modified:   code/controllers/configuration.dm
+#	modified:   code/controllers/subsystem/jobs.dm
+#	modified:   code/datums/music_player.dm
+#	modified:   code/datums/spells/Time_stop.dm
+#	modified:   code/datums/spells/ethereal_jaunt.dm
+#	modified:   code/datums/spells/in_hand.dm
+#	modified:   code/datums/uplinks_items.dm
+#	modified:   code/defines/obj/hydro.dm
+#	modified:   code/defines/obj/weapon.dm
+#	modified:   code/game/gamemodes/abduction/abduction_gear.dm
+#	modified:   code/game/gamemodes/changeling/headcrab.dm
+#	modified:   code/game/gamemodes/changeling/powers/Whip.dm
+#	modified:   code/game/gamemodes/changeling/powers/mutations.dm
+#	modified:   code/game/gamemodes/cult/cult_datums.dm
+#	modified:   code/game/gamemodes/cult/cult_items.dm
+#	modified:   code/game/gamemodes/events/biomass.dm
+#	modified:   code/game/gamemodes/events/ninja_equipment.dm
+#	modified:   code/game/gamemodes/events/spacevines.dm
+#	modified:   code/game/gamemodes/nuclear/nuclearbomb.dm
+#	modified:   code/game/jobs/access.dm
+#	modified:   code/game/jobs/jobs.dm
+#	modified:   code/game/machinery/bees_apiary.dm
+#	modified:   code/game/machinery/bees_items.dm
+#	modified:   code/game/machinery/biogenerator.dm
+#	modified:   code/game/machinery/bots/farmbot.dm
+#	modified:   code/game/machinery/constructable_frame.dm
+#	modified:   code/game/machinery/droppod.dm
+#	modified:   code/game/machinery/hydroponics.dm
+#	modified:   code/game/machinery/iv_drip.dm
+#	modified:   code/game/machinery/kitchen/gibber.dm
+#	modified:   code/game/machinery/kitchen/smartfridge.dm
+#	modified:   code/game/machinery/seed_extractor.dm
+#	modified:   code/game/machinery/vending.dm
+#	modified:   code/game/objects/effects/decals/Cleanable/humans.dm
+#	modified:   code/game/objects/effects/overlays.dm
+#	modified:   code/game/objects/items.dm
+#	modified:   code/game/objects/items/devices/flashlight.dm
+#	modified:   code/game/objects/items/devices/radio/headset.dm
+#	modified:   code/game/objects/items/robot/robot_parts.dm
+#	modified:   code/game/objects/items/stacks/sheets/glass.dm
+#	modified:   code/game/objects/items/stacks/sheets/leather.dm
+#	modified:   code/game/objects/items/stacks/sheets/mineral.dm
+#	modified:   code/game/objects/items/weapons/autoinjectors.dm
+#	modified:   code/game/objects/items/weapons/cigs_lighters.dm
+#	modified:   code/game/objects/items/weapons/handcuffs.dm
+#	modified:   code/game/objects/items/weapons/hydroponics.dm
+#	modified:   code/game/objects/items/weapons/kitchen.dm
+#	modified:   code/game/objects/items/weapons/mop.dm
+#	modified:   code/game/objects/items/weapons/storage/bags.dm
+#	modified:   code/game/objects/items/weapons/storage/belt.dm
+#	modified:   code/game/objects/items/weapons/storage/fancy.dm
+#	modified:   code/game/objects/items/weapons/storage/uplink_kits.dm
+#	modified:   code/game/objects/items/weapons/surgery_limbattachment.dm
+#	modified:   code/game/objects/items/weapons/twohanded.dm
+#	modified:   code/game/objects/structures.dm
+#	modified:   code/game/objects/structures/crates_lockers/closets/crittercrate.dm
+#	modified:   code/game/objects/structures/crates_lockers/closets/secure/scientist.dm
+#	modified:   code/game/objects/structures/crates_lockers/closets/secure/security.dm
+#	modified:   code/game/objects/structures/extinguisher.dm
+#	modified:   code/game/objects/structures/flora.dm
+#	modified:   code/game/objects/structures/inflatable.dm
+#	modified:   code/game/objects/structures/mirror.dm
+#	modified:   code/game/objects/structures/signs.dm
+#	modified:   code/game/objects/structures/watercloset.dm
+#	modified:   code/modules/assembly/mousetrap.dm
+#	modified:   code/modules/atmospheric/ZAS/Phoron.dm
+#	modified:   code/modules/cargo/exports/tools.dm
+#	modified:   code/modules/cargo/packs.dm
+#	modified:   code/modules/client/character menu/general.dm
+#	modified:   code/modules/client/character menu/loadout/loadout_general.dm
+#	modified:   code/modules/client/preferences.dm
+#	modified:   code/modules/client/preferences_savefile.dm
+#	modified:   code/modules/clothing/clothing.dm
+#	modified:   code/modules/clothing/gloves/color.dm
+#	modified:   code/modules/clothing/gloves/miscellaneous.dm
+#	modified:   code/modules/clothing/shoes/colour.dm
+#	modified:   code/modules/clothing/shoes/miscellaneous.dm
+#	modified:   code/modules/clothing/spacesuits/alien.dm
+#	modified:   code/modules/clothing/spacesuits/captain.dm
+#	modified:   code/modules/clothing/spacesuits/rig.dm
+#	modified:   code/modules/clothing/suits/armor.dm
+#	modified:   code/modules/clothing/suits/bio.dm
+#	modified:   code/modules/clothing/suits/labcoat.dm
+#	modified:   code/modules/clothing/suits/miscellaneous.dm
+#	modified:   code/modules/clothing/suits/utility.dm
+#	modified:   code/modules/clothing/suits/wiz_robe.dm
+#	modified:   code/modules/clothing/under/accessories/storage.dm
+#	modified:   code/modules/clothing/under/miscellaneous.dm
+#	modified:   code/modules/clothing/under/ties.dm
+#	modified:   code/modules/food/recipes_microwave.dm
+#	modified:   code/modules/food/recipes_oven.dm
+#	modified:   code/modules/holidays/new_year/clothing.dm
+#	modified:   code/modules/holodeck/HolodeckObjects.dm
+#	modified:   code/modules/jungle/jungle_animals.dm
+#	modified:   code/modules/media/jukebox.dm
+#	modified:   code/modules/mining/drilling/circuitboard.dm
+#	modified:   code/modules/mining/drilling/drill.dm
+#	modified:   code/modules/mining/equipment_locker.dm
+#	modified:   code/modules/mining/mining_fabricator/mining_research.dm
+#	modified:   code/modules/mob/living/carbon/brain/brain_item.dm
+#	modified:   code/modules/mob/living/carbon/carbon.dm
+#	modified:   code/modules/mob/living/carbon/give.dm
+#	modified:   code/modules/mob/living/carbon/human/emote.dm
+#	modified:   code/modules/mob/living/carbon/human/human.dm
+#	modified:   code/modules/mob/living/carbon/human/human_attackhand.dm
+#	modified:   code/modules/mob/living/carbon/human/human_attackpaw.dm
+#	modified:   code/modules/mob/living/carbon/human/human_damage.dm
+#	modified:   code/modules/mob/living/carbon/human/human_defense.dm
+#	modified:   code/modules/mob/living/carbon/human/human_movement.dm
+#	modified:   code/modules/mob/living/carbon/human/inventory.dm
+#	modified:   code/modules/mob/living/carbon/human/life.dm
+#	modified:   code/modules/mob/living/carbon/human/update_icons.dm
+#	modified:   code/modules/mob/living/carbon/metroid/metroid.dm
+#	modified:   code/modules/mob/living/carbon/monkey/diona.dm
+#	modified:   code/modules/mob/living/carbon/monkey/life.dm
+#	modified:   code/modules/mob/living/carbon/monkey/monkey.dm
+#	modified:   code/modules/mob/living/carbon/shock.dm
+#	modified:   code/modules/mob/living/carbon/species.dm
+#	modified:   code/modules/mob/living/living.dm
+#	modified:   code/modules/mob/living/living_defense.dm
+#	modified:   code/modules/mob/living/living_defines.dm
+#	modified:   code/modules/mob/living/simple_animal/friendly/cat.dm
+#	modified:   code/modules/mob/living/simple_animal/friendly/corgi.dm
+#	modified:   code/modules/mob/living/simple_animal/friendly/crab.dm
+#	modified:   code/modules/mob/living/simple_animal/friendly/farm_animals.dm
+#	modified:   code/modules/mob/living/simple_animal/friendly/fox.dm
+#	modified:   code/modules/mob/living/simple_animal/friendly/mouse.dm
+#	modified:   code/modules/mob/living/simple_animal/friendly/mushroom.dm
+#	modified:   code/modules/mob/living/simple_animal/friendly/pug.dm
+#	modified:   code/modules/mob/living/simple_animal/friendly/tomato.dm
+#	modified:   code/modules/mob/living/simple_animal/hostile/alien.dm
+#	modified:   code/modules/mob/living/simple_animal/hostile/bear.dm
+#	modified:   code/modules/mob/living/simple_animal/hostile/carp.dm
+#	modified:   code/modules/mob/living/simple_animal/hostile/giant_spider.dm
+#	modified:   code/modules/mob/living/simple_animal/hostile/mimic.dm
+#	modified:   code/modules/mob/living/simple_animal/hostile/tree.dm
+#	modified:   code/modules/mob/living/simple_animal/parrot.dm
+#	modified:   code/modules/mob/living/simple_animal/simple_animal.dm
+#	modified:   code/modules/mob/mob.dm
+#	modified:   code/modules/mob/mob_cleanup.dm
+#	modified:   code/modules/mob/mob_defines.dm
+#	modified:   code/modules/mob/mob_helpers.dm
+#	modified:   code/modules/mob/mob_movement.dm
+#	modified:   code/modules/organs/blood.dm
+#	modified:   code/modules/organs/organ.dm
+#	modified:   code/modules/organs/organ_external.dm
+#	modified:   code/modules/organs/organ_internal.dm
+#	modified:   code/modules/paperwork/paperbin.dm
+#	modified:   code/modules/projectiles/ammunition.dm
+#	modified:   code/modules/projectiles/effects.dm
+#	modified:   code/modules/projectiles/gun.dm
+#	modified:   code/modules/projectiles/guns/alien.dm
+#	modified:   code/modules/projectiles/guns/projectile/automatic.dm
+#	modified:   code/modules/projectiles/guns/projectile/bow.dm
+#	modified:   code/modules/projectiles/guns/projectile/pneumatic.dm
+#	modified:   code/modules/projectiles/guns/projectile/rocket.dm
+#	modified:   code/modules/projectiles/projectile.dm
+#	modified:   code/modules/projectiles/projectile/magic.dm
+#	modified:   code/modules/reagents/Chemistry-Machinery.dm
+#	modified:   code/modules/reagents/Chemistry-Reagents.dm
+#	modified:   code/modules/reagents/Chemistry-Recipes.dm
+#	modified:   code/modules/reagents/dartgun.dm
+#	modified:   code/modules/reagents/reagent_containers/food.dm
+#	modified:   code/modules/reagents/reagent_containers/food/cans.dm
+#	modified:   code/modules/reagents/reagent_containers/food/condiment.dm
+#	modified:   code/modules/reagents/reagent_containers/food/drinks.dm
+#	modified:   code/modules/reagents/reagent_containers/food/drinks/bottle.dm
+#	modified:   code/modules/reagents/reagent_containers/food/drinks/drinkingglass.dm
+#	modified:   code/modules/reagents/reagent_containers/food/glowsticks.dm
+#	modified:   code/modules/reagents/reagent_containers/food/snacks.dm
+#	modified:   code/modules/reagents/reagent_containers/food/snacks/grown.dm
+#	modified:   code/modules/reagents/reagent_containers/food/snacks/meat.dm
+#	modified:   code/modules/reagents/reagent_containers/glass.dm
+#	modified:   code/modules/reagents/reagent_containers/pill.dm
+#	modified:   code/modules/reagents/reagent_containers/spray.dm
+#	modified:   code/modules/research/designs.dm
+#	modified:   code/modules/research/xenoarchaeology/finds/finds.dm
+#	modified:   code/modules/research/xenoarchaeology/finds/finds_special.dm
+#	modified:   code/modules/scrap/scrap.dm
+#	modified:   code/modules/surgery/headreattach.dm
+#	modified:   code/modules/surgery/robolimbs.dm
+#	modified:   code/modules/surgery/surgery.dm
+#	modified:   code/modules/virus2/effect.dm
+#	modified:   html/changelog.html
+#	modified:   icons/effects/narsie_spawn_anim.dmi
+#	modified:   icons/mob/animal.dmi
+#	modified:   icons/mob/human_races/damage_overlays.dmi
+#	modified:   icons/mob/human_races/masks/dam_mask_gen.dmi
+#	modified:   icons/mob/human_races/r_abductor.dmi
+#	modified:   icons/mob/human_races/r_armalis.dmi
+#	modified:   icons/mob/human_races/r_def_human.dmi
+#	modified:   icons/mob/human_races/r_def_lizard.dmi
+#	modified:   icons/mob/human_races/r_def_plant.dmi
+#	deleted:    icons/mob/human_races/r_def_shadowling.dmi
+#	modified:   icons/mob/human_races/r_def_skrell.dmi
+#	modified:   icons/mob/human_races/r_def_tajaran.dmi
+#	modified:   icons/mob/human_races/r_def_vox.dmi
+#	modified:   icons/mob/human_races/r_diona.dmi
+#	modified:   icons/mob/human_races/r_golem.dmi
+#	modified:   icons/mob/human_races/r_human.dmi
+#	modified:   icons/mob/human_races/r_lizard.dmi
+#	modified:   icons/mob/human_races/r_machine.dmi
+#	modified:   icons/mob/human_races/r_plant.dmi
+#	modified:   icons/mob/human_races/r_shadowling.dmi
+#	modified:   icons/mob/human_races/r_skeleton.dmi
+#	modified:   icons/mob/human_races/r_skrell.dmi
+#	modified:   icons/mob/human_races/r_tajaran.dmi
+#	modified:   icons/mob/human_races/r_vox.dmi
+#	modified:   icons/mob/human_races/robotic.dmi
+#	modified:   icons/mob/inhands/clothing_lefthand.dmi
+#	modified:   icons/mob/inhands/clothing_righthand.dmi
+#	modified:   icons/mob/inhands/items_lefthand.dmi
+#	modified:   icons/mob/inhands/items_righthand.dmi
+#	modified:   icons/mob/suit.dmi
+#	modified:   icons/mob/surgery.dmi
+#	modified:   icons/mob/uniform.dmi
+#	modified:   icons/mob/zone_sel.dmi
+#	modified:   icons/obj/atmos.dmi
+#	modified:   icons/obj/cigarettes.dmi
+#	modified:   icons/obj/clothing/suits.dmi
+#	modified:   icons/obj/clothing/uniforms.dmi
+#	modified:   icons/obj/decals.dmi
+#	modified:   icons/obj/device.dmi
+#	modified:   icons/obj/drinks.dmi
+#	modified:   icons/obj/flora/plants.dmi
+#	modified:   icons/obj/food.dmi
+#	deleted:    icons/obj/hydroponics.dmi
+#	modified:   icons/obj/hydroponics/equipment.dmi
+#	modified:   icons/obj/hydroponics/growing.dmi
+#	new file:   icons/obj/hydroponics/growing_flowers.dmi
+#	new file:   icons/obj/hydroponics/growing_fruits.dmi
+#	new file:   icons/obj/hydroponics/growing_mushrooms.dmi
+#	new file:   icons/obj/hydroponics/growing_vegetables.dmi
+#	modified:   icons/obj/hydroponics/harvest.dmi
+#	new file:   icons/obj/hydroponics/hydroponics.dmi
+#	modified:   icons/obj/hydroponics/seeds.dmi
+#	modified:   icons/obj/kitchen.dmi
+#	modified:   icons/obj/lighting.dmi
+#	modified:   icons/obj/machines/washing_machine.dmi
+#	deleted:    icons/obj/seeds.dmi
+#	modified:   icons/obj/stationobjs.dmi
+#	modified:   icons/obj/structures/droppod.dmi
+#	modified:   icons/obj/vending.dmi
+#	modified:   interface/interface.dm
+#	modified:   interface/skin.dmf
+#	modified:   maps/z1.dmm
+#	modified:   maps/z2.dmm
+#	modified:   maps/z3.dmm
+#	modified:   maps/z5.dmm
+#	modified:   nano/images/nanomap_z1.png
+#	new file:   tools/dmitool/README.txt
+#	new file:   tools/dmitool/build.gradle
+#	new file:   tools/dmitool/check_icon_state_limit.py
+#	new file:   tools/dmitool/dmimerge.sh
+#	new file:   tools/dmitool/dmitool.jar
+#	new file:   tools/dmitool/dmitool.py
+#	new file:   tools/dmitool/git_merge_installer.bat
+#	new file:   tools/dmitool/git_merge_installer.sh
+#	new file:   tools/dmitool/merging.txt
+#	new file:   tools/dmitool/src/main/java/dmitool/DMI.java
+#	new file:   tools/dmitool/src/main/java/dmitool/DMIDiff.java
+#	new file:   tools/dmitool/src/main/java/dmitool/DMIException.java
+#	new file:   tools/dmitool/src/main/java/dmitool/IconState.java
+#	new file:   tools/dmitool/src/main/java/dmitool/IconStateDiff.java
+#	new file:   tools/dmitool/src/main/java/dmitool/Image.java
+#	new file:   tools/dmitool/src/main/java/dmitool/Main.java
+#	new file:   tools/dmitool/src/main/java/dmitool/NonPalettedImage.java
+#	new file:   tools/dmitool/src/main/java/dmitool/PNGChunk.java
+#	new file:   tools/dmitool/src/main/java/dmitool/PalettedImage.java
+#	new file:   tools/dmitool/src/main/java/dmitool/RGBA.java
+#
