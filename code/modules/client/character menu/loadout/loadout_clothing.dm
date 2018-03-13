@@ -8,7 +8,7 @@
 /datum/gear/under
 	display_name = "Black tango dress"
 	path = /obj/item/clothing/under/blacktango
-	slot = slot_wear_suit
+	slot = slot_w_uniform
 	sort_category = "Suits and Overwear"
 	cost = 1
 
