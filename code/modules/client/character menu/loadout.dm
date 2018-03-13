@@ -44,9 +44,13 @@
 		. += "</tr>"
 		if(G.allowed_roles)
 			. += "<tr><td colspan=3><font size=2>Restrictions: "
+			var/aroles
 			for(var/role in G.allowed_roles)
-				. += role + ", "
-			. += trim(copytext(., 1, length(.)-2))
+				if(!aroles)
+					aroles = "[role]"
+				else
+					. +=  ", [role]"
+			. += aroles
 			. += "</font></td></tr>"
 
 		if(ticked)
