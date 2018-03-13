@@ -402,6 +402,7 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/cutouts
 	cost = 1
 
+/*
 /datum/uplink_item/stealthy_weapons/para_pen
 	name = "Paralysis Pen"
 	desc = "A syringe disguised as a functional pen, filled with a neuromuscular-blocking drug that renders a target immobile on injection and makes them seem dead to observers. \
@@ -409,7 +410,7 @@
 	item = /obj/item/weapon/pen/paralysis
 	cost = 4
 	excludefrom = list(/datum/game_mode/nuclear)
-	excludefrom_uplinks = list("nuclear")
+	excludefrom_uplinks = list("nuclear") */
 
 /datum/uplink_item/stealthy_weapons/strip_gloves
 	name = "Strip gloves"
