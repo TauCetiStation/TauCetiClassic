@@ -41,7 +41,32 @@
 	display_name = "Orange bandana"
 	path = /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
 
+/datum/gear/head/fez
+	display_name =  "Fez"
+	path = /obj/item/clothing/head/fez
+
+/datum/gear/head/indiana
+	display_name = "Leather hat"
+	path = /obj/item/clothing/head/indiana
+
+/datum/gear/head/cowboy
+	display_name = "Cowboy hat"
+	path = /obj/item/clothing/head/western/cowboy
+
 /datum/gear/head/kung
 	display_name = "Kung bandana"
 	path = /obj/item/clothing/head/det_hat/fluff/kung
 	cost = 1
+
+/datum/gear/head/beret
+	display_name = "Beret selection"
+	path = /obj/item/clothing/head/beret/red
+
+/datum/gear/head/beret/New()
+	..()
+	var/berets = list()
+	berets["red"] = /obj/item/clothing/head/beret/red
+	berets["blue"] = /obj/item/clothing/head/beret/blue
+	berets["black"] = /obj/item/clothing/head/beret/black
+	berets["purple"] = /obj/item/clothing/head/beret/purple
+	gear_tweaks += new/datum/gear_tweak/path(berets)
