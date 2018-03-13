@@ -379,7 +379,8 @@ var/datum/controller/master/Master = new()
 		SS_flags = SS.flags
 		if (SS_flags & SS_NO_FIRE)
 			subsystemstocheck -= SS
-		if (!(SS_flags & SS_TICKER) && (SS_flags & SS_KEEP_TIMING) && SS.last_fire + (SS.wait * 0.75) > world.time)
+			continue
+		if ((SS_flags & (SS_TICKER|SS_KEEP_TIMING)) == SS_KEEP_TIMING && SS.last_fire + (SS.wait * 0.75) > world.time)
 			continue
 
 		SS.enqueue()
