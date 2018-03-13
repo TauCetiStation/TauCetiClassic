@@ -49,7 +49,7 @@
 				if(!aroles)
 					aroles = "[role]"
 				else
-					. +=  ", [role]"
+					aroles +=  ", [role]"
 			. += aroles
 			. += "</font></td></tr>"
 
