@@ -1,16 +1,16 @@
-/mob/living/carbon/human/say(message, ignoring_appearance)
+/mob/living/carbon/human/say(message, ignore_appearance)
 	var/verb = "says"
 	var/message_range = world.view
 	var/italics = 0
 	var/alt_name = ""
 	if(client)
 		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "\red You cannot speak in IC (Muted).")
+			to_chat(src, "<span class='userdange'>You cannot speak in IC (Muted).</span>")
 			return
 
 	//Meme stuff
-	if((!speech_allowed && usr == src) || (src.miming))
-		to_chat(usr, "\red You can't speak.")
+	if((!speech_allowed && usr == src) || miming)
+		to_chat(usr, "<span class='userdange'>You can't speak.</span>")
 		return
 
 	message =  trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))
@@ -28,7 +28,7 @@
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))
 
-	if(!ignoring_appearance && name != GetVoice())
+	if(!ignore_appearance && name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"
 
 	//parse the radio code and consume it

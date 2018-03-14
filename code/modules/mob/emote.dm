@@ -35,28 +35,18 @@
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
 				if(O.status_flags & PASSEMOTES)
-					for(var/thing in O.contents)
-						if(istype(thing, /obj/item/weapon/holder))
-							var/obj/item/weapon/holder/H = thing
-							H.show_message(message, m_type)
-						else if(isliving(thing))
-							var/mob/living/L = thing
-							L.show_message(message, m_type, show_to_parasites = FALSE)
-				O.show_message(message, m_type, show_to_parasites = FALSE)
+					for(var/obj/item/weapon/holder/thing in O.contents)
+						thing.show_message(message, m_type)
+				O.show_message(message, m_type)
 
 		// Type 2 (Audible) emotes are sent to anyone in hear range
 		// of the *LOCATION* -- this is important for pAIs to be heard
 		else if (m_type & 2)
 			for (var/mob/O in hearers(get_turf(src), null))
 				if(O.status_flags & PASSEMOTES)
-					for(var/thing in O.contents)
-						if(istype(thing, /obj/item/weapon/holder))
-							var/obj/item/weapon/holder/H = thing
-							H.show_message(message, m_type)
-						else if(isliving(thing))
-							var/mob/living/L = thing
-							L.show_message(message, m_type, show_to_parasites = FALSE)
-				O.show_message(message, m_type, show_to_parasites = FALSE)
+					for(var/obj/item/weapon/holder/thing in O.contents)
+						thing.show_message(message, m_type)
+				O.show_message(message, m_type)
 
 /mob/proc/emote_dead(message)
 

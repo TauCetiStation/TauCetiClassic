@@ -34,7 +34,7 @@
 
 	usr.show_message(t, 1)
 
-/mob/proc/show_message(msg, type, alt, alt_type, show_to_parasites = TRUE)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+/mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
 	if(!client)
 		return FALSE
@@ -60,9 +60,9 @@
 	to_chat(src, msg)
 	return msg
 
-/mob/living/carbon/show_message(msg, type, alt, alt_type, show_to_parasites = TRUE)
+/mob/living/carbon/show_message(msg, type, alt, alt_type)
 	. = ..()
-	if(. && show_to_parasites && length(parasites))
+	if(. && length(parasites))
 		for(var/M in parasites)
 			to_chat(M, .)
 // Show a message to all mobs in sight of this one

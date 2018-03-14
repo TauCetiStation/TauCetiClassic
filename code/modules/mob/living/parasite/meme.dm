@@ -35,14 +35,12 @@ mob/living/parasite
 	src.host = host
 	loc = host
 	host.parasites.Add(src)
-	host.status_flags |= PASSEMOTES
 	if(client)
 		client.eye = host
 	return TRUE
 
 /mob/living/parasite/proc/exit_host()
 	host.parasites.Remove(src)
-	host.remove_passemotes_flag()
 	host = null
 	loc = null
 	return TRUE

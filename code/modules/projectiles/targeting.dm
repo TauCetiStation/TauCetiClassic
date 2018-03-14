@@ -241,7 +241,6 @@
 			for(var/mob/living/M in G.target)
 				if(M && !(M in view(src)))
 					M.NotTargeted(G)
-	handle_phantom_move(NewLoc, direct)
 
 //If you move out of range, it isn't going to still stay locked on you any more.
 /client/var

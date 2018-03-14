@@ -766,7 +766,6 @@
 		else if(istype(H.loc,/obj/item))
 			to_chat(src, "<span class='notice'>You struggle free of [H.loc].</span>")
 			H.forceMove(get_turf(H))
-		M.remove_passemotes_flag()
 		return
 
 	//Resisting control by an alien mind.
@@ -1123,36 +1122,7 @@
 			visible_message("<span class='notice'>[user] butchers [src].</span>")
 			gib()
 
-
-/mob/living/relaymove(mob/living/mob, direct)
-	if(!isessence(mob))
-		return FALSE
-
-	mob.setMoveCooldown(1)
-	var/mob/living/parasite/essence/essence = mob
-	if(!(essence.flags_allowed & ESSENCE_PHANTOM))
-		to_chat(mob, "<span class='userdanger'>Your host forbrade you to own phantom</span>")
-		return TRUE
-
-	if(!essence.phantom.showed)
-		essence.phantom.show_phantom()
-		return TRUE
-	var/tile = get_turf(get_step(essence.phantom, direct))
-	if(get_dist(tile, essence.host) < 8)
-		essence.phantom.dir = direct
-		essence.phantom.loc = tile
-	return TRUE
-
-/mob/living/proc/handle_phantom_move(NewLoc, direct)
-	if(!mind || !mind.changeling || length(mind.changeling.essences) < 1)
-		return
-	if(loc == NewLoc)
-		for(var/mob/living/parasite/essence/essence in mind.changeling.essences)
-			if(essence.phantom.showed)
-				essence.phantom.loc = get_turf(get_step(essence.phantom, direct))
-
 /mob/living/proc/remove_passemotes_flag()
-
 	if(locate(/obj/item/weapon/holder) in src)
 		return FALSE
 	status_flags &= ~PASSEMOTES

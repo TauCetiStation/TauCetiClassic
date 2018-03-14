@@ -63,8 +63,6 @@
 
 	if(istype(M,/mob/living/carbon/human))
 		to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
-		M.status_flags |= PASSEMOTES
-
 		to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
 		src.loc = M
 		src.verbs += /mob/living/carbon/monkey/diona/proc/split
@@ -88,10 +86,6 @@
 	src.loc = get_turf(src)
 	src.verbs -= /mob/living/carbon/monkey/diona/proc/split
 	src.verbs += /mob/living/carbon/monkey/diona/proc/merge
-
-	var/mob/living/carbon/C = src.loc
-	if(istype(C))
-		C.remove_passemotes_flag()
 
 /mob/living/carbon/monkey/diona/verb/fertilize_plant()
 

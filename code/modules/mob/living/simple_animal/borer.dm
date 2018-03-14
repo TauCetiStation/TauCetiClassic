@@ -330,8 +330,7 @@ mob/living/simple_animal/borer/proc/detatch()
 		host_brain.ckey = null
 		host_brain.name = "host brain"
 		host_brain.real_name = "host brain"
-
-	host.remove_passemotes_flag()
+	host.parasites -= src
 	host = null
 
 /mob/living/simple_animal/borer/verb/infest()
@@ -400,7 +399,7 @@ mob/living/simple_animal/borer/proc/detatch()
 
 		host_brain.name = M.name
 		host_brain.real_name = M.real_name
-		host.status_flags |= PASSEMOTES
+		host.parasites |= src
 
 		return
 	else

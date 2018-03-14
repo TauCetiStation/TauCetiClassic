@@ -1,4 +1,6 @@
 /mob/living/parasite/essence
+	alpha = 127
+	icon = 'icons/mob/human.dmi'
 	var/datum/changeling/changeling
 	var/flags_allowed = (ESSENCE_HIVEMIND | ESSENCE_PHANTOM | ESSENCE_POINT | ESSENCE_SPEAK_TO_HOST)
 	var/obj/effect/essence_phantom/phantom
