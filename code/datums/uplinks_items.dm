@@ -407,7 +407,7 @@
 	desc = "A syringe disguised as a functional pen, filled with a neuromuscular-blocking drug that renders a target immobile on injection and makes them seem dead to observers. \
 	Side effects of the drug include noticeable drooling. The pen holds one dose of paralyzing agent, and cannot be refilled."
 	item = /obj/item/weapon/pen/paralysis
-	cost = 4
+	cost = 11
 	excludefrom = list(/datum/game_mode/nuclear)
 	excludefrom_uplinks = list("nuclear")
 
