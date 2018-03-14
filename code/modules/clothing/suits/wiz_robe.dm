@@ -18,12 +18,12 @@
 	body_parts_covered = HEAD|FACE
 
 /obj/item/clothing/head/wizard/marisa
-	name = "Witch Hat"
+	name = "witch hat"
 	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
 	icon_state = "marisa"
 
 /obj/item/clothing/head/wizard/magus
-	name = "Magus Helm"
+	name = "magus helm"
 	desc = "A mysterious helmet that hums with an unearthly power."
 	icon_state = "magus"
 	item_state = "magus"
@@ -35,7 +35,7 @@
 	icon_state = "amp"
 
 /obj/item/clothing/head/wizard/cap
-	name = "Gentlemans Cap"
+	name = "gentlemans cap"
 	desc = "A checkered gray flat cap woven together with the rarest of threads."
 	icon_state = "gentcap"
 
@@ -63,13 +63,13 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
 /obj/item/clothing/suit/wizrobe/wiz_blue
-	name = "Blue Jacket"
+	name = "blue jacket"
 	desc = "A stylish gem-lined jacket straight from deep space."
 	icon_state = "mage_jacket_blue"
 	item_state = "mage_jacket_blue"
 
 /obj/item/clothing/suit/wizrobe/wiz_red
-	name = "Red Jacket"
+	name = "red jacket"
 	desc = "A stylish gem-lined jacket straight from deep space."
 	icon_state = "mage_jacket_red"
 	item_state = "mage_jacket_red"
@@ -82,20 +82,20 @@
 
 
 /obj/item/clothing/suit/wizrobe/marisa
-	name = "Witch Robe"
+	name = "witch robe"
 	desc = "Magic is all about the spell power, ZE!"
 	icon_state = "marisa"
 	item_state = "marisarobe"
 
 /obj/item/clothing/suit/wizrobe/magusblue
-	name = "Magus Robe"
+	name = "magus robe"
 	desc = "A set of armoured robes that seem to radiate a dark power."
 	icon_state = "magusblue"
 	item_state = "magusblue"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/clothing/suit/wizrobe/magusred
-	name = "Magus Robe"
+	name = "magus robe"
 	desc = "A set of armoured robes that seem to radiate a dark power."
 	icon_state = "magusred"
 	item_state = "magusred"
@@ -108,7 +108,7 @@
 	item_state = "psyamp"
 
 /obj/item/clothing/suit/wizrobe/gentlecoat
-	name = "Gentlemans Coat"
+	name = "gentlemans coat"
 	desc = "A heavy threaded twead gray jacket. For a different sort of Gentleman."
 	icon_state = "gentlecoat"
 	item_state = "gentlecoat"
@@ -122,13 +122,13 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/head/wizard/marisa/fake
-	name = "Witch Hat"
+	name = "witch hat"
 	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
 	icon_state = "marisa"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/wizrobe/marisa/fake
-	name = "Witch Robe"
+	name = "witch robe"
 	desc = "Magic is all about the spell power, ZE!"
 	icon_state = "marisa"
 	item_state = "marisarobe"

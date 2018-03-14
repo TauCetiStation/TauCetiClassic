@@ -19,7 +19,7 @@
 	icon_state = "helmet_warden"
 
 /obj/item/clothing/head/helmet/HoS
-	name = "Head of Security Hat"
+	name = "head of security hat"
 	desc = "The hat of the Head of Security. For showing the officers who's in charge."
 	icon_state = "hoscap"
 	flags = HEADCOVERSEYES
@@ -29,7 +29,7 @@
 	siemens_coefficient = 0.8
 
 /obj/item/clothing/head/helmet/HoS/dermal
-	name = "Dermal Armour Patch"
+	name = "dermal armour patch"
 	desc = "You're not quite sure how you manage to take it on and off, but it implants nicely in your head."
 	icon_state = "dermal"
 	item_state = "dermal"
@@ -100,7 +100,7 @@
 	siemens_coefficient = 0.3
 
 /obj/item/clothing/head/helmet/thunderdome
-	name = "\improper Thunderdome helmet"
+	name = "\improper thunderdome helmet"
 	desc = "<i>'Let the battle commence!'</i>"
 	icon_state = "thunderdome"
 	flags = HEADCOVERSEYES
