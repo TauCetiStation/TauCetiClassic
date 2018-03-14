@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 16
+#define SAVEFILE_VERSION_MAX 18
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -49,11 +49,19 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["aooccolor"] << S["ooccolor"]
 		aooccolor = ooccolor
 
-//datum/preferences/proc/update_character(current_version, savefile/S)
-	/* JUST AN EXAMPLE
-	if(current_version < 10)
-		toggles |= MEMBER_PUBLIC
-	*/
+/datum/preferences/proc/update_character(current_version, savefile/S)
+	if(current_version < 18)
+		ResetJobs()
+		if(language && species && language != "None")
+			var/datum/language/lang = all_languages[language]
+			if(!(species in lang.allowed_species))
+				language = "None"
+				S["language"] << language
+	if(current_version < 17)
+		for(var/organ_name in organ_data)
+			if(organ_name in list("r_hand", "l_hand", "r_foot", "l_foot"))
+				organ_data -= organ_name
+				S["organ_data"] -= organ_name
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
@@ -223,8 +231,8 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
-	//if(needs_update >= 0)
-	//	update_character(needs_update, S) // needs_update == savefile_version if we need an update (positive integer)
+	if(needs_update >= 0)
+		update_character(needs_update, S) // needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))

@@ -194,42 +194,37 @@
 	var/slab_nutrition = src.occupant.nutrition / 15
 
 	// Some mobs have specific meat item types.
-	if(istype(src.occupant,/mob/living/simple_animal))
-		var/mob/living/simple_animal/critter = src.occupant
-		if(critter.meat_amount)
-			slab_count = critter.meat_amount
-		if(critter.meat_type)
-			slab_type = critter.meat_type
-	else if(istype(src.occupant,/mob/living/carbon/human))
-		slab_name = src.occupant.real_name
+	if(ishuman(occupant))
+		slab_name = occupant.real_name
 		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/human
-	else if(istype(src.occupant, /mob/living/carbon/monkey))
+	else if(ismonkey(occupant))
 		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
 
 	// Small mobs don't give as much nutrition.
-	if(src.occupant.small)
+	if(occupant.small)
 		slab_nutrition *= 0.5
 	slab_nutrition /= slab_count
 
 	spawn(gibtime)
-		for(var/i=1 to slab_count)
-			var/obj/item/weapon/reagent_containers/food/snacks/meat/new_meat = new slab_type(get_turf(get_step(src, 8)))
-			new_meat.name = "[slab_name] [new_meat.name]"
-			new_meat.reagents.add_reagent("nutriment",slab_nutrition)
+		if(iscarbon(occupant))
+			for(var/i=1 to slab_count)
+				var/obj/item/weapon/reagent_containers/food/snacks/meat/new_meat = new slab_type(get_turf(get_step(src, 8)))
+				new_meat.name = "[slab_name] [new_meat.name]"
+				new_meat.reagents.add_reagent("nutriment", slab_nutrition)
 
-			if(src.occupant.reagents)
-				src.occupant.reagents.trans_to(new_meat, round(occupant.reagents.total_volume/slab_count,1))
+				if(occupant.reagents)
+					occupant.reagents.trans_to(new_meat, round(occupant.reagents.total_volume/slab_count, 1))
 
-		src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
+		occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
 		user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
 		msg_admin_attack("[user.name] ([user.ckey]) gibbed [src.occupant] ([src.occupant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		src.occupant.ghostize(bancheck = TRUE)
+		occupant.ghostize(bancheck = TRUE)
 
-		src.operating = 0
-		src.occupant.gib()
+		operating = 0
+		occupant.gib()
 		qdel(src.occupant)
-		src.occupant = null
+		occupant = null
 
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = 0

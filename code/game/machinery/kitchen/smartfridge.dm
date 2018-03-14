@@ -72,21 +72,16 @@
 
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
 	if(istype(O,/obj/item/weapon/storage/pill_bottle))
-		if(O.contents.len)
-			for(var/obj/item/I in O)
-				if(!accept_check(I))
-					return 0
-			return 1
-		return 0
+		return TRUE
 	if(!istype(O,/obj/item/weapon/reagent_containers))
-		return 0
+		return FALSE
 	if(istype(O,/obj/item/weapon/reagent_containers/pill)) // empty pill prank ok
-		return 1
+		return TRUE
 	if(!O.reagents || !O.reagents.reagent_list.len) // other empty containers not accepted
-		return 0
+		return FALSE
 	if(istype(O,/obj/item/weapon/reagent_containers/syringe) || istype(O,/obj/item/weapon/reagent_containers/glass/bottle) || istype(O,/obj/item/weapon/reagent_containers/glass/beaker) || istype(O,/obj/item/weapon/reagent_containers/spray))
-		return 1
-	return 0
+		return TRUE
+	return FALSE
 
 /obj/machinery/smartfridge/secure/extract
 	name = "\improper Slime Extract Storage"
@@ -126,15 +121,6 @@
 	if(istype(O,/obj/item/weapon/reagent_containers/glass/beaker/vial/))
 		return 1
 	if(istype(O,/obj/item/weapon/virusdish/))
-		return 1
-	return 0
-
-/obj/machinery/smartfridge/chemistry
-	name = "\improper Smart Chemical Storage"
-	desc = "A refrigerated storage unit for medicine and chemical storage."
-
-/obj/machinery/smartfridge/chemistry/accept_check(obj/item/O)
-	if(istype(O,/obj/item/weapon/storage/pill_bottle) || istype(O,/obj/item/weapon/reagent_containers))
 		return 1
 	return 0
 
@@ -211,7 +197,7 @@
 	if(accept_check(O))
 		if(contents.len >= max_n_of_items)
 			to_chat(user, "<span class='notice'>\The [src] is full.</span>")
-			return 1
+			return
 		else
 			user.remove_from_mob(O)
 			O.loc = src
@@ -224,34 +210,34 @@
 
 			nanomanager.update_uis(src)
 
-	else if(istype(O, /obj/item/weapon/storage/bag/plants))
-		var/obj/item/weapon/storage/bag/plants/P = O
-		var/plants_loaded = 0
-		for(var/obj/G in P.contents)
-			if(accept_check(G))
+	else if(istype(O, /obj/item/weapon/storage)) // fastload from userstorage
+		var/obj/item/weapon/storage/S = O
+		var/item_loaded = 0
+		for(var/obj/I in S.contents)
+			if(accept_check(I))
 				if(contents.len >= max_n_of_items)
 					to_chat(user, "<span class='notice'>\The [src] is full.</span>")
-					return 1
+					return
 				else
-					P.remove_from_storage(G,src)
-					if(item_quants[G.name])
-						item_quants[G.name]++
+					S.remove_from_storage(I,src)
+					if(item_quants[I.name])
+						item_quants[I.name]++
 					else
-						item_quants[G.name] = 1
-					plants_loaded++
-		if(plants_loaded)
+						item_quants[I.name] = 1
+					item_loaded++
 
+		if(item_loaded)
 			user.visible_message( \
-				"<span class='notice'>[user] loads \the [src] with \the [P].</span>", \
-				"<span class='notice'>You load \the [src] with \the [P].</span>")
-			if(P.contents.len > 0)
+				"<span class='notice'>[user] loads \the [src] with \the [S].</span>", \
+				"<span class='notice'>You load \the [src] with \the [S].</span>")
+			if(S.contents.len > 0)
 				to_chat(user, "<span class='notice'>Some items are refused.</span>")
 
 		nanomanager.update_uis(src)
-
+		return
 	else
 		to_chat(user, "<span class='notice'>\The [src] smartly refuses [O].</span>")
-		return 1
+		return
 
 /obj/machinery/smartfridge/secure/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/weapon/card/emag))

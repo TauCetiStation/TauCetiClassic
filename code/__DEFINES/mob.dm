@@ -20,12 +20,8 @@
 #define BP_HEAD   "head"
 #define BP_L_ARM  "l_arm"
 #define BP_R_ARM  "r_arm"
-#define BP_L_HAND "l_hand"
-#define BP_R_HAND "r_hand"
 #define BP_L_LEG  "l_leg"
 #define BP_R_LEG  "r_leg"
-#define BP_L_FOOT "l_foot"
-#define BP_R_FOOT "r_foot"
 
 // Organ defines.
 #define O_MOUTH    "mouth"
@@ -105,6 +101,15 @@
 // By defining the effect multiplier this way, it'll exactly adjust
 // all effects according to how they originally were with the 0.4 metabolism
 #define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
+
+// Factor of how fast mob nutrition decreases
+#define	HUNGER_FACTOR 0.1
+
+// Taste sensitivity - the more the more reagents you'll taste
+#define TASTE_SENSITIVITY_NORMAL 1
+#define TASTE_SENSITIVITY_SHARP 1.5
+#define TASTE_SENSITIVITY_DULL 0.75
+#define TASTE_SENSITIVITY_NO_TASTE 0
 
 //Ian can lick or sniff
 #define IAN_STANDARD 0

@@ -44,6 +44,10 @@
 
 	return src.traumatic_shock
 
+/mob/living/carbon/human/updateshock()
+	if (species && species.flags[NO_PAIN])
+		return
+	..()
 
 /mob/living/carbon/proc/handle_shock()
 	updateshock()

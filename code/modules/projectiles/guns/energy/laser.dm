@@ -128,13 +128,14 @@ obj/item/weapon/gun/energy/laser/retro
 	name = "laser cannon"
 	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
 	icon_state = "lasercannon"
+	item_state = null
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
 
 	fire_delay = 20
 
-	isHandgun()
-		return 0
+/obj/item/weapon/gun/energy/lasercannon/isHandgun()
+	return 0
 
 /obj/item/weapon/gun/energy/lasercannon/cyborg/newshot()
 	if(isrobot(src.loc))

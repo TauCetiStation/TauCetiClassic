@@ -25,7 +25,11 @@
 		return 0
 
 	if(M == user)
-		to_chat(M, "\blue You swallow a gulp of [src].")
+		if(isliving(M))
+			var/mob/living/L = M
+			if(taste)
+				L.taste_reagents(src.reagents)
+		to_chat(M, "<span class='notice'>You swallow a gulp of [src].</span>")
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
 			reagents.reaction(M, INGEST)

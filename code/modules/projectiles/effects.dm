@@ -15,7 +15,8 @@
 		transform = M
 
 /obj/effect/projectile/proc/activate()
-	QDEL_IN(src, time_to_live)
+	if(time_to_live)
+		QDEL_IN(src, time_to_live)
 
 //----------------------------
 // Laser beam

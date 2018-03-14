@@ -196,10 +196,9 @@
 			return
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
-					if(V.stealth_active)
-						V.DeactivateStealth()
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+				var/obj/item/clothing/suit/V = H.wear_suit
+				V.attack_reaction(H, REACTION_ITEM_TAKEOFF)
 			if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
 				if(!user.delay_clothing_u_equip(src))
 					return 0
@@ -212,6 +211,12 @@
 		if(isliving(src.loc))
 			return
 		user.SetNextMove(CLICK_CD_RAPID)
+
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+				var/obj/item/clothing/suit/V = H.wear_suit
+				V.attack_reaction(H, REACTION_ITEM_TAKE)
 
 	if(QDELETED(src) || freeze_movement) // remove_from_mob() may remove DROPDEL items, so...
 		return

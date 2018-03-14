@@ -31,7 +31,7 @@
 /obj/item/weapon/holder/pickup(mob/user)
 	user.status_flags |= PASSEMOTES
 
-/obj/item/weapon/holder/dropped(mob/living/user)
+/obj/item/weapon/holder/dropped(mob/living/carbon/user)
 	..()
 	user.remove_passemotes_flag()
 

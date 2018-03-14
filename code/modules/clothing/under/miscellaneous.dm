@@ -103,7 +103,7 @@
 	w_class = 4//bulky item
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS //Needs gloves and shoes with cold protection to be fully protected.
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 
@@ -115,9 +115,9 @@
 	desc = "it's a cybernetically enhanced jumpsuit used for administrative duties."
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.01
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	armor = list(melee = 100, bullet = 100, laser = 100,energy = 100, bomb = 100, bio = 100, rad = 100)
-	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
+	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0
 
@@ -155,7 +155,7 @@
 	icon_state = "psysuit"
 	item_state = "psysuit"
 	item_color = "psysuit"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
 /obj/item/clothing/under/gentlesuit
 	name = "Gentlemans Suit"
@@ -318,7 +318,7 @@
 	icon_state = "kilt"
 	item_state = "kilt"
 	item_color = "kilt"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|FEET
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
 /obj/item/clothing/under/sexymime
 	name = "sexy mime outfit"
@@ -375,6 +375,30 @@
 	desc = "A old western inspired gown for the girl who likes to drink."
 	icon_state = "dress_saloon"
 	item_color = "dress_saloon"
+
+/obj/item/clothing/under/dress/dress_summer
+	name = "summer dress"
+	desc = "Ruffle your way through the season in this sweet, sunshine green dress."
+	icon_state = "dress_summer"
+	item_color = "dress_summer"
+
+/obj/item/clothing/under/dress/dress_vintage
+	name = "vintage dress"
+	desc = "Take a swan dive into vintage love, dames!"
+	icon_state = "dress_vintage"
+	item_color = "dress_vintage"
+
+/obj/item/clothing/under/dress/dress_evening
+	name = "elegant evening dress"
+	desc = "A stylish gown perfect for a wedding-guest dress, ball gown or your next formal celebration."
+	icon_state = "dress_evening"
+	item_color = "dress_evening"
+
+/obj/item/clothing/under/dress/dress_party
+	name = "party dress"
+	desc = "The party doesn’t start ’til you walk in, so make an entrance no one can ignore."
+	icon_state = "dress_party"
+	item_color = "dress_party"
 
 
 /obj/item/clothing/under/dress/dress_cap

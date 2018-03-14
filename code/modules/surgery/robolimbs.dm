@@ -141,9 +141,9 @@
 /datum/surgery_step/limb/attach/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
 		var/obj/item/robot_parts/p = tool
-		if (p.part)
-			if (!(target_zone in p.part))
-				return 0
+		if (target_zone != p.part)
+			to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
+			return 0
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 		return (BP.status & ORGAN_ATTACHABLE)
 

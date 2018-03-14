@@ -218,3 +218,18 @@
 	name = "\improper sign TO THE MORGUE"
 	desc = "Current disposal unit leads straight to the morgue. Bring out your dead!"
 	icon_state = "morgue_disposal"
+
+/obj/structure/sign/chinese
+	name = "\improper chinese restaurant sign"
+	desc = "A glowing dragon invites you in."
+	icon_state = "chinese"
+
+/obj/structure/sign/nanotrasen
+	name = "\improper Nanotrasen Logo"
+	desc = "A sign with the Nanotrasen Logo on it. Glory to Nanotrasen!"
+	icon_state = "nanotrasen"
+
+/obj/structure/sign/enginesafety
+	name = "\improper ENGINEERING SAFETY"
+	desc = "A sign detailing the various safety protocols when working on-site to ensure a safe shift."
+	icon_state = "safety"

@@ -87,6 +87,8 @@
 		else
 			M.key = brainmob.key
 
+		M.dna = brainmob.dna
+
 		M:brain_op_stage = 3.0
 
 		qdel(src)

@@ -79,6 +79,7 @@
 	var/deathtime_required = 18000	//30 minutes
 
 	var/usealienwhitelist = 0
+	var/use_alien_job_restriction = 0
 	var/limitalienplayers = 0
 	var/alien_to_human_ratio = 0.5
 	var/list/whitelisted_species_by_time = list()
@@ -88,6 +89,8 @@
 	var/wikiurl
 	var/forumurl
 	var/media_base_url = "http://example.org"
+	var/server_rules_url
+	var/discord_invite_url
 
 	//Alert level description
 	var/alert_desc_green = "All threats to the station have passed. Security may not have weapons visible, privacy laws are once again fully enforced."
@@ -354,6 +357,12 @@
 				if("media_base_url")
 					media_base_url = value
 
+				if ("server_rules_url")
+					server_rules_url = value
+
+				if ("discord_invite_url")
+					discord_invite_url = value
+
 				if("serverwhitelist_message")
 					config.serverwhitelist_message = value
 
@@ -447,6 +456,9 @@
 
 				if("usealienwhitelist")
 					usealienwhitelist = 1
+
+				if("use_alien_job_restriction")
+					config.use_alien_job_restriction = 1
 
 				if("alien_available_by_time") //totally not copypaste from probabilities
 					var/avail_time_sep = findtext(value, " ")

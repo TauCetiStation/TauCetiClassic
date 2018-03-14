@@ -129,7 +129,7 @@
 	set waitfor = 0
 	return
 
-/mob/proc/incapacitated(restrained_type = HANDS)
+/mob/proc/incapacitated(restrained_type = ARMS)
 	return
 
 /mob/proc/restrained()

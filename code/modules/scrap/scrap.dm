@@ -130,8 +130,8 @@ var/global/list/scrap_base_cache = list()
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags[IS_SYNTHETIC])
 				return
-			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & FEET) ) )
-				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_FOOT , BP_R_FOOT)]
+			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & LEGS) ) )
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 				if(BP.status & ORGAN_ROBOT)
 					return
 				to_chat(M, "<span class='danger'>You step on the sharp debris!</span>")
@@ -198,7 +198,7 @@ var/global/list/scrap_base_cache = list()
 			return 0
 		if(victim.gloves)
 			return 0
-		var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_HAND , BP_R_HAND)]
+		var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
 		if(!BP)
 			return 0
 		if(BP.status & ORGAN_ROBOT)

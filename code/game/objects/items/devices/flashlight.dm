@@ -87,6 +87,14 @@
 	else
 		return ..()
 
+/obj/item/device/flashlight/seclite
+	name = "seclite"
+	desc = "A robust flashlight used by security."
+	icon_state = "seclite"
+	item_state = "seclite"
+	force = 7 // Not as good as a stun baton.
+	hitsound = 'sound/weapons/genhit1.ogg'
+
 /obj/item/device/flashlight/pen
 	name = "penlight"
 	desc = "A pen-sized light, used by medical staff."

@@ -221,7 +221,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/blob_act()
 	if(stat == DEAD)	return
 	to_chat(src, "<span class='danger'>\The blob attacks you!</span>")
-	var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
+	var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 	var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, "melee"))
 	return
@@ -254,20 +254,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
+		var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 		var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 		var/armor = run_armor_check(BP, "melee")
 		apply_damage(damage, BRUTE, BP, armor)
 		if(armor >= 2)	return
-
-
-/mob/living/carbon/human/proc/is_loyalty_implanted(mob/living/carbon/human/M)
-	for(var/L in M.contents)
-		if(istype(L, /obj/item/weapon/implant/loyalty))
-			for(var/obj/item/organ/external/BP in M.bodyparts)
-				if(L in BP.implants)
-					return 1
-	return 0
 
 /mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M)
 	if(M.Victim) return // can't attack while eating!
@@ -331,9 +322,15 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	return
 
+/mob/living/carbon/human/proc/canusetwohands() // На случай если вернутся к ладошкам, заменить упоминание рук на ладошки.
+	var/obj/item/organ/external/l_arm/BPL = bodyparts_by_name[BP_L_ARM]
+	var/obj/item/organ/external/r_arm/BPR = bodyparts_by_name[BP_R_ARM]
+	if(BPL.is_broken() || BPR.is_broken() || !BPL.is_usable() || !BPR.is_usable())
+		return FALSE
+	return TRUE
 
-/mob/living/carbon/human/restrained(check_type = HANDS)
-	if ((check_type & HANDS) && handcuffed)
+/mob/living/carbon/human/restrained(check_type = ARMS)
+	if ((check_type & ARMS) && handcuffed)
 		return TRUE
 	if ((check_type & LEGS) && legcuffed)
 		return TRUE
@@ -484,7 +481,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(NO_SHOCK in src.mutations)	return 0 //#Z2 no shock with that mutation.
 
 	if(!def_zone)
-		def_zone = pick(BP_L_HAND , BP_R_HAND)
+		def_zone = pick(BP_L_ARM , BP_R_ARM)
 
 	var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 
@@ -1624,3 +1621,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(BP && (BP.status & ORGAN_ROBOT))
 		return FALSE
 	return species.has_organ[organ_check]
+
+/mob/living/carbon/human/can_eat(flags = DIET_ALL)
+	return species && (species.dietflags & flags)
+
+/mob/living/carbon/human/get_taste_sensitivity()
+	if(species)
+		return species.taste_sensitivity
+	else
+		return 1

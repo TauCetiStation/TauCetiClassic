@@ -20,9 +20,9 @@
 	var/silenced = 0
 	var/recoil = 0
 	var/clumsy_check = 1
+	var/can_suicide_with = TRUE
 	var/tmp/list/mob/living/target //List of who yer targeting.
 	var/tmp/lock_time = -100
-	var/tmp/mouthshoot = 0 ///To stop people from suiciding twice... >.>
 	var/automatic = 0 //Used to determine if you can target multiple people.
 	var/tmp/mob/living/last_moved_mob //Used to fire faster at more than one person.
 	var/tmp/told_cant_shoot = 0 //So that it doesn't spam them with the fact they cannot hit them.
@@ -100,15 +100,9 @@
 			if(user.dna && user.dna.mutantrace == "adamantine")
 				to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
 				return
-			if(H.wear_suit)
-				if(istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-					for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
-						if(V.stealth_active)
-							V.DeactivateStealth()
-				if(istype(H.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
-					for(var/obj/item/clothing/suit/space/vox/stealth/V in list(H.wear_suit))
-						if(V.on)
-							V.overload()
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+				var/obj/item/clothing/suit/V = H.wear_suit
+				V.attack_reaction(H, REACTION_GUN_FIRE)
 
 			if(clumsy_check) //it should be AFTER hulk or monkey check.
 				var/going_to_explode = 0
@@ -169,19 +163,18 @@
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
 	//Suicide handling.
-	if (M == user && def_zone == O_MOUTH && !mouthshoot)
+	if (M == user && def_zone == O_MOUTH)
+		if(user.is_busy())
+			return
+		if(!can_suicide_with)
+			to_chat(user, "<span class='notice'>You have tried to commit suicide, but couldn't do it with [src].</span>")
+			return
 		if(isrobot(user))
 			to_chat(user, "<span class='notice'>You have tried to commit suicide, but couldn't do it.</span>")
 			return
-		if(istype(src, /obj/item/weapon/gun/magic/staff))
-			to_chat(user, "<span class='notice'>Get rid of the habit of holding different sticks in your mouth.</span>")
-			return
-		if(user.is_busy()) return
-		mouthshoot = 1
 		M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
 		if(!do_after(user, 40, target = user))
 			M.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
-			mouthshoot = 0
 			return
 		if (can_fire())
 			user.visible_message("<span class = 'warning'>[user] pulls the trigger.</span>")
@@ -192,13 +185,11 @@
 			if(istype(chambered.BB, /obj/item/projectile/beam/lastertag) || istype(chambered.BB, /obj/item/projectile/beam/practice))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel rather silly, trying to commit suicide with a toy.</span>")
-				mouthshoot = 0
 				return
 			if(istype(chambered.BB, /obj/item/projectile/bullet/chameleon))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel weakness and the taste of gunpowder, but no more.</span>")
 				user.apply_effect(5,WEAKEN,0)
-				mouthshoot = 0
 				return
 
 			chambered.BB.on_hit(M)
@@ -211,12 +202,10 @@
 			chambered.BB = null
 			chambered.update_icon()
 			update_icon()
-			mouthshoot = 0
 			process_chamber()
 			return
 		else
 			click_empty(user)
-			mouthshoot = 0
 			return
 
 	if (can_fire())

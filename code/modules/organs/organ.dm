@@ -137,7 +137,7 @@
 	if(istype(buckled, /obj/structure/stool))
 		return
 
-	for(var/limb_tag in list(BP_L_LEG, BP_R_LEG, BP_L_FOOT, BP_R_FOOT))
+	for(var/limb_tag in list(BP_L_LEG, BP_R_LEG))
 		var/obj/item/organ/external/E = bodyparts_by_name[limb_tag]
 		if(!E || !E.is_usable())
 			stance_damage += 2 // let it fail even if just foot&leg
