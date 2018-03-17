@@ -85,7 +85,8 @@
 	desc = "A sign with adhesive backing."
 	icon = 'icons/obj/decals.dmi'
 	icon_state = "backing"
-	w_class = 4
+	item_state = "sheet-metal"
+	w_class = ITEM_SIZE_LARGE
 	var/sign_path = /obj/structure/sign/basic //the type of sign that will be created when placed on a turf
 
 /obj/item/sign_backing/afterattack(atom/target, mob/user, proximity)
@@ -105,7 +106,7 @@
 	icon_state = "nanotrasen"
 
 /obj/structure/sign/mark
-	layer = 2
+	layer = TURF_LAYER
 	icon = 'icons/misc/mark.dmi'
 	name = "\improper Symbol"
 	desc = "You look at a symbol."
