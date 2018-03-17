@@ -331,7 +331,6 @@
 		unbuckle_mob()
 	else if(do_after(usr, 30, 1, src))
 		M.loc = loc
-		..()
 
 /obj/machinery/washing_machine/post_buckle_mob(mob/living/M)
 	..()
