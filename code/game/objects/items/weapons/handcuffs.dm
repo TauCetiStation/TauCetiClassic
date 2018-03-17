@@ -113,6 +113,13 @@
 	dispenser = 1
 
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
+	if(ishuman(C))
+		var/mob/living/carbon/human/target = C
+		var/obj/item/organ/external/l_arm/BPL = target.bodyparts_by_name[BP_L_ARM]
+		var/obj/item/organ/external/r_arm/BPR = target.bodyparts_by_name[BP_R_ARM]
+		if(!BPL.is_usable() || !BPR.is_usable())
+			to_chat(user, "<span class = 'warning'>[target] has to have both of \his hands intact to be restrained.</span>")
+			return
 	if(!C.handcuffed)
 		var/turf/p_loc = user.loc
 		var/turf/p_loc_m = C.loc
