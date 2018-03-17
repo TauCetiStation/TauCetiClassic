@@ -63,7 +63,15 @@
 /obj/structure/sign/departments/medbay
 	name = "\improper MEDBAY"
 	desc = "The Intergalactic symbol of Medical institutions. You'll probably get help here."
-	icon_state = "bluecross"
+	icon_state = "greencross"
 
 /obj/structure/sign/departments/medbay/alt
-	icon_state = "bluecross2"
+	icon_state = "greencross2"
+
+/obj/structure/sign/departments/medbay/old
+	icon_state = "greencross4"
+
+/obj/structure/sign/departments/medbay/lifestar
+	name = "\improper LIFESTAR"
+	desc = "The Star of Life is a blue, six-pointed star, outlined with a white border which features the rod of Asclepius in the center"
+	icon_state = "lifestar"

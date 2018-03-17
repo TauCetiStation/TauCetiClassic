@@ -3,7 +3,6 @@
 /obj/structure/sign/map
 	name = "station map"
 	desc = "A framed picture of the station."
-	integrity = 500
 
 /obj/structure/sign/map/left
 	icon_state = "map-left"
@@ -45,3 +44,23 @@
 	name = "command department"
 	desc = "A direction sign, pointing out which way the Command department is."
 	icon_state = "direction_bridge"
+
+/obj/structure/sign/deck/bridge
+	name = "\improper Bridge Deck"
+	icon_state = "deck-b"
+
+/obj/structure/sign/deck/first
+	name = "\improper First Deck"
+	icon_state = "deck-1"
+
+/obj/structure/sign/deck/second
+	name = "\improper Second Deck"
+	icon_state = "deck-2"
+
+/obj/structure/sign/deck/third
+	name = "\improper Third Deck"
+	icon_state = "deck-3"
+
+/obj/structure/sign/deck/fourth
+	name = "\improper Fourth Deck"
+	icon_state = "deck-4"

@@ -1,11 +1,10 @@
 /obj/structure/sign
 	icon = 'icons/obj/decals.dmi'
-	anchored = 1
-	opacity = 0
-	density = 0
+	anchored = TRUE
+	opacity = FALSE
+	density = FALSE
 	layer = SIGN_LAYER
-	var/integrity = 100
-	var/buildable_sign = 1 //unwrenchable and modifiable
+	var/buildable_sign = TRUE //unwrenchable and modifiable
 
 /obj/structure/sign/atom_init()
 	. = ..()
@@ -15,23 +14,13 @@
 	desc = "How can signs be real if our eyes aren't real?"
 	icon_state = "backing"
 
-/obj/structure/sign/proc/play_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
-	switch(damage_type)
-		if(BRUTE)
-			if(damage_amount)
-				playsound(src.loc, 'sound/weapons/slash.ogg', 80, 1)
-			else
-				playsound(loc, 'sound/weapons/tap.ogg', 50, 1)
-		if(BURN)
-			playsound(loc, 'sound/items/welder.ogg', 80, 1)
-
 /obj/structure/sign/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && buildable_sign)
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>",
 							 "<span class='notice'>You start unfastening [src].</span>")
-		playsound(user, 'sound/items/ratchet.ogg', 50, 1)
+		playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
 		if(do_after(user,40,target = src))
-			playsound(src, 'sound/items/deconstruct.ogg', 50, 1)
+			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] unfastens [src].</span>",
 								 "<span class='notice'>You unfasten [src].</span>")
 			var/obj/item/sign_backing/SB = new (get_turf(user))
@@ -39,7 +28,7 @@
 			SB.sign_path = type
 			qdel(src)
 		return
-	else if(istype(W, /obj/item/weapon/pen) && buildable_sign)
+	else if(istype(W, /obj/item/weapon/airlock_painter) && buildable_sign)
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
 		"Hydroponics", "Xenobiology")
 		var/obj/structure/sign/sign_type
@@ -83,6 +72,7 @@
 		//It's import to clone the pixel layout information
 		//Otherwise signs revert to being on the turf and
 		//move jarringly
+		playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1)
 		var/obj/structure/sign/newsign = new sign_type(get_turf(src))
 		newsign.pixel_x = pixel_x
 		newsign.pixel_y = pixel_y
@@ -114,7 +104,26 @@
 	desc = "A sign with the Nanotrasen Logo on it. Glory to Nanotrasen!"
 	icon_state = "nanotrasen"
 
-/obj/structure/sign/logo
-	name = "nanotrasen logo"
-	desc = "The Nanotrasen corporate logo."
-	icon_state = "nanotrasen_sign1"
+/obj/structure/sign/mark
+	layer = 2
+	icon = 'icons/misc/mark.dmi'
+	name = "\improper Symbol"
+	desc = "You look at a symbol."
+	icon_state = "b1"
+
+/obj/structure/sign/mark/symbol_b
+	icon = 'icons/misc/blue_symbol.dmi'
+	icon_state = "C"
+
+/obj/structure/sign/chinese
+	name = "\improper chinese restaurant sign"
+	desc = "A glowing dragon invites you in."
+	icon_state = "chinese"
+	light_color = "#d00023"
+	light_power = 1
+	light_range = 3
+
+/obj/structure/sign/monkey_painting
+	name = "\improper Mr. Deempisi portrait"
+	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'"
+	icon_state = "monkey_painting"

@@ -96,11 +96,11 @@ What is the naming convention for planes or layers?
 #define DOOR_LAYER                 2.82
 #define BELOW_MACHINERY_LAYER      2.83 // Currently for grilles only, because they should be below machinery
 #define DEFAULT_MACHINERY_LAYER    2.85 // Every /obj/machinery by default have this layer
-//define OBJ_LAYER                  3 // For easy recordkeeping; this is a byond define
+//#define OBJ_LAYER                  3 // For easy recordkeeping; this is a byond define
 #define SHUTTERS_LAYER             3.1
 #define ABOVE_WINDOW_LAYER         3.3
-#define BELOW_MOB_LAYER            3.7 //Currently used only by fluff struct in bluespace shelter
 #define SIGN_LAYER                 3.4 //Default value for /obj/structure/sign
+#define BELOW_MOB_LAYER            3.7 //Currently used only by fluff struct in bluespace shelter
 //#define MOB_LAYER                  4 // For easy recordkeeping; this is a byond define
 //#define FLY_LAYER                  5 // For easy recordkeeping; this is a byond define
 

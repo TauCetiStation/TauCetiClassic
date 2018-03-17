@@ -3,6 +3,9 @@
 	desc = "A warning sign."
 	icon_state = "securearea"
 
+/obj/structure/sign/warning/detailed
+	icon_state = "securearea2"
+
 /obj/structure/sign/warning/securearea
 	name = "\improper SECURE AREA"
 	desc = "A warning sign which reads 'SECURE AREA'."
@@ -26,6 +29,10 @@
 	desc = "A warning sign which reads 'HARD VACUUM AHEAD'."
 	icon_state = "space"
 
+/obj/structure/sign/warning/airlock
+	name = "\improper EXTERNAL AIRLOCK"
+	icon_state = "doors1"
+
 /obj/structure/sign/warning/vacuum/external
 	name = "\improper EXTERNAL AIRLOCK"
 	desc = "A warning sign which reads 'EXTERNAL AIRLOCK'."
@@ -35,6 +42,11 @@
 	name = "\improper DISPOSAL: LEADS TO SPACE"
 	desc = "A warning sign which reads 'DISPOSAL: LEADS TO SPACE'."
 	icon_state = "deathsposal"
+
+/obj/structure/sign/warning/morgue_disposal
+	name = "\improper sign TO THE MORGUE"
+	desc = "Current disposal unit leads straight to the morgue. Bring out your dead!"
+	icon_state = "morgue_disposal"
 
 /obj/structure/sign/warning/pods
 	name = "\improper ESCAPE PODS"
@@ -54,6 +66,11 @@
 /obj/structure/sign/warning/nosmoking/circle
 	icon_state = "nosmoking"
 
+/obj/structure/sign/warning/smoking
+	name = "\improper SMOKING"
+	desc = "Hell yeah."
+	icon_state = "smoking"
+
 /obj/structure/sign/warning/radiation
 	name = "\improper HAZARDOUS RADIATION"
 	desc = "A warning sign alerting the user of potential radiation hazards."
@@ -66,10 +83,34 @@
 /obj/structure/sign/warning/xeno_mining
 	name = "\improper DANGEROUS ALIEN LIFE"
 	desc = "A sign that warns would-be travellers of hostile alien life in the vicinity."
-	icon = 'icons/obj/mining.dmi'
 	icon_state = "xeno_warning"
 
 /obj/structure/sign/warning/enginesafety
 	name = "\improper ENGINEERING SAFETY"
 	desc = "A sign detailing the various safety protocols when working on-site to ensure a safe shift."
 	icon_state = "safety"
+
+/obj/structure/sign/warning/server_room
+	name = "\improper SERVER ROOM"
+	icon_state = "server"
+
+/obj/structure/sign/warning/lethal_turrets
+	name = "\improper LETHAL TURRETS"
+	icon_state = "turrets"
+	desc = "Enter at own risk!"
+
+/obj/structure/sign/warning/moving_parts
+	name = "\improper MOVING PARTS"
+	icon_state = "movingparts"
+
+/obj/structure/sign/warning/bomb_range
+	name = "\improper BOMB RANGE"
+	icon_state = "blast"
+
+/obj/structure/sign/warning/secure_area/armory
+	name = "\improper ARMORY"
+	icon_state = "armory"
+
+/obj/structure/sign/warning/mail_delivery
+	name = "\improper MAIL DELIVERY"
+	icon_state = "mail"
