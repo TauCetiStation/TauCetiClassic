@@ -26,8 +26,8 @@
 /datum/game_mode/revolution/rp_revolution/pre_setup()
 
 	for(var/mob/dead/new_player/player in player_list) //check if all heads want a revolution
-		if((player.mind.assigned_role in command_positions) && (ROLE_REV_HEAD in player.client.prefs.be_role))
-				return FALSE
+		if((player.mind.assigned_role in command_positions) && !(ROLE_REV_HEAD in player.client.prefs.be_role))
+			return FALSE
 
 	if(config.protect_roles_from_antagonist)
 		restricted_jobs += protected_jobs
