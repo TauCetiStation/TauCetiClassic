@@ -338,3 +338,8 @@
 		M.pixel_y = -10
 	else
 		M.pixel_y = 0
+
+/obj/machinery/washing_machine/process()
+	for(var/mob/living/M in loc)
+		if(state == 5)
+			shake_camera(M, 3, 1)
