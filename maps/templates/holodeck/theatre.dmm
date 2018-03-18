@@ -24,7 +24,7 @@
 "x" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet13-5"; dir = 4},/area/holodeck/source_theatre)
 "y" = (/turf/simulated/floor/holofloor{icon_state = "carpet9-4"; dir = 4},/area/holodeck/source_theatre)
 "z" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet1-0"},/area/holodeck/source_theatre)
-"A" = (/obj/structure/flora/pottedplant{icon_state = "plant-6"; tag = "icon-plant-6"},/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/area/holodeck/source_theatre)
+"A" = (/obj/structure/flora/pottedplant{icon_state = "plant-6"},/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/area/holodeck/source_theatre)
 "B" = (/turf/simulated/floor/holofloor{icon_state = "carpetsymbol"; dir = 6},/area/holodeck/source_theatre)
 
 (1,1,1) = {"
