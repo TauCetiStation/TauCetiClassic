@@ -4,7 +4,6 @@
 /obj/machinery/door/airlock
 	var/id_tag
 	var/suppres_next_status_send = FALSE
-	var/dock_tag
 
 
 /obj/machinery/door/airlock/receive_signal(datum/signal/signal)

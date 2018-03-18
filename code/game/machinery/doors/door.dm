@@ -27,6 +27,8 @@
 	var/door_open_sound  = 'sound/machines/airlock/airlockToggle_2.ogg'
 	var/door_close_sound = 'sound/machines/airlock/airlockToggle_2.ogg'
 
+	var/dock_tag
+
 /obj/machinery/door/atom_init()
 	. = ..()
 	if(density)
