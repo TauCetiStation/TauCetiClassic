@@ -9,14 +9,14 @@
 "ai" = (/obj/structure/scrap_cube,/turf/space,/area/space)
 "aj" = (/turf/simulated/shuttle/floor{icon_state = "floor3"},/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/derelict/ship)
 "ak" = (/turf/simulated/shuttle/wall{icon_state = "swall13"; dir = 2},/area/derelict/ship)
-"al" = (/turf/simulated/shuttle/wall{tag = "icon-swall12"; icon_state = "swall12"; dir = 2},/area/derelict/ship)
+"al" = (/turf/simulated/shuttle/wall{ icon_state = "swall12"; dir = 2},/area/derelict/ship)
 "am" = (/turf/simulated/shuttle/wall{icon_state = "swall11"; dir = 2},/area/derelict/ship)
 "an" = (/obj/machinery/computer/med_data,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
 "ao" = (/obj/effect/decal/cleanable/vomit,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
 "ap" = (/turf/simulated/shuttle/wall{icon_state = "swall15"; dir = 2},/area/derelict/ship)
 "aq" = (/turf/simulated/shuttle/plating,/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/derelict/ship)
-"ar" = (/turf/simulated/shuttle/wall{dir = 2; icon_state = "swall_f10"; layer = 2; tag = "icon-swall_f10"},/area/derelict/ship)
-"as" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/shuttle/engine/heater{tag = "icon-heater1 (EAST)"; icon_state = "heater1"; dir = 4},/turf/simulated/floor/plating/airless,/area/derelict/ship)
+"ar" = (/turf/simulated/shuttle/wall{dir = 2; icon_state = "swall_f10"; layer = 2},/area/derelict/ship)
+"as" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/shuttle/engine/heater{ icon_state = "heater1"; dir = 4},/turf/simulated/floor/plating/airless,/area/derelict/ship)
 "at" = (/turf/simulated/shuttle/floor{icon_state = "floor3"},/turf/simulated/shuttle/wall{icon_state = "swall_f10"; dir = 2},/area/derelict/ship)
 "au" = (/obj/item/weapon/scalpel,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
 "av" = (/turf/simulated/shuttle/wall{icon_state = "swall7"; dir = 2},/area/derelict/ship)
@@ -114,7 +114,7 @@
 "cj" = (/obj/machinery/vending/tool,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
 "ck" = (/obj/machinery/light/small,/obj/machinery/constructable_frame/machine_frame,/obj/structure/cable,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
 "cl" = (/obj/structure/table,/obj/item/device/radio/off,/obj/item/device/radio/off,/obj/item/device/radio/off,/obj/item/device/radio/off,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/derelict/ship)
-"cm" = (/turf/simulated/shuttle/wall{tag = "icon-swall_f9"; icon_state = "swall_f9"; dir = 2},/area/derelict/ship)
+"cm" = (/turf/simulated/shuttle/wall{ icon_state = "swall_f9"; dir = 2},/area/derelict/ship)
 "cn" = (/obj/structure/shuttle/engine/propulsion{dir = 4; icon_state = "burst_r"},/turf/space,/area/derelict/ship)
 "hq" = (/turf/simulated/wall/r_wall,/area/AIsattele)
 "hr" = (/obj/structure/computerframe,/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/plating/airless,/area/AIsattele)
@@ -391,4 +391,3 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
-
