@@ -417,11 +417,11 @@ var/datum/subsystem/shuttle/SSshuttle
 			return 1
 
 /datum/subsystem/shuttle/proc/dock_act(area_type, door_tag)
-
+	//todo post_signal?
 	var/area/A = ispath(area_type) ? locate(area_type) : area_type
 
 	for(var/obj/machinery/door/DOOR in A)
-		if(DOOR.tag == door_tag)
+		if(DOOR.dock_tag == door_tag)
 			if(istype(DOOR, /obj/machinery/door/airlock))
 				var/obj/machinery/door/airlock/D = DOOR
 				D.unbolt()
@@ -431,11 +431,11 @@ var/datum/subsystem/shuttle/SSshuttle
 				D.open()
 
 /datum/subsystem/shuttle/proc/undock_act(area_type, door_tag)
-
+	//todo post_signal?
 	var/area/A = ispath(area_type) ? locate(area_type) : area_type
 
 	for(var/obj/machinery/door/DOOR in A)
-		if(DOOR.tag == door_tag)
+		if(DOOR.dock_tag == door_tag)
 			if(istype(DOOR, /obj/machinery/door/airlock))
 				var/obj/machinery/door/airlock/D = DOOR
 				D.close_unsafe(TRUE)
