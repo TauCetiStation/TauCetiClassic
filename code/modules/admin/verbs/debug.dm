@@ -617,6 +617,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"security officer",
 		"detective",
 		"doctor",
+		"emergency physician",
 		"chemist",
 		"virologist",
 		"psychiatrist",
@@ -624,6 +625,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"atmos-tech",
 		"scientist",
 		"xenobiologist",
+		"xenoarcheologist",
 		"roboticist",
 		"geneticist",
 		"janitor",
@@ -1228,6 +1230,24 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = list(access_medical, access_morgue, access_surgery)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
+		if("emergency physician")
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_med(M), slot_l_ear)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/fr_jacket(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(M), slot_shoes)
+
+			var/obj/item/device/pda/medical/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "Emergency Physician"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+			M.equip_to_slot_or_del(pda, slot_belt)
+
+			var/obj/item/weapon/card/id/med/W = new(M)
+			W.assignment = "Emergency Physician"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_medical, access_morgue, access_maint_tunnels, access_external_airlocks, access_security, access_engine_equip, access_research, access_mailsorting)
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("chemist")
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_med(M), slot_l_ear)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chemist(M), slot_w_uniform)
@@ -1336,6 +1356,24 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.assignment = "Scientist"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
+		if("xenoarcheologist")
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(M), slot_l_ear)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(M), slot_shoes)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/science(M), slot_wear_suit)
+
+			var/obj/item/device/pda/science/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "Xenoarcheologist"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+			M.equip_to_slot_or_del(pda, slot_belt)
+
+			var/obj/item/weapon/card/id/sci/W = new(M)
+			W.assignment = "Xenoarcheologist"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_research, access_xenoarch)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("xenobiologist")
