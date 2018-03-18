@@ -4,7 +4,38 @@
 	desc = "That's not red paint. That's real blood."
 	icon_state = "deathsquad"
 	item_state = "deathsquad"
+	action_button_name = "Toggle Holo Map"
 	armor = list(melee = 80, bullet = 70, laser = 70,energy = 70, bomb = 70, bio = 30, rad = 30)
+	var/datum/holomap_interface/deathsquad/holo = null
+	var/on = FALSE
+
+/obj/item/clothing/head/helmet/space/deathsquad/atom_init()
+	. = ..()
+	deathsquad_helmets += src
+	holo = new(src)
+
+/obj/item/clothing/head/helmet/space/deathsquad/Destroy()
+	deathsquad_helmets -= src
+	QDEL_NULL(holo)
+	return ..()
+
+/obj/item/clothing/head/helmet/space/deathsquad/ui_action_click()
+	if(!(usr.mind.special_role == "Death Commando"))
+		to_chat(usr, "<span class='notice'>You try to activate the holomap, but nothing happens. Perhaps it is broken?</span>")
+		return
+	if(on)
+		holo.deactivate_holomap()
+		to_chat(usr, "<span class='notice'>You deactivate the holomap.</span>")
+	else
+		holo.activate(usr, "deathsquad")
+		to_chat(usr, "<span class='notice'>You activate the holomap.</span>")
+	on = !on
+
+/obj/item/clothing/head/helmet/space/deathsquad/dropped(mob/M)
+	holo.deactivate_holomap()
+	on = FALSE
+	return ..()
+	
 
 /obj/item/clothing/head/helmet/space/deathsquad/beret
 	name = "officer's beret"

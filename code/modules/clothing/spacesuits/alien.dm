@@ -102,6 +102,33 @@
 		VOX = 'icons/mob/species/vox/head.dmi',
 		VOX_ARMALIS = 'icons/mob/species/armalis/head.dmi',
 		)
+	var/datum/holomap_interface/vox/holo = null
+	var/on = FALSE
+	action_button_name = "Toggle holomap"
+
+/obj/item/clothing/head/helmet/space/vox/atom_init()
+	. = ..()
+	vox_helmets += src
+	holo = new(src)
+
+/obj/item/clothing/head/helmet/space/vox/Destroy()
+	vox_helmets -= src
+	QDEL_NULL(holo)
+	return ..()
+
+/obj/item/clothing/head/helmet/space/vox/ui_action_click()
+	if(on)
+		holo.deactivate_holomap()
+		to_chat(usr, "<span class='notice'>You deactivate the holomap.</span>")
+	else
+		holo.activate(usr, "vox")
+		to_chat(usr, "<span class='notice'>You activate the holomap.</span>")
+	on = !on
+
+/obj/item/clothing/head/helmet/space/vox/dropped(mob/M)
+	holo.deactivate_holomap()
+	on = FALSE
+	return ..()
 
 /obj/item/clothing/head/helmet/space/vox/pressure
 	name = "alien helmet"
