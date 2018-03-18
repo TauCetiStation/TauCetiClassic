@@ -85,7 +85,7 @@
 	else //Trying to wield it
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			var/W = H.wield(src, wieldsound, initial(name))
+			var/W = H.wield(src, initial(name), wieldsound)
 			if(W)
 				wield()
 

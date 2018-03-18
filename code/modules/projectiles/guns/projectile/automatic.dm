@@ -135,7 +135,7 @@
 			else
 				if(ishuman(user))
 					var/mob/living/carbon/human/H = user
-					if(!H.canusetwohands())
+					if(!H.can_use_two_hands())
 						to_chat(user, "<span class='warning'>You need both of your hands to be intact.</span>")
 						return
 				cover_open = !cover_open
@@ -159,7 +159,7 @@
 			else //Trying to wield it
 				if(ishuman(user))
 					var/mob/living/carbon/human/H = user
-					var/W = H.wield(src, null, initial(name))
+					var/W = H.wield(src, initial(name))
 					if(W)
 						wield()
 

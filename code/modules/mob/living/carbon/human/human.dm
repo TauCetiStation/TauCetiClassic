@@ -322,7 +322,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	return
 
-/mob/living/carbon/human/proc/canusetwohands(broken = TRUE) // Replace arms with hands in case of reverting Kurshan's PR.
+/mob/living/carbon/human/proc/can_use_two_hands(broken = TRUE) // Replace arms with hands in case of reverting Kurshan's PR.
 	var/obj/item/organ/external/l_arm/BPL = bodyparts_by_name[BP_L_ARM]
 	var/obj/item/organ/external/r_arm/BPR = bodyparts_by_name[BP_R_ARM]
 	if(broken && (BPL.is_broken() || BPR.is_broken()))
@@ -331,13 +331,13 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/human/proc/wield(/obj/item/I, wieldsound = null, name)
-	if(!canusetwohands())
+/mob/living/carbon/human/proc/wield(/obj/item/I, name, wieldsound = null)
+	if(!can_use_two_hands())
 		to_chat(src, "<span class='warning'>You need both of your hands to be intact to do this.</span>")
-		return
+		return FALSE
 	if(get_inactive_hand())
 		to_chat(src, "<span class='warning'>You need your other hand to be empty to do this.</span>")
-		return
+		return FALSE
 	to_chat(src, "<span class='notice'>You grab the [name] with both hands.</span>")
 	if(wieldsound)
 		playsound(loc, wieldsound, 50, 1)
@@ -351,7 +351,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	O.name = "[name] - offhand"
 	O.desc = "Your second grip on the [name]"
 	put_in_inactive_hand(O)
-	return
+	return TRUE
 
 /mob/living/carbon/human/restrained(check_type = ARMS)
 	if ((check_type & ARMS) && handcuffed)
