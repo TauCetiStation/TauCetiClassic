@@ -376,6 +376,30 @@
 	icon_state = "dress_saloon"
 	item_color = "dress_saloon"
 
+/obj/item/clothing/under/dress/dress_summer
+	name = "summer dress"
+	desc = "Ruffle your way through the season in this sweet, sunshine green dress."
+	icon_state = "dress_summer"
+	item_color = "dress_summer"
+
+/obj/item/clothing/under/dress/dress_vintage
+	name = "vintage dress"
+	desc = "Take a swan dive into vintage love, dames!"
+	icon_state = "dress_vintage"
+	item_color = "dress_vintage"
+
+/obj/item/clothing/under/dress/dress_evening
+	name = "elegant evening dress"
+	desc = "A stylish gown perfect for a wedding-guest dress, ball gown or your next formal celebration."
+	icon_state = "dress_evening"
+	item_color = "dress_evening"
+
+/obj/item/clothing/under/dress/dress_party
+	name = "party dress"
+	desc = "The party doesn’t start ’til you walk in, so make an entrance no one can ignore."
+	icon_state = "dress_party"
+	item_color = "dress_party"
+
 
 /obj/item/clothing/under/dress/dress_cap
 	name = "captain dress uniform"

@@ -20,6 +20,7 @@
 	name = "\improper SWAT shoes"
 	desc = "When you want to turn up the heat."
 	icon_state = "swat"
+	item_state = "wjboots"
 	flags = NOSLIP
 	siemens_coefficient = 0.6
 	clipped_status = CLIPPABLE
@@ -28,7 +29,7 @@
 	name = "combat boots"
 	desc = "When you REALLY want to turn up the heat"
 	icon_state = "swat"
-	item_state = "jackboots"
+	item_state = "wjboots"
 	flags = NOSLIP
 	siemens_coefficient = 0.6
 	clipped_status = CLIPPABLE

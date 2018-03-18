@@ -90,3 +90,21 @@
 	icon_state = "garpantsband"
 	item_state = "garpantsband"
 	item_color = "garpantsband"
+
+/obj/item/clothing/under/pants/milipants_army
+	name = "olive field pants"
+	desc = "They look suspiciously similiar to the M65 standard military jacket, classic olive one."
+	icon_state = "milipants_army"
+	item_color = "milipants_army"
+
+/obj/item/clothing/under/pants/milipants_army/ranger
+	name = "desert field pants"
+	desc = "They look suspiciously similiar to the M65 standard military jacket, marine cold desert one."
+	icon_state = "milipants_ranger"
+	item_color = "milipants_ranger"
+
+/obj/item/clothing/under/pants/milipants_army/navy
+	name = "navy field pants"
+	desc = "They look suspiciously similiar to the M65 standard military jacket, navy seal one."
+	icon_state = "milipants_navy"
+	item_color = "milipants_navy"

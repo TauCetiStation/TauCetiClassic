@@ -72,6 +72,10 @@
 	unit_name = "flare"
 	export_types = list(/obj/item/device/flashlight/flare)
 
+/datum/export/flashlight/seclite
+	cost = 10
+	unit_name = "seclite"
+	export_types = list(/obj/item/device/flashlight/seclite)
 
 // Analyzers and Scanners
 /datum/export/analyzer

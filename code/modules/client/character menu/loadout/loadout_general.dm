@@ -39,3 +39,14 @@ datum/gear/zippo
 /datum/gear/electriccig
 	display_name = "Electronic cigarette"
 	path = /obj/item/clothing/mask/fluff/electriccig
+
+/datum/gear/pulserifle
+	display_name = "Pulse rifle"
+	path = /obj/item/weapon/gun/energy/pulse_rifle
+	cost = 10
+
+/datum/gear/holster
+	display_name = "Holster"
+	path = /obj/item/clothing/accessory/holster/armpit
+	cost = 2
+	allowed_roles = list("Captain", "Head of Security", "Head of Personnel", "Warden", "Security Officer", "Detective")

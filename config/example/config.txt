@@ -168,6 +168,12 @@ GUEST_BAN
 ## Wiki address
 # WIKIURL http://example.com
 
+## Server Rules address
+# SERVER_RULES_URL http://example.com
+
+## Discord invite address
+# DISCORD_INVITE_URL http://example.com
+
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://example.com
 
