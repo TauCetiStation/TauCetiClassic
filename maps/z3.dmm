@@ -9,14 +9,14 @@
 "ai" = (/obj/structure/scrap_cube,/turf/space,/area/space)
 "aj" = (/obj/machinery/light/small{dir = 1},/obj/machinery/vending/medical,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
 "ak" = (/turf/simulated/shuttle/wall{icon_state = "swall13"; dir = 2},/area/derelict/ship)
-"al" = (/turf/simulated/shuttle/wall{tag = "icon-swall12"; icon_state = "swall12"; dir = 2},/area/derelict/ship)
+"al" = (/turf/simulated/shuttle/wall{ icon_state = "swall12"; dir = 2},/area/derelict/ship)
 "am" = (/turf/simulated/shuttle/wall{icon_state = "swall11"; dir = 2},/area/derelict/ship)
 "an" = (/obj/machinery/sleeper,/obj/effect/decal/remains/human,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
 "ao" = (/turf/simulated/floor{icon_state = "dark"},/turf/simulated/shuttle/wall{icon_state = "swall_s5"; dir = 2},/area/derelict/ship)
 "ap" = (/turf/simulated/shuttle/wall{icon_state = "swall15"; dir = 2},/area/derelict/ship)
 "aq" = (/obj/machinery/computer/med_data,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
-"ar" = (/turf/simulated/shuttle/wall{dir = 2; icon_state = "swall_f10"; layer = 2; tag = "icon-swall_f10"},/area/derelict/ship)
-"as" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/shuttle/engine/heater{tag = "icon-heater1 (EAST)"; icon_state = "heater1"; dir = 4},/turf/simulated/floor/plating/airless,/area/derelict/ship)
+"ar" = (/turf/simulated/shuttle/wall{dir = 2; icon_state = "swall_f10"; layer = 2},/area/derelict/ship)
+"as" = (/obj/structure/window/reinforced{dir = 8},/obj/structure/shuttle/engine/heater{ icon_state = "heater1"; dir = 4},/turf/simulated/floor/plating/airless,/area/derelict/ship)
 "at" = (/obj/structure/table,/obj/item/weapon/storage/firstaid/regular{pixel_x = 6; pixel_y = -5},/obj/item/roller,/obj/item/weapon/FixOVein,/obj/item/weapon/bonegel,/obj/item/weapon/bonesetter,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
 "au" = (/turf/simulated/floor{icon_state = "damaged1"},/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/derelict/ship)
 "av" = (/turf/simulated/shuttle/wall{icon_state = "swall7"; dir = 2},/area/derelict/ship)
@@ -87,7 +87,7 @@
 "bI" = (/obj/structure/table,/obj/item/clothing/accessory/medal/gold/heroism,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
 "bJ" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/obj/structure/window/reinforced{dir = 1},/obj/structure/window/reinforced{dir = 4},/obj/item/weapon/syntiflesh,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
 "bK" = (/obj/machinery/door/window/northright,/obj/effect/decal/remains/human,/obj/effect/decal/cleanable/vomit,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
-"bL" = (/turf/simulated/floor{icon_state = "dark"},/turf/simulated/shuttle/wall{dir = 2; icon_state = "swall_f10"; layer = 2; tag = "icon-swall_f10"},/area/derelict/ship)
+"bL" = (/turf/simulated/floor{icon_state = "dark"},/turf/simulated/shuttle/wall{dir = 2; icon_state = "swall_f10"; layer = 2},/area/derelict/ship)
 "bM" = (/obj/machinery/portable_atmospherics/canister/oxygen,/obj/machinery/light/small,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
 "bN" = (/obj/machinery/light_switch{pixel_x = 27},/obj/machinery/vending/sovietsoda,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
 "bO" = (/obj/machinery/light/small,/obj/structure/dispenser/oxygen,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
@@ -114,7 +114,7 @@
 "cj" = (/obj/machinery/light/small,/obj/machinery/constructable_frame/machine_frame,/obj/structure/cable,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
 "ck" = (/obj/structure/table,/obj/item/device/radio/off,/obj/item/device/radio/off,/obj/item/device/radio/off,/obj/item/device/radio/off,/obj/item/weapon/circuitboard/security,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
 "cl" = (/turf/simulated/shuttle/wall{icon_state = "swall_f9"; dir = 2},/area/derelict/ship)
-"cm" = (/turf/simulated/shuttle/wall{tag = "icon-swall_f9"; icon_state = "swall_f9"; dir = 2},/area/derelict/ship)
+"cm" = (/turf/simulated/shuttle/wall{ icon_state = "swall_f9"; dir = 2},/area/derelict/ship)
 "cn" = (/obj/structure/shuttle/engine/propulsion{dir = 4; icon_state = "burst_r"},/turf/space,/area/derelict/ship)
 "hq" = (/turf/simulated/wall/r_wall,/area/AIsattele)
 "hr" = (/obj/structure/computerframe,/obj/structure/cable{icon_state = "0-2"; d2 = 2},/turf/simulated/floor/plating/airless,/area/AIsattele)
@@ -391,4 +391,3 @@ aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 "}
-
