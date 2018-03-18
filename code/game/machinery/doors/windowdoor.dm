@@ -13,6 +13,7 @@
 	var/obj/item/weapon/airlock_electronics/electronics = null
 	var/base_state = "left"
 	var/health = 150.0 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	var/simple_animal_can_bumpopen = TRUE
 
 /obj/machinery/door/window/atom_init()
 	. = ..()
@@ -112,6 +113,8 @@
 	if (!( ticker ))
 		return
 	var/mob/M = AM
+	if((!simple_animal_can_bumpopen) && (istype(M, /mob/living/simple_animal)))
+		return
 	if(!M.restrained())
 		bumpopen(M)
 	return
@@ -398,6 +401,9 @@
 	var/id = null
 	health = 300.0 //Stronger doors for prison (regular window door health is 200)
 
+/obj/machinery/door/window/noanimal
+	simple_animal_can_bumpopen = FALSE
+
 
 /obj/machinery/door/window/northleft
 	dir = NORTH
@@ -462,3 +468,35 @@
 	dir = SOUTH
 	icon_state = "rightsecure"
 	base_state = "rightsecure"
+
+/obj/machinery/door/window/noanimal/northleft
+	dir = NORTH
+
+/obj/machinery/door/window/noanimal/eastleft
+	dir = EAST
+
+/obj/machinery/door/window/noanimal/westleft
+	dir = WEST
+
+/obj/machinery/door/window/noanimal/southleft
+	dir = SOUTH
+
+/obj/machinery/door/window/noanimal/northright
+	dir = NORTH
+	icon_state = "right"
+	base_state = "right"
+
+/obj/machinery/door/window/noanimal/eastright
+	dir = EAST
+	icon_state = "right"
+	base_state = "right"
+
+/obj/machinery/door/window/noanimal/westright
+	dir = WEST
+	icon_state = "right"
+	base_state = "right"
+
+/obj/machinery/door/window/noanimal/southright
+	dir = SOUTH
+	icon_state = "right"
+	base_state = "right"
