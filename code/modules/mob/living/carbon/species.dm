@@ -20,6 +20,7 @@
 	var/tox_mod = 1                                      // Toxloss multiplier.
 	var/brain_mod = 1                                    // Brainloss multiplier.
 	var/speed_mod =  0                                   // How fast or slow specific specie.
+	var/click_mod = 0
 
 	var/primitive                     // Lesser form, if any (ie. monkey for humans)
 	var/tail                          // Name of tail image in species effects icon file.
@@ -413,6 +414,7 @@
 	heat_level_2 = 3000
 	heat_level_3 = 4000
 
+	click_mod = 4
 	speed_mod = 7
 
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not

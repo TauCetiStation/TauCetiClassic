@@ -40,6 +40,10 @@
 
 
 /mob/proc/SetNextMove(num)
+	if(ishuman(src))
+		var/mob/living/carbon/human/M = src
+		if(M.species)
+			num += M.species.click_mod
 	next_move = world.time + num + next_move_modifier
 
 /mob/proc/ClickOn( atom/A, params )
