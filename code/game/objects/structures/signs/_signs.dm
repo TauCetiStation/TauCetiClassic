@@ -4,6 +4,7 @@
 	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
+	var/health = 100.0
 	var/buildable_sign = TRUE //unwrenchable and modifiable
 
 /obj/structure/sign/atom_init()
@@ -77,8 +78,21 @@
 		newsign.pixel_x = pixel_x
 		newsign.pixel_y = pixel_y
 		qdel(src)
+
 	else
-		return ..()
+		user.SetNextMove(CLICK_CD_MELEE)
+		switch(W.damtype)
+			if("fire")
+				playsound(loc, 'sound/items/welder.ogg', 80, 1)
+				src.health -= W.force * 1
+			if("brute")
+				playsound(loc, 'sound/weapons/slash.ogg', 80, 1)
+				src.health -= W.force * 0.75
+			else
+		if (src.health <= 0)
+			visible_message("\red [src] is smashed apart!</B>")
+			qdel(src)
+		..()
 
 /obj/item/sign_backing
 	name = "sign backing"
@@ -99,6 +113,12 @@
 		qdel(src)
 	else
 		return ..()
+
+/obj/item/sign_backing/attackby(obj/item/weapon/W, mob/user)
+	if (istype(W, /obj/item/weapon/weldingtool))
+		playsound(loc, 'sound/items/welder.ogg', 50, 1)
+		new /obj/item/stack/sheet/mineral/plastic(user.loc, 2)
+		qdel(src)
 
 /obj/structure/sign/nanotrasen
 	name = "\improper Nanotrasen Logo"
