@@ -359,6 +359,8 @@
 	changeling.delegating = FALSE
 
 /obj/effect/proc_holder/changeling/manage_essencies/Topic(href, href_list)
+	if(!usr.mind || !usr.mind.changeling || usr.mind.changeling.controled_by)
+		return
 	if(href_list["share_body"])
 		var/mob/living/parasite/essence/M = locate(href_list["share_body"])
 		var/mob/living/carbon/C = usr
