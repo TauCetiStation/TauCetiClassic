@@ -50,3 +50,6 @@
 
 /area/mine/west_outpost
 	name = "West Mining Outpost"
+
+/area/mine/mech_bay
+	name = "Mining Station Mech Bay"
