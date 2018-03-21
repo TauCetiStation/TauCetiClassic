@@ -62,7 +62,7 @@
 	to_chat(src, "You wiggle out of the depths of [M]'s biomass and plop to the ground.")
 	gestalt = null
 	forceMove(get_turf(src))
-	M.status_flags &= ~PASSEMOTES
+	M.remove_passemotes_flag()
 //Verbs after this point.
 
 /mob/living/carbon/monkey/diona/verb/merge()
@@ -82,15 +82,11 @@
 	for(var/mob/living/carbon/human/C in view(1,src))
 		if(C.get_species() == DIONA)
 			choices += C
-
 	var/mob/living/carbon/human/M = input(src,"Who do you wish to merge with?") in null|choices
-
 	if(!M || !src || !(src.Adjacent(M)))
 		return
-
 	if(is_busy() || !do_after(src, 40, target = M))
 		return
-
 	merging(M)
 
 /mob/living/carbon/monkey/diona/verb/split()
@@ -105,7 +101,6 @@
 	if(incapacitated())
 		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
 		return
-
 	splitting(gestalt)
 
 /mob/living/carbon/monkey/diona/verb/pass_knowledge()
@@ -174,7 +169,6 @@
 
 	if(V)
 		injecting = V
-
 
 /mob/living/carbon/monkey/diona/verb/fertilize_plant()
 

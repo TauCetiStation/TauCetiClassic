@@ -114,6 +114,8 @@
 
 
 /obj/machinery/gibber/MouseDrop_T(mob/target, mob/user)
+	if(!iscarbon(user) && !isrobot(user))
+		return
 	if(user.stat || user.restrained())
 		return
 	move_into_gibber(user,target)

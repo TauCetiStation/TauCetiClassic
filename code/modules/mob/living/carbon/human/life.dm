@@ -71,8 +71,6 @@
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
-		//Updates the number of stored chemicals for powers
-		handle_changeling()
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
@@ -119,6 +117,9 @@
 	name = get_visible_name()
 
 	handle_regular_hud_updates()
+
+	//Updates the number of stored chemicals for powers and essentials
+	handle_changeling()
 
 	pulse = handle_pulse()
 
@@ -1517,57 +1518,46 @@
 			if(!isRemoteObserve && client && !client.adminobs)
 				remoteview_target = null
 				reset_view(null)
-/*
+
 
 		if(mind && mind.changeling)
 			hud_used.lingchemdisplay.invisibility = 0
 			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[mind.changeling.chem_charges]</font></div>"
 		else
 			hud_used.lingchemdisplay.invisibility = 101
-*/
+
 	..()
 
 	return 1
 
 /mob/living/carbon/human/update_sight()
-	species.sightglassesmod = 0
+	sightglassesmod = null
+	if(stat == DEAD)
+		set_EyesVision(transition_time = 0)
+		return
 	var/obj/item/clothing/glasses/G = glasses
 	if(istype(G) && G.active)
 		if(istype(glasses, /obj/item/clothing/glasses/meson))
-			species.sightglassesmod = 1
+			sightglassesmod = "meson"
 		else if(istype(glasses, /obj/item/clothing/glasses/night) && !istype(glasses, /obj/item/clothing/glasses/night/shadowling))
-			species.sightglassesmod = 2
+			sightglassesmod = "nvg"
 		else if(istype(glasses, /obj/item/clothing/glasses/thermal))
-			species.sightglassesmod = 3
+			sightglassesmod = "thermal"
 		else if(istype(glasses, /obj/item/clothing/glasses/science))
-			species.sightglassesmod = 4
+			sightglassesmod = "sci"
 
-	if(stat == DEAD)
-		set_EyesVision(transition_time = 0)
-	else
-		if(species.nighteyes)
-			if(species.sightglassesmod)
-				set_EyesVision("nightsight_glasses")
-			else
-				var/light_amount = 0
-				var/turf/T = get_turf(src)
-				light_amount = round(T.get_lumcount()*10)
-				if(light_amount > 1)
-					set_EyesVision(transition_time = 20)
-				else
-					set_EyesVision("nightsight",20)
+	if(species.nighteyes)
+		if(sightglassesmod)
+			sightglassesmod = "nightsight_glasses"
 		else
-			switch(species.sightglassesmod)
-				if(0)
-					set_EyesVision()
-				if(1)
-					set_EyesVision("meson")
-				if(2)
-					set_EyesVision("nvg")
-				if(3)
-					set_EyesVision("thermal")
-				if(4)
-					set_EyesVision("sci")
+			var/light_amount = 0
+			var/turf/T = get_turf(src)
+			light_amount = round(T.get_lumcount()*10)
+			if(light_amount > 1)
+				sightglassesmod = null
+			else
+				sightglassesmod = "nightsight"
+	set_EyesVision(sightglassesmod)
 
 /mob/living/carbon/human/proc/handle_random_events()
 	// Puke if toxloss is too high

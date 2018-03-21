@@ -43,8 +43,10 @@
 	do_climb(usr)
 
 /obj/structure/MouseDrop_T(mob/target, mob/user)
+	if(isessence(user))
+		return
 	var/mob/living/H = user
-	if(istype(H) && can_climb(H) && target == user)
+	if(can_climb(H) && target == user)
 		do_climb(target)
 	else
 		return ..()

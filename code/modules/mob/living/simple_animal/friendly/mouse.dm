@@ -84,7 +84,8 @@
 /mob/living/simple_animal/mouse/MouseDrop(atom/over_object)
 
 	var/mob/living/carbon/H = over_object
-	if(!istype(H) || !Adjacent(H)) return ..()
+	if(!istype(H) || !Adjacent(H) || ismob(H.loc))
+		return ..()
 
 	if(H.a_intent == "help")
 		get_scooped(H)

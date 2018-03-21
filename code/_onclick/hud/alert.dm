@@ -181,6 +181,10 @@
 	name = "Burning"
 	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you up."
 
+/obj/screen/alert/stasis
+	name = "Stasis"
+	desc = "You has entered in statis. Just wait a little bit."
+
 //IANS
 /obj/screen/alert/ian_oxy
 	name = "Choking"

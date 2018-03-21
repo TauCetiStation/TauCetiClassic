@@ -65,6 +65,8 @@
 
 #define isliving(A) (istype(A, /mob/living))
 
+#define isessence(A) (istype(A, /mob/living/parasite/essence))
+
 // MOB
 
 #define isobserver(A) (istype(A, /mob/dead/observer))

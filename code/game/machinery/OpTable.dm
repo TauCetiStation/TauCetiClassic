@@ -74,7 +74,7 @@
 
 
 /obj/machinery/optable/MouseDrop_T(obj/O, mob/user)
-	if(isrobot(user))
+	if(isrobot(user) || isessence(user))
 		return
 
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
