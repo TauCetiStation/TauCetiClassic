@@ -273,8 +273,7 @@
 	return mannequin
 
 /obj/item/weapon/scissors/Topic(href, href_list)
-	..()
-	if(!barber || !barbertarget)
+	if(!barber || barer != usr || !barbertarget)
 		return
 	switch(href_list["choice"])
 		if("selecthaircut")
