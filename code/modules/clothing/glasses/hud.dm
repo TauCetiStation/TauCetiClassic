@@ -11,7 +11,7 @@
 
 
 /obj/item/clothing/glasses/sunglasses/hud/secmed
-	name = "Mixed HUD"
+	name = "mixed HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and health status."
 	icon_state = "secmedhud"
 	body_parts_covered = 0
@@ -31,7 +31,7 @@
 		fixtime = world.time + 900 / severity
 
 /obj/item/clothing/glasses/hud/health
-	name = "Health Scanner HUD"
+	name = "health scanner HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
 	icon_state = "healthhud"
 	body_parts_covered = 0
@@ -42,14 +42,14 @@
 	process_med_hud(M, 1, crit_fail = crit_fail)
 
 /obj/item/clothing/glasses/hud/security
-	name = "Security HUD"
+	name = "security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
 	body_parts_covered = 0
 	var/global/list/jobs[0]
 
 /obj/item/clothing/glasses/hud/security/jensenshades
-	name = "Augmented shades"
+	name = "augmented shades"
 	desc = "Polarized bioneural eyewear, designed to augment your vision."
 	icon_state = "hos_shades"
 	item_state = "hos_shades"

@@ -158,7 +158,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
 /obj/item/clothing/under/gentlesuit
-	name = "Gentlemans Suit"
+	name = "gentlemans suit"
 	desc = "A silk black shirt with a white tie and a matching gray vest and slacks. Feels proper."
 	icon_state = "gentlesuit"
 	item_state = "gentlesuit"
@@ -512,7 +512,7 @@
 
 /obj/item/clothing/under/rank/forensic_technician
 	desc = "It has a Forensics rank stripe on it."
-	name = "Forensics Jumpsuit"
+	name = "forensics jumpsuit"
 	icon_state = "forensicsred"
 	item_state = "r_suit"
 	item_color = "forensicsred"
@@ -658,7 +658,7 @@
 
 /obj/item/clothing/under/rank/centcom/representative
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Ensign\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
-	name = "\improper NanoTrasen Navy Uniform"
+	name = "\improper NanoTrasen navy uniform"
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
@@ -666,7 +666,7 @@
 
 /obj/item/clothing/under/rank/centcom/officer
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Lieutenant Commander\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
-	name = "\improper NanoTrasen Officers Uniform"
+	name = "\improper NanoTrasen officers uniform"
 	icon_state = "officer"
 	item_state = "g_suit"
 	item_color = "officer"
@@ -674,7 +674,7 @@
 
 /obj/item/clothing/under/rank/centcom/captain
 	desc = "Gold trim on space-black cloth, this uniform displays the rank of \"Captain\" and bears \"N.C.V. Fearless CV-286\" on the left shounder."
-	name = "\improper NanoTrasen Captains Uniform"
+	name = "\improper NanoTrasen captains uniform"
 	icon_state = "centcom"
 	item_state = "dg_suit"
 	item_color = "centcom"
@@ -688,41 +688,41 @@
 	item_color = "roman"
 
 /obj/item/clothing/under/patient_gown
-	name = "Patient Gown"
+	name = "patient gown"
 	desc = "A long loose piece of clothing worn in a hospital by someone doing or having an operation. It can be used as clothing for bedridden patients."
 	icon_state = "patient_gown"
 	item_color = "patient_gown"
 
 /obj/item/clothing/under/pretty_dress
-	name = "Pretty Dress"
+	name = "pretty dress"
 	desc = "An Enchanting blue dress."
 	icon_state = "pretty_dress"
 	item_color = "pretty_dress"
 
 /obj/item/clothing/under/sukeban_pants
-	name = "Sukeban Pants"
+	name = "sukeban pants"
 	desc = "A white shirt with wide baggy pants"
 	icon_state = "sukeban_pants"
 	item_color = "sukeban_pants"
 
 /obj/item/clothing/under/sukeban_dress
-	name = "Sukeban Dress"
+	name = "sukeban dress"
 	desc = "A Dress of Japanese schoolgirls"
 	icon_state = "sukeban_dress"
 	item_color = "sukeban_dress"
 
 /obj/item/clothing/under/karate
-	name = "Karate Underwear"
+	name = "karate underwear"
 	icon_state = "karate"
 	item_color = "karate"
 
 /obj/item/clothing/under/smoking
-	name = "Smoking"
+	name = "smoking"
 	icon_state = "smoking_new"
 	item_color = "smoking_new"
 
 /obj/item/clothing/under/popking
-	name = "Popking Suit"
+	name = "popking suit"
 	desc = "Classic costume of the King of Pop. A great choice if you want to twist again, watching Pretty Woman."
 	icon_state = "popking"
 	item_color = "popking"
@@ -732,18 +732,18 @@
 	item_color = "popking2"
 
 /obj/item/clothing/under/pinkpolo
-	name = "Pink Polo"
+	name = "pink polo"
 	desc = "The classic image of an American gangster 80. Hello from Miami."
 	icon_state = "pinkpolo"
 	item_color = "pinkpolo"
 
 /obj/item/clothing/under/bathrobe
-	name = "Bath Robe"
+	name = "bath robe"
 	icon_state = "bathrobe"
 	item_color = "bathrobe"
 
 /obj/item/clothing/under/bathtowel
-	name = "Bath Towel"
+	name = "bath towel"
 	icon_state = "bathtowel"
 	item_color = "bathtowel"
 	slot_flags = SLOT_HEAD | SLOT_ICLOTHING

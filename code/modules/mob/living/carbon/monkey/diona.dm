@@ -8,6 +8,8 @@
 	voice_name = "diona nymph"
 	speak_emote = list("chirrups")
 	icon_state = "nymph1"
+	hazard_low_pressure = DIONA_HAZARD_LOW_PRESSURE
+	blood_color = "#004400"
 	var/list/donors = list()
 	var/ready_evolve = 0
 	var/mob/living/carbon/human/gestalt = null
@@ -43,6 +45,12 @@
 	add_language("Rootspeak")
 
 /mob/living/carbon/monkey/diona/proc/merging(mob/living/carbon/human/M)
+	var/count = 0
+	for(var/mob/living/carbon/monkey/diona in M)
+		count++
+	if(count >= 3)
+		visible_message(src, "<span class='notice'>[M]'s body seems to repel [src], as it attempts to twine with it's being.</span>")
+		return
 	to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
 	M.status_flags |= PASSEMOTES
 	to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
@@ -74,19 +82,11 @@
 	for(var/mob/living/carbon/human/C in view(1,src))
 		if(C.get_species() == DIONA)
 			choices += C
-
 	var/mob/living/carbon/human/M = input(src,"Who do you wish to merge with?") in null|choices
-
 	if(!M || !src || !(src.Adjacent(M)))
 		return
-	var/count = 0
-	for(var/mob/living/carbon/monkey/diona in M)
-		count++
-
-	if(count >= 3)
-		to_chat(src, "<span class='notice'>You cannot merge with [M], as it already has many nymphs.</span>")
+	if(is_busy() || !do_after(src, 40, target = M))
 		return
-
 	merging(M)
 
 /mob/living/carbon/monkey/diona/verb/split()
