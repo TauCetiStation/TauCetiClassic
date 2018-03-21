@@ -395,7 +395,7 @@
 		var/pressure = environment.return_pressure()
 		var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 
-		if(adjusted_pressure < WARNING_HIGH_PRESSURE && adjusted_pressure > WARNING_LOW_PRESSURE && abs(environment.temperature - 293.15) < 20 && abs(bodytemperature - 310.14) < 0.5)
+		if(adjusted_pressure < warning_high_pressure && adjusted_pressure > warning_low_pressure && abs(environment.temperature - 293.15) < 20 && abs(bodytemperature - 310.14) < 0.5)
 
 			//Hopefully should fix the walk-inside-still-pressure-warning issue.
 			if(pressure_alert)
@@ -418,14 +418,14 @@
 
 		//Account for massive pressure differences
 		switch(adjusted_pressure)
-			if(HAZARD_HIGH_PRESSURE to INFINITY)
-				adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
+			if(hazard_high_pressure to INFINITY)
+				adjustBruteLoss( min( ( (adjusted_pressure / hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
 				throw_alert("pressure","highpressure",2)
-			if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
+			if(warning_high_pressure to hazard_high_pressure)
 				throw_alert("pressure","highpressure",1)
-			if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
+			if(warning_low_pressure to warning_high_pressure)
 				clear_alert("pressure")
-			if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
+			if(hazard_low_pressure to warning_low_pressure)
 				throw_alert("pressure","lowpressure",1)
 			else
 				if( !(COLD_RESISTANCE in mutations) )
