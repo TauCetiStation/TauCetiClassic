@@ -4,11 +4,8 @@
 	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
-	var/health = 100.0
+	var/health = 100
 	var/buildable_sign = TRUE //unwrenchable and modifiable
-
-/obj/structure/sign/atom_init()
-	. = ..()
 
 /obj/structure/sign/basic
 	name = "blank sign"
@@ -20,6 +17,7 @@
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>",
 							 "<span class='notice'>You start unfastening [src].</span>")
 		playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
+			return
 		if(do_after(user,40,target = src))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] unfastens [src].</span>",
@@ -90,7 +88,7 @@
 				src.health -= W.force * 0.75
 			else
 		if (src.health <= 0)
-			visible_message("\red [src] is smashed apart!</B>")
+			visible_message("<span class='warning'>[user] smashed [src] apart!</span>")
 			qdel(src)
 		..()
 
