@@ -250,6 +250,8 @@
 
 /obj/structure/closet/wardrobe/chemistry_white/PopulateContents()
 	for (var/i in 1 to 2)
+		new /obj/item/clothing/under/rank/chemist/skirt(src)
+	for (var/i in 1 to 2)
 		new /obj/item/clothing/under/rank/chemist(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/shoes/white(src)
@@ -263,6 +265,8 @@
 	icon_closed = "white"
 
 /obj/structure/closet/wardrobe/genetics_white/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/under/rank/geneticist/skirt(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/under/rank/geneticist(src)
 	for (var/i in 1 to 2)
@@ -283,6 +287,8 @@
 	icon_closed = "white"
 
 /obj/structure/closet/wardrobe/virology_white/PopulateContents()
+	for (var/i in 1 to 2)
+		new /obj/item/clothing/under/rank/virologist/skirt(src)
 	for (var/i in 1 to 2)
 		new /obj/item/clothing/under/rank/virologist(src)
 	for (var/i in 1 to 2)
