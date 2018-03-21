@@ -1,12 +1,12 @@
 /obj/item/clothing/head/bio_hood/new_hazmat
 	icon_state = "hazmat_white_head"
-	name = "Hazmat helmet"
+	name = "hazmat helmet"
 	desc = "White colored and from brand new collection. Unisex!"
 
 /obj/item/clothing/suit/bio_suit/new_hazmat
 	icon_state = "hazmat_white"
 	item_state = "hazmat_white"
-	name = "Hazmat suit"
+	name = "hazmat suit"
 	desc = "White colored and from brand new collection. Unisex!"
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDEEARS
 	flags = THICKMATERIAL | PHORONGUARD | BLOCKHAIR

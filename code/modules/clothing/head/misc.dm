@@ -295,7 +295,7 @@
 
 
 /obj/item/clothing/head/batman_helmet
-	name = "batman helmet"
+	name = "Batman helmet"
 	desc = "It's not who you are underneath, it's what you do that defines you."
 	icon_state = "batman_helmet"
 	item_state = "batman_helmet"
@@ -390,6 +390,6 @@
 	icon_state = "centcomcaptain"
 
 /obj/item/clothing/head/angel_nimb
-	name = "Nimb"
+	name = "nimb"
 	desc = "Just a Nimb"
 	icon_state = "nimb"

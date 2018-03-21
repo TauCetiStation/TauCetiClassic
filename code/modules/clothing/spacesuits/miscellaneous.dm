@@ -32,7 +32,7 @@
 	allowed = list(/obj/item) //for stuffing exta special presents
 
 /obj/item/clothing/head/helmet/syndiassault
-	name = "Assault helmet"
+	name = "assault helmet"
 	icon_state = "assaulthelmet_b"
 	item_state = "assaulthelmet_b"
 	armor = list(melee = 50, bullet = 60, laser = 45, energy = 70, bomb = 50, bio = 0, rad = 50)
@@ -65,12 +65,12 @@
 //Buget suit
 
 /obj/item/clothing/suit/space/cheap
-	name = "Budget spacesuit"
+	name = "budget spacesuit"
 	desc = "It was an attempt to force the assistants to work in space.The label on the side reads: Not for atheists"
 	resilience = 0.6
 
 /obj/item/clothing/head/helmet/space/cheap
-	name = "Budget spacesuit helmet"
+	name = "budget spacesuit helmet"
 	desc = "It was an attempt to force the assistants to work in space. At least 60% of them survived in the spacesuit."
 
 //Mime's Hardsuit

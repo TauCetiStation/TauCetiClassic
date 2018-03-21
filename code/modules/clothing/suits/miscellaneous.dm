@@ -128,7 +128,7 @@
 
 
 /obj/item/clothing/suit/imperium_monk
-	name = "Imperium monk"
+	name = "imperium monk"
 	desc = "Have YOU killed a xenos today?"
 	icon_state = "imperium_monk"
 	item_state = "imperium_monk"
@@ -137,7 +137,7 @@
 
 
 /obj/item/clothing/suit/chickensuit
-	name = "Chicken Suit"
+	name = "chicken suit"
 	desc = "A suit made long ago by the ancient empire KFC."
 	icon_state = "chickensuit"
 	item_state = "chickensuit"
@@ -147,7 +147,7 @@
 
 
 /obj/item/clothing/suit/monkeysuit
-	name = "Monkey Suit"
+	name = "monkey suit"
 	desc = "A suit that looks like a primate."
 	icon_state = "monkeysuit"
 	item_state = "monkeysuit"
@@ -157,7 +157,7 @@
 
 
 /obj/item/clothing/suit/holidaypriest
-	name = "Holiday Priest"
+	name = "holiday priest"
 	desc = "This is a nice holiday my son."
 	icon_state = "holidaypriest"
 	item_state = "holidaypriest"
@@ -406,7 +406,7 @@
 
 
 /obj/item/clothing/suit/storage/miljacket_army
-	name = "Field jacket olive"
+	name = "field jacket olive"
 	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Classic olive."
 	icon_state = "miljacket_army"
 	item_state = "miljacket_army"
@@ -436,13 +436,13 @@
 	usr.update_inv_wear_suit()	//so our overlays update
 
 /obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger
-	name = "Field jacket desert"
+	name = "field jacket desert"
 	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Marine cold desert."
 	icon_state = "miljacket_ranger"
 	item_state = "miljacket_ranger"
 
 /obj/item/clothing/suit/storage/miljacket_army/miljacket_navy
-	name = "Field jacket navy"
+	name = "field jacket navy"
 	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Like a navy seal,"
 	icon_state = "miljacket_navy"
 	item_state = "miljacket_navy"
@@ -525,7 +525,7 @@
 	armor = list(melee = 50, bullet = 30, laser = 10, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/goodman_jacket
-	name = "Brown jacket"
+	name = "brown jacket"
 	desc = "A good jacket for good men."
 	icon_state = "gmjacket"
 
@@ -580,27 +580,27 @@
 	fastened = !fastened
 
 /obj/item/clothing/suit/atlas_jacket
-	name = "Atlas Jacket"
+	name = "atlas jacket"
 	desc = "Stylish white satin jacket with a scorpion embroidered on the back."
 	icon_state = "atlas_jacket"
 
 /obj/item/clothing/suit/shawl
-	name = "Shawl"
+	name = "shawl"
 	desc = "A pink Shawl for Hindi Womans."
 	icon_state = "shawl"
 
 /obj/item/clothing/suit/sukeban_coat
-	name = "Sukeban Coat"
+	name = "sukeban coat"
 	desc = "Just a Street Japanese coat"
 	icon_state = "sukeban_coat"
 
 /obj/item/clothing/suit/plaid
-	name = "Plaid"
+	name = "plaid"
 	desc = "Home warm plaid"
 	icon_state = "plaid"
 
 /obj/item/clothing/suit/tuxedo
-	name = "Tuxedo"
+	name = "tuxedo"
 	desc = "A semi-formal evening suit distinguished primarily by satin or grosgrain facings on the jacket's lapels"
 	icon_state = "tuxedo"
 

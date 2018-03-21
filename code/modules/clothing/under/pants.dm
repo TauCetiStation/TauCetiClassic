@@ -21,7 +21,7 @@
 	item_color = "jeansblack"
 
 /obj/item/clothing/under/pants/youngfolksjeans
-	name = "Young Folks jeans"
+	name = "young folks jeans"
 	desc = "For those tired of boring old jeans. Relive the passion of your youth!"
 	icon_state = "jeansyoungfolks"
 	item_color = "jeansyoungfolks"
@@ -81,7 +81,7 @@
 	item_color = "camopants"
 
 /obj/item/clothing/under/pants/gar
-	name = "Gar Pants"
+	name = "gar pants"
 	icon_state = "garpants"
 	item_state = "garpants"
 	item_color = "garpants"
