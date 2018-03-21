@@ -17,6 +17,7 @@
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>",
 							 "<span class='notice'>You start unfastening [src].</span>")
 		playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
+		if(user.is_busy())
 			return
 		if(do_after(user,40,target = src))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
