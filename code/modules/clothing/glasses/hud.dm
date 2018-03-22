@@ -10,15 +10,13 @@
 	return
 
 
-/obj/item/clothing/glasses/sunglasses/hud/secmed
+/obj/item/clothing/glasses/hud/secmed
 	name = "mixed HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and health status."
 	icon_state = "secmedhud"
-	body_parts_covered = 0
-	var/fixtime = 0
+	flash_protection = 2
 
-
-/obj/item/clothing/glasses/sunglasses/hud/secmed/proc/process_hud(mob/M)
+/obj/item/clothing/glasses/hud/secmed/process_hud(mob/M)
 	if(crit_fail)
 		if(fixtime < world.time)
 			crit_fail=0
@@ -34,31 +32,11 @@
 	name = "health scanner HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their health status."
 	icon_state = "healthhud"
-	body_parts_covered = 0
 
 
 /obj/item/clothing/glasses/hud/health/process_hud(mob/M)
 	check_integrity()
 	process_med_hud(M, 1, crit_fail = crit_fail)
-
-/obj/item/clothing/glasses/hud/security
-	name = "security HUD"
-	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
-	icon_state = "securityhud"
-	body_parts_covered = 0
-	var/global/list/jobs[0]
-
-/obj/item/clothing/glasses/hud/security/jensenshades
-	name = "augmented shades"
-	desc = "Polarized bioneural eyewear, designed to augment your vision."
-	icon_state = "hos_shades"
-	item_state = "hos_shades"
-	vision_flags = SEE_MOBS
-	invisa_view = 3
-
-/obj/item/clothing/glasses/hud/security/process_hud(mob/M)
-	check_integrity()
-	process_sec_hud(M, 1, crit_fail = crit_fail)
 
 /obj/item/clothing/glasses/hud/broken/process_hud(mob/M)
 	process_broken_hud(M, 1)
@@ -72,3 +50,36 @@
 	if(!crit_fail)
 		crit_fail = 1
 		fixtime = world.time + 900 / severity
+
+/obj/item/clothing/glasses/hud/security
+	name = "security HUD"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
+	icon_state = "securityhud"
+
+/obj/item/clothing/glasses/hud/security/process_hud(mob/M)
+	check_integrity()
+	process_sec_hud(M, 1, crit_fail = crit_fail)
+
+/obj/item/clothing/glasses/hud/security/sun
+	name = "HUDsunglasses"
+	desc = "Sunglasses with a HUD."
+	icon_state = "sunhud"
+	flash_protection = 2
+
+/obj/item/clothing/glasses/hud/security/sun/tactical
+	name = "tactical HUD"
+	desc = "Flash-resistant goggles with inbuilt combat and security information."
+	icon_state = "swatgoggles"
+
+/obj/item/clothing/glasses/hud/security/sun/gar
+	name = "gar HUDsunglasses"
+	icon_state = "gars"
+	item_state = "gars"
+
+/obj/item/clothing/glasses/hud/security/sun/jensenshades
+	name = "augmented shades"
+	desc = "Polarized bioneural eyewear, designed to augment your vision."
+	icon_state = "hos_shades"
+	item_state = "hos_shades"
+	vision_flags = SEE_MOBS
+	invisa_view = 3

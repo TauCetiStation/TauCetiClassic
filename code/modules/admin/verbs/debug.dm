@@ -1068,7 +1068,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/hos(M), slot_l_ear)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
-			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), slot_glasses)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/security/sun(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(M), slot_l_store)
 
 			var/obj/item/device/pda/heads/hos/pda = new(M)
@@ -1157,7 +1157,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
-			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(M), slot_glasses)
+			M.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/security/sun(M), slot_glasses)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(M), slot_l_ear)
 
 			var/obj/item/device/pda/warden/pda = new(M)
