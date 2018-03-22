@@ -16,7 +16,7 @@
 
 /obj/item/device/plant_analyzer/attack(mob/living/carbon/human/M, mob/living/user)
 	if(M.species && M.species.flags[IS_PLANT])
-		healthanalyze(M, user, 1) // 1 means limb-scanning mode
+		health_analyze(M, user, TRUE) // 1 means limb-scanning mode
 
 // ********************************************************
 // Here's all the seeds (plants) that can be used in hydro
