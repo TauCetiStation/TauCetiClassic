@@ -656,7 +656,7 @@
 "amG" = (/obj/machinery/bodyscanner,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/syndicate_station/start)
 "amH" = (/obj/machinery/body_scanconsole,/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/syndicate_station/start)
 "amI" = (/obj/machinery/door/window{dir = 4; name = "Infirmary"; req_access_txt = "150"},/turf/simulated/shuttle/floor{icon_state = "floor3"},/area/syndicate_station/start)
-"amJ" = (/obj/machinery/door/airlock/external{req_access_txt = "150"},/obj/machinery/door/poddoor/shutters/syndi,/turf/unsimulated/floor{icon_state = "dark"},/area/syndicate_mothership)
+"amJ" = (/obj/machinery/door/airlock/external{req_access_txt = "150"},/obj/machinery/door/poddoor/shutters/syndi{dock_tag = "Syndicate_shuttle"},/turf/unsimulated/floor{icon_state = "dark"},/area/syndicate_mothership)
 "amK" = (/obj/structure/lattice,/obj/structure/window/reinforced{dir = 1},/obj/effect/landmark/blockway,/turf/space,/area/space)
 "amL" = (/obj/structure/window/reinforced{dir = 1},/obj/effect/landmark/blockway,/turf/space,/area/space)
 "amM" = (/obj/machinery/vending/cigarette{pixel_x = 0; pixel_y = 0},/turf/unsimulated/floor{icon_state = "bar"; dir = 2},/area/syndicate_mothership)
