@@ -87,7 +87,15 @@
 	imp = new /obj/item/weapon/implant/explosive(src)
 	. = ..()
 
+/obj/item/weapon/implantcase/freedom
+	name = "Glass Case- 'Freedom'"
+	desc = "A case containing an freedom implant."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "implantcase-r"
 
+/obj/item/weapon/implantcase/freedom/atom_init()
+	imp = new /obj/item/weapon/implant/freedom(src)
+	. = ..()
 
 /obj/item/weapon/implantcase/chem
 	name = "Glass Case- 'Chem'"
