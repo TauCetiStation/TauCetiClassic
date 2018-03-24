@@ -75,7 +75,7 @@ REAGENT SCANNER
 	throw_range = 10
 	m_amt = 200
 	origin_tech = "magnets=1;biotech=1"
-	var/mode = 1;
+	var/mode = TRUE
 
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
