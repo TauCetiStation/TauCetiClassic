@@ -867,6 +867,42 @@
 	 /obj/item/clothing/suit/wizrobe/wiz_blue = 1, /obj/item/clothing/suit/wizrobe/wiz_red = 1)
 	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/wizarditis = 1)	//No one can get to the machine to hack it anyways; for the lulz - Microwave
 
+/obj/machinery/vending/weirdomat
+	name = "Weird-O-Mat"
+	desc = "A marvel, on the brink of technobabble and pixie fiction."
+	icon_state = "MagiVend"
+	light_color = "#97429a"
+	products = list(/obj/item/weapon/occult_pinpointer = 3,
+		/obj/item/device/occult_scanner = 3)
+	contraband = list(/obj/item/weapon/nullrod = 1)
+	product_slogans = "Amicitiae nostrae memoriam spero sempiternam fore;Aequam memento rebus in arduis servare mentem;Vitanda est improba siren desidia;Serva me, servabo te;Faber est suae quisque fortunae"
+	vend_reply = "Have fun! No returns!"
+	product_ads = "Occult is magic;Knowledge is magic;All the magic!;None to spook us;The dice has been cast"
+
+/obj/machinery/vending/weirdomat/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/ectoplasm))
+		RedeemEctoplasm(I, user)
+		return
+	..()
+
+/obj/machinery/vending/weirdomat/proc/RedeemEctoplasm(obj/plasm, redeemer)
+	if(plasm.in_use)
+		return
+	plasm.in_use = TRUE
+	var/selection = input(redeemer, "Pick your eternal reward", "Ectoplasm Redemption") in list("Misfortune Set", "Spiritual Bond Set", "Cancel")
+	if(!selection || !Adjacent(redeemer))
+		plasm.in_use = FALSE
+		return
+	switch(selection)
+		if("Misfortune Set")
+			new /obj/item/weapon/storage/pill_bottle/ghostdice(src.loc)
+		if("Spiritual Bond Set")
+			new /obj/item/weapon/game_kit/chaplain(src.loc)
+		if("Cancel")
+			plasm.in_use = FALSE
+			return
+	qdel(plasm)
+
 /obj/machinery/vending/dinnerware
 	name = "Dinnerware"
 	desc = "A kitchen and restaurant equipment vendor."

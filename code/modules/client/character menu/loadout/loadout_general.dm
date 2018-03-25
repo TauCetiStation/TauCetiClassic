@@ -10,6 +10,11 @@
 	display_name = "Dice pack"
 	path = /obj/item/weapon/storage/pill_bottle/dice
 
+/datum/gear/dice/ghastly
+	display_name = "Accursed Dice Pack"
+	path = /obj/item/weapon/storage/pill_bottle/ghostdice
+	allowed_roles = list("Chaplain", "Paranormal Investigator")
+
 /datum/gear/cards
 	display_name = "Deck of cards"
 	path = /obj/item/toy/cards
@@ -39,6 +44,22 @@ datum/gear/zippo
 /datum/gear/electriccig
 	display_name = "Electronic cigarette"
 	path = /obj/item/clothing/mask/fluff/electriccig
+
+/datum/gear/game_kit
+	display_name = "Gaming Kit Selection"
+	path = /obj/item/weapon/game_kit/red
+	cost = 3
+
+/datum/gear/game_kit/New()
+	..()
+	var/game_kits = list()
+	game_kits["red"] = /obj/item/weapon/game_kit/red
+	game_kits["blue"] = /obj/item/weapon/game_kit/blue
+	game_kits["purple"] = /obj/item/weapon/game_kit/purple
+	game_kits["orange"] = /obj/item/weapon/game_kit/orange
+	gear_tweaks += new/datum/gear_tweak/path(game_kits)
+
+/datum/gear/game_kitchaplain
 
 /datum/gear/pulserifle
 	display_name = "Pulse rifle"
