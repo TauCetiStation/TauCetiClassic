@@ -51,7 +51,7 @@
 	selection_color = "#ffeeff"
 	idtype = /obj/item/weapon/card/id/sci
 	access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
-	alt_titles = list("Xenoarcheologist", "Phoron Researcher")
+	alt_titles = list("Phoron Researcher")
 	minimal_player_ingame_minutes = 1560
 	restricted_species = list(UNATHI, DIONA)
 
