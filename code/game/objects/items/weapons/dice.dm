@@ -1,4 +1,4 @@
-#define AMPLITUDE 30
+#define AMPLITUDE 3
 #define SLIGHTLY_CONFUSED 10
 //from tg
 /obj/item/weapon/dice
@@ -176,13 +176,15 @@
 	diceroll()
 
 /obj/item/weapon/dice/ghost/attack_ghost()
-	visible_message("<span class='notice'>The [src] appears to fly up into the air, levitating.</span>")
+	visible_message("<span class='notice'>\the [src] appears to fly up into the air, levitating.</span>")
 	var/time = 15
 	while(time > 0)
-		pixel_y = rand(-AMPLITUDE/3, AMPLITUDE/3)
+		pixel_x = rand(-AMPLITUDE/3, AMPLITUDE/3)
 		pixel_y = rand(-AMPLITUDE, AMPLITUDE)
 		time += -1
 		sleep(1)
+	pixel_x = 0
+	pixel_y = 0
 	diceroll()
 	if(prob(1))
 		poof()

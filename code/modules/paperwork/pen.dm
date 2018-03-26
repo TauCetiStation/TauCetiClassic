@@ -23,6 +23,12 @@
 	m_amt = 10
 	var/colour = "black"	//what colour the ink is!
 
+/obj/item/weapon/pen/ghost
+	desc = "An expensive looking pen. You wonder, what is it's cost?"
+	colour = "purple"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "fountainpen" //paththegreat: Eli Stevens
+	var/entity = ""
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."
@@ -140,11 +146,26 @@
 /obj/item/weapon/pen/chameleon/attack_self(mob/user)
 	signature = sanitize(input("Enter new signature. Leave blank for 'Anonymous'", "New Signature", signature))
 
+/obj/item/weapon/pen/ghost/attack_self(mob/living/carbon/human/user)
+	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")))
+		to_chat(user, "<span class='notice'>You feel the pen quiver, as another entity posseses it.")
+		var/choices = list()
+		for(var/mob/dead/observer/D in dead_mob_list)
+			if(D.started_as_observer)
+				choices += D.name
+		if(choices)
+			entity = sanitize(pick(choices))
+		else
+			entity = ""
+
 /obj/item/weapon/pen/proc/get_signature(mob/user)
 	return (user && user.real_name) ? user.real_name : "Anonymous"
 
 /obj/item/weapon/pen/chameleon/get_signature(mob/user)
 	return signature ? signature : "Anonymous"
+
+/obj/item/weapon/pen/ghost/get_signature(mob/user)
+	return entity ? entity : (user && user.real_name) ? user.real_name : "Anonymous"
 
 /obj/item/weapon/pen/chameleon/verb/set_colour()
 	set name = "Change Pen Colour"

@@ -889,7 +889,7 @@
 	if(plasm.in_use)
 		return
 	plasm.in_use = TRUE
-	var/selection = input(redeemer, "Pick your eternal reward", "Ectoplasm Redemption") in list("Misfortune Set", "Spiritual Bond Set", "Cancel")
+	var/selection = input(redeemer, "Pick your eternal reward", "Ectoplasm Redemption") in list("Misfortune Set", "Spiritual Bond Set", "Contract From Below", "Cancel")
 	if(!selection || !Adjacent(redeemer))
 		plasm.in_use = FALSE
 		return
@@ -898,6 +898,8 @@
 			new /obj/item/weapon/storage/pill_bottle/ghostdice(src.loc)
 		if("Spiritual Bond Set")
 			new /obj/item/weapon/game_kit/chaplain(src.loc)
+		if("Contract From Below")
+			new /obj/item/weapon/pen/ghost(src.loc)
 		if("Cancel")
 			plasm.in_use = FALSE
 			return
