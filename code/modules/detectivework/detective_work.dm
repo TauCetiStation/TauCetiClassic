@@ -202,7 +202,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			if(files)
 				var/list/dossier = files[href_list["identifier"]]
 				if(href_list["ren"])
-					var/new_title = sanitize_alt(copytext(input("Rename to what?", "Dossier Editing", "Dossier [files.Find(href_list["identifier"])]") as null|text,1,MAX_MESSAGE_LEN))
+					var/new_title = sanitize(copytext(input("Rename to what?", "Dossier Editing", "Dossier [files.Find(href_list["identifier"])]") as null|text,1,MAX_MESSAGE_LEN))
 					if(new_title)
 						dossier[2] = new_title
 					else
@@ -438,7 +438,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			if(!files || !files[href_list["identifier"]])
 				temp = "ERROR: Record/Database not found!"
 			else
-				var/new_title = sanitize_alt(copytext(input("Rename to what?", "Dossier Editing", "Dossier [files.Find(href_list["identifier"])]") as null|text,1,MAX_MESSAGE_LEN))
+				var/new_title = sanitize(copytext(input("Rename to what?", "Dossier Editing", "Dossier [files.Find(href_list["identifier"])]") as null|text,1,MAX_MESSAGE_LEN))
 				if(new_title)
 					var/list/file = files[href_list["identifier"]]
 					file[2] = new_title

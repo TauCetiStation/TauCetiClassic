@@ -23,10 +23,10 @@ proc/admin_call_cooldown(value1)
 	admin_call_cooldown(key_name(src))
 
 	var/output_text = {"<font color='red'>============ADMINCALL============</font><BR>
-<font color='red'>[sanitize_alt("1) Сообщение длинной не более 140 символов.")]</font><BR>
-<font color='red'>[sanitize_alt("2) Описать коротко и внятно причину по которой нужен админ.")]</font><BR>
-<font color='red'>[sanitize_alt("3) Ожидать.")]</font><BR>
-<font color='red'>[sanitize_alt("4) Если и таким образом не выйдет вызвать админа, то в крайнем случае сообщение будет сохранено и не потеряется.")]</font><BR>
+<font color='red'>[sanitize("1) Сообщение длинной не более 140 символов.")]</font><BR>
+<font color='red'>[sanitize("2) Описать коротко и внятно причину по которой нужен админ.")]</font><BR>
+<font color='red'>[sanitize("3) Ожидать.")]</font><BR>
+<font color='red'>[sanitize("4) Если и таким образом не выйдет вызвать админа, то в крайнем случае сообщение будет сохранено и не потеряется.")]</font><BR>
 <font color='red'>=================================</font><BR>
 "}
 

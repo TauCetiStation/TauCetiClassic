@@ -469,7 +469,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		return
 
 	if(href_list["set_channel_name"])
-		src.channel_name = sanitizeSQL(sanitize_alt(copytext(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""), 1, MAX_NAME_LEN)))
+		src.channel_name = sanitize_sql(sanitize(copytext(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""), 1, MAX_NAME_LEN)))
 		while (findtext(src.channel_name," ") == 1)
 			src.channel_name = copytext(src.channel_name, 2, lentext(src.channel_name) + 1)
 		//src.update_icon()
@@ -517,7 +517,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		src.channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
 
 	else if(href_list["set_new_message"])
-		src.msg = sanitize_alt(input(usr, "Write your Feed story", "Network Channel Handler", ""))
+		src.msg = sanitize(input(usr, "Write your Feed story", "Network Channel Handler", ""))
 		while (findtext(src.msg," ") == 1)
 			src.msg = copytext(src.msg, 2, lentext(src.msg) + 1)
 
@@ -574,12 +574,12 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		src.screen = 14
 
 	else if(href_list["set_wanted_name"])
-		src.channel_name = sanitize_alt(input(usr, "Provide the name of the Wanted person", "Network Security Handler", ""))
+		src.channel_name = sanitize(input(usr, "Provide the name of the Wanted person", "Network Security Handler", ""))
 		while (findtext(src.channel_name," ") == 1)
 			src.channel_name = copytext(src.channel_name,2,lentext(src.channel_name)+1)
 
 	else if(href_list["set_wanted_desc"])
-		src.msg = sanitize_alt(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
+		src.msg = sanitize(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
 		while (findtext(src.msg," ") == 1)
 			src.msg = copytext(src.msg,2,lentext(src.msg)+1)
 
@@ -976,7 +976,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W, mob/user)
 	var/turf/T = get_turf(src)                      //Who the fuck uses spawn(600) anyway, jesus christ
 	if(channel)
 		for(var/mob/O in hearers(world.view-1, T))
-			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Breaking news from [sanitize_chat(channel)]!\"</span>",2)
+			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Breaking news from [channel]!\"</span>",2)
 		src.alert = 1
 		src.update_icon()
 		spawn(300)

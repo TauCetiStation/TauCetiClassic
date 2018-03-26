@@ -64,7 +64,7 @@
 		output += "<td><a class='small' href='?src=\ref[src];whitelist=edit_ban;ckey=[user_ckey];role=[role]'>[ban]</a></td>"
 		output += "<td>[role]</td>"
 
-		var/reason = sanitize_alt(role_whitelist[user_ckey][role]["reason"])
+		var/reason = sanitize(role_whitelist[user_ckey][role]["reason"])
 		output += "<td><a class='small' href='?src=\ref[src];whitelist=edit_reason;ckey=[user_ckey];role=[role]'>(E)</a> [reason]</td>"
 		var/addby = role_whitelist[user_ckey][role]["addby"]
 		var/addtm = role_whitelist[user_ckey][role]["addtm"]

@@ -19,10 +19,10 @@
 
 
 /datum/language/proc/format_message(message, verb)
-	return "[verb], <span class='message'><span class='[colour]'>\"[sanitize_plus_chat(capitalize(message))]\"</span></span>"
+	return "[verb], <span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
 
 /datum/language/proc/format_message_radio(message, verb)
-	return "[verb], <span class='[colour]'>\"[sanitize_plus_chat(capitalize(message))]\"</span>"
+	return "[verb], <span class='[colour]'>\"[capitalize(message)]\"</span>"
 
 /datum/language/proc/scramble(input)
 

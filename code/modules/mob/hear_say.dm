@@ -56,7 +56,7 @@
 		if(language)
 			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>")
 		else
-			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][verb], <span class='message'><span class='body'>\"[sanitize_plus_chat(message)]\"</span></span></span>")
+			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			src.playsound_local(source, speech_sound, sound_vol, 1)
@@ -159,7 +159,7 @@
 	if(language)
 		formatted = language.format_message_radio(message, verb)
 	else
-		formatted = "[verb], <span class=\"body\">\"[sanitize_plus_chat(message)]\"</span>"
+		formatted = "[verb], <span class=\"body\">\"[message]\"</span>"
 
 	if(sdisabilities & DEAF || ear_deaf)
 		if(prob(20))
@@ -194,7 +194,7 @@
 			heardword = copytext(heardword,2)
 		if(copytext(heardword,-1) in punctuation)
 			heardword = copytext(heardword,1,lentext(heardword))
-		heard = "<span class = 'game_say'>...You hear something about...[sanitize_plus_chat(heardword)]</span>"
+		heard = "<span class = 'game_say'>...You hear something about...[heardword]</span>"
 
 	else
 		heard = "<span class = 'game_say'>...<i>You almost hear someone talking</i>...</span>"

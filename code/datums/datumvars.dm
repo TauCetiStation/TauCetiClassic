@@ -355,7 +355,7 @@ body
 		html += "[name] = <span class='value'>null</span>"
 
 	else if (istext(value))
-		html += "[name] = <span class='value'>\"[sanitize_popup(value)]\"</span>"
+		html += "[name] = <span class='value'>\"[value]\"</span>"
 
 	else if (isicon(value))
 		#ifdef VARSICON

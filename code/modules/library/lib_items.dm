@@ -32,7 +32,7 @@
 		O.loc = src
 		update_icon()
 	else if(istype(O, /obj/item/weapon/pen))
-		var/newname = stripped_input(usr, "What would you like to title this bookshelf?")
+		var/newname = sanitize_safe(input(usr, "What would you like to title this bookshelf?"))
 		if(!newname)
 			return
 		else
@@ -183,14 +183,14 @@
 					src.name = newtitle
 					src.title = newtitle
 			if("Contents")
-				var/content = sanitize_alt(copytext(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null,1, 8192))
+				var/content = sanitize(copytext(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null,1, 8192))
 				if(!content)
 					to_chat(usr, "The content is invalid.")
 					return
 				else
 					src.dat += content
 			if("Author")
-				var/newauthor = sanitize_alt(copytext(input(usr, "Write the author's name:"),1, MAX_NAME_LEN))
+				var/newauthor = sanitize(copytext(input(usr, "Write the author's name:"),1, MAX_NAME_LEN))
 				if(!newauthor)
 					to_chat(usr, "The name is invalid.")
 					return

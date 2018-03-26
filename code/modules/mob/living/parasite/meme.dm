@@ -246,7 +246,7 @@ mob/living/parasite/meme/verb/Thought()
 		return
 
 	//message = say_quote(message)
-	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'><i>[sanitize_plus_chat(message)]</i></span></span>"
+	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'><i>[message]</i></span></span>"
 	//target.show_message(rendered)
 	to_chat(target, rendered)
 	to_chat(usr, "<i>You make [target] hear:</i> [rendered]")
