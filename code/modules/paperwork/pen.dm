@@ -148,7 +148,7 @@
 
 /obj/item/weapon/pen/ghost/attack_self(mob/living/carbon/human/user)
 	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")))
-		to_chat(user, "<span class='notice'>You feel the pen quiver, as another entity posseses it.")
+		to_chat(user, "<span class='notice'>You feel the pen quiver, as another entity posseses it.</span>")
 		var/choices = list()
 		for(var/mob/dead/observer/D in dead_mob_list)
 			if(D.started_as_observer)

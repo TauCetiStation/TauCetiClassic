@@ -38,7 +38,7 @@
 		pixel_x = rand(-amplitude, amplitude)
 		pixel_y = rand(-amplitude/3, amplitude/3)
 		set_light(light_range, 1, "#a2fad1")
-		time += -1
+		time--
 		sleep(1)
 	for(var/mob/living/A in viewers(3, loc))
 		A.confused += SLIGHTLY_CONFUSED
@@ -51,6 +51,14 @@
 	if(!result)
 		result = rand(1, sides)
 	icon_state = "[initial(icon_state)][result]"
+
+/obj/item/weapon/dice/d00/atom_init()
+	. = ..()
+	result = (result - 1)*10
+
+/obj/item/weapon/dice/ghost/d00/atom_init()
+	. = ..()
+	result = (result - 1)*10
 
 /obj/item/weapon/dice/d2
 	name = "d2"
@@ -132,7 +140,7 @@
 
 /obj/item/weapon/dice/d20
 	name = "d20"
-	desc = "Accursed die with twenty sides. The prefered die to throw at the GM."
+	desc = "A die with twenty sides. The prefered die to throw at the GM."
 	icon_state = "d20"
 	sides = 20
 
@@ -181,7 +189,7 @@
 	while(time > 0)
 		pixel_x = rand(-AMPLITUDE/3, AMPLITUDE/3)
 		pixel_y = rand(-AMPLITUDE, AMPLITUDE)
-		time += -1
+		time--
 		sleep(1)
 	pixel_x = 0
 	pixel_y = 0
@@ -254,7 +262,7 @@
 	new /obj/item/weapon/dice/ghost/d12(src)
 	new /obj/item/weapon/dice/ghost/d20(src)
 
-/obj/item/weapon/storage/pill_bottle/ghostdice/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
+/obj/item/weapon/storage/pill_bottle/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	..()
 	if(istype(W, /obj/item/weapon/nullrod))
 		if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")))

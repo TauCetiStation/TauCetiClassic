@@ -60,6 +60,21 @@ datum/gear/zippo
 	gear_tweaks += new/datum/gear_tweak/path(game_kits)
 
 /datum/gear/game_kitchaplain
+	display_name = "Ghostly Gaming Kit"
+	path = /obj/item/weapon/game_kit/chaplain
+	cost = 3
+	allowed_roles = list("Chaplain", "Paranormal Investigator")
+
+/datum/gear/ghostpen
+	display_name = "One Fancy Pen"
+	path = /obj/item/weapon/pen/ghost
+	allowed_roles = list("Chaplain", "Paranormal Investigator")
+
+/datum/gear/ghostcamera
+	display_name = "Anomalous Camera"
+	path = /obj/item/device/camera/spooky
+	allowed_roles = list("Chaplain", "Paranormal Investigator")
+	cost = 3
 
 /datum/gear/pulserifle
 	display_name = "Pulse rifle"
