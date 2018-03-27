@@ -675,3 +675,28 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/IsAdvancedToolUser()
 	return IsAdminGhost(src)
+
+/mob/dead/observer/verb/change_icon()
+	set name = "Change Dead Icon"
+	set category = "Ghost"
+	if(!config.allow_donators)
+		to_chat(src, "<span class='warning'>Currently disabled by config.</span>")
+		return
+	if(!client.donator)
+		if(config.donate_info_url)
+			to_chat(src, "<span class='warning'>This only for donators, more info <a href='[config.donate_info_url]' target='_blank'>here</a>.</span>")
+		else
+			to_chat(src, "<span class='warning'>This only for donators, sorry.</span>")
+		return
+	var/new_icon_state = input("Please choose a new appearance","Changing Appearance") in icon_states('icons/mob/donators.dmi')
+	if(!new_icon_state)
+		return
+	overlays.Cut()
+	alpha = 127
+	icon = 'icons/mob/donators.dmi'
+	icon_state = new_icon_state
+	ghost_darkness_images -= ghostimage
+	qdel(ghostimage)
+	ghostimage = image(icon, src, icon_state)
+	ghost_darkness_images |= ghostimage
+	updateallghostimages()
