@@ -9,6 +9,7 @@
 #define ROLE_WIZARD            "Wizard"
 #define ROLE_MALF              "Malf AI"
 #define ROLE_REV               "Revolutionary"
+#define ROLE_REV_HEAD          "Head of Staff in Rev."
 #define ROLE_ALIEN             "Xenomorph"
 #define ROLE_PAI               "pAI"
 #define ROLE_CULTIST           "Cultist"
@@ -35,6 +36,7 @@ var/global/list/special_roles = list(
 	ROLE_WIZARD = IS_MODE_COMPILED("wizard"),            //3
 	ROLE_MALF = IS_MODE_COMPILED("malfunction"),         //4
 	ROLE_REV = IS_MODE_COMPILED("revolution"),           //5
+	ROLE_REV_HEAD = ROLE_REV,                            //5.1
 	ROLE_ALIEN = 1,                                      //6
 	ROLE_PAI = 1,                                        //7
 	ROLE_CULTIST = IS_MODE_COMPILED("cult"),             //8
