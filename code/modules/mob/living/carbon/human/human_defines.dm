@@ -87,3 +87,6 @@
 	var/robolimb_count = 0 // Number of robot limbs.
 	var/sightglassesmod = null
 	var/datum/personal_crafting/handcrafting
+	//Diona stuff
+	var/data = 0
+	var/heal_time = 0

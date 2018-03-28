@@ -7,7 +7,7 @@
 	var/list/allowed_tools = null
 	// type paths referencing mutantraces that this step applies to.
 	var/list/allowed_species = null
-	var/list/disallowed_species = null
+	var/list/disallowed_species = list(IPC)
 
 	// duration of the step
 	var/min_duration = 0
@@ -144,8 +144,9 @@
 				swapped = 1
 
 /datum/surgery_status
-	var/eyes	=	0
-	var/face	=	0
-	var/appendix =	0
-	var/ribcage =	0
+	var/plasticsur = 0
+	var/eyes = 0
+	var/face = 0
+	var/appendix = 0
+	var/ribcage = 0
 	var/list/in_progress = list()

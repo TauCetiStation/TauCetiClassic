@@ -55,7 +55,6 @@
 	var/hazard_low_pressure = HAZARD_LOW_PRESSURE     // Dangerously low pressure.
 
 	var/list/flags = list()       // Various specific features.
-
 	var/list/abilities = list()	// For species-derived or admin-given powers
 
 	var/datum/dirt_cover/blood_color = /datum/dirt_cover/red_blood //Red.
@@ -404,6 +403,7 @@
 	heat_level_2 = 3000
 	heat_level_3 = 4000
 
+	burn_mod = 1.3
 	speed_mod = 7
 
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
@@ -419,16 +419,26 @@
 	,NO_PAIN = TRUE
 	)
 
-	blood_color = /datum/dirt_cover/green_blood
-	has_organ = list(
-		O_HEART   = /obj/item/organ/internal/heart,
-		O_BRAIN   = /obj/item/organ/internal/brain,
-		O_EYES    = /obj/item/organ/internal/eyes,
-		O_LUNGS   = /obj/item/organ/internal/lungs/diona,
-		O_LIVER   = /obj/item/organ/internal/liver,
-		O_KIDNEYS = /obj/item/organ/internal/kidneys
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest
+		,BP_GROIN  = /obj/item/organ/external/groin
+		,BP_HEAD   = /obj/item/organ/external/head/diona
+		,BP_L_ARM  = /obj/item/organ/external/l_arm
+		,BP_R_ARM  = /obj/item/organ/external/r_arm
+		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
 		)
 
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart,
+		O_BRAIN   = /obj/item/organ/internal/brain/diona,
+		O_EYES    = /obj/item/organ/internal/eyes,
+		O_LUNGS   = /obj/item/organ/internal/lungs/diona,
+		O_LIVER   = /obj/item/organ/internal/liver/diona,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys/diona
+		)
+
+	blood_color = /datum/dirt_cover/green_blood
 	flesh_color = "#907E4A"
 
 	has_gendered_icons = FALSE
@@ -453,11 +463,12 @@
 
 	H.visible_message("\red[H] splits apart with a wet slithering noise!")
 
+
 /datum/species/machine
 	name = IPC
 	icobase = 'icons/mob/human_races/r_machine.dmi'
 	deform = 'icons/mob/human_races/r_machine.dmi'
-	language = "Tradeband"
+	language = "Trinary"
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
@@ -490,6 +501,25 @@
 	,VIRUS_IMMUNE = TRUE
 	,BIOHAZZARD_IMMUNE = TRUE
 	)
+
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest
+		,BP_GROIN  = /obj/item/organ/external/groin
+		,BP_HEAD   = /obj/item/organ/external/head/ipc
+		,BP_L_ARM  = /obj/item/organ/external/l_arm
+		,BP_R_ARM  = /obj/item/organ/external/r_arm
+		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		)
+
+	has_organ = list(
+		 O_HEART   = /obj/item/organ/internal/heart/ipc
+		,O_BRAIN   = /obj/item/organ/internal/brain/ipc
+		,O_EYES    = /obj/item/organ/internal/eyes/ipc
+		,O_LUNGS   = /obj/item/organ/internal/lungs/ipc
+		,O_LIVER   = /obj/item/organ/internal/liver/ipc
+		,O_KIDNEYS = /obj/item/organ/internal/kidneys/ipc
+		)
 
 	blood_color = /datum/dirt_cover/oil
 	flesh_color = "#575757"

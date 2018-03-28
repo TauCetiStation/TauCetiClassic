@@ -39,6 +39,16 @@
 
 	default_deconstruction_crowbar(O)
 
+	if(istype(O, /obj/item/weapon/organ))
+		var/obj/item/weapon/organ/IO = O
+		if(IO.owner.get_species() == DIONA)
+			to_chat(user, "<span class='notice'>You extract some seeds from the [IO.name].</span>")
+			var/t_amount = 0
+			var/t_max = rand(1,4)
+			for(var/I in t_amount to t_max)
+				new /obj/item/seeds/replicapod(loc)
+			qdel(IO)
+
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/))
 		var/obj/item/weapon/reagent_containers/food/snacks/grown/F = O
 		user.drop_item()
