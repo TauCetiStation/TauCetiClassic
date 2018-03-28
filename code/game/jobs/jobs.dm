@@ -21,13 +21,12 @@ var/const/SCIENTIST			=(1<<1)
 var/const/CHEMIST			=(1<<2)
 var/const/CMO				=(1<<3)
 var/const/DOCTOR			=(1<<4)
-var/const/GENETICIST		=(1<<5)
-var/const/VIROLOGIST		=(1<<6)
-var/const/PSYCHIATRIST		=(1<<7)
-var/const/ROBOTICIST		=(1<<8)
-var/const/XENOBIOLOGIST		=(1<<9)
-var/const/EMERGENCYPHYSICIAN=(1<<10)
-var/const/XENOARCHEOLOGIST	=(1<<11)
+var/const/VIROLOGIST		=(1<<5)
+var/const/PSYCHIATRIST		=(1<<6)
+var/const/ROBOTICIST		=(1<<7)
+var/const/XENOBIOLOGIST		=(1<<8)
+var/const/EMERGENCYPHYSICIAN=(1<<9)
+var/const/XENOARCHEOLOGIST	=(1<<10)
 
 
 var/const/CIVILIAN			=(1<<2)
@@ -72,7 +71,6 @@ var/list/engineering_positions = list(
 var/list/medical_positions = list(
 	"Chief Medical Officer",
 	"Medical Doctor",
-	"Geneticist",
 	"Psychiatrist",
 	"Chemist",
 	"Virologist",
@@ -83,7 +81,6 @@ var/list/medical_positions = list(
 var/list/science_positions = list(
 	"Research Director",
 	"Scientist",
-	"Geneticist",	//Part of both medical and science
 	"Roboticist",
 	"Xenobiologist"
 )

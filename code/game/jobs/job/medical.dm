@@ -179,20 +179,6 @@
 	return 1
 
 
-/datum/job/geneticist
-	title = "Geneticist"
-	flag = GENETICIST
-	department_flag = MEDSCI
-	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
-	supervisors = "the chief medical officer and research director"
-	selection_color = "#ffeef0"
-	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_morgue, access_genetics, access_research)
-	minimal_player_ingame_minutes = 960
-	restricted_species = list(UNATHI, TAJARAN, DIONA)
-
 /datum/job/geneticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/geneticist(H), slot_w_uniform)
