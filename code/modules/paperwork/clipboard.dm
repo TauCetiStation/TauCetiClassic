@@ -76,7 +76,7 @@
 	for(var/obj/item/weapon/photo/Ph in src)
 		dat += "<A href='?src=\ref[src];remove=\ref[Ph]'>Remove</A> - <A href='?src=\ref[src];look=\ref[Ph]'>[sanitize(Ph.name)]</A><BR>"
 
-	user << browse(dat, "window=clipboard")
+	user << browse(entity_ja(dat), "window=clipboard")
 	onclose(user, "clipboard")
 	add_fingerprint(usr)
 	return

@@ -281,7 +281,7 @@
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat += dat2
-			user << browse(dat, "window=communications;size=400x500")
+			user << browse(entity_ja(dat), "window=communications;size=400x500")
 			onclose(user, "communications")
 		return
 
@@ -356,7 +356,7 @@
 			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Swipe ID</A> to confirm change.<BR>"
 
 	dat += "<BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
-	user << browse(dat, "window=communications;size=400x500")
+	user << browse(entity_ja(dat), "window=communications;size=400x500")
 	onclose(user, "communications")
 
 

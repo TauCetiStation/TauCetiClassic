@@ -9,5 +9,6 @@
 #define JA_PLACEHOLDER_CODE 182
 #define JA_ENTITY           "&#1103;"
 #define JA_ENTITY_ASCII     "&#255;"  //for old text and histoty, we don't need this anymore because goonchat (God bless goonchat)
+                                      //todo: clean saves/bd from this
 
 //#define DEBUG_CYRILLIC

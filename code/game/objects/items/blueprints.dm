@@ -72,7 +72,7 @@ move an amendment</a> to the drawing.</p>
 		else
 			return
 	text += "</BODY></HTML>"
-	usr << browse(text, "window=blueprints")
+	usr << browse(entity_ja(text), "window=blueprints")
 	onclose(usr, "blueprints")
 
 

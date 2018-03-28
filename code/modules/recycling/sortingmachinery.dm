@@ -197,7 +197,7 @@
 
 	dat += "</tr></table><br>Current Selection: [currTag ? currTag : "None"]</tt>"
 
-	user << browse(dat, "window=destTagScreen;size=450x350")
+	user << browse(entity_ja(dat), "window=destTagScreen;size=450x350")
 	onclose(user, "destTagScreen")
 
 /obj/item/device/destTagger/attack_self(mob/user)

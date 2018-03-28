@@ -97,7 +97,7 @@
 
 			"<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
-	user << browse("<HEAD><TITLE>Securitron v2.5 controls</TITLE></HEAD>[dat]", "window=autosec")
+	user << browse("<HEAD><TITLE>Securitron v2.5 controls</TITLE></HEAD>[entity_ja(dat)]", "window=autosec")
 	onclose(user, "autosec")
 
 

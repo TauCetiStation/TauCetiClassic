@@ -53,7 +53,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=editrights;size=600x500")
+	usr << browse(entity_ja(output),"window=editrights;size=600x500")
 
 /datum/admins/proc/add_admin()
 	if(!usr.client)
@@ -167,7 +167,7 @@ var elements = document.getElementsByName('rights');
 <input type="button" value="Apply" onclick="send_rights()" />
 </html>
 "}
-	usr << browse(output,"window=change_permissions;size=250x380;")
+	usr << browse(entity_ja(output),"window=change_permissions;size=250x380;")
 
 
 /datum/admins/proc/change_permissions(adm_ckey, new_rights)

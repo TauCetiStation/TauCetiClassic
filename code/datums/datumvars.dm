@@ -339,7 +339,7 @@ body
 
 	html += "</body></html>"
 
-	usr << browse(html, "window=variables\ref[D];size=475x650")
+	usr << browse(entity_ja(html), "window=variables\ref[D];size=475x650")
 
 	return
 
@@ -1015,4 +1015,4 @@ body
 		i *= 2
 	while(i < ~0)
 
-	usr << browse(dat, "window=bit_flags")
+	usr << browse(entity_ja(dat), "window=bit_flags")

@@ -399,7 +399,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
-	user << browse(dat, text("window=mob[name];size=340x540"))
+	user << browse(entity_ja(dat), text("window=mob[name];size=340x540"))
 	onclose(user, "mob[name]")
 	return
 

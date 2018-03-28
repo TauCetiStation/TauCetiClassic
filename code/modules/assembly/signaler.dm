@@ -69,7 +69,7 @@ Code:
 <A href='byond://?src=\ref[src];code=5'>+</A><BR>
 [t1]
 </TT>"}
-	user << browse(dat, "window=radio")
+	user << browse(entity_ja(dat), "window=radio")
 	onclose(user, "radio")
 	return
 

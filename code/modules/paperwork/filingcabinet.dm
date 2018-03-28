@@ -64,7 +64,7 @@
 		var/obj/item/P = contents[i]
 		dat += "<tr><td><a href='?src=\ref[src];retrieve=\ref[P]'>[sanitize(P.name)]</a></td></tr>"
 	dat += "</table></center>"
-	user << browse("<html><head><title>[name]</title></head><body>[dat]</body></html>", "window=filingcabinet;size=350x300")
+	user << browse("<html><head><title>[name]</title></head><body>[entity_ja(dat)]</body></html>", "window=filingcabinet;size=350x300")
 
 	return
 

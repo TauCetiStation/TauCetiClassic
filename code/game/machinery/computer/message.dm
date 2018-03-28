@@ -237,7 +237,7 @@
 
 	dat += "</body>"
 	message = defaultmsg
-	user << browse(dat, "window=message;size=700x700")
+	user << browse(entity_ja(dat), "window=message;size=700x700")
 	onclose(user, "message")
 
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user)

@@ -45,10 +45,10 @@
 	scripts[name] = file
 
 /datum/browser/proc/set_content(ncontent)
-	content = ncontent
+	content = entity_ja(ncontent)
 
 /datum/browser/proc/add_content(ncontent)
-	content += ncontent
+	content += entity_ja(ncontent)
 
 /datum/browser/proc/get_header()
 	var/key
@@ -89,10 +89,10 @@
 /datum/browser/proc/get_content()
 	return {"
 	[get_header()]
-	[content]
+	[content]//entity_ja(content)? 
 	[get_footer()]
 	"}
-
+//"
 /datum/browser/proc/open(use_onclose = 1)
 	var/window_size = ""
 	if (width && height)

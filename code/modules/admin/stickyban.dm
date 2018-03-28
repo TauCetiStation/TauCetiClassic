@@ -149,7 +149,7 @@
 		[banhtml]
 	</body>
 	"}
-	usr << browse(html,"window=stickybans;size=700x400")
+	usr << browse(entity_ja(html),"window=stickybans;size=700x400")
 
 //returns true if and only if the game added the sticky ban.
 /proc/is_stickyban_from_game(ban)

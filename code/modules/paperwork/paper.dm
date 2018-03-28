@@ -78,12 +78,12 @@
 	if((!(ishuman(user) || isobserver(user) || issilicon(user)) && !forceshow) || forcestars)
 		data = "<HTML><HEAD><TITLE>[sanitize(name)]</TITLE></HEAD><BODY>[stars(info)][stamp_text]</BODY></HTML>"
 		if(view)
-			user << browse(data, "window=[name]")
+			user << browse(entity_ja(data), "window=[name]")
 			onclose(user, "[name]")
 	else
 		data = "<HTML><HEAD><TITLE>[sanitize(name)]</TITLE></HEAD><BODY>[infolinks ? info_links : info][stamp_text]</BODY></HTML>"
 		if(view)
-			user << browse(data, "window=[name]")
+			user << browse(entity_ja(data), "window=[name]")
 			onclose(user, "[name]")
 	return data
 

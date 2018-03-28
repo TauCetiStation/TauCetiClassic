@@ -32,7 +32,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=whitelist;size=600x500")
+	usr << browse(entity_ja(output),"window=whitelist;size=600x500")
 
 /datum/admins/proc/whitelist_view(user_ckey)
 	src = usr.client.holder
@@ -81,7 +81,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=whitelist_user;size=750x500")
+	usr << browse(entity_ja(output),"window=whitelist_user;size=750x500")
 
 /datum/admins/proc/whitelist_add_user()
 	if(!check_rights(R_WHITELIST))

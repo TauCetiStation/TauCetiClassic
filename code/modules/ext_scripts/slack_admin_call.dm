@@ -30,7 +30,7 @@ proc/admin_call_cooldown(value1)
 <font color='red'>=================================</font><BR>
 "}
 
-	src << browse(output_text, "window=admcl;size=600x300")
+	src << browse(entity_ja(output_text), "window=admcl;size=600x300")
 
 	src << 'sound/effects/adminhelp.ogg'
 

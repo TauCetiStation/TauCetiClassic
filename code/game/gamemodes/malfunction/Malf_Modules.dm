@@ -68,7 +68,7 @@ robot_fabricator
 			dat += "<A href='byond://?src=\ref[src];module_type=[module]'>[initial(module_type.module_name)]</A> ([initial(module_type.price)])<BR>"
 		dat += "<HR>"
 
-	user << browse(dat, "window=modpicker")
+	user << browse(entity_ja(dat), "window=modpicker")
 	onclose(user, "modpicker")
 
 /datum/AI_Module/module_picker/Topic(href, href_list)

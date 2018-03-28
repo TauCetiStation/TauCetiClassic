@@ -205,7 +205,7 @@ VOX HEIST ROUNDTYPE
 	[sanitize("- И последнее - старайтесь играть командой, не соло! Если вам все воксы кричат чтобы вы возвращались на корабль - вероятно стоит бросить текущие дела и прислушаться к команде.")]<BR>
 	"}
 
-	raider.current << browse(output_text, "window=vxrd;size=600x300")
+	raider.current << browse(entity_ja(output_text), "window=vxrd;size=600x300")
 
 /datum/game_mode/heist/declare_completion()
 	//No objectives, go straight to the feedback.

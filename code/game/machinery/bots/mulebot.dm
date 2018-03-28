@@ -227,7 +227,7 @@
 		else
 			dat += "The bot is in maintenance mode and cannot be controlled.<BR>"
 
-	user << browse("<HEAD><TITLE>Mulebot [suffix ? "([suffix])" : ""]</TITLE></HEAD>[dat]", "window=mulebot;size=350x500")
+	user << browse("<HEAD><TITLE>Mulebot [suffix ? "([suffix])" : ""]</TITLE></HEAD>[entity_ja(dat)]", "window=mulebot;size=350x500")
 	onclose(user, "mulebot")
 
 /obj/machinery/bot/mulebot/Topic(href, href_list)

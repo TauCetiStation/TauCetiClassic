@@ -191,19 +191,19 @@
 		if("records")
 			switch(href_list["task"])
 				if("med_record")
-					var/medmsg = sanitize(input(usr,"Set your medical notes here.","Medical Records",html_decode(reset_ja(med_record))) as message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+					var/medmsg = sanitize(input(usr,"Set your medical notes here.","Medical Records",input_default(med_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 
 					if(medmsg != null)
 						med_record = medmsg
 
 				if("sec_record")
-					var/secmsg = sanitize(input(usr,"Set your security notes here.","Security Records",html_decode(reset_ja(sec_record))) as message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+					var/secmsg = sanitize(input(usr,"Set your security notes here.","Security Records",input_default(sec_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 
 					if(secmsg != null)
 						sec_record = secmsg
 
 				if("gen_record")
-					var/genmsg = sanitize(input(usr,"Set your employment notes here.","Employment Records",html_decode(reset_ja(gen_record))) as message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+					var/genmsg = sanitize(input(usr,"Set your employment notes here.","Employment Records",input_default(gen_record)) as message, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
 
 					if(genmsg != null)
 						gen_record = genmsg
@@ -454,7 +454,7 @@
 					religion = choice
 
 				if("flavor_text")
-					var/msg = sanitize(copytext(input(usr,"Set the flavor text in your 'examine' verb.","Flavor Text",html_decode(reset_ja(flavor_text))) as message, 1, MAX_MESSAGE_LEN))
+					var/msg = sanitize(input(usr,"Set the flavor text in your 'examine' verb.","Flavor Text", input_default(flavor_text)) as message)
 
 					if(msg != null)
 						flavor_text = msg

@@ -84,7 +84,7 @@
 			bmode = "Disabled"
 		dat += "<BR><BR>Bridge Mode : <A href='?src=\ref[src];operation=bridgemode'>[bmode]</A><BR>"
 
-	user << browse("<HEAD><TITLE>Repairbot v1.0 controls</TITLE></HEAD>[dat]", "window=autorepair")
+	user << browse("<HEAD><TITLE>Repairbot v1.0 controls</TITLE></HEAD>[entity_ja(dat)]", "window=autorepair")
 	onclose(user, "autorepair")
 
 

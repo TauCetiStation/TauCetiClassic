@@ -154,7 +154,7 @@
 
 	dat += "</font>"
 	temp = ""
-	user << browse(dat, "window=tcommachine;size=520x500;can_resize=0")
+	user << browse(entity_ja(dat), "window=tcommachine;size=520x500;can_resize=0")
 	onclose(user, "tcommachine")
 
 

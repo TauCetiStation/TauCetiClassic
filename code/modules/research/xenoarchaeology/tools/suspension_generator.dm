@@ -113,7 +113,7 @@
 	dat += "<hr>"
 	dat += "<A href='?src=\ref[src]'> Refresh console </A><BR>"
 	dat += "<A href='?src=\ref[src];close=1'> Close console </A><BR>"
-	user << browse(dat, "window=suspension;size=500x400")
+	user << browse(entity_ja(dat), "window=suspension;size=500x400")
 	onclose(user, "suspension")
 
 /obj/machinery/suspension_gen/process()

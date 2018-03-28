@@ -104,12 +104,12 @@
 		if(istype(src[page], /obj/item/weapon/paper))
 			var/obj/item/weapon/paper/P = W
 			dat += P.show_content(human_user, view = FALSE)
-			human_user << browse(dat, "window=[name]")
+			human_user << browse(entity_ja(dat), "window=[name]")
 			P.add_fingerprint(usr)
 		else if(istype(src[page], /obj/item/weapon/photo))
 			var/obj/item/weapon/photo/P = W
 			human_user << browse_rsc(P.img, "tmp_photo.png")
-			human_user << browse(dat + "<html><head><title>[sanitize(P.name)]</title></head>" \
+			human_user << browse(entity_ja(dat) + "<html><head><title>[sanitize(P.name)]</title></head>" \
 			+ "<body style='overflow:hidden'>" \
 			+ "<div> <img src='tmp_photo.png' width = '180'" \
 			+ "[P.scribble ? "<div> Written on the back:<br><i>[P.scribble]</i>" : ]"\
