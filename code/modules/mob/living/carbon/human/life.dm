@@ -628,8 +628,7 @@
 
 		//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
 		var/temp_adj = 0
-		var/obj/item/organ/internal/lungs/ipc/L = organs_by_name[O_LUNGS]
-		if(!on_fire || !L.is_bruised()) //If you're on fire, you do not heat up or cool down based on surrounding gases
+		if(!on_fire || !(get_species() = IPC && is_damaged_organ(O_LUNGS))) //If you're on fire, you do not heat up or cool down based on surrounding gases
 			if(loc_temp < bodytemperature)			//Place is colder than we are
 				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
@@ -968,13 +967,14 @@
 			var/turf/T = loc
 			light_amount = round((T.get_lumcount()*10)-5)
 
-		var/obj/item/organ/internal/liver/L = organs_by_name[O_LIVER]
-		if(get_species() == DIONA && !L.is_bruised())
+		if(get_species() == DIONA && !is_damaged_organ(O_LIVER))
 			nutrition += light_amount
 
 		if(species.flags[IS_PLANT])
 			var/obj/item/organ/internal/kidneys/KS = organs_by_name[O_KIDNEYS]
-			if(get_species() == DIONA && (nutrition > 500 - KS.damage*5))
+			if(!KS)
+				nutrition = 0
+			if(KS && get_species() == DIONA && (nutrition > 500 - KS.damage*5))
 				nutrition = 500 - KS.damage*5
 			if(light_amount >= 3) //if there's enough light, heal
 				adjustBruteLoss(-(light_amount))
@@ -982,46 +982,10 @@
 				adjustOxyLoss(-(light_amount))
 			var/obj/item/organ/external/External
 			if(nutrition > 350 && light_amount >= 4 && prob(75))
-				if(!External)
-					for(var/obj/item/organ/external/BP in bodyparts)
-						if(BP.status & ORGAN_DESTROYED)
-							if(BP.parent && (BP.parent.status & ORGAN_DESTROYED))
-								continue
-							else
-								heal_time = 65
-								External = BP
-						else if(BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED))
-							heal_time = 30
-							External = BP
-						if(External)
-							break
-				else if(bodytemperature >= 170 && (nutrition - External.repair_cost) > 201)
-					apply_damages(0,0,1,2,0,0) // 1 toxic, 2 oxy
-					nutrition -= 1
-					data++
-					if(data == 1)
-						visible_message("<span class='notice'>You see odd movement in [src]'s [External.name]...</span>"
-						,"<span class='notice'> You feel strange vibration on tips of your [External.name]... </span>")
-					if(data == 10)
-						visible_message("<span class='notice'>You hear sickening crunch In [src]'s [External.name]...</span>")
-					if(data == 20)
-						visible_message("<span class='notice'>[src]'s [External.name] shortly bends...</span>")
-					if(data == 30)
-						if(heal_time == 30)
-							visible_message("<span class='notice'>[src] stirs his [External.name]...</span>","<span class='userdanger'>You feel freedom in moving your [External.name]</span>")
-						else
-							visible_message("<span class='notice'>From [src]'s [External.parent.name] grow small meaty sprout...</span>")
-					if(data == 50)
-						visible_message("<span class='notice'>You see something resembling [External.name] at [src]'s [External.parent.name]...</span>")
-					if(data == 65)
-						visible_message("<span class='userdanger'>A new [External.name] grown from [src]'s [External.parent.name]!</span>","<span class='userdanger'>You feel again your [External.name]!</span>")
-					if(data >= heal_time)
-						External.rejuvenate()
-						data = 0
-						heal_time = 0
-						nutrition -= External.repair_cost
-						External = null
-						update_body()
+				External = find_damaged_bodypart(External)
+				nutrition -= 1
+				apply_damages(0,0,1,2,0,0)
+				regen_bodyparts(External, TRUE)
 			if(light_amount >=5)
 				for(var/obj/item/organ/internal/O in organs)
 					if(O.damage)

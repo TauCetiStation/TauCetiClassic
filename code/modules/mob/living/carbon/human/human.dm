@@ -353,11 +353,61 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	put_in_inactive_hand(O)
 	return TRUE
 
-/mob/living/carbon/human/proc/is_bruised_organ(organ)
+/mob/living/carbon/human/proc/is_damaged_organ(organ)
 	var/obj/item/organ/internal/IO = organs_by_name[organ]
+	if(!IO)
+		return TRUE
 	if(IO.is_bruised())
 		return TRUE
 	return FALSE
+
+/mob/living/carbon/human/proc/find_damaged_bodypart(External = null)
+	if(!External)
+		for(var/obj/item/organ/external/BP in bodyparts) // find a broken/destroyed limb
+			if(BP.status & ORGAN_DESTROYED)
+				if(BP.parent && (BP.parent.status & ORGAN_DESTROYED))
+					continue
+				else
+					heal_time = 65
+					External = BP
+			else if(BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED))
+				heal_time = 30
+				External = BP
+			if(External)
+				break
+	return External
+
+/mob/living/carbon/human/proc/regen_bodyparts(obj/item/organ/external/External = null, use_cost = FALSE)
+	if(bodytemperature >= 170 && vessel && External) // start fixing broken/destroyed limb
+		for(var/datum/reagent/blood/B in vessel.reagent_list)
+			B.volume -= 4
+		data++
+		switch(data)
+			if(1)
+				visible_message("<span class='notice'>You see odd movement in [src]'s [External.name]...</span>","<span class='notice'> You [species && species.flags[NO_PAIN] ? "notice" : "feel"] strange vibration on tips of your [External.name]... </span>")
+			if(10)
+				visible_message("<span class='notice'>You hear sickening crunch In [src]'s [External.name]...</span>")
+			if(20)
+				visible_message("<span class='notice'>[src]'s [External.name] shortly bends...</span>")
+			if(30)
+				if(heal_time == 30)
+					visible_message("<span class='notice'>[src] stirs his [External.name]...</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] freedom in moving your [External.name]</span>")
+				else
+					visible_message("<span class='notice'>From [src]'s [External.parent.name] grows a small meaty sprout...</span>")
+			if(50)
+				visible_message("<span class='notice'>You see something resembling [External.name] at [src]'s [External.parent.name]...</span>")
+			if(65)
+				visible_message("<span class='userdanger'>A new [External.name] has grown from [src]'s [External.parent.name]!</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] your [External.name] again!</span>")
+		if(prob(50))
+			emote("scream",1,null,1)
+		if(data >= heal_time) // recover organ
+			External.rejuvenate()
+			data = 0
+			heal_time = 0
+			if(use_cost)
+				nutrition -= External.repair_cost
+			External = null
+			update_body()
 
 /mob/living/carbon/human/restrained(check_type = ARMS)
 	if ((check_type & ARMS) && handcuffed)

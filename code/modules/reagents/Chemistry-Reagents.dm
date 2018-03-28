@@ -1349,64 +1349,24 @@ datum
 			color = "#551a8b" // rgb: 85, 26, 139
 			overdose = 5.1
 			custom_metabolism = 0.07
-			var/heal_time = 0
 			var/obj/item/organ/external/External
 			taste_message = "machines"
-
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
 				if(!ishuman(M) || volume > overdose)
 					return
 				var/mob/living/carbon/human/H = M
-				if(H.nutrition < 200) // if nanites doesn't have enough resources, they're stops working and spends
+				if(H.nutrition < 200) // if nanites don't have enough resources, they stop working and still spend
 					H.make_jittery(100)
 					volume += 0.07
 					return
 				H.jitteriness = max(0,H.jitteriness - 100)
-				if(!External)
-					for(var/obj/item/organ/external/BP in H.bodyparts) // find a broken/destroyed limb
-						if(BP.status & ORGAN_DESTROYED)
-							if(BP.parent && (BP.parent.status & ORGAN_DESTROYED))
-								continue
-							else
-								heal_time = 65
-								External = BP
-						else if(BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED))
-							heal_time = 30
-							External = BP
-						if(External)
-							break
-				else if(H.bodytemperature >= 170 && H.vessel) // start fixing broken/destroyed limb
-					for(var/datum/reagent/blood/B in H.vessel.reagent_list)
-						B.volume -= 4
-					H.nutrition -= 3
-					H.apply_effect(3, WEAKEN)
-					H.apply_damages(0,0,1,4,0,5) // 1 toxic, 4 oxy and 5 halloss
-					data++
-					if(data == 1)
-						H.visible_message("<span class='notice'>You see oddly moving in [H]'s [External.name]...</span>"
-					 	,"<span class='notice'> You feel strange vibration on tips of your [External.name]... </span>")
-					if(data == 10)
-						H.visible_message("<span class='notice'>You hear sickening crunch In [H]'s [External.name]...</span>")
-					if(data == 20)
-						H.visible_message("<span class='notice'>[H]'s [External.name] shortly bends...</span>")
-					if(data == 30)
-						if(heal_time == 30)
-							H.visible_message("<span class='notice'>[H] stirs his [External.name]...</span>","<span class='userdanger'>You feel freedom in moving your [External.name]</span>")
-						else
-							H.visible_message("<span class='notice'>From [H]'s [External.parent.name] grow small meaty sprout...</span>")
-					if(data == 50)
-						H.visible_message("<span class='notice'>You see something resembling [External.name] at [H]'s [External.parent.name]...</span>")
-					if(data == 65)
-						H.visible_message("<span class='userdanger'>A new [External.name] grown from [H]'s [External.parent.name]!</span>","<span class='userdanger'>You feel again your [External.name]!</span>")
-					if(prob(50))
-						H.emote("scream",1,null,1)
-					if(data >= heal_time) // recover organ
-						External.rejuvenate()
-						data = 0
-						External = null
-						heal_time = 0
+				External = H.find_damaged_bodypart(External)
+				H.nutrition -= 3
+				H.apply_effect(3, WEAKEN)
+				H.apply_damages(0,0,1,4,0,5)
+				H.regen_bodyparts(External, FALSE)
 
 		bicaridine
 			name = "Bicaridine"

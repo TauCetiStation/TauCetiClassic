@@ -1265,7 +1265,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 				hair.color = rgb(H.r_hair, H.g_hair, H.b_hair)
 
 			overlays.Add(hair) //icon.Blend(hair, ICON_OVERLAY)
-	if(H.get_species() != DIONA && H.get_species() != IPC)
+
+	var/obj/item/organ/internal/IO = H.organs_by_name[O_BRAIN]
+	if(IO && IO.parent_bodypart == BP_HEAD)
 		spawn(5)
 		if(brainmob && brainmob.client)
 			brainmob.client.screen.len = null //clear the hud
