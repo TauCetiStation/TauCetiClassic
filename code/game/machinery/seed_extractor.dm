@@ -41,7 +41,7 @@
 
 	if(istype(O, /obj/item/weapon/organ))
 		var/obj/item/weapon/organ/IO = O
-		if(IO.owner.get_species() == DIONA)
+		if(IO.specie == DIONA)
 			to_chat(user, "<span class='notice'>You extract some seeds from the [IO.name].</span>")
 			var/t_amount = 0
 			var/t_max = rand(1,4)

@@ -12,7 +12,7 @@
 	var/damage = 0              // Amount of damage to the organ
 
 	// Will be moved, removed or refactored.
-	var/process_accuracy = 0
+	var/process_accuracy = 0    // Damage multiplier for organs, that have damage values.
 	var/robotic = 0             // For being a robot
 
 /obj/item/organ/internal/insert_organ()
@@ -76,12 +76,6 @@
 	if (!silent)
 		owner.custom_pain("Something inside your [BP.name] hurts a lot.", 1)
 
-/obj/item/organ/internal/proc/is_bruised_organ(organ)
-	var/obj/item/organ/internal/IO = owner.organs_by_name[organ]
-	if(IO.is_bruised())
-		return TRUE
-	return FALSE
-
 /obj/item/organ/internal/emp_act(severity)
 	switch(robotic)
 		if(0)
@@ -132,8 +126,7 @@
 /obj/item/organ/internal/heart/ipc/process()
 	..()
 	owner.species.speed_mod += damage/10
-	var/obj/item/organ/internal/kidneys/ipc/L = owner.organs_by_name[O_KIDNEYS]
-	if(is_bruised() && L.is_bruised() && prob(4))
+	if(owner.is_damaged_organ(O_KIDNEYS) && prob(4))
 		to_chat(owner, "<span class='warning bold'>%SERVOMOTOR% INJURY DETECTED. CEASE DAMAGE TO %SERVOMOTOR%. REQUEST ASSISTANCE.</span>")
 
 /obj/item/organ/internal/lungs
@@ -199,10 +192,8 @@
 					owner.adjustToxLoss(0.3 * process_accuracy)
 
 /obj/item/organ/internal/lungs/ipc/process()
-	if(is_bruised())
-		var/obj/item/organ/internal/kidneys/ipc/L = owner.organs_by_name[O_KIDNEYS]
-		if(L.is_bruised() && prob(4))
-			to_chat(owner, "<span class='warning bold'>%COOLING ELEMENT% INJURY DETECTED. CEASE DAMAGE TO %COOLING ELEMENT%. REQUEST ASSISTANCE.</span>")
+	if(is_bruised() && owner.is_damaged_organ(O_KIDNEYS) && prob(4))
+		to_chat(owner, "<span class='warning bold'>%COOLING ELEMENT% INJURY DETECTED. CEASE DAMAGE TO %COOLING ELEMENT%. REQUEST ASSISTANCE.</span>")
 
 /obj/item/organ/internal/liver
 	name = "liver"
@@ -257,7 +248,6 @@
 					owner.adjustToxLoss(0.3 * process_accuracy)
 
 /obj/item/organ/internal/liver/ipc/process()
-	var/obj/item/organ/internal/kidneys/ipc/L = owner.organs_by_name[O_KIDNEYS]
 	if(damage)
 		if(locate(/obj/item/weapon/stock_parts/cell, src))
 			for(var/obj/item/weapon/stock_parts/cell/crap/B in src)
@@ -265,10 +255,10 @@
 				if(owner.nutrition > (B.maxcharge - damage*5))
 					owner.nutrition = B.maxcharge - damage*5
 		else
-			if(L.is_bruised() && prob(2))
+			if(owner.is_damaged_organ(O_KIDNEYS) && prob(2))
 				to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
 			owner.stat = UNCONSCIOUS
-	if(is_bruised() && L.is_bruised() && prob(4))
+	if(is_bruised() && owner.is_damaged_organ(O_KIDNEYS) && prob(4))
 		to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% INJURY DETECTED. CEASE DAMAGE TO %ACCUMULATOR%. REQUEST ASSISTANCE.</span>")
 
 /obj/item/organ/internal/kidneys
