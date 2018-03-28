@@ -353,6 +353,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	put_in_inactive_hand(O)
 	return TRUE
 
+/mob/living/carbon/human/proc/is_bruised_organ(organ)
+	var/obj/item/organ/internal/IO = organs_by_name[organ]
+	if(IO.is_bruised())
+		return TRUE
+	return FALSE
+
 /mob/living/carbon/human/restrained(check_type = ARMS)
 	if ((check_type & ARMS) && handcuffed)
 		return TRUE
