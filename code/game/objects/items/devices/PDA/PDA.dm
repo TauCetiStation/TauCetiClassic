@@ -197,6 +197,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/chef
 	icon_state = "pda-chef"
 
+/obj/item/device/pda/barber
+	icon_state = "pda-barber"
+
 /obj/item/device/pda/bar
 	icon_state = "pda-bar"
 

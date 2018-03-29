@@ -287,6 +287,50 @@
 
 
 //More or less assistants
+/datum/job/barber
+	title = "Barber"
+	flag = BARBER
+	department_flag = CIVILIAN
+	faction = "Station"
+	total_positions = 1
+	spawn_positions = 1
+	supervisors = "the head of personnel"
+	selection_color = "#bbe291"
+	idtype = /obj/item/weapon/card/id/civ
+	access = list(access_barber)
+	alt_titles = list("Stylist")
+	minimal_player_ingame_minutes = 480
+
+/datum/job/barber/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)
+		return FALSE
+
+	if(H.mind.role_alt_title)
+		switch(H.mind.role_alt_title)
+			if("Stylist")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/purpsuit(H), slot_w_uniform)
+			if("Barber")
+				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/barber(H), slot_w_uniform)
+	switch(H.backbag)
+		if(2)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
+		if(3)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), slot_back)
+		if(4)
+			H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
+
+	if(visualsOnly)
+		return
+
+	H.equip_to_slot_or_del(new /obj/item/device/pda/barber(H), slot_belt)
+	if(H.backbag == 1)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+	else
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+
+	return TRUE
+
 /datum/job/librarian
 	title = "Librarian"
 	flag = LIBRARIAN

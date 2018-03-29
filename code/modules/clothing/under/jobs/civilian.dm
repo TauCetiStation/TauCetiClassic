@@ -200,3 +200,10 @@
 	item_state = "miner"
 	item_color = "miner"
 	flags = ONESIZEFITSALL
+
+/obj/item/clothing/under/rank/barber
+	desc = "A suit, that oozes fabulous."
+	name = "barber's uniform"
+	icon_state = "barber"
+	item_state = "barber"
+	flags = ONESIZEFITSALL
