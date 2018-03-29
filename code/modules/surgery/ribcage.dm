@@ -518,8 +518,7 @@
 /datum/surgery_step/ipc_ribcage/wrench_sec/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to loosen bolts on [target]'s security panel with \the [tool].",
 	"You begin to loosen bolts on [target]'s maintenance panel with \the [tool].")
-	var/obj/item/organ/internal/kidneys/L = target.organs_by_name[O_KIDNEYS]
-	if(!L.is_bruised())
+	if(!target.is_damaged_organ(O_KIDNEYS))
 		target.custom_pain("%MAIN SECURITY PANEL% UNATHORISED ACCESS ATTEMPT DETECTED!",1)
 	..()
 
@@ -551,8 +550,7 @@
 
 /datum/surgery_step/ipc_ribcage/pry_sec/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts to pry open the security panel in [target]'s torso with \the [tool].", "You start to pry open the security panel in [target]'s torso with \the [tool].")
-	var/obj/item/organ/internal/kidneys/L = target.organs_by_name[O_KIDNEYS]
-	if(!L.is_bruised())
+	if(!target.is_damaged_organ(O_KIDNEYS))
 		target.custom_pain("%MAIN SECURITY PANEL% DAMAGE DETECTED. CEASE APPLIED DAMAGE.",1)
 	..()
 
@@ -665,16 +663,18 @@
 /datum/surgery_step/ipc_ribcage/take_accumulator/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class = 'notice'>[user] yanked out [target]'s accumulator with \the [tool].</span>",
 	"<span class = 'notice'>You yanked out [target]'s accumulator with \the [tool].</span>")
-	var/obj/item/organ/internal/kidneys/L = target.organs_by_name[O_KIDNEYS]
 	for(var/obj/item/weapon/stock_parts/cell/A in target)
 		A.forceMove(get_turf(target))
-		if(!L.is_bruised())
+		if(!target.is_damaged_organ(O_KIDNEYS))
 			target.custom_pain("%SHUTTING DOWN%",1)
 
 /datum/surgery_step/ipc_ribcage/take_accumulator/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class = 'warning>[user]'s hand slips, scratching [target]'s accumulator with \the [tool]!</span>",
 	"<span class = 'warning'>Your hand slips, scratching [target]'s accumulator with \the [tool]!</span>")
 	var/obj/item/organ/internal/liver/ipc/A = target.organs_by_name[O_LIVER]
+	if(!A)
+		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+		BP.createwound(CUT, 20)
 	A.damage += 10
 
 /datum/surgery_step/ipc_ribcage/put_accumulator

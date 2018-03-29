@@ -194,8 +194,7 @@
 	user.visible_message("<span class = 'notice'>[user] unscrewed [target]'s camera panels with \the [tool].</span>" ,
 	"<span class = 'notice'>You unscrewed [target]'s camera panels with \the [tool].</span>")
 	target.op_stage.eyes = 1
-	var/obj/item/organ/internal/kidneys/L = target.organs_by_name[O_KIDNEYS]
-	if(!L.is_bruised())
+	if(!target.is_damaged_organ(O_KIDNEYS))
 		target.custom_pain("%VISUALS DENIED%. REQUESTING ADDITIONAL PERSPECTIVE REACTIONS.",1)
 	target.blinded += 1.5
 
@@ -245,8 +244,7 @@
 		BP.createwound(CUT, 5)
 
 	IO.take_damage(dam_amt,0)
-	var/obj/item/organ/internal/kidneys/L = target.organs_by_name[O_KIDNEYS]
-	if(!L.is_bruised())
+	if(!target.is_damaged_organ(O_KIDNEYS))
 		target.custom_pain("SEVERE VISUAL SENSOR DAMAGE DETECTED. %REACTION_OVERLOAD%.",1)
 	target.blinded += 3.0
 

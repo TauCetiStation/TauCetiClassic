@@ -354,8 +354,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts to unscrew [target]'s [BP.name]'s maintenance hatch with \the [tool].",
 	"You start to unscrew [target]'s [BP.name]'s maintenance hatch with \the [tool].")
-	var/obj/item/organ/internal/kidneys/L = target.organs_by_name[O_KIDNEYS]
-	if(!L.is_bruised())
+	if(!target.is_damaged_organ(O_KIDNEYS))
 		target.custom_pain("%[BP.name]'S MAINTENANCE HATCH% UNATHORISED ACCESS ATTEMPT DETECTED!",1)
 	..()
 
@@ -393,8 +392,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("[user] starts to pry open [target]'s [BP.name]'s maintenance hatch with \the [tool].",
 	"You start to pry open [target]'s [BP.name]'s maintenance hatch with \the [tool].")
-	var/obj/item/organ/internal/kidneys/L = target.organs_by_name[O_KIDNEYS]
-	if(!L.is_bruised())
+	if(!target.is_damaged_organ(O_KIDNEYS))
 		target.custom_pain("%[BP.name]'s MAINTENANCE HATCH% DAMAGE DETECTED. CEASE APPLIED DAMAGE.",1)
 	..()
 
