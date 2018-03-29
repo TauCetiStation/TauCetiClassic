@@ -65,6 +65,7 @@
 
 //bitflags for door switches.
 #define OPEN     1
+#define CLOSED   2 //for firedoor currently, legacy and should be checked
 #define IDSCAN   2
 #define BOLTS    4
 #define SHOCK    8
