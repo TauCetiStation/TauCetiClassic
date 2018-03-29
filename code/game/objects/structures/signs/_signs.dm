@@ -14,11 +14,11 @@
 
 /obj/structure/sign/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/weapon/wrench) && buildable_sign)
+		if(user.is_busy())
+			return
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>",
 							 "<span class='notice'>You start unfastening [src].</span>")
 		playsound(loc, 'sound/items/ratchet.ogg', 50, 1)
-		if(user.is_busy())
-			return
 		if(do_after(user,40,target = src))
 			playsound(loc, 'sound/items/deconstruct.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] unfastens [src].</span>",
@@ -29,6 +29,8 @@
 			qdel(src)
 		return
 	else if(istype(W, /obj/item/weapon/airlock_painter) && buildable_sign)
+		if(user.is_busy())
+			return
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
 		"Hydroponics", "Xenobiology")
 		var/obj/structure/sign/sign_type
@@ -79,7 +81,6 @@
 		qdel(src)
 
 	else
-		user.SetNextMove(CLICK_CD_MELEE)
 		switch(W.damtype)
 			if("fire")
 				playsound(loc, 'sound/items/welder.ogg', 80, 1)
