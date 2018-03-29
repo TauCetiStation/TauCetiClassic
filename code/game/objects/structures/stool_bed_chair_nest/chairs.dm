@@ -16,6 +16,9 @@
 	var/behind = null
 	var/behind_buckled = null
 
+/obj/structure/stool/bed/chair/barber
+	icon_state = "barber_chair"
+
 /obj/structure/stool/bed/chair/metal/blue
 	icon_state = "chair_blu"
 

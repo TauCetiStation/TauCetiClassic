@@ -631,6 +631,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"janitor",
 		"chef",
 		"bartender",
+		"barber",
 		"botanist",
 		"qm",
 		"cargo",
@@ -1482,6 +1483,24 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.assignment = "Bartender"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = list(access_bar)
+			W.registered_name = M.real_name
+			M.equip_to_slot_or_del(W, slot_wear_id)
+		if("barber")
+			M.equip_to_slot_or_del(new /obj/item/device/radio/headset(M), slot_l_ear)
+			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/barber(M), slot_w_uniform)
+			M.equip_to_slot_or_del(new /obj/item/clothing/suit/wcoat(M), slot_wear_suit)
+			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(M), slot_shoes)
+
+			var/obj/item/device/pda/barber/pda = new(M)
+			pda.owner = M.real_name
+			pda.ownjob = "Barber"
+			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
+			M.equip_to_slot_or_del(pda, slot_belt)
+
+			var/obj/item/weapon/card/id/civ/W = new(M)
+			W.assignment = "Barber"
+			W.name = "[M.real_name]'s ID Card ([W.assignment])"
+			W.access = list(access_barber)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("botanist")

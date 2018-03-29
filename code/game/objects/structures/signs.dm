@@ -219,6 +219,11 @@
 	desc = "Current disposal unit leads straight to the morgue. Bring out your dead!"
 	icon_state = "morgue_disposal"
 
+/obj/structure/sign/barber
+	name = "\improper barber shop sign"
+	desc = "A spinning sign indicating a barbershop is near."
+	icon_state = "barber"
+
 /obj/structure/sign/chinese
 	name = "\improper chinese restaurant sign"
 	desc = "A glowing dragon invites you in."

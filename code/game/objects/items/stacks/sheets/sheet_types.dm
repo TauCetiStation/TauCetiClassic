@@ -12,6 +12,7 @@
  */
 var/global/list/datum/stack_recipe/metal_recipes = list ( \
 	new/datum/stack_recipe("stool", /obj/structure/stool, one_per_turf = 1, on_floor = 1), \
+	new/datum/stack_recipe("barber chair", /obj/structure/stool/bed/chair/barber, one_per_turf = TRUE, on_floor = TRUE),
 	new/datum/stack_recipe_list("metal chairs", list( \
 		new/datum/stack_recipe("grey chair", /obj/structure/stool/bed/chair/metal, one_per_turf = 1, on_floor = 1), \
 		new/datum/stack_recipe("blue chair", /obj/structure/stool/bed/chair/metal/blue, one_per_turf = 1, on_floor = 1), \
