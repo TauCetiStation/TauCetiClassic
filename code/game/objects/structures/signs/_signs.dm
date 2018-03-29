@@ -144,6 +144,11 @@
 	light_power = 1
 	light_range = 3
 
+/obj/structure/sign/barber
+	name = "\improper barbershop sign"
+	desc = "A glowing red-blue-white stripe you won't mistake for any other!"
+	icon_state = "barber"
+
 /obj/structure/sign/monkey_painting
 	name = "\improper Mr. Deempisi portrait"
 	desc = "Under the painting a plaque reads: 'While the meat grinder may not have spared you, fear not. Not one part of you has gone to waste... You were delicious.'"
