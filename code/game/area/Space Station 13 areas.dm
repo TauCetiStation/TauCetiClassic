@@ -807,10 +807,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/medical/genetics
 	name = "Genetics Lab"
 	icon_state = "genetics"
+	power_light = 0
+	power_equip = 0
+	power_environ = 0
 
 /area/medical/genetics_cloning
 	name = "Cloning Lab"
 	icon_state = "cloning"
+	power_light = 0
+	power_equip = 0
+	power_environ = 0
 
 /area/medical/sleeper
 	name = "Emergency Treatment Centre"
