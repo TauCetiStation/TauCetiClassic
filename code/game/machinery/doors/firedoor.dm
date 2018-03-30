@@ -1,6 +1,3 @@
-/var/const/OPEN = 1
-/var/const/CLOSED = 2
-
 /obj/machinery/door/firedoor
 	name = "\improper Emergency Shutter"
 	desc = "Emergency air-tight shutter, capable of sealing off breached areas."

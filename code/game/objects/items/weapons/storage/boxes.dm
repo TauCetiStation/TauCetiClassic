@@ -600,6 +600,18 @@
 	new /obj/item/weapon/hair_color_spray/brown(src)
 	new /obj/item/weapon/hair_color_spray/blond(src)
 
+/obj/item/weapon/storage/box/lipstick
+	name = "lipstick box"
+	desc = "A box full of lipstick."
+
+/obj/item/weapon/storage/box/lipstick/atom_init()
+	. = ..()
+	new /obj/item/weapon/lipstick(src)
+	new /obj/item/weapon/lipstick/purple(src)
+	new /obj/item/weapon/lipstick/jade(src)
+	new /obj/item/weapon/lipstick/black(src)
+	new /obj/item/weapon/paper(src)
+
 // Don't know where is original box itself, so just put it here.
 /obj/item/weapon/storage/box/contraband
 	name = "box"
