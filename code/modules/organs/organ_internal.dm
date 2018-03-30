@@ -125,7 +125,6 @@
 
 /obj/item/organ/internal/heart/ipc/process()
 	..()
-	owner.species.speed_mod += damage/10
 	if(owner.is_damaged_organ(O_KIDNEYS) && prob(4))
 		to_chat(owner, "<span class='warning bold'>%SERVOMOTOR% INJURY DETECTED. CEASE DAMAGE TO %SERVOMOTOR%. REQUEST ASSISTANCE.</span>")
 

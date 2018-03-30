@@ -11,6 +11,13 @@
 
 	var/tally = species.speed_mod
 
+	if(get_species() == IPC)
+		var/obj/item/organ/internal/IO = organs_by_name[O_HEART]
+		if(!IO)
+			tally += 20
+		else
+			tally += IO.damage/5
+
 	if(RUN in mutations)
 		tally -= 0.5
 
