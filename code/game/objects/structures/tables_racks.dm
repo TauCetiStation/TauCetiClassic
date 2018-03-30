@@ -594,10 +594,6 @@
 	. = ..()
 	check_break(AM)
 
-/obj/structure/table/glass/proc/throw_check(mob/living/M)
-	if(M.loc == get_turf(src))
-		check_break(M)
-
 /obj/structure/table/glass/proc/check_break(mob/living/M)
 	if(istype(M) && (M.checkpass(PASSTABLE) || M.checkpass(PASSCRAWL)))
 		return FALSE
