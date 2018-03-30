@@ -8,7 +8,7 @@
 	icon_broken = "barbersecurebroken"
 	icon_off = "barbersecureoff"
 
-/obj/structure/closet/secure_closet/hydroponics/PopulateContents()
+/obj/structure/closet/secure_closet/barber/PopulateContents()
 	new /obj/item/clothing/suit/wcoat(src)
 	new /obj/item/clothing/under/rank/barber(src)
 	new /obj/item/clothing/under/lawyer/purpsuit(src)
