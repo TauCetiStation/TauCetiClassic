@@ -983,9 +983,10 @@
 			var/obj/item/organ/external/External
 			if(nutrition > 350 && light_amount >= 4 && prob(75))
 				External = find_damaged_bodypart(External)
-				nutrition -= 1
-				apply_damages(0,0,1,2,0,0)
-				regen_bodyparts(External, TRUE)
+				if(External)
+					nutrition -= 1
+					apply_damages(0,0,1,2,0,0)
+					regen_bodyparts(External, TRUE)
 			if(light_amount >=5)
 				for(var/obj/item/organ/internal/O in organs)
 					if(O.damage)

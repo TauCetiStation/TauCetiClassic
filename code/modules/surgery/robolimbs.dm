@@ -143,7 +143,7 @@
 
 /datum/surgery_step/limb/attach/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
-		if(!(istype(tool, /obj/item/weapon/organ/head/posi) && target.get_species() == IPC))
+		if(istype(tool, /obj/item/weapon/organ/head/posi) && !target.get_species() == IPC)
 			return
 		var/obj/item/robot_parts/p = tool
 		if (target_zone != p.part)
@@ -154,20 +154,20 @@
 
 /datum/surgery_step/limb/attach/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("[user] starts attaching \the [tool] where [target]'s [BP.name] used to be.", \
+	user.visible_message("[user] starts attaching \the [tool] where [target]'s [BP.name] used to be.",
 	"You start attaching \the [tool] where [target]'s [BP.name] used to be.")
 
 /datum/surgery_step/limb/attach/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/robot_parts/L = tool
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\blue [user] has attached \the [tool] where [target]'s [BP.name] used to be.",	\
+	user.visible_message("\blue [user] has attached \the [tool] where [target]'s [BP.name] used to be.",
 	"\blue You have attached \the [tool] where [target]'s [BP.name] used to be.")
 	BP.germ_level = 0
 	BP.robotize()
 	if(L.sabotaged)
-		BP.sabotaged = 1
+		BP.sabotaged = TRUE
 	else
-		BP.sabotaged = 0
+		BP.sabotaged = FALSE
 	target.update_body()
 	target.updatehealth()
 	target.UpdateDamageIcon(BP)
@@ -175,7 +175,7 @@
 
 /datum/surgery_step/limb/attach/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips, damaging connectors on [target]'s [BP.name]!", \
+	user.visible_message("\red [user]'s hand slips, damaging connectors on [target]'s [BP.name]!",
 	"\red Your hand slips, damaging connectors on [target]'s [BP.name]!")
 	target.apply_damage(10, BRUTE, BP, null, DAM_SHARP)
 
