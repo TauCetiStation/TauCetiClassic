@@ -1314,7 +1314,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 				brain_op_stage = 1
 
 			if(2)
-				if(!specie in list(DIONA, IPC))
+				if(!(specie in list(DIONA, IPC)))
 					for(var/mob/O in (oviewers(brainmob) - user))
 						O.show_message("\red [brainmob] is having \his connections to the brain delicately severed with [W] by [user].", 1)
 					to_chat(brainmob, "\red [user] begins to cut open your head with [W]!")
@@ -1333,7 +1333,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 				brain_op_stage = 2
 			if(3)
-				if(specie in list(DIONA, IPC))
+				if(!(specie in list(DIONA, IPC)))
 					for(var/mob/O in (oviewers(brainmob) - user))
 						O.show_message("\red [brainmob] has \his spine's connection to the brain severed with [W] by [user].", 1)
 					to_chat(brainmob, "\red [user] severs your brain's connection to the spine with [W]!")
