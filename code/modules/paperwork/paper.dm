@@ -293,12 +293,12 @@
 	t = replacetext(t, "\[/th\]", "</th>");
 
 	// standart head
-	t = replacetext(t, "\[h\]", "<h2 style=\"font-family: Arial; text-align:center;\">");
-	t = replacetext(t, "\[/h\]", "</h2>");
+	t = replacetext(t, "\[h\]", "<h3 style=\"font-family: Arial; text-align:center;\">");
+	t = replacetext(t, "\[/h\]", "</h3>");
 
 	// bordered head;
-	t = replacetext(t, "\[bh\]", "<h2 style=\"border-width: 4px; border-style: solid; font-family: Arial; padding: 10px; text-align:center;\">");
-	t = replacetext(t, "\[/bh\]", "</h2>")
+	t = replacetext(t, "\[bh\]", "<h3 style=\"border-width: 4px; border-style: solid; font-family: Arial; padding: 10px; text-align:center;\">");
+	t = replacetext(t, "\[/bh\]", "</h3>")
 
 	// blockquote
 	t = replacetext(t, "\[quote\]", "<blockquote style=\"line-height:normal; margin-bottom:10px; font-style:italic; text-align:right;\">");
@@ -418,7 +418,7 @@
 
 		var last_fields_value = fields
 
-		t = sanitize_alt(t, list("\n"="\[br\]","ÿ"=LETTER_255))
+		t = sanitize_alt(t, list("\n"="\[br\]","Ã¿"=LETTER_255))
 
 		// check for exploits
 		for(var/bad in paper_blacklist)
