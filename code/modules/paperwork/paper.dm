@@ -452,6 +452,7 @@
 
 /obj/item/weapon/paper/attackby(obj/item/weapon/P, mob/user)
 	..()
+	user.SetNextMove(CLICK_CD_INTERACT)
 	var/clown = 0
 	if(user.mind && (user.mind.assigned_role == "Clown"))
 		clown = 1
