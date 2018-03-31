@@ -59,7 +59,6 @@
 		to_chat(usr, "\blue You can't post it all on board!")
 		return
 
-	//t = sanitize(t, list("\n"="\[br\]","ÿ"=LETTER_255))//TODO:CYRILLIC
 	t = sanitize(replacetext(t, "\n", "\[br\]"))
 
 	// check for exploits

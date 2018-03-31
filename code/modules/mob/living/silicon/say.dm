@@ -34,7 +34,7 @@
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return*/
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = sanitize(message)
 
 	if (stat == DEAD)
 		return say_dead(message)

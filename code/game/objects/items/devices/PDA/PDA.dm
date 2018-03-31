@@ -641,13 +641,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 //MESSENGER/NOTE FUNCTIONS===================================
 
 		if ("Edit")
-			var/n = input(U, "Please enter message", name, notehtml) as message
-			if (in_range(src, U) && loc == U)
-				n = copytext(sanitize(n), 1, MAX_MESSAGE_LEN)
-				if (mode == 1)
-					note = html_decode(n)
-					notehtml = note
-					note = replacetext(note, "\n", "<br>")
+			var/n = sanitize(input(U, "Please enter message", name, input_default(notehtml)) as message, extra = FALSE)
+			if (in_range(src, U) && loc == U && mode == 1)
+				note = html_decode(n)
+				notehtml = note
+				note = replacetext(note, "\n", "<br>")
 			else
 				ui.close()
 		if("Toggle Messenger")

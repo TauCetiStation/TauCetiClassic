@@ -153,7 +153,7 @@ move an amendment</a> to the drawing.</p>
 	var/area/A = get_area()
 	//world << "DEBUG: edit_area"
 	var/prevname = "[A.name]"
-	var/str = sanitize_safe(input(usr,"New area name:","Blueprint Editing", prevname), MAX_LNAME_LEN)
+	var/str = sanitize_safe(input(usr,"New area name:","Blueprint Editing", input_default(prevname)), MAX_LNAME_LEN)
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)

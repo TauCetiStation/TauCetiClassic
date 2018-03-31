@@ -437,7 +437,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		var/new_name = sanitize(copytext(input(usr,"What would you like to name this mob?","Input a name",M.real_name) as text|null,1,MAX_NAME_LEN))
+		var/new_name = sanitize_safe(input(usr,"What would you like to name this mob?","Input a name",input_default(M.real_name)) as text|null, MAX_NAME_LEN)
 		if(!new_name || !M)
 			return
 

@@ -415,7 +415,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = ckey(input(src, "Please specify which key will be respawned.", "Key", ""))
+	var/input = input(src, "Please specify which key will be respawned.", "Key", "") as null|anything in clients
 	if(!input)
 		return
 
@@ -651,7 +651,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		to_chat(src, "Only administrators may use this command.")
 		return
 	var/input = sanitize(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
-	var/customname = sanitize_safe(input(usr, "Pick a title for the report. Do not forget about prohibit of the use of the Cyrillic alphabet in the names of objects. ", "Title") as text|null)
+	var/customname = sanitize_safe(input(usr, "Pick a title for the report.", "Title") as text|null)
 	if(!input)
 		return
 	if(!customname)
@@ -1065,7 +1065,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!sent_text)
 		return
 
-	var/sent_name = sanitize_safe(input(usr, "Pick a title for the message. Do not forget about prohibit of the use of the Cyrillic alphabet in the names of objects, enter Cancel to stop sending", "Title") as text)
+	var/sent_name = sanitize_safe(input(usr, "Pick a title for the message.", "Title") as text)
 	if(!sent_name)
 		sent_name = "NanoTrasen Update"
 	if(sent_name == "Cancel")

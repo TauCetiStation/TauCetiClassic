@@ -13,16 +13,15 @@
 			if (data["ckey"])
 				ckey = data["ckey"]
 			else
-				ckey = input(usr,"Ckey","Ckey","") as text|null
+				ckey = ckey(input(usr,"Ckey","Ckey","") as text|null)
 				if (!ckey)
 					return
-				ckey = ckey(ckey)
 			if (ckey in world.GetConfig("ban"))
 				to_chat(usr, "Can not add a stickyban: User already has a current sticky ban")
 			if (data["reason"])
 				ban["message"] = data["reason"]
 			else
-				var/reason = input(usr,"Reason","Reason","Ban Evasion") as text|null
+				var/reason = sanitize(input(usr,"Reason","Reason","Ban Evasion") as text|null)
 				if (!reason)
 					return
 				ban["message"] = "[reason]"
@@ -101,7 +100,7 @@
 				alert("This user was stickybanned by the host, and can not be edited from this panel")
 				return
 			var/oldreason = ban["message"]
-			var/reason = input(usr,"Reason","Reason","[ban["message"]]") as text|null
+			var/reason = sanitize(input(usr,"Reason","Reason","[ban["message"]]") as text|null)
 			if (!reason || reason == oldreason)
 				return
 			//we have to do this again incase something changed while we waited for input

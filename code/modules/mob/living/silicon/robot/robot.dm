@@ -351,12 +351,12 @@
 	if(custom_name)
 		return 0
 	var/newname
-	newname = input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text
-	if (newname != "")
+	newname = sanitize_safe(input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text, MAX_NAME_LEN)
+	if (newname)
 		custom_name = newname
-
-	updatename()
-	updateicon()
+		
+		updatename()
+		updateicon()
 
 /mob/living/silicon/robot/show_alerts()
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
@@ -1257,14 +1257,14 @@
 	set desc = "Sets a description which will be shown when someone examines you."
 	set category = "IC"
 
-	pose =  copytext(sanitize(input(usr, "This is [src]. It is...", "Pose", null)  as text), 1, MAX_MESSAGE_LEN)
+	pose = sanitize(input(usr, "This is [src]. It is...", "Pose", input_default(pose)) as text)
 
 /mob/living/silicon/robot/verb/set_flavor()
 	set name = "Set Flavour Text"
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
 
-	flavor_text =  copytext(sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text), 1)
+	flavor_text =  sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", input_default(flavor_text))  as text)
 
 /mob/living/silicon/robot/proc/choose_icon(triesleft, list/module_sprites)
 

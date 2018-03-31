@@ -275,11 +275,11 @@ What a mess.*/
 					screen = 1
 //RECORD FUNCTIONS
 		if("Search Records")
-			var/t1 = input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text
+			var/t1 = sanitize(input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text)
 			if(!t1 || is_not_allowed(usr))
 				return
 			Perp = new/list()
-			t1 = lowertext(t1)
+			t1 = lowertext_(t1)
 			var/list/components = splittext(t1, " ")
 			if(components.len > 5)
 				return //Lets not let them search too greedily.
@@ -379,7 +379,7 @@ What a mess.*/
 			if(!istype(active2, /datum/data/record))
 				return
 			var/a2 = active2
-			var/t1 = sanitize(copytext(input("Add Comment:", "Secure. records", null, null)  as message,1,MAX_MESSAGE_LEN))
+			var/t1 = sanitize(input("Add Comment:", "Secure. records", null, null)  as message)
 			if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active2 != a2))
 				return FALSE
 			var/counter = 1
@@ -421,19 +421,19 @@ What a mess.*/
 			switch(href_list["field"])
 				if("name")
 					if(istype(active1, /datum/data/record))
-						var/t1 = input("Please input name:", "Secure. records", active1.fields["name"], null)  as text
+						var/t1 = sanitize(input("Please input name:", "Secure. records", input_default(active1.fields["name"]), null)  as text)
 						if(!t1 || active1 != a1)
 							return FALSE
 						active1.fields["name"] = t1
 				if("id")
 					if(istype(active2, /datum/data/record))
-						var/t1 = sanitize(copytext(input("Please input id:", "Secure. records", active1.fields["id"], null)  as text,1,MAX_MESSAGE_LEN))
+						var/t1 = sanitize(input("Please input id:", "Secure. records", input_default(active1.fields["id"]), null)  as text)
 						if(!t1 || active1 != a1)
 							return FALSE
 						active1.fields["id"] = t1
 				if("fingerprint")
 					if(istype(active1, /datum/data/record))
-						var/t1 = sanitize(copytext(input("Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null)  as text,1,MAX_MESSAGE_LEN))
+						var/t1 = sanitize(input("Please input fingerprint hash:", "Secure. records", input_default(active1.fields["fingerprint"]), null)  as text)
 						if(!t1 || active1 != a1)
 							return FALSE
 						active1.fields["fingerprint"] = t1
@@ -451,31 +451,31 @@ What a mess.*/
 						active1.fields["age"] = t1
 				if("mi_crim")
 					if(istype(active2, /datum/data/record))
-						var/t1 = sanitize(copytext(input("Please input minor disabilities list:", "Secure. records", active2.fields["mi_crim"], null)  as text,1,MAX_MESSAGE_LEN))
+						var/t1 = sanitize(input("Please input minor disabilities list:", "Secure. records", input_default(active2.fields["mi_crim"]), null)  as text)
 						if (!t1 || active2 != a2)
 							return FALSE
 						active2.fields["mi_crim"] = t1
 				if("mi_crim_d")
 					if(istype(active2, /datum/data/record))
-						var/t1 = sanitize(copytext(input("Please summarize minor dis.:", "Secure. records", active2.fields["mi_crim_d"], null)  as message,1,MAX_MESSAGE_LEN))
+						var/t1 = sanitize(input("Please summarize minor dis.:", "Secure. records", input_default(active2.fields["mi_crim_d"]), null)  as message)
 						if (!t1 || active2 != a2)
 							return FALSE
 						active2.fields["mi_crim_d"] = t1
 				if("ma_crim")
 					if(istype(active2, /datum/data/record))
-						var/t1 = sanitize(copytext(input("Please input major diabilities list:", "Secure. records", active2.fields["ma_crim"], null)  as text,1,MAX_MESSAGE_LEN))
+						var/t1 = sanitize(input("Please input major diabilities list:", "Secure. records", input_default(active2.fields["ma_crim"]), null)  as text)
 						if (!t1 || active2 != a2)
 							return FALSE
 						active2.fields["ma_crim"] = t1
 				if("ma_crim_d")
 					if (istype(active2, /datum/data/record))
-						var/t1 = sanitize(copytext(input("Please summarize major dis.:", "Secure. records", active2.fields["ma_crim_d"], null)  as message,1,MAX_MESSAGE_LEN))
+						var/t1 = sanitize(input("Please summarize major dis.:", "Secure. records", input_default(active2.fields["ma_crim_d"]), null)  as message)
 						if(!t1 || active2 != a2)
 							return FALSE
 						active2.fields["ma_crim_d"] = t1
 				if("notes")
 					if(istype(active2, /datum/data/record))
-						var/t1 = copytext(html_encode(input("Please summarize notes:", "Secure. records", html_decode(active2.fields["notes"]), null)  as message),1,MAX_MESSAGE_LEN)
+						var/t1 = sanitize(input("Please summarize notes:", "Secure. records", input_default(active2.fields["notes"]), null)  as message)
 						if (!t1 || active2 != a2)
 							return FALSE
 						active2.fields["notes"] = t1
@@ -502,7 +502,7 @@ What a mess.*/
 						alert(usr, "You do not have the required rank to do this!")
 				if("species")
 					if (istype(active1, /datum/data/record))
-						var/t1 = sanitize(copytext(input("Please enter race:", "General records", active1.fields["species"], null)  as message,1,MAX_MESSAGE_LEN))
+						var/t1 = sanitize(input("Please enter race:", "General records", input_default(active1.fields["species"]), null) as message)
 						if(!t1 || is_not_allowed(usr) || (active1 != a1))
 							return FALSE
 						active1.fields["species"] = t1

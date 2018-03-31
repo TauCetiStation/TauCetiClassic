@@ -110,7 +110,7 @@ var/list/fusion_cores = list()
 		return
 
 	if(ismultitool(W))
-		var/new_ident = input("Enter a new ident tag.", "Fusion Core", id_tag) as null|text
+		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Fusion Core", input_default(id_tag)) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident
 		return

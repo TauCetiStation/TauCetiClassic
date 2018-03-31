@@ -198,8 +198,6 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 		return
 
 	if(istype(message, /image) || istype(message, /sound) || istype(target, /savefile) || !(ismob(target) || islist(target) || isclient(target) || target == world))
-		if(target == world && istext(message))
-			message = entity_ja(message)//TODO:CYRILLIC ?? TODO HOW IT WORKS???
 		target << message
 		if (!isatom(target)) // Really easy to mix these up, and not having to make sure things are mobs makes the code cleaner.
 			CRASH("DEBUG: to_chat called with invalid message")
@@ -218,6 +216,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 			message = replacetext(message, "\proper", "")
 
 		message = entity_ja(message)
+		
 		var/client/C
 		if(istype(target, /client))
 			C = target

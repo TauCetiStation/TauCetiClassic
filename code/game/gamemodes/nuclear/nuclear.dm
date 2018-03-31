@@ -192,7 +192,7 @@
 
 /datum/game_mode/proc/prepare_syndicate_leader(datum/mind/synd_mind, nuke_code)
 	if (nuke_code)
-		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0, 0)
+		synd_mind.store_memory("<B>Syndicate Nuclear Bomb Code</B>: [nuke_code]", 0)
 		to_chat(synd_mind.current, "The nuclear authorization code is: <B>[nuke_code]</B>")
 		var/obj/item/weapon/paper/P = new
 		P.info = "The nuclear authorization code is: <b>[nuke_code]</b>"
@@ -394,7 +394,7 @@
 	return newname
 */
 /proc/NukeNameAssign(datum/mind/synd_mind)
-	var/choose_name = input(synd_mind.current, "You are a Gorlex Maradeurs agent! What is your name?", "Choose a name") as text
+	var/choose_name = sanitize_safe(input(synd_mind.current, "You are a Gorlex Maradeurs agent! What is your name?", "Choose a name") as text, MAX_NAME_LEN)
 
 	if(!choose_name)
 		return

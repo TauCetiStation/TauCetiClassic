@@ -111,7 +111,7 @@
 		if(null,"")
 			return
 		if("*New Rank*")
-			new_rank = input("Please input a new rank", "New custom rank", null, null) as null|text
+			new_rank = sanitize(input("Please input a new rank", "New custom rank", null, null) as null|text)
 			if(!new_rank)
 				to_chat(usr, "<span class='alert'>Error: Topic 'editrights': Invalid rank</span>")
 				return

@@ -23,7 +23,7 @@
 		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
-	message = trim(sanitize(copytext(message, 1, MAX_MESSAGE_LEN)))
+	message = sanitize(message)
 
 	if(use_me)
 		usr.emote("me",usr.emote_type,message)

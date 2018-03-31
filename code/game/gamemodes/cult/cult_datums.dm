@@ -815,8 +815,7 @@ var/list/cult_runes = list()
 	if(busy)
 		return
 	busy = TRUE
-	var/input = input(user, "Please choose a message to tell to the other acolytes.", "Voice of Blood", "")
-	input = sanitize(copytext(input, 1, MAX_MESSAGE_LEN))
+	var/input = sanitize(input(user, "Please choose a message to tell to the other acolytes.", "Voice of Blood", ""))
 	if(!input)
 		busy = FALSE
 		return fizzle(user)

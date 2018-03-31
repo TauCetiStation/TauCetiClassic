@@ -21,7 +21,7 @@ client/proc/staffhelp(msg, help_type = null)
 
 	if(!msg)
 		return
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	msg = sanitize(msg)
 	if(!msg)
 		return
 	var/original_msg = msg

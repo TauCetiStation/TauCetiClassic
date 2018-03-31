@@ -18,6 +18,13 @@
 	var/sanitized_text = replacetext(t, "'", "\\'")
 	sanitized_text = replacetext(sanitized_text, "\"", "\\\"")
 	return sanitized_text
+	
+// Sanitize inputs to avoid SQL injection attacks
+proc/sql_sanitize_text(text)
+	text = replacetext(text, "'", "''")
+	text = replacetext(text, ";", "")
+	text = replacetext(text, "&", "")
+	return text
 
 /*
  * Text sanitization
@@ -25,11 +32,6 @@
 
 //Used for preprocessing entered text
 /proc/sanitize(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE)
-	#ifdef DEBUG_CYRILLIC
-	world.log << "DEBUG: sanitize(), text: [input]"
-	world.log << "DEBUG: max_length: [max_length], encode: [encode], trim: [trim], "
-	#endif
-
 	if(!input)
 		return
 
@@ -55,7 +57,7 @@
 		//Maybe, we need trim text twice? Here and before copytext?
 		input = trim(input)
 
-	return input+"&#8203;"//if we see this - it's double sanitize!
+	return input
 
 //Run sanitize(), but remove <, >, " first to prevent displaying them as &gt; &lt; &34; in some places, after html_encode().
 //Best used for sanitize object names, window titles.
@@ -154,13 +156,10 @@
 
 //replace ja with entity for chat/popup
 /proc/entity_ja(text)
-	#ifdef DEBUG_CYRILLIC
-	world.log << "DEBUG: entity_ja(), text: [text]"
-	#endif
 	return replace_characters(text, list(JA_PLACEHOLDER=JA_ENTITY, JA_ENTITY_ASCII=JA_ENTITY))
 
 /proc/input_default(text)
-	return html_decode(reset_ja(text))
+	return html_decode(reset_ja(text))//replace br with \n?
 /*
  * Text searches
  */

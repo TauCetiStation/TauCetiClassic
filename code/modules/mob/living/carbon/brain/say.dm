@@ -4,7 +4,7 @@
 		return
 	if(container)
 		if(istype(container, /obj/item/device/mmi) || istype(container, /obj/item/device/mmi/posibrain))
-			message = sanitize(copytext(message, 1, MAX_MESSAGE_LEN))
+			message = sanitize(message)
 			if ((department_radio_keys[copytext(message, 1, 3)] == "binary") && (container && istype(container, /obj/item/device/mmi/posibrain)))
 				message = copytext(message, 3)
 				message = trim(message)
@@ -23,6 +23,6 @@
 		if(istype(container, /obj/item/device/biocan))
 			var/obj/item/device/biocan/B = container
 			if(B.commutator_enabled)
-				..(trim(sanitize(copytext(message, 1, MAX_MESSAGE_LEN))), sanitize = 0)
+				..(sanitize(message), sanitize = 0)
 			else
 				return

@@ -1526,7 +1526,7 @@
 	if (href_list["change_name"])
 		if(usr != src.occupant)	return
 		var/newname = sanitize_safe(input(occupant,"Choose new exosuit name","Rename exosuit",initial(name)) as text, MAX_NAME_LEN)
-		if(newname && trim(newname))
+		if(newname)
 			usr << sound('sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_stereo_complite.ogg',channel = 4, volume=100)
 			name = newname
 		else

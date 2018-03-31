@@ -469,9 +469,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		return
 
 	if(href_list["set_channel_name"])
-		src.channel_name = sanitize_sql(sanitize(copytext(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""), 1, MAX_NAME_LEN)))
-		while (findtext(src.channel_name," ") == 1)
-			src.channel_name = copytext(src.channel_name, 2, lentext(src.channel_name) + 1)
+		src.channel_name = sanitize_safe(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", input_default(channel_name)), MAX_LNAME_LEN)
 		//src.update_icon()
 
 	else if(href_list["set_channel_lock"])
@@ -517,9 +515,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		src.channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
 
 	else if(href_list["set_new_message"])
-		src.msg = sanitize(input(usr, "Write your Feed story", "Network Channel Handler", ""))
-		while (findtext(src.msg," ") == 1)
-			src.msg = copytext(src.msg, 2, lentext(src.msg) + 1)
+		src.msg = sanitize(input(usr, "Write your Feed story", "Network Channel Handler", input_default(src.msg)), extra = FALSE)
 
 	else if(href_list["set_attachment"])
 		AttachPhoto(usr)
@@ -574,14 +570,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		src.screen = 14
 
 	else if(href_list["set_wanted_name"])
-		src.channel_name = sanitize(input(usr, "Provide the name of the Wanted person", "Network Security Handler", ""))
-		while (findtext(src.channel_name," ") == 1)
-			src.channel_name = copytext(src.channel_name,2,lentext(src.channel_name)+1)
+		src.channel_name = sanitize(input(usr, "Provide the name of the Wanted person", "Network Security Handler", input_default(channel_name)), MAX_LNAME_LEN)
 
 	else if(href_list["set_wanted_desc"])
-		src.msg = sanitize(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
-		while (findtext(src.msg," ") == 1)
-			src.msg = copytext(src.msg,2,lentext(src.msg)+1)
+		src.msg = sanitize(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", input_default(msg)), extra = FALSE)
 
 	else if(href_list["submit_wanted"])
 		var/input_param = text2num(href_list["submit_wanted"])
@@ -920,7 +912,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W, mob/user)
 		if(src.scribble_page == src.curr_page)
 			to_chat(user, "<FONT COLOR='blue'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</FONT>")
 		else
-			var/s = sanitize(input(user, "Write something", "Newspaper", ""), 1, MAX_MESSAGE_LEN)
+			var/s = sanitize(input(user, "Write something", "Newspaper", ""))
 //			s = copytext(sanitize_u(s), 1, MAX_MESSAGE_LEN)
 			if (!s)
 				return

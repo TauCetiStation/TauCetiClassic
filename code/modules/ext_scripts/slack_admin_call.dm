@@ -34,7 +34,7 @@ proc/admin_call_cooldown(value1)
 
 	src << 'sound/effects/adminhelp.ogg'
 
-	var/msg = input(src, "Message:", "Admin Call", ) as text
+	var/msg = input(src, "Message:", "Admin Call") as text
 
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
@@ -45,7 +45,7 @@ proc/admin_call_cooldown(value1)
 	if(check_answer == "No")
 		return
 
-	msg = sanitize(copytext(msg,1,140))
+	msg = sanitize(msg, 140)
 
 	if(!msg)	return
 	var/original_msg = msg

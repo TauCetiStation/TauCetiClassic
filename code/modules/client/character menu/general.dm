@@ -250,7 +250,7 @@
 		if("input")
 			switch(href_list["preference"])
 				if("name")
-					var/new_name = sanitize_name( input(user, "Choose your character's name:", "Character Preference")  as text|null )
+					var/new_name = sanitize_name(input(user, "Choose your character's name:", "Character Preference")  as text|null)
 					if(new_name)
 						real_name = new_name
 					else
@@ -414,9 +414,9 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = input(user, "Please enter a home system.")  as text|null
+						var/raw_choice = sanitize(input(user, "Please enter a home system.")  as text|null)
 						if(raw_choice)
-							home_system = sanitize(copytext(raw_choice,1,MAX_MESSAGE_LEN))
+							home_system = raw_choice
 						return
 					home_system = choice
 
@@ -425,9 +425,9 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = input(user, "Please enter your current citizenship.", "Character Preference") as text|null
+						var/raw_choice = sanitize(input(user, "Please enter your current citizenship.", "Character Preference") as text|null)
 						if(raw_choice)
-							citizenship = sanitize(copytext(raw_choice,1,MAX_MESSAGE_LEN))
+							citizenship = raw_choice
 						return
 					citizenship = choice
 
@@ -436,9 +436,9 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = input(user, "Please enter a faction.")  as text|null
+						var/raw_choice = sanitize(input(user, "Please enter a faction.")  as text|null)
 						if(raw_choice)
-							faction = sanitize(copytext(raw_choice,1,MAX_MESSAGE_LEN))
+							faction = raw_choice
 						return
 					faction = choice
 
@@ -447,9 +447,9 @@
 					if(!choice)
 						return
 					if(choice == "Other")
-						var/raw_choice = input(user, "Please enter a religon.")  as text|null
+						var/raw_choice = sanitize(input(user, "Please enter a religon.")  as text|null)
 						if(raw_choice)
-							religion = sanitize(copytext(raw_choice,1,MAX_MESSAGE_LEN))
+							religion = raw_choice
 						return
 					religion = choice
 

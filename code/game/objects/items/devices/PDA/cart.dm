@@ -590,10 +590,10 @@
 				if("alert")
 					post_status("alert", href_list["alert"])
 				if("setmsg1")
-					message1 = input("Line 1", "Enter Message Text", message1) as text|null
+					message1 = sanitize_safe(input("Line 1", "Enter Message Text", message1) as text|null, MAX_LNAME_LEN)
 					updateSelfDialog()
 				if("setmsg2")
-					message2 = input("Line 2", "Enter Message Text", message2) as text|null
+					message2 = sanitize_safe(input("Line 2", "Enter Message Text", message2) as text|null, MAX_LNAME_LEN)
 					updateSelfDialog()
 				else
 					post_status(href_list["statdisp"])

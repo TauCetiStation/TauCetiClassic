@@ -3,7 +3,7 @@
 	if (silent)
 		return
 
-	message = sanitize(copytext(message, 1, MAX_MESSAGE_LEN))
+	message = sanitize(message)
 
 	if (length(message) >= 2)
 		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
@@ -23,7 +23,7 @@
 	if (silent)
 		return
 
-	message = sanitize(copytext(message, 1, MAX_MESSAGE_LEN))
+	message = sanitize(message)
 
 	if (length(message) >= 2)
 		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
@@ -39,7 +39,7 @@
 	if (silent)
 		return
 
-	message = sanitize(copytext(message, 1, MAX_MESSAGE_LEN))
+	message = sanitize(message)
 
 	if (length(message) >= 2)
 		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")

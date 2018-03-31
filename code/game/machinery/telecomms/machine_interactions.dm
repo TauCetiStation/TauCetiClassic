@@ -300,13 +300,13 @@
 			*/
 
 			if("id")
-				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
+				var/newid = sanitize_safe(input(usr, "Specify the new ID for this machine", src, input_default(id)) as null|text)
 				if(newid && canAccess(usr))
 					id = newid
 					temp = "<font color = #666633>-% New ID assigned: \"[id]\" %-</font color>"
 
 			if("network")
-				var/newnet = input(usr, "Specify the new network for this machine. This will break all current links.", src, network) as null|text
+				var/newnet = sanitize_safe(input(usr, "Specify the new network for this machine. This will break all current links.", src, input_default(network)) as null|text, MAX_LNAME_LEN)
 				if(newnet && canAccess(usr))
 
 					if(length(newnet) > 15)

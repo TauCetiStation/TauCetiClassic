@@ -13,7 +13,7 @@
 		to_chat(usr, "<span class='userdange'>You can't speak.</span>")
 		return
 
-	message =  trim(sanitize(copytext(message, 1, MAX_MESSAGE_LEN)))
+	message =  sanitize(message)
 
 	if(stat == DEAD)
 		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!

@@ -76,7 +76,7 @@
 			if(isscrewdriver(W))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
-				var/input = sanitize(input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13"))
+				var/input = sanitize_safe(input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13"), MAX_LNAME_LEN)
 				if(!input)
 					to_chat(usr, "No input found please hang up and try your call again.")
 					return
@@ -87,7 +87,7 @@
 					return
 
 				var/temptag = "[get_area(src)] ([rand(1, 999)])"
-				input = sanitize(input(usr, "How would you like to name the camera?", "Set Camera Name", temptag))
+				input = sanitize_safe(input(usr, "How would you like to name the camera?", "Set Camera Name", input_default(temptag)), MAX_LNAME_LEN)
 
 				state = 4
 				var/obj/machinery/camera/C = new(src.loc)

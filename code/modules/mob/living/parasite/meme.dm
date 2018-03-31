@@ -233,11 +233,11 @@ mob/living/parasite/meme/verb/Thought()
 	if(!target)
 		return
 
-	var/speaker = sanitize(copytext(input("Select the voice in which you would like to make yourself heard.", "Voice") as null|text, 1, MAX_NAME_LEN))
+	var/speaker = sanitize(input("Select the voice in which you would like to make yourself heard.", "Voice") as null|text, MAX_NAME_LEN)
 	if(!speaker)
 		return
 
-	var/message = sanitize(copytext(input("What would you like to say?", "Message") as null|text, 1, MAX_MESSAGE_LEN))
+	var/message = sanitize(input("What would you like to say?", "Message") as null|text)
 	if(!message)
 		return
 

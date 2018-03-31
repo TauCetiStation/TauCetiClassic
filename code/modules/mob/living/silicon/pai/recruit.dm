@@ -49,35 +49,34 @@ var/datum/paiController/paiController			// Global handler for pAI candidates
 
 			switch(option)
 				if("name")
-					t = input("Enter a name for your pAI", "pAI Name", candidate.name) as text
+					t = sanitize_safe(input("Enter a name for your pAI", "pAI Name", input_default(candidate.name)) as text)
 					if(t)
-						candidate.name = sanitize(copytext(t,1,MAX_NAME_LEN))
+						candidate.name = t
 				if("desc")
-					t = input("Enter a description for your pAI", "pAI Description", candidate.description) as message
+					t = sanitize(input("Enter a description for your pAI", "pAI Description", input_default(candidate.description)) as message)
 					if(t)
-						candidate.description = sanitize(copytext(t,1,MAX_MESSAGE_LEN))
+						candidate.description = t
 				if("role")
-					t = input("Enter a role for your pAI", "pAI Role", candidate.role) as text
+					t = sanitize(input("Enter a role for your pAI", "pAI Role", input_default(candidate.role)) as text)
 					if(t)
-						candidate.role = sanitize(copytext(t,1,MAX_MESSAGE_LEN))
+						candidate.role = t
 				if("ooc")
-					t = input("Enter any OOC comments", "pAI OOC Comments", candidate.comments) as message
+					t = sanitize(input("Enter any OOC comments", "pAI OOC Comments", input_default(candidate.comments)) as message)
 					if(t)
-						candidate.comments = sanitize(copytext(t,1,MAX_MESSAGE_LEN))
+						candidate.comments = t
 				if("save")
 					candidate.savefile_save(usr)
 				if("load")
 					candidate.savefile_load(usr)
 					//In case people have saved unsanitized stuff.
-					// TODO:CYRILLIC
 					if(candidate.name)
-						candidate.name = sanitize(copytext(candidate.name,1,MAX_NAME_LEN))
+						candidate.name = sanitize_safe(candidate.name, MAX_NAME_LEN)
 					if(candidate.description)
-						candidate.description = sanitize(copytext(candidate.description,1,MAX_MESSAGE_LEN))
+						candidate.description = sanitize(candidate.description, MAX_MESSAGE_LEN)
 					if(candidate.role)
-						candidate.role = sanitize(copytext(candidate.role,1,MAX_MESSAGE_LEN))
+						candidate.role = sanitize(candidate.role, MAX_MESSAGE_LEN)
 					if(candidate.comments)
-						candidate.comments = sanitize(copytext(candidate.comments,1,MAX_MESSAGE_LEN))
+						candidate.comments = sanitize(candidate.comments, MAX_MESSAGE_LEN)
 
 				if("submit")
 					if(candidate)

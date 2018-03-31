@@ -432,11 +432,11 @@
 
 	else if(href_list["createbottle"])
 		if(!condi)
-			var/name = sanitize(input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " ")), MAX_NAME_LEN)
+			var/name = sanitize_safe(input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " ")), MAX_NAME_LEN)
 			if(!name)
 				return FALSE
 			var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
-			P.name = trim("[name] bottle")
+			P.name = "[name] bottle"
 			P.icon_state = "bottle[bottlesprite]"
 			P.pixel_x = rand(-7, 7) //random position
 			P.pixel_y = rand(-7, 7)
@@ -597,7 +597,7 @@
 					if(!amount)
 						return FALSE
 					vol_each = min(reagents.total_volume / amount, 50)
-				var/name = sanitize(input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)"), MAX_NAME_LEN)
+				var/name = sanitize_safe(input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)"), MAX_NAME_LEN)
 				if(!name || !reagents.total_volume)
 					return FALSE
 				var/obj/item/weapon/reagent_containers/pill/P
@@ -607,7 +607,7 @@
 						P = new/obj/item/weapon/reagent_containers/pill(loaded_pill_bottle)
 					else
 						P = new/obj/item/weapon/reagent_containers/pill(src.loc)
-					P.name = trim("[name] pill")
+					P.name = "[name] pill"
 					P.icon_state = "pill[pillsprite]"
 					P.pixel_x = rand(-7, 7) //random position
 					P.pixel_y = rand(-7, 7)
@@ -858,7 +858,7 @@
 				if(type in diseases) // Make sure this is a disease
 					D = new type(0, null)
 			var/list/data = list("viruses"=list(D))
-			var/name = sanitize(copytext(input(usr,"Name:","Name the culture",D.name), 1, MAX_NAME_LEN))
+			var/name = sanitize_safe(input(usr,"Name:","Name the culture",input_default(D.name)), MAX_NAME_LEN)
 			if(!name || name == " ") name = D.name
 			B.name = "[name] culture bottle"
 			B.desc = "A small bottle. Contains [D.agent] culture in synthblood medium."
@@ -878,7 +878,7 @@
 	else if(href_list["clear"])
 		src.temphtml = ""
 	else if(href_list["name_disease"])
-		var/new_name = sanitize(input(usr, "Name the Disease", "New Name", ""), MAX_NAME_LEN)
+		var/new_name = sanitize_safe(input(usr, "Name the Disease", "New Name"), MAX_NAME_LEN)
 		if(stat & (NOPOWER|BROKEN))
 			return
 		if(usr.stat || usr.restrained())

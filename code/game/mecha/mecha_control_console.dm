@@ -41,7 +41,7 @@
 		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("send_message")
 		var/message = sanitize(input(usr,"Input message","Transmit message") as text)
 		var/obj/mecha/M = MT.in_mecha()
-		if(trim(message) && M)
+		if(message && M)
 			M.occupant_message(message)
 	else if(href_list["shock"])
 		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("shock")

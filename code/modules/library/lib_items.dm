@@ -175,7 +175,7 @@
 		var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
 		switch(choice)
 			if("Title")
-				var/newtitle = sanitize(copytext(input(usr, "Write a new title:"), 1, MAX_NAME_LEN))
+				var/newtitle = sanitize_safe(input(usr, "Write a new title:"), MAX_NAME_LEN)
 				if(!newtitle)
 					to_chat(usr, "The title is invalid.")
 					return
@@ -183,14 +183,14 @@
 					src.name = newtitle
 					src.title = newtitle
 			if("Contents")
-				var/content = sanitize(copytext(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null,1, 8192))
+				var/content = sanitize(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null, MAX_BOOK_MESSAGE_LEN)
 				if(!content)
 					to_chat(usr, "The content is invalid.")
 					return
 				else
-					src.dat += content
+					src.dat += content//infiniti books?
 			if("Author")
-				var/newauthor = sanitize(copytext(input(usr, "Write the author's name:"),1, MAX_NAME_LEN))
+				var/newauthor = sanitize(input(usr, "Write the author's name:"), MAX_NAME_LEN)
 				if(!newauthor)
 					to_chat(usr, "The name is invalid.")
 					return
