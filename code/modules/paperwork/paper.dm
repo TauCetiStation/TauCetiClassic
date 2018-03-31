@@ -301,7 +301,7 @@
 	t = replacetext(t, "\[/bh\]", "</h3>")
 
 	// blockquote
-	t = replacetext(t, "\[quote\]", "<blockquote style=\"line-height:normal; margin-bottom:10px; font-style:italic; text-align:right;\">");
+	t = replacetext(t, "\[quote\]", "<blockquote style=\"line-height:normal; margin-bottom:10px; font-style:italic; letter-spacing: 1.25px; text-align:right;\">");
 	t = replacetext(t, "\[/quote\]", "</blockquote>");
 
 	// div
