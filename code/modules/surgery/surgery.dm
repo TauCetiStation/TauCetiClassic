@@ -31,17 +31,20 @@
 // Checks if this step applies to the mutantrace of the user.
 /datum/surgery_step/proc/is_valid_mutantrace(mob/living/carbon/human/target)
 
+	if(!ishuman(target)) // Juuuuust making sure.
+		return TRUE
+
 	if(allowed_species)
 		for(var/species in allowed_species)
 			if(target.species.name == species)
-				return 1
+				return TRUE
 
 	if(disallowed_species)
 		for(var/species in disallowed_species)
 			if(target.species.name == species)
-				return 0
+				return FALSE
 
-	return 1
+	return TRUE
 
 // checks whether this step can be applied with the given user and target
 /datum/surgery_step/proc/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
