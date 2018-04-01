@@ -34,6 +34,7 @@
 	new /obj/item/device/multitool(src)
 	new /obj/item/device/flash(src)
 	new /obj/item/taperoll/engineering(src)
+	new /obj/item/weapon/gun/energy/pulse_rifle(src)
 
 /obj/structure/closet/secure_closet/engineering_electrical
 	name = "Electrical Supplies"
