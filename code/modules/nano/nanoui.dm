@@ -360,11 +360,12 @@ nanoui is used to open and update nano browser uis
 	return {"
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta http-equiv="Content-Type" content="text/html; charset=Windows-1251">
 	<head>
 		<script type='text/javascript'>
 			function receiveUpdateData(jsonString)
 			{
+				jsonString = jsonString.replace(/¶/g, "&#1103;");//fx fo ja
 				// We need both jQuery and NanoStateManager to be able to recieve data
 				// At the moment any data received before those libraries are loaded will be lost
 				if (typeof NanoStateManager != 'undefined' && typeof jQuery != 'undefined')

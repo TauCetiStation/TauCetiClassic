@@ -83,13 +83,16 @@
 	return {"
 			</div>
 		</div>
+		<script>
+			document.body.innerHTML = document.body.innerHTML.replace(/¶/g, "ÿ");<!-- omg its so weird --!>
+		</script>
 	</body>
 </html>"}
 
 /datum/browser/proc/get_content()
 	return {"
 	[get_header()]
-	[content]//entity_ja(content)? 
+	[content]
 	[get_footer()]
 	"}
 //"

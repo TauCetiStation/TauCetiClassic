@@ -215,7 +215,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 		if(findtext(message, "\proper"))
 			message = replacetext(message, "\proper", "")
 
-		message = entity_ja(message)
+		//message = entity_ja(message)//moved to js
 		
 		var/client/C
 		if(istype(target, /client))
