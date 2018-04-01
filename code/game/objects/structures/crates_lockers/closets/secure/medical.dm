@@ -121,6 +121,7 @@
 	new /obj/item/device/flash(src)
 	new /obj/item/weapon/reagent_containers/hypospray/cmo(src)
 	new /obj/item/clothing/suit/surgicalapron(src)
+	new /obj/item/weapon/gun/energy/pulse_rifle(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "Animal Control"
