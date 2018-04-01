@@ -28,7 +28,7 @@
 				if(isnewplayer(M))
 					continue
 				if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTSIGHT) && !(M in viewers(src, null)))
-					M.show_message(message, show_to_parasites = FALSE)
+					M.show_message(message)
 
 
 		// Type 1 (Visual) emotes are sent to anyone in view of the item
