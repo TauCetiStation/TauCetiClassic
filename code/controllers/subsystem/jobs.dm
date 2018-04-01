@@ -361,12 +361,14 @@ var/datum/subsystem/job/SSjob
 					if(G.allowed_roles)
 						for(var/job_name in G.allowed_roles)
 							if(job.title == job_name)
-								permitted = 1
+								permitted = TRUE
+							else if(H.mind.role_alt_title == job_name)
+								permitted = TRUE
 					else
-						permitted = 1
+						permitted = TRUE
 
 					if(G.whitelisted && (G.whitelisted != H.species.name || !is_alien_whitelisted(H, G.whitelisted)))
-						permitted = 0
+						permitted = FALSE
 
 					if(!permitted)
 						to_chat(H, "<span class='warning'>Your current job or whitelist status does not permit you to spawn with [thing]!</span>")
