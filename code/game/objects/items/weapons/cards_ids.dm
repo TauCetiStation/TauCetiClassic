@@ -329,7 +329,7 @@
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
 	if(!src.registered_name)
 		//Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
-		var t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)), MAX_NAME_LEN)
+		var t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
 		if(!t) //Same as mob/dead/new_player/prefrences.dm
 			alert("Invalid name.")
 			return
@@ -350,8 +350,8 @@
 
 		switch(alert("Would you like to display the ID, change its look, or retitle it?","Choose.","Rename", "Change look","Show"))
 			if("Rename")
-				var t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)), MAX_NAME_LEN)
-				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/dead/new_player/prefrences.dm
+				var t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
+				if(!t) //Same as mob/dead/new_player/prefrences.dm
 					alert("Invalid name.")
 					return
 				src.registered_name = t

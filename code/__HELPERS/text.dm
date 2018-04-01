@@ -8,7 +8,6 @@
  *			Misc
  */
 
-
 /*
  * SQL sanitization
  */
@@ -127,8 +126,8 @@ proc/sql_sanitize_text(text)
 	if(last_char_group == 1)
 		output = copytext(output,1,length(output))	//removes the last character (in this case a space)
 
-	for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai","plating"))	//prevents these common metagamey names
-		if(cmptext(output,bad_name))	return	//(not case sensitive)
+	if(lowertext(output) in forbidden_names)	//prevents these common metagamey names
+		return	//(not case sensitive)
 
 	return output
 
