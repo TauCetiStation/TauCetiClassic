@@ -88,7 +88,7 @@
 	return
 
 /obj/item/weapon/game_kit/chaplain/attack_ghost(mob/dead/observer/user)
-	set_light(3, 1, "a2fad1")
+	set_light(3, 1, "#a2fad1")
 	addtimer(CALLBACK(src, .atom/proc/set_light, 0), 10)
 	return interact(user)
 

@@ -101,7 +101,7 @@
 		return
 
 	for(var/obj/machinery/door/poddoor/shutters/syndi/shutter in cur_area)
-		if(shutter.tag == "Syndicate_shuttle")
+		if(shutter.dock_tag == "Syndicate_shuttle")
 			to_chat(user, "<span class='notice'>The Shuttle has been unlocked!</span>")
 			qdel(shutter)
 			playsound(console, 'sound/machines/twobeep.ogg', 50, 2)

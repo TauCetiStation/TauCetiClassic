@@ -1682,41 +1682,68 @@ datum/design/nanopaste
 	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000)
 	build_path = /obj/item/stack/nanopaste
 
+datum/design/implanter
+	name = "implanter"
+	desc = "Implanter, used to inject implants."
+	id = "implanter"
+	req_tech = list("materials" = 2, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
+	build_path = /obj/item/weapon/implanter
+
 datum/design/implant_loyal
 	name = "Glass Case- 'Loyalty'"
 	desc = "A case containing a loyalty implant."
 	id = "implant_loyal"
-	req_tech = list("materials" = 2, "biotech" = 3)
+	req_tech = list("materials" = 2, "biotech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100)
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000)
 	build_path = /obj/item/weapon/implantcase/loyalty
+
+datum/design/implant_mindshield
+	name = "Glass Case- 'MindShield'"
+	desc = "A case containing a mindshield implant."
+	id = "implant_mindshield"
+	req_tech = list("materials" = 2, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000)
+	build_path = /obj/item/weapon/implantcase/mindshield
 
 datum/design/implant_chem
 	name = "Glass Case- 'Chem'"
 	desc = "A case containing a chemical implant."
 	id = "implant_chem"
-	req_tech = list("materials" = 2, "biotech" = 3)
+	req_tech = list("materials" = 2, "biotech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100)
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000,)
 	build_path = /obj/item/weapon/implantcase/chem
 
 datum/design/implant_death
 	name = "Glass Case- 'Death Alarm'"
 	desc = "A case containing a death alarm implant."
 	id = "implant_death"
-	req_tech = list("materials" = 2, "biotech" = 3)
+	req_tech = list("materials" = 2, "biotech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100)
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/implantcase/death_alarm
 
-datum/design/implant_free
-	name = "boxed freedom implant (with injector)"
-	desc = "A sleek, sturdy box"
-	id = "implant_free"
-	req_tech = list("syndicate" = 2, "biotech" = 3)
+datum/design/implant_tracking
+	name = "Glass Case- 'Tracking'"
+	desc = "A case containing a tracking implant."
+	id = "implant_tracking"
+	req_tech = list("materials" = 2, "biotech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100, MAT_DIAMOND = 100)
-	build_path = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
+	build_path = /obj/item/weapon/implantcase/tracking
+
+datum/design/implant_free
+	name = "Glass Case- 'Freedom'"
+	desc = "A case containing a freedom implant."
+	id = "implant_free"
+	req_tech = list("syndicate" = 3, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000, MAT_DIAMOND = 1000)
+	build_path = /obj/item/weapon/implantcase/freedom
 
 datum/design/chameleon
 	name = "Chameleon Kit"

@@ -370,12 +370,12 @@
 	icon_state = "beret_blue"
 
 /obj/item/clothing/head/beret/black
-	name = "blue beret"
+	name = "black beret"
 	desc = "Bonjour, but in black. Smells like baguette, pardon my French."
 	icon_state = "beret_black"
 
 /obj/item/clothing/head/beret/purple
-	name = "blue beret"
+	name = "purple beret"
 	desc = "Bonjour, but in purple. Smells like baguette, pardon my French."
 	icon_state = "beret_purple"
 

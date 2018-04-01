@@ -85,27 +85,9 @@
 	else //Trying to wield it
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(!H.canusetwohands())
-				to_chat(user, "<span class='warning'>You need both of your hands to be intact to do this.</span>")
-				return
-		if(user.get_inactive_hand())
-			to_chat(user, "<span class='warning'>You need your other hand to be empty to do this.</span>")
-			return
-		wield()
-		to_chat(user, "<span class='notice'>You grab the [initial(name)] with both hands.</span>")
-		if (src.wieldsound)
-			playsound(src.loc, wieldsound, 50, 1)
-
-		if(user.hand)
-			user.update_inv_l_hand()
-		else
-			user.update_inv_r_hand()
-
-		var/obj/item/weapon/twohanded/offhand/O = new offhand_item(user) ////Let's reserve his other hand~
-		O.name = "[initial(name)] - offhand"
-		O.desc = "Your second grip on the [initial(name)]"
-		user.put_in_inactive_hand(O)
-		return
+			var/W = H.wield(src, initial(name), wieldsound)
+			if(W)
+				wield()
 
 ///////////OFFHAND///////////////
 /obj/item/weapon/twohanded/offhand

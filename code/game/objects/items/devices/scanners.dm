@@ -75,7 +75,7 @@ REAGENT SCANNER
 	throw_range = 10
 	m_amt = 200
 	origin_tech = "magnets=1;biotech=1"
-	var/mode = 1;
+	var/mode = TRUE
 
 /obj/item/device/healthanalyzer/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
@@ -88,8 +88,10 @@ REAGENT SCANNER
 			user.show_message("<span class = 'warning bold'>Warning: Blood Level ERROR: --% --cl.</span><span class = 'notice bold'>Type: ERROR</span>")
 			user.show_message("<span class = 'notice'>Subject's pulse:</span><font color='red'>-- bpm.</font>")
 			return
+		else
+			health_analyze(M, user, mode)
 	else
-		healthanalyze(M, user, mode)
+		user.show_message("<span class = 'warning'>Analyzing Results not compiled. Unknown anatomy detected.</span>")
 
 /obj/item/device/healthanalyzer/verb/toggle_mode()
 	set name = "Switch Verbosity"
@@ -97,9 +99,9 @@ REAGENT SCANNER
 
 	mode = !mode
 	switch (mode)
-		if(1)
+		if(TRUE)
 			to_chat(usr, "The scanner now shows specific limb damage.")
-		if(0)
+		if(FALSE)
 			to_chat(usr, "The scanner no longer shows limb damage.")
 
 /obj/item/device/healthanalyzer/rad_laser
