@@ -72,7 +72,7 @@ move an amendment</a> to the drawing.</p>
 		else
 			return
 	text += "</BODY></HTML>"
-	usr << browse(text, "window=blueprints")
+	usr << browse(entity_ja(text), "window=blueprints")
 	onclose(usr, "blueprints")
 
 
@@ -116,7 +116,7 @@ move an amendment</a> to the drawing.</p>
 				to_chat(usr, "\red Error! Please notify administration!")
 				return
 	var/list/turf/turfs = res
-	var/str = trim(stripped_input(usr,"New area name:","Blueprint Editing", "", MAX_NAME_LEN))
+	var/str = sanitize_safe(input(usr,"New area name:","Blueprint Editing", ""), MAX_LNAME_LEN)
 	if(!str || !length(str)) //cancel
 		return
 	if(length(str) > 50)
@@ -153,7 +153,7 @@ move an amendment</a> to the drawing.</p>
 	var/area/A = get_area()
 	//world << "DEBUG: edit_area"
 	var/prevname = "[A.name]"
-	var/str = trim(stripped_input(usr,"New area name:","Blueprint Editing", prevname, MAX_NAME_LEN))
+	var/str = sanitize_safe(input(usr,"New area name:","Blueprint Editing", input_default(prevname)), MAX_LNAME_LEN)
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)

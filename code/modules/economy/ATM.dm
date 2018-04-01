@@ -216,7 +216,7 @@ log transactions
 			dat += "<input type='submit' value='Submit'><br>"
 			dat += "</form>"
 
-	user << browse(dat,"window=atm;size=550x650")
+	user << browse(entity_ja(dat),"window=atm;size=550x650")
 
 /obj/machinery/atm/is_operational_topic()
 	return TRUE

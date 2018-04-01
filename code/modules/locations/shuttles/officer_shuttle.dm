@@ -91,7 +91,7 @@
 		<a href='?src=\ref[src];centcomm=1'>Centcomm</a><br>
 		<a href='?src=\ref[user];mach_close=computer'>Close</a>"}
 
-	user << browse(dat, "window=computer;size=575x450")
+	user << browse(entity_ja(dat), "window=computer;size=575x450")
 	onclose(user, "computer")
 
 /obj/machinery/computer/officer_shuttle/Topic(href, href_list)

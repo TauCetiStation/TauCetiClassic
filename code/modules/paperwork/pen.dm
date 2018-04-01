@@ -138,7 +138,7 @@
 	var/signature = ""
 
 /obj/item/weapon/pen/chameleon/attack_self(mob/user)
-	signature = sanitize(input("Enter new signature. Leave blank for 'Anonymous'", "New Signature", signature))
+	signature = sanitize(input("Enter new signature. Leave blank for 'Anonymous'", "New Signature", input_default(signature)))
 
 /obj/item/weapon/pen/proc/get_signature(mob/user)
 	return (user && user.real_name) ? user.real_name : "Anonymous"

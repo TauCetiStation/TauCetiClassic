@@ -54,7 +54,7 @@ world/IsBanned(key,address,computer_id)
 			//var/pip = query.item[2]
 			//var/pcid = query.item[3]
 			var/ackey = query.item[4]
-			var/reason = query.item[5]
+			var/reason = entity_ja(query.item[5])
 			var/expiration = query.item[6]
 			var/duration = query.item[7]
 			var/bantime = query.item[8]
@@ -64,7 +64,7 @@ world/IsBanned(key,address,computer_id)
 			if(text2num(duration) > 0)
 				expires = " The ban is for [duration] minutes and expires on [expiration] (server time)."
 
-			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[replacetext(reason, LETTER_255,"ÿ")] \nThis ban was applied by [ackey] on [bantime], [expires]"
+			var/desc = "\nReason: You, or another user of this computer or connection ([pckey]) is banned from playing here. The ban reason is:\n[reason]\nThis ban was applied by [ackey] on [bantime], [expires]"
 
 			return list("reason"="[bantype]", "desc"="[desc]")
 

@@ -85,7 +85,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 					return
 
 				if("text")
-					lst[i] = input("Enter new text:","Text",null) as text
+					lst[i] = sanitize(input("Enter new text:","Text",null) as text)
 
 				if("num")
 					lst[i] = input("Enter new number:","Num",0) as num
@@ -208,7 +208,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			return 0
 	var/obj/item/device/paicard/card = new(T)
 	var/mob/living/silicon/pai/pai = new(card)
-	pai.name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text
+	pai.name = sanitize_safe(input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text, MAX_NAME_LEN)
 	pai.real_name = pai.name
 	pai.key = choice.key
 	card.setPersonality(pai)

@@ -24,12 +24,11 @@
 	attackby(obj/item/weapon/I, mob/user)
 		..()
 		if (istype(I, /obj/item/weapon/pen))
-			var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
+			var/t = sanitize_safe(input(user, "What would you like the label to be?", input_default(src.name), null)  as text, MAX_NAME_LEN)
 			if (user.get_active_hand() != I)
 				return
 			if((!in_range(src, usr) && src.loc != user))
 				return
-			t = sanitize(copytext(t,1,MAX_MESSAGE_LEN))
 			if(t)
 				src.name = text("Glass Case- '[]'", t)
 			else

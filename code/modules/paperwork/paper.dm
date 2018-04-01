@@ -21,6 +21,7 @@
 	var/info_links	//A different version of the paper which includes html links at fields and EOF
 	var/stamp_text		//The (text for the) stamp_text on the paper.
 	var/fields		//Amount of user created fields
+	var/free_space = MAX_PAPER_MESSAGE_LEN
 	var/list/stamped
 	var/list/ico      //Icons and
 	var/list/offset_x //offsets stored for later
@@ -41,9 +42,9 @@
 	pixel_x = rand(-9, 9)
 	stamp_text = ""
 
-	spawn(2)
-		update_icon()
-		updateinfolinks()
+	update_icon()
+	update_space(info)
+	updateinfolinks()
 
 /obj/item/weapon/paper/update_icon()
 	if(icon_state == "scrap_bloodied")
@@ -52,6 +53,12 @@
 		icon_state = "paper_words"
 		return
 	icon_state = "paper"
+
+/obj/item/weapon/paper/proc/update_space(var/new_text)
+	if(!new_text)
+		return
+
+	free_space -= length(strip_html_properly(new_text))
 
 /obj/item/weapon/paper/examine(mob/user)
 	..()
@@ -69,14 +76,14 @@
 
 	var/data
 	if((!(ishuman(user) || isobserver(user) || issilicon(user)) && !forceshow) || forcestars)
-		data = "<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[sanitize_plus_popup(stars(revert_ja(info)))][stamp_text]</BODY></HTML>"
+		data = "<HTML><HEAD><TITLE>[sanitize(name)]</TITLE></HEAD><BODY>[stars(info)][stamp_text]</BODY></HTML>"
 		if(view)
-			user << browse(data, "window=[name]")
+			user << browse(entity_ja(data), "window=[name]")
 			onclose(user, "[name]")
 	else
-		data = "<HTML><HEAD><TITLE>[sanitize_popup(name)]</TITLE></HEAD><BODY>[infolinks ? info_links : info][stamp_text]</BODY></HTML>"
+		data = "<HTML><HEAD><TITLE>[sanitize(name)]</TITLE></HEAD><BODY>[infolinks ? info_links : info][stamp_text]</BODY></HTML>"
 		if(view)
-			user << browse(data, "window=[name]")
+			user << browse(entity_ja(data), "window=[name]")
 			onclose(user, "[name]")
 	return data
 
@@ -88,7 +95,7 @@
 	if((CLUMSY in usr.mutations) && prob(50))
 		to_chat(usr, "<span class='warning'>You cut yourself on the paper.</span>")
 		return
-	var/n_name = sanitize(copytext(input(usr, "What would you like to label the paper?", "Paper Labelling", null)  as text, 1, MAX_NAME_LEN))
+	var/n_name = sanitize_safe(input(usr, "What would you like to label the paper?", "Paper Labelling", null) as text, MAX_NAME_LEN)
 	if((loc == usr && usr.stat == CONSCIOUS))
 		name = "[(n_name ? text("[n_name]") : "paper")]"
 	add_fingerprint(usr)
@@ -230,6 +237,7 @@
 /obj/item/weapon/paper/proc/clearpaper()
 	info = null
 	stamp_text = null
+	free_space = MAX_PAPER_MESSAGE_LEN
 	LAZYCLEARLIST(stamped)
 	LAZYCLEARLIST(ico)
 	LAZYCLEARLIST(offset_x)
@@ -376,9 +384,16 @@
 
 	if(href_list["write"])
 		var/id = href_list["write"]
-		//var/t = strip_html_simple(input(usr, "What text do you wish to add to " + (id=="end" ? "the end of the paper" : "field "+id) + "?", "[name]", null),8192) as message
-		//var/t =  strip_html_simple(input("Enter what you want to write:", "Write", null, null)  as message, MAX_MESSAGE_LEN)
-		var/t =  input("Enter what you want to write:", "Write", null, null)  as message
+
+		if(free_space <= 0)
+			usr << "<span class='info'>There isn't enough space left on \the [src] to write anything.</span>"
+			return
+
+		var/t =  sanitize(input("Enter what you want to write:", "Write", null, null)  as message, free_space, extra = FALSE)
+
+		if(!t)
+			return
+
 		var/obj/item/i = usr.get_active_hand() // Check to see if he still got that darn pen, also check if he's using a crayon or pen.
 		var/iscrayon = 0
 		if(!istype(i, /obj/item/weapon/pen))
@@ -392,32 +407,24 @@
 
 		var last_fields_value = fields
 
-		t = sanitize_alt(t, list("\n"="\[br\]","ÿ"=LETTER_255))
-
-		// check for exploits
-		for(var/bad in paper_blacklist)
-			if(findtext(t,bad))
-				to_chat(usr, "\blue You think to yourself, \"Hm.. this is only paper...\"")
-				log_admin("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
-				message_admins("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
-				return
-
-		//t = replacetext(t, "\n", "<BR>")
+		t = replacetext(t, "\n", "<BR>")
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
-
-		if(isIAN(usr))
-			t = GibberishAll(t)
 
 		if(fields > 50)
 			to_chat(usr, "<span class='warning'>Too many fields. Sorry, you can't do this.</span>")
 			fields = last_fields_value
 			return
 
+		if(isIAN(usr))
+			t = GibberishAll(t)
+
 		if(id!="end")
 			addtofield(text2num(id), t) // He wants to edit a field, let him.
 		else
 			info += t // Oh, he wants to edit to the end of the file, let him.
 			updateinfolinks()
+
+		update_space(t)
 
 		show_content(usr, forceshow = TRUE, infolinks = TRUE)
 

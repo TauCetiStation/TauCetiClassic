@@ -482,7 +482,7 @@ ________________________________________________________________________________
 	dat += "</body></html>"
 
 	//Setting the can>resize etc to 0 remove them from the drag bar but still allows the window to be draggable.
-	display_to << browse(dat,"window=spideros;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
+	display_to << browse(entity_ja(dat),"window=spideros;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
 
 //=======//SPIDEROS TOPIC PROC//=======//
 
@@ -535,8 +535,7 @@ ________________________________________________________________________________
 
 		if("Message")
 			var/obj/item/device/pda/P = locate(href_list["target"])
-			var/t = input(U, "Please enter untraceable message.") as text
-			t = sanitize(copytext(t, 1, MAX_MESSAGE_LEN))
+			var/t = sanitize(input(U, "Please enter untraceable message.") as text)
 			if(!t||U.stat||U.wear_suit!=src||!s_initialized)//Wow, another one of these. Man...
 				display_to << browse(null, "window=spideros")
 				return
@@ -560,7 +559,7 @@ ________________________________________________________________________________
 					if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
 						if(isnewplayer(M))
 							continue
-						M.show_message("<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[sanitize_chat(t)]</span></span>")
+						M.show_message("<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t]</span></span>")
 
 				if (!P.message_silent)
 					playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)

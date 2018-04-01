@@ -608,7 +608,7 @@
 	<BR><HR><BR>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
-	user << browse(dat, text("window=mob[name];size=340x480"))
+	user << browse(entity_ja(dat), text("window=mob[name];size=340x480"))
 	onclose(user, "mob[name]")
 	return
 
@@ -773,7 +773,7 @@
 		pet.colour = "[M.colour]"
 		to_chat(user, "You feed the slime the potion, removing it's powers and calming it.")
 		qdel(M)
-		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+		var/newname = sanitize_safe(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text, MAX_NAME_LEN)
 
 		if (!newname)
 			newname = "pet slime"
@@ -801,7 +801,7 @@
 		pet.colour = "[M.colour]"
 		to_chat(user, "You feed the slime the potion, removing it's powers and calming it.")
 		qdel(M)
-		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+		var/newname = sanitize_safe(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text, MAX_NAME_LEN)
 
 		if (!newname)
 			newname = "pet slime"

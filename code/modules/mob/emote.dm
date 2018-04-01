@@ -8,13 +8,11 @@
 	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
 	if(m_type == 2 && muzzled) return
 
-	var/input
 	if(!message)
-		input = sanitize(copytext(input(src,"Choose an emote to display.") as text|null,1,MAX_MESSAGE_LEN))
-	else
-		input = sanitize_plus_chat(message)
-	if(input)
-		message = "<B>[src]</B> [input]"
+		message = sanitize(input(src,"Choose an emote to display.") as text|null)
+
+	if(message)
+		message = "<B>[src]</B> [message]"
 	else
 		return
 
@@ -64,14 +62,11 @@
 			return
 
 
-	var/input
 	if(!message)
-		input = sanitize(copytext(input(src, "Choose an emote to display.") as text|null, 1, MAX_MESSAGE_LEN))
-	else
-		input = sanitize_plus_chat(message)
+		message = sanitize(input(src, "Choose an emote to display.") as text|null)
 
-	if(input)
-		message = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[src]</span> <span class='message'>[input]</span></span>"
+	if(message)
+		message = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[src]</span> <span class='message'>[message]</span></span>"
 	else
 		return
 

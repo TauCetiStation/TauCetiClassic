@@ -68,7 +68,7 @@
 				dat += "The implant casing is empty."
 		else
 			dat += "Please insert an implant casing!"
-		user << browse(dat, "window=implantpad")
+		user << browse(entity_ja(dat), "window=implantpad")
 		onclose(user, "implantpad")
 		return
 

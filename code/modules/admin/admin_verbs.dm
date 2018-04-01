@@ -617,7 +617,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Make Sound"
 	set desc = "Display a message to everyone who can hear the target."
 	if(O)
-		var/message = input("What do you want the message to be?", "Make Sound") as text|null
+		var/message = sanitize(input("What do you want the message to be?", "Make Sound") as text|null)
 		if(!message)
 			return
 		for (var/mob/V in hearers(O))
@@ -885,8 +885,8 @@ var/list/admin_verbs_hideable = list(
 		return
 
 	var/mob/winner = input("Who's a winner?", "Achievement Winner") in player_list
-	var/name = input("What will you call your achievement?", "Achievement Winner", "New Achievement")
-	var/desc = input("What description will you give it?", "Achievement Description", "You Win")
+	var/name = sanitize(input("What will you call your achievement?", "Achievement Winner", "New Achievement"))
+	var/desc = sanitize(input("What description will you give it?", "Achievement Description", "You Win"))
 
 	if(istype(winner, /mob/living))
 		achoice = alert("Give our winner his own trophy?","Achievement Trophy", "Confirm","Cancel")
@@ -921,7 +921,7 @@ var/list/admin_verbs_hideable = list(
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/msg = sanitize(copytext(input(usr, "", "Antag OOC") as text, 1, MAX_MESSAGE_LEN))
+	var/msg = sanitize(input(usr, "", "Antag OOC") as text)
 	if(!msg)	return
 
 	var/display_name = src.key

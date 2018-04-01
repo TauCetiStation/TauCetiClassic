@@ -59,12 +59,12 @@ proc/spawn_room(atom/start_loc,x_size,y_size,wall,floor , clean = 0 , name)
 proc/admin_spawn_room_at_pos()
 	var/wall
 	var/floor
-	var/x = input("X position","X pos",usr.x)
-	var/y = input("Y position","Y pos",usr.y)
-	var/z = input("Z position","Z pos",usr.z)
-	var/x_len = input("Desired length.","Length",5)
-	var/y_len = input("Desired width.","Width",5)
-	var/clean = input("Delete existing items in area?" , "Clean area?", 0)
+	var/x = input("X position","X pos",usr.x) as num
+	var/y = input("Y position","Y pos",usr.y) as num
+	var/z = input("Z position","Z pos",usr.z) as num
+	var/x_len = input("Desired length.","Length",5) as num
+	var/y_len = input("Desired width.","Width",5) as num
+	var/clean = input("Delete existing items in area?" , "Clean area?", 0) as num
 	switch(alert("Wall type",null,"Reinforced wall","Regular wall","Resin wall"))
 		if("Reinforced wall")
 			wall=/turf/simulated/wall/r_wall
