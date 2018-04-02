@@ -13,12 +13,20 @@ var/list/dreams = list(
 	"a unathi","a tajaran","the ai core","the mining station","the research station","a beaker of strange liquid",
 	)
 
+var/list/nightmares = list(
+	"c'thulhu","a cultist","a deity","rituals","blood","gibs","death","horror","abyss","damnation","a sign","a shadow","fear","the giant spider",
+	"darkness","voices from all around","a catastrpohe","freezing","ruins","blinking lights","flames","a voice","a pair of red eyes",
+	"the unknown","a murderer","a killer","a xeno","a criminal","visions","it","a gasmask","look","a painting","an abomination","an yellow sign","shadows",
+	"the undead","whispers","suicide","creatures","cave","eyes","a child","plague","hunger","rot","rats","a witch","screams","claws","fangs",
+	"height","knife","a corpse","guilt","singularity","a ghost"
+	)
+
 /mob/living/carbon/proc/dream()
 	dreaming = 1
 
 	spawn(0)
 		for(var/i = rand(1,4),i > 0, i--)
-			to_chat(src, "\blue <i>... [pick(dreams)] ...</i>")
+			to_chat(src, "<span class='[dreaming == 2 ? "warning" : "notice"] italics>... [dreaming == 2 ? pick(nightmares) : pick(dreams)] ...</span>")
 			sleep(rand(40,70))
 			if(paralysis <= 0)
 				dreaming = 0

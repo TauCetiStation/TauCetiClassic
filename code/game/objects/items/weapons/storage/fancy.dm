@@ -93,6 +93,21 @@
 	for (var/i in 1 to storage_slots)
 		new /obj/item/candle(src)
 
+/obj/item/weapon/storage/fancy/black_candle_box
+	name = "candle pack"
+	desc = "A pack of black candles."
+	icon = 'icons/obj/candle.dmi'
+	icon_state = "gcandlebox5"
+	icon_type = "gcandle"
+	item_state = "gcandlebox5"
+	storage_slots = 5
+	throwforce = 2
+	slot_flags = SLOT_BELT
+
+/obj/item/weapon/storage/fancy/candle_box/atom_init()
+	. = ..()
+	for (var/i in 1 to storage_slots)
+		new /obj/item/candle/ghost(src)
 /*
  * Crayon Box
  */

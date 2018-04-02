@@ -164,6 +164,8 @@
 		else
 			to_chat(user, "<span class='warning'>You suddenly feel bamboozled because of your own luck!</span>")
 			user.confused += SLIGHTLY_CONFUSED
+	if(result == 1)
+		poof()
 
 /obj/item/weapon/dice/ghost/d20/throw_at(mob/living/target, range, speed, mob/living/thrower)
 	diceroll()

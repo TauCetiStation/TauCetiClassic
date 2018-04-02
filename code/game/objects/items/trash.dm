@@ -53,5 +53,8 @@
 		name = "\improper \"LiquidFood\" ration"
 		icon_state = "liquidfood"
 
+/obj/item/trash/candle/ghost
+	icon_state = "gcandle4"
+
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return
