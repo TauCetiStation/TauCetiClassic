@@ -19,6 +19,10 @@
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 
+	if(user.a_intent == "help" && istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/butch))
+		if(attempt_harvest(I, user))
+			return
+
 	if(user.zone_sel && user.zone_sel.selecting)
 		I.attack(src, user, user.zone_sel.selecting)
 	else
@@ -35,9 +39,6 @@
 		if(istype(H.wear_suit, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/V = H.wear_suit
 			V.attack_reaction(src, REACTION_ATACKED, user)
-
-	if(attempt_harvest(I, user))
-		return
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
