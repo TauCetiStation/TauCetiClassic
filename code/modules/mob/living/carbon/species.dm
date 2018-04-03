@@ -143,6 +143,9 @@
 /datum/species/proc/on_loose(mob/living/carbon/human/H)
 	return
 
+/datum/species/proc/regen(mob/living/carbon/human/H, light_amount, External) // Perhaps others will regenerate in different ways?
+	return
+
 /datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
 	if(flags[IS_SYNTHETIC])
  //H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
@@ -455,6 +458,26 @@
 	H.gender = NEUTER
 
 	return ..()
+
+/datum/species/diona/regen(mob/living/carbon/human/H, light_amount, External)
+	if(light_amount >=5) // If you can regen organs - do so.
+		for(var/obj/item/organ/internal/O in H.organs)
+			if(O.damage)
+				O.damage -= light_amount/10
+				H.nutrition -= light_amount
+				return
+			continue
+	if(H.nutrition > 350 && light_amount >= 4) // If you don't need to regen organs, regen bodyparts.
+		External = H.find_damaged_bodypart(External)
+		if(External)
+			H.nutrition -= 1
+			H.apply_damages(0,0,1,1,0,0)
+			H.regen_bodyparts(External, TRUE)
+			return
+	if(light_amount >= 3) // If you don't need to regen bodyparts, fix up small things.
+		H.adjustBruteLoss(-(light_amount))
+		H.adjustToxLoss(-(light_amount))
+		H.adjustOxyLoss(-(light_amount))
 
 /datum/species/diona/handle_death(mob/living/carbon/human/H)
 
