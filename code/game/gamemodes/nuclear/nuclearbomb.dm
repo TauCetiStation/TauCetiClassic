@@ -479,7 +479,6 @@ var/bomb_set
 		unbuckle_mob()
 	else if(do_after(usr, 30, 1, src))
 		M.loc = loc
-		..()
 
 /obj/machinery/nuclearbomb/post_buckle_mob(mob/living/M)
 	..()

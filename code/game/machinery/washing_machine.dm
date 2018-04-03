@@ -320,3 +320,26 @@
 			state = 1
 
 	update_icon()
+
+/obj/machinery/washing_machine/MouseDrop_T(mob/living/M, mob/living/user)
+	if(!ishuman(M) || !ishuman(user))
+		return
+	if(user.is_busy())
+		return
+	if(buckled_mob)
+		do_after(usr, 30, 1, src)
+		unbuckle_mob()
+	else if(do_after(usr, 30, 1, src))
+		M.loc = loc
+
+/obj/machinery/washing_machine/post_buckle_mob(mob/living/M)
+	..()
+	if(M == buckled_mob)
+		M.pixel_y = -10
+	else
+		M.pixel_y = 0
+
+/obj/machinery/washing_machine/process()
+	for(var/mob/living/M in loc)
+		if(state == 5)
+			shake_camera(M, 3, 1)
