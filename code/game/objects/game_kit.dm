@@ -92,6 +92,12 @@
 	addtimer(CALLBACK(src, .atom/proc/set_light, 0), 10)
 	return interact(user)
 
+/obj/item/weapon/game_kit/chaplain/attackby(obj/item/W, mob/user)
+	..()
+	if(istype(W, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = W
+		OS.scanned_type = src.type
+
 /obj/item/weapon/game_kit/interact(mob/user)
 	user.machine = src
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/chess)		//Sending pictures to the client

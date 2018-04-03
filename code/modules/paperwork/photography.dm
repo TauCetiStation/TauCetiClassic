@@ -172,7 +172,11 @@
 		return
 	..()
 
-
+/obj/item/device/camera/spooky/attackby(obj/item/I, mob/user)
+	..()
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
+		OS.scanned_type = src.type
 
 /obj/item/device/camera/proc/camera_get_icon(list/turfs, turf/center)
 	var/atoms[] = list()

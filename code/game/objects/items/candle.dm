@@ -72,6 +72,9 @@
 
 /obj/item/candle/ghost/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	..()
+	if(istype(W, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = W
+		OS.scanned_type = src.type
 	if(user.getBrainLoss() >= 60 || user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")
 		if(!lit && istype(W, /obj/item/weapon/storage/bible))
 			var/obj/item/weapon/storage/bible/B = W

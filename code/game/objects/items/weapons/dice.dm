@@ -23,6 +23,9 @@
 
 /obj/item/weapon/dice/ghost/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	..()
+	if(istype(W, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = W
+		OS.scanned_type = src.type
 	if(istype(W, /obj/item/weapon/nullrod))
 		if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")))
 			poof()
@@ -266,6 +269,9 @@
 
 /obj/item/weapon/storage/pill_bottle/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	..()
+	if(istype(W, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = W
+		OS.scanned_type = src.type
 	if(istype(W, /obj/item/weapon/nullrod))
 		if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")))
 			var/count

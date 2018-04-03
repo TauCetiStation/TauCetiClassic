@@ -880,6 +880,9 @@
 	product_ads = "Occult is magic;Knowledge is magic;All the magic!;None to spook us;The dice has been cast"
 
 /obj/machinery/vending/weirdomat/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
+		OS.scanned_type = src.type
 	if(istype(I, /obj/item/weapon/ectoplasm))
 		RedeemEctoplasm(I, user)
 		return

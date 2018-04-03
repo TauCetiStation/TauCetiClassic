@@ -104,10 +104,16 @@
 	throwforce = 2
 	slot_flags = SLOT_BELT
 
-/obj/item/weapon/storage/fancy/candle_box/atom_init()
+/obj/item/weapon/storage/fancy/black_candle_box/atom_init()
 	. = ..()
 	for (var/i in 1 to storage_slots)
 		new /obj/item/candle/ghost(src)
+
+/obj/item/weapon/storage/fancy/black_candle_box/attackby(obj/item/W, mob/user)
+	..()
+	if(istype(W, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = W
+		OS.scanned_type = src.type
 /*
  * Crayon Box
  */
