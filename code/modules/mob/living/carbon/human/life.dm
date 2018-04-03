@@ -967,7 +967,7 @@
 			var/turf/T = loc
 			light_amount = round((T.get_lumcount()*10)-5)
 
-		if(get_species() == DIONA && !is_damaged_organ(O_LIVER))
+		if(get_species() == DIONA && !is_damaged_organ(O_LIVER)) // Specie may require light, but only plants, with chlorophyllic plasts can produce nutrition out of light!
 			nutrition += light_amount
 
 		if(species.flags[IS_PLANT])
@@ -976,24 +976,8 @@
 				nutrition = 0
 			if(KS && get_species() == DIONA && (nutrition > 500 - KS.damage*5))
 				nutrition = 500 - KS.damage*5
-			if(light_amount >= 3) //if there's enough light, heal
-				adjustBruteLoss(-(light_amount))
-				adjustToxLoss(-(light_amount))
-				adjustOxyLoss(-(light_amount))
 			var/obj/item/organ/external/External
-			if(nutrition > 350 && light_amount >= 4 && prob(75))
-				External = find_damaged_bodypart(External)
-				if(External)
-					nutrition -= 1
-					apply_damages(0,0,1,2,0,0)
-					regen_bodyparts(External, TRUE)
-			if(light_amount >=5)
-				for(var/obj/item/organ/internal/O in organs)
-					if(O.damage)
-						O.damage -= light_amount/10
-						nutrition -= light_amount
-					continue
-					//TODO: heal wounds.
+			species.regen(src, light_amount, External)
 
 	if(dna && dna.mutantrace == "shadow")
 		var/light_amount = 0
