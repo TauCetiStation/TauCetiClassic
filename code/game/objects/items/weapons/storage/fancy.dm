@@ -103,11 +103,41 @@
 	storage_slots = 5
 	throwforce = 2
 	slot_flags = SLOT_BELT
+	var/teleporter_delay = 0
 
 /obj/item/weapon/storage/fancy/black_candle_box/atom_init()
 	. = ..()
 	for (var/i in 1 to storage_slots)
 		new /obj/item/candle/ghost(src)
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/storage/fancy/black_candle_box/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/storage/fancy/black_candle_box/process()
+	for(var/mob/living/M in viewers(3, loc))
+		return
+
+	if(contents.len >= storage_slots) // If it's full, it ain't hungry.
+		return
+
+	for(var/obj/item/candle/ghost/CG in range(3, get_turf(src)))
+		visible_message("<span class='warning'>[src] is nomming on [CG]... This looks oddly creepy.</span>")
+		CG.forceMove(src)
+
+	teleporter_delay--
+	if(teleporter_delay <= 0)
+		var/target = locate(/obj/item/candle/ghost)
+		if(target)
+			loc.visible_message("<span class='warning'>You hear a loud pop, as [src] poofs out of existence.</span>")
+			playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
+			forceMove(get_turf(target))
+			teleporter_delay += rand(500,600)
+			visible_message("<span class='warning'>You hear a loud pop, as [src] poofs into existence.</span>")
+			playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
+			for(var/mob/living/A in viewers(3, loc))
+				A.confused += 10
 
 /obj/item/weapon/storage/fancy/black_candle_box/attackby(obj/item/W, mob/user)
 	..()
