@@ -883,6 +883,7 @@
 	if(istype(I, /obj/item/device/occult_scanner))
 		var/obj/item/device/occult_scanner/OS = I
 		OS.scanned_type = src.type
+		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 	if(istype(I, /obj/item/weapon/ectoplasm))
 		RedeemEctoplasm(I, user)
 		return
@@ -892,7 +893,7 @@
 	if(plasm.in_use)
 		return
 	plasm.in_use = TRUE
-	var/selection = input(redeemer, "Pick your eternal reward", "Ectoplasm Redemption") in list("Misfortune Set", "Spiritual Bond Set", "Contract From Below", "Cryptorecorder", "Black Candle", "Cancel")
+	var/selection = input(redeemer, "Pick your eternal reward", "Ectoplasm Redemption") in list("Misfortune Set", "Spiritual Bond Set", "Contract From Below", "Cryptorecorder", "Black Candle Box", "Cancel")
 	if(!selection || !Adjacent(redeemer))
 		plasm.in_use = FALSE
 		return
@@ -905,8 +906,8 @@
 			new /obj/item/weapon/pen/ghost(loc)
 		if("Cryptorecorder")
 			new /obj/item/device/camera/spooky(loc)
-		if("Black Candle")
-			new /obj/item/candle/ghost(loc)
+		if("Black Candle Box")
+			new /obj/item/weapon/storage/fancy/black_candle_box(loc)
 		if("Cancel")
 			plasm.in_use = FALSE
 			return

@@ -1,3 +1,5 @@
+var/global/list/obj/item/candle/ghost/ghost_candles = list()
+
 /obj/item/candle
 	name = "red candle"
 	desc = "A candle."
@@ -16,28 +18,36 @@
 	item_state = "gcandle"
 	candle_color = "#a2fad1"
 
+/obj/item/candle/ghost/atom_init()
+	. = ..()
+	ghost_candles += src
+
+/obj/item/candle/ghost/Destroy()
+	ghost_candles -= src
+	return ..()
+
 /obj/item/candle/ghost/attack_ghost()
 	if(!lit)
+		src.light("<span class='warning'>\The [name] suddenly lights up.</span>")
 		if(prob(10))
 			spook()
-		light()
 
 /obj/item/candle/proc/light(flavor_text = "<span class='warning'>[usr] lights the [name].</span>")
-	if(!lit)
+	if(!src.lit)
 		lit = TRUE
 		//src.damtype = "fire"
-		for(var/mob/O in viewers(usr, null))
-			O.show_message(flavor_text, 1)
-		set_light(CANDLE_LUM, candle_color)
+		visible_message(flavor_text)
+		set_light(CANDLE_LUM, 1, candle_color)
 		START_PROCESSING(SSobj, src)
 
 /obj/item/candle/ghost/proc/spook()
-	visible_message("<span class='warning bold'>Out of the tip of the flame, a face appears. Horrifying.</span>")
+	visible_message("<span class='warning bold'>Out of the tip of the flame, a face appears.</span>")
 	playsound(get_turf(src), 'sound/effects/screech.ogg', 50, 0)
-	for(var/mob/living/carbon/M in hearers(4, src))
-		M.confused += 10
-		M.make_jittery(150)
-	for(var/obj/machinery/light/L in range(4, src))
+	for(var/mob/living/carbon/M in hearers(4, get_turf(src)))
+		if(!iscultist(M))
+			M.confused += 10
+			M.make_jittery(150)
+	for(var/obj/machinery/light/L in range(4, get_turf(src)))
 		L.on = TRUE
 		L.broken()
 
@@ -75,6 +85,10 @@
 	if(istype(W, /obj/item/device/occult_scanner))
 		var/obj/item/device/occult_scanner/OS = W
 		OS.scanned_type = src.type
+		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
+	if(istype(W, /obj/item/weapon/book/tome))
+		spook()
+		light()
 	if(user.getBrainLoss() >= 60 || user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")
 		if(!lit && istype(W, /obj/item/weapon/storage/bible))
 			var/obj/item/weapon/storage/bible/B = W
@@ -87,12 +101,12 @@
 					M.apply_damages(-1,-1,-1,-1,0,0)
 					light()
 		if(istype(W, /obj/item/weapon/nullrod))
+			var/obj/item/candle/C = new /obj/item/candle(loc)
 			if(lit)
-				var/obj/item/candle/C = new /obj/item/candle(loc)
-				C.lit = TRUE
-			else
-				new /obj/item/candle(loc)
+				C.light()
+			C.wax = wax
 			if(istype(loc, /mob))
+				user.put_in_hands(C)
 				dropped()
 			qdel(src)
 		if(istype(W, /obj/item/trash/candle))
@@ -109,23 +123,20 @@
 		return
 	wax--
 	if(!wax)
-		if(istype(src, /obj/item/trash/candle/ghost))
-			new/obj/item/trash/candle/ghost(src.loc)
+		var/obj/item/candle/C
+		if(istype(src, /obj/item/candle/ghost))
+			C = new /obj/item/trash/candle/ghost(src.loc)
 		else
-			new/obj/item/trash/candle(src.loc)
+			C = new /obj/item/trash/candle(src.loc)
 		if(istype(loc, /mob))
+			var/mob/M = loc
+			M.put_in_hands(C)
 			dropped()
 		qdel(src)
 	update_icon()
 	if(istype(loc, /turf)) //start a fire if possible
 		var/turf/T = loc
 		T.hotspot_expose(700, 5)
-
-/obj/item/candle/ghost/process()
-	..()
-	for(var/mob/living/carbon/M in range(4, src))
-		if(M.dreaming)
-			M.dreaming = 2
 
 /obj/item/candle/attack_self(mob/user)
 	if(lit)

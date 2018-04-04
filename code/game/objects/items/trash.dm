@@ -56,5 +56,15 @@
 /obj/item/trash/candle/ghost
 	icon_state = "gcandle4"
 
+/obj/item/trash/candle/ghost/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
+	..()
+	if(user.getBrainLoss() >= 60 || user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")
+		if(istype(W, /obj/item/weapon/nullrod))
+			var/obj/item/trash/candle/C = new /obj/item/trash/candle(loc)
+			if(istype(loc, /mob))
+				user.put_in_hands(C)
+				dropped()
+			qdel(src)
+
 /obj/item/trash/attack(mob/M, mob/living/user)
 	return

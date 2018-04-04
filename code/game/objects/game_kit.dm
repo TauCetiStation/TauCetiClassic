@@ -97,6 +97,7 @@
 	if(istype(W, /obj/item/device/occult_scanner))
 		var/obj/item/device/occult_scanner/OS = W
 		OS.scanned_type = src.type
+		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 
 /obj/item/weapon/game_kit/interact(mob/user)
 	user.machine = src

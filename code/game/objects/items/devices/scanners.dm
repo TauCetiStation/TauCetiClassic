@@ -392,6 +392,7 @@ REAGENT SCANNER
 	if(istype(W, /obj/item/device/occult_scanner))
 		var/obj/item/device/occult_scanner/OS = W
 		target_type = OS.scanned_type
+		target = null // So we ain't looking for the old target
 		to_chat(user, "<span class='notice'>[src] succesfully extracted [pick("mythical","magical","arcane")] knowledge from [W]</span>")
 
 /obj/item/weapon/occult_pinpointer/Destroy()

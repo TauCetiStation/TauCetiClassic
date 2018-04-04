@@ -1,3 +1,7 @@
+#define IS_DREAMING 1
+#define IS_NIGHTMARE 2
+#define NOT_DREAMING 0
+
 var/list/dreams = list(
 	"an ID card","a bottle","a familiar face","a crewmember","a toolbox","a security officer","the captain",
 	"voices from all around","deep space","a doctor","the engine","a traitor","an ally","darkness",
@@ -22,20 +26,25 @@ var/list/nightmares = list(
 	)
 
 /mob/living/carbon/proc/dream()
-	dreaming = 1
-
-	spawn(0)
-		for(var/i = rand(1,4),i > 0, i--)
-			to_chat(src, "<span class='[dreaming == 2 ? "warning" : "notice"] italics>... [dreaming == 2 ? pick(nightmares) : pick(dreams)] ...</span>")
-			sleep(rand(40,70))
-			if(paralysis <= 0)
-				dreaming = 0
-				return 0
-		dreaming = 0
-		return 1
+	dreaming = IS_DREAMING
+	for(var/obj/item/candle/ghost/CG in range(4, src))
+		dreaming = IS_NIGHTMARE
+	var/i = rand(1,4)
+	while(i)
+		if(dreaming == 2)
+			to_chat(src, "<span class='warning italics'>... [pick(nightmares)] ...</span>")
+		else
+			to_chat(src, "<span class='notice italics'>... [pick(dreams)] ...</span>")
+		sleep(rand(40,70))
+		if(paralysis <= 0)
+			dreaming = NOT_DREAMING
+			return FALSE
+		i--
+	dreaming = 0
+	return TRUE
 
 /mob/living/carbon/proc/handle_dreams()
 	if(client && !dreaming && prob(5))
 		dream()
 
-/mob/living/carbon/var/dreaming = 0
+/mob/living/carbon/var/dreaming = NOT_DREAMING
