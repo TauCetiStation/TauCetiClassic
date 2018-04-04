@@ -453,9 +453,7 @@ Please contact me on #coderbus IRC. ~Carn x
 				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_s", -MUTANTRACE_LAYER)
 
 	if(species.name == SHADOWLING && head)
-		var/image/eyes = image('icons/mob/shadowling.dmi', null, "[dna.mutantrace]_ms_s", LIGHTING_LAYER + 1)
-		eyes.plane = LIGHTING_PLANE + 1
-		standing += eyes
+		standing += shadowling_eyes
 
 	if(!dna || !(dna.mutantrace == "golem"))
 		update_body()

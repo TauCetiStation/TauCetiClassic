@@ -219,18 +219,9 @@
 	if(ishuman(host))
 		var/mob/living/carbon/human/H = host
 		set_EyesVision(H.sightglassesmod)
-		if(H.glasses)
-			if(istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-				var/obj/item/clothing/glasses/sunglasses/sechud/O = H.glasses
-				if(O.hud)
-					O.hud.process_hud(src)
-			else if(istype(H.glasses, /obj/item/clothing/glasses/hud))
-				var/obj/item/clothing/glasses/hud/O = H.glasses
-				O.process_hud(src)
-			else if(istype(H.glasses, /obj/item/clothing/glasses/sunglasses/hud/secmed))
-				var/obj/item/clothing/glasses/sunglasses/hud/secmed/O = H.glasses
-				O.process_hud(src)
-
+		if(istype(H.glasses, /obj/item/clothing/glasses/hud/security))
+			var/obj/item/clothing/glasses/hud/O = H.glasses
+			O.process_hud(src)
 
 		for(var/scr in screens) // screens shit
 			if(!(scr in host.screens))

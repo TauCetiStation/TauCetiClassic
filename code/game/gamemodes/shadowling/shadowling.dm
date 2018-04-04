@@ -159,7 +159,8 @@ Made by Xhuis
 		new_thrall_mind.memory += "<b>The Shadowlings' Objectives:</b> [objective_explanation]"
 		to_chat(new_thrall_mind.current, "<b>The objectives of the shadowlings:</b> [objective_explanation]")
 		H.hud_updateflag |= 1 << SPECIALROLE_HUD
-		H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
+		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind)
+		H.AddSpell(new /obj/effect/proc_holder/spell/targeted/thrall_sight)
 		return 1
 
 

@@ -1280,11 +1280,13 @@
 		else
 			clear_fullscreen("brute")
 
-	if( stat == DEAD )
+	if(stat == DEAD )
 		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = 8
-		if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
-		if(healths)		healths.icon_state = "health7"	//DEAD healthmeter
+		if(!druggy)
+			see_invisible = SEE_INVISIBLE_LEVEL_TWO
+		if(healths)
+			healths.icon_state = "health7"	//DEAD healthmeter
 		if(client)
 			if(client.view != world.view)
 				if(locate(/obj/item/weapon/gun/energy/sniperrifle, contents))
@@ -1295,7 +1297,7 @@
 	else
 		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 		see_in_dark = species.darksight
-		see_invisible = see_in_dark>2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
+		see_invisible = see_in_dark > 2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
 		if(dna)
 			switch(dna.mutantrace)
 				if("slime")
@@ -1308,50 +1310,44 @@
 		if(XRAY in mutations)
 			sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 			see_in_dark = 8
-			if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
+			if(!druggy)
+				see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
 		if(seer)
-			var/obj/effect/rune/R = locate() in loc
-			if(R && istype(R.power, /datum/cult/seer))
-				see_invisible = SEE_INVISIBLE_CULT
+			var/obj/effect/proc_holder/spell/targeted/thrall_sight/T = locate() in mind.spell_list
+			if(T && T.activated)
+				see_invisible = SEE_INVISIBLE_MINIMUM
+				see_in_dark += 2
 			else
-				see_invisible = SEE_INVISIBLE_LIVING
-				seer = FALSE
+				var/obj/effect/rune/R = locate() in loc
+				if(R && istype(R.power, /datum/cult/seer))
+					see_invisible = SEE_INVISIBLE_CULT
+				else
+					see_invisible = SEE_INVISIBLE_LIVING
+					seer = FALSE
 
 		if(glasses)
 			var/obj/item/clothing/glasses/G = glasses
 			if(istype(G))
 				see_in_dark += G.darkness_view
-				if(G.vision_flags)		// MESONS
+				if(G.vision_flags)
 					sight |= G.vision_flags
 					if(!druggy)
 						see_invisible = SEE_INVISIBLE_MINIMUM
-			if(istype(G,/obj/item/clothing/glasses/night/shadowling))
-				var/obj/item/clothing/glasses/night/shadowling/S = G
-				if(S.vision)
-					see_invisible = SEE_INVISIBLE_LIVING
-				else
-					see_invisible = SEE_INVISIBLE_MINIMUM
+				if(istype(G,/obj/item/clothing/glasses/night/shadowling))
+					var/obj/item/clothing/glasses/night/shadowling/S = G
+					if(S.vision)
+						see_invisible = SEE_INVISIBLE_LIVING
+					else
+						see_invisible = SEE_INVISIBLE_MINIMUM
 
 /* HUD shit goes here, as long as it doesn't modify sight flags */
 // The purpose of this is to stop xray and w/e from preventing you from using huds -- Love, Doohl
-
-			if(istype(glasses, /obj/item/clothing/glasses/sunglasses/sechud))
-				var/obj/item/clothing/glasses/sunglasses/sechud/O = glasses
-				if(O.hud)
-					O.hud.process_hud(src)
-				if(!druggy)
-					see_invisible = SEE_INVISIBLE_LIVING
-			else if(istype(glasses, /obj/item/clothing/glasses/hud))
-				var/obj/item/clothing/glasses/hud/O = glasses
-				O.process_hud(src)
-				if(!druggy)
-					see_invisible = SEE_INVISIBLE_LIVING
-			else if(istype(glasses, /obj/item/clothing/glasses/sunglasses/hud/secmed))
-				var/obj/item/clothing/glasses/sunglasses/hud/secmed/O = glasses
-				O.process_hud(src)
-				if(!druggy)
-					see_invisible = SEE_INVISIBLE_LIVING
+				if(istype(glasses, /obj/item/clothing/glasses/hud))
+					var/obj/item/clothing/glasses/hud/O = glasses
+					O.process_hud(src)
+					if(!druggy)
+						see_invisible = SEE_INVISIBLE_LIVING
 
 		else if(!seer)
 			see_invisible = SEE_INVISIBLE_LIVING

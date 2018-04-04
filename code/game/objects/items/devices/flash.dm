@@ -66,7 +66,8 @@
 	var/flashfail = 0
 
 	if(iscarbon(M))
-		var/safety = M:eyecheck()
+		var/mob/living/carbon/C = M
+		var/safety = C.eyecheck()
 		if(safety <= 0)
 			M.Weaken(10)
 			M.flash_eyes()
@@ -162,10 +163,9 @@
 			qdel(animation)
 
 	for(var/mob/living/carbon/M in oviewers(3, null))
-		var/safety = M:eyecheck()
-		if(!safety)
-			if(!M.blinded)
-				M.flash_eyes()
+		var/safety = M.eyecheck()
+		if(safety <= 0 && !M.blinded)
+			M.flash_eyes()
 
 	return
 
