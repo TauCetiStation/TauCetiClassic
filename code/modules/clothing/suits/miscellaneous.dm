@@ -610,9 +610,3 @@
 	icon_state = "syndieshirt"
 	item_state = "syndieshirt"
 	body_parts_covered = UPPER_TORSO|ARMS
-
-/obj/item/clothing/suit/furcoat
-    name = "fur coat"
-    desc = "A coat made of endangered species fur"
-    icon_state = "furcoat"
-    item_state = "furcoat"
