@@ -1,5 +1,5 @@
 //not a computer
-obj/machinery/scanner
+/obj/machinery/scanner
 	name = "Identity Analyser"
 	var/outputdir = 0
 	icon = 'icons/obj/stationobjs.dmi'
@@ -8,7 +8,8 @@ obj/machinery/scanner
 	anchored = 1
 	var/lastuser = null
 
-obj/machinery/scanner/New()
+/obj/machinery/scanner/atom_init()
+	. = ..()
 	if(!outputdir)
 		switch(dir)
 			if(1)
@@ -36,11 +37,12 @@ obj/machinery/scanner/New()
 		icon_state = "scanner_idle"
 		stat &= ~NOPOWER
 
-obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
-	if(stat & NOPOWER)
+/obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
+	. = ..()
+	if(.)
 		return
 	if(!ishuman(user) || lastuser == user.real_name)
-		return
+		return 1
 	use_power(500)
 	flick("scanner_on",src)
 	lastuser = user.real_name
@@ -60,23 +62,22 @@ obj/machinery/scanner/attack_hand(mob/living/carbon/human/user)
 			marks += row["rank"]
 	*/
 	var/text = {"
-	<font size=4><center>Report</center></font><br>
-	<b><u>Name</u></b>: [mname]
-	<b><u>Age</u></b>: [age]
-	<b><u>Sex</u></b>: [gender]
-	<b><u>DNA</u></b>: [dna]
-	<b><u>Blood Type</u></b>: [bloodtype]
-	<b><u>Fingerprint</u></b>: [fingerprint]
+		<font size=4><center>Report</center></font><br>
+		<b><u>Name</u></b>: [mname]
+		<b><u>Age</u></b>: [age]
+		<b><u>Sex</u></b>: [gender]
+		<b><u>DNA</u></b>: [dna]
+		<b><u>Blood Type</u></b>: [bloodtype]
+		<b><u>Fingerprint</u></b>: [fingerprint]
 
-	<b><u>Black Marks</u></b>:<br> "}
+		<b><u>Black Marks</u></b>:<br> "}
 	for(var/A in marks)
 		text += "\red[A]<br>"
-	to_chat(user, "\blue You feel a sting as the scanner extracts some of your blood.")
+	to_chat(user, "<span class='notice'>You feel a sting as the scanner extracts some of your blood.</span>")
 	var/turf/T = get_step(src,outputdir)
 	var/obj/item/weapon/paper/print = new(T)
 	print.name = "[mname] Report"
 	print.info = text
-	print.stamped = 1
 
 	for(var/datum/data/record/test in data_core.general)
 		if (test.fields["name"] == mname)

@@ -65,6 +65,10 @@
 		..()
 
 /obj/machinery/mill/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
 		F.loc = src.loc
 		output -= F
@@ -135,6 +139,10 @@
 		..()
 
 /obj/machinery/fermenter/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
 		F.loc = src.loc
 		output -= F
@@ -196,6 +204,10 @@
 		..()
 
 /obj/machinery/still/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
 		F.loc = src.loc
 		output -= F
@@ -281,6 +293,10 @@
 		..()
 
 /obj/machinery/centrifuge/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	for(var/obj/item/weapon/reagent_containers/food/F in output)
 		F.loc = src.loc
 		output -= F

@@ -5,9 +5,9 @@
 /obj/item/weapon/reagent_containers/glass/replenishing
 	var/spawning_id
 
-/obj/item/weapon/reagent_containers/glass/replenishing/New()
-	..()
-	SSobj.processing |= src
+/obj/item/weapon/reagent_containers/glass/replenishing/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 	spawning_id = pick("blood","holywater","lube","stoxin","ethanol","ice","glycerol","fuel","cleaner")
 
 /obj/item/weapon/reagent_containers/glass/replenishing/process()
@@ -21,8 +21,9 @@
 	var/last_twitch = 0
 	var/max_stored_messages = 100
 
-/obj/item/clothing/mask/gas/poltergeist/New()
-	SSobj.processing |= src
+/obj/item/clothing/mask/gas/poltergeist/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/mask/gas/poltergeist/process()
 	if(heard_talk.len && istype(src.loc, /mob/living) && prob(10))
@@ -54,9 +55,9 @@
 	var/wight_check_index = 1
 	var/list/shadow_wights = list()
 
-/obj/item/weapon/vampiric/New()
-	..()
-	SSobj.processing |= src
+/obj/item/weapon/vampiric/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/vampiric/process()
 	//see if we've identified anyone nearby
@@ -127,7 +128,7 @@
 		playsound(src.loc, pick('sound/hallucinations/wail.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/far_noise.ogg'), 50, 1, -3)
 		nearby_mobs.Add(M)
 
-		var/target = pick("chest","groin","head","l_arm","r_arm","r_leg","l_leg","l_hand","r_hand","l_foot","r_foot")
+		var/target = pick(BP_CHEST , BP_GROIN , BP_HEAD , BP_L_ARM , BP_R_ARM , BP_R_LEG , BP_L_LEG)
 		M.apply_damage(rand(5, 10), BRUTE, target)
 		to_chat(M, "\red The skin on your [parse_zone(target)] feels like it's ripping apart, and a stream of blood flies out.")
 		var/obj/effect/decal/cleanable/blood/splatter/animated/B = new(M.loc)
@@ -141,10 +142,10 @@
 	var/turf/target_turf
 	var/loc_last_process
 
-/obj/effect/decal/cleanable/blood/splatter/animated/New()
-	..()
-	SSobj.processing |= src
-	loc_last_process = src.loc
+/obj/effect/decal/cleanable/blood/splatter/animated/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+	loc_last_process = loc
 
 /obj/effect/decal/cleanable/blood/splatter/animated/process()
 	if(target_turf && src.loc != target_turf)
@@ -172,8 +173,9 @@
 	icon_state = "shade"
 	density = 1
 
-/obj/effect/shadow_wight/New()
-	SSobj.processing |= src
+/obj/effect/shadow_wight/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/shadow_wight/process()
 	if(src.loc)
@@ -197,7 +199,7 @@
 			M.sleeping = max(M.sleeping,rand(5,10))
 			src.loc = null
 	else
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 /obj/effect/shadow_wight/Bump(var/atom/obstacle)
 	to_chat(obstacle, "\red You feel a chill run down your spine!")

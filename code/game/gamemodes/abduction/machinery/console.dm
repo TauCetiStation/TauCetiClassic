@@ -4,18 +4,18 @@
 
 /obj/machinery/abductor/proc/IsAbductor(mob/living/carbon/human/H)
 	if(!H.species)
-		return 0
-	return H.species.name == "Abductor"
+		return FALSE
+	return H.species.name == ABDUCTOR
 
 /obj/machinery/abductor/proc/IsAgent(mob/living/carbon/human/H)
-	if(H.species.name == "Abductor")
+	if(H.species.name == ABDUCTOR)
 		return H.agent
-	return 0
+	return FALSE
 
 /obj/machinery/abductor/proc/IsScientist(mob/living/carbon/human/H)
-	if(H.species.name == "Abductor")
+	if(H.species.name == ABDUCTOR)
 		return H.scientist
-	return 0
+	return FALSE
 
 //*************-Console-*************//
 
@@ -24,14 +24,14 @@
 	desc = "Ship command center."
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "console"
-	density = 1
+	density = TRUE
 	anchored = 1.0
 	var/obj/item/device/abductor/gizmo/gizmo
 	var/obj/item/clothing/suit/armor/abductor/vest/vest
 	var/obj/machinery/abductor/experiment/experiment
 	var/obj/machinery/abductor/pad/pad
 	var/list/datum/icon_snapshot/disguises = list()
-	var/show_price_list = 0
+	var/show_price_list = FALSE
 	var/list/price_list = list(
 							"heal injector" =4,
 							"decloner"		=3,
@@ -40,15 +40,17 @@
 							"agent helmet" 	=1,
 							"radio silencer"=1)
 
-/obj/machinery/abductor/console/attack_hand(mob/user)
-	if(..())
-		return
-	if(!IsAbductor(user))
+/obj/machinery/abductor/console/interact(mob/user)
+	if(!IsAbductor(user) && !isAI(user) && !isobserver(user))
+		if(user.is_busy())
+			return
 		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
-		if(do_after(user,100,target = src))
+		if(do_after(user, 100, target = src))
 			TeleporterSend()
-		return
-	user.set_machine(src)
+	else
+		..()
+
+/obj/machinery/abductor/console/ui_interact(mob/user)
 	var/dat = ""
 	dat += "<H2> Abductsoft 3000 </H2>"
 
@@ -68,19 +70,19 @@
 	else
 		dat += "<span class='bad'>NO EXPERIMENT MACHINE DETECTED</span> <br>"
 
-	if(pad!=null)
+	if(pad)
 		dat += "<H4> Teleport control</H4>"
 		dat += "<a href='?src=\ref[src];teleporter_send=1'>Activate Teleporter</A><br>"
 		dat += "<a href='?src=\ref[src];teleporter_set=1'>Set Teleporter</A><br>"
 		dat += "<font color = #7E8D9F><b>Set to: </b></font>[pad.teleport_target ? "[copytext("[pad.target_name]",3)]" : "Nothing"]<br>"
-		if(gizmo!=null && gizmo.marked!=null)
+		if(gizmo && gizmo.marked)
 			dat += "<a href='?src=\ref[src];teleporter_retrieve=1'>Retrieve Mark</A><br>"
 		else
 			dat += "<span class='linkOff'>Retrieve Mark</span><br>"
 	else
 		dat += "<span class='bad'>NO TELEPAD DETECTED</span></br>"
 
-	if(vest!=null)
+	if(vest)
 		dat += "<h4> Agent Vest Mode</h4>"
 		var/mode = vest.mode
 		if(mode == VEST_STEALTH)
@@ -95,11 +97,11 @@
 		dat += "<font color = #7E8D9F><b>Selected: </b></font>[vest.disguise ? "[vest.disguise.name]" : "Nobody"]"
 	else
 		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
+
 	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500)
 	popup.set_content(dat)
-	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
+	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-	return
 
 /obj/machinery/abductor/console/Topic(href, href_list)
 	. = ..()
@@ -131,7 +133,7 @@
 				Dispense(/obj/item/device/abductor/gizmo)
 	else if(href_list["show_prices"])
 		show_price_list = !show_price_list
-	src.updateUsrDialog()
+	updateUsrDialog()
 
 /obj/machinery/abductor/console/proc/get_price_list()
 	var/dat = "<table border='0' width='300'>"
@@ -144,25 +146,21 @@
 /obj/machinery/abductor/console/proc/TeleporterSet()
 	var/A = null
 	A = input("Select area to teleport to", "Teleport", A) in teleportlocs
-	if(pad!=null)
+	if(pad)
 		pad.teleport_target = teleportlocs[A]
 		pad.target_name = pad.teleport_target.name
-	return
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
-	if(gizmo!=null && pad!=null && gizmo.marked)
+	if(gizmo && pad && gizmo.marked)
 		pad.Retrieve(gizmo.marked)
-	return
 
 /obj/machinery/abductor/console/proc/TeleporterSend()
-	if(pad!=null)
+	if(pad)
 		pad.Send()
-	return
 
 /obj/machinery/abductor/console/proc/FlipVest()
-	if(vest!=null)
+	if(vest)
 		vest.flip_mode()
-	return
 
 /obj/machinery/abductor/console/proc/SelectDisguise()
 	var/list/entries = list()
@@ -176,10 +174,8 @@
 	var/datum/icon_snapshot/chosen = entries[entry_name]
 	if(chosen)
 		vest.SetDisguise(chosen)
-	return
 
 /obj/machinery/abductor/console/proc/Initialize()
-
 	for(var/obj/machinery/abductor/pad/p in machines)
 		if(p.team == team)
 			pad = p
@@ -220,13 +216,12 @@
 
 /obj/machinery/abductor/console/proc/Dispense(item,cost=1)
 	if(experiment && experiment.points >= cost)
-		experiment.points-=cost
-		src.visible_message("Incoming supply!")
+		experiment.points -= cost
+		visible_message("Incoming supply!")
 		if(pad)
 			flick("alien-pad", pad)
 			new item(pad.loc)
 		else
-			new item(src.loc)
+			new item(loc)
 	else
-		src.visible_message("Insufficent data!")
-	return
+		visible_message("Insufficent data!")

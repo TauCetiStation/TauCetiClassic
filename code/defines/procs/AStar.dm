@@ -1,191 +1,191 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
+/**
+ * A Star pathfinding algorithm
+ *
+ * Returns a list of tiles forming a path from A to B, taking dense objects as well as walls, and the orientation of
+ * windows along the route into account.
+ *
+ * Use:
+ * > your_list = AStar(start location, end location, moving atom, distance proc, max nodes, maximum node depth, minimum distance to target, adjacent proc, atom id, turfs to exclude, check only simulated)
+ *
+ * Optional extras to add on (in order):
+ * - Distance proc : the distance used in every A* calculation (length of path and heuristic)
+ * - MaxNodes: The maximum number of nodes the returned path can be (0 = infinite)
+ * - Maxnodedepth: The maximum number of nodes to search (default: 30, 0 = infinite)
+ * - Mintargetdist: Minimum distance to the target before path returns, could be used to get
+ *   near a target, but not right to it - for an AI mob with a gun, for example.
+ * - Adjacent proc : returns the turfs to consider around the actually processed node
+ * - Simulated only : whether to consider unsimulated turfs or not (used by some Adjacent proc)
+ *
+ * Also added 'exclude' turf to avoid travelling over; defaults to null
+ *
+ * Actual Adjacent procs :
+ * - /turf/proc/reachableAdjacentTurfs : returns reachable turfs in cardinal directions (uses simulated_only)
+ */
 
-/*
-A Star pathfinding algorithm
-Returns a list of tiles forming a path from A to B, taking dense objects as well as walls, and the orientation of
-windows along the route into account.
-Use:
-your_list = AStar(start location, end location, adjacent turf proc, distance proc)
-For the adjacent turf proc i wrote:
-/turf/proc/AdjacentTurfs
-And for the distance one i wrote:
-/turf/proc/Distance
-So an example use might be:
+/////////////////
+//PathNode object
+/////////////////
 
-src.path_list = AStar(src.loc, target.loc, /turf/proc/AdjacentTurfs, /turf/proc/Distance)
+/PathNode
+	var/turf/source       // Turf associated with the PathNode
+	var/PathNode/prevNode // Link to the parent PathNode
 
-Note: The path is returned starting at the END node, so i wrote reverselist to reverse it for ease of use.
+	var/f    // A* Node weight (f = g + h)
+	var/g    // A* movement cost variable
+	var/h    // A* heuristic variable
+	var/nt   // Count the number of Nodes traversed
 
-src.path_list = reverselist(src.pathlist)
+/PathNode/New(source, prevNode, g, h, nt)
+	src.source = source
+	src.prevNode = prevNode
 
-Then to start on the path, all you need to do it:
-Step_to(src, src.path_list[1])
-src.path_list -= src.path_list[1] or equivilent to remove that node from the list.
+	src.f = g + h
+	src.g = g
+	src.h = h
+	src.nt = nt
 
-Optional extras to add on (in order):
-MaxNodes: The maximum number of nodes the returned path can be (0 = infinite)
-Maxnodedepth: The maximum number of nodes to search (default: 30, 0 = infinite)
-Mintargetdist: Minimum distance to the target before path returns, could be used to get
-near a target, but not right to it - for an AI mob with a gun, for example.
-Minnodedist: Minimum number of nodes to return in the path, could be used to give a path a minimum
-length to avoid portals or something i guess?? Not that they're counted right now but w/e.
-*/
+/PathNode/proc/calc_f()
+	f = g + h
 
-// Modified to provide ID argument - supplied to 'adjacent' proc, defaults to null
-// Used for checking if route exists through a door which can be opened
+//////////
+//A* procs
+//////////
 
-// Also added 'exclude' turf to avoid travelling over; defaults to null
-
-
-/PriorityQueue
-	var/L[]
-	var/cmp
-
-/PriorityQueue/New(compare)
-	L = new()
-	cmp = compare
-
-/PriorityQueue/proc/IsEmpty()
-	return !L.len
-
-/PriorityQueue/proc/Enqueue(d)
-	var/i
-	var/j
-	L.Add(d)
-	i = L.len
-	j = i>>1
-	while(i > 1 &&  call(cmp)(L[j],L[i]) > 0)
-		L.Swap(i,j)
-		i = j
-		j >>= 1
-
-/PriorityQueue/proc/Dequeue()
-	if(!L.len) return 0
-	. = L[1]
-	Remove(1)
-
-/PriorityQueue/proc/Remove(i)
-	if(i > L.len) return 0
-	L.Swap(i,L.len)
-	L.Cut(L.len)
-	if(i < L.len)
-		_Fix(i)
-
-/PriorityQueue/proc/_Fix(i)
-	var/child = i + i
-	var/item = L[i]
-	while(child <= L.len)
-		if(child + 1 <= L.len && call(cmp)(L[child],L[child + 1]) > 0)
-			child++
-		if(call(cmp)(item,L[child]) > 0)
-			L[i] = L[child]
-			i = child
-		else
-			break
-		child = i + i
-	L[i] = item
-
-/PriorityQueue/proc/List()
-	var/ret[] = new()
-	var/copy = L.Copy()
-	while(!IsEmpty())
-		ret.Add(Dequeue())
-	L = copy
-	return ret
-
-/PriorityQueue/proc/RemoveItem(i)
-	var/ind = L.Find(i)
-	if(ind)
-		Remove(ind)
-
-PathNode
-	var/datum/source
-	var/PathNode/prevNode
-	var/f
-	var/g
-	var/h
-	var/nt		// Nodes traversed
-	New(s,p,pg,ph,pnt)
-		source = s
-		prevNode = p
-		g = pg
-		h = ph
-		f = g + h
-		source.bestF = f
-		nt = pnt
-
-/datum
-	var/bestF
-
+/**
+ * The weighting function, used in the A* algorithm
+ */
 /proc/PathWeightCompare(PathNode/a, PathNode/b)
 	return a.f - b.f
 
-/proc/AStar(start,end,adjacent,dist,maxnodes,maxnodedepth = 30,mintargetdist,minnodedist,id=null, turf/exclude=null)
+/**
+ * Reversed so that the Heap is a MinHeap rather than a MaxHeap
+ */
+/proc/HeapPathWeightCompare(PathNode/a, PathNode/b)
+	return b.f - a.f
 
-//	world << "A*: [start] [end] [adjacent] [dist] [maxnodes] [maxnodedepth] [mintargetdist], [minnodedist] [id]"
-	var/PriorityQueue/open = new /PriorityQueue(/proc/PathWeightCompare)
-	var/closed[] = new()
-	var/path[]
-	start = get_turf(start)
-	if(!start) return 0
+/**
+ * Wrapper that returns an empty list if A* failed to find a path
+ */
+/proc/get_path_to(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+	var/list/path = AStar(caller, end, dist, maxnodes, maxnodedepth, mintargetdist, adjacent,id, exclude, simulated_only)
+	if(!path)
+		path = list()
+	return path
 
-	open.Enqueue(new /PathNode(start,null,0,call(start,dist)(end)))
+/**
+ * The actual A* algorithm
+ */
+/proc/AStar(caller, end, dist, maxnodes, maxnodedepth = 30, mintargetdist, adjacent = /turf/proc/reachableAdjacentTurfs, id=null, turf/exclude=null, simulated_only = 1)
+	var/list/pnodelist = list()
 
+	// Sanitation
+	var/start = get_turf(caller)
+	if(!start)
+		CRASH("Unable to get turf from caller")
+
+	if(maxnodes)
+		// If start turf is farther than maxnodes from end turf, no need to do anything
+		if(call(start, dist)(end) > maxnodes)
+			return
+
+		maxnodedepth = maxnodes  // No need to consider path longer than maxnodes
+
+	var/Heap/open = new /Heap(/proc/HeapPathWeightCompare)  // The open list
+	var/list/closed = list()                                // The closed list
+
+	var/list/path = null  // The returned path, if any
+	var/PathNode/cur      // Current processed turf
+
+	// Initialization
+	open.Insert(new /PathNode(start,null,0,call(start,dist)(end),0))
+
+	// Then run the main loop
 	while(!open.IsEmpty() && !path)
-	{
-		var/PathNode/cur = open.Dequeue()
-		closed.Add(cur.source)
+		cur = open.Pop()      // Get the lower f turf in the open list
+		closed += cur.source  // And tell we've processed it
 
+		// If we only want to get near the target, check if we're close enough
 		var/closeenough
 		if(mintargetdist)
 			closeenough = call(cur.source,dist)(end) <= mintargetdist
 
+		// If too many steps, abandon that path
+		if(maxnodedepth && (cur.nt > maxnodedepth))
+			continue
+
+		// Found the target turf (or close enough), let's create the path to it
 		if(cur.source == end || closeenough)
-			path = new()
-			path.Add(cur.source)
+			path = list()
+			path += cur.source
+
 			while(cur.prevNode)
 				cur = cur.prevNode
-				path.Add(cur.source)
+				path += cur.source
+
 			break
 
-		var/L[] = call(cur.source,adjacent)(id)
-		if(minnodedist && maxnodedepth)
-			if(call(cur.source,minnodedist)(end) + cur.nt >= maxnodedepth)
-				continue
-		else if(maxnodedepth)
-			if(cur.nt >= maxnodedepth)
+		// Get adjacents turfs using the adjacent proc, checking for access with id
+		var/list/L = call(cur.source,adjacent)(caller,id, simulated_only)
+		for(var/turf/T in L)
+			if(T == exclude || (T in closed))
 				continue
 
-		for(var/datum/d in L)
-			if(d == exclude)
-				continue
-			var/ng = cur.g + call(cur.source,dist)(d)
-			if(d.bestF)
-				if(ng + call(d,dist)(end) < d.bestF)
-					for(var/i = 1; i <= open.L.len; i++)
-						var/PathNode/n = open.L[i]
-						if(n.source == d)
-							open.Remove(i)
-							break
-				else
-					continue
+			var/newg = cur.g + call(cur.source,dist)(T)
 
-			open.Enqueue(new /PathNode(d,cur,ng,call(d,dist)(end),cur.nt+1))
-			if(maxnodes && open.L.len > maxnodes)
-				open.L.Cut(open.L.len)
-	}
+			var/PathNode/P = pnodelist[T]
+			if(!P)
+				// Is not already in open list, so add it
+				var/PathNode/newnode = new /PathNode(T,cur,newg,call(T,dist)(end),cur.nt+1)
+				open.Insert(newnode)
+				pnodelist[T] = newnode
+			else
+				// Is already in open list, check if it's a better way from the current turf
+				if(newg < P.g)
+					P.prevNode = cur
+					P.g = (newg * L.len / 9)
+					P.calc_f()
+					P.nt = cur.nt + 1
+					open.ReSort(P)  // Reorder the changed element in the list
+		CHECK_TICK
 
-	var/PathNode/temp
-	while(!open.IsEmpty())
-		temp = open.Dequeue()
-		temp.source.bestF = 0
-	while(closed.len)
-		temp = closed[closed.len]
-		temp.bestF = 0
-		closed.Cut(closed.len)
 
+	// Cleaning after us
+	pnodelist = null
+
+	// Reverse the path to get it from start to finish
 	if(path)
-		for(var/i = 1; i <= path.len/2; i++)
-			path.Swap(i,path.len-i+1)
+		for(var/i in 1 to (path.len / 2))
+			path.Swap(i, path.len - i + 1)
 
 	return path
+
+/**
+ * Returns adjacent turfs in cardinal directions that are reachable
+ * `simulated_only` controls whether only simulated turfs are considered or not
+ */
+/turf/proc/reachableAdjacentTurfs(caller, ID, simulated_only)
+	var/list/L = list()
+
+	for(var/dir in cardinal)
+		var/turf/T = get_step(src, dir)
+
+		if(simulated_only && !istype(T))
+			continue
+
+		if(!T.density && !LinkBlockedWithAccess(T, caller, ID))
+			L += T
+	return L
+
+/turf/proc/LinkBlockedWithAccess(turf/T, caller, ID)
+	var/adir = get_dir(src, T)
+	var/rdir = get_dir(T, src)
+
+	for(var/obj/structure/window/W in src)
+		if(!W.CanAStarPass(ID, adir))
+			return TRUE
+
+	for(var/obj/O in T)
+		if(!O.CanAStarPass(ID, rdir, caller))
+			return TRUE
+
+	return FALSE

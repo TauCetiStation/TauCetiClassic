@@ -29,10 +29,11 @@
 	icon_state = "waterballoon-e"
 	item_state = "balloon-empty"
 
-/obj/item/toy/balloon/New()
+/obj/item/toy/balloon/atom_init()
 	var/datum/reagents/R = new/datum/reagents(10)
 	reagents = R
 	R.my_atom = src
+	. = ..()
 
 /obj/item/toy/balloon/attack(mob/living/carbon/human/M, mob/user)
 	return
@@ -427,29 +428,26 @@
 	item_state = "sunflower"
 	var/empty = 0
 
-/obj/item/toy/waterflower/New()
+/obj/item/toy/waterflower/atom_init()
 	var/datum/reagents/R = new/datum/reagents(10)
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("water", 10)
+	. = ..()
 
 /obj/item/toy/waterflower/attack(mob/living/carbon/human/M, mob/user)
 	return
 
 /obj/item/toy/waterflower/afterattack(atom/A, mob/user)
-
-	if (istype(A, /obj/item/weapon/storage/backpack ))
+	if(locate(/obj/structure/table, loc))
 		return
 
-	else if (locate (/obj/structure/table, src.loc))
-		return
-
-	else if (istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
+	else if(istype(A, /obj/structure/reagent_dispensers/watertank) && get_dist(src,A) <= 1)
 		A.reagents.trans_to(src, 10)
 		to_chat(user, "\blue You refill your flower!")
 		return
 
-	else if (src.reagents.total_volume < 1)
+	else if(src.reagents.total_volume < 1)
 		src.empty = 1
 		to_chat(user, "\blue Your flower has run dry!")
 		return
@@ -619,8 +617,9 @@
 	var/cooldown = 0
 	var/toysay = "What the fuck did you do?"
 
-/obj/item/toy/figure/New()
-    desc = "A \"Space Life\" brand [src]."
+/obj/item/toy/figure/atom_init()
+	. = ..()
+	desc = "A \"Space Life\" brand [src]."
 
 /obj/item/toy/figure/attack_self(mob/user)
 	if(cooldown <= world.time)
@@ -929,9 +928,9 @@ Owl & Griffin toys
 	w_class = 2.0
 	var/list/cards = list()
 
-/obj/item/toy/cards/New()
-	..()
-	for(var/i = 2; i <= 10; i++)
+/obj/item/toy/cards/atom_init()
+	. = ..()
+	for (var/i in 2 to 10)
 		cards += "[i] of Hearts"
 		cards += "[i] of Spades"
 		cards += "[i] of Clubs"
@@ -977,6 +976,7 @@ Owl & Griffin toys
 
 /obj/item/toy/cards/attack_self(mob/user)
 	cards = shuffle(cards)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(user, 'sound/items/cardshuffle.ogg', 50, 1)
 	user.visible_message("<span class='notice'>[user] shuffles the deck.</span>", "<span class='notice'>You shuffle the deck.</span>")
 

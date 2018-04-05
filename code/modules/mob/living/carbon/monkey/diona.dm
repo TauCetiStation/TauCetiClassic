@@ -8,8 +8,19 @@
 	voice_name = "diona nymph"
 	speak_emote = list("chirrups")
 	icon_state = "nymph1"
+	hazard_low_pressure = DIONA_HAZARD_LOW_PRESSURE
+	blood_color = "#004400"
 	var/list/donors = list()
 	var/ready_evolve = 0
+	var/mob/living/carbon/human/gestalt = null
+	var/allowedinjecting = list("nutriment",
+                                "ryetalyn",
+                                "kelotane",
+                                "hyronalin",
+                                "alkysine",
+                                "imidazoline"
+                               )
+	var/datum/reagent/injecting = null
 	universal_understand = 0 // Dionaea do not need to speak to people
 	universal_speak = 0      // before becoming an adult. Use *chirp.
 	holder_type = /obj/item/weapon/holder/diona
@@ -17,86 +28,147 @@
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
 
 	//Let people pick the little buggers up.
-	if(M.a_intent == "help")
-		if(M.species && M.species.name == "Diona")
-			to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
-			to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
-			src.verbs += /mob/living/carbon/monkey/diona/proc/split
-			src.verbs -= /mob/living/carbon/monkey/diona/proc/merge
-			src.loc = M
-
+	if(M.a_intent == "grab")
+		if(M.species && M.species.name == DIONA)
+			visible_message("<span class='notice'>[M] starts to merge [src] into themselves.</span>","<span class='notice'>You start merging [src] into you.</span>")
+			if(M.is_busy() || !do_after(M, 40, target = src))
+				return
+			merging(M)
+			return
 	..()
 
-/mob/living/carbon/monkey/diona/New()
-
-	..()
+/mob/living/carbon/monkey/diona/atom_init()
+	. = ..()
 	gender = NEUTER
 	dna.mutantrace = "plant"
-	greaterform = "Diona"
+	greaterform = DIONA
 	add_language("Rootspeak")
-	src.verbs += /mob/living/carbon/monkey/diona/proc/merge
 
+/mob/living/carbon/monkey/diona/proc/merging(mob/living/carbon/human/M)
+	var/count = 0
+	for(var/mob/living/carbon/monkey/diona in M)
+		count++
+	if(count >= 3)
+		visible_message(src, "<span class='notice'>[M]'s body seems to repel [src], as it attempts to twine with it's being.</span>")
+		return
+	to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
+	M.status_flags |= PASSEMOTES
+	to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
+	forceMove(M)
+	gestalt = M
+
+/mob/living/carbon/monkey/diona/proc/splitting(mob/living/carbon/human/M)
+	to_chat(src.loc, "You feel a pang of loss as [src] splits away from your biomass.")
+	to_chat(src, "You wiggle out of the depths of [M]'s biomass and plop to the ground.")
+	gestalt = null
+	forceMove(get_turf(src))
+	M.remove_passemotes_flag()
 //Verbs after this point.
 
-/mob/living/carbon/monkey/diona/proc/merge()
+/mob/living/carbon/monkey/diona/verb/merge()
 
 	set category = "Diona"
 	set name = "Merge with gestalt"
 	set desc = "Merge with another diona."
 
-	if(istype(src.loc,/mob/living/carbon))
-		src.verbs -= /mob/living/carbon/monkey/diona/proc/merge
+	if(gestalt)
+		return
+
+	if(incapacitated())
+		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
 		return
 
 	var/list/choices = list()
-	for(var/mob/living/carbon/C in view(1,src))
-
-		if(!(src.Adjacent(C)) || !(C.client)) continue
-
-		if(istype(C,/mob/living/carbon/human))
-			var/mob/living/carbon/human/D = C
-			if(D.species && D.species.name == "Diona")
-				choices += C
-
-	var/mob/living/M = input(src,"Who do you wish to merge with?") in null|choices
-
-	if(!M || !src || !(src.Adjacent(M))) return
-
-	if(istype(M,/mob/living/carbon/human))
-		to_chat(M, "You feel your being twine with that of [src] as it merges with your biomass.")
-		M.status_flags |= PASSEMOTES
-
-		to_chat(src, "You feel your being twine with that of [M] as you merge with its biomass.")
-		src.loc = M
-		src.verbs += /mob/living/carbon/monkey/diona/proc/split
-		src.verbs -= /mob/living/carbon/monkey/diona/proc/merge
-	else
+	for(var/mob/living/carbon/human/C in view(1,src))
+		if(C.get_species() == DIONA)
+			choices += C
+	var/mob/living/carbon/human/M = input(src,"Who do you wish to merge with?") in null|choices
+	if(!M || !src || !(src.Adjacent(M)))
 		return
+	if(is_busy() || !do_after(src, 40, target = M))
+		return
+	merging(M)
 
-/mob/living/carbon/monkey/diona/proc/split()
+/mob/living/carbon/monkey/diona/verb/split()
 
 	set category = "Diona"
 	set name = "Split from gestalt"
 	set desc = "Split away from your gestalt as a lone nymph."
 
-	if(!(istype(src.loc,/mob/living/carbon)))
-		src.verbs -= /mob/living/carbon/monkey/diona/proc/split
+	if(!gestalt)
 		return
 
-	to_chat(src.loc, "You feel a pang of loss as [src] splits away from your biomass.")
-	to_chat(src, "You wiggle out of the depths of [src.loc]'s biomass and plop to the ground.")
+	if(incapacitated())
+		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
+		return
+	splitting(gestalt)
 
-	var/mob/living/M = src.loc
+/mob/living/carbon/monkey/diona/verb/pass_knowledge()
 
-	src.loc = get_turf(src)
-	src.verbs -= /mob/living/carbon/monkey/diona/proc/split
-	src.verbs += /mob/living/carbon/monkey/diona/proc/merge
+	set category = "Diona"
+	set name = "Pass Knowledge"
+	set desc = "Teach the gestalt your own known languages."
 
-	if(istype(M))
-		for(var/atom/A in M.contents)
-			if(istype(A,/mob/living/simple_animal/borer) || istype(A,/obj/item/weapon/holder))
+	if(!gestalt)
+		return
+
+	if(gestalt.incapacitated(null))
+		to_chat(src, "<span class='warning'>[gestalt] must be conscious to do this.</span>")
+		return
+	if(incapacitated())
+		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
+		return
+
+	if(gestalt.nutrition < 230)
+		to_chat(src, "<span class='notice'>It would appear, that [gestalt] does not have enough nutrition to accept your knowledge.</span>")
+		return
+	if(nutrition < 230)
+		to_chat(src, "<span class='notice'>It would appear, that you do not have enough nutrition to pass knowledge onto [gestalt].</span>")
+		return
+
+	var/langdiff = languages - gestalt.languages
+	var/datum/language/L = pick(langdiff)
+	to_chat(gestalt, "<span class ='notice'>It would seem [src] is trying to pass on their knowledge onto you.</span>")
+	to_chat(src, "<span class='notice'>You concentrate your willpower on transcribing [L.name] onto [gestalt], this may take a while.</span>")
+	if(is_busy() || !do_after(src, 40, target = gestalt))
+		return
+	gestalt.add_language(L.name)
+	nutrition -= 30
+	gestalt.nutrition -= 30
+	to_chat(src, "<span class='notice'>It would seem you have passed on [L.name] onto [gestalt] succesfully.</span>")
+	to_chat(gestalt, "<span class='notice'>It would seem you have acquired knowledge of [L.name]!</span>")
+	if(prob(50))
+		to_chat(src, "<span class='warning'>You momentarily forget [L.name]. Is this how memory wiping feels?</span")
+		remove_language(L.name)
+
+/mob/living/carbon/monkey/diona/verb/synthesize()
+
+	set category = "Diona"
+	set name = "Synthesize"
+	set desc = "Synthesize chemicals inside gestalt's body."
+
+	if(!gestalt)
+		return
+
+	if(incapacitated())
+		to_chat(src, "<span class='warning'>You must be conscious to do this.</span>")
+		return
+
+	if(nutrition < 210)
+		to_chat(src, "<span class='warning'>You do not have enough nutriments to perform this action.</span>")
+		return
+
+	if(injecting)
+		switch(alert("Would you like to stop injecting, or change chemical?","Choose.","Stop injecting","Change chemical"))
+			if("Stop injecting")
+				injecting = null
 				return
-	M.status_flags &= ~PASSEMOTES
+			if("Change chemical")
+				injecting = null
+	var/V = input(src,"What do you wish to inject?") in null|allowedinjecting
+
+	if(V)
+		injecting = V
 
 /mob/living/carbon/monkey/diona/verb/fertilize_plant()
 
@@ -142,9 +214,13 @@
 	set name = "Evolve"
 	set desc = "Grow to a more complex form."
 
-	if(!is_alien_whitelisted(src, "Diona") && config.usealienwhitelist)
+	if(!is_alien_whitelisted(src, DIONA) && config.usealienwhitelist)
 		to_chat(src, alert("You are currently not whitelisted to play as a full diona."))
 		return 0
+
+	if(gestalt)
+		to_chat(src, "You can not grow, while being inside [gestalt].")
+		return
 
 	if(donors.len < 5)
 		to_chat(src, "You are not yet ready for your growth...")
@@ -158,7 +234,7 @@
 	src.visible_message("\red [src] begins to shift and quiver, and erupts in a shower of shed bark as it splits into a tangle of nearly a dozen new dionaea.","\red You begin to shift and quiver, feeling your awareness splinter. All at once, we consume our stored nutrients to surge with growth, splitting into a tangle of at least a dozen new dionaea. We have attained our gestalt form.")
 
 	var/mob/living/carbon/human/adult = new(get_turf(src.loc))
-	adult.set_species("Diona")
+	adult.set_species(DIONA)
 
 	if(istype(loc,/obj/item/weapon/holder/diona))
 		var/obj/item/weapon/holder/diona/L = loc
@@ -242,19 +318,10 @@
 	if(stat == DEAD)
 		return say_dead(message)
 
-	var/datum/language/speaking = null
-
-	if(length(message) >= 2)
-		var/channel_prefix = copytext(message, 1 ,3)
-		if(languages.len)
-			for(var/datum/language/L in languages)
-				if(lowertext(channel_prefix) == ":[L.key]")
-					verb = L.speech_verb
-					speaking = L
-					break
-
+	var/datum/language/speaking = parse_language(message)
 	if(speaking)
-		message = trim(copytext(message,3))
+		verb = speaking.speech_verb
+		message = trim(copytext(message,2+length(speaking.key)))
 
 	if(!message || stat)
 		return

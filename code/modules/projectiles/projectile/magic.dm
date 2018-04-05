@@ -6,6 +6,8 @@
 	nodamage = 1
 	flag = "magic"
 
+	var/power_of_spell = 1
+
 /obj/item/projectile/magic/change
 	name = "bolt of change"
 	icon_state = "ice_1"
@@ -16,6 +18,10 @@
 	damage_type = BURN
 	nodamage = 1
 	flag = "magic"
+
+/obj/item/projectile/magic/atom_init(mapload, power_of_spell = 1)
+	src.power_of_spell = power_of_spell
+	. = ..()
 
 /obj/item/projectile/magic/change/on_hit(atom/change)
 	wabbajack(change)
@@ -135,7 +141,7 @@
 	nodamage = 1
 	flag = "magic"
 
-/obj/item/projectile/magic/animate/Bump(var/atom/change)
+/obj/item/projectile/magic/animate/Bump(atom/change)
 	. = ..()
 	if(istype(change, /obj/item) || istype(change, /obj/structure) && !is_type_in_list(change, protected_objects))
 		var/obj/O = change
@@ -153,19 +159,7 @@
 	damage = 9001
 	damage_type = OXY
 	nodamage = 0
-	flag = "magic"
-
-/obj/item/projectile/magic/fireball
-	name = "bolt of fireball"
-	icon_state = "fireball"
-	damage = 25 //The spell fireball additionally does 20 burn, so the wand fireball is marginally less painful
-	damage_type = BRUTE
-	nodamage = 0
-	flag = "magic"
-
-/obj/item/projectile/magic/fireball/on_hit(target)
-	var/turf/T = get_turf(target)
-	explosion(T, -1, 0, 2, 3, 0, flame_range = 2)
+	flag = "magic"*/
 
 /obj/item/projectile/magic/resurrection
 	name = "bolt of resurrection"
@@ -176,22 +170,46 @@
 	flag = "magic"
 
 /obj/item/projectile/magic/resurrection/on_hit(mob/living/carbon/target)
+	if(!istype(target))
+		return
+	var/old_stat = target.stat
+	target.revive()
+	if(!target.ckey || !target.mind)
+		for(var/mob/dead/observer/ghost in dead_mob_list)
+			if(target.mind == ghost.mind)
+				ghost.reenter_corpse()
+				break
+	if(old_stat != DEAD)
+		to_chat(target, "<span class='notice'>You feel great!</span>")
+	else
+		to_chat(target, "<span class='notice'>You rise with a start, you're alive!!!</span>")
 
-	if(istype(target,/mob))
-		var/old_stat = target.stat
-		target.revive()
-		target.suiciding = 0
-		if(!target.ckey)
-			for(var/mob/dead/observer/ghost in player_list)
-				if(target.real_name == ghost.real_name)
-					ghost.reenter_corpse()
-					break
-		if(old_stat != DEAD)
-			to_chat(target, "<span class='notice'>You feel great!</span>")
-		else
-			to_chat(target, "<span class='notice'>You rise with a start, you're alive!!!</span>")
+/obj/item/projectile/magic/door
+	name = "bolt of door creation"
+	icon_state = "energy"
+	damage = 0
+	damage_type = OXY
+	nodamage = 1
+	flag = "magic"
+	var/list/doors = list(/obj/structure/mineral_door/iron, /obj/structure/mineral_door/silver,/obj/structure/mineral_door/gold, /obj/structure/mineral_door/uranium,
+					/obj/structure/mineral_door/sandstone, /obj/structure/mineral_door/transparent/diamond, /obj/structure/mineral_door/wood)
 
-/obj/item/projectile/magic/teleport
+/obj/item/projectile/magic/door/on_hit(atom/target)
+	if(!(getOPressureDifferential(target) >= FIREDOOR_MAX_PRESSURE_DIFF))
+		if(istype(target, /turf/simulated/wall))
+			var/turf/place = target
+			place.ChangeTurf(/turf/simulated/floor/plating)
+			var/pickedtype = pick(doors)
+			new pickedtype(place)
+		else if(istype(target, /obj/machinery/door))
+			var/obj/machinery/door/D = target
+			D.open()
+		else if(istype(target, /obj/structure/mineral_door))
+			var/obj/structure/mineral_door/D = target
+			D.Open()
+	qdel(src)
+
+/*/obj/item/projectile/magic/teleport
 	name = "bolt of teleportation"
 	icon_state = "bluespace"
 	damage = 0
@@ -212,24 +230,4 @@
 			do_teleport(stuff, stuff, 10)
 			var/datum/effect/effect/system/harmless_smoke_spread/smoke = new /datum/effect/effect/system/harmless_smoke_spread()
 			smoke.set_up(max(round(10 - teleammount),1), 0, stuff.loc) //Smoke drops off if a lot of stuff is moved for the sake of sanity
-			smoke.start()
-
-/obj/item/projectile/magic/door
-	name = "bolt of door creation"
-	icon_state = "energy"
-	damage = 0
-	damage_type = OXY
-	nodamage = 1
-	flag = "magic"
-
-/obj/item/projectile/magic/door/on_hit(atom/target)
-	var/atom/T = target.loc
-	if(isturf(target))
-		if(target.density)
-			new /obj/structure/mineral_door/wood(target)
-			target:ChangeTurf(/turf/simulated/floor/plating)
-	else if (isturf(T))
-		if(T.density)
-			new /obj/structure/mineral_door/wood(T)
-			T:ChangeTurf(/turf/simulated/floor/plating)
-*/
+			smoke.start()*/

@@ -15,15 +15,14 @@
 	var/signs = 0	//maximum capacity hardcoded below
 
 
-/obj/structure/janitorialcart/New()
+/obj/structure/janitorialcart/atom_init()
 	create_reagents(100)
-
+	. = ..()
 
 /obj/structure/janitorialcart/examine(mob/user)
 	..()
 	if(src in user)
 		to_chat(user, "[src] contains [reagents.total_volume] unit\s of liquid!")
-
 
 /obj/structure/janitorialcart/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/storage/bag/trash) && !mybag)
@@ -173,9 +172,10 @@
 	var/callme = "pimpin' ride"	//how do people refer to it?
 
 
-/obj/structure/stool/bed/chair/janicart/New()
+/obj/structure/stool/bed/chair/janicart/atom_init()
 	handle_rotation()
 	create_reagents(100)
+	. = ..()
 
 
 /obj/structure/stool/bed/chair/janicart/examine(mob/user)

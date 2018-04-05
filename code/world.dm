@@ -1,19 +1,20 @@
 /world
-	mob = /mob/new_player
+	mob = /mob/dead/new_player
 	turf = /turf/space
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 0	//stops player uploaded stuff from being kept in the rsc past the current session
+	fps = 20
 
 
-
-#define RECOMMENDED_VERSION 510
+#define RECOMMENDED_VERSION 511
 /world/New()
 	//logs
 	var/date_string = time2text(world.realtime, "YYYY/MM-Month/DD-Day")
 	href_logfile = file("data/logs/[date_string] hrefs.htm")
 	diary = file("data/logs/[date_string].log")
 	diary << "[log_end]\n[log_end]\nStarting up. [time2text(world.timeofday, "hh:mm.ss")][log_end]\n---------------------[log_end]"
+	changelog_hash = md5('html/changelog.html')
 
 	if(byond_version < RECOMMENDED_VERSION)
 		world.log << "Your server's byond version does not meet the recommended requirements for this server. Please update BYOND"
@@ -27,10 +28,12 @@
 	load_motd()
 	load_admins()
 	load_mentors()
+	if(config.allow_donators)
+		load_donators()
 	if(config.usewhitelist)
 		load_whitelist()
 	if(config.usealienwhitelist)
-		load_alienwhitelist()
+		load_whitelistSQL()
 	LoadBans()
 	investigate_reset()
 
@@ -213,10 +216,33 @@ var/world_topic_spam_protect_time = world.timeofday
 
 
 
-/world/Reboot(var/reason)
-	/*spawn(0)
-		world << sound(pick('sound/AI/newroundsexy.ogg','sound/misc/apcdestroyed.ogg','sound/misc/bangindonk.ogg')) // random end sounds!! - LastyBatsy
-		*/
+/world/Reboot(reason)
+
+	// Bad initializations log.
+	var/initlog = SSatoms.InitLog()
+	if(initlog)
+		world.log << initlog
+
+	// Adds the del() log to world.log in a format condensable by the runtime condenser found in tools
+	var/list/dellog = list()
+
+	//sort by how long it's wasted hard deleting
+	sortTim(SSgarbage.items, cmp=/proc/cmp_qdel_item_time, associative = TRUE)
+	for(var/path in SSgarbage.items)
+		var/datum/qdel_item/I = SSgarbage.items[path]
+		dellog += "Path: [path]"
+		if (I.failures)
+			dellog += "\tFailures: [I.failures]"
+		dellog += "\tqdel() Count: [I.qdels]"
+		dellog += "\tDestroy() Cost: [I.destroy_time]ms"
+		if (I.hard_deletes)
+			dellog += "\tTotal Hard Deletes [I.hard_deletes]"
+			dellog += "\tTime Spent Hard Deleting: [I.hard_delete_time]ms"
+		if (I.slept_destroy)
+			dellog += "\tSleeps: [I.slept_destroy]"
+		if (I.no_hint)
+			dellog += "\tNo hint: [I.no_hint] times"
+	world.log << dellog.Join("\n")
 
 	for(var/client/C in clients)
 		if(config.server)	//if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
@@ -257,7 +283,7 @@ var/world_topic_spam_protect_time = world.timeofday
 /world/proc/save_mode(the_mode)
 	var/F = file("data/mode.txt")
 	fdel(F)
-	to_chat(F, the_mode)
+	F << the_mode
 
 /world/proc/load_last_mode()
 	var/list/Lines = file2list("data/last_mode.txt")
@@ -269,11 +295,19 @@ var/world_topic_spam_protect_time = world.timeofday
 /world/proc/save_last_mode(the_last_mode)
 	var/F = file("data/last_mode.txt")
 	fdel(F)
-	to_chat(F, the_last_mode)
-
+	F << the_last_mode
 
 /world/proc/load_motd()
 	join_motd = file2text("config/motd.txt")
+
+/world/proc/load_donators()
+	var/L = file2list("config/donators.txt")
+	for(var/line in L)
+		if(!length(line))
+			continue
+		if(copytext(line,1,2) == "#")
+			continue
+		donators.Add(ckey(line))
 
 
 /world/proc/load_configuration()

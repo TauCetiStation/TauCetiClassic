@@ -134,7 +134,7 @@
 	var/mob/living/carbon/human/user = usr
 	for(var/datum/mind/mindToCount in ticker.mode.thralls)
 		thrallsPresent++
-	if(thrallsPresent >= 5 && (user.dna.species != "Shadowling"))
+	if(thrallsPresent >= 5 && (user.dna.species != SHADOWLING))
 		to_chat(user, "<span class='warning'>With your telepathic abilities suppressed, your human form will not allow you to enthrall any others. Hatch first.</span>")
 		charge_counter = charge_max
 		return
@@ -180,17 +180,17 @@
 					to_chat(target, "<span class='boldannounce'>Your gaze is forcibly drawn into a blinding red light. You fall to the floor as conscious thought is wiped away.</span>")
 					target.Weaken(12)
 					sleep(20)
-					if(target.is_loyalty_implanted(target))
+					if(ismindshielded(target))
 						to_chat(usr, "<span class='notice'>They are enslaved by Nanotrasen. You begin to shut down the nanobot implant - this will take some time.</span>")
 						usr.visible_message("<span class='danger'>[usr] halts for a moment, then begins passing its hand over [target]'s body.</span>")
 						to_chat(target, "<span class='boldannounce'>You feel your loyalties begin to weaken!</span>")
 						sleep(150) //15 seconds - not spawn() so the enthralling takes longer
 						to_chat(usr, "<span class='notice'>The nanobots composing the loyalty implant have been rendered inert. Now to continue.</span>")
 						usr.visible_message("<span class='danger'>[usr] halts thier hand and resumes staring into [target]'s face.</span>")
-						for(var/obj/item/weapon/implant/loyalty/L in target)
-							if(L && L.implanted)
+						for(var/obj/item/weapon/implant/mindshield/L in target)
+							if(L.implanted)
 								qdel(L)
-								to_chat(target, "<span class='boldannounce'>Your unwavering loyalty to Nanotrasen unexpectedly falters, dims, dies. You feel a sense of liberation which is quickly stifled by terror.</span>")
+								to_chat(target, "<span class='boldannounce'>Your unwavering volition unexpectedly falters, dims, dies. You feel a sense of true terror.</span>")
 				if(3)
 					to_chat(usr, "<span class='notice'>You begin rearranging [target]'s memories.</span>")
 					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")
@@ -227,11 +227,11 @@
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/text = stripped_input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", "")
+		var/text = sanitize(input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", ""))
 		if(!text)
 			return
 		for(var/mob/M in mob_list)
-			if(is_shadow_or_thrall(M) || (M in dead_mob_list))
+			if(is_shadow_or_thrall(M) || isobserver(M))
 				to_chat(M, "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [sanitize(text)]</span>")
 
 
@@ -249,16 +249,21 @@
 	for(var/mob/living/user in targets)
 		user.visible_message("<span class='warning'>[user]'s skin suddenly bubbles and begins to shift around their body!</span>", \
 							 "<span class='shadowling'>You regenerate your protective armor and cleanse your form of defects.</span>")
-		user.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling(usr), slot_w_uniform)
-		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling(usr), slot_shoes)
-		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling(usr), slot_wear_suit)
-		user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling(usr), slot_head)
-		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling(usr), slot_gloves)
-		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling(usr), slot_wear_mask)
-		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling(usr), slot_glasses)
-		//hardset_dna(user, null, null, null, null, /datum/species/shadow/ling) //can't be a shadowling without being a shadowling
+		for(var/obj/item/I in user)
+			if(I.flags & ABSTRACT)
+				qdel(I)
+			else
+				user.remove_from_mob(I)
+
+		user.equip_to_slot_or_del(new /obj/item/clothing/under/shadowling, slot_w_uniform)
+		user.equip_to_slot_or_del(new /obj/item/clothing/shoes/shadowling, slot_shoes)
+		user.equip_to_slot_or_del(new /obj/item/clothing/suit/space/shadowling, slot_wear_suit)
+		user.equip_to_slot_or_del(new /obj/item/clothing/head/shadowling, slot_head)
+		user.equip_to_slot_or_del(new /obj/item/clothing/gloves/shadowling, slot_gloves)
+		user.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/shadowling, slot_wear_mask)
+		user.equip_to_slot_or_del(new /obj/item/clothing/glasses/night/shadowling, slot_glasses)
 		var/mob/living/carbon/human/H = usr
-		H.set_species("Shadowling")
+		H.set_species(SHADOWLING)
 		H.dna.mutantrace = "shadowling"
 		H.update_mutantrace()
 		H.regenerate_icons()
@@ -375,7 +380,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			M.Stun(3)
 	else
 		to_chat(M, "<span class='notice'><b>You breathe in the black smoke, and you feel revitalized!</b></span>")
-		M.heal_organ_damage(2,2)
+		M.heal_bodypart_damage(2, 2)
 		M.adjustOxyLoss(-2)
 		M.adjustToxLoss(-2)
 	..()
@@ -443,7 +448,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			nearbyTargets.Add(M)
 		for(var/mob/living/carbon/M in nearbyTargets)
 			nearbyTargets.Remove(M) //To prevent someone dying like a zillion times
-			U.heal_organ_damage(10, 10)
+			U.heal_bodypart_damage(10, 10)
 			U.adjustToxLoss(-10)
 			U.adjustOxyLoss(-10)
 			U.AdjustWeakened(-1)
@@ -530,6 +535,9 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 		//boom.audible_message("<b>[boom]</b> screams!")
 		boom.emote("scream",,, 1)
 		sleep(20)
+		if(istype(boom,/mob/living/simple_animal/hostile/carp/dog))
+			to_chat(SHA,"<span class='shadowling'>Probably, trying to explode [boom] wasn't good idea....</span>")
+			boom = usr
 		playsound(boom, 'sound/effects/splat.ogg', 100, 1)
 		boom.visible_message("<span class='userdanger'>[boom] explodes!</span>")
 		boom.gib()
@@ -636,7 +644,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 			target.Weaken(15)
 			if(target.bodytemperature)
 				target.bodytemperature -= INFINITY //:^)
-			target.take_organ_damage(0,80)
+			target.take_bodypart_damage(0, 80)
 
 
 
@@ -651,7 +659,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind_ascendant/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/text = stripped_input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", "")
+		var/text = sanitize(input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", ""))
 		if(!text)
 			return
 		for(var/mob/M in mob_list)
@@ -671,7 +679,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 
 /obj/effect/proc_holder/spell/targeted/shadowlingAscendantTransmit/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/text = stripped_input(user, "What do you want to say to everything on and near [world.name]?.", "Transmit to World", "")
+		var/text = sanitize(input(user, "What do you want to say to everything on and near [world.name]?.", "Transmit to World", ""))
 		if(!text)
 			return
 		to_chat(world, "<font size=4><span class='shadowling'><b>\"[sanitize(text)]\"</font></span>")

@@ -85,7 +85,7 @@ datum
 
 obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/W, mob/living/user)
 	if(istype(W, /obj/item/weapon/pen))
-		var/new_label = input("What should the new label be?","Label solution tray")
+		var/new_label = sanitize_safe(input("What should the new label be?","Label solution tray"), MAX_NAME_LEN)
 		if(new_label)
 			name = "solution tray ([new_label])"
 			to_chat(user, "\blue You write on the label of the solution tray.")
@@ -94,53 +94,56 @@ obj/item/weapon/reagent_containers/glass/solution_tray/attackby(obj/item/weapon/
 
 /obj/item/weapon/reagent_containers/glass/beaker/tungsten
 	name = "beaker 'tungsten'"
-	New()
-		..()
-		reagents.add_reagent("tungsten",50)
-		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/tungsten/atom_init()
+	. = ..()
+	reagents.add_reagent("tungsten",50)
+	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/oxygen
 	name = "beaker 'oxygen'"
-	New()
-		..()
-		reagents.add_reagent("oxygen",50)
-		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/oxygen/atom_init()
+	. = ..()
+	reagents.add_reagent("oxygen",50)
+	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/sodium
 	name = "beaker 'sodium'"
-	New()
-		..()
-		reagents.add_reagent("sodium",50)
-		update_icon()
+
+/obj/item/weapon/reagent_containers/glass/beaker/sodium/atom_init()
+	. = ..()
+	reagents.add_reagent("sodium",50)
+	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/lithium
 	name = "beaker 'lithium'"
 
-	New()
-		..()
-		reagents.add_reagent("lithium",50)
-		update_icon()
+/obj/item/weapon/reagent_containers/glass/beaker/lithium/atom_init()
+	. = ..()
+	reagents.add_reagent("lithium",50)
+	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/water
 	name = "beaker 'water'"
 
-	New()
-		..()
-		reagents.add_reagent("water",50)
-		update_icon()
+/obj/item/weapon/reagent_containers/glass/beaker/water/atom_init()
+	. = ..()
+	reagents.add_reagent("water",50)
+	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/water
 	name = "beaker 'water'"
 
-	New()
-		..()
-		reagents.add_reagent("water",50)
-		update_icon()
+/obj/item/weapon/reagent_containers/glass/beaker/water/atom_init()
+	. = ..()
+	reagents.add_reagent("water",50)
+	update_icon()
 
 /obj/item/weapon/reagent_containers/glass/beaker/fuel
 	name = "beaker 'fuel'"
 
-	New()
-		..()
-		reagents.add_reagent("fuel",50)
-		update_icon()
+/obj/item/weapon/reagent_containers/glass/beaker/fuel/atom_init()
+	. = ..()
+	reagents.add_reagent("fuel",50)
+	update_icon()

@@ -21,18 +21,17 @@
 
 	//reset pulling
 	if(M.pulledby)
-		var/mob/P = M.pulledby
-		if(P.pulling)
-			P.pulling = null
-		M.pulledby = null
-
+		M.pulledby.stop_pulling()
+	if(M.grabbed_by.len)
+		for (var/obj/item/weapon/grab/G in M.grabbed_by)
+			qdel(G)
 	M.buckled = src
 	M.set_dir(dir)
-	M.update_canmove()
 	buckled_mob = M
 	post_buckle_mob(M)
 	M.throw_alert("buckled", new_master = src)
 	correct_pixel_shift(M)
+	M.update_canmove()
 	return 1
 
 /atom/movable/proc/unbuckle_mob()
@@ -102,3 +101,9 @@
 				"<span class='notice'>You hear metal clanking.</span>")
 		add_fingerprint(user)
 	return M
+
+/atom/movable/proc/has_buckled_mobs()
+	if(!buckled_mob)
+		return FALSE
+	if(buckled_mob)
+		return TRUE

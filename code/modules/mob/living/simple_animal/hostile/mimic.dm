@@ -9,7 +9,6 @@
 	icon_state = "crate"
 	icon_living = "crate"
 
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/carpmeat
 	response_help = "touches the"
 	response_disarm = "pushes the"
 	response_harm = "hits the"
@@ -63,8 +62,8 @@
 	var/attempt_open = 0
 
 // Pickup loot
-/mob/living/simple_animal/hostile/mimic/crate/initialize()
-	..()
+/mob/living/simple_animal/hostile/mimic/crate/atom_init()
+	. = ..()
 	for(var/obj/item/I in loc)
 		I.loc = src
 
@@ -137,8 +136,8 @@ var/global/list/protected_objects = list(/obj/structure/table, /obj/structure/ca
 	var/destroy_objects = 0
 	var/knockdown_people = 0
 
-/mob/living/simple_animal/hostile/mimic/copy/New(loc, var/obj/copy, var/mob/living/creator)
-	..(loc)
+/mob/living/simple_animal/hostile/mimic/copy/atom_init(mapload, obj/copy, mob/living/creator)
+	. = ..()
 	CopyObject(copy, creator)
 
 /mob/living/simple_animal/hostile/mimic/copy/death()

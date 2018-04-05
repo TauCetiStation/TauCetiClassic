@@ -23,7 +23,7 @@
 		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
-	message = trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))
+	message = sanitize(message)
 
 	if(use_me)
 		usr.emote("me",usr.emote_type,message)
@@ -35,16 +35,16 @@
 	var/alt_name = ""
 
 	if(say_disabled)	//This is here to try to identify lag problems
-		to_chat(usr, "\red Speech is currently admin-disabled.")
+		to_chat(usr, "<span class='red'> Speech is currently admin-disabled.</span>")
 		return
 
 	if(!src.client.holder)
 		if(!dsay_allowed)
-			to_chat(src, "\red Deadchat is globally muted")
+			to_chat(src, "<span class='red'> Deadchat is globally muted.</span>")
 			return
 
 	if(client && !(client.prefs.chat_toggles & CHAT_DEAD))
-		to_chat(usr, "\red You have deadchat muted.")
+		to_chat(usr, "<span class='red'> You have deadchat muted.</span>")
 		return
 
 	if(mind && mind.name)
@@ -53,8 +53,10 @@
 		name = real_name
 	if(name != real_name)
 		alt_name = " (died as [real_name])"
+	if(client.prefs.chat_toggles & CHAT_CKEY)
+		name += " ([key])"
 
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] [pick("complains","moans","whines","laments","blubbers")], <span class='message'>\"[sanitize_plus_chat(message)]\"</span></span>"
+	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] [pick("complains","moans","whines","laments","blubbers")], <span class='message'>\"[message]\"</span></span>"
 
 	for(var/mob/M in player_list)
 		if(isnewplayer(M))
@@ -158,7 +160,7 @@
 //returns the language object only if the code corresponds to a language that src can speak, otherwise null.
 /mob/proc/parse_language(message)
 	if(length(message) >= 2)
-		var/language_prefix = lowertext_plus(copytext(message, 1 ,3))
+		var/language_prefix = lowertext_(copytext(message, 1 ,3))
 		var/datum/language/L = language_keys[language_prefix]
 		if (can_speak(L))
 			return L

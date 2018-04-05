@@ -33,7 +33,8 @@
 	max_water = 30
 	sprite_name = "miniFE"
 
-/obj/item/weapon/extinguisher/New()
+/obj/item/weapon/extinguisher/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(max_water)
 	reagents = R
 	R.my_atom = src
@@ -41,7 +42,7 @@
 
 /obj/item/weapon/extinguisher/examine(mob/user)
 	..()
-	if(src in user)
+	if(in_range(src, user))
 		to_chat(user, "[reagents.total_volume] units of water left!")
 
 /obj/item/weapon/extinguisher/attack_self(mob/user)
@@ -115,7 +116,7 @@
 
 		for(var/a in 0 to spray_range)
 			spawn(0)
-				var/obj/effect/effect/water/W = PoolOrNew(/obj/effect/effect/water, get_turf(src))
+				var/obj/effect/effect/water/W = new /obj/effect/effect/water(get_turf(src))
 				var/turf/my_target = pick(the_targets)
 				var/datum/reagents/R = new/datum/reagents(spray_amount)
 				if(!W) return
@@ -128,6 +129,7 @@
 					step_towards(W,my_target)
 					if(!W) return
 					if(!W.reagents) break
+					spawn_fluid(loc, spray_amount)
 					W.reagents.reaction(get_turf(W))
 					for(var/atom/atm in get_turf(W))
 						if(!W) return

@@ -7,6 +7,7 @@ var/list/clown_sound = list('sound/effects/clownstep1.ogg','sound/effects/clowns
 var/list/swing_hit_sound = list('sound/weapons/genhit1.ogg', 'sound/weapons/genhit2.ogg', 'sound/weapons/genhit3.ogg')
 var/list/hiss_sound = list('sound/voice/hiss1.ogg','sound/voice/hiss2.ogg','sound/voice/hiss3.ogg','sound/voice/hiss4.ogg')
 var/list/page_sound = list('sound/effects/pageturn1.ogg', 'sound/effects/pageturn2.ogg','sound/effects/pageturn3.ogg')
+var/list/fracture_sound = list('sound/effects/bonebreak1.ogg','sound/effects/bonebreak2.ogg','sound/effects/bonebreak3.ogg','sound/effects/bonebreak4.ogg')
 //var/list/gun_sound = list('sound/weapons/Gunshot.ogg', 'sound/weapons/Gunshot2.ogg','sound/weapons/Gunshot3.ogg','sound/weapons/Gunshot4.ogg')
 //var/list/footsteps_sound = list('sound/effects/footsteps.ogg','sound/effects/footsteps2.ogg')
 var/list/footsteps_sound = list('sound/effects/tile1.wav','sound/effects/tile2.wav','sound/effects/tile3.wav','sound/effects/tile4.wav')
@@ -38,7 +39,8 @@ var/list/footsteps_sound = list('sound/effects/tile1.wav','sound/effects/tile2.w
 var/const/FALLOFF_SOUNDS = 0.5
 
 /mob/proc/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
-	if(!src.client || ear_deaf > 0)	return
+	if(!src.client || ear_deaf > 0)
+		return FALSE
 	soundin = get_sfx(soundin)
 
 	var/sound/S = sound(soundin)
@@ -82,7 +84,7 @@ var/const/FALLOFF_SOUNDS = 0.5
 		S.volume *= pressure_factor
 
 		if (S.volume <= 0)
-			return	//no volume means no sound
+			return FALSE	//no volume means no sound
 
 		var/dx = turf_source.x - T.x // Hearing from the right/left
 		S.x = dx
@@ -94,6 +96,12 @@ var/const/FALLOFF_SOUNDS = 0.5
 	if(!is_global)
 		S.environment = 2
 	src << S
+
+/mob/living/parasite/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
+	if(!host || host.ear_deaf > 0)
+		return FALSE
+	return ..()
+
 
 /client/proc/playtitlemusic()
 	if(!ticker || !ticker.login_music)	return
@@ -117,5 +125,6 @@ var/const/FALLOFF_SOUNDS = 0.5
 			if ("swing_hit") soundin = pick(swing_hit_sound)
 			if ("hiss") soundin = pick(hiss_sound)
 			if ("pageturn") soundin = pick(page_sound)
+			if ("fracture") soundin = pick(fracture_sound)
 			//if ("gunshot") soundin = pick(gun_sound)
 	return soundin

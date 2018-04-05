@@ -4,7 +4,6 @@
 	icon = 'icons/obj/window.dmi'
 	density = 1
 	layer = 3.2//Just above doors
-	pressure_resistance = 4*ONE_ATMOSPHERE
 	anchored = 1.0
 	flags = ON_BORDER
 	var/maxhealth = 14.0
@@ -69,11 +68,13 @@
 		index = 0
 		while(index < 2)
 			new shardtype(loc) //todo pooling?
-			if(reinf) PoolOrNew(/obj/item/stack/rods, loc)
+			if(reinf)
+				new /obj/item/stack/rods(loc)
 			index++
 	else
 		new shardtype(loc) //todo pooling?
-		if(reinf) PoolOrNew(/obj/item/stack/rods, loc)
+		if(reinf)
+			new /obj/item/stack/rods(loc)
 	qdel(src)
 	return
 
@@ -122,6 +123,13 @@
 	else
 		return 1
 
+/obj/structure/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+	if(!density)
+		return TRUE
+	if((dir == SOUTHWEST) || (dir == to_dir))
+		return FALSE
+
+	return TRUE
 
 /obj/structure/window/CheckExit(atom/movable/O, target)
 	if(istype(O) && O.checkpass(PASSGLASS))
@@ -153,6 +161,7 @@
 	playsound(loc, 'sound/effects/Glasshit.ogg', 50, 1)
 
 /obj/structure/window/attack_hand(mob/user)	//specflags please!!
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations)
 		user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!"))
 		user.do_attack_animation(src)
@@ -160,17 +169,16 @@
 	else if(user.dna && user.dna.mutantrace == "adamantine")
 		user.do_attack_animation(src)
 		take_damage(rand(15,25), "generic")
-	else if (usr.a_intent == "hurt")
+	else if (user.a_intent == "hurt")
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
-		usr.visible_message("<span class='danger'>[usr.name] bangs against the [src.name]!</span>", \
+		user.visible_message("<span class='danger'>[usr.name] bangs against the [src.name]!</span>", \
 							"<span class='danger'>You bang against the [src.name]!</span>", \
 							"You hear a banging sound.")
 	else
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
-		usr.visible_message("[usr.name] knocks on the [src.name].", \
+		user.visible_message("[usr.name] knocks on the [src.name].", \
 							"You knock on the [src.name].", \
 							"You hear a knocking sound.")
-	return
 
 
 /obj/structure/window/attack_paw(mob/user)
@@ -190,7 +198,7 @@
 
 
 /obj/structure/window/attack_alien(mob/user)
-	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(islarva(user) || isfacehugger(user))
 		return
 	attack_generic(user, 15)
@@ -198,17 +206,18 @@
 /obj/structure/window/attack_animal(mob/user)
 	if(!isanimal(user))
 		return
+	..()
 	var/mob/living/simple_animal/M = user
-	M.do_attack_animation(src)
 	if(M.melee_damage_upper <= 0)
 		return
 	attack_generic(M, M.melee_damage_upper)
 
 
 /obj/structure/window/attack_slime(mob/user)
-	user.do_attack_animation(src)
 	if(!isslimeadult(user))
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
 	attack_generic(user, rand(10, 15))
 
 
@@ -216,13 +225,37 @@
 	if(!istype(W))
 		return//I really wish I did not need this
 
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/airlock_painter))
 		change_paintjob(W, user)
-		return
 
-	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
+	else if(istype(W, /obj/item/weapon/screwdriver))
+		if(reinf && state >= 1)
+			state = 3 - state
+			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
+			to_chat(user, (state == 1 ? "<span class='notice'>You have unfastened the window from the frame.</span>" : "<span class='notice'>You have fastened the window to the frame.</span>"))
+
+		else if(reinf && state == 0)
+			anchored = !anchored
+			update_nearby_icons()
+			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
+			to_chat(user, (anchored ? "<span class='notice'>You have fastened the frame to the floor.</span>" : "<span class='notice'>You have unfastened the frame from the floor.</span>"))
+
+		else if(!reinf)
+			anchored = !anchored
+			update_nearby_icons()
+			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
+			to_chat(user, (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>"))
+
+	else if(istype(W, /obj/item/weapon/crowbar) && reinf && state <= 1)
+		state = 1 - state
+		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
+		to_chat(user, (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>"))
+
+	else if(istype(W, /obj/item/weapon/grab) && get_dist(src,user)<2)
 		var/obj/item/weapon/grab/G = W
 		if (istype(G.affecting, /mob/living))
+			user.SetNextMove(CLICK_CD_MELEE)
 			var/mob/living/M = G.affecting
 			var/mob/living/A = G.assailant
 			var/state = G.state
@@ -252,26 +285,13 @@
 					M.attack_log += "\[[time_stamp()]\] <font color='orange'>Crushed by [A.name] against \the [src]([A.ckey])</font>"
 					A.attack_log += "\[[time_stamp()]\] <font color='red'>Crushes [M.name] against \the [src]([M.ckey])</font>"
 					msg_admin_attack("[key_name(A)] crushes [key_name(M)] against \the [src]")
-			return
-	if(istype(W, /obj/item/weapon/screwdriver))
-		if(reinf && state >= 1)
-			state = 3 - state
-			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
-			to_chat(user, (state == 1 ? "<span class='notice'>You have unfastened the window from the frame.</span>" : "<span class='notice'>You have fastened the window to the frame.</span>"))
-		else if(reinf && state == 0)
-			anchored = !anchored
-			update_nearby_icons()
-			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
-			to_chat(user, (anchored ? "<span class='notice'>You have fastened the frame to the floor.</span>" : "<span class='notice'>You have unfastened the frame from the floor.</span>"))
-		else if(!reinf)
-			anchored = !anchored
-			update_nearby_icons()
-			playsound(loc, 'sound/items/Screwdriver.ogg', 75, 1)
-			to_chat(user, (anchored ? "<span class='notice'>You have fastened the window to the floor.</span>" : "<span class='notice'>You have unfastened the window.</span>"))
-	else if(istype(W, /obj/item/weapon/crowbar) && reinf && state <= 1)
-		state = 1 - state
-		playsound(loc, 'sound/items/Crowbar.ogg', 75, 1)
-		to_chat(user, (state ? "<span class='notice'>You have pried the window into the frame.</span>" : "<span class='notice'>You have pried the window out of the frame.</span>"))
+
+	else if(istype(W,/obj/item/weapon/changeling_hammer))
+		var/obj/item/weapon/changeling_hammer/C = W
+		user.SetNextMove(CLICK_CD_MELEE)
+		if(C.use_charge(user))
+			playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+			shatter()
 	else
 		if(W.damtype == BRUTE || W.damtype == BURN)
 			take_damage(W.force)
@@ -282,7 +302,6 @@
 		else
 			playsound(loc, 'sound/effects/Glasshit.ogg', 75, 1)
 		..()
-	return
 
 //painter
 /obj/structure/window/proc/change_paintjob(obj/item/C, mob/user)
@@ -359,8 +378,8 @@
 */
 
 
-/obj/structure/window/New(Loc)
-	..()
+/obj/structure/window/atom_init()
+	. = ..()
 
 	ini_dir = dir
 
@@ -368,7 +387,7 @@
 
 	color = color_windows()
 
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles(need_rebuild = 1)
 	update_nearby_icons()
 
 
@@ -385,15 +404,6 @@
 	..()
 	dir = ini_dir
 	update_nearby_tiles(need_rebuild=1)
-
-
-//This proc has to do with airgroups and atmos, it has nothing to do with smoothwindows, that's update_nearby_tiles().
-/obj/structure/window/proc/update_nearby_tiles(need_rebuild)
-	if(!SSair)
-		return 0
-	SSair.mark_for_update(get_turf(src))
-
-	return 1
 
 //checks if this window is full-tile one
 /obj/structure/window/proc/is_fulltile()
@@ -429,7 +439,7 @@
 		icon_state = "[basestate][junction]"
 
 		var/ratio = health / maxhealth
-		ratio = Ceiling(ratio*4) * 25
+		ratio = ceil(ratio * 4) * 25
 
 		overlays -= crack_overlay
 		if(ratio > 75)

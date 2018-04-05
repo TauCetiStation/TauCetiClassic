@@ -15,15 +15,7 @@
 	var/toner = 30 //how much toner is left! woooooo~
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 
-/obj/machinery/photocopier/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/photocopier/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/photocopier/attack_hand(mob/user)
-	user.set_machine(src)
-
+/obj/machinery/photocopier/ui_interact(mob/user)
 	var/dat = "Photocopier<BR><BR>"
 	if(copy || photocopy || bundle)
 		dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><BR>"
@@ -39,9 +31,8 @@
 	dat += "Current toner level: [toner]"
 	if(!toner)
 		dat +="<BR>Please insert a new toner cartridge!"
-	user << browse(dat, "window=copier")
+	user << browse(entity_ja(dat), "window=copier")
 	onclose(user, "copier")
-	return
 
 /obj/machinery/photocopier/is_operational_topic()
 	return TRUE
@@ -176,6 +167,7 @@
 		else
 			to_chat(user, "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
 	else if(istype(O, /obj/item/weapon/wrench))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
@@ -210,38 +202,37 @@
 
 
 /obj/machinery/photocopier/proc/copy(obj/item/weapon/paper/copy)
-	var/obj/item/weapon/paper/c = new /obj/item/weapon/paper (loc)
+	var/obj/item/weapon/paper/P = new(loc)
 	if(toner > 10)	//lots of toner, make it dark
-		c.info = "<font color = #101010>"
+		P.info = "<font color = #101010>"
 	else			//no toner? shitty copies for you!
-		c.info = "<font color = #808080>"
+		P.info = "<font color = #808080>"
 	var/copied = html_decode(copy.info)
-	copied = replacetext(copied, "<font face=\"[c.deffont]\" color=", "<font face=\"[c.deffont]\" nocolor=")	//state of the art techniques in action
-	copied = replacetext(copied, "<font face=\"[c.crayonfont]\" color=", "<font face=\"[c.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
-	c.info += copied
-	c.info += "</font>"
-	c.name = copy.name // -- Doohl
-	c.fields = copy.fields
-	c.stamps = copy.stamps
-	c.stamped = copy.stamped
-	c.ico = copy.ico
-	c.offset_x = copy.offset_x
-	c.offset_y = copy.offset_y
-	var/list/temp_overlays = copy.overlays       //Iterates through stamps
-	var/image/img                                //and puts a matching
-	for (var/j = 1, j <= temp_overlays.len, j++) //gray overlay onto the copy
-		if (findtext(copy.ico[j], "cap") || findtext(copy.ico[j], "cent"))
+	copied = replacetext(copied, "<font face=\"[P.deffont]\" color=", "<font face=\"[P.deffont]\" nocolor=")	//state of the art techniques in action
+	copied = replacetext(copied, "<font face=\"[P.crayonfont]\" color=", "<font face=\"[P.crayonfont]\" nocolor=")	//This basically just breaks the existing color tag, which we need to do because the innermost tag takes priority.
+	P.info += copied
+	P.info += "</font>"
+	P.name = copy.name // -- Doohl
+	P.fields = copy.fields
+	P.stamp_text = copy.stamp_text
+	P.stamped = LAZYCOPY(copy.stamped)
+	P.ico = LAZYCOPY(copy.ico)
+	P.offset_x = LAZYCOPY(copy.offset_x)
+	P.offset_y = LAZYCOPY(copy.offset_y)
+	var/image/img
+	for (var/i in 1 to copy.overlays.len)        //Iterates through stamps gray and puts a matching overlay onto the copy
+		if (findtext(copy.ico[i], "cap") || findtext(copy.ico[i], "cent"))
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-circle")
-		else if (findtext(copy.ico[j], "deny"))
+		else if (findtext(copy.ico[i], "deny"))
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-x")
 		else
 			img = image('icons/obj/bureaucracy.dmi', "paper_stamp-dots")
-		img.pixel_x = copy.offset_x[j]
-		img.pixel_y = copy.offset_y[j]
-		c.overlays += img
-	c.updateinfolinks()
+		img.pixel_x = copy.offset_x[i]
+		img.pixel_y = copy.offset_y[i]
+		P.overlays += img
+	P.updateinfolinks()
 	toner--
-	return c
+	return P
 
 
 /obj/machinery/photocopier/proc/photocopy(obj/item/weapon/photo/photocopy)

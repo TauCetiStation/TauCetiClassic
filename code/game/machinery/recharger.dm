@@ -1,6 +1,6 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 
-obj/machinery/recharger
+/obj/machinery/recharger
 	name = "recharger"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
@@ -9,11 +9,18 @@ obj/machinery/recharger
 	use_power = 1
 	idle_power_usage = 4
 	active_power_usage = 250
+	interact_offline = TRUE
 	var/obj/item/weapon/charging = null
 	var/recharge_coeff = 1
+	var/static/list/allowed_items = list(
+                                        /obj/item/weapon/gun/energy,
+                                        /obj/item/weapon/melee/baton,
+                                        /obj/item/weapon/twohanded/shockpaddles/standalone,
+                                        /obj/item/ammo_box/magazine/l10mag
+                                    )
 
-/obj/machinery/recharger/New()
-	..()
+/obj/machinery/recharger/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/recharger()
 	component_parts += new /obj/item/weapon/stock_parts/capacitor()
@@ -23,10 +30,10 @@ obj/machinery/recharger
 	for(var/obj/item/weapon/stock_parts/capacitor/C in component_parts)
 		recharge_coeff = C.rating
 
-obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
+/obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 	if(istype(user,/mob/living/silicon))
 		return
-	if(istype(G, /obj/item/weapon/gun/energy) || istype(G, /obj/item/weapon/melee/baton) || istype(G, /obj/item/weapon/defibrillator) || istype(G, /obj/item/ammo_box/magazine/l10mag))
+	if(is_type_in_list(G, allowed_items))
 		if(charging || panel_open)
 			return
 
@@ -64,8 +71,14 @@ obj/machinery/recharger/attackby(obj/item/weapon/G, mob/user)
 			default_deconstruction_crowbar(G)
 			return
 
-obj/machinery/recharger/attack_hand(mob/user)
-	add_fingerprint(user)
+/obj/machinery/recharger/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
+	return 1
+
+/obj/machinery/recharger/attack_hand(mob/user)
+	if(..())
+		return 1
 
 	if(charging)
 		charging.update_icon()
@@ -74,10 +87,7 @@ obj/machinery/recharger/attack_hand(mob/user)
 		use_power = 1
 		update_icon()
 
-obj/machinery/recharger/attack_paw(mob/user)
-	return attack_hand(user)
-
-obj/machinery/recharger/process()
+/obj/machinery/recharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return
 
@@ -102,8 +112,8 @@ obj/machinery/recharger/process()
 			else
 				icon_state = "recharger2"
 			return
-		if(istype(charging, /obj/item/weapon/defibrillator))
-			var/obj/item/weapon/defibrillator/D = charging
+		if(istype(charging, /obj/item/weapon/twohanded/shockpaddles/standalone))
+			var/obj/item/weapon/twohanded/shockpaddles/standalone/D = charging
 			if(D.charges < initial(D.charges))
 				D.charges++
 				icon_state = "recharger1"
@@ -124,7 +134,7 @@ obj/machinery/recharger/process()
 			else
 				icon_state = "recharger2"
 
-obj/machinery/recharger/emp_act(severity)
+/obj/machinery/recharger/emp_act(severity)
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		..(severity)
 		return
@@ -139,7 +149,7 @@ obj/machinery/recharger/emp_act(severity)
 		B.charges = 0
 	..(severity)
 
-obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
+/obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to the stuff in process to make it feel a tiny bit snappier.
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		icon_state = "rechargeroff"
 	else if(panel_open)
@@ -149,12 +159,12 @@ obj/machinery/recharger/update_icon()	//we have an update_icon() in addition to 
 	else
 		icon_state = "recharger0"
 
-obj/machinery/recharger/wallcharger
+/obj/machinery/recharger/wallcharger
 	name = "wall recharger"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "wrecharger0"
 
-obj/machinery/recharger/wallcharger/process()
+/obj/machinery/recharger/wallcharger/process()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		return
 
@@ -177,8 +187,8 @@ obj/machinery/recharger/wallcharger/process()
 			else
 				icon_state = "wrecharger2"
 			return
-		if(istype(charging, /obj/item/weapon/defibrillator))
-			var/obj/item/weapon/defibrillator/D = charging
+		if(istype(charging, /obj/item/weapon/twohanded/shockpaddles/standalone))
+			var/obj/item/weapon/twohanded/shockpaddles/standalone/D = charging
 			if(D.charges < initial(D.charges))
 				D.charges++
 				icon_state = "wrecharger1"
@@ -198,7 +208,7 @@ obj/machinery/recharger/wallcharger/process()
 			else
 				icon_state = "wrecharger2"
 
-obj/machinery/recharger/wallcharger/update_icon()
+/obj/machinery/recharger/wallcharger/update_icon()
 	if(stat & (NOPOWER|BROKEN) || !anchored)
 		icon_state = "wrechargeroff"
 	else if(panel_open)

@@ -3,10 +3,10 @@
 	icon_state = "bolt"
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
+	var/time_to_live = 3
 
-/obj/effect/projectile/New(var/turf/location)
-	if(istype(location))
-		loc = location
+/obj/effect/projectile/atom_init()
+	. = ..()
 	if(light_color)
 		set_light(light_range,light_power,light_color)
 
@@ -15,10 +15,8 @@
 		transform = M
 
 /obj/effect/projectile/proc/activate()
-	spawn(3)
-		qdel(src)	//see effect_system.dm - sets loc to null and lets GC handle removing these effects
-
-	return
+	if(time_to_live)
+		QDEL_IN(src, time_to_live)
 
 //----------------------------
 // Laser beam
@@ -172,3 +170,12 @@
 	light_range = 2
 	light_power = 2
 	light_color = "#2be4b8"
+
+/obj/effect/projectile/rails
+	time_to_live = 15
+
+/obj/effect/projectile/rails/tracer
+	icon_state = "rails_beam"
+
+/obj/effect/projectile/rails/impact
+	icon_state = "rails_impact"

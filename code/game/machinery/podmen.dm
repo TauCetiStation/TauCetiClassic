@@ -91,34 +91,35 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 			return
 
 /obj/item/seeds/replicapod/proc/request_player()
-	for(var/mob/dead/observer/O in player_list)
+	for(var/mob/dead/observer/O in dead_mob_list)
+		if(O.has_enabled_antagHUD && config.antag_hud_restricted)
+			continue
 		if(jobban_isbanned(O, ROLE_PLANT))
 			continue
 		if(role_available_in_minutes(O, ROLE_PLANT))
 			continue
 		if(O.client)
 			var/client/C = O.client
-			if(!C.prefs.ignore_question.Find("diona") && (ROLE_PLANT in C.prefs.be_role))
-				if(O.has_enabled_antagHUD == 1 && config.antag_hud_restricted) //No love for ghost with antaghud enabled
-					continue
-				question(C)
+			if((!C.prefs.ignore_question.Find("diona")) && (ROLE_PLANT in C.prefs.be_role))
+				INVOKE_ASYNC(src, .proc/question, C)
 
 /obj/item/seeds/replicapod/proc/question(client/C)
-	spawn(0)
-		if(!C)	return
-		var/response = alert(C, "Someone is harvesting a diona pod. Would you like to play as a diona?", "Dionaea harvest", "No", "Yes", "Never for this round.")
-		if(!C || ckey)
-			return
-		if(response == "Yes")
-			transfer_personality(C)
-		else if (response == "Never for this round")
-			C.prefs.ignore_question += "diona"
+	if(!C)
+		return
+	var/response = alert(C, "Someone is harvesting a diona pod. Would you like to play as a diona?", "Dionaea harvest", "No", "Yes", "Never for this round")
+	if(!C || ckey || found_player)
+		return
+	if(response == "Yes")
+		transfer_personality(C)
+	else if (response == "Never for this round")
+		C.prefs.ignore_question += "diona"
 
 /obj/item/seeds/replicapod/proc/transfer_personality(client/player)
 
-	if(!player) return
+	if(!player)
+		return
 
-	found_player = 1
+	found_player = TRUE
 
 	var/mob/living/carbon/monkey/diona/podman = new(parent.loc)
 	podman.ckey = player.ckey
@@ -157,7 +158,7 @@ Growing it to term with nothing injected will grab a ghost from the observers. *
 	to_chat(podman, "<B>You are now one of the Dionaea, a race of drifting interstellar plantlike creatures that sometimes share their seeds with human traders.</B>")
 	to_chat(podman, "<B>Too much darkness will send you into shock and starve you, but light will help you heal.</B>")
 	if(!realName)
-		var/newname = input(podman,"Enter a name, or leave blank for the default name.", "Name change","") as text
+		var/newname = sanitize_safe(input(podman,"Enter a name, or leave blank for the default name.", "Name change","") as text, MAX_NAME_LEN)
 		if (newname != "")
 			podman.real_name = newname
 

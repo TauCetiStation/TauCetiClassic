@@ -11,15 +11,12 @@
 	max_w_class = 3
 	max_combined_w_class = 16
 
-/obj/item/weapon/storage/briefcase/New()
-	..()
-
 /obj/item/weapon/storage/briefcase/attack(mob/living/M, mob/living/user)
 	//..()
 
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red The [src] slips out of your hand and hits your head.")
-		user.take_organ_damage(10)
+		user.take_bodypart_damage(10)
 		user.Paralyse(2)
 		return
 

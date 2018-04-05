@@ -2,7 +2,6 @@
 /client
 	var/list/parallax_layers
 	var/list/parallax_layers_cached
-	var/static/list/parallax_static_layers_tail = newlist(/obj/screen/parallax_pmaster, /obj/screen/parallax_space_whitifier)
 	var/atom/movable/movingmob
 	var/turf/previous_turf
 	var/dont_animate_parallax //world.time of when we can state animate()ing parallax again
@@ -27,11 +26,11 @@
 	if (length(C.parallax_layers) > C.parallax_layers_max)
 		C.parallax_layers.len = C.parallax_layers_max
 
-	C.screen |= (C.parallax_layers + C.parallax_static_layers_tail)
+	C.screen |= (C.parallax_layers)
 
 /datum/hud/proc/remove_parallax()
 	var/client/C = mymob.client
-	C.screen -= (C.parallax_layers_cached + C.parallax_static_layers_tail)
+	C.screen -= (C.parallax_layers_cached)
 	C.parallax_layers = null
 
 /datum/hud/proc/apply_parallax_pref()
@@ -112,7 +111,7 @@
 	C.parallax_movedir = new_parallax_movedir
 	if (C.parallax_animate_timer)
 		deltimer(C.parallax_animate_timer)
-	C.parallax_animate_timer = addtimer(src, .update_parallax_motionblur, min(shortesttimer, PARALLAX_LOOP_TIME), TIMER_NORMAL, C, animatedir, new_parallax_movedir, newtransform)
+	C.parallax_animate_timer = addtimer(CALLBACK(src, .proc/update_parallax_motionblur, C, animatedir, new_parallax_movedir, newtransform), min(shortesttimer, PARALLAX_LOOP_TIME), TIMER_CLIENT_TIME|TIMER_STOPPABLE)
 
 /datum/hud/proc/update_parallax_motionblur(client/C, animatedir, new_parallax_movedir, matrix/newtransform)
 	C.parallax_animate_timer = FALSE
@@ -217,8 +216,8 @@
 	mouse_opacity = 0
 
 
-/obj/screen/parallax_layer/New(view)
-	..()
+/obj/screen/parallax_layer/atom_init(mapload, view)
+	. = ..()
 	if (!view)
 		view = world.view
 	update_o(view)
@@ -227,7 +226,7 @@
 	if (!view)
 		view = world.view
 	var/list/new_overlays = list()
-	var/count = Ceiling(view/(480/world.icon_size))+1
+	var/count = ceil(view/(480/world.icon_size))+1
 	for(var/x in -count to count)
 		for(var/y in -count to count)
 			if(x == 0 && y == 0)
@@ -248,25 +247,6 @@
 	icon_state = "layer2"
 	speed = 1
 	layer = 2
-
-/obj/screen/parallax_pmaster
-	appearance_flags = PLANE_MASTER
-	plane = PLANE_SPACE_PARALLAX
-	blend_mode = BLEND_MULTIPLY
-	mouse_opacity = FALSE
-	screen_loc = "CENTER-7,CENTER-7"
-
-/obj/screen/parallax_space_whitifier
-	appearance_flags = PLANE_MASTER
-	plane = PLANE_SPACE
-	color = list(
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		0, 0, 0, 0,
-		1, 1, 1, 1,
-		0, 0, 0, 0
-		)
-	screen_loc = "CENTER-7,CENTER-7"
 
 
 #undef LOOP_NONE

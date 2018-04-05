@@ -12,27 +12,17 @@
 	//Used to enable or disable drone fabrication.
 	var/obj/machinery/drone_fabricator/dronefab
 
-/obj/machinery/computer/drone_control/attack_ai(mob/user)
-	return src.attack_hand(user)
+/obj/machinery/computer/drone_control/interact(user)
+	if(istype(user, /mob/living/silicon/robot/drone))
+		to_chat(user, "<span class='warning'>Access Denied.</span>")
+	else
+		..()
 
-/obj/machinery/computer/drone_control/attack_paw(mob/user)
-
-	return src.attack_hand(user)
-	return
-
-/obj/machinery/computer/drone_control/attack_hand(mob/user)
-	if(..())
-		return
-
-	if(!allowed(user) || istype(user, /mob/living/silicon/robot/drone))
-		to_chat(user, "\red Access denied.")
-		return
-
-	user.set_machine(src)
+/obj/machinery/computer/drone_control/ui_interact(mob/user)
 	var/dat
 	dat += "<B>Maintenance Units</B><BR>"
 
-	for(var/mob/living/silicon/robot/drone/D in world)
+	for(var/mob/living/silicon/robot/drone/D in mob_list)
 		dat += "<BR>[D.real_name] ([D.stat == DEAD ? "<font color='red'>INACTIVE" : "<font color='green'>ACTIVE"]</FONT>)"
 		dat += "<font dize = 9><BR>Cell charge: [D.cell.charge]/[D.cell.maxcharge]."
 		dat += "<BR>Currently located in: [get_area(D)]."
@@ -42,9 +32,8 @@
 
 	dat += "<BR><BR><B>Drone fabricator</B>: "
 	dat += "[dronefab ? "<A href='?src=\ref[src];toggle_fab=1'>[(dronefab.produce_drones && !(dronefab.stat & NOPOWER)) ? "ACTIVE" : "INACTIVE"]</A>" : "<font color='red'><b>FABRICATOR NOT DETECTED.</b></font> (<A href='?src=\ref[src];search_fab=1'>search</a>)"]"
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 
 /obj/machinery/computer/drone_control/Topic(href, href_list)

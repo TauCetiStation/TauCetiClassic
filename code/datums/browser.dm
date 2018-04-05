@@ -45,10 +45,10 @@
 	scripts[name] = file
 
 /datum/browser/proc/set_content(ncontent)
-	content = ncontent
+	content = entity_ja(ncontent)
 
 /datum/browser/proc/add_content(ncontent)
-	content += ncontent
+	content += entity_ja(ncontent)
 
 /datum/browser/proc/get_header()
 	var/key
@@ -83,6 +83,9 @@
 	return {"
 			</div>
 		</div>
+		<script>
+			document.body.innerHTML = document.body.innerHTML.replace(/¶/g, "ÿ");<!-- omg its so weird --!>
+		</script>
 	</body>
 </html>"}
 
@@ -92,7 +95,7 @@
 	[content]
 	[get_footer()]
 	"}
-
+//"
 /datum/browser/proc/open(use_onclose = 1)
 	var/window_size = ""
 	if (width && height)

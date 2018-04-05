@@ -26,6 +26,10 @@
 		ui.set_auto_update(1)
 
 /obj/machinery/embedded_controller/radio/advanced_airlock_controller/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
+
 	var/clean = 0
 	switch(href_list["command"])	//anti-HTML-hacking checks
 		if("cycle_ext")
@@ -77,6 +81,10 @@
 		ui.set_auto_update(1)
 
 /obj/machinery/embedded_controller/radio/airlock_controller/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
+
 	var/clean = 0
 	switch(href_list["command"])	//anti-HTML-hacking checks
 		if("cycle_ext")
@@ -135,6 +143,10 @@
 		ui.set_auto_update(1)
 
 /obj/machinery/embedded_controller/radio/access_controller/Topic(href, href_list)
+	. = ..()
+	if(!.)
+		return
+
 	var/clean = 0
 	switch(href_list["command"])	//anti-HTML-hacking checks
 		if("cycle_ext_door")

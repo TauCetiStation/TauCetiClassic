@@ -163,7 +163,7 @@
 					var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state")
 					var/list/fully_locked = list("resize", "resize_rev")
 
-					master.buildmode.varholder = input(usr,"Enter variable name:" ,"Name", "name")
+					master.buildmode.varholder = sanitize(input(usr,"Enter variable name:" ,"Name", "name"))
 					if(master.buildmode.varholder in fully_locked)
 						to_chat(usr, "\red It is forbidden to edit this variable.")
 						return
@@ -173,7 +173,7 @@
 					if(!thetype) return 1
 					switch(thetype)
 						if("text")
-							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", "value") as text
+							master.buildmode.valueholder = sanitize(input(usr,"Enter variable value:" ,"Value", "value") as text)
 						if("number")
 							master.buildmode.valueholder = input(usr,"Enter variable value:" ,"Value", 123) as num
 						if("mob-reference")
@@ -274,5 +274,5 @@
 					holder.throw_atom = object
 			if(pa.Find("right"))
 				if(holder.throw_atom)
-					holder.throw_atom.throw_at(object, 10, 1)
+					holder.throw_atom.throw_at(object, 10, 3)
 					log_admin("[key_name(usr)] threw [holder.throw_atom] at [object]")

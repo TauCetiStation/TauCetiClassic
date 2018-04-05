@@ -3,7 +3,7 @@
 	desc = "Expels impurifications from our form; curing diseases, genetic disabilities, and removing toxins and radiation."
 	helptext = "Can be used while unconscious."
 	chemical_cost = 25
-	genomecost = 3
+	genomecost = 1
 	req_stat = UNCONSCIOUS
 
 //Heals the things that the other regenerative abilities don't.

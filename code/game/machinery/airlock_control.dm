@@ -1,14 +1,12 @@
 #define AIRLOCK_CONTROL_RANGE 5
 
 // This code allows for airlocks to be controlled externally by setting an id_tag and comm frequency (disables ID access)
-obj/machinery/door/airlock
+/obj/machinery/door/airlock
 	var/id_tag
-	var/frequency
-	var/datum/radio_frequency/radio_connection
 	var/suppres_next_status_send = FALSE
 
 
-obj/machinery/door/airlock/receive_signal(datum/signal/signal)
+/obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	if(!signal || signal.encryption) return
 
 	if(id_tag != signal.data["tag"] || !signal.data["command"]) return
@@ -55,7 +53,7 @@ obj/machinery/door/airlock/receive_signal(datum/signal/signal)
 	else
 		send_status()
 
-obj/machinery/door/airlock/proc/send_status()
+/obj/machinery/door/airlock/proc/send_status()
 	if(radio_connection)
 		var/datum/signal/signal = new
 		signal.transmission_method = 1 //radio signal
@@ -67,17 +65,17 @@ obj/machinery/door/airlock/proc/send_status()
 
 		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 
-obj/machinery/door/airlock/Bumped(atom/AM)
+/obj/machinery/door/airlock/Bumped(atom/AM)
 	if(ishuman(AM) && prob(40) && src.density)
 		var/mob/living/carbon/human/H = AM
 		if(H.getBrainLoss() >= 60)
 			playsound(src.loc, 'sound/effects/bang.ogg', 25, 1)
 			if(!istype(H.head, /obj/item/clothing/head/helmet))
 				visible_message("\red [H] headbutts the airlock.")
-				var/datum/organ/external/affecting = H.get_organ("head")
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 				H.Stun(8)
 				H.Weaken(5)
-				affecting.take_damage(10, 0)
+				BP.take_damage(10, 0)
 			else
 				visible_message("\red [H] headbutts the airlock. Good thing they're wearing a helmet.")
 				H.Stun(8)
@@ -100,51 +98,52 @@ obj/machinery/door/airlock/Bumped(atom/AM)
 			radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 	return
 
-obj/machinery/door/airlock/proc/set_frequency(new_frequency)
+/obj/machinery/door/airlock/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	if(new_frequency)
 		frequency = new_frequency
 		radio_connection = radio_controller.add_object(src, frequency, RADIO_AIRLOCK)
 
 
-obj/machinery/door/airlock/initialize()
+/obj/machinery/door/airlock/atom_init()
+	. = ..()
 	if(frequency)
 		set_frequency(frequency)
 
 	update_icon()
 
 
-obj/machinery/door/airlock/New()
-	..()
+/obj/machinery/door/airlock/atom_init()
+	. = ..()
 
 	if(radio_controller)
 		set_frequency(frequency)
 
-obj/machinery/door/airlock/Destroy()
+/obj/machinery/door/airlock/Destroy()
 	if(frequency && radio_controller)
 		radio_controller.remove_object(src,frequency)
 	return ..()
 
-obj/machinery/airlock_sensor
+/obj/machinery/airlock_sensor
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "airlock_sensor_off"
 	name = "airlock sensor"
 
-	anchored = 1
+	anchored = TRUE
 	power_channel = ENVIRON
+	interact_offline = TRUE // this is very strange that power_channel is defined, use_power = 1 (parent), when this element has no unpowered features and sprites.
 
 	var/id_tag
 	var/master_tag
-	var/frequency = 1379
+	frequency = 1379
 	var/command = "cycle"
 
-	var/datum/radio_frequency/radio_connection
 
 	var/on = 1
 	var/alert = 0
 	var/previousPressure
 
-obj/machinery/airlock_sensor/update_icon()
+/obj/machinery/airlock_sensor/update_icon()
 	if(on)
 		if(alert)
 			icon_state = "airlock_sensor_alert"
@@ -153,7 +152,14 @@ obj/machinery/airlock_sensor/update_icon()
 	else
 		icon_state = "airlock_sensor_off"
 
-obj/machinery/airlock_sensor/attack_hand(mob/user)
+/obj/machinery/airlock_sensor/allowed_fail()
+	flick("access_button_cycle", src)
+
+/obj/machinery/airlock_sensor/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	var/datum/signal/signal = new
 	signal.transmission_method = 1 //radio signal
 	signal.data["tag"] = master_tag
@@ -162,7 +168,7 @@ obj/machinery/airlock_sensor/attack_hand(mob/user)
 	radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
 	flick("airlock_sensor_cycle", src)
 
-obj/machinery/airlock_sensor/process()
+/obj/machinery/airlock_sensor/process()
 	if(on)
 		var/datum/gas_mixture/air_sample = return_air()
 		var/pressure = round(air_sample.return_pressure(),0.1)
@@ -182,95 +188,77 @@ obj/machinery/airlock_sensor/process()
 
 			update_icon()
 
-obj/machinery/airlock_sensor/proc/set_frequency(new_frequency)
+/obj/machinery/airlock_sensor/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, frequency, RADIO_AIRLOCK)
 
-obj/machinery/airlock_sensor/initialize()
+/obj/machinery/airlock_sensor/atom_init()
+	. = ..()
 	set_frequency(frequency)
 
-obj/machinery/airlock_sensor/New()
-	..()
-	if(radio_controller)
-		set_frequency(frequency)
-
-obj/machinery/airlock_sensor/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src,frequency)
-	return ..()
-
-obj/machinery/airlock_sensor/airlock_interior
+/obj/machinery/airlock_sensor/airlock_interior
 	command = "cycle_interior"
 
-obj/machinery/airlock_sensor/airlock_exterior
+/obj/machinery/airlock_sensor/airlock_exterior
 	command = "cycle_exterior"
 
-obj/machinery/access_button
+/obj/machinery/access_button
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "access_button_standby"
 	name = "access button"
 
 	layer = 3.3	//Above windows
-	anchored = 1
+	anchored = TRUE
 	power_channel = ENVIRON
+	interact_offline = TRUE
 
 	var/master_tag
-	var/frequency = 1449
+	frequency = 1449
 	var/command = "cycle"
 
-	var/datum/radio_frequency/radio_connection
+	var/on = TRUE
 
-	var/on = 1
-
-
-obj/machinery/access_button/update_icon()
+/obj/machinery/access_button/update_icon()
 	if(on)
 		icon_state = "access_button_standby"
 	else
 		icon_state = "access_button_off"
 
+/obj/machinery/access_button/allowed_fail()
+	flick("access_button_cycle", src)
 
-obj/machinery/access_button/attack_hand(mob/user)
-	add_fingerprint(usr)
-	if(!allowed(user))
-		to_chat(user, "\red Access Denied")
+/obj/machinery/access_button/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 
-	else if(radio_connection)
+	if(radio_connection)
 		var/datum/signal/signal = new
 		signal.transmission_method = 1 //radio signal
 		signal.data["tag"] = master_tag
 		signal.data["command"] = command
 
 		radio_connection.post_signal(src, signal, range = AIRLOCK_CONTROL_RANGE, filter = RADIO_AIRLOCK)
+
 	flick("access_button_cycle", src)
 
 
-obj/machinery/access_button/proc/set_frequency(new_frequency)
+/obj/machinery/access_button/set_frequency(new_frequency)
 	radio_controller.remove_object(src, frequency)
 	frequency = new_frequency
-	radio_connection = radio_controller.add_object(src, frequency, RADIO_AIRLOCK)
+	if(frequency)
+		radio_connection = radio_controller.add_object(src, frequency, RADIO_AIRLOCK)
 
 
-obj/machinery/access_button/initialize()
+/obj/machinery/access_button/atom_init()
+	. = ..()
 	set_frequency(frequency)
 
-
-obj/machinery/access_button/New()
-	..()
-
-	if(radio_controller)
-		set_frequency(frequency)
-
-obj/machinery/access_button/Destroy()
-	if(radio_controller)
-		radio_controller.remove_object(src, frequency)
-	return ..()
-
-obj/machinery/access_button/airlock_interior
+/obj/machinery/access_button/airlock_interior
 	frequency = 1379
 	command = "cycle_interior"
 
-obj/machinery/access_button/airlock_exterior
+/obj/machinery/access_button/airlock_exterior
 	frequency = 1379
 	command = "cycle_exterior"

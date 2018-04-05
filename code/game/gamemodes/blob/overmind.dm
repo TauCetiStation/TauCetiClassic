@@ -15,11 +15,11 @@
 	var/blob_points = 0
 	var/max_blob_points = 100
 
-/mob/camera/blob/New()
+/mob/camera/blob/atom_init()
 	var/new_name = "[initial(name)] ([rand(1, 999)])"
 	name = new_name
 	real_name = new_name
-	..()
+	. = ..()
 
 /mob/camera/blob/Login()
 	..()
@@ -53,15 +53,14 @@
 	blob_talk(message)
 
 /mob/camera/blob/proc/blob_talk(message)
-	log_say("[key_name(src)] : [message]")
+	message = sanitize(message)
 
-	message = trim(sanitize(copytext(message, 1, MAX_MESSAGE_LEN)))
+	log_say("[key_name(src)] : [message]")
 
 	if (!message)
 		return
 
 	//var/message_a = say_quote(message)
-	//ïðîáëåìêà êàê è ó àëèåíîâ, ìåðæèòü/îáíîâëÿòü
 	var/message_a = "<span class='say_quote'>says,</span> \"<span class='body'>[message]</span>\""
 	var/rendered = "<font color=\"#EE4000\"><i><span class='game say'>Blob Telepathy, <span class='name'>[name]</span> <span class='message'>[message_a]</span></span></i></font>"
 

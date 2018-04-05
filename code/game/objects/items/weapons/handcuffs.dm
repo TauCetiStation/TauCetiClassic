@@ -17,16 +17,18 @@
 	var/cuff_sound = 'sound/weapons/handcuffs.ogg'
 
 /obj/item/weapon/handcuffs/attack(mob/living/carbon/C, mob/user)
-	if (!istype(user, /mob/living/carbon/human))
+	if (!ishuman(user) && !isIAN(user))
 		to_chat(user, "\red You don't have the dexterity to do this!")
+		return
+	if(!istype(C))
 		return
 	if ((CLUMSY in usr.mutations) && prob(50))
 		to_chat(user, "\red Uh ... how do those things work?!")
 		place_handcuffs(user, user)
 		return
 	if(!C.handcuffed)
-		if (C == user)
-			place_handcuffs(user, user)
+		if (C == user || isIAN(user))
+			place_handcuffs(C, user)
 			return
 
 		//check for an aggressive grab
@@ -72,29 +74,9 @@
 			O.process()
 		return
 
-var/last_chew = 0
-/mob/living/carbon/human/RestrainedClickOn(atom/A)
-	if (A != src) return ..()
-	if (last_chew + 26 > world.time) return
-
-	var/mob/living/carbon/human/H = A
-	if (!H.handcuffed) return
-	if (H.a_intent != "hurt") return
-	if (H.zone_sel.selecting != "mouth") return
-	if (H.wear_mask) return
-	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket)) return
-
-	var/datum/organ/external/O = H.organs_by_name[H.hand?"l_hand":"r_hand"]
-	if (!O) return
-
-	var/s = "\red [H.name] chews on \his [O.display_name]!"
-	H.visible_message(s, "\red You chew on your [O.display_name]!")
-	H.attack_log += text("\[[time_stamp()]\] <font color='red'>[s] ([H.ckey])</font>")
-	log_attack("[s] ([H.ckey])")
-
-	O.take_damage(3,0,1,1,"teeth marks")
-
-	last_chew = world.time
+	if (isIAN(target))
+		var/mob/living/carbon/ian/IAN = target
+		IAN.un_equip_or_action(user, "Neck", user.get_active_hand())
 
 /obj/item/weapon/handcuffs/cable
 	name = "cable restraints"
@@ -131,6 +113,10 @@ var/last_chew = 0
 	dispenser = 1
 
 /obj/item/weapon/handcuffs/cyborg/attack(mob/living/carbon/C, mob/user)
+	if(ishuman(C))
+		var/mob/living/carbon/human/target = C
+		if(!target.can_use_two_hands(FALSE))
+			return
 	if(!C.handcuffed)
 		var/turf/p_loc = user.loc
 		var/turf/p_loc_m = C.loc

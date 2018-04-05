@@ -5,24 +5,24 @@
 	desc = "A super-powerful laser."
 	icon = 'icons/obj/engine.dmi'
 	icon_state = "laser"
-	anchored = 0
-	density = 1
+	anchored = FALSE
+	density = TRUE
 	req_access = list(access_research)
+	frequency = 1
 
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 300
+	interact_offline = TRUE
+	allowed_checks = ALLOWED_CHECK_NONE
 
-	var/active = 0
+	var/active = FALSE
 	var/fire_delay = 100
 	var/last_shot = 0
 	var/shot_number = 0
 	var/state = 0
-	var/locked = 0
-
+	var/locked = FALSE
 	var/energy = 0.0001
-	var/frequency = 1
-
 	var/freq = 50000
 	var/id
 
@@ -37,10 +37,6 @@
 	src.dir = turn(src.dir, 90)
 	return 1
 
-/obj/machinery/zero_point_emitter/New()
-	..()
-	return
-
 /obj/machinery/zero_point_emitter/update_icon()
 	if (active && !(stat & (NOPOWER|BROKEN)))
 		icon_state = "laser"//"emitter_+a"
@@ -48,24 +44,28 @@
 		icon_state = "laser"//"emitter"
 
 /obj/machinery/zero_point_emitter/attack_hand(mob/user)
-	src.add_fingerprint(user)
+	. = ..()
+	if(.)
+		return
+
 	if(state == 2)
-		if(!src.locked)
-			if(src.active==1)
-				src.active = 0
+		if(!locked || IsAdminGhost(user))
+			if(active == 1)
+				active = 0
 				to_chat(user, "You turn off the [src].")
-				src.use_power = 1
+				use_power = 1
 			else
-				src.active = 1
+				active = 1
 				to_chat(user, "You turn on the [src].")
-				src.shot_number = 0
-				src.fire_delay = 100
-				src.use_power = 2
+				shot_number = 0
+				fire_delay = 100
+				use_power = 2
 			update_icon()
 		else
-			to_chat(user, "\red The controls are locked!")
+			to_chat(user, "<span class='warning'>The controls are locked!</span>")
+			return 1
 	else
-		to_chat(user, "\red The [src] needs to be firmly secured to the floor first.")
+		to_chat(user, "<span class='warning'>The [src] needs to be firmly secured to the floor first.</span>")
 		return 1
 
 
@@ -149,6 +149,7 @@
 			if(0)
 				to_chat(user, "\red The [src.name] needs to be wrenched to the floor.")
 			if(1)
+				if(user.is_busy()) return
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
@@ -161,6 +162,7 @@
 				else
 					to_chat(user, "\red You need more welding fuel to complete this task.")
 			if(2)
+				if(user.is_busy()) return
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \
@@ -194,6 +196,7 @@
 		locked = 0
 		emagged = 1
 		user.visible_message("[user.name] emags the [src.name].","\red You short out the lock.")
+		user.SetNextMove(CLICK_CD_INTERACT)
 		return
 
 	..()

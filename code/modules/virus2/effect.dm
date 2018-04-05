@@ -118,23 +118,23 @@
 	activate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			var/organ = pick(list("r_arm","l_arm","r_leg","r_leg"))
-			var/datum/organ/external/E = H.organs_by_name[organ]
-			if (!(E.status & ORGAN_DEAD))
-				E.status |= ORGAN_DEAD
-				to_chat(H, "<span class='notice'>You can't feel your [E.display_name] anymore...</span>")
-				for (var/datum/organ/external/C in E.children)
-					C.status |= ORGAN_DEAD
+			var/bodypart = pick(list(BP_R_ARM , BP_L_ARM , BP_R_LEG , BP_L_LEG))
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
+			if (!(BP.status & ORGAN_DEAD))
+				BP.status |= ORGAN_DEAD
+				to_chat(H, "<span class='notice'>You can't feel your [BP.name] anymore...</span>")
+				for (var/obj/item/organ/external/CHILD in BP.children)
+					CHILD.status |= ORGAN_DEAD
 			H.update_body()
 		mob.adjustToxLoss(15*multiplier)
 
 	deactivate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			for (var/datum/organ/external/E in H.organs)
-				E.status &= ~ORGAN_DEAD
-				for (var/datum/organ/external/C in E.children)
-					C.status &= ~ORGAN_DEAD
+			for (var/obj/item/organ/external/BP in H.bodyparts)
+				BP.status &= ~ORGAN_DEAD
+				for (var/obj/item/organ/external/CHILD in BP.children)
+					CHILD.status &= ~ORGAN_DEAD
 			H.update_body()
 
 /datum/disease2/effect/immortal
@@ -143,9 +143,9 @@
 	activate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			for (var/datum/organ/external/E in H.organs)
-				if (E.status & ORGAN_BROKEN && prob(30))
-					E.status ^= ORGAN_BROKEN
+			for (var/obj/item/organ/external/BP in H.bodyparts)
+				if (BP.status & ORGAN_BROKEN && prob(30))
+					BP.status ^= ORGAN_BROKEN
 		var/heal_amt = -5*multiplier
 		mob.apply_damages(heal_amt,heal_amt,heal_amt,heal_amt)
 
@@ -165,14 +165,14 @@
 	activate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			for (var/datum/organ/external/E in H.organs)
-				E.min_broken_damage = max(5, E.min_broken_damage - 30)
+			for (var/obj/item/organ/external/BP in H.bodyparts)
+				BP.min_broken_damage = max(5, BP.min_broken_damage - 30)
 
 	deactivate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			for (var/datum/organ/external/E in H.organs)
-				E.min_broken_damage = initial(E.min_broken_damage)
+			for (var/obj/item/organ/external/BP in H.bodyparts)
+				BP.min_broken_damage = initial(BP.min_broken_damage)
 
 /datum/disease2/effect/toxins
 	name = "Hyperacidity"
@@ -202,9 +202,9 @@
 	activate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			var/datum/organ/internal/brain/B = H.internal_organs_by_name["brain"]
-			if (B.damage < B.min_broken_damage)
-				B.take_damage(5)
+			var/obj/item/organ/internal/brain/IO = H.organs_by_name[O_BRAIN]
+			if (IO.damage < IO.min_broken_damage)
+				IO.take_damage(5)
 		else
 			mob.setBrainLoss(50)
 
@@ -297,7 +297,7 @@
 	activate(mob/living/carbon/mob,multiplier)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			if(H.species.name == "Human" && !(H.h_style == "Bald") && !(H.h_style == "Balding Hair"))
+			if(H.species.name == HUMAN && !(H.h_style == "Bald") && !(H.h_style == "Balding Hair"))
 				to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
 				spawn(50)
 					H.h_style = "Balding Hair"
@@ -351,4 +351,7 @@
 	name = "Headache"
 	stage = 1
 	activate(mob/living/carbon/mob,multiplier)
-		to_chat(mob, "<span class = 'notice'> Your head hurts a bit</span>")
+		if(ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			if(H.species && H.species.flags[NO_PAIN])
+				to_chat(mob, "<span class = 'notice'> Your head hurts a bit</span>")

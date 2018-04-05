@@ -2,7 +2,10 @@
  * Contains:
  *		Table Parts
  *		Reinforced Table Parts
+ *		Glass Table Parts
  *		Wooden Table Parts
+ *		Fancy Table Parts
+ *		Black Fancy Table Parts
  *		Rack Parts
  */
 
@@ -18,12 +21,12 @@
 		//SN src = null
 		qdel(src)
 	if (istype(W, /obj/item/stack/rods))
-		if (W:amount >= 4)
+		var/obj/item/stack/rods/R = W
+		if (R.use(4))
 			new /obj/item/weapon/table_parts/reinforced( user.loc )
 			to_chat(user, "\blue You reinforce the [name].")
-			W:use(4)
 			qdel(src)
-		else if (W:amount < 4)
+		else
 			to_chat(user, "\red You need at least four rods to do this.")
 
 /obj/item/weapon/table_parts/attack_self(mob/user)
@@ -49,6 +52,20 @@
 	return
 
 /*
+ * Glass Table Parts
+ */
+/obj/item/weapon/table_parts/glass/attackby(obj/item/weapon/W, mob/user)
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/glass( user.loc )
+		qdel(src)
+
+/obj/item/weapon/table_parts/glass/attack_self(mob/user)
+	new /obj/structure/table/glass( user.loc )
+	user.drop_item()
+	qdel(src)
+	return
+
+/*
  * Wooden Table Parts
  */
 /obj/item/weapon/table_parts/wood/attackby(obj/item/weapon/W, mob/user)
@@ -58,16 +75,38 @@
 
 	if (istype(W, /obj/item/stack/tile/grass))
 		var/obj/item/stack/tile/grass/Grass = W
-		if(Grass.amount > 1)
-			Grass.amount -= 1
-		else
-			qdel(Grass)
+		Grass.use(1)
 		new /obj/item/weapon/table_parts/wood/poker( src.loc )
 		visible_message("<span class='notice'>[user] adds grass to the wooden table parts</span>")
 		qdel(src)
 
 /obj/item/weapon/table_parts/wood/attack_self(mob/user)
 	new /obj/structure/table/woodentable( user.loc )
+	user.drop_item()
+	qdel(src)
+	return
+
+/*
+ * Fancy Wooden Table Parts
+ */
+/obj/item/weapon/table_parts/wood/fancy/attackby(obj/item/weapon/W, mob/user)
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/wood( user.loc )
+		qdel(src)
+
+/obj/item/weapon/table_parts/wood/fancy/attack_self(mob/user)
+	new /obj/structure/table/woodentable/fancy( user.loc )
+	user.drop_item()
+	qdel(src)
+	return
+
+/obj/item/weapon/table_parts/wood/fancy/black/attackby(obj/item/weapon/W, mob/user)
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/wood( user.loc )
+		qdel(src)
+
+/obj/item/weapon/table_parts/wood/fancy/black/attack_self(mob/user)
+	new /obj/structure/table/woodentable/fancy/black( user.loc )
 	user.drop_item()
 	qdel(src)
 	return

@@ -122,7 +122,7 @@
 
 
 /obj/item/device/assembly/process()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return
 
 

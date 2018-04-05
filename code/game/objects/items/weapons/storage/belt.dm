@@ -6,6 +6,7 @@
 	item_state = "utility"
 	slot_flags = SLOT_BELT
 	attack_verb = list("whipped", "lashed", "disciplined")
+	use_to_pickup = TRUE
 
 /obj/item/weapon/storage/belt/utility
 	name = "tool-belt" //Carn: utility belt is nicer, but it bamboozles the text parsing.
@@ -20,24 +21,24 @@
 		"/obj/item/weapon/wrench",
 		"/obj/item/device/multitool",
 		"/obj/item/device/flashlight",
-		"/obj/item/weapon/cable_coil",
+		"/obj/item/stack/cable_coil",
 		"/obj/item/device/t_scanner",
 		"/obj/item/device/analyzer",
 		"/obj/item/taperoll/engineering")
 
 
-/obj/item/weapon/storage/belt/utility/full/New()
-	..()
+/obj/item/weapon/storage/belt/utility/full/atom_init()
+	. = ..()
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
 	new /obj/item/weapon/crowbar(src)
 	new /obj/item/weapon/wirecutters(src)
-	new /obj/item/weapon/cable_coil(src,30,pick("red","yellow","orange"))
+	new /obj/item/stack/cable_coil(src, 30, pick(COLOR_RED, COLOR_YELLOW, COLOR_ORANGE))
 
 
-/obj/item/weapon/storage/belt/utility/atmostech/New()
-	..()
+/obj/item/weapon/storage/belt/utility/atmostech/atom_init()
+	. = ..()
 	new /obj/item/weapon/screwdriver(src)
 	new /obj/item/weapon/wrench(src)
 	new /obj/item/weapon/weldingtool(src)
@@ -102,8 +103,8 @@
 	    "/obj/item/weapon/FixOVein",
 	    "/obj/item/weapon/bonesetter"
 	)
-/obj/item/weapon/storage/belt/medical/surg/full/New()
-	..()
+/obj/item/weapon/storage/belt/medical/surg/full/atom_init()
+	. = ..()
 	new /obj/item/weapon/retractor(src)
 	new /obj/item/weapon/hemostat(src)
 	new /obj/item/weapon/cautery(src)
@@ -126,6 +127,7 @@
 		"/obj/item/weapon/grenade/flashbang",
 		"/obj/item/weapon/reagent_containers/spray/pepper",
 		"/obj/item/weapon/handcuffs",
+		"/obj/item/device/hailer",
 		"/obj/item/device/flash",
 		"/obj/item/clothing/glasses",
 		"/obj/item/ammo_casing/shotgun",
@@ -138,11 +140,11 @@
 		"/obj/item/clothing/glasses/hud/security",
 		"/obj/item/device/flashlight",
 		"/obj/item/device/pda",
-		"/obj/item/device/radio/headset",
 		"/obj/item/weapon/melee",
 		"/obj/item/taperoll/police",
 		"/obj/item/weapon/gun/energy/taser",
-		"/obj/item/weapon/shield/riot/tele"
+		"/obj/item/weapon/shield/riot/tele",
+		"/obj/item/device/flashlight/seclite"
 		)
 
 /obj/item/weapon/storage/belt/soulstone
@@ -155,15 +157,10 @@
 		"/obj/item/device/soulstone"
 		)
 
-/obj/item/weapon/storage/belt/soulstone/full/New()
-	..()
-	new /obj/item/device/soulstone(src)
-	new /obj/item/device/soulstone(src)
-	new /obj/item/device/soulstone(src)
-	new /obj/item/device/soulstone(src)
-	new /obj/item/device/soulstone(src)
-	new /obj/item/device/soulstone(src)
-
+/obj/item/weapon/storage/belt/soulstone/full/atom_init()
+	. = ..()
+	for (var/i in 1 to 6)
+		new /obj/item/device/soulstone(src)
 
 /obj/item/weapon/storage/belt/champion
 	name = "championship belt"
@@ -202,11 +199,13 @@
 		"/obj/item/device/pda",
 		"/obj/item/taperoll/police",
 		"/obj/item/device/radio/headset",
-		"/obj/item/weapon/melee"
+		"/obj/item/weapon/melee",
+		"/obj/item/device/flashlight/seclite"
 		)
 
 /obj/item/weapon/storage/belt/military
 	name = "military belt"
 	desc = "A syndicate belt designed to be used by boarding parties.  Its style is modeled after the hardsuits they wear."
 	icon_state = "militarybelt"
+	item_state = "militarybelt"
 	can_hold = list()

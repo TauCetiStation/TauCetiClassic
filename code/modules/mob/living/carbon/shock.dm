@@ -28,17 +28,15 @@
 	if(src.analgesic)
 		src.traumatic_shock = 0
 
-	// broken or ripped off organs will add quite a bit of pain
+	// broken or ripped off bodyparts will add quite a bit of pain
 	if(istype(src,/mob/living/carbon/human))
 		var/mob/living/carbon/human/M = src
-		for(var/datum/organ/external/organ in M.organs)
-			if (!organ)
-				continue
-			if((organ.status & ORGAN_DESTROYED) && !organ.amputated)
+		for(var/obj/item/organ/external/BP in M.bodyparts)
+			if((BP.status & ORGAN_DESTROYED) && !BP.amputated)
 				src.traumatic_shock += 60
-			else if(organ.status & ORGAN_BROKEN || organ.open)
+			else if((BP.status & ORGAN_BROKEN) || BP.open)
 				src.traumatic_shock += 30
-				if(organ.status & ORGAN_SPLINTED)
+				if(BP.status & ORGAN_SPLINTED)
 					src.traumatic_shock -= 25
 
 	if(src.traumatic_shock < 0)
@@ -46,6 +44,10 @@
 
 	return src.traumatic_shock
 
+/mob/living/carbon/human/updateshock()
+	if (species && species.flags[NO_PAIN])
+		return
+	..()
 
 /mob/living/carbon/proc/handle_shock()
 	updateshock()

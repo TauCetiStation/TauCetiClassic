@@ -31,7 +31,7 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
 		"}
 */
-	usr << browse(dat, "window=oneclickantag;size=400x400")
+	usr << browse(entity_ja(dat), "window=oneclickantag;size=400x400")
 	return
 
 
@@ -549,22 +549,22 @@ client/proc/one_click_antag()
 	new_vox.mutations |= NOCLONE //Stops the station crew from messing around with their DNA.
 
 	//Now apply cortical stack.
-	var/datum/organ/external/affected = new_vox.get_organ("head")
+	var/obj/item/organ/external/BP = new_vox.bodyparts_by_name[BP_HEAD]
 
 	//To avoid duplicates.
 	for(var/obj/item/weapon/implant/cortical/imp in new_vox.contents)
-		affected.implants -= imp
+		BP.implants -= imp
 		qdel(imp)
 
 	var/obj/item/weapon/implant/cortical/I = new(new_vox)
 	I.imp_in = new_vox
 	I.implanted = 1
-	affected.implants += I
-	I.part = affected
+	BP.implants += I
+	I.part = BP
 
 	if(ticker.mode && ( istype( ticker.mode,/datum/game_mode/heist ) ) )
 		var/datum/game_mode/heist/M = ticker.mode
-		M.cortical_stacks += I
+		M.cortical_stacks[new_vox.mind] = I
 		M.raiders[new_vox.mind] = I
 
 	ticker.mode.traitors += new_vox.mind

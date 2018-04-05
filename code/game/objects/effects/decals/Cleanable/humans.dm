@@ -1,4 +1,4 @@
-#define DRYING_TIME 5 * 60*10                        //for 1 unit of depth in puddle (amount var)
+#define DRYING_TIME 5 MINUTES                        //for 1 unit of depth in puddle (amount var)
 
 var/global/list/image/splatter_cache=list()
 
@@ -23,66 +23,71 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/blood/Destroy()
 	for(var/datum/disease/D in viruses)
 		D.cure(0)
-	SSobj.processing.Remove(src)
 	return ..()
 
-/obj/effect/decal/cleanable/blood/New()
+/obj/effect/decal/cleanable/blood/atom_init()
 	..()
-	update_icon()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/decal/cleanable/blood/atom_init_late()
 	remove_ex_blood()
+	update_icon()
 
 /obj/effect/decal/cleanable/blood/proc/remove_ex_blood() //removes existant blood on the turf
 	if(istype(src, /obj/effect/decal/cleanable/blood/tracks))
 		return // We handle our own drying.
-	if(src.type == /obj/effect/decal/cleanable/blood)
-		if(src.loc && isturf(src.loc))
-			for(var/obj/effect/decal/cleanable/blood/B in src.loc)
-				if(B != src)
-					if (B.blood_DNA)
-						blood_DNA |= B.blood_DNA.Copy()
-					qdel(B)
-	drytime = world.time + DRYING_TIME * (amount+1)
-	SSobj.processing |= src
 
-/obj/effect/decal/cleanable/blood/process()
-	if(world.time > drytime)
-		dry()
+	if(loc) // someone should make blood that drips thru closet or smth like that.
+		for(var/obj/effect/decal/cleanable/blood/B in loc)
+			if(B != src && B.type == type)
+				if (B.blood_DNA)
+					blood_DNA |= B.blood_DNA.Copy()
+				qdel(B)
+
+		drytime = world.time + DRYING_TIME * (amount + 1)
+		addtimer(CALLBACK(src, .proc/dry), drytime)
 
 /obj/effect/decal/cleanable/blood/update_icon()
-	if(basecolor == "rainbow") basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
+	if(basecolor == "rainbow")
+		basecolor = "#[pick(list("FF0000","FF7F00","FFFF00","00FF00","0000FF","4B0082","8F00FF"))]"
 	color = basecolor
 
-/obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/human/perp)
-	if (!istype(perp))
+/obj/effect/decal/cleanable/blood/Crossed(mob/living/carbon/perp)
+	if(!istype(perp))
 		return
 	if(amount < 1)
 		return
 	if(!islist(blood_DNA))	//prevent from runtime errors connected with shitspawn
 		blood_DNA = list()
 
-	var/datum/organ/external/l_foot = perp.get_organ("l_foot")
-	var/datum/organ/external/r_foot = perp.get_organ("r_foot")
-	var/hasfeet = 1
-	if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
-		hasfeet = 0
-	if(perp.shoes && !perp.buckled)//Adding blood to shoes
-		var/obj/item/clothing/shoes/S = perp.shoes
-		if(istype(S))
-			S.blood_color = basecolor
-			S.track_blood = max(amount,S.track_blood)
-			if(!S.blood_overlay)
-				S.generate_blood_overlay()
-			if(!S.blood_DNA)
-				S.blood_DNA = list()
-				S.blood_overlay.color = basecolor
-				S.overlays += S.blood_overlay
-			if(S.blood_overlay && S.blood_overlay.color != basecolor)
-				S.blood_overlay.color = basecolor
-				S.overlays.Cut()
-				S.overlays += S.blood_overlay
-			if(blood_DNA.len)
-				S.blood_DNA |= blood_DNA.Copy()
-	else if (hasfeet)//Or feet
+	var/hasfeet = TRUE
+	var/skip = FALSE
+	if (ishuman(perp))
+		var/mob/living/carbon/human/H = perp
+		var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
+		var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
+		if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
+			hasfeet = FALSE
+		if(perp.shoes && !perp.buckled)//Adding blood to shoes
+			var/obj/item/clothing/shoes/S = perp.shoes
+			if(istype(S))
+				S.blood_color = basecolor
+				S.track_blood = max(amount,S.track_blood)
+				if(!S.blood_overlay)
+					S.generate_blood_overlay()
+				if(!S.blood_DNA)
+					S.blood_DNA = list()
+					S.blood_overlay.color = basecolor
+					S.overlays += S.blood_overlay
+				if(S.blood_overlay && S.blood_overlay.color != basecolor)
+					S.blood_overlay.color = basecolor
+					S.overlays.Cut()
+					S.overlays += S.blood_overlay
+				if(blood_DNA.len)
+					S.blood_DNA |= blood_DNA.Copy()
+			skip = TRUE
+
+	if (hasfeet && !skip) // Or feet
 		perp.feet_blood_color = basecolor
 		perp.track_blood = max(amount,perp.track_blood)
 		if(!perp.feet_blood_DNA)
@@ -104,11 +109,11 @@ var/global/list/image/splatter_cache=list()
 	desc = "It's dry and crusty. Someone is not doing their job."
 	color = adjust_brightness(color, -50)
 	amount = 0
-	SSobj.processing.Remove(src)
 
 /obj/effect/decal/cleanable/blood/attack_hand(mob/living/carbon/human/user)
 	..()
 	if (amount && istype(user))
+		user.SetNextMove(CLICK_CD_MELEE)
 		add_fingerprint(user)
 		if (user.gloves)
 			return
@@ -135,6 +140,11 @@ var/global/list/image/splatter_cache=list()
 	icon_state = "1"
 	random_icon_states = list("1","2","3","4","5")
 	amount = 0
+	var/list/drips = list()
+
+/obj/effect/decal/cleanable/blood/drip/atom_init()
+	. = ..()
+	drips |= icon_state
 
 /obj/effect/decal/cleanable/blood/writing
 	icon_state = "tracks"
@@ -144,8 +154,8 @@ var/global/list/image/splatter_cache=list()
 	amount = 0
 	var/message
 
-/obj/effect/decal/cleanable/blood/writing/New()
-	..()
+/obj/effect/decal/cleanable/blood/writing/atom_init()
+	. = ..()
 	if(random_icon_states.len)
 		for(var/obj/effect/decal/cleanable/blood/writing/W in loc)
 			random_icon_states.Remove(W.icon_state)
@@ -221,7 +231,7 @@ var/global/list/image/splatter_cache=list()
 		for (var/i = 0, i < pick(1, 200; 2, 150; 3, 50; 4), i++)
 			sleep(3)
 			if (i > 0)
-				var/obj/effect/decal/cleanable/blood/b = PoolOrNew(/obj/effect/decal/cleanable/blood/splatter, src.loc)
+				var/obj/effect/decal/cleanable/blood/b = new /obj/effect/decal/cleanable/blood/splatter(src.loc)
 				b.basecolor = src.basecolor
 				b.update_icon()
 				for(var/datum/disease/D in src.viruses)
@@ -245,8 +255,11 @@ var/global/list/image/splatter_cache=list()
 	random_icon_states = list("mucus")
 
 	var/list/datum/disease2/disease/virus2 = list()
-	var/dry=0 // Keeps the lag down
+	var/dry = 0 // Keeps the lag down
 
-/obj/effect/decal/cleanable/mucus/New()
-	spawn(DRYING_TIME * 2)
-		dry=1
+/obj/effect/decal/cleanable/mucus/atom_init()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/set_dry, 1), DRYING_TIME * 2)
+
+/obj/effect/decal/cleanable/mucus/proc/set_dry(value) // just to change var using timer, we need a whole new proc :(
+	dry = value

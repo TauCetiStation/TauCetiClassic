@@ -51,10 +51,9 @@
 	if (usr.abiotic())
 		to_chat(usr, "\blue <B>Subject cannot have abiotic items on.</B>")
 		return
-	usr.pulling = null
 	usr.client.perspective = EYE_PERSPECTIVE
 	usr.client.eye = src
-	usr.loc = src
+	usr.forceMove(src)
 	src.occupant = usr
 	src.icon_state = "body_scanner_1"
 	for(var/obj/O in src)
@@ -78,7 +77,7 @@
 	src.icon_state = "body_scanner_0"
 	return
 
-/obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, user)
+/obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, mob/user)
 	if ((!( istype(G, /obj/item/weapon/grab) ) || !( ismob(G.affecting) )))
 		return
 	if (src.occupant)
@@ -87,7 +86,11 @@
 	if (G.affecting.abiotic())
 		to_chat(user, "\blue <B>Subject cannot have abiotic items on.</B>")
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	var/mob/M = G.affecting
+	if(M.buckled)
+		var/obj/O = M.buckled
+		O.user_unbuckle_mob(user)
 	if (M.client)
 		M.client.perspective = EYE_PERSPECTIVE
 		M.client.eye = src
@@ -172,7 +175,7 @@
 
 /obj/machinery/body_scanconsole
 	var/obj/machinery/bodyscanner/connected
-	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/loyalty, /obj/item/weapon/implant/tracking)
+	var/known_implants = list(/obj/item/weapon/implant/chem, /obj/item/weapon/implant/death_alarm, /obj/item/weapon/implant/mindshield, /obj/item/weapon/implant/tracking, /obj/item/weapon/implant/mindshield/loyalty)
 	var/delete
 	var/temphtml
 	name = "Body Scanner Console"
@@ -183,12 +186,12 @@
 	var/storedinfo = null
 
 
-/obj/machinery/body_scanconsole/New()
+/obj/machinery/body_scanconsole/atom_init()
 	..()
-	spawn( 5 )
-		src.connected = locate(/obj/machinery/bodyscanner, get_step(src, WEST))
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/body_scanconsole/atom_init_late()
+	connected = locate(/obj/machinery/bodyscanner, get_step(src, WEST))
 
 /*
 
@@ -214,19 +217,13 @@
 */
 
 
-/obj/machinery/body_scanconsole/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/body_scanconsole/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/body_scanconsole/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/body_scanconsole/ui_interact(mob/user)
 	if(!ishuman(connected.occupant))
 		to_chat(user, "\red This device can only scan compatible lifeforms.")
 		return
+
 	var/dat
+
 	if (src.delete && src.temphtml) //Window in buffer but its just simple message, so nothing
 		src.delete = src.delete
 	else if (!src.delete && src.temphtml) //Window in buffer - its a menu, dont add clear message
@@ -286,24 +283,24 @@
 						if(!D.hidden[SCANNER])
 							dat += text("<font color='red'><B>Warning: [D.form] Detected</B>\nName: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</FONT><BR>")
 
-					dat += "<HR><A href='?src=\ref[src];print=1'>Print organs report</A><BR>"
+					dat += "<HR><A href='?src=\ref[src];print=1'>Print body parts report</A><BR>"
 					storedinfo = null
 					dat += "<HR><table border='1'>"
 					dat += "<tr>"
-					dat += "<th>Organ</th>"
+					dat += "<th>Body Part</th>"
 					dat += "<th>Burn Damage</th>"
 					dat += "<th>Brute Damage</th>"
 					dat += "<th>Other Wounds</th>"
 					dat += "</tr>"
 					storedinfo += "<HR><table border='1'>"
 					storedinfo += "<tr>"
-					storedinfo += "<th>Organ</th>"
+					storedinfo += "<th>Body Part</th>"
 					storedinfo += "<th>Burn Damage</th>"
 					storedinfo += "<th>Brute Damage</th>"
 					storedinfo += "<th>Other Wounds</th>"
 					storedinfo += "</tr>"
 
-					for(var/datum/organ/external/e in occupant.organs)
+					for(var/obj/item/organ/external/BP in occupant.bodyparts)
 
 						dat += "<tr>"
 						storedinfo += "<tr>"
@@ -314,24 +311,23 @@
 						var/bled = ""
 						var/robot = ""
 						var/splint = ""
-						var/internal_bleeding = ""
+						var/arterial_bleeding = ""
 						var/lung_ruptured = ""
-						for(var/datum/wound/W in e.wounds) if(W.internal)
-							internal_bleeding = "<br>Internal bleeding"
-							break
-						if(istype(e, /datum/organ/external/chest) && occupant.is_lung_ruptured())
+						if(BP.status & ORGAN_ARTERY_CUT)
+							arterial_bleeding = "<br>Arterial bleeding"
+						if(istype(BP, /obj/item/organ/external/chest) && occupant.is_lung_ruptured())
 							lung_ruptured = "Lung ruptured:"
-						if(e.status & ORGAN_SPLINTED)
+						if(BP.status & ORGAN_SPLINTED)
 							splint = "Splinted:"
-						if(e.status & ORGAN_BLEEDING)
+						if(BP.status & ORGAN_BLEEDING)
 							bled = "Bleeding:"
-						if(e.status & ORGAN_BROKEN)
-							AN = "[e.broken_description]:"
-						if(e.status & ORGAN_ROBOT)
+						if(BP.status & ORGAN_BROKEN)
+							AN = "[BP.broken_description]:"
+						if(BP.status & ORGAN_ROBOT)
 							robot = "Prosthetic:"
-						if(e.open)
+						if(BP.open)
 							open = "Open:"
-						switch (e.germ_level)
+						switch (BP.germ_level)
 							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infected = "Mild Infection:"
 							if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
@@ -348,33 +344,33 @@
 								infected = "Septic:"
 
 						var/unknown_body = 0
-						for(var/I in e.implants)
+						for(var/I in BP.implants)
 							if(is_type_in_list(I,known_implants))
 								imp += "[I] implanted:"
 							else
 								unknown_body++
 
-						if(unknown_body || e.hidden)
+						if(unknown_body || BP.hidden)
 							imp += "Unknown body present:"
 						if(!AN && !open && !infected & !imp)
 							AN = "None:"
-						if(!(e.status & ORGAN_DESTROYED))
-							dat += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
-							storedinfo += "<td>[e.display_name]</td><td>[e.burn_dam]</td><td>[e.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][internal_bleeding][lung_ruptured]</td>"
+						if(!(BP.status & ORGAN_DESTROYED))
+							dat += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][lung_ruptured]</td>"
+							storedinfo += "<td>[BP.name]</td><td>[BP.burn_dam]</td><td>[BP.brute_dam]</td><td>[robot][bled][AN][splint][open][infected][imp][arterial_bleeding][lung_ruptured]</td>"
 						else
-							dat += "<td>[e.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
-							storedinfo += "<td>[e.display_name]</td><td>-</td><td>-</td><td>Not Found</td>"
+							dat += "<td>[BP.name]</td><td>-</td><td>-</td><td>Not Found</td>"
+							storedinfo += "<td>[BP.name]</td><td>-</td><td>-</td><td>Not Found</td>"
 						dat += "</tr>"
 						storedinfo += "</tr>"
-					for(var/datum/organ/internal/i in occupant.internal_organs)
+					for(var/obj/item/organ/internal/IO in occupant.organs)
 						var/mech = ""
-						if(i.robotic == 1)
+						if(IO.robotic == 1)
 							mech = "Assisted:"
-						if(i.robotic == 2)
+						if(IO.robotic == 2)
 							mech = "Mechanical:"
 
 						var/infection = "None"
-						switch (i.germ_level)
+						switch (IO.germ_level)
 							if (INFECTION_LEVEL_ONE to INFECTION_LEVEL_ONE_PLUS)
 								infection = "Mild Infection:"
 							if (INFECTION_LEVEL_ONE_PLUS to INFECTION_LEVEL_ONE_PLUS_PLUS)
@@ -391,10 +387,10 @@
 								infection = "Necrotic:"
 
 						dat += "<tr>"
-						dat += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>[infection]:[mech]</td><td></td>"
+						dat += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection]:[mech]</td><td></td>"
 						dat += "</tr>"
 						storedinfo += "<tr>"
-						storedinfo += "<td>[i.name]</td><td>N/A</td><td>[i.damage]</td><td>[infection]:[mech]</td><td></td>"
+						storedinfo += "<td>[IO.name]</td><td>N/A</td><td>[IO.damage]</td><td>[infection]:[mech]</td><td></td>"
 						storedinfo += "</tr>"
 					dat += "</table>"
 					storedinfo += "</table>"
@@ -409,8 +405,7 @@
 		else
 			dat = "<font color='red'> Error: No Body Scanner connected.</font>"
 	dat += text("<BR><BR><A href='?src=\ref[];mach_close=scanconsole'>Close</A>", user)
-	user << browse(dat, "window=scanconsole;size=430x600")
-	return
+	user << browse(entity_ja(dat), "window=scanconsole;size=430x600")
 
 /obj/machinery/body_scanconsole/Topic(href, href_list)
 	. = ..()

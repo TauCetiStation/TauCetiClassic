@@ -72,10 +72,11 @@ var/list/stealth_keys = list()
 var/list/ignore_vision_inside = list(
 	/obj/mecha,
 	/obj/machinery/abductor/experiment,
-	/obj/machinery/atmospherics/unary/cryo_cell,
+	/obj/machinery/atmospherics/components/unary/cryo_cell,
 	/obj/machinery/bodyscanner,
 	/obj/machinery/clonepod,
 	/obj/machinery/dna_scannernew,
 	/obj/machinery/sleeper,
-	/obj/effect/dummy
+	/obj/effect/dummy,
+	/obj/structure/droppod
 	)

@@ -17,13 +17,11 @@
 	var/stop = 0.0
 	var/screen = 0 // 0 - Main Menu, 1 - Cyborg Status, 2 - Kill 'em All! -- In text
 
-/obj/machinery/computer/robotics/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/robotics/ui_interact(mob/user)
 	if (src.z > ZLEVEL_EMPTY)
 		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
-	user.set_machine(src)
+
 	var/dat
 	if (src.temp)
 		dat = "<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>"
@@ -90,9 +88,8 @@
 				\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
 
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 /obj/machinery/computer/robotics/Topic(href, href_list)
 	. = ..()
@@ -105,21 +102,15 @@
 		<A href='?src=\ref[src];temp=1'>Cancel</A>"}
 
 	else if (href_list["eject2"])
-		var/obj/item/weapon/card/id/I = usr.get_active_hand()
-		if (istype(I, /obj/item/device/pda))
-			var/obj/item/device/pda/pda = I
-			I = pda.id
-		if (istype(I))
-			if(src.check_access(I))
-				if (!status)
-					message_admins("\blue [key_name_admin(usr)] has initiated the global cyborg killswitch! <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>")
-					log_game("\blue [key_name(usr)] has initiated the global cyborg killswitch!")
-					src.status = 1
-					src.start_sequence()
-					src.temp = null
-
-			else
-				to_chat(usr, "\red Access Denied.")
+		if(allowed(usr))
+			if (!status)
+				message_admins("\blue [key_name_admin(usr)] has initiated the global cyborg killswitch! <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>")
+				log_game("\blue [key_name(usr)] has initiated the global cyborg killswitch!")
+				src.status = 1
+				src.start_sequence()
+				src.temp = null
+		else
+			to_chat(usr, "\red Access Denied.")
 
 	else if (href_list["stop"])
 		src.temp = {"

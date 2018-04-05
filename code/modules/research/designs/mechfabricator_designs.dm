@@ -203,7 +203,7 @@
 	category = list("Odysseus")
 
 /datum/design/odysseus_left_arm
-	name = "Exosuit Right Arm (\"Odysseus\")"
+	name = "Exosuit Left Arm (\"Odysseus\")"
 	id = "odysseus_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/odysseus_left_arm
@@ -414,6 +414,7 @@
 	category = list("Durand")
 
 /datum/design/durand_left_arm
+	name = "Exosuit Left Arm (\"Durand\")"
 	id = "durand_left_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_left_arm
@@ -421,7 +422,7 @@
 	category = list("Durand")
 
 /datum/design/durand_right_arm
-	name = "Exosuit Left Arm (\"Durand\")"
+	name = "Exosuit Right Arm (\"Durand\")"
 	id = "durand_right_arm"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_right_arm
@@ -430,7 +431,7 @@
 	category = list("Durand")
 
 /datum/design/durand_left_leg
-	name = "Exosuit Right Arm (\"Durand\")"
+	name = "Exosuit Left Leg (\"Durand\")"
 	id = "durand_left_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_left_leg
@@ -439,7 +440,7 @@
 	category = list("Durand")
 
 /datum/design/durand_right_leg
-	name = "Exosuit Left Leg (\"Durand\")"
+	name = "Exosuit Right Leg (\"Durand\")"
 	id = "durand_right_leg"
 	build_type = MECHFAB
 	build_path = /obj/item/mecha_parts/part/durand_right_leg

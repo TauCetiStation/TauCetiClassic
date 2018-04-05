@@ -12,66 +12,66 @@
 	use_me = 0 //Blobs can't emote
 
 
-	New()
-		real_name += " [pick(rand(1, 99))]"
-		name = real_name
-		..()
+/mob/living/blob/atom_init()
+	real_name += " [pick(rand(1, 99))]"
+	name = real_name
+	. = ..()
 
 
-	say(var/message)
-		return//No talking for you
+/mob/living/blob/say(var/message)
+	return//No talking for you
 
 
-	emote(act,m_type=1,message = null)
-		return
+/mob/living/blob/emote(act,m_type=1,message = null)
+	return
 
 
-	Life()
-		set invisibility = 0
-		//set background = 1
+/mob/living/blob/Life()
+	set invisibility = 0
+	//set background = 1
 
-		clamp_values()
-		UpdateDamage()
-		if(health < 0)
-			src.dust()
-
-
-	proc/clamp_values()
-		AdjustStunned(0)
-		AdjustParalysis(0)
-		AdjustWeakened(0)
-		sleeping = 0
-		if(stat)
-			stat = CONSCIOUS
-		return
+	clamp_values()
+	UpdateDamage()
+	if(health < 0)
+		src.dust()
 
 
-	proc/UpdateDamage()
-		health = 60 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
-		return
+/mob/living/blob/proc/clamp_values()
+	AdjustStunned(0)
+	AdjustParalysis(0)
+	AdjustWeakened(0)
+	sleeping = 0
+	if(stat)
+		stat = CONSCIOUS
+	return
 
 
-	death(gibbed)
-		if(key)
-			var/mob/dead/observer/ghost = new(src)
-			ghost.name = ghost_name
-			ghost.real_name = ghost_name
-			ghost.key = key
-			if (ghost.client)
-				ghost.client.eye = ghost
-			return ..(gibbed)
+/mob/living/blob/proc/UpdateDamage()
+	health = 60 - (getOxyLoss() + getToxLoss() + getFireLoss() + getBruteLoss() + getCloneLoss())
+	return
 
 
-	blob_act()
-		to_chat(src, "The blob attempts to reabsorb you.")
-		adjustToxLoss(20)
-		return
+/mob/living/blob/death(gibbed)
+	if(key)
+		var/mob/dead/observer/ghost = new(src)
+		ghost.name = ghost_name
+		ghost.real_name = ghost_name
+		ghost.key = key
+		if (ghost.client)
+			ghost.client.eye = ghost
+		return ..(gibbed)
 
 
-	Process_Spacemove()
-		if(locate(/obj/effect/blob) in oview(1,src))
-			return 1
-		return (..())
+/mob/living/blob/blob_act()
+	to_chat(src, "The blob attempts to reabsorb you.")
+	adjustToxLoss(20)
+	return
+
+
+/mob/living/blob/Process_Spacemove()
+	if(locate(/obj/effect/blob) in oview(1,src))
+		return 1
+	return (..())
 
 
 /mob/living/blob/verb/create_node()
@@ -212,7 +212,7 @@
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = input(src, "Please specify which key will be turned into a bloby.", "Key", "")
+	var/input = ckey(input(src, "Please specify which key will be turned into a bloby.", "Key", ""))
 
 	var/mob/dead/observer/G_found
 	if(!input)
@@ -224,7 +224,7 @@
 
 	else
 		for(var/mob/dead/observer/G in player_list)
-			if(G.client&&ckey(G.key)==ckey(input))
+			if(G.client&&ckey(G.key)==input)
 				G_found = G
 				break
 

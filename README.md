@@ -1,12 +1,21 @@
 # Tau Ceti Classic
-[![Slack](http://slack.tauceti.ru/badge.svg)](http://slack.tauceti.ru/)
+
 [![tauceti.ru](https://img.shields.io/badge/site-tauceti.ru-blue.svg)](http://tauceti.ru/)
+[![Discord](https://img.shields.io/badge/dynamic/json.svg?label=Discord&uri=https%3A%2F%2Fdiscordapp.com%2Fapi%2Fguilds%2F401030271417188353%2Fwidget.json&query=members.length&colorB=%237289db&suffix=%20online&logo=discord)](https://discord.gg/YCWRjkb)
+
+---
 
 [Baystation12](http://baystation12.net/)-based build with many changes from another upstream and sibling builds like:  
 * [/tg/station13](https://tgstation13.org/)
 * [ParadiseSS13](http://nanotrasen.se/phpBB3/index.php)
 * [/vg/station13](http://ss13.pomf.se/)
 * [Goonstation](http://goonhub.com/)
+
+---
+
+### ВНЕСТИ ВКЛАД (CONTRIBUTING)
+
+Обязательно прочитайте [CONTRIBUTING.md](https://github.com/TauCetiStation/TauCetiClassic/blob/master/CONTRIBUTING.md).
 
 ---
 

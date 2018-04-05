@@ -31,7 +31,7 @@
 	var/index1			// display index for scrolling messages or 0 if non-scrolling
 	var/index2
 
-	var/frequency = 1435		// radio frequency
+	frequency = 1435		// radio frequency
 	var/supply_display = 0		// true if a supply shuttle display
 
 	var/friendc = 0      // track if Friend Computer mode
@@ -42,11 +42,9 @@
 	// new display
 	// register for radio system
 
-/obj/machinery/status_display/New()
-	..()
-	spawn(5)	// must wait for map loading to finish
-		if(radio_controller)
-			radio_controller.add_object(src, frequency)
+/obj/machinery/status_display/atom_init()
+	. = ..()
+	radio_controller.add_object(src, frequency)
 
 /obj/machinery/status_display/Destroy()
 	if(radio_controller)
@@ -272,6 +270,8 @@
 				set_picture("ai_facepalm")
 			if("Friend Computer")
 				set_picture("ai_friend")
+			if("HAL")
+				set_picture("ai_hal")
 
 		return
 

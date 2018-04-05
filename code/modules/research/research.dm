@@ -154,6 +154,13 @@ research holder datum.
 				KT.level = max((KT.level + 1), (level - 1))
 	return
 
+//Checks if the origin level can raise current tech levels
+//Input: Tech's ID and Level; Output: TRUE for yes, FALSE for no
+/datum/research/proc/IsTechHigher(ID, level)
+	for(var/datum/tech/KT in known_tech)
+		if(KT.id == ID)
+			return KT.level <= level
+
 /datum/research/proc/UpdateDesigns(obj/item/I, list/temp_tech)
 	for(var/T in temp_tech)
 		if(temp_tech[T] - 1 >= known_tech[T])
@@ -288,6 +295,7 @@ datum/tech/robotics
 	g_amt = 10
 	var/datum/tech/stored
 
-/obj/item/weapon/disk/tech_disk/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+/obj/item/weapon/disk/tech_disk/atom_init()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)

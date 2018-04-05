@@ -40,7 +40,7 @@
 		else
 			tempL -= attempt
 	if(!success)
-		target.loc = pick(L)
+		target.forceMove(pick(L))
 
 /obj/machinery/abductor/pad/proc/Warp(mob/living/target)
 	if(target)
@@ -60,11 +60,11 @@
 					target.drop_l_hand()
 				else
 					target.drop_r_hand()
-		target.forceMove(src.loc)
+		target.forceMove(loc)
 
 /obj/machinery/abductor/pad/proc/Send()
 	flick("alien-pad", src)
-	for(var/mob/living/target in src.loc)
+	for(var/mob/living/target in loc)
 		TeleportToArea(target, teleport_target)
 		spawn(0)
 			anim(target.loc,target,'icons/mob/mob.dmi',,"uncloak",,target.dir)

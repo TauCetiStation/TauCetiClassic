@@ -7,7 +7,8 @@
 #define LOC_VAULT 6
 #define LOC_CONSTR 7
 #define LOC_TECH 8
-#define LOC_TACTICAL 9
+
+#define LOC_LATEST 8
 
 #define VERM_MICE 0
 #define VERM_LIZARDS 1
@@ -23,7 +24,7 @@
 
 /datum/event/infestation/start()
 
-	location = rand(0,9)
+	location = rand(0, LOC_LATEST)
 	var/list/turf/simulated/floor/turfs = list()
 	var/spawn_area_type
 	switch(location)
@@ -54,9 +55,6 @@
 		if(LOC_TECH)
 			spawn_area_type = /area/storage/tech
 			locstring = "technical storage"
-		if(LOC_TACTICAL)
-			spawn_area_type = /area/security/tactical
-			locstring = "tactical equipment storage"
 
 	//world << "looking for [spawn_area_type]"
 	for(var/areapath in typesof(spawn_area_type))
@@ -112,7 +110,8 @@
 #undef LOC_HYDRO
 #undef LOC_VAULT
 #undef LOC_TECH
-#undef LOC_TACTICAL
+
+#undef LOC_LATEST
 
 #undef VERM_MICE
 #undef VERM_LIZARDS

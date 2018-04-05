@@ -37,31 +37,25 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
 	desc = "A remote control switch for holosign."
-	var/id = null
-	var/active = 0
-	anchored = 1.0
+	anchored = TRUE
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
-
-/obj/machinery/holosign_switch/attack_ai(mob/user)
-	return src.attack_hand(user)
-/
-obj/machinery/holosign_switch/attack_paw(mob/user)
-	return src.attack_hand(user)
+	var/id = null
+	var/active = FALSE
 
 /obj/machinery/holosign_switch/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/machinery/holosign_switch/attack_hand(mob/user)
-	src.add_fingerprint(usr)
-	if(stat & (NOPOWER|BROKEN))
+	. = ..()
+	if(.)
 		return
-	add_fingerprint(user)
 
 	use_power(5)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	active = !active
 	if(active)
@@ -74,5 +68,3 @@ obj/machinery/holosign_switch/attack_paw(mob/user)
 			spawn( 0 )
 				M.toggle()
 				return
-
-	return

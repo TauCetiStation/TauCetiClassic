@@ -10,4 +10,5 @@
 			client.eye = loc
 			client.perspective = EYE_PERSPECTIVE
 	src.view_core()
+	wipe_timer_id = addtimer(CALLBACK(src, .proc/wipe_core), 6000, TIMER_STOPPABLE)
 	return

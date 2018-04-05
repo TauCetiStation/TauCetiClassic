@@ -6,6 +6,7 @@
 	desc = "Allows temporary access to station areas."
 	icon_state = "guest"
 	light_color = "#0099ff"
+	customizable_view = FORDBIDDEN_VIEW
 
 	var/temp_access = list() //to prevent agent cards stealing access as permanent
 	var/expiration_time = 0
@@ -55,8 +56,8 @@
 	var/list/internal_log = list()
 	var/mode = 0  // 0 - making pass, 1 - viewing logs
 
-/obj/machinery/computer/guestpass/New()
-	..()
+/obj/machinery/computer/guestpass/atom_init()
+	. = ..()
 	uid = "[rand(100,999)]-G[rand(10,99)]"
 
 /obj/machinery/computer/guestpass/attackby(obj/O, mob/user)
@@ -69,17 +70,7 @@
 		else
 			to_chat(user, "<span class='warning'>There is already ID card inside.</span>")
 
-/obj/machinery/computer/guestpass/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/guestpass/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/guestpass/attack_hand(mob/user)
-	if(..())
-		return
-
-	user.set_machine(src)
+/obj/machinery/computer/guestpass/ui_interact(mob/user)
 	var/dat
 
 	if (mode == 1) //Logs
@@ -104,7 +95,7 @@
 				dat += "<a href='?src=\ref[src];choice=access;access=[A]'>[area]</a><br>"
 		dat += "<br><a href='?src=\ref[src];action=issue'>Issue pass</a><br>"
 
-	user << browse(dat, "window=guestpass;size=400x520")
+	user << browse(entity_ja(dat), "window=guestpass;size=400x520")
 	onclose(user, "guestpass")
 
 
@@ -119,11 +110,11 @@
 	if (href_list["choice"])
 		switch(href_list["choice"])
 			if ("giv_name")
-				var/nam = sanitize(input("Person pass is issued to", "Name", giv_name) as text|null)
+				var/nam = sanitize(input("Person pass is issued to", "Name", input_default(giv_name)) as text|null)
 				if (nam)
 					giv_name = nam
 			if ("reason")
-				var/reas = sanitize(input("Reason why pass is issued", "Reason", reason) as text|null)
+				var/reas = sanitize(input("Reason why pass is issued", "Reason", input_default(reason)) as text|null)
 				if(reas)
 					reason = reas
 			if ("duration")

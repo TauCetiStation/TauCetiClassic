@@ -43,11 +43,9 @@
 	//Equipment slots
 	var/obj/item/wear_suit = null
 	var/obj/item/w_uniform = null
-	var/obj/item/shoes = null
 	var/obj/item/belt = null
 	var/obj/item/gloves = null
 	var/obj/item/glasses = null
-	var/obj/item/head = null
 	var/obj/item/l_ear = null
 	var/obj/item/r_ear = null
 	var/obj/item/wear_id = null
@@ -68,8 +66,8 @@
 
 	var/failed_last_breath = 0 //This is used to determine if the mob failed a breath. If they did fail a brath, they will attempt to breathe each tick, otherwise just once per 4 ticks.
 
-	var/last_dam = -1	//Used for determining if we need to process all organs or just some or even none.
-	var/list/bad_external_organs = list()// organs we check until they are good.
+	var/last_dam = -1	//Used for determining if we need to process all bodyparts or just some or even none.
+	var/list/bad_bodyparts = list()// bodyparts we check until they are good.
 
 	var/xylophone = 0 //For the spoooooooky xylophone cooldown
 
@@ -84,3 +82,8 @@
 	var/name_override //For temporary visible name changes
 
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
+
+	var/full_prosthetic    // We are a robutt.
+	var/robolimb_count = 0 // Number of robot limbs.
+	var/sightglassesmod = null
+	var/datum/personal_crafting/handcrafting

@@ -78,13 +78,13 @@
 //This really should be in mob not every check
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/datum/organ/internal/eyes/E = H.internal_organs_by_name["eyes"]
-			if (E.damage >= E.min_bruised_damage)
+			var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+			if (IO.damage >= IO.min_bruised_damage)
 				to_chat(M, "\red Your eyes start to burn badly!")
 				if(!banglet && !(istype(src , /obj/item/weapon/grenade/clusterbuster)))
-					if (E.damage >= E.min_broken_damage)
+					if (IO.damage >= IO.min_broken_damage)
 						to_chat(M, "\red You can't see anything!")
-			if(H.species.name == "Shadowling") // BBQ from shadowling ~Zve
+			if(H.species.name == SHADOWLING) // BBQ from shadowling ~Zve
 				H.adjustFireLoss(rand(15,25))
 		if (M.ear_damage >= 15)
 			to_chat(M, "\red Your ears start to ring badly!")
@@ -142,34 +142,30 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang_segment"
 
-/obj/item/weapon/grenade/clusterbuster/segment/New(var/loc, var/payload_type = /obj/item/weapon/grenade/flashbang/cluster)
-	..()
+/obj/item/weapon/grenade/clusterbuster/segment/atom_init(mapload, payload_type = /obj/item/weapon/grenade/flashbang/cluster)
+	. = ..()
 	icon_state = "clusterbang_segment_active"
 	payload = payload_type
 	active = 1
 	walk_away(src,loc,rand(1,4))
-	addtimer(src, "prime", rand(15,60))
+	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
 
 /obj/item/weapon/grenade/clusterbuster/segment/prime()
-
 	new /obj/effect/payload_spawner(loc, payload, rand(4,8))
-
 	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
-
 	qdel(src)
 
 //////////////////////////////////
 //The payload spawner effect
 /////////////////////////////////
-/obj/effect/payload_spawner/New(var/turf/newloc,var/type, var/numspawned as num)
-
+/obj/effect/payload_spawner/atom_init(type, numspawned)
+	. = ..()
 	for(var/loop = numspawned ,loop > 0, loop--)
 		var/obj/item/weapon/grenade/P = new type(loc)
 		P.active = 1
 		walk_away(P,loc,rand(1,4))
-
-		addtimer(P, "prime", rand(15,60))
-	qdel(src)
+		addtimer(CALLBACK(P, /obj/item/weapon/grenade.proc/prime), rand(15,60))
+	return INITIALIZE_HINT_QDEL
 
 /obj/item/weapon/grenade/flashbang/cluster
 	icon_state = "flashbang_active"

@@ -154,12 +154,7 @@
 		spawn(25) increase_tension(user)
 
 /obj/item/weapon/crossbow/afterattack(atom/target, mob/living/user, flag, params)
-
-	if (istype(target, /obj/item/weapon/storage/backpack ))
-		src.dropped()
-		return
-
-	else if (target.loc == user.loc)
+	if (target.loc == user.loc)
 		return
 
 	else if (locate (/obj/structure/table, src.loc))
@@ -179,6 +174,11 @@
 		spawn(0) Fire(target,user,params)
 
 /obj/item/weapon/crossbow/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = H.wear_suit
+			V.attack_reaction(H, REACTION_GUN_FIRE)
 
 	add_fingerprint(user)
 
@@ -191,7 +191,7 @@
 
 	var/obj/item/weapon/arrow/A = arrow
 	A.loc = get_turf(user)
-	A.throw_at(target,26,tension*release_speed,user) //26 because speed must be < than distance
+	A.throw_at(target, (tension * release_speed) + 1, tension * release_speed, user)
 	arrow = null
 	tension = 0
 	icon_state = "crossbow"
@@ -232,65 +232,58 @@
 		if(5)
 			to_chat(user, "It has a steel cable loosely strung across the lath.")
 
-/obj/item/weapon/crossbowframe/attackby(obj/item/W, mob/user)
-	if(istype(user, /mob/living/silicon/robot)) return
-	if(istype(W,/obj/item/stack/rods))
-		if(buildstate == 0)
-			var/obj/item/stack/rods/R = W
-			if(R.amount >= 3)
-				R.use(3)
-				to_chat(user, "\blue You assemble a backbone of rods around the wooden stock.")
+/obj/item/weapon/crossbowframe/attackby(obj/item/W, mob/user) // its better to implement this in personal crafting later.
+	if(isrobot(user))
+		return
+
+	if(istype(W, /obj/item/stack))
+		var/obj/item/stack/S = W
+		var/amount_to_use
+		var/fail_msg
+		var/success_msg
+
+		if(istype(W, /obj/item/stack/rods) && buildstate == 0)
+			amount_to_use = 3
+			fail_msg = "<span class='notice'>You need at least three rods to complete this task.</span>"
+			success_msg = "<span class='notice'>You assemble a backbone of rods around the wooden stock.</span>"
+
+		else if(istype(W, /obj/item/stack/cable_coil) && (buildstate in list(2, 4)))
+			amount_to_use = 5
+			fail_msg = "<span class='notice'>You need at least five segments of cable coil to complete this task."
+			if(buildstate == 2)
+				success_msg = "<span class='notice'>You wire a crude cell mount into the top of the crossbow."
+			else
+				success_msg = "<span class='notice'>You string a steel cable across the crossbow's lath."
+
+		else if(istype(W, /obj/item/stack/sheet/mineral/plastic) && buildstate == 3)
+			amount_to_use = 3
+			fail_msg = "<span class='notice'>You need at least three plastic sheets to complete this task."
+			success_msg = "<span class='notice'>You assemble and install a heavy plastic lath onto the crossbow."
+
+		if(amount_to_use) // if this is null, then tool we are trying to use is wrong.
+			if(S.use(amount_to_use))
+				to_chat(user, success_msg)
 				buildstate++
 				update_icon()
 			else
-				to_chat(user, "\blue You need at least three rods to complete this task.")
-			return
-	else if(istype(W,/obj/item/weapon/weldingtool))
+				to_chat(user, fail_msg)
+
+	else if(istype(W, /obj/item/weapon/weldingtool))
 		if(buildstate == 1)
 			var/obj/item/weapon/weldingtool/T = W
-			if(T.remove_fuel(0,user))
-				if(!src || !T.isOn()) return
+			if(T.remove_fuel(0, user))
+				if(!T.isOn())
+					return
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-				to_chat(user, "\blue You weld the rods into place.")
+				to_chat(user, "<span class='notice'>You weld the rods into place.")
 			buildstate++
 			update_icon()
-		return
-	else if(istype(W,/obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/C = W
-		if(buildstate == 2)
-			if(C.amount >= 5)
-				C.use(5)
-				to_chat(user, "\blue You wire a crude cell mount into the top of the crossbow.")
-				buildstate++
-				update_icon()
-			else
-				to_chat(user, "\blue You need at least five segments of cable coil to complete this task.")
-			return
-		else if(buildstate == 4)
-			if(C.amount >= 5)
-				C.use(5)
-				to_chat(user, "\blue You string a steel cable across the crossbow's lath.")
-				buildstate++
-				update_icon()
-			else
-				to_chat(user, "\blue You need at least five segments of cable coil to complete this task.")
-			return
-	else if(istype(W,/obj/item/stack/sheet/mineral/plastic))
-		if(buildstate == 3)
-			var/obj/item/stack/sheet/mineral/plastic/P = W
-			if(P.amount >= 3)
-				P.use(3)
-				to_chat(user, "\blue You assemble and install a heavy plastic lath onto the crossbow.")
-				buildstate++
-				update_icon()
-			else
-				to_chat(user, "\blue You need at least three plastic sheets to complete this task.")
-			return
-	else if(istype(W,/obj/item/weapon/screwdriver))
+
+	else if(istype(W, /obj/item/weapon/screwdriver))
 		if(buildstate == 5)
-			to_chat(user, "\blue You secure the crossbow's various parts.")
+			to_chat(user, "<span class='notice'>You secure the crossbow's various parts.")
 			new /obj/item/weapon/crossbow(get_turf(src))
 			qdel(src)
-		return
+
 	else
 		..()

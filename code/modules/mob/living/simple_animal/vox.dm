@@ -87,7 +87,7 @@
 
 	targets += getmobs() //Fill list, prompt user with list
 	target = input("Select a creature!", "Speak to creature", null, null) as null|anything in targets
-	text = input("What would you like to say?", "Speak to creature", null, null)
+	text = sanitize(input("What would you like to say?", "Speak to creature", null, null))
 
 	if (!target || !text)
 		return
@@ -101,7 +101,7 @@
 	to_chat(M, "\blue Like lead slabs crashing into the ocean, alien thoughts drop into your mind: [text]")
 	if(istype(M,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = M
-		if(H.species.name == "Vox")
+		if(H.species.name == VOX)
 			return
 		to_chat(H, "\red Your nose begins to bleed...")
 		H.drip(1)

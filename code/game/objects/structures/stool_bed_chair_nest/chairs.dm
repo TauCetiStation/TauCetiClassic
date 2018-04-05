@@ -16,6 +16,9 @@
 	var/behind = null
 	var/behind_buckled = null
 
+/obj/structure/stool/bed/chair/barber
+	icon_state = "barber_chair"
+
 /obj/structure/stool/bed/chair/metal/blue
 	icon_state = "chair_blu"
 
@@ -34,33 +37,33 @@
 /obj/structure/stool/bed/chair/metal/black
 	icon_state = "chair_bla"
 
-/obj/structure/stool/bed/chair/metal/New()
+/obj/structure/stool/bed/chair/metal/atom_init()
 	behind = "chair_behind_g"
-	return ..()
+	. = ..()
 
-/obj/structure/stool/bed/chair/metal/blue/New()
+/obj/structure/stool/bed/chair/metal/blue/atom_init()
 	behind = "chair_behind_blu"
-	return ..()
+	. = ..()
 
-/obj/structure/stool/bed/chair/metal/yellow/New()
+/obj/structure/stool/bed/chair/metal/yellow/atom_init()
 	behind = "chair_behind_y"
-	return ..()
+	. = ..()
 
-/obj/structure/stool/bed/chair/metal/red/New()
+/obj/structure/stool/bed/chair/metal/red/atom_init()
 	behind = "chair_behind_r"
-	return ..()
+	. = ..()
 
-/obj/structure/stool/bed/chair/metal/green/New()
+/obj/structure/stool/bed/chair/metal/green/atom_init()
 	behind = "chair_behind_gr"
-	return ..()
+	. = ..()
 
-/obj/structure/stool/bed/chair/metal/white/New()
+/obj/structure/stool/bed/chair/metal/white/atom_init()
 	behind = "chair_behind_w"
-	return ..()
+	. = ..()
 
-/obj/structure/stool/bed/chair/metal/black/New()
+/obj/structure/stool/bed/chair/metal/black/atom_init()
 	behind = "chair_behind_bla"
-	return ..()
+	. = ..()
 
 /obj/structure/stool/bed/chair/Move(atom/newloc, direct)
 	..()
@@ -79,9 +82,9 @@
 	icon_state = "schair"
 	var/sarmrest = null
 
-/obj/structure/stool/bed/chair/schair/New()
+/obj/structure/stool/bed/chair/schair/atom_init()
 	sarmrest = image("icons/obj/objects.dmi", "schair_armrest", layer = FLY_LAYER)
-	return ..()
+	. = ..()
 
 /obj/structure/stool/bed/chair/schair/post_buckle_mob(mob/living/M)
 	if(buckled_mob)
@@ -89,11 +92,12 @@
 	else
 		overlays -= sarmrest
 
-/obj/structure/stool/bed/chair/New()
+/obj/structure/stool/bed/chair/atom_init()
 	..()
-	spawn(3)	//sorry. i don't think there's a better way to do this.
-		handle_rotation()
-	return
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/stool/bed/chair/atom_init_late()
+	handle_rotation()
 
 /obj/structure/stool/bed/chair/attackby(obj/item/weapon/W, mob/user)
 	..()
@@ -111,21 +115,22 @@
 		SK.master = E
 		qdel(src)
 
-/obj/structure/stool/bed/chair/attack_hand()
-	if(can_flip(usr))
+/obj/structure/stool/bed/chair/attack_hand(mob/user)
+	if(can_flip(user))
 		var/flip_time = 20	//2 sec without someone
 		if(!isnull(buckled_mob))
 			flip_time = 60	//6 sec with
+		user.SetNextMove(CLICK_CD_MELEE)
 		if(!flipped)
-			usr.visible_message("<span class='notice'>[usr] flips \the [src] down.</span>","<span class='notice'>You flips \the [src] down.")
+			user.visible_message("<span class='notice'>[usr] flips \the [src] down.</span>","<span class='notice'>You flips \the [src] down.")
 			flip()
 			if(buckled_mob && !buckled_mob.restrained())
 				var/mob/living/L = buckled_mob
 				unbuckle_mob()
 				L.apply_effect(2, WEAKEN, 0)
-				L.apply_damage(3, BRUTE, "head")
-		else if(do_after(usr, flip_time, target = usr))
-			usr.visible_message("<span class='notice'>[usr] flips \the [src] up.</span>","<span class='notice'>You flips \the [src] up.")
+				L.apply_damage(3, BRUTE, BP_HEAD)
+		else if(!user.is_busy() && do_after(user, flip_time, target = usr))
+			user.visible_message("<span class='notice'>[user] flips \the [src] up.</span>","<span class='notice'>You flips \the [src] up.")
 			flip()
 	else
 		..()
@@ -223,22 +228,25 @@
 /obj/structure/stool/bed/chair/wood/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-		new /obj/item/stack/sheet/wood(src.loc)
+		user.SetNextMove(CLICK_CD_RAPID)
+		new /obj/item/stack/sheet/wood(loc)
 		qdel(src)
-	if(istype(W, /obj/item/weapon/melee/energy))
-		if(istype(W, /obj/item/weapon/melee/energy/blade) || W:active)
+		return
+	else if(istype(W, /obj/item/weapon/melee/energy/blade))
+		var/obj/item/weapon/melee/energy/blade/B = W
+		if(B.active)
 			user.do_attack_animation(src)
+			user.SetNextMove(CLICK_CD_MELEE)
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 			spark_system.set_up(5, 0, src.loc)
 			spark_system.start()
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
-			for(var/mob/O in viewers(user, 4))
-				O.show_message("\blue [src] was sliced apart by [user]!", 1, "\red You hear [src] coming apart.", 2)
-			new /obj/item/stack/sheet/wood(src.loc)
+			playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(loc, "sparks", 50, 1)
+			visible_message("<span class='notice'>[src] was sliced apart by [user]!</span>", "<span class='notice'>You hear [src] coming apart.</span>")
+			new /obj/item/stack/sheet/wood(loc)
 			qdel(src)
-	else
-		..()
+			return
+	..()
 
 /obj/structure/stool/bed/chair/comfy
 	name = "comfy chair"
@@ -247,9 +255,9 @@
 	color = rgb(255,255,255)
 	var/armrest = null
 
-/obj/structure/stool/bed/chair/comfy/New()
+/obj/structure/stool/bed/chair/comfy/atom_init()
 	armrest = image("icons/obj/objects.dmi", "comfychair_armrest", layer = FLY_LAYER)
-	return ..()
+	. = ..()
 
 /obj/structure/stool/bed/chair/comfy/post_buckle_mob(mob/living/M)
 	if(buckled_mob)
@@ -306,7 +314,7 @@
 			victim.apply_effect(6, STUN, 0)
 			victim.apply_effect(6, WEAKEN, 0)
 			victim.apply_effect(6, STUTTER, 0)
-			victim.take_organ_damage(10)
+			victim.take_bodypart_damage(10)
 		occupant.visible_message("<span class='danger'>[occupant] crashed into \the [A]!</span>")
 
 /obj/structure/stool/bed/chair/office/light

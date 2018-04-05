@@ -82,30 +82,11 @@ This is called when facehugger has grabbed(left click) and then
 ----------------------------------------*/
 
 /mob/living/carbon/alien/facehugger/proc/leap_at_face(mob/living/L)
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
+	if(ishuman(L) || ismonkey(L) || isIAN(L) || iscorgi(L)) // CP! THIS IS DELTA SIX! DO WE NEED THIS? CP!
 		var/obj/item/clothing/mask/facehugger/FH = new(loc)
 		src.loc = FH
 		FH.current_hugger = src
-		FH.Attach(H)
-		H.status_flags |= PASSEMOTES
-		return
-	else if(ismonkey(L))
-		var/mob/living/carbon/monkey/M = L
-		var/obj/item/clothing/mask/facehugger/FH = new(loc)
-		src.loc = FH
-		FH.current_hugger = src
-		FH.Attach(M)
-		M.status_flags |= PASSEMOTES
-		return
-	else if(iscorgi(L))
-		var/mob/living/simple_animal/corgi/C = L
-		var/obj/item/clothing/mask/facehugger/FH = new(loc)
-		src.loc = FH
-		FH.current_hugger = src
-		FH.Attach(C)
-		C.status_flags |= PASSEMOTES
-		return
+		FH.Attach(L)
 
 /*----------------------------------------
 This is chestburster mechanic for damaging
@@ -141,10 +122,9 @@ This is chestburster mechanic for damaging
 	w_class = 5.0
 
 
-/obj/item/weapon/larva_bite/New(mob/user, mob/victim)
-	..()
-	loc = user
-	chestburster = user
+/obj/item/weapon/larva_bite/atom_init(mapload, mob/victim)
+	. = ..()
+	chestburster = loc
 	affecting = victim
 
 	hud = new /obj/screen/larva_bite(src)
@@ -185,27 +165,27 @@ This is chestburster mechanic for damaging
 
 	if(ishuman(affecting))
 		var/mob/living/carbon/human/H = affecting
-		var/datum/organ/external/chest/C = H.get_organ("chest")
-		if(C.status & ORGAN_BROKEN)
+		var/obj/item/organ/external/chest/BP = H.bodyparts_by_name[BP_CHEST]
+		if((BP.status & ORGAN_BROKEN) || H.stat == DEAD) //I don't know why, but bodyparts can't be broken, when human is dead.
 			chestburster.loc = get_turf(H)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [H]'s chest!</span>")
 			chestburster << sound('sound/voice/hiss5.ogg',0,0,0,100)
 			if(H.key)
 				H.death()
 				H.ghostize(can_reenter_corpse = FALSE, bancheck = TRUE)
-				C.open = 1
+				BP.open = 1
 			else
 				H.gib()
 			qdel(src)
 		else
 			last_bite = world.time
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
-			H.apply_damage(rand(7,14), BRUTE, "chest")
+			H.apply_damage(rand(7,14), BRUTE, BP_CHEST)
 			H.shock_stage = 20
 			H.Weaken(1)
 			H.emote("scream",,, 1)
-	else if(ismonkey(affecting))
-		var/mob/living/carbon/monkey/M = affecting
+	else if(ismonkey(affecting) || isIAN(affecting))
+		var/mob/living/carbon/M = affecting
 		if(M.stat == DEAD)
 			chestburster.loc = get_turf(M)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [M]'s butt!</span>")
@@ -271,21 +251,23 @@ This is emryo growth procs
 	var/mob/living/baby
 	var/stage = 0
 
-/obj/item/alien_embryo/New()
+/obj/item/alien_embryo/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/alien_embryo/atom_init_late()
 	if(istype(loc, /mob/living))
 		affected_mob = loc
-		SSobj.processing |= src
-		spawn(0)
-			AddInfectionImages(affected_mob)
+		START_PROCESSING(SSobj, src)
+		AddInfectionImages(affected_mob)
 	else
 		qdel(src)
 
 /obj/item/alien_embryo/Destroy()
 	if(affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
-		SSobj.processing.Remove(src)
-		spawn(0)
-			RemoveInfectionImages(affected_mob)
+		STOP_PROCESSING(SSobj, src)
+		RemoveInfectionImages(affected_mob)
 	return ..()
 
 /obj/item/alien_embryo/proc/show_message(message, m_type)
@@ -304,7 +286,7 @@ This is emryo growth procs
 	if(!affected_mob)	return
 	if(loc != affected_mob)
 		affected_mob.status_flags &= ~(XENO_HOST)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		spawn(0)
 			RemoveInfectionImages(affected_mob)
 			affected_mob = null
@@ -341,7 +323,7 @@ This is emryo growth procs
 			if(prob(2))
 				to_chat(affected_mob, "\red Your muscles ache.")
 				if(prob(20))
-					affected_mob.take_organ_damage(1)
+					affected_mob.take_bodypart_damage(1)
 			if(prob(2))
 				to_chat(affected_mob, "\red Your stomach hurts.")
 				if(prob(20))
@@ -383,12 +365,15 @@ This is facehugger Attach procs
 	var/strength = 5
 	var/current_hugger
 
-/obj/item/clothing/mask/facehugger/New()
-	SSobj.processing |= src
+/obj/item/clothing/mask/facehugger/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/clothing/mask/facehugger/atom_init_late()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/mask/facehugger/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/clothing/mask/facehugger/process()
@@ -427,7 +412,8 @@ This is facehugger Attach procs
 	if (sterile)
 		to_chat(user, "<span class='danger'>It looks like the proboscis has been removed.</span>")
 
-/obj/item/clothing/mask/facehugger/attackby()
+/obj/item/clothing/mask/facehugger/attackby(obj/item/W, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	Die()
 	return
 
@@ -440,33 +426,42 @@ This is facehugger Attach procs
 		Die()
 	return
 
-/obj/item/clothing/mask/facehugger/proc/Attach(M)
-	if( (!iscorgi(M) && !iscarbon(M)) || isalien(M))
+/obj/item/clothing/mask/facehugger/proc/Attach(mob/living/L)
+	if( (!iscorgi(L) && !iscarbon(L)) || isalien(L) || isslime(L) )
 		return
 
-	var/mob/living/L = M //just so I don't need to use :
+	if(loc == L)
+		return
+	if(stat == DEAD)
+		return
+	if(!sterile)
+		L.take_bodypart_damage(strength, 0)
 
-	if(loc == L) return
-	if(stat == DEAD)	return
-	if(!sterile) L.take_organ_damage(strength,0)
-
-	if(ishuman(M))
-		var/mob/living/carbon/human/target = L
-		target.equip_to_slot(src, slot_wear_mask)
-	else if(ismonkey(M))
-		var/mob/living/carbon/monkey/target = L
-		target.equip_to_slot(src, slot_wear_mask)
-		target.contents += src // Monkey sanity check - Snapshot
-	else if(iscorgi(M))
-		var/mob/living/simple_animal/corgi/C = M
+	if(iscarbon(L))
+		var/mob/living/carbon/target = L
+		var/target_slot = slot_wear_mask
+		if(isIAN(L))
+			target_slot = slot_head
+		target.equip_to_slot(src, target_slot)
+		if(ismonkey(L)) // wtf is there in monkeys equip proc, that they need this?! ~zve
+			target.contents += src // Monkey sanity check - Snapshot
+	else if(iscorgi(L))
+		var/mob/living/simple_animal/corgi/C = L
 		src.loc = C
 		C.facehugger = src
 		C.wear_mask = src
-
-	return
+		C.regenerate_icons()
 
 /obj/item/clothing/mask/facehugger/proc/Impregnate(mob/living/target, mob/living/FH)
-	if(!target || target.wear_mask != src || target.stat == DEAD) //was taken off or something
+	if(!target || target.stat == DEAD) //was taken off or something
+		return
+
+	var/mob/living/carbon/ian/IAN = target
+	var/target_slot = target.wear_mask
+	if(isIAN(IAN))
+		target_slot = IAN.head
+
+	if(target_slot != src)
 		return
 
 	if(!FH || FH.stat == DEAD)
@@ -480,12 +475,12 @@ This is facehugger Attach procs
 		new_xeno.key = FH.key
 		new_embryo.baby = new_xeno
 		qdel(FH)
-		target.remove_from_mob(target.wear_mask)
+		target.remove_from_mob(target_slot)
 		if(ismonkey(target))
 			for(var/obj/item/clothing/mask/facehugger/FH_mask in target.contents)
 				FH_mask.loc = get_turf(target)
 
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 		target.status_flags |= XENO_HOST
 		target.visible_message("\red \b [src] falls limp after violating [target]'s face!")
@@ -536,7 +531,7 @@ When we finish, facehugger's player will be transfered inside embryo.
 
 /obj/item/weapon/fh_grab
 	name = "grab"
-	flags = NOBLUDGEON | ABSTRACT
+	flags = NOBLUDGEON | ABSTRACT | DROPDEL
 	var/obj/screen/fh_grab/hud = null
 	var/mob/affecting = null
 	var/mob/assailant = null
@@ -550,10 +545,9 @@ When we finish, facehugger's player will be transfered inside embryo.
 	w_class = 5.0
 
 
-/obj/item/weapon/fh_grab/New(mob/user, mob/victim)
-	..()
-	loc = user
-	assailant = user
+/obj/item/weapon/fh_grab/atom_init(mapload, mob/victim)
+	. = ..()
+	assailant = loc
 	affecting = victim
 
 	hud = new /obj/screen/fh_grab(src)
@@ -562,6 +556,11 @@ When we finish, facehugger's player will be transfered inside embryo.
 	hud.name = "Leap at face"
 	hud.master = src
 
+/obj/item/weapon/fh_grab/Destroy()
+	QDEL_NULL(hud)
+	affecting = null
+	assailant = null
+	return ..()
 
 /obj/item/weapon/fh_grab/proc/throw_held()
 	return null
@@ -618,22 +617,17 @@ When we finish, facehugger's player will be transfered inside embryo.
 		qdel(src)
 		return
 
-	if(iscarbon(affecting))
-		var/obj/item/clothing/mask/facehugger/hugger = affecting.wear_mask
-		if(hugger)
-			if(hugger.current_hugger != assailant)
-				to_chat(assailant, "There is already facehugger on the face")
-				qdel(src)
-				return
-	else if(iscorgi(affecting))
-		var/mob/living/simple_animal/corgi/C = affecting
-
-		var/obj/item/clothing/mask/facehugger/hugger = C.wear_mask
-		if(hugger)
-			if(hugger.current_hugger != assailant)
-				to_chat(assailant, "There is already facehugger on the face")
-				qdel(src)
-				return
+	var/obj/item/clothing/mask/facehugger/hugger
+	if(iscorgi(affecting) || iscarbon(affecting))
+		if(isIAN(affecting))
+			var/mob/living/carbon/ian/IAN = affecting
+			hugger = IAN.head
+		else
+			hugger = affecting.wear_mask
+	if(istype(hugger) && hugger.current_hugger != assailant)
+		to_chat(assailant, "There is already facehugger on the face")
+		qdel(src)
+		return
 
 	for(var/obj/item/alien_embryo/AE in affecting.contents)
 		to_chat(assailant, "\red [affecting] already impregnated.")
@@ -649,7 +643,13 @@ When we finish, facehugger's player will be transfered inside embryo.
 	if(state == GRAB_PASSIVE)
 		assailant.visible_message("<span class='warning'>[assailant] leaps at [affecting] face!</span>")
 		var/mob/living/carbon/alien/facehugger/FH = assailant
-		if(affecting.wear_mask)
+		if(isIAN(affecting)) //CP, we need helpers! I repeat, we need helpers! CP? CP!!
+			var/mob/living/carbon/ian/IAN = affecting
+			if(!istype(IAN.head, /obj/item/clothing/mask/facehugger))
+				var/obj/item/clothing/mask/victim_mask = IAN.head
+				IAN.remove_from_mob(victim_mask)
+				qdel(victim_mask)
+		else if(affecting.wear_mask)
 			if(!istype(affecting.wear_mask, /obj/item/clothing/mask/facehugger))
 				var/obj/item/clothing/mask/victim_mask = affecting.wear_mask
 				affecting.remove_from_mob(victim_mask)
@@ -740,10 +740,3 @@ When we finish, facehugger's player will be transfered inside embryo.
 	if(M == affecting)
 		s_click(hud)
 		return
-
-/obj/item/weapon/fh_grab/dropped()
-	qdel(src)
-
-/obj/item/weapon/fh_grab/Destroy()
-	qdel(hud)
-	return ..()

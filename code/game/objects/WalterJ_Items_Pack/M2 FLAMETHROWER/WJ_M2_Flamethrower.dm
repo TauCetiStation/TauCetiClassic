@@ -96,7 +96,7 @@
 
 /obj/item/weapon/flamethrower_M2/process()
 	if(!lit)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 	var/turf/location = loc
 	if(istype(location, /mob/))
@@ -136,11 +136,6 @@
 			var/turflist = getline(user, target_turf)
 			flame_turf(turflist)
 
-/obj/item/weapon/flamethrower_M2/attackby(obj/item/W, mob/user)
-	..()
-	return
-
-
 /obj/item/weapon/flamethrower_M2/attack_self(mob/user)
 	if(user.stat || user.restrained() || user.lying)	return
 	if(!Connected_tank)
@@ -148,7 +143,7 @@
 		return
 	if(!lit)
 		lit = 1
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 		to_chat(usr, "You had opend fuel intake and lit your M2 Flamethrower!")
 	else
 		lit = 0
@@ -169,8 +164,6 @@
 		if(!previousturf && length(turflist)>1)
 			previousturf = get_turf(src)
 			continue	//so we don't burn the tile we be standin on
-		if(previousturf && LinkBlocked(previousturf, T))
-			break
 		ignite_turf(T)
 		sleep(1)
 	if(Connected_tank.reagents.total_volume < throw_amount)

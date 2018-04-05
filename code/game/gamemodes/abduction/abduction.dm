@@ -102,7 +102,7 @@
 		H = agent.current
 		L = agent_landmarks[team_number]
 		H.loc = L.loc
-		H.set_species("Abductor")
+		H.set_species(ABDUCTOR)
 		H.agent = 1
 		H.team = team_number
 		H.real_name = team_name + " Agent"
@@ -117,7 +117,7 @@
 		H = scientist.current
 		L = scientist_landmarks[team_number]
 		H.loc = L.loc
-		H.set_species("Abductor")
+		H.set_species(ABDUCTOR)
 		H.scientist = 1
 		H.team = team_number
 		H.real_name = team_name + " Scientist"
@@ -154,7 +154,7 @@
 	H = agent.current
 	L = agent_landmarks[team_number]
 	H.loc = L.loc
-	H.set_species("Abductor")
+	H.set_species(ABDUCTOR)
 	H.agent = 1
 	H.team = team_number
 	H.real_name = team_name + " Agent"
@@ -167,7 +167,7 @@
 	H = scientist.current
 	L = scientist_landmarks[team_number]
 	H.loc = L.loc
-	H.set_species("Abductor")
+	H.set_species(ABDUCTOR)
 	H.scientist = 1
 	H.team = team_number
 	H.real_name = team_name + " Scientist"
@@ -341,12 +341,14 @@
 /obj/effect/landmark/abductor
 	var/team = 1
 
-/obj/effect/landmark/abductor/console/New()
+/obj/effect/landmark/abductor/console/atom_init()
+	..()
+
 	var/obj/machinery/abductor/console/c = new /obj/machinery/abductor/console(src.loc)
 	c.team = team
-	spawn(5)
-		c.Initialize()
-	qdel(src)
+	c.Initialize()
+
+	return INITIALIZE_HINT_QDEL
 
 /obj/effect/landmark/abductor/agent
 /obj/effect/landmark/abductor/scientist

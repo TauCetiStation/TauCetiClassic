@@ -20,12 +20,12 @@
 	var/camera_cache = null
 
 /obj/machinery/computer/security/check_eye(mob/user)
-	if ((get_dist(user, src) > 1 || (user.incapacitated()) || user.blinded) && !istype(user, /mob/living/silicon))
+	if ((get_dist(user, src) > 1 || user.incapacitated() || user.blinded) && !issilicon(user) && !isobserver(user))
 		return null
-	if ( !current || !current.can_use() ) //camera doesn't work
+	if (!current || !current.can_use()) //camera doesn't work
 		reset_current()
 	var/list/viewing = viewers(src)
-	if((istype(user,/mob/living/silicon/robot)) && (!(viewing.Find(user))))
+	if(isrobot(user) && !viewing.Find(user))
 		return null
 	user.reset_view(current)
 	return 1
@@ -54,7 +54,7 @@
 				data["current"] = cam
 
 		var/list/camera_list = list("cameras" = cameras)
-		camera_cache=list2json(camera_list)
+		camera_cache = list2json(camera_list)
 	else
 		if(current)
 			data["current"] = current.nano_structure()
@@ -99,6 +99,8 @@
 		reset_current()
 		usr.check_eye(current)
 
+/obj/machinery/computer/security/attack_ghost(mob/user) // this should not ever be opened to ghots, there is simply no point (even for admin) and also this thing eats up ALOT of resources.
+	return
 
 /obj/machinery/computer/security/attack_hand(mob/user)
 	if (src.z > ZLEVEL_EMPTY)
@@ -107,14 +109,11 @@
 	if (!network)
 		world.log << "A computer lacks a network at [x],[y],[z]."
 		return
-	if (!(istype(network,/list)))
+	if (!istype(network, /list))
 		world.log << "The computer at [x],[y],[z] has a network that is not a list!"
 		return
 
-	if(..())
-		return
-
-	ui_interact(user)
+	..()
 
 /obj/machinery/computer/security/proc/can_access_camera(obj/machinery/camera/C)
 	var/list/shared_networks = src.network & C.network
@@ -195,16 +194,6 @@
 	if(istype(usr.machine,/obj/machinery/computer/security))
 		var/obj/machinery/computer/security/console = usr.machine
 		console.jump_on_click(usr,src)
-//Camera control: arrow keys.
-/mob/Move(n,direct)
-	if(istype(machine,/obj/machinery/computer/security))
-		var/obj/machinery/computer/security/console = machine
-		var/turf/T = get_turf(console.current)
-		for(var/i;i<10;i++)
-			T = get_step(T,direct)
-		console.jump_on_click(src,T)
-		return
-	return ..(n,direct)
 
 /obj/machinery/computer/security/telescreen
 	name = "Telescreen"

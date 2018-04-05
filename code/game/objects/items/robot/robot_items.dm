@@ -73,10 +73,9 @@
 	icon_state = "healthhud"
 	icon = 'icons/obj/clothing/glasses.dmi'
 
-	New()
-		..()
-		hud = new /obj/item/clothing/glasses/hud/health(src)
-		return
+/obj/item/borg/sight/hud/med/atom_init()
+	. = ..()
+	hud = new /obj/item/clothing/glasses/hud/health(src)
 
 
 /obj/item/borg/sight/hud/sec
@@ -84,15 +83,14 @@
 	icon_state = "securityhud"
 	icon = 'icons/obj/clothing/glasses.dmi'
 
-	New()
-		..()
-		hud = new /obj/item/clothing/glasses/hud/security(src)
-		return
+/obj/item/borg/sight/hud/sec/atom_init()
+	. = ..()
+	hud = new /obj/item/clothing/glasses/hud/security(src)
+
 
 /obj/item/borg/sight/hud/miner
 	name = "geological hud"
 
-	New()
-		..()
-		hud = new /obj/item/clothing/glasses/hud/mining(src)
-		return
+/obj/item/borg/sight/hud/miner/atom_init()
+	. = ..()
+	hud = new /obj/item/clothing/glasses/hud/mining(src)

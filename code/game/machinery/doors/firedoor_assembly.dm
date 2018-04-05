@@ -1,4 +1,4 @@
-obj/structure/firedoor_assembly
+/obj/structure/firedoor_assembly
 	name = "\improper emergency shutter assembly"
 	desc = "It can save lives."
 	icon = 'icons/obj/doors/DoorHazard.dmi'
@@ -8,18 +8,19 @@ obj/structure/firedoor_assembly
 	density = 1
 	var/wired = 0
 
-obj/structure/firedoor_assembly/update_icon()
+/obj/structure/firedoor_assembly/update_icon()
 	if(anchored)
 		icon_state = "door_anchored"
 	else
 		icon_state = "door_construction"
 
-obj/structure/firedoor_assembly/attackby(C, mob/user)
-	if(istype(C, /obj/item/weapon/cable_coil) && !wired && anchored)
-		var/obj/item/weapon/cable_coil/cable = C
-		if (cable.amount < 1)
+/obj/structure/firedoor_assembly/attackby(C, mob/user)
+	if(istype(C, /obj/item/stack/cable_coil) && !wired && anchored)
+		var/obj/item/stack/cable_coil/cable = C
+		if (cable.get_amount() < 1)
 			to_chat(user, "<span class='warning'>You need one length of coil to wire \the [src].</span>")
 			return
+		if(user.is_busy(src)) return
 		user.visible_message("[user] wires \the [src].", "You start to wire \the [src].")
 		if(do_after(user, 40, target = src) && !wired && anchored)
 			if (cable.use(1))
@@ -27,13 +28,14 @@ obj/structure/firedoor_assembly/attackby(C, mob/user)
 				to_chat(user, "<span class='notice'>You wire \the [src].</span>")
 
 	else if(istype(C, /obj/item/weapon/wirecutters) && wired )
+		if(user.is_busy(src)) return
 		playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		user.visible_message("[user] cuts the wires from \the [src].", "You start to cut the wires from \the [src].")
 
 		if(do_after(user, 40, target = src))
 			if(!src) return
 			to_chat(user, "<span class='notice'>You cut the wires!</span>")
-			new/obj/item/weapon/cable_coil(src.loc, 1)
+			new /obj/item/stack/cable_coil/random(src.loc, 1)
 			wired = 0
 
 	else if(istype(C, /obj/item/weapon/airalarm_electronics) && wired)
@@ -54,6 +56,7 @@ obj/structure/firedoor_assembly/attackby(C, mob/user)
 		update_icon()
 	else if(!anchored && istype(C, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = C
+		if(user.is_busy(src)) return
 		if(WT.remove_fuel(0, user))
 			user.visible_message("<span class='warning'>[user] dissassembles \the [src].</span>",
 			"You start to dissassemble \the [src].")

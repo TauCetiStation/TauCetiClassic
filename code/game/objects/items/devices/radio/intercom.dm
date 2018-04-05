@@ -11,18 +11,17 @@
 	var/mob/living/silicon/ai/ai = list()
 	var/last_tick //used to delay the powercheck
 
-/obj/item/device/radio/intercom/New()
-	..()
-	SSobj.processing |= src
+/obj/item/device/radio/intercom/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/radio/intercom/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/device/radio/intercom/attack_ai(mob/user)
 	src.add_fingerprint(user)
-	spawn (0)
-		attack_self(user)
+	INVOKE_ASYNC(src, .proc/attack_self, user)
 
 /obj/item/device/radio/intercom/attack_paw(mob/user)
 	return src.attack_hand(user)
@@ -30,13 +29,12 @@
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)
 	src.add_fingerprint(user)
-	spawn (0)
-		attack_self(user)
+	INVOKE_ASYNC(src, .proc/attack_self, user)
 
 /obj/item/device/radio/intercom/receive_range(freq, level)
 	if (!on)
 		return -1
-	if (!(src.wires & WIRE_RECEIVE))
+	if (wires.is_index_cut(RADIO_WIRE_RECEIVE))
 		return -1
 	if(!(0 in level))
 		var/turf/position = get_turf(src)

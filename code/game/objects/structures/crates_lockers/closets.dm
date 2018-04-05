@@ -4,6 +4,7 @@
 	icon = 'icons/obj/closet.dmi'
 	icon_state = "closed"
 	density = 1
+	layer = CONTAINER_STRUCTURE_LAYER
 	var/icon_closed = "closed"
 	var/icon_opened = "open"
 	var/opened = 0
@@ -16,11 +17,24 @@
 	var/storage_capacity = 30 //This is so that someone can't pack hundreds of items in a locker/crate
 							  //then open it in a populated area to crash clients.
 
-/obj/structure/closet/initialize()
-	if(!opened)		// if closed, any item at the crate's loc is put in the contents
+/obj/structure/closet/atom_init(mapload)
+	. = ..()
+	closet_list += src
+	if(mapload && !opened)		// if closed, any item at the crate's loc is put in the contents
 		for(var/obj/item/I in src.loc)
-			if(I.density || I.anchored || I == src) continue
+			if(I.density || I.anchored || I == src)
+				continue
 			I.forceMove(src)
+	PopulateContents()
+	update_icon()
+
+/obj/structure/closet/Destroy()
+	closet_list -= src
+	return ..()
+
+//USE THIS TO FILL IT, NOT INITIALIZE OR NEW
+/obj/structure/closet/proc/PopulateContents()
+	return
 
 /obj/structure/closet/alter_health()
 	return get_turf(src)
@@ -151,18 +165,16 @@
 
 /obj/structure/closet/attack_animal(mob/living/simple_animal/user)
 	if(user.environment_smash)
+		..()
 		playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
-		user.do_attack_animation(src)
 		visible_message("\red [user] destroys the [src]. ")
-		for(var/atom/movable/A as mob|obj in src)
-			A.forceMove(src.loc)
+		open()
 		qdel(src)
 
 // this should probably use dump_contents()
 /obj/structure/closet/blob_act()
 	if(prob(75))
-		for(var/atom/movable/A as mob|obj in src)
-			A.forceMove(src.loc)
+		open()
 		qdel(src)
 
 /obj/structure/closet/meteorhit(obj/O)
@@ -183,9 +195,8 @@
 			if(!WT.remove_fuel(0,user))
 				to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 				return
-			new /obj/item/stack/sheet/metal(src.loc)
-			for(var/mob/M in viewers(src))
-				M.show_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", 3, "You hear welding.", 2)
+			new /obj/item/stack/sheet/metal(loc)
+			visible_message("<span class='notice'>\The [src] has been cut apart by [user] with \the [WT].</span>", "You hear welding.")
 			qdel(src)
 			return
 		if(isrobot(user))
@@ -195,20 +206,21 @@
 		usr.drop_item()
 		if(W)
 			W.forceMove(src.loc)
+
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))
 		return
+
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!WT.remove_fuel(0,user))
 			to_chat(user, "<span class='notice'>You need more welding fuel to complete this task.</span>")
 			return
 		src.welded = !src.welded
 		src.update_icon()
-		for(var/mob/M in viewers(src))
-			M.show_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", 3, "You hear welding.", 2)
+		visible_message("<span class='warning'>[src] has been [welded?"welded shut":"unwelded"] by [user.name].</span>", "You hear welding.")
 	else
-		src.attack_hand(user)
-	return
+		attack_hand(user)
 
 /obj/structure/closet/MouseDrop_T(atom/movable/O, mob/user)
 	if(istype(O, /obj/screen))	//fix for HUD elements making their way into the world	-Pete
@@ -227,6 +239,7 @@
 		return
 	if(istype(O, /obj/structure/closet))
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	step_towards(O, src.loc)
 	if(user != O)
 		user.show_viewers("<span class='danger'>[user] stuffs [O] into [src]!</span>")
@@ -256,6 +269,7 @@
 
 /obj/structure/closet/attack_hand(mob/user)
 	src.add_fingerprint(user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	src.toggle(user)
 
 // tk grab then use on self
@@ -303,7 +317,7 @@
 		return  //Door's open, not locked or welded, no point in resisting.
 
 	//okay, so the closet is either welded or locked... resist!!!
-	user.next_move = world.time + 100
+	user.SetNextMove(100)
 	user.last_special = world.time + 100
 	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>")
 	for(var/mob/O in viewers(src))

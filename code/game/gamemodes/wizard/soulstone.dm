@@ -48,7 +48,7 @@
 			dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Summon Shade</A>"}
 			dat += "<br>"
 			dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
-		user << browse(dat, "window=aicard")
+		user << browse(entity_ja(dat), "window=aicard")
 		onclose(user, "aicard")
 		return
 
@@ -75,7 +75,7 @@
 				for(var/mob/living/simple_animal/shade/A in src)
 					A.status_flags &= ~GODMODE
 					A.canmove = 1
-					to_chat(A, "<b>You have been released from your prison, but you are still bound to [U.name]'s will. Help them suceed in their goals at all costs.</b>")
+					to_chat(A, "<b>You have been released from your prison, but you are still bound to [U.name]'s and his allies will. Help them suceed in their goals at all costs.</b>")
 					A.loc = U.loc
 					A.cancel_camera()
 					src.icon_state = "soulstone"
@@ -96,7 +96,7 @@
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
 
 
-/obj/item/proc/transfer_soul(choice, target, mob/U).
+/obj/item/proc/transfer_soul(choice, target, mob/U)
 	switch(choice)
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target
@@ -134,7 +134,7 @@
 							S.cancel_camera()
 							C.icon_state = "soulstone2"
 							C.name = "Soul Stone: [S.real_name]"
-							to_chat(S, "Your soul has been captured! You are now bound to [U.name]'s will, help them suceed in their goals at all costs.")
+							to_chat(S, "Your soul has been captured! You are now bound to [U.name]'s and his allies will, help them suceed in their goals at all costs.")
 							to_chat(U, "\blue <b>Capture successful!</b>: \black [T.real_name]'s soul has been ripped from their body and stored within the soul stone.")
 							to_chat(U, "The soulstone has been imprinted with [S.real_name]'s mind, it will no longer react to other souls.")
 							C.imprinted = "[S.name]"
@@ -176,7 +176,7 @@
 							ticker.mode.update_all_cult_icons()
 						qdel(T)
 						to_chat(Z, "<B>You are playing a Juggernaut. Though slow, you can withstand extreme punishment, and rip apart enemies and walls alike.</B>")
-						to_chat(Z, "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>")
+						to_chat(Z, "<B>You are still bound to serve your creator and his allies, follow their orders and help them complete their goals at all costs.</B>")
 						Z.cancel_camera()
 						qdel(C)
 
@@ -191,7 +191,7 @@
 							ticker.mode.update_all_cult_icons()
 						qdel(T)
 						to_chat(Z, "<B>You are playing a Wraith. Though relatively fragile, you are fast, deadly, and even able to phase through walls.</B>")
-						to_chat(Z, "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>")
+						to_chat(Z, "<B>You are still bound to serve your creator and his allies, follow their orders and help them complete their goals at all costs.</B>")
 						Z.cancel_camera()
 						qdel(C)
 
@@ -206,7 +206,7 @@
 							ticker.mode.update_all_cult_icons()
 						qdel(T)
 						to_chat(Z, "<B>You are playing an Artificer. You are incredibly weak and fragile, but you are able to construct fortifications, repair allied constructs (by clicking on them), and even create new constructs</B>")
-						to_chat(Z, "<B>You are still bound to serve your creator, follow their orders and help them complete their goals at all costs.</B>")
+						to_chat(Z, "<B>You are still bound to serve your creator and his allies, follow their orders and help them complete their goals at all costs.</B>")
 						Z.cancel_camera()
 						qdel(C)
 			else

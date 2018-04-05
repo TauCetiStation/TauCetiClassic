@@ -24,19 +24,27 @@
 	if(istype(get_active_hand(),/obj/item/device/assembly/signaler))
 		var/obj/item/device/assembly/signaler/signaler = get_active_hand()
 		if(signaler.deadman && prob(80))
+			attack_log += "\[[time_stamp()]\]<font color='orange'>triggers their deadman's switch!</font>"
+			message_admins("\blue [key_name_admin(src)] triggers their deadman's switch! ([ADMIN_JMP(src)])")
+			log_game("\blue [key_name(src)] triggers their deadman's switch!")
 			src.visible_message("\red [src] triggers their deadman's switch!")
 			signaler.signal()
 
+	//Armor
+	var/damage = P.damage
+	var/flags = P.damage_flags()
 	var/absorb = run_armor_check(def_zone, P.flag)
-	var/proj_sharp = is_sharp(P)
-	var/proj_edge = has_edge(P)
-	if ((proj_sharp || proj_edge) && prob(getarmor(def_zone, P.flag)))
-		proj_sharp = 0
-		proj_edge = 0
+	if (prob(absorb))
+		if(flags & DAM_LASER)
+			//the armour causes the heat energy to spread out, which reduces the damage (and the blood loss)
+			//this is mostly so that armour doesn't cause people to lose MORE fluid from lasers than they would otherwise
+			damage *= FLUIDLOSS_CONC_BURN / FLUIDLOSS_WIDE_BURN
+		flags &= ~(DAM_SHARP | DAM_EDGE | DAM_LASER)
 
 	if(!P.nodamage)
-		apply_damage(P.damage, P.damage_type, def_zone, absorb, 0, P, sharp=proj_sharp, edge=proj_edge)
+		apply_damage(damage, P.damage_type, def_zone, absorb, flags, P)
 	P.on_hit(src, absorb, def_zone)
+
 	return absorb
 
 //this proc handles being hit by a thrown atom
@@ -47,78 +55,135 @@
 		if(istype(O,/obj/item/weapon))
 			var/obj/item/weapon/W = O
 			dtype = W.damtype
-		var/throw_damage = O.throwforce*(AM.fly_speed/5)
+		var/throw_damage = O.throwforce * (AM.fly_speed / 5)
 
-		var/miss_chance = 15
-		if (O.throw_source)
+		var/zone
+		var/mob/living/L = isliving(O.thrower) ? O.thrower : null
+		if(L)
+			zone = check_zone(L.zone_sel.selecting)
+		else
+			zone = ran_zone(BP_CHEST, 75) // Hits a random part of the body, geared towards the chest
+
+		//check if we hit
+		if(O.throw_source)
 			var/distance = get_dist(O.throw_source, loc)
-			miss_chance = min(15*(distance-2), 0)
+			zone = get_zone_with_miss_chance(zone, src, min(15 * (distance - 2), 0))
+		else
+			zone = get_zone_with_miss_chance(zone, src, 15)
 
-		if (prob(miss_chance))
-			visible_message("\blue \The [O] misses [src] narrowly!")
+		if(!zone)
+			visible_message("<span class='notice'>\The [O] misses [src] narrowly!</span>")
 			return
 
-		src.visible_message("\red [src] has been hit by [O].")
-		var/armor = run_armor_check(null, "melee")
+		if(O.thrower != src && check_shields(throw_damage, "[O]", get_dir(O,src)))
+			return
 
-		apply_damage(throw_damage, dtype, null, armor, is_sharp(O), has_edge(O), O)
+		resolve_thrown_attack(O, throw_damage, dtype, zone)
 
-		O.throwing = 0		//it hit, so stop moving
-
-		if(ismob(O.thrower))
-			var/mob/M = O.thrower
-			var/client/assailant = M.client
+		if(L)
+			var/client/assailant = L.client
 			if(assailant)
-				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with a [O], thrown by [M.name] ([assailant.ckey])</font>")
-				M.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with a thrown [O]</font>")
-				if(!istype(src,/mob/living/simple_animal/mouse))
-					msg_admin_attack("[src.name] ([src.ckey]) was hit by a [O], thrown by [M.name] ([assailant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[src.x];Y=[src.y];Z=[src.z]'>JMP</a>)")
+				src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been hit with a [O], thrown by [L.name] ([assailant.ckey])</font>")
+				L.attack_log += text("\[[time_stamp()]\] <font color='red'>Hit [src.name] ([src.ckey]) with a thrown [O]</font>")
+				if(!ismouse(src))
+					msg_admin_attack("[src.name] ([src.ckey]) was hit by a [O], thrown by [L.name] ([assailant.ckey]) [ADMIN_JMP(src)]")
 
 		// Begin BS12 momentum-transfer code.
 		if(O.throw_source && AM.fly_speed >= 15)
 			var/obj/item/weapon/W = O
-			var/momentum = AM.fly_speed/2
-			var/dir = get_dir(O.throw_source, src)
 
-			visible_message("\red [src] staggers under the impact!","\red You stagger under the impact!")
-			src.throw_at(get_edge_target_turf(src,dir),1,momentum)
+			visible_message("<span class='warning'>[src] staggers under the impact!</span>",
+				"<span class='danger'>You stagger under the impact!</span>")
 
-			if(!W || !src) return
+			var/atom/throw_target = get_edge_target_turf(src, get_dir(O.throw_source, src))
+			throw_at(throw_target, 5, 1, O.thrower, FALSE, null, null, CALLBACK(src, .proc/pin_to_turf, W))
 
-			if(W.sharp) //Projectile is suitable for pinning.
-				//Handles embedding for non-humans and simple_animals.
-				O.loc = src
-				src.embedded += O
 
-				var/turf/T = near_wall(dir,2)
+/mob/living/proc/resolve_thrown_attack(obj/O, throw_damage, dtype, zone, armor)
 
-				if(T)
-					src.loc = T
-					visible_message("<span class='warning'>[src] is pinned to the wall by [O]!</span>","<span class='warning'>You are pinned to the wall by [O]!</span>")
-					src.anchored = 1
-					src.pinned += O
-					src.verbs += /mob/proc/yank_out_object
-		AM.fly_speed = 0
+	if(isnull(armor)) // Armor arg passed by human
+		armor = run_armor_check(null, "melee")
+		visible_message("<span class='warning'>[src] has been hit by [O].</span>")
+
+	var/damage_flags = O.damage_flags()
+
+	if(prob(armor))
+		damage_flags &= ~(DAM_SHARP | DAM_EDGE)
+
+	var/created_wound = apply_damage(throw_damage, dtype, null, armor, damage_flags, O)
+
+	//thrown weapon embedded object code.
+	if(dtype == BRUTE && istype(O, /obj/item))
+		var/obj/item/I = O
+		if(!I.can_embed || I.is_robot_module())
+			return
+
+		var/sharp = is_sharp(I)
+
+		var/damage = throw_damage //the effective damage used for embedding purposes, no actual damage is dealt here
+		if (armor)
+			damage *= blocked_mult(armor)
+
+		//blunt objects should really not be embedding in things unless a huge amount of force is involved
+		var/embed_chance = sharp ? (damage / (I.w_class / 2)) : (damage / (I.w_class * 3))
+		var/embed_threshold = sharp ? 5 * I.w_class : 15 * I.w_class
+
+		//Sharp objects will always embed if they do enough damage.
+		//Thrown sharp objects have some momentum already and have a small chance to embed even if the damage is below the threshold
+		if(sharp && prob(damage / (10 * I.w_class) * 100) || (damage > embed_threshold && prob(embed_chance)))
+			embed(I, zone, created_wound)
+
+/mob/living/proc/embed(obj/item/I)
+	I.loc = src
+	embedded += I
+	verbs += /mob/proc/yank_out_object
+
+/mob/living/proc/pin_to_turf(obj/item/I)
+	if(!I)
+		return
+
+	if(I.sharp && I.loc == src) // Projectile is suitable for pinning.
+
+		var/turf/T = near_wall(I.dir, 2, TRUE)
+		if(!T)
+			return
+
+		if(loc != T)
+			return
+
+		visible_message("<span class='warning'>[src] is pinned to the [T] by [I]!</span>",
+			"<span class='danger'>You are pinned to the wall by [I]!</span>")
+		anchored = TRUE
+		pinned += I
+		update_canmove() // instant update, no need to wait Life() tick
 
 //This is called when the mob is thrown into a dense turf
-/mob/living/proc/turf_collision(turf/T, speed)
-	src.take_organ_damage(speed*5)
+/mob/living/proc/turf_collision(turf/T)
+	visible_message("<span class='warning'>[src] crashed into \the [T]!</span>","<span class='danger'>You are crashed into \the [T]!</span>")
+	take_bodypart_damage(fly_speed * 5)
 
-/mob/living/proc/near_wall(direction,distance=1)
-	var/turf/T = get_step(get_turf(src),direction)
-	var/turf/last_turf = src.loc
+/mob/living/proc/near_wall(direction, distance = 1, check_dense_objs = FALSE)
+	var/turf/T = get_step(get_turf(src), direction)
+	var/turf/last_turf = loc
 	var/i = 1
 
-	while(i>0 && i<=distance)
+	while(i > 0 && i <= distance)
 		if(T.density) //Turf is a wall!
 			return last_turf
+		if(check_dense_objs)
+			for(var/obj/O in T.contents)
+				if(O.density)
+					return last_turf
 		i++
 		last_turf = T
-		T = get_step(T,direction)
+		T = get_step(T, direction)
 
-	return 0
+	return FALSE
 
 // End BS12 momentum-transfer code.
+
+/mob/living/proc/check_shields(damage = 0, attack_text = "the attack", hit_dir = 0)
+	return FALSE
 
 //Mobs on Fire
 /mob/living/proc/IgniteMob()
@@ -144,7 +209,7 @@
 	if(!on_fire)
 		return 1
 	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.oxygen < 1)
+	if(G.get_by_flag(XGM_GAS_OXIDIZER) < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	for(var/obj/item/I in contents)
@@ -155,11 +220,20 @@
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return
 	var/turf/location = get_turf(src)
-	location.hotspot_expose(700, 50, 1)
+	location.hotspot_expose(fire_burn_temperature(), 50)
 
 /mob/living/fire_act()
 	adjust_fire_stacks(0.5)
 	IgniteMob()
+
+//Finds the effective temperature that the mob is burning at.
+/mob/living/proc/fire_burn_temperature()
+	if (fire_stacks <= 0)
+		return 0
+
+	//Scale quadratically so that single digit numbers of fire stacks don't burn ridiculously hot.
+	//lower limit of 700 K, same as matches and roughly the temperature of a cool flame.
+	return max(2.25 * round(FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE * (fire_stacks / FIRE_MAX_FIRESUIT_STACKS) ** 2), 700)
 
 //Mobs on Fire end
 
@@ -220,6 +294,6 @@
 			//hud_used.SetButtonCoords(hud_used.hide_actions_toggle,button_number+1)
 		client.screen += hud_used.hide_actions_toggle
 
-/mob/living/incapacitated()
-	if(stat || paralysis || stunned || weakened || restrained())
+/mob/living/incapacitated(restrained_type = ARMS)
+	if(stat || paralysis || stunned || weakened || restrained(restrained_type))
 		return 1

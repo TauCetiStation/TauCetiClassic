@@ -22,8 +22,8 @@
 	icon_state = "ecar"
 	icon_custom = null
 
-/obj/item/weapon/gun/energy/gun/carbine/New()
-	..()
+/obj/item/weapon/gun/energy/gun/carbine/atom_init()
+	. = ..()
 	if(power_supply)
 		power_supply.maxcharge = 1500
 		power_supply.charge = 1500
@@ -45,13 +45,13 @@
 	var/charge_tick = 0
 	modifystate = 0
 
-/obj/item/weapon/gun/energy/gun/nuclear/New()
-	..()
-	SSobj.processing |= src
+/obj/item/weapon/gun/energy/gun/nuclear/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 
 /obj/item/weapon/gun/energy/gun/nuclear/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 
@@ -85,7 +85,7 @@
 			to_chat(M, "\red You feel a wave of heat wash over you.")
 			M.apply_effect(300, IRRADIATE)
 		crit_fail = 1 //break the gun so it stops recharging
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		update_icon()
 	return 0
 
@@ -94,7 +94,7 @@
 		overlays += "nucgun-whee"
 		return
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = Ceiling(ratio*4) * 25
+	ratio = ceil(ratio * 4) * 25
 	overlays += "nucgun-[ratio]"
 
 /obj/item/weapon/gun/energy/gun/nuclear/proc/update_reactor()

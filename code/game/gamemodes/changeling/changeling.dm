@@ -209,6 +209,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 			//Removed sanity if(changeling) because we -want- a runtime to inform us that the changelings list is incorrect and needs to be fixed.
 			text += "<BR><B>Changeling ID:</B> [changeling.changeling.changelingID]"
 			text += "<BR><B>Genomes Absorbed:</B> [changeling.changeling.absorbedcount]"
+			text +="<BR><B>Stored Essences:</B>"
+			for(var/mob/living/parasite/essence/E in changeling.changeling.essences)
+				text += printplayerwithicon(E.mind)
+				text += "<BR>"
 			if(!config.objectives_disabled)
 				if(changeling.objectives.len)
 					var/count = 1
@@ -230,21 +234,10 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 						feedback_add_details("changeling_success","FAIL")
 					if(changeling.current && changeling.changeling.purchasedpowers)
 						text += "<BR><B>[changeling.changeling.changelingID] used the following abilities: </B>"
-						var/list/invisible_powers = list("-Evolution Menu-",
-														"Absorb DNA",
-														"Change Species",
-														"Regenerative Stasis",
-														"Hive Channel",
-														"Hive Absorb",
-														"Transform"
-														)
-						var/i = 1
+						var/i = 0
 						for(var/obj/effect/proc_holder/changeling/C in changeling.changeling.purchasedpowers)
-							if(C.name in invisible_powers)
-								continue
-							text += "<BR><B>#[i]</B>: [C.name]"
-							i++
-						i--
+							if(C.genomecost >= 1)
+								text += "<BR><B>#[++i]</B>: [C.name]"
 						if(!i)
 							text += "<BR>Changeling was too autistic and did't buy anything."
 
@@ -266,7 +259,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/list/absorbed_languages = list()
 	var/absorbedcount = 0
 	var/chem_charges = 20
-	var/chem_recharge_rate = 0.5
+	var/chem_recharge_rate = 1
 	var/chem_storage = 50
 	var/chem_recharge_slowdown = 0
 	var/sting_range = 1
@@ -280,6 +273,11 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	var/obj/effect/proc_holder/changeling/sting/chosen_sting
 	var/space_suit_active = 0
 	var/instatis = 0
+	var/strained_muscles = 0
+	var/list/essences = list()
+	var/mob/living/parasite/essence/trusted_entity
+	var/mob/living/parasite/essence/controled_by
+	var/delegating = FALSE
 
 /datum/changeling/New(var/gender=FEMALE)
 	..()
@@ -288,10 +286,18 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	else					honorific = "Mr."
 	if(possible_changeling_IDs.len)
 		changelingID = pick(possible_changeling_IDs)
+		if(changelingID == "Tau") // yeah, cuz we can
+			geneticpoints++
 		possible_changeling_IDs -= changelingID
 		changelingID = "[honorific] [changelingID]"
 	else
 		changelingID = "[honorific] [rand(1,999)]"
+
+/datum/changeling/Destroy()
+	trusted_entity = null
+	controled_by = null
+	QDEL_LIST(essences)
+	return ..()
 
 /datum/changeling/proc/regenerate()
 	chem_charges = min(max(0, chem_charges + chem_recharge_rate - chem_recharge_slowdown), chem_storage)

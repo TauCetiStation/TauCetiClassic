@@ -4,7 +4,7 @@
 	return price
 
 /obj/item/stack/get_price()
-	return price * amount
+	return price * get_amount()
 
 /obj/machinery/get_price()
 	var/my_price = price
@@ -39,7 +39,7 @@
 /mob/living/carbon/human/tajaran/price = 50000
 /mob/living/simple_animal/price = 50
 /mob/living/simple_animal/corgi/price = 225
-/mob/living/simple_animal/corgi/Ian/price = 65000
+/mob/living/carbon/ian/price = 65000
 /mob/living/simple_animal/cat/Runtime/price = 55000
 
 /obj/item/ammo_casing/price = 10
@@ -125,10 +125,10 @@
 /obj/item/clothing/suit/space/price = 24456
 /obj/item/clothing/suit/space/rig/price = 32547
 /obj/item/clothing/suit/storage/labcoat/cmo/price = 5500
-/obj/item/clothing/tie/holobadge/price = 350
-/obj/item/clothing/tie/holster/price = 1600
-/obj/item/clothing/tie/medal/price = 9500
-/obj/item/clothing/tie/medal/gold/captain/price = 70000
+/obj/item/clothing/accessory/holobadge/price = 350
+/obj/item/clothing/accessory/holster/price = 1600
+/obj/item/clothing/accessory/medal/price = 9500
+/obj/item/clothing/accessory/medal/gold/captain/price = 70000
 /obj/item/clothing/under/M35_Jacket/price = 750
 /obj/item/clothing/under/M35_Jacket_Oficer/price = 1000
 /obj/item/clothing/under/chameleon/price = 444
@@ -161,7 +161,6 @@
 /obj/item/device/mass_spectrometer/price = 2650
 /obj/item/device/mass_spectrometer/adv/price = 3020
 /obj/item/device/mmi/posibrain/price = 30090
-/obj/item/device/pipe_painter/price = 384
 /obj/item/device/radio/headset/price = 150
 /obj/item/device/radio/headset/ert/price = 7000
 /obj/item/device/radio/headset/heads/price = 5500
@@ -234,7 +233,7 @@
 /obj/item/weapon/gun/energy/ionrifle/price = 5860
 /obj/item/weapon/gun/energy/kinetic_accelerator/price = 2760
 /obj/item/weapon/gun/energy/laser/price = 4380
-/obj/item/weapon/gun/energy/laser/captain/price = 13500
+/obj/item/weapon/gun/energy/laser/selfcharging/captain/price = 13500
 /obj/item/weapon/gun/energy/laser/retro/price = 5430
 /obj/item/weapon/gun/energy/lasercannon/price = 6600
 /obj/item/weapon/gun/energy/sniperrifle/price = 5700

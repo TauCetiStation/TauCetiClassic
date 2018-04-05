@@ -39,6 +39,12 @@
 		//del(usr)
 		return
 
+	if(href_list["asset_cache_confirm_arrival"])
+		//to_chat(src, "ASSET JOB [href_list["asset_cache_confirm_arrival"]] ARRIVED.")
+		var/job = text2num(href_list["asset_cache_confirm_arrival"])
+		completed_asset_jobs += job
+		return
+
 	//Admin PM
 	if(href_list["priv_msg"])
 		var/client/C = locate(href_list["priv_msg"])
@@ -76,13 +82,6 @@
 			src << link(href_list["link"])
 
 	..()	//redirect to hsrc.Topic()
-
-//client/proc/is_content_unlocked()
-//	if(!prefs.unlock_content)
-//		to_chat(src, "Become a BYOND member to access member-perks and features, as well as support the engine that makes this game possible. Only 10 bucks for 3 months! <a href='http:)//www.byond.com/membership'>Click Here to find out more</a>."
-
-//		return 0
-//	return 1
 
 /client/proc/handle_spam_prevention(message, mute_type)
 	if(global_message_cooldown && (world.time < last_message_time + 5))
@@ -122,6 +121,7 @@
 	///////////
 /client/New(TopicData)
 	chatOutput = new /datum/chatOutput(src) // Right off the bat.
+	var/tdata = TopicData //save this for later use
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker")					//Invalid connection type.
@@ -195,14 +195,19 @@
 		add_admin_verbs()
 		admin_memo_show()
 
-	log_client_to_db()
+	if(config.allow_donators && ckey in donators)
+		donator = 1
+		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting us! You have access to all the additional donator-only features this month.</span>")
+		
+	log_client_to_db(tdata)
 
 	send_resources()
 
-	if(!void)
-		void = new()
+	generate_clickcatcher()
 
-	screen += void
+	if(prefs.lastchangelog != changelog_hash) // Bolds the changelog button on the interface so we know there are updates.
+		to_chat(src, "<span class='info'>You have unread updates in the changelog.</span>")
+		winset(src, "rpane.changelog", "font-style=bold;background-color=#B1E477")
 
 	if(!geoip)
 		geoip = new(src, address)
@@ -213,6 +218,12 @@
 
 	if(!cob)
 		cob = new()
+
+	if(!winexists(src, "asset_cache_browser")) // The client is using a custom skin, tell them.
+		to_chat(src, "<span class='warning'>Unable to access asset cache browser, \
+		if you are using a custom skin file, please allow DS to download the updated version, if you are not, then make a bug report. \
+		This is not a critical issue but can cause issues with resource downloading, as it is impossible to know when extra resources arrived to you.</span>")
+
 
 	//////////////
 	//DISCONNECT//
@@ -234,7 +245,7 @@
 
 
 
-/client/proc/log_client_to_db()
+/client/proc/log_client_to_db(connectiontopic)
 
 	if ( IsGuestKey(src.key) )
 		return
@@ -270,16 +281,18 @@
 		related_accounts_cid += "[query_cid.item[1]], "
 		break
 
+	var/admin_rank = "Player"
+	if (src.holder)
+		admin_rank = src.holder.rank
+	else if (config.check_randomizer && check_randomizer(connectiontopic))
+		return
+
 	//Just the standard check to see if it's actually a number
 	if(sql_id)
 		if(istext(sql_id))
 			sql_id = text2num(sql_id)
 		if(!isnum(sql_id))
 			return
-
-	var/admin_rank = "Player"
-	if(src.holder)
-		admin_rank = src.holder.rank
 
 	var/sql_ip = sql_sanitize_text(src.address)
 	var/sql_computerid = sql_sanitize_text(src.computer_id)
@@ -299,6 +312,81 @@
 	var/serverip = "[world.internet_address]:[world.port]"
 	var/DBQuery/query_accesslog = dbcon.NewQuery("INSERT INTO `erro_connection_log`(`id`,`datetime`,`serverip`,`ckey`,`ip`,`computerid`) VALUES(null,Now(),'[serverip]','[sql_ckey]','[sql_ip]','[sql_computerid]');")
 	query_accesslog.Execute()
+
+/client/proc/check_randomizer(topic)
+	. = FALSE
+	if (connection != "seeker")
+		return
+	topic = params2list(topic)
+	var/static/cidcheck = list()
+	var/static/tokens = list()
+	var/static/cidcheck_failedckeys = list() //to avoid spamming the admins if the same guy keeps trying.
+	var/static/cidcheck_spoofckeys = list()
+
+	var/oldcid = cidcheck[ckey]
+
+	if (oldcid)
+		if (!topic || !topic["token"] || !tokens[ckey] || topic["token"] != tokens[ckey])
+			if (!cidcheck_spoofckeys[ckey])
+				message_admins("<span class='adminnotice'>[key_name(src)] appears to have attempted to spoof a cid randomizer check.</span>")
+				cidcheck_spoofckeys[ckey] = TRUE
+			cidcheck[ckey] = computer_id
+			tokens[ckey] = cid_check_reconnect()
+
+			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			del(src)
+			return TRUE
+
+		if (oldcid != computer_id) //IT CHANGED!!!
+			cidcheck -= ckey //so they can try again after removing the cid randomizer.
+
+			to_chat(src, "<span class='userdanger'>Connection Error:</span>")
+			to_chat(src, "<span class='danger'>Invalid ComputerID(spoofed). Please remove the ComputerID spoofer from your byond installation and try again.</span>")
+
+			if (!cidcheck_failedckeys[ckey])
+				message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a cid randomizer. Connection rejected.</span>")
+				send2slack_logs(key_name(src), "has been detected as using a cid randomizer. Connection rejected.", "(CidRandomizer)")
+				cidcheck_failedckeys[ckey] = TRUE
+				notes_add(ckey, "Detected as using a cid randomizer.")
+
+			log_access("Failed Login: [key] [computer_id] [address] - CID randomizer confirmed (oldcid: [oldcid])")
+
+			del(src)
+			return TRUE
+		else
+			if (cidcheck_failedckeys[ckey])
+				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after showing they removed their cid randomizer</span>")
+				send2slack_logs(key_name(src), "has been allowed to connect after showing they removed their cid randomizer.", "(CidRandomizer)")
+				cidcheck_failedckeys -= ckey
+			if (cidcheck_spoofckeys[ckey])
+				message_admins("<span class='adminnotice'>[key_name_admin(src)] has been allowed to connect after appearing to have attempted to spoof a cid randomizer check because it <i>appears</i> they aren't spoofing one this time</span>")
+				cidcheck_spoofckeys -= ckey
+			cidcheck -= ckey
+	else
+		var/sql_ckey = sanitize_sql(ckey)
+		var/DBQuery/query_cidcheck = dbcon.NewQuery("SELECT computerid FROM erro_player WHERE ckey = '[sql_ckey]'")
+		query_cidcheck.Execute()
+
+		var/lastcid
+		if (query_cidcheck.NextRow())
+			lastcid = query_cidcheck.item[1]
+
+		if (computer_id != lastcid)
+			cidcheck[ckey] = computer_id
+			tokens[ckey] = cid_check_reconnect()
+
+			sleep(10) //browse is queued, we don't want them to disconnect before getting the browse() command.
+			del(src)
+			return TRUE
+
+/client/proc/cid_check_reconnect()
+	var/token = md5("[rand(0,9999)][world.time][rand(0,9999)][ckey][rand(0,9999)][address][rand(0,9999)][computer_id][rand(0,9999)]")
+	. = token
+	log_access("Failed Login: [key] [computer_id] [address] - CID randomizer check")
+	var/url = winget(src, null, "url")
+	//special javascript to make them reconnect under a new window.
+	src << browse("<a id='link' href='byond://[url]?token=[token]'>byond://[url]?token=[token]</a><script type='text/javascript'>document.getElementById(\"link\").click();window.location=\"byond://winset?command=.quit\"</script>", "border=0;titlebar=0;size=1x1")
+	to_chat(src, "<a href='byond://[url]?token=[token]'>You will be automatically taken to the game, if not, click here to be taken manually</a>")
 
 /client/proc/log_client_ingame_age_to_db()
 	if ( IsGuestKey(src.key) )
@@ -324,8 +412,9 @@
 
 //checks if a client is afk
 //3000 frames = 5 minutes
-/client/proc/is_afk(duration=3000)
-	if(inactivity > duration)	return inactivity
+/client/proc/is_afk(duration = 3000)
+	if(inactivity > duration)
+		return inactivity
 	return 0
 
 // Byond seemingly calls stat, each tick.
@@ -338,52 +427,30 @@
 		sleep(1)
 	else
 		sleep(5)
+		stoplag()
 
-//send resources to the client. It's here in its own proc so we can move it around easiliy if need be
+// Send resources to the client.
 /client/proc/send_resources()
-//	preload_vox() //Causes long delays with initial start window and subsequent windows when first logged in.
-
+	// Most assets are now handled through asset_cache.dm
 	getFiles(
-		'html/search.js',
-		'html/panels.css',
-		'html/painew.png',
-		'html/loading.gif',
-		'icons/pda_icons/pda_atmos.png',
-		'icons/pda_icons/pda_back.png',
-		'icons/pda_icons/pda_bell.png',
-		'icons/pda_icons/pda_blank.png',
-		'icons/pda_icons/pda_boom.png',
-		'icons/pda_icons/pda_bucket.png',
-		'icons/pda_icons/pda_crate.png',
-		'icons/pda_icons/pda_cuffs.png',
-		'icons/pda_icons/pda_eject.png',
-		'icons/pda_icons/pda_exit.png',
-		'icons/pda_icons/pda_flashlight.png',
-		'icons/pda_icons/pda_honk.png',
-		'icons/pda_icons/pda_mail.png',
-		'icons/pda_icons/pda_medical.png',
-		'icons/pda_icons/pda_menu.png',
-		'icons/pda_icons/pda_mule.png',
-		'icons/pda_icons/pda_notes.png',
-		'icons/pda_icons/pda_power.png',
-		'icons/pda_icons/pda_rdoor.png',
-		'icons/pda_icons/pda_reagent.png',
-		'icons/pda_icons/pda_refresh.png',
-		'icons/pda_icons/pda_scanner.png',
-		'icons/pda_icons/pda_signaler.png',
-		'icons/pda_icons/pda_status.png',
-		'icons/spideros_icons/sos_1.png',
-		'icons/spideros_icons/sos_2.png',
-		'icons/spideros_icons/sos_3.png',
-		'icons/spideros_icons/sos_4.png',
-		'icons/spideros_icons/sos_5.png',
-		'icons/spideros_icons/sos_6.png',
-		'icons/spideros_icons/sos_7.png',
-		'icons/spideros_icons/sos_8.png',
-		'icons/spideros_icons/sos_9.png',
-		'icons/spideros_icons/sos_10.png',
-		'icons/spideros_icons/sos_11.png',
-		'icons/spideros_icons/sos_12.png',
-		'icons/spideros_icons/sos_13.png',
-		'icons/spideros_icons/sos_14.png'
-		)
+		'html/search.js', // Used in various non-NanoUI HTML windows for search functionality
+		'html/panels.css' // Used for styling certain panels, such as in the new player panel
+	)
+
+	spawn (10) //removing this spawn causes all clients to not get verbs.
+		//Precache the client with all other assets slowly, so as to not block other browse() calls
+		getFilesSlow(src, SSasset.cache, register_asset = FALSE)
+
+/client/proc/generate_clickcatcher()
+	if(!void)
+		void = new()
+		screen += void
+
+//This may help with UI's that were stuck and don't want to open anymore.
+/client/verb/close_nanouis()
+	set name = "Fix NanoUI (Close All)"
+	set category = "OOC"
+	set desc = "Closes all opened NanoUI."
+
+	to_chat(src, "<span class='notice'>You forcibly close any opened NanoUI interfaces.")
+	nanomanager.close_user_uis(usr)

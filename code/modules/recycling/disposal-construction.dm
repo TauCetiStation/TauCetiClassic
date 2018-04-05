@@ -9,7 +9,6 @@
 	icon_state = "conpipe-s"
 	anchored = 0
 	density = 0
-	pressure_resistance = 5*ONE_ATMOSPHERE
 	m_amt = 1850
 	level = 2
 	var/ptype = 0
@@ -65,25 +64,17 @@
 		if(10)
 			base_state = "pipe-j2s"
 			dpdir = dir | left | flip
-///// Z-Level stuff
+
 		if(11)
-			base_state = "pipe-u"
-			dpdir = dir
-		if(12)
-			base_state = "pipe-d"
-			dpdir = dir
-///// Z-Level stuff
-		if(13)
 			base_state = "pipe-tagger"
 			dpdir = dir | flip
-		if(14)
+
+		if(12)
 			base_state = "pipe-tagger-partial"
 			dpdir = dir | flip
 
 
-///// Z-Level stuff
-	if(ptype<6 || ptype>8 && !(ptype==11 || ptype==12))
-///// Z-Level stuff
+	if(ptype < 6 || ptype > 8)
 		icon_state = "con[base_state]"
 	else
 		icon_state = base_state
@@ -157,15 +148,9 @@
 			return /obj/structure/disposalpipe/sortjunction
 		if(10)
 			return /obj/structure/disposalpipe/sortjunction/flipped
-///// Z-Level stuff
 		if(11)
-			return /obj/structure/disposalpipe/up
-		if(12)
-			return /obj/structure/disposalpipe/down
-///// Z-Level stuff
-		if(13)
 			return /obj/structure/disposalpipe/tagger
-		if(14)
+		if(12)
 			return /obj/structure/disposalpipe/tagger/partial
 	return
 
@@ -188,10 +173,10 @@
 		if(9, 10)
 			nicetype = "sorting pipe"
 			ispipe = 1
-		if(13)
+		if(11)
 			nicetype = "tagging pipe"
 			ispipe = 1
-		if(14)
+		if(12)
 			nicetype = "partial tagging pipe"
 			ispipe = 1
 		else
@@ -205,13 +190,14 @@
 
 	var/obj/structure/disposalpipe/CP = locate() in T
 	if(ptype>=6 && ptype <= 8) // Disposal or outlet
-		if(CP) // There's something there
-			if(!istype(CP,/obj/structure/disposalpipe/trunk))
+		if (!(istype(I, /obj/item/weapon/wrench) && anchored))
+			if(CP) // There's something there
+				if(!istype(CP,/obj/structure/disposalpipe/trunk))
+					to_chat(user, "The [nicetype] requires a trunk underneath it in order to work.")
+					return
+			else // Nothing under, fuck.
 				to_chat(user, "The [nicetype] requires a trunk underneath it in order to work.")
 				return
-		else // Nothing under, fuck.
-			to_chat(user, "The [nicetype] requires a trunk underneath it in order to work.")
-			return
 	else
 		if(CP)
 			update()
@@ -245,6 +231,7 @@
 
 	else if(istype(I, /obj/item/weapon/weldingtool))
 		if(anchored)
+			if(user.is_busy()) return
 			var/obj/item/weapon/weldingtool/W = I
 			if(W.remove_fuel(0,user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)

@@ -1,8 +1,5 @@
 
 //########################## CONTRABAND ;3333333333333333333 -Agouri ###################################################
-#define NUM_OF_POSTER_DESIGNS 36 // contraband posters
-
-#define NUM_OF_POSTER_DESIGNS_LEGIT 35 // corporate approved posters
 
 #define POSTERNAME "name"
 
@@ -102,7 +99,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	icon_state = "rolled_poster"
 	var/serial_number = 0
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
-	var/official = 0
+	var/official = FALSE
 
 /obj/item/weapon/poster/contraband
 	name = "contraband poster"
@@ -114,57 +111,51 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	name = "motivational poster"
 	icon_state = "rolled_legit"
 	desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
-	official = 1
+	official = TRUE
 
-/obj/item/weapon/poster/New(turf/loc, given_serial = 0)
-	if(given_serial == 0)
-		if(!official)
-			serial_number = rand(1, NUM_OF_POSTER_DESIGNS)
-			resulting_poster = new(serial_number,official)
-		else
-			serial_number = rand(1, NUM_OF_POSTER_DESIGNS_LEGIT)
-			resulting_poster = new(serial_number,official)
+/obj/item/weapon/poster/atom_init(mapload, given_serial = 0)
+	if(!given_serial)
+		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)
+		resulting_poster = new(serial_number, official)
 	else
 		serial_number = given_serial
 		//We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
 	name += " - No. [serial_number]"
-	..(loc)
+	. = ..()
 
 
 //############################## THE ACTUAL DECALS ###########################
 
-obj/structure/sign/poster
+/obj/structure/sign/poster
 	name = "poster"
 	desc = "A large piece of space-resistant printed paper. "
 	icon = 'icons/obj/contraband.dmi'
-	anchored = 1
+	anchored = TRUE
 	var/serial_number	//Will hold the value of src.loc if nobody initialises it
-	var/ruined = 0
-	var/official = 0
+	var/ruined = FALSE
+	var/official = FALSE
 	var/placespeed = 30 // don't change this, otherwise the animation will not sync to the progress bar
 
 
 
-obj/structure/sign/poster/New(var/serial, var/rolled_official)
+/obj/structure/sign/poster/atom_init(mapload, rolled_official)
 
-	serial_number = serial
-	official = rolled_official
+	serial_number = loc
+	if(rolled_official)
+		official = rolled_official
 	if(serial_number == loc)
-		if(!official)
-			serial_number = rand(1, NUM_OF_POSTER_DESIGNS)	//This is for the mappers that want individual posters without having to use rolled posters.
-		if(official)
-			serial_number = rand(1, NUM_OF_POSTER_DESIGNS_LEGIT)
-	if(!official)
-		icon_state = "poster[serial_number]"
-		name += contrabandposters[serial_number][POSTERNAME]
-		desc += contrabandposters[serial_number][POSTERDESC]
-	else if (official)
+		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)	//This is for the mappers that want individual posters without having to use rolled posters.
+	if(official)
 		icon_state = "poster[serial_number]_legit"
 		name += legitposters[serial_number][POSTERNAME]
 		desc += legitposters[serial_number][POSTERDESC]
-	..()
+	else
+		icon_state = "poster[serial_number]"
+		name += contrabandposters[serial_number][POSTERNAME]
+		desc += contrabandposters[serial_number][POSTERDESC]
+	. = ..()
 
-obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
+/obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wirecutters))
 		playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
 		if(ruined)
@@ -195,13 +186,13 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
 			return
 
 /obj/structure/sign/poster/proc/roll_and_drop(turf/newloc, official)
-	if (!official)
-		var/obj/item/weapon/poster/contraband/P = new(src, serial_number)
+	if(official)
+		var/obj/item/weapon/poster/legit/P = new(src, serial_number)
 		P.resulting_poster = src
 		P.loc = newloc
 		src.loc = P
 	else
-		var/obj/item/weapon/poster/legit/P = new(src, serial_number)
+		var/obj/item/weapon/poster/contraband/P = new(src, serial_number)
 		P.resulting_poster = src
 		P.loc = newloc
 		src.loc = P
@@ -210,47 +201,31 @@ obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
 /turf/simulated/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
 	if(!P.resulting_poster)	return
 
-	if(!istype(src,/turf/simulated/wall))
-		to_chat(user, "<span class='red'> You can't place this here!</span>")
+	if((x - user.x) != 0 && (y - user.y) != 0) // check if user not on the axis with wall
 		return
-
-	var/stuff_on_wall = 0
-	for(var/obj/O in contents) //Let's see if it already has a poster on it or too much stuff
-		if(istype(O,/obj/structure/sign/poster))
-			to_chat(user, "<span class='notice'>The wall is far too cluttered to place a poster!</span>")
+	for(var/obj/structure/sign/poster/PO in user.loc.contents) //Let's see if it already has a poster
+		if(istype(PO, /obj/structure/sign/poster) && \
+		PO.pixel_x == (x - user.x) * P.resulting_poster.bound_width && \
+		PO.pixel_y == (y - user.y) * P.resulting_poster.bound_height)
+			to_chat(user, "<span class='notice'>The wall is already has a poster!</span>")
 			return
-		stuff_on_wall++
-		if(stuff_on_wall == 3)
-			to_chat(user, "<span class='notice'>The wall is far too cluttered to place a poster!</span>")
-			return
-
+	if(user.is_busy(src)) return
 	to_chat(user, "<span class='notice'>You start placing the poster on the wall...</span>")//Looks like it's uncluttered enough. Place the poster.
 
 	//declaring D because otherwise if P gets 'deconstructed' we lose our reference to P.resulting_poster
-//	var/obj/structure/sign/poster/D = new(P.serial_number)
 	var/obj/structure/sign/poster/D = P.resulting_poster
 
 	var/temp_loc = user.loc
-	flick("poster_being_set",D)
-	D.loc = src
+	flick("poster_being_set", D)
+	D.loc = user.loc
+	D.pixel_x = (x - D.x) * D.bound_width
+	D.pixel_y = (y - D.y) * D.bound_height
 	D.official = P.official
 	qdel(P)	//delete it now to cut down on sanity checks afterwards. Agouri's code supports rerolling it anyway
 	playsound(D.loc, 'sound/items/poster_being_created.ogg', 100, 1)
 
-//	sleep(17)
-	if(do_after(user,D.placespeed,target=src))
-		if(!D)	return
-
-		if(istype(src,/turf/simulated/wall) && user && user.loc == temp_loc)//Let's check if everything is still there
-			to_chat(user, "<span class='notice'>You place the poster!</span>")
-		else
-			D.roll_and_drop(temp_loc,D.official)
-		return
-
-/*/datum/poster
-	// Name suffix. Poster - [name]
-	var/name=""
-	// Description suffix
-	var/desc=""
-	var/icon_state=""*/
-
+	if(do_after(user, D.placespeed, target=src))
+		to_chat(user, "<span class='notice'>You placed the poster!</span>")
+	else
+		D.roll_and_drop(temp_loc, D.official)
+	return

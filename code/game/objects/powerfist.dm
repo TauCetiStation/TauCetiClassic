@@ -68,7 +68,7 @@
 		thetank.forceMove(src)
 
 
-/obj/item/weapon/melee/powerfist/attack(mob/living/target, mob/living/user)
+/obj/item/weapon/melee/powerfist/attack(mob/living/target, mob/living/user, def_zone)
 	if(!tank)
 		to_chat(user,"<span class='warning'>\The [src] can't operate without a source of gas!</span>")
 		return
@@ -76,18 +76,17 @@
 		to_chat(user,"<span class='warning'>\The [src]'s piston-ram lets out a weak hiss, it needs more gas!</span>")
 		playsound(loc, 'sound/effects/refill.ogg', 50, 1)
 		return
-	target.apply_damage(force * fisto_setting, BRUTE, user.zone_sel.selecting)
+	target.apply_damage(force * fisto_setting, BRUTE, def_zone)
 	target.visible_message("<span class='danger'>[user]'s powerfist lets out a loud hiss as they punch [target.name]!</span>", \
 		"<span class='userdanger'>You cry out in pain as [user]'s punch flings you backwards!</span>")
-	PoolOrNew(/obj/item/effect/kinetic_blast, target.loc)
+	new /obj/item/effect/kinetic_blast(target.loc)
 	playsound(loc, 'sound/weapons/resonator_blast.ogg', 50, 1)
 	playsound(loc, 'sound/weapons/genhit2.ogg', 50, 1)
 
 	var/atom/throw_target = get_edge_target_turf(target, get_dir(src, get_step_away(target, src)))
-	spawn(1)
-		target.throw_at(throw_target, 5 * fisto_setting, 0.2)
+	target.throw_at(throw_target, 5 * fisto_setting, 1)
 
 	target.attack_log += text("\[[time_stamp()]\]<font color='orange'> Has been powerfisted by [user.name] ([user.ckey])</font>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>powerfisted [target.name]'s ([target.ckey])</font>")
-	msg_admin_attack("[user] ([user.ckey]) powerfisted [target.name] ([target.ckey]) <A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[target.x];Y=[target.y];Z=[target.z]'>JMP</a>)</span></span>")
+	msg_admin_attack("[user] ([user.ckey]) powerfisted [target.name] ([target.ckey]) ([ADMIN_JMP(target)])")
 	return

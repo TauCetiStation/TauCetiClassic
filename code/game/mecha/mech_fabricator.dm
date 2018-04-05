@@ -9,6 +9,7 @@
 	idle_power_usage = 20
 	active_power_usage = 5000
 	req_access = list(access_robotics)
+	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/time_coeff = 1
 	var/time_coeff_tech = 1
 	var/resource_coeff = 1
@@ -47,8 +48,8 @@
 								"Misc"
 								)
 
-/obj/machinery/mecha_part_fabricator/New()
-	..()
+/obj/machinery/mecha_part_fabricator/atom_init()
+	. = ..()
 	New_parts()
 	files = new /datum/research(src) //Setup the research data holder.
 
@@ -172,9 +173,11 @@
 	desc = initial(desc)
 
 	var/location = get_step(src,(dir))
-	var/obj/item/I = new D.build_path(location)
-	I.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
-	I.materials[MAT_GLASS] = get_resource_cost_w_coeff(D,MAT_GLASS)
+	var/I = new D.build_path(location)
+	if(istype(I, /obj/item))
+		var/obj/item/Item = I
+		Item.materials[MAT_METAL] = get_resource_cost_w_coeff(D,MAT_METAL)
+		Item.materials[MAT_GLASS] = get_resource_cost_w_coeff(D,MAT_GLASS)
 	visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"\The [I] is complete.\"")
 	being_built = null
 
@@ -298,32 +301,10 @@
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
 	return round(initial(D.construction_time)*time_coeff*time_coeff_tech, roundto)
 
-/obj/machinery/mecha_part_fabricator/proc/operation_allowed(mob/M)
-	if(isrobot(M) || isAI(M))
-		return 1
-	if(!istype(req_access) || !req_access.len)
-		return 1
-	else if(istype(M, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = M
-		for(var/ID in list(H.get_active_hand(), H.wear_id, H.belt))
-			if(src.check_access(ID))
-				return 1
-	visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"Access denied.\"")
-	//M << "<font color='red'>You don't have required permissions to use [src]</font>"
-	return 0
+/obj/machinery/mecha_part_fabricator/ui_interact(mob/user)
+	var/dat
+	var/left_part
 
-/obj/machinery/mecha_part_fabricator/attack_hand(mob/user)
-	if(!(..()))
-		if(!operation_allowed(user))
-			return
-		else
-			return interact(user)
-
-/obj/machinery/mecha_part_fabricator/interact(mob/user)
-	var/dat, left_part
-	if (..())
-		return
-	user.set_machine(src)
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
 		visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"Error! Part outlet is obstructed.\"")
@@ -374,9 +355,8 @@
 				</table>
 				</body>
 				</html>"}
-	user << browse(dat, "window=mecha_fabricator;size=1000x430")
+	user << browse(entity_ja(dat), "window=mecha_fabricator;size=1000x430")
 	onclose(user, "mecha_fabricator")
-	return
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
 	. = ..()
@@ -422,12 +402,9 @@
 		return update_queue_on_page()
 
 	if(href_list["process_queue"])
-		spawn(0)
-			if(processing_queue || being_built)
-				return FALSE
-			processing_queue = 1
-			process_queue()
-			processing_queue = 0
+		if(processing_queue || being_built)
+			return FALSE
+		processing_queue()
 
 	if(href_list["clear_temp"])
 		temp = null
@@ -477,6 +454,13 @@
 
 	updateUsrDialog()
 
+/obj/machinery/mecha_part_fabricator/proc/processing_queue()
+	set waitfor = FALSE
+
+	processing_queue = TRUE
+	process_queue()
+	processing_queue = FALSE
+
 /obj/machinery/mecha_part_fabricator/proc/remove_material(mat_string, amount)
 	if(resources[mat_string] < MINERAL_MATERIAL_AMOUNT) //not enough mineral for a sheet
 		return -1
@@ -509,8 +493,8 @@
 	var/total_amount = round(resources[mat_string]/MINERAL_MATERIAL_AMOUNT)
 	if(total_amount)//if there's still enough material for sheets
 		var/obj/item/stack/sheet/res = new type(get_turf(src),min(amount,total_amount))
-		resources[mat_string] -= res.amount*MINERAL_MATERIAL_AMOUNT
-		result += res.amount
+		resources[mat_string] -= res.get_amount()*MINERAL_MATERIAL_AMOUNT
+		result += res.get_amount()
 
 	return result
 
@@ -568,7 +552,7 @@
 		if(resources[material] < res_max_amount)
 			overlays += "fab-load-[material2name(material)]"//loading animation is now an overlay based on material type. No more spontaneous conversion of all ores to metal. -vey
 
-			var/transfer_amount = min(stack.amount, round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
+			var/transfer_amount = min(stack.get_amount(), round((res_max_amount - resources[material])/MINERAL_MATERIAL_AMOUNT,1))
 			resources[material] += transfer_amount * MINERAL_MATERIAL_AMOUNT
 			stack.use(transfer_amount)
 			to_chat(user, "<span class='notice'>You insert [transfer_amount] [sname] sheet\s into \the [src].</span>")

@@ -22,8 +22,13 @@
 	throw_range = 15
 	m_amt = 10
 	var/colour = "black"	//what colour the ink is!
-	pressure_resistance = 2
 
+/obj/item/weapon/pen/ghost
+	desc = "An expensive looking pen. You wonder, what is it's cost?"
+	colour = "purple"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "fountainpen" //paththegreat: Eli Stevens
+	var/entity = ""
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."
@@ -50,13 +55,12 @@
 	origin_tech = "materials=2;syndicate=5"
 
 
-/obj/item/weapon/pen/sleepypen/New()
+/obj/item/weapon/pen/sleepypen/atom_init()
 	var/datum/reagents/R = new/datum/reagents(30) //Used to be 300
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("chloralhydrate", 22)	//Used to be 100 sleep toxin//30 Chloral seems to be fatal, reducing it to 22./N
-	..()
-	return
+	. = ..()
 
 
 /obj/item/weapon/pen/sleepypen/attack(mob/M, mob/user)
@@ -80,23 +84,21 @@
 
 /obj/item/weapon/pen/paralysis/attack(mob/living/M, mob/user)
 	..()
-	if(!(istype(M,/mob)))
+
+	if(!istype(M))
 		return
 
-	if(M.can_inject(user,1))
-		if(reagents.total_volume)
-			if(M.reagents) reagents.trans_to(M, 50)
-	return
+	if(reagents.total_volume && M.reagents && M.try_inject(user, TRUE, TRUE, TRUE))
+		reagents.trans_to(M, 50)
 
 
-/obj/item/weapon/pen/paralysis/New()
+/obj/item/weapon/pen/paralysis/atom_init()
 	var/datum/reagents/R = new/datum/reagents(50)
 	reagents = R
 	R.my_atom = src
 	R.add_reagent("zombiepowder", 10)
 	R.add_reagent("cryptobiolin", 15)
-	..()
-	return
+	. = ..()
 
 /obj/item/weapon/pen/edagger
 	origin_tech = "combat=3;syndicate=1"
@@ -134,4 +136,63 @@
 		clean_blood()
 		icon_state = initial(icon_state) //looks like a normal pen when off.
 		item_state = initial(item_state)
+
+/*
+ * Chameleon pen
+ */
+/obj/item/weapon/pen/chameleon
+	var/signature = ""
+
+/obj/item/weapon/pen/chameleon/attack_self(mob/user)
+	signature = sanitize(input("Enter new signature. Leave blank for 'Anonymous'", "New Signature", input_default(signature)))
+
+/obj/item/weapon/pen/ghost/attack_self(mob/living/carbon/human/user)
+	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")))
+		to_chat(user, "<span class='notice'>You feel the pen quiver, as another entity posseses it.</span>")
+		var/choices = list()
+		for(var/mob/dead/observer/D in dead_mob_list)
+			if(D.started_as_observer)
+				choices += D.name
+		if(choices)
+			entity = sanitize(pick(choices))
+		else
+			entity = ""
+
+/obj/item/weapon/pen/proc/get_signature(mob/user)
+	return (user && user.real_name) ? user.real_name : "Anonymous"
+
+/obj/item/weapon/pen/chameleon/get_signature(mob/user)
+	return signature ? signature : "Anonymous"
+
+/obj/item/weapon/pen/ghost/get_signature(mob/user)
+	return entity ? entity : (user && user.real_name) ? user.real_name : "Anonymous"
+
+/obj/item/weapon/pen/chameleon/verb/set_colour()
+	set name = "Change Pen Colour"
+	set category = "Object"
+
+	var/list/possible_colours = list ("Yellow", "Green", "Pink", "Blue", "Orange", "Cyan", "Red", "Invisible", "Black")
+	var/selected_type = input("Pick new colour.", "Pen Colour", null, null) as null|anything in possible_colours
+
+	if(selected_type)
+		switch(selected_type)
+			if("Yellow")
+				colour = "yellow"
+			if("Green")
+				colour = "lime"
+			if("Pink")
+				colour = "pink"
+			if("Blue")
+				colour = "blue"
+			if("Orange")
+				colour = "orange"
+			if("Cyan")
+				colour = "cyan"
+			if("Red")
+				colour = "red"
+			if("Invisible")
+				colour = "white"
+			else
+				colour = "black"
+		to_chat(usr, "<span class='info'>You select the [lowertext(selected_type)] ink container.</span>")
 

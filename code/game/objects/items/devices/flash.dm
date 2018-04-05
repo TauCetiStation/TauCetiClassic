@@ -78,7 +78,7 @@
 						if(M.stat == CONSCIOUS)
 							M.mind_initialize()		//give them a mind datum if they don't have one.
 							var/resisted
-							if(!isloyal(M) && !jobban_isbanned(M, ROLE_REV) && !jobban_isbanned(M, "Syndicate") && !role_available_in_minutes(M, ROLE_REV))
+							if(!ismindshielded(M) && !jobban_isbanned(M, ROLE_REV) && !jobban_isbanned(M, "Syndicate") && !role_available_in_minutes(M, ROLE_REV))
 								if(user.mind in ticker.mode.head_revolutionaries)
 									M.mind.has_been_rev = 1
 									if(!ticker.mode.add_revolutionary(M.mind))

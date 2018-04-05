@@ -143,14 +143,18 @@ var/const/INGEST = 2
 
 	src.trans_to(B, amount)
 
-	digest_delay(BR, target, B)
-	//spawn(95)
-	//	BR.reaction(target, INGEST)
-	//	spawn(5)
-	//		BR.trans_to(target, BR.total_volume)
-	//		qdel(B)
+	digest_with_delay(BR, target, B)
 
 	return amount
+
+/datum/reagents/proc/digest_with_delay(datum/reagents/BR, obj/target, obj/item/weapon/reagent_containers/glass/beaker/noreact/B)
+	set waitfor = FALSE
+
+	sleep(95)
+	BR.reaction(target, INGEST)
+	sleep(5)
+	BR.trans_to(target, BR.total_volume)
+	qdel(B)
 
 /datum/reagents/proc/copy_to(obj/target, amount=1, multiplier=1, preserve_data=1, safety = 0)
 	if(!target)
@@ -372,31 +376,37 @@ var/const/INGEST = 2
 		if(TOUCH)
 			for(var/datum/reagent/R in reagent_list)
 				if(ismob(A))
-					spawn(0)
-						if(!R) return
-						else R.reaction_mob(A, TOUCH, R.volume+volume_modifier)
+					if(!R)
+						return
+					else
+						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_mob, A, TOUCH, R.volume+volume_modifier)
 				if(isturf(A))
-					spawn(0)
-						if(!R) return
-						else R.reaction_turf(A, R.volume+volume_modifier)
+					if(!R)
+						return
+					else
+						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_turf, A, R.volume+volume_modifier)
 				if(isobj(A))
-					spawn(0)
-						if(!R) return
-						else R.reaction_obj(A, R.volume+volume_modifier)
+					if(!R)
+						return
+					else
+						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
 		if(INGEST)
 			for(var/datum/reagent/R in reagent_list)
 				if(ismob(A) && R)
-					spawn(0)
-						if(!R) return
-						else R.reaction_mob(A, INGEST, R.volume+volume_modifier)
+					if(!R)
+						return
+					else
+						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_mob, A, INGEST, R.volume+volume_modifier)
 				if(isturf(A) && R)
-					spawn(0)
-						if(!R) return
-						else R.reaction_turf(A, R.volume+volume_modifier)
+					if(!R)
+						return
+					else
+						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_turf, A, R.volume+volume_modifier)
 				if(isobj(A) && R)
-					spawn(0)
-						if(!R) return
-						else R.reaction_obj(A, R.volume+volume_modifier)
+					if(!R)
+						return
+					else
+						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
 	return
 
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, safety = 0)
@@ -471,9 +481,8 @@ var/const/INGEST = 2
 	return 1
 
 /datum/reagents/proc/remove_reagent(reagent, amount, safety = 0)//Added a safety check for the trans_id_to
-	if(!isnum(amount)) return 1
-	if(amount < 0) return 0
-	if(amount > 2000) return
+	if(!isnum(amount) || amount < 0 || amount > 2000)
+		return FALSE
 
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
@@ -483,20 +492,17 @@ var/const/INGEST = 2
 			if(!safety)//So it does not handle reactions when it need not to
 				handle_reactions()
 			my_atom.on_reagent_change()
-			return 0
+			return TRUE
 
-	return 1
+	return FALSE
 
-/datum/reagents/proc/has_reagent(reagent, amount = -1)
-
-	for(var/A in reagent_list)
-		var/datum/reagent/R = A
-		if (R.id == reagent)
-			if(!amount) return R
-			else
-				if(R.volume >= amount) return R
-				else return 0
-
+/datum/reagents/proc/has_reagent(reagent, amount = 0)
+	for(var/datum/reagent/R in reagent_list)
+		if(R.id == reagent)
+			if(!amount)
+				return R
+			else if(R.volume >= amount)
+				return R
 	return 0
 
 /datum/reagents/proc/get_reagent_amount(reagent)
@@ -506,6 +512,9 @@ var/const/INGEST = 2
 			return R.volume
 
 	return 0
+
+/datum/reagents/proc/get_reagent(type)
+	. = locate(type) in reagent_list
 
 /datum/reagents/proc/get_reagents()
 	var/res = ""
@@ -593,13 +602,3 @@ var/const/INGEST = 2
 /atom/proc/create_reagents(max_vol)
 	reagents = new/datum/reagents(max_vol)
 	reagents.my_atom = src
-
-// Временное (а может и постоянное) решение бага с проком, который симулирует поедание еды/таблеток и передает с задержкой реагенты из временного контейнера...
-//... по какой-то причине, кудел прерывает spawn который был вызван объектом(еда/таблетка)...
-//... быстрое решение нашел только такое - отвязать проблемный блок в проке от регов. ~Zve
-/proc/digest_delay(datum/reagents/BR, obj/target, obj/item/weapon/reagent_containers/glass/beaker/noreact/B)
-	spawn(95)
-		BR.reaction(target, INGEST)
-		spawn(5)
-			BR.trans_to(target, BR.total_volume)
-			qdel(B)

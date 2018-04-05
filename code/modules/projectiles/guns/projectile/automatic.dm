@@ -45,10 +45,9 @@
 	fire_sound = 'sound/weapons/Gunshot_smg.ogg'
 
 
-/obj/item/weapon/gun/projectile/automatic/c20r/New()
-	..()
+/obj/item/weapon/gun/projectile/automatic/c20r/atom_init()
+	. = ..()
 	update_icon()
-	return
 
 /obj/item/weapon/gun/projectile/automatic/c20r/afterattack(atom/target, mob/living/user, flag)
 	..()
@@ -77,7 +76,14 @@
 
 /obj/item/weapon/gun/projectile/automatic/c20r/update_icon()
 	..()
-	icon_state = "c20r[silenced ? "-silencer" : ""][magazine ? "-[Ceiling(get_ammo(0)/4)*4]" : ""][chambered ? "" : "-e"]"
+	overlays.Cut()
+	if(magazine)
+		var/image/magazine_icon = image('icons/obj/gun.dmi', "mag-[ceil(get_ammo(0) / 4) * 4]")
+		overlays += magazine_icon
+	if(silenced)
+		var/image/silencer_icon = image('icons/obj/gun.dmi', "c20r-silencer")
+		overlays += silencer_icon
+	icon_state = "c20r[chambered ? "" : "-e"]"
 	return
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw
@@ -120,14 +126,18 @@
 /obj/item/weapon/gun/projectile/automatic/l6_saw/pickup(mob/user)
 	unwield()
 
-
 /obj/item/weapon/gun/projectile/automatic/l6_saw/attack_self(mob/user)
 	switch(alert("Would you like to [cover_open ? "open" : "close"], or change grip?","Choose.","Toggle cover","Change grip"))
 		if("Toggle cover")
-			if(wielded)
-				to_chat(user, "<span class='notice'>You need your other hand to be empty.</span>")
+			if(wielded || user.get_inactive_hand())
+				to_chat(user, "<span class='warning'>You need your other hand to be empty to do this.</span>")
 				return
 			else
+				if(ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if(!H.can_use_two_hands())
+						to_chat(user, "<span class='warning'>You need both of your hands to be intact.</span>")
+						return
 				cover_open = !cover_open
 				to_chat(user, "<span class='notice'>You [cover_open ? "open" : "close"] [src]'s cover.</span>")
 				update_icon()
@@ -147,26 +157,14 @@
 				return
 
 			else //Trying to wield it
-				if(user.get_inactive_hand())
-					to_chat(user, "<span class='warning'>You need your other hand to be empty</span>")
-					return
-				wield()
-				to_chat(user, "<span class='notice'>You grab the [initial(name)] with both hands.</span>")
-
-				if(user.hand)
-					user.update_inv_l_hand()
-				else
-					user.update_inv_r_hand()
-
-				var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
-				O.name = "[initial(name)] - offhand"
-				O.desc = "Your second grip on the [initial(name)]"
-				user.put_in_inactive_hand(O)
-				return
-
+				if(ishuman(user))
+					var/mob/living/carbon/human/H = user
+					var/W = H.wield(src, initial(name))
+					if(W)
+						wield()
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/update_icon()
-	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? Ceiling(get_ammo(0)/12.5)*25 : "-empty"]"
+	icon_state = "l6[cover_open ? "open" : "closed"][magazine ? ceil(get_ammo(0) / 12.5) * 25 : "-empty"]"
 
 /obj/item/weapon/gun/projectile/automatic/l6_saw/afterattack(atom/target, mob/living/user, flag, params) //what I tried to do here is just add a check to see if the cover is open or not and add an icon_state change because I can't figure out how c-20rs do it with overlays
 	if(!wielded)
@@ -237,10 +235,9 @@
 	recoil = 0
 	energy_gun = 1
 
-/obj/item/weapon/gun/projectile/automatic/l10c/New()
-	..()
+/obj/item/weapon/gun/projectile/automatic/l10c/atom_init()
+	. = ..()
 	update_icon()
-	return
 
 /obj/item/weapon/gun/projectile/automatic/l10c/process_chamber()
 	return ..(0, 1, 1)
@@ -420,10 +417,9 @@
 	mag_type = /obj/item/ammo_box/magazine/m12g
 	fire_sound = 'sound/weapons/Gunshot.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/bulldog/New()
-	..()
+/obj/item/weapon/gun/projectile/automatic/bulldog/atom_init()
+	. = ..()
 	update_icon()
-	return
 
 /obj/item/weapon/gun/projectile/automatic/bulldog/proc/update_magazine()
 	if(magazine)
@@ -455,19 +451,46 @@
 	mag_type = /obj/item/ammo_box/magazine/m556
 	fire_sound = 'sound/weapons/Gunshot.ogg'
 
-/obj/item/weapon/gun/projectile/automatic/a28/New()
-	..()
+/obj/item/weapon/gun/projectile/automatic/a28/atom_init()
+	. = ..()
 	update_icon()
-	return
-
-/obj/item/weapon/gun/projectile/automatic/a28/proc/update_magazine()
-	if(magazine)
-		src.overlays = 0
-		overlays += "[magazine.icon_state]-o"
-		return
 
 /obj/item/weapon/gun/projectile/automatic/a28/update_icon()
-	src.overlays = 0
-	update_magazine()
-	icon_state = "a28[chambered ? "" : "-e"]"
+	overlays.Cut()
+	if(magazine)
+		overlays += "[magazine.icon_state]-o"
+	icon_state = "[initial(icon_state)][chambered ? "" : "-e"]"
 	return
+
+/obj/item/weapon/gun/projectile/automatic/a74
+	name = "A74 assault rifle"
+	desc = "Stradi and Practican Maid Bai Spess soviets corporation, bazed he original design of 20 centuriyu fin about baars and vodka vile patrimonial it, saunds of balalaika place minvile, yuzes 7.74 caliber"
+	mag_type = /obj/item/ammo_box/magazine/a74mm
+	w_class = 3.0
+	icon_state = "a74"
+	item_state = "a74"
+	origin_tech = "combat=5;materials=4;syndicate=6"
+	fire_sound = 'sound/weapons/guns/ak74_fire.ogg'
+	var/icon/mag_icon = icon('icons/obj/gun.dmi',"mag-a74")
+
+/obj/item/weapon/gun/projectile/automatic/a74/atom_init()
+	. = ..()
+	update_icon()
+
+/obj/item/weapon/gun/projectile/automatic/a74/update_icon()
+	overlays.Cut()
+	if(magazine)
+		overlays += mag_icon
+		item_state = "[initial(icon_state)]"
+	else
+		item_state = "[initial(icon_state)]-e"
+
+/obj/item/weapon/gun/projectile/automatic/a74/attack_self(mob/user)
+	if(..())
+		playsound(user, 'sound/weapons/guns/ak74_reload.ogg', 50, 1)
+	update_icon()
+
+/obj/item/weapon/gun/projectile/automatic/a74/attackby(obj/item/A, mob/user)
+	if(..())
+		playsound(user, 'sound/weapons/guns/ak74_reload.ogg', 50, 1)
+	update_icon()

@@ -8,8 +8,9 @@
 	var/stored_charge = 0
 	var/effect_id = ""
 
-/obj/item/weapon/anobattery/New()
+/obj/item/weapon/anobattery/atom_init()
 	battery_effect = new()
+	. = ..()
 
 /obj/item/weapon/anobattery/proc/UpdateSprite()
 	var/p = (stored_charge/capacity)*100
@@ -35,9 +36,9 @@
 	var/turf/archived_loc
 	var/energy_consumed_on_touch = 100
 
-/obj/item/weapon/anodevice/New()
-	..()
-	SSobj.processing |= src
+/obj/item/weapon/anodevice/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/anodevice/attackby(obj/I, mob/user)
 	if(istype(I, /obj/item/weapon/anobattery))
@@ -194,7 +195,7 @@
 	icon_state = "anodev[round(p,25)]"
 
 /obj/item/weapon/anodevice/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/anodevice/attack(mob/living/M, mob/living/user, def_zone)

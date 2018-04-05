@@ -6,30 +6,38 @@
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
 	return
+
 /atom/movable/attackby(obj/item/W, mob/user, params)
 	user.do_attack_animation(src)
-	if(W && !(W.flags&NOBLUDGEON))
+	user.SetNextMove(CLICK_CD_MELEE)
+	add_fingerprint(user)
+	if(W && !(W.flags & NOBLUDGEON))
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
 /mob/living/attackby(obj/item/I, mob/user, params)
-	if(istype(I) && ismob(user))
+	if(!istype(I) || !ismob(user))
+		return
+	user.SetNextMove(CLICK_CD_MELEE)
+
+	if(user.zone_sel && user.zone_sel.selecting)
+		I.attack(src, user, user.zone_sel.selecting)
+	else
 		I.attack(src, user)
 
-		if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
-			var/mob/living/carbon/human/H = user
-			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
-					if(V.stealth_active)
-						V.DeactivateStealth()
+	if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
+		var/mob/living/carbon/human/H = user
+		if(istype(H.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = H.wear_suit
+			V.attack_reaction(H, REACTION_INTERACT_ARMED, src)
 
-		if(butcher_results && stat == DEAD)
-			if(buckled && istype(buckled, /obj/structure/kitchenspike))
-				var/sharpness = is_sharp(I)
-				if(sharpness)
-					to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-					playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-					if(do_mob(user, src, 80/sharpness))
-						harvest(user)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(istype(H.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = H.wear_suit
+			V.attack_reaction(src, REACTION_ATACKED, user)
+
+	if(attempt_harvest(I, user))
+		return
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
@@ -38,18 +46,14 @@
 
 
 /obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
-
-	if (!istype(M)) // not sure if this is the right thing...
-		return 0
 	var/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M,user,src))
 			return 0
-
 	// Knifing
 	if(edge)
 		for(var/obj/item/weapon/grab/G in M.grabbed_by)
-			if(G.assailant == user && G.state >= GRAB_NECK && world.time >= (G.last_action + 20) && user.zone_sel.selecting == "head")
+			if(G.assailant == user && G.state >= GRAB_NECK && world.time >= (G.last_action + 20) && def_zone == BP_HEAD)
 				var/protected = 0
 				if(ishuman(M))
 					var/mob/living/carbon/human/AH = M
@@ -57,9 +61,10 @@
 						protected = 1
 				if(!protected)
 					//TODO: better alternative for applying damage multiple times? Nice knifing sound?
-					M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
-					M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
-					M.apply_damage(20, BRUTE, "head", 0, sharp=sharp, edge=edge)
+					var/damage_flags = damage_flags()
+					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
+					M.apply_damage(20, BRUTE, BP_HEAD, null, damage_flags)
 					M.adjustOxyLoss(60) // Brain lacks oxygen immediately, pass out
 					playsound(loc, 'sound/effects/throat_cutting.ogg', 50, 1, 1)
 					flick(G.hud.icon_state, G.hud)
@@ -83,16 +88,12 @@
 	M.attack_log += "\[[time_stamp()]\]<font color='orange'> Attacked by [user.name] ([user.ckey]) with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)])</font>"
 	msg_admin_attack("[key_name(user)] attacked [key_name(M)] with [name] (INTENT: [uppertext(user.a_intent)]) (DAMTYE: [uppertext(damtype)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)" )
 
-	//spawn(1800)            // this wont work right
-	//	M.lastattacker = null
-	/////////////////////////
-
 	var/power = force
 	if(HULK in user.mutations)
 		power *= 2
 
-	if(!istype(M, /mob/living/carbon/human))
-		if(istype(M, /mob/living/carbon/slime))
+	if(!ishuman(M))
+		if(isslime(M))
 			var/mob/living/carbon/slime/slime = M
 			if(prob(25))
 				to_chat(user, "\red [src] passes right through [M]!")
@@ -181,8 +182,9 @@
 
 
 
-	if(istype(M, /mob/living/carbon/human))
-		return M:attacked_by(src, user, def_zone)	//make sure to return whether we have hit or miss
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		return H.attacked_by(src, user, def_zone)	//make sure to return whether we have hit or miss
 	else
 		switch(damtype)
 			if("brute")
@@ -191,14 +193,14 @@
 
 				else
 
-					M.take_organ_damage(power)
+					M.take_bodypart_damage(power)
 					if (prob(33)) // Added blood for whacking non-humans too
 						var/turf/location = M.loc
 						if (istype(location, /turf/simulated))
 							location:add_blood_floor(M)
 			if("fire")
 				if (!(COLD_RESISTANCE in M.mutations))
-					M.take_organ_damage(0, power)
+					M.take_bodypart_damage(0, power)
 					to_chat(M, "Aargh it burns!")
 		M.updatehealth()
 	add_fingerprint(user)

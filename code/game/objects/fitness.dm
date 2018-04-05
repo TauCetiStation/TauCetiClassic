@@ -7,8 +7,11 @@
 	anchored = 1
 
 /obj/structure/stacklifter/attack_hand(mob/user)
+	if(!user.Adjacent(src))
+		return
 	var/mob/living/carbon/human/gymnast = user
-
+	if(!istype(gymnast) || gymnast.lying)
+		return
 	if(in_use)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
@@ -52,8 +55,11 @@
 	anchored = 1
 
 /obj/structure/weightlifter/attack_hand(mob/user)
+	if(!user.Adjacent(src))
+		return
 	var/mob/living/carbon/human/gymnast = user
-
+	if(!istype(gymnast) || gymnast.lying)
+		return
 	if(in_use)
 		to_chat(user, "It's already in use - wait a bit.")
 		return
@@ -95,5 +101,4 @@
 		var/finishmessage = pick("You feel stronger!","You feel like you can take on the world!","You feel robust!","You feel indestructible!")
 		icon_state = "fitnessweight"
 		overlays -= W
-
 		to_chat(user, "[finishmessage]")

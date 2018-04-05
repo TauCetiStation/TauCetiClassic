@@ -14,6 +14,7 @@
 	var/d_state = 0
 
 /turf/simulated/wall/r_wall/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations) //#Z2
 		if(user.a_intent == "hurt")
 			to_chat(user, text("\blue You punch the wall."))
@@ -22,14 +23,9 @@
 				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
 			if(prob(5))
 				playsound(user.loc, 'sound/weapons/tablehit1.ogg', 50, 1)
-				var/organ_name = pick("l_arm","r_arm")
-				if(user.hand)
-					organ_name = "l_arm"
-				else
-					organ_name = "r_arm"
 				var/mob/living/carbon/human/H = user
-				var/datum/organ/external/E = H.get_organ(organ_name)
-				E.take_damage(rand(5, 15), 0, 0, 0, "Reinforced wall")
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[user.hand ? BP_L_ARM : BP_R_ARM]
+				BP.take_damage(rand(5, 15), used_weapon = "Reinforced wall")
 				to_chat(user, text("\red Ouch!!"))
 			else
 				playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
@@ -48,13 +44,15 @@
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user)
 
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!(ishuman(user) || ticker) && ticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	//get the user's location
-	if(!istype(user.loc, /turf))
+	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(user.is_busy()) return
 
 	if(rotting)
 		if(istype(W, /obj/item/weapon/weldingtool))
@@ -142,14 +140,12 @@
 			//REPAIRING (replacing the outer grille for cosmetic damage)
 			else if(istype(W, /obj/item/stack/rods))
 				var/obj/item/stack/O = W
+				if(!O.use(1))
+					return
 				src.d_state = 0
 				src.icon_state = "r_wall"
 				relativewall_neighbours()	//call smoothwall stuff
 				to_chat(user, "<span class='notice'>You replace the outer grille.</span>")
-				if (O.amount > 1)
-					O.amount--
-				else
-					qdel(O)
 				return
 
 		if(2)
@@ -274,7 +270,15 @@
 //vv OK, we weren't performing a valid deconstruction step or igniting thermite,let's check the other possibilities vv
 
 	//DRILLING
-	if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+	if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
+		var/obj/item/weapon/changeling_hammer/C = W
+		user.do_attack_animation(src)
+		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
+		if(C.use_charge(user, 4))
+			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+			take_damage(pick(10, 20, 30))
+		return
+	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
 
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
 
@@ -297,14 +301,12 @@
 				return
 
 			if(user.loc == T && user.get_active_hand() == MS && d_state)
+				if(!MS.use(1))
+					return
 				src.d_state = 0
 				src.icon_state = "r_wall"
 				relativewall_neighbours()	//call smoothwall stuff
 				to_chat(user, "<span class='notice'>You repair the last of the damage.</span>")
-				if (MS.amount > 1)
-					MS.amount--
-				else
-					qdel(MS)
 
 	//APC
 	else if(istype(W,/obj/item/apc_frame))

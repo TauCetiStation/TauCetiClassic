@@ -14,8 +14,8 @@
 	var/pellets = 0								//Pellets for spreadshot
 	var/variance = 0							//Variance for inaccuracy fundamental to the casing
 
-/obj/item/ammo_casing/New()
-	..()
+/obj/item/ammo_casing/atom_init()
+	. = ..()
 	if(projectile_type)
 		BB = new projectile_type(src)
 	pixel_x = rand(-10.0, 10)
@@ -37,8 +37,7 @@
 	if(istype(W, /obj/item/weapon/screwdriver))
 		if(BB)
 			if(initial(BB.name) == "bullet")
-				var/tmp_label = ""
-				var/label_text = sanitize(copytext(input(user, "Inscribe some text into \the [initial(BB.name)]","Inscription",tmp_label), 1, MAX_NAME_LEN))
+				var/label_text = sanitize_safe(input(user, "Inscribe some text into \the [initial(BB.name)]","Inscription"), MAX_NAME_LEN)
 				if(length(label_text) > 20)
 					to_chat(user, "\red The inscription can be at most 20 characters long.")
 				else
@@ -52,6 +51,8 @@
 				to_chat(user, "\blue You can only inscribe a metal bullet.")//because inscribing beanbags is silly
 		else
 			to_chat(user, "\blue There is no bullet in the casing to inscribe anything into.")
+	else
+		..()
 
 //Boxes of ammo
 /obj/item/ammo_box
@@ -62,7 +63,7 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	item_state = "syringe_kit"
-	m_amt = 50000
+	m_amt = 500
 	throwforce = 2
 	w_class = 2.0
 	throw_speed = 4
@@ -74,8 +75,9 @@
 	var/caliber
 	var/multiload = 1
 
-/obj/item/ammo_box/New()
-	for(var/i = 1, i <= max_ammo, i++)
+/obj/item/ammo_box/atom_init()
+	. = ..()
+	for (var/i in 1 to max_ammo)
 		stored_ammo += new ammo_type(src)
 	update_icon()
 

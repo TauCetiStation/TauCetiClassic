@@ -14,12 +14,13 @@
 		return
 	else if(anchored && istype(I, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = I
-		if(R.amount >= 4)
-			R.use(4)
+		if(R.use(4))
 			to_chat(user, "<span class='notice'>You add spikes to the frame.</span>")
 			var/obj/F = new /obj/structure/kitchenspike(src.loc)
 			transfer_fingerprints_to(F)
 			qdel(src)
+	else
+		..()
 
 /obj/structure/kitchenspike
 	name = "meatspike"
@@ -37,6 +38,7 @@
 /obj/structure/kitchenspike/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(!src.buckled_mob)
+			if(user.is_busy()) return
 			playsound(loc, 'sound/items/Crowbar.ogg', 100, 1)
 			if(do_after(user, 20, target = src))
 				to_chat(user, "<span class='notice'>You pry the spikes out of the frame.</span>")
@@ -76,6 +78,8 @@
 					qdel(G)
 		else
 			to_chat(user, "<span class='danger'>You can't use that on the spike!</span>")
+	else
+		..()
 
 /obj/structure/kitchenspike/user_buckle_mob(mob/living/M, mob/living/user) //Don't want them getting put on the rack other than by spiking
 	return
@@ -84,6 +88,7 @@
 	if(buckled_mob)
 		var/mob/living/L = buckled_mob
 		if(L != user)
+			if(user.is_busy()) return
 			L.visible_message(\
 				"<span class='notice'>[user.name] tries to pull [L.name] free of the [src]!</span>",\
 				"<span class='warning'>[user.name] is trying to pull you off the [src], opening up fresh wounds!</span>",\

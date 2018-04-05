@@ -72,18 +72,14 @@
 	else
 		icon_state = normal_icon
 
-/obj/machinery/computer/message_monitor/initialize()
+/obj/machinery/computer/message_monitor/atom_init()
+	. = ..()
 	//Is the server isn't linked to a server, and there's a server available, default it to the first one in the list.
 	if(!linkedServer)
 		if(message_servers && message_servers.len > 0)
 			linkedServer = message_servers[1]
-	return
 
-/obj/machinery/computer/message_monitor/attack_hand(mob/living/user)
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(!istype(user))
-		return
+/obj/machinery/computer/message_monitor/ui_interact(mob/user)
 	//If the computer is being hacked or is emagged, display the reboot message.
 	if(hacking || emag)
 		message = rebootmsg
@@ -123,7 +119,7 @@
 			else
 				for(var/n = ++i; n <= optioncount; n++)
 					dat += "<dd><font color='blue'>&#09;[n]. ---------------</font><br></dd>"
-			if((istype(user, /mob/living/silicon/ai) || istype(user, /mob/living/silicon/robot)) && (user.mind.special_role && user.mind.original == user))
+			if((isAI(user) || isrobot(user)) && (user.mind.special_role && user.mind.original == user))
 				//Malf/Traitor AIs can bruteforce into the system to gain the Key.
 				dat += "<dd><A href='?src=\ref[src];hack=1'><i><font color='Red'>*&@#. Bruteforce Key</font></i></font></a><br></dd>"
 			else
@@ -153,7 +149,7 @@
 			dat += "</table>"
 		//Hacking screen.
 		if(2)
-			if(istype(user, /mob/living/silicon/ai) || istype(user, /mob/living/silicon/robot))
+			if(isAI(user) || isrobot(user))
 				dat += "Brute-forcing for server key.<br> It will take 20 seconds for every character that the password has."
 				dat += "In the meantime, this console can reveal your true intentions if you let someone access it. Make sure no humans enter the room during that time."
 			else
@@ -241,9 +237,8 @@
 
 	dat += "</body>"
 	message = defaultmsg
-	user << browse(dat, "window=message;size=700x700")
+	user << browse(entity_ja(dat), "window=message;size=700x700")
 	onclose(user, "message")
-	return
 
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user)
 	if(isnull(linkedServer))
@@ -276,7 +271,7 @@
 			auth = 0
 			screen = 0
 		else
-			var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+			var/dkey = sanitize(input(usr, "Please enter the decryption key.") as text|null)
 			if(dkey && dkey != "")
 				if(src.linkedServer.decryptkey == dkey)
 					auth = 1
@@ -327,10 +322,10 @@
 			message = noserver
 		else
 			if(auth)
-				var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+				var/dkey = sanitize(input(usr, "Please enter the decryption key.") as text|null)
 				if(dkey && dkey != "")
 					if(src.linkedServer.decryptkey == dkey)
-						var/newkey = trim(input(usr,"Please enter the new key (3 - 16 characters max):"))
+						var/newkey = sanitize(input(usr,"Please enter the new key (3 - 16 characters max):"))
 						if(length(newkey) <= 3)
 							message = "<span class='notice'>NOTICE: Decryption key too short!</span>"
 						else if(length(newkey) > 16)
@@ -343,7 +338,7 @@
 
 	//Hack the Console to get the password
 	if (href_list["hack"])
-		if((istype(usr, /mob/living/silicon/ai) || istype(usr, /mob/living/silicon/robot)) && (usr.mind.special_role && usr.mind.original == usr))
+		if((isAI(usr) || isrobot(usr)) && (usr.mind.special_role && usr.mind.original == usr))
 			src.hacking = 1
 			src.screen = 2
 			src.icon_state = hack_icon
@@ -390,7 +385,7 @@
 
 				//Select Your Name
 				if("Sender")
-					customsender 	= copytext(input(usr, "Please enter the sender's name.") as text|null, 1, MAX_NAME_LEN)
+					customsender 	= sanitize(input(usr, "Please enter the sender's name.") as text|null, MAX_NAME_LEN)
 
 				//Select Receiver
 				if("Recepient")
@@ -406,12 +401,11 @@
 
 				//Enter custom job
 				if("RecJob")
-					customjob	 	= copytext(input(usr, "Please enter the sender's job.") as text|null, 1, MAX_NAME_LEN)
+					customjob	 	= sanitize(input(usr, "Please enter the sender's job.") as text|null, MAX_NAME_LEN)
 
 				//Enter message
 				if("Message")
-					custommessage	= input(usr, "Please enter your message.") as text|null
-					custommessage	= sanitize_alt(copytext(custommessage, 1, MAX_MESSAGE_LEN))
+					custommessage	= sanitize(input(usr, "Please enter your message.") as text|null)
 
 				//Send message
 				if("Send")
@@ -441,7 +435,7 @@
 								O.show_message(text("[bicon(customrecepient)] *[customrecepient.ttone]*"))
 							if( customrecepient.loc && ishuman(customrecepient.loc) )
 								var/mob/living/carbon/human/H = customrecepient.loc
-								to_chat(H, "[bicon(customrecepient)] <b>Message from [customsender] ([customjob]), </b>\"[sanitize_chat(custommessage)]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)")
+								to_chat(H, "[bicon(customrecepient)] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)")
 							log_pda("[usr] (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]")
 							customrecepient.overlays.Cut()
 							customrecepient.overlays += image('icons/obj/pda.dmi', "pda-r")
@@ -460,7 +454,7 @@
 								O.show_message(text("[bicon(customrecepient)] *[customrecepient.ttone]*"))
 							if( customrecepient.loc && ishuman(customrecepient.loc) )
 								var/mob/living/carbon/human/H = customrecepient.loc
-								to_chat(H, "[bicon(customrecepient)] <b>Message from [PDARec.owner] ([customjob]), </b>\"[sanitize_chat(custommessage)]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)")
+								to_chat(H, "[bicon(customrecepient)] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)")
 							log_pda("[usr] (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]")
 							customrecepient.overlays.Cut()
 							customrecepient.overlays += image('icons/obj/pda.dmi', "pda-r")
@@ -488,14 +482,16 @@
 	name = "Monitor Decryption Key"
 	var/obj/machinery/message_server/server = null
 
-/obj/item/weapon/paper/monitorkey/New()
+/obj/item/weapon/paper/monitorkey/atom_init()
 	..()
-	spawn(10)
-		if(message_servers)
-			for(var/obj/machinery/message_server/server in message_servers)
-				if(!isnull(server))
-					if(!isnull(server.decryptkey))
-						info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
-						info_links = info
-						icon_state = "paper_words"
-						break
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/paper/monitorkey/atom_init_late()
+	if(message_servers)
+		for(var/obj/machinery/message_server/server in message_servers)
+			if(!isnull(server))
+				if(!isnull(server.decryptkey))
+					info = "<center><h2>Daily Key Reset</h2></center><br>The new message monitor key is '[server.decryptkey]'.<br>Please keep this a secret and away from the clown.<br>If necessary, change the password to a more secure one."
+					info_links = info
+					icon_state = "paper_words"
+					break

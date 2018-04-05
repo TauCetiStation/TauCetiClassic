@@ -13,6 +13,8 @@
 	icon_state = "control_standby"
 	anchored = 1
 	density = 0
+	allowed_checks = ALLOWED_CHECK_NONE // we use isLocked proc to open UI.
+
 	var/enabled = 0
 	var/lethal = 0
 	var/locked = 1
@@ -49,9 +51,10 @@
 		var/area/A = control_area
 		if(A && istype(A))
 			A.turret_controls -= src
-	..()
+	return ..()
 
-/obj/machinery/turretid/initialize()
+/obj/machinery/turretid/atom_init()
+	. = ..()
 	if(!control_area)
 		control_area = get_area(src)
 	else if(istext(control_area))
@@ -68,24 +71,20 @@
 			control_area = null
 
 	power_change() //Checks power and initial settings
-	return
 
 /obj/machinery/turretid/proc/isLocked(mob/user)
 	if(ailock && issilicon(user))
 		to_chat(user, "<span class='notice'>There seems to be a firewall preventing you from accessing this device.</span>")
-		return 1
+		return TRUE
 
-	if(locked && !issilicon(user))
+	if(locked && !issilicon(user) && !isobserver(user))
 		to_chat(user, "<span class='notice'>Access denied.</span>")
-		return 1
+		return TRUE
 
-	return 0
-
-/obj/machinery/turretid/is_operational()
-	return !(stat & (NOPOWER|BROKEN))
+	return FALSE
 
 /obj/machinery/turretid/is_operational_topic()
-	return is_operational()
+	return !(stat & (NOPOWER|BROKEN))
 
 /obj/machinery/turretid/attackby(obj/item/weapon/W, mob/user)
 	if(stat & BROKEN)
@@ -107,62 +106,51 @@
 		return
 	return ..()
 
-/obj/machinery/turretid/attack_ai(mob/user as mob)
-	if(!is_operational() || isLocked(user))
+/obj/machinery/turretid/ui_interact(mob/user)
+	if(isLocked(user))
 		return
-
-	interact(user)
-
-/obj/machinery/turretid/attack_hand(mob/user as mob)
-	if(!is_operational() || isLocked(user))
-		return
-
-	interact(user)
-
-/obj/machinery/turretid/interact(mob/user)
-	user.set_machine(src)
 
 	var/dat = text({"
-<table width="100%" cellspacing="0" cellpadding="4">
-	<tr>
-		<td>Status: </td><td>[]</td>
-	</tr>
-	<tr></tr>
-	<tr>
-		<td>Lethal Mode: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Neutralize All Non-Synthetics: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Neutralize All Cyborgs: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Weapon Authorization: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Security Records: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Arrest Status: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Access Authorization: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check misc. Lifeforms: </td><td>[]</td>
-	</tr>
-</table>"},
+		<table width="100%" cellspacing="0" cellpadding="4">
+			<tr>
+				<td>Status: </td><td>[]</td>
+			</tr>
+			<tr></tr>
+			<tr>
+				<td>Lethal Mode: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Neutralize All Non-Synthetics: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Neutralize All Cyborgs: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Weapon Authorization: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Security Records: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Arrest Status: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Access Authorization: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check misc. Lifeforms: </td><td>[]</td>
+			</tr>
+		</table>"},
 
-"<A href='?src=\ref[src];command=enable'>[enabled ? "On" : "Off"]</A>",
-"<A href='?src=\ref[src];command=lethal'>[lethal ? "On" : "Off"]</A>",
-"<A href='?src=\ref[src];command=check_n_synth'>[check_n_synth ? "Yes" : "No"]</A>",
-"[(special_control && isAI(user)) ? "<A href='?src=\ref[src];command=shot_synth'>[shot_synth ? "Yes" : "No"]</A>" : "NOT ALLOWED"]",
-"<A href='?src=\ref[src];command=check_weapons'>[check_weapons ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_records'>[check_records ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_arrest'>[check_arrest ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_access'>[check_access ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>")
+		"<A href='?src=\ref[src];command=enable'>[enabled ? "On" : "Off"]</A>",
+		"<A href='?src=\ref[src];command=lethal'>[lethal ? "On" : "Off"]</A>",
+		"<A href='?src=\ref[src];command=check_n_synth'>[check_n_synth ? "Yes" : "No"]</A>",
+		"[(special_control && isAI(user)) ? "<A href='?src=\ref[src];command=shot_synth'>[shot_synth ? "Yes" : "No"]</A>" : "NOT ALLOWED"]",
+		"<A href='?src=\ref[src];command=check_weapons'>[check_weapons ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_records'>[check_records ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_arrest'>[check_arrest ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_access'>[check_access ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>")
 
 	var/datum/browser/popup = new(user, "window=autoseccontrol", "Turret Installation Controller", 400, 320)
 	popup.set_content(dat)
@@ -198,7 +186,7 @@
 			if("check_anomalies")
 				check_anomalies = !check_anomalies
 
-		if(!isnull(log_action))
+		if(log_action)
 			log_admin("[key_name(usr)] has [log_action]")
 			message_admins("[key_name_admin(usr)] has [log_action]")
 
@@ -229,7 +217,7 @@
 	if(!(stat & NOPOWER))
 		updateTurrets()
 
-/obj/machinery/turretid/update_icon()
+/obj/machinery/turretid/update_icon(slave = FALSE)
 	..()
 	if(stat & NOPOWER)
 		icon_state = "control_off"
@@ -244,6 +232,9 @@
 	else
 		icon_state = "control_standby"
 		set_light(1.5, 1,"#003300")
+	if(!slave && istype(control_area))
+		for(var/obj/machinery/turretid/tid in control_area.turret_controls)
+			tid.update_icon(TRUE)
 
 /obj/machinery/turretid/emp_act(severity)
 	if(enabled)
@@ -258,10 +249,11 @@
 
 		enabled=0
 		updateTurrets()
-
-		spawn(rand(60,600))
-			if(!enabled)
-				enabled=1
-				updateTurrets()
+		addtimer(CALLBACK(src, .proc/emp_act_post), rand(60,600))
 
 	..()
+
+/obj/machinery/turretid/proc/emp_act_post()
+	if(!enabled)
+		enabled=1
+		updateTurrets()

@@ -16,7 +16,7 @@
 	see_in_dark = 6
 	maxHealth = 5
 	health = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 1)
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "stamps on the"
@@ -51,8 +51,8 @@
 		else if(prob(5))
 			emote("snuffles")
 
-/mob/living/simple_animal/mouse/New()
-	..()
+/mob/living/simple_animal/mouse/atom_init()
+	. = ..()
 	name = "[name] ([rand(1, 1000)])"
 	real_name = name
 
@@ -72,18 +72,20 @@
 
 
 /mob/living/simple_animal/mouse/proc/splat()
-	src.health = 0
-	src.stat = DEAD
-	src.icon_dead = "mouse_[body_color]_splat"
-	src.icon_state = "mouse_[body_color]_splat"
+	health = 0
+	stat = DEAD
+	icon_dead = "mouse_[body_color]_splat"
+	icon_state = "mouse_[body_color]_splat"
 	layer = MOB_LAYER
+	timeofdeath = world.time
 	if(client)
 		client.time_died_as_mouse = world.time
 
 /mob/living/simple_animal/mouse/MouseDrop(atom/over_object)
 
 	var/mob/living/carbon/H = over_object
-	if(!istype(H) || !Adjacent(H)) return ..()
+	if(!istype(H) || !Adjacent(H) || ismob(H.loc))
+		return ..()
 
 	if(H.a_intent == "help")
 		get_scooped(H)

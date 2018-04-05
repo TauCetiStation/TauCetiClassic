@@ -15,7 +15,7 @@
 
 		if(SSmob.times_fired%4==2)
 			//Only try to take a breath every 4 seconds, unless suffocating
-			spawn(0) breathe()
+			INVOKE_ASYNC(src, .proc/breathe)
 
 		else //Still give containing object the chance to interact
 			if(istype(loc, /obj/))
@@ -60,7 +60,7 @@
 		if(reagents)
 			if(reagents.has_reagent("lexorin")) return
 
-		if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell)) return
+		if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell)) return
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
@@ -71,7 +71,7 @@
 		if(losebreath>0) //Suffocating so do not take a breath
 			losebreath--
 			if (prob(75)) //High chance of gasping for air
-				spawn emote("gasp")
+				INVOKE_ASYNC(src, .proc/emote, "gasp")
 			if(istype(loc, /obj/))
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
@@ -91,7 +91,7 @@
 						breath_moles = (ONE_ATMOSPHERE*BREATH_VOLUME/R_IDEAL_GAS_EQUATION*environment.temperature)
 					else*/
 						// Not enough air around, take a percentage of what's there to model this properly
-					breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+					breath_moles = environment.total_moles * BREATH_PERCENTAGE
 
 					breath = loc.remove_air(breath_moles)
 
@@ -99,9 +99,7 @@
 					for(var/obj/effect/effect/smoke/chem/smoke in view(1, src))
 						if(smoke.reagents.total_volume)
 							smoke.reagents.reaction(src, INGEST)
-							spawn(5)
-								if(smoke)
-									smoke.reagents.copy_to(src, 10) // I dunno, maybe the reagents enter the blood stream through the lungs?
+							addtimer(CALLBACK(smoke.reagents, /datum/reagents.proc/copy_to, src, 10), 5) // I dunno, maybe the reagents enter the blood stream through the lungs?
 							break // If they breathe in the nasty stuff once, no need to continue checking
 
 
@@ -140,23 +138,23 @@
 			return 0
 
 		var/phoron_used = 0
-		var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+		var/breath_pressure = breath.total_moles * R_IDEAL_GAS_EQUATION * breath.temperature / BREATH_VOLUME
 
 		//Partial pressure of the phoron in our breath
-		var/Toxins_pp = (breath.phoron/breath.total_moles())*breath_pressure
+		var/Toxins_pp = (breath.gas["phoron"] / breath.total_moles) * breath_pressure
 
 		if(Toxins_pp) // Detect phoron in air
 
-			adjustToxLoss(breath.phoron*250)
+			adjustToxLoss(breath.gas["phoron"] * 250)
 			throw_alert("alien_tox")
-			phoron_used = breath.phoron
+			phoron_used = breath.gas["phoron"]
 
 		else
 			clear_alert("alien_tox")
 
 		//Breathe in phoron and out oxygen
-		breath.phoron -= phoron_used
-		breath.oxygen += phoron_used
+		breath.adjust_gas("phoron", -phoron_used, update = FALSE)
+		breath.adjust_gas("oxygen", phoron_used)
 
 		return 1
 
@@ -366,3 +364,4 @@
 		adjustFireLoss(6)
 		return
 //END FIRE CODE
+

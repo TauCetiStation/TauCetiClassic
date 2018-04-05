@@ -11,7 +11,8 @@
 	action_button_name = "Toggle Hardhat"
 	siemens_coefficient = 0.9
 
-/obj/item/clothing/head/hardhat/New()
+/obj/item/clothing/head/hardhat/atom_init()
+	. = ..()
 	update_icon()
 
 /obj/item/clothing/head/hardhat/attack_self(mob/user)

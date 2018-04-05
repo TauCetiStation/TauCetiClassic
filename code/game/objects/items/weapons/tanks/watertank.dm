@@ -13,8 +13,8 @@
 	var/on = 0
 	var/max_vol = 500
 
-/obj/item/weapon/watertank/New()
-	..()
+/obj/item/weapon/watertank/atom_init()
+	. = ..()
 	create_reagents(max_vol)
 	reagents.add_reagent("cleaner", src.max_vol)
 
@@ -121,13 +121,12 @@
 
 	var/obj/item/weapon/watertank/tank
 
-/obj/item/weapon/reagent_containers/spray/mister/New(parent_tank)
-	..()
+/obj/item/weapon/reagent_containers/spray/mister/atom_init(mapload, parent_tank)
+	. = ..()
 	if(check_tank_exists(parent_tank))
 		tank = parent_tank
 		reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
 		loc = tank
-	return
 
 // Here is some magic. Problems with drop, no problems with throw. Too wierd for me - Smalltasty
 /obj/item/weapon/reagent_containers/spray/mister/dropped(mob/user)
@@ -161,9 +160,9 @@
 	icon_state = "waterbackpackjani"
 	item_state = "waterbackpackjani"
 
-/obj/item/weapon/watertank/janitor/New()
-	..()
-	reagents.add_reagent("cleaner", src.max_vol)
+/obj/item/weapon/watertank/janitor/atom_init()
+	. = ..()
+	reagents.add_reagent("cleaner", max_vol)
 
 /obj/item/weapon/reagent_containers/spray/mister/janitor
 	name = "janitor spray nozzle"

@@ -1214,14 +1214,23 @@ datum/design/cryotube
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/cryo_tube
 
-datum/design/thermomachine
-	name = "Freezer/Heater Board"
-	desc = "The circuit board for a freezer/heater."
-	id = "thermomachine"
-	req_tech = list("programming" = 3, "phorontech" = 3)
+/datum/design/gas_heater
+	name = "gas heating system"
+	desc = "The circuit board for a heater."
+	id = "gasheater"
+	req_tech = list("powerstorage" = 2, "engineering" = 1)
 	build_type = IMPRINTER
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
-	build_path = /obj/item/weapon/circuitboard/thermomachine
+	build_path = /obj/item/weapon/circuitboard/heater
+
+/datum/design/gas_cooler
+	name = "gas cooling system"
+	desc = "The circuit board for a freezer."
+	id = "gascooler"
+	req_tech = list("magnets" = 2, "engineering" = 2)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/cooler
 
 datum/design/biogenerator
 	name = "Biogenerator Board"
@@ -1402,6 +1411,15 @@ datum/design/circuit_imprinter
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/circuit_imprinter
 
+datum/design/emitter
+	name = "Circuit Board Emitter"
+	desc = "The circuit board for a emitter."
+	id = "emitter"
+	req_tech = list("programming" = 5, "engineering" = 5, "powerstorage" = 5)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/emitter
+
 datum/design/autolathe
 	name = "Autolathe Board"
 	desc = "The circuit board for an autolathe."
@@ -1506,6 +1524,33 @@ datum/design/cyborgrecharger
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/grounding_rod
 	//category = list("Misc. Machinery")
+
+/datum/design/mining_drill
+	name = "Machine Design (Mining Drill Head)"
+	desc = "Large drill for mining."
+	id = "mining_drill"
+	req_tech = list("powerstorage" = 3, "programming" = 3, "engineering" = 4, "magnets" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/miningdrill
+
+/datum/design/mining_drill_brace
+	name = "Machine Design (Mining Drill Brace)"
+	desc = "Brace for mining drill."
+	id = "mining_drill_brace"
+	req_tech = list("powerstorage" = 3, "programming" = 3, "engineering" = 4, "magnets" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/miningdrillbrace
+
+/datum/design/mining_fabricator
+	name = "Machine Design (Mining fabricator)"
+	desc = "For mining staff"
+	id = "mining_fabricator"
+	req_tech = list("powerstorage" = 3, "programming" = 3, "engineering" = 4, "magnets" = 4, "materials" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/minefab
 
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////
@@ -1637,41 +1682,68 @@ datum/design/nanopaste
 	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000)
 	build_path = /obj/item/stack/nanopaste
 
+datum/design/implanter
+	name = "implanter"
+	desc = "Implanter, used to inject implants."
+	id = "implanter"
+	req_tech = list("materials" = 2, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
+	build_path = /obj/item/weapon/implanter
+
 datum/design/implant_loyal
 	name = "Glass Case- 'Loyalty'"
 	desc = "A case containing a loyalty implant."
 	id = "implant_loyal"
-	req_tech = list("materials" = 2, "biotech" = 3)
+	req_tech = list("materials" = 2, "biotech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100)
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000)
 	build_path = /obj/item/weapon/implantcase/loyalty
+
+datum/design/implant_mindshield
+	name = "Glass Case- 'MindShield'"
+	desc = "A case containing a mindshield implant."
+	id = "implant_mindshield"
+	req_tech = list("materials" = 2, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000)
+	build_path = /obj/item/weapon/implantcase/mindshield
 
 datum/design/implant_chem
 	name = "Glass Case- 'Chem'"
 	desc = "A case containing a chemical implant."
 	id = "implant_chem"
-	req_tech = list("materials" = 2, "biotech" = 3)
+	req_tech = list("materials" = 2, "biotech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100)
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000,)
 	build_path = /obj/item/weapon/implantcase/chem
 
 datum/design/implant_death
 	name = "Glass Case- 'Death Alarm'"
 	desc = "A case containing a death alarm implant."
 	id = "implant_death"
-	req_tech = list("materials" = 2, "biotech" = 3)
+	req_tech = list("materials" = 2, "biotech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100)
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/implantcase/death_alarm
 
-datum/design/implant_free
-	name = "boxed freedom implant (with injector)"
-	desc = "A sleek, sturdy box"
-	id = "implant_free"
-	req_tech = list("syndicate" = 2, "biotech" = 3)
+datum/design/implant_tracking
+	name = "Glass Case- 'Tracking'"
+	desc = "A case containing a tracking implant."
+	id = "implant_tracking"
+	req_tech = list("materials" = 2, "biotech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100, MAT_DIAMOND = 100)
-	build_path = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
+	build_path = /obj/item/weapon/implantcase/tracking
+
+datum/design/implant_free
+	name = "Glass Case- 'Freedom'"
+	desc = "A case containing a freedom implant."
+	id = "implant_free"
+	req_tech = list("syndicate" = 3, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000, MAT_DIAMOND = 1000)
+	build_path = /obj/item/weapon/implantcase/freedom
 
 datum/design/chameleon
 	name = "Chameleon Kit"
@@ -1705,15 +1777,34 @@ datum/design/noreactbeaker
 	build_path = /obj/item/weapon/reagent_containers/glass/beaker/noreact
 	category = list("Misc")
 
-datum/design/defibrillators
+datum/design/defibrillators_back
 	name = "Defibrillators"
 	desc = "Defibrillators to revive people."
-	id = "defibrillators"
-	req_tech = list("combat" = 2,"biotech" = 2)
+	id = "defibrillators_back"
+	req_tech = list("biotech" = 3, "powerstorage" = 2)
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
 	reliability = 76
 	build_path = /obj/item/weapon/defibrillator
+
+datum/design/defibrillators_belt
+	name = "Compact defibrillators"
+	desc = "Defibrillators to revive people."
+	id = "defibrillators_compact"
+	req_tech = list("biotech" = 3, "powerstorage" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 2000, MAT_GLASS = 50)
+	reliability = 76
+	build_path = /obj/item/weapon/defibrillator/compact
+
+datum/design/defibrillators_standalone
+	name = "Standalone defibrillators"
+	desc = "Defibrillators to revive people."
+	id = "defibrillators_standalone"
+	req_tech = list("biotech" = 4, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000)
+	build_path = /obj/item/weapon/twohanded/shockpaddles/standalone
 
 /datum/design/sensor_device
 	name = "Handheld Crew Monitor"
@@ -1760,6 +1851,15 @@ datum/design/scalpel_manager
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500, MAT_SILVER = 1500, MAT_GOLD = 1500, MAT_DIAMOND = 750)
 	build_path = /obj/item/weapon/scalpel/manager
+
+/datum/design/biocan
+	name = "Biogel can"
+	desc = "Medical device for sustaining life in head"
+	id = "biocan"
+	req_tech = list("biotech" = 3, "materials" = 3, "magnets" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1200, MAT_GLASS = 1000)
+	build_path = /obj/item/device/biocan
 
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
@@ -1866,6 +1966,24 @@ datum/design/large_grenade
 	materials = list(MAT_METAL = 3000)
 	reliability = 79
 	build_path = /obj/item/weapon/grenade/chem_grenade/large
+
+/datum/design/l10
+	name = "L10-c"
+	desc = "A basic energy-based carbine with fast rate of fire."
+	id = "l10"
+	req_tech = list("combat" = 5, "materials" = 6, "magnets" = 4, "powerstorage" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 12500, MAT_GOLD = 6000, MAT_SILVER = 4500, MAT_DIAMOND = 500, MAT_URANIUM = 1000)
+	build_path = /obj/item/weapon/gun/projectile/automatic/l10c
+
+/datum/design/l10_mag
+	name = "L10-c battery"
+	desc = "A special battery with protection from EM pulse."
+	id = "l10_mag"
+	req_tech = list("combat" = 4, "materials" = 5, "magnets" = 4, "powerstorage" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_GOLD = 2000, MAT_SILVER = 1500)
+	build_path = /obj/item/ammo_box/magazine/l10mag
 
 datum/design/smg
 	name = "Submachine Gun"
@@ -2031,6 +2149,16 @@ datum/design/bluespace_crystal
 	reliability = 100
 	build_path = /obj/item/bluespace_crystal/artificial
 
+/datum/design/miningsatchel_holding
+	name = "Mining Satchel of Holding"
+	desc = "A mining satchel that can hold an infinite amount of ores."
+	id = "minerbag_holding"
+	req_tech = list("bluespace" = 4, "materials" = 3, "engineering" = 4)
+	build_type = PROTOLATHE | MINEFAB
+	materials = list(MAT_GOLD = 1500, MAT_URANIUM = 500) //quite cheap, for more convenience
+	build_path = /obj/item/weapon/storage/bag/ore/holding
+	category = list("Tools")
+
 /////////////////////////////////////////
 /////////////////HUDs////////////////////
 /////////////////////////////////////////
@@ -2052,6 +2180,15 @@ datum/design/security_hud
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/hud/security
+
+datum/design/secmed_hud
+	name = "Mixed HUD"
+	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and health status."
+	id = "secmed_hud"
+	req_tech = list("magnets" = 4, "combat" = 3, "biotech" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	build_path = /obj/item/clothing/glasses/sunglasses/hud/secmed
 
 datum/design/mining_hud
 	name = "Geological Optical Scanner"
@@ -2090,9 +2227,10 @@ datum/design/mining_hud
 	g_amt = 10
 	var/datum/design/blueprint
 
-/obj/item/weapon/disk/design_disk/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+/obj/item/weapon/disk/design_disk/atom_init()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 
 /////////////////////////////////////////
@@ -2201,6 +2339,15 @@ datum/design/cart_janitor
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/weapon/cartridge/janitor
+
+/datum/design/radio_grid
+	name = "Radio Grid"
+	desc = "A metal grid, attached to circuit to protect it from emitting."
+	id = "radio_grid"
+	req_tech = list("engineering" = 4, "powerstorage" = 3, "magnets" = 3, "programming" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 250, MAT_GLASS = 50)
+	build_path = /obj/item/device/radio_grid
 
 /*
 datum/design/cart_clown
@@ -2317,10 +2464,12 @@ datum/design/body_warp
 	construction_time=100
 	category = list("Support")
 
-datum/design/spraycan
+/datum/design/spraycan
 	name = "Spraycan"
 	id = "spraycan"
-	build_type = AUTOLATHE
+	desc = "A metallic container containing tasty paint."
+	req_tech = list("materials" = 1)
+	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	build_path = /obj/item/toy/crayon/spraycan
 
@@ -2332,6 +2481,46 @@ datum/design/spraycan
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 4000, MAT_GLASS = 1000)
 	build_path = /obj/item/clothing/mask/gas/welding
+
+/datum/design/exwelder
+	name = "Experimental Welding Tool"
+	desc = "An experimental welder capable of self-fuel generation."
+	id = "exwelder"
+	req_tech = list("materials" = 4, "engineering" = 5, "bluespace" = 2, "phorontech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 500, MAT_PHORON = 1500, MAT_URANIUM = 200)
+	build_path = /obj/item/weapon/weldingtool/experimental
+	category = list("Equipment")
+
+/datum/design/jawsoflife
+	name = "Jaws of Life"
+	desc = "A small, compact Jaws of Life with an interchangable pry jaws and cutting jaws"
+	id = "jawsoflife"
+	req_tech = list("materials" = 4, "engineering" = 6, "magnets" = 6) // added one more requirment since the Jaws of Life are a bit OP
+	build_path = /obj/item/weapon/crowbar/power
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_SILVER = 2000, MAT_GOLD = 1000)
+	category = list("Equipment")
+
+/datum/design/handdrill
+	name = "Hand Drill"
+	desc = "A small electric hand drill with an interchangable screwdriver and bolt bit"
+	id = "handdrill"
+	req_tech = list("materials" = 4, "engineering" = 6, "magnets" = 6)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_SILVER = 2000, MAT_GOLD = 1000)
+	build_path = /obj/item/weapon/screwdriver/power
+	category = list("Equipment")
+
+/datum/design/magboots
+	name = "Magnetic Boots"
+	desc = "Magnetic boots, often used during extravehicular activity to ensure the user remains safely attached to the vehicle."
+	id = "magboots"
+	req_tech = list("materials" = 4, "magnets" = 4, "engineering" = 5)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 4500, MAT_SILVER = 1500, MAT_GOLD = 2500)
+	build_path = /obj/item/clothing/shoes/magboots
+	category = list("Equipment")
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////

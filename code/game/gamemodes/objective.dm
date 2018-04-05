@@ -65,68 +65,67 @@ datum/objective/assassinate
 
 
 
-datum/objective/mutiny
-	find_target()
-		..()
-		if(target && target.current)
-			explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
-		else
-			explanation_text = "Free Objective"
-		return target
+
+datum/objective/mutiny/find_target()
+	..()
+	if(target && target.current)
+		explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
+	else
+		explanation_text = "Free Objective"
+	return target
 
 
-	find_target_by_role(role, role_type=0)
-		..(role, role_type)
-		if(target && target.current)
-			explanation_text = "Assassinate [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
-		else
-			explanation_text = "Free Objective"
-		return target
+datum/objective/mutiny/find_target_by_role(role, role_type=0)
+	..(role, role_type)
+	if(target && target.current)
+		explanation_text = "Assassinate [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
+	else
+		explanation_text = "Free Objective"
+	return target
 
-	check_completion()
-		if(target && target.current)
-			if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
-				return 1
-			var/turf/T = get_turf(target.current)
-			if(T && (T.z != ZLEVEL_STATION))			//If they leave the station they count as dead for this
-				return 2
-			return 0
-		return 1
-
-datum/objective/mutiny/rp
-	find_target()
-		..()
-		if(target && target.current)
-			explanation_text = "Assassinate, capture or convert [target.current.real_name], the [target.assigned_role]."
-		else
-			explanation_text = "Free Objective"
-		return target
+datum/objective/mutiny/check_completion()
+	if(target && target.current)
+		if(target.current.stat == DEAD || !ishuman(target.current) || !target.current.ckey)
+			return 1
+		var/turf/T = get_turf(target.current)
+		if(T && (T.z != ZLEVEL_STATION))			//If they leave the station they count as dead for this
+			return 2
+		return 0
+	return 1
 
 
-	find_target_by_role(role, role_type=0)
-		..(role, role_type)
-		if(target && target.current)
-			explanation_text = "Assassinate, capture or convert [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
-		else
-			explanation_text = "Free Objective"
-		return target
+datum/objective/mutiny/rp/find_target()
+	..()
+	if(target && target.current)
+		explanation_text = "Assassinate, capture or convert [target.current.real_name], the [target.assigned_role]."
+	else
+		explanation_text = "Free Objective"
+	return target
+
+
+datum/objective/mutiny/rp/find_target_by_role(role, role_type=0)
+	..(role, role_type)
+	if(target && target.current)
+		explanation_text = "Assassinate, capture or convert [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
+	else
+		explanation_text = "Free Objective"
+	return target
 
 	// less violent rev objectives
-	check_completion()
-		var/rval = 1
-		if(target && target.current)
-			//assume that only carbon mobs can become rev heads for now
-			if(target.current.stat == DEAD || target.current:handcuffed || !ishuman(target.current))
-				return 1
-			// Check if they're converted
-			if(istype(ticker.mode, /datum/game_mode/revolution))
-				if(target in ticker.mode:head_revolutionaries)
-					return 1
-			var/turf/T = get_turf(target.current)
-			if(T && (T.z != ZLEVEL_STATION))			//If they leave the station they count as dead for this
-				rval = 2
-			return 0
-		return rval
+datum/objective/mutiny/rp/check_completion()
+	if(target && target.current)
+		//assume that only carbon mobs can become rev heads for now
+		if(target.current.stat == DEAD || target.current:handcuffed || !ishuman(target.current))
+			return TRUE
+		// Check if they're converted
+		if(istype(ticker.mode, /datum/game_mode/revolution))
+			if(target in ticker.mode:head_revolutionaries)
+				return TRUE
+		var/turf/T = get_turf(target.current)
+		if(T && (T.z != ZLEVEL_STATION))			//If they leave the station they count as dead for this
+			return TRUE
+		return FALSE
+	return TRUE
 
 datum/objective/anti_revolution/execute
 	find_target()
@@ -250,6 +249,34 @@ datum/objective/debrain//I want braaaainssss
 				return 1
 		return 0
 
+/datum/objective/dehead/find_target()
+	..()
+	if(target && target.current)
+		explanation_text = "Put the head of [target.current.real_name] in biogel can and steal it."
+	else
+		explanation_text = "Free Objective"
+	return target
+
+/datum/objective/dehead/find_target_by_role(role, role_type=0)
+	..()
+	if(target && target.current)
+		explanation_text = "Steal the head of [target.current.real_name] the [!role_type ? target.assigned_role : target.special_role], make shure that head is stored in the biogel can."
+	else
+		explanation_text = "Free Objective"
+	return target
+
+/datum/objective/dehead/check_completion()
+	if(!target)//If it's a free objective.
+		return 1
+	if( !owner.current || owner.current.stat==DEAD )//If you're otherwise dead.
+		return 0
+	var/list/all_items = owner.current.get_contents()
+	for(var/obj/item/device/biocan/B in all_items)
+		if(B.brainmob && B.brainmob == target.current)
+			return 1
+		return 0
+	return 0
+
 
 datum/objective/protect//The opposite of killing a dude.
 	find_target()
@@ -361,7 +388,7 @@ datum/objective/escape
 		if(istype(location, /turf/simulated/shuttle/floor4)) // Fails traitors if they are in the shuttle brig -- Polymorph
 			if(istype(owner.current, /mob/living/carbon))
 				var/mob/living/carbon/C = owner.current
-				if (!C.handcuffed)
+				if (!C.restrained())
 					return 1
 			return 0
 
@@ -456,16 +483,16 @@ datum/objective/harm
 				return 0
 
 			var/mob/living/carbon/human/H = target.current
-			for(var/datum/organ/external/E in H.organs)
-				if(E.status & ORGAN_BROKEN)
+			for(var/obj/item/organ/external/BP in H.bodyparts)
+				if(BP.status & ORGAN_BROKEN)
 					already_completed = 1
 					return 1
-				if(E.status & ORGAN_DESTROYED && !E.amputated)
+				if((BP.status & ORGAN_DESTROYED) && !BP.amputated)
 					already_completed = 1
 					return 1
 
-			var/datum/organ/external/head/head = H.get_organ("head")
-			if(head.disfigured)
+			var/obj/item/organ/external/head/BP = H.bodyparts_by_name[BP_HEAD]
+			if(BP.disfigured)
 				return 1
 		return 0
 
@@ -480,7 +507,7 @@ datum/objective/steal
 	var/target_name
 
 	var/global/possible_items[] = list(
-		"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/captain,
+		"the captain's antique laser gun" = /obj/item/weapon/gun/energy/laser/selfcharging/captain,
 		"a hand teleporter" = /obj/item/weapon/hand_tele,
 		"an RCD" = /obj/item/weapon/rcd,
 		"a jetpack" = /obj/item/weapon/tank/jetpack,
@@ -497,7 +524,7 @@ datum/objective/steal
 		"a chief medical officer's jumpsuit" = /obj/item/clothing/under/rank/chief_medical_officer,
 		"a head of security's jumpsuit" = /obj/item/clothing/under/rank/head_of_security,
 		"a head of personnel's jumpsuit" = /obj/item/clothing/under/rank/head_of_personnel,
-		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray,
+		"the hypospray" = /obj/item/weapon/reagent_containers/hypospray/cmo,
 		"the captain's pinpointer" = /obj/item/weapon/pinpointer,
 		"an ablative armor vest" = /obj/item/clothing/suit/armor/laserproof,
 	)
@@ -537,7 +564,7 @@ datum/objective/steal
 			var/tmp_obj = new custom_target
 			var/custom_name = tmp_obj:name
 			qdel(tmp_obj)
-			custom_name = sanitize(copytext(input("Enter target name:", "Objective target", custom_name) as text|null,1,MAX_MESSAGE_LEN))
+			custom_name = sanitize_safe(input("Enter target name:", "Objective target", input_default(custom_name)) as text|null)
 			if (!custom_name) return
 			target_name = custom_name
 			steal_target = custom_target
@@ -557,7 +584,7 @@ datum/objective/steal
 
 				for(var/obj/item/I in all_items) //Check for phoron tanks
 					if(istype(I, steal_target))
-						found_amount += (target_name=="28 moles of phoron (full tank)" ? (I:air_contents:phoron) : (I:amount))
+						found_amount += (target_name == "28 moles of phoron (full tank)" ? (I:air_contents:gas["phoron"]) : (I:amount))
 				return found_amount>=target_amount
 
 			if("50 coins (in bag)")
@@ -672,7 +699,7 @@ datum/objective/absorb
 		if (ticker)
 			var/n_p = 1 //autowin
 			if (ticker.current_state == GAME_STATE_SETTING_UP)
-				for(var/mob/new_player/P in player_list)
+				for(var/mob/dead/new_player/P in player_list)
 					if(P.client && P.ready && P.mind!=owner)
 						n_p ++
 			else if (ticker.current_state == GAME_STATE_PLAYING)
@@ -694,58 +721,42 @@ datum/objective/absorb
 
 /* Isn't suited for global objectives
 /*---------CULTIST----------*/
-
 		eldergod
 			explanation_text = "Summon Nar-Sie via the use of an appropriate rune. It will only work if nine cultists stand on and around it."
-
 			check_completion()
 				if(eldergod) //global var, defined in rune4.dm
 					return 1
 				return 0
-
 		survivecult
 			var/num_cult
-
 			explanation_text = "Our knowledge must live on. Make sure at least 5 acolytes escape on the shuttle to spread their work on an another station."
-
 			check_completion()
 				if(SSshuttle.location<2)
 					return 0
-
 				var/cultists_escaped = 0
-
 				var/area/shuttle/escape/centcom/C = /area/shuttle/escape/centcom
 				for(var/turf/T in	get_area_turfs(C.type))
 					for(var/mob/living/carbon/H in T)
 						if(iscultist(H))
 							cultists_escaped++
-
 				if(cultists_escaped>=5)
 					return 1
-
 				return 0
-
 		sacrifice //stolen from traitor target objective
-
 			proc/find_target() //I don't know how to make it work with the rune otherwise, so I'll do it via a global var, sacrifice_target, defined in rune15.dm
 				var/list/possible_targets = call(/datum/game_mode/cult/proc/get_unconvertables)()
-
 				if(possible_targets.len > 0)
 					sacrifice_target = pick(possible_targets)
-
 				if(sacrifice_target && sacrifice_target.current)
 					explanation_text = "Sacrifice [sacrifice_target.current.real_name], the [sacrifice_target.assigned_role]. You will need the sacrifice rune (Hell join blood) and three acolytes to do so."
 				else
 					explanation_text = "Free Objective"
-
 				return sacrifice_target
-
 			check_completion() //again, calling on a global list defined in rune15.dm
 				if(sacrifice_target.current in sacrificed)
 					return 1
 				else
 					return 0
-
 /*-------ENDOF CULTIST------*/
 */
 //Meme objectives
@@ -764,168 +775,163 @@ datum/objective/meme_attune
 
 //Vox heist objectives.
 
-datum/objective/heist
-	proc/choose_target()
-		return
+/datum/objective/heist/proc/choose_target()
+	return
 
-datum/objective/heist/kidnap
-	choose_target()
-		var/list/roles = list("Chief Engineer","Research Director","Roboticist","Chemist","Station Engineer")
-		var/list/possible_targets = list()
-		var/list/priority_targets = list()
+/datum/objective/heist/kidnap/choose_target()
+	var/list/roles = list("Roboticist" , "Medical Doctor" , "Chemist" , "Station Engineer")
+	var/list/possible_targets = list()
+	var/list/priority_targets = list()
 
-		for(var/datum/mind/possible_target in ticker.minds)
-			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && (possible_target.assigned_role != "MODE"))
-				possible_targets += possible_target
-				for(var/role in roles)
-					if(possible_target.assigned_role == role)
-						priority_targets += possible_target
-						continue
+	for(var/datum/mind/possible_target in ticker.minds)
+		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD) && (possible_target.assigned_role != "MODE"))
 
-		if(priority_targets.len > 0)
-			target = pick(priority_targets)
-		else if(possible_targets.len > 0)
-			target = pick(possible_targets)
+			possible_targets += possible_target
+			for(var/role in roles)
+				if(possible_target.assigned_role == role)
+					priority_targets += possible_target
+					continue
 
-		if(target && target.current)
-			explanation_text = "You need a new recruit: [target.current.real_name], the [target.assigned_role]. Grab them and bring into the ship. They must be alive!"
-		else
-			explanation_text = "Free Objective"
-		return target
+	if(priority_targets.len > 0)
+		target = pick(priority_targets)
+	else if(possible_targets.len > 0)
+		target = pick(possible_targets)
 
-	check_completion()
-		if(target && target.current)
-			if (target.current.stat == DEAD)
-				return 0 // They're dead. Fail.
-			//if (!target.current.restrained())
-			//	return 0 // They're loose. Close but no cigar.
+	if(target && target.current)
+		explanation_text = "The Shoal has a need for [target.current.real_name], the [target.assigned_role]. Take them alive."
+	else
+		explanation_text = "Free Objective"
+	return target
 
-			var/area/shuttle/vox/station/A = locate()
-			for(var/mob/living/carbon/human/M in A)
-				if(target.current == M)
-					return 1 //They're restrained on the shuttle. Success.
-		else
-			return 0
+/datum/objective/heist/kidnap/check_completion()
+	if(target && target.current)
+		if (target.current.stat == DEAD)
+			return FALSE // They're dead. Fail.
+		//if (!target.current.restrained())
+		//	return 0 // They're loose. Close but no cigar.
+		if(get_area(target) == locate(/area/shuttle/vox/station))
+			return TRUE
+	else
+		return FALSE
 
-datum/objective/heist/loot
+/datum/objective/heist/loot/choose_target()
+	var/loot = "an object"
+	switch(rand(1, 8))
+		if(1)
+			target = /obj/structure/particle_accelerator
+			target_amount = 6
+			loot = "a complete particle accelerator"
+		if(2)
+			target = /obj/machinery/the_singularitygen
+			target_amount = 1
+			loot = "a Gravitational Singularity Generator"
+		if(3)
+			target = /obj/machinery/power/emitter
+			target_amount = 4
+			loot = "four emitters"
+		if(4)
+			target = /obj/machinery/nuclearbomb
+			target_amount = 1
+			loot = "a nuclear bomb"
+		if(5)
+			target = /obj/item/weapon/gun
+			target_amount = 6
+			loot = "six guns"
+		if(6)
+			target = /obj/item/weapon/gun/energy
+			target_amount = 4
+			loot = "four energy guns"
+		if(7)
+			target = /obj/item/weapon/gun/energy/laser
+			target_amount = 2
+			loot = "two laser guns"
+		if(8)
+			target = /obj/item/weapon/gun/energy/ionrifle
+			target_amount = 1
+			loot = "an ion gun"
 
-	choose_target()
-		var/loot = "an object"
-		switch(rand(1,8))
-			if(1)
-				target = /obj/structure/particle_accelerator
-				target_amount = 6
-				loot = "a complete particle accelerator"
-			if(2)
-				target = /obj/machinery/the_singularitygen
-				target_amount = 1
-				loot = "a Gravitational Singularity Generator"
-			if(3)
-				target = /obj/machinery/power/emitter
-				target_amount = 4
-				loot = "four emitters"
-			if(4)
-				target = /obj/machinery/nuclearbomb
-				target_amount = 1
-				loot = "a nuclear bomb"
-			if(5)
-				target = /obj/item/weapon/gun
-				target_amount = 6
-				loot = "six guns"
-			if(6)
-				target = /obj/item/weapon/gun/energy
-				target_amount = 4
-				loot = "four energy guns"
-			if(7)
-				target = /obj/item/weapon/gun/energy/laser
-				target_amount = 2
-				loot = "two laser guns"
-			if(8)
-				target = /obj/item/weapon/gun/energy/ionrifle
-				target_amount = 1
-				loot = "an ion gun"
+	explanation_text = "We are lacking in hardware. Steal [loot]."
 
-		explanation_text = "We are lacking in hardware. Steal [loot]."
+/datum/objective/heist/loot/check_completion()
+	var/total_amount = 0
 
-	check_completion()
+	for(var/obj/O in locate(/area/shuttle/vox/station))
+		if(istype(O,target)) total_amount++
+		for(var/obj/I in O.contents)
+			if(istype(I, target))
+				total_amount++
+		if(total_amount >= target_amount)
+			return TRUE
 
-		var/total_amount = 0
+	var/datum/game_mode/heist/H = ticker.mode
+	for(var/datum/mind/raider in H.raiders)
+		if(raider.current)
+			for(var/obj/O in raider.current.get_contents())
+				if(istype(O,target))
+					total_amount++
+				if(total_amount >= target_amount)
+					return TRUE
 
-		for(var/obj/O in locate(/area/shuttle/vox/station))
-			if(istype(O,target)) total_amount++
-			for(var/obj/I in O.contents)
-				if(istype(I,target)) total_amount++
-			if(total_amount >= target_amount) return 1
+	return FALSE
 
-		var/datum/game_mode/heist/H = ticker.mode
-		for(var/datum/mind/raider in H.raiders)
-			if(raider.current)
-				for(var/obj/O in raider.current.get_contents())
-					if(istype(O,target)) total_amount++
-					if(total_amount >= target_amount) return 1
+/datum/objective/heist/salvage/choose_target()
+	switch(rand(1,4))
+		if(1)
+			target = "metal"
+			target_amount = 300
+		if(2)
+			target = "glass"
+			target_amount = 200
+		if(3)
+			target = "plasteel"
+			target_amount = 100
+		if(4)
+			target = "solid phoron"
+			target_amount = 100
+		if(5)
+			target = "silver"
+			target_amount = 50
+		if(6)
+			target = "gold"
+			target_amount = 20
+		if(7)
+			target = "uranium"
+			target_amount = 20
+		if(8)
+			target = "diamond"
+			target_amount = 1
 
-		return 0
+	explanation_text = "Ransack the station and escape with [target_amount] [target]."
 
-datum/objective/heist/salvage
+/datum/objective/heist/salvage/check_completion()
+	var/total_amount = 0
 
-	choose_target()
-		switch(rand(1,4))
-			if(1)
-				target = "metal"
-				target_amount = 300
-			if(2)
-				target = "glass"
-				target_amount = 200
-			if(3)
-				target = "plasteel"
-				target_amount = 100
-			if(4)
-				target = "phoron"
-				target_amount = 100
-			//if(5)
-			//	target = "silver"
-			//	target_amount = 50
-			//if(6)
-			//	target = "gold"
-			//	target_amount = 20
-			//if(7)
-			//	target = "uranium"
-			//	target_amount = 20
-			//if(8)
-			//	target = "diamond"
-			//	target_amount = 20
+	for(var/obj/item/O in locate(/area/shuttle/vox/station))
 
-		explanation_text = "Ransack the station and escape with [target_amount] [target]."
+		var/obj/item/stack/sheet/S
+		if(istype(O, /obj/item/stack/sheet))
+			if(O.name == target)
+				S = O
+				total_amount += S.get_amount()
+		for(var/obj/I in O.contents)
+			if(istype(I, /obj/item/stack/sheet))
+				if(I.name == target)
+					S = I
+					total_amount += S.get_amount()
 
-	check_completion()
+	var/datum/game_mode/heist/H = ticker.mode
+	for(var/datum/mind/raider in H.raiders)
+		if(raider.current)
+			for(var/obj/item/O in raider.current.get_contents())
+				if(istype(O,/obj/item/stack/sheet))
+					if(O.name == target)
+						var/obj/item/stack/sheet/S = O
+						total_amount += S.get_amount()
 
-		var/total_amount = 0
-
-		for(var/obj/item/O in locate(/area/shuttle/vox/station))
-
-			var/obj/item/stack/sheet/S
-			if(istype(O,/obj/item/stack/sheet))
-				if(O.name == target)
-					S = O
-					total_amount += S.amount
-			for(var/obj/I in O.contents)
-				if(istype(I,/obj/item/stack/sheet))
-					if(I.name == target)
-						S = I
-						total_amount += S.amount
-
-		var/datum/game_mode/heist/H = ticker.mode
-		for(var/datum/mind/raider in H.raiders)
-			if(raider.current)
-				for(var/obj/item/O in raider.current.get_contents())
-					if(istype(O,/obj/item/stack/sheet))
-						if(O.name == target)
-							var/obj/item/stack/sheet/S = O
-							total_amount += S.amount
-
-		if(total_amount >= target_amount) return 1
-		return 0
-
+	if(total_amount >= target_amount)
+		return TRUE
+	return FALSE
+/*
 var/heist_rob_total = 0
 /proc/heist_recursive_price_check(atom/movable/AM,loop=0)
 	loop++
@@ -936,7 +942,6 @@ var/heist_rob_total = 0
 			heist_rob_total += I.get_price()
 			if(I.contents && I.contents.len)
 				heist_recursive_price_check(I,loop)
-
 /proc/heist_recursive_price_reset(atom/movable/AM,loop=0)
 	loop++
 	if(loop > 15) return
@@ -946,41 +951,40 @@ var/heist_rob_total = 0
 			I.price = 0
 			if(I.contents && I.contents.len)
 				heist_recursive_price_reset(I,loop)
-
 /proc/heist_get_shuttle_price()
 	heist_rob_total = 0
 	var/area/A = get_area(locate(/obj/effect/landmark/heist/aurora))
 	if(A)
 		for(var/atom/movable/AM in A)
 			heist_recursive_price_check(AM)
-
 /datum/objective/heist/robbery/choose_target()
 	target = "valuables"
 	target_amount = 1000000
 	explanation_text = "Ransack the station for any valuables."
-
 /datum/objective/heist/robbery/check_completion()
 	heist_rob_total = 0
 	for(var/atom/movable/AM in locate(/area/shuttle/vox/station))
 		heist_recursive_price_check(AM)
-
 	if(heist_rob_total >= target_amount) return 1
-	return 0
+	return 0*/
 
-datum/objective/heist/inviolate_crew
+/datum/objective/heist/inviolate_crew
 	explanation_text = "Do not leave any Vox behind, alive or dead."
 
-	check_completion()
-		var/datum/game_mode/heist/H = ticker.mode
-		if(H.is_raider_crew_safe()) return 1
-		return 0
+/datum/objective/heist/inviolate_crew/check_completion()
+	var/datum/game_mode/heist/H = ticker.mode
+	if(H.is_raider_crew_safe())
+		return TRUE
+	return FALSE
 
 #define MAX_VOX_KILLS 10 //Number of kills during the round before the Inviolate is broken.
 						 //Would be nice to use vox-specific kills but is currently not feasible.
 var/global/vox_kills = 0 //Used to check the Inviolate.
 
-datum/objective/heist/inviolate_death
+/datum/objective/heist/inviolate_death
 	explanation_text = "Follow the Inviolate. Minimise death and loss of resources."
-	check_completion()
-		if(vox_kills > MAX_VOX_KILLS) return 0
-		return 1
+
+/datum/objective/heist/inviolate_death/check_completion()
+	if(vox_kills > MAX_VOX_KILLS)
+		return FALSE
+	return TRUE

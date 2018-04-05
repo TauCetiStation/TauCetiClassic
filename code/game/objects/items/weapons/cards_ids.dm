@@ -6,8 +6,6 @@
  *		FINGERPRINT CARD
  */
 
-
-
 /*
  * DATA CARDS - Used for the teleporter
  */
@@ -80,7 +78,7 @@
 		/obj/item/device/taperecorder,
 		/obj/item/device/hailer,
 		/obj/item/device/megaphone,
-		/obj/item/clothing/tie/holobadge,
+		/obj/item/clothing/accessory/holobadge,
 		/obj/structure/closet/crate/secure,
 		/obj/structure/closet/secure_closet,
 		/obj/machinery/computer/libraryconsole/bookmanagement,
@@ -130,7 +128,7 @@
 	var/access = list()
 	var/registered_name = "Unknown" // The name registered_name on the card
 	slot_flags = SLOT_ID
-
+	var/customizable_view = UNIVERSAL_VIEW
 	var/blood_type = "\[UNSET\]"
 	var/dna_hash = "\[UNSET\]"
 	var/fingerprint_hash = "\[UNSET\]"
@@ -140,13 +138,14 @@
 	var/rank = null			//actual job
 	var/dorm = 0		// determines if this ID has claimed a dorm already
 
-/obj/item/weapon/card/id/New()
-	..()
-	spawn(30)
-	if(istype(loc, /mob/living/carbon/human))
-		blood_type = loc:dna:b_type
-		dna_hash = loc:dna:unique_enzymes
-		fingerprint_hash = md5(loc:dna:uni_identity)
+/obj/item/weapon/card/id/atom_init()
+	. = ..()
+
+	if(ishuman(loc)) // this should be ok without any spawn as long, as item spawned inside mob by equip procs.
+		var/mob/living/carbon/human/H = loc
+		blood_type = H.dna.b_type
+		dna_hash = H.dna.unique_enzymes
+		fingerprint_hash = md5(H.dna.uni_identity)
 
 /obj/item/weapon/card/id/attack_self(mob/user)
 	for(var/mob/O in viewers(user, null))
@@ -201,15 +200,117 @@
 	icon_state = "gold"
 	item_state = "gold_id"
 
+/obj/item/weapon/card/id/civ
+	name = "identification card"
+	desc = "A card issued to civilian staff."
+	icon_state = "civ"
+	item_state = "civ_id"
+
+/obj/item/weapon/card/id/civGold //This is not the HoP. There's no position that uses this right now.
+	name = "identification card"
+	desc = "A card which represents common sense and responsibility."
+	icon_state = "civGold"
+	item_state = "civGold_id"
+
+/obj/item/weapon/card/id/sec
+	name = "identification card"
+	desc = "A card issued to security staff."
+	icon_state = "sec"
+	item_state = "sec_id"
+
+/obj/item/weapon/card/id/secGold
+	name = "identification card"
+	desc = "A card which represents honor and protection."
+	icon_state = "secGold"
+	item_state = "secGold_id"
+
+/obj/item/weapon/card/id/eng
+	name = "identification card"
+	desc = "A card issued to engineering staff."
+	icon_state = "eng"
+	item_state = "eng_id"
+
+/obj/item/weapon/card/id/engGold
+	name = "identification card"
+	desc = "A card which represents creativity and ingenuity."
+	icon_state = "engGold"
+	item_state = "engGold_id"
+
+/obj/item/weapon/card/id/med
+	name = "identification card"
+	desc = "A card issued to medical staff."
+	icon_state = "med"
+	item_state = "med_id"
+
+/obj/item/weapon/card/id/medGold
+	name = "identification card"
+	desc = "A card which represents care and compassion."
+	icon_state = "medGold"
+	item_state = "medGold_id"
+
+/obj/item/weapon/card/id/sci
+	name = "identification card"
+	desc = "A card issued to science staff."
+	icon_state = "sci"
+	item_state = "sci_id"
+
+/obj/item/weapon/card/id/sciGold
+	name = "identification card"
+	desc = "A card which represents knowledge and reasoning."
+	icon_state = "sciGold"
+	item_state = "sciGold_id"
+
+/obj/item/weapon/card/id/clown
+	name = "identification card"
+	desc = "A card which represents laugh and robust."
+	icon_state = "clown"
+	item_state = "clown_id"
+
+/obj/item/weapon/card/id/clownGold //not in use
+	name = "identification card"
+	desc = "A golden card which represents laugh and robust."
+	icon_state = "clownGold"
+	item_state = "clownGold_id"
+
+/obj/item/weapon/card/id/mime
+	name = "identification card"
+	desc = "A card which represents tears and silence."
+	icon_state = "mime"
+	item_state = "mime_id"
+
+/obj/item/weapon/card/id/mimeGold //not in use
+	name = "identification card"
+	desc = "A golden card which represents tears and silence."
+	icon_state = "mimeGold"
+	item_state = "mimeGold_id"
+
+/obj/item/weapon/card/id/cargo
+	name = "identification card"
+	desc = "A card issued to cargo staff."
+	icon_state = "cargo"
+	item_state = "cargo_id"
+
+/obj/item/weapon/card/id/cargoGold
+	name = "identification card"
+	desc = "A card which represents service and planning."
+	icon_state = "cargoGold"
+	item_state = "cargoGold_id"
+
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
 	access = list(access_maint_tunnels, access_syndicate, access_external_airlocks)
 	origin_tech = "syndicate=3"
 	var/registered_user=null
+	var/list/colorlist = list()
+	var/obj/item/weapon/card/id/scard = null
+	customizable_view = TRAITOR_VIEW
 
-/obj/item/weapon/card/id/syndicate/New(mob/user as mob)
-	..()
-	if(!isnull(user)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
+
+
+/obj/item/weapon/card/id/syndicate/atom_init()
+	. = ..()
+	if(ismob(loc)) // Runtime prevention on laggy starts or where users log out because of lag at round start.
+		var/mob/user = loc
 		registered_name = ishuman(user) ? user.real_name : user.name
 	else
 		registered_name = "Agent Card"
@@ -228,13 +329,13 @@
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
 	if(!src.registered_name)
 		//Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
-		var t = reject_bad_name(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name))
-		if(!t) //Same as mob/new_player/prefrences.dm
+		var t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
+		if(!t) //Same as mob/dead/new_player/prefrences.dm
 			alert("Invalid name.")
 			return
 		src.registered_name = t
 
-		var u = sanitize(copytext(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Agent"),1,MAX_MESSAGE_LEN))
+		var u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Agent"))
 		if(!u)
 			alert("Invalid assignment.")
 			src.registered_name = ""
@@ -247,15 +348,15 @@
 
 		if(!registered_user) registered_user = user  //
 
-		switch(alert("Would you like to display the ID, or retitle it?","Choose.","Rename","Show"))
+		switch(alert("Would you like to display the ID, change its look, or retitle it?","Choose.","Rename", "Change look","Show"))
 			if("Rename")
-				var t = sanitize(copytext(input(user, "What name would you like to put on this card?", "Agent card name", ishuman(user) ? user.real_name : user.name),1,26))
-				if(!t || t == "Unknown" || t == "floor" || t == "wall" || t == "r-wall") //Same as mob/new_player/prefrences.dm
+				var t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
+				if(!t) //Same as mob/dead/new_player/prefrences.dm
 					alert("Invalid name.")
 					return
 				src.registered_name = t
 
-				var u = sanitize(copytext(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Test Subject"),1,MAX_MESSAGE_LEN))
+				var u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Test Subject"))
 				if(!u)
 					alert("Invalid assignment.")
 					return
@@ -263,6 +364,23 @@
 				src.name = "[src.registered_name]'s ID Card ([src.assignment])"
 				to_chat(user, "\blue You successfully forge the ID card.")
 				return
+			if("Change look")
+				for(var/P in typesof(/obj/item/weapon/card/id))
+					var/obj/item/weapon/card/id/C = new P
+					if (C.customizable_view != FORDBIDDEN_VIEW) //everything except forbidden
+						C.name = C.icon_state
+						colorlist += C
+
+				var/obj/item/weapon/card/id/newc
+				newc = input(user, "Select your type!", "Card Changing") as null|anything in colorlist
+				if (newc)
+					src.icon = 'icons/obj/card.dmi'
+					src.icon_state = newc.icon_state
+					src.desc = newc.desc
+				src.update_icon()
+				to_chat(user, "<span class='notice'>You successfully change the look of the ID card!</span>")
+				return
+
 			if("Show")
 				..()
 	else
@@ -276,12 +394,14 @@
 	registered_name = "Syndicate"
 	assignment = "Syndicate Overlord"
 	access = list(access_syndicate, access_external_airlocks)
+	customizable_view = TRAITOR_VIEW
 
 /obj/item/weapon/card/id/syndicate/commander
 	name = "syndicate commander ID card"
 	assignment = "Syndicate Commander"
 	icon_state = "syndicate-command"
 	access = list(access_maint_tunnels, access_syndicate, access_syndicate_commander, access_external_airlocks)
+
 
 /obj/item/weapon/card/id/syndicate/nuker
 	icon_state = "syndicate"
@@ -294,10 +414,10 @@
 	registered_name = "Captain"
 	assignment = "Captain"
 
-/obj/item/weapon/card/id/captains_spare/New()
+/obj/item/weapon/card/id/captains_spare/atom_init()
 	var/datum/job/captain/J = new/datum/job/captain
 	access = J.get_access()
-	..()
+	. = ..()
 
 /obj/item/weapon/card/id/centcom
 	name = "\improper CentCom. ID"
@@ -305,18 +425,20 @@
 	icon_state = "centcom"
 	registered_name = "Central Command"
 	assignment = "General"
+	customizable_view = TRAITOR_VIEW
 
-/obj/item/weapon/card/id/centcom/New()
+/obj/item/weapon/card/id/centcom/atom_init()
 	access = get_all_centcom_access()
-	..()
+	. = ..()
 
 /obj/item/weapon/card/id/ert
 	name = "\improper CentCom. ID"
 	icon_state = "ert"
 	registered_name = "Central Command"
 	assignment = "Emergency Response Team"
+	customizable_view = TRAITOR_VIEW
 
-/obj/item/weapon/card/id/ert/New()
+/obj/item/weapon/card/id/ert/atom_init()
 	access = get_all_accesses()
 	access += get_all_centcom_access()
-	..()
+	. = ..()

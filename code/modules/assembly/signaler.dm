@@ -19,26 +19,24 @@
 	var/datum/radio_frequency/radio_connection
 	var/deadman = 0
 
-/obj/item/device/assembly/signaler/New()
-	..()
-	spawn(40)
-		set_frequency(frequency)
-	return
+/obj/item/device/assembly/signaler/atom_init()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/set_frequency, frequency), 40)
 
 /obj/item/device/assembly/signaler/Destroy()
 	if(radio_controller)
 		radio_controller.remove_object(src,frequency)
 	frequency = 0
+	connected = null
 	return ..()
 
 /obj/item/device/assembly/signaler/activate()
-	if(cooldown > 0)	return 0
+	if(cooldown > 0)
+		return FALSE
 	cooldown = 2
-	spawn(10)
-		process_cooldown()
-
+	addtimer(CALLBACK(src, .proc/process_cooldown), 10)
 	signal()
-	return 1
+	return TRUE
 
 /obj/item/device/assembly/signaler/update_icon()
 	if(holder)
@@ -71,7 +69,7 @@ Code:
 <A href='byond://?src=\ref[src];code=5'>+</A><BR>
 [t1]
 </TT>"}
-	user << browse(dat, "window=radio")
+	user << browse(entity_ja(dat), "window=radio")
 	onclose(user, "radio")
 	return
 
@@ -139,9 +137,8 @@ Code:
 
 
 /obj/item/device/assembly/signaler/pulse(radio = 0)
-	if(istype(src.loc, /obj/machinery/door/airlock) && src.airlock_wire && src.wires)
-		var/obj/machinery/door/airlock/A = src.loc
-		A.pulse(src.airlock_wire)
+	if(connected && wires)
+		connected.pulse_signaler(src)
 	else if(holder)
 		holder.process_activation(src, 1, 0)
 	else
@@ -175,13 +172,13 @@ Code:
 
 /obj/item/device/assembly/signaler/process()
 	if(!deadman)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	var/mob/M = src.loc
 	if(!M || !ismob(M))
 		if(prob(5))
 			signal()
 		deadman = 0
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	else if(prob(5))
 		M.visible_message("[M]'s finger twitches a bit over [src]'s signal button!")
 	return
@@ -191,7 +188,7 @@ Code:
 	set name = "Threaten to push the button!"
 	set desc = "BOOOOM!"
 	deadman = 1
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	usr.visible_message("\red [usr] moves their finger over [src]'s signal button...")
 
 // Embedded signaller used in anomalies.

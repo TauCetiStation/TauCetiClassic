@@ -19,7 +19,7 @@ var/global/sent_strike_team = 0
 
 	var/input = null
 	while(!input)
-		input = sanitize(copytext(input(src, "Please specify which mission the death commando squad shall undertake.", "Specify Mission", ""),1,MAX_MESSAGE_LEN))
+		input = sanitize(input(src, "Please specify which mission the death commando squad shall undertake.", "Specify Mission", ""))
 		if(!input)
 			if(alert("Error, no mission set. Do you want to exit the setup process?",,"Yes","No")=="Yes")
 				return
@@ -72,6 +72,7 @@ var/global/sent_strike_team = 0
 				new_commando.internals.icon_state = "internal1"
 
 			//So they don't forget their code or mission.
+			create_random_account_and_store_in_mind(new_commando)
 			if(nuke_code)
 				new_commando.mind.store_memory("<B>Nuke Code:</B> \red [nuke_code].")
 			new_commando.mind.store_memory("<B>Mission:</B> \red [input].")
@@ -123,9 +124,7 @@ var/global/sent_strike_team = 0
 
 /mob/living/carbon/human/proc/equip_death_commando(leader_selected = 0)
 
-	var/obj/item/device/radio/R = new /obj/item/device/radio/headset(src)
-	R.set_frequency(1341)
-	equip_to_slot_or_del(R, slot_l_ear)
+	equip_to_slot_or_del(new /obj/item/device/radio/headset/deathsquad(src), slot_l_ear)
 	if (leader_selected == 0)
 		equip_to_slot_or_del(new /obj/item/clothing/under/color/green(src), slot_w_uniform)
 	else
@@ -158,9 +157,9 @@ var/global/sent_strike_team = 0
 	equip_to_slot_or_del(new /obj/item/weapon/gun/energy/pulse_rifle(src), slot_r_hand)
 
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(src)//Here you go Deuryn
-	L.imp_in = src
-	L.implanted = 1
+	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
+	L.inject(src)
+	START_PROCESSING(SSobj, L)
 
 
 

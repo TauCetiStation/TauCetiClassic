@@ -9,7 +9,8 @@
 	var/triggerproc = "explode" //name of the proc thats called when the mine is triggered
 	var/triggered = 0
 
-/obj/effect/mine/New()
+/obj/effect/mine/atom_init()
+	. = ..()
 	icon_state = "uglyminearmed"
 
 /obj/effect/mine/Crossed(AM as mob|obj)
@@ -26,7 +27,7 @@
 		call(src,triggerproc)(M)
 
 /obj/effect/mine/proc/triggerrad(obj)
-	var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, src)
 	s.start()
 	obj:radiation += 50
@@ -39,7 +40,7 @@
 	if(ismob(obj))
 		var/mob/M = obj
 		M.Stun(30)
-	var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, src)
 	s.start()
 	spawn(0)
@@ -51,14 +52,7 @@
 
 	for (var/turf/simulated/floor/target in range(1,src))
 		if(!target.blocks_air)
-
-			var/datum/gas_mixture/payload = new
-			var/datum/gas/sleeping_agent/trace_gas = new
-
-			trace_gas.moles = 30
-			payload += trace_gas
-
-			target.zone.air.merge(payload)
+			target.assume_gas("sleeping_agent", 30)
 
 	spawn(0)
 		qdel(src)
@@ -67,11 +61,7 @@
 	for (var/turf/simulated/floor/target in range(1,src))
 		if(!target.blocks_air)
 
-			var/datum/gas_mixture/payload = new
-
-			payload.phoron = 30
-
-			target.zone.air.merge(payload)
+			target.assume_gas("phoron", 30)
 
 			target.hotspot_expose(1000, CELL_VOLUME)
 
@@ -79,7 +69,7 @@
 		qdel(src)
 
 /obj/effect/mine/proc/triggerkick(obj)
-	var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	s.set_up(3, 1, src)
 	s.start()
 	del(obj:client)

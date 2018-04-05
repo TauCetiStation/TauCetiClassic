@@ -31,8 +31,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/getserverlog,			/*allows us to fetch server logs (diary) for other days*/
 	/client/proc/get_whitelist, 			//Whitelist
 	/client/proc/add_to_whitelist,
-	/client/proc/get_alienwhitelist,
-	/client/proc/add_to_alienwhitelist,
+	/datum/admins/proc/whitelist_panel,
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
 	/client/proc/Getmob,				/*teleports a mob to our location*/
 	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
@@ -77,7 +76,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/response_team, // Response Teams admin verb
 	/client/proc/toggle_antagHUD_use,
 	/client/proc/toggle_antagHUD_restrictions,
-	/client/proc/allow_character_respawn,    /* Allows a ghost to respawn */
+	/client/proc/allow_character_respawn,	/* Allows a ghost to respawn */
 	/client/proc/aooc,
 	/client/proc/change_security_level,
 	/client/proc/empty_ai_core_toggle_latejoin,
@@ -90,7 +89,8 @@ var/list/admin_verbs_ban = list(
 var/list/admin_verbs_sounds = list(
 	/client/proc/play_local_sound,
 	/client/proc/play_server_sound,
-	/client/proc/play_sound
+	/client/proc/play_sound,
+	/client/proc/stop_server_sound
 	)
 var/list/admin_verbs_fun = list(
 	/client/proc/object_talk,
@@ -106,18 +106,21 @@ var/list/admin_verbs_fun = list(
 	/client/proc/cmd_admin_add_random_ai_law,
 	/client/proc/make_sound,
 	/client/proc/toggle_random_events,
-	/client/proc/set_ooc,
+	/client/proc/set_global_ooc,
 	/client/proc/editappear,
 	/client/proc/roll_dices,
 	/client/proc/epileptic_anomaly,
 //	/client/proc/Noir_anomaly,
 	/client/proc/epileptic_anomaly_cancel,
 	/client/proc/achievement,
-	/client/proc/toggle_AI_interact /*toggle admin ability to interact with machines as an AI*/
+	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
+	/client/proc/centcom_barriers_toggle,
+	/client/proc/gateway_fix
 	)
 var/list/admin_verbs_spawn = list(
 	/datum/admins/proc/spawn_atom,		/*allows us to spawn instances*/
-	/client/proc/respawn_character
+	/client/proc/respawn_character,
+	/datum/admins/proc/spawn_fluid_verb
 	)
 var/list/admin_verbs_server = list(
 	/client/proc/Set_Holiday,
@@ -148,6 +151,7 @@ var/list/admin_verbs_debug = list(
 	/client/proc/Debug2,
 	/client/proc/ZASSettings,
 	/client/proc/cmd_debug_make_powernets,
+	/client/proc/cmd_debug_load_junkyard,
 	/client/proc/cmd_debug_mob_lists,
 	/client/proc/cmd_admin_delete,
 	/client/proc/cmd_debug_del_all,
@@ -157,12 +161,16 @@ var/list/admin_verbs_debug = list(
 	/client/proc/investigate_show,
 	/client/proc/reload_admins,
 	/client/proc/reload_mentors,
+	/client/proc/reload_nanoui_resources,
 //	/client/proc/remake_distribution_map,
 //	/client/proc/show_distribution_map,
 	/client/proc/enable_debug_verbs,
 	/*/client/proc/callproc,*/
 //	/proc/machine_upgrade,
-	/client/proc/toggledebuglogs
+	/client/proc/toggledebuglogs,
+	/client/proc/view_runtimes,
+	/client/proc/cmd_display_del_log,
+	/client/proc/cmd_display_init_log
 	)
 var/list/admin_verbs_possess = list(
 	/proc/possess,
@@ -178,10 +186,19 @@ var/list/admin_verbs_permissions = list(
 var/list/admin_verbs_rejuv = list(
 	/client/proc/respawn_character
 	)
+var/list/admin_verbs_whitelist = list(
+	/client/proc/get_whitelist, 			//Whitelist
+	/client/proc/add_to_whitelist,
+	/datum/admins/proc/whitelist_panel,
+	/datum/admins/proc/toggle_job_restriction
+	)
+var/list/admin_verbs_event = list(
+	/client/proc/event_map_loader
+	)
 
 //verbs which can be hidden - needs work
 var/list/admin_verbs_hideable = list(
-	/client/proc/set_ooc,
+	/client/proc/set_global_ooc,
 	/client/proc/deadmin_self,
 //	/client/proc/deadchat,
 	/client/proc/toggleprayers,
@@ -210,9 +227,8 @@ var/list/admin_verbs_hideable = list(
 	/client/proc/cmd_admin_gib_self,
 	/client/proc/drop_bomb,
 	/client/proc/get_whitelist, 			//Whitelist
-	/client/proc/get_alienwhitelist,
 	/client/proc/add_to_whitelist,
-	/client/proc/add_to_alienwhitelist,
+	/datum/admins/proc/whitelist_panel,
 	/client/proc/gsw_add,
 	/datum/admins/proc/toggle_aliens,
 	/datum/admins/proc/toggle_space_ninja,
@@ -279,11 +295,13 @@ var/list/admin_verbs_hideable = list(
 			verbs += admin_verbs_sounds
 		if(holder.rights & R_SPAWN)
 			verbs += admin_verbs_spawn
+		if(holder.rights & R_WHITELIST)
+			verbs += admin_verbs_whitelist
+		if(holder.rights & R_EVENT)
+			verbs += admin_verbs_event
 
 		if(holder.rights & R_ADMIN)
 			control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
-		if(holder.rights & R_FUN)
-			verbs += admin_verbs_event
 
 /client/proc/remove_admin_verbs()
 	verbs.Remove(
@@ -367,7 +385,7 @@ var/list/admin_verbs_hideable = list(
 
 		feedback_add_details("admin_verb","P") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-	else if(istype(mob,/mob/new_player))
+	else if(isnewplayer(mob))
 		to_chat(src, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>")
 	else
 		//ghostize
@@ -446,12 +464,15 @@ var/list/admin_verbs_hideable = list(
 	return
 
 /client/proc/colorooc()
-	set category = "Fun"
-	set name = "OOC Text Color"
-	if(!holder)	return
-	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
-	if(new_ooccolor)
-		prefs.ooccolor = new_ooccolor
+	set category = "OOC"
+	set name = "Set Admin OOC Color"
+	if(!holder)
+		return
+	if(!config.allow_admin_ooccolor)
+		to_chat(usr, "<span class='warning'>Currently disabled by config.</span>")
+	var/new_aooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
+	if(new_aooccolor)
+		prefs.aooccolor = new_aooccolor
 		prefs.save_preferences()
 	feedback_add_details("admin_verb","OC") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	return
@@ -478,93 +499,29 @@ var/list/admin_verbs_hideable = list(
 		message_admins("[key_name_admin(usr)] has turned stealth mode [holder.fakekey ? "ON" : "OFF"]")
 	feedback_add_details("admin_verb","SM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-#define MAX_WARNS 3
-#define AUTOBANTIME 15
-
 /client/proc/warn(warned_ckey)
-	var/reason = "Autobanning due to too many formal warnings"
 	if(!check_rights(R_ADMIN))
 		return
 
-	if(!warned_ckey || !istext(warned_ckey))	return
-	/*if(warned_ckey in admin_datums)
-		to_chat(usr, "<font color='red'>Error: warn(): You can't warn admins.</font>")
-		return*/
+	warned_ckey = ckey(warned_ckey)
 
-	var/datum/preferences/D
+	var/reason = input(usr, "Reason?", "Warn Reason","") as text|null
+
+	if(!warned_ckey || !reason)
+		return
+
+	notes_add(warned_ckey, "ADMINWARN: " + reason, src)
+
 	var/client/C = directory[warned_ckey]
-	if(C)	D = C.prefs
-	else	D = preferences_datums[warned_ckey]
+	reason = sanitize(reason)
 
-	if(!D)
-		to_chat(src, "<font color='red'>Error: warn(): No such ckey found.</font>")
-		return
-
-	if(++D.warns >= MAX_WARNS)					//uh ohhhh...you'reee iiiiin trouuuubble O:)
-		var/bantime = (++D.warnbans * AUTOBANTIME)
-		D.warns = 1
-		ban_unban_log_save("[ckey] warned [warned_ckey], resulting in a [bantime] minute autoban.")
-		if(C)
-			log_admin("[src.key] has warned [C.key] resulting in a [bantime] minute ban.")
-			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)] resulting in a [bantime] minute ban.")
-			send2slack_logs(key_name(src),  "has warned [key_name_admin(C)] resulting in a [bantime] minute ban.", "(WARNBAN)")
-			to_chat(C, "<font color='red'><BIG><B>You have been autobanned due to a warning by [ckey].</B></BIG><br>This is a temporary ban, it will be removed in [bantime] minutes.")
-		else
-			log_admin("[src.key] has warned [warned_ckey] resulting in a [bantime] minute ban.")
-			message_admins("[key_name_admin(src)] has warned [warned_ckey] resulting in a [bantime] minute ban.")
-			send2slack_logs(key_name(src),  "has warned [warned_ckey] resulting in a [bantime] minute ban.", "(WARNBAN)")
-		AddBan(warned_ckey, D.last_id, "Autobanning due to too many formal warnings", ckey, 1, bantime)
-		holder.DB_ban_record(BANTYPE_TEMP, null, bantime, reason, , ,warned_ckey)
-		feedback_inc("ban_warn",1)
-		D.save_preferences()
-		del(C)
-	else
-		if(C)
-			to_chat(C, "<font color='red'><BIG><B>You have been formally warned by an administrator.</B></BIG><br>Further warnings will result in an autoban.</font>")
-			log_admin("[src.key] has warned [C.key]")
-			message_admins("[key_name_admin(src)] has warned [key_name_admin(C)]. They have [MAX_WARNS-D.warns] strikes remaining. And have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
-		else
-			log_admin("[src.key] has warned [C.key]")
-			message_admins("[key_name_admin(src)] has warned [warned_ckey] (DC). They have [MAX_WARNS-D.warns] strikes remaining. And have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
-		D.save_preferences()
-	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-/client/proc/unwarn(warned_ckey)
-	if(!check_rights(R_ADMIN))
-		return
-
-	if(!warned_ckey || !istext(warned_ckey))	return
-	/*if(warned_ckey in admin_datums)
-		to_chat(usr, "<font color='red'>Error: warn(): You can't warn admins.</font>")
-		return*/
-
-	var/datum/preferences/D
-	var/client/C = directory[warned_ckey]
-	if(C)	D = C.prefs
-	else	D = preferences_datums[warned_ckey]
-
-	if(!D)
-		to_chat(src, "<font color='red'>Error: unwarn(): No such ckey found.</font>")
-		return
-
-	if(D.warns == 0)
-		to_chat(src, "<font color='red'>Error: unwarn(): You can't unwarn someone with 0 warnings, you big dummy.</font>")
-		return
-
-	D.warns-=1
-	var/strikesleft = MAX_WARNS-D.warns
 	if(C)
-		to_chat(C, "<font color='red'><BIG><B>One of your warnings has been removed.</B></BIG><br>You currently have [strikesleft] strike\s left</font>")
-		log_admin("[src.key] has unwarned [C.key]")
-		message_admins("[key_name_admin(src)] has unwarned [key_name_admin(C)]. They have [strikesleft] strike(s) remaining, and have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
-	else
-		log_admin("[src.key] has unwarned [warned_ckey] (DC)")
-		message_admins("[key_name_admin(src)] has unwarned [warned_ckey] (DC). They have [strikesleft] strike(s) remaining, and have been warn banned [D.warnbans] [D.warnbans == 1 ? "time" : "times"]")
-	D.save_preferences()
-	feedback_add_details("admin_verb","UNWARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+		to_chat(C, "<span class='alert'><span class='reallybig bold'>You have been formally warned by an administrator.</span><br>Reason: [reason].</span>")
 
-#undef MAX_WARNS
-#undef AUTOBANTIME
+	log_admin("[src.key] has warned [warned_ckey] with reason: [reason]")
+	message_admins("[key_name_admin(src)] has warned [C ? key_name_admin(C) : warned_ckey] with reason: [reason].")
+
+	feedback_add_details("admin_verb","WARN") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_bomb() // Some admin dickery that can probably be done better -- TLE
 	set category = "Special Verbs"
@@ -660,7 +617,7 @@ var/list/admin_verbs_hideable = list(
 	set name = "Make Sound"
 	set desc = "Display a message to everyone who can hear the target."
 	if(O)
-		var/message = input("What do you want the message to be?", "Make Sound") as text|null
+		var/message = sanitize(input("What do you want the message to be?", "Make Sound") as text|null)
 		if(!message)
 			return
 		for (var/mob/V in hearers(O))
@@ -736,7 +693,8 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Sets the station security level."
 	set category = "Admin"
 
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN))
+		return
 	var sec_level = input(usr, "It's currently code [get_security_level()].", "Select Security Level")  as null|anything in (list("green","blue","red","delta")-get_security_level())
 	if(alert("Switch from code [get_security_level()] to code [sec_level]?","Change security level?","Yes","No") == "Yes")
 		set_security_level(sec_level)
@@ -757,7 +715,8 @@ var/list/admin_verbs_hideable = list(
 	set name = "Edit Appearance"
 	set category = "Fun"
 
-	if(!check_rights(R_FUN))	return
+	if(!check_rights(R_FUN))
+		return
 
 	if(!istype(M, /mob/living/carbon/human))
 		to_chat(usr, "\red You can only do this to humans!")
@@ -895,6 +854,7 @@ var/list/admin_verbs_hideable = list(
 
 	to_chat(T, "<span class='notice'><b><font size=3>Man up and deal with it.</font></b></span>")
 	to_chat(T, "<span class='notice'>Move on.</span>")
+	T << 'sound/voice/ManUp1.ogg'
 
 	log_admin("[key_name(usr)] told [key_name(T)] to man up and deal with it.")
 	message_admins("\blue [key_name_admin(usr)] told [key_name(T)] to man up and deal with it.")
@@ -915,7 +875,8 @@ var/list/admin_verbs_hideable = list(
 	set name = "Give Achievement"
 	set category = "Fun"
 
-	if(!check_rights(R_FUN))	return
+	if(!check_rights(R_FUN))
+		return
 
 	var/achoice = "Cancel"
 
@@ -924,8 +885,8 @@ var/list/admin_verbs_hideable = list(
 		return
 
 	var/mob/winner = input("Who's a winner?", "Achievement Winner") in player_list
-	var/name = input("What will you call your achievement?", "Achievement Winner", "New Achievement")
-	var/desc = input("What description will you give it?", "Achievement Description", "You Win")
+	var/name = sanitize(input("What will you call your achievement?", "Achievement Winner", "New Achievement"))
+	var/desc = sanitize(input("What description will you give it?", "Achievement Description", "You Win"))
 
 	if(istype(winner, /mob/living))
 		achoice = alert("Give our winner his own trophy?","Achievement Trophy", "Confirm","Cancel")
@@ -957,9 +918,10 @@ var/list/admin_verbs_hideable = list(
 	set category = "Admin"
 	set name = "Antag OOC"
 
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN))
+		return
 
-	var/msg = sanitize(copytext(input(usr, "", "Antag OOC") as text, 1, MAX_MESSAGE_LEN))
+	var/msg = sanitize(input(usr, "", "Antag OOC") as text)
 	if(!msg)	return
 
 	var/display_name = src.key
@@ -978,5 +940,140 @@ var/list/admin_verbs_hideable = list(
 	set desc = "Allows you to interact with most machines as an AI would as a ghost"
 
 	AI_Interact = !AI_Interact
+	machine_interactive_ghost = AI_Interact
 	log_admin("[key_name(usr)] has [AI_Interact ? "activated" : "deactivated"] Admin AI Interact")
 	message_admins("[key_name_admin(usr)] has [AI_Interact ? "activated" : "deactivated"] their AI interaction")
+
+//////////////////////////////
+// Map loader
+//////////////////////////////
+
+/client/proc/event_map_loader()
+	set category = "Event"
+	set name = "Event map loader"
+	if(!check_rights(R_EVENT))
+		return
+
+	var/list/AllowedMaps = list()
+
+	var/list/Lines = file2list("maps/event_map_list.txt")
+	if(!Lines.len)	return
+	for (var/t in Lines)
+		if (!t)
+			continue
+		t = trim(t)
+		if (length(t) == 0)
+			continue
+		else if (copytext(t, 1, 2) == "#")
+			continue
+		var/pos = findtext(t, " ")
+		var/name = null
+		if (pos)
+			// No, don't do lowertext here, that breaks paths on linux
+			name = copytext(t, 1, pos)
+		//	value = copytext(t, pos + 1)
+		else
+			// No, don't do lowertext here, that breaks paths on linux
+			name = t
+		if (!name)
+			continue
+
+		AllowedMaps.Add(name)
+
+
+	AllowedMaps += "--CANCEL--"
+
+	var/choice = input("Select a map", , "CANCEL") in AllowedMaps
+	if(choice == "--CANCEL--") return
+
+	message_admins("[key_name_admin(src)] started loading event-map [choice]")
+	log_admin("[key_name_admin(src)] started loading event-map [choice]")
+
+	if(maploader.load_new_z_level(choice))//, load_speed = 100)
+		message_admins("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
+		log_admin("[key_name_admin(src)] loaded event-map [choice], zlevel [world.maxz]")
+	else
+		message_admins("[key_name_admin(src)] failed to load event-map [choice].")
+
+//////////////////////////////
+// Noir event
+//////////////////////////////
+/*
+/client/proc/Noir_anomaly()
+	set category = "Event"
+	set name = "Noir event(in dev!)"
+	if(!check_rights(R_PERMISSIONS))	return
+
+	if(alert("Are you really sure?",,"Yes","No") != "Yes")
+		return
+
+	for(var/atom/O in world)
+		if(O.icon)
+			if(O.color)
+				O.color = null
+
+			var/icon/newIcon = icon(O.icon)
+			newIcon.GrayScale()
+			O.icon = newIcon
+
+	log_admin("[key_name(src)] started noir event!", 1)
+	message_admins("\blue [key_name_admin(src)] started noir event!", 1)
+*/
+//////////////////////////////
+// Gateway
+//////////////////////////////
+
+/client/proc/gateway_fix()
+	set category = "Event"
+	set name = "Connect Gateways"
+
+	if(!check_rights(R_FUN))
+		return
+
+	for(var/obj/machinery/gateway/G in machines)
+		G.atom_init()
+
+	log_admin("[key_name(src)] connected gates")
+	message_admins("\blue [key_name_admin(src)] connected gates")
+
+//////////////////////////////
+// Velocity\Centcomm barriers
+//////////////////////////////
+var/centcom_barriers_stat = 1
+
+/client/proc/centcom_barriers_toggle()
+	set category = "Event"
+	set name = "Centcom Barriers Toggle"
+
+	centcom_barriers_stat = !centcom_barriers_stat
+
+	if(!check_rights(R_FUN))
+		return
+
+	for(var/obj/effect/landmark/trololo/L in landmarks_list)
+		L.active = centcom_barriers_stat
+	for(var/obj/structure/centcom_barrier/B in world)
+		B.density = centcom_barriers_stat
+
+	log_admin("[key_name(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
+	message_admins("\blue [key_name_admin(src)] switched [centcom_barriers_stat? "on" : "off"] centcomm barriers")
+
+/obj/effect/landmark/trololo
+	name = "Rickroll"
+	//var/melody = 'sound/Never_Gonna_Give_You_Up.ogg'	//NOPE
+	var/message = "<i>\blue It's not the door you're looking for...</i>"
+	var/active = 1
+	var/lchannel = 999
+
+/obj/effect/landmark/trololo/Crossed(mob/M)
+	if(!active) return
+	/*if(istype(M, /mob/living/carbon))
+		M << sound(melody,0,1,lchannel,20)*/
+
+/obj/structure/centcom_barrier
+	name = "Invisible wall"
+	anchored = 1
+	density = 1
+	invisibility = 101
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "x3"

@@ -15,7 +15,6 @@
 /datum/game_mode
 	var/name = "invalid"
 	var/config_tag = null
-	var/intercept_hacked = 0
 	var/votable = 1
 	var/playable_mode = 1
 	var/probability = 0
@@ -31,6 +30,8 @@
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
+	var/list/restricted_jobs_autotraitor = list("Cyborg", "Security Officer", "Warden")
+	var/autotraitor_delay = 15 MINUTES // how often to try to add new traitors.
 	var/role_type = null
 	var/newscaster_announcements = null
 	var/ert_disabled = 0
@@ -86,8 +87,8 @@ Implants;
 ///Checks to see if the game can be setup and ran with the current number of players or whatnot.
 /datum/game_mode/proc/can_start()
 	var/playerC = 0
-	for(var/mob/new_player/player in player_list)
-		if((player.client)&&(player.ready))
+	for(var/mob/dead/new_player/player in player_list)
+		if(player.client && player.ready)
 			playerC++
 
 	antag_candidates = get_players_for_role(role_type)
@@ -112,6 +113,10 @@ Implants;
 ///post_setup()
 ///Everyone should now be on the station and have their normal gear.  This is the place to give the special roles extra things
 /datum/game_mode/proc/post_setup()
+	var/list/exclude_autotraitor_for = list("extended", "sandbox", "meteor", "gang", "epidemic") // config_tag var
+	if(!(config_tag in exclude_autotraitor_for))
+		addtimer(CALLBACK(src, .proc/traitorcheckloop), autotraitor_delay)
+
 	spawn (ROUNDSTART_LOGOUT_REPORT_TIME)
 		display_roundstart_logout_report()
 
@@ -204,8 +209,6 @@ Implants;
 	if(escaped_on_pod_5 > 0)
 		feedback_set("escaped_on_pod_5",escaped_on_pod_5)
 
-	send2mainirc("A round of [src.name] has ended - [surviving_total] survivors, [ghosts] ghosts.")
-
 	return 0
 
 
@@ -282,7 +285,7 @@ Implants;
 
 /*	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 	for(var/mob/M in player_list)
-		if(!istype(M,/mob/new_player))
+		if(!isnewplayer(M))
 			M << sound('sound/AI/intercept.ogg')
 	if(security_level < SEC_LEVEL_BLUE)
 		set_security_level(SEC_LEVEL_BLUE)*/
@@ -293,7 +296,7 @@ Implants;
 	var/list/candidates = list()
 
 	// Assemble a list of active players without jobbans.
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		if(player.client && player.ready)
 			if(role in player.client.prefs.be_role)
 				if(!jobban_isbanned(player, "Syndicate") && !jobban_isbanned(player, role) && !role_available_in_minutes(player, role))
@@ -303,7 +306,7 @@ Implants;
 	players = shuffle(players)
 
 	// Get a list of all the people who want to be the antagonist for this round
-	for(var/mob/new_player/player in players)
+	for(var/mob/dead/new_player/player in players)
 		if(role in player.client.prefs.be_role)
 			log_debug("[player.key] had [role] enabled, so we are drafting them.")
 			candidates += player.mind
@@ -324,7 +327,7 @@ Implants;
 /datum/game_mode/proc/latespawn(mob)
 
 /*
-/datum/game_mode/proc/check_player_role_pref(role, mob/new_player/player)
+/datum/game_mode/proc/check_player_role_pref(role, mob/dead/new_player/player)
 	if(player.preferences.be_role & role)
 		return 1
 	return 0
@@ -332,7 +335,7 @@ Implants;
 
 /datum/game_mode/proc/num_players()
 	. = 0
-	for(var/mob/new_player/P in player_list)
+	for(var/mob/dead/new_player/P in player_list)
 		if(P.client && P.ready)
 			. ++
 

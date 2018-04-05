@@ -4,27 +4,111 @@
 
 // ===
 /area
+	level = null
+	name = "Space"
+	icon = 'icons/turf/areas.dmi'
+	icon_state = "unknown"
+	layer = 10
+	mouse_opacity = 0
+
 	var/global/global_uid = 0
 	var/uid
+
 	var/parallax_movedir = 0
 
-/area/New()
+	var/fire = null
+	var/atmos = 1
+	var/atmosalm = 0
+	var/poweralm = 1
+	var/party = null
+	var/lightswitch = 1
+	var/valid_territory = 1 //If it's a valid territory for gangs to claim
+
+	var/eject = null
+
+	var/debug = 0
+	var/powerupdate = 10	//We give everything 10 ticks to settle out it's power usage.
+	var/requires_power = 1
+	var/always_unpowered = 0	//this gets overriden to 1 for space in area/New()
+
+	var/power_equip = 1
+	var/power_light = 1
+	var/power_environ = 1
+	var/music = null
+	var/used_equip = 0
+	var/used_light = 0
+	var/used_environ = 0
+	var/static_equip
+	var/static_light = 0
+	var/static_environ
+
+	var/has_gravity = 1
+	var/obj/machinery/power/apc/apc = null
+	var/no_air = null
+	var/area/master				// master area used for power calcluations
+								// (original area before splitting due to sd_DAL)
+	var/list/related			// the other areas of the same type as this
+	var/list/all_doors = list()		//Added by Strumpetplaya - Alarm Change - Contains a list of doors adjacent to this area
+	var/air_doors_activated = 0
+
+
+/*Adding a wizard area teleport list because motherfucking lag -- Urist*/
+/*I am far too lazy to make it a proper list of areas so I'll just make it run the usual telepot routine at the start of the game*/
+var/list/teleportlocs = list()
+
+/proc/process_teleport_locs()
+	for(var/area/AR in all_areas)
+		if(istype(AR, /area/shuttle) || istype(AR, /area/syndicate_station) || istype(AR, /area/wizard_station) || istype(AR, /area/engine/singularity))
+			continue
+		if(teleportlocs.Find(AR.name))
+			continue
+		var/turf/picked = pick(get_area_turfs(AR.type))
+		if (picked.z == ZLEVEL_STATION)
+			teleportlocs += AR.name
+			teleportlocs[AR.name] = AR
+	teleportlocs = sortAssoc(teleportlocs)
+	return 1
+
+
+var/list/ghostteleportlocs = list()
+
+/proc/process_ghost_teleport_locs()
+	for(var/area/AR in all_areas)
+		if(ghostteleportlocs.Find(AR.name))
+			continue
+		if(istype(AR, /area/turret_protected/aisat) || istype(AR, /area/derelict) || istype(AR, /area/tdome))
+			ghostteleportlocs += AR.name
+			ghostteleportlocs[AR.name] = AR
+		var/turf/picked = pick(get_area_turfs(AR.type))
+		if (picked.z == ZLEVEL_STATION || picked.z == ZLEVEL_ASTEROID || picked.z == ZLEVEL_TELECOMMS)
+			ghostteleportlocs += AR.name
+			ghostteleportlocs[AR.name] = AR
+	ghostteleportlocs = sortAssoc(ghostteleportlocs)
+	return 1
+
+/area/New() // not ready for transfer, problems with alarms raises if this part moved into init (requires more time)
 	icon_state = ""
 	layer = 10
-	master = src //moved outside the spawn(1) to avoid runtimes in lighting.dm when it references loc.loc.master ~Carn
+	master = src
 	uid = ++global_uid
 	related = list(src)
 	all_areas += src
 
 	if(!requires_power)
-		power_light = 0			//rastaf0
-		power_equip = 0			//rastaf0
-		power_environ = 0		//rastaf0
+		power_light = 0
+		power_equip = 0
+		power_environ = 0
 
 	..()
 
-//	spawn(15)
-	power_change()		// all machines set to current power level, also updates lighting icon
+/area/atom_init()
+
+	. = ..()
+
+	if(dynamic_lighting)
+		luminosity = FALSE
+
+	power_change() // all machines set to current power level, also updates lighting icon
 
 
 /area/proc/poweralert(state, obj/source)
@@ -54,9 +138,6 @@
 	return
 
 /area/proc/atmosalert(danger_level)
-//	if(type==/area) //No atmos alarms in space
-//		return 0 //redudant
-
 	//Check all the alarms before lowering atmosalm. Raising is perfectly fine.
 	for (var/area/RA in related)
 		for (var/obj/machinery/alarm/AA in RA)
@@ -80,7 +161,6 @@
 		if (danger_level >= 2 && atmosalm < 2)
 			var/list/cameras = list()
 			for(var/area/RA in related)
-				//updateicon()
 				for(var/obj/machinery/camera/C in RA)
 					cameras += C
 					C.network.Add("Atmosphere Alarms")
@@ -102,23 +182,21 @@
 	if(!src.master.air_doors_activated)
 		src.master.air_doors_activated = 1
 		for(var/obj/machinery/door/firedoor/E in src.master.all_doors)
-			if(!E:blocked)
+			if(!E.blocked)
 				if(E.operating)
-					E:nextstate = CLOSED
+					E.nextstate = CLOSED
 				else if(!E.density)
-					spawn(0)
-						E.close()
+					INVOKE_ASYNC(E, /obj/machinery/door/firedoor.proc/close)
 
 /area/proc/air_doors_open()
 	if(src.master.air_doors_activated)
 		src.master.air_doors_activated = 0
 		for(var/obj/machinery/door/firedoor/E in src.master.all_doors)
-			if(!E:blocked)
+			if(!E.blocked)
 				if(E.operating)
-					E:nextstate = OPEN
+					E.nextstate = OPEN
 				else if(E.density)
-					spawn(0)
-						E.open()
+					INVOKE_ASYNC(E, /obj/machinery/door/firedoor.proc/open)
 
 
 /area/proc/firealert()
@@ -133,8 +211,7 @@
 				if(D.operating)
 					D.nextstate = CLOSED
 				else if(!D.density)
-					spawn()
-						D.close()
+					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/close)
 		var/list/cameras = list()
 		for(var/area/RA in related)
 			for (var/obj/machinery/camera/C in RA)
@@ -146,7 +223,7 @@
 			a.triggerAlarm("Fire", src, cameras, src)
 
 /area/proc/firereset()
-	if (fire)
+	if(fire)
 		fire = 0
 		master.fire = 0		//used for firedoor checks
 		mouse_opacity = 0
@@ -155,8 +232,7 @@
 				if(D.operating)
 					D.nextstate = OPEN
 				else if(D.density)
-					spawn(0)
-					D.open()
+					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
 		for(var/area/RA in related)
 			for (var/obj/machinery/camera/C in RA)
 				C.network.Remove("Fire Alarms")
@@ -165,33 +241,17 @@
 		for (var/obj/machinery/computer/station_alert/a in machines)
 			a.cancelAlarm("Fire", src, src)
 
-/area/proc/readyalert()
-	/*if(name == "Space")
-		return
-	for(var/obj/machinery/light/L in contents)
-		L.red_alert = 1
-		L.update()*/
-	return
-
-/area/proc/readyreset()
-	/*if(red_alert_code) return
-	if(red_alert_evac) return
-	for(var/obj/machinery/light/L in contents)
-		L.red_alert = 0
-		L.update()*/
-	return
-
 /area/proc/partyalert()
 	if(name == "Space") //no parties in space!!!
 		return
-	if (!( party ))
+	if(!party)
 		party = 1
 		updateicon()
 		mouse_opacity = 0
 	return
 
 /area/proc/partyreset()
-	if (party)
+	if(party)
 		party = 0
 		mouse_opacity = 0
 		updateicon()
@@ -200,36 +260,14 @@
 				if(D.operating)
 					D.nextstate = OPEN
 				else if(D.density)
-					spawn(0)
-					D.open()
+					INVOKE_ASYNC(D, /obj/machinery/door/firedoor.proc/open)
 	return
 
 /area/proc/updateicon()
-	//if ((fire || eject || party) && ((!requires_power)?(!requires_power):power_environ))//If it doesn't require power, can still activate this proc.
-	//if ((fire || eject || party) && (!requires_power||power_environ) && !istype(src, /area/space))//If it doesn't require power, can still activate this proc.
-	//	if(fire && !eject && !party)
-	//		icon_state = "blue"
-	//	/*else if(atmosalm && !fire && !eject && !party)
-	//		icon_state = "bluenew"*/
-	//	else if(!fire && eject && !party)
-	//		icon_state = "red"
-	//	else if(party && !fire && !eject)
-	//		icon_state = "party"
-	//	else
-	//		icon_state = "blue-red"
-	//else
-	//	new lighting behaviour with obj lights
 	icon_state = null
 
 
-/*
-#define EQUIP 1
-#define LIGHT 2
-#define ENVIRON 3
-*/
-
 /area/proc/powered(chan)		// return true if the area has power to given channel
-
 	if(!master.requires_power)
 		return 1
 	if(master.always_unpowered)
@@ -245,7 +283,6 @@
 	return 0
 
 // called when power status changes
-
 /area/proc/power_change()
 	master.powerupdate = 2
 	for(var/area/RA in related)
@@ -320,7 +357,8 @@
 		thunk(L)
 
 	// Ambience goes down here -- make sure to list each area seperately for ease of adding things in later, thanks! Note: areas adjacent to each other should have the same sounds to prevent cutoff when possible.- LastyScratch
-	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))	return
+	if(!(L && L.client && (L.client.prefs.toggles & SOUND_AMBIENCE)))
+		return
 
 	if(!L.client.ambience_playing)
 		L.client.ambience_playing = 1
@@ -337,11 +375,11 @@
 			sound = pick('sound/ambience/ambispace.ogg','sound/music/title2.ogg','sound/music/space.ogg','sound/music/main.ogg','sound/music/traitor.ogg','sound/ambience/voidambi.ogg','sound/ambience/timeship_amb1.ogg')
 		else if(istype(src, /area/engine))
 			sound = pick('sound/ambience/ambisin1.ogg','sound/ambience/ambisin2.ogg','sound/ambience/ambisin3.ogg','sound/ambience/ambisin4.ogg')
-		else if(istype(src, /area/AIsattele) || istype(src, /area/turret_protected/ai) || istype(src, /area/turret_protected/ai_upload) || istype(src, /area/turret_protected/ai_upload_foyer))
+		else if(istype(src, /area/AIsattele) || istype(src, /area/turret_protected/ai) || istype(src, /area/turret_protected/ai_upload))
 			sound = pick('sound/ambience/ambimalf.ogg')
 		else if(istype(src, /area/mine/explored) || istype(src, /area/mine/unexplored))
 			sound = pick('sound/ambience/ambimine.ogg', 'sound/ambience/song_game.ogg','sound/ambience/mars.ogg')
-		else if(istype(src, /area/tcommsat) || istype(src, /area/turret_protected/tcomwest) || istype(src, /area/turret_protected/tcomeast) || istype(src, /area/turret_protected/tcomfoyer) || istype(src, /area/turret_protected/tcomsat))
+		else if(istype(src, /area/tcommsat))
 			sound = pick('sound/ambience/ambisin2.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/signal.ogg', 'sound/ambience/ambigen10.ogg')
 		else if (istype(src, /area/syndicate_station) || istype(src, /area/syndicate_station/start) || istype(src,/area/syndicate_station/transit))
 			sound = pick('sound/ambience/omega.ogg')
@@ -350,10 +388,12 @@
 
 		if(!L.client.played)
 			L << sound(sound, repeat = 0, wait = 0, volume = 25, channel = 1)
-			L.client.played = 1
-			spawn(600)			//ewww - this is very very bad
-				if(L.&& L.client)
-					L.client.played = 0
+			L.client.played = TRUE
+			addtimer(CALLBACK(src, .proc/set_played_false, L), 600)
+
+/area/proc/set_played_false(mob/living/L)
+	if(L && L.client)
+		L.client.played = FALSE
 
 /area/proc/gravitychange(gravitystate = 0, area/A)
 

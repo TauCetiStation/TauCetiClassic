@@ -200,8 +200,8 @@
 /obj/item/device/assembly_holder/timer_igniter
 	name = "timer-igniter assembly"
 
-/obj/item/device/assembly_holder/timer_igniter/New()
-	..()
+/obj/item/device/assembly_holder/timer_igniter/atom_init()
+	. = ..()
 
 	var/obj/item/device/assembly/igniter/ign = new(src)
 	ign.secured = 1
@@ -210,7 +210,7 @@
 	tmr.time=5
 	tmr.secured = 1
 	tmr.holder = src
-	SSobj.processing |= tmr
+	START_PROCESSING(SSobj, tmr)
 	a_left = tmr
 	a_right = ign
 	secured = 1

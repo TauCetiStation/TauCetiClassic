@@ -43,6 +43,7 @@
 		if(locked)
 			if ( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && (!src.emagged))
 				emagged = 1
+				user.SetNextMove(CLICK_CD_MELEE)
 				src.overlays += image('icons/obj/storage.dmi', icon_sparking)
 				sleep(6)
 				overlays.Cut()
@@ -60,14 +61,14 @@
 				return
 
 			if (istype(W, /obj/item/weapon/screwdriver))
-				if (do_after(user, 20, target = src))
+				if (!user.is_busy(src) && do_after(user, 20, target = src))
 					src.open =! src.open
 					user.show_message(text("\blue You [] the service panel.", (src.open ? "open" : "close")))
 				return
 			if ((istype(W, /obj/item/device/multitool)) && (src.open == 1)&& (!src.l_hacking))
 				user.show_message(text("\red Now attempting to reset internal memory, please hold."), 1)
 				src.l_hacking = 1
-				if (do_after(usr, 100, target = src))
+				if (!user.is_busy() && do_after(usr, 100, target = src))
 					if (prob(40))
 						src.l_setshort = 1
 						src.l_set = 0
@@ -109,7 +110,7 @@
 		if (!src.locked)
 			message = "*****"
 		dat += text("<HR>\n>[]<BR>\n<A href='?src=\ref[];type=1'>1</A>-<A href='?src=\ref[];type=2'>2</A>-<A href='?src=\ref[];type=3'>3</A><BR>\n<A href='?src=\ref[];type=4'>4</A>-<A href='?src=\ref[];type=5'>5</A>-<A href='?src=\ref[];type=6'>6</A><BR>\n<A href='?src=\ref[];type=7'>7</A>-<A href='?src=\ref[];type=8'>8</A>-<A href='?src=\ref[];type=9'>9</A><BR>\n<A href='?src=\ref[];type=R'>R</A>-<A href='?src=\ref[];type=0'>0</A>-<A href='?src=\ref[];type=E'>E</A><BR>\n</TT>", message, src, src, src, src, src, src, src, src, src, src, src, src)
-		user << browse(dat, "window=caselock;size=300x280")
+		user << browse(entity_ja(dat), "window=caselock;size=300x280")
 
 	Topic(href, href_list)
 		..()
@@ -158,25 +159,24 @@
 	throw_range = 4
 	w_class = 4.0
 
-	New()
+/obj/item/weapon/storage/secure/briefcase/atom_init()
+	. = ..()
+	new /obj/item/weapon/paper(src)
+	new /obj/item/weapon/pen(src)
+
+/obj/item/weapon/storage/secure/briefcase/attack_hand(mob/user)
+	if ((src.loc == user) && (src.locked == 1))
+		to_chat(usr, "\red [src] is locked and cannot be opened!")
+	else if ((src.loc == user) && (!src.locked))
+		src.open(usr)
+	else
 		..()
-		new /obj/item/weapon/paper(src)
-		new /obj/item/weapon/pen(src)
+		for(var/mob/M in range(1))
+			if (M.s_active == src)
+				src.close(M)
+	src.add_fingerprint(user)
 
-	attack_hand(mob/user)
-		if ((src.loc == user) && (src.locked == 1))
-			to_chat(usr, "\red [src] is locked and cannot be opened!")
-		else if ((src.loc == user) && (!src.locked))
-			src.open(usr)
-		else
-			..()
-			for(var/mob/M in range(1))
-				if (M.s_active == src)
-					src.close(M)
-		src.add_fingerprint(user)
-		return
-
-/obj/item/weapon/storage/secure/briefcase/attackby(var/obj/item/weapon/W, var/mob/user)
+/obj/item/weapon/storage/secure/briefcase/attackby(obj/item/weapon/W, mob/user)
 	..()
 	update_icon()
 
@@ -195,50 +195,14 @@
 		M.update_inv_l_hand()
 		M.update_inv_r_hand()
 
-	//I consider this worthless but it isn't my code so whatever.  Remove or uncomment.
-	/*attack(mob/M, mob/living/user)
-		if ((CLUMSY in user.mutations) && prob(50))
-			to_chat(user, "\red The [src] slips out of your hand and hits your head.")
-			user.take_organ_damage(10)
-			user.Paralyse(2)
-			return
-
-		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been attacked with [src.name] by [user.name] ([user.ckey])</font>")
-		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] to attack [M.name] ([M.ckey])</font>")
-
-		log_attack("<font color='red'>[user.name] ([user.ckey]) attacked [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)])</font>")
-
-		var/t = user:zone_sel.selecting
-		if (t == "head")
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if (H.stat < 2 && H.health < 50 && prob(90))
-				// ******* Check
-					if (istype(H, /obj/item/clothing/head) && H.flags & 8 && prob(80))
-						to_chat(H, "\red The helmet protects you from being hit hard in the head!")
-						return
-					var/time = rand(2, 6)
-					if (prob(75))
-						H.Paralyse(time)
-					else
-						H.Stun(time)
-					if(H.stat != DEAD)	H.stat = UNCONSCIOUS
-					for(var/mob/O in viewers(H, null))
-						O.show_message(text("\red <B>[] has been knocked unconscious!</B>", H), 1, "\red You hear someone fall.", 2)
-				else
-					to_chat(H, text("\red [] tried to knock you unconcious!",user))
-					H.eye_blurry += 3
-
-		return*/
-
 //Syndie variant of Secure Briefcase. Contains space cash, slightly more robust.
 /obj/item/weapon/storage/secure/briefcase/syndie
 	force = 15.0
 
-/obj/item/weapon/storage/secure/briefcase/syndie/New()
-	for(var/i = 0, i < storage_slots - 2, i++)
+/obj/item/weapon/storage/secure/briefcase/syndie/atom_init()
+	for (var/i in 1 to (storage_slots - 3))
 		new /obj/item/weapon/spacecash/c1000(src)
-	return ..()
+	. = ..()
 
 
 // -----------------------------
@@ -259,14 +223,14 @@
 	density = 0
 	cant_hold = list("/obj/item/weapon/storage/secure/briefcase")
 
-	New()
-		..()
-		new /obj/item/weapon/paper(src)
-		new /obj/item/weapon/pen(src)
+/obj/item/weapon/storage/secure/safe/atom_init()
+	. = ..()
+	new /obj/item/weapon/paper(src)
+	new /obj/item/weapon/pen(src)
 
-	attack_hand(mob/user)
-		return attack_self(user)
+/obj/item/weapon/storage/secure/safe/attack_hand(mob/user)
+	return attack_self(user)
 
-/obj/item/weapon/storage/secure/safe/HoS/New()
-	..()
+//obj/item/weapon/storage/secure/safe/HoS/atom_init()
+//	. = ..()
 	//new /obj/item/weapon/storage/lockbox/clusterbang(src) This item is currently broken... and probably shouldnt exist to begin with (even though it's cool)

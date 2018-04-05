@@ -10,6 +10,7 @@ var/const/MAX_SAVE_SLOTS = 10
 #define RETURN_TO_LOBBY 2
 
 #define MAX_GEAR_COST 5
+#define MAX_GEAR_COST_DONATOR MAX_GEAR_COST+3
 /datum/preferences
 	var/client/parent
 	//doohickeys for savefiles
@@ -18,8 +19,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/savefile_version = 0
 
 	//non-preference stuff
-	var/warns = 0
-	var/warnbans = 0
 	var/permamuted = 0
 	var/muted = 0
 	var/last_ip
@@ -36,10 +35,12 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/UI_style = "White"
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
-	var/ooccolor = "#b82e00"
+	var/aooccolor = "#b82e00"
+	var/ooccolor = "#002eb8"
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
+	var/lastchangelog = ""              //Saved changlog filesize to detect if there was a change
 
 	//antag preferences
 	var/list/be_role = list()
@@ -70,7 +71,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/r_eyes = 0						//Eye color
 	var/g_eyes = 0						//Eye color
 	var/b_eyes = 0						//Eye color
-	var/species = "Human"
+	var/species = HUMAN
 	var/language = "None"				//Secondary language
 
 	//Some faction information.
@@ -181,7 +182,7 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("loadout")
 			dat += ShowCustomLoadout(user)
 	dat += "</body></html>"
-	user << browse(dat, "window=preferences;size=618x778;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
+	user << browse(entity_ja(dat), "window=preferences;size=618x778;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)
@@ -191,7 +192,7 @@ var/const/MAX_SAVE_SLOTS = 10
 		user << browse(null, "window=preferences")
 		return
 
-	if(!istype(user, /mob/new_player))
+	if(!isnewplayer(user))
 		return
 
 	switch(href_list["preference"])
@@ -296,23 +297,23 @@ var/const/MAX_SAVE_SLOTS = 10
 	character.personal_faction = faction
 	character.religion = religion
 
-	// Destroy/cyborgize organs
+	// Destroy/cyborgize bodyparts & organs
 
 	for(var/name in organ_data)
-		var/datum/organ/external/O = character.organs_by_name[name]
-		var/datum/organ/internal/I = character.internal_organs_by_name[name]
+		var/obj/item/organ/external/BP = character.bodyparts_by_name[name]
+		var/obj/item/organ/internal/IO = character.organs_by_name[name]
 		var/status = organ_data[name]
 
 		if(status == "amputated")
-			O.amputated = 1
-			O.status |= ORGAN_DESTROYED
-			O.destspawn = 1
+			BP.amputated = 1
+			BP.status |= ORGAN_DESTROYED
+			BP.destspawn = 1
 		if(status == "cyborg")
-			O.status |= ORGAN_ROBOT
+			BP.status |= ORGAN_ROBOT
 		if(status == "assisted")
-			I.mechassist()
+			IO.mechassist()
 		else if(status == "mechanical")
-			I.mechanize()
+			IO.mechanize()
 
 		else continue
 
@@ -334,9 +335,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.overeatduration = 2000
 
 	// Wheelchair necessary?
-	var/datum/organ/external/l_foot = character.get_organ("l_foot")
-	var/datum/organ/external/r_foot = character.get_organ("r_foot")
-	if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
+	var/obj/item/organ/external/l_leg = character.bodyparts_by_name[BP_L_LEG]
+	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
+	if((!l_leg || l_leg.status & ORGAN_DESTROYED) && (!r_leg || r_leg.status & ORGAN_DESTROYED)) // TODO cane if its only single leg.
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
 		character.buckled = W
 		character.update_canmove()

@@ -3,7 +3,7 @@
 	name = "Industrial Dropper"
 	desc = "A larger dropper. Transfers 10 units."
 	icon = 'icons/obj/chemical.dmi'
-	icon_state = "dropper0"
+	icon_state = "dropper"
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(1,2,3,4,5,6,7,8,9,10)
 	volume = 10
@@ -76,7 +76,7 @@
 		to_chat(user, "\blue You transfer [trans] units of the solution.")
 		if (src.reagents.total_volume<=0)
 			filled = 0
-			icon_state = "dropper[filled]"
+			icon_state = "dropper"
 
 	else
 

@@ -8,9 +8,14 @@
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
+	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE
+	var/warning_high_pressure = WARNING_HIGH_PRESSURE
+	var/warning_low_pressure = WARNING_LOW_PRESSURE
+	var/hazard_low_pressure = HAZARD_LOW_PRESSURE
+	blood_color = "#A10808"
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
-	var/greaterform = "Human"                  // Used when humanizing a monkey.
+	var/greaterform = HUMAN                  // Used when humanizing a monkey.
 	icon_state = "monkey1"
 	//var/uni_append = "12C4E2"                // Small appearance modifier for different species.
 	var/list/uni_append = list(0x12C,0x4E2)    // Same as above for DNA2.
@@ -43,7 +48,7 @@
 	uni_append = list(0x044,0xC5D) // 044C5D
 	holder_type = /obj/item/weapon/holder/monkey/stok
 
-/mob/living/carbon/monkey/New()
+/mob/living/carbon/monkey/atom_init()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
@@ -79,38 +84,38 @@
 
 		update_muts=1
 
-	..()
+	. = ..()
+
 	update_icons()
-	return
 
-/mob/living/carbon/monkey/unathi/New()
+/mob/living/carbon/monkey/unathi/atom_init()
 
-	..()
+	. = ..()
 	dna.mutantrace = "lizard"
-	greaterform = "Unathi"
+	greaterform = UNATHI
 	add_language("Sinta'unathi")
 
-/mob/living/carbon/monkey/skrell/New()
+/mob/living/carbon/monkey/skrell/atom_init()
 
-	..()
+	. = ..()
 	dna.mutantrace = "skrell"
-	greaterform = "Skrell"
+	greaterform = SKRELL
 	add_language("Skrellian")
 
-/mob/living/carbon/monkey/tajara/New()
+/mob/living/carbon/monkey/tajara/atom_init()
 
-	..()
+	. = ..()
 	dna.mutantrace = "tajaran"
-	greaterform = "Tajaran"
+	greaterform = TAJARAN
 	add_language("Siik'tajr")
 
-/mob/living/carbon/monkey/diona/New()
+/mob/living/carbon/monkey/diona/atom_init()
 
-	..()
+	. = ..()
 	alien = 1
 	gender = NEUTER
 	dna.mutantrace = "plant"
-	greaterform = "Diona"
+	greaterform = DIONA
 	add_language("Rootspeak")
 
 /mob/living/carbon/monkey/diona/movement_delay()
@@ -137,10 +142,13 @@
 		unset_machine()
 		src << browse(null, t1)
 	if ((href_list["item"] && !( usr.stat ) && !( usr.restrained() ) && in_range(src, usr) ))
+		var/obj/item/item = usr.get_active_hand()
+		if(item && (item.flags & (ABSTRACT | DROPDEL)))
+			return
 		var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
 		O.source = usr
 		O.target = src
-		O.item = usr.get_active_hand()
+		O.item = item
 		O.s_loc = usr.loc
 		O.t_loc = loc
 		O.place = href_list["item"]
@@ -205,7 +213,7 @@
 					G.cell.use(2500)
 					apply_effects(0,0,0,0,5,0,0,150)
 
-					var/datum/effect/effect/system/spark_spread/s = PoolOrNew(/datum/effect/effect/system/spark_spread)
+					var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 					s.set_up(3, 1, src)
 					s.start()
 
@@ -249,10 +257,10 @@
 						O.show_message(text("\red <B>[] has attempted to punch [name]!</B>", M), 1)
 		else
 			if (M.a_intent == "grab")
-				if (M == src || anchored)
+				if (M == src || anchored || M.lying)
 					return
 
-				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src )
+				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 				M.put_in_active_hand(G)
 
@@ -319,9 +327,9 @@
 						O.show_message(text("\red <B>[] has attempted to lunge at [name]!</B>", M), 1)
 
 		if ("grab")
-			if (M == src)
+			if (M == src || anchored || M.lying)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
 
@@ -352,13 +360,14 @@
 	return
 
 /mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
+	if(..())
+		return
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -431,22 +440,17 @@
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
-		if(client && mind)
-			if(mind.changeling)
-				stat("Chemical Storage", "[mind.changeling.chem_charges]/[mind.changeling.chem_storage]")
-				stat("Genetic Damage Time", mind.changeling.geneticdamage)
-				stat("Absorbed DNA", mind.changeling.absorbedcount)
-	return
+		if(istype(src, /mob/living/carbon/monkey/diona))
+			stat(null, "Nutriment: [nutrition]/400")
+		CHANGELING_STATPANEL_STATS(null)
 
+	CHANGELING_STATPANEL_POWERS(null)
 
 /mob/living/carbon/monkey/verb/removeinternal()
 	set name = "Remove Internals"
 	set category = "IC"
 	internal = null
 	return
-
-/mob/living/carbon/monkey/var/co2overloadtime = null
-/mob/living/carbon/monkey/var/temperature_resistance = T0C+75
 
 /mob/living/carbon/monkey/emp_act(severity)
 	if(wear_id) wear_id.emp_act(severity)
@@ -494,18 +498,18 @@
 	return 0
 
 /mob/living/carbon/monkey/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list())
-        if(stat)
-                return
+	if(stat)
+		return
 
-        if(copytext(message,1,2) == "*")
-                return emote(copytext(message,2))
+	if(copytext(message,1,2) == "*")
+		return emote(copytext(message,2))
 
-        if(stat)
-                return
+	if(stat)
+		return
 
-        if(speak_emote.len)
-                verb = pick(speak_emote)
+	if(speak_emote.len)
+		verb = pick(speak_emote)
 
-        message = capitalize(trim_left(message))
+	message = capitalize(trim_left(message))
 
-        ..(message, speaking, verb, alt_name, italics, message_range, used_radios)
+	..(message, speaking, verb, alt_name, italics, message_range, used_radios)

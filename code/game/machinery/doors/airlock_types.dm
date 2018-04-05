@@ -155,13 +155,8 @@
 
 /obj/machinery/door/airlock/phoron/proc/PhoronBurn(temperature)
 	for(var/turf/simulated/floor/target_tile in range(2, loc))
-		var/datum/gas_mixture/napalm = new
-		var/phoronToDeduce = 35
-		napalm.phoron = phoronToDeduce
-		napalm.temperature = 400 + T0C
-		target_tile.assume_air(napalm)
-		spawn(0)
-			target_tile.hotspot_expose(temperature, 400)
+		target_tile.assume_gas("phoron", 35, 400 + T0C)
+		INVOKE_ASYNC(target_tile, /turf/simulated/floor.proc/hotspot_expose, temperature, 400)
 
 	for(var/obj/structure/falsewall/phoron/F in range(3, src))//Hackish as fuck, but until temperature_expose works, there is nothing I can do -Sieve
 		var/turf/T = get_turf(F)
@@ -332,8 +327,8 @@
 /obj/machinery/door/airlock/multi_tile
 	var/width = 2
 
-/obj/machinery/door/airlock/multi_tile/New()
-	..()
+/obj/machinery/door/airlock/multi_tile/atom_init()
+	. = ..()
 	if(dir in list(EAST, WEST))
 		bound_width  = world.icon_size
 		bound_height = width * world.icon_size

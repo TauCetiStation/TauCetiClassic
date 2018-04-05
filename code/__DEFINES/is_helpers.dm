@@ -1,30 +1,51 @@
-#define isbot(A) (istype(A, /obj/machinery/bot))
-
-#define isdrone(A) (istype(A, /mob/living/silicon/robot/drone))
-
-#define ishuman(A) (istype(A, /mob/living/carbon/human))
+// HUMAN
 
 #define isabductor(A) (istype(A, /mob/living/carbon/human/abductor))
 
-#define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
+#define ishuman(A) (istype(A, /mob/living/carbon/human))
 
-#define isbrain(A) (istype(A, /mob/living/carbon/brain))
+// CARBON
+#define isalienqueen(A) (istype(A, /mob/living/carbon/alien/humanoid/queen))
 
-#define isalien(A) (istype(A, /mob/living/carbon/alien))
+#define isaliendrone(A) (istype(A, /mob/living/carbon/alien/humanoid/drone))
+
+#define isaliensentinel(A) (istype(A, /mob/living/carbon/alien/humanoid/sentinel))
+
+#define isalienhunter(A) (istype(A, /mob/living/carbon/alien/humanoid/hunter))
 
 #define isalienadult(A) (istype(A, /mob/living/carbon/alien/humanoid))
 
-#define isfacehugger(A) (istype(A, /mob/living/carbon/alien/facehugger))
-
 #define islarva(A) (istype(A, /mob/living/carbon/alien/larva))
 
-#define isslime(A) (istype(A, /mob/living/carbon/slime))
+#define isfacehugger(A) (istype(A, /mob/living/carbon/alien/facehugger))
+
+#define isalien(A) (istype(A, /mob/living/carbon/alien))
+
+#define isbrain(A) (istype(A, /mob/living/carbon/brain))
 
 #define isslimeadult(A) (istype(A, /mob/living/carbon/slime/adult))
 
+#define isslime(A) (istype(A, /mob/living/carbon/slime))
+
+#define ismonkey(A) (istype(A, /mob/living/carbon/monkey))
+
+#define isIAN(A) (istype(A, /mob/living/carbon/ian))
+
+#define iscarbon(A) (istype(A, /mob/living/carbon))
+
+// SILICON
+
+#define isdrone(A) (istype(A, /mob/living/silicon/robot/drone))
+
 #define isrobot(A) (istype(A, /mob/living/silicon/robot))
 
-#define isanimal(A) (istype(A, /mob/living/simple_animal))
+#define isAI(A) (istype(A, /mob/living/silicon/ai))
+
+#define ispAI(A) (istype(A, /mob/living/silicon/pai))
+
+#define issilicon(A) (istype(A, /mob/living/silicon))
+
+// LIVING
 
 #define iscorgi(A) (istype(A, /mob/living/simple_animal/corgi))
 
@@ -34,29 +55,37 @@
 
 #define ismouse(A) (istype(A, /mob/living/simple_animal/mouse))
 
+#define isclown(A) (istype(A, mob/living/simple_animal/hostile/retaliate/clown))
+
 #define isbear(A) (istype(A, /mob/living/simple_animal/hostile/bear))
 
 #define iscarp(A) (istype(A, /mob/living/simple_animal/hostile/carp))
 
-#define isclown(A) (istype(A, mob/living/simple_animal/hostile/retaliate/clown))
-
-#define isAI(A) (istype(A, /mob/living/silicon/ai))
-
-#define ispAI(A) (istype(A, /mob/living/silicon/pai))
-
-#define iscarbon(A) (istype(A, /mob/living/carbon))
-
-#define issilicon(A) (istype(A, /mob/living/silicon))
+#define isanimal(A) (istype(A, /mob/living/simple_animal))
 
 #define isliving(A) (istype(A, /mob/living))
 
-#define isnewplayer(A) (istype(A, /mob/new_player))
+#define isessence(A) (istype(A, /mob/living/parasite/essence))
+
+// MOB
 
 #define isobserver(A) (istype(A, /mob/dead/observer))
 
 #define isovermind(A) (istype(A, /mob/camera/blob))
 
-#define isorgan(A) (istype(A, /datum/organ/external))
+#define isnewplayer(A) (istype(A, /mob/dead/new_player))
+
+// ELSE
+
+#define isbodypart(A) (istype(A, /obj/item/organ/external))
+
+#define isbot(A) (istype(A, /obj/machinery/bot))
+
+#define islist(A) (istype(A, /list))
+
+#define ismachinery(A) (istype(A, /obj/machinery))
+
+#define ismovableatom(A) (istype(A, /atom/movable))
 
 // GOONCHAT PORT
 

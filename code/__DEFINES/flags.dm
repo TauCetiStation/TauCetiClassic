@@ -3,10 +3,11 @@
 #define STOPS_LOWPRESSUREDMAGE  2    //To successfully stop you taking all pressure damage you must have both a suit and head item with STOPS_PRESSUREDMAGE flag.
 #define STOPS_PRESSUREDMAGE     3    //Used against both, high and low pressure.
 
+#define NOLIMB           -1    // related to THICKMATERIAL check, thats why this is here.
 //FLAGS BITMASK
 #define NOBLUDGEON        2    // When an item has this it produces no "X has been hit by Y with Z" message with the default handler.
 #define MASKINTERNALS     4    // Mask allows internals.
-#define USEDELAY          8    // 1 second extra delay on use. (Can be used once every 2s)
+//#define USEDELAY          8    // 1 second extra delay on use. (Can be used once every 2s) ~ Kursh, Doesn't used for now.
 #define NOSHIELD         16    // Weapon not affected by shield.
 #define CONDUCT          32    // Conducts electricity. (metal etc.)
 #define ABSTRACT         64    // For all things that are technically items but used for various different stuff, made it 128 because it could conflict with other flags other way.
@@ -28,14 +29,19 @@
 #define BLOCK_GAS_SMOKE_EFFECT  2048    // Blocks the effect that chemical clouds would have on a mob --glasses, mask and helmets ONLY! (NOTE: flag shared with ONESIZEFITSALL)
 #define ONESIZEFITSALL          2048
 #define PHORONGUARD             4096    // Does not get contaminated by phoron.
+#define DROPDEL                 8192    // When dropped, it calls qdel on itself
 
 #define	NOREACT  4096    //Reagents dont' react inside this container.
+
+/* Secondary atom flags, for the flags_2 var, denoted with a _2 */
+#define HOLOGRAM_2   1
 
 //Species flags.
 #define NO_BLOOD           "no_blood"
 #define NO_BREATHE         "no_breathe"
 #define NO_SCAN            "no_scan"
 #define NO_PAIN            "no_pain"
+#define NO_EMBED           "no_embed"
 #define HAS_SKIN_TONE      "has_skin_tone"
 #define HAS_SKIN_COLOR     "has_skin_color"
 #define HAS_LIPS           "has_lips"
@@ -51,8 +57,15 @@
 #define BIOHAZZARD_IMMUNE  "biohazzard_immune"
 #define HAS_HAIR           "has_hair"
 
+//Species Diet Flags
+#define DIET_CARN		1 //meat
+#define DIET_OMNI		2 //everything
+#define DIET_HERB		4 // VEGANS!
+#define DIET_ALL		255
+
 //bitflags for door switches.
 #define OPEN     1
+#define CLOSED   2 //for firedoor currently, legacy and should be checked
 #define IDSCAN   2
 #define BOLTS    4
 #define SHOCK    8
@@ -84,4 +97,22 @@
 #define SLOT_POCKET       2048    // This is to allow items with a w_class of 3 or 4 to fit in pockets.
 #define SLOT_DENYPOCKET   4096    // This is to deny items with a w_class of 2 or 1 to fit in pockets.
 #define SLOT_TWOEARS      8192
-#define SLOT_LEGS        16384
+#define SLOT_TIE         16384
+
+
+//flags for customizing id-cards
+#define FORDBIDDEN_VIEW      1
+#define UNIVERSAL_VIEW       2
+#define TRAITOR_VIEW         4
+
+// changeling essences flags
+#define ESSENCE_SPEAK 1
+#define ESSENCE_WHISP 2
+#define ESSENCE_SPEAK_IN_RADIO 4
+#define ESSENCE_HIVEMIND 8
+#define ESSENCE_SPEAK_TO_HOST 16
+#define ESSENCE_SELF_VOICE 32
+#define ESSENCE_PHANTOM 64
+#define ESSENCE_POINT 128
+#define ESSENCE_EMOTE 256
+#define ESSENCE_ALL 511

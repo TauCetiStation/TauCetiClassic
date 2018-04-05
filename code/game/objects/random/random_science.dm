@@ -87,6 +87,10 @@
 	icon_state = "id_mod"
 /obj/random/science/common_circuit/item_to_spawn()
 	return pick(\
+					/obj/item/weapon/module/power_control,\
+					/obj/item/weapon/airalarm_electronics,\
+					/obj/item/weapon/firealarm_electronics,\
+					/obj/item/weapon/airlock_electronics,\
 					/obj/item/weapon/circuitboard/circuit_imprinter,\
 					/obj/item/weapon/circuitboard/rdconsole,\
 					/obj/item/weapon/circuitboard/destructive_analyzer,\
@@ -154,7 +158,7 @@
 	icon_state = "id_mod"
 /obj/random/science/circuit/item_to_spawn()
 	return pick(\
-					prob(80);/obj/random/science/common_circuit,\
+					prob(100);/obj/random/science/common_circuit,\
 					prob(8);/obj/random/science/rare_circuit,\
 					prob(10);/obj/random/science/common_ai_module,\
 					prob(2);/obj/random/science/rare_ai_module\

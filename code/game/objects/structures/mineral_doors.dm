@@ -10,6 +10,7 @@
 	icon = 'icons/obj/doors/mineral_doors.dmi'
 	icon_state = "metal"
 
+	var/operating_sound = 'sound/effects/stonedoor_openclose.ogg'
 	var/mineralType = "metal"
 	var/state = 0 //closed, 1 == open
 	var/isSwitchingStates = 0
@@ -17,11 +18,11 @@
 
 	var/health = 100
 
-/obj/structure/mineral_door/New(location)
-	..()
+/obj/structure/mineral_door/atom_init()
+	. = ..()
 	icon_state = mineralType
 	name = "[mineralType] door"
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles(need_rebuild = 1)
 
 /obj/structure/mineral_door/Destroy()
 	update_nearby_tiles()
@@ -75,11 +76,11 @@
 
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = 1
-	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
+	playsound(loc, operating_sound, 100, 1)
 	flick("[mineralType]opening",src)
 	sleep(10)
 	density = 0
-	opacity = 0
+	set_opacity(0)
 	state = 1
 	update_icon()
 	isSwitchingStates = 0
@@ -87,11 +88,11 @@
 
 /obj/structure/mineral_door/proc/Close()
 	isSwitchingStates = 1
-	playsound(loc, 'sound/effects/stonedoor_openclose.ogg', 100, 1)
+	playsound(loc, operating_sound, 100, 1)
 	flick("[mineralType]closing",src)
 	sleep(10)
 	density = 1
-	opacity = 1
+	set_opacity(1)
 	state = 0
 	update_icon()
 	isSwitchingStates = 0
@@ -105,6 +106,7 @@
 
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/pickaxe))
+		if(user.is_busy()) return
 		var/obj/item/weapon/pickaxe/digTool = W
 		to_chat(user, "You start digging the [name].")
 		if(do_after(user,digTool.digspeed, target = src) && src)
@@ -119,6 +121,7 @@
 			var/obj/item/weapon/weldingtool/WT = W
 			if(!src || !WT.isOn())
 				return ..()
+			if(user.is_busy()) return
 			if(WT.remove_fuel(0, user))
 				playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 				user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
@@ -135,6 +138,7 @@
 				health -= W.force
 				CheckHealth()
 				return ..()
+			if(user.is_busy()) return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 			user.visible_message("[user] dissassembles [src].", "You start to dissassemble [src].")
 			if(do_after(user, 40, target = src))
@@ -189,12 +193,6 @@
 			CheckHealth()
 	return
 
-/obj/structure/mineral_door/proc/update_nearby_tiles(need_rebuild) //Copypasta from airlock code
-	if(!SSair)
-		return 0
-	SSair.mark_for_update(get_turf(src))
-	return 1
-
 /obj/structure/mineral_door/iron
 	mineralType = "metal"
 	health = 300
@@ -239,15 +237,10 @@
 /obj/structure/mineral_door/transparent/phoron/proc/TemperatureAct(temperature)
 	for(var/turf/simulated/floor/target_tile in range(2,loc))
 
-		var/datum/gas_mixture/napalm = new
-
 		var/phoronToDeduce = temperature/10
 
-		napalm.phoron = phoronToDeduce
-		napalm.temperature = 200+T0C
-
-		target_tile.assume_air(napalm)
-		spawn (0) target_tile.hotspot_expose(temperature, 400)
+		target_tile.assume_gas("phoron", phoronToDeduce)
+		target_tile.hotspot_expose(temperature, 400)
 
 		health -= phoronToDeduce/100
 		CheckHealth()
@@ -257,29 +250,8 @@
 	health = 1000
 
 /obj/structure/mineral_door/wood
+	operating_sound = 'sound/effects/doorcreaky.ogg'
 	mineralType = "wood"
-
-/obj/structure/mineral_door/wood/Open()
-	isSwitchingStates = 1
-	playsound(loc, 'sound/effects/doorcreaky.ogg', 100, 1)
-	flick("[mineralType]opening",src)
-	sleep(10)
-	density = 0
-	opacity = 0
-	state = 1
-	update_icon()
-	isSwitchingStates = 0
-
-/obj/structure/mineral_door/wood/Close()
-	isSwitchingStates = 1
-	playsound(loc, 'sound/effects/doorcreaky.ogg', 100, 1)
-	flick("[mineralType]closing",src)
-	sleep(10)
-	density = 1
-	opacity = 1
-	state = 0
-	update_icon()
-	isSwitchingStates = 0
 
 /obj/structure/mineral_door/wood/Dismantle(devastated = 0)
 	if(!devastated)
@@ -289,39 +261,34 @@
 
 /obj/structure/mineral_door/resin
 	icon = 'icons/mob/alien.dmi'
+	operating_sound = 'sound/effects/attackblob.ogg'
 	mineralType = "resin"
 	health = 150
 	var/close_delay = 100
+
+/obj/structure/mineral_door/resin/atom_init()
+	var/turf/T = get_turf(loc)
+	if(T)
+		T.blocks_air = TRUE
+	. = ..()
+
+/obj/structure/mineral_door/resin/Destroy()
+	var/turf/T = get_turf(loc)
+	if(T)
+		T.blocks_air = FALSE
+	return ..()
 
 /obj/structure/mineral_door/resin/TryToSwitchState(atom/user)
 	if(isalien(user))
 		return ..()
 
 /obj/structure/mineral_door/resin/Open()
-	isSwitchingStates = 1
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-	flick("[mineralType]opening",src)
-	sleep(10)
-	density = 0
-	opacity = 0
-	state = 1
-	update_icon()
-	isSwitchingStates = 0
+	..()
+	addtimer(CALLBACK(src, .proc/TryToClose), close_delay)
 
-	spawn(close_delay)
-		if(!isSwitchingStates && state == 1)
-			Close()
-
-/obj/structure/mineral_door/resin/Close()
-	isSwitchingStates = 1
-	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
-	flick("[mineralType]closing",src)
-	sleep(10)
-	density = 1
-	opacity = 1
-	state = 0
-	update_icon()
-	isSwitchingStates = 0
+/obj/structure/mineral_door/resin/proc/TryToClose()
+	if(!isSwitchingStates && state == 1)
+		Close()
 
 /obj/structure/mineral_door/resin/Dismantle(devastated = 0)
 	qdel(src)
@@ -336,3 +303,15 @@
 	CheckHealth()
 	return
 
+/obj/structure/mineral_door/resin/attack_paw(mob/user)
+	if(isalienadult(user) && user.a_intent == "hurt")
+		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
+		health -= rand(40, 60)
+		if(health <= 0)
+			user.visible_message("<span class='danger'>[user] slices the [name] to pieces!</span>")
+		else
+			user.visible_message("<span class='danger'>[user] claws at the resin!</span>")
+		CheckHealth()
+	else
+		return ..()

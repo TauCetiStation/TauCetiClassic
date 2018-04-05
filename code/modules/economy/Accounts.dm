@@ -18,6 +18,20 @@
 	var/time = ""
 	var/source_terminal = ""
 
+/proc/create_random_account_and_store_in_mind(mob/living/carbon/human/H)
+	var/datum/money_account/M = create_account(H.real_name, rand(50,500)*10, null)
+	if(H.mind)
+		var/remembered_info = ""
+		remembered_info += "<b>Your account number is:</b> #[M.account_number]<br>"
+		remembered_info += "<b>Your account pin is:</b> [M.remote_access_pin]<br>"
+		remembered_info += "<b>Your account funds are:</b> $[M.money]<br>"
+		if(M.transaction_log.len)
+			var/datum/transaction/T = M.transaction_log[1]
+			remembered_info += "<b>Your account was created:</b> [T.time], [T.date] at [T.source_terminal]<br>"
+		H.mind.store_memory(remembered_info)
+		H.mind.initial_account = M
+	return M
+
 /proc/create_account(new_owner_name = "Default user", starting_funds = 0, obj/machinery/account_database/source_db)
 
 	//create a new account
@@ -34,7 +48,7 @@
 	if(!source_db)
 		//set a random date, time and location some time over the past few decades
 		T.date = "[num2text(rand(1,31))] [pick("January","February","March","April","May","June","July","August","September","October","November","December")], 25[rand(10,56)]"
-		T.time = "[rand(0,24)]:[rand(11,59)]"
+		T.time = "[rand(0,23)]:[rand(11,59)]"
 		T.source_terminal = "NTGalaxyNet Terminal #[rand(111,1111)]"
 
 		M.account_number = rand(111111, 999999)
@@ -62,13 +76,8 @@
 		R.info += "<i>Authorised NT officer overseeing creation:</i> [source_db.held_card.registered_name]<br>"
 
 		//stamp the paper
-		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-		stampoverlay.icon_state = "paper_stamp-cent"
-		if(!R.stamped)
-			R.stamped = new
-		R.stamped += /obj/item/weapon/stamp
-		R.overlays += stampoverlay
-		R.stamps += "<HR><i>This paper has been stamped by the Accounts Database.</i>"
+		var/obj/item/weapon/stamp/centcomm/S = new
+		S.stamp_paper(R, "This paper has been stamped by the Accounts Database.")
 
 	//add the account
 	M.transaction_log.Add(T)

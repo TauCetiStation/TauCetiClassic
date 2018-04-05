@@ -6,8 +6,7 @@
 	density = 1
 	anchored = 1
 	flags = CONDUCT
-	pressure_resistance = 5*ONE_ATMOSPHERE
-	layer = 2.9
+	layer = BELOW_MACHINERY_LAYER
 	explosion_resistance = 5
 	var/health = 10
 	var/destroyed = 0
@@ -32,6 +31,7 @@
 
 /obj/structure/grille/attack_hand(mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] kicks [src].</span>", \
 						 "<span class='warning'>You kick [src].</span>", \
@@ -47,6 +47,7 @@
 
 /obj/structure/grille/attack_alien(mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(istype(user, /mob/living/carbon/alien/larva))	return
 
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
@@ -61,8 +62,8 @@
 
 /obj/structure/grille/attack_slime(mob/user)
 	if(!istype(user, /mob/living/carbon/slime/adult))	return
+	user.SetNextMove(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
-
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	user.visible_message("<span class='warning'>[user] smashes against [src].</span>", \
 						 "<span class='warning'>You smash against [src].</span>", \
@@ -73,14 +74,13 @@
 	return
 
 /obj/structure/grille/attack_animal(mob/living/simple_animal/M)
-	if(M.melee_damage_upper == 0)	return
-	M.do_attack_animation(src)
-
+	if(M.melee_damage_upper == 0)
+		return
+	..()
 	playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 	M.visible_message("<span class='warning'>[M] smashes against [src].</span>", \
 					  "<span class='warning'>You smash against [src].</span>", \
 					  "You hear twisting metal.")
-
 	health -= M.melee_damage_upper
 	healthcheck()
 	return
@@ -109,10 +109,11 @@
 	return 0
 
 /obj/structure/grille/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(iswirecutter(W))
 		if(!shock(user, 100))
 			playsound(loc, 'sound/items/Wirecutter.ogg', 100, 1)
-			PoolOrNew(/obj/item/stack/rods, list(get_turf(src), 2))
+			new /obj/item/stack/rods(get_turf(src), 2)
 			qdel(src)
 	else if((isscrewdriver(W)) && (istype(loc, /turf/simulated) || anchored))
 		if(!shock(user, 90))
@@ -125,7 +126,7 @@
 //window placing begin
 	else if( istype(W,/obj/item/stack/sheet/rglass) || istype(W,/obj/item/stack/sheet/glass) )
 		var/obj/item/stack/ST = W
-		if(ST.amount < 1)
+		if(ST.get_amount() < 1)
 			return
 		var/dir_to_set = 1
 		if(loc == user.loc)
@@ -149,9 +150,11 @@
 			if(WINDOW.dir == dir_to_set)
 				to_chat(user, "<span class='notice'>There is already a window facing this way there.</span>")
 				return
+		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You start placing the window.</span>")
 		if(do_after(user,20,target = src))
-			if(!src) return //Grille destroyed while waiting
+			if(QDELETED(src))
+				return //Grille destroyed while waiting
 			for(var/obj/structure/window/WINDOW in loc)
 				if(WINDOW.dir == dir_to_set)//checking this for a 2nd time to check if a window was made while we were waiting.
 					to_chat(user, "<span class='notice'>There is already a window facing this way there.</span>")
@@ -192,11 +195,11 @@
 			icon_state = "brokengrille"
 			density = 0
 			destroyed = 1
-			PoolOrNew(/obj/item/stack/rods, get_turf(src))
+			new /obj/item/stack/rods(get_turf(src))
 
 		else
 			if(health <= -6)
-				PoolOrNew(/obj/item/stack/rods, get_turf(src))
+				new /obj/item/stack/rods(get_turf(src))
 				qdel(src)
 				return
 	return

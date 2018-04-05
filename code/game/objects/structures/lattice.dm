@@ -8,30 +8,26 @@
 	layer = 2.3 //under pipes
 	//	flags = CONDUCT
 
-/obj/structure/lattice/New()
-	..()
-///// Z-Level Stuff
-	if(!(istype(src.loc, /turf/space) || istype(src.loc, /turf/simulated/floor/open)))
-///// Z-Level Stuff
-		qdel(src)
-	for(var/obj/structure/lattice/LAT in src.loc)
+/obj/structure/lattice/atom_init()
+	. = ..()
+	if(!istype(loc, /turf/space))
+		return INITIALIZE_HINT_QDEL
+	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)
 			qdel(LAT)
 	icon = 'icons/obj/smoothlattice.dmi'
 	icon_state = "latticeblank"
 	updateOverlays()
 	for (var/dir in cardinal)
-		var/obj/structure/lattice/L
-		if(locate(/obj/structure/lattice, get_step(src, dir)))
-			L = locate(/obj/structure/lattice, get_step(src, dir))
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, get_step(src, dir))
+		if(L)
 			L.updateOverlays()
 
 /obj/structure/lattice/Destroy()
 	for (var/dir in cardinal)
-		var/obj/structure/lattice/L
-		if(locate(/obj/structure/lattice, get_step(src, dir)))
-			L = locate(/obj/structure/lattice, get_step(src, dir))
-			L.updateOverlays(src.loc)
+		var/obj/structure/lattice/L = locate(/obj/structure/lattice, get_step(src, dir))
+		if(L)
+			L.updateOverlays(loc)
 	return ..()
 
 /obj/structure/lattice/blob_act()
@@ -53,7 +49,7 @@
 
 /obj/structure/lattice/attackby(obj/item/C, mob/user)
 
-	if (istype(C, /obj/item/stack/tile/plasteel) || istype(C, /obj/item/stack/rods))
+	if(istype(C, /obj/item/stack/tile/plasteel) || istype(C, /obj/item/stack/rods))
 		var/turf/T = get_turf(src)
 		T.attackby(C, user) //BubbleWrap - hand this off to the underlying turf instead
 		return
@@ -61,8 +57,8 @@
 		var/obj/item/weapon/weldingtool/WT = C
 		if(WT.remove_fuel(0, user))
 			to_chat(user, "\blue Slicing lattice joints ...")
-		PoolOrNew(/obj/item/stack/rods, src.loc)
-		qdel(src)
+			new /obj/item/stack/rods(loc)
+			qdel(src)
 
 	return
 

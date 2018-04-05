@@ -13,7 +13,6 @@
 	var/list/obj/item/possible_upgrades = list(/obj/item/device/assembly/prox_sensor, /obj/item/stack/sheet/mineral/phoron, /obj/item/device/analyzer)
 	var/list/upgrades = list()
 	var/state = 0
-	var/busy = 0
 	/*
 				0 = Nothing done to it
 				1 = Wrenched in place
@@ -57,7 +56,7 @@
 		if(2)
 			// State 2
 			if(iscoil(W))
-				var/obj/item/weapon/cable_coil/C = W
+				var/obj/item/stack/cable_coil/C = W
 				if(C.use(2))
 					to_chat(user, "You add wires to the assembly.")
 					state = 3
@@ -77,7 +76,7 @@
 			if(isscrewdriver(W))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
-				var/input = strip_html(input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13"))
+				var/input = sanitize_safe(input(usr, "Which networks would you like to connect this camera to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Set Network", "SS13"), MAX_LNAME_LEN)
 				if(!input)
 					to_chat(usr, "No input found please hang up and try your call again.")
 					return
@@ -88,7 +87,7 @@
 					return
 
 				var/temptag = "[get_area(src)] ([rand(1, 999)])"
-				input = strip_html(input(usr, "How would you like to name the camera?", "Set Camera Name", temptag))
+				input = sanitize_safe(input(usr, "How would you like to name the camera?", "Set Camera Name", input_default(temptag)), MAX_LNAME_LEN)
 
 				state = 4
 				var/obj/machinery/camera/C = new(src.loc)
@@ -116,7 +115,7 @@
 
 			else if(iswirecutter(W))
 
-				new/obj/item/weapon/cable_coil(get_turf(src), 2)
+				new /obj/item/stack/cable_coil/red(get_turf(src), 2)
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				to_chat(user, "You cut the wires from the circuits.")
 				state = 2
@@ -153,20 +152,14 @@
 		..()
 
 /obj/item/weapon/camera_assembly/proc/weld(obj/item/weapon/weldingtool/WT, mob/user)
-
-	if(busy)
-		return 0
 	if(!WT.isOn())
 		return 0
-
+	if(user.is_busy(src)) return
 	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
-	busy = 1
 	if(do_after(user, 20, target = src))
-		busy = 0
 		if(!WT.isOn())
 			return 0
 		return 1
-	busy = 0
 	return 0

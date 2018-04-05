@@ -28,21 +28,19 @@
 		used = TRUE
 		to_chat(user, "<span class='notice'>Seatching for available borg personality. Please wait 30 seconds...</span>")
 		for(var/client/C in borg_candicates)
-			request_player(C)
-		spawn(300)
-			stop_search()
+			INVOKE_ASYNC(src, .proc/request_player, C)
+		addtimer(CALLBACK(src, .proc/stop_search), 300)
 	else
 		to_chat(user, "<span class='notice'>Unable to connect to Syndicate Command. Please wait and try again later or use the teleporter on your uplink to get your points refunded.</span>")
 
-obj/item/weapon/antag_spawner/borg_tele/proc/request_player(client/C)
-	spawn(0)
-		if(!C)
-			return
-		var/response = alert(C, "Syndicate requesting a personality for a syndicate borg. Would you like to play as one?", "Syndicate borg request", "Yes", "No")
-		if(!C)
-			return		//handle logouts that happen whilst the alert is waiting for a respons.
-		if(response == "Yes")
-			requested_candidates += C
+/obj/item/weapon/antag_spawner/borg_tele/proc/request_player(client/C)
+	if(!C)
+		return
+	var/response = alert(C, "Syndicate requesting a personality for a syndicate borg. Would you like to play as one?", "Syndicate borg request", "Yes", "No")
+	if(!C)
+		return		//handle logouts that happen whilst the alert is waiting for a respons.
+	if(response == "Yes")
+		requested_candidates += C
 
 /obj/item/weapon/antag_spawner/borg_tele/proc/stop_search()
 	if(requested_candidates.len > 0)

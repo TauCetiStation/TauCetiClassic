@@ -41,7 +41,7 @@
 				return 0
 //		src << "updating alert [category] [id] [severity]"
 	else
-		alert = PoolOrNew(/obj/screen/alert)
+		alert = new /obj/screen/alert()
 //		src << "throwing new alert [category] [id] [severity]"
 
 	if(new_master)
@@ -72,13 +72,15 @@
 	alert.desc = initial(path_as_obj.desc)
 	alert.timeout = initial(path_as_obj.timeout)
 	if(alert.timeout)
-		spawn(alert.timeout)
-			if(alert.timeout && alerts[category] == alert && world.time >= alert.timeout)
-				clear_alert(category)
+		addtimer(CALLBACK(src, .proc/alert_timeout, alert, category), alert.timeout)
 		alert.timeout = world.time + alert.timeout - world.tick_lag
 	alert.mouse_opacity = 1
 
 	return alert
+
+/mob/proc/alert_timeout(obj/screen/alert/alert, category)
+	if(alert.timeout && alerts[category] == alert && world.time >= alert.timeout)
+		clear_alert(category)
 
 // Proc to clear an existing alert.
 /mob/proc/clear_alert(category)
@@ -179,6 +181,27 @@
 	name = "Burning"
 	desc = "It's too hot! Flee to space or at least away from the flames. Standing on weeds will heal you up."
 
+/obj/screen/alert/stasis
+	name = "Stasis"
+	desc = "You has entered in statis. Just wait a little bit."
+
+//IANS
+/obj/screen/alert/ian_oxy
+	name = "Choking"
+	desc = "You're not getting enough oxygen."
+
+/obj/screen/alert/ian_tox
+	name = "Gas"
+	desc = "There's gas in the air and you're breathing it in."
+
+/obj/screen/alert/ian_hot
+	name = "Too Hot"
+	desc = "You're flaming hot!"
+
+/obj/screen/alert/ian_cold
+	name = "Too Cold"
+	desc = "You're freezing cold!"
+
 //SILICONS
 
 /obj/screen/alert/nocell
@@ -270,6 +293,3 @@
 
 /obj/screen/alert/MouseExited()
 	closeToolTip(usr)
-
-/obj/screen/alert/Destroy()
-	return QDEL_HINT_PUTINPOOL //Don't destroy me, I have a family!

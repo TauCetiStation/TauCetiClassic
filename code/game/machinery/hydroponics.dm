@@ -2,10 +2,11 @@
 
 /obj/machinery/hydroponics
 	name = "hydroponics tray"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray"
 	density = 1
 	anchored = 1
+	interact_offline = TRUE
 	var/waterlevel = 100 // The amount of water in the tray (max 100)
 	var/maxwater = 100		//The maximum amount of water in the tray
 	var/nutrilevel = 10 // The amount of nutrient in the tray (max 10)
@@ -31,11 +32,11 @@
 
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
 
-/obj/machinery/hydroponics/constructable/New()
-	..()
+/obj/machinery/hydroponics/constructable/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/hydroponics(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
@@ -628,7 +629,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 		else
 			to_chat(user, "<span class='warning'>[src] already has seeds in it!</span>")
 
-	else if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	else if (istype(O, /obj/item/device/plant_analyzer))
 		if(planted && myseed)
 			to_chat(user, "*** <B>[myseed.plantname]</B> ***")//Carn: now reports the plants growing, not the seeds.
 			to_chat(user, "-Plant Age: \blue [age]")
@@ -741,16 +742,19 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	else if(dead)
 		planted = 0
 		dead = 0
-		to_chat(usr, text("You remove the dead plant from the [src]."))
+		to_chat(user, text("You remove the dead plant from the [src]."))
 		qdel(myseed)
 		update_icon()
 
 /obj/machinery/hydroponics/attack_hand(mob/user)
-	if(istype(usr,/mob/living/silicon))		//How does AI know what plant is?
+	. = ..()
+	if(.)
 		return
+	if(issilicon(user)) //How does AI know what plant is?
+		return 1
 	if(harvest)
 		if(!(user in range(1,src)))
-			return
+			return 1
 		myseed.harvest()
 	else if(dead)
 		planted = 0
@@ -811,8 +815,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	var/t_yield = round(yield*parent.yieldmod)
 
 	if(t_yield > 0)
-		var/obj/item/stack/tile/grass/new_grass = new/obj/item/stack/tile/grass(user.loc)
-		new_grass.amount = t_yield
+		new/obj/item/stack/tile/grass(user.loc, t_yield)
 
 	parent.update_tray()
 
@@ -970,7 +973,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 ///////////////////////////////////////////////////////////////////////////////
 /obj/machinery/hydroponics/soil //Not actually hydroponics at all! Honk!
 	name = "soil"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
 	density = 0
 	use_power = 0
@@ -983,18 +986,18 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 
 	if(planted)
 		if(dead)
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-dead")
+			overlays += image('icons/obj/hydroponics/hydroponics.dmi', icon_state="[myseed.species]-dead")
 		else if(harvest)
 			if(myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
-				overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[myseed.growthstages]")
+				overlays += image('icons/obj/hydroponics/hydroponics.dmi', icon_state="[myseed.species]-grow[myseed.growthstages]")
 			else
-				overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-harvest")
+				overlays += image('icons/obj/hydroponics/hydroponics.dmi', icon_state="[myseed.species]-harvest")
 		else if(age < myseed.maturation)
 			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages )
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[round(t_growthstate)]")
+			overlays += image('icons/obj/hydroponics/hydroponics.dmi', icon_state="[myseed.species]-grow[round(t_growthstate)]")
 			lastproduce = age
 		else
-			overlays += image('icons/obj/hydroponics.dmi', icon_state="[myseed.species]-grow[myseed.growthstages]")
+			overlays += image('icons/obj/hydroponics/hydroponics.dmi', icon_state="[myseed.species]-grow[myseed.growthstages]")
 
 	if(!luminosity)
 		if(istype(myseed,/obj/item/seeds/glowshroom))

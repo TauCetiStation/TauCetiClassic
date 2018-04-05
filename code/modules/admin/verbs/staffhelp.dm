@@ -21,7 +21,7 @@ client/proc/staffhelp(msg, help_type = null)
 
 	if(!msg)
 		return
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+	msg = sanitize(msg)
 	if(!msg)
 		return
 	var/original_msg = msg
@@ -120,13 +120,6 @@ client/proc/staffhelp(msg, help_type = null)
 			log_msg = "[prefix]: [key_name(src)]: [original_msg] - heard by [admin_number_present] non-AFK admins."
 			//clean the input msg
 			send2slack_logs(key_name(src), original_msg, "(HELP)")
-			if(admin_number_present <= 0)
-				if(!admin_number_afk)
-					send2adminirc("ADMINHELP from [key_name(src)]: [html_decode(original_msg)] - !!No admins online!!")
-				else
-					send2adminirc("ADMINHELP from [key_name(src)]: [html_decode(original_msg)] - !!All admins AFK ([admin_number_afk])!!")
-			else
-				send2adminirc("ADMINHELP from [key_name(src)]: [html_decode(original_msg)]")
 
 	feedback_add_details("admin_verb", help_type) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin(log_msg)

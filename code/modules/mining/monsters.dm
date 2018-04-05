@@ -20,6 +20,7 @@
 	a_intent = "harm"
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
+	weather_immunities = list("ash", "acid")
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -202,10 +203,12 @@
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Burrow()//Begin the chase to kill the goldgrub in time
 	if(!alerted)
 		alerted = 1
-		spawn(chase_time)
-		if(alerted)
-			visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
-			qdel(src)
+		addtimer(CALLBACK(src, .proc/burrow_check), chase_time)
+
+/mob/living/simple_animal/hostile/asteroid/goldgrub/proc/burrow_check()
+	if(alerted)
+		visible_message("<span class='danger'>The [src.name] buries into the ground, vanishing from sight!</span>")
+		qdel(src)
 
 /mob/living/simple_animal/hostile/asteroid/goldgrub/proc/Reward()
 	if(!ore_eaten || ore_types_eaten.len == 0)
@@ -282,10 +285,13 @@
 	icon_state = "boiledrorocore"
 	var/inert = 0
 
-/obj/item/asteroid/hivelord_core/New()
-	spawn(1200)
-		inert = 1
-		desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
+/obj/item/asteroid/hivelord_core/atom_init()
+	. = ..()
+	addtimer(CALLBACK(src, .proc/make_inert), 1200)
+
+/obj/item/asteroid/hivelord_core/proc/make_inert()
+	inert = 1
+	desc = "The remains of a hivelord that have become useless, having been left alone too long after being harvested."
 
 /obj/item/asteroid/hivelord_core/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
@@ -332,10 +338,12 @@
 	environment_smash = 0
 	pass_flags = PASSTABLE
 
-/mob/living/simple_animal/hostile/asteroid/hivelordbrood/New()
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/atom_init()
 	..()
-	spawn(100)
-		qdel(src)
+	return INITIALIZE_HINT_LATELOAD
+
+/mob/living/simple_animal/hostile/asteroid/hivelordbrood/atom_init_late()
+	QDEL_IN(src, 100)
 
 /mob/living/simple_animal/hostile/asteroid/hivelordbrood/death()
 	qdel(src)
@@ -405,30 +413,29 @@
 		icon_state = icon_aggro
 	return
 
-/obj/effect/goliath_tentacle/
+/obj/effect/goliath_tentacle
 	name = "Goliath tentacle"
 	icon = 'icons/mob/monsters.dmi'
 	icon_state = "Goliath_tentacle"
 
-/obj/effect/goliath_tentacle/New()
+/obj/effect/goliath_tentacle/atom_init()
+	. = ..()
 	var/turftype = get_turf(src)
 	if(istype(turftype, /turf/simulated/mineral))
 		var/turf/simulated/mineral/M = turftype
 		M.GetDrilled()
-	spawn(20)
-		Trip()
+	addtimer(CALLBACK(src, .proc/Trip), 20)
 
 /obj/effect/goliath_tentacle/original
 
-/obj/effect/goliath_tentacle/original/New()
+/obj/effect/goliath_tentacle/original/atom_init()
+	. = ..()
 	var/list/directions = cardinal.Copy()
-	var/counter
-	for(counter = 1, counter <= 3, counter++)
+	for (var/i in 1 to 3)
 		var/spawndir = pick(directions)
 		directions -= spawndir
-		var/turf/T = get_step(src,spawndir)
+		var/turf/T = get_step(src, spawndir)
 		new /obj/effect/goliath_tentacle(T)
-	..()
 
 /obj/effect/goliath_tentacle/proc/Trip()
 	for(var/mob/living/M in src.loc)

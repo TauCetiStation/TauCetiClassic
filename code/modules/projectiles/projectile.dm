@@ -40,6 +40,7 @@
 	var/flag = "bullet" //Defines what armor to use when it hits things.  Must be set to bullet, laser, energy,or bomb	//Cael - bio and rad are also valid
 	var/projectile_type = "/obj/item/projectile"
 	var/kill_count = 50 //This will de-increment every process(). When 0, it will delete the projectile.
+	var/paused = FALSE //for suspending the projectile midair
 		//Effects
 	var/stun = 0
 	var/weaken = 0
@@ -56,6 +57,7 @@
 	var/step_delay = 1	// the delay between iterations if not a hitscan projectile
 
 	// effect types to be used
+	var/list/tracer_list = null // if set to list, it will be gathering all projectile effects into list and delete them after impact
 	var/muzzle_type
 	var/tracer_type
 	var/impact_type
@@ -65,10 +67,37 @@
 	var/matrix/effect_transform			// matrix to rotate and scale projectile effects - putting it here so it doesn't
 										//  have to be recreated multiple times
 
-/obj/item/projectile/New()
-	..()
+/obj/item/projectile/atom_init()
+	damtype = damage_type // TODO unify these vars properly (Bay12)
+	if(timestop_count)
+		var/obj/effect/timestop/T = locate() in loc
+		if(T)
+			T.timestop(src)
+	. = ..()
 	if(light_color)
 		set_light(light_range,light_power,light_color)
+
+/obj/item/projectile/Destroy()
+	QDEL_LIST(tracer_list)
+	firer = null
+	starting = null
+	original = null
+	shot_from = null
+	return ..()
+
+
+/obj/item/projectile/proc/check_living_shield(mob/living/carbon/human/H)
+	var/obj/item/weapon/grab/grab = null
+	if(istype(H.r_hand,/obj/item/weapon/grab))
+		grab = H.r_hand
+	else if(istype(H.l_hand,/obj/item/weapon/grab))
+		grab = H.l_hand
+	if(!grab)
+		return H
+	if(grab.state >= GRAB_NECK && !grab.affecting.lying)
+		if(is_the_opposite_dir(H.dir, dir))
+			return grab.affecting
+	return H
 
 /obj/item/projectile/proc/on_hit(atom/target, blocked = 0)
 	if(!isliving(target))	return 0
@@ -97,7 +126,7 @@
 	if(!istype(target) || !istype(firer))
 		return 0
 
-	var/obj/item/projectile/test/trace = new /obj/item/projectile/test(get_turf(firer)) //Making the test....
+	var/obj/item/projectile/test/dummy/trace = new /obj/item/projectile/test/dummy(get_turf(firer)) //Making the test....
 
 	//Set the flags and pass flags to that of the real projectile...
 	if(!isnull(flags))
@@ -115,7 +144,7 @@
 	starting = starting_loc
 	current = starting_loc
 	if(new_firer)
-		firer = src
+		firer = new_firer
 
 	yo = new_y - starting_loc.y
 	xo = new_x - starting_loc.x
@@ -136,14 +165,12 @@
 		return 0
 
 	var/forcedodge = 0 // force the projectile to pass
-
+	var/mob/M = ismob(A) ? A : null
 	bumped = 1
-	if(firer && istype(A, /mob))
-		var/mob/M = A
+	if(firer && M)
 		if(!istype(A, /mob/living))
 			loc = A.loc
 			return 0// nope.avi
-
 		var/distance = get_dist(starting,loc) //More distance = less damage, except for high fire power weapons.
 		var/miss_modifier = 0
 		if(damage && (distance > 7))
@@ -156,79 +183,60 @@
 				miss_modifier += -60
 		if(distance > 1)
 			def_zone = get_zone_with_miss_chance(def_zone, M, miss_modifier)
-		//def_zone = get_zone_with_probabilty(def_zone)
 
 		if(!def_zone)
+			forcedodge = PROJECTILE_FORCE_MISS
+
+	if(!forcedodge)
+		if(M && ishuman(M))
+			M = check_living_shield(A)
+			A = M
+
+		forcedodge = A.bullet_act(src, def_zone) // searches for return value
+
+	if(forcedodge == PROJECTILE_FORCE_MISS) // the bullet passes through a dense object!
+		if(M)
 			visible_message("<span class = 'notice'>\The [src] misses [M] narrowly!</span>")
-			forcedodge = -1
+
+		if(istype(A, /turf))
+			loc = A
 		else
-			if(silenced)
-				to_chat(M, "<span class = 'red'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
-			else
-				visible_message("<span class = 'red'>[A.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
-			if(istype(firer, /mob))
-				M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-				firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-				if(!fake)
-					msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") //BS12 EDIT ALG
-			else
-				M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
-				if(!fake)
-					msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
+			loc = A.loc
+		bumped = FALSE // reset bumped variable!
+		permutated.Add(A)
 
-//	if(istype(src, /obj/item/projectile/beam))
+		return FALSE
 
-	if(A)
-		if (!forcedodge)
-			forcedodge = A.bullet_act(src, def_zone) // searches for return value
-		if(forcedodge == -1) // the bullet passes through a dense object!
-			bumped = 0 // reset bumped variable!
-			if(istype(A, /turf))
-				loc = A
-			else
-				loc = A.loc
-			permutated.Add(A)
-			return 0
-		if(istype(A,/turf))
-			for(var/obj/O in A)
-				O.bullet_act(src)
-			for(var/mob/M in A)
-				M.bullet_act(src, def_zone)
+	else if(M)
+		if(silenced)
+			to_chat(M, "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
+		else
+			M.visible_message("<span class='userdanger'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
+			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
+		if(firer)
+			M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
+			firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
+			if(!fake)
+				msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") //BS12 EDIT ALG
+		else
+			M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
+			if(!fake)
+				msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(M)] [ADMIN_FLW(M)]") //BS12 EDIT ALG
 
-		//stop flying
-		on_impact(A)
 
-		density = 0
-		invisibility = 101
-		qdel(src)
+	if(istype(A,/turf))
+		for(var/obj/O in A)
+			O.bullet_act(src)
+		for(var/mob/Mob in A)
+			Mob.bullet_act(src, def_zone)
+
+	//stop flying
+	on_impact(A)
+
+	density = 0
+	invisibility = 101
+	qdel(src)
 	return 1
-
-//	else
-//		spawn(0)
-//			if(A)
-//						// We get the location before running A.bullet_act, incase the proc deletes A and makes it null
-//				var/turf/new_loc = null
-//				if(istype(A, /turf))
-//					new_loc = A
-//				else
-//					new_loc = A.loc
-//
-//				if (!forcedodge)
-//					forcedodge = A.bullet_act(src, def_zone) // searches for return value
-//				if(forcedodge == -1) // the bullet passes through a dense object!
-//					bumped = 0 // reset bumped variable!
-//					loc = new_loc
-//					permutated.Add(A)
-//					return 0
-//				//stop flying
-//				on_impact(A)
-//
-//				density = 0
-//				invisibility = 101
-//				qdel(src)
-//				return 0
-//		return 1
-
 
 
 /obj/item/projectile/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
@@ -247,6 +255,9 @@
 	setup_trajectory()
 
 	spawn while(src && src.loc)
+		if(paused)
+			sleep(1)
+			continue
 		if(kill_count-- < 1)
 			on_impact(src.loc) //for any final impact behaviours
 			qdel(src)
@@ -256,7 +267,6 @@
 		if((x == 1 || x == world.maxx || y == 1 || y == world.maxy))
 			qdel(src)
 			return
-
 		trajectory.increment()	// increment the current location
 		location = trajectory.return_location(location)		// update the locally stored location data
 
@@ -269,9 +279,14 @@
 
 		if(!bumped && !isturf(original))
 			if(loc == get_turf(original))
-				if(!(original in permutated))
-					if(Bump(original))
-						return
+				if(isturf(original.loc))
+					if(!(original in permutated))
+						if(Bump(original))
+							return
+				else//if target is in mecha/crate/MULE/etc
+					if(!(original.loc in permutated))
+						if(Bump(original.loc))
+							return
 
 		if(first_step)
 			muzzle_effect(effect_transform)
@@ -307,6 +322,8 @@
 		var/obj/effect/projectile/M = new muzzle_type(get_turf(src))
 
 		if(istype(M))
+			if(tracer_list)
+				tracer_list += M
 			M.set_transform(T)
 			M.pixel_x = location.pixel_x
 			M.pixel_y = location.pixel_y
@@ -317,6 +334,8 @@
 		var/obj/effect/projectile/P = new tracer_type(location.loc)
 
 		if(istype(P))
+			if(tracer_list)
+				tracer_list += P
 			P.set_transform(M)
 			P.pixel_x = location.pixel_x
 			P.pixel_y = location.pixel_y
@@ -332,6 +351,18 @@
 			P.pixel_y = location.pixel_y
 			P.activate()
 
+/obj/item/projectile/proc/Fire(atom/A, mob/living/user)
+	var/turf/T = get_turf(user)
+	var/turf/U = get_turf(A)
+	firer = user
+	def_zone = check_zone(user.zone_sel.selecting)
+	starting = T
+	original = A
+	current = T
+	yo = U.y - T.y
+	xo = U.x - T.x
+	INVOKE_ASYNC(src, .process)
+
 /obj/item/projectile/test //Used to see if you can hit them.
 	invisibility = 101 //Nope!  Can't see me!
 	yo = null
@@ -345,15 +376,16 @@
 		return //cannot shoot yourself
 	if(istype(A, /obj/item/projectile))
 		return
-	if(is_type_in_list(A, list(/mob/living, /obj/mecha, /obj/machinery/bot/mulebot)))
-		result = 2 //We hit someone, return 1!
+	if(istype(A, /mob/living))
+		result = 2 //We hit someone, return 1 (in process() 2 will be decremented to 1)!
+		bumped = TRUE
 		return
 	if(checkpass(PASSGLASS) && istype(A, /obj/structure/window))
 		return
 	if(checkpass(PASSGRILLE) && istype(A, /obj/structure/grille))
 		return
 	result = 1
-	return
+	bumped = TRUE
 
 /obj/item/projectile/test/process()
 	var/turf/curloc = get_turf(src)
@@ -362,8 +394,8 @@
 		return 0
 	yo = targloc.y - curloc.y
 	xo = targloc.x - curloc.x
-	target = targloc
 	original = target
+	target = targloc
 	starting = curloc
 
 	//plot the initial trajectory
@@ -372,24 +404,42 @@
 	while(src) //Loop on through!
 		if(result)
 			return (result - 1)
-		if((!( target ) || loc == target))
+		if(!target || loc == target)
 			target = locate(min(max(x + xo, 1), world.maxx), min(max(y + yo, 1), world.maxy), z) //Finding the target turf at map edge
+		if(x == 1 || x == world.maxx || y == 1 || y == world.maxy || kill_count-- < 1)
+			qdel(src)
+			return 0
 
 		trajectory.increment()	// increment the current location
 		location = trajectory.return_location(location)		// update the locally stored location data
+		if(!location)
+			qdel(src)
+			return 0
 
 		Move(location.return_turf())
 
-		var/mob/living/M = locate() in get_turf(src)
-		if(istype(M)) //If there is someting living...
-			return 1 //Return 1
-		else
-			M = locate() in get_step(src,target)
-			if(istype(M))
-				return 1
+		if(!bumped && !isturf(original) && loc == get_turf(original))
+			if(isturf(original.loc))
+				Bump(original)
+			else
+				Bump(original.loc) //if target is in mecha/crate/MULE/etc
+
+/obj/item/projectile/test/dummy/Bump(atom/A) //Another test projectile with increased checklist
+	..()
+	if(result != 1)
+		return
+	//bumped is already set to TRUE
+	if(is_type_in_list(A, list(/obj/structure/closet, /obj/mecha, /obj/machinery/bot/mulebot)))
+		result = 2
+	return
 
 /obj/item/projectile/proc/Range() ///tg/
 	return
 
 /obj/item/projectile/Process_Spacemove(movement_dir = 0)
 	return 1 //Bullets don't drift in space
+
+var/static/list/taser_projectiles = list(
+	/obj/item/projectile/beam/stun,
+	/obj/item/ammo_casing/energy/electrode
+)

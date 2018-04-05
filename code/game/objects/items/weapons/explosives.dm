@@ -8,39 +8,50 @@
 /obj/item/weapon/plastique/afterattack(atom/target, mob/user, flag)
 	if (!flag)
 		return
-	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/item/weapon/storage/) || istype(target, /obj/machinery/nuclearbomb))
+	if (istype(target, /turf/unsimulated) || istype(target, /turf/simulated/shuttle) || istype(target, /obj/machinery/nuclearbomb))
 		return
+	if(user.is_busy()) return
 	to_chat(user, "Planting explosives...")
 	if(ismob(target))
-
-		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target:real_name] ([target:ckey])</font>"
-		msg_admin_attack("[user.real_name] ([user.ckey]) tried planting [name] on [target:real_name] ([target:ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-
-		user.visible_message("\red [user.name] is trying to plant some kind of explosive on [target.name]!")
+		var/mob/living/M = target
+		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [M.real_name] ([M.ckey])</font>"
+		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [M.real_name] ([M.ckey]) [ADMIN_FLW(M)]")
+		user.visible_message("<span class ='red'> [user.name] is trying to plant some kind of explosive on [M.name]!</span>")
+	else
+		user.attack_log += "\[[time_stamp()]\] <font color='red'> [user.real_name] tried planting [name] on [target.name]</font>"
+		msg_admin_attack("[user.real_name] ([user.ckey]) [ADMIN_FLW(user)] tried planting [name] on [target.name] [ADMIN_JMP(target)]")
 
 	if(do_after(user, 50, target = target) && in_range(user, target))
 		user.drop_item()
 		target = target
 		loc = null
 		var/location
-		if (isturf(target)) location = target
-		if (isobj(target)) location = target.loc
-		if (ismob(target))
-			target:attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
-			user.visible_message("\red [user.name] finished planting an explosive on [target.name]!")
+		if(ismob(target))
+			var/mob/living/M = target
+			M.attack_log += "\[[time_stamp()]\]<font color='orange'> Had the [name] planted on them by [user.real_name] ([user.ckey])</font>"
+			user.visible_message("<span class ='red'> [user.name] finished planting an explosive on [M.name]!</span>")
+		else
+			location = target
 		target.overlays += image('icons/obj/assemblies.dmi', "plastic-explosive2")
 		to_chat(user, "Bomb has been planted. Timer counting down from [timer].")
-		spawn(timer*10)
-			if(target)
-				if(ismob(target)) location = target.loc
-				explosion(location, 0, 0, 2, 3)
-				if (istype(target, /turf/simulated/wall)) target:dismantle_wall(1)
-				else target.ex_act(1)
-				if (isobj(target))
-					if (target)
-						qdel(target)
-				if (src)
-					qdel(src)
+		addtimer(CALLBACK(src, .proc/prime_explosion, target, location), timer * 10)
+
+/obj/item/weapon/plastique/proc/prime_explosion(atom/target, location)
+	if(!target)
+		return
+	if(ismob(target) || isobj(target))
+		location = target.loc
+	if(istype(target, /turf/simulated/wall))
+		var/turf/simulated/wall/W = target
+		W.dismantle_wall(1)
+	else
+		target.ex_act(1)
+
+	explosion(location, 0, 0, 2, 3)
+	if(target && !QDELETED(target))
+		target.overlays -= image('icons/obj/assemblies.dmi', "plastic-explosive2")
+	if(src)
+		qdel(src)
 
 /obj/item/weapon/plastique/attack(mob/M, mob/user, def_zone)
 	return

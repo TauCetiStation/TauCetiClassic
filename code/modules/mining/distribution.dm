@@ -72,27 +72,24 @@ Deep minerals:
 //Halfassed diamond-square algorithm with some fuckery since it's a single dimension array.
 /datum/ore_distribution/proc/populate_distribution_map()
 
-	//Announce it!
-	world.log << "<b><font color='red'>Generating resource distribution map.</b></font>"
-
 	//Seed beginning values.
 	var/x = 1
 	var/y = 1
-	var/size = real_size-1
-	map[MAP_TOP_LEFT] =     (range/3)+rand(range/5)
-	map[MAP_TOP_RIGHT] =    (range/3)+rand(range/5)
-	map[MAP_BOTTOM_LEFT] =  (range/3)+rand(range/5)
-	map[MAP_BOTTOM_RIGHT] = (range/3)+rand(range/5)
+	var/size = real_size - 1
+	map[MAP_TOP_LEFT]     = (range / 3) + rand(range/5)
+	map[MAP_TOP_RIGHT]    = (range / 3) + rand(range/5)
+	map[MAP_BOTTOM_LEFT]  = (range / 3) + rand(range/5)
+	map[MAP_BOTTOM_RIGHT] = (range / 3) + rand(range/5)
 
 	//Fill in and smooth it out.
 	var/attempts = 0
 	do
 		attempts++
-		generate_distribution_map(1,1,size)
+		generate_distribution_map(1, 1, size)
 	while(attempts < ITERATE_BEFORE_FAIL && !map_is_sane())
 
 	if(attempts >= ITERATE_BEFORE_FAIL)
-		world.log << "<b><font color='red'>Could not generate a sane distribution map. Aborting.</font></b>"
+		world.log << "Could not generate a sane distribution map. Aborting!"
 		map = null
 		return
 	else
@@ -169,16 +166,7 @@ Deep minerals:
 						target_turf.resources["carbonaceous rock"] = rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX)
 
 						switch(map[MAP_CELL])
-							if(0 to 130) 	// ~50% chance
-								target_turf.resources["iron"] =       rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX)
-								//target_turf.resources["gold"] =       0
-								target_turf.resources["silver"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
-								//target_turf.resources["uranium"] =    0
-								//target_turf.resources["diamond"] =    0
-								target_turf.resources["phoron"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
-								//target_turf.resources["osmium"] =     0
-								//target_turf.resources["hydrogen"] =   0
-							if(131 to 200) // ~27% chance
+							if(0 to 70)
 								target_turf.resources["iron"] =       rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
 								target_turf.resources["gold"] =       rand(RESOURCE_LOW_MIN,RESOURCE_MID_MAX)
 								target_turf.resources["silver"] =     rand(RESOURCE_LOW_MIN,RESOURCE_LOW_MAX)
@@ -187,7 +175,16 @@ Deep minerals:
 								//target_turf.resources["phoron"] =     o
 								//target_turf.resources["osmium"] =     0
 								//target_turf.resources["hydrogen"] =   0
-							if(201 to 255)// ~21 % chanse
+							if(71 to 125)
+								target_turf.resources["iron"] =       rand(RESOURCE_HIGH_MIN,RESOURCE_HIGH_MAX)
+								//target_turf.resources["gold"] =       0
+								target_turf.resources["silver"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
+								//target_turf.resources["uranium"] =    0
+								//target_turf.resources["diamond"] =    0
+								target_turf.resources["phoron"] =     rand(RESOURCE_MID_MIN,RESOURCE_MID_MAX)
+								//target_turf.resources["osmium"] =     0
+								//target_turf.resources["hydrogen"] =   0
+							if(126 to 255)
 								//target_turf.resources["iron"] =       0
 								//target_turf.resources["gold"] =       0
 								//target_turf.resources["silver"] =     0
@@ -200,8 +197,6 @@ Deep minerals:
 			tx += chunk_size
 		tx = origin_x
 		ty += chunk_size
-
-	world.log << "<b><font color='red'>Resource map generation complete.</font></b>"
 	return
 
 #undef MAP_CELL

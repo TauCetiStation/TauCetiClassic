@@ -35,19 +35,22 @@
 	icon_state = "creep_1"
 	random_icon_states = list("creep_1", "creep_2", "creep_3", "creep_4", "creep_5", "creep_6", "creep_7", "creep_8", "creep_9")
 
-/obj/structure/cellular_biomass/wall/meat/New()
+/obj/structure/cellular_biomass/wall/meat/atom_init()
+	. = ..()
 	icon_state = "bloodwall_[pick(1,1,2,2,3,4)]"
 
-/obj/structure/cellular_biomass/grass/meat/New()
+/obj/structure/cellular_biomass/grass/meat/atom_init()
+	. = ..()
 	icon_state = "bloodfloor_[pick(1,2,3)]"
 
-/obj/structure/cellular_biomass/core/meat/New()
+/obj/structure/cellular_biomass/core/meat/atom_init()
+	. = ..()
 	icon_state = "light_[pick(1,2)]"
 	set_light(luminosity)
 
-/obj/structure/cellular_biomass/lair/meat/New()
+/obj/structure/cellular_biomass/lair/meat/atom_init(mapload)
 	icon_state = "lair"
-	..(pick(subtypesof(/mob/living/simple_animal/hostile/cellular/meat/)))
+	. = ..(mapload, pick(subtypesof(/mob/living/simple_animal/hostile/cellular/meat/)))
 
 /mob/living/simple_animal/hostile/cellular/meat/
 	name = "insane creature"

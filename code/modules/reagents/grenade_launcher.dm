@@ -29,11 +29,7 @@
 			to_chat(usr, "\red The grenade launcher cannot hold more grenades.")
 
 /obj/item/weapon/gun/grenadelauncher/afterattack(obj/target, mob/user , flag)
-
-	if (istype(target, /obj/item/weapon/storage/backpack ))
-		return
-
-	else if (locate (/obj/structure/table, src.loc))
+	if (locate (/obj/structure/table, src.loc))
 		return
 
 	else if(target == user)

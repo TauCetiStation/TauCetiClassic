@@ -18,18 +18,19 @@
 /*
  * Sword
  */
-/obj/item/weapon/melee/energy/sword/IsShield()
+/obj/item/weapon/melee/energy/sword/Get_shield_chance()
 	if(active)
-		return 1
+		return 40
 	return 0
 
-/obj/item/weapon/melee/energy/sword/New()
-	item_color = pick("red","blue","green","purple")
+/obj/item/weapon/melee/energy/sword/atom_init()
+	. = ..()
+	item_color = pick("red","blue","green","purple","yellow","pink","black")
 
 /obj/item/weapon/melee/energy/sword/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red You accidentally cut yourself with [src].")
-		user.take_organ_damage(5,5)
+		user.take_bodypart_damage(5, 5)
 	active = !active
 	if (active)
 		force = 30
@@ -59,6 +60,7 @@
 	add_fingerprint(user)
 	return
 
+
 /*
  * Classic Baton
  */
@@ -77,9 +79,9 @@
 		user.Weaken(3 * force)
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			H.apply_damage(2*force, BRUTE, "head")
+			H.apply_damage(2 * force, BRUTE, BP_HEAD)
 		else
-			user.take_organ_damage(2*force)
+			user.take_bodypart_damage(2 * force)
 		return
 /*this is already called in ..()
 	src.add_fingerprint(user)
@@ -170,9 +172,9 @@
 			user.Weaken(3 * force)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
-				H.apply_damage(2*force, BRUTE, "head")
+				H.apply_damage(2 * force, BRUTE, BP_HEAD)
 			else
-				user.take_organ_damage(2*force)
+				user.take_bodypart_damage(2 * force)
 			return
 		if(..())
 			playsound(src.loc, "swing_hit", 50, 1, -1)
@@ -186,27 +188,40 @@
  */
 //Most of the other special functions are handled in their own files.
 
-/obj/item/weapon/melee/energy/sword/green
-	New()
-		item_color = "green"
+/obj/item/weapon/melee/energy/sword/green/atom_init()
+	. = ..()
+	item_color = "green"
 
-/obj/item/weapon/melee/energy/sword/red
-	New()
-		item_color = "red"
+/obj/item/weapon/melee/energy/sword/red/atom_init()
+	. = ..()
+	item_color = "red"
 
-/obj/item/weapon/melee/energy/blade/New()
+/obj/item/weapon/melee/energy/sword/blue/atom_init()
+	. = ..()
+	item_color = "blue"
+
+/obj/item/weapon/melee/energy/sword/purple/atom_init()
+	. = ..()
+	item_color = "purple"
+
+/obj/item/weapon/melee/energy/sword/yellow/atom_init()
+	. = ..()
+	item_color = "yellow"
+
+/obj/item/weapon/melee/energy/sword/pink/atom_init()
+	. = ..()
+	item_color = "pink"
+
+/obj/item/weapon/melee/energy/sword/black/atom_init()
+	. = ..()
+	item_color = "black"
+
+
+/obj/item/weapon/melee/energy/blade/atom_init()
+	. = ..()
 	spark_system = new /datum/effect/effect/system/spark_spread()
 	spark_system.set_up(5, 0, src)
 	spark_system.attach(src)
-	return
-
-/obj/item/weapon/melee/energy/blade/dropped()
-	qdel(src)
-	return
-
-/obj/item/weapon/melee/energy/blade/proc/throw_held()
-	qdel(src)
-	return
 
 /*
  * Energy Axe
@@ -231,35 +246,44 @@
 /*
  * Energy Shield
  */
-/obj/item/weapon/shield/energy/IsShield()
+/obj/item/weapon/shield/energy/Get_shield_chance()
 	if(active)
-		return 1
-	else
-		return 0
+		return block_chance
+	return 0
 
 /obj/item/weapon/shield/energy/attack_self(mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "\red You beat yourself in the head with [src].")
-		user.take_organ_damage(5)
+		to_chat(user, "<span class='danger'> You beat yourself in the head with [src].</span>")
+		user.take_bodypart_damage(5)
+	if(emp_cooldown >= world.time)
+		to_chat(user, "<span class='userdanger'>[src] is recalibrating!</span>")
+		return
 	active = !active
-	if (active)
-		force = 10
-		icon_state = "eshield[active]"
-		w_class = 4
-		playsound(user, 'sound/weapons/saberon.ogg', 50, 1)
-		to_chat(user, "\blue [src] is now active.")
-
+	if(active)
+		turn_on(user)
 	else
-		force = 3
-		icon_state = "eshield[active]"
-		w_class = 1
-		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
-		to_chat(user, "\blue [src] can now be concealed.")
+		turn_off(user)
+	add_fingerprint(user)
 
-	if(istype(user,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = user
+/obj/item/weapon/shield/energy/proc/turn_on(mob/living/user)
+	force = 10
+	icon_state = "eshield[active]"
+	w_class = 4
+	playsound(loc, 'sound/weapons/saberon.ogg', 50, 1)
+	to_chat(user, "<span class='notice'> [src] is now active.</span>")
+	update_icon()
+
+/obj/item/weapon/shield/energy/proc/turn_off(mob/living/user)
+	force = 3
+	icon_state = "eshield[active]"
+	w_class = 1
+	playsound(loc, 'sound/weapons/saberoff.ogg', 50, 1)
+	update_icon()
+	if(user)
+		to_chat(user, "<span class='notice'> [src] can now be concealed.</span>")
+
+/obj/item/weapon/shield/energy/update_icon()
+	if(ishuman(loc))
+		var/mob/living/carbon/human/H = loc
 		H.update_inv_l_hand()
 		H.update_inv_r_hand()
-
-	add_fingerprint(user)
-	return

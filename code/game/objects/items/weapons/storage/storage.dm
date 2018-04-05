@@ -32,7 +32,7 @@
 	return ..()
 
 /obj/item/weapon/storage/MouseDrop(obj/over_object as obj)
-	if (ishuman(usr) || ismonkey(usr)) //so monkeys can take off their backpacks -- Urist
+	if (ishuman(usr) || ismonkey(usr) || isIAN(usr)) //so monkeys can take off their backpacks -- Urist
 		var/mob/M = usr
 
 		if(!over_object)
@@ -63,6 +63,10 @@
 					if(!M.unEquip(src))
 						return
 					M.put_in_l_hand(src)
+				if("mouth")
+					if(!M.unEquip(src))
+						return
+					M.put_in_active_hand(src)
 			src.add_fingerprint(usr)
 			return
 	return
@@ -92,7 +96,7 @@
 	user.s_active = src
 	is_seeing |= user
 
-/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower)
+/obj/item/weapon/storage/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
 	close_all()
 	return ..()
 
@@ -292,7 +296,8 @@
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
 				else if (W && W.w_class >= 3.0) //Otherwise they can only see large or normal items from a distance...
 					M.show_message("<span class='notice'>[usr] puts [W] into [src].</span>")
-
+		if(crit_fail && prob(25))
+			remove_from_storage(W, get_turf(src))
 		src.orient2hud(usr)
 		for(var/mob/M in can_see_contents())
 			show_to(M)
@@ -341,20 +346,20 @@
 
 	if(isrobot(user))
 		to_chat(user, "\blue You're a robot. No.")
-		return //Robots can't interact with storage items.
+		return //Robots can't interact with storage items. FALSE
 
 	if(!can_be_inserted(W))
-		return
+		return FALSE
 
 	if(istype(W, /obj/item/weapon/implanter/compressed))
-		return
+		return FALSE
 
 	if(istype(W, /obj/item/weapon/tray))
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			if(prob(85))
 				to_chat(user, "\red The tray won't fit in [src].")
-				return
+				return FALSE
 			else
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
@@ -363,11 +368,11 @@
 				to_chat(user, "\red God damnit!")
 
 	if(istype(W, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
-		return
+		return FALSE
 
 	W.add_fingerprint(user)
 	handle_item_insertion(W)
-	return
+	return TRUE
 
 /obj/item/weapon/storage/dropped(mob/user)
 	return
@@ -393,6 +398,10 @@
 				src.close(M)
 	src.add_fingerprint(user)
 
+//Should be merged into attack_hand() later, i mean whole attack_paw() proc, but thats probably a lot of work.
+/obj/item/weapon/storage/attack_paw(mob/user) // so monkey, ian or something will open it, istead of unequip from back
+	return attack_hand(user)                  // to unequip - there is drag n drop available for this task - same as humans do.
+
 /obj/item/weapon/storage/verb/toggle_gathering_mode()
 	set name = "Switch Gathering Method"
 	set category = "Object"
@@ -417,8 +426,8 @@
 	for(var/obj/item/I in contents)
 		remove_from_storage(I, T)
 
-/obj/item/weapon/storage/New()
-	..()
+/obj/item/weapon/storage/atom_init()
+	. = ..()
 	if(allow_quick_empty)
 		verbs += /obj/item/weapon/storage/verb/quick_empty
 	else

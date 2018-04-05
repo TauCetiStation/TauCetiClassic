@@ -24,9 +24,6 @@ ADMIN_LEGACY_SYSTEM
 ## Add a # infront of this if you want to use the SQL based banning system. The legacy systems use the files in the data folder. You need to set up your database to use the SQL based system.
 BAN_LEGACY_SYSTEM
 
-## Add a # here if you wish to use the setup where jobs have more access. This is intended for servers with low populations - where there are not enough players to fill all roles, so players need to do more than just one job. Also for servers where they don't want people to hide in their own departments.
-JOBS_HAVE_MINIMAL_ACCESS
-
 ## Unhash this entry to have certain jobs require your account to be at least a certain number of days old to select. You can configure the exact age requirement for different jobs by editing
 ## the minimal_player_age variable in the files in folder /code/game/jobs/job/.. for the job you want to edit. Set minimal_player_age to 0 to disable age requirement for that job.
 ## REQUIRES the database set up to work. Keep it hashed if you don't have a database set up.
@@ -171,6 +168,12 @@ GUEST_BAN
 ## Wiki address
 # WIKIURL http://example.com
 
+## Server Rules address
+# SERVER_RULES_URL http://example.com
+
+## Discord invite address
+# DISCORD_INVITE_URL http://example.com
+
 ## Ban appeals URL - usually for a forum or wherever people should go to contact your admins.
 # BANAPPEALS http://example.com
 
@@ -224,25 +227,9 @@ USEALIENWHITELIST
 ## Password used for authorizing ircbot and other external tools.
 #COMMS_PASSWORD
 
-## Uncomment to enable sending data to the IRC bot.
-#USE_IRC_BOT
-
-## Host where the IRC bot is hosted.  Port 45678 needs to be open.
-#IRC_BOT_HOST localhost
-
-## IRC channel to send information to.  Leave blank to disable.
-#MAIN_IRC #main
-
-## IRC channel to send adminhelps to.  Leave blank to disable adminhelps-to-irc.
-#ADMIN_IRC #admin
-
 ## Path to the python2 executable on the system.  Leave blank for default.
 ## Default is "python" on Windows, "/usr/bin/env python2" on UNIX.
 #PYTHON_PATH
-
-## Uncomment to use the C library nudge instead of the python script.
-## This helps security and stability on Linux, but you need to compile the library first.
-#USE_LIB_NUDGE
 
 ## Uncommen to allow ghosts to write in blood during Cult rounds.
 ALLOW_CULT_GHOSTWRITER
@@ -263,3 +250,15 @@ REQ_CULT_GHOSTWRITER 6
 ## 1 - alarms only for first round people
 ## 2 - for first day
 ANTIGRIEF_ALARM_LEVEL 1
+
+## Uncomment to provide special actions for people from /config/donators.txt
+#ALLOW_DONATORS
+
+## Your link to donan informations
+#DONATE_INFO_URL http://you-url
+
+## Uncomment this to enable checking for the cid randomizer dll. (disabled if database isn't enabled or connected)
+# CHECK_RANDOMIZER
+
+## Uncomment this to enable job restrictions for xenos in occupation menu.
+USE_ALIEN_JOB_RESTRICTION

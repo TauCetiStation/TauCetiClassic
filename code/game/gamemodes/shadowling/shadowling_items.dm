@@ -7,21 +7,21 @@
 	has_sensor = 0
 	canremove = 0
 	origin_tech = null
-	flags = ABSTRACT
+	flags = ABSTRACT | DROPDEL
 	unacidable = 1
 
 
 /obj/item/clothing/suit/space/shadowling
 	name = "chitin shell"
 	desc = "Dark, semi-transparent shell. Protects against vacuum, but not against the light of the stars." //Still takes damage from spacewalking but is immune to space itself
-	icon_state = "golem"
+	icon_state = "shadowling_armor"
 	item_state = "golem"
 	body_parts_covered = FULL_BODY //Shadowlings are immune to space
 	cold_protection = FULL_BODY
 	//min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
-	flags = ABSTRACT | THICKMATERIAL
+	flags = ABSTRACT | DROPDEL | THICKMATERIAL
 	slowdown = 0
 	unacidable = 1
 	heat_protection = null //You didn't expect a light-sensitive creature to have heat resistance, did you?
@@ -33,9 +33,9 @@
 /obj/item/clothing/shoes/shadowling
 	name = "chitin feet"
 	desc = "Charred-looking feet. They have minature hooks that latch onto flooring."
-	icon_state = "golem"
+	icon_state = "shadowling_shoes"
 	unacidable = 1
-	flags = NOSLIP | ABSTRACT
+	flags = NOSLIP | ABSTRACT | DROPDEL
 	canremove = 0
 
 
@@ -47,7 +47,7 @@
 	origin_tech = null
 	siemens_coefficient = 0
 	unacidable = 1
-	flags = ABSTRACT
+	flags = ABSTRACT | DROPDEL
 	canremove = 0
 	flags_inv = 0
 
@@ -55,23 +55,23 @@
 /obj/item/clothing/gloves/shadowling
 	name = "chitin hands"
 	desc = "An electricity-resistant yet thin covering of the hands."
-	icon_state = "golem"
+	icon_state = "shadowling_gloves"
 	item_state = null
 	origin_tech = null
 	siemens_coefficient = 0
 	unacidable = 1
-	flags = ABSTRACT
+	flags = ABSTRACT | DROPDEL
 	canremove = 0
 
 
 /obj/item/clothing/head/shadowling
 	name = "chitin helm"
 	desc = "A helmet-like enclosure of the head."
-	icon_state = "golem"
+	icon_state = "shadowling_head"
 	item_state = null
 	origin_tech = null
 	unacidable = 1
-	flags = ABSTRACT
+	flags = ABSTRACT | DROPDEL
 	canremove = 0
 	flags_inv = 0
 
@@ -91,7 +91,7 @@
 	//invisa_view = 2
 	//flash_protect = 2
 	unacidable = 1
-	flags = ABSTRACT
+	flags = ABSTRACT | DROPDEL
 	canremove = 0
 	action_button_name = "Toggle Vision"
 	icon = 'icons/mob/shadowling_hud.dmi'
@@ -126,11 +126,14 @@
 	icon = 'icons/effects/genetics.dmi'
 	icon_state = "shadow_portal"
 
-/obj/structure/shadow_vortex/New()
-	//src.audible_message("<span class='warning'><b>\The [src] lets out a dismaying screech as dimensional barriers are torn apart!</span>")
-	playsound(loc, 'sound/effects/supermatter.ogg', 100, 1)
-	sleep(100)
-	qdel(src)
+/obj/structure/shadow_vortex/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/shadow_vortex/atom_init_late()
+	audible_message("<span class='warning'><b>\The [src] lets out a dismaying screech as dimensional barriers are torn apart!</span>")
+	playsound(src, 'sound/effects/supermatter.ogg', 100, 1)
+	QDEL_IN(src, 100)
 
 /obj/structure/shadow_vortex/Crossed(var/td)
 	..()

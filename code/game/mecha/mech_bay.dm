@@ -23,8 +23,8 @@
 	var/repairability = 0
 	var/turf/recharging_turf = null
 
-/obj/machinery/mech_bay_recharge_port/New()
-	..()
+/obj/machinery/mech_bay_recharge_port/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/mech_recharger(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
@@ -32,7 +32,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
 	RefreshParts()
 	recharging_turf = get_step(loc, dir)
 
@@ -101,15 +101,7 @@
 		MT.buffer = src
 		to_chat(user, "<span class='notice'>You download data to the buffer.</span>")
 
-/obj/machinery/computer/mech_bay_power_console/attack_ai(mob/user)
-	return interact(user)
-
-/obj/machinery/computer/mech_bay_power_console/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/mech_bay_power_console/interact(mob/user)
+/obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user)
 	var/data
 	if(!recharge_port)
 		data += "<div class='statusDisplay'>No recharging port detected.</div><BR>"
@@ -128,7 +120,6 @@
 	var/datum/browser/popup = new(user, "mech recharger", name, 300, 300)
 	popup.set_content(data)
 	popup.open()
-	return
 
 /obj/machinery/computer/mech_bay_power_console/Topic(href, href_list)
 	. = ..()
@@ -166,5 +157,6 @@
 	else
 		icon_state = "recharge_comp_on"
 
-/obj/machinery/computer/mech_bay_power_console/initialize()
+/obj/machinery/computer/mech_bay_power_console/atom_init()
+	. = ..()
 	reconnect()

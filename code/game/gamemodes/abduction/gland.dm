@@ -19,16 +19,16 @@
 /obj/item/gland/proc/Start()
 	active = 1
 	next_activation  = world.time + rand(cooldown_low,cooldown_high)
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/gland/proc/Inject(mob/living/carbon/human/target)
 	host = target
-	target.internal_organs += src
+	target.organs += src
 	src.loc = target
 
 /obj/item/gland/process()
 	if(!active)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		return
 	if(next_activation <= world.time)
 		//This gives a chance to transplant the gland active into someone else if you're fast
@@ -136,10 +136,7 @@ obj/item/gland/slime/activate()
 
 /obj/item/gland/pop/activate()
 	to_chat(host, "<span class='notice'>You feel unlike yourself.</span>")
-	var/species = pick(list(/datum/species/vox,/datum/species/diona,/datum/species/tajaran,/datum/species/unathi,/datum/species/human))
-	host.species = new species()
-	host.regenerate_icons()
-	return
+	host.set_species_soft(pick(HUMAN , UNATHI , TAJARAN , DIONA , VOX))
 
 
 //VENTCRAWLING
@@ -280,11 +277,11 @@ obj/item/gland/slime/activate()
 
 /obj/effect/cocoon/abductor/proc/Start()
 	hatch_time = world.time + 600
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/cocoon/abductor/process()
 	if(world.time > hatch_time)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 		for(var/mob/M in contents)
 			src.visible_message("<span class='warning'>[src] hatches!</span>")
 			M.loc = src.loc

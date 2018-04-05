@@ -17,6 +17,11 @@
 	var/lum_g = 0
 	var/lum_b = 0
 
+	var/cache_r  = 0
+	var/cache_g  = 0
+	var/cache_b  = 0
+	var/cache_mx = 0
+
 /datum/lighting_corner/New(var/turf/new_turf, var/diagonal)
 	. = ..()
 
@@ -55,8 +60,7 @@
 		i            = LIGHTING_CORNER_DIAGONAL.Find(turn(masters[T], 180))
 		T.corners[i] = src
 
-	spawn() // Lighting overlays get initialized AFTER corners, so this spawn() will make sure the activity (which checks for overlays) is updated after the overlays are generated.
-		update_active()
+	update_active()
 
 /datum/lighting_corner/proc/update_active()
 	active = FALSE
@@ -70,6 +74,26 @@
 	lum_r += delta_r
 	lum_g += delta_g
 	lum_b += delta_b
+
+	// Cache these values a head of time so 4 individual lighting overlays don't all calculate them individually.
+	var/mx = max(lum_r, lum_g, lum_b) // Scale it so 1 is the strongest lum, if it is above 1.
+	. = 1 // factor
+	if (mx > 1)
+		. = 1 / mx
+
+	#if LIGHTING_SOFT_THRESHOLD != 0
+	else if (mx < LIGHTING_SOFT_THRESHOLD)
+		. = 0 // 0 means soft lighting.
+
+	cache_r  = lum_r * . || LIGHTING_SOFT_THRESHOLD
+	cache_g  = lum_g * . || LIGHTING_SOFT_THRESHOLD
+	cache_b  = lum_b * . || LIGHTING_SOFT_THRESHOLD
+	#else
+	cache_r  = lum_r * .
+	cache_g  = lum_g * .
+	cache_b  = lum_b * .
+	#endif
+	cache_mx = mx
 
 	for(var/TT in masters)
 		var/turf/T = TT

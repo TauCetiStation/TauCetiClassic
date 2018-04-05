@@ -52,8 +52,6 @@
 	if(camera)
 		camera.status = 0
 
-	remove_robot_verbs()
-
 	sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
 	see_in_dark = 8
 	see_invisible = SEE_INVISIBLE_LEVEL_TWO

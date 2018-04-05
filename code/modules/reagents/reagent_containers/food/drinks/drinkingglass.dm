@@ -110,6 +110,10 @@
 					icon_state = "tequillaglass"
 					name = "Glass of Tequilla"
 					desc = "Now all that's missing is the weird colored shades!"
+				if("champagne")
+					icon_state = "chamglass"
+					name = "Glass of Champagne"
+					desc = "Very fine drink"
 				if("patron")
 					icon_state = "patronglass"
 					name = "Glass of Patron"
@@ -450,6 +454,14 @@
 					icon_state = "milkshake"
 					name = "Milkshake"
 					desc = "Glorious brainfreezing mixture."
+				if("milkshake_chocolate")
+					icon_state = "milkshake_chocolate"
+					name = "Cjocolate Milkshake"
+					desc = "Glorious brainfreezing mixture. Now with cocoa!"
+				if("milkshake_strawberry")
+					icon_state = "milkshake_strawberry"
+					name = "Strawberry Milkshake"
+					desc = "Glorious brainfreezing mixture. So sweet!"
 				if("lemonade")
 					icon_state = "lemonadeglass"
 					name = "Lemonade"
@@ -509,7 +521,7 @@
 				for(var/mob/O in viewers(world.view, user))
 					O.show_message(text("\red [] has been splashed with [] in the face by []!", target, src, user), 1)
 				src.reagents.reaction(target, TOUCH)
-				spawn(5) src.reagents.clear_reagents()
+				addtimer(CALLBACK(reagents, /datum/reagents.proc/clear_reagents), 5)
 				return
 		else
 			if(user.a_intent == "help")
@@ -527,13 +539,15 @@
 
 // for /obj/machinery/vending/sovietsoda
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda
-	New()
-		..()
-		reagents.add_reagent("sodawater", volume)
-		on_reagent_change()
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/soda/atom_init()
+	. = ..()
+	reagents.add_reagent("sodawater", volume)
+	on_reagent_change()
 
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola
-	New()
-		..()
-		reagents.add_reagent("cola", volume)
-		on_reagent_change()
+
+/obj/item/weapon/reagent_containers/food/drinks/drinkingglass/cola/atom_init()
+	. = ..()
+	reagents.add_reagent("cola", volume)
+	on_reagent_change()

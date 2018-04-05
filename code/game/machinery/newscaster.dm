@@ -132,13 +132,13 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	name = "Security Newscaster"
 	securityCaster = 1
 
-/obj/machinery/newscaster/New()         //Constructor, ho~
+/obj/machinery/newscaster/atom_init()         //Constructor, ho~
 	allCasters += src
-	src.paper_remaining = 15            // Will probably change this to something better
+	paper_remaining = 15            // Will probably change this to something better
 	for(var/obj/machinery/newscaster/NEWSCASTER in allCasters) // Let's give it an appropriate unit number
-		src.unit_no++
-	src.update_icon() //for any custom ones on the map...
-	..()                                //I just realised the newscasters weren't in the global machines list. The superconstructor call will tend to that
+		unit_no++
+	update_icon() //for any custom ones on the map...
+	. = ..()                                //I just realised the newscasters weren't in the global machines list. The superconstructor call will tend to that
 
 /obj/machinery/newscaster/Destroy()
 	allCasters -= src
@@ -200,13 +200,15 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 			return
 	return
 
-/obj/machinery/newscaster/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/newscaster/attack_hand(mob/user)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
-	if(!src.ispowered || src.isbroken)
+/obj/machinery/newscaster/ui_interact(mob/user)            //########### THE MAIN BEEF IS HERE! And in the proc below this...############
+	if(isbroken)
 		return
-	if(istype(user, /mob/living/carbon/human) || istype(user,/mob/living/silicon) )
+
+	if(isobserver(user))
+		to_chat(user, "[src]'s UI has no support for observer.")
+		return
+
+	if(ishuman(user) || issilicon(user)) // need abit of rewriting this to make it work for observers.
 		var/mob/living/human_or_robot_user = user
 		var/dat
 		dat = text("<HEAD><TITLE>Newscaster</TITLE></HEAD><H3>Newscaster Unit #[src.unit_no]</H3>")
@@ -450,7 +452,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
 
-		human_or_robot_user << browse(dat, "window=newscaster_main;size=400x600")
+		human_or_robot_user << browse(entity_ja(dat), "window=newscaster_main;size=400x600")
 		onclose(human_or_robot_user, "newscaster_main")
 
 	/*if(src.isbroken) //debugging shit
@@ -467,9 +469,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		return
 
 	if(href_list["set_channel_name"])
-		src.channel_name = sanitizeSQL(sanitize_alt(copytext(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""), 1, MAX_NAME_LEN)))
-		while (findtext(src.channel_name," ") == 1)
-			src.channel_name = copytext(src.channel_name, 2, lentext(src.channel_name) + 1)
+		src.channel_name = sanitize_safe(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", input_default(channel_name)), MAX_LNAME_LEN)
 		//src.update_icon()
 
 	else if(href_list["set_channel_lock"])
@@ -512,12 +512,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		for(var/datum/feed_channel/F in news_network.network_channels)
 			if( (!F.locked || F.author == scanned_user) && !F.censored)
 				available_channels += F.channel_name
-		src.channel_name = strip_html(input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels )
+		src.channel_name = input(usr, "Choose receiving Feed Channel", "Network Channel Handler") in available_channels
 
 	else if(href_list["set_new_message"])
-		src.msg = sanitize_alt(input(usr, "Write your Feed story", "Network Channel Handler", ""))
-		while (findtext(src.msg," ") == 1)
-			src.msg = copytext(src.msg, 2, lentext(src.msg) + 1)
+		src.msg = sanitize(input(usr, "Write your Feed story", "Network Channel Handler", input_default(src.msg)), extra = FALSE)
 
 	else if(href_list["set_attachment"])
 		AttachPhoto(usr)
@@ -572,14 +570,10 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		src.screen = 14
 
 	else if(href_list["set_wanted_name"])
-		src.channel_name = sanitize_alt(input(usr, "Provide the name of the Wanted person", "Network Security Handler", ""))
-		while (findtext(src.channel_name," ") == 1)
-			src.channel_name = copytext(src.channel_name,2,lentext(src.channel_name)+1)
+		src.channel_name = sanitize(input(usr, "Provide the name of the Wanted person", "Network Security Handler", input_default(channel_name)), MAX_LNAME_LEN)
 
 	else if(href_list["set_wanted_desc"])
-		src.msg = sanitize_alt(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
-		while (findtext(src.msg," ") == 1)
-			src.msg = copytext(src.msg,2,lentext(src.msg)+1)
+		src.msg = sanitize(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", input_default(msg)), extra = FALSE)
 
 	else if(href_list["submit_wanted"])
 		var/input_param = text2num(href_list["submit_wanted"])
@@ -714,6 +708,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 				src.screen=2*/  //Obsolete after autorecognition
 
 	if(istype(I, /obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>Now [anchored ? "un" : ""]securing [name]</span>")
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		if(do_after(user, 60, target = src))
@@ -729,6 +724,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	else
 		if(istype(I, /obj/item/weapon) )
 			user.do_attack_animation(src)
+			user.SetNextMove(CLICK_CD_MELEE)
 			var/obj/item/weapon/W = I
 			if(W.force <15)
 				for (var/mob/O in hearers(5, src.loc))
@@ -748,10 +744,6 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 		else
 			to_chat(user, "<FONT COLOR='blue'>This does nothing.</FONT>")
 	src.update_icon()
-
-/obj/machinery/newscaster/attack_ai(mob/user)
-	return src.attack_hand(user) //or maybe it'll have some special functions? No idea.
-
 
 /obj/machinery/newscaster/attack_paw(mob/user)
 	to_chat(user, "<font color='blue'>The newscaster controls are far too complicated for your tiny brain!</font>")
@@ -803,11 +795,7 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 	var/scribble=""
 	var/scribble_page = null
 
-/*obj/item/weapon/newspaper/attack_hand(mob/user as mob)
-	..()
-	to_chat(world, "derp")*/
-
-obj/item/weapon/newspaper/attack_self(mob/user)
+/obj/item/weapon/newspaper/attack_self(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/human_user = user
 		var/dat
@@ -881,7 +869,7 @@ obj/item/weapon/newspaper/attack_self(mob/user)
 				dat+="I'm sorry to break your immersion. This shit's bugged. Report this bug to Agouri, polyxenitopalidou@gmail.com"
 
 		dat+="<BR><HR><div align='center'>[src.curr_page+1]</div>"
-		human_user << browse(dat, "window=newspaper_main;size=300x400")
+		human_user << browse(entity_ja(dat), "window=newspaper_main;size=300x400")
 		onclose(human_user, "newspaper_main")
 	else
 		to_chat(user, "The paper is full of intelligible symbols!")
@@ -924,7 +912,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W, mob/user)
 		if(src.scribble_page == src.curr_page)
 			to_chat(user, "<FONT COLOR='blue'>There's already a scribble in this page... You wouldn't want to make things too cluttered, would you?</FONT>")
 		else
-			var/s = sanitize(input(user, "Write something", "Newspaper", ""), 1, MAX_MESSAGE_LEN)
+			var/s = sanitize(input(user, "Write something", "Newspaper", ""))
 //			s = copytext(sanitize_u(s), 1, MAX_MESSAGE_LEN)
 			if (!s)
 				return
@@ -980,7 +968,7 @@ obj/item/weapon/newspaper/attackby(obj/item/weapon/W, mob/user)
 	var/turf/T = get_turf(src)                      //Who the fuck uses spawn(600) anyway, jesus christ
 	if(channel)
 		for(var/mob/O in hearers(world.view-1, T))
-			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Breaking news from [sanitize_chat(channel)]!\"</span>",2)
+			O.show_message("<span class='newscaster'><EM>[src.name]</EM> beeps, \"Breaking news from [channel]!\"</span>",2)
 		src.alert = 1
 		src.update_icon()
 		spawn(300)

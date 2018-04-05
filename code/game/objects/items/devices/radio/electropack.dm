@@ -98,7 +98,7 @@
 
 		M.Weaken(10)
 
-	if(master && wires & 1)
+	if(master && !wires.is_index_cut(RADIO_WIRE_SIGNAL))
 		master.receive_signal()
 	return
 
@@ -122,6 +122,6 @@ Code:
 <A href='byond://?src=\ref[src];code=1'>+</A>
 <A href='byond://?src=\ref[src];code=5'>+</A><BR>
 </TT>"}
-	user << browse(dat, "window=radio")
+	user << browse(entity_ja(dat), "window=radio")
 	onclose(user, "radio")
 	return

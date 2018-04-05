@@ -10,6 +10,7 @@
 
 /obj/structure/pit/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/shovel))
+		if(user.is_busy()) return
 		visible_message("<span class='notice'>\The [user] starts [open ? "filling" : "digging open"] \the [src]</span>")
 		if(do_after(user, 50, target = src) )
 			visible_message("<span class='notice'>\The [user] [open ? "fills" : "digs open"] \the [src]!</span>")
@@ -25,13 +26,14 @@
 			to_chat(user, "<span class='notice'>There's already a grave marker here.</span>")
 		else
 			var/obj/item/stack/sheet/wood/plank = W
-			if(plank.amount < 1)
+			if(plank.get_amount() < 1)
 				return
+			if(user.is_busy()) return
 			visible_message("<span class='notice'>\The [user] starts making a grave marker on top of \the [src]</span>")
 			if(do_after(user, 50, target = src))
-				visible_message("<span class='notice'>\The [user] finishes the grave marker</span>")
 				if(!plank.use(1))
 					return
+				visible_message("<span class='notice'>\The [user] finishes the grave marker</span>")
 				new/obj/structure/gravemarker(src.loc)
 			else
 				to_chat(user, "<span class='notice'>You stop making a grave marker.</span>")
@@ -98,8 +100,8 @@
 	desc = "Some things are better left buried."
 	open = 0
 
-/obj/structure/pit/closed/New()
-	..()
+/obj/structure/pit/closed/atom_init()
+	. = ..()
 	close()
 
 //invisible until unearthed first
@@ -115,7 +117,7 @@
 	name = "grave"
 	icon_state = "pit0"
 
-/obj/structure/pit/closed/grave/New()
+/obj/structure/pit/closed/grave/atom_init()
 	var/obj/structure/closet/coffin/C = new(src.loc)
 
 	var/obj/effect/decal/remains/human/bones = new(C)
@@ -150,14 +152,14 @@
 
 	if(prob(30))
 		var/list/misc = list(
-			/obj/item/clothing/tie/fluff/altair_locket,
-			/obj/item/clothing/tie/holobadge,
-			/obj/item/clothing/tie/horrible,
-			/obj/item/clothing/tie/medal,
-			/obj/item/clothing/tie/medal/silver,
-			/obj/item/clothing/tie/medal/silver/valor,
-			/obj/item/clothing/tie/medal/gold,
-			/obj/item/clothing/tie/medal/gold/heroism,
+			/obj/item/clothing/accessory/fluff/altair_locket,
+			/obj/item/clothing/accessory/holobadge,
+			/obj/item/clothing/accessory/tie/horrible,
+			/obj/item/clothing/accessory/medal,
+			/obj/item/clothing/accessory/medal/silver,
+			/obj/item/clothing/accessory/medal/silver/valor,
+			/obj/item/clothing/accessory/medal/gold,
+			/obj/item/clothing/accessory/medal/gold/heroism,
 			/obj/item/weapon/gun/energy/laser/retro/jetsons
 			)
 		loot = pick(misc)
@@ -165,7 +167,7 @@
 
 	var/obj/structure/gravemarker/random/R = new(src.loc)
 	R.generate()
-	..()
+	. = ..()
 
 /obj/structure/gravemarker
 	name = "grave marker"
@@ -184,9 +186,9 @@
 	..()
 	to_chat(user, message)
 
-/obj/structure/gravemarker/random/New()
+/obj/structure/gravemarker/random/atom_init()
 	generate()
-	..()
+	. = ..()
 
 /obj/structure/gravemarker/random/proc/generate()
 	icon_state = pick("wood","cross")
@@ -200,6 +202,7 @@
 
 /obj/structure/gravemarker/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/hatchet))
+		if(user.is_busy()) return
 		visible_message("<span class = 'warning'>\The [user] starts hacking away at \the [src] with \the [W].</span>")
 		if(do_after(user, 30, target = src))
 			visible_message("<span class = 'warning'>\The [user] hacks \the [src] apart.</span>")
@@ -207,7 +210,8 @@
 			qdel(src)
 			return
 	if(istype(W,/obj/item/weapon/pen))
-		var/msg = sanitize(input(user, "What should it say?", "Grave marker", message) as text|null)
+		var/msg = sanitize(input(user, "What should it say?", "Grave marker", input_default(message)) as text|null)
+		add_fingerprint(user)
 		if(msg)
 			message = msg
 

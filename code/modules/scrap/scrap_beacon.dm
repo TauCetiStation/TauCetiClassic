@@ -14,18 +14,20 @@
 	var/active = 0
 
 /obj/structure/scrap_beacon/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if((last_summon + summon_cooldown) >= world.time)
 		to_chat(user, "<span class='notice'>[src.name] not charged yet.</span>")
 		return
 	last_summon = world.time
 	if(!active)
-		spawn()
-			start_scrap_summon()
+		start_scrap_summon()
 
 /obj/structure/scrap_beacon/update_icon()
 	icon_state = "beacon[active]"
 
 /obj/structure/scrap_beacon/proc/start_scrap_summon()
+	set waitfor = FALSE
+
 	active = 1
 	update_icon()
 	sleep(30)

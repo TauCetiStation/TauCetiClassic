@@ -8,6 +8,7 @@
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
 	if(.)
+		handle_phantom_move(NewLoc, direct)
 		if(src.nutrition && src.stat != DEAD)
 			src.nutrition -= HUNGER_FACTOR/10
 			if(src.m_intent == "run")
@@ -20,6 +21,21 @@
 			germ_level++
 
 /mob/living/carbon/relaymove(mob/user, direction)
+	if(isessence(user))
+		user.setMoveCooldown(1)
+		var/mob/living/parasite/essence/essence = user
+		if(!(essence.flags_allowed & ESSENCE_PHANTOM))
+			to_chat(user, "<span class='userdanger'>Your host forbrade you to own phantom</span>")
+			return
+
+		if(!essence.phantom.showed)
+			essence.phantom.show_phantom()
+			return
+		var/tile = get_turf(get_step(essence.phantom, direction))
+		if(get_dist(tile, essence.host) < 8)
+			essence.phantom.dir = direction
+			essence.phantom.loc = tile
+		return
 	if(user in src.stomach_contents)
 		if(prob(40))
 			for(var/mob/M in hearers(4, src))
@@ -30,13 +46,11 @@
 				var/d = rand(round(I.force / 4), I.force)
 				if(istype(src, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = src
-					var/organ = H.get_organ("chest")
-					if (istype(organ, /datum/organ/external))
-						var/datum/organ/external/temp = organ
-						temp.take_damage(d, 0)
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
+					BP.take_damage(d, 0)
 					H.updatehealth()
 				else
-					src.take_organ_damage(d)
+					src.take_bodypart_damage(d)
 				for(var/mob/M in viewers(user, null))
 					if(M.client)
 						M.show_message(text("<span class='danger'>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
@@ -47,6 +61,14 @@
 						A.loc = loc
 						stomach_contents.Remove(A)
 					src.gib()
+
+/mob/living/carbon/attack_animal(mob/living/simple_animal/M)
+	..()
+	if(istype(M,/mob/living/simple_animal/headcrab))
+		var/mob/living/simple_animal/headcrab/crab = M
+		crab.Infect(src)
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/gib()
 	for(var/mob/M in src)
@@ -73,54 +95,39 @@
 		..()
 
 /mob/living/carbon/attack_hand(mob/M)
-	if(!istype(M, /mob/living/carbon)) return
-	if (hasorgans(M))
-		var/datum/organ/external/temp = M:organs_by_name["r_hand"]
-		if (M.hand)
-			temp = M:organs_by_name["l_hand"]
-		if(temp && !temp.is_usable())
-			to_chat(M, "<span class='rose'>You can't use your [temp.display_name].</span>")
-			return
+	if(!iscarbon(M))
+		return
 
 	for(var/datum/disease/D in viruses)
-
 		if(D.spread_by_touch())
-
 			M.contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	for(var/datum/disease/D in M.viruses)
-
 		if(D.spread_by_touch())
-
 			contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	return
 
 
 /mob/living/carbon/attack_paw(mob/M)
-	if(!istype(M, /mob/living/carbon)) return
+	if(!iscarbon(M))
+		return
 
 	for(var/datum/disease/D in viruses)
-
 		if(D.spread_by_touch())
 			M.contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	for(var/datum/disease/D in M.viruses)
-
 		if(D.spread_by_touch())
 			contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	return
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	if(status_flags & GODMODE)	return 0	//godmode
 
 	var/turf/T = get_turf(src)
-	var/obj/effect/decal/cleanable/water/W = locate(/obj/effect/decal/cleanable/water, T)
-	if(W)
+	var/obj/effect/fluid/F = locate() in T
+	if(F)
 		attack_log += "\[[time_stamp()]\]<font color='red'> [src] was shocked by the [source] and started chain-reaction with water!</font>"
-		msg_admin_attack("[key_name(src)] was shocked by the [source] and started chain-reaction with water! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>)")
-		W.electrocute_act(shock_damage)
+		msg_admin_attack("[key_name(src)] was shocked by the [source] and started chain-reaction with water! [ADMIN_JMP(src)]")
+		F.electrocute_act(shock_damage)
 
 	shock_damage *= siemens_coeff
 	if(shock_damage<1)
@@ -194,10 +201,10 @@
 				"<span class='notice'>You check yourself for injuries.</span>" \
 				)
 
-			for(var/datum/organ/external/org in H.organs)
+			for(var/obj/item/organ/external/BP in H.bodyparts)
 				var/status = ""
-				var/brutedamage = org.brute_dam
-				var/burndamage = org.burn_dam
+				var/brutedamage = BP.brute_dam
+				var/burndamage = BP.burn_dam
 				if(halloss > 0)
 					if(prob(30))
 						brutedamage += halloss
@@ -219,14 +226,14 @@
 					status += "blistered"
 				else if(burndamage > 0)
 					status += "numb"
-				if(org.status & ORGAN_DESTROYED)
+				if(BP.status & ORGAN_DESTROYED)
 					status = "MISSING!"
-				if(org.status & ORGAN_MUTATED)
+				if(BP.status & ORGAN_MUTATED)
 					status = "weirdly shapen."
 				if(status == "")
 					status = "OK"
-				src.show_message(text("\t []My [] is [].",status=="OK"?"\blue ":"\red ",org.display_name,status),1)
-			if(H.species && (H.species.name == "Skeleton") && !H.w_uniform && !H.wear_suit)
+				src.show_message(text("\t []My [] is [].", status == "OK" ? "\blue " : "\red ", BP.name,status), 1)
+			if(H.species && (H.species.name == SKELETON) && !H.w_uniform && !H.wear_suit)
 				H.play_xylophone()
 		else
 			var/t_him = "it"
@@ -240,14 +247,22 @@
 
 			if(lying)
 				src.sleeping = max(0,src.sleeping-5)
-				if(!src.sleeping)
-					src.resting = 0
-				if(src.crawling)
-					if(crawl_can_use() && src.pass_flags & PASSCRAWL)
-						src.pass_flags ^= PASSCRAWL
-						src.crawling = 0
-				M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
-									"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
+				if (!M.lying)
+					if(!src.sleeping)
+						src.resting = 0
+					if(src.crawling)
+						if(crawl_can_use() && src.pass_flags & PASSCRAWL)
+							src.pass_flags ^= PASSCRAWL
+							src.crawling = 0
+					M.visible_message("<span class='notice'>[M] shakes [src] trying to wake [t_him] up!</span>", \
+										"<span class='notice'>You shake [src] trying to wake [t_him] up!</span>")
+				else
+					if(!src.sleeping)
+						M.visible_message("<span class='notice'>[M] cuddles with [src] to make [t_him] feel better!</span>", \
+								"<span class='notice'>You cuddle with [src] to make [t_him] feel better!</span>")
+					else
+						M.visible_message("<span class='notice'>[M] gently touches [src] trying to wake [t_him] up!</span>", \
+										"<span class='notice'>You gently touch [src] trying to wake [t_him] up!</span>")
 			else
 				M.visible_message("<span class='notice'>[M] hugs [src] to make [t_him] feel better!</span>", \
 								"<span class='notice'>You hug [src] to make [t_him] feel better!</span>")
@@ -261,8 +276,49 @@
 /mob/living/carbon/proc/crawl_can_use()
 	var/turf/T = get_turf(src)
 	if( (locate(/obj/structure/table) in T) || (locate(/obj/structure/stool/bed) in T) || (locate(/obj/structure/plasticflaps) in T))
-		return 0
-	return 1
+		return FALSE
+	return TRUE
+
+/mob/living/carbon/var/crawl_getup = FALSE
+/mob/living/carbon/proc/crawl()
+	set name = "Crawl"
+	set category = "IC"
+
+	if( stat || weakened || stunned || paralysis || resting || sleeping || (status_flags & FAKEDEATH) || buckled)
+		return
+	if(crawl_getup)
+		return
+
+	if(crawling)
+		crawl_getup = TRUE
+		if(do_after(src, 10, target = src))
+			crawl_getup = FALSE
+			if(!crawl_can_use())
+				playsound(loc, 'sound/weapons/tablehit1.ogg', 50, 1)
+				if(ishuman(src))
+					var/mob/living/carbon/human/H = src
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+					BP.take_damage(5, used_weapon = "Facepalm") // what?.. that guy was insane anyway.
+				else
+					take_overall_damage(5, used_weapon = "Table")
+				Stun(1)
+				to_chat(src, "<span class='danger'>Ouch!</span>")
+				return
+			layer = 4.0
+		else
+			crawl_getup = FALSE
+			return
+	else
+		if(!crawl_can_use())
+			to_chat(src, "<span class='notice'>You can't crawl here!</span>")
+			return
+		layer = 3.9
+
+	pass_flags ^= PASSCRAWL
+	crawling = !crawling
+
+	to_chat(src, "<span class='notice'>You are now [crawling ? "crawling" : "getting up"].</span>")
+	update_canmove()
 
 /mob/living/carbon/proc/eyecheck()
 	return 0
@@ -357,6 +413,12 @@
 
 		item.throw_at(target, item.throw_range, item.throw_speed, src)
 
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+				var/obj/item/clothing/suit/V = H.wear_suit
+				V.attack_reaction(H, REACTION_THROWITEM)
+
 /mob/living/carbon/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
 	bodytemperature = max(bodytemperature, BODYTEMP_HEAT_DAMAGE_LIMIT+10)
@@ -405,7 +467,7 @@
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
-	user << browse(dat, text("window=mob[];size=325x500", name))
+	user << browse(entity_ja(dat), text("window=mob[];size=325x500", name))
 	onclose(user, "mob[name]")
 	return
 
@@ -435,11 +497,23 @@
 	set name = "Sleep"
 	set category = "IC"
 
-	if(usr.sleeping)
-		to_chat(usr, "<span class='rose'>You are already sleeping")
+	if(sleeping)
+		to_chat(src, "<span class='rose'>You are already sleeping</span>")
 		return
-	if(alert(src,"You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
-		usr.sleeping = 20 //Short nap
+	if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
+		sleeping = 20 //Short nap
+
+/mob/living/carbon/slip(slipped_on, stun_duration=4, weaken_duration=2)
+	if(buckled || sleeping || weakened || paralysis || stunned || resting || crawling)
+		return FALSE
+	stop_pulling()
+	to_chat(src, "<span class='warning'>You slipped on [slipped_on]!</span>")
+	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
+	if (stun_duration > 0)
+		Stun(stun_duration)
+	if(weaken_duration > 0)
+		Weaken(weaken_duration)
+	return TRUE
 
 //Brain slug proc for voluntary removal of control.
 /mob/living/carbon/proc/release_control()
@@ -566,5 +640,27 @@
 	else
 		return initial(pixel_x)
 
-/mob/living/carbon/getTrail()
-	return "trails_1"
+/mob/living/carbon/proc/bloody_hands(mob/living/source, amount = 2)
+	return
+
+/mob/living/carbon/proc/bloody_body(mob/living/source)
+	return
+
+/mob/living/carbon/proc/handle_phantom_move(NewLoc, direct)
+	if(!mind || !mind.changeling || length(mind.changeling.essences) < 1)
+		return
+	if(loc == NewLoc)
+		for(var/mob/living/parasite/essence/essence in mind.changeling.essences)
+			if(essence.phantom.showed)
+				essence.phantom.loc = get_turf(get_step(essence.phantom, direct))
+
+/mob/living/carbon/proc/remove_passemotes_flag()
+	for(var/thing in src)
+		if(istype(thing, /obj/item/weapon/holder))
+			return
+		if(istype(thing, /mob/living/carbon/monkey/diona))
+			return
+	status_flags &= ~PASSEMOTES
+
+/mob/living/carbon/proc/can_eat(flags = 255) //I don't know how and why does it work
+	return TRUE

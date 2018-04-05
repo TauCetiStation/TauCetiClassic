@@ -61,10 +61,10 @@
 	var/decrement = 1
 	var/charge = 1
 
-/obj/item/device/lightreplacer/New()
+/obj/item/device/lightreplacer/atom_init()
 	uses = max_uses / 2
 	failmsg = "The [name]'s refill light blinks red."
-	..()
+	. = ..()
 
 /obj/item/device/lightreplacer/examine(mob/user)
 	..()
@@ -78,15 +78,12 @@
 
 	if(istype(W, /obj/item/stack/sheet/glass))
 		var/obj/item/stack/sheet/glass/G = W
-		if(G.amount - decrement >= 0 && uses < max_uses)
-			var/remaining = max(G.amount - decrement, 0)
-			if(!remaining && !(G.amount - decrement) == 0)
+		if(G.get_amount() - decrement >= 0 && uses < max_uses)
+			var/remaining = max(G.get_amount() - decrement, 0)
+			if(!remaining && !(G.get_amount() - decrement) == 0)
 				to_chat(user, "There isn't enough glass.")
 				return
-			G.amount = remaining
-			if(!G.amount)
-				user.drop_item()
-				qdel(G)
+			G.set_amount(remaining)
 			AddUses(increment)
 			to_chat(user, "You insert a piece of glass into the [src.name]. You have [uses] lights remaining.")
 			return

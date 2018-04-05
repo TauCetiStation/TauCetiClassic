@@ -6,15 +6,9 @@
 	anchored = 1
 	mouse_opacity = 0
 
-/obj/effect/expl_particles/New()
-	..()
-	spawn (15)
-		src.loc = null
-	return
-
-/obj/effect/expl_particles/Move()
-	..()
-	return
+/obj/effect/expl_particles/atom_init()
+	. = ..()
+	QDEL_IN(src, 15)
 
 /datum/effect/system/expl_particles
 	var/number = 10
@@ -46,11 +40,9 @@
 	pixel_x = -32
 	pixel_y = -32
 
-/obj/effect/explosion/New()
-	..()
-	spawn (10)
-		src.loc = null
-	return
+/obj/effect/explosion/atom_init()
+	. = ..()
+	QDEL_IN(src, 10)
 
 /datum/effect/system/explosion
 	var/turf/location

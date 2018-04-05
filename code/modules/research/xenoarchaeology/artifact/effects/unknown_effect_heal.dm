@@ -13,10 +13,9 @@
 
 			if(ishuman(toucher))
 				var/mob/living/carbon/human/H = toucher
-				for(var/datum/organ/external/affecting in H.organs)
-					if(affecting && istype(affecting))
-						affecting.heal_damage(25 * weakness, 25 * weakness)
-				//H:heal_organ_damage(25, 25)
+				for(var/obj/item/organ/external/BP in H.bodyparts)
+					BP.heal_damage(25 * weakness, 25 * weakness)
+				//H:heal_bodypart_damage(25, 25)
 				H.vessel.add_reagent("blood",5)
 				H.nutrition += 50 * weakness
 				H.adjustBrainLoss(-25 * weakness)

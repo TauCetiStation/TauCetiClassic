@@ -10,10 +10,10 @@
 		var/const/max_health = 200
 		var/health = max_health //The shield can only take so much beating (prevents perma-prisons)
 
-/obj/machinery/shield/New()
-	src.dir = pick(1,2,3,4)
-	..()
-	update_nearby_tiles(need_rebuild=1)
+/obj/machinery/shield/atom_init()
+	dir = pick(1,2,3,4)
+	. = ..()
+	update_nearby_tiles(need_rebuild = 1)
 
 /obj/machinery/shield/Destroy()
 	opacity = 0
@@ -24,16 +24,6 @@
 /obj/machinery/shield/CanPass(atom/movable/mover, turf/target, height, air_group)
 	if(!height || air_group) return 0
 	else return ..()
-
-//Looks like copy/pasted code... I doubt 'need_rebuild' is even used here - Nodrak
-/obj/machinery/shield/proc/update_nearby_tiles(need_rebuild)
-	if(!SSair)
-		return 0
-
-	SSair.mark_for_update(get_turf(src))
-
-	return 1
-
 
 /obj/machinery/shield/attackby(obj/item/weapon/W, mob/user)
 	if(!istype(W)) return
@@ -46,7 +36,7 @@
 	//Play a fitting sound
 	playsound(src.loc, 'sound/effects/EMPulse.ogg', 75, 1)
 
-
+	user.SetNextMove(CLICK_CD_MELEE)
 	if (src.health <= 0)
 		visible_message("\blue The [src] dissipates!")
 		qdel(src)
@@ -136,22 +126,21 @@
 
 
 /obj/machinery/shieldgen
-		name = "Emergency shield projector"
-		desc = "Used to seal minor hull breaches."
-		icon = 'icons/obj/objects.dmi'
-		icon_state = "shieldoff"
-		density = 1
-		opacity = 0
-		anchored = 0
-		pressure_resistance = 2*ONE_ATMOSPHERE
-		req_access = list(access_engine)
-		var/const/max_health = 100
-		var/health = max_health
-		var/active = 0
-		var/malfunction = 0 //Malfunction causes parts of the shield to slowly dissapate
-		var/list/deployed_shields = list()
-		var/is_open = 0 //Whether or not the wires are exposed
-		var/locked = 0
+	name = "Emergency shield projector"
+	desc = "Used to seal minor hull breaches."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "shieldoff"
+	density = TRUE
+	opacity = FALSE
+	anchored = FALSE
+	req_access = list(access_engine)
+	var/const/max_health = 100
+	var/health = max_health
+	var/active = FALSE
+	var/malfunction = FALSE //Malfunction causes parts of the shield to slowly dissapate
+	var/list/deployed_shields = list()
+	var/is_open = FALSE //Whether or not the wires are exposed
+	var/locked = FALSE
 
 /obj/machinery/shieldgen/Destroy()
 	for(var/obj/machinery/shield/shield_tile in deployed_shields)
@@ -231,13 +220,16 @@
 	checkhp()
 
 /obj/machinery/shieldgen/attack_hand(mob/user)
-	if(locked)
-		to_chat(user, "The machine is locked, you are unable to use it.")
+	. = ..()
+	if(.)
 		return
+	if(locked && !IsAdminGhost(user))
+		to_chat(user, "The machine is locked, you are unable to use it.")
+		return 1
 	if(is_open)
 		to_chat(user, "The panel must be closed before operating this machine.")
-		return
-
+		return 1
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if (src.active)
 		user.visible_message("\blue [bicon(src)] [user] deactivated the shield generator.", \
 			"\blue [bicon(src)] You deactivate the shield generator.", \
@@ -251,11 +243,11 @@
 			src.shields_up()
 		else
 			to_chat(user, "The device must first be secured to the floor.")
-	return
 
 /obj/machinery/shieldgen/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/card/emag))
 		malfunction = 1
+		user.SetNextMove(CLICK_CD_MELEE)
 		update_icon()
 
 	else if(istype(W, /obj/item/weapon/screwdriver))
@@ -267,14 +259,15 @@
 			to_chat(user, "\blue You open the panel and expose the wiring.")
 			is_open = 1
 
-	else if(istype(W, /obj/item/weapon/cable_coil) && malfunction && is_open)
-		var/obj/item/weapon/cable_coil/coil = W
+	else if(istype(W, /obj/item/stack/cable_coil) && malfunction && is_open)
+		var/obj/item/stack/cable_coil/coil = W
+		if(user.is_busy(src)) return
 		to_chat(user, "\blue You begin to replace the wires.")
 		//if(do_after(user, min(60, round( ((maxhealth/health)*10)+(malfunction*10) ))) //Take longer to repair heavier damage
 		if(do_after(user, 30, target = src))
-			if(!src || !coil) return
-			if(!coil.use(1))
+			if(QDELETED(src) || !coil.use(1))
 				return
+
 			health = max_health
 			malfunction = 0
 			to_chat(user, "\blue You repair the [src]!")
@@ -319,28 +312,26 @@
 ////FIELD GEN START //shameless copypasta from fieldgen, powersink, and grille
 #define maxstoredpower 500
 /obj/machinery/shieldwallgen
-		name = "Shield Generator"
-		desc = "A shield generator."
-		icon = 'icons/obj/stationobjs.dmi'
-		icon_state = "Shield_Gen"
-		anchored = 0
-		density = 1
-		req_access = list(access_teleporter)
-		var/active = 0
-		var/power = 0
-		var/state = 0
-		var/steps = 0
-		var/last_check = 0
-		var/check_delay = 10
-		var/recalc = 0
-		var/locked = 1
-		var/destroyed = 0
-		var/directwired = 1
-//		var/maxshieldload = 200
-		var/obj/structure/cable/attached		// the attached cable
-		var/storedpower = 0
-		flags = CONDUCT
-		use_power = 0
+	name = "Shield Generator"
+	desc = "A shield generator."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "Shield_Gen"
+	anchored = FALSE
+	density = TRUE
+	req_access = list(access_teleporter)
+	flags = CONDUCT
+	use_power = 0
+	var/active = FALSE
+	var/power = 0
+	var/state = 0
+	var/steps = 0
+	var/last_check = 0
+	var/check_delay = 10
+	var/recalc = 0
+	var/locked = TRUE
+	var/destroyed = FALSE
+	var/obj/structure/cable/attached		// the attached cable
+	var/storedpower = 0
 
 /obj/machinery/shieldwallgen/proc/power()
 	if(!anchored)
@@ -370,16 +361,20 @@
 //		use_power(250) //uses APC power
 
 /obj/machinery/shieldwallgen/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(state != 1)
 		to_chat(user, "\red The shield generator needs to be firmly secured to the floor first.")
 		return 1
-	if(src.locked && !istype(user, /mob/living/silicon))
+	if(src.locked && !issilicon(user) && !IsAdminGhost(user))
 		to_chat(user, "\red The controls are locked!")
 		return 1
 	if(power != 1)
 		to_chat(user, "\red The shield generator needs to be powered by wire underneath.")
 		return 1
 
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(src.active >= 1)
 		src.active = 0
 		icon_state = "Shield_Gen"
@@ -394,7 +389,6 @@
 		user.visible_message("[user] turned the shield generator on.", \
 			"You turn on the shield generator.", \
 			"You hear heavy droning.")
-	src.add_fingerprint(user)
 
 /obj/machinery/shieldwallgen/process()
 	spawn(100)
@@ -504,6 +498,7 @@
 	else
 		src.add_fingerprint(user)
 		visible_message("\red The [src.name] has been hit with \the [W.name] by [user.name]!")
+		user.SetNextMove(CLICK_CD_MELEE)
 
 /obj/machinery/shieldwallgen/proc/cleanup(NSEW)
 	var/obj/machinery/shieldwall/F
@@ -556,10 +551,10 @@
 		var/obj/machinery/shieldwallgen/gen_primary
 		var/obj/machinery/shieldwallgen/gen_secondary
 
-/obj/machinery/shieldwall/New(var/obj/machinery/shieldwallgen/A, var/obj/machinery/shieldwallgen/B)
-	..()
-	src.gen_primary = A
-	src.gen_secondary = B
+/obj/machinery/shieldwall/atom_init(mapload, obj/machinery/shieldwallgen/A, obj/machinery/shieldwallgen/B)
+	. = ..()
+	gen_primary = A
+	gen_secondary = B
 	if(A && B)
 		needs_power = 1
 

@@ -4,39 +4,41 @@
 	name = "\improper Emergency Authentication Device"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "blackbox"
-	density = 1
-	anchored = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = 0
 
 	var/captains_key
 	var/secondary_key
-	var/activated = 0
+	var/activated = FALSE
 
-	use_power = 0
+/obj/machinery/emergency_authentication_device/atom_init(mapload, mode)
+	src.mode = mode
+	. = ..()
 
-	New(loc, mode)
-		src.mode = mode
-		..(loc)
+/obj/machinery/emergency_authentication_device/proc/check_key_existence()
+	if(!mode.captains_key)
+		captains_key = 1
 
-	proc/check_key_existence()
-		if(!mode.captains_key)
-			captains_key = 1
+	if(!mode.secondary_key)
+		secondary_key = 1
 
-		if(!mode.secondary_key)
-			secondary_key = 1
-
-	proc/get_status()
-		if(activated)
-			return "Activated"
-		if(captains_key && secondary_key)
-			return "Both Keys Authenticated"
-		if(captains_key)
-			return "Captain's Key Authenticated"
-		if(secondary_key)
-			return "Secondary Key Authenticated"
-		else
-			return "Inactive"
+/obj/machinery/emergency_authentication_device/proc/get_status()
+	if(activated)
+		return "Activated"
+	if(captains_key && secondary_key)
+		return "Both Keys Authenticated"
+	if(captains_key)
+		return "Captain's Key Authenticated"
+	if(secondary_key)
+		return "Secondary Key Authenticated"
+	else
+		return "Inactive"
 
 /obj/machinery/emergency_authentication_device/attack_hand(mob/user)
+	if(..())
+		return
+
 	if(activated)
 		to_chat(user, "\blue \The [src] is already active!")
 		return

@@ -14,6 +14,7 @@
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
+				if(user.is_busy(src)) return
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
 					to_chat(user, "\blue You wrench the frame into place.")
@@ -24,6 +25,7 @@
 				if(!WT.isOn())
 					to_chat(user, "The welder must be on for this task.")
 					return
+				if(user.is_busy(src)) return
 				playsound(loc, 'sound/items/Welder.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
 					if(!src || !WT.remove_fuel(0, user)) return
@@ -32,6 +34,7 @@
 					qdel(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
+				if(user.is_busy(src)) return
 				playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
 					to_chat(user, "\blue You unfasten the frame.")
@@ -62,15 +65,16 @@
 				to_chat(user, "\blue You unfasten the circuit board.")
 				state = 1
 				icon_state = "1"
-			if(istype(P, /obj/item/weapon/cable_coil))
-				if(P:amount >= 5)
-					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			if(istype(P, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/C = P
+				if(user.is_busy(src)) return
+				if(C.get_amount() >= 5)
+					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20, target = src))
-						P:amount -= 5
-						if(!P:amount) qdel(P)
-						to_chat(user, "\blue You add cables to the frame.")
-						state = 3
-						icon_state = "3"
+						if(C.use(5))
+							to_chat(user, "\blue You add cables to the frame.")
+							state = 3
+							icon_state = "3"
 		if(3)
 			if(istype(P, /obj/item/weapon/wirecutters))
 				if (brain)
@@ -80,16 +84,15 @@
 					to_chat(user, "\blue You remove the cables.")
 					state = 2
 					icon_state = "2"
-					var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( loc )
-					A.amount = 5
+					new /obj/item/stack/cable_coil/red(loc, 5)
 
 			if(istype(P, /obj/item/stack/sheet/rglass))
-				if(P:amount >= 2)
-					playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+				var/obj/item/stack/sheet/rglass/RG = P
+				if(user.is_busy(src)) return
+				if(RG.get_amount() >= 2)
+					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20, target = src))
-						if (P)
-							P:amount -= 2
-							if(!P:amount) qdel(P)
+						if (RG.use(2))
 							to_chat(user, "\blue You put in the glass panel.")
 							state = 4
 							icon_state = "4"
@@ -291,7 +294,7 @@ That prevents a few funky behaviors.
 								C.name = "inteliCard"
 								C.overlays.Cut()
 								A.loc = T
-								T.occupant = A
+								T.occupier = A
 								A.control_disabled = 1
 								if (A.stat == DEAD)
 									T.overlays += image('icons/obj/computer.dmi', "ai-fixer-404")
@@ -302,25 +305,25 @@ That prevents a few funky behaviors.
 								to_chat(A, "You have been uploaded to a stationary terminal. Sadly, there is no remote access from here.")
 								to_chat(U, "\blue <b>Transfer successful</b>: \black [A.name] ([rand(1000,9999)].exe) installed and executed successfully. Local copy has been removed.")
 						else
-							if(!C.contents.len && T.occupant && !T.active)
-								C.name = "inteliCard - [T.occupant.name]"
+							if(!C.contents.len && T.occupier && !T.active)
+								C.name = "inteliCard - [T.occupier.name]"
 								T.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
-								if (T.occupant.stat == DEAD)
+								if (T.occupier.stat == DEAD)
 									C.icon_state = "aicard-404"
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
 								else
 									C.icon_state = "aicard-full"
 									T.overlays -= image('icons/obj/computer.dmi', "ai-fixer-full")
-								to_chat(T.occupant, "You have been downloaded to a mobile storage device. Still no remote access.")
-								to_chat(U, "\blue <b>Transfer successful</b>: \black [T.occupant.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
-								T.occupant.loc = C
-								T.occupant.cancel_camera()
-								T.occupant = null
+								to_chat(T.occupier, "You have been downloaded to a mobile storage device. Still no remote access.")
+								to_chat(U, "\blue <b>Transfer successful</b>: \black [T.occupier.name] ([rand(1000,9999)].exe) removed from host terminal and stored within local memory.")
+								T.occupier.loc = C
+								T.occupier.cancel_camera()
+								T.occupier = null
 							else if (C.contents.len)
 								to_chat(U, "\red <b>ERROR</b>: \black Artificial intelligence detected on terminal.")
 							else if (T.active)
 								to_chat(U, "\red <b>ERROR</b>: \black Reconstruction in progress.")
-							else if (!T.occupant)
+							else if (!T.occupier)
 								to_chat(U, "\red <b>ERROR</b>: \black Unable to locate artificial intelligence.")
 					if("NINJASUIT")
 						var/obj/item/clothing/suit/space/space_ninja/C = src

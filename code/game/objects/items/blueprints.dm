@@ -4,6 +4,9 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "blueprints"
 	attack_verb = list("attacked", "bapped", "hit")
+	var/max_area_size = 300
+	var/greedy = 0
+
 	var/const/AREA_ERRNONE = 0
 	var/const/AREA_STATION = 1
 	var/const/AREA_SPACE =   2
@@ -69,7 +72,7 @@ move an amendment</a> to the drawing.</p>
 		else
 			return
 	text += "</BODY></HTML>"
-	usr << browse(text, "window=blueprints")
+	usr << browse(entity_ja(text), "window=blueprints")
 	onclose(usr, "blueprints")
 
 
@@ -82,16 +85,15 @@ move an amendment</a> to the drawing.</p>
 /obj/item/blueprints/proc/get_area_type(area/A = get_area())
 	if (istype(A, /area/space))
 		return AREA_SPACE
+	if (istype(A, /area/awaymission/junkyard))
+		return AREA_SPACE // allow junkyard building
 	var/list/SPECIALS = list(
 		/area/shuttle,
-		/area/admin,
-		/area/arrival,
 		/area/centcom,
 		/area/asteroid,
 		/area/tdome,
 		/area/syndicate_station,
-		/area/wizard_station,
-		/area/prison
+		/area/wizard_station
 		// /area/derelict //commented out, all hail derelict-rebuilders!
 	)
 	for (var/type in SPECIALS)
@@ -114,7 +116,7 @@ move an amendment</a> to the drawing.</p>
 				to_chat(usr, "\red Error! Please notify administration!")
 				return
 	var/list/turf/turfs = res
-	var/str = trim(stripped_input(usr,"New area name:","Blueprint Editing", "", MAX_NAME_LEN))
+	var/str = sanitize_safe(input(usr,"New area name:","Blueprint Editing", ""), MAX_LNAME_LEN)
 	if(!str || !length(str)) //cancel
 		return
 	if(length(str) > 50)
@@ -132,7 +134,6 @@ move an amendment</a> to the drawing.</p>
 	A.always_unpowered = 0
 	A.valid_territory = 0
 	move_turfs_to_area(turfs, A)
-
 	A.always_unpowered = 0
 
 	spawn(5)
@@ -152,7 +153,7 @@ move an amendment</a> to the drawing.</p>
 	var/area/A = get_area()
 	//world << "DEBUG: edit_area"
 	var/prevname = "[A.name]"
-	var/str = trim(stripped_input(usr,"New area name:","Blueprint Editing", prevname, MAX_NAME_LEN))
+	var/str = sanitize_safe(input(usr,"New area name:","Blueprint Editing", input_default(prevname)), MAX_LNAME_LEN)
 	if(!str || !length(str) || str==prevname) //cancel
 		return
 	if(length(str) > 50)
@@ -175,9 +176,9 @@ move an amendment</a> to the drawing.</p>
 			M.name = replacetext(M.name,oldtitle,title)
 		for(var/obj/machinery/power/apc/M in RA)
 			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/atmospherics/unary/vent_scrubber/M in RA)
+		for(var/obj/machinery/atmospherics/components/unary/vent_scrubber/M in RA)
 			M.name = replacetext(M.name,oldtitle,title)
-		for(var/obj/machinery/atmospherics/unary/vent_pump/M in RA)
+		for(var/obj/machinery/atmospherics/components/unary/vent_pump/M in RA)
 			M.name = replacetext(M.name,oldtitle,title)
 		for(var/obj/machinery/door/M in RA)
 			M.name = replacetext(M.name,oldtitle,title)
@@ -192,12 +193,12 @@ move an amendment</a> to the drawing.</p>
 		return BORDER_BETWEEN
 	if (istype(T2, /turf/simulated/wall))
 		return BORDER_2NDTILE
-	if (!istype(T2, /turf/simulated))
+	if (!istype(T2, /turf/simulated) || (dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
 		return BORDER_BETWEEN
 
 	for (var/obj/structure/window/W in T2)
 		if(turn(dir,180) == W.dir)
-			return BORDER_BETWEEN
+			return BORDER_2NDTILE
 		if (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST))
 			return BORDER_2NDTILE
 	for(var/obj/machinery/door/window/D in T2)
@@ -209,6 +210,10 @@ move an amendment</a> to the drawing.</p>
 		return BORDER_2NDTILE
 	if (locate(/obj/structure/falserwall) in T2)
 		return BORDER_2NDTILE
+	if (locate(/obj/structure/mineral_door) in T2)
+		return BORDER_2NDTILE
+	if (locate(/obj/structure/inflatable/door) in T2)
+		return BORDER_2NDTILE
 
 	return BORDER_NONE
 
@@ -216,20 +221,21 @@ move an amendment</a> to the drawing.</p>
 	var/list/turf/found = new
 	var/list/turf/pending = list(first)
 	while(pending.len)
-		if (found.len+pending.len > 300)
+		if (found.len+pending.len > max_area_size)
 			return ROOM_ERR_TOOLARGE
 		var/turf/T = pending[1] //why byond havent list::pop()?
 		pending -= T
-		for (var/dir in cardinal)
-			var/skip = 0
-			for (var/obj/structure/window/W in T)
-				if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
-					skip = 1; break
-			if (skip) continue
-			for(var/obj/machinery/door/window/D in T)
-				if(dir == D.dir)
-					skip = 1; break
-			if (skip) continue
+		for (var/dir in alldirs)
+			if(!greedy) // we want to add windows to area or not
+				var/skip = 0
+				for (var/obj/structure/window/W in T)
+					if(dir == W.dir || (W.dir in list(NORTHEAST,SOUTHEAST,NORTHWEST,SOUTHWEST)))
+						skip = 1; break
+				if (skip) continue
+				for(var/obj/machinery/door/window/D in T)
+					if(dir == D.dir)
+						skip = 1; break
+				if (skip) continue
 
 			var/turf/NT = get_step(T,dir)
 			if (!isturf(NT) || (NT in found) || (NT in pending))

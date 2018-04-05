@@ -1,15 +1,15 @@
 /obj/item/clothing/head/helmet/space/sk
-	name = "Skafandr Kosmicheskiy Helmet"
+	name = "skafandr kosmicheskiy helmet"
 	desc = "SK-1 Spacesuit helmet. The first spacesuit helmet ever used. Reminds you of Vostok spaceflight and Yuri Gagarin"
 	icon_state = "sk"
 	item_state = "sk"
 	flags_pressure = STOPS_LOWPRESSUREDMAGE
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 0)
 	siemens_coefficient = 0.65
-	species_restricted = list("exclude","Diona","Vox")
+	species_restricted = list("exclude" , DIONA , VOX)
 
 /obj/item/clothing/suit/space/sk
-	name = "Skafandr Kosmicheskiy"
+	name = "skafandr kosmicheskiy"
 	icon_state = "sk"
 	item_state = "sk"
 	desc = "SK-1 Spacesuit. The first spacesuit ever used. Reminds you of Vostok spaceflight and Yuri Gagarin"
@@ -20,11 +20,11 @@
 
 /obj/item/clothing/suit/space/sk/equipped()
 	..()
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/sk/dropped()
 	..()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/space/sk/process()
 	if(istype(get_turf(src), /turf/space) && !istype(loc.loc, /obj/mecha))

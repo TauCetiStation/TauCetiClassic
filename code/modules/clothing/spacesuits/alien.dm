@@ -1,10 +1,10 @@
 //Skrell space gear. Sleek like a wetsuit.
 /obj/item/clothing/head/helmet/space/skrell
-	name = "Skrellian helmet"
+	name = "skrellian helmet"
 	desc = "Smoothly contoured and polished to a shine. Still looks like a fishbowl."
 	armor = list(melee = 20, bullet = 20, laser = 25,energy = 50, bomb = 50, bio = 100, rad = 100)
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list("Skrell","Human")
+	species_restricted = list(SKRELL , HUMAN)
 
 /obj/item/clothing/head/helmet/space/skrell/white
 	icon_state = "skrell_helmet_white"
@@ -17,13 +17,13 @@
 	item_color = "skrell_helmet_black"
 
 /obj/item/clothing/suit/space/skrell
-	name = "Skrellian hardsuit"
+	name = "skrellian hardsuit"
 	desc = "Seems like a wetsuit with reinforced plating seamlessly attached to it. Very chic."
 	armor = list(melee = 20, bullet = 20, laser = 25,energy = 50, bomb = 50, bio = 100, rad = 100)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
-	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list("Skrell","Human")
+	species_restricted = list(SKRELL , HUMAN)
 
 /obj/item/clothing/suit/space/skrell/white
 	icon_state = "skrell_suit_white"
@@ -41,7 +41,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 	var/up = 0 //So Unathi helmets play nicely with the weldervision check.
-	species_restricted = list("Unathi")
+	species_restricted = list(UNATHI)
 
 /obj/item/clothing/head/helmet/space/unathi/helmet_cheap
 	name = "NT breacher helmet"
@@ -53,9 +53,9 @@
 /obj/item/clothing/suit/space/unathi
 	armor = list(melee = 40, bullet = 30, laser = 30,energy = 15, bomb = 35, bio = 100, rad = 50)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner,/obj/item/weapon/pickaxe, /obj/item/weapon/rcd)
-	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list("Unathi")
+	species_restricted = list(UNATHI)
 
 /obj/item/clothing/suit/space/unathi/rig_cheap
 	name = "NT breacher chassis"
@@ -84,23 +84,23 @@
 /obj/item/clothing/suit/space/vox
 	w_class = 3
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/melee/energy/sword,/obj/item/weapon/handcuffs,/obj/item/weapon/tank)
-	slowdown = 2
-	armor = list(melee = 60, bullet = 30, laser = 30,energy = 15, bomb = 30, bio = 30, rad = 30)
-	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	slowdown = 1.5
+	armor = list(melee = 60, bullet = 50, laser = 40,energy = 15, bomb = 30, bio = 30, rad = 30)
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
-	species_restricted = list("Vox", "Vox Armalis")
+	species_restricted = list(VOX , VOX_ARMALIS)
 	sprite_sheets = list(
-		"Vox" = 'icons/mob/species/vox/suit.dmi',
-		"Vox Armalis" = 'icons/mob/species/armalis/suit.dmi',
+		VOX = 'icons/mob/species/vox/suit.dmi',
+		VOX_ARMALIS = 'icons/mob/species/armalis/suit.dmi',
 		)
 
 /obj/item/clothing/head/helmet/space/vox
-	armor = list(melee = 60, bullet = 30, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 60, bullet = 50, laser = 40, energy = 15, bomb = 30, bio = 30, rad = 30)
 	flags = HEADCOVERSEYES
-	species_restricted = list("Vox","Vox Armalis")
+	species_restricted = list(VOX , VOX_ARMALIS)
 	sprite_sheets = list(
-		"Vox" = 'icons/mob/species/vox/head.dmi',
-		"Vox Armalis" = 'icons/mob/species/armalis/head.dmi',
+		VOX = 'icons/mob/species/vox/head.dmi',
+		VOX_ARMALIS = 'icons/mob/species/armalis/head.dmi',
 		)
 
 /obj/item/clothing/head/helmet/space/vox/pressure
@@ -134,11 +134,86 @@
 	item_state = "vox-stealth"
 	desc = "A smoothly contoured, matte-black alien helmet."
 
+	armor = list(melee = 60, bullet = 30, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
+
 /obj/item/clothing/suit/space/vox/stealth
 	name = "alien stealth suit"
 	icon_state = "vox-stealth"
 	item_state = "vox-stealth"
 	desc = "A sleek black suit. It seems to have a tail, and is very heavy."
+
+	armor = list(melee = 60, bullet = 30, laser = 30, energy = 15, bomb = 30, bio = 30, rad = 30)
+	slowdown = 0.5
+
+	action_button_name = "Toggle Stealth Technology"
+	var/on = FALSE
+	var/mob/living/carbon/human/wearer
+
+/obj/item/clothing/suit/space/vox/stealth/ui_action_click()
+	toggle_stealth()
+
+/obj/item/clothing/suit/space/vox/stealth/process()
+	if(!on)
+		return
+
+	if(is_damaged())
+		toggle_stealth(TRUE)
+	else
+		wearer.alpha = 4
+
+/obj/item/clothing/suit/space/vox/stealth/equipped(mob/user, slot)
+	..()
+	if(slot == slot_wear_suit)
+		wearer = user
+
+/obj/item/clothing/suit/space/vox/stealth/dropped(mob/user)
+	toggle_stealth(TRUE)
+	wearer = null
+	..()
+
+/obj/item/clothing/suit/space/vox/stealth/proc/toggle_stealth(deactive = FALSE)
+	if(on)
+		on = FALSE
+		STOP_PROCESSING(SSobj, src)
+		wearer.alpha = 255
+	else if(!deactive)
+		if(wearer.is_busy()) return
+		to_chat(wearer, "<span class='notice'>Turning on stealth mode...</span>")
+		if(do_after(wearer, 40, target = wearer))
+			if(!istype(wearer) || wearer.wear_suit != src)
+				return
+			if(is_damaged())
+				return
+			on = TRUE
+			to_chat(wearer, "<span class='notice'>Stealth mode in now on!</span>")
+			START_PROCESSING(SSobj, src)
+
+/obj/item/clothing/suit/space/vox/stealth/proc/is_damaged()
+	if(damage >= 2)
+		to_chat(wearer, "<span class='warning'>[src] is too damaged to support stealth mode!</span>")
+		var/datum/effect/effect/system/spark_spread/s = new
+		s.set_up(5, 1, src)
+		s.start()
+		return TRUE
+	else
+		return FALSE
+
+/obj/item/clothing/suit/space/vox/stealth/proc/overload()
+	wearer.visible_message(
+	"<span class='warning'>[wearer] appears from nowhere!",
+	"<span class='warning'>Your stealth got overloaded and no longer can sustain itself!</span>"
+	)
+	var/datum/effect/effect/system/spark_spread/s = new
+	s.set_up(5, 1, src)
+	s.start()
+	toggle_stealth()
+
+/obj/item/clothing/suit/space/vox/stealth/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+	if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)
+		return
+
+	if(on)
+		overload()
 
 /obj/item/clothing/head/helmet/space/vox/medic
 	name = "alien goggled helmet"
@@ -154,7 +229,7 @@
 
 /obj/item/clothing/under/vox
 	has_sensor = 0
-	species_restricted = list("Vox")
+	species_restricted = list(VOX)
 
 /obj/item/clothing/under/vox/vox_casual
 	name = "alien clothing"
@@ -179,10 +254,10 @@
 	siemens_coefficient = 0
 	permeability_coefficient = 0.05
 	item_color = "gloves-vox"
-	species_restricted = list("Vox","Vox Armalis")
+	species_restricted = list(VOX , VOX_ARMALIS)
 	sprite_sheets = list(
-		"Vox" = 'icons/mob/species/vox/gloves.dmi',
-		"Vox Armalis" = 'icons/mob/species/armalis/gloves.dmi',
+		VOX = 'icons/mob/species/vox/gloves.dmi',
+		VOX_ARMALIS = 'icons/mob/species/armalis/gloves.dmi',
 		)
 /obj/item/clothing/shoes/magboots/vox
 
@@ -191,9 +266,9 @@
 	item_state = "boots-vox"
 	icon_state = "boots-vox"
 
-	species_restricted = list("Vox","Vox Armalis")
+	species_restricted = list(VOX , VOX_ARMALIS)
 	sprite_sheets = list(
-		"Vox Armalis" = 'icons/mob/species/armalis/feet.dmi'
+		VOX_ARMALIS = 'icons/mob/species/armalis/feet.dmi'
 		)
 
 	action_button_name = "Toggle the magclaws"

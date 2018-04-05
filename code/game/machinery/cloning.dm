@@ -15,6 +15,7 @@
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "pod_0"
 	req_access = list(access_genetics) //For premature unlocking.
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/heal_level = 90 //The clone is released once its health reaches this level.
 	var/locked = 0
 	var/obj/machinery/computer/cloning/connected = null //So we remember the connected clone machine.
@@ -26,8 +27,8 @@
 	var/efficiency
 	light_color = "#00FF00"
 
-/obj/machinery/clonepod/New()
-	..()
+/obj/machinery/clonepod/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/clonepod(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
@@ -35,8 +36,8 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 1)
 	RefreshParts()
 
 /obj/machinery/clonepod/RefreshParts()
@@ -69,7 +70,8 @@
 	name = "data disk - 'God Emperor of Mankind'"
 	read_only = 1
 
-/obj/item/weapon/disk/data/demo/New()
+/obj/item/weapon/disk/data/demo/atom_init()
+	. = ..()
 	Initialize()
 	buf.types=DNA2_BUF_UE|DNA2_BUF_UI
 	//data = "066000033000000000AF00330660FF4DB002690"
@@ -84,7 +86,8 @@
 	name = "data disk - 'Mr. Muggles'"
 	read_only = 1
 
-/obj/item/weapon/disk/data/monkey/New()
+/obj/item/weapon/disk/data/monkey/atom_init()
+	. = ..()
 	Initialize()
 	buf.types=DNA2_BUF_SE
 	var/list/new_SE=list(0x098,0x3E8,0x403,0x44C,0x39F,0x4B0,0x59D,0x514,0x5FC,0x578,0x5DC,0x640,0x6A4)
@@ -114,8 +117,8 @@
 	return selected
 
 //Disk stuff.
-/obj/item/weapon/disk/data/New()
-	..()
+/obj/item/weapon/disk/data/atom_init()
+	. = ..()
 	var/diskcolor = pick(0,1,2)
 	src.icon_state = "datadisk[diskcolor]"
 
@@ -144,18 +147,13 @@
 			src.healthstring = "ERROR"
 		return src.healthstring
 
-/obj/machinery/clonepod/attack_ai(mob/user)
-	src.add_hiddenprint(user)
-	return attack_hand(user)
-/obj/machinery/clonepod/attack_paw(mob/user)
-	return attack_hand(user)
-/obj/machinery/clonepod/attack_hand(mob/user)
-	if ((isnull(src.occupant)) || (stat & NOPOWER))
-		return
-	if ((!isnull(src.occupant)) && (src.occupant.stat != DEAD))
-		var/completion = (100 * ((src.occupant.health + 100) / (src.heal_level + 100)))
-		to_chat(user, "Current clone cycle is [round(completion)]% complete.")
-	return
+/obj/machinery/clonepod/examine(mob/user)
+	if(..(user, 3))
+		if ((isnull(occupant)) || (stat & NOPOWER))
+			return
+		if ((!isnull(occupant)) && (occupant.stat != DEAD))
+			var/completion = (100 * ((occupant.health + 100) / (heal_level + 100)))
+			to_chat(user, "Current clone cycle is [round(completion)]% complete.")
 
 //Clonepod
 
@@ -243,7 +241,7 @@
 	H.dna.UpdateUI()
 
 	H.f_style = "Shaved"
-	if(R.dna.species == "Human") //no more xenos losing ears/tentacles
+	if(R.dna.species == HUMAN) //no more xenos losing ears/tentacles
 		H.h_style = pick("Bedhead", "Bedhead 2", "Bedhead 3")
 
 	for(var/datum/language/L in R.languages)
@@ -262,6 +260,7 @@
 		return
 
 	if((src.occupant) && (src.occupant.loc == src))
+
 		if((src.occupant.stat == DEAD) || (src.occupant.suiciding) || !occupant.key)  //Autoeject corpses and suiciding dudes.
 			src.locked = 0
 			src.go_out()
@@ -336,6 +335,7 @@
 	else if (istype(W, /obj/item/weapon/card/emag))
 		if (isnull(src.occupant))
 			return
+		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "You force an emergency ejection.")
 		src.locked = 0
 		src.go_out()
@@ -464,15 +464,10 @@
 	name = "Diskette Box"
 	icon_state = "disk_kit"
 
-/obj/item/weapon/storage/box/disks/New()
-	..()
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
-	new /obj/item/weapon/disk/data(src)
+/obj/item/weapon/storage/box/disks/atom_init()
+	. = ..()
+	for (var/i in 1 to 7)
+		new /obj/item/weapon/disk/data(src)
 
 /*
  *	Manual -- A big ol' manual.

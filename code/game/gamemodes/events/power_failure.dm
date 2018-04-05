@@ -8,7 +8,7 @@ var/power_fail_event = 0
 		command_alert("Abnormal activity detected in [station_name()]'s powernet. As a precautionary measure, the station's power will be shut off for an indeterminate duration.", "Critical Power Failure")
 		player_list << sound('sound/AI/poweroff.ogg')
 		if(prob(25))
-			addtimer(GLOBAL_PROC, "play_ambience", 600)
+			addtimer(CALLBACK(GLOBAL_PROC, .proc/play_ambience), 600)
 
 	var/list/skipped_areas = list(/area/turret_protected/ai, /area/tcommsat/computer, /area/tcommsat/chamber)
 

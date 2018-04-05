@@ -6,7 +6,7 @@
 	cure_id = "spaceacillin"
 	cure_chance = 10
 	agent = "1nqu1s1t10n flu virion"
-	affected_species = list("Human")
+	affected_species = list(HUMAN)
 	permeability_mod = 0.75
 	desc = "If left untreated the subject will burn to death for being a heretic."
 	severity = "Serious"
@@ -22,7 +22,7 @@
 				affected_mob.emote("cough")
 			if(prob(1))
 				to_chat(affected_mob, "\red You're burning in your own skin!")
-				affected_mob.take_organ_damage(0,5)
+				affected_mob.take_bodypart_damage(0,5)
 
 		if(3)
 			affected_mob.bodytemperature += 20
@@ -32,5 +32,5 @@
 				affected_mob.emote("cough")
 			if(prob(5))
 				to_chat(affected_mob, "\red You're burning in your own skin!")
-				affected_mob.take_organ_damage(0,5)
+				affected_mob.take_bodypart_damage(0,5)
 	return

@@ -11,7 +11,7 @@
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	message = sanitize(copytext(message, 1, MAX_MESSAGE_LEN))
+	message = sanitize(message)
 
 	if(istype(src.loc,/mob/living/simple_animal/borer))
 		var/mob/living/simple_animal/borer/B = src.loc
@@ -19,7 +19,7 @@
 		to_chat(B.host, "The captive mind of [src] whispers, \"[message]\"")
 
 		for (var/mob/M in player_list)
-			if (istype(M, /mob/new_player))
+			if (isnewplayer(M))
 				continue
 			else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 				to_chat(M, "The captive mind of [src] whispers, \"[message]\"")
@@ -56,6 +56,13 @@
 	var/mob/living/captive_brain/host_brain // Used for swapping control of the body back and forth.
 	var/controlling                         // Used in human death check.
 	var/docile = 0                          // Sugar can stop borers from acting.
+
+/mob/living/simple_animal/borer/atom_init()
+	. = ..()
+	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
+	host_brain = new/mob/living/captive_brain(src)
+
+	request_player()
 
 /mob/living/simple_animal/borer/Life()
 
@@ -95,18 +102,9 @@
 				if(prob(host.brainloss/20))
 					host.say("*[pick(list("blink","blink_r","choke","aflap","drool","twitch","twitch_s","gasp"))]")
 
-/mob/living/simple_animal/borer/New()
-	..()
-	truename = "[pick("Primary","Secondary","Tertiary","Quaternary")] [rand(1000,9999)]"
-	host_brain = new/mob/living/captive_brain(src)
-
-	request_player()
-
-
 /mob/living/simple_animal/borer/say(var/message)
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-	message = capitalize(message)
+	message = capitalize(sanitize(message))
 
 	if(!message)
 		return
@@ -212,7 +210,7 @@
 		to_chat(src, "You cannot do that in your current state.")
 		return
 
-	if(!host.internal_organs_by_name["brain"]) //this should only run in admin-weirdness situations, but it's here non the less - RR
+	if(!host.organs_by_name[O_BRAIN]) //this should only run in admin-weirdness situations, but it's here non the less - RR
 		to_chat(src, "<span class='warning'>There is no brain here for us to command!</span>")
 		return
 
@@ -309,8 +307,8 @@ mob/living/simple_animal/borer/proc/detatch()
 
 	if(istype(host,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = host
-		var/datum/organ/external/head = H.get_organ("head")
-		head.implants -= src
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+		BP.implants -= src
 
 	src.loc = get_turf(host)
 	controlling = 0
@@ -331,14 +329,8 @@ mob/living/simple_animal/borer/proc/detatch()
 		host_brain.ckey = null
 		host_brain.name = "host brain"
 		host_brain.real_name = "host brain"
-
-	var/mob/living/H = host
+	host.parasites -= src
 	host = null
-
-	for(var/atom/A in H.contents)
-		if(istype(A,/mob/living/simple_animal/borer) || istype(A,/obj/item/weapon/holder))
-			return
-	H.status_flags &= ~PASSEMOTES
 
 /mob/living/simple_animal/borer/verb/infest()
 	set category = "Alien"
@@ -373,7 +365,7 @@ mob/living/simple_animal/borer/proc/detatch()
 		if(H.check_head_coverage())
 			to_chat(src, "You cannot get through that host's protective gear.")
 			return
-
+	if(is_busy()) return
 	to_chat(M, "Something slimy begins probing at the opening of your ear canal...")
 	to_chat(src, "You slither up [M] and begin probing at their ear canal...")
 
@@ -401,12 +393,12 @@ mob/living/simple_animal/borer/proc/detatch()
 
 		if(istype(M,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = M
-			var/datum/organ/external/head = H.get_organ("head")
-			head.implants += src
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+			BP.implants += src
 
 		host_brain.name = M.name
 		host_brain.real_name = M.real_name
-		host.status_flags |= PASSEMOTES
+		host.parasites |= src
 
 		return
 	else

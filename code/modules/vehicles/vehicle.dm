@@ -37,9 +37,6 @@
 //-------------------------------------------
 // Standard procs
 //-------------------------------------------
-/obj/vehicle/New()
-	..()
-
 /obj/vehicle/Move()
 	if(can_move())
 		var/old_loc = get_turf(src)
@@ -56,8 +53,7 @@
 		//Dummy loads do not have to be moved as they are just an overlay
 		//See load_object() proc in cargo_trains.dm for an example
 		if(load && !istype(load, /datum/vehicle_dummy_load))
-			load.forceMove(loc)
-			load.set_dir(dir)
+			load.Move(loc, dir)
 
 		return 1
 	else
@@ -84,6 +80,7 @@
 		to_chat(user, "<span class='notice'>Maintenance panel is now [open ? "opened" : "closed"].</span>")
 	else if(istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/T = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(T.welding)
 			if(health < maxhealth)
 				if(open)
@@ -176,7 +173,7 @@
 
 	new /obj/item/stack/rods(Tsec)
 	new /obj/item/stack/rods(Tsec)
-	new /obj/item/weapon/cable_coil/cut(Tsec)
+	new /obj/item/stack/cable_coil/red(Tsec, 2)
 
 	//stuns people who are thrown off a train that has been blown up
 	if(istype(load, /mob/living))
@@ -276,9 +273,6 @@
 	load.layer = initial(load.layer)
 	load.plane = initial(load.plane)
 
-	if(ismob(load))
-		unbuckle_mob(load)
-
 	load = null
 
 	return 1
@@ -304,10 +298,11 @@
 /obj/vehicle/attack_hand(mob/user, damage, attack_message)
 	if(!damage)
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	visible_message("<span class='danger'>[user] [attack_message] the [src]!</span>")
 	user.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name]</font>")
 	src.health -= damage
 	if(prob(10))
 		new /obj/effect/decal/cleanable/blood/oil(src.loc)
-	spawn(1) healthcheck()
+	healthcheck()
 	return 1

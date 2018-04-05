@@ -9,17 +9,25 @@
 	idle_power_usage = 200
 	active_power_usage = 5000
 	var/efficiency
+	var/obj/machinery/computer/telescience/computer
 
-/obj/machinery/telepad/New()
-	..()
+/obj/machinery/telepad/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/telesci_pad(null)
 	component_parts += new /obj/item/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
 	RefreshParts()
+
+/obj/machinery/telepad/Destroy()
+	if(computer)
+		computer.close_wormhole()
+		computer.telepad = null
+		computer = null
+	return ..()
 
 /obj/machinery/telepad/RefreshParts()
 	var/E
@@ -56,7 +64,6 @@
 	var/stage = 0
 /obj/machinery/telepad_cargo/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
-		anchored = 0
 		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 		if(anchored)
 			anchored = 0
@@ -117,16 +124,16 @@
 	var/emagged = 0
 	var/teleporting = 0
 
-/obj/item/weapon/rcs/New()
-	..()
-	SSobj.processing |= src
+/obj/item/weapon/rcs/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/rcs/examine(mob/user)
 	..()
 	to_chat(user, "There are [rcharges] charges left.")
 
 /obj/item/weapon/rcs/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/rcs/process()
@@ -155,5 +162,6 @@
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(5, 1, src)
 		s.start()
+		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "<span class='notice'>You emag the RCS. Click on it to toggle between modes.</span>")
 		return

@@ -13,8 +13,8 @@
 
 	var/obj/machinery/computer/operating/computer = null
 
-/obj/machinery/optable/New()
-	..()
+/obj/machinery/optable/atom_init()
+	. = ..()
 	for(dir in list(NORTH,EAST,SOUTH,WEST))
 		computer = locate(/obj/machinery/computer/operating, get_step(src, dir))
 		if (computer)
@@ -47,24 +47,22 @@
 
 /obj/machinery/optable/attack_paw(mob/user)
 	if ((HULK in usr.mutations))
+		user.SetNextMove(CLICK_CD_MELEE)
 		to_chat(usr, text("<span class='notice'>You destroy the operating table.</span>"))
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		qdel(src)
-	if (!( locate(/obj/machinery/optable, user.loc) ))
-		step(user, get_dir(user, src))
-		if (user.loc == src.loc)
-			user.layer = TURF_LAYER
-			visible_message("<span class='notice'>The monkey hides under the table!</span>")
 	return
 
 /obj/machinery/optable/attack_hand(mob/user)
 	if (HULK in usr.mutations)
+		user.SetNextMove(CLICK_CD_MELEE)
 		to_chat(usr, text("<span class='notice'>You destroy the table.</span>"))
 		visible_message("<span class='danger'>[usr] destroys the operating table!</span>")
 		src.density = 0
 		qdel(src)
-	return
+	else
+		return ..() // for fun, for braindamage and fingerprints.
 
 /obj/machinery/optable/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
 	if(air_group || (height==0)) return 1
@@ -76,7 +74,7 @@
 
 
 /obj/machinery/optable/MouseDrop_T(obj/O, mob/user)
-	if(isrobot(user))
+	if(isrobot(user) || isessence(user))
 		return
 
 	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
@@ -141,6 +139,7 @@
 	if (istype(W, /obj/item/weapon/grab))
 		if(iscarbon(W:affecting))
 			take_victim(W:affecting,usr)
+			user.SetNextMove(CLICK_CD_MELEE)
 			qdel(W)
 			return
 	user.drop_item()

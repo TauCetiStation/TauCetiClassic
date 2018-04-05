@@ -12,88 +12,73 @@
 
 
 /obj/item/weapon/implanter/update()
-	if (src.imp)
-		src.icon_state = "implanter1"
+	if (imp)
+		icon_state = "implanter1"
 	else
-		src.icon_state = "implanter0"
-	return
+		icon_state = "implanter0"
 
 
-/obj/item/weapon/implanter/attack(mob/M, mob/user)
-	if (!istype(M, /mob/living/carbon))
+/obj/item/weapon/implanter/attack(mob/M, mob/user, def_zone)
+	if (!iscarbon(M))
 		return
-	if (user && src.imp)
-		for (var/mob/O in viewers(M, null))
-			O.show_message("\red [user] is attemping to implant [M].", 1)
+	if (!user || !imp)
+		return
 
-		var/turf/T1 = get_turf(M)
-		if (T1 && ((M == user) || do_after(user, 50, target = M)))
-			if(user && M && (get_turf(M) == T1) && src && src.imp)
-				for (var/mob/O in viewers(M, null))
-					O.show_message("\red [M] has been implanted by [user].", 1)
+	user.visible_message("<span class ='userdanger'>[user] is attemping to implant [M].</span>")
 
-				M.attack_log += text("\[[time_stamp()]\] <font color='orange'> Implanted with [src.name] ([src.imp.name])  by [user.name] ([user.ckey])</font>")
-				user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] ([src.imp.name]) to implant [M.name] ([M.ckey])</font>")
-				msg_admin_attack("[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-
-				user.show_message("\red You implanted the implant into [M].")
-				if(src.imp.implanted(M))
-					src.imp.loc = M
-					src.imp.imp_in = M
-					src.imp.implanted = 1
-					if (ishuman(M))
-						var/mob/living/carbon/human/H = M
-						var/datum/organ/external/affected = H.get_organ(user.zone_sel.selecting)
-						affected.implants += src.imp
-						imp.part = affected
-
-						H.hud_updateflag |= 1 << IMPLOYAL_HUD
-
-				src.imp = null
+	if(M == user || (!user.is_busy() && do_after(user, 50, target = M)))
+		if(src && imp)
+			M.attack_log += text("\[[time_stamp()]\] <font color='orange'> Implanted with [src.name] ([src.imp.name])  by [user.name] ([user.ckey])</font>")
+			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Used the [src.name] ([src.imp.name]) to implant [M.name] ([M.ckey])</font>")
+			msg_admin_attack("[user.name] ([user.ckey]) implanted [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+			if(imp.implanted(M))
+				user.visible_message("<span class ='userdanger'>[M] has been implanted by [user].</span>", "You implanted the implant into [M].")
+				imp.inject(M, def_zone)
+				imp = null
 				update()
 
-	return
 
 
+/obj/item/weapon/implanter/mindshield
+	name = "implanter-mind shield"
+
+/obj/item/weapon/implanter/mindshield/atom_init()
+	imp = new /obj/item/weapon/implant/mindshield(src)
+	. = ..()
+	update()
 
 /obj/item/weapon/implanter/loyalty
 	name = "implanter-loyalty"
 
-/obj/item/weapon/implanter/loyalty/New()
-	src.imp = new /obj/item/weapon/implant/loyalty( src )
-	..()
+/obj/item/weapon/implanter/loyalty/atom_init()
+	imp = new /obj/item/weapon/implant/mindshield/loyalty(src)
+	. = ..()
 	update()
-	return
-
-
 
 /obj/item/weapon/implanter/explosive
 	name = "implanter (E)"
 
-/obj/item/weapon/implanter/explosive/New()
-	src.imp = new /obj/item/weapon/implant/explosive( src )
-	..()
+/obj/item/weapon/implanter/explosive/atom_init()
+	imp = new /obj/item/weapon/implant/explosive(src)
+	. = ..()
 	update()
-	return
 
 /obj/item/weapon/implanter/adrenalin
 	name = "implanter-adrenalin"
 
-/obj/item/weapon/implanter/adrenalin/New()
-	src.imp = new /obj/item/weapon/implant/adrenalin(src)
-	..()
+/obj/item/weapon/implanter/adrenalin/atom_init()
+	imp = new /obj/item/weapon/implant/adrenalin(src)
+	. = ..()
 	update()
-	return
 
 /obj/item/weapon/implanter/compressed
 	name = "implanter (C)"
 	icon_state = "cimplanter1"
 
-/obj/item/weapon/implanter/compressed/New()
-	imp = new /obj/item/weapon/implant/compressed( src )
-	..()
+/obj/item/weapon/implanter/compressed/atom_init()
+	imp = new /obj/item/weapon/implant/compressed(src)
+	. = ..()
 	update()
-	return
 
 /obj/item/weapon/implanter/compressed/update()
 	if (imp)
@@ -134,6 +119,6 @@
 	name = "implanter (storage)"
 	icon_state = "cimplanter1"
 
-/obj/item/weapon/implanter/storage/New()
+/obj/item/weapon/implanter/storage/atom_init()
 	imp = new /obj/item/weapon/implant/storage(src)
-	..()
+	. = ..()

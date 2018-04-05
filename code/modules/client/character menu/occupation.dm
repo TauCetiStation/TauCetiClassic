@@ -1,5 +1,5 @@
 /datum/preferences/proc/ShowOccupation(mob/user)
-	var/limit = 19	//The amount of jobs allowed per column. Defaults to 19 to make it look nice.
+	var/limit = 20	//The amount of jobs allowed per column. Defaults to 19 to make it look nice.
 	var/list/splitJobs = list("Chief Medical Officer")	//Allows you split the table by job. You can make different tables for each department by including their heads.
 														//Defaults to CMO to make it look nice.
 	if(!SSjob)
@@ -49,6 +49,9 @@
 			else
 				var/available_in_days = job.available_in_days(user.client)
 				. += "<del>[rank]</del></td><td> \[IN [(available_in_days)] DAYS]</td></tr>"
+			continue
+		if(!job.is_species_permitted(user.client))
+			. += "<del>[rank]</del></td><td><b> \[SPECIES RESTRICTED]</b></td></tr>"
 			continue
 		if((job_civilian_low & ASSISTANT) && (rank != "Test Subject"))
 			. += "<font color=orange>[rank]</font></td><td></td></tr>"

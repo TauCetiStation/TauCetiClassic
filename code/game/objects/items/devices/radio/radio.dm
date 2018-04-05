@@ -15,7 +15,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/traitor_frequency = 0 //tune to frequency to unlock traitor supplies
 	var/canhear_range = 3 // the range which mobs can hear this radio from
 	var/obj/item/device/radio/patch_link = null
-	var/wires = WIRE_SIGNAL | WIRE_RECEIVE | WIRE_TRANSMIT
+	var/datum/wires/radio/wires = null
 	var/b_stat = 0
 	var/broadcasting = 0
 	var/listening = 1
@@ -25,6 +25,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	var/syndie = 0//Holder to see if it's a syndicate encrpyed radio
 	var/maxf = 1499
 //			"Example" = FREQ_LISTENING|FREQ_BROADCASTING
+	var/grid = FALSE // protect from EMP
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	throw_speed = 2
@@ -32,10 +33,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	w_class = 2
 	g_amt = 25
 	m_amt = 75
-	var/const/WIRE_SIGNAL = 1 //sends a signal, like to set off a bomb or electrocute someone
-	var/const/WIRE_RECEIVE = 2
-	var/const/WIRE_TRANSMIT = 4
-	var/const/TRANSMISSION_DELAY = 5 // only 2/second/radio
 	var/const/FREQ_LISTENING = 1
 		//FREQ_BROADCASTING = 2
 
@@ -48,13 +45,10 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		frequency = new_frequency
 		radio_connection = radio_controller.add_object(src, frequency, RADIO_CHAT)
 
-/obj/item/device/radio/New()
-	..()
-	if(radio_controller)
-		initialize()
+/obj/item/device/radio/atom_init()
+	. = ..()
 
-
-/obj/item/device/radio/initialize()
+	wires = new(src)
 
 	if(freerange)
 		if(frequency < 1200 || frequency > 1600)
@@ -70,6 +64,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
 
 /obj/item/device/radio/Destroy()
+	QDEL_NULL(wires)
 	if(radio_controller)
 		radio_controller.remove_object(src, frequency)
 		for (var/ch_name in channels)
@@ -81,7 +76,8 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/attack_self(mob/user)
 	user.set_machine(src)
-	interact(user)
+	if(!wires.interact(user))
+		interact(user)
 
 /obj/item/device/radio/interact(mob/user)
 	if(!on)
@@ -107,22 +103,11 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	for (var/ch_name in channels)
 		dat+=text_sec_channel(ch_name, channels[ch_name])
-	dat+={"[text_wires()]</TT></body></html>"}
+
 	var/datum/browser/popup = new(user, "window=radio", "[src]")
 	popup.set_content(dat)
 	popup.open()
 	return
-
-/obj/item/device/radio/proc/text_wires()
-	if (!b_stat)
-		return ""
-	return {"
-			<hr>
-			Green Wire: <A href='byond://?src=\ref[src];wires=4'>[(wires & 4) ? "Cut" : "Mend"] Wire</A><BR>
-			Red Wire:   <A href='byond://?src=\ref[src];wires=2'>[(wires & 2) ? "Cut" : "Mend"] Wire</A><BR>
-			Blue Wire:  <A href='byond://?src=\ref[src];wires=1'>[(wires & 1) ? "Cut" : "Mend"] Wire</A><BR>
-			"}
-
 
 /obj/item/device/radio/proc/text_sec_channel(chan_name, chan_stat)
 	var/list = !!(chan_stat&FREQ_LISTENING)!=0
@@ -185,14 +170,6 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 				channels[chan_name] &= ~FREQ_LISTENING
 			else
 				channels[chan_name] |= FREQ_LISTENING
-	else if (href_list["wires"])
-		var/t1 = text2num(href_list["wires"])
-		if (!( istype(usr.get_active_hand(), /obj/item/weapon/wirecutters) ))
-			return
-		if (wires & t1)
-			wires &= ~t1
-		else
-			wires |= t1
 	if (!( master ))
 		if (istype(loc, /mob))
 			interact(loc)
@@ -235,7 +212,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 	//  Uncommenting this. To the above comment:
 	// 	The permacell radios aren't suppose to be able to transmit, this isn't a bug and this "fix" is just making radio wires useless. -Giacom
-	if(!(src.wires & WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
+	if(wires.is_index_cut(RADIO_WIRE_TRANSMIT)) // The device has to have all its wires and shit intact
 		return
 
 
@@ -473,7 +450,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		else
 			eqjobname = "Unknown"
 
-		if (!(wires & WIRE_TRANSMIT))
+		if (wires.is_index_cut(RADIO_WIRE_TRANSMIT))
 			return
 
 		var/list/receive = list()
@@ -635,7 +612,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	// what the range is in which mobs will hear the radio
 	// returns: -1 if can't receive, range otherwise
 
-	if (!(wires & WIRE_RECEIVE))
+	if (wires.is_index_cut(RADIO_WIRE_RECEIVE))
 		return -1
 	if(!listening)
 		return -1
@@ -676,29 +653,38 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 		to_chat(user, "<span class='notice'>\the [src] can[b_stat ? "" : " not"] be attached or modified!</span>")
 
 /obj/item/device/radio/attackby(obj/item/weapon/W, mob/user)
-	..()
-	user.set_machine(src)
-	if (!( istype(W, /obj/item/weapon/screwdriver) ))
-		return
-	b_stat = !( b_stat )
-	if(!istype(src, /obj/item/device/radio/beacon))
-		if (b_stat)
-			user.show_message("\blue The radio can now be attached and modified!")
-		else
-			user.show_message("\blue The radio can no longer be modified or attached!")
-		updateDialog()
-			//Foreach goto(83)
+	if(istype(W, /obj/item/device/radio_grid))
+		if(grid)
+			to_chat(user, "<span class='userdanger'>There is already installed Shielded grid!</span>")
+			return
+		to_chat(user, "<span class='notice'>You attach [W] to [src]!</span>")
+		user.drop_item()
+		var/obj/item/device/radio_grid/new_grid = W
+		new_grid.attach(src)
+	else if(istype(W, /obj/item/weapon/wirecutters))
+		if(!grid)
+			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
+			return
+		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
+		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
+		new_grid.dettach(src)
+	else if (istype(W, /obj/item/weapon/screwdriver))
+		b_stat = !b_stat
 		add_fingerprint(user)
-		return
-	else return
+		playsound(user, 'sound/items/Screwdriver.ogg', 50, 1)
+		if(!istype(src, /obj/item/device/radio/beacon))
+			to_chat(user, "<span class='notice'>The radio can [b_stat ? "now" : "no longer"] be attached and modified!</span>")
+	else
+		..()
 
 /obj/item/device/radio/emp_act(severity)
-	on = 0
+	if(!grid)
+		on = 0
+		..()
 /*	broadcasting = 0
 	listening = 0
 	for (var/ch_name in channels)
 	channels[ch_name] = 0 */
-	..()
 
 
 ///////////////////////////////
@@ -822,8 +808,7 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 	if(!subspace_transmission)//Don't even bother if subspace isn't turned on
 		for (var/ch_name in channels)
 			dat+=text_sec_channel(ch_name, channels[ch_name])
-	dat+={"[text_wires()]</TT></body></html>"}
-	user << browse(dat, "window=radio")
+	user << browse(entity_ja(dat), "window=radio")
 	onclose(user, "radio")
 	return
 
@@ -841,3 +826,21 @@ var/GLOBAL_RADIO_TYPE = 1 // radio type to use
 
 /obj/item/device/radio/off
 	listening = 0
+
+/obj/item/device/radio_grid
+	name = "Shielded grid"
+	desc = "A metal grid, attached to circuit to protect it from emitting."
+	w_class = 2
+	icon = 'icons/obj/radio.dmi'
+	icon_state = "radio_grid"
+
+/obj/item/device/radio_grid/proc/attach(obj/item/device/radio/radio)
+	radio.on = TRUE
+	radio.grid = TRUE
+	qdel(src)
+
+/obj/item/device/radio_grid/proc/dettach(obj/item/device/radio/radio)
+	playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
+	if(prob(30))
+		radio.on = FALSE
+	radio.grid = FALSE

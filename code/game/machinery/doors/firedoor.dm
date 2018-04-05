@@ -1,6 +1,3 @@
-/var/const/OPEN = 1
-/var/const/CLOSED = 2
-
 /obj/machinery/door/firedoor
 	name = "\improper Emergency Shutter"
 	desc = "Emergency air-tight shutter, capable of sealing off breached areas."
@@ -39,13 +36,11 @@
 		"cold"
 	)
 
-/obj/machinery/door/firedoor/New()
+/obj/machinery/door/firedoor/atom_init()
 	. = ..()
 	for(var/obj/machinery/door/firedoor/F in loc)
 		if(F != src)
-			spawn(1)
-				qdel(src)
-			return .
+			return INITIALIZE_HINT_QDEL
 	var/area/A = get_area(src)
 	ASSERT(istype(A))
 
@@ -53,7 +48,7 @@
 	areas_added = list(A)
 
 	for(var/direction in cardinal)
-		A = get_area(get_step(src,direction))
+		A = get_area(get_step(src, direction))
 		if(istype(A) && !(A in areas_added))
 			A.all_doors.Add(src)
 			areas_added += A
@@ -106,40 +101,17 @@
 			return
 		else if(!density)
 			return
-		else
+		else if(!user.is_busy(src))
 			to_chat(user, "\red You force your claws between the doors and begin to pry them open...")
 			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
-			if (do_after(user,40,target = src))
-				if(!src) return
+			if (do_after(user,40,target = src) && src)
 				open(1)
 	return
 
 /obj/machinery/door/firedoor/attack_animal(mob/user)
 	if(istype(user, /mob/living/simple_animal/hulk))
-		if(blocked)
-			if(prob(75))
-				user.visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>",\
-				"You punch \the [src]!",\
-				"\red You feel some weird vibration!")
-				playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
-				return
-			else
-				user.say(pick("RAAAAAAAARGH!", "HNNNNNNNNNGGGGGGH!", "GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", "AAAAAAARRRGH!" ))
-				user.visible_message("\red <B>[user]</B> has destroyed some mechanic in \the <B>[src]!</B>",\
-				"You destroy some mechanic in \the [src] door, which holds it in place!",\
-				"\red <B>You feel some weird vibration!</B>")
-				playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
-				qdel(src)
-			return
-		else if(!density)
-			return
-		else
-			to_chat(user, "\red You force your fingers between the doors and begin to pry them open...")
-			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 30, 1, -4)
-			if (do_after(user,40,target = src))
-				if(!src) return
-				open(1)
-	return
+		var/mob/living/simple_animal/hulk/H = user
+		H.attack_hulk(src)
 
 /obj/machinery/door/firedoor/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -214,7 +186,7 @@
 	if(blocked && istype(C, /obj/item/weapon/crowbar))
 		if(!hatch_open)
 			to_chat(user, "<span class='danger'>You must open the maintenance hatch first!</span>")
-		else
+		else if(!user.is_busy(src))
 			user.visible_message("<span class='danger'>[user] is removing the electronics from \the [src].</span>",
 									"You start to remove the electronics from [src].")
 			if(do_after(user,30,target = src))
@@ -246,7 +218,7 @@
 			"You try to pry \the [src] [density ? "open" : "closed"], but it is welded in place!",\
 			"You hear someone struggle and metal straining.")
 			return
-
+		if(user.is_busy(src)) return
 		user.visible_message("\red \The [user] starts to force \the [src] [density ? "open" : "closed"] with \a [C]!",\
 				"You start forcing \the [src] [density ? "open" : "closed"] with \the [C]!",\
 				"You hear metal strain.")
@@ -284,6 +256,7 @@
 /obj/machinery/door/firedoor/do_close()
 	..()
 	layer = base_layer + FIREDOOR_CLOSED_MOD
+	START_PROCESSING(SSmachine, src)
 	latetoggle()
 
 /obj/machinery/door/firedoor/do_open()
@@ -328,45 +301,46 @@
 
 	// CHECK PRESSURE
 /obj/machinery/door/firedoor/process()
-	..()
-
-	if(density && next_process_time <= world.time)
-		next_process_time = world.time + 100		// 10 second delays between process updates
-		var/changed = 0
-		lockdown=0
-		// Pressure alerts
-		pdiff = getOPressureDifferential(src.loc)
-		if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
-			lockdown = 1
-			if(!pdiff_alert)
-				pdiff_alert = 1
-				changed = 1 // update_icon()
-		else
-			if(pdiff_alert)
-				pdiff_alert = 0
-				changed = 1 // update_icon()
-
-		tile_info = getCardinalAirInfo(src.loc,list("temperature","pressure"))
-		var/old_alerts = dir_alerts
-		for(var/index in 1 to 4)
-			var/list/tileinfo=tile_info[index]
-			if(tileinfo==null)
-				continue // Bad data.
-			var/celsius = convert_k2c(tileinfo[1])
-
-			var/alerts=0
-
-			// Temperatures
-			if(celsius >= FIREDOOR_MAX_TEMP)
-				alerts |= FIREDOOR_ALERT_HOT
+	if(density)
+		if(next_process_time <= world.time)
+			next_process_time = world.time + 100		// 10 second delays between process updates
+			var/changed = 0
+			lockdown=0
+			// Pressure alerts
+			pdiff = getOPressureDifferential(src.loc)
+			if(pdiff >= FIREDOOR_MAX_PRESSURE_DIFF)
 				lockdown = 1
-			else if(celsius <= FIREDOOR_MIN_TEMP)
-				alerts |= FIREDOOR_ALERT_COLD
-				lockdown = 1
+				if(!pdiff_alert)
+					pdiff_alert = 1
+					changed = 1 // update_icon()
+			else
+				if(pdiff_alert)
+					pdiff_alert = 0
+					changed = 1 // update_icon()
 
-			dir_alerts[index]=alerts
+			tile_info = getCardinalAirInfo(src.loc,list("temperature","pressure"))
+			var/old_alerts = dir_alerts
+			for(var/index in 1 to 4)
+				var/list/tileinfo=tile_info[index]
+				if(tileinfo==null)
+					continue // Bad data.
+				var/celsius = convert_k2c(tileinfo[1])
 
-		if(dir_alerts != old_alerts)
-			changed = 1
-		if(changed)
-			update_icon()
+				var/alerts=0
+
+				// Temperatures
+				if(celsius >= FIREDOOR_MAX_TEMP)
+					alerts |= FIREDOOR_ALERT_HOT
+					lockdown = 1
+				else if(celsius <= FIREDOOR_MIN_TEMP)
+					alerts |= FIREDOOR_ALERT_COLD
+					lockdown = 1
+
+				dir_alerts[index]=alerts
+
+			if(dir_alerts != old_alerts)
+				changed = 1
+			if(changed)
+				update_icon()
+	else
+		return PROCESS_KILL

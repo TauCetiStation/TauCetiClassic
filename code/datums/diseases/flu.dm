@@ -6,7 +6,7 @@
 	cure_id = "spaceacillin"
 	cure_chance = 10
 	agent = "H13N1 flu virion"
-	affected_species = list("Human", "Monkey")
+	affected_species = list(HUMAN , MONKEY)
 	permeability_mod = 0.75
 	desc = "If left untreated the subject will feel quite unwell."
 	severity = "Medium"
@@ -32,7 +32,7 @@
 			if(prob(1))
 				to_chat(affected_mob, "\red Your muscles ache.")
 				if(prob(20))
-					affected_mob.take_organ_damage(1)
+					affected_mob.take_bodypart_damage(1)
 			if(prob(1))
 				to_chat(affected_mob, "\red Your stomach hurts.")
 				if(prob(20))
@@ -57,7 +57,7 @@
 			if(prob(1))
 				to_chat(affected_mob, "\red Your muscles ache.")
 				if(prob(20))
-					affected_mob.take_organ_damage(1)
+					affected_mob.take_bodypart_damage(1)
 			if(prob(1))
 				to_chat(affected_mob, "\red Your stomach hurts.")
 				if(prob(20))

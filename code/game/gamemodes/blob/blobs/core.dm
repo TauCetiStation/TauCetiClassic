@@ -10,21 +10,21 @@
 	var/point_rate = 2
 	var/last_resource_collection
 
-/obj/effect/blob/core/New(loc, var/h = 200, var/client/new_overmind = null, var/new_rate = 2)
+/obj/effect/blob/core/atom_init(mapload, h = 200, client/new_overmind, new_rate = 2)
 	blob_cores += src
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	if(!overmind)
 		create_overmind(new_overmind)
 	point_rate = new_rate
 	last_resource_collection = world.time
-	..(loc, h)
+	. = ..()
 
 
 /obj/effect/blob/core/Destroy()
 	blob_cores -= src
 	if(overmind)
 		qdel(overmind)
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 //	return
 

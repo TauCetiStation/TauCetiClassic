@@ -3,6 +3,7 @@
 	plane = GAME_PLANE
 	var/level = 2
 	var/flags = 0
+	var/flags_2 = 0
 	var/list/fingerprints
 	var/list/fingerprintshidden
 	var/fingerprintslast = null
@@ -17,6 +18,8 @@
 	var/resize = 1		//don't abuse this shit
 	var/resize_rev = 1	//helps to restore default size
 
+	var/initialized = FALSE
+
 	///Chemistry.
 	var/datum/reagents/reagents = null
 
@@ -26,6 +29,83 @@
 
 	//Detective Work, used for the duplicate data points kept in the scanners
 	var/list/original_atom
+
+	var/in_use_action = FALSE // do_after sets this to TRUE and is_busy() can check for that to disallow multiple users to interact with this at the same time.
+
+/atom/New(loc, ...)
+	if(use_preloader && (src.type == _preloader.target_path))//in case the instanciated atom is creating other atoms in New()
+		_preloader.load(src)
+
+	//. = ..() //uncomment if you are dumb enough to add a /datum/New() proc
+
+	var/do_initialize = SSatoms.initialized
+	if(do_initialize > INITIALIZATION_INSSATOMS)
+		args[1] = do_initialize == INITIALIZATION_INNEW_MAPLOAD
+		if(SSatoms.InitAtom(src, args))
+			//we were deleted
+			return
+
+	var/list/created = SSatoms.created_atoms
+	if(created)
+		created += src
+
+// Called after New if the map is being loaded. mapload = TRUE
+// Called from base of New if the map is being loaded. mapload = FALSE
+// This base must be called or derivatives must set initialized to TRUE
+// must not sleep
+// Other parameters are passed from New (excluding loc), this does not happen if mapload is TRUE
+// Must return an Initialize hint. Defined in __DEFINES/subsystems.dm
+
+//Note: the following functions don't call the base for optimization and must copypasta:
+// /turf/atom_init
+// /turf/space/atom_init
+// /mob/dead/atom_init
+
+//Do also note that this proc always runs in New for /mob/dead
+/atom/proc/atom_init(mapload, ...)
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
+
+	if(light_power && light_range)
+		update_light()
+
+	if(opacity && isturf(src.loc))
+		var/turf/T = src.loc
+		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+
+	return INITIALIZE_HINT_NORMAL
+
+//called if atom_init returns INITIALIZE_HINT_LATELOAD
+/atom/proc/atom_init_late()
+	return
+
+/atom/Destroy()
+	if(reagents)
+		QDEL_NULL(reagents)
+
+	LAZYCLEARLIST(overlays)
+
+	if(light)
+		light.destroy()
+		light = null
+
+	return ..()
+
+/atom/proc/CheckParts(list/parts_list)
+	for(var/A in parts_list)
+		if(istype(A, /datum/reagent))
+			if(!reagents)
+				reagents = new()
+			reagents.reagent_list.Add(A)
+			reagents.conditional_update()
+		else if(ismovableatom(A))
+			var/atom/movable/M = A
+			if(isliving(M.loc))
+				var/mob/living/L = M.loc
+				L.drop_from_inventory(M, src)
+			else
+				M.forceMove(src)
 
 /atom/proc/assume_air(datum/gas_mixture/giver)
 	return null
@@ -65,6 +145,16 @@
 		return flags & INSERT_CONTAINER
 */
 
+/atom/proc/can_mob_interact(mob/user)
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.getBrainLoss() >= 60)
+			user.visible_message("<span class='warning'>[H] stares cluelessly at [isturf(loc) ? src : ismob(loc) ? src : "something"] and drools.</span>")
+			return FALSE
+		else if(prob(H.getBrainLoss()))
+			to_chat(user, "<span class='warning'>You momentarily forget how to use [src].</span>")
+			return FALSE
+	return TRUE
 
 /atom/proc/meteorhit(obj/meteor)
 	return
@@ -119,7 +209,7 @@
 			found += A.search_contents_for(path,filter_path)
 	return found
 
-/atom/proc/examine(mob/user)
+/atom/proc/examine(mob/user, distance = -1)
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
 	if(src.blood_DNA)
@@ -156,6 +246,8 @@
 		else
 			to_chat(user, "Nothing.")
 
+	return distance == -1 || isobserver(user) || (get_dist(src, user) <= distance)
+
 //called to set the atom's dir and used to add behaviour to dir-changes
 /atom/proc/set_dir(new_dir)
 	. = new_dir != dir
@@ -180,14 +272,11 @@
 	return
 
 /atom/proc/hitby(atom/movable/AM)
-	if(density)
-		AM.throwing = 0
-		AM.fly_speed = 0
 	return
 
 /atom/proc/add_hiddenprint(mob/living/M)
-	if(isnull(M)) return
-	if(isnull(M.key)) return
+	if(!M || !M.key)
+		return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna))
@@ -208,10 +297,9 @@
 			src.fingerprintslast = M.key
 	return
 
-/atom/proc/add_fingerprint(mob/living/M, ignoregloves = 0)
-	if(isnull(M)) return
-	if(isAI(M)) return
-	if(isnull(M.key)) return
+/atom/proc/add_fingerprint(mob/M, ignoregloves = 0)
+	if(!M || !M.key || isAI(M)) //AI's clicks already calls add_hiddenprint from ClickOn() proc
+		return
 	if (ishuman(M))
 		//Add the list if it does not exist.
 		if(!fingerprintshidden)
@@ -304,7 +392,7 @@
 	else
 		//Smudge up dem prints some
 		if(fingerprintslast != M.key)
-			fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), M.real_name, M.key)
+			fingerprintshidden += text("\[[]\]Real name: [], Key: []", time_stamp(), M.real_name, M.key)
 			fingerprintslast = M.key
 
 	//Cleaning up shit.
@@ -411,10 +499,7 @@
 /atom/Stat()
 	. = ..()
 	sleep(1)
-
-//This will be called after the map and objects are loaded
-/atom/proc/initialize()
-	return
+	stoplag()
 
 /atom/proc/update_transform()
 	var/matrix/ntransform = matrix(transform)

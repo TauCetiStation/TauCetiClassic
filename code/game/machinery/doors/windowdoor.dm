@@ -3,34 +3,25 @@
 	desc = "A strong door."
 	icon = 'icons/obj/doors/windoor.dmi'
 	icon_state = "left"
-	var/base_state = "left"
-	var/health = 150.0 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
 	visible = 0.0
 	flags = ON_BORDER
 	opacity = 0
-	var/obj/item/weapon/airlock_electronics/electronics = null
 	explosion_resistance = 5
 	air_properties_vary_with_direction = 1
 	door_open_sound  = 'sound/machines/windowdoor.ogg'
 	door_close_sound = 'sound/machines/windowdoor.ogg'
+	var/obj/item/weapon/airlock_electronics/electronics = null
+	var/base_state = "left"
+	var/health = 150.0 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
 
-/obj/machinery/door/window/update_nearby_tiles(need_rebuild)
-	if(!SSair)
-		return 0
+/obj/machinery/door/window/atom_init()
+	. = ..()
 
-	SSair.mark_for_update(get_turf(src))
-
-	return 1
-
-/obj/machinery/door/window/New()
-	..()
-
-	if (src.req_access && src.req_access.len)
-		src.icon_state = "[src.icon_state]"
-		src.base_state = src.icon_state
+	if (req_access && req_access.len)
+		icon_state = "[icon_state]"
+		base_state = icon_state
 
 	color = color_windows()
-	return
 
 /obj/machinery/door/window/Destroy()
 	density = 0
@@ -54,10 +45,10 @@
 
 /obj/machinery/door/window/proc/shatter(display_message = 1)
 	if(!(flags & NODECONSTRUCT))
-		new /obj/item/weapon/shard(src.loc)
-		new /obj/item/weapon/shard(src.loc)
-		new /obj/item/stack/rods(src.loc, 2)
-		new /obj/item/weapon/cable_coil(src.loc, 2)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/weapon/shard(loc)
+		new /obj/item/stack/rods(loc, 2)
+		new /obj/item/stack/cable_coil/red(loc, 2)
 		var/obj/item/weapon/airlock_electronics/ae
 		if(!electronics)
 			ae = new/obj/item/weapon/airlock_electronics( src.loc )
@@ -147,6 +138,9 @@
 	else
 		return 1
 
+/obj/machinery/door/window/CanAStarPass(obj/item/weapon/card/id/ID, to_dir, caller)
+	return !density || (dir != to_dir) || (check_access(ID) && hasPower())
+
 /obj/machinery/door/window/CheckExit(atom/movable/mover as mob|obj, turf/target as turf)
 	if(istype(mover) && mover.checkpass(PASSGLASS))
 		return 1
@@ -225,10 +219,6 @@
 	//..() //Does this really need to be here twice? The parent proc doesn't even do anything yet. - Nodrak
 	return
 
-
-/obj/machinery/door/window/attack_ai(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/door/window/proc/attack_generic(mob/user, damage = 0)
 	if(src.operating)
 		return
@@ -241,28 +231,23 @@
 /obj/machinery/door/window/attack_alien(mob/user)
 	if(islarva(user))
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)
 
 /obj/machinery/door/window/attack_animal(mob/user)
 	if(!isanimal(user))
 		return
+	..()
 	var/mob/living/simple_animal/M = user
 	if(M.melee_damage_upper <= 0)
 		return
 	attack_generic(M, M.melee_damage_upper)
 
-
 /obj/machinery/door/window/attack_slime(mob/living/carbon/slime/user)
 	if(!istype(user, /mob/living/carbon/slime/adult))
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	attack_generic(user, 25)
-
-/obj/machinery/door/window/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-
-/obj/machinery/door/window/attack_hand(mob/user)
-	return src.attackby(user, user)
 
 /obj/machinery/door/window/attackby(obj/item/weapon/I, mob/user)
 
@@ -274,9 +259,19 @@
 		change_paintjob(I, user)
 		return
 
+	if( istype(I,/obj/item/weapon/changeling_hammer))
+		var/obj/item/weapon/changeling_hammer/W = I
+		user.SetNextMove(CLICK_CD_MELEE)
+		if(W.use_charge(user, 6))
+			visible_message("<span class='danger'>[user]</B> has punched [src]!</span>")
+			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+			shatter()
+		return
+
 	//Emags and ninja swords? You may pass.
 	if (density && ((istype(I, /obj/item/weapon/card/emag) && hasPower()) || istype(I, /obj/item/weapon/melee/energy/blade)))
 		flick("[src.base_state]spark", src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		sleep(6)
 		if(istype(I, /obj/item/weapon/melee/energy/blade))
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
@@ -302,12 +297,13 @@
 			return
 
 		if(istype(I, /obj/item/weapon/crowbar))
-			if(p_open && !src.density && !src.operating)
+			if(p_open && !src.density)
+				if(user.is_busy(src)) return
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 100, 1)
 				user.visible_message("<span class='warning'>[user] removes the electronics from the [src.name].</span>", \
 									 "You start to remove electronics from the [src.name].")
 				if(do_after(user,40,target=src))
-					if(src.p_open && !src.density && !src.operating && src.loc)
+					if(src.p_open && !src.density && src.loc)
 						var/obj/structure/windoor_assembly/WA = new /obj/structure/windoor_assembly(src.loc)
 						switch(base_state)
 							if("left")
@@ -357,6 +353,7 @@
 	//If windoor is unpowered, crowbar, fireaxe and armblade can force it.
 	if(istype(I, /obj/item/weapon/crowbar) || istype(I, /obj/item/weapon/twohanded/fireaxe) || istype(I, /obj/item/weapon/melee/arm_blade) )
 		if(!hasPower())
+			user.SetNextMove(CLICK_CD_INTERACT)
 			if(density)
 				open(1)
 			else
@@ -366,6 +363,7 @@
 	//If it's a weapon, smash windoor. Unless it's an id card, agent card, ect.. then ignore it (Cards really shouldnt damage a door anyway)
 	if(src.density && istype(I, /obj/item/weapon) && !istype(I, /obj/item/weapon/card))
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		if( (I.flags&NOBLUDGEON) || !I.force )
 			return
 		var/aforce = I.force

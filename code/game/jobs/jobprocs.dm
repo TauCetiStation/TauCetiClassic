@@ -16,35 +16,23 @@
 	if(!H.miming)
 		to_chat(usr, "You still haven't atoned for your speaking transgression. Wait.")
 		return
+	addtimer(CALLBACK(GLOBAL_PROC, /client/proc/return_mimewall, H), 300)
+	H.visible_message("<span class='notice'>[H] looks as if a wall is in front of them.</span>", "You form a wall in front of yourself.")
 	H.verbs -= /client/proc/mimewall
-	spawn(300)
-		H.verbs += /client/proc/mimewall
-	for (var/mob/V in viewers(H))
-		if(V!=usr)
-			V.show_message("[H] looks as if a wall is in front of them.", 3, "", 2)
-	to_chat(usr, "You form a wall in front of yourself.")
-	new /obj/effect/forcefield/mime(locate(usr.x,usr.y,usr.z))
-	return
+	H.mind.special_verbs  -= /client/proc/mimewall
+	new /obj/effect/forcefield/magic/mime(get_turf(H), H, 300)
+
+/client/proc/return_mimewall(mob/living/carbon/human/H)
+	H.verbs += /client/proc/mimewall
+	if(H.mind)
+		H.mind.special_verbs  += /client/proc/mimewall
 
 ///////////Mimewalls///////////
 
-/obj/effect/forcefield/mime
+/obj/effect/forcefield/magic/mime
 	icon_state = "empty"
 	name = "invisible wall"
 	desc = "You have a bad feeling about this."
-	var/timeleft = 300
-	var/last_process = 0
-
-/obj/effect/forcefield/mime/New()
-	..()
-	last_process = world.time
-	SSobj.processing |= src
-
-/obj/effect/forcefield/mime/process()
-	timeleft -= (world.time - last_process)
-	if(timeleft <= 0)
-		SSobj.processing.Remove(src)
-		qdel(src)
 
 ///////////////////////////////
 
@@ -61,6 +49,7 @@
 		H.miming = 0
 	else
 		to_chat(H, "You'll have to wait if you want to atone for your sins.")
-		spawn(3000)
-			H.miming = 1
-	return
+		addtimer(CALLBACK(GLOBAL_PROC, /client/proc/return_speech, H), 3000)
+
+/client/proc/return_speech(mob/living/carbon/human/H)
+	H.miming = 1

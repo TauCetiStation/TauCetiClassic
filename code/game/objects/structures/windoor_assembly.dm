@@ -27,10 +27,10 @@ obj/structure/windoor_assembly
 	var/secure = 0		//Whether or not this creates a secure windoor
 	var/state = "01"	//How far the door assembly has progressed
 
-obj/structure/windoor_assembly/New(dir=NORTH)
-	..()
+obj/structure/windoor_assembly/atom_init(mapload, dir = NORTH)
+	. = ..()
 	src.ini_dir = src.dir
-	update_nearby_tiles(need_rebuild=1)
+	update_nearby_tiles(need_rebuild = 1)
 
 obj/structure/windoor_assembly/Destroy()
 	density = 0
@@ -60,6 +60,7 @@ obj/structure/windoor_assembly/Destroy()
 
 /obj/structure/windoor_assembly/attackby(obj/item/W, mob/user)
 	//I really should have spread this out across more states but thin little windoors are hard to sprite.
+	if(user.is_busy()) return
 	switch(state)
 		if("01")
 			if(istype(W, /obj/item/weapon/weldingtool) && !anchored )
@@ -71,9 +72,9 @@ obj/structure/windoor_assembly/Destroy()
 					if(do_after(user, 40, target = src))
 						if(!src || !WT.isOn()) return
 						to_chat(user, "\blue You dissasembled the windoor assembly!")
-						new /obj/item/stack/sheet/rglass(get_turf(src), 5)
+						new /obj/item/stack/sheet/rglass(loc, 5)
 						if(secure)
-							PoolOrNew(/obj/item/stack/rods, list(get_turf(src), 4))
+							new /obj/item/stack/rods(loc, 4)
 						qdel(src)
 				else
 					to_chat(user, "\blue You need more welding fuel to dissassemble the windoor assembly.")
@@ -112,16 +113,15 @@ obj/structure/windoor_assembly/Destroy()
 			//Adding plasteel makes the assembly a secure windoor assembly. Step 2 (optional) complete.
 			else if(istype(W, /obj/item/stack/rods) && !secure)
 				var/obj/item/stack/rods/R = W
-				if(R.amount < 4)
+				if(R.get_amount() < 4)
 					to_chat(user, "\red You need more rods to do this.")
 					return
 				to_chat(user, "\blue You start to reinforce the windoor with rods.")
 
 				if(do_after(user,40, target = src))
-					if(!src || !secure)
+					if(QDELETED(src) || !secure || !R.use(4))
 						return
 
-					R.use(4)
 					to_chat(user, "\blue You reinforce the windoor.")
 					src.secure = 1
 					if(src.anchored)
@@ -130,13 +130,13 @@ obj/structure/windoor_assembly/Destroy()
 						src.name = "Secure Windoor Assembly"
 
 			//Adding cable to the assembly. Step 5 complete.
-			else if(istype(W, /obj/item/weapon/cable_coil) && anchored)
+			else if(istype(W, /obj/item/stack/cable_coil) && anchored)
 				user.visible_message("[user] wires the windoor assembly.", "You start to wire the windoor assembly.")
 
 				if(do_after(user, 40, target = src))
 					if(!src || !src.anchored || src.state != "01")
 						return
-					var/obj/item/weapon/cable_coil/CC = W
+					var/obj/item/stack/cable_coil/CC = W
 					if(!CC.use(1))
 						return
 					to_chat(user, "\blue You wire the windoor!")
@@ -160,7 +160,7 @@ obj/structure/windoor_assembly/Destroy()
 						return
 
 					to_chat(user, "\blue You cut the windoor wires.!")
-					new/obj/item/weapon/cable_coil(get_turf(user), 1)
+					new /obj/item/stack/cable_coil/random(get_turf(user), 1)
 					src.state = "01"
 					if(src.secure)
 						src.name = "Secure Anchored Windoor Assembly"
@@ -204,7 +204,7 @@ obj/structure/windoor_assembly/Destroy()
 					ae.loc = src.loc
 
 			else if(istype(W, /obj/item/weapon/pen))
-				var/t = copytext(stripped_input(user, "Enter the name for the door.", src.name, src.created_name),1,MAX_NAME_LEN)
+				var/t = sanitize_safe(input(user, "Enter the name for the door.", src.name, input_default(src.created_name)), MAX_LNAME_LEN)
 				if(!t)
 					return
 				if(!in_range(src, usr) && src.loc != usr)
@@ -320,11 +320,3 @@ obj/structure/windoor_assembly/Destroy()
 
 	update_icon()
 	return
-
-/obj/structure/windoor_assembly/proc/update_nearby_tiles(need_rebuild)
-	if(!SSair)
-		return 0
-
-	SSair.mark_for_update(get_turf(src))
-
-	return 1

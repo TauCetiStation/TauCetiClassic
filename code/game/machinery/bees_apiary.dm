@@ -3,7 +3,7 @@
 
 /obj/machinery/apiary
 	name = "apiary tray"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "hydrotray3"
 	density = 1
 	anchored = 1
@@ -25,8 +25,8 @@
 	var/hydrotray_type = /obj/machinery/hydroponics
 
 //overwrite this after it's created if the apiary needs a custom machinery sprite
-/obj/machinery/apiary/New()
-	..()
+/obj/machinery/apiary/atom_init()
+	. = ..()
 	overlays += image('icons/obj/apiary_bees_etc.dmi', icon_state="apiary")
 
 /obj/machinery/apiary/bullet_act(obj/item/projectile/Proj) //Works with the Somatoray to modify plant variables.
@@ -69,6 +69,7 @@
 			angry_swarm(user)
 		else
 			to_chat(user, "\blue You begin to dislodge the dead apiary from the tray.")
+		if(user.is_busy()) return
 		if(do_after(user, 50, target = src))
 			new hydrotray_type(src.loc)
 			new /obj/item/apiary(src.loc)
@@ -89,6 +90,7 @@
 				to_chat(user, "\red You begin to harvest the honey. The bees don't seem to like it.")
 				angry_swarm(user)
 			else
+				if(user.is_busy()) return
 				to_chat(user, "\blue You begin to harvest the honey.")
 			if(do_after(user,50,target = src))
 				G.reagents.add_reagent("honey",harvestable_honey)

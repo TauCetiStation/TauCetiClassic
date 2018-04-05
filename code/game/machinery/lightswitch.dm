@@ -6,25 +6,27 @@
 	desc = "It turns lights on and off. What are you, simple?"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1.0
-	var/on = 1
+	anchored = TRUE
+	var/on = TRUE
 	var/area/area = null
 	var/otherarea = null
 	//	luminosity = 1
 
-/obj/machinery/light_switch/New()
+/obj/machinery/light_switch/atom_init()
 	..()
-	spawn(5)
-		src.area = src.loc.loc
+	return INITIALIZE_HINT_LATELOAD
 
-		if(otherarea)
-			src.area = locate(text2path("/area/[otherarea]"))
+/obj/machinery/light_switch/atom_init_late()
+	area = loc.loc
 
-		if(!name)
-			name = "light switch ([area.name])"
+	if(otherarea)
+		area = locate(text2path("/area/[otherarea]"))
 
-		src.on = src.area.lightswitch
-		updateicon()
+	if(!name)
+		name = "light switch ([area.name])"
+
+	on = area.lightswitch
+	updateicon()
 
 
 
@@ -42,14 +44,13 @@
 	if(src in oview(1, user))
 		to_chat(user, "A light switch. It is [on? "on" : "off"].")
 
-
-/obj/machinery/light_switch/attack_paw(mob/user)
-	src.attack_hand(user)
-
 /obj/machinery/light_switch/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 
-	src.add_fingerprint(usr)
 	on = !on
+	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(src, 'sound/items/buttonclick.ogg', 20, 1, 1)
 
 	for(var/area/A in area.master.related)

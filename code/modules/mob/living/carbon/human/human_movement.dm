@@ -1,81 +1,89 @@
 /mob/living/carbon/human/movement_delay()
-	var/tally = 0
 
-	if(species)
-		tally = species.speed_mod
-
-	if(crawling)
-		tally += 7
-	else if((reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola")) && species && !(species.flags[NO_BLOOD]))
-		return -1
-
-	if(istype(l_hand, /obj/item/weapon/gun))
-		if(l_hand.w_class > 3)
-			tally += 0.5
-	if(istype(r_hand, /obj/item/weapon/gun))
-		if(r_hand.w_class > 3)
-			tally += 0.5
+	if(mind && mind.changeling && mind.changeling.strained_muscles)
+		if(!has_gravity(src))
+			return -3   // speed boost in space.
+		else
+			return -2.5 // changeling ability also nulify any speed modifications and gives boost.
 
 	if(!has_gravity(src))
 		return -1 // It's hard to be slowed down in space by... anything
 
+	var/tally = species.speed_mod
+
+	if(RUN in mutations)
+		tally -= 0.5
+
+	if(crawling)
+		tally += 7
+
 	if(embedded_flag)
-		handle_embedded_objects() //Moving with objects stuck in you can cause bad times.
+		handle_embedded_objects() // Moving with objects stuck in you can cause bad times.
 
 	var/health_deficiency = (100 - health + halloss)
 	if(health_deficiency >= 40)
 		tally += (health_deficiency / 25)
 
-	var/hungry = (500 - nutrition)/5 // So overeat would be 100 and default level would be 80
-	if (hungry >= 70)
-		tally += hungry/50
-
-	if(wear_suit)
-		tally += wear_suit.slowdown
+	var/hungry = (500 - nutrition) / 5 // So overeat would be 100 and default level would be 80
+	if(hungry >= 70)
+		tally += hungry / 50
 
 	if(istype(buckled, /obj/structure/stool/bed/chair/wheelchair))
-		for(var/organ_name in list("l_hand","r_hand","l_arm","r_arm"))
-			var/datum/organ/external/E = get_organ(organ_name)
-			if(!E || (E.status & ORGAN_DESTROYED))
-				tally += 4
-			else if(E.status & ORGAN_SPLINTED)
-				tally += 0.5
-			else if(E.status & ORGAN_BROKEN)
-				tally += 1.5
+		for(var/bodypart_name in list(BP_L_ARM , BP_R_ARM))
+			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
+			if(!BP || (BP.status & ORGAN_DESTROYED))
+				tally += 6
+			else if(BP.status & ORGAN_SPLINTED)
+				tally += 0.8
+			else if(BP.status & ORGAN_BROKEN)
+				tally += 3
 	else
-		if(shoes)
-			tally += shoes.slowdown
+		var/chem_nullify_debuff = FALSE
+		if(!species.flags[NO_BLOOD] && ( reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola") )) // hyperzine removes equipment slowdowns (no blood = no chemical effects).
+			chem_nullify_debuff = TRUE
 
-		if(back)
+		if(wear_suit && wear_suit.slowdown && !(wear_suit.slowdown > 0 && chem_nullify_debuff))
+			tally += wear_suit.slowdown
+
+		if(back && back.slowdown && !(back.slowdown > 0 && chem_nullify_debuff))
 			tally += back.slowdown
 
-		if(buckled)	//so, if we buckled we have large debuff
+		if(shoes && shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
+			tally += shoes.slowdown
+
+		if(!chem_nullify_debuff)
+			for(var/x in list(l_hand, r_hand))
+				var/obj/item/O = x
+				if(O && !(O.flags & ABSTRACT) && O.w_class >= ITEM_SIZE_NORMAL)
+					tally += 0.5 * (O.w_class - 2) // (3 = 0.5) || (4 = 1) || (5 = 1.5)
+
+		if(buckled) // so, if we buckled we have large debuff
 			tally += 5.5
 
-		for(var/organ_name in list("l_foot","r_foot","l_leg","r_leg"))
-			var/datum/organ/external/E = get_organ(organ_name)
-			if(!E || (E.status & ORGAN_DESTROYED))
-				tally += 4
-			else if(E.status & ORGAN_SPLINTED)
-				tally += 0.5
-			else if(E.status & ORGAN_BROKEN)
-				tally += 1.5
+		for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG))
+			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
+			if(!BP || (BP.status & ORGAN_DESTROYED))
+				tally += 6
+			else if(BP.status & ORGAN_SPLINTED)
+				tally += 0.8
+			else if(BP.status & ORGAN_BROKEN)
+				tally += 3
 
 	if(shock_stage >= 10)
-		tally += 3
+		tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)
 
 	if(pull_debuff)
 		tally += pull_debuff
 
-	if(FAT in src.mutations)
+	if(FAT in mutations)
 		tally += 1.5
-	if (bodytemperature < 283.222)
+
+	if(bodytemperature < 283.222)
 		tally += (283.222 - bodytemperature) / 10 * 1.75
 
-	if(RUN in src.mutations)
-		tally = 0
+	tally += max(2 * stance_damage, 0) //damaged/missing feet or legs is slow
 
-	return (tally+config.human_delay)
+	return (tally + config.human_delay)
 
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0)
 

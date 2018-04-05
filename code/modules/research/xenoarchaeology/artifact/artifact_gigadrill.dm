@@ -4,13 +4,17 @@
 	desc = "A giant, alien drill mounted on long treads."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "gigadrill"
-	var/active = 0
+	use_power = 0
+	density = TRUE
+	layer = 3.1		//to go over ores
+	var/active = FALSE
 	var/drill_time = 10
 	var/turf/drilling_turf
-	density = 1
-	layer = 3.1		//to go over ores
 
 /obj/machinery/giga_drill/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(active)
 		active = 0
 		icon_state = "gigadrill"

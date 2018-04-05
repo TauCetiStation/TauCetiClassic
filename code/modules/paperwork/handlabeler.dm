@@ -3,6 +3,8 @@
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "labeler0"
 	item_state = "flight"
+	m_amt = 800
+	origin_tech = "materials=1"
 	var/label = null
 	var/labels_left = 30
 	var/mode = 0	//off or on.
@@ -43,7 +45,7 @@
 	if(mode)
 		to_chat(user, "<span class='notice'>You turn on \the [src].</span>")
 		//Now let them chose the text.
-		var/str = sanitize(copytext(input(user,"Label text?","Set label",""),1,MAX_NAME_LEN))
+		var/str = sanitize_safe(input(user,"Label text?","Set label",""),MAX_NAME_LEN)
 		if(!str || !length(str))
 			to_chat(user, "<span class='notice'>Invalid text.</span>")
 			return

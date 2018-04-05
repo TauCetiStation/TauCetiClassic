@@ -26,7 +26,7 @@
 			ser["data"] = dna.SE
 		else
 			ser["data"] = dna.UI
-		ser["owner"] = src.dna.real_name
+		ser["owner"] = dna.real_name
 		ser["label"] = name
 		if(types & DNA2_BUF_UI)
 			ser["type"] = "ui"
@@ -52,16 +52,16 @@
 	var/open = 0
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 
-/obj/machinery/dna_scannernew/New()
-	..()
+/obj/machinery/dna_scannernew/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/clonescanner(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
 	RefreshParts()
 
 /obj/machinery/dna_scannernew/RefreshParts()
@@ -78,8 +78,7 @@
 /obj/machinery/dna_scannernew/proc/toggle_open(mob/user=usr)
 	if(!user)
 		return
-	if(open)	return close(user)
-	else		return open(user)
+	return open ? close(user) : open(user)
 
 /obj/machinery/dna_scannernew/container_resist()
 	var/mob/living/user = usr
@@ -87,7 +86,7 @@
 	if(open || !locked)	//Open and unlocked, no need to escape
 		open = 1
 		return
-	user.next_move = world.time + 100
+	user.SetNextMove(100)
 	user.last_special = world.time + 100
 	to_chat(user, "<span class='notice'>You lean on the back of [src] and start pushing the door open. (this will take about [breakout_time] minutes.)</span>")
 	user.visible_message("<span class='warning'>You hear a metallic creaking from [src]!</span>")
@@ -170,6 +169,7 @@
 	return
 
 /obj/machinery/dna_scannernew/attackby(obj/item/I, mob/user)
+
 	if(!occupant && default_deconstruction_screwdriver(user, "[initial(icon_state)]_open", "[initial(icon_state)]", I))
 		return
 
@@ -179,7 +179,7 @@
 	if(istype(I, /obj/item/weapon/crowbar))
 		if(panel_open)
 			for(var/obj/O in contents) // in case there is something in the scanner
-				O.loc = src.loc
+				O.loc = loc
 			default_deconstruction_crowbar(I)
 		return
 
@@ -197,6 +197,7 @@
 
 	if(istype(I, /obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = I
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!ismob(G.affecting))
 			return
 
@@ -206,7 +207,6 @@
 
 		var/mob/M = G.affecting
 		M.forceMove(loc)
-		user.stop_pulling()
 		qdel(G)
 
 /obj/machinery/dna_scannernew/attack_hand(mob/user)
@@ -275,31 +275,30 @@
 	var/waiting_for_user_input=0 // Fix for #274 (Mash create block injector without answering dialog to make unlimited injectors) - N3X
 
 /obj/machinery/computer/scan_consolenew/attackby(obj/item/I, mob/user)
-	if (istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
-		if (!src.disk)
+	if(istype(I, /obj/item/weapon/disk/data)) //INSERT SOME diskS
+		if (!disk)
 			user.drop_item()
 			I.loc = src
-			src.disk = I
+			disk = I
 			to_chat(user, "<span class='notice'>You insert [I].</span>")
 			nanomanager.update_uis(src) // update all UIs attached to src
 			return
 	else
 		..()
-	return
 
-/obj/machinery/computer/scan_consolenew/New()
+/obj/machinery/computer/scan_consolenew/atom_init()
 	..()
 	for(var/i=0;i<3;i++)
 		buffers[i+1]=new /datum/dna2/record
-	spawn(5)
-		for(dir in list(NORTH,EAST,SOUTH,WEST))
-			connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
-			if(!isnull(connected))
-				break
-		spawn(250)
-			src.injector_ready = 1
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/scan_consolenew/atom_init_late()
+	for(dir in list(NORTH,EAST,SOUTH,WEST))
+		connected = locate(/obj/machinery/dna_scannernew, get_step(src, dir))
+		if(!isnull(connected))
+			break
+	spawn(250)
+		injector_ready = 1
 
 /obj/machinery/computer/scan_consolenew/proc/all_dna_blocks(list/buffer)
 	var/list/arr = list()
@@ -316,23 +315,6 @@
 	I.buf = buffer
 	return 1
 
-/obj/machinery/computer/scan_consolenew/attack_hand(user)
-	if(..())
-		return
-	if(ishuman(user)) //#Z2 Hulk </3 computers
-		var/mob/living/carbon/human/H = user
-		if(HULK in H.mutations)
-			if(stat & (BROKEN))
-				return
-			if(H.a_intent == "hurt")
-				H.visible_message("\red [H.name] smashes [src] with \his mighty arms!")
-				set_broken()
-				return
-			else
-				H.visible_message("\red [H.name] stares cluelessly at [src] and drools.")
-				return//##Z2
-	ui_interact(user)
-
  /**
   * The ui_interact proc is used to open and update Nano UIs
   * If ui_interact is not used then the UI will not update correctly
@@ -346,14 +328,14 @@
   */
 /obj/machinery/computer/scan_consolenew/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 	if(connected && connected.is_operational())
-		if(user == connected.occupant || user.stat)
+		if(user == connected.occupant)
 			return
 
 		// this is the data which will be sent to the ui
 		var/data[0]
 		data["selectedMenuKey"] = selected_menu_key
 		data["open"] = connected.open
-		data["locked"] = src.connected.locked
+		data["locked"] = connected.locked
 		data["hasOccupant"] = connected.occupant ? 1 : 0
 
 		data["isInjectorReady"] = injector_ready
@@ -372,7 +354,7 @@
 		data["disk"] = diskData
 
 		var/list/new_buffers = list()
-		for(var/datum/dna2/record/buf in src.buffers)
+		for(var/datum/dna2/record/buf in buffers)
 			new_buffers += list(buf.GetData())
 		data["buffers"]=new_buffers
 
@@ -389,7 +371,7 @@
 		data["selectedUITargetHex"] = selected_ui_target_hex
 
 		var/occupantData[0]
-		if (!src.connected.occupant || !src.connected.occupant.dna)
+		if (!connected.occupant || !connected.occupant.dna)
 			occupantData["name"] = null
 			occupantData["stat"] = null
 			occupantData["isViableSubject"] = null
@@ -404,7 +386,7 @@
 			occupantData["name"] = connected.occupant.name
 			occupantData["stat"] = connected.occupant.stat
 			occupantData["isViableSubject"] = 1
-			if (!src.connected.occupant.dna || NOCLONE in connected.occupant.mutations || (connected.scan_level == 3))
+			if (!connected.occupant.dna || NOCLONE in connected.occupant.mutations || (connected.scan_level == 3))
 				occupantData["isViableSubject"] = 0
 			occupantData["health"] = connected.occupant.health
 			occupantData["maxHealth"] = connected.occupant.maxHealth
@@ -443,7 +425,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(!src || !src.connected)
+	if(!src || !connected)
 		return FALSE // don't update uis
 	else if(irradiating) // Make sure that it isn't already irradiating someone...
 		return FALSE // don't update uis
@@ -459,127 +441,127 @@
 			connected.toggle_open(usr)
 
 	else if (href_list["pulseRadiation"])
-		irradiating = src.radiation_duration
-		var/lock_state = src.connected.locked
-		src.connected.locked = 1//lock it
+		irradiating = radiation_duration
+		var/lock_state = connected.locked
+		connected.locked = 1//lock it
 		nanomanager.update_uis(src) // update all UIs attached to src
 
-		sleep(10 * src.radiation_duration) // sleep for radiation_duration seconds
+		sleep(10 * radiation_duration) // sleep for radiation_duration seconds
 
 		irradiating = 0
 
-		if (!src.connected.occupant)
+		if (!connected.occupant)
 			return
 
 		if (prob(95))
 			if(prob(75))
-				randmutb(src.connected.occupant)
+				randmutb(connected.occupant)
 			else
-				randmuti(src.connected.occupant)
+				randmuti(connected.occupant)
 		else
 			if(prob(95))
-				randmutg(src.connected.occupant)
+				randmutg(connected.occupant)
 			else
-				randmuti(src.connected.occupant)
+				randmuti(connected.occupant)
 
-		src.connected.occupant.radiation += ((src.radiation_intensity * 3) + src.radiation_duration * 3)
-		src.connected.locked = lock_state
+		connected.occupant.radiation += ((radiation_intensity * 3) + radiation_duration * 3)
+		connected.locked = lock_state
 
 	else if (href_list["radiationDuration"])
 		if (text2num(href_list["radiationDuration"]) > 0)
-			if (src.radiation_duration < 20)
-				src.radiation_duration += 2
+			if (radiation_duration < 20)
+				radiation_duration += 2
 		else
-			if (src.radiation_duration > 2)
-				src.radiation_duration -= 2
+			if (radiation_duration > 2)
+				radiation_duration -= 2
 
 	else if (href_list["radiationIntensity"])
 		if (text2num(href_list["radiationIntensity"]) > 0)
-			if (src.radiation_intensity < 10)
-				src.radiation_intensity++
+			if (radiation_intensity < 10)
+				radiation_intensity++
 		else
-			if (src.radiation_intensity > 1)
-				src.radiation_intensity--
+			if (radiation_intensity > 1)
+				radiation_intensity--
 
 	////////////////////////////////////////////////////////
 
 	else if (href_list["changeUITarget"] && text2num(href_list["changeUITarget"]) > 0)
-		if (src.selected_ui_target < 15)
-			src.selected_ui_target++
-			src.selected_ui_target_hex = src.selected_ui_target
+		if (selected_ui_target < 15)
+			selected_ui_target++
+			selected_ui_target_hex = selected_ui_target
 			switch(selected_ui_target)
 				if(10)
-					src.selected_ui_target_hex = "A"
+					selected_ui_target_hex = "A"
 				if(11)
-					src.selected_ui_target_hex = "B"
+					selected_ui_target_hex = "B"
 				if(12)
-					src.selected_ui_target_hex = "C"
+					selected_ui_target_hex = "C"
 				if(13)
-					src.selected_ui_target_hex = "D"
+					selected_ui_target_hex = "D"
 				if(14)
-					src.selected_ui_target_hex = "E"
+					selected_ui_target_hex = "E"
 				if(15)
-					src.selected_ui_target_hex = "F"
+					selected_ui_target_hex = "F"
 		else
-			src.selected_ui_target = 0
-			src.selected_ui_target_hex = 0
+			selected_ui_target = 0
+			selected_ui_target_hex = 0
 
 	else if (href_list["changeUITarget"] && text2num(href_list["changeUITarget"]) < 1)
-		if (src.selected_ui_target > 0)
-			src.selected_ui_target--
-			src.selected_ui_target_hex = src.selected_ui_target
+		if (selected_ui_target > 0)
+			selected_ui_target--
+			selected_ui_target_hex = selected_ui_target
 			switch(selected_ui_target)
 				if(10)
-					src.selected_ui_target_hex = "A"
+					selected_ui_target_hex = "A"
 				if(11)
-					src.selected_ui_target_hex = "B"
+					selected_ui_target_hex = "B"
 				if(12)
-					src.selected_ui_target_hex = "C"
+					selected_ui_target_hex = "C"
 				if(13)
-					src.selected_ui_target_hex = "D"
+					selected_ui_target_hex = "D"
 				if(14)
-					src.selected_ui_target_hex = "E"
+					selected_ui_target_hex = "E"
 		else
-			src.selected_ui_target = 15
-			src.selected_ui_target_hex = "F"
+			selected_ui_target = 15
+			selected_ui_target_hex = "F"
 
 	else if (href_list["selectUIBlock"] && href_list["selectUISubblock"]) // This chunk of code updates selected block / sub-block based on click
 		var/select_block = text2num(href_list["selectUIBlock"])
 		var/select_subblock = text2num(href_list["selectUISubblock"])
 		if ((select_block <= 13) && (select_block >= 1))
-			src.selected_ui_block = select_block
+			selected_ui_block = select_block
 		if ((select_subblock <= DNA_BLOCK_SIZE) && (select_subblock >= 1))
-			src.selected_ui_subblock = select_subblock
+			selected_ui_subblock = select_subblock
 
 	else if (href_list["pulseUIRadiation"])
-		var/block = src.connected.occupant.dna.GetUISubBlock(src.selected_ui_block,src.selected_ui_subblock)
+		var/block = connected.occupant.dna.GetUISubBlock(selected_ui_block, selected_ui_subblock)
 
-		irradiating = src.radiation_duration
-		var/lock_state = src.connected.locked
-		src.connected.locked = 1//lock it
+		irradiating = radiation_duration
+		var/lock_state = connected.locked
+		connected.locked = 1//lock it
 		nanomanager.update_uis(src) // update all UIs attached to src
 
-		sleep(10 * src.radiation_duration) // sleep for radiation_duration seconds
+		sleep(10 * radiation_duration) // sleep for radiation_duration seconds
 
 		irradiating = 0
 
-		if (!src.connected.occupant)
+		if (!connected.occupant)
 			return
 
-		if (prob((80 + (src.radiation_duration / 2))))
-			block = miniscrambletarget(num2text(selected_ui_target), src.radiation_intensity, src.radiation_duration)
-			src.connected.occupant.dna.SetUISubBlock(src.selected_ui_block, src.selected_ui_subblock, block)
-			src.connected.occupant.UpdateAppearance()
-			src.connected.occupant.radiation += (src.radiation_intensity + src.radiation_duration) / (connected.damage_coeff ** 2)
+		if (prob((80 + (radiation_duration / 2))))
+			block = miniscrambletarget(num2text(selected_ui_target), radiation_intensity, radiation_duration)
+			connected.occupant.dna.SetUISubBlock(selected_ui_block, selected_ui_subblock, block)
+			connected.occupant.UpdateAppearance()
+			connected.occupant.radiation += (radiation_intensity + radiation_duration) / (connected.damage_coeff ** 2)
 		else
-			if	(prob(20+src.radiation_intensity))
-				randmutb(src.connected.occupant)
-				domutcheck(src.connected.occupant,src.connected)
+			if	(prob(20 + radiation_intensity))
+				randmutb(connected.occupant)
+				domutcheck(connected.occupant, connected)
 			else
-				randmuti(src.connected.occupant)
-				src.connected.occupant.UpdateAppearance()
-			src.connected.occupant.radiation += ((src.radiation_intensity * 2) + src.radiation_duration + (connected.precision_coeff ** 2))
-		src.connected.locked = lock_state
+				randmuti(connected.occupant)
+				connected.occupant.UpdateAppearance()
+			connected.occupant.radiation += ((radiation_intensity * 2) + radiation_duration + (connected.precision_coeff ** 2))
+		connected.locked = lock_state
 
 	////////////////////////////////////////////////////////
 
@@ -600,52 +582,52 @@
 		var/select_block = text2num(href_list["selectSEBlock"])
 		var/select_subblock = text2num(href_list["selectSESubblock"])
 		if ((select_block <= DNA_SE_LENGTH) && (select_block >= 1))
-			src.selected_se_block = select_block
+			selected_se_block = select_block
 		if ((select_subblock <= DNA_BLOCK_SIZE) && (select_subblock >= 1))
-			src.selected_se_subblock = select_subblock
+			selected_se_subblock = select_subblock
 		//testing("User selected block [selected_se_block] (sent [select_block]), subblock [selected_se_subblock] (sent [select_block]).")
 
 	else if (href_list["pulseSERadiation"])
-		var/block = src.connected.occupant.dna.GetSESubBlock(src.selected_se_block,src.selected_se_subblock)
+		var/block = connected.occupant.dna.GetSESubBlock(selected_se_block, selected_se_subblock)
 		//var/original_block=block
-		//testing("Irradiating SE block [src.selected_se_block]:[src.selected_se_subblock] ([block])...")
+		//testing("Irradiating SE block [selected_se_block]:[selected_se_subblock] ([block])...")
 
-		irradiating = src.radiation_duration
-		var/lock_state = src.connected.locked
-		src.connected.locked = 1 //lock it
+		irradiating = radiation_duration
+		var/lock_state = connected.locked
+		connected.locked = 1 //lock it
 		nanomanager.update_uis(src) // update all UIs attached to src
 
-		sleep(10 * src.radiation_duration) // sleep for radiation_duration seconds
+		sleep(10 * radiation_duration) // sleep for radiation_duration seconds
 
 		irradiating = 0
 
-		if(src.connected.occupant)
-			if (prob((80 + (src.radiation_duration / 2))))
+		if(connected.occupant)
+			if (prob((80 + (radiation_duration / 2))))
 				// FIXME: Find out what these corresponded to and change them to the WHATEVERBLOCK they need to be.
-				//if ((src.selected_se_block != 2 || src.selected_se_block != 12 || src.selected_se_block != 8 || src.selected_se_block || 10) && prob (20))
+				//if ((selected_se_block != 2 || selected_se_block != 12 || selected_se_block != 8 || selected_se_block || 10) && prob (20))
 				var/real_SE_block = selected_se_block
-				block = miniscramble(block, src.radiation_intensity, src.radiation_duration)
+				block = miniscramble(block, radiation_intensity, radiation_duration)
 				if(prob(20))
-					if (src.selected_se_block > 1 && src.selected_se_block < DNA_SE_LENGTH / 2)
+					if (selected_se_block > 1 && selected_se_block < DNA_SE_LENGTH / 2)
 						real_SE_block++
-					else if (src.selected_se_block > DNA_SE_LENGTH / 2 && src.selected_se_block < DNA_SE_LENGTH)
+					else if (selected_se_block > DNA_SE_LENGTH / 2 && selected_se_block < DNA_SE_LENGTH)
 						real_SE_block--
 
-				//testing("Irradiated SE block [real_SE_block]:[src.selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
+				//testing("Irradiated SE block [real_SE_block]:[selected_se_subblock] ([original_block] now [block]) [(real_SE_block!=selected_se_block) ? "(SHIFTED)":""]!")
 				connected.occupant.dna.SetSESubBlock(real_SE_block,selected_se_subblock,block)
-				src.connected.occupant.radiation += (src.radiation_intensity + src.radiation_duration) / (connected.damage_coeff ** 2)
-				domutcheck(src.connected.occupant, src.connected, block != null, 1)//#Z2
+				connected.occupant.radiation += (radiation_intensity + radiation_duration) / (connected.damage_coeff ** 2)
+				domutcheck(connected.occupant, connected, block != null, 1)//#Z2
 			else
-				src.connected.occupant.radiation += ((src.radiation_intensity * 2) + src.radiation_duration + (connected.precision_coeff ** 2))
-				if	(prob(80 - src.radiation_duration))
+				connected.occupant.radiation += ((radiation_intensity * 2) + radiation_duration + (connected.precision_coeff ** 2))
+				if	(prob(80 - radiation_duration))
 					//testing("Random bad mut!")
-					randmutb(src.connected.occupant)
-					domutcheck(src.connected.occupant, src.connected, block != null, 1)//#Z2
+					randmutb(connected.occupant)
+					domutcheck(connected.occupant, connected, block != null, 1)//#Z2
 				else
-					randmuti(src.connected.occupant)
+					randmuti(connected.occupant)
 					//testing("Random identity mut!")
-					src.connected.occupant.UpdateAppearance()
-		src.connected.locked = lock_state
+					connected.occupant.UpdateAppearance()
+		connected.locked = lock_state
 
 	else if(href_list["ejectBeaker"])
 		if(connected.beaker)
@@ -659,18 +641,18 @@
 
 		// These bufferOptions do not require a bufferId
 		if (bufferOption == "wipeDisk")
-			if ((isnull(src.disk)) || (src.disk.read_only))
-				//src.temphtml = "Invalid disk. Please try again."
+			if (!disk || disk.read_only)
+				//temphtml = "Invalid disk. Please try again."
 				return FALSE
 
-			src.disk.buf = null
-			//src.temphtml = "Data saved."
+			disk.buf = null
+			//temphtml = "Data saved."
 
 		else if (bufferOption == "ejectDisk")
-			if (!src.disk)
+			if (!disk)
 				return
-			src.disk.loc = get_turf(src)
-			src.disk = null
+			disk.loc = get_turf(src)
+			disk = null
 
 		// All bufferOptions from here on require a bufferId
 		if (!href_list["bufferId"])
@@ -682,76 +664,76 @@
 			return FALSE // Not a valid buffer id
 
 		else if (bufferOption == "saveUI")
-			if(src.connected.occupant && src.connected.occupant.dna)
+			if(connected.occupant && connected.occupant.dna)
 				var/datum/dna2/record/databuf = new
 				databuf.types = DNA2_BUF_UE
-				databuf.dna = src.connected.occupant.dna.Clone()
+				databuf.dna = connected.occupant.dna.Clone()
 				if(ishuman(connected.occupant))
 					databuf.dna.real_name=connected.occupant.name
 				databuf.name = "Unique Identifier"
-				src.buffers[bufferId] = databuf
+				buffers[bufferId] = databuf
 
 		else if (bufferOption == "saveUIAndUE")
-			if(src.connected.occupant && src.connected.occupant.dna)
+			if(connected.occupant && connected.occupant.dna)
 				var/datum/dna2/record/databuf = new
 				databuf.types = DNA2_BUF_UI|DNA2_BUF_UE
-				databuf.dna = src.connected.occupant.dna.Clone()
+				databuf.dna = connected.occupant.dna.Clone()
 				if(ishuman(connected.occupant))
 					databuf.dna.real_name=connected.occupant.name
 				databuf.name = "Unique Identifier + Unique Enzymes"
-				src.buffers[bufferId] = databuf
+				buffers[bufferId] = databuf
 
 		else if (bufferOption == "saveSE")
-			if(src.connected.occupant && src.connected.occupant.dna)
+			if(connected.occupant && connected.occupant.dna)
 				var/datum/dna2/record/databuf = new
 				databuf.types = DNA2_BUF_SE
-				databuf.dna = src.connected.occupant.dna.Clone()
+				databuf.dna = connected.occupant.dna.Clone()
 				if(ishuman(connected.occupant))
 					databuf.dna.real_name=connected.occupant.name
 				databuf.name = "Structural Enzymes"
-				src.buffers[bufferId] = databuf
+				buffers[bufferId] = databuf
 
 		else if (bufferOption == "clear")
-			src.buffers[bufferId] = new /datum/dna2/record()
+			buffers[bufferId] = new /datum/dna2/record()
 
 		else if (bufferOption == "changeLabel")
-			var/datum/dna2/record/buf = src.buffers[bufferId]
-			var/text = sanitize(input(usr, "New Label:", "Edit Label", buf.name) as text|null)
+			var/datum/dna2/record/buf = buffers[bufferId]
+			var/text = sanitize_safe(input(usr, "New Label:", "Edit Label", input_default(buf.name)) as text|null, MAX_NAME_LEN)
 			buf.name = text
-			src.buffers[bufferId] = buf
+			buffers[bufferId] = buf
 
 		else if (bufferOption == "transfer")
-			if (!src.connected.occupant || (NOCLONE in src.connected.occupant.mutations) || !src.connected.occupant.dna)
+			if (!connected.occupant || (NOCLONE in connected.occupant.mutations) || !connected.occupant.dna)
 				return FALSE
 
 			irradiating = 2
-			var/lock_state = src.connected.locked
-			src.connected.locked = 1//lock it
+			var/lock_state = connected.locked
+			connected.locked = 1//lock it
 			nanomanager.update_uis(src) // update all UIs attached to src
 
 			sleep(20) // sleep for 2 seconds
 
 			irradiating = 0
-			src.connected.locked = lock_state
+			connected.locked = lock_state
 
-			var/datum/dna2/record/buf = src.buffers[bufferId]
+			var/datum/dna2/record/buf = buffers[bufferId]
 
 			if ((buf.types & DNA2_BUF_UI))
 				if ((buf.types & DNA2_BUF_UE))
-					src.connected.occupant.real_name = buf.dna.real_name
-					src.connected.occupant.name = buf.dna.real_name
-				src.connected.occupant.UpdateAppearance(buf.dna.UI.Copy())
+					connected.occupant.real_name = buf.dna.real_name
+					connected.occupant.name = buf.dna.real_name
+				connected.occupant.UpdateAppearance(buf.dna.UI.Copy())
 			else if (buf.types & DNA2_BUF_SE)
-				src.connected.occupant.dna.SE = buf.dna.SE
-				src.connected.occupant.dna.UpdateSE()
-				domutcheck(src.connected.occupant,src.connected)
-			src.connected.occupant.radiation += rand(15 / (connected.damage_coeff ** 2), 40 / (connected.damage_coeff ** 2))
+				connected.occupant.dna.SE = buf.dna.SE
+				connected.occupant.dna.UpdateSE()
+				domutcheck(connected.occupant,connected)
+			connected.occupant.radiation += rand(15 / (connected.damage_coeff ** 2), 40 / (connected.damage_coeff ** 2))
 
 		else if (bufferOption == "createInjector")
-			if (src.injector_ready && !waiting_for_user_input)
+			if (injector_ready && !waiting_for_user_input)
 				var/success = 0
 				var/obj/item/weapon/dnainjector/I = new /obj/item/weapon/dnainjector
-				var/datum/dna2/record/buf = src.buffers[bufferId]
+				var/datum/dna2/record/buf = buffers[bufferId]
 				if(href_list["createBlockInjector"])
 					waiting_for_user_input = 1
 					var/list/selectedbuf
@@ -766,34 +748,34 @@
 					success = 1
 				waiting_for_user_input = 0
 				if(success)
-					I.loc = src.loc
+					I.loc = loc
 					I.name += " ([buf.name])"
-					//src.temphtml = "Injector created."
-					src.injector_ready = 0
+					//temphtml = "Injector created."
+					injector_ready = 0
 					spawn(300)
-						src.injector_ready = 1
+						injector_ready = 1
 				//else
-					//src.temphtml = "Error in injector creation."
+					//temphtml = "Error in injector creation."
 			//else
-				//src.temphtml = "Replicator not ready yet."
+				//temphtml = "Replicator not ready yet."
 
 		else if (bufferOption == "loadDisk")
-			if ((isnull(src.disk)) || (!src.disk.buf))
-				//src.temphtml = "Invalid disk. Please try again."
+			if (!disk || !disk.buf)
+				//temphtml = "Invalid disk. Please try again."
 				return FALSE
 
-			src.buffers[bufferId] = src.disk.buf
-			//src.temphtml = "Data loaded."
+			buffers[bufferId] = disk.buf
+			//temphtml = "Data loaded."
 
 		else if (bufferOption == "saveDisk")
-			if ((isnull(src.disk)) || (src.disk.read_only))
-				//src.temphtml = "Invalid disk. Please try again."
+			if ((isnull(disk)) || (disk.read_only))
+				//temphtml = "Invalid disk. Please try again."
 				return FALSE
 
-			var/datum/dna2/record/buf = src.buffers[bufferId]
-			src.disk.buf = buf
-			src.disk.name = "data disk - '[buf.dna.real_name]'"
-			//src.temphtml = "Data saved."
+			var/datum/dna2/record/buf = buffers[bufferId]
+			disk.buf = buf
+			disk.name = "data disk - '[buf.dna.real_name]'"
+			//temphtml = "Data saved."
 
 
 /////////////////////////// DNA MACHINES

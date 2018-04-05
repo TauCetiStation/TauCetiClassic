@@ -25,11 +25,34 @@
 	flags = CONDUCT
 	origin_tech = "materials=1"
 	attack_verb = list("attacked", "stabbed", "poked")
+	var/max_contents = 1
 
-/obj/item/weapon/kitchen/utensil/New()
+/obj/item/weapon/kitchen/utensil/atom_init()
+	. = ..()
 	if (prob(60))
-		src.pixel_y = rand(0, 4)
-	return
+		pixel_y = rand(0, 4)
+
+/obj/item/weapon/kitchen/utensil/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if(!istype(M))
+		return ..()
+
+	if(user.a_intent != "help")
+		if(user.zone_sel.selecting == "head" || user.zone_sel.selecting == "eyes")
+			if((CLUMSY in user.mutations) && prob(50))
+				M = user
+			return eyestab(M,user)
+		else
+			return ..()
+
+	if(contents.len)
+		var/obj/item/weapon/reagent_containers/food/snacks/toEat = contents[1]
+		if(istype(toEat))
+			if(CanEat(user, M, toEat, "eat"))
+				toEat.On_Consume(M, user)
+				if(toEat)
+					qdel(toEat)
+				overlays.Cut()
+				return
 
 /*
  * Spoons
@@ -55,41 +78,22 @@
 	force = 3
 	icon_state = "fork"
 
-/obj/item/weapon/kitchen/utensil/fork/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!istype(M))
-		return ..()
-
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
-		return ..()
-
-	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
-		if(M == user)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\blue [] eats a delicious forkful of omelette!", user), 1)
-				M.reagents.add_reagent("nutriment", 1)
-		else
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\blue [] feeds [] a delicious forkful of omelette!", user, M), 1)
-				M.reagents.add_reagent("nutriment", 1)
-		src.icon_state = "fork"
-		return
-	else
-		if((CLUMSY in user.mutations) && prob(50))
-			M = user
-		return eyestab(M,user)
-
 /obj/item/weapon/kitchen/utensil/fork/afterattack(atom/target, mob/user, proximity)
 	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
 	if(!proximity) return
 	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
 	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
-	if(istype(target,/obj/effect/decal/cleanable))
+	if(istype(target,/obj/effect/decal/cleanable) && !user.is_busy(target))
 		user.visible_message("<span class='warning'>[user] begins to clean \the [target.name].</span>","<span class='notice'>You begin to clean \the [target.name].</span>")
 		if(do_after(user, 60, target = target))
 			user.visible_message("<span class='warning'>[user] scrub \the [target.name] out.</span>","<span class='notice'>You scrub \the [target.name] out.</span>")
 			qdel(target)
-		else
-			return
+
+/obj/item/weapon/kitchen/utensil/fork/sticks
+	name = "wooden chopsticks"
+	desc = "How do people even hold this?"
+	force = 2
+	icon_state = "sticks"
 
 /obj/item/weapon/kitchen/utensil/pfork
 	name = "plastic fork"
@@ -97,71 +101,17 @@
 	icon_state = "pfork"
 	force = 0
 
-/obj/item/weapon/kitchen/utensil/pfork/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!istype(M))
-		return ..()
 
-	if(user.zone_sel.selecting != "eyes" && user.zone_sel.selecting != "head")
-		return ..()
-
-	if (src.icon_state == "forkloaded") //This is a poor way of handling it, but a proper rewrite of the fork to allow for a more varied foodening can happen when I'm in the mood. --NEO
-		if(M == user)
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\blue [] eats a delicious forkful of omelette!", user), 1)
-				M.reagents.add_reagent("nutriment", 1)
-		else
-			for(var/mob/O in viewers(M, null))
-				O.show_message(text("\blue [] feeds [] a delicious forkful of omelette!", user, M), 1)
-				M.reagents.add_reagent("nutriment", 1)
-		src.icon_state = "fork"
-		return
-	else
-		if((CLUMSY in user.mutations) && prob(50))
-			M = user
-		return eyestab(M,user)
-
-/*
- * Knives
- */
-/obj/item/weapon/kitchen/utensil/knife
-	name = "knife"
-	desc = "Can cut through any food."
-	icon_state = "knife"
-	force = 10.0
-	w_class = 2.0
-	throwforce = 10.0
-	sharp = 0
-	edge = 1
-
-	suicide_act(mob/user)
-		to_chat(viewers(user), pick("\red <b>[user] is slitting \his wrists with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
-							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>"))
-		return (BRUTELOSS)
-
-/obj/item/weapon/kitchen/utensil/knife/attack(target, mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "\red You accidentally cut yourself with the [src].")
-		user.take_organ_damage(20)
-		return
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	return ..()
-
-/obj/item/weapon/kitchen/utensil/pknife
-	name = "plastic knife"
-	desc = "The bluntest of blades."
-	icon_state = "pknife"
-	force = 0
-	w_class = 2.0
-	throwforce = 0
-
-/obj/item/weapon/kitchen/utensil/pknife/attack(target, mob/living/user)
-	if ((CLUMSY in user.mutations) && prob(50))
-		to_chat(user, "\red You somehow managed to cut yourself with the [src].")
-		user.take_organ_damage(20)
-		return
-	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
-	return ..()
+/obj/item/weapon/kitchen/utensil/pfork/afterattack(atom/target, mob/user, proximity)  //make them useful or some slow soap for plastic. Just copy-paste from usual fork
+	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
+	if(!proximity) return
+	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
+	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
+	if(istype(target,/obj/effect/decal/cleanable) && !user.is_busy(target))
+		user.visible_message("<span class='warning'>[user] begins to clean \the [target.name].</span>","<span class='notice'>You begin to clean \the [target.name].</span>")
+		if(do_after(user, 60, target = target))
+			user.visible_message("<span class='warning'>[user] scrub \the [target.name] out.</span>","<span class='notice'>You scrub \the [target.name] out.</span>")
+			qdel(target)
 
 /*
  * Kitchen knives
@@ -175,7 +125,7 @@
 	sharp = 1
 	edge = 1
 	force = 10.0
-	w_class = 3.0
+	w_class = 2.0
 	throwforce = 6.0
 	throw_speed = 3
 	throw_range = 6
@@ -188,6 +138,14 @@
 							"\red <b>[user] is slitting \his throat with the [src.name]! It looks like \he's trying to commit suicide.</b>", \
 							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>"))
 		return (BRUTELOSS)
+
+/obj/item/weapon/kitchenknife/plastic
+	name = "plastic knife"
+	desc = "The bluntest of blades."
+	icon_state = "pknife"
+	force = 0
+	w_class = 2.0
+	throwforce = 0
 
 /obj/item/weapon/kitchenknife/ritual
 	name = "ritual knife"
@@ -237,7 +195,7 @@
 /obj/item/weapon/kitchen/rollingpin/attack(mob/living/M, mob/living/user)
 	if ((CLUMSY in user.mutations) && prob(50))
 		to_chat(user, "\red The [src] slips out of your hand and hits your head.")
-		user.take_organ_damage(10)
+		user.take_bodypart_damage(10)
 		user.Paralyse(2)
 		return
 
@@ -246,7 +204,7 @@
 	msg_admin_attack("[user.name] ([user.ckey]) used the [src.name] to attack [M.name] ([M.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
 	var/t = user:zone_sel.selecting
-	if (t == "head")
+	if (t == BP_HEAD)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.stat < 2 && H.health < 50 && prob(90))
@@ -300,7 +258,7 @@
 					   // w_class = 2 -- takes up 3
 					   // w_class = 3 -- takes up 5
 
-/obj/item/weapon/tray/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/weapon/tray/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 
 	// Drop all the things. All of them.
 	overlays.Cut()
@@ -318,7 +276,7 @@
 	if((CLUMSY in user.mutations) && prob(50))              //What if he's a clown?
 		to_chat(M, "\red You accidentally slam yourself with the [src]!")
 		M.Weaken(1)
-		user.take_organ_damage(2)
+		user.take_bodypart_damage(2)
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 			return
@@ -329,7 +287,7 @@
 	var/mob/living/carbon/human/H = M      ///////////////////////////////////// /Let's have this ready for later.
 
 
-	if(!(user.zone_sel.selecting == ("eyes" || "head"))) //////////////hitting anything else other than the eyes
+	if(!(def_zone == O_EYES || def_zone == BP_HEAD)) //////////////hitting anything else other than the eyes
 		if(prob(33))
 			src.add_blood(H)
 			var/turf/location = H.loc
@@ -342,9 +300,9 @@
 
 		if(prob(15))
 			M.Weaken(3)
-			M.take_organ_damage(3)
+			M.take_bodypart_damage(3)
 		else
-			M.take_organ_damage(5)
+			M.take_bodypart_damage(5)
 		if(prob(50))
 			playsound(M, 'sound/items/trayhit1.ogg', 50, 1)
 			for(var/mob/O in viewers(M, null))
@@ -383,10 +341,10 @@
 				O.show_message(text("\red <B>[] slams [] with the tray!</B>", user, M), 1)
 		if(prob(10))
 			M.Stun(rand(1,3))
-			M.take_organ_damage(3)
+			M.take_bodypart_damage(3)
 			return
 		else
-			M.take_organ_damage(5)
+			M.take_bodypart_damage(5)
 			return
 
 	else //No eye or head protection, tough luck!
@@ -407,10 +365,10 @@
 				O.show_message(text("\red <B>[] slams [] in the face with the tray!</B>", user, M), 1)
 		if(prob(30))
 			M.Stun(rand(2,4))
-			M.take_organ_damage(4)
+			M.take_bodypart_damage(4)
 			return
 		else
-			M.take_organ_damage(8)
+			M.take_bodypart_damage(8)
 			if(prob(30))
 				M.Weaken(2)
 				return

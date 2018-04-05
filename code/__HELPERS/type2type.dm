@@ -189,19 +189,21 @@
 
 //Converts a rights bitfield into a string
 /proc/rights2text(rights,seperator="")
-	if(rights & R_BUILDMODE)	. += "[seperator]+BUILDMODE"
-	if(rights & R_ADMIN)		. += "[seperator]+ADMIN"
-	if(rights & R_BAN)			. += "[seperator]+BAN"
-	if(rights & R_FUN)			. += "[seperator]+FUN"
-	if(rights & R_SERVER)		. += "[seperator]+SERVER"
-	if(rights & R_DEBUG)		. += "[seperator]+DEBUG"
-	if(rights & R_POSSESS)		. += "[seperator]+POSSESS"
-	if(rights & R_PERMISSIONS)	. += "[seperator]+PERMISSIONS"
-	if(rights & R_STEALTH)		. += "[seperator]+STEALTH"
-	if(rights & R_REJUVINATE)	. += "[seperator]+REJUVINATE"
-	if(rights & R_VAREDIT)		. += "[seperator]+VAREDIT"
-	if(rights & R_SOUNDS)		. += "[seperator]+SOUND"
-	if(rights & R_SPAWN)		. += "[seperator]+SPAWN"
+	if(rights & R_BUILDMODE)   . += "[seperator]+BUILDMODE"
+	if(rights & R_ADMIN)       . += "[seperator]+ADMIN"
+	if(rights & R_BAN)         . += "[seperator]+BAN"
+	if(rights & R_FUN)         . += "[seperator]+FUN"
+	if(rights & R_SERVER)      . += "[seperator]+SERVER"
+	if(rights & R_DEBUG)       . += "[seperator]+DEBUG"
+	if(rights & R_POSSESS)     . += "[seperator]+POSSESS"
+	if(rights & R_PERMISSIONS) . += "[seperator]+PERMISSIONS"
+	if(rights & R_STEALTH)     . += "[seperator]+STEALTH"
+	if(rights & R_REJUVINATE)  . += "[seperator]+REJUVINATE"
+	if(rights & R_VAREDIT)     . += "[seperator]+VAREDIT"
+	if(rights & R_SOUNDS)      . += "[seperator]+SOUND"
+	if(rights & R_SPAWN)       . += "[seperator]+SPAWN"
+	if(rights & R_WHITELIST)   . += "[seperator]+WHITELIST"
+	if(rights & R_EVENT)       . += "[seperator]+EVENT"
 	return .
 
 /proc/ui_style2icon(ui_style)

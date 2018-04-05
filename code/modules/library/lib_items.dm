@@ -19,7 +19,8 @@
 	density = 1
 	opacity = 1
 
-/obj/structure/bookcase/initialize()
+/obj/structure/bookcase/atom_init()
+	. = ..()
 	for(var/obj/item/I in loc)
 		if(istype(I, /obj/item/weapon/book))
 			I.loc = src
@@ -31,7 +32,7 @@
 		O.loc = src
 		update_icon()
 	else if(istype(O, /obj/item/weapon/pen))
-		var/newname = stripped_input(usr, "What would you like to title this bookshelf?")
+		var/newname = sanitize_safe(input(usr, "What would you like to title this bookshelf?"))
 		if(!newname)
 			return
 		else
@@ -84,20 +85,19 @@
 /obj/structure/bookcase/manuals/medical
 	name = "Medical Manuals bookcase"
 
-/obj/structure/bookcase/manuals/medical/New()
-	..()
+/obj/structure/bookcase/manuals/medical/atom_init()
+	. = ..()
 	new /obj/item/weapon/book/manual/medical_cloning(src)
-	new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
-	new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
-	new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
+	for (var/i in 1 to 3)
+		new /obj/item/weapon/book/manual/medical_diagnostics_manual(src)
 	update_icon()
 
 
 /obj/structure/bookcase/manuals/engineering
 	name = "Engineering Manuals bookcase"
 
-/obj/structure/bookcase/manuals/engineering/New()
-	..()
+/obj/structure/bookcase/manuals/engineering/atom_init()
+	. = ..()
 	new /obj/item/weapon/book/manual/engineering_construction(src)
 	new /obj/item/weapon/book/manual/engineering_particle_accelerator(src)
 	new /obj/item/weapon/book/manual/engineering_hacking(src)
@@ -111,8 +111,8 @@
 /obj/structure/bookcase/manuals/research_and_development
 	name = "R&D Manuals bookcase"
 
-/obj/structure/bookcase/manuals/research_and_development/New()
-	..()
+/obj/structure/bookcase/manuals/research_and_development/atom_init()
+	. = ..()
 	new /obj/item/weapon/book/manual/research_and_development(src)
 	update_icon()
 
@@ -147,7 +147,7 @@
 			to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 			return
 	if(src.dat)
-		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
+		user << browse(entity_ja("<TT><I>Penned by [author].</I></TT> <BR>[dat]"), "window=book")
 		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
 		onclose(user, "book")
 	else
@@ -175,7 +175,7 @@
 		var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
 		switch(choice)
 			if("Title")
-				var/newtitle = sanitize(copytext(input(usr, "Write a new title:"), 1, MAX_NAME_LEN))
+				var/newtitle = sanitize_safe(input(usr, "Write a new title:"), MAX_NAME_LEN)
 				if(!newtitle)
 					to_chat(usr, "The title is invalid.")
 					return
@@ -183,14 +183,14 @@
 					src.name = newtitle
 					src.title = newtitle
 			if("Contents")
-				var/content = sanitize_alt(copytext(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null,1, 8192))
+				var/content = sanitize(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null, MAX_BOOK_MESSAGE_LEN)
 				if(!content)
 					to_chat(usr, "The content is invalid.")
 					return
 				else
-					src.dat += content
+					src.dat += content//infiniti books?
 			if("Author")
-				var/newauthor = sanitize_alt(copytext(input(usr, "Write the author's name:"),1, MAX_NAME_LEN))
+				var/newauthor = sanitize(input(usr, "Write the author's name:"), MAX_NAME_LEN)
 				if(!newauthor)
 					to_chat(usr, "The name is invalid.")
 					return
@@ -229,6 +229,7 @@
 					to_chat(user, "[W]'s screen flashes: 'Book stored in buffer. Title added to general inventory.'")
 	else if(istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/wirecutters))
 		if(carved)	return
+		if(user.is_busy()) return
 		to_chat(user, "<span class='notice'>You begin to carve out [title].</span>")
 		if(do_after(user, 30, target = user))
 			to_chat(user, "<span class='notice'>You carve out the pages from [title]! You didn't want to read it anyway.</span>")
@@ -237,11 +238,11 @@
 	else
 		..()
 
-/obj/item/weapon/book/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(user.zone_sel.selecting == "eyes")
+/obj/item/weapon/book/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
+	if(def_zone == O_EYES)
 		user.visible_message("<span class='notice'>You open up the book and show it to [M]. </span>", \
 			"<span class='notice'> [user] opens up a book and shows it to [M]. </span>")
-		M << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
+		M << browse(entity_ja("<TT><I>Penned by [author].</I></TT> <BR>[dat]"), "window=book")
 
 
 /*

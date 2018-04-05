@@ -50,7 +50,7 @@ Doesn't work on other aliens/AI.*/
 
 	if(powerc(10))
 		adjustToxLoss(-10)
-		var/msg = sanitize_alt(copytext(input("Message:", "Alien Whisper") as text|null, 1, MAX_MESSAGE_LEN))
+		var/msg = sanitize(input("Message:", "Alien Whisper") as text|null)
 		if(msg)
 			log_say("AlienWhisper: [key_name(src)]->[M.key] : [msg]")
 			to_chat(M, "\green You hear a strange, alien voice in your head... \italic [msg]")
@@ -137,7 +137,7 @@ Doesn't work on other aliens/AI.*/
 		if(!istype(T, /turf))
 			return
 		if (U == T)
-			usr.bullet_act(new /obj/item/projectile/energy/neurotoxin(usr.loc), get_organ_target())
+			usr.bullet_act(new /obj/item/projectile/energy/neurotoxin(usr.loc), ran_zone(zone_sel.selecting)
 			return
 		if(!istype(U, /turf))
 			return
@@ -149,6 +149,32 @@ Doesn't work on other aliens/AI.*/
 		A.process()
 	return
 */
+
+/mob/living/carbon/alien/humanoid/proc/screech()
+	set name = "Screech!"
+	set desc = "Emit a screech that stuns prey."
+	set category = "Alien"
+
+	if(world.time < last_screech + screech_delay)
+		return
+
+	playsound(src, 'sound/effects/screech2.ogg', 100, 1)
+	for(var/mob/living/carbon/human/H in oviewers())
+		if(H.sdisabilities & DEAF || istype(H.l_ear, /obj/item/clothing/ears/earmuffs) || istype(H.r_ear, /obj/item/clothing/ears/earmuffs))
+			continue
+
+		to_chat(H, "<font color='red' size='7'>HISSSSSS</font>")
+		H.SetSleeping(0)
+		H.stuttering += 20
+		H.ear_deaf += 30
+		H.Weaken(3)
+		if(prob(30))
+			H.Stun(10)
+			H.Paralyse(4)
+		else
+			H.Stun(5)
+			H.Paralyse(2)
+	last_screech = world.time
 #define ALIEN_NEUROTOXIN 1
 #define ALIEN_ACID 2
 /mob/living/carbon/alien/humanoid/proc/toggle_neurotoxin(message = 1)
@@ -219,7 +245,7 @@ Doesn't work on other aliens/AI.*/
 			if(!powerc(150))
 				return
 			BB = new /obj/item/projectile/acid_special(usr.loc)
-			neurotoxin_next_shot = world.time  + (neurotoxin_delay * 6)
+			neurotoxin_next_shot = world.time  + (neurotoxin_delay * 4)
 			adjustToxLoss(-150)
 
 	visible_message("\red <B> [src] spits [BB.name] at [target]!</B>")
@@ -246,6 +272,10 @@ Doesn't work on other aliens/AI.*/
 	set name = "Secrete Resin (75)"
 	set desc = "Secrete tough malleable resin."
 	set category = "Alien"
+
+	if((locate(/obj/effect/alien/egg) in get_turf(src)) || (locate(/obj/structure/mineral_door/resin) in get_turf(src)) || (locate( /obj/effect/alien/resin/wall) in get_turf(src)) || (locate(/obj/effect/alien/resin/membrane) in get_turf(src)) || (locate(/obj/structure/stool/bed/nest) in get_turf(src)))
+		to_chat (src, "There is already a resin structure there.")
+		return
 
 	if(powerc(75))
 		var/choice = input("Choose what you wish to shape.","Resin building") as null|anything in list("resin door","resin wall","resin membrane","resin nest") //would do it through typesof but then the player choice would have the type path and we don't want the internal workings to be exposed ICly - Urist

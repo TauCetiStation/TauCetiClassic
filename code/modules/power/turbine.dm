@@ -23,7 +23,6 @@
 	anchored = 1
 	density = 1
 	var/obj/machinery/compressor/compressor
-	directwired = 1
 	var/turf/simulated/outturf
 	var/lastgen
 	var/productivity = 1
@@ -44,7 +43,7 @@
 
 // the inlet stage of the gas turbine electricity generator
 
-/obj/machinery/compressor/New()
+/obj/machinery/compressor/atom_init()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/power_compressor(null)
@@ -54,18 +53,20 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 5)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 5)
 	RefreshParts()
 	gas_contained = new
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/compressor/atom_init_late()
 	inturf = get_step(src, dir)
 
-	spawn(5)
-		turbine = locate() in get_step(src, get_dir(inturf, src))
-		if(!turbine)
-			stat |= BROKEN
-		else
-			turbine.stat &= !BROKEN
-			turbine.compressor = src
+	turbine = locate() in get_step(src, get_dir(inturf, src))
+	if(!turbine)
+		stat |= BROKEN
+	else
+		turbine.stat &= !BROKEN
+		turbine.compressor = src
 
 
 #define COMPFRICTION 5e5
@@ -107,35 +108,35 @@
 		return
 	rpm = 0.9* rpm + 0.1 * rpmtarget
 	var/datum/gas_mixture/environment = inturf.return_air()
-	var/transfer_moles = environment.total_moles()/10
+	var/transfer_moles = environment.total_moles / 10
 	//var/transfer_moles = rpm/10000*capacity
 	var/datum/gas_mixture/removed = inturf.remove_air(transfer_moles)
 	gas_contained.merge(removed)
 
-	rpm = max(0, rpm - (rpm*rpm)/(COMPFRICTION/efficiency))
+	rpm = max(0, rpm - (rpm * rpm) / (COMPFRICTION / efficiency))
 
 
 	if(starter && !(stat & NOPOWER))
 		use_power(2800)
-		if(rpm<1000)
+		if(rpm < 1000)
 			rpmtarget = 1000
 	else
-		if(rpm<1000)
+		if(rpm < 1000)
 			rpmtarget = 0
 
 
 
-	if(rpm>50000)
+	if(rpm > 50000)
 		overlays += image('icons/obj/pipes.dmi', "comp-o4", FLY_LAYER)
-	else if(rpm>10000)
+	else if(rpm > 10000)
 		overlays += image('icons/obj/pipes.dmi', "comp-o3", FLY_LAYER)
-	else if(rpm>2000)
+	else if(rpm > 2000)
 		overlays += image('icons/obj/pipes.dmi', "comp-o2", FLY_LAYER)
-	else if(rpm>500)
+	else if(rpm > 500)
 		overlays += image('icons/obj/pipes.dmi', "comp-o1", FLY_LAYER)
 	 //TODO: DEFERRED
 
-/obj/machinery/power/turbine/New()
+/obj/machinery/power/turbine/atom_init()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/power_turbine(src)
@@ -145,19 +146,20 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
-	component_parts += new /obj/item/weapon/cable_coil(src, 5)
+	component_parts += new /obj/item/stack/cable_coil/red(src, 5)
 	RefreshParts()
 
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/power/turbine/atom_init_late()
 	outturf = get_step(src, dir)
 
-	spawn(5)
-
-		compressor = locate() in get_step(src, get_dir(outturf, src))
-		if(!compressor)
-			stat |= BROKEN
-		else
-			compressor.stat &= !BROKEN
-			compressor.turbine = src
+	compressor = locate() in get_step(src, get_dir(outturf, src))
+	if(!compressor)
+		stat |= BROKEN
+	else
+		compressor.stat &= !BROKEN
+		compressor.turbine = src
 
 /obj/machinery/power/turbine/RefreshParts()
 	var/P = 0
@@ -178,28 +180,22 @@
 	if(!compressor)
 		stat |= BROKEN
 		return
-	lastgen = ((compressor.rpm / TURBGENQ)**TURBGENG) * TURBGENQ * productivity
+	lastgen = ((compressor.rpm / TURBGENQ) ** TURBGENG) * TURBGENQ * productivity
 
 	add_avail(lastgen)
-	var/newrpm = ((compressor.gas_contained.temperature) * compressor.gas_contained.total_moles())/4
+	var/newrpm = ((compressor.gas_contained.temperature) * compressor.gas_contained.total_moles) / 4
 	newrpm = max(0, newrpm)
 
 	if(!compressor.starter || newrpm > 1000)
 		compressor.rpmtarget = newrpm
 
-	if(compressor.gas_contained.total_moles()>0)
-		var/oamount = min(compressor.gas_contained.total_moles(), (compressor.rpm+100)/35000*compressor.capacity)
+	if(compressor.gas_contained.total_moles>0)
+		var/oamount = min(compressor.gas_contained.total_moles, (compressor.rpm + 100) / 35000 * compressor.capacity)
 		var/datum/gas_mixture/removed = compressor.gas_contained.remove(oamount)
 		outturf.assume_air(removed)
 
 	if(lastgen > 100)
 		overlays += image('icons/obj/pipes.dmi', "turb-o", FLY_LAYER)
-
-/obj/machinery/power/turbine/attack_hand(mob/user)
-	if(..())
-		return
-
-	interact(user)
 
 /obj/machinery/power/turbine/attackby(obj/item/I, mob/user)
 	if(default_deconstruction_screwdriver(user, initial(icon_state), initial(icon_state), I))
@@ -220,14 +216,12 @@
 
 	default_deconstruction_crowbar(I)
 
-/obj/machinery/power/turbine/interact(mob/user)
+/obj/machinery/power/turbine/ui_interact(mob/user)
 
-	if ( !Adjacent(user)  || (stat & (NOPOWER|BROKEN)) && (!istype(user, /mob/living/silicon)) )
-		user.machine = null
+	if ( !Adjacent(user) || (stat & (NOPOWER|BROKEN)) && !issilicon(user) && !isobserver(user) )
+		user.unset_machine(src)
 		user << browse(null, "window=turbine")
 		return
-
-	user.machine = src
 
 	var/t = "<TT><B>Gas Turbine Generator</B><HR><PRE>"
 
@@ -240,10 +234,8 @@
 	t += "</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>"
 
 	t += "</TT>"
-	user << browse(t, "window=turbine")
+	user << browse(entity_ja(t), "window=turbine")
 	onclose(user, "turbine")
-
-	return
 
 /obj/machinery/power/turbine/Topic(href, href_list)
 	if(href_list["close"])
@@ -267,25 +259,21 @@
 
 
 
-/obj/machinery/computer/turbine_computer/New()
+/obj/machinery/computer/turbine_computer/atom_init()
 	..()
-	spawn(5)
-		search_turbine()
-		doors = new /list()
-		for(var/obj/machinery/door/poddoor/P in machines)
-			if(P.id == id)
-				doors += P
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/turbine_computer/atom_init_late()
+	search_turbine()
+	doors = new /list()
+	for(var/obj/machinery/door/poddoor/P in machines)
+		if(P.id == id)
+			doors += P
 
 /obj/machinery/computer/turbine_computer/proc/search_turbine()
 	compressor = locate(/obj/machinery/compressor) in range(5)
 
-/obj/machinery/computer/turbine_computer/attack_hand(mob/user)
-	if(..())
-		return
-
-	interact(user)
-
-/obj/machinery/computer/turbine_computer/interact(mob/user)
+/obj/machinery/computer/turbine_computer/ui_interact(mob/user)
 	var/dat
 	if(compressor && compressor.turbine)
 		dat += {"<BR><B>Gas turbine remote control system</B><HR>
@@ -304,9 +292,8 @@
 		if(!compressor)
 			dat += "<A href='?src=\ref[src];search=1'>Search for compressor</A>"
 
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 
 

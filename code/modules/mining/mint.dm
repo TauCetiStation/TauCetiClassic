@@ -23,16 +23,16 @@
 	var/coinsToProduce = 10
 
 
-/obj/machinery/mineral/mint/New()
-	..()
-	spawn( 5 )
-		for (var/dir in cardinal)
-			src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
-			if(src.input) break
-		for (var/dir in cardinal)
-			src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
-			if(src.output) break
-		SSobj.processing |= src
+/obj/machinery/mineral/mint/atom_init()
+	. = ..()
+	for (var/dir in cardinal)
+		src.input = locate(/obj/machinery/mineral/input, get_step(src, dir))
+		if(src.input)
+			break
+	for (var/dir in cardinal)
+		src.output = locate(/obj/machinery/mineral/output, get_step(src, dir))
+		if(src.output)
+			break
 
 /obj/machinery/mineral/mint/process()
 	if ( src.input)
@@ -40,32 +40,32 @@
 		O = locate(/obj/item/stack/sheet, input.loc)
 		if(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/gold))
-				amt_gold += 100 * O.amount
+				amt_gold += 100 * O.get_amount()
 				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/silver))
-				amt_silver += 100 * O.amount
+				amt_silver += 100 * O.get_amount()
 				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/diamond))
-				amt_diamond += 100 * O.amount
+				amt_diamond += 100 * O.get_amount()
 				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/phoron))
-				amt_phoron += 100 * O.amount
+				amt_phoron += 100 * O.get_amount()
 				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/uranium))
-				amt_uranium += 100 * O.amount
+				amt_uranium += 100 * O.get_amount()
 				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/metal))
-				amt_iron += 100 * O.amount
+				amt_iron += 100 * O.get_amount()
 				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/clown))
-				amt_clown += 100 * O.amount
+				amt_clown += 100 * O.get_amount()
 				qdel(O)
 			if (istype(O,/obj/item/stack/sheet/mineral/platinum))
-				amt_platinum += 100 * O.amount
+				amt_platinum += 100 * O.get_amount()
 				qdel(O) //Commented out for now. -Durandan
 
 
-/obj/machinery/mineral/mint/attack_hand(user)
+/obj/machinery/mineral/mint/ui_interact(user)
 
 	var/dat = "<b>Coin Press</b><br>"
 
@@ -129,7 +129,7 @@
 
 	dat += text("<br><br>In total this machine produced <font color='green'><b>[newCoins]</b></font> coins.")
 	dat += text("<br><A href='?src=\ref[src];makeCoins=[1]'>Make coins</A>")
-	user << browse("[dat]", "window=mint")
+	user << browse("[entity_ja(dat)]", "window=mint")
 
 /obj/machinery/mineral/mint/Topic(href, href_list)
 	. = ..()

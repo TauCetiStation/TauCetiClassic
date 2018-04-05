@@ -20,54 +20,49 @@ var/global/const/MAXIMUM_MEME_POINTS = 750
 mob/living/carbon/var/list/parasites = list()
 
 mob/living/parasite
-	var/mob/living/carbon/human/host // the host that this parasite occupies
+	var/mob/living/carbon/host // the host that this parasite occupies
 
-	Login()
-		..()
-		// make the client see through the host instead
+/mob/living/parasite/Login()
+	..()
+	if(host)
 		client.eye = host
-		client.perspective = EYE_PERSPECTIVE
-		sleeping = 0
+	else
+		client.eye = loc
+	client.perspective = EYE_PERSPECTIVE
+	sleeping = 0
 
-mob/living/parasite/proc/enter_host(mob/living/carbon/human/host)
-	// by default, parasites can't share a body with other life forms
-	if(host.parasites.len > 0)
-		return 0
-
+/mob/living/parasite/proc/enter_host(mob/living/carbon/host)
 	src.host = host
-	src.loc = host
+	loc = host
 	host.parasites.Add(src)
-	host.status_flags |= PASSEMOTES
-	if(client) client.eye = host
+	if(client)
+		client.eye = host
+	return TRUE
 
-	return 1
-
-mob/living/parasite/proc/exit_host()
-	src.host.status_flags &= ~PASSEMOTES
-	src.host.parasites.Remove(src)
-	src.host = null
-	src.loc = null
-
-	return 1
+/mob/living/parasite/proc/exit_host()
+	host.parasites.Remove(src)
+	host = null
+	loc = null
+	return TRUE
 
 
 // === MEME ===
 // ============
 
-// Memes use points for many actions
-mob/living/parasite/meme/var/meme_points = 100
-mob/living/parasite/meme/var/dormant = 0
+/mob/living/parasite/meme
+	var/meme_points = 100
+	var/dormant = 0
+	var/meme_death = "stoxin"
+	var/list/indoctrinated = list()
 
-mob/living/parasite/meme/var/meme_death = "stoxin"
-
-
-// Memes have a list of indoctrinated hosts
-mob/living/parasite/meme/var/list/indoctrinated = list()
-
-
-mob/living/parasite/meme/New()
-	..()
+/mob/living/parasite/meme/atom_init()
+	. = ..()
 	name = "[pick("Meme")] [rand(1000,9999)]"
+
+/mob/living/parasite/meme/enter_host(mob/living/carbon/human/host)
+	if(locate(/mob/living/parasite/meme) in host.parasites)
+		return FALSE
+	return ..()
 
 mob/living/parasite/meme/Life()
 	..()
@@ -238,11 +233,11 @@ mob/living/parasite/meme/verb/Thought()
 	if(!target)
 		return
 
-	var/speaker = sanitize(copytext(input("Select the voice in which you would like to make yourself heard.", "Voice") as null|text, 1, MAX_NAME_LEN))
+	var/speaker = sanitize(input("Select the voice in which you would like to make yourself heard.", "Voice") as null|text, MAX_NAME_LEN)
 	if(!speaker)
 		return
 
-	var/message = sanitize(copytext(input("What would you like to say?", "Message") as null|text, 1, MAX_MESSAGE_LEN))
+	var/message = sanitize(input("What would you like to say?", "Message") as null|text)
 	if(!message)
 		return
 
@@ -251,7 +246,7 @@ mob/living/parasite/meme/verb/Thought()
 		return
 
 	//message = say_quote(message)
-	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'><i>[sanitize_plus_chat(message)]</i></span></span>"
+	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'><i>[message]</i></span></span>"
 	//target.show_message(rendered)
 	to_chat(target, rendered)
 	to_chat(usr, "<i>You make [target] hear:</i> [rendered]")
@@ -584,11 +579,12 @@ mob/living/parasite/meme/verb/Possession()
 
 		var/datum/mind/host_mind = host.mind
 		var/datum/mind/meme_mind = src.mind
+		var/mob/living/carbon/human/H = host
 
 		host_mind.transfer_to(dummy)
 		meme_mind.transfer_to(host)
 		host_mind.current.clearHUD()
-		host.update_body()
+		H.update_body()
 
 		to_chat(dummy, "\blue You feel very drowsy.. Your eyelids become heavy...")
 
@@ -603,7 +599,7 @@ mob/living/parasite/meme/verb/Possession()
 		meme_mind.transfer_to(src)
 		host_mind.transfer_to(host)
 		meme_mind.current.clearHUD()
-		host.update_body()
+		H.update_body()
 		to_chat(src, "\red You lose control..")
 
 		qdel(dummy)

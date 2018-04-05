@@ -24,12 +24,11 @@
 	attackby(obj/item/weapon/I, mob/user)
 		..()
 		if (istype(I, /obj/item/weapon/pen))
-			var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
+			var/t = sanitize_safe(input(user, "What would you like the label to be?", input_default(src.name), null)  as text, MAX_NAME_LEN)
 			if (user.get_active_hand() != I)
 				return
 			if((!in_range(src, usr) && src.loc != user))
 				return
-			t = sanitize(copytext(t,1,MAX_MESSAGE_LEN))
 			if(t)
 				src.name = text("Glass Case- '[]'", t)
 			else
@@ -71,11 +70,9 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 
-
-	New()
-		src.imp = new /obj/item/weapon/implant/tracking( src )
-		..()
-		return
+/obj/item/weapon/implantcase/tracking/atom_init()
+	imp = new /obj/item/weapon/implant/tracking(src)
+	. = ..()
 
 
 
@@ -85,25 +82,39 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-r"
 
+/obj/item/weapon/implantcase/explosive/atom_init()
+	imp = new /obj/item/weapon/implant/explosive(src)
+	. = ..()
 
-	New()
-		src.imp = new /obj/item/weapon/implant/explosive( src )
-		..()
-		return
+/obj/item/weapon/implantcase/freedom
+	name = "Glass Case- 'Freedom'"
+	desc = "A case containing an freedom implant."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "implantcase-r"
 
-
+/obj/item/weapon/implantcase/freedom/atom_init()
+	imp = new /obj/item/weapon/implant/freedom(src)
+	. = ..()
 
 /obj/item/weapon/implantcase/chem
 	name = "Glass Case- 'Chem'"
 	desc = "A case containing a chemical implant."
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
-/obj/item/weapon/implantcase/chem/New()
 
-	src.imp = new /obj/item/weapon/implant/chem( src )
-	..()
-	return
+/obj/item/weapon/implantcase/chem/atom_init()
+	imp = new /obj/item/weapon/implant/chem(src)
+	. = ..()
 
+/obj/item/weapon/implantcase/mindshield
+	name = "Glass Case- 'MindShield'"
+	desc = "A case containing a mindshield implant."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "implantcase-r"
+
+/obj/item/weapon/implantcase/mindshield/atom_init()
+	imp = new /obj/item/weapon/implant/mindshield(src)
+	. = ..()
 
 /obj/item/weapon/implantcase/loyalty
 	name = "Glass Case- 'Loyalty'"
@@ -111,12 +122,9 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-r"
 
-
-	New()
-		src.imp = new /obj/item/weapon/implant/loyalty( src )
-		..()
-		return
-
+/obj/item/weapon/implantcase/loyalty/atom_init()
+	imp = new /obj/item/weapon/implant/mindshield/loyalty(src)
+	. = ..()
 
 /obj/item/weapon/implantcase/death_alarm
 	name = "Glass Case- 'Death Alarm'"
@@ -124,7 +132,6 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 
-	New()
-		src.imp = new /obj/item/weapon/implant/death_alarm( src )
-		..()
-		return
+/obj/item/weapon/implantcase/death_alarm/atom_init()
+	imp = new /obj/item/weapon/implant/death_alarm(src)
+	. = ..()

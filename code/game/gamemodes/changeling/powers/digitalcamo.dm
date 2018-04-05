@@ -9,8 +9,16 @@
 
 	if(user.digitalcamo)
 		to_chat(user, "<span class='notice'>We return to normal.</span>")
+		for(var/mob/living/silicon/ai/AI in ai_list)
+			if(AI.client)
+				AI.client.images -= user.digitaldisguise
 	else
 		to_chat(user, "<span class='notice'>We distort our form to prevent AI-tracking.</span>")
+		user.digitaldisguise = image(loc = user)
+		user.digitaldisguise.override = 1
+		for(var/mob/living/silicon/ai/AI in ai_list)
+			if(AI.client)
+				AI.client.images += user.digitaldisguise
 	user.digitalcamo = !user.digitalcamo
 
 	spawn(0)

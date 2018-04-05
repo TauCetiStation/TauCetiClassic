@@ -20,9 +20,9 @@
 	var/silenced = 0
 	var/recoil = 0
 	var/clumsy_check = 1
+	var/can_suicide_with = TRUE
 	var/tmp/list/mob/living/target //List of who yer targeting.
 	var/tmp/lock_time = -100
-	var/tmp/mouthshoot = 0 ///To stop people from suiciding twice... >.>
 	var/automatic = 0 //Used to determine if you can target multiple people.
 	var/tmp/mob/living/last_moved_mob //Used to fire faster at more than one person.
 	var/tmp/told_cant_shoot = 0 //So that it doesn't spam them with the fact they cannot hit them.
@@ -44,8 +44,10 @@
 /obj/item/weapon/gun/proc/process_chamber()
 	return 0
 
-/obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver.
-	return 1
+/obj/item/weapon/gun/proc/special_check(mob/M, atom/target) //Placeholder for any special checks, like detective's revolver. or wizards
+	if(M.mind.special_role == "Wizard")
+		return FALSE
+	return TRUE
 
 /obj/item/weapon/gun/proc/shoot_with_empty_chamber(mob/living/user)
 	to_chat(user, "<span class='warning'>*click*</span>")
@@ -54,8 +56,7 @@
 
 /obj/item/weapon/gun/proc/shoot_live_shot(mob/living/user)
 	if(recoil)
-		spawn()
-			shake_camera(user, recoil + 1, recoil)
+		shake_camera(user, recoil + 1, recoil)
 
 	if(silenced)
 		playsound(user, fire_sound, 10, 1)
@@ -92,17 +93,16 @@
 			return
 		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.species.name == "Shadowling")
+			if(H.species.name == SHADOWLING)
 				to_chat(H, "<span class='notice'>Your fingers don't fit in the trigger guard!</span>")
 				return
 
 			if(user.dna && user.dna.mutantrace == "adamantine")
 				to_chat(user, "<span class='red'>Your metal fingers don't fit in the trigger guard!</span>")
 				return
-			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
-					if(V.stealth_active)
-						V.DeactivateStealth()
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+				var/obj/item/clothing/suit/V = H.wear_suit
+				V.attack_reaction(H, REACTION_GUN_FIRE)
 
 			if(clumsy_check) //it should be AFTER hulk or monkey check.
 				var/going_to_explode = 0
@@ -113,7 +113,7 @@
 				if(going_to_explode)
 					explosion(user.loc, 0, 0, 1, 1)
 					to_chat(H, "<span class='danger'>[src] blows up in your face.</span>")
-					H.take_organ_damage(0,20)
+					H.take_bodypart_damage(0, 20)
 					H.drop_item()
 					qdel(src)
 					return
@@ -163,15 +163,18 @@
 
 /obj/item/weapon/gun/attack(mob/living/M, mob/living/user, def_zone)
 	//Suicide handling.
-	if (M == user && user.zone_sel.selecting == "mouth" && !mouthshoot)
+	if (M == user && def_zone == O_MOUTH)
+		if(user.is_busy())
+			return
+		if(!can_suicide_with)
+			to_chat(user, "<span class='notice'>You have tried to commit suicide, but couldn't do it with [src].</span>")
+			return
 		if(isrobot(user))
 			to_chat(user, "<span class='notice'>You have tried to commit suicide, but couldn't do it.</span>")
 			return
-		mouthshoot = 1
 		M.visible_message("<span class='warning'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
 		if(!do_after(user, 40, target = user))
 			M.visible_message("<span class='notice'>[user] decided life was worth living.</span>")
-			mouthshoot = 0
 			return
 		if (can_fire())
 			user.visible_message("<span class = 'warning'>[user] pulls the trigger.</span>")
@@ -182,18 +185,16 @@
 			if(istype(chambered.BB, /obj/item/projectile/beam/lastertag) || istype(chambered.BB, /obj/item/projectile/beam/practice))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel rather silly, trying to commit suicide with a toy.</span>")
-				mouthshoot = 0
 				return
 			if(istype(chambered.BB, /obj/item/projectile/bullet/chameleon))
 				user.visible_message("<span class = 'notice'>Nothing happens.</span>",\
 									"<span class = 'notice'>You feel weakness and the taste of gunpowder, but no more.</span>")
 				user.apply_effect(5,WEAKEN,0)
-				mouthshoot = 0
 				return
 
 			chambered.BB.on_hit(M)
 			if (chambered.BB.damage_type != HALLOSS)
-				user.apply_damage(chambered.BB.damage*2.5, chambered.BB.damage_type, "head", used_weapon = "Point blank shot in the mouth with \a [chambered.BB]", sharp=1)
+				user.apply_damage(chambered.BB.damage * 2.5, chambered.BB.damage_type, BP_HEAD, null, chambered.BB.damage_flags(), "Point blank shot in the mouth with \a [chambered.BB]")
 				user.death()
 			else
 				to_chat(user, "<span class = 'notice'>Ow...</span>")
@@ -201,12 +202,10 @@
 			chambered.BB = null
 			chambered.update_icon()
 			update_icon()
-			mouthshoot = 0
 			process_chamber()
 			return
 		else
 			click_empty(user)
-			mouthshoot = 0
 			return
 
 	if (can_fire())

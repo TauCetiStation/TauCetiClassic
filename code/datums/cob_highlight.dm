@@ -1,4 +1,4 @@
-#define COB_HINT "Rotate (ALT + LMB)\nCancel (RMB)\nAmount [using_this.amount]"
+#define COB_HINT "Rotate (ALT + LMB)\nCancel (RMB)\nAmount [using_this.get_amount()]"
 
 /client/var/datum/craft_or_build/cob
 
@@ -64,7 +64,7 @@
 	. = TRUE
 	if(busy || !using_this || !from_recipe)
 		return FALSE //return, no need to play red animation.
-	else if(using_this.amount < from_recipe.req_amount)
+	else if(using_this.get_amount() < from_recipe.req_amount)
 		. = FALSE
 		to_chat(M, "<span class='notice'>You haven't got enough [using_this.name] to build \the [from_recipe.title]!</span>")
 	else if(from_recipe.one_per_turf && (locate(from_recipe.result_type) in here))
@@ -126,14 +126,13 @@
 		playsound(M, 'sound/effects/grillehit.ogg', 50, 1)//Yes, 2nd time with timed recipe.
 		var/atom/A = new from_recipe.result_type(over_this_saved)
 		A.dir = build_direction
-		using_this.amount -= from_recipe.req_amount
-		if(using_this.amount <= 0)
-			M.remove_from_mob(using_this)
-			qdel(using_this)
+		using_this.use(from_recipe.req_amount)
 		A.add_fingerprint(M)
 		b_overlay.maptext = COB_HINT
 
 /turf/MouseEntered(location, control, params)
+	if(!usr.client.cob)
+		return
 	if(usr.client.cob.in_building_mode)
 		if(usr.restrained() || usr.stat || (usr.get_active_hand() != usr.client.cob.using_this && usr.get_inactive_hand() != usr.client.cob.using_this))
 			usr.client.cob.remove_build_overlay(usr.client)

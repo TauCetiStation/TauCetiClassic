@@ -4,7 +4,7 @@
 	desc = "That's not red paint. That's real blood."
 	icon_state = "deathsquad"
 	item_state = "deathsquad"
-	armor = list(melee = 65, bullet = 40, laser = 35,energy = 20, bomb = 30, bio = 30, rad = 30)
+	armor = list(melee = 80, bullet = 70, laser = 70,energy = 70, bomb = 70, bio = 30, rad = 30)
 
 /obj/item/clothing/head/helmet/space/deathsquad/beret
 	name = "officer's beret"
@@ -31,6 +31,16 @@
 	flags = ONESIZEFITSALL
 	allowed = list(/obj/item) //for stuffing exta special presents
 
+/obj/item/clothing/head/helmet/syndiassault
+	name = "assault helmet"
+	icon_state = "assaulthelmet_b"
+	item_state = "assaulthelmet_b"
+	armor = list(melee = 50, bullet = 60, laser = 45, energy = 70, bomb = 50, bio = 0, rad = 50)
+	siemens_coefficient = 0.2
+
+/obj/item/clothing/head/helmet/syndiassault/alternate
+	icon_state = "assaulthelmet"
+	item_state = "assaulthelmet"
 
 //Space pirate outfit
 /obj/item/clothing/head/helmet/space/pirate
@@ -55,12 +65,12 @@
 //Buget suit
 
 /obj/item/clothing/suit/space/cheap
-	name = "Budget spacesuit"
+	name = "budget spacesuit"
 	desc = "It was an attempt to force the assistants to work in space.The label on the side reads: Not for atheists"
 	resilience = 0.6
 
 /obj/item/clothing/head/helmet/space/cheap
-	name = "Budget spacesuit helmet"
+	name = "budget spacesuit helmet"
 	desc = "It was an attempt to force the assistants to work in space. At least 60% of them survived in the spacesuit."
 
 //Mime's Hardsuit

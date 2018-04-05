@@ -262,7 +262,7 @@
 				else
 					M_job = "Living"
 
-			else if(istype(M,/mob/new_player))
+			else if(isnewplayer(M))
 				M_job = "New player"
 
 			else if(isobserver(M))
@@ -318,7 +318,7 @@
 	</body></html>
 	"}
 
-	usr << browse(dat, "window=players;size=600x480")
+	usr << browse(entity_ja(dat), "window=players;size=600x480")
 
 //The old one
 /datum/admins/proc/player_panel_old()
@@ -352,6 +352,8 @@
 			dat += "<td>Alien</td>"
 		else if(istype(M, /mob/living/parasite/meme))
 			dat += "<td>Meme</td>"
+		else if(istype(M, /mob/living/parasite/essence))
+			dat += "<td>Changelling Essence</td>"
 		else
 			dat += "<td>Unknown</td>"
 
@@ -378,7 +380,7 @@
 
 	dat += "</table></body></html>"
 
-	usr << browse(dat, "window=players;size=640x480")
+	usr << browse(entity_ja(dat), "window=players;size=640x480")
 
 /datum/admins/proc/check_antagonists()
 	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
@@ -562,9 +564,9 @@
 			dat += "<br><table cellspacing=5><tr><td align=center><font color='green'><B>Heist:</font></B></td><td></td><td></td></tr>"
 			if(mode.raid_objectives && mode.raid_objectives.len)
 				for(var/datum/objective/heist/H in mode.raid_objectives)
-					heist_get_shuttle_price()
+					//heist_get_shuttle_price()
 					dat += "<tr><td><B>[H.explanation_text]</B></td></tr>"
-					dat += "<tr><td><i>Progress: [num2text(heist_rob_total,9)]/[num2text(H.target_amount,9)]</i></td></tr>"
+					//dat += "<tr><td><i>Progress: [num2text(heist_rob_total,9)]/[num2text(H.target_amount,9)]</i></td></tr>"
 			dat += check_role_table("Raiders", ticker.mode.raiders, src)
 
 		if(ticker.mode.ninjas.len)
@@ -581,7 +583,7 @@
 			dat += mutiny.check_antagonists_ui(src)
 
 		dat += "</body></html>"
-		usr << browse(dat, "window=roundstatus;size=400x500")
+		usr << browse(entity_ja(dat), "window=roundstatus;size=400x500")
 	else
 		alert("The game hasn't started yet!")
 

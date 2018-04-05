@@ -10,10 +10,16 @@
 /obj/structure/ex_act(severity)
 	switch(severity)
 		if(1.0)
+			for(var/atom/movable/AM in contents)
+				AM.forceMove(loc)
+				AM.ex_act(severity++)
 			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
+				for(var/atom/movable/AM in contents)
+					AM.forceMove(loc)
+					AM.ex_act(severity++)
 				qdel(src)
 				return
 		if(3.0)
@@ -22,8 +28,8 @@
 /obj/structure/meteorhit(obj/O)
 	qdel(src)
 
-/obj/structure/New()
-	..()
+/obj/structure/atom_init()
+	. = ..()
 	if(climbable)
 		verbs += /obj/structure/proc/climb_on
 
@@ -37,8 +43,10 @@
 	do_climb(usr)
 
 /obj/structure/MouseDrop_T(mob/target, mob/user)
+	if(isessence(user))
+		return
 	var/mob/living/H = user
-	if(istype(H) && can_climb(H) && target == user)
+	if(can_climb(H) && target == user)
 		do_climb(target)
 	else
 		return ..()
@@ -49,6 +57,9 @@
 
 	if (!user.Adjacent(src))
 		to_chat(user, "<span class='danger'>You can't climb there, the way is blocked.</span>")
+		return 0
+
+	if(user.is_busy())
 		return 0
 
 	var/obj/occupied = turf_is_crowded()
@@ -72,7 +83,6 @@
 /obj/structure/proc/do_climb(mob/living/user)
 	if (!can_climb(user))
 		return
-
 	usr.visible_message("<span class='warning'>[user] starts climbing onto \the [src]!</span>")
 	climbers |= user
 
@@ -84,11 +94,14 @@
 		climbers -= user
 		return
 
+	on_climb(user)
+	climbers -= user
+
+/obj/structure/proc/on_climb(mob/living/user)
 	usr.forceMove(get_turf(src))
 
 	if (get_turf(user) == get_turf(src))
 		usr.visible_message("<span class='warning'>[user] climbs onto \the [src]!</span>")
-	climbers -= user
 
 /obj/structure/proc/structure_shaken()
 	for(var/mob/living/M in climbers)
@@ -110,25 +123,21 @@
 				M.adjustBruteLoss(damage)
 				return
 
-			var/datum/organ/external/affecting
+			var/obj/item/organ/external/BP
 
-			switch(pick(list("ankle","wrist","head","knee","elbow")))
-				if("ankle")
-					affecting = H.get_organ(pick("l_foot", "r_foot"))
+			switch(pick(list("knee","head","elbow")))
 				if("knee")
-					affecting = H.get_organ(pick("l_leg", "r_leg"))
-				if("wrist")
-					affecting = H.get_organ(pick("l_hand", "r_hand"))
+					BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 				if("elbow")
-					affecting = H.get_organ(pick("l_arm", "r_arm"))
+					BP = H.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
 				if("head")
-					affecting = H.get_organ("head")
+					BP = H.bodyparts_by_name[BP_HEAD]
 
-			if(affecting)
-				to_chat(M, "<span class='red'>You land heavily on your [affecting.display_name]!</span>")
-				affecting.take_damage(damage, 0)
-				if(affecting.parent)
-					affecting.parent.add_autopsy_data("Misadventure", damage)
+			if(BP)
+				to_chat(M, "<span class='red'>You land heavily on your [BP.name]!</span>")
+				BP.take_damage(damage, 0)
+				if(BP.parent)
+					BP.parent.add_autopsy_data("Misadventure", damage)
 			else
 				to_chat(H, "<span class='red'>You land heavily!</span>")
 				H.adjustBruteLoss(damage)

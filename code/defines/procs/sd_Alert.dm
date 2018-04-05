@@ -152,7 +152,7 @@ Version 1 changes (from version 0):
 
 	html += "</th></tr></table></body>"
 
-	target << browse(html,"window=\ref[src];size=[size];can_close=0")
+	target << browse(entity_ja(html),"window=\ref[src];size=[size];can_close=0")
 
 /sd_alert/proc/Response()
 	var/validated

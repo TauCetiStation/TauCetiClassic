@@ -5,8 +5,8 @@
 	icon_state = "crystal"
 	density = 1
 
-/obj/structure/crystal/New()
-	..()
+/obj/structure/crystal/atom_init()
+	. = ..()
 
 	icon_state = pick("ano70","ano80")
 

@@ -10,13 +10,15 @@
 
 	var/health = 1000
 
-/obj/structure/pbag/New()
+/obj/structure/pbag/atom_init()
+	. = ..()
 	//color = pick("#aaffaa", "#aaaaff", "#ff3030", "#ff1010", "#ffffff")
 	color = random_color()
 
 /obj/structure/pbag/attack_hand(mob/user)
 	if(!anchored) return
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	hit(user)
 
 /obj/structure/pbag/ex_act(severity)
@@ -56,8 +58,8 @@
 
 /obj/structure/pbag/proc/swing(time = rand(5, 20))
 	icon_state = "pbaghit"
-	spawn(time)
-		icon_state = "pbag"
+	sleep(time)
+	icon_state = "pbag"
 
 /obj/structure/pbag/verb/hang()
 	set name = "Hang Bag"

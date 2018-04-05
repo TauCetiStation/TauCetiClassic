@@ -2,8 +2,8 @@
 	name = "cyborg recharging station"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "borgcharger0"
-	density = 0
-	anchored = 1.0
+	density = FALSE
+	anchored = TRUE
 	use_power = 1
 	idle_power_usage = 50
 	active_power_usage = 50
@@ -14,15 +14,14 @@
 	var/icon_update_tick = 0				// Used to update icon only once every 10 ticks
 	var/construct_op = 0
 	var/circuitboard = "/obj/item/weapon/circuitboard/cyborgrecharger"
-	var/locked = 1
-	var/open = 1
-	req_access = list(access_robotics)
+	var/locked = TRUE
+	var/open = TRUE
 	var/recharge_speed
 	var/repairs
 
 
-/obj/machinery/recharge_station/New()
-	..()
+/obj/machinery/recharge_station/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/cyborgrecharger(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
@@ -110,12 +109,6 @@
 	open_machine()
 	..(severity)
 
-/obj/machinery/recharge_station/attack_paw(user)
-	return attack_hand(user)
-
-/obj/machinery/recharge_station/attack_ai(user)
-	return attack_hand(user)
-
 /obj/machinery/recharge_station/attackby(obj/item/P, mob/user)
 	if(open)
 		if(default_deconstruction_screwdriver(user, "borgdecon2", "borgcharger0", P))
@@ -127,12 +120,14 @@
 	default_deconstruction_crowbar(P)
 
 /obj/machinery/recharge_station/attack_hand(mob/user)
-	if(..())	return
-	if(construct_op == 0)
+	. = ..()
+	if(.)
+		return
+	user.SetNextMove(CLICK_CD_INTERACT)
+	if(!construct_op)
 		toggle_open()
 	else
 		to_chat(user, "The recharger can't be closed in this state.")
-	add_fingerprint(user)
 
 /obj/machinery/recharge_station/proc/toggle_open()
 	if(open)
@@ -155,7 +150,6 @@
 /obj/machinery/recharge_station/close_machine()
 	if(!panel_open)
 		for(var/mob/living/silicon/robot/R in loc)
-			R.stop_pulling()
 			if(R.client)
 				R.client.eye = src
 				R.client.perspective = EYE_PERSPECTIVE
@@ -204,7 +198,7 @@
 			if(R.module)
 				R.module.respawn_consumable(R)
 			if(repairs)
-				R.heal_organ_damage(repairs, repairs - 1)
+				R.heal_bodypart_damage(repairs, repairs - 1)
 			if(!R.cell)
 				return
 			else if(R.cell.charge >= R.cell.maxcharge)

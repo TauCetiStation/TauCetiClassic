@@ -124,8 +124,10 @@
 
 /obj/item/tape/attackby(obj/item/weapon/W, mob/user)
 	breaktape(W, user, FALSE)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 /obj/item/tape/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if (user.a_intent == "help" && src.allowed(user))
 		user.show_viewers("\blue [user] lifts [src], allowing passage.")
 		src.density = 0
@@ -144,7 +146,7 @@
 	breaktape(W = null, user = null, forced = TRUE)
 
 /obj/item/tape/proc/breaktape(obj/item/weapon/W, mob/user, forced = FALSE)
-	if((user && user.a_intent == "help") && (W && !can_puncture(W) && src.allowed(user)) && !forced)
+	if((user && user.a_intent == "help") && (W && !W.can_puncture() && src.allowed(user)) && !forced)
 		to_chat(user, "You can't break the [src] with that!")
 		return
 	if(user)

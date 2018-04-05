@@ -17,8 +17,8 @@
 	var/ks1type = /obj/item/device/encryptionkey
 	var/ks2type = null
 
-/obj/item/device/radio/headset/New()
-	..()
+/obj/item/device/radio/headset/atom_init()
+	. = ..()
 	if(ks1type)
 		keyslot1 = new ks1type(src)
 	if(ks2type)
@@ -44,6 +44,7 @@
 /obj/item/device/radio/headset/syndicate
 	syndie = 1
 	ks1type = /obj/item/device/encryptionkey/syndicate
+	grid = TRUE
 
 /obj/item/device/radio/headset/syndicate/alt
 	icon_state = "syndie_headset"
@@ -119,6 +120,7 @@
 	icon_state = "cap_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/captain
+	grid = TRUE
 
 /obj/item/device/radio/headset/heads/ai_integrated //No need to care about icons, it should be hidden inside the AI anyway.
 	name = "AI Subspace Transceiver"
@@ -139,12 +141,13 @@
 	return
 
 /obj/item/device/radio/headset/heads/rd
-	name = "Research Director's headset"
+	name = "research director's headset"
 	desc = "Headset of the researching God. To access the science channel, use :n. For command, use :c."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "rd_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/rd
+	grid = TRUE
 
 /obj/item/device/radio/headset/heads/hos
 	name = "head of security's headset"
@@ -161,6 +164,7 @@
 	icon_state = "ce_headset"
 	item_state = "headset"
 	ks2type = /obj/item/device/encryptionkey/heads/ce
+	grid = TRUE
 
 /obj/item/device/radio/headset/heads/cmo
 	name = "chief medical officer's headset"
@@ -202,114 +206,88 @@
 
 /obj/item/device/radio/headset/ert
 	name = "CentCom Response Team headset"
-	desc = "The headset of the boss's boss. Channels are as follows: :h - Response Team :c - command, :s - security, :e - engineering, :d - mining, :q - cargo, :m - medical, :n - science."
+	desc = "The headset of the boss's boss. Channels are as follows: :h - Response Team :c - command, :s - security, :e - engineering, :u - supply, :m - medical, :n - science."
 	icon_state = "com_headset"
 	item_state = "headset"
 	freerange = 1
 	ks2type = /obj/item/device/encryptionkey/ert
+	grid = TRUE
+
+/obj/item/device/radio/headset/deathsquad
+	grid = TRUE
+
+/obj/item/device/radio/headset/deathsquad/atom_init()
+	. = ..()
+	set_frequency(1341)
 
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W, mob/user)
-//	..()
-	user.set_machine(src)
-	if (!( istype(W, /obj/item/weapon/screwdriver) || (istype(W, /obj/item/device/encryptionkey/ ))))
-		return
-
-	if(istype(W, /obj/item/weapon/screwdriver))
-		if(keyslot1 || keyslot2)
-
-
-			for(var/ch_name in channels)
-				radio_controller.remove_object(src, radiochannels[ch_name])
-				secure_radio_connections[ch_name] = null
-
-
-			if(keyslot1)
-				var/turf/T = get_turf(user)
-				if(T)
-					keyslot1.loc = T
-					keyslot1 = null
-
-
-
-			if(keyslot2)
-				var/turf/T = get_turf(user)
-				if(T)
-					keyslot2.loc = T
-					keyslot2 = null
-
-			recalculateChannels()
-			to_chat(user, "You pop out the encryption keys in the headset!")
-
-		else
-			to_chat(user, "This headset doesn't have any encryption keys!  How useless...")
-
-	if(istype(W, /obj/item/device/encryptionkey/))
-		if(keyslot1 && keyslot2)
-			to_chat(user, "The headset can't hold another key!")
+	if(istype(W, /obj/item/device/radio_grid))
+		if(grid)
+			to_chat(user, "<span class='userdanger'>There is already installed Shielded grid!</span>")
 			return
-
+		to_chat(user, "<span class='notice'>You attach [W] to [src]!</span>")
+		user.drop_item()
+		var/obj/item/device/radio_grid/new_grid = W
+		new_grid.attach(src)
+	else if(istype(W, /obj/item/weapon/wirecutters))
+		if(!grid)
+			to_chat(user, "<span class='userdanger'>Nothing to cut here!</span>")
+			return
+		to_chat(user, "<span class='notice'>You pop out Shielded grid from [src]!</span>")
+		var/obj/item/device/radio_grid/new_grid = new(get_turf(loc))
+		new_grid.dettach(src)
+	else if(istype(W, /obj/item/weapon/screwdriver))
+		if(!keyslot1 && !keyslot2)
+			to_chat(user, "<span class='notice'>This headset doesn't have any encryption keys!  How useless...</span>")
+			return
+		for(var/ch_name in channels)
+			radio_controller.remove_object(src, radiochannels[ch_name])
+			secure_radio_connections[ch_name] = null
+		var/turf/T = get_turf(user)
+		if(keyslot1)
+			keyslot1.loc = T
+			keyslot1 = null
+		if(keyslot2)
+			keyslot2.loc = T
+			keyslot2 = null
+		recalculateChannels()
+		playsound(user, 'sound/items/Screwdriver.ogg', 50, 1)
+		to_chat(user, "<span class='notice'>You pop out the encryption keys in the headset!</span>")
+	else if(istype(W, /obj/item/device/encryptionkey/))
+		if(keyslot1 && keyslot2)
+			to_chat(user, "<span class='notice'>The headset can't hold another key!</span>")
+			return
 		if(!keyslot1)
 			user.drop_item()
 			W.loc = src
 			keyslot1 = W
-
 		else
 			user.drop_item()
 			W.loc = src
 			keyslot2 = W
-
-
 		recalculateChannels()
 
-	return
-
-
 /obj/item/device/radio/headset/proc/recalculateChannels()
-	src.channels = list()
-	src.translate_binary = 0
-	src.translate_hive = 0
-	src.syndie = 0
-
-	if(keyslot1)
-		for(var/ch_name in keyslot1.channels)
-			if(ch_name in src.channels)
+	channels = list()
+	translate_binary = 0
+	translate_hive = 0
+	syndie = 0
+	for(var/obj/item/device/encryptionkey/Slot in list(keyslot1, keyslot2))
+		for(var/ch_name in Slot.channels)
+			if(ch_name in channels)
 				continue
-			src.channels += ch_name
-			src.channels[ch_name] = keyslot1.channels[ch_name]
-
-		if(keyslot1.translate_binary)
-			src.translate_binary = 1
-
-		if(keyslot1.translate_hive)
-			src.translate_hive = 1
-
-		if(keyslot1.syndie)
-			src.syndie = 1
-
-	if(keyslot2)
-		for(var/ch_name in keyslot2.channels)
-			if(ch_name in src.channels)
-				continue
-			src.channels += ch_name
-			src.channels[ch_name] = keyslot2.channels[ch_name]
-
-		if(keyslot2.translate_binary)
-			src.translate_binary = 1
-
-		if(keyslot2.translate_hive)
-			src.translate_hive = 1
-
-		if(keyslot2.syndie)
-			src.syndie = 1
-
-
+			channels += ch_name
+			channels[ch_name] = Slot.channels[ch_name]
+		if(Slot.translate_binary)
+			translate_binary = 1
+		if(Slot.translate_hive)
+			translate_hive = 1
+		if(Slot.syndie)
+			syndie = 1
 	for (var/ch_name in channels)
 		if(!radio_controller)
 			sleep(30) // Waiting for the radio_controller to be created.
 		if(!radio_controller)
-			src.name = "broken radio headset"
+			name = "broken radio headset"
 			return
-
 		secure_radio_connections[ch_name] = radio_controller.add_object(src, radiochannels[ch_name],  RADIO_CHAT)
-
-	return

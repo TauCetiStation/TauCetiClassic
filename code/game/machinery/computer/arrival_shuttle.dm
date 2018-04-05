@@ -16,16 +16,17 @@ var/lastMove = 0
 	var/obj/item/device/radio/intercom/radio
 
 
-/obj/machinery/computer/arrival_shuttle/New()
+/obj/machinery/computer/arrival_shuttle/atom_init()
 //	curr_location= locate(/area/shuttle/arrival/pre_game)
 	radio = new (src)
+	. = ..()
 
 /obj/machinery/computer/arrival_shuttle/proc/try_move_from_station()
 	if(moving || location != 2 || !SSshuttle)
 		return
 	var/myArea = get_area(src)
 	if(SSshuttle.forbidden_atoms_check(myArea))
-		addtimer(src, "try_move_from_station", 600, FALSE)
+		addtimer(CALLBACK(src, .proc/try_move_from_station), 600)
 		return
 	arrival_shuttle_move()
 
@@ -102,53 +103,23 @@ var/lastMove = 0
 	open_doors(toArea, location)
 
 	if(location == 2)
-		addtimer(src, "try_move_from_station", 600, FALSE)
+		addtimer(CALLBACK(src, .proc/try_move_from_station), 600)
 
 
 /obj/machinery/computer/arrival_shuttle/proc/lock_doors(area/A)
-	var/area/velocity = locate(/area/centcom/arrival)
-	for(var/obj/machinery/door/airlock/external/D in velocity)
-		if(D.tag == "velocity_1")
-			D.close()
-			spawn(10) //incase someone messing with door.
-				if(D && D.density)
-					D.bolt()
-
-	var/area/station = locate(/area/hallway/secondary/entry)
-	for(var/obj/machinery/door/airlock/external/D in station)
-		if(D.tag == "arrival_1")
-			D.close()
-			spawn(10)
-				if(D && D.density)
-					D.bolt()
-
-	for(var/obj/machinery/door/unpowered/shuttle/wagon/D in A)
-		spawn(0)
-			D.close()
-			D.locked = 1
+	SSshuttle.undock_act(/area/centcom/arrival, "velocity_1")
+	SSshuttle.undock_act(/area/hallway/secondary/entry, "arrival_1")
+	SSshuttle.undock_act(A)
 
 /obj/machinery/computer/arrival_shuttle/proc/open_doors(area/A, arrival)
 	switch(arrival)
 		if(0) //Velocity
-			var/area/velocity = locate(/area/centcom/arrival)
-			for(var/obj/machinery/door/airlock/external/D in velocity)
-				if(D.tag == "velocity_1")
-					D.unbolt()
+			SSshuttle.dock_act(/area/centcom/arrival, "velocity_1")
+			SSshuttle.dock_act(A)
 
-			for(var/obj/machinery/door/unpowered/shuttle/wagon/D in A)
-				spawn(0)
-					D.locked = 0
-					D.open()
 		if(2) //Station
-			var/area/station = locate(/area/hallway/secondary/entry)
-			for(var/obj/machinery/door/airlock/external/D in station)
-				if(D.tag == "arrival_1")
-					D.unbolt()
-
-			for(var/obj/machinery/door/unpowered/shuttle/wagon/D in A)
-				spawn(0)
-					D.locked = 0
-					D.open()
+			SSshuttle.dock_act(/area/hallway/secondary/entry, "arrival_1")
+			SSshuttle.dock_act(A)
 
 /obj/machinery/computer/arrival_shuttle/proc/shake_mobs(area/A)
 	for(var/mob/M in A)
@@ -185,11 +156,9 @@ var/lastMove = 0
 						break
 					step(L, EAST)
 
-/obj/machinery/computer/arrival_shuttle/attack_hand(user)
-	src.add_fingerprint(usr)
+/obj/machinery/computer/arrival_shuttle/ui_interact(user)
 	var/dat = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"
-
-	user << browse("[dat]", "window=researchshuttle;size=200x100")
+	user << browse("[entity_ja(dat)]", "window=researchshuttle;size=200x100")
 
 /obj/machinery/computer/arrival_shuttle/Topic(href, href_list)
 	. = ..()
@@ -210,11 +179,9 @@ var/lastMove = 0
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "wagon"
 
-/obj/machinery/computer/arrival_shuttle/dock/attack_hand(user)
-	src.add_fingerprint(usr)
+/obj/machinery/computer/arrival_shuttle/dock/ui_interact(user)
 	var/dat1 = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];back=1'>Send back</A></b></center><br>"
-
-	user << browse("[dat1]", "window=researchshuttle;size=200x100")
+	user << browse("[entity_ja(dat1)]", "window=researchshuttle;size=200x100")
 
 /obj/machinery/computer/arrival_shuttle/dock/Topic(href, href_list)
 	. = ..()

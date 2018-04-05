@@ -37,7 +37,7 @@
 		msg += "</span>"
 
 	if (src.digitalcamo)
-		msg += "It is moving its body in an unnatural and blatantly unsimian manner.\n"
+		msg += "<span class='warning'>It is moving its body in an unnatural and blatantly unsimian manner.</span>\n"
 
 	msg += "*---------*</span>"
 

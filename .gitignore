@@ -6,4 +6,6 @@
 *.lk
 *.backup
 taucetistation.dmb
+Thumbs.db
 data/
+.vscode

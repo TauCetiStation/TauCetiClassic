@@ -9,26 +9,22 @@
 	var/active = 0
 	circuit = /obj/item/weapon/circuitboard/aifixer
 
-/obj/machinery/computer/aifixer/New()
-	src.overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
-	..()
+/obj/machinery/computer/aifixer/atom_init()
+	overlays += image('icons/obj/computer.dmi', "ai-fixer-empty")
+	. = ..()
 
 /obj/machinery/computer/aifixer/attackby(I, user)
 	if(istype(I, /obj/item/device/aicard))
-		var/obj/item/device/aicard/AIcard = I
-		if(stat & (NOPOWER|BROKEN))
+		if(stat & (NOPOWER | BROKEN))
 			to_chat(user, "This terminal isn't functioning right now, get it working!")
 			return
-		AIcard.transfer_ai("AIFIXER","AICARD",src,user)
+		var/obj/item/device/aicard/AIcard = I
+		AIcard.transfer_ai("AIFIXER", "AICARD", src, user)
 	else
 		..()
 	return
 
-/obj/machinery/computer/aifixer/attack_hand(mob/user)
-	if(..())
-		return
-
-	user.set_machine(src)
+/obj/machinery/computer/aifixer/ui_interact(mob/user)
 	var/dat = "<h3>AI System Integrity Restorer</h3><br><br>"
 
 	if (src.occupier)
@@ -63,9 +59,8 @@
 			dat += "<br><br>Reconstruction in process, please wait.<br>"
 	dat += {" <A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 /obj/machinery/computer/aifixer/process()
 	if(..())
@@ -86,11 +81,11 @@
 			src.occupier.adjustToxLoss(-1)
 			src.occupier.adjustBruteLoss(-1)
 			src.occupier.updatehealth()
-			if (src.occupier.health >= 0 && src.occupant.stat == DEAD)
+			if (src.occupier.health >= 0 && src.occupier.stat == DEAD)
 				src.occupier.stat = CONSCIOUS
 				src.occupier.lying = 0
-				dead_mob_list -= src.occupant
-				living_mob_list += src.occupant
+				dead_mob_list -= src.occupier
+				living_mob_list += src.occupier
 				src.overlays -= image('icons/obj/computer.dmi', "ai-fixer-404")
 				src.overlays += image('icons/obj/computer.dmi', "ai-fixer-full")
 				src.occupier.add_ai_verbs()

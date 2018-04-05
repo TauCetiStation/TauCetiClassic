@@ -18,6 +18,7 @@
 	anchored = 1
 	state_open = 1
 	light_color = "#7BF9FF"
+	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/obj/item/weapon/reagent_containers/glass/beaker = null
 	var/filtering = 0
 	var/efficiency = 1
@@ -29,18 +30,27 @@
 		list("anti_toxin", "ryetalyn" ,"dermaline", "arithrazine"),
 		list("dexalinp", "alkysine")
 	)
+	var/upgraded = FALSE
 
-/obj/machinery/sleeper/New()
-	..()
-	beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
+/obj/machinery/sleeper/upgraded
+	upgraded = TRUE
+
+/obj/machinery/sleeper/atom_init(mapload)
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/sleeper(null)
-	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
-	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
+	if(upgraded)
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin/bluespace(null)
+		component_parts += new /obj/item/weapon/stock_parts/manipulator/femto(null)
+	else
+		component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
+		component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 1)
+	component_parts += new /obj/item/stack/cable_coil/random(null, 1)
 	RefreshParts()
+	if(mapload)
+		beaker = new /obj/item/weapon/reagent_containers/glass/beaker/large(src)
 
 /obj/machinery/sleeper/RefreshParts()
 	var/E
@@ -61,6 +71,8 @@
 
 /obj/machinery/sleeper/MouseDrop_T(mob/target, mob/user)
 	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !iscarbon(target) || target.buckled)
+		return
+	if(!iscarbon(usr) && !isrobot(usr))
 		return
 	close_machine(target)
 
@@ -84,6 +96,7 @@
 		qdel(src)
 
 /obj/machinery/sleeper/attack_animal(mob/living/simple_animal/M)//Stop putting hostile mobs in things guise
+	..()
 	if(M.environment_smash)
 		visible_message("<span class='danger'>[M.name] smashes [src] apart!</span>")
 		qdel(src)
@@ -196,9 +209,7 @@
 	add_fingerprint(usr)
 	return
 
-/obj/machinery/sleeper/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/sleeper/ui_interact(mob/user)
 	var/dat = "<h3>Sleeper Status</h3>"
 
 	dat += "<div class='statusDisplay'>"
@@ -292,12 +303,6 @@
 	else
 		to_chat(usr, "<span class='notice'>ERROR: Subject cannot metabolise chemicals.</span>")
 	updateUsrDialog()
-
-/obj/machinery/sleeper/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/sleeper/attack_paw(mob/user)
-	return attack_hand(user)
 
 /obj/machinery/sleeper/open_machine()
 	if(!state_open && !panel_open)

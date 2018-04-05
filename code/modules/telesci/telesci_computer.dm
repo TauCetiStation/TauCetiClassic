@@ -26,31 +26,35 @@
 	var/teleport_cooldown = 0 // every index requires a bluespace crystal
 	var/list/power_options = list(5, 10, 20, 25, 30, 40, 50, 80, 100)
 	var/teleporting = 0
-	var/starting_crystals = 3
+	var/starting_crystals = 0
 	var/max_crystals = 4
 	var/list/crystals = list()
 	var/obj/item/device/gps/inserted_gps
 	var/obj/effect/portal/tsci_wormhole/active_wormhole = null
 
-/obj/machinery/computer/telescience/New()
-	..()
+/obj/machinery/computer/telescience/atom_init()
+	. = ..()
 	recalibrate()
+
+/obj/machinery/computer/telescience/atom_init()
+	. = ..()
+	for(var/i = 1; i <= starting_crystals; i++)
+		crystals += new /obj/item/bluespace_crystal/artificial(null) // starting crystals
 
 /obj/machinery/computer/telescience/Destroy()
 	eject()
 	if(inserted_gps)
 		inserted_gps.loc = loc
 		inserted_gps = null
+	if(telepad)
+		telepad.computer = null
+		telepad = null
+	close_wormhole()
 	return ..()
 
 /obj/machinery/computer/telescience/examine(mob/user)
 	..()
 	to_chat(user, "There are [crystals.len] bluespace crystals in the crystal ports.")
-
-/obj/machinery/computer/telescience/initialize()
-	..()
-	for(var/i = 1; i <= starting_crystals; i++)
-		crystals += new /obj/item/bluespace_crystal/artificial(null) // starting crystals
 
 /obj/machinery/computer/telescience/attack_paw(mob/user)
 	to_chat(user, "<span class='warning'>You are too primitive to use this computer!</span>")
@@ -94,21 +98,17 @@
 	else if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/telepad))
+			if(telepad)
+				telepad.computer = null
+				close_wormhole()
 			telepad = M.buffer
+			telepad.computer = src
 			M.buffer = null
 			to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
 	else
 		..()
 
-/obj/machinery/computer/telescience/attack_ai(mob/user)
-	src.attack_hand(user)
-
-/obj/machinery/computer/telescience/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/telescience/interact(mob/user)
+/obj/machinery/computer/telescience/ui_interact(mob/user)
 	var/t
 	if(!telepad)
 		in_use = 0     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
@@ -157,7 +157,6 @@
 	var/datum/browser/popup = new(user, "telesci", name, 300, 550)
 	popup.set_content(t)
 	popup.open()
-	return
 
 /obj/machinery/computer/telescience/proc/create_wormhole(turf/exit)
 	if(exit.density)

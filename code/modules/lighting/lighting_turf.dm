@@ -7,12 +7,6 @@
 	var/tmp/list/datum/lighting_corner/corners[4]
 	var/tmp/has_opaque_atom = FALSE // Not to be confused with opacity, this will be TRUE if there's any opaque atom on the tile.
 
-/turf/New()
-	. = ..()
-
-	if(opacity)
-		has_opaque_atom = TRUE
-
 // Causes any affecting light sources to be queued for a visibility update, for example a door got opened.
 /turf/proc/reconsider_lights()
 	for(var/A in affecting_lights)
@@ -38,7 +32,7 @@
 	if(!lighting_overlay)
 		var/area/A = loc
 		if(A.dynamic_lighting)
-			PoolOrNew(/atom/movable/lighting_overlay, src)
+			new /atom/movable/lighting_overlay(src)
 
 			for(var/LC in corners)
 				if(!LC)
@@ -75,14 +69,6 @@
 		if(A.opacity)
 			has_opaque_atom = TRUE
 
-// If an opaque movable atom moves around we need to potentially update visibility.
-/turf/Entered(var/atom/movable/Obj, var/atom/OldLoc)
-	. = ..()
-
-	if(Obj && Obj.opacity)
-		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
-		reconsider_lights()
-
 /turf/Exited(var/atom/movable/Obj, var/atom/newloc)
 	. = ..()
 
@@ -91,12 +77,13 @@
 		reconsider_lights()
 
 /turf/change_area(area/old_area, area/new_area)
-	if(new_area.dynamic_lighting != old_area.dynamic_lighting)
-		if(new_area.dynamic_lighting)
-			lighting_build_overlay()
+	if(SSlighting.initialized)
+		if(new_area.dynamic_lighting != old_area.dynamic_lighting)
+			if(new_area.dynamic_lighting)
+				lighting_build_overlay()
 
-		else
-			lighting_clear_overlay()
+			else
+				lighting_clear_overlay()
 
 /turf/proc/get_corners(dir)
 	if(has_opaque_atom)

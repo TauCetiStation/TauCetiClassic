@@ -5,33 +5,29 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 	desc = "A marker that can be used to extract a target to a Aurora. Anything not bolted down can be moved. Anything living will be dropped off into a holding cell"
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
-	var/is_extracting = 0
+	var/turf/extraction_point
 
 /obj/item/weapon/extraction_pack/afterattack(atom/movable/A, mob/user, proximity)
 	var/extract_time = 70
-	if(!proximity)
+	if(user.is_busy())
 		return
-	if(is_extracting)
+	if(!proximity)
 		return
 	if(!istype(A))
 		return
 	else if(istype(A, /obj/effect/extraction_holder)) // This is stupid...
 		return
 	else
-		var/obj/effect/landmark/heist/fulton_mark
-		if(ismob(A))
-			fulton_mark = locate(/obj/effect/landmark/heist/mob_loot)
-			extract_time = 100
-		else
-			fulton_mark = locate(/obj/effect/landmark/heist/obj_loot)
-		if(!fulton_mark)
-			to_chat(user, "<span class='notice'>Error... Aurora beacon not found.</span>")
+		if(!isturf(extraction_point))
+			to_chat(user, "<span class='notice'>Error... Extraction point not found.</span>")
 			return
+
+		if(ismob(A))
+			extract_time = 100
 		if(A.loc == user || A == user) // No extracting stuff you're holding in your hands/yourself.
 			return
 		if(A.anchored)
 			return
-		is_extracting = 1
 		to_chat(user, "<span class='notice'>You start attaching the pack to [A]...</span>")
 		if(istype(A, /obj/item))
 			var/obj/item/I = A
@@ -40,7 +36,6 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			else
 				extract_time = w_class * 20 // 3 = 6 seconds, 4 = 8 seconds, 5 = 10 seconds.
 		if(do_after(user, extract_time, target=A))
-			is_extracting = 0
 			if(A.anchored)
 				return
 			to_chat(user, "<span class='notice'>You attach the pack to [A] and activate it.</span>")
@@ -70,11 +65,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			BPs.icon = 'code/modules/anomaly/anomalies.dmi'
 			BPs.icon_state = "bluespace"
 			BPs.mouse_opacity = 0
-			var/list/flooring_near_beacon = list()
-			for(var/turf/T in RANGE_TURFS(1, fulton_mark))
-				flooring_near_beacon += T
-			var/turf/teleport_loc = pick(flooring_near_beacon)
-			var/obj/effect/BPe = new /obj/effect(teleport_loc)
+			var/obj/effect/BPe = new /obj/effect(extraction_point)
 			BPe.icon = 'code/modules/anomaly/anomalies.dmi'
 			BPe.icon_state = "bluespace"
 			BPe.mouse_opacity = 0
@@ -98,7 +89,7 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 				H.drowsyness = 0
 				H.sleeping = 0
 			//sleep(30)
-			holder_obj.loc = teleport_loc
+			holder_obj.loc = extraction_point
 			s = new /datum/effect/effect/system/spark_spread
 			s.set_up(5, 1, holder_obj.loc)
 			s.start()
@@ -119,8 +110,6 @@ var/list/extraction_appends = list("AAAAAAAAAAAAAAAAAUGH", "AAAAAAAAAAAHHHHHHHHH
 			qdel(holder_obj)
 			qdel(BPs)
 			qdel(BPe)
-		else
-			is_extracting = 0
 
 /obj/effect/extraction_holder
 	name = "extraction holder"

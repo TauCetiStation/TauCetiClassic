@@ -18,29 +18,22 @@
 	var/obj/item/weapon/camera_assembly/assembly = null
 	var/hidden = 0	//Hidden cameras will be unreachable for AI
 
-	// WIRES
-	var/wires = 63 // 0b111111
-	var/list/IndexToFlag = list()
-	var/list/IndexToWireColor = list()
-	var/list/WireColorToIndex = list()
-	var/list/WireColorToFlag = list()
+	var/datum/wires/camera/wires = null
 
 	//OTHER
-
 	var/view_range = 7
 	var/short_range = 2
 
 	var/light_disabled = 0
 	var/alarm_on = 0
-	var/busy = 0
 
-/obj/machinery/camera/New()
-	..()
+/obj/machinery/camera/atom_init()
+	. = ..()
 	cameranet.cameras += src //Camera must be added to global list of all cameras no matter what...
 	var/list/open_networks = difflist(network,RESTRICTED_CAMERA_NETWORKS) //...but if all of camera's networks are restricted, it only works for specific camera consoles.
 	if(open_networks.len) //If there is at least one open network, chunk is available for AI usage.
 		cameranet.addCamera(src)
-	WireColorToFlag = randomCameraWires()
+	wires = new(src)
 	assembly = new(src)
 	assembly.state = 4
 	/* // Use this to look for cameras that have the same c_tag.
@@ -49,19 +42,18 @@
 		if(C != src && C.c_tag == src.c_tag && tempnetwork.len)
 			world.log << "[src.c_tag] [src.x] [src.y] [src.z] conflicts with [C.c_tag] [C.x] [C.y] [C.z]"
 	*/
-	if(!src.network || src.network.len < 1)
+	if(!network || network.len < 1)
 		if(loc)
-			error("[src.name] in [get_area(src)] (x:[src.x] y:[src.y] z:[src.z] has errored. [src.network?"Empty network list":"Null network list"]")
+			error("[name] in [get_area(src)] ([COORD(src)]) has errored. [network ? "Empty network list" : "Null network list"]")
 		else
-			error("[src.name] in [get_area(src)]has errored. [src.network?"Empty network list":"Null network list"]")
-		ASSERT(src.network)
-		ASSERT(src.network.len > 0)
+			error("[name] in [get_area(src)]has errored. [network ? "Empty network list" : "Null network list"]")
+		ASSERT(network)
+		ASSERT(network.len > 0)
 
 /obj/machinery/camera/Destroy()
 	disconnect_viewers()
-	if(assembly)
-		qdel(assembly)
-		assembly = null
+	QDEL_NULL(wires)
+	QDEL_NULL(assembly)
 	if(bug)
 		bug.bugged_cameras -= c_tag
 		if(bug.current == src)
@@ -84,18 +76,18 @@
 /obj/machinery/camera/emp_act(severity)
 	if(!isEmpProof() && status)
 		if(prob(100/severity))
-			var/list/previous_network = network
+			addtimer(CALLBACK(src, .proc/fix_emp_state, network), 900)
 			network = list()
 			stat |= EMPED
 			toggle_cam(TRUE)
 			triggerCameraAlarm()
-			spawn(900)
-				network = previous_network
-				stat &= ~EMPED
-				cancelCameraAlarm()
-				toggle_cam(TRUE)
 			..()
 
+/obj/machinery/camera/proc/fix_emp_state(list/previous_network)
+	network = previous_network
+	stat &= ~EMPED
+	cancelCameraAlarm()
+	toggle_cam(TRUE)
 
 /obj/machinery/camera/ex_act(severity)
 	if(src.invuln)
@@ -111,16 +103,12 @@
 	src.view_range = num
 	cameranet.updateVisibility(src, 0)
 
-/obj/machinery/camera/proc/shock(mob/living/user)
-	if(!istype(user))
-		return
-	user.electrocute_act(10, src)
-
 /obj/machinery/camera/attack_paw(mob/living/carbon/alien/humanoid/user)
 	if(!istype(user))
 		return
 	if(status)
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("<span class='warning'>\The [user] slashes at [src]!</span>")
 		playsound(src, 'sound/weapons/slash.ogg', 100, 1)
 		toggle_cam(FALSE, user)
@@ -138,10 +126,10 @@
 		"<span class='notice'>You screw the camera's panel [panel_open ? "open" : "closed"].</span>")
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
-	else if((iswirecutter(W) || ismultitool(W)) && panel_open)
-		interact(user)
+	else if(is_wire_tool(W) && panel_open)
+		wires.interact(user)
 
-	else if(iswelder(W) && canDeconstruct())
+	else if(iswelder(W) && wires.is_deconstructable())
 		if(weld(W, user))
 			drop_assembly(1)
 			qdel(src)
@@ -188,15 +176,12 @@
 		for(var/mob/living/silicon/ai/O in living_mob_list)
 			if(!O.client)
 				continue
-			if(U.name == "Unknown")
-				to_chat(O, "<b>[U]</b> holds \a [itemname] up to one of your cameras ...")
-			else
-				to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U]</a></b> holds \a [itemname] up to one of your cameras ...")
-			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
+			to_chat(O, "<b><a href='byond://?src=\ref[O];track2=\ref[O];track=\ref[U]'>[U.name]</a></b> holds \a [itemname] up to one of your cameras ...")
+			O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
 		for(var/mob/O in player_list)
 			if (O.client && O.client.eye == src)
 				to_chat(O, "[U] holds \a [itemname] up to one of the cameras ...")
-				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, info), text("window=[]", itemname))
+				O << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", itemname, entity_ja(info)), text("window=[]", itemname))
 	else if (istype(W, /obj/item/device/camera_bug))
 		if(!src.can_use())
 			to_chat(user, "<span class='notice'>Camera non-functional</span>")
@@ -220,8 +205,7 @@
 			playsound(loc, "sparks", 50, 1)
 			visible_message("<span class='notice'>The camera has been sliced apart by [user] with [W]!</span>")
 			drop_assembly()
-			pick(new /obj/item/weapon/cable_coil(loc),
-                 new /obj/item/weapon/cable_coil/cut(loc))
+			new /obj/item/stack/cable_coil/cut/red(loc)
 			qdel(src)
 	else
 		..()
@@ -330,22 +314,17 @@
 
 /obj/machinery/camera/proc/weld(obj/item/weapon/weldingtool/WT, mob/user)
 
-	if(busy)
-		return 0
 	if(!WT.isOn())
 		return 0
-
+	if(user.is_busy(src)) return
 	// Do after stuff here
 	to_chat(user, "<span class='notice'>You start to weld the [src]..</span>")
 	playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 	WT.eyecheck(user)
-	busy = 1
 	if(do_after(user, 100, target = src))
-		busy = 0
 		if(!WT.isOn())
 			return 0
 		return 1
-	busy = 0
 	return 0
 
 /obj/machinery/camera/proc/add_network(network_name)

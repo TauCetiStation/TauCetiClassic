@@ -45,19 +45,20 @@
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				to_chat(user, "<span class='notice'>You remove the cables.</span>")
 				construct_op ++
-				var/obj/item/weapon/cable_coil/A = new /obj/item/weapon/cable_coil( user.loc )
-				A.amount = 5
+				new /obj/item/stack/cable_coil/red(user.loc, 5)
 				stat |= BROKEN // the machine's been borked!
 		if(3)
-			if(istype(P, /obj/item/weapon/cable_coil))
-				var/obj/item/weapon/cable_coil/A = P
-				if(A.use(5))
-					to_chat(user, "<span class='notice'>You insert the cables.</span>")
-					construct_op --
-					stat &= ~BROKEN // the machine's not borked anymore!
-				else
+			if(istype(P, /obj/item/stack/cable_coil))
+				var/obj/item/stack/cable_coil/A = P
+				if(!A.use(5))
 					to_chat(user, "<span class='danger'>You need more cable to do that.</span>")
-			if(istype(P, /obj/item/weapon/crowbar))
+					return
+
+				to_chat(user, "<span class='notice'>You insert the cables.</span>")
+				construct_op --
+				stat &= ~BROKEN // the machine's not borked anymore!
+
+			else if(istype(P, /obj/item/weapon/crowbar) && !user.is_busy(src))
 				to_chat(user, "<span class='notice'>You begin prying out the circuit board and components...</span>")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				if(do_after(user,60,target = src))
@@ -79,12 +80,10 @@
 						for(var/I in C.req_components)
 							for(var/i = 1, i <= C.req_components[I], i++)
 								newpath = text2path(I)
-								var/obj/item/s = new newpath
-								s.loc = src.loc
-								if(istype(s, /obj/item/weapon/cable_coil))
-									var/obj/item/weapon/cable_coil/A = s
-									A.amount = 1
-									A.update_icon()
+								if(istype(newpath, /obj/item/stack/cable_coil))
+									new newpath(loc, 1)
+								else
+									new newpath(loc)
 
 						// Drop a circuit board too
 						C.loc = src.loc
@@ -95,23 +94,15 @@
 					qdel(src)
 
 
-/obj/machinery/telecomms/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/telecomms/attack_hand(mob/user)
-
-	// You need a multitool to use this, or be silicon
-	if(!issilicon(user))
+/obj/machinery/telecomms/ui_interact(mob/user)
+	// You need a multitool to use this, or be silicon/ghost
+	if(!issilicon(user) && !isobserver(user))
 		// istype returns false if the value is null
 		if(!istype(user.get_active_hand(), /obj/item/device/multitool))
 			return
 
-	if(stat & (BROKEN|NOPOWER))
-		return
-
 	var/obj/item/device/multitool/P = get_multitool(user)
 
-	user.set_machine(src)
 	var/dat
 	dat = "<font face = \"Courier\"><HEAD><TITLE>[src.name]</TITLE></HEAD><center><H3>[src.name] Access</H3></center>"
 	dat += "<br>[temp]<br>"
@@ -123,7 +114,8 @@
 			dat += "<br>Identification String: <a href='?src=\ref[src];input=id'>NULL</a>"
 		dat += "<br>Network: <a href='?src=\ref[src];input=network'>[network]</a>"
 		dat += "<br>Prefabrication: [autolinkers.len ? "TRUE" : "FALSE"]"
-		if(hide) dat += "<br>Shadow Link: ACTIVE</a>"
+		if(hide)
+			dat += "<br>Shadow Link: ACTIVE</a>"
 
 		//Show additional options for certain machines.
 		dat += Options_Menu()
@@ -162,8 +154,8 @@
 
 	dat += "</font>"
 	temp = ""
-	user << browse(dat, "window=tcommachine;size=520x500;can_resize=0")
-	onclose(user, "dormitory")
+	user << browse(entity_ja(dat), "window=tcommachine;size=520x500;can_resize=0")
+	onclose(user, "tcommachine")
 
 
 // Off-Site Relays
@@ -191,7 +183,7 @@
 
 	var/obj/item/device/multitool/P = null
 	// Let's double check
-	if(!issilicon(user) && istype(user.get_active_hand(), /obj/item/device/multitool))
+	if(!issilicon(user) && !isobserver(user) && istype(user.get_active_hand(), /obj/item/device/multitool))
 		P = user.get_active_hand()
 	else if(isAI(user))
 		var/mob/living/silicon/ai/U = user
@@ -199,6 +191,11 @@
 	else if(isrobot(user) && in_range(user, src))
 		if(istype(user.get_active_hand(), /obj/item/device/multitool))
 			P = user.get_active_hand()
+	else if(isobserver(user))
+		var/mob/dead/observer/O = user
+		if(!O.adminMulti)
+			O.adminMulti = new(O)
+		P = O.adminMulti
 	return P
 
 // Additional Options for certain machines. Use this when you want to add an option to a specific machine.
@@ -277,7 +274,7 @@
 
 
 /obj/machinery/telecomms/Topic(href, href_list)
-	if(!issilicon(usr))
+	if(!issilicon(usr) && !isobserver(usr))
 		if(!istype(usr.get_active_hand(), /obj/item/device/multitool))
 			return FALSE
 
@@ -303,13 +300,13 @@
 			*/
 
 			if("id")
-				var/newid = copytext(reject_bad_text(input(usr, "Specify the new ID for this machine", src, id) as null|text),1,MAX_MESSAGE_LEN)
+				var/newid = sanitize_safe(input(usr, "Specify the new ID for this machine", src, input_default(id)) as null|text)
 				if(newid && canAccess(usr))
 					id = newid
 					temp = "<font color = #666633>-% New ID assigned: \"[id]\" %-</font color>"
 
 			if("network")
-				var/newnet = input(usr, "Specify the new network for this machine. This will break all current links.", src, network) as null|text
+				var/newnet = sanitize_safe(input(usr, "Specify the new network for this machine. This will break all current links.", src, input_default(network)) as null|text, MAX_LNAME_LEN)
 				if(newnet && canAccess(usr))
 
 					if(length(newnet) > 15)
@@ -386,7 +383,7 @@
 	updateUsrDialog()
 
 /obj/machinery/telecomms/proc/canAccess(mob/user)
-	if(issilicon(user) || in_range(user, src))
+	if(issilicon(user) || isobserver(user) || in_range(user, src))
 		return 1
 	return 0
 

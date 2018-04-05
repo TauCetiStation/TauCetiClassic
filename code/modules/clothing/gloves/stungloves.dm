@@ -5,8 +5,8 @@
 		return
 
 	//add wires
-	if(istype(W, /obj/item/weapon/cable_coil))
-		var/obj/item/weapon/cable_coil/C = W
+	if(istype(W, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = W
 		if (clipped)
 			to_chat(user, "<span class='notice'>The [src] are too badly mangled for wiring.</span>")
 			return
@@ -15,11 +15,10 @@
 			to_chat(user, "<span class='notice'>The [src] are already wired.</span>")
 			return
 
-		if(C.amount < 2)
+		if(!C.use(2))
 			to_chat(user, "<span class='notice'>There is not enough wire to cover the [src].</span>")
 			return
 
-		C.use(2)
 		wired = 1
 		siemens_coefficient = 3.0
 		to_chat(user, "<span class='notice'>You wrap some wires around the [src].</span>")
@@ -66,15 +65,11 @@
 			name = "mangled [name]"
 			desc = "[desc]<br>They have had the fingertips cut off of them."
 			if("exclude" in species_restricted)
-				species_restricted -= "Unathi"
-				species_restricted -= "Tajaran"
-			return
+				species_restricted -= UNATHI
+				species_restricted -= TAJARAN
 		else
 			to_chat(user, "<span class='notice'>The [src] have already been clipped!</span>")
-			return
-
 		return
-
 	..()
 
 /obj/item/clothing/gloves/update_icon()

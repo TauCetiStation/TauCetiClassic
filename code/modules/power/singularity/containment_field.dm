@@ -10,28 +10,31 @@
 	unacidable = 1
 	use_power = 0
 	light_range = 4
+
 	var/obj/machinery/field_generator/FG1 = null
 	var/obj/machinery/field_generator/FG2 = null
-	var/hasShocked = 0 //Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
+	var/last_shock     = 0    // Used to add a delay between shocks. In some cases this used to crash servers by spawning hundreds of sparks every second.
+	var/shock_cooldown = 20
 
 /obj/machinery/containment_field/Destroy()
-	if(FG1 && !FG1.clean_up)
-		FG1.cleanup()
-	if(FG2 && !FG2.clean_up)
-		FG2.cleanup()
+	detach_from_field_generator(FG1)
+	FG1 = null
+	detach_from_field_generator(FG2)
+	FG2 = null
 	return ..()
 
-/obj/machinery/containment_field/attack_hand(mob/user)
-	if(get_dist(src, user) > 1)
-		return 0
-	else
-		shock(user)
-		return 1
+/obj/machinery/containment_field/proc/detach_from_field_generator(obj/machinery/field_generator/FG)
+	if(!FG)
+		return
+	FG.fields -= src
+	FG.turn_off()
 
+/obj/machinery/containment_field/attack_hand(mob/user)
+	if(in_range(src, user) && !isobserver(user))
+		shock(user)
 
 /obj/machinery/containment_field/blob_act()
 	return 0
-
 
 /obj/machinery/containment_field/ex_act(severity)
 	return 0
@@ -40,70 +43,63 @@
 	return 0
 
 /obj/machinery/containment_field/HasProximity(atom/movable/AM)
-	if(istype(AM,/mob/living/silicon) && prob(40))
+	if(issilicon(AM) && prob(40))
 		shock(AM)
 		return 1
-	if(istype(AM,/mob/living/carbon) && prob(50))
+	if(iscarbon(AM) && prob(50))
 		shock(AM)
 		return 1
 	return 0
 
 
+/obj/machinery/containment_field/proc/shock(mob/living/shoked_mob)
+	if(world.time < last_shock + shock_cooldown)
+		return
 
-/obj/machinery/containment_field/proc/shock(mob/living/user)
-	if(hasShocked)
-		return 0
 	if(!FG1 || !FG2)
 		qdel(src)
-		return 0
-	if(iscarbon(user))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, user.loc)
-		s.start()
+		return
 
-		hasShocked = 1
-		var/shock_damage = min(rand(30,40),rand(30,40))
-		user.burn_skin(shock_damage)
-		user.updatehealth()
-		user.visible_message("\red [user.name] was shocked by the [src.name]!", \
-			"\red <B>You feel a powerful shock course through your body sending you flying!</B>", \
-			"\red You hear a heavy electrical crack")
+	var/datum/effect/effect/system/spark_spread/S = new
+	S.set_up(5, 1, shoked_mob.loc)
+	S.start()
+
+	if(iscarbon(shoked_mob))
+		var/shock_damage = min(rand(30,40), rand(30,40))
+		shoked_mob.burn_skin(shock_damage)
+		shoked_mob.updatehealth()
+
+		shoked_mob.visible_message(
+			"<span class='warning'>[shoked_mob] was shocked by the [src]!</span>",
+			"<span class='danger'>You feel a powerful shock course through your body sending you flying!</span>",
+			"<span class='notice'>You hear a heavy electrical crack.</span>")
 
 		var/stun = min(shock_damage, 15)
-		user.Stun(stun)
-		user.Weaken(10)
+		shoked_mob.Stun(stun)
+		shoked_mob.Weaken(10)
+		shoked_mob.updatehealth()
 
-		user.updatehealth()
-		var/atom/target = get_edge_target_turf(user, get_dir(src, get_step_away(user, src)))
-		user.throw_at(target, 200, 4)
-
-		sleep(20)
-		hasShocked = 0
-		return
-
-	else if(issilicon(user))
-		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
-		s.set_up(5, 1, user.loc)
-		s.start()
-
-		hasShocked = 1
+		var/atom/target = get_edge_target_turf(shoked_mob, get_dir(src, get_step_away(shoked_mob, src)))
+		shoked_mob.throw_at(target, 200, 4)
+	else if(issilicon(shoked_mob))
 		var/shock_damage = rand(15,30)
-		user.take_overall_damage(0,shock_damage)
-		user.visible_message("\red [user.name] was shocked by the [src.name]!", \
-			"\red <B>Energy pulse detected, system damaged!</B>", \
-			"\red You hear an electrical crack")
-		if(prob(20))
-			user.Stun(2)
+		shoked_mob.take_overall_damage(0, shock_damage)
 
-		sleep(20)
-		hasShocked = 0
+		shoked_mob.visible_message(
+			"<span class='warning'>[shoked_mob] was shocked by the [src]!</span>",
+			"<span class='danger'>Energy pulse detected, system damaged!</span>",
+			"<span class='notice'>You hear an electrical crack.</span>")
+
+		if(prob(20))
+			shoked_mob.Stun(2)
+
+	last_shock = world.time
+
+/obj/machinery/containment_field/proc/set_master(master1, master2)
+	if(!master1 || !master2)
 		return
 
-	return
-
-/obj/machinery/containment_field/proc/set_master(master1,master2)
-	if(!master1 || !master2)
-		return 0
 	FG1 = master1
+	FG1.fields += src
 	FG2 = master2
-	return 1
+	FG2.fields += src

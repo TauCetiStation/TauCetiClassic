@@ -73,7 +73,7 @@
 	nutrition = 800 // 1200 = max
 
 
-/mob/living/carbon/slime/New()
+/mob/living/carbon/slime/atom_init()
 	var/datum/reagents/R = new/datum/reagents(100)
 	reagents = R
 	R.my_atom = src
@@ -83,14 +83,11 @@
 	else
 		name = text("[colour] adult slime ([number])")
 	real_name = name
-	spawn (1)
-		regenerate_icons()
-		to_chat(src, "\blue Your icons have been generated!")
-	..()
 
-/mob/living/carbon/slime/adult/New()
-	//verbs.Remove(/mob/living/carbon/slime/verb/ventcrawl)
-	..()
+	. = ..()
+
+	regenerate_icons()
+
 /mob/living/carbon/slime/Destroy()
 	Victim = null
 	Target = null
@@ -100,6 +97,7 @@
 	if(Friends.len)
 		Friends.Cut()
 	return ..()
+
 /mob/living/carbon/slime/regenerate_icons()
 	overlays.len = 0
 	//var/icon_text = "[colour] [is_adult ? "adult" : "baby"] slime"
@@ -182,7 +180,7 @@
 	..()
 
 	if(statpanel("Status"))
-		if(istype(src, /mob/living/carbon/slime/adult))
+		if(isslimeadult(src))
 			stat(null, "Health: [round((health / 200) * 100)]%")
 			stat(null, "Nutrition: [nutrition]/1200")
 			if(amount_grown >= 10)
@@ -312,13 +310,14 @@
 
 
 /mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M)
+	if(..())
+		return
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -451,9 +450,9 @@
 			help_shake_act(M)
 
 		if ("grab")
-			if (M == src)
+			if (M == src || M.lying)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
 
@@ -542,9 +541,9 @@
 						O.show_message(text("\red <B>[] has attempted to lunge at [name]!</B>", M), 1)
 
 		if ("grab")
-			if (M == src)
+			if (M == src || M.lying)
 				return
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
 
@@ -601,10 +600,6 @@
 	return 0
 
 
-mob/living/carbon/slime/var/co2overloadtime = null
-mob/living/carbon/slime/var/temperature_resistance = T0C+75
-
-
 /mob/living/carbon/slime/show_inv(mob/user)
 
 	user.set_machine(src)
@@ -613,7 +608,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	<BR><HR><BR>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
-	user << browse(dat, text("window=mob[name];size=340x480"))
+	user << browse(entity_ja(dat), text("window=mob[name];size=340x480"))
 	onclose(user, "mob[name]")
 	return
 
@@ -658,11 +653,11 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 			enhanced = 1
 			qdel(O)
 
-/obj/item/slime_extract/New()
-		..()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
+/obj/item/slime_extract/atom_init()
+	. = ..()
+	var/datum/reagents/R = new/datum/reagents(100)
+	reagents = R
+	R.my_atom = src
 
 /obj/item/slime_extract/grey
 	name = "grey slime extract"
@@ -778,7 +773,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		pet.colour = "[M.colour]"
 		to_chat(user, "You feed the slime the potion, removing it's powers and calming it.")
 		qdel(M)
-		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+		var/newname = sanitize_safe(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text, MAX_NAME_LEN)
 
 		if (!newname)
 			newname = "pet slime"
@@ -806,7 +801,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		pet.colour = "[M.colour]"
 		to_chat(user, "You feed the slime the potion, removing it's powers and calming it.")
 		qdel(M)
-		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+		var/newname = sanitize_safe(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text, MAX_NAME_LEN)
 
 		if (!newname)
 			newname = "pet slime"
@@ -856,6 +851,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	has_sensor = 0
 	canremove = 0
 	unacidable = 1
+	flags = ABSTRACT | DROPDEL
+
 
 /obj/item/clothing/shoes/golem
 	name = "golem's feet"
@@ -863,8 +860,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	icon_state = "golem"
 	item_state = null
 	canremove = 0
-	flags = NOSLIP
-	slowdown = SHOES_SLOWDOWN+2
+	flags = ABSTRACT | DROPDEL | NOSLIP
 	unacidable = 1
 
 
@@ -876,15 +872,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	canremove = 0
 	siemens_coefficient = 0
 	unacidable = 1
-
-/obj/item/clothing/mask/gas/golem
-	name = "golem's face"
-	desc = "The imposing face of an adamantine golem."
-	icon_state = "golem"
-	item_state = "golem"
-	canremove = 0
-	siemens_coefficient = 0
-	unacidable = 1
+	flags = ABSTRACT | DROPDEL
 	flags_inv = 0
 
 
@@ -896,6 +884,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	siemens_coefficient = 0
 	canremove = 0
 	unacidable = 1
+	flags = ABSTRACT | DROPDEL
 
 
 /obj/item/clothing/head/helmet/space/golem
@@ -913,6 +902,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	heat_protection = HEAD
 	max_heat_protection_temperature = FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE
 
+	flags = ABSTRACT | DROPDEL
 	flags_inv = 0
 	slowdown = 0
 	unacidable = 1
@@ -930,12 +920,13 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	w_class = 4//bulky item
 	allowed = null
 
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
+	flags = ABSTRACT | DROPDEL
 	flags_inv = HIDEGLOVES | HIDESHOES | HIDEJUMPSUIT
 	slowdown = 0
 	unacidable = 1
@@ -956,8 +947,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	var/last_ghost_click = 0
 	var/mob/dead/observer/spirit
 
-/obj/effect/golemrune/New()
-	..()
+/obj/effect/golemrune/atom_init()
+	. = ..()
 	announce_to_ghosts()
 
 /obj/effect/golemrune/update_icon()
@@ -991,7 +982,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		user.golem_rune = null
 		to_chat(user, "<span class='notice'>You are no longer queued for golem role.</span>")
 	else
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 		last_ghost_click = world.time + 50
 		var/image/I = image('icons/mob/hud.dmi', src, "agolem_master") //If there is alot activated rune close by, we can see which is ours.
 		user.client.images += I
@@ -1004,19 +995,8 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	if(!check_spirit())
 		to_chat(user, "The rune fizzles uselessly. There is no spirit nearby.")
 		return
-
-	var/mob/living/carbon/human/G = new /mob/living/carbon/human
-	G.dna.mutantrace = "adamantine"
-	G.update_mutantrace()
-	G.real_name = text("Adamantine Golem ([rand(1, 1000)])")
-	G.equip_to_slot_or_del(new /obj/item/clothing/under/golem(G), slot_w_uniform)
-	G.equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/golem(G), slot_head)
-	G.equip_to_slot_or_del(new /obj/item/clothing/suit/space/golem(G), slot_wear_suit)
-	G.equip_to_slot_or_del(new /obj/item/clothing/shoes/golem(G), slot_shoes)
-	G.equip_to_slot_or_del(new /obj/item/clothing/mask/gas/golem(G), slot_wear_mask)
-	G.equip_to_slot_or_del(new /obj/item/clothing/gloves/golem(G), slot_gloves)
-	G.status_flags &= ~(CANSTUN|CANWEAKEN|CANPARALYSE)
-	G.forceMove(loc)
+	user.SetNextMove(CLICK_CD_INTERACT)
+	var/mob/living/carbon/human/golem/G = new(loc)
 	G.attack_log = spirit.attack_log //Preserve attack log, if there is any...
 	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"
 	G.key = spirit.key
@@ -1045,7 +1025,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 		spirit = null
 		result = 0
 	if(!result)
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 	update_icon()
 	return result
 
@@ -1084,25 +1064,25 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	var/Flush = 30
 	var/Uses = 5 // uses before it goes inert
 
-/obj/item/slime_core/New()
-		..()
-		var/datum/reagents/R = new/datum/reagents(100)
-		reagents = R
-		R.my_atom = src
-		POWERFLAG = rand(1,10)
-		Uses = rand(7, 25)
-		//flags |= NOREACT
+/obj/item/slime_core/atom_init()
+	. = ..()
+	var/datum/reagents/R = new/datum/reagents(100)
+	reagents = R
+	R.my_atom = src
+	POWERFLAG = rand(1,10)
+	Uses = rand(7, 25)
+	//flags |= NOREACT
 
-		spawn()
-			Life()
+	spawn()
+		Life()
 
-	proc/Life()
-		while(src)
-			sleep(25)
-			Flush--
-			if(Flush <= 0)
-				reagents.clear_reagents()
-				Flush = 30
+/obj/item/slime_core/proc/Life()
+	while(src)
+		sleep(25)
+		Flush--
+		if(Flush <= 0)
+			reagents.clear_reagents()
+			Flush = 30
 */
 
 
@@ -1116,21 +1096,20 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 	origin_tech = "biotech=4"
 	var/grown = 0
 
-/obj/item/weapon/reagent_containers/food/snacks/egg/slime/New()
-	..()
+/obj/item/weapon/reagent_containers/food/snacks/egg/slime/atom_init()
+	. = ..()
 	reagents.add_reagent("nutriment", 4)
 	reagents.add_reagent("slimejelly", 1)
-	spawn(rand(1200,1500))//the egg takes a while to "ripen"
-		Grow()
+	addtimer(CALLBACK(src, .proc/Grow), rand(1200,1500)) // the egg takes a while to "ripen"
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Grow()
 	grown = 1
 	icon_state = "slime egg-grown"
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/proc/Hatch()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	var/turf/T = get_turf(src)
 	src.visible_message("\blue The [name] pulsates and quivers!")
 	spawn(rand(50,100))
@@ -1142,7 +1121,7 @@ mob/living/carbon/slime/var/temperature_resistance = T0C+75
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/process()
 	var/turf/location = get_turf(src)
 	var/datum/gas_mixture/environment = location.return_air()
-	if (environment.phoron > MOLES_PHORON_VISIBLE)//phoron exposure causes the egg to hatch
+	if (environment.gas["phoron"] > MOLES_PHORON_VISIBLE)//phoron exposure causes the egg to hatch
 		src.Hatch()
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/slime/attackby(obj/item/weapon/W, mob/user)

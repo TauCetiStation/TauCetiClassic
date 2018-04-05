@@ -64,7 +64,7 @@ var/can_call_ert
 
 		for (var/obj/effect/landmark/L in landmarks_list) if (L.name == "Commando")
 			L.name = null//Reserving the place.
-			var/new_name = input(usr, "Pick a name","Name") as null|text
+			var/new_name = sanitize_safe(input(usr, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
 			if(!new_name)//Somebody changed his mind, place is available again.
 				L.name = "Commando"
 				return
@@ -73,6 +73,7 @@ var/can_call_ert
 			qdel(L)
 			new_commando.mind.key = usr.key
 			new_commando.key = usr.key
+			create_random_account_and_store_in_mind(new_commando)
 
 			to_chat(new_commando, "\blue You are [!leader_selected?"a member":"the <B>LEADER</B>"] of an Emergency Response Team, a type of military division, under CentComm's service. There is a code red alert on [station_name()], you are tasked to go and fix the problem.")
 			to_chat(new_commando, "<b>You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.")
@@ -261,10 +262,7 @@ var/can_call_ert
 		W.icon_state = "ert"
 		equip_to_slot_or_del(W, slot_wear_id)
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(src)
-	L.imp_in = src
-	L.implanted = 1
-	var/datum/organ/external/affected = src.organs_by_name["head"]
-	affected.implants += L
-	L.part = affected
+	var/obj/item/weapon/implant/mindshield/loyalty/L = new(src)
+	L.inject(src)
+	START_PROCESSING(SSobj, L)
 	return 1

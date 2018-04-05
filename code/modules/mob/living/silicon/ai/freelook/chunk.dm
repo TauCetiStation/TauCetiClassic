@@ -21,26 +21,26 @@
 
 // Add an AI eye to the chunk, then update if changed.
 
-/datum/camerachunk/proc/add(mob/aiEye/ai)
-	if(!ai.ai)
+/datum/camerachunk/proc/add(mob/camera/Eye/eye)
+	if(!eye.master)
 		return
-	ai.visibleCameraChunks += src
-	if(ai.ai.client)
-		ai.ai.client.images += obscured
+	eye.visibleCameraChunks += src
+	if(eye.master.client)
+		eye.master.client.images += obscured
 	visible++
-	seenby += ai
+	seenby += eye
 	if(changed && !updating)
 		update()
 
 // Remove an AI eye from the chunk, then update if changed.
 
-/datum/camerachunk/proc/remove(mob/aiEye/ai)
-	if(!ai.ai)
+/datum/camerachunk/proc/remove(mob/camera/Eye/eye)
+	if(!eye.master)
 		return
-	ai.visibleCameraChunks -= src
-	if(ai.ai.client)
-		ai.ai.client.images -= obscured
-	seenby -= ai
+	eye.visibleCameraChunks -= src
+	if(eye.master.client)
+		eye.master.client.images -= obscured
+	seenby -= eye
 	if(visible > 0)
 		visible--
 
@@ -109,12 +109,11 @@
 		var/turf/t = turf
 		if(t.obscured)
 			obscured -= t.obscured
-			for(var/eye in seenby)
-				var/mob/aiEye/m = eye
-				if(!m || !m.ai)
+			for(var/mob/camera/Eye/m in seenby)
+				if(!m || !m.master)
 					continue
-				if(m.ai.client)
-					m.ai.client.images -= t.obscured
+				if(m.master.client)
+					m.master.client.images -= t.obscured
 
 	for(var/turf in visRemoved)
 		var/turf/t = turf
@@ -124,13 +123,12 @@
 				t.obscured.plane = LIGHTING_PLANE+1
 
 			obscured += t.obscured
-			for(var/eye in seenby)
-				var/mob/aiEye/m = eye
-				if(!m || !m.ai)
+			for(var/mob/camera/Eye/m in seenby)
+				if(!m || !m.master)
 					seenby -= m
 					continue
-				if(m.ai.client)
-					m.ai.client.images += t.obscured
+				if(m.master.client)
+					m.master.client.images += t.obscured
 
 // Create a new camera chunk, since the chunks are made as they are needed.
 

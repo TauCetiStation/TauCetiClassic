@@ -24,7 +24,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
 	sprite_sheets = list(
-		"Tajaran" = 'icons/mob/species/tajaran/suit.dmi',
+		TAJARAN = 'icons/mob/species/tajaran/suit.dmi',
 		)
 
 /obj/item/clothing/head/tajaran/scarf

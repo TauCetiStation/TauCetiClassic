@@ -13,8 +13,8 @@
 	var/on = 0
 	var/brightness_on = 5 //luminosity when on
 
-/obj/item/device/flashlight/initialize()
-	..()
+/obj/item/device/flashlight/atom_init()
+	. = ..()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
 		set_light(brightness_on)
@@ -45,9 +45,9 @@
 	return ..()
 
 
-/obj/item/device/flashlight/attack(mob/living/M, mob/living/user)
+/obj/item/device/flashlight/attack(mob/living/M, mob/living/user, def_zone)
 	add_fingerprint(user)
-	if(on && user.zone_sel.selecting == "eyes")
+	if(on && def_zone == O_EYES)
 
 		if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))	//too dumb to use flashlight properly
 			return ..()	//just hit them in the head
@@ -86,6 +86,14 @@
 					to_chat(user, "<span class='notice'>[M]'s pupils narrow.</span>")
 	else
 		return ..()
+
+/obj/item/device/flashlight/seclite
+	name = "seclite"
+	desc = "A robust flashlight used by security."
+	icon_state = "seclite"
+	item_state = "seclite"
+	force = 7 // Not as good as a stun baton.
+	hitsound = 'sound/weapons/genhit1.ogg'
 
 /obj/item/device/flashlight/pen
 	name = "penlight"
@@ -154,9 +162,9 @@
 	action_button_name = "Toggle Flare"
 
 
-/obj/item/device/flashlight/flare/New()
+/obj/item/device/flashlight/flare/atom_init()
 	fuel = rand(800, 1000) // Sorry for changing this so much but I keep under-estimating how long X number of ticks last in seconds.
-	..()
+	. = ..()
 
 /obj/item/device/flashlight/flare/process()
 	var/turf/pos = get_turf(src)
@@ -166,8 +174,9 @@
 	if(!fuel || !on)
 		turn_off()
 		if(!fuel)
-			src.icon_state = "[initial(icon_state)]-empty"
-		SSobj.processing.Remove(src)
+			icon_state = "[initial(icon_state)]-empty"
+			item_state = icon_state
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/flare/proc/turn_off()
 	on = 0
@@ -194,7 +203,12 @@
 		user.visible_message("<span class='notice'>[user] activates the flare.</span>", "<span class='notice'>You pull the cord on the flare, activating it!</span>")
 		src.force = on_damage
 		src.damtype = "fire"
-		SSobj.processing |= src
+		item_state = icon_state
+		if(user.hand)
+			user.update_inv_l_hand()
+		else
+			user.update_inv_r_hand()
+		START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/slime
 	gender = PLURAL
@@ -209,28 +223,30 @@
 	brightness_on = 6
 	on = 1 //Bio-luminesence has one setting, on.
 
-/obj/item/device/flashlight/slime/New()
-	set_light(brightness_on)
-	spawn(1) //Might be sloppy, but seems to be necessary to prevent further runtimes and make these work as intended... don't judge me!
-		update_brightness()
-		icon_state = initial(icon_state)
+/obj/item/device/flashlight/slime/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/device/flashlight/slime/atom_init_late()
+	update_brightness()
+	icon_state = initial(icon_state)
 
 /obj/item/device/flashlight/slime/attack_self(mob/user)
 	return //Bio-luminescence does not toggle.
 
 /obj/item/device/flashlight/emp
-	origin_tech = "magnets=3;syndicate=´1"
+	origin_tech = "magnets=3;syndicate=1"
 	var/emp_max_charges = 4
 	var/emp_cur_charges = 4
 	var/charge_tick = 0
 
 
-/obj/item/device/flashlight/emp/New()
-	..()
-	SSobj.processing |= src
+/obj/item/device/flashlight/emp/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/flashlight/emp/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/device/flashlight/emp/process()
@@ -241,8 +257,8 @@
 	emp_cur_charges = min(emp_cur_charges+1, emp_max_charges)
 	return 1
 
-/obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user)
-	if(on && user.zone_sel.selecting == "eyes") // call original attack proc only if aiming at the eyes
+/obj/item/device/flashlight/emp/attack(mob/living/M, mob/living/user, def_zone)
+	if(on && def_zone == O_EYES) // call original attack proc only if aiming at the eyes
 		..()
 	return
 
@@ -251,7 +267,7 @@
 		return
 
 	if(emp_cur_charges)
-		emp_cur_charges -= 1
+		emp_cur_charges--
 
 		if(ismob(A))
 			var/mob/M = A

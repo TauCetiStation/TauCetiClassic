@@ -85,11 +85,11 @@ datum/admins/proc/notes_gethtml(ckey)
 
 //Hijacking this file for BS12 playernotes functions. I like this ^ one systemm alright, but converting sounds too bothersome~ Chinsky.
 
-/proc/notes_add(key, note, mob/usr)
+/proc/notes_add(key, note, client/admin)
 	if (!key || !note)
 		return
 
-	note = sanitize_alt(note)
+	note = sanitize(note)
 
 	//Loading list of notes for this key
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
@@ -113,9 +113,9 @@ datum/admins/proc/notes_gethtml(ckey)
 	var/day_loc = findtext(full_date, time2text(world.timeofday, "DD"))
 
 	var/datum/player_info/P = new
-	if (usr)
-		P.author = usr.key
-		P.rank = usr.client.holder.rank
+	if (admin)
+		P.author = admin.key
+		P.rank = admin.holder.rank
 	else
 		P.author = "Adminbot"
 		P.rank = "Friendly Robot"
@@ -125,8 +125,8 @@ datum/admins/proc/notes_gethtml(ckey)
 	infos += P
 	info << infos
 
-	message_admins("\blue [key_name_admin(usr)] has edited [key]'s notes.")
-	log_admin("[key_name(usr)] has edited [key]'s notes.")
+	message_admins("[admin ? key_name_admin(admin) : "Adminbot"] has edited [key]'s notes.")
+	log_admin("[admin ? key_name(admin) : "Adminbot"]] has edited [key]'s notes.")
 
 	del(info) // savefile, so NOT qdel
 
@@ -140,7 +140,7 @@ datum/admins/proc/notes_gethtml(ckey)
 	del(note_list)	// savefile, so NOT qdel
 
 
-/proc/notes_del(key, index)
+/proc/notes_del(key, index, admin)
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")
 	var/list/infos
 	info >> infos
@@ -150,8 +150,8 @@ datum/admins/proc/notes_gethtml(ckey)
 	infos.Remove(item)
 	info << infos
 
-	message_admins("\blue [key_name_admin(usr)] deleted one of [key]'s notes.")
-	log_admin("[key_name(usr)] deleted one of [key]'s notes.")
+	message_admins("[key_name_admin(admin)] deleted one of [key]'s notes.")
+	log_admin("[key_name(admin)] deleted one of [key]'s notes.")
 
 	del(info)	// savefile, so NOT qdel
 

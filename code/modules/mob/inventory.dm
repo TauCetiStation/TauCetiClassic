@@ -2,6 +2,11 @@
 /mob/proc/attack_ui(slot)
 	var/obj/item/W = get_active_hand()
 	if(istype(W))
+		if(isIAN(src))
+			switch(slot)
+				if(slot_head, slot_back)
+					to_chat(src, "<span class='notice'>You have no idea how humans do this.</span>")
+					return
 		if (istype(W, /obj/item/clothing))
 			var/obj/item/clothing/C = W
 			if(C.rig_restrict_helmet)
@@ -49,22 +54,23 @@
 	return equip_to_slot_if_possible(W, slot, 1, 1, 0)
 
 //The list of slots by priority. equip_to_appropriate_slot() uses this list. Doesn't matter if a mob type doesn't have a slot.
-var/list/slot_equipment_priority = list( \
-		slot_back,\
-		slot_wear_id,\
-		slot_w_uniform,\
-		slot_wear_suit,\
-		slot_wear_mask,\
-		slot_head,\
-		slot_shoes,\
-		slot_gloves,\
-		slot_l_ear,\
-		slot_r_ear,\
-		slot_glasses,\
-		slot_belt,\
-		slot_s_store,\
-		slot_l_store,\
-		slot_r_store\
+var/list/slot_equipment_priority = list(
+	slot_back,
+	slot_wear_id,
+	slot_w_uniform,
+	slot_wear_suit,
+	slot_wear_mask,
+	slot_head,
+	slot_shoes,
+	slot_gloves,
+	slot_l_ear,
+	slot_r_ear,
+	slot_glasses,
+	slot_belt,
+	slot_s_store,
+	slot_tie,
+	slot_l_store,
+	slot_r_store
 	)
 
 //puts the item "W" into an appropriate slot in a human's inventory
@@ -185,12 +191,8 @@ var/list/slot_equipment_priority = list( \
 /mob/proc/put_in_hands(obj/item/W)
 	if(!W)		return 0
 	if(put_in_active_hand(W))
-		update_inv_l_hand()
-		update_inv_r_hand()
 		return 1
 	else if(put_in_inactive_hand(W))
-		update_inv_l_hand()
-		update_inv_r_hand()
 		return 1
 	else
 		W.forceMove(get_turf(src))
@@ -260,7 +262,7 @@ var/list/slot_equipment_priority = list( \
 	drop_from_inventory(I)
 	return 1
 
-//Attemps to remove an object on a mob.  Will not move it to another area or such, just removes from the mob.
+// Attemps to remove an object on a mob. Will drop item to ground or move into target.
 /mob/proc/remove_from_mob(obj/O, atom/target)
 	if(!O) return
 	src.u_equip(O)
@@ -279,27 +281,76 @@ var/list/slot_equipment_priority = list( \
 		I.dropped(src)
 	return 1
 
+//Returns the item equipped to the specified slot, if any.
+/mob/proc/get_equipped_item(var/slot)
+	return null
 
-//Outdated but still in use apparently. This should at least be a human proc.
+/mob/living/carbon/get_equipped_item(var/slot)
+	switch(slot)
+		if(slot_back) return back
+		if(slot_wear_mask) return wear_mask
+		if(slot_l_hand) return l_hand
+		if(slot_r_hand) return r_hand
+	return null
+
+/mob/living/carbon/human/get_equipped_item(var/slot)
+	switch(slot)
+		if(slot_belt) return belt
+		if(slot_l_ear) return l_ear
+		if(slot_r_ear) return r_ear
+		if(slot_glasses) return glasses
+		if(slot_gloves) return gloves
+		if(slot_head) return head
+		if(slot_shoes) return shoes
+		if(slot_wear_id) return wear_id
+		if(slot_wear_suit) return wear_suit
+		if(slot_w_uniform) return w_uniform
+		if(slot_back) return back
+		if(slot_wear_mask) return wear_mask
+		if(slot_l_hand) return l_hand
+		if(slot_r_hand) return r_hand
+	return null
+
 /mob/proc/get_equipped_items()
-	var/list/items = new/list()
+	return null
 
-	if(hasvar(src,"back")) if(src:back) items += src:back
-	if(hasvar(src,"belt")) if(src:belt) items += src:belt
-	if(hasvar(src,"l_ear")) if(src:l_ear) items += src:l_ear
-	if(hasvar(src,"r_ear")) if(src:r_ear) items += src:r_ear
-	if(hasvar(src,"glasses")) if(src:glasses) items += src:glasses
-	if(hasvar(src,"gloves")) if(src:gloves) items += src:gloves
-	if(hasvar(src,"head")) if(src:head) items += src:head
-	if(hasvar(src,"shoes")) if(src:shoes) items += src:shoes
-	if(hasvar(src,"wear_id")) if(src:wear_id) items += src:wear_id
-	if(hasvar(src,"wear_mask")) if(src:wear_mask) items += src:wear_mask
-	if(hasvar(src,"wear_suit")) if(src:wear_suit) items += src:wear_suit
-//	if(hasvar(src,"w_radio")) if(src:w_radio) items += src:w_radio  commenting this out since headsets go on your ears now PLEASE DON'T BE MAD KEELIN
-	if(hasvar(src,"w_uniform")) if(src:w_uniform) items += src:w_uniform
+/mob/living/carbon/get_equipped_items()
+	var/list/items = list()
 
-	//if(hasvar(src,"l_hand")) if(src:l_hand) items += src:l_hand
-	//if(hasvar(src,"r_hand")) if(src:r_hand) items += src:r_hand
+	if(back)
+		items += back
+	if(wear_mask)
+		items += wear_mask
+	if(l_hand)
+		items += l_hand
+	if(r_hand)
+		items += r_hand
+
+	return items
+
+/mob/living/carbon/human/get_equipped_items()
+	var/list/items = ..()
+
+	if(belt)
+		items += belt
+	if(l_ear)
+		items += l_ear
+	if(r_ear)
+		items += r_ear
+	if(glasses)
+		items += glasses
+	if(gloves)
+		items += gloves
+	if(head)
+		items += head
+	if(shoes)
+		items += shoes
+	if(wear_id)
+		items += wear_id
+	if(wear_suit)
+		items += wear_suit
+	if(w_uniform)
+		items += w_uniform
 
 	return items
 

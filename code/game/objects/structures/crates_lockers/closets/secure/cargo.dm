@@ -8,22 +8,20 @@
 	icon_broken = "securecargobroken"
 	icon_off = "securecargooff"
 
-	New()
-		..()
-		new /obj/item/clothing/under/rank/cargotech(src)
-		new /obj/item/clothing/shoes/black(src)
-		new /obj/item/device/radio/headset/headset_cargo(src)
-		new /obj/item/clothing/gloves/brown(src)
-		new /obj/item/clothing/head/soft(src)
-//		new /obj/item/weapon/cartridge/quartermaster(src)
-		/*/New year part
-		new /obj/item/clothing/suit/wintercoat/cargo(src)
-		new /obj/item/clothing/suit/wintercoat/cargo(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-		new /obj/item/clothing/head/santa(src)
-		*/
-		return
+/obj/structure/closet/secure_closet/cargotech/PopulateContents()
+	new /obj/item/clothing/under/rank/cargotech(src)
+	new /obj/item/clothing/shoes/black(src)
+	new /obj/item/device/radio/headset/headset_cargo(src)
+	new /obj/item/clothing/gloves/brown(src)
+	new /obj/item/clothing/head/soft(src)
+//	new /obj/item/weapon/cartridge/quartermaster(src)
+	#ifdef NEWYEARCONTENT
+	new /obj/item/clothing/suit/wintercoat/cargo(src)
+	new /obj/item/clothing/suit/wintercoat/cargo(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/head/santa(src)
+	#endif
 
 /obj/structure/closet/secure_closet/quartermaster
 	name = "Quartermaster's Locker"
@@ -35,29 +33,29 @@
 	icon_broken = "secureqmbroken"
 	icon_off = "secureqmoff"
 
-	New()
-		..()
-		new /obj/item/clothing/under/rank/postal_dude_shirt(src)
-		new /obj/item/clothing/suit/storage/postal_dude_coat(src)
-		new /obj/item/clothing/under/rank/cargo(src)
-		new /obj/item/clothing/under/rank/cargo_fem(src)
-		new /obj/item/clothing/shoes/brown(src)
-		new /obj/item/device/radio/headset/headset_cargo(src)
-		new /obj/item/clothing/gloves/black(src)
-//		new /obj/item/weapon/cartridge/quartermaster(src)
-		new /obj/item/clothing/suit/fire/firefighter(src)
-		new /obj/item/weapon/tank/emergency_oxygen(src)
-		new /obj/item/clothing/mask/gas/coloured(src)
-		new /obj/item/clothing/glasses/meson(src)
-		new /obj/item/clothing/head/soft(src)
-		new /obj/item/weapon/mining_voucher(src)
-		new /obj/item/weapon/survivalcapsule(src)
-		/*/New year part
-		new /obj/item/clothing/suit/wintercoat/cargo(src)
-		new /obj/item/clothing/shoes/winterboots(src)
-		new /obj/item/clothing/head/santa(src)
-		*/
-		return
+/obj/structure/closet/secure_closet/quartermaster/PopulateContents()
+	new /obj/item/clothing/under/rank/postal_dude_shirt(src)
+	new /obj/item/device/remote_device/quartermaster(src)
+	new /obj/item/clothing/suit/storage/postal_dude_coat(src)
+	new /obj/item/clothing/under/rank/cargo(src)
+	new /obj/item/clothing/under/rank/cargo_fem(src)
+	new /obj/item/clothing/shoes/brown(src)
+	new /obj/item/device/radio/headset/headset_cargo(src)
+	new /obj/item/clothing/gloves/black(src)
+//	new /obj/item/weapon/cartridge/quartermaster(src)
+	new /obj/item/clothing/suit/fire/firefighter(src)
+	new /obj/item/clothing/head/hardhat/red(src)
+	new /obj/item/weapon/tank/air(src)
+	new /obj/item/clothing/mask/gas/coloured(src)
+	new /obj/item/clothing/glasses/meson(src)
+	new /obj/item/clothing/head/soft(src)
+	new /obj/item/weapon/mining_voucher(src)
+	new /obj/item/weapon/survivalcapsule(src)
+	#ifdef NEWYEARCONTENT
+	new /obj/item/clothing/suit/wintercoat/cargo(src)
+	new /obj/item/clothing/shoes/winterboots(src)
+	new /obj/item/clothing/head/santa(src)
+	#endif
 
 /obj/structure/closet/secure_closet/recycler
 	name = "Recycler's Locker"
@@ -69,7 +67,7 @@
 	icon_broken = "securecargobroken"
 	icon_off = "securecargooff"
 
-obj/structure/closet/secure_closet/recycler/New()
+/obj/structure/closet/secure_closet/recycler/PopulateContents()
 	new /obj/item/weapon/shovel(src)
 	new /obj/item/weapon/storage/bag/trash/miners(src)
 	new /obj/item/clothing/under/rank/recycler(src)
@@ -82,4 +80,3 @@ obj/structure/closet/secure_closet/recycler/New()
 	new /obj/item/clothing/head/soft/trash(src)
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/clothing/suit/recyclervest(src)
-	return

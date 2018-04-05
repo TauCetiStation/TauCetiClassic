@@ -8,93 +8,99 @@
 	idle_power_usage = 5
 	active_power_usage = 60
 	power_channel = EQUIP
+	interact_offline = TRUE
 	var/obj/item/weapon/stock_parts/cell/charging = null
 	var/chargelevel = -1
 	var/efficiency = 0.875	//<1.0 means some power is lost in the charging process, >1.0 means free energy.
-	proc
-		updateicon()
-			icon_state = "ccharger[charging ? 1 : 0]"
 
-			if(charging && !(stat & (BROKEN|NOPOWER)) )
+/obj/machinery/cell_charger/proc/updateicon()
+	icon_state = "ccharger[charging ? 1 : 0]"
 
-				var/newlevel = 	round(charging.percent() * 4.0 / 99)
-				//world << "nl: [newlevel]"
+	if(charging && !(stat & (BROKEN|NOPOWER)) )
 
-				if(chargelevel != newlevel)
+		var/newlevel = 	round(charging.percent() * 4.0 / 99)
+		//world << "nl: [newlevel]"
 
-					overlays.Cut()
-					overlays += "ccharger-o[newlevel]"
+		if(chargelevel != newlevel)
 
-					chargelevel = newlevel
-			else
-				overlays.Cut()
-	examine(mob/user)
-		..()
-		to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
-		if(charging)
-			to_chat(user, "Current charge: [charging.charge]")
+			overlays.Cut()
+			overlays += "ccharger-o[newlevel]"
 
-	attackby(obj/item/weapon/W, mob/user)
-		if(stat & BROKEN)
-			return
+			chargelevel = newlevel
+	else
+		overlays.Cut()
+/obj/machinery/cell_charger/examine(mob/user)
+	..()
+	to_chat(user, "There's [charging ? "a" : "no"] cell in the charger.")
+	if(charging)
+		to_chat(user, "Current charge: [charging.charge]")
 
-		if(istype(W, /obj/item/weapon/stock_parts/cell) && anchored)
-			if(charging)
-				to_chat(user, "\red There is already a cell in the charger.")
-				return
-			else
-				var/area/a = loc.loc // Gets our locations location, like a dream within a dream
-				if(!isarea(a))
-					return
-				if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
-					to_chat(user, "\red The [name] blinks red as you try to insert the cell!")
-					return
-
-				user.drop_item()
-				W.loc = src
-				charging = W
-				user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
-				chargelevel = -1
-			updateicon()
-		else if(istype(W, /obj/item/weapon/wrench))
-			if(charging)
-				to_chat(user, "\red Remove the cell first!")
-				return
-
-			anchored = !anchored
-			to_chat(user, "You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground")
-			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-
-	attack_hand(mob/user)
-		if(charging)
-			usr.put_in_hands(charging)
-			charging.add_fingerprint(user)
-			charging.updateicon()
-
-			src.charging = null
-			user.visible_message("[user] removes the cell from the charger.", "You remove the cell from the charger.")
-			chargelevel = -1
-			updateicon()
-
-	attack_ai(mob/user)
+/obj/machinery/cell_charger/attackby(obj/item/weapon/W, mob/user)
+	if(stat & BROKEN)
 		return
 
-	emp_act(severity)
-		if(stat & (BROKEN|NOPOWER))
-			return
+	if(istype(W, /obj/item/weapon/stock_parts/cell) && anchored)
 		if(charging)
-			charging.emp_act(severity)
-		..(severity)
+			to_chat(user, "\red There is already a cell in the charger.")
+			return
+		else
+			var/area/a = loc.loc // Gets our locations location, like a dream within a dream
+			if(!isarea(a))
+				return
+			if(a.power_equip == 0) // There's no APC in this area, don't try to cheat power!
+				to_chat(user, "\red The [name] blinks red as you try to insert the cell!")
+				return
 
-
-	process()
-		//world << "ccpt [charging] [stat]"
-		if(!charging || (stat & (BROKEN|NOPOWER)) || !anchored)
+			user.drop_item()
+			W.loc = src
+			charging = W
+			user.visible_message("[user] inserts a cell into the charger.", "You insert a cell into the charger.")
+			chargelevel = -1
+		updateicon()
+	else if(istype(W, /obj/item/weapon/wrench))
+		if(charging)
+			to_chat(user, "\red Remove the cell first!")
 			return
 
-		var/power_used = 100000	//for 200 units of charge. Yes, thats right, 100 kW. Is something wrong with CELLRATE?
+		anchored = !anchored
+		to_chat(user, "You [anchored ? "attach" : "detach"] the cell charger [anchored ? "to" : "from"] the ground")
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 
-		power_used = charging.give(power_used*CELLRATE*efficiency)
-		use_power(power_used)
+/obj/machinery/cell_charger/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
 
+	if(charging)
+		usr.put_in_hands(charging)
+		charging.add_fingerprint(user)
+		charging.updateicon()
+
+		charging = null
+		user.visible_message("[user] removes the cell from the charger.", "You remove the cell from the charger.")
+		chargelevel = -1
 		updateicon()
+
+/obj/machinery/cell_charger/attack_ai(mob/user)
+	if(IsAdminGhost(user)) // why not?
+		return ..()
+
+/obj/machinery/cell_charger/emp_act(severity)
+	if(stat & (BROKEN|NOPOWER))
+		return
+	if(charging)
+		charging.emp_act(severity)
+	..(severity)
+
+
+/obj/machinery/cell_charger/process()
+	//world << "ccpt [charging] [stat]"
+	if(!charging || (stat & (BROKEN|NOPOWER)) || !anchored)
+		return
+
+	var/power_used = 100000	//for 200 units of charge. Yes, thats right, 100 kW. Is something wrong with CELLRATE?
+
+	power_used = charging.give(power_used*CELLRATE*efficiency)
+	use_power(power_used)
+
+	updateicon()

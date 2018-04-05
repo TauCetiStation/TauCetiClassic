@@ -1,7 +1,7 @@
 "a" = (/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/area/holodeck/source_meetinghall)
-"b" = (/obj/structure/flora/pottedplant{icon_state = "plant-6"; tag = "icon-plant-6"},/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/area/holodeck/source_meetinghall)
-"c" = (/turf/simulated/floor/holofloor{icon_state = "carpet2-0"; dir = 4},/area/holodeck/source_meetinghall)
-"d" = (/turf/simulated/floor/holofloor{icon_state = "carpet1-0"; dir = 4},/area/holodeck/source_meetinghall)
+"b" = (/obj/structure/flora/pottedplant{icon_state = "plant-6"},/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/area/holodeck/source_meetinghall)
+"c" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet4-0"},/area/holodeck/source_meetinghall)
+"d" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet8-0"},/area/holodeck/source_meetinghall)
 "e" = (/turf/simulated/floor/holofloor{icon_state = "carpetsymbol"; dir = 6},/area/holodeck/source_meetinghall)
 "f" = (/turf/simulated/floor/holofloor{icon_state = "grimy"; dir = 2},/turf/simulated/floor/holofloor{icon_state = "siding1"; dir = 2},/area/holodeck/source_meetinghall)
 "g" = (/turf/simulated/floor/holofloor{icon_state = "rampbottom"; dir = 2},/area/holodeck/source_meetinghall)
@@ -22,10 +22,10 @@ aaaaaaaaab
 aacdecdaaa
 aaaaaaaaaa
 fffffffffg
-ehiiiiijkl
-emnnnnnokl
-kmnnnnnokl
-kmnnnnnokl
-kpqqqqqrkl
+epmmmmmhkl
+eqnnnnnikl
+kqnnnnnikl
+kqnnnnnikl
+krooooojkl
 kkkkkkkkkl
 "}

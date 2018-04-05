@@ -14,7 +14,7 @@
 
 /obj/item/weapon/gun/energy/ionrifle/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = Ceiling(ratio*4) * 25
+	ratio = ceil(ratio * 4) * 25
 	switch(modifystate)
 		if (0)
 			if(ratio > 100)
@@ -61,28 +61,29 @@
 	var/charge_tick = 0
 	var/mode = 0 //0 = mutate, 1 = yield boost
 
-	New()
-		..()
-		SSobj.processing |= src
+/obj/item/weapon/gun/energy/floragun/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 
-	Destroy()
-		SSobj.processing.Remove(src)
-		return ..()
+/obj/item/weapon/gun/energy/floragun/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
-	process()
-		charge_tick++
-		if(charge_tick < 4) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(100)
-		update_icon()
-		return 1
+/obj/item/weapon/gun/energy/floragun/process()
+	charge_tick++
+	if(charge_tick < 4)
+		return 0
+	charge_tick = 0
+	if(!power_supply)
+		return 0
+	power_supply.give(100)
+	update_icon()
+	return 1
 
-	attack_self(mob/living/user)
-		select_fire(user)
-		update_icon()
-		return
+/obj/item/weapon/gun/energy/floragun/attack_self(mob/living/user)
+	select_fire(user)
+	update_icon()
 
 /obj/item/weapon/gun/energy/meteorgun
 	name = "meteor gun"
@@ -96,24 +97,26 @@
 	var/charge_tick = 0
 	var/recharge_time = 5 //Time it takes for shots to recharge (in ticks)
 
-	New()
-		..()
-		SSobj.processing |= src
+/obj/item/weapon/gun/energy/meteorgun/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 
-	Destroy()
-		SSobj.processing.Remove(src)
-		return ..()
+/obj/item/weapon/gun/energy/meteorgun/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
 
-	process()
-		charge_tick++
-		if(charge_tick < recharge_time) return 0
-		charge_tick = 0
-		if(!power_supply) return 0
-		power_supply.give(100)
+/obj/item/weapon/gun/energy/meteorgun/process()
+	charge_tick++
+	if(charge_tick < recharge_time)
+		return 0
+	charge_tick = 0
+	if(!power_supply)
+		return 0
+	power_supply.give(100)
 
-	update_icon()
-		return
+/obj/item/weapon/gun/energy/meteorgun/update_icon()
+	return
 
 /obj/item/weapon/gun/energy/meteorgun/pen
 	name = "meteor pen"
@@ -171,18 +174,16 @@ obj/item/weapon/gun/energy/staff/focus
 	w_class = 4.0
 	var/zoom = 0
 
-/obj/item/weapon/gun/energy/sniperrifle/New()
-	..()
+/obj/item/weapon/gun/energy/sniperrifle/atom_init()
+	. = ..()
 	update_icon()
-	return
-
 
 /obj/item/weapon/gun/energy/sniperrifle/isHandgun()
 	return 0
 
 /obj/item/weapon/gun/energy/sniperrifle/update_icon()
 	var/ratio = power_supply.charge / power_supply.maxcharge
-	ratio = Ceiling(ratio*4) * 25
+	ratio = ceil(ratio * 4) * 25
 	switch(modifystate)
 		if (0)
 			if(ratio > 100)
@@ -232,6 +233,17 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	to_chat(usr, "<font color='[zoom?"blue":"red"]'>Zoom mode [zoom?"en":"dis"]abled.</font>")
 	return
 
+/obj/item/weapon/gun/energy/sniperrifle/rails
+	name = "Rails rifle"
+	desc = "With this weapon you'll be the boss at any Arena."
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "relsotron"
+	item_state = "relsotron"
+	origin_tech = null
+	ammo_type = list(/obj/item/ammo_casing/energy/rails)
+	fire_delay = 20
+	w_class = 3.0
+
 //Tesla Cannon
 /obj/item/weapon/gun/tesla
 	name = "Tesla Cannon"
@@ -244,14 +256,15 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	var/charge = 0
 	var/charging = FALSE
 	var/cooldown = FALSE
+	var/spinspeed = 1
 
-/obj/item/weapon/gun/tesla/New()
-	..()
+/obj/item/weapon/gun/tesla/atom_init()
+	. = ..()
 	update_icon()
 
 /obj/item/weapon/gun/tesla/proc/charge(mob/living/user)
 	set waitfor = FALSE
-	if(do_after(user, 40, target = src))
+	if(do_after(user, 40 * spinspeed, target = src))
 		if(charging && charge < 3)
 			charge++
 			playsound(loc, "sparks", 75, 1, -1)
@@ -283,6 +296,8 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 	charge(user)
 
 /obj/item/weapon/gun/tesla/special_check(mob/user, atom/target)
+	if(!..())
+		return FALSE
 	if(!charge)
 		to_chat(user, "<span class='red'>Tesla Cannon is not charged!</span>")
 	else if(!istype(target, /mob/living))
@@ -337,3 +352,13 @@ modules/mob/living/carbon/human/life.dm if you die, you will be zoomed out.
 			M.electrocute_act(5 * (4 - severity) * charge, src, , , 1)
 		charge = 0
 		update_icon()
+
+/obj/item/weapon/gun/tesla/rifle
+	name = "Tesla rifle"
+	desc = "Rifle which uses electrical charge to damage multiple targets. Spin the generator handle to charge it up"
+	icon = 'icons/obj/gun.dmi'
+	icon_state = "arctesla"
+	item_state = "arctesla"
+	w_class = 3.0
+	origin_tech = null
+	spinspeed = 0.5

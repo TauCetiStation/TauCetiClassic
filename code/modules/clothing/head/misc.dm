@@ -174,13 +174,6 @@
 	icon_state = "boater_hat"
 	item_state = "boater_hat"
 	desc = "The ultimate in summer fashion."
-/*
-/obj/item/clothing/head/fedora
-	name = "\improper fedora"
-	icon_state = "fedora"
-	item_state = "fedora"
-	desc = "A sharp, stylish hat."
-*/
 
 /obj/item/clothing/head/feathertrilby
 	name = "\improper feather trilby"
@@ -227,7 +220,7 @@
 	item_state = "zhan_scarf"
 	desc = "White headscarf"
 	body_parts_covered = 0
-	species_restricted = list("Unathi","Tajaran","Human","Diona","Machine")
+	species_restricted = list(UNATHI , TAJARAN , HUMAN , DIONA , IPC)
 
 /obj/item/clothing/head/skrell_headwear
 	name = "skrell yellow headwear"
@@ -235,7 +228,7 @@
 	item_state = "skrell_yellow"
 	desc = "Just two pieces of yellow cloth"
 	body_parts_covered = 0
-	species_restricted = list("Skrell")
+	species_restricted = list(SKRELL)
 
 /obj/item/clothing/head/skrell_headwear/red
 	name = "skrell red headwear"
@@ -243,7 +236,7 @@
 	item_state = "skrell_red"
 	desc = "Just two pieces of red cloth"
 	body_parts_covered = 0
-	species_restricted = list("Skrell")
+	species_restricted = list(SKRELL)
 
 /obj/item/clothing/head/skrell_headwear/blue
 	name = "skrell blue headwear"
@@ -251,7 +244,7 @@
 	item_state = "skrell_blue"
 	desc = "Just two pieces of blue cloth"
 	body_parts_covered = 0
-	species_restricted = list("Skrell")
+	species_restricted = list(SKRELL)
 
 /obj/item/clothing/head/xenos
 	name = "xenos helmet"
@@ -285,8 +278,24 @@
 
 	fedoraproc(usr)
 
+/obj/item/clothing/head/fedora/black
+	name = "fedora"
+	desc = "Someone wearing this definitely makes them cool."
+	icon_state = "hat_black"
+
+/obj/item/clothing/head/fedora/white
+	name = "white fedora"
+	desc = "Someone wearing this definitely makes them cool."
+	icon_state = "hat_white"
+
+/obj/item/clothing/head/fedora/brown
+ 	name = "brown fedora"
+ 	desc = "Someone wearing this definitely makes them cool."
+ 	icon_state = "hat_brown"
+
+
 /obj/item/clothing/head/batman_helmet
-	name = "batman helmet"
+	name = "Batman helmet"
 	desc = "It's not who you are underneath, it's what you do that defines you."
 	icon_state = "batman_helmet"
 	item_state = "batman_helmet"
@@ -298,12 +307,6 @@
 	name = "white beret"
 	icon_state = "rosas_hat"
 	item_state = "helmet"
-
-/obj/item/clothing/head/fedora
-	name = "\improper fedora"
-	icon_state = "fedora"
-	item_state = "fedora"
-	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
 
 /obj/item/clothing/head/sombrero
 	name = "sombrero"
@@ -323,22 +326,6 @@
 	item_state = "shamebrero"
 	desc = "You never asked for this."
 
-//Mafia
-/obj/item/clothing/head/fedora_mafia
-	name = "fedora"
-	desc = "Someone wearing this definitely makes them cool."
-	icon_state = "hat_black"
-
-/obj/item/clothing/head/fedora_mafia/white
-	name = "white fedora"
-	desc = "Someone wearing this definitely makes them cool."
-	icon_state = "hat_white"
-
-/obj/item/clothing/head/fedora_mafia/brown
- 	name = "brown fedora"
- 	desc = "Someone wearing this definitely makes them cool."
- 	icon_state = "hat_brown"
-
 /obj/item/clothing/head/western
 	name = "western hat"
 	icon_state = "western_hat"
@@ -348,11 +335,13 @@
 	name = "cowboy hat"
 	icon_state = "cowboy_hat"
 	item_state = "cowboy_hat"
+	desc = "Howdy, partner!"
 
 /obj/item/clothing/head/indiana
 	name = "leather hat"
 	icon_state = "indiana_hat"
 	item_state = "indiana_hat"
+	desc = "Be aware of rolling boulders."
 
 /obj/item/clothing/head/necromancer_hood
 	name = "necromancer's hood"
@@ -370,12 +359,37 @@
 	name = "green hood"
 	icon_state = "green_hood"
 
+/obj/item/clothing/head/beret/red
+	name = "red beret"
+	desc = "Bonjour, but in red. Smells like baguette, pardon my French."
+	icon_state = "beret_red"
+
+/obj/item/clothing/head/beret/blue
+	name = "blue beret"
+	desc = "Bonjour, but in blue. Smells like baguette, pardon my French."
+	icon_state = "beret_blue"
+
+/obj/item/clothing/head/beret/black
+	name = "black beret"
+	desc = "Bonjour, but in black. Smells like baguette, pardon my French."
+	icon_state = "beret_black"
+
+/obj/item/clothing/head/beret/purple
+	name = "purple beret"
+	desc = "Bonjour, but in purple. Smells like baguette, pardon my French."
+	icon_state = "beret_purple"
+
 /obj/item/clothing/head/beret/centcom/officer
 	name = "officers beret"
-	desc = "A black beret adorned with the shield silver kite shield with an engraved sword�of the NanoTrasen security forces, announcing to the world that the wearer is a defender of NanoTrasen."
+	desc = "A black beret adorned with the shield silver kite shield with an engraved sword of the NanoTrasen security forces, announcing to the world that the wearer is a defender of NanoTrasen."
 	icon_state = "centcomofficerberet"
 
 /obj/item/clothing/head/beret/centcom/captain
 	name = "captains beret"
-	desc = "A white beret adorned with the shield cobalt kite shield with an engraved sword�of the NanoTrasen security forces, worn only by those captaining a vessel of the NanoTrasen Navy."
+	desc = "A white beret adorned with the shield cobalt kite shield with an engraved sword of the NanoTrasen security forces, worn only by those captaining a vessel of the NanoTrasen Navy."
 	icon_state = "centcomcaptain"
+
+/obj/item/clothing/head/angel_nimb
+	name = "nimb"
+	desc = "Just a Nimb"
+	icon_state = "nimb"

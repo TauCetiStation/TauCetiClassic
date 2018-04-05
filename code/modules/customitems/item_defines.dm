@@ -14,12 +14,12 @@
 	name = "cyborgification waiver"
 	desc = "It's some kind of official-looking contract."
 
-/obj/item/weapon/paper/fluff/sue_donem/New()
-	..()
+/obj/item/weapon/paper/fluff/sue_donem/atom_init()
+	. = ..()
 
 	info = "<B>Organic Carrier AIA and Standard Cyborgification Agreement</B><BR>\n<BR>\nUnder the authority of Nanotrasen Synthetic Intelligence Division, this document hereby authorizes an accredited Roboticist of the NSS Exodus or a deputized authority to perform a regulation lobotomisation upon the person of one '<I>Sue Donem</I>' (hereafter referred to as the Subject) with intent to enact a live Artificial Intelligence Assimilation (AIA) or live Cyborgification proceedure.<BR>\n<BR>\nNo further station authorization is required, and the Subject waives all rights as a human under Nanotrasen internal and external legal protocol. This document is subject to amendment under Nanotrasen internal protocol \[REDACTED\].<BR>\n<BR>\nSigned: <I>Sue Donem</I><BR>\n"
 
-	stamps = (stamps=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the NanoTrasen Synthetic Intelligence Division rubber stamp.</i>"
+	stamp_text = (stamp_text=="" ? "<HR>" : "<BR>") + "<i>This paper has been stamped with the NanoTrasen Synthetic Intelligence Division rubber stamp.</i>"
 
 	var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
 	stampoverlay.pixel_x = rand(-2, 2)
@@ -283,11 +283,11 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "reesemackenzie"
 
-/obj/item/weapon/card/id/fluff/lifetime	//fastler: Fastler Greay; it seemed like something multiple people would have
+/*/obj/item/weapon/card/id/fluff/lifetime	//fastler: Fastler Greay; it seemed like something multiple people would have
 	name = "Lifetime ID Card"
 	desc = "A modified ID card given only to those people who have devoted their lives to the better interests of NanoTrasen. It sparkles blue."
 	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "lifetimeid"
+	icon_state = "lifetimeid"*/
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/shinyflask //lexusjjss: Lexus Langg & Zachary Tomlinson
 	name = "shiny flask"
@@ -325,33 +325,30 @@
 /obj/item/weapon/storage/pill_bottle/fluff/listermedbottle //compactninja: Lister Black
 	name = "Pill bottle (anti-depressants)"
 	desc = "Contains pills used to deal with depression. They appear to be prescribed to Lister Black"
-	New()
-		..()
-		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
-		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
-		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
-		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
-		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
-		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
-		new /obj/item/weapon/reagent_containers/pill/fluff/listermed( src )
+
+/obj/item/weapon/storage/pill_bottle/fluff/listermedbottle/atom_init()
+	. = ..()
+	for (var/i in 1 to 7)
+		new /obj/item/weapon/reagent_containers/pill/fluff/listermed(src)
 
 /obj/item/weapon/reagent_containers/pill/fluff/listermed
 	name = "anti-depressant pill"
 	desc = "Used to deal with depression."
 	icon_state = "pill9"
-	New()
-		..()
-		reagents.add_reagent("stoxin", 5)
-		reagents.add_reagent("sugar", 10)
-		reagents.add_reagent("ethanol", 5)
+
+/obj/item/weapon/reagent_containers/pill/fluff/listermed/atom_init()
+	. = ..()
+	reagents.add_reagent("stoxin", 5)
+	reagents.add_reagent("sugar", 10)
+	reagents.add_reagent("ethanol", 5)
 
 /obj/item/clothing/mask/fluff/electriccig //CubeJackal: Barry Sharke
 	name = "Electronic cigarette"
 	desc = "An electronic cigarette. Most of the relief of a real cigarette with none of the side effects. Often used by smokers who are trying to quit the habit."
 	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "cigon"
+	icon_state = "ecig"
 	throw_speed = 0.5
-	item_state = "ciglit"
+	item_state = "ecig"
 	w_class = 1
 	body_parts_covered = null
 
@@ -365,12 +362,11 @@
 	amount_per_transfer_from_this = 5
 	volume = 15
 
-/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/New()
-	..()
+/obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/atom_init()
+	. = ..()
 	reagents.remove_reagent("tricordrazine", 30)
 	reagents.add_reagent("oxycodone", 15)
 	update_icon()
-	return
 
 /obj/item/weapon/reagent_containers/hypospray/fluff/asher_spock_1/attack_self(mob/user)
 	to_chat(user, "\blue You click \the [src] but get no reaction. Must be dead.")
@@ -385,14 +381,6 @@
 	if (!( istype(M, /mob) ))
 		return
 	if (reagents.total_volume)
-		if (M == user && user.ckey == "nerezza") //Make sure this is being used by the right person, for the right reason (self injection)
-			visible_message("\blue [user] presses their \
-				penlight against their skin, quickly clicking the button once.", \
-				"\blue You press the disguised autoinjector against your skin and click the button. There's a sharp pain at the injection site that rapidly fades.", \
-				"You hear a rustle as someone moves nearby, then a sharp click.")
-		if (M != user && user.ckey == "nerezza") //Woah now, you better be careful partner
-			to_chat(user, "\blue You don't want to contaminate the autoinjector.")
-			return
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 			var/trans = reagents.trans_to(M, amount_per_transfer_from_this)
@@ -411,11 +399,11 @@
 
 //End strange penlight
 
-/obj/item/weapon/card/id/fluff/asher_spock_2 //Nerezza: Asher Spock
+/*/obj/item/weapon/card/id/fluff/asher_spock_2 //Nerezza: Asher Spock
 	name = "Odysses Specialist ID card"
 	desc = "A special identification card with a red cross signifying an emergency physician has specialised in Odysseus operations and maintenance.\nIt grants the owner recharge bay access."
 	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "odysseus_spec_id"
+	icon_state = "odysseus_spec_id"*/
 
 /obj/item/weapon/clipboard/fluff/mcreary_journal //sirribbot: James McReary
 	name = "McReary's journal"
@@ -478,7 +466,7 @@
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
 	item_color="white"
-	species_restricted = list("exclude","Unathi")
+	species_restricted = list("exclude" , UNATHI)
 
 /obj/item/clothing/gloves/fluff/walter_brooks_1 //botanistpower: Walter Brooks
 	name = "mittens"
@@ -627,7 +615,23 @@
 	item_state = "mantle-unathi"
 	body_parts_covered = 0
 
+/obj/item/clothing/suit/fluff/kung
+	name = "Kung jacket"
+	desc = "Leather jaket with an old security badge attached to it"
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "kung_jacket_w"
+	item_state = "kung_jacket_w"
+	w_class = 3
+
+
 //////////// Uniforms ////////////
+
+/obj/item/clothing/under/fluff/kung
+	name = "Kung Jeans"
+	desc = "Pair of old jeans combined with a red tank-top"
+	icon_state = "kung_suit"
+	item_color = "kung_suit"
+	w_class = 3
 
 /obj/item/clothing/under/fluff/milo_hachert //Field Dress Uniform - Milo Hachert - Commissar_Drew
 	name = "field dress uniform"
@@ -757,6 +761,13 @@
 	item_state = "maid"
 	item_color = "maid"
 
+/obj/item/clothing/under/fluff/maid_suit/sakuya
+	name = "maid suit"
+	desc = "For a women who like to throw knifes"
+	icon_state = "sakuya"
+	item_state = "sakuya"
+	item_color = "sakuya"
+
 /obj/item/clothing/under/rank/medical/fluff/rosa
 	name = "short sleeve medical dress"
 	desc = "Made of a special fiber that gives special protection against biohazards. Has a cross on the chest denoting that the wearer is trained medical personnel and short sleeves."
@@ -841,58 +852,56 @@
 
 ////// Small locket - Altair An-Nasaqan - Serithi
 
-/obj/item/clothing/tie/fluff/altair_locket
+/obj/item/clothing/accessory/fluff/altair_locket
 	name = "small locket"
 	desc = "A small golden locket attached to an Ii'rka-reed string. Inside the locket is a holo-picture of a female Tajaran, and an inscription writtin in Siik'mas."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "altair_locket"
 	item_state = "altair_locket"
 	item_color = "altair_locket"
-	slot_flags = 0
 	w_class = 2
-	slot_flags = SLOT_MASK
+	slot_flags = SLOT_MASK | SLOT_TIE
 
 ////// Silver locket - Konaa Hirano - Konaa_Hirano
 
-/obj/item/clothing/tie/fluff/konaa_hirano
+/obj/item/clothing/accessory/fluff/konaa_hirano
 	name = "silver locket"
 	desc = "This oval shaped, argentium sterling silver locket hangs on an incredibly fine, refractive string, almost thin as hair and microweaved from links to a deceptive strength, of similar material. The edges are engraved very delicately with an elegant curving design, but overall the main is unmarked and smooth to the touch, leaving room for either remaining as a stolid piece or future alterations. There is an obvious internal place for a picture or lock of some sort, but even behind that is a very thin compartment unhinged with the pinch of a thumb and forefinger."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "konaahirano"
 	item_state = "konaahirano"
 	item_color = "konaahirano"
-	slot_flags = 0
 	w_class = 2
-	slot_flags = SLOT_MASK
+	slot_flags = SLOT_MASK | SLOT_TIE
 	var/obj/item/held //Item inside locket.
 
-/obj/item/clothing/tie/fluff/konaa_hirano/attack_self(mob/user)
+/obj/item/clothing/accessory/fluff/konaa_hirano/attack_self(mob/user)
 	if(held)
 		to_chat(user, "You open [src] and [held] falls out.")
 		held.loc = get_turf(user)
 		src.held = null
 
-/obj/item/clothing/tie/fluff/konaa_hirano/attackby(obj/item/O, mob/user)
+/obj/item/clothing/accessory/fluff/konaa_hirano/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/weapon/paper))
 		if(held)
-			to_chat(usr, "[src] already has something inside it.")
+			to_chat(user, "[src] already has something inside it.")
 		else
-			to_chat(usr, "You slip [O] into [src].")
+			to_chat(user, "You slip [O] into [src].")
 			user.drop_item()
 			O.loc = src
 			src.held = O
-		return
-	..()
+	else
+		..()
 
 //////  Medallion - Nasir Khayyam - Jamini
 
-/obj/item/clothing/tie/fluff/nasir_khayyam_1
+/obj/item/clothing/accessory/fluff/nasir_khayyam_1
 	name = "medallion"
 	desc = "This silvered medallion bears the symbol of the Hadii Clan of the Tajaran."
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "nasir_khayyam_1"
 	w_class = 2
-	slot_flags = SLOT_MASK
+	slot_flags = SLOT_MASK | SLOT_TIE
 
 ////// Emerald necklace - Ty Foster - Nega
 
@@ -910,10 +919,16 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "michael_guess_1"
 	w_class = 2
-	slot_flags = SLOT_MASK
+	slot_flags = SLOT_MASK | SLOT_TIE
 	body_parts_covered = 0
 
 //////////// Shoes ////////////
+
+/obj/item/clothing/shoes/fluff/kung
+	name = "Kung shoes"
+	desc = "Pair of a high red shoes."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "kung_shoes_w"
 
 /obj/item/clothing/shoes/magboots/fluff/susan_harris_1 //sniperyeti: Susan Harris
 	name = "Susan's Magboots"
@@ -968,6 +983,13 @@
 	icon_state = "retpoluniform"
 	item_color = "retpoluniform"
 
+/obj/item/clothing/head/det_hat/fluff/kung
+	name = "Kung headband"
+	desc = "Stripe of red cloth.You can wear it on your head."
+	icon = 'icons/obj/custom_items.dmi'
+	icon_state = "kung_headband_w"
+	item_state = "kung_headband_w"
+
 //////////// Weapons ////////////
 
 ///// Well-used baton - Oen'g Issek - Donofnyc3
@@ -1006,23 +1028,24 @@
 	icon_state = "nashi_belt"
 	item_state = "fluff_rbelt"
 
-	New()
-		..()
-		new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 14, "Bicaridine")
-		new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 15, "Dermaline")
-		new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 16, "Dylovene")
-		new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 17, "Dexalin Plus")
-		new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 18, "Tricordrazine")
-		new /obj/item/weapon/reagent_containers/syringe/(src)
-		new /obj/item/device/healthanalyzer(src)
+/obj/item/weapon/storage/belt/medical/fluff/nashi_belt/atom_init()
+	. = ..()
+	new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 14, "Bicaridine")
+	new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 15, "Dermaline")
+	new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 16, "Dylovene")
+	new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 17, "Dexalin Plus")
+	new /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle(src, 18, "Tricordrazine")
+	new /obj/item/weapon/reagent_containers/syringe/(src)
+	new /obj/item/device/healthanalyzer(src)
 
 /obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle
 	icon = 'icons/obj/chemical.dmi'
-	New(loc, var/color, var/labeled)
-		..()
-		name = "[labeled] bottle"
-		desc = "A small bottle.  Contains [labeled]"
-		icon_state = "bottle[color]"
+
+/obj/item/weapon/reagent_containers/glass/bottle/fluff/nashi_bottle/atom_init(color, labeled)
+	. = ..()
+	name = "[labeled] bottle"
+	desc = "A small bottle.  Contains [labeled]"
+	icon_state = "bottle[color]"
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/yuri_kornienkovich_flask
 	name = "Yuri's Flask"

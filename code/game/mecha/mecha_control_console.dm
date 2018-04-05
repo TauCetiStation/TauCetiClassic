@@ -9,14 +9,11 @@
 	var/screen = 0
 	var/stored_data
 
-/obj/machinery/computer/mecha/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
-	var/dat = "<html><head><title>[src.name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
+/obj/machinery/computer/mecha/ui_interact(mob/user)
+	var/dat = "<html><head><title>[name]</title><style>h3 {margin: 0px; padding: 0px;}</style></head><body>"
 	if(screen == 0)
 		dat += "<h3>Tracking beacons data</h3>"
-		for(var/obj/item/mecha_parts/mecha_tracking/TR in world)
+		for(var/obj/item/mecha_parts/mecha_tracking/TR in mecha_tracking_list)
 			var/answer = TR.get_mecha_info()
 			if(answer)
 				dat += {"<hr>[answer]<br/>
@@ -31,9 +28,8 @@
 	dat += "<A href='?src=\ref[src];refresh=1'>(Refresh)</A><BR>"
 	dat += "</body></html>"
 
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 /obj/machinery/computer/mecha/Topic(href, href_list)
 	. = ..()
@@ -43,9 +39,9 @@
 	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
 	if(href_list["send_message"])
 		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("send_message")
-		var/message = strip_html_simple(input(usr,"Input message","Transmit message") as text)
+		var/message = sanitize(input(usr,"Input message","Transmit message") as text)
 		var/obj/mecha/M = MT.in_mecha()
-		if(trim(message) && M)
+		if(message && M)
 			M.occupant_message(message)
 	else if(href_list["shock"])
 		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("shock")
@@ -67,6 +63,14 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "motion2"
 	origin_tech = "programming=2;magnets=2"
+
+/obj/item/mecha_parts/mecha_tracking/atom_init()
+	. = ..()
+	mecha_tracking_list += src
+
+/obj/item/mecha_parts/mecha_tracking/Destroy()
+	mecha_tracking_list -= src
+	return ..()
 
 /obj/item/mecha_parts/mecha_tracking/proc/get_mecha_info()
 	if(!in_mecha())
@@ -115,12 +119,7 @@
 /obj/item/weapon/storage/box/mechabeacons
 	name = "Exosuit Tracking Beacons"
 
-/obj/item/weapon/storage/box/mechabeacons/New()
-	..()
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
-	new /obj/item/mecha_parts/mecha_tracking(src)
+/obj/item/weapon/storage/box/mechabeacons/atom_init()
+	. = ..()
+	for (var/i in 1 to 7)
+		new /obj/item/mecha_parts/mecha_tracking(src)

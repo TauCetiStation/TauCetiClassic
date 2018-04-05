@@ -107,19 +107,6 @@
 	m_amt = 50
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
-/*
-/obj/item/weapon/game_kit
-	name = "Gaming Kit"
-	icon = 'icons/obj/items.dmi'
-	icon_state = "game_kit"
-	var/selected = null
-	var/board_stat = null
-	var/data = ""
-	var/base_url = "http://svn.slurm.us/public/spacestation13/misc/game_kit"
-	item_state = "sheet-metal"
-	w_class = 5.0
-*/
-
 /obj/item/weapon/gift
 	name = "gift"
 	desc = "A wrapped item."
@@ -191,11 +178,11 @@
 	icon_state = "bola"
 	breakouttime = 35 //easy to apply, easy to break out of
 	origin_tech = "engineering=3;combat=1"
+	throw_speed = 5
 	var/weaken = 2
 
-/obj/item/weapon/legcuffs/bola/throw_at(atom/target, mob/thrower)
-	if(!..())
-		return
+/obj/item/weapon/legcuffs/bola/after_throw(datum/callback/callback)
+	..()
 	playsound(src.loc,'sound/weapons/bolathrow.ogg', 75, 1)
 
 /obj/item/weapon/legcuffs/bola/throw_impact(atom/hit_atom)
@@ -269,20 +256,16 @@
 	return ..()
 
 /obj/item/weapon/shard/afterattack(atom/A, mob/user, proximity)
-	if(!proximity || !(src in user))
+	if(!proximity)
 		return
 	if(isturf(A))
 		return
-	if(istype(A, /obj/item/weapon/storage))
-		return
-
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(!H.gloves && !(H.dna && H.dna.mutantrace == "adamantine")) //specflags please..
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
-			var/organ = (H.hand ? "l_" : "r_") + "hand"
-			var/datum/organ/external/affecting = H.get_organ(organ)
-			affecting.take_damage(force / 2)
+			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
+			BP.take_damage(force / 2, null, damage_flags())
 	else if(ismonkey(user))
 		var/mob/living/carbon/monkey/M = user
 		to_chat(M, "<span class='warning'>[src] cuts into your hand!</span>")
@@ -313,21 +296,20 @@
 	icon_state = "shrapnellarge"
 	desc = "A bunch of tiny bits of shattered metal."
 
-/obj/item/weapon/shard/shrapnel/New()
+/obj/item/weapon/shard/shrapnel/atom_init()
+	. = ..()
 
-	src.icon_state = pick("shrapnellarge", "shrapnelmedium", "shrapnelsmall")
-	switch(src.icon_state)
+	icon_state = pick("shrapnellarge", "shrapnelmedium", "shrapnelsmall")
+	switch(icon_state)
 		if("shrapnelsmall")
-			src.pixel_x = rand(-12, 12)
-			src.pixel_y = rand(-12, 12)
+			pixel_x = rand(-12, 12)
+			pixel_y = rand(-12, 12)
 		if("shrapnelmedium")
-			src.pixel_x = rand(-8, 8)
-			src.pixel_y = rand(-8, 8)
+			pixel_x = rand(-8, 8)
+			pixel_y = rand(-8, 8)
 		if("shrapnellarge")
-			src.pixel_x = rand(-5, 5)
-			src.pixel_y = rand(-5, 5)
-		else
-	return
+			pixel_x = rand(-5, 5)
+			pixel_y = rand(-5, 5)
 
 /obj/item/weapon/SWF_uplink
 	name = "station-bounced radio"
@@ -416,6 +398,20 @@
 	name = "poker table parts"
 	desc = "Keep away from fire, and keep near seedy dealers."
 	icon_state = "poker_tableparts"
+	flags = null
+
+/obj/item/weapon/table_parts/wood/fancy
+	name = "fancy table parts"
+	desc = "Covered with an amazingly fancy, patterned cloth."
+	icon_state = "fancy_tableparts"
+
+/obj/item/weapon/table_parts/wood/fancy/black
+	icon_state = "fancyblack_tableparts"
+
+/obj/item/weapon/table_parts/glass
+	name = "glass table parts"
+	desc = "Very fragile."
+	icon_state = "glass_tableparts"
 	flags = null
 
 /obj/item/weapon/wire
@@ -524,7 +520,7 @@
 /obj/item/weapon/scythe/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	if(istype(A, /obj/effect/spacevine))
-		for(var/obj/effect/spacevine/B in orange(A,1))
+		for(var/obj/effect/spacevine/B in orange(A, 1))
 			if(prob(80))
 				qdel(B)
 		qdel(A)
@@ -586,13 +582,9 @@
 /obj/item/weapon/storage/part_replacer/afterattack(obj/machinery/T, mob/living/carbon/human/user, flag)
 	if(flag)
 		return
-	else
-		if(works_from_distance)
-			if(istype(T))
-				if(T.component_parts)
-					T.exchange_parts(user, src)
-					user.Beam(T,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
-	return
+	if(works_from_distance && istype(T) && T.component_parts)
+		T.exchange_parts(user, src)
+		user.Beam(T,icon_state="rped_upgrade",icon='icons/effects/effects.dmi',time=5)
 
 /obj/item/weapon/storage/part_replacer/bluespace
 	name = "bluespace rapid part exchange device"
@@ -625,9 +617,11 @@
 	icon = 'icons/obj/stock_parts.dmi'
 	w_class = 2.0
 	var/rating = 1
-	New()
-		src.pixel_x = rand(-5.0, 5)
-		src.pixel_y = rand(-5.0, 5)
+
+/obj/item/weapon/stock_parts/atom_init()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 //Rank 1
 
@@ -880,3 +874,37 @@
 	icon_state = "capacitor"
 	desc = "A debug item for research."
 	origin_tech = "materials=8;engineering=8;phorontech=8;powerstorage=8;bluespace=8;biotech=8;combat=8;magnets=8;programming=8;syndicate=8"
+
+/obj/item/weapon/broom
+	name = "Broom"
+	desc = "This broom is made with the branches and leaves of a tree which secretes aromatic oils."
+	icon_state = "broom_sauna"
+
+/obj/item/weapon/broom/attack(mob/living/carbon/human/M, mob/living/user, def_zone)
+	if(!istype(M) || user.a_intent == "hurt")
+		return ..()
+	if(wet - 5 < 0)
+		to_chat(user, "<span class='userdanger'>Soak this [src] first!</span>")
+		return
+	if(M == user)
+		to_chat(user, "<span class='userdanger'>You can't birching yourself!</span>")
+		return
+	if(!M.lying)
+		to_chat(user, "<span class='userdanger'>[M] Must be lie down first!</span>")
+		return
+
+	var/zone = check_zone(user.zone_sel.selecting)
+	var/obj/item/organ/external/BP = M.get_bodypart(zone)
+	for(var/obj/item/clothing/C in M.get_equipped_items())
+		if(C.body_parts_covered & BP.body_part)
+			to_chat(user, "<span class='userdanger'>Take off [M]'s clothes first!</span>")
+			return
+
+	zone = parse_zone(zone)
+	wet -= 5
+	user.visible_message("<span class='notice'>A [user] lightly Birching [M]'s [zone] with [src]!</span>",
+		"<span class='notice'>You lightly Birching [M]'s [zone] with [src]!</span>")
+
+
+
+

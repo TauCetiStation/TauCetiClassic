@@ -5,7 +5,7 @@
 	item_state = "rocket"
 	w_class = 4.0
 	force = 5
-	flags =  CONDUCT | USEDELAY
+	flags =  CONDUCT
 	origin_tech = "combat=8;materials=5"
 	slot_flags = 0
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/rocket
@@ -60,22 +60,11 @@
 		return
 
 	else //Trying to wield it
-		if(user.get_inactive_hand())
-			to_chat(user, "<span class='warning'>You need your other hand to be empty</span>")
-			return
-		wield()
-		to_chat(user, "<span class='notice'>You grab the [initial(name)] with both hands.</span>")
-
-		if(user.hand)
-			user.update_inv_l_hand()
-		else
-			user.update_inv_r_hand()
-
-		var/obj/item/weapon/twohanded/offhand/O = new(user) ////Let's reserve his other hand~
-		O.name = "[initial(name)] - offhand"
-		O.desc = "Your second grip on the [initial(name)]."
-		user.put_in_inactive_hand(O)
-		return
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			var/W = H.wield(src, initial(name))
+			if(W)
+				wield()
 
 /obj/item/weapon/gun/projectile/revolver/rocketlauncher/attack_hand(mob/user)
 	if(loc != user)

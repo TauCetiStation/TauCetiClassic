@@ -9,17 +9,18 @@
 	use_power = 1
 	idle_power_usage = 100 //Watts, I hope.  Just enough to do the computer and display things.
 
-	var/obj/machinery/atmospherics/binary/circulator/circ1
-	var/obj/machinery/atmospherics/binary/circulator/circ2
+	var/obj/machinery/atmospherics/components/binary/circulator/circ1
+	var/obj/machinery/atmospherics/components/binary/circulator/circ2
 
 	var/lastgen = 0
 	var/lastgenlev = -1
 
-/obj/machinery/power/generator/New()
+/obj/machinery/power/generator/atom_init()
 	..()
+	return INITIALIZE_HINT_LATELOAD
 
-	spawn(1)
-		reconnect()
+/obj/machinery/power/generator/atom_init_late()
+	reconnect()
 
 //generators connect in dir and reverse_dir(dir) directions
 //mnemonic to determine circulator/generator directions: the cirulators orbit clockwise around the generator
@@ -32,8 +33,8 @@
 	if(src.loc && anchored)
 		power_change()
 		if(src.dir & (EAST|WEST))
-			circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,EAST)
-			circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,WEST)
+			circ1 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,EAST)
+			circ2 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,WEST)
 
 			if(circ1 && circ2)
 				if(circ1.dir != SOUTH || circ2.dir != NORTH)
@@ -41,8 +42,8 @@
 					circ2 = null
 
 		else if(src.dir & (NORTH|SOUTH))
-			circ1 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,NORTH)
-			circ2 = locate(/obj/machinery/atmospherics/binary/circulator) in get_step(src,SOUTH)
+			circ1 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,NORTH)
+			circ2 = locate(/obj/machinery/atmospherics/components/binary/circulator) in get_step(src,SOUTH)
 
 			if(circ1 && circ2 && (circ1.dir != EAST || circ2.dir != WEST))
 				circ1 = null
@@ -86,14 +87,19 @@
 				air1.temperature = air1.temperature - energy_transfer/air1_heat_capacity
 
 			//Transfer the air
-			circ1.air2.merge(air1)
-			circ2.air2.merge(air2)
+			var/datum/gas_mixture/circ_air1 = circ1.AIR1
+			var/datum/gas_mixture/circ_air2 = circ2.AIR2
+
+
+			circ_air1.merge(air1)
+			circ_air2.merge(air2)
 
 			//Update the gas networks
-			if(circ1.network2)
-				circ1.network2.update = 1
-			if(circ2.network2)
-				circ2.network2.update = 1
+			var/datum/pipeline/parent1 = circ1.PARENT1
+			var/datum/pipeline/parent2 = circ2.PARENT2
+
+			parent1.update = 1
+			parent2.update = 1
 
 	// update icon overlays and power usage only if displayed level has changed
 	if(lastgen > 250000 && prob(10))
@@ -109,10 +115,6 @@
 		updateicon()
 	add_avail(lastgen)
 
-/obj/machinery/power/generator/attack_ai(mob/user)
-	if(stat & (BROKEN|NOPOWER)) return
-	interact(user)
-
 /obj/machinery/power/generator/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		anchored = !anchored
@@ -122,19 +124,20 @@
 	else
 		..()
 
-/obj/machinery/power/generator/attack_hand(mob/user)
-	add_fingerprint(user)
-	if(stat & (BROKEN|NOPOWER) || !anchored) return
-	interact(user)
-
-
 /obj/machinery/power/generator/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) && (!istype(user, /mob/living/silicon/ai)))
+	if(anchored)
+		..()
+
+/obj/machinery/power/generator/ui_interact(mob/user)
+	if ( (get_dist(src, user) > 1 ) && !(issilicon(user) || isobserver(user)))
 		user.unset_machine(src)
 		user << browse(null, "window=teg")
 		return
 
-	user.set_machine(src)
+	var/datum/gas_mixture/circ1_air1 = circ1.AIR1
+	var/datum/gas_mixture/circ1_air2 = circ1.AIR2
+	var/datum/gas_mixture/circ2_air1 = circ2.AIR1
+	var/datum/gas_mixture/circ2_air2 = circ2.AIR2
 
 	var/t = "<PRE><B>Thermo-Electric Generator</B><HR>"
 
@@ -161,9 +164,8 @@
 	t += "<HR>"
 	t += "<A href='?src=\ref[src]'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A>"
 
-	user << browse(t, "window=teg;size=460x300")
+	user << browse(entity_ja(t), "window=teg;size=460x300")
 	onclose(user, "teg")
-	return 1
 
 
 /obj/machinery/power/generator/Topic(href, href_list)

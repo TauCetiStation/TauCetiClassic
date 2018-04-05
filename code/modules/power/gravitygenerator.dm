@@ -25,21 +25,19 @@
 	var/effectiverange = 25
 
 	// Borrows code from cloning computer
-/obj/machinery/computer/gravity_control_computer/New()
+/obj/machinery/computer/gravity_control_computer/atom_init()
 	..()
-	spawn(5)
-		updatemodules()
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/gravity_generator/New()
+/obj/machinery/computer/gravity_control_computer/atom_init_late()
+	updatemodules()
+
+/obj/machinery/gravity_generator/atom_init()
 	..()
-	spawn(5)
-		locatelocalareas()
-		return
-	return
+	return INITIALIZE_HINT_LATELOAD
 
-
+/obj/machinery/gravity_generator/atom_init_late()
+	locatelocalareas()
 
 /obj/machinery/computer/gravity_control_computer/proc/updatemodules()
 	src.gravity_generator = findgenerator()
@@ -63,20 +61,7 @@
 			break
 	return foundgenerator
 
-
-/obj/machinery/computer/gravity_control_computer/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/gravity_control_computer/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/computer/gravity_control_computer/attack_hand(mob/user)
-	user.set_machine(src)
-	add_fingerprint(user)
-
-	if(stat & (BROKEN|NOPOWER))
-		return
-
+/obj/machinery/computer/gravity_control_computer/ui_interact(mob/user)
 	updatemodules()
 
 	var/dat = "<h3>Generator Control System</h3>"
@@ -108,7 +93,7 @@
 	else
 		dat += "No local gravity generator detected!"
 
-	user << browse(dat, "window=gravgen")
+	user << browse(entity_ja(dat), "window=gravgen")
 	onclose(user, "gravgen")
 
 

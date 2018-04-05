@@ -27,11 +27,6 @@
 				var/obj/item/Item = new path()
 				if(istype(Item,/obj/item/weapon/card/id))
 					//id card needs to replace the original ID
-					if(M.ckey == "nerezza" && M.real_name == "Asher Spock" && M.mind.role_alt_title && M.mind.role_alt_title != "Emergency Physician")
-						//only spawn ID if asher is joining as an emergency physician
-						ok = 1
-						qdel(Item)
-						goto skip
 					var/obj/item/weapon/card/id/I = Item
 					for(var/obj/item/weapon/card/id/C in M)
 						//default settings
@@ -44,24 +39,11 @@
 						I.fingerprint_hash = C.fingerprint_hash
 						//I.pin = C.pin
 
-						//custom stuff
-						if(M.ckey == "fastler" && M.real_name == "Fastler Greay") //This is a Lifetime ID
-							I.name = "[M.real_name]'s Lifetime ID Card ([M.mind.role_alt_title ? M.mind.role_alt_title : M.mind.assigned_role])"
-						else if(M.ckey == "nerezza" && M.real_name == "Asher Spock") //This is an Odysseus Specialist ID
-							I.name = "[M.real_name]'s Odysseus Specialist ID Card ([M.mind.role_alt_title ? M.mind.role_alt_title : M.mind.assigned_role])"
-							I.access += list(access_robotics) //Station-based mecha pilots need this to access the recharge bay.
-						else if(M.ckey == "roaper" && M.real_name == "Ian Colm") //This is a Technician ID
-							I.name = "[M.real_name]'s Technician ID ([M.mind.role_alt_title ? M.mind.role_alt_title : M.mind.assigned_role])"
-
 						//replace old ID
 						qdel(C)
 						ok = M.equip_to_slot_if_possible(I, slot_wear_id, 0)	//if 1, last argument deletes on fail
 						break
 				else if(istype(Item,/obj/item/weapon/storage/belt))
-					if(M.ckey == "jakksergal" && M.real_name == "Nashi Ra'hal" && M.mind.role_alt_title && M.mind.role_alt_title != "Nurse" && M.mind.role_alt_title != "Chemist")
-						ok = 1
-						qdel(Item)
-						goto skip
 					var/obj/item/weapon/storage/belt/medical/fluff/nashi_belt/I = Item
 					if(istype(M.belt,/obj/item/weapon/storage/belt))
 						for(var/obj/item/weapon/storage/belt/B in M)
@@ -85,6 +67,5 @@
 							ok = 1
 							break
 
-				skip:
 				if (ok == 0) // Finally, since everything else failed, place it on the ground
 					Item.loc = get_turf(M.loc)

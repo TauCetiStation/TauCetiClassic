@@ -20,8 +20,8 @@
 	var/force_divisor = 400                             // Force equates to speed. Speed/5 equates to a damage multiplier for whoever you hit.
 	                                                    // For reference, a fully pressurized oxy tank at 50% gas release firing a health
 	                                                    // analyzer with a force_divisor of 10 hit with a damage multiplier of 3000+.
-/obj/item/weapon/storage/pneumatic/New()
-	..()
+/obj/item/weapon/storage/pneumatic/atom_init()
+	. = ..()
 	tank_container = new(src)
 	tank_container.tag = "gas_tank_holder"
 
@@ -73,12 +73,8 @@
 			to_chat(user, "Nothing is attached to the tank valve!")
 
 /obj/item/weapon/storage/pneumatic/afterattack(atom/target, mob/living/user, flag, params)
-	if (istype(target, /obj/item/weapon/storage/backpack ))
+	if (target.loc == user.loc)
 		return
-
-	else if (target.loc == user.loc)
-		return
-
 	else if (locate (/obj/structure/table, src.loc))
 		return
 
@@ -102,6 +98,11 @@
 			return
 
 /obj/item/weapon/storage/pneumatic/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = H.wear_suit
+			V.attack_reaction(H, REACTION_GUN_FIRE)
 
 	if (!tank)
 		to_chat(user, "There is no gas tank in [src]!")
@@ -131,7 +132,7 @@
 	user.visible_message("<span class='danger'>[user] fires [src] and launches [object] at [target]!</span>","<span class='danger'>You fire [src] and launch [object] at [target]!</span>")
 
 	src.remove_from_storage(object,user.loc)
-	object.throw_at(target,81,speed,user)         //81 because speed must be < than distance
+	object.throw_at(target, speed + 1, speed, user)
 
 	var/lost_gas_amount = tank.air_contents.total_moles*(pressure_setting/100)
 	var/datum/gas_mixture/removed = tank.air_contents.remove(lost_gas_amount)
@@ -181,8 +182,7 @@
 	else if(istype(W,/obj/item/stack/sheet/metal))
 		if(buildstate == 2)
 			var/obj/item/stack/sheet/metal/M = W
-			if(M.amount >= 5)
-				M.use(5)
+			if(M.use(5))
 				to_chat(user, "\blue You assemble a chassis around the cannon frame.")
 				buildstate++
 				update_icon()

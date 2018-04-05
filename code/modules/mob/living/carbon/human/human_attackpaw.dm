@@ -10,9 +10,9 @@
 			O.show_message(text("\red <B>[M.name] has bit []!</B>", src), 1)
 
 		var/damage = rand(1, 3)
-		var/dam_zone = pick("chest", "l_hand", "r_hand", "l_leg", "r_leg")
-		var/datum/organ/external/affecting = get_organ(ran_zone(dam_zone))
-		apply_damage(damage, BRUTE, affecting, run_armor_check(affecting, "melee"))
+		var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
+		var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
+		apply_damage(damage, BRUTE, BP, run_armor_check(BP, "melee"))
 
 		for(var/datum/disease/D in M.viruses)
 			if(istype(D, /datum/disease/jungle_fever))

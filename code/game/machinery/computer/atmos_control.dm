@@ -7,32 +7,21 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	light_color = "#00b000"
-	density = 1
-	anchored = 1.0
 	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
-	var/obj/machinery/alarm/current
-	var/overridden = 0 //not set yet, can't think of a good way to do it
 	req_access = list(access_ce)
+	allowed_checks = ALLOWED_CHECK_NONE
 
+	var/obj/machinery/alarm/current
+	var/overridden = FALSE //not set yet, can't think of a good way to do it
 
-/obj/machinery/computer/atmoscontrol/attack_ai(mob/user)
-	return interact(user)
-
-/obj/machinery/computer/atmoscontrol/attack_paw(mob/user)
-	return interact(user)
-
-/obj/machinery/computer/atmoscontrol/attack_hand(mob/user)
-	if(..())
-		return
-	return interact(user)
-
-/obj/machinery/computer/atmoscontrol/interact(mob/user)
-	user.set_machine(src)
-	if(allowed(user))
-		overridden = 1
+/obj/machinery/computer/atmoscontrol/ui_interact(mob/user)
+	if(allowed(user)) // this is very strange when you know, that this var will be set everytime someone opens with and without access and interfere with each other... but maybe i don't understand smth.
+		overridden = TRUE
 	else if(!emagged)
-		overridden = 0
+		overridden = FALSE
+
 	var/dat = "<a href='?src=\ref[src]&reset=1'>Main Menu</a><hr>"
+
 	if(current)
 		dat += specific()
 	else
@@ -48,17 +37,100 @@
 				if (2)
 					dat += "<font color=red>"
 			dat += "[alarm]</font></a><br/>"
-	user << browse(dat, "window=atmoscontrol")
+	user << browse(entity_ja(dat), "window=atmoscontrol")
 
 /obj/machinery/computer/atmoscontrol/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)
-		user.visible_message("\red \The [user] swipes \a [I] through \the [src], causing the screen to flash!",\
-			"\red You swipe your [I] through \the [src], the screen flashing as you gain full control.",\
-			"You hear the swipe of a card through a reader, and an electronic warble.")
-		emagged = 1
-		overridden = 1
+		user.visible_message("<span class='red'>\The [user] swipes \a [I] through \the [src], causing the screen to flash!</span>",
+			                 "<span class='red'>You swipe your [I] through \the [src], the screen flashing as you gain full control.</span>",
+			                 "You hear the swipe of a card through a reader, and an electronic warble.")
+
+		emagged = TRUE
+		overridden = TRUE
 		return
+
 	return ..()
+
+// This is here for non nano support which this computer is actually uses for now.
+
+/obj/machinery/alarm/proc/return_status()
+	var/turf/location = get_turf(src)
+	var/datum/gas_mixture/environment = location.return_air()
+	var/total = environment.gas["oxygen"] + environment.gas["carbon_dioxide"] + environment.gas["phoron"] + environment.gas["nitrogen"]
+	var/output = "<b>Air Status:</b><br>"
+
+	if(total == 0)
+		output += "<font color='red'><b>Warning: Cannot obtain air sample for analysis.</b></font>"
+		return output
+
+	output += {"
+<style>
+.dl0 { color: green; }
+.dl1 { color: orange; }
+.dl2 { color: red; font-weght: bold;}
+</style>
+"}
+
+	var/partial_pressure = R_IDEAL_GAS_EQUATION * environment.temperature / environment.volume
+
+	var/list/current_settings = TLV["pressure"]
+	var/environment_pressure = environment.return_pressure()
+	var/pressure_dangerlevel = get_danger_level(environment_pressure, current_settings)
+
+	current_settings = TLV["oxygen"]
+	var/oxygen_dangerlevel = get_danger_level(environment.gas["oxygen"] * partial_pressure, current_settings)
+	var/oxygen_percent = environment.gas["oxygen"] ? round(environment.gas["oxygen"] / total * 100, 2) : 0
+
+	current_settings = TLV["carbon dioxide"]
+	var/co2_dangerlevel = get_danger_level(environment.gas["carbon_dioxide"] * partial_pressure, current_settings)
+	var/co2_percent = environment.gas["carbon_dioxide"] ? round(environment.gas["carbon_dioxide"] / total * 100, 2) : 0
+
+	current_settings = TLV["phoron"]
+	var/phoron_dangerlevel = get_danger_level(environment.gas["phoron"] * partial_pressure, current_settings)
+	var/phoron_percent = environment.gas["phoron"] ? round(environment.gas["phoron"] / total * 100, 2) : 0
+
+	current_settings = TLV["other"]
+	var/other_moles = 0
+	for(var/g in trace_gas)
+		other_moles += environment.gas[g] // this is only going to be used in a partial pressure calc, so we don't need to worry about group_multiplier here.
+	var/other_dangerlevel = get_danger_level(other_moles * partial_pressure, current_settings)
+
+	current_settings = TLV["temperature"]
+	var/temperature_dangerlevel = get_danger_level(environment.temperature, current_settings)
+
+	output += {"
+Pressure: <span class='dl[pressure_dangerlevel]'>[environment_pressure]</span>kPa<br>
+Oxygen: <span class='dl[oxygen_dangerlevel]'>[oxygen_percent]</span>%<br>
+Carbon dioxide: <span class='dl[co2_dangerlevel]'>[co2_percent]</span>%<br>
+Toxins: <span class='dl[phoron_dangerlevel]'>[phoron_percent]</span>%<br>
+"}
+
+	if (other_dangerlevel == 2)
+		output += "Notice: <span class='dl2'>High Concentration of Unknown Particles Detected</span><br>"
+	else if (other_dangerlevel == 1)
+		output += "Notice: <span class='dl1'>Low Concentration of Unknown Particles Detected</span><br>"
+
+	output += "Temperature: <span class='dl[temperature_dangerlevel]'>[environment.temperature]</span>K ([round(environment.temperature - T0C, 0.1)]C)<br>"
+
+	//'Local Status' should report the LOCAL status, damnit.
+	output += "Local Status: "
+	switch(max(pressure_dangerlevel, oxygen_dangerlevel, co2_dangerlevel, phoron_dangerlevel, other_dangerlevel, temperature_dangerlevel))
+		if(2)
+			output += "<span class='dl2'>DANGER: Internals Required</span><br>"
+		if(1)
+			output += "<span class='dl1'>Caution</span><br>"
+		if(0)
+			output += "<span class='dl0'>Optimal</span><br>"
+
+	output += "Area Status: "
+	if(alarm_area.atmosalm)
+		output += "<span class='dl1'>Atmos alert in area</span>"
+	else if (alarm_area.fire)
+		output += "<span class='dl1'>Fire alarm in area</span>"
+	else
+		output += "No alerts"
+
+	return output
 
 /obj/machinery/computer/atmoscontrol/proc/specific()
 	if(!current)
@@ -93,8 +165,7 @@
 					"scrubbing"
 				)
 					current.send_signal(device_id, list (href_list["command"] = text2num(href_list["val"])))
-					spawn(3)
-						src.updateUsrDialog()
+					updateUsrDialog()
 				//if("adjust_threshold") //was a good idea but required very wide window
 				if("set_threshold")
 					var/env = href_list["env"]
@@ -102,19 +173,22 @@
 					var/list/selected = current.TLV[env]
 					var/list/thresholds = list("lower bound", "low warning", "high warning", "upper bound")
 					var/newval = input("Enter [thresholds[threshold]] for [env]", "Alarm triggers", selected[threshold]) as num|null
+
 					if (isnull(newval) || ..() || (current.locked && issilicon(usr)))
 						return FALSE
-					if (newval<0)
+
+					if (newval < 0)
 						selected[threshold] = -1.0
-					else if (env=="temperature" && newval>5000)
+					else if (env=="temperature" && newval > 5000)
 						selected[threshold] = 5000
 					else if (env=="pressure" && newval>50*ONE_ATMOSPHERE)
 						selected[threshold] = 50*ONE_ATMOSPHERE
-					else if (env!="temperature" && env!="pressure" && newval>200)
+					else if (env!="temperature" && env != "pressure" && newval > 200)
 						selected[threshold] = 200
 					else
-						newval = round(newval,0.01)
+						newval = round(newval, 0.01)
 						selected[threshold] = newval
+
 					if(threshold == 1)
 						if(selected[1] > selected[2])
 							selected[2] = selected[1]
@@ -122,6 +196,7 @@
 							selected[3] = selected[1]
 						if(selected[1] > selected[4])
 							selected[4] = selected[1]
+
 					if(threshold == 2)
 						if(selected[1] > selected[2])
 							selected[1] = selected[2]
@@ -129,6 +204,7 @@
 							selected[3] = selected[2]
 						if(selected[2] > selected[4])
 							selected[4] = selected[2]
+
 					if(threshold == 3)
 						if(selected[1] > selected[3])
 							selected[1] = selected[3]
@@ -136,6 +212,7 @@
 							selected[2] = selected[3]
 						if(selected[3] > selected[4])
 							selected[4] = selected[3]
+
 					if(threshold == 4)
 						if(selected[1] > selected[4])
 							selected[1] = selected[4]
@@ -151,14 +228,12 @@
 						if(current.target_temperature > selected[3])
 							current.target_temperature = selected[3]
 
-					spawn(1)
-						updateUsrDialog()
+					updateUsrDialog()
 			return
 
 		if(href_list["screen"])
 			current.screen = text2num(href_list["screen"])
-			spawn(1)
-				src.updateUsrDialog()
+			updateUsrDialog()
 			return
 
 		//commenting this out because it causes compile errors
@@ -173,24 +248,25 @@
 		if(href_list["atmos_alarm"])
 			if (current.alarm_area.atmosalert(2))
 				current.apply_danger_level(2)
-			spawn(1)
-				src.updateUsrDialog()
+
+			updateUsrDialog()
 			current.update_icon()
 			return
+
 		if(href_list["atmos_reset"])
 			if (current.alarm_area.atmosalert(0))
 				current.apply_danger_level(0)
-			spawn(1)
-				src.updateUsrDialog()
+
+			updateUsrDialog()
 			current.update_icon()
 			return
 
 		if(href_list["mode"])
 			current.mode = text2num(href_list["mode"])
 			current.apply_mode()
-			spawn(5)
-				src.updateUsrDialog()
+			updateUsrDialog()
 			return
+
 	updateUsrDialog()
 
 //copypasta from alarm code, changed to work with this without derping hard
@@ -213,7 +289,7 @@
 <a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_SENSORS]'>Sensor Control</a><br>
 <HR>
 "}
-			if (current.mode==AALARM_MODE_PANIC)
+			if (current.mode == AALARM_MODE_PANIC)
 				output += "<font color='red'><B>PANIC SYPHON ACTIVE</B></font><br><A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_SCRUBBING]'>turn syphoning off</A>"
 			else
 				output += "<A href='?src=\ref[src];alarm=\ref[current];mode=[AALARM_MODE_PANIC]'><font color='red'><B>ACTIVATE PANIC SYPHON IN AREA</B></font></A>"
@@ -229,7 +305,7 @@
 					if(!data)
 						state = "<font color='red'> can not be found!</font>"
 						data = list("external" = 0) //for "0" instead of empty string
-					else if (data["timestamp"]+AALARM_REPORT_TIMEOUT < world.time)
+					else if (data["timestamp"] + AALARM_REPORT_TIMEOUT < world.time)
 						state = "<font color='red'> not responding!</font>"
 					sensor_data += {"
 <B>[long_name]</B>[state]<BR>
@@ -313,12 +389,13 @@ Nitrous Oxide
 					AALARM_MODE_CYCLE       = "<font color='red'>Cycle - Siphons air before replacing</font>",\
 					AALARM_MODE_FILL        = "<font color='green'>Fill - Shuts off scrubbers and opens vents</font>",\
 					AALARM_MODE_OFF         = "<font color='blue'>Off - Shuts off vents and scrubbers</font>",)
-			for (var/m=1,m<=modes.len,m++)
+			for(var/m in 1 to modes.len)
 				if (current.mode==m)
 					output += {"<li><A href='?src=\ref[src];alarm=\ref[current];mode=[m]'><b>[modes[m]]</b></A> (selected)</li>"}
 				else
 					output += {"<li><A href='?src=\ref[src];alarm=\ref[current];mode=[m]'>[modes[m]]</A></li>"}
 			output += "</ul>"
+
 		if (AALARM_SCREEN_SENSORS)
 			output += {"
 <a href='?src=\ref[src];alarm=\ref[current];screen=[AALARM_SCREEN_MAIN]'>Main menu</a><br>
@@ -346,19 +423,19 @@ table tr:first-child th:first-child { border: none;}
 			for (var/g in gases)
 				output += "<TR><th>[gases[g]]</th>"
 				tlv = current.TLV[g]
-				for (var/i = 1, i <= 4, i++)
+				for(var/i in 1 to 4)
 					output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=[g];var=[i]'>[tlv[i] >= 0?tlv[i]:"OFF"]</A></td>"
 				output += "</TR>"
 
 			tlv = current.TLV["pressure"]
 			output += "<TR><th>Pressure</th>"
-			for (var/i = 1, i <= 4, i++)
+			for(var/i in 1 to 4)
 				output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=pressure;var=[i]'>[tlv[i]>= 0?tlv[i]:"OFF"]</A></td>"
 			output += "</TR>"
 
 			tlv = current.TLV["temperature"]
 			output += "<TR><th>Temperature</th>"
-			for (var/i = 1, i <= 4, i++)
+			for(var/i in 1 to 4)
 				output += "<td><A href='?src=\ref[src];alarm=\ref[current];command=set_threshold;env=temperature;var=[i]'>[tlv[i]>= 0?tlv[i]:"OFF"]</A></td>"
 			output += "</TR>"
 			output += "</table>"

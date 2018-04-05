@@ -35,16 +35,6 @@ s_cooldown ticks off each second based on the suit recharge proc, in seconds. De
 				return 1
 	return (s_coold)//Returns the value of the variable which counts down to zero.
 
-//=======//TELEPORT GRAB CHECK//=======//
-/obj/item/clothing/suit/space/space_ninja/proc/handle_teleport_grab(turf/T, mob/living/U)
-	if(istype(U.get_active_hand(),/obj/item/weapon/grab))//Handles grabbed persons.
-		var/obj/item/weapon/grab/G = U.get_active_hand()
-		G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)//variation of position.
-	if(istype(U.get_inactive_hand(),/obj/item/weapon/grab))
-		var/obj/item/weapon/grab/G = U.get_inactive_hand()
-		G.affecting.loc = locate(T.x+rand(-1,1),T.y+rand(-1,1),T.z)//variation of position.
-	return
-
 //=======//SMOKE//=======//
 /*Summons smoke in radius of user.
 Not sure why this would be useful (it's not) but whatever. Ninjas need their smoke bombs.*/
@@ -56,13 +46,13 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 
 	if(!ninjacost(,2))
 		var/mob/living/carbon/human/U = affecting
-		to_chat(U, "\blue There are <B>[s_bombs]</B> smoke bombs remaining.")
 		var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
 		smoke.set_up(10, 0, U.loc)
 		smoke.start()
 		playsound(U.loc, 'sound/effects/bamf.ogg', 50, 2)
 		s_bombs--
 		s_coold = 1
+		to_chat(U, "<span class='info'>There are <B>[s_bombs]</B> smoke bombs remaining.</span>")
 	return
 
 
@@ -85,8 +75,6 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 
 			cell.use(C*10)
 			handle_teleport_grab(T, U)
-			if(U.buckled)
-				U.buckled.unbuckle_mob()
 			U.forceMove(T)
 
 			spawn(0)
@@ -127,6 +115,7 @@ Not sure why this would be useful (it's not) but whatever. Ninjas need their smo
 	if(!ninjacost(C,0)) //Same spawn cost but higher upkeep cost
 		var/mob/living/carbon/human/U = affecting
 		if(!kamikaze)
+			cancel_stealth()
 			if(!U.get_active_hand()&&!istype(U.get_inactive_hand(), /obj/item/weapon/melee/energy/blade))
 				var/obj/item/weapon/melee/energy/blade/W = new()
 				spark_system.start()
@@ -173,8 +162,10 @@ This could be a lot better but I'm too tired atm.*/
 				return
 			if (targloc == curloc)
 				return
-			var/obj/item/projectile/energy/dart/A = new /obj/item/projectile/energy/dart(U.loc)
+			var/obj/item/projectile/energy/dart/A = new(curloc)
+			A.starting = get_turf(affecting)
 			A.current = curloc
+			A.original = targloc
 			A.yo = targloc.y - curloc.y
 			A.xo = targloc.x - curloc.x
 			cell.use(C*10)

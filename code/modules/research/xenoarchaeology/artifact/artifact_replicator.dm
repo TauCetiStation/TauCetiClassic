@@ -9,6 +9,7 @@
 	idle_power_usage = 100
 	active_power_usage = 1000
 	use_power = 1
+	interact_offline = TRUE
 
 	var/spawn_progress_time = 0
 	var/max_spawn_time = 50
@@ -20,8 +21,8 @@
 
 	var/fail_message
 
-/obj/machinery/replicator/New()
-	..()
+/obj/machinery/replicator/atom_init()
+	. = ..()
 
 	var/list/viables = list(\
 	/obj/item/roller,\
@@ -70,7 +71,7 @@
 	)
 
 	var/quantity = rand(5,15)
-	for(var/i=0, i<quantity, i++)
+	for (var/i in 1 to quantity)
 		var/button_desc = "a [pick("yellow","purple","green","blue","red","orange","white")], "
 		button_desc += "[pick("round","square","diamond","heart","dog","human")] shaped "
 		button_desc += "[pick("toggle","switch","lever","button","pad","hole")]"
@@ -117,16 +118,13 @@
 
 	last_process_time = world.time
 
-/obj/machinery/replicator/attack_hand(mob/user)
-	interact(user)
-
-/obj/machinery/replicator/interact(mob/user)
+/obj/machinery/replicator/ui_interact(mob/user)
 	var/dat = "The control panel displays an incomprehensible selection of controls, many with unusual markings or text around them.<br>"
 	dat += "<br>"
 	for(var/index=1, index<=construction.len, index++)
 		dat += "<A href='?src=\ref[src];activate=[index]'>\[[construction[index]]\]</a><br>"
 
-	user << browse(dat, "window=alien_replicator")
+	user << browse(entity_ja(dat), "window=alien_replicator")
 
 /obj/machinery/replicator/attackby(obj/item/weapon/W, mob/living/user)
 	user.drop_item()

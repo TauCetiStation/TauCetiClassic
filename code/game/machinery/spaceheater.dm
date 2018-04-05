@@ -10,6 +10,8 @@
 	icon_state = "sheater-off"
 	name = "space heater"
 	desc = "Made by Space Amish using traditional space techniques, this heater/cooler is guaranteed not to set the station on fire."
+	interact_offline = TRUE
+	interact_open = TRUE
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/on = FALSE
 	var/mode = HEATER_MODE_STANDBY
@@ -17,19 +19,18 @@
 	var/targetTemperature = T20C
 	var/heatingPower = 40000
 	var/efficiency = 20000
-	var/temperatureTolerance = 1
 	var/settableTemperatureMedian = 30 + T0C
 	var/settableTemperatureRange = 30
 
 
-/obj/machinery/space_heater/New()
-	..()
+/obj/machinery/space_heater/atom_init()
+	. = ..()
 	cell = new(src)
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/space_heater(null)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/micro_laser(null)
-	component_parts += new /obj/item/weapon/cable_coil(null, 3)
+	component_parts += new /obj/item/stack/cable_coil/red(null, 3)
 	RefreshParts()
 	update_icon()
 
@@ -119,17 +120,8 @@
 	else
 		..()
 
-/obj/machinery/space_heater/attack_hand(mob/user)
-	interact(user)
-
-/obj/machinery/space_heater/attack_paw(mob/user)
-	interact(user)
-
-/obj/machinery/space_heater/interact(mob/user)
-	ui_interact(user)
-
 /obj/machinery/space_heater/ui_interact(mob/user, ui_key = "main")
-	if(user.stat)
+	if(user.stat) // this probably handled by nano itself, a check would be nice.
 		return
 
 	var/data[0]
@@ -168,7 +160,6 @@
 	else
 		// The UI is already open so push the new data to it
 		ui.push_data(data)
-		return
 
 /obj/machinery/space_heater/is_operational_topic()
 	return !(stat & BROKEN)
@@ -228,53 +219,50 @@
 	if(!on || (stat & BROKEN))
 		return
 
-	if(cell && cell.charge > 0)
-		var/turf/simulated/L = loc
-		if(!istype(L))
-			if(mode != HEATER_MODE_STANDBY)
-				mode = HEATER_MODE_STANDBY
-				update_icon()
-			return
+	if(powered() || cell && cell.charge > 0)
+		var/datum/gas_mixture/env = loc.return_air()
+		if(env && abs(env.temperature - targetTemperature) <= 0.1)
+			mode = HEATER_MODE_STANDBY
+		else
+			var/transfer_moles = 0.25 * env.total_moles
+			var/datum/gas_mixture/removed = env.remove(transfer_moles)
 
-		var/datum/gas_mixture/env = L.return_air()
+			if(removed)
+				var/heat_transfer = removed.get_thermal_energy_change(targetTemperature)
+				var/power_draw
+				if(heat_transfer > 0)	//heating air
+					heat_transfer = min( heat_transfer , heatingPower ) //limit by the power rating of the heater
 
-		var/newMode = HEATER_MODE_STANDBY
-		if(setMode != HEATER_MODE_COOL && env.temperature < targetTemperature - temperatureTolerance)
-			newMode = HEATER_MODE_HEAT
-		else if(setMode != HEATER_MODE_HEAT && env.temperature > targetTemperature + temperatureTolerance)
-			newMode = HEATER_MODE_COOL
+					removed.add_thermal_energy(heat_transfer)
+					power_draw = heat_transfer
+				else	//cooling air
+					heat_transfer = abs(heat_transfer)
 
-		if(mode != newMode)
-			mode = newMode
-			update_icon()
+					//Assume the heat is being pumped into the hull which is fixed at 20 C
+					var/cop = removed.temperature / T20C	//coefficient of performance from thermodynamics -> power used = heat_transfer/cop
+					heat_transfer = min(heat_transfer, cop * heatingPower)	//limit heat transfer by available power
 
-		if(mode == HEATER_MODE_STANDBY)
-			return
+					heat_transfer = removed.add_thermal_energy(-heat_transfer)	//get the actual heat transfer
 
-		var/transfer_moles = 0.25 * env.total_moles()
-		var/datum/gas_mixture/removed = env.remove(transfer_moles)
-		if(removed)
-			var/heat_capacity = removed.heat_capacity()
-			var/requiredPower = abs(removed.temperature - targetTemperature) * heat_capacity
-			requiredPower = min(requiredPower, heatingPower)
+					power_draw = abs(heat_transfer) / cop
+				if(!powered())
+					cell.use(power_draw * CELLRATE)
+				else
+					use_power(power_draw TAUCETI_POWER_DRAW_MOD)
 
-			if(requiredPower < 1)
-				return
+				if(heat_transfer > 0)
+					mode = HEATER_MODE_HEAT
+				else if(heat_transfer < 0)
+					mode = HEATER_MODE_COOL
+				else
+					mode = HEATER_MODE_STANDBY
 
-			if(heat_capacity)
-				var/deltaTemperature = requiredPower / heat_capacity
-				if(mode == HEATER_MODE_COOL)
-					deltaTemperature *= -1
-				if(deltaTemperature)
-					removed.temperature += deltaTemperature
-
-			cell.use(requiredPower / efficiency)
-
-		env.merge(removed)
-
+			env.merge(removed)
 	else
 		on = FALSE
-		update_icon()
+		mode = HEATER_MODE_STANDBY
+		power_change()
+	update_icon()
 
 #undef HEATER_MODE_STANDBY
 #undef HEATER_MODE_HEAT

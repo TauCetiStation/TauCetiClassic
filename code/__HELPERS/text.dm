@@ -8,54 +8,131 @@
  *			Misc
  */
 
-
 /*
  * SQL sanitization
  */
 
 // Run all strings to be used in an SQL query through this proc first to properly escape out injection attempts.
-/proc/sanitizeSQL(t)
+/proc/sanitize_sql(t)
 	var/sanitized_text = replacetext(t, "'", "\\'")
 	sanitized_text = replacetext(sanitized_text, "\"", "\\\"")
 	return sanitized_text
+	
+// Sanitize inputs to avoid SQL injection attacks
+proc/sql_sanitize_text(text)
+	text = replacetext(text, "'", "''")
+	text = replacetext(text, ";", "")
+	text = replacetext(text, "&", "")
+	return text
 
 /*
  * Text sanitization
  */
 
-//Simply removes < and > and limits the length of the message
-/proc/strip_html_simple(t,limit=MAX_MESSAGE_LEN)
-	var/list/strip_chars = list("<",">")
-	t = copytext(t,1,limit)
-	for(var/char in strip_chars)
-		var/index = findtext(t, char)
-		while(index)
-			t = copytext(t, 1, index) + copytext(t, index+1)
-			index = findtext(t, char)
-	return t
+//Used for preprocessing entered text
+/proc/sanitize(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE)
+	if(!input)
+		return
 
-/proc/readd_quotes(t)
-	var/list/repl_chars = list("&#34;" = "\"")
-	for(var/char in repl_chars)
-		var/index = findtext(t, char)
-		while(index)
-			t = copytext(t, 1, index) + repl_chars[char] + copytext(t, index+5)
-			index = findtext(t, char)
-	return t
+	if(max_length)
+		input = copytext(input,1,max_length)
+
+	input = replacetext(input, JA_CHARACTER, JA_PLACEHOLDER)
+
+	if(extra)
+		input = replace_characters(input, list("\n"=" ","\t"=" "))
+
+	if(encode)
+		//In addition to processing html, html_encode removes byond formatting codes like "\red", "\i" and other.
+		//It is important to avoid double-encode text, it can "break" quotes and some other characters.
+		//Also, keep in mind that escaped characters don't work in the interface (window titles, lower left corner of the main window, etc.)
+		input = html_encode(input)
+	else
+		//If not need encode text, simply remove < and >
+		//note: we can also remove here byond formatting codes: 0xFF + next byte
+		input = replace_characters(input, list("<"=" ", ">"=" "))
+
+	if(trim)
+		//Maybe, we need trim text twice? Here and before copytext?
+		input = trim(input)
+
+	return input
+
+//Run sanitize(), but remove <, >, " first to prevent displaying them as &gt; &lt; &34; in some places, after html_encode().
+//Best used for sanitize object names, window titles.
+//If you have a problem with sanitize() in chat, when quotes and >, < are displayed as html entites -
+//this is a problem of double-encode(when & becomes &amp;), use sanitize() with encode=0, but not the sanitize_safe()!
+/proc/sanitize_safe(input, max_length = MAX_MESSAGE_LEN, encode = TRUE, trim = TRUE, extra = TRUE)
+	return sanitize(replace_characters(input, list(">"=" ","<"=" ", "\""="'")), max_length, encode, trim, extra)
+
+//Filters out undesirable characters from names
+/proc/sanitize_name(input, max_length = MAX_NAME_LEN, allow_numbers = 0, force_first_letter_uppercase = TRUE)
+	if(!input || length(input) > max_length)
+		return //Rejects the input if it is null or if it is longer then the max length allowed
+
+	var/number_of_alphanumeric	= 0
+	var/last_char_group			= 0
+	var/output = ""
+
+	for(var/i=1, i<=length(input), i++)
+		var/ascii_char = text2ascii(input,i)
+		switch(ascii_char)
+			// A  .. Z
+			if(65 to 90)			//Uppercase Letters
+				output += ascii2text(ascii_char)
+				number_of_alphanumeric++
+				last_char_group = 4
+
+			// a  .. z
+			if(97 to 122)			//Lowercase Letters
+				if(last_char_group<2 && force_first_letter_uppercase)
+					output += ascii2text(ascii_char-32)	//Force uppercase first character
+				else
+					output += ascii2text(ascii_char)
+				number_of_alphanumeric++
+				last_char_group = 4
+
+			// 0  .. 9
+			if(48 to 57)			//Numbers
+				if(!last_char_group)		continue	//suppress at start of string
+				if(!allow_numbers)			continue
+				output += ascii2text(ascii_char)
+				number_of_alphanumeric++
+				last_char_group = 3
+
+			// '  -  .
+			if(39,45,46)			//Common name punctuation
+				if(!last_char_group) continue
+				output += ascii2text(ascii_char)
+				last_char_group = 2
+
+			// ~   |   @  :  #  $  %  &  *  +
+			if(126,124,64,58,35,36,37,38,42,43)			//Other symbols that we'll allow (mainly for AI)
+				if(!last_char_group)		continue	//suppress at start of string
+				if(!allow_numbers)			continue
+				output += ascii2text(ascii_char)
+				last_char_group = 2
+
+			//Space
+			if(32)
+				if(last_char_group <= 1)	continue	//suppress double-spaces and spaces at start of string
+				output += ascii2text(ascii_char)
+				last_char_group = 1
+			else
+				return
+
+	if(number_of_alphanumeric < 2)	return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
+
+	if(last_char_group == 1)
+		output = copytext(output,1,length(output))	//removes the last character (in this case a space)
+
+	if(lowertext(output) in forbidden_names)	//prevents these common metagamey names
+		return	//(not case sensitive)
+
+	return output
 
 /proc/sanitize_slack(t)
-	return replacetext(html_decode(revert_ja(t)), "\"", "'")
-
-//Runs sanitize and strip_html_simple
-//I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' after sanitize() calls byond's html_encode()
-/proc/strip_html(t,limit=MAX_MESSAGE_LEN)
-	return copytext((sanitize(strip_html_simple(t))),1,limit)
-
-//Runs byond's sanitization proc along-side strip_html_simple
-//I believe strip_html_simple() is required to run first to prevent '<' from displaying as '&lt;' that html_encode() would cause
-/proc/adminscrub(t,limit=MAX_MESSAGE_LEN)
-	return copytext((html_encode(strip_html_simple(t))),1,limit)
-
+	return replacetext(html_decode(reset_ja(t)), "\"", "'")
 
 //Returns null if there is any bad text in the string
 /proc/reject_bad_text(text, max_length=512)
@@ -64,102 +141,24 @@
 	for(var/i=1, i<=length(text), i++)
 		switch(text2ascii(text,i))
 			if(62,60,92,47)	return			//rejects the text if it contains these bad characters: <, >, \ or /
-//			if(127 to 255)	return			//rejects weird letters like �
+			if(127 to 181)	return			//rejects weird letters like �
+			if(183 to 191)	return			//rejects weird letters like �
 			if(0 to 31)		return			//more weird stuff
 			if(32)			continue		//whitespace
 			else			non_whitespace = 1
 	if(non_whitespace)		return text		//only accepts the text if it has some non-spaces
 
-// Used to get a sanitized input.
-/proc/stripped_input(mob/user, message = "", title = "", default = "", max_length=MAX_MESSAGE_LEN)
-	var/name = input(user, message, title, default)
-	return strip_html_simple(name, max_length)
 
-//Filters out undesirable characters from names
-/proc/reject_bad_name(t_in, allow_numbers=0, max_length=MAX_NAME_LEN)
-	if(!t_in || length(t_in) > max_length)
-		return //Rejects the input if it is null or if it is longer then the max length allowed
+//reset to placeholder for inputs, logs
+/proc/reset_ja(text)
+	return replace_characters(text, list(JA_CODE=JA_PLACEHOLDER, JA_CODE_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
 
-	var/number_of_alphanumeric	= 0
-	var/last_char_group			= 0
-	var/t_out = ""
+//replace ja with entity for chat/popup
+/proc/entity_ja(text)
+	return replace_characters(text, list(JA_PLACEHOLDER=JA_ENTITY, JA_ENTITY_ASCII=JA_ENTITY))
 
-	for(var/i=1, i<=length(t_in), i++)
-		var/ascii_char = text2ascii(t_in,i)
-		switch(ascii_char)
-			// A  .. Z
-			if(65 to 90)			//Uppercase Letters
-				t_out += ascii2text(ascii_char)
-				number_of_alphanumeric++
-				last_char_group = 4
-
-			// a  .. z
-			if(97 to 122)			//Lowercase Letters
-				if(last_char_group<2)		t_out += ascii2text(ascii_char-32)	//Force uppercase first character
-				else						t_out += ascii2text(ascii_char)
-				number_of_alphanumeric++
-				last_char_group = 4
-
-			// 0  .. 9
-			if(48 to 57)			//Numbers
-				if(!last_char_group)		continue	//suppress at start of string
-				if(!allow_numbers)			continue
-				t_out += ascii2text(ascii_char)
-				number_of_alphanumeric++
-				last_char_group = 3
-
-			// '  -  .
-			if(39,45,46)			//Common name punctuation
-				if(!last_char_group) continue
-				t_out += ascii2text(ascii_char)
-				last_char_group = 2
-
-			// ~   |   @  :  #  $  %  &  *  +
-			if(126,124,64,58,35,36,37,38,42,43)			//Other symbols that we'll allow (mainly for AI)
-				if(!last_char_group)		continue	//suppress at start of string
-				if(!allow_numbers)			continue
-				t_out += ascii2text(ascii_char)
-				last_char_group = 2
-
-			//Space
-			if(32)
-				if(last_char_group <= 1)	continue	//suppress double-spaces and spaces at start of string
-				t_out += ascii2text(ascii_char)
-				last_char_group = 1
-			else
-				return
-
-	if(number_of_alphanumeric < 2)	return		//protects against tiny names like "A" and also names like "' ' ' ' ' ' ' '"
-
-	if(last_char_group == 1)
-		t_out = copytext(t_out,1,length(t_out))	//removes the last character (in this case a space)
-
-	for(var/bad_name in list("space","floor","wall","r-wall","monkey","unknown","inactive ai"))	//prevents these common metagamey names
-		if(cmptext(t_out,bad_name))	return	//(not case sensitive)
-
-	return t_out
-
-//checks text for html tags
-//if tag is not in whitelist (var/list/paper_tag_whitelist in global.dm)
-//relpaces < with &lt;
-//hm, better use pencode + sanitize()
-proc/checkhtml(t)
-	t = sanitize_simple(t, list("&#"="."))
-
-	var/p = findtext(t,"<",1)
-	while (p)	//going through all the tags
-		var/start = p++
-		var/tag = copytext(t,p, p+1)
-		if (tag != "/")
-			while (reject_bad_text(copytext(t, p, p+1), 1))
-				tag = copytext(t,start, p)
-				p++
-			tag = copytext(t,start+1, p)
-			if (!(tag in paper_tag_whitelist))	//if it's unkown tag, disarming it
-				t = copytext(t,1,start-1) + "&lt;" + copytext(t,start+1)
-		p = findtext(t,"<",p)
-
-	return t
+/proc/input_default(text)
+	return html_decode(reset_ja(text))//replace br with \n?
 /*
  * Text searches
  */
@@ -196,6 +195,12 @@ proc/checkhtml(t)
 /*
  * Text modification
  */
+
+/proc/replace_characters(var/t,var/list/repl_chars)
+	for(var/char in repl_chars)
+		t = replacetext(t, char, repl_chars[char])
+	return t
+
 //Adds 'u' number of zeros ahead of the text 't'
 /proc/add_zero(t, u)
 	while (length(t) < u)
@@ -235,7 +240,32 @@ proc/checkhtml(t)
 
 //Returns a string with the first element of the string capitalized.
 /proc/capitalize(t)
-	return uppertext_plus(copytext(t, 1, 2)) + copytext(t, 2)
+	return uppertext_(copytext(t, 1, 2)) + copytext(t, 2)
+
+//This proc strips html properly, remove < > and all text between
+//for complete text sanitizing should be used sanitize()
+/proc/strip_html_properly(var/input)
+	if(!input)
+		return
+	var/opentag = 1 //These store the position of < and > respectively.
+	var/closetag = 1
+	while(1)
+		opentag = findtext(input, "<")
+		closetag = findtext(input, ">")
+		if(closetag && opentag)
+			if(closetag < opentag)
+				input = copytext(input, (closetag + 1))
+			else
+				input = copytext(input, 1, opentag) + copytext(input, (closetag + 1))
+		else if(closetag || opentag)
+			if(opentag)
+				input = copytext(input, 1, opentag)
+			else
+				input = copytext(input, (closetag + 1))
+		else
+			break
+
+	return input
 
 //Centers text by adding spaces to either side of the string.
 /proc/dd_centertext(message, length)
@@ -316,3 +346,50 @@ proc/checkhtml(t)
 /proc/macro2html(text)
     var/static/regex/text_macro = new("(\\xFF.)(.*)$")
     return text_macro.Replace(text, /proc/replace_text_macro)
+
+/*
+ * Byond
+ * (remove this when byond lern unicode)
+ */
+
+/proc/lowertext_(var/text)
+	var/lenght = length(text)
+	var/new_text = null
+	var/lcase_letter
+	var/letter_ascii
+
+	var/p = 1
+	while(p <= lenght)
+		lcase_letter = copytext(text, p, p + 1)
+		letter_ascii = text2ascii(lcase_letter)
+
+		if((letter_ascii >= 65 && letter_ascii <= 90) || (letter_ascii >= 192 && letter_ascii < 223))
+			lcase_letter = ascii2text(letter_ascii + 32)
+		else if(letter_ascii == 223)
+			lcase_letter = JA_PLACEHOLDER
+
+		new_text += lcase_letter
+		p++
+
+	return new_text
+
+/proc/uppertext_(var/text)
+	var/lenght = length(text)
+	var/new_text = null
+	var/ucase_letter
+	var/letter_ascii
+
+	var/p = 1
+	while(p <= lenght)
+		ucase_letter = copytext(text, p, p + 1)
+		letter_ascii = text2ascii(ucase_letter)
+
+		if((letter_ascii >= 97 && letter_ascii <= 122) || (letter_ascii >= 224 && letter_ascii < 255))
+			ucase_letter = ascii2text(letter_ascii - 32)
+		else if(letter_ascii == JA_PLACEHOLDER_CODE)
+			ucase_letter = JA_UPPERCHARACTER
+
+		new_text += ucase_letter
+		p++
+
+	return new_text

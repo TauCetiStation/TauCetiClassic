@@ -38,7 +38,6 @@ var/list/wood_icons = list("wood","wood-broken")
 	var/icon_plating = "plating"
 	thermal_conductivity = 0.040
 	heat_capacity = 10000
-	var/lava = 0
 	var/broken = 0
 	var/burnt = 0
 	var/mineral = "metal"
@@ -63,8 +62,8 @@ var/list/wood_icons = list("wood","wood-broken")
 	proc/toggle_lightfloor_on()
 		lightfloor_state ^= LIGHTFLOOR_ON_BIT
 
-/turf/simulated/floor/New()
-	..()
+/turf/simulated/floor/atom_init()
+	. = ..()
 	if(icon_state in icons_to_ignore_at_floor_init) //so damaged/burned tiles or plating icons aren't saved as the default
 		icon_regular_floor = "floor"
 	else
@@ -85,14 +84,14 @@ var/list/wood_icons = list("wood","wood-broken")
 	//set src in oview(1)
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(basetype)
 		if(2.0)
 			switch(pick(1,2;75,3))
 				if (1)
 					src.ReplaceWithLattice()
 					if(prob(33)) new /obj/item/stack/sheet/metal(src)
 				if(2)
-					src.ChangeTurf(/turf/space)
+					src.ChangeTurf(basetype)
 				if(3)
 					if(prob(80))
 						src.break_tile_to_plating()
@@ -143,10 +142,8 @@ var/list/wood_icons = list("wood","wood-broken")
 		else if(prob(50))
 			ReplaceWithLattice()
 
-turf/simulated/floor/proc/update_icon()
-	if(lava)
-		return
-	else if(is_plasteel_floor())
+/turf/simulated/floor/update_icon()
+	if(is_plasteel_floor())
 		if(!broken && !burnt)
 			icon_state = icon_regular_floor
 	else if(is_plating())
@@ -227,6 +224,7 @@ turf/simulated/floor/proc/update_icon()
 		if(istype(src,/turf/simulated/floor)) //Was throwing runtime errors due to a chance of it changing to space halfway through.
 			if(air)
 				update_visuals(air)*/
+	..()
 
 /turf/simulated/floor/return_siding_icon_state()
 	..()
@@ -486,6 +484,7 @@ turf/simulated/floor/proc/update_icon()
 
 	if(!C || !user)
 		return 0
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	if(istype(C,/obj/item/weapon/light/bulb)) //only for light tiles
 		if(is_light_floor())
@@ -539,12 +538,12 @@ turf/simulated/floor/proc/update_icon()
 	if(istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		if (is_plating())
-			if (R.amount >= 2)
+			if (R.get_amount() >= 2)
+				if(user.is_busy()) return
 				to_chat(user, "\blue Reinforcing the floor...")
-				if(do_after(user, 30, target = src) && R && R.amount >= 2 && is_plating())
-					if (R.use(2))
-						ChangeTurf(/turf/simulated/floor/engine)
-						playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
+				if(do_after(user, 30, target = src) && R.use(2) && is_plating())
+					ChangeTurf(/turf/simulated/floor/engine)
+					playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
 					return
 			else
 				to_chat(user, "\red You need more rods.")
@@ -585,9 +584,9 @@ turf/simulated/floor/proc/update_icon()
 				to_chat(user, "\blue This section is too damaged to support a tile. Use a welder to fix the damage.")
 
 
-	if(istype(C, /obj/item/weapon/cable_coil))
+	if(istype(C, /obj/item/stack/cable_coil))
 		if(is_plating() || is_catwalk())
-			var/obj/item/weapon/cable_coil/coil = C
+			var/obj/item/stack/cable_coil/coil = C
 			for(var/obj/structure/cable/LC in src)
 				if((LC.d1==0)||(LC.d2==0))
 					LC.attackby(C,user)

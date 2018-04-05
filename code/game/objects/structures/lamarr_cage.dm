@@ -70,7 +70,6 @@
 	src.health -= W.force
 	src.healthcheck()
 	..()
-	return
 
 /obj/structure/lamarr/attack_paw(mob/user)
 	return src.attack_hand(user)
@@ -79,10 +78,8 @@
 	if (src.destroyed)
 		return
 	else
-		to_chat(usr, text("\blue You kick the lab cage."))
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				to_chat(O, text("\red [] kicks the lab cage.", usr))
+		user.SetNextMove(CLICK_CD_MELEE)
+		visible_message("<span class='userdanger'>[user] kicks the lab cage.</span>")
 		src.health -= 2
 		healthcheck()
 		return
@@ -100,5 +97,5 @@
 	sterile = 1
 	gender = FEMALE
 
-/obj/item/clothing/mask/facehugger/lamarr/New()//to prevent deleting it if aliums are disabled
+/obj/item/clothing/mask/facehugger/lamarr/atom_init_late()//to prevent deleting it if aliums are disabled
 	return

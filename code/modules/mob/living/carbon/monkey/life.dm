@@ -1,14 +1,3 @@
-//This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:32
-
-/mob/living/carbon/monkey
-	var/oxygen_alert = 0
-	var/phoron_alert = 0
-	var/fire_alert = 0
-	var/pressure_alert = 0
-
-	var/temperature_alert = 0
-
-
 /mob/living/carbon/monkey/Life()
 	set invisibility = 0
 	//set background = 1
@@ -23,7 +12,7 @@
 		environment = loc.return_air()
 
 	if (stat != DEAD)
-		if(!istype(src,/mob/living/carbon/monkey/diona)) //still breathing
+		if(!istype(src,/mob/living/carbon/monkey/diona))
 			//First, resolve location and get a breath
 			if(SSmob.times_fired%4==2)
 				//Only try to take a breath every 4 seconds, unless suffocating
@@ -36,7 +25,6 @@
 
 		//Updates the number of stored chemicals for powers
 		handle_changeling()
-
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
@@ -225,8 +213,8 @@
 
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath
-		if(health < 0)
-			losebreath++
+		if(handle_drowning() || health < 0)
+			losebreath = max(2, losebreath + 1)
 		if(losebreath>0) //Suffocating so do not take a breath
 			losebreath--
 			if (prob(75)) //High chance of gasping for air
@@ -244,24 +232,20 @@
 					var/obj/location_as_object = loc
 					breath = location_as_object.handle_internal_lifeform(src, BREATH_VOLUME)
 				else if(istype(loc, /turf/))
-					var/breath_moles = environment.total_moles()*BREATH_PERCENTAGE
+					var/breath_moles = environment.total_moles * BREATH_PERCENTAGE
 					breath = loc.remove_air(breath_moles)
 
 					if(istype(wear_mask, /obj/item/clothing/mask/gas))
 						var/obj/item/clothing/mask/gas/G = wear_mask
 						var/datum/gas_mixture/filtered = new
 
-						filtered.copy_from(breath)
-						filtered.phoron *= G.gas_filter_strength
-						for(var/datum/gas/gas in filtered.trace_gases)
-							gas.moles *= G.gas_filter_strength
-						filtered.update_values()
-						loc.assume_air(filtered)
+						for(var/g in  list("phoron", "sleeping_agent"))
+							if(breath.gas[g])
+								filtered.gas[g] = breath.gas[g] * G.gas_filter_strength
+								breath.gas[g] -= filtered.gas[g]
 
-						breath.phoron *= 1 - G.gas_filter_strength
-						for(var/datum/gas/gas in breath.trace_gases)
-							gas.moles *= 1 - G.gas_filter_strength
 						breath.update_values()
+						filtered.update_values()
 
 					// Handle chem smoke effect  -- Doohl
 					var/block = 0
@@ -323,23 +307,23 @@
 		var/SA_para_min = 0.5
 		var/SA_sleep_min = 5
 		var/oxygen_used = 0
-		var/breath_pressure = (breath.total_moles()*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
+		var/breath_pressure = (breath.total_moles*R_IDEAL_GAS_EQUATION*breath.temperature)/BREATH_VOLUME
 
 		//Partial pressure of the O2 in our breath
-		var/O2_pp = (breath.oxygen/breath.total_moles())*breath_pressure
+		var/O2_pp = (breath.gas["oxygen"] / breath.total_moles) * breath_pressure
 		// Same, but for the phoron
-		var/Toxins_pp = (breath.phoron/breath.total_moles())*breath_pressure
+		var/Toxins_pp = (breath.gas["phoron"] / breath.total_moles) * breath_pressure
 		// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
-		var/CO2_pp = (breath.carbon_dioxide/breath.total_moles())*breath_pressure
+		var/CO2_pp = (breath.gas["carbon_dioxide"] / breath.total_moles) * breath_pressure
 
 		if(O2_pp < safe_oxygen_min) 			// Too little oxygen
 			if(prob(20))
-				spawn(0) emote("gasp")
+				emote("gasp")
 			if (O2_pp == 0)
 				O2_pp = 0.01
-			var/ratio = safe_oxygen_min/O2_pp
-			adjustOxyLoss(min(5*ratio, 7)) // Don't fuck them up too fast (space only does 7 after all!)
-			oxygen_used = breath.oxygen*ratio/6
+			var/ratio = safe_oxygen_min / O2_pp
+			adjustOxyLoss(min(5 * ratio, 7)) // Don't fuck them up too fast (space only does 7 after all!)
+			oxygen_used = breath.gas["oxygen"] * ratio / 6
 			oxygen_alert = max(oxygen_alert, 1)
 		/*else if (O2_pp > safe_oxygen_max) 		// Too much oxygen (commented this out for now, I'll deal with pressure damage elsewhere I suppose)
 			spawn(0) emote("cough")
@@ -349,11 +333,11 @@
 			oxygen_alert = max(oxygen_alert, 1)*/
 		else 									// We're in safe limits
 			adjustOxyLoss(-5)
-			oxygen_used = breath.oxygen/6
+			oxygen_used = breath.gas["oxygen"] / 6
 			oxygen_alert = 0
 
-		breath.oxygen -= oxygen_used
-		breath.carbon_dioxide += oxygen_used
+		breath.adjust_gas("oxygen", oxygen_used, update = FALSE)
+		breath.adjust_gas_temp("carbon_dioxide", oxygen_used, bodytemperature, update = FALSE) //update afterwards
 
 		if(CO2_pp > safe_co2_max)
 			if(!co2overloadtime) // If it's the first breath with too much CO2 in it, lets start a counter, then have them pass out after 12s or so.
@@ -364,13 +348,13 @@
 				if(world.time - co2overloadtime > 300) // They've been in here 30s now, lets start to kill them for their own good!
 					adjustOxyLoss(8)
 			if(prob(20)) // Lets give them some chance to know somethings not right though I guess.
-				spawn(0) emote("cough")
+				emote("cough")
 
 		else
 			co2overloadtime = 0
 
 		if(Toxins_pp > safe_phoron_max) // Too much phoron
-			var/ratio = (breath.phoron/safe_phoron_max) * 10
+			var/ratio = (breath.gas["phoron"] / safe_phoron_max) * 10
 			//adjustToxLoss(Clamp(ratio, MIN_PLASMA_DAMAGE, MAX_PLASMA_DAMAGE))	//Limit amount of damage toxin exposure can do per second
 			if(reagents)
 				reagents.add_reagent("toxin", Clamp(ratio, MIN_TOXIN_DAMAGE, MAX_TOXIN_DAMAGE))
@@ -378,31 +362,32 @@
 		else
 			phoron_alert = 0
 
-		if(breath.trace_gases.len)	// If there's some other shit in the air lets deal with it here.
-			for(var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-				var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
-				if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
-					Paralyse(3) // 3 gives them one second to wake up and run away a bit!
-					if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
-						sleeping = max(sleeping+2, 10)
-				else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-					if(prob(20))
-						spawn(0) emote(pick("giggle", "laugh"))
+		if(breath.gas["sleeping_agent"])	// If there's some other shit in the air lets deal with it here.
+			var/SA_pp = (breath.gas["sleeping_agent"] / breath.total_moles) * breath_pressure
+			if(SA_pp > SA_para_min) // Enough to make us paralysed for a bit
+				Paralyse(3) // 3 gives them one second to wake up and run away a bit!
+				if(SA_pp > SA_sleep_min) // Enough to make us sleep as well
+					Sleeping(5)
+			else if(SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+				if(prob(20))
+					spawn(0) emote(pick("giggle", "laugh"))
 
+			breath.adjust_gas("sleeping_agent", -breath.gas["sleeping_agent"] / 6, update = FALSE) //update after
 
-		if(breath.temperature > (T0C+66)) // Hot air hurts :(
+		if(breath.temperature > (T0C + 66)) // Hot air hurts :(
 			if(prob(20))
 				to_chat(src, "\red You feel a searing heat in your lungs!")
 			fire_alert = max(fire_alert, 2)
 		else
 			fire_alert = 0
 
+		breath.update_values()
 
 		//Temporary fixes to the alerts.
 
 		return 1
 
-	proc/handle_environment(datum/gas_mixture/environment)
+	handle_environment(datum/gas_mixture/environment)
 		if(!environment)
 			return
 
@@ -410,7 +395,7 @@
 		var/pressure = environment.return_pressure()
 		var/adjusted_pressure = calculate_affecting_pressure(pressure) //Returns how much pressure actually affects the mob.
 
-		if(adjusted_pressure < WARNING_HIGH_PRESSURE && adjusted_pressure > WARNING_LOW_PRESSURE && abs(environment.temperature - 293.15) < 20 && abs(bodytemperature - 310.14) < 0.5 && environment.phoron < MOLES_PHORON_VISIBLE)
+		if(adjusted_pressure < warning_high_pressure && adjusted_pressure > warning_low_pressure && abs(environment.temperature - 293.15) < 20 && abs(bodytemperature - 310.14) < 0.5)
 
 			//Hopefully should fix the walk-inside-still-pressure-warning issue.
 			if(pressure_alert)
@@ -433,14 +418,14 @@
 
 		//Account for massive pressure differences
 		switch(adjusted_pressure)
-			if(HAZARD_HIGH_PRESSURE to INFINITY)
-				adjustBruteLoss( min( ( (adjusted_pressure / HAZARD_HIGH_PRESSURE) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
+			if(hazard_high_pressure to INFINITY)
+				adjustBruteLoss( min( ( (adjusted_pressure / hazard_high_pressure) -1 )*PRESSURE_DAMAGE_COEFFICIENT , MAX_HIGH_PRESSURE_DAMAGE) )
 				throw_alert("pressure","highpressure",2)
-			if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
+			if(warning_high_pressure to hazard_high_pressure)
 				throw_alert("pressure","highpressure",1)
-			if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
+			if(warning_low_pressure to warning_high_pressure)
 				clear_alert("pressure")
-			if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
+			if(hazard_low_pressure to warning_low_pressure)
 				throw_alert("pressure","lowpressure",1)
 			else
 				if( !(COLD_RESISTANCE in mutations) )
@@ -463,22 +448,6 @@
 			adjustFireLoss(5.0*discomfort)
 
 	proc/handle_chemicals_in_body()
-
-		if(alien) //Diona nymphs are the only alien monkey currently.
-			var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
-			if(isturf(loc)) //else, there's considered to be no light
-				var/turf/T = loc
-				light_amount = round((T.get_lumcount()*10)-5)
-
-			nutrition += light_amount
-			traumatic_shock -= light_amount
-
-			if(nutrition > 500)
-				nutrition = 500
-			if(light_amount > 2) //if there's enough light, heal
-				adjustBruteLoss(-1)
-				adjustToxLoss(-1)
-				adjustOxyLoss(-1)
 
 		if(reagents && reagents.reagent_list.len)
 			reagents.metabolize(src,alien)
@@ -649,8 +618,8 @@
 	proc/handle_changeling()
 		if(mind && mind.changeling)
 			mind.changeling.regenerate()
-			//hud_used.lingchemdisplay.invisibility = 0
-			//hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[src.mind.changeling.chem_charges]</font></div>"
+			hud_used.lingchemdisplay.invisibility = 0
+			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[src.mind.changeling.chem_charges]</font></div>"
 		return
 
 ///FIRE CODE
@@ -660,3 +629,31 @@
 		adjustFireLoss(6)
 		return
 //END FIRE CODE
+
+/mob/living/carbon/monkey/diona/Life()
+	if(stat != DEAD)
+		var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
+		if(gestalt && isturf(gestalt.loc))
+			var/turf/T = gestalt.loc
+			light_amount = round((T.get_lumcount()*10)-5)
+		else if(isturf(loc)) //else, there's considered to be no light
+			var/turf/T = loc
+			light_amount = round((T.get_lumcount()*10)-5)
+
+		nutrition += light_amount
+		traumatic_shock -= light_amount
+
+		if(nutrition > 400)
+			nutrition = 400
+		if(light_amount > 2) //if there's enough light, heal
+			adjustBruteLoss(-1)
+			adjustToxLoss(-1)
+			adjustOxyLoss(-1)
+
+		if(injecting)
+			if(gestalt && nutrition > 210)
+				gestalt.reagents.add_reagent(injecting,1)
+				nutrition -= 10
+			else
+				injecting = null
+	..()

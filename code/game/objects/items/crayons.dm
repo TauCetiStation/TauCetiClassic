@@ -73,16 +73,15 @@
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 	if(is_type_in_list(target,validSurfaces))
-		var/temp
 		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti","rune","letter")
 		switch(drawtype)
 			if("letter")
 				drawtype = input("Choose the letter.", "Crayon scribbles") in list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-				to_chat(user, "You start drawing a letter on the [target.name].")
+				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")
 			if("graffiti")
-				to_chat(user, "You start drawing graffiti on the [target.name].")
+				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] graffiti on the [target.name].</span>")
 			if("rune")
-				to_chat(user, "You start drawing a rune on the [target.name].")
+				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] a rune on the [target.name].</span>")
 
 		////////////////////////// GANG FUNCTIONS
 		var/area/territory
@@ -90,10 +89,8 @@
 		if(gang)
 			//Determine gang affiliation
 			if(user.mind in (ticker.mode.A_bosses | ticker.mode.A_gang))
-				temp = "[gang_name("A")] gang tag"
 				gangID = "A"
 			else if(user.mind in (ticker.mode.B_bosses | ticker.mode.B_gang))
-				temp = "[gang_name("B")] gang tag"
 				gangID = "B"
 
 			//Check area validity. Reject space, player-created areas, and non-station z-levels.
@@ -119,11 +116,12 @@
 					return
 		/////////////////////////////////////////
 
-
-		to_chat(user, "You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name].")
+		if(!in_range(user, target))
+			to_chat(user, "<span class = 'notice'>You must stay close to your drawing if you want to draw something.</span>")
+			return
 		if(instant)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-		if((instant>0) || do_after(user, 50, target = target))
+		if(instant > 0 || (!user.is_busy(src) && do_after(user, 50, target = target)))
 
 			//Gang functions
 			if(gangID)
@@ -139,7 +137,10 @@
 			else
 				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 
-			to_chat(user, "You finish [instant ? "spraying" : "drawing"] [temp].")
+			if(drawtype in list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"))
+				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")
+			else
+				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] [drawtype] on the [target.name].</span>")
 			if(instant<0)
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 			uses = max(0,uses-1)
@@ -182,8 +183,8 @@
 	edible = 0
 	validSurfaces = list(/turf/simulated/floor,/turf/simulated/wall)
 
-/obj/item/toy/crayon/spraycan/New()
-	..()
+/obj/item/toy/crayon/spraycan/atom_init()
+	. = ..()
 	name = "spray can"
 	update_icon()
 
@@ -214,26 +215,29 @@
 	if(capped)
 		to_chat(user, "<span class='warning'>Take the cap off first!</span>")
 		return
-	else
-		if(iscarbon(target))
-			if(uses-10 > 0)
-				uses = uses - 10
-				var/mob/living/carbon/human/C = target
-				user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
-				if(C.client)
-					C.eye_blurry = max(C.eye_blurry, 3)
-					C.eye_blind = max(C.eye_blind, 1)
-					//if(C.check_eye_prot() <= 0) // no eye protection? ARGH IT BURNS. Need fix
-					//	C.confused = max(C.confused, 3)
-					//	C.Weaken(3)
-				if(ishuman(C))
-					var/mob/living/carbon/human/H = C
-					C.lip_style = "spray_face"
-					C.lip_color = colour
-					H.update_body()
-				C.update_body()
-		playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
-		..()
+	if(iscarbon(target) && uses - 10 > 0)
+		uses -= 10
+		var/mob/living/carbon/C = target
+		user.visible_message("<span class='danger'> [user] sprays [src] into the face of [target]!</span>")
+		if(C.client)
+			C.eye_blurry = max(C.eye_blurry, 3)
+			C.eye_blind = max(C.eye_blind, 1)
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			H.lip_style = "spray_face"
+			H.lip_color = colour
+			H.update_body()
+	else if(istype(target, /obj/machinery/nuclearbomb))
+		var/obj/machinery/nuclearbomb/N = target
+		var/choice = input(user, "Spraycan options") as null|anything in list("fish", "peace", "shark", "nuke", "nt", "heart", "woman", "smile")
+		if(!choice)
+			return
+		uses -= 5
+		N.overlays -= image('icons/effects/Nuke_sprays.dmi', N.spray_icon_state)
+		N.overlays += image('icons/effects/Nuke_sprays.dmi', choice)
+		N.spray_icon_state = choice
+	playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
+	..()
 
 /obj/item/toy/crayon/spraycan/update_icon()
 	overlays.Cut()

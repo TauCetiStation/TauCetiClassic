@@ -12,8 +12,7 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 4
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 4)
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
@@ -24,10 +23,14 @@
 	melee_damage_upper = 5
 	var/datum/reagents/udder = null
 
-/mob/living/simple_animal/hostile/retaliate/goat/New()
+/mob/living/simple_animal/hostile/retaliate/goat/atom_init()
 	udder = new(50)
 	udder.my_atom = src
-	..()
+	. = ..()
+
+/mob/living/simple_animal/hostile/retaliate/goat/Destroy()
+	QDEL_NULL(udder)
+	return ..()
 
 /mob/living/simple_animal/hostile/retaliate/goat/Life()
 	. = ..()
@@ -73,6 +76,7 @@
 
 /mob/living/simple_animal/hostile/retaliate/goat/attackby(obj/item/O, mob/user)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>")
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
@@ -82,6 +86,15 @@
 			to_chat(user, "\red The udder is dry. Wait a bit longer...")
 	else
 		..()
+
+/mob/living/simple_animal
+	name = "animal"
+	desc = "Just simple animal"
+	response_help  = "pets the"
+	response_disarm = "gently pushes aside the"
+	response_harm   = "kicks the"
+	attacktext = "kicks"
+
 //cow
 /mob/living/simple_animal/cow
 	name = "cow"
@@ -97,22 +110,22 @@
 	speak_chance = 1
 	turns_per_move = 5
 	see_in_dark = 6
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 6
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
-	attacktext = "kicks"
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/slab = 6)
 	health = 50
 	var/datum/reagents/udder = null
 
-/mob/living/simple_animal/cow/New()
+/mob/living/simple_animal/cow/atom_init()
 	udder = new(50)
 	udder.my_atom = src
-	..()
+	. = ..()
+
+/mob/living/simple_animal/cow/Destroy()
+	QDEL_NULL(udder)
+	return ..()
 
 /mob/living/simple_animal/cow/attackby(obj/item/O, mob/user)
 	if(stat == CONSCIOUS && istype(O, /obj/item/weapon/reagent_containers/glass))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>")
 		var/obj/item/weapon/reagent_containers/glass/G = O
 		var/transfered = udder.trans_id_to(G, "milk", rand(5,10))
@@ -164,24 +177,19 @@
 	emote_see = list("pecks at the ground","flaps its tiny wings")
 	speak_chance = 2
 	turns_per_move = 2
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 1
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
-	attacktext = "kicks"
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 1)
 	health = 1
 	var/amount_grown = 0
 	pass_flags = PASSTABLE | PASSGRILLE
 	small = 1
 
-/mob/living/simple_animal/chick/New()
-	..()
+/mob/living/simple_animal/chick/atom_init()
+	. = ..()
 	pixel_x = rand(-6, 6)
 	pixel_y = rand(0, 10)
 
 /mob/living/simple_animal/chick/Life()
-	. =..()
+	. = ..()
 	if(!.)
 		return
 	if(!stat)
@@ -205,20 +213,15 @@ var/global/chicken_count = 0
 	emote_see = list("pecks at the ground","flaps its wings viciously")
 	speak_chance = 2
 	turns_per_move = 3
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
-	meat_amount = 2
-	response_help  = "pets the"
-	response_disarm = "gently pushes aside the"
-	response_harm   = "kicks the"
-	attacktext = "kicks"
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 2)
 	health = 10
 	var/eggsleft = 0
 	var/body_color
 	pass_flags = PASSTABLE
 	small = 1
 
-/mob/living/simple_animal/chicken/New()
-	..()
+/mob/living/simple_animal/chicken/atom_init()
+	. = ..()
 	if(!body_color)
 		body_color = pick( list("brown","black","white") )
 	icon_state = "chicken_[body_color]"
@@ -234,6 +237,7 @@ var/global/chicken_count = 0
 
 /mob/living/simple_animal/chicken/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks/grown/wheat)) //feedin' dem chickens
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!stat && eggsleft < 8)
 			user.visible_message("\blue [user] feeds [O] to [name]! It clucks happily.","\blue You feed [O] to [name]! It clucks happily.")
 			user.drop_item()
@@ -256,7 +260,7 @@ var/global/chicken_count = 0
 		E.pixel_x = rand(-6,6)
 		E.pixel_y = rand(-6,6)
 		if(chicken_count < MAX_CHICKENS && prob(10))
-			SSobj.processing |= E
+			START_PROCESSING(SSobj, E)
 
 /obj/item/weapon/reagent_containers/food/snacks/egg/var/amount_grown = 0
 /obj/item/weapon/reagent_containers/food/snacks/egg/process()
@@ -265,7 +269,82 @@ var/global/chicken_count = 0
 		if(amount_grown >= 100)
 			visible_message("[src] hatches with a quiet cracking sound.")
 			new /mob/living/simple_animal/chick(get_turf(src))
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 			qdel(src)
 	else
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
+
+/mob/living/simple_animal/pig
+	name = "pig"
+	desc = "Oink oink."
+	icon_state = "pig"
+	icon_living = "pig"
+	icon_dead = "pig_dead"
+	speak = list("oink?","oink","OINK")
+	speak_emote = list("oinks")
+	emote_see = list("rolls around")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/ham = 6)
+	health = 50
+
+/mob/living/simple_animal/turkey
+	name = "turkey"
+	desc = "Benjamin Franklin would be proud."
+	icon_state = "turkey"
+	icon_living = "turkey"
+	icon_dead = "turkey_dead"
+	speak = list("gobble?","gobble","GOBBLE")
+	speak_emote = list("gobble")
+	emote_see = list("struts around")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 4)
+	health = 50
+
+/mob/living/simple_animal/goose
+	name = "goose"
+	desc = "A pretty goose. Would make a nice comforter."
+	icon_state = "goose"
+	icon_living = "goose"
+	icon_dead = "goose_dead"
+	speak = list("quack?","quack","QUACK")
+	speak_emote = list("quacks")
+	emote_see = list("flaps it's wings")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
+	health = 50
+
+/mob/living/simple_animal/seal
+	name = "seal"
+	desc = "A beautiful white seal."
+	icon_state = "seal"
+	icon_living = "seal"
+	icon_dead = "seal_dead"
+	speak = list("Urk?","urk","URK")
+	speak_emote = list("urks")
+	emote_see = list("flops around")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
+	health = 50
+
+/mob/living/simple_animal/walrus
+	name = "walrus"
+	desc = "A big brown walrus."
+	icon_state = "walrus"
+	icon_living = "walrus"
+	icon_dead = "walrus_dead"
+	speak = list("Urk?","urk","URK")
+	speak_emote = list("urks")
+	emote_see = list("flops around")
+	speak_chance = 1
+	turns_per_move = 5
+	see_in_dark = 6
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 6)
+	health = 50

@@ -1,39 +1,25 @@
 var/datum/subsystem/objects/SSobj
 
+/datum/var/isprocessing = 0
 /datum/proc/process()
 	set waitfor = 0
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return 0
 
 /datum/subsystem/objects
 	name = "Objects"
-	priority = 12
+
+	priority   = SS_PRIORITY_OBJECTS
+	flags = SS_NO_INIT
 
 	var/list/processing = list()
 	var/list/currentrun = list()
-	var/list/burning = list()
-	var/list/drying = list()
 
 /datum/subsystem/objects/New()
 	NEW_SS_GLOBAL(SSobj)
 
-/datum/subsystem/objects/Initialize(timeofday, zlevel)
-	setupGenetics()
-	GenerateGasOverlays()
-	color_windows_init()
-	global_announcer = new(null) //Doh...
-	for(var/V in world)
-		var/atom/A = V
-		if (zlevel && A.z != zlevel)
-			continue
-		A.initialize()
-		CHECK_TICK
-	. = ..()
-
-
 /datum/subsystem/objects/stat_entry()
 	..("P:[processing.len]")
-
 
 /datum/subsystem/objects/fire(resumed = 0)
 	if (!resumed)
@@ -42,29 +28,17 @@ var/datum/subsystem/objects/SSobj
 	var/list/currentrun = src.currentrun
 
 	while(currentrun.len)
-		var/datum/thing = currentrun[1]
-		currentrun.Cut(1, 2)
-		if(thing)
-			thing.process(wait)
+		var/datum/thing = currentrun[currentrun.len]
+		currentrun.len--
+
+		if(QDELETED(thing))
+			processing -= thing
 		else
-			SSobj.processing.Remove(thing)
+			thing.process()
+
 		if (MC_TICK_CHECK)
 			return
 
-	for(var/obj/item/dryingobj in SSobj.drying)
-		if(dryingobj && dryingobj.wet)
-			dryingobj.dry_process()
-		else
-			SSobj.drying.Remove(dryingobj)
-
-	//for(var/obj/burningobj in SSobj.burning)
-	//	if(burningobj && (burningobj.burn_state == ON_FIRE))
-	//		if(burningobj.burn_world_time < world.time)
-	//			burningobj.burn()
-	//	else
-	//		SSobj.burning.Remove(burningobj)
-
-/datum/subsystem/objects/proc/setup_template_objects(list/objects)
-	for(var/A in objects)
-		var/atom/B = A
-		B.initialize()
+/datum/subsystem/objects/Recover()
+	if (istype(SSobj.processing))
+		processing = SSobj.processing

@@ -93,6 +93,7 @@
 	if(H.health >= config.health_threshold_crit)
 		to_chat(user, "\blue [H.name] is in good condition.")
 		return
+	if(user.is_busy()) return
 	to_chat(user, "Planting...")
 
 	user.visible_message("\red [user.name] is trying to plant some kind of device on [target.name]!")
@@ -108,7 +109,7 @@
 		var/I = image('icons/obj/device.dmi', "medicon")
 		H.overlays += I
 		to_chat(user, "Device has been planted. Timer counting down from [timer].")
-		addtimer(src,"teleport",timer*10,FALSE, H, target_beacon, I)
+		addtimer(CALLBACK(src, .proc/teleport, H, target_beacon, I), timer * 10)
 
 /obj/item/weapon/medical/teleporter/attack(mob/M, mob/user, def_zone)
 	return

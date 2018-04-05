@@ -15,6 +15,9 @@
 			return 1
 	return (!mover.density || !density || lying)
 
+/mob/proc/setMoveCooldown(timeout)
+	if(client)
+		client.move_delay = max(world.time + timeout, client.move_delay)
 
 /client/North()
 	..()
@@ -215,8 +218,8 @@
 			else if(istype(mob.buckled, /obj/structure/stool/bed/chair/wheelchair))
 				if(ishuman(mob.buckled))
 					var/mob/living/carbon/human/driver = mob.buckled
-					var/datum/organ/external/l_hand = driver.get_organ("l_hand")
-					var/datum/organ/external/r_hand = driver.get_organ("r_hand")
+					var/obj/item/organ/external/l_hand = driver.bodyparts_by_name[BP_L_ARM]
+					var/obj/item/organ/external/r_hand = driver.bodyparts_by_name[BP_R_ARM]
 					if((!l_hand || (l_hand.status & ORGAN_DESTROYED)) && (!r_hand || (r_hand.status & ORGAN_DESTROYED)))
 						return // No hands to drive your chair? Tough luck!
 				move_delay += 2
@@ -279,6 +282,21 @@
 
 /mob/proc/SelfMove(turf/n, direct)
 	return Move(n, direct)
+
+/mob/Move(n,direct)
+	//Camera control: arrow keys.
+	if (machine && istype(machine, /obj/machinery/computer/security))
+		var/obj/machinery/computer/security/console = machine
+		var/turf/T = get_turf(console.current)
+		for(var/i;i<10;i++)
+			T = get_step(T,direct)
+		console.jump_on_click(src,T)
+		return
+
+	if (pinned.len)
+		return
+
+	return ..(n,direct)
 
 ///Process_Grab()
 ///Called by client/Move()

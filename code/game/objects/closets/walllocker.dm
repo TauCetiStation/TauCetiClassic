@@ -8,17 +8,20 @@
 	icon_state = "wall-locker"
 	density = 0
 	anchored = 1
+	wall_mounted = 1
 	icon_closed = "wall-locker"
 	icon_opened = "wall-lockeropen"
 
 //spawns endless (3 sets) amounts of breathmask, emergency oxy tank and crowbar
-
 /obj/structure/closet/walllocker/emerglocker
 	name = "emergency locker"
 	desc = "A wall mounted locker with emergency supplies."
 	var/list/spawnitems = list(/obj/item/weapon/tank/emergency_oxygen,/obj/item/clothing/mask/breath)
 	var/amount = 2 // spawns each items X times.
 	icon_state = "emerg"
+
+/obj/structure/closet/walllocker/emerglocker/update_icon() // We don't want any icons manipulation with this.
+	return
 
 /obj/structure/closet/walllocker/emerglocker/toggle(mob/user)
 	src.attack_hand(user)
@@ -31,10 +34,10 @@
 	if (istype(user, /mob/living/silicon/ai))	//Added by Strumpetplaya - AI shouldn't be able to
 		return									//activate emergency lockers.  This fixes that.  (Does this make sense, the AI can't call attack_hand, can it? --Mloc)
 	if(!amount)
-		to_chat(usr, "<spawn class='notice'>It's empty..")
+		to_chat(user, "<spawn class='notice'>It's empty..")
 		return
 	if(amount)
-		to_chat(usr, "<spawn class='notice'>You take out some items from \the [src].")
+		to_chat(user, "<spawn class='notice'>You take out some items from \the [src].")
 		for(var/path in spawnitems)
 			new path(src.loc)
 		amount--

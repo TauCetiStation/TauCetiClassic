@@ -4,27 +4,19 @@
 	req_access = list(access_all_personal_lockers)
 	var/registered_name = null
 
-/obj/structure/closet/secure_closet/personal/New()
-	..()
+/obj/structure/closet/secure_closet/personal/PopulateContents()
 	if(prob(50))
 		new /obj/item/weapon/storage/backpack(src)
 	else
-		new /obj/item/weapon/storage/backpack/satchel_norm(src)
-	new /obj/item/device/radio/headset( src )
-	return
-
+		new /obj/item/weapon/storage/backpack/satchel/norm(src)
+	new /obj/item/device/radio/headset(src)
 
 /obj/structure/closet/secure_closet/personal/patient
 	name = "patient's closet"
 
-/obj/structure/closet/secure_closet/personal/patient/New()
-	..()
-	// Not really the best way to do this, but it's better than "contents = list()"!
-	for(var/atom/movable/AM in contents)
-		qdel(AM)
+/obj/structure/closet/secure_closet/personal/patient/PopulateContents()
 	new /obj/item/clothing/under/color/white(src)
 	new /obj/item/clothing/shoes/white(src)
-	return
 
 /obj/structure/closet/secure_closet/personal/cabinet
 	icon_state = "cabinetdetective_locked"
@@ -46,14 +38,9 @@
 		else
 			icon_state = icon_opened
 
-/obj/structure/closet/secure_closet/personal/cabinet/New()
-	..()
-	// Not really the best way to do this, but it's better than "contents = list()"!
-	for(var/atom/movable/AM in contents)
-		qdel(AM)
+/obj/structure/closet/secure_closet/personal/cabinet/PopulateContents()
 	new /obj/item/weapon/storage/backpack/satchel/withwallet(src)
 	new /obj/item/device/radio/headset(src)
-	return
 
 /obj/structure/closet/secure_closet/personal/attackby(obj/item/weapon/W, mob/user)
 	if (src.opened)
@@ -81,6 +68,7 @@
 	else if( (istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber)) && !src.broken)
 		broken = 1
 		locked = 0
+		user.SetNextMove(CLICK_CD_MELEE)
 		desc = "It appears to be broken."
 		icon_state = src.icon_broken
 		if(istype(W, /obj/item/weapon/melee/energy/blade)||istype(W, /obj/item/weapon/twohanded/dualsaber))

@@ -8,6 +8,8 @@
  *		Book Binder
  */
 
+#define LIBRETURNLIMIT 15 // how many entries we will display to the user per page.
+
 /*
  * Borrowbook datum
  */
@@ -30,15 +32,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	var/title
 	var/category = "Any"
 	var/author
-	var/SQLquery
+	var/page = 0
 
-/obj/machinery/computer/libraryconsole/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/libraryconsole/interact(mob/user)
-	user.set_machine(src)
+/obj/machinery/computer/libraryconsole/ui_interact(mob/user)
 	var/dat = "<HEAD><TITLE>Library Visitor</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	switch(screenstate)
 		if(0)
@@ -51,9 +47,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			establish_old_db_connection()
 			if(!dbcon_old.IsConnected())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font><BR>"
-			else if(!SQLquery)
-				dat += "<font color=red><b>ERROR</b>: Malformed search request. Please contact your system administrator for assistance.</font><BR>"
 			else
+				var/SQLquery = "SELECT author, title, category, id FROM library WHERE "
+				if(category == "Any")
+					SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' LIMIT [page], [LIBRETURNLIMIT]"
+				else
+					SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' AND category='[category]' LIMIT [page], [LIBRETURNLIMIT]"
 				dat += {"<table>
 				<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>SS<sup>13</sup>BN</td></tr>"}
 
@@ -67,8 +66,15 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 					var/id = query.item[4]
 					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td>[id]</td></tr>"
 				dat += "</table><BR>"
-			dat += "<A href='?src=\ref[src];back=1'>\[Go Back\]</A><BR>"
-	var/datum/browser/popup = new(user, "publiclibrary", name, 600, 400)
+			dat += {"
+			<A href='?src=\ref[src];back=1'>\[Go Back\]</A>
+			 <A href='?src=\ref[src];pageprev=2'>\[<< Page\]</A>
+			 <A href='?src=\ref[src];pageprev=1'>\[< Page\]</A>
+			 <A href='?src=\ref[src];pagereset=1'>\[Reset\]</A>
+			 <A href='?src=\ref[src];pagenext=1'>\[Page >\]</A>
+			 <A href='?src=\ref[src];pagenext=2'>\[Page >>\]</A><BR>"}
+
+	var/datum/browser/popup = new(user, "publiclibrary", name, 600, 600)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -79,36 +85,46 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		return
 
 	if(href_list["settitle"])
-		var/newtitle = input("Enter a title to search for:") as text|null
+		var/newtitle = sanitize_safe(input("Enter a title to search for:") as text|null)
 		if(newtitle)
-			title = sanitize_alt(newtitle)
+			title = newtitle
 		else
 			title = null
-		title = sanitizeSQL(title)
+		title = sanitize_sql(title)
 	if(href_list["setcategory"])
 		var/newcategory = input("Choose a category to search for:") in list("Any", "Fiction", "Non-Fiction", "Adult", "Reference", "Religion")
 		if(newcategory)
-			category = sanitize_alt(newcategory)
+			category = newcategory
 		else
 			category = "Any"
-		category = sanitizeSQL(category)
+		category = sanitize_sql(category)
 	if(href_list["setauthor"])
-		var/newauthor = input("Enter an author to search for:") as text|null
+		var/newauthor = sanitize(input("Enter an author to search for:") as text|null)
 		if(newauthor)
-			author = sanitize_alt(newauthor)
+			author = newauthor
 		else
 			author = null
-		author = sanitizeSQL(author)
+		author = sanitize_sql(author)
 	if(href_list["search"])
-		SQLquery = "SELECT author, title, category, id FROM library WHERE "
-		if(category == "Any")
-			SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%'"
-		else
-			SQLquery += "author LIKE '%[author]%' AND title LIKE '%[title]%' AND category='[category]'"
 		screenstate = 1
 
 	if(href_list["back"])
 		screenstate = 0
+
+	if(href_list["pageprev"] == "1")
+		page = max(0, page - LIBRETURNLIMIT)
+
+	if(href_list["pageprev"] == "2")
+		page = max(0, page - (LIBRETURNLIMIT * 5))
+
+	if(href_list["pagereset"])
+		page = 0
+
+	if(href_list["pagenext"] == "1")
+		page = min(page + LIBRETURNLIMIT, 10000)
+
+	if(href_list["pagenext"] == "2")
+		page = min(page + (LIBRETURNLIMIT * 5), 10000)
 
 	src.updateUsrDialog()
 
@@ -130,8 +146,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 	var/bibledelay = 0
 
-/obj/machinery/computer/libraryconsole/bookmanagement/New()
-	..()
+/obj/machinery/computer/libraryconsole/bookmanagement/atom_init()
+	. = ..()
 	if(circuit)
 		circuit.name = "circuit board (Book Inventory Management Console)"
 		circuit.build_path = /obj/machinery/computer/libraryconsole/bookmanagement
@@ -197,11 +213,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			if(!dbcon_old.IsConnected())
 				dat += "<font color=red><b>ERROR</b>: Unable to contact External Archive. Please contact your system administrator for assistance.</font>"
 			else
-				dat += {"<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A><BR><BR>
+				dat += {"<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A>([page] - [page + LIBRETURNLIMIT])<BR><BR>
 				<table>
 				<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"}
 
-				var/DBQuery/query = dbcon_old.NewQuery("SELECT id, author, title, category FROM library")
+				var/DBQuery/query = dbcon_old.NewQuery("SELECT id, author, title, category FROM library LIMIT [page], [LIBRETURNLIMIT]")
 				query.Execute()
 
 				while(query.NextRow())
@@ -211,7 +227,13 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 					var/category = query.item[4]
 					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[id]'>\[Order\]</A></td></tr>"
 				dat += "</table>"
-			dat += "<BR><A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A><BR>"
+			dat += {"
+			<BR><A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A>
+			 <A href='?src=\ref[src];pageprev=2'>\[<< Page\]</A>
+			 <A href='?src=\ref[src];pageprev=1'>\[< Page\]</A>
+			 <A href='?src=\ref[src];pagereset=1'>\[Reset\]</A>
+			 <A href='?src=\ref[src];pagenext=1'>\[Page >\]</A>
+			 <A href='?src=\ref[src];pagenext=2'>\[Page >>\]</A><BR>"}
 		if(5)
 			dat += "<H3>Upload a New Title</H3>"
 			if(!scanner)
@@ -224,7 +246,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 				dat += "<FONT color=red>No data found in scanner memory.</FONT><BR>"
 			else
 				dat += {"<TT>Data marked for upload...</TT><BR>
-				<TT>Title: </TT>[sanitize_popup(scanner.cache.name)]<BR>"}
+				<TT>Title: </TT>[sanitize(scanner.cache.name)]<BR>"}
 				if(!scanner.cache.author)
 					scanner.cache.author = "Anonymous"
 				dat += {"<TT>Author: </TT><A href='?src=\ref[src];setauthor=1'>[scanner.cache.author]</A><BR>
@@ -237,7 +259,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			<A href='?src=\ref[src];arccheckout=1'>Yes.</A><BR>
 			<A href='?src=\ref[src];switchscreen=0'>No.</A><BR>"}
 
-	var/datum/browser/popup = new(user, "library", name, 600, 400)
+	var/datum/browser/popup = new(user, "library", name, 600, 600)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
@@ -245,6 +267,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 /obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon/W, mob/user)
 	if (src.density && istype(W, /obj/item/weapon/card/emag))
 		src.emagged = 1
+		user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/barcodescanner))
 		var/obj/item/weapon/barcodescanner/scanner = W
 		scanner.computer = src
@@ -304,13 +327,13 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		if(checkoutperiod < 1)
 			checkoutperiod = 1
 	if(href_list["editbook"])
-		buffer_book = sanitize_alt(copytext(input("Enter the book's title:") as text|null,1,MAX_MESSAGE_LEN))
+		buffer_book = sanitize_safe(input("Enter the book's title:") as text|null, MAX_NAME_LEN)
 	if(href_list["editmob"])
-		buffer_mob = sanitize_alt(copytext(input("Enter the recipient's name:") as text|null,1,MAX_NAME_LEN))
+		buffer_mob = sanitize(input("Enter the recipient's name:") as text|null, MAX_NAME_LEN)
 	if(href_list["checkout"])
 		var/datum/borrowbook/b = new /datum/borrowbook
-		b.bookname = sanitize_alt(buffer_book)//����� ��, TODO:CYRILLIC
-		b.mobname = sanitize_alt(buffer_mob)
+		b.bookname = buffer_book
+		b.mobname = buffer_mob
 		b.getdate = world.time
 		b.duedate = world.time + (checkoutperiod * 600)
 		checkouts.Add(b)
@@ -321,7 +344,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		var/obj/item/weapon/book/b = locate(href_list["delbook"])
 		inventory.Remove(b)
 	if(href_list["setauthor"])
-		var/newauthor = sanitize_alt(copytext(input("Enter the author's name: ") as text|null,1,MAX_MESSAGE_LEN))
+		var/newauthor = sanitize(input("Enter the author's name: ") as text|null, MAX_NAME_LEN)	
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
@@ -346,10 +369,10 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 							var/sqlcontent = dbcon.Quote(scanner.cache.dat)
 							var/sqlcategory = dbcon.Quote(upload_category)
 							*/
-							var/sqltitle = sanitizeSQL(scanner.cache.name)
-							var/sqlauthor = sanitizeSQL(scanner.cache.author)
-							var/sqlcontent = sanitizeSQL(scanner.cache.dat)
-							var/sqlcategory = sanitizeSQL(upload_category)
+							var/sqltitle = sanitize_sql(scanner.cache.name)
+							var/sqlauthor = sanitize_sql(scanner.cache.author)
+							var/sqlcontent = sanitize_sql(scanner.cache.dat)
+							var/sqlcategory = sanitize_sql(upload_category)
 							var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO library (author, title, content, category) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]')")
 							if(!query.Execute())
 								to_chat(usr, query.ErrorMsg())
@@ -358,7 +381,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 								alert("Upload Complete.")
 
 	if(href_list["targetid"])
-		var/sqlid = sanitizeSQL(href_list["targetid"])
+		var/sqlid = sanitize_sql(href_list["targetid"])
 		establish_old_db_connection()
 		if(!dbcon_old.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
@@ -374,7 +397,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 			while(query.NextRow())
 				var/author = query.item[2]
-				var/title = sanitize_chat(query.item[3])
+				var/title = query.item[3]
 				var/content = query.item[4]
 				var/obj/item/weapon/book/B = new(src.loc)
 				B.name = "Book: [title]"
@@ -408,8 +431,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		user.drop_item()
 		O.loc = src
 
-/obj/machinery/libraryscanner/attack_hand(mob/user)
-	usr.set_machine(src)
+/obj/machinery/libraryscanner/ui_interact(mob/user)
 	var/dat = "<HEAD><TITLE>Scanner Control Interface</TITLE></HEAD><BODY>\n" // <META HTTP-EQUIV='Refresh' CONTENT='10'>
 	if(cache)
 		dat += "<FONT color=#005500>Data stored in memory.</FONT><BR>"
@@ -420,7 +442,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		dat += "       <A href='?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR><BR><A href='?src=\ref[src];eject=1'>\[Remove Book\]</A>"
 	else
 		dat += "<BR>"
-	user << browse(dat, "window=scanner")
+	user << browse(entity_ja(dat), "window=scanner")
 	onclose(user, "scanner")
 
 /obj/machinery/libraryscanner/Topic(href, href_list)
@@ -453,6 +475,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	if(istype(O, /obj/item/weapon/paper))
 		user.drop_item()
 		O.loc = src
+		user.SetNextMove(CLICK_CD_MELEE)
 		user.visible_message("[user] loads some paper into [src].", "You load some paper into [src].")
 		src.visible_message("[src] begins to hum as it warms up its printing drums.")
 		sleep(rand(200,400))
@@ -464,3 +487,5 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		qdel(O)
 	else
 		..()
+
+#undef LIBRETURNLIMIT

@@ -8,25 +8,24 @@
 	icon_broken = "hydrosecurebroken"
 	icon_off = "hydrosecureoff"
 
-	New()
-		..()
-		switch(rand(1,2))
-			if(1)
-				new /obj/item/clothing/suit/apron(src)
-			if(2)
-				new /obj/item/clothing/suit/apron/overalls(src)
-		new /obj/item/weapon/storage/bag/plants(src)
-		new /obj/item/clothing/under/rank/hydroponics(src)
-		new /obj/item/clothing/under/rank/hydroponics_fem(src)
-		new /obj/item/device/analyzer/plant_analyzer(src)
-		//new /obj/item/clothing/head/greenbandana(src)
-		new /obj/item/clothing/mask/bandana(src)
-		new /obj/item/weapon/minihoe(src)
-		new /obj/item/weapon/hatchet(src)
-//		new /obj/item/weapon/bee_net(src) //No more bees, March 2014
-		new /obj/item/clothing/gloves/botanic_leather(src)
-		/*/New year part
-		new /obj/item/clothing/suit/wintercoat/hydro(src)
-		new /obj/item/clothing/head/santa(src)
-		*/
-		return
+/obj/structure/closet/secure_closet/hydroponics/PopulateContents()
+	switch(rand(1,2))
+		if(1)
+			new /obj/item/clothing/suit/apron(src)
+		if(2)
+			new /obj/item/clothing/suit/apron/overalls(src)
+
+	new /obj/item/weapon/storage/bag/plants(src)
+	new /obj/item/clothing/under/rank/hydroponics(src)
+	new /obj/item/clothing/under/rank/hydroponics_fem(src)
+	new /obj/item/device/plant_analyzer(src)
+	//new /obj/item/clothing/head/greenbandana(src)
+	new /obj/item/clothing/mask/bandana(src)
+	new /obj/item/weapon/minihoe(src)
+	new /obj/item/weapon/hatchet(src)
+//	new /obj/item/weapon/bee_net(src) //No more bees, March 2014
+	new /obj/item/clothing/gloves/botanic_leather(src)
+	#ifdef NEWYEARCONTENT
+	new /obj/item/clothing/suit/wintercoat/hydro(src)
+	new /obj/item/clothing/head/santa(src)
+	#endif

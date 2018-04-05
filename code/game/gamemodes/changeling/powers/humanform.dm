@@ -71,7 +71,8 @@
 
 	if(user.mind)
 		user.mind.transfer_to(O)
-
+	for(var/mob/living/parasite/essence/M in user)
+		M.transfer(O)
 	O.changeling_update_languages(changeling.absorbed_languages)
 
 

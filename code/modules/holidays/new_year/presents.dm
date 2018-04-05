@@ -11,8 +11,8 @@
 						/obj/item/weapon/poster/contraband				= 2,
 						/obj/item/weapon/poster/legit					= 2,
 						/obj/item/weapon/storage/box/snappops			= 2,
-						/obj/item/clothing/tie/holster/waist			= 2,
-						/obj/item/clothing/tie/medal/gold				= 2,
+						/obj/item/clothing/accessory/holster/waist			= 2,
+						/obj/item/clothing/accessory/medal/gold				= 2,
 						/obj/item/toy/blink								= 2,
 						/obj/item/clothing/under/syndicate/tacticool	= 2,
 						/obj/item/toy/sword								= 2,
@@ -87,13 +87,8 @@
 						/obj/item/toy/prize/poly/polyspecial			= 1
 						)
 
-	var/list/species_list = list("Unathi",	//Species list for whitelist present
-								 "Tajaran",
-								 "Skrell",
-								 "Diona",
-								 "Machine")
-
-/obj/item/weapon/present/New()
+/obj/item/weapon/present/atom_init()
+	. = ..()
 	icon_state = "gift[rand(1,9)]"
 	pixel_x = rand(-6,6)
 	pixel_y = rand(-6,6)
@@ -147,42 +142,19 @@
 			whitelist_gift()
 
 /obj/item/weapon/present/proc/whitelist_gift(mob/user = usr)
-	var/rand_species = random_species()
-	var/path = "config/alienwhitelist.txt"
+	var/user_ckey = user.ckey
+	var/rand_role
+	if(role_whitelist[user_ckey])
+		var/list/user_roles = whitelisted_roles - role_whitelist[user_ckey] // exclude anything that user already have.
+		if(!user_roles.len)
+			return
+		rand_role = pick(user_roles)
+	else
+		rand_role = pick(whitelisted_roles)
 
-	var/consilience_check = file2text(path)
-	if(findtext(consilience_check,"[user.key] - [rand_species]"))	//Check, if user already has whitelist for this race
-		var/i
-		for(i=0, i<5, i++)
-			if(!species_list.len)
-				break
-			rand_species = random_species(rand_species)
-			if(!(findtext(consilience_check,"[user.key] - [rand_species]")))	//When no match is found...
-				goto found	//... from here ...
-		return
-
-	found:	//... we go here
-	var/text = "[user.key] - [rand_species] ,added by New Year 2016 Present\n"	//in case, if we are not in 2016 date should be changed
-	text2file(text,path)
-	load_alienwhitelist()
-
-	log_admin("Alien whitelist: [user.key] - [rand_species] ,added by New Year 2016 Present")	//in case, if we are not in 2016 date should be changed
-	message_admins("Alien whitelist: [user.key] - [rand_species] ,added by New Year 2016 Present")	//in case, if we are not in 2016 date should be changed
-
-	to_chat(user, "<span class='notice'>You are so lucky bastard. Congratulations!</span>")
-
-/obj/item/weapon/present/proc/random_species(exclude)
-
-	if(exclude)
-		species_list.Remove(exclude)
-
-	if(!species_list.len)
-		species_list = null
-		return
-
-	var/rand_species = pick(species_list)
-	return rand_species
-
+	var/reason = "New Year [time2text(world.realtime, "YYYY")] Present."
+	if(whitelist_DB_add(user_ckey, rand_role, reason, "yourfriendian", added_by_bot = TRUE))
+		to_chat(user, "<span class='notice'>You are so lucky bastard. Congratulations!</span>")
 
 /obj/item/weapon/ore/coal/special
 	name = "coal"

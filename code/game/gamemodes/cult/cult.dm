@@ -2,26 +2,25 @@
 
 /datum/game_mode
 	var/list/datum/mind/cult = list()
-	var/list/allwords = list("travel","self","see","hell","blood","join","tech","destroy", "other", "hide")
-
 
 /proc/iscultist(mob/living/M)
 	return istype(M) && M.mind && ticker && ticker.mode && (M.mind in ticker.mode.cult)
 
 /proc/is_convertable_to_cult(datum/mind/mind)
-	if(!istype(mind))	return 0
-	if(istype(mind.current, /mob/living/carbon/human) && (mind.assigned_role in list("Captain", "Chaplain")))	return 0
-	for(var/obj/item/weapon/implant/loyalty/L in mind.current)
-		if(L && (L.imp_in == mind.current))//Checks to see if the person contains an implant, then checks that the implant is actually inside of them
-			return 0
-	return 1
+	if(!istype(mind))
+		return FALSE
+	if(ishuman(mind.current) && (mind.assigned_role in list("Captain", "Chaplain")))
+		return FALSE
+	if(ismindshielded(mind.current))
+		return FALSE
+	return TRUE
 
 
 /datum/game_mode/cult
 	name = "cult"
 	config_tag = "cult"
 	role_type = ROLE_CULTIST
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
 	protected_jobs = list()
 	required_players = 5
 	required_players_secret = 15
@@ -40,6 +39,7 @@
 	var/list/startwords = list("blood","join","self","hell")
 
 	var/list/objectives = list()
+	var/list/sacrificed = list()
 
 	var/eldergod = 1 //for the summon god objective
 	var/eldertry = 0
@@ -94,7 +94,6 @@
 
 	for(var/datum/mind/cult_mind in cult)
 		equip_cultist(cult_mind.current)
-		update_all_cult_icons()
 		to_chat(cult_mind.current, "<span class = 'info'><b>You are a member of the <font color='red'>cult</font>!</b></span>")
 		grant_runeword(cult_mind.current)
 		if(!config.objectives_disabled)
@@ -102,6 +101,7 @@
 		else
 			to_chat(cult_mind.current, "<span class ='blue'>Within the rules,</span> try to act as an opposing force to the crew. Further RP and try to make sure other players have </i>fun<i>! If you are confused or at a loss, always adminhelp, and before taking extreme actions, please try to also contact the administration! Think through your actions and make the roleplay immersive! <b>Please remember all rules aside from those without explicit exceptions apply to antagonists.</i></b>")
 		cult_mind.special_role = "Cultist"
+	update_all_cult_icons()
 
 	return ..()
 
@@ -147,6 +147,9 @@
 	if (!where)
 		to_chat(mob, "Unfortunately, you weren't able to get a talisman. This is very bad and you should adminhelp immediately.")
 	else
+		var/obj/item/weapon/paper/talisman/T2 = new(mob)
+		T2.power = new /datum/cult/communicate(T2)
+		mob.equip_in_one_of_slots(T2, slots)
 		to_chat(mob, "You have a talisman in your [where], one that will help you start the cult on this station. Use it well and remember - there are others.")
 		mob.update_icons()
 		return 1
@@ -154,20 +157,19 @@
 
 /datum/game_mode/cult/grant_runeword(mob/living/carbon/human/cult_mob, word)
 	if (!word)
-		if(startwords.len > 0)
-			word=pick(startwords)
-			startwords -= word
-	return ..(cult_mob,word)
+		if(length(startwords) > 0)
+			word = pick_n_take(startwords)
+	return ..(cult_mob, word)
 
 
 /datum/game_mode/proc/grant_runeword(mob/living/carbon/human/cult_mob, word)
 	if(!cultwords["travel"])
 		runerandom()
 	if (!word)
-		word=pick(allwords)
+		word = pick(cultwords)
 	var/wordexp = "[cultwords[word]] is [word]..."
-	to_chat(cult_mob, "<span class = 'red'>You remember one thing from the dark teachings of your master... <b>[wordexp]</b></span>")
-	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
+	to_chat(cult_mob, "<span class = 'cult'>You remember one thing from the dark teachings of your master... <b>[wordexp]</b></span>")
+	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0)
 
 
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind) //BASE
@@ -176,7 +178,7 @@
 	if(!(cult_mind in cult) && is_convertable_to_cult(cult_mind))
 		cult_mind.current.Paralyse(5)
 		cult += cult_mind
-		update_all_cult_icons()
+		update_cult_icons_added(cult_mind)
 		return 1
 
 
@@ -191,58 +193,52 @@
 	if(cult_mind in cult)
 		cult -= cult_mind
 		cult_mind.current.Paralyse(5)
-		to_chat(cult_mind.current, "\red <FONT size = 3><B>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</B></FONT>")
+		to_chat(cult_mind.current, "<span class='danger'><FONT size = 3>An unfamiliar white light flashes through your mind, cleansing the taint of the dark-one and the memories of your time as his servant with it.</span></FONT>")
 		cult_mind.memory = ""
 		update_cult_icons_removed(cult_mind)
 		if(show_message)
-			for(var/mob/M in viewers(cult_mind.current))
-				to_chat(M, "<FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</FONT>")
+			cult_mind.current.visible_message("<span class='danger'><FONT size = 3>[cult_mind.current] looks like they just reverted to their old faith!</span></FONT>")
 
 /datum/game_mode/proc/update_all_cult_icons()
-	spawn(0)
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					for(var/image/I in cultist.current.client.images)
-						if(I.icon_state == "cult")
-							qdel(I)
-
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					for(var/datum/mind/cultist_1 in cult)
-						if(cultist_1.current)
-							var/I = image('icons/mob/mob.dmi', loc = cultist_1.current, icon_state = "cult")
-							cultist.current.client.images += I
+	for(var/datum/mind/cultist in cult)
+		if(cultist.current && cultist.current.client)
+			for(var/image/I in cultist.current.client.images)
+				if(I.icon_state == "cult")
+					cultist.current.client.images -= I
+					qdel(I)
+	for(var/datum/mind/cultist in cult)
+		if(cultist.current && cultist.current.client)
+			for(var/datum/mind/cultist_1 in cult)
+				if(cultist_1.current)
+					var/I = image('icons/mob/mob.dmi', loc = cultist_1.current, icon_state = "cult")
+					cultist.current.client.images += I
 
 
 /datum/game_mode/proc/update_cult_icons_added(datum/mind/cult_mind)
-	spawn(0)
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					var/I = image('icons/mob/mob.dmi', loc = cult_mind.current, icon_state = "cult")
-					cultist.current.client.images += I
-			if(cult_mind.current)
-				if(cult_mind.current.client)
-					var/image/J = image('icons/mob/mob.dmi', loc = cultist.current, icon_state = "cult")
-					cult_mind.current.client.images += J
-
+	if(!cult_mind.current)
+		return 0
+	for(var/datum/mind/cultist in cult)
+		if(cultist.current && cultist.current.client)
+			var/I = image('icons/mob/mob.dmi', loc = cult_mind.current, icon_state = "cult")
+			cultist.current.client.images += I
+		if(cult_mind.current.client)
+			var/image/J = image('icons/mob/mob.dmi', loc = cultist.current, icon_state = "cult")
+			cult_mind.current.client.images += J
 
 /datum/game_mode/proc/update_cult_icons_removed(datum/mind/cult_mind)
-	spawn(0)
-		for(var/datum/mind/cultist in cult)
-			if(cultist.current)
-				if(cultist.current.client)
-					for(var/image/I in cultist.current.client.images)
-						if(I.icon_state == "cult" && I.loc == cult_mind.current)
-							qdel(I)
-
-		if(cult_mind.current)
-			if(cult_mind.current.client)
-				for(var/image/I in cult_mind.current.client.images)
-					if(I.icon_state == "cult")
-						qdel(I)
+	if(!cult_mind.current)
+		return 0
+	for(var/datum/mind/cultist in cult)
+		if(cultist.current && cultist.current.client)
+			for(var/image/I in cultist.current.client.images)
+				if(I.icon_state == "cult" && I.loc == cult_mind.current)
+					cultist.current.client.images -= I
+					qdel(I)
+	if(cult_mind.current.client)
+		for(var/image/I in cult_mind.current.client.images)
+			if(I.icon_state == "cult")
+				cult_mind.current.client.images -= I
+				qdel(I)
 
 
 /datum/game_mode/cult/proc/get_unconvertables()

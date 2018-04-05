@@ -21,9 +21,10 @@ datum/chemical_reaction/coolant
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "coolanttank"
 	amount_per_transfer_from_this = 10
-	New()
-		..()
-		reagents.add_reagent("coolant",1000)
+
+/obj/structure/reagent_dispensers/coolanttank/atom_init()
+	. = ..()
+	reagents.add_reagent("coolant",1000)
 
 /obj/structure/reagent_dispensers/coolanttank/bullet_act(obj/item/projectile/Proj)
 	if(istype(Proj ,/obj/item/projectile/beam)||istype(Proj,/obj/item/projectile/bullet))
@@ -40,10 +41,8 @@ datum/chemical_reaction/coolant
 	var/datum/effect/effect/system/smoke_spread/S = new /datum/effect/effect/system/smoke_spread
 	//S.attach(src)
 	S.set_up(5, 0, src.loc)
-
+	S.start()
 	playsound(src.loc, 'sound/effects/smoke.ogg', 50, 1, -3)
-	spawn(0)
-		S.start()
 
 	var/datum/gas_mixture/env = src.loc.return_air()
 	if(env)
@@ -54,6 +53,4 @@ datum/chemical_reaction/coolant
 		else
 			env.temperature -= 50
 
-	sleep(10)
-	if(src)
-		qdel(src)
+	QDEL_IN(src, 10)

@@ -1,14 +1,22 @@
 // Plant analyzer
 
-/obj/item/device/analyzer/plant_analyzer
+/obj/item/device/plant_analyzer
 	name = "plant analyzer"
 	desc = "A hand-held scanner which reports condition of the plant."
 	icon = 'icons/obj/device.dmi'
+	w_class = 1.0
+	m_amt = 200
+	g_amt = 50
+	origin_tech = "materials=1;biotech=1"
 	icon_state = "hydro"
-	item_state = "analyzer"
+	item_state = "plantanalyzer"
 
 	attack_self(mob/user)
 		return 0
+
+/obj/item/device/plant_analyzer/attack(mob/living/carbon/human/M, mob/living/user)
+	if(M.species && M.species.flags[IS_PLANT])
+		health_analyze(M, user, TRUE) // 1 means limb-scanning mode
 
 // ********************************************************
 // Here's all the seeds (plants) that can be used in hydro
@@ -16,7 +24,7 @@
 
 /obj/item/seeds
 	name = "pack of seeds"
-	icon = 'icons/obj/seeds.dmi'
+	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed" // unknown plant seed - these shouldn't exist in-game
 	w_class = 2.0 // Makes them pocketable
 	var/mypath = "/obj/item/seeds"
@@ -35,7 +43,7 @@
 	var/list/mutatelist = list()
 
 /obj/item/seeds/attackby(obj/item/O, mob/user)
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if (istype(O, /obj/item/device/plant_analyzer))
 		to_chat(user, "*** <B>[plantname]</B> ***")
 		to_chat(user, "-Plant Endurance: \blue [endurance]")
 		to_chat(user, "-Plant Lifespan: \blue [lifespan]")
@@ -44,6 +52,7 @@
 		to_chat(user, "-Plant Production: \blue [production]")
 		if(potency != -1)
 			to_chat(user, "-Plant Potency: \blue [potency]")
+		user.SetNextMove(CLICK_CD_INTERACT)
 		return
 	..() // Fallthrough to item/attackby() so that bags can pick seeds up
 
@@ -1157,10 +1166,11 @@
 	var/potency = 1
 	var/plant_type = 0
 
-/obj/item/weapon/grown/New()
+/obj/item/weapon/grown/atom_init()
 	var/datum/reagents/R = new/datum/reagents(50)
 	reagents = R
 	R.my_atom = src
+	. = ..()
 
 /obj/item/weapon/grown/proc/changePotency(newValue) //-QualityVan
 	potency = newValue
@@ -1168,7 +1178,7 @@
 /obj/item/weapon/grown/log
 	name = "tower-cap log"
 	desc = "It's better than bad, it's good!"
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "logs"
 	force = 5
 	throwforce = 5
@@ -1181,25 +1191,18 @@
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
-		for(var/i=0,i<2,i++)
-			var/obj/item/stack/sheet/wood/NG = new (user.loc)
-			for (var/obj/item/stack/sheet/wood/G in user.loc)
-				if(G==NG)
-					continue
-				if(G.amount>=G.max_amount)
-					continue
-				G.attackby(NG, user)
-				to_chat(usr, "You add the newly-formed wood to the stack. It now contains [NG.amount] planks.")
+		for(var/i in 1 to 2)
+			new/obj/item/stack/sheet/wood(user.loc, , TRUE)
 		qdel(src)
-		return
 
 
 /obj/item/weapon/grown/sunflower // FLOWER POWER!
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
 	damtype = "fire"
 	force = 0
@@ -1223,15 +1226,12 @@
 	throw_range = 3
 	plant_type = 1
 	seed = "/obj/item/seeds/gibtomato"
-	New()
-		..()
 
-
-/obj/item/weapon/grown/gibtomato/New()
-	..()
-	src.gibs = new /obj/effect/gibspawner/human(get_turf(src))
-	src.gibs.attach(src)
-	src.smoke.set_up(10, 0, usr.loc)
+/obj/item/weapon/grown/gibtomato/atom_init()
+	. = ..()
+	gibs = new /obj/effect/gibspawner/human(get_turf(src))
+	gibs.attach(src)
+	smoke.set_up(10, 0, usr.loc)
 */
 /obj/item/weapon/grown/nettle // -- Skie
 	desc = "It's probably <B>not</B> wise to touch it with bare hands..."
@@ -1248,8 +1248,8 @@
 	origin_tech = "combat=1"
 	seed = "/obj/item/seeds/nettleseed"
 
-/obj/item/weapon/grown/nettle/New()
-	..()
+/obj/item/weapon/grown/nettle/atom_init()
+	. = ..()
 	spawn(5)	//So potency can be set in the proc that creates these crops
 		reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
 		reagents.add_reagent("sacid", round(potency, 1))
@@ -1271,8 +1271,8 @@
 	origin_tech = "combat=3"
 	attack_verb = list("stung")
 
-/obj/item/weapon/grown/deathnettle/New()
-	..()
+/obj/item/weapon/grown/deathnettle/atom_init()
+	. = ..()
 	spawn(5)	//So potency can be set in the proc that creates these crops
 		reagents.add_reagent("nutriment", 1+round((potency / 50), 1))
 		reagents.add_reagent("pacid", round(potency, 1))
@@ -1293,9 +1293,10 @@
 	var/toxicity = 0
 	var/PestKillStr = 0
 
-/obj/item/pestkiller/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+/obj/item/pestkiller/atom_init()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 /obj/item/pestkiller/carbaryl
 	name = "bottle of carbaryl"
@@ -1304,20 +1305,12 @@
 	toxicity = 4
 	PestKillStr = 2
 
-/obj/item/pestkiller/carbaryl/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
-
 /obj/item/pestkiller/lindane
 	name = "bottle of lindane"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle18"
 	toxicity = 6
 	PestKillStr = 4
-
-/obj/item/pestkiller/lindane/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
 
 /obj/item/pestkiller/phosmet
 	name = "bottle of phosmet"
@@ -1326,17 +1319,13 @@
 	toxicity = 8
 	PestKillStr = 7
 
-/obj/item/pestkiller/phosmet/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
-
 // *************************************
 // Hydroponics Tools
 // *************************************
 
 /obj/item/weapon/weedspray // -- Skie
 	desc = "It's a toxic mixture, in spray form, to kill small weeds."
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "weed-spray"
 	icon_state = "weedspray"
 	item_state = "spray"
@@ -1355,7 +1344,7 @@
 
 /obj/item/weapon/pestspray // -- Skie
 	desc = "It's some pest eliminator spray! <I>Do not inhale!</I>"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "pest-spray"
 	icon_state = "pestspray"
 	item_state = "spraycan"
@@ -1382,7 +1371,8 @@
 	force = 5.0
 	throwforce = 7.0
 	w_class = 2.0
-	m_amt = 50
+	m_amt = 2550
+	origin_tech = "materials=1;biotech=1"
 	attack_verb = list("slashed", "sliced", "cut", "clawed")
 
 // *************************************
@@ -1429,9 +1419,10 @@
 	var/mutmod = 0
 	var/yieldmod = 0
 
-/obj/item/nutrient/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
+/obj/item/nutrient/atom_init()
+	. = ..()
+	pixel_x = rand(-5.0, 5)
+	pixel_y = rand(-5.0, 5)
 
 /obj/item/nutrient/ez
 	name = "bottle of E-Z-Nutrient"
@@ -1440,10 +1431,6 @@
 	mutmod = 1
 	yieldmod = 1
 
-/obj/item/nutrient/ez/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
-
 /obj/item/nutrient/l4z
 	name = "bottle of Left 4 Zed"
 	icon = 'icons/obj/chemical.dmi'
@@ -1451,19 +1438,9 @@
 	mutmod = 2
 	yieldmod = 0
 
-/obj/item/nutrient/l4z/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
-
 /obj/item/nutrient/rh
 	name = "bottle of Robust Harvest"
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "bottle15"
 	mutmod = 0
 	yieldmod = 2
-
-/obj/item/nutrient/rh/New()
-	src.pixel_x = rand(-5.0, 5)
-	src.pixel_y = rand(-5.0, 5)
-
-

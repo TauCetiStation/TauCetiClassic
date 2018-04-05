@@ -23,7 +23,7 @@
 			icon_state = "posibrain-searching"
 			src.searching = 1
 			src.request_player()
-			spawn(600) reset_search()
+			addtimer(CALLBACK(src, .proc/reset_search), 600)
 
 	proc/request_player()
 		for(var/mob/dead/observer/O in player_list)
@@ -36,17 +36,16 @@
 			if(O.client)
 				var/client/C = O.client
 				if(!C.prefs.ignore_question.Find("posibrain") && (ROLE_PAI in C.prefs.be_role))
-					question(C)
+					INVOKE_ASYNC(src, .proc/question, C)
 
 	proc/question(client/C)
-		spawn(0)
-			if(!C)	return
-			var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "No", "Yes", "Never for this round")
-			if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
-			if(response == "Yes")
-				transfer_personality(C.mob)
-			else if (response == "Never for this round")
-				C.prefs.ignore_question += "posibrain"
+		if(!C)	return
+		var/response = alert(C, "Someone is requesting a personality for a positronic brain. Would you like to play as one?", "Positronic brain request", "No", "Yes", "Never for this round")
+		if(!C || brainmob.key || 0 == searching)	return		//handle logouts that happen whilst the alert is waiting for a response, and responses issued after a brain has been located.
+		if(response == "Yes")
+			transfer_personality(C.mob)
+		else if (response == "Never for this round")
+			C.prefs.ignore_question += "posibrain"
 
 
 	transfer_identity(mob/living/carbon/H)
@@ -134,17 +133,17 @@
 		for (var/mob/M in viewers(T))
 			M.show_message("<span class='notice'>\The [src] pings softly.</span>")
 
-/obj/item/device/mmi/posibrain/New()
+/obj/item/device/mmi/posibrain/atom_init()
 
-	src.brainmob = new(src)
-	src.brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI"))]-[rand(100, 999)]"
-	src.brainmob.real_name = src.brainmob.name
-	src.brainmob.loc = src
-	src.brainmob.container = src
-	src.brainmob.robot_talk_understand = 1
-	src.brainmob.stat = CONSCIOUS
-	src.brainmob.silent = 0
-	src.brainmob.brain_op_stage = 4.0
-	dead_mob_list -= src.brainmob
+	brainmob = new(src)
+	brainmob.name = "[pick(list("PBU","HIU","SINA","ARMA","OSI","HBL","MSO","CHRI","CDB","XSI","ORNG","GUN","KOR","MET","FRE","XIS","SLI","PKP","HOG","RZH","MRPR","JJR","FIRC","INC","PHL","BGB","ANTR","MIW","JRD","CHOC","ANCL","JLLO","JNLG","KOS","TKRG","XAL","STLP","CBOS","DUNC","FXMC","DRSD","XHS","BOB","EXAD","JMAD"))]-[rand(100, 999)]"
+	brainmob.real_name = brainmob.name
+	brainmob.loc = src
+	brainmob.container = src
+	brainmob.robot_talk_understand = 1
+	brainmob.stat = CONSCIOUS
+	brainmob.silent = 0
+	brainmob.brain_op_stage = 4.0
+	dead_mob_list -= brainmob
 
-	..()
+	. = ..()

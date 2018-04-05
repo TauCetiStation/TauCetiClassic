@@ -10,8 +10,8 @@ var/global/media_receivers=list()
 	var/media_frequency = 1015 // 123.4 MHz
 	var/media_crypto    = null // Crypto key
 
-/obj/machinery/media/receiver/New()
-	..()
+/obj/machinery/media/receiver/atom_init()
+	. = ..()
 	connect_frequency()
 
 /obj/machinery/media/receiver/proc/receive_broadcast(url="", start_time=0)

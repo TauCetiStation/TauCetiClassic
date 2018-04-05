@@ -15,8 +15,8 @@
  	//var/image/inhand_blood_overlay
 	attack_verb = list("bashed", "pacified", "smashed", "opressed", "flapped")
 
-/obj/item/weapon/transparant/New()
-	..()
+/obj/item/weapon/transparant/atom_init()
+	. = ..()
 	not_bloody_state = icon_state
 
 /obj/item/weapon/transparant/attackby(obj/item/I, mob/user)
@@ -27,7 +27,7 @@
 	if(istype(I, /obj/item/weapon/pen))
 
 		var/defaultText = "FUK NT!1"
-		var/targName = copytext(sanitize(input(usr, "Just write something here", "Transparant text", defaultText)),1,MAX_MESSAGE_LEN)
+		var/targName = sanitize(input(usr, "Just write something here", "Transparant text", input_default(defaultText)))
 		var/obj/item/weapon/transparant/text/W = new /obj/item/weapon/transparant/text
 		W.desc = targName
 		user.remove_from_mob(src)

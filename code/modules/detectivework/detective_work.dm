@@ -55,6 +55,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 	name = "\improper High-Res Forensic Scanning Computer"
 	icon_state = "forensic"
 	light_color = "#a91515"
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/scanning
 	var/temp = ""
 	var/canclear = 1
@@ -80,23 +81,15 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 	req_access = list(access_forensics_lockers)
 
 
-/obj/machinery/computer/forensic_scanning/New()
-	..()
+/obj/machinery/computer/forensic_scanning/atom_init()
+	. = ..()
 	new /obj/item/weapon/book/manual/detective(get_turf(src))
-	return
 
 
-/obj/machinery/computer/forensic_scanning/attack_ai(mob/user)
-	return attack_hand(user)
-
-
-/obj/machinery/computer/forensic_scanning/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/forensic_scanning/ui_interact(mob/user)
 	var/dat = ""
 	var/isai = 0
-	if(istype(usr,/mob/living/silicon))
+	if(issilicon(user) || isobserver(user))
 		isai = 1
 	if(temp)
 		dat += "<tt>[temp]</tt><br><br>"
@@ -121,7 +114,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			dat += {"<a href='?src=\ref[src];operation=database'>{Access Database}</a><br><br><tt>[scan_data]</tt>"}
 			if(scan_data && !scan_process)
 				dat += "<br><a href='?src=\ref[src];operation=erase'>{Erase Data}</a>"
-	user << browse(dat,"window=scanner")
+	user << browse(entity_ja(dat),"window=scanner")
 	onclose(user,"scanner")
 
 
@@ -209,7 +202,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			if(files)
 				var/list/dossier = files[href_list["identifier"]]
 				if(href_list["ren"])
-					var/new_title = sanitize_alt(copytext(input("Rename to what?", "Dossier Editing", "Dossier [files.Find(href_list["identifier"])]") as null|text,1,MAX_MESSAGE_LEN))
+					var/new_title = sanitize(input("Rename to what?", "Dossier Editing", "Dossier [files.Find(href_list["identifier"])]") as null|text)
 					if(new_title)
 						dossier[2] = new_title
 					else
@@ -445,7 +438,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 			if(!files || !files[href_list["identifier"]])
 				temp = "ERROR: Record/Database not found!"
 			else
-				var/new_title = sanitize_alt(copytext(input("Rename to what?", "Dossier Editing", "Dossier [files.Find(href_list["identifier"])]") as null|text,1,MAX_MESSAGE_LEN))
+				var/new_title = sanitize(input("Rename to what?", "Dossier Editing", "Dossier [files.Find(href_list["identifier"])]") as null|text,1,MAX_MESSAGE_LEN)
 				if(new_title)
 					var/list/file = files[href_list["identifier"]]
 					file[2] = new_title

@@ -4,6 +4,7 @@
 	icon_state = "wm_10"
 	density = 1
 	anchored = 1.0
+	use_power = 0
 	var/state = 1
 	//1 = empty, open door
 	//2 = empty, closed door
@@ -50,8 +51,7 @@
 
 	//Tanning!
 	for(var/obj/item/stack/sheet/hairlesshide/HH in contents)
-		var/obj/item/stack/sheet/wetleather/WL = new(src)
-		WL.amount = HH.amount
+		new/obj/item/stack/sheet/wetleather(src, HH.get_amount())
 		qdel(HH)
 
 
@@ -281,7 +281,14 @@
 		..()
 	update_icon()
 
+/obj/machinery/washing_machine/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
+
 /obj/machinery/washing_machine/attack_hand(mob/user)
+	if(..())
+		return 1
+	user.SetNextMove(CLICK_CD_RAPID)
 	switch(state)
 		if(1)
 			state = 2
@@ -311,6 +318,5 @@
 				O.loc = src.loc
 			crayon = null
 			state = 1
-
 
 	update_icon()

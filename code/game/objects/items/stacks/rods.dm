@@ -13,23 +13,34 @@
 	max_amount = 60
 	attack_verb = list("hit", "bludgeoned", "whacked")
 
+/obj/item/stack/rods/update_icon()
+	var/amount = get_amount()
+	if((amount <= 5) && (amount > 0))
+		icon_state = "rods-[amount]"
+	else
+		icon_state = "rods"
+
 /obj/item/stack/rods/attackby(obj/item/W, mob/user)
 	..()
 	if (istype(W, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/WT = W
 
-		if(amount < 2)
-			to_chat(user, "<span class='danger'>You need at least two rods to do this.</span>")
+		if(get_amount() < 2)
+			to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
 			return
 
-		if(WT.remove_fuel(0,user))
-			if(!use(2))
-				return
-			var/obj/item/stack/sheet/metal/new_item = new(usr.loc)
-			new_item.add_to_stacks(usr)
-			for (var/mob/M in viewers(src))
-				M.show_message("<span class='danger'>[src] is shaped into metal by [user.name] with the weldingtool.</span>", 3, "\red You hear welding.", 2)
-		return
+		if(WT.remove_fuel(0, user))
+			var/obj/item/stack/sheet/metal/new_item = new(usr.loc, , TRUE)
+			user.visible_message(
+				"[user.name] shaped [src] into metal with the welding tool.",
+				"<span class='notice'>You shape [src] into metal with the welding tool.</span>",
+				"<span class='italics'>You hear welding.</span>")
+			var/obj/item/stack/rods/R = src
+			src = null
+			var/replace = (user.get_inactive_hand() == R)
+			R.use(2)
+			if (!R && replace)
+				user.put_in_hands(new_item)
 
 /obj/item/stack/rods/attack_self(mob/user)
 	src.add_fingerprint(user)
@@ -48,9 +59,10 @@
 			else
 				return 1
 	else
-		if(amount < 2)
-			to_chat(user, "<span class='danger'>You need at least two rods to do this.</span>")
+		if(get_amount() < 2)
+			to_chat(user, "<span class='warning'>You need at least two rods to do this!</span>")
 			return
+		if(user.is_busy()) return
 		to_chat(usr, "<span class='notice'>Assembling grille...</span>")
 		if (!do_after(usr, 10, target = usr))
 			return

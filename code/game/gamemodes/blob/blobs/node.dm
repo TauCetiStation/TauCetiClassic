@@ -6,22 +6,22 @@
 	fire_resist = 2
 
 
-/obj/effect/blob/node/New(loc, var/h = 100)
+/obj/effect/blob/node/atom_init(mapload, h = 100)
 	blob_nodes += src
-	SSobj.processing |= src
-	..(loc, h)
+	START_PROCESSING(SSobj, src)
+	. = ..()
 
 /obj/effect/blob/node/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	return
 
 /obj/effect/blob/node/Destroy()
 	blob_nodes -= src
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/blob/node/Life()
-	for(var/i = 1; i < 8; i += i)
-		Pulse(5, i)
+	for(var/dir in cardinal)
+		Pulse(5, dir)
 	health = min(initial(health), health + 1)
 
 /obj/effect/blob/node/update_icon()

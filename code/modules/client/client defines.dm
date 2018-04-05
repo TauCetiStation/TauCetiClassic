@@ -21,8 +21,9 @@
 	var/adminobs		= null
 	var/area			= null
 	var/time_died_as_mouse = null //when the client last died as a mouse
-
+	var/time_joined_as_spacebum = null
 	var/adminhelped = 0
+	var/donator = 0
 
 		///////////////
 		//SOUND STUFF//

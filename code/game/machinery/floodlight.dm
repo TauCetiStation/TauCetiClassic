@@ -4,18 +4,19 @@
 	name = "Emergency Floodlight"
 	icon = 'icons/obj/machines/floodlight.dmi'
 	icon_state = "flood00"
-	density = 1
-	var/on = 0
+	density = TRUE
+	light_power = 2
+	interact_offline = TRUE
+	var/on = FALSE
 	var/obj/item/weapon/stock_parts/cell/high/cell = null
 	var/use = 5
-	var/unlocked = 0
-	var/open = 0
+	var/unlocked = FALSE
+	var/open = FALSE
 	var/brightness_on = 7
-	light_power = 2
 
-/obj/machinery/floodlight/New()
-	src.cell = new(src)
-	..()
+/obj/machinery/floodlight/atom_init()
+	cell = new(src)
+	. = ..()
 
 /obj/machinery/floodlight/proc/updateicon()
 	icon_state = "flood[open ? "o" : ""][open && cell ? "b" : ""]0[on]"
@@ -31,7 +32,12 @@
 			src.visible_message("<span class='warning'>[src] shuts down due to lack of power!</span>")
 			return
 
+
 /obj/machinery/floodlight/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	if(open && cell)
 		if(ishuman(user))
 			if(!user.get_active_hand())
@@ -43,7 +49,7 @@
 		cell.add_fingerprint(user)
 		cell.updateicon()
 
-		src.cell = null
+		cell = null
 		to_chat(user, "You remove the power cell")
 		updateicon()
 		return

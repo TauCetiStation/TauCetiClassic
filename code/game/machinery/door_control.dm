@@ -5,78 +5,38 @@
 	icon_state = "doorctrl0"
 	desc = "A remote control-switch for a door."
 	power_channel = ENVIRON
-	var/id = null
-	var/range = 10
-	var/normaldoorcontrol = 0
-	var/desiredstate = 0 // Zero is closed, 1 is open.
-	var/specialfunctions = 1
-	/*
-	Bitflag, 	1= open
-				2= idscan,
-				4= bolts
-				8= shock
-				16= door safties
-
-	*/
-
-	var/exposedwires = 0
-	var/wires = 3
-	/*
-	Bitflag,	1=checkID
-				2=Network Access
-	*/
-
-	anchored = 1.0
+	anchored = TRUE
 	use_power = 1
 	idle_power_usage = 2
 	active_power_usage = 4
+	var/id = null
+	var/range = 10
+	var/normaldoorcontrol = FALSE
+	var/desiredstate = 0 // Zero is closed, 1 is open.
+	var/specialfunctions = 1
 
-/obj/machinery/door_control/attack_ai(mob/user)
-	if(wires & 2)
-		return src.attack_hand(user)
-	else
-		to_chat(user, "Error, no route to host.")
-
-/obj/machinery/door_control/attack_paw(mob/user)
-	return src.attack_hand(user)
+/obj/machinery/door_control/allowed_fail(mob/user)
+	playsound(src, 'sound/items/buttonswitch.ogg', 20, 1, 1)
+	flick("doorctrl-denied",src)
 
 /obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user)
-	/* For later implementation
-	if (istype(W, /obj/item/weapon/screwdriver))
-	{
-		if(wiresexposed)
-			icon_state = "doorctrl0"
-			wiresexposed = 0
-
-		else
-			icon_state = "doorctrl-open"
-			wiresexposed = 1
-
-		return
-	}
-	*/
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
 	if(istype(W, /obj/item/weapon/card/emag))
 		req_access = list()
+		user.SetNextMove(CLICK_CD_INTERACT)
 		req_one_access = list()
 		playsound(src.loc, "sparks", 100, 1)
 	return src.attack_hand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user)
-	src.add_fingerprint(usr)
+	. = ..()
+	if(.)
+		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(src, 'sound/items/buttonswitch.ogg', 20, 1, 1)
-	if(stat & (NOPOWER|BROKEN))
-		return
-
-	if(!allowed(user) && (wires & 1))
-		to_chat(user, "\red Access Denied")
-		flick("doorctrl-denied",src)
-		return
-
 	use_power(5)
 	icon_state = "doorctrl1"
-	add_fingerprint(user)
 
 	if(normaldoorcontrol)
 		for(var/obj/machinery/door/airlock/D in range(range))
@@ -103,7 +63,7 @@
 					if(specialfunctions & IDSCAN)
 						D.aiDisabledIdScanner = 0
 					if(specialfunctions & BOLTS)
-						if(!D.isWireCut(4) && D.hasPower())
+						if(!D.isAllPowerCut() && D.hasPower())
 							D.unbolt()
 					if(specialfunctions & SHOCK)
 						D.secondsElectrified = 0
@@ -134,12 +94,6 @@
 	else
 		icon_state = "doorctrl0"
 
-/obj/machinery/driver_button/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/driver_button/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/driver_button/attackby(obj/item/weapon/W, mob/user)
 
 	if(istype(W, /obj/item/device/detective_scanner))
@@ -147,15 +101,11 @@
 	return src.attack_hand(user)
 
 /obj/machinery/driver_button/attack_hand(mob/user)
-
-	src.add_fingerprint(usr)
-	if(stat & (NOPOWER|BROKEN))
-		return
-	if(active)
-		return
-	add_fingerprint(user)
+	if(..() || active)
+		return 1
 
 	use_power(5)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	active = 1
 	icon_state = "launcheract"
@@ -182,5 +132,3 @@
 
 	icon_state = "launcherbtt"
 	active = 0
-
-	return

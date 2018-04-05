@@ -17,22 +17,13 @@
 /obj/item/weapon/reagent_containers/hypospray/attack_paw(mob/user)
 	return src.attack_hand(user)
 
-
-/obj/item/weapon/reagent_containers/hypospray/New() //comment this to make hypos start off empty
-	..()
-	reagents.add_reagent("tricordrazine", 30)
-	return
-
-/obj/item/weapon/reagent_containers/hypospray/attack(mob/M, mob/user)
+/obj/item/weapon/reagent_containers/hypospray/attack(mob/living/M, mob/user)
 	if(!reagents.total_volume)
 		to_chat(user, "\red [src] is empty.")
 		return
-	if (!( istype(M, /mob) ))
+	if(!istype(M))
 		return
-	if (reagents.total_volume)
-		to_chat(user, "\blue You inject [M] with [src].")
-		to_chat(M, "\red You feel a tiny prick!")
-
+	if(reagents.total_volume && M.try_inject(user, TRUE, TRUE, TRUE, TRUE))
 		src.reagents.reaction(M, INGEST)
 		if(M.reagents)
 
@@ -49,41 +40,42 @@
 
 	return
 
+/obj/item/weapon/reagent_containers/hypospray/cmo //We need "another" hypo for CMO
+
+/obj/item/weapon/reagent_containers/hypospray/cmo/atom_init()
+	. = ..()
+	reagents.add_reagent("tricordrazine", 30)
+
+
 /obj/item/weapon/reagent_containers/hypospray/autoinjector
 	name = "autoinjector"
 	desc = "A rapid and safe way to administer small amounts of drugs by untrained or trained personnel."
 	icon_state = "autoinjector"
 	item_state = "autoinjector"
-	amount_per_transfer_from_this = 5
 	volume = 5
 
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/New()
-	..()
-	reagents.remove_reagent("tricordrazine", 30)
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/atom_init()
+	. = ..()
 	reagents.add_reagent("inaprovaline", 5)
+	flags &= ~OPENCONTAINER
+	amount_per_transfer_from_this = volume
 	update_icon()
-	return
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack //goliath kiting
 	name = "stimpack"
 	desc = "A rapid way to stimulate your body's adrenaline, allowing for freer movement in restrictive armor."
 	icon_state = "stimpen"
 	volume = 20
-	amount_per_transfer_from_this = 20
 
-/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack/New()
-	..()
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack/atom_init()
+	. = ..()
 	reagents.add_reagent("coffee", 13)
 	reagents.add_reagent("hyperzine", 2)
 	update_icon()
-	return
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/attack(mob/M, mob/user)
 	..()
-	if(reagents.total_volume <= 0) //Prevents autoinjectors to be refilled.
-		flags &= ~OPENCONTAINER
 	update_icon()
-	return
 
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/update_icon()
 	if(reagents.total_volume > 0)

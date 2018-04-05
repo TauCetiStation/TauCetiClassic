@@ -10,27 +10,24 @@
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 5000
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 /obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/stack/sheet/metal))
+		var/obj/item/stack/sheet/metal/M = O
 		if (src.metal_amount < 150000.0)
 			var/count = 0
 			src.overlays += "fab-load-metal"
 			spawn(15)
-				if(O)
-					if(!O:amount)
-						return
-					while(metal_amount < 150000 && O:amount)
-						src.metal_amount += O:m_amt /*O:height * O:width * O:length * 100000.0*/
-						O:amount--
-						count++
+				if(!M.get_amount())
+					return
+				while(metal_amount < 150000 && M.use(1))
+					src.metal_amount += M.m_amt /*O:height * O:width * O:length * 100000.0*/
+					count++
 
-					if (O:amount < 1)
-						qdel(O)
-
-					to_chat(user, "You insert [count] metal sheet\s into the fabricator.")
-					src.overlays -= "fab-load-metal"
-					updateDialog()
+				to_chat(user, "You insert [count] metal sheet\s into the fabricator.")
+				src.overlays -= "fab-load-metal"
+				updateDialog()
 		else
 			to_chat(user, "The robot part maker is full. Please remove metal from the robot part maker in order to insert more.")
 
@@ -40,36 +37,30 @@
 	else
 		stat |= NOPOWER
 
-/obj/machinery/robotic_fabricator/attack_paw(user)
-	return src.attack_hand(user)
-
-/obj/machinery/robotic_fabricator/attack_hand(user)
+/obj/machinery/robotic_fabricator/ui_interact(user)
 	var/dat
-	if (..())
-		return
 
 	if (src.operating)
 		dat = {"
-<TT>Building [src.being_built.name].<BR>
-Please wait until completion...</TT><BR>
-<BR>
-"}
+			<TT>Building [src.being_built.name].<BR>
+			Please wait until completion...</TT><BR>
+			<BR>
+			"}
 	else
 		dat = {"
-<B>Metal Amount:</B> [min(150000, src.metal_amount)] cm<sup>3</sup> (MAX: 150,000)<BR><HR>
-<BR>
-<A href='?src=\ref[src];make=1'>Left Arm (25,000 cc metal.)<BR>
-<A href='?src=\ref[src];make=2'>Right Arm (25,000 cc metal.)<BR>
-<A href='?src=\ref[src];make=3'>Left Leg (25,000 cc metal.)<BR>
-<A href='?src=\ref[src];make=4'>Right Leg (25,000 cc metal).<BR>
-<A href='?src=\ref[src];make=5'>Chest (50,000 cc metal).<BR>
-<A href='?src=\ref[src];make=6'>Head (50,000 cc metal).<BR>
-<A href='?src=\ref[src];make=7'>Robot Frame (75,000 cc metal).<BR>
-"}
+			<B>Metal Amount:</B> [min(150000, src.metal_amount)] cm<sup>3</sup> (MAX: 150,000)<BR><HR>
+			<BR>
+			<A href='?src=\ref[src];make=1'>Left Arm (25,000 cc metal.)<BR>
+			<A href='?src=\ref[src];make=2'>Right Arm (25,000 cc metal.)<BR>
+			<A href='?src=\ref[src];make=3'>Left Leg (25,000 cc metal.)<BR>
+			<A href='?src=\ref[src];make=4'>Right Leg (25,000 cc metal).<BR>
+			<A href='?src=\ref[src];make=5'>Chest (50,000 cc metal).<BR>
+			<A href='?src=\ref[src];make=6'>Head (50,000 cc metal).<BR>
+			<A href='?src=\ref[src];make=7'>Robot Frame (75,000 cc metal).<BR>
+			"}
 
-	user << browse("<HEAD><TITLE>Robotic Fabricator Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=robot_fabricator")
+	user << browse("<HEAD><TITLE>Robotic Fabricator Control Panel</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=robot_fabricator")
 	onclose(user, "robot_fabricator")
-	return
 
 /obj/machinery/robotic_fabricator/Topic(href, href_list)
 	. = ..()

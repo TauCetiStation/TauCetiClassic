@@ -17,7 +17,7 @@
 
 	var/needs_update = FALSE
 
-/atom/movable/lighting_overlay/New(var/atom/loc, var/no_update = FALSE)
+/atom/movable/lighting_overlay/atom_init(mapload, no_update = FALSE)
 	. = ..()
 	verbs.Cut()
 
@@ -25,13 +25,16 @@
 	T.lighting_overlay = src
 	T.luminosity       = FALSE
 
+	for(var/turf/space/S in RANGE_TURFS(1, src)) //RANGE_TURFS is in code\__HELPERS\game.dm
+		S.update_starlight()
+
 	if(no_update)
 		return
 
 	update_overlay()
 
 /atom/movable/lighting_overlay/Destroy()
-	var/turf/T   = loc
+	var/turf/T = loc
 	if(istype(T))
 		T.lighting_overlay = null
 		T.luminosity = TRUE
@@ -39,9 +42,6 @@
 	SSlighting.changed_overlays -= src;
 
 	return ..()
-
-/atom/movable/lighting_overlay/singularity_act()
-	return
 
 /atom/movable/lighting_overlay/proc/update_overlay()
 	var/turf/T = loc
@@ -54,39 +54,31 @@
 
 		qdel(src)
 
-	var/list/L = src.color:Copy() // For some dumb reason BYOND won't allow me to use [] on a colour matrix directly.
-	var/anylums = 0
+	// To the future coder who sees this and thinks
+	// "Why didn't he just use a loop?"
+	// Well my man, it's because the loop performed like shit.
+	// And there's no way to improve it because
+	// without a loop you can make the list all at once which is the fastest you're gonna get.
+	// Oh it's also shorter line wise.
+	// Including with these comments.
 
-	for(var/A in T.corners)
-		if(!A)
-			continue
+	// See LIGHTING_CORNER_DIAGONAL in lighting_corner.dm for why these values are what they are.
+	// No I seriously cannot think of a more efficient method, fuck off Comic.
+	var/datum/lighting_corner/cr = T.corners[3]
+	var/datum/lighting_corner/cg = T.corners[2]
+	var/datum/lighting_corner/cb = T.corners[4]
+	var/datum/lighting_corner/ca = T.corners[1]
 
-		var/datum/lighting_corner/C = A
-		var/i = 0
+	var/max = max(cr.cache_mx, cg.cache_mx, cb.cache_mx, ca.cache_mx)
 
-		// Huge switch to determine i based on D.
-		switch(turn(C.masters[T], 180))
-			if(NORTHEAST)
-				i = AR
+	color  = list(
+		cr.cache_r, cr.cache_g, cr.cache_b, 0,
+		cg.cache_r, cg.cache_g, cg.cache_b, 0,
+		cb.cache_r, cb.cache_g, cb.cache_b, 0,
+		ca.cache_r, ca.cache_g, ca.cache_b, 0,
+		0, 0, 0, 1
+	)
+	luminosity = max > LIGHTING_SOFT_THRESHOLD
 
-			if(SOUTHEAST)
-				i = GR
-
-			if(SOUTHWEST)
-				i = RR
-
-			if(NORTHWEST)
-				i = BR
-
-		var/mx = max(C.lum_r, C.lum_g, C.lum_b) // Scale it so 1 is the strongest lum, if it is above 1.
-		anylums += mx
-		. = 1 // factor
-		if(mx > 1)
-			. = 1 / mx
-
-		L[i + 0]   = C.lum_r * .
-		L[i + 1]   = C.lum_g * .
-		L[i + 2]   = C.lum_b * .
-
-	src.color  = L
-	luminosity = (anylums > 0)
+/atom/movable/lighting_overlay/singularity_act()
+	return

@@ -38,8 +38,37 @@
 		/obj/item/weapon/clipboard,
 		/obj/item/weapon/paper,
 		/obj/item/weapon/paper_bundle,
-		/obj/item/weapon/card/id
+		/obj/item/weapon/card/id,
+		/obj/item/weapon/book,
+		/obj/item/weapon/newspaper
 		)
+
+/obj/item/weapon/gripper/chemistry
+	name = "chemistry gripper"
+	desc = "A simple grasping tool for chemical work."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gripper"
+
+	can_hold = list(
+		/obj/item/weapon/reagent_containers/glass,
+		/obj/item/weapon/storage/pill_bottle
+		)
+
+/obj/item/weapon/gripper/service
+	name = "service gripper"
+	desc = "A simple grasping tool for service work."
+	icon = 'icons/obj/device.dmi'
+	icon_state = "gripper"
+
+	can_hold = list(
+		/obj/item/weapon/reagent_containers/glass,
+		/obj/item/weapon/reagent_containers/food
+		)
+
+/obj/item/weapon/gripper/examine(mob/user)
+	..()
+	if(wrapped)
+		to_chat(user, "It is holding \a [wrapped].")
 
 /obj/item/weapon/gripper/attack_self(mob/user)
 	if(wrapped)
@@ -187,7 +216,7 @@
 
 			if(!istype(D))
 				return
-
+			if(user.is_busy()) return
 			to_chat(D, "\red You begin decompiling the other drone.")
 
 			if(!do_after(D,50,target = M))
@@ -304,7 +333,7 @@
 		else
 			module_string += text("[O]: <A HREF=?src=\ref[src];act=\ref[O]>Activate</A><BR>")
 
-		if((istype(O,/obj/item/weapon) || istype(O,/obj/item/device)) && !(istype(O,/obj/item/weapon/cable_coil)))
+		if((istype(O,/obj/item/weapon) || istype(O,/obj/item/device)) && !(istype(O,/obj/item/stack/cable_coil)))
 			tools += module_string
 		else
 			resources += module_string
@@ -321,7 +350,7 @@
 
 	dat += resources
 
-	src << browse(dat, "window=robotmod")
+	src << browse(entity_ja(dat), "window=robotmod")
 
 //Putting the decompiler here to avoid doing list checks every tick.
 /mob/living/silicon/robot/drone/use_power()
@@ -337,24 +366,20 @@
 			switch(type)
 				if("metal")
 					if(!stack_metal)
-						stack_metal = new /obj/item/stack/sheet/metal/cyborg(src.module)
-						stack_metal.amount = 1
+						stack_metal = new (module, 1)
 					stack = stack_metal
 				if("glass")
 					if(!stack_glass)
-						stack_glass = new /obj/item/stack/sheet/glass/cyborg(src.module)
-						stack_glass.amount = 1
+						stack_glass = new (module, 1)
 					stack = stack_glass
 				if("wood")
 					if(!stack_wood)
-						stack_wood = new /obj/item/stack/sheet/wood/cyborg(src.module)
-						stack_wood.amount = 1
+						stack_wood = new (module, 1)
 					stack = stack_wood
 				if("plastic")
 					if(!stack_plastic)
-						stack_plastic = new /obj/item/stack/sheet/mineral/plastic/cyborg(src.module)
-						stack_plastic.amount = 1
+						stack_plastic = new (module, 1)
 					stack = stack_plastic
 
-			stack.amount++
+			stack.add(1)
 			decompiler.stored_comms[type]--;

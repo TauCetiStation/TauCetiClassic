@@ -59,32 +59,29 @@
 		//toxloss isn't used for aliens, its actually used as alien powers!!
 		health = maxHealth - getOxyLoss() - getFireLoss() - getBruteLoss() - getCloneLoss()
 
-/mob/living/carbon/alien/proc/handle_environment(datum/gas_mixture/environment)
+/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
 
 	//If there are alien weeds on the ground then heal if needed or give some plasma
 	if(locate(/obj/structure/alien/weeds) in loc)
 		if(health >= maxHealth)
 			adjustToxLoss(plasma_rate)
 		else
-			adjustBruteLoss(-heal_rate)
-			adjustFireLoss(-heal_rate)
-			adjustOxyLoss(-heal_rate)
-			adjustCloneLoss(-heal_rate)
+			if(storedPlasma >= max_plasma)
+				adjustBruteLoss(-heal_rate*2)
+				adjustFireLoss(-heal_rate*2)
+				adjustOxyLoss(-heal_rate*2)
+				adjustCloneLoss(-heal_rate*2)
+			else
+				adjustBruteLoss(-heal_rate)
+				adjustFireLoss(-heal_rate)
+				adjustOxyLoss(-heal_rate)
+				adjustCloneLoss(-heal_rate)
+				adjustToxLoss(plasma_rate/2)
 
 	if(!environment)
 		return
 
-	var/loc_temp = T0C
-	if(istype(loc, /obj/mecha))
-		var/obj/mecha/M = loc
-		loc_temp =  M.return_temperature()
-	else if(istype(get_turf(src), /turf/space))
-		var/turf/heat_turf = get_turf(src)
-		loc_temp = heat_turf.temperature
-	else if(istype(loc, /obj/machinery/atmospherics/unary/cryo_cell))
-		loc_temp = loc:air_contents.temperature
-	else
-		loc_temp = environment.temperature
+	var/loc_temp = get_temperature(environment)
 
 	//world << "Loc temp: [loc_temp] - Body temp: [bodytemperature] - Fireloss: [getFireLoss()] - Fire protection: [heat_protection] - Location: [loc] - src: [src]"
 
@@ -150,27 +147,33 @@
 	..()
 
 	if(statpanel("Status"))
-		var/baby = 0
-		var/drone = 0
-		var/sentinel = 0
-		var/hunter = 0
+		if(isalienqueen(src))
+			var/hugger = 0
+			var/larva = 0
+			var/drone = 0
+			var/sentinel = 0
+			var/hunter = 0
 
-		if(istype(src, /mob/living/carbon/alien/humanoid/queen))
 			for(var/mob/living/carbon/alien/A in living_mob_list)
-				if(istype(A, /mob/living/carbon/alien/humanoid/queen))
+				if(A.stat == DEAD)
 					continue
 				if(!A.key && A.brain_op_stage != 4)
 					continue
-				if(istype(A, /mob/living/carbon/alien/facehugger) || istype(A, /mob/living/carbon/alien/larva))
-					baby++
-				if(istype(A, /mob/living/carbon/alien/humanoid/drone))
+
+				if(isfacehugger(A))
+					hugger++
+				else if(islarva(A))
+					larva++
+				else if(isaliendrone(A))
 					drone++
-				if(istype(A, /mob/living/carbon/alien/humanoid/sentinel))
+				else if(isaliensentinel(A))
 					sentinel++
-				if(istype(A, /mob/living/carbon/alien/humanoid/hunter))
+				else if(isalienhunter(A))
 					hunter++
+
 			stat(null, "Hive Status:")
-			stat(null, "Babies: [baby]")
+			stat(null, "Huggers: [hugger]")
+			stat(null, "Larvas: [larva]")
 			stat(null, "Drones: [drone]")
 			stat(null, "Sentinels: [sentinel]")
 			stat(null, "Hunters: [hunter]")
@@ -290,7 +293,7 @@ Hit Procs
 	<BR><HR><BR>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
-	user << browse(dat, text("window=mob[name];size=340x480"))
+	user << browse(entity_ja(dat), text("window=mob[name];size=340x480"))
 	onclose(user, "mob[name]")
 	return
 

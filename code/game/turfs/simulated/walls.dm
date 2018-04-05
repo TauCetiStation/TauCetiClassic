@@ -23,9 +23,6 @@
 	var/walltype = "metal"
 	var/sheet_type = /obj/item/stack/sheet/metal
 
-/turf/simulated/wall/New()
-	..()
-
 /turf/simulated/wall/Destroy()
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
@@ -33,11 +30,11 @@
 	dismantle_wall()
 	return ..()
 
-/turf/simulated/wall/ChangeTurf(newtype)
+/turf/simulated/wall/ChangeTurf()
 	for(var/obj/effect/E in src)
 		if(E.name == "Wallrot")
 			qdel(E)
-	..(newtype)
+	. = ..()
 	relativewall_neighbours()
 
 //Appearance
@@ -59,7 +56,7 @@
 	if(rotting)
 		to_chat(user, "<span class='warning'>There is fungus growing on [src].</span>")
 
-/turf/simulated/wall/proc/update_icon()
+/turf/simulated/wall/update_icon()
 	if(!damage_overlays[1]) //list hasn't been populated
 		generate_overlays()
 
@@ -136,8 +133,7 @@
 		new /obj/effect/decal/cleanable/blood(src)
 		return (new /obj/structure/cultgirder(src))
 
-	var/obj/item/stack/sheet/sheet = new sheet_type(src)
-	sheet.amount = 2
+	new sheet_type(src, 2)
 	return (new /obj/structure/girder(src))
 
 /turf/simulated/wall/proc/devastate_wall()
@@ -145,14 +141,13 @@
 		new /obj/effect/decal/cleanable/blood(src)
 		new /obj/effect/decal/remains/human(src)
 
-	var/obj/item/stack/sheet/sheet = new sheet_type(src)
-	sheet.amount = 2
+	new sheet_type(src, 2)
 	new /obj/item/stack/sheet/metal(src)
 
 /turf/simulated/wall/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			src.ChangeTurf(/turf/space)
+			src.ChangeTurf(basetype)
 			return
 		if(2.0)
 			if(prob(75))
@@ -243,7 +238,7 @@
 	return */
 
 /turf/simulated/wall/attack_animal(mob/living/simple_animal/M)
-	M.do_attack_animation(src)
+	..()
 	if(M.environment_smash >= 2)
 		if(istype(M, /mob/living/simple_animal/hulk))
 			var/mob/living/simple_animal/hulk/Hulk = M
@@ -267,6 +262,7 @@
 			return
 
 /turf/simulated/wall/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations) //#Z2 No more chances, just randomized damage and hurt intent
 		if(user.a_intent == "hurt")
 			playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
@@ -284,18 +280,18 @@
 	to_chat(user, "\blue You push the wall but nothing happens!")
 	playsound(src, 'sound/weapons/Genhit.ogg', 25, 1)
 	src.add_fingerprint(user)
-	..()
 	return
 
 /turf/simulated/wall/attackby(obj/item/weapon/W, mob/user)
 
-	if (!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+	if (!(ishuman(user)|| ticker) && ticker.mode.name != "monkey")
 		to_chat(user, "<span class='warning'>You don't have the dexterity to do this!</span>")
 		return
 
 	//get the user's location
-	if(!istype(user.loc, /turf))
+	if(!isturf(user.loc))
 		return	//can't do this stuff whilst inside objects and such
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	if(rotting)
 		if(istype(W, /obj/item/weapon/weldingtool))
@@ -339,6 +335,7 @@
 
 	//DECONSTRUCTION
 	if(istype(W, /obj/item/weapon/weldingtool))
+		if(user.is_busy()) return
 
 		var/response = "Dismantle"
 		if(damage)
@@ -371,6 +368,7 @@
 			return
 
 	else if(istype(W, /obj/item/weapon/pickaxe/plasmacutter))
+		if(user.is_busy()) return
 
 		to_chat(user, "<span class='notice'>You begin slicing through the outer plating.</span>")
 		playsound(src, 'sound/items/Welder.ogg', 100, 1)
@@ -390,6 +388,7 @@
 
 	//DRILLING
 	else if (istype(W, /obj/item/weapon/pickaxe/drill/diamond_drill))
+		if(user.is_busy()) return
 
 		to_chat(user, "<span class='notice'>You begin to drill though the wall.</span>")
 
@@ -407,6 +406,7 @@
 		return
 
 	else if(istype(W, /obj/item/weapon/melee/energy/blade))
+		if(user.is_busy()) return
 		var/obj/item/weapon/melee/energy/blade/EB = W
 
 		EB.spark_system.start()
@@ -426,6 +426,14 @@
 				dismantle_wall(1)
 				for(var/mob/O in viewers(user, 5))
 					O.show_message("<span class='warning'>The wall was sliced apart by [user]!</span>", 1, "<span class='warning'>You hear metal being sliced apart and sparks flying.</span>", 2)
+		return
+	else if(istype(W,/obj/item/weapon/changeling_hammer) && !rotting)
+		var/obj/item/weapon/changeling_hammer/C = W
+		visible_message("<span class='danger'>[user] has punched the[src]!</span>")
+		user.do_attack_animation(src)
+		if(C.use_charge(user))
+			playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+			take_damage(pick(10, 20, 30))
 		return
 
 	else if(istype(W,/obj/item/apc_frame))
@@ -465,7 +473,6 @@
 
 	else
 		return attack_hand(user)
-	return
 
 /turf/simulated/wall/singularity_pull(S, current_size)
 	if(current_size >= STAGE_FIVE)

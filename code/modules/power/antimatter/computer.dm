@@ -15,16 +15,17 @@
 	var/obj/machinery/power/am_engine/injector/connected_I = null
 	var/state = STATE_DEFAULT
 
-/obj/machinery/computer/am_engine/New()
+/obj/machinery/computer/am_engine/atom_init()
 	..()
-	spawn( 24 )
-		for(var/obj/machinery/power/am_engine/engine/E in world)
-			if(E.engine_id == src.engine_id)
-				src.connected_E = E
-		for(var/obj/machinery/power/am_engine/injector/I in world)
-			if(I.engine_id == src.engine_id)
-				src.connected_I = I
-	return
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/machinery/computer/am_engine/atom_init_late()
+	for(var/obj/machinery/power/am_engine/engine/E in machines)
+		if(E.engine_id == engine_id)
+			connected_E = E
+	for(var/obj/machinery/power/am_engine/injector/I in machines)
+		if(I.engine_id == engine_id)
+			connected_I = I
 
 /obj/machinery/computer/am_engine/Topic(href, href_list)
 	. = ..()
@@ -56,16 +57,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/computer/am_engine/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/am_engine/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/am_engine/attack_hand(mob/user)
-	if(..())
-		return
-	user.machine = src
+/obj/machinery/computer/am_engine/ui_interact(mob/user)
 	var/dat = "<head><title>Engine Computer</title></head><body>"
 	switch(src.state)
 		if(STATE_DEFAULT)
@@ -90,6 +82,6 @@
 			dat += "<BR>Contents:<br>[src.connected_E.H_fuel]kg of Hydrogen<br>[src.connected_E.antiH_fuel]kg of Anti-Hydrogen<br>"
 
 	dat += "<BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
-	user << browse(dat, "window=communications;size=400x500")
+	user << browse(entity_ja(dat), "window=communications;size=400x500")
 	onclose(user, "communications")
 

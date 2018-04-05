@@ -9,8 +9,8 @@
 	origin_tech = "combat=3;magnets=2"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser)
 
-/obj/item/weapon/gun/energy/laser/New()
-	..()
+/obj/item/weapon/gun/energy/laser/atom_init()
+	. = ..()
 	if(power_supply)
 		power_supply.maxcharge = 1500
 		power_supply.charge = 1500
@@ -56,35 +56,30 @@ obj/item/weapon/gun/energy/laser/retro
 	icon_state = "retro"
 	desc = "An older model of the basic lasergun, no longer used by Nanotrasen's security or military forces. Nevertheless, it is still quite deadly and easy to maintain, making it a favorite amongst pirates and other outlaws."
 
-
-/obj/item/weapon/gun/energy/laser/captain
-	icon_state = "caplaser"
-	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
-	force = 10
-	origin_tech = null
+/obj/item/weapon/gun/energy/laser/selfcharging
 	var/charge_tick = 0
+	var/chargespeed = 0
+
+/obj/item/weapon/gun/energy/laser/selfcharging/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 
-/obj/item/weapon/gun/energy/laser/captain/New()
-	..()
-	SSobj.processing |= src
-
-
-/obj/item/weapon/gun/energy/laser/captain/Destroy()
-	SSobj.processing.Remove(src)
+/obj/item/weapon/gun/energy/laser/selfcharging/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 
-/obj/item/weapon/gun/energy/laser/captain/process()
+/obj/item/weapon/gun/energy/laser/selfcharging/process()
 	charge_tick++
 	if(charge_tick < 4) return 0
 	charge_tick = 0
 	if(!power_supply) return 0
-	power_supply.give(100)
+	power_supply.give(100 * chargespeed)
 	update_icon()
 	return 1
 
-/obj/item/weapon/gun/energy/laser/captain/isHandgun()
+/obj/item/weapon/gun/energy/laser/selfcharging/isHandgun()
 	return 1
 
 /obj/item/weapon/gun/energy/laser/cyborg/newshot()
@@ -97,6 +92,21 @@ obj/item/weapon/gun/energy/laser/retro
 				chambered.newshot()
 	return
 
+/obj/item/weapon/gun/energy/laser/selfcharging/captain
+	icon_state = "caplaser"
+	desc = "This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy. On the item is an image of Space Station 13. The station is exploding."
+	force = 10
+	origin_tech = null
+	chargespeed = 1
+
+/obj/item/weapon/gun/energy/laser/selfcharging/alien
+	name = "Alien blaster"
+	icon_state = "egun"
+	desc = " The object menaces with spikes of energy. You don't kmown what kind of weapon."
+	force = 5
+	origin_tech = null
+	chargespeed = 2
+
 /obj/item/weapon/gun/energy/laser/scatter
 	name = "scatter laser gun"
 	icon_state = "oldlaser"
@@ -107,17 +117,25 @@ obj/item/weapon/gun/energy/laser/retro
 		select_fire(user)
 		update_icon()
 
+/obj/item/weapon/gun/energy/laser/scatter/alien
+	name = "scatter laser rife"
+	icon_state = "subegun"
+	desc = "A laser gun equipped with a refraction kit that spreads bolts."
+	ammo_type = list(/obj/item/ammo_casing/energy/laser, /obj/item/ammo_casing/energy/laser/scatter)
+	origin_tech = null
+
 /obj/item/weapon/gun/energy/lasercannon
 	name = "laser cannon"
 	desc = "With the L.A.S.E.R. cannon, the lasing medium is enclosed in a tube lined with uranium-235 and subjected to high neutron flux in a nuclear reactor core. This incredible technology may help YOU achieve high excitation rates with small laser volumes!"
 	icon_state = "lasercannon"
+	item_state = null
 	origin_tech = "combat=4;materials=3;powerstorage=3"
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/heavy)
 
 	fire_delay = 20
 
-	isHandgun()
-		return 0
+/obj/item/weapon/gun/energy/lasercannon/isHandgun()
+	return 0
 
 /obj/item/weapon/gun/energy/lasercannon/cyborg/newshot()
 	if(isrobot(src.loc))
@@ -151,17 +169,17 @@ obj/item/weapon/gun/energy/laser/retro
 /obj/item/weapon/gun/energy/laser/bluetag/special_check(mob/living/carbon/human/M)
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/bluetag))
-			return 1
+			return ..()
 		to_chat(M, "\red You need to be wearing your laser tag vest!")
 	return 0
 
-/obj/item/weapon/gun/energy/laser/bluetag/New()
-	..()
-	SSobj.processing |= src
+/obj/item/weapon/gun/energy/laser/bluetag/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 
 /obj/item/weapon/gun/energy/laser/bluetag/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 
@@ -186,17 +204,17 @@ obj/item/weapon/gun/energy/laser/retro
 /obj/item/weapon/gun/energy/laser/redtag/special_check(mob/living/carbon/human/M)
 	if(ishuman(M))
 		if(istype(M.wear_suit, /obj/item/clothing/suit/redtag))
-			return 1
+			return ..()
 		to_chat(M, "\red You need to be wearing your laser tag vest!")
 	return 0
 
-/obj/item/weapon/gun/energy/laser/redtag/New()
-	..()
-	SSobj.processing |= src
+/obj/item/weapon/gun/energy/laser/redtag/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 
 /obj/item/weapon/gun/energy/laser/redtag/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 

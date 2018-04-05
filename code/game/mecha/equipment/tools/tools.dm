@@ -48,15 +48,26 @@
 						O.anchored = initial(O.anchored)
 			else
 				occupant_message("<font color='red'>Not enough room in cargo compartment.</font>")
-		else
-			if(istype(target, /obj/structure/scrap))
-				var/obj/structure/scrap/pile = target
-				playsound(target, 'sound/effects/metal_creaking.ogg', 50, 1)
-				if(do_after_cooldown(pile))
-					occupant_message("<font color='red'>You squeeze the [pile.name] into compact shape.</font>")
-					pile.make_cube()
+		else if(istype(target, /obj/structure/scrap))
+			var/obj/structure/scrap/pile = target
+			playsound(target, 'sound/effects/metal_creaking.ogg', 50, 1)
+			if(do_after_cooldown(pile))
+				occupant_message("<font color='red'>You squeeze the [pile.name] into compact shape.</font>")
+				pile.make_cube()
 			else
 				occupant_message("<font color='red'>[target] is firmly secured.</font>")
+		else if(istype(target, /obj/structure/droppod))
+			var/obj/structure/droppod/Drop = target
+			if(Drop.flags & STATE_DROPING || Drop.intruder || Drop.second_intruder)
+				return
+			var/T = chassis.loc
+			if(do_after_cooldown(Drop) && T == chassis.loc && src == chassis.selected\
+			&& !Drop.intruder && !Drop.second_intruder && !(Drop.flags & STATE_DROPING) && !(Drop.flags & STATE_AIMING))
+				cargo_holder.cargo += Drop
+				Drop.loc = chassis
+				occupant_message("<font color='blue'>[target] succesfully loaded.</font>")
+				log_message("Loaded [O]. Cargo compartment capacity: [cargo_holder.cargo_capacity - cargo_holder.cargo.len]")
+				return 1
 
 	else if(istype(target,/mob/living))
 		var/mob/living/M = target
@@ -220,12 +231,11 @@
 	energy_drain = 0
 	range = MELEE|RANGED
 
-/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/New()
+/obj/item/mecha_parts/mecha_equipment/tool/extinguisher/atom_init()
 	reagents = new/datum/reagents(200)
 	reagents.my_atom = src
 	reagents.add_reagent("water", 200)
-	..()
-	return
+	. = ..()
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher/action(atom/target) //copypasted from extinguisher. TODO: Rewrite from scratch.
 	if(!action_checks(target) || get_dist(chassis, target)>3) return
@@ -248,7 +258,7 @@
 				var/list/the_targets = list(T,T1,T2)
 				spawn(0)
 					for(var/a in 1 to 5)
-						var/obj/effect/effect/water/W = PoolOrNew(/obj/effect/effect/water, get_turf(chassis))
+						var/obj/effect/effect/water/W = new /obj/effect/effect/water(get_turf(chassis))
 						if(!W)	return
 						var/turf/my_target = pick(the_targets)
 						var/datum/reagents/R = new/datum/reagents(5)
@@ -322,7 +332,7 @@
 				if(do_after_cooldown(target))
 					if(disabled) return
 					chassis.spark_system.start()
-					target:ChangeTurf(/turf/space)
+					target:BreakToBase()
 					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.use_power(energy_drain)
 			else if (istype(target, /obj/machinery/door/airlock))
@@ -452,8 +462,7 @@
 	P.name = "wormhole"
 	do_after_cooldown()
 	src = null
-	spawn(rand(150,300))
-		qdel(P)
+	QDEL_IN(P, rand(150,300))
 	return
 
 
@@ -645,7 +654,7 @@
 		chassis.log_append_to_last("Armor saved.")
 		if(istype(A, /mob/living))
 			var/mob/living/M = A
-			M.take_organ_damage(10)
+			M.take_bodypart_damage(10)
 	else if(istype(A, /obj))
 		var/obj/O = A
 		if(O.throwforce)
@@ -671,11 +680,10 @@
 	var/icon/droid_overlay
 	var/list/repairable_damage = list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH)
 
-/obj/item/mecha_parts/mecha_equipment/repair_droid/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/repair_droid/atom_init()
+	. = ..()
 	pr_repair_droid = new /datum/global_iterator/mecha_repair_droid(list(src),0)
 	pr_repair_droid.set_delay(equip_cooldown)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/repair_droid/attach(obj/mecha/M)
 	..()
@@ -756,11 +764,10 @@
 	var/coeff = 100
 	var/list/use_channels = list(EQUIP,ENVIRON,LIGHT)
 
-/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/New()
-	..()
+/obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/atom_init()
+	. = ..()
 	pr_energy_relay = new /datum/global_iterator/mecha_energy_relay(list(src),0)
 	pr_energy_relay.set_delay(equip_cooldown)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/tesla_energy_relay/detach()
 	pr_energy_relay.stop()
@@ -870,17 +877,15 @@
 	var/power_per_cycle = 20
 	reliability = 1000
 
-/obj/item/mecha_parts/mecha_equipment/generator/New()
+/obj/item/mecha_parts/mecha_equipment/generator/atom_init()
 	..()
-	init()
-	return
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/item/mecha_parts/mecha_equipment/generator/proc/init()
+/obj/item/mecha_parts/mecha_equipment/generator/atom_init_late()
 	fuel = new /obj/item/stack/sheet/mineral/phoron(src)
 	fuel.amount = 0
 	pr_mech_generator = new /datum/global_iterator/mecha_generator(list(src),0)
 	pr_mech_generator.set_delay(equip_cooldown)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/detach()
 	pr_mech_generator.stop()
@@ -920,10 +925,10 @@
 	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/proc/load_fuel(obj/item/stack/sheet/P)
-	if(P.type == fuel.type && P.amount)
+	if(P.type == fuel.type && P.get_amount())
 		var/to_load = max(max_fuel - fuel.amount*fuel.perunit,0)
 		if(to_load)
-			var/units = min(max(round(to_load / P.perunit),1),P.amount)
+			var/units = min(max(round(to_load / P.perunit),1),P.get_amount())
 			if(units)
 				fuel.amount += units
 				P.use(units)
@@ -949,12 +954,12 @@
 		return
 	var/datum/gas_mixture/GM = new
 	if(prob(10))
-		GM.phoron += 100
+		GM.gas["phoron"] += 100
 		GM.temperature = 1500+T0C //should be enough to start a fire
 		T.visible_message("The [src] suddenly disgorges a cloud of heated phoron.")
-		destroy()
+		qdel(src)
 	else
-		GM.phoron += 5
+		GM.gas["phoron"] += 5
 		GM.temperature = istype(T) ? T.air.temperature : T20C
 		T.visible_message("The [src] suddenly disgorges a cloud of phoron.")
 	T.assume_air(GM)
@@ -1003,12 +1008,11 @@
 	var/rad_per_cycle = 0.3
 	reliability = 1000
 
-/obj/item/mecha_parts/mecha_equipment/generator/nuclear/init()
+/obj/item/mecha_parts/mecha_equipment/generator/nuclear/atom_init_late()
 	fuel = new /obj/item/stack/sheet/mineral/uranium(src)
 	fuel.amount = 0
 	pr_mech_generator = new /datum/global_iterator/mecha_generator/nuclear(list(src),0)
 	pr_mech_generator.set_delay(equip_cooldown)
-	return
 
 /obj/item/mecha_parts/mecha_equipment/generator/nuclear/critfail()
 	return
@@ -1102,3 +1106,90 @@
 	var/new_icon = "ripley"  //What base icon will the new mech use?
 	var/removable = null     //Can the kit be removed?
 	var/list/allowed_types = list() //Types of mech that the kit will work on.
+
+
+/********Mecha Drop System********/
+/obj/item/mecha_parts/mecha_equipment/Drop_system
+	name = "Drop System"
+	desc = "Allow to drop mech from skies."
+	icon_state = "tesla"
+	origin_tech = "magnets=4"
+	equip_cooldown = 10
+	energy_drain = 2500
+	range = 0
+	var/uses = 1
+	var/aiming = FALSE
+	var/static/datum/droppod_allowed/allowed_areas
+
+/obj/item/mecha_parts/mecha_equipment/Drop_system/atom_init()
+	. = ..()
+	if(!allowed_areas)
+		allowed_areas = new
+
+/obj/item/mecha_parts/mecha_equipment/Drop_system/Topic(href, href_list)
+	..()
+	if(href_list["start_drop"])
+		if(!aiming && uses)
+			Select()
+			log_message("Select Drop Point.")
+		else
+			chassis.occupant_message("<span class='notice'>You cannot drop for now!</span>")
+	return
+
+/obj/item/mecha_parts/mecha_equipment/Drop_system/get_equip_info()
+	if(!chassis)
+		return
+	return "<span style=\"color:[equip_ready?"#0f0":"#f00"];\">*</span>&nbsp;[name] - <a href='?src=\ref[src];start_drop=1'>Start Drop</a>"
+
+/obj/item/mecha_parts/mecha_equipment/Drop_system/proc/Select() // little copypaste from droppod code
+	if(aiming)
+		return
+	aiming = TRUE
+	var/A
+	A = input("Select Area for Droping Pod", "Select", A) in allowed_areas.areas
+	var/area/thearea = allowed_areas.areas[A]
+	var/list/L = list()
+	for(var/turf/T in get_area_turfs(thearea.type))
+		if(!T.density && !istype(T, /turf/space) && !T.obscured)
+			L+=T
+	if(isemptylist(L))
+		chassis.occupant_message("<span class='notice'>Automatic Aim System cannot find an appropriate target!</span>")
+		aiming = FALSE
+		return
+	if(!Challenge)
+		if(world.time < SYNDICATE_CHALLENGE_TIMER)
+			chassis.occupant_message("<span class='warning'>You've issued a combat challenge to the station! \
+			You've got to give them at least [round(((SYNDICATE_CHALLENGE_TIMER - world.time) / 10) / 60)] \
+			time more minutes to allow them to prepare.</span>")
+			aiming = FALSE
+			return
+	else
+		Challenge.Dropod_used = TRUE
+	chassis.occupant_message("<span class='notice'>You succesfully selected target!</span>")
+	chassis.loc = pick(L)
+	uses--
+	chassis.freeze_movement = TRUE // to prevent moving in drop phase.
+	chassis.density = FALSE
+	chassis.opacity = FALSE
+	var/initial_x = chassis.pixel_x
+	var/initial_y = chassis.pixel_y
+	playsound(src, 'sound/effects/drop_start.ogg', 100, 2)
+	chassis.pixel_x = rand(-150, 150)
+	chassis.pixel_y = 500
+	animate(chassis, pixel_y = initial_y, pixel_x = initial_x, time = 20)
+	addtimer(CALLBACK(src, .proc/perform_drop), 20)
+
+
+/obj/item/mecha_parts/mecha_equipment/Drop_system/proc/perform_drop()
+	for(var/atom/movable/T in loc)
+		if(T != src && T != chassis.occupant && !(istype(T, /obj/structure/window) || istype(T, /obj/machinery/door/airlock) || istype(T, /obj/machinery/door/poddoor)))
+			if(!(T in chassis.contents)) T.ex_act(1)
+	for(var/mob/living/M in oviewers(6, src))
+		shake_camera(M, 2, 2)
+	for(var/turf/simulated/floor/T in RANGE_TURFS(1, chassis))
+		T.break_tile_to_plating()
+	playsound(loc, 'sound/effects/drop_land.ogg', 100, 2)
+	chassis.freeze_movement = FALSE
+	chassis.density = TRUE
+	chassis.opacity = TRUE
+	aiming = FALSE

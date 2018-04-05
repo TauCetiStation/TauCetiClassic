@@ -21,7 +21,7 @@
 			<p>
 				<b>TO:</b> Captain [mode.head_loyalist], Commanding Officer, [station_name()]<br>
 				<b>FROM:</b> NanoTrasen Emergency Messaging Relay<br>
-				<b>DATE:</b> [time2text(world.realtime, "MM/DD")]/[game_year]<br>
+				<b>DATE:</b> [time2text(world.realtime, "DD/MM")]/[game_year]<br>
 				<b>SUBJECT:</b> Directive X<br>
 			</p>
 

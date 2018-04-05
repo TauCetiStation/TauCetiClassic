@@ -41,7 +41,7 @@
 						prob(4);/obj/item/weapon/gun/energy/mindflayer,\
 						prob(3);/obj/item/weapon/gun/energy/sniperrifle,\
 						prob(3);/obj/item/weapon/gun/energy/gun/nuclear,\
-						prob(2);/obj/item/weapon/gun/energy/laser/captain,\
+						prob(2);/obj/item/weapon/gun/energy/laser/selfcharging/captain,\
 						prob(2);/obj/item/weapon/gun/energy/crossbow,\
 						prob(1);/obj/item/weapon/gun/energy/pulse_rifle\
 					)

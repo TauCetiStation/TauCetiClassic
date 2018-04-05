@@ -40,11 +40,6 @@ proc/listgetindex(list/list,index)
 			return list[index]
 	return
 
-proc/islist(list/list)
-	if(istype(list))
-		return 1
-	return 0
-
 //Return either pick(list) or null if list is not of type /list or is empty
 proc/safepick(list/list)
 	if(!islist(list) || !list.len)
@@ -59,6 +54,8 @@ proc/isemptylist(list/list)
 
 //Checks for specific types in a list
 /proc/is_type_in_list(atom/A, list/L)
+	if(!L || !L.len || !A)
+		return 0
 	for(var/type in L)
 		if(istype(A, type))
 			return 1
@@ -76,6 +73,12 @@ proc/listclearnulls(list/list)
 		while(null in list)
 			list -= null
 	return
+
+// same as above, except it returns list back.
+/proc/removeNullsFromList(list/L)
+	while(L.Remove(null))
+		continue
+	return L
 
 /*
  * Returns list containing all the entries from first list that are not present in second.
@@ -671,7 +674,6 @@ datum/proc/dd_SortValue()
 //Checks for specific types in specifically structured (Assoc "type" = TRUE) lists ('typecaches')
 /proc/is_type_in_typecache(atom/A, list/L)
 	if(!L || !L.len || !A)
-
 		return 0
 	return L[A.type]
 
@@ -718,6 +720,9 @@ datum/proc/dd_SortValue()
 	return input_key
 
 #define LAZYINITLIST(L) if (!L) L = list()
-
 #define UNSETEMPTY(L) if (L && !L.len) L = null
-
+#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+#define LAZYREMOVE(L, I) if(L) { L -= I; if(!L.len) { L = null; } }
+#define LAZYLEN(L) length(L)
+#define LAZYCLEARLIST(L) if(L) L.Cut()
+#define LAZYCOPY(L) L && L.len ? L.Copy() : null

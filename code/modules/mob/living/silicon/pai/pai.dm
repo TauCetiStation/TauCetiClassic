@@ -5,6 +5,7 @@
 
 	robot_talk_understand = 0
 	emote_type = 2		// pAIs emotes are heard, not seen, so they can be seen through a container (eg. person)
+	canmove = FALSE
 
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
@@ -36,8 +37,6 @@
 	var/screen				// Which screen our main window displays
 	var/subscreen			// Which specific function of the main screen is being displayed
 
-	var/obj/item/device/pda/ai/pai/pda = null
-
 	var/secHUD = 0			// Toggles whether the Security HUD is active or not
 	var/medHUD = 0			// Toggles whether the Medical  HUD is active or not
 
@@ -54,16 +53,20 @@
 
 	var/translator_on = 0 // keeps track of the translator module
 
+/mob/living/silicon/pai/atom_init()
+	var/obj/item/device/paicard/P = loc
 
-/mob/living/silicon/pai/New(var/obj/item/device/paicard)
-	canmove = 0
-	src.loc = paicard
-	card = paicard
+	if(!istype(P)) //when manually spawning a pai, we create a card to put it into.
+		var/newcardloc = P
+		P = new /obj/item/device/paicard(newcardloc)
+		P.setPersonality(src)
+
+	loc = P
+	card = P
 	sradio = new(src)
-	if(card)
-		if(!card.radio)
-			card.radio = new /obj/item/device/radio(src.card)
-		radio = card.radio
+	if(!card.radio)
+		card.radio = new /obj/item/device/radio(card)
+	radio = card.radio
 
 	//Default languages without universal translator software
 	add_language("Sol Common", 1)
@@ -77,12 +80,8 @@
 		pda.owner = text("[]", src)
 		pda.name = pda.owner + " (" + pda.ownjob + ")"
 		pda.toff = 1
-	..()
 
-/mob/living/silicon/pai/Login()
-	..()
-	usr << browse_rsc('html/paigrid.png')			// Go ahead and cache the interface resources as early as possible
-
+	. = ..()
 
 /mob/living/silicon/pai/Stat()
 	..()

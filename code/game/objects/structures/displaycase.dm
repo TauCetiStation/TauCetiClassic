@@ -15,7 +15,7 @@
 		if (1)
 			new /obj/item/weapon/shard( src.loc )
 			if (occupied)
-				new /obj/item/weapon/gun/energy/laser/captain( src.loc )
+				new /obj/item/weapon/gun/energy/laser/selfcharging/captain( src.loc )
 				occupied = 0
 			qdel(src)
 		if (2)
@@ -39,14 +39,14 @@
 	if (prob(75))
 		new /obj/item/weapon/shard( src.loc )
 		if (occupied)
-			new /obj/item/weapon/gun/energy/laser/captain( src.loc )
+			new /obj/item/weapon/gun/energy/laser/selfcharging/captain( src.loc )
 			occupied = 0
 		qdel(src)
 
 
 /obj/structure/displaycase/meteorhit(obj/O)
 		new /obj/item/weapon/shard( src.loc )
-		new /obj/item/weapon/gun/energy/laser/captain( src.loc )
+		new /obj/item/weapon/gun/energy/laser/selfcharging/captain( src.loc )
 		qdel(src)
 
 
@@ -71,6 +71,7 @@
 
 
 /obj/structure/displaycase/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	src.health -= W.force
 	src.healthcheck()
 	..()
@@ -81,17 +82,15 @@
 
 /obj/structure/displaycase/attack_hand(mob/user)
 	if (src.destroyed && src.occupied)
-		new /obj/item/weapon/gun/energy/laser/captain( src.loc )
+		new /obj/item/weapon/gun/energy/laser/selfcharging/captain( src.loc )
 		to_chat(user, "\b You deactivate the hover field built into the case.")
 		src.occupied = 0
 		src.add_fingerprint(user)
 		update_icon()
 		return
 	else
-		to_chat(usr, text("\blue You kick the display case."))
-		for(var/mob/O in oviewers())
-			if ((O.client && !( O.blinded )))
-				to_chat(O, text("\red [] kicks the display case.", usr))
+		user.SetNextMove(CLICK_CD_MELEE)
+		visible_message("span class='userdanger'>[user] kicks the display case.</span>")
 		src.health -= 2
 		healthcheck()
 		return

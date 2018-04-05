@@ -16,7 +16,3 @@
 /obj/item/weapon/paper/crumpled/bloody/dickbutt
 	info = "<p><img src=paper_dickbutt.png></p>"
 	layer = 2.9
-
-/obj/item/weapon/paper/crumpled/bloody/dickbutt/examine(mob/user)
-	..()
-	user << browse_rsc(file("icons/dickbutt.png"), "paper_dickbutt.png")

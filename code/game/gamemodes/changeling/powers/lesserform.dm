@@ -2,7 +2,7 @@
 	name = "Lesser form"
 	desc = "We debase ourselves and become lesser. We become a monkey."
 	chemical_cost = 5
-	genomecost = 4
+	genomecost = 2
 	genetic_damage = 30
 	max_genetic_damage = 30
 	req_human = 1
@@ -13,6 +13,9 @@
 
 	if(user.has_brain_worms())
 		to_chat(user, "<span class='warning'>We cannot perform this ability at the present time!</span>")
+		return
+	if(user.restrained())
+		to_chat(user,"<span class='warning'>We cannot perform this ability as you restrained!</span>")
 		return
 
 	user.visible_message("<span class='warning'>[user] transforms!</span>")
@@ -63,6 +66,8 @@
 		if(O.mind.changeling)
 			O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 			O.changeling_update_languages(changeling.absorbed_languages)
+			for(var/mob/living/parasite/essence/M in user)
+				M.transfer(O)
 	. = O
 	feedback_add_details("changeling_powers","LF")
 	qdel(user)

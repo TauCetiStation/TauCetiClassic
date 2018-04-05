@@ -1,5 +1,6 @@
 /mob/living/carbon/human/emote(act,m_type=1,message = null, auto)
 	var/param = null
+	var/virus_scream = FALSE
 
 	if (findtext(act, "-", 1, null))
 		var/t1 = findtext(act, "-", 1, null)
@@ -9,14 +10,14 @@
 	if(findtext(act,"s",-1) && !findtext(act,"_",-2))//Removes ending s's unless they are prefixed with a '_'
 		act = copytext(act,1,length(act))
 
-	var/muzzled = istype(src.wear_mask, /obj/item/clothing/mask/muzzle)
+	var/muzzled = istype(wear_mask, /obj/item/clothing/mask/muzzle)
 	//var/m_type = 1
 
 	for (var/obj/item/weapon/implant/I in src)
 		if (I.implanted)
 			I.trigger(act, src)
 
-	if(src.stat == DEAD && (act != "deathgasp"))
+	if(stat == DEAD && (act != "deathgasp"))
 		return
 	switch(act)
 		if ("airguitar")
@@ -50,7 +51,7 @@
 			m_type = 1
 
 		if ("custom")
-			var/input = sanitize(copytext(input("Choose an emote to display.") as text|null,1,MAX_MESSAGE_LEN))
+			var/input = sanitize(input("Choose an emote to display.") as text|null)
 			if (!input)
 				return
 			var/input2 = input("Is this a visible or hearable emote?") in list("Visible","Hearable")
@@ -172,8 +173,12 @@
 				m_type = 1
 			else
 				if (!muzzled)
-					message = "<B>[src]</B> coughs!"
-					m_type = 2
+					if (!(get_species() == DIONA))
+						message = "<B>[src]</B> coughs!"
+						m_type = 2
+					else
+						message = "<B>[src]</B> creaks!"
+						m_type = 2
 				else
 					message = "<B>[src]</B> makes a strong noise."
 					m_type = 2
@@ -361,22 +366,17 @@
 					m_type = 2
 
 		if ("point")
-			if (!src.restrained())
-				var/mob/M = null
+			if (!restrained())
+				var/atom/target = null
 				if (param)
-					for (var/atom/A as mob|obj|turf|area in view(null, null))
+					for (var/atom/A as mob|obj|turf in oview())
 						if (param == A.name)
-							M = A
+							target = A
 							break
-
-				if (!M)
-					message = "<B>[src]</B> points."
+				if (!target)
+					message = "<span class='notice'><b>[src]</b> points.</span>"
 				else
-					M.point()
-
-				if (M)
-					message = "<B>[src]</B> points to [M]."
-				else
+					pointed(target)
 			m_type = 1
 
 		if ("raise")
@@ -534,23 +534,25 @@
 				message = "<B>[src]</B> acts out a scream!"
 				m_type = 1
 			else
-				if (!muzzled)
-					if (auto == 1)
-						if(world.time-lastScream >= 30)//prevent scream spam with things like poly spray
-							message = "<B>[src]</B> screams in agony!"
-							var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
-							if (src.gender == FEMALE) //Females have their own screams. Trannys be damned.
-								screamSound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
-							var/scream = pick(screamSound)//AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
-							playsound(get_turf(src), scream, 50, 0)
+				virus_scream = locate(/datum/disease2/effect/scream, src) in virus2
+				if(virus_scream || !(species && species.flags[NO_PAIN]))
+					if (!muzzled)
+						if (auto)
+							if(world.time-lastScream >= 30)//prevent scream spam with things like poly spray
+								message = "<B>[src]</B> screams in agony!"
+								var/list/screamSound = list('sound/misc/malescream1.ogg', 'sound/misc/malescream2.ogg', 'sound/misc/malescream3.ogg', 'sound/misc/malescream4.ogg', 'sound/misc/malescream5.ogg', 'sound/misc/wilhelm.ogg', 'sound/misc/goofy.ogg')
+								if (gender == FEMALE) //Females have their own screams. Trannys be damned.
+									screamSound = list('sound/misc/femalescream1.ogg', 'sound/misc/femalescream2.ogg', 'sound/misc/femalescream3.ogg', 'sound/misc/femalescream4.ogg', 'sound/misc/femalescream5.ogg')
+								var/scream = pick(screamSound)//AUUUUHHHHHHHHOOOHOOHOOHOOOOIIIIEEEEEE
+								playsound(get_turf(src), scream, 50, 0)
+								m_type = 2
+								lastScream = world.time
+						else
+							message = "<B>[src]</B> screams!"
 							m_type = 2
-							lastScream = world.time
 					else
-						message = "<B>[src]</B> screams!"
+						message = "<B>[src]</B> makes a very loud noise."
 						m_type = 2
-				else
-					message = "<B>[src]</B> makes a very loud noise."
-					m_type = 2
 
 		if ("help")
 			to_chat(src, "blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough,\ncry, custom, deathgasp, drool, eyebrow, frown, gasp, giggle, groan, grumble, handshake, hug-(none)/mob, glare-(none)/mob,\ngrin, laugh, look-(none)/mob, moan, mumble, nod, pale, point-atom, raise, salute, shake, shiver, shrug,\nsigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, whimper,\nwink, yawn")
@@ -587,11 +589,11 @@
 	set desc = "Sets a description which will be shown when someone examines you."
 	set category = "IC"
 
-	pose =  sanitize(copytext(input(usr, "This is [src]. \He is...", "Pose", null)  as text, 1, MAX_MESSAGE_LEN))
+	pose =  sanitize(input(usr, "This is [src]. \He is...", "Pose", null)  as text)
 
 /mob/living/carbon/human/verb/set_flavor()
 	set name = "Set Flavour Text"
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
 
-	flavor_text =  sanitize(copytext(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text, 1, MAX_MESSAGE_LEN))
+	flavor_text =  sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text)

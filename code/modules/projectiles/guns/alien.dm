@@ -19,7 +19,7 @@
 	desc = "A vicious alien projectile weapon. Parts of it quiver gelatinously, as though the thing is insectile and alive."
 
 	var/last_regen = 0
-	var/spike_gen_time = 100
+	var/spike_gen_time = 10 SECONDS
 	var/max_spikes = 3
 	var/spikes = 3
 	var/obj/item/weapon/spike/spike
@@ -32,14 +32,16 @@
 	icon = 'icons/obj/gun.dmi'
 	icon_state = "spikethrower3"
 	item_state = "spikethrower"
+	lefthand_file = 'icons/mob/inhands/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/guns_righthand.dmi'
 
-/obj/item/weapon/spikethrower/New()
-	..()
-	SSobj.processing |= src
+/obj/item/weapon/spikethrower/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 	last_regen = world.time
 
 /obj/item/weapon/spikethrower/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/weapon/spikethrower/process()
@@ -66,8 +68,7 @@
 		Fire(A,user,params)
 
 /obj/item/weapon/spikethrower/attack(mob/living/M, mob/living/user, def_zone)
-
-	if (M == user && user.zone_sel.selecting == "mouth")
+	if (M == user && def_zone == O_MOUTH)
 		M.visible_message("\red [user] attempts without success to fit [src] into their mouth.")
 		return
 
@@ -83,7 +84,11 @@
 		return ..()
 
 /obj/item/weapon/spikethrower/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
-
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = H.wear_suit
+			V.attack_reaction(H, REACTION_GUN_FIRE)
 	add_fingerprint(user)
 
 	var/turf/curloc = get_turf(user)
@@ -93,7 +98,7 @@
 
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
-		if(H.species && H.species.name != "Vox")
+		if(H.species && H.species.name != VOX)
 			to_chat(user, "\red The weapon does not respond to you!")
 			return
 	else
@@ -111,7 +116,7 @@
 
 	user.visible_message("\red [user] fires [src]!", "\red You fire [src]!")
 	spike.loc = get_turf(src)
-	spike.throw_at(target,10,fire_force,user)
+	spike.throw_at(target, 10, fire_force, user)
 	spike = null
 	update_icon()
 
@@ -138,7 +143,7 @@
 	if(loc != user)
 		var/mob/living/carbon/human/H = user
 		if(istype(H))
-			if(H.species.name == "Vox Armalis")
+			if(H.species.name == VOX_ARMALIS)
 				..()
 				return
 		to_chat(user, "\red \The [src] is far too large for you to pick up.")

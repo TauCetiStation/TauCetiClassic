@@ -14,6 +14,7 @@
 	var/list/syringes = new/list()
 	var/max_syringes = 1
 	m_amt = 2000
+	can_suicide_with = FALSE
 
 /obj/item/weapon/gun/syringe/examine(mob/user)
 	..()
@@ -37,7 +38,8 @@
 
 
 /obj/item/weapon/gun/syringe/afterattack(obj/target, mob/user , flag)
-	if(!isturf(target.loc) || target == user) return
+	if(target == user)
+		return
 	..()
 
 /obj/item/weapon/gun/syringe/can_fire()
@@ -48,74 +50,65 @@
 
 /obj/item/weapon/gun/syringe/Fire(atom/target, mob/living/user, params, reflex = 0)
 	if(syringes.len)
-		spawn(0) fire_syringe(target,user)
+		fire_syringe(target, user)
 	else
 		to_chat(usr, "\red [src] is empty.")
 
 /obj/item/weapon/gun/syringe/proc/fire_syringe(atom/target, mob/user)
+	set waitfor = FALSE
+
 	if (locate (/obj/structure/table, src.loc))
 		return
-	else
-		var/turf/trg = get_turf(target)
-		var/obj/effect/syringe_gun_dummy/D = new/obj/effect/syringe_gun_dummy(get_turf(src))
-		var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
-		if((!S) || (!S.reagents))	//ho boy! wot runtimes!
-			return
-		S.reagents.trans_to(D, S.reagents.total_volume)
-		syringes -= S
-		qdel(S)
-		D.icon_state = "syringeproj"
-		D.name = "syringe"
-		playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
-
-		for(var/i=0, i<6, i++)
-			if(!D) break
-			if(D.loc == trg) break
-			step_towards(D,trg)
-
-			if(D)
-				for(var/mob/living/carbon/M in D.loc)
-					if(!istype(M,/mob/living/carbon)) continue
-					if(M == user) continue
-					//Syringe gun attack logging by Yvarov
-					var/R
-					if(D.reagents)
-						for(var/datum/reagent/A in D.reagents.reagent_list)
-							R += A.id + " ("
-							R += num2text(A.volume) + "),"
-					if (istype(M, /mob))
-						M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
-						user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
-						msg_admin_attack("[user.name] ([user.ckey]) shot [M.name] ([M.ckey]) with a syringegun ([R]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-
-					else
-						M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT (No longer exists)</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
-						msg_admin_attack("UNKNOWN shot [M.name] ([M.ckey]) with a <b>syringegun</b> ([R]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-
-					var/mob/living/T
-					if(istype(M,/mob/living))
-						T = M
-
-					M.visible_message("<span class='danger'>[M] is hit by the syringe!</span>")
-
-					if(T && istype(T) && T.can_inject())
-						if(D.reagents)
-							D.reagents.trans_to(M, 15)
-					else
-						M.visible_message("<span class='danger'>The syringe bounces off [M]!</span>")
-
-					qdel(D)
-					break
-			if(D)
-				for(var/atom/A in D.loc)
-					if(A == user) continue
-					if(A.density) qdel(D)
-
-			sleep(1)
-
-		if (D) spawn(10) qdel(D)
-
+	var/turf/trg = get_turf(target)
+	var/obj/effect/syringe_gun_dummy/D = new(get_turf(src))
+	var/obj/item/weapon/reagent_containers/syringe/S = syringes[1]
+	if((!S) || (!S.reagents))	//ho boy! wot runtimes!
 		return
+	S.reagents.trans_to(D, S.reagents.total_volume)
+	syringes -= S
+	qdel(S)
+	D.icon_state = "syringeproj"
+	D.name = "syringe"
+	playsound(user.loc, 'sound/items/syringeproj.ogg', 50, 1)
+
+	for(var/i = 0 to 6)
+		if(!D) break
+		if(D.loc == trg) break
+		step_towards(D,trg)
+
+		if(D)
+			for(var/A in D.loc)
+				if(isatom(A))
+					var/atom/AM = A
+					if(AM.density && !ismob(A))
+						qdel(D)
+						break
+				if(!iscarbon(A))
+					continue
+
+				var/mob/living/carbon/M = A
+				var/R
+				if(D.reagents)
+					for(var/datum/reagent/RA in D.reagents.reagent_list)
+						R += RA.id + " ("
+						R += num2text(RA.volume) + "),"
+				M.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
+				user.attack_log += "\[[time_stamp()]\] <b>[user]/[user.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>syringegun</b> ([R])"
+				msg_admin_attack("[user.name] ([user.ckey]) shot [M.name] ([M.ckey]) with a syringegun ([R]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+
+				if(!M.check_thickmaterial(target_zone = user.zone_sel.selecting) && !M.isSynthetic(user.zone_sel.selecting))
+					if(D.reagents)
+						M.visible_message("<span class='danger'>[M] is hit by the syringe!</span>")
+						D.reagents.trans_to(M, 15)
+				else
+					M.visible_message("<span class='danger'>The syringe bounces off [M]!</span>")
+
+				qdel(D)
+				break
+		sleep(1)
+
+		if (D)
+			QDEL_IN(D, 10)
 
 /obj/item/weapon/gun/syringe/rapidsyringe
 	name = "rapid syringe gun"
@@ -132,7 +125,8 @@
 	anchored = 1
 	density = 0
 
-/obj/effect/syringe_gun_dummy/New()
+/obj/effect/syringe_gun_dummy/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(15)
 	reagents = R
 	R.my_atom = src

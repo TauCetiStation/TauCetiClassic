@@ -42,14 +42,14 @@
 				var/mob/living/carbon/human/H = target
 	//			if (M.health <= 0) return
 
-				var/datum/organ/external/temp = H.get_organ(pick("chest", "chest", "chest", "head"))
-				if(temp)
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_CHEST , BP_CHEST , BP_CHEST , BP_HEAD)]
+				if(BP)
 					switch(damtype)
 						if("brute")
 							H.Paralyse(1)
-							temp.take_damage(rand(force/2, force), 0)
+							BP.take_damage(rand(force / 2, force), 0)
 						if("fire")
-							temp.take_damage(0, rand(force/2, force))
+							BP.take_damage(0, rand(force / 2, force))
 						if("tox")
 							if(H.reagents)
 								if(H.reagents.get_reagent_amount("carpotoxin") + force < force*2)

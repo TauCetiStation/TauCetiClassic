@@ -31,7 +31,6 @@ var/global/wcDw
 		/area/security/main,
 		/area/security/prison,
 		/area/security/warden,
-		/area/security/tactical,
 		/area/security/range,
 		/area/security/forensic_office
 		)
@@ -88,25 +87,13 @@ var/global/wcDw
 		/area/shuttle/transport1/station,
 		/area/shuttle/alien/base,
 		/area/shuttle/alien/mine,
-		/area/shuttle/prison,
-		/area/shuttle/prison/station,
-		/area/shuttle/prison/prison,
 		/area/shuttle/specops/centcom,
 		/area/shuttle/specops/station,
 		/area/shuttle/syndicate_elite/mothership,
 		/area/shuttle/syndicate_elite/station,
 		/area/shuttle/administration/centcom,
 		/area/shuttle/administration/station,
-		/area/shuttle/thunderdome,
-		/area/shuttle/thunderdome/grnshuttle,
-		/area/shuttle/thunderdome/grnshuttle/dome,
-		/area/shuttle/thunderdome/grnshuttle/station,
-		/area/shuttle/thunderdome/redshuttle,
-		/area/shuttle/thunderdome/redshuttle/dome,
-		/area/shuttle/thunderdome/redshuttle/station,
 		/area/shuttle/research,
-		/area/shuttle/research/station,
-		/area/shuttle/research/outpost,
 		/area/shuttle/vox/station
 		)
 

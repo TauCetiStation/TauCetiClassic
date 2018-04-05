@@ -10,10 +10,10 @@
 	var/list/priority_alarms = list()
 	var/list/minor_alarms = list()
 	var/receive_frequency = 1437
-	var/datum/radio_frequency/radio_connection
 
-/obj/machinery/computer/atmos_alert/initialize()
-	..()
+
+/obj/machinery/computer/atmos_alert/atom_init()
+	. = ..()
 	set_frequency(receive_frequency)
 
 /obj/machinery/computer/atmos_alert/receive_signal(datum/signal/signal)
@@ -34,17 +34,13 @@
 	return
 
 
-/obj/machinery/computer/atmos_alert/proc/set_frequency(new_frequency)
+/obj/machinery/computer/atmos_alert/set_frequency(new_frequency)
 	radio_controller.remove_object(src, receive_frequency)
 	receive_frequency = new_frequency
 	radio_connection = radio_controller.add_object(src, receive_frequency, RADIO_ATMOSIA)
 
-
-/obj/machinery/computer/atmos_alert/attack_hand(mob/user)
-	if(..(user))
-		return
-	user << browse(return_text(),"window=computer")
-	user.set_machine(src)
+/obj/machinery/computer/atmos_alert/ui_interact(mob/user)
+	user << browse(entity_ja(return_text()),"window=computer")
 	onclose(user, "computer")
 
 /obj/machinery/computer/atmos_alert/process()

@@ -25,12 +25,11 @@
 
 	attackby(W, mob/user)
 		if (istype(W, /obj/item/weapon/pen))
-			var/t = input(user, "What would you like the label to be?", text("[]", src.name), null)  as text
+			var/t = sanitize(input(user, "What would you like the label to be?", input_default(src.name), null)  as text, MAX_NAME_LEN)
 			if (user.get_active_hand() != W)
 				return
 			if (!in_range(src, user) && src.loc != user)
 				return
-			t = sanitize(copytext(t,1,MAX_MESSAGE_LEN))
 			if (t)
 				src.name = "body bag - "
 				src.name += t
@@ -55,14 +54,14 @@
 
 	MouseDrop(over_object, src_location, over_location)
 		..()
+		if(!iscarbon(usr) && !isrobot(usr))
+			return
 		if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
-			if(!ishuman(usr))	return
 			if(opened)	return 0
 			if(contents.len)	return 0
 			visible_message("[usr] folds up the [src.name]")
 			new item_path(get_turf(src))
-			spawn(0)
-				qdel(src)
+			qdel(src)
 			return
 
 /obj/structure/closet/bodybag/update_icon()
@@ -103,7 +102,8 @@
 			qdel(src)
 
 	MouseDrop(over_object, src_location, over_location)
+		if(!iscarbon(usr) && !isrobot(usr))
+			return
 		if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
-			if(!ishuman(usr))	return
 			to_chat(usr, "\red You can't fold that up anymore..")
 		..()

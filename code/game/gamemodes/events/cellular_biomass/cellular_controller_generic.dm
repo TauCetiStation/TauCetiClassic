@@ -16,13 +16,13 @@
 	var/landmarks_type = /obj/effect/decal/cleanable/cellular
 	var/cores_type =     /obj/structure/cellular_biomass/core
 
-/obj/effect/cellular_biomass_controller/New()
-	if(!istype(src.loc,/turf/simulated/floor))
-		qdel(src)
-		return
-	spawn_cellular_biomass_core(src.loc)
-	spawn_cellular_biomass_piece(src.loc)
-	SSobj.processing |= src
+/obj/effect/cellular_biomass_controller/atom_init()
+	. = ..()
+	if(!istype(loc, /turf/simulated/floor))
+		return INITIALIZE_HINT_QDEL
+	spawn_cellular_biomass_core(loc)
+	spawn_cellular_biomass_piece(loc)
+	START_PROCESSING(SSobj, src)
 
 /obj/effect/cellular_biomass_controller/proc/remove_biomass(obj/structure/cellular_biomass/removed)
 	if(istype(removed, /obj/structure/cellular_biomass/wall))
@@ -36,7 +36,7 @@
 	growth_queue.Cut()
 	for(var/obj/structure/cellular_biomass/str in growth_queue)
 		str.master = null
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 
@@ -152,7 +152,7 @@
 
 /obj/effect/cellular_biomass_controller/proc/spawn_cellular_biomass_living(loc)
 	var/obj/structure/cellular_biomass/living = new living_type(loc)
-	if(!qdeleted(living))
+	if(!QDELETED(living))
 		biomass += living
 		living.set_master(src)
 

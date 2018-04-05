@@ -16,8 +16,6 @@
 	var/turns_per_move = 1
 	var/turns_since_move = 0
 	universal_speak = 0		//No, just no.
-	var/meat_amount = 0
-	var/meat_type
 	var/stop_automated_movement = 0 //Use this to temporarely stop random movement or to if you write special movement code for animals.
 	var/wander = 1	// Does the mob wander around when idle?
 	var/stop_automated_movement_when_pulled = 1 //When set to 1 this stops the animal from moving when someone is pulling it.
@@ -55,15 +53,6 @@
 	var/environment_smash = 0 //Set to 1 to allow breaking of crates,lockers,racks,tables; 2 for walls; 3 for Rwalls
 
 	var/speed = 0 //LETS SEE IF I CAN SET SPEEDS FOR SIMPLE MOBS WITHOUT DESTROYING EVERYTHING. Higher speed is slower, negative speed is faster
-
-/mob/living/simple_animal/New()
-	..()
-	verbs -= /mob/verb/observe
-
-/mob/living/simple_animal/Login()
-	if(src && src.client)
-		src.client.screen = null
-	..()
 
 /mob/living/simple_animal/updatehealth()
 	return
@@ -157,10 +146,10 @@
 		if(istype(T,/turf/simulated))
 			var/turf/simulated/ST = T
 			if(ST.air)
-				var/tox = ST.air.phoron
-				var/oxy = ST.air.oxygen
-				var/n2  = ST.air.nitrogen
-				var/co2 = ST.air.carbon_dioxide
+				var/tox = ST.air.gas["phoron"]
+				var/oxy = ST.air.gas["oxygen"]
+				var/n2  = ST.air.gas["nitrogen"]
+				var/co2 = ST.air.gas["carbon_dioxide"]
 
 				if(min_oxy)
 					if(oxy < min_oxy)
@@ -200,9 +189,10 @@
 /mob/living/simple_animal/gib()
 	if(icon_gib)
 		flick(icon_gib, src)
-	if(meat_amount && meat_type)
-		for(var/i = 0; i < meat_amount; i++)
-			new meat_type(src.loc)
+	if(butcher_results)
+		for(var/path in butcher_results)
+			for(var/i = 0 to butcher_results[path])
+				new path(loc)
 	..()
 
 /mob/living/simple_animal/emote(act, type, desc)
@@ -211,17 +201,22 @@
 		..(act, type, desc)
 
 /mob/living/simple_animal/attack_animal(mob/living/simple_animal/M)
+	if(src == M)
+		return TRUE
+	..()
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
+		return TRUE
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 		adjustBruteLoss(damage)
+		return TRUE
+	return FALSE
 
 /mob/living/simple_animal/bullet_act(obj/item/projectile/Proj)
 	if(!Proj)	return
@@ -240,18 +235,17 @@
 						O.show_message("\blue [M] [response_help] [src]")
 
 		if("grab")
-			if (M == src)
+			if (M == src || anchored || M.lying)
 				return
 			if (!(status_flags & CANPUSH))
 				return
 
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
 
 			grabbed_by += G
 			G.synch()
-			G.affecting = src
 			LAssailant = M
 
 			for(var/mob/O in viewers(src, null))
@@ -277,18 +271,17 @@
 				if ((O.client && !( O.blinded )))
 					O.show_message(text("\blue [M] caresses [src] with its scythe like arm."), 1)
 		if ("grab")
-			if(M == src)
+			if(M == src || anchored || M.lying)
 				return
 			if(!(status_flags & CANPUSH))
 				return
 
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab( M, M, src )
+			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
 			M.put_in_active_hand(G)
 
 			grabbed_by += G
 			G.synch()
-			G.affecting = src
 			LAssailant = M
 
 			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
@@ -346,38 +339,14 @@
 	if(istype(O, /obj/item/stack/medical))
 		if(stat != DEAD)
 			var/obj/item/stack/medical/MED = O
-			if(health < maxHealth)
-				if(MED.amount >= 1)
-					adjustBruteLoss(-MED.heal_brute)
-					MED.amount -= 1
-					if(MED.amount <= 0)
-						qdel(MED)
-					for(var/mob/M in viewers(src, null))
-						if ((M.client && !( M.blinded )))
-							M.show_message("\blue [user] applies the [MED] on [src]")
+			if(health < maxHealth && MED.use(1))
+				adjustBruteLoss(-MED.heal_brute)
+				src.visible_message("<span class='notice'>[user] applies the [MED] on [src]</span>")
 		else
-			to_chat(user, "\blue this [src] is dead, medical items won't bring it back to life.")
-	if(meat_type && (stat == DEAD))	//if the animal has a meat, and if it is dead.
-		if(istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
-			new meat_type (get_turf(src))
-			if(prob(95))
-				qdel(src)
-				return
-			gib()
-	else
-		if(O.force)
-			var/damage = O.force
-			if (O.damtype == HALLOSS)
-				damage = 0
-			adjustBruteLoss(damage)
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red \b [src] has been attacked with the [O] by [user]. ")
-		else
-			to_chat(usr, "\red This weapon is ineffective, it does no damage.")
-			for(var/mob/M in viewers(src, null))
-				if ((M.client && !( M.blinded )))
-					M.show_message("\red [user] gently taps [src] with the [O]. ")
+			to_chat(user, "<span class='notice'> this [src] is dead, medical items won't bring it back to life.</span>")
+	user.SetNextMove(CLICK_CD_MELEE)
+	if(attempt_harvest(O, user))
+		return
 	..()
 
 
@@ -397,6 +366,7 @@
 /mob/living/simple_animal/death()
 	icon_state = icon_dead
 	stat = DEAD
+	health = 0
 	density = 0
 	return ..()
 
@@ -466,7 +436,7 @@
 	if(stat)
 		return
 
-	message = sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN))
+	message = sanitize(message)
 
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))

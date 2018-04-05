@@ -87,7 +87,12 @@
 			missing_ages = 1
 			continue
 		if(C.player_age < age)
-			msg += "[key_name(C, 1)]: account is [C.player_age] days and [C.player_ingame_age] in-game minutes old.<br>"
+			msg += {"
+				[key_name(C, 1)] [ADMIN_PP(C.mob)]:<br>
+				<b>Days on server:</b> [C.player_age]<br>
+				<b>In-game minutes:</b> [C.player_ingame_age]
+				<hr>
+			"}
 
 	if(missing_ages)
 		to_chat(src, "Some accounts did not have proper ages set in their clients.  This function requires database to be present")
@@ -410,7 +415,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = ckey(input(src, "Please specify which key will be respawned.", "Key", ""))
+	var/input = input(src, "Please specify which key will be respawned.", "Key", "") as null|anything in clients
 	if(!input)
 		return
 
@@ -581,7 +586,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 				data_core.manifest_inject(new_character)
 
 			if(alert(new_character,"Would you like an active AI to announce this character?",,"No","Yes")=="Yes")
-				call(/mob/new_player/proc/AnnounceArrival)(new_character, new_character.mind.assigned_role)
+				call(/mob/dead/new_player/proc/AnnounceArrival)(new_character, new_character.mind.assigned_role)
 
 	message_admins("\blue [admin] has respawned [player_key] as [new_character.real_name].")
 
@@ -645,8 +650,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(!holder)
 		to_chat(src, "Only administrators may use this command.")
 		return
-	var/input = input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null
-	var/customname = input(usr, "Pick a title for the report. Do not forget about prohibit of the use of the Cyrillic alphabet in the names of objects. ", "Title") as text|null
+	var/input = sanitize(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN, extra = FALSE)
+	var/customname = sanitize_safe(input(usr, "Pick a title for the report.", "Title") as text|null)
 	if(!input)
 		return
 	if(!customname)
@@ -655,7 +660,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		if(! (C.stat & (BROKEN|NOPOWER) ) )
 			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper( C.loc )
 			P.name = "'[command_name()] Update.'"
-			P.info = sanitize_alt(copytext(input, 1, MAX_MESSAGE_LEN), list("�"=LETTER_255))
+			P.info = replacetext(input, "\n", "<br/>")
 			P.update_icon()
 			C.messagetitle.Add("[command_name()] Update")
 			C.messagetext.Add(P.info)
@@ -751,7 +756,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Special Verbs"
 	set name = "Gib"
 
-	if(!check_rights(R_ADMIN|R_FUN))	return
+	if(!check_rights(R_ADMIN|R_FUN))
+		return
 
 	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
 	if(confirm != "Yes") return
@@ -904,20 +910,28 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Call Shuttle"
 
-	if ((!( ticker ) || SSshuttle.location))
+	if(!ticker || SSshuttle.location)
 		return
 
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN))
+		return
 
-	var/confirm = alert(src, "You sure?", "Confirm", "Yes", "No")
-	if(confirm != "Yes") return
+	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes")
+		return
 
-	if(ticker.mode.name == "revolution" || ticker.mode.name == "AI malfunction" || ticker.mode.name == "confliction")
-		var/choice = input("The shuttle will just return if you call it. Call anyway?") in list("Confirm", "Cancel")
-		if(choice == "Confirm")
-			SSshuttle.fake_recall = rand(300,500)
-		else
-			return
+	if(SSshuttle.always_fake_recall)
+		var/choice = input("The shuttle will just return if you call it. What you want to do?") in list(
+					"Cancel shuttle call",
+					"Call it anyway",
+					"Call and allow it to fly to station")
+		switch(choice)
+			if("Cancel shuttle call")
+				return
+			if("Call and allow it to fly to station")
+				SSshuttle.always_fake_recall = FALSE
+				SSshuttle.fake_recall = 0
+				log_admin("[key_name(usr)] disabled shuttle fake recall.")
+				message_admins("<span class='info'>[key_name_admin(usr)] disabled shuttle fake recall.</span>")
 
 	var/type = alert(src, "It's emergency shuttle or crew transfer?", "Confirm", "Emergency", "Crew transfer")
 
@@ -929,11 +943,11 @@ Traitors and the like can also be revived with the previous role mostly intact.
 		var/eaccess = alert(src, "Grant acces to maints for everyone?", "Confirm", "Yes", "No")
 		SSshuttle.incall()
 		captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+		world << sound('sound/AI/shuttlecalled.ogg')
 
 		if(eaccess == "Yes")
 			make_maint_all_access(FALSE)
 
-	world << sound('sound/AI/shuttlecalled.ogg')
 	feedback_add_details("admin_verb","CSHUT") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] admin-called the emergency shuttle.")
 	message_admins("\blue [key_name_admin(usr)] admin-called the emergency shuttle.")
@@ -943,7 +957,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	set category = "Admin"
 	set name = "Cancel Shuttle"
 
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN))
+		return
 
 	if(alert(src, "You sure?", "Confirm", "Yes", "No") != "Yes") return
 
@@ -958,7 +973,7 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if(timer_maint_revoke_id)
 		deltimer(timer_maint_revoke_id)
 		timer_maint_revoke_id = 0
-	timer_maint_revoke_id = addtimer(GLOBAL_PROC, "revoke_maint_all_access", 600, TRUE, FALSE)
+	timer_maint_revoke_id = addtimer(CALLBACK(GLOBAL_PROC, .proc/revoke_maint_all_access, FALSE), 600, TIMER_UNIQUE|TIMER_STOPPABLE)
 
 	return
 
@@ -969,7 +984,8 @@ Traitors and the like can also be revived with the previous role mostly intact.
 	if (!ticker)
 		return
 
-	if(!check_rights(R_ADMIN))	return
+	if(!check_rights(R_ADMIN))
+		return
 
 	SSshuttle.deny_shuttle = !SSshuttle.deny_shuttle
 
@@ -1039,36 +1055,55 @@ Traitors and the like can also be revived with the previous role mostly intact.
 
 
 /client/proc/send_fax_message()
-	set category = "Special Verbs"
 	set name = "Send Fax Message"
-
-	var/mob/Sender
+	set category = "Special Verbs"
 
 	if(!check_rights(R_ADMIN))
 		return
 
-	var/sent = sanitize_alt(input(usr, "Please enter anything you want. Anything. Serious.", "What?", "") as message|null)
-	if(!sent)
-		return
-	var/sentname = sanitize_alt(input(usr, "Pick a title for the message. Do not forget about prohibit of the use of the Cyrillic alphabet in the names of objects, enter Cancel to stop sending", "Title") as text)
-	if(!sentname)
-		sentname = "NanoTrasen Update"
-	if(sentname == "Cancel")
-		return
-	var/dpt = input(usr, "Please choose the needed fax, choose unknown to send to all faxes on the station") as null|anything in alldepartments
-	if(!dpt)
-		return
-	var/list/stampos = list("CentCom", "Syndicate", "Clown", "FakeCentCom", "Unknown")
-	var/stamp = input(usr, "Please choose the needed stamp, choose unknown to send without any stamp") as null|anything in stampos
-	if(!stamp)
-		return
-	var/stamps = sanitize_alt(input(usr, "Pick a message for stamp text (e.g. This paper has been stamped by the Central Compound Quantum Relay), if empty will be chosen default text for the selected stamp") as text)
-
-	var/question1 = alert(src, "Do you want to cancel the sending of this fax?", "Confirm", "Yes", "No")
-	if(question1 != "No")
+	var/sent_text = sanitize(input(usr, "Please, enter the text you want to send.", "What?", "") as message|null, MAX_PAPER_MESSAGE_LEN)
+	if(!sent_text)
 		return
 
-	message_admins("Fax message was created by [key_name_admin(src)] and sent to [dpt]")
+	var/sent_name = sanitize_safe(input(usr, "Pick a title for the message.", "Title") as text)
+	if(!sent_name)
+		sent_name = "NanoTrasen Update"
+	if(sent_name == "Cancel")
+		return
+
+	var/list/departments = alldepartments.Copy()
+	departments += "All"
+	var/department = input(usr, "Please, choose the destination department.") as null|anything in departments
+	if(!department)
+		return
+
+	var/list/stamp_list = list("CentComm", "Syndicate", "Clown", "FakeCentComm", "None")
+	var/stamp_name = input(usr, "Please, choose the stamp you want to send with.") as null|anything in stamp_list
+	if(!stamp_name)
+		return
+
+	var/stamp_type = null
+	if(stamp_name != "None")
+		stamp_type = text2path("/obj/item/weapon/stamp/[lowertext(stamp_name)]")
+
+	var/stamp_text = null
+	if(stamp_type)
+		stamp_text = sanitize(input(usr, "Pick a message for stamp text (e.g. This paper has been stamped by the Central Compound Quantum Relay). In case of empty field there will be default stamp text.") as text)
+
+	var/obj/item/weapon/paper/P = new
+	P.name = sent_name
+	P.info = sent_text
+
+	if(stamp_type)
+		var/obj/item/weapon/stamp/S = new stamp_type
+
+		if(stamp_text)
+			S.stamp_paper(P, stamp_text)
+		else
+			S.stamp_paper(P, use_stamp_by_message = TRUE)
+
+	send_fax(usr, P, department)
+
 	feedback_add_details("admin_verb","FAXMESS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
-	SendFax(sent, sentname, Sender, dpt, stamp, stamps)
+	message_admins("Fax message was created by [key_name_admin(usr)] and sent to [department]")
+	send2slack_custommsg("Fax message was created by [key_name_admin(usr)] and sent to [department]: [sent_text]")

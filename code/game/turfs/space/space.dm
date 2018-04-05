@@ -9,11 +9,21 @@
 	plane = PLANE_SPACE
 //	heat_capacity = 700000 No.
 
-/turf/space/New()
+/turf/space/atom_init()
+	if(initialized)
+		stack_trace("Warning: [src]([type]) initialized multiple times!")
+	initialized = TRUE
+
 	if(!istype(src, /turf/space/transit))
 		icon_state = SPACE_ICON_STATE
-	update_starlight()
-	..()
+
+	if(light_power && light_range)
+		update_light()
+
+	if(opacity)
+		has_opaque_atom = TRUE
+
+	return INITIALIZE_HINT_NORMAL
 
 /turf/space/Destroy()
 	return QDEL_HINT_LETMELIVE
@@ -32,15 +42,18 @@
 	if (istype(C, /obj/item/stack/rods))
 		var/obj/item/stack/rods/R = C
 		var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
+		user.SetNextMove(CLICK_CD_RAPID)
 		if(L)
-			if(R.amount < 2)
+			if(R.get_amount() < 2)
 				to_chat(user, "\red You don't have enough rods to do that.")
 				return
+			if(user.is_busy()) return
 			to_chat(user, "\blue You begin to build a catwalk.")
 			if(do_after(user,30,target = src))
+				if(!R.use(2))
+					return
 				playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 				to_chat(user, "\blue You build a catwalk!")
-				R.use(2)
 				ChangeTurf(/turf/simulated/floor/plating/airless/catwalk)
 				qdel(L)
 				return
@@ -59,12 +72,12 @@
 			if(!S.use(1))
 				return
 			qdel(L)
+			user.SetNextMove(CLICK_CD_RAPID)
 			playsound(src, 'sound/weapons/Genhit.ogg', 50, 1)
 			S.build(src)
 			return
 		else
 			to_chat(user, "\red The plating is going to need some support.")
-	return
 
 
 // Ported from unstable r355
@@ -144,7 +157,7 @@
 				A.x = rand(TRANSITIONEDGE + 2, world.maxx - TRANSITIONEDGE - 2)
 
 
-			sleep(0)//Let a diagonal move finish, if necessary
+			stoplag()//Let a diagonal move finish, if necessary
 			A.newtonian_move(A.inertia_dir)
 
 /turf/space/proc/Sandbox_Spacemove(atom/movable/A)
@@ -256,8 +269,8 @@
 					A.loc.Entered(A)
 	return
 
-/turf/space/ChangeTurf(turf/N, force_lighting_update = 0)
-	return ..(N, 1)
+/turf/space/ChangeTurf(path, force_lighting_update = 0)
+	return ..(path, TRUE)
 
 /turf/space/singularity_act()
 	return

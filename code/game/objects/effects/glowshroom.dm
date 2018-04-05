@@ -8,6 +8,8 @@
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowshroomf"
 	layer = 2.1
+	light_power = 0.7
+	light_color = "#80b82e"
 	var/endurance = 30
 	var/potency = 30
 	var/delay = 1200
@@ -22,9 +24,9 @@
 /obj/effect/glowshroom/single
 	spreadChance = 0
 
-/obj/effect/glowshroom/New()
+/obj/effect/glowshroom/atom_init()
 
-	..()
+	. = ..()
 
 	dir = CalcDir()
 
@@ -42,19 +44,19 @@
 	else //if on the floor, glowshroom on-floor sprite
 		icon_state = "glowshroomf"
 
-	SSobj.processing |= src
+	START_PROCESSING(SSobj, src)
 
-	set_light(round(potency/10))
+	set_light(round(potency/10), light_power, light_color)
 	lastTick = world.timeofday
 
 /obj/effect/glowshroom/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/effect/glowshroom/process()
 	if(!spreaded)
 		return
-
+	STOP_PROCESSING(SSobj, src)
 	if(((world.timeofday - lastTick) > delay) || ((world.timeofday - lastTick) < 0))
 		lastTick = world.timeofday
 		spreaded = 0

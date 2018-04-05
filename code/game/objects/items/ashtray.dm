@@ -8,11 +8,10 @@
 		icon_full  	= ""
 		icon_broken	= ""
 
-/obj/item/ashtray/New()
-	..()
-	src.pixel_y = rand(-5, 5)
-	src.pixel_x = rand(-6, 6)
-	return
+/obj/item/ashtray/atom_init()
+	. = ..()
+	pixel_y = rand(-5, 5)
+	pixel_x = rand(-6, 6)
 
 /obj/item/ashtray/attackby(obj/item/weapon/W, mob/user)
 	if (health < 1)
@@ -28,7 +27,7 @@
 			var/obj/item/clothing/mask/cigarette/cig = W
 			if (cig.lit == 1)
 				src.visible_message("[user] crushes [cig] in [src], putting it out.")
-				SSobj.processing.Remove(cig)
+				STOP_PROCESSING(SSobj, cig)
 				var/obj/item/butt = new cig.type_butt(src)
 				cig.transfer_fingerprints_to(butt)
 				qdel(cig)

@@ -33,7 +33,7 @@ var/list/advance_cures = 	list(
 	agent = "advance microbes"
 	max_stages = 5
 	spread = "Unknown"
-	affected_species = list("Human","Monkey")
+	affected_species = list(HUMAN, MONKEY)
 
 	// NEW VARS
 
@@ -207,7 +207,7 @@ var/list/advance_cures = 	list(
 		hidden = list( (properties["stealth"] > 2), (properties["stealth"] > 3) )
 		// The more symptoms we have, the less transmittable it is but some symptoms can make up for it.
 		SetSpread(Clamp(properties["transmittable"] - symptoms.len, BLOOD, AIRBORNE))
-		permeability_mod = max(Ceiling(0.4 * properties["transmittable"]), 1)
+		permeability_mod = max(ceil(0.4 * properties["transmittable"]), 1)
 		cure_chance = 15 - Clamp(properties["resistance"], -5, 5) // can be between 10 and 20
 		stage_prob = max(properties["stage_rate"], 2)
 		SetSeverity(properties["severity"])
@@ -394,7 +394,7 @@ var/list/advance_cures = 	list(
 
 	if(D.symptoms.len > 0)
 
-		var/new_name = input(user, "Name your new disease.", "New Name")
+		var/new_name = sanitize_safe(input(user, "Name your new disease.", "New Name"), MAX_LNAME_LEN)
 		D.AssignName(new_name)
 		D.Refresh()
 

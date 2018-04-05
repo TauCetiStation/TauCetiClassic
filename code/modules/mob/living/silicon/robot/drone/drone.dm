@@ -27,9 +27,10 @@
 	var/mail_destination = ""
 
 	holder_type = /obj/item/weapon/holder/drone
-/mob/living/silicon/robot/drone/New()
 
-	..()
+/mob/living/silicon/robot/drone/atom_init()
+
+	. = ..()
 
 	if(camera && "Robots" in camera.network)
 		camera.add_network("Engineering")
@@ -46,7 +47,6 @@
 		var/datum/robot_component/C = components[V]
 		C.max_damage = 10
 
-	verbs -= /mob/living/silicon/robot/verb/Namepick
 	module = new /obj/item/weapon/robot_module/drone(src)
 
 	//Grab stacks.
@@ -102,7 +102,7 @@
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+	message = sanitize(message)
 
 	if (stat == DEAD)
 		return say_dead(message)
@@ -162,7 +162,7 @@
 			to_chat(src, "\red [user] attempts to load subversive software into you, but your hacked subroutined ignore the attempt.")
 			to_chat(user, "\red You attempt to subvert [src], but the sequencer has no effect.")
 			return
-
+		user.SetNextMove(CLICK_CD_MELEE)
 		to_chat(user, "\red You swipe the sequencer across [src]'s interface and watch its eyes flicker.")
 		to_chat(src, "\red You feel a sudden burst of malware loaded into your execute-as-root buffer. Your tiny brain methodically parses, loads and executes the script.")
 
@@ -345,10 +345,6 @@
 	else
 		to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
 		return
-
-/mob/living/silicon/robot/drone/add_robot_verbs()
-
-/mob/living/silicon/robot/drone/remove_robot_verbs()
 
 /mob/living/simple_animal/drone/mob_negates_gravity()
 	return 1

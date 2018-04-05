@@ -91,9 +91,8 @@
 		O.t_loc = M.loc
 		O.place = "fuel"
 		M.requests += O
-		spawn( 0 )
-			O.process()
-			return
+		INVOKE_ASYNC(O, /obj/effect/equip_e/human.proc/process)
+		return
 	else
 		for(var/mob/O in viewers(M, null))
 			O.show_message(text("\red [M] ate the [content ? content : "empty canister"]!"), 1)

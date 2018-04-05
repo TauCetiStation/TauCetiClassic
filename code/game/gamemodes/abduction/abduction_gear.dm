@@ -77,18 +77,16 @@
 		M.regenerate_icons()
 	return
 
-/obj/item/clothing/suit/armor/abductor/vest/IsShield()
-	DeactivateStealth()
-	return 0
+/obj/item/clothing/suit/armor/abductor/vest/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+	if(reaction_type == REACTION_ITEM_TAKE)
+		return
 
-/obj/item/clothing/suit/armor/abductor/vest/IsReflect()
 	DeactivateStealth()
-	return 0
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/IsAbductor(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.species.name != "Abductor")
+		if(H.species.name != ABDUCTOR)
 			return 0
 		return 1
 	return 0
@@ -131,19 +129,19 @@
 		M.update_canmove()
 //		M.adjustStaminaLoss(-75)
 		combat_cooldown = 0
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 
 /obj/item/clothing/suit/armor/abductor/vest/process()
 	combat_cooldown++
 	if(combat_cooldown == initial(combat_cooldown))
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 
 //SCIENCE TOOL
 /obj/item/device/abductor/proc/IsAbductor(user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.species.name != "Abductor")
+		if(H.species.name != ABDUCTOR)
 			return 0
 		return 1
 	return 0
@@ -233,6 +231,8 @@
 	if(get_dist(target,user) > 1)
 		to_chat(user, "<span class='warning'>You need to be next to the specimen to prepare it for transport.</span>")
 		return
+	if(user.is_busy())
+		return
 	to_chat(user, "<span class='notice'>You begin preparing [target] for transport...</span>")
 	if(do_after(user, 100, target = target))
 		marked = target
@@ -301,7 +301,7 @@
 			imp_in.buckled.unbuckle_mob()
 		home.Retrieve(imp_in)
 		cooldown = 0
-		SSobj.processing |= src
+		START_PROCESSING(SSobj, src)
 	else
 		to_chat(imp_in, "<span class='warning'>You must wait [30 - cooldown] seconds to use [src] again!</span>")
 	return
@@ -310,7 +310,7 @@
 	if(cooldown < initial(cooldown))
 		cooldown++
 		if(cooldown == initial(cooldown))
-			SSobj.processing.Remove(src)
+			STOP_PROCESSING(SSobj, src)
 
 
 //ALIEN DECLONER
@@ -322,7 +322,7 @@
 	item_state = "alienpistol"
 
 /obj/item/weapon/gun/energy/decloner/alien/special_check(mob/living/carbon/human/M)
-	if(M.species.name != "Abductor")
+	if(M.species.name != ABDUCTOR)
 		to_chat(M, "<span class='notice'>You can't figure how this works.</span>")
 		return 0
 	return 1
@@ -374,7 +374,7 @@
 	var/mob/living/carbon/human/H = user
 	if(!H.species)
 		return 0
-	if(H.species.name != "Abductor")
+	if(H.species.name != ABDUCTOR)
 		return 0
 	return 1
 
@@ -443,7 +443,7 @@
 	var/mob/living/carbon/human/H = user
 	if(!H.species)
 		return 0
-	if(H.species.name != "Abductor")
+	if(H.species.name != ABDUCTOR)
 		return 0
 	return 1
 
@@ -558,6 +558,7 @@
 	name = "hard-light energy field"
 	desc = "A hard-light field restraining the hands."
 	icon_state = "handcuffAlien"
+	flags = DROPDEL // no CONDUCT
 	origin_tech = "materials=5;combat=4;powerstorage=5"
 	breakouttime = 450
 
@@ -598,16 +599,19 @@
 	var/belt = null
 	var/mob/living/carbon/fastened = null
 
-/obj/machinery/optable/abductor/New()
+/obj/machinery/optable/abductor/atom_init()
 	belt = image("icons/obj/abductor.dmi", "belt", layer = FLY_LAYER)
-	return ..()
+	. = ..()
 
-/obj/machinery/optable/abductor/attack_hand()
+/obj/machinery/optable/abductor/attack_hand(mob/living/carbon/C)
 	if(!victim && !fastened)
 		return
 
 	//exclusion any bugs with grab
-	var/mob/living/carbon/C = usr
+	if(!istype(C))
+		return
+	C.SetNextMove(CLICK_CD_MELEE)
+
 	if(istype(C.get_active_hand(),/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = C.get_active_hand()
 		if(istype(C.l_hand, G))
@@ -676,9 +680,9 @@
 	desc = "Advanced flat surface technology at work!"
 	icon = 'icons/obj/abductor.dmi'
 
-/obj/structure/table/abductor/New()		// Fuck this shit, I am out...
+/obj/structure/table/abductor/atom_init()		// Fuck this shit, I am out...
+	. = ..()
 	verbs -= /obj/structure/table/verb/do_flip
-	return
 
 /obj/structure/closet/abductor
 	name = "alien locker"
@@ -713,8 +717,8 @@
 <br>
 Congratulations! You are now trained for xenobiology research!"}
 
-/obj/item/weapon/paper/abductor/New()
-	..()
+/obj/item/weapon/paper/abductor/atom_init()
+	. = ..()
 	verbs -= /obj/item/weapon/paper/verb/crumple
 
 /obj/item/weapon/paper/abductor/update_icon()
@@ -729,12 +733,12 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/item/weapon/lazarus_injector/alien/afterattack(atom/target, mob/user)
 	if(!loaded)
 		return
-	if(istype(target, /mob/living))
+	if(isliving(target))
 		var/mob/living/M = target
 		M.revive()
 		loaded = 0
 		user.visible_message("<span class='notice'>[user] injects [M] with [src], fully heal it.</span>")
-		playsound(src,'sound/effects/refill.ogg',50,1)
+		playsound(src, 'sound/effects/refill.ogg', 50, 1)
 		icon_state = "abductor_empty"
 
 /obj/machinery/recharger/wallcharger/alien

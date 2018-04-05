@@ -10,10 +10,9 @@ var/bar_sing_global = pick("lv426", "zocalo", "4theemprah", "ishimura",\
 	icon_state = "empty"
 	anchored = 1
 
-/obj/structure/sign/double/barsign/New()
-
+/obj/structure/sign/double/barsign/atom_init()
+	. = ..()
 	ChangeSign(bar_sing_global)
-	return
 
 /obj/structure/sign/double/barsign/proc/ChangeSign(Text)
 	src.icon_state = "[Text]"

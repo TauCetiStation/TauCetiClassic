@@ -18,8 +18,9 @@
 	var/const/RADS_PER_TICK=150
 	var/const/MAX_TEMP=70 // Celsius
 
-/obj/machinery/media/transmitter/broadcast/initialize()
-	testing("[type]/initialize() called!")
+/obj/machinery/media/transmitter/broadcast/atom_init()
+	. = ..()
+	testing("[type]/atom_init() called!")
 	if(autolink && autolink.len)
 		for(var/obj/machinery/media/source in orange(20, src))
 			if(source.id_tag in autolink)
@@ -50,19 +51,12 @@
 /*
 /obj/machinery/media/transmitter/broadcast/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/device/multitool))
-		update_multitool_menu(user)
+		attack_hand(user)
 		return 1
 
-/obj/machinery/media/transmitter/broadcast/attack_ai(mob/user)
-	src.add_hiddenprint(user)
-	attack_hand(user)
-
-/obj/machinery/media/transmitter/broadcast/attack_hand(mob/user)
-	update_multitool_menu(user)
-
-/obj/machinery/media/transmitter/broadcast/multitool_menu(var/mob/user,var/obj/item/device/multitool/P)
+/obj/machinery/media/transmitter/broadcast/ui_interact(mob/user)
 	// You need a multitool to use this, or be silicon
-	if(!issilicon(user))
+	if(!issilicon(user) && !isobserver(user))
 		// istype returns false if the value is null
 		if(!istype(user.get_active_hand(), /obj/item/device/multitool))
 			return
@@ -159,7 +153,7 @@
 			var/datum/gas_mixture/env = L.return_air()
 			if(env.temperature != MAX_TEMP + T0C)
 
-				var/transfer_moles = 0.25 * env.total_moles()
+				var/transfer_moles = 0.25 * env.total_moles
 
 				var/datum/gas_mixture/removed = env.remove(transfer_moles)
 

@@ -2,26 +2,30 @@
 This is what happens, when alien attack.
 ----------------------------------------*/
 /mob/living/carbon/alien/UnarmedAttack(atom/A)
+	..()
 	A.attack_alien(src)
+
 /atom/proc/attack_alien(mob/user)
 	attack_paw(user)
-	return
-/mob/living/carbon/alien/RestrainedClickOn(atom/A)
 	return
 
 // Baby aliens
 /mob/living/carbon/alien/facehugger/UnarmedAttack(atom/A)
+	SetNextMove(CLICK_CD_MELEE)
 	A.attack_facehugger(src)
+
 /atom/proc/attack_facehugger(mob/user)
 	return
 
 /mob/living/carbon/alien/larva/UnarmedAttack(atom/A)
+	..()
 	A.attack_larva(src)
+
 /atom/proc/attack_larva(mob/user)
 	return
 
 /mob/living/carbon/human/attack_larva(mob/living/carbon/alien/larva/M)
-	if(check_shields(0, M.name))
+	if(check_shields(0, M.name, get_dir(M,src) ))
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
 
@@ -33,15 +37,15 @@ This is what happens, when alien attack.
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("\red <B>[M] has lunged at [src]!</B>")
 				return 0
-			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
-			var/armor_block = run_armor_check(affecting, "melee")
+			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
+			var/armor_block = run_armor_check(BP, "melee")
 			playsound(loc, 'sound/weapons/bite.ogg', 25, 1, -1)
 			visible_message("\red <B>[M] has bitten [src]!</B>")
-			apply_damage(damage, BRUTE, affecting, armor_block)
+			apply_damage(damage, BRUTE, BP, armor_block)
 			updatehealth()
 
 /mob/living/carbon/human/attack_alien(mob/living/carbon/alien/humanoid/M)
-	if(check_shields(0, M.name))
+	if(check_shields(0, M.name, get_dir(M,src) ))
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
 
@@ -49,7 +53,7 @@ This is what happens, when alien attack.
 		if ("help")
 			visible_message(text("\blue [M] caresses [src] with its scythe like arm."))
 		if ("grab")
-			if(M == src || anchored)
+			if(M == src || anchored || M.lying)
 				return
 			if (w_uniform)
 				w_uniform.add_fingerprint(M)
@@ -73,13 +77,13 @@ This is what happens, when alien attack.
 				playsound(loc, 'sound/weapons/slashmiss.ogg', 50, 1, -1)
 				visible_message("\red <B>[M] has lunged at [src]!</B>")
 				return 0
-			var/datum/organ/external/affecting = get_organ(ran_zone(M.zone_sel.selecting))
-			var/armor_block = run_armor_check(affecting, "melee")
+			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
+			var/armor_block = run_armor_check(BP, "melee")
 
 			playsound(loc, 'sound/weapons/slice.ogg', 25, 1, -1)
 			visible_message("\red <B>[M] has slashed at [src]!</B>")
 
-			apply_damage(damage, BRUTE, affecting, armor_block)
+			apply_damage(damage, BRUTE, BP, armor_block)
 			if (damage >= 20)
 				visible_message("\red <B>[M] has wounded [src]!</B>")
 				apply_effect(rand(3,5), WEAKEN, armor_block)

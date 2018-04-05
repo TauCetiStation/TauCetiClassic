@@ -4,9 +4,7 @@
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "suspension2"
 	density = 1
-	req_access = list(access_research)
 	var/obj/item/weapon/stock_parts/cell/cell
-	var/obj/item/weapon/card/id/auth_card
 	var/locked = 1
 	var/open = 0
 	var/screwed = 1
@@ -15,161 +13,9 @@
 	var/obj/effect/suspension_field/suspension_field
 	var/list/secured_mobs = list()
 
-/obj/machinery/suspension_gen/New()
-	src.cell = new/obj/item/weapon/stock_parts/cell/high(src)
-	..()
-
-/obj/machinery/suspension_gen/process()
-	//set background = 1
-
-	if (suspension_field)
-		cell.charge -= power_use
-
-		var/turf/T = get_turf(suspension_field)
-		if(field_type == "carbon")
-			for(var/mob/living/carbon/M in T)
-				M.weakened = max(M.weakened, 3)
-				cell.charge -= power_use
-				if(prob(5))
-					to_chat(M, "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]")
-
-		if(field_type == "iron")
-			for(var/mob/living/silicon/M in T)
-				M.weakened = max(M.weakened, 3)
-				cell.charge -= power_use
-				if(prob(5))
-					to_chat(M, "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]")
-
-		for(var/obj/item/I in T)
-			if(!suspension_field.contents.len)
-				suspension_field.icon_state = "energynet"
-				suspension_field.overlays += "shield2"
-			I.loc = suspension_field
-
-		for(var/mob/living/simple_animal/M in T)
-			M.weakened = max(M.weakened, 3)
-			cell.charge -= power_use
-			if(prob(5))
-				to_chat(M, "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]")
-
-		if(cell.charge <= 0)
-			deactivate()
-
-/obj/machinery/suspension_gen/interact(mob/user)
-	var/dat = "<b>Multi-phase mobile suspension field generator MK II \"Steadfast\"</b><br>"
-	if(cell)
-		var/colour = "red"
-		if(cell.charge / cell.maxcharge > 0.66)
-			colour = "green"
-		else if(cell.charge / cell.maxcharge > 0.33)
-			colour = "orange"
-		dat += "<b>Energy cell</b>: <font color='[colour]'>[100 * cell.charge / cell.maxcharge]%</font><br>"
-	else
-		dat += "<b>Energy cell</b>: None<br>"
-	if(auth_card)
-		dat += "<A href='?src=\ref[src];ejectcard=1'>\[[auth_card]\]<a><br>"
-		if(!locked)
-			dat += "<b><A href='?src=\ref[src];toggle_field=1'>[suspension_field ? "Disable" : "Enable"] field</a></b><br>"
-		else
-			dat += "<br>"
-	else
-		dat += "<A href='?src=\ref[src];insertcard=1'>\[------\]<a><br>"
-		if(!locked)
-			dat += "<b><A href='?src=\ref[src];toggle_field=1'>[suspension_field ? "Disable" : "Enable"] field</a></b><br>"
-		else
-			dat += "Enter your ID to begin.<br>"
-
-	dat += "<hr>"
-	if(!locked)
-		dat += "<b>Select field mode</b><br>"
-		dat += "[field_type=="carbon"?"<b>":""			]<A href='?src=\ref[src];select_field=carbon'>Diffracted carbon dioxide laser</A></b><br>"
-		dat += "[field_type=="nitrogen"?"<b>":""		]<A href='?src=\ref[src];select_field=nitrogen'>Nitrogen tracer field</A></b><br>"
-		dat += "[field_type=="potassium"?"<b>":""		]<A href='?src=\ref[src];select_field=potassium'>Potassium refrigerant cloud</A></b><br>"
-		dat += "[field_type=="mercury"?"<b>":""	]<A href='?src=\ref[src];select_field=mercury'>Mercury dispersion wave</A></b><br>"
-		dat += "[field_type=="iron"?"<b>":""		]<A href='?src=\ref[src];select_field=iron'>Iron wafer conduction field</A></b><br>"
-		dat += "[field_type=="calcium"?"<b>":""	]<A href='?src=\ref[src];select_field=calcium'>Calcium binary deoxidiser</A></b><br>"
-		dat += "[field_type=="phoron"?"<b>":""	]<A href='?src=\ref[src];select_field=chlorine'>Chlorine diffusion emissions</A></b><br>"
-		dat += "[field_type=="phoron"?"<b>":""	]<A href='?src=\ref[src];select_field=phoron'>Phoron saturated field</A></b><br>"
-	else
-		dat += "<br>"
-		dat += "<br>"
-		dat += "<br>"
-		dat += "<br>"
-		dat += "<br>"
-		dat += "<br>"
-		dat += "<br>"
-		dat += "<br>"
-	dat += "<hr>"
-	dat += "<font color='blue'><b>Always wear safety gear and consult a field manual before operation.</b></font><br>"
-	if(!locked)
-		dat += "<A href='?src=\ref[src];lock=1'>Lock console</A><br>"
-	else
-		dat += "<br>"
-	dat += "<A href='?src=\ref[src];refresh=1'>Refresh console</A><br>"
-	dat += "<A href='?src=\ref[src];close=1'>Close console</A>"
-	user << browse(dat, "window=suspension;size=500x400")
-	onclose(user, "suspension")
-
-/obj/machinery/suspension_gen/is_operational_topic()
-	return TRUE
-
-/obj/machinery/suspension_gen/Topic(href, href_list)
-	if(href_list["close"])
-		usr.unset_machine()
-		usr << browse(null, "window=suspension")
-		return FALSE
-
+/obj/machinery/suspension_gen/atom_init()
+	cell = new/obj/item/weapon/stock_parts/cell/high(src)
 	. = ..()
-	if(!.)
-		return
-
-	if(href_list["toggle_field"])
-		if(!suspension_field)
-			if(cell.charge > 0)
-				if(anchored)
-					activate()
-				else
-					to_chat(usr, "<span class='warning'>You are unable to activate [src] until it is properly secured on the ground.</span>")
-		else
-			deactivate()
-	if(href_list["select_field"])
-		field_type = href_list["select_field"]
-	else if(href_list["insertcard"])
-		var/obj/item/I = usr.get_active_hand()
-		if (istype(I, /obj/item/weapon/card))
-			usr.drop_item()
-			I.loc = src
-			auth_card = I
-			if(attempt_unlock(I))
-				to_chat(usr, "<span class='info'>You insert [I], the console flashes \'<i>Access granted.</a>\'</span>")
-			else
-				to_chat(usr, "<span class='warning'>You insert [I], the console flashes \'<i>Access denied.</a>\'</span>")
-	else if(href_list["ejectcard"])
-		if(auth_card)
-			if(ishuman(usr))
-				auth_card.loc = usr.loc
-				if(!usr.get_active_hand())
-					usr.put_in_hands(auth_card)
-				auth_card = null
-			else
-				auth_card.loc = loc
-				auth_card = null
-	else if(href_list["lock"])
-		locked = 1
-
-	updateUsrDialog()
-
-/obj/machinery/suspension_gen/attack_hand(mob/user)
-	if(!open)
-		interact(user)
-	else if(cell)
-		cell.loc = loc
-		cell.add_fingerprint(user)
-		cell.updateicon()
-
-		icon_state = "suspension0"
-		cell = null
-		to_chat(user, "<span class='info'>You remove the power cell</span>")
 
 /obj/machinery/suspension_gen/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/screwdriver))
@@ -218,27 +64,139 @@
 				cell = W
 				to_chat(user, "<span class='info'>You insert the power cell.</span>")
 				icon_state = "suspension1"
-	else if(istype(W, /obj/item/weapon/card))
-		var/obj/item/weapon/card/I = W
-		if(!auth_card)
-			if(attempt_unlock(I))
-				to_chat(user, "<span class='info'>You swipe [I], the console flashes \'<i>Access granted.</i>\'</span>")
-			else
-				to_chat(user, "<span class='warning'>You swipe [I], console flashes \'<i>Access denied.</i>\'</span>")
+	else if(istype(W, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/id/sci = W
+		if(access_xenoarch in sci.access)
+			src.locked = !src.locked
+			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+			updateDialog()
 		else
-			to_chat(user, "<span class='warning'>Remove [auth_card] first.</span>")
+			to_chat(user, "\red Access denied.")
+	else if(istype(W, /obj/item/weapon/card/emag))
+		user.SetNextMove(CLICK_CD_INTERACT)
+		if(prob(75))
+			src.locked = !src.locked
+			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+			updateDialog()
+		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
+		s.set_up(5, 1, src)
+		s.start()
 
-/obj/machinery/suspension_gen/proc/attempt_unlock(obj/item/weapon/card/C)
+/obj/machinery/suspension_gen/ui_interact(mob/user)
+	var/dat = "<b>Multi-phase mobile suspension field generator MK II \"Steadfast\"</b><br>"
+	if(cell)
+		var/colour = "red"
+		if(cell.charge / cell.maxcharge > 0.66)
+			colour = "green"
+		else if(cell.charge / cell.maxcharge > 0.33)
+			colour = "orange"
+		dat += "<b>Energy cell</b>: <font color='[colour]'>[100 * cell.charge / cell.maxcharge]%</font><br>"
+	else
+		dat += "<b>Energy cell</b>: None<br>"
+		dat += "<hr>"
+	if(locked && !isobserver(user))
+		dat += "<i>Swipe your ID card to begin.</i>"
+	else
+		dat += "Suspension field generator is: [suspension_field ? "<font color=green>Enable</font>" : "<font color=red>Disable</font>" ] <br><b><A href='?src=\ref[src];toggle_field=1'>[suspension_field ? "\[Disable field\]" : "\[Enable field\]"]</a></b><br>"
+		dat += "<b>Select field mode</b><br>"
+		dat += "[field_type=="carbon"?"<b>":""			]<A href='?src=\ref[src];select_field=carbon'>Diffracted carbon dioxide laser</A></b><br>"
+		dat += "[field_type=="nitrogen"?"<b>":""		]<A href='?src=\ref[src];select_field=nitrogen'>Nitrogen tracer field</A></b><br>"
+		dat += "[field_type=="potassium"?"<b>":""		]<A href='?src=\ref[src];select_field=potassium'>Potassium refrigerant cloud</A></b><br>"
+		dat += "[field_type=="mercury"?"<b>":""	]<A href='?src=\ref[src];select_field=mercury'>Mercury dispersion wave</A></b><br>"
+		dat += "[field_type=="iron"?"<b>":""		]<A href='?src=\ref[src];select_field=iron'>Iron wafer conduction field</A></b><br>"
+		dat += "[field_type=="calcium"?"<b>":""	]<A href='?src=\ref[src];select_field=calcium'>Calcium binary deoxidiser</A></b><br>"
+		dat += "[field_type=="chlorine"?"<b>":""	]<A href='?src=\ref[src];select_field=chlorine'>Chlorine diffusion emissions</A></b><br>"
+		dat += "[field_type=="phoron"?"<b>":""	]<A href='?src=\ref[src];select_field=phoron'>Phoron saturated field</A></b><br>"
+		dat += "<hr>"
+		dat += "<font color='blue'><b>Always wear safety gear and consult a field manual before operation.</b></font><br>"
+		dat += "<A href='?src=\ref[src];lock=1'>Lock console</A><br>"
+	dat += "<hr>"
+	dat += "<A href='?src=\ref[src]'> Refresh console </A><BR>"
+	dat += "<A href='?src=\ref[src];close=1'> Close console </A><BR>"
+	user << browse(entity_ja(dat), "window=suspension;size=500x400")
+	onclose(user, "suspension")
+
+/obj/machinery/suspension_gen/process()
+	//set background = 1
+
+	if (suspension_field)
+		cell.charge -= power_use
+
+		var/turf/T = get_turf(suspension_field)
+		if(field_type == "carbon")
+			for(var/mob/living/carbon/M in T)
+				M.weakened = max(M.weakened, 3)
+				cell.charge -= power_use
+				if(prob(5))
+					to_chat(M, "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]")
+
+		if(field_type == "iron")
+			for(var/mob/living/silicon/M in T)
+				M.weakened = max(M.weakened, 3)
+				cell.charge -= power_use
+				if(prob(5))
+					to_chat(M, "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]")
+
+		for(var/obj/item/I in T)
+			if(!suspension_field.contents.len)
+				suspension_field.icon_state = "energynet"
+				suspension_field.overlays += "shield2"
+			I.loc = suspension_field
+
+		for(var/mob/living/simple_animal/M in T)
+			M.weakened = max(M.weakened, 3)
+			cell.charge -= power_use
+			if(prob(5))
+				to_chat(M, "\blue [pick("You feel tingly.","You feel like floating.","It is hard to speak.","You can barely move.")]")
+
+		if(cell.charge <= 0)
+			deactivate()
+
+/obj/machinery/suspension_gen/is_operational_topic()
+	return TRUE
+
+/obj/machinery/suspension_gen/Topic(href, href_list)
+	if(href_list["close"])
+		usr.unset_machine()
+		usr << browse(null, "window=suspension")
+		return FALSE
+
+	. = ..()
+	if(!.)
+		return
+	
+	if(locked)
+		to_chat(usr, "<span class='warning'>Console locked!</span>")
+		return
+
+	if(href_list["toggle_field"])
+		if(!suspension_field)
+			if(cell.charge > 0)
+				if(anchored)
+					activate()
+				else
+					to_chat(usr, "<span class='warning'>You are unable to activate [src] until it is properly secured on the ground.</span>")
+		else
+			deactivate()
+	if(href_list["select_field"])
+		field_type = href_list["select_field"]
+
+	if(href_list["lock"])
+		locked = 1
+
+	updateDialog()
+
+/obj/machinery/suspension_gen/interact(mob/user)
 	if(!open)
-		if(istype(C, /obj/item/weapon/card/emag) && cell.charge > 0)
-			//put sparks here
-			if(prob(95))
-				locked = 0
-		else if(istype(C, /obj/item/weapon/card/id) && check_access(C))
-			locked = 0
+		..()
+	else if(cell)
+		cell.loc = loc
+		cell.add_fingerprint(user)
+		cell.updateicon()
 
-		if(!locked)
-			return 1
+		icon_state = "suspension0"
+		cell = null
+		to_chat(user, "<span class='info'>You remove the power cell</span>")
 
 //checks for whether the machine can be activated or not should already have occurred by this point
 /obj/machinery/suspension_gen/proc/activate()
@@ -305,15 +263,17 @@
 
 /obj/machinery/suspension_gen/proc/deactivate()
 	//drop anything we picked up
-	var/turf/T = get_turf(suspension_field)
+	if(suspension_field)
+		var/turf/T = get_turf(suspension_field)
 
-	for(var/mob/M in T)
-		to_chat(M, "<span class='info'>You no longer feel like floating.</span>")
-		M.weakened = min(M.weakened, 3)
+		for(var/mob/M in T)
+			to_chat(M, "<span class='info'>You no longer feel like floating.</span>")
+			M.weakened = min(M.weakened, 3)
 
-	src.visible_message("\blue [bicon(src)] [src] deactivates with a gentle shudder.")
-	qdel(suspension_field)
-	icon_state = "suspension2"
+		src.visible_message("\blue [bicon(src)] [src] deactivates with a gentle shudder.")
+		qdel(suspension_field)
+		suspension_field = null
+		icon_state = "suspension2"
 
 /obj/machinery/suspension_gen/Destroy()
 	//safety checks: clear the field and drop anything it's holding

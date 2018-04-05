@@ -12,51 +12,43 @@
 	var/access_code = 0
 	var/datum/money_account/linked_account
 
-/obj/item/device/eftpos/New()
-	..()
+/obj/item/device/eftpos/atom_init()
+	. = ..()
 	machine_id = "[station_name()] EFTPOS #[num_financial_terminals++]"
 	access_code = rand(1111,111111)
-	spawn(0)
-		print_reference()
 
-		//create a short manual as well
-		var/obj/item/weapon/paper/R = new(src.loc)
-		R.name = "Steps to success: Correct EFTPOS Usage"
-		/*
-		R.info += "<b>When first setting up your EFTPOS device:</b>"
-		R.info += "1. Memorise your EFTPOS command code (provided with all EFTPOS devices).<br>"
-		R.info += "2. Confirm that your EFTPOS device is connected to your local accounts database. For additional assistance with this step, contact NanoTrasen IT Support<br>"
-		R.info += "3. Confirm that your EFTPOS device has been linked to the account that you wish to recieve funds for all transactions processed on this device.<br>"
-		R.info += "<b>When starting a new transaction with your EFTPOS device:</b>"
-		R.info += "1. Ensure the device is UNLOCKED so that new data may be entered.<br>"
-		R.info += "2. Enter a sum of money and reference message for the new transaction.<br>"
-		R.info += "3. Lock the transaction, it is now ready for your customer.<br>"
-		R.info += "4. If at this stage you wish to modify or cancel your transaction, you may simply reset (unlock) your EFTPOS device.<br>"
-		R.info += "5. Give your EFTPOS device to the customer, they must authenticate the transaction by swiping their ID card and entering their PIN number.<br>"
-		R.info += "6. If done correctly, the transaction will be logged to both accounts with the reference you have entered, the terminal ID of your EFTPOS device and the money transferred across accounts.<br>"
-		*/
-		//Temptative new manual:
-		R.info += "<b>First EFTPOS setup:</b><br>"
-		R.info += "1. Memorise your EFTPOS command code (provided with all EFTPOS devices).<br>"
-		R.info += "2. Connect the EFTPOS to the account in which you want to receive the funds.<br><br>"
-		R.info += "<b>When starting a new transaction:</b><br>"
-		R.info += "1. Enter the amount of money you want to charge and a purpose message for the new transaction.<br>"
-		R.info += "2. Lock the new transaction. If you want to modify or cancel the transaction, you simply have to reset your EFTPOS device.<br>"
-		R.info += "3. Give the EFTPOS device to your customer, he/she must finish the transaction by swiping their ID card or a charge card with enough funds.<br>"
-		R.info += "4. If everything is done correctly, the money will be transferred. To unlock the device you will have to reset the EFTPOS device.<br>"
+	print_reference()
+
+	//create a short manual as well
+	var/obj/item/weapon/paper/R = new(src.loc)
+	R.name = "Steps to success: Correct EFTPOS Usage"
+	/*
+	R.info += "<b>When first setting up your EFTPOS device:</b>"
+	R.info += "1. Memorise your EFTPOS command code (provided with all EFTPOS devices).<br>"
+	R.info += "2. Confirm that your EFTPOS device is connected to your local accounts database. For additional assistance with this step, contact NanoTrasen IT Support<br>"
+	R.info += "3. Confirm that your EFTPOS device has been linked to the account that you wish to recieve funds for all transactions processed on this device.<br>"
+	R.info += "<b>When starting a new transaction with your EFTPOS device:</b>"
+	R.info += "1. Ensure the device is UNLOCKED so that new data may be entered.<br>"
+	R.info += "2. Enter a sum of money and reference message for the new transaction.<br>"
+	R.info += "3. Lock the transaction, it is now ready for your customer.<br>"
+	R.info += "4. If at this stage you wish to modify or cancel your transaction, you may simply reset (unlock) your EFTPOS device.<br>"
+	R.info += "5. Give your EFTPOS device to the customer, they must authenticate the transaction by swiping their ID card and entering their PIN number.<br>"
+	R.info += "6. If done correctly, the transaction will be logged to both accounts with the reference you have entered, the terminal ID of your EFTPOS device and the money transferred across accounts.<br>"
+	*/
+	//Temptative new manual:
+	R.info += "<b>First EFTPOS setup:</b><br>"
+	R.info += "1. Memorise your EFTPOS command code (provided with all EFTPOS devices).<br>"
+	R.info += "2. Connect the EFTPOS to the account in which you want to receive the funds.<br><br>"
+	R.info += "<b>When starting a new transaction:</b><br>"
+	R.info += "1. Enter the amount of money you want to charge and a purpose message for the new transaction.<br>"
+	R.info += "2. Lock the new transaction. If you want to modify or cancel the transaction, you simply have to reset your EFTPOS device.<br>"
+	R.info += "3. Give the EFTPOS device to your customer, he/she must finish the transaction by swiping their ID card or a charge card with enough funds.<br>"
+	R.info += "4. If everything is done correctly, the money will be transferred. To unlock the device you will have to reset the EFTPOS device.<br>"
 
 
-		//stamp the paper
-		var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-		stampoverlay.icon_state = "paper_stamp-cent"
-		if(!R.stamped)
-			R.stamped = new
-		R.offset_x += 0
-		R.offset_y += 0
-		R.ico += "paper_stamp-cent"
-		R.stamped += /obj/item/weapon/stamp
-		R.overlays += stampoverlay
-		R.stamps += "<HR><i>This paper has been stamped by the EFTPOS device.</i>"
+	//stamp the paper
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(R, "This paper has been stamped by the EFTPOS device.")
 
 	//by default, connect to the station account
 	//the user of the EFTPOS device can change the target account though, and no-one will be the wiser (except whoever's being charged)
@@ -70,13 +62,9 @@
 	R.info += "<b>Do not lose or misplace this code.</b><br>"
 
 	//stamp the paper
-	var/image/stampoverlay = image('icons/obj/bureaucracy.dmi')
-	stampoverlay.icon_state = "paper_stamp-cent"
-	if(!R.stamped)
-		R.stamped = new
-	R.stamped += /obj/item/weapon/stamp
-	R.overlays += stampoverlay
-	R.stamps += "<HR><i>This paper has been stamped by the EFTPOS device.</i>"
+	var/obj/item/weapon/stamp/centcomm/S = new
+	S.stamp_paper(R, "This paper has been stamped by the EFTPOS device.")
+
 	var/obj/item/smallDelivery/D = new(R.loc)
 	R.loc = D
 	D.wrapped = R
@@ -106,7 +94,7 @@
 			dat += "<a href='?src=\ref[src];choice=change_code'>Change access code</a><br>"
 			dat += "<a href='?src=\ref[src];choice=change_id'>Change EFTPOS ID</a><br>"
 			dat += "Scan card to reset access code <a href='?src=\ref[src];choice=reset'>\[------\]</a>"
-		user << browse(dat,"window=eftpos")
+		user << browse(entity_ja(dat),"window=eftpos")
 	else
 		user << browse(null,"window=eftpos")
 
@@ -167,7 +155,7 @@
 			if("change_id")
 				var/attempt_code = text2num(input("Re-enter the current EFTPOS access code", "Confirm EFTPOS code"))
 				if(attempt_code == access_code)
-					eftpos_name = input("Enter a new terminal ID for this device", "Enter new EFTPOS ID") + " EFTPOS scanner"
+					eftpos_name = sanitize_safe(input("Enter a new terminal ID for this device", "Enter new EFTPOS ID"), MAX_LNAME_LEN) + " EFTPOS scanner"
 					print_reference()
 				else
 					to_chat(usr, "[bicon(src)]<span class='warning'>Incorrect code entered.</span>")
@@ -179,7 +167,7 @@
 					linked_account = null
 					to_chat(usr, "[bicon(src)]<span class='warning'>Account has been suspended.</span>")
 			if("trans_purpose")
-				transaction_purpose = input("Enter reason for EFTPOS transaction", "Transaction purpose")
+				transaction_purpose = sanitize(input("Enter reason for EFTPOS transaction", "Transaction purpose"))
 			if("trans_value")
 				var/try_num = input("Enter amount for EFTPOS transaction", "Transaction amount") as num
 				if(try_num < 0)

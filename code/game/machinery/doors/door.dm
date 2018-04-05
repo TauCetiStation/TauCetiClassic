@@ -27,7 +27,9 @@
 	var/door_open_sound  = 'sound/machines/airlock/airlockToggle_2.ogg'
 	var/door_close_sound = 'sound/machines/airlock/airlockToggle_2.ogg'
 
-/obj/machinery/door/New()
+	var/dock_tag
+
+/obj/machinery/door/atom_init()
 	. = ..()
 	if(density)
 		layer = base_layer + DOOR_CLOSED_MOD //Above most items if closed
@@ -38,7 +40,6 @@
 		explosion_resistance = 0
 
 	update_nearby_tiles(need_rebuild=1)
-	return
 
 
 /obj/machinery/door/Destroy()
@@ -112,145 +113,26 @@
 	src.open()
 	return
 
-
-/obj/machinery/door/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-
-/obj/machinery/door/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-
 /obj/machinery/door/attack_hand(mob/user)
-	return src.attackby(user, user)
+	return attackby(user, user)
 
 /obj/machinery/door/attack_tk(mob/user)
 	if(requiresID() && !allowed(null))
 		return
 	..()
 
-/obj/machinery/door/attackby(obj/item/I, mob/user)
-	if(HULK in user.mutations) //#Z2 Hulk can open any door with his power and break any door with harm intent.
-		if(!src.density) return
-		var/cur_loc = user.loc
-		var/cur_dir
-		var/found = 0
-		for(var/direction in cardinal)
-			var/turf/T = get_step(src,direction)
-			for(var/mob/living/carbon/human/H in T.contents)
-				if(H == user)
-					found = 1
-					break
-			if(found)
-				break
-		if(!found) return
-		if(I != user)
-			to_chat(user, "\red You can't force open door with [I] in hand!")
-			return
-		var/obj/machinery/door/airlock/A = src
-		if(istype(A,/obj/machinery/door/airlock/))
-			if(user.a_intent == "hurt")
-				if(prob(90))
-					user.visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>",\
-					"You punch \the [src]!",\
-					"\red You feel some weird vibration!")
-					playsound(user.loc, 'sound/effects/grillehit.ogg', 50, 1)
-					return
-				else
-					user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-					user.visible_message("\red <B>[user]</B> has destroyed some mechanic in \the <B>[src]!</B>",\
-					"You destroy some mechanic in \the [src] door, which holds it in place!",\
-					"\red <B>You feel some weird vibration!</B>")
-					playsound(user.loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
-					if(istype(A,/obj/machinery/door/airlock/multi_tile/)) //Some kind runtime with multi_tile airlock... So delete for now... #Z2
-						qdel(A)
-					else
-						var/obj/structure/door_assembly/da = new A.assembly_type(A.loc)
-						da.anchored = 0
+/obj/machinery/door/attack_ghost(mob/user)
+	if(IsAdminGhost(user))
+		if(density)
+			open()
+		else
+			close()
 
-						var/target = da.loc
-						cur_dir = user.dir
-						for(var/i=0, i<4, i++)
-							target = get_turf(get_step(target,cur_dir))
-						da.throw_at(target, 200, 100)
-
-						if(A.mineral)
-							da.change_mineral_airlock_type(A.mineral)
-						if(A.glass && da.can_insert_glass)
-							da.set_glass(TRUE)
-						da.state = ASSEMBLY_WIRED
-						da.created_name = src.name
-						da.update_state()
-
-						var/obj/item/weapon/airlock_electronics/ae
-						ae = new/obj/item/weapon/airlock_electronics( A.loc )
-						if(!A.req_access)
-							A.check_access()
-						if(A.req_access.len)
-							ae.conf_access = A.req_access
-						else if (A.req_one_access.len)
-							ae.conf_access = A.req_one_access
-							ae.one_access = 1
-						ae.loc = da
-						da.electronics = ae
-
-						qdel(A)
-					return
-			else if(A.locked && user.a_intent != "hurt")
-				to_chat(user, "\red The door is bolted and you need more aggressive force to get thru!")
-				return
-		user.visible_message("\red \The [user] starts to force \the [src] open with a bare hands!",\
-				"You start forcing \the [src] open with a bare hands!",\
-				"You hear metal strain.")
-		if(do_after(user, 30, target = src))
-			found = 0
-			for(var/direction in cardinal)
-				var/turf/T = get_step(src,direction)
-				for(var/mob/living/carbon/human/H in T.contents)
-					if(H == user)
-						found = 1
-						if(direction == 1)
-							cur_dir = 2
-						else if(direction == 2)
-							cur_dir = 1
-						else if(direction == 4)
-							cur_dir = 8
-						else if(direction == 8)
-							cur_dir = 4
-						break
-				if(found)
-					break
-			if(!found) return
-			if(!src.density) return
-			if(cur_loc != user.loc) return
-			spawn(0)
-				user.canmove = 0
-				user.density = 0
-				var/target = user.loc
-				open()
-				user.say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ))
-				var/turf/simulated/floor/tile = target
-				if(tile)
-					tile.break_tile()
-				for(var/i=0, i<2, i++)
-					target = get_turf(get_step(target,cur_dir))
-				playsound(user.loc, 'sound/weapons/thudswoosh.ogg', 50, 1)
-				user.throw_at(target, 200, 100)
-				user.visible_message("\red \The [user] forces \the [src] open with a bare hands!",\
-						"You force \the [src] open with a bare hands!",\
-						"You hear metal strain, and a door open.")
-				user.canmove = 1
-				user.density = 1
-				close()
-		return //##Z2
+/obj/machinery/door/attackby(obj/item/I, mob/living/user)
 	if(istype(I, /obj/item/device/detective_scanner))
 		return
-	if(src.operating || isrobot(user))	return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
-	src.add_fingerprint(user)
-	if(!Adjacent(user))
-		user = null
-	if(!src.requiresID())
-		user = null
+	if(src.operating)
+		return
 	if(src.density && hasPower() && (istype(I, /obj/item/weapon/card/emag)||istype(I, /obj/item/weapon/melee/energy/blade)))
 		update_icon(AIRLOCK_EMAG)
 		sleep(6)
@@ -258,6 +140,13 @@
 			update_icon(AIRLOCK_CLOSED)
 		operating = -1
 		return 1
+	if(isrobot(user))
+		return //borgs can't attack doors open because it conflicts with their AI-like interaction with them.
+	if(!Adjacent(user))
+		user = null
+	if(!src.requiresID())
+		user = null
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(src.allowed(user))
 		if(src.density)
 			open()
@@ -466,15 +355,12 @@
 /obj/machinery/door/proc/requiresID()
 	return 1
 
-/obj/machinery/door/proc/update_nearby_tiles(need_rebuild)
-	if(!SSair)
-		return 0
+/obj/machinery/door/update_nearby_tiles(need_rebuild)
+	. = ..()
 
-	for(var/turf/simulated/turf in locs)
-		update_heat_protection(turf)
-		SSair.mark_for_update(turf)
-
-	return 1
+	if(.)
+		for(var/turf/simulated/turf in locs)
+			update_heat_protection(turf)
 
 /obj/machinery/door/proc/update_heat_protection(turf/simulated/source)
 	if(istype(source))

@@ -31,6 +31,8 @@
 		surgery_steps += S
 	sort_surgeries()
 
+	init_subtypes(/datum/crafting_recipe, crafting_recipes)
+
 	//Medical side effects. List all effects by their names
 	for(var/T in subtypesof(/datum/medical_effect))
 		var/datum/medical_effect/M = new T
@@ -49,7 +51,7 @@
 	for(var/language_name in all_languages)
 		var/datum/language/L = all_languages[language_name]
 		for(var/key in L.key)
-			language_keys[":[lowertext(key)]"] = L
+			language_keys[":[lowertext_(key)]"] = L
 
 	var/rkey = 0
 	for(var/T in subtypesof(/datum/species))

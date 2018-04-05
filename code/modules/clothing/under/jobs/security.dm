@@ -136,6 +136,13 @@
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.8
 
+/obj/item/clothing/under/rank/head_of_security/turtleneck
+	name = "head of security's turtleneck"
+	icon_state = "hos_turtleneck"
+	item_color = "hos_turtleneck"
+	item_state = "hos_turtleneck"
+	flags = 0
+
 /obj/item/clothing/under/rank/head_of_security/corp
 	icon_state = "hos_corporate"
 	item_state = "hos_corporate"

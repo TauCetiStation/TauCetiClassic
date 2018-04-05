@@ -16,7 +16,6 @@
 	var/can_embed = 1
 	var/slot_flags = 0		//This is used to determine on which slots an item can fit.
 	pass_flags = PASSTABLE
-	pressure_resistance = 5
 //	causeerrorheresoifixthis
 	var/obj/item/master = null
 
@@ -62,7 +61,7 @@
 	/* Species-specific sprites, concept stolen from Paradise//vg/.
 	ex:
 	sprite_sheets = list(
-		"Tajaran" = 'icons/cat/are/bad'
+		TAJARAN = 'icons/cat/are/bad'
 		)
 	If index term exists and icon_override is not set, this sprite sheet will be used.
 	*/
@@ -83,7 +82,119 @@
 /obj/item/device
 	icon = 'icons/obj/device.dmi'
 
+/obj/item/device/proc/health_analyze(mob/living/M, mob/living/user, mode)
+	var/message
+	if(((CLUMSY in user.mutations) || user.getBrainLoss() >= 60) && prob(50))
+		user.visible_message("<span class='warning'>[user] has analyzed the floor's vitals!</span>", "<span class = 'warning'>You try to analyze the floor's vitals!</span>")
+		message += "<span class='notice'>Analyzing Results for The floor:\n&emsp; Overall Status: Healthy</span><br>"
+		message += "<span class='notice'>&emsp; Damage Specifics: [0]-[0]-[0]-[0]</span><br>"
+		message += "<span class='notice'>Key: Suffocation/Toxin/Burns/Brute</span><br>"
+		message += "<span class='notice'>Body Temperature: ???</span>"
+		user.show_message(message)
+		return
+	if(!(istype(user, /mob/living/carbon/human) || ticker) && ticker.mode.name != "monkey")
+		to_chat(usr, "<span class='warning'>You don't have the dexterity to do this!</span>")
+		return
+	user.visible_message("<span class='notice'>[user] has analyzed [M]'s vitals.","<span class='notice'>You have analyzed [M]'s vitals.")
+
+	var/fake_oxy = max(rand(1,40), M.getOxyLoss(), (300 - (M.getToxLoss() + M.getFireLoss() + M.getBruteLoss())))
+	var/OX = M.getOxyLoss() > 50 	? 	"<b>[M.getOxyLoss()]</b>" 		: M.getOxyLoss()
+	var/TX = M.getToxLoss() > 50 	? 	"<b>[M.getToxLoss()]</b>" 		: M.getToxLoss()
+	var/BU = M.getFireLoss() > 50 	? 	"<b>[M.getFireLoss()]</b>" 		: M.getFireLoss()
+	var/BR = M.getBruteLoss() > 50 	? 	"<b>[M.getBruteLoss()]</b>" 	: M.getBruteLoss()
+	if(M.status_flags & FAKEDEATH)
+		OX = fake_oxy > 50 			? 	"<b>[fake_oxy]</b>" 			: fake_oxy
+		message += "<span class='notice'>Analyzing Results for [M]:\n&emsp; Overall Status: dead</span><br>"
+	else
+		message += "<span class='notice'>Analyzing Results for [M]:\n&emsp; Overall Status: [M.stat > 1 ? "dead" : "[M.health - M.halloss]% healthy"]</span><br>"
+	message += "&emsp; Key: <font color='blue'>Suffocation</font>/<font color='green'>Toxin</font>/<font color='#FFA500'>Burns</font>/<font color='red'>Brute</font><br>"
+	message += "&emsp; Damage Specifics: <font color='blue'>[OX]</font> - <font color='green'>[TX]</font> - <font color='#FFA500'>[BU]</font> - <font color='red'>[BR]</font><br>"
+	message += "<span class='notice'>Body Temperature: [M.bodytemperature-T0C]&deg;C ([M.bodytemperature*1.8-459.67]&deg;F)</span><br>"
+	if(M.tod && (M.stat == DEAD || (M.status_flags & FAKEDEATH)))
+		message += "<span class='notice'>Time of Death: [M.tod]</span><br>"
+	if(istype(M, /mob/living/carbon/human) && mode)
+		var/mob/living/carbon/human/H = M
+		var/list/damaged = H.get_damaged_bodyparts(1, 1)
+		message += "<span class='notice'>Localized Damage, Brute/Burn:</span><br>"
+		if(length(damaged))
+			for(var/obj/item/organ/external/BP in damaged)
+				message += "<span class='notice'>&emsp; [capitalize(BP.name)]: [(BP.brute_dam > 0) ? "<span class='warning'>[BP.brute_dam]</span>" : 0][(BP.status & ORGAN_BLEEDING) ? "<span class='warning bold'>\[Bleeding\]</span>" : "&emsp;"] - [(BP.burn_dam > 0) ? "<font color='#FFA500'>[BP.burn_dam]</font>" : 0]</span><br>"
+		else
+			message += "<span class='notice'>&emsp; Limbs are OK.</span><br>"
+
+	OX = M.getOxyLoss() > 50 ? "<font color='blue'><b>Severe oxygen deprivation detected</b></font>" : "Subject bloodstream oxygen level normal"
+	TX = M.getToxLoss() > 50 ? "<font color='green'><b>Dangerous amount of toxins detected</b></font>" : "Subject bloodstream toxin level minimal"
+	BU = M.getFireLoss() > 50 ? "<font color='#FFA500'><b>Severe burn damage detected</b></font>" : "Subject burn injury status O.K"
+	BR = M.getBruteLoss() > 50 ? "<font color='red'><b>Severe anatomical damage detected</b></font>" : "Subject brute-force injury status O.K"
+	if(M.status_flags & FAKEDEATH)
+		OX = fake_oxy > 50 ? 		"<span class='warning'>Severe oxygen deprivation detected<span class='notice'>" : "Subject bloodstream oxygen level normal"
+	message += "[OX] | [TX] | [BU] | [BR]<br>"
+	if(istype(M, /mob/living/carbon))
+		var/mob/living/carbon/C = M
+		if(C.reagents.total_volume)
+			message += "<span class='warning'>Warning: Unknown substance detected in subject's blood.</span><br>"
+		if(C.virus2.len)
+			for (var/ID in C.virus2)
+				if (ID in virusDB)
+					var/datum/data/record/V = virusDB[ID]
+					message += "<span class='warning'>Warning: Pathogen [V.fields["name"]] detected in subject's blood. Known antigen : [V.fields["antigen"]]</span><br>"
+//			user.show_message(text("\red Warning: Unknown pathogen detected in subject's blood."))
+	if(M.getCloneLoss())
+		user.show_message("<span class='warning'>Subject appears to have been imperfectly cloned.</span>")
+	for(var/datum/disease/D in M.viruses)
+		if(!D.hidden[SCANNER])
+			message += "<span class = 'warning bold'>Warning: [D.form] Detected</span>\n<span class = 'warning'>Name: [D.name].\nType: [D.spread].\nStage: [D.stage]/[D.max_stages].\nPossible Cure: [D.cure]</span><br>"
+	if(M.reagents && M.reagents.get_reagent_amount("inaprovaline"))
+		message += "<span class='notice'>Bloodstream Analysis located [M.reagents:get_reagent_amount("inaprovaline")] units of rejuvenation chemicals.</span><br>"
+	if(M.has_brain_worms())
+		message += "<span class='warning'>Subject suffering from aberrant brain activity. Recommend further scanning.</span><br>"
+	else if(M.getBrainLoss() >= 100 || istype(M, /mob/living/carbon/human) && M:brain_op_stage == 4.0)
+		message += "<span class='warning'>Subject is brain dead.</span>"
+	else if(M.getBrainLoss() >= 60)
+		message += "<span class='warning'>Severe brain damage detected. Subject likely to have mental retardation.</span><br>"
+	else if(M.getBrainLoss() >= 10)
+		message += "<span class='warning'>Significant brain damage detected. Subject may have had a concussion.</span><br>"
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+
+		var/found_bleed
+		var/found_broken
+		for(var/obj/item/organ/external/BP in H.bodyparts)
+			if(BP.status & ORGAN_BROKEN)
+				if(((BP.body_zone == BP_L_ARM) || (BP.body_zone == BP_R_ARM) || (BP.body_zone == BP_L_LEG) || (BP.body_zone == BP_R_LEG)) && !(BP.status & ORGAN_SPLINTED))
+					message += "<span class='warning'>Unsecured fracture in subject [BP.name]. Splinting recommended for transport.</span><br>"
+				if(!found_broken)
+					found_broken = TRUE
+
+			if(!found_bleed && (BP.status & ORGAN_ARTERY_CUT))
+				found_bleed = TRUE
+
+			if(BP.has_infected_wound())
+				message += "<span class='warning'>Infected wound detected in subject [BP.name]. Disinfection recommended.</span><br>"
+
+		if(found_bleed)
+			message += "<span class='warning'>Arterial bleeding detected. Advanced scanner required for location.</span><br>"
+		if(found_broken)
+			message += "<span class='warning'>Bone fractures detected. Advanced scanner required for location.</span><br>"
+
+		if(H.vessel)
+			var/blood_volume = round(H.vessel.get_reagent_amount("blood"))
+			var/blood_percent =  blood_volume / 560
+			var/blood_type = H.dna.b_type
+			blood_percent *= 100
+			if(blood_volume <= 500 && blood_volume > 336)
+				message += "<span class='warning bold'>Warning: Blood Level LOW: [blood_percent]% [blood_volume]cl.</span><span class='notice'>Type: [blood_type]</span><br>"
+			else if(blood_volume <= 336)
+				message += "<span class='warning bold'>Warning: Blood Level CRITICAL: [blood_percent]% [blood_volume]cl.</span><span class='notice bold'>Type: [blood_type]</span><br>"
+			else
+				message += "<span class='notice'>Blood Level Normal: [blood_percent]% [blood_volume]cl. Type: [blood_type]</span><br>"
+		message += "<span class='notice'>Subject's pulse: <font color='[H.pulse == PULSE_THREADY || H.pulse == PULSE_NONE ? "red" : "blue"]'>[H.get_pulse(GETPULSE_TOOL)] bpm.</font></span><br>"
+	add_fingerprint(user)
+	user.show_message(message)
+	return
+
 /obj/item/Destroy()
+	flags &= ~DROPDEL // prevent recursive dels
 	if(ismob(loc))
 		var/mob/m = loc
 		m.drop_from_inventory(src)
@@ -155,7 +266,8 @@
 	to_chat(user, "[open_span]It's a[wet_status] [size] item.[close_span]")
 
 /obj/item/attack_hand(mob/user)
-	if (!user) return
+	if (!user || anchored)
+		return
 
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
 		if(istype(src, /obj/item/weapon/melee/))
@@ -184,14 +296,6 @@
 			to_chat(user, "\red \The [src] is far too small for you to pick up.")
 			return
 
-	if(hasorgans(user))
-		var/datum/organ/external/temp = user:organs_by_name["r_hand"]
-		if (user.hand)
-			temp = user:organs_by_name["l_hand"]
-		if(temp && !temp.is_usable())
-			to_chat(user, "<span class='notice'>You try to move your [temp.display_name], but cannot!")
-			return
-
 	if(istype(src.loc, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = src.loc
 		S.remove_from_storage(src)
@@ -201,12 +305,11 @@
 		//canremove==0 means that object may not be removed. You can still wear it. This only applies to clothing. /N
 		if(!src.canremove)
 			return
-		if(istype(user,/mob/living/carbon/human))
+		if(ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-				for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
-					if(V.stealth_active)
-						V.DeactivateStealth()
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+				var/obj/item/clothing/suit/V = H.wear_suit
+				V.attack_reaction(H, REACTION_ITEM_TAKEOFF)
 			if(istype(src, /obj/item/clothing/suit/space)) // If the item to be unequipped is a rigid suit
 				if(!user.delay_clothing_u_equip(src))
 					return 0
@@ -218,7 +321,17 @@
 	else
 		if(isliving(src.loc))
 			return
-		user.next_move = max(user.next_move+2,world.time + 2)
+		user.SetNextMove(CLICK_CD_RAPID)
+
+		if(ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+				var/obj/item/clothing/suit/V = H.wear_suit
+				V.attack_reaction(H, REACTION_ITEM_TAKE)
+
+	if(QDELETED(src) || freeze_movement) // remove_from_mob() may remove DROPDEL items, so...
+		return
+
 	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
@@ -226,6 +339,8 @@
 
 
 /obj/item/attack_paw(mob/user)
+	if (!user || anchored)
+		return
 
 	if(isalien(user)) // -- TLE
 		var/mob/living/carbon/alien/A = user
@@ -251,9 +366,13 @@
 	else
 		if(istype(src.loc, /mob/living))
 			return
-		src.pickup(user)
+
 		user.next_move = max(user.next_move+2,world.time + 2)
 
+	if(QDELETED(src) || freeze_movement) // no item - no pickup, you dummy!
+		return
+
+	src.pickup(user)
 	user.put_in_active_hand(src)
 	return
 
@@ -270,7 +389,7 @@
 // Due to storage type consolidation this should get used more now.
 // I have cleaned it up a little, but it could probably use more.  -Sayu
 /obj/item/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W,/obj/item/weapon/storage))
+	if(istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
@@ -297,8 +416,15 @@
 
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
+	return FALSE
 
-	return
+/obj/item/throw_at(atom/target, range, speed, mob/thrower, spin = TRUE, diagonals_first = FALSE, datum/callback/callback)
+	callback = CALLBACK(src, .proc/after_throw, callback) // Replace their callback with our own.
+	. = ..(target, range, speed, thrower, spin, diagonals_first, callback)
+
+/obj/item/proc/after_throw(datum/callback/callback)
+	if (callback) //call the original callback
+		. = callback.Invoke()
 
 /obj/item/proc/talk_into(mob/M, text)
 	return
@@ -308,7 +434,8 @@
 
 // apparently called whenever an item is removed from a slot, container, or anything else.
 /obj/item/proc/dropped(mob/user)
-	..()
+	if(DROPDEL & flags)
+		qdel(src)
 
 // called just as an item is picked up (loc is not yet changed)
 /obj/item/proc/pickup(mob/user)
@@ -344,6 +471,8 @@
 	if(ishuman(M))
 		//START HUMAN
 		var/mob/living/carbon/human/H = M
+		if(!H.has_bodypart_for_slot(slot))
+			return 0
 		//fat mutation
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
 			if(FAT in H.mutations)
@@ -505,6 +634,19 @@
 					if(B.contents.len < B.storage_slots && w_class <= B.max_w_class)
 						return 1
 				return 0
+			if(slot_tie)
+				if(!H.w_uniform)
+					if(!disable_warning)
+						to_chat(H, "<span class='warning'>You need a jumpsuit before you can attach this [name].</span>")
+					return FALSE
+				var/obj/item/clothing/under/uniform = H.w_uniform
+				if(uniform.accessories.len && !uniform.can_attach_accessory(src))
+					if (!disable_warning)
+						to_chat(H, "<span class='warning'>You already have an accessory of this type attached to your [uniform].</span>")
+					return FALSE
+				if( !(slot_flags & SLOT_TIE) )
+					return FALSE
+				return TRUE
 		return 0 //Unsupported slot
 		//END HUMAN
 
@@ -535,7 +677,38 @@
 		return 0 //Unsupported slot
 
 		//END MONKEY
-
+	else if(isIAN(M))
+		var/mob/living/carbon/ian/C = M
+		switch(slot)
+			if(slot_head)
+				if(C.head)
+					return FALSE
+				if(istype(src, /obj/item/clothing/mask/facehugger))
+					return TRUE
+				if( !(slot_flags & SLOT_HEAD) )
+					return FALSE
+				return TRUE
+			if(slot_mouth)
+				if(C.mouth)
+					return FALSE
+				return TRUE
+			if(slot_neck)
+				if(C.neck)
+					return FALSE
+				if(istype(src, /obj/item/weapon/handcuffs))
+					return TRUE
+				if( !(slot_flags & SLOT_ID) )
+					return FALSE
+				return TRUE
+			if(slot_back)
+				if(C.back)
+					return FALSE
+				if(istype(src, /obj/item/clothing/suit/armor/vest))
+					return TRUE
+				if( !(slot_flags & SLOT_BACK) )
+					return FALSE
+				return TRUE
+		return FALSE
 
 /obj/item/verb/verb_pickup()
 	set src in oview(1)
@@ -578,7 +751,7 @@
 /obj/item/proc/IsReflect(def_zone, hol_dir, hit_dir) //This proc determines if and at what% an object will reflect energy projectiles if it's in l_hand,r_hand or wear_suit
 	return FALSE
 
-/obj/item/proc/IsShield()
+/obj/item/proc/Get_shield_chance()
 	return 0
 
 /obj/item/proc/get_loc_turf()
@@ -633,11 +806,11 @@
 		)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		var/datum/organ/internal/eyes/eyes = H.internal_organs_by_name["eyes"]
-		eyes.damage += rand(3,4)
-		if(eyes.damage >= eyes.min_bruised_damage)
+		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+		IO.damage += rand(3,4)
+		if(IO.damage >= IO.min_bruised_damage)
 			if(H.stat != DEAD)
-				if(eyes.robotic <= 1) //robot eyes bleeding might be a bit silly
+				if(IO.robotic <= 1) //robot eyes bleeding might be a bit silly
 					to_chat(H, "\red Your eyes start to bleed profusely!")
 			if(prob(50))
 				if(H.stat != DEAD)
@@ -646,13 +819,13 @@
 				H.eye_blurry += 10
 				H.Paralyse(1)
 				H.Weaken(4)
-			if (eyes.damage >= eyes.min_broken_damage)
+			if (IO.damage >= IO.min_broken_damage)
 				if(H.stat != DEAD)
 					to_chat(H, "\red You go blind!")
-		var/datum/organ/external/affecting = H.get_organ("head")
-		affecting.take_damage(7)
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
+		BP.take_damage(7)
 	else
-		M.take_organ_damage(7)
+		M.take_bodypart_damage(7)
 	M.eye_blurry += rand(3,4)
 	return
 
@@ -690,18 +863,21 @@
 	blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
 	return 1 //we applied blood to the item
 
+var/global/list/items_blood_overlay_by_type = list()
 /obj/item/proc/generate_blood_overlay()
 	if(blood_overlay)
 		return
 
-	var/icon/I = new /icon(icon, icon_state)
-	I.Blend(new /icon('icons/effects/blood.dmi', rgb(255,255,255)),ICON_ADD) //fills the icon_state with white (except where it's transparent)
-	I.Blend(new /icon('icons/effects/blood.dmi', "itemblood"),ICON_MULTIPLY) //adds blood and the remaining white areas become transparant
-
-	//not sure if this is worth it. It attaches the blood_overlay to every item of the same type if they don't have one already made.
-	for(var/obj/item/A in world)
-		if(A.type == type && !A.blood_overlay)
-			A.blood_overlay = image(I)
+	var/image/IMG = items_blood_overlay_by_type[type]
+	if(IMG)
+		blood_overlay = IMG
+	else
+		var/icon/ICO = new /icon(icon, icon_state)
+		ICO.Blend(new /icon('icons/effects/blood.dmi', rgb(255, 255, 255)), ICON_ADD) // fills the icon_state with white (except where it's transparent)
+		ICO.Blend(new /icon('icons/effects/blood.dmi', "itemblood"), ICON_MULTIPLY)   // adds blood and the remaining white areas become transparant
+		IMG = image("icon" = ICO)
+		items_blood_overlay_by_type[type] = IMG
+		blood_overlay = IMG
 
 /obj/item/proc/showoff(mob/user)
 	for (var/mob/M in view(user))

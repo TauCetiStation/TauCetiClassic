@@ -75,49 +75,50 @@
 	set category = "Admin"
 	set name = "Staffwho"
 
-	var/msg = ""
-	var/mentmsg = ""
-	var/num_admins_online = 0
-	var/num_mentors_online = 0
+	var/list/messages = list("", "")
+	var/list/num_online = list(0, 0)
 	if(holder)
 		for(var/client/C in admins)
 			if(C.ckey in stealth_keys)
 				continue
-			if(C.holder.fakekey && (!R_ADMIN & holder.rights))
+			if(C.holder.fakekey && !(R_ADMIN & holder.rights))
 				continue
-			msg += "&emsp;[C] is a [C.holder.rank]"
+			messages[1] += "&emsp;[C] is a [C.holder.rank]"
 			if(C.holder.fakekey)
-				msg += " <i>(as [C.holder.fakekey])</i>"
+				messages[1] += " <i>(as [C.holder.fakekey])</i>"
 			if(isobserver(C.mob))
-				msg += " - Observing"
-			else if(istype(C.mob,/mob/new_player))
-				msg += " - Lobby"
+				messages[1] += " - Observing"
+			else if(isnewplayer(C.mob))
+				messages[1] += " - Lobby"
 			else
-				msg += " - Playing"
+				messages[1] += " - Playing"
 			if(C.is_afk())
-				msg += " (AFK)"
-			msg += "\n"
-			num_admins_online++
+				messages[1] += " (AFK)"
+			messages[1] += "\n"
+			num_online[1]++
 		for(var/client/C in mentors)
-			mentmsg += "&emsp;[C] is a Mentor"
+			messages[2] += "&emsp;[C] is a Mentor"
 			if(isobserver(C.mob))
-				mentmsg += " - Observing"
-			else if(istype(C.mob,/mob/new_player))
-				mentmsg += " - Lobby"
+				messages[2] += " - Observing"
+			else if(isnewplayer(C.mob))
+				messages[2] += " - Lobby"
 			else
-				mentmsg += " - Playing"
+				messages[2] += " - Playing"
 			if(C.is_afk())
-				mentmsg += " (AFK)"
-			mentmsg += "\n"
-			num_mentors_online++
+				messages[2] += " (AFK)"
+			messages[2] += "\n"
+			num_online[2]++
 	else
 		for(var/client/C in admins)
 			if(C.ckey in stealth_keys)
 				continue
 			if(!C.holder.fakekey)
-				msg += "&emsp;[C] is a [C.holder.rank]\n"
-				num_admins_online++
+				messages[1] += "&emsp;[C] is a [C.holder.rank]\n"
+				num_online[1]++
 		for(var/client/C in mentors)
-			mentmsg += "&emsp;[C] is a Mentor\n"
-			num_mentors_online++
-	to_chat(src, "<b>Current Admins ([num_admins_online]):</b>\n" + msg + "\n<b>Current Mentors ([num_mentors_online]):</b>\n" + mentmsg)
+			messages[2] += "&emsp;[C] is a Mentor\n"
+			num_online[2]++
+
+	messages[1]  = num_online[1] ? "<b>Current Admins ([num_online[1]]):</b>\n" + messages[1] : "<b>No Admins online</b>\n"
+	messages[1] += num_online[2] ? "\n<b>Current Mentors ([num_online[2]]):</b>\n" + messages[2] : "\n<b>No Mentors online</b>\n"
+	to_chat(src, messages[1])

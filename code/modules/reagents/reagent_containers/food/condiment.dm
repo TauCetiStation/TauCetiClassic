@@ -28,6 +28,10 @@
 			to_chat(user, "\red None of [src] left, oh no!")
 			return 0
 
+		if(isliving(M))
+			var/mob/living/L = M
+			if(taste)
+				L.taste_reagents(reagents)
 		if(M == user)
 			to_chat(M, "\blue You swallow some of contents of the [src].")
 			if(reagents.total_volume)
@@ -35,7 +39,7 @@
 
 			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
 			return 1
-		else if( istype(M, /mob/living/carbon/human) )
+		else
 
 			for(var/mob/O in viewers(world.view, user))
 				O.show_message("\red [user] attempts to feed [M] [src].", 1)
@@ -144,22 +148,25 @@
 	name = "Universal Enzyme"
 	desc = "Used in cooking various dishes."
 	icon_state = "enzyme"
-	New()
-		..()
-		reagents.add_reagent("enzyme", 50)
+
+/obj/item/weapon/reagent_containers/food/condiment/enzyme/atom_init()
+	. = ..()
+	reagents.add_reagent("enzyme", 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/flour
 	name = "Flour"
 	desc = "A small bag filled with some flour."
 	icon_state = "flour"
-	New()
-		..()
-		reagents.add_reagent("flour", 30)
+
+/obj/item/weapon/reagent_containers/food/condiment/flour/atom_init()
+	. = ..()
+	reagents.add_reagent("flour", 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/sugar
-	New()
-		..()
-		reagents.add_reagent("sugar", 50)
+
+/obj/item/weapon/reagent_containers/food/condiment/sugar/atom_init()
+	. = ..()
+	reagents.add_reagent("sugar", 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker		//Seperate from above since it's a small shaker rather then
 	name = "Salt Shaker"											//	a large one.
@@ -168,9 +175,10 @@
 	possible_transfer_amounts = list(1,20) //for clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
-	New()
-		..()
-		reagents.add_reagent("sodiumchloride", 20)
+
+/obj/item/weapon/reagent_containers/food/condiment/saltshaker/atom_init()
+	. = ..()
+	reagents.add_reagent("sodiumchloride", 20)
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
 	name = "Pepper Mill"
@@ -179,6 +187,7 @@
 	possible_transfer_amounts = list(1,20) //for clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
-	New()
-		..()
-		reagents.add_reagent("blackpepper", 20)
+
+/obj/item/weapon/reagent_containers/food/condiment/peppermill/atom_init()
+	. = ..()
+	reagents.add_reagent("blackpepper", 20)

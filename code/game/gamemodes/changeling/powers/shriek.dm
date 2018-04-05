@@ -3,7 +3,7 @@
 	desc = "Our lungs and vocal chords shift, allowing us to briefly emit a noise that deafens and confuses the weak-minded."
 	helptext = "Emits a high-frequency sound that confuses and deafens humans, blows out nearby lights and overloads cyborg sensors."
 	chemical_cost = 25
-	genomecost = 5
+	genomecost = 3
 	req_human = 1
 
 //A flashy ability, good for crowd control and sewing chaos.

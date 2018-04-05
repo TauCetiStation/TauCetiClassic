@@ -3,12 +3,12 @@
 	icon_state = "multitool"
 	var/track_delay = 0
 
-/obj/item/device/multitool/ai_detect/New()
-	..()
-	SSobj.processing |= src
+/obj/item/device/multitool/ai_detect/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
 
 /obj/item/device/multitool/ai_detect/Destroy()
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
 	return ..()
 
 /obj/item/device/multitool/ai_detect/process()
@@ -25,7 +25,7 @@
 
 		if(chunk)
 			if(chunk.seenby.len)
-				for(var/mob/aiEye/A in chunk.seenby)
+				for(var/mob/camera/Eye/ai/A in chunk.seenby)
 					var/turf/eye_turf = get_turf(A)
 					if(get_dist(our_turf, eye_turf) < 8)
 						found_eye = 1

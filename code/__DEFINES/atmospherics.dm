@@ -1,125 +1,67 @@
-#define FIRE_DAMAGE_MODIFIER 0.0215 //Higher values result in more external fire damage to the skin (default 0.0215)
-#define AIR_DAMAGE_MODIFIER 2.025 //More means less damage from hot air scalding lungs, less = more damage. (default 2.025)
+#define PIPE_SIMPLE_STRAIGHT        0
+#define PIPE_SIMPLE_BENT            1
+#define PIPE_HE_STRAIGHT            2
+#define PIPE_HE_BENT                3
+#define PIPE_CONNECTOR              4
+#define PIPE_MANIFOLD               5
+#define PIPE_JUNCTION               6
+#define PIPE_UVENT                  7
+#define PIPE_MVALVE                 8
+#define PIPE_DVALVE                 9
+#define PIPE_PUMP                   10
+#define PIPE_SCRUBBER               11
+//#define unsed                       12
+#define PIPE_GAS_FILTER             13
+#define PIPE_GAS_MIXER              14
+#define PIPE_PASSIVE_GATE           15
+#define PIPE_VOLUME_PUMP            16
+#define PIPE_HEAT_EXCHANGE          17
+#define PIPE_MTVALVE                18
+#define PIPE_MANIFOLD4W             19
+#define PIPE_CAP                    20
+// Z-Level stuff (those leaved here as is, so you won't guess why some numbers are missing)
+//#define PIPE_UP                     21
+//#define PIPE_DOWN                   22
+// Z-Level stuff
+#define PIPE_GAS_FILTER_M           23
+#define PIPE_GAS_MIXER_T            24
+#define PIPE_GAS_MIXER_M            25
+#define PIPE_OMNI_MIXER             26
+#define PIPE_OMNI_FILTER            27
+// Supply, scrubbers and universal pipes
+#define PIPE_UNIVERSAL              28
+#define PIPE_SUPPLY_STRAIGHT        29
+#define PIPE_SUPPLY_BENT            30
+#define PIPE_SCRUBBERS_STRAIGHT     31
+#define PIPE_SCRUBBERS_BENT         32
+#define PIPE_SUPPLY_MANIFOLD        33
+#define PIPE_SCRUBBERS_MANIFOLD     34
+#define PIPE_SUPPLY_MANIFOLD4W      35
+#define PIPE_SCRUBBERS_MANIFOLD4W   36
+// Z-Level stuff
+//#define PIPE_SUPPLY_UP              37
+//#define PIPE_SCRUBBERS_UP           38
+//#define PIPE_SUPPLY_DOWN            39
+//#define PIPE_SCRUBBERS_DOWN         40
+// Z-Level stuff
+#define PIPE_SUPPLY_CAP             41
+#define PIPE_SCRUBBERS_CAP          42
+// Mirrored T-valve ~ because I couldn't be bothered re-sorting all of the defines
+#define PIPE_MTVALVEM               43
+// I also couldn't be bothered sorting, so automatic shutoff valve.
+#define PIPE_SVALVE                 44
 
-#define CELL_VOLUME 2500	//liters in a cell
-#define MOLES_CELLSTANDARD (ONE_ATMOSPHERE*CELL_VOLUME/(T20C*R_IDEAL_GAS_EQUATION))	//moles in a 2.5 m^3 cell at 101.325 Pa and 20 degC
-#define O2STANDARD 0.21
-#define N2STANDARD 0.79
-#define MOLES_O2STANDARD MOLES_CELLSTANDARD*O2STANDARD	// O2 standard value (21%)
-#define MOLES_N2STANDARD MOLES_CELLSTANDARD*N2STANDARD	// N2 standard value (79%)
+#define PIPE_FUEL_STRAIGHT          45
+#define PIPE_FUEL_BENT              46
+#define PIPE_FUEL_MANIFOLD          47
+#define PIPE_FUEL_MANIFOLD4W        48
+// Z-Level stuff
+//#define PIPE_FUEL_UP                49
+//#define PIPE_FUEL_DOWN              50
+// Z-Level stuff
+#define PIPE_FUEL_CAP               51
 
-#define GAS_O2 	(1 << 0)
-#define GAS_N2	(1 << 1)
-#define GAS_PL	(1 << 2)
-#define GAS_CO2	(1 << 3)
-#define GAS_N2O	(1 << 4)
-
-#define MOLES_PHORON_VISIBLE	0.7 //Moles in a standard cell after which phoron is visible
-#define MIN_TOXIN_DAMAGE 1	//This and MAX_TOXIN_DAMAGE are for when a mob breathes poisonous air
-#define MAX_TOXIN_DAMAGE 10	//This and MIN_TOXIN_DAMAGE are for when a mob breathes poisonous air
-
-#define BREATH_VOLUME 0.5	//liters in a normal breath
-#define BREATH_MOLES (ONE_ATMOSPHERE * BREATH_VOLUME /(T20C*R_IDEAL_GAS_EQUATION))
-#define BREATH_PERCENTAGE BREATH_VOLUME/CELL_VOLUME
-
-//Amount of air to take a from a tile
-#define HUMAN_NEEDED_OXYGEN	MOLES_CELLSTANDARD*BREATH_PERCENTAGE*0.16
-
-//Amount of air needed before pass out/suffocation commences
-#define SOUND_MINIMUM_PRESSURE 10
-
-// Pressure limits.
-#define HAZARD_HIGH_PRESSURE 550	//This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
-#define WARNING_HIGH_PRESSURE 325 	//This determins when the orange pressure icon is displayed (it is 0.7 * HAZARD_HIGH_PRESSURE)
-#define WARNING_LOW_PRESSURE 50 	//This is when the gray low pressure icon is displayed. (it is 2.5 * HAZARD_LOW_PRESSURE)
-#define HAZARD_LOW_PRESSURE 20		//This is when the black ultra-low pressure icon is displayed. (This one is set as a constant)
-
-#define TEMPERATURE_DAMAGE_COEFFICIENT 1.5	//This is used in handle_temperature_damage() for humans, and in reagents that affect body temperature. Temperature damage is multiplied by this amount.
-#define BODYTEMP_AUTORECOVERY_DIVISOR 12 //This is the divisor which handles how much of the temperature difference between the current body temperature and 310.15K (optimal temperature) humans auto-regenerate each tick. The higher the number, the slower the recovery. This is applied each tick, so long as the mob is alive.
-#define BODYTEMP_AUTORECOVERY_MINIMUM 1 //Minimum amount of kelvin moved toward 310.15K per tick. So long as abs(310.15 - bodytemp) is more than 50.
-#define BODYTEMP_COLD_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is lower than their body temperature. Make it lower to lose bodytemp faster.
-#define BODYTEMP_HEAT_DIVISOR 6 //Similar to the BODYTEMP_AUTORECOVERY_DIVISOR, but this is the divisor which is applied at the stage that follows autorecovery. This is the divisor which comes into play when the human's loc temperature is higher than their body temperature. Make it lower to gain bodytemp faster.
-#define BODYTEMP_COOLING_MAX -30 //The maximum number of degrees that your body can cool in 1 tick, when in a cold area.
-#define BODYTEMP_HEATING_MAX 30 //The maximum number of degrees that your body can heat up in 1 tick, when in a hot area.
-
-#define BODYTEMP_HEAT_DAMAGE_LIMIT 360.15 // The limit the human body can take before it starts taking damage from heat.
-#define BODYTEMP_COLD_DAMAGE_LIMIT 260.15 // The limit the human body can take before it starts taking damage from coldness.
-
-#define SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-helmet quality headwear. MUST NOT BE 0.
-#define SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE 2.0 //what min_cold_protection_temperature is set to for space-suit quality jumpsuits or suits. MUST NOT BE 0.
-#define SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE 5000	//These need better heat protect, but not as good heat protect as firesuits.
-#define FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE 30000 //what max_heat_protection_temperature is set to for firesuit quality headwear. MUST NOT BE 0.
-#define FIRE_HELMET_MAX_HEAT_PROTECTION_TEMPERATURE 30000 //for fire helmet quality items (red and white hardhats)
-#define HELMET_MIN_COLD_PROTECTION_TEMPERATURE 160	//For normal helmets
-#define HELMET_MAX_HEAT_PROTECTION_TEMPERATURE 600	//For normal helmets
-#define ARMOR_MIN_COLD_PROTECTION_TEMPERATURE 160	//For armor
-#define ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE 600	//For armor
-
-#define GLOVES_MIN_COLD_PROTECTION_TEMPERATURE 2.0	//For some gloves (black and)
-#define GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE 1500		//For some gloves
-#define SHOE_MIN_COLD_PROTECTION_TEMPERATURE 2.0	//For gloves
-#define SHOE_MAX_HEAT_PROTECTION_TEMPERATURE 1500		//For gloves
-
-#define PRESSURE_DAMAGE_COEFFICIENT 4 //The amount of pressure damage someone takes is equal to (pressure / HAZARD_HIGH_PRESSURE)*PRESSURE_DAMAGE_COEFFICIENT, with the maximum of MAX_PRESSURE_DAMAGE
-#define MAX_HIGH_PRESSURE_DAMAGE 7	//This used to be 20... I got this much random rage for some retarded decision by polymorph?! Polymorph now lies in a pool of blood with a katana jammed in his spleen. ~Errorage --PS: The katana did less than 20 damage to him :(
-#define LOW_PRESSURE_DAMAGE 3 	//The amount of damage someone takes when in a low pressure area (The pressure threshold is so low that it doesn't make sense to do any calculations, so it just applies this flat value).
-
-#define MINIMUM_AIR_RATIO_TO_SUSPEND 0.05
-	//Minimum ratio of air that must move to/from a tile to suspend group processing
-#define MINIMUM_AIR_TO_SUSPEND MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND
-	//Minimum amount of air that has to move before a group processing can be suspended
-
-#define MINIMUM_MOLES_DELTA_TO_MOVE MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND //Either this must be active
-#define MINIMUM_TEMPERATURE_TO_MOVE	T20C+100 		  //or this (or both, obviously)
-
-#define MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND 0.012
-#define MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND 4
-	//Minimum temperature difference before group processing is suspended
-#define MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER 0.5
-	//Minimum temperature difference before the gas temperatures are just set to be equal
-
-#define MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION		T20C+10
-#define MINIMUM_TEMPERATURE_START_SUPERCONDUCTION	T20C+200
-
-#define FLOOR_HEAT_TRANSFER_COEFFICIENT 0.4
-#define WALL_HEAT_TRANSFER_COEFFICIENT 0.0
-#define DOOR_HEAT_TRANSFER_COEFFICIENT 0.0
-#define SPACE_HEAT_TRANSFER_COEFFICIENT 0.2 //a hack to partly simulate radiative heat
-#define OPEN_HEAT_TRANSFER_COEFFICIENT 0.4
-#define WINDOW_HEAT_TRANSFER_COEFFICIENT 0.1 //a hack for now
-	//Must be between 0 and 1. Values closer to 1 equalize temperature faster
-	//Should not exceed 0.4 else strange heat flow occur
-
-/*
-#define FIRE_MINIMUM_TEMPERATURE_TO_SPREAD	150+T0C
-#define FIRE_MINIMUM_TEMPERATURE_TO_EXIST	100+T0C
-#define FIRE_SPREAD_RADIOSITY_SCALE		0.85
-#define FIRE_CARBON_ENERGY_RELEASED	  500000 //Amount of heat released per mole of burnt carbon into the tile
-#define FIRE_PHORON_ENERGY_RELEASED	 3000000 //Amount of heat released per mole of burnt phoron into the tile
-#define FIRE_GROWTH_RATE			40000 //For small fires
-
-#define WATER_BOIL_TEMP 393 */
-
-// Fire Damage
-#define CARBON_LIFEFORM_FIRE_RESISTANCE 200+T0C
-#define CARBON_LIFEFORM_FIRE_DAMAGE		4
-
-//Phoron fire properties
-#define PHORON_MINIMUM_BURN_TEMPERATURE		100+T0C
-#define PHORON_FLASHPOINT 					246+T0C
-#define PHORON_UPPER_TEMPERATURE			1370+T0C
-#define PHORON_MINIMUM_OXYGEN_NEEDED		2
-#define PHORON_MINIMUM_OXYGEN_PHORON_RATIO	20
-#define PHORON_OXYGEN_FULLBURN				10
-
-#define NORMPIPERATE 30					//pipe-insulation rate divisor
-#define HEATPIPERATE 8					//heat-exch pipe insulation
-
-#define FLOWFRAC 0.99				// fraction of gas transfered per process
-
-#define TANK_LEAK_PRESSURE		(30.*ONE_ATMOSPHERE)	// Tank starts leaking
-#define TANK_RUPTURE_PRESSURE	(40.*ONE_ATMOSPHERE) // Tank spills all contents into atmosphere
-
-#define TANK_FRAGMENT_PRESSURE	(50.*ONE_ATMOSPHERE) // Boom 3x3 base explosion
-#define TANK_FRAGMENT_SCALE	    (10.*ONE_ATMOSPHERE) // +1 for each SCALE kPa aboe threshold
-								// was 2 atm
+#define CONNECT_TYPE_REGULAR    1
+#define CONNECT_TYPE_SUPPLY     2
+#define CONNECT_TYPE_SCRUBBER   4
+#define CONNECT_TYPE_HE         8

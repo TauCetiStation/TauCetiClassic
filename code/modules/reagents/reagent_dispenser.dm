@@ -6,7 +6,6 @@
 	density = 1
 	anchored = 0
 	flags = OPENCONTAINER
-	pressure_resistance = 2*ONE_ATMOSPHERE
 
 	var/amount_per_transfer_from_this = 10
 	var/possible_transfer_amounts = list(10,25,50,100)
@@ -14,13 +13,13 @@
 /obj/structure/reagent_dispensers/attackby(obj/item/weapon/W, mob/user)
 	return
 
-/obj/structure/reagent_dispensers/New()
+/obj/structure/reagent_dispensers/atom_init()
 	var/datum/reagents/R = new/datum/reagents(1000)
 	reagents = R
 	R.my_atom = src
 	if (!possible_transfer_amounts)
 		src.verbs -= /obj/structure/reagent_dispensers/verb/set_APTFT
-	..()
+	. = ..()
 
 /obj/structure/reagent_dispensers/verb/set_APTFT() //set amount_per_transfer_from_this
 	set name = "Set transfer amount"
@@ -63,8 +62,8 @@
 	amount_per_transfer_from_this = 10
 	var/modded = 0
 
-/obj/structure/reagent_dispensers/watertank/New()
-	..()
+/obj/structure/reagent_dispensers/watertank/atom_init()
+	. = ..()
 	reagents.add_reagent("water",1000)
 
 /obj/structure/reagent_dispensers/watertank/examine(mob/user)
@@ -73,12 +72,13 @@
 		to_chat(user, "\red Water faucet is wrenched open, leaking the water!")
 
 /obj/structure/reagent_dispensers/watertank/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if (istype(W,/obj/item/weapon/wrench))
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
 		modded = modded ? 0 : 1
 		if (modded)
-			SSobj.processing |= src
+			START_PROCESSING(SSobj, src)
 			leak_water(amount_per_transfer_from_this)
 
 	add_fingerprint(usr)
@@ -89,7 +89,7 @@
 	if(modded)
 		leak_water(2)
 	else
-		SSobj.processing.Remove(src)
+		STOP_PROCESSING(SSobj, src)
 
 /obj/structure/reagent_dispensers/watertank/Move()
 	if (..() && modded)
@@ -101,10 +101,7 @@
 
 	amount = min(amount, reagents.total_volume)
 	reagents.remove_reagent("water",amount)
-
-	create_water(src)
-
-
+	spawn_fluid(loc, amount * 50)
 
 /obj/structure/reagent_dispensers/fueltank
 	name = "fueltank"
@@ -115,8 +112,8 @@
 	var/modded = 0
 	var/obj/item/device/assembly_holder/rig = null
 
-/obj/structure/reagent_dispensers/fueltank/New()
-	..()
+/obj/structure/reagent_dispensers/fueltank/atom_init()
+	. = ..()
 	var/datum/reagents/R = new/datum/reagents(300)
 	reagents = R
 	R.my_atom = src
@@ -132,26 +129,28 @@
 		if(rig)
 			to_chat(user, "<span class='notice'>There is some kind of device rigged to the tank.</span>")
 
-/obj/structure/reagent_dispensers/fueltank/attack_hand()
-	if (rig)
-		usr.visible_message("[usr] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
-		if(do_after(usr, 20, target = src))
-			usr.visible_message("\blue [usr] detaches [rig] from \the [src].", "\blue  You detach [rig] from \the [src]")
+/obj/structure/reagent_dispensers/fueltank/attack_hand(mob/user)
+	if (rig && !user.is_busy())
+		user.visible_message("[user] begins to detach [rig] from \the [src].", "You begin to detach [rig] from \the [src]")
+		if(do_after(user, 20, target = src))
+			user.visible_message("\blue [user] detaches [rig] from \the [src].", "\blue  You detach [rig] from \the [src]")
 			rig.loc = get_turf(usr)
 			rig = null
 			overlays = new/list()
 
 /obj/structure/reagent_dispensers/fueltank/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W,/obj/item/weapon/wrench))
+		user.SetNextMove(CLICK_CD_RAPID)
 		user.visible_message("[user] wrenches [src]'s faucet [modded ? "closed" : "open"].", \
 			"You wrench [src]'s faucet [modded ? "closed" : "open"]")
-		modded = modded ? 0 : 1
+		modded = !modded
 		if (modded)
 			leak_fuel(amount_per_transfer_from_this)
 	if (istype(W,/obj/item/device/assembly_holder))
 		if (rig)
 			to_chat(user, "\red There is another device in the way.")
 			return ..()
+		if(user.is_busy()) return
 		user.visible_message("[user] begins rigging [W] to \the [src].", "You begin rigging [W] to \the [src]")
 		if(do_after(user, 20, target = src))
 			user.visible_message("\blue [user] rigs [W] to \the [src].", "\blue  You rig [W] to \the [src]")
@@ -227,8 +226,8 @@
 	density = 0
 	amount_per_transfer_from_this = 45
 
-/obj/structure/reagent_dispensers/peppertank/New()
-	..()
+/obj/structure/reagent_dispensers/peppertank/atom_init()
+	. = ..()
 	reagents.add_reagent("condensedcapsaicin",1000)
 
 
@@ -242,8 +241,8 @@
 	possible_transfer_amounts = null
 	anchored = 1
 
-/obj/structure/reagent_dispensers/water_cooler/New()
-	..()
+/obj/structure/reagent_dispensers/water_cooler/atom_init()
+	. = ..()
 	reagents.add_reagent("water",500)
 
 
@@ -254,8 +253,8 @@
 	icon_state = "beertankTEMP"
 	amount_per_transfer_from_this = 10
 
-/obj/structure/reagent_dispensers/beerkeg/New()
-	..()
+/obj/structure/reagent_dispensers/beerkeg/atom_init()
+	. = ..()
 	reagents.add_reagent("beer",1000)
 
 /obj/structure/reagent_dispensers/beerkeg/blob_act()
@@ -270,8 +269,8 @@
 	amount_per_transfer_from_this = 10
 	anchored = 1
 
-/obj/structure/reagent_dispensers/virusfood/New()
-	..()
+/obj/structure/reagent_dispensers/virusfood/atom_init()
+	. = ..()
 	reagents.add_reagent("virusfood", 1000)
 
 /obj/structure/reagent_dispensers/acid
@@ -282,6 +281,6 @@
 	amount_per_transfer_from_this = 10
 	anchored = 1
 
-/obj/structure/reagent_dispensers/acid/New()
-	..()
+/obj/structure/reagent_dispensers/acid/atom_init()
+	. = ..()
 	reagents.add_reagent("sacid", 1000)

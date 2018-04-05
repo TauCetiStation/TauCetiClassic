@@ -1,205 +1,527 @@
+#define CONTRACT_PRICE 5
+
+/datum/spellbook_entry
+	var/name = "Entry Name"
+
+	var/spell_type = null
+	var/desc = ""
+	var/category = "Offensive"
+	var/log_name = "XX" //What it shows up as in logs
+	var/cost = 2
+	var/refundable = 1
+	var/surplus = -1 // -1 for infinite, not used by anything atm
+	var/obj/effect/proc_holder/spell/S = null //Since spellbooks can be used by only one person anyway we can track the actual spell
+	var/buy_word = "Learn"
+
+/datum/spellbook_entry/proc/IsAvailible() // For config prefs / gamemode restrictions - these are round applied
+	return 1
+
+/datum/spellbook_entry/proc/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) // Specific circumstances
+	if(book.uses < cost)
+		return 0
+	for(var/obj/effect/proc_holder/spell/spell in user.mind.spell_list)
+		if(istype(spell, spell_type))
+			return 0
+	return 1
+
+/datum/spellbook_entry/proc/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) //return 1 on success
+	if(!S || QDELETED(S))
+		S = new spell_type()
+	feedback_add_details("wizard_spell_learned",log_name)
+	user.AddSpell(S)
+	to_chat(user, "<span class='notice'>You have learned [S.name].</span>")
+	return 1
+
+/datum/spellbook_entry/proc/CanRefund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	if(!refundable)
+		return 0
+	if(!S)
+		S = new spell_type()
+	for(var/obj/effect/proc_holder/spell/aspell in user.mind.spell_list)
+		if(initial(S.name) == initial(aspell.name))
+			return 1
+	return 0
+
+/datum/spellbook_entry/proc/Refund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book) //return point value or -1 for failure
+	if(!istype(get_area(user), /area/wizard_station))
+		to_chat(user, "<span clas=='warning'>You can only refund spells at the wizard lair</span>")
+		return -1
+	if(!S)
+		S = new spell_type()
+	for(var/obj/effect/proc_holder/spell/aspell in user.spell_list)
+		if(initial(S.name) == initial(aspell.name))
+			user.spell_list -= aspell
+			user.mind.spell_list -= aspell
+			qdel(aspell)
+			qdel(S)
+			return cost
+	return -1
+/datum/spellbook_entry/proc/GetInfo()
+	if(!S)
+		S = new spell_type()
+	var/dat =""
+	dat += "<b>[initial(S.name)]</b>"
+	if(S.charge_type == "recharge")
+		dat += " Cooldown:[S.charge_max / 10]"
+	dat += " Cost:[cost]<br>"
+	dat += "<i>[S.desc][desc]</i><br>"
+	dat += "[S.clothes_req ? "Needs wizard garb" : "Can be cast without wizard garb"]<br>"
+	return dat
+
+/datum/spellbook_entry/fireball
+	name = "Fireball"
+	spell_type = /obj/effect/proc_holder/spell/in_hand/fireball
+	log_name = "FB"
+
+/datum/spellbook_entry/res_touch
+	name = "Resurrection"
+	spell_type = /obj/effect/proc_holder/spell/in_hand/res_touch
+	log_name = "RT"
+	category = "Defensive"
+	cost = 1
+
+/datum/spellbook_entry/heal_touch
+	name = "Heal"
+	spell_type = /obj/effect/proc_holder/spell/in_hand/heal
+	log_name = "HT"
+	category = "Defensive"
+
+/datum/spellbook_entry/magicm
+	name = "Magic Missile"
+	spell_type = /obj/effect/proc_holder/spell/targeted/projectile/magic_missile
+	log_name = "MM"
+	category = "Defensive"
+
+/datum/spellbook_entry/disabletech
+	name = "Disable Tech"
+	spell_type = /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech
+	log_name = "DT"
+	category = "Defensive"
+
+/datum/spellbook_entry/repulse
+	name = "Repulse"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/repulse
+	log_name = "RP"
+	category = "Defensive"
+
+/datum/spellbook_entry/timestop
+	name = "Time Stop"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/timestop
+	log_name = "TS"
+	category = "Defensive"
+	cost = 3
+
+/datum/spellbook_entry/smoke
+	name = "Smoke"
+	spell_type = /obj/effect/proc_holder/spell/targeted/smoke
+	log_name = "SM"
+	category = "Defensive"
+	cost = 1
+
+/datum/spellbook_entry/blind
+	name = "Blind"
+	spell_type = /obj/effect/proc_holder/spell/targeted/trigger/blind
+	log_name = "BD"
+
+/datum/spellbook_entry/mindswap
+	name = "Mindswap"
+	spell_type = /obj/effect/proc_holder/spell/targeted/mind_transfer
+	log_name = "MT"
+	category = "Mobility"
+
+/datum/spellbook_entry/forcewall
+	name = "Force Wall"
+	spell_type = /obj/effect/proc_holder/spell/targeted/forcewall
+	log_name = "FW"
+	category = "Defensive"
+	cost = 1
+
+/datum/spellbook_entry/blink
+	name = "Blink"
+	spell_type = /obj/effect/proc_holder/spell/targeted/turf_teleport/blink
+	log_name = "BL"
+	category = "Mobility"
+
+/datum/spellbook_entry/teleport
+	name = "Teleport"
+	spell_type = /obj/effect/proc_holder/spell/targeted/area_teleport/teleport
+	log_name = "TP"
+	category = "Mobility"
+
+/datum/spellbook_entry/mutate
+	name = "Mutate"
+	spell_type = /obj/effect/proc_holder/spell/targeted/genetic/mutate
+	log_name = "MU"
+
+/datum/spellbook_entry/jaunt
+	name = "Ethereal Jaunt"
+	spell_type = /obj/effect/proc_holder/spell/targeted/ethereal_jaunt
+	log_name = "EJ"
+	category = "Mobility"
+
+/datum/spellbook_entry/knock
+	name = "Knock"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/knock
+	log_name = "KN"
+	category = "Mobility"
+	cost = 1
+
+/datum/spellbook_entry/summonitem
+	name = "Summon Item"
+	spell_type = /obj/effect/proc_holder/spell/targeted/summonitem
+	log_name = "IS"
+	category = "Assistance"
+	cost = 1
+
+/datum/spellbook_entry/lightningbolt
+	name = "Lightning Bolt"
+	spell_type = /obj/effect/proc_holder/spell/in_hand/tesla
+	log_name = "LB"
+	cost = 3
+
+/datum/spellbook_entry/lightningbolt/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book) //return 1 on success
+	. = ..()
+	user.tesla_ignore = TRUE
+
+/datum/spellbook_entry/lightningbolt/Refund(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	. = ..()
+	if(.)
+		user.tesla_ignore = FALSE
+
+/datum/spellbook_entry/arcane_barrage
+	name = "Arcane Barrage"
+	spell_type = /obj/effect/proc_holder/spell/in_hand/arcane_barrage
+	log_name = "AB"
+	cost = 3
+
+/datum/spellbook_entry/barnyard
+	name = "Barnyard Curse"
+	spell_type = /obj/effect/proc_holder/spell/targeted/barnyardcurse
+	log_name = "BC"
+
+/datum/spellbook_entry/lighting_shock
+	name = "Lighting Shock"
+	spell_type = /obj/effect/proc_holder/spell/targeted/lighting_shock
+	log_name = "LS"
+
+/datum/spellbook_entry/charge
+	name = "Charge"
+	spell_type = /obj/effect/proc_holder/spell/targeted/charge
+	log_name = "CH"
+	category = "Assistance"
+	cost = 1
+
+/datum/spellbook_entry/spacetime_dist
+	name = "Spacetime Distortion"
+	spell_type = /obj/effect/proc_holder/spell/targeted/spacetime_dist
+	log_name = "STD"
+	category = "Defensive"
+	cost = 1
+
+/datum/spellbook_entry/the_traps
+	name = "The Traps!"
+	spell_type = /obj/effect/proc_holder/spell/aoe_turf/conjure/the_traps
+	log_name = "TT"
+	category = "Offensive"
+
+/datum/spellbook_entry/item
+	name = "Buy Item"
+	refundable = 0
+	buy_word = "Summon"
+	var/item_path= null
+
+/datum/spellbook_entry/item/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	new item_path (get_turf(user))
+	feedback_add_details("wizard_spell_learned", log_name)
+	return 1
+
+/datum/spellbook_entry/item/GetInfo()
+	var/dat =""
+	dat += "<b>[name]</b>"
+	dat += " Cost:[cost]<br>"
+	dat += "<i>[desc]</i><br>"
+	if(surplus >= 0)
+		dat += "[surplus] left.<br>"
+	return dat
+
+/datum/spellbook_entry/item/staffchange
+	name = "Staff of Change"
+	desc = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself."
+	item_path = /obj/item/weapon/gun/magic/staff/change
+	log_name = "ST"
+	cost = 4
+
+/datum/spellbook_entry/item/staffanimation
+	name = "Staff of Animation"
+	desc = "An arcane staff capable of shooting bolts of eldritch energy which cause inanimate objects to come to life. This magic doesn't affect machines."
+	item_path = /obj/item/weapon/gun/magic/staff/animate
+	log_name = "SA"
+	category = "Assistance"
+	cost = 3
+
+/datum/spellbook_entry/item/staffdoor
+	name = "Staff of Door Creation"
+	desc = "A particular staff that can mold solid metal into ornate doors. Useful for getting around in the absence of other transportation. Does not work on glass."
+	item_path = /obj/item/weapon/gun/magic/staff/doorcreation
+	log_name = "SD"
+	category = "Mobility"
+	cost = 3
+
+/datum/spellbook_entry/item/staffhealing
+	name = "Staff of Healing"
+	desc = "An altruistic staff that can heal the lame and raise the dead."
+	item_path = /obj/item/weapon/gun/magic/staff/healing
+	log_name = "SH"
+	category = "Defensive"
+	cost = 4
+
+/datum/spellbook_entry/item/soulstones
+	name = "Six Soul Stone Shards and the spell Artificer"
+	desc = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot."
+	item_path = /obj/item/weapon/storage/belt/soulstone/full
+	log_name = "SS"
+	category = "Assistance"
+
+/datum/spellbook_entry/item/soulstones/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
+	. =..()
+	if(.)
+		user.AddSpell(new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(user))
+	return .
+
+/datum/spellbook_entry/item/necrostone
+	name = "A Necromantic Stone"
+	desc = "A Necromantic stone is able to resurrect three dead individuals as skeletal thralls for you to command."
+	item_path = /obj/item/device/necromantic_stone
+	log_name = "NS"
+	category = "Assistance"
+	cost = 3
+
+/datum/spellbook_entry/item/armor
+	name = "Mastercrafted Armor Set"
+	desc = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space."
+	item_path = /obj/item/clothing/suit/space/rig/wizard
+	log_name = "HS"
+	category = "Defensive"
+
+/datum/spellbook_entry/item/armor/Buy(mob/living/carbon/human/user,obj/item/weapon/spellbook/book)
+	. = ..()
+	if(.)
+		new /obj/item/clothing/shoes/sandal(get_turf(user)) //In case they've lost them.
+		new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(user))//To complete the outfit
+
+/datum/spellbook_entry/item/contract
+	name = "Contract of Apprenticeship"
+	desc = "A magical contract binding an apprentice wizard to your service, using it will summon them to your side."
+	item_path = /obj/item/weapon/contract
+	log_name = "CT"
+	category = "Assistance"
+	cost = CONTRACT_PRICE
+
+/datum/spellbook_entry/item/contract/Buy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	var/obj/item/weapon/contract/contract = new(get_turf(user))
+	contract.wizard = user.mind
+	feedback_add_details("wizard_spell_learned",log_name)
+	return 1
+
+
+/*datum/spellbook_entry/item/battlemage
+	name = "Battlemage Armour"
+	desc = "An ensorcelled suit of armour, protected by a powerful shield. The shield can completly negate sixteen attacks before being permanently depleted."
+	item_path = /obj/item/clothing/suit/space/hardsuit/shielded/wizard
+	log_name = "BM"
+	limit = 1
+	category = "Defensive"
+
+/datum/spellbook_entry/item/battlemage_charge
+	name = "Battlemage Armour Charges"
+	desc = "A powerful defensive rune, it will grant eight additional charges to a suit of battlemage armour."
+	item_path = /obj/item/wizard_armour_charge
+	log_name = "AC"
+	category = "Defensive"
+	cost = 1*/
+
+/datum/spellbook_entry/summon
+	name = "Summon Stuff"
+	category = "Rituals"
+	refundable = 0
+	buy_word = "Cast"
+	var/active = 0
+
+/datum/spellbook_entry/summon/CanBuy(mob/living/carbon/human/user, obj/item/weapon/spellbook/book)
+	return ..() && !active
+
+/datum/spellbook_entry/summon/GetInfo()
+	var/dat =""
+	dat += "<b>[name]</b>"
+	if(cost > 0)
+		dat += " Cost:[cost]<br>"
+	else
+		dat += " No Cost<br>"
+	dat += "<i>[desc]</i><br>"
+	if(active)
+		dat += "<b>Already cast!</b><br>"
+	return dat
+
+/datum/spellbook_entry/summon/IsAvailible()
+	return ticker.mode // In case spellbook is placed on map
+
 /obj/item/weapon/spellbook
 	name = "spell book"
-	desc = "The legendary book of spells of the wizard."
+	desc = "An unearthly tome that glows with power."
+	w_class = 2
 	icon = 'icons/obj/library.dmi'
 	icon_state ="book"
-	throw_speed = 1
-	throw_range = 5
-	w_class = 2.0
-	var/uses = 5
+	var/uses = 10
 	var/temp = null
-	var/max_uses = 5
-	var/op = 1
+	var/tab = null
+	var/datum/mind/owner
+	var/list/datum/spellbook_entry/entries = list()
+	var/list/categories = list()
 
-	action_button_name = "Use Spell Book"
+/obj/item/weapon/spellbook/examine(mob/user)
+	..()
+	if(owner)
+		to_chat(user, "There is a small signature on the front cover: \"[owner]\".")
+	else
+		to_chat(user, "It appears to have no author.")
 
+/obj/item/weapon/spellbook/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/spellbook/atom_init_late()
+	var/entry_types = subtypesof(/datum/spellbook_entry) - /datum/spellbook_entry/item - /datum/spellbook_entry/summon
+	for(var/T in entry_types)
+		var/datum/spellbook_entry/E = new T
+		if(E.IsAvailible())
+			entries |= E
+			categories |= E.category
+		else
+			qdel(E)
+	tab = categories[1]
+
+
+
+/obj/item/weapon/spellbook/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/weapon/contract))
+		var/obj/item/weapon/contract/contract = O
+		if(contract.uses != initial(contract.uses))
+			to_chat(user, "<span class='warning'>The contract has been used, you can't get your points back now!</span>")
+		else
+			to_chat(user, "<span class='notice'>You feed the contract back into the spellbook, refunding your points.</span>")
+			uses += CONTRACT_PRICE
+			qdel(O)
+
+/obj/item/weapon/spellbook/proc/GetCategoryHeader(category)
+	var/dat = ""
+	switch(category)
+		if("Offensive")
+			dat += "Spells and items geared towards debilitating and destroying.<BR><BR>"
+			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
+			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
+		if("Defensive")
+			dat += "Spells and items geared towards improving your survivabilty or reducing foes' ability to attack.<BR><BR>"
+			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
+			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
+		if("Mobility")
+			dat += "Spells and items geared towards improving your ability to move. It is a good idea to take at least one.<BR><BR>"
+			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
+			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
+		if("Assistance")
+			dat += "Spells and items geared towards bringing in outside forces to aid you or improving upon your other items and abilties.<BR><BR>"
+			dat += "Items are not bound to you and can be stolen. Additionaly they cannot typically be returned once purchased.<BR>"
+			dat += "For spells: the number after the spell name is the cooldown time.<BR>"
+	return dat
+
+/obj/item/weapon/spellbook/proc/wrap(content)
+	var/dat = ""
+	dat +="<html><head><title>Spellbook</title></head>"
+	dat += {"
+	<head>
+		<style type="text/css">
+      		body { font-size: 80%; font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif; }
+      		ul#tabs { list-style-type: none; margin: 30px 0 0 0; padding: 0 0 0.3em 0; }
+      		ul#tabs li { display: inline; }
+      		ul#tabs li a { color: #42454a; background-color: #dedbde; border: 1px solid #c9c3ba; border-bottom: none; padding: 0.3em; text-decoration: none; }
+      		ul#tabs li a:hover { background-color: #f1f0ee; }
+      		ul#tabs li a.selected { color: #000; background-color: #f1f0ee; font-weight: bold; padding: 0.7em 0.3em 0.38em 0.3em; }
+      		div.tabContent { border: 1px solid #c9c3ba; padding: 0.5em; background-color: #f1f0ee; }
+      		div.tabContent.hide { display: none; }
+    	</style>
+  	</head>
+	"}
+	dat += {"[content]</body></html>"}
+	return dat
 
 /obj/item/weapon/spellbook/attack_self(mob/user)
+	if(!owner)
+		to_chat(user, "<span class='notice'>You bind the spellbook to yourself.</span>")
+		owner = user.mind
+		return
+	if(user.mind != owner)
+		to_chat(user, "<span class='warning'>The [name] does not recognize you as its owner and refuses to open!</span>")
+		return
 	user.set_machine(src)
-	var/dat
-	if(temp)
-		dat = "[temp]<BR><BR><A href='byond://?src=\ref[src];temp=1'>Clear</A>"
-	else
-		dat = "<B>The Book of Spells:</B><BR>"
-		dat += "Spells left to memorize: [uses]<BR>"
-		dat += "<HR>"
-		dat += "<B>Memorize which spell:</B><BR>"
-		dat += "<I>The number after the spell name is the cooldown time.</I><BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=magicmissile'>Magic Missile</A> (15)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=fireball'>Fireball</A> (10)<BR>"
-		//dat += "<A href='byond://?src=\ref[src];spell_choice=disintegrate'>Disintegrate</A> (60)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=disabletech'>Disable Technology</A> (40)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=smoke'>Smoke</A> (12)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=blind'>Blind</A> (30)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=mindswap'>Mind Transfer</A> (60)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=forcewall'>Forcewall</A> (10)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=blink'>Blink</A> (2)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=teleport'>Teleport</A> (60)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=mutate'>Mutate</A> (40)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=etherealjaunt'>Ethereal Jaunt</A> (30)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=knock'>Knock</A> (10)<BR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=horseman'>Curse of the Horseman</A> (15)<BR>"
-//		if(op)
-//			dat += "<A href='byond://?src=\ref[src];spell_choice=summonguns'>Summon Guns</A> (One time use, global spell)<BR>"
-		dat += "<HR>"
-		dat += "<B>Artefacts:</B><BR>"
-		dat += "Powerful items imbued with eldritch magics. Summoning one will count towards your maximum number of spells.<BR>"
-		dat += "It is recommended that only experienced wizards attempt to wield such artefacts.<BR>"
-		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=staffchange'>Staff of Change</A><BR>"
-		dat += "<HR>"
-	//	dat += "<A href='byond://?src=\ref[src];spell_choice=mentalfocus'>Mental Focus</A><BR>"
-//		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=soulstone'>Six Soul Stone Shards and the spell Artificer</A><BR>"
-		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=armor'>Mastercrafted Armor Set</A><BR>"
-		dat += "<HR>"
-		dat += "<A href='byond://?src=\ref[src];spell_choice=staffanimation'>Staff of Animation</A><BR>"
-		dat += "<HR>"
-		if(op)
-			dat += "<A href='byond://?src=\ref[src];spell_choice=rememorize'>Re-memorize Spells</A><BR>"
-	user << browse(dat, "window=radio")
-	onclose(user, "radio")
+	var/dat = ""
+
+	dat += "<ul id=\"tabs\">"
+	var/list/cat_dat = list()
+	for(var/category in categories)
+		cat_dat[category] = "<hr>"
+		dat += "<li><a [tab==category?"class=selected":""] href='byond://?src=\ref[src];page=[category]'>[category]</a></li>"
+
+	dat += "<li><a><b>Points remaining : [uses]</b></a></li>"
+	dat += "</ul>"
+
+	var/datum/spellbook_entry/E
+	for(var/i = 1 to entries.len)
+		var/spell_info = ""
+		E = entries[i]
+		spell_info += E.GetInfo()
+		if(E.CanBuy(user,src))
+			spell_info+= "<a href='byond://?src=\ref[src];buy=[i]'>[E.buy_word]</A><br>"
+		else
+			spell_info+= "<span>Can't [E.buy_word]</span><br>"
+		if(E.CanRefund(user,src))
+			spell_info+= "<a href='byond://?src=\ref[src];refund=[i]'>Refund</A><br>"
+		spell_info += "<hr>"
+		if(cat_dat[E.category])
+			cat_dat[E.category] += spell_info
+
+	for(var/category in categories)
+		dat += "<div class=\"[tab==category?"tabContent":"tabContent hide"]\" id=\"[category]\">"
+		dat += GetCategoryHeader(category)
+		dat += cat_dat[category]
+		dat += "</div>"
+
+	user << browse(wrap(entity_ja(dat)), "window=spellbook;size=700x500")
+	onclose(user, "spellbook")
 	return
 
 /obj/item/weapon/spellbook/Topic(href, href_list)
 	..()
+	if(!ishuman(usr))
+		return 1
 	var/mob/living/carbon/human/H = usr
 
 	if(H.stat || H.restrained())
 		return
-	if(!istype(H, /mob/living/carbon/human))
-		return 1
 
-	if(loc == H || (in_range(src, H) && istype(loc, /turf)))
+	var/datum/spellbook_entry/E = null
+	if(loc == H || (in_range(src, H) && isturf(loc)))
 		H.set_machine(src)
-		if(href_list["spell_choice"])
-			if(href_list["spell_choice"] == "rememorize")
-				var/area/wizard_station/A = locate()
-				if(usr in A.contents)
-					for(var/obj/effect/proc_holder/spell/S in H.spell_list)
-						if(S.name == "Artificer")
-							var/obj/item/weapon/storage/belt/soulstone/full/B = locate() in H.contents
-							if(B && B.contents.len == 6)
-								qdel(B)
-							else
-								temp = "To get points back for artificer spell, you must carry soulstone belt with 6 soulstones inside."
-								attack_self(H)
-								return
-					uses = max_uses
-					H.spellremove(usr)
-					temp = "All spells have been removed. You may now memorize a new set of spells."
-					feedback_add_details("wizard_spell_learned","UM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-				else
-					temp = "You may only re-memorize spells whilst located inside the wizard sanctuary."
-			else if(uses >= 1 && max_uses >=1)
-				uses--
-			/*
-			*/
-				var/list/available_spells = list(magicmissile = "Magic Missile", fireball = "Fireball", disintegrate = "Disintegrate", disabletech = "Disable Tech", smoke = "Smoke", blind = "Blind", mindswap = "Mind Transfer", forcewall = "Forcewall", blink = "Blink", teleport = "Teleport", mutate = "Mutate", etherealjaunt = "Ethereal Jaunt", knock = "Knock", horseman = "Curse of the Horseman", summonguns = "Summon Guns", staffchange = "Staff of Change", mentalfocus = "Mental Focus", soulstone = "Six Soul Stone Shards and the spell Artificer", armor = "Mastercrafted Armor Set", staffanimate = "Staff of Animation")
-				var/already_knows = 0
-				for(var/obj/effect/proc_holder/spell/aspell in H.spell_list)
-					if(available_spells[href_list["spell_choice"]] == aspell.name)
-						already_knows = 1
-						temp = "You already know that spell."
-						uses++
-						break
-			/*
-			*/
-				if(!already_knows)
-					switch(href_list["spell_choice"])
-						if("magicmissile")
-							feedback_add_details("wizard_spell_learned","MM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.AddSpell (new /obj/effect/proc_holder/spell/targeted/projectile/magic_missile(H))
-							temp = "This spell fires several, slow moving, magic projectiles at nearby targets. If they hit a target, it is paralyzed and takes minor damage."
-						if("fireball")
-							feedback_add_details("wizard_spell_learned","FB") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.AddSpell (new /obj/effect/proc_holder/spell/dumbfire/fireball(H))
-							temp = "This spell fires a fireball in the direction you're facing and does not require wizard garb. Be careful not to fire it at people that are standing next to you."
-						if("disintegrate")
-							feedback_add_details("wizard_spell_learned","DG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.AddSpell (new /obj/effect/proc_holder/spell/targeted/inflict_handler/disintegrate(H))
-							temp = "This spell instantly kills somebody adjacent to you with the vilest of magick. It has a long cooldown."
-						if("disabletech")
-							feedback_add_details("wizard_spell_learned","DT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.AddSpell (new /obj/effect/proc_holder/spell/targeted/emplosion/disable_tech(H))
-							temp = "This spell disables all weapons, cameras and most other technology in range."
-						if("smoke")
-							feedback_add_details("wizard_spell_learned","SM") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.AddSpell (new /obj/effect/proc_holder/spell/targeted/smoke(H))
-							temp = "This spell spawns a cloud of choking smoke at your location and does not require wizard garb."
-						if("blind")
-							feedback_add_details("wizard_spell_learned","BD") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.AddSpell (new /obj/effect/proc_holder/spell/targeted/trigger/blind(H))
-							temp = "This spell temporarly blinds a single person and does not require wizard garb."
-						if("mindswap")
-							feedback_add_details("wizard_spell_learned","MT") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.AddSpell (new /obj/effect/proc_holder/spell/targeted/mind_transfer(H))
-							temp = "This spell allows the user to switch bodies with a target. Careful to not lose your memory in the process."
-						if("forcewall")
-							feedback_add_details("wizard_spell_learned","FW") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.AddSpell (new /obj/effect/proc_holder/spell/aoe_turf/conjure/forcewall(H))
-							temp = "This spell creates an unbreakable wall that lasts for 30 seconds and does not need wizard garb."
-						if("blink")
-							feedback_add_details("wizard_spell_learned","BL") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.AddSpell (new /obj/effect/proc_holder/spell/targeted/turf_teleport/blink(H))
-							temp = "This spell randomly teleports you a short distance. Useful for evasion or getting into areas if you have patience."
-						if("teleport")
-							feedback_add_details("wizard_spell_learned","TP") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.AddSpell (new /obj/effect/proc_holder/spell/targeted/area_teleport/teleport(H))
-							temp = "This spell teleports you to a type of area of your selection. Very useful if you are in danger, but has a decent cooldown, and is unpredictable."
-						if("mutate")
-							feedback_add_details("wizard_spell_learned","MU") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.AddSpell (new /obj/effect/proc_holder/spell/targeted/genetic/mutate(H))
-							temp = "This spell causes you to turn into a hulk and gain telekinesis for a short while."
-						if("etherealjaunt")
-							feedback_add_details("wizard_spell_learned","EJ") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.AddSpell (new /obj/effect/proc_holder/spell/targeted/ethereal_jaunt(H))
-							temp = "This spell creates your ethereal form, temporarily making you invisible and able to pass through walls."
-						if("knock")
-							feedback_add_details("wizard_spell_learned","KN") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.AddSpell (new /obj/effect/proc_holder/spell/aoe_turf/knock(H))
-							temp = "This spell opens nearby doors and does not require wizard garb."
-						if("horseman")
-							feedback_add_details("wizard_spell_learned","HH") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.AddSpell (new /obj/effect/proc_holder/spell/targeted/horsemask(H))
-							temp = "This spell will curse a person to wear an unremovable horse mask (it has glue on the inside) and speak like a horse. It does not require a wizard garb. Do note the curse will disintegrate the target's current mask if they are wearing one."
-						if("summonguns")
-							feedback_add_details("wizard_spell_learned","SG") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							H.rightandwrong()
-							max_uses--
-							temp = "Nothing could possibly go wrong with arming a crew of lunatics just itching for an excuse to kill eachother. Just be careful not to get hit in the crossfire!"
-						if("staffchange")
-							feedback_add_details("wizard_spell_learned","ST") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/weapon/gun/magic/staff/change(get_turf(H))
-							temp = "An artefact that spits bolts of coruscating energy which cause the target's very form to reshape itself"
-							max_uses--
-					/*	if("mentalfocus")
-							feedback_add_details("wizard_spell_learned","MF") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/weapon/gun/energy/staff/focus(get_turf(H))
-							temp = "An artefact that channels the will of the user into destructive bolts of force."
-							max_uses-- */
-						if("soulstone")
-							feedback_add_details("wizard_spell_learned","SS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/weapon/storage/belt/soulstone/full(get_turf(H))
-							H.AddSpell (new /obj/effect/proc_holder/spell/aoe_turf/conjure/construct(H))
-							temp = "Soul Stone Shards are ancient tools capable of capturing and harnessing the spirits of the dead and dying. The spell Artificer allows you to create arcane machines for the captured souls to pilot."
-						if("armor")
-							feedback_add_details("wizard_spell_learned","HS") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/clothing/shoes/sandal(get_turf(H)) //In case they've lost them.
-							new /obj/item/clothing/gloves/purple(get_turf(H))//To complete the outfit
-							new /obj/item/clothing/suit/space/rig/wizard(get_turf(H))
-							new /obj/item/clothing/head/helmet/space/rig/wizard(get_turf(H))
-							temp = "An artefact suit of armor that allows you to cast spells while providing more protection against attacks and the void of space."
-							max_uses--
-						if("staffanimation")
-							feedback_add_details("wizard_spell_learned","SA") //please do not change the abbreviation to keep data processing consistent. Add a unique id to any new spells
-							new /obj/item/weapon/gun/magic/staff/animate(get_turf(H))
-							temp = "An artefact that spits bolts of life-force which causes objects which are hit by it to animate and come to life! This magic doesn't affect machines."
-							max_uses--
-		else
-			if(href_list["temp"])
-				temp = null
-		attack_self(H)
-
+		if(href_list["buy"])
+			E = entries[text2num(href_list["buy"])]
+			if(E && E.CanBuy(H,src))
+				if(E.Buy(H,src))
+					uses -= E.cost
+		else if(href_list["refund"])
+			E = entries[text2num(href_list["refund"])]
+			if(E && E.refundable)
+				var/result = E.Refund(H,src)
+				if(result > 0)
+					uses += result
+		else if(href_list["page"])
+			tab = sanitize(href_list["page"])
+	attack_self(H)
 	return

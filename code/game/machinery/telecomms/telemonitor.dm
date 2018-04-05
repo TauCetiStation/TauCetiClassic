@@ -62,7 +62,7 @@
 
 
 
-		user << browse(dat, "window=comm_monitor;size=575x400")
+		user << browse(entity_ja(dat), "window=comm_monitor;size=575x400")
 		onclose(user, "server_control")
 
 		temp = ""
@@ -128,7 +128,7 @@
 		if(istype(D, /obj/item/weapon/card/emag) && !emagged)
 			playsound(src.loc, 'sound/effects/sparks4.ogg', 75, 1)
 			emagged = 1
-			to_chat(user, "\blue You you disable the security protocols")
+			to_chat(user, "\blue You disable the security protocols")
 		else
 			..()
 		src.updateUsrDialog()

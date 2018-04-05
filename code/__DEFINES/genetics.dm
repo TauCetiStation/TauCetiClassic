@@ -21,11 +21,9 @@
 #define FAT				6
 #define HUSK			7
 #define NOCLONE			8
-
+#define LASEREYES		9 	// harm intent - click anywhere to shoot lasers from eyes
 
 	// Extra powers:
-#define LASER			9 	// harm intent - click anywhere to shoot lasers from eyes
-#define HEAL			10 	// healing people with hands
 //#define SHADOW			11 	// shadow teleportation (create in/out portals anywhere) (25%)
 //#define SCREAM			12 	// supersonic screaming (25%)
 //#define EXPLOSIVE		13 	// exploding on-demand (15%)
@@ -74,3 +72,5 @@
 #define BLIND			1
 #define MUTE			2
 #define DEAF			4
+
+#define MUTCHK_FORCED        1

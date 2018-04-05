@@ -4,14 +4,11 @@
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "cypherkey"
 	item_state = ""
+	w_class = 2
 	var/translate_binary = 0
 	var/translate_hive = 0
 	var/syndie = 0
 	var/list/channels = list()
-
-/obj/item/device/encryptionkey/New()
-
-/obj/item/device/encryptionkey/attackby(obj/item/weapon/W, mob/user)
 
 /obj/item/device/encryptionkey/syndicate
 	icon_state = "cypherkey"

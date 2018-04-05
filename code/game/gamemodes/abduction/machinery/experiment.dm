@@ -23,12 +23,6 @@
 /obj/machinery/abductor/experiment/allow_drop()
 	return 0
 
-/obj/machinery/abductor/experiment/attack_hand(mob/user)
-	if(..())
-		return
-
-	experimentUI(user)
-
 /obj/machinery/abductor/experiment/open_machine()
 	if(!state_open && !panel_open)
 		..()
@@ -49,17 +43,18 @@
 
 	var/icon/icobase = H.species.icobase
 
-	preview_icon = new /icon(icobase, "torso_[g]")
+	preview_icon = new /icon(icobase, "[BP_CHEST]_[g]")
 	var/icon/temp
-	temp = new /icon(icobase, "groin_[g]")
+	temp = new /icon(icobase, "[BP_GROIN]_[g]")
 	preview_icon.Blend(temp, ICON_OVERLAY)
-	temp = new /icon(icobase, "head_[g]")
+	temp = new /icon(icobase, "[BP_HEAD]_[g]")
 	preview_icon.Blend(temp, ICON_OVERLAY)
 
-	for(var/datum/organ/external/E in H.organs)
-		if(E.status & ORGAN_CUT_AWAY || E.status & ORGAN_DESTROYED) continue
-		temp = new /icon(icobase, "[E.name]")
-		if(E.status & ORGAN_ROBOT)
+	for(var/obj/item/organ/external/BP in H.bodyparts)
+		if((BP.status & ORGAN_CUT_AWAY) || (BP.status & ORGAN_DESTROYED))
+			continue
+		temp = new /icon(icobase, "[BP.body_zone]")
+		if(BP.status & ORGAN_ROBOT)
 			temp.MapColors(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
 		preview_icon.Blend(temp, ICON_OVERLAY)
 
@@ -101,7 +96,7 @@
 
 	return preview_icon
 
-/obj/machinery/abductor/experiment/proc/experimentUI(mob/user)
+/obj/machinery/abductor/experiment/ui_interact(mob/user)
 	var/dat
 	dat += "<h3> Experiment </h3>"
 	if(occupant)
@@ -134,6 +129,7 @@
 	dat += "<br>"
 	dat += "<a href='?src=\ref[src];refresh=1'>Scan</a>"
 	dat += "<a href='?src=\ref[src];[state_open ? "close=1'>Close</a>" : "open=1'>Open</a>"]"
+
 	var/datum/browser/popup = new(user, "experiment", "Probing Console", 300, 300)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.set_content(dat)

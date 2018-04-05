@@ -16,8 +16,7 @@
 	if(istype(O,/obj/item/weapon/wirecutters))
 		if(!use(1))
 			return
-		var/obj/item/weapon/cable_coil/CC = new/obj/item/weapon/cable_coil(user.loc)
-		CC.amount = 5
+		new/obj/item/stack/cable_coil/random(user.loc, 5)
 		new/obj/item/stack/sheet/glass(user.loc)
 
 	if(istype(O,/obj/item/stack/sheet/metal))

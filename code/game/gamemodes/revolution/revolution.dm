@@ -15,7 +15,7 @@
 	name = "revolution"
 	config_tag = "revolution"
 	role_type = ROLE_REV
-	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	restricted_jobs = list("Security Officer", "Warden", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
 	required_players = 4
 	required_players_secret = 15
 	required_enemies = 3
@@ -48,7 +48,7 @@
 		restricted_jobs += protected_jobs
 
 	var/head_check = 0
-	for(var/mob/new_player/player in player_list)
+	for(var/mob/dead/new_player/player in player_list)
 		if(player.mind.assigned_role in command_positions)
 			head_check = 1
 			break
@@ -176,11 +176,11 @@
 ///////////////////////////////
 /datum/game_mode/revolution/check_finished()
 	if(config.continous_rounds)
-		if(finished != 0)
+		if(finished)
 			if(SSshuttle)
 				SSshuttle.always_fake_recall = 0
 		return ..()
-	if(finished != 0)
+	if(finished)
 		return 1
 	else
 		return 0
@@ -192,9 +192,8 @@
 	if(rev_mind.assigned_role in command_positions)
 		return 0
 	var/mob/living/carbon/human/H = rev_mind.current//Check to see if the potential rev is implanted
-	for(var/obj/item/weapon/implant/loyalty/L in H)//Checking that there is a loyalty implant in the contents
-		if(L.imp_in == H)//Checking that it's actually implanted
-			return 0
+	if(ismindshielded(H))
+		return 0
 	if((rev_mind in revolutionaries) || (rev_mind in head_revolutionaries))
 		return 0
 	revolutionaries += rev_mind
@@ -434,6 +433,7 @@
 
 
 	if(revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution))
+		text += "<BR>"
 		text += printlogo("rev-logo", "head revolutionaries")
 		var/icon/logo2 = icon('icons/mob/mob.dmi', "rev-logo")
 		end_icons += logo2
@@ -465,7 +465,7 @@
 			text += ")"
 
 
-
+	text += "<BR>"
 	if( head_revolutionaries.len || revolutionaries.len || istype(ticker.mode,/datum/game_mode/revolution) )
 		text += printlogo("nano-logo", "heads of staff")
 

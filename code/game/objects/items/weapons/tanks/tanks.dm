@@ -8,8 +8,6 @@
 	slot_flags = SLOT_BACK
 	w_class = 3
 
-	pressure_resistance = ONE_ATMOSPHERE*5
-
 	force = 5.0
 	throwforce = 10.0
 	throw_speed = 1
@@ -21,30 +19,27 @@
 	var/volume = 70
 	var/manipulated_by = null		//Used by _onclick/hud/screen_objects.dm internals to determine if someone has messed with our tank or not.
 						//If they have and we haven't scanned it with the PDA or gas analyzer then we might just breath whatever they put in it.
-/obj/item/weapon/tank/New()
-	..()
+/obj/item/weapon/tank/atom_init()
+	. = ..()
 
-	src.air_contents = new /datum/gas_mixture()
-	src.air_contents.volume = volume //liters
-	src.air_contents.temperature = T20C
+	air_contents = new
+	air_contents.volume = volume //liters
+	air_contents.temperature = T20C
 
-	SSobj.processing |= src
-	return
+	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/tank/Destroy()
-	if(air_contents)
-		qdel(air_contents)
-
-	SSobj.processing.Remove(src)
+	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(air_contents)
 	return ..()
 
 /obj/item/weapon/tank/examine(mob/user)
 	..()
-	var/obj/icon = src
+	var/obj/O = src
 	if (istype(src.loc, /obj/item/assembly))
-		icon = src.loc
+		O = src.loc
 	if (!in_range(src, usr))
-		if (icon == src)
+		if (O == src)
 			to_chat(user, "<span class='notice'>If you want any more information you'll need to get closer.</span>")
 		return
 
@@ -68,54 +63,28 @@
 
 /obj/item/weapon/tank/blob_act()
 	if(prob(50))
-		var/turf/location = src.loc
-		if (!( istype(location, /turf) ))
+		var/turf/location = loc
+		if(!isturf(location))
 			qdel(src)
 
-		if(src.air_contents)
+		if(air_contents)
 			location.assume_air(air_contents)
 
 		qdel(src)
 
 /obj/item/weapon/tank/attackby(obj/item/weapon/W, mob/user)
 	..()
-	var/obj/icon = src
+	//var/obj/icon = src
 
-	if (istype(src.loc, /obj/item/assembly))
-		icon = src.loc
+	//if (istype(src.loc, /obj/item/assembly))
+	//	icon = src.loc // wtf is this?
 
-	if ((istype(W, /obj/item/device/analyzer)) && get_dist(user, src) <= 1)
-		for (var/mob/O in viewers(user, null))
-			to_chat(O, "\red [user] has used [W] on [bicon(icon)] [src]")
-
-		var/pressure = air_contents.return_pressure()
-		manipulated_by = user.real_name			//This person is aware of the contents of the tank.
-		var/total_moles = air_contents.total_moles()
-
-		to_chat(user, "\blue Results of analysis of [bicon(icon)]")
-		if (total_moles>0)
-			var/o2_concentration = air_contents.oxygen/total_moles
-			var/n2_concentration = air_contents.nitrogen/total_moles
-			var/co2_concentration = air_contents.carbon_dioxide/total_moles
-			var/phoron_concentration = air_contents.phoron/total_moles
-
-			var/unknown_concentration =  1-(o2_concentration+n2_concentration+co2_concentration+phoron_concentration)
-
-			to_chat(user, "\blue Pressure: [round(pressure,0.1)] kPa")
-			to_chat(user, "\blue Nitrogen: [round(n2_concentration*100)]%")
-			to_chat(user, "\blue Oxygen: [round(o2_concentration*100)]%")
-			to_chat(user, "\blue CO2: [round(co2_concentration*100)]%")
-			to_chat(user, "\blue Phoron: [round(phoron_concentration*100)]%")
-			if(unknown_concentration>0.01)
-				to_chat(user, "\red Unknown: [round(unknown_concentration*100)]%")
-			to_chat(user, "\blue Temperature: [round(air_contents.temperature-T0C)]&deg;C")
-		else
-			to_chat(user, "\blue Tank is empty!")
-		src.add_fingerprint(user)
+	if (istype(W, /obj/item/device/analyzer))
+		return
 	else if (istype(W,/obj/item/latexballon))
 		var/obj/item/latexballon/LB = W
 		LB.blow(src)
-		src.add_fingerprint(user)
+		add_fingerprint(user)
 
 	if(istype(W, /obj/item/device/assembly_holder))
 		bomb_assemble(W,user)

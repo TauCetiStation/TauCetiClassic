@@ -13,8 +13,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 	var/obj/item/weapon/loaded_item = null
 	var/decon_mod = 0
 
-/obj/machinery/r_n_d/destructive_analyzer/New()
-	..()
+/obj/machinery/r_n_d/destructive_analyzer/atom_init()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/destructive_analyzer(null)
 	component_parts += new /obj/item/weapon/stock_parts/scanning_module(null)
@@ -53,6 +53,8 @@ Note: Must be placed within 3 tiles of the R&D Console
 
 	default_deconstruction_crowbar(O)
 
+	if (panel_open && is_wire_tool(O) && wires.interact(user))
+		return
 	if (disabled)
 		return
 	if (!linked_console)
@@ -77,11 +79,13 @@ Note: Must be placed within 3 tiles of the R&D Console
 		O.loc = src
 		to_chat(user, "<span class='notice'>You add the [O.name] to the machine!</span>")
 		flick("d_analyzer_la", src)
-		spawn(10)
-			icon_state = "d_analyzer_l"
-			busy = 0
+		addtimer(CALLBACK(src, .proc/unbusy), 10)
 		return 1
 	return
+
+/obj/machinery/r_n_d/destructive_analyzer/proc/unbusy()
+	icon_state = "d_analyzer_l"
+	busy = 0
 
 //For testing purposes only.
 /*/obj/item/weapon/deconstruction_test

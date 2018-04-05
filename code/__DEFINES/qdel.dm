@@ -4,6 +4,52 @@
 #define QDEL_HINT_IWILLGC		2 //functionally the same as the above. qdel should assume the object will gc on its own, and not check it.
 #define QDEL_HINT_HARDDEL		3 //qdel should assume this object won't gc, and queue a hard delete using a hard reference.
 #define QDEL_HINT_HARDDEL_NOW	4 //qdel should assume this object won't gc, and hard del it post haste.
-#define QDEL_HINT_PUTINPOOL		5 //qdel will put this object in the atom pool.
-#define QDEL_HINT_FINDREFERENCE	6 //functionally identical to QDEL_HINT_QUEUE if TESTING is not enabled in _compiler_options.dm.
+#define QDEL_HINT_FINDREFERENCE	5 //functionally identical to QDEL_HINT_QUEUE if TESTING is not enabled in _compiler_options.dm.
 								  //if TESTING is enabled, qdel will call this object's find_references() verb.
+
+//defines for the gc_destroyed var
+
+#define GC_QUEUE_PREQUEUE 1
+#define GC_QUEUE_CHECK 2
+#define GC_QUEUE_HARDDELETE 3
+#define GC_QUEUE_COUNT 3      // increase this when adding more steps.
+
+#define GC_QUEUED_FOR_QUEUING -1
+#define GC_QUEUED_FOR_HARD_DEL -2
+#define GC_CURRENTLY_BEING_QDELETED -3
+
+/**
+ * Delete `item` after `time` passed.
+ * Return `id` for timer, so deletion process could be stopped.
+ */
+#define QDEL_IN(item, time) addtimer(CALLBACK(GLOBAL_PROC, .proc/qdel, item), time, TIMER_STOPPABLE)
+
+/**
+ * Delete `item` and nullify var, where it was.
+ */
+#define QDEL_NULL(item) if(item) { qdel(item); item = null }
+
+/**
+ * Return `TRUE` if `X` already passed `Destroy()` phase.
+ */
+#define QDELING(X) (X.gc_destroyed)
+
+/**
+ * Same as above plus sanitization that checks if atom exist.
+ */
+#define QDELETED(X) (!X || QDELING(X))
+
+/**
+ * Return `TRUE` if `X` is in `Destroy()` phase.
+ * So you would know for sure, that `qdel()` was used on `X`.
+ */
+#define QDESTROYING(X) (!X || X.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
+
+
+/**
+ * Macroses for `qdel()` operations on simple and associative lists.
+ * Use them only in case, when you need to invoke `Destroy()` proc on objects in list.
+ */
+
+#define QDEL_LIST(L) if(L) { for(var/I in L) qdel(I); L.Cut(); }
+#define QDEL_LIST_ASSOC(L) if(L) { for(var/I in L) qdel(L[I]); L.Cut(); }

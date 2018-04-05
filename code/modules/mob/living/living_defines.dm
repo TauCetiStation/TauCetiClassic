@@ -1,6 +1,5 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
-
 	//Health and life related vars
 	var/maxHealth = 100 //Maximum health that should be possible.
 	var/health = 100 	//A mob's health
@@ -44,8 +43,10 @@
 	var/on_fire = 0 //The "Are we on fire?" var
 	var/fire_stacks = 0 //Tracks how many stacks of fire we have on, max is usually 20
 
-	var/ventcrawler = 0 //0 No vent crawling, 1 vent crawling in the nude, 2 vent crawling always
-	var/list/pipes_shown = list()
-	var/last_played_vent
-
+	var/tesla_ignore = FALSE
 	var/list/butcher_results = null
+
+	var/isHandsBusy = FALSE
+
+	var/list/recent_tastes = list()
+	var/lasttaste = 0 // Prevent tastes spam

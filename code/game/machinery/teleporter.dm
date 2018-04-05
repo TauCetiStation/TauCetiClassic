@@ -11,13 +11,12 @@
 	var/turf/target //Used for one-time-use teleport cards (such as clown planet coordinates.)
 						 //Setting this to 1 will set src.locked to null after a player enters the portal and will not allow hand-teles to open portals to that location.
 
-/obj/machinery/computer/teleporter/New()
-	src.id = "[rand(1000, 9999)]"
-	link_power_station()
-	..()
-	return
+/obj/machinery/computer/teleporter/atom_init()
+	id = "[rand(1000, 9999)]"
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/computer/teleporter/initialize()
+/obj/machinery/computer/teleporter/atom_init_late()
 	link_power_station()
 
 /obj/machinery/computer/teleporter/Destroy()
@@ -47,15 +46,7 @@
 		..()
 	return
 
-/obj/machinery/computer/teleporter/attack_ai(mob/user)
-	src.attack_hand(user)
-
-/obj/machinery/computer/teleporter/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/teleporter/interact(mob/user)
+/obj/machinery/computer/teleporter/ui_interact(mob/user)
 	var/data = "<h3>Teleporter Status</h3>"
 	if(!power_station)
 		data += "<div class='statusDisplay'>No power station linked.</div>"
@@ -85,7 +76,6 @@
 	var/datum/browser/popup = new(user, "teleporter", name, 400, 400)
 	popup.set_content(data)
 	popup.open()
-	return
 
 /obj/machinery/computer/teleporter/Topic(href, href_list)
 	. = ..()
@@ -247,9 +237,8 @@
 	var/obj/machinery/teleport/station/power_station
 	var/calibrated //Calibration prevents mutation
 
-/obj/machinery/teleport/hub/New()
+/obj/machinery/teleport/hub/atom_init()
 	..()
-	link_power_station()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/teleporter_hub(null)
 	component_parts += new /obj/item/bluespace_crystal/artificial(null)
@@ -257,8 +246,9 @@
 	component_parts += new /obj/item/bluespace_crystal/artificial(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	RefreshParts()
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/teleport/hub/initialize()
+/obj/machinery/teleport/hub/atom_init_late()
 	link_power_station()
 
 /obj/machinery/teleport/hub/Destroy()
@@ -339,8 +329,8 @@
 /obj/machinery/teleport/hub/proc/is_ready()
 	. = !panel_open && !(stat & (BROKEN|NOPOWER)) && power_station && power_station.engaged && !(power_station.stat & (BROKEN|NOPOWER))
 
-//obj/machinery/teleport/hub/syndicate/New()
-//	..()
+//obj/machinery/teleport/hub/syndicate/atom_init()
+//	. = ..()
 //	component_parts += new /obj/item/weapon/stock_parts/matter_bin/super(null)
 //	RefreshParts()
 
@@ -348,16 +338,16 @@
 	name = "station"
 	desc = "It's the station thingy of a teleport thingy." //seriously, wtf.
 	icon_state = "controller"
-	var/engaged = 0
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 2000
+	var/engaged = 0
 	var/obj/machinery/computer/teleporter/teleporter_console
 	var/obj/machinery/teleport/hub/teleporter_hub
 	var/list/linked_stations = list()
 	var/efficiency = 0
 
-/obj/machinery/teleport/station/New()
+/obj/machinery/teleport/station/atom_init()
 	..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/teleporter_station(null)
@@ -367,9 +357,9 @@
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(null)
 	component_parts += new /obj/item/weapon/stock_parts/console_screen(null)
 	RefreshParts()
-	link_console_and_hub()
+	return INITIALIZE_HINT_LATELOAD
 
-/obj/machinery/teleport/station/initialize()
+/obj/machinery/teleport/station/atom_init_late()
 	link_console_and_hub()
 
 /obj/machinery/teleport/station/RefreshParts()
@@ -431,19 +421,18 @@
 			to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
 			return
 
-/obj/machinery/teleport/station/attack_paw()
-	src.attack_hand()
-
-/obj/machinery/teleport/station/attack_ai()
-	src.attack_hand()
-
 /obj/machinery/teleport/station/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	if(!panel_open)
 		toggle(user)
 
 /obj/machinery/teleport/station/proc/toggle(mob/user)
-	if(stat & (BROKEN|NOPOWER) || !teleporter_hub || !teleporter_console )
+	if(!teleporter_hub || !teleporter_console)
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if (teleporter_console.target)
 		src.engaged = !src.engaged
 		use_power(5000)

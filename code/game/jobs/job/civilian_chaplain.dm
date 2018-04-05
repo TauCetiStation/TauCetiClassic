@@ -8,8 +8,8 @@
 	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
-	access = list(access_morgue, access_chapel_office, access_crematorium, access_maint_tunnels)
-	minimal_access = list(access_morgue, access_chapel_office, access_crematorium)
+	idtype = /obj/item/weapon/card/id/civ
+	access = list(access_morgue, access_chapel_office, access_crematorium)
 	alt_titles = list("Counselor")
 	minimal_player_ingame_minutes = 480
 
@@ -31,7 +31,7 @@
 
 	spawn(0)
 		var/religion_name = "Christianity"
-		var/new_religion = sanitize(copytext(input(H, "You are the crew services officer. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name),1,MAX_NAME_LEN))
+		var/new_religion = sanitize_safe(input(H, "You are the crew services officer. Would you like to change your religion? Default is Christianity, in SPACE.", "Name change", religion_name), MAX_NAME_LEN)
 
 		if (!new_religion)
 			new_religion = religion_name
@@ -66,7 +66,7 @@
 
 	spawn(1)
 		var/deity_name = "Space Jesus"
-		var/new_deity = sanitize(copytext(input(H, "Would you like to change your deity? Default is Space Jesus.", "Name change", deity_name),1,MAX_NAME_LEN))
+		var/new_deity = sanitize_safe(input(H, "Would you like to change your deity? Default is Space Jesus.", "Name change", deity_name), MAX_NAME_LEN)
 
 		if ((length(new_deity) == 0) || (new_deity == "Space Jesus") )
 			new_deity = deity_name

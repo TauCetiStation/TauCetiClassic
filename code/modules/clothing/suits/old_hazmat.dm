@@ -1,11 +1,11 @@
 /obj/item/clothing/head/bio_hood/old_hazmat
 	icon_state = "old_hazmat_white"
-	name = "Hazmat helmet"
+	name = "hazmat helmet"
 	desc = "White colored and classic."
 /obj/item/clothing/suit/bio_suit/old_hazmat
 	icon_state = "old_hazmat_white"
 	item_state = "old_hazmat_white"
-	name = "Hazmat suit"
+	name = "hazmat suit"
 	desc = "White colored and classic."
 
 /obj/item/clothing/suit/bio_suit/old_hazmat/sec
