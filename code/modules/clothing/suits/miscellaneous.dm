@@ -610,3 +610,12 @@
 	icon_state = "syndieshirt"
 	item_state = "syndieshirt"
 	body_parts_covered = UPPER_TORSO|ARMS
+
+/obj/item/clothing/suit/fur_coat
+	name = "fur coat"
+	desc = "An extremely expensive and ostentatious coat, made of endangered species fur."
+	icon_state = "fur_coat"
+	item_state = "fur_coat"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS
+
