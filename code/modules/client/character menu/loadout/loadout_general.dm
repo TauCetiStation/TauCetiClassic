@@ -6,6 +6,11 @@
 	display_name = "Cane"
 	path = /obj/item/weapon/cane
 
+/datum/gear/cane/swag
+	display_name = "Diamond cane"
+	path = /obj/item/weapon/cane/swag
+	cost = 6
+
 /datum/gear/dice/nerd
 	display_name = "Dice pack"
 	path = /obj/item/weapon/storage/pill_bottle/dice

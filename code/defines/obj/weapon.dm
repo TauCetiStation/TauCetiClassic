@@ -93,7 +93,6 @@
 	throw_speed = 4
 	throw_range = 5
 
-
 /obj/item/weapon/cane
 	name = "cane"
 	desc = "A cane used by a true gentlemen. Or a clown."
@@ -106,6 +105,11 @@
 	w_class = 2.0
 	m_amt = 50
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
+
+/obj/item/weapon/cane/swag
+	name = "expencive cane"
+	desc = "A cane with a diamond knob."
+	icon_state = "cane_swag"
 
 /obj/item/weapon/gift
 	name = "gift"
