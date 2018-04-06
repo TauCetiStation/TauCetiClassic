@@ -7,7 +7,7 @@
 	path = /obj/item/weapon/cane
 
 /datum/gear/cane/swag
-	display_name = "Diamond cane"
+	display_name = "Elite cane"
 	path = /obj/item/weapon/cane/swag
 	cost = 6
 
