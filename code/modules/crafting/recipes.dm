@@ -64,3 +64,11 @@
 				/obj/item/stack/sheet/mineral/plastic = 4)
 	result = /obj/item/toy/sword
 	category = CAT_MISC
+
+/datum/crafting_recipe/cane_swag
+	name = "Swag Cane"
+	reqs = list(/obj/item/stack/rods = 1,
+				/obj/item/stack/sheet/mineral/gold = 1,
+				/obj/item/stack/sheet/mineral/diamond = 1)
+	result = /obj/item/weapon/cane/swag
+	category = CAT_MISC

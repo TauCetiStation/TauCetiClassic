@@ -107,6 +107,11 @@
 	m_amt = 50
 	attack_verb = list("bludgeoned", "whacked", "disciplined", "thrashed")
 
+/obj/item/weapon/cane/swag
+	name = "elite cane"
+	desc = "A cane with a diamond knob. Looks stylish and glamour. To show everyone who's boss here."
+	icon_state = "cane_swag"
+
 /obj/item/weapon/gift
 	name = "gift"
 	desc = "A wrapped item."
