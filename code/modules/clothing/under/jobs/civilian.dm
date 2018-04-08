@@ -206,4 +206,5 @@
 	name = "barber's uniform"
 	icon_state = "barber"
 	item_state = "barber"
+	item_color = "barber"
 	flags = ONESIZEFITSALL

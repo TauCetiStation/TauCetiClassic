@@ -39,7 +39,7 @@ var/list/forbidden_varedit_object_types = list(
 	switch(class)
 
 		if("text")
-			var_value = input("Enter new text:","Text") as null|text
+			var_value = sanitize(input("Enter new text:","Text") as null|text)
 
 		if("num")
 			var_value = input("Enter new number:","Num") as null|num
@@ -88,7 +88,7 @@ var/list/forbidden_varedit_object_types = list(
 	switch(class)
 
 		if("text")
-			var_value = input("Enter new text:","Text") as text
+			var_value = sanitize(input("Enter new text:","Text") as text)
 
 		if("num")
 			var_value = input("Enter new number:","Num") as num
@@ -243,7 +243,7 @@ var/list/forbidden_varedit_object_types = list(
 			return
 
 		if("text")
-			L[L.Find(variable)] = input("Enter new text:","Text") as text
+			L[L.Find(variable)] = sanitize(input("Enter new text:","Text") as text)
 
 		if("num")
 			L[L.Find(variable)] = input("Enter new number:","Num") as num

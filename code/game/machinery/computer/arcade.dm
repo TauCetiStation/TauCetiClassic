@@ -123,7 +123,7 @@
 
 	dat += "</b></center>"
 
-	user << browse(dat, "window=arcade")
+	user << browse(entity_ja(dat), "window=arcade")
 	onclose(user, "arcade")
 
 /obj/machinery/computer/arcade/Topic(href, href_list)

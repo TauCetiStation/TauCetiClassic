@@ -20,7 +20,7 @@
 				Frequency: <A href='byond://?src=\ref[src];set_freq=-1'>[format_frequency(media_frequency)]</a><BR>
 				"}
 	dat+={"</TT></body></html>"}
-	user << browse(dat, "window=radio-recv")
+	user << browse(entity_ja(dat), "window=radio-recv")
 	onclose(user, "radio-recv")
 
 /obj/machinery/media/receiver/boombox/proc/update_on()

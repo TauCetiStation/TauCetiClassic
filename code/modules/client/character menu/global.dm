@@ -9,7 +9,7 @@
 	. += 				"<tr><td>Alpha(transparency): <a href='?_src_=prefs;preference=UIalpha'><b>[UI_style_alpha]</b></a></td></tr>"
 	. += 				"<tr><td colspan='3'><a href='?_src_=prefs;task=reset'>Reset custom UI</a></td></tr>"
 	if(config.allow_Metadata)
-		. +=			"<tr><td><br><b>OOC Notes: </b><a href='?_src_=prefs;preference=metadata;task=input'>[length(metadata)>0?"[sanitize_popup(copytext(metadata, 1, 3))]...":"\[...\]"]</a></td></tr>"
+		. +=			"<tr><td><br><b>OOC Notes: </b><a href='?_src_=prefs;preference=metadata;task=input'>[length(metadata)>0?"[copytext(metadata, 1, 3)]...":"\[...\]"]</a></td></tr>"
 	//if(user.client) TG
 	//	if(user.client.holder)
 	//		. += "<b>Adminhelp Sound:</b> <a href='?_src_=prefs;preference=hear_adminhelps'>[(toggles & SOUND_ADMINHELP)?"On":"Off"]</a><br>"
@@ -96,9 +96,9 @@
 	switch(href_list["task"])
 		if("input")
 			if(href_list["preference"] == "metadata")
-				var/new_metadata = input(user, "Enter any OOC information you'd like others to see:", "Game Preference" , html_decode(revert_ja(metadata)))  as message|null
-				if(!isnull(new_metadata))
-					metadata = sanitize(copytext(new_metadata,1,MAX_MESSAGE_LEN))
+				var/new_metadata = sanitize(input(user, "Enter any OOC information you'd like others to see:", "Game Preference", input_default(metadata)) as message|null)
+				if(new_metadata)
+					metadata = new_metadata
 
 			//if(href_list["preference"] == "ghostorbit")
 			//	if(unlock_content)

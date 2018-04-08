@@ -37,7 +37,7 @@
 				if (2)
 					dat += "<font color=red>"
 			dat += "[alarm]</font></a><br/>"
-	user << browse(dat, "window=atmoscontrol")
+	user << browse(entity_ja(dat), "window=atmoscontrol")
 
 /obj/machinery/computer/atmoscontrol/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)

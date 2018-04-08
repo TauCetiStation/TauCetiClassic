@@ -85,7 +85,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 					return
 
 				if("text")
-					lst[i] = input("Enter new text:","Text",null) as text
+					lst[i] = sanitize(input("Enter new text:","Text",null) as text)
 
 				if("num")
 					lst[i] = input("Enter new number:","Num",0) as num
@@ -208,7 +208,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			return 0
 	var/obj/item/device/paicard/card = new(T)
 	var/mob/living/silicon/pai/pai = new(card)
-	pai.name = input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text
+	pai.name = sanitize_safe(input(choice, "Enter your pAI name:", "pAI Name", "Personal AI") as text, MAX_NAME_LEN)
 	pai.real_name = pai.name
 	pai.key = choice.key
 	card.setPersonality(pai)
@@ -1061,7 +1061,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			            access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
 			            access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
 			            access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
-			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway)
+			            access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_barber)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
 		if("hos")

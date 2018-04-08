@@ -64,7 +64,7 @@ var/can_call_ert
 
 		for (var/obj/effect/landmark/L in landmarks_list) if (L.name == "Commando")
 			L.name = null//Reserving the place.
-			var/new_name = input(usr, "Pick a name","Name") as null|text
+			var/new_name = sanitize_safe(input(usr, "Pick a name","Name") as null|text, MAX_LNAME_LEN)
 			if(!new_name)//Somebody changed his mind, place is available again.
 				L.name = "Commando"
 				return

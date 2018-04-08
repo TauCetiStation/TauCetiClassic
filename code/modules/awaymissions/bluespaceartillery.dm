@@ -28,7 +28,7 @@
 	dat += "The Bluespace Artillery in mode : <a href='?src=\ref[src];toggle=1'>[intensity ? "<font color=red>Destroy</font>" : "<font color=green>Hurt</font>"]</a><br>"
 	dat += "<A href='byond://?src=\ref[src];fire=1'>Open Fire</A><BR>"
 	dat += "Deployment of weapon authorized by <br>Nanotrasen Naval Command<br><br>Remember, friendly fire is grounds for termination of your contract and life.<HR>"
-	user << browse(dat, "window=scroll")
+	user << browse(entity_ja(dat), "window=scroll")
 	onclose(user, "scroll")
 
 /obj/machinery/artillerycontrol/Topic(href, href_list)

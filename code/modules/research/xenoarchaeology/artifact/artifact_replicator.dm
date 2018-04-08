@@ -124,7 +124,7 @@
 	for(var/index=1, index<=construction.len, index++)
 		dat += "<A href='?src=\ref[src];activate=[index]'>\[[construction[index]]\]</a><br>"
 
-	user << browse(dat, "window=alien_replicator")
+	user << browse(entity_ja(dat), "window=alien_replicator")
 
 /obj/machinery/replicator/attackby(obj/item/weapon/W, mob/living/user)
 	user.drop_item()

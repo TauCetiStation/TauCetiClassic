@@ -46,13 +46,12 @@
 		message_mentors("[key_name(src, 0, 0, 0)] has started replying to [key_name(C, 0, 0, 0)]'s help request.")
 //	if(usr in mentors)
 	message_admins("[key_name_admin(src)] has started replying to [key_name(C, 0, 0)]'s help request.")
-	var/msg = input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null
+	var/msg = sanitize(input(src,"Message:", "Private message to [key_name(C, 0, 0)]") as text|null)
 	if (!msg)
 		message_admins("[key_name_admin(src)] has cancelled their reply to [key_name(C, 0, 0)]'s help request.")
 		if(usr.client in mentors)
 			message_mentors("[key_name(src, 0, 0, 0)] has cancelled their reply to [key_name(C, 0, 0, 0)]'s help request.")
 		return
-	msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
 	cmd_admin_pm(whom, msg)
 
 //takes input from cmd_admin_pm_context, cmd_admin_pm_panel or /client/Topic and sends them a PM.
@@ -72,9 +71,7 @@
 
 	//get message text, limit it's length.and clean/escape html
 	if(!msg)
-		msg = input(src,"Message:", "Private message to [key_name(C, 0, holder ? 1 : 0, holder ? 1 : 0)]") as text|null
-
-		msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
+		msg = sanitize(input(src,"Message:", "Private message to [key_name(C, 0, holder ? 1 : 0, holder ? 1 : 0)]") as text|null)
 
 		if(!msg)
 			return
@@ -87,12 +84,6 @@
 
 	if (src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
-
-	//clean the message if it's not sent by a high-rank admin
-	if(!check_rights(R_SERVER|R_DEBUG,0))
-		//msg = sanitize(copytext(msg,1,MAX_MESSAGE_LEN))
-		if(!msg)
-			return
 
 	var/recieve_color = "purple"
 	var/send_pm_type = " "
@@ -132,7 +123,7 @@
 			spawn(0)	//so we don't hold the caller proc up
 				var/sender = src
 				var/sendername = key
-				var/reply = input(C, msg,"[recieve_pm_type] PM from-[sendername]", "") as text|null		//show message and await a reply
+				var/reply = sanitize(input(C, msg,"[recieve_pm_type] PM from-[sendername]", "") as text|null)		//show message and await a reply
 				if(C && reply)
 					if(sender)
 						C.cmd_admin_pm(sender,reply)										//sender is still about, let's reply to them
@@ -170,12 +161,10 @@
 		to_chat(src, "<font color='red'>Error: Private-Message: You are unable to use PM-s (muted).</font>")
 		return
 
-	var/msg = input(src,"Message:", "Private message to admins on IRC / 400 character limit") as text|null
+	var/msg = sanitize(input(src,"Message:", "Private message to admins on IRC / 400 character limit") as text|null)
 
 	if(!msg)
 		return
-
-	sanitize(msg)
 
 	if(length(msg) > 400) // TODO: if message length is over 400, divide it up into seperate messages, the message length restriction is based on IRC limitations.  Probably easier to do this on the bots ends.
 		to_chat(src, "\red Your message was not sent because it was more then 400 characters find your message below for ease of copy/pasting")

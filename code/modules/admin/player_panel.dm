@@ -318,7 +318,7 @@
 	</body></html>
 	"}
 
-	usr << browse(dat, "window=players;size=600x480")
+	usr << browse(entity_ja(dat), "window=players;size=600x480")
 
 //The old one
 /datum/admins/proc/player_panel_old()
@@ -380,7 +380,7 @@
 
 	dat += "</table></body></html>"
 
-	usr << browse(dat, "window=players;size=640x480")
+	usr << browse(entity_ja(dat), "window=players;size=640x480")
 
 /datum/admins/proc/check_antagonists()
 	if (ticker && ticker.current_state >= GAME_STATE_PLAYING)
@@ -583,7 +583,7 @@
 			dat += mutiny.check_antagonists_ui(src)
 
 		dat += "</body></html>"
-		usr << browse(dat, "window=roundstatus;size=400x500")
+		usr << browse(entity_ja(dat), "window=roundstatus;size=400x500")
 	else
 		alert("The game hasn't started yet!")
 

@@ -28,10 +28,10 @@
 		return
 
 	playsound(src, 'sound/items/megaphone.ogg', 100, 1, 1)
-	var/message = sanitize_plus(copytext(input(user, "Shout a message?", "Megaphone", null)  as text,1,MAX_MESSAGE_LEN))
+	var/message = sanitize(input(user, "Shout a message?", "Megaphone", null)  as text)
 	if(!message)
 		return
-	message = sanitize_plus_chat(capitalize(message))
+	message = (capitalize(message))
 	if ((src.loc == user && usr.stat == CONSCIOUS))
 		if(emagged)
 			if(insults)

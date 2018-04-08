@@ -65,7 +65,7 @@
 		"}
 //What number the make points to is in the define # at the top of construction.dm in same folder
 
-	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
+	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=pipedispenser")
 	onclose(user, "pipedispenser")
 
 /obj/machinery/pipedispenser/is_operational_topic()
@@ -177,7 +177,7 @@ Nah
 		<A href='?src=\ref[src];dmake=7'>Chute</A><BR>
 		"}
 
-	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
+	user << browse("<HEAD><TITLE>[src]</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=pipedispenser")
 
 // 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk
 

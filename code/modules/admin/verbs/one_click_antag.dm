@@ -31,7 +31,7 @@ client/proc/one_click_antag()
 		<a href='?src=\ref[src];makeAntag=10'>Make Deathsquad (Syndicate) (Requires Ghosts)</a><br>
 		"}
 */
-	usr << browse(dat, "window=oneclickantag;size=400x400")
+	usr << browse(entity_ja(dat), "window=oneclickantag;size=400x400")
 	return
 
 

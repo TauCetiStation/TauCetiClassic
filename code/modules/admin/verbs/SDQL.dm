@@ -324,7 +324,7 @@
 					text += "<a href='?src=\ref[t];SDQL_select=\ref[t]'>\ref[t]</a>: [t]<br>"
 
 				//text += "[t]<br>"
-			usr << browse(text, "window=sdql_result")
+			usr << browse(entity_ja(text), "window=sdql_result")
 
 
 /client/Topic(href,href_list[],hsrc)

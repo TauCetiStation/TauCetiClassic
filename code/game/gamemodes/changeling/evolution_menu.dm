@@ -16,7 +16,7 @@ var/list/sting_paths
 		sting_paths = init_paths(/obj/effect/proc_holder/changeling)
 
 	var/dat = create_menu(changeling)
-	usr << browse(dat, "window=powers;size=600x700")//900x480
+	usr << browse(entity_ja(dat), "window=powers;size=600x700")//900x480
 
 
 /obj/effect/proc_holder/changeling/evolution_menu/proc/create_menu(datum/changeling/changeling)
@@ -291,7 +291,7 @@ var/list/sting_paths
 	if(href_list["P"])
 		usr.mind.changeling.purchasePower(usr, href_list["P"])
 	var/dat = create_menu(usr.mind.changeling)
-	usr << browse(dat, "window=powers;size=600x700")
+	usr << browse(entity_ja(dat), "window=powers;size=600x700")
 /////
 /*
 /obj/effect/proc_holder/changeling/evolution_menu/Topic(href, href_list)
@@ -301,7 +301,7 @@ var/list/sting_paths
 	if(href_list["P"])
 		usr.mind.changeling.purchasePower(usr, href_list["P"])
 	var/dat = create_menu(usr.mind.changeling)
-	usr << browse(dat, "window=powers;size=600x700") */
+	usr << browse(entity_ja(dat), "window=powers;size=600x700") */
 
 /datum/changeling/proc/purchasePower(mob/living/carbon/user, sting_name)
 

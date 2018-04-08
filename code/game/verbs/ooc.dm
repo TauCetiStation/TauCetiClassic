@@ -14,7 +14,7 @@ var/global/normal_ooc_colour = "#002eb8"
 		to_chat(src, "Guests may not use OOC.")
 		return
 
-	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
+	msg = sanitize(msg)
 	if(!msg)	return
 
 	if(!(prefs.chat_toggles & CHAT_OOC))
@@ -125,7 +125,7 @@ var/global/normal_ooc_colour = "#002eb8"
 		to_chat(src, "Guests may not use OOC.")
 		return
 
-	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
+	msg = sanitize(msg)
 	if(!msg)	return
 
 	if(!(prefs.chat_toggles & CHAT_LOOC))

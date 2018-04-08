@@ -233,11 +233,11 @@ mob/living/parasite/meme/verb/Thought()
 	if(!target)
 		return
 
-	var/speaker = sanitize(copytext(input("Select the voice in which you would like to make yourself heard.", "Voice") as null|text, 1, MAX_NAME_LEN))
+	var/speaker = sanitize(input("Select the voice in which you would like to make yourself heard.", "Voice") as null|text, MAX_NAME_LEN)
 	if(!speaker)
 		return
 
-	var/message = sanitize(copytext(input("What would you like to say?", "Message") as null|text, 1, MAX_MESSAGE_LEN))
+	var/message = sanitize(input("What would you like to say?", "Message") as null|text)
 	if(!message)
 		return
 
@@ -246,7 +246,7 @@ mob/living/parasite/meme/verb/Thought()
 		return
 
 	//message = say_quote(message)
-	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'><i>[sanitize_plus_chat(message)]</i></span></span>"
+	var/rendered = "<span class='game say'><span class='name'>[speaker]</span> <span class='message'><i>[message]</i></span></span>"
 	//target.show_message(rendered)
 	to_chat(target, rendered)
 	to_chat(usr, "<i>You make [target] hear:</i> [rendered]")

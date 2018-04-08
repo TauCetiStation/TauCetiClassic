@@ -128,7 +128,7 @@
 			output += "<B>Objective #[obj_count]</B>: [objective.explanation_text]"
 			obj_count++
 
-	recipient << browse(output,"window=memory")
+	recipient << browse(entity_ja(output),"window=memory")
 
 /datum/mind/proc/edit_memory()
 	if(!ticker || !ticker.mode)
@@ -490,7 +490,7 @@
 
 	out += "<a href='?src=\ref[src];obj_announce=1'>Announce objectives</a><br><br>"
 
-	usr << browse(out, "window=edit_memory[src];size=400x500")
+	usr << browse(entity_ja(out), "window=edit_memory[src];size=400x500")
 
 /datum/mind/Topic(href, href_list)
 	if(!check_rights(R_ADMIN))
@@ -502,8 +502,9 @@
 		assigned_role = new_role
 
 	else if (href_list["memory_edit"])
-		var/new_memo = sanitize(copytext(input("Write new memory", "Memory", memory) as null|message,1,MAX_MESSAGE_LEN))
-		if (isnull(new_memo)) return
+		var/new_memo = sanitize(input("Write new memory", "Memory", input_default(memory)) as null|message, extra = FALSE)
+		if (new_memo)
+			return
 		memory = new_memo
 
 	else if (href_list["obj_edit"] || href_list["obj_add"])
@@ -613,7 +614,7 @@
 				new_objective.target_amount = target_number
 
 			if ("custom")
-				var/expl = sanitize(copytext(input("Custom objective:", "Objective", objective ? objective.explanation_text : "") as text|null,1,MAX_MESSAGE_LEN))
+				var/expl = sanitize(input("Custom objective:", "Objective", objective ? input_default(objective.explanation_text) : "") as text|null)
 				if (!expl) return
 				new_objective = new /datum/objective
 				new_objective.owner = src
@@ -1030,7 +1031,7 @@
 						code = bombue.r_code
 						break
 				if (code)
-					store_memory("<B>Syndicate Nuclear Bomb Code</B>: [code]", 0, 0)
+					store_memory("<B>Syndicate Nuclear Bomb Code</B>: [code]", 0)
 					to_chat(current, "The nuclear authorization code is: <B>[code]</B>")
 				else
 					to_chat(usr, "\red No valid nuke found!")

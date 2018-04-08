@@ -407,5 +407,5 @@
 		endgame_info_logged = 1
 		log_game(dat)
 
-	src << browse(dat, "window=roundstats;size=1000x600")
+	src << browse(entity_ja(dat), "window=roundstats;size=1000x600")
 	return

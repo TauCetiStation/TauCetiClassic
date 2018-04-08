@@ -42,8 +42,7 @@
 
 /obj/item/weapon/photo/attackby(obj/item/weapon/P, mob/user)
 	if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
-		var/txt = sanitize_alt(copytext(input(user, "What would you like to write on the back?", "Photo Writing", null)  as text, 1, 128))
-		//txt = copytext(txt, 1, 128)
+		var/txt = sanitize(input(user, "What would you like to write on the back?", "Photo Writing", null) as text, 128)
 		if(loc == user && user.stat == CONSCIOUS)
 			scribble = txt
 	else if(istype(P, /obj/item/weapon/lighter))
@@ -60,11 +59,11 @@
 
 /obj/item/weapon/photo/proc/show(mob/user)
 	user << browse_rsc(img, "tmp_photo.png")
-	user << browse("<html><head><title>[sanitize_popup(name)]</title></head>" \
+	user << browse(entity_ja("<html><head><title>[name]</title></head>" \
 		+ "<body style='overflow:hidden;margin:0;text-align:center'>" \
 		+ "<img src='tmp_photo.png' width='192' style='-ms-interpolation-mode:nearest-neighbor' />" \
 		+ "[scribble ? "<br>Written on the back:<br><i>[scribble]</i>" : ""]"\
-		+ "</body></html>", "window=book;size=192x[scribble ? 400 : 192]")
+		+ "</body></html>"), "window=book;size=192x[scribble ? 400 : 192]")
 	onclose(user, "[name]")
 	return
 
@@ -73,7 +72,7 @@
 	set category = "Object"
 	set src in usr
 
-	var/n_name = sanitize(copytext(input(usr, "What would you like to label the photo?", "Photo Labelling", null)  as text, 1, MAX_NAME_LEN))
+	var/n_name = sanitize_safe(input(usr, "What would you like to label the photo?", "Photo Labelling", null) as text, MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
 	if(( (loc == usr || (loc.loc && loc.loc == usr)) && usr.stat == CONSCIOUS))
 		name = "[(n_name ? text("[n_name]") : "photo")]"

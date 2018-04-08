@@ -186,4 +186,4 @@
 			list += {"<A href='byond://?src=\ref[src];lawc=[number]'>[src.lawcheck[number+1]] [number]:</A> [law]<BR>"}
 			number++
 	list += {"<br><br><A href='byond://?src=\ref[src];laws=1'>State Laws</A>"}
-	usr << browse(list, "window=laws")
+	usr << browse(entity_ja(list), "window=laws")

@@ -36,7 +36,7 @@ var/const/VOX_PATH = "sound/vox/"
 		if(index != vox_words.len)
 			dat += " / "
 
-	src << browse(dat, "window=announce_help;size=500x400")
+	src << browse(entity_ja(dat), "window=announce_help;size=500x400")
 
 
 /mob/living/silicon/ai/verb/announcement()

@@ -22,7 +22,7 @@
 		catalog += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td>[id]</td></tr>"
 	catalog += "</table>"
 
-	usr << browse(catalog, "window=admlibrarycatalog")
+	usr << browse(entity_ja(catalog), "window=admlibrarycatalog")
 	onclose(usr, "library")
 
 /client/proc/library_debug_remove()
@@ -83,4 +83,4 @@
 	var/book = "<HEAD><TITLE>[title], [author]</TITLE></HEAD><BODY>\n"
 	book += content
 
-	usr << browse(content, "window=content")
+	usr << browse(entity_ja(content), "window=content")

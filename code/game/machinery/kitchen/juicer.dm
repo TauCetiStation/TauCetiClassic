@@ -97,7 +97,7 @@
 		dat += "<A href='?src=\ref[src];action=juice'>Turn on!<BR>"
 	if (beaker)
 		dat += "<A href='?src=\ref[src];action=detach'>Detach a beaker!<BR>"
-	user << browse("<HEAD><TITLE>Juicer</TITLE></HEAD><TT>[dat]</TT>", "window=juicer")
+	user << browse("<HEAD><TITLE>Juicer</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=juicer")
 	onclose(user, "juicer")
 
 

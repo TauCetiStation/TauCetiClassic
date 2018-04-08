@@ -400,6 +400,20 @@
 	icon_state = "poker_tableparts"
 	flags = null
 
+/obj/item/weapon/table_parts/wood/fancy
+	name = "fancy table parts"
+	desc = "Covered with an amazingly fancy, patterned cloth."
+	icon_state = "fancy_tableparts"
+
+/obj/item/weapon/table_parts/wood/fancy/black
+	icon_state = "fancyblack_tableparts"
+
+/obj/item/weapon/table_parts/glass
+	name = "glass table parts"
+	desc = "Very fragile."
+	icon_state = "glass_tableparts"
+	flags = null
+
 /obj/item/weapon/wire
 	desc = "This is just a simple piece of regular insulated wire."
 	name = "wire"

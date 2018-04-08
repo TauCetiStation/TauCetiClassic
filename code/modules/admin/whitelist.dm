@@ -32,7 +32,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=whitelist;size=600x500")
+	usr << browse(entity_ja(output),"window=whitelist;size=600x500")
 
 /datum/admins/proc/whitelist_view(user_ckey)
 	src = usr.client.holder
@@ -64,7 +64,7 @@
 		output += "<td><a class='small' href='?src=\ref[src];whitelist=edit_ban;ckey=[user_ckey];role=[role]'>[ban]</a></td>"
 		output += "<td>[role]</td>"
 
-		var/reason = sanitize_alt(role_whitelist[user_ckey][role]["reason"])
+		var/reason = sanitize(role_whitelist[user_ckey][role]["reason"])
 		output += "<td><a class='small' href='?src=\ref[src];whitelist=edit_reason;ckey=[user_ckey];role=[role]'>(E)</a> [reason]</td>"
 		var/addby = role_whitelist[user_ckey][role]["addby"]
 		var/addtm = role_whitelist[user_ckey][role]["addtm"]
@@ -81,7 +81,7 @@
 </body>
 </html>"}
 
-	usr << browse(output,"window=whitelist_user;size=750x500")
+	usr << browse(entity_ja(output),"window=whitelist_user;size=750x500")
 
 /datum/admins/proc/whitelist_add_user()
 	if(!check_rights(R_WHITELIST))

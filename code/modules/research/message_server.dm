@@ -291,13 +291,6 @@ var/obj/machinery/blackbox_recorder/blackbox
 		var/DBQuery/query_insert = dbcon.NewQuery(sql)
 		query_insert.Execute()
 
-// Sanitize inputs to avoid SQL injection attacks
-proc/sql_sanitize_text(text)
-	text = replacetext(text, "'", "''")
-	text = replacetext(text, ";", "")
-	text = replacetext(text, "&", "")
-	return text
-
 proc/feedback_set(variable,value)
 	if(!blackbox) return
 

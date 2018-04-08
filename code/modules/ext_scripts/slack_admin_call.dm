@@ -23,18 +23,18 @@ proc/admin_call_cooldown(value1)
 	admin_call_cooldown(key_name(src))
 
 	var/output_text = {"<font color='red'>============ADMINCALL============</font><BR>
-<font color='red'>[sanitize_alt("1) Сообщение длинной не более 140 символов.")]</font><BR>
-<font color='red'>[sanitize_alt("2) Описать коротко и внятно причину по которой нужен админ.")]</font><BR>
-<font color='red'>[sanitize_alt("3) Ожидать.")]</font><BR>
-<font color='red'>[sanitize_alt("4) Если и таким образом не выйдет вызвать админа, то в крайнем случае сообщение будет сохранено и не потеряется.")]</font><BR>
+<font color='red'>[sanitize("1) Сообщение длинной не более 140 символов.")]</font><BR>
+<font color='red'>[sanitize("2) Описать коротко и внятно причину по которой нужен админ.")]</font><BR>
+<font color='red'>[sanitize("3) Ожидать.")]</font><BR>
+<font color='red'>[sanitize("4) Если и таким образом не выйдет вызвать админа, то в крайнем случае сообщение будет сохранено и не потеряется.")]</font><BR>
 <font color='red'>=================================</font><BR>
 "}
 
-	src << browse(output_text, "window=admcl;size=600x300")
+	src << browse(entity_ja(output_text), "window=admcl;size=600x300")
 
 	src << 'sound/effects/adminhelp.ogg'
 
-	var/msg = input(src, "Message:", "Admin Call", ) as text
+	var/msg = input(src, "Message:", "Admin Call") as text
 
 	if(src.handle_spam_prevention(msg,MUTE_ADMINHELP))
 		return
@@ -45,7 +45,7 @@ proc/admin_call_cooldown(value1)
 	if(check_answer == "No")
 		return
 
-	msg = sanitize(copytext(msg,1,140))
+	msg = sanitize(msg, 140)
 
 	if(!msg)	return
 	var/original_msg = msg

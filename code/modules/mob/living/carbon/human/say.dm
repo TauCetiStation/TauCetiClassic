@@ -13,7 +13,7 @@
 		to_chat(usr, "<span class='userdange'>You can't speak.</span>")
 		return
 
-	message =  trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))
+	message =  sanitize(message)
 
 	if(stat == DEAD)
 		if(fake_death) //Our changeling with fake_death status must not speak in dead chat!!
@@ -143,11 +143,11 @@
 			return
 		if("binary")
 			if(robot_talk_understand || binarycheck())
-				robot_talk(sanitize_plus_chat(message))
+				robot_talk(message)
 			return
 		if("changeling")
 			if(mind && mind.changeling)
-				var/n_message = sanitize_plus_chat(message)
+				var/n_message = message
 				for(var/mob/Changeling in mob_list)
 					if(Changeling.mind && Changeling.mind.changeling)
 						to_chat(Changeling, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
@@ -159,7 +159,7 @@
 			return
 		if("alientalk")
 			if(mind && mind.changeling)
-				var/n_message = sanitize_plus_chat(message)
+				var/n_message = message
 				for(var/M in mind.changeling.essences)
 					to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
 				for(var/datum/orbit/O in orbiters)
@@ -267,7 +267,7 @@
 		handled = 1
 
 	if((HULK in mutations) && health >= 25 && length(message))
-		message = "[uppertext_plus(message)]!!!"
+		message = "[uppertext_(message)]!!!"
 		verb = pick("yells","roars","hollers")
 		handled = 1
 	if(slurring)
@@ -286,7 +286,7 @@
 			message = stutter(message)
 			verb = pick("stammers", "stutters")
 		if(prob(braindam))
-			message = uppertext_plus(message)
+			message = uppertext_(message)
 			verb = pick("yells like an idiot","says rather loudly")
 
 	returns[1] = message

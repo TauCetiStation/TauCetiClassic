@@ -33,7 +33,7 @@ var/global/list/frozen_items = list()
 	dat += "<a href='?src=\ref[src];allitems=1'>Recover all objects</a>.<br>"
 	dat += "<a href='?src=\ref[src];crew=1'>Revive crew</a>.<br/><hr/>"
 
-	user << browse(dat, "window=cryopod_console")
+	user << browse(entity_ja(dat), "window=cryopod_console")
 	onclose(user, "cryopod_console")
 
 /obj/machinery/computer/cryopod/Topic(href, href_list)
@@ -50,7 +50,7 @@ var/global/list/frozen_items = list()
 			dat += "[person]<br/>"
 		dat += "<hr/>"
 
-		user << browse(dat, "window=cryolog")
+		user << browse(entity_ja(dat), "window=cryolog")
 
 	else if(href_list["item"])
 
