@@ -123,11 +123,6 @@
 /obj/item/organ/internal/heart/ipc
 	name = "servomotor"
 
-/obj/item/organ/internal/heart/ipc/process()
-	..()
-	if(owner.is_damaged_organ(O_KIDNEYS) && prob(4))
-		to_chat(owner, "<span class='warning bold'>%SERVOMOTOR% INJURY DETECTED. CEASE DAMAGE TO %SERVOMOTOR%. REQUEST ASSISTANCE.</span>")
-
 /obj/item/organ/internal/lungs
 	name = "lungs"
 	organ_tag = O_LUNGS
@@ -190,10 +185,6 @@
 				if(istype(R, /datum/reagent/toxin))
 					owner.adjustToxLoss(0.3 * process_accuracy)
 
-/obj/item/organ/internal/lungs/ipc/process()
-	if(is_bruised() && owner.is_damaged_organ(O_KIDNEYS) && prob(4))
-		to_chat(owner, "<span class='warning bold'>%COOLING ELEMENT% INJURY DETECTED. CEASE DAMAGE TO %COOLING ELEMENT%. REQUEST ASSISTANCE.</span>")
-
 /obj/item/organ/internal/liver
 	name = "liver"
 	organ_tag = O_LIVER
@@ -254,11 +245,9 @@
 				if(owner.nutrition > (B.maxcharge - damage*5))
 					owner.nutrition = B.maxcharge - damage*5
 		else
-			if(owner.is_damaged_organ(O_KIDNEYS) && prob(2))
+			if(owner.is_bruised_organ(O_KIDNEYS) && prob(2))
 				to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
 			owner.stat = UNCONSCIOUS
-	if(is_bruised() && owner.is_damaged_organ(O_KIDNEYS) && prob(4))
-		to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% INJURY DETECTED. CEASE DAMAGE TO %ACCUMULATOR%. REQUEST ASSISTANCE.</span>")
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"
@@ -280,6 +269,11 @@
 		if(prob(2))
 			to_chat(owner, "<span class='warning'>You notice slight discomfort in your groin.</span>")
 
+/obj/item/organ/internal/kidneys/ipc/process()
+	for(var/obj/item/organ/internal/IO in owner.organs)
+		if(IO.is_bruised() && prob(4))
+			to_chat(owner, "<span class='warning bold'>%[uppertext_(IO)]% INJURY DETECTED. CEASE DAMAGE TO %ACCUMULATOR%. REQUEST ASSISTANCE.</span>")
+
 /obj/item/organ/internal/brain
 	name = "brain"
 	organ_tag = O_BRAIN
@@ -300,6 +294,7 @@
 
 /obj/item/organ/internal/eyes/ipc
 	name = "cameras"
+	robotic = 2
 
 /obj/item/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()

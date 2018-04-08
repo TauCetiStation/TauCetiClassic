@@ -290,11 +290,11 @@
 	max_duration = 90
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/is_chest_organ_damaged = 0
+	var/is_chest_organ_damaged = FALSE
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO.damage > 0 && IO.robotic == 2)
-			is_chest_organ_damaged = 1
+			is_chest_organ_damaged = TRUE
 			break
 	return ..() && is_chest_organ_damaged && target.op_stage.ribcage == 2
 
@@ -315,15 +315,15 @@
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
 		if(IO.damage > 0 && IO.robotic == 2)
-			user.visible_message("<span class = 'notice'>[user] repairs [target]'s [IO] with \the [tool].</span>", \
-			"<span class = 'notice'>You repair [target]'s [IO] with \the [tool].</span>" )
+			user.visible_message("<span class='notice'>[user] repairs [target]'s [IO] with \the [tool].</span>",
+			"<span class='notice'>You repair [target]'s [IO] with \the [tool].</span>" )
 			IO.damage = 0
 
 /datum/surgery_step/ribcage/fix_chest_internal_robot/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
 	for(var/obj/item/organ/internal/IO in BP.bodypart_organs)
-		user.visible_message("<span class = 'warning'>[user]'s hand slips, smearing [tool] in the incision in [target]'s [IO], gumming it up!</span>",
-		"<span class = 'warning'>Your hand slips, smearing [tool] in the incision in [target]'s [IO], gumming it up!</span>")
+		user.visible_message("<span class='warning'>[user]'s hand slips, smearing [tool] in the incision in [target]'s [IO], gumming it up!</span>",
+		"<span class='warning'>Your hand slips, smearing [tool] in the incision in [target]'s [IO], gumming it up!</span>")
 		var/dam_amt = 2
 		if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
 			target.apply_damage(6, BURN, BP, null)
@@ -344,13 +344,12 @@
 	/obj/item/weapon/kitchenknife = 75,
 	/obj/item/weapon/shard = 50
 	)
+	disallowed_species = list("exclude", DIONA)
 
 	min_duration = 80
 	max_duration = 100
 
 /datum/surgery_step/ribcage/cut_diona_brain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(target.get_species() != DIONA)
-		return
 	return ..() && target.op_stage.ribcage == 2
 
 /datum/surgery_step/ribcage/cut_diona_brain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -359,13 +358,13 @@
 	..()
 
 /datum/surgery_step/ribcage/cut_diona_brain/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'notice'>[user] separates connections to [target]'s brain with \the [tool].</span>",
-	"<span class = 'notice'>You separate connections to [target]'s brain with \the [tool].</span>")
+	user.visible_message("<span class='notice'>[user] separates connections to [target]'s brain with \the [tool].</span>",
+	"<span class='notice'>You separate connections to [target]'s brain with \the [tool].</span>")
 	target.chest_brain_op_stage = 1
 
 /datum/surgery_step/ribcage/cut_diona_brain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'warning>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
-	"<span class = 'warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
+	user.visible_message("<span class='warning>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
+	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
 	target.apply_damage(50, BRUTE, BP_CHEST, 1, DAM_SHARP)
 
 /datum/surgery_step/ribcage/cut_diona_spine
@@ -379,8 +378,6 @@
 	max_duration = 70
 
 /datum/surgery_step/ribcage/cut_diona_spine/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(target.get_species() != DIONA)
-		return
 	return ..() && target.chest_brain_op_stage == 1 && target.op_stage.ribcage == 2
 
 /datum/surgery_step/ribcage/cut_diona_spine/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -389,8 +386,8 @@
 	..()
 
 /datum/surgery_step/ribcage/cut_diona_spine/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'notice'>[user] separates [target]'s brain from \his spine with \the [tool].</span>",
-	"<span class = 'notice'>You separate [target]'s brain from spine with \the [tool].</span>")
+	user.visible_message("<span class='notice'>[user] separates [target]'s brain from \his spine with \the [tool].</span>",
+	"<span class='notice'>You separate [target]'s brain from spine with \the [tool].</span>")
 
 	var/mob/living/simple_animal/borer/borer = target.has_brain_worms()
 
@@ -409,8 +406,8 @@
 	target.death()
 
 /datum/surgery_step/ribcage/cut_diona_spine/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
-	"<span class = 'warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
+	user.visible_message("<span class='warning'>[user]'s hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>",
+	"<span class='warning'>Your hand slips, cutting a vein in [target]'s brain with \the [tool]!</span>")
 	target.apply_damage(30, BRUTE, BP_CHEST, 1, DAM_SHARP)
 	if (ishuman(user))
 		user:bloody_body(target)
@@ -420,8 +417,9 @@
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ipc_ribcage/cut_posibrain
 	allowed_tools = list(
-	/obj/item/weapon/wrench = 100,
-	/obj/item/weapon/bonesetter = 75
+	/obj/item/weapon/wirecutters = 100,
+	/obj/item/weapon/kitchenknife = 75,
+	/obj/item/weapon/shard = 50
 	)
 	allowed_species = list(IPC)
 
@@ -432,18 +430,18 @@
 	return ..() && target.op_stage.ribcage == 2
 
 /datum/surgery_step/ipc_ribcage/cut_posibrain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts loosening bolts connecting [target]'s posi-brain with \the [tool].",
-	"You start loosening bolts connecting [target]'s posi-brain with \the [tool].")
+	user.visible_message("[user] starts cutting wires connecting [target]'s posi-brain with \the [tool].",
+	"You start cutting wires connecting [target]'s posi-brain with \the [tool].")
 	..()
 
 /datum/surgery_step/ipc_ribcage/cut_posibrain/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'notice'>[user] loosens bolts connecting [target]'s posi-brain with \the [tool].</span>",
-	"<span class = 'notice'>You loosen bolts connecting [target]'s posi-brain with \the [tool].</span>")
+	user.visible_message("<span class='notice'>[user] cuts wires connecting [target]'s posi-brain with \the [tool].</span>",
+	"<span class='notice'>You cut wires connecting [target]'s posi-brain with \the [tool].</span>")
 	target.chest_brain_op_stage = 1
 
 /datum/surgery_step/ipc_ribcage/cut_posibrain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'warning>[user]'s hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>",
-	"<span class = 'warning'>Your hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>")
+	user.visible_message("<span class='warning>[user]'s hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>",
+	"<span class='warning'>Your hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>")
 	target.apply_damage(50, BRUTE, BP_CHEST, 1, DAM_SHARP)
 
 /datum/surgery_step/ipc_ribcage/extract_posibrain
@@ -452,6 +450,7 @@
 	/obj/item/weapon/hatchet = 75,
 	/obj/item/weapon/circular_saw = 50
 	)
+	priority = 4
 
 	min_duration = 50
 	max_duration = 70
@@ -465,8 +464,8 @@
 	..()
 
 /datum/surgery_step/ipc_ribcage/extract_posibrain/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'notice'>[user] pries out [target]'s posi-brain from \his hatch with \the [tool].</span>",
-	"<span class = 'notice'>You pry out [target]'s posi-brain from hatch with \the [tool].</span>")
+	user.visible_message("<span class='notice'>[user] pries out [target]'s posi-brain from \his hatch with \the [tool].</span>",
+	"<span class='notice'>You pry out [target]'s posi-brain from hatch with \the [tool].</span>")
 
 	user.attack_log += "\[[time_stamp()]\]<font color='red'> Debrained [target.name] ([target.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
 	target.attack_log += "\[[time_stamp()]\]<font color='orange'> Debrained by [user.name] ([user.ckey]) with [tool.name] (INTENT: [uppertext(user.a_intent)])</font>"
@@ -480,15 +479,47 @@
 	var/obj/item/device/mmi/posibrain/P = new(target.loc)
 	P.transfer_identity(target)
 
-	target.chest_brain_op_stage = 2.0
+	target.chest_brain_op_stage = 2
 	target.death()
 
 /datum/surgery_step/ipc_ribcage/extract_posibrain/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'warning'>[user]'s hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>",
-	"<span class = 'warning'>Your hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>")
+	user.visible_message("<span class='warning'>[user]'s hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>",
+	"<span class='warning'>Your hand slips, severely denting [target]'s posi-brain with \the [tool]!</span>")
 	target.apply_damage(30, BRUTE, BP_CHEST, 1, DAM_SHARP)
+
+/datum/surgery_step/ipc_ribcage/import_posibrain
+	allowed_tools = list(
+	/obj/item/device/mmi/posibrain = 100
+	)
+
+	min_duration = 50
+	max_duration = 70
+
+/datum/surgery_step/ipc_ribcage/import_posibrain/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	return ..() && target.chest_brain_op_stage == 2 && target.op_stage.ribcage == 2
+
+/datum/surgery_step/ipc_ribcage/import_posibrain/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("[user] starts fiddling in \the [tool] into [target].",
+	"Your start fiddling in \the [tool] into [target].")
+	..()
+
+/datum/surgery_step/ipc_ribcage/import_posibrain/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
+	user.visible_message("<span class='notice'>[user] fiddled in \the [tool] into [target].</span>",
+	"<span class='notice'>You fiddled in \the [tool] into [target].</span>")
+
+	var/obj/item/brain/B
+	target.organs += B
+	target.organs_by_name += O_BRAIN
+
+	var/obj/item/device/mmi/posibrain/PB = tool
+	if(PB.brainmob.mind)
+		PB.brainmob.mind.transfer_to(target)
+		target.dna = PB.brainmob.dna
+
+	tool.dropped()
+	qdel(tool)
 //////////////////////////////////////////////////////////////////
-//				GENERIC	ROBOTIC SURGERY							//
+//				RIBCAGE	ROBOTIC SURGERY							//
 //////////////////////////////////////////////////////////////////
 /datum/surgery_step/ipc_ribcage
 	can_infect = FALSE
@@ -518,18 +549,18 @@
 /datum/surgery_step/ipc_ribcage/wrench_sec/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to loosen bolts on [target]'s security panel with \the [tool].",
 	"You begin to loosen bolts on [target]'s maintenance panel with \the [tool].")
-	if(!target.is_damaged_organ(O_KIDNEYS))
-		target.custom_pain("%MAIN SECURITY PANEL% UNATHORISED ACCESS ATTEMPT DETECTED!",1)
+	if(!target.is_bruised_organ(O_KIDNEYS))
+		to_chat(target, "%MAIN SECURITY PANEL% UNATHORISED ACCESS ATTEMPT DETECTED!")
 	..()
 
 /datum/surgery_step/ipc_ribcage/wrench_sec/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'notice'> [user] has loosen bolts on [target]'s security panel with \the [tool].</span>",
-	"<span class = 'notice'> You have loosen bolts on [target]'s security panel with \the [tool].</span>")
+	user.visible_message("<span class='notice'> [user] has loosen bolts on [target]'s security panel with \the [tool].</span>",
+	"<span class='notice'> You have loosen bolts on [target]'s security panel with \the [tool].</span>")
 	target.op_stage.ribcage = 1
 
 /datum/surgery_step/ipc_ribcage/wrench_sec/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'warning'>[user]'s hand slips, scratching [target]'s security panel with \the [tool]!</span>" ,
-	"<span class = 'warning'>Your hand slips, scratching [target]'s security panel with \the [tool]!</span>" )
+	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s security panel with \the [tool]!</span>" ,
+	"<span class='warning'>Your hand slips, scratching [target]'s security panel with \the [tool]!</span>" )
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.createwound(CUT, 20)
 	BP.fracture()
@@ -541,6 +572,7 @@
 	/obj/item/weapon/hatchet = 75,
 	/obj/item/weapon/circular_saw = 50
 	)
+	priority = 3
 
 	min_duration = 30
 	max_duration = 40
@@ -549,9 +581,10 @@
 	return ..() && target.op_stage.ribcage == 1
 
 /datum/surgery_step/ipc_ribcage/pry_sec/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts to pry open the security panel in [target]'s torso with \the [tool].", "You start to pry open the security panel in [target]'s torso with \the [tool].")
-	if(!target.is_damaged_organ(O_KIDNEYS))
-		target.custom_pain("%MAIN SECURITY PANEL% DAMAGE DETECTED. CEASE APPLIED DAMAGE.",1)
+	user.visible_message("[user] starts to pry open the security panel in [target]'s torso with \the [tool].",
+	"You start to pry open the security panel in [target]'s torso with \the [tool].")
+	if(!target.is_bruised_organ(O_KIDNEYS))
+		to_chat(target, "<span class='warning italics'>%MAIN SECURITY PANEL% DAMAGE DETECTED. CEASE APPLIED DAMAGE.</span>")
 	..()
 
 /datum/surgery_step/ipc_ribcage/pry_sec/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
@@ -567,7 +600,8 @@
 		BP.fracture()
 
 /datum/surgery_step/ipc_ribcage/pry_sec/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'warning'>[user]'s hand slips, breaking [target]'s security panel!</span>", "<span class = 'warning'>Your hand slips, breaking [target]'s security panel!</span>")
+	user.visible_message("<span class='warning'>[user]'s hand slips, breaking [target]'s security panel!</span>",
+	"<span class='warning'>Your hand slips, breaking [target]'s security panel!</span>")
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.createwound(BRUISE, 20)
 	BP.fracture()
@@ -599,14 +633,14 @@
 	BP.open = 2
 
 /datum/surgery_step/ipc_ribcage/shut_sec/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	var/msg = "<span class = 'warning'>[user]'s hand slips, bending [target]'s security panel the wrong way!</span>"
-	var/self_msg = "<span class = 'warning'>Your hand slips, bending [target]'s security panel the wrong way!</span>"
+	var/msg = "<span class='warning'>[user]'s hand slips, bending [target]'s security panel the wrong way!</span>"
+	var/self_msg = "<span class='warning'>Your hand slips, bending [target]'s security panel the wrong way!</span>"
 	user.visible_message(msg, self_msg)
 	var/obj/item/organ/external/chest/BP = target.get_bodypart(BP_CHEST)
 	BP.createwound(BRUISE, 20)
 	BP.fracture()
-	if (prob(40))
-		user.visible_message("<span class = 'warning'>A loud bang can be heard.</span>")
+	if(prob(40))
+		user.visible_message("<span class='warning'>A loud bang can be heard.</span>")
 		target.rupture_lung()
 
 /datum/surgery_step/ipc_ribcage/wrenchshut_sec
@@ -626,25 +660,26 @@
 	..()
 
 /datum/surgery_step/ipc_ribcage/wrenchshut_sec/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'notice'> [user] has loosen bolts on [target]'s security panel with \the [tool].</span>",
-	"<span class = 'notice'> You have loosen bolts on [target]'s security panel with \the [tool].</span>")
+	user.visible_message("<span class='notice'> [user] has loosen bolts on [target]'s security panel with \the [tool].</span>",
+	"<span class='notice'> You have loosen bolts on [target]'s security panel with \the [tool].</span>")
 
 	target.op_stage.ribcage = 0
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.open = 1
 
 /datum/surgery_step/ipc_ribcage/wrenchshut_sec/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'warning'>[user]'s hand slips, scratching [target]'s security panel with \the [tool]!</span>",
-	"<span class = 'warning'>Your hand slips, scratching [target]'s security panel with \the [tool]!</span>" )
+	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s security panel with \the [tool]!</span>",
+	"<span class='warning'>Your hand slips, scratching [target]'s security panel with \the [tool]!</span>" )
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	BP.createwound(CUT, 20)
 	BP.fracture()
 
 /datum/surgery_step/ipc_ribcage/take_accumulator
 	allowed_tools = list(
-	/obj/item/weapon/crowbar = 100,
-	/obj/item/weapon/hatchet = 75,
-	/obj/item/weapon/circular_saw = 50
+	/obj/item/weapon/screwdriver = 100,
+	/obj/item/weapon/scalpel = 75,
+	/obj/item/weapon/kitchenknife = 75,
+	/obj/item/weapon/shard = 50,
 	)
 
 	min_duration = 60
@@ -656,21 +691,21 @@
 	return ..() && target.op_stage.ribcage == 2
 
 /datum/surgery_step/ipc_ribcage/take_accumulator/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("[user] starts to yank out [target]'s accumulator out with \the [tool].",
-	"You start yanking out [target]'s accumulator with \the [tool].")
+	user.visible_message("[user] starts to unscrew [target]'s accumulator out with \the [tool].",
+	"You start unscrewing [target]'s accumulator with \the [tool].")
 	..()
 
 /datum/surgery_step/ipc_ribcage/take_accumulator/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'notice'>[user] yanked out [target]'s accumulator with \the [tool].</span>",
-	"<span class = 'notice'>You yanked out [target]'s accumulator with \the [tool].</span>")
+	user.visible_message("<span class='notice'>[user] unscrewed [target]'s accumulator with \the [tool].</span>",
+	"<span class='notice'>You unscrewed [target]'s accumulator with \the [tool].</span>")
 	for(var/obj/item/weapon/stock_parts/cell/A in target)
 		A.forceMove(get_turf(target))
-		if(!target.is_damaged_organ(O_KIDNEYS))
-			target.custom_pain("%SHUTTING DOWN%",1)
+		if(!target.is_bruised_organ(O_KIDNEYS))
+			to_chat(target, "<span class='warning italics'>%SHUTTING DOWN%</span>")
 
 /datum/surgery_step/ipc_ribcage/take_accumulator/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'warning>[user]'s hand slips, scratching [target]'s accumulator with \the [tool]!</span>",
-	"<span class = 'warning'>Your hand slips, scratching [target]'s accumulator with \the [tool]!</span>")
+	user.visible_message("<span class='warning>[user]'s hand slips, scratching [target]'s accumulator with \the [tool]!</span>",
+	"<span class='warning'>Your hand slips, scratching [target]'s accumulator with \the [tool]!</span>")
 	var/obj/item/organ/internal/liver/ipc/A = target.organs_by_name[O_LIVER]
 	if(!A)
 		var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
@@ -696,8 +731,8 @@
 	..()
 
 /datum/surgery_step/ipc_ribcage/put_accumulator/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'notice'>[user] has put in \the [tool] into [target]'s accumulator slot.</span>",
-	"<span class = 'notice'>You have put in \the [tool] into [target]'s accumulator slot.</span>")
+	user.visible_message("<span class='notice'>[user] has put in \the [tool] into [target]'s accumulator slot.</span>",
+	"<span class='notice'>You have put in \the [tool] into [target]'s accumulator slot.</span>")
 
 	user.drop_item()
 	tool.forceMove(target)
