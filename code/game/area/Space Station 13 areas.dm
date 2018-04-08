@@ -243,6 +243,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/centcom/arrival
 	name = "Arrival Shuttle Dock"
 
+/area/centcom/battleroyal
+	name = "Battle Royal Arena"
 
 //SYNDICATES
 

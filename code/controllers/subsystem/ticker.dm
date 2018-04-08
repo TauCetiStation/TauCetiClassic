@@ -9,7 +9,7 @@ var/datum/subsystem/ticker/ticker
 
 	flags = SS_FIRE_IN_LOBBY | SS_KEEP_TIMING
 
-	var/const/restart_timeout = 600
+	var/restart_timeout = 600
 	var/current_state = GAME_STATE_STARTUP
 
 	var/hide_mode = 0
@@ -122,6 +122,9 @@ var/datum/subsystem/ticker/ticker
 						mutiny.round_outcome()
 
 					slack_roundend()
+
+					if(1)
+						battleroyal_init()
 
 					if (mode.station_was_nuked)
 						feedback_set_details("end_proper","nuke")
