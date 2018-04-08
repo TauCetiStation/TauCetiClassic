@@ -145,6 +145,9 @@
 	if(..())
 		if(istype(tool, /obj/item/weapon/organ/head/posi) && !target.get_species() == IPC)
 			return
+		else if(istype(tool, /obj/item/weapon/organ/head/posi))
+			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
+			return (BP.status & ORGAN_ATTACHABLE)
 		var/obj/item/robot_parts/p = tool
 		if (target_zone != p.part)
 			to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
@@ -168,6 +171,9 @@
 		BP.sabotaged = TRUE
 	else
 		BP.sabotaged = FALSE
+	if(target_zone == BP_HEAD && !target.has_eyes())
+		target.organs += E
+		target.organs_by_name += O_EYES
 	target.update_body()
 	target.updatehealth()
 	target.UpdateDamageIcon(BP)
@@ -226,8 +232,8 @@
 
 /datum/surgery_step/ipc_limb/cut_wires/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class = 'notice'>[user] finished repositioning wires where [target]'s [BP.name] used to be with \the [tool].</span>",
-	"<span class = 'notice'>You finished repositioning wires where [target]'s [BP.name] used to be with \the [tool].</span>")
+	user.visible_message("<span class='notice'>[user] finished repositioning wires where [target]'s [BP.name] used to be with \the [tool].</span>",
+	"<span class='notice'>You finished repositioning wires where [target]'s [BP.name] used to be with \the [tool].</span>")
 	BP.status |= ORGAN_CUT_AWAY
 	BP.open = 3
 
@@ -235,8 +241,8 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (BP.parent)
 		BP = BP.parent
-		user.visible_message("<span class = 'warning'>[user]'s hand slips, cutting [target]'s [BP.name] open!</span>",
-		"<span class = 'warning'>Your hand slips, cutting [target]'s [BP.name] open!</span>")
+		user.visible_message("<span class='warning'>[user]'s hand slips, cutting [target]'s [BP.name] open!</span>",
+		"<span class='warning'>Your hand slips, cutting [target]'s [BP.name] open!</span>")
 		BP.createwound(CUT, 10)
 
 /datum/surgery_step/ipc_limb/ipc_prepare
@@ -261,8 +267,8 @@
 
 /datum/surgery_step/ipc_limb/ipc_prepare/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class = 'notice'>[user] has finished adjusting the area around [target]'s [BP.name] with \the [tool].</span>",
-	"\blue You have finished adjusting the area around [target]'s [BP.name] with \the [tool].")
+	user.visible_message("<span class='notice'>[user] has finished adjusting the area around [target]'s [BP.name] with \the [tool].</span>",
+	"<span class='notice'>You have finished adjusting the area around [target]'s [BP.name] with \the [tool].</span>")
 	BP.status |= ORGAN_ATTACHABLE
 	BP.amputated = TRUE
 	BP.setAmputatedTree()
@@ -272,6 +278,6 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	if (BP.parent)
 		BP = BP.parent
-		user.visible_message("<span class = 'warning'>[user]'s hand slips, denting [target]'s [BP.name]!</span>",
-		"<span class = 'warning'>Your hand slips, searing [target]'s [BP.name]!</span>")
+		user.visible_message("<span class='warning'>[user]'s hand slips, denting [target]'s [BP.name]!</span>",
+		"<span class='warning'>Your hand slips, searing [target]'s [BP.name]!</span>")
 		target.apply_damage(10, BRUTE, BP)

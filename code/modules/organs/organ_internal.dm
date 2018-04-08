@@ -300,6 +300,7 @@
 
 /obj/item/organ/internal/eyes/ipc
 	name = "cameras"
+	robotic = 2
 
 /obj/item/organ/internal/eyes/process() //Eye damage replaces the old eye_stat var.
 	..()

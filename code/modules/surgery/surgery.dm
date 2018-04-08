@@ -36,12 +36,16 @@
 
 	if(allowed_species)
 		for(var/species in allowed_species)
-			if(target.species.name == species)
+			if("exclude" in allowed_species && target.species.name == species)
+				return FALSE
+			else if(target.species.name == species)
 				return TRUE
 
 	if(disallowed_species)
 		for(var/species in disallowed_species)
-			if(target.species.name == species)
+			if("exclude" in disallowed_species && target.species.name == species)
+				return TRUE
+			else if(target.species.name == species)
 				return FALSE
 
 	return TRUE

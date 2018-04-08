@@ -1290,7 +1290,15 @@ Note that amputating the affected organ does in fact remove the infection from t
 					if(istype(crab))
 						crab.sting_action(brainmob)
 						H.gib()
+	else
+		var/obj/item/organ/internal/eyes/E = H.organs_by_name[O_EYES]
+		if(E)
+			H.organs -= E
+			H.organs_by_name -= O_EYES
+			H.h_style = "Bald"
+			H.f_style = "Shaved"
 	H.update_body()
+	H.update_hair()
 
 /obj/item/weapon/organ/head/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->head
 	brainmob = new(src)

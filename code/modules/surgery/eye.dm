@@ -191,18 +191,18 @@
 	..()
 
 /datum/surgery_step/ipc_eye/screw_open/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'notice'>[user] unscrewed [target]'s camera panels with \the [tool].</span>" ,
-	"<span class = 'notice'>You unscrewed [target]'s camera panels with \the [tool].</span>")
+	user.visible_message("<span class='notice'>[user] unscrewed [target]'s camera panels with \the [tool].</span>" ,
+	"<span class='notice'>You unscrewed [target]'s camera panels with \the [tool].</span>")
 	target.op_stage.eyes = 1
 	if(!target.is_damaged_organ(O_KIDNEYS))
-		target.custom_pain("%VISUALS DENIED%. REQUESTING ADDITIONAL PERSPECTIVE REACTIONS.",1)
+		to_chat(target, "<span class='warning italics'>%VISUALS DENIED%. REQUESTING ADDITIONAL PERSPECTION REACTIONS.</span>")
 	target.blinded += 1.5
 
 /datum/surgery_step/ipc_eye/screw_open/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class = 'warning'>[user]'s hand slips, scratching [target]'s cameras wth \the [tool]!</span>" ,
-	"<span class = 'warning'>Your hand slips, scratching [target]'s cameras wth \the [tool]!</span>")
+	user.visible_message("<span class='warning'>[user]'s hand slips, scratching [target]'s cameras wth \the [tool]!</span>" ,
+	"<span class='warning'>Your hand slips, scratching [target]'s cameras wth \the [tool]!</span>")
 	BP.createwound(CUT, 10)
 	IO.take_damage(5, 0)
 
@@ -225,15 +225,15 @@
 	..()
 
 /datum/surgery_step/ipc_eye/mend_cameras/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	user.visible_message("<span class = 'notice'>[user] mends the lenses and wires in [target]'s cameras with \the [tool].</span>",
-	"<span class = 'notice'>You mend the lenses abd wires in [target]'s cameras with \the [tool].</span>")
+	user.visible_message("<span class='notice'>[user] mends the lenses and wires in [target]'s cameras with \the [tool].</span>",
+	"<span class='notice'>You mend the lenses abd wires in [target]'s cameras with \the [tool].</span>")
 	target.op_stage.eyes = 2
 
 /datum/surgery_step/ipc_eye/mend_cameras/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("<span class = 'warning'>[user]'s hand slips, denting [target]'s cameras with \the [tool]!</span>",
-	"<span class = 'warning'>Your hand slips, denting [target]'s cameras with \the [tool]!</span>")
+	user.visible_message("<span class='warning'>[user]'s hand slips, denting [target]'s cameras with \the [tool]!</span>",
+	"<span class='warning'>Your hand slips, denting [target]'s cameras with \the [tool]!</span>")
 	var/dam_amt = 2
 
 	if(istype(tool, /obj/item/stack/nanopaste) || istype(tool, /obj/item/weapon/bonegel))
@@ -245,7 +245,7 @@
 
 	IO.take_damage(dam_amt,0)
 	if(!target.is_damaged_organ(O_KIDNEYS))
-		target.custom_pain("SEVERE VISUAL SENSOR DAMAGE DETECTED. %REACTION_OVERLOAD%.",1)
+		to_chat(target, "<span class='warning italics'>SEVERE VISUAL SENSOR DAMAGE DETECTED. %REACTION_OVERLOAD%.</span>")
 	target.blinded += 3.0
 
 /datum/surgery_step/ipc_eye/close_shut
@@ -268,8 +268,8 @@
 
 /datum/surgery_step/ipc_eye/closet_shut/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/internal/eyes/eyes = target.organs_by_name[O_EYES]
-	user.visible_message("<span class = 'notice'>[user] locks [target]'s camera panels with \the [tool].</span>",
-	"<span class = 'notice'>You lock [target]'s camera panels with \the [tool].<span>")
+	user.visible_message("<span class='notice'>[user] locks [target]'s camera panels with \the [tool].</span>",
+	"<span class='notice'>You lock [target]'s camera panels with \the [tool].</span>")
 	if (target.op_stage.eyes == 2)
 		target.disabilities &= ~NEARSIGHTED
 		target.sdisabilities &= ~BLIND
@@ -279,7 +279,7 @@
 /datum/surgery_step/ipc_eye/close_shut/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	var/obj/item/organ/internal/eyes/IO = target.organs_by_name[O_EYES]
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
-	user.visible_message("\red [user]'s hand slips,  denting [target]'s cameras with \the [tool]!", \
-	"\red Your hand slips, denting [target]'s cameras with \the [tool]!")
+	user.visible_message("<span class='warning'>[user]'s hand slips,  denting [target]'s cameras with \the [tool]!</span>",
+	"<span class='warning'>Your hand slips, denting [target]'s cameras with \the [tool]!</span>")
 	target.apply_damage(5, BRUTE, BP)
 	IO.take_damage(5, 0)
