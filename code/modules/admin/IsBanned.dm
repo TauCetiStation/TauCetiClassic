@@ -12,6 +12,14 @@ world/IsBanned(key,address,computer_id)
 		message_admins("\blue Failed Login: [key] - Guests not allowed")
 		return list("reason"="guest", "desc"="\nReason: Guests not allowed. Please sign in with a byond account.")
 
+	//Whitelist Checking
+	var/DBQuery/wquery = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ckey = '[ckey(key)]'")
+	wquery.Execute()
+	if(!wquery.NextRow())
+		log_access("Failed Login: [key] - not in Whitelist")
+		message_admins("\blue Failed Login: [key] - not in Whitelist")
+		return list("reason"="whitelist", "desc"="\nReason: You shall not pass! Whitelist enabled.")
+
 	if(config.ban_legacy_system)
 
 		//Ban Checking
