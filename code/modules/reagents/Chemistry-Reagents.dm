@@ -101,8 +101,6 @@ datum
 				return
 
 			check_digesting(mob/living/M)
-				if(M.stat == DEAD) // Dead can't digest. Period. Alright?
-					return FALSE
 				if(restrict_species)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -150,7 +148,7 @@ datum
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(alien && alien == IS_DIONA)
+				if(alien && alien == DIONA)
 					M.adjustCloneLoss(-REM)
 
 			reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
@@ -273,7 +271,7 @@ datum
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(alien && alien == IS_DIONA)
+				if(alien && alien == DIONA)
 					M.nutrition += REM
 
 		water/holywater
@@ -424,7 +422,7 @@ datum
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(alien && alien == IS_VOX)
+				if(alien && alien == VOX)
 					M.adjustToxLoss(REAGENTS_METABOLISM)
 				else
 					if(M.losebreath >= 10)
@@ -517,7 +515,7 @@ datum
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(alien && alien == IS_VOX)
+				if(alien && alien == VOX)
 					M.adjustToxLoss(REAGENTS_METABOLISM)
 					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
 
@@ -543,10 +541,10 @@ datum
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(alien && alien == IS_VOX)
+				if(alien && alien == VOX)
 					M.adjustOxyLoss(-2 * REM)
 					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
-				if(alien && alien == IS_DIONA)
+				if(alien && alien == DIONA)
 					M.adjustBruteLoss(-REM)
 					M.adjustOxyLoss(-REM)
 					M.adjustToxLoss(-REM)
@@ -671,7 +669,7 @@ datum
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(alien && alien == IS_DIONA)
+				if(alien && alien == DIONA)
 					M.adjustBruteLoss(-REM)
 					M.adjustOxyLoss(-REM)
 					M.adjustToxLoss(-REM)
@@ -1136,7 +1134,7 @@ datum
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(alien && alien == IS_VOX)
+				if(alien && alien == VOX)
 					M.adjustToxLoss(2 * REM)
 				else
 					M.adjustOxyLoss(-2 * REM)
@@ -1157,7 +1155,7 @@ datum
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(alien && alien == IS_VOX)
+				if(alien && alien == VOX)
 					M.adjustOxyLoss()
 				else
 					M.adjustOxyLoss(-M.getOxyLoss())
@@ -3312,7 +3310,7 @@ datum
 		if(isnum(A.data))
 			d += A.data
 
-	if(alien && alien == IS_SKRELL) //Skrell get very drunk very quickly.
+	if(alien && alien == SKRELL) //Skrell get very drunk very quickly.
 		d *= 5
 
 	M.dizziness += dizzy_adj
@@ -4223,7 +4221,7 @@ datum
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(!alien || !alien == IS_DIONA)
+		if(!alien || !alien == DIONA)
 			switch(volume)
 				if(1 to 5)
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST] // it was H.get_bodypart(????) with nothing as arg, so its always a chest?

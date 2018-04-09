@@ -21,8 +21,6 @@
                                 "milk",
                                 "coffee"
                                )
-
-	alien = IS_DIONA
 	race = DIONA
 	var/datum/reagent/injecting = null
 	universal_understand = FALSE // Dionaea do not need to speak to people

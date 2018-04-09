@@ -949,9 +949,9 @@
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
 
 	if(reagents && !species.flags[IS_SYNTHETIC]) //Synths don't process reagents.
-		var/alien = 0
-		if(species && species.reagent_tag)
-			alien = species.reagent_tag
+		var/alien = null
+		if(species)
+			alien = species.name
 		reagents.metabolize(src,alien)
 
 		var/total_phoronloss = 0

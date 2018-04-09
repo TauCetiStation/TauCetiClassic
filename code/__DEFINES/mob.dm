@@ -72,12 +72,6 @@
 #define MONKEY      "Monkey"
 #define GOLEM       "Adamantine Golem"
 
-//Some on_mob_life() procs check for alien races.
-#define IS_DIONA  1
-#define IS_VOX	  2
-#define IS_SKRELL 3
-#define IS_UNATHI 4
-
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
 
 #define ALIEN_SELECT_AFK_BUFFER 1 // How many minutes that a person can be AFK before not being allowed to be an alien.

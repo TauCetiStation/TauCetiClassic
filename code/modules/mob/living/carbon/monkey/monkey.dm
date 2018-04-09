@@ -20,7 +20,6 @@
 	//var/uni_append = "12C4E2"                // Small appearance modifier for different species.
 	var/list/uni_append = list(0x12C,0x4E2)    // Same as above for DNA2.
 	var/update_muts = 1                        // Monkey gene must be set at start.
-	var/alien = null				   //Used for reagent metabolism.
 	var/race = HUMAN // Used for restrictions checking.
 	holder_type = /obj/item/weapon/holder/monkey
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5)
@@ -40,7 +39,6 @@
 	speak_emote = list("squicks")
 	icon_state = "skrellkey1"
 	uni_append = list(0x01C,0xC92) // 01CC92
-	alien = IS_SKRELL
 	race = SKRELL
 	holder_type = /obj/item/weapon/holder/monkey/neaera
 
@@ -50,7 +48,6 @@
 	speak_emote = list("hisses")
 	icon_state = "stokkey1"
 	uni_append = list(0x044,0xC5D) // 044C5D
-	alien = IS_UNATHI
 	race = UNATHI
 	holder_type = /obj/item/weapon/holder/monkey/stok
 
@@ -118,7 +115,6 @@
 /mob/living/carbon/monkey/diona/atom_init()
 
 	. = ..()
-	alien = 1
 	gender = NEUTER
 	dna.mutantrace = "plant"
 	greaterform = DIONA
