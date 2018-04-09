@@ -14,8 +14,8 @@ world/IsBanned(key,address,computer_id)
 
 	//Whitelist Checking
 	var/DBQuery/wquery = dbcon.NewQuery("SELECT ckey FROM erro_player WHERE ckey = '[ckey(key)]'")
-	query.Execute()
-	if(!query.NextRow())
+	wquery.Execute()
+	if(!wquery.NextRow())
 		log_access("Failed Login: [key] - not in Whitelist")
 		message_admins("\blue Failed Login: [key] - not in Whitelist")
 		return list("reason"="whitelist", "desc"="\nReason: You shall not pass! Whitelist enabled.")
