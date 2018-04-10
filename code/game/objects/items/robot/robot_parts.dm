@@ -7,6 +7,12 @@
 	slot_flags = SLOT_BELT
 	var/part = null
 	var/sabotaged = 0 //Emagging limbs can have repercussions when installed as prosthetics.
+	var/datum/robolimb/model
+
+/obj/item/robot_parts/atom_init()
+	. = ..()
+	if(!model)
+		model = all_robolimbs["Unbranded"]
 
 /obj/item/robot_parts/l_arm
 	name = "robot left arm"

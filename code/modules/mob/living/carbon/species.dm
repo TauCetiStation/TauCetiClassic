@@ -131,7 +131,7 @@
 		for(var/obj/item/organ/external/BP in H.bodyparts)
 			if(BP.status & (ORGAN_CUT_AWAY | ORGAN_DESTROYED))
 				continue
-			BP.status |= ORGAN_ROBOT
+			BP.robotize("Morpheus")
 		for(var/obj/item/organ/internal/IO in H.organs)
 			IO.mechanize()
 

@@ -26,6 +26,7 @@
 	var/list/children = list()        // Sub-limbs.
 	var/list/bodypart_organs = list() // Internal organs of this body part
 	var/sabotaged = 0                 // If a prosthetic limb is emagged, it will detonate when it fails.
+	var/datum/robolimb/model
 	var/list/implants = list()        // Currently implanted objects.
 
 	// Joint/state stuff.
@@ -893,7 +894,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			status |= ORGAN_SPLINTED
 			suit.supporting_limbs |= src
 
-/obj/item/organ/external/proc/robotize()
+/obj/item/organ/external/proc/robotize(company = "Unbranded")
 	status &= ~ORGAN_BROKEN
 	status &= ~ORGAN_BLEEDING
 	status &= ~ORGAN_SPLINTED
@@ -904,8 +905,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	status |= ORGAN_ROBOT
 	destspawn = 0
 	amputated = 0
+	model = all_robolimbs[company]
 	for (var/obj/item/organ/external/BP in children)
-		BP.robotize()
+		BP.robotize(company)
 
 /obj/item/organ/external/proc/mutate()
 	src.status |= ORGAN_MUTATED
@@ -928,8 +930,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(!owner.species.has_gendered_icons)
 		gender = ""
 
-	if (status & ORGAN_ROBOT && !(owner.species && owner.species.flags[IS_SYNTHETIC]))
-		return new /icon('icons/mob/human_races/robotic.dmi', "[body_zone][gender ? "_[gender]" : ""]")
+	if (status & ORGAN_ROBOT)
+		return new /icon(model.iconbase, "[body_zone][gender ? "_[gender]" : ""]")
 
 	if (status & ORGAN_MUTATED)
 		return new /icon(deform_icon, "[body_zone][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
@@ -943,6 +945,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/g = ""
 	if(owner.species.has_gendered_icons)
 		g = owner.gender == FEMALE ? "_f" : "_m"
+
+	if (status & ORGAN_ROBOT)
+		return new /icon(model.iconbase, "[body_zone][g ? "_[gender]" : ""]")
 
 	if(status & ORGAN_MUTATED)
 		. = new /icon(deform_icon, "[body_zone][g]")
