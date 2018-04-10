@@ -4426,6 +4426,142 @@ datum
 	var/datum/preferences/A = new()	//Randomize appearance for the human
 	A.randomize_appearance_for(H)
 
+/datum/reagent/hair_dye
+	name = "Hair Dye"
+	id = "whitehairdye"
+	description = "A compound used to dye hair. Any hair."
+	data = new/list("r_color"=255,"g_color"=255,"b_color"=255)
+	reagent_state = LIQUID
+	color = "#FFFFFF" // to see rgb just look into data!
+	taste_message = "liquid colour"
+
+/datum/reagent/hair_dye/red
+	name = "Red Hair Dye"
+	id = "redhairdye"
+	data = list("r_color"=255,"g_color"=0,"b_color"=0)
+	reagent_state = LIQUID
+	color = "#FF0000"
+
+/datum/reagent/hair_dye/green
+	name = "Green Hair Dye"
+	id = "greenhairdye"
+	data = list("r_color"=0,"g_color"=255,"b_color"=0)
+	reagent_state = LIQUID
+	color = "#00FF00"
+
+/datum/reagent/hair_dye/blue
+	name = "Blue Hair Dye"
+	id = "bluehairdye"
+	data = list("r_color"=0,"g_color"=0,"b_color"=255)
+	reagent_state = LIQUID
+	color = "#0000FF"
+
+/datum/reagent/hair_dye/black
+	name = "Black Hair Dye"
+	id = "blackhairdye"
+	data = list("r_color"=0,"g_color"=0,"b_color"=0)
+	reagent_state = LIQUID
+	color = "#000000"
+
+/datum/reagent/hair_dye/brown
+	name = "Brown Hair Dye"
+	id = "brownhairdye"
+	data = list("r_color"=50,"g_color"=0,"b_color"=0)
+	reagent_state = LIQUID
+	color = "#500000"
+
+/datum/reagent/hair_dye/blond
+	name = "Blond Hair Dye"
+	id = "blondhairdye"
+	data = list("r_color"=255,"g_color"=225,"b_color"=135)
+	reagent_state = LIQUID
+	color = "#FFE187"
+
+/datum/chemical_reaction/hair_dye
+	name = "Hair Dye"
+	id = "whitehairdye"
+	result = "whitehairdye"
+	required_reagents = list("lube" = 1, "sodiumchloride" = 1)
+	result_amount = 2
+
+/datum/chemical_reaction/hair_dye/red
+	name = "Red Hair Dye"
+	id = "redhairdye"
+	result = "redhairdye"
+	required_reagents = list("hairdye" = 1, "iron" = 1)
+	result_amount = 1 // They don't mix, instead they react.
+
+/datum/chemical_reaction/hair_dye/blue
+	name = "Blue Hair Dye"
+	id = "bluehairdye"
+	result = "bluehairdye"
+	required_reagents = list("hairdye" = 1, "copper" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye/green
+	name = "Green Hair Dye"
+	id = "greenhairdye"
+	result = "greenhairdye"
+	required_reagents = list("hairdye" = 1, "chlorine" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye/black
+	name = "Black Hair Dye"
+	id = "blackhairdye"
+	result = "blackhairdye"
+	required_reagents = list("hairdye" = 1, "carbon" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye/brown
+	name = "Brown Hair Dye"
+	id = "brownhairdye"
+	result = "brownhairdye"
+	required_reagents = list("hairdye" = 1, "sulfur" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye/blond
+	name = "Blond Hair Dye"
+	id = "blondhairdye"
+	result = "blondhairdye"
+	required_reagents = list("hairdye" = 1, "sugar" = 1)
+	result_amount = 1
+
+/datum/reagent/hair_dye/reaction_mob(mob/M, method=TOUCH, volume)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/r_tweak = ((data["r_color"] * volume) / 10) // volume of 10 basically just replaces the color alltogether, a potent hair dye this is.
+		var/g_tweak = ((data["g_color"] * volume) / 10)
+		var/b_tweak = ((data["b_color"] * volume) / 10)
+		var/volume_coefficient = max((10-volume)/10, 0)
+		if(H.client && volume >= 5 && !H.glasses)
+			H.eye_blurry = max(H.eye_blurry, volume)
+			H.eye_blind = max(H.eye_blind, 1)
+		if(volume >= 10 && H.species && H.species.flags[HAS_SKIN_COLOR])
+			if(!H.wear_suit && !H.w_uniform && !H.shoes && !H.head && !H.wear_mask) // You either paint the full body, or beard/hair
+				H.r_skin = Clamp(round(H.r_skin*max((100-volume)/100, 0) + r_tweak*0.1), 0, 255) // Full body painting is costly! Hence, *0.1
+				H.g_skin = Clamp(round(H.g_skin*max((100-volume)/100, 0) + g_tweak*0.1), 0, 255)
+				H.b_skin = Clamp(round(H.b_skin*max((100-volume)/100, 0) + b_tweak*0.1), 0, 255)
+				H.r_hair = Clamp(round(H.r_hair*max((100-volume)/100, 0) + r_tweak*0.1), 0, 255) // If you're painting full body, all the painting is costly.
+				H.g_hair = Clamp(round(H.g_hair*max((100-volume)/100, 0) + g_tweak*0.1), 0, 255)
+				H.b_hair = Clamp(round(H.b_hair*max((100-volume)/100, 0) + b_tweak*0.1), 0, 255)
+				H.r_facial = Clamp(round(H.r_facial*max((100-volume)/100, 0) + r_tweak*0.1), 0, 255)
+				H.g_facial = Clamp(round(H.g_facial*max((100-volume)/100, 0) + g_tweak*0.1), 0, 255)
+				H.b_facial = Clamp(round(H.b_facial*max((100-volume)/100, 0) + b_tweak*0.1), 0, 255)
+		else if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
+			if(!(H.head && (H.head.flags & HEADCOVERSMOUTH)) && H.h_style != "Bald")
+				H.r_hair = Clamp(round(H.r_hair*volume_coefficient + r_tweak), 0, 255)
+				H.g_hair = Clamp(round(H.g_hair*volume_coefficient + g_tweak), 0, 255)
+				H.b_hair = Clamp(round(H.b_hair*volume_coefficient + b_tweak), 0, 255)
+			if(!(H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)) && H.f_style != "Shaved")
+				H.r_facial = Clamp(round(H.r_facial*volume_coefficient + r_tweak), 0, 255)
+				H.g_facial = Clamp(round(H.g_facial*volume_coefficient + g_tweak), 0, 255)
+				H.b_facial = Clamp(round(H.b_facial*volume_coefficient + b_tweak), 0, 255)
+		if(!H.head && !H.wear_mask && H.h_style == "Bald" && H.f_style == "Shaved" && volume >= 5)
+			H.lip_style = "spray_face"
+			H.lip_color = color
+		H.update_hair()
+		H.update_body()
+
 /proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc
 	var/result = "| "
