@@ -158,7 +158,7 @@
 	user.visible_message("\blue [user] has attached \the [tool] where [target]'s [BP.name] used to be.",	\
 	"\blue You have attached \the [tool] where [target]'s [BP.name] used to be.")
 	BP.germ_level = 0
-	BP.robotize()
+	BP.robotize(L.model.company)
 	if(L.sabotaged)
 		BP.sabotaged = 1
 	else

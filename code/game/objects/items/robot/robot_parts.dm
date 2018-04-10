@@ -44,6 +44,7 @@
 	icon_state = "chest"
 	var/wires = 0.0
 	var/obj/item/weapon/stock_parts/cell/cell = null
+	part = BP_CHEST
 
 /obj/item/robot_parts/head
 	name = "robot head"
@@ -51,6 +52,13 @@
 	icon_state = "head"
 	var/obj/item/device/flash/flash1 = null
 	var/obj/item/device/flash/flash2 = null
+	part = BP_HEAD
+
+/obj/item/robot_parts/groin
+	name = "robot groin"
+	desc = "A standard chasis for holding leg-pseudomuscles together. Wrapped in wires and other not relatable stuff."
+	icon_state = "chest" // Placeholder.
+	part = BP_GROIN
 
 /obj/item/robot_parts/robot_suit
 	name = "robot endoskeleton"

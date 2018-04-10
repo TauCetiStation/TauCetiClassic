@@ -9,7 +9,7 @@ var/datum/robolimb/unbranded
 	var/desc = "A generic unbranded robotic prosthesis." // Seen when examining a limb.
 	var/iconbase = 'icons/mob/human_races/robotic.dmi'       // Icon base to draw from.
 	var/protected = 0									 // How protected from EMP the limb is.
-	var/list/restrict_species = list(HUMAN, SKRELL, UNATHI, TAJARAN, DIONA, IPC, VOX, VOX_ARMALIS, ABDUCTOR, SKELETON, SHADOWLING, GOLEM)
+	var/list/restrict_species = list("exclude")
 	var/monitor = FALSE			 		 			 // Whether the limb can display IPC screens.
 	var/parts = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)						 	 // Defines what parts said brand can replace on a body.
 

@@ -321,13 +321,17 @@
 					var/list/valid_hairstyles = list()
 					for(var/hairstyle in hair_styles_list)
 						var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-						if( !(species in S.species_allowed))
+						if(!(species in S.species_allowed))
 							if(gender == MALE && S.gender == FEMALE)
 								continue
 							if(gender == FEMALE && S.gender == MALE)
 								continue
 							if(!(species in S.species_allowed))
 								continue
+							var/datum/robolimb/IPC_monitor = all_robolimbs[organ_prost_data[BP_HEAD]]
+							if(species == IPC && !IPC_monitor.monitor)
+								continue
+
 
 						valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
 
@@ -500,9 +504,9 @@
 							for(var/company in all_robolimbs)
 								var/datum/robolimb/limb_type = all_robolimbs[company]
 								if(limb in limb_type.parts)
-									if("exclude" in limb_type.restrict_species && !(species in limb_type.restrict_species))
+									if(("exclude" in limb_type.restrict_species) && !(species in limb_type.restrict_species))
 										prothesis_types += company
-									if(!("exclude" in limb_type.restrict_species) && species in limb_type.restrict_species)
+									else if(species in limb_type.restrict_species)
 										prothesis_types += company
 
 							if(!prothesis_types.len)
@@ -515,15 +519,16 @@
 							switch(new_state)
 								if("Normal")
 									organ_data[limb] = null
+									organ_prost_data[limb] = null
 								if("Amputated")
 									organ_data[limb] = "amputated"
+									organ_prost_data[limb] = null
 								if("Prothesis")
 									var/new_company = input(user, "What manufacturer do you wish the limb to be made by?") as null|anything in prothesis_types
 									if(!new_company)
 										new_company = "Unbranded"
 									organ_data[limb] = "cyborg"
 									organ_prost_data[limb] = new_company
-									world.log << "[organ_prost_data[limb]]"
 
 						if("Organs")
 							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")

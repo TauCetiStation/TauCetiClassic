@@ -660,8 +660,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 			switch(body_zone)
 				if(BP_HEAD)
-					if(owner.species.flags[IS_SYNTHETIC])
-						bodypart = new /obj/item/weapon/organ/head/posi(owner.loc, owner)
+					if(status & ORGAN_ROBOT)
+						bodypart = new /obj/item/robot_parts/head(owner.loc)
 					else
 						bodypart = new /obj/item/weapon/organ/head(owner.loc, owner)
 				if(BP_R_ARM)
@@ -687,14 +687,17 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 			if(bodypart)
 				//Robotic limbs explode if sabotaged.
-				if(status & ORGAN_ROBOT && !no_explode && sabotaged)
-					explosion(get_turf(owner), -1, -1, 2, 3)
-					var/datum/effect/effect/system/spark_spread/spark_system = new
-					spark_system.set_up(5, 0, owner)
-					spark_system.attach(owner)
-					spark_system.start()
-					spawn(10)
-						qdel(spark_system)
+				if(status & ORGAN_ROBOT)
+					var/obj/item/robot_parts/BP = bodypart
+					BP.model = model
+					if(!no_explode && sabotaged)
+						explosion(get_turf(owner), -1, -1, 2, 3)
+						var/datum/effect/effect/system/spark_spread/spark_system = new
+						spark_system.set_up(5, 0, owner)
+						spark_system.attach(owner)
+						spark_system.start()
+						spawn(10)
+							qdel(spark_system)
 
 				var/matrix/M = matrix()
 				M.Turn(rand(180))
@@ -906,8 +909,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	destspawn = 0
 	amputated = 0
 	model = all_robolimbs[company]
-	for (var/obj/item/organ/external/BP in children)
-		BP.robotize(company)
 
 /obj/item/organ/external/proc/mutate()
 	src.status |= ORGAN_MUTATED
@@ -947,7 +948,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		g = owner.gender == FEMALE ? "_f" : "_m"
 
 	if (status & ORGAN_ROBOT)
-		return new /icon(model.iconbase, "[body_zone][g ? "_[gender]" : ""]")
+		return new /icon(model.iconbase, "[body_zone][g]")
 
 	if(status & ORGAN_MUTATED)
 		. = new /icon(deform_icon, "[body_zone][g]")
