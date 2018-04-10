@@ -121,7 +121,7 @@
 	icon_state = "hairspray"
 	item_state = "hairspray"
 	amount_per_transfer_from_this = 1
-	possible_transfer_amounts = list(1,5,10) //Set to null instead of list, if there is only one.
+	possible_transfer_amounts = list(1,5,10)
 	spray_size = 1
 	spray_sizes = list(1)
 
