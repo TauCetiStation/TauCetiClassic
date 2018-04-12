@@ -290,32 +290,6 @@
 	t = replacetext(t, "\[/large\]", "</font>")
 	t = replacetext(t, "\[field\]", "<span class=\"paper_field\"></span>")
 
-	// tables
-	t = replacetext(t, "\[table\]", "<table border=3px cellpadding=5px bordercolor=\"black\">");
-	t = replacetext(t, "\[/table\]", "</table>");
-	t = replacetext(t, "\[tr\]", "<tr>");
-	t = replacetext(t, "\[/tr\]", "</tr>");
-	t = replacetext(t, "\[td\]", "<td>");
-	t = replacetext(t, "\[/td\]", "</td>");
-	t = replacetext(t, "\[th\]", "<th>");
-	t = replacetext(t, "\[/th\]", "</th>");
-
-	// standart head
-	t = replacetext(t, "\[h\]", "<h3 style=\"font-family: Arial; text-align:center;\">");
-	t = replacetext(t, "\[/h\]", "</h3>");
-
-	// bordered head;
-	t = replacetext(t, "\[bh\]", "<h3 style=\"border-width: 4px; border-style: solid; font-family: Arial; padding: 10px; text-align:center;\">");
-	t = replacetext(t, "\[/bh\]", "</h3>")
-
-	// blockquote
-	t = replacetext(t, "\[quote\]", "<blockquote style=\"line-height:normal; margin-bottom:10px; font-style:italic; letter-spacing: 1.25px; text-align:right;\">");
-	t = replacetext(t, "\[/quote\]", "</blockquote>");
-
-	// div
-	t = replacetext(t, "\[block\]", "<div style=\"border-width: 4px; border-style: dashed;\">");
-	t = replacetext(t, "\[/block\]", "</div>");
-
 	if(!iscrayon)
 		t = replacetext(t, "\[*\]", "<li>")
 		t = replacetext(t, "\[hr\]", "<HR>")
@@ -434,15 +408,6 @@
 		var last_fields_value = fields
 
 		t = replacetext(t, "\n", "<BR>")
-
-		// check for exploits
-		for(var/bad in paper_blacklist)
-			if(findtext(t,bad))
-				to_chat(usr, "\blue You think to yourself, \"Hm.. this is only paper...\"")
-				log_admin("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
-				message_admins("PAPER: [usr] ([usr.ckey]) tried to use forbidden word in [src]: [bad].")
-				return
-
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
 
 		if(fields > 50)
