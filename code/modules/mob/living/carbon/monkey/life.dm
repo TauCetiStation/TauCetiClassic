@@ -450,7 +450,7 @@
 	proc/handle_chemicals_in_body()
 
 		if(reagents && reagents.reagent_list.len)
-			reagents.metabolize(src,alien)
+			reagents.metabolize(src,race)
 
 		if (drowsyness)
 			drowsyness--
