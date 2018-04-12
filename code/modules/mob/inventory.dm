@@ -270,7 +270,7 @@ var/list/slot_equipment_priority = list(
 		src.client.screen -= O
 	O.layer = initial(O.layer)
 	O.plane = initial(O.plane)
-	O.appearance_flags = initial(0)
+	O.appearance_flags = initial(O.appearance_flags)
 	O.screen_loc = null
 	if(istype(O, /obj/item))
 		var/obj/item/I = O
