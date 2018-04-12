@@ -523,7 +523,7 @@
 	set popup_menu = 0
 	if(usr != intruder)
 		return
-	intruder << browse(get_stats_html(), "window=droppod")
+	intruder << browse(entity_ja(get_stats_html()), "window=droppod")
 	return
 
 /obj/structure/droppod/proc/get_stats_html()

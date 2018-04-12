@@ -133,7 +133,7 @@
 					t1 += " <A href='?src=\ref[src];make=[i];multiplier=[max_multiplier]'>[max_multiplier*R.res_amount]x</A>"
 
 	t1 += "</TT></body></HTML>"
-	user << browse(t1, "window=stack")
+	user << browse(entity_ja(t1), "window=stack")
 	onclose(user, "stack")
 	return
 
@@ -319,10 +319,10 @@
 	var/res_amount = 1
 	var/max_res_amount = 1
 	var/time = 0
-	var/one_per_turf = 0
-	var/on_floor = 0
+	var/one_per_turf = FALSE
+	var/on_floor = FALSE
 
-/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = 0, on_floor = 0)
+/datum/stack_recipe/New(title, result_type, req_amount = 1, res_amount = 1, max_res_amount = 1, time = 0, one_per_turf = FALSE, on_floor = FALSE)
 	src.title = title
 	src.result_type = result_type
 	src.req_amount = req_amount

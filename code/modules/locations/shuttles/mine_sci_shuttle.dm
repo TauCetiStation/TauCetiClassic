@@ -32,7 +32,7 @@ var/global/area/mine_sci_curr_location = null
 	else
 		dat = "Cannot find shuttle"
 
-	user << browse(dat, "window=flightcomputer;size=575x450")
+	user << browse(entity_ja(dat), "window=flightcomputer;size=575x450")
 	onclose(user, "flightcomputer")
 
 /obj/machinery/computer/mine_sci_shuttle/Topic(href, href_list)

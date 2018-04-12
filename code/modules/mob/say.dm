@@ -23,7 +23,7 @@
 		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
-	message = trim(sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN)))
+	message = sanitize(message)
 
 	if(use_me)
 		usr.emote("me",usr.emote_type,message)
@@ -56,7 +56,7 @@
 	if(client.prefs.chat_toggles & CHAT_CKEY)
 		name += " ([key])"
 
-	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] [pick("complains","moans","whines","laments","blubbers")], <span class='message'>\"[sanitize_plus_chat(message)]\"</span></span>"
+	var/rendered = "<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name] [pick("complains","moans","whines","laments","blubbers")], <span class='message'>\"[message]\"</span></span>"
 
 	for(var/mob/M in player_list)
 		if(isnewplayer(M))
@@ -160,7 +160,7 @@
 //returns the language object only if the code corresponds to a language that src can speak, otherwise null.
 /mob/proc/parse_language(message)
 	if(length(message) >= 2)
-		var/language_prefix = lowertext_plus(copytext(message, 1 ,3))
+		var/language_prefix = lowertext_(copytext(message, 1 ,3))
 		var/datum/language/L = language_keys[language_prefix]
 		if (can_speak(L))
 			return L

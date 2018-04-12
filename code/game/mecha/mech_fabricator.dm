@@ -355,7 +355,7 @@
 				</table>
 				</body>
 				</html>"}
-	user << browse(dat, "window=mecha_fabricator;size=1000x430")
+	user << browse(entity_ja(dat), "window=mecha_fabricator;size=1000x430")
 	onclose(user, "mecha_fabricator")
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)

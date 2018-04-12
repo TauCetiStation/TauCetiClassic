@@ -93,7 +93,7 @@
 	else
 		dat += "No local gravity generator detected!"
 
-	user << browse(dat, "window=gravgen")
+	user << browse(entity_ja(dat), "window=gravgen")
 	onclose(user, "gravgen")
 
 

@@ -193,7 +193,7 @@
 			meme_death_explained = "fire"
 		to_chat(meme.current, "<B>You are a <span class = 'red'>meme</span>!</B>")
 		to_chat(meme.current, "<B>Your death is in <span class = 'red'>[meme_death_explained]</span>!</B>")
-		meme.store_memory("<B>Your death is in [meme_death_explained]!</B>", 0, 0)
+		meme.store_memory("<B>Your death is in [meme_death_explained]!</B>", 0)
 
 	var/obj_count = 1
 	for(var/datum/objective/objective in meme.objectives)

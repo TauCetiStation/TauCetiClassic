@@ -97,7 +97,7 @@
 
 			"<A href='?src=\ref[src];operation=patrol'>[auto_patrol ? "On" : "Off"]</A>" )
 
-	user << browse("<HEAD><TITLE>Securitron v2.5 controls</TITLE></HEAD>[dat]", "window=autosec")
+	user << browse("<HEAD><TITLE>Securitron v2.5 controls</TITLE></HEAD>[entity_ja(dat)]", "window=autosec")
 	onclose(user, "autosec")
 
 
@@ -373,7 +373,7 @@
 	..()
 
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", name, created_name), 1, MAX_NAME_LEN)
+		var/t = sanitize_safe(input(user, "Enter new robot name", name, input_default(created_name)), MAX_NAME_LEN)
 		if(!t)
 			return
 		if(!in_range(src, usr) && loc != usr)

@@ -8,9 +8,11 @@
 	color = "#bf80bf"
 	custom_metabolism = 0.01
 	data = 0
+	restrict_species = list(IPC, DIONA)
 
-	on_mob_life(var/mob/living/M as mob)
-		if(!M) M = holder.my_atom
+	on_mob_life(mob/living/M, alien)
+		if(!M)
+			M = holder.my_atom
 		if(src.volume <= 0.1) if(data != -1)
 			data = -1
 			to_chat(M, "\red You lose focus..")
@@ -36,9 +38,11 @@
 	color = "#ff80ff"
 	custom_metabolism = 0.01
 	data = 0
+	restrict_species = list(IPC, DIONA)
 
-	on_mob_life(var/mob/living/M as mob)
-		if(!M) M = holder.my_atom
+	on_mob_life(mob/living/M, alien)
+		if(!M)
+			M = holder.my_atom
 		if(src.volume <= 0.1) if(data != -1)
 			data = -1
 			to_chat(M, "\red Your mind feels a little less stable..")
@@ -65,9 +69,11 @@
 	color = "#ff80bf"
 	custom_metabolism = 0.01
 	data = 0
+	restrict_species = list(IPC, DIONA)
 
-	on_mob_life(var/mob/living/M as mob)
-		if(!M) M = holder.my_atom
+	on_mob_life(mob/living/M, alien)
+		if(!M)
+			M = holder.my_atom
 		if(src.volume <= 0.1) if(data != -1)
 			data = -1
 			to_chat(M, "\red Your mind feels much less stable..")

@@ -97,7 +97,7 @@
 				</table>
 				</body>
 				</html>"}
-	user << browse(dat, "window=mine_fabricator;size=1000x430")
+	user << browse(entity_ja(dat), "window=mine_fabricator;size=1000x430")
 	onclose(user, "mine_fabricator")
 	return
 

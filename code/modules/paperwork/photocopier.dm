@@ -31,7 +31,7 @@
 	dat += "Current toner level: [toner]"
 	if(!toner)
 		dat +="<BR>Please insert a new toner cartridge!"
-	user << browse(dat, "window=copier")
+	user << browse(entity_ja(dat), "window=copier")
 	onclose(user, "copier")
 
 /obj/machinery/photocopier/is_operational_topic()

@@ -116,7 +116,7 @@
 		dat += "Ignore Mushrooms : <A href='?src=\ref[src];ignoreMush=1'>[src.setting_ignoreMushrooms ? "Yes" : "No"]</A><BR>"
 		dat += "</TT>"
 
-	user << browse("<HEAD><TITLE>Farmbot v1.0 controls</TITLE></HEAD>[dat]", "window=autofarm")
+	user << browse("<HEAD><TITLE>Farmbot v1.0 controls</TITLE></HEAD>[entity_ja(dat)]", "window=autofarm")
 	onclose(user, "autofarm")
 
 /obj/machinery/bot/farmbot/Topic(href, href_list)
@@ -572,8 +572,7 @@
 		qdel(src)
 
 	else if(istype(W, /obj/item/weapon/pen))
-		var/t = input(user, "Enter new robot name", src.name, src.created_name) as text
-		t = sanitize(copytext(t, 1, MAX_NAME_LEN))
+		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)) as text, MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)

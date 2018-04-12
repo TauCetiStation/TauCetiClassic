@@ -48,7 +48,7 @@
 			dat += {"<A href='byond://?src=\ref[src];choice=Summon'>Summon Shade</A>"}
 			dat += "<br>"
 			dat += {"<a href='byond://?src=\ref[src];choice=Close'> Close</a>"}
-		user << browse(dat, "window=aicard")
+		user << browse(entity_ja(dat), "window=aicard")
 		onclose(user, "aicard")
 		return
 
@@ -96,7 +96,7 @@
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
 
 
-/obj/item/proc/transfer_soul(choice, target, mob/U).
+/obj/item/proc/transfer_soul(choice, target, mob/U)
 	switch(choice)
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target

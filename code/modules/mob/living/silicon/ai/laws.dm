@@ -162,4 +162,4 @@
 	list += {"<br><A href='byond://?src=\ref[src];lawr=1'>Channel: [src.lawchannel]</A><br>"}
 	list += {"<A href='byond://?src=\ref[src];laws=1'>State Laws</A>"}
 
-	usr << browse(list, "window=laws")
+	usr << browse(entity_ja(list), "window=laws")

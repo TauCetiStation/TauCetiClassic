@@ -36,7 +36,7 @@
 		t += "Output: [laser.active ? "<B>Online</B> <A href = '?src=\ref[laser];online=1'>Offline</A>" : "<A href = '?src=\ref[laser];online=1'>Online</A> <B>Offline</B> "]<BR>"
 	t += "<hr>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	user << browse(t, "window=laser_control;size=500x800")
+	user << browse(entity_ja(t), "window=laser_control;size=500x800")
 	user.machine = src
 
 /*

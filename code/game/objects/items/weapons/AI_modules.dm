@@ -94,8 +94,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/safeguard/attack_self(mob/user)
 	..()
-	var/targName = stripped_input(usr, "Please enter the name of the person to safeguard.", "Safeguard who?", user.name)
-	targetName = targName
+	targetName = sanitize(input(usr, "Please enter the name of the person to safeguard.", "Safeguard who?", input_default(user.name)))
 	desc = text("A 'safeguard' AI module: 'Safeguard [].  Individuals that threaten [] are not human and are a threat to humans.'", targetName, targetName)
 
 /obj/item/weapon/aiModule/safeguard/install(obj/machinery/computer/C)
@@ -123,8 +122,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/oneHuman/attack_self(mob/user)
 	..()
-	var/targName = stripped_input(usr, "Please enter the name of the person who is the only human.", "Who?", user.real_name)
-	targetName = targName
+	targetName = sanitize(input(usr, "Please enter the name of the person who is the only human.", "Who?", input_default(user.real_name)))
 	desc = text("A 'one human' AI module: 'Only [] is human.'", targetName)
 
 /obj/item/weapon/aiModule/oneHuman/install(obj/machinery/computer/C)
@@ -260,9 +258,7 @@ AI MODULES
 	var/new_lawpos = input("Please enter the priority for your new law. Can only write to law sectors 15 and above.", "Law Priority (15+)", lawpos) as num
 	if(new_lawpos < 15)	return
 	lawpos = min(new_lawpos, 50)
-	var/newlaw = ""
-	var/targName = sanitize(copytext(input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw),1,MAX_MESSAGE_LEN))
-	newFreeFormLaw = targName
+	newFreeFormLaw = sanitize(input(usr, "Please enter a new law for the AI.", "Freeform Law Entry"))
 	desc = "A 'freeform' AI module: ([lawpos]) '[newFreeFormLaw]'"
 
 /obj/item/weapon/aiModule/freeform/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
@@ -422,9 +418,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/freeformcore/attack_self(mob/user)
 	..()
-	var/newlaw = ""
-	var/targName = stripped_input(usr, "Please enter a new core law for the AI.", "Freeform Law Entry", newlaw)
-	newFreeFormLaw = targName
+	newFreeFormLaw = sanitize(input(usr, "Please enter a new core law for the AI.", "Freeform Law Entry"))
 	desc = "A 'freeform' Core AI module:  '[newFreeFormLaw]'"
 
 /obj/item/weapon/aiModule/freeformcore/transmitInstructions(mob/living/silicon/ai/target, mob/sender)
@@ -447,9 +441,7 @@ AI MODULES
 
 /obj/item/weapon/aiModule/syndicate/attack_self(mob/user)
 	..()
-	var/newlaw = ""
-	var/targName = stripped_input(usr, "Please enter a new law for the AI.", "Freeform Law Entry", newlaw,MAX_MESSAGE_LEN)
-	newFreeFormLaw = targName
+	newFreeFormLaw = sanitize(input(usr, "Please enter a new law for the AI.", "Freeform Law Entry"))
 	desc = "A hacked AI law module:  '[newFreeFormLaw]'"
 
 /obj/item/weapon/aiModule/syndicate/transmitInstructions(mob/living/silicon/ai/target, mob/sender)

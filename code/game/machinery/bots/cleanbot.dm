@@ -99,7 +99,7 @@
 			text("<A href='?src=\ref[src];operation=screw'>[src.screwloose ? "Yes" : "No"]</A>"),
 			text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"]</A>"))
 
-	user << browse("<HEAD><TITLE>Cleaner v1.0 controls</TITLE></HEAD>[dat]", "window=autocleaner")
+	user << browse("<HEAD><TITLE>Cleaner v1.0 controls</TITLE></HEAD>[entity_ja(dat)]", "window=autocleaner")
 	onclose(user, "autocleaner")
 
 /obj/machinery/bot/cleanbot/Topic(href, href_list)
@@ -120,9 +120,9 @@
 			src.should_patrol =!src.should_patrol
 			src.patrol_path = null
 		if("freq")
-			var/freq = text2num(input("Select frequency for  navigation beacons", "Frequnecy", num2text(beacon_freq / 10))) * 10
+			var/freq = input("Select frequency for  navigation beacons", "Frequnecy", num2text(beacon_freq / 10)) as num
 			if (freq > 0)
-				src.beacon_freq = freq
+				src.beacon_freq = freq * 10
 		if("screw")
 			src.screwloose = !src.screwloose
 			to_chat(usr, "<span class='notice>You twiddle the screw.</span>")
@@ -355,7 +355,7 @@
 		qdel(src)
 
 	else if (istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
+		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)), MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)

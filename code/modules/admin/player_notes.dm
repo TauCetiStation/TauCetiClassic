@@ -89,7 +89,7 @@ datum/admins/proc/notes_gethtml(ckey)
 	if (!key || !note)
 		return
 
-	note = sanitize_alt(note)
+	note = sanitize(note)
 
 	//Loading list of notes for this key
 	var/savefile/info = new("data/player_saves/[copytext(key, 1, 2)]/[key]/info.sav")

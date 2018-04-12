@@ -24,6 +24,7 @@ datum
 		var/custom_metabolism = REAGENTS_METABOLISM
 		var/taste_strength = 1 //how easy it is to taste - the more the easier
 		var/taste_message = "bitterness" //life's bitter by default. Cool points for using a span class for when you're tasting <span class='userdanger'>LIQUID FUCKING DEATH</span>
+		var/list/restrict_species = list(IPC) // Species that simply can not digest this reagent.
 
 		var/overdose = 0
 		var/overdose_dam = 1
@@ -79,6 +80,8 @@ datum
 					return
 				if(!isliving(M))
 					return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
+				if(!check_digesting(M)) // You can't overdose on what you can't digest
+					return
 				if((overdose > 0) && (volume >= overdose))//Overdosing, wooo
 					M.adjustToxLoss(overdose_dam)
 				return TRUE
@@ -97,7 +100,16 @@ datum
 			on_update(atom/A)
 				return
 
-
+			check_digesting(mob/living/M)
+				if(restrict_species)
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if(H.species in restrict_species)
+							return FALSE
+					if(ismonkey(M))
+						var/mob/living/carbon/monkey/C = M
+						if(C.race in restrict_species)
+							return FALSE
 
 		blood
 			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null, "antibodies" = null)
@@ -133,9 +145,11 @@ datum
 				if(self.data && self.data["antibodies"] && istype(M, /mob/living/carbon))//... and curing
 					var/mob/living/carbon/C = M
 					C.antibodies |= self.data["antibodies"]
-
-
-
+			on_mob_life(mob/living/M, alien)
+				if(!..())
+					return
+				if(alien && alien == DIONA)
+					M.adjustCloneLoss(-REM)
 
 			reaction_turf(var/turf/simulated/T, var/volume)//splash the blood all over the place
 				if(!istype(T)) return
@@ -254,6 +268,11 @@ datum
 					if(!cube.wrapped)
 						cube.Expand()
 				return
+			on_mob_life(mob/living/M, alien)
+				if(!..())
+					return
+				if(alien && alien == DIONA)
+					M.nutrition += REM
 
 		water/holywater
 			name = "Holy Water"
@@ -363,8 +382,9 @@ datum
 			color = "#c8a5dc" // rgb: 200, 165, 220
 			custom_metabolism = REAGENTS_METABOLISM * 0.5
 			overdose = REAGENTS_OVERDOSE
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
 				if(M.losebreath >= 10)
@@ -397,11 +417,12 @@ datum
 			color = "#00bfff" // rgb: 200, 165, 220
 			custom_metabolism = REAGENTS_METABOLISM * 0.5
 			overdose = REAGENTS_OVERDOSE * 2
+			restrict_species = list(IPC, DIONA)
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(alien && alien == IS_VOX)
+				if(alien && alien == VOX)
 					M.adjustToxLoss(REAGENTS_METABOLISM)
 				else
 					if(M.losebreath >= 10)
@@ -415,8 +436,9 @@ datum
 			color = "#60a584" // rgb: 96, 165, 132
 			custom_metabolism = REAGENTS_METABOLISM * 0.5
 			overdose = REAGENTS_OVERDOSE
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
 				M.druggy = max(M.druggy, 15)
@@ -435,8 +457,9 @@ datum
 			color = "#202040" // rgb: 20, 20, 40
 			custom_metabolism = REAGENTS_METABOLISM * 0.25
 			overdose = REAGENTS_OVERDOSE
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(var/mob/living/M as mob)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
 				if(ishuman(M))
@@ -492,9 +515,7 @@ datum
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(M.stat == DEAD)
-					return
-				if(alien && alien == IS_VOX)
+				if(alien && alien == VOX)
 					M.adjustToxLoss(REAGENTS_METABOLISM)
 					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
 
@@ -520,11 +541,15 @@ datum
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(M.stat == DEAD)
-					return
-				if(alien && alien == IS_VOX)
+				if(alien && alien == VOX)
 					M.adjustOxyLoss(-2 * REM)
 					holder.remove_reagent(src.id, REAGENTS_METABOLISM) //By default it slowly disappears.
+				if(alien && alien == DIONA)
+					M.adjustBruteLoss(-REM)
+					M.adjustOxyLoss(-REM)
+					M.adjustToxLoss(-REM)
+					M.adjustFireLoss(-REM)
+					M.nutrition += REM
 
 		hydrogen
 			name = "Hydrogen"
@@ -554,6 +579,7 @@ datum
 			color = "#484848" // rgb: 72, 72, 72
 			overdose = REAGENTS_OVERDOSE
 			taste_message = "druggie poison"
+			restrict_species = list(IPC, DIONA)
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -640,6 +666,16 @@ datum
 			color = "#832828" // rgb: 131, 40, 40
 			taste_message = "misguided choices"
 
+			on_mob_life(mob/living/M, alien)
+				if(!..())
+					return
+				if(alien && alien == DIONA)
+					M.adjustBruteLoss(-REM)
+					M.adjustOxyLoss(-REM)
+					M.adjustToxLoss(-REM)
+					M.adjustFireLoss(-REM)
+					M.nutrition += REM
+
 			custom_metabolism = 0.01
 
 		lithium
@@ -650,8 +686,9 @@ datum
 			color = "#808080" // rgb: 128, 128, 128
 			overdose = REAGENTS_OVERDOSE
 			taste_message = "happiness"
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
 				if(M.canmove && !M.restrained() && istype(M.loc, /turf/space))
@@ -739,10 +776,9 @@ datum
 			overdose = REAGENTS_OVERDOSE
 			custom_metabolism = 0
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-
 				M.remove_any_mutations()
 				holder.del_reagent(id)
 
@@ -774,8 +810,9 @@ datum
 			reagent_state = LIQUID
 			color = "#c8a5dc"
 			overdose = 60
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
 				if(volume > overdose)
@@ -789,8 +826,9 @@ datum
 			color = "#cb68fc"
 			overdose = 30
 			custom_metabolism = 0.025
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
 				if(volume > overdose)
@@ -804,8 +842,9 @@ datum
 			color = "#800080"
 			overdose = 20
 			custom_metabolism = 0.025
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
 				if(volume > overdose)
@@ -1042,8 +1081,9 @@ datum
 			overdose = REAGENTS_OVERDOSE
 			custom_metabolism = REAGENTS_METABOLISM * 0.5
 			taste_message = null
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
 				M.make_dizzy(1)
@@ -1059,13 +1099,11 @@ datum
 			color = "#ffc600" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
 			taste_message = null
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(M.stat == DEAD)
-					return
-				//This needs a diona check but if one is added they won't be able to heal burn damage at all.
 				M.heal_bodypart_damage(0,2 * REM)
 
 		dermaline
@@ -1076,14 +1114,12 @@ datum
 			color = "#ff8000" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE * 0.5
 			taste_message = null
+			restrict_species = list(IPC, DIONA)
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(M.stat == DEAD) //THE GUY IS **DEAD**! BEREFT OF ALL LIFE HE RESTS IN PEACE etc etc. He does NOT metabolise shit anymore, god DAMN
-					return
-				if(!alien || alien != IS_DIONA)
-					M.heal_bodypart_damage(0,3 * REM)
+				M.heal_bodypart_damage(0,3 * REM)
 
 		dexalin
 			name = "Dexalin"
@@ -1093,16 +1129,14 @@ datum
 			color = "#0080ff" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
 			taste_message = "oxygen"
+			restrict_species = list(IPC, DIONA)
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(M.stat == DEAD)
-					return  //See above, down and around. --Agouri
-
-				if(alien && alien == IS_VOX)
+				if(alien && alien == VOX)
 					M.adjustToxLoss(2 * REM)
-				else if(!alien || alien != IS_DIONA)
+				else
 					M.adjustOxyLoss(-2 * REM)
 
 				if(holder.has_reagent("lexorin"))
@@ -1116,15 +1150,14 @@ datum
 			color = "#0040ff" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE * 0.5
 			taste_message = "ability to breath"
+			restrict_species = list(IPC, DIONA)
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(M.stat == DEAD)
-					return
-				if(alien && alien == IS_VOX)
+				if(alien && alien == VOX)
 					M.adjustOxyLoss()
-				else if(!alien || alien != IS_DIONA)
+				else
 					M.adjustOxyLoss(-M.getOxyLoss())
 
 				if(holder.has_reagent("lexorin"))
@@ -1137,21 +1170,19 @@ datum
 			reagent_state = LIQUID
 			color = "#00b080" // rgb: 200, 165, 220
 			taste_message = null
+			restrict_species = list(IPC, DIONA)
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(M.stat == DEAD)
-					return
-				if(!alien || alien != IS_DIONA)
-					if(M.getOxyLoss())
-						M.adjustOxyLoss(-1 * REM)
-					if(M.getBruteLoss() && prob(80))
-						M.heal_bodypart_damage(1 * REM, 0)
-					if(M.getFireLoss() && prob(80))
-						M.heal_bodypart_damage(0, 1 * REM)
-					if(M.getToxLoss() && prob(80))
-						M.adjustToxLoss(-1 * REM)
+				if(M.getOxyLoss())
+					M.adjustOxyLoss(-1 * REM)
+				if(M.getBruteLoss() && prob(80))
+					M.heal_bodypart_damage(1 * REM, 0)
+				if(M.getFireLoss() && prob(80))
+					M.heal_bodypart_damage(0, 1 * REM)
+				if(M.getToxLoss() && prob(80))
+					M.adjustToxLoss(-1 * REM)
 
 		anti_toxin
 			name = "Anti-Toxin (Dylovene)"
@@ -1160,15 +1191,15 @@ datum
 			reagent_state = LIQUID
 			color = "#00a000" // rgb: 200, 165, 220
 			taste_message = null
+			restrict_species = list(IPC, DIONA)
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(!alien || alien != IS_DIONA)
-					M.reagents.remove_all_type(/datum/reagent/toxin, 1 * REM, 0, 1)
-					M.drowsyness = max(M.drowsyness - 2 * REM, 0)
-					M.hallucination = max(0, M.hallucination - 5 * REM)
-					M.adjustToxLoss(-2 * REM)
+				M.reagents.remove_all_type(/datum/reagent/toxin, 1 * REM, 0, 1)
+				M.drowsyness = max(M.drowsyness - 2 * REM, 0)
+				M.hallucination = max(0, M.hallucination - 5 * REM)
+				M.adjustToxLoss(-2 * REM)
 
 		adminordrazine //An OP chemical for admins
 			name = "Adminordrazine"
@@ -1217,8 +1248,9 @@ datum
 			color = "#99ccff" // rgb: 200, 165, 220
 			custom_metabolism = 0.01
 			overdose = REAGENTS_OVERDOSE
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
 				M.drowsyness = max(M.drowsyness - 5, 0)
@@ -1238,8 +1270,9 @@ datum
 			reagent_state = LIQUID
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
 				M.jitteriness = max(M.jitteriness - 5, 0)
@@ -1278,8 +1311,6 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				if(M.stat == DEAD)
-					return  //See above, down and around. --Agouri
 				M.radiation = max(M.radiation - 7 * REM, 0)
 				M.adjustToxLoss(-1 * REM)
 				if(prob(15))
@@ -1308,6 +1339,7 @@ datum
 			color = "#a0dbff" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
 			taste_message = "carrot"
+			restrict_species = list(IPC, DIONA)
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1329,6 +1361,7 @@ datum
 			color = "#561ec3" // rgb: 200, 165, 220
 			overdose = 10
 			taste_message = null
+			restrict_species = list(IPC, DIONA)
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -1351,6 +1384,8 @@ datum
 			custom_metabolism = 0.07
 			var/obj/item/organ/external/External
 			taste_message = "machines"
+			restrict_species = list(IPC, DIONA)
+
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
@@ -1376,14 +1411,12 @@ datum
 			color = "#bf0000" // rgb: 200, 165, 220
 			overdose = REAGENTS_OVERDOSE
 			taste_message = null
+			restrict_species = list(IPC, DIONA)
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(M.stat == DEAD)
-					return
-				if(!alien || alien != IS_DIONA)
-					M.heal_bodypart_damage(2 * REM, 0)
+				M.heal_bodypart_damage(2 * REM, 0)
 
 		hyperzine
 			name = "Hyperzine"
@@ -1394,13 +1427,13 @@ datum
 			custom_metabolism = 0.03
 			overdose = REAGENTS_OVERDOSE * 0.5
 			taste_message = "speed"
+			restrict_species = list(IPC, DIONA)
 
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(!alien || alien != IS_DIONA)
-					if(prob(5))
-						M.emote(pick("twitch","blink_r","shiver"))
+				if(prob(5))
+					M.emote(pick("twitch","blink_r","shiver"))
 
 		cryoxadone
 			name = "Cryoxadone"
@@ -1666,11 +1699,10 @@ datum
 			color = "#C8A5DC" // rgb: 200, 165, 220
 			toxpwr = 0
 			overdose = REAGENTS_OVERDOSE
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
-					return
-				if(M.stat == DEAD)
 					return
 				if(prob(33))
 					M.take_bodypart_damage(1 * REM, 0)
@@ -1739,8 +1771,9 @@ datum
 			reagent_state = SOLID
 			color = "#669900" // rgb: 102, 153, 0
 			toxpwr = 0.5
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
 				M.status_flags |= FAKEDEATH
@@ -1765,7 +1798,7 @@ datum
 			custom_metabolism = 0.05
 			overdose = REAGENTS_OVERDOSE
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
 				M.hallucination += 10
@@ -1821,8 +1854,9 @@ datum
 			toxpwr = 0
 			custom_metabolism = 0.1
 			overdose = REAGENTS_OVERDOSE
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
 				if(!data)
@@ -1852,8 +1886,9 @@ datum
 			custom_metabolism = 0.1 //Default 0.2
 			overdose = 15
 			overdose_dam = 6
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
 				if(!data)
@@ -1915,8 +1950,9 @@ datum
 			color = "#FBBF0D" // rgb: 251, 191, 13
 			custom_metabolism = 0.15 // Sleep toxins should always be consumed pretty fast
 			overdose = REAGENTS_OVERDOSE * 0.5
+			restrict_species = list(IPC, DIONA)
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
 				if(!data)
@@ -2349,8 +2385,9 @@ datum
 	color = "#E700E7" // rgb: 231, 0, 231
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = FOOD_METABOLISM * 0.5
+	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/psilocybin/on_mob_life(mob/living/M)
+/datum/reagent/consumable/psilocybin/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	M.druggy = max(M.druggy, 30)
@@ -3056,8 +3093,9 @@ datum
 	reagent_state = LIQUID
 	color = "#666300" // rgb: 102, 99, 0
 	taste_message = "fruity alcohol"
+	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/atomicbomb/on_mob_life(mob/living/M)
+/datum/reagent/consumable/atomicbomb/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	M.druggy = max(M.druggy, 50)
@@ -3083,8 +3121,9 @@ datum
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
 	taste_message = "the number fourty two"
+	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/gargle_blaster/on_mob_life(mob/living/M)
+/datum/reagent/consumable/gargle_blaster/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	if(!data)
@@ -3109,8 +3148,9 @@ datum
 	reagent_state = LIQUID
 	color = "#2E2E61" // rgb: 46, 46, 97
 	taste_message = "brain damageeeEEeee"
+	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/neurotoxin/on_mob_life(mob/living/M)
+/datum/reagent/consumable/neurotoxin/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	M.weakened = max(M.weakened, 3)
@@ -3137,8 +3177,9 @@ datum
 	color = "#664300" // rgb: 102, 67, 0
 	custom_metabolism = FOOD_METABOLISM * 0.5
 	taste_message = "peeeeeeace"
+	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/hippies_delight/on_mob_life(mob/living/M)
+/datum/reagent/consumable/hippies_delight/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	M.druggy = max(M.druggy, 50)
@@ -3206,6 +3247,7 @@ datum
 	var/blur_start = 300	//amount absorbed after which mob starts getting blurred vision
 	var/pass_out = 400	//amount absorbed after which mob starts passing out
 	taste_message = "liquid fire"
+	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/consumable/ethanol/on_mob_life(mob/living/M, alien)
 	if(!..())
@@ -3229,7 +3271,7 @@ datum
 		if(isnum(A.data))
 			d += A.data
 
-	if(alien && alien == IS_SKRELL) //Skrell get very drunk very quickly.
+	if(alien && alien == SKRELL) //Skrell get very drunk very quickly.
 		d *= 5
 
 	M.dizziness += dizzy_adj
@@ -4133,13 +4175,14 @@ datum
 	var/spawning_horror = 0
 	var/percent_machine = 0
 	taste_message = "nanomachines, son"
+	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/mednanobots/on_mob_life(mob/living/M)
+/datum/reagent/mednanobots/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(H.species.name != "Dionae")
+		if(!alien || !alien == DIONA)
 			switch(volume)
 				if(1 to 5)
 					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST] // it was H.get_bodypart(????) with nothing as arg, so its always a chest?
@@ -4268,7 +4311,7 @@ datum
 	custom_metabolism = 0.5
 
 /datum/reagent/alphaamanitin/on_mob_life(mob/living/M, alien)
-	if(!..() || (alien && alien == IS_DIONA))
+	if(!..())
 		return
 
 	M.adjustToxLoss(6)
@@ -4284,7 +4327,7 @@ datum
 	custom_metabolism = 0.05
 
 /datum/reagent/aflatoxin/on_mob_life(mob/living/M, alien)
-	if(!..() || (alien && alien == IS_DIONA))
+	if(!..())
 		return
 
 	if(!data)
@@ -4304,9 +4347,10 @@ datum
 	custom_metabolism = 0.01
 	data = 1 //Used as a tally
 	taste_message = "DEATH"
+	restrict_species = list(IPC, DIONA)
 
 /datum/reagent/chefspecial/on_mob_life(mob/living/M, alien)
-	if(!..() || (alien && alien == IS_DIONA))
+	if(!..())
 		return
 
 	if(!data)
@@ -4326,9 +4370,8 @@ datum
 	custom_metabolism = 0 //No metabolism
 
 /datum/reagent/dioxin/on_mob_life(mob/living/M, alien)
-	if(!..() || (alien && alien == IS_DIONA))
+	if(!..())
 		return
-
 	if(!data)
 		data = 1
 

@@ -42,7 +42,7 @@ Notes:
 /datum/tooltip/New(client/C)
 	if (C)
 		owner = C
-		owner << browse(file2text(file), "window=[control]")
+		owner << browse(entity_ja(file2text(file)), "window=[control]")
 	..()
 
 /datum/tooltip/proc/show(atom/movable/thing, params = null, title = null, content = null, theme = "default", special = "none")

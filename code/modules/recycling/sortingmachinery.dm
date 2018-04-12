@@ -39,7 +39,7 @@
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/weapon/pen))
-		var/str = sanitize(copytext(input(usr,"Label text?","Set label",""),1,MAX_NAME_LEN))
+		var/str = sanitize_safe(input(usr,"Label text?","Set label",""), MAX_NAME_LEN)
 		if(!str || !length(str))
 			to_chat(usr, "\red Invalid text.")
 			return
@@ -77,7 +77,7 @@
 			playsound(src.loc, 'sound/machines/twobeep.ogg', 100, 1)
 
 	else if(istype(W, /obj/item/weapon/pen))
-		var/str = sanitize(copytext(input(usr,"Label text?","Set label",""),1,MAX_NAME_LEN))
+		var/str = sanitize_safe(input(usr,"Label text?","Set label",""), MAX_NAME_LEN)
 		if(!str || !length(str))
 			to_chat(usr, "\red Invalid text.")
 			return
@@ -197,7 +197,7 @@
 
 	dat += "</tr></table><br>Current Selection: [currTag ? currTag : "None"]</tt>"
 
-	user << browse(dat, "window=destTagScreen;size=450x350")
+	user << browse(entity_ja(dat), "window=destTagScreen;size=450x350")
 	onclose(user, "destTagScreen")
 
 /obj/item/device/destTagger/attack_self(mob/user)

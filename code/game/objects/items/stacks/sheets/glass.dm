@@ -68,7 +68,7 @@
 		return 0
 	var/title = "Sheet-Glass"
 	title += " ([get_amount()] sheet\s left)"
-	switch(alert(title, "Would you like full tile glass or one direction?", "One Direction", "Full Window", "Cancel", null))
+	switch(input(title, "What would you like to make?", "One Direction") in list("One Direction", "Full Window", "Glass Table Parts", "Cancel"))
 		if("One Direction")
 			if(QDELETED(src))
 				return 1
@@ -127,6 +127,17 @@
 			W.dir = SOUTHWEST
 			W.ini_dir = SOUTHWEST
 			W.anchored = 0
+		if("Glass Table Parts")
+			if(QDELETED(src))
+				return 1
+			if(src.loc != user)
+				return 1
+
+			if(!src.use(2))
+				to_chat(user, "\red You need more glass to do that.")
+				return 1
+
+			new /obj/item/weapon/table_parts/glass(user.loc)
 	return 0
 
 /obj/item/stack/sheet/glass/after_throw(datum/callback/callback)

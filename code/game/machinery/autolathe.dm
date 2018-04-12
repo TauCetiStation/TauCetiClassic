@@ -175,7 +175,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 			dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
 		dat += "<br>"
 
-	user << browse("<HTML><HEAD><TITLE>Autolathe Control Panel</TITLE></HEAD><BODY><TT>[dat]</TT></BODY></HTML>", "window=autolathe_regular")
+	user << browse("<HTML><HEAD><TITLE>Autolathe Control Panel</TITLE></HEAD><BODY><TT>[entity_ja(dat)]</TT></BODY></HTML>", "window=autolathe_regular")
 	onclose(user, "autolathe_regular")
 
 /obj/machinery/autolathe/proc/shock(mob/user, prb)

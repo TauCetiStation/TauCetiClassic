@@ -92,7 +92,7 @@
 		var/bancid = href_list["dbbanaddcid"]
 		var/banduration = text2num(href_list["dbbaddduration"])
 		var/banjob = href_list["dbbanaddjob"]
-		var/banreason = sanitize_simple(href_list["dbbanreason"])
+		var/banreason = sanitize(href_list["dbbanreason"])
 
 		banckey = ckey(banckey)
 
@@ -362,12 +362,12 @@
 				mins = min(525599,mins)
 				minutes = CMinutes + mins
 				duration = GetExp(minutes)
-				reason = input(usr,"Reason?","reason",reason2) as text|null
+				reason = sanitize(input(usr,"Reason?","reason",reason2) as text|null)
 				if(!reason)	return
 			if("No")
 				temp = 0
 				duration = "Perma"
-				reason = input(usr,"Reason?","reason",reason2) as text|null
+				reason = sanitize(input(usr,"Reason?","reason",reason2) as text|null)
 				if(!reason)	return
 
 		log_admin("[key_name(usr)] edited [banned_key]'s ban. Reason: [reason] Duration: [duration]")
@@ -737,7 +737,7 @@
 
 		body = "<body>[jobs]</body>"
 		dat = "<tt>[header][body]</tt>"
-		usr << browse(dat, "window=jobban2;size=800x490")
+		usr << browse(entity_ja(dat), "window=jobban2;size=800x490")
 		return
 
 	//JOBBAN'S INNARDS
@@ -830,7 +830,7 @@
 					var/mins = input(usr,"How long (in minutes)?","Ban time",1440) as num|null
 					if(!mins)
 						return
-					var/reason = sanitize_simple(input(usr,"Reason?","Please State Reason","") as text|null)
+					var/reason = sanitize(input(usr,"Reason?","Please State Reason","") as text|null)
 					if(!reason)
 						return
 
@@ -850,14 +850,14 @@
 					notes_add(M.ckey, "Banned  from [msg] - [reason]")
 					message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [msg] for [mins] minutes")
 					to_chat(M, "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG>")
-					to_chat(M, "\red <B>The reason is: [sanitize_plus_chat(reason)]</B>")
+					to_chat(M, "\red <B>The reason is: [reason]</B>")
 					to_chat(M, "\red This jobban will be lifted in [mins] minutes.")
 					href_list["jobban2"] = 1 // lets it fall through and refresh
 					return 1
 				if("No")
 					if(!check_rights(R_BAN))
 						return
-					var/reason = sanitize_simple(input(usr,"Reason?","Please State Reason","") as text|null)
+					var/reason = sanitize(input(usr,"Reason?","Please State Reason","") as text|null)
 					if(reason)
 						var/msg
 						for(var/job in notbannedlist)
@@ -873,7 +873,7 @@
 						notes_add(M.ckey, "Banned  from [msg] - [reason]")
 						message_admins("\blue [key_name_admin(usr)] banned [key_name_admin(M)] from [msg]")
 						to_chat(M, "\red<BIG><B>You have been jobbanned by [usr.client.ckey] from: [msg].</B></BIG>")
-						to_chat(M, "\red <B>The reason is: [sanitize_plus_chat(reason)]</B>")
+						to_chat(M, "\red <B>The reason is: [reason]</B>")
 						to_chat(M, "\red Jobban can be lifted only upon request.")
 						href_list["jobban2"] = 1 // lets it fall through and refresh
 						return 1
@@ -929,7 +929,7 @@
 			dat += "<b>Proxy:</b> [C.geoip.proxy]<br>"
 			dat += "<b>IP:</b> [C.geoip.ip]<br>"
 			dat += "<hr><b>Status:</b> [C.geoip.status]"
-			usr << browse(dat, "window=geoip")
+			usr << browse(entity_ja(dat), "window=geoip")
 
 	else if(href_list["cid_list"])
 		var/mob/M = locate(href_list["cid_list"])
@@ -941,7 +941,7 @@
 			dat += "<center><b>Ckey:</b> [C.ckey] | <b>Ignore warning:</b> [C.prefs.ignore_cid_warning ? "yes" : "no"]</center>"
 			for(var/x in C.prefs.cid_list)
 				dat += "<b>computer_id:</b> [x] - <b>first seen:</b> [C.prefs.cid_list[x]["first_seen"]] - <b>last seen:</b> [C.prefs.cid_list[x]["last_seen"]]<br>"
-			usr << browse(dat, "window=[C.ckey]_cid_list")
+			usr << browse(entity_ja(dat), "window=[C.ckey]_cid_list")
 
 	else if(href_list["cid_ignore"])
 		var/mob/M = locate(href_list["cid_ignore"])
@@ -965,14 +965,14 @@
 			dat += "<b>IP:</b> [C.related_accounts_ip]<hr>"
 			dat += "<b>CID:</b> [C.related_accounts_cid]"
 
-			usr << browse(dat, "window=[C.ckey]_related_accounts")
+			usr << browse(entity_ja(dat), "window=[C.ckey]_related_accounts")
 
 	else if(href_list["boot2"])
 		var/mob/M = locate(href_list["boot2"])
 		if (ismob(M))
 			if(!check_if_greater_rights_than(M.client))
 				return
-			var/reason = input("Please enter reason")
+			var/reason = sanitize(input("Please enter reason"))
 			if(!reason)
 				to_chat(M, "\red You have been kicked from the server")
 			else
@@ -1015,12 +1015,12 @@
 				if(!mins)
 					return
 				if(mins >= 525600) mins = 525599
-				var/reason = sanitize_simple(input(usr,"Reason?","reason","Griefer") as text|null)
+				var/reason = sanitize(input(usr,"Reason?","reason","Griefer") as text|null)
 				if(!reason)
 					return
 				AddBan(M.ckey, M.computer_id, reason, usr.ckey, 1, mins)
 				ban_unban_log_save("[usr.client.ckey] has banned [M.ckey]. - Reason: [reason] - This will be removed in [mins] minutes.")
-				to_chat(M, "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [sanitize_plus_chat(reason)].</B></BIG>")
+				to_chat(M, "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>")
 				to_chat(M, "\red This is a temporary ban, it will be removed in [mins] minutes.")
 				feedback_inc("ban_tmp",1)
 				DB_ban_record(BANTYPE_TEMP, M, mins, reason)
@@ -1030,13 +1030,13 @@
 				else
 					to_chat(M, "\red No ban appeals URL has been set.")
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
-				message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [sanitize_plus_chat(reason)]\nThis will be removed in [mins] minutes.")
+				message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis will be removed in [mins] minutes.")
 
 				del(M.client)
 				//del(M)	// See no reason why to delete mob. Important stuff can be lost. And ban can be lifted before round ends.
 			if("No")
 				if(!check_rights(R_BAN))   return
-				var/reason = sanitize_simple(input(usr,"Reason?","reason","Griefer") as text|null)
+				var/reason = sanitize(input(usr,"Reason?","reason","Griefer") as text|null)
 				if(!reason)
 					return
 				switch(alert(usr,"IP ban?",,"Yes","No","Cancel"))
@@ -1045,7 +1045,7 @@
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0, M.lastKnownIP)
 					if("No")
 						AddBan(M.ckey, M.computer_id, reason, usr.ckey, 0, 0)
-				to_chat(M, "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [sanitize_plus_chat(reason)].</B></BIG>")
+				to_chat(M, "\red<BIG><B>You have been banned by [usr.client.ckey].\nReason: [reason].</B></BIG>")
 				to_chat(M, "\red This is a permanent ban.")
 				if(config.banappeals)
 					to_chat(M, "\red To try to resolve this matter head to [config.banappeals]")
@@ -1053,7 +1053,7 @@
 					to_chat(M, "\red No ban appeals URL has been set.")
 				ban_unban_log_save("[usr.client.ckey] has permabanned [M.ckey]. - Reason: [reason] - This is a permanent ban.")
 				log_admin("[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
-				message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [sanitize_plus_chat(reason)]\nThis is a permanent ban.")
+				message_admins("\blue[usr.client.ckey] has banned [M.ckey].\nReason: [reason]\nThis is a permanent ban.")
 				feedback_inc("ban_perma",1)
 				DB_ban_record(BANTYPE_PERMA, M, -1, reason)
 
@@ -1092,7 +1092,7 @@
 		dat += {"<A href='?src=\ref[src];c_mode2=secret'>Secret</A><br>"}
 		dat += {"<A href='?src=\ref[src];c_mode2=random'>Random</A><br>"}
 		dat += {"Now: [master_mode]"}
-		usr << browse(dat, "window=c_mode")
+		usr << browse(entity_ja(dat), "window=c_mode")
 
 	else if(href_list["f_secret"])
 		if(!check_rights(R_ADMIN))
@@ -1107,7 +1107,7 @@
 			dat += {"<A href='?src=\ref[src];f_secret2=[mode]'>[config.mode_names[mode]]</A><br>"}
 		dat += {"<A href='?src=\ref[src];f_secret2=secret'>Random (default)</A><br>"}
 		dat += {"Now: [secret_force_mode]"}
-		usr << browse(dat, "window=f_secret")
+		usr << browse(entity_ja(dat), "window=f_secret")
 
 	else if(href_list["c_mode2"])
 		if(!check_rights(R_ADMIN|R_SERVER))
@@ -1606,7 +1606,7 @@
 			to_chat(usr, "The person you are trying to contact is not wearing a headset")
 			return
 
-		var/input = input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", "")
+		var/input = sanitize(input(src.owner, "Please enter a message to reply to [key_name(H)] via their headset.","Outgoing message from The Syndicate", ""))
 		if(!input)	return
 
 		to_chat(src.owner, "You sent [input] to [H] via a secure channel.")
@@ -1619,20 +1619,20 @@
 		var/info = locate(href_list["CentcommFaxViewInfo"])
 		var/stamps = locate(href_list["CentcommFaxViewStamps"])
 
-		usr << browse("<HTML><HEAD><TITLE>Centcomm Fax Message</TITLE></HEAD><BODY>[info][stamps]</BODY></HTML>", "window=Centcomm Fax Message")
+		usr << browse("<HTML><HEAD><TITLE>Centcomm Fax Message</TITLE></HEAD><BODY>[entity_ja(info)][stamps]</BODY></HTML>", "window=Centcomm Fax Message")
 
 	else if(href_list["CentcommFaxReply"])
 		var/mob/living/carbon/human/H = locate(href_list["CentcommFaxReply"])
 
-		var/input = sanitize_alt(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work, but HTML tags do! Use <br> for line breaks.", "Outgoing message from Centcomm", "") as message|null)
+		var/input = sanitize(input(src.owner, "Please, enter a message to reply to [key_name(H)] via secure connection. NOTE: BBCode does not work.", "Outgoing message from Centcomm", "") as message|null, extra = FALSE)
 		if(!input)
 			return
 
-		var/customname = sanitize_alt(input(src.owner, "Pick a title for the report", "Title") as text|null)
+		var/customname = sanitize_safe(input(src.owner, "Pick a title for the report", "Title") as text|null)
 
 		var/obj/item/weapon/paper/P = new
 		P.name = "[command_name()]- [customname]"
-		P.info = checkhtml(html_decode(input))
+		P.info = input
 
 		var/obj/item/weapon/stamp/centcomm/S = new
 		S.stamp_paper(P, use_stamp_by_message = TRUE)
@@ -2005,7 +2005,7 @@
 				if(!ticker)
 					alert("The game hasn't started yet!")
 					return
-				var/objective = sanitize(copytext(input("Enter an objective"),1,MAX_MESSAGE_LEN))
+				var/objective = sanitize(input("Enter an objective"))
 				if(!objective)
 					return
 				feedback_inc("admin_secrets_fun_used",1)
@@ -2387,17 +2387,17 @@
 				var/dat = "<B>Bombing List<HR>"
 				for(var/l in bombers)
 					dat += text("[l]<BR>")
-				usr << browse(dat, "window=bombers")
+				usr << browse(entity_ja(dat), "window=bombers")
 			if("list_signalers")
 				var/dat = "<B>Showing last [length(lastsignalers)] signalers.</B><HR>"
 				for(var/sig in lastsignalers)
 					dat += "[sig]<BR>"
-				usr << browse(dat, "window=lastsignalers;size=800x500")
+				usr << browse(entity_ja(dat), "window=lastsignalers;size=800x500")
 			if("list_lawchanges")
 				var/dat = "<B>Showing last [length(lawchanges)] law changes.</B><HR>"
 				for(var/sig in lawchanges)
 					dat += "[sig]<BR>"
-				usr << browse(dat, "window=lawchanges;size=800x500")
+				usr << browse(entity_ja(dat), "window=lawchanges;size=800x500")
 			if("list_job_debug")
 				var/dat = "<B>Job Debug info.</B><HR>"
 				if(SSjob)
@@ -2407,7 +2407,7 @@
 					for(var/datum/job/job in SSjob.occupations)
 						if(!job)	continue
 						dat += "job: [job.title], current_positions: [job.current_positions], total_positions: [job.total_positions] <BR>"
-					usr << browse(dat, "window=jobdebug;size=600x500")
+					usr << browse(entity_ja(dat), "window=jobdebug;size=600x500")
 			if("showailaws")
 				output_ai_laws()
 			if("showgm")
@@ -2423,7 +2423,7 @@
 					if(H.ckey)
 						dat += text("<tr><td>[]</td><td>[]</td></tr>", H.name, H.get_assignment())
 				dat += "</table>"
-				usr << browse(dat, "window=manifest;size=440x410")
+				usr << browse(entity_ja(dat), "window=manifest;size=440x410")
 			if("check_antagonist")
 				check_antagonists()
 			if("DNA")
@@ -2433,7 +2433,7 @@
 					if(H.dna && H.ckey)
 						dat += "<tr><td>[H]</td><td>[H.dna.unique_enzymes]</td><td>[H.b_type]</td></tr>"
 				dat += "</table>"
-				usr << browse(dat, "window=DNA;size=440x410")
+				usr << browse(entity_ja(dat), "window=DNA;size=440x410")
 			if("fingerprints")
 				var/dat = "<B>Showing Fingerprints.</B><HR>"
 				dat += "<table cellspacing=5><tr><th>Name</th><th>Fingerprints</th></tr>"
@@ -2446,7 +2446,7 @@
 						else if(!H.dna)
 							dat += "<tr><td>[H]</td><td>H.dna = null</td></tr>"
 				dat += "</table>"
-				usr << browse(dat, "window=fingerprints;size=440x410")
+				usr << browse(entity_ja(dat), "window=fingerprints;size=440x410")
 			else
 		if (usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsadmin"]]")
@@ -2463,7 +2463,7 @@
 					dat += "<li>[l]</li>"
 				if(!admin_log.len)
 					dat += "No-one has done anything this round!"
-				usr << browse(dat, "window=admin_log")
+				usr << browse(entity_ja(dat), "window=admin_log")
 			if("maint_access_brig")
 				for(var/obj/machinery/door/airlock/maintenance/M in machines)
 					if (access_maint_tunnels in M.req_access)
@@ -2487,9 +2487,7 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_channel_name"])
-		src.admincaster_feed_channel.channel_name = sanitize_alt(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", ""))
-		while (findtext(src.admincaster_feed_channel.channel_name," ") == 1)
-			src.admincaster_feed_channel.channel_name = copytext(src.admincaster_feed_channel.channel_name,2,lentext(src.admincaster_feed_channel.channel_name)+1)
+		src.admincaster_feed_channel.channel_name = sanitize(input(usr, "Provide a Feed Channel Name", "Network Channel Handler", input_default(admincaster_feed_channel.channel_name)))
 		src.access_news_network()
 
 	else if(href_list["ac_set_channel_lock"])
@@ -2526,9 +2524,7 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_new_message"])
-		src.admincaster_feed_message.body = sanitize_alt(input(usr, "Write your Feed story", "Network Channel Handler", ""))
-		while (findtext(src.admincaster_feed_message.body," ") == 1)
-			src.admincaster_feed_message.body = copytext(src.admincaster_feed_message.body,2,lentext(src.admincaster_feed_message.body)+1)
+		src.admincaster_feed_message.body = sanitize(input(usr, "Write your Feed story", "Network Channel Handler", input_default(admincaster_feed_message.body)), extra = FALSE)
 		src.access_news_network()
 
 	else if(href_list["ac_submit_new_message"])
@@ -2580,15 +2576,11 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_wanted_name"])
-		src.admincaster_feed_message.author = sanitize_alt(input(usr, "Provide the name of the Wanted person", "Network Security Handler", ""))
-		while (findtext(src.admincaster_feed_message.author," ") == 1)
-			src.admincaster_feed_message.author = copytext(admincaster_feed_message.author,2,lentext(admincaster_feed_message.author)+1)
+		src.admincaster_feed_message.author = sanitize(input(usr, "Provide the name of the Wanted person", "Network Security Handler", input_default(admincaster_feed_message.author)))
 		src.access_news_network()
 
 	else if(href_list["ac_set_wanted_desc"])
-		src.admincaster_feed_message.body = sanitize_alt(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
-		while (findtext(src.admincaster_feed_message.body," ") == 1)
-			src.admincaster_feed_message.body = copytext(src.admincaster_feed_message.body,2,lentext(src.admincaster_feed_message.body)+1)
+		src.admincaster_feed_message.body = sanitize(input(usr, "Provide the a description of the Wanted person and any other details you deem important", "Network Security Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["ac_submit_wanted"])
@@ -2693,7 +2685,7 @@
 		src.access_news_network()
 
 	else if(href_list["ac_set_signature"])
-		src.admincaster_signature = sanitize_alt(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
+		src.admincaster_signature = sanitize(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
 		src.access_news_network()
 
 	else if(href_list["populate_inactive_customitems"])
@@ -2727,7 +2719,7 @@
 
 	if(href_list["add_player_info"])
 		var/key = href_list["add_player_info"]
-		var/add = input("Add Player Info") as null|text
+		var/add = input("Add Player Info") as null|text//sanitise below in notes_add
 		if(!add) return
 
 		notes_add(key, add, usr.client)

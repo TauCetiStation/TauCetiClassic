@@ -53,7 +53,7 @@ var/global/obj/item/device/nuclear_challenge/Challenge
 
 	if(custom_threat == "Yes")
 		declaring_war = TRUE
-		war_declaration = stripped_input(user, "Insert your custom declaration", "Declaration")
+		war_declaration = sanitize(input(user, "Insert your custom declaration", "Declaration"))
 		declaring_war = FALSE
 
 	if(!check_allowed(user) || !war_declaration)

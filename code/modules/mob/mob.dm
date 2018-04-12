@@ -164,7 +164,7 @@
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
-	user << browse(dat, text("window=mob[];size=325x500", name))
+	user << browse(entity_ja(dat), text("window=mob[];size=325x500", name))
 	onclose(user, "mob[name]")
 	return
 
@@ -247,19 +247,15 @@
 	set name = "Add Note"
 	set category = "IC"
 
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
 	msg = sanitize(msg)
 
-	if(mind)
+	if(msg && mind)
 		mind.store_memory(msg)
 	else
 		to_chat(src, "The game appears to have misplaced your mind datum, so we can't show you your notes.")
 
-/mob/proc/store_memory(msg, popup, sane = 1)
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-
-	if(sane)
-		msg = sanitize_alt(msg)
+/mob/proc/store_memory(msg, popup)
+	msg = sanitize(msg)
 
 	if(length(memory) == 0)
 		memory += msg
@@ -273,12 +269,9 @@
 	set src in usr
 	if(usr != src)
 		to_chat(usr, "No.")
-	var/msg = input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",html_decode(flavor_text)) as message|null
+	var/msg = sanitize(input(usr,"Set the flavor text in your 'examine' verb. Can also be used for OOC notes about your character.","Flavor Text",input_default(flavor_text)) as message|null)
 
-	if(msg != null)
-		msg = copytext(msg, 1, MAX_MESSAGE_LEN)
-		msg = html_encode(msg)
-
+	if(msg)
 		flavor_text = msg
 
 /mob/proc/warn_flavor_changed()
@@ -463,7 +456,8 @@
 		src << browse(null, t1)
 
 	if(href_list["flavor_more"])
-		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, sanitize_popup(replacetext(flavor_text, "\n", "<BR>"))), text("window=[];size=500x200", name))
+		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", name, entity_ja(flavor_text)), text("window=[];size=500x200", name))
+
 		onclose(usr, "[name]")
 	if(href_list["flavor_change"])
 		update_flavor_text()

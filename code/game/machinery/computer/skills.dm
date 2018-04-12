@@ -98,7 +98,7 @@
 							Fingerprint: <A href='?src=\ref[src];choice=Edit Field;field=fingerprint'>[active1.fields["fingerprint"]]</A><BR>\n	\
 							Physical Status: [active1.fields["p_stat"]]<BR>\n	\
 							Mental Status: [active1.fields["m_stat"]]<BR><BR>\n	\
-							Employment/skills summary:<BR> [sanitize_popup(decode(active1.fields["notes"]))]<BR></td>	\
+							Employment/skills summary:<BR> [decode(active1.fields["notes"])]<BR></td>	\
 							<td align = center valign = top>Photo:<br><img src=front.png height=80 width=80 border=4>	\
 							<img src=side.png height=80 width=80 border=4></td></tr></table>")
 					else
@@ -140,7 +140,7 @@
 				else
 		else
 			dat += text("<A href='?src=\ref[];choice=Log In'>{Log In}</A>", src)
-	user << browse(text("<HEAD><TITLE>Employment Records</TITLE></HEAD><TT>[]</TT>", dat), "window=secure_rec;size=600x400")
+	user << browse(text("<HEAD><TITLE>Employment Records</TITLE></HEAD><TT>[]</TT>", entity_ja(dat)), "window=secure_rec;size=600x400")
 	onclose(user, "secure_rec")
 
 /*Revised /N
@@ -219,11 +219,11 @@ What a mess.*/
 					screen = 1
 //RECORD FUNCTIONS
 		if("Search Records")
-			var/t1 = input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text
+			var/t1 = sanitize_safe(input("Search String: (Partial Name or ID or Fingerprints or Rank)", "Secure. records", null, null)  as text)
 			if ((!( t1 ) || usr.stat || !( authenticated ) || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr))))
 				return FALSE
 			Perp = new/list()
-			t1 = lowertext(t1)
+			t1 = lowertext_(t1)
 			var/list/components = splittext(t1, " ")
 			if(components.len > 5)
 				return //Lets not let them search too greedily.
@@ -315,19 +315,19 @@ What a mess.*/
 			switch(href_list["field"])
 				if("name")
 					if (istype(active1, /datum/data/record))
-						var/t1 = copytext(input("Please input name:", "Secure. records", active1.fields["name"], null)  as text, 1, MAX_NAME_LEN)
-						if ((!( t1 ) || !length(trim(t1)) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr))) || active1 != a1)
+						var/t1 = sanitize(input("Please input name:", "Secure. records", input_default(active1.fields["name"]), null)  as text, MAX_NAME_LEN)
+						if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr))) || active1 != a1)
 							return FALSE
 						active1.fields["name"] = t1
 				if("id")
 					if (istype(active1, /datum/data/record))
-						var/t1 = sanitize(copytext(input("Please input id:", "Secure. records", active1.fields["id"], null)  as text,1,MAX_MESSAGE_LEN))
+						var/t1 = sanitize(input("Please input id:", "Secure. records", input_default(active1.fields["id"]), null)  as text)
 						if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
 							return FALSE
 						active1.fields["id"] = t1
 				if("fingerprint")
 					if (istype(active1, /datum/data/record))
-						var/t1 = sanitize(copytext(input("Please input fingerprint hash:", "Secure. records", active1.fields["fingerprint"], null)  as text,1,MAX_MESSAGE_LEN))
+						var/t1 = sanitize(input("Please input fingerprint hash:", "Secure. records", input_default(active1.fields["fingerprint"]), null)  as text)
 						if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
 							return FALSE
 						active1.fields["fingerprint"] = t1
@@ -356,7 +356,7 @@ What a mess.*/
 						alert(usr, "You do not have the required rank to do this!")
 				if("species")
 					if (istype(active1, /datum/data/record))
-						var/t1 = sanitize(copytext(input("Please enter race:", "General records", active1.fields["species"], null)  as message,1,MAX_MESSAGE_LEN))
+						var/t1 = sanitize(input("Please enter race:", "General records", input_default(active1.fields["species"]), null) as message)
 						if ((!( t1 ) || !( authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && !issilicon(usr) && !isobserver(usr)) || active1 != a1))
 							return FALSE
 						active1.fields["species"] = t1

@@ -88,7 +88,7 @@
 				\n<A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 			dat += "<A href='?src=\ref[src];screen=0'>(Return to Main Menu)</A><BR>"
 
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
 
 /obj/machinery/computer/robotics/Topic(href, href_list)

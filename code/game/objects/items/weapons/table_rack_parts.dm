@@ -2,7 +2,10 @@
  * Contains:
  *		Table Parts
  *		Reinforced Table Parts
+ *		Glass Table Parts
  *		Wooden Table Parts
+ *		Fancy Table Parts
+ *		Black Fancy Table Parts
  *		Rack Parts
  */
 
@@ -49,6 +52,20 @@
 	return
 
 /*
+ * Glass Table Parts
+ */
+/obj/item/weapon/table_parts/glass/attackby(obj/item/weapon/W, mob/user)
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/glass( user.loc )
+		qdel(src)
+
+/obj/item/weapon/table_parts/glass/attack_self(mob/user)
+	new /obj/structure/table/glass( user.loc )
+	user.drop_item()
+	qdel(src)
+	return
+
+/*
  * Wooden Table Parts
  */
 /obj/item/weapon/table_parts/wood/attackby(obj/item/weapon/W, mob/user)
@@ -65,6 +82,31 @@
 
 /obj/item/weapon/table_parts/wood/attack_self(mob/user)
 	new /obj/structure/table/woodentable( user.loc )
+	user.drop_item()
+	qdel(src)
+	return
+
+/*
+ * Fancy Wooden Table Parts
+ */
+/obj/item/weapon/table_parts/wood/fancy/attackby(obj/item/weapon/W, mob/user)
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/wood( user.loc )
+		qdel(src)
+
+/obj/item/weapon/table_parts/wood/fancy/attack_self(mob/user)
+	new /obj/structure/table/woodentable/fancy( user.loc )
+	user.drop_item()
+	qdel(src)
+	return
+
+/obj/item/weapon/table_parts/wood/fancy/black/attackby(obj/item/weapon/W, mob/user)
+	if (istype(W, /obj/item/weapon/wrench))
+		new /obj/item/stack/sheet/wood( user.loc )
+		qdel(src)
+
+/obj/item/weapon/table_parts/wood/fancy/black/attack_self(mob/user)
+	new /obj/structure/table/woodentable/fancy/black( user.loc )
 	user.drop_item()
 	qdel(src)
 	return

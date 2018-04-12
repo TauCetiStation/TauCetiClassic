@@ -165,7 +165,7 @@ datum/genesequence
 	dat += "<br>"
 	dat += "<hr>"
 	dat += "<a href='?src=\ref[src];close=1'>Close</a>"
-	user << browse(dat, "window=reconstitutor;size=600x500")
+	user << browse(entity_ja(dat), "window=reconstitutor;size=600x500")
 	onclose(user, "reconstitutor")
 
 /obj/machinery/computer/reconstitutor/Topic(href, href_list)

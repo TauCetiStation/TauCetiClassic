@@ -32,7 +32,7 @@
 		O.loc = src
 		update_icon()
 	else if(istype(O, /obj/item/weapon/pen))
-		var/newname = stripped_input(usr, "What would you like to title this bookshelf?")
+		var/newname = sanitize_safe(input(usr, "What would you like to title this bookshelf?"))
 		if(!newname)
 			return
 		else
@@ -147,7 +147,7 @@
 			to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 			return
 	if(src.dat)
-		user << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
+		user << browse(entity_ja("<TT><I>Penned by [author].</I></TT> <BR>[dat]"), "window=book")
 		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
 		onclose(user, "book")
 	else
@@ -175,7 +175,7 @@
 		var/choice = input("What would you like to change?") in list("Title", "Contents", "Author", "Cancel")
 		switch(choice)
 			if("Title")
-				var/newtitle = sanitize(copytext(input(usr, "Write a new title:"), 1, MAX_NAME_LEN))
+				var/newtitle = sanitize_safe(input(usr, "Write a new title:"), MAX_NAME_LEN)
 				if(!newtitle)
 					to_chat(usr, "The title is invalid.")
 					return
@@ -183,14 +183,14 @@
 					src.name = newtitle
 					src.title = newtitle
 			if("Contents")
-				var/content = sanitize_alt(copytext(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null,1, 8192))
+				var/content = sanitize(input(usr, "Write your book's contents (HTML NOT allowed):") as message|null, MAX_BOOK_MESSAGE_LEN)
 				if(!content)
 					to_chat(usr, "The content is invalid.")
 					return
 				else
-					src.dat += content
+					src.dat += content//infiniti books?
 			if("Author")
-				var/newauthor = sanitize_alt(copytext(input(usr, "Write the author's name:"),1, MAX_NAME_LEN))
+				var/newauthor = sanitize(input(usr, "Write the author's name:"), MAX_NAME_LEN)
 				if(!newauthor)
 					to_chat(usr, "The name is invalid.")
 					return
@@ -242,7 +242,7 @@
 	if(def_zone == O_EYES)
 		user.visible_message("<span class='notice'>You open up the book and show it to [M]. </span>", \
 			"<span class='notice'> [user] opens up a book and shows it to [M]. </span>")
-		M << browse("<TT><I>Penned by [author].</I></TT> <BR>" + "[dat]", "window=book")
+		M << browse(entity_ja("<TT><I>Penned by [author].</I></TT> <BR>[dat]"), "window=book")
 
 
 /*

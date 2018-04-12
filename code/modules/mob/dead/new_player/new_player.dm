@@ -59,7 +59,7 @@
 
 	output += "</div>"
 
-	src << browse(output,"window=playersetup;size=210x240;can_close=0")
+	src << browse(entity_ja(output),"window=playersetup;size=210x240;can_close=0")
 	return
 
 /mob/dead/new_player/Stat()
@@ -374,7 +374,7 @@
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions]) (Active: [active])</a><br>"
 
 	dat += "</center>"
-	src << browse(dat, "window=latechoices;size=300x640;can_close=1")
+	src << browse(entity_ja(dat), "window=latechoices;size=300x640;can_close=1")
 
 
 /mob/dead/new_player/proc/create_character()
@@ -456,7 +456,7 @@
 	dat += "<h4>Show Crew Manifest</h4>"
 	dat += data_core.get_manifest(OOC = 1)
 
-	src << browse(dat, "window=manifest;size=370x420;can_close=1")
+	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
 
 /mob/dead/new_player/Move()
 	return 0

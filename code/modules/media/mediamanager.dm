@@ -120,7 +120,7 @@ function SetVolume(volume) {
 	if(!media || !istype(media))
 		to_chat(usr, "You have no media datum to change, if you're not in the lobby tell an admin.")
 		return
-	var/value = input("Choose your Jukebox volume.", "Jukebox volume", media.volume)
+	var/value = input("Choose your Jukebox volume.", "Jukebox volume", media.volume) as num
 	value = round(max(0, min(100, value)))
 	media.update_volume(value)
 	if(prefs)

@@ -182,7 +182,7 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("loadout")
 			dat += ShowCustomLoadout(user)
 	dat += "</body></html>"
-	user << browse(dat, "window=preferences;size=618x778;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
+	user << browse(entity_ja(dat), "window=preferences;size=618x778;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)

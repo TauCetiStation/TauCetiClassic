@@ -77,7 +77,7 @@
 
 		t += "</FONT></PRE></TT>"
 
-	user << browse(t, "window=powcomp;size=450x900")
+	user << browse(entity_ja(t), "window=powcomp;size=450x900")
 	onclose(user, "powcomp")
 
 

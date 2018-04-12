@@ -218,7 +218,7 @@
 				<br>
 				<p>Each time this button is pressed, a request will be sent out to any available personalities. Check back often give plenty of time for personalities to respond. This process could take anywhere from 15 seconds to several minutes, depending on the available personalities' timeliness.</p>
 			"}
-	user << browse(dat, "window=paicard")
+	user << browse(entity_ja(dat), "window=paicard")
 	onclose(user, "paicard")
 	return
 
@@ -258,12 +258,12 @@
 		else
 			radio.wires |= t1
 	if(href_list["setlaws"])
-		var/newlaws = sanitize_alt(copytext(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", revert_ja(pai.pai_laws)) as message,1,MAX_MESSAGE_LEN))
+		var/newlaws = sanitize(input("Enter any additional directives you would like your pAI personality to follow. Note that these directives will not override the personality's allegiance to its imprinted master. Conflicting directives will be ignored.", "pAI Directive Configuration", input_default(pai.pai_laws)) as message)
 		if(newlaws)
 			pai.pai_laws = newlaws
 			to_chat(pai, "Your supplemental directives have been updated. Your new directives are:")
-			to_chat(pai, "Prime Directive: <br>[sanitize_chat(pai.pai_law0)]")
-			to_chat(pai, "Supplemental Directives: <br>[sanitize_chat(pai.pai_laws)]")
+			to_chat(pai, "Prime Directive: <br>[pai.pai_law0]")
+			to_chat(pai, "Supplemental Directives: <br>[pai.pai_laws]")
 	attack_self(usr)
 
 // 		WIRE_SIGNAL = 1

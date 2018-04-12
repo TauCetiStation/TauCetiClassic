@@ -112,7 +112,7 @@
 	dat += "<BR>"
 	for(var/datum/mind/M in previous_users)
 		dat += "<I>[M.name]</I><BR>"
-	user << browse(dat, "window=radio")
+	user << browse(entity_ja(dat), "window=radio")
 	onclose(user, "radio")
 	return
 

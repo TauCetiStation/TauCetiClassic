@@ -1088,7 +1088,7 @@ FIRE ALARM
 		var/second = round(time) % 60
 		var/minute = (round(time) - second) / 60
 		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>Fire alarm</B> [d1]\n<HR>The current alert level is: [get_security_level()]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? "[minute]:" : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
-		user << browse(dat, "window=firealarm")
+		user << browse(entity_ja(dat), "window=firealarm")
 		onclose(user, "firealarm")
 	else
 		if (A.fire)
@@ -1102,7 +1102,7 @@ FIRE ALARM
 		var/second = round(time) % 60
 		var/minute = (round(time) - second) / 60
 		var/dat = "<HTML><HEAD></HEAD><BODY><TT><B>[stars("Fire alarm")]</B> [d1]\n<HR><b>The current alert level is: [stars(get_security_level())]</b><br><br>\nTimer System: [d2]<BR>\nTime Left: [(minute ? text("[]:", minute) : null)][second] <A href='?src=\ref[src];tp=-30'>-</A> <A href='?src=\ref[src];tp=-1'>-</A> <A href='?src=\ref[src];tp=1'>+</A> <A href='?src=\ref[src];tp=30'>+</A>\n</TT></BODY></HTML>"
-		user << browse(dat, "window=firealarm")
+		user << browse(entity_ja(dat), "window=firealarm")
 		onclose(user, "firealarm")
 
 /obj/machinery/firealarm/Topic(href, href_list)

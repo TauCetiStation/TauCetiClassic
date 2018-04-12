@@ -6,7 +6,7 @@
 		to_chat(usr, "\red Speech is currently admin-disabled.")
 		return
 
-	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
+	msg = sanitize(msg)
 	if(!msg)	return
 
 	if(usr.client)
@@ -28,15 +28,13 @@
 	//log_admin("HELP: [key_name(src)]: [msg]")
 
 /proc/Centcomm_announce(text , mob/Sender , iamessage)
-	var/msg = sanitize(copytext(text, 1, MAX_MESSAGE_LEN))
-	send2slack_custommsg("[key_name(Sender)] has made an Centcomm announcement", msg, ":job_cap:")
-	msg = "\blue <b><font color=orange>CENTCOMM[iamessage ? " IA" : ""]:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;CentcommReply=\ref[Sender]'>RPLY</A>):</b> [msg]"
+	send2slack_custommsg("[key_name(Sender)] has made an Centcomm announcement", text, ":job_cap:")
+	text = "\blue <b><font color=orange>CENTCOMM[iamessage ? " IA" : ""]:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;CentcommReply=\ref[Sender]'>RPLY</A>):</b> [text]"
 	for(var/client/C in admins)
-		to_chat(C, msg)
+		to_chat(C, text)
 
 /proc/Syndicate_announce(text , mob/Sender)
-	var/msg = sanitize(copytext(text, 1, MAX_MESSAGE_LEN))
-	send2slack_custommsg("[key_name(Sender)] has made an Syndicate announcement", msg, ":job_nuke:")
-	msg = "\blue <b><font color=crimson>SYNDICATE:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;SyndicateReply=\ref[Sender]'>RPLY</A>):</b> [msg]"
+	send2slack_custommsg("[key_name(Sender)] has made an Syndicate announcement", text, ":job_nuke:")
+	text = "\blue <b><font color=crimson>SYNDICATE:</font>[key_name(Sender, 1)] (<A HREF='?_src_=holder;adminplayeropts=\ref[Sender]'>PP</A>) (<A HREF='?_src_=vars;Vars=\ref[Sender]'>VV</A>) (<A HREF='?_src_=holder;subtlemessage=\ref[Sender]'>SM</A>) (<A HREF='?_src_=holder;adminplayerobservejump=\ref[Sender]'>JMP</A>) (<A HREF='?_src_=holder;secretsadmin=check_antagonist'>CA</A>) (<A HREF='?_src_=holder;BlueSpaceArtillery=\ref[Sender]'>BSA</A>) (<A HREF='?_src_=holder;SyndicateReply=\ref[Sender]'>RPLY</A>):</b> [text]"
 	for(var/client/C in admins)
-		to_chat(C, msg)
+		to_chat(C, text)

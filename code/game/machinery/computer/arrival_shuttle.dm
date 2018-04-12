@@ -158,7 +158,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/ui_interact(user)
 	var/dat = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];move=1'>Send</A></b></center><br>"
-	user << browse("[dat]", "window=researchshuttle;size=200x100")
+	user << browse("[entity_ja(dat)]", "window=researchshuttle;size=200x100")
 
 /obj/machinery/computer/arrival_shuttle/Topic(href, href_list)
 	. = ..()
@@ -181,7 +181,7 @@ var/lastMove = 0
 
 /obj/machinery/computer/arrival_shuttle/dock/ui_interact(user)
 	var/dat1 = "<center>Shuttle location:[curr_location]<br>Ready to move[!arrival_shuttle_ready_move() ? " in [max(round((lastMove + ARRIVAL_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br><b><A href='?src=\ref[src];back=1'>Send back</A></b></center><br>"
-	user << browse("[dat1]", "window=researchshuttle;size=200x100")
+	user << browse("[entity_ja(dat1)]", "window=researchshuttle;size=200x100")
 
 /obj/machinery/computer/arrival_shuttle/dock/Topic(href, href_list)
 	. = ..()

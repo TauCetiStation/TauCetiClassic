@@ -564,7 +564,7 @@ datum/objective/steal
 			var/tmp_obj = new custom_target
 			var/custom_name = tmp_obj:name
 			qdel(tmp_obj)
-			custom_name = sanitize(copytext(input("Enter target name:", "Objective target", custom_name) as text|null,1,MAX_MESSAGE_LEN))
+			custom_name = sanitize_safe(input("Enter target name:", "Objective target", input_default(custom_name)) as text|null)
 			if (!custom_name) return
 			target_name = custom_name
 			steal_target = custom_target
