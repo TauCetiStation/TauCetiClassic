@@ -4481,42 +4481,36 @@ datum
 	name = "Red Hair Dye"
 	id = "redhairdye"
 	data = list("r_color"=255,"g_color"=0,"b_color"=0)
-	reagent_state = LIQUID
 	color = "#FF0000"
 
 /datum/reagent/hair_dye/green
 	name = "Green Hair Dye"
 	id = "greenhairdye"
 	data = list("r_color"=0,"g_color"=255,"b_color"=0)
-	reagent_state = LIQUID
 	color = "#00FF00"
 
 /datum/reagent/hair_dye/blue
 	name = "Blue Hair Dye"
 	id = "bluehairdye"
 	data = list("r_color"=0,"g_color"=0,"b_color"=255)
-	reagent_state = LIQUID
 	color = "#0000FF"
 
 /datum/reagent/hair_dye/black
 	name = "Black Hair Dye"
 	id = "blackhairdye"
 	data = list("r_color"=0,"g_color"=0,"b_color"=0)
-	reagent_state = LIQUID
 	color = "#000000"
 
 /datum/reagent/hair_dye/brown
 	name = "Brown Hair Dye"
 	id = "brownhairdye"
 	data = list("r_color"=50,"g_color"=0,"b_color"=0)
-	reagent_state = LIQUID
 	color = "#500000"
 
 /datum/reagent/hair_dye/blond
 	name = "Blond Hair Dye"
 	id = "blondhairdye"
 	data = list("r_color"=255,"g_color"=225,"b_color"=135)
-	reagent_state = LIQUID
 	color = "#FFE187"
 
 /datum/chemical_reaction/hair_dye
