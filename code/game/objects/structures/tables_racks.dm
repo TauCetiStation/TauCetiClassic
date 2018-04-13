@@ -644,7 +644,6 @@
 	desc = "A standard metal table frame covered with an amazingly fancy, patterned cloth."
 	icon_state = "fancytable"
 	parts = /obj/item/weapon/table_parts/wood/fancy
-	canconnect = FALSE
 
 /obj/structure/table/woodentable/fancy/black
 	icon_state = "fancytable_black"

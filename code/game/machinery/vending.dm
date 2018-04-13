@@ -913,6 +913,27 @@
 			return
 	qdel(plasm)
 
+/obj/machinery/vending/barbervend
+	name = "Fab-O-Vend"
+	desc = "It would seem it vends dyes, and other stuff to make you pretty."
+	icon_state = "barbervend"
+	product_slogans = "Spread the colour, like butter, onto toast... Onto their hair.; Sometimes, I dream about dyes...; Paint 'em up and call me Mr. Painter.; Look brother, I'm a vendomat, I solve practical problems."
+	product_ads = "Cut 'em all!; To sheds!; Hair be gone!; Prettify!; Beautify!"
+	req_access_txt = "69"
+	refill_canister = /obj/item/weapon/vending_refill/barbervend
+	products = list(/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/white = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/red = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/green = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blue = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/black = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/brown = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blond = 10,
+					/obj/item/weapon/reagent_containers/spray/hair_color_spray = 3)
+	contraband = list(/obj/item/weapon/razor = 1)
+	premium = list(/obj/item/weapon/scissors  = 3,
+				   /obj/item/weapon/hair_growth_accelerator = 3,
+				   /obj/item/weapon/storage/box/lipstick = 3)
+
 /obj/machinery/vending/dinnerware
 	name = "Dinnerware"
 	desc = "A kitchen and restaurant equipment vendor."

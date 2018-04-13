@@ -96,7 +96,7 @@
 ////////////////////////////Proc for moving soul in and out off stone//////////////////////////////////////
 
 
-/obj/item/proc/transfer_soul(choice, target, mob/U).
+/obj/item/proc/transfer_soul(choice, target, mob/U)
 	switch(choice)
 		if("VICTIM")
 			var/mob/living/carbon/human/T = target

@@ -775,7 +775,7 @@
 	name = "Shaved"
 	icon_state = "bald"
 	gender = NEUTER
-	species_allowed = list(HUMAN , UNATHI , TAJARAN , SKRELL , VOX , IPC)
+	species_allowed = list(HUMAN , UNATHI , TAJARAN , SKRELL , VOX , IPC, DIONA)
 
 /datum/sprite_accessory/facial_hair/watson
 	name = "Watson Mustache"
@@ -1182,3 +1182,63 @@
 	name = "Tajara Smallsatche"
 	icon_state = "taj_facial_smallstache"
 	species_allowed = list(TAJARAN)
+
+/datum/sprite_accessory/hair/dio_bloom
+	name = "Diona Everbloom"
+	icon_state = "dio_bloom"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_rose
+	name = "Diona Rose"
+	icon_state = "dio_rose"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_king
+	name = "Diona Flowerking"
+	icon_state = "dio_king"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_vines
+	name = "Diona Vines Short"
+	icon_state = "dio_vines"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_vinel
+	name = "Diona Vines Long"
+	icon_state = "dio_vinel"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_lotus
+	name = "Diona Lotus"
+	icon_state = "dio_lotus"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_palm
+	name = "Diona Palmhead"
+	icon_state = "dio_palm"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_garland
+	name = "Diona Garland"
+	icon_state = "dio_garland"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_shrub
+	name = "Diona Shrub"
+	icon_state = "dio_shrub"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)
+
+/datum/sprite_accessory/hair/dio_ficus
+	name = "Diona Ficus"
+	icon_state = "dio_ficus"
+	do_colouration = FALSE
+	species_allowed = list(DIONA)

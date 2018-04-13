@@ -48,3 +48,7 @@ var/list/nightmares = list(
 		dream()
 
 /mob/living/carbon/var/dreaming = NOT_DREAMING
+
+#undef IS_DREAMING
+#undef IS_NIGHTMARE
+#undef NOT_DREAMING

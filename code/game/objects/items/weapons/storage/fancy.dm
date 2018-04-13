@@ -119,34 +119,35 @@
 /obj/item/weapon/storage/fancy/black_candle_box/process()
 	if(cooldown > 0)
 		cooldown--
-	cooldown = 30
+	else
+		cooldown = 30
 
-	if(contents.len >= storage_slots)
-		return
+		if(contents.len >= storage_slots)
+			return
 
-	for(var/mob/living/M in viewers(7, loc))
-		return
+		for(var/mob/living/M in viewers(7, loc))
+			return
 
-	for(var/obj/item/candle/ghost/CG in range(1, get_turf(src)))
-		loc.visible_message("<span class='warning'>[src] is nomming on [CG]... This looks oddly creepy.</span>")
-		CG.forceMove(src)
-		update_icon()
-		break
+		for(var/obj/item/candle/ghost/CG in range(1, get_turf(src)))
+			loc.visible_message("<span class='warning'>[src] is nomming on [CG]... This looks oddly creepy.</span>")
+			CG.forceMove(src)
+			update_icon()
+			break
 
-	teleporter_delay--
-	if(teleporter_delay <= 0)
-		for(var/obj/item/candle/ghost/target in ghost_candles)
-			if(istype(target.loc, /turf))
-				loc.visible_message("<span class='warning'>You hear a loud pop, as [src] poofs out of existence.</span>")
-				playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
-				forceMove(get_turf(target))
-				visible_message("<span class='warning'>You hear a loud pop, as [src] poofs into existence.</span>")
-				playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
-				for(var/mob/living/A in viewers(3, loc))
-					A.confused += 10
-					A.make_jittery(150)
-				break
-		teleporter_delay += rand(5,10) // teleporter_delay-- is ran only once half a minute. This seems reasonable.
+		teleporter_delay--
+		if(teleporter_delay <= 0)
+			for(var/obj/item/candle/ghost/target in ghost_candles)
+				if(istype(target.loc, /turf))
+					loc.visible_message("<span class='warning'>You hear a loud pop, as [src] poofs out of existence.</span>")
+					playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
+					forceMove(get_turf(target))
+					visible_message("<span class='warning'>You hear a loud pop, as [src] poofs into existence.</span>")
+					playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
+					for(var/mob/living/A in viewers(3, loc))
+						A.confused += 10
+						A.make_jittery(150)
+					break
+			teleporter_delay += rand(5,10) // teleporter_delay-- is ran only once half a minute. This seems reasonable.
 
 /obj/item/weapon/storage/fancy/black_candle_box/attackby(obj/item/W, mob/user)
 	..()
