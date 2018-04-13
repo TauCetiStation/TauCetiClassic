@@ -62,3 +62,8 @@
 	machine_name = "ClothesMate"
 	icon_state = "refill_clothes"
 	charges = 16// of 48
+
+/obj/item/weapon/vending_refill/barbervend
+	machine_name = "BarberVend"
+	icon_state = "refill_booze" // Placeholder?
+	charges =  25// of 70
