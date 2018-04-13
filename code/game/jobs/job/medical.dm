@@ -48,8 +48,8 @@
 	flag = DOCTOR
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 4
-	spawn_positions = 3
+	total_positions = 3
+	spawn_positions = 2
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
