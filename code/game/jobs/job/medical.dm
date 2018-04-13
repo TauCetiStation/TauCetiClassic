@@ -107,9 +107,9 @@
 
 	return 1
 
-/datum/job/paramedic
-	title = "Paramedic"
-	flag = PARAMEDIC
+/datum/job/emergencyphysician
+	title = "Emergency Physician"
+	flag = EMERGENCYPHYSICIAN
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 2
@@ -117,11 +117,11 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_morgue, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_engine_equip, access_research, access_mailsorting)
+	access = list(access_medical, access_morgue, access_genetics, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_engine_equip, access_research, access_mailsorting)
 	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
 	restricted_species = list(IPC, DIONA)
 
-/datum/job/paramedic/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/emergencyphysician/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)

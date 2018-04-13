@@ -617,7 +617,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"security officer",
 		"detective",
 		"doctor",
-		"paramedic",
+		"emergency physician",
 		"chemist",
 		"virologist",
 		"psychiatrist",
@@ -1231,7 +1231,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = list(access_medical, access_morgue, access_surgery)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
-		if("paramedic")
+		if("emergency physician")
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_med(M), slot_l_ear)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/fr_jacket(M), slot_wear_suit)
@@ -1239,12 +1239,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/device/pda/medical/pda = new(M)
 			pda.owner = M.real_name
-			pda.ownjob = "Paramedic"
+			pda.ownjob = "Emergency Physician"
 			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/med/W = new(M)
-			W.assignment = "Paramedic"
+			W.assignment = "Emergency Physician"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = list(access_medical, access_morgue, access_maint_tunnels, access_external_airlocks, access_security, access_engine_equip, access_research, access_mailsorting)
 			W.registered_name = M.real_name
