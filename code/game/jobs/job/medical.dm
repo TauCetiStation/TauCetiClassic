@@ -10,7 +10,7 @@
 	idtype = /obj/item/weapon/card/id/medGold
 	req_admin_notify = 1
 	access = list(
-		access_medical, access_morgue, access_paramedic, access_genetics, access_heads,
+		access_medical, access_morgue, access_genetics, access_heads,
 		access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 		access_keycard_auth, access_sec_doors, access_psychiatrist, access_maint_tunnels
 	)
@@ -117,7 +117,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_morgue, access_paramedic, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_engine_equip, access_research, access_mailsorting)
+	access = list(access_medical, access_morgue, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_engine_equip, access_research, access_mailsorting)
 	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
 	restricted_species = list(IPC, DIONA)
 
