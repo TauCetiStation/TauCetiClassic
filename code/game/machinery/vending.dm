@@ -880,6 +880,10 @@
 	product_ads = "Occult is magic;Knowledge is magic;All the magic!;None to spook us;The dice has been cast"
 
 /obj/machinery/vending/weirdomat/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
+		OS.scanned_type = src.type
+		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 	if(istype(I, /obj/item/weapon/ectoplasm))
 		RedeemEctoplasm(I, user)
 		return
@@ -889,19 +893,21 @@
 	if(plasm.in_use)
 		return
 	plasm.in_use = TRUE
-	var/selection = input(redeemer, "Pick your eternal reward", "Ectoplasm Redemption") in list("Misfortune Set", "Spiritual Bond Set", "Contract From Below", "Cryptorecorder", "Cancel")
+	var/selection = input(redeemer, "Pick your eternal reward", "Ectoplasm Redemption") in list("Misfortune Set", "Spiritual Bond Set", "Contract From Below", "Cryptorecorder", "Black Candle Box", "Cancel")
 	if(!selection || !Adjacent(redeemer))
 		plasm.in_use = FALSE
 		return
 	switch(selection)
 		if("Misfortune Set")
-			new /obj/item/weapon/storage/pill_bottle/ghostdice(src.loc)
+			new /obj/item/weapon/storage/pill_bottle/ghostdice(loc)
 		if("Spiritual Bond Set")
-			new /obj/item/weapon/game_kit/chaplain(src.loc)
+			new /obj/item/weapon/game_kit/chaplain(loc)
 		if("Contract From Below")
-			new /obj/item/weapon/pen/ghost(src.loc)
+			new /obj/item/weapon/pen/ghost(loc)
 		if("Cryptorecorder")
-			new /obj/item/device/camera/spooky(src.loc)
+			new /obj/item/device/camera/spooky(loc)
+		if("Black Candle Box")
+			new /obj/item/weapon/storage/fancy/black_candle_box(loc)
 		if("Cancel")
 			plasm.in_use = FALSE
 			return

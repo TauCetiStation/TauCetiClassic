@@ -93,6 +93,68 @@
 	for (var/i in 1 to storage_slots)
 		new /obj/item/candle(src)
 
+/obj/item/weapon/storage/fancy/black_candle_box
+	name = "candle pack"
+	desc = "A pack of black candles."
+	icon = 'icons/obj/candle.dmi'
+	icon_state = "gcandlebox5"
+	icon_type = "gcandle"
+	item_state = "gcandlebox5"
+	storage_slots = 5
+	throwforce = 2
+	slot_flags = SLOT_BELT
+	var/cooldown = 0
+	var/teleporter_delay = 0
+
+/obj/item/weapon/storage/fancy/black_candle_box/atom_init()
+	. = ..()
+	for (var/i in 1 to storage_slots)
+		new /obj/item/candle/ghost(src)
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/storage/fancy/black_candle_box/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/storage/fancy/black_candle_box/process()
+	if(cooldown > 0)
+		cooldown--
+	else
+		cooldown = 30
+
+		if(contents.len >= storage_slots)
+			return
+
+		for(var/mob/living/M in viewers(7, loc))
+			return
+
+		for(var/obj/item/candle/ghost/CG in range(1, get_turf(src)))
+			loc.visible_message("<span class='warning'>[src] is nomming on [CG]... This looks oddly creepy.</span>")
+			CG.forceMove(src)
+			update_icon()
+			break
+
+		teleporter_delay--
+		if(teleporter_delay <= 0)
+			for(var/obj/item/candle/ghost/target in ghost_candles)
+				if(istype(target.loc, /turf))
+					loc.visible_message("<span class='warning'>You hear a loud pop, as [src] poofs out of existence.</span>")
+					playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
+					forceMove(get_turf(target))
+					visible_message("<span class='warning'>You hear a loud pop, as [src] poofs into existence.</span>")
+					playsound(loc, 'sound/effects/bubble_pop.ogg', 50, 1)
+					for(var/mob/living/A in viewers(3, loc))
+						A.confused += 10
+						A.make_jittery(150)
+					break
+			teleporter_delay += rand(5,10) // teleporter_delay-- is ran only once half a minute. This seems reasonable.
+
+/obj/item/weapon/storage/fancy/black_candle_box/attackby(obj/item/W, mob/user)
+	..()
+	if(istype(W, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = W
+		OS.scanned_type = src.type
+		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 /*
  * Crayon Box
  */

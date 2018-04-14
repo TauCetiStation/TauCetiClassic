@@ -1,3 +1,7 @@
+#define IS_DREAMING 1
+#define IS_NIGHTMARE 2
+#define NOT_DREAMING 0
+
 var/list/dreams = list(
 	"an ID card","a bottle","a familiar face","a crewmember","a toolbox","a security officer","the captain",
 	"voices from all around","deep space","a doctor","the engine","a traitor","an ally","darkness",
@@ -13,21 +17,38 @@ var/list/dreams = list(
 	"a unathi","a tajaran","the ai core","the mining station","the research station","a beaker of strange liquid",
 	)
 
-/mob/living/carbon/proc/dream()
-	dreaming = 1
+var/list/nightmares = list(
+	"c'thulhu","a cultist","a deity","rituals","blood","gibs","death","horror","abyss","damnation","a sign","a shadow","fear","the giant spider",
+	"darkness","voices from all around","a catastrpohe","freezing","ruins","blinking lights","flames","a voice","a pair of red eyes",
+	"the unknown","a murderer","a killer","a xeno","a criminal","visions","it","a gasmask","look","a painting","an abomination","an yellow sign","shadows",
+	"the undead","whispers","suicide","creatures","cave","eyes","a child","plague","hunger","rot","rats","a witch","screams","claws","fangs",
+	"height","knife","a corpse","guilt","singularity","a ghost"
+	)
 
-	spawn(0)
-		for(var/i = rand(1,4),i > 0, i--)
-			to_chat(src, "\blue <i>... [pick(dreams)] ...</i>")
-			sleep(rand(40,70))
-			if(paralysis <= 0)
-				dreaming = 0
-				return 0
-		dreaming = 0
-		return 1
+/mob/living/carbon/proc/dream()
+	dreaming = IS_DREAMING
+	for(var/obj/item/candle/ghost/CG in range(4, src))
+		dreaming = IS_NIGHTMARE
+	var/i = rand(1,4)
+	while(i)
+		if(dreaming == 2)
+			to_chat(src, "<span class='warning italics'>... [pick(nightmares)] ...</span>")
+		else
+			to_chat(src, "<span class='notice italics'>... [pick(dreams)] ...</span>")
+		sleep(rand(40,70))
+		if(paralysis <= 0)
+			dreaming = NOT_DREAMING
+			return FALSE
+		i--
+	dreaming = 0
+	return TRUE
 
 /mob/living/carbon/proc/handle_dreams()
 	if(client && !dreaming && prob(5))
 		dream()
 
-/mob/living/carbon/var/dreaming = 0
+/mob/living/carbon/var/dreaming = NOT_DREAMING
+
+#undef IS_DREAMING
+#undef IS_NIGHTMARE
+#undef NOT_DREAMING
