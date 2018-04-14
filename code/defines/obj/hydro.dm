@@ -14,13 +14,17 @@
 	attack_self(mob/user)
 		return 0
 
+/obj/item/device/plant_analyzer/attack(mob/living/carbon/human/M, mob/living/user)
+	if(M.species && M.species.flags[IS_PLANT])
+		healthanalyze(M, user, 1) // 1 means limb-scanning mode
+
 // ********************************************************
 // Here's all the seeds (plants) that can be used in hydro
 // ********************************************************
 
 /obj/item/seeds
 	name = "pack of seeds"
-	icon = 'icons/obj/seeds.dmi'
+	icon = 'icons/obj/hydroponics/seeds.dmi'
 	icon_state = "seed" // unknown plant seed - these shouldn't exist in-game
 	w_class = 2.0 // Makes them pocketable
 	var/mypath = "/obj/item/seeds"
@@ -1174,7 +1178,7 @@
 /obj/item/weapon/grown/log
 	name = "tower-cap log"
 	desc = "It's better than bad, it's good!"
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "logs"
 	force = 5
 	throwforce = 5
@@ -1198,7 +1202,7 @@
 /obj/item/weapon/grown/sunflower // FLOWER POWER!
 	name = "sunflower"
 	desc = "It's beautiful! A certain person might beat you to death if you trample these."
-	icon = 'icons/obj/harvest.dmi'
+	icon = 'icons/obj/hydroponics/harvest.dmi'
 	icon_state = "sunflower"
 	damtype = "fire"
 	force = 0
@@ -1321,7 +1325,7 @@
 
 /obj/item/weapon/weedspray // -- Skie
 	desc = "It's a toxic mixture, in spray form, to kill small weeds."
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "weed-spray"
 	icon_state = "weedspray"
 	item_state = "spray"
@@ -1340,7 +1344,7 @@
 
 /obj/item/weapon/pestspray // -- Skie
 	desc = "It's some pest eliminator spray! <I>Do not inhale!</I>"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	name = "pest-spray"
 	icon_state = "pestspray"
 	item_state = "spraycan"

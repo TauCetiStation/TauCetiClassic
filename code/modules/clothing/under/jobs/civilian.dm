@@ -109,7 +109,7 @@
 
 /obj/item/clothing/under/rank/internalaffairs
 	desc = "The plain, professional attire of an Internal Affairs Agent. The collar is <i>immaculately</i> starched."
-	name = "Internal Affairs uniform"
+	name = "internal affairs uniform"
 	icon_state = "internalaffairs"
 	item_state = "internalaffairs"
 	item_color = "internalaffairs"
@@ -127,7 +127,7 @@
 
 /obj/item/clothing/under/lawyer
 	desc = "Slick threads."
-	name = "Lawyer suit"
+	name = "lawyer suit"
 
 
 /obj/item/clothing/under/lawyer/black
@@ -155,7 +155,7 @@
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/bluesuit
-	name = "Blue Suit"
+	name = "blue suit"
 	desc = "A classy suit and tie."
 	icon_state = "bluesuit"
 	item_state = "bluesuit"
@@ -163,14 +163,14 @@
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/purpsuit
-	name = "Purple Suit"
+	name = "purple suit"
 	icon_state = "lawyer_purp"
 	item_state = "lawyer_purp"
 	item_color = "lawyer_purp"
 	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/lawyer/oldman
-	name = "Old Man's Suit"
+	name = "old man's suit"
 	desc = "A classic suit for the older gentleman with built in back support."
 	icon_state = "oldman"
 	item_state = "oldman"

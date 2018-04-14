@@ -249,7 +249,7 @@
 	icon_state = "sexymime"
 
 /obj/item/clothing/mask/gas/death_commando
-	name = "Death Commando Mask"
+	name = "death commando mask"
 	icon_state = "death_commando_mask"
 	item_state = "death_commando_mask"
 	siemens_coefficient = 0.2

@@ -352,6 +352,8 @@
 			dat += "<td>Alien</td>"
 		else if(istype(M, /mob/living/parasite/meme))
 			dat += "<td>Meme</td>"
+		else if(istype(M, /mob/living/parasite/essence))
+			dat += "<td>Changelling Essence</td>"
 		else
 			dat += "<td>Unknown</td>"
 

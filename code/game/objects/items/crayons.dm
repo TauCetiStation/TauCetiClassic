@@ -73,16 +73,15 @@
 	if(istype(target, /obj/effect/decal/cleanable))
 		target = target.loc
 	if(is_type_in_list(target,validSurfaces))
-		var/temp
 		var/drawtype = input("Choose what you'd like to draw.", "Crayon scribbles") in list("graffiti","rune","letter")
 		switch(drawtype)
 			if("letter")
 				drawtype = input("Choose the letter.", "Crayon scribbles") in list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z")
-				to_chat(user, "You start drawing a letter on the [target.name].")
+				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")
 			if("graffiti")
-				to_chat(user, "You start drawing graffiti on the [target.name].")
+				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] graffiti on the [target.name].</span>")
 			if("rune")
-				to_chat(user, "You start drawing a rune on the [target.name].")
+				to_chat(user, "<span class = 'notice'>You start [instant ? "spraying" : "drawing"] a rune on the [target.name].</span>")
 
 		////////////////////////// GANG FUNCTIONS
 		var/area/territory
@@ -90,10 +89,8 @@
 		if(gang)
 			//Determine gang affiliation
 			if(user.mind in (ticker.mode.A_bosses | ticker.mode.A_gang))
-				temp = "[gang_name("A")] gang tag"
 				gangID = "A"
 			else if(user.mind in (ticker.mode.B_bosses | ticker.mode.B_gang))
-				temp = "[gang_name("B")] gang tag"
 				gangID = "B"
 
 			//Check area validity. Reject space, player-created areas, and non-station z-levels.
@@ -119,8 +116,9 @@
 					return
 		/////////////////////////////////////////
 
-
-		to_chat(user, "You start [instant ? "spraying" : "drawing"] a [temp] on the [target.name].")
+		if(!in_range(user, target))
+			to_chat(user, "<span class = 'notice'>You must stay close to your drawing if you want to draw something.</span>")
+			return
 		if(instant)
 			playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 		if(instant > 0 || (!user.is_busy(src) && do_after(user, 50, target = target)))
@@ -139,7 +137,10 @@
 			else
 				new /obj/effect/decal/cleanable/crayon(target,colour,shadeColour,drawtype)
 
-			to_chat(user, "You finish [instant ? "spraying" : "drawing"] [temp].")
+			if(drawtype in list("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"))
+				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] a letter on the [target.name].</span>")
+			else
+				to_chat(user, "<span class = 'notice'>You finish [instant ? "spraying" : "drawing"] [drawtype] on the [target.name].</span>")
 			if(instant<0)
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 			uses = max(0,uses-1)

@@ -87,7 +87,6 @@ This is called when facehugger has grabbed(left click) and then
 		src.loc = FH
 		FH.current_hugger = src
 		FH.Attach(L)
-		L.status_flags |= PASSEMOTES
 
 /*----------------------------------------
 This is chestburster mechanic for damaging

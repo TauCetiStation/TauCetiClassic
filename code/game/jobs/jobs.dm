@@ -26,6 +26,8 @@ var/const/VIROLOGIST		=(1<<6)
 var/const/PSYCHIATRIST		=(1<<7)
 var/const/ROBOTICIST		=(1<<8)
 var/const/XENOBIOLOGIST		=(1<<9)
+var/const/EMERGENCYPHYSICIAN=(1<<10)
+var/const/XENOARCHEOLOGIST	=(1<<11)
 
 
 var/const/CIVILIAN			=(1<<2)
@@ -97,7 +99,7 @@ var/list/civilian_positions = list(
 	"Cargo Technician",
 	"Shaft Miner",
 	"Recycler",
-	"Lawyer",
+	"Internal Affairs Agent",
 	"Chaplain",
 	"Test Subject",
 	"Clown",

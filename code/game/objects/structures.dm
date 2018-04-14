@@ -43,8 +43,10 @@
 	do_climb(usr)
 
 /obj/structure/MouseDrop_T(mob/target, mob/user)
+	if(isessence(user))
+		return
 	var/mob/living/H = user
-	if(istype(H) && can_climb(H) && target == user)
+	if(can_climb(H) && target == user)
 		do_climb(target)
 	else
 		return ..()
@@ -120,13 +122,9 @@
 
 			var/obj/item/organ/external/BP
 
-			switch(pick(list("ankle","wrist","head","knee","elbow")))
-				if("ankle")
-					BP = H.bodyparts_by_name[pick(BP_L_FOOT , BP_R_FOOT)]
+			switch(pick(list("knee","head","elbow")))
 				if("knee")
 					BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
-				if("wrist")
-					BP = H.bodyparts_by_name[pick(BP_L_HAND , BP_R_HAND)]
 				if("elbow")
 					BP = H.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
 				if("head")

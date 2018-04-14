@@ -233,3 +233,12 @@
 	reagents.add_reagent("impedrezene", 10)
 	reagents.add_reagent("synaptizine", 5)
 	reagents.add_reagent("hyperzine", 5)
+
+/obj/item/weapon/reagent_containers/pill/lipozine
+	name = "Lipozine"
+	desc = "When you mistake whith maffin"
+	icon_state = "pill18"
+
+/obj/item/weapon/reagent_containers/pill/lipozine/atom_init()
+	. = ..()
+	reagents.add_reagent("lipozine", 15)

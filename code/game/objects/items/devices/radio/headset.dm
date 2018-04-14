@@ -141,7 +141,7 @@
 	return
 
 /obj/item/device/radio/headset/heads/rd
-	name = "Research Director's headset"
+	name = "research director's headset"
 	desc = "Headset of the researching God. To access the science channel, use :n. For command, use :c."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "rd_headset"

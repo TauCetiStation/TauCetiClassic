@@ -46,7 +46,7 @@
 #define CANPARALYSE	4
 #define CANPUSH		8
 #define LEAPING		16
-#define PASSEMOTES	32      //Mob has a cortical borer or holders inside of it that need to see emotes.
+#define PASSEMOTES	32      //Mob has holders inside of it that need to see emotes.
 #define LOCKSTUN	64      // if Mob has this flag, then stunned cannot be modified using Stun() SetStun() AdjustStunned() procs.
 #define GODMODE		4096
 #define FAKEDEATH	8192	//Replaces stuff like changeling.changeling_fakedeath

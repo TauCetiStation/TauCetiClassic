@@ -37,30 +37,34 @@
 /mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
 	if(!client)
-		return
+		return FALSE
 
 	if(type)
 		if((type & 1) && ((sdisabilities & BLIND) || blinded || paralysis) )//Vision related
 			if(!alt)
-				return
+				return FALSE
 			else
 				msg = alt
 				type = alt_type
 		if((type & 2) && ((sdisabilities & DEAF) || ear_deaf))//Hearing related
 			if (!alt)
-				return
+				return FALSE
 			else
 				msg = alt
 				type = alt_type
 				if (((type & 1) && (sdisabilities & BLIND)))
-					return
+					return FALSE
 	// Added voice muffling for Issue 41.
 	if(stat == UNCONSCIOUS || sleeping > 0)
-		to_chat(src, "<I>... You can almost hear someone talking ...</I>")
-	else
-		to_chat(src, msg)
-	return
+		msg = "<I>... You can almost hear someone talking ...</I>"
+	to_chat(src, msg)
+	return msg
 
+/mob/living/carbon/show_message(msg, type, alt, alt_type)
+	. = ..()
+	if(. && length(parasites))
+		for(var/M in parasites)
+			to_chat(M, .)
 // Show a message to all mobs in sight of this one
 // This would be for visible actions by the src mob
 // message is the message output to anyone who can see e.g. "[src] does something!"
@@ -125,7 +129,7 @@
 	set waitfor = 0
 	return
 
-/mob/proc/incapacitated(restrained_type = HANDS)
+/mob/proc/incapacitated(restrained_type = ARMS)
 	return
 
 /mob/proc/restrained()
@@ -480,10 +484,14 @@
 
 /mob/MouseDrop(mob/M as mob)
 	..()
-	if(M != usr) return
-	if(usr == src) return
-	if(!Adjacent(usr)) return
-	if(istype(M, /mob/living/silicon/ai)) return
+	if(M != usr)
+		return
+	if(usr == src)
+		return
+	if(!Adjacent(usr))
+		return
+	if(isAI(M))
+		return
 	show_inv(usr)
 
 //this and stop_pulling really ought to be /mob/living procs

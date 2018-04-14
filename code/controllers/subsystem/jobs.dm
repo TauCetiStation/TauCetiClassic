@@ -481,6 +481,11 @@ var/datum/subsystem/job/SSjob
 				H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_l_hand)
 				H.internal = H.l_hand
 			H.internals.icon_state = "internal1"
+		if(H.get_species() == DIONA)
+			if (H.backbag == 1)
+				H.equip_to_slot_or_del(new /obj/item/device/flashlight/flare(H), slot_r_hand)
+			else
+				H.equip_to_slot_or_del(new /obj/item/device/flashlight/flare(H), slot_in_backpack)
 
 	//Deferred item spawning.
 	for(var/thing in spawn_in_storage)

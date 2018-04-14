@@ -140,7 +140,7 @@
 			if(prob(25))
 				new_item = new /obj/item/weapon/kitchen/utensil/fork(src.loc)
 			else if(prob(50))
-				new_item = new /obj/item/weapon/kitchen/utensil/knife(src.loc)
+				new_item = new /obj/item/weapon/kitchenknife(src.loc)
 			else
 				new_item = new /obj/item/weapon/kitchen/utensil/spoon(src.loc)
 			additional_desc = "[pick("It's like no [item_type] you've ever seen before",\

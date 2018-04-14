@@ -180,7 +180,7 @@
 	Used when you are handcuffed and click things.
 	Not currently used by anything but could easily be.
 */
-/mob/proc/RestrainedClickOn(atom/A) // for now it's overriding in human and monkey.
+/mob/proc/RestrainedClickOn(atom/A) // for now it's overriding only in monkey.
 	return
 
 /*

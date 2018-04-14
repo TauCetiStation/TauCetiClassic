@@ -13,6 +13,7 @@
 	var/colourName = null
 	var/eaten = 0
 	var/datum/reagent/liquid_fuel
+	var/start_brightness = 4
 	action_button_name = "Break Glowstick"
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/atom_init()
@@ -21,24 +22,32 @@
 	icon_state = "glowstick_[colourName]"
 	item_state = "glowstick_[colourName]"
 	. = ..()
+	add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/process()
 	liquid_fuel.volume = max(liquid_fuel.volume - 0.1, 0)
-	if(liquid_fuel.volume)
-		if(liquid_fuel.volume < reagents.maximum_volume/3)
-			if(light_range != 3) set_light(2,1)
-		else if(liquid_fuel.volume < reagents.maximum_volume/2)
-			if(light_range != 5) set_light(3)
+	check_volume()
 	if(!liquid_fuel.volume || !on)
 		turn_off()
 		if(!liquid_fuel.volume)
 			src.icon_state = "glowstick_[colourName]-over"
 		STOP_PROCESSING(SSobj, src)
 
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/check_volume()
+	if(liquid_fuel.volume)
+		if(liquid_fuel.volume < reagents.maximum_volume/3)
+			if(light_range == 3)
+				set_light(2,1)
+			return
+		else if(liquid_fuel.volume < reagents.maximum_volume/2)
+			if(light_range == 4)
+				set_light(3)
+			return
+
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "glowstick_[colourName]-on"
-		set_light(4)
+		set_light(start_brightness)
 	else
 		icon_state = "glowstick_[colourName]"
 		set_light(0)
@@ -179,17 +188,7 @@
 			liquid_fuel = luminophore
 
 	var/datum/reagent/lum = locate(/datum/reagent/luminophore) in R.reagent_list
-	if(lum)
-		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/green))
-			lum.color = "#88EBC3"
-		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/red))
-			lum.color = "#EA0052"
-		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue))
-			lum.color = "#24C1FF"
-		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow))
-			lum.color = "#FFFA18"
-		if(istype(src, /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange))
-			lum.color = "#FF9318"
+	lum.color = filling_color
 
 ////////////////G L O W S T I C K - C O L O R S////////////////
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/green
@@ -197,42 +196,68 @@
 	light_color = "#88EBC3"
 	filling_color = "#88EBC3"
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/green/atom_init()
-	. = ..()
-	add_fuel()
-
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/red
 	colourName = "red"
 	light_color = "#EA0052"
 	filling_color = "#EA0052"
-
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/red/atom_init()
-	. = ..()
-	add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/blue
 	colourName = "blue"
 	light_color = "#24C1FF"
 	filling_color = "#24C1FF"
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/blue/atom_init()
-	. = ..()
-	add_fuel()
-
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow
 	colourName = "yellow"
 	light_color = "#FFFA18"
 	filling_color = "#FFFA18"
-
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/yellow/atom_init()
-	. = ..()
-	add_fuel()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/orange
 	colourName = "orange"
 	light_color = "#FF9318"
 	filling_color = "#FF9318"
 
-/obj/item/weapon/reagent_containers/food/snacks/glowstick/orange/atom_init()
+
+///////////////////// POWER GLOWSTICK //////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power
+	start_brightness = 7
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/atom_init()
+	name = "Advanset [colourName] glowstick"
 	. = ..()
-	add_fuel()
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/check_volume()
+	if(liquid_fuel.volume)
+		if(liquid_fuel.volume < reagents.maximum_volume/3)
+			if(light_range == 5)
+				set_light(3)
+			return
+		else if(liquid_fuel.volume < reagents.maximum_volume/2)
+			if(light_range == 7)
+				set_light(5)
+			return
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/green
+	colourName = "green"
+	light_color = "#88EBC3"
+	filling_color = "#88EBC3"
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/red
+	colourName = "red"
+	light_color = "#EA0052"
+	filling_color = "#EA0052"
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/blue
+	colourName = "blue"
+	light_color = "#24C1FF"
+	filling_color = "#24C1FF"
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/yellow
+	colourName = "yellow"
+	light_color = "#FFFA18"
+	filling_color = "#FFFA18"
+
+/obj/item/weapon/reagent_containers/food/snacks/glowstick/power/orange
+	colourName = "orange"
+	light_color = "#FF9318"
+	filling_color = "#FF9318"

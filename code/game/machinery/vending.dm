@@ -657,7 +657,8 @@
 					/obj/item/weapon/reagent_containers/food/drinks/flask/barflask = 2, /obj/item/weapon/reagent_containers/food/drinks/flask/vacuumflask = 2,
 					/obj/item/weapon/reagent_containers/food/drinks/drinkingglass = 30,/obj/item/weapon/reagent_containers/food/drinks/ice = 9,
 					/obj/item/weapon/reagent_containers/food/drinks/bottle/melonliquor = 2,/obj/item/weapon/reagent_containers/food/drinks/bottle/bluecuracao = 2,
-					/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe = 2,/obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine = 5)
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/absinthe = 2,/obj/item/weapon/reagent_containers/food/drinks/bottle/grenadine = 5,
+					/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne = 5)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/tea = 10)
 	vend_delay = 15
 	product_slogans = "I hope nobody asks me for a bloody cup o' tea...;Alcohol is humanity's friend. Would you abandon a friend?;Quite delighted to serve you!;Is nobody thirsty on this station?"
@@ -702,6 +703,17 @@
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 1)
 	refill_canister = /obj/item/weapon/vending_refill/snack
 
+/obj/machinery/vending/chinese
+	name = "\improper Mr. Chang"
+	desc = "A self-serving Chinese food machine, for all your Chinese food needs."
+	product_slogans = "Taste 5000 years of culture!"
+	icon_state = "snack"
+	light_color = "#d00023"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein = 6, /obj/item/weapon/reagent_containers/food/snacks/chinese/tao = 6, /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball = 6, /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles = 6,
+					/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 6, /obj/item/weapon/kitchen/utensil/fork/sticks = 18)
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein = 50, /obj/item/weapon/reagent_containers/food/snacks/chinese/tao = 50, /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball = 50, /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles = 50,
+					/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 50, /obj/item/weapon/kitchen/utensil/fork/sticks = 1)
+	refill_canister = /obj/item/weapon/vending_refill/snack
 
 /obj/machinery/vending/cola
 	name = "Robust Softdrinks"
@@ -741,10 +753,10 @@
 	vend_delay = 34
 	icon_state = "cigs"
 	light_color = "#dddddd"
-	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 4)
+	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/fancy/cigarettes/menthol = 5,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 4)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
 	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
-	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 15,/obj/item/weapon/storage/box/matches = 1,/obj/item/weapon/lighter/random = 2)
+	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 15,/obj/item/weapon/storage/fancy/cigarettes/menthol = 25,/obj/item/weapon/storage/box/matches = 1,/obj/item/weapon/lighter/random = 2)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
 
 /obj/machinery/vending/medical
@@ -806,7 +818,7 @@
 	req_access_txt = "1"
 	products = list(/obj/item/weapon/handcuffs = 8,/obj/item/weapon/grenade/flashbang = 4,/obj/item/device/flash = 5,
 					/obj/item/weapon/reagent_containers/food/snacks/donut/normal = 12,/obj/item/weapon/storage/box/evidence = 6)
-	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/weapon/storage/fancy/donut_box = 2)
+	contraband = list(/obj/item/clothing/glasses/sunglasses = 2,/obj/item/weapon/storage/fancy/donut_box = 2,/obj/item/device/flashlight/seclite = 4)
 
 /obj/machinery/vending/hydronutrients
 	name = "NutriMax"
@@ -875,7 +887,7 @@
 		/obj/item/weapon/kitchen/mould/coin = 1,
 		/obj/item/weapon/kitchen/mould/loli = 1
 	)
-	contraband = list(/obj/item/weapon/kitchen/utensil/spoon = 2,/obj/item/weapon/kitchen/utensil/knife = 2,/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/butch = 2)
+	contraband = list(/obj/item/weapon/kitchen/utensil/spoon = 2,/obj/item/weapon/kitchen/rollingpin = 2, /obj/item/weapon/butch = 2)
 
 /obj/machinery/vending/sovietsoda
 	name = "BODA"
@@ -965,7 +977,8 @@
 	/obj/item/clothing/suit/wintercoat=3,/obj/item/clothing/shoes/winterboots=3,/obj/item/clothing/head/santa=3,
 	/obj/item/clothing/suit/storage/miljacket_army=3,/obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger=2,/obj/item/clothing/suit/storage/miljacket_army/miljacket_navy=2,
 	/obj/item/clothing/suit/student_jacket=3,/obj/item/clothing/suit/shawl=2,/obj/item/clothing/suit/atlas_jacket=4,/obj/item/clothing/under/sukeban_pants=2,
-	/obj/item/clothing/under/sukeban_dress=2,/obj/item/clothing/suit/sukeban_coat=4,/obj/item/clothing/under/pinkpolo=3,/obj/item/clothing/under/pretty_dress=1)
+	/obj/item/clothing/under/sukeban_dress=2,/obj/item/clothing/suit/sukeban_coat=4,/obj/item/clothing/under/pinkpolo=3,/obj/item/clothing/under/pretty_dress=1,
+	/obj/item/clothing/under/dress/dress_summer=2,/obj/item/clothing/under/dress/dress_vintage=2,/obj/item/clothing/under/dress/dress_evening=2,/obj/item/clothing/under/dress/dress_party=2)
 
 	contraband = list(/obj/item/clothing/under/syndicate/tacticool=2,/obj/item/clothing/mask/balaclava=2,/obj/item/clothing/head/ushanka=2,/obj/item/clothing/under/soviet=2,/obj/item/clothing/mask/gas/fawkes = 6)
 
@@ -990,7 +1003,8 @@
 	/obj/item/clothing/suit/wintercoat=130,/obj/item/clothing/shoes/winterboots=70,/obj/item/clothing/head/santa=50,
 	/obj/item/clothing/suit/storage/miljacket_army=655,/obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger=655,/obj/item/clothing/suit/storage/miljacket_army/miljacket_navy=655,
 	/obj/item/clothing/suit/student_jacket=459,/obj/item/clothing/suit/shawl=344,/obj/item/clothing/suit/atlas_jacket=250,/obj/item/clothing/under/sukeban_pants=366,
-	/obj/item/clothing/under/sukeban_dress=366,/obj/item/clothing/suit/sukeban_coat=579,/obj/item/clothing/under/pinkpolo=638,/obj/item/clothing/under/pretty_dress=564)
+	/obj/item/clothing/under/sukeban_dress=366,/obj/item/clothing/suit/sukeban_coat=579,/obj/item/clothing/under/pinkpolo=638,/obj/item/clothing/under/pretty_dress=564,
+	/obj/item/clothing/under/dress/dress_summer=332,/obj/item/clothing/under/dress/dress_vintage=465,/obj/item/clothing/under/dress/dress_evening=386,/obj/item/clothing/under/dress/dress_party=349)
 
 	refill_canister = /obj/item/weapon/vending_refill/clothing
 
@@ -1076,7 +1090,7 @@
 					/obj/item/weapon/reagent_containers/food/snacks/candy_corn = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/cracker = 20,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle = 12)
-	contraband = list(/obj/item/weapon/kitchen/utensil/knife = 6)
+	contraband = list(/obj/item/weapon/kitchenknife = 6)
 
 //from old nanotrasen
 /obj/machinery/vending/theater

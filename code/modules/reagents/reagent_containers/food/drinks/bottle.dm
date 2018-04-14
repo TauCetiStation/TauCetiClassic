@@ -203,6 +203,15 @@
 	. = ..()
 	reagents.add_reagent("rum", 100)
 
+/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne
+	name = "Duc de Paris Brut"
+	desc = "Boisson elegante. Servir froid."
+	icon_state = "chambottle"
+
+/obj/item/weapon/reagent_containers/food/drinks/bottle/champagne/atom_init()
+	. = ..()
+	reagents.add_reagent("champagne", 100)
+
 /obj/item/weapon/reagent_containers/food/drinks/bottle/holywater
 	name = "Flask of Holy Water"
 	desc = "A flask of the chaplain's holy water."

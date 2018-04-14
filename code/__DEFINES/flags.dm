@@ -57,6 +57,12 @@
 #define BIOHAZZARD_IMMUNE  "biohazzard_immune"
 #define HAS_HAIR           "has_hair"
 
+//Species Diet Flags
+#define DIET_CARN		1 //meat
+#define DIET_OMNI		2 //everything
+#define DIET_HERB		4 // VEGANS!
+#define DIET_ALL		255
+
 //bitflags for door switches.
 #define OPEN     1
 #define IDSCAN   2
@@ -97,3 +103,15 @@
 #define FORDBIDDEN_VIEW      1
 #define UNIVERSAL_VIEW       2
 #define TRAITOR_VIEW         4
+
+// changeling essences flags
+#define ESSENCE_SPEAK 1
+#define ESSENCE_WHISP 2
+#define ESSENCE_SPEAK_IN_RADIO 4
+#define ESSENCE_HIVEMIND 8
+#define ESSENCE_SPEAK_TO_HOST 16
+#define ESSENCE_SELF_VOICE 32
+#define ESSENCE_PHANTOM 64
+#define ESSENCE_POINT 128
+#define ESSENCE_EMOTE 256
+#define ESSENCE_ALL 511

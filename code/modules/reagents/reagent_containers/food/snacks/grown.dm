@@ -496,7 +496,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/melee/energy))
+	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You carve a face into [src]!</span>", 1)
 		new /obj/item/clothing/head/pumpkinhead (user.loc)
 		qdel(src)
@@ -564,11 +564,11 @@
 	item_state = "banana"
 	filling_color = "#FCF695"
 	trash = /obj/item/weapon/bananapeel
+	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/atom_init()
 	. = ..()
 	reagents.add_reagent("banana", 1+round((potency / 10), 1))
-	bitesize = 5
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
 

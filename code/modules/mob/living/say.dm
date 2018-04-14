@@ -190,7 +190,6 @@ var/list/department_radio_keys = list(
 	I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	spawn(0)
 		flick_overlay(I, speech_bubble_recipients, 30)
-
 	for(var/mob/M in listening)
 		M.hear_say(message, verb, speaking, alt_name, italics, src, used_radios.len, speech_sound, sound_vol)
 

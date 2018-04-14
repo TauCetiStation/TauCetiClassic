@@ -49,7 +49,7 @@
 
 //Chef
 /obj/item/clothing/suit/chef
-	name = "Chef's apron"
+	name = "chef's apron"
 	desc = "An apron used by a high class chef."
 	icon_state = "chef"
 	item_state = "chef"
@@ -114,7 +114,7 @@
 
 //Lawyer
 /obj/item/clothing/suit/storage/lawyer/bluejacket
-	name = "Blue Suit Jacket"
+	name = "blue suit jacket"
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_blue_open"
 	item_state = "suitjacket_blue_open"
@@ -122,7 +122,7 @@
 	body_parts_covered = UPPER_TORSO|ARMS
 
 /obj/item/clothing/suit/storage/lawyer/purpjacket
-	name = "Purple Suit Jacket"
+	name = "purple suit jacket"
 	desc = "A snappy dress jacket."
 	icon_state = "suitjacket_purp"
 	item_state = "suitjacket_purp"
@@ -131,7 +131,7 @@
 
 //Internal Affairs
 /obj/item/clothing/suit/storage/internalaffairs
-	name = "Internal Affairs Jacket"
+	name = "internal affairs jacket"
 	desc = "A smooth black jacket."
 	icon_state = "ia_jacket_open"
 	item_state = "ia_jacket"
@@ -197,7 +197,7 @@
 
 //Recycler
 /obj/item/clothing/suit/recyclervest
-    name = "Recycler vest"
+    name = "recycler vest"
     desc = "This is Recycler vest."
     icon = 'icons/obj/clothing/suits.dmi'
     icon_state = "recycler_vest_open"

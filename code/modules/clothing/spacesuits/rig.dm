@@ -51,7 +51,7 @@
 	slowdown = 1
 	armor = list(melee = 40, bullet = 5, laser = 10,energy = 5, bomb = 35, bio = 100, rad = 20)
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/storage/bag/ore,/obj/item/device/t_scanner, /obj/item/weapon/rcd)
-	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
 	species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX)
@@ -212,7 +212,7 @@
 			else
 				return ..()
 
-		else if(target_zone == BP_L_LEG || target_zone == BP_R_LEG || target_zone == BP_L_FOOT || target_zone == BP_R_FOOT)
+		else if(target_zone == BP_L_LEG || target_zone == BP_R_LEG)
 
 			//Installing a component into or modifying the contents of the feet.
 			if(!attached_boots)

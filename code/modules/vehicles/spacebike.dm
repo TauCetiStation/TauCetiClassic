@@ -59,6 +59,8 @@
 /obj/vehicle/space/spacebike/MouseDrop_T(mob/living/M, mob/living/user)
 	if(!istype(user) || !istype(M))
 		return
+	if(isessence(user))
+		return
 	if(user.incapacitated() || user.lying)
 		return
 	if(!load(M))

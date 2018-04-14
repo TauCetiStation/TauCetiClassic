@@ -11,7 +11,7 @@
 	idtype = /obj/item/weapon/card/id/cargoGold
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
 	minimal_player_ingame_minutes = 1200
-	restricted_species = list(UNATHI, TAJARAN, DIONA)
+	restricted_species = list(TAJARAN, DIONA)
 
 /datum/job/qm/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -47,6 +47,7 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
 	minimal_player_ingame_minutes = 960
+	restricted_species = list(SKRELL, DIONA)
 
 
 /datum/job/cargo_tech/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -79,6 +80,7 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
 	minimal_player_ingame_minutes = 960
+	restricted_species = list(SKRELL)
 
 /datum/job/mining/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -116,6 +118,7 @@
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mailsorting, access_recycler)
 	minimal_player_ingame_minutes = 960
+	restricted_species = list(SKRELL)
 
 /datum/job/recycler/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -148,6 +151,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_bar)
 	minimal_player_ingame_minutes = 480
+	restricted_species = list(TAJARAN)
 
 /datum/job/bartender/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -195,6 +199,7 @@
 	access = list(access_kitchen)
 	alt_titles = list("Cook")
 	minimal_player_ingame_minutes = 480
+	restricted_species = list(TAJARAN, SKRELL)
 
 /datum/job/chef/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -226,6 +231,7 @@
 	access = list(access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 	alt_titles = list("Hydroponicist")
 	minimal_player_ingame_minutes = 480
+	restricted_species = list(SKRELL)
 
 /datum/job/hydro/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -261,6 +267,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_janitor, access_maint_tunnels)
 	minimal_player_ingame_minutes = 480
+	restricted_species = list(SKRELL)
 
 /datum/job/janitor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -325,7 +332,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_lawyer, access_court, access_sec_doors)
 	minimal_player_ingame_minutes = 1560
-	restricted_species = list(UNATHI, TAJARAN, DIONA, SKRELL)
+	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/lawyer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -366,6 +373,7 @@
 	idtype = /obj/item/weapon/card/id/clown
 	access = list(access_clown, access_theatre)
 	minimal_player_ingame_minutes = 480
+	restricted_species = list(SKRELL)
 
 /datum/job/clown/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -400,6 +408,7 @@
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/mime
 	access = list(access_mime, access_theatre)
+	restricted_species = list(SKRELL)
 
 /datum/job/mime/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

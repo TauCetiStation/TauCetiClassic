@@ -214,12 +214,13 @@ var/datum/subsystem/vote/SSvote
 		to_chat(world, "\n<font color='purple'><b>[sanitize_plus_chat(text)]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 
-		if(vote_type == "crew_transfer")
+		if(vote_type != "custom")
 			for(var/client/C in clients)
 				var/datum/browser/popup = new(C, "vote", "Voting Panel")
 				popup.set_window_options("can_close=0")
 				popup.set_content(SSvote.interface(C))
 				popup.open(0)
+		if(vote_type == "crew_transfer")
 			addtimer(CALLBACK(src , .proc/return_ooc, ooc_allowed), config.vote_period)
 			if(ooc_allowed)
 				ooc_allowed = FALSE

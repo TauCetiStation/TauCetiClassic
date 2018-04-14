@@ -37,14 +37,14 @@
 	body_parts_covered = 0
 
 /obj/item/clothing/mask/fake_face
-	name = "Fake Face"
+	name = "fake face"
 	desc = "Warning: this face not a fake."
 	icon_state = "fake_face"
 	flags_inv = HIDEFACE
 	body_parts_covered = 0
 
 /obj/item/clothing/mask/snorkel
-	name = "Snorkel"
+	name = "snorkel"
 	desc = "For the Swimming Savant."
 	icon_state = "snorkel"
 	flags_inv = HIDEFACE
@@ -159,7 +159,7 @@
 	return message
 
 /obj/item/clothing/mask/cowmask
-	name = "Cowface"
+	name = "cowface"
 	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!"
 	icon_state = "cowmask"
 	item_state = "cowmask"
@@ -242,13 +242,13 @@
 	icon_state = "bandskull"
 
 /obj/item/clothing/mask/tie/collar
-	name = "Silver Collar"
+	name = "silver collar"
 	desc = "A common collar with silver covering"
 	icon_state = "collar"
 	body_parts_covered = 0
 
 /obj/item/clothing/mask/tie/collar2
-	name = "Gold Collar"
+	name = "gold collar"
 	desc = "A common collar with gold covering"
 	icon_state = "collar2"
 	body_parts_covered = 0

@@ -3,7 +3,7 @@
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	anchored = 0
-	density = 1
+	density = 0
 	interact_offline = TRUE
 	var/mob/living/carbon/human/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
@@ -51,7 +51,8 @@
 
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
 	..()
-
+	if(!iscarbon(usr) && !isrobot(usr))
+		return
 	if(attached)
 		visible_message("[src.attached] is detached from \the [src]")
 		src.attached = null

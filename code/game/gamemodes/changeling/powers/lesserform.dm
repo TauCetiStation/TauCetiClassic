@@ -66,6 +66,8 @@
 		if(O.mind.changeling)
 			O.mind.changeling.purchasedpowers += new /obj/effect/proc_holder/changeling/humanform(null)
 			O.changeling_update_languages(changeling.absorbed_languages)
+			for(var/mob/living/parasite/essence/M in user)
+				M.transfer(O)
 	. = O
 	feedback_add_details("changeling_powers","LF")
 	qdel(user)

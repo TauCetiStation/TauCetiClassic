@@ -55,8 +55,9 @@
 
 	MouseDrop(over_object, src_location, over_location)
 		..()
+		if(!iscarbon(usr) && !isrobot(usr))
+			return
 		if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
-			if(!ishuman(usr))	return
 			if(opened)	return 0
 			if(contents.len)	return 0
 			visible_message("[usr] folds up the [src.name]")
@@ -102,7 +103,8 @@
 			qdel(src)
 
 	MouseDrop(over_object, src_location, over_location)
+		if(!iscarbon(usr) && !isrobot(usr))
+			return
 		if((over_object == usr && (in_range(src, usr) || usr.contents.Find(src))))
-			if(!ishuman(usr))	return
 			to_chat(usr, "\red You can't fold that up anymore..")
 		..()

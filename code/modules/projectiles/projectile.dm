@@ -57,6 +57,7 @@
 	var/step_delay = 1	// the delay between iterations if not a hitscan projectile
 
 	// effect types to be used
+	var/list/tracer_list = null // if set to list, it will be gathering all projectile effects into list and delete them after impact
 	var/muzzle_type
 	var/tracer_type
 	var/impact_type
@@ -68,9 +69,21 @@
 
 /obj/item/projectile/atom_init()
 	damtype = damage_type // TODO unify these vars properly (Bay12)
+	if(timestop_count)
+		var/obj/effect/timestop/T = locate() in loc
+		if(T)
+			T.timestop(src)
 	. = ..()
 	if(light_color)
 		set_light(light_range,light_power,light_color)
+
+/obj/item/projectile/Destroy()
+	QDEL_LIST(tracer_list)
+	firer = null
+	starting = null
+	original = null
+	shot_from = null
+	return ..()
 
 
 /obj/item/projectile/proc/check_living_shield(mob/living/carbon/human/H)
@@ -309,6 +322,8 @@
 		var/obj/effect/projectile/M = new muzzle_type(get_turf(src))
 
 		if(istype(M))
+			if(tracer_list)
+				tracer_list += M
 			M.set_transform(T)
 			M.pixel_x = location.pixel_x
 			M.pixel_y = location.pixel_y
@@ -319,6 +334,8 @@
 		var/obj/effect/projectile/P = new tracer_type(location.loc)
 
 		if(istype(P))
+			if(tracer_list)
+				tracer_list += P
 			P.set_transform(M)
 			P.pixel_x = location.pixel_x
 			P.pixel_y = location.pixel_y

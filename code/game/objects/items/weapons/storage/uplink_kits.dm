@@ -219,3 +219,13 @@
 	. = ..()
 	for(var/i in 0 to 6)
 		new /obj/item/weapon/poster/contraband(src)
+
+/obj/item/weapon/storage/box/syndie_kit/merch
+	name = "box (M)"
+	desc = "Box containing some Syndicate merchandise for real agents!"
+
+/obj/item/weapon/storage/box/syndie_kit/merch/atom_init()
+	. = ..()
+	new /obj/item/clothing/head/soft/red(src)
+	new /obj/item/clothing/suit/syndieshirt(src)
+	new /obj/item/toy/syndicateballoon(src)

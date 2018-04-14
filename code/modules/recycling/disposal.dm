@@ -155,6 +155,8 @@
 	//animals cannot put mobs other than themselves into disposal
 	if(isanimal(user) && target != user)
 		return
+	if(isessence(user))
+		return
 
 	src.add_fingerprint(user)
 	var/target_loc = target.loc
@@ -203,6 +205,8 @@
 
 		if(get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.stat || istype(user, /mob/living/silicon/ai)) return
 		if(isanimal(user)) return
+		if(isessence(user))
+			return
 		src.add_fingerprint(user)
 		var/target_loc = target.loc
 		var/msg

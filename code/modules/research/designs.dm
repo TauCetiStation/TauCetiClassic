@@ -1525,6 +1525,33 @@ datum/design/cyborgrecharger
 	build_path = /obj/item/weapon/circuitboard/grounding_rod
 	//category = list("Misc. Machinery")
 
+/datum/design/mining_drill
+	name = "Machine Design (Mining Drill Head)"
+	desc = "Large drill for mining."
+	id = "mining_drill"
+	req_tech = list("powerstorage" = 3, "programming" = 3, "engineering" = 4, "magnets" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/miningdrill
+
+/datum/design/mining_drill_brace
+	name = "Machine Design (Mining Drill Brace)"
+	desc = "Brace for mining drill."
+	id = "mining_drill_brace"
+	req_tech = list("powerstorage" = 3, "programming" = 3, "engineering" = 4, "magnets" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/miningdrillbrace
+
+/datum/design/mining_fabricator
+	name = "Machine Design (Mining fabricator)"
+	desc = "For mining staff"
+	id = "mining_fabricator"
+	req_tech = list("powerstorage" = 3, "programming" = 3, "engineering" = 4, "magnets" = 4, "materials" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/minefab
+
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////
 /////////////////////////////////////////

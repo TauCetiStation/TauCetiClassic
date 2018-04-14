@@ -73,6 +73,7 @@
 	if(target.mind)//if the victim has got a mind
 
 		target.mind.show_memory(src, 0) //I can read your mind, kekeke. Output all their notes.
+		changeling.geneticpoints += 2
 
 		if(target.mind.changeling)//If the target was a changeling, suck out their extra juice and objective points!
 			changeling.chem_charges += min(target.mind.changeling.chem_charges, changeling.chem_storage)
@@ -83,14 +84,25 @@
 						continue
 					changeling.absorbed_dna += dna_data
 				target.mind.changeling.absorbed_dna.len = 1
+			for(var/mob/living/parasite/essence/E in target.mind.changeling.essences)
+				E.flags_allowed = (ESSENCE_HIVEMIND | ESSENCE_PHANTOM | ESSENCE_POINT | ESSENCE_SPEAK_TO_HOST)
+				E.self_voice = FALSE
+				if(E.phantom)
+					E.phantom.hide_phantom()
+				E.changeling = changeling
+				E.transfer(user)
+			target.mind.changeling.essences.Cut()
+
 
 			changeling.geneticpoints += target.mind.changeling.geneticpoints
 			target.mind.changeling.absorbedcount = 0
+		new /mob/living/parasite/essence(user, user, target)
+
 	else
+		changeling.geneticpoints += 0.5
 		changeling.chem_charges += 10
 
 	changeling.isabsorbing = 0
-	changeling.geneticpoints +=2
 	for(var/datum/reagent/blood/B in target.vessel.reagent_list) //We are vamplings, so we drink blood!
 		if(B.id == "blood")
 			B.volume = 0

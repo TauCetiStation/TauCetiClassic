@@ -128,6 +128,7 @@
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/device/flashlight/flare(src)
 	new /obj/item/clothing/under/rank/head_of_security/turtleneck(src)
+	new /obj/item/device/flashlight/seclite(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
@@ -168,6 +169,7 @@
 	new /obj/item/weapon/reagent_containers/spray/pepper(src)
 	new /obj/item/weapon/melee/baton(src)
 	new /obj/item/weapon/storage/box/holobadge(src)
+	new /obj/item/device/flashlight/seclite(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)
@@ -205,6 +207,7 @@
 	new /obj/item/taperoll/police(src)
 	new /obj/item/device/hailer(src)
 	new /obj/item/device/flashlight/flare(src)
+	new /obj/item/device/flashlight/seclite(src)
 	#ifdef NEWYEARCONTENT
 	new /obj/item/clothing/suit/wintercoat/security(src)
 	new /obj/item/clothing/shoes/winterboots(src)

@@ -16,6 +16,7 @@
 	bound_height = 64
 	icon = 'icons/obj/structures/droppod.dmi'
 	icon_state = "dropod_opened"
+	var/item_state = null
 
 	var/max_integrity = 100
 	var/obj_integrity = 100
@@ -63,7 +64,7 @@
 	for(var/obj/item/X in stored_items)
 		X.forceMove(turf)
 	stored_items.Cut()
-	new /obj/effect/decal/droppod_wreckage(turf)
+	new /obj/effect/decal/droppod_wreckage(turf, item_state)
 	return ..()
 
 /obj/structure/droppod/ex_act()
@@ -188,6 +189,8 @@
 	overlays -= mob_overlay
 	QDEL_NULL(mob_overlay)
 	icon_state = Stored_Nuclear ? "dropod_opened_n" : "dropod_opened"
+	if(item_state)
+		icon_state += item_state
 	intruder.forceMove(get_turf(loc))
 	intruder = null
 	verbs += /obj/structure/droppod/verb/move_inside
@@ -356,12 +359,13 @@
 	flags |= STATE_DROPING
 	density = FALSE
 	opacity = FALSE
-	icon_state = "dropod_flying"
+	icon_state = "dropod_flying[item_state]"
 	var/initial_x = pixel_x
 	var/initial_y = pixel_y
 	animate(src, pixel_y = 500, pixel_x = rand(-150, 150), time = 20, easing = SINE_EASING)
 	sleep(25)
 	loc = AimTarget
+	sleep(10)
 	animate(src, pixel_y = initial_y, pixel_x = initial_x, time = 20, easing = CUBIC_EASING)
 	addtimer(CALLBACK(src, .proc/perform_drop), 20)
 
@@ -379,8 +383,10 @@
 	AimTarget = null
 	uses--
 	icon_state = Stored_Nuclear ? "dropod_opened_n" : "dropod_opened"
-	overlays -= image(icon, "drop_panel", "layer" = initial(layer) + 0.3)
-	new /obj/effect/overlay/droppod_open(loc)
+	if(item_state)
+		icon_state += item_state
+	overlays -= image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3)
+	new /obj/effect/overlay/droppod_open(loc, item_state)
 	sleep(50)
 	if(uses <= 0)
 		qdel(src)
@@ -480,7 +486,7 @@
 /obj/structure/droppod/proc/EjectNuclear()
 	visible_message("<span class='notice'>[Stored_Nuclear] has been ejected from [src]!</span>")
 	Stored_Nuclear.forceMove(get_turf(loc))
-	icon_state = "dropod_opened"
+	icon_state = "dropod_opened[item_state]"
 	Stored_Nuclear = null
 	verbs -= /obj/structure/droppod/proc/Nuclear
 
@@ -653,10 +659,10 @@
 		if(flags & IS_LOCKED)
 			flags &= ~IS_LOCKED
 			to_chat(intruder, "<span class='notice'>You unblocked [src].</span>")
-			overlays -= image(icon, "drop_panel", "layer" = initial(layer) + 0.3)
+			overlays -= image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3)
 		else
 			flags |= IS_LOCKED
-			overlays += image(icon, "drop_panel", "layer" = initial(layer) + 0.3)
+			overlays += image(icon, "drop_panel[item_state]", "layer" = initial(layer) + 0.3)
 			to_chat(intruder, "<span class='notice'>You blocked [src].</span>")
 		send_byjax(intruder, "droppod.browser", "commands", get_commands())
 		return
@@ -678,6 +684,8 @@
 		return
 
 /obj/structure/droppod/Legitimate
+	icon_state = "dropod_opened_nt"
+	item_state = "_nt"
 	flags = (ADVANCED_AIMING_INSTALLED | IS_LEGITIMATE)
 
 /obj/structure/droppod/Syndi
@@ -730,6 +738,11 @@
 	density = 1
 	anchored = 0
 	opacity = 0
+
+/obj/effect/decal/droppod_wreckage/atom_init(mapload, icon_modifier)
+	. = ..()
+	if(icon_modifier)
+		icon_state += icon_modifier
 
 /obj/item/device/drop_caller
 	name = "Drop Pod inititalizer"

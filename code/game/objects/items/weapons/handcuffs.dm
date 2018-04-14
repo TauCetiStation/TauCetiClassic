@@ -78,31 +78,6 @@
 		var/mob/living/carbon/ian/IAN = target
 		IAN.un_equip_or_action(user, "Neck", user.get_active_hand())
 
-var/last_chew = 0
-/mob/living/carbon/human/RestrainedClickOn(atom/A)
-	if (A != src) return ..()
-	if (last_chew + 26 > world.time) return
-
-	var/mob/living/carbon/human/H = A
-	if (!H.handcuffed) return
-	if (H.a_intent != "hurt") return
-	if (H.zone_sel.selecting != O_MOUTH) return
-	if (H.wear_mask) return
-	if (istype(H.wear_suit, /obj/item/clothing/suit/straight_jacket)) return
-
-	var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
-	if (!BP)
-		return
-
-	var/s = "\red [H.name] chews on \his [BP.name]!"
-	H.visible_message(s, "\red You chew on your [BP.name]!")
-	H.attack_log += text("\[[time_stamp()]\] <font color='red'>[s] ([H.ckey])</font>")
-	log_attack("[s] ([H.ckey])")
-
-	BP.take_damage(3, null, DAM_EDGE | DAM_SHARP, "teeth marks")
-
-	last_chew = world.time
-
 /obj/item/weapon/handcuffs/cable
 	name = "cable restraints"
 	desc = "Looks like some cables tied together. Could be used to tie something up."

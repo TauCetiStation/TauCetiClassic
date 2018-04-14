@@ -174,7 +174,7 @@
 
 		var/obj/effect/decal/cleanable/blood/this = new /obj/effect/decal/cleanable/blood(src)
 		this.blood_DNA[M.dna.unique_enzymes] = M.dna.b_type
-		this.basecolor = "#A10808"
+		this.basecolor = M.blood_color
 		this.update_icon()
 
 	else if(istype(M,/mob/living/carbon/human))

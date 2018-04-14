@@ -4,7 +4,7 @@
 	name = "gaming kit"
 	desc = "Allows you play chess, checkers, or whichever game involving those pieces."
 	icon = 'icons/obj/items.dmi'
-	icon_state = "game_kit"
+	icon_state = "game_kit_red"
 	var/selected = null
 	var/board_stat = null		//Core string
 	var/data = ""
@@ -13,6 +13,32 @@
 	g_amt = 1000
 	item_state = "sheet-metal"
 	w_class = 5.0
+
+/obj/item/weapon/game_kit/red
+	icon_state = "game_kit_red"
+	name = "red gaming kit"
+
+/obj/item/weapon/game_kit/blue
+	icon_state = "game_kit_blue"
+	name = "blue gaming kit"
+
+/obj/item/weapon/game_kit/purple
+	icon_state = "game_kit_purple"
+	name = "purple gaming kit"
+
+/obj/item/weapon/game_kit/orange
+	icon_state = "game_kit_orange"
+	name = "orange gaming kit"
+
+/obj/item/weapon/game_kit/random/atom_init()
+	. = ..()
+	var/colour = pick("red", "blue", "purple", "orange")
+	icon_state = "game_kit_[colour]"
+	name = "[colour] gaming kit"
+
+/obj/item/weapon/game_kit/chaplain
+	desc = "Allows you to play chess, checkers, or whichever game involving those pieces, even from beyond our world!"
+	icon_state = "game_kit_chaplain"
 
 /obj/item/weapon/game_kit/atom_init()
 	. = ..()
@@ -31,7 +57,7 @@
 		dat += "<tr>"
 
 		for (var/x = 1 to 8)
-			var/color = (y + x) % 2 ? "#999999" : "#ffffff"		//Color the squares in black and white
+			var/color = (y + x) % 2 ? "#999999" : istype(src, /obj/item/weapon/game_kit/chaplain) ? "#a2fad1" : "#ffffff"		//Color the squares in black and white or black and green in case of the chaplain kit.
 			var/piece = copytext(board_stat, ((y - 1) * 8 + x) * 2 - 1, ((y - 1) * 8 + x) * 2 + 1)		//Copy the part of the board_stat string.
 			dat += "<td>"
 			dat += "<td style='background-color:[color]' width=32 height=32>"
@@ -58,6 +84,14 @@
 /obj/item/weapon/game_kit/attack_ai(mob/user)
 	return interact(user)
 
+/obj/item/weapon/game_kit/chaplain/attack_ai(mob/user)
+	return
+
+/obj/item/weapon/game_kit/chaplain/attack_ghost(mob/dead/observer/user)
+	set_light(3, 1, "a2fad1")
+	addtimer(CALLBACK(src, .atom/proc/set_light, 0), 10)
+	return interact(user)
+
 /obj/item/weapon/game_kit/interact(mob/user)
 	user.machine = src
 	var/datum/asset/assets = get_asset_datum(/datum/asset/simple/chess)		//Sending pictures to the client
@@ -67,10 +101,16 @@
 	user << browse(data, "window=game_kit")
 	onclose(user, "game_kit")
 
-
 /obj/item/weapon/game_kit/Topic(href, href_list)
 	..()
-	if ((usr.stat || usr.restrained()))
+	if(!istype(src, /obj/item/weapon/game_kit/chaplain))
+		if(usr.stat)
+			return
+	else
+		if(usr.stat == UNCONSCIOUS)
+			return
+
+	if (usr.restrained())
 		return
 
 	if (usr.contents.Find(src) || (in_range(src, usr) && istype(loc, /turf)))

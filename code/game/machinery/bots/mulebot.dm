@@ -346,7 +346,8 @@
 			playsound(loc, 'sound/machines/ping.ogg', 50, 0)
 
 /obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
-
+	if(!iscarbon(user) && !isrobot(user))
+		return
 	if(user.stat)
 		return
 
@@ -361,6 +362,8 @@
 // mousedrop a crate to load the bot
 // can load anything if emagged
 /obj/machinery/bot/mulebot/MouseDrop_T(atom/movable/AM, mob/user)
+	if(!iscarbon(usr) && !isrobot(usr))
+		return
 	if(user.incapacitated() || user.lying)
 		return
 	if (!istype(AM))

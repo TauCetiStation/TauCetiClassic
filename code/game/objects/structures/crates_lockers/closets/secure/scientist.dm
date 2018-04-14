@@ -35,7 +35,7 @@
 	new /obj/item/clothing/under/rank/research_director(src)
 	new /obj/item/clothing/under/rank/research_director/rdalt(src)
 	new /obj/item/clothing/under/rank/research_director/dress_rd(src)
-	new /obj/item/clothing/suit/storage/labcoat(src)
+	new /obj/item/clothing/suit/storage/labcoat/rd(src)
 	new /obj/item/weapon/cartridge/rd(src)
 	new /obj/item/clothing/shoes/white(src)
 	new /obj/item/clothing/shoes/leather(src)

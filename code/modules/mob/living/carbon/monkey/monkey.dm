@@ -8,6 +8,11 @@
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
+	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE
+	var/warning_high_pressure = WARNING_HIGH_PRESSURE
+	var/warning_low_pressure = WARNING_LOW_PRESSURE
+	var/hazard_low_pressure = HAZARD_LOW_PRESSURE
+	blood_color = "#A10808"
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/greaterform = HUMAN                  // Used when humanizing a monkey.
@@ -435,6 +440,8 @@
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
+		if(istype(src, /mob/living/carbon/monkey/diona))
+			stat(null, "Nutriment: [nutrition]/400")
 		CHANGELING_STATPANEL_STATS(null)
 
 	CHANGELING_STATPANEL_POWERS(null)
@@ -491,18 +498,18 @@
 	return 0
 
 /mob/living/carbon/monkey/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list())
-        if(stat)
-                return
+	if(stat)
+		return
 
-        if(copytext(message,1,2) == "*")
-                return emote(copytext(message,2))
+	if(copytext(message,1,2) == "*")
+		return emote(copytext(message,2))
 
-        if(stat)
-                return
+	if(stat)
+		return
 
-        if(speak_emote.len)
-                verb = pick(speak_emote)
+	if(speak_emote.len)
+		verb = pick(speak_emote)
 
-        message = capitalize(trim_left(message))
+	message = capitalize(trim_left(message))
 
-        ..(message, speaking, verb, alt_name, italics, message_range, used_radios)
+	..(message, speaking, verb, alt_name, italics, message_range, used_radios)

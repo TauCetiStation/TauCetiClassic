@@ -293,6 +293,9 @@ var/global/loopModeNames=list(
 		"classic" = "Classical Music",
 		"ussr_disco" = "Disco USSR-89s",
 		"topreptilian" = "Top Reptillian",
+		"zvukbanok" = "Sounds of beer cans",
+		"eurobeat" = "Eurobeat",
+		"finland" = "Suomi wave",
 	)
 
 // Relaxing elevator music~
@@ -315,6 +318,9 @@ var/global/loopModeNames=list(
 		"classic" = "Classical Music",
 		"ussr_disco" = "Disco USSR-89s",
 		"topreptilian" = "Top Reptillian",
+		"zvukbanok" = "Sounds of beer cans",
+		"eurobeat" = "Eurobeat",
+		"finland" = "Suomi wave",
 	)
 
 /obj/machinery/media/jukebox/techno

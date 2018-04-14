@@ -911,12 +911,10 @@ ________________________________________________________________________________
 		cancel_stealth()
 	else
 		anim(U.loc,U,'icons/mob/mob.dmi',,"cloak",,U.dir)
-		s_active=!s_active
+		s_active=TRUE
 		icon_state = U.gender==FEMALE ? "s-ninjasf" : "s-ninjas"
 		U.regenerate_icons()	//update their icons
-		to_chat(U, "\blue You are now invisible to normal detection.")
-		for(var/mob/O in oviewers(U))
-			O.show_message("[U.name] vanishes into thin air!",1)
+		U.visible_message("[U.name] vanishes into thin air!", "<span class='notice'>You are now invisible to normal detection.</span>")
 		U.invisibility = INVISIBILITY_LEVEL_TWO
 		if(istype(U.get_active_hand(), /obj/item/weapon/melee/energy/blade))
 			U.drop_item()
@@ -929,12 +927,31 @@ ________________________________________________________________________________
 	var/mob/living/carbon/human/U = affecting
 	if(s_active)
 		anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
-		s_active=!s_active
-		to_chat(U, "\blue You are now visible.")
+		s_active=FALSE
 		U.invisibility = 0
-		for(var/mob/O in oviewers(U))
-			O.show_message("[U.name] appears from thin air!",1)
-		if(U.mind.protector_role == 1)
+		U.visible_message("[U.name] appears from thin air!", "<span class='notice'>You are now visible.</span>")
+		if(U.mind.protector_role)
+			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
+		else
+			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
+		U.regenerate_icons()	//update their icons
+		return 1
+	return 0
+
+/obj/item/clothing/suit/space/space_ninja/proc/pop_stealth()
+	var/mob/living/carbon/human/U = affecting
+	if(s_active)
+		var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
+		sparks.set_up(3, 0, get_turf(U))
+		sparks.start()
+		sparks = new /datum/effect/effect/system/spark_spread()
+		sparks.set_up(3, 0, get_turf(U))
+		sparks.start()
+
+		s_active=FALSE
+		U.invisibility = 0
+		U.visible_message("[U.name] appears from thin air!", "<span class='notice'>You are now visible.</span>")
+		if(U.mind.protector_role)
 			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
 		else
 			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
@@ -976,6 +993,16 @@ ________________________________________________________________________________
 				to_chat(user, "There are <B>[a_boost]</B> adrenaline booster\s remaining.")
 			else
 				to_chat(user, "�rr�R �a��a�� No-�-� f��N� 3RR�r")
+
+/obj/item/clothing/suit/space/space_ninja/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+	if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)
+		return
+
+	if(reaction_type == REACTION_HIT_BY_BULLET || reaction_type == REACTION_INTERACT_ARMED || reaction_type == REACTION_INTERACT_UNARMED || reaction_type == REACTION_THROWITEM || reaction_type == REACTION_ATACKED)
+		pop_stealth()
+		return
+
+	cancel_stealth()
 
 /*
 ===================================================================================

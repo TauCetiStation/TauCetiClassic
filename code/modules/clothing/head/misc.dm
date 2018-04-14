@@ -295,7 +295,7 @@
 
 
 /obj/item/clothing/head/batman_helmet
-	name = "batman helmet"
+	name = "Batman helmet"
 	desc = "It's not who you are underneath, it's what you do that defines you."
 	icon_state = "batman_helmet"
 	item_state = "batman_helmet"
@@ -335,11 +335,13 @@
 	name = "cowboy hat"
 	icon_state = "cowboy_hat"
 	item_state = "cowboy_hat"
+	desc = "Howdy, partner!"
 
 /obj/item/clothing/head/indiana
 	name = "leather hat"
 	icon_state = "indiana_hat"
 	item_state = "indiana_hat"
+	desc = "Be aware of rolling boulders."
 
 /obj/item/clothing/head/necromancer_hood
 	name = "necromancer's hood"
@@ -357,6 +359,26 @@
 	name = "green hood"
 	icon_state = "green_hood"
 
+/obj/item/clothing/head/beret/red
+	name = "red beret"
+	desc = "Bonjour, but in red. Smells like baguette, pardon my French."
+	icon_state = "beret_red"
+
+/obj/item/clothing/head/beret/blue
+	name = "blue beret"
+	desc = "Bonjour, but in blue. Smells like baguette, pardon my French."
+	icon_state = "beret_blue"
+
+/obj/item/clothing/head/beret/black
+	name = "blue beret"
+	desc = "Bonjour, but in black. Smells like baguette, pardon my French."
+	icon_state = "beret_black"
+
+/obj/item/clothing/head/beret/purple
+	name = "blue beret"
+	desc = "Bonjour, but in purple. Smells like baguette, pardon my French."
+	icon_state = "beret_purple"
+
 /obj/item/clothing/head/beret/centcom/officer
 	name = "officers beret"
 	desc = "A black beret adorned with the shield silver kite shield with an engraved sword of the NanoTrasen security forces, announcing to the world that the wearer is a defender of NanoTrasen."
@@ -368,6 +390,6 @@
 	icon_state = "centcomcaptain"
 
 /obj/item/clothing/head/angel_nimb
-	name = "Nimb"
+	name = "nimb"
 	desc = "Just a Nimb"
 	icon_state = "nimb"

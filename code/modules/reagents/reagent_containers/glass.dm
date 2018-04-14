@@ -147,7 +147,7 @@
 			to_chat(user, "<span class = 'notice'>You set the label to \"[tmp_label]\".</span>")
 			src.label_text = tmp_label
 			src.update_name_label()
-	if (istype(W, /obj/item/stack/nanopaste))
+	else if(istype(W, /obj/item/stack/nanopaste))
 		var/obj/item/stack/nanopaste/N = W
 		if(src.is_open_container() && src.reagents) //Something like a glass. Player probably wants to transfer TO it.
 			if(src.reagents.total_volume >= src.reagents.maximum_volume)
@@ -158,6 +158,8 @@
 				return
 
 			src.reagents.add_reagent("nanites2", 1)
+	else
+		..()
 
 /obj/item/weapon/reagent_containers/glass/proc/update_name_label()
 	if(src.label_text == "")

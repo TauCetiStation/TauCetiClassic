@@ -2,27 +2,19 @@
 	if (istype(loc, /turf) && istype(loc.loc, /area/start))
 		to_chat(M, "No attacking people at spawn, you jackass.")
 		return
-
-	var/obj/item/organ/external/BPH = M.bodyparts_by_name[M.hand ? BP_L_HAND : BP_R_HAND]
-	if(BPH && !BPH.is_usable())
-		to_chat(M, "\red You can't use your [BPH.name].")
-		return
-
 	..()
 
 	if((M != src) && check_shields(0, M.name, get_dir(M,src)))
 		visible_message("\red <B>[M] attempted to touch [src]!</B>")
 		return 0
 
-	if(M.wear_suit)
-		if(istype(M.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-			for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(M.wear_suit))
-				if(V.stealth_active)
-					V.DeactivateStealth()
-		if(istype(M.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
-			for(var/obj/item/clothing/suit/space/vox/stealth/V in list(M.wear_suit))
-				if(V.on)
-					V.overload()
+	if(M.wear_suit && istype(M.wear_suit, /obj/item/clothing/suit))
+		var/obj/item/clothing/suit/V = M.wear_suit
+		V.attack_reaction(M, REACTION_INTERACT_UNARMED, src)
+
+	if(src.wear_suit && istype(src.wear_suit, /obj/item/clothing/suit))
+		var/obj/item/clothing/suit/V = src.wear_suit
+		V.attack_reaction(src, REACTION_ATACKED, M)
 
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		M.do_attack_animation(src)
@@ -91,12 +83,18 @@
 	switch(M.a_intent)
 		if("help")
 			if(health < config.health_threshold_crit && health > config.health_threshold_dead)
+				if(M.species && M.species.flags[NO_BREATHE])
+					to_chat(M, "<span class='notice bold'>Your species can not perform CPR!</span>")
+					return FALSE
+				if(species && species.flags[NO_BREATHE])
+					to_chat(M, "<span class='notice bold'>You can not perform CPR on these species!</span>")
+					return FALSE
 				if((M.head && (M.head.flags & HEADCOVERSMOUTH)) || (M.wear_mask && (M.wear_mask.flags & MASKCOVERSMOUTH)))
-					to_chat(M, "\blue <B>Remove your mask!</B>")
-					return 0
+					to_chat(M, "<span class='notice bold'>Remove your mask!</span>")
+					return FALSE
 				if((head && (head.flags & HEADCOVERSMOUTH)) || (wear_mask && (wear_mask.flags & MASKCOVERSMOUTH)))
-					to_chat(M, "\blue <B>Remove his mask!</B>")
-					return 0
+					to_chat(M, "<span class='notice bold'>Remove his mask!</span>")
+					return FALSE
 
 				var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human()
 				O.source = M

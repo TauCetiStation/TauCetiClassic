@@ -304,7 +304,7 @@
 	name = "inflatable barrier box"
 	desc = "Contains inflatable walls and doors."
 	icon_state = "inf_box"
-	item_state = "syringe_kit"
+	item_state = "inf_box"
 	max_combined_w_class = 21
 
 /obj/item/weapon/storage/briefcase/inflatable/atom_init()
