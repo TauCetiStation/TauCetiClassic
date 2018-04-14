@@ -110,6 +110,7 @@ datum
 						var/mob/living/carbon/monkey/C = M
 						if(C.race in restrict_species)
 							return FALSE
+				return TRUE
 
 		blood
 			data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null, "antibodies" = null)
