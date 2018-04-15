@@ -7,9 +7,11 @@ var/datum/robolimb/unbranded
 /datum/robolimb
 	var/company = "Unbranded"                            // Shown when selecting the limb.
 	var/desc = "A generic unbranded robotic prosthesis." // Seen when examining a limb.
-	var/iconbase = 'icons/mob/human_races/robotic.dmi'       // Icon base to draw from.
-	var/protected = 0									 // How protected from EMP the limb is.
-	var/list/restrict_species = list("exclude")
+	var/iconbase = 'icons/mob/human_races/robotic.dmi'   // Icon base to draw from.
+	var/protected = 0                                    // How protected from EMP the limb is.
+	var/low_quality = FALSE                              // If TRUE, limb may spawn in being sabotaged.
+	var/list/restrict_species = list("exclude")          // Species that CAN wear the limb.
+	var/list/possible_tools = list()                     // If limb can simulate a tool, it will be in this list.
 	var/monitor = FALSE			 		 			 // Whether the limb can display IPC screens.
 	var/parts = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)						 	 // Defines what parts said brand can replace on a body.
 
@@ -17,6 +19,7 @@ var/datum/robolimb/unbranded
 	company = "Unbranded Monitor"
 	desc = "A generic unbranded interpretation of a popular prosthetic head model. It looks rudimentary and cheaply constructed."
 	iconbase = 'icons/mob/human_races/cyberlimbs/unbranded/unbranded_monitor.dmi'
+	low_quality = TRUE
 	monitor = TRUE
 	restrict_species = list(IPC)
 	parts = list(BP_HEAD)
@@ -129,12 +132,16 @@ var/datum/robolimb/unbranded
 	company = "Xion"
 	desc = "This limb has a minimalist black and red casing."
 	iconbase = 'icons/mob/human_races/cyberlimbs/xion/xion_main.dmi'
+	low_quality = TRUE
+	possible_tools = list("hand" = null, "screwdriver" = /obj/item/weapon/screwdriver, "wrench" = /obj/item/weapon/wrench)
 	parts = list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM)
 
 /datum/robolimb/xion_ipc
 	company = "Xion - Breach"
 	desc = "This limb has a minimalist black and red casing. Looks a bit menacing."
 	iconbase = 'icons/mob/human_races/cyberlimbs/xion/xion_ipc.dmi'
+	low_quality = TRUE
+	possible_tools = list("hand" = null, "screwdriver" = /obj/item/weapon/screwdriver, "wrench" = /obj/item/weapon/wrench)
 	restrict_species = list(IPC)
 	parts = BP_ALL
 
@@ -142,6 +149,7 @@ var/datum/robolimb/unbranded
 	company = "Xion Monitor"
 	desc = "Xion Mfg.'s unique spin on a popular prosthetic head model. It looks and minimalist and utilitarian."
 	iconbase = 'icons/mob/human_races/cyberlimbs/xion/xion_monitor.dmi'
+	low_quality = TRUE
 	monitor = TRUE
 	restrict_species = list(IPC)
 	parts = list(BP_HEAD)

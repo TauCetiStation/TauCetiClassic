@@ -28,6 +28,12 @@
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
+/obj/item/weapon/wrench/prosthetic
+	name = "prosthetic wrench"
+	desc = "A wrench with many common uses. Can be your hand."
+	flags = CONDUCT | ABSTRACT | DROPDEL
+	origin_tech = null
+
 /obj/item/weapon/wrench/power
 	name = "Hand Drill"
 	desc ="A simple powered drill with a bolt bit"
@@ -70,6 +76,11 @@
 		to_chat(viewers(user), pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
 							"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
 		return(BRUTELOSS)
+
+/obj/item/weapon/screwdriver/prosthetic
+	name = "prosthetic screwdriver"
+	flags = CONDUCT | ABSTRACT | DROPDEL
+	origin_tech = null
 
 /obj/item/weapon/screwdriver/atom_init(mapload, param_color)
 	. = ..()
@@ -131,6 +142,11 @@
 	attack_verb = list("pinched", "nipped")
 	sharp = 1
 	edge = 1
+
+/obj/item/weapon/wirecutters/prosthetic
+	name = "prosthetic wirecutters"
+	flags = CONDUCT | ABSTRACT | DROPDEL
+	origin_tech = null
 
 /obj/item/weapon/wirecutters/atom_init(mapload, param_color)
 	. = ..()
@@ -518,6 +534,11 @@
 	m_amt = 50
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
+
+/obj/item/weapon/crowbar/prosthetic
+	name = "prosthetic crowbar"
+	flags = CONDUCT | ABSTRACT | DROPDEL
+	origin_tech = null
 
 /obj/item/weapon/crowbar/red
 	icon = 'icons/obj/items.dmi'

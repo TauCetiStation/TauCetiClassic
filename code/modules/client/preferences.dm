@@ -247,7 +247,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = TRUE)
 	if(be_random_name)
 		real_name = random_name(gender)
 
@@ -303,23 +303,26 @@ var/const/MAX_SAVE_SLOTS = 10
 	// Destroy/cyborgize bodyparts & organs
 
 	for(var/name in organ_data)
+		world.log << "It's a [organ_data[name]] [name]. It's made by [organ_prost_data[name]]"
+
+	for(var/name in organ_data)
 		var/obj/item/organ/external/BP = character.bodyparts_by_name[name]
 		var/obj/item/organ/internal/IO = character.organs_by_name[name]
 		var/status = organ_data[name]
-		var/company = organ_prost_data[name]
 
 		if(status == "amputated")
 			BP.amputated = 1
 			BP.status |= ORGAN_DESTROYED
 			BP.destspawn = 1
 		if(status == "cyborg")
+			var/company = organ_prost_data[name]
 			BP.robotize(company)
 		if(status == "assisted")
 			IO.mechassist()
 		else if(status == "mechanical")
 			IO.mechanize()
-
-		else continue
+		else
+			continue
 
 
 	//Disabilities

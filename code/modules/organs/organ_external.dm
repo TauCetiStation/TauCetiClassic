@@ -25,7 +25,6 @@
 	var/number_wounds = 0             // number of wounds, which is NOT wounds.len!
 	var/list/children = list()        // Sub-limbs.
 	var/list/bodypart_organs = list() // Internal organs of this body part
-	var/sabotaged = 0                 // If a prosthetic limb is emagged, it will detonate when it fails.
 	var/datum/robolimb/model
 	var/list/implants = list()        // Currently implanted objects.
 
@@ -47,6 +46,10 @@
 	var/tmp/amputated = 0 //Whether this has been cleanly amputated, thus causing no pain
 	var/limb_layer = 0
 	var/damage_msg = "\red You feel an intense pain"
+	var/sabotaged = FALSE                 // If a prosthetic limb is emagged, it will detonate when it fails.
+	var/protected = 0                 // Protection against EMP.
+	var/has_grid = FALSE              // Used for checking, whether limb has a grid inbuilt.
+	var/obj/tool = null               // Used for prosthetics, that can simulate a tool.
 
 /obj/item/organ/external/insert_organ()
 	..()
@@ -69,6 +72,11 @@
 /obj/item/organ/external/emp_act(severity)
 	if(!(status & ORGAN_ROBOT)) // meatbags do not care about EMP
 		return
+
+	if(protected)
+		severity = Clamp(severity+protected, 1, 3)
+	if(sabotaged)
+		severity = max(severity-1, 1)
 
 	var/burn_damage = 0
 	switch(severity)
@@ -688,8 +696,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 			if(bodypart)
 				//Robotic limbs explode if sabotaged.
 				if(status & ORGAN_ROBOT)
-					var/obj/item/robot_parts/BP = bodypart
-					BP.model = model
+					var/obj/item/robot_parts/RP = bodypart
+					RP.model = model
+					RP.get_brand()
 					if(!no_explode && sabotaged)
 						explosion(get_turf(owner), -1, -1, 2, 3)
 						var/datum/effect/effect/system/spark_spread/spark_system = new
@@ -909,6 +918,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	destspawn = 0
 	amputated = 0
 	model = all_robolimbs[company]
+	protected = model.protected
+	if(model.low_quality && prob(50)) // Even non-broken low quality prosthetics can break, on attachment.
+		sabotaged = TRUE
 
 /obj/item/organ/external/proc/mutate()
 	src.status |= ORGAN_MUTATED

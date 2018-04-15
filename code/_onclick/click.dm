@@ -43,6 +43,7 @@
 	next_move = world.time + num + next_move_modifier
 
 /mob/proc/ClickOn( atom/A, params )
+	world.log << "[A], [params]"
 	if(world.time <= next_click)
 		return
 	next_click = world.time + 1

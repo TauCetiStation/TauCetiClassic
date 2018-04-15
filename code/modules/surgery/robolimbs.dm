@@ -159,10 +159,8 @@
 	"\blue You have attached \the [tool] where [target]'s [BP.name] used to be.")
 	BP.germ_level = 0
 	BP.robotize(L.model.company)
-	if(L.sabotaged)
-		BP.sabotaged = 1
-	else
-		BP.sabotaged = 0
+	BP.sabotaged = L.sabotaged
+	BP.has_grid = L.has_grid
 	target.update_body()
 	target.updatehealth()
 	target.UpdateDamageIcon(BP)
