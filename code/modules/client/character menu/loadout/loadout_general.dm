@@ -76,6 +76,11 @@ datum/gear/zippo
 	allowed_roles = list("Chaplain", "Paranormal Investigator")
 	cost = 3
 
+/datum/gear/blackcandle
+	display_name = "Black Candle"
+	path = /obj/item/candle/ghost
+	allowed_roles = list("Chaplain", "Paranormal Investigator")
+
 /datum/gear/pulserifle
 	display_name = "Pulse rifle"
 	path = /obj/item/weapon/gun/energy/pulse_rifle

@@ -880,6 +880,10 @@
 	product_ads = "Occult is magic;Knowledge is magic;All the magic!;None to spook us;The dice has been cast"
 
 /obj/machinery/vending/weirdomat/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
+		OS.scanned_type = src.type
+		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 	if(istype(I, /obj/item/weapon/ectoplasm))
 		RedeemEctoplasm(I, user)
 		return
@@ -889,23 +893,46 @@
 	if(plasm.in_use)
 		return
 	plasm.in_use = TRUE
-	var/selection = input(redeemer, "Pick your eternal reward", "Ectoplasm Redemption") in list("Misfortune Set", "Spiritual Bond Set", "Contract From Below", "Cryptorecorder", "Cancel")
+	var/selection = input(redeemer, "Pick your eternal reward", "Ectoplasm Redemption") in list("Misfortune Set", "Spiritual Bond Set", "Contract From Below", "Cryptorecorder", "Black Candle Box", "Cancel")
 	if(!selection || !Adjacent(redeemer))
 		plasm.in_use = FALSE
 		return
 	switch(selection)
 		if("Misfortune Set")
-			new /obj/item/weapon/storage/pill_bottle/ghostdice(src.loc)
+			new /obj/item/weapon/storage/pill_bottle/ghostdice(loc)
 		if("Spiritual Bond Set")
-			new /obj/item/weapon/game_kit/chaplain(src.loc)
+			new /obj/item/weapon/game_kit/chaplain(loc)
 		if("Contract From Below")
-			new /obj/item/weapon/pen/ghost(src.loc)
+			new /obj/item/weapon/pen/ghost(loc)
 		if("Cryptorecorder")
-			new /obj/item/device/camera/spooky(src.loc)
+			new /obj/item/device/camera/spooky(loc)
+		if("Black Candle Box")
+			new /obj/item/weapon/storage/fancy/black_candle_box(loc)
 		if("Cancel")
 			plasm.in_use = FALSE
 			return
 	qdel(plasm)
+
+/obj/machinery/vending/barbervend
+	name = "Fab-O-Vend"
+	desc = "It would seem it vends dyes, and other stuff to make you pretty."
+	icon_state = "barbervend"
+	product_slogans = "Spread the colour, like butter, onto toast... Onto their hair.; Sometimes, I dream about dyes...; Paint 'em up and call me Mr. Painter.; Look brother, I'm a vendomat, I solve practical problems."
+	product_ads = "Cut 'em all!; To sheds!; Hair be gone!; Prettify!; Beautify!"
+	req_access_txt = "69"
+	refill_canister = /obj/item/weapon/vending_refill/barbervend
+	products = list(/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/white = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/red = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/green = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blue = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/black = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/brown = 10,
+					/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blond = 10,
+					/obj/item/weapon/reagent_containers/spray/hair_color_spray = 3)
+	contraband = list(/obj/item/weapon/razor = 1)
+	premium = list(/obj/item/weapon/scissors  = 3,
+				   /obj/item/weapon/hair_growth_accelerator = 3,
+				   /obj/item/weapon/storage/box/lipstick = 3)
 
 /obj/machinery/vending/dinnerware
 	name = "Dinnerware"

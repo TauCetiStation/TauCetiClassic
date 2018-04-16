@@ -11,7 +11,7 @@
 	if(!uses)
 		to_chat(user, "<span class='userdanger'>No calls left!</span>")
 		return
-	if(SSshuttle.departed)
+	if(SSshuttle.departed || SSshuttle.online)
 		to_chat(user, "<span class='userdanger'>All rats have worked their shift</span>")
 		return
 	playsound(user,'sound/weapons/ring.ogg',100,1)

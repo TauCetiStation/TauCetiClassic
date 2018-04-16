@@ -5,6 +5,12 @@
 
 ---
 
+### Maintainers WANTED
+
+Проекту остро необходимы мейнтейнеры для поддержания развития. Если у вас есть время и желание, опыт - пишите в ``#rnd`` канал в Дискорде с меншоном на ``@Build Maintainer``
+
+---
+
 [Baystation12](http://baystation12.net/)-based build with many changes from another upstream and sibling builds like:  
 * [/tg/station13](https://tgstation13.org/)
 * [ParadiseSS13](http://nanotrasen.se/phpBB3/index.php)
