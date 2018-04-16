@@ -14,15 +14,17 @@
 	var/ready_evolve = 0
 	var/mob/living/carbon/human/gestalt = null
 	var/allowedinjecting = list("nutriment",
-                                "ryetalyn",
-                                "kelotane",
-                                "hyronalin",
-                                "alkysine",
-                                "imidazoline"
+                                "orangejuice",
+                                "tomatojuice",
+                                "limejuice",
+                                "carrotjuice",
+                                "milk",
+                                "coffee"
                                )
+	race = DIONA
 	var/datum/reagent/injecting = null
-	universal_understand = 0 // Dionaea do not need to speak to people
-	universal_speak = 0      // before becoming an adult. Use *chirp.
+	universal_understand = FALSE // Dionaea do not need to speak to people
+	universal_speak = FALSE      // before becoming an adult. Use *chirp.
 	holder_type = /obj/item/weapon/holder/diona
 
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
