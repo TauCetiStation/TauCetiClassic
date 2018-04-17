@@ -529,8 +529,6 @@
 										new_company = "Unbranded"
 									organ_data[limb] = "cyborg"
 									organ_prost_data[limb] = new_company
-							world.log << "[organ_data[limb]] the name of [organ_prost_data[limb]]"
-
 						if("Organs")
 							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
 							if(!organ_name) return

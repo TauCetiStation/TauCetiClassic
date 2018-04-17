@@ -49,7 +49,6 @@
 	var/sabotaged = FALSE                 // If a prosthetic limb is emagged, it will detonate when it fails.
 	var/protected = 0                 // Protection against EMP.
 	var/has_grid = FALSE              // Used for checking, whether limb has a grid inbuilt.
-	var/obj/tool = null               // Used for prosthetics, that can simulate a tool.
 
 /obj/item/organ/external/insert_organ()
 	..()
@@ -98,8 +97,16 @@
 #define DROPLIMB_THRESHOLD_DESTROY 1
 #define ORGAN_DAMAGE_SPILLOVER_MULTIPLIER 0.005
 /obj/item/organ/external/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
-	brute = round(brute * owner.species.brute_mod, 0.1)
-	burn = round(burn * owner.species.burn_mod, 0.1)
+	var/brute_coefficient = 1
+	var/burn_coefficient = 1
+	if(model)
+		brute_coefficient *= model.brute_mod
+		burn_coefficient *= model.burn_mod
+	else // If it's robotic, it doesn't matter how tough the owner is.
+		brute_coefficient *= owner.species.brute_mod
+		burn_coefficient *= owner.species.burn_mod
+	brute = round(brute * brute_coefficient, 0.1)
+	burn = round(burn * burn_coefficient, 0.1)
 
 	if((brute <= 0) && (burn <= 0))
 		return 0

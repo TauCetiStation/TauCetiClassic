@@ -1,8 +1,5 @@
-var/global/list/all_robolimbs = list()
-var/global/list/all_robolimbs_try = list()
-var/global/list/monitor_robolimbs = list()
-
-var/datum/robolimb/unbranded
+var/list/all_robolimbs = list()
+var/list/monitor_robolimbs = list()
 
 /datum/robolimb
 	var/company = "Unbranded"                            // Shown when selecting the limb.
@@ -14,6 +11,12 @@ var/datum/robolimb/unbranded
 	var/list/possible_tools = list()                     // If limb can simulate a tool, it will be in this list.
 	var/monitor = FALSE			 		 			 // Whether the limb can display IPC screens.
 	var/parts = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG)						 	 // Defines what parts said brand can replace on a body.
+	var/speed_mod = 0                                    // If it modifies owner's speed.
+	var/brute_mod = 1                                    // 1 Means it's damage multiplied by 1, aka no mod.
+	var/burn_mod = 1
+	var/speed_carry = 0                                  // Lower speed tally for wearing clothes, if this is more than 0.
+	var/weight = 1                                       // If total weight of prothesis > weight_max, slow down drastically.
+	var/weight_max = 6                                   // Chests' total weight lift.
 
 /datum/robolimb/unbranded_monitor
 	company = "Unbranded Monitor"
@@ -42,6 +45,7 @@ var/datum/robolimb/unbranded
 	iconbase = 'icons/mob/human_races/cyberlimbs/bishop/bishop_ipc.dmi'
 	restrict_species = list(IPC)
 	parts = BP_ALL
+	weight_max = 10 // IPC variants of anything have higher weight capability. I mean, it's a robotic hull, it doesn't need to be as complex as to replace human's body, what it lacks in advancement it catches up to in... WEIGHT MAX.
 
 /datum/robolimb/bishop_monitor
 	company = "Bishop Monitor"
@@ -63,6 +67,7 @@ var/datum/robolimb/unbranded
 	iconbase = 'icons/mob/human_races/cyberlimbs/cybersolutions/cybersolutions_ipc.dmi'
 	restrict_species = list(IPC)
 	parts = BP_ALL
+	weight_max = 10
 
 /datum/robolimb/grayson_ipc
 	company = "Grayson"
@@ -70,6 +75,7 @@ var/datum/robolimb/unbranded
 	iconbase = 'icons/mob/human_races/cyberlimbs/grayson/grayson_ipc.dmi'
 	restrict_species = list(IPC)
 	parts = BP_ALL
+	weight_max = 10
 
 /datum/robolimb/grayson_monitor
 	company = "Grayson Monitor"
@@ -84,6 +90,11 @@ var/datum/robolimb/unbranded
 	desc = "This limb has a militaristic black and green casing with gold stripes."
 	iconbase = 'icons/mob/human_races/cyberlimbs/hephaestus/hephaestus_main.dmi'
 	parts = list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM)
+	brute_mod = 0.9
+	burn_mod = 0.9
+	speed_mod = 0.35 // Two hands would slow you down to Unathi levels.
+	weight = 2
+	weight_max = 10
 
 /datum/robolimb/hephaestus_ipc
 	company = "Hephaestus - Athena"
@@ -91,6 +102,11 @@ var/datum/robolimb/unbranded
 	iconbase = 'icons/mob/human_races/cyberlimbs/hephaestus/hephaestus_ipc.dmi'
 	restrict_species = list(IPC)
 	parts = BP_ALL
+	brute_mod = 0.9
+	burn_mod = 0.9
+	speed_mod = 0.35
+	weight = 2
+	weight_max = 18
 
 /datum/robolimb/hephaestus_monitor
 	company = "Hephaestus Monitor"
@@ -99,6 +115,10 @@ var/datum/robolimb/unbranded
 	monitor = TRUE
 	restrict_species = list(IPC)
 	parts = list(BP_HEAD)
+	brute_mod = 0.9
+	burn_mod = 0.9
+	speed_mod = 0.35
+	weight = 2
 
 /datum/robolimb/morpheus
 	company = "Morpheus"
@@ -106,12 +126,16 @@ var/datum/robolimb/unbranded
 	iconbase = 'icons/mob/human_races/cyberlimbs/morpheus/morpheus_ipc.dmi'
 	restrict_species = list(IPC)
 	parts = BP_ALL
+	weight_max = 10
 
 /datum/robolimb/wardtakahashi
 	company = "Ward-Takahashi"
 	desc = "This limb features sleek black and white polymers."
 	iconbase = 'icons/mob/human_races/cyberlimbs/wardtakahashi/wardtakahashi_main.dmi'
 	parts = list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM)
+	weight = 2
+	weight_max = 8
+	speed_carry = -0.5
 
 /datum/robolimb/wardtakahashi_ipc
 	company = "Ward-Takahashi - Spirit"
@@ -119,6 +143,9 @@ var/datum/robolimb/unbranded
 	iconbase = 'icons/mob/human_races/cyberlimbs/wardtakahashi/wardtakahashi_ipc.dmi'
 	restrict_species = list(IPC)
 	parts = BP_ALL
+	weight = 2
+	weight_max = 18
+	speed_carry = -0.5
 
 /datum/robolimb/wardtakahashi_monitor
 	company = "Ward-Takahashi Monitor"
@@ -127,13 +154,14 @@ var/datum/robolimb/unbranded
 	monitor = TRUE
 	restrict_species = list(IPC)
 	parts = list(BP_HEAD)
+	weight = 2
 
 /datum/robolimb/xion
 	company = "Xion"
 	desc = "This limb has a minimalist black and red casing."
 	iconbase = 'icons/mob/human_races/cyberlimbs/xion/xion_main.dmi'
 	low_quality = TRUE
-	possible_tools = list("hand" = null, "screwdriver" = /obj/item/weapon/screwdriver, "wrench" = /obj/item/weapon/wrench)
+	possible_tools = list("hand" = null, "screwdriver" = /obj/item/weapon/screwdriver/prosthetic, "wirecutters" = /obj/item/weapon/wirecutters/prosthetic, "crowbar" = /obj/item/weapon/crowbar/prosthetic, "wrench" = /obj/item/weapon/wrench/prosthetic)
 	parts = list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM)
 
 /datum/robolimb/xion_ipc
@@ -141,9 +169,10 @@ var/datum/robolimb/unbranded
 	desc = "This limb has a minimalist black and red casing. Looks a bit menacing."
 	iconbase = 'icons/mob/human_races/cyberlimbs/xion/xion_ipc.dmi'
 	low_quality = TRUE
-	possible_tools = list("hand" = null, "screwdriver" = /obj/item/weapon/screwdriver, "wrench" = /obj/item/weapon/wrench)
+	possible_tools = list("hand" = null, "screwdriver" = /obj/item/weapon/screwdriver/prosthetic, "wirecutters" = /obj/item/weapon/wirecutters/prosthetic, "crowbar" = /obj/item/weapon/crowbar/prosthetic, "wrench" = /obj/item/weapon/wrench/prosthetic)
 	restrict_species = list(IPC)
 	parts = BP_ALL
+	weight_max = 10
 
 /datum/robolimb/xion_monitor
 	company = "Xion Monitor"

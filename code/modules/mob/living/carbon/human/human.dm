@@ -1269,6 +1269,11 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			if(W in arm.model.possible_tools)
 				drop_from_inventory(W)
 		else
+			var/obj/W = get_active_hand()
+			if(!W)
+				return
+			if(W in arm.model.possible_tools)
+				drop_from_inventory(W)
 			var/obj/tool_chosen = arm.model.possible_tools[choice_tool]
 			var/obj/tool_created = new tool_chosen()
 			if(hand)

@@ -290,7 +290,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	if(!organ_data)
 		organ_data = list()
 	if(!be_role)
-		src.be_role = list()
+		be_role = list()
 	if(!organ_prost_data)
 		organ_prost_data = list()
 

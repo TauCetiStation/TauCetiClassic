@@ -303,9 +303,6 @@ var/const/MAX_SAVE_SLOTS = 10
 	// Destroy/cyborgize bodyparts & organs
 
 	for(var/name in organ_data)
-		world.log << "It's a [organ_data[name]] [name]. It's made by [organ_prost_data[name]]"
-
-	for(var/name in organ_data)
 		var/obj/item/organ/external/BP = character.bodyparts_by_name[name]
 		var/obj/item/organ/internal/IO = character.organs_by_name[name]
 		var/status = organ_data[name]

@@ -42,23 +42,15 @@
 		if(!species.flags[NO_BLOOD] && ( reagents.has_reagent("hyperzine") || reagents.has_reagent("nuka_cola") )) // hyperzine removes equipment slowdowns (no blood = no chemical effects).
 			chem_nullify_debuff = TRUE
 
+		var/clothing_slowdown = 0
 		if(wear_suit && wear_suit.slowdown && !(wear_suit.slowdown > 0 && chem_nullify_debuff))
-			tally += wear_suit.slowdown
+			clothing_slowdown += wear_suit.slowdown
 
 		if(back && back.slowdown && !(back.slowdown > 0 && chem_nullify_debuff))
-			tally += back.slowdown
+			clothing_slowdown += back.slowdown
 
 		if(shoes && shoes.slowdown && !(shoes.slowdown > 0 && chem_nullify_debuff))
-			tally += shoes.slowdown
-
-		if(!chem_nullify_debuff)
-			for(var/x in list(l_hand, r_hand))
-				var/obj/item/O = x
-				if(O && !(O.flags & ABSTRACT) && O.w_class >= ITEM_SIZE_NORMAL)
-					tally += 0.5 * (O.w_class - 2) // (3 = 0.5) || (4 = 1) || (5 = 1.5)
-
-		if(buckled) // so, if we buckled we have large debuff
-			tally += 5.5
+			clothing_slowdown += shoes.slowdown
 
 		for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG))
 			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
@@ -68,6 +60,38 @@
 				tally += 0.8
 			else if(BP.status & ORGAN_BROKEN)
 				tally += 3
+			else if((BP.status & ORGAN_ROBOT) && BP.model && !clothing_slowdown)
+				clothing_slowdown = max(clothing_slowdown - BP.model.speed_carry, 0)
+
+		tally += clothing_slowdown
+
+		var/obj/item/organ/external/chest/CH = bodyparts_by_name[BP_CHEST]
+
+		var/max_weight = 0
+		var/prosthetic_weight = 0
+		if(CH && (CH.status & ORGAN_ROBOT) && CH.model)
+			max_weight = CH.model.weight_max
+		else
+			max_weight = 4
+
+		for(var/obj/item/organ/external/BP in BP_ALL)
+			if(!BP)
+				continue
+			if((BP.status & ORGAN_ROBOT) && BP.model)
+				tally += BP.model.speed_mod
+				prosthetic_weight += BP.model.weight
+
+		if(prosthetic_weight > max_weight)
+			tally += 7 // A huge debuff, if you're overloaded on prosthetics. You better don't overload yourself on them!
+
+		if(!chem_nullify_debuff)
+			for(var/x in list(l_hand, r_hand))
+				var/obj/item/O = x
+				if(O && !(O.flags & ABSTRACT) && O.w_class >= ITEM_SIZE_NORMAL)
+					tally += 0.5 * (O.w_class - 2) // (3 = 0.5) || (4 = 1) || (5 = 1.5)
+
+		if(buckled) // so, if we buckled we have large debuff
+			tally += 5.5
 
 	if(shock_stage >= 10)
 		tally += round(log(3.5, shock_stage), 0.1) // (40 = ~3.0) and (starts at ~1.83)
