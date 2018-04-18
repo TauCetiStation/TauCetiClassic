@@ -2470,15 +2470,10 @@ datum
 	if(!..())
 		return
 	M.nutrition += nutriment_factor
-	/*if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden")) //if we want some FUN and FEATURES we should uncomment it
-		if(!M) M = holder.my_atom
+	if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain")) //if we want some FUN and FEATURES we should uncomment it
 		M.heal_bodypart_damage(1, 1)
 		M.nutrition += nutriment_factor
-		..()
-		return
-	*/
 
-/*//removed because of meta bullshit. this is why we can't have nice things.
 /datum/reagent/consumable/syndicream
 	name = "Cream filling"
 	id = "syndicream"
@@ -2486,17 +2481,14 @@ datum
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#AB7878" // rgb: 171, 120, 120
 
-	on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/syndicream/on_mob_life(mob/living/M)
+	if(!..())
+		return
+	M.nutrition += nutriment_factor
+	if(istype(M, /mob/living/carbon/human) && M.mind && M.mind.special_role)
+		M.heal_bodypart_damage(1, 1)
 		M.nutrition += nutriment_factor
-		if(istype(M, /mob/living/carbon/human) && M.mind)
-		if(M.mind.special_role)
-			if(!M) M = holder.my_atom
-				M.heal_bodypart_damage(1, 1)
-				M.nutrition += nutriment_factor
-				..()
-				return
-		..()
-*/
+
 /datum/reagent/consumable/cornoil
 	name = "Corn Oil"
 	id = "cornoil"
@@ -3092,7 +3084,7 @@ datum
 	color = "#485000" // rgb:72, 080, 0
 	taste_message = "coffee...soda?"
 
-/datum/reagent/consumable/drink/cold/rewriter/on_mob_life(var/mob/living/M as mob)
+/datum/reagent/consumable/drink/cold/rewriter/on_mob_life(mob/living/M)
 	if(!..())
 		return
 	M.make_jittery(5)
