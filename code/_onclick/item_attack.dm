@@ -19,10 +19,6 @@
 		return
 	user.SetNextMove(CLICK_CD_MELEE)
 
-	if(user.a_intent == "help" && istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/butch))
-		if(attempt_harvest(I, user))
-			return
-
 	if(user.zone_sel && user.zone_sel.selecting)
 		I.attack(src, user, user.zone_sel.selecting)
 	else
