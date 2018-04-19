@@ -1,69 +1,68 @@
 //This file was auto-corrected by findeclaration.exe on 25.5.2012 20:42:31
 var/global/list/all_objectives = list()
 
-datum/objective
+/datum/objective
 	var/datum/mind/owner = null			//Who owns the objective.
 	var/explanation_text = "Nothing"	//What that person is supposed to do.
 	var/datum/mind/target = null		//If they are focused on a particular person.
 	var/target_amount = 0				//If they are focused on a particular number. Steal objectives have their own counter.
 	var/completed = 0					//currently only used for custom objectives.
 
-	New(var/text)
-		all_objectives |= src
-		if(text)
-			explanation_text = text
+/datum/objective/New(text)
+	all_objectives |= src
+	if(text)
+		explanation_text = text
 
-	Destroy()
-		all_objectives -= src
-		return ..()
+/datum/objective/Destroy()
+	all_objectives -= src
+	return ..()
 
-	proc/check_completion()
-		return completed
+/datum/objective/proc/check_completion()
+	return completed
 
-	proc/find_target()
-		var/list/possible_targets = list()
-		for(var/datum/mind/possible_target in ticker.minds)
-			if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD))
-				possible_targets += possible_target
-		if(possible_targets.len > 0)
-			target = pick(possible_targets)
-
-
-	proc/find_target_by_role(role, role_type=0)//Option sets either to check assigned role or special role. Default to assigned.
-		for(var/datum/mind/possible_target in ticker.minds)
-			if((possible_target != owner) && ishuman(possible_target.current) && ((role_type ? possible_target.special_role : possible_target.assigned_role) == role) )
-				target = possible_target
-				break
-
-
-
-datum/objective/assassinate
-	find_target()
-		..()
-		if(target && target.current)
-			explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
-		else
-			explanation_text = "Free Objective"
+/datum/objective/proc/find_target()
+	var/list/possible_targets = list()
+	for(var/datum/mind/possible_target in ticker.minds)
+		if(possible_target != owner && ishuman(possible_target.current) && (possible_target.current.stat != DEAD))
+			possible_targets += possible_target
+	if(possible_targets.len > 0)
+		target = pick(possible_targets)
 		return target
+	return FALSE
 
 
-	find_target_by_role(role, role_type=0)
-		..(role, role_type)
-		if(target && target.current)
-			explanation_text = "Assassinate [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
-		else
-			explanation_text = "Free Objective"
-		return target
+/datum/objective/proc/find_target_by_role(role, role_type=0)//Option sets either to check assigned role or special role. Default to assigned.
+	for(var/datum/mind/possible_target in ticker.minds)
+		if((possible_target != owner) && ishuman(possible_target.current) && ((role_type ? possible_target.special_role : possible_target.assigned_role) == role) )
+			target = possible_target
+			break
 
 
-	check_completion()
-		if(target && target.current)
-			if(target.current.stat == DEAD || issilicon(target.current) || isbrain(target.current) || target.current.z > ZLEVEL_EMPTY || !target.current.ckey) //Borgs/brains/AIs count as dead for traitor objectives. --NeoFite
-				return 1
-			return 0
-		return 1
+
+/datum/objective/assassinate
+
+/datum/objective/assassinate/find_target()
+	if(..())
+		explanation_text = "Assassinate [target.current.real_name], the [target.assigned_role]."
+	else
+		explanation_text = "Free Objective"
+	return target
 
 
+/datum/objective/assassinate/find_target_by_role(role, role_type=0)
+	if(..())
+		explanation_text = "Assassinate [target.current.real_name], the [!role_type ? target.assigned_role : target.special_role]."
+	else
+		explanation_text = "Free Objective"
+	return target
+
+
+/datum/objective/assassinate/check_completion()
+	if(target && target.current)
+		return (target.current.stat == DEAD || issilicon(target.current) || \
+		 isbrain(target.current) || isessence(target.current)			 || \
+		 target.current.z > ZLEVEL_EMPTY || !target.current.ckey)
+	return TRUE
 
 
 datum/objective/mutiny/find_target()
