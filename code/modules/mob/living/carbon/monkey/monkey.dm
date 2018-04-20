@@ -20,6 +20,7 @@
 	var/list/uni_append = list(0x12C,0x4E2)    // Same as above for DNA2.
 	var/update_muts = 1                        // Monkey gene must be set at start.
 	var/race = HUMAN // Used for restrictions checking.
+	var/custom_metabolism = 0 // Additional consumed reagent. Doesn't actually impact the effect of the reagent on the monkey!
 	holder_type = /obj/item/weapon/holder/monkey
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5)
 
@@ -37,7 +38,9 @@
 	voice_name = "neaera"
 	speak_emote = list("squicks")
 	icon_state = "skrellkey1"
+	blood_color = "#8817c1"
 	uni_append = list(0x01C,0xC92) // 01CC92
+	custom_metabolism = SKRELL_METABOLISM
 	race = SKRELL
 	holder_type = /obj/item/weapon/holder/monkey/neaera
 	blood_datum = /datum/dirt_cover/purple_blood
@@ -515,3 +518,5 @@
 	message = capitalize(trim_left(message))
 
 	..(message, speaking, verb, alt_name, italics, message_range, used_radios)
+
+#undef SKRELL_METABOLISM
