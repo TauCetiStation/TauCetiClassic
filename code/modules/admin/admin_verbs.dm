@@ -32,6 +32,7 @@ var/list/admin_verbs_admin = list(
 	/client/proc/get_whitelist, 			//Whitelist
 	/client/proc/add_to_whitelist,
 	/datum/admins/proc/whitelist_panel,
+	/datum/admins/proc/library_recycle_bin,
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
 	/client/proc/Getmob,				/*teleports a mob to our location*/
 	/client/proc/Getkey,				/*teleports a mob with a certain ckey to our location*/
