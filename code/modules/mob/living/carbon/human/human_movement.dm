@@ -72,7 +72,7 @@
 		if(CH && (CH.status & ORGAN_ROBOT) && CH.model)
 			max_weight = CH.model.weight_max
 		else
-			max_weight = 4
+			max_weight = 4 // 4 prothesises a normal human can wear
 
 		for(var/obj/item/organ/external/BP in BP_ALL)
 			if(!BP)

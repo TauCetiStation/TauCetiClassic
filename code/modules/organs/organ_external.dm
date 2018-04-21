@@ -364,6 +364,18 @@ This function completely restores a damaged organ to perfect condition.
 	if(owner.life_tick % wound_update_accuracy == 0)
 		update_wounds()
 
+	if((status & ORGAN_ROBOT) && model && model.tech_tier < HIGH_TECH_PROSTHETIC) // They do boom, but ain't gone. Fix 'em up untill it's too late!
+		if(prob(brute_dam + burn_dam) && sabotaged)
+			explosion(get_turf(owner), -1, -1, 2, 3)
+			var/datum/effect/effect/system/spark_spread/spark_system = new
+			spark_system.set_up(5, 0, owner)
+			spark_system.attach(owner)
+			spark_system.start()
+			sleep(10)
+			qdel(spark_system)
+		if(prob(brute_dam + burn_dam) && !sabotaged) // If it ain't broke yet. It might become.
+			sabotaged = !sabotaged
+
 	//Chem traces slowly vanish
 	if(owner.life_tick % 10 == 0)
 		for(var/chemID in trace_chemicals)

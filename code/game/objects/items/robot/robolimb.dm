@@ -1,3 +1,7 @@
+#define LOW_TECH_PROSTHETIC 1
+#define MEDIUM_TECH_PROSTHETIC 2
+#define HIGH_TECH_PROSTHETIC 3
+
 var/list/all_robolimbs = list()
 var/list/monitor_robolimbs = list()
 
@@ -17,6 +21,7 @@ var/list/monitor_robolimbs = list()
 	var/speed_carry = 0                                  // Lower speed tally for wearing clothes, if this is more than 0.
 	var/weight = 1                                       // If total weight of prothesis > weight_max, slow down drastically.
 	var/weight_max = 6                                   // Chests' total weight lift.
+	var/tech_tier = LOW_TECH_PROSTHETIC
 
 /datum/robolimb/unbranded_monitor
 	company = "Unbranded Monitor"
@@ -132,6 +137,7 @@ var/list/monitor_robolimbs = list()
 	company = "Ward-Takahashi"
 	desc = "This limb features sleek black and white polymers."
 	iconbase = 'icons/mob/human_races/cyberlimbs/wardtakahashi/wardtakahashi_main.dmi'
+	tech_tier = HIGH_TECH_PROSTHETIC
 	parts = list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM)
 	weight = 2
 	weight_max = 8
@@ -142,6 +148,7 @@ var/list/monitor_robolimbs = list()
 	desc = "This limb has white and purple features, with a heavier casing."
 	iconbase = 'icons/mob/human_races/cyberlimbs/wardtakahashi/wardtakahashi_ipc.dmi'
 	restrict_species = list(IPC)
+	tech_tier = HIGH_TECH_PROSTHETIC
 	parts = BP_ALL
 	weight = 2
 	weight_max = 18
@@ -151,6 +158,7 @@ var/list/monitor_robolimbs = list()
 	company = "Ward-Takahashi Monitor"
 	desc = "Ward-Takahashi's unique spin on a popular prosthetic head model. It looks sleek and modern."
 	iconbase = 'icons/mob/human_races/cyberlimbs/wardtakahashi/wardtakahashi_monitor.dmi'
+	tech_tier = HIGH_TECH_PROSTHETIC
 	monitor = TRUE
 	restrict_species = list(IPC)
 	parts = list(BP_HEAD)
@@ -160,6 +168,7 @@ var/list/monitor_robolimbs = list()
 	company = "Xion"
 	desc = "This limb has a minimalist black and red casing."
 	iconbase = 'icons/mob/human_races/cyberlimbs/xion/xion_main.dmi'
+	tech_tier = MEDIUM_TECH_PROSTHETIC
 	low_quality = TRUE
 	possible_tools = list("hand" = null, "screwdriver" = /obj/item/weapon/screwdriver/prosthetic, "wirecutters" = /obj/item/weapon/wirecutters/prosthetic, "crowbar" = /obj/item/weapon/crowbar/prosthetic, "wrench" = /obj/item/weapon/wrench/prosthetic)
 	parts = list(BP_L_LEG, BP_R_LEG, BP_L_ARM, BP_R_ARM)
@@ -168,6 +177,7 @@ var/list/monitor_robolimbs = list()
 	company = "Xion - Breach"
 	desc = "This limb has a minimalist black and red casing. Looks a bit menacing."
 	iconbase = 'icons/mob/human_races/cyberlimbs/xion/xion_ipc.dmi'
+	tech_tier = MEDIUM_TECH_PROSTHETIC
 	low_quality = TRUE
 	possible_tools = list("hand" = null, "screwdriver" = /obj/item/weapon/screwdriver/prosthetic, "wirecutters" = /obj/item/weapon/wirecutters/prosthetic, "crowbar" = /obj/item/weapon/crowbar/prosthetic, "wrench" = /obj/item/weapon/wrench/prosthetic)
 	restrict_species = list(IPC)
@@ -178,6 +188,7 @@ var/list/monitor_robolimbs = list()
 	company = "Xion Monitor"
 	desc = "Xion Mfg.'s unique spin on a popular prosthetic head model. It looks and minimalist and utilitarian."
 	iconbase = 'icons/mob/human_races/cyberlimbs/xion/xion_monitor.dmi'
+	tech_tier = MEDIUM_TECH_PROSTHETIC
 	low_quality = TRUE
 	monitor = TRUE
 	restrict_species = list(IPC)
