@@ -1625,29 +1625,31 @@ datum
 					return
 				if(alien && alien == DIONA)
 					M.nutrition += 2 * REM
-					if(ishuman(M))
-						var/mob/living/carbon/human/H = M
-						var/list/species_hair = list()
-						if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
-							for(var/i in hair_styles_list)
-								var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
-								if(i == "Bald")
-									continue
-								if(H.species.name in tmp_hair.species_allowed)
-									species_hair += i
-							if(species_hair.len)
-								H.h_style = pick(species_hair)
-						var/list/species_facial_hair = list()
-						if(!(H.wear_mask && ((H.head.flags & HEADCOVERSMOUTH) || (H.wear_mask.flags & MASKCOVERSMOUTH))))
-							for(var/i in facial_hair_styles_list) // In case of a not so far future.
-								var/datum/sprite_accessory/hair/tmp_hair = facial_hair_styles_list[i]
-								if(i == "Shaved")
-									continue
-								if(H.species.name in tmp_hair.species_allowed)
-									species_facial_hair += i
-							if(species_facial_hair.len)
-								H.f_style = pick(species_facial_hair)
-						H.update_hair()
+
+			reaction_mob(mob/M, method = TOUCH, volume)
+				if(volume >= 1 && ishuman(M))
+					var/mob/living/carbon/human/H = M
+					var/list/species_hair = list()
+					if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
+						for(var/i in hair_styles_list)
+							var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
+							if(i == "Bald")
+								continue
+							if(H.species.name in tmp_hair.species_allowed)
+								species_hair += i
+						if(species_hair.len)
+							H.h_style = pick(species_hair)
+					var/list/species_facial_hair = list()
+					if(!((H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)) || (H.head && (H.head.flags & MASKCOVERSMOUTH))))
+						for(var/i in facial_hair_styles_list) // In case of a not so far future.
+							var/datum/sprite_accessory/hair/tmp_hair = facial_hair_styles_list[i]
+							if(i == "Shaved")
+								continue
+							if(H.species.name in tmp_hair.species_allowed)
+								species_facial_hair += i
+						if(species_facial_hair.len)
+							H.f_style = pick(species_facial_hair)
+					H.update_hair()
 
 		ethylredoxrazine	// FUCK YOU, ALCOHOL
 			name = "Ethylredoxrazine"
@@ -4618,7 +4620,7 @@ datum
 				H.r_hair = Clamp(round(H.r_hair*volume_coefficient + r_tweak), 0, 255)
 				H.g_hair = Clamp(round(H.g_hair*volume_coefficient + g_tweak), 0, 255)
 				H.b_hair = Clamp(round(H.b_hair*volume_coefficient + b_tweak), 0, 255)
-			if(!(H.wear_mask && ((H.head.flags & HEADCOVERSMOUTH) || (H.wear_mask.flags & MASKCOVERSMOUTH))) && H.f_style != "Shaved")
+			if(!((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
 				H.r_facial = Clamp(round(H.r_facial*volume_coefficient + r_tweak), 0, 255)
 				H.g_facial = Clamp(round(H.g_facial*volume_coefficient + g_tweak), 0, 255)
 				H.b_facial = Clamp(round(H.b_facial*volume_coefficient + b_tweak), 0, 255)
@@ -4663,7 +4665,7 @@ datum
 				if(species_hair.len)
 					H.h_style = pick(species_hair)
 
-			if(!(H.wear_mask && ((H.head.flags & HEADCOVERSMOUTH) || (H.wear_mask.flags & MASKCOVERSMOUTH))))
+			if(!((H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)) || (H.head && (H.head.flags & MASKCOVERSMOUTH))))
 				var/list/species_facial_hair = list()
 				if(H.species)
 					for(var/i in facial_hair_styles_list)
