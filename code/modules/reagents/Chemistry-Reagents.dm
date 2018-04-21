@@ -1620,6 +1620,35 @@ datum
 			reagent_state = LIQUID
 			color = "#604030" // rgb: 96, 64, 48
 
+			on_mob_life(mob/living/M, alien)
+				if(!..())
+					return
+				if(alien && alien == DIONA)
+					M.nutrition += 2 * REM
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						var/list/species_hair = list()
+						if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
+							for(var/i in hair_styles_list)
+								var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
+								if(i == "Bald")
+									continue
+								if(H.species.name in tmp_hair.species_allowed)
+									species_hair += i
+							if(species_hair.len)
+								H.h_style = pick(species_hair)
+						var/list/species_facial_hair = list()
+						if(!(H.wear_mask && ((H.head.flags & HEADCOVERSMOUTH) || (H.wear_mask.flags & MASKCOVERSMOUTH))))
+							for(var/i in facial_hair_styles_list) // In case of a not so far future.
+								var/datum/sprite_accessory/hair/tmp_hair = facial_hair_styles_list[i]
+								if(i == "Shaved")
+									continue
+								if(H.species.name in tmp_hair.species_allowed)
+									species_facial_hair += i
+							if(species_facial_hair.len)
+								H.f_style = pick(species_facial_hair)
+						H.update_hair()
+
 		ethylredoxrazine	// FUCK YOU, ALCOHOL
 			name = "Ethylredoxrazine"
 			id = "ethylredoxrazine"
@@ -4473,7 +4502,7 @@ datum
 	name = "Hair Dye"
 	id = "whitehairdye"
 	description = "A compound used to dye hair. Any hair."
-	data = new/list("r_color"=255,"g_color"=255,"b_color"=255)
+	data = list("r_color"=255,"g_color"=255,"b_color"=255)
 	reagent_state = LIQUID
 	color = "#FFFFFF" // to see rgb just look into data!
 	taste_message = "liquid colour"
@@ -4585,11 +4614,11 @@ datum
 				H.g_facial = Clamp(round(H.g_facial*max((100-volume)/100, 0) + g_tweak*0.1), 0, 255)
 				H.b_facial = Clamp(round(H.b_facial*max((100-volume)/100, 0) + b_tweak*0.1), 0, 255)
 		else if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
-			if(!(H.head && (H.head.flags & HEADCOVERSMOUTH)) && H.h_style != "Bald")
+			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
 				H.r_hair = Clamp(round(H.r_hair*volume_coefficient + r_tweak), 0, 255)
 				H.g_hair = Clamp(round(H.g_hair*volume_coefficient + g_tweak), 0, 255)
 				H.b_hair = Clamp(round(H.b_hair*volume_coefficient + b_tweak), 0, 255)
-			if(!(H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)) && H.f_style != "Shaved")
+			if(!(H.wear_mask && ((H.head.flags & HEADCOVERSMOUTH) || (H.wear_mask.flags & MASKCOVERSMOUTH))) && H.f_style != "Shaved")
 				H.r_facial = Clamp(round(H.r_facial*volume_coefficient + r_tweak), 0, 255)
 				H.g_facial = Clamp(round(H.g_facial*volume_coefficient + g_tweak), 0, 255)
 				H.b_facial = Clamp(round(H.b_facial*volume_coefficient + b_tweak), 0, 255)
@@ -4598,6 +4627,57 @@ datum
 			H.lip_color = color
 		H.update_hair()
 		H.update_body()
+
+/datum/reagent/hair_growth_accelerator
+	name = "Hair Growth Accelerator"
+	id = "hair_growth_accelerator"
+	data = list("bald_head_list"=list("Bald", "Balding Hair", "Skinhead", "Unathi Horns", "Tajaran Ears"),"shaved_face_list"=list("Shaved"),"allowed_races"=list(HUMAN, UNATHI, TAJARAN))
+	description = "A substance for the bald. Renews hair. Apply to head or groin."
+	reagent_state = LIQUID
+	color = "#EFC769" // rgb: 239, 199, 105
+	taste_message = "hairs inside me"
+
+/datum/chemical_reaction/hair_growth_accelerator
+	name = "Hair Growth Accelerator"
+	id = "hair_growth_accelerator"
+	result = "hair_growth_accelerator"
+	required_reagents = list("ryetalyn" = 1, "anti_toxin", "sugar" = 1)
+	result_amount = 3
+
+/datum/reagent/hair_growth_accelerator/reaction_mob(mob/M, method = TOUCH, volume)
+	if(volume >= 1 && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species.name in data["allowed_races"])
+			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
+				var/list/species_hair = list()
+				if(H.species)
+					for(var/i in hair_styles_list)
+						var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
+						if(i in data["bald_hair_styles_list"])
+							continue
+						if(H.species.name in tmp_hair.species_allowed)
+							species_hair += i
+				else
+					species_hair = hair_styles_list
+
+				if(species_hair.len)
+					H.h_style = pick(species_hair)
+
+			if(!(H.wear_mask && ((H.head.flags & HEADCOVERSMOUTH) || (H.wear_mask.flags & MASKCOVERSMOUTH))))
+				var/list/species_facial_hair = list()
+				if(H.species)
+					for(var/i in facial_hair_styles_list)
+						var/datum/sprite_accessory/hair/tmp_hair = facial_hair_styles_list[i]
+						if(i in data["shaved_facial_hair_styles_list"])
+							continue
+						if(H.species.name in tmp_hair.species_allowed)
+							species_facial_hair += i
+				else
+					species_facial_hair = facial_hair_styles_list
+
+				if(species_facial_hair.len)
+					H.f_style = pick(species_facial_hair)
+			H.update_hair()
 
 /proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc
