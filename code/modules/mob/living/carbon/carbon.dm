@@ -9,14 +9,10 @@
 	. = ..()
 	if(.)
 		handle_phantom_move(NewLoc, direct)
-		var/hunger_loss = HUNGER_FACTOR
-		if(ishuman(src))
-			var/mob/living/carbon/human/H = src
-			hunger_loss += H.species.custom_metabolism
-		if(nutrition && src.stat != DEAD)
-			nutrition -= hunger_loss/10
+		if(nutrition && stat != DEAD)
+			nutrition -= HUNGER_FACTOR/10
 			if(m_intent == "run")
-				nutrition -= hunger_loss/10
+				nutrition -= HUNGER_FACTOR/10
 		if((FAT in mutations) && m_intent == "run" && bodytemperature <= 360)
 			bodytemperature += 2
 

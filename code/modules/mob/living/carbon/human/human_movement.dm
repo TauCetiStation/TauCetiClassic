@@ -85,6 +85,14 @@
 
 	return (tally + config.human_delay)
 
+/mob/living/carbon/human/Move()
+	. = ..()
+	if(.)
+		if(nutrition && stat != DEAD)
+			nutrition -= species.custom_metabolism/10
+			if(m_intent == "run")
+				nutrition -= species.custom_metabolism/10
+
 /mob/living/carbon/human/Process_Spacemove(movement_dir = 0)
 
 	if(..())

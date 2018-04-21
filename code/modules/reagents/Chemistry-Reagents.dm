@@ -863,7 +863,7 @@ datum
 			on_mob_life(mob/living/M, alien)
 				if(!..())
 					return
-				if(alien && alien == SKRELL) // It does contain milk.
+				if(alien == SKRELL) // It does contain milk.
 					M.adjustToxLoss(2 * REM)
 					return
 				M.nutrition += nutriment_factor * REM
@@ -2207,7 +2207,7 @@ datum
 /datum/reagent/consumable/nutriment/protein/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
-	if(alien && alien == SKRELL)
+	if(alien == SKRELL)
 		M.adjustToxLoss(2 * REM)
 
 /datum/reagent/consumable/nutriment/plantmatter		// Plant-based biomatter, digestable by herbivores and omnivores, worthless to carnivores
@@ -2577,8 +2577,6 @@ datum
 /datum/reagent/consumable/dry_ramen/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
-	if(alien && alien == SKRELL)
-		M.adjustToxLoss(2 * REM)
 	M.nutrition += nutriment_factor
 
 /datum/reagent/consumable/hot_ramen
@@ -2593,8 +2591,6 @@ datum
 /datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
-	if(alien && alien == SKRELL)
-		M.adjustToxLoss(2 * REM)
 	M.nutrition += nutriment_factor
 	if (M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -2611,8 +2607,6 @@ datum
 /datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
-	if(alien && alien == SKRELL)
-		M.adjustToxLoss(2 * REM)
 	M.nutrition += nutriment_factor
 	M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 /datum/reagent/consumable/rice
@@ -2654,7 +2648,7 @@ datum
 /datum/reagent/consumable/egg/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
-	if(alien && alien == SKRELL)
+	if(alien == SKRELL)
 		M.adjustToxLoss(2 * REM)
 
 /datum/reagent/consumable/cheese
@@ -2858,7 +2852,7 @@ datum
 		M.heal_bodypart_damage(1, 0)
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 10 * REAGENTS_METABOLISM)
-	if(alien && alien == SKRELL)
+	if(alien == SKRELL && !istype(src, /datum/reagent/consumable/drink/milk/soymilk))
 		M.adjustToxLoss(2 * REM)
 
 /datum/reagent/consumable/drink/milk/soymilk
@@ -2932,8 +2926,6 @@ datum
 	M.sleeping = 0
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1, 0)
-	if(alien && alien == SKRELL) // Soy. Nuff' said.
-		M.adjustToxLoss(2 * REM)
 
 /datum/reagent/consumable/drink/coffee/cafe_latte
 	name = "Cafe Latte"
@@ -3114,7 +3106,7 @@ datum
 			if(istype(M, /mob/living/carbon/slime))
 				M.bodytemperature -= rand(15,20)
 	data++
-	if(alien && alien == SKRELL)
+	if(alien == SKRELL)
 		M.adjustToxLoss(2 * REM)
 
 /datum/reagent/consumable/drink/cold/milkshake/chocolate
@@ -3360,7 +3352,7 @@ datum
 		if(isnum(A.data))
 			d += A.data
 
-	if(alien && alien == SKRELL) //Skrell get very drunk very quickly.
+	if(alien == SKRELL) //Skrell get very drunk very quickly.
 		d *= 5
 
 	M.dizziness += dizzy_adj

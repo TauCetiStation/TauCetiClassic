@@ -123,6 +123,14 @@
 	greaterform = DIONA
 	add_language("Rootspeak")
 
+/mob/living/carbon/monkey/Move()
+	. = ..()
+	if(.)
+		if(nutrition && stat != DEAD)
+			nutrition -= custom_metabolism/10
+			if(m_intent == "run")
+				nutrition -= custom_metabolism/10
+
 /mob/living/carbon/monkey/diona/movement_delay()
 	return ..(tally = 3.5)
 

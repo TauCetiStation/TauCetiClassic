@@ -216,7 +216,7 @@ var/const/INGEST = 2
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				remove_amount += H.species.custom_metabolism
-			if(ismonkey(M))
+			else if(ismonkey(M))
 				var/mob/living/carbon/monkey/Y = M
 				remove_amount += Y.custom_metabolism
 			remove_reagent(R.id, remove_amount)
