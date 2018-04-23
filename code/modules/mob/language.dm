@@ -143,6 +143,17 @@
 	allowed_species = list(IPC, DIONA, SKRELL, UNATHI, TAJARAN)
 	syllables = list("tao","shi","tzu","yi","com","be","is","i","op","vi","ed","lec","mo","cle","te","dis","e")
 
+/datum/language/ipc
+	name = "Trinary"
+	desc = "A modified binary fuzzy logic based language spoken by IPC. Basically, is just a sequence of zeros, ones and twos."
+	speech_verb = "pings"
+	ask_verb = "beeps"
+	exclaim_verb = "boops"
+	colour = "ipc"
+	key = list("y", "í")
+	allowed_species = list(IPC)
+	syllables = list("000", "111", "222", "001", "010", "100", "002", "020", "200", "011", "101", "110", "022", "202", "220", "112", "121", "211", "122", "212", "221", "012", "021", "120", "210", "102", "201")
+
 // Galactic common languages (systemwide accepted standards).
 /datum/language/trader
 	name = "Tradeband"

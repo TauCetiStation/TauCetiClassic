@@ -138,7 +138,8 @@ var/list/ai_verbs_default = list(
 	add_language("Siik'tajr", 0)
 	add_language("Skrellian", 0)
 	add_language("Rootspeak", 0)
-	add_language("Tradeband", 1)
+	add_language("Tradeband", 0)
+	add_language("Trinary", 1)
 	add_language("Gutter", 0)
 
 	if(!safety) // Only used by AIize() to successfully spawn an AI.
