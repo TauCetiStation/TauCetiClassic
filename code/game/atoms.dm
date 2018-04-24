@@ -215,7 +215,7 @@
 	//This reformat names to get a/an properly working on item descriptions when they are bloody
 	var/f_name = "\a [src]."
 	if(dirt_overlay) //Oil and blood puddles got 'blood_color = NULL', however they got 'color' instead
-		f_name = "<span class='danger'>[dirt_description()]!</span>"
+		f_name = "<span class='danger'>\a [dirt_description()]!</span>"
 	to_chat(user, "[bicon(src)] That's [f_name]")
 	if(desc)
 		to_chat(user, desc)
@@ -465,8 +465,8 @@
 		dirt_overlay = null
 	if(istype(blood_DNA, /list))
 		blood_DNA = null
-	return 1
-
+		return 1
+	return 0
 
 /atom/proc/get_global_map_pos()
 	if(!islist(global_map) || isemptylist(global_map)) return

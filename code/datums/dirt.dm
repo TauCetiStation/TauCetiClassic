@@ -2,7 +2,7 @@
 	var/name = "red blood"
 	var/color = "#A10808"
 
-/datum/dirt_cover/New(var/datum/dirt_cover/cover)
+/datum/dirt_cover/New(datum/dirt_cover/cover)
 	if(cover)
 		name = cover.name
 		color = cover.color
@@ -24,6 +24,10 @@
 	name = "blue blood"
 	color = "#2299FC"
 
+/datum/dirt_cover/purple_blood
+	name = "purple blood"
+	color = "#8817c1"
+	
 /datum/dirt_cover/green_blood
 	name = "green blood"
 	color = "#004400"
@@ -44,7 +48,7 @@
 	name = "xeno blood"
 	color = "#05EE05"
 
-/datum/dirt_cover/proc/add_dirt(var/datum/dirt_cover/A)
+/datum/dirt_cover/proc/add_dirt(datum/dirt_cover/A)
 	var/red = (hex2num(copytext(color,2,4)) + hex2num(copytext(A.color,2,4))) / 2
 	var/green = (hex2num(copytext(color,4,6)) + hex2num(copytext(A.color,4,6))) / 2
 	var/blue = (hex2num(copytext(color,6,8)) + hex2num(copytext(A.color,6,8))) / 2
@@ -53,7 +57,7 @@
 		name = A.name //
 
 /*
-/proc/get_dirt_mixed_color(var/list/dms)
+/proc/get_dirt_mixed_color(list/dms)
 	if(!dms)
 		return 0
 	var/red = 0

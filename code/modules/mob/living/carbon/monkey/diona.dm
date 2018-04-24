@@ -9,7 +9,6 @@
 	speak_emote = list("chirrups")
 	icon_state = "nymph1"
 	hazard_low_pressure = DIONA_HAZARD_LOW_PRESSURE
-	blood_color = "#004400"
 	var/list/donors = list()
 	var/ready_evolve = 0
 	var/mob/living/carbon/human/gestalt = null
@@ -26,6 +25,8 @@
 	universal_understand = FALSE // Dionaea do not need to speak to people
 	universal_speak = FALSE      // before becoming an adult. Use *chirp.
 	holder_type = /obj/item/weapon/holder/diona
+	blood_datum = /datum/dirt_cover/green_blood
+
 
 /mob/living/carbon/monkey/diona/attack_hand(mob/living/carbon/human/M)
 

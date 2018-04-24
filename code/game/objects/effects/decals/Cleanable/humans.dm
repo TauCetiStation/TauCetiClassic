@@ -15,8 +15,7 @@ var/global/list/image/splatter_cache=list()
 	var/base_icon = 'icons/effects/blood.dmi'
 	var/list/viruses = list()
 	blood_DNA = list()
-	var/datum/dirt_cover/basedatum  // Color when wet.
-	var/spawntype = /datum/dirt_cover/red_blood
+	var/datum/dirt_cover/basedatum = /datum/dirt_cover/red_blood // Color when wet.
 	var/list/datum/disease2/disease/virus2 = list()
 	var/amount = 5
 	var/drytime
@@ -29,7 +28,7 @@ var/global/list/image/splatter_cache=list()
 /obj/effect/decal/cleanable/blood/atom_init()
 	..()
 
-	basedatum = new spawntype
+	basedatum = new basedatum
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/effect/decal/cleanable/blood/atom_init_late()

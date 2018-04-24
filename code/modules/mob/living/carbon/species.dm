@@ -269,7 +269,7 @@
 		)
 
 	eyes = "skrell_eyes"
-
+	blood_color = /datum/dirt_cover/purple_blood
 	flesh_color = "#8CD7A3"
 
 /datum/species/vox
