@@ -46,15 +46,7 @@
 		..()
 	return
 
-/obj/machinery/computer/teleporter/attack_ai(mob/user)
-	src.attack_hand(user)
-
-/obj/machinery/computer/teleporter/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/teleporter/interact(mob/user)
+/obj/machinery/computer/teleporter/ui_interact(mob/user)
 	var/data = "<h3>Teleporter Status</h3>"
 	if(!power_station)
 		data += "<div class='statusDisplay'>No power station linked.</div>"
@@ -84,7 +76,6 @@
 	var/datum/browser/popup = new(user, "teleporter", name, 400, 400)
 	popup.set_content(data)
 	popup.open()
-	return
 
 /obj/machinery/computer/teleporter/Topic(href, href_list)
 	. = ..()
@@ -347,11 +338,10 @@
 	name = "station"
 	desc = "It's the station thingy of a teleport thingy." //seriously, wtf.
 	icon_state = "controller"
-	var/engaged = 0
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 2000
-	ghost_must_be_admin = TRUE
+	var/engaged = 0
 	var/obj/machinery/computer/teleporter/teleporter_console
 	var/obj/machinery/teleport/hub/teleporter_hub
 	var/list/linked_stations = list()
@@ -431,14 +421,9 @@
 			to_chat(user, "<span class='notice'>You reconnect the station to nearby machinery.</span>")
 			return
 
-/obj/machinery/teleport/station/attack_paw(mob/user)
-	attack_hand(user)
-
-/obj/machinery/teleport/station/attack_ai(mob/user)
-	attack_hand(user)
-
 /obj/machinery/teleport/station/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
 
 	if(!panel_open)
@@ -447,6 +432,7 @@
 /obj/machinery/teleport/station/proc/toggle(mob/user)
 	if(!teleporter_hub || !teleporter_console)
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if (teleporter_console.target)
 		src.engaged = !src.engaged
 		use_power(5000)

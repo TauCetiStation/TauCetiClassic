@@ -71,8 +71,6 @@
 				var/obj/location_as_object = loc
 				location_as_object.handle_internal_lifeform(src, 0)
 
-		//Updates the number of stored chemicals for powers
-		handle_changeling()
 		//Mutations and radiation
 		handle_mutations_and_radiation()
 
@@ -119,6 +117,9 @@
 	name = get_visible_name()
 
 	handle_regular_hud_updates()
+
+	//Updates the number of stored chemicals for powers and essentials
+	handle_changeling()
 
 	pulse = handle_pulse()
 
@@ -198,12 +199,12 @@
 	//Oh, really?
 	if (getBrainLoss() >= 60 && stat != DEAD)
 		if(prob(3))
-			if(config.rus_language)
+			if(config.rus_language)//TODO:CYRILLIC dictionary?
 				switch(pick(1,2,3))
 					if(1)
 						say(pick("азазаа!", "Я не смалгей!", "ХОС ХУЕСОС!", "[pick("", "ебучий трейтор")] [pick("морган", "моргун", "морген", "мрогун")] [pick("джемес", "джамес", "джаемес")] грефонет миня шпасит;е!!!", "ти можыш дать мне [pick("тилипатию","халку","эпиллепсию")]?", "ХАчу стать боргом!", "ПОЗОвите детектива!", "Хочу стать мартышкой!", "ХВАТЕТ ГРИФОНЕТЬ МИНЯ!!!!", "ШАТОЛ!"))
 					if(2)
-						say(pick("Как мин[LETTER_255]ть руки?","ебучие фурри!", "Подебил", "Прокл[LETTER_255]тые трапы!", "лолка!", "вжжжжжжжжж!!!", "джеф скваааад!", "БРАНДЕНБУРГ!", "БУДАПЕШТ!", "ПАУУУУУК!!!!", "ПУКАН БОМБАНУЛ!", "ПУШКА", "РЕВА ПОЦОНЫ", "Пати на хопа!"))
+						say(pick("Как мин[JA_PLACEHOLDER]ть руки?","ебучие фурри!", "Подебил", "Прокл[JA_PLACEHOLDER]тые трапы!", "лолка!", "вжжжжжжжжж!!!", "джеф скваааад!", "БРАНДЕНБУРГ!", "БУДАПЕШТ!", "ПАУУУУУК!!!!", "ПУКАН БОМБАНУЛ!", "ПУШКА", "РЕВА ПОЦОНЫ", "Пати на хопа!"))
 					if(3)
 						emote("drool")
 			else
@@ -826,18 +827,10 @@
 			thermal_protection += THERMAL_PROTECTION_LEG_LEFT
 		if(thermal_protection_flags & LEG_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_LEG_RIGHT
-		if(thermal_protection_flags & FOOT_LEFT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_LEFT
-		if(thermal_protection_flags & FOOT_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_RIGHT
 		if(thermal_protection_flags & ARM_LEFT)
 			thermal_protection += THERMAL_PROTECTION_ARM_LEFT
 		if(thermal_protection_flags & ARM_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_ARM_RIGHT
-		if(thermal_protection_flags & HAND_LEFT)
-			thermal_protection += THERMAL_PROTECTION_HAND_LEFT
-		if(thermal_protection_flags & HAND_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
 
 
 	return min(1,thermal_protection)
@@ -888,18 +881,10 @@
 			thermal_protection += THERMAL_PROTECTION_LEG_LEFT
 		if(thermal_protection_flags & LEG_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_LEG_RIGHT
-		if(thermal_protection_flags & FOOT_LEFT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_LEFT
-		if(thermal_protection_flags & FOOT_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_FOOT_RIGHT
 		if(thermal_protection_flags & ARM_LEFT)
 			thermal_protection += THERMAL_PROTECTION_ARM_LEFT
 		if(thermal_protection_flags & ARM_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_ARM_RIGHT
-		if(thermal_protection_flags & HAND_LEFT)
-			thermal_protection += THERMAL_PROTECTION_HAND_LEFT
-		if(thermal_protection_flags & HAND_RIGHT)
-			thermal_protection += THERMAL_PROTECTION_HAND_RIGHT
 
 	return min(1,thermal_protection)
 
@@ -964,9 +949,9 @@
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
 
 	if(reagents && !species.flags[IS_SYNTHETIC]) //Synths don't process reagents.
-		var/alien = 0
-		if(species && species.reagent_tag)
-			alien = species.reagent_tag
+		var/alien = null
+		if(species)
+			alien = species.name
 		reagents.metabolize(src,alien)
 
 		var/total_phoronloss = 0
@@ -1533,57 +1518,46 @@
 			if(!isRemoteObserve && client && !client.adminobs)
 				remoteview_target = null
 				reset_view(null)
-/*
+
 
 		if(mind && mind.changeling)
 			hud_used.lingchemdisplay.invisibility = 0
 			hud_used.lingchemdisplay.maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'> <font color='#dd66dd'>[mind.changeling.chem_charges]</font></div>"
 		else
 			hud_used.lingchemdisplay.invisibility = 101
-*/
+
 	..()
 
 	return 1
 
 /mob/living/carbon/human/update_sight()
-	species.sightglassesmod = 0
+	sightglassesmod = null
+	if(stat == DEAD)
+		set_EyesVision(transition_time = 0)
+		return
 	var/obj/item/clothing/glasses/G = glasses
 	if(istype(G) && G.active)
 		if(istype(glasses, /obj/item/clothing/glasses/meson))
-			species.sightglassesmod = 1
+			sightglassesmod = "meson"
 		else if(istype(glasses, /obj/item/clothing/glasses/night) && !istype(glasses, /obj/item/clothing/glasses/night/shadowling))
-			species.sightglassesmod = 2
+			sightglassesmod = "nvg"
 		else if(istype(glasses, /obj/item/clothing/glasses/thermal))
-			species.sightglassesmod = 3
+			sightglassesmod = "thermal"
 		else if(istype(glasses, /obj/item/clothing/glasses/science))
-			species.sightglassesmod = 4
+			sightglassesmod = "sci"
 
-	if(stat == DEAD)
-		set_EyesVision(transition_time = 0)
-	else
-		if(species.nighteyes)
-			if(species.sightglassesmod)
-				set_EyesVision("nightsight_glasses")
-			else
-				var/light_amount = 0
-				var/turf/T = get_turf(src)
-				light_amount = round(T.get_lumcount()*10)
-				if(light_amount > 1)
-					set_EyesVision(transition_time = 20)
-				else
-					set_EyesVision("nightsight",20)
+	if(species.nighteyes)
+		if(sightglassesmod)
+			sightglassesmod = "nightsight_glasses"
 		else
-			switch(species.sightglassesmod)
-				if(0)
-					set_EyesVision()
-				if(1)
-					set_EyesVision("meson")
-				if(2)
-					set_EyesVision("nvg")
-				if(3)
-					set_EyesVision("thermal")
-				if(4)
-					set_EyesVision("sci")
+			var/light_amount = 0
+			var/turf/T = get_turf(src)
+			light_amount = round(T.get_lumcount()*10)
+			if(light_amount > 1)
+				sightglassesmod = null
+			else
+				sightglassesmod = "nightsight"
+	set_EyesVision(sightglassesmod)
 
 /mob/living/carbon/human/proc/handle_random_events()
 	// Puke if toxloss is too high
@@ -1846,8 +1820,8 @@
 					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Incarcerated"))
 						holder.icon_state = "hudprisoner"
 						break
-					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Parolled"))
-						holder.icon_state = "hudparolled"
+					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Paroled"))
+						holder.icon_state = "hudparoled"
 						break
 					else if((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "Released"))
 						holder.icon_state = "hudreleased"
@@ -1863,12 +1837,17 @@
 		holder2.icon_state = "hudblank"
 		holder3.icon_state = "hudblank"
 
+		var/has_loyal_implant = FALSE
 		for(var/obj/item/weapon/implant/I in src)
 			if(I.implanted)
 				if(istype(I,/obj/item/weapon/implant/tracking))
 					holder1.icon_state = "hud_imp_tracking"
-				if(istype(I,/obj/item/weapon/implant/loyalty))
-					holder2.icon_state = "hud_imp_loyal"
+				if(istype(I,/obj/item/weapon/implant/mindshield) && !has_loyal_implant)
+					if(istype(I,/obj/item/weapon/implant/mindshield/loyalty))
+						has_loyal_implant = TRUE
+						holder2.icon_state = "hud_imp_loyal"
+					else
+						holder2.icon_state = "hud_imp_mindshield"
 				if(istype(I,/obj/item/weapon/implant/chem))
 					holder3.icon_state = "hud_imp_chem"
 

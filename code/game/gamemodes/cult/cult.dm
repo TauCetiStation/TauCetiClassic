@@ -11,7 +11,7 @@
 		return FALSE
 	if(ishuman(mind.current) && (mind.assigned_role in list("Captain", "Chaplain")))
 		return FALSE
-	if(isloyal(mind.current))
+	if(ismindshielded(mind.current))
 		return FALSE
 	return TRUE
 
@@ -169,7 +169,7 @@
 		word = pick(cultwords)
 	var/wordexp = "[cultwords[word]] is [word]..."
 	to_chat(cult_mob, "<span class = 'cult'>You remember one thing from the dark teachings of your master... <b>[wordexp]</b></span>")
-	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0, 0)
+	cult_mob.mind.store_memory("<B>You remember that</B> [wordexp]", 0)
 
 
 /datum/game_mode/proc/add_cultist(datum/mind/cult_mind) //BASE

@@ -327,7 +327,7 @@ body
 	font-size: 8pt;
 }
 </style>"}
-	html += "</head><body>"
+	html += "</head>"
 	html += body
 
 	html += {"
@@ -339,7 +339,7 @@ body
 
 	html += "</body></html>"
 
-	usr << browse(html, "window=variables\ref[D];size=475x650")
+	usr << browse(entity_ja(html), "window=variables\ref[D];size=475x650")
 
 	return
 
@@ -355,7 +355,7 @@ body
 		html += "[name] = <span class='value'>null</span>"
 
 	else if (istext(value))
-		html += "[name] = <span class='value'>\"[sanitize_popup(value)]\"</span>"
+		html += "[name] = <span class='value'>\"[value]\"</span>"
 
 	else if (isicon(value))
 		#ifdef VARSICON
@@ -437,7 +437,7 @@ body
 			to_chat(usr, "This can only be used on instances of type /mob")
 			return
 
-		var/new_name = sanitize(copytext(input(usr,"What would you like to name this mob?","Input a name",M.real_name) as text|null,1,MAX_NAME_LEN))
+		var/new_name = sanitize_safe(input(usr,"What would you like to name this mob?","Input a name",input_default(M.real_name)) as text|null, MAX_NAME_LEN)
 		if(!new_name || !M)
 			return
 
@@ -1015,4 +1015,4 @@ body
 		i *= 2
 	while(i < ~0)
 
-	usr << browse(dat, "window=bit_flags")
+	usr << browse(entity_ja(dat), "window=bit_flags")

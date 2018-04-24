@@ -30,7 +30,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user)
 	..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if (istype(O, /obj/item/device/plant_analyzer))
 		var/msg
 		msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>\n"
 		switch(plant_type)
@@ -89,7 +89,7 @@
 
 /obj/item/weapon/grown/attackby(obj/item/O, mob/user)
 	..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if (istype(O, /obj/item/device/plant_analyzer))
 		var/msg
 		msg = "<span class='info'>*---------*\n This is \a <span class='name'>[src]</span>\n"
 		switch(plant_type)
@@ -461,7 +461,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap/attackby(obj/item/O, mob/user)
 	. = ..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if (istype(O, /obj/item/device/plant_analyzer))
 		to_chat(user, "<span class='info'>- Mineral Content: <i>[reagents.get_reagent_amount("gold")]%</i></span>")
 
 
@@ -496,7 +496,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/pumpkin/attackby(obj/item/weapon/W, mob/user)
 	..()
-	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/kitchen/utensil/knife) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/melee/energy))
+	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You carve a face into [src]!</span>", 1)
 		new /obj/item/clothing/head/pumpkinhead (user.loc)
 		qdel(src)
@@ -564,11 +564,11 @@
 	item_state = "banana"
 	filling_color = "#FCF695"
 	trash = /obj/item/weapon/bananapeel
+	bitesize = 5
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/banana/atom_init()
 	. = ..()
 	reagents.add_reagent("banana", 1+round((potency / 10), 1))
-	bitesize = 5
 	pixel_x = rand(-5.0, 5)
 	pixel_y = rand(-5.0, 5)
 
@@ -587,7 +587,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/chili/attackby(obj/item/O, mob/user)
 	. = ..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if (istype(O, /obj/item/device/plant_analyzer))
 		to_chat(user, "<span class='info'>- Capsaicin: <i>[reagents.get_reagent_amount("capsaicin")]%</i></span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/eggplant
@@ -628,7 +628,7 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 	bitesize = 1+round(reagents.total_volume / 2, 1)
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/throw_impact(atom/hit_atom)
+/obj/item/weapon/reagent_containers/food/snacks/grown/tomato/throw_impact(atom/hit_atom)
 	..()
 	new/obj/effect/decal/cleanable/tomato_smudge(loc)
 	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
@@ -678,11 +678,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bloodtomato/throw_impact(atom/hit_atom)
 	..()
-	new/obj/effect/decal/cleanable/blood/splatter(src.loc)
-	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
-	src.reagents.reaction(get_turf(hit_atom))
+	new/obj/effect/decal/cleanable/blood/splatter(loc)
+	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
-		src.reagents.reaction(A)
+		reagents.reaction(A)
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato
@@ -701,11 +701,11 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/throw_impact(atom/hit_atom)
 	..()
-	new/obj/effect/decal/cleanable/blood/oil(src.loc)
-	src.visible_message("<span class='notice'>The [src.name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
-	src.reagents.reaction(get_turf(hit_atom))
+	new/obj/effect/decal/cleanable/blood/oil(loc)
+	visible_message("<span class='notice'>The [name] has been squashed.</span>","<span class='moderate'>You hear a smack.</span>")
+	reagents.reaction(get_turf(hit_atom))
 	for(var/atom/A in get_turf(hit_atom))
-		src.reagents.reaction(A)
+		reagents.reaction(A)
 	qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/bluetomato/Crossed(AM)
@@ -775,7 +775,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/icepepper/attackby(obj/item/O, mob/user)
 	. = ..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if (istype(O, /obj/item/device/plant_analyzer))
 		to_chat(user, "<span class='info'>- Frostoil: <i>[reagents.get_reagent_amount("frostoil")]%</i></span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/carrot
@@ -809,7 +809,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/reishi/attackby(obj/item/O, mob/user)
 	. = ..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if (istype(O, /obj/item/device/plant_analyzer))
 		to_chat(user, "<span class='info'>- Sleep Toxin: <i>[reagents.get_reagent_amount("stoxin")]%</i></span>")
 		to_chat(user, "<span class='info'>- Space Drugs: <i>[reagents.get_reagent_amount("space_drugs")]%</i></span>")
 
@@ -830,7 +830,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/amanita/attackby(obj/item/O, mob/user)
 	. = ..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if (istype(O, /obj/item/device/plant_analyzer))
 		to_chat(user, "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>")
 		to_chat(user, "<span class='info'>- Psilocybin: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>")
 
@@ -851,7 +851,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/angel/attackby(obj/item/O , mob/user)
 	. = ..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if (istype(O, /obj/item/device/plant_analyzer))
 		to_chat(user, "<span class='info'>- Amatoxins: <i>[reagents.get_reagent_amount("amatoxin")]%</i></span>")
 		to_chat(user, "<span class='info'>- Psilocybin: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>")
 
@@ -871,7 +871,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/libertycap/attackby(obj/item/O, mob/user)
 	. = ..()
-	if (istype(O, /obj/item/device/analyzer/plant_analyzer))
+	if (istype(O, /obj/item/device/plant_analyzer))
 		to_chat(user, "<span class='info'>- Psilocybin: <i>[reagents.get_reagent_amount("psilocybin")]%</i></span>")
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/plumphelmet

@@ -8,6 +8,7 @@
 /mob/living/carbon/Move(NewLoc, direct)
 	. = ..()
 	if(.)
+		handle_phantom_move(NewLoc, direct)
 		if(src.nutrition && src.stat != DEAD)
 			src.nutrition -= HUNGER_FACTOR/10
 			if(src.m_intent == "run")
@@ -20,6 +21,21 @@
 			germ_level++
 
 /mob/living/carbon/relaymove(mob/user, direction)
+	if(isessence(user))
+		user.setMoveCooldown(1)
+		var/mob/living/parasite/essence/essence = user
+		if(!(essence.flags_allowed & ESSENCE_PHANTOM))
+			to_chat(user, "<span class='userdanger'>Your host forbrade you to own phantom</span>")
+			return
+
+		if(!essence.phantom.showed)
+			essence.phantom.show_phantom()
+			return
+		var/tile = get_turf(get_step(essence.phantom, direction))
+		if(get_dist(tile, essence.host) < 8)
+			essence.phantom.dir = direction
+			essence.phantom.loc = tile
+		return
 	if(user in src.stomach_contents)
 		if(prob(40))
 			for(var/mob/M in hearers(4, src))
@@ -47,9 +63,12 @@
 					src.gib()
 
 /mob/living/carbon/attack_animal(mob/living/simple_animal/M)
+	..()
 	if(istype(M,/mob/living/simple_animal/headcrab))
 		var/mob/living/simple_animal/headcrab/crab = M
 		crab.Infect(src)
+		return TRUE
+	return FALSE
 
 /mob/living/carbon/gib()
 	for(var/mob/M in src)
@@ -76,43 +95,29 @@
 		..()
 
 /mob/living/carbon/attack_hand(mob/M)
-	if(!istype(M, /mob/living/carbon)) return
-	if (ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
-		if(BP && !BP.is_usable())
-			to_chat(H, "<span class='rose'>You can't use your [BP.name].</span>")
-			return
+	if(!iscarbon(M))
+		return
 
 	for(var/datum/disease/D in viruses)
-
 		if(D.spread_by_touch())
-
 			M.contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	for(var/datum/disease/D in M.viruses)
-
 		if(D.spread_by_touch())
-
 			contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	return
 
 
 /mob/living/carbon/attack_paw(mob/M)
-	if(!istype(M, /mob/living/carbon)) return
+	if(!iscarbon(M))
+		return
 
 	for(var/datum/disease/D in viruses)
-
 		if(D.spread_by_touch())
 			M.contract_disease(D, 0, 1, CONTACT_HANDS)
 
 	for(var/datum/disease/D in M.viruses)
-
 		if(D.spread_by_touch())
 			contract_disease(D, 0, 1, CONTACT_HANDS)
-
-	return
 
 /mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	if(status_flags & GODMODE)	return 0	//godmode
@@ -410,10 +415,9 @@
 
 		if(ishuman(src))
 			var/mob/living/carbon/human/H = src
-			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
-				for(var/obj/item/clothing/suit/space/vox/stealth/V in list(H.wear_suit))
-					if(V.on)
-						V.overload()
+			if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+				var/obj/item/clothing/suit/V = H.wear_suit
+				V.attack_reaction(H, REACTION_THROWITEM)
 
 /mob/living/carbon/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	..()
@@ -463,7 +467,7 @@
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
-	user << browse(dat, text("window=mob[];size=325x500", name))
+	user << browse(entity_ja(dat), text("window=mob[];size=325x500", name))
 	onclose(user, "mob[name]")
 	return
 
@@ -641,6 +645,25 @@
 
 /mob/living/carbon/proc/bloody_body(mob/living/source)
 	return
+
+/mob/living/carbon/proc/handle_phantom_move(NewLoc, direct)
+	if(!mind || !mind.changeling || length(mind.changeling.essences) < 1)
+		return
+	if(loc == NewLoc)
+		for(var/mob/living/parasite/essence/essence in mind.changeling.essences)
+			if(essence.phantom.showed)
+				essence.phantom.loc = get_turf(get_step(essence.phantom, direct))
+
+/mob/living/carbon/proc/remove_passemotes_flag()
+	for(var/thing in src)
+		if(istype(thing, /obj/item/weapon/holder))
+			return
+		if(istype(thing, /mob/living/carbon/monkey/diona))
+			return
+	status_flags &= ~PASSEMOTES
+
+/mob/living/carbon/proc/can_eat(flags = 255) //I don't know how and why does it work
+	return TRUE
 
 /mob/living/carbon/proc/crawl_in_blood(obj/effect/decal/cleanable/blood/floor_blood)
 	return

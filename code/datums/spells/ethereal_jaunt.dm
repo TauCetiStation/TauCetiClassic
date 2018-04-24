@@ -25,6 +25,7 @@
 		var/obj/effect/dummy/spell_jaunt/holder = new(mobloc)
 		target.ExtinguishMob()			//This spell can extinguish mob
 		target.status_flags ^= GODMODE	//Protection from any kind of damage, caused you in astral world
+		holder.master = target
 		var/list/companions = handle_teleport_grab(holder, target)
 		if(companions)
 			for(var/M in companions)
@@ -32,9 +33,10 @@
 				L.status_flags ^= GODMODE
 				L.ExtinguishMob()
 		var/image/I = image('icons/mob/blob.dmi', holder, "marker", LIGHTING_LAYER+1)
-		target.client.images += I
-		target.forceMove(holder)
-		target.client.eye = holder
+		if(target.client)
+			target.client.images += I
+			target.forceMove(holder)
+			target.client.eye = holder
 
 		if(phaseshift)
 			holder.dir = target.dir
@@ -64,8 +66,9 @@
 			flick("reappear", holder)
 
 		sleep(FLICK_OVERLAY_JAUNT_DURATION)
-		target.client.images -= I
-		target.client.eye = target
+		if(target.client)
+			target.client.images -= I
+			target.client.eye = target
 		target.status_flags ^= GODMODE	//Turn off this cheat
 		if(companions)
 			for(var/M in companions)
@@ -81,11 +84,14 @@
 	layer = 5
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "blank"
+	var/mob/master
 	var/canmove = FALSE
 
 
 /obj/effect/dummy/spell_jaunt/relaymove(mob/user, direction)
 	if(!canmove || last_move + 2 > world.time)
+		return
+	if(user != master)
 		return
 	var/turf/newLoc = get_step(src,direction)
 	if(!(newLoc.flags & NOJAUNT))
@@ -97,12 +103,14 @@
 
 /obj/effect/dummy/spell_jaunt/ex_act(blah)
 	return
+
 /obj/effect/dummy/spell_jaunt/bullet_act(blah)
 	return
 
 /obj/effect/dummy/spell_jaunt/Destroy()
 	for(var/atom/movable/AM in src)
 		AM.forceMove(get_turf(src))
+	master = null
 	return ..()
 
 #undef FLICK_OVERLAY_JAUNT_DURATION

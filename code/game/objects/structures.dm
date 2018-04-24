@@ -43,8 +43,10 @@
 	do_climb(usr)
 
 /obj/structure/MouseDrop_T(mob/target, mob/user)
+	if(isessence(user))
+		return
 	var/mob/living/H = user
-	if(istype(H) && can_climb(H) && target == user)
+	if(can_climb(H) && target == user)
 		do_climb(target)
 	else
 		return ..()
@@ -55,6 +57,9 @@
 
 	if (!user.Adjacent(src))
 		to_chat(user, "<span class='danger'>You can't climb there, the way is blocked.</span>")
+		return 0
+
+	if(user.is_busy())
 		return 0
 
 	var/obj/occupied = turf_is_crowded()
@@ -78,7 +83,6 @@
 /obj/structure/proc/do_climb(mob/living/user)
 	if (!can_climb(user))
 		return
-
 	usr.visible_message("<span class='warning'>[user] starts climbing onto \the [src]!</span>")
 	climbers |= user
 
@@ -90,11 +94,14 @@
 		climbers -= user
 		return
 
+	on_climb(user)
+	climbers -= user
+
+/obj/structure/proc/on_climb(mob/living/user)
 	usr.forceMove(get_turf(src))
 
 	if (get_turf(user) == get_turf(src))
 		usr.visible_message("<span class='warning'>[user] climbs onto \the [src]!</span>")
-	climbers -= user
 
 /obj/structure/proc/structure_shaken()
 	for(var/mob/living/M in climbers)
@@ -118,13 +125,9 @@
 
 			var/obj/item/organ/external/BP
 
-			switch(pick(list("ankle","wrist","head","knee","elbow")))
-				if("ankle")
-					BP = H.bodyparts_by_name[pick(BP_L_FOOT , BP_R_FOOT)]
+			switch(pick(list("knee","head","elbow")))
 				if("knee")
 					BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
-				if("wrist")
-					BP = H.bodyparts_by_name[pick(BP_L_HAND , BP_R_HAND)]
 				if("elbow")
 					BP = H.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]
 				if("head")

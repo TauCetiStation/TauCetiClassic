@@ -44,16 +44,7 @@
 	moving = 0
 	return 1
 
-/obj/machinery/computer/syndicate_station/attack_hand(mob/user)
-	if(..())
-		return
-
-	if(!allowed(user))
-		to_chat(user, "\red Access Denied")
-		return
-
-	user.set_machine(src)
-
+/obj/machinery/computer/syndicate_station/ui_interact(mob/user)
 	var/dat = {"Location: [curr_location]<br>
 	Ready to move[max(lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time, 0) ? " in [max(round((lastMove + SYNDICATE_SHUTTLE_COOLDOWN - world.time) * 0.1), 0)] seconds" : ": now"]<br>
 	<a href='?src=\ref[src];syndicate=1'>Syndicate Space</a><br>
@@ -66,9 +57,8 @@
 	<a href='?src=\ref[src];mining=1'>North East of the Mining Asteroid</a><br>
 	<a href='?src=\ref[user];mach_close=computer'>Close</a>"}
 
-	user << browse(dat, "window=computer;size=575x450")
+	user << browse(entity_ja(dat), "window=computer;size=575x450")
 	onclose(user, "computer")
-	return
 
 
 /obj/machinery/computer/syndicate_station/Topic(href, href_list)

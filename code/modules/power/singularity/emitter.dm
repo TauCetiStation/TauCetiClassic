@@ -12,7 +12,7 @@
 	use_power = 0
 	idle_power_usage = 10
 	active_power_usage = 300
-	ghost_must_be_admin = TRUE
+	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/active = FALSE
 	var/powered = FALSE
@@ -79,8 +79,10 @@
 		icon_state = "emitter-off"
 
 /obj/machinery/power/emitter/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
+	user.SetNextMove(CLICK_CD_RAPID)
 	activate(user)
 
 /obj/machinery/power/emitter/proc/activate(mob/user)
@@ -208,6 +210,7 @@
 			if(0)
 				to_chat(user, "\red The [src.name] needs to be wrenched to the floor.")
 			if(1)
+				if(user.is_busy()) return
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to weld the [src.name] to the floor.", \
@@ -221,6 +224,7 @@
 				else
 					to_chat(user, "\red You need more welding fuel to complete this task.")
 			if(2)
+				if(user.is_busy()) return
 				if (WT.remove_fuel(0,user))
 					playsound(src.loc, 'sound/items/Welder2.ogg', 50, 1)
 					user.visible_message("[user.name] starts to cut the [src.name] free from the floor.", \

@@ -10,6 +10,7 @@
 	active_power_usage = 25000
 	req_access = list(access_mining)
 	build_type = MINEFAB
+	allowed_checks = ALLOWED_CHECK_TOPIC
 	resources = list(
 						MAT_METAL=0,
 						MAT_GLASS=0,
@@ -96,7 +97,7 @@
 				</table>
 				</body>
 				</html>"}
-	user << browse(dat, "window=mine_fabricator;size=1000x430")
+	user << browse(entity_ja(dat), "window=mine_fabricator;size=1000x430")
 	onclose(user, "mine_fabricator")
 	return
 

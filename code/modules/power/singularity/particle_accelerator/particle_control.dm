@@ -14,6 +14,7 @@
 	construction_state = 0
 	active = 0
 	dir = 1
+	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/list/obj/structure/particle_accelerator/connected_parts
 	var/assembled = 0
 	var/parts = null
@@ -27,9 +28,9 @@
 		toggle_power()
 	return ..()
 
-/obj/machinery/particle_accelerator/control_box/attack_hand(mob/user)
+/obj/machinery/particle_accelerator/control_box/interact(mob/user)
 	if(construction_state >= 3)
-		interact(user)
+		..()
 
 /obj/machinery/particle_accelerator/control_box/update_state()
 	if(construction_state < 3)
@@ -46,8 +47,6 @@
 		use_power = 1
 		active = 0
 		connected_parts = list()
-
-	return
 
 /obj/machinery/particle_accelerator/control_box/update_icon()
 	if(active)
@@ -204,8 +203,8 @@
 	return 1
 
 
-/obj/machinery/particle_accelerator/control_box/interact(mob/user)
-	if(..() || (get_dist(src, user) > 1) && !issilicon(user) && !isobserver(user))
+/obj/machinery/particle_accelerator/control_box/ui_interact(mob/user)
+	if(!in_range(src, user) && !issilicon(user) && !isobserver(user))
 		user.unset_machine()
 		user << browse(null, "window=pacontrol")
 		return
@@ -228,6 +227,5 @@
 		dat += "Particle Strength: [src.strength] "
 		dat += "<A href='?src=\ref[src];strengthdown=1'>--</A>|<A href='?src=\ref[src];strengthup=1'>++</A><BR><BR>"
 
-	user << browse(dat, "window=pacontrol;size=420x500")
+	user << browse(entity_ja(dat), "window=pacontrol;size=420x500")
 	onclose(user, "pacontrol")
-	return

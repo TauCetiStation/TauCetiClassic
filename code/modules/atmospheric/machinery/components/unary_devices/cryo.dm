@@ -166,9 +166,6 @@
 	else
 		to_chat(user, "[src] seems empty.")
 
-/obj/machinery/atmospherics/components/unary/cryo_cell/attack_hand(mob/user)
-	ui_interact(user)
-
  /**
   * The ui_interact proc is used to open and update Nano UIs
   * If ui_interact is not used then the UI will not update correctly

@@ -221,7 +221,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/blob_act()
 	if(stat == DEAD)	return
 	to_chat(src, "<span class='danger'>\The blob attacks you!</span>")
-	var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
+	var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 	var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 	apply_damage(rand(30, 40), BRUTE, BP, run_armor_check(BP, "melee"))
 	return
@@ -243,31 +243,22 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 
 /mob/living/carbon/human/attack_animal(mob/living/simple_animal/M)
-	..()
+	if(..())
+		return
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
-		var/dam_zone = pick(BP_CHEST , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG)
+		var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 		var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(dam_zone)]
 		var/armor = run_armor_check(BP, "melee")
 		apply_damage(damage, BRUTE, BP, armor)
 		if(armor >= 2)	return
-
-
-/mob/living/carbon/human/proc/is_loyalty_implanted(mob/living/carbon/human/M)
-	for(var/L in M.contents)
-		if(istype(L, /obj/item/weapon/implant/loyalty))
-			for(var/obj/item/organ/external/BP in M.bodyparts)
-				if(L in BP.implants)
-					return 1
-	return 0
 
 /mob/living/carbon/human/attack_slime(mob/living/carbon/slime/M)
 	if(M.Victim) return // can't attack while eating!
@@ -331,14 +322,46 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	return
 
+/mob/living/carbon/human/proc/can_use_two_hands(broken = TRUE) // Replace arms with hands in case of reverting Kurshan's PR.
+	var/obj/item/organ/external/l_arm/BPL = bodyparts_by_name[BP_L_ARM]
+	var/obj/item/organ/external/r_arm/BPR = bodyparts_by_name[BP_R_ARM]
+	if(broken && (BPL.is_broken() || BPR.is_broken()))
+		return FALSE
+	if(!BPL.is_usable() || !BPR.is_usable())
+		return FALSE
+	return TRUE
 
-/mob/living/carbon/human/restrained()
-	if (handcuffed)
-		return 1
+/mob/living/carbon/human/proc/wield(/obj/item/I, name, wieldsound = null)
+	if(!can_use_two_hands())
+		to_chat(src, "<span class='warning'>You need both of your hands to be intact to do this.</span>")
+		return FALSE
+	if(get_inactive_hand())
+		to_chat(src, "<span class='warning'>You need your other hand to be empty to do this.</span>")
+		return FALSE
+	to_chat(src, "<span class='notice'>You grab the [name] with both hands.</span>")
+	if(wieldsound)
+		playsound(loc, wieldsound, 50, 1)
+
+	if(hand)
+		update_inv_l_hand()
+	else
+		update_inv_r_hand()
+
+	var/obj/item/weapon/twohanded/offhand/O = new(src)
+	O.name = "[name] - offhand"
+	O.desc = "Your second grip on the [name]"
+	put_in_inactive_hand(O)
+	return TRUE
+
+/mob/living/carbon/human/restrained(check_type = ARMS)
+	if ((check_type & ARMS) && handcuffed)
+		return TRUE
+	if ((check_type & LEGS) && legcuffed)
+		return TRUE
 	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-		return 1
+		return TRUE
 	if (istype(buckled, /obj/structure/stool/bed/nest))
-		return 1
+		return TRUE
 	return 0
 
 
@@ -376,7 +399,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	<BR><A href='?src=\ref[user];refresh=1'>Refresh</A>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
-	user << browse(dat, text("window=mob[name];size=340x540"))
+	user << browse(entity_ja(dat), text("window=mob[name];size=340x540"))
 	onclose(user, "mob[name]")
 	return
 
@@ -482,7 +505,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(NO_SHOCK in src.mutations)	return 0 //#Z2 no shock with that mutation.
 
 	if(!def_zone)
-		def_zone = pick(BP_L_HAND , BP_R_HAND)
+		def_zone = pick(BP_L_ARM , BP_R_ARM)
 
 	var/obj/item/organ/external/BP = get_bodypart(check_zone(def_zone))
 
@@ -550,7 +573,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 						for (var/datum/data/record/R in data_core.security)
 							if (R.fields["id"] == E.fields["id"])
 
-								var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Parolled", "Released", "Cancel")
+								var/setcriminal = input(usr, "Specify a new criminal status for this person.", "Security HUD", R.fields["criminal"]) in list("None", "*Arrest*", "Incarcerated", "Paroled", "Released", "Cancel")
 
 								if(hasHUD(usr, "security"))
 									if(setcriminal != "Cancel")
@@ -645,7 +668,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					for (var/datum/data/record/R in data_core.security)
 						if (R.fields["id"] == E.fields["id"])
 							if(hasHUD(usr,"security"))
-								var/t1 = sanitize(copytext(input("Add Comment:", "Sec. records", null, null)  as message,1,MAX_MESSAGE_LEN))
+								var/t1 = sanitize(input("Add Comment:", "Sec. records", null, null)  as message)
 								if ( !(t1) || usr.stat || usr.restrained() || !(hasHUD(usr,"security")) )
 									return
 								var/counter = 1
@@ -774,7 +797,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 					for (var/datum/data/record/R in data_core.medical)
 						if (R.fields["id"] == E.fields["id"])
 							if(hasHUD(usr,"medical"))
-								var/t1 = sanitize(copytext(input("Add Comment:", "Med. records", null, null)  as message,1,MAX_MESSAGE_LEN))
+								var/t1 = sanitize(input("Add Comment:", "Med. records", null, null)  as message)
 								if ( !(t1) || usr.stat || usr.restrained() || !(hasHUD(usr,"medical")) )
 									return
 								var/counter = 1
@@ -1326,14 +1349,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	var/max_length = bloody_hands * 30 //tweeter style
 
-	var/message = sanitize(copytext(stripped_input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""), 1, MAX_MESSAGE_LEN))
+	var/message = sanitize(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""), MAX_MESSAGE_LEN)
 
 	if (message)
 		var/used_blood_amount = round(length(message) / 30, 1)
 		bloody_hands = max(0, bloody_hands - used_blood_amount) //use up some blood
 
 		if (length(message) > max_length)
-			message += "-"
+			message += "-"//Should crop any letters? No?
 			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
 
 		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
@@ -1467,7 +1490,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		to_chat(src, "<span class='notice'>It is unsafe to leap without gravity!</span>")
 		return
 
-	if(stat || stunned || lying)
+	if(incapacitated(LEGS) || buckled || pinned.len || stance_damage >= 4) //because you need !restrained legs to leap
 		to_chat(src, "<span class='warning'>You cannot leap in your current state.</span>")
 		return
 
@@ -1499,30 +1522,37 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(isliving(A))
 		var/mob/living/L = A
 		L.visible_message("<span class='danger'>\The [src] leaps at [L]!</span>", "<span class='userdanger'>[src] leaps on you!</span>")
-		L.Weaken(5)
-		sleep(2) // Runtime prevention (infinite bump() calls on hulks)
-		step_towards(src, L)
-
-		var/use_hand = "left"
-		if(l_hand)
-			if(r_hand)
-				to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
-				return
-			else
-				use_hand = "right"
-
-		visible_message("<span class='warning'><b>\The [src]</b> seizes [L] aggressively!</span>")
-
-		var/obj/item/weapon/grab/G = new(src, L)
-		if(use_hand == "left")
-			l_hand = G
+		if(issilicon(A))
+			L.Weaken(1) //Only brief stun
+			step_towards(src, L)
 		else
-			r_hand = G
+			L.Weaken(5)
+			sleep(2) // Runtime prevention (infinite bump() calls on hulks)
+			step_towards(src, L)
 
-		G.state = GRAB_AGGRESSIVE
-		G.icon_state = "grabbed1"
-		G.synch()
-		L.grabbed_by += G
+			if(restrained()) //You can leap when you hands are cuffed, but you can't grab
+				return
+
+			var/use_hand = "left"
+			if(l_hand)
+				if(r_hand)
+					to_chat(src, "<span class='warning'>You need to have one hand free to grab someone.</span>")
+					return
+				else
+					use_hand = "right"
+
+			visible_message("<span class='warning'><b>\The [src]</b> seizes [L] aggressively!</span>")
+
+			var/obj/item/weapon/grab/G = new(src, L)
+			if(use_hand == "left")
+				l_hand = G
+			else
+				r_hand = G
+
+			G.state = GRAB_AGGRESSIVE
+			G.icon_state = "grabbed1"
+			G.synch()
+			L.grabbed_by += G
 
 	else if(A.density)
 		visible_message("<span class='danger'>[src] smashes into [A]!</span>", "<span class='danger'>You smashes into [A]!</span>")
@@ -1616,3 +1646,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(BP && (BP.status & ORGAN_ROBOT))
 		return FALSE
 	return species.has_organ[organ_check]
+
+/mob/living/carbon/human/can_eat(flags = DIET_ALL)
+	return species && (species.dietflags & flags)
+
+/mob/living/carbon/human/get_taste_sensitivity()
+	if(species)
+		return species.taste_sensitivity
+	else
+		return 1

@@ -77,13 +77,11 @@
 		M.regenerate_icons()
 	return
 
-/obj/item/clothing/suit/armor/abductor/vest/Get_shield_chance()
-	DeactivateStealth()
-	return 0
+/obj/item/clothing/suit/armor/abductor/vest/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+	if(reaction_type == REACTION_ITEM_TAKE)
+		return
 
-/obj/item/clothing/suit/armor/abductor/vest/IsReflect()
 	DeactivateStealth()
-	return 0
 
 /obj/item/clothing/suit/armor/abductor/vest/proc/IsAbductor(user)
 	if(ishuman(user))
@@ -232,6 +230,8 @@
 /obj/item/device/abductor/gizmo/proc/prepare(atom/target, mob/living/user)
 	if(get_dist(target,user) > 1)
 		to_chat(user, "<span class='warning'>You need to be next to the specimen to prepare it for transport.</span>")
+		return
+	if(user.is_busy())
 		return
 	to_chat(user, "<span class='notice'>You begin preparing [target] for transport...</span>")
 	if(do_after(user, 100, target = target))
@@ -603,14 +603,14 @@
 	belt = image("icons/obj/abductor.dmi", "belt", layer = FLY_LAYER)
 	. = ..()
 
-/obj/machinery/optable/abductor/attack_hand()
+/obj/machinery/optable/abductor/attack_hand(mob/living/carbon/C)
 	if(!victim && !fastened)
 		return
 
 	//exclusion any bugs with grab
-	var/mob/living/carbon/C = usr
 	if(!istype(C))
 		return
+	C.SetNextMove(CLICK_CD_MELEE)
 
 	if(istype(C.get_active_hand(),/obj/item/weapon/grab))
 		var/obj/item/weapon/grab/G = C.get_active_hand()
@@ -733,12 +733,12 @@ Congratulations! You are now trained for xenobiology research!"}
 /obj/item/weapon/lazarus_injector/alien/afterattack(atom/target, mob/user)
 	if(!loaded)
 		return
-	if(istype(target, /mob/living))
+	if(isliving(target))
 		var/mob/living/M = target
 		M.revive()
 		loaded = 0
 		user.visible_message("<span class='notice'>[user] injects [M] with [src], fully heal it.</span>")
-		playsound(src,'sound/effects/refill.ogg',50,1)
+		playsound(src, 'sound/effects/refill.ogg', 50, 1)
 		icon_state = "abductor_empty"
 
 /obj/machinery/recharger/wallcharger/alien

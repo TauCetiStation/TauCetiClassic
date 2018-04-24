@@ -1,5 +1,5 @@
 "a" = (/turf/simulated/floor/holofloor{icon_state = "grimy"; dir = 2},/area/holodeck/source_courtroom)
-"b" = (/obj/structure/flora/pottedplant{icon_state = "plant-10"; tag = "icon-plant-10"},/obj/structure/window/reinforced/holowindow{dir = 4},/turf/simulated/floor/holofloor{icon_state = "grimy"; dir = 2},/area/holodeck/source_courtroom)
+"b" = (/obj/structure/flora/pottedplant{icon_state = "plant-10"},/obj/structure/window/reinforced/holowindow{dir = 4},/turf/simulated/floor/holofloor{icon_state = "grimy"; dir = 2},/area/holodeck/source_courtroom)
 "c" = (/obj/structure/table/woodentable/holotable,/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_courtroom)
 "d" = (/obj/machinery/door/window/holowindoor{dir = 4},/turf/simulated/floor/holofloor{icon_state = "grimy"; dir = 2},/area/holodeck/source_courtroom)
 "e" = (/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_courtroom)

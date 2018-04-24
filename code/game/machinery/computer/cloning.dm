@@ -5,6 +5,7 @@
 	light_color = "#315ab4"
 	circuit = /obj/item/weapon/circuitboard/cloning
 	req_access = list(access_heads) //Only used for record deletion right now.
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/machinery/dna_scannernew/scanner = null //Linked scanner. For scanning.
 	var/obj/machinery/clonepod/pod1 = null //Linked cloning pod.
 	var/temp = ""
@@ -84,17 +85,7 @@
 		..()
 	return
 
-/obj/machinery/computer/cloning/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/cloning/interact(mob/user)
-	user.set_machine(src)
-	add_fingerprint(user)
-	if(..())
-		return
-
+/obj/machinery/computer/cloning/ui_interact(mob/user)
 	updatemodules()
 
 	var/dat = "<h3>Cloning System Control</h3>"
@@ -204,7 +195,7 @@
 			dat += "<b><a href='byond://?src=\ref[src];menu=3'>No</a></b>"
 
 
-	user << browse(dat, "window=cloning")
+	user << browse(entity_ja(dat), "window=cloning")
 	onclose(user, "cloning")
 	return
 

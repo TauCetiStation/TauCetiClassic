@@ -125,8 +125,8 @@
 		to_chat(user, "<span class='notice'>Attach a phoron tank first!</span>")
 		return
 	var/dat = text("<TT><B>Flamethrower (<A HREF='?src=\ref[src];light=1'>[lit ? "<font color='red'>Lit</font>" : "Unlit"]</a>)</B><BR>\n Tank Pressure: [ptank.air_contents.return_pressure()]<BR>\nAmount to throw: <A HREF='?src=\ref[src];amount=-100'>-</A> <A HREF='?src=\ref[src];amount=-10'>-</A> <A HREF='?src=\ref[src];amount=-1'>-</A> [throw_amount] <A HREF='?src=\ref[src];amount=1'>+</A> <A HREF='?src=\ref[src];amount=10'>+</A> <A HREF='?src=\ref[src];amount=100'>+</A><BR>\n<A HREF='?src=\ref[src];remove=1'>Remove phorontank</A> - <A HREF='?src=\ref[src];close=1'>Close</A></TT>")
-	user << browse(dat, "window=flamethrower;size=600x300")
-	onclose(user, "flamethrower")
+	user << browse(entity_ja(dat), "window=flamethrower;size=600x300")
+	onclose(entity_ja(user), "flamethrower")
 	return
 
 
@@ -192,7 +192,7 @@
 	//Burn it based on transfered gas
 	//target.hotspot_expose(part4.air_contents.temperature*2,300)
 	target.hotspot_expose((ptank.air_contents.temperature * 2) + 380, 500) // -- More of my "how do I shot fire?" dickery. -- TLE
-	//location.hotspot_expose(1000,500,1)
+	//location.hotspot_expose(1000, 500)
 	return
 
 /obj/item/weapon/flamethrower/full/atom_init()

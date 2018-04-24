@@ -96,6 +96,11 @@
 #define MAX_ALIEN_LEAP_DIST 7
 
 /mob/living/carbon/alien/humanoid/hunter/proc/leap_at(atom/A)
+
+	if(buckled)
+		to_chat(src, "<span class='alertalien'>You cannot leap in your current state.</span>")
+		return
+		
 	if(pounce_cooldown)
 		to_chat(src, "<span class='alertalien'>You are too fatigued to pounce right now!</span>")
 		return
@@ -127,7 +132,10 @@
 	if(isliving(A))
 		var/mob/living/L = A
 		L.visible_message("<span class='danger'>[src] pounces on [L]!</span>", "<span class='userdanger'>[src] pounces on you!</span>")
-		L.Weaken(5)
+		if(issilicon(A))
+			L.Weaken(1) //Only brief stun
+		else
+			L.Weaken(5)
 		sleep(2)  // Runtime prevention (infinite bump() calls on hulks)
 		step_towards(src, L)
 		toggle_leap(FALSE)

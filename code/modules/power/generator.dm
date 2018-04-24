@@ -115,10 +115,6 @@
 		updateicon()
 	add_avail(lastgen)
 
-/obj/machinery/power/generator/attack_ai(mob/user)
-	if(stat & (BROKEN|NOPOWER)) return
-	interact(user)
-
 /obj/machinery/power/generator/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/wrench))
 		anchored = !anchored
@@ -128,13 +124,11 @@
 	else
 		..()
 
-/obj/machinery/power/generator/attack_hand(mob/user)
-	add_fingerprint(user)
-	if(stat & (BROKEN|NOPOWER) || !anchored) return
-	interact(user)
-
-
 /obj/machinery/power/generator/interact(mob/user)
+	if(anchored)
+		..()
+
+/obj/machinery/power/generator/ui_interact(mob/user)
 	if ( (get_dist(src, user) > 1 ) && !(issilicon(user) || isobserver(user)))
 		user.unset_machine(src)
 		user << browse(null, "window=teg")
@@ -144,8 +138,6 @@
 	var/datum/gas_mixture/circ1_air2 = circ1.AIR2
 	var/datum/gas_mixture/circ2_air1 = circ2.AIR1
 	var/datum/gas_mixture/circ2_air2 = circ2.AIR2
-
-	user.set_machine(src)
 
 	var/t = "<PRE><B>Thermo-Electric Generator</B><HR>"
 
@@ -172,9 +164,8 @@
 	t += "<HR>"
 	t += "<A href='?src=\ref[src]'>Refresh</A> <A href='?src=\ref[src];close=1'>Close</A>"
 
-	user << browse(t, "window=teg;size=460x300")
+	user << browse(entity_ja(t), "window=teg;size=460x300")
 	onclose(user, "teg")
-	return 1
 
 
 /obj/machinery/power/generator/Topic(href, href_list)

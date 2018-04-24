@@ -5,32 +5,32 @@
 	icon_state = "blank"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
-	var/list/part = null
+	var/part = null
 	var/sabotaged = 0 //Emagging limbs can have repercussions when installed as prosthetics.
 
 /obj/item/robot_parts/l_arm
 	name = "robot left arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_arm"
-	part = list(BP_L_ARM , BP_L_HAND)
+	part = BP_L_ARM
 
 /obj/item/robot_parts/r_arm
 	name = "robot right arm"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_arm"
-	part = list(BP_R_ARM , BP_R_HAND)
+	part = BP_R_ARM
 
 /obj/item/robot_parts/l_leg
 	name = "robot left leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "l_leg"
-	part = list(BP_L_LEG , BP_L_FOOT)
+	part = BP_L_LEG
 
 /obj/item/robot_parts/r_leg
 	name = "robot right leg"
 	desc = "A skeletal limb wrapped in pseudomuscles, with a low-conductivity case."
 	icon_state = "r_leg"
-	part = list(BP_R_LEG , BP_R_FOOT)
+	part = BP_R_LEG
 
 /obj/item/robot_parts/chest
 	name = "robot torso"
@@ -259,7 +259,7 @@
 		return
 
 	if (istype(W, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "Enter new robot name", name, created_name, MAX_NAME_LEN)
+		var/t = sanitize_safe(input(user, "Enter new robot name", name, created_name), MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && loc != usr)

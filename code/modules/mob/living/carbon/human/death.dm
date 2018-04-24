@@ -141,5 +141,5 @@
 	if(fake_death)
 		fake_death = 0
 	ChangeToHusk()
-	mutations |= NOCLONE
+	mutations.Add(NOCLONE)
 	return

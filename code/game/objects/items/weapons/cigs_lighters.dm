@@ -34,7 +34,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		burn_out()
 		return
 	if(location)
-		location.hotspot_expose(700, 5, 0, src)
+		location.hotspot_expose(700, 5, src)
 		return
 
 /obj/item/weapon/match/dropped(mob/user)
@@ -168,7 +168,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		die()
 		return
 	if(location)
-		location.hotspot_expose(700, 5, 0, src)
+		location.hotspot_expose(700, 5, src)
 	if(reagents && reagents.total_volume)	//	check if it has any reagents at all
 		if(iscarbon(loc) && (src == loc:wear_mask)) // if it's in the human/monkey mouth, transfer reagents to the mob
 			if(istype(loc, /mob/living/carbon/human))
@@ -428,9 +428,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				else
 					to_chat(user, "<span class='warning'>You burn yourself while lighting the lighter.</span>")
 					if (user.l_hand == src)
-						user.apply_damage(2, BURN, BP_L_HAND)
+						user.apply_damage(2, BURN, BP_L_ARM)
 					else
-						user.apply_damage(2, BURN, BP_R_HAND)
+						user.apply_damage(2, BURN, BP_R_ARM)
 					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
 
 			set_light(2)
@@ -472,5 +472,5 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/weapon/lighter/process()
 	var/turf/location = get_turf(src)
 	if(location)
-		location.hotspot_expose(700, 5, 0, src)
+		location.hotspot_expose(700, 5, src)
 	return

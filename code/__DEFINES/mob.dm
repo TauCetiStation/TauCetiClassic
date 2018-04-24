@@ -20,12 +20,8 @@
 #define BP_HEAD   "head"
 #define BP_L_ARM  "l_arm"
 #define BP_R_ARM  "r_arm"
-#define BP_L_HAND "l_hand"
-#define BP_R_HAND "r_hand"
 #define BP_L_LEG  "l_leg"
 #define BP_R_LEG  "r_leg"
-#define BP_L_FOOT "l_foot"
-#define BP_R_FOOT "r_foot"
 
 // Organ defines.
 #define O_MOUTH    "mouth"
@@ -76,12 +72,6 @@
 #define MONKEY      "Monkey"
 #define GOLEM       "Adamantine Golem"
 
-//Some on_mob_life() procs check for alien races.
-#define IS_DIONA  1
-#define IS_VOX	  2
-#define IS_SKRELL 3
-#define IS_UNATHI 4
-
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
 
 #define ALIEN_SELECT_AFK_BUFFER 1 // How many minutes that a person can be AFK before not being allowed to be an alien.
@@ -106,7 +96,22 @@
 // all effects according to how they originally were with the 0.4 metabolism
 #define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
 
+// Factor of how fast mob nutrition decreases
+#define	HUNGER_FACTOR 0.1
+
+// Taste sensitivity - the more the more reagents you'll taste
+#define TASTE_SENSITIVITY_NORMAL 1
+#define TASTE_SENSITIVITY_SHARP 1.5
+#define TASTE_SENSITIVITY_DULL 0.75
+#define TASTE_SENSITIVITY_NO_TASTE 0
+
 //Ian can lick or sniff
 #define IAN_STANDARD 0
 #define IAN_LICK     1
 #define IAN_SNIFF    2
+
+// CLicks Cooldowns
+#define CLICK_CD_MELEE 8
+#define CLICK_CD_INTERACT 4
+#define CLICK_CD_RAPID 2
+#define CLICK_CD_AI 9

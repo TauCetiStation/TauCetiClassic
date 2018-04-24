@@ -164,19 +164,11 @@
 
 	return
 
-//Allows AIs to use door_timer, see human attack_hand function below
-/obj/machinery/door_timer/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-
 //Allows humans to use door_timer
 //Opens dialog window when someone clicks on door timer
 // Allows altering timer and the timing boolean.
 // Flasher activation limited to 150 seconds
-/obj/machinery/door_timer/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/door_timer/ui_interact(mob/user)
 	// Used for the 'time left' display
 	var/second = round(timeleft() % 60)
 	var/minute = round((timeleft() - second) / 60)
@@ -184,8 +176,6 @@
 	// Used for 'set timer'
 	var/setsecond = round((timetoset / 10) % 60)
 	var/setminute = round(((timetoset / 10) - setsecond) / 60)
-
-	user.set_machine(src)
 
 	// dat
 	var/dat = "<HTML><BODY><TT>"
@@ -222,9 +212,8 @@
 	dat += "<br/><br/><a href='?src=\ref[user];mach_close=computer'>Close</a>"
 	dat += "</TT></BODY></HTML>"
 
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 
 //Function for using door_timer dialog input, checks if user has permission

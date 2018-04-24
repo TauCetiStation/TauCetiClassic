@@ -10,6 +10,7 @@ var/const/MAX_SAVE_SLOTS = 10
 #define RETURN_TO_LOBBY 2
 
 #define MAX_GEAR_COST 5
+#define MAX_GEAR_COST_DONATOR MAX_GEAR_COST+3
 /datum/preferences
 	var/client/parent
 	//doohickeys for savefiles
@@ -34,7 +35,8 @@ var/const/MAX_SAVE_SLOTS = 10
 	var/UI_style = "White"
 	var/UI_style_color = "#ffffff"
 	var/UI_style_alpha = 255
-	var/ooccolor = "#b82e00"
+	var/aooccolor = "#b82e00"
+	var/ooccolor = "#002eb8"
 	var/toggles = TOGGLES_DEFAULT
 	var/chat_toggles = TOGGLES_DEFAULT_CHAT
 	var/ghost_orbit = GHOST_ORBIT_CIRCLE
@@ -180,7 +182,7 @@ var/const/MAX_SAVE_SLOTS = 10
 		if("loadout")
 			dat += ShowCustomLoadout(user)
 	dat += "</body></html>"
-	user << browse(dat, "window=preferences;size=618x778;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
+	user << browse(entity_ja(dat), "window=preferences;size=618x778;can_close=0;can_minimize=0;can_maximize=0;can_resize=0")
 
 /datum/preferences/proc/process_link(mob/user, list/href_list)
 	if(!user)
@@ -333,9 +335,9 @@ var/const/MAX_SAVE_SLOTS = 10
 		character.overeatduration = 2000
 
 	// Wheelchair necessary?
-	var/obj/item/organ/external/l_foot = character.bodyparts_by_name[BP_L_FOOT]
-	var/obj/item/organ/external/r_foot = character.bodyparts_by_name[BP_R_FOOT]
-	if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED)) // TODO cane if its only single leg.
+	var/obj/item/organ/external/l_leg = character.bodyparts_by_name[BP_L_LEG]
+	var/obj/item/organ/external/r_leg = character.bodyparts_by_name[BP_R_LEG]
+	if((!l_leg || l_leg.status & ORGAN_DESTROYED) && (!r_leg || r_leg.status & ORGAN_DESTROYED)) // TODO cane if its only single leg.
 		var/obj/structure/stool/bed/chair/wheelchair/W = new /obj/structure/stool/bed/chair/wheelchair (character.loc)
 		character.buckled = W
 		character.update_canmove()

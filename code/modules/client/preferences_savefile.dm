@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 15
+#define SAVEFILE_VERSION_MAX 19
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -45,11 +45,28 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		S["warns"]    << null
 		S["warnbans"] << null
 
-//datum/preferences/proc/update_character(current_version, savefile/S)
-	/* JUST AN EXAMPLE
-	if(current_version < 10)
-		toggles |= MEMBER_PUBLIC
-	*/
+	if(current_version < 16)
+		S["aooccolor"] << S["ooccolor"]
+		aooccolor = ooccolor
+
+/datum/preferences/proc/update_character(current_version, savefile/S)
+	if(current_version < 17)
+		for(var/organ_name in organ_data)
+			if(organ_name in list("r_hand", "l_hand", "r_foot", "l_foot"))
+				organ_data -= organ_name
+				S["organ_data"] -= organ_name
+	if(current_version < 18)
+		ResetJobs()
+
+		if(language && species && language != "None")
+			if(!istext(language))
+				var/atom/A = language
+				language = A.name
+
+			var/datum/language/lang = all_languages[language]
+			if(!(species in lang.allowed_species))
+				language = "None"
+				S["language"] << language
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
@@ -76,6 +93,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//General preferences
 	S["ooccolor"]			>> ooccolor
+	S["aooccolor"]			>> aooccolor
 	S["lastchangelog"]		>> lastchangelog
 	S["UI_style"]			>> UI_style
 	S["default_slot"]		>> default_slot
@@ -98,6 +116,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Sanitize
 	ooccolor		= sanitize_hexcolor(ooccolor, initial(ooccolor))
+	aooccolor		= sanitize_hexcolor(aooccolor, initial(aooccolor))
 	lastchangelog	= sanitize_text(lastchangelog, initial(lastchangelog))
 	UI_style		= sanitize_inlist(UI_style, list("White", "Midnight","Orange","old"), initial(UI_style))
 	default_slot	= sanitize_integer(default_slot, 1, MAX_SAVE_SLOTS, initial(default_slot))
@@ -128,6 +147,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//general preferences
 	S["ooccolor"]			<< ooccolor
+	S["aooccolor"]			<< aooccolor
 	S["lastchangelog"]		<< lastchangelog
 	S["UI_style"]			<< UI_style
 	S["be_role"]			<< be_role
@@ -216,12 +236,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//*** FOR FUTURE UPDATES, SO YOU KNOW WHAT TO DO ***//
 	//try to fix any outdated data if necessary
-	//if(needs_update >= 0)
-	//	update_character(needs_update, S) // needs_update == savefile_version if we need an update (positive integer)
+	if(needs_update >= 0)
+		update_character(needs_update, S) // needs_update == savefile_version if we need an update (positive integer)
 
 	//Sanitize
 	metadata		= sanitize_text(metadata, initial(metadata))
-	real_name		= reject_bad_name(real_name)
+	real_name		= sanitize_name(real_name)
 	if(isnull(species)) species = HUMAN
 	if(isnull(language)) language = "None"
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)

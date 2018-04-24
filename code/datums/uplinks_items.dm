@@ -402,15 +402,6 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/cutouts
 	cost = 1
 
-/datum/uplink_item/stealthy_weapons/para_pen
-	name = "Paralysis Pen"
-	desc = "A syringe disguised as a functional pen, filled with a neuromuscular-blocking drug that renders a target immobile on injection and makes them seem dead to observers. \
-	Side effects of the drug include noticeable drooling. The pen holds one dose of paralyzing agent, and cannot be refilled."
-	item = /obj/item/weapon/pen/paralysis
-	cost = 4
-	excludefrom = list(/datum/game_mode/nuclear)
-	excludefrom_uplinks = list("nuclear")
-
 /datum/uplink_item/stealthy_weapons/strip_gloves
 	name = "Strip gloves"
 	desc = "A pair of black gloves which allow to stealthy strip off items from the victim."
@@ -627,6 +618,18 @@
 	item = /obj/item/device/encryptionkey/syndicate
 	cost = 2
 
+/datum/uplink_item/device_tools/poster_kit
+	name = "Poster kit"
+	desc = "Box of illegal posters"
+	item = /obj/item/weapon/storage/box/syndie_kit/posters
+	cost = 1
+
+/datum/uplink_item/device_tools/headcan
+	name = "Biogel can"
+	desc = "Sophisticated device for sustaining life in head for a long period"
+	item = /obj/item/device/biocan
+	cost = 1
+
 /datum/uplink_item/device_tools/ai_detector
 	name = "Artificial Intelligence Detector" // changed name in case newfriends thought it detected disguised ai's
 	desc = "A functional multitool that turns red when it detects an artificial intelligence watching it or its holder. Knowing when an artificial intelligence is watching you is useful for knowing when to maintain cover."
@@ -739,10 +742,10 @@
 	cost = 20
 	excludefrom = list(/datum/game_mode/nuclear)
 
-/datum/uplink_item/badass/balloon
-	name = "For showing that you are The Boss"
-	desc = "A useless red balloon with the syndicate logo on it, which can blow the deepest of covers."
-	item = /obj/item/toy/syndicateballoon
+/datum/uplink_item/badass/merch
+	name = "Syndicate Merchandise"
+	desc = "To show your loalty to the Syndicate! Contains new red t-shirt with Syndicate logo, red cap and a fancy baloon!"
+	item = /obj/item/weapon/storage/box/syndie_kit/merch
 	cost = 20
 
 /datum/uplink_item/badass/syndiecigs

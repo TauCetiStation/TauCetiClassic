@@ -6,6 +6,7 @@
 	icon_state = "aiupload"
 	density = 1
 	req_one_access = list(access_hop, access_captain, access_cent_captain)
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/receipt_num
 	var/machine_id = ""
 	var/obj/item/weapon/card/id/held_card
@@ -55,14 +56,7 @@
 
 	attack_hand(user)
 
-/obj/machinery/account_database/attack_hand(mob/user)
-	if(..())
-		return
-	ui_interact(user)
-
 /obj/machinery/account_database/ui_interact(mob/user, ui_key="main", datum/nanoui/ui=null)
-	user.set_machine(src)
-
 	var/data[0]
 	data["src"] = "\ref[src]"
 	data["id_inserted"] = !!held_card

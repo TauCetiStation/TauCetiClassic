@@ -53,7 +53,6 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	use_power = 1
 	idle_power_usage = 10
 	active_power_usage = 100
-	ghost_must_be_admin = TRUE
 
 	var/list/datum/data_pda_msg/pda_msgs = list()
 	var/list/datum/data_rc_msg/rc_msgs = list()
@@ -94,12 +93,14 @@ var/global/list/obj/machinery/message_server/message_servers = list()
 	rc_msgs += new/datum/data_rc_msg(recipient,sender,message,stamp,id_auth)
 
 /obj/machinery/message_server/attack_hand(user)
+	. = ..()
+	if(.)
+		return
+
 //	user << "\blue There seem to be some parts missing from this server. They should arrive on the station in a few days, give or take a few CentCom delays."
 	to_chat(user, "You toggle PDA message passing from [active ? "On" : "Off"] to [active ? "Off" : "On"]")
 	active = !active
 	update_icon()
-
-	return
 
 /obj/machinery/message_server/update_icon()
 	if((stat & (BROKEN|NOPOWER)))
@@ -289,13 +290,6 @@ var/obj/machinery/blackbox_recorder/blackbox
 		var/sql = "INSERT INTO erro_feedback VALUES (null, Now(), [round_id], \"[FV.get_variable()]\", [FV.get_value()], \"[FV.get_details()]\")"
 		var/DBQuery/query_insert = dbcon.NewQuery(sql)
 		query_insert.Execute()
-
-// Sanitize inputs to avoid SQL injection attacks
-proc/sql_sanitize_text(text)
-	text = replacetext(text, "'", "''")
-	text = replacetext(text, ";", "")
-	text = replacetext(text, "&", "")
-	return text
 
 proc/feedback_set(variable,value)
 	if(!blackbox) return

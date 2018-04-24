@@ -7,15 +7,16 @@
 	spawn_positions = 1
 	supervisors = "the captain"
 	selection_color = "#ffddf0"
-	idtype = /obj/item/weapon/card/id/silver
+	idtype = /obj/item/weapon/card/id/medGold
 	req_admin_notify = 1
 	access = list(
-		access_medical, access_morgue, access_genetics, access_heads,
+		access_medical, access_morgue, access_paramedic, access_genetics, access_heads,
 		access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce,
 		access_keycard_auth, access_sec_doors, access_psychiatrist, access_maint_tunnels
 	)
 	minimal_player_age = 10
 	minimal_player_ingame_minutes = 2400
+	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/cmo/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -47,13 +48,15 @@
 	flag = DOCTOR
 	department_flag = MEDSCI
 	faction = "Station"
-	total_positions = 5
+	total_positions = 4
 	spawn_positions = 3
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_morgue, access_surgery, access_maint_tunnels)
-	alt_titles = list("Surgeon","Emergency Physician","Nurse")
+	alt_titles = list("Surgeon", "Nurse")
 	minimal_player_ingame_minutes = 960
+	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/doctor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -73,10 +76,6 @@
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_med(H), slot_l_ear)
 	if (H.mind.role_alt_title)
 		switch(H.mind.role_alt_title)
-			if("Emergency Physician")
-				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
-				H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/fr_jacket(H), slot_wear_suit)
-
 			if("Surgeon")
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical/blue(H), slot_w_uniform)
 				H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat(H), slot_wear_suit)
@@ -108,6 +107,41 @@
 
 	return 1
 
+/datum/job/paramedic
+	title = "Paramedic"
+	flag = PARAMEDIC
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the chief medical officer"
+	selection_color = "#ffeef0"
+	idtype = /obj/item/weapon/card/id/med
+	access = list(access_medical, access_morgue, access_paramedic, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_engine_equip, access_research, access_mailsorting)
+	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
+	restricted_species = list(IPC, DIONA)
+
+/datum/job/paramedic/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)	return 0
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
+	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/fr_jacket(H), slot_wear_suit)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/firstaid/adv(H), slot_l_hand)
+
+	if(visualsOnly)
+		return
+
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_med(H), slot_l_ear)
+	H.equip_to_slot_or_del(new /obj/item/device/pda/medical(H), slot_belt)
+	switch(H.backbag)
+		if(1) H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(H), slot_back)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/med(H), slot_back)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+
+	return 1
+
 
 //Chemist is a medical job damnit	//YEAH FUCK YOU SCIENCE	-Pete	//Guys, behave -Erro
 /datum/job/chemist
@@ -119,6 +153,7 @@
 	spawn_positions = 2
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_chemistry)
 	alt_titles = list("Pharmacist")
 	minimal_player_ingame_minutes = 960
@@ -153,8 +188,10 @@
 	spawn_positions = 2
 	supervisors = "the chief medical officer and research director"
 	selection_color = "#ffeef0"
+	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_morgue, access_genetics, access_research)
 	minimal_player_ingame_minutes = 960
+	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/geneticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -187,9 +224,11 @@
 	spawn_positions = 1
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_virology)
 	alt_titles = list("Pathologist","Microbiologist")
 	minimal_player_ingame_minutes = 960
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA)
 
 /datum/job/virologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -225,9 +264,11 @@
 	spawn_positions = 1
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
+	idtype = /obj/item/weapon/card/id/med
 	access = list(access_medical, access_psychiatrist)
 	alt_titles = list("Psychologist")
 	minimal_player_ingame_minutes = 960
+	restricted_species = list(UNATHI)
 
 /datum/job/psychiatrist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

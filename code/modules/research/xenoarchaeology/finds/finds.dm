@@ -47,6 +47,7 @@
 /obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/weldingtool/))
 		var/obj/item/weapon/weldingtool/w = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(w.isOn())
 			if(w.get_fuel() >= 4 && !src.method)
 				if(inside)
@@ -67,6 +68,7 @@
 	else if(istype(W,/obj/item/device/core_sampler/))
 		var/obj/item/device/core_sampler/S = W
 		S.sample_item(src, user)
+		user.SetNextMove(CLICK_CD_INTERACT)
 		return
 
 	..()
@@ -138,7 +140,7 @@
 			if(prob(25))
 				new_item = new /obj/item/weapon/kitchen/utensil/fork(src.loc)
 			else if(prob(50))
-				new_item = new /obj/item/weapon/kitchen/utensil/knife(src.loc)
+				new_item = new /obj/item/weapon/kitchenknife(src.loc)
 			else
 				new_item = new /obj/item/weapon/kitchen/utensil/spoon(src.loc)
 			additional_desc = "[pick("It's like no [item_type] you've ever seen before",\

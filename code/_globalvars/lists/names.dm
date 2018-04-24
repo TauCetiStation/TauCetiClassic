@@ -14,3 +14,5 @@ var/list/verbs = file2list("config/names/verbs.txt")
 var/list/adjectives = file2list("config/names/adjectives.txt")
 //loaded on startup because of "
 //would include in rsc if ' was used
+
+var/list/forbidden_names = list("space","floor","wall","r-wall","monkey","unknown","inactive ai","plating","unknown","arrivals alert system")

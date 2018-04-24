@@ -12,8 +12,7 @@
 	emote_see = list("shakes its head", "shivers")
 	speak_chance = 1
 	turns_per_move = 10
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat/corgi
-	meat_amount = 3
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/corgi = 3)
 	response_help  = "pets the"
 	response_disarm = "bops the"
 	response_harm   = "kicks the"
@@ -34,6 +33,7 @@
 
 /mob/living/simple_animal/corgi/attackby(obj/item/O, mob/user)
 	if(istype(O, /obj/item/weapon/newspaper))
+		user.SetNextMove(CLICK_CD_MELEE)
 		if(!stat)
 			for(var/mob/M in viewers(user, null))
 				if ((M.client && !( M.blinded )))
@@ -109,11 +109,12 @@
 	icon_state = "borgi"
 	icon_living = "borgi"
 	icon_dead = "borgi_dead"
-	meat_type = null
+	butcher_results = list()
 	var/emagged = 0
 
 /mob/living/simple_animal/corgi/borgi/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
+		user.SetNextMove(CLICK_CD_MELEE)
 		Emag(user)
 	else
 		..()

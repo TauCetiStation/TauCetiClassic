@@ -44,6 +44,7 @@
 		else
 			to_chat(user, "\red Access denied.")
 	else if(istype(W, /obj/item/weapon/card/emag))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(prob(75))
 			src.locked = !src.locked
 			to_chat(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
@@ -70,19 +71,8 @@
 	else
 		..()
 
-/obj/machinery/shield_capacitor/attack_paw(user)
-	return src.attack_hand(user)
-
-/obj/machinery/shield_capacitor/attack_ai(user)
-	return src.attack_hand(user)
-
-/obj/machinery/shield_capacitor/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/shield_capacitor/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
+/obj/machinery/shield_capacitor/ui_interact(mob/user)
+	if ( !in_range(src, user) || (stat & (BROKEN|NOPOWER)) )
 		if (!issilicon(user) && !isobserver(user))
 			user.unset_machine()
 			user << browse(null, "window=shield_capacitor")
@@ -107,8 +97,7 @@
 	t += "<A href='?src=\ref[src]'>Refresh</A> "
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
 
-	user << browse(t, "window=shield_capacitor;size=500x400")
-	user.set_machine(src)
+	user << browse(entity_ja(t), "window=shield_capacitor;size=500x400")
 
 /obj/machinery/shield_capacitor/process()
 	//

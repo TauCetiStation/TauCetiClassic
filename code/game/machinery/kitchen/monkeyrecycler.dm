@@ -9,7 +9,6 @@
 	use_power = 1
 	idle_power_usage = 5
 	active_power_usage = 50
-	ghost_must_be_admin = TRUE
 	var/grinded = 0
 	var/required_grind = 5
 	var/cube_production = 1
@@ -21,7 +20,7 @@
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
 	component_parts += new /obj/item/weapon/stock_parts/matter_bin(null)
 	RefreshParts()
-	
+
 /obj/machinery/monkey_recycler/proc/grind(var/M, mob/user)
 	user.drop_item()
 	qdel(M)
@@ -86,15 +85,15 @@
 	return
 
 /obj/machinery/monkey_recycler/attack_hand(mob/user)
-	if (..())
+	. = ..()
+	if(.)
 		return
 	if(grinded >= required_grind)
 		to_chat(user, "\blue The machine hisses loudly as it condenses the grinded monkey meat. After a moment, it dispenses a brand new monkey cube.")
-		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
+		playsound(src, 'sound/machines/hiss.ogg', 50, 1)
 		grinded -= required_grind
 		for(var/i = 0, i < cube_production, i++)
-			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/monkeycube/wrapped(loc)
 		to_chat(user, "\blue The machine's display flashes that it has [grinded] monkeys worth of material left.")
 	else
 		to_chat(user, "<span class='danger'>The machine needs at least [required_grind] monkey(s) worth of material to produce a monkey cube. It only has [grinded].</span>")
-	return

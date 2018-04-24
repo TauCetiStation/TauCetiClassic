@@ -283,11 +283,11 @@
 	icon = 'icons/obj/custom_items.dmi'
 	icon_state = "reesemackenzie"
 
-/obj/item/weapon/card/id/fluff/lifetime	//fastler: Fastler Greay; it seemed like something multiple people would have
+/*/obj/item/weapon/card/id/fluff/lifetime	//fastler: Fastler Greay; it seemed like something multiple people would have
 	name = "Lifetime ID Card"
 	desc = "A modified ID card given only to those people who have devoted their lives to the better interests of NanoTrasen. It sparkles blue."
 	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "lifetimeid"
+	icon_state = "lifetimeid"*/
 
 /obj/item/weapon/reagent_containers/food/drinks/flask/fluff/shinyflask //lexusjjss: Lexus Langg & Zachary Tomlinson
 	name = "shiny flask"
@@ -346,9 +346,9 @@
 	name = "Electronic cigarette"
 	desc = "An electronic cigarette. Most of the relief of a real cigarette with none of the side effects. Often used by smokers who are trying to quit the habit."
 	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "cigon"
+	icon_state = "ecig"
 	throw_speed = 0.5
-	item_state = "ciglit"
+	item_state = "ecig"
 	w_class = 1
 	body_parts_covered = null
 
@@ -399,11 +399,11 @@
 
 //End strange penlight
 
-/obj/item/weapon/card/id/fluff/asher_spock_2 //Nerezza: Asher Spock
+/*/obj/item/weapon/card/id/fluff/asher_spock_2 //Nerezza: Asher Spock
 	name = "Odysses Specialist ID card"
 	desc = "A special identification card with a red cross signifying an emergency physician has specialised in Odysseus operations and maintenance.\nIt grants the owner recharge bay access."
 	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "odysseus_spec_id"
+	icon_state = "odysseus_spec_id"*/
 
 /obj/item/weapon/clipboard/fluff/mcreary_journal //sirribbot: James McReary
 	name = "McReary's journal"
@@ -761,6 +761,13 @@
 	item_state = "maid"
 	item_color = "maid"
 
+/obj/item/clothing/under/fluff/maid_suit/sakuya
+	name = "maid suit"
+	desc = "For a women who like to throw knifes"
+	icon_state = "sakuya"
+	item_state = "sakuya"
+	item_color = "sakuya"
+
 /obj/item/clothing/under/rank/medical/fluff/rosa
 	name = "short sleeve medical dress"
 	desc = "Made of a special fiber that gives special protection against biohazards. Has a cross on the chest denoting that the wearer is trained medical personnel and short sleeves."
@@ -877,14 +884,14 @@
 /obj/item/clothing/accessory/fluff/konaa_hirano/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/weapon/paper))
 		if(held)
-			to_chat(usr, "[src] already has something inside it.")
+			to_chat(user, "[src] already has something inside it.")
 		else
-			to_chat(usr, "You slip [O] into [src].")
+			to_chat(user, "You slip [O] into [src].")
 			user.drop_item()
 			O.loc = src
 			src.held = O
-		return
-	..()
+	else
+		..()
 
 //////  Medallion - Nasir Khayyam - Jamini
 

@@ -13,7 +13,7 @@
 
 /obj/item/weapon/paper_bin/MouseDrop(mob/user as mob)
 	if((user == usr && (!( usr.restrained() ) && (!( usr.stat ) && (usr.contents.Find(src) || in_range(src, usr))))))
-		if(!istype(usr, /mob/living/carbon/slime) && !istype(usr, /mob/living/simple_animal))
+		if(!istype(usr, /mob/living/carbon/slime) && !istype(usr, /mob/living/simple_animal) && !isessence(usr))
 			if( !usr.get_active_hand() )		//if active hand is empty
 				attack_hand(usr, 1, 1)
 
@@ -25,12 +25,6 @@
 
 
 /obj/item/weapon/paper_bin/attack_hand(mob/user)
-	if (ishuman(user))
-		var/mob/living/carbon/human/H = user
-		var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
-		if(BP && !BP.is_usable())
-			to_chat(H, "<span class='notice'>You try to move your [BP.name], but cannot!")
-			return
 	var/response = ""
 	if(!papers.len > 0)
 		response = alert(user, "Do you take regular paper, or Carbon copy paper?", "Paper type request", "Regular", "Carbon-Copy", "Cancel")

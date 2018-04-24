@@ -100,10 +100,9 @@
 	return
 
 
-/obj/machinery/suit_storage_unit/attack_hand(mob/user)
+/obj/machinery/suit_storage_unit/ui_interact(mob/user)
 	var/dat
-	if(..())
-		return
+
 	if(src.panelopen) //The maintenance panel is open. Time for some shady stuff
 		dat+= "<HEAD><TITLE>Suit storage unit: Maintenance panel</TITLE></HEAD>"
 		dat+= "<Font color ='black'><B>Maintenance panel controls</B></font><HR>"
@@ -111,13 +110,13 @@
 		dat+= text("<font color ='black'>A small dial with a \"ë\" symbol embroidded on it. It's pointing towards a gauge that reads []</font>.<BR> <font color='blue'><A href='?src=\ref[];toggleUV=1'> Turn towards []</A><BR>",(src.issuperUV ? "15nm" : "185nm"),src,(src.issuperUV ? "185nm" : "15nm") )
 		dat+= text("<font color ='black'>A thick old-style button, with 2 grimy LED lights next to it. The [] LED is on.</font><BR><font color ='blue'><A href='?src=\ref[];togglesafeties=1'>Press button</a></font>",(src.safetieson? "<font color='green'><B>GREEN</B></font>" : "<font color='red'><B>RED</B></font>"),src)
 		dat+= text("<HR><BR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close panel</A>", user)
-		//user << browse(dat, "window=ssu_m_panel;size=400x500")
+		//user << browse(entity_ja(dat), "window=ssu_m_panel;size=400x500")
 		//onclose(user, "ssu_m_panel")
 	else if(src.isUV) //The thing is running its cauterisation cycle. You have to wait.
 		dat += "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
 		dat+= "<font color ='red'><B>Unit is cauterising contents with selected UV ray intensity. Please wait.</font></B><BR>"
 		//dat+= "<font colr='black'><B>Cycle end in: [src.cycletimeleft()] seconds. </font></B>"
-		//user << browse(dat, "window=ssu_cycling_panel;size=400x500")
+		//user << browse(entity_ja(dat), "window=ssu_cycling_panel;size=400x500")
 		//onclose(user, "ssu_cycling_panel")
 
 	else
@@ -145,18 +144,17 @@
 			dat+= text("Unit status: []",(src.islocked? "<font color ='red'><B>**LOCKED**</B></font><BR>" : "<font color ='green'><B>**UNLOCKED**</B></font><BR>") )
 			dat+= text("<A href='?src=\ref[];start_UV=1'>Start Disinfection cycle</A><BR>",src)
 			dat += text("<BR><BR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close control panel</A>", user)
-			//user << browse(dat, "window=Suit Storage Unit;size=400x500")
+			//user << browse(entity_ja(dat), "window=Suit Storage Unit;size=400x500")
 			//onclose(user, "Suit Storage Unit")
 		else //Ohhhh shit it's dirty or broken! Let's inform the guy.
 			dat+= "<HEAD><TITLE>Suit storage unit</TITLE></HEAD>"
 			dat+= "<font color='maroon'><B>Unit chamber is too contaminated to continue usage. Please call for a qualified individual to perform maintenance.</font></B><BR><BR>"
 			dat+= text("<HR><A href='?src=\ref[];mach_close=suit_storage_unit'>Close control panel</A>", user)
-			//user << browse(dat, "window=suit_storage_unit;size=400x500")
+			//user << browse(entity_ja(dat), "window=suit_storage_unit;size=400x500")
 			//onclose(user, "suit_storage_unit")
 
-	user << browse(dat, "window=suit_storage_unit;size=400x500")
+	user << browse(entity_ja(dat), "window=suit_storage_unit;size=400x500")
 	onclose(user, "suit_storage_unit")
-	return
 
 
 /obj/machinery/suit_storage_unit/Topic(href, href_list) //I fucking HATE this proc
@@ -410,6 +408,7 @@
 /obj/machinery/suit_storage_unit/container_resist()
 	var/mob/living/user = usr
 	if(islocked)
+		if(user.is_busy()) return
 		user.next_move = world.time + 100
 		user.last_special = world.time + 100
 		var/breakout_time = 2
@@ -447,6 +446,7 @@
 	if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) )
 		to_chat(usr, "<font color='red'>It's too cluttered inside for you to fit in!</font>")
 		return
+	if(usr.is_busy()) return
 	visible_message("[usr] starts squeezing into the suit storage unit!", 3)
 	if(do_after(usr, 10, target = src))
 		usr.stop_pulling()
@@ -482,6 +482,7 @@
 		var/obj/item/weapon/grab/G = I
 		if( !(ismob(G.affecting)) )
 			return
+		user.SetNextMove(CLICK_CD_MELEE)
 		if (!src.isopen)
 			to_chat(usr, "<font color='red'>The unit's doors are shut.</font>")
 			return
@@ -491,6 +492,7 @@
 		if ( (src.OCCUPANT) || (src.HELMET) || (src.SUIT) ) //Unit needs to be absolutely empty
 			to_chat(user, "<font color='red'>The unit's storage area is too cluttered.</font>")
 			return
+		if(user.is_busy()) return
 		visible_message("[user] starts putting [G.affecting.name] into the Suit Storage Unit.", 3)
 		if(do_after(user, 20, target = src))
 			if(!G || !G.affecting) return //derpcheck
@@ -555,10 +557,6 @@
 	src.update_icon()
 	src.updateUsrDialog()
 	return
-
-
-/obj/machinery/suit_storage_unit/attack_ai(mob/user)
-	return src.attack_hand(user)
 
 
 /obj/machinery/suit_storage_unit/attack_paw(mob/user)

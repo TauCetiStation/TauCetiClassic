@@ -103,6 +103,7 @@
 		score["oremined"]++ //When ore spawns, increment score.  Only include ore spawned on mining asteroid.
 
 /obj/item/weapon/ore/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(istype(W,/obj/item/device/core_sampler))
 		var/obj/item/device/core_sampler/C = W
 		C.sample_item(src, user)

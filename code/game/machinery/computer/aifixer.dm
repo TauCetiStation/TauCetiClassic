@@ -24,10 +24,7 @@
 		..()
 	return
 
-/obj/machinery/computer/aifixer/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/computer/aifixer/ui_interact(mob/user)
 	var/dat = "<h3>AI System Integrity Restorer</h3><br><br>"
 
 	if (src.occupier)
@@ -62,9 +59,8 @@
 			dat += "<br><br>Reconstruction in process, please wait.<br>"
 	dat += {" <A href='?src=\ref[user];mach_close=computer'>Close</A>"}
 
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 /obj/machinery/computer/aifixer/process()
 	if(..())

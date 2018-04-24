@@ -12,10 +12,11 @@
 				total_cost += G.cost
 
 	var/fcolor =  "#3366CC"
-	if(total_cost < MAX_GEAR_COST)
+	var/max_cost = (config.allow_donators && user.client.donator) ? MAX_GEAR_COST_DONATOR : MAX_GEAR_COST
+	if(total_cost < max_cost)
 		fcolor = "#E67300"
 	. += "<table align='center' width='570px'>"
-	. += "<tr><td colspan=3><center><b><font color='[fcolor]'>[total_cost]/[MAX_GEAR_COST]</font> loadout points spent.</b> \[<a href='?_src_=prefs;preference=loadout;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
+	. += "<tr><td colspan=3><center><b><font color='[fcolor]'>[total_cost]/[max_cost]</font> loadout points spent.</b> \[<a href='?_src_=prefs;preference=loadout;clear_loadout=1'>Clear Loadout</a>\]</center></td></tr>"
 	. += "<tr><td colspan=3><center><b>"
 
 	var/firstcat = 1
@@ -43,8 +44,13 @@
 		. += "</tr>"
 		if(G.allowed_roles)
 			. += "<tr><td colspan=3><font size=2>Restrictions: "
+			var/aroles
 			for(var/role in G.allowed_roles)
-				. += role + " "
+				if(!aroles)
+					aroles = "[role]"
+				else
+					aroles +=  ", [role]"
+			. += aroles
 			. += "</font></td></tr>"
 
 		if(ticked)
@@ -71,7 +77,7 @@
 						type_blacklist += G.subtype_path
 					total_cost += G.cost
 
-			if((total_cost + TG.cost) <= MAX_GEAR_COST)
+			if((total_cost + TG.cost) <= ((config.allow_donators && user.client.donator) ? MAX_GEAR_COST_DONATOR : MAX_GEAR_COST))
 				gear += TG.display_name
 
 	else if(href_list["gear"] && href_list["tweak"])

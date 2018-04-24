@@ -6,9 +6,9 @@
 	desc = "A pair of black shoes."
 	clipped_status = CLIPPABLE
 
-	cold_protection = FEET
+	cold_protection = LEGS
 	min_cold_protection_temperature = SHOE_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = FEET
+	heat_protection = LEGS
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 
 /obj/item/clothing/shoes/black/redcoat
@@ -139,6 +139,7 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(chained && src == H.shoes)
+			if(user.is_busy()) return
 			confirmed = 0
 			H.visible_message("<span class='notice'>[H] attempts to remove the [src]!</span>",
 			"<span class='notice'>You attempt to remove the [src]. (This will take around 2 minutes and you need to stand still)</span>")

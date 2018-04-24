@@ -6,17 +6,15 @@
 	icon_state = "grinder"
 	density = TRUE
 	anchored = TRUE
+	use_power = 1
+	idle_power_usage = 2
+	active_power_usage = 500
 	var/operating = FALSE //Is it on?
 	var/dirty = FALSE // Does it need cleaning?
-
 	var/gibtime = 80 // Time from starting until meat appears
 	var/gib_throw_dir // Direction to spit meat and gibs in.
 	var/meat_produced = 0
 	var/ignore_clothing = 0
-	use_power = 1
-	idle_power_usage = 2
-	active_power_usage = 500
-	ghost_must_be_admin = TRUE
 
 //auto-gibs anything that bumps into it
 /obj/machinery/gibber/autogibber
@@ -81,25 +79,22 @@
 	else
 		src.overlays += image('icons/obj/kitchen.dmi', "gridle")
 
-/obj/machinery/gibber/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/gibber/container_resist()
 	go_out()
-	return
 
 /obj/machinery/gibber/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(operating)
 		to_chat(user, "<span class='danger'>The gibber is locked and running, wait for it to finish.</span>")
-		return
+		return 1
 	else
-		src.startgibbing(user)
+		startgibbing(user)
 
 /obj/machinery/gibber/attackby(obj/item/W, mob/user)
-
-	if (istype(W, /obj/item/weapon/grab))
+	if(istype(W, /obj/item/weapon/grab))
 		src.add_fingerprint(user)
 		var/obj/item/weapon/grab/G = W
 		move_into_gibber(user, G.affecting)
@@ -119,6 +114,8 @@
 
 
 /obj/machinery/gibber/MouseDrop_T(mob/target, mob/user)
+	if(!iscarbon(user) && !isrobot(user))
+		return
 	if(user.stat || user.restrained())
 		return
 	move_into_gibber(user,target)
@@ -140,7 +137,7 @@
 	if(victim.abiotic(1) && !ignore_clothing)
 		to_chat(user, "<span class='danger'>Subject may not have abiotic items on.</span>")
 		return
-
+	if(user.is_busy(src)) return
 	user.visible_message("\red [user] starts to put [victim] into the gibber!")
 	src.add_fingerprint(user)
 	if(do_after(user, 30, target = src) && victim.Adjacent(src) && user.Adjacent(src) && victim.Adjacent(user) && !occupant)
@@ -197,42 +194,37 @@
 	var/slab_nutrition = src.occupant.nutrition / 15
 
 	// Some mobs have specific meat item types.
-	if(istype(src.occupant,/mob/living/simple_animal))
-		var/mob/living/simple_animal/critter = src.occupant
-		if(critter.meat_amount)
-			slab_count = critter.meat_amount
-		if(critter.meat_type)
-			slab_type = critter.meat_type
-	else if(istype(src.occupant,/mob/living/carbon/human))
-		slab_name = src.occupant.real_name
+	if(ishuman(occupant))
+		slab_name = occupant.real_name
 		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/human
-	else if(istype(src.occupant, /mob/living/carbon/monkey))
+	else if(ismonkey(occupant))
 		slab_type = /obj/item/weapon/reagent_containers/food/snacks/meat/monkey
 
 	// Small mobs don't give as much nutrition.
-	if(src.occupant.small)
+	if(occupant.small)
 		slab_nutrition *= 0.5
 	slab_nutrition /= slab_count
 
 	spawn(gibtime)
-		for(var/i=1 to slab_count)
-			var/obj/item/weapon/reagent_containers/food/snacks/meat/new_meat = new slab_type(get_turf(get_step(src, 8)))
-			new_meat.name = "[slab_name] [new_meat.name]"
-			new_meat.reagents.add_reagent("nutriment",slab_nutrition)
+		if(iscarbon(occupant))
+			for(var/i=1 to slab_count)
+				var/obj/item/weapon/reagent_containers/food/snacks/meat/new_meat = new slab_type(get_turf(get_step(src, 8)))
+				new_meat.name = "[slab_name] [new_meat.name]"
+				new_meat.reagents.add_reagent("nutriment", slab_nutrition)
 
-			if(src.occupant.reagents)
-				src.occupant.reagents.trans_to(new_meat, round(occupant.reagents.total_volume/slab_count,1))
+				if(occupant.reagents)
+					occupant.reagents.trans_to(new_meat, round(occupant.reagents.total_volume/slab_count, 1))
 
-		src.occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
+		occupant.attack_log += "\[[time_stamp()]\] Was gibbed by <b>[user]/[user.ckey]</b>" //One shall not simply gib a mob unnoticed!
 		user.attack_log += "\[[time_stamp()]\] Gibbed <b>[src.occupant]/[src.occupant.ckey]</b>"
 		msg_admin_attack("[user.name] ([user.ckey]) gibbed [src.occupant] ([src.occupant.ckey]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		src.occupant.ghostize(bancheck = TRUE)
+		occupant.ghostize(bancheck = TRUE)
 
-		src.operating = 0
-		src.occupant.gib()
+		operating = 0
+		occupant.gib()
 		qdel(src.occupant)
-		src.occupant = null
+		occupant = null
 
 		playsound(src.loc, 'sound/effects/splat.ogg', 50, 1)
 		operating = 0

@@ -72,7 +72,6 @@
 		for(var/X in d)
 			to_chat(world, "[X]")*/
 
-// TODO:CYRILLIC
 /datum/talking_atom/proc/SaySomething(word = null)
 	if(!holder_atom)
 		return
@@ -123,7 +122,6 @@
 		if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
 			listening|=M
 
-	msg = sanitize_plus_chat(msg)
 	for(var/mob/M in listening)
 		to_chat(M, "[bicon(holder_atom)] <b>[holder_atom]</b> reverberates, \blue\"[msg]\"")
 	last_talk_time = world.time

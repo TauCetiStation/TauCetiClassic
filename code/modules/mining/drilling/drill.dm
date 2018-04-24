@@ -280,6 +280,7 @@
 
 
 /obj/machinery/mining/drill/attackby(obj/item/O, mob/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(wires_shocked)
 		shock(user)
 	if(active && wires_protector_disable)
@@ -293,7 +294,8 @@
 			return
 
 
-	if(!panel_open || active) return ..()
+	if(!panel_open || active)
+		return ..()
 
 	if(istype(O, /obj/item/weapon/stock_parts/cell))
 		if(cell)
@@ -306,15 +308,20 @@
 			to_chat(user, "You install \the [O].")
 		return
 
-	if(istype(O, /obj/item/weapon/wirecutters) || istype(O, /obj/item/device/multitool))
-		wires.interact(user)
+	if(is_wire_tool(O) && wires.interact(user))
 		return
 	..()
 
+/obj/machinery/mining/drill/is_interactable()
+	return TRUE
+
 /obj/machinery/mining/drill/attack_hand(mob/user)
-	if(!in_range(src, user) || issilicon(user) || isobserver(user))
+	if(..())
 		return
-	if(wires_shocked)
+	if(issilicon(user))
+		to_chat(user, "This drill didn`t support your iterface")
+		return
+	if(wires_shocked && !isobserver(user))
 		shock(user)
 	if (panel_open && cell)
 		to_chat(user, "You take out \the [cell].")
@@ -370,7 +377,7 @@
 		return 0
 
 	var/mob/living/carbon/human/H = user
-	var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
+	var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
 
 	if(!BP || !BP.is_usable())
 		return

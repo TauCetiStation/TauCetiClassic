@@ -24,7 +24,7 @@ var/global/sent_syndicate_strike_team = 0
 
 	var/input = null
 	while(!input)
-		input = sanitize(copytext(input(src, "Please specify which mission the syndicate strike team shall undertake.", "Specify Mission", ""),1,MAX_MESSAGE_LEN))
+		input = sanitize(input(src, "Please specify which mission the syndicate strike team shall undertake.", "Specify Mission", ""))
 		if(!input)
 			if(alert("Error, no mission set. Do you want to exit the setup process?",,"Yes","No")=="Yes")
 				return
@@ -135,14 +135,14 @@ var/global/sent_syndicate_strike_team = 0
 	equip_to_slot_or_del(new /obj/item/clothing/under/syndicate(src), slot_w_uniform)
 	equip_to_slot_or_del(new /obj/item/clothing/shoes/swat(src), slot_shoes)
 	if (!syndicate_leader_selected)
-		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/black(src), slot_wear_suit)
+		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/elite(src), slot_wear_suit)
 	else
-		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/black/red(src), slot_wear_suit)
+		equip_to_slot_or_del(new /obj/item/clothing/suit/space/syndicate/elite/commander(src), slot_wear_suit)
 	equip_to_slot_or_del(new /obj/item/clothing/gloves/combat(src), slot_gloves)
 	if (!syndicate_leader_selected)
-		equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/syndicate/black(src), slot_head)
+		equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/syndicate/elite(src), slot_head)
 	else
-		equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/syndicate/black/red(src), slot_head)
+		equip_to_slot_or_del(new /obj/item/clothing/head/helmet/space/syndicate/elite/commander(src), slot_head)
 	equip_to_slot_or_del(new /obj/item/clothing/mask/gas/syndicate(src), slot_wear_mask)
 	equip_to_slot_or_del(new /obj/item/clothing/glasses/thermal(src), slot_glasses)
 

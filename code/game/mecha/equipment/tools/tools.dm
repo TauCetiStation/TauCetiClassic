@@ -1183,7 +1183,7 @@
 /obj/item/mecha_parts/mecha_equipment/Drop_system/proc/perform_drop()
 	for(var/atom/movable/T in loc)
 		if(T != src && T != chassis.occupant && !(istype(T, /obj/structure/window) || istype(T, /obj/machinery/door/airlock) || istype(T, /obj/machinery/door/poddoor)))
-			T.ex_act(1)
+			if(!(T in chassis.contents)) T.ex_act(1)
 	for(var/mob/living/M in oviewers(6, src))
 		shake_camera(M, 2, 2)
 	for(var/turf/simulated/floor/T in RANGE_TURFS(1, chassis))

@@ -91,3 +91,14 @@
 	reagents.add_reagent("dexalinp", 1)
 	reagents.add_reagent("tricordrazine", 10)
 	update_icon()
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine
+	name = "leporazine autoinjector"
+	desc = "Leporazine can be use to stabilize an individuals body temperature."
+	icon_state = "autoinjector"
+	volume = 15
+
+/obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine/atom_init()
+	. = ..()
+	reagents.clear_reagents()
+	reagents.add_reagent("leporazine", 15)

@@ -47,3 +47,7 @@
 /datum/gear/shoes/heels2
 	display_name = "Heels"
 	path = /obj/item/clothing/shoes/heels/alternate
+
+/datum/gear/shoes/laceup
+	display_name = "Laceup shoes"
+	path = /obj/item/clothing/shoes/laceup

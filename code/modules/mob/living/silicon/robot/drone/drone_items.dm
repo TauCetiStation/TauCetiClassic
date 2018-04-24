@@ -216,7 +216,7 @@
 
 			if(!istype(D))
 				return
-
+			if(user.is_busy()) return
 			to_chat(D, "\red You begin decompiling the other drone.")
 
 			if(!do_after(D,50,target = M))
@@ -350,7 +350,7 @@
 
 	dat += resources
 
-	src << browse(dat, "window=robotmod")
+	src << browse(entity_ja(dat), "window=robotmod")
 
 //Putting the decompiler here to avoid doing list checks every tick.
 /mob/living/silicon/robot/drone/use_power()

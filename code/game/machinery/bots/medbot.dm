@@ -97,13 +97,7 @@
 	src.icon_state = "medibot[src.on]"
 	src.updateUsrDialog()
 
-/obj/machinery/bot/medbot/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/bot/medbot/attack_hand(mob/user)
-	. = ..()
-	if (.)
-		return
+/obj/machinery/bot/medbot/ui_interact(mob/user)
 	var/dat
 	dat += "<TT><B>Automatic Medical Unit v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>"
@@ -136,9 +130,8 @@
 
 		dat += "The speaker switch is [src.shut_up ? "off" : "on"]. <a href='?src=\ref[src];togglevoice=[1]'>Toggle</a><br>"
 
-	user << browse("<HEAD><TITLE>Medibot v1.0 controls</TITLE></HEAD>[dat]", "window=automed")
+	user << browse("<HEAD><TITLE>Medibot v1.0 controls</TITLE></HEAD>[entity_ja(dat)]", "window=automed")
 	onclose(user, "automed")
-	return
 
 /obj/machinery/bot/medbot/Topic(href, href_list)
 	. = ..()
@@ -459,7 +452,7 @@
 	return
 
 /obj/machinery/bot/medbot/bullet_act(obj/item/projectile/Proj)
-	if(Proj.flag == "taser")
+	if(is_type_in_list(Proj, taser_projectiles)) //taser_projectiles defined in projectile.dm
 		src.stunned = min(stunned+10,20)
 	..()
 
@@ -569,7 +562,7 @@
 /obj/item/weapon/firstaid_arm_assembly/attackby(obj/item/weapon/W, mob/user)
 	..()
 	if(istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
+		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)), MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)

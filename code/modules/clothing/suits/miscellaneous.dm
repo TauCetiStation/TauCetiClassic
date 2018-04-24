@@ -78,7 +78,7 @@
 	icon_state = "justice"
 	item_state = "justice"
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|HANDS|LEGS|FEET
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 
 /obj/item/clothing/suit/judgerobe
@@ -116,48 +116,48 @@
 	w_class = 3
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|HANDS|LEGS|FEET
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 /obj/item/clothing/suit/hastur
 	name = "Hastur's Robes"
 	desc = "Robes not meant to be worn by man."
 	icon_state = "hastur"
 	item_state = "hastur"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/imperium_monk
-	name = "Imperium monk"
+	name = "imperium monk"
 	desc = "Have YOU killed a xenos today?"
 	icon_state = "imperium_monk"
 	item_state = "imperium_monk"
-	body_parts_covered = HEAD|UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
+	body_parts_covered = HEAD|UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/chickensuit
-	name = "Chicken Suit"
+	name = "chicken suit"
 	desc = "A suit made long ago by the ancient empire KFC."
 	icon_state = "chickensuit"
 	item_state = "chickensuit"
-	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET
+	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
 
 
 /obj/item/clothing/suit/monkeysuit
-	name = "Monkey Suit"
+	name = "monkey suit"
 	desc = "A suit that looks like a primate."
 	icon_state = "monkeysuit"
 	item_state = "monkeysuit"
-	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS|FEET|HANDS
+	body_parts_covered = UPPER_TORSO|ARMS|LOWER_TORSO|LEGS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
 
 
 /obj/item/clothing/suit/holidaypriest
-	name = "Holiday Priest"
+	name = "holiday priest"
 	desc = "This is a nice holiday my son."
 	icon_state = "holidaypriest"
 	item_state = "holidaypriest"
@@ -182,7 +182,7 @@
 	desc = "A suit that completely restrains the wearer."
 	icon_state = "straight_jacket"
 	item_state = "straight_jacket"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 
 /obj/item/clothing/suit/ianshirt
@@ -214,7 +214,7 @@
 /obj/item/clothing/suit/jacket/leather/overcoat
 	name = "leather overcoat"
 	desc = "That's a damn fine coat."
-	icon_state = "leathercoat"
+	icon_state = "leather_overcoat"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
@@ -276,13 +276,12 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
 //coats
-/*
+
 /obj/item/clothing/suit/leathercoat
 	name = "leather coat"
 	desc = "A flowing, black coat."
 	icon_state = "leathercoat"
 	item_state = "leathercoat"
-	*/
 
 /obj/item/clothing/suit/browncoat
 	name = "brown leather coat"
@@ -346,7 +345,7 @@
 	desc = "A suit made out of chitinous alien hide."
 	icon_state = "xenos"
 	item_state = "xenos_helm"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
 //swimsuit
@@ -394,7 +393,7 @@
 	desc = "My parents are dead"
 	icon_state = "batman"
 	item_state = "batman"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 /obj/item/clothing/suit/superman
@@ -402,12 +401,12 @@
 	desc = "Is it a bird? Is it a plane?"
 	icon_state = "superman"
 	item_state = "superman"
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
 
 /obj/item/clothing/suit/storage/miljacket_army
-	name = "Field jacket olive"
+	name = "field jacket olive"
 	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Classic olive."
 	icon_state = "miljacket_army"
 	item_state = "miljacket_army"
@@ -437,22 +436,16 @@
 	usr.update_inv_wear_suit()	//so our overlays update
 
 /obj/item/clothing/suit/storage/miljacket_army/miljacket_ranger
-	name = "Field jacket desert"
+	name = "field jacket desert"
 	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Marine cold desert."
 	icon_state = "miljacket_ranger"
 	item_state = "miljacket_ranger"
 
 /obj/item/clothing/suit/storage/miljacket_army/miljacket_navy
-	name = "Field jacket navy"
+	name = "field jacket navy"
 	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Like a navy seal,"
 	icon_state = "miljacket_navy"
 	item_state = "miljacket_navy"
-
-/obj/item/clothing/suit/leathercoat
-	name = "leather coat"
-	desc = "A flowing, black coat."
-	icon_state = "leathercoat"
-	item_state = "leathercoat"
 
 /obj/item/clothing/suit/poncho
 	name = "poncho"
@@ -532,7 +525,7 @@
 	armor = list(melee = 50, bullet = 30, laser = 10, energy = 10, bomb = 25, bio = 0, rad = 0)
 
 /obj/item/clothing/suit/goodman_jacket
-	name = "Brown jacket"
+	name = "brown jacket"
 	desc = "A good jacket for good men."
 	icon_state = "gmjacket"
 
@@ -587,26 +580,33 @@
 	fastened = !fastened
 
 /obj/item/clothing/suit/atlas_jacket
-	name = "Atlas Jacket"
+	name = "atlas jacket"
 	desc = "Stylish white satin jacket with a scorpion embroidered on the back."
 	icon_state = "atlas_jacket"
 
 /obj/item/clothing/suit/shawl
-	name = "Shawl"
+	name = "shawl"
 	desc = "A pink Shawl for Hindi Womans."
 	icon_state = "shawl"
 
 /obj/item/clothing/suit/sukeban_coat
-	name = "Sukeban Coat"
+	name = "sukeban coat"
 	desc = "Just a Street Japanese coat"
 	icon_state = "sukeban_coat"
 
 /obj/item/clothing/suit/plaid
-	name = "Plaid"
+	name = "plaid"
 	desc = "Home warm plaid"
 	icon_state = "plaid"
 
 /obj/item/clothing/suit/tuxedo
-	name = "Tuxedo"
+	name = "tuxedo"
 	desc = "A semi-formal evening suit distinguished primarily by satin or grosgrain facings on the jacket's lapels"
 	icon_state = "tuxedo"
+
+/obj/item/clothing/suit/syndieshirt
+	name = "red shirt"
+	desc = "Brand new, incredibly comfortable t-shirt with a logo of Syndicate."
+	icon_state = "syndieshirt"
+	item_state = "syndieshirt"
+	body_parts_covered = UPPER_TORSO|ARMS

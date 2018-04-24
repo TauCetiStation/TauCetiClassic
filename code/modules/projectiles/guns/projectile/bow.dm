@@ -154,12 +154,7 @@
 		spawn(25) increase_tension(user)
 
 /obj/item/weapon/crossbow/afterattack(atom/target, mob/living/user, flag, params)
-
-	if (istype(target, /obj/item/weapon/storage/backpack ))
-		src.dropped()
-		return
-
-	else if (target.loc == user.loc)
+	if (target.loc == user.loc)
 		return
 
 	else if (locate (/obj/structure/table, src.loc))
@@ -179,6 +174,11 @@
 		spawn(0) Fire(target,user,params)
 
 /obj/item/weapon/crossbow/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = H.wear_suit
+			V.attack_reaction(H, REACTION_GUN_FIRE)
 
 	add_fingerprint(user)
 
@@ -233,7 +233,7 @@
 			to_chat(user, "It has a steel cable loosely strung across the lath.")
 
 /obj/item/weapon/crossbowframe/attackby(obj/item/W, mob/user) // its better to implement this in personal crafting later.
-	if(istype(user, /mob/living/silicon/robot))
+	if(isrobot(user))
 		return
 
 	if(istype(W, /obj/item/stack))

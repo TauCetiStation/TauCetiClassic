@@ -6,7 +6,12 @@
 
 /obj/structure/flora/plant/random/atom_init()
 	. = ..()
-	icon_state = "plant-[rand(1, 26)]"
+	icon_state = "plant-[rand(1, 31)]"
+
+/obj/structure/flora/plant/monkey
+	name = "monkeyplant"
+	desc = "Made by one mad scientist"
+	icon_state = "monkeyplant"
 
 //trees
 /obj/structure/flora/tree

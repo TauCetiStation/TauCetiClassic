@@ -305,7 +305,7 @@
 			to_chat(user, "\red Circuit controls are locked.")
 			return
 		var/existing_networks = jointext(network,",")
-		var/input = strip_html(input(usr, "Which networks would you like to connect this camera console circuit to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Multitool-Circuitboard interface", existing_networks))
+		var/input = sanitize_safe(input(usr, "Which networks would you like to connect this camera console circuit to? Seperate networks with a comma. No Spaces!\nFor example: SS13,Security,Secret ", "Multitool-Circuitboard interface", input_default(existing_networks)), MAX_LNAME_LEN)
 		if(!input)
 			to_chat(usr, "No input found please hang up and try your call again.")
 			return
@@ -351,6 +351,7 @@
 	switch(state)
 		if(0)
 			if(istype(P, /obj/item/weapon/wrench))
+				if(user.is_busy(src)) return
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
 					to_chat(user, "\blue You wrench the frame into place.")
@@ -361,6 +362,7 @@
 				if(!WT.remove_fuel(0, user))
 					to_chat(user, "The welding tool must be on to complete this task.")
 					return
+				if(user.is_busy(src)) return
 				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
 					if(!src || !WT.isOn()) return
@@ -369,6 +371,7 @@
 					qdel(src)
 		if(1)
 			if(istype(P, /obj/item/weapon/wrench))
+				if(user.is_busy(src)) return
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if(do_after(user, 20, target = src))
 					to_chat(user, "\blue You unfasten the frame.")
@@ -407,6 +410,7 @@
 			if(istype(P, /obj/item/stack/cable_coil))
 				var/obj/item/stack/cable_coil/C = P
 				if(C.get_amount() >= 5)
+					if(user.is_busy(src)) return
 					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20, target = src))
 						if(C.use(5))
@@ -424,6 +428,7 @@
 			if(istype(P, /obj/item/stack/sheet/glass))
 				var/obj/item/stack/sheet/glass/G = P
 				if(G.get_amount() >= 2)
+					if(user.is_busy(src)) return
 					playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
 					if(do_after(user, 20, target = src))
 						if(G.use(2))

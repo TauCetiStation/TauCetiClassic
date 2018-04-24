@@ -108,15 +108,7 @@
 	else
 		..()
 
-/obj/machinery/computer/telescience/attack_ai(mob/user)
-	src.attack_hand(user)
-
-/obj/machinery/computer/telescience/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/telescience/interact(mob/user)
+/obj/machinery/computer/telescience/ui_interact(mob/user)
 	var/t
 	if(!telepad)
 		in_use = 0     //Yeah so if you deconstruct teleporter while its in the process of shooting it wont disable the console
@@ -165,7 +157,6 @@
 	var/datum/browser/popup = new(user, "telesci", name, 300, 550)
 	popup.set_content(t)
 	popup.open()
-	return
 
 /obj/machinery/computer/telescience/proc/create_wormhole(turf/exit)
 	if(exit.density)

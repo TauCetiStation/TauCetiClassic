@@ -14,7 +14,7 @@ var/global/normal_ooc_colour = "#002eb8"
 		to_chat(src, "Guests may not use OOC.")
 		return
 
-	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
+	msg = sanitize(msg)
 	if(!msg)	return
 
 	if(!(prefs.chat_toggles & CHAT_OOC))
@@ -49,7 +49,7 @@ var/global/normal_ooc_colour = "#002eb8"
 			display_colour = "#1b521f"	//dark green
 		else if(holder.rights & R_ADMIN)
 			if(config.allow_admin_ooccolor)
-				display_colour = src.prefs.ooccolor
+				display_colour = src.prefs.aooccolor
 			else
 				display_colour = "#b82e00"	//orange
 
@@ -62,6 +62,10 @@ var/global/normal_ooc_colour = "#002eb8"
 						display_name = "[holder.fakekey]/([src.key])"
 					else
 						display_name = holder.fakekey
+
+			if(config.allow_donators && donator && prefs.ooccolor)
+				display_name = "<span style='color: [prefs.ooccolor]'>[display_name]</span>"
+
 			to_chat(C, "<font color='[display_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
 
 			/*
@@ -80,11 +84,32 @@ var/global/normal_ooc_colour = "#002eb8"
 				to_chat(C, "<font color='[normal_ooc_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[src.key]:</EM> <span class='message'>[msg]</span></span></font>")
 			*/
 
-/client/proc/set_ooc(newColor as color)
-	set name = "Set Player OOC Colour"
+/client/proc/set_global_ooc(newColor as color)
+	set name = "Set Global OOC Colour"
 	set desc = "Set to yellow for eye burning goodness."
-	set category = "Fun"
+	set category = "OOC"
+	if(!holder)
+		return
 	normal_ooc_colour = newColor
+
+/client/verb/set_name_ooc()
+	set name = "Set Name OOC Colour"
+	set category = "OOC"
+	
+	if(!config.allow_donators)
+		to_chat(usr, "<span class='warning'>Currently disabled by config.</span>")
+		return
+	if(!donator)
+		if(config.donate_info_url)
+			to_chat(usr, "<span class='warning'>This only for donators, more info <a href='[config.donate_info_url]' target='_blank'>here</a>.</span>")
+		else
+			to_chat(usr, "<span class='warning'>This only for donators, sorry.</span>")
+		return
+
+	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
+	if(new_ooccolor)
+		prefs.ooccolor = new_ooccolor
+		prefs.save_preferences()
 
 /client/verb/looc(msg as text)
 	set name = "LOOC" //Gave this shit a shorter name so you only have to time out "ooc" rather than "ooc message" to use it --NeoFite
@@ -100,7 +125,7 @@ var/global/normal_ooc_colour = "#002eb8"
 		to_chat(src, "Guests may not use OOC.")
 		return
 
-	msg = sanitize(copytext(msg, 1, MAX_MESSAGE_LEN))
+	msg = sanitize(msg)
 	if(!msg)	return
 
 	if(!(prefs.chat_toggles & CHAT_LOOC))

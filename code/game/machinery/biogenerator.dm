@@ -116,10 +116,7 @@
 	update_icon()
 	return
 
-/obj/machinery/biogenerator/interact(mob/user)
-	if(stat & BROKEN || panel_open)
-		return
-	user.set_machine(src)
+/obj/machinery/biogenerator/ui_interact(mob/user)
 	var/dat
 	if(processing)
 		dat += "<div class='statusDisplay'>Biogenerator is processing! Please wait...</div><BR>"
@@ -141,7 +138,8 @@
 			dat += "<div class='statusDisplay'>"
 			dat += "10 milk: <A href='?src=\ref[src];action=create;item=milk'>Make</A> ([20/efficiency])<BR>"
 			dat += "10 cream: <A href='?src=\ref[src];action=create;item=cream'>Make</A> ([30/efficiency])<BR>"
-			dat += "Monkey cube: <A href='?src=\ref[src];action=create;item=meat'>Make</A> ([250/efficiency])"
+			dat += "Monkey cube: <A href='?src=\ref[src];action=create;item=monkey'>Make</A> ([250/efficiency])<BR>"
+			dat += "Meat: <A href='?src=\ref[src];action=create;item=meat'>Make</A><A href='?src=\ref[src];action=create;item=meat5'>x5</A> ([125/efficiency])<BR>"
 			dat += "</div>"
 			dat += "<h3>Nutrients:</h3>"
 			dat += "<div class='statusDisplay'>"
@@ -168,19 +166,12 @@
 	var/datum/browser/popup = new(user, "biogen", name, 350, 520)
 	popup.set_content(dat)
 	popup.open()
-	return
-
-/obj/machinery/biogenerator/attack_hand(mob/user)
-	interact(user)
 
 /obj/machinery/biogenerator/proc/activate()
-	if (usr.stat != CONSCIOUS)
-		return
-	if (src.stat != CONSCIOUS) //NOPOWER etc
-		return
-	if(src.processing)
+	if(processing)
 		to_chat(usr, "<span class='warning'>The biogenerator is in the process of working.</span>")
 		return
+
 	var/S = 0
 	for(var/obj/item/weapon/reagent_containers/food/snacks/grown/I in contents)
 		S += 5
@@ -188,18 +179,18 @@
 			points += 1*productivity
 		else points += I.reagents.get_reagent_amount("nutriment")*10*productivity
 		qdel(I)
+
 	if(S)
 		processing = 1
 		update_icon()
 		updateUsrDialog()
-		playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+		playsound(src, 'sound/machines/blender.ogg', 50, 1)
 		use_power(S*30)
 		sleep(S+15/productivity)
 		processing = 0
 		update_icon()
 	else
 		menustat = "void"
-	return
 
 /obj/machinery/biogenerator/proc/check_cost(cost)
 	if (cost > points)
@@ -222,7 +213,10 @@
 			if (check_cost(30/efficiency)) return 0
 			else beaker.reagents.add_reagent("cream",10)
 		if("meat")
-			if (check_cost(250/efficiency)) return 0
+			if (check_cost(125/efficiency)) return 0
+			else new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+		if("monkey")
+			if(check_cost(250/efficiency)) return 0
 			else new/obj/item/weapon/reagent_containers/food/snacks/monkeycube(src.loc)
 		if("ez")
 			if (check_cost(10/efficiency)) return 0
@@ -257,6 +251,14 @@
 				new/obj/item/nutrient/rh(src.loc)
 				new/obj/item/nutrient/rh(src.loc)
 				new/obj/item/nutrient/rh(src.loc)
+		if("meat5")
+			if (check_cost(125/efficiency)) return 0
+			else
+				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
+				new/obj/item/weapon/reagent_containers/food/snacks/meat(src.loc)
 		if("wallet")
 			if (check_cost(100/efficiency)) return 0
 			else new/obj/item/weapon/storage/wallet(src.loc)

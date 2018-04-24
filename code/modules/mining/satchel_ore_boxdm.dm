@@ -16,6 +16,7 @@
 		src.contents += W
 	if (istype(W, /obj/item/weapon/storage))
 		var/obj/item/weapon/storage/S = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		S.hide_from(usr)
 		for(var/obj/item/weapon/ore/O in S.contents)
 			S.remove_from_storage(O, src) //This will move the item to this item's contents
@@ -99,7 +100,7 @@
 		dat += text("Strange rocks: [amt_strange]<br>")
 
 	dat += text("<br><br><A href='?src=\ref[src];removeall=1'>Empty box</A>")
-	user << browse("[dat]", "window=orebox")
+	user << browse("[entity_ja(dat)]", "window=orebox")
 	return
 
 /obj/structure/ore_box/examine(mob/user)

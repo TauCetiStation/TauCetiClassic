@@ -87,7 +87,6 @@ This is called when facehugger has grabbed(left click) and then
 		src.loc = FH
 		FH.current_hugger = src
 		FH.Attach(L)
-		L.status_flags |= PASSEMOTES
 
 /*----------------------------------------
 This is chestburster mechanic for damaging
@@ -413,7 +412,8 @@ This is facehugger Attach procs
 	if (sterile)
 		to_chat(user, "<span class='danger'>It looks like the proboscis has been removed.</span>")
 
-/obj/item/clothing/mask/facehugger/attackby()
+/obj/item/clothing/mask/facehugger/attackby(obj/item/W, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	Die()
 	return
 

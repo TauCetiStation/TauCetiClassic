@@ -59,7 +59,7 @@
 
 	output += "</div>"
 
-	src << browse(output,"window=playersetup;size=210x240;can_close=0")
+	src << browse(entity_ja(output),"window=playersetup;size=210x240;can_close=0")
 	return
 
 /mob/dead/new_player/Stat()
@@ -142,7 +142,7 @@
 		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
 				to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
-				return 0
+				return FALSE
 
 		LateChoices()
 
@@ -158,8 +158,7 @@
 		if(client.prefs.species != HUMAN)
 			if(!is_alien_whitelisted(src, client.prefs.species) && config.usealienwhitelist)
 				to_chat(src, alert("You are currently not whitelisted to play [client.prefs.species]."))
-				return 0
-
+				return FALSE
 		AttemptLateSpawn(href_list["SelectedJob"])
 		return
 
@@ -264,11 +263,17 @@
 
 /mob/dead/new_player/proc/IsJobAvailable(rank)
 	var/datum/job/job = SSjob.GetJob(rank)
-	if(!job)	return 0
-	if(!job.is_position_available()) return 0
-	if(jobban_isbanned(src,rank))	return 0
-	if(!job.player_old_enough(src.client))	return 0
-	return 1
+	if(!job)
+		return FALSE
+	if(!job.is_position_available())
+		return FALSE
+	if(jobban_isbanned(src, rank))
+		return FALSE
+	if(!job.player_old_enough(client))
+		return FALSE
+	if(!job.is_species_permitted(client))
+		return FALSE
+	return TRUE
 
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
@@ -369,7 +374,7 @@
 			dat += "<a href='byond://?src=\ref[src];SelectedJob=[job.title]'>[job.title] ([job.current_positions]) (Active: [active])</a><br>"
 
 	dat += "</center>"
-	src << browse(dat, "window=latechoices;size=300x640;can_close=1")
+	src << browse(entity_ja(dat), "window=latechoices;size=300x640;can_close=1")
 
 
 /mob/dead/new_player/proc/create_character()
@@ -390,13 +395,8 @@
 		new_character = new(loc)
 
 	new_character.lastarea = get_area(loc)
-
-	var/datum/language/chosen_language
 	if(client.prefs.language)
-		chosen_language = all_languages["[client.prefs.language]"]
-	if(chosen_language)
-		if(is_alien_whitelisted(src, client.prefs.language) || !config.usealienwhitelist || !(chosen_language.flags & WHITELISTED) || (new_character.species && (chosen_language.name in new_character.species.secondary_langs)))
-			new_character.add_language("[client.prefs.language]")
+		new_character.add_language(client.prefs.language)
 
 	if(ticker.random_players)
 		new_character.gender = pick(MALE, FEMALE)
@@ -456,7 +456,7 @@
 	dat += "<h4>Show Crew Manifest</h4>"
 	dat += data_core.get_manifest(OOC = 1)
 
-	src << browse(dat, "window=manifest;size=370x420;can_close=1")
+	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
 
 /mob/dead/new_player/Move()
 	return 0

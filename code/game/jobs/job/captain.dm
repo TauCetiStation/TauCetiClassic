@@ -12,6 +12,7 @@
 	access = list() 			//See get_access()
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 3900
+	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, IPC)
 
 /datum/job/captain/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -42,13 +43,10 @@
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
 
-	var/obj/item/weapon/implant/loyalty/L = new/obj/item/weapon/implant/loyalty(H)
-	L.imp_in = H
-	L.implanted = 1
+	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
+	L.inject(H)
+	START_PROCESSING(SSobj, L)
 	to_chat(world, "<b>[H.real_name] is the captain!</b>")
-	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-	BP.implants += L
-	L.part = BP
 	return 1
 
 /datum/job/captain/get_access()
@@ -74,8 +72,9 @@
 		access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue,
 		access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer,
 		access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
-		access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler, access_detective
+		access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler, access_detective, access_barber
 	)
+	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 
 /datum/job/hop/equip(mob/living/carbon/human/H, visualsOnly = FALSE)

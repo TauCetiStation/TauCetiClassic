@@ -10,12 +10,13 @@
 
 
 /obj/structure/mirror/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
 		if(H.a_intent == "hurt")
 			H.do_attack_animation(src)
 			if(!H.gloves)
-				var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_HAND : BP_R_HAND]
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
 				BP.take_damage(rand(0, 4))
 			if(!shattered && prob(20))
 				shatter()
@@ -45,6 +46,7 @@
 
 /obj/structure/mirror/attackby(obj/item/I, mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
@@ -59,6 +61,7 @@
 
 /obj/structure/mirror/attack_alien(mob/user)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(islarva(user) || isfacehugger(user))
 		return
 	if(shattered)
@@ -71,10 +74,11 @@
 /obj/structure/mirror/attack_animal(mob/user)
 	if(!isanimal(user))
 		return
+	..()
+
 	var/mob/living/simple_animal/M = user
 	if(M.melee_damage_upper <= 0)
 		return
-	M.do_attack_animation(src)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
 		return
@@ -85,6 +89,7 @@
 /obj/structure/mirror/attack_slime(mob/user)
 	if(!isslimeadult(user))
 		return
+	user.SetNextMove(CLICK_CD_MELEE)
 	user.do_attack_animation(src)
 	if(shattered)
 		playsound(src.loc, 'sound/effects/hit_on_shattered_glass.ogg', 70, 1)
@@ -111,7 +116,7 @@
 
 	switch(choice)
 		if("name")
-			var/newname = copytext(sanitize(input(H, "Who are we again?", "Name change", H.name) as null|text),1,MAX_NAME_LEN)
+			var/newname = sanitize_safe(input(H, "Who are we again?", "Name change", H.name) as null|text, MAX_NAME_LEN)
 
 			if(!newname)
 				return
@@ -124,9 +129,9 @@
 				H.mind.name = newname
 
 		if ("skin tone")
-			var/new_tone = input(H, "Choose your skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin Tone") as text
+			var/new_tone = input(H, "Choose your skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin Tone") as num
 			if(new_tone)
-				H.s_tone = max(min(round(text2num(new_tone)), 220), 1)
+				H.s_tone = max(min(round(new_tone), 220), 1)
 				H.s_tone =  -H.s_tone + 35
 			H.update_hair()
 			H.update_body()

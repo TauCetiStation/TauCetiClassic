@@ -14,7 +14,7 @@ datum/genesequence
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "dna"
 	circuit = "/obj/item/weapon/circuitboard/reconstitutor"
-	req_access = list(access_heads) //Only used for record deletion right now.
+	req_access = list(access_xenoarch) //Only used for record deletion right now. //xenoarch couldn't use it when it was access_heads
 	var/obj/machinery/clonepod/pod1 = 1 //Linked cloning pod.
 	var/temp = ""
 	var/menu = 1 //Which menu screen to display
@@ -87,11 +87,7 @@ datum/genesequence
 	else
 		..()
 
-/obj/machinery/computer/reconstitutor/attack_hand(mob/user)
-	src.add_fingerprint(user)
-	interact(user)
-
-/obj/machinery/computer/reconstitutor/interact(mob/user)
+/obj/machinery/computer/reconstitutor/ui_interact(mob/user)
 	if(stat & (NOPOWER|BROKEN) || get_dist(src, user) > 1 && !issilicon(user) && !isobserver(user))
 		user.unset_machine(src)
 		return
@@ -137,7 +133,7 @@ datum/genesequence
 						discovered_genesequences -= cur_genesequence
 						completed_genesequences += cur_genesequence
 						manually_placed_genomes[sequence_num] = new/list(7)
-						interact(user)
+						updateDialog()
 						return
 				//yellow background if adjacent to correct slot
 				if(curindex > 1 && manually_placed_genomes[sequence_num][curindex] == cur_genesequence.full_genome_sequence[curindex - 1])
@@ -169,8 +165,7 @@ datum/genesequence
 	dat += "<br>"
 	dat += "<hr>"
 	dat += "<a href='?src=\ref[src];close=1'>Close</a>"
-	user << browse(dat, "window=reconstitutor;size=600x500")
-	user.set_machine(src)
+	user << browse(entity_ja(dat), "window=reconstitutor;size=600x500")
 	onclose(user, "reconstitutor")
 
 /obj/machinery/computer/reconstitutor/Topic(href, href_list)

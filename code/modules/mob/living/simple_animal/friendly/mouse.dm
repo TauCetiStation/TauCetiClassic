@@ -16,7 +16,7 @@
 	see_in_dark = 6
 	maxHealth = 5
 	health = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/meat
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat = 1)
 	response_help  = "pets the"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "stamps on the"
@@ -84,7 +84,8 @@
 /mob/living/simple_animal/mouse/MouseDrop(atom/over_object)
 
 	var/mob/living/carbon/H = over_object
-	if(!istype(H) || !Adjacent(H)) return ..()
+	if(!istype(H) || !Adjacent(H) || ismob(H.loc))
+		return ..()
 
 	if(H.a_intent == "help")
 		get_scooped(H)

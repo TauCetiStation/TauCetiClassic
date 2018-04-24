@@ -141,7 +141,7 @@
 	return
 
 /obj/item/device/radio/headset/heads/rd
-	name = "Research Director's headset"
+	name = "research director's headset"
 	desc = "Headset of the researching God. To access the science channel, use :n. For command, use :c."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "rd_headset"
@@ -206,12 +206,19 @@
 
 /obj/item/device/radio/headset/ert
 	name = "CentCom Response Team headset"
-	desc = "The headset of the boss's boss. Channels are as follows: :h - Response Team :c - command, :s - security, :e - engineering, :d - mining, :q - cargo, :m - medical, :n - science."
+	desc = "The headset of the boss's boss. Channels are as follows: :h - Response Team :c - command, :s - security, :e - engineering, :u - supply, :m - medical, :n - science."
 	icon_state = "com_headset"
 	item_state = "headset"
 	freerange = 1
 	ks2type = /obj/item/device/encryptionkey/ert
 	grid = TRUE
+
+/obj/item/device/radio/headset/deathsquad
+	grid = TRUE
+
+/obj/item/device/radio/headset/deathsquad/atom_init()
+	. = ..()
+	set_frequency(1341)
 
 /obj/item/device/radio/headset/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/radio_grid))

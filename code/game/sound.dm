@@ -39,7 +39,8 @@ var/list/footsteps_sound = list('sound/effects/tile1.wav','sound/effects/tile2.w
 var/const/FALLOFF_SOUNDS = 0.5
 
 /mob/proc/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
-	if(!src.client || ear_deaf > 0)	return
+	if(!src.client || ear_deaf > 0)
+		return FALSE
 	soundin = get_sfx(soundin)
 
 	var/sound/S = sound(soundin)
@@ -83,7 +84,7 @@ var/const/FALLOFF_SOUNDS = 0.5
 		S.volume *= pressure_factor
 
 		if (S.volume <= 0)
-			return	//no volume means no sound
+			return FALSE	//no volume means no sound
 
 		var/dx = turf_source.x - T.x // Hearing from the right/left
 		S.x = dx
@@ -95,6 +96,12 @@ var/const/FALLOFF_SOUNDS = 0.5
 	if(!is_global)
 		S.environment = 2
 	src << S
+
+/mob/living/parasite/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
+	if(!host || host.ear_deaf > 0)
+		return FALSE
+	return ..()
+
 
 /client/proc/playtitlemusic()
 	if(!ticker || !ticker.login_music)	return

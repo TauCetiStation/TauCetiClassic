@@ -203,9 +203,7 @@
 		C.swap_hand()
 		C.drop_item()
 		C.put_in_hands(Arcane)
-
-		user.next_click = world.time + 4
-		user.next_move = world.time + 4
+		user.SetNextMove(CLICK_CD_INTERACT)
 	else
 		C.drop_item()
 
@@ -390,11 +388,11 @@
 		return
 
 	var/hamt = -30 * power_of_spell // level 6 = 180 || level 7 = 31.5 (cause of reduction)
-
-	if(power_of_spell == 7)
+	var/reduced_heal = (power_of_spell == 7)
+	if(reduced_heal)
 		hamt *= 0.15 // healing everything 85% less, because most of healing power goes into regeneration of limbs which also full heals them.
 		target.restore_all_bodyparts()
 		target.regenerate_icons()
 
-	target.apply_damages(0, 0, hamt, hamt, hamt, hamt) // zero is for brute and burn, because no point to heal them, since body parts restoration does that.
+	target.apply_damages(reduced_heal ? 0 : hamt, reduced_heal ? 0 : hamt, hamt, hamt, hamt, hamt) // zero is for brute and burn in case of restoring bodyparts, because no point to heal them, since body parts restoration does that.
 	target.apply_effects(hamt, hamt, hamt, hamt, hamt, hamt, hamt, hamt)

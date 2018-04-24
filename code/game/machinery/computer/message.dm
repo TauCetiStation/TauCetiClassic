@@ -79,9 +79,7 @@
 		if(message_servers && message_servers.len > 0)
 			linkedServer = message_servers[1]
 
-/obj/machinery/computer/message_monitor/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/message_monitor/ui_interact(mob/user)
 	//If the computer is being hacked or is emagged, display the reboot message.
 	if(hacking || emag)
 		message = rebootmsg
@@ -239,9 +237,8 @@
 
 	dat += "</body>"
 	message = defaultmsg
-	user << browse(dat, "window=message;size=700x700")
+	user << browse(entity_ja(dat), "window=message;size=700x700")
 	onclose(user, "message")
-	return
 
 /obj/machinery/computer/message_monitor/proc/BruteForce(mob/user)
 	if(isnull(linkedServer))
@@ -274,7 +271,7 @@
 			auth = 0
 			screen = 0
 		else
-			var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+			var/dkey = sanitize(input(usr, "Please enter the decryption key.") as text|null)
 			if(dkey && dkey != "")
 				if(src.linkedServer.decryptkey == dkey)
 					auth = 1
@@ -325,10 +322,10 @@
 			message = noserver
 		else
 			if(auth)
-				var/dkey = trim(input(usr, "Please enter the decryption key.") as text|null)
+				var/dkey = sanitize(input(usr, "Please enter the decryption key.") as text|null)
 				if(dkey && dkey != "")
 					if(src.linkedServer.decryptkey == dkey)
-						var/newkey = trim(input(usr,"Please enter the new key (3 - 16 characters max):"))
+						var/newkey = sanitize(input(usr,"Please enter the new key (3 - 16 characters max):"))
 						if(length(newkey) <= 3)
 							message = "<span class='notice'>NOTICE: Decryption key too short!</span>"
 						else if(length(newkey) > 16)
@@ -388,7 +385,7 @@
 
 				//Select Your Name
 				if("Sender")
-					customsender 	= copytext(input(usr, "Please enter the sender's name.") as text|null, 1, MAX_NAME_LEN)
+					customsender 	= sanitize(input(usr, "Please enter the sender's name.") as text|null, MAX_NAME_LEN)
 
 				//Select Receiver
 				if("Recepient")
@@ -404,12 +401,11 @@
 
 				//Enter custom job
 				if("RecJob")
-					customjob	 	= copytext(input(usr, "Please enter the sender's job.") as text|null, 1, MAX_NAME_LEN)
+					customjob	 	= sanitize(input(usr, "Please enter the sender's job.") as text|null, MAX_NAME_LEN)
 
 				//Enter message
 				if("Message")
-					custommessage	= input(usr, "Please enter your message.") as text|null
-					custommessage	= sanitize_alt(copytext(custommessage, 1, MAX_MESSAGE_LEN))
+					custommessage	= sanitize(input(usr, "Please enter your message.") as text|null)
 
 				//Send message
 				if("Send")
@@ -439,7 +435,7 @@
 								O.show_message(text("[bicon(customrecepient)] *[customrecepient.ttone]*"))
 							if( customrecepient.loc && ishuman(customrecepient.loc) )
 								var/mob/living/carbon/human/H = customrecepient.loc
-								to_chat(H, "[bicon(customrecepient)] <b>Message from [customsender] ([customjob]), </b>\"[sanitize_chat(custommessage)]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)")
+								to_chat(H, "[bicon(customrecepient)] <b>Message from [customsender] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[src];choice=Message;skiprefresh=1;target=\ref[src]'>Reply</a>)")
 							log_pda("[usr] (PDA: [customsender]) sent \"[custommessage]\" to [customrecepient.owner]")
 							customrecepient.overlays.Cut()
 							customrecepient.overlays += image('icons/obj/pda.dmi', "pda-r")
@@ -458,7 +454,7 @@
 								O.show_message(text("[bicon(customrecepient)] *[customrecepient.ttone]*"))
 							if( customrecepient.loc && ishuman(customrecepient.loc) )
 								var/mob/living/carbon/human/H = customrecepient.loc
-								to_chat(H, "[bicon(customrecepient)] <b>Message from [PDARec.owner] ([customjob]), </b>\"[sanitize_chat(custommessage)]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)")
+								to_chat(H, "[bicon(customrecepient)] <b>Message from [PDARec.owner] ([customjob]), </b>\"[custommessage]\" (<a href='byond://?src=\ref[customrecepient];choice=Message;skiprefresh=1;target=\ref[PDARec]'>Reply</a>)")
 							log_pda("[usr] (PDA: [PDARec.owner]) sent \"[custommessage]\" to [customrecepient.owner]")
 							customrecepient.overlays.Cut()
 							customrecepient.overlays += image('icons/obj/pda.dmi', "pda-r")

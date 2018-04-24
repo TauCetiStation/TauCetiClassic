@@ -9,7 +9,8 @@ var/list/ventcrawl_machinery = list(
 	/obj/item/device/radio/borg,
 	/obj/item/weapon/holder,
 	/obj/machinery/camera,
-	/mob/living/simple_animal/borer
+	/mob/living/simple_animal/borer,
+	/mob/living/parasite
 	)
 
 /mob/living/var/list/icon/pipes_shown = list()
@@ -128,7 +129,7 @@ var/list/ventcrawl_machinery = list(
 					if(HAZARD_HIGH_PRESSURE to INFINITY)
 						to_chat(src, "<span class='danger'>You feel a roaring wind pushing you away from the vent!</span>")
 
-			if(!do_after(src, 45, null, vent_found))
+			if(is_busy() || !do_after(src, 45, null, vent_found))
 				return
 
 			if(!can_ventcrawl())

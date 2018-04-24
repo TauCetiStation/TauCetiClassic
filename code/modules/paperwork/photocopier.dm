@@ -15,15 +15,7 @@
 	var/toner = 30 //how much toner is left! woooooo~
 	var/maxcopies = 10	//how many copies can be copied at once- idea shamelessly stolen from bs12's copier!
 
-/obj/machinery/photocopier/attack_ai(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/photocopier/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/photocopier/attack_hand(mob/user)
-	user.set_machine(src)
-
+/obj/machinery/photocopier/ui_interact(mob/user)
 	var/dat = "Photocopier<BR><BR>"
 	if(copy || photocopy || bundle)
 		dat += "<a href='byond://?src=\ref[src];remove=1'>Remove Paper</a><BR>"
@@ -39,9 +31,8 @@
 	dat += "Current toner level: [toner]"
 	if(!toner)
 		dat +="<BR>Please insert a new toner cartridge!"
-	user << browse(dat, "window=copier")
+	user << browse(entity_ja(dat), "window=copier")
 	onclose(user, "copier")
-	return
 
 /obj/machinery/photocopier/is_operational_topic()
 	return TRUE
@@ -176,6 +167,7 @@
 		else
 			to_chat(user, "<span class='notice'>This cartridge is not yet ready for replacement! Use up the rest of the toner.</span>")
 	else if(istype(O, /obj/item/weapon/wrench))
+		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(loc, 'sound/items/Ratchet.ogg', 50, 1)
 		anchored = !anchored
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")

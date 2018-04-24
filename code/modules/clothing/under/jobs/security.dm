@@ -137,7 +137,7 @@
 	siemens_coefficient = 0.8
 
 /obj/item/clothing/under/rank/head_of_security/turtleneck
-	name = "Head of Security's Turtleneck"
+	name = "head of security's turtleneck"
 	icon_state = "hos_turtleneck"
 	item_color = "hos_turtleneck"
 	item_state = "hos_turtleneck"

@@ -223,6 +223,10 @@ function output(message, flag) {
 		message = emojify(message);
 		message = linkify(message);
 	}
+
+	//fix for "я"
+	message = message.replace(/¶/g, "я");
+
 	opts.messageCount++;
 
 	//Actually append the message

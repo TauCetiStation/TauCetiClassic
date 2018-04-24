@@ -4,6 +4,7 @@
 	icon = 'icons/obj/atmos.dmi'
 	icon_state = "pscrubber:0"
 	density = TRUE
+	interact_offline = TRUE
 
 	volume = 750
 
@@ -88,19 +89,6 @@
 			update_icon()
 
 	updateDialog()
-
-/obj/machinery/portable_atmospherics/powered/scrubber/attack_ai(mob/user)
-	add_hiddenprint(user)
-	return attack_hand(user)
-
-/obj/machinery/portable_atmospherics/powered/scrubber/attack_ghost(var/mob/user)
-	return attack_hand(user)
-
-/obj/machinery/portable_atmospherics/powered/scrubber/attack_paw(mob/user)
-	return attack_hand(user)
-
-/obj/machinery/portable_atmospherics/powered/scrubber/attack_hand(var/mob/user)
-	ui_interact(user)
 
 /obj/machinery/portable_atmospherics/powered/scrubber/ui_interact(mob/user, ui_key = "rcon", datum/nanoui/ui = null)
 	var/list/data[0]
@@ -218,6 +206,7 @@
 			return
 
 		anchored = !anchored
+		user.SetNextMove(CLICK_CD_INTERACT)
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		to_chat(user, "<span class='notice'>You [anchored ? "wrench" : "unwrench"] \the [src].</span>")
 

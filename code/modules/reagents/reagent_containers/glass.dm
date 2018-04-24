@@ -140,14 +140,14 @@
 
 /obj/item/weapon/reagent_containers/glass/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pen) || istype(W, /obj/item/device/flashlight/pen))
-		var/tmp_label = sanitize(copytext(input(user, "Enter a label for [src.name]","Label",src.label_text), 1, MAX_NAME_LEN))
+		var/tmp_label = sanitize_safe(input(user, "Enter a label for [src.name]","Label", input_default(label_text)), MAX_NAME_LEN)
 		if(length(tmp_label) > 10)
 			to_chat(user, "<span class = 'rose'>The label can be at most 10 characters long.</span>")
 		else
 			to_chat(user, "<span class = 'notice'>You set the label to \"[tmp_label]\".</span>")
 			src.label_text = tmp_label
 			src.update_name_label()
-	if (istype(W, /obj/item/stack/nanopaste))
+	else if(istype(W, /obj/item/stack/nanopaste))
 		var/obj/item/stack/nanopaste/N = W
 		if(src.is_open_container() && src.reagents) //Something like a glass. Player probably wants to transfer TO it.
 			if(src.reagents.total_volume >= src.reagents.maximum_volume)
@@ -158,6 +158,8 @@
 				return
 
 			src.reagents.add_reagent("nanites2", 1)
+	else
+		..()
 
 /obj/item/weapon/reagent_containers/glass/proc/update_name_label()
 	if(src.label_text == "")

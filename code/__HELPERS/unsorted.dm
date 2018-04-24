@@ -276,10 +276,10 @@ Turf and target are seperate in case you want to teleport some distance from a t
 		var/newname
 
 		for(var/i=1,i<=3,i++)	//we get 3 attempts to pick a suitable name.
-			newname = input(src,"You are a [role]. Would you like to change your name to something else?", "Name change",oldname) as text
+			newname = input(src,"You are a [role]. Would you like to change your name to something else?", "Name change",input_default(oldname)) as text
 			if((world.time-time_passed)>300)
 				return	//took too long
-			newname = reject_bad_name(newname,allow_numbers)	//returns null if the name doesn't meet some basic requirements. Tidies up a few other things like bad-characters.
+			newname = sanitize_name(newname, ,allow_numbers)	//returns null if the name doesn't meet some basic requirements. Tidies up a few other things like bad-characters.
 
 			for(var/mob/living/M in player_list)
 				if(M == src)
@@ -425,6 +425,7 @@ Turf and target are seperate in case you want to teleport some distance from a t
 	ADD_TO_MOBLIST(/mob/living/carbon/brain)
 	ADD_TO_MOBLIST(/mob/living/carbon/alien)
 	ADD_TO_MOBLIST(/mob/dead)
+	ADD_TO_MOBLIST(/mob/living/parasite/essence)
 	ADD_TO_MOBLIST(/mob/living/carbon/monkey)
 	ADD_TO_MOBLIST(/mob/living/carbon/slime)
 	ADD_TO_MOBLIST(/mob/living/carbon/ian)
@@ -1060,20 +1061,12 @@ proc/get_mob_with_client_list()
 	switch(zone)
 		if(BP_L_ARM)
 			return "left arm"
-		if(BP_L_HAND)
-			return "left hand"
 		if(BP_R_ARM)
 			return "right arm"
-		if(BP_R_HAND)
-			return "right hand"
 		if(BP_L_LEG)
 			return "left leg"
-		if(BP_L_FOOT)
-			return "left foot"
 		if(BP_R_LEG)
 			return "right leg"
-		if(BP_R_FOOT)
-			return "right foot"
 		else
 			return zone
 
@@ -1437,7 +1430,7 @@ var/list/WALLITEMS = typecacheof(list(
 	spawn()
 		//if limb names will ever be changed or procs that use names of limbs,
 		//you must adjust names of body_parts according to the current that server uses or mobs will be missing some icon_states.
-		var/list/body_parts = list(BP_CHEST , BP_GROIN , BP_HEAD , BP_L_ARM , BP_R_ARM , BP_L_HAND , BP_R_HAND , BP_L_LEG , BP_R_LEG , BP_L_FOOT , BP_R_FOOT)
+		var/list/body_parts = list(BP_CHEST , BP_GROIN , BP_HEAD , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 		//Same rules for damage states.. must be exactly same as other code uses...
 		var/list/damage_states = list("01" , "10" , "11" , "12" , "13" , "02" , "20" , "21" , "22" , "23" , "03" , "30" , "31" , "32" , "33")
 

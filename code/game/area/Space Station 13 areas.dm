@@ -83,7 +83,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/shuttle/escape_pod1/transit
 	icon_state = "shuttle"
-	parallax_movedir = WEST
+	parallax_movedir = EAST
 
 /area/shuttle/escape_pod2
 	name = "Escape Pod Two"
@@ -97,7 +97,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/shuttle/escape_pod2/transit
 	icon_state = "shuttle"
-	parallax_movedir = WEST
+	parallax_movedir = EAST
 
 /area/shuttle/escape_pod3
 	name = "Escape Pod Three"
@@ -111,7 +111,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/shuttle/escape_pod3/transit
 	icon_state = "shuttle"
-	parallax_movedir = WEST
+	parallax_movedir = EAST
 
 /area/shuttle/escape_pod5 //Pod 4 was lost to meteors
 	name = "Escape Pod Five"
@@ -125,7 +125,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/shuttle/escape_pod5/transit
 	icon_state = "shuttle"
-	parallax_movedir = EAST
+	parallax_movedir = WEST
 
 /area/shuttle/mining
 	name = "Mining Shuttle"
@@ -551,6 +551,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/kitchen
 	name = "Kitchen"
 	icon_state = "kitchen"
+
+/area/crew_quarters/barbershop
+	name = "Barbershop"
+	icon_state = "barbershop"
 
 /area/crew_quarters/bar
 	name = "Bar"

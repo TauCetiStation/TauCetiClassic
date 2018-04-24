@@ -126,12 +126,16 @@
 			harm_objective.owner = traitor
 			harm_objective.find_target()
 			traitor.objectives += harm_objective
-		else
+		if(51 to 115)
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = traitor
 			steal_objective.find_target()
 			traitor.objectives += steal_objective
-
+		else
+			var/datum/objective/dehead/dehead_objective = new
+			dehead_objective.owner = traitor
+			dehead_objective.find_target()
+			traitor.objectives += dehead_objective
 
 /datum/game_mode/proc/greet_traitor(datum/mind/traitor)
 	to_chat(traitor.current, "<B><font size=3 color=red>You are the traitor.</font></B>")
@@ -312,6 +316,19 @@
 			to_chat(traitor_mob, "A portable object teleportation relay has been installed in your [R.name] [loc]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
 			traitor_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc]).")
 			traitor_mob.mind.total_TC += R.hidden_uplink.uses
+	for(var/datum/objective/dehead/D in traitor_mob.mind.objectives)
+		var/obj/item/device/biocan/B = new (traitor_mob.loc)
+		var/list/slots = list (
+		"backpack" = slot_in_backpack,
+		"left hand" = slot_l_hand,
+		"right hand" = slot_r_hand,
+		)
+		var/where = traitor_mob.equip_in_one_of_slots(B, slots)
+		traitor_mob.update_icons()
+		if (!where)
+			to_chat(traitor_mob, "The Syndicate were unfortunately unable to provide you with the brand new can for storing heads.")
+		else
+			to_chat(traitor_mob, "The biogel-filled can in your [where] will help you to steal you target's head alive and undamaged.")
 	//Begin code phrase.
 	if(!safety)//If they are not a rev. Can be added on to.
 		to_chat(traitor_mob, "The Syndicate provided you with the following information on how to identify other agents:")

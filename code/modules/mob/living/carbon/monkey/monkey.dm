@@ -8,6 +8,11 @@
 	pass_flags = PASSTABLE
 	update_icon = 0		///no need to call regenerate_icon
 	ventcrawler = 1
+	var/hazard_high_pressure = HAZARD_HIGH_PRESSURE
+	var/warning_high_pressure = WARNING_HIGH_PRESSURE
+	var/warning_low_pressure = WARNING_LOW_PRESSURE
+	var/hazard_low_pressure = HAZARD_LOW_PRESSURE
+	blood_color = "#A10808"
 
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/greaterform = HUMAN                  // Used when humanizing a monkey.
@@ -15,7 +20,7 @@
 	//var/uni_append = "12C4E2"                // Small appearance modifier for different species.
 	var/list/uni_append = list(0x12C,0x4E2)    // Same as above for DNA2.
 	var/update_muts = 1                        // Monkey gene must be set at start.
-	var/alien = 0				   //Used for reagent metabolism.
+	var/race = HUMAN // Used for restrictions checking.
 	holder_type = /obj/item/weapon/holder/monkey
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/monkey = 5)
 
@@ -25,6 +30,7 @@
 	speak_emote = list("mews")
 	icon_state = "tajkey1"
 	uni_append = list(0x0A0,0xE00) // 0A0E00
+	race = TAJARAN
 	holder_type = /obj/item/weapon/holder/monkey/farwa
 
 /mob/living/carbon/monkey/skrell
@@ -33,6 +39,7 @@
 	speak_emote = list("squicks")
 	icon_state = "skrellkey1"
 	uni_append = list(0x01C,0xC92) // 01CC92
+	race = SKRELL
 	holder_type = /obj/item/weapon/holder/monkey/neaera
 
 /mob/living/carbon/monkey/unathi
@@ -41,6 +48,7 @@
 	speak_emote = list("hisses")
 	icon_state = "stokkey1"
 	uni_append = list(0x044,0xC5D) // 044C5D
+	race = UNATHI
 	holder_type = /obj/item/weapon/holder/monkey/stok
 
 /mob/living/carbon/monkey/atom_init()
@@ -107,7 +115,6 @@
 /mob/living/carbon/monkey/diona/atom_init()
 
 	. = ..()
-	alien = 1
 	gender = NEUTER
 	dna.mutantrace = "plant"
 	greaterform = DIONA
@@ -355,13 +362,14 @@
 	return
 
 /mob/living/carbon/monkey/attack_animal(mob/living/simple_animal/M)
+	if(..())
+		return
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -434,6 +442,8 @@
 	if(statpanel("Status"))
 		stat(null, "Intent: [a_intent]")
 		stat(null, "Move Mode: [m_intent]")
+		if(istype(src, /mob/living/carbon/monkey/diona))
+			stat(null, "Nutriment: [nutrition]/400")
 		CHANGELING_STATPANEL_STATS(null)
 
 	CHANGELING_STATPANEL_POWERS(null)
@@ -490,18 +500,18 @@
 	return 0
 
 /mob/living/carbon/monkey/say(var/message, var/datum/language/speaking = null, var/verb="says", var/alt_name="", var/italics=0, var/message_range = world.view, var/list/used_radios = list())
-        if(stat)
-                return
+	if(stat)
+		return
 
-        if(copytext(message,1,2) == "*")
-                return emote(copytext(message,2))
+	if(copytext(message,1,2) == "*")
+		return emote(copytext(message,2))
 
-        if(stat)
-                return
+	if(stat)
+		return
 
-        if(speak_emote.len)
-                verb = pick(speak_emote)
+	if(speak_emote.len)
+		verb = pick(speak_emote)
 
-        message = capitalize(trim_left(message))
+	message = capitalize(trim_left(message))
 
-        ..(message, speaking, verb, alt_name, italics, message_range, used_radios)
+	..(message, speaking, verb, alt_name, italics, message_range, used_radios)

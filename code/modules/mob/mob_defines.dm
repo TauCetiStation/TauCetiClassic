@@ -101,7 +101,7 @@
 	var/cpr_time = 1.0//Carbon
 
 
-	var/bodytemperature = 310.055	//98.7 F
+	var/bodytemperature = BODYTEMP_NORMAL	//98.7 F
 	var/drowsyness = 0.0//Carbon
 	var/dizziness = 0//Carbon
 	var/is_dizzy = 0
@@ -216,7 +216,7 @@
 	var/alien_talk_understand = 0
 
 	var/has_limbs = 1 //Whether this mob have any limbs he can move with
-	var/can_stand = 1 //Whether this mob have ability to stand
+	var/stance_damage = 1 //Whether this mob's ability to stand has been affected
 
 	var/immune_to_ssd = 0
 

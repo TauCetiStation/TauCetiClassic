@@ -123,7 +123,7 @@
 	if(data_core)
 		dat += data_core.get_manifest(1) // make it monochrome
 	dat += "<br>"
-	src << browse(dat, "window=airoster")
+	src << browse(entity_ja(dat), "window=airoster")
 	onclose(src, "airoster")
 
 //can't inject synths
@@ -157,9 +157,12 @@
 	var/dat = "<b><font size = 5>Known Languages</font></b><br/><br/>"
 
 	for(var/datum/language/L in languages)
-		dat += "<b>[L.name] (:[L.key])</b><br/>Speech Synthesizer: <i>[(L in speech_synthesizer_langs)? "YES":"NOT SUPPORTED"]</i><br/>[L.desc]<br/><br/>"
+		dat += "<b>[L.name] "
+		for(var/l_key in L.key)
+			dat += "(:[l_key])"
+		dat += " </b><br/>Speech Synthesizer: <i>[(L in speech_synthesizer_langs)? "YES":"NOT SUPPORTED"]</i><br/>[L.desc]<br/><br/>"
 
-	src << browse(dat, "window=checklanguage")
+	src << browse(entity_ja(dat), "window=checklanguage")
 	return
 
 /mob/living/silicon/proc/toggle_sensor_mode()

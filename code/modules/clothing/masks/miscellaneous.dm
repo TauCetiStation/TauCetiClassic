@@ -37,14 +37,14 @@
 	body_parts_covered = 0
 
 /obj/item/clothing/mask/fake_face
-	name = "Fake Face"
+	name = "fake face"
 	desc = "Warning: this face not a fake."
 	icon_state = "fake_face"
 	flags_inv = HIDEFACE
 	body_parts_covered = 0
 
 /obj/item/clothing/mask/snorkel
-	name = "Snorkel"
+	name = "snorkel"
 	desc = "For the Swimming Savant."
 	icon_state = "snorkel"
 	flags_inv = HIDEFACE
@@ -52,34 +52,71 @@
 
 //scarves (fit in in mask slot)
 
-/obj/item/clothing/mask/bluescarf
+/obj/item/clothing/mask/scarf
+	name = "scarf"
+	desc = "A simple neck scarf."
+	icon_state = "bluescarf"
+	item_state = "bluescarf"
+	flags = MASKCOVERSMOUTH
+	w_class = 2
+	gas_transfer_coefficient = 0.90
+	action_button_name = "Adjust scarf"
+	var/hanging = 0
+
+/obj/item/clothing/mask/scarf/blue
 	name = "blue neck scarf"
 	desc = "A blue neck scarf."
-	icon_state = "blueneckscarf"
-	item_state = "blueneckscarf"
-	flags = MASKCOVERSMOUTH
-	w_class = 2
-	gas_transfer_coefficient = 0.90
+	icon_state = "bluescarf"
+	item_state = "bluescarf"
 
-/obj/item/clothing/mask/redscarf
+/obj/item/clothing/mask/scarf/red
 	name = "red scarf"
-	desc = "A red and white checkered neck scarf."
-	icon_state = "redwhite_scarf"
-	item_state = "redwhite_scarf"
-	flags = MASKCOVERSMOUTH
-	w_class = 2
-	gas_transfer_coefficient = 0.90
+	desc = "A red neck scarf."
+	icon_state = "redscarf"
+	item_state = "redscarf"
 
-/obj/item/clothing/mask/greenscarf
+/obj/item/clothing/mask/scarf/green
 	name = "green scarf"
 	desc = "A green neck scarf."
-	icon_state = "green_scarf"
-	item_state = "green_scarf"
-	flags = MASKCOVERSMOUTH
-	w_class = 2
-	gas_transfer_coefficient = 0.90
+	icon_state = "greenscarf"
+	item_state = "greenscarf"
 
-/obj/item/clothing/mask/ninjascarf
+/obj/item/clothing/mask/scarf/yellow
+	name = "yellow scarf"
+	desc = "A yellow neck scarf."
+	icon_state = "yellowscarf"
+	item_state = "yellowscarf"
+
+/obj/item/clothing/mask/scarf/violet
+	name = "violet scarf"
+	desc = "A violet neck scarf."
+	icon_state = "violetscarf"
+	item_state = "violetscarf"
+
+/obj/item/clothing/mask/scarf/attack_self(mob/user)
+
+	if(user.incapacitated())
+		return
+
+
+	if(!hanging)
+		hanging = !hanging
+		gas_transfer_coefficient = 1 //gas is now escaping to the turf and vice versa
+		flags &= ~MASKCOVERSMOUTH
+		icon_state = "[initial(icon_state)]down"
+		to_chat(user, "Your scarf is now hanging on your neck.")
+	else
+		hanging = !hanging
+		gas_transfer_coefficient = 0.90
+		flags |= MASKCOVERSMOUTH
+		icon_state = "[initial(icon_state)]"
+		to_chat(user, "You pull the scarf up to cover your face.")
+	user.update_inv_wear_mask()
+
+
+
+
+/obj/item/clothing/mask/scarf/ninja
 	name = "ninja scarf"
 	desc = "A stealthy, dark scarf."
 	icon_state = "ninja_scarf"
@@ -122,7 +159,7 @@
 	return message
 
 /obj/item/clothing/mask/cowmask
-	name = "Cowface"
+	name = "cowface"
 	desc = "It looks like a mask, but closer inspection reveals it's melded onto this persons face!"
 	icon_state = "cowmask"
 	item_state = "cowmask"
@@ -205,13 +242,13 @@
 	icon_state = "bandskull"
 
 /obj/item/clothing/mask/tie/collar
-	name = "Silver Collar"
+	name = "silver collar"
 	desc = "A common collar with silver covering"
 	icon_state = "collar"
 	body_parts_covered = 0
 
 /obj/item/clothing/mask/tie/collar2
-	name = "Gold Collar"
+	name = "gold collar"
 	desc = "A common collar with gold covering"
 	icon_state = "collar2"
 	body_parts_covered = 0

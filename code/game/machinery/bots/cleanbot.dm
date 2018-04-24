@@ -80,34 +80,27 @@
 	src.path = new()
 	src.updateUsrDialog()
 
-/obj/machinery/bot/cleanbot/attack_hand(mob/user)
-	. = ..()
-	if (.)
-		return
-	interact(user)
-
-/obj/machinery/bot/cleanbot/interact(mob/user)
+/obj/machinery/bot/cleanbot/ui_interact(mob/user)
 	var/dat
 	dat += text({"
-<TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>
-Status: []<BR>
-Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>
-Maintenance panel is [src.open ? "opened" : "closed"]"},
-text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
+		<TT><B>Automatic Station Cleaner v1.0</B></TT><BR><BR>
+		Status: []<BR>
+		Behaviour controls are [src.locked ? "locked" : "unlocked"]<BR>
+		Maintenance panel is [src.open ? "opened" : "closed"]"},
+		text("<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>"))
 	if(!src.locked || issilicon(user) || isobserver(user))
 		dat += text({"<BR>Cleans Blood: []<BR>"}, text("<A href='?src=\ref[src];operation=blood'>[src.blood ? "Yes" : "No"]</A>"))
 		dat += text({"<BR>Patrol station: []<BR>"}, text("<A href='?src=\ref[src];operation=patrol'>[src.should_patrol ? "Yes" : "No"]</A>"))
 	//	dat += text({"<BR>Beacon frequency: []<BR>"}, text("<A href='?src=\ref[src];operation=freq'>[src.beacon_freq]</A>"))
 	if(src.open && !src.locked)
 		dat += text({"
-Odd looking screw twiddled: []<BR>
-Weird button pressed: []"},
-text("<A href='?src=\ref[src];operation=screw'>[src.screwloose ? "Yes" : "No"]</A>"),
-text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"]</A>"))
+			Odd looking screw twiddled: []<BR>
+			Weird button pressed: []"},
+			text("<A href='?src=\ref[src];operation=screw'>[src.screwloose ? "Yes" : "No"]</A>"),
+			text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"]</A>"))
 
-	user << browse("<HEAD><TITLE>Cleaner v1.0 controls</TITLE></HEAD>[dat]", "window=autocleaner")
+	user << browse("<HEAD><TITLE>Cleaner v1.0 controls</TITLE></HEAD>[entity_ja(dat)]", "window=autocleaner")
 	onclose(user, "autocleaner")
-	return
 
 /obj/machinery/bot/cleanbot/Topic(href, href_list)
 	. = ..()
@@ -127,9 +120,9 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 			src.should_patrol =!src.should_patrol
 			src.patrol_path = null
 		if("freq")
-			var/freq = text2num(input("Select frequency for  navigation beacons", "Frequnecy", num2text(beacon_freq / 10))) * 10
+			var/freq = input("Select frequency for  navigation beacons", "Frequnecy", num2text(beacon_freq / 10)) as num
 			if (freq > 0)
-				src.beacon_freq = freq
+				src.beacon_freq = freq * 10
 		if("screw")
 			src.screwloose = !src.screwloose
 			to_chat(usr, "<span class='notice>You twiddle the screw.</span>")
@@ -362,7 +355,7 @@ text("<A href='?src=\ref[src];operation=oddbutton'>[src.oddbutton ? "Yes" : "No"
 		qdel(src)
 
 	else if (istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
+		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)), MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)

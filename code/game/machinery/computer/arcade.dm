@@ -106,11 +106,9 @@
 	enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	name = (name_action + name_part1 + name_part2)
 
-/obj/machinery/computer/arcade/attack_hand(mob/user)
-	if(..())
-		return
-	user.set_machine(src)
+/obj/machinery/computer/arcade/ui_interact(mob/user)
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
+
 	dat += "<center><h4>[src.enemy_name]</h4></center>"
 
 	dat += "<br><center><h3>[src.temp]</h3></center>"
@@ -125,9 +123,8 @@
 
 	dat += "</b></center>"
 
-	user << browse(dat, "window=arcade")
+	user << browse(entity_ja(dat), "window=arcade")
 	onclose(user, "arcade")
-	return
 
 /obj/machinery/computer/arcade/Topic(href, href_list)
 	. = ..()

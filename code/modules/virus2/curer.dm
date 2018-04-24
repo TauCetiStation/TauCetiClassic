@@ -37,18 +37,7 @@
 /obj/machinery/computer/curer/proc/unvirus()
 	virusing = 0
 
-/obj/machinery/computer/curer/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/curer/attack_paw(mob/user)
-
-	return src.attack_hand(user)
-	return
-
-/obj/machinery/computer/curer/attack_hand(mob/user)
-	if(..())
-		return
-	user.machine = src
+/obj/machinery/computer/curer/ui_interact(mob/user)
 	var/dat
 	if(curing)
 		dat = "Antibody production in progress"
@@ -61,18 +50,19 @@
 		if(B)
 			dat = "Blood sample inserted."
 			var/code = ""
-			for(var/V in ANTIGENS) if(text2num(V) & B.data["antibodies"]) code += ANTIGENS[V]
-			dat += "<BR>Antibodies: [code]"
-			dat += "<BR><A href='?src=\ref[src];antibody=1'>Begin antibody production</a>"
+			for(var/V in ANTIGENS)
+				if(text2num(V) & B.data["antibodies"])
+					code += ANTIGENS[V]
+					dat += "<BR>Antibodies: [code]"
+					dat += "<BR><A href='?src=\ref[src];antibody=1'>Begin antibody production</a>"
 		else
 			dat += "<BR>Please check container contents."
 		dat += "<BR><A href='?src=\ref[src];eject=1'>Eject container</a>"
 	else
 		dat = "Please insert a container."
 
-	user << browse(dat, "window=computer;size=400x500")
+	user << browse(entity_ja(dat), "window=computer;size=400x500")
 	onclose(user, "computer")
-	return
 
 /obj/machinery/computer/curer/process()
 	..()

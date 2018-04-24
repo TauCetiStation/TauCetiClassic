@@ -351,12 +351,12 @@
 	if(custom_name)
 		return 0
 	var/newname
-	newname = input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text
-	if (newname != "")
+	newname = sanitize_safe(input(src,"You are a robot. Enter a name, or leave blank for the default name.", "Name change","") as text, MAX_NAME_LEN)
+	if (newname)
 		custom_name = newname
-
-	updatename()
-	updateicon()
+		
+		updatename()
+		updateicon()
 
 /mob/living/silicon/robot/show_alerts()
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY>\n"
@@ -377,7 +377,7 @@
 		dat += "<BR>\n"
 
 	viewalerts = 1
-	src << browse(dat, "window=robotalerts&can_close=0")
+	src << browse(entity_ja(dat), "window=robotalerts&can_close=0")
 
 /mob/living/silicon/robot/proc/self_diagnosis()
 	if(!is_component_functioning("diagnosis unit"))
@@ -392,7 +392,7 @@
 		var/datum/robot_component/C = components[V]
 		dat += "<b>[C.name]</b><br><table><tr><td>Brute Damage:</td><td>[C.brute_damage]</td></tr><tr><td>Electronics Damage:</td><td>[C.electronics_damage]</td></tr><tr><td>Powered:</td><td>[(!C.idle_usage || C.is_powered()) ? "Yes" : "No"]</td></tr><tr><td>Toggled:</td><td>[ C.toggled ? "Yes" : "No"]</td></table><br>"
 
-	src << browse(dat, "window=robotdiagnosis")
+	src << browse(entity_ja(dat), "window=robotdiagnosis")
 
 /mob/living/silicon/robot/proc/toggle_lights()
 	if (stat == DEAD)
@@ -443,7 +443,7 @@
 					if(malf.apcs >= 3)
 						stat(null, "Time until station control secured: [max(malf.AI_win_timeleft/(malf.apcs/3), 0)] seconds")
 			else if(ticker.mode:malf_mode_declared)
-				stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/APC_MIN_TO_MALDF_DECLARE), 0)]")
+				stat(null, "Time left: [max(ticker.mode:AI_win_timeleft/(ticker.mode:apcs/APC_MIN_TO_MALF_DECLARE), 0)]")
 	return 0
 
 
@@ -557,6 +557,7 @@
 		if (!getBruteLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
+		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/weapon/weldingtool/WT = W
 		if (WT.remove_fuel(0))
 			adjustBruteLoss(-30)
@@ -572,6 +573,7 @@
 		if (!getFireLoss())
 			to_chat(user, "Nothing to fix here!")
 			return
+		user.SetNextMove(CLICK_CD_INTERACT)
 		var/obj/item/stack/cable_coil/coil = W
 		if(!coil.use(1))
 			return
@@ -695,6 +697,7 @@
 	else if(istype(W, /obj/item/weapon/card/emag))		// trying to unlock with an emag card
 		if(!opened)//Cover is closed
 			if(locked)
+				user.SetNextMove(CLICK_CD_MELEE)
 				if(prob(90))
 					var/obj/item/weapon/card/emag/emag = W
 					emag.uses--
@@ -904,13 +907,13 @@
 	return
 
 /mob/living/silicon/robot/attack_animal(mob/living/simple_animal/M)
+	M.do_attack_animation(src)
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -921,7 +924,6 @@
 /mob/living/silicon/robot/attack_hand(mob/user)
 
 	add_fingerprint(user)
-
 	if(opened && !wiresexposed && (!istype(user, /mob/living/silicon)))
 		var/datum/robot_component/cell_component = components["power cell"]
 		if(cell)
@@ -1076,7 +1078,7 @@
 		else
 			dat += text("[obj]: \[<A HREF=?src=\ref[src];act=\ref[obj]>Activate</A> | <B>Deactivated</B>\]<BR>")
 */
-	src << browse(dat, "window=robotmod")
+	src << browse(entity_ja(dat), "window=robotmod")
 
 
 /mob/living/silicon/robot/Topic(href, href_list)
@@ -1255,14 +1257,14 @@
 	set desc = "Sets a description which will be shown when someone examines you."
 	set category = "IC"
 
-	pose =  copytext(sanitize(input(usr, "This is [src]. It is...", "Pose", null)  as text), 1, MAX_MESSAGE_LEN)
+	pose = sanitize(input(usr, "This is [src]. It is...", "Pose", input_default(pose)) as text)
 
 /mob/living/silicon/robot/verb/set_flavor()
 	set name = "Set Flavour Text"
 	set desc = "Sets an extended description of your character's features."
 	set category = "IC"
 
-	flavor_text =  copytext(sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", null)  as text), 1)
+	flavor_text =  sanitize(input(usr, "Please enter your new flavour text.", "Flavour text", input_default(flavor_text))  as text)
 
 /mob/living/silicon/robot/proc/choose_icon(triesleft, list/module_sprites)
 

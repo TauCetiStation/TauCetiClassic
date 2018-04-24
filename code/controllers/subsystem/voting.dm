@@ -86,14 +86,14 @@ var/datum/subsystem/vote/SSvote
 	var/text
 	if(winners.len > 0)
 		if(question)
-			text += "<b>[sanitize_plus_chat(question)]</b>"
+			text += "<b>[question]</b>"
 		else
 			text += "<b>[capitalize(mode)] Vote</b>"
 		for(var/i=1,i<=choices.len,i++)
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
-			text += "\n<b>[sanitize_plus_chat(choices[i])]:</b> [votes]"
+			text += "\n<b>[choices[i]]:</b> [votes]"
 		if(mode != "custom")
 			if(winners.len > 1)
 				text = "\n<b>Vote Tied Between:</b>"
@@ -191,11 +191,11 @@ var/datum/subsystem/vote/SSvote
 						return 0
 				choices.Add("End Shift","Continue Playing")
 			if("custom")
-				question = capitalize(sanitize_simple(stripped_input(usr,"What is the vote for?")))
+				question = capitalize(sanitize(input(usr,"What is the vote for?")))
 				if(!question)
 					return 0
 				for(var/i=1,i<=10,i++)
-					var/option = capitalize(sanitize_simple(stripped_input(usr,"Please enter an option or hit cancel to finish")))
+					var/option = capitalize(sanitize(input(usr,"Please enter an option or hit cancel to finish")))
 					if(!option || mode || !usr.client)
 						break
 					choices.Add(option)
@@ -206,27 +206,25 @@ var/datum/subsystem/vote/SSvote
 		voting_started_time = world.time
 		var/text = "[capitalize(mode)] vote started by [initiator]."
 		if(mode == "custom")
-			text += "\n[sanitize_plus_chat(question)]"
+			text += "\n[question]"
 		else
 			started_time = world.time
 		log_vote(text)
 		world << sound('sound/misc/notice1.ogg')
-		to_chat(world, "\n<font color='purple'><b>[sanitize_plus_chat(text)]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
+		to_chat(world, "\n<font color='purple'><b>[text]</b>\nType <b>vote</b> or click <a href='?src=\ref[src]'>here</a> to place your votes.\nYou have [config.vote_period/10] seconds to vote.</font>")
 		time_remaining = round(config.vote_period/10)
 
-		if(vote_type == "crew_transfer")
+		if(vote_type != "custom")
 			for(var/client/C in clients)
 				var/datum/browser/popup = new(C, "vote", "Voting Panel")
 				popup.set_window_options("can_close=0")
 				popup.set_content(SSvote.interface(C))
 				popup.open(0)
-			addtimer(CALLBACK(src , .proc/return_ooc, ooc_allowed, dsay_allowed), config.vote_period)
+		if(vote_type == "crew_transfer")
+			addtimer(CALLBACK(src , .proc/return_ooc, ooc_allowed), config.vote_period)
 			if(ooc_allowed)
 				ooc_allowed = FALSE
 				to_chat(world, "<B>The OOC channel will be globally disabled during vote!</B>")
-			if(dsay_allowed)
-				dsay_allowed = FALSE
-				to_chat(world, "<B>Deadchat will be globally disabled during vote!</B>")
 		return 1
 	return 0
 
@@ -240,7 +238,7 @@ var/datum/subsystem/vote/SSvote
 
 	if(mode)
 		if(question)
-			. += "<h2>Vote: '[sanitize_alt(question)]'</h2>"
+			. += "<h2>Vote: '[sanitize(question)]'</h2>"
 		else
 			. += "<h2>Vote: [capitalize(mode)]</h2>"
 		. += "Time Left: [time_remaining] s<hr><ul>"
@@ -248,7 +246,7 @@ var/datum/subsystem/vote/SSvote
 			var/votes = choices[choices[i]]
 			if(!votes)
 				votes = 0
-			. += "<li><a href='?src=\ref[src];vote=[i]'>[sanitize_alt(choices[i])]</a>"
+			. += "<li><a href='?src=\ref[src];vote=[i]'>[sanitize(choices[i])]</a>"
 			if(mode == "custom" || admin)
 				. += "([votes] votes)"
 			if(choices[i] == voted[C.ckey])
@@ -341,10 +339,7 @@ var/datum/subsystem/vote/SSvote
 	popup.set_content(SSvote.interface(client))
 	popup.open(0)
 
-/datum/subsystem/vote/proc/return_ooc(old_stat_ooc, old_stat_deadchat)
+/datum/subsystem/vote/proc/return_ooc(old_stat_ooc)
 	if(old_stat_ooc && !ooc_allowed)
 		to_chat(world, "<B>The OOC channel has been globally enabled!</B>")
 		ooc_allowed = TRUE
-	if(old_stat_deadchat && !dsay_allowed)
-		to_chat(world, "<B>Deadchat has been globally enabled!</B>")
-		dsay_allowed = TRUE

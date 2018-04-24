@@ -408,6 +408,7 @@
 /obj/mecha/attack_hand(mob/user)
 	src.log_message("Attack by hand/paw. Attacker - [user].",1)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 
 	if ((HULK in user.mutations) && !prob(src.deflect_chance))
 		src.take_damage(15)
@@ -425,6 +426,7 @@
 /obj/mecha/attack_alien(mob/user)
 	src.log_message("Attack by alien. Attacker - [user].",1)
 	user.do_attack_animation(src)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(!prob(src.deflect_chance))
 		src.take_damage(15)
 		src.check_for_internal_damage(list(MECHA_INT_TEMP_CONTROL,MECHA_INT_TANK_BREACH,MECHA_INT_CONTROL_LOST))
@@ -442,10 +444,11 @@
 
 /obj/mecha/attack_animal(mob/living/simple_animal/user)
 	src.log_message("Attack by simple animal. Attacker - [user].",1)
+	..()
+
 	if(user.melee_damage_upper == 0)
 		user.emote("[user.friendly] [src]")
 	else
-		user.do_attack_animation(src)
 		if(!prob(src.deflect_chance))
 			var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 			src.take_damage(damage)
@@ -499,7 +502,7 @@
 		src.log_append_to_last("Armor saved.")
 		return
 	var/ignore_threshold
-	if(Proj.flag == "taser")
+	if(is_type_in_list(Proj, taser_projectiles)) //taser_projectiles defined in projectile.dm
 		use_power(200)
 		return
 	if(istype(Proj, /obj/item/projectile/beam/pulse))
@@ -708,6 +711,7 @@
 
 	else if(istype(W, /obj/item/weapon/weldingtool) && user.a_intent != "hurt")
 		var/obj/item/weapon/weldingtool/WT = W
+		user.SetNextMove(CLICK_CD_MELEE)
 		if (WT.remove_fuel(0,user))
 			if (hasInternalDamage(MECHA_INT_TANK_BREACH))
 				clearInternalDamage(MECHA_INT_TANK_BREACH)
@@ -757,11 +761,13 @@
 	else if(istype(W, /obj/item/weapon/changeling_hammer))
 		var/obj/item/weapon/changeling_hammer/Ham = W
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		visible_message("\red <B>[user]</B> has punched \the <B>[src]!</B>")
 		playsound(loc, 'sound/effects/grillehit.ogg', 50, 1)
 		if(prob(50) && Ham.use_charge(user,6))
 			take_damage(Ham.force * 3)
 	else
+		user.SetNextMove(CLICK_CD_MELEE)
 		call((proc_res["dynattackby"]||src), "dynattackby")(W,user)
 /*
 		src.log_message("Attacked by [W]. Attacker - [user]")
@@ -1088,7 +1094,7 @@
 	if(usr!=src.occupant)
 		return
 	//pr_update_stats.start()
-	src.occupant << browse(src.get_stats_html(), "window=exosuit")
+	src.occupant << browse(entity_ja(src.get_stats_html()), "window=exosuit")
 	return
 
 /*
@@ -1394,7 +1400,7 @@
 		output += "[a_name] - <a href='?src=\ref[src];add_req_access=[a];user=\ref[user];id_card=\ref[id_card]'>Add</a><br>"
 	output += "<hr><a href='?src=\ref[src];finish_req_access=1;user=\ref[user]'>Finish</a> <font color='red'>(Warning! The ID upload panel will be locked. It can be unlocked only through Exosuit Interface.)</font>"
 	output += "</body></html>"
-	user << browse(output, "window=exosuit_add_access")
+	user << browse(entity_ja(output), "window=exosuit_add_access")
 	onclose(user, "exosuit_add_access")
 	return
 
@@ -1413,7 +1419,7 @@
 						[(state>0) ?"<a href='?src=\ref[src];set_internal_tank_valve=1;user=\ref[user]'>Set Cabin Air Pressure</a>":null]
 						</body>
 						</html>"}
-	user << browse(output, "window=exosuit_maint_console")
+	user << browse(entity_ja(output), "window=exosuit_maint_console")
 	onclose(user, "exosuit_maint_console")
 	return
 
@@ -1514,13 +1520,13 @@
 	if (href_list["view_log"])
 		if(usr != src.occupant)	return
 		usr << sound('sound/mecha/UI_SCI-FI_Tone_10_stereo.ogg',channel = 4, volume = 100)
-		src.occupant << browse(src.get_log_html(), "window=exosuit_log")
+		src.occupant << browse(entity_ja(src.get_log_html()), "window=exosuit_log")
 		onclose(occupant, "exosuit_log")
 		return
 	if (href_list["change_name"])
 		if(usr != src.occupant)	return
-		var/newname = strip_html_simple(input(occupant,"Choose new exosuit name","Rename exosuit",initial(name)) as text, MAX_NAME_LEN)
-		if(newname && trim(newname))
+		var/newname = sanitize_safe(input(occupant,"Choose new exosuit name","Rename exosuit",initial(name)) as text, MAX_NAME_LEN)
+		if(newname)
 			usr << sound('sound/mecha/UI_SCI-FI_Tone_Deep_Wet_22_stereo_complite.ogg',channel = 4, volume=100)
 			name = newname
 		else

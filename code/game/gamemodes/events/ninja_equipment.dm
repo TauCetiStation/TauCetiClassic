@@ -482,7 +482,7 @@ ________________________________________________________________________________
 	dat += "</body></html>"
 
 	//Setting the can>resize etc to 0 remove them from the drag bar but still allows the window to be draggable.
-	display_to << browse(dat,"window=spideros;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
+	display_to << browse(entity_ja(dat),"window=spideros;size=400x444;border=1;can_resize=1;can_close=0;can_minimize=0")
 
 //=======//SPIDEROS TOPIC PROC//=======//
 
@@ -535,8 +535,7 @@ ________________________________________________________________________________
 
 		if("Message")
 			var/obj/item/device/pda/P = locate(href_list["target"])
-			var/t = input(U, "Please enter untraceable message.") as text
-			t = sanitize(copytext(t, 1, MAX_MESSAGE_LEN))
+			var/t = sanitize(input(U, "Please enter untraceable message.") as text)
 			if(!t||U.stat||U.wear_suit!=src||!s_initialized)//Wow, another one of these. Man...
 				display_to << browse(null, "window=spideros")
 				return
@@ -560,7 +559,7 @@ ________________________________________________________________________________
 					if(M.stat == DEAD && M.client && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS)) // src.client is so that ghosts don't have to listen to mice
 						if(isnewplayer(M))
 							continue
-						M.show_message("<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[sanitize_chat(t)]</span></span>")
+						M.show_message("<span class='game say'>PDA Message - <span class='name'>[U]</span> -> <span class='name'>[P.owner]</span>: <span class='message'>[t]</span></span>")
 
 				if (!P.message_silent)
 					playsound(P.loc, 'sound/machines/twobeep.ogg', 50, 1)
@@ -863,9 +862,11 @@ ________________________________________________________________________________
 			to_chat(U, "Replenished a total of [total_reagent_transfer ? total_reagent_transfer : "zero"] chemical units.")//Let the player know how much total volume was added.
 			return
 		else if(istype(I, /obj/item/weapon/stock_parts/cell))
-			if(I:maxcharge>cell.maxcharge&&n_gloves&&n_gloves.candrain)
+			if(I:maxcharge > cell.maxcharge && n_gloves && n_gloves.candrain)
+				if(U.is_busy(src))
+					return
 				to_chat(U, "\blue Higher maximum capacity detected.\nUpgrading...")
-				if (n_gloves&&n_gloves.candrain&&do_after(U,s_delay, target = U))
+				if (n_gloves && n_gloves.candrain && do_after(U,s_delay, target = U))
 					U.drop_item()
 					I.loc = src
 					I:charge = min(I:charge+cell.charge, I:maxcharge)
@@ -883,6 +884,8 @@ ________________________________________________________________________________
 		else if(istype(I, /obj/item/weapon/disk/tech_disk))//If it's a data disk, we want to copy the research on to the suit.
 			var/obj/item/weapon/disk/tech_disk/TD = I
 			if(TD.stored)//If it has something on it.
+				if(U.is_busy(src))
+					return
 				to_chat(U, "Research information detected, processing...")
 				if(do_after(U,s_delay,target = U))
 					for(var/datum/tech/current_data in stored_research)
@@ -907,25 +910,47 @@ ________________________________________________________________________________
 		cancel_stealth()
 	else
 		anim(U.loc,U,'icons/mob/mob.dmi',,"cloak",,U.dir)
-		s_active=!s_active
+		s_active=TRUE
 		icon_state = U.gender==FEMALE ? "s-ninjasf" : "s-ninjas"
 		U.regenerate_icons()	//update their icons
-		to_chat(U, "\blue You are now invisible to normal detection.")
-		for(var/mob/O in oviewers(U))
-			O.show_message("[U.name] vanishes into thin air!",1)
+		U.visible_message("[U.name] vanishes into thin air!", "<span class='notice'>You are now invisible to normal detection.</span>")
 		U.invisibility = INVISIBILITY_LEVEL_TWO
+		if(istype(U.get_active_hand(), /obj/item/weapon/melee/energy/blade))
+			U.drop_item()
+		if(istype(U.get_inactive_hand(), /obj/item/weapon/melee/energy/blade))
+			U.swap_hand()
+			U.drop_item()
 	return
 
 /obj/item/clothing/suit/space/space_ninja/proc/cancel_stealth()
 	var/mob/living/carbon/human/U = affecting
 	if(s_active)
 		anim(U.loc,U,'icons/mob/mob.dmi',,"uncloak",,U.dir)
-		s_active=!s_active
-		to_chat(U, "\blue You are now visible.")
+		s_active=FALSE
 		U.invisibility = 0
-		for(var/mob/O in oviewers(U))
-			O.show_message("[U.name] appears from thin air!",1)
-		if(U.mind.protector_role == 1)
+		U.visible_message("[U.name] appears from thin air!", "<span class='notice'>You are now visible.</span>")
+		if(U.mind.protector_role)
+			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
+		else
+			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
+		U.regenerate_icons()	//update their icons
+		return 1
+	return 0
+
+/obj/item/clothing/suit/space/space_ninja/proc/pop_stealth()
+	var/mob/living/carbon/human/U = affecting
+	if(s_active)
+		var/datum/effect/effect/system/spark_spread/sparks = new /datum/effect/effect/system/spark_spread()
+		sparks.set_up(3, 0, get_turf(U))
+		sparks.start()
+		sparks = new /datum/effect/effect/system/spark_spread()
+		sparks.set_up(3, 0, get_turf(U))
+		sparks.start()
+
+		s_active=FALSE
+		U.invisibility = 0
+		U.visible_message("[U.name] appears from thin air!", "<span class='notice'>You are now visible.</span>")
+		if(U.mind.protector_role)
 			icon_state = U.gender==FEMALE ? "s-ninjakf" : "s-ninjak"
 		else
 			icon_state = U.gender==FEMALE ? "s-ninjanf" : "s-ninjan"
@@ -968,6 +993,16 @@ ________________________________________________________________________________
 			else
 				to_chat(user, "�rr�R �a��a�� No-�-� f��N� 3RR�r")
 
+/obj/item/clothing/suit/space/space_ninja/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+	if(reaction_type == REACTION_ITEM_TAKE || reaction_type == REACTION_ITEM_TAKEOFF)
+		return
+
+	if(reaction_type == REACTION_HIT_BY_BULLET || reaction_type == REACTION_INTERACT_ARMED || reaction_type == REACTION_INTERACT_UNARMED || reaction_type == REACTION_THROWITEM || reaction_type == REACTION_ATACKED)
+		pop_stealth()
+		return
+
+	cancel_stealth()
+
 /*
 ===================================================================================
 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<SPACE NINJA GLOVES>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -995,16 +1030,17 @@ ________________________________________________________________________________
 
 		if("APC")
 			var/obj/machinery/power/apc/A = target
-			if(A.cell&&A.cell.charge)
+			if(A.cell && A.cell.charge)
 				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
 				spark_system.set_up(5, 0, A.loc)
-				while(G.candrain&&A.cell.charge>0&&!maxcapacity)
+				while(G.candrain && A.cell.charge > 0 && !maxcapacity)
 					drain = rand(G.mindrain,G.maxdrain)
 					if(A.cell.charge<drain)
 						drain = A.cell.charge
 					if(S.cell.charge+drain>S.cell.maxcharge)
 						drain = S.cell.maxcharge-S.cell.charge
 						maxcapacity = 1//Reached maximum battery capacity.
+
 					if (do_after(U,10,target = A))
 						spark_system.start()
 						playsound(A.loc, "sparks", 50, 1)
@@ -1047,7 +1083,7 @@ ________________________________________________________________________________
 		if("CELL")
 			var/obj/item/weapon/stock_parts/cell/A = target
 			if(A.charge)
-				if (G.candrain&&do_after(U,30,target = A))
+				if (G.candrain && do_after(U,30,target = A))
 					to_chat(U, "\blue Gained <B>[A.charge]</B> energy from the cell.")
 					if(S.cell.charge+A.charge>S.cell.maxcharge)
 						S.cell.charge=S.cell.maxcharge
@@ -1482,8 +1518,9 @@ It is possible to destroy the net by the occupant or someone else.
 		..()
 		return
 
-	attack_hand()
-		if (HULK in usr.mutations)
+	attack_hand(mob/living/carbon/human/user)
+		if (HULK in user.mutations)
+			user.SetNextMove(CLICK_CD_MELEE)
 			to_chat(usr, text("\blue You easily destroy the energy net."))
 			for(var/mob/O in oviewers(src))
 				O.show_message(text("\red [] rips the energy net apart!", usr), 1)
@@ -1494,9 +1531,10 @@ It is possible to destroy the net by the occupant or someone else.
 	attack_paw()
 		return attack_hand()
 
-	attack_alien()
-		usr.do_attack_animation(src)
-		if (islarva(usr) || isfacehugger(usr))
+	attack_alien(mob/user)
+		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
+		if (islarva(user) || isfacehugger(user))
 			return
 		to_chat(usr, text("\green You claw at the net."))
 		for(var/mob/O in oviewers(src))
@@ -1512,6 +1550,7 @@ It is possible to destroy the net by the occupant or someone else.
 
 	attackby(obj/item/weapon/W, mob/user)
 		var/aforce = W.force
+		user.SetNextMove(CLICK_CD_MELEE)
 		health = max(0, health - aforce)
 		healthcheck()
 		..()

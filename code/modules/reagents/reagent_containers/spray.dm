@@ -15,7 +15,7 @@
 	var/spray_size = 3
 	var/list/spray_sizes = list(1,3)
 	volume = 250
-	var/safety = 0
+	var/safety = FALSE
 
 	action_button_name = "Switch Spray"
 
@@ -25,7 +25,7 @@
 	verbs -= /obj/item/weapon/reagent_containers/verb/set_APTFT
 
 /obj/item/weapon/reagent_containers/spray/afterattack(atom/A, mob/user)
-	if(istype(A, /obj/item/weapon/storage) || istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
+	if(istype(A, /obj/structure/table) || istype(A, /obj/structure/rack) || istype(A, /obj/structure/closet) \
 	|| istype(A, /obj/item/weapon/reagent_containers) || istype(A, /obj/structure/sink) || istype(A, /obj/structure/janitorialcart))
 		return
 
@@ -113,6 +113,36 @@
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
 		reagents.reaction(usr.loc)
 		spawn(5) src.reagents.clear_reagents()
+//hair dyes!
+/obj/item/weapon/reagent_containers/spray/hair_color_spray
+	name = "hair color spray"
+	desc = "Changes hair colour! Don't forget to read the label!"
+	icon = 'icons/obj/items.dmi'
+	icon_state = "hairspray"
+	item_state = "hairspray"
+	amount_per_transfer_from_this = 1
+	possible_transfer_amounts = list(1,5,10)
+	spray_size = 1
+	spray_sizes = list(1)
+
+/obj/item/weapon/reagent_containers/spray/hair_color_spray/atom_init()
+	. = ..()
+	name = "white hair color spray"
+	icon_state = "hairspraywhite"
+
+/obj/item/weapon/reagent_containers/spray/hair_color_spray/verb/change_label()
+	set name = "Change Label"
+	set category = "Object"
+	set src in usr
+
+	var/colour_spray = input(usr, "Choose desired label colour") as null|anything in list("white", "red", "green", "blue", "black", "brown", "blond")
+	if(colour_spray)
+		name = "[colour_spray] [initial(name)]"
+		icon_state = "[initial(icon_state)][colour_spray]"
+	else
+		name = "white hair color spray"
+		icon_state = "hairspraywhite"
+	update_icon()
 
 //space cleaner
 /obj/item/weapon/reagent_containers/spray/cleaner
@@ -227,7 +257,7 @@
 /obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie
 	name = "Plant-B-Gone"
 	desc = "Kills those pesky weeds!"
-	icon = 'icons/obj/hydroponics.dmi'
+	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "plantbgone"
 	item_state = "plantbgone"
 	volume = 100

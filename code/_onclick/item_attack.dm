@@ -6,39 +6,38 @@
 // No comment
 /atom/proc/attackby(obj/item/W, mob/user, params)
 	return
+
 /atom/movable/attackby(obj/item/W, mob/user, params)
 	user.do_attack_animation(src)
-	if(W && !(W.flags&NOBLUDGEON))
+	user.SetNextMove(CLICK_CD_MELEE)
+	add_fingerprint(user)
+	if(W && !(W.flags & NOBLUDGEON))
 		visible_message("<span class='danger'>[src] has been hit by [user] with [W].</span>")
 
 /mob/living/attackby(obj/item/I, mob/user, params)
-	if(istype(I) && ismob(user))
-		if(user.zone_sel && user.zone_sel.selecting)
-			I.attack(src, user, user.zone_sel.selecting)
-		else
-			I.attack(src, user)
+	if(!istype(I) || !ismob(user))
+		return
+	user.SetNextMove(CLICK_CD_MELEE)
 
-		if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
-			var/mob/living/carbon/human/H = user
-			if(H.wear_suit)
-				if(istype(H.wear_suit, /obj/item/clothing/suit/armor/abductor/vest))
-					for(var/obj/item/clothing/suit/armor/abductor/vest/V in list(H.wear_suit))
-						if(V.stealth_active)
-							V.DeactivateStealth()
-				if(istype(H.wear_suit, /obj/item/clothing/suit/space/vox/stealth))
-					for(var/obj/item/clothing/suit/space/vox/stealth/V in list(H.wear_suit))
-						if(V.on)
-							V.overload()
+	if(user.zone_sel && user.zone_sel.selecting)
+		I.attack(src, user, user.zone_sel.selecting)
+	else
+		I.attack(src, user)
 
+	if(ishuman(user))	//When abductor will hit someone from stelth he will reveal himself
+		var/mob/living/carbon/human/H = user
+		if(istype(H.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = H.wear_suit
+			V.attack_reaction(H, REACTION_INTERACT_ARMED, src)
 
-		if(butcher_results && stat == DEAD)
-			if(buckled && istype(buckled, /obj/structure/kitchenspike))
-				var/sharpness = is_sharp(I)
-				if(sharpness)
-					to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-					playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-					if(do_mob(user, src, 80/sharpness))
-						harvest(user)
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if(istype(H.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = H.wear_suit
+			V.attack_reaction(src, REACTION_ATACKED, user)
+
+	if(attempt_harvest(I, user))
+		return
 
 // Proximity_flag is 1 if this afterattack was called on something adjacent, in your square, or on your person.
 // Click parameters is the params string from byond Click() code, see that documentation.
@@ -47,14 +46,10 @@
 
 
 /obj/item/proc/attack(mob/living/M, mob/living/user, def_zone)
-
-	if (!istype(M)) // not sure if this is the right thing...
-		return 0
 	var/messagesource = M
 	if (can_operate(M))        //Checks if mob is lying down on table for surgery
 		if (do_surgery(M,user,src))
 			return 0
-
 	// Knifing
 	if(edge)
 		for(var/obj/item/weapon/grab/G in M.grabbed_by)
@@ -97,8 +92,8 @@
 	if(HULK in user.mutations)
 		power *= 2
 
-	if(!istype(M, /mob/living/carbon/human))
-		if(istype(M, /mob/living/carbon/slime))
+	if(!ishuman(M))
+		if(isslime(M))
 			var/mob/living/carbon/slime/slime = M
 			if(prob(25))
 				to_chat(user, "\red [src] passes right through [M]!")
@@ -187,8 +182,9 @@
 
 
 
-	if(istype(M, /mob/living/carbon/human))
-		return M:attacked_by(src, user, def_zone)	//make sure to return whether we have hit or miss
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		return H.attacked_by(src, user, def_zone)	//make sure to return whether we have hit or miss
 	else
 		switch(damtype)
 			if("brute")

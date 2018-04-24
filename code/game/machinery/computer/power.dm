@@ -35,12 +35,7 @@
 			powernet = attached.get_powernet()
 	return
 
-/obj/machinery/computer/monitor/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/monitor/interact(mob/user)
+/obj/machinery/computer/monitor/ui_interact(mob/user)
 
 	if ( (get_dist(src, user) > 1 ) || (stat & (BROKEN|NOPOWER)) )
 		if (!issilicon(user) && !isobserver(user))
@@ -49,7 +44,6 @@
 			return
 
 
-	user.set_machine(src)
 	var/t = "<TT><B>Power Monitoring</B><HR>"
 
 	t += "<BR><HR><A href='?src=\ref[src];update=1'>Refresh</A>"
@@ -83,7 +77,7 @@
 
 		t += "</FONT></PRE></TT>"
 
-	user << browse(t, "window=powcomp;size=450x900")
+	user << browse(entity_ja(t), "window=powcomp;size=450x900")
 	onclose(user, "powcomp")
 
 

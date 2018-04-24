@@ -145,6 +145,7 @@ Pipelines + Other Objects -> Pipe network
 	if(istype(W, /obj/item/device/analyzer))
 		return
 	else if(istype(W, /obj/item/weapon/wrench))
+		if(user.is_busy()) return
 		if(can_unwrench(user))
 			var/turf/T = get_turf(src)
 			if (level == 1 && isturf(T) && T.intact)

@@ -40,15 +40,17 @@
 							"agent helmet" 	=1,
 							"radio silencer"=1)
 
-/obj/machinery/abductor/console/attack_hand(mob/user)
-	if(..())
-		return
-	if(!IsAbductor(user) && !isobserver(user))
+/obj/machinery/abductor/console/interact(mob/user)
+	if(!IsAbductor(user) && !isAI(user) && !isobserver(user))
+		if(user.is_busy())
+			return
 		to_chat(user, "<span class='warning'>You start mashing alien buttons at random!</span>")
 		if(do_after(user, 100, target = src))
 			TeleporterSend()
-		return
-	user.set_machine(src)
+	else
+		..()
+
+/obj/machinery/abductor/console/ui_interact(mob/user)
 	var/dat = ""
 	dat += "<H2> Abductsoft 3000 </H2>"
 
@@ -95,11 +97,11 @@
 		dat += "<font color = #7E8D9F><b>Selected: </b></font>[vest.disguise ? "[vest.disguise.name]" : "Nobody"]"
 	else
 		dat += "<span class='bad'>NO AGENT VEST DETECTED</span>"
+
 	var/datum/browser/popup = new(user, "computer", "Abductor Console", 400, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(icon, icon_state))
 	popup.open()
-	return
 
 /obj/machinery/abductor/console/Topic(href, href_list)
 	. = ..()

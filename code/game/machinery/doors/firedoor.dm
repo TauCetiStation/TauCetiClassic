@@ -1,6 +1,3 @@
-/var/const/OPEN = 1
-/var/const/CLOSED = 2
-
 /obj/machinery/door/firedoor
 	name = "\improper Emergency Shutter"
 	desc = "Emergency air-tight shutter, capable of sealing off breached areas."
@@ -14,7 +11,6 @@
 	glass = 0
 	door_open_sound  = 'sound/machines/electric_door_open.ogg'
 	door_close_sound = 'sound/machines/electric_door_open.ogg'
-	ghost_must_be_admin = TRUE //currently not needed, but what if someone deleted allowed() in attack_hand() proc?
 
 	//These are frequenly used with windows, so make sure zones can pass.
 	//Generally if a firedoor is at a place where there should be a zone boundery then there will be a regular door underneath it.
@@ -105,11 +101,10 @@
 			return
 		else if(!density)
 			return
-		else
+		else if(!user.is_busy(src))
 			to_chat(user, "\red You force your claws between the doors and begin to pry them open...")
 			playsound(src.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
-			if (do_after(user,40,target = src))
-				if(!src) return
+			if (do_after(user,40,target = src) && src)
 				open(1)
 	return
 
@@ -191,7 +186,7 @@
 	if(blocked && istype(C, /obj/item/weapon/crowbar))
 		if(!hatch_open)
 			to_chat(user, "<span class='danger'>You must open the maintenance hatch first!</span>")
-		else
+		else if(!user.is_busy(src))
 			user.visible_message("<span class='danger'>[user] is removing the electronics from \the [src].</span>",
 									"You start to remove the electronics from [src].")
 			if(do_after(user,30,target = src))
@@ -223,7 +218,7 @@
 			"You try to pry \the [src] [density ? "open" : "closed"], but it is welded in place!",\
 			"You hear someone struggle and metal straining.")
 			return
-
+		if(user.is_busy(src)) return
 		user.visible_message("\red \The [user] starts to force \the [src] [density ? "open" : "closed"] with \a [C]!",\
 				"You start forcing \the [src] [density ? "open" : "closed"] with \the [C]!",\
 				"You hear metal strain.")

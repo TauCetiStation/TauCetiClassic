@@ -88,7 +88,7 @@
 		to_chat(user, "<span class='warning'>You cannot unwrench \the [src], it is too exerted due to internal pressure.</span>")
 		add_fingerprint(user)
 		return TRUE
-
+	if(user.is_busy()) return
 	to_chat(user, "<span class='notice'>You begin to unfasten \the [src]...</span>")
 	playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
 
@@ -99,14 +99,6 @@
 			"You hear a ratchet.")
 		new /obj/item/pipe(loc, null, null, src)
 		qdel(src)
-
-/obj/machinery/atmospherics/components/omni/attack_hand(user)
-	if(..())
-		return
-
-	src.add_fingerprint(usr)
-	ui_interact(user)
-	return
 
 /obj/machinery/atmospherics/components/omni/proc/build_icons()
 	if(!check_icon_cache())

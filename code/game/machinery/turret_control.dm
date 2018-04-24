@@ -13,6 +13,8 @@
 	icon_state = "control_standby"
 	anchored = 1
 	density = 0
+	allowed_checks = ALLOWED_CHECK_NONE // we use isLocked proc to open UI.
+
 	var/enabled = 0
 	var/lethal = 0
 	var/locked = 1
@@ -104,56 +106,51 @@
 		return
 	return ..()
 
-/obj/machinery/turretid/attack_hand(mob/user as mob)
-	if(..() || isLocked(user))
+/obj/machinery/turretid/ui_interact(mob/user)
+	if(isLocked(user))
 		return
 
-	interact(user)
-
-/obj/machinery/turretid/interact(mob/user)
-	user.set_machine(src)
-
 	var/dat = text({"
-<table width="100%" cellspacing="0" cellpadding="4">
-	<tr>
-		<td>Status: </td><td>[]</td>
-	</tr>
-	<tr></tr>
-	<tr>
-		<td>Lethal Mode: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Neutralize All Non-Synthetics: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Neutralize All Cyborgs: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Weapon Authorization: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Security Records: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Arrest Status: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check Access Authorization: </td><td>[]</td>
-	</tr>
-	<tr>
-		<td>Check misc. Lifeforms: </td><td>[]</td>
-	</tr>
-</table>"},
+		<table width="100%" cellspacing="0" cellpadding="4">
+			<tr>
+				<td>Status: </td><td>[]</td>
+			</tr>
+			<tr></tr>
+			<tr>
+				<td>Lethal Mode: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Neutralize All Non-Synthetics: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Neutralize All Cyborgs: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Weapon Authorization: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Security Records: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Arrest Status: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check Access Authorization: </td><td>[]</td>
+			</tr>
+			<tr>
+				<td>Check misc. Lifeforms: </td><td>[]</td>
+			</tr>
+		</table>"},
 
-"<A href='?src=\ref[src];command=enable'>[enabled ? "On" : "Off"]</A>",
-"<A href='?src=\ref[src];command=lethal'>[lethal ? "On" : "Off"]</A>",
-"<A href='?src=\ref[src];command=check_n_synth'>[check_n_synth ? "Yes" : "No"]</A>",
-"[(special_control && isAI(user)) ? "<A href='?src=\ref[src];command=shot_synth'>[shot_synth ? "Yes" : "No"]</A>" : "NOT ALLOWED"]",
-"<A href='?src=\ref[src];command=check_weapons'>[check_weapons ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_records'>[check_records ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_arrest'>[check_arrest ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_access'>[check_access ? "Yes" : "No"]</A>",
-"<A href='?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>")
+		"<A href='?src=\ref[src];command=enable'>[enabled ? "On" : "Off"]</A>",
+		"<A href='?src=\ref[src];command=lethal'>[lethal ? "On" : "Off"]</A>",
+		"<A href='?src=\ref[src];command=check_n_synth'>[check_n_synth ? "Yes" : "No"]</A>",
+		"[(special_control && isAI(user)) ? "<A href='?src=\ref[src];command=shot_synth'>[shot_synth ? "Yes" : "No"]</A>" : "NOT ALLOWED"]",
+		"<A href='?src=\ref[src];command=check_weapons'>[check_weapons ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_records'>[check_records ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_arrest'>[check_arrest ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_access'>[check_access ? "Yes" : "No"]</A>",
+		"<A href='?src=\ref[src];command=check_anomalies'>[check_anomalies ? "Yes" : "No"]</A>")
 
 	var/datum/browser/popup = new(user, "window=autoseccontrol", "Turret Installation Controller", 400, 320)
 	popup.set_content(dat)

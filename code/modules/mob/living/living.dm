@@ -32,6 +32,9 @@
 		var/mob/living/carbon/C = src
 		C.spread_disease_to(M, "Contact")
 
+	if(M.pulling == src)
+		M.stop_pulling()
+
 	//BubbleWrap: Should stop you pushing a restrained person out of the way
 	if(ishuman(M))
 		for(var/mob/MM in range(M, 1))
@@ -749,7 +752,7 @@
 
 	if(!isliving(usr) || usr.next_move > world.time)
 		return
-	usr.next_move = world.time + 20
+	usr.SetNextMove(20)
 
 	var/mob/living/L = usr
 
@@ -757,7 +760,7 @@
 
 	if(istype(src.loc,/obj/item/weapon/holder))
 		var/obj/item/weapon/holder/H = src.loc //Get our item holder.
-		var/mob/M = H.loc                      //Get our mob holder (if any).
+		var/mob/living/M = H.loc                      //Get our mob holder (if any).
 
 		if(istype(M))
 			M.drop_from_inventory(H)
@@ -766,15 +769,18 @@
 		else if(istype(H.loc,/obj/item))
 			to_chat(src, "<span class='notice'>You struggle free of [H.loc].</span>")
 			H.forceMove(get_turf(H))
-
-		if(istype(M))
-			for(var/atom/A in M.contents)
-				if(istype(A,/mob/living/simple_animal/borer) || istype(A,/obj/item/weapon/holder))
-					return
-
-		if(ismob(M))
-			M.status_flags &= ~PASSEMOTES
 		return
+
+	if(ishuman(usr) && (!usr.incapacitated()))
+		var/mob/living/carbon/human/D = usr
+		if(D.get_species() == DIONA)
+			var/choices = list()
+			for(var/V in contents)
+				if(istype(V, /mob/living/carbon/monkey/diona))
+					choices += V
+			var/mob/living/carbon/monkey/diona/V = input(D,"Who do wish you to expel from within?") in null|choices
+			to_chat(D, "<span class='notice'>You wriggle [V] out of your insides.</span>")
+			V.splitting(D)
 
 	//Resisting control by an alien mind.
 	if(istype(src.loc,/mob/living/simple_animal/borer))
@@ -809,7 +815,7 @@
 
 	//resisting grabs (as if it helps anyone...)
 	if (!L.stat && !L.restrained())
-		if(L.stunned > 2 || L.weakened)
+		if(L.stunned > 2 || L.weakened > 2)
 			return
 		var/resisting = 0
 		for(var/obj/O in L.requests)
@@ -822,7 +828,7 @@
 				if(GRAB_PASSIVE)
 					qdel(G)
 				if(GRAB_AGGRESSIVE)
-					if(prob(60)) //same chance of breaking the grab as disarm
+					if(prob(50 - (L.lying ? 35 : 0)))
 						L.visible_message("<span class='danger'>[L] has broken free of [G.assailant]'s grip!</span>")
 						qdel(G)
 				if(GRAB_NECK)
@@ -1118,14 +1124,65 @@
 	//reset the pixel offsets to zero
 	floating = 0
 
-/mob/living/proc/harvest(mob/living/user)
+/mob/living/proc/attempt_harvest(obj/item/I, mob/user)
+	if(stat == DEAD && !isnull(butcher_results) && !ishuman(src)) //can we butcher it?
+		if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/butch))
+			if(user.is_busy()) return
+			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
+			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+			if(do_mob(user, src, 80))
+				harvest(user)
+			return TRUE
+
+/mob/living/proc/harvest(mob/user)
 	if(QDELETED(src))
 		return
-	if(butcher_results)
-		if(butcher_results.len)
-			for(var/path in butcher_results)
-				for(var/i = 1 to butcher_results[path])
-					new path(src.loc)
-				butcher_results.Remove(path)
-			visible_message("<span class='notice'>[user] butchers [src].</span>")
-			gib()
+	if(butcher_results.len)
+		for(var/path in butcher_results)
+			for(var/i = 1 to butcher_results[path])
+				new path(src.loc)
+			butcher_results.Remove(path) //In case you want to have things like simple_animals drop their butcher results on gib, so it won't double up below.
+		visible_message("<span class='notice'>[user] butchers [src].</span>")
+		gib()
+
+/mob/living/proc/get_taste_sensitivity()
+	return TRUE
+
+/mob/living/proc/taste_reagents(datum/reagents/tastes)
+	var/t_sens = get_taste_sensitivity()
+	if(!t_sens)//this also works for IPCs and stuff that returns 0 here
+		return
+
+	var/do_not_taste_at_all = 1//so we don't spam with recent tastes
+
+	var/taste_sum = 0
+	var/list/taste_list = list()//associative list so we can stack stuff that tastes the same
+	var/list/final_taste_list = list()//final list of taste strings
+
+	for(var/datum/reagent/R in tastes.reagent_list)
+		taste_sum += R.volume * R.taste_strength
+		if(R.taste_message)
+			taste_list[R.taste_message] += R.volume * R.taste_strength
+
+	for(var/R in taste_list)
+		if(recent_tastes[R] && (world.time - recent_tastes[R] < 12 SECONDS))
+			recent_tastes -= R
+			continue
+
+		do_not_taste_at_all = 0//something was fresh enough to taste; could still be bland enough to be unrecognizable
+
+		if(taste_list[R] / taste_sum >= 0.15 / t_sens)
+			final_taste_list += R
+			recent_tastes[R] = world.time
+
+	if(do_not_taste_at_all)
+		return //no message spam
+
+	if(world.time-lasttaste >= 18)//prevent tastes spam
+		if(final_taste_list.len == 0)//too many reagents - none meet their thresholds
+			to_chat(src, "<span class='notice'>You can't really make out what you're tasting...</span>")
+			lasttaste = world.time
+			return
+
+		to_chat(src, "<span class='notice'>You can taste [english_list(final_taste_list)].</span>")
+		lasttaste = world.time

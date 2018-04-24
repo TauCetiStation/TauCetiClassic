@@ -177,7 +177,7 @@ var/global/list/breach_burn_descriptors = list(
 /obj/item/clothing/suit/space/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/stack/sheet/mineral/plastic) || istype(W,/obj/item/stack/sheet/metal))
 
-		if(istype(src.loc,/mob/living))
+		if(isliving(loc))
 			to_chat(user, "\red How do you intend to patch a hardsuit while someone is wearing it?")
 			return
 
@@ -186,6 +186,7 @@ var/global/list/breach_burn_descriptors = list(
 			return
 
 		var/obj/item/stack/sheet/P = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(P.get_amount() < 3)
 			P.use(P.get_amount())
 			repair_breaches(BURN, ( istype(P,/obj/item/stack/sheet/mineral/plastic) ? P.get_amount() : (P.get_amount() * 2) ), user)
@@ -196,7 +197,7 @@ var/global/list/breach_burn_descriptors = list(
 
 	else if(istype(W, /obj/item/weapon/weldingtool))
 
-		if(istype(src.loc,/mob/living))
+		if(isliving(loc))
 			to_chat(user, "\red How do you intend to patch a hardsuit while someone is wearing it?")
 			return
 
@@ -205,6 +206,7 @@ var/global/list/breach_burn_descriptors = list(
 			return
 
 		var/obj/item/weapon/weldingtool/WT = W
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(!WT.remove_fuel(5))
 			to_chat(user, "\red You need more welding fuel to repair this suit.")
 			return

@@ -8,6 +8,7 @@
 	light_color = "#0099ff"
 	req_access = list(access_heads)
 	circuit = /obj/item/weapon/circuitboard/communications
+	allowed_checks = ALLOWED_CHECK_NONE
 	var/prints_intercept = 1
 	var/authenticated = 0
 	var/list/messagetitle = list()
@@ -106,7 +107,7 @@
 		if("announce")
 			if(src.authenticated==2)
 				if(message_cooldown)	return
-				var/input = stripped_input(usr, "Please choose a message to announce to the station crew.", "What?")
+				var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "What?"), extra = FALSE)
 				if(!input || !(usr in view(1,src)))
 					return
 				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
@@ -173,10 +174,10 @@
 					post_status(href_list["statdisp"])
 
 		if("setmsg1")
-			stat_msg1 = input("Line 1", "Enter Message Text", stat_msg1) as text|null
+			stat_msg1 = sanitize_safe(input("Line 1", "Enter Message Text", stat_msg1) as text|null, MAX_LNAME_LEN)
 			src.updateDialog()
 		if("setmsg2")
-			stat_msg2 = input("Line 2", "Enter Message Text", stat_msg2) as text|null
+			stat_msg2 = sanitize_safe(input("Line 2", "Enter Message Text", stat_msg2) as text|null, MAX_LNAME_LEN)
 			src.updateDialog()
 
 		// OMG CENTCOMM LETTERHEAD
@@ -185,7 +186,7 @@
 				if(CM.cooldown)
 					to_chat(usr, "\red Arrays recycling.  Please stand by.")
 					return
-				var/input = stripped_input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", "")
+				var/input = sanitize(input(usr, "Please choose a message to transmit to Centcomm via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination.  Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
 				if(!input || !(usr in view(1,src)))
 					return
 				Centcomm_announce(input, usr)
@@ -200,7 +201,7 @@
 				if(CM.cooldown)
 					to_chat(usr, "\red Arrays recycling.  Please stand by.")
 					return
-				var/input = stripped_input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", "")
+				var/input = sanitize(input(usr, "Please choose a message to transmit to \[ABNORMAL ROUTING CORDINATES\] via quantum entanglement.  Please be aware that this process is very expensive, and abuse will lead to... termination. Transmission does not guarantee a response. There is a 30 second delay before you may send another message, be clear, full and concise.", "To abort, send an empty message.", ""))
 				if(!input || !(usr in view(1,src)))
 					return
 				Syndicate_announce(input, usr)
@@ -266,14 +267,11 @@
 		..()
 	return
 
-/obj/machinery/computer/communications/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/communications/ui_interact(mob/user)
 	if (src.z > ZLEVEL_EMPTY)
 		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
 		return
 
-	user.set_machine(src)
 	var/dat = "<head><title>Communications Console</title></head><body>"
 	if (SSshuttle.online && SSshuttle.location==0)
 		var/timeleft = SSshuttle.timeleft()
@@ -283,7 +281,7 @@
 		var/dat2 = src.interact_ai(user) // give the AI a different interact proc to limit its access
 		if(dat2)
 			dat += dat2
-			user << browse(dat, "window=communications;size=400x500")
+			user << browse(entity_ja(dat), "window=communications;size=400x500")
 			onclose(user, "communications")
 		return
 
@@ -358,7 +356,7 @@
 			dat += "<A HREF='?src=\ref[src];operation=swipeidseclevel'>Swipe ID</A> to confirm change.<BR>"
 
 	dat += "<BR>\[ [(src.state != STATE_DEFAULT) ? "<A HREF='?src=\ref[src];operation=main'>Main Menu</A> | " : ""]<A HREF='?src=\ref[user];mach_close=communications'>Close</A> \]"
-	user << browse(dat, "window=communications;size=400x500")
+	user << browse(entity_ja(dat), "window=communications;size=400x500")
 	onclose(user, "communications")
 
 

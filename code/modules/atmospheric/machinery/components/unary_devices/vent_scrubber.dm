@@ -266,6 +266,7 @@
 
 /obj/machinery/atmospherics/components/unary/vent_scrubber/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/weldingtool))
+		if(user.is_busy()) return
 
 		var/obj/item/weapon/weldingtool/WT = W
 
@@ -276,7 +277,6 @@
 		if(!WT.remove_fuel(0, user))
 			to_chat(user, "<span class='warning'>You need more welding fuel to complete this task.</span>")
 			return
-
 		to_chat(user, "<span class='notice'>Now welding \the [src].</span>")
 		playsound(src, 'sound/items/Welder2.ogg', 50, 1)
 
@@ -290,6 +290,7 @@
 
 		welded = !welded
 		update_icon()
+
 		user.visible_message("<span class='notice'>\The [user] [welded ? "welds \the [src] shut" : "unwelds \the [src]"].</span>", \
 			"<span class='notice'>You [welded ? "weld \the [src] shut" : "unweld \the [src]"].</span>", \
 			"You hear welding.")

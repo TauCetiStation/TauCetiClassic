@@ -96,7 +96,7 @@
 				return
 			I.loc = src
 			inserted_id = I
-			interact(user)
+			updateUsrDialog()
 		return
 	if(exchange_parts(user, W))
 		return
@@ -124,12 +124,7 @@
 	qdel(O)//No refined type? Purge it.
 	return
 
-/obj/machinery/mineral/ore_redemption/attack_hand(user)
-	if(..())
-		return
-	interact(user)
-
-obj/machinery/mineral/ore_redemption/interact(mob/user)
+/obj/machinery/mineral/ore_redemption/ui_interact(mob/user)
 	var/obj/item/stack/sheet/mineral/s
 	var/dat
 
@@ -154,7 +149,6 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	var/datum/browser/popup = new(user, "console_stacking_machine", "Ore Redemption Machine", 400, 500)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/mineral/ore_redemption/proc/get_ore_values()
 	var/dat = "<table border='0' width='300'>"
@@ -247,26 +241,19 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	anchored = 1.0
 	var/obj/item/weapon/card/id/inserted_id
 	var/list/prize_list = list(
-//		new /datum/data/mining_equipment("Stimpack",			/obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,100),
-		new /datum/data/mining_equipment("Chili",               /obj/item/weapon/reagent_containers/food/snacks/hotchili,           100),
-		new /datum/data/mining_equipment("Cigar",               /obj/item/clothing/mask/cigarette/cigar/havana,                     100),
-		new /datum/data/mining_equipment("Whiskey",             /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,     150),
-		new /datum/data/mining_equipment("Soap",                /obj/item/weapon/soap/nanotrasen, 						            150),
-		new /datum/data/mining_equipment("Alien toy",           /obj/item/clothing/mask/facehugger/toy, 		                    250),
-//		new /datum/data/mining_equipment("Suit patcher",        /obj/item/weapon/patcher,										    300),
-//		new /datum/data/mining_equipment("Stimpack Bundle",		/obj/item/weapon/storage/box/autoinjector/stimpack,				    400),
-//		new /datum/data/mining_equipment("Laser pointer",       /obj/item/device/laser_pointer, 				                    250),
-//		new /datum/data/mining_equipment("Shelter capsule",		/obj/item/weapon/survivalcapsule,								    500),
-		new /datum/data/mining_equipment("Point card",    		/obj/item/weapon/card/mining_point_card,               			    500),
-//		new /datum/data/mining_equipment("Sonic jackhammer",    /obj/item/weapon/pickaxe/drill/jackhammer,                          500),
-//		new /datum/data/mining_equipment("Mining drone",        /mob/living/simple_animal/hostile/mining_drone/,                    700),
-//		new /datum/data/mining_equipment("Resonator",           /obj/item/weapon/resonator,                                         800),
-//		new /datum/data/mining_equipment("Kinetic accelerator", /obj/item/weapon/gun/energy/kinetic_accelerator,                   1000),
-//		new /datum/data/mining_equipment("Jaunter",             /obj/item/device/wormhole_jaunter,                                 1100),
-//		new /datum/data/mining_equipment("Special mining rig",  /obj/item/mining_rig_pack,										   1500),
-//		new /datum/data/mining_equipment("Lazarus injector",    /obj/item/weapon/lazarus_injector,                                 1500),
-//		new /datum/data/mining_equipment("Jetpack",             /obj/item/weapon/tank/jetpack/carbondioxide,                       2000),
-		new /datum/data/mining_equipment("Space cash",    		/obj/item/weapon/spacecash/c1000,                    			   5000)
+		new /datum/data/mining_equipment("Stimpack",			     /obj/item/weapon/reagent_containers/hypospray/autoinjector/stimpack,   100),
+		new /datum/data/mining_equipment("Chili",                    /obj/item/weapon/reagent_containers/food/snacks/hotchili,              100),
+		new /datum/data/mining_equipment("Cigar",                    /obj/item/clothing/mask/cigarette/cigar/havana,                        100),
+		new /datum/data/mining_equipment("Whiskey",                  /obj/item/weapon/reagent_containers/food/drinks/bottle/whiskey,        150),
+		new /datum/data/mining_equipment("Soap",                     /obj/item/weapon/soap/nanotrasen, 						                150),
+		new /datum/data/mining_equipment("lipozine pill",            /obj/item/weapon/reagent_containers/pill/lipozine,                     200),
+		new /datum/data/mining_equipment("leporazine autoinjector",  /obj/item/weapon/reagent_containers/hypospray/autoinjector/leporazine, 300),
+		new /datum/data/mining_equipment("Alien toy",                /obj/item/clothing/mask/facehugger/toy, 		                        250),
+		new /datum/data/mining_equipment("Stimpack Bundle",	         /obj/item/weapon/storage/box/autoinjector/stimpack,				    400),
+		new /datum/data/mining_equipment("Point card",    	         /obj/item/weapon/card/mining_point_card,               			    500),
+		new /datum/data/mining_equipment("Space first-aid kit",      /obj/item/weapon/storage/firstaid/small_firstaid_kit/space,            1000),
+		new /datum/data/mining_equipment("Space cash",    	         /obj/item/weapon/spacecash/c1000,                    			        5000),
+		new /datum/data/mining_equipment("Mining voucher",    	     /obj/item/weapon/mining_voucher,                    			        10000)
 		)
 
 /datum/data/mining_equipment/
@@ -300,12 +287,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		icon_state = "[initial(icon_state)]-off"
 	return
 
-/obj/machinery/mineral/equipment_locker/attack_hand(user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/mineral/equipment_locker/interact(mob/user)
+/obj/machinery/mineral/equipment_locker/ui_interact(mob/user)
 	var/dat
 	dat +="<div class='statusDisplay'>"
 	if(istype(inserted_id))
@@ -321,7 +303,6 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 	var/datum/browser/popup = new(user, "miningvendor", "Mining Equipment Vendor", 400, 680)
 	popup.set_content(dat)
 	popup.open()
-	return
 
 /obj/machinery/mineral/equipment_locker/Topic(href, href_list)
 	. = ..()
@@ -365,7 +346,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 			usr.drop_item()
 			C.loc = src
 			inserted_id = C
-			interact(user)
+			updateUsrDialog()
 		return
 	if(default_deconstruction_screwdriver(user, "mining-open", "mining", I))
 		updateUsrDialog()
@@ -485,9 +466,10 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 		playsound(src,'sound/effects/sparks4.ogg',50,1)
 		qdel(src)
 
-/obj/item/device/wormhole_jaunter/attackby(obj/item/B)
+/obj/item/device/wormhole_jaunter/attackby(obj/item/B, mob/user)
 	if(istype(B, /obj/item/device/radio/beacon))
-		usr.visible_message("<span class='notice'>[usr.name] spent [B.name] above [src.name], scanning the serial code.</span>",
+		user.SetNextMove(CLICK_CD_INTERACT)
+		user.visible_message("<span class='notice'>[user.name] spent [B.name] above [src.name], scanning the serial code.</span>",
 							"<span class='notice'>You scanned serial code of [B.name], now [src.name] is locked.</span>")
 		src.chosen_beacon = B
 		icon_state = "Jaunter_locked"
@@ -663,6 +645,7 @@ obj/machinery/mineral/ore_redemption/interact(mob/user)
 /mob/living/simple_animal/hostile/mining_drone/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/weldingtool))
 		var/obj/item/weapon/weldingtool/W = I
+		user.SetNextMove(CLICK_CD_INTERACT)
 		if(W.welding && !stat)
 			if(stance != HOSTILE_STANCE_IDLE)
 				to_chat(user, "<span class='info'>[src] is moving around too much to repair!</span>")

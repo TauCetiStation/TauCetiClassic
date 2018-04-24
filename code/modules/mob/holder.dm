@@ -26,10 +26,18 @@
 			mob_container = M
 			mob_container.forceMove(get_turf(src))
 			M.reset_view()
-
 		qdel(src)
 
+/obj/item/weapon/holder/pickup(mob/user)
+	..()
+	user.status_flags |= PASSEMOTES
+
+/obj/item/weapon/holder/dropped(mob/living/carbon/user)
+	..()
+	user.remove_passemotes_flag()
+
 /obj/item/weapon/holder/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	for(var/mob/M in src.contents)
 		M.attackby(W,user)
 
@@ -50,8 +58,8 @@
 
 	to_chat(grabber, "You scoop up [src].")
 	to_chat(src, "[grabber] scoops you up.")
-	grabber.status_flags |= PASSEMOTES
 	LAssailant = grabber
+
 	return
 
 //Mob specific holders.

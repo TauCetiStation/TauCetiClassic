@@ -61,13 +61,7 @@
 			var/list/L = connected_doors[D.network]
 			L.Add(D)
 
-/obj/machinery/computer/lockdown/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/computer/lockdown/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/computer/lockdown/ui_interact(mob/user)
 	var/t = "<B>Lockdown Control</B><BR>"
 	t += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
@@ -101,7 +95,7 @@
 		t += "\red No networks connected.<br>"
 	t += "<A href='?src=\ref[src];refresh=1'>Refresh</A><BR>"
 	t += "<A href='?src=\ref[src];close=1'>Close</A><BR>"
-	user << browse(t, "window=lockdown;size=550x600")
+	user << browse(entity_ja(t), "window=lockdown;size=550x600")
 	onclose(user, "lockdown")
 
 /obj/machinery/computer/lockdown/Topic(href, href_list)

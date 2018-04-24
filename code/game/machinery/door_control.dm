@@ -5,46 +5,38 @@
 	icon_state = "doorctrl0"
 	desc = "A remote control-switch for a door."
 	power_channel = ENVIRON
+	anchored = TRUE
+	use_power = 1
+	idle_power_usage = 2
+	active_power_usage = 4
 	var/id = null
 	var/range = 10
 	var/normaldoorcontrol = FALSE
 	var/desiredstate = 0 // Zero is closed, 1 is open.
 	var/specialfunctions = 1
-	anchored = 1.0
-	use_power = 1
-	idle_power_usage = 2
-	active_power_usage = 4
-	ghost_must_be_admin = TRUE
 
-/obj/machinery/door_control/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/door_control/attack_paw(mob/user)
-	return src.attack_hand(user)
+/obj/machinery/door_control/allowed_fail(mob/user)
+	playsound(src, 'sound/items/buttonswitch.ogg', 20, 1, 1)
+	flick("doorctrl-denied",src)
 
 /obj/machinery/door_control/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/device/detective_scanner))
 		return
 	if(istype(W, /obj/item/weapon/card/emag))
 		req_access = list()
+		user.SetNextMove(CLICK_CD_INTERACT)
 		req_one_access = list()
 		playsound(src.loc, "sparks", 100, 1)
 	return src.attack_hand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user)
-	if(..())
+	. = ..()
+	if(.)
 		return
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	playsound(src, 'sound/items/buttonswitch.ogg', 20, 1, 1)
-
-	if(!allowed(user))
-		to_chat(user, "\red Access Denied")
-		flick("doorctrl-denied",src)
-		return
-
 	use_power(5)
 	icon_state = "doorctrl1"
-	add_fingerprint(user)
 
 	if(normaldoorcontrol)
 		for(var/obj/machinery/door/airlock/D in range(range))
@@ -102,12 +94,6 @@
 	else
 		icon_state = "doorctrl0"
 
-/obj/machinery/driver_button/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/driver_button/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/driver_button/attackby(obj/item/weapon/W, mob/user)
 
 	if(istype(W, /obj/item/device/detective_scanner))
@@ -116,9 +102,10 @@
 
 /obj/machinery/driver_button/attack_hand(mob/user)
 	if(..() || active)
-		return
+		return 1
 
 	use_power(5)
+	user.SetNextMove(CLICK_CD_INTERACT)
 
 	active = 1
 	icon_state = "launcheract"
@@ -145,5 +132,3 @@
 
 	icon_state = "launcherbtt"
 	active = 0
-
-	return

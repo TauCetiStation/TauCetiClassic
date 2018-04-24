@@ -101,15 +101,7 @@
 		MT.buffer = src
 		to_chat(user, "<span class='notice'>You download data to the buffer.</span>")
 
-/obj/machinery/computer/mech_bay_power_console/attack_ai(mob/user)
-	return interact(user)
-
-/obj/machinery/computer/mech_bay_power_console/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
-
-/obj/machinery/computer/mech_bay_power_console/interact(mob/user)
+/obj/machinery/computer/mech_bay_power_console/ui_interact(mob/user)
 	var/data
 	if(!recharge_port)
 		data += "<div class='statusDisplay'>No recharging port detected.</div><BR>"
@@ -128,7 +120,6 @@
 	var/datum/browser/popup = new(user, "mech recharger", name, 300, 300)
 	popup.set_content(data)
 	popup.open()
-	return
 
 /obj/machinery/computer/mech_bay_power_console/Topic(href, href_list)
 	. = ..()

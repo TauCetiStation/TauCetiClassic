@@ -5,14 +5,14 @@
 	icon = 'icons/obj/machines/floodlight.dmi'
 	icon_state = "flood00"
 	density = TRUE
+	light_power = 2
+	interact_offline = TRUE
 	var/on = FALSE
 	var/obj/item/weapon/stock_parts/cell/high/cell = null
 	var/use = 5
 	var/unlocked = FALSE
 	var/open = FALSE
 	var/brightness_on = 7
-	light_power = 2
-	ghost_must_be_admin = TRUE
 
 /obj/machinery/floodlight/atom_init()
 	cell = new(src)
@@ -32,7 +32,12 @@
 			src.visible_message("<span class='warning'>[src] shuts down due to lack of power!</span>")
 			return
 
+
 /obj/machinery/floodlight/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+
 	if(open && cell)
 		if(ishuman(user))
 			if(!user.get_active_hand())

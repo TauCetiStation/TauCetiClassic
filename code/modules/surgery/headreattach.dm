@@ -191,6 +191,7 @@
 	var/obj/item/weapon/organ/head/B = tool
 	if (B.brainmob.mind)
 		B.brainmob.mind.transfer_to(target)
+		target.dna = B.brainmob.dna
 	qdel(B)
 
 

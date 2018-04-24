@@ -24,10 +24,7 @@
 	to_chat(user, "<span class='notice'>You insert [O] in [src]!</span>")
 	updateUsrDialog()
 
-/obj/machinery/computer/intruder_station/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/computer/intruder_station/ui_interact(mob/user)
 	var/dat = ""
 	var/available_telecrystalls = 0
 	if(stored_uplink && stored_uplink.hidden_uplink)
@@ -51,7 +48,6 @@
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open()
-	return
 
 /obj/machinery/computer/intruder_station/Topic(href, href_list)
 	. = ..()
@@ -105,7 +101,7 @@
 		return
 
 	for(var/obj/machinery/door/poddoor/shutters/syndi/shutter in cur_area)
-		if(shutter.tag == "Syndicate_shuttle")
+		if(shutter.dock_tag == "Syndicate_shuttle")
 			to_chat(user, "<span class='notice'>The Shuttle has been unlocked!</span>")
 			qdel(shutter)
 			playsound(console, 'sound/machines/twobeep.ogg', 50, 2)

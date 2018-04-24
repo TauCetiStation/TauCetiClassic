@@ -49,11 +49,9 @@
 			return
 	return
 
-/obj/machinery/ai_slipper/attack_hand(mob/user)
-	if(..())
-		return
-
+/obj/machinery/ai_slipper/ui_interact(mob/user)
 	var/area/area = get_area(src)
+
 	if (!istype(area))
 		to_chat(user, text("Turret badly positioned - area is [].", area))
 		return
@@ -65,9 +63,8 @@
 		t += text("Dispenser [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br>\n", src.disabled?"deactivated":"activated", src, src.disabled?"Enable":"Disable")
 		t += text("Uses Left: [uses]. <A href='?src=\ref[src];toggleUse=1'>Activate the dispenser?</A><br>\n")
 
-	user << browse(t, "window=computer;size=575x450")
+	user << browse(entity_ja(t), "window=computer;size=575x450")
 	onclose(user, "computer")
-	return
 
 /obj/machinery/ai_slipper/Topic(href, href_list)
 	. = ..()

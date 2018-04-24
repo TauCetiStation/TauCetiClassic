@@ -47,11 +47,20 @@
 /proc/hsl2rgb(h, s, l)
 	return
 
-/proc/isloyal(A) //Checks to see if the person contains a loyalty implant, then checks that the implant is actually inside of them
-	for(var/obj/item/weapon/implant/loyalty/L in A)
+/proc/ismindshielded(A, only_mindshield = FALSE) //Checks to see if the person contains a mindshield implant, then checks that the implant is actually inside of them
+
+	for(var/obj/item/weapon/implant/mindshield/L in A)
+		if(only_mindshield && L.type != /obj/item/weapon/implant/mindshield)
+			continue
 		if(L.implanted)
-			return 1
-	return 0
+			return TRUE
+	return FALSE
+
+/proc/isloyal(A)
+	for(var/obj/item/weapon/implant/mindshield/loyalty/L in A)
+		if(L.implanted)
+			return TRUE
+	return FALSE
 
 /proc/check_zone(zone)
 	if(!zone)
@@ -93,7 +102,7 @@
 // Emulates targetting a specific body part, and miss chances
 // May return null if missed
 // miss_chance_mod may be negative.
-/proc/get_zone_with_miss_chance(zone, var/mob/target, var/miss_chance_mod = 0)
+/proc/get_zone_with_miss_chance(zone, mob/target, miss_chance_mod = 0)
 	zone = check_zone(zone)
 
 	// you can only miss if your target is standing and not restrained
@@ -101,22 +110,16 @@
 		var/miss_chance = 10
 		switch(zone)
 			if(BP_HEAD)
-				miss_chance = 30
-			if(BP_L_LEG)
-				miss_chance = 40
-			if(BP_R_LEG)
-				miss_chance = 40
+				miss_chance = 50
+			if(BP_GROIN)
+				miss_chance = 50
 			if(BP_L_ARM)
-				miss_chance = 40
+				miss_chance = 60
 			if(BP_R_ARM)
-				miss_chance = 40
-			if(BP_L_HAND)
 				miss_chance = 60
-			if(BP_R_HAND)
+			if(BP_L_LEG)
 				miss_chance = 60
-			if(BP_L_FOOT)
-				miss_chance = 60
-			if(BP_R_FOOT)
+			if(BP_R_LEG)
 				miss_chance = 60
 		if(prob(max(miss_chance + miss_chance_mod, 0)))
 			if(prob(max(20, (miss_chance/2))))
@@ -124,28 +127,20 @@
 			else
 				var/t = rand(1, 100)
 				switch(t)
-					if(1 to 50)
+					if(1 to 65)
 						return BP_CHEST
-					if(51 to 61)
+					if(66 to 75)
 						return BP_HEAD
-					if(62 to 66)
+					if(76 to 80)
 						return BP_L_ARM
-					if(67 to 71)
+					if(81 to 85)
 						return BP_R_ARM
-					if(72 to 76)
+					if(86 to 90)
 						return BP_R_LEG
-					if(77 to 81)
+					if(91 to 95)
 						return BP_L_LEG
-					if(82 to 87)
+					if(96 to 100)
 						return BP_GROIN
-					if(88 to 91)
-						return BP_L_FOOT
-					if(92 to 94)
-						return BP_R_FOOT
-					if(95 to 97)
-						return BP_L_HAND
-					if(98 to 100)
-						return BP_R_HAND
 
 	return zone
 
@@ -194,60 +189,53 @@ proc/slur(phrase)
 	var/counter=lentext(phrase)
 	var/newphrase=""
 	var/newletter=""
-	var/lletter=""
 	while(counter>=1)
 		newletter=copytext(phrase,(leng-counter)+1,(leng-counter)+2)
 		if(rand(1,3)==3)
-			if(lletter=="o")	newletter="u"
-			if(lletter=="s")	newletter="ch"
-			if(lletter=="a")	newletter="ah"
-			if(lletter=="c")	newletter="k"
-			if(lletter=="�")	newletter="�" //246->249
-			if(lletter=="�")	newletter="�" //229->232
+			if(lowertext(newletter)=="o")	newletter="u"
+			if(lowertext(newletter)=="s")	newletter="ch"
+			if(lowertext(newletter)=="a")	newletter="ah"
+			if(lowertext(newletter)=="c")	newletter="k"
+			if(lowertext_(newletter)=="ч")	newletter="щ" //247 -> 249
+			if(lowertext_(newletter)=="е")	newletter="и" //229 -> 232
+			if(lowertext_(newletter)=="з")	newletter="с" //231 -> 241
 		switch(rand(1,15))
-			if(1 to 4)
-				newletter = "[lowertext_plus(newletter)]"
-			if(5 to 8)
-				newletter = "[uppertext_plus(newletter)]"
-			if(9)	newletter+="'"
+			if(1,3,5,8)	newletter="[lowertext_(newletter)]"
+			if(2,4,6,15)	newletter="[uppertext_(newletter)]"
+			if(7)	newletter+="'"
 		newphrase+="[newletter]";counter-=1
 	return newphrase
 
-// TODO:CYRILLIC ������������ lowertext_plus
-/proc/stutter(text)
-	text = html_decode(text)
-	var/t = ""
-	var/lenght = length(text)//length of the entire word
+/proc/stutter(n)
+	var/te = html_decode(n)
+	var/t = ""//placed before the message. Not really sure what it's for.
+	n = length(n)//length of the entire word
 	var/alphabet[0]
-	//alphabet.Add("b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z")
-	//alphabet.Add("á","â","ã","ä","æ","ç","é","ê","ë","ì","í","ï","ð","ñ","ò","ô","õ","ö","÷","ø","ù")
+	//latin
+	//"b","c","d","f","g","h","j","k","l","m","n","p","q","r","s","t","v","w","x","y","z"
 	alphabet.Add(98,99,100,102,103,104,105,106,107,108,109,110,112,113,114,115,116,118,119,120,121,122)
+	//cyrillic
+	//"б","в","г","д","ж","з","й","к","л","м","н","п","р","с","т","ф","х","ц","ч","ш","щ"
 	alphabet.Add(225,226,227,228,230,231,233,234,235,236,237,239,240,241,242,244,245,246,247,248,249)
-	var/letter
-	var/lcase_letter
-	var/tletter
-	var/p = 1
-	while(p <= lenght)//while P, which starts at 1 is less or equal to N which is the length.
-		letter = copytext(text, p, p + 1)//copies text from a certain distance. In this case, only one letter at a time.
-		tletter = letter
-		lcase_letter = text2ascii(letter)
-		if((lcase_letter >= 65 && lcase_letter <=90) || (lcase_letter >= 192 && lcase_letter <=223))
-			tletter = ascii2text(lcase_letter + 32)
-		if (prob(80) && (text2ascii(tletter) in alphabet))
+
+	var/p = null
+	p = 1//1 is the start of any word
+	while(p <= n)//while P, which starts at 1 is less or equal to N which is the length.
+		var/n_letter = copytext(te, p, p + 1)//copies text from a certain distance. In this case, only one letter at a time.
+		if (prob(80) && (lowertext_(n_letter) in alphabet))
 			if (prob(10))
-				letter = text("[letter]-[letter]-[letter]-[letter]")//replaces the current letter with this instead.
+				n_letter = text("[n_letter]-[n_letter]-[n_letter]-[n_letter]")//replaces the current letter with this instead.
 			else
 				if (prob(20))
-					letter = text("[letter]-[letter]-[letter]")
+					n_letter = text("[n_letter]-[n_letter]-[n_letter]")
 				else
 					if (prob(5))
-						letter = null
+						n_letter = null
 					else
-						letter = text("[letter]-[letter]")
-		t = text("[t][letter]")//since the above is ran through for each letter, the text just adds up back to the original word.
+						n_letter = text("[n_letter]-[n_letter]")
+		t = text("[t][n_letter]")//since the above is ran through for each letter, the text just adds up back to the original word.
 		p++//for each letter p is increased to find where the next letter will be.
-	//return sanitize(copytext(t,1,MAX_MESSAGE_LEN))
-	return copytext(t,1,MAX_MESSAGE_LEN)
+	return sanitize(t)
 
 
 /proc/Gibberish(t, p)//t is the inputted message, and any value higher than 70 for p will cause letters to be replaced instead of added
@@ -308,8 +296,7 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 			n_letter = text("[n_letter]")
 		t = text("[t][n_letter]")
 		p=p+n_mod
-	return copytext(t,1,MAX_MESSAGE_LEN)
-
+	return sanitize(t)
 
 /proc/shake_camera(mob/M, duration, strength=1)
 	if(!M || !M.client || !strength) return
@@ -473,11 +460,18 @@ var/list/intents = list("help","disarm","grab","hurt")
 
 #undef SAFE_PERP
 
-/proc/IsAdminGhost(var/mob/user)
-	if(check_rights(R_ADMIN, 0) && isobserver(user) && user.client.AI_Interact)
-		return 1
-	else
-		return 0
+/proc/IsAdminGhost(mob/user)
+	if(!user) // Are they a mob? Auto interface updates call this with a null src
+		return
+	if(!user.client) // Do they have a client?
+		return
+	if(!isobserver(user)) // Are they a ghost?
+		return
+	if(!check_rights_for(user.client, R_ADMIN)) // Are they allowed?
+		return
+	if(!user.client.AI_Interact) // Do they have it enabled?
+		return
+	return TRUE
 
 /mob/proc/is_busy(atom/target, show_warning = TRUE)
 	if(busy_with_action)

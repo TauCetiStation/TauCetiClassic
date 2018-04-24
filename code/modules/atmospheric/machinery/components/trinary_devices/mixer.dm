@@ -9,6 +9,7 @@
 	use_power = 0
 	idle_power_usage = 150 // internal circuitry, friction losses and stuff
 	power_rating = 3700    // This also doubles as a measure of how powerful the mixer is, in Watts. 3700 W ~ 5 HP
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/set_flow_rate = ATMOS_DEFAULT_VOLUME_MIXER
 	var/list/mixing_inputs
@@ -111,20 +112,9 @@
 		last_power_draw = power_draw
 		use_power(power_draw)
 
-/obj/machinery/atmospherics/components/trinary/mixer/attack_hand(user)
-	if(..())
-		return
-
-	add_fingerprint(usr)
-
-	if(!allowed(user))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
-		return
-
+/obj/machinery/atmospherics/components/trinary/mixer/ui_interact(user)
 	var/datum/gas_mixture/air1 = AIR1
 	var/datum/gas_mixture/air2 = AIR2
-
-	usr.set_machine(src)
 
 	var/dat = {"<b>Power: </b><a href='?src=\ref[src];power=1'>[use_power?"On":"Off"]</a><br>
 				<b>Set Flow Rate Limit: </b>
@@ -147,7 +137,7 @@
 				<a href='?src=\ref[src];node2_c=0.1'>+</a>
 				"}
 
-	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_mixer")
+	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=atmo_mixer")
 	onclose(user, "atmo_mixer")
 
 /obj/machinery/atmospherics/components/trinary/mixer/Topic(href, href_list)

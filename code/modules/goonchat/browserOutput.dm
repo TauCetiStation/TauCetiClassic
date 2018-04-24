@@ -1,17 +1,3 @@
-var/list/chatResources = list(
-	"code/modules/goonchat/browserassets/js/jquery.min.js",
-	"code/modules/goonchat/browserassets/js/jquery.mark.min.js",
-	"code/modules/goonchat/browserassets/js/json2.min.js",
-	"code/modules/goonchat/browserassets/js/browserOutput.js",
-	"code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.eot",
-	"code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.svg",
-	"code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.ttf",
-	"code/modules/goonchat/browserassets/css/fonts/fontawesome-webfont.woff",
-	"code/modules/goonchat/browserassets/css/font-awesome.css",
-	"code/modules/goonchat/browserassets/css/emojib64.css",
-	"code/modules/goonchat/browserassets/css/browserOutput.css"
-)
-
 var/savefile/iconCache = new /savefile("data/iconCache.sav")
 var/chatDebug = file("data/chatDebug.log")
 var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json")
@@ -55,14 +41,10 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 	if(!owner)
 		return
 
-	for(var/attempts = 1 to 5)
-		for(var/asset in global.chatResources)
-			owner << browse_rsc(file(asset))
-
-		owner << browse(file("code/modules/goonchat/browserassets/html/browserOutput.html"), "window=browseroutput")
-		sleep(20 SECONDS)
-		if(!owner || loaded)
-			break
+	var/datum/asset/goonchat = get_asset_datum(/datum/asset/simple/goonchat)
+	goonchat.register()
+	goonchat.send(owner)
+	owner << browse('code/modules/goonchat/browserassets/html/browserOutput.html', "window=browseroutput")
 
 /datum/chatOutput/Topic(var/href, var/list/href_list)
 	if(usr.client != owner)
@@ -233,7 +215,8 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 		if(findtext(message, "\proper"))
 			message = replacetext(message, "\proper", "")
 
-		message = sanitize_popup(message)
+		//message = entity_ja(message)//moved to js
+		
 		var/client/C
 		if(istype(target, /client))
 			C = target

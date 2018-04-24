@@ -185,7 +185,7 @@ BLIND     // can't see anything
 	var/wired = 0
 	var/obj/item/weapon/stock_parts/cell/cell = 0
 	var/clipped = 0
-	body_parts_covered = HANDS
+	body_parts_covered = ARMS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
 	species_restricted = list("exclude" , UNATHI , TAJARAN)
@@ -234,7 +234,7 @@ BLIND     // can't see anything
 	desc = "Comfortable-looking shoes."
 	gender = PLURAL //Carn: for grammarically correct text-parsing
 	siemens_coefficient = 0.9
-	body_parts_covered = FEET
+	body_parts_covered = LEGS
 	slot_flags = SLOT_FEET
 	var/clipped_status = NO_CLIPPING
 
@@ -264,6 +264,8 @@ BLIND     // can't see anything
 				to_chat(user, "<span class='notice'>You have no idea of how to clip [src]!</span>")
 			if(CLIPPED)
 				to_chat(user, "<span class='notice'>[src] have already been clipped!</span>")
+	else
+		..()
 
 /obj/item/proc/negates_gravity()
 	return 0
@@ -281,6 +283,9 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.9
 	w_class = 3
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/suit.dmi')
+
+/obj/item/clothing/proc/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
+	return
 
 //Spacesuit
 //Note: Everything in modules/clothing/spacesuits should have the entire suit grouped together.
@@ -312,13 +317,13 @@ BLIND     // can't see anything
 	permeability_coefficient = 0.02
 	flags = THICKMATERIAL | PHORONGUARD
 	flags_pressure = STOPS_PRESSUREDMAGE
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/device/suit_cooling_unit)
 	slowdown = 3
 	equip_time = 100 // Bone White - time to equip/unequip. see /obj/item/attack_hand (items.dm) and /obj/item/clothing/mob_can_equip (clothing.dm)
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 100, rad = 50)
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
-	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | FEET | ARMS | HANDS
+	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude" , DIONA , VOX)
@@ -424,7 +429,7 @@ BLIND     // can't see anything
 	remove_accessory(usr, A)
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
-	if(I.sharp && !istype(loc, /mob/living/carbon/human)) //you can cut only clothes lying on the floor
+	if(I.sharp && !ishuman(loc)) //you can cut only clothes lying on the floor
 		for (var/i in 1 to 3)
 			new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), null, null, crit_fail)
 		qdel(src)
@@ -443,7 +448,7 @@ BLIND     // can't see anything
 			action_button_name = "Use inventory."
 			return
 		else
-			user << "<span class='notice'>You cannot attach more accessories of this type to [src].</span>"
+			to_chat(user, "<span class='notice'>You cannot attach more accessories of this type to [src].</span>")
 
 	if(accessories.len)
 		for(var/obj/item/clothing/accessory/A in accessories)

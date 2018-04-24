@@ -154,7 +154,8 @@
 			return
 
 		else
-			//user.say("Heeeeeeeeeerrre's Johnny!")
+			if(prob(10))
+				user.say("Heeeeeeeeeerrre's Johnny!") // ^^
 			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>We force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
 			A.open(1)
 
@@ -280,7 +281,7 @@
 	icon_state = "lingarmor"
 	canremove = 0
 	flags = THICKMATERIAL | DROPDEL
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	slowdown = 1
 	armor = list(melee = 65, bullet = 50, laser = 50, energy = 35, bomb = 25, bio = 0, rad = 0)
 	flags_inv = HIDEJUMPSUIT

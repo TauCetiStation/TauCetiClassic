@@ -7,14 +7,7 @@
 	var/id_tag
 	var/scan_range = 25
 
-/obj/machinery/computer/gyrotron_control/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/computer/gyrotron_control/attack_hand(mob/user)
-	add_fingerprint(user)
-	interact(user)
-
-/obj/machinery/computer/gyrotron_control/interact(mob/user)
+/obj/machinery/computer/gyrotron_control/ui_interact(mob/user)
 
 	if(!id_tag)
 		to_chat(user, "<span class='warning'>This console has not been assigned an ident tag. Please contact your system administrator or conduct a manual update with a standard multitool.</span>")
@@ -47,8 +40,6 @@
 	var/datum/browser/popup = new(user, "gyrotron_controller_[id_tag]", "Gyrotron Remote Control Console", 500, 400, src)
 	popup.set_content(dat)
 	popup.open()
-	add_fingerprint(user)
-	user.set_machine(src)
 
 /obj/machinery/computer/gyrotron_control/Topic(href, href_list)
 	. = ..()
@@ -88,7 +79,7 @@
 
 /obj/machinery/computer/gyrotron_control/attackby(obj/item/W, mob/user)
 	if(ismultitool(W))
-		var/new_ident = input("Enter a new ident tag.", "Gyrotron Control", id_tag) as null|text
+		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Gyrotron Control", input_default(id_tag)) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident
 		return

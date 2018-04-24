@@ -73,12 +73,8 @@
 			to_chat(user, "Nothing is attached to the tank valve!")
 
 /obj/item/weapon/storage/pneumatic/afterattack(atom/target, mob/living/user, flag, params)
-	if (istype(target, /obj/item/weapon/storage/backpack ))
+	if (target.loc == user.loc)
 		return
-
-	else if (target.loc == user.loc)
-		return
-
 	else if (locate (/obj/structure/table, src.loc))
 		return
 
@@ -102,6 +98,11 @@
 			return
 
 /obj/item/weapon/storage/pneumatic/proc/Fire(atom/target, mob/living/user, params, reflex = 0)
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit))
+			var/obj/item/clothing/suit/V = H.wear_suit
+			V.attack_reaction(H, REACTION_GUN_FIRE)
 
 	if (!tank)
 		to_chat(user, "There is no gas tank in [src]!")

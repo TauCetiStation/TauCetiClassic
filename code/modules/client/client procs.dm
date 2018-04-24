@@ -195,6 +195,10 @@
 		add_admin_verbs()
 		admin_memo_show()
 
+	if(config.allow_donators && ckey in donators)
+		donator = 1
+		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting us! You have access to all the additional donator-only features this month.</span>")
+		
 	log_client_to_db(tdata)
 
 	send_resources()
@@ -280,7 +284,7 @@
 	var/admin_rank = "Player"
 	if (src.holder)
 		admin_rank = src.holder.rank
-	else if (check_randomizer(connectiontopic))
+	else if (config.check_randomizer && check_randomizer(connectiontopic))
 		return
 
 	//Just the standard check to see if it's actually a number
@@ -359,7 +363,7 @@
 				cidcheck_spoofckeys -= ckey
 			cidcheck -= ckey
 	else
-		var/sql_ckey = sanitizeSQL(ckey)
+		var/sql_ckey = sanitize_sql(ckey)
 		var/DBQuery/query_cidcheck = dbcon.NewQuery("SELECT computerid FROM erro_player WHERE ckey = '[sql_ckey]'")
 		query_cidcheck.Execute()
 

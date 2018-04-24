@@ -202,11 +202,11 @@
 		if(brute == 0 && burn == 0)
 			break
 
-		// heal brute damage
-		if(W.damage_type == CUT || W.damage_type == BRUISE)
-			brute = W.heal_damage(brute)
-		else if(W.damage_type == BURN)
-			burn = W.heal_damage(burn)
+		switch(W.damage_type)
+			if(BURN, LASER) // heal burn damage
+				burn = W.heal_damage(burn)
+			else // heal brute damage
+				brute = W.heal_damage(brute)
 
 	if(internal)
 		status &= ~ORGAN_BROKEN
@@ -644,7 +644,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		if(BP.parent == src)
 			BP.droplimb(null, clean, disintegrate)
 
-	if(parent && disintegrate != DROPLIMB_BURN)
+	if(parent && !(parent.status & ORGAN_DESTROYED) && disintegrate != DROPLIMB_BURN)
 		if(clean)
 			if(prob(10))
 				parent.sever_artery()
@@ -657,44 +657,32 @@ Note that amputating the affected organ does in fact remove the infection from t
 			var/obj/bodypart // Dropped limb object
 			add_blood(owner)
 
-			switch(body_part)
-				if(HEAD)
+			switch(body_zone)
+				if(BP_HEAD)
 					if(owner.species.flags[IS_SYNTHETIC])
 						bodypart = new /obj/item/weapon/organ/head/posi(owner.loc, owner)
 					else
 						bodypart = new /obj/item/weapon/organ/head(owner.loc, owner)
-				if(ARM_RIGHT)
+				if(BP_R_ARM)
 					if(status & ORGAN_ROBOT)
 						bodypart = new /obj/item/robot_parts/r_arm(owner.loc)
 					else
 						bodypart = new /obj/item/weapon/organ/r_arm(owner.loc, owner)
-				if(ARM_LEFT)
+				if(BP_L_ARM)
 					if(status & ORGAN_ROBOT)
 						bodypart = new /obj/item/robot_parts/l_arm(owner.loc)
 					else
 						bodypart = new /obj/item/weapon/organ/l_arm(owner.loc, owner)
-				if(LEG_RIGHT)
+				if(BP_R_LEG)
 					if(status & ORGAN_ROBOT)
 						bodypart = new /obj/item/robot_parts/r_leg(owner.loc)
 					else
 						bodypart = new /obj/item/weapon/organ/r_leg(owner.loc, owner)
-				if(LEG_LEFT)
+				if(BP_L_LEG)
 					if(status & ORGAN_ROBOT)
 						bodypart = new /obj/item/robot_parts/l_leg(owner.loc)
 					else
 						bodypart = new /obj/item/weapon/organ/l_leg(owner.loc, owner)
-				if(HAND_RIGHT)
-					if(!(status & ORGAN_ROBOT))
-						bodypart = new /obj/item/weapon/organ/r_hand(owner.loc, owner)
-				if(HAND_LEFT)
-					if(!(status & ORGAN_ROBOT))
-						bodypart = new /obj/item/weapon/organ/l_hand(owner.loc, owner)
-				if(FOOT_RIGHT)
-					if(!(status & ORGAN_ROBOT))
-						bodypart = new /obj/item/weapon/organ/r_foot/(owner.loc, owner)
-				if(FOOT_LEFT)
-					if(!(status & ORGAN_ROBOT))
-						bodypart = new /obj/item/weapon/organ/l_foot(owner.loc, owner)
 
 			if(bodypart)
 				//Robotic limbs explode if sabotaged.
@@ -714,7 +702,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 				if(!clean)
 					// Throw limb around.
 					if(isturf(bodypart.loc))
-						bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), rand(1, 3), 30)
+						bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), rand(1, 3), throw_speed)
 					dir = 2
 		if(DROPLIMB_BURN)
 			new /obj/effect/decal/cleanable/ash(get_turf(owner))
@@ -731,27 +719,45 @@ Note that amputating the affected organ does in fact remove the infection from t
 				gore.basedatum =  new/datum/dirt_cover(owner.species.blood_color)
 				gore.update_icon()
 
-			gore.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), 30)
+			gore.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), throw_speed)
 
 			for(var/obj/item/I in src)
 				I.loc = get_turf(src)
-				I.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), 30)
+				I.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), throw_speed)
 
-	switch(body_part)
-		if(HEAD)
-			owner.remove_from_mob(owner.head)
-			owner.remove_from_mob(owner.glasses)
-			owner.remove_from_mob(owner.l_ear)
-			owner.remove_from_mob(owner.r_ear)
-			owner.remove_from_mob(owner.wear_mask)
-		if(HAND_RIGHT)
-			owner.remove_from_mob(owner.gloves)
-			owner.remove_from_mob(owner.r_hand)
-		if(HAND_LEFT)
-			owner.remove_from_mob(owner.gloves)
-			owner.remove_from_mob(owner.l_hand)
-		if(FOOT_RIGHT , FOOT_LEFT)
-			owner.remove_from_mob(owner.shoes)
+	switch(body_zone)
+		if(BP_HEAD)
+			if(disintegrate == DROPLIMB_EDGE)
+				owner.remove_from_mob(owner.head)
+				owner.remove_from_mob(owner.glasses)
+				owner.remove_from_mob(owner.l_ear)
+				owner.remove_from_mob(owner.r_ear)
+				owner.remove_from_mob(owner.wear_mask)
+			else
+				qdel(owner.head)
+				qdel(owner.glasses)
+				qdel(owner.l_ear)
+				qdel(owner.r_ear)
+				qdel(owner.wear_mask)
+		if(BP_R_ARM)
+			if(disintegrate == DROPLIMB_EDGE)
+				owner.remove_from_mob(owner.gloves)
+				owner.remove_from_mob(owner.r_hand)
+			else
+				qdel(owner.gloves)
+				qdel(owner.r_hand)
+		if(BP_L_ARM)
+			if(disintegrate == DROPLIMB_EDGE)
+				owner.remove_from_mob(owner.gloves)
+				owner.remove_from_mob(owner.l_hand)
+			else
+				qdel(owner.gloves)
+				qdel(owner.l_hand)
+		if(BP_R_LEG , BP_L_LEG)
+			if(disintegrate == DROPLIMB_EDGE)
+				owner.remove_from_mob(owner.shoes)
+			else
+				qdel(owner.shoes)
 
 	owner.update_body()
 
@@ -778,14 +784,14 @@ Note that amputating the affected organ does in fact remove the infection from t
 ****************************************************/
 
 /obj/item/organ/external/proc/release_restraints()
-	if (owner.handcuffed && body_part in list(ARM_LEFT, ARM_RIGHT, HAND_LEFT, HAND_RIGHT))
+	if (owner.handcuffed && body_part in list(ARM_LEFT, ARM_RIGHT))
 		owner.visible_message(\
 			"\The [owner.handcuffed.name] falls off of [owner.name].",\
 			"\The [owner.handcuffed.name] falls off you.")
 
 		owner.drop_from_inventory(owner.handcuffed)
 
-	if (owner.legcuffed && body_part in list(FOOT_LEFT, FOOT_RIGHT, LEG_LEFT, LEG_RIGHT))
+	if (owner.legcuffed && body_part in list(LEG_LEFT, LEG_RIGHT))
 		owner.visible_message(\
 			"\The [owner.legcuffed.name] falls off of [owner.name].",\
 			"\The [owner.legcuffed.name] falls off you.")
@@ -1096,43 +1102,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	..()
 	process_grasp(owner.r_hand, "right hand")
 
-
-/obj/item/organ/external/l_hand
-	name = "left hand"
-
-	body_part = HAND_LEFT
-	body_zone = BP_L_HAND
-	parent_bodypart = BP_L_ARM
-	limb_layer = LIMB_L_HAND_LAYER
-
-	arterial_bleed_severity = 0.5
-	max_damage = 30
-	min_broken_damage = 15
-	w_class = ITEM_SIZE_SMALL
-
-/obj/item/organ/external/l_hand/process()
-	..()
-	process_grasp(owner.l_hand, "left hand")
-
-
-/obj/item/organ/external/r_hand
-	name = "right hand"
-
-	body_part = HAND_RIGHT
-	body_zone = BP_R_HAND
-	parent_bodypart = BP_R_ARM
-	limb_layer = LIMB_R_HAND_LAYER
-
-	arterial_bleed_severity = 0.5
-	max_damage = 30
-	min_broken_damage = 15
-	w_class = ITEM_SIZE_SMALL
-
-/obj/item/organ/external/r_hand/process()
-	..()
-	process_grasp(owner.r_hand, "right hand")
-
-
 /obj/item/organ/external/l_leg
 	name = "left leg"
 	artery_name = "femoral artery"
@@ -1164,36 +1133,6 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
-
-
-/obj/item/organ/external/l_foot
-	name = "left foot"
-
-	body_part = FOOT_LEFT
-	body_zone = BP_L_FOOT
-	parent_bodypart = BP_L_LEG
-	limb_layer = LIMB_L_FOOT_LAYER
-	icon_position = LEFT
-
-	arterial_bleed_severity = 0.5
-	max_damage = 30
-	min_broken_damage = 15
-	w_class = ITEM_SIZE_SMALL
-
-
-/obj/item/organ/external/r_foot
-	name = "right foot"
-
-	body_part = FOOT_RIGHT
-	body_zone = BP_R_FOOT
-	parent_bodypart = BP_R_LEG
-	limb_layer = LIMB_R_FOOT_LAYER
-	icon_position = RIGHT
-
-	arterial_bleed_severity = 0.5
-	max_damage = 30
-	min_broken_damage = 15
-	w_class = ITEM_SIZE_SMALL
 
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
@@ -1268,27 +1207,19 @@ Note that amputating the affected organ does in fact remove the infection from t
 /obj/item/weapon/organ/l_arm
 	name = "left arm"
 	icon_state = BP_L_ARM
-/obj/item/weapon/organ/l_foot
-	name = "left foot"
-	icon_state = BP_L_FOOT
-/obj/item/weapon/organ/l_hand
-	name = "left hand"
-	icon_state = BP_L_HAND
+
 /obj/item/weapon/organ/l_leg
 	name = "left leg"
 	icon_state = BP_L_LEG
+
 /obj/item/weapon/organ/r_arm
 	name = "right arm"
 	icon_state = BP_R_ARM
-/obj/item/weapon/organ/r_foot
-	name = "right foot"
-	icon_state = BP_R_FOOT
-/obj/item/weapon/organ/r_hand
-	name = "right hand"
-	icon_state = BP_R_HAND
+
 /obj/item/weapon/organ/r_leg
 	name = "right leg"
 	icon_state = BP_R_LEG
+
 /obj/item/weapon/organ/head
 	name = "head"
 	icon_state = BP_HEAD
@@ -1355,6 +1286,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	brainmob.container = src
 
 /obj/item/weapon/organ/head/attackby(obj/item/weapon/W, mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if(istype(W,/obj/item/weapon/scalpel))
 		switch(brain_op_stage)
 			if(0)

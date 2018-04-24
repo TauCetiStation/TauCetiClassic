@@ -11,7 +11,7 @@
 		if (src.client.handle_spam_prevention(message,MUTE_IC))
 			return
 
-	message = sanitize(copytext(message, 1, MAX_MESSAGE_LEN))
+	message = sanitize(message)
 
 	if(istype(src.loc,/mob/living/simple_animal/borer))
 		var/mob/living/simple_animal/borer/B = src.loc
@@ -104,8 +104,7 @@
 
 /mob/living/simple_animal/borer/say(var/message)
 
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-	message = capitalize(message)
+	message = capitalize(sanitize(message))
 
 	if(!message)
 		return
@@ -330,14 +329,8 @@ mob/living/simple_animal/borer/proc/detatch()
 		host_brain.ckey = null
 		host_brain.name = "host brain"
 		host_brain.real_name = "host brain"
-
-	var/mob/living/H = host
+	host.parasites -= src
 	host = null
-
-	for(var/atom/A in H.contents)
-		if(istype(A,/mob/living/simple_animal/borer) || istype(A,/obj/item/weapon/holder))
-			return
-	H.status_flags &= ~PASSEMOTES
 
 /mob/living/simple_animal/borer/verb/infest()
 	set category = "Alien"
@@ -372,7 +365,7 @@ mob/living/simple_animal/borer/proc/detatch()
 		if(H.check_head_coverage())
 			to_chat(src, "You cannot get through that host's protective gear.")
 			return
-
+	if(is_busy()) return
 	to_chat(M, "Something slimy begins probing at the opening of your ear canal...")
 	to_chat(src, "You slither up [M] and begin probing at their ear canal...")
 
@@ -405,7 +398,7 @@ mob/living/simple_animal/borer/proc/detatch()
 
 		host_brain.name = M.name
 		host_brain.real_name = M.real_name
-		host.status_flags |= PASSEMOTES
+		host.parasites |= src
 
 		return
 	else

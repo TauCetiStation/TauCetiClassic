@@ -120,6 +120,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 /mob/dead/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/book/tome))
+		user.SetNextMove(CLICK_CD_MELEE)
 		var/mob/dead/M = src
 		if(src.invisibility != 0)
 			M.invisibility = 0
@@ -554,7 +555,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	dat += "<h4>Crew Manifest</h4>"
 	dat += data_core.get_manifest()
 
-	src << browse(dat, "window=manifest;size=370x420;can_close=1")
+	src << browse(entity_ja(dat), "window=manifest;size=370x420;can_close=1")
 
 //Used for drawing on walls with blood puddles as a spooky ghost.
 /mob/dead/observer/verb/bloody_doodle()
@@ -617,12 +618,12 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	var/max_length = 50
 
-	var/message = stripped_input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", "")
+	var/message = sanitize_safe(input(src,"Write a message. It cannot be longer than [max_length] characters.","Blood writing", ""))
 
 	if (message)
 
 		if (length(message) > max_length)
-			message += "-"
+			message += "-"//Should crop any letters? No?
 			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
 
 		var/obj/effect/decal/cleanable/blood/writing/W = new(T)

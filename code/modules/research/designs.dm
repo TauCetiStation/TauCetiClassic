@@ -1411,6 +1411,15 @@ datum/design/circuit_imprinter
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/circuit_imprinter
 
+datum/design/emitter
+	name = "Circuit Board Emitter"
+	desc = "The circuit board for a emitter."
+	id = "emitter"
+	req_tech = list("programming" = 5, "engineering" = 5, "powerstorage" = 5)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/emitter
+
 datum/design/autolathe
 	name = "Autolathe Board"
 	desc = "The circuit board for an autolathe."
@@ -1515,6 +1524,33 @@ datum/design/cyborgrecharger
 	materials = list(MAT_GLASS = 1000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/grounding_rod
 	//category = list("Misc. Machinery")
+
+/datum/design/mining_drill
+	name = "Machine Design (Mining Drill Head)"
+	desc = "Large drill for mining."
+	id = "mining_drill"
+	req_tech = list("powerstorage" = 3, "programming" = 3, "engineering" = 4, "magnets" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/miningdrill
+
+/datum/design/mining_drill_brace
+	name = "Machine Design (Mining Drill Brace)"
+	desc = "Brace for mining drill."
+	id = "mining_drill_brace"
+	req_tech = list("powerstorage" = 3, "programming" = 3, "engineering" = 4, "magnets" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/miningdrillbrace
+
+/datum/design/mining_fabricator
+	name = "Machine Design (Mining fabricator)"
+	desc = "For mining staff"
+	id = "mining_fabricator"
+	req_tech = list("powerstorage" = 3, "programming" = 3, "engineering" = 4, "magnets" = 4, "materials" = 4)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 1000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/minefab
 
 /////////////////////////////////////////
 ////////////Power Stuff//////////////////
@@ -1646,41 +1682,68 @@ datum/design/nanopaste
 	materials = list(MAT_METAL = 7000, MAT_GLASS = 7000)
 	build_path = /obj/item/stack/nanopaste
 
+datum/design/implanter
+	name = "implanter"
+	desc = "Implanter, used to inject implants."
+	id = "implanter"
+	req_tech = list("materials" = 2, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
+	build_path = /obj/item/weapon/implanter
+
 datum/design/implant_loyal
 	name = "Glass Case- 'Loyalty'"
 	desc = "A case containing a loyalty implant."
 	id = "implant_loyal"
-	req_tech = list("materials" = 2, "biotech" = 3)
+	req_tech = list("materials" = 2, "biotech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100)
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000)
 	build_path = /obj/item/weapon/implantcase/loyalty
+
+datum/design/implant_mindshield
+	name = "Glass Case- 'MindShield'"
+	desc = "A case containing a mindshield implant."
+	id = "implant_mindshield"
+	req_tech = list("materials" = 2, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000)
+	build_path = /obj/item/weapon/implantcase/mindshield
 
 datum/design/implant_chem
 	name = "Glass Case- 'Chem'"
 	desc = "A case containing a chemical implant."
 	id = "implant_chem"
-	req_tech = list("materials" = 2, "biotech" = 3)
+	req_tech = list("materials" = 2, "biotech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100)
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000,)
 	build_path = /obj/item/weapon/implantcase/chem
 
 datum/design/implant_death
 	name = "Glass Case- 'Death Alarm'"
 	desc = "A case containing a death alarm implant."
 	id = "implant_death"
-	req_tech = list("materials" = 2, "biotech" = 3)
+	req_tech = list("materials" = 2, "biotech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100)
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/implantcase/death_alarm
 
-datum/design/implant_free
-	name = "boxed freedom implant (with injector)"
-	desc = "A sleek, sturdy box"
-	id = "implant_free"
-	req_tech = list("syndicate" = 2, "biotech" = 3)
+datum/design/implant_tracking
+	name = "Glass Case- 'Tracking'"
+	desc = "A case containing a tracking implant."
+	id = "implant_tracking"
+	req_tech = list("materials" = 2, "biotech" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 100, MAT_GOLD = 100, MAT_DIAMOND = 100)
-	build_path = /obj/item/weapon/storage/box/syndie_kit/imp_freedom
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000)
+	build_path = /obj/item/weapon/implantcase/tracking
+
+datum/design/implant_free
+	name = "Glass Case- 'Freedom'"
+	desc = "A case containing a freedom implant."
+	id = "implant_free"
+	req_tech = list("syndicate" = 3, "biotech" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1000, MAT_GLASS = 1000, MAT_SILVER = 1000, MAT_GOLD = 1000, MAT_DIAMOND = 1000)
+	build_path = /obj/item/weapon/implantcase/freedom
 
 datum/design/chameleon
 	name = "Chameleon Kit"
@@ -1788,6 +1851,15 @@ datum/design/scalpel_manager
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500, MAT_SILVER = 1500, MAT_GOLD = 1500, MAT_DIAMOND = 750)
 	build_path = /obj/item/weapon/scalpel/manager
+
+/datum/design/biocan
+	name = "Biogel can"
+	desc = "Medical device for sustaining life in head"
+	id = "biocan"
+	req_tech = list("biotech" = 3, "materials" = 3, "magnets" = 3)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 1200, MAT_GLASS = 1000)
+	build_path = /obj/item/device/biocan
 
 /////////////////////////////////////////
 /////////////////Weapons/////////////////
@@ -2392,10 +2464,12 @@ datum/design/body_warp
 	construction_time=100
 	category = list("Support")
 
-datum/design/spraycan
+/datum/design/spraycan
 	name = "Spraycan"
 	id = "spraycan"
-	build_type = AUTOLATHE
+	desc = "A metallic container containing tasty paint."
+	req_tech = list("materials" = 1)
+	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 100, MAT_GLASS = 100)
 	build_path = /obj/item/toy/crayon/spraycan
 

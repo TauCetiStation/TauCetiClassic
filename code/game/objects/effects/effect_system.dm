@@ -651,6 +651,7 @@ steam.start() -- spawns the effect
 	return
 
 /obj/structure/foamedmetal/attack_hand(mob/user)
+	user.SetNextMove(CLICK_CD_MELEE)
 	if ((HULK in user.mutations) || (prob(75 - metal*25)))
 		to_chat(user, "\blue You smash through the metal foam wall.")
 		for(var/mob/O in oviewers(user))

@@ -9,26 +9,13 @@
 	light_color = "#00b000"
 	circuit = "/obj/item/weapon/circuitboard/atmoscontrol"
 	req_access = list(access_ce)
+	allowed_checks = ALLOWED_CHECK_NONE
 
 	var/obj/machinery/alarm/current
 	var/overridden = FALSE //not set yet, can't think of a good way to do it
 
-
-/obj/machinery/computer/atmoscontrol/attack_ai(mob/user)
-	return interact(user)
-
-/obj/machinery/computer/atmoscontrol/attack_paw(mob/user)
-	return interact(user)
-
-/obj/machinery/computer/atmoscontrol/attack_hand(mob/user)
-	if(..())
-		return
-	return interact(user)
-
-/obj/machinery/computer/atmoscontrol/interact(mob/user)
-	user.set_machine(src)
-
-	if(allowed(user))
+/obj/machinery/computer/atmoscontrol/ui_interact(mob/user)
+	if(allowed(user)) // this is very strange when you know, that this var will be set everytime someone opens with and without access and interfere with each other... but maybe i don't understand smth.
 		overridden = TRUE
 	else if(!emagged)
 		overridden = FALSE
@@ -50,7 +37,7 @@
 				if (2)
 					dat += "<font color=red>"
 			dat += "[alarm]</font></a><br/>"
-	user << browse(dat, "window=atmoscontrol")
+	user << browse(entity_ja(dat), "window=atmoscontrol")
 
 /obj/machinery/computer/atmoscontrol/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/weapon/card/emag) && !emagged)

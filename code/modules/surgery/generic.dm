@@ -199,7 +199,7 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	var/msg = "[user] starts to pry open the incision on [target]'s [BP.name] with \the [tool]."
 	var/self_msg = "You start to pry open the incision on [target]'s [BP.name] with \the [tool]."
-	if (target_zone == BP_HEAD)
+	if (target_zone == BP_CHEST)
 		msg = "[user] starts to separate the ribcage and rearrange the organs in [target]'s torso with \the [tool]."
 		self_msg = "You start to separate the ribcage and rearrange the organs in [target]'s torso with \the [tool]."
 	if (target_zone == BP_GROIN)

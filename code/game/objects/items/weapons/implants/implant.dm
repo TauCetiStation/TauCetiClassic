@@ -11,6 +11,18 @@
 	var/allow_reagents = 0
 	var/malfunction = 0
 
+/obj/item/weapon/implant/atom_init()
+	. = ..()
+	implant_list += src
+
+/obj/item/weapon/implant/Destroy()
+	implant_list -= src
+	if(part)
+		part.implants.Remove(src)
+		part = null
+	imp_in = null
+	return ..()
+
 /obj/item/weapon/implant/proc/trigger(emote, source)
 	return
 
@@ -22,6 +34,19 @@
 // return 1 if the implant succeeds (ex. Nonrevhead and loyalty implant.)
 /obj/item/weapon/implant/proc/implanted(mob/source)
 	return 1
+
+/obj/item/weapon/implant/proc/inject(mob/living/carbon/C, def_zone)
+	if(!C)
+		return
+	loc = C
+	imp_in = C
+	implanted = TRUE
+	if(ishuman(C))
+		var/mob/living/carbon/human/H = C
+		var/obj/item/organ/external/BP = H.bodyparts_by_name[def_zone ? def_zone : BP_HEAD]
+		BP.implants += src
+		part = BP
+		H.hud_updateflag |= 1 << IMPLOYAL_HUD
 
 /obj/item/weapon/implant/proc/get_data()
 	return "No information available"
@@ -43,11 +68,6 @@
 	desc = "Charred circuit in melted plastic case. Wonder what that used to be..."
 	icon_state = "implant_melted"
 	malfunction = MALFUNCTION_PERMANENT
-
-/obj/item/weapon/implant/Destroy()
-	if(part)
-		part.implants.Remove(src)
-	return ..()
 
 /obj/item/weapon/implant/tracking
 	name = "tracking implant"
@@ -150,7 +170,7 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/explosive/hear(msg)
 	var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
-	msg = sanitize_simple(msg, replacechars)
+	msg = sanitize(msg, replacechars)
 	if(findtext(msg,phrase))
 		activate()
 		qdel(src)
@@ -202,10 +222,9 @@ Implant Specifics:<BR>"}
 
 /obj/item/weapon/implant/explosive/implanted(mob/source)
 	elevel = alert("What sort of explosion would you prefer?", "Implant Intent", "Localized Limb", "Destroy Body", "Full Explosion")
-	phrase = input("Choose activation phrase:") as text
 	var/list/replacechars = list("'" = "","\"" = "",">" = "","<" = "","(" = "",")" = "")
-	phrase = sanitize_simple(phrase, replacechars)
-	usr.mind.store_memory("Explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.", 0, 0)
+	phrase = sanitize_safe(replace_characters(input("Choose activation phrase:") as text, replacechars))
+	usr.mind.store_memory("Explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.", 0)
 	to_chat(usr, "The implanted explosive implant in [source] can be activated by saying something containing the phrase ''[src.phrase]'', <B>say [src.phrase]</B> to attempt to activate.")
 	return 1
 
@@ -313,80 +332,6 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	spawn(20)
 		malfunction--
 
-/obj/item/weapon/implant/loyalty
-	name = "loyalty implant"
-	desc = "Makes you loyal or such."
-
-/obj/item/weapon/implant/loyalty/get_data()
-	var/dat = {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Nanotrasen Employee Management Implant<BR>
-<b>Life:</b> Ten years.<BR>
-<b>Important Notes:</b> Personnel injected with this device tend to be much more loyal to the company.<BR>
-<b>Warning:</b> Usage without special equipment may cause heavy injuries and severe brain damage.<BR>
-<HR>
-<b>Implant Details:</b><BR>
-<b>Function:</b> Contains a small pod of nanobots that manipulate the host's mental functions.<BR>
-<b>Special Features:</b> Will prevent and cure most forms of brainwashing.<BR>
-<b>Integrity:</b> Implant will last so long as the nanobots are inside the bloodstream."}
-	return dat
-
-/obj/item/weapon/implant/loyalty/implanted(mob/M)
-	if(!istype(M, /mob/living/carbon/human))	return 0
-	var/mob/living/carbon/human/H = M
-	if((H.mind in (ticker.mode.head_revolutionaries | ticker.mode.A_bosses | ticker.mode.B_bosses)) || is_shadow_or_thrall(H))
-		H.visible_message("<span class='warning'>[H] seems to resist the implant!</span>", "<span class='userdanger'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
-		return 0
-
-	if(H.mind in ticker.mode.revolutionaries)
-		ticker.mode.remove_revolutionary(H.mind)
-
-	if(H.mind in (ticker.mode.A_gang | ticker.mode.B_gang))
-		ticker.mode.remove_gangster(H.mind, exclude_bosses=1)
-		H.visible_message("<span class='warning'>[src] was destroyed in the process!</span>", "<span class='userdanger'>You feel a surge of loyalty towards Nanotrasen.</span>")
-		return 0
-
-	if(H.mind in ticker.mode.cult)
-		to_chat(H, "<span class='userdanger'>You feel the corporate tendrils of Nanotrasen try to invade your mind!</span>")
-	else
-		to_chat(H, "<span class='userdanger'>You have been implanted. You feel a surge of loyalty towards Nanotrasen.</span>")
-
-	if(prob(50))
-		H.visible_message("[H] suddenly goes very red and starts writhing. There is a strange smell in the air...", \
-			"\red Suddenly the horrible pain strikes your body! Your mind is in complete disorder! Blood pulses and starts burning! The pain is impossible!!!")
-		H.adjustBrainLoss(80)
-
-	START_PROCESSING(SSobj, src)
-	return 1
-
-/obj/item/weapon/implant/loyalty/atom_init()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/item/weapon/implant/loyalty/process()
-	if (!implanted)
-		STOP_PROCESSING(SSobj, src)
-		return
-
-	var/mob/M = imp_in
-
-	if(!M)	return
-
-	if(M.stat == DEAD || isnull(M))
-		STOP_PROCESSING(SSobj, src)
-		return
-
-	if(prob(1) && prob(25))//1/400
-		switch(rand(1, 4))
-			if(1)
-				to_chat(M, "\italic You [pick("are sure", "think")] that NanoTrasen - is the best corporation in the whole Universe!")
-			if(2)
-				to_chat(M, "\italic You [pick("are sure", "think")] that Captain is the greatest man who ever lived!")
-			if(3)
-				to_chat(M, "\italic You want to give your life away in the name of NanoTrasen!")
-			if(4)
-				to_chat(M, "\italic You are confident that all what Heads of station do - is for a greater good!")
-
 /obj/item/weapon/implant/adrenalin
 	name = "adrenalin"
 	desc = "Removes all stuns and knockdowns."
@@ -419,7 +364,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 
 
 /obj/item/weapon/implant/adrenalin/implanted(mob/source)
-	source.mind.store_memory("A implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0, 0)
+	source.mind.store_memory("A implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.", 0)
 	to_chat(source, "The implanted freedom implant can be activated by using the pale emote, <B>say *pale</B> to attempt to activate.")
 	return 1
 
@@ -535,7 +480,7 @@ the implant may become unstable and either pre-maturely inject the subject or si
 /obj/item/weapon/implant/compressed/implanted(mob/source)
 	src.activation_emote = input("Choose activation emote:") in list("blink", "blink_r", "eyebrow", "chuckle", "twitch_s", "frown", "nod", "blush", "giggle", "grin", "groan", "shrug", "smile", "pale", "sniff", "whimper", "wink")
 	if (source.mind)
-		source.mind.store_memory("Compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
+		source.mind.store_memory("Compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0)
 	to_chat(source, "The implanted compressed matter implant can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
 	return 1
 

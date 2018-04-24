@@ -346,20 +346,20 @@
 
 	if(isrobot(user))
 		to_chat(user, "\blue You're a robot. No.")
-		return //Robots can't interact with storage items.
+		return //Robots can't interact with storage items. FALSE
 
 	if(!can_be_inserted(W))
-		return
+		return FALSE
 
 	if(istype(W, /obj/item/weapon/implanter/compressed))
-		return
+		return FALSE
 
 	if(istype(W, /obj/item/weapon/tray))
 		var/obj/item/weapon/tray/T = W
 		if(T.calc_carry() > 0)
 			if(prob(85))
 				to_chat(user, "\red The tray won't fit in [src].")
-				return
+				return FALSE
 			else
 				W.loc = user.loc
 				if ((user.client && user.s_active != src))
@@ -368,11 +368,11 @@
 				to_chat(user, "\red God damnit!")
 
 	if(istype(W, /obj/item/weapon/packageWrap) && !(src in user)) //prevents package wrap being put inside the backpack when the backpack is not being worn/held (hence being wrappable)
-		return
+		return FALSE
 
 	W.add_fingerprint(user)
 	handle_item_insertion(W)
-	return
+	return TRUE
 
 /obj/item/weapon/storage/dropped(mob/user)
 	return

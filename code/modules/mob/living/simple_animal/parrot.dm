@@ -42,7 +42,7 @@
 
 	speak_chance = 1//1% (1 in 100) chance every tick; So about once per 150 seconds, assuming an average tick is 1.5s
 	turns_per_move = 5
-	meat_type = /obj/item/weapon/reagent_containers/food/snacks/cracker/
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/cracker = 2)
 
 	response_help  = "pets the"
 	response_disarm = "gently moves aside the"
@@ -126,7 +126,7 @@
 	else
 		dat +=	"<br><b>Headset:</b> <a href='?src=\ref[src];add_inv=ears'>Nothing</a>"
 
-	user << browse(dat, text("window=mob[];size=325x500", name))
+	user << browse(entity_ja(dat), text("window=mob[];size=325x500", name))
 	onclose(user, "mob[real_name]")
 	return
 
@@ -242,7 +242,8 @@
 //Simple animals
 /mob/living/simple_animal/parrot/attack_animal(mob/living/simple_animal/M)
 	if(client) return
-
+	if(..())
+		return
 
 	if(parrot_state == PARROT_PERCH)
 		parrot_sleep_dur = parrot_sleep_max //Reset it's sleep timer if it was perched
@@ -779,7 +780,7 @@
 	speak_chance = 20
 	status_flags = GODMODE
 	incorporeal_move = 1
-	meat_type = list(/obj/item/weapon/ectoplasm = 1)
+	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
 
 /mob/living/simple_animal/parrot/Poly/ghost/atom_init()
 	memory_saved = 1 //At this point nothing is saved

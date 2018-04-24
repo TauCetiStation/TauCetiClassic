@@ -180,17 +180,17 @@
 					to_chat(target, "<span class='boldannounce'>Your gaze is forcibly drawn into a blinding red light. You fall to the floor as conscious thought is wiped away.</span>")
 					target.Weaken(12)
 					sleep(20)
-					if(target.is_loyalty_implanted(target))
+					if(ismindshielded(target))
 						to_chat(usr, "<span class='notice'>They are enslaved by Nanotrasen. You begin to shut down the nanobot implant - this will take some time.</span>")
 						usr.visible_message("<span class='danger'>[usr] halts for a moment, then begins passing its hand over [target]'s body.</span>")
 						to_chat(target, "<span class='boldannounce'>You feel your loyalties begin to weaken!</span>")
 						sleep(150) //15 seconds - not spawn() so the enthralling takes longer
 						to_chat(usr, "<span class='notice'>The nanobots composing the loyalty implant have been rendered inert. Now to continue.</span>")
 						usr.visible_message("<span class='danger'>[usr] halts thier hand and resumes staring into [target]'s face.</span>")
-						for(var/obj/item/weapon/implant/loyalty/L in target)
-							if(L && L.implanted)
+						for(var/obj/item/weapon/implant/mindshield/L in target)
+							if(L.implanted)
 								qdel(L)
-								to_chat(target, "<span class='boldannounce'>Your unwavering loyalty to Nanotrasen unexpectedly falters, dims, dies. You feel a sense of liberation which is quickly stifled by terror.</span>")
+								to_chat(target, "<span class='boldannounce'>Your unwavering volition unexpectedly falters, dims, dies. You feel a sense of true terror.</span>")
 				if(3)
 					to_chat(usr, "<span class='notice'>You begin rearranging [target]'s memories.</span>")
 					usr.visible_message("<span class='danger'>[usr]'s eyes flare brightly, their unflinching gaze staring constantly at [target].</span>")
@@ -227,7 +227,7 @@
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/text = stripped_input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", "")
+		var/text = sanitize(input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", ""))
 		if(!text)
 			return
 		for(var/mob/M in mob_list)
@@ -659,7 +659,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 
 /obj/effect/proc_holder/spell/targeted/shadowling_hivemind_ascendant/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/text = stripped_input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", "")
+		var/text = sanitize(input(user, "What do you want to say to fellow thralls and shadowlings?.", "Hive Chat", ""))
 		if(!text)
 			return
 		for(var/mob/M in mob_list)
@@ -679,7 +679,7 @@ datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
 
 /obj/effect/proc_holder/spell/targeted/shadowlingAscendantTransmit/cast(list/targets)
 	for(var/mob/living/user in targets)
-		var/text = stripped_input(user, "What do you want to say to everything on and near [world.name]?.", "Transmit to World", "")
+		var/text = sanitize(input(user, "What do you want to say to everything on and near [world.name]?.", "Transmit to World", ""))
 		if(!text)
 			return
 		to_chat(world, "<font size=4><span class='shadowling'><b>\"[sanitize(text)]\"</font></span>")

@@ -65,7 +65,7 @@
 				qdel(O) //Commented out for now. -Durandan
 
 
-/obj/machinery/mineral/mint/attack_hand(user)
+/obj/machinery/mineral/mint/ui_interact(user)
 
 	var/dat = "<b>Coin Press</b><br>"
 
@@ -129,7 +129,7 @@
 
 	dat += text("<br><br>In total this machine produced <font color='green'><b>[newCoins]</b></font> coins.")
 	dat += text("<br><A href='?src=\ref[src];makeCoins=[1]'>Make coins</A>")
-	user << browse("[dat]", "window=mint")
+	user << browse("[entity_ja(dat)]", "window=mint")
 
 /obj/machinery/mineral/mint/Topic(href, href_list)
 	. = ..()

@@ -109,7 +109,7 @@
 						return
 					to_chat(usr, "You set the pinpointer to locate [targetitem]")
 				if("DNA")
-					var/DNAstring = input("Input DNA string to search for." , "Please Enter String." , "")
+					var/DNAstring = sanitize(input("Input DNA string to search for." , "Please Enter String." , ""))
 					if(!DNAstring)
 						return
 					for(var/mob/living/carbon/M in mob_list)

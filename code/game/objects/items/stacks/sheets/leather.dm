@@ -92,11 +92,11 @@
 
 /obj/item/stack/sheet/animalhide/attackby(obj/item/weapon/W, mob/user)
 	if(	istype(W, /obj/item/weapon/kitchenknife) || \
-		istype(W, /obj/item/weapon/kitchen/utensil/knife) || \
 		istype(W, /obj/item/weapon/twohanded/fireaxe) || \
 		istype(W, /obj/item/weapon/hatchet) )
 
 		//visible message on mobs is defined as visible_message(message, self_message, blind_message)
+		if(user.is_busy()) return
 		usr.visible_message("\blue \the [usr] starts cutting hair off \the [src]", "\blue You start cutting the hair off \the [src]", "You hear the sound of a knife rubbing against flesh")
 		if(do_after(user,50,target = src))
 			if(!use(1))

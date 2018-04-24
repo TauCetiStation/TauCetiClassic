@@ -65,6 +65,8 @@
 
 #define isliving(A) (istype(A, /mob/living))
 
+#define isessence(A) (istype(A, /mob/living/parasite/essence))
+
 // MOB
 
 #define isobserver(A) (istype(A, /mob/dead/observer))
@@ -80,6 +82,8 @@
 #define isbot(A) (istype(A, /obj/machinery/bot))
 
 #define islist(A) (istype(A, /list))
+
+#define ismachinery(A) (istype(A, /obj/machinery))
 
 #define ismovableatom(A) (istype(A, /atom/movable))
 

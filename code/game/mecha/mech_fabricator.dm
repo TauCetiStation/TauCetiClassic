@@ -9,6 +9,7 @@
 	idle_power_usage = 20
 	active_power_usage = 5000
 	req_access = list(access_robotics)
+	allowed_checks = ALLOWED_CHECK_TOPIC
 	var/time_coeff = 1
 	var/time_coeff_tech = 1
 	var/resource_coeff = 1
@@ -300,32 +301,10 @@
 /obj/machinery/mecha_part_fabricator/proc/get_construction_time_w_coeff(datum/design/D, roundto = 1) //aran
 	return round(initial(D.construction_time)*time_coeff*time_coeff_tech, roundto)
 
-/obj/machinery/mecha_part_fabricator/proc/operation_allowed(mob/M)
-	if(isrobot(M) || isAI(M) || IsAdminGhost(M))
-		return 1
-	if(!istype(req_access) || !req_access.len)
-		return 1
-	else if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		for(var/ID in list(H.get_active_hand(), H.wear_id, H.belt))
-			if(src.check_access(ID))
-				return 1
-	visible_message("[bicon(src)] <b>\The [src]</b> beeps: \"Access denied.\"")
-	//M << "<font color='red'>You don't have required permissions to use [src]</font>"
-	return 0
+/obj/machinery/mecha_part_fabricator/ui_interact(mob/user)
+	var/dat
+	var/left_part
 
-/obj/machinery/mecha_part_fabricator/attack_hand(mob/user)
-	if(!(..()))
-		if(!operation_allowed(user))
-			return
-		else
-			return interact(user)
-
-/obj/machinery/mecha_part_fabricator/interact(mob/user)
-	var/dat, left_part
-	if (..())
-		return
-	user.set_machine(src)
 	var/turf/exit = get_step(src,(dir))
 	if(exit.density)
 		visible_message("[bicon(src)] <b>\The [src]</b> beeps, \"Error! Part outlet is obstructed.\"")
@@ -376,9 +355,8 @@
 				</table>
 				</body>
 				</html>"}
-	user << browse(dat, "window=mecha_fabricator;size=1000x430")
+	user << browse(entity_ja(dat), "window=mecha_fabricator;size=1000x430")
 	onclose(user, "mecha_fabricator")
-	return
 
 /obj/machinery/mecha_part_fabricator/Topic(href, href_list)
 	. = ..()

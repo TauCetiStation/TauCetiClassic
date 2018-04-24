@@ -3,7 +3,8 @@
 	icon = 'icons/obj/iv_drip.dmi'
 	icon_state = "iv_drip"
 	anchored = 0
-	density = 1
+	density = 0
+	interact_offline = TRUE
 	var/mob/living/carbon/human/attached = null
 	var/mode = 1 // 1 is injecting, 0 is taking blood.
 	var/obj/item/weapon/reagent_containers/beaker = null
@@ -50,7 +51,8 @@
 
 /obj/machinery/iv_drip/MouseDrop(over_object, src_location, over_location)
 	..()
-
+	if(!iscarbon(usr) && !isrobot(usr))
+		return
 	if(attached)
 		visible_message("[src.attached] is detached from \the [src]")
 		src.attached = null
@@ -135,16 +137,19 @@
 				beaker.reagents.handle_reactions()
 				update_icon()
 
-/obj/machinery/iv_drip/attack_ghost(mob/user)
-	return
+/obj/machinery/iv_drip/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
 
 /obj/machinery/iv_drip/attack_hand(mob/user)
-	if(src.beaker)
-		src.beaker.loc = get_turf(src)
-		src.beaker = null
+	. = ..()
+	if(.)
+		return
+
+	if(beaker)
+		beaker.loc = get_turf(src)
+		beaker = null
 		update_icon()
-	else
-		return ..()
 
 /obj/machinery/iv_drip/verb/toggle_mode()
 	set name = "Toggle Mode"

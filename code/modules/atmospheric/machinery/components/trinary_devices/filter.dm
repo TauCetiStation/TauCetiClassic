@@ -9,6 +9,7 @@
 	use_power = 0
 	idle_power_usage = 150 // internal circuitry, friction losses and stuff
 	power_rating = 7500    // This also doubles as a measure of how powerful the filter is, in Watts. 7500 W ~ 10 HP
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/set_flow_rate = ATMOS_DEFAULT_VOLUME_FILTER
 
@@ -122,14 +123,7 @@
 	set_frequency(frequency)
 	..()
 
-/obj/machinery/atmospherics/components/trinary/filter/attack_hand(user) // -- TLE
-	if(..())
-		return
-
-	if(!src.allowed(user))
-		to_chat(user, "<span class='warning'>Access denied.</span>")
-		return
-
+/obj/machinery/atmospherics/components/trinary/filter/ui_interact(user) // -- TLE
 	var/dat
 	var/current_filter_type
 	switch(filter_type)
@@ -164,7 +158,7 @@
 			<B>Flow rate: </B>[round(last_flow_rate, 0.1)]L/s
 			"}
 
-	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[dat]</TT>", "window=atmo_filter")
+	user << browse("<HEAD><TITLE>[src.name] control</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=atmo_filter")
 	onclose(user, "atmo_filter")
 
 /obj/machinery/atmospherics/components/trinary/filter/Topic(href, href_list) // -- TLE

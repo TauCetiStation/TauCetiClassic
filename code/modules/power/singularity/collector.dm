@@ -8,8 +8,8 @@ var/global/list/rad_collectors = list()
 	icon_state = "ca"
 	anchored = FALSE
 	density = TRUE
-	ghost_must_be_admin = TRUE
 	req_access = list(access_engine_equip)
+	use_power = 0
 	var/obj/item/weapon/tank/phoron/P = null
 	var/last_power = 0
 	var/active = FALSE
@@ -34,18 +34,20 @@ var/global/list/rad_collectors = list()
 	return
 
 /obj/machinery/power/rad_collector/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+	user.SetNextMove(CLICK_CD_RAPID)
 	if(anchored)
-		if(!src.locked || isobserver(user))
+		if(!locked || IsAdminGhost(user))
 			toggle_power()
-			user.visible_message("[user.name] turns the [src.name] [active? "on":"off"].", \
-			"You turn the [src.name] [active? "on":"off"].")
+			user.visible_message(
+				"[user.name] turns the [name] [active? "on":"off"].",
+				"You turn the [name] [active? "on":"off"].")
 			investigate_log("turned [active?"<font color='green'>on</font>":"<font color='red'>off</font>"] by [user.key]. [P?"Fuel: [round(P.air_contents.gas["phoron"]/0.29)]%":"<font color='red'>It is empty</font>"].","singulo")
-			return
 		else
-			to_chat(user, "\red The controls are locked!")
-			return
-..()
-
+			to_chat(user, "<span class='warning'>The controls are locked!</span>")
+			return 1
 
 /obj/machinery/power/rad_collector/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/device/analyzer))

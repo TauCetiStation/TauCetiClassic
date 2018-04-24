@@ -310,13 +310,14 @@
 
 
 /mob/living/carbon/slime/attack_animal(mob/living/simple_animal/M)
+	if(..())
+		return
 	if(M.melee_damage_upper == 0)
 		M.emote("[M.friendly] [src]")
 	else
 		if(M.attack_sound)
 			playsound(loc, M.attack_sound, 50, 1, 1)
-		for(var/mob/O in viewers(src, null))
-			O.show_message("\red <B>[M]</B> [M.attacktext] [src]!", 1)
+		visible_message("<span class='userdanger'><B>[M]</B>[M.attacktext] [src]!</span>")
 		M.attack_log += text("\[[time_stamp()]\] <font color='red'>attacked [src.name] ([src.ckey])</font>")
 		src.attack_log += text("\[[time_stamp()]\] <font color='orange'>was attacked by [M.name] ([M.ckey])</font>")
 		var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
@@ -607,7 +608,7 @@
 	<BR><HR><BR>
 	<BR><A href='?src=\ref[user];mach_close=mob[name]'>Close</A>
 	<BR>"}
-	user << browse(dat, text("window=mob[name];size=340x480"))
+	user << browse(entity_ja(dat), text("window=mob[name];size=340x480"))
 	onclose(user, "mob[name]")
 	return
 
@@ -772,7 +773,7 @@
 		pet.colour = "[M.colour]"
 		to_chat(user, "You feed the slime the potion, removing it's powers and calming it.")
 		qdel(M)
-		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+		var/newname = sanitize_safe(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text, MAX_NAME_LEN)
 
 		if (!newname)
 			newname = "pet slime"
@@ -800,7 +801,7 @@
 		pet.colour = "[M.colour]"
 		to_chat(user, "You feed the slime the potion, removing it's powers and calming it.")
 		qdel(M)
-		var/newname = copytext(sanitize(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text),1,MAX_NAME_LEN)
+		var/newname = sanitize_safe(input(user, "Would you like to give the slime a name?", "Name your new pet", "pet slime") as null|text, MAX_NAME_LEN)
 
 		if (!newname)
 			newname = "pet slime"
@@ -919,10 +920,10 @@
 	w_class = 4//bulky item
 	allowed = null
 
-	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
-	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
-	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|FEET|ARMS|HANDS
+	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
 	flags = ABSTRACT | DROPDEL
@@ -994,7 +995,7 @@
 	if(!check_spirit())
 		to_chat(user, "The rune fizzles uselessly. There is no spirit nearby.")
 		return
-
+	user.SetNextMove(CLICK_CD_INTERACT)
 	var/mob/living/carbon/human/golem/G = new(loc)
 	G.attack_log = spirit.attack_log //Preserve attack log, if there is any...
 	G.attack_log += "\[[time_stamp()]\]<font color='blue'> ======GOLEM LIFE======</font>"

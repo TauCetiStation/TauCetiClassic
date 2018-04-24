@@ -22,7 +22,7 @@
 	if (!W || !user || !W.type) return
 	switch(W.type)
 		if(/obj/item/weapon/circular_saw) qdel(src)
-		if(/obj/item/weapon/kitchen/utensil/knife) qdel(src)
+		if(/obj/item/weapon/kitchenknife) qdel(src)
 		if(/obj/item/weapon/scalpel) qdel(src)
 		if(/obj/item/weapon/twohanded/fireaxe) qdel(src)
 		if(/obj/item/weapon/hatchet) qdel(src)
@@ -47,9 +47,12 @@
 
 /obj/effect/spacevine/attack_hand(mob/user)
 	user_unbuckle_mob(user)
+	user.SetNextMove(CLICK_CD_MELEE)
+
 
 /obj/effect/spacevine/attack_paw(mob/user)
 	user_unbuckle_mob(user)
+	user.SetNextMove(CLICK_CD_MELEE)
 
 /obj/effect/spacevine_controller
 	var/list/obj/effect/spacevine/vines = list()

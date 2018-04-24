@@ -9,7 +9,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/device/multitool(), \
 		new /obj/item/device/t_scanner(), \
 		new /obj/item/device/analyzer(), \
-		new /obj/item/device/analyzer/plant_analyzer(), \
+		new /obj/item/device/plant_analyzer(), \
 		new /obj/item/device/healthanalyzer(), \
 		new /obj/item/weapon/weldingtool(), \
 		new /obj/item/weapon/screwdriver(), \
@@ -57,7 +57,7 @@ var/global/list/autolathe_recipes = list( \
 		new /obj/item/weapon/minihoe(), \
 		new /obj/item/weapon/hand_labeler(), \
 		new /obj/item/device/destTagger(), \
-		new /obj/item/weapon/game_kit(), \
+		new /obj/item/weapon/game_kit/random(), \
 		new /obj/item/newscaster_frame(), \
 	)
 
@@ -80,7 +80,12 @@ var/global/list/autolathe_recipes_hidden = list( \
 	name = "\improper Autolathe"
 	desc = "It produces items using metal and glass."
 	icon_state = "autolathe"
-	density = 1
+	density = TRUE
+	anchored = TRUE
+	use_power = 1
+	idle_power_usage = 10
+	active_power_usage = 100
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 	var/m_amount = 0.0
 	var/max_m_amount = 150000.0
@@ -89,16 +94,14 @@ var/global/list/autolathe_recipes_hidden = list( \
 	var/max_g_amount = 75000.0
 
 	var/operating = 0.0
-	anchored = 1.0
+
 	var/list/L
 	var/list/LL
 	var/hacked = 0
 	var/disabled = 0
 	var/shocked = 0
 	var/datum/wires/autolathe/wires = null
-	use_power = 1
-	idle_power_usage = 10
-	active_power_usage = 100
+
 	var/busy = 0
 	var/prod_coeff
 
@@ -134,7 +137,10 @@ var/global/list/autolathe_recipes_hidden = list( \
 	for(var/obj/item/weapon/stock_parts/manipulator/M in component_parts)
 		prod_coeff += M.rating - 1
 
-/obj/machinery/autolathe/proc/regular_win(mob/user)
+/obj/machinery/autolathe/ui_interact(mob/user)
+	if(disabled)
+		return
+
 	var/coeff = 2 ** prod_coeff
 	var/dat
 
@@ -169,7 +175,7 @@ var/global/list/autolathe_recipes_hidden = list( \
 			dat += "<A href='?src=\ref[src];make=\ref[t]'>[title]</A>"
 		dat += "<br>"
 
-	user << browse("<HTML><HEAD><TITLE>Autolathe Control Panel</TITLE></HEAD><BODY><TT>[dat]</TT></BODY></HTML>", "window=autolathe_regular")
+	user << browse("<HTML><HEAD><TITLE>Autolathe Control Panel</TITLE></HEAD><BODY><TT>[entity_ja(dat)]</TT></BODY></HTML>", "window=autolathe_regular")
 	onclose(user, "autolathe_regular")
 
 /obj/machinery/autolathe/proc/shock(mob/user, prb)
@@ -186,17 +192,12 @@ var/global/list/autolathe_recipes_hidden = list( \
 		return 0
 
 /obj/machinery/autolathe/interact(mob/user)
-	if(..())
-		return
 	if (shocked && !issilicon(user) && !isobserver(user))
 		shock(user,50)
 	if (disabled)
 		to_chat(user, "\red You press the button, but nothing happens.")
 		return
-	if(wires.interact(user))
-		return
-
-	regular_win(user)
+	..()
 
 /obj/machinery/autolathe/attackby(obj/item/I, mob/user)
 	if (busy)
@@ -218,8 +219,8 @@ var/global/list/autolathe_recipes_hidden = list( \
 				new /obj/item/stack/sheet/glass(loc, round(g_amount / 3750))
 			default_deconstruction_crowbar(I)
 			return 1
-		else
-			attack_hand(user)
+		else if(is_wire_tool(I))
+			wires.interact(user)
 			return 1
 
 	if (stat)
@@ -262,14 +263,6 @@ var/global/list/autolathe_recipes_hidden = list( \
 		qdel(I)
 	busy = 0
 	src.updateUsrDialog()
-
-/obj/machinery/autolathe/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/autolathe/attack_hand(mob/user)
-	if(..())
-		return
-	interact(user)
 
 /obj/machinery/autolathe/Topic(href, href_list)
 	. = ..()

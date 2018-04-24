@@ -118,9 +118,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			req_console_information -= department
 	return ..()
 
-/obj/machinery/requests_console/attack_hand(user)
-	if(..())
-		return
+/obj/machinery/requests_console/ui_interact(user)
 	var/dat
 	dat = text("<HEAD><TITLE>Requests Console</TITLE></HEAD><H3>[department] Requests Console</H3>")
 	if(!open)
@@ -193,7 +191,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 					dat += text("<b>Authentication accepted</b><BR><BR>")
 				else
 					dat += text("Swipe your card to authenticate yourself.<BR><BR>")
-				dat += text("<b>Message: </b>[sanitize_popup(message)] <A href='?src=\ref[src];writeAnnouncement=1'>Write</A><BR><BR>")
+				dat += text("<b>Message: </b>[message] <A href='?src=\ref[src];writeAnnouncement=1'>Write</A><BR><BR>")
 				if (announceAuth && message)
 					dat += text("<A href='?src=\ref[src];sendAnnouncement=1'>Announce</A><BR>");
 				dat += text("<BR><A href='?src=\ref[src];setScreen=0'>Back</A><BR>")
@@ -217,9 +215,8 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 				else
 					dat += text("Speaker <A href='?src=\ref[src];setSilent=1'>ON</A>")
 
-		user << browse("[dat]", "window=request_console")
+		user << browse("[entity_ja(dat)]", "window=request_console")
 		onclose(user, "req_console")
-	return
 
 /obj/machinery/requests_console/Topic(href, href_list)
 	. = ..()
@@ -229,7 +226,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 	if(reject_bad_text(href_list["write"]))
 		dpt = ckey(href_list["write"]) //write contains the string of the receiving department's name
 
-		var/new_message = sanitize_alt(copytext(input(usr, "Write your message:", "Awaiting Input", ""),1,MAX_MESSAGE_LEN))
+		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", ""))
 		if(new_message)
 			message = new_message
 			screen = 9
@@ -246,7 +243,7 @@ var/list/obj/machinery/requests_console/allConsoles = list()
 			priority = -1
 
 	if(href_list["writeAnnouncement"])
-		var/new_message = sanitize(copytext(input(usr, "Write your message:", "Awaiting Input", ""),1,MAX_MESSAGE_LEN))
+		var/new_message = sanitize(input(usr, "Write your message:", "Awaiting Input", ""))
 		if(new_message)
 			message = new_message
 			switch(href_list["priority"])

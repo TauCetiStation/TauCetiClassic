@@ -31,7 +31,7 @@
 				if(!H.shoes)
 					BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 					H.Weaken(3)
-			if(BP_L_HAND, BP_R_HAND)
+			if(BP_L_ARM, BP_R_ARM)
 				if(!H.gloves)
 					BP = H.bodyparts_by_name[type]
 					H.Stun(3)
@@ -53,10 +53,7 @@
 		to_chat(user, "<span class='notice'>You arm [src].</span>")
 	else
 		if(((user.getBrainLoss() >= 60 || (CLUMSY in user.mutations)) && prob(50)))
-			var/which_hand = BP_L_HAND
-			if(!user.hand)
-				which_hand = BP_R_HAND
-			triggered(user, which_hand)
+			triggered(user, user.hand ? BP_L_ARM : BP_R_ARM)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
 			return
@@ -68,10 +65,8 @@
 /obj/item/device/assembly/mousetrap/attack_hand(mob/living/user)
 	if(armed)
 		if(((user.getBrainLoss() >= 60 || CLUMSY in user.mutations)) && prob(50))
-			var/which_hand = BP_L_HAND
-			if(!user.hand)
-				which_hand = BP_R_HAND
-			triggered(user, which_hand)
+			user.SetNextMove(CLICK_CD_INTERACT)
+			triggered(user, user.hand ? BP_L_ARM : BP_R_ARM)
 			user.visible_message("<span class='warning'>[user] accidentally sets off [src], breaking their fingers.</span>", \
 								 "<span class='warning'>You accidentally trigger [src]!</span>")
 			return
@@ -93,7 +88,7 @@
 	if(armed)
 		finder.visible_message("<span class='warning'>[finder] accidentally sets off [src], breaking their fingers.</span>", \
 							   "<span class='warning'>You accidentally trigger [src]!</span>")
-		triggered(finder, finder.hand ? BP_L_HAND : BP_R_HAND)
+		triggered(finder, finder.hand ? BP_L_ARM : BP_R_ARM)
 		return 1	//end the search!
 	return 0
 

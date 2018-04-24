@@ -22,8 +22,7 @@
 		if(!O:brainmob)
 			to_chat(user, "\red You aren't sure where this brain came from, but you're pretty sure it's a useless brain.")
 			return
-		for(var/mob/V in viewers(src, null))
-			V.show_message(text("\blue [user] sticks \a [O] into \the [src]."))
+		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
 
 		brainmob = O:brainmob
 		O:brainmob = null
@@ -45,12 +44,27 @@
 
 		return
 
+	if(istype(O,/obj/item/weapon/holder/diona) && !brainmob)
+		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
+
+		for(var/mob/living/carbon/monkey/diona/V in O.contents)
+			if(!V.mind || !V.key)
+				to_chat(user, "<span class='warning'>It would appear [V] is void of consciousness, defeats MMI's purpose.</span>")
+				return
+			transfer_nymph(V)
+
+		qdel(O)
+
+		feedback_inc("cyborg_mmis_filled",1)
+
+		return
+
 	if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
 		if(allowed(user))
 			locked = !locked
-			to_chat(user, "\blue You [locked ? "lock" : "unlock"] the brain holder.")
+			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the brain holder.</span>")
 		else
-			to_chat(user, "\red Access denied.")
+			to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
 	if(brainmob)
 		O.attack(brainmob, user)//Oh noooeeeee
@@ -59,20 +73,47 @@
 
 /obj/item/device/mmi/attack_self(mob/user)
 	if(!brainmob)
-		to_chat(user, "\red You upend the MMI, but there's nothing in it.")
+		to_chat(user, "<span class='warning'>You upend the MMI, but there's nothing in it.</span>")
 	else if(locked)
-		to_chat(user, "\red You upend the MMI, but the brain is clamped into place.")
+		to_chat(user, "<span class='warning'>You upend the MMI, but the brain is clamped into place.</span>")
 	else
-		to_chat(user, "\blue You upend the MMI, spilling the brain onto the floor.")
+		for(var/mob/living/carbon/monkey/diona/V in brainmob.contents)
+			icon_state = "mmi_empty"
+			name = "Man-Machine Interface"
+			to_chat(user, "<span class='notice'>You uppend the MMI, dropping [brainmob.real_name] onto the floor.</span>")
+			V.loc = user.loc
+			QDEL_NULL(brainmob)
+			return
+		to_chat(user, "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>")
 		var/obj/item/brain/brain = new(user.loc)
 		brainmob.container = null//Reset brainmob mmi var.
 		brainmob.loc = brain//Throw mob into brain.
 		living_mob_list -= brainmob//Get outta here
 		brain.brainmob = brainmob//Set the brain to use the brainmob
-		brainmob = null//Set mmi brainmob var to null
+		QDEL_NULL(brainmob)
 
-		icon_state = "mmi_empty"
-		name = "Man-Machine Interface"
+/obj/item/device/mmi/MouseDrop_T(mob/living/carbon/monkey/diona/target, mob/user)
+	if(user.incapacitated() || !istype(target))
+		return
+	if(target.buckled || !in_range(user, src) || !in_range(user, target))
+		return
+	if(target == user)
+		visible_message("<span class='red'>[usr] starts climbing into the MMI.</span>", 3)
+	else
+		if(target.anchored)
+			return
+		visible_message("<span class='red'>[usr] starts stuffing [target.name] into the MMI.</span>", 3)
+	if(user.is_busy() || !do_after(usr, 20, target = usr))
+		return
+	if(target == user)
+		visible_message("<span class='red'>[user.name] climbs into the MMI.</span>","<span class='notice'>You climb into the MMI.</span>")
+	else if(target != user)
+		visible_message("<span class='danger'>[user.name] stuffs [target.name] into the MMI!</span>","<span class='red'>You stuff [target.name] into the MMI!</span>")
+	else
+		return
+	transfer_nymph(target)
+
+	feedback_inc("cyborg_mmis_filled",1)
 
 /obj/item/device/mmi/proc/transfer_identity(mob/living/carbon/human/H)//Same deal as the regular brain proc. Used for human-->robot people.
 	brainmob = new(src)
@@ -84,6 +125,17 @@
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	icon_state = "mmi_full"
 	locked = 1
+
+/obj/item/device/mmi/proc/transfer_nymph(mob/living/carbon/monkey/diona/H)
+	brainmob = new(src)
+	if(H.mind)
+		H.mind.transfer_to(brainmob)
+		brainmob.stat = CONSCIOUS
+	H.forceMove(brainmob)
+
+	name = "Man-Machine Interface: [brainmob.real_name]"
+	icon_state = "mmi_fullnymph"
+	locked = TRUE
 
 /obj/item/device/mmi/radio_enabled
 	name = "Radio-enabled Man-Machine Interface"

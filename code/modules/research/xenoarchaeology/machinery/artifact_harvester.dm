@@ -39,14 +39,10 @@
 		return..()
 
 
-/obj/machinery/artifact_harvester/attack_hand(mob/user)
-	src.add_fingerprint(user)
-	interact(user)
-
-/obj/machinery/artifact_harvester/interact(mob/user)
+/obj/machinery/artifact_harvester/ui_interact(mob/user)
 	if(stat & (NOPOWER|BROKEN))
 		return
-	user.set_machine(src)
+
 	var/dat = "<B>Artifact Power Harvester</B><BR>"
 	dat += "<HR><BR>"
 	//

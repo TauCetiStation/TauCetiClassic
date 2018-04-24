@@ -11,20 +11,13 @@
 
 /obj/machinery/computer/fusion_core_control/attackby(obj/item/thing, mob/user)
 	if(ismultitool(thing))
-		var/new_ident = input("Enter a new ident tag.", "Core Control", id_tag) as null|text
+		var/new_ident = sanitize_safe(input("Enter a new ident tag.", "Core Control", input_default(id_tag)) as null|text, MAX_LNAME_LEN)
 		if(new_ident && user.Adjacent(src))
 			id_tag = new_ident
 			cur_viewed_device = null
 		return
 	else
 		return ..()
-
-/obj/machinery/computer/fusion_core_control/attack_ai(mob/user)
-	attack_hand(user)
-
-/obj/machinery/computer/fusion_core_control/attack_hand(mob/user)
-	add_fingerprint(user)
-	ui_interact(user)
 
 /obj/machinery/computer/fusion_core_control/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null)
 

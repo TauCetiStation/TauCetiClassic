@@ -46,6 +46,15 @@
 
 #define MAX_FLAG 65535
 
+/proc/is_wire_tool(obj/item/I)
+	if(istype(I, /obj/item/device/multitool))
+		return TRUE
+	if(istype(I, /obj/item/weapon/wirecutters))
+		return TRUE
+	if(istype(I, /obj/item/device/assembly/signaler))
+		return TRUE
+	return
+
 var/list/same_wires = list()
 
 /datum/wires
@@ -165,10 +174,19 @@ var/list/same_wires = list()
 
 /datum/wires/Topic(href, href_list)
 	..()
+
+	if(!can_use(usr) || href_list["close"])
+		usr << browse(null, "window=wires")
+		usr.unset_machine(holder)
+		return
+
 	if(in_range(holder, usr) && isliving(usr))
 		var/mob/living/L = usr
 
-		if(can_use(L) && href_list["action"])
+		if(!holder.can_mob_interact(L))
+			return
+
+		if(href_list["action"])
 			var/obj/item/I = L.get_active_hand()
 			holder.add_hiddenprint(L)
 
@@ -206,9 +224,7 @@ var/list/same_wires = list()
 			// Update Window
 			interact(usr)
 
-	if(href_list["close"])
-		usr << browse(null, "window=wires")
-		usr.unset_machine(holder)
+
 
 
 ////////////////////
@@ -243,6 +259,9 @@ var/list/same_wires = list()
 //////////
 // Helpers
 //////////
+/datum/wires/proc/repair()
+	wires_status = 0
+
 /datum/wires/proc/pulse_color(color)
 	pulse_index(get_index_by_color(color))
 

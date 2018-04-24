@@ -63,6 +63,7 @@
 	verbs += /mob/living/carbon/proc/crawl
 
 /mob/living/carbon/ian/UnarmedAttack(atom/A)
+	..()
 	if(ian_action)
 		if(isHandsBusy)
 			return
@@ -323,6 +324,7 @@
 		chance += 50
 
 	if(chance && prob(chance))
+		user.SetNextMove(CLICK_CD_MELEE * 2) // DISMORALING HIM
 		if(O.force)
 			user.visible_message("<span class='warning'>[user] hits [src] with the [O], however [src] is too armored.</span>",
 			                     "<span class='warning'>You can't cause [src] any damage.</span>")
@@ -649,6 +651,7 @@
 			updatehealth()
 
 /mob/living/carbon/ian/attack_animal(mob/living/simple_animal/M)
+	M.do_attack_animation(src)
 	if(!M.melee_damage_upper)
 		M.emote("[M.friendly] [src]")
 	else
@@ -723,7 +726,7 @@
 	if(stat)
 		return
 
-	message = sanitize_plus(copytext(message, 1, MAX_MESSAGE_LEN))
+	message = sanitize(message)
 
 	if(copytext(message,1,2) == "*")
 		return emote(copytext(message,2))

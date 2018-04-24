@@ -112,6 +112,7 @@ var/list/cult_datums = list()
 		user.forceMove(get_turf(pick(allrunes)))
 
 /obj/effect/rune/attack_hand(mob/living/user)
+	user.SetNextMove(CLICK_CD_INTERACT)
 	if(!iscultist(user))
 		to_chat(user, "You can't mouth the arcane scratchings without fumbling over them.")
 		return
@@ -267,7 +268,7 @@ var/list/cult_datums = list()
 	[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
 	[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 	"}
-	usr << browse("[notedat]", "window=notes")
+	usr << browse("[entity_ja(notedat)]", "window=notes")
 
 /obj/item/weapon/book/tome/attack(mob/living/M, mob/living/user)
 
@@ -314,7 +315,7 @@ var/list/cult_datums = list()
 		if("Read it")
 			if(usr.get_active_hand() != src)
 				return
-			user << browse("[tomedat]", "window=Arcane Tome")
+			user << browse("[entity_ja(tomedat)]", "window=Arcane Tome")
 			return
 		if("Notes")
 			if(usr.get_active_hand() != src)
@@ -332,7 +333,7 @@ var/list/cult_datums = list()
 			[words[9]] is <a href='byond://?src=\ref[src];number=9;action=change'>[words[words[9]]]</A> <A href='byond://?src=\ref[src];number=9;action=clear'>Clear</A><BR>
 			[words[10]] is <a href='byond://?src=\ref[src];number=10;action=change'>[words[words[10]]]</A> <A href='byond://?src=\ref[src];number=10;action=clear'>Clear</A><BR>
 			"}
-			user << browse("[notedat]", "window=notes")
+			user << browse("[entity_ja(notedat)]", "window=notes")
 			return
 	if(usr.get_active_hand() != src)
 		return
@@ -341,29 +342,30 @@ var/list/cult_datums = list()
 	var/w2
 	var/w3
 	var/list/english = list()
-	for (var/w in words)
-		english += words[w]
+	for(var/w in words)
+		english[words[w]] = w
 	if(user)
 		w1 = input("Write your first rune:", "Rune Scribing") in english
 		if(!w1)
 			return
 		if(w1 in cultwords)
-			w1 = cultwords[w1]
+			w1 = english[w1]
 
 	if(user)
 		w2 = input("Write your second rune:", "Rune Scribing") in english
 		if(!w2)
 			return
 		if(w2 in cultwords)
-			w2 = cultwords[w2]
+			w2 = english[w2]
 	if(user)
 		w3 = input("Write your third rune:", "Rune Scribing") in english
 		if(!w3)
 			return
 		if(w3 in cultwords)
-			w3 = cultwords[w3]
+			w3 = english[w3]
 
-	if(user.get_active_hand() != src)
+
+	if(user.get_active_hand() != src || user.is_busy())
 		return
 	user.visible_message("<span class='danger'> [user] slices open a finger and begins to chant and paint symbols on the floor.</span>",\
 	"<span class='danger'> You hear chanting.</span>")

@@ -66,14 +66,7 @@
 	src.path = new()
 	src.updateUsrDialog()
 
-/obj/machinery/bot/floorbot/attack_hand(mob/user)
-	. = ..()
-	if (.)
-		return
-	usr.set_machine(src)
-	interact(user)
-
-/obj/machinery/bot/floorbot/interact(mob/user)
+/obj/machinery/bot/floorbot/ui_interact(mob/user)
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
 	dat += "Status: <A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A><BR>"
@@ -91,9 +84,8 @@
 			bmode = "Disabled"
 		dat += "<BR><BR>Bridge Mode : <A href='?src=\ref[src];operation=bridgemode'>[bmode]</A><BR>"
 
-	user << browse("<HEAD><TITLE>Repairbot v1.0 controls</TITLE></HEAD>[dat]", "window=autorepair")
+	user << browse("<HEAD><TITLE>Repairbot v1.0 controls</TITLE></HEAD>[entity_ja(dat)]", "window=autorepair")
 	onclose(user, "autorepair")
-	return
 
 
 /obj/machinery/bot/floorbot/attackby(obj/item/W , mob/user)
@@ -407,7 +399,7 @@
 		qdel(src)
 
 	else if (istype(W, /obj/item/weapon/pen))
-		var/t = copytext(stripped_input(user, "Enter new robot name", src.name, src.created_name),1,MAX_NAME_LEN)
+		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)),MAX_NAME_LEN)
 		if (!t)
 			return
 		if (!in_range(src, usr) && src.loc != usr)
@@ -426,7 +418,7 @@
 		user.drop_from_inventory(src)
 		qdel(src)
 	else if (istype(W, /obj/item/weapon/pen))
-		var/t = stripped_input(user, "Enter new robot name", src.name, src.created_name)
+		var/t = sanitize_safe(input(user, "Enter new robot name", src.name, input_default(src.created_name)), MAX_NAME_LEN)
 
 		if (!t)
 			return

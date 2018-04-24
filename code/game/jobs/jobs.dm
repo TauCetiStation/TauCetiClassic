@@ -26,6 +26,8 @@ var/const/VIROLOGIST		=(1<<6)
 var/const/PSYCHIATRIST		=(1<<7)
 var/const/ROBOTICIST		=(1<<8)
 var/const/XENOBIOLOGIST		=(1<<9)
+var/const/PARAMEDIC			=(1<<10)
+var/const/XENOARCHEOLOGIST	=(1<<11)
 
 
 var/const/CIVILIAN			=(1<<2)
@@ -45,6 +47,7 @@ var/const/CLOWN				=(1<<11)
 var/const/MIME				=(1<<12)
 var/const/ASSISTANT			=(1<<13)
 var/const/RECYCLER			=(1<<14)
+var/const/BARBER			=(1<<15)
 
 var/list/assistant_occupations = list(
 )
@@ -73,7 +76,8 @@ var/list/medical_positions = list(
 	"Geneticist",
 	"Psychiatrist",
 	"Chemist",
-	"Virologist"
+	"Virologist",
+	"Paramedic"
 )
 
 
@@ -82,12 +86,14 @@ var/list/science_positions = list(
 	"Scientist",
 	"Geneticist",	//Part of both medical and science
 	"Roboticist",
-	"Xenobiologist"
+	"Xenobiologist",
+	"Xenoarchaeologist"
 )
 
 //BS12 EDIT
 var/list/civilian_positions = list(
 	"Head of Personnel",
+	"Barber",
 	"Bartender",
 	"Botanist",
 	"Chef",
@@ -97,7 +103,7 @@ var/list/civilian_positions = list(
 	"Cargo Technician",
 	"Shaft Miner",
 	"Recycler",
-	"Lawyer",
+	"Internal Affairs Agent",
 	"Chaplain",
 	"Test Subject",
 	"Clown",

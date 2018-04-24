@@ -10,6 +10,7 @@
 	use_power = 1
 	idle_power_usage = 20
 	active_power_usage = 5000
+	allowed_checks = ALLOWED_CHECK_TOPIC
 
 /obj/machinery/robotic_fabricator/attackby(obj/item/O, mob/user)
 	if (istype(O, /obj/item/stack/sheet/metal))
@@ -36,36 +37,30 @@
 	else
 		stat |= NOPOWER
 
-/obj/machinery/robotic_fabricator/attack_paw(user)
-	return src.attack_hand(user)
-
-/obj/machinery/robotic_fabricator/attack_hand(user)
+/obj/machinery/robotic_fabricator/ui_interact(user)
 	var/dat
-	if (..())
-		return
 
 	if (src.operating)
 		dat = {"
-<TT>Building [src.being_built.name].<BR>
-Please wait until completion...</TT><BR>
-<BR>
-"}
+			<TT>Building [src.being_built.name].<BR>
+			Please wait until completion...</TT><BR>
+			<BR>
+			"}
 	else
 		dat = {"
-<B>Metal Amount:</B> [min(150000, src.metal_amount)] cm<sup>3</sup> (MAX: 150,000)<BR><HR>
-<BR>
-<A href='?src=\ref[src];make=1'>Left Arm (25,000 cc metal.)<BR>
-<A href='?src=\ref[src];make=2'>Right Arm (25,000 cc metal.)<BR>
-<A href='?src=\ref[src];make=3'>Left Leg (25,000 cc metal.)<BR>
-<A href='?src=\ref[src];make=4'>Right Leg (25,000 cc metal).<BR>
-<A href='?src=\ref[src];make=5'>Chest (50,000 cc metal).<BR>
-<A href='?src=\ref[src];make=6'>Head (50,000 cc metal).<BR>
-<A href='?src=\ref[src];make=7'>Robot Frame (75,000 cc metal).<BR>
-"}
+			<B>Metal Amount:</B> [min(150000, src.metal_amount)] cm<sup>3</sup> (MAX: 150,000)<BR><HR>
+			<BR>
+			<A href='?src=\ref[src];make=1'>Left Arm (25,000 cc metal.)<BR>
+			<A href='?src=\ref[src];make=2'>Right Arm (25,000 cc metal.)<BR>
+			<A href='?src=\ref[src];make=3'>Left Leg (25,000 cc metal.)<BR>
+			<A href='?src=\ref[src];make=4'>Right Leg (25,000 cc metal).<BR>
+			<A href='?src=\ref[src];make=5'>Chest (50,000 cc metal).<BR>
+			<A href='?src=\ref[src];make=6'>Head (50,000 cc metal).<BR>
+			<A href='?src=\ref[src];make=7'>Robot Frame (75,000 cc metal).<BR>
+			"}
 
-	user << browse("<HEAD><TITLE>Robotic Fabricator Control Panel</TITLE></HEAD><TT>[dat]</TT>", "window=robot_fabricator")
+	user << browse("<HEAD><TITLE>Robotic Fabricator Control Panel</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=robot_fabricator")
 	onclose(user, "robot_fabricator")
-	return
 
 /obj/machinery/robotic_fabricator/Topic(href, href_list)
 	. = ..()

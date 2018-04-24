@@ -30,12 +30,14 @@
 			to_chat(user, "<span class='notice'>You pin the paper to the noticeboard.</span>")
 		else
 			to_chat(user, "<span class='notice'>You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached.</span>")
+	else
+		..()
 
 /obj/structure/noticeboard/attack_hand(user)
 	var/dat = "<B>Noticeboard</B><BR>"
 	for(var/obj/item/weapon/paper/P in src)
 		dat += "<A href='?src=\ref[src];read=\ref[P]'>[P.name]</A> <A href='?src=\ref[src];write=\ref[P]'>Write</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A><BR>"
-	user << browse("<HEAD><TITLE>Notices</TITLE></HEAD>[dat]","window=noticeboard")
+	user << browse("<HEAD><TITLE>Notices</TITLE></HEAD>[entity_ja(dat)]","window=noticeboard")
 	onclose(user, "noticeboard")
 
 
@@ -73,9 +75,9 @@
 		var/obj/item/weapon/paper/P = locate(href_list["read"])
 		if((P && P.loc == src))
 			if(!( istype(usr, /mob/living/carbon/human) ))
-				usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY><TT>[stars(P.info)]</TT></BODY></HTML>", "window=[P.name]")
+				usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY><TT>[entity_ja(stars(P.info))]</TT></BODY></HTML>", "window=[P.name]")
 				onclose(usr, "[P.name]")
 			else
-				usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY><TT>[P.info]</TT></BODY></HTML>", "window=[P.name]")
+				usr << browse("<HTML><HEAD><TITLE>[P.name]</TITLE></HEAD><BODY><TT>[entity_ja(P.info)]</TT></BODY></HTML>", "window=[P.name]")
 				onclose(usr, "[P.name]")
 	return

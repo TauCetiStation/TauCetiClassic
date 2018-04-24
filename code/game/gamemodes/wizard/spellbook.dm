@@ -199,6 +199,11 @@
 	spell_type = /obj/effect/proc_holder/spell/targeted/barnyardcurse
 	log_name = "BC"
 
+/datum/spellbook_entry/lighting_shock
+	name = "Lighting Shock"
+	spell_type = /obj/effect/proc_holder/spell/targeted/lighting_shock
+	log_name = "LS"
+
 /datum/spellbook_entry/charge
 	name = "Charge"
 	spell_type = /obj/effect/proc_holder/spell/targeted/charge
@@ -489,7 +494,7 @@
 		dat += cat_dat[category]
 		dat += "</div>"
 
-	user << browse(wrap(dat), "window=spellbook;size=700x500")
+	user << browse(wrap(entity_ja(dat)), "window=spellbook;size=700x500")
 	onclose(user, "spellbook")
 	return
 

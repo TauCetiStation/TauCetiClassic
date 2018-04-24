@@ -24,6 +24,7 @@
 /obj/item/light_fixture_frame/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
 		new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
+		user.SetNextMove(CLICK_CD_RAPID)
 		qdel(src)
 		return
 	..()
@@ -42,7 +43,7 @@
 	playsound(src.loc, 'sound/machines/click.ogg', 75, 1)
 	var/constrdir = usr.dir
 	var/constrloc = usr.loc
-	if (!do_after(usr, 30, target = on_wall))
+	if (usr.is_busy() || !do_after(usr, 30, target = on_wall))
 		return
 	switch(fixture_type)
 		if("bulb")
@@ -97,10 +98,12 @@
 
 /obj/machinery/light_construct/attackby(obj/item/weapon/W, mob/user)
 	src.add_fingerprint(user)
+	user.SetNextMove(CLICK_CD_RAPID)
 	if (istype(W, /obj/item/weapon/wrench))
 		if (src.stage == 1)
+			if(user.is_busy()) return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
-			to_chat(usr, "You begin deconstructing [src].")
+			to_chat(user, "You begin deconstructing [src].")
 			if (!do_after(usr, 30, target = src))
 				return
 			new /obj/item/stack/sheet/metal( get_turf(src.loc), sheets_refunded )
@@ -196,6 +199,7 @@
 	idle_power_usage = 2
 	active_power_usage = 20
 	power_channel = LIGHT //Lights are calc'd via area so they dont need to be in the machine list
+	interact_offline = TRUE
 	var/on = 0					// 1 if on, 0 if off
 	var/on_gs = 0
 	var/static_power_used = 0
@@ -396,6 +400,7 @@
 
 
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		if(prob(1+W.force * 5))
 
 			to_chat(user, "You hit the light, and it smashes!")
@@ -468,11 +473,7 @@
 // ai attack - make lights flicker, because why not
 
 /obj/machinery/light/attack_ai(mob/user)
-	src.flicker(1)
-
-/obj/machinery/light/attack_ghost(mob/user)
-	if(IsAdminGhost(user))
-		flicker(1)
+	flicker(1)
 
 // Aliens smash the bulb but do not get electrocuted./N
 /obj/machinery/light/attack_alien(mob/living/carbon/alien/humanoid/user)//So larva don't go breaking light bulbs.
@@ -481,6 +482,7 @@
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
 		user.do_attack_animation(src)
+		user.SetNextMove(CLICK_CD_MELEE)
 		for(var/mob/M in viewers(src))
 			M.show_message("\red [user.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
 		broken()
@@ -492,21 +494,22 @@
 		to_chat(M, "\red That object is useless to you.")
 		return
 	else if (status == LIGHT_OK||status == LIGHT_BURNED)
-		M.do_attack_animation(src)
+		..()
 		for(var/mob/O in viewers(src))
 			O.show_message("\red [M.name] smashed the light!", 3, "You hear a tinkle of breaking glass", 2)
 		broken()
-	return
 // attack with hand - remove tube/bulb
 // if hands aren't protected and the light is on, burn the player
 
 /obj/machinery/light/attack_hand(mob/user)
-
-	add_fingerprint(user)
+	. = ..()
+	if(.)
+		return
+	user.SetNextMove(CLICK_CD_RAPID)
 
 	if(status == LIGHT_EMPTY)
 		to_chat(user, "There is no [fitting] in this light.")
-		return
+		return 1
 
 	// make it burn hands if not wearing fire-insulated gloves
 	if(on)
@@ -514,7 +517,6 @@
 		var/mob/living/carbon/human/H = user
 
 		if(istype(H))
-
 			if(H.gloves)
 				var/obj/item/clothing/gloves/G = H.gloves
 				if(G.max_heat_protection_temperature)
@@ -528,7 +530,7 @@
 			to_chat(user, "You telekinetically remove the light [fitting].")
 		else
 			to_chat(user, "You try to remove the light [fitting], but it's too hot and you don't want to burn your hand.")
-			return				// if burned, don't remove the light
+			return 1			// if burned, don't remove the light
 	else
 		to_chat(user, "You remove the light [fitting].")
 
@@ -742,6 +744,7 @@
 	..()
 	if(istype(I, /obj/item/weapon/reagent_containers/syringe))
 		var/obj/item/weapon/reagent_containers/syringe/S = I
+		user.SetNextMove(CLICK_CD_INTERACT)
 
 		to_chat(user, "You inject the solution into the [src].")
 

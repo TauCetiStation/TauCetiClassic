@@ -173,17 +173,6 @@
 		nanomanager.update_uis(src) // update all UIs attached to src
 		return
 
-/obj/machinery/chem_dispenser/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/chem_dispenser/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/chem_dispenser/attack_hand(mob/user)
-	if(stat & BROKEN)
-		return
-	ui_interact(user)
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/chem_dispenser/constructable
@@ -443,11 +432,11 @@
 
 	else if(href_list["createbottle"])
 		if(!condi)
-			var/name = stripped_input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " "), MAX_NAME_LEN)
+			var/name = sanitize_safe(input(usr, "Name:","Name your bottle!", (reagents.total_volume ? reagents.get_master_reagent_name() : " ")), MAX_NAME_LEN)
 			if(!name)
 				return FALSE
 			var/obj/item/weapon/reagent_containers/glass/bottle/P = new/obj/item/weapon/reagent_containers/glass/bottle(src.loc)
-			P.name = trim("[name] bottle")
+			P.name = "[name] bottle"
 			P.icon_state = "bottle[bottlesprite]"
 			P.pixel_x = rand(-7, 7) //random position
 			P.pixel_y = rand(-7, 7)
@@ -608,7 +597,7 @@
 					if(!amount)
 						return FALSE
 					vol_each = min(reagents.total_volume / amount, 50)
-				var/name = stripped_input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)", MAX_NAME_LEN)
+				var/name = sanitize_safe(input(usr,"Name:","Name your pill!", "[reagents.get_master_reagent_name()] ([vol_each]u)"), MAX_NAME_LEN)
 				if(!name || !reagents.total_volume)
 					return FALSE
 				var/obj/item/weapon/reagent_containers/pill/P
@@ -618,7 +607,7 @@
 						P = new/obj/item/weapon/reagent_containers/pill(loaded_pill_bottle)
 					else
 						P = new/obj/item/weapon/reagent_containers/pill(src.loc)
-					P.name = trim("[name] pill")
+					P.name = "[name] pill"
 					P.icon_state = "pill[pillsprite]"
 					P.pixel_x = rand(-7, 7) //random position
 					P.pixel_y = rand(-7, 7)
@@ -626,15 +615,7 @@
 
 	src.updateUsrDialog()
 
-/obj/machinery/chem_master/attack_ai(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/chem_master/attack_paw(mob/user)
-	return src.attack_hand(user)
-
-/obj/machinery/chem_master/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/chem_master/ui_interact(mob/user)
 	if(!(user.client in has_sprites))
 		spawn()
 			has_sprites += user.client
@@ -710,11 +691,11 @@
 	dat += "<LI><A href='?src=\ref[src];createbottle=1'>Create bottle</A> ([condi ? "50" : "30"] units max)"
 	dat += "</UL>"
 	dat += "<BR><A href='?src=\ref[src];close=1'>Close</A>"
+
 	var/datum/browser/popup = new(user, "chem_master", name, 470, 500)
 	popup.set_content(dat)
 	popup.set_title_image(user.browse_rsc_icon(src.icon, src.icon_state))
 	popup.open(1)
-	return
 
 /obj/machinery/chem_master/proc/isgoodnumber(num)
 	if(isnum(num))
@@ -877,7 +858,7 @@
 				if(type in diseases) // Make sure this is a disease
 					D = new type(0, null)
 			var/list/data = list("viruses"=list(D))
-			var/name = sanitize(copytext(input(usr,"Name:","Name the culture",D.name), 1, MAX_NAME_LEN))
+			var/name = sanitize_safe(input(usr,"Name:","Name the culture",input_default(D.name)), MAX_NAME_LEN)
 			if(!name || name == " ") name = D.name
 			B.name = "[name] culture bottle"
 			B.desc = "A small bottle. Contains [D.agent] culture in synthblood medium."
@@ -897,7 +878,7 @@
 	else if(href_list["clear"])
 		src.temphtml = ""
 	else if(href_list["name_disease"])
-		var/new_name = stripped_input(usr, "Name the Disease", "New Name", "", MAX_NAME_LEN)
+		var/new_name = sanitize_safe(input(usr, "Name the Disease", "New Name"), MAX_NAME_LEN)
 		if(stat & (NOPOWER|BROKEN))
 			return
 		if(usr.stat || usr.restrained())
@@ -917,9 +898,7 @@
 	src.updateUsrDialog()
 
 
-/obj/machinery/computer/pandemic/attack_hand(mob/user)
-	if(..())
-		return
+/obj/machinery/computer/pandemic/ui_interact(mob/user)
 	var/dat = ""
 	if(src.temphtml)
 		dat = "[src.temphtml]<BR><BR><A href='?src=\ref[src];clear=1'>Main Menu</A>"
@@ -1004,9 +983,8 @@
 		dat += "<BR><A href='?src=\ref[src];eject=1'>Eject beaker</A>[((R.total_volume&&R.reagent_list.len) ? "-- <A href='?src=\ref[src];empty_beaker=1'>Empty beaker</A>":"")]<BR>"
 		dat += "<A href='?src=\ref[user];mach_close=pandemic'>Close</A>"
 
-	user << browse("<TITLE>[src.name]</TITLE><BR>[dat]", "window=pandemic;size=575x400")
+	user << browse("<TITLE>[src.name]</TITLE><BR>[entity_ja(dat)]", "window=pandemic;size=575x400")
 	onclose(user, "pandemic")
-	return
 
 
 /obj/machinery/computer/pandemic/attackby(obj/I, mob/user)
@@ -1068,6 +1046,7 @@
 		/obj/item/weapon/reagent_containers/food/snacks/grown/ricestalk = list("rice" = -5),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/cherries = list("cherryjelly" = 0),
 		/obj/item/weapon/reagent_containers/food/snacks/grown/plastellium = list("plasticide" = 5),
+		/obj/item/weapon/reagent_containers/food/snacks/egg = list("egg" = -5),
 
 
 		//archaeology!
@@ -1163,17 +1142,12 @@
 	src.updateUsrDialog()
 	return 0
 
-/obj/machinery/reagentgrinder/attack_paw(mob/user)
-	return src.attack_hand(user)
-
 /obj/machinery/reagentgrinder/attack_ai(mob/user)
+	if(IsAdminGhost(user))
+		return ..()
 	return 0
 
-/obj/machinery/reagentgrinder/attack_hand(mob/user)
-	user.set_machine(src)
-	interact(user)
-
-/obj/machinery/reagentgrinder/interact(mob/user) // The microwave Menu
+/obj/machinery/reagentgrinder/ui_interact(mob/user) // The microwave Menu
 	var/is_chamber_empty = 0
 	var/is_beaker_ready = 0
 	var/processing_chamber = ""
@@ -1201,10 +1175,10 @@
 
 
 		dat = {"
-	<b>Processing chamber contains:</b><br>
-	[processing_chamber]<br>
-	[beaker_contents]<hr>
-	"}
+			<b>Processing chamber contains:</b><br>
+			[processing_chamber]<br>
+			[beaker_contents]<hr>
+			"}
 		if (is_beaker_ready && !is_chamber_empty && !(stat & (NOPOWER|BROKEN)))
 			dat += "<A href='?src=\ref[src];action=grind'>Grind the reagents</a><BR>"
 			dat += "<A href='?src=\ref[src];action=juice'>Juice the reagents</a><BR><BR>"
@@ -1214,9 +1188,8 @@
 			dat += "<A href='?src=\ref[src];action=detach'>Detach the beaker</a><BR>"
 	else
 		dat += "Please wait..."
-	user << browse("<HEAD><TITLE>All-In-One Grinder</TITLE></HEAD><TT>[dat]</TT>", "window=reagentgrinder")
+	user << browse("<HEAD><TITLE>All-In-One Grinder</TITLE></HEAD><TT>[entity_ja(dat)]</TT>", "window=reagentgrinder")
 	onclose(user, "reagentgrinder")
-	return
 
 
 /obj/machinery/reagentgrinder/Topic(href, href_list)
@@ -1312,7 +1285,7 @@
 	spawn(50)
 		pixel_x = initial(pixel_x) //return to its spot after shaking
 		inuse = 0
-		interact(usr)
+		updateUsrDialog()
 	//Snacks
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
@@ -1348,7 +1321,7 @@
 	spawn(60)
 		pixel_x = initial(pixel_x) //return to its spot after shaking
 		inuse = 0
-		interact(usr)
+		updateUsrDialog()
 	//Snacks and Plants
 	for (var/obj/item/weapon/reagent_containers/food/snacks/O in holdingitems)
 		if (beaker.reagents.total_volume >= beaker.reagents.maximum_volume)

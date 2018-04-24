@@ -59,7 +59,7 @@
 			new /obj/item/weapon/soap/syndie(src)
 			new /obj/item/weapon/storage/bag/trash(src)
 			new /obj/item/bodybag(src)
-			new /obj/item/clothing/under/suit_jacket(src)
+			new /obj/item/clothing/under/suit_jacket/reinforced(src)
 			new /obj/item/clothing/shoes/laceup(src)
 			new /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate(src)
 			new /obj/item/clothing/glasses/sunglasses/big(src)
@@ -143,6 +143,8 @@
 	. = ..()
 	new /obj/item/clothing/suit/space/syndicate(src)
 	new /obj/item/clothing/head/helmet/space/syndicate(src)
+	new /obj/item/clothing/mask/breath(src)
+	new /obj/item/weapon/tank/emergency_oxygen/engi(src)
 
 /obj/item/weapon/storage/box/syndie_kit/chameleon
 	name = "Chameleon Kit"
@@ -209,3 +211,21 @@
 	. = ..()
 	new /obj/item/weapon/pen/chameleon(src)
 	new /obj/item/weapon/stamp/chameleon(src)
+
+/obj/item/weapon/storage/box/syndie_kit/posters
+	name = "box (P)"
+
+/obj/item/weapon/storage/box/syndie_kit/posters/atom_init()
+	. = ..()
+	for(var/i in 0 to 6)
+		new /obj/item/weapon/poster/contraband(src)
+
+/obj/item/weapon/storage/box/syndie_kit/merch
+	name = "box (M)"
+	desc = "Box containing some Syndicate merchandise for real agents!"
+
+/obj/item/weapon/storage/box/syndie_kit/merch/atom_init()
+	. = ..()
+	new /obj/item/clothing/head/soft/red(src)
+	new /obj/item/clothing/suit/syndieshirt(src)
+	new /obj/item/toy/syndicateballoon(src)

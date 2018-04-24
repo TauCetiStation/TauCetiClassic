@@ -231,6 +231,11 @@
 	desc = "The traditional mime's mask. It has an eerie facial posture."
 	icon_state = "mime"
 
+/obj/item/clothing/mask/gas/fawkes //--getup1
+	name = "strange mask"
+	desc = "Remember, remember, the fifth of November"
+	icon_state = "fawkes"
+
 /obj/item/clothing/mask/gas/monkeymask
 	name = "monkey mask"
 	desc = "A mask used when acting as a monkey."
@@ -244,7 +249,7 @@
 	icon_state = "sexymime"
 
 /obj/item/clothing/mask/gas/death_commando
-	name = "Death Commando Mask"
+	name = "death commando mask"
 	icon_state = "death_commando_mask"
 	item_state = "death_commando_mask"
 	siemens_coefficient = 0.2
