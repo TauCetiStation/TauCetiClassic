@@ -2712,10 +2712,11 @@
 		else
 			return
 
-		query = dbcon_old.NewQuery("UPDATE library SET deletereason = 'NULL' WHERE id = [bookid]")
+		query = dbcon_old.NewQuery("UPDATE library SET deletereason = NULL WHERE id = [bookid]")
 		if(!query.Execute())
 			return
 
+		library_recycle_bin()
 		message_admins("[key_name_admin(usr)] restored [title] from the recycle bin")
 
 	else if(href_list["deletebook"])
@@ -2734,6 +2735,7 @@
 		if(!query.Execute())
 			return
 
+		library_recycle_bin()
 		message_admins("[key_name_admin(usr)] removed [title] from the library database")
 
 	else if(href_list["populate_inactive_customitems"])

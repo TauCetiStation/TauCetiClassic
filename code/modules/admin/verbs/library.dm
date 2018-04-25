@@ -96,23 +96,28 @@
 		to_chat(usr, "Database is not connected.")
 		return
 
-	var/DBQuery/query = dbcon_old.NewQuery("SELECT id, author, title, category, ckey, deletereason FROM library WHERE deletereason != 'NULL'")
+	if (!istype(src,/datum/admins))
+		src = usr.client.holder
+	if (!istype(src,/datum/admins))
+		to_chat(usr, "Error: you are not an admin!")
+		return
+
+	var/DBQuery/query = dbcon_old.NewQuery("SELECT id, title, author, ckey, deletereason FROM library WHERE deletereason IS NOT NULL")
 	if(!query.Execute())
 		return
 
 	var/catalog = "<HEAD><TITLE>Book Inventory Management</TITLE></HEAD><BODY>\n"
-	catalog += "<table><tr><td>ID</td><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>CKEY</td><td>REASON</td></tr>"
-
+	catalog += "<table border=1 rules=all frame=void cellspacing=0 cellpadding=3><HR><tr><td>ID</td><td>TITLE</td><td>AUTHOR</td><td>CKEY</td><td>REASON</td><td>OPTIONS</td></tr></HR>"
+	var/permitted = check_rights(R_PERMISSIONS,0)
 	while(query.NextRow())
 		var/id = query.item[1]
-		var/author = query.item[2]
-		var/title = query.item[3]
-		var/category = query.item[4]
-		var/ckey = query.item[5]
-		var/reason = query.item[6]
-		catalog += "<tr><td>[id]</td><td>[author]</td><td>[title]</td><td>[category]</td><td>[ckey]</td><td>[reason]</td><td><a href='?src=\ref[src];readbook=[id]'>Read</a></td>[(check_rights(R_PERMISSIONS,0)) ? "<td><a href='?src=\ref[src];restorebook=[id]'>Restore</a></td>" : null][(check_rights(R_PERMISSIONS,0)) ? "<td><a href='?src=\ref[src];deletebook=[id]'>Delete</a></td>" : null]</tr>"
+		var/title = query.item[2]
+		var/author = query.item[3]
+		var/ckey = query.item[4]
+		var/reason = query.item[5]
+		catalog += "<tr><td>[id]</td><td>[title]</td><td>[author]</td><td>[ckey]</td><td>[reason]</td><td><a href='?src=\ref[src];readbook=[id]'>Read</a>[permitted ? "<BR><a href='?src=\ref[src];restorebook=[id]'>Restore</a><BR>" : null][permitted ? "<a href='?src=\ref[src];deletebook=[id]'>Delete</a><BR>" : null]</td></tr>"
 	catalog += "</table>"
 
 
-	usr << browse(entity_ja(catalog), "window=librecyclebin")
+	usr << browse(entity_ja(catalog), "window=librecyclebin;size=500x500")
 	onclose(usr, "librecyclebin")
