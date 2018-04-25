@@ -58,10 +58,10 @@ var/datum/subsystem/ticker/ticker
 	'sound/music/b12_combined_start.ogg',\
 	'sound/music/title2.ogg',\
 	'sound/music/traitor.ogg',\
-	'sound/lobby/sundown.ogg',\
-	'sound/lobby/hanging_masses.ogg',\
-	'sound/lobby/admiral-station-13.ogg',\
-	'sound/lobby/robocop_gb_intro.ogg')
+	'sound/lobby/animatronica.ogg',\
+	'sound/lobby/less-traveled.ogg',\
+	'sound/lobby/milkywayexplore.ogg',\
+	'sound/lobby/welcometolunarInd.ogg')
 
 
 /datum/subsystem/ticker/Initialize(timeofday)
