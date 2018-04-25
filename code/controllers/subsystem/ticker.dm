@@ -52,12 +52,12 @@ var/datum/subsystem/ticker/ticker
 	/*
 	'sound/music/space.ogg',\
 	'sound/music/clouds.s3m',\
-	'sound/music/title1.ogg',\	//disgusting
-	*/
+	'sound/music/title1.ogg',\
 	'sound/music/space_oddity.ogg',\
 	'sound/music/b12_combined_start.ogg',\
 	'sound/music/title2.ogg',\
-	'sound/music/traitor.ogg',\
+	'sound/music/traitor.ogg',\	 //disgusting
+	*/
 	'sound/lobby/animatronica.ogg',\
 	'sound/lobby/less-traveled.ogg',\
 	'sound/lobby/milkywayexplore.ogg',\
