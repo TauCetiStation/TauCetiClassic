@@ -23,6 +23,10 @@
 
 /obj/item/weapon/dice/ghost/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	..()
+	if(istype(W, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = W
+		OS.scanned_type = src.type
+		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 	if(istype(W, /obj/item/weapon/nullrod))
 		if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")))
 			poof()
@@ -164,6 +168,8 @@
 		else
 			to_chat(user, "<span class='warning'>You suddenly feel bamboozled because of your own luck!</span>")
 			user.confused += SLIGHTLY_CONFUSED
+	if(result == 1)
+		poof()
 
 /obj/item/weapon/dice/ghost/d20/throw_at(mob/living/target, range, speed, mob/living/thrower)
 	diceroll()
@@ -264,13 +270,20 @@
 
 /obj/item/weapon/storage/pill_bottle/attackby(obj/item/weapon/W, mob/living/carbon/human/user)
 	..()
+	if(istype(W, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = W
+		OS.scanned_type = src.type
+		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
 	if(istype(W, /obj/item/weapon/nullrod))
 		if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")))
 			var/count
 			for(var/obj/item/weapon/dice/ghost/A in src)
 				count++
 				var/obj/item/weapon/dice/B = new A.normal_type(src)
-				B.result = A.result
+				if(istype(A, /obj/item/weapon/dice/ghost/d00))
+					B.result = (A.result/10)+1
+				else
+					B.result = A.result
 				B.icon_state = "[initial(B.icon_state)][B.result]"
 				qdel(A)
 			if(count)

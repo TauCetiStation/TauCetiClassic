@@ -5,7 +5,7 @@
 	icon_state = "biocan"
 	origin_tech = "biotech=3;materials=3;magnets=3"
 	w_class = 3
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = KEEP_TOGETHER | TILE_BOUND
 	var/obj/item/weapon/organ/head/headobj = null
 	var/image/display_headobj = null
 	var/mob/living/carbon/brain/brainmob = null

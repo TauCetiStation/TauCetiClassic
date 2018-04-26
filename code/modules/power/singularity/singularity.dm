@@ -6,6 +6,7 @@
 	anchored = 1
 	density = 1
 	layer = 6
+	appearance_flags = 0
 	//light_range = 6
 	unacidable = 1 //Don't comment this out.
 	var/current_size = 1

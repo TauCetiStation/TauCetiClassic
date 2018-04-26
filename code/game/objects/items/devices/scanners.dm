@@ -373,38 +373,45 @@ REAGENT SCANNER
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
-	var/obj/item/weapon/ectoplasm/ectoplasm = null
-	var/active = 0
+	var/target = null
+	var/target_type = /obj/item/weapon/ectoplasm
+	var/active = FALSE
 
+/obj/item/weapon/occult_pinpointer/attack_self()
+	if(!active)
+		to_chat(usr, "<span class='notice'>You activate the [name]</span>")
+		START_PROCESSING(SSobj, src)
+	else
+		icon_state = "locoff"
+		to_chat(usr, "<span class='notice'>You deactivate the [name]</span>")
+		STOP_PROCESSING(SSobj, src)
+	active = !active
 
-	attack_self()
-		if(!active)
-			active = 1
-			search()
-			to_chat(usr, "\blue You activate the [src.name]")
-		else
-			active = 0
-			icon_state = "locoff"
-			to_chat(usr, "\blue You deactivate the [src.name]")
+/obj/item/weapon/occult_pinpointer/attackby(obj/item/W, mob/user)
+	..()
+	if(istype(W, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = W
+		target_type = OS.scanned_type
+		target = null // So we ain't looking for the old target
+		to_chat(user, "<span class='notice'>[src] succesfully extracted [pick("mythical","magical","arcane")] knowledge from [W]</span>")
 
-	proc/search()
-		if(!active) return
-		if(!ectoplasm)
-			ectoplasm = locate()
-			if(!ectoplasm)
-				icon_state = "locnull"
-				return
-		dir = get_dir(src,ectoplasm)
-		switch(get_dist(src,ectoplasm))
-			if(0)
-				icon_state = "locon"
-			if(1 to 8)
-				icon_state = "locon"
-			if(9 to 16)
-				icon_state = "locon"
-			if(16 to INFINITY)
-				icon_state = "locon"
-		spawn(5) .()
+/obj/item/weapon/occult_pinpointer/Destroy()
+	active = FALSE
+	STOP_PROCESSING(SSobj, src)
+	target = null
+	return ..()
+
+/obj/item/weapon/occult_pinpointer/process()
+	if(!active)
+		return
+	if(!target)
+		target = locate(target_type)
+		if(!target)
+			icon_state = "locnull"
+			return
+	dir = get_dir(src,target)
+	if(get_dist(src,target))
+		icon_state = "locon"
 
 /obj/item/device/occult_scanner
 	name = "occult scanner"
@@ -417,10 +424,15 @@ REAGENT SCANNER
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
+	var/scanned_type = /obj/item/weapon/ectoplasm
+
+/obj/item/device/occult_scanner/attack_self(mob/user)
+	if(!istype(scanned_type, /obj/item/weapon/ectoplasm))
+		scanned_type = /obj/item/weapon/ectoplasm
+		to_chat(user, "<span class='notice'>You reset the scanned object of the scanner.</span>")
 
 /obj/item/device/occult_scanner/afterattack(mob/M, mob/user)
 	if(user && user.client)
 		if(ishuman(M) && M.stat == DEAD)
-			user.visible_message("\blue [user] scans [M], the air around them humming gently.")
-			user.show_message("\blue [M] was [pick("possessed", "devoured", "destroyed", "murdered", "captured")] by [pick("Cthulhu", "Mi-Go", "Elder God", "dark spirit", "Outsider", "unknown alien creature")]", 1)
-		else	return
+			user.visible_message("<span class='notice'>[user] scans [M], the air around them humming gently.</span>",
+			                     "<span class='notice'>[M] was [pick("possessed", "devoured", "destroyed", "murdered", "captured")] by [pick("Cthulhu", "Mi-Go", "Elder God", "dark spirit", "Outsider", "unknown alien creature")]</span>")

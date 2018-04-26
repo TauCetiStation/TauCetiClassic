@@ -426,3 +426,58 @@
 /obj/item/weapon/reagent_containers/glass/bottle/nanites/atom_init()
 	. = ..()
 	reagents.add_reagent("nanites", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_dye
+	name = "hair dye bottle"
+	desc = "A small bottle of hair dye."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle2"
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/white
+	name = "white hair dye bottle"
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/red
+	name = "red hair dye bottle"
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blue
+	name = "blue hair dye bottle"
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/green
+	name = "green hair dye bottle"
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/black
+	name = "black hair dye bottle"
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/brown
+	name = "brown hair dye bottle"
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blond
+	name = "blond hair dye bottle"
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/white/atom_init()
+	. = ..()
+	reagents.add_reagent("whitehairdye", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/red/atom_init()
+	. = ..()
+	reagents.add_reagent("redhairdye", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/green/atom_init()
+	. = ..()
+	reagents.add_reagent("greenhairdye", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blue/atom_init()
+	. = ..()
+	reagents.add_reagent("bluehairdye", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/black/atom_init()
+	. = ..()
+	reagents.add_reagent("blackhairdye", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/brown/atom_init()
+	. = ..()
+	reagents.add_reagent("brownhairdye", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blond/atom_init()
+	. = ..()
+	reagents.add_reagent("blondhairdye", 30)

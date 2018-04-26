@@ -30,6 +30,12 @@
 	icon_state = "fountainpen" //paththegreat: Eli Stevens
 	var/entity = ""
 
+/obj/item/weapon/pen/ghost/attackby(obj/item/I, mob/user)
+	..()
+	if(istype(I, /obj/item/device/occult_scanner))
+		var/obj/item/device/occult_scanner/OS = I
+		OS.scanned_type = src.type
+
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."
 	icon_state = "pen_blue"

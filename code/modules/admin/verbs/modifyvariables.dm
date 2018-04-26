@@ -271,7 +271,7 @@ var/list/forbidden_varedit_object_types = list(
 	if(!check_rights(R_VAREDIT))	return
 
 	var/list/icons_modifying = list("resize")
-	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "mutantrace", "player_ingame_age", "summon_type")
+	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "mutantrace", "player_ingame_age", "summon_type", "AI_Interact")
 	var/list/typechange_locked = list("player_next_age_tick","player_ingame_age")
 	var/list/fully_locked = list("holder", "player_next_age_tick", "resize_rev")
 
