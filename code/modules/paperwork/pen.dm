@@ -30,11 +30,30 @@
 	icon_state = "fountainpen" //paththegreat: Eli Stevens
 	var/entity = ""
 
+/obj/item/weapon/pen/ghost/afterattack(atom/target, mob/user, proximity)
+	..()
+	if(!proximity || !entity)
+		return
+	var/list/phrases = list("Why did you do that, [user]?", "Do you not have anything better to do?", "Murder! Murder! MURDER!", "Did [target] deserve this?",
+	                        "Why are you doing this again?", "Don't, [user].", "Do not even think about such things!", "Do I deserve eternally witnessing your misery?",
+	                        "Why am I here?", "Can we go now?", "Listen, [target] doesn't have anything to do with this.", "Make it stooop.")
+	to_chat(user, "[entity] [pick("moans", "laments", "whines", "blubbers")], \"[pick(phrases)]\"")
+
 /obj/item/weapon/pen/ghost/attackby(obj/item/I, mob/user)
 	..()
 	if(istype(I, /obj/item/device/occult_scanner))
 		var/obj/item/device/occult_scanner/OS = I
 		OS.scanned_type = src.type
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.getBrainLoss() >= 60 || user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")
+			if(entity && istype(I, /obj/item/weapon/nullrod))
+				entity = ""
+				to_chat(user, "<span class='warning'>[capitalize(src.name)] quivers and shakes, as it's entity leaves!</span>")
+			else if(istype(I, /obj/item/weapon/storage/bible))
+				var/obj/item/weapon/storage/bible/B = I
+				to_chat(user, "<span class='notice'>You feel a ceratin divine intelligence, as [capitalize(B.deity_name)] posseses \the [src].</span>")
+				entity = B.deity_name
 
 /obj/item/weapon/pen/blue
 	desc = "It's a normal blue ink pen."
@@ -154,15 +173,14 @@
 
 /obj/item/weapon/pen/ghost/attack_self(mob/living/carbon/human/user)
 	if(user.getBrainLoss() >= 60 || (user.mind && (user.mind.assigned_role == "Chaplain" || user.mind.role_alt_title == "Paranormal Investigator")))
-		to_chat(user, "<span class='notice'>You feel the pen quiver, as another entity posseses it.</span>")
-		var/choices = list()
-		for(var/mob/dead/observer/D in dead_mob_list)
-			if(D.started_as_observer)
-				choices += D.name
-		if(choices)
-			entity = sanitize(pick(choices))
-		else
-			entity = ""
+		if(!entity)
+			to_chat(user, "<span class='notice'>You feel the pen quiver, as another entity posseses it.</span>")
+			var/choices = list()
+			for(var/mob/dead/observer/D in dead_mob_list)
+				if(D.started_as_observer)
+					choices += D.name
+			if(choices)
+				entity = sanitize(pick(choices))
 
 /obj/item/weapon/pen/proc/get_signature(mob/user)
 	return (user && user.real_name) ? user.real_name : "Anonymous"
