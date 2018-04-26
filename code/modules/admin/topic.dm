@@ -2701,6 +2701,8 @@
 		usr << browse(entity_ja(content), "window=book")
 
 	else if(href_list["restorebook"])
+		if(alert(usr, "Confirm restoring?", "Message", "Yes", "No") != "Yes")
+			return
 		var/bookid = text2num(href_list["restorebook"])
 		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = [bookid]")
 		if(!query.Execute())
@@ -2720,6 +2722,9 @@
 		message_admins("[key_name_admin(usr)] restored [title] from the recycle bin")
 
 	else if(href_list["deletebook"])
+		if(alert(usr, "Confirm removal?", "Message", "Yes", "No") != "Yes")
+			return
+
 		var/bookid = text2num(href_list["deletebook"])
 		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = [bookid]")
 		if(!query.Execute())
