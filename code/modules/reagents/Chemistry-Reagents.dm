@@ -280,7 +280,6 @@ datum
 			id = "holywater"
 			description = "An ashen-obsidian-water mix, this solution will alter certain sections of the brain's rationality."
 			color = "#e0e8ef" // rgb: 224, 232, 239
-			custom_metabolism = REAGENTS_METABOLISM * 10
 
 			on_mob_life(mob/living/M)
 				if(!..())
@@ -304,7 +303,7 @@ datum
 					cleansed.icon_state = "[initial(cleansed.icon_state)][cleansed.result]"
 					if(istype(O.loc, /mob/living)) // Just for the sake of me feeling better.
 						var/mob/living/M = O.loc
-						M.drop_from_inventory(O)
+						M.drop_from_inventory(cleansed)
 					qdel(O)
 				else if(istype(O, /obj/item/candle/ghost))
 					var/obj/item/candle/ghost/G = O
@@ -314,25 +313,25 @@ datum
 					cleansed.wax = G.wax
 					if(istype(O.loc, /mob/living))
 						var/mob/living/M = O.loc
-						M.drop_from_inventory(O)
+						M.drop_from_inventory(cleansed)
 					qdel(O)
 				else if(istype(O, /obj/item/weapon/game_kit/chaplain))
 					var/obj/item/weapon/game_kit/chaplain/G = O
 					var/obj/item/weapon/game_kit/random/cleansed = new /obj/item/weapon/game_kit/random(G.loc)
 					if(istype(O.loc, /mob/living))
 						var/mob/living/M = O.loc
-						M.drop_from_inventory(O)
+						M.drop_from_inventory(cleansed)
 					qdel(O)
 				else if(istype(O, /obj/item/weapon/pen/ghost))
 					var/obj/item/weapon/pen/ghost/G = O
 					var/obj/item/weapon/pen/cleansed = new /obj/item/weapon/pen(G.loc)
 					if(istype(O.loc, /mob/living))
 						var/mob/living/M = O.loc
-						M.drop_from_inventory(O)
+						M.drop_from_inventory(cleansed)
 					qdel(O)
 				else if(istype(O, /obj/item/weapon/storage/fancy/black_candle_box))
 					var/obj/item/weapon/storage/fancy/black_candle_box/G = O
-					G.teleporter_delay++ // Basically adds half a minute delay.
+					G.teleporter_delay += volume
 
 		lube
 			name = "Space Lube"
@@ -4694,7 +4693,6 @@ datum
 	id = "unholywater"
 	description = "A corpsen-ectoplasmic-water mix, this solution could alter concepts of reality itself."
 	color = "#C80064" // rgb: 200,0, 100
-	custom_metabolism = REAGENTS_METABOLISM * 10
 
 /datum/reagent/water/unholywater/on_mob_life(mob/living/M)
 	if(!..())
@@ -4704,11 +4702,11 @@ datum
 	if(iscultist(M) && prob(10))
 		switch(data)
 			if(1 to 30)
-				M.heal_bodypart_damage(1, 1)
+				M.heal_bodypart_damage(REM, REM)
 			if(30 to 60)
-				M.heal_bodypart_damage(2, 2)
+				M.heal_bodypart_damage(2 * REM, 2 * REM)
 			if(60 to INFINITY)
-				M.heal_bodypart_damage(3, 3)
+				M.heal_bodypart_damage(3 * REM, 3 * REM)
 	else if(!iscultist(M))
 		switch(data)
 			if(1 to 20)
@@ -4736,7 +4734,7 @@ datum
 		cursed.icon_state = "[initial(cursed.icon_state)][cursed.result]"
 		if(istype(O.loc, /mob/living)) // Just for the sake of me feeling better.
 			var/mob/living/M = O.loc
-			M.drop_from_inventory(O)
+			M.drop_from_inventory(cursed)
 		qdel(O)
 	else if(istype(O, /obj/item/candle) && !istype(O, /obj/item/candle/ghost))
 		var/obj/item/candle/N = O
@@ -4746,7 +4744,7 @@ datum
 		cursed.wax = N.wax
 		if(istype(O.loc, /mob/living))
 			var/mob/living/M = O.loc
-			M.drop_from_inventory(O)
+			M.drop_from_inventory(cursed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/game_kit) && !istype(O, /obj/item/weapon/game_kit/chaplain))
 		var/obj/item/weapon/game_kit/N = O
@@ -4754,18 +4752,18 @@ datum
 		cursed.board_stat = N.board_stat
 		if(istype(O.loc, /mob/living))
 			var/mob/living/M = O.loc
-			M.drop_from_inventory(O)
+			M.drop_from_inventory(cursed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/pen) && !istype(O, /obj/item/weapon/pen/ghost))
 		var/obj/item/weapon/pen/N = O
 		var/obj/item/weapon/pen/ghost/cursed = new /obj/item/weapon/pen/ghost(N.loc)
 		if(istype(O.loc, /mob/living))
 			var/mob/living/M = O.loc
-			M.drop_from_inventory(O)
+			M.drop_from_inventory(cursed)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/storage/fancy/black_candle_box))
 		var/obj/item/weapon/storage/fancy/black_candle_box/G = O
-		G.teleporter_delay-- // Basically removes half a minute of delay.
+		G.teleporter_delay += volume
 
 /datum/chemical_reaction/unholywater
 	name = "Unholy Water"

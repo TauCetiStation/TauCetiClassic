@@ -152,10 +152,10 @@
 	icon_state = "thurible"
 	item_state = "thurible"
 	amount_per_transfer_from_this = 1
-	possible_transfer_amounts = list(1)
+	possible_transfer_amounts = list(1, 5, 10)
 	spray_size = 1
 	spray_sizes = list(1)
-	volume = 10 // People shouldn't be able to create giant gas clouds just this easily.
+	volume = 100
 	var/lit = FALSE
 	var/temperature = 0 // At 100, it all evaporates. Yes, even the dense metals. The name doesn't actually imply that this item's temperature is changing.
 	var/fuel = 300
@@ -194,6 +194,8 @@
 
 /obj/item/weapon/reagent_containers/spray/thurible/proc/light(mob/user, action_string = "lights up")
 	if(!lit)
+		icon_state = "thurible_lit"
+		update_icon()
 		lit = TRUE
 		user.visible_message("<span class='notice'>[user] [action_string] \the [src].</span>", "<span class='notice'>You light up \the [src].</span>")
 
@@ -208,32 +210,42 @@
 /obj/item/weapon/reagent_containers/spray/thurible/process()
 	if(lit && safety)
 		if(temperature >= 100)
+			var/datum/reagents/evaporate = new /datum/reagents
+			evaporate.my_atom = src // Important for fingerprint tracking, and etc.
 			var/evaporated_volume = 0
 			for(var/datum/reagent/A in reagents.reagent_list)
-				evaporated_volume += A.volume/5
-				A.volume -= A.volume/5
-			if(evaporated_volume)
+				var/reagent_volume = min(A.volume/reagents.reagent_list.len, amount_per_transfer_from_this/reagents.reagent_list.len)
+				reagents.remove_reagent(A.id, reagent_volume) // Basically, we want the thurible to evaporate only amount_per_transfer_from_this cube of reagents total.
+				evaporated_volume += reagent_volume/2 // To prevent giant gaseous clouds, we divide the actual volume.
+				evaporate.add_reagent(A.id, reagent_volume, A.data, TRUE) // Safety(no reactions) should be TRUE, since "evaporate" is abstract, and not attached to any objects.
+			if(evaporate.reagent_list.len)
 				var/location = get_turf(src)
 				var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
 				S.attach(location)
-				S.set_up(reagents, evaporated_volume, 0, location)
+				S.set_up(evaporate, evaporated_volume, 0, location)
 				playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
 				S.start()
-			temperature -= rand(10,30) // Release the "hot" gas, and chill.
-		temperature++
-		fuel = max(fuel-1, 0)
+				temperature -= rand(evaporated_volume*3,evaporated_volume*6) // Release the "hot" gas, and chill.
+		fuel = max(fuel - 1, 0)
 		if(fuel == 0)
-			temperature--
+			temperature = max(0, temperature - 1)
+		else
+			temperature = min(100, temperature+1)
 		if(temperature <=0)
 			visible_message("<span class='notice'>The fire in [src] just went out.</span>")
 			lit = FALSE
-	else if(!lit && !safety)
-		for(var/datum/reagent/A in reagents.reagent_list)
-			if(!istype(A, /datum/reagent/toxin/phoron) && !istype(A, /datum/reagent/fuel))
-				continue
-			else
-				fuel = round(min(fuel + A.volume*0.6, 300)) // Basically, 1 point of fuel reagent is 3 fuel points of thurible. 100 - is max fuel.
-				A.volume -= A.volume*0.2
+			icon_state = "thurible"
+			update_icon()
+	else if(!lit)
+		if(temperature >= 0)
+			temperature = max(0, temperature - 1)
+		if(!safety)
+			for(var/datum/reagent/A in reagents.reagent_list)
+				if(!istype(A, /datum/reagent/toxin/phoron) && !istype(A, /datum/reagent/fuel))
+					continue
+				else
+					fuel += min(round(A.volume*3), 3) // Basically, 1 point of fuel reagent is 3 fuel points of thurible. 100 - is max fuel.
+					reagents.remove_reagent(A.id, min(A.volume, 1))
 
 /obj/item/weapon/reagent_containers/spray/thurible/attackby(obj/item/weapon/W, mob/user)
 	..()
@@ -242,32 +254,44 @@
 			var/obj/item/weapon/weldingtool/WT = W
 			if(WT.isOn())
 				light(user, "casually lights")
-				fuel += 7
 		else if(istype(W, /obj/item/weapon/lighter))
 			var/obj/item/weapon/lighter/L = W
 			if(L.lit)
 				light(user)
-				fuel += 5
 		else if(istype(W, /obj/item/weapon/match))
 			var/obj/item/weapon/match/M = W
 			if(M.lit)
 				light(user)
-				fuel += 5
 		else if(istype(W, /obj/item/candle))
 			var/obj/item/candle/C = W
 			if(C.lit)
 				light(user)
-				fuel += 10 // Candles go out, so their "fuel" is the most precious to us.
 	else if(!safety)
-		to_chat(user, "Put the cap back on.")
+		to_chat(user, "<span class='notice'>Put the cap back on.</span>")
 
 /obj/item/weapon/reagent_containers/spray/thurible/attack_self(mob/user)
-	if(lit) // You can't switch the cap, if the thing's burning.
+	if(lit) // You can't switch the spray mode, if the thing's burning.
 		user.visible_message("<span class='notice'>[user] extinguishes \the [src].</span>", "<span class='notice'>You extinguish \the [src].</span>")
 		lit = FALSE
+		icon_state = "thurible"
+		update_icon()
 	else
 		safety = !safety
 		to_chat(user, "<span class='notice'>You [safety ? "put on" : "take off"] the cap of [src].</span>")
+
+/obj/item/weapon/reagent_containers/spray/thurible/verb/switch_spray_size()
+	set name = "Adjust Nozzle"
+	set category = "Object"
+	set src in usr
+
+	if(!lit && !safety)
+		amount_per_transfer_from_this = next_in_list(amount_per_transfer_from_this, possible_transfer_amounts)
+		spray_size = next_in_list(spray_size, spray_sizes)
+		to_chat(usr, "<span class='notice'>You adjusted the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>")
+	else if(lit)
+		to_chat(usr, "<span class='notice'>The nozzle is too hot to the touch.</span>")
+	else if(safety)
+		to_chat(usr, "<span class='notice'>Take the cap off first.</span>")
 
 //space cleaner
 /obj/item/weapon/reagent_containers/spray/cleaner

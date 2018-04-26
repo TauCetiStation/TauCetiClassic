@@ -120,7 +120,7 @@
 	if(cooldown > 0)
 		cooldown--
 	else
-		cooldown = 30
+		cooldown = 300
 
 		if(contents.len >= storage_slots)
 			return
