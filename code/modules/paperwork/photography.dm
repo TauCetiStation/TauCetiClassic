@@ -243,6 +243,7 @@
 
 /obj/item/device/camera/proc/camera_get_mobs(turf/the_turf)
 	var/mob_detail
+	var/names_detail = list()
 	for(var/mob/M in the_turf)
 		if(M.invisibility)
 			if(see_ghosts && istype(M,/mob/dead/observer))
@@ -253,6 +254,7 @@
 					mob_detail = "You can see a g-g-g-g-ghooooost! "
 				else
 					mob_detail += "You can also see a g-g-g-g-ghooooost!"
+				names_detail[O.name] = O.type
 			else
 				continue
 
@@ -272,22 +274,9 @@
 				mob_detail = "You can see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]. "
 			else
 				mob_detail += "You can also see [L] on the photo[L.health < 75 ? " - [L] looks hurt":""].[holding ? " [holding]":"."]."
-
-	return mob_detail
-
-/obj/item/device/camera/proc/camera_get_photographed_names(turf/the_turf)
-	var/list/names_detail = list()
-	for(var/mob/M in the_turf)
-		if(M.invisibility)
-			if(see_ghosts && istype(M,/mob/dead/observer))
-				var/mob/dead/observer/O = M
-				if(O.orbiting)
-					continue
-				names_detail[O.name] = O.type
-		if(istype(M, /mob/living))
 			names_detail[M.name] = M.type
 
-	return names_detail
+	return list("mob_detail" = mob_detail, "names_detail" = names_detail)
 
 /obj/item/device/camera/afterattack(atom/target, mob/user, flag)
 	if(!on || !pictures_left || ismob(target.loc))
@@ -326,9 +315,10 @@
 			if(isAi && !cameranet.checkTurfVis(T))
 				continue
 			else
+				var/detail_list = camera_get_mobs(T)
 				turfs += T
-				mobs += camera_get_mobs(T)
-				mob_names += camera_get_photographed_names(T)
+				mobs += detail_list["mob_detail"]
+				mob_names += detail_list["names_detail"]
 
 	var/icon/temp = get_base_photo_icon()
 	temp.Blend("#000", ICON_OVERLAY)
