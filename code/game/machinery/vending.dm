@@ -884,7 +884,7 @@
 		var/obj/item/device/occult_scanner/OS = I
 		OS.scanned_type = src.type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
-	if(istype(I, /obj/item/weapon/ectoplasm))
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/ectoplasm))
 		RedeemEctoplasm(I, user)
 		return
 	..()
