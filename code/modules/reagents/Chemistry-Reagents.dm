@@ -285,11 +285,54 @@ datum
 			on_mob_life(mob/living/M)
 				if(!..())
 					return
-				if(ishuman(M))
-					if((M.mind in ticker.mode.cult) && prob(10))
-						to_chat(M, "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>")
-						ticker.mode.remove_cultist(M.mind)
-						M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>")
+				if(holder.has_reagent("unholywater"))
+					holder.remove_reagent("unholywater", 2 * REM)
+				if(ishuman(M) && iscultist(M) && prob(10))
+					ticker.mode.remove_cultist(M.mind)
+					M.visible_message("<span class='notice'>[M]'s eyes blink and become clearer.</span>",
+					                  "<span class='notice'>A cooling sensation from inside you brings you an untold calmness.</span>")
+
+			reaction_obj(obj/O, volume)
+				src = null
+				if(istype(O, /obj/item/weapon/dice/ghost))
+					var/obj/item/weapon/dice/ghost/G = O
+					var/obj/item/weapon/dice/cleansed = new G.normal_type(G.loc)
+					if(istype(G, /obj/item/weapon/dice/ghost/d00))
+						cleansed.result = (G.result/10)+1
+					else
+						cleansed.result = G.result
+					cleansed.icon_state = "[initial(cleansed.icon_state)][cleansed.result]"
+					if(istype(O.loc, /mob/living)) // Just for the sake of me feeling better.
+						var/mob/living/M = O.loc
+						M.drop_from_inventory(O)
+					qdel(O)
+				else if(istype(O, /obj/item/candle/ghost))
+					var/obj/item/candle/ghost/G = O
+					var/obj/item/candle/cleansed = new /obj/item/candle(G.loc)
+					if(G.lit) // Haha, but wouldn't water actually extinguish it?
+						cleansed.light("")
+					cleansed.wax = G.wax
+					if(istype(O.loc, /mob/living))
+						var/mob/living/M = O.loc
+						M.drop_from_inventory(O)
+					qdel(O)
+				else if(istype(O, /obj/item/weapon/game_kit/chaplain))
+					var/obj/item/weapon/game_kit/chaplain/G = O
+					var/obj/item/weapon/game_kit/random/cleansed = new /obj/item/weapon/game_kit/random(G.loc)
+					if(istype(O.loc, /mob/living))
+						var/mob/living/M = O.loc
+						M.drop_from_inventory(O)
+					qdel(O)
+				else if(istype(O, /obj/item/weapon/pen/ghost))
+					var/obj/item/weapon/pen/ghost/G = O
+					var/obj/item/weapon/pen/cleansed = new /obj/item/weapon/pen(G.loc)
+					if(istype(O.loc, /mob/living))
+						var/mob/living/M = O.loc
+						M.drop_from_inventory(O)
+					qdel(O)
+				else if(istype(O, /obj/item/weapon/storage/fancy/black_candle_box))
+					var/obj/item/weapon/storage/fancy/black_candle_box/G = O
+					G.teleporter_delay++ // Basically adds half a minute delay.
 
 		lube
 			name = "Space Lube"
@@ -4598,6 +4641,138 @@ datum
 			H.lip_color = color
 		H.update_hair()
 		H.update_body()
+
+/datum/reagent/ectoplasm
+	name = "Ectoplasm"
+	id = "ectoplasm"
+	description = "A spooky scary substance to explain ghosts and stuff."
+	reagent_state = LIQUID
+	taste_message = "spooky ghosts"
+	color = "#FFA8E4" // rgb: 255, 168, 228
+
+/datum/reagent/ectoplasm/on_mob_life(mob/living/M)
+	M.hallucination += 1
+	M.make_jittery(2)
+	if(!data)
+		data = 1
+	switch(data)
+		if(1 to 15)
+			M.make_jittery(2)
+			M.hallucination = max(M.hallucination, 3)
+			if(prob(1))
+				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
+				M.emote("faint") // Seeing ghosts ain't an easy thing for your mind.
+		if(15 to 45)
+			M.make_jittery(4)
+			M.druggy = max(M.druggy, 15)
+			M.hallucination = max(M.hallucination, 10)
+			if(prob(5))
+				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
+				M.emote("faint")
+		if(45 to 90)
+			M.make_jittery(8)
+			M.druggy = max(M.druggy, 30)
+			M.hallucination = max(M.hallucination, 60)
+			if(prob(10))
+				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
+				M.emote("faint")
+		if(90 to 180)
+			M.make_jittery(8)
+			M.druggy = max(M.druggy, 35)
+			M.hallucination = max(M.hallucination, 60)
+			if(prob(10))
+				to_chat(src, "<span class='warning'>You see... [pick(nightmares)] ...</span>")
+				M.emote("faint")
+			if(prob(5))
+				M.adjustBrainLoss(5)
+		if(180 to INFINITY)
+			M.adjustBrainLoss(100)
+	data++
+
+/datum/reagent/water/unholywater
+	name = "Unholy Water"
+	id = "unholywater"
+	description = "A corpsen-ectoplasmic-water mix, this solution could alter concepts of reality itself."
+	color = "#C80064" // rgb: 200,0, 100
+	custom_metabolism = REAGENTS_METABOLISM * 10
+
+/datum/reagent/water/unholywater/on_mob_life(mob/living/M)
+	if(!..())
+		return
+	if(!data)
+		data = 1
+	if(iscultist(M) && prob(10))
+		switch(data)
+			if(1 to 30)
+				M.heal_bodypart_damage(1, 1)
+			if(30 to 60)
+				M.heal_bodypart_damage(2, 2)
+			if(60 to INFINITY)
+				M.heal_bodypart_damage(3, 3)
+	else if(!iscultist(M))
+		switch(data)
+			if(1 to 20)
+				M.make_jittery(3)
+			if(20 to 40)
+				M.make_jittery(6)
+				if(prob(15))
+					M.sleeping += 1
+			if(40 to 80)
+				M.make_jittery(12)
+				if(prob(30))
+					M.sleeping += 1
+			if(80 to INFINITY)
+				M.sleeping += 1
+	data++
+/datum/reagent/water/unholywater/reaction_obj(obj/O, volume)
+	src = null
+	if(istype(O, /obj/item/weapon/dice))
+		var/obj/item/weapon/dice/N = O
+		var/obj/item/weapon/dice/cursed = new N.accursed_type(N.loc)
+		if(istype(N, /obj/item/weapon/dice/d00))
+			cursed.result = (N.result/10)+1
+		else
+			cursed.result = N.result
+		cursed.icon_state = "[initial(cursed.icon_state)][cursed.result]"
+		if(istype(O.loc, /mob/living)) // Just for the sake of me feeling better.
+			var/mob/living/M = O.loc
+			M.drop_from_inventory(O)
+		qdel(O)
+	else if(istype(O, /obj/item/candle) && !istype(O, /obj/item/candle/ghost))
+		var/obj/item/candle/N = O
+		var/obj/item/candle/ghost/cursed = new /obj/item/candle/ghost(N.loc)
+		if(N.lit) // Haha, but wouldn't water actually extinguish it?
+			cursed.light("")
+		cursed.wax = N.wax
+		if(istype(O.loc, /mob/living))
+			var/mob/living/M = O.loc
+			M.drop_from_inventory(O)
+		qdel(O)
+	else if(istype(O, /obj/item/weapon/game_kit) && !istype(O, /obj/item/weapon/game_kit/chaplain))
+		var/obj/item/weapon/game_kit/N = O
+		var/obj/item/weapon/game_kit/random/cursed = new /obj/item/weapon/game_kit/chaplain(N.loc)
+		cursed.board_stat = N.board_stat
+		if(istype(O.loc, /mob/living))
+			var/mob/living/M = O.loc
+			M.drop_from_inventory(O)
+		qdel(O)
+	else if(istype(O, /obj/item/weapon/pen) && !istype(O, /obj/item/weapon/pen/ghost))
+		var/obj/item/weapon/pen/N = O
+		var/obj/item/weapon/pen/ghost/cursed = new /obj/item/weapon/pen/ghost(N.loc)
+		if(istype(O.loc, /mob/living))
+			var/mob/living/M = O.loc
+			M.drop_from_inventory(O)
+		qdel(O)
+	else if(istype(O, /obj/item/weapon/storage/fancy/black_candle_box))
+		var/obj/item/weapon/storage/fancy/black_candle_box/G = O
+		G.teleporter_delay-- // Basically removes half a minute of delay.
+
+/datum/chemical_reaction/unholywater
+	name = "Unholy Water"
+	id = "unholywater"
+	result = "unholywater"
+	required_reagents = list("water" = 1, "ectoplasm" = 1)
+	result_amount = 1 // Because rules of logic shouldn't apply here either.
 
 /proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc

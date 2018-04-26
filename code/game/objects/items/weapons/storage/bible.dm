@@ -24,11 +24,18 @@
 	if(!proximity)
 		return
 	if(user.mind && (user.mind.assigned_role == "Chaplain"))
-		if(A.reagents && A.reagents.has_reagent("water")) //blesses all the water in the holder
-			to_chat(user, "\blue You bless [A].")
-			var/water2holy = A.reagents.get_reagent_amount("water")
+		if(A.reagents && A.reagents.has_reagent("water")) //blesses/curses all the water in the holder
+			var/water2convert = A.reagents.get_reagent_amount("water")
 			A.reagents.del_reagent("water")
-			A.reagents.add_reagent("holywater",water2holy)
+			if(icon_state == "necronomicon")
+				to_chat(user, "<span class='warning'>You curse [A].</span>")
+				A.reagents.add_reagent("unholywater",water2convert)
+			else if(icon_state == "bible" && prob(10))
+				to_chat(user, "<span clas='notice'>You have just created wine!")
+				A.reagents.add_reagent("wine",water2convert)
+			else
+				to_chat(user, "<span class='notice'>You bless [A].</span>")
+				A.reagents.add_reagent("holywater",water2convert)
 
 /obj/item/weapon/storage/bible/attackby(obj/item/weapon/W, mob/user)
 	if (src.use_sound)
