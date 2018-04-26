@@ -33,7 +33,7 @@ var/list/nightmares = list(
 	var/i = rand(1,4)
 	while(i)
 		if(dreaming == 2)
-			to_chat(src, "<span class='warning italics'>... [pick(nightmares)] ...</span>")
+			to_chat(src, "<span class='warning italic'>... [pick(nightmares)] ...</span>")
 			adjustHalLoss(4) // Nightmares are quite agonizing. Since just sleeping remove 3 HalLoss, adding 4 here would in total give just 1 haldamage/life tick.
 			if(prob(10))
 				var/list/creepysounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',
@@ -43,7 +43,7 @@ var/list/nightmares = list(
 				'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
 				src << pick(creepysounds)
 		else
-			to_chat(src, "<span class='notice italics'>... [pick(dreams)] ...</span>")
+			to_chat(src, "<span class='notice italic'>... [pick(dreams)] ...</span>")
 		sleep(rand(40,70))
 		if(paralysis <= 0)
 			dreaming = NOT_DREAMING
