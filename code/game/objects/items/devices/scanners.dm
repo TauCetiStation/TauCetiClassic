@@ -374,7 +374,7 @@ REAGENT SCANNER
 	throw_range = 20
 	m_amt = 500
 	var/target = null
-	var/target_type = /obj/item/weapon/ectoplasm
+	var/target_type = /obj/item/weapon/reagent_containers/food/snacks/ectoplasm
 	var/active = FALSE
 
 /obj/item/weapon/occult_pinpointer/attack_self()
@@ -424,11 +424,11 @@ REAGENT SCANNER
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500
-	var/scanned_type = /obj/item/weapon/ectoplasm
+	var/scanned_type = /obj/item/weapon/reagent_containers/food/snacks/ectoplasm
 
 /obj/item/device/occult_scanner/attack_self(mob/user)
-	if(!istype(scanned_type, /obj/item/weapon/ectoplasm))
-		scanned_type = /obj/item/weapon/ectoplasm
+	if(!istype(scanned_type, /obj/item/weapon/reagent_containers/food/snacks/ectoplasm))
+		scanned_type = /obj/item/weapon/reagent_containers/food/snacks/ectoplasm
 		to_chat(user, "<span class='notice'>You reset the scanned object of the scanner.</span>")
 
 /obj/item/device/occult_scanner/afterattack(mob/M, mob/user)

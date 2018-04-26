@@ -27,6 +27,13 @@ var/list/nightmares = list(
 
 /mob/living/carbon/proc/dream()
 	dreaming = IS_DREAMING
+	if(reagents.has_reagent("unholywater"))
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(!(H.species && H.species.flags[NO_BLOOD]))
+				dreaming = IS_NIGHTMARE
+		else
+			dreaming = IS_NIGHTMARE
 	for(var/obj/item/candle/ghost/CG in range(4, src))
 		if(CG.lit)
 			dreaming = IS_NIGHTMARE
@@ -43,6 +50,7 @@ var/list/nightmares = list(
 				'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',
 				'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
 				src << pick(creepysounds)
+			to_chat(src, "<span class='warning italic'>... [pick(nightmares)] ...</span>")
 		else
 			to_chat(src, "<span class='notice italic'>... [pick(dreams)] ...</span>")
 		sleep(rand(40,70))
