@@ -33,7 +33,7 @@ var/list/nightmares = list(
 	var/i = rand(1,4)
 	while(i)
 		if(dreaming == 2)
-			to_chat(src, "<span class='warning italic'>... [pick(nightmares)] ...</span>")
+			to_chat(src, "<span class='warning'>... [pick(nightmares)] ...</span>")
 			adjustHalLoss(4) // Nightmares are quite agonizing. Since just sleeping remove 3 HalLoss, adding 4 here would in total give just 1 haldamage/life tick.
 			if(prob(10))
 				var/list/creepysounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',
