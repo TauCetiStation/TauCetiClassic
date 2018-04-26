@@ -101,8 +101,8 @@ What is the naming convention for planes or layers?
 #define ABOVE_WINDOW_LAYER         3.3
 #define SIGN_LAYER                 3.4   // Default value for /obj/structure/sign
 #define BELOW_MOB_LAYER            3.7   // Currently used only by fluff struct in bluespace shelter
-#define WALL_OBJ_LAYER             4.25
 //efine MOB_LAYER                  4     // For easy recordkeeping; this is a byond define
+#define WALL_OBJ_LAYER             4.25
 //efine FLY_LAYER                  5     // For easy recordkeeping; this is a byond define
 
 
