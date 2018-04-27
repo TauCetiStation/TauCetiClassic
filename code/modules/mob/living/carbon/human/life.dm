@@ -628,7 +628,7 @@
 
 		//Body temperature adjusts depending on surrounding atmosphere based on your thermal protection
 		var/temp_adj = 0
-		if(!on_fire) //If you're on fire, you do not heat up or cool down based on surrounding gases
+		if(!on_fire || !(get_species() == IPC && is_damaged_organ(O_LUNGS))) //If you're on fire, you do not heat up or cool down based on surrounding gases
 			if(loc_temp < bodytemperature)			//Place is colder than we are
 				var/thermal_protection = get_cold_protection(loc_temp) //This returns a 0 - 1 value, which corresponds to the percentage of protection based on what you're wearing and what you're exposed to.
 				if(thermal_protection < 1)
@@ -832,7 +832,6 @@
 		if(thermal_protection_flags & ARM_RIGHT)
 			thermal_protection += THERMAL_PROTECTION_ARM_RIGHT
 
-
 	return min(1,thermal_protection)
 
 //See proc/get_heat_protection_flags(temperature) for the description of this proc.
@@ -968,17 +967,17 @@
 			var/turf/T = loc
 			light_amount = round((T.get_lumcount()*10)-5)
 
-		nutrition += light_amount
-		traumatic_shock -= light_amount
+		if(get_species() == DIONA && !is_damaged_organ(O_LIVER)) // Specie may require light, but only plants, with chlorophyllic plasts can produce nutrition out of light!
+			nutrition += light_amount
 
 		if(species.flags[IS_PLANT])
-			if(nutrition > 500)
-				nutrition = 500
-			if(light_amount >= 3) //if there's enough light, heal
-				adjustBruteLoss(-(light_amount))
-				adjustToxLoss(-(light_amount))
-				adjustOxyLoss(-(light_amount))
-				//TODO: heal wounds, heal broken limbs.
+			var/obj/item/organ/internal/kidneys/KS = organs_by_name[O_KIDNEYS]
+			if(!KS)
+				nutrition = 0
+			if(KS && get_species() == DIONA && (nutrition > 500 - KS.damage*5))
+				nutrition = 500 - KS.damage*5
+			var/obj/item/organ/external/External
+			species.regen(src, light_amount, External)
 
 	if(dna && dna.mutantrace == "shadow")
 		var/light_amount = 0

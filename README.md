@@ -1,7 +1,7 @@
-# Tau Ceti Classic
+# Gamma Station
 
 [![tauceti.ru](https://img.shields.io/badge/site-tauceti.ru-blue.svg)](http://tauceti.ru/)
-[![Discord](https://img.shields.io/badge/dynamic/json.svg?label=Discord&uri=https%3A%2F%2Fdiscordapp.com%2Fapi%2Fguilds%2F401030271417188353%2Fwidget.json&query=members.length&colorB=%237289db&suffix=%20online&logo=discord)](https://discord.gg/YCWRjkb)
+[![Discord](https://img.shields.io/badge/dynamic/json.svg?label=Discord&uri=https%3A%2F%2Fdiscordapp.com%2Fapi%2Fguilds%2F401030271417188353%2Fwidget.json&query=members.length&colorB=%237289db&suffix=%20online&logo=discord)](https://discord.gg/V92ZHwY)
 
 ---
 
@@ -16,6 +16,7 @@
 * [ParadiseSS13](http://nanotrasen.se/phpBB3/index.php)
 * [/vg/station13](http://ss13.pomf.se/)
 * [Goonstation](http://goonhub.com/)
+* [Tau Ceti Classic](https://github.com/TauCetiStation/TauCetiClassic)
 
 ---
 

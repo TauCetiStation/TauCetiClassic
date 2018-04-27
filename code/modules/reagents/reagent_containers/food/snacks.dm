@@ -1334,7 +1334,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/syndicake/atom_init()
 	. = ..()
 	reagents.add_reagent("nutriment", 4)
-	reagents.add_reagent("doctorsdelight", 5)
+	reagents.add_reagent("syndicream", 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/loadedbakedpotato
 	name = "Loaded Baked Potato"
