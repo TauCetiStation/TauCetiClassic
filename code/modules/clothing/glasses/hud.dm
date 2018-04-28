@@ -9,6 +9,15 @@
 /obj/item/clothing/glasses/hud/proc/process_hud(mob/M)
 	return
 
+/obj/item/clothing/glasses/hud/ghost
+	name = "ghostbusting HUD"
+	desc = "A heads-up display that scans any paranormal \"lifesigns\" in view and provides accurate data about their current power level."
+	icon_state = "secmedhud"
+	body_parts_covered = 0
+
+/obj/item/clothing/glasses/hud/ghost/process_hud(mob/M)
+	check_integrity()
+	process_ghostbuster_hud(M, crit_fail = crit_fail)
 
 /obj/item/clothing/glasses/sunglasses/hud/secmed
 	name = "mixed HUD"

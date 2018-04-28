@@ -26,7 +26,31 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	ghost_candles -= src
 	return ..()
 
+/obj/item/candle/attack_ghost(mob/dead/observer/user)
+	if(!istype(user))
+		return
+
+	var/allowed = user.check_allowance(100, 1, "extinguish_candle") // For any reason, compiler thinks INTERACTION_ADVANCED is a variable.
+
+	if(allowed && lit)
+		switch(user.material_interaction_level)
+			if(INTERACTION_ADVANCED)
+				if(!istype(src, /obj/item/candle/ghost))
+					lit = FALSE
+					update_icon()
+					set_light(0)
+				else
+					to_chat(user, "<span class='warning'>Even your forces are not enough to extinguish it.</span>")
+			if(INTERACTION_PARANORMAL)
+				lit = FALSE
+				update_icon()
+				set_light(0)
+
+		user.essence -= 100
+		user.spook_time_use["extinguish_candle"] = world.time + 600 // One minute delay.
+
 /obj/item/candle/ghost/attack_ghost()
+	..()
 	if(!lit)
 		src.light("<span class='warning'>\The [name] suddenly lights up.</span>")
 		if(prob(10))

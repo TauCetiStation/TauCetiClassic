@@ -48,6 +48,16 @@ the HUD updates properly! */
 			P.Client.images += perp.hud_list[IMPLOYAL_HUD]
 			P.Client.images += perp.hud_list[IMPCHEM_HUD]
 
+/proc/process_ghostbuster_hud(mob/M, mob/Alt, crit_fail = 0)
+	if(!can_process_hud(M))
+		return
+	var/datum/arranged_hud_process/P = arrange_hud_process(M, Alt, ghost_hud_users)
+	for(var/mob/dead/observer/O in P.Mob.in_view(P.Turf))
+		if(crit_fail)
+			P.Client.images += image('icons/mob/hud.dmi', loc = O, icon_state = "hudbroken1")
+			continue
+		P.Client.images += O.hud_list[GHOST_POWER_HUD]
+
 /proc/process_broken_hud(mob/M, advanced_mode, mob/Alt)
 	if(!can_process_hud(M))
 		return
@@ -87,6 +97,7 @@ the HUD updates properly! */
 				client.images -= hud
 	med_hud_users -= src
 	sec_hud_users -= src
+	ghost_hud_users -= src
 
 /mob/proc/in_view(turf/T)
 	return view(T)

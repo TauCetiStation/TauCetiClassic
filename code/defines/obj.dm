@@ -1,3 +1,8 @@
+// I need to define it somewhere here, so the entire game code recognizes these defines.
+#define INTERACTION_NORMAL 0 // Basic ghost stuff. Occult dice, etc.
+#define INTERACTION_ADVANCED 1 // Advanced ghost stuff. Spooky sounds, flicking lights.
+#define INTERACTION_PARANORMAL 2 // Ultimate art of spookyness.
+
 /obj/structure/signpost
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "signpost"

@@ -115,6 +115,12 @@
 	desc = "Stylish glasses with transparent lenses"
 	icon_state = "aviators_mirror"
 
+/obj/item/clothing/glasses/ghost
+	name = "clip-enhanced aviator glasses"
+	desc = "A clip connecting the lenses allows broader sensory reception. Used for activity, also known as \"Ghostbusting\"."
+	icon_state = "aviators_mad"
+	item_state = "ghost"
+
 /obj/item/clothing/glasses/jerusalem
 	name = "Jerusalem glasses"
 	desc = "Here you can see a small inscription: I hate it here"

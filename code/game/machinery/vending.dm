@@ -81,6 +81,22 @@
 	QDEL_NULL(coin)
 	return ..()
 
+/obj/machinery/vending/attack_ghost(mob/dead/observer/user)
+	if(!istype(user))
+		return
+
+	var/allowed = user.check_allowance(100, INTERACTION_ADVANCED, "possess_vendomat") // For any reason, compiler thinks INTERACTION_ADVANCED is a variable.
+
+	if(allowed)
+		if(shut_up)
+			shut_up = FALSE
+			to_chat(user, "<span class='notice'>[capitalize(src)] now live and well! Listen to his prayers.</span>")
+		if(user.material_interaction_level >= INTERACTION_PARANORMAL && !shoot_inventory)
+			shoot_inventory = TRUE
+
+		user.essence -= 100
+		user.spook_time_use["possess_vendomat"] = world.time + 600 // One minute delay.
+
 /obj/machinery/vending/ex_act(severity)
 	switch(severity)
 		if(1.0)

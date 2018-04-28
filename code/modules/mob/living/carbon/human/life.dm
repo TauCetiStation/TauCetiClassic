@@ -1326,6 +1326,10 @@
 					sight |= G.vision_flags
 					if(!druggy)
 						see_invisible = SEE_INVISIBLE_MINIMUM
+				if(istype(G, /obj/item/clothing/glasses/ghost) || istype(G, /obj/item/clothing/glasses/hud/ghost))
+					see_invisible = SEE_INVISIBLE_CULT
+				else
+					see_invisible = SEE_INVISIBLE_LIVING
 			if(istype(G,/obj/item/clothing/glasses/night/shadowling))
 				var/obj/item/clothing/glasses/night/shadowling/S = G
 				if(S.vision)

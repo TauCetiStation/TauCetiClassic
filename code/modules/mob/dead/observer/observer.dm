@@ -16,9 +16,14 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 	see_invisible = SEE_INVISIBLE_OBSERVER
 	see_in_dark = 100
 	invisibility = INVISIBILITY_OBSERVER
+
+	var/material_interaction_level = INTERACTION_NORMAL // Read defines above.
+	var/essence = 0 // How much ectoplasm is in this ghost?
+	var/spook_time_use = list("boo" = 0, "slice" = 0, "juggle" = 0, "possess_vendomat" = 0, "extinguish_candle" = 0) // Is used to delay skills.
+	var/list/hud_list[10]
+
 	var/can_reenter_corpse
 	var/datum/hud/living/carbon/hud = null // hud
-	var/bootime = 0
 	var/started_as_observer //This variable is set to 1 when you enter the game as an observer.
 							//If you died in the game and are a ghsot - this will remain as null.
 							//Note that this is not a reliable way to determine if admins started as observers, since they change mobs a lot.
@@ -84,6 +89,26 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 
 	dead_mob_list += src
 
+	if(ticker && ticker.mode && ticker.mode.name == "cult")
+		material_interaction_level++
+	if(!jobban_isbanned(src, ROLE_REVENANT) && !role_available_in_minutes(src, ROLE_REVENANT) && client)
+		if(ROLE_REVENANT in client.prefs.be_role)
+			if(ticker && ticker.mode.name == "cult")
+				material_interaction_level++
+			if(started_as_observer && prob(10)) // 10% to make this ghost even spookier, just for the sake of it, really.
+				material_interaction_level++
+	if(client && material_interaction_level)
+		to_chat(src, "It seems you are a <span class='bold'>special</span> ghost. Your reach onto reality is expended. Do not waste the opportunity.")
+	hud_list[HEALTH_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[STATUS_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[ID_HUD]          = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[WANTED_HUD]      = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPLOYAL_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPCHEM_HUD]     = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[IMPTRACK_HUD]    = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[SPECIALROLE_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[STATUS_HUD_OOC]  = image('icons/mob/hud.dmi', src, "hudblank")
+	hud_list[GHOST_POWER_HUD] = image('icons/mob/hud.dmi', src, "hudblank")
 	. = ..()
 
 /mob/dead/observer/Destroy()
@@ -118,7 +143,7 @@ var/global/list/image/ghost_sightless_images = list() //this is a list of images
 		var/turf/T = get_turf(target)
 		forceMove(T)
 
-/mob/dead/attackby(obj/item/W, mob/user)
+/mob/dead/observer/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/weapon/book/tome))
 		user.SetNextMove(CLICK_CD_MELEE)
 		var/mob/dead/M = src
@@ -162,7 +187,23 @@ Works together with spawning an observer, noted above.
 			assess_targets(target_list, src)
 	if(medHUD)
 		process_medHUD(src)
+	if(material_interaction_level)
+		switch(material_interaction_level)
+			if(INTERACTION_PARANORMAL)
+				essence += 2
+			if(INTERACTION_ADVANCED)
+				essence++
 
+	var/image/holder = hud_list[GHOST_POWER_HUD]
+	holder.icon_state = "hudblank"
+
+	if(material_interaction_level)
+		switch(material_interaction_level)
+			if(INTERACTION_ADVANCED)
+				holder.icon_state = "hudparanormalinvestigator"
+			if(INTERACTION_PARANORMAL)
+				holder.icon_state = "hudanomalist"
+	hud_list[GHOST_POWER_HUD] = holder
 
 /mob/dead/proc/process_medHUD(mob/M)
 	var/client/C = M.client
@@ -269,6 +310,8 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	..()
 	if(statpanel("Status"))
 		stat(null, "Station Time: [worldtime2text()]")
+		if(material_interaction_level)
+			stat(null, "Essence Level: [essence]")
 		if(ticker.mode && ticker.mode.config_tag == "gang")
 			var/datum/game_mode/gang/mode = ticker.mode
 			if(isnum(mode.A_timer))
@@ -429,21 +472,75 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			else
 				to_chat(A, "This mob is not located in the game world.")
 
-/*
+/mob/dead/observer/proc/check_allowance(essence_required, material_interaction_level_required, skill_name)
+	if(material_interaction_level < material_interaction_level_required)
+		to_chat(usr, "<span class='notice'>It seems you don't have enough power on mortal plane.</span>")
+		return FALSE
+	if(essence < essence_required)
+		to_chat(usr, "<span_class='notice'>You need [200 - essence] more essence to use this power, feed.</span>")
+		return FALSE
+	if(spook_time_use[skill_name] > world.time)
+		to_chat(usr, "<span class='notice'>You have to wait [(spook_time_use["skill_name"] - world.time)/10] seconds until using this again.</span>")
+		return FALSE
+	return TRUE
+
 /mob/dead/observer/verb/boo()
 	set category = "Ghost"
-	set name = "Boo!"
-	set desc= "Scare your crew members because of boredom!"
+	set name = "Pop Light"
+	set desc = "Scare the living by denying them light!"
 
-	if(bootime > world.time) return
-	var/obj/machinery/light/L = locate(/obj/machinery/light) in view(1, src)
-	if(L)
-		L.flicker()
-		bootime = world.time + 600
+	var/allowed = check_allowance(200, INTERACTION_ADVANCED, "boo")
+
+	if(allowed)
+		var/obj/machinery/light/L = locate(/obj/machinery/light) in view(1, src)
+		if(L)
+			switch(material_interaction_level)
+				if(INTERACTION_ADVANCED)
+					L.flicker()
+				if(INTERACTION_PARANORMAL)
+					L.broken()
+			essence -= 200
+			spook_time_use["boo"] = world.time + 600 // One minute delay.
+
+/mob/dead/observer/verb/cut_self() // Yay, self-harm!
+	set category = "Ghost"
+	set name = "Slice"
+	set desc = "Slices ghostly person, causing them to do some ghastly noises."
+
+	var/allowed = check_allowance(300, INTERACTION_ADVANCED, "slice")
+
+	if(allowed)
+		playsound(get_turf(src), 'sound/weapons/slash.ogg', 50, 1)
+
+		essence -= 300
+		spook_time_use["slice"] = world.time + 900 // One minute and a half delay.
+
+/mob/dead/observer/throw_item(atom/target, obj/item/I)
+	if(!istype(I))
 		return
-	//Maybe in the future we can add more <i>spooky</i> code here!
-	return
-*/
+	visible_message("<span class='rose'>[I] has been thrown.</span>")
+	newtonian_move(get_dir(target, src))
+	I.throw_at(target, I.throw_range, I.throw_speed, src)
+
+/mob/dead/observer/verb/juggle()
+	set category = "Ghost"
+	set name = "Juggle"
+	set desc = "Throws small items around, causing panick in people."
+
+	var/allowed = check_allowance(400, INTERACTION_PARANORMAL, "juggle")
+
+	if(allowed)
+		var/list/turf_base = list()
+		for(var/A in range(src, 2))
+			if(istype(A, /turf))
+				turf_base += A
+			if(istype(A, /obj/item))
+				var/obj/item/I = A
+				if(I.w_class <= ITEM_SIZE_SMALL)
+					throw_item(pick(turf_base), A)
+
+		essence -= 400
+		spook_time_use["juggle"] = world.time + 1800 // A whooping three minute delay!
 
 /mob/dead/observer/memory()
 	set hidden = 1
@@ -578,7 +675,10 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(ticker.mode.name == "cult")
 		var/datum/game_mode/cult/C = ticker.mode
 		if(C.cult.len > config.cult_ghostwriter_req_cultists)
-			ghosts_can_write = 1
+			ghosts_can_write = TRUE
+
+	if(material_interaction_level)
+		ghosts_can_write = TRUE
 
 	if(!ghosts_can_write)
 		to_chat(src, "<span class='red'>The veil is not thin enough for you to do that.</span>")
