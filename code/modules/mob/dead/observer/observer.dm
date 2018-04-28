@@ -607,7 +607,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(!choice || choice.amount == 0 || !(src.Adjacent(choice)))
 		return
 
-	var/doodle_color = (choice.basecolor) ? choice.basecolor : "#A10808"
+	var/datum/dirt_cover/doodle_color = new/datum/dirt_cover(choice.basedatum)
 
 	var/num_doodles = 0
 	for (var/obj/effect/decal/cleanable/blood/writing/W in T)
@@ -627,7 +627,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			to_chat(src, "<span class='warning'>You ran out of blood to write with!</span>")
 
 		var/obj/effect/decal/cleanable/blood/writing/W = new(T)
-		W.basecolor = doodle_color
+		W.basedatum = new/datum/dirt_cover(doodle_color)
 		W.update_icon()
 		W.message = message
 		W.add_hiddenprint(src)

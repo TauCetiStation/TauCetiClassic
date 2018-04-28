@@ -57,7 +57,7 @@
 	var/list/flags = list()       // Various specific features.
 	var/list/abilities = list()	// For species-derived or admin-given powers
 
-	var/blood_color = "#A10808" //Red.
+	var/datum/dirt_cover/blood_color = /datum/dirt_cover/red_blood //Red.
 	var/flesh_color = "#FFC896" //Pink.
 	var/base_color      //Used when setting species.
 
@@ -271,7 +271,7 @@
 		)
 
 	eyes = "skrell_eyes"
-
+	blood_color = /datum/dirt_cover/purple_blood
 	flesh_color = "#8CD7A3"
 
 /datum/species/vox
@@ -299,7 +299,7 @@
 		NO_SCAN = TRUE
 	)
 
-	blood_color = "#2299FC"
+	blood_color = /datum/dirt_cover/blue_blood
 	flesh_color = "#808D11"
 
 	sprite_sheets = list(
@@ -373,7 +373,7 @@
 	,NO_PAIN = TRUE
 	)
 
-	blood_color = "#2299FC"
+	blood_color = /datum/dirt_cover/blue_blood
 	flesh_color = "#808D11"
 	tail = "armalis_tail"
 	icon_template = 'icons/mob/human_races/r_armalis.dmi'
@@ -422,6 +422,7 @@
 	,NO_PAIN = TRUE
 	)
 
+	blood_color = /datum/dirt_cover/green_blood
 	has_bodypart = list(
 		 BP_CHEST  = /obj/item/organ/external/chest
 		,BP_GROIN  = /obj/item/organ/external/groin
@@ -525,6 +526,7 @@
 	,BIOHAZZARD_IMMUNE = TRUE
 	)
 
+	blood_color = /datum/dirt_cover/oil
 	has_bodypart = list(
 		 BP_CHEST  = /obj/item/organ/external/chest
 		,BP_GROIN  = /obj/item/organ/external/groin
@@ -562,7 +564,7 @@
 	,VIRUS_IMMUNE = TRUE
 	)
 
-	blood_color = "#BCBCBC"
+	blood_color = /datum/dirt_cover/gray_blood
 
 /datum/species/abductor/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
@@ -640,7 +642,7 @@
 	heat_level_2 = 3000
 	heat_level_3 = 4000
 
-	blood_color = "#000000"
+	blood_color = /datum/dirt_cover/black_blood
 	darksight = 8
 
 	flags = list(
@@ -674,7 +676,7 @@
 	brain_mod = 0
 	speed_mod = 2
 
-	blood_color = "#515573"
+	blood_color = /datum/dirt_cover/adamant_blood
 	flesh_color = "#137E8F"
 
 	flags = list(

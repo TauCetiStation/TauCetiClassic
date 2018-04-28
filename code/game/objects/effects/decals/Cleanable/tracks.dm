@@ -18,15 +18,16 @@ var/global/list/image/fluidtrack_cache=list()
 
 /datum/fluidtrack
 	var/direction=0
-	var/basecolor="#A10808"
+//	var/basecolor="#A10808"
 	var/wet=0
 	var/fresh=1
 	var/crusty=0
 	var/image/overlay
+	var/datum/dirt_cover/basedatum  // Color when wet.
 
-	New(_direction,_color,_wet)
+	New(_direction,color_datum,_wet)
 		src.direction=_direction
-		src.basecolor=_color
+		src.basedatum = new/datum/dirt_cover(color_datum)
 		src.wet=_wet
 
 // Footprints, tire trails...
@@ -63,7 +64,7 @@ var/global/list/image/fluidtrack_cache=list()
 	* @param goingdir Direction tracks are going to (or 0).
 	* @param bloodcolor Color of the blood when wet.
 	*/
-	proc/AddTracks(list/DNA, comingdir, goingdir, bloodcolor="#A10808")
+	proc/AddTracks(list/DNA, comingdir, goingdir, var/datum/dirt_cover/color_datum)
 		var/updated=0
 		// Shift our goingdir 4 spaces to the left so it's in the GOING bitblock.
 		var/realgoing=goingdir<<4
@@ -86,11 +87,11 @@ var/global/list/image/fluidtrack_cache=list()
 				if(dirs&b)
 					var/sid=setdirs["[b]"]
 					track=stack[sid]
-					if(track.wet==t && track.basecolor==bloodcolor)
+					if(track.wet==t && track.basedatum.color == color_datum.color)
 						continue
 					// Remove existing stack entry
 					stack.Remove(track)
-				track=new /datum/fluidtrack(b,bloodcolor,t)
+				track=new /datum/fluidtrack(b,color_datum,t)
 				stack.Add(track)
 				setdirs["[b]"]=stack.Find(track)
 				updatedtracks |= b
@@ -103,11 +104,11 @@ var/global/list/image/fluidtrack_cache=list()
 				if(dirs&b)
 					var/sid=setdirs["[b]"]
 					track=stack[sid]
-					if(track.wet==t && track.basecolor==bloodcolor)
+					if(track.wet==t && track.basedatum.color == color_datum.color)
 						continue
 					// Remove existing stack entry
 					stack.Remove(track)
-				track=new /datum/fluidtrack(b,bloodcolor,t)
+				track=new /datum/fluidtrack(b,color_datum,t)
 				stack.Add(track)
 				setdirs["[b]"]=stack.Find(track)
 				updatedtracks |= b
@@ -135,7 +136,7 @@ var/global/list/image/fluidtrack_cache=list()
 			if(track.overlay)
 				track.overlay=null
 			var/image/I = image(icon, icon_state=state, dir=num2dir(truedir))
-			I.color = track.basecolor
+			I.color = track.basedatum.color
 
 			track.fresh=0
 			track.overlay=I
