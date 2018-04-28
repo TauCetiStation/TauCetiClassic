@@ -7,15 +7,17 @@
 	flags = OPENCONTAINER | NOBLUDGEON
 	slot_flags = SLOT_BELT
 	throwforce = 3
-	w_class = 2.0
+	w_class = ITEM_SIZE_SMALL
 	throw_speed = 2
 	throw_range = 10
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10) //Set to null instead of list, if there is only one.
 	var/spray_size = 3
-	var/list/spray_sizes = list(1,3)
+	var/spray_size_max = 3 // Used in Spray_at_Multiple_Tiles sprays, to determine what is the furthest the sprayed substanced will go.
+	var/list/spray_sizes = list(1,3) // When building this list, take into considiration what's written above.
 	volume = 250
 	var/safety = FALSE
+	var/triple_shot = FALSE
 
 	action_button_name = "Switch Spray"
 
@@ -53,7 +55,10 @@
 		to_chat(usr, "<span class = 'warning'>The safety is on!</span>")
 		return
 
-	Spray_at(A)
+	if(triple_shot)
+		Spray_at_Multiple_Tiles(A)
+	else
+		Spray_at(A)
 
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 
@@ -69,6 +74,7 @@
 	return
 
 /obj/item/weapon/reagent_containers/spray/proc/Spray_at(atom/A)
+	var/spray_size_current = spray_size // This ensures, that a player doesn't switch to another mode mid-fly.
 	var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
 	D.create_reagents(amount_per_transfer_from_this)
 	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_size)
@@ -76,22 +82,19 @@
 
 	var/turf/A_turf = get_turf(A)//BS12
 
-	spawn(0)
-		for(var/i=0, i<spray_size, i++)
-			step_towards(D,A)
-			D.reagents.reaction(get_turf(D))
-			for(var/atom/T in get_turf(D))
-				D.reagents.reaction(T)
+	for(var/i in 0 to spray_size_current)
+		step_towards(D,A)
+		D.reagents.reaction(get_turf(D))
+		for(var/atom/T in get_turf(D))
+			D.reagents.reaction(T)
 
-				// When spraying against the wall, also react with the wall, but
-				// not its contents. BS12
-				if(get_dist(D, A_turf) == 1 && A_turf.density)
-					D.reagents.reaction(A_turf)
-				sleep(2)
-			sleep(3)
-		qdel(D)
-
-	return
+			// When spraying against the wall, also react with the wall, but
+			// not its contents. BS12
+			if(get_dist(D, A_turf) == 1 && A_turf.density)
+				D.reagents.reaction(A_turf)
+			sleep(2)
+		sleep(3)
+	qdel(D)
 
 /obj/item/weapon/reagent_containers/spray/attack_self(mob/user)
 	if(!possible_transfer_amounts)
@@ -112,7 +115,8 @@
 	if(isturf(usr.loc))
 		to_chat(usr, "<span class='notice'>You empty \the [src] onto the floor.</span>")
 		reagents.reaction(usr.loc)
-		spawn(5) src.reagents.clear_reagents()
+		sleep(5)
+		reagents.clear_reagents()
 //hair dyes!
 /obj/item/weapon/reagent_containers/spray/hair_color_spray
 	name = "hair color spray"
@@ -183,9 +187,6 @@
 	safety = !safety
 	to_chat(usr, "<span class = 'notice'>You switch the safety [safety ? "on" : "off"].</span>")
 
-/obj/item/weapon/reagent_containers/spray/pepper/Spray_at(atom/A)
-	..()
-
 //water flower
 /obj/item/weapon/reagent_containers/spray/waterflower
 	name = "water flower"
@@ -213,16 +214,21 @@
 	possible_transfer_amounts = null
 	volume = 600
 	origin_tech = "combat=3;materials=3;engineering=3"
+	triple_shot = TRUE
+	spray_size = 6
+	spray_size_max = 8
 
-
-//this is a big copypasta clusterfuck, but it's still better than it used to be!
-/obj/item/weapon/reagent_containers/spray/chemsprayer/Spray_at(atom/A)
+//hey, now this is a seperate proc, which can be used elsewhere!
+/obj/item/weapon/reagent_containers/spray/proc/Spray_at_Multiple_Tiles(atom/A)
+	var/spray_size_current = spray_size
+	var/spray_size_max_current = spray_size_max
 	var/Sprays[3]
-	for(var/i=1, i<=3, i++) // intialize sprays
-		if(src.reagents.total_volume < 1) break
+	for(var/i in 1 to 3) // intialize sprays
+		if(reagents.total_volume < 1)
+			break
 		var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
 		D.create_reagents(amount_per_transfer_from_this)
-		src.reagents.trans_to(D, amount_per_transfer_from_this)
+		reagents.trans_to(D, amount_per_transfer_from_this)
 
 		D.icon += mix_color_from_reagents(D.reagents.reagent_list)
 
@@ -234,24 +240,24 @@
 	var/turf/T2 = get_step(T,turn(direction, -90))
 	var/list/the_targets = list(T,T1,T2)
 
-	for(var/i=1, i<=Sprays.len, i++)
+	for(var/i in 1 to Sprays.len)
 		spawn()
 			var/obj/effect/decal/chempuff/D = Sprays[i]
-			if(!D) continue
+			if(!D)
+				continue
 
 			// Spreads the sprays a little bit
 			var/turf/my_target = pick(the_targets)
 			the_targets -= my_target
 
-			for(var/j=1, j<=rand(6,8), j++)
+			var/max_distance_random = rand(spray_size_current, spray_size_max_current)
+			for(var/j in 1 to max_distance_random)
 				step_towards(D, my_target)
 				D.reagents.reaction(get_turf(D))
 				for(var/atom/t in get_turf(D))
 					D.reagents.reaction(t)
 				sleep(2)
 			qdel(D)
-
-	return
 
 // Plant-B-Gone
 /obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie
