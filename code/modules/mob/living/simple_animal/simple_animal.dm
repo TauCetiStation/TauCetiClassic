@@ -345,10 +345,6 @@
 		else
 			to_chat(user, "<span class='notice'> this [src] is dead, medical items won't bring it back to life.</span>")
 	user.SetNextMove(CLICK_CD_MELEE)
-
-	if(user.a_intent == "help" && istype(O, /obj/item/weapon/kitchenknife) || istype(O, /obj/item/weapon/butch))
-		if(attempt_harvest(O, user))
-			return
 	..()
 
 
