@@ -178,8 +178,8 @@
 	sharp = 1
 	edge = 1
 
-/obj/item/weapon/butch/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(user.a_intent == "help" && M.attempt_harvest(src, user))
+/obj/item/weapon/butch/attack(mob/living/M, mob/living/user)
+	if(user.a_intent == I_HELP && M.attempt_harvest(src, user))
 		return
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
