@@ -125,6 +125,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	//custom loadout
 	var/list/gear = list()
 	var/gear_tab = "General"
+	var/list/halop_card_deck = list()
 
 /datum/preferences/New(client/C)
 	parent = C

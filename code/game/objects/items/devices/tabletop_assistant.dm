@@ -25,6 +25,7 @@
 	m_amt = 30
 	g_amt = 20
 	origin_tech = "magnets=2;engineering=2"
+	var/card_parentdeck = null
 	var/data = "" // Is used for UI interaction.
 	var/report_time = 0 // So people can't spam with papers.
 	var/interaction_time = 0 // So people generally can't spam with interactions.
@@ -58,8 +59,8 @@
 	switch(mode)
 		if(CARD_MODE)
 			dat += "<a href='?src=\ref[src];cardpickup=1'>Card Pick Up Count</a><BR>"
-			dat += "<a href='?src=\ref[src];cardremovecasino=1'>Remove \"Casino\" Cards</a><BR>"
-			dat += "<a href='?src=\ref[src];cardsort=1'>Sort Card Deck<BR></a>"
+			dat += "<a href='?src=\ref[src];cardremovecasino=1'>Remove \"Casino\" Cards / Set Deck Parentship</a><BR>"
+			dat += "<a href='?src=\ref[src];cardsort=1'>Sort Card Deck / Rebuild Deck Integrity List<BR></a>"
 			dat += "<a href='?src=\ref[src];carddeductlost=1'>Lost Cards Deduction</a><BR>"
 			dat += "<a href='?src=\ref[src];cardtakecertain=1'>Take Certain Card</a><BR>"
 			if(interaction_mode == CARD_PICKUP_MODE)
@@ -219,44 +220,55 @@
 		return
 	switch(mode)
 		if(CARD_MODE)
-			if(istype(O, /obj/item/toy/cards))
-				var/obj/item/toy/cards/C = O
+			if(istype(O, /obj/item/toy/play_cards))
+				var/obj/item/toy/play_cards/C = O
 				switch(interaction_mode)
 					if(CARD_PICKUP_MODE)
-						var/obj/item/toy/cardhand/CH = new/obj/item/toy/cardhand(get_turf(src))
+						var/obj/item/toy/play_cardhand/CH = new/obj/item/toy/play_cardhand(get_turf(src))
 						for(var/i in 1 to interaction_number)
 							if(C.cards.len < i)
 								break
 							CH.currenthand += C.cards[1]
 							C.cards -= C.cards[1]
 						CH.parentdeck = C
+						CH.update_icon()
 						C.update_icon()
 					if(REMOVE_CASINO_MODE)
-						if(C.cards.len < C.normal_deck_size || C.cards.len > C.normal_deck_size)
-							to_chat(user, "<span class='warning'>It seems [C] is not at it's playing size. It's playing size is [C.normal_deck_size]!</span>")
-							return
-						C.cards = list()
-						C.fill_deck(2, 10)
-						var/obj/item/toy/cardhand/CH = new/obj/item/toy/cardhand(get_turf(src))
-						for(var/i in 2 to 5)
-							C.cards -= "[i] of Hearts"
-							C.cards -= "[i] of Spades"
-							C.cards -= "[i] of Clubs"
-							C.cards -= "[i] of Diamonds"
-							CH.currenthand += "[i] of Hearts"
-							CH.currenthand += "[i] of Spades"
-							CH.currenthand += "[i] of Clubs"
-							CH.currenthand += "[i] of Diamonds"
-						CH.parentdeck = C
-						C.update_icon()
-						to_chat(user, "<span class='notice'>The [C] has been sorted, with spare cards removed into [CH]</span>")
+						if(istype(C, /obj/item/toy/play_cards/normal_cards))
+							if(C.cards.len < C.normal_deck_size || C.cards.len > C.normal_deck_size)
+								to_chat(user, "<span class='warning'>It seems [C] is not at it's playing size. It's playing size is [C.normal_deck_size], while it's size is [C.cards.len]!</span>")
+								return
+							C.cards = list()
+							C.fill_deck(2, 10)
+							var/obj/item/toy/play_cardhand/CH = new/obj/item/toy/play_cardhand(get_turf(src))
+							for(var/i in 2 to 5)
+								C.cards -= "[i] of Hearts"
+								C.cards -= "[i] of Spades"
+								C.cards -= "[i] of Clubs"
+								C.cards -= "[i] of Diamonds"
+								CH.currenthand += "[i] of Hearts"
+								CH.currenthand += "[i] of Spades"
+								CH.currenthand += "[i] of Clubs"
+								CH.currenthand += "[i] of Diamonds"
+							CH.parentdeck = C
+							CH.update_icon()
+							C.update_icon()
+							to_chat(user, "<span class='notice'>The [C] has been sorted, with spare cards removed into [CH]</span>")
+						if(istype(C, /obj/item/toy/play_cards/halop_cards))
+							card_parentdeck = C
+							to_chat(user, "<span class='notice'>The [C] has been set as the parent.</span>")
 					if(SORT_DECK_MODE)
 						if(C.cards.len < C.normal_deck_size || C.cards.len > C.normal_deck_size)
-							to_chat(user, "<span class='warning'>It seems [C] is not at it's playing size. It's playing size is [C.normal_deck_size]!</span>")
+							to_chat(user, "<span class='warning'>It seems [C] is not at it's playing size. It's playing size is [C.normal_deck_size], while it's size is [C.cards.len]!</span>")
 							return
-						C.cards = list() // Nullifying all the cards before sorting them.
-						C.fill_deck(2, 10)
-						to_chat(user, "<span class='notice'>The [C] has been sorted</span>")
+						if(istype(C, /obj/item/toy/play_cards/normal_cards))
+							C.cards = list() // Nullifying all the cards before sorting them.
+							C.fill_deck(2, 10)
+							to_chat(user, "<span class='notice'>The [C] has been sorted</span>")
+						if(istype(C, /obj/item/toy/play_cards/halop_cards))
+							C.integrity = list() // Clearing it up.
+							C.integrity += C.cards // And filling it up.
+							to_chat(user, "<span class='notice'>The [C]'s integrity list has been rebuilt.</span>")
 					if(DEDUCT_CARD_MODE)
 						if(report_time > world.time)
 							to_chat(user, "<span class='notice'>[src]'s ink storage is regenerating, please wait.</span>")
@@ -283,20 +295,32 @@
 						var/card_choice
 						switch(pick_mode)
 							if("By Name")
-								card_choice = input(user, "Type in the name of the card you're looking for. Case-sensitive.", "Tabletop Assistant") as null|text
+								var/card_name
+								card_name = input(user, "Type in the name of the card you're looking for. Case-sensitive.", "Tabletop Assistant") as null|text
+								for(var/i in C.cards)
+									if(i != card_name)
+										continue
+									else
+										card_choice = card_name
 							if("In List")
 								card_choice = input(user, "Pick a card out of the deck.", "Tabletop Assistant") as null|anything in C.cards
-						if(!card_choice || !(locate(card_choice) in C.cards))
+						if(!card_choice)
 							to_chat(user, "<span class='notice'>There is no card to draw.</span>")
 							return
-						var/obj/item/toy/singlecard/H = new/obj/item/toy/singlecard(user.loc)
-						H.cardname = card_choice
-						H.parentdeck = C
+						var/obj/item/toy/play_singlecard/SC = new C.single_card(user.loc)
+						SC.cardname = card_choice
+						SC.parentdeck = C
 						C.cards -= card_choice
-						H.pickup(user)
-						user.put_in_active_hand(H)
+						SC.generate_info()
+						SC.pickup(user)
+						user.put_in_active_hand(SC)
 						user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
 						C.update_icon()
+			if(istype(O, /obj/item/toy/play_singlecard/halop_cards))
+				var/obj/item/toy/play_singlecard/halop_cards/HC = O
+				if(mode == REMOVE_CASINO_MODE) // It is the "Set Parent Mode" for Halopian cards.
+					HC.parentdeck = card_parentdeck
+					to_chat(user, "<span class='notice'>The [card_parentdeck] has been set as [HC]'s parent.</span>")
 		if(GAMEKIT_MODE)
 			if(istype(O, /obj/item/weapon/game_kit))
 				var/obj/item/weapon/game_kit/G = O

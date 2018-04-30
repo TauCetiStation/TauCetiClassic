@@ -22,7 +22,11 @@
 
 /datum/gear/cards
 	display_name = "Deck of cards"
-	path = /obj/item/toy/cards
+	path = /obj/item/toy/play_cards/normal_cards
+
+/datum/gear/halop_cards
+	display_name = "Deck of Space Station 13(TM) cards"
+	path = /obj/item/weapon/card_spawner
 
 /datum/gear/flask
 	display_name = "Flask"

@@ -63,6 +63,12 @@
 		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
 
+	for(var/T in subtypesof(/datum/playing_cards))
+		var/datum/playing_cards/card = new T
+		card_datums_by_name[card.name_card] = card
+		if(card.can_be_gathered)
+			card_drop_datums_by_name[card.name_card] = card
+
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()
 

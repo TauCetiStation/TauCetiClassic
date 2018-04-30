@@ -867,6 +867,35 @@
 	 /obj/item/clothing/suit/wizrobe/wiz_blue = 1, /obj/item/clothing/suit/wizrobe/wiz_red = 1)
 	contraband = list(/obj/item/weapon/reagent_containers/glass/bottle/wizarditis = 1)	//No one can get to the machine to hack it anyways; for the lulz - Microwave
 
+/obj/machinery/vending/halops_cards_vending
+	name = "Card-O-Tron"
+	desc = "A vending machine of great importance, as only it offers you reliable source of your Space Station 13 cards."
+	icon_state = "Theater" //TODO: Get a sprite
+	products = list(/obj/item/weapon/storage/box/halops_booster_pack = 10)
+	prices = list(/obj/item/weapon/storage/box/halops_booster_pack = 500)
+	vend_reply = ""
+	product_slogans = "Card-O-Tron machine, vends carts!;Carts for everybody!;Pay a price, and buy a dozen!;Buy a card, make a deck!;It's a package deal, partner."
+	product_ads = "Cards, cards, cards, cards.;Don't cut on cards!;Gotta collect 'em all!;Halop is da best.;Save 'em!;Card addiction, yay!"
+	var/saves_cards = FALSE
+
+/obj/machinery/vending/halops_cards_vending/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/toy/play_cards/halop_cards) && ishuman(user) && saves_cards)
+		var/mob/living/carbon/human/H = user
+		var/obj/item/toy/play_cards/halop_cards/C = I
+		if(C.cards.len < C.normal_deck_size || C.cards.len > C.normal_deck_size)
+			to_chat(user, "<span class='warning'>It seems [C] is not at it's playing size. It's playing size is [C.normal_deck_size], while it's size is [C.cards.len]!</span>")
+			return
+		else
+			switch(alert("This action will override the current deck, continue?","Card-O-Tron","Yes","No"))
+				if("Yes")
+					H.client.prefs.halop_card_deck = list()
+					H.client.prefs.halop_card_deck = C.cards
+					H.client.prefs.save_preferences()
+					to_chat(user, "<span class='notice'>Your new deck has succesfully been sent to the bluespace deck storage.</span>")
+					qdel(C)
+					return
+	..()
+
 /obj/machinery/vending/weirdomat
 	name = "Weird-O-Mat"
 	desc = "A marvel, on the brink of technobabble and pixie fiction."

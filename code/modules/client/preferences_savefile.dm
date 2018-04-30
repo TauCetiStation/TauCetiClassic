@@ -105,6 +105,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["UI_style_alpha"]		>> UI_style_alpha
 	S["permamuted"]			>> permamuted
 	S["permamuted"]			>> muted
+	S["halop_card_deck"] >> halop_card_deck
 
 	//Antag preferences
 	S["be_role"]			>> be_role
@@ -157,6 +158,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["ghost_orbit"]		<< ghost_orbit
 	S["randomslot"]			<< randomslot
 	S["permamuted"]			<< permamuted
+	S["halop_card_deck"] << halop_card_deck
 	return 1
 
 /datum/preferences/proc/load_saved_character(dir)
@@ -222,6 +224,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["player_alt_titles"]	>> player_alt_titles
 	S["organ_data"]			>> organ_data
 	S["gear"]				>> gear
+	S["halop_card_deck"] >> halop_card_deck
 
 	S["nanotrasen_relation"] >> nanotrasen_relation
 	S["home_system"] 		>> home_system
@@ -397,6 +400,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["disabilities"]		<< disabilities
 	S["organ_data"]			<< organ_data
 	S["gear"]				<< gear
+	S["halop_card_deck"] << halop_card_deck
 
 	S["nanotrasen_relation"] << nanotrasen_relation
 	S["home_system"] 		<< home_system

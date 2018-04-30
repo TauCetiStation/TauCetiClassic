@@ -203,6 +203,27 @@ You can set verify to TRUE if you want send() to sleep until the client has the 
 		"paper_dickbutt.png" = 'icons/paper_icons/dickbutt.png'
 	)
 
+/datum/asset/simple/halop_cards
+	assets = list(
+		"sofa_ninja_1.png" = 'icons/obj/halop_cards/sofa_ninja_1.png',
+		"shrub_2.png" = 'icons/obj/halop_cards/shrub_2.png',
+		"space_carp_3.png" = 'icons/obj/halop_cards/space_carp_3.png',
+		"assistant_4.png" = 'icons/obj/halop_cards/assistant_4.png',
+		"assistant_in_space_suit_5.png" = 'icons/obj/halop_cards/assistant_in_space_suit_5.png',
+		"cakehead_6.png" = 'icons/obj/halop_cards/cakehead_6.png',
+		"space_law_7.png" = 'icons/obj/halop_cards/space_law_7.png',
+		"clown_8.png" = 'icons/obj/halop_cards/clown_8.png',
+		"light_sources_9.png" = 'icons/obj/halop_cards/light_sources_9.png',
+		"experienced_assistant_10.png" = 'icons/obj/halop_cards/experienced_assistant_10.png',
+		"the_false_wizard_11.png" = 'icons/obj/halop_cards/the_false_wizard_11.png',
+		"vending_machines_12.png" = 'icons/obj/halop_cards/vending_machines_12.png',
+		"arcade_13.png" = 'icons/obj/halop_cards/arcade_13.png',
+		"unwanted_clone_14.png" = 'icons/obj/halop_cards/unwanted_clone_14.png',
+		"mattress_ninja_22.png" = 'icons/obj/halop_cards/mattress_ninja_22.png',
+		"winged_soldier_23.png" = 'icons/obj/halop_cards/winged_soldier_23.png',
+		"bronze_helmet_24.png" = 'icons/obj/halop_cards/bronze_helmet_24.png',
+		"bumblebee_25.png" = 'icons/obj/halop_cards/bumblebee_25.png')
+
 /datum/asset/simple/chess
 	assets = list(
 		"BR.png" = 'icons/obj/chess/board_BR.png',
