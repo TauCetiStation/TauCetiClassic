@@ -126,11 +126,8 @@
 	if(prob(35))
 		contaminate()
 	if(prob(75))
-		generate_blood_overlay()
-		blood_overlay.color = pick("#030303", "#aa0000")
-		blood_color = blood_overlay.color
-		overlays += blood_overlay
-		blood_DNA = list()
+		generate_dirt_cover()
+		add_dirt_cover(pick(subtypesof(/datum/dirt_cover)))
 	..()
 
 

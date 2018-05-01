@@ -12,8 +12,7 @@
 	var/warning_high_pressure = WARNING_HIGH_PRESSURE
 	var/warning_low_pressure = WARNING_LOW_PRESSURE
 	var/hazard_low_pressure = HAZARD_LOW_PRESSURE
-	blood_color = "#A10808"
-
+	var/blood_datum = /datum/dirt_cover/red_blood
 	var/obj/item/weapon/card/id/wear_id = null // Fix for station bounced radios -- Skie
 	var/greaterform = HUMAN                  // Used when humanizing a monkey.
 	icon_state = "monkey1"
@@ -41,6 +40,7 @@
 	uni_append = list(0x01C,0xC92) // 01CC92
 	race = SKRELL
 	holder_type = /obj/item/weapon/holder/monkey/neaera
+	blood_datum = /datum/dirt_cover/purple_blood
 
 /mob/living/carbon/monkey/unathi
 	name = "stok"

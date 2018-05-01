@@ -72,7 +72,7 @@
 	var/xylophone = 0 //For the spoooooooky xylophone cooldown
 
 	var/mob/remoteview_target = null
-	var/hand_blood_color
+	var/datum/dirt_cover/hand_dirt_color
 
 	//Golem stuff
 	var/my_master = 0

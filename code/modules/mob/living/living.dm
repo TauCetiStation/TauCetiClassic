@@ -707,19 +707,22 @@
 				newdir = EAST
 		if((newdir in list(1, 2, 4, 8)) && (prob(50)))
 			newdir = turn(get_dir(T, M.loc), 180)
+		var/datum/dirt_cover/new_cover
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.species)
+				new_cover = new H.species.blood_color
+		if(!new_cover)
+			new_cover = new/datum/dirt_cover/red_blood
 		if(!blood_exists)
-			new /obj/effect/decal/cleanable/blood/trail_holder(M.loc)
+			var/obj/effect/decal/cleanable/blood/BL = new /obj/effect/decal/cleanable/blood/trail_holder(M.loc)
+			BL.basedatum = new_cover
+			BL.update_icon()
+		else
+			for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in M.loc)
+				TH.basedatum.add_dirt(new_cover)
+				TH.update_icon()
 		for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in M.loc)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.species)
-					if(TH.color != H.species.blood_color)
-						TH.basecolor = H.species.blood_color
-						TH.update_icon()
-			else
-				if(TH.color != initial(TH.basecolor))
-					TH.basecolor = initial(TH.basecolor)
-					TH.update_icon()
 			if(!TH.amount)
 				STOP_PROCESSING(SSobj, TH)
 				TH.name = initial(TH.name)

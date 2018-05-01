@@ -17,15 +17,15 @@
 	var/list/gibamounts = list()
 	var/list/gibdirections = list() //of lists
 	var/fleshcolor //Used for gibbed humans.
-	var/bloodcolor //Used for gibbed humans.
+	var/datum/dirt_cover/blooddatum //Used for gibbed humans.
 
-/obj/effect/gibspawner/atom_init(location, list/viruses, datum/dna/MobDNA, _fleshcolor, _bloodcolor)
+/obj/effect/gibspawner/atom_init(location, list/viruses, datum/dna/MobDNA, _fleshcolor, _blooddatum)
 	..()
 
 	if(_fleshcolor)
 		fleshcolor = _fleshcolor
-	if(_bloodcolor)
-		bloodcolor = _bloodcolor
+	if(_blooddatum)
+		blooddatum = new _blooddatum
 
 	if(isturf(loc)) // basically if a badmin spawns it
 		Gib(loc, viruses, MobDNA)
@@ -56,8 +56,8 @@
 				// Apply human species colouration to masks.
 				if(fleshcolor)
 					gib.fleshcolor = fleshcolor
-				if(bloodcolor)
-					gib.basecolor = bloodcolor
+				if(blooddatum)
+					gib.basedatum = new/datum/dirt_cover(blooddatum)
 
 				gib.update_icon()
 

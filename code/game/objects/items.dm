@@ -839,24 +839,22 @@
 		var/obj/item/clothing/gloves/G = src
 		G.transfer_blood = 0
 
+/obj/item/add_dirt_cover()
+	if(!blood_overlay)
+		generate_dirt_cover()
+	..()
+	if(dirt_overlay)
+		if(blood_overlay.color != dirt_overlay.color)
+			overlays.Remove(blood_overlay)
+			blood_overlay.color = dirt_overlay.color
+			overlays += blood_overlay
 
 /obj/item/add_blood(mob/living/carbon/human/M)
 	if (!..())
 		return 0
 
-	if(istype(src, /obj/item/weapon/melee/energy))
-		return
-
 	//if we haven't made our blood_overlay already
-	if( !blood_overlay )
-		generate_blood_overlay()
-
-	//apply the blood-splatter overlay if it isn't already in there
-	if(!blood_DNA.len)
-		blood_overlay.color = blood_color
-		overlays += blood_overlay
-
-	//if this blood isn't already in the list, add it
+	//add_dirt_cover(new M.species.blood_color)
 
 	if(blood_DNA[M.dna.unique_enzymes])
 		return 0 //already bloodied with this blood. Cannot add more.
@@ -864,7 +862,7 @@
 	return 1 //we applied blood to the item
 
 var/global/list/items_blood_overlay_by_type = list()
-/obj/item/proc/generate_blood_overlay()
+/obj/item/proc/generate_dirt_cover()
 	if(blood_overlay)
 		return
 
