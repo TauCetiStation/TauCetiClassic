@@ -34,10 +34,13 @@
 				if(!use(1))
 					to_chat(user, "<span class='danger'>You need more nanite paste to do this.</span>")
 					return
-				BP.heal_damage(15, 15, robo_repair = 1)
+				if(H == user) // It must've been done long time ago.
+					to_chat(user, "<span class='alert'>You can't repair damage to your own body - it's against OH&S.</span>")
+					return
+				BP.heal_damage(15, 15, FALSE, TRUE)
 				H.updatehealth()
-				user.visible_message("<span class='notice'>\The [user] applies some nanite paste at[user != M ? " \the [M]'s" : " \the"][BP.name] with \the [src].</span>",\
-				"<span class='notice'>You apply some nanite paste at [user == M ? "your" : "[M]'s"] [BP.name].</span>")
+				user.visible_message("<span class='notice'>\The [user] applies some nanite paste at \the [M]'s [BP.name] with \the [src].</span>",\
+				"<span class='notice'>You apply some nanite paste at [M]'s [BP.name].</span>")
 			else
 				to_chat(user, "<span class='notice'>Nothing to fix here.</span>")
 

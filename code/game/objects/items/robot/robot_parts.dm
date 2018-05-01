@@ -6,7 +6,24 @@
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
 	var/part = null
-	var/sabotaged = 0 //Emagging limbs can have repercussions when installed as prosthetics.
+	var/protected = 0 // Protection from EMP.
+	var/has_grid = FALSE              // Used for checking, whether limb has a grid inbuilt.
+	var/sabotaged = FALSE //Emagging limbs can have repercussions when installed as prosthetics.
+	var/hatch_opened = FALSE
+	var/datum/robolimb/model
+
+/obj/item/robot_parts/atom_init()
+	. = ..()
+	if(!model)
+		model = all_robolimbs["Unbranded"]
+	get_brand()
+
+/obj/item/robot_parts/proc/get_brand()
+	name = "[model.company] [initial(name)]"
+	desc = "[initial(desc)] Model seems to be [model.company]."
+	protected = model.protected
+	if(model.low_quality && prob(50)) // 50% chance for a low quality prosthetic to be sabotaged.
+		sabotaged = model.low_quality
 
 /obj/item/robot_parts/l_arm
 	name = "robot left arm"
@@ -38,6 +55,7 @@
 	icon_state = "chest"
 	var/wires = 0.0
 	var/obj/item/weapon/stock_parts/cell/cell = null
+	part = BP_CHEST
 
 /obj/item/robot_parts/head
 	name = "robot head"
@@ -45,6 +63,13 @@
 	icon_state = "head"
 	var/obj/item/device/flash/flash1 = null
 	var/obj/item/device/flash/flash2 = null
+	part = BP_HEAD
+
+/obj/item/robot_parts/groin
+	name = "robot groin"
+	desc = "A standard chasis for holding leg-pseudomuscles together. Wrapped in wires and other not relatable stuff."
+	icon_state = "chest" // Placeholder.
+	part = BP_GROIN
 
 /obj/item/robot_parts/robot_suit
 	name = "robot endoskeleton"
@@ -360,6 +385,16 @@
 			to_chat(user, "<span class='warning'>[src] is already sabotaged!</span>")
 		else
 			to_chat(user, "<span class='warning'>You slide [W] into the dataport on [src] and short out the safeties.</span>")
-			sabotaged = 1
+			sabotaged = TRUE
 		return
+	if(istype(W, /obj/item/weapon/screwdriver))
+		hatch_opened = !hatch_opened
+		user.visible_message("<span class='notice'>[user] [hatch_opened ? "opened" : "closed"] the hatch on [src].</span>",
+		"<span class='notice'>You [hatch_opened ? "open" : "close"] the hatch on [src].</span>")
+	if(istype(W, /obj/item/device/multitool) && hatch_opened)
+		if(sabotaged)
+			sabotaged = FALSE
+	if(istype(W, /obj/item/device/radio_grid) && hatch_opened && !has_grid)
+		protected += 1
+		has_grid = TRUE
 	..()

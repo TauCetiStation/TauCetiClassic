@@ -58,8 +58,15 @@
 			for(var/name in organ_data)
 				//world << "[ind] \ [organ_data.len]"
 				var/status = organ_data[name]
+				var/company = organ_prost_data[name]
 				var/organ_name = parse_zone(name)
 				switch(name)
+					if(BP_HEAD)
+						organ_name = "head"
+					if(BP_CHEST)
+						organ_name = "chest"
+					if(BP_GROIN)
+						organ_name = "groin"
 					if(BP_L_ARM)
 						organ_name = "left arm"
 					if(BP_R_ARM)
@@ -75,7 +82,7 @@
 
 				if(status == "cyborg")
 					++ind
-					. += "<li>Mechanical [organ_name] prothesis</li>"
+					. += "<li>Mechanical [company] [organ_name] prothesis</li>"
 				else if(status == "amputated")
 					++ind
 					. += "<li>Amputated [organ_name]</li>"
@@ -314,13 +321,17 @@
 					var/list/valid_hairstyles = list()
 					for(var/hairstyle in hair_styles_list)
 						var/datum/sprite_accessory/S = hair_styles_list[hairstyle]
-						if( !(species in S.species_allowed))
+						if(!(species in S.species_allowed))
 							if(gender == MALE && S.gender == FEMALE)
 								continue
 							if(gender == FEMALE && S.gender == MALE)
 								continue
 							if(!(species in S.species_allowed))
 								continue
+							var/datum/robolimb/IPC_monitor = all_robolimbs[organ_prost_data[BP_HEAD]]
+							if(species == IPC && !IPC_monitor.monitor)
+								continue
+
 
 						valid_hairstyles[hairstyle] = hair_styles_list[hairstyle]
 
@@ -465,11 +476,21 @@
 
 					switch(menu_type)
 						if("Limbs")
-							var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Left Leg","Right Leg","Left Arm","Right Arm")
+							var/limb_name = input(user, "Which limb do you want to change?") as null|anything in list("Head", "Chest", "Groin", "Left Leg","Right Leg","Left Arm","Right Arm")
 							if(!limb_name) return
 
 							var/limb = null
+							var/allowed_states = list("Normal","Amputated","Prothesis")
 							switch(limb_name)
+								if("Head")
+									limb = BP_HEAD
+									allowed_states = list("Normal","Prothesis")
+								if("Chest")
+									limb = BP_CHEST
+									allowed_states = list("Normal","Prothesis")
+								if("Groin")
+									limb = BP_GROIN
+									allowed_states = list("Normal","Prothesis")
 								if("Left Leg")
 									limb = BP_L_LEG
 								if("Right Leg")
@@ -479,17 +500,35 @@
 								if("Right Arm")
 									limb = BP_R_ARM
 
-							var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in list("Normal","Amputated","Prothesis")
-							if(!new_state) return
+							var/list/prothesis_types = list()
+							for(var/company in all_robolimbs)
+								var/datum/robolimb/limb_type = all_robolimbs[company]
+								if(limb in limb_type.parts)
+									if(("exclude" in limb_type.restrict_species) && !(species in limb_type.restrict_species))
+										prothesis_types += company
+									else if(species in limb_type.restrict_species)
+										prothesis_types += company
+
+							if(!prothesis_types.len)
+								allowed_states -= "Prothesis"
+
+							var/new_state = input(user, "What state do you wish the limb to be in?") as null|anything in allowed_states
+							if(!new_state)
+								return
 
 							switch(new_state)
 								if("Normal")
 									organ_data[limb] = null
+									organ_prost_data[limb] = null
 								if("Amputated")
 									organ_data[limb] = "amputated"
+									organ_prost_data[limb] = null
 								if("Prothesis")
+									var/new_company = input(user, "What manufacturer do you wish the limb to be made by?") as null|anything in prothesis_types
+									if(!new_company)
+										new_company = "Unbranded"
 									organ_data[limb] = "cyborg"
-
+									organ_prost_data[limb] = new_company
 						if("Organs")
 							var/organ_name = input(user, "Which internal function do you want to change?") as null|anything in list("Heart", "Eyes")
 							if(!organ_name) return

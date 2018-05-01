@@ -104,6 +104,9 @@ var/const/MAX_SAVE_SLOTS = 10
 	// will probably not be able to do this for head and torso ;)
 	var/list/organ_data = list()
 
+	// maps each organ's robotic type if any.
+	var/list/organ_prost_data = list()
+
 	var/list/player_alt_titles = new()		// the default name of a job like "Medical Doctor"
 
 	var/flavor_text = ""
@@ -244,7 +247,7 @@ var/const/MAX_SAVE_SLOTS = 10
 	ShowChoices(user)
 	return 1
 
-/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = 1)
+/datum/preferences/proc/copy_to(mob/living/carbon/human/character, icon_updates = TRUE)
 	if(be_random_name)
 		real_name = random_name(gender)
 
@@ -309,13 +312,14 @@ var/const/MAX_SAVE_SLOTS = 10
 			BP.status |= ORGAN_DESTROYED
 			BP.destspawn = 1
 		if(status == "cyborg")
-			BP.status |= ORGAN_ROBOT
+			var/company = organ_prost_data[name]
+			BP.robotize(company)
 		if(status == "assisted")
 			IO.mechassist()
 		else if(status == "mechanical")
 			IO.mechanize()
-
-		else continue
+		else
+			continue
 
 
 	//Disabilities

@@ -221,6 +221,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["disabilities"]		>> disabilities
 	S["player_alt_titles"]	>> player_alt_titles
 	S["organ_data"]			>> organ_data
+	S["organ_prost_data"] 	>> organ_prost_data
 	S["gear"]				>> gear
 
 	S["nanotrasen_relation"] >> nanotrasen_relation
@@ -282,10 +283,16 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	job_engsec_med = sanitize_integer(job_engsec_med, 0, 65535, initial(job_engsec_med))
 	job_engsec_low = sanitize_integer(job_engsec_low, 0, 65535, initial(job_engsec_low))
 
-	if(isnull(disabilities)) disabilities = 0
-	if(!player_alt_titles) player_alt_titles = new()
-	if(!organ_data) src.organ_data = list()
-	if(!be_role) src.be_role = list()
+	if(isnull(disabilities))
+		disabilities = 0
+	if(!player_alt_titles)
+		player_alt_titles = new()
+	if(!organ_data)
+		organ_data = list()
+	if(!be_role)
+		be_role = list()
+	if(!organ_prost_data)
+		organ_prost_data = list()
 
 	if(!home_system) home_system = "None"
 	if(!citizenship) citizenship = "None"
@@ -396,6 +403,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["be_role"]			<< be_role
 	S["disabilities"]		<< disabilities
 	S["organ_data"]			<< organ_data
+	S["organ_prost_data"] 	<< organ_prost_data
 	S["gear"]				<< gear
 
 	S["nanotrasen_relation"] << nanotrasen_relation

@@ -25,7 +25,7 @@
 	var/number_wounds = 0             // number of wounds, which is NOT wounds.len!
 	var/list/children = list()        // Sub-limbs.
 	var/list/bodypart_organs = list() // Internal organs of this body part
-	var/sabotaged = 0                 // If a prosthetic limb is emagged, it will detonate when it fails.
+	var/datum/robolimb/model
 	var/list/implants = list()        // Currently implanted objects.
 
 	// Joint/state stuff.
@@ -46,6 +46,9 @@
 	var/tmp/amputated = 0 //Whether this has been cleanly amputated, thus causing no pain
 	var/limb_layer = 0
 	var/damage_msg = "\red You feel an intense pain"
+	var/sabotaged = FALSE                 // If a prosthetic limb is emagged, it will detonate when it fails.
+	var/protected = 0                 // Protection against EMP.
+	var/has_grid = FALSE              // Used for checking, whether limb has a grid inbuilt.
 
 /obj/item/organ/external/insert_organ()
 	..()
@@ -69,6 +72,11 @@
 	if(!(status & ORGAN_ROBOT)) // meatbags do not care about EMP
 		return
 
+	if(protected)
+		severity = Clamp(severity+protected, 1, 3)
+	if(sabotaged)
+		severity = max(severity-1, 1)
+
 	var/burn_damage = 0
 	switch(severity)
 		if(1)
@@ -89,8 +97,16 @@
 #define DROPLIMB_THRESHOLD_DESTROY 1
 #define ORGAN_DAMAGE_SPILLOVER_MULTIPLIER 0.005
 /obj/item/organ/external/proc/take_damage(brute = 0, burn = 0, damage_flags = 0, used_weapon = null)
-	brute = round(brute * owner.species.brute_mod, 0.1)
-	burn = round(burn * owner.species.burn_mod, 0.1)
+	var/brute_coefficient = 1
+	var/burn_coefficient = 1
+	if(model)
+		brute_coefficient *= model.brute_mod
+		burn_coefficient *= model.burn_mod
+	else // If it's robotic, it doesn't matter how tough the owner is.
+		brute_coefficient *= owner.species.brute_mod
+		burn_coefficient *= owner.species.burn_mod
+	brute = round(brute * brute_coefficient, 0.1)
+	burn = round(burn * burn_coefficient, 0.1)
 
 	if((brute <= 0) && (burn <= 0))
 		return 0
@@ -347,6 +363,18 @@ This function completely restores a damaged organ to perfect condition.
 	// Process wounds, doing healing etc. Only do this every few ticks to save processing power
 	if(owner.life_tick % wound_update_accuracy == 0)
 		update_wounds()
+
+	if((status & ORGAN_ROBOT) && model && model.tech_tier < HIGH_TECH_PROSTHETIC) // They do boom, but ain't gone. Fix 'em up untill it's too late!
+		if(prob(brute_dam + burn_dam) && sabotaged)
+			explosion(get_turf(owner), -1, -1, 2, 3)
+			var/datum/effect/effect/system/spark_spread/spark_system = new
+			spark_system.set_up(5, 0, owner)
+			spark_system.attach(owner)
+			spark_system.start()
+			sleep(10)
+			qdel(spark_system)
+		if(prob(brute_dam + burn_dam) && !sabotaged) // If it ain't broke yet. It might become.
+			sabotaged = !sabotaged
 
 	//Chem traces slowly vanish
 	if(owner.life_tick % 10 == 0)
@@ -659,8 +687,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 			switch(body_zone)
 				if(BP_HEAD)
-					if(owner.species.flags[IS_SYNTHETIC])
-						bodypart = new /obj/item/weapon/organ/head/posi(owner.loc, owner)
+					if(status & ORGAN_ROBOT)
+						bodypart = new /obj/item/robot_parts/head(owner.loc)
 					else
 						bodypart = new /obj/item/weapon/organ/head(owner.loc, owner)
 				if(BP_R_ARM)
@@ -686,14 +714,18 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 			if(bodypart)
 				//Robotic limbs explode if sabotaged.
-				if(status & ORGAN_ROBOT && !no_explode && sabotaged)
-					explosion(get_turf(owner), -1, -1, 2, 3)
-					var/datum/effect/effect/system/spark_spread/spark_system = new
-					spark_system.set_up(5, 0, owner)
-					spark_system.attach(owner)
-					spark_system.start()
-					spawn(10)
-						qdel(spark_system)
+				if(status & ORGAN_ROBOT)
+					var/obj/item/robot_parts/RP = bodypart
+					RP.model = model
+					RP.get_brand()
+					if(!no_explode && sabotaged)
+						explosion(get_turf(owner), -1, -1, 2, 3)
+						var/datum/effect/effect/system/spark_spread/spark_system = new
+						spark_system.set_up(5, 0, owner)
+						spark_system.attach(owner)
+						spark_system.start()
+						spawn(10)
+							qdel(spark_system)
 
 				var/matrix/M = matrix()
 				M.Turn(rand(180))
@@ -893,7 +925,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 			status |= ORGAN_SPLINTED
 			suit.supporting_limbs |= src
 
-/obj/item/organ/external/proc/robotize()
+/obj/item/organ/external/proc/robotize(company = "Unbranded")
 	status &= ~ORGAN_BROKEN
 	status &= ~ORGAN_BLEEDING
 	status &= ~ORGAN_SPLINTED
@@ -904,8 +936,10 @@ Note that amputating the affected organ does in fact remove the infection from t
 	status |= ORGAN_ROBOT
 	destspawn = 0
 	amputated = 0
-	for (var/obj/item/organ/external/BP in children)
-		BP.robotize()
+	model = all_robolimbs[company]
+	protected = model.protected
+	if(model.low_quality && prob(50)) // Even non-broken low quality prosthetics can break, on attachment.
+		sabotaged = TRUE
 
 /obj/item/organ/external/proc/mutate()
 	src.status |= ORGAN_MUTATED
@@ -928,8 +962,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(!owner.species.has_gendered_icons)
 		gender = ""
 
-	if (status & ORGAN_ROBOT && !(owner.species && owner.species.flags[IS_SYNTHETIC]))
-		return new /icon('icons/mob/human_races/robotic.dmi', "[body_zone][gender ? "_[gender]" : ""]")
+	if (status & ORGAN_ROBOT)
+		return new /icon(model.iconbase, "[body_zone][gender ? "_[gender]" : ""]")
 
 	if (status & ORGAN_MUTATED)
 		return new /icon(deform_icon, "[body_zone][gender ? "_[gender]" : ""][fat ? "_[fat]" : ""]")
@@ -943,6 +977,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	var/g = ""
 	if(owner.species.has_gendered_icons)
 		g = owner.gender == FEMALE ? "_f" : "_m"
+
+	if (status & ORGAN_ROBOT)
+		return new /icon(model.iconbase, "[body_zone][g]")
 
 	if(status & ORGAN_MUTATED)
 		. = new /icon(deform_icon, "[body_zone][g]")

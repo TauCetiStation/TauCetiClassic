@@ -439,7 +439,15 @@ By design, d1 is the smallest direction and d2 is the highest
 
 		if(BP.burn_dam > 0)
 			if(use(1))
-				BP.heal_damage(0, 15, 0, 1)
+				if(BP.model)
+					switch(BP.model.tech_tier)
+						if(LOW_TECH_PROSTHETIC)
+							BP.heal_damage(15,0,0,1)
+						if(MEDIUM_TECH_PROSTHETIC)
+							BP.heal_damage(5,0,0,1)
+						if(HIGH_TECH_PROSTHETIC)
+							to_chat(user, "<span class='info'>This prosthetic is too advanced to be fixed like this!</span>") // Yes, we waste the cable anyway >:)
+							return
 				user.visible_message("<span class='alert'>\The [user] repairs some burn damage on \the [H]'s [BP.name] with \the [src].</span>")
 				return
 			else

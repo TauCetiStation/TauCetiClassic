@@ -28,6 +28,12 @@
 	origin_tech = "materials=1;engineering=1"
 	attack_verb = list("bashed", "battered", "bludgeoned", "whacked")
 
+/obj/item/weapon/wrench/prosthetic
+	name = "prosthetic wrench"
+	desc = "A wrench with many common uses. Can be your hand."
+	flags = CONDUCT | ABSTRACT | DROPDEL
+	origin_tech = null
+
 /obj/item/weapon/wrench/power
 	name = "Hand Drill"
 	desc ="A simple powered drill with a bolt bit"
@@ -70,6 +76,11 @@
 		to_chat(viewers(user), pick("<span class='danger'>[user] is stabbing the [src.name] into \his temple! It looks like \he's trying to commit suicide.</span>", \
 							"<span class='danger'>[user] is stabbing the [src.name] into \his heart! It looks like \he's trying to commit suicide.</span>"))
 		return(BRUTELOSS)
+
+/obj/item/weapon/screwdriver/prosthetic
+	name = "prosthetic screwdriver"
+	flags = CONDUCT | ABSTRACT | DROPDEL
+	origin_tech = null
 
 /obj/item/weapon/screwdriver/atom_init(mapload, param_color)
 	. = ..()
@@ -131,6 +142,11 @@
 	attack_verb = list("pinched", "nipped")
 	sharp = 1
 	edge = 1
+
+/obj/item/weapon/wirecutters/prosthetic
+	name = "prosthetic wirecutters"
+	flags = CONDUCT | ABSTRACT | DROPDEL
+	origin_tech = null
 
 /obj/item/weapon/wirecutters/atom_init(mapload, param_color)
 	. = ..()
@@ -519,6 +535,11 @@
 	origin_tech = "engineering=1"
 	attack_verb = list("attacked", "bashed", "battered", "bludgeoned", "whacked")
 
+/obj/item/weapon/crowbar/prosthetic
+	name = "prosthetic crowbar"
+	flags = CONDUCT | ABSTRACT | DROPDEL
+	origin_tech = null
+
 /obj/item/weapon/crowbar/red
 	icon = 'icons/obj/items.dmi'
 	icon_state = "red_crowbar"
@@ -558,8 +579,16 @@
 				return
 
 		if(BP.brute_dam)
-			BP.heal_damage(15,0,0,1)
-			user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [BP.name] with \the [src].</span>")
+			if(BP.model)
+				switch(BP.model.tech_tier)
+					if(LOW_TECH_PROSTHETIC)
+						BP.heal_damage(15,0,0,1)
+					if(MEDIUM_TECH_PROSTHETIC)
+						BP.heal_damage(5,0,0,1)
+					if(HIGH_TECH_PROSTHETIC)
+						to_chat(user, "<span class='info'>This prosthetic is too advanced to be fixed like this!</span>")
+						return
+				user.visible_message("<span class='rose'>\The [user] patches some dents on \the [M]'s [BP.name] with \the [src].</span>")
 		else
 			to_chat(user, "<span class='info'>Nothing to fix!</span>")
 

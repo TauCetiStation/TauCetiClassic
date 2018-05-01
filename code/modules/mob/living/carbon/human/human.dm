@@ -1246,6 +1246,49 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	else
 		to_chat(usr, "\blue [self ? "Your" : "[src]'s"] pulse is [src.get_pulse(GETPULSE_HAND)].")
 
+/mob/living/carbon/human/verb/set_prosthetic_tool()
+	set category = "Object"
+	set name = "Change Prosthetic Tool"
+	set desc = "Changes the tool type of your prosthetic arm, if any are allowed."
+	set src = usr
+
+	var/obj/item/organ/external/arm
+	if(hand)
+		arm = bodyparts_by_name[BP_L_ARM]
+	else
+		arm = bodyparts_by_name[BP_R_ARM]
+
+	if(arm && (arm.status & ORGAN_ROBOT) && arm.model && arm.model.possible_tools)
+
+		var/choice_tool = input(usr, "What tooltype do you wish to switch to for [arm]?") in null|arm.model.possible_tools
+		if(!choice_tool)
+			return
+		if(choice_tool == "hand")
+			var/obj/W = get_active_hand()
+			if(!W)
+				return
+			if(W in arm.model.possible_tools)
+				drop_from_inventory(W)
+		else
+			var/obj/W = get_active_hand()
+			if(!W)
+				return
+			if(W in arm.model.possible_tools)
+				drop_from_inventory(W)
+			var/obj/tool_chosen = arm.model.possible_tools[choice_tool]
+			var/obj/tool_created = new tool_chosen()
+			if(hand)
+				put_in_l_hand(tool_created)
+			else
+				put_in_r_hand(tool_created)
+
+	else if(!arm)
+		to_chat(usr, "<span class='notice'>You couldn't change the tooltype of a hand. Because you didn't have a hand.</span>")
+	else if(!(arm.status & ORGAN_ROBOT))
+		to_chat(usr, "<span class='notice'>You couldn't change the tooltype of a hand. Because the hand isn't prosthetic.</span>")
+	else if(!arm.model.possible_tools.len)
+		to_chat(usr, "<span class='notice'>You couldn't change the tooltype of a hand. Because the hand didn't have a tooltype to change to.</span>")
+
 /mob/living/carbon/human/proc/set_species(new_species, force_organs, default_colour)
 
 	if(!new_species)

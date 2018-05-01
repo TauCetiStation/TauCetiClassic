@@ -76,6 +76,10 @@
 		owner.custom_pain("Something inside your [BP.name] hurts a lot.", 1)
 
 /obj/item/organ/internal/emp_act(severity)
+	if(parent.protected)
+		severity = Clamp(severity+parent.protected, 1, 3)
+	if(parent.sabotaged)
+		severity = max(severity-1, 1)
 	switch(robotic)
 		if(0)
 			return

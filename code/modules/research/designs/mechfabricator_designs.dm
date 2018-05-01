@@ -8,6 +8,15 @@
 	construction_time = 500
 	category = list("Cyborg")
 
+/datum/design/borg_groin
+	name = "Cyborg Groin"
+	id = "borg_groin"
+	build_type = MECHFAB
+	build_path = /obj/item/robot_parts/groin
+	materials = list(MAT_METAL=25000)
+	construction_time = 350
+	category = list("Cyborg")
+
 /datum/design/borg_chest
 	name = "Cyborg Torso"
 	id = "borg_chest"
