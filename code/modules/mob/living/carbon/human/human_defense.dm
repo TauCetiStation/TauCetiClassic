@@ -391,39 +391,30 @@
 
 	BP.embed(I, null, null, created_wound)
 
-/mob/living/carbon/human/bloody_hands(mob/living/carbon/human/source, amount = 2)
+/mob/living/carbon/human/bloody_hands(mob/living/carbon/human/source, amount = 2, blood_datum)
 	if (gloves)
 		if(istype(gloves, /obj/item/clothing/gloves/))
 			var/obj/item/clothing/gloves/GL = gloves
-			GL.add_blood(source)
+			GL.add_blood(source,blood_datum)
 			GL.transfer_blood = amount
 			GL.bloody_hands_mob = source
 	else
-		add_blood(source)
+		add_blood(source,blood_datum)
 		bloody_hands = amount
 		bloody_hands_mob = source
 	update_inv_gloves()		//updates on-mob overlays for bloody hands and/or bloody gloves
 
-/mob/living/carbon/human/bloody_body(mob/living/carbon/human/source)
+/mob/living/carbon/human/bloody_body(mob/living/carbon/human/source, blood_datum)
 	if(wear_suit)
-		wear_suit.add_blood(source)
+		wear_suit.add_blood(source,blood_datum)
 		update_inv_wear_suit()
 	if(w_uniform)
-		w_uniform.add_blood(source)
+		w_uniform.add_blood(source,blood_datum)
 		update_inv_w_uniform()
 
-/mob/living/carbon/human/crawl_in_blood(obj/effect/decal/cleanable/blood/floor_blood)
-	if(wear_suit)
-		wear_suit.add_dirt_cover(floor_blood.basedatum)
-		update_inv_wear_suit()
-	if(w_uniform)
-		w_uniform.add_dirt_cover(floor_blood.basedatum)
-		update_inv_w_uniform()
-	if (gloves)
-		gloves.add_dirt_cover(floor_blood.basedatum)
-	else
-		add_dirt_cover(floor_blood.basedatum)
-	update_inv_gloves()
+/mob/living/carbon/human/crawl_in_blood(obj/effect/decal/cleanable/blood/floor_blood, amount = 2)
+	bloody_hands(src,amount,floor_blood.basedatum)
+	bloody_body(src,floor_blood.basedatum)
 
 /mob/living/carbon/proc/check_thickmaterial(obj/item/organ/external/BP, target_zone)
 	return 0
