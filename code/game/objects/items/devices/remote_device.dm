@@ -118,7 +118,7 @@
 /obj/item/device/remote_device/head_of_personal
 	name = "civillian door remote"
 	icon_state = "rdc_hop"
-	region_access = list(6, 7)
+	region_access = list(6, 7, 57)
 
 #undef REMOTE_OPEN
 #undef REMOTE_BOLT
