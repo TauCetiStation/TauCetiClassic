@@ -419,7 +419,6 @@
 	,NO_PAIN = TRUE
 	)
 
-	blood_color = /datum/dirt_cover/green_blood
 	has_organ = list(
 		O_HEART   = /obj/item/organ/internal/heart,
 		O_BRAIN   = /obj/item/organ/internal/brain,
@@ -429,7 +428,7 @@
 		O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
 
-	blood_color = "#004400"
+	blood_color = /datum/dirt_cover/green_blood
 	flesh_color = "#907E4A"
 
 	has_gendered_icons = FALSE
