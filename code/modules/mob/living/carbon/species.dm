@@ -28,6 +28,7 @@
 	var/attack_verb = "punch"         // Empty hand hurt intent verb.
 	var/punch_damage = 0              // Extra empty hand attack damage.
 	var/mutantrace                    // Safeguard due to old code.
+	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
 
 	var/breath_type = "oxygen"           // Non-oxygen gas breathed, if any.
 	var/poison_type = "phoron"           // Poisonous air.
@@ -407,6 +408,7 @@
 	speed_mod = 7
 
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
+	butcher_drops = list(/obj/item/stack/sheet/wood = 5)
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -481,6 +483,8 @@
 	brute_mod = 1.5
 	burn_mod = 1
 
+	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
+
 	flags = list(
 	 IS_WHITELISTED = TRUE
 	,NO_BREATHE = TRUE
@@ -524,6 +528,8 @@
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
 	dietflags = 0
+
+	butcher_drops = list()
 
 	flags = list(
 	 NO_BREATHE = TRUE
@@ -591,6 +597,8 @@
 	blood_color = /datum/dirt_cover/black_blood
 	darksight = 8
 
+	butcher_drops = list() // They are just shadows. Why should they drop anything?
+
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
@@ -624,6 +632,8 @@
 
 	blood_color = /datum/dirt_cover/adamant_blood
 	flesh_color = "#137E8F"
+
+	butcher_drops = list(/obj/item/weapon/ore/diamond = 1, /obj/item/weapon/ore/slag = 3)
 
 	flags = list(
 		NO_BLOOD = TRUE,

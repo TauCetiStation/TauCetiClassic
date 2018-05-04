@@ -67,6 +67,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		else
 			set_species()
 
+	if(species) // For safety, we put it seperately.
+		butcher_results = species.butcher_drops
+
 	dna.species = species.name
 
 	var/datum/reagents/R = new/datum/reagents(1000)
