@@ -22,13 +22,13 @@
 	var/lastproduce = 0 // Last time it was harvested
 	var/lastcycle = 0 //Used for timing of cycles.
 	var/cycledelay = 200 // About 10 seconds / cycle
-	var/planted = 0 // Is it occupied?
-	var/harvest = 0 //Ready to harvest?
+	var/planted = FALSE // Is it occupied?
+	var/harvest = FALSE //Ready to harvest?
 	var/obj/item/seeds/myseed = null // The currently planted seed
 	var/rating = 1
 	var/unwrenchable = 1
 
-	pixel_y=8
+	pixel_y = 8
 
 /obj/machinery/hydroponics/constructable
 	name = "hydroponics tray"
@@ -76,7 +76,7 @@
 		return
 
 	if(istype(I, /obj/item/weapon/crowbar))
-		if(anchored==2)
+		if(anchored == 2)
 			to_chat(user, "Unscrew the hoses first!")
 			return
 		default_deconstruction_crowbar(I, 1)
@@ -91,25 +91,24 @@
 	else if(istype(Proj ,/obj/item/projectile/energy/florayield))
 		if(myseed.yield == 0)//Oh god don't divide by zero you'll doom us all.
 			adjustSYield(1 * rating)
-			//world << "Yield increased by 1, from 0, to a total of [myseed.yield]"
-		else if(prob(1/(myseed.yield * myseed.yield) *100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
+		else if(prob(1 / (myseed.yield * myseed.yield) *100))//This formula gives you diminishing returns based on yield. 100% with 1 yield, decreasing to 25%, 11%, 6, 4, 2...
 			adjustSYield(1 * rating)
-			//world << "Yield increased by 1, to a total of [myseed.yield]"
 	else
 		..()
 		return
 
 /obj/machinery/hydroponics/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
+	if(air_group || (height == 0))
+		return TRUE
 
 	if(istype(mover) && mover.checkpass(PASSTABLE))
-		return 1
+		return TRUE
 	else
-		return 0
+		return FALSE
 
 /obj/machinery/hydroponics/process()
 
-	var/needs_update = 0 // Checks if the icon needs updating so we don't redraw empty trays every time
+	var/needs_update = FALSE // Checks if the icon needs updating so we don't redraw empty trays every time
 
 	if(myseed && (myseed.loc != src))
 		myseed.loc = src
@@ -119,7 +118,7 @@
 		if(planted && !dead)
 			// Advance age
 			age += 1 * HYDRO_SPEED_MULTIPLIER
-			needs_update = 1
+			needs_update = TRUE
 
 //Nutrients//////////////////////////////////////////////////////////////
 			// Nutrients deplete slowly
@@ -181,7 +180,7 @@
 			if(age > myseed.production && (age - lastproduce) > myseed.production && (!harvest && !dead))
 				nutrimentMutation()
 				if(myseed && myseed.yield != -1) // Unharvestable shouldn't be harvested
-					harvest = 1
+					harvest = TRUE
 				else
 					lastproduce = age
 			if(prob(5))  // On each tick, there's a 5 percent chance the pest population will increase
@@ -191,14 +190,13 @@
 				adjustWeeds(1 / rating * HYDRO_SPEED_MULTIPLIER)
 
 		// Weeeeeeeeeeeeeeedddssss
-
 		if (weedlevel >= 10 && prob(50)) // At this point the plant is kind of fucked. Weeds can overtake the plant spot.
 			if(planted)
 				if(myseed.plant_type == 0) // If a normal plant
 					weedinvasion()
 			else
 				weedinvasion() // Weed invasion into empty tray
-			needs_update = 1
+			needs_update = TRUE
 		if (needs_update)
 			update_icon()
 	return
@@ -222,7 +220,7 @@
 		return
 	return
 
-obj/machinery/hydroponics/update_icon()
+/obj/machinery/hydroponics/update_icon()
 	//Refreshes the icon and sets the luminosity
 	overlays.Cut()
 
@@ -231,18 +229,23 @@ obj/machinery/hydroponics/update_icon()
 	if(planted)
 		var/image/I
 		if(dead)
-			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-dead")
+			I = image(icon = myseed.hydroponictray_icon_path, icon_state = "[myseed.species]-dead")
+			to_chat(world,"[myseed.hydroponictray_icon_path]:[myseed.species]-dead")
 		else if(harvest)
 			if(myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
-				I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]")
+				I = image(icon = myseed.hydroponictray_icon_path, icon_state = "[myseed.species]-grow[myseed.growthstages]")
+				to_chat(world, "[myseed.hydroponictray_icon_path]:[myseed.species]-grow[myseed.growthstages]")
 			else
-				I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-harvest")
+				I = image(icon = myseed.hydroponictray_icon_path, icon_state = "[myseed.species]-harvest")
+				to_chat(world, "[myseed.hydroponictray_icon_path]:[myseed.species]-harvest")
 		else if(age < myseed.maturation)
 			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages ) // Make sure it won't crap out due to HERPDERP 6 stages only
-			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[round(t_growthstate)]")
+			I = image(icon = myseed.hydroponictray_icon_path, icon_state = "[myseed.species]-grow[round(t_growthstate)]")
+			to_chat(world, "[myseed.hydroponictray_icon_path]:[myseed.species]-grow[round(t_growthstate)]")
 			lastproduce = age //Cheating by putting this here, it means that it isn't instantly ready to harvest
 		else
-			I = image('icons/obj/hydroponics/growing.dmi', icon_state = "[myseed.species]-grow[myseed.growthstages]") // Same
+			I = image(icon = myseed.hydroponictray_icon_path, icon_state = "[myseed.species]-grow[myseed.growthstages]") // Same
+			to_chat(world, "[myseed.hydroponictray_icon_path]:[myseed.species]-grow[myseed.growthstages]")
 		I.layer = MOB_LAYER + 0.1
 		overlays += I
 
@@ -264,7 +267,7 @@ obj/machinery/hydroponics/update_icon()
 
 	return
 
-obj/machinery/hydroponics/proc/UpdateDescription()
+/obj/machinery/hydroponics/proc/UpdateDescription()
 	desc = null
 	if (planted)
 		desc = "[src] has <span class='info'>[myseed.plantname]</span> planted."
@@ -273,8 +276,8 @@ obj/machinery/hydroponics/proc/UpdateDescription()
 		else if (harvest)
 			desc += " It's ready to harvest."
 
-obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient, this happens.
-	dead = 0
+/obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient, this happens.
+	dead = FALSE
 	var/oldPlantName
 	if(myseed) // In case there's nothing in the tray beforehand
 		oldPlantName = myseed.plantname
@@ -298,11 +301,11 @@ obj/machinery/hydroponics/proc/weedinvasion() // If a weed growth is sufficient,
 			myseed = new /obj/item/seeds/plumpmycelium
 		else
 			myseed = new /obj/item/seeds/weeds
-	planted = 1
+	planted = TRUE
 	age = 0
 	health = myseed.endurance
 	lastcycle = world.time
-	harvest = 0
+	harvest = FALSE
 	weedlevel = 0 // Reset
 	pestlevel = 0 // Reset
 	update_icon()
@@ -336,13 +339,13 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	else
 		return
 
-	dead = 0
+	dead = FALSE
 	hardmutate()
-	planted = 1
+	planted = TRUE
 	age = 0
 	health = myseed.endurance
 	lastcycle = world.time
-	harvest = 0
+	harvest = FALSE
 	weedlevel = 0 // Reset
 
 	spawn(5) // Wait a while
@@ -350,19 +353,19 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutated into [myseed.plantname]!</span>")
 
 
-obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
+/obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent instead. Mind you, this pretty much destroys the old plant
 	if ( weedlevel > 5 )
 		if(myseed)
 			qdel(myseed)
 		var/newWeed = pick(/obj/item/seeds/libertymycelium, /obj/item/seeds/angelmycelium, /obj/item/seeds/deathnettleseed, /obj/item/seeds/kudzuseed)
 		myseed = new newWeed
-		dead = 0
+		dead = FALSE
 		hardmutate()
-		planted = 1
+		planted = TRUE
 		age = 0
 		health = myseed.endurance
 		lastcycle = world.time
-		harvest = 0
+		harvest = FALSE
 		weedlevel = 0 // Reset
 
 		spawn(5) // Wait a while
@@ -373,27 +376,25 @@ obj/machinery/hydroponics/proc/mutateweed() // If the weeds gets the mutagent in
 	return
 
 
-/obj/machinery/hydroponics/proc/plantdies() // OH NOES!!!!! I put this all in one function to make things easier
+/obj/machinery/hydroponics/proc/plantdies()
 	health = 0
-	harvest = 0
+	harvest = FALSE
 	pestlevel = 0 // Pests die
 	if(!dead)
 		update_icon()
-		dead = 1
+		dead = TRUE
 
 
 /obj/machinery/hydroponics/proc/mutatepest()
 	if(pestlevel > 5)
 		visible_message("The pests seem to behave oddly...")
-		for(var/i=0, i<3, i++)
+		for(var/i in 1 to 3)
 			new /obj/effect/spider/spiderling(loc)
-			//S.grow_as = /mob/living/simple_animal/hostile/giant_spider/hunter
 	else
 		to_chat(usr, "The pests seem to behave oddly, but quickly settle down...")
 
 
-obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
-
+/obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	//Called when mob user "attacks" it with object O
 	if(istype(O, /obj/item/nutrient))
 		var/obj/item/nutrient/myNut = O
@@ -420,7 +421,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 				return
 		if(!reagent_source.reagents.total_volume)
 			to_chat(user, "<span class='notice'>[reagent_source] is empty.</span>")
-			return 1
+			return TRUE
 
 		if(istype(reagent_source, /obj/item/weapon/reagent_containers/food/snacks) || istype(reagent_source, /obj/item/weapon/reagent_containers/pill))
 			visible_message("<span class='notice'>[user] composts [reagent_source], spreading it through [target].</span>")
@@ -608,15 +609,15 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 		S.clear_reagents()
 		qdel(S)
 		update_icon()
-		return 1
+		return TRUE
 
 	else if ( istype(O, /obj/item/seeds/) )
 		if(!planted)
 			user.remove_from_mob(O)
 			to_chat(user, "You plant the [O.name]")
-			dead = 0
+			dead = FALSE
 			myseed = O
-			planted = 1
+			planted = TRUE
 			age = 1
 			health = myseed.endurance
 			lastcycle = world.time
@@ -683,7 +684,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 			score["stuffharvested"]++
 
 	else if(istype(O, /obj/item/weapon/wrench) && unwrenchable)
-		if(anchored==2)
+		if(anchored == 2)
 			to_chat(user, "Unscrew the hoses first!")
 			return
 
@@ -699,12 +700,12 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	else if(istype(O, /obj/item/weapon/wirecutters) && unwrenchable)
 
 		if(anchored)
-			if(anchored==2)
+			if(anchored == 2)
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				anchored = 1
 				to_chat(user, "<span class='notice'>You snip \the [src]'s hoses.</span>")
 
-			else if(anchored==1)
+			else if(anchored == 1)
 				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				anchored = 2
 				to_chat(user, "<span class='notice'>You reconnect \the [src]'s hoses.</span>")
@@ -740,8 +741,8 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	if(harvest)
 		myseed.harvest(src)
 	else if(dead)
-		planted = 0
-		dead = 0
+		planted = FALSE
+		dead = FALSE
 		to_chat(user, text("You remove the dead plant from the [src]."))
 		qdel(myseed)
 		update_icon()
@@ -751,14 +752,14 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	if(.)
 		return
 	if(issilicon(user)) //How does AI know what plant is?
-		return 1
+		return TRUE
 	if(harvest)
 		if(!(user in range(1,src)))
-			return 1
+			return TRUE
 		myseed.harvest()
 	else if(dead)
-		planted = 0
-		dead = 0
+		planted = FALSE
+		dead = FALSE
 		to_chat(user, "<span class='notice'>You remove the dead plant from [src].</span>")
 		qdel(myseed)
 		update_icon()
@@ -821,7 +822,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 
 /obj/item/seeds/gibtomato/harvest(mob/user = usr)
 	var/produce = text2path(productname)
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/obj/machinery/hydroponics/parent = loc
 	var/t_amount = 0
 
 	while ( t_amount < (yield * parent.yieldmod ))
@@ -842,11 +843,11 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 
 /obj/item/seeds/nettleseed/harvest(mob/user = usr)
 	var/produce = text2path(productname)
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/obj/machinery/hydroponics/parent = loc
 	var/t_amount = 0
 
 	while ( t_amount < (yield * parent.yieldmod ))
-		var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency) // User gets a consumable -QualityVan
+		var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency)
 		t_prod.seed = mypath
 		t_prod.species = species
 		t_prod.lifespan = lifespan
@@ -854,19 +855,19 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 		t_prod.maturation = maturation
 		t_prod.production = production
 		t_prod.yield = yield
-		t_prod.changePotency(potency) // -QualityVan
+		t_prod.changePotency(potency)
 		t_prod.plant_type = plant_type
 		t_amount++
 
 	parent.update_tray()
 
-/obj/item/seeds/deathnettleseed/harvest(mob/user = usr) //isn't a nettle subclass yet, so
+/obj/item/seeds/deathnettleseed/harvest(mob/user = usr) //COPYPOASTAAAA
 	var/produce = text2path(productname)
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/obj/machinery/hydroponics/parent = loc
 	var/t_amount = 0
 
 	while ( t_amount < (yield * parent.yieldmod ))
-		var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency) // User gets a consumable -QualityVan
+		var/obj/item/weapon/grown/t_prod = new produce(user.loc, potency)
 		t_prod.seed = mypath
 		t_prod.species = species
 		t_prod.lifespan = lifespan
@@ -874,7 +875,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 		t_prod.maturation = maturation
 		t_prod.production = production
 		t_prod.yield = yield
-		t_prod.changePotency(potency) // -QualityVan
+		t_prod.changePotency(potency)
 		t_prod.plant_type = plant_type
 		t_amount++
 
@@ -882,7 +883,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 
 /obj/item/seeds/eggyseed/harvest(mob/user = usr)
 	var/produce = text2path(productname)
-	var/obj/machinery/hydroponics/parent = loc //for ease of access
+	var/obj/machinery/hydroponics/parent = loc
 	var/t_amount = 0
 
 	while ( t_amount < (yield * parent.yieldmod ))
@@ -892,7 +893,7 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	parent.update_tray()
 
 /obj/machinery/hydroponics/proc/update_tray(mob/user = usr)
-	harvest = 0
+	harvest = FALSE
 	lastproduce = age
 	if(istype(myseed,/obj/item/seeds/replicapod/))
 		to_chat(user, "<span class='notice'>You harvest from the [myseed.plantname].</span>")
@@ -902,8 +903,8 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 		to_chat(user, "<span class='notice'>You harvest [myseed.getYield()] items from the [myseed.plantname].</span>")
 	if(myseed.oneharvest)
 		qdel(myseed)
-		planted = 0
-		dead = 0
+		planted = FALSE
+		dead = FALSE
 	update_icon()
 
 /// Tray Setters - The following procs adjust the tray or plants variables, and make sure that the stat doesn't go out of bounds.///
@@ -975,9 +976,9 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 	name = "soil"
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "soil"
-	density = 0
-	use_power = 0
-	unwrenchable = 0
+	density = FALSE
+	use_power = FALSE
+	unwrenchable = FALSE
 
 /obj/machinery/hydroponics/soil/update_icon() // Same as normal but with the overlays removed - Cheridan.
 	overlays.Cut()
@@ -986,18 +987,18 @@ obj/machinery/hydroponics/attackby(obj/item/O, mob/user)
 
 	if(planted)
 		if(dead)
-			overlays += image('icons/obj/hydroponics/hydroponics.dmi', icon_state="[myseed.species]-dead")
+			overlays += image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-dead")
 		else if(harvest)
 			if(myseed.plant_type == 2) // Shrooms don't have a -harvest graphic
-				overlays += image('icons/obj/hydroponics/hydroponics.dmi', icon_state="[myseed.species]-grow[myseed.growthstages]")
+				overlays += image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-grow[myseed.growthstages]")
 			else
-				overlays += image('icons/obj/hydroponics/hydroponics.dmi', icon_state="[myseed.species]-harvest")
+				overlays += image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-harvest")
 		else if(age < myseed.maturation)
 			var/t_growthstate = ((age / myseed.maturation) * myseed.growthstages )
-			overlays += image('icons/obj/hydroponics/hydroponics.dmi', icon_state="[myseed.species]-grow[round(t_growthstate)]")
+			overlays += image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-grow[round(t_growthstate)]")
 			lastproduce = age
 		else
-			overlays += image('icons/obj/hydroponics/hydroponics.dmi', icon_state="[myseed.species]-grow[myseed.growthstages]")
+			overlays += image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-grow[myseed.growthstages]")
 
 	if(!luminosity)
 		if(istype(myseed,/obj/item/seeds/glowshroom))
