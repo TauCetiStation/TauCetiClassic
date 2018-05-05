@@ -280,6 +280,7 @@
 
 /obj/machinery/bot/cleanbot/proc/get_targets()
 	src.target_types = new/list()
+	target_types += /obj/effect/decal/cleanable/blood/poo
 	target_types += /obj/effect/decal/cleanable/blood/oil
 	target_types += /obj/effect/decal/cleanable/blood/gibs/robot
 	target_types += /obj/effect/decal/cleanable/vomit
