@@ -2,7 +2,7 @@
 	name = "curtain"
 	icon = 'icons/obj/curtain.dmi'
 	icon_state = "closed"
-	layer = WALL_OBJ_LAYER
+	layer = INFRONT_MOB_LAYER
 	opacity = TRUE
 	density = FALSE
 
