@@ -96,6 +96,8 @@
 
 		handle_heart_beat()
 
+		handle_feces()
+
 	handle_stasis_bag()
 
 	if(life_tick > 5 && timeofdeath && (timeofdeath < 5 || world.time - timeofdeath > 6000))	//We are long dead, or we're junk mobs spawned like the clowns on the clown shuttle
@@ -1732,6 +1734,17 @@
 
 	return temp
 
+/mob/living/carbon/human/proc/handle_feces()
+	if(prob(5) && feces_count < MAX_FECES_COUNT && nutrition >= NUTRITION_LEVEL_FED && !species.flags[IS_PLANT] && !species.flags[IS_SYNTHETIC]  )
+		switch(nutrition)
+			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_FULL)
+				feces_count += 0.1
+			if(NUTRITION_LEVEL_FULL to INFINITY)
+				feces_count += 0.5
+
+	if(feces_count > MAX_FECES_COUNT)
+		feces_count = MAX_FECES_COUNT
+		to_chat(src, "<span class='notice'>You're wanna to poo.</span>")
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes
 	we only set those statuses and icons upon changes.  Then those HUD items will simply add those pre-made images.

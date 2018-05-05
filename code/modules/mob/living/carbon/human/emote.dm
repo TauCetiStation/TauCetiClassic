@@ -556,7 +556,35 @@
 
 		if ("help")
 			to_chat(src, "blink, blink_r, blush, bow-(none)/mob, burp, choke, chuckle, clap, collapse, cough,\ncry, custom, deathgasp, drool, eyebrow, frown, gasp, giggle, groan, grumble, handshake, hug-(none)/mob, glare-(none)/mob,\ngrin, laugh, look-(none)/mob, moan, mumble, nod, pale, point-atom, raise, salute, shake, shiver, shrug,\nsigh, signal-#1-10, smile, sneeze, sniff, snore, stare-(none)/mob, tremble, twitch, twitch_s, whimper,\nwink, yawn")
-
+	//HOT STUFF
+		if (("poo"))
+			if(species.flags[IS_PLANT] || species.flags[IS_SYNTHETIC])
+				to_chat(src, "<span class='notice'>You are unable to poo, deal with it</span>")  //Если шаловливые ручки админов доберутся до переменных, этот трюк не позволит срать тем, кому это не положено.
+			if (feces_count < MAX_FECES_COUNT)
+				to_chat(src, "<span class='notice'>You can't poo now.</span>")
+			else
+				var/turf/location = loc
+				var/obj/structure/toilet/T = locate(/obj/structure/toilet) in location.contents
+				feces_count = 0
+				nutrition -= 80
+				adjustToxLoss(-1)
+				playsound(loc, 'sound/effects/squish.ogg', 40, 1)
+				if(T)
+					if(T.open)
+						to_chat(src, "<span class='warning'>You just poo into toilet, like a white man.</span>")
+						message = "<B>[src]</B> poo into the toilet!"
+					else
+						to_chat(src, "<span class='warning'>You shit on closed toilet like retard!</span>")
+						message = "<B>[src]</B> shits on closed toilet!"
+						new /obj/item/weapon/reagent_containers/food/snacks/solid_shit(loc)
+						if (istype(location, /turf/simulated))
+							new /obj/effect/decal/cleanable/blood/poo(location)
+				else
+					new /obj/item/weapon/reagent_containers/food/snacks/solid_shit(loc)
+					if (istype(location, /turf/simulated))
+						new /obj/effect/decal/cleanable/blood/poo(location)
+					to_chat(src, "<span class='warning'>You shits on the floor. </span>")
+					message = "<B>[src]</B> shits on the floor!"
 		else
 			to_chat(src, "\blue Unusable emote '[act]'. Say *help for a list.")
 
