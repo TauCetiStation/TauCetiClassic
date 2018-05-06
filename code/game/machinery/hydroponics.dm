@@ -341,7 +341,7 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 	harvest = FALSE
 	weedlevel = 0 // Reset
 
-	spawn(5) // Wait a while
+	sleep(5) // Wait a while
 	update_icon()
 	visible_message("<span class='warning'>[oldPlantName] suddenly mutated into [myseed.plantname]!</span>")
 
@@ -361,7 +361,7 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 		harvest = FALSE
 		weedlevel = 0 // Reset
 
-		spawn(5) // Wait a while
+		sleep(5) // Wait a while
 		update_icon()
 		visible_message("<span class='warning'>The mutated weeds in [src] spawned a [myseed.plantname]!</span>")
 	else
@@ -703,8 +703,7 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 				to_chat(user, "<span class='notice'>You reconnect \the [src]'s hoses.</span>")
 
 			for(var/obj/machinery/hydroponics/h in range(1,src))
-				spawn()
-					h.update_icon()
+				h.update_icon()
 
 	else if ( istype(O, /obj/item/weapon/pestspray) )
 		var/obj/item/pestkiller/myPKiller = O
