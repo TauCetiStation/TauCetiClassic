@@ -155,7 +155,6 @@
 	desc = "These seeds grow into a helpful herb called S'Rendarr's Hand, native to Ahdomai."
 	icon_state = "seed-shand"
 	mypath = "/obj/item/seeds/shandseed"
-	// TODO - SHANDSEED SPRItES IN hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
 	species = "shand"
 	plantname = "S'Rendarr's Hand"
 	productname = "/obj/item/stack/medical/bruise_pack/tajaran"
@@ -392,7 +391,6 @@
 	desc = "These seeds grow into poppies."
 	icon_state = "seed-poppy"
 	mypath = "/obj/item/seeds/poppyseed"
-	//TODO : POPPY STPRITES hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
 	species = "poppy"
 	plantname = "Poppy Plants"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/poppy"
@@ -731,7 +729,6 @@
 	desc = "Yo mang, want some weeds?"
 	icon_state = "seed"
 	mypath = "/obj/item/seeds/weeds"
-	//TODO WEEDS SPRITES hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
 	species = "weeds"
 	plantname = "Starthistle"
 	productname = ""
@@ -750,7 +747,6 @@
 	desc = "These seeds grow into pretty little flowers."
 	icon_state = "seed-harebell"
 	mypath = "/obj/item/seeds/harebell"
-	//TODO : HATEBELL SPRITES hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
 	species = "harebell"
 	plantname = "Harebells"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/harebell"
@@ -769,7 +765,6 @@
 	desc = "These seeds grow into sunflowers."
 	icon_state = "seed-sunflower"
 	mypath = "/obj/item/seeds/sunflowerseed"
-	//TODO hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
 	species = "sunflower"
 	plantname = "Sunflowers"
 	productname = "/obj/item/weapon/grown/sunflower"
@@ -1006,7 +1001,7 @@
 	desc = "When life gives you lemons, mutate them into cash."
 	icon_state = "seed-cash"
 	mypath = "/obj/item/seeds/cashseed"
-	//TODO hydroponictray_icon_path = 'icons/obj/hydroponics/growing.dmi'
+	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "cashtree"
 	plantname = "Money Tree"
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/money"
@@ -1176,7 +1171,7 @@
 	R.my_atom = src
 	. = ..()
 
-/obj/item/weapon/grown/proc/changePotency(newValue) //-QualityVan
+/obj/item/weapon/grown/proc/changePotency(newValue)
 	potency = newValue
 
 /obj/item/weapon/grown/log
@@ -1196,11 +1191,10 @@
 
 /obj/item/weapon/grown/log/attackby(obj/item/weapon/W, mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
-	var/obj/item/weapon/WE = W
-	if(istype(WE, /obj/item/weapon/circular_saw) || istype(WE, /obj/item/weapon/hatchet) || (istype(WE, /obj/item/weapon/twohanded/fireaxe) && WE.wielded) || istype(WE, /obj/item/weapon/melee/energy))
+	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
 		for(var/i in 1 to 2)
-			new/obj/item/stack/sheet/wood(user.loc, , TRUE)
+			new/obj/item/stack/sheet/wood(user.loc, megre = TRUE)//named arg, see code/game/objects/items/stacks/stack.dm
 		qdel(src)
 
 
