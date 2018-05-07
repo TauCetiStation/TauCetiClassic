@@ -702,8 +702,7 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 				anchored = 2
 				to_chat(user, "<span class='notice'>You reconnect \the [src]'s hoses.</span>")
 
-			for(var/obj/machinery/hydroponics/h in range(1,src))
-				h.update_icon()
+			update_icon()
 
 	else if ( istype(O, /obj/item/weapon/pestspray) )
 		var/obj/item/pestkiller/myPKiller = O
