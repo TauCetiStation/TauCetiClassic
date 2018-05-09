@@ -1122,7 +1122,7 @@
 	floating = 0
 
 /mob/living/proc/attempt_harvest(obj/item/I, mob/user)
-	if(stat == DEAD && istype(buckled, /obj/structure/kitchenspike)) //can we butcher it? Mob must be buckled to a meatspike to butcher it
+	if(stat == DEAD && butcher_results && istype(buckled, /obj/structure/kitchenspike)) //can we butcher it? Mob must be buckled to a meatspike to butcher it
 		if(user.is_busy())
 			return
 		to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
