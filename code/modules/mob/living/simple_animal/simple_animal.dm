@@ -345,8 +345,6 @@
 		else
 			to_chat(user, "<span class='notice'> this [src] is dead, medical items won't bring it back to life.</span>")
 	user.SetNextMove(CLICK_CD_MELEE)
-	if(attempt_harvest(O, user))
-		return
 	..()
 
 

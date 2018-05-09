@@ -139,6 +139,11 @@
 							"\red <b>[user] is slitting \his stomach open with the [src.name]! It looks like \he's trying to commit seppuku.</b>"))
 		return (BRUTELOSS)
 
+/obj/item/weapon/kitchenknife/attack(mob/living/carbon/M, mob/living/carbon/user)
+	if(user.a_intent == "help" && M.attempt_harvest(src, user))
+		return
+	return ..()
+
 /obj/item/weapon/kitchenknife/plastic
 	name = "plastic knife"
 	desc = "The bluntest of blades."
@@ -173,7 +178,9 @@
 	sharp = 1
 	edge = 1
 
-/obj/item/weapon/butch/attack(mob/living/carbon/M, mob/living/carbon/user)
+/obj/item/weapon/butch/attack(mob/living/M, mob/living/user)
+	if(user.a_intent == I_HELP && M.attempt_harvest(src, user))
+		return
 	playsound(loc, 'sound/weapons/bladeslice.ogg', 50, 1, -1)
 	return ..()
 
