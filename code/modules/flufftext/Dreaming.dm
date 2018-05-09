@@ -30,6 +30,7 @@ var/list/nightmares = list(
 	for(var/obj/item/candle/ghost/CG in range(4, src))
 		if(CG.lit)
 			dreaming = IS_NIGHTMARE
+			break
 	var/i = rand(1,4)
 	while(i)
 		if(dreaming == 2)
