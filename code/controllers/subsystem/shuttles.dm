@@ -95,29 +95,35 @@ var/datum/subsystem/shuttle/SSshuttle
 	switch(location)
 		if(SHUTTLE_IN_TRANSIT)
 			/* --- Shuttle is in transit to Central Command from SS13 --- */
+			to_chat(world, "shuttles are in transit")
 			if(direction == 2)
 				if(timeleft < PARALLAX_LOOP_TIME / 10)
 					var/area/stop_parallax = locate(/area/shuttle/escape/transit)
+					to_chat(world, "Stop parallax : [stop_parallax.type]")
 					stop_parallax.parallax_slowdown()
 					if(!is_escapepod_hacked[ESCAPE_POD_1])
 						stop_parallax = locate(/area/shuttle/escape_pod1/transit)
 					else
 						stop_parallax = locate(/area/shuttle/escape_pod1/transit/syndicate)
+					to_chat(world, "Stop parallax : [stop_parallax.type]")
 					stop_parallax.parallax_slowdown()
 					if(!is_escapepod_hacked[ESCAPE_POD_2])
 						stop_parallax = locate(/area/shuttle/escape_pod2/transit)
 					else
 						stop_parallax = locate(/area/shuttle/escape_pod2/transit/syndicate)
+					to_chat(world, "Stop parallax : [stop_parallax.type]")
 					stop_parallax.parallax_slowdown()
 					if(!is_escapepod_hacked[ESCAPE_POD_3])
 						stop_parallax = locate(/area/shuttle/escape_pod3/transit)
 					else
 						stop_parallax = locate(/area/shuttle/escape_pod3/transit/syndicate)
+					to_chat(world, "Stop parallax : [stop_parallax.type]")
 					stop_parallax.parallax_slowdown()
 					if(!is_escapepod_hacked[ESCAPE_POD_5])
 						stop_parallax = locate(/area/shuttle/escape_pod5/transit)
 					else
 						stop_parallax = locate(/area/shuttle/escape_pod5/transit/syndicate)
+					to_chat(world, "Stop parallax : [stop_parallax.type]")
 					stop_parallax.parallax_slowdown()
 				if(timeleft > 0)
 					return 0
@@ -156,6 +162,7 @@ var/datum/subsystem/shuttle/SSshuttle
 						start_location = locate(/area/shuttle/escape_pod1/transit/syndicate)
 						end_location = locate(/area/shuttle/escape_pod1/syndicate)
 						start_location.move_contents_to(end_location, null, NORTH) //TODO : CHANGE NORTH TO TRUE VAR
+						to_chat(world, "Escapepod1.move_contents.to")
 
 					close_doors_act(end_location)
 					shake_mobs_act(end_location)
@@ -315,6 +322,7 @@ var/datum/subsystem/shuttle/SSshuttle
 				// Some aesthetic turbulance shaking
 				shake_mobs_act(end_location)
 
+				to_chat(world, "Shuttl are at station")
 				//pods
 				if(alert == 0) // Crew Transfer not for pods
 

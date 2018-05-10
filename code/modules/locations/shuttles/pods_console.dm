@@ -56,12 +56,12 @@
 /obj/machinery/computer/escapepod_console/proc/allow_escape()
 	if(!hacked)
 		hacked = TRUE
-		if( istype(current_pod, ESCAPE_POD_1) ||\
-			istype(current_pod, ESCAPE_POD_2) ||\
-			istype(current_pod, ESCAPE_POD_3) ||\
-			istype(current_pod, ESCAPE_POD_5))
-			SSshuttle.is_escapepod_hacked[current_pod] = TRUE //current_pod is some of these macro names
-			to_chat(world, "SSshuttle.is_escapepod_hacked[current_pod] = [SSshuttle.is_escapepod_hacked[current_pod]]")
+		if( ispath(current_pod.type, ESCAPE_POD_1) ||\
+			ispath(current_pod.type, ESCAPE_POD_2) ||\
+			ispath(current_pod.type, ESCAPE_POD_3) ||\
+			ispath(current_pod.type, ESCAPE_POD_5))
+			SSshuttle.is_escapepod_hacked[current_pod.type] = TRUE //current_pod is some of these macro names
+			to_chat(world, "SSshuttle.is_escapepod_hacked :[current_pod.type] = [SSshuttle.is_escapepod_hacked[current_pod.type]]")
 		else
 			to_chat(world, "current_pod was not in list!")
 
