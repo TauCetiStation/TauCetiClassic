@@ -99,18 +99,22 @@ var/datum/subsystem/shuttle/SSshuttle
 				if(timeleft < PARALLAX_LOOP_TIME / 10)
 					var/area/stop_parallax = locate(/area/shuttle/escape/transit)
 					stop_parallax.parallax_slowdown()
+					if(!is_escapepod_hacked[ESCAPE_POD_1])
 						stop_parallax = locate(/area/shuttle/escape_pod1/transit)
 					else
 						stop_parallax = locate(/area/shuttle/escape_pod1/transit/syndicate)
 					stop_parallax.parallax_slowdown()
+					if(!is_escapepod_hacked[ESCAPE_POD_2])
 						stop_parallax = locate(/area/shuttle/escape_pod2/transit)
 					else
 						stop_parallax = locate(/area/shuttle/escape_pod2/transit/syndicate)
 					stop_parallax.parallax_slowdown()
+					if(!is_escapepod_hacked[ESCAPE_POD_3])
 						stop_parallax = locate(/area/shuttle/escape_pod3/transit)
 					else
 						stop_parallax = locate(/area/shuttle/escape_pod3/transit/syndicate)
 					stop_parallax.parallax_slowdown()
+					if(!is_escapepod_hacked[ESCAPE_POD_5])
 						stop_parallax = locate(/area/shuttle/escape_pod5/transit)
 					else
 						stop_parallax = locate(/area/shuttle/escape_pod5/transit/syndicate)
