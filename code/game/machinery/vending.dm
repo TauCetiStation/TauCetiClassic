@@ -873,8 +873,26 @@
 	icon_state = "MagiVend"
 	light_color = "#97429a"
 	products = list(/obj/item/weapon/occult_pinpointer = 3,
-		/obj/item/device/occult_scanner = 3)
-	contraband = list(/obj/item/weapon/nullrod = 1)
+		/obj/item/device/occult_scanner = 3,
+		/obj/item/clothing/mask/gas/owl_mask = 3,
+		/obj/item/clothing/mask/pig = 3,
+		/obj/item/clothing/mask/horsehead = 3,
+		/obj/item/clothing/mask/cowmask = 3,
+		/obj/item/clothing/mask/chicken = 3,
+		/obj/item/weapon/kitchenknife/plastic = 3)
+	prices = list(/obj/item/weapon/occult_pinpointer = 400,
+		/obj/item/device/occult_scanner = 400,
+		/obj/item/clothing/mask/gas/owl_mask = 250,
+		/obj/item/clothing/mask/pig = 250,
+		/obj/item/clothing/mask/horsehead = 250,
+		/obj/item/clothing/mask/cowmask = 250,
+		/obj/item/clothing/mask/chicken = 250,
+		/obj/item/weapon/kitchenknife/plastic = 300)
+	contraband = list(/obj/item/weapon/nullrod = 1,
+		/obj/item/weapon/kitchenknife/ritual = 1)
+	premium = list(/obj/item/clothing/glasses/gglasses = 1,
+		/obj/item/toy/figure/wizard = 1,
+		/obj/item/weapon/storage/fancy/crayons = 1)
 	product_slogans = "Amicitiae nostrae memoriam spero sempiternam fore;Aequam memento rebus in arduis servare mentem;Vitanda est improba siren desidia;Serva me, servabo te;Faber est suae quisque fortunae"
 	vend_reply = "Have fun! No returns!"
 	product_ads = "Occult is magic;Knowledge is magic;All the magic!;None to spook us;The dice has been cast"
