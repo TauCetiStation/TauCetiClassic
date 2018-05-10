@@ -931,7 +931,7 @@
 					/obj/item/weapon/reagent_containers/spray/hair_color_spray = 3)
 	contraband = list(/obj/item/weapon/razor = 1)
 	premium = list(/obj/item/weapon/scissors  = 3,
-				   /obj/item/weapon/hair_growth_accelerator = 3,
+				   /obj/item/weapon/reagent_containers/glass/bottle/hair_growth_accelerator = 3,
 				   /obj/item/weapon/storage/box/lipstick = 3)
 
 /obj/machinery/vending/dinnerware

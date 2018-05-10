@@ -18,7 +18,7 @@
 	new /obj/item/weapon/storage/box/hairdyes(src)
 	new /obj/item/weapon/storage/box/lipstick(src)
 	new /obj/item/weapon/reagent_containers/spray/hair_color_spray(src)
-	new /obj/item/weapon/hair_growth_accelerator(src)
+	new /obj/item/weapon/reagent_containers/glass/bottle/hair_growth_accelerator(src)
 	new /obj/item/weapon/scissors(src)
 	new /obj/item/weapon/reagent_containers/spray/cleaner(src)
 	new /obj/item/weapon/reagent_containers/glass/rag(src)
