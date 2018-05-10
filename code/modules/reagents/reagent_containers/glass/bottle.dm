@@ -481,3 +481,13 @@
 /obj/item/weapon/reagent_containers/glass/bottle/hair_dye/blond/atom_init()
 	. = ..()
 	reagents.add_reagent("blondhairdye", 30)
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_growth_accelerator
+	name = "hair growth accelerator bottle"
+	desc = "A small bottle of hair growth accelerator."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "bottle2"
+
+/obj/item/weapon/reagent_containers/glass/bottle/hair_growth_accelerator/atom_init()
+	. = ..()
+	reagents.add_reagent("hair_growth_accelerator", 30)

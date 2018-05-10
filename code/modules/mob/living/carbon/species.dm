@@ -429,7 +429,6 @@
 		O_KIDNEYS = /obj/item/organ/internal/kidneys
 		)
 
-	blood_color = "#004400"
 	flesh_color = "#907E4A"
 
 	has_gendered_icons = FALSE
