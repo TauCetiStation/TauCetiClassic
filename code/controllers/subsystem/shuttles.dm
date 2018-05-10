@@ -13,11 +13,10 @@ var/datum/subsystem/shuttle/SSshuttle
 #define SUPPLY_STATION_AREATYPE /area/supply/station //Type of the supply shuttle area for station
 #define SUPPLY_DOCK_AREATYPE /area/supply/dock	//Type of the supply shuttle area for dock
 
-//escape pod stuff. Default areas of pods.
-#define ESCAPE_POD_1 /area/shuttle/escape_pod1/station
+#define ESCAPE_POD_1 /area/shuttle/escape_pod1/station//escape pod stuff. Default areas of pods.
 #define ESCAPE_POD_2 /area/shuttle/escape_pod2/station
 #define ESCAPE_POD_3 /area/shuttle/escape_pod3/station
-#define ESCAPE_POD_5 /area/shuttle/escape_pod5/station
+#define ESCAPE_POD_5 /area/shuttle/escape_pod5/station//yes, 4 pod is not included, it is not mismatch
 
 /datum/subsystem/shuttle
 	name = "Shuttles"
@@ -53,9 +52,9 @@ var/datum/subsystem/shuttle/SSshuttle
 	var/list/supply_packs = list()
 		//escape pods stuff
 	var/list/is_escapepod_hacked = list(ESCAPE_POD_1 = FALSE, //we use this list for hacking escape pod's console and pod will go wild in space, and not to CentComm
-										ESCAPE_POD_2 = FALSE,
-										ESCAPE_POD_3 = FALSE,
-										ESCAPE_POD_5 = FALSE)
+										ESCAPE_POD_2 = FALSE, //ESCAPE_POD is just a type path of pod to launch. This is pair of PATH_TO_POD = TRUE/FALSE
+										ESCAPE_POD_3 = FALSE, //FALSE means pod will not go anywhere escept his standart places.
+										ESCAPE_POD_5 = FALSE) //TRUE means pod will go in syndicate's space and not to CentCom. See pods_console.dm
 		//shuttle movement
 	var/at_station = 0
 	var/movetime = 1200
@@ -99,42 +98,32 @@ var/datum/subsystem/shuttle/SSshuttle
 			if(direction == 2)
 				if(timeleft < PARALLAX_LOOP_TIME / 10)
 					var/area/stop_parallax = locate(/area/shuttle/escape/transit)
-					to_chat(world, "Stop parallax : [stop_parallax.type]")
 					stop_parallax.parallax_slowdown()
 					if(!is_escapepod_hacked[ESCAPE_POD_1])
 						stop_parallax = locate(/area/shuttle/escape_pod1/transit)
 					else
 						stop_parallax = locate(/area/shuttle/escape_pod1/transit/syndicate)
-					to_chat(world, "Stop parallax : [stop_parallax.type]")
 					stop_parallax.parallax_slowdown()
 					if(!is_escapepod_hacked[ESCAPE_POD_2])
 						stop_parallax = locate(/area/shuttle/escape_pod2/transit)
 					else
 						stop_parallax = locate(/area/shuttle/escape_pod2/transit/syndicate)
-					to_chat(world, "Stop parallax : [stop_parallax.type]")
 					stop_parallax.parallax_slowdown()
 					if(!is_escapepod_hacked[ESCAPE_POD_3])
 						stop_parallax = locate(/area/shuttle/escape_pod3/transit)
 					else
 						stop_parallax = locate(/area/shuttle/escape_pod3/transit/syndicate)
-					to_chat(world, "Stop parallax : [stop_parallax.type]")
 					stop_parallax.parallax_slowdown()
 					if(!is_escapepod_hacked[ESCAPE_POD_5])
 						stop_parallax = locate(/area/shuttle/escape_pod5/transit)
 					else
 						stop_parallax = locate(/area/shuttle/escape_pod5/transit/syndicate)
-					to_chat(world, "Stop parallax : [stop_parallax.type]")
 					stop_parallax.parallax_slowdown()
 				if(timeleft > 0)
 					return 0
 
 				/* --- Shuttle has arrived at Centrcal Command --- */
 				else
-					// turn off the star spawners
-					/*
-					for(var/obj/effect/starspawner/S in world)
-						S.spawning = 0
-					*/
 
 					location = SHUTTLE_AT_CENTCOM
 
@@ -150,67 +139,57 @@ var/datum/subsystem/shuttle/SSshuttle
 
 					//PODS
 						//pod1
-					to_chat(world, "is_escapepod_hacked[ESCAPE_POD_1] = [is_escapepod_hacked[ESCAPE_POD_1]]")
 					if(!is_escapepod_hacked[ESCAPE_POD_1])
-						to_chat(world, "Escapepod1 wasn't hacked and didn't gone wild :(")
 						start_location = locate(/area/shuttle/escape_pod1/transit)
 						end_location = locate(/area/shuttle/escape_pod1/centcom)
-						if( prob(5) ) // 5% that they survive
+						if( prob(5) )
 							start_location.move_contents_to(end_location, null, NORTH)
 					else
-						to_chat(world, "Escapepod1 is hacked and gone wild :)")
 						start_location = locate(/area/shuttle/escape_pod1/transit/syndicate)
 						end_location = locate(/area/shuttle/escape_pod1/syndicate)
-						start_location.move_contents_to(end_location, null, NORTH) //TODO : CHANGE NORTH TO TRUE VAR
-						to_chat(world, "Escapepod1.move_contents.to")
+						start_location.move_contents_to(end_location, null, NORTH)
 
 					close_doors_act(end_location)
 					shake_mobs_act(end_location)
 
 						//pod2
 					if(!is_escapepod_hacked[ESCAPE_POD_2])
-						to_chat(world, "Escapepod2 wasn't hacked and didn't gone wild :(")
 						start_location = locate(/area/shuttle/escape_pod2/transit)
 						end_location = locate(/area/shuttle/escape_pod2/centcom)
-						if( prob(5) ) // 5% that they survive
+						if( prob(5) )
 							start_location.move_contents_to(end_location, null, NORTH)
 					else
-						to_chat(world, "Escapepod2 is hacked and gone wild :)")
 						start_location = locate(/area/shuttle/escape_pod2/transit/syndicate)
 						end_location = locate(/area/shuttle/escape_pod2/syndicate)
-						start_location.move_contents_to(end_location, null, NORTH) //TODO : CHANGE NORTH TO TRUE VAR
+						start_location.move_contents_to(end_location, null, NORTH)
 
 					close_doors_act(end_location)
 					shake_mobs_act(end_location)
 
 						//pod3
 					if(!is_escapepod_hacked[ESCAPE_POD_3])
-						to_chat(world, "Escapepod3 wasn't hacked and didn't gone wild :(")
 						start_location = locate(/area/shuttle/escape_pod3/transit)
 						end_location = locate(/area/shuttle/escape_pod3/centcom)
-						if( prob(5) ) // 5% that they survive
+						if( prob(5) )
 							start_location.move_contents_to(end_location, null, NORTH)
 					else
-						to_chat(world, "Escapepod3 is hacked and gone wild :)")
 						start_location = locate(/area/shuttle/escape_pod3/transit/syndicate)
 						end_location = locate(/area/shuttle/escape_pod3/syndicate)
-						start_location.move_contents_to(end_location, null, NORTH) //TODO : CHANGE NORTH TO TRUE VAR
+						start_location.move_contents_to(end_location, null, NORTH)
 
 					close_doors_act(end_location)
 					shake_mobs_act(end_location)
 
 						//pod5
 					if(!is_escapepod_hacked[ESCAPE_POD_5])
-						to_chat(world, "Escapepod5 wasn't hacked and didn't gone wild :(")
 						start_location = locate(/area/shuttle/escape_pod5/transit)
 						end_location = locate(/area/shuttle/escape_pod5/centcom)
-						if( prob(5) ) // 5% that they survive
+						if( prob(5) )
 							start_location.move_contents_to(end_location, null, EAST)
 					else
-						to_chat(world, "Escapepod5 is hacked and gone wild :)")
 						start_location = locate(/area/shuttle/escape_pod5/transit/syndicate)
 						end_location = locate(/area/shuttle/escape_pod5/syndicate)
-						start_location.move_contents_to(end_location, null, EAST) //TODO : CHANGE NORTH TO TRUE VAR
+						start_location.move_contents_to(end_location, null, EAST)
 
 					close_doors_act(end_location)
 					shake_mobs_act(end_location)
@@ -297,16 +276,6 @@ var/datum/subsystem/shuttle/SSshuttle
 
 			/* --- Shuttle leaves the station, enters transit --- */
 			else
-				//if(alert == 1)
-				//	captain_announce("Departing...")
-				//	sleep(100)
-				// Turn on the star effects
-
-				/* // kinda buggy atm, i'll fix this later
-				for(var/obj/effect/starspawner/S in world)
-					if(!S.spawning)
-						spawn() S.startspawn()
-				*/
 
 				departed = 1 // It's going!
 				location = SHUTTLE_IN_TRANSIT // in deep space
@@ -321,95 +290,80 @@ var/datum/subsystem/shuttle/SSshuttle
 
 				// Some aesthetic turbulance shaking
 				shake_mobs_act(end_location)
-
-				to_chat(world, "Shuttl are at station")
 				//pods
 				if(alert == 0) // Crew Transfer not for pods
 
 						//pod1
 					if(!is_escapepod_hacked[ESCAPE_POD_1])
-						to_chat(world, "1Escapepod wasn't hacked and didn't entered transit :([is_escapepod_hacked[ESCAPE_POD_1]]")
 						start_location = locate(ESCAPE_POD_1)
 						end_location = locate(/area/shuttle/escape_pod1/transit)
 						if( prob(5) ) // 5% that they survive
 							start_location.move_contents_to(end_location, null, NORTH)
 					else
-						to_chat(world, "1Escapepod is hacked and gone wild :)")
 						start_location = locate(ESCAPE_POD_1)
 						end_location = locate(/area/shuttle/escape_pod1/transit/syndicate)
-						start_location.move_contents_to(end_location, null, NORTH) //TODO : CHANGE NORTH TO TRUE VAR
+						start_location.move_contents_to(end_location, null, NORTH)
 
 					close_doors_act(end_location)
 					shake_mobs_act(end_location)
 
 						//pod2
 					if(!is_escapepod_hacked[ESCAPE_POD_2])
-						to_chat(world, "1Escapepo2 wasn't hacked and didn't entered transit :(")
 						start_location = locate(ESCAPE_POD_2)
 						end_location = locate(/area/shuttle/escape_pod2/transit)
-						if( prob(5) ) // 5% that they survive
+						if( prob(5) )
 							start_location.move_contents_to(end_location, null, NORTH)
 					else
-						to_chat(world, "1Escapepod2 is hacked and gone wild :)")
 						start_location = locate(ESCAPE_POD_2)
 						end_location = locate(/area/shuttle/escape_pod2/transit/syndicate)
-						start_location.move_contents_to(end_location, null, NORTH) //TODO : CHANGE NORTH TO TRUE VAR
+						start_location.move_contents_to(end_location, null, NORTH)
 
 					close_doors_act(end_location)
 					shake_mobs_act(end_location)
 
 						//pod3
 					if(!is_escapepod_hacked[ESCAPE_POD_3])
-						to_chat(world, "1Escapepod3 wasn't hacked and didn't entered transit :(")
 						start_location = locate(ESCAPE_POD_3)
 						end_location = locate(/area/shuttle/escape_pod3/transit)
-						if( prob(5) ) // 5% that they survive
+						if( prob(5) )
 							start_location.move_contents_to(end_location, null, NORTH)
 					else
-						to_chat(world, "1Escapepod3 is hacked and gone wild :)")
 						start_location = locate(ESCAPE_POD_3)
 						end_location = locate(/area/shuttle/escape_pod3/transit/syndicate)
-						start_location.move_contents_to(end_location, null, NORTH) //TODO : CHANGE NORTH TO TRUE VAR
+						start_location.move_contents_to(end_location, null, NORTH)
 
 					close_doors_act(end_location)
 					shake_mobs_act(end_location)
 
 						//pod5
 					if(!is_escapepod_hacked[ESCAPE_POD_5])
-						to_chat(world, "1Escapepod5 wasn't hacked and didn't entered transit :(")
 						start_location = locate(ESCAPE_POD_5)
 						end_location = locate(/area/shuttle/escape_pod5/transit)
-						if( prob(5) ) // 5% that they survive
+						if( prob(5) )
 							start_location.move_contents_to(end_location, null, EAST)
 					else
-						to_chat(world, "1Escapepod5 is hacked and gone wild :)")
 						start_location = locate(ESCAPE_POD_5)
 						end_location = locate(/area/shuttle/escape_pod5/transit/syndicate)
-						start_location.move_contents_to(end_location, null, EAST) //TODO : CHANGE NORTH TO TRUE VAR
+						start_location.move_contents_to(end_location, null, EAST)
 
 					close_doors_act(end_location)
 					shake_mobs_act(end_location)
 
 					captain_announce("The Emergency Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
 				else
-					to_chat(world, "Pods are goin'now")
 
-					to_chat(world, "is_escapepod_hacked[ESCAPE_POD_1] : [is_escapepod_hacked[ESCAPE_POD_1]]")
 					if(is_escapepod_hacked[ESCAPE_POD_1])
-						to_chat(world, "2Escapepod5 is hacked and gone wild :)[is_escapepod_hacked[ESCAPE_POD_1]]")
 						start_location = locate(ESCAPE_POD_1)
-						end_location = locate(/area/shuttle/escape_pod1/transit)
+						end_location = locate(/area/shuttle/escape_pod1/transit/syndicate)
 						start_location.move_contents_to(end_location, null, NORTH)
 
 
 					close_doors_act(end_location)
 					shake_mobs_act(end_location)
 
-					to_chat(world, "is_escapepod_hacked[ESCAPE_POD_2] : [is_escapepod_hacked[ESCAPE_POD_1]]")
 					if(is_escapepod_hacked[ESCAPE_POD_2])
-						to_chat(world, "2Escapepod5 is hacked and gone wild :)")
 						start_location = locate(ESCAPE_POD_2)
-						end_location = locate(/area/shuttle/escape_pod2/transit)
+						end_location = locate(/area/shuttle/escape_pod2/transit/syndicate)
 						start_location.move_contents_to(end_location, null, NORTH)
 
 
@@ -417,9 +371,8 @@ var/datum/subsystem/shuttle/SSshuttle
 					shake_mobs_act(end_location)
 
 					if(is_escapepod_hacked[ESCAPE_POD_3])
-						to_chat(world, "2Escapepod5 is hacked and gone wild :)")
 						start_location = locate(ESCAPE_POD_3)
-						end_location = locate(/area/shuttle/escape_pod3/transit)
+						end_location = locate(/area/shuttle/escape_pod3/transit/syndicate)
 						start_location.move_contents_to(end_location, null, NORTH)
 
 
@@ -427,14 +380,14 @@ var/datum/subsystem/shuttle/SSshuttle
 					shake_mobs_act(end_location)
 
 					if(is_escapepod_hacked[ESCAPE_POD_5])
-						to_chat(world, "2Escapepod5 is hacked and gone wild :)")
 						start_location = locate(ESCAPE_POD_5)
-						end_location = locate(/area/shuttle/escape_pod5/transit)
+						end_location = locate(/area/shuttle/escape_pod5/transit/syndicate)
 						start_location.move_contents_to(end_location, null, EAST)
 
 
 					close_doors_act(end_location)
 					shake_mobs_act(end_location)
+
 					captain_announce("The Crew Transfer Shuttle has left the station. Estimate [round(timeleft()/60,1)] minutes until the shuttle docks at Central Command.")
 
 				return 1
