@@ -81,9 +81,16 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/shuttle/escape_pod1/centcom
 	icon_state = "shuttle"
 
+/area/shuttle/escape_pod1/syndicate//this is end point of traitor's traveling - somewhere in space, where syndi can find you
+	icon_state = "shuttle" //TODO : MAKE OWN SINDYE ICONS
+
 /area/shuttle/escape_pod1/transit
 	icon_state = "shuttle"
 	parallax_movedir = EAST
+
+/area/shuttle/escape_pod1/transit/syndicate//regular pods goes one way, and this illegal space taxi goes another
+	icon_state = "shuttle"
+	parallax_movedir = EAST//TODO : pick true way to fly in opposite direction from legal podes
 
 /area/shuttle/escape_pod2
 	name = "Escape Pod Two"
@@ -95,7 +102,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/shuttle/escape_pod2/centcom
 	icon_state = "shuttle"
 
+/area/shuttle/escape_pod2/syndicate
+	icon_state = "shuttle" //TODO : MAKE OWN SINDYE ICONS
+
 /area/shuttle/escape_pod2/transit
+	icon_state = "shuttle"
+	parallax_movedir = EAST
+
+/area/shuttle/escape_pod2/transit/syndicate
 	icon_state = "shuttle"
 	parallax_movedir = EAST
 
@@ -109,7 +123,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/shuttle/escape_pod3/centcom
 	icon_state = "shuttle"
 
+/area/shuttle/escape_pod3/syndicate
+	icon_state = "shuttle" //TODO : MAKE OWN SINDYE ICONS
+
 /area/shuttle/escape_pod3/transit
+	icon_state = "shuttle"
+	parallax_movedir = EAST
+
+/area/shuttle/escape_pod3/transit/syndicate//see above
 	icon_state = "shuttle"
 	parallax_movedir = EAST
 
@@ -123,7 +144,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/shuttle/escape_pod5/centcom
 	icon_state = "shuttle"
 
+/area/shuttle/escape_pod5/syndicate//see above
+	icon_state = "shuttle"
+
 /area/shuttle/escape_pod5/transit
+	icon_state = "shuttle"
+	parallax_movedir = WEST
+
+/area/shuttle/escape_pod5/transit/syndicate//see above
 	icon_state = "shuttle"
 	parallax_movedir = WEST
 
