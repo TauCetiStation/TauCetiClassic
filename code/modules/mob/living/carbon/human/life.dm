@@ -96,7 +96,8 @@
 
 		handle_heart_beat()
 
-		handle_feces()
+		if(SHIT_TOGGLED)
+			handle_feces()
 
 	handle_stasis_bag()
 
@@ -1735,7 +1736,7 @@
 	return temp
 
 /mob/living/carbon/human/proc/handle_feces()
-	if(prob(5) && feces_count < MAX_FECES_COUNT && nutrition >= NUTRITION_LEVEL_FED && !species.flags[IS_PLANT] && !species.flags[IS_SYNTHETIC]  )
+	if(prob(5) && feces_count <= MAX_FECES_COUNT && nutrition >= NUTRITION_LEVEL_FED && !species.flags[IS_PLANT] && !species.flags[IS_SYNTHETIC]  )
 		switch(nutrition)
 			if(NUTRITION_LEVEL_FED to NUTRITION_LEVEL_FULL)
 				feces_count += 0.1
@@ -1744,7 +1745,13 @@
 
 	if(feces_count > MAX_FECES_COUNT)
 		feces_count = MAX_FECES_COUNT
+
+	//антиспам сервис
+	if(feces_count == MAX_FECES_COUNT && world.time >= next_feces_message_time && prob(10))
 		to_chat(src, "<span class='notice'>You're wanna to poo.</span>")
+		next_feces_message_time = world.time + 1000
+
+
 /*
 	Called by life(), instead of having the individual hud items update icons each tick and check for status changes
 	we only set those statuses and icons upon changes.  Then those HUD items will simply add those pre-made images.

@@ -630,6 +630,7 @@ var/global/BSACooldown = 0
 			<BR>
 			<B>Fun Secrets</B><BR>
 			<BR>
+			<A href='?src=\ref[src];secretsfun=toggle_shit'>Toggle hot stuff(shit,piss,etc) (by default is off)</A><BR>
 			<A href='?src=\ref[src];secretsfun=sec_clothes'>Remove 'internal' clothing</A><BR>
 			<A href='?src=\ref[src];secretsfun=sec_all_clothes'>Remove ALL clothing</A><BR>
 			<A href='?src=\ref[src];secretsfun=monkey'>Turn all humans into monkeys</A><BR>

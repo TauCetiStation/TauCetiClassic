@@ -80,3 +80,5 @@ var/list/ignore_vision_inside = list(
 	/obj/effect/dummy,
 	/obj/structure/droppod
 	)
+
+var/SHIT_TOGGLED = 0 //Глобальный переключатель непотребства
