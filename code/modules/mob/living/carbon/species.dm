@@ -1,7 +1,6 @@
 /*
 	Datum-based species. Should make for much cleaner and easier to maintain mutantrace code.
 */
-#define SKRELL_METABOLISM 0.1
 
 /datum/species
 	var/name                     // Species name.
@@ -45,7 +44,7 @@
 	var/body_temperature = 310.15	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
 	var/synth_temp_gain = 0			//IS_SYNTHETIC species will gain this much temperature every second
 
-	var/custom_metabolism = 0 // Additional consumed reagent. Doesn't actually impact the effect of the reagent on the xeno! Also influences how fast the xeno gets hungry.
+	var/metabolism_mod = METABOLISM_FACTOR // Whether the xeno has custom metabolism? Is not additive, does override.
 	var/taste_sensitivity = TASTE_SENSITIVITY_NORMAL //the most widely used factor; humans use a different one
 	var/dietflags = 0	// Make sure you set this, otherwise it won't be able to digest a lot of foods
 
@@ -252,7 +251,7 @@
 	primitive = /mob/living/carbon/monkey/skrell
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_HERB
-	custom_metabolism = SKRELL_METABOLISM
+	metabolism_mod = SKRELL_METABOLISM_FACTOR
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
 	flags = list(
@@ -274,7 +273,6 @@
 	eyes = "skrell_eyes"
 	blood_color = /datum/dirt_cover/purple_blood
 	flesh_color = "#8CD7A3"
-	blood_color = "#8817c1"
 
 /datum/species/vox
 	name = VOX

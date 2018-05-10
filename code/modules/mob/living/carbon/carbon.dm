@@ -10,9 +10,9 @@
 	if(.)
 		handle_phantom_move(NewLoc, direct)
 		if(nutrition && stat != DEAD)
-			nutrition -= HUNGER_FACTOR/10
+			nutrition -= metabolism_factor/10
 			if(m_intent == "run")
-				nutrition -= HUNGER_FACTOR/10
+				nutrition -= metabolism_factor/10
 		if((FAT in mutations) && m_intent == "run" && bodytemperature <= 360)
 			bodytemperature += 2
 

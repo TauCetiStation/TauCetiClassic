@@ -86,9 +86,6 @@
 #define NUTRITION_LEVEL_HUNGRY 250
 #define NUTRITION_LEVEL_STARVING 150
 
-// Factor of how fast mob nutrition decreases
-#define HUNGER_FACTOR 0.05
-
 // How many units of reagent are consumed per tick, by default.
 #define REAGENTS_METABOLISM 0.2
 
@@ -97,7 +94,8 @@
 #define REAGENTS_EFFECT_MULTIPLIER REAGENTS_METABOLISM / 0.4
 
 // Factor of how fast mob nutrition decreases
-#define	HUNGER_FACTOR 0.1
+#define METABOLISM_FACTOR 0.1
+#define SKRELL_METABOLISM_FACTOR 0.2 // Twice the speed for half the sense!
 
 // Taste sensitivity - the more the more reagents you'll taste
 #define TASTE_SENSITIVITY_NORMAL 1
