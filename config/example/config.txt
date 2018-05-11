@@ -262,3 +262,8 @@ ANTIGRIEF_ALARM_LEVEL 1
 
 ## Uncomment this to enable job restrictions for xenos in occupation menu.
 USE_ALIEN_JOB_RESTRICTION
+
+##BYOND version restrictions
+##client with version < BYOND_VERSION_MIN will be kicked, < recommend - just warned
+BYOND_VERSION_MIN 500
+# BYOND_VERSION_RECOMMEND 512
