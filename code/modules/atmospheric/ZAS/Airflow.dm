@@ -284,10 +284,19 @@ Contains helper procs for airflow, handled in /connection_group.
 //	for(var/mob/M in hearers(src))
 //		M.show_message("<span class='danger'>[src] slams into [A]!</span>",1,"<span class='danger'>You hear a loud slam!</span>",2)
 	playsound(src.loc, "punch", 25, 1, -1)
-	if (prob(33))
+
+	var/b_loss = min(airflow_speed, (airborne_acceleration*2)) * vsc.airflow_damage
+
+	for(var/i in contents)
+		if(istype(i, /obj/item/airbag))
+			var/obj/item/airbag/airbag = i
+			airbag.deploy(src)
+			b_loss = 0
+			break
+
+	if(prob(33) && b_loss > 0)
 		loc:add_blood(src)
 		bloody_body(src)
-	var/b_loss = min(airflow_speed, (airborne_acceleration*2)) * vsc.airflow_damage
 
 	var/blocked = run_armor_check(BP_HEAD,"melee")
 	apply_damage(b_loss / 3, BRUTE, BP_HEAD, blocked, 0, "Airflow")
