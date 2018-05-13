@@ -6,8 +6,10 @@
 
 /obj/machinery/computer/escapepod_console
 	name = "EscapePod Console"
-	icon = 'code/modules/locations/shuttles/pod.dmi'
-	icon_state = "pod_console"
+	icon = 'code/modules/locations/shuttles/pods_machinery.dmi'
+	desc = "This is pod's on-board computer. Try not to destroy this important thing!"
+	icon_state = "console"
+	density = FALSE
 	req_access = list(access_captain)
 	var/hacked = FALSE   //is escape pod hacked and ready to go in deep space?
 	var/area/current_pod //area to check and set pod to HACKED
@@ -19,11 +21,7 @@
 /obj/machinery/computer/escapepod_console/ui_interact(mob/user)
 	var/dat
 	dat = {"Current pod: [current_pod]<br>
-	Hacked : [hacked ? "yes" : "no"]<br>"}/*
-		<a href='?src=\ref[src];mine=1'>Mining Statin</a> |
-		<a href='?src=\ref[src];station=1'>NSS Exodus</a> |
-		<a href='?src=\ref[src];sci=1'>Research Outpost</a><br>
-		<a href='?src=\ref[user];mach_close=flightcomputer'>Close</a>"}*/
+	Hacked : [hacked ? "yes" : "no"]<br>"}
 
 	user << browse(entity_ja(dat), "window=podflightcomputer;size=300x450")
 	onclose(user, "podflightcomputer")
@@ -36,26 +34,13 @@
 	if(!current_pod)
 		to_chat(usr, "\red Pod not found!")
 		return FALSE
-	/*if(autopilot.moving)
-		to_chat(usr, "\blue Shuttle is already moving.")
-		return FALSE
-
-	var/result = FALSE
-	if(href_list["mine"])
-		result = autopilot.mine_sci_move_to(MINE_DOCK)
-	else if(href_list["sci"])
-		result = autopilot.mine_sci_move_to(SCI_DOCK)
-	else if(href_list["station"])
-		result = autopilot.mine_sci_move_to(STATION_DOCK)
-	if(result)
-		to_chat(usr, "\blue Shuttle recieved message and will be sent shortly.")*/
 
 	updateUsrDialog()
 
 //there is no another way to get to SSshuttle
 /obj/machinery/computer/escapepod_console/proc/allow_escape()
 	if(!hacked)
-		hacked = TRUE
+		hacked = TRUE//Hacked only once per round
 		if( ispath(current_pod.type, ESCAPE_POD_1) ||\
 			ispath(current_pod.type, ESCAPE_POD_2) ||\
 			ispath(current_pod.type, ESCAPE_POD_3) ||\
@@ -68,11 +53,22 @@
 /obj/machinery/computer/escapepod_console/attackby(obj/item/weapon/W, mob/user)
 
 	if(istype(W, /obj/item/device/pda) && W.GetID())
-		//this is for future var/obj/item/weapon/card/I = W.GetID()
-		allow_escape()
-	else if(istype(W, /obj/item/weapon/card))
-		//same var/obj/item/weapon/card/I = W
-		allow_escape()
+		var/obj/item/weapon/card/I = W.GetID()
+		if(check_access(I))
+			visible_message("<span class='info'>[user] applies a PDA to [src]. </span>")
+			to_chat(user, "<span class='info'>You hear that [src] softly beeps two times. </span>")
+			allow_escape()
+
+	else if(istype(W, /obj/item/weapon/card/id))
+		var/obj/item/weapon/card/I = W
+		if(check_access(I))
+			visible_message("<span class='info'>[user] swipes a card through [src] and it softly beeps three times.</span>")
+			allow_escape()
+
+	else if (istype(W, /obj/item/weapon/card/emag))
+		visible_message("<span class='info'>[user] swipes a card through [src], it flashes red and beeps one time .</span>")
+		allow_escape()//emag should serve just as a pass, without using it's charges. Broken emag is also accepted.
+	..()
 
 #undef ESCAPE_POD_1
 #undef ESCAPE_POD_2
