@@ -3,8 +3,12 @@
 	////////////
 #define TOPIC_SPAM_DELAY	2		//2 ticks is about 2/10ths of a second; it was 4 ticks, but that caused too many clicks to be lost due to lag
 #define UPLOAD_LIMIT		10485760	//Restricts client uploads to the server to 10MB //Boosted this thing. What's the worst that can happen?
-#define MIN_CLIENT_VERSION	0		//Just an ambiguously low version for now, I don't want to suddenly stop people playing.
-									//I would just like the code ready should it ever need to be used.
+
+var/list/blacklisted_builds = list(
+	"1407" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
+	"1408" = "bug preventing client display overrides from working leads to clients being able to see things/mobs they shouldn't be able to see",
+	)
+
 	/*
 	When somebody clicks a link in game, this Topic is called first.
 	It does the stuff in this proc and  then is redirected to the Topic() proc for the src=[0xWhatever]
@@ -126,8 +130,6 @@
 
 	if(connection != "seeker")					//Invalid connection type.
 		return null
-	if(byond_version < MIN_CLIENT_VERSION)		//Out of date client.
-		return null
 
 	if(IsGuestKey(key))
 		alert(src,"This server doesn't allow guest accounts to play. Please go to http://www.byond.com/ and register for a key.","Guest","OK")
@@ -180,6 +182,26 @@
 	. = ..()	//calls mob.Login()
 	spawn() // Goonchat does some non-instant checks in start()
 		chatOutput.start()
+
+
+	spawn(50)//should wait for goonchat initialization
+		if(config.byond_version_min && byond_version < config.byond_version_min)
+			to_chat(src, "<span class='warning bold'>Your version of Byond is too old. Update to the [config.byond_version_min] or later for playing on our server.</span>")
+			log_access("Failed Login: [key] [computer_id] [address] - byond version less that minimal required: [byond_version].[byond_build])")
+			if(!holder)
+				qdel(src)
+				return
+
+		if(config.byond_version_recommend && byond_version < config.byond_version_recommend)
+			to_chat(src, "<span class='warning bold'>Your version of Byond is less that recommended. Update to the [config.byond_version_recommend] for better experiense.</span>")
+
+		if((byond_version >= 512 && (!byond_build || byond_build < 1386)) || num2text(byond_build) in blacklisted_builds)
+			to_chat(src, "<span class='warning bold'>You are using the inappropriate Byond version. Update to the latest Byond version or install another from http://www.byond.com/download/build/ for playing on our server.</span>")
+			message_admins("<span class='adminnotice'>[key_name(src)] has been detected as using a inappropriate byond version: [byond_version].[byond_build]. Connection rejected.</span>")
+			log_access("Failed Login: [key] [computer_id] [address] - inappropriate byond version: [byond_version].[byond_build])")
+			if(!holder)
+				qdel(src)
+				return
 
 	if(custom_event_msg && custom_event_msg != "")
 		to_chat(src, "<h1 class='alert'>Custom Event</h1>")
@@ -408,7 +430,6 @@
 
 #undef TOPIC_SPAM_DELAY
 #undef UPLOAD_LIMIT
-#undef MIN_CLIENT_VERSION
 
 //checks if a client is afk
 //3000 frames = 5 minutes
