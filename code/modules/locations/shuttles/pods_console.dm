@@ -16,11 +16,11 @@
 
 /obj/machinery/computer/escapepod_console/atom_init()
 	. = ..()
-	current_pod = get_area(src.loc)
+	current_pod = get_area(src.loc)//now we get smth like /area/shuttle/escape_pod1/station - go ahead with this
 
 /obj/machinery/computer/escapepod_console/proc/allow_escape()
 	if(!hacked)
-		hacked = TRUE//Hacked once per round
+		hacked = TRUE//Hacked only once per round
 		if( ispath(current_pod.type, ESCAPE_POD_1) ||\
 			ispath(current_pod.type, ESCAPE_POD_2) ||\
 			ispath(current_pod.type, ESCAPE_POD_3) ||\
@@ -44,7 +44,7 @@
 	else if(istype(W, /obj/item/weapon/card/emag) ||\
 			istype(W, /obj/item/weapon/card/emag_broken))
 		visible_message("<span class='info'>[user] swipes a card through [src], it flashes red and beeps one time .</span>")
-		allow_escape()
+		allow_escape()//emag should serve just as a pass, without using it's charges. Broken emag is also accepted.
 	else
 		to_chat("<span class='info'>You're trying to use [W] on [src], but it flashes red.</span>")
 	..()
