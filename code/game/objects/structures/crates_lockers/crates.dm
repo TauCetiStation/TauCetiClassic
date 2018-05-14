@@ -495,7 +495,6 @@
 	for(var/i in 1 to 2)
 		new /obj/item/weapon/reagent_containers/spray/plantbgone(src)
 	new /obj/item/weapon/minihoe(src)
-	new /obj/item/weapon/reagent_containers/glass/beaker/large//this is needed for biogenerator and etc
 //	new /obj/item/weapon/weedspray(src)
 //	new /obj/item/weapon/weedspray(src)
 //	new /obj/item/weapon/pestspray(src)
