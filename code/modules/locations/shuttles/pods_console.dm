@@ -41,7 +41,7 @@
 			visible_message("<span class='info'>[user] swipes a card through [src] and it softly beeps three times and flashes green.</span>")
 			allow_escape()
 
-	else if(istype(W, /obj/item/weapon/card/emag) ||
+	else if(istype(W, /obj/item/weapon/card/emag) ||\
 			istype(W, /obj/item/weapon/card/emag_broken))
 		visible_message("<span class='info'>[user] swipes a card through [src], it flashes red and beeps one time .</span>")
 		allow_escape()//emag should serve just as a pass, without using it's charges. Broken emag is also accepted.
