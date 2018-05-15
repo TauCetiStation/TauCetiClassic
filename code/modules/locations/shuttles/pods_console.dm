@@ -3,7 +3,6 @@
 #define ESCAPE_POD_3 /area/shuttle/escape_pod3/station
 #define ESCAPE_POD_5 /area/shuttle/escape_pod5/station
 
-//this is computer's subtype becouse there are a lot of idoas for features!
 /obj/machinery/computer/escapepod_console
 	name = "Escape Pod Console"
 	icon = 'code/modules/locations/shuttles/pods_machinery.dmi'
@@ -11,12 +10,12 @@
 	icon_state = "console"
 	density = FALSE
 	req_access = list(access_captain)
-	var/hacked = FALSE   //is escape pod hacked and ready to go in deep space?
-	var/area/current_pod //area to check and set pod to HACKED
+	var/hacked = FALSE   //is escape pod hacked and ready to go deep in space?
+	var/area/current_pod //area tied to pod
 
 /obj/machinery/computer/escapepod_console/atom_init()
 	. = ..()
-	current_pod = get_area(src.loc)//now we get smth like /area/shuttle/escape_pod1/station - go ahead with this
+	current_pod = get_area(src.loc)
 
 /obj/machinery/computer/escapepod_console/proc/allow_escape()
 	if(!hacked)
@@ -44,7 +43,7 @@
 	else if(istype(W, /obj/item/weapon/card/emag) ||\
 			istype(W, /obj/item/weapon/card/emag_broken))
 		visible_message("<span class='info'>[user] swipes a card through [src], it flashes red and beeps one time .</span>")
-		allow_escape()//emag should serve just as a pass, without using it's charges. Broken emag is also accepted.
+		allow_escape()
 	else
 		to_chat("<span class='info'>You're trying to use [W] on [src], but it flashes red.</span>")
 	..()
