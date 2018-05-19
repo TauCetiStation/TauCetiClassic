@@ -374,7 +374,7 @@
 
 	// nutrition decrease
 	if (nutrition > 0)
-		nutrition = max(0, nutrition - metabolism_factor)
+		nutrition = max(0, nutrition - metabolism_factor/10)
 
 	if (nutrition > 450)
 		if(overeatduration < 600)
