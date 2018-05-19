@@ -372,24 +372,24 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	return FALSE
 
 /mob/living/carbon/human/proc/find_damaged_bodypart()
-	if(!regenerating_bodypart)
-		for(var/obj/item/organ/external/BP in bodyparts) // find a broken/destroyed limb
-			if(BP.status & (ORGAN_DESTROYED | ORGAN_BROKEN | ORGAN_SPLINTED))
-				if(BP.parent && (BP.parent.status & ORGAN_DESTROYED))
-					continue
-				else
-					regenerating_bodypart = BP
-			if(regenerating_bodypart)
-				break
+	for(var/obj/item/organ/external/BP in bodyparts) // find a broken/destroyed limb
+		if(BP.status & (ORGAN_DESTROYED | ORGAN_BROKEN | ORGAN_SPLINTED))
+			if(BP.parent && (BP.parent.status & ORGAN_DESTROYED))
+				continue
+			else
+				return BP
+	return FALSE // In case we didn't find anything.
 
 /mob/living/carbon/human/proc/regen_bodyparts(remove_blood_amount = 0, use_cost = FALSE)
 	if(vessel && regenerating_bodypart) // start fixing broken/destroyed limb
 		if(remove_blood_amount)
 			for(var/datum/reagent/blood/B in vessel.reagent_list)
 				B.volume -= remove_blood_amount
-		var/regenerating_capacity_penalty = regenerating_bodypart.regen_bodypart_penalty/2 // Used as time till organ regeneration.
+		var/regenerating_capacity_penalty = 0 // Used as time till organ regeneration.
 		if(regenerating_bodypart.status & ORGAN_DESTROYED)
-			regenerating_capacity_penalty += regenerating_bodypart.regen_bodypart_penalty/2
+			regenerating_capacity_penalty = regenerating_bodypart.regen_bodypart_penalty
+		else
+			regenerating_capacity_penalty = regenerating_bodypart.regen_bodypart_penalty/2
 		regenerating_organ_time++
 		switch(regenerating_organ_time)
 			if(1)

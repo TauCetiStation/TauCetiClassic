@@ -459,8 +459,9 @@
 				H.nutrition -= light_amount
 				return
 	if(H.nutrition > 350 && light_amount >= 4) // If you don't need to regen organs, regen bodyparts.
-		H.find_damaged_bodypart()
-		if(H.regenerating_bodypart)
+		if(!H.regenerating_bodypart) // If there is none currently, go ahead, find it.
+			H.regenerating_bodypart = H.find_damaged_bodypart()
+		if(H.regenerating_bodypart) // If it did find one.
 			H.nutrition -= 1
 			H.apply_damages(0,0,1,1,0,0)
 			H.regen_bodyparts(0, TRUE)
