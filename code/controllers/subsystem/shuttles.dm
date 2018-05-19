@@ -94,7 +94,6 @@ var/datum/subsystem/shuttle/SSshuttle
 	switch(location)
 		if(SHUTTLE_IN_TRANSIT)
 			/* --- Shuttle is in transit to Central Command from SS13 --- */
-			to_chat(world, "shuttles are in transit")
 			if(direction == 2)
 				if(timeleft < PARALLAX_LOOP_TIME / 10)
 					var/area/stop_parallax = locate(/area/shuttle/escape/transit)

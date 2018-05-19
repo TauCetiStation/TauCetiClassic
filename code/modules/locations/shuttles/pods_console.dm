@@ -27,22 +27,9 @@
 			SSshuttle.is_escapepod_hacked[current_pod.type] = TRUE
 
 /obj/machinery/computer/escapepod_console/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/device/pda) && W.GetID())
-		var/obj/item/weapon/card/I = W.GetID()
-		if(check_access(I))
-			visible_message("<span class='info'>[user] applies a PDA to [src]. </span>")
-			to_chat(user, "<span class='info'>You hear that [src] softly beeps two times and flashes green. </span>")
-			allow_escape()
-
-	else if(istype(W, /obj/item/weapon/card/id))
-		var/obj/item/weapon/card/I = W
-		if(check_access(I))
-			visible_message("<span class='info'>[user] swipes a card through [src] and it softly beeps three times and flashes green.</span>")
-			allow_escape()
-
-	else if(istype(W, /obj/item/weapon/card/emag) ||\
-			istype(W, /obj/item/weapon/card/emag_broken))
-		visible_message("<span class='info'>[user] swipes a card through [src], it flashes red and beeps one time .</span>")
+	if( istype(W, /obj/item/weapon/card/emag) ||\
+		istype(W, /obj/item/weapon/card/emag_broken))
+		visible_message("<span class='info'>[user] swipes a card through [src], it flashes red and softly beeps.</span>")
 		allow_escape()
 	else
 		to_chat("<span class='info'>You're trying to use [W] on [src], but it flashes red.</span>")
