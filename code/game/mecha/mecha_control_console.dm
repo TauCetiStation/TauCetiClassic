@@ -36,18 +36,18 @@
 	if(!.)
 		return
 
-	var/datum/topic_input/filter = new /datum/topic_input(href,href_list)
+	var/datum/topic_input/F = new /datum/topic_input(href,href_list)
 	if(href_list["send_message"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("send_message")
+		var/obj/item/mecha_parts/mecha_tracking/MT = F.getObj("send_message")
 		var/message = sanitize(input(usr,"Input message","Transmit message") as text)
 		var/obj/mecha/M = MT.in_mecha()
 		if(message && M)
 			M.occupant_message(message)
 	else if(href_list["shock"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("shock")
+		var/obj/item/mecha_parts/mecha_tracking/MT = F.getObj("shock")
 		MT.shock()
 	else if(href_list["get_log"])
-		var/obj/item/mecha_parts/mecha_tracking/MT = filter.getObj("get_log")
+		var/obj/item/mecha_parts/mecha_tracking/MT = F.getObj("get_log")
 		stored_data = MT.get_mecha_log()
 		screen = 1
 	else if(href_list["return"])

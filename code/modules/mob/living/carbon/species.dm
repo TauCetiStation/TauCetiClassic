@@ -28,6 +28,7 @@
 	var/attack_verb = "punch"         // Empty hand hurt intent verb.
 	var/punch_damage = 0              // Extra empty hand attack damage.
 	var/mutantrace                    // Safeguard due to old code.
+	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
 
 	var/breath_type = "oxygen"           // Non-oxygen gas breathed, if any.
 	var/poison_type = "phoron"           // Poisonous air.
@@ -56,7 +57,6 @@
 	var/hazard_low_pressure = HAZARD_LOW_PRESSURE     // Dangerously low pressure.
 
 	var/list/flags = list()       // Various specific features.
-
 	var/list/abilities = list()	// For species-derived or admin-given powers
 
 	var/datum/dirt_cover/blood_color = /datum/dirt_cover/red_blood //Red.
@@ -142,6 +142,9 @@
 	return
 
 /datum/species/proc/on_loose(mob/living/carbon/human/H)
+	return
+
+/datum/species/proc/regen(mob/living/carbon/human/H) // Perhaps others will regenerate in different ways?
 	return
 
 /datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
@@ -406,9 +409,11 @@
 	heat_level_2 = 3000
 	heat_level_3 = 4000
 
+	burn_mod = 1.3
 	speed_mod = 7
 
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
+	butcher_drops = list(/obj/item/stack/sheet/wood = 5)
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -421,16 +426,26 @@
 	,NO_PAIN = TRUE
 	)
 
-	blood_color = /datum/dirt_cover/green_blood
-	has_organ = list(
-		O_HEART   = /obj/item/organ/internal/heart,
-		O_BRAIN   = /obj/item/organ/internal/brain,
-		O_EYES    = /obj/item/organ/internal/eyes,
-		O_LUNGS   = /obj/item/organ/internal/lungs/diona,
-		O_LIVER   = /obj/item/organ/internal/liver,
-		O_KIDNEYS = /obj/item/organ/internal/kidneys
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest
+		,BP_GROIN  = /obj/item/organ/external/groin
+		,BP_HEAD   = /obj/item/organ/external/head/diona
+		,BP_L_ARM  = /obj/item/organ/external/l_arm
+		,BP_R_ARM  = /obj/item/organ/external/r_arm
+		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
 		)
 
+	has_organ = list(
+		O_HEART   = /obj/item/organ/internal/heart,
+		O_BRAIN   = /obj/item/organ/internal/brain/diona,
+		O_EYES    = /obj/item/organ/internal/eyes,
+		O_LUNGS   = /obj/item/organ/internal/lungs/diona,
+		O_LIVER   = /obj/item/organ/internal/liver/diona,
+		O_KIDNEYS = /obj/item/organ/internal/kidneys/diona
+		)
+
+	blood_color = /datum/dirt_cover/green_blood
 	flesh_color = "#907E4A"
 
 	has_gendered_icons = FALSE
@@ -439,6 +454,26 @@
 	H.gender = NEUTER
 
 	return ..()
+
+/datum/species/diona/regen(mob/living/carbon/human/H, light_amount)
+	if(light_amount >= 5) // If you can regen organs - do so.
+		for(var/obj/item/organ/internal/O in H.organs)
+			if(O.damage)
+				O.damage -= light_amount/5
+				H.nutrition -= light_amount
+				return
+	if(H.nutrition > 350 && light_amount >= 4) // If you don't need to regen organs, regen bodyparts.
+		if(!H.regenerating_bodypart) // If there is none currently, go ahead, find it.
+			H.regenerating_bodypart = H.find_damaged_bodypart()
+		if(H.regenerating_bodypart) // If it did find one.
+			H.nutrition -= 1
+			H.apply_damages(0,0,1,1,0,0)
+			H.regen_bodyparts(0, TRUE)
+			return
+	if(light_amount >= 3) // If you don't need to regen bodyparts, fix up small things.
+		H.adjustBruteLoss(-(light_amount))
+		H.adjustToxLoss(-(light_amount))
+		H.adjustOxyLoss(-(light_amount))
 
 /datum/species/diona/handle_death(mob/living/carbon/human/H)
 
@@ -455,11 +490,12 @@
 
 	H.visible_message("\red[H] splits apart with a wet slithering noise!")
 
+
 /datum/species/machine
 	name = IPC
 	icobase = 'icons/mob/human_races/r_machine.dmi'
 	deform = 'icons/mob/human_races/r_machine.dmi'
-	language = "Tradeband"
+	language = "Trinary"
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
@@ -482,6 +518,8 @@
 	brute_mod = 1.5
 	burn_mod = 1
 
+	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
+
 	flags = list(
 	 IS_WHITELISTED = TRUE
 	,NO_BREATHE = TRUE
@@ -492,6 +530,25 @@
 	,VIRUS_IMMUNE = TRUE
 	,BIOHAZZARD_IMMUNE = TRUE
 	)
+
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest
+		,BP_GROIN  = /obj/item/organ/external/groin
+		,BP_HEAD   = /obj/item/organ/external/head/ipc
+		,BP_L_ARM  = /obj/item/organ/external/l_arm
+		,BP_R_ARM  = /obj/item/organ/external/r_arm
+		,BP_L_LEG  = /obj/item/organ/external/l_leg
+		,BP_R_LEG  = /obj/item/organ/external/r_leg
+		)
+
+	has_organ = list(
+		 O_HEART   = /obj/item/organ/internal/heart/ipc
+		,O_BRAIN   = /obj/item/organ/internal/brain/ipc
+		,O_EYES    = /obj/item/organ/internal/eyes/ipc
+		,O_LUNGS   = /obj/item/organ/internal/lungs/ipc
+		,O_LIVER   = /obj/item/organ/internal/liver/ipc
+		,O_KIDNEYS = /obj/item/organ/internal/kidneys/ipc
+		)
 
 	blood_color = /datum/dirt_cover/oil
 	flesh_color = "#575757"
@@ -525,6 +582,8 @@
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
 	dietflags = 0
+
+	butcher_drops = list()
 
 	flags = list(
 	 NO_BREATHE = TRUE
@@ -592,6 +651,8 @@
 	blood_color = /datum/dirt_cover/black_blood
 	darksight = 8
 
+	butcher_drops = list() // They are just shadows. Why should they drop anything?
+
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
@@ -625,6 +686,8 @@
 
 	blood_color = /datum/dirt_cover/adamant_blood
 	flesh_color = "#137E8F"
+
+	butcher_drops = list(/obj/item/weapon/ore/diamond = 1, /obj/item/weapon/ore/slag = 3)
 
 	flags = list(
 		NO_BLOOD = TRUE,
