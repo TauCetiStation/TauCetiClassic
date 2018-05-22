@@ -353,6 +353,70 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	put_in_inactive_hand(O)
 	return TRUE
 
+/mob/living/carbon/human/proc/is_type_organ(organ, o_type)
+	var/obj/item/organ/O
+	if(organ in organs_by_name)
+		O = organs_by_name[organ]
+	if(organ in bodyparts_by_name)
+		O = bodyparts_by_name[organ]
+	if(!O)
+		return FALSE
+	return istype(O, o_type)
+
+/mob/living/carbon/human/proc/is_bruised_organ(organ)
+	var/obj/item/organ/internal/IO = organs_by_name[organ]
+	if(!IO)
+		return TRUE
+	if(IO.is_bruised())
+		return TRUE
+	return FALSE
+
+/mob/living/carbon/human/proc/find_damaged_bodypart()
+	for(var/obj/item/organ/external/BP in bodyparts) // find a broken/destroyed limb
+		if(BP.status & (ORGAN_DESTROYED | ORGAN_BROKEN | ORGAN_SPLINTED))
+			if(BP.parent && (BP.parent.status & ORGAN_DESTROYED))
+				continue
+			else
+				return BP
+	return FALSE // In case we didn't find anything.
+
+/mob/living/carbon/human/proc/regen_bodyparts(remove_blood_amount = 0, use_cost = FALSE)
+	if(vessel && regenerating_bodypart) // start fixing broken/destroyed limb
+		if(remove_blood_amount)
+			for(var/datum/reagent/blood/B in vessel.reagent_list)
+				B.volume -= remove_blood_amount
+		var/regenerating_capacity_penalty = 0 // Used as time till organ regeneration.
+		if(regenerating_bodypart.status & ORGAN_DESTROYED)
+			regenerating_capacity_penalty = regenerating_bodypart.regen_bodypart_penalty
+		else
+			regenerating_capacity_penalty = regenerating_bodypart.regen_bodypart_penalty/2
+		regenerating_organ_time++
+		switch(regenerating_organ_time)
+			if(1)
+				visible_message("<span class='notice'>You see odd movement in [src]'s [regenerating_bodypart.name]...</span>","<span class='notice'> You [species && species.flags[NO_PAIN] ? "notice" : "feel"] strange vibration on tips of your [regenerating_bodypart.name]... </span>")
+			if(10)
+				visible_message("<span class='notice'>You hear sickening crunch In [src]'s [regenerating_bodypart.name]...</span>")
+			if(20)
+				visible_message("<span class='notice'>[src]'s [regenerating_bodypart.name] shortly bends...</span>")
+			if(30)
+				if(regenerating_capacity_penalty == regenerating_bodypart.regen_bodypart_penalty/2)
+					visible_message("<span class='notice'>[src] stirs his [regenerating_bodypart.name]...</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] freedom in moving your [regenerating_bodypart.name]</span>")
+				else
+					visible_message("<span class='notice'>From [src]'s [regenerating_bodypart.parent.name] grows a small meaty sprout...</span>")
+			if(50)
+				visible_message("<span class='notice'>You see something resembling [regenerating_bodypart.name] at [src]'s [regenerating_bodypart.parent.name]...</span>")
+			if(65)
+				visible_message("<span class='userdanger'>A new [regenerating_bodypart.name] has grown from [src]'s [regenerating_bodypart.parent.name]!</span>","<span class='userdanger'>You [species && species.flags[NO_PAIN] ? "notice" : "feel"] your [regenerating_bodypart.name] again!</span>")
+		if(prob(50))
+			emote("scream",1,null,1)
+		if(regenerating_organ_time >= regenerating_capacity_penalty) // recover organ
+			regenerating_bodypart.rejuvenate()
+			regenerating_organ_time = 0
+			if(use_cost)
+				nutrition -= regenerating_capacity_penalty
+			regenerating_bodypart = null
+			update_body()
+
 /mob/living/carbon/human/restrained(check_type = ARMS)
 	if ((check_type & ARMS) && handcuffed)
 		return TRUE

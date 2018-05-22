@@ -74,6 +74,10 @@
 	var/mob/remoteview_target = null
 	var/datum/dirt_cover/hand_dirt_color
 
+	// Organs regenerating variables.
+	var/regenerating_organ_time = 0
+	var/obj/item/organ/external/regenerating_bodypart // A bodypart that is currently regenerating, so we don't have a random one picked each time.
+
 	//Golem stuff
 	var/my_master = 0
 	var/my_golems = list()

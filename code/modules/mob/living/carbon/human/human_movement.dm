@@ -11,6 +11,13 @@
 
 	var/tally = species.speed_mod
 
+	if(is_type_organ(O_HEART, /obj/item/organ/internal/heart/ipc)) // IPC's heart is a servomotor, damaging it influences speed.
+		var/obj/item/organ/internal/IO = organs_by_name[O_HEART]
+		if(!IO) // If it's servomotor somehow is missing, it's absence should be treated as 100 damage to it.
+			tally += 20
+		else
+			tally += IO.damage/5
+
 	if(RUN in mutations)
 		tally -= 0.5
 
