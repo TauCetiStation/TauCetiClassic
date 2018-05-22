@@ -1,0 +1,41 @@
+#define ESCAPE_POD_1 /area/shuttle/escape_pod1/station
+#define ESCAPE_POD_2 /area/shuttle/escape_pod2/station
+#define ESCAPE_POD_3 /area/shuttle/escape_pod3/station
+#define ESCAPE_POD_5 /area/shuttle/escape_pod5/station
+
+/obj/machinery/computer/escapepod_console
+	name = "Escape Pod Console"
+	icon = 'code/modules/locations/shuttles/pods_machinery.dmi'
+	desc = "This is pod's on-board computer. Try not to destroy this important thing!"
+	icon_state = "console"
+	density = FALSE
+	req_access = list(access_captain)
+	var/hacked = FALSE   //is escape pod hacked and ready to go deep in space?
+	var/area/current_pod //area tied to pod
+
+/obj/machinery/computer/escapepod_console/atom_init()
+	. = ..()
+	current_pod = get_area(src.loc)
+
+/obj/machinery/computer/escapepod_console/proc/allow_escape()
+	if(!hacked)
+		hacked = TRUE//Hacked only once per round
+		if( ispath(current_pod.type, ESCAPE_POD_1) ||\
+			ispath(current_pod.type, ESCAPE_POD_2) ||\
+			ispath(current_pod.type, ESCAPE_POD_3) ||\
+			ispath(current_pod.type, ESCAPE_POD_5))
+			SSshuttle.is_escapepod_hacked[current_pod.type] = TRUE
+
+/obj/machinery/computer/escapepod_console/attackby(obj/item/weapon/W, mob/user)
+	if( istype(W, /obj/item/weapon/card/emag) ||\
+		istype(W, /obj/item/weapon/card/emag_broken))
+		visible_message("<span class='info'>[user] swipes a card through [src], it flashes red and softly beeps.</span>")
+		allow_escape()
+	else
+		to_chat("<span class='info'>You're trying to use [W] on [src], but it flashes red.</span>")
+	..()
+
+#undef ESCAPE_POD_1
+#undef ESCAPE_POD_2
+#undef ESCAPE_POD_3
+#undef ESCAPE_POD_5
