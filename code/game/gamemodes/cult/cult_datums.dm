@@ -822,6 +822,8 @@ var/list/cult_runes = list()
 	for(var/datum/mind/H in ticker.mode.cult)
 		if(H.current)
 			to_chat(H.current, "<span class='cult'>Acolyte [user.real_name]: [input]</span>")
+			log_say("Voice Of Blood: [user.real_name]/[key_name(usr)] : [input]")
+
 	playsound(holder, 'sound/magic/message.ogg', 50, 1)
 	holder_reaction(user, input)
 
