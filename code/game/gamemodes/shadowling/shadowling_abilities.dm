@@ -232,8 +232,8 @@
 			return
 		for(var/mob/M in mob_list)
 			if(is_shadow_or_thrall(M) || isobserver(M))
-				to_chat(M, "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [sanitize(text)]</span>")
-				log_say("Shadowling Hivemind: [usr.real_name]/[key_name(usr)] : [entity_ja(sanitize((text))]")
+				to_chat(M, "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [(text)]</span>")
+				log_say("Shadowling Hivemind: [key_name(usr)] : [(text)]")
 
 
 
