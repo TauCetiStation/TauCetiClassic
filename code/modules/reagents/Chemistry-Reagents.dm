@@ -104,7 +104,7 @@ datum
 				if(restrict_species)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if(H.species in restrict_species)
+						if(H.species.name in restrict_species)
 							return FALSE
 					if(ismonkey(M))
 						var/mob/living/carbon/monkey/C = M
@@ -902,8 +902,11 @@ datum
 			nutriment_factor = 2 * REAGENTS_METABOLISM
 			color = "#899613" // rgb: 137, 150, 19
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
+					return
+				if(alien == SKRELL) // It does contain milk.
+					M.adjustToxLoss(2 * REM)
 					return
 				M.nutrition += nutriment_factor * REM
 
@@ -1425,7 +1428,6 @@ datum
 			color = "#551a8b" // rgb: 85, 26, 139
 			overdose = 5.1
 			custom_metabolism = 0.07
-			var/heal_time = 0
 			var/obj/item/organ/external/External
 			taste_message = "machines"
 			restrict_species = list(IPC, DIONA)
@@ -1436,54 +1438,18 @@ datum
 				if(!ishuman(M) || volume > overdose)
 					return
 				var/mob/living/carbon/human/H = M
-				if(H.nutrition < 200) // if nanites doesn't have enough resources, they're stops working and spends
+				if(H.nutrition < 200) // if nanites don't have enough resources, they stop working and still spend
 					H.make_jittery(100)
 					volume += 0.07
 					return
 				H.jitteriness = max(0,H.jitteriness - 100)
-				if(!External)
-					for(var/obj/item/organ/external/BP in H.bodyparts) // find a broken/destroyed limb
-						if(BP.status & ORGAN_DESTROYED)
-							if(BP.parent && (BP.parent.status & ORGAN_DESTROYED))
-								continue
-							else
-								heal_time = 65
-								External = BP
-						else if(BP.status & (ORGAN_BROKEN | ORGAN_SPLINTED))
-							heal_time = 30
-							External = BP
-						if(External)
-							break
-				else if(H.bodytemperature >= 170 && H.vessel) // start fixing broken/destroyed limb
-					for(var/datum/reagent/blood/B in H.vessel.reagent_list)
-						B.volume -= 4
+				if(!H.regenerating_bodypart)
+					H.regenerating_bodypart = H.find_damaged_bodypart()
+				if(H.regenerating_bodypart)
 					H.nutrition -= 3
 					H.apply_effect(3, WEAKEN)
-					H.apply_damages(0,0,1,4,0,5) // 1 toxic, 4 oxy and 5 halloss
-					data++
-					if(data == 1)
-						H.visible_message("<span class='notice'>You see oddly moving in [H]'s [External.name]...</span>"
-					 	,"<span class='notice'> You feel strange vibration on tips of your [External.name]... </span>")
-					if(data == 10)
-						H.visible_message("<span class='notice'>You hear sickening crunch In [H]'s [External.name]...</span>")
-					if(data == 20)
-						H.visible_message("<span class='notice'>[H]'s [External.name] shortly bends...</span>")
-					if(data == 30)
-						if(heal_time == 30)
-							H.visible_message("<span class='notice'>[H] stirs his [External.name]...</span>","<span class='userdanger'>You feel freedom in moving your [External.name]</span>")
-						else
-							H.visible_message("<span class='notice'>From [H]'s [External.parent.name] grow small meaty sprout...</span>")
-					if(data == 50)
-						H.visible_message("<span class='notice'>You see something resembling [External.name] at [H]'s [External.parent.name]...</span>")
-					if(data == 65)
-						H.visible_message("<span class='userdanger'>A new [External.name] grown from [H]'s [External.parent.name]!</span>","<span class='userdanger'>You feel again your [External.name]!</span>")
-					if(prob(50))
-						H.emote("scream",1,null,1)
-					if(data >= heal_time) // recover organ
-						External.rejuvenate()
-						data = 0
-						External = null
-						heal_time = 0
+					H.apply_damages(0,0,1,4,0,5)
+					H.regen_bodyparts(4, FALSE)
 
 		bicaridine
 			name = "Bicaridine"
@@ -1661,6 +1627,37 @@ datum
 			description = "A secondary amine, mildly corrosive."
 			reagent_state = LIQUID
 			color = "#604030" // rgb: 96, 64, 48
+
+			on_mob_life(mob/living/M, alien)
+				if(!..())
+					return
+				if(alien && alien == DIONA)
+					M.nutrition += 2 * REM
+
+			reaction_mob(mob/M, method = TOUCH, volume)
+				if(volume >= 1 && ishuman(M))
+					var/mob/living/carbon/human/H = M
+					var/list/species_hair = list()
+					if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
+						for(var/i in hair_styles_list)
+							var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
+							if(i == "Bald")
+								continue
+							if(H.species.name in tmp_hair.species_allowed)
+								species_hair += i
+						if(species_hair.len)
+							H.h_style = pick(species_hair)
+					var/list/species_facial_hair = list()
+					if(!((H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)) || (H.head && (H.head.flags & MASKCOVERSMOUTH))))
+						for(var/i in facial_hair_styles_list) // In case of a not so far future.
+							var/datum/sprite_accessory/hair/tmp_hair = facial_hair_styles_list[i]
+							if(i == "Shaved")
+								continue
+							if(H.species.name in tmp_hair.species_allowed)
+								species_facial_hair += i
+						if(species_facial_hair.len)
+							H.f_style = pick(species_facial_hair)
+					H.update_hair()
 
 		ethylredoxrazine	// FUCK YOU, ALCOHOL
 			name = "Ethylredoxrazine"
@@ -2212,13 +2209,11 @@ datum
 	diet_flags = DIET_CARN | DIET_OMNI
 	taste_message = "meat"
 
-/datum/reagent/consumable/nutriment/protein/on_mob_life(mob/living/M)
+/datum/reagent/consumable/nutriment/protein/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.species.name == SKRELL)
-			H.adjustToxLoss(2 * REM)
+	if(alien == SKRELL)
+		M.adjustToxLoss(2 * REM)
 
 /datum/reagent/consumable/nutriment/plantmatter		// Plant-based biomatter, digestable by herbivores and omnivores, worthless to carnivores
 	name = "Plant-matter"
@@ -2584,7 +2579,7 @@ datum
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen coated with what might just be your tears"
 
-/datum/reagent/consumable/dry_ramen/on_mob_life(mob/living/M)
+/datum/reagent/consumable/dry_ramen/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	M.nutrition += nutriment_factor
@@ -2598,7 +2593,7 @@ datum
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
-/datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/M)
+/datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	M.nutrition += nutriment_factor
@@ -2614,12 +2609,11 @@ datum
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
-/datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/M)
+/datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	M.nutrition += nutriment_factor
 	M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
-
 /datum/reagent/consumable/rice
 	name = "Rice"
 	id = "rice"
@@ -2655,6 +2649,12 @@ datum
 	reagent_state = LIQUID
 	color = "#F0C814"
 	taste_message = "eggs"
+
+/datum/reagent/consumable/egg/on_mob_life(mob/living/M, alien)
+	if(!..())
+		return
+	if(alien == SKRELL)
+		M.adjustToxLoss(2 * REM)
 
 /datum/reagent/consumable/cheese
 	name = "Cheese"
@@ -2850,13 +2850,15 @@ datum
 	color = "#DFDFDF" // rgb: 223, 223, 223
 	taste_message = "milk"
 
-/datum/reagent/consumable/drink/milk/on_mob_life(mob/living/M)
+/datum/reagent/consumable/drink/milk/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1, 0)
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 10 * REAGENTS_METABOLISM)
+	if(alien == SKRELL && !istype(src, /datum/reagent/consumable/drink/milk/soymilk))
+		M.adjustToxLoss(2 * REM)
 
 /datum/reagent/consumable/drink/milk/soymilk
 	name = "Soy Milk"
@@ -2923,7 +2925,7 @@ datum
 	adj_sleepy = 0
 	adj_temp = 5
 
-/datum/reagent/consumable/drink/coffee/soy_latte/on_mob_life(mob/living/M)
+/datum/reagent/consumable/drink/coffee/soy_latte/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	M.sleeping = 0
@@ -3086,7 +3088,7 @@ datum
 	adj_temp = -9
 	taste_message = "milkshake"
 
-/datum/reagent/consumable/drink/cold/milkshake/on_mob_life(mob/living/M)
+/datum/reagent/consumable/drink/cold/milkshake/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	if(!data)
@@ -3109,6 +3111,8 @@ datum
 			if(istype(M, /mob/living/carbon/slime))
 				M.bodytemperature -= rand(15,20)
 	data++
+	if(alien == SKRELL)
+		M.adjustToxLoss(2 * REM)
 
 /datum/reagent/consumable/drink/cold/milkshake/chocolate
 	name = "Chocolate Milkshake"
@@ -3353,7 +3357,7 @@ datum
 		if(isnum(A.data))
 			d += A.data
 
-	if(alien && alien == SKRELL) //Skrell get very drunk very quickly.
+	if(alien == SKRELL) //Skrell get very drunk very quickly.
 		d *= 5
 
 	M.dizziness += dizzy_adj
@@ -4515,7 +4519,7 @@ datum
 	name = "Hair Dye"
 	id = "whitehairdye"
 	description = "A compound used to dye hair. Any hair."
-	data = new/list("r_color"=255,"g_color"=255,"b_color"=255)
+	data = list("r_color"=255,"g_color"=255,"b_color"=255)
 	reagent_state = LIQUID
 	color = "#FFFFFF" // to see rgb just look into data!
 	taste_message = "liquid colour"
@@ -4627,11 +4631,11 @@ datum
 				H.g_facial = Clamp(round(H.g_facial*max((100-volume)/100, 0) + g_tweak*0.1), 0, 255)
 				H.b_facial = Clamp(round(H.b_facial*max((100-volume)/100, 0) + b_tweak*0.1), 0, 255)
 		else if(H.species && H.species.name in list(HUMAN, UNATHI, TAJARAN))
-			if(!(H.head && (H.head.flags & HEADCOVERSMOUTH)) && H.h_style != "Bald")
+			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))) && H.h_style != "Bald")
 				H.r_hair = Clamp(round(H.r_hair*volume_coefficient + r_tweak), 0, 255)
 				H.g_hair = Clamp(round(H.g_hair*volume_coefficient + g_tweak), 0, 255)
 				H.b_hair = Clamp(round(H.b_hair*volume_coefficient + b_tweak), 0, 255)
-			if(!(H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)) && H.f_style != "Shaved")
+			if(!((H.wear_mask && (H.wear_mask.flags & HEADCOVERSMOUTH)) || (H.head && (H.head.flags & HEADCOVERSMOUTH))) && H.f_style != "Shaved")
 				H.r_facial = Clamp(round(H.r_facial*volume_coefficient + r_tweak), 0, 255)
 				H.g_facial = Clamp(round(H.g_facial*volume_coefficient + g_tweak), 0, 255)
 				H.b_facial = Clamp(round(H.b_facial*volume_coefficient + b_tweak), 0, 255)
@@ -4771,6 +4775,57 @@ datum
 	result = "unholywater"
 	required_reagents = list("water" = 1, "ectoplasm" = 1)
 	result_amount = 1 // Because rules of logic shouldn't apply here either.
+
+/datum/reagent/hair_growth_accelerator
+	name = "Hair Growth Accelerator"
+	id = "hair_growth_accelerator"
+	data = list("bald_head_list"=list("Bald", "Balding Hair", "Skinhead", "Unathi Horns", "Tajaran Ears"),"shaved_face_list"=list("Shaved"),"allowed_races"=list(HUMAN, UNATHI, TAJARAN))
+	description = "A substance for the bald. Renews hair. Apply to head or groin."
+	reagent_state = LIQUID
+	color = "#EFC769" // rgb: 239, 199, 105
+	taste_message = "hairs inside me"
+
+/datum/chemical_reaction/hair_growth_accelerator
+	name = "Hair Growth Accelerator"
+	id = "hair_growth_accelerator"
+	result = "hair_growth_accelerator"
+	required_reagents = list("ryetalyn" = 1, "anti_toxin", "sugar" = 1)
+	result_amount = 3
+
+/datum/reagent/hair_growth_accelerator/reaction_mob(mob/M, method = TOUCH, volume)
+	if(volume >= 1 && ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(H.species.name in data["allowed_races"])
+			if(!(H.head && ((H.head.flags & BLOCKHAIR) || (H.head.flags & HIDEEARS))))
+				var/list/species_hair = list()
+				if(H.species)
+					for(var/i in hair_styles_list)
+						var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
+						if(i in data["bald_hair_styles_list"])
+							continue
+						if(H.species.name in tmp_hair.species_allowed)
+							species_hair += i
+				else
+					species_hair = hair_styles_list
+
+				if(species_hair.len)
+					H.h_style = pick(species_hair)
+
+			if(!((H.wear_mask && (H.wear_mask.flags & MASKCOVERSMOUTH)) || (H.head && (H.head.flags & MASKCOVERSMOUTH))))
+				var/list/species_facial_hair = list()
+				if(H.species)
+					for(var/i in facial_hair_styles_list)
+						var/datum/sprite_accessory/hair/tmp_hair = facial_hair_styles_list[i]
+						if(i in data["shaved_facial_hair_styles_list"])
+							continue
+						if(H.species.name in tmp_hair.species_allowed)
+							species_facial_hair += i
+				else
+					species_facial_hair = facial_hair_styles_list
+
+				if(species_facial_hair.len)
+					H.f_style = pick(species_facial_hair)
+			H.update_hair()
 
 /proc/pretty_string_from_reagent_list(list/reagent_list)
 	//Convert reagent list to a printable string for logging etc

@@ -1263,7 +1263,7 @@ datum/supply_pack/New()
 	name = "Barber supplies"
 	contains = list(/obj/item/weapon/storage/box/hairdyes,
 	/obj/item/weapon/reagent_containers/spray/hair_color_spray,
-	/obj/item/weapon/hair_growth_accelerator,
+	/obj/item/weapon/reagent_containers/glass/bottle/hair_growth_accelerator,
 	/obj/item/weapon/scissors,
 	/obj/item/weapon/razor)
 	cost = 1000

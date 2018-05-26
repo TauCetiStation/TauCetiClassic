@@ -32,7 +32,6 @@
 		dead_mob_list -= brainmob//Update dem lists
 		living_mob_list += brainmob
 
-		user.drop_item()
 		qdel(O)
 
 		name = "Man-Machine Interface: [brainmob.real_name]"
@@ -82,6 +81,8 @@
 			name = "Man-Machine Interface"
 			to_chat(user, "<span class='notice'>You uppend the MMI, dropping [brainmob.real_name] onto the floor.</span>")
 			V.loc = user.loc
+			if(brainmob.mind)
+				brainmob.mind.transfer_to(V)
 			QDEL_NULL(brainmob)
 			return
 		to_chat(user, "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>")
@@ -126,12 +127,16 @@
 	icon_state = "mmi_full"
 	locked = 1
 
-/obj/item/device/mmi/proc/transfer_nymph(mob/living/carbon/monkey/diona/H)
+/obj/item/device/mmi/proc/transfer_nymph(mob/living/carbon/monkey/diona/D)
 	brainmob = new(src)
-	if(H.mind)
-		H.mind.transfer_to(brainmob)
-		brainmob.stat = CONSCIOUS
-	H.forceMove(brainmob)
+	brainmob.name = D.real_name
+	brainmob.real_name = D.real_name
+	brainmob.dna = D.dna
+	brainmob.container = src
+	if(D.mind)
+		D.mind.transfer_to(brainmob)
+	brainmob.stat = CONSCIOUS
+	D.forceMove(brainmob)
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	icon_state = "mmi_fullnymph"

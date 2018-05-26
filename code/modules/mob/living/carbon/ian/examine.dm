@@ -28,7 +28,7 @@
 	//head
 	if(head)
 		if(head.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] [(head.blood_color != "#030303") ? "blood" : "oil"]-stained [head.name] on [t_his] head!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] [head.dirt_description()] on [t_his] head!</span>\n"
 		else if(head.wet)
 			msg += "<span class='wet'>[t_He] [t_is] wearing [bicon(head)] [head.gender==PLURAL?"some":"a"] wet [head.name] on [t_his] head!</span>\n"
 		else
@@ -37,7 +37,7 @@
 	//back
 	if(back)
 		if(back.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_has] [bicon(back)] [back.gender==PLURAL?"some":"a"] [(back.blood_color != "#030303") ? "blood" : "oil"]-stained [back] on [t_his] back.</span>\n"
+			msg += "<span class='warning'>[t_He] [t_has] [bicon(back)] [back.gender==PLURAL?"some":"a"] [back.dirt_description()] on [t_his] back.</span>\n"
 		else if(back.wet)
 			msg += "<span class='wet'>[t_He] [t_has] [bicon(back)] [back.gender==PLURAL?"some":"a"] wet [back] on [t_his] back.</span>\n"
 		else
@@ -46,7 +46,7 @@
 	//hand (err.. mouth!)
 	if(!skipface && mouth && !(mouth.flags&ABSTRACT)) // Yesh, hide hand if face is obscured. Err, i mean mouth!
 		if(mouth.blood_DNA)
-			msg += "<span class='warning'>[t_He] [t_is] holding [bicon(mouth)] [mouth.gender==PLURAL?"some":"a"] [(mouth.blood_color != "#030303") ? "blood" : "oil"]-stained [mouth.name] in [t_his] mouth!</span>\n"
+			msg += "<span class='warning'>[t_He] [t_is] holding [bicon(mouth)] [mouth.gender==PLURAL?"some":"a"] [mouth.dirt_description()] in [t_his] mouth!</span>\n"
 		else if(mouth.wet)
 			msg += "<span class='wet'>[t_He] [t_is] holding [bicon(mouth)] [mouth.gender==PLURAL?"some":"a"] wet [mouth.name] in [t_his] mouth!</span>\n"
 		else

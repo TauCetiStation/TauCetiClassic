@@ -1,3 +1,8 @@
+/datum/gear/tabletop
+	display_name = "Tabletop Assistant"
+	path = /obj/item/device/tabletop_assistant
+	cost = 2
+
 /datum/gear/dice
 	display_name = "d20"
 	path = /obj/item/weapon/dice/d20

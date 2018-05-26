@@ -924,13 +924,25 @@ Owl & Griffin toys
 	name = "deck of cards"
 	desc = "A deck of space-grade playing cards."
 	icon = 'icons/obj/cards.dmi'
-	icon_state = "deck_full"
+	icon_state = "deck"
 	w_class = 2.0
 	var/list/cards = list()
+	var/normal_deck_size = 52 // How many cards should be in the full deck.
+	var/list/integrity = list() // Is populated in atom_init(), determines which cards SHOULD be in the full deck.
 
-/obj/item/toy/cards/atom_init()
-	. = ..()
-	for (var/i in 2 to 10)
+
+/obj/item/toy/cards/update_icon() // Some foreshadowing here.
+	if(cards.len > normal_deck_size/2)
+		icon_state = "[initial(icon_state)]_full"
+	else if(cards.len > normal_deck_size/4)
+		icon_state = "[initial(icon_state)]_half"
+	else if(cards.len >= 1)
+		icon_state = "[initial(icon_state)]_low"
+	else if(cards.len == 0)
+		icon_state = "[initial(icon_state)]_empty"
+
+/obj/item/toy/cards/proc/fill_deck(from_c, to_c) // Made, so we can fill from 6 to 10 instead of 2 to 10.
+	for(var/i in from_c to to_c)
 		cards += "[i] of Hearts"
 		cards += "[i] of Spades"
 		cards += "[i] of Clubs"
@@ -951,28 +963,27 @@ Owl & Griffin toys
 	cards += "Ace of Spades"
 	cards += "Ace of Clubs"
 	cards += "Ace of Diamonds"
+	update_icon()
 
+/obj/item/toy/cards/atom_init()
+	. = ..()
+	fill_deck(2, 10)
+	integrity += cards
 
 /obj/item/toy/cards/attack_hand(mob/user)
 	var/choice = null
 	if(cards.len == 0)
-		src.icon_state = "deck_empty"
 		to_chat(user, "<span class='notice'>There are no more cards to draw.</span>")
 		return
 	var/obj/item/toy/singlecard/H = new/obj/item/toy/singlecard(user.loc)
 	choice = cards[1]
 	H.cardname = choice
 	H.parentdeck = src
-	src.cards -= choice
+	cards -= choice
 	H.pickup(user)
 	user.put_in_active_hand(H)
-	src.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
-	if(cards.len > 26)
-		src.icon_state = "deck_full"
-	else if(cards.len > 10)
-		src.icon_state = "deck_half"
-	else if(cards.len > 1)
-		src.icon_state = "deck_low"
+	user.visible_message("<span class='notice'>[user] draws a card from the deck.</span>", "<span class='notice'>You draw a card from the deck.</span>")
+	update_icon()
 
 /obj/item/toy/cards/attack_self(mob/user)
 	cards = shuffle(cards)
@@ -990,12 +1001,7 @@ Owl & Griffin toys
 			qdel(C)
 		else
 			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
-		if(cards.len > 26)
-			src.icon_state = "deck_full"
-		else if(cards.len > 10)
-			src.icon_state = "deck_half"
-		else if(cards.len > 1)
-			src.icon_state = "deck_low"
+		update_icon()
 
 
 /obj/item/toy/cards/attackby(obj/item/toy/cardhand/C, mob/living/user)
@@ -1008,12 +1014,7 @@ Owl & Griffin toys
 			qdel(C)
 		else
 			to_chat(user, "<span class='notice'>You can't mix cards from other decks.</span>")
-		if(cards.len > 26)
-			src.icon_state = "deck_full"
-		else if(cards.len > 10)
-			src.icon_state = "deck_half"
-		else if(cards.len > 1)
-			src.icon_state = "deck_low"
+		update_icon()
 
 /obj/item/toy/cards/MouseDrop(atom/over_object)
 	var/mob/M = usr

@@ -5,7 +5,7 @@
 	name = "omni gas filter"
 	icon_state = "map_filter"
 
-	var/list/filters = new()
+	var/list/gas_filters = new()
 	var/datum/omni_port/input
 	var/datum/omni_port/output
 	var/max_output_pressure = MAX_OMNI_PRESSURE
@@ -29,7 +29,7 @@
 /obj/machinery/atmospherics/components/omni/filter/Destroy()
 	input = null
 	output = null
-	filters.Cut()
+	gas_filters.Cut()
 	return ..()
 
 /obj/machinery/atmospherics/components/omni/filter/sort_ports()
@@ -39,8 +39,8 @@
 				output = null
 			if(input == P)
 				input = null
-			if(filters.Find(P))
-				filters -= P
+			if(gas_filters.Find(P))
+				gas_filters -= P
 
 			P.air.volume = 200
 			switch(P.mode)
@@ -49,12 +49,12 @@
 				if(ATM_OUTPUT)
 					output = P
 				if(ATM_O2 to ATM_N2O)
-					filters += P
+					gas_filters += P
 
 /obj/machinery/atmospherics/components/omni/filter/error_check()
-	if(!input || !output || !filters)
+	if(!input || !output || !gas_filters)
 		return TRUE
-	if(filters.len < 1) //requires at least 1 filter ~otherwise why are you using a filter?
+	if(gas_filters.len < 1) //requires at least 1 filter ~otherwise why are you using a filter?
 		return TRUE
 
 	return FALSE
@@ -68,7 +68,7 @@
 
 	var/delta = between(0, (output_air ? (max_output_pressure - output_air.return_pressure()) : 0), max_output_pressure)
 	var/transfer_moles_max = calculate_transfer_moles(input_air, output_air, delta, (output && output.parent && output.parent.air.volume) ? output.parent.air.volume : 0)
-	for(var/datum/omni_port/filter_output in filters)
+	for(var/datum/omni_port/filter_output in gas_filters)
 		delta = between(0, (filter_output.air ? (max_output_pressure - filter_output.air.return_pressure()) : 0), max_output_pressure)
 		transfer_moles_max = min(transfer_moles_max, (calculate_transfer_moles(input_air, filter_output.air, delta, (filter_output && filter_output.parent && filter_output.parent.air.volume) ? filter_output.parent.air.volume : 0)))
 
@@ -86,7 +86,7 @@
 		input.parent.update = TRUE
 		output.parent.update = TRUE
 
-		for(var/datum/omni_port/P in filters)
+		for(var/datum/omni_port/P in gas_filters)
 			P.parent.update = TRUE
 
 	return TRUE

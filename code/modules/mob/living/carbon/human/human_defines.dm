@@ -72,7 +72,11 @@
 	var/xylophone = 0 //For the spoooooooky xylophone cooldown
 
 	var/mob/remoteview_target = null
-	var/hand_blood_color
+	var/datum/dirt_cover/hand_dirt_color
+
+	// Organs regenerating variables.
+	var/regenerating_organ_time = 0
+	var/obj/item/organ/external/regenerating_bodypart // A bodypart that is currently regenerating, so we don't have a random one picked each time.
 
 	//Golem stuff
 	var/my_master = 0
@@ -80,8 +84,6 @@
 
 	var/lastScream = 0 // Prevent scream spam in some situations
 	var/name_override //For temporary visible name changes
-
-	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
 
 	var/full_prosthetic    // We are a robutt.
 	var/robolimb_count = 0 // Number of robot limbs.

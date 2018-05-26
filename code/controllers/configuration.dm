@@ -133,6 +133,9 @@
 	var/use_age_restriction_for_jobs = 0 //Do jobs use account age restrictions? --requires database
 	var/use_ingame_minutes_restriction_for_jobs = 0 //Do jobs use in-game minutes instead account age for restrictions?
 
+	var/byond_version_min = 0
+	var/byond_version_recommend = 0
+
 	var/simultaneous_pm_warning_timeout = 100
 
 	var/assistant_maint = 0 //Do assistants get maint access?
@@ -218,6 +221,12 @@
 
 				if ("ban_legacy_system")
 					config.ban_legacy_system = 1
+
+				if ("byond_version_min")
+					config.byond_version_min = text2num(value)
+
+				if ("byond_version_recommend")
+					config.byond_version_recommend = text2num(value)
 
 				if ("use_age_restriction_for_jobs")
 					config.use_age_restriction_for_jobs = 1

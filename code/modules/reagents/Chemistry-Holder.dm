@@ -211,8 +211,10 @@ var/const/INGEST = 2
 	for(var/A in reagent_list)
 		var/datum/reagent/R = A
 		if(M && R)
+			var/mob/living/carbon/C = M //currently metabolism work only for carbon, there is no need to check mob type
+			var/remove_amount = R.custom_metabolism * C.metabolism_factor
 			R.on_mob_life(M, alien)
-			remove_reagent(R.id, R.custom_metabolism)
+			remove_reagent(R.id, remove_amount)
 	update_total()
 
 /datum/reagents/proc/conditional_update_move(atom/A, Running = 0)

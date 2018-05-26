@@ -707,19 +707,22 @@
 				newdir = EAST
 		if((newdir in list(1, 2, 4, 8)) && (prob(50)))
 			newdir = turn(get_dir(T, M.loc), 180)
+		var/datum/dirt_cover/new_cover
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(H.species)
+				new_cover = new H.species.blood_color
+		if(!new_cover)
+			new_cover = new/datum/dirt_cover/red_blood
 		if(!blood_exists)
-			new /obj/effect/decal/cleanable/blood/trail_holder(M.loc)
+			var/obj/effect/decal/cleanable/blood/BL = new /obj/effect/decal/cleanable/blood/trail_holder(M.loc)
+			BL.basedatum = new_cover
+			BL.update_icon()
+		else
+			for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in M.loc)
+				TH.basedatum.add_dirt(new_cover)
+				TH.update_icon()
 		for(var/obj/effect/decal/cleanable/blood/trail_holder/TH in M.loc)
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(H.species)
-					if(TH.color != H.species.blood_color)
-						TH.basecolor = H.species.blood_color
-						TH.update_icon()
-			else
-				if(TH.color != initial(TH.basecolor))
-					TH.basecolor = initial(TH.basecolor)
-					TH.update_icon()
 			if(!TH.amount)
 				STOP_PROCESSING(SSobj, TH)
 				TH.name = initial(TH.name)
@@ -1122,14 +1125,14 @@
 	floating = 0
 
 /mob/living/proc/attempt_harvest(obj/item/I, mob/user)
-	if(stat == DEAD && !isnull(butcher_results) && !ishuman(src)) //can we butcher it?
-		if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/butch))
-			if(user.is_busy()) return
-			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-			if(do_mob(user, src, 80))
-				harvest(user)
-			return TRUE
+	if(stat == DEAD && butcher_results && istype(buckled, /obj/structure/kitchenspike)) //can we butcher it? Mob must be buckled to a meatspike to butcher it
+		if(user.is_busy())
+			return
+		to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
+		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+		if(do_mob(user, src, 80))
+			harvest(user)
+		return TRUE
 
 /mob/living/proc/harvest(mob/user)
 	if(QDELETED(src))
