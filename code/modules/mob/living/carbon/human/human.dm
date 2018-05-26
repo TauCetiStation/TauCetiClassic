@@ -67,7 +67,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		else
 			set_species()
 
-	if(species) // For safety, we put it seperately.
+	if(species) // Just to be sure.
+		metabolism_factor = species.metabolism_mod
 		butcher_results = species.butcher_drops
 
 	dna.species = species.name

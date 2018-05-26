@@ -29,6 +29,8 @@
 	var/co2overloadtime = null
 	var/temperature_resistance = T0C+75
 
+	var/metabolism_factor = METABOLISM_FACTOR
+
 	var/obj/item/head
 	var/obj/item/shoes
 	var/obj/item/neck

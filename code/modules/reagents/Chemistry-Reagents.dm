@@ -104,7 +104,7 @@ datum
 				if(restrict_species)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if(H.species in restrict_species)
+						if(H.species.name in restrict_species)
 							return FALSE
 					if(ismonkey(M))
 						var/mob/living/carbon/monkey/C = M
@@ -860,8 +860,11 @@ datum
 			nutriment_factor = 2 * REAGENTS_METABOLISM
 			color = "#899613" // rgb: 137, 150, 19
 
-			on_mob_life(mob/living/M)
+			on_mob_life(mob/living/M, alien)
 				if(!..())
+					return
+				if(alien == SKRELL) // It does contain milk.
+					M.adjustToxLoss(2 * REM)
 					return
 				M.nutrition += nutriment_factor * REM
 
@@ -2164,13 +2167,11 @@ datum
 	diet_flags = DIET_CARN | DIET_OMNI
 	taste_message = "meat"
 
-/datum/reagent/consumable/nutriment/protein/on_mob_life(mob/living/M)
+/datum/reagent/consumable/nutriment/protein/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.species.name == SKRELL)
-			H.adjustToxLoss(2 * REM)
+	if(alien == SKRELL)
+		M.adjustToxLoss(2 * REM)
 
 /datum/reagent/consumable/nutriment/plantmatter		// Plant-based biomatter, digestable by herbivores and omnivores, worthless to carnivores
 	name = "Plant-matter"
@@ -2536,7 +2537,7 @@ datum
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen coated with what might just be your tears"
 
-/datum/reagent/consumable/dry_ramen/on_mob_life(mob/living/M)
+/datum/reagent/consumable/dry_ramen/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	M.nutrition += nutriment_factor
@@ -2550,7 +2551,7 @@ datum
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
-/datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/M)
+/datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	M.nutrition += nutriment_factor
@@ -2566,12 +2567,11 @@ datum
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
-/datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/M)
+/datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	M.nutrition += nutriment_factor
 	M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
-
 /datum/reagent/consumable/rice
 	name = "Rice"
 	id = "rice"
@@ -2607,6 +2607,12 @@ datum
 	reagent_state = LIQUID
 	color = "#F0C814"
 	taste_message = "eggs"
+
+/datum/reagent/consumable/egg/on_mob_life(mob/living/M, alien)
+	if(!..())
+		return
+	if(alien == SKRELL)
+		M.adjustToxLoss(2 * REM)
 
 /datum/reagent/consumable/cheese
 	name = "Cheese"
@@ -2802,13 +2808,15 @@ datum
 	color = "#DFDFDF" // rgb: 223, 223, 223
 	taste_message = "milk"
 
-/datum/reagent/consumable/drink/milk/on_mob_life(mob/living/M)
+/datum/reagent/consumable/drink/milk/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1, 0)
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 10 * REAGENTS_METABOLISM)
+	if(alien == SKRELL && !istype(src, /datum/reagent/consumable/drink/milk/soymilk))
+		M.adjustToxLoss(2 * REM)
 
 /datum/reagent/consumable/drink/milk/soymilk
 	name = "Soy Milk"
@@ -2875,7 +2883,7 @@ datum
 	adj_sleepy = 0
 	adj_temp = 5
 
-/datum/reagent/consumable/drink/coffee/soy_latte/on_mob_life(mob/living/M)
+/datum/reagent/consumable/drink/coffee/soy_latte/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	M.sleeping = 0
@@ -3038,7 +3046,7 @@ datum
 	adj_temp = -9
 	taste_message = "milkshake"
 
-/datum/reagent/consumable/drink/cold/milkshake/on_mob_life(mob/living/M)
+/datum/reagent/consumable/drink/cold/milkshake/on_mob_life(mob/living/M, alien)
 	if(!..())
 		return
 	if(!data)
@@ -3061,6 +3069,8 @@ datum
 			if(istype(M, /mob/living/carbon/slime))
 				M.bodytemperature -= rand(15,20)
 	data++
+	if(alien == SKRELL)
+		M.adjustToxLoss(2 * REM)
 
 /datum/reagent/consumable/drink/cold/milkshake/chocolate
 	name = "Chocolate Milkshake"
@@ -3305,7 +3315,7 @@ datum
 		if(isnum(A.data))
 			d += A.data
 
-	if(alien && alien == SKRELL) //Skrell get very drunk very quickly.
+	if(alien == SKRELL) //Skrell get very drunk very quickly.
 		d *= 5
 
 	M.dizziness += dizzy_adj
