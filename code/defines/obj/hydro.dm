@@ -77,7 +77,7 @@
 	mutatelist = list(/obj/item/seeds/icepepperseed)
 
 /obj/item/seeds/plastiseed
-	name = "plastellium mycelium"
+	name = "pack of plastellium mycelium"
 	desc = "This mycelium grows into Plastellium."
 	icon_state = "mycelium-plast"
 	mypath = "/obj/item/seeds/plastiseed"
