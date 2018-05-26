@@ -861,13 +861,6 @@
 	origin_tech = "magnets=5;materials=5;bluespace=3"
 	m_amt = 50
 
-/obj/item/weapon/ectoplasm
-	name = "ectoplasm"
-	desc = "Spooky!"
-	gender = PLURAL
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "ectoplasm"
-
 /obj/item/weapon/research//Makes testing much less of a pain -Sieve
 	name = "research"
 	icon = 'icons/obj/stock_parts.dmi'

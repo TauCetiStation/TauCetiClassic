@@ -144,6 +144,155 @@
 		icon_state = "hairspraywhite"
 	update_icon()
 
+//thurible
+/obj/item/weapon/reagent_containers/spray/thurible
+	name = "thurible"
+	desc = "Is used to burn incense. Or heretics. Both? Both is good."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "thurible"
+	item_state = "thurible"
+	amount_per_transfer_from_this = 1
+	possible_transfer_amounts = list(1, 5, 10)
+	spray_size = 1
+	spray_sizes = list(1)
+	volume = 100
+	var/lit = FALSE
+	var/temperature = 0 // At 100, it all evaporates. Yes, even the dense metals. The name doesn't actually imply that this item's temperature is changing.
+	var/fuel = 300
+	safety = TRUE
+
+/obj/item/weapon/reagent_containers/spray/thurible/examine(mob/user)
+	..()
+	if(src in view(1, user))
+		var/temp_sight
+		var/is_fueled
+		switch(temperature)
+			if(-INFINITY to 0)
+				temp_sight = "blue"
+			if(0 to 30)
+				temp_sight = "normal"
+			if(30 to 60)
+				temp_sight = "yellow"
+			if(60 to 90)
+				temp_sight = "orange"
+			if(90 to INFINITY)
+				temp_sight = "<span class='warning'>boiling red</span>"
+		switch(fuel)
+			if(0)
+				is_fueled = "not fueled at all"
+			if(1 to 75)
+				is_fueled = "almost not fueled"
+			if(75 to 150)
+				is_fueled = "slightly fueled"
+			if(150 to 225)
+				is_fueled = "evenly fueled"
+			if(225 to 299)
+				is_fueled = "almost fueled"
+			if(300 to INFINITY)
+				is_fueled = "fully fueled"
+		to_chat(user, "The cap is [safety ? "on" : "off"]. The thurbile's surface is [temp_sight]. The canister in [src] is [is_fueled].")
+
+/obj/item/weapon/reagent_containers/spray/thurible/proc/light(mob/user, action_string = "lights up")
+	if(!lit)
+		icon_state = "thurible_lit"
+		update_icon()
+		lit = TRUE
+		user.visible_message("<span class='notice'>[user] [action_string] \the [src].</span>", "<span class='notice'>You light up \the [src].</span>")
+
+/obj/item/weapon/reagent_containers/spray/thurible/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/reagent_containers/spray/thurible/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/reagent_containers/spray/thurible/process()
+	if(lit && safety)
+		if(temperature >= 100)
+			var/datum/reagents/evaporate = new /datum/reagents
+			evaporate.my_atom = src // Important for fingerprint tracking, and etc.
+			var/evaporated_volume = 0
+			for(var/datum/reagent/A in reagents.reagent_list)
+				var/reagent_volume = min(A.volume/reagents.reagent_list.len, amount_per_transfer_from_this/reagents.reagent_list.len)
+				reagents.remove_reagent(A.id, reagent_volume) // Basically, we want the thurible to evaporate only amount_per_transfer_from_this cube of reagents total.
+				evaporated_volume += reagent_volume/2 // To prevent giant gaseous clouds, we divide the actual volume.
+				evaporate.add_reagent(A.id, reagent_volume, A.data, TRUE) // Safety(no reactions) should be TRUE, since "evaporate" is abstract, and not attached to any objects.
+			if(evaporate.reagent_list.len)
+				var/location = get_turf(src)
+				var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
+				S.attach(location)
+				S.set_up(evaporate, evaporated_volume, 0, location)
+				playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+				S.start()
+				temperature -= rand(evaporated_volume*3,evaporated_volume*6) // Release the "hot" gas, and chill.
+		fuel = max(fuel - 1, 0)
+		if(fuel == 0)
+			temperature = max(0, temperature - 1)
+		else
+			temperature = min(100, temperature+1)
+		if(temperature <=0)
+			visible_message("<span class='notice'>The fire in [src] just went out.</span>")
+			lit = FALSE
+			icon_state = "thurible"
+			update_icon()
+	else if(!lit)
+		if(temperature >= 0)
+			temperature = max(0, temperature - 1)
+		if(!safety)
+			for(var/datum/reagent/A in reagents.reagent_list)
+				if(!istype(A, /datum/reagent/toxin/phoron) && !istype(A, /datum/reagent/fuel))
+					continue
+				else
+					fuel += min(round(A.volume*3), 3) // Basically, 1 point of fuel reagent is 3 fuel points of thurible. 100 - is max fuel.
+					reagents.remove_reagent(A.id, min(A.volume, 1))
+
+/obj/item/weapon/reagent_containers/spray/thurible/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(!lit && safety) // You can't lit the fuel when the cap's off, cause then it wouldn't start to burn.
+		if(istype(W, /obj/item/weapon/weldingtool))
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.isOn())
+				light(user, "casually lights")
+		else if(istype(W, /obj/item/weapon/lighter))
+			var/obj/item/weapon/lighter/L = W
+			if(L.lit)
+				light(user)
+		else if(istype(W, /obj/item/weapon/match))
+			var/obj/item/weapon/match/M = W
+			if(M.lit)
+				light(user)
+		else if(istype(W, /obj/item/candle))
+			var/obj/item/candle/C = W
+			if(C.lit)
+				light(user)
+	else if(!safety)
+		to_chat(user, "<span class='notice'>Put the cap back on.</span>")
+
+/obj/item/weapon/reagent_containers/spray/thurible/attack_self(mob/user)
+	if(lit) // You can't switch the spray mode, if the thing's burning.
+		user.visible_message("<span class='notice'>[user] extinguishes \the [src].</span>", "<span class='notice'>You extinguish \the [src].</span>")
+		lit = FALSE
+		icon_state = "thurible"
+		update_icon()
+	else
+		safety = !safety
+		to_chat(user, "<span class='notice'>You [safety ? "put on" : "take off"] the cap of [src].</span>")
+
+/obj/item/weapon/reagent_containers/spray/thurible/verb/switch_spray_size()
+	set name = "Adjust Nozzle"
+	set category = "Object"
+	set src in usr
+
+	if(!lit && !safety)
+		amount_per_transfer_from_this = next_in_list(amount_per_transfer_from_this, possible_transfer_amounts)
+		spray_size = next_in_list(spray_size, spray_sizes)
+		to_chat(usr, "<span class='notice'>You adjusted the pressure nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>")
+	else if(lit)
+		to_chat(usr, "<span class='notice'>The nozzle is too hot to the touch.</span>")
+	else if(safety)
+		to_chat(usr, "<span class='notice'>Take the cap off first.</span>")
+
 //space cleaner
 /obj/item/weapon/reagent_containers/spray/cleaner
 	name = "space cleaner"
