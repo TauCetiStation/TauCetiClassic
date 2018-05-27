@@ -274,6 +274,7 @@ datum
 					return
 				if(alien && alien == DIONA)
 					M.nutrition += REM
+				return TRUE
 
 		water/holywater
 			name = "Holy Water"
@@ -4651,13 +4652,12 @@ datum
 	description = "A spooky scary substance to explain ghosts and stuff."
 	reagent_state = LIQUID
 	taste_message = "spooky ghosts"
+	data = 1
 	color = "#FFA8E4" // rgb: 255, 168, 228
 
 /datum/reagent/ectoplasm/on_mob_life(mob/living/M)
 	M.hallucination += 1
 	M.make_jittery(2)
-	if(!data)
-		data = 1
 	switch(data)
 		if(1 to 15)
 			M.make_jittery(2)
@@ -4696,13 +4696,12 @@ datum
 	name = "Unholy Water"
 	id = "unholywater"
 	description = "A corpsen-ectoplasmic-water mix, this solution could alter concepts of reality itself."
+	data = 1
 	color = "#C80064" // rgb: 200,0, 100
 
 /datum/reagent/water/unholywater/on_mob_life(mob/living/M)
 	if(!..())
 		return
-	if(!data)
-		data = 1
 	if(iscultist(M) && prob(10))
 		switch(data)
 			if(1 to 30)
@@ -4726,6 +4725,7 @@ datum
 			if(80 to INFINITY)
 				M.sleeping += 1
 	data++
+
 /datum/reagent/water/unholywater/reaction_obj(obj/O, volume)
 	src = null
 	if(istype(O, /obj/item/weapon/dice))
