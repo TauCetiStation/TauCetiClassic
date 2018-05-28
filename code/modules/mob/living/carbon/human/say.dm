@@ -148,6 +148,7 @@
 		if("changeling")
 			if(mind && mind.changeling)
 				var/n_message = message
+				log_say("Changeling Mind: [mind.changeling.changelingID]/[mind.name]/[key] : [n_message]")
 				for(var/mob/Changeling in mob_list)
 					if(Changeling.mind && Changeling.mind.changeling)
 						to_chat(Changeling, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
@@ -162,10 +163,15 @@
 				var/n_message = message
 				for(var/M in mind.changeling.essences)
 					to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
-				for(var/datum/orbit/O in orbiters)
-					to_chat(O.orbiter, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+
+				for(var/mob/M in dead_mob_list)
+					if(!M.client || isnewplayer(M))
+						continue //skip monkeys, leavers and new players
+					if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
+						to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+
 				to_chat(src, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
-				log_say("Changeling Mind: [mind.name]/[key] : [n_message]")
+				log_say("Changeling Mind: [mind.changeling.changelingID]/[mind.name]/[key] : [n_message]")
 			return
 		else
 			if(message_mode)
