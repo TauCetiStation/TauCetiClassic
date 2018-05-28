@@ -801,6 +801,11 @@ var/list/cult_runes = list()
 	word3 = "technology"
 	var/busy = FALSE
 
+/datum/cult/communicate/holder_reaction(mob/living/carbon/user, input)
+	if(istype(holder, /obj/effect/rune))
+		return rune_reaction(user, input)
+	return talisman_reaction(user, input)
+
 /datum/cult/communicate/rune_reaction(mob/living/user, input)
 	user.say("O bidai nabora se[pick("'","`")]sma!")
 	user.say("[input]")
@@ -819,7 +824,6 @@ var/list/cult_runes = list()
 	if(!input)
 		busy = FALSE
 		return fizzle(user)
-	log_say("Voice Of Blood: [key_name(usr)] : [input]")
 	for(var/datum/mind/H in ticker.mode.cult)
 		if(H.current)
 			to_chat(H.current, "<span class='cult'>Acolyte [user.real_name]: [input]</span>")
