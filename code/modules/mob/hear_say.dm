@@ -27,6 +27,9 @@
 			else
 				message = stars(message)
 
+	if(!message)
+		return
+
 	var/speaker_name = speaker.name
 	if(istype(speaker, /mob/living/carbon/human))
 		var/mob/living/carbon/human/H = speaker
@@ -89,6 +92,9 @@
 				message = language.scramble(message)
 			else
 				message = stars(message)
+
+	if(!message)
+		return
 
 	if(hard_to_hear)
 		message = stars(message)
