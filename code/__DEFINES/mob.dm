@@ -115,3 +115,5 @@
 #define CLICK_CD_INTERACT 4
 #define CLICK_CD_RAPID 2
 #define CLICK_CD_AI 9
+
+#define MAX_FECES_COUNT 5

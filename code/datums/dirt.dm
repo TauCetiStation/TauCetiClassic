@@ -27,7 +27,7 @@
 /datum/dirt_cover/purple_blood
 	name = "purple blood"
 	color = "#8817c1"
-	
+
 /datum/dirt_cover/green_blood
 	name = "green blood"
 	color = "#004400"
@@ -47,6 +47,11 @@
 /datum/dirt_cover/xeno_blood
 	name = "xeno blood"
 	color = "#05EE05"
+
+/datum/dirt_cover/poo
+	name = "shit"
+	color = "#402000"
+
 
 /datum/dirt_cover/proc/add_dirt(datum/dirt_cover/A)
 	var/red = (hex2num(copytext(color,2,4)) + hex2num(copytext(A.color,2,4))) / 2

@@ -1854,6 +1854,12 @@
 
 		var/ok = 0
 		switch(href_list["secretsfun"])
+			if("toggle_shit")
+				SHIT_TOGGLED = !SHIT_TOGGLED
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","Shit")
+				log_admin("[key_name(usr)] toggled shit [(SHIT_TOGGLED != 0) ? "on" : "off"]")
+				message_admins("\blue [key_name_admin(usr)] toggled shit [(SHIT_TOGGLED != 0) ? "on" : "off"].")
 			if("sec_clothes")
 				feedback_inc("admin_secrets_fun_used",1)
 				feedback_add_details("admin_secrets_fun_used","SC")
