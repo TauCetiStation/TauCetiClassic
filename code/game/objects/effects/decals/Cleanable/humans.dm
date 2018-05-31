@@ -96,7 +96,7 @@ var/global/list/image/splatter_cache=list()
 
 	perp.update_inv_shoes()
 	if(perp.lying)
-		perp.crawl_in_blood(src)
+		perp.crawl_in_blood(src,2)
 	amount--
 
 /obj/effect/decal/cleanable/blood/proc/dry()
@@ -119,7 +119,7 @@ var/global/list/image/splatter_cache=list()
 			user.blood_DNA = list()
 		user.blood_DNA |= blood_DNA.Copy()
 		user.bloody_hands += taken
-		user.hand_dirt_color = new/datum/dirt_cover(basedatum)
+	//	user.hand_dirt_color = new/datum/dirt_cover(basedatum)
 		if(user.hand_dirt_color)
 			user.hand_dirt_color.add_dirt(basedatum)
 		else

@@ -50,3 +50,6 @@
 
 	var/list/recent_tastes = list()
 	var/lasttaste = 0 // Prevent tastes spam
+
+	var/feces_count = 0
+	var/next_feces_message_time = 0
