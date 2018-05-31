@@ -85,8 +85,6 @@
 
 	usr << browse(entity_ja(content), "window=content")
 
-
-
 /datum/admins/proc/library_recycle_bin()
 	set category = "Admin"
 	set name = "Library recycle bin"

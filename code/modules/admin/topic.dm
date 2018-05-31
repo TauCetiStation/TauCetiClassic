@@ -2689,21 +2689,38 @@
 		src.access_news_network()
 
 	else if(href_list["readbook"])
+		if(!check_rights(R_ADMIN))
+			return
+
 		var/bookid = text2num(href_list["readbook"])
+
+		if(!isnum(bookid))
+			return
+
 		var/DBQuery/query = dbcon_old.NewQuery("SELECT content FROM library WHERE id = [bookid]")
+
 		if(!query.Execute())
 			return
 
 		var/content
 		if(query.NextRow())
 			content = query.item[1]
+		else
+			return
 
 		usr << browse(entity_ja(content), "window=book")
 
 	else if(href_list["restorebook"])
+		if(!check_rights(R_DEBUG))
+			return
+
 		if(alert(usr, "Confirm restoring?", "Message", "Yes", "No") != "Yes")
 			return
 		var/bookid = text2num(href_list["restorebook"])
+
+		if(!isnum(bookid))
+			return
+
 		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = [bookid]")
 		if(!query.Execute())
 			return
@@ -2722,11 +2739,19 @@
 		message_admins("[key_name_admin(usr)] restored [title] from the recycle bin")
 
 	else if(href_list["deletebook"])
+		if(!check_rights(R_DEBUG))
+			return
+
 		if(alert(usr, "Confirm removal?", "Message", "Yes", "No") != "Yes")
 			return
 
 		var/bookid = text2num(href_list["deletebook"])
+
+		if(!isnum(bookid))
+			return
+
 		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = [bookid]")
+
 		if(!query.Execute())
 			return
 
@@ -2738,6 +2763,8 @@
 
 		query = dbcon_old.NewQuery("DELETE FROM library WHERE id='[bookid]'")
 		if(!query.Execute())
+			return
+		else
 			return
 
 		library_recycle_bin()
