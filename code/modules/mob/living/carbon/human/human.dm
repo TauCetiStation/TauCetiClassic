@@ -423,6 +423,19 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return TRUE
 	return 0
 
+/mob/living/carbon/human/resist()
+	..()
+	if(usr && !usr.incapacitated())
+		var/mob/living/carbon/human/D = usr
+		if(D.get_species() == DIONA)
+			var/list/choices = list()
+			for(var/mob/living/carbon/monkey/diona/V in contents)
+				if(istype(V) && V.gestalt == src)
+					choices += V
+			var/mob/living/carbon/monkey/diona/V = input(D,"Who do wish you to expel from within?") in null|choices
+			if(V)
+				to_chat(D, "<span class='notice'>You wriggle [V] out of your insides.</span>")
+				V.splitting(D)
 
 /mob/living/carbon/human/show_inv(mob/user)
 	var/obj/item/clothing/under/suit = null
