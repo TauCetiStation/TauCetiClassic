@@ -133,6 +133,18 @@
 	key = list("q", "é")
 	syllables = list("hs","zt","kr","st","sh")
 
+/datum/language/diona_space
+	name = "Rootsong"
+	desc = "A language represented by series of high frequency waves, similiar to those of radio waves. Can not be picked up without advanced equipment, but waves do spread in space."
+	allowed_species = list(IPC, DIONA)
+	colour = "soghun"
+	key = list("f", "à")
+	signlang_verb = list("emits a series of short beeps", "screeches in boops", "eminates short pings", "projects a series of screeches")
+	flags = SIGNLANG // For all intents and purposes, this is basically a sign language.
+
+/datum/language/diona_space/format_message(message, verb)
+	return "<span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
+
 /datum/language/human
 	name = "Sol Common"
 	desc = "A bastardized hybrid of informal English and elements of Mandarin Chinese; the common language of the Sol system."
