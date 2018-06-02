@@ -134,6 +134,18 @@
 	key = list("q", "é")
 	syllables = list("hs","zt","kr","st","sh")
 
+/datum/language/diona_space
+	name = "Rootsong"
+	desc = "A language represented by series of high frequency waves, similiar to those of radio waves. Can not be picked up without advanced equipment, but waves do spread in space."
+	allowed_species = list(IPC, DIONA)
+	colour = "soghun"
+	key = list("f", "à")
+	signlang_verb = list("emits a series of short beeps", "screeches in boops", "eminates short pings", "projects a series of screeches")
+	flags = SIGNLANG // For all intents and purposes, this is basically a sign language.
+
+/datum/language/diona_space/format_message(message, verb)
+	return "<span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
+
 /datum/language/human
 	name = "Sol Common"
 	desc = "A bastardized hybrid of informal English and elements of Mandarin Chinese; the common language of the Sol system."
@@ -149,7 +161,7 @@
 	ask_verb = "beeps"
 	exclaim_verb = "boops"
 	colour = "ipc"
-	key = list("x", "÷") //only "dfpz" left.
+	key = list("x", "÷") //only "dpz" left.
 	//need to find a way to resolve possesive macros
 	allowed_species = list(IPC)
 	syllables = list("000", "111", "222", "001", "010", "100", "002", "020", "200", "011", "101", "110", "022", "202", "220", "112", "121", "211", "122", "212", "221", "012", "021", "120", "210", "102", "201")
