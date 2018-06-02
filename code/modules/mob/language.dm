@@ -71,7 +71,7 @@
 	exclaim_verb = "roars"
 	colour = "soghun"
 	key = list("o", "ù")
-	allowed_species = list(IPC)
+	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, TAJARAN)
 	syllables = list("ss","ss","ss","ss","skak","seeki","resh","las","esi","kor","sh")
 
 /datum/language/tajaran
@@ -81,7 +81,7 @@
 	ask_verb = "mrowls"
 	exclaim_verb = "yowls"
 	colour = "tajaran"
-	allowed_species = list(IPC)
+	allowed_species = list(IPC, HUMAN, DIONA, SKRELL, UNATHI)
 	key = list("j", "î")
 	syllables = list("rr","rr","tajr","kir","raj","kii","mir","kra","ahk","nal","vah","khaz","jri","ran","darr", \
 	"mi","jri","dynh","manq","rhe","zar","rrhaz","kal","chur","eech","thaa","dra","jurl","mah","sanu","dra","ii'r", \
