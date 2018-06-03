@@ -24,6 +24,7 @@
 	var/primitive                     // Lesser form, if any (ie. monkey for humans)
 	var/tail                          // Name of tail image in species effects icon file.
 	var/language                      // Default racial language, if any.
+	var/list/additional_languages = list() // Additional languages, to the primary. These can not be the forced ones.
 	var/force_racial_language = FALSE // If TRUE, racial language will be forced by default when speaking.
 	var/attack_verb = "punch"         // Empty hand hurt intent verb.
 	var/punch_damage = 0              // Extra empty hand attack damage.
@@ -218,6 +219,7 @@
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
 	language = "Siik'maas"
+	additional_languages = list("Siik'tajr")
 	tail = "tajtail"
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
