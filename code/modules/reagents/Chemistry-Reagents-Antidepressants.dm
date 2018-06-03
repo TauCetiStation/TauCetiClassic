@@ -10,9 +10,8 @@
 	data = 0
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/antidepressant/methylphenidate/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/antidepressant/methylphenidate/on_general_digest(mob/living/M)
+	..()
 	if(volume <= 0.1 && data != -1)
 		data = -1
 		to_chat(M, "<span class='warning'>You lose focus..</span>")
@@ -38,9 +37,8 @@
 	data = 0
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/antidepressant/citalopram/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/antidepressant/citalopram/on_general_digest(mob/living/M)
+	..()
 	if(volume <= 0.1 && data != -1)
 		data = -1
 		to_chat(M, "<span class='warning'>Your mind feels a little less stable.</span>")
@@ -66,9 +64,8 @@
 	data = 0
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/antidepressant/paroxetine/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/antidepressant/paroxetine/on_general_digest(mob/living/M)
+	..()
 	if(volume <= 0.1 && data != -1)
 		data = -1
 		to_chat(M, "<span class='warning'>Your mind feels much less stable.</span>")

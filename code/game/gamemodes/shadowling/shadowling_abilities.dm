@@ -371,9 +371,8 @@
 	//metabolization_rate = 100 //lel
 	custom_metabolism = 100
 
-/datum/reagent/shadowling_blindness_smoke/on_mob_life(var/mob/living/M as mob)
-	if(!..())
-		return
+/datum/reagent/shadowling_blindness_smoke/on_general_digest(mob/living/M)
+	..()
 	if(!is_shadow_or_thrall(M))
 		to_chat(M, "<span class='warning bold'>You breathe in the black smoke, and your eyes burn horribly!</span>")
 		M.eye_blind = 5

@@ -132,12 +132,11 @@
 	toxpwr = 0
 	custom_metabolism = 1
 
-	on_mob_life(mob/living/carbon/M)
-		if(!..())
-			return
-		if(!data)
-			data = 1
-		if(!volume)
-			volume = 1
-		if(volume > 5)
-			M.Weaken(4)
+/datum/reagent/toxin/harvester/on_general_digest(mob/living/carbon/M)
+	..()
+	if(!data)
+		data = 1
+	if(!volume)
+		volume = 1
+	if(volume > 5)
+		M.Weaken(4)

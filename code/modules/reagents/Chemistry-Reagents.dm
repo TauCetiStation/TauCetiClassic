@@ -78,7 +78,7 @@
 		return
 	if(!isliving(M))
 		return //Noticed runtime errors from pacid trying to damage ghosts, this should fix. --NEO
-	if(!check_digesting(M)) // You can't overdose on what you can't digest
+	if(!check_digesting(M, alien)) // You can't overdose on what you can't digest
 		return
 	if((overdose > 0) && (volume >= overdose))//Overdosing, wooo
 		M.adjustToxLoss(overdose_dam)
@@ -98,7 +98,7 @@
 /datum/reagent/proc/on_update(atom/A)
 	return
 
-/datum/reagent/proc/check_digesting(mob/living/M)
+/datum/reagent/proc/check_digesting(mob/living/M, alien)
 	if(restrict_species)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -108,6 +108,64 @@
 			var/mob/living/carbon/monkey/C = M
 			if(C.race in restrict_species)
 				return FALSE
+	var/should_general_digest = TRUE
+	switch(alien)
+		if(HUMAN)
+			should_general_digest = TRUE
+		if(SKRELL)
+			should_general_digest = on_skrell_digest(M)
+		if(UNATHI)
+			should_general_digest = on_unathi_digest(M)
+		if(TAJARAN)
+			should_general_digest = on_tajaran_digest(M)
+		if(DIONA)
+			should_general_digest = on_diona_digest(M)
+		if(VOX)
+			should_general_digest = on_vox_digest(M)
+		if(VOX_ARMALIS)
+			should_general_digest = on_vox_digest(M)
+		if(ABDUCTOR)
+			should_general_digest = on_abductor_digest(M)
+		if(SKELETON)
+			should_general_digest = on_skeleton_digest(M)
+		if(SHADOWLING)
+			should_general_digest = on_shadowling_digest(M)
+		if(GOLEM)
+			should_general_digest = on_golem_digest(M)
+		else
+			should_general_digest = TRUE
+	if(should_general_digest)
+		on_general_digest(M)
+	return TRUE
+
+/datum/reagent/proc/on_general_digest(mob/living/M)
+	return
+
+/datum/reagent/proc/on_skrell_digest(mob/living/M)
+	return TRUE
+
+/datum/reagent/proc/on_unathi_digest(mob/living/M)
+	return TRUE
+
+/datum/reagent/proc/on_tajaran_digest(mob/living/M)
+	return TRUE
+
+/datum/reagent/proc/on_diona_digest(mob/living/M)
+	return TRUE
+
+/datum/reagent/proc/on_vox_digest(mob/living/M)
+	return TRUE
+
+/datum/reagent/proc/on_abductor_digest(mob/living/M)
+	return TRUE
+
+/datum/reagent/proc/on_skeleton_digest(mob/living/M)
+	return TRUE
+
+/datum/reagent/proc/on_shadowling_digest(mob/living/M)
+	return TRUE
+
+/datum/reagent/proc/on_golem_digest(mob/living/M)
 	return TRUE
 
 /datum/reagent/blood
@@ -146,11 +204,10 @@
 		var/mob/living/carbon/C = M
 		C.antibodies |= self.data["antibodies"]
 
-/datum/reagent/blood/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
-	if(alien && alien == DIONA)
-		M.adjustCloneLoss(-REM)
+/datum/reagent/blood/on_diona_digest(mob/living/M)
+	..() // Should be put in these procs, in case a xeno of sorts has a reaction to ALL reagents.
+	M.adjustCloneLoss(-REM)
+	return FALSE // Returning false would mean that generic digestion proc won't be used.
 
 /datum/reagent/blood/reaction_turf(turf/simulated/T, volume)//splash the blood all over the place
 	if(!istype(T))
@@ -261,12 +318,10 @@
 		if(!cube.wrapped)
 			cube.Expand()
 
-/datum/reagent/water/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
-	if(alien && alien == DIONA)
-		M.nutrition += REM
-	return TRUE
+/datum/reagent/water/on_diona_digest(mob/living/M)
+	..()
+	M.nutrition += REM
+	return FALSE
 
 /datum/reagent/water/holywater
 	name = "Holy Water"
@@ -274,9 +329,8 @@
 	description = "An ashen-obsidian-water mix, this solution will alter certain sections of the brain's rationality."
 	color = "#e0e8ef" // rgb: 224, 232, 239
 
-/datum/reagent/water/holywater/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/water/holywater/on_general_digest(mob/living/M)
+	..()
 	if(holder.has_reagent("unholywater"))
 		holder.remove_reagent("unholywater", 2 * REM)
 	if(ishuman(M) && iscultist(M) && prob(10))
@@ -351,9 +405,8 @@
 	custom_metabolism = 0.01
 	taste_message = "plastic"
 
-/datum/reagent/plasticide/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/plasticide/on_general_digest(mob/living/M)
+	..()
 	// Toxins are really weak, but without being treated, last very long.
 	M.adjustToxLoss(0.2)
 
@@ -365,9 +418,8 @@
 	color = "#13bc5e" // rgb: 19, 188, 94
 	overdose = REAGENTS_OVERDOSE
 
-/datum/reagent/slimetoxin/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/slimetoxin/on_general_digest(mob/living/M)
+	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.dna && !H.dna.mutantrace)
@@ -383,9 +435,8 @@
 	color = "#13bc5e" // rgb: 19, 188, 94
 	overdose = REAGENTS_OVERDOSE
 
-/datum/reagent/aslimetoxin/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/aslimetoxin/on_general_digest(mob/living/M)
+	..()
 	if(istype(M, /mob/living/carbon) && M.stat != DEAD)
 		to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
 		if(M.monkeyizing)
@@ -421,9 +472,8 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/srejuvenate/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/srejuvenate/on_general_digest(mob/living/M)
+	..()
 	if(M.losebreath >= 10)
 		M.losebreath = max(10, M.losebreath-10)
 	if(!data)
@@ -456,14 +506,15 @@
 	overdose = REAGENTS_OVERDOSE * 2
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/inaprovaline/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
-	if(alien && alien == VOX)
-		M.adjustToxLoss(REAGENTS_METABOLISM)
-	else
-		if(M.losebreath >= 10)
-			M.losebreath = max(10, M.losebreath-5)
+/datum/reagent/inaprovaline/on_general_digest(mob/living/M)
+	..()
+	if(M.losebreath >= 10)
+		M.losebreath = max(10, M.losebreath-5)
+
+/datum/reagent/inaprovaline/on_vox_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(REAGENTS_METABOLISM)
+	return FALSE // General digest proc shouldn't be called.
 
 /datum/reagent/space_drugs
 	name = "Space drugs"
@@ -475,9 +526,8 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/space_drugs/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/space_drugs/on_general_digest(mob/living/M)
+	..()
 	M.druggy = max(M.druggy, 15)
 	if(isturf(M.loc) && !istype(M.loc, /turf/space))
 		if(M.canmove && !M.restrained())
@@ -496,9 +546,8 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/serotrotium/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/serotrotium/on_general_digest(mob/living/M)
+	..()
 	if(ishuman(M))
 		if(prob(7))
 			M.emote(pick("twitch","drool","moan","gasp"))
@@ -512,12 +561,11 @@
 	taste_message = null
 	custom_metabolism = 0.01
 
-/datum/reagent/oxygen/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
-	if(alien && alien == VOX)
-		M.adjustToxLoss(REAGENTS_METABOLISM)
-		holder.remove_reagent(id, REAGENTS_METABOLISM) //By default it slowly disappears.
+/datum/reagent/oxygen/on_vox_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(REAGENTS_METABOLISM)
+	holder.remove_reagent(id, REAGENTS_METABOLISM) //By default it slowly disappears.
+	return FALSE
 
 /datum/reagent/copper
 	name = "Copper"
@@ -536,18 +584,20 @@
 	taste_message = null
 	custom_metabolism = 0.01
 
-/datum/reagent/nitrogen/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
-	if(alien && alien == VOX)
-		M.adjustOxyLoss(-2 * REM)
-		holder.remove_reagent(id, REAGENTS_METABOLISM) //By default it slowly disappears.
-	if(alien && alien == DIONA)
-		M.adjustBruteLoss(-REM)
-		M.adjustOxyLoss(-REM)
-		M.adjustToxLoss(-REM)
-		M.adjustFireLoss(-REM)
-		M.nutrition += REM
+/datum/reagent/nitrogen/on_diona_digest(mob/living/M)
+	..()
+	M.adjustBruteLoss(-REM)
+	M.adjustOxyLoss(-REM)
+	M.adjustToxLoss(-REM)
+	M.adjustFireLoss(-REM)
+	M.nutrition += REM
+	return FALSE
+
+/datum/reagent/nitrogen/on_vox_digest(mob/living/M)
+	..()
+	M.adjustOxyLoss(-2 * REM)
+	holder.remove_reagent(id, REAGENTS_METABOLISM) //By default it slowly disappears.
+	return FALSE
 
 /datum/reagent/hydrogen
 	name = "Hydrogen"
@@ -577,9 +627,8 @@
 	taste_message = "druggie poison"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/mercury/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/mercury/on_general_digest(mob/living/M)
+	..()
 	if(M.canmove && !M.restrained() && istype(M.loc, /turf/space))
 		step(M, pick(cardinal))
 	if(prob(5))
@@ -623,9 +672,8 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "characteristic taste"
 
-/datum/reagent/chlorine/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/chlorine/on_general_digest(mob/living/M)
+	..()
 	M.take_bodypart_damage(1 * REM, 0)
 
 /datum/reagent/fluorine
@@ -637,10 +685,9 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = "toothpaste"
 
-/datum/reagent/fluorine/on_mob_life(mob/living/M)
-	if(!..())
-		return
-	M.adjustToxLoss(1 * REM)
+/datum/reagent/fluorine/on_general_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(REM)
 
 /datum/reagent/sodium
 	name = "Sodium"
@@ -660,15 +707,14 @@
 	taste_message = "misguided choices"
 	custom_metabolism = 0.01
 
-/datum/reagent/phosphorus/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
-	if(alien && alien == DIONA)
-		M.adjustBruteLoss(-REM)
-		M.adjustOxyLoss(-REM)
-		M.adjustToxLoss(-REM)
-		M.adjustFireLoss(-REM)
-		M.nutrition += REM
+/datum/reagent/phosphorus/on_diona_digest(mob/living/M)
+	..()
+	M.adjustBruteLoss(-REM)
+	M.adjustOxyLoss(-REM)
+	M.adjustToxLoss(-REM)
+	M.adjustFireLoss(-REM)
+	M.nutrition += REM
+	return FALSE
 
 /datum/reagent/lithium
 	name = "Lithium"
@@ -680,9 +726,8 @@
 	taste_message = "happiness"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/lithium/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/lithium/on_general_digest(mob/living/M)
+	..()
 	if(M.canmove && !M.restrained() && istype(M.loc, /turf/space))
 		step(M, pick(cardinal))
 	if(prob(5))
@@ -696,9 +741,8 @@
 	color = "#FFFFFF" // rgb: 255, 255, 255
 	taste_message = "sweetness"
 
-/datum/reagent/sugar/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/sugar/on_general_digest(mob/living/M)
+	..()
 	M.nutrition += REM
 
 /datum/reagent/glycerol
@@ -716,7 +760,7 @@
 	description = "Nitroglycerin is a heavy, colorless, oily, explosive liquid obtained by nitrating glycerol."
 	reagent_state = LIQUID
 	color = "#808080" // rgb: 128, 128, 128
-	taste_message = "oil" // Wait. Is it really oil though? Or does it here mean oil, as in "масло"?
+	taste_message = "oil" // Wait. Is it really oil though? Or does it here mean oil, as in "?????"?
 	custom_metabolism = 0.01
 
 /datum/reagent/radium
@@ -727,9 +771,8 @@
 	color = "#C7C7C7" // rgb: 199,199,199
 	taste_message = "bonehurting juice"
 
-/datum/reagent/radium/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/radium/on_general_digest(mob/living/M)
+	..()
 	M.apply_effect(2 * REM,IRRADIATE, 0)
 	// radium may increase your chances to cure a disease
 	if(istype(M,/mob/living/carbon)) // make sure to only use it on carbon mobs
@@ -755,7 +798,6 @@
 			if(!glow)
 				new /obj/effect/decal/cleanable/greenglow(T)
 
-
 /datum/reagent/ryetalyn
 	name = "Ryetalyn"
 	id = "ryetalyn"
@@ -765,9 +807,8 @@
 	overdose = REAGENTS_OVERDOSE
 	custom_metabolism = 0
 
-/datum/reagent/ryetalyn/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/ryetalyn/on_general_digest(mob/living/M)
+	..()
 	M.remove_any_mutations()
 	holder.del_reagent(id)
 
@@ -786,9 +827,8 @@
 			W.thermite = 1
 			W.overlays += image('icons/effects/effects.dmi',icon_state = "#673910")
 
-/datum/reagent/thermite/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/thermite/on_general_digest(mob/living/M)
+	..()
 	M.adjustFireLoss(1)
 
 /datum/reagent/paracetamol
@@ -800,9 +840,8 @@
 	overdose = 60
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/paracetamol/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/paracetamol/on_general_digest(mob/living/M)
+	..()
 	if(volume > overdose)
 		M.hallucination = max(M.hallucination, 2)
 
@@ -816,9 +855,8 @@
 	custom_metabolism = 0.025
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/tramadol/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/tramadol/on_general_digest(mob/living/M)
+	..()
 	if(volume > overdose)
 		M.hallucination = max(M.hallucination, 2)
 
@@ -832,9 +870,8 @@
 	custom_metabolism = 0.025
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/oxycodone/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/oxycodone/on_general_digest(mob/living/M)
+	..()
 	if(volume > overdose)
 		M.druggy = max(M.druggy, 10)
 		M.hallucination = max(M.hallucination, 3)
@@ -847,13 +884,14 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#899613" // rgb: 137, 150, 19
 
-/datum/reagent/virus_food/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
-	if(alien == SKRELL) // It does contain milk.
-		M.adjustToxLoss(2 * REM)
-		return
+/datum/reagent/virus_food/on_general_digest(mob/living/M)
+	..()
 	M.nutrition += nutriment_factor * REM
+
+/datum/reagent/virus_vood/on_skrell_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(2 * REM)
+	return FALSE
 
 /datum/reagent/sterilizine
 	name = "Sterilizine"
@@ -906,9 +944,8 @@
 	color = "#B8B8C0" // rgb: 184, 184, 192
 	taste_message = "bonehurting juice"
 
-/datum/reagent/uranium/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/uranium/on_general_digest(mob/living/M)
+	..()
 	M.apply_effect(1, IRRADIATE, 0)
 
 /datum/reagent/uranium/reaction_turf(turf/T, volume)
@@ -953,9 +990,8 @@
 /datum/reagent/fuel/reaction_turf(turf/T, volume)
 	new /obj/effect/decal/cleanable/liquid_fuel(T, volume)
 
-/datum/reagent/fuel/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/fuel/on_general_digest(mob/living/M)
+	..()
 	M.adjustToxLoss(1)
 
 /datum/reagent/fuel/reaction_mob(mob/living/M, method=TOUCH, volume)//Splashing people with welding fuel to make them easy to ignite!
@@ -1036,9 +1072,8 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
-/datum/reagent/leporazine/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/leporazine/on_general_digest(mob/living/M)
+	..()
 	if(M.bodytemperature > BODYTEMP_NORMAL)
 		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	else if(M.bodytemperature < 311)
@@ -1055,9 +1090,8 @@
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/cryptobiolin/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/cryptobiolin/on_general_digest(mob/living/M)
+	..()
 	M.make_dizzy(1)
 	if(!M.confused)
 		M.confused = 1
@@ -1073,9 +1107,8 @@
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/kelotane/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/kelotane/on_general_digest(mob/living/M)
+	..()
 	M.heal_bodypart_damage(0,2 * REM)
 
 /datum/reagent/dermaline
@@ -1088,9 +1121,8 @@
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/dermaline/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/dermaline/on_general_digest(mob/living/M)
+	..()
 	M.heal_bodypart_damage(0,3 * REM)
 
 /datum/reagent/dexalin
@@ -1103,16 +1135,17 @@
 	taste_message = "oxygen"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/dexalin/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
-	if(alien && alien == VOX)
-		M.adjustToxLoss(2 * REM)
-	else
-		M.adjustOxyLoss(-2 * REM)
+/datum/reagent/dexalin/on_general_digest(mob/living/M)
+	..()
+	M.adjustOxyLoss(-2 * REM)
 
 	if(holder.has_reagent("lexorin"))
 		holder.remove_reagent("lexorin", 2 * REM)
+
+/datum/reagent/dexalin/on_general_digest(mob/living/M, alien) // Now dexalin does not remove lexarin from Voxes. For the better or the worse.
+	..()
+	M.adjustToxLoss(2 * REM)
+	return FALSE
 
 /datum/reagent/dexalinp
 	name = "Dexalin Plus"
@@ -1124,16 +1157,17 @@
 	taste_message = "ability to breath"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/dexalinp/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
-	if(alien && alien == VOX)
-		M.adjustOxyLoss()
-	else
-		M.adjustOxyLoss(-M.getOxyLoss())
+/datum/reagent/dexalinp/on_general_digest(mob/living/M)
+	..()
+	M.adjustOxyLoss(-M.getOxyLoss())
 
 	if(holder.has_reagent("lexorin"))
 		holder.remove_reagent("lexorin", 2 * REM)
+
+/datum/reagent/dexalinp/on_vox_digest(mob/living/M) // Now dexalin plus does not remove lexarin from Voxes. For the better or the worse.
+	..()
+	M.adjustOxyLoss(6 * REM) // Let's just say it's thrice as poisonous.
+	return FALSE
 
 /datum/reagent/tricordrazine
 	name = "Tricordrazine"
@@ -1144,9 +1178,8 @@
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/tricordrazine/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/tricordrazine/on_general_digest(mob/living/M)
+	..()
 	if(M.getOxyLoss())
 		M.adjustOxyLoss(-1 * REM)
 	if(M.getBruteLoss() && prob(80))
@@ -1165,10 +1198,9 @@
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/anti_toxin/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
-	M.reagents.remove_all_type(/datum/reagent/toxin, 1 * REM, 0, 1)
+/datum/reagent/anti_toxin/on_general_digest(mob/living/M)
+	..()
+	M.reagents.remove_all_type(/datum/reagent/toxin, REM, 0, 1)
 	M.drowsyness = max(M.drowsyness - 2 * REM, 0)
 	M.hallucination = max(0, M.hallucination - 5 * REM)
 	M.adjustToxLoss(-2 * REM)
@@ -1181,9 +1213,8 @@
 	color = "#C8A5DC" // rgb: 200, 165, 220
 	taste_message = "admin abuse"
 
-/datum/reagent/adminordrazine/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/adminordrazine/on_general_digest(mob/living/M)
+	..()
 	M.reagents.remove_all_type(/datum/reagent/toxin, 5 * REM, 0, 1)
 	M.setCloneLoss(0)
 	M.setOxyLoss(0)
@@ -1222,9 +1253,8 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/synaptizine/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/synaptizine/on_general_digest(mob/living/M)
+	..()
 	M.drowsyness = max(M.drowsyness - 5, 0)
 	M.AdjustParalysis(-1)
 	M.AdjustStunned(-1)
@@ -1244,9 +1274,8 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/impedrezene/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/impedrezene/on_general_digest(mob/living/M)
+	..()
 	M.jitteriness = max(M.jitteriness - 5, 0)
 	if(prob(80))
 		M.adjustBrainLoss(1 * REM)
@@ -1265,9 +1294,8 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
-/datum/reagent/hyronalin/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/hyronalin/on_general_digest(mob/living/M)
+	..()
 	M.radiation = max(M.radiation - 3 * REM, 0)
 
 /datum/reagent/arithrazine
@@ -1280,9 +1308,8 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
-/datum/reagent/arithrazine/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/arithrazine/on_general_digest(mob/living/M)
+	..()
 	M.radiation = max(M.radiation - 7 * REM, 0)
 	M.adjustToxLoss(-1 * REM)
 	if(prob(15))
@@ -1298,9 +1325,8 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
-/datum/reagent/alkysine/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/alkysine/on_general_digest(mob/living/M)
+	..()
 	M.adjustBrainLoss(-3 * REM)
 
 /datum/reagent/imidazoline
@@ -1313,9 +1339,8 @@
 	taste_message = "carrot"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/imidazoline/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/imidazoline/on_general_digest(mob/living/M)
+	..()
 	M.eye_blurry = max(M.eye_blurry - 5, 0)
 	M.eye_blind = max(M.eye_blind - 5, 0)
 	if(ishuman(M))
@@ -1335,9 +1360,8 @@
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/peridaxon/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/peridaxon/on_general_digest(mob/living/M)
+	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 
@@ -1357,9 +1381,8 @@
 	taste_message = "machines"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/kyphotorin/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/kyphotorin/on_general_digest(mob/living/M)
+	..()
 	if(!ishuman(M) || volume > overdose)
 		return
 	var/mob/living/carbon/human/H = M
@@ -1386,9 +1409,8 @@
 	taste_message = null
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/bicaridine/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/bicaridine/on_general_digest(mob/living/M, alien)
+	..()
 	M.heal_bodypart_damage(2 * REM, 0)
 
 /datum/reagent/hyperzine
@@ -1402,9 +1424,8 @@
 	taste_message = "speed"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/hyperizine/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/hyperizine/on_general_digest(mob/living/M)
+	..()
 	if(prob(5))
 		M.emote(pick("twitch","blink_r","shiver"))
 
@@ -1416,9 +1437,8 @@
 	color = "#80bfff" // rgb: 200, 165, 220
 	taste_message = null
 
-/datum/reagent/cryoxadone/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/cryoxadone/on_general_digest(mob/living/M)
+	..()
 	if(M.bodytemperature < 170)
 		M.adjustCloneLoss(-1)
 		M.adjustOxyLoss(-1)
@@ -1433,9 +1453,8 @@
 	color = "#8080ff" // rgb: 200, 165, 220
 	taste_message = null
 
-/datum/reagent/clonexadone/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/clonexadone/on_general_digest(mob/living/M)
+	..()
 	if(M.bodytemperature < 170)
 		M.adjustCloneLoss(-3)
 		M.adjustOxyLoss(-3)
@@ -1451,9 +1470,8 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
-/datum/reagent/rezadone/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/rezadone/on_general_digest(mob/living/M)
+	..()
 	if(!data)
 		data = 1
 	data++
@@ -1553,11 +1571,10 @@
 	reagent_state = LIQUID
 	color = "#604030" // rgb: 96, 64, 48
 
-/datum/reagent/diethylamine/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
-	if(alien && alien == DIONA)
-		M.nutrition += 2 * REM
+/datum/reagent/diethylamine/on_diona_digest(mob/living/M)
+	..()
+	M.nutrition += 2 * REM
+	return FALSE
 
 /datum/reagent/diethylamine/reaction_mob(mob/M, method = TOUCH, volume)
 	if(volume >= 1 && ishuman(M))
@@ -1584,7 +1601,7 @@
 				H.f_style = pick(species_facial_hair)
 		H.update_hair()
 
-/datum/reagent/ethylredoxrazine	// FUCK YOU, ALCOHOL
+/datum/reagent/ethylredoxrazine // FUCK YOU, ALCOHOL
 	name = "Ethylredoxrazine"
 	id = "ethylredoxrazine"
 	description = "A powerful oxidizer that reacts with ethanol."
@@ -1593,9 +1610,8 @@
 	overdose = REAGENTS_OVERDOSE
 	taste_message = null
 
-/datum/reagent/ethylredoxrazine/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/ethylredoxrazine/on_general_digest(mob/living/M)
+	..()
 	M.dizziness = 0
 	M.drowsyness = 0
 	M.stuttering = 0
@@ -1614,12 +1630,10 @@
 	custom_metabolism = 0.1
 	taste_message = "bitterness"
 
-/datum/reagent/toxin/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/toxin/on_general_digest(mob/living/M)
+	..()
 	if(toxpwr)
 		M.adjustToxLoss(toxpwr * REM)
-	return TRUE //toxin has many subclasses, so we need return TRUE for them.
 
 /datum/reagent/toxin/amatoxin
 	name = "Amatoxin"
@@ -1652,9 +1666,8 @@
 		domutcheck(M, null)
 		M.UpdateAppearance()
 
-/datum/reagent/toxin/mutagen/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/toxin/mutagen/on_general_digest(mob/living/M)
+	..()
 	M.apply_effect(10, IRRADIATE, 0)
 
 /datum/reagent/toxin/phoron
@@ -1665,9 +1678,8 @@
 	color = "#ef0097" // rgb: 231, 27, 0
 	toxpwr = 3
 
-/datum/reagent/toxin/phoron/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/toxin/phoron/on_general_digest(mob/living/M)
+	..()
 	if(holder.has_reagent("inaprovaline"))
 		holder.remove_reagent("inaprovaline", 2 * REM)
 
@@ -1711,9 +1723,8 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/toxin/lexorin/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/toxin/lexorin/on_general_digest(mob/living/M)
+	..()
 	if(prob(33))
 		M.take_bodypart_damage(1 * REM, 0)
 	M.adjustOxyLoss(3)
@@ -1728,9 +1739,8 @@
 	color = "#801E28" // rgb: 128, 30, 40
 	toxpwr = 0
 
-/datum/reagent/toxin/slimejelly/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/toxin/slimejelly/on_general_digest(mob/living/M)
+	..()
 	if(prob(10))
 		to_chat(M, "<span class='warning'>Your insides are burning!</span>")
 		M.adjustToxLoss(rand(20,60) * REM)
@@ -1746,9 +1756,8 @@
 	toxpwr = 4
 	custom_metabolism = 0.4
 
-/datum/reagent/toxin/cyanide/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/toxin/cyanide/on_general_digest(mob/living/M)
+	..()
 	M.adjustOxyLoss(4 * REM)
 	M.sleeping += 1
 
@@ -1760,9 +1769,8 @@
 	color = "#CF3600" // rgb: 207, 54, 0
 	toxpwr = 0
 
-/datum/reagent/toxin/minttoxin/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/toxin/minttoxin/on_general_digest(mob/living/M)
+	..()
 	if(FAT in M.mutations)
 		M.gib()
 
@@ -1783,9 +1791,8 @@
 	toxpwr = 0.5
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/toxin/zombiepowder/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/toxin/zombiepowder/on_general_digest(mob/living/M)
+	..()
 	M.status_flags |= FAKEDEATH
 	M.adjustOxyLoss(0.5 * REM)
 	M.Weaken(10)
@@ -1808,9 +1815,8 @@
 	custom_metabolism = 0.05
 	overdose = REAGENTS_OVERDOSE
 
-/datum/reagent/toxin/mindbreaker/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/toxin/mindbreaker/on_general_digest(mob/living/M)
+	..()
 	M.hallucination += 10
 
 /datum/reagent/toxin/plantbgone
@@ -1869,9 +1875,8 @@
 	overdose = REAGENTS_OVERDOSE
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/toxin/stoxin/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/toxin/stoxin/on_general_digest(mob/living/M)
+	..()
 	if(!data)
 		data = 1
 	switch(data)
@@ -1901,9 +1906,8 @@
 	overdose_dam = 6
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/toxin/chloralhydrate/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/toxin/chloralhydrate/on_general_digest(mob/living/M)
+	..()
 	if(!data)
 		data = 1
 	data++
@@ -1925,9 +1929,8 @@
 	toxpwr = 0
 	overdose = 30
 
-/datum/reagent/toxin/potassium_chloride/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/toxin/potassium_chloride/on_general_digest(mob/living/M)
+	..()
 	if(M.stat != UNCONSCIOUS)
 		if(volume >= overdose)
 			if(M.losebreath >= 10)
@@ -1944,9 +1947,8 @@
 	toxpwr = 2
 	overdose = 20
 
-/datum/reagent/toxin/potassium_chlorophoride/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/toxin/potassium_chlorophoride/on_general_digest(mob/living/M)
+	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.stat != UNCONSCIOUS)
@@ -1965,9 +1967,8 @@
 	overdose = REAGENTS_OVERDOSE * 0.5
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/toxin/beer2/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/toxin/beer2/on_general_digest(mob/living/M)
+	..()
 	if(!data)
 		data = 1
 	switch(data)
@@ -1989,9 +1990,8 @@
 	custom_metabolism = 0.4
 	toxpwr = 0
 
-/datum/reagent/toxin/mutetoxin/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/toxin/mutetoxin/on_general_digest(mob/living/M)
+	..()
 	M.silent = max(M.silent, 3)
 
 /datum/reagent/toxin/acid
@@ -2003,9 +2003,8 @@
 	toxpwr = 1
 	var/meltprob = 10
 
-/datum/reagent/toxin/acid/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/toxin/acid/on_general_digest(mob/living/M)
+	..()
 	M.take_bodypart_damage(0, 1 * REM)
 
 /datum/reagent/toxin/acid/reaction_mob(mob/living/M, method=TOUCH, volume)//magic numbers everywhere
@@ -2093,9 +2092,8 @@
 	id = "consumable"
 	taste_message = null
 
-/datum/reagent/consumable/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/on_general_digest(mob/living/M)
+	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.can_eat(diet_flags))	//Make sure the species has it's dietflag set, otherwise it can't digest any nutrients
@@ -2111,15 +2109,13 @@
 	color = "#664330" // rgb: 102, 67, 48
 	taste_message = "bland food"
 
-/datum/reagent/consumable/nutriment/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/nutriment/on_general_digest(mob/living/M)
+	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(H.can_eat(diet_flags))
 			if(prob(50))
 				M.adjustBruteLoss(-1)
-	return TRUE
 
 /*
 				// If overeaten - vomit and fall down
@@ -2143,20 +2139,19 @@
 	diet_flags = DIET_CARN | DIET_OMNI
 	taste_message = "meat"
 
-/datum/reagent/consumable/nutriment/protein/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
-	if(alien == SKRELL)
-		M.adjustToxLoss(2 * REM)
+/datum/reagent/consumable/nutriment/protein/on_skrell_digest(mob/living/M, alien)
+	..()
+	M.adjustToxLoss(2 * REM)
+	return FALSE
 
-/datum/reagent/consumable/nutriment/plantmatter		// Plant-based biomatter, digestable by herbivores and omnivores, worthless to carnivores
+/datum/reagent/consumable/nutriment/plantmatter // Plant-based biomatter, digestable by herbivores and omnivores, worthless to carnivores
 	name = "Plant-matter"
 	id = "plantmatter"
 	description = "Vitamin-rich fibers and natural sugars commonly found in fresh produce."
 	diet_flags = DIET_HERB | DIET_OMNI
 	taste_message = "plant matter"
 
-/datum/reagent/consumable/vitamin			//Helps to regen blood and hunger
+/datum/reagent/consumable/vitamin //Helps to regen blood and hunger
 	name = "Vitamin"
 	id = "vitamin"
 	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
@@ -2164,9 +2159,8 @@
 	color = "#664330" // rgb: 102, 67, 48
 	taste_message = null
 
-/datum/reagent/consumable/vitamin/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/vitamin/on_general_digest(mob/living/M)
+	..()
 	if(prob(50))
 		M.adjustBruteLoss(-1)
 		M.adjustFireLoss(-1)
@@ -2180,7 +2174,6 @@
 				var/datum/reagent/blood/B = locate() in H.vessel.reagent_list
 				B.volume += 0.5
 
-
 /datum/reagent/consumable/lipozine
 	name = "Lipozine" // The anti-nutriment.
 	id = "lipozine"
@@ -2190,9 +2183,8 @@
 	color = "#BBEDA4" // rgb: 187, 237, 164
 	overdose = REAGENTS_OVERDOSE
 
-/datum/reagent/consumable/lipozine/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/lipozine/on_general_digest(mob/living/M)
+	..()
 	M.nutrition = max(M.nutrition - nutriment_factor, 0)
 	M.overeatduration = 0
 
@@ -2232,9 +2224,8 @@
 	custom_metabolism = FOOD_METABOLISM
 	taste_message = "<span class='warning'>HOTNESS</span>"
 
-/datum/reagent/consumable/capsaicin/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/capsaicin/on_general_digest(mob/living/M)
+	..()
 	if(!data)
 		data = 1
 	switch(data)
@@ -2312,9 +2303,8 @@
 				victim.Stun(5)
 				victim.Weaken(5)
 
-/datum/reagent/consumable/condensedcapsaicin/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/condensedcapsaicin/on_general_digest(mob/living/M)
+	..()
 	if(prob(5))
 		M.visible_message("<span class='warning'>[M] [pick("dry heaves!","coughs!","splutters!")]</span>")
 
@@ -2327,9 +2317,8 @@
 	custom_metabolism = FOOD_METABOLISM
 	taste_message = "<font color='lightblue'>cold</span>"
 
-/datum/reagent/consumable/frostoil/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/frostoil/on_general_digest(mob/living/M)
+	..()
 	M.bodytemperature = max(M.bodytemperature - 10 * TEMPERATURE_DAMAGE_COEFFICIENT, 0)
 	if(prob(1))
 		M.emote("shiver")
@@ -2338,7 +2327,7 @@
 	holder.remove_reagent("capsaicin", 5)
 	holder.remove_reagent(src.id, FOOD_METABOLISM)
 
-/datum/reagent/consumable/frostoil/reaction_turf(var/turf/simulated/T, var/volume)
+/datum/reagent/consumable/frostoil/reaction_turf(turf/simulated/T, volume)
 	for(var/mob/living/carbon/slime/M in T)
 		M.adjustToxLoss(rand(15,30))
 
@@ -2368,9 +2357,8 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "cocoa"
 
-/datum/reagent/consumable/coco/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/coco/on_general_digest(mob/living/M)
+	..()
 	M.nutrition += nutriment_factor
 
 /datum/reagent/consumable/hot_coco
@@ -2382,9 +2370,8 @@
 	color = "#403010" // rgb: 64, 48, 16
 	taste_message = "chocolate"
 
-/datum/reagent/consumable/hot_coco/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M)
+	..()
 	if (M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	M.nutrition += nutriment_factor
@@ -2398,9 +2385,8 @@
 	custom_metabolism = FOOD_METABOLISM * 0.5
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/psilocybin/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/consumable/psilocybin/on_general_digest(mob/living/M)
+	..()
 	M.druggy = max(M.druggy, 30)
 	if(!data)
 		data = 1
@@ -2437,9 +2423,8 @@
 	color = "#FF00FF" // rgb: 255, 0, 255
 	taste_message = "sweetness"
 
-/datum/reagent/consumable/sprinkles/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
+	..()
 	M.nutrition += nutriment_factor
 	/*if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden")) //if we want some FUN and FEATURES we should uncomment it
 		if(!M) M = holder.my_atom
@@ -2457,7 +2442,7 @@
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#AB7878" // rgb: 171, 120, 120
 
-	on_mob_life(var/mob/living/M as mob)
+	on_general_digest(var/mob/living/M as mob)
 		M.nutrition += nutriment_factor
 		if(istype(M, /mob/living/carbon/human) && M.mind)
 		if(M.mind.special_role)
@@ -2477,9 +2462,8 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "oil"
 
-/datum/reagent/consumable/cornoil/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/cornoil/on_general_digest(mob/living/M)
+	..()
 	M.nutrition += nutriment_factor
 
 /datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
@@ -2513,9 +2497,8 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen coated with what might just be your tears"
 
-/datum/reagent/consumable/dry_ramen/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/consumable/dry_ramen/on_general_digest(mob/living/M)
+	..()
 	M.nutrition += nutriment_factor
 
 /datum/reagent/consumable/hot_ramen
@@ -2527,9 +2510,8 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
-/datum/reagent/consumable/hot_ramen/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/consumable/hot_ramen/on_general_digest(mob/living/M)
+	..()
 	M.nutrition += nutriment_factor
 	if (M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -2543,11 +2525,11 @@
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
-/datum/reagent/consumable/hell_ramen/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
+	..()
 	M.nutrition += nutriment_factor
 	M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
+
 /datum/reagent/consumable/rice
 	name = "Rice"
 	id = "rice"
@@ -2557,9 +2539,8 @@
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_message = "rice"
 
-/datum/reagent/consumable/rice/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/rice/on_general_digest(mob/living/M)
+	..()
 	M.nutrition += nutriment_factor
 
 /datum/reagent/consumable/cherryjelly
@@ -2571,9 +2552,8 @@
 	color = "#801E28" // rgb: 128, 30, 40
 	taste_message = "cherry jelly"
 
-/datum/reagent/consumable/cherryjelly/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/cherryjelly/on_general_digest(mob/living/M)
+	..()
 	M.nutrition += nutriment_factor
 
 /datum/reagent/consumable/egg
@@ -2584,11 +2564,10 @@
 	color = "#F0C814"
 	taste_message = "eggs"
 
-/datum/reagent/consumable/egg/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
-	if(alien == SKRELL)
-		M.adjustToxLoss(2 * REM)
+/datum/reagent/consumable/egg/on_skrell_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(2 * REM)
+	return FALSE
 
 /datum/reagent/consumable/cheese
 	name = "Cheese"
@@ -2632,9 +2611,8 @@
 	var/adj_sleepy = 0
 	var/adj_temp = 0
 
-/datum/reagent/consumable/drink/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/drink/on_general_digest(mob/living/M)
+	..()
 	M.nutrition += nutriment_factor
 	if(adj_dizzy)
 		M.dizziness = max(0,M.dizziness + adj_dizzy)
@@ -2645,7 +2623,6 @@
 	if(adj_temp)
 		if(M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
 			M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (25 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	return TRUE
 
 /datum/reagent/consumable/drink/orangejuice
 	name = "Orange juice"
@@ -2654,9 +2631,8 @@
 	color = "#E78108" // rgb: 231, 129, 8
 	taste_message = "orange juice"
 
-/datum/reagent/consumable/drink/orangejuice/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/drink/orangejuice/on_general_digest(mob/living/M)
+	..()
 	if(M.getOxyLoss() && prob(30))
 		M.adjustOxyLoss(-1)
 
@@ -2667,9 +2643,8 @@
 	color = "#731008" // rgb: 115, 16, 8
 	taste_message = "tomato juice"
 
-/datum/reagent/consumable/drink/tomatojuice/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/drink/tomatojuice/on_general_digest(mob/living/M)
+	..()
 	if(M.getFireLoss() && prob(20))
 		M.heal_bodypart_damage(0, 1)
 
@@ -2680,9 +2655,8 @@
 	color = "#365E30" // rgb: 54, 94, 48
 	taste_message = "lime juice"
 
-/datum/reagent/consumable/drink/limejuice/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/drink/limejuice/on_general_digest(mob/living/M)
+	..()
 	if(M.getToxLoss() && prob(20))
 		M.adjustToxLoss(-1 * REM)
 
@@ -2693,9 +2667,8 @@
 	color = "#973800" // rgb: 151, 56, 0
 	taste_message = "carrot juice"
 
-/datum/reagent/consumable/drink/carrotjuice/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/drink/carrotjuice/on_general_digest(mob/living/M)
+	..()
 	M.eye_blurry = max(M.eye_blurry - 1, 0)
 	M.eye_blind = max(M.eye_blind - 1, 0)
 	if(!data)
@@ -2737,9 +2710,8 @@
 	color = "#863353" // rgb: 134, 51, 83
 	taste_message = "bitterness"
 
-/datum/reagent/consumable/drink/poisonberryjuice/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/drink/poisonberryjuice/on_general_digest(mob/living/M)
+	..()
 	M.adjustToxLoss(1)
 
 /datum/reagent/consumable/drink/watermelonjuice
@@ -2784,15 +2756,17 @@
 	color = "#DFDFDF" // rgb: 223, 223, 223
 	taste_message = "milk"
 
-/datum/reagent/consumable/drink/milk/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/consumable/drink/milk/on_general_digest(mob/living/M)
+	..()
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1, 0)
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 10 * REAGENTS_METABOLISM)
-	if(alien == SKRELL && !istype(src, /datum/reagent/consumable/drink/milk/soymilk))
-		M.adjustToxLoss(2 * REM)
+
+/datum/reagent/consumable/drink/milk/on_skrell_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(2 * REM)
+	return FALSE
 
 /datum/reagent/consumable/drink/milk/soymilk
 	name = "Soy Milk"
@@ -2800,6 +2774,9 @@
 	description = "An opaque white liquid made from soybeans."
 	color = "#DFDFC7" // rgb: 223, 223, 199
 	taste_message = "fake milk"
+
+/datum/reagent/consumable/drink/milk/soymilk/on_skrell_digest(mob/living/M) // Can't digest milk, but soy milk isn't quite milk.
+	return TRUE
 
 /datum/reagent/consumable/drink/milk/cream
 	name = "Cream"
@@ -2835,13 +2812,11 @@
 	adj_temp = 25
 	taste_message = "coffee"
 
-/datum/reagent/consumable/drink/coffee/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/drink/coffee/on_general_digest(mob/living/M)
+	..()
 	M.make_jittery(5)
 	if(adj_temp > 0 && holder.has_reagent("frostoil"))
 		holder.remove_reagent("frostoil", 10 * REAGENTS_METABOLISM)
-	return TRUE
 
 /datum/reagent/consumable/drink/coffee/icecoffee
 	name = "Iced Coffee"
@@ -2859,9 +2834,8 @@
 	adj_sleepy = 0
 	adj_temp = 5
 
-/datum/reagent/consumable/drink/coffee/soy_latte/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/consumable/drink/coffee/soy_latte/on_general_digest(mob/living/M)
+	..()
 	M.sleeping = 0
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1, 0)
@@ -2874,9 +2848,8 @@
 	adj_sleepy = 0
 	adj_temp = 5
 
-/datum/reagent/consumable/drink/coffee/cafe_latte/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/drink/coffee/cafe_latte/on_general_digest(mob/living/M)
+	..()
 	M.sleeping = 0
 	if(M.getBruteLoss() && prob(20))
 		M.heal_bodypart_damage(1, 0)
@@ -2892,9 +2865,8 @@
 	adj_temp = 20
 	taste_message = "tea"
 
-/datum/reagent/consumable/drink/tea/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/drink/tea/on_general_digest(mob/living/M)
+	..()
 	if(M.getToxLoss() && prob(20))
 		M.adjustToxLoss(-1)
 
@@ -2951,9 +2923,8 @@
 	adj_sleepy = -2
 	taste_message = "cola"
 
-/datum/reagent/consumable/drink/cold/nuka_cola/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/drink/cold/nuka_cola/on_general_digest(mob/living/M)
+	..()
 	M.make_jittery(20)
 	M.druggy = max(M.druggy, 30)
 	M.dizziness += 5
@@ -3022,9 +2993,8 @@
 	adj_temp = -9
 	taste_message = "milkshake"
 
-/datum/reagent/consumable/drink/cold/milkshake/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/consumable/drink/cold/milkshake/on_general_digest(mob/living/M)
+	..()
 	if(!data)
 		data = 1
 	switch(data)
@@ -3045,8 +3015,11 @@
 			if(istype(M, /mob/living/carbon/slime))
 				M.bodytemperature -= rand(15,20)
 	data++
-	if(alien == SKRELL)
-		M.adjustToxLoss(2 * REM)
+
+/datum/reagent/consumable/drink/cold/milkshake/on_skrell_digest(mob/living/M)
+	..()
+	M.adjustToxLoss(2 * REM)
+	return FALSE
 
 /datum/reagent/consumable/drink/cold/milkshake/chocolate
 	name = "Chocolate Milkshake"
@@ -3064,7 +3037,6 @@
 	adj_temp = -9
 	taste_message = "strawberry milk"
 
-
 /datum/reagent/consumable/drink/cold/rewriter
 	name = "Rewriter"
 	description = "The secret of the sanctuary of the Libarian..."
@@ -3072,9 +3044,8 @@
 	color = "#485000" // rgb:72, 080, 0
 	taste_message = "coffee...soda?"
 
-/datum/reagent/consumable/drink/cold/rewriter/on_mob_life(var/mob/living/M as mob)
-	if(!..())
-		return
+/datum/reagent/consumable/drink/cold/rewriter/on_general_digest(mob/living/M )
+	..()
 	M.make_jittery(5)
 
 /datum/reagent/consumable/doctor_delight
@@ -3087,9 +3058,8 @@
 	nutriment_factor = 1 * FOOD_METABOLISM
 	taste_message = "healthy dietary choices"
 
-/datum/reagent/consumable/doctor_delight/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/doctor_delight/on_general_digest(mob/living/M)
+	..()
 	M.nutrition += nutriment_factor
 	if(M.getOxyLoss() && prob(50))
 		M.adjustOxyLoss(-2)
@@ -3115,9 +3085,8 @@
 	taste_message = "fruity alcohol"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/atomicbomb/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/consumable/atomicbomb/on_general_digest(mob/living/M)
+	..()
 	M.druggy = max(M.druggy, 50)
 	M.confused = max(M.confused + 2,0)
 	M.make_dizzy(10)
@@ -3143,9 +3112,8 @@
 	taste_message = "the number fourty two"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/gargle_blaster/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/consumable/gargle_blaster/on_general_digest(mob/living/M)
+	..()
 	if(!data)
 		data = 1
 	data++
@@ -3170,9 +3138,8 @@
 	taste_message = "brain damageeeEEeee"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/neurotoxin/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/consumable/neurotoxin/on_general_digest(mob/living/M)
+	..()
 	M.weakened = max(M.weakened, 3)
 	if(!data)
 		data = 1
@@ -3199,9 +3166,8 @@
 	taste_message = "peeeeeeace"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/hippies_delight/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/consumable/hippies_delight/on_general_digest(mob/living/M)
+	..()
 	M.druggy = max(M.druggy, 50)
 	if(!data)
 		data = 1
@@ -3269,7 +3235,7 @@
 	taste_message = "liquid fire"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/consumable/ethanol/on_mob_life(mob/living/M, alien)
+/datum/reagent/consumable/ethanol/on_mob_life(mob/living/M, alien) // There's a multiplier for Skrells, which can't be inbuilt in any other reasonable way.
 	if(!..())
 		return
 
@@ -3350,9 +3316,8 @@
 	nutriment_factor = 1 * FOOD_METABOLISM
 	taste_message = "beer"
 
-/datum/reagent/consumable/ethanol/beer/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/ethanol/beer/on_general_digest(mob/living/M)
+	..()
 	M.jitteriness = max(M.jitteriness - 3,0)
 
 /datum/reagent/consumable/ethanol/kahlua
@@ -3365,9 +3330,8 @@
 	adj_drowsy = -3
 	adj_sleepy = -2
 
-/datum/reagent/consumable/ethanol/kahlua/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/ethanol/kahlua/on_general_digest(mob/living/M)
+	..()
 	M.make_jittery(5)
 
 /datum/reagent/consumable/ethanol/whiskey
@@ -3397,9 +3361,8 @@
 	nutriment_factor = 1 * FOOD_METABOLISM
 	taste_message = "party"
 
-/datum/reagent/consumable/ethanol/thirteenloko/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/ethanol/thirteenloko/on_general_digest(mob/living/M)
+	..()
 	M.drowsyness = max(0, M.drowsyness - 7)
 	if(M.bodytemperature > BODYTEMP_NORMAL)
 		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
@@ -3412,9 +3375,8 @@
 	color = "#619494" // rgb: 97, 148, 148
 	boozepwr = 2
 
-/datum/reagent/consumable/ethanol/vodka/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/ethanol/vodka/on_general_digest(mob/living/M)
+	..()
 	M.radiation = max(M.radiation - 1,0)
 
 /datum/reagent/consumable/ethanol/bilk
@@ -3434,9 +3396,8 @@
 	boozepwr = 5
 	taste_message = "fruity alcohol"
 
-/datum/reagent/consumable/ethanol/threemileisland/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/ethanol/threemileisland/on_general_digest(mob/living/M)
+	..()
 	M.druggy = max(M.druggy, 50)
 
 /datum/reagent/consumable/ethanol/gin
@@ -3544,9 +3505,8 @@
 	confused_start = 1
 	taste_message = "bitter wine"
 
-/datum/reagent/consumable/ethanol/pwine/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/ethanol/pwine/on_general_digest(mob/living/M)
+	..()
 	M.druggy = max(M.druggy, 50)
 	if(!data)
 		data = 1
@@ -3610,9 +3570,8 @@
 	boozepwr = 1
 	taste_message = "rum"
 
-/datum/reagent/consumable/ethanol/deadrum/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/ethanol/deadrum/on_general_digest(mob/living/M)
+	..()
 	M.dizziness += 5
 
 /datum/reagent/consumable/ethanol/sake
@@ -3740,9 +3699,8 @@
 	boozepwr = 5
 	taste_message = "FIRE"
 
-/datum/reagent/consumable/ethanol/toxins_special/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/ethanol/toxins_special/on_general_digest(mob/living/M)
+	..()
 	if (M.bodytemperature < 330)
 		M.bodytemperature = min(330, M.bodytemperature + (15 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 
@@ -3755,9 +3713,8 @@
 	boozepwr = 4
 	taste_message = "THE LAW"
 
-/datum/reagent/consumable/ethanol/beepsky_smash/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/ethanol/beepsky_smash/on_general_digest(mob/living/M)
+	..()
 	M.Stun(2)
 
 /datum/reagent/consumable/ethanol/irish_cream
@@ -3840,9 +3797,8 @@
 	boozepwr = 5
 	taste_message = "bitter alcohol"
 
-/datum/reagent/consumable/ethanol/manhattan_proj/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/ethanol/manhattan_proj/on_general_digest(mob/living/M)
+	..()
 	M.druggy = max(M.druggy, 30)
 
 /datum/reagent/consumable/ethanol/whiskeysoda
@@ -3861,9 +3817,8 @@
 	boozepwr = 4
 	taste_message = "poor life choices"
 
-/datum/reagent/consumable/ethanol/antifreeze/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/ethanol/antifreeze/on_general_digest(mob/living/M)
+	..()
 	if (M.bodytemperature < 330)
 		M.bodytemperature = min(330, M.bodytemperature + (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 
@@ -3961,9 +3916,8 @@
 	boozepwr = 3
 	taste_message = "spicy alcohol"
 
-/datum/reagent/consumable/ethanol/sbiten/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/ethanol/sbiten/on_general_digest(mob/living/M)
+	..()
 	if (M.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT)
 		M.bodytemperature = min(BODYTEMP_HEAT_DAMAGE_LIMIT, M.bodytemperature + (50 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 
@@ -4001,9 +3955,8 @@
 	boozepwr = 1
 	taste_message = "refreshing alcohol"
 
-/datum/reagent/consumable/ethanol/iced_beer/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/ethanol/iced_beer/on_general_digest(mob/living/M)
+	..()
 	if(M.bodytemperature > 270)
 		M.bodytemperature = max(270, M.bodytemperature - (20 * TEMPERATURE_DAMAGE_COEFFICIENT)) //310 is the normal bodytemp. 310.055
 
@@ -4119,9 +4072,8 @@
 	boozepwr = 4
 	taste_message = "mphhhh"
 
-/datum/reagent/consumable/ethanol/silencer/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/consumable/ethanol/silencer/on_general_digest(mob/living/M)
+	..()
 	if(!data)
 		data = 1
 	data++
@@ -4156,9 +4108,8 @@
 	custom_metabolism = 0.2
 	taste_message = "bitterness"
 
-/datum/reagent/luminophore/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/luminophore/on_general_digest(mob/living/M)
+	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		H.vomit()
@@ -4197,125 +4148,123 @@
 	taste_message = "nanomachines, son"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/mednanobots/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/mednanobots/on_general_digest(mob/living/M)
+	..()
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(!alien || !alien == DIONA)
-			switch(volume)
-				if(1 to 5)
-					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST] // it was H.get_bodypart(????) with nothing as arg, so its always a chest?
-					for(var/datum/wound/W in BP.wounds)
-						BP.wounds -= W
-						H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
-					if(H.getOxyLoss() > 0 && prob(90))
-						if(holder.has_reagent("mednanobots"))
-							H.adjustOxyLoss(-4)
-							holder.remove_reagent("mednanobots", 0.1)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
+		switch(volume)
+			if(1 to 5)
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST] // it was H.get_bodypart(????) with nothing as arg, so its always a chest?
+				for(var/datum/wound/W in BP.wounds)
+					BP.wounds -= W
+					H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
+				if(H.getOxyLoss() > 0 && prob(90))
+					if(holder.has_reagent("mednanobots"))
+						H.adjustOxyLoss(-4)
+						holder.remove_reagent("mednanobots", 0.1)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
 
-					if(H.getBruteLoss() > 0 && prob(90))
-						if(holder.has_reagent("mednanobots"))
-							H.heal_bodypart_damage(5, 0)
-							holder.remove_reagent("mednanobots", 0.125)
+				if(H.getBruteLoss() > 0 && prob(90))
+					if(holder.has_reagent("mednanobots"))
+						H.heal_bodypart_damage(5, 0)
+						holder.remove_reagent("mednanobots", 0.125)
 
-					if(H.getFireLoss() > 0 && prob(90))
-						if(holder.has_reagent("mednanobots"))
-							H.heal_bodypart_damage(0, 5)
-							holder.remove_reagent("mednanobots", 0.125)
+				if(H.getFireLoss() > 0 && prob(90))
+					if(holder.has_reagent("mednanobots"))
+						H.heal_bodypart_damage(0, 5)
+						holder.remove_reagent("mednanobots", 0.125)
 
-					if(H.getToxLoss() > 0 && prob(50))
-						if(holder.has_reagent("mednanobots"))
-							H.adjustToxLoss(-2)
-							holder.remove_reagent("mednanobots", 0.05)
+				if(H.getToxLoss() > 0 && prob(50))
+					if(holder.has_reagent("mednanobots"))
+						H.adjustToxLoss(-2)
+						holder.remove_reagent("mednanobots", 0.05)
 
-					if(H.getCloneLoss() > 0 && prob(60))
-						if(holder.has_reagent("mednanobots"))
-							H.adjustCloneLoss(-2)
-							holder.remove_reagent("mednanobots", 0.05)
+				if(H.getCloneLoss() > 0 && prob(60))
+					if(holder.has_reagent("mednanobots"))
+						H.adjustCloneLoss(-2)
+						holder.remove_reagent("mednanobots", 0.05)
 
-					if(percent_machine > 5)
-						if(holder.has_reagent("mednanobots"))
-							percent_machine -= 1
-							if(prob(20))
-								to_chat(M, pick("You feel more like yourself again."))
-					if(H.dizziness != 0)
-						H.dizziness = max(0, H.dizziness - 15)
-					if(H.confused != 0)
-						H.confused = max(0, H.confused - 5)
-					for(var/datum/disease/D in M.viruses)
-						D.spread = "Remissive"
-						D.stage--
-						if(D.stage < 1)
-							D.cure()
-				if(5 to 20)		//Danger zone healing. Adds to a human mob's "percent machine" var, which is directly translated into the chance that it will turn horror each tick that the reagent is above 5u.
-					var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
-					for(var/datum/wound/W in BP.wounds)
-						BP.wounds -= W
-						H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
-					if(H.getOxyLoss() > 0 && prob(90))
-						if(holder.has_reagent("mednanobots"))
-							H.adjustOxyLoss(-4)
-							holder.remove_reagent("mednanobots", 0.1)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
-							percent_machine += 0.5
-							if(prob(20))
-								to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
+				if(percent_machine > 5)
+					if(holder.has_reagent("mednanobots"))
+						percent_machine -= 1
+						if(prob(20))
+							to_chat(M, pick("You feel more like yourself again."))
+				if(H.dizziness != 0)
+					H.dizziness = max(0, H.dizziness - 15)
+				if(H.confused != 0)
+					H.confused = max(0, H.confused - 5)
+				for(var/datum/disease/D in M.viruses)
+					D.spread = "Remissive"
+					D.stage--
+					if(D.stage < 1)
+						D.cure()
+			if(5 to 20)		//Danger zone healing. Adds to a human mob's "percent machine" var, which is directly translated into the chance that it will turn horror each tick that the reagent is above 5u.
+				var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_CHEST]
+				for(var/datum/wound/W in BP.wounds)
+					BP.wounds -= W
+					H.visible_message("<span class='warning'>[H]'s wounds close up in the blink of an eye!</span>")
+				if(H.getOxyLoss() > 0 && prob(90))
+					if(holder.has_reagent("mednanobots"))
+						H.adjustOxyLoss(-4)
+						holder.remove_reagent("mednanobots", 0.1)  //The number/40 means that every time it heals, it uses up number/40ths of a unit, meaning each unit heals 40 damage
+						percent_machine += 0.5
+						if(prob(20))
+							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
 
-					if(H.getBruteLoss() > 0 && prob(90))
-						if(holder.has_reagent("mednanobots"))
-							H.heal_bodypart_damage(5, 0)
-							holder.remove_reagent("mednanobots", 0.125)
-							percent_machine += 0.5
-							if(prob(20))
-								to_chat(M, pick("<span class='warning'> Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
+				if(H.getBruteLoss() > 0 && prob(90))
+					if(holder.has_reagent("mednanobots"))
+						H.heal_bodypart_damage(5, 0)
+						holder.remove_reagent("mednanobots", 0.125)
+						percent_machine += 0.5
+						if(prob(20))
+							to_chat(M, pick("<span class='warning'> Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
 
-					if(H.getFireLoss() > 0 && prob(90))
-						if(holder.has_reagent("mednanobots"))
-							H.heal_bodypart_damage(0, 5)
-							holder.remove_reagent("mednanobots", 0.125)
-							percent_machine += 0.5
-							if(prob(20))
-								to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
+				if(H.getFireLoss() > 0 && prob(90))
+					if(holder.has_reagent("mednanobots"))
+						H.heal_bodypart_damage(0, 5)
+						holder.remove_reagent("mednanobots", 0.125)
+						percent_machine += 0.5
+						if(prob(20))
+							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
 
-					if(H.getToxLoss() > 0 && prob(50))
-						if(holder.has_reagent("mednanobots"))
-							H.adjustToxLoss(-2)
-							holder.remove_reagent("mednanobots", 0.05)
-							percent_machine += 0.5
-							if(prob(20))
-								to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
+				if(H.getToxLoss() > 0 && prob(50))
+					if(holder.has_reagent("mednanobots"))
+						H.adjustToxLoss(-2)
+						holder.remove_reagent("mednanobots", 0.05)
+						percent_machine += 0.5
+						if(prob(20))
+							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
 
-					if(H.getCloneLoss() > 0 && prob(60))
-						if(holder.has_reagent("mednanobots"))
-							H.adjustCloneLoss(-2)
-							holder.remove_reagent("mednanobots", 0.05)
-							percent_machine += 0.5
-							if(prob(20))
-								to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
+				if(H.getCloneLoss() > 0 && prob(60))
+					if(holder.has_reagent("mednanobots"))
+						H.adjustCloneLoss(-2)
+						holder.remove_reagent("mednanobots", 0.05)
+						percent_machine += 0.5
+						if(prob(20))
+							to_chat(M, pick("<span class='warning'>Something shifts inside you...</span>", "<span class='warning'>You feel different, somehow...</span>"))
 
-					if(H.dizziness != 0)
-						H.dizziness = max(0, H.dizziness - 15)
-					if(H.confused != 0)
-						H.confused = max(0, H.confused - 5)
-					for(var/datum/disease/D in M.viruses)
-						D.spread = "Remissive"
-						D.stage--
-						if(D.stage < 1)
-							D.cure()
-					if(prob(percent_machine))
-						holder.add_reagent("mednanobots", 20)
-						to_chat(M, pick("<b><span class='warning'>Your body lurches!</b></span>"))
-				if(20 to INFINITY)
-					spawning_horror = 1
-					to_chat(M, pick("<b><span class='warning'>Something doesn't feel right...</span></b>", "<b><span class='warning'>Something is growing inside you!</span></b>", "<b><span class='warning'>You feel your insides rearrange!</span></b>"))
-					spawn(60)
-						if(spawning_horror)
-							to_chat(M, pick( "<b><span class='warning'>Something bursts out from inside you!</span></b>"))
-							message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>)")
-							log_game("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots")
-							new /mob/living/simple_animal/hostile/cyber_horror(H.loc)
-							spawning_horror = 0
-							H.gib()
+				if(H.dizziness != 0)
+					H.dizziness = max(0, H.dizziness - 15)
+				if(H.confused != 0)
+					H.confused = max(0, H.confused - 5)
+				for(var/datum/disease/D in M.viruses)
+					D.spread = "Remissive"
+					D.stage--
+					if(D.stage < 1)
+						D.cure()
+				if(prob(percent_machine))
+					holder.add_reagent("mednanobots", 20)
+					to_chat(M, pick("<b><span class='warning'>Your body lurches!</b></span>"))
+			if(20 to INFINITY)
+				spawning_horror = 1
+				to_chat(M, pick("<b><span class='warning'>Something doesn't feel right...</span></b>", "<b><span class='warning'>Something is growing inside you!</span></b>", "<b><span class='warning'>You feel your insides rearrange!</span></b>"))
+				spawn(60)
+					if(spawning_horror)
+						to_chat(M, pick( "<b><span class='warning'>Something bursts out from inside you!</span></b>"))
+						message_admins("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots. (<A HREF='?_src_=holder;adminmoreinfo=\ref[H]'>?</A>)")
+						log_game("[key_name(H)] has gibbed and spawned a new cyber horror due to nanobots")
+						new /mob/living/simple_animal/hostile/cyber_horror(H.loc)
+						spawning_horror = 0
+						H.gib()
 	else
 		holder.del_reagent("mednanobots")
 
@@ -4330,9 +4279,8 @@
 	color = "#792300" //rgb: 121, 35, 0
 	custom_metabolism = 0.5
 
-/datum/reagent/alphaamanitin/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/alphaamanitin/on_general_digest(mob/living/M)
+	..()
 
 	M.adjustToxLoss(6)
 	M.adjustOxyLoss(2)
@@ -4346,9 +4294,8 @@
 	color = "#792300" //rgb: 59, 8, 5
 	custom_metabolism = 0.05
 
-/datum/reagent/aflatoxin/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/aflatoxin/on_general_digest(mob/living/M)
+	..()
 
 	if(!data)
 		data = 1
@@ -4369,9 +4316,8 @@
 	taste_message = "DEATH"
 	restrict_species = list(IPC, DIONA)
 
-/datum/reagent/chefspecial/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/chefspecial/on_general_digest(mob/living/M)
+	..()
 
 	if(!data)
 		data = 1
@@ -4389,9 +4335,8 @@
 	color = "#792300" //rgb: 207, 54, 0
 	custom_metabolism = 0 //No metabolism
 
-/datum/reagent/dioxin/on_mob_life(mob/living/M, alien)
-	if(!..())
-		return
+/datum/reagent/dioxin/on_general_digest(mob/living/M)
+	..()
 	if(!data)
 		data = 1
 
@@ -4434,8 +4379,9 @@
 	color = "#5EFF3B" //RGB: 94, 255, 59
 	custom_metabolism = 1000
 
-/datum/reagent/mulligan/on_mob_life(mob/living/carbon/human/H)
-	if(!..())
+/datum/reagent/mulligan/on_general_digest(mob/living/carbon/human/H)
+	..()
+	if(istype(H))
 		return
 	to_chat(H,"<span class='warning'><b>You grit your teeth in pain as your body rapidly mutates!</b></span>")
 	H.visible_message("<b>[H]</b> suddenly transforms!")
@@ -4588,7 +4534,8 @@
 	data = 1
 	color = "#FFA8E4" // rgb: 255, 168, 228
 
-/datum/reagent/ectoplasm/on_mob_life(mob/living/M)
+/datum/reagent/ectoplasm/on_general_digest(mob/living/M)
+	..()
 	M.hallucination += 1
 	M.make_jittery(2)
 	switch(data)
@@ -4632,9 +4579,8 @@
 	data = 1
 	color = "#C80064" // rgb: 200,0, 100
 
-/datum/reagent/water/unholywater/on_mob_life(mob/living/M)
-	if(!..())
-		return
+/datum/reagent/water/unholywater/on_general_digest(mob/living/M)
+	..()
 	if(iscultist(M) && prob(10))
 		switch(data)
 			if(1 to 30)
