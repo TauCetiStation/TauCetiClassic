@@ -109,31 +109,8 @@
 			if(C.race in restrict_species)
 				return FALSE
 	var/should_general_digest = TRUE
-	switch(alien)
-		if(HUMAN)
-			should_general_digest = TRUE
-		if(SKRELL)
-			should_general_digest = on_skrell_digest(M)
-		if(UNATHI)
-			should_general_digest = on_unathi_digest(M)
-		if(TAJARAN)
-			should_general_digest = on_tajaran_digest(M)
-		if(DIONA)
-			should_general_digest = on_diona_digest(M)
-		if(VOX)
-			should_general_digest = on_vox_digest(M)
-		if(VOX_ARMALIS)
-			should_general_digest = on_vox_digest(M)
-		if(ABDUCTOR)
-			should_general_digest = on_abductor_digest(M)
-		if(SKELETON)
-			should_general_digest = on_skeleton_digest(M)
-		if(SHADOWLING)
-			should_general_digest = on_shadowling_digest(M)
-		if(GOLEM)
-			should_general_digest = on_golem_digest(M)
-		else
-			should_general_digest = TRUE
+	var/datum/species/specimen = all_species[alien]
+	should_general_digest = specimen.call_digest_proc(M, src)
 	if(should_general_digest)
 		on_general_digest(M)
 	return TRUE
