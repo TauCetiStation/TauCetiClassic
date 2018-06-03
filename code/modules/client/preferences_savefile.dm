@@ -2,7 +2,7 @@
 #define SAVEFILE_VERSION_MIN 8
 
 //This is the current version, anything below this will attempt to update (if it's not obsolete)
-#define SAVEFILE_VERSION_MAX 19
+#define SAVEFILE_VERSION_MAX 20
 
 /*
 SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Carn
@@ -67,6 +67,12 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			if(!(species in lang.allowed_species))
 				language = "None"
 				S["language"] << language
+
+	if(current_version < 20)
+		if(!islist(language))
+			var/old_language = language
+			language = list(old_language)
+			S["language"] << language
 
 /datum/preferences/proc/load_path(ckey, filename = "preferences.sav")
 	if(!ckey)
@@ -243,7 +249,7 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	metadata		= sanitize_text(metadata, initial(metadata))
 	real_name		= sanitize_name(real_name)
 	if(isnull(species)) species = HUMAN
-	if(isnull(language)) language = "None"
+	if(isnull(language)) language = list("None")
 	if(isnull(nanotrasen_relation)) nanotrasen_relation = initial(nanotrasen_relation)
 	if(!real_name) real_name = random_name(gender)
 	if(!gear) gear = list()
