@@ -395,9 +395,8 @@
 		new_character = new(loc)
 
 	new_character.lastarea = get_area(loc)
-	if(client.prefs.language.len)
-		for(var/L in client.prefs.language)
-			new_character.add_language(L)
+	if(client.prefs.language)
+		new_character.add_language(client.prefs.language)
 
 	if(ticker.random_players)
 		new_character.gender = pick(MALE, FEMALE)

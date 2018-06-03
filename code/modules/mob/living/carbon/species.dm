@@ -25,7 +25,6 @@
 	var/tail                          // Name of tail image in species effects icon file.
 	var/language                      // Default racial language, if any.
 	var/list/additional_languages = list() // Additional languages, to the primary. These can not be the forced ones.
-	var/can_pick_language_amount = 1  // Amount of languages this specimen can take additionally.
 	var/force_racial_language = FALSE // If TRUE, racial language will be forced by default when speaking.
 	var/attack_verb = "punch"         // Empty hand hurt intent verb.
 	var/punch_damage = 0              // Extra empty hand attack damage.
@@ -491,7 +490,7 @@
 		else
 			qdel(D)
 
-	H.visible_message("<span class='warning'>[H] splits apart with a wet slithering noise!</span>")
+	H.visible_message("\red[H] splits apart with a wet slithering noise!")
 
 
 /datum/species/machine
@@ -502,7 +501,6 @@
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
-	can_pick_language_amount = 2
 
 	eyes = "blank_eyes"
 
