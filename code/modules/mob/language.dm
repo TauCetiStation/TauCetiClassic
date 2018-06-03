@@ -95,7 +95,6 @@
 	ask_verb = "mrowls"
 	exclaim_verb = "yowls"
 	colour = "tajaran_signlang"
-	allowed_species = list(TAJARAN)
 	key = list("y", "í")
 	signlang_verb = list("flicks their left ear", "flicks their right ear", "swivels their ears", "twitches their tail", "curls the end of their tail", "arches their tail", "wiggles the end of their tail", "waves their tail about", "holds up a claw", "gestures with their left hand", "gestures with their right hand", "gestures with their tail", "gestures with their ears")
 	flags = NONVERBAL
