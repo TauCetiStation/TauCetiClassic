@@ -295,7 +295,16 @@
 						if(!(lang.flags & RESTRICTED) && (S.name in lang.allowed_species))
 							new_languages += lang.name
 
-					language = input("Please select a secondary language", "Character Generation", null) in new_languages
+					var/new_language = input("Please select a secondary language", "Character Generation", null) in new_languages
+
+					if(new_language in language)
+						language -= new_language
+					else if(language.len < S.can_pick_language_amount)
+						language += new_language
+						if("None" in language)
+							language -= "None"
+					if(language.len == 0)
+						language += "None"
 
 				if("b_type")
 					var/new_b_type = input(user, "Choose your character's blood-type:", "Character Preference") as null|anything in list( "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" )
