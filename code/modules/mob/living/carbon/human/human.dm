@@ -1342,6 +1342,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(species.language)
 		add_language(species.language)
 
+	if(species.additional_languages)
+		for(var/A in species.additional_languages)
+			add_language(A)
+
 	if(species.base_color && default_colour)
 		//Apply colour.
 		r_skin = hex2num(copytext(species.base_color,2,4))
