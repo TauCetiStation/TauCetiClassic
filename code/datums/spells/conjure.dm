@@ -132,10 +132,12 @@
 	toxpwr = 0
 	custom_metabolism = 1
 
-	on_mob_life(var/mob/living/carbon/M as mob)
-		if(!M) M = holder.my_atom
-		if(!data) data = 1
-		if(!volume) volume = 1
+	on_mob_life(mob/living/carbon/M)
+		if(!..())
+			return
+		if(!data)
+			data = 1
+		if(!volume)
+			volume = 1
 		if(volume > 5)
 			M.Weaken(4)
-		return
