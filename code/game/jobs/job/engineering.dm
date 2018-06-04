@@ -36,12 +36,8 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/ce(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/heads/ce(H), slot_l_store)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 
 /datum/job/engineer
@@ -79,12 +75,8 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), slot_l_ear)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 
 /datum/job/atmos
@@ -116,12 +108,8 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), slot_l_ear)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 /proc/get_airlock_wires_identification()
 	var/list/wire_list = same_wires[/obj/machinery/door/airlock]

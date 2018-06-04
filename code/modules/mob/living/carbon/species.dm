@@ -157,6 +157,21 @@
 			H.update_hair()
 	return
 
+/datum/species/proc/before_job_equip(mob/living/carbon/human/H, datum/job/J) // Do we really need this proc? Perhaps.
+	return
+
+/datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+	var/obj/item/weapon/storage/box/SK
+	if(J.title in list("Shaft Miner", "Chief Engineer", "Station Engineer", "Atmospheric Technician"))
+		SK = new /obj/item/weapon/storage/box/engineer(H)
+	else
+		SK = new /obj/item/weapon/storage/box/survival(H)
+
+	if(H.backbag == 1)
+		H.equip_to_slot_or_del(SK, slot_r_hand)
+	else
+		H.equip_to_slot_or_del(SK, slot_in_backpack)
+
 /datum/species/human
 	name = HUMAN
 	language = "Sol Common"
@@ -208,6 +223,10 @@
 	flesh_color = "#34AF10"
 	base_color = "#066000"
 
+/datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+	..()
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), slot_shoes, 1)
+
 /datum/species/tajaran
 	name = TAJARAN
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
@@ -245,6 +264,11 @@
 
 	flesh_color = "#AFA59E"
 	base_color = "#333333"
+
+/datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+	..()
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), slot_shoes, 1)
+
 
 /datum/species/skrell
 	name = SKRELL
@@ -312,6 +336,16 @@
 		"feet" = 'icons/mob/species/vox/shoes.dmi',
 		"gloves" = 'icons/mob/species/vox/gloves.dmi'
 		)
+
+/datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/vox(src), slot_wear_mask)
+	if(!H.r_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_r_hand)
+		H.internal = H.r_hand
+	else if(!H.l_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_l_hand)
+		H.internal = H.l_hand
+	H.internals.icon_state = "internal1"
 
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
@@ -475,6 +509,12 @@
 		H.adjustToxLoss(-(light_amount))
 		H.adjustOxyLoss(-(light_amount))
 
+/datum/species/diona/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+	if(H.backbag == 1)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), slot_r_hand)
+	else
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), slot_in_backpack)
+
 /datum/species/diona/handle_death(mob/living/carbon/human/H)
 
 	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
@@ -489,7 +529,6 @@
 			qdel(D)
 
 	H.visible_message("\red[H] splits apart with a wet slithering noise!")
-
 
 /datum/species/machine
 	name = IPC
@@ -552,6 +591,12 @@
 
 	blood_color = /datum/dirt_cover/oil
 	flesh_color = "#575757"
+
+/datum/species/ipc/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+	if(H.backbag == 1)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), slot_r_hand)
+	else
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), slot_in_backpack)
 
 /datum/species/abductor
 	name = ABDUCTOR
