@@ -385,6 +385,8 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/image/facial_s = image("icon" = facial_hair_style.icon, "icon_state" = "[facial_hair_style.icon_state]_s", "layer" = -HAIR_LAYER)
 			if(facial_hair_style.do_colouration)
 				facial_s.color = RGB_CONTRAST(r_facial, g_facial, b_facial)
+			if(BP.non_solid)
+				facial_s.alpha = BP.solid_alpha
 			standing += facial_s
 
 	if(h_style && !(head && (head.flags & BLOCKHEADHAIR)))
@@ -393,6 +395,8 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/image/hair_s = image("icon" = hair_style.icon, "icon_state" = "[hair_style.icon_state]_s", "layer" = -HAIR_LAYER)
 			if(hair_style.do_colouration)
 				hair_s.color = RGB_CONTRAST(r_hair, g_hair, b_hair)
+			if(BP.non_solid)
+				hair_s.alpha = BP.solid_alpha
 			standing += hair_s
 
 	if(standing.len)
@@ -448,8 +452,6 @@ Please contact me on #coderbus IRC. ~Carn x
 	var/list/standing	= list()
 	if(dna)
 		switch(dna.mutantrace)
-			if("slime")
-				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_[species.name]_s", -MUTANTRACE_LAYER)
 			if("golem" , "shadow")
 				standing += image('icons/effects/genetics.dmi', null, "[dna.mutantrace][fat]_[gender]_s", -MUTANTRACE_LAYER)
 

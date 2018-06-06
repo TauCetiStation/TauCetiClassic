@@ -265,6 +265,9 @@
 		if(species.flags[RAD_IMMUNE])
 			return
 
+		if(species.flags[RAD_GLOW])
+			set_light(Clamp(radiation/15, 1, 5), Clamp(radiation/25, 1, 10), species.get_flesh_color())
+
 		if (radiation > 100)
 			radiation = 100
 			if(!species.flags[RAD_ABSORB])
@@ -323,6 +326,9 @@
 					var/obj/item/organ/external/BP = pick(bodyparts)
 					if(istype(BP))
 						BP.add_autopsy_data("Radiation Poisoning", damage)
+	else
+		if(species.flags[RAD_GLOW])
+			set_light(0)
 
 /mob/living/carbon/human/proc/breathe()
 	if(NO_BREATH in src.mutations)
@@ -979,6 +985,9 @@
 					nutrition = 500 - KS.damage*5
 			species.regen(src, light_amount)
 
+	if(get_species() == LIMUS)
+		species.regen(src)
+
 	if(dna && dna.mutantrace == "shadow")
 		var/light_amount = 0
 		if(isturf(loc))
@@ -1021,7 +1030,7 @@
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 	else
-		if(overeatduration > 500 && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
+		if(overeatduration > 500 && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT] && !species.flags[NO_FAT])
 			mutations.Add(FAT)
 			update_body()
 			update_mutantrace()
@@ -1211,6 +1220,20 @@
 		if(druggy)
 			druggy = max(druggy-1, 0)
 
+		if(stored_shock)
+			stored_shock = max(stored_shock-1, 0)
+			if(stored_shock > 50)
+				new /obj/effect/effect/sparks(get_turf(src)) //created sparkles will disappear on themselves
+			else if(stored_shock > 100)
+				var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread(get_turf(src))
+				s.set_up(5, 1, src)
+				s.start() // No instagibbing by shock slimes!
+				for(var/mob/living/A in view(2))
+					var/elec_dam = round(rand(stored_shock/100,stored_shock/2)) // Everyone gets a different portion of BLEH in their face.
+					if(istype(A))
+						A.electrocute_act(elec_dam, src)
+					stored_shock -= elec_dam
+
 		// If you're dirty, your gloves will become dirty, too.
 		if(gloves && germ_level > gloves.germ_level && prob(10))
 			gloves.germ_level += 1
@@ -1297,9 +1320,6 @@
 		see_invisible = see_in_dark>2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
 		if(dna)
 			switch(dna.mutantrace)
-				if("slime")
-					see_in_dark = 3
-					see_invisible = SEE_INVISIBLE_LEVEL_ONE
 				if("shadow")
 					see_in_dark = 8
 					see_invisible = SEE_INVISIBLE_LEVEL_ONE

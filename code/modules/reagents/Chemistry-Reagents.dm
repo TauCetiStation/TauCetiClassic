@@ -377,10 +377,9 @@ datum
 					return
 				if(ishuman(M))
 					var/mob/living/carbon/human/H = M
-					if(H.dna && !H.dna.mutantrace)
+					if(H.get_species() != LIMUS)
 						to_chat(M, "<span class='warning'>Your flesh rapidly mutates!</span>")
-						H.dna.mutantrace = "slime"
-						H.update_mutantrace()
+						H.set_species(LIMUS, TRUE, TRUE)
 
 		aslimetoxin
 			name = "Advanced Mutation Toxin"

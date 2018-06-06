@@ -49,6 +49,16 @@
 				t_He = "She"
 				t_his = "her"
 				t_him = "her"
+			if(NEUTER)
+				t_He = "It"
+				t_his = "it's"
+				t_him = "it"
+			if(PLURAL)
+				t_He = "They"
+				t_his = "their"
+				t_him = "them"
+				t_is = "are"
+				t_has = "have"
 
 	msg += "<EM>[src.name]</EM>!\n"
 
@@ -407,7 +417,8 @@
 	if(mind && mind.changeling && mind.changeling.isabsorbing)
 		msg += "<span class='warning'><b>[t_He] sucking fluids from someone through a giant proboscis!</b></span>\n"
 
-
+	if(species)
+		msg += species.examine_text(src, t_He)
 
 	if(hasHUD(user,"security"))
 		var/perpname = "wot"

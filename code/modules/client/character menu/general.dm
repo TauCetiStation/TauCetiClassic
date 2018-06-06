@@ -392,7 +392,7 @@
 						s_tone = 35 - max(min( round(new_s_tone), 220),1)
 
 				if("skin")
-					if(species == UNATHI || species == TAJARAN || species == SKRELL)
+					if(species in list(UNATHI, TAJARAN, SKRELL, LIMUS))
 						var/new_skin = input(user, "Choose your character's skin colour: ", "Character Preference") as color|null
 						if(new_skin)
 							r_skin = hex2num(copytext(new_skin, 2, 4))

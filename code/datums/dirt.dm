@@ -16,6 +16,10 @@
 	name = "oil"
 	color = "#1F181F"
 
+/datum/dirt_cover/slimy_goo
+	name = "slime"
+	color = "#0064C8"
+
 /datum/dirt_cover/red_blood
 	name = "red blood"
 	color = "#A10808"
@@ -27,7 +31,7 @@
 /datum/dirt_cover/purple_blood
 	name = "purple blood"
 	color = "#8817c1"
-	
+
 /datum/dirt_cover/green_blood
 	name = "green blood"
 	color = "#004400"

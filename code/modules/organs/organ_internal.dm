@@ -287,6 +287,10 @@
 	name = "positronic brain"
 	parent_bodypart = BP_CHEST
 
+/obj/item/organ/internal/brain/slime_core
+	name = "slime core"
+	parent_bodypart = BP_CHEST
+
 /obj/item/organ/internal/eyes
 	name = "eyes"
 	organ_tag = O_EYES

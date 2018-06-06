@@ -119,7 +119,7 @@
 		if(D.spread_by_touch())
 			contract_disease(D, 0, 1, CONTACT_HANDS)
 
-/mob/living/carbon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
+/mob/living/carbon/electrocute_act(shock_damage, atom/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	if(status_flags & GODMODE)	return 0	//godmode
 
 	var/turf/T = get_turf(src)
@@ -130,7 +130,9 @@
 		F.electrocute_act(shock_damage)
 
 	shock_damage *= siemens_coeff
-	if(shock_damage<1)
+	if(shock_damage < 1) // Mob not taking any damage whatsoever.
+		if(siemens_coeff < 0) // Mob gaining energy by being electrocuted, instead of dispersing it.
+			stored_shock -= shock_damage // Slimes charge by getting electrocuted.
 		return 0
 	apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
 	playsound(loc, "sparks", 50, 1, -1)

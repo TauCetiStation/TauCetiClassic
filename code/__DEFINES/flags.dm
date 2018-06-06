@@ -56,6 +56,8 @@
 #define VIRUS_IMMUNE       "virus_immune"
 #define BIOHAZZARD_IMMUNE  "biohazzard_immune"
 #define HAS_HAIR           "has_hair"
+#define RAD_GLOW           "rad_glow"
+#define NO_FAT             "no_fat"
 
 //Species Diet Flags
 #define DIET_CARN		1 //meat

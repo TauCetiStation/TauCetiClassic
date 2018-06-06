@@ -5,6 +5,11 @@
 /mob/living/proc/OpenCraftingMenu()
 	return
 
+/mob/living/proc/apply_stored_shock_to(mob/living/target)
+	if(stored_shock)
+		target.electrocute_act(stored_shock, src)
+		stored_shock = 0
+
 //Generic Bump(). Override MobBump() and ObjBump() instead of this.
 /mob/living/Bump(atom/A, yes)
 	if (buckled || !yes || now_pushing)
@@ -378,7 +383,7 @@
 	return 0
 
 
-/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
+/mob/living/proc/electrocute_act(shock_damage, atom/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
 	  return 0 //only carbon liveforms have this proc
 
 /mob/living/emp_act(severity)
@@ -852,10 +857,15 @@
 				C.next_move = world.time + 100
 				C.last_special = world.time + 100
 				to_chat(C, "<span class='rose'>You attempt to unbuckle yourself. (This will take around 2 minutes and you need to stand still)</span>")
-				for(var/mob/O in viewers(L))
-					O.show_message("<span class='danger'>[usr] attempts to unbuckle themself!</span>", 1)
+				visible_message("<span class='danger'>[usr] attempts to unbuckle themself!</span>", 1)
+				var/unbuckle_time = 1200 // default time to unbuckle
+				if(ishuman(src))
+					var/mob/living/carbon/human/H = src
+					var/obj/item/organ/external/CH = H.bodyparts_by_name[BP_CHEST]
+					if(CH.non_solid) // if it's chest is squishy
+						unbuckle_time /= 2 // Squishy things get out twice as fast.
 				spawn(0)
-					if(do_after(usr, 1200, target = usr))
+					if(do_after(usr, unbuckle_time, target = usr))
 						if(!C.buckled)
 							return
 						for(var/mob/O in viewers(C))
@@ -911,9 +921,15 @@
 				if(istype(HC)) //If you are handcuffed with actual handcuffs... Well what do I know, maybe someone will want to handcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
 					displaytime = breakouttime / 600 //Minutes
+				if(ishuman(src))
+					var/mob/living/carbon/human/H = src
+					var/obj/item/organ/external/LH = H.bodyparts_by_name[BP_L_ARM]
+					var/obj/item/organ/external/RH = H.bodyparts_by_name[BP_R_ARM]
+					if(LH.non_solid || RH.non_solid) // if at least one of the hands is squishy.
+						breakouttime /= 2 // Squishy things get out twice as fast.
+						displaytime /= 2
 				to_chat(CM, "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
-				for(var/mob/O in viewers(CM))
-					O.show_message( "<span class='danger'>[usr] attempts to remove \the [HC]!</span>", 1)
+				visible_message( "<span class='danger'>[usr] attempts to remove \the [HC]!</span>", 1)
 				spawn(0)
 					if(do_after(CM, breakouttime, target = usr))
 						if(!CM.handcuffed || CM.buckled)
@@ -955,9 +971,15 @@
 				if(istype(HC)) //If you are legcuffed with actual legcuffs... Well what do I know, maybe someone will want to legcuff you with toilet paper in the future...
 					breakouttime = HC.breakouttime
 					displaytime = breakouttime / 600 //Minutes
+				if(ishuman(src))
+					var/mob/living/carbon/human/H = src
+					var/obj/item/organ/external/LL = H.bodyparts_by_name[BP_L_LEG]
+					var/obj/item/organ/external/RL = H.bodyparts_by_name[BP_R_LEG]
+					if(LL.non_solid || RL.non_solid) // if at least one of the hands is squishy.
+						breakouttime /= 2 // Squishy things get out twice as fast.
+						displaytime /= 2
 				to_chat(CM, "<span class='notice'>You attempt to remove \the [HC]. (This will take around [displaytime] minutes and you need to stand still)</span>")
-				for(var/mob/O in viewers(CM))
-					O.show_message( "<span class='danger'>[usr] attempts to remove \the [HC]!</span>", 1)
+				visible_message( "<span class='danger'>[usr] attempts to remove \the [HC]!</span>", 1)
 				spawn(0)
 					if(do_after(CM, breakouttime, target = usr))
 						if(!CM.legcuffed || CM.buckled)

@@ -60,7 +60,9 @@
 			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 			var/armor_block = run_armor_check(BP, "melee")
 
-			if(HULK in M.mutations)			damage += 5
+			if(HULK in M.mutations)
+				damage += 5
+
 			if(dna && dna.mutantrace == "adamantine")
 				damage += 5
 
@@ -153,8 +155,8 @@
 			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
 			var/armor_block = run_armor_check(BP, "melee")
 
-			if(HULK in M.mutations)			damage += 5
-
+			if(HULK in M.mutations)
+				damage += 5
 
 			playsound(loc, attack.attack_sound, 25, 1, -1)
 
@@ -164,8 +166,10 @@
 				visible_message("\red <B>[M] has weakened [src]!</B>")
 				apply_effect(2, WEAKEN, armor_block)
 
+			attack.handle_effects(M, src)
+
 			damage += attack.damage
-			apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags())
+			apply_damage(damage, attack.damage_type, BP, armor_block, attack.damage_flags())
 
 
 		if("disarm")
