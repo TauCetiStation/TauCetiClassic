@@ -1,30 +1,3 @@
-/client/proc/library_debug_cat()
-	set category = "Debug"
-	set name = "Library: Catalog"
-	if(!check_rights(R_PERMISSIONS))	return
-
-	establish_old_db_connection()
-	if(!dbcon_old.IsConnected())
-		to_chat(usr, "BD POTRACHENO")
-		return
-
-	var/catalog = "<HEAD><TITLE>Book Inventory Management</TITLE></HEAD><BODY>\n"
-	catalog += "<table><tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td>ID</td></tr>"
-
-	var/DBQuery/query = dbcon_old.NewQuery("SELECT id, author, title, category FROM library")
-	query.Execute()
-
-	while(query.NextRow())
-		var/id = query.item[1]
-		var/author = query.item[2]
-		var/title = query.item[3]
-		var/category = query.item[4]
-		catalog += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td>[id]</td></tr>"
-	catalog += "</table>"
-
-	usr << browse(entity_ja(catalog), "window=admlibrarycatalog")
-	onclose(usr, "admlibrarycatalog")
-
 /client/proc/library_debug_remove()
 	set category = "Debug"
 	set name = "Library: Remove by id"
@@ -87,7 +60,7 @@
 
 /datum/admins/proc/library_recycle_bin()
 	set category = "Admin"
-	set name = "Library recycle bin"
+	set name = "Library: Recycle bin"
 
 	establish_old_db_connection()
 	if(!dbcon_old.IsConnected())

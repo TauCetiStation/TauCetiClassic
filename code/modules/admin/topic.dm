@@ -2697,7 +2697,7 @@
 		if(!isnum(bookid))
 			return
 
-		var/DBQuery/query = dbcon_old.NewQuery("SELECT content FROM library WHERE id = [bookid]")
+		var/DBQuery/query = dbcon_old.NewQuery("SELECT content FROM library WHERE id = '[bookid]'")
 
 		if(!query.Execute())
 			return
@@ -2721,7 +2721,7 @@
 		if(!isnum(bookid))
 			return
 
-		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = [bookid]")
+		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = '[bookid]'")
 		if(!query.Execute())
 			return
 
@@ -2731,7 +2731,7 @@
 		else
 			return
 
-		query = dbcon_old.NewQuery("UPDATE library SET deletereason = NULL WHERE id = [bookid]")
+		query = dbcon_old.NewQuery("UPDATE library SET deletereason = NULL WHERE id = '[bookid]'")
 		if(!query.Execute())
 			return
 
@@ -2750,7 +2750,7 @@
 		if(!isnum(bookid))
 			return
 
-		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = [bookid]")
+		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = '[bookid]'")
 
 		if(!query.Execute())
 			return
@@ -2763,8 +2763,6 @@
 
 		query = dbcon_old.NewQuery("DELETE FROM library WHERE id='[bookid]'")
 		if(!query.Execute())
-			return
-		else
 			return
 
 		library_recycle_bin()

@@ -345,7 +345,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		var/obj/item/weapon/book/b = locate(href_list["delbook"])
 		inventory.Remove(b)
 	if(href_list["setauthor"])
-		var/newauthor = sanitize(input("Enter the author's name: ") as text|null, MAX_NAME_LEN)	
+		var/newauthor = sanitize(input("Enter the author's name: ") as text|null, MAX_NAME_LEN)
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
@@ -374,7 +374,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 							var/sqlauthor = sanitize_sql(scanner.cache.author)
 							var/sqlcontent = sanitize_sql(scanner.cache.dat)
 							var/sqlcategory = sanitize_sql(upload_category)
-							var/sqlckey = sanitize_sql(usr.key)
+							var/sqlckey = sanitize_sql(usr.ckey)
 							var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO library (author, title, content, category, ckey) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[sqlckey]')")
 							if(!query.Execute())
 								to_chat(usr, query.ErrorMsg())
@@ -394,7 +394,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			bibledelay = 1
 			spawn(60)
 				bibledelay = 0
-			var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM library WHERE id=[sqlid]")
+			var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM library WHERE id='[sqlid]'")
 			query.Execute()
 
 			while(query.NextRow())
@@ -417,7 +417,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			alert("Connection to Archive has been severed. Aborting.")
 			return
 
-		var/DBQuery/query = dbcon_old.NewQuery("SELECT title, deletereason FROM library WHERE id=[sqlid]")
+		var/DBQuery/query = dbcon_old.NewQuery("SELECT title, deletereason FROM library WHERE id='[sqlid]'")
 		if(!query.Execute())
 			return
 
@@ -428,7 +428,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			if(query.item[2] != null)
 				return
 
-		var/reason = sanitize_sql(input(usr,"Reason for removal","Enter reason (max 60 characters)") as text)
+		var/reason = sanitize_sql(sanitize(input(usr,"Reason for removal","Enter reason (max 60 characters)") as text))
 		if(length(reason) > 60)
 			alert("The reason is more than 60 characters long")
 			return
@@ -436,12 +436,12 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		if(!reason)
 			return
 
-		query = dbcon_old.NewQuery("UPDATE library SET deletereason = '[reason]' WHERE id = [sqlid]")
+		query = dbcon_old.NewQuery("UPDATE library SET deletereason = '[reason]' WHERE id = '[sqlid]'")
 		query.Execute()
 
-		message_admins("[usr.name]/[usr.key] requested removal of [title] from the library database")
+		message_admins("[usr.name]/[usr.ckey] requested removal of [title] from the library database")
 
-		alert("Deletal request sent.")
+		alert("Delete request sent.")
 
 	if(href_list["orderbyid"])
 		var/orderid = input("Enter your order:") as num|null
