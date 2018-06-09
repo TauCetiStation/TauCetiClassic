@@ -49,8 +49,8 @@
 	var/item = null
 	var/cost = 0
 	var/last = 0 // Appear last
-	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
-	var/list/excludefrom = list()//Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
+//	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
+//	var/list/excludefrom = list()//Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
 	var/list/uplink_types = list() //Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
 	var/list/excludefrom_uplinks = list() //Empty list does nothing. Alias you will need to state the type of uplink, where the object won't be available.
 
@@ -139,45 +139,35 @@
 	desc = "A compact, mag-fed semi-automatic shotgun for combat in narrow corridors. Uses various 12g magazines."
 	item = /obj/item/weapon/gun/projectile/automatic/bulldog
 	cost = 16
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
 
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Squad Automatic Weapon"
 	desc = "A traditionally constructed machine gun made by AA-2531. This deadly weapon has a massive 50-round magazine of 7.62x51mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/l6_saw
 	cost = 45
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
 
 /datum/uplink_item/dangerous/heavyrifle
 	name = "PTR-7 heavy rifle"
 	desc = "A portable anti-armour bolt-action rifle. Originally designed to used against armoured exosuits. Fires armor piercing 14.5mm shells."
 	item = /obj/item/weapon/gun/projectile/heavyrifle
 	cost = 20
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
 
 /datum/uplink_item/dangerous/bazooka
 	name = "Goliath missile launcher"
 	desc = "The Goliath is a single-shot shoulder-fired multipurpose missile launcher."
 	item = /obj/item/weapon/gun/projectile/revolver/rocketlauncher
 	cost = 35
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
 
 /datum/uplink_item/dangerous/a74
 	name = "A74 Assault Rifle"
 	desc = "A bullpup automatic assault rifle. Great for range combat and fire suppresion. Uses 30-round magazine of 7.74mm ammunition."
 	item = /obj/item/weapon/gun/projectile/automatic/a74
 	cost = 20
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
 
 /datum/uplink_item/dangerous/crossbow
 	name = "Miniature Energy Crossbow"
@@ -185,7 +175,6 @@
 	Its bolts stun enemies for short periods, and replenish automatically."
 	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 7
-	excludefrom = list(/datum/game_mode/nuclear)
 	excludefrom_uplinks = list("nuclear")
 /*
 /datum/uplink_item/dangerous/flamethrower
@@ -221,18 +210,14 @@
 	desc = "The Minibomb is a grenade with a five-second fuse."
 	item = /obj/item/weapon/grenade/syndieminibomb
 	cost = 6
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
 
 /datum/uplink_item/dangerous/viscerators
 	name = "Viscerator Delivery Grenade"
 	desc = "A unique grenade that deploys a swarm of viscerators upon activation, which will chase down and shred any non-operatives in the area."
 	item = /obj/item/weapon/grenade/spawnergrenade/manhacks
 	cost = 7
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
 /*
 /datum/uplink_item/dangerous/bioterror
 	name = "Biohazardous Chemical Sprayer"
@@ -248,25 +233,20 @@
 	This model lacks a method of space propulsion, and therefore it is advised to repair the mothership's teleporter if you wish to make use of it."
 	item = /obj/mecha/combat/gygax/dark
 	cost = 90
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
 
 /datum/uplink_item/dangerous/mauler
 	name = "Mauler Exosuit"
 	desc = "A massive and incredibly deadly Syndicate exosuit. Features long-range targetting, thrust vectoring, and deployable smoke."
 	item = /obj/mecha/combat/marauder/mauler
 	cost = 140
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
 
 /datum/uplink_item/dangerous/syndieborg
 	name = "Syndicate Robot"
 	desc = "A robot designed for extermination and slaved to syndicate agents. Delivered through a single-use bluespace hand teleporter and comes pre-equipped with various weapons and equipment."
 	item = /obj/item/weapon/antag_spawner/borg_tele
 	cost = 36
-	gamemodes = list(/datum/game_mode/nuclear)
 
 //for refunding the syndieborg teleporter
 /datum/uplink_item/dangerous/syndieborg/spawn_item()
@@ -304,45 +284,35 @@
 	desc = "A 20-round .45 ACP magazine for use in the C-20r submachine gun. These rounds have a short stunning effect and medium impact damage."
 	item = /obj/item/ammo_box/magazine/m12mm
 	cost = 2
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
 
 /datum/uplink_item/ammo/a74standart
 	name = "Ammo-7.74mm"
 	desc = "A 30-round 7.74 magazine for use in the A74 assault rifle."
 	item = /obj/item/ammo_box/magazine/a74mm
 	cost = 7
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
 
 /datum/uplink_item/ammo/bullbuck
 	name = "Ammo-12g Buckshot"
 	desc = "An additional  8-round buckshot magazine for use in the Bulldog shotgun."
 	item = /obj/item/ammo_box/magazine/m12g
 	cost = 4
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
 
 /datum/uplink_item/ammo/bullstun
 	name = "Ammo-12g Stun Slug"
 	desc = "An alternative 8-round stun slug magazine for use in the Bulldog shotgun. Accurate, reliable, powerful."
 	item = /obj/item/ammo_box/magazine/m12g/stun
 	cost = 4
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
 
 /datum/uplink_item/ammo/bullincendiary
 	name = "Ammo-12g Incendiary"
 	desc = "An alternative 8-round incendiary magazine for use in the Bulldog shotgun."
 	item = /obj/item/ammo_box/magazine/m12g/incendiary
 	cost = 5
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
-	excludefrom_uplinks = list("traitor")
 /*
 /datum/uplink_item/ammo/pistol
 	name = "Ammo-10mm"
@@ -356,7 +326,6 @@
 	desc = "A 50-round magazine of 7.62x51mm ammunition for use in the L6 SAW machinegun. By the time you need to use this, you'll already be on a pile of corpses."
 	item = /obj/item/ammo_box/magazine/m762
 	cost = 14
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/heavyrifle
@@ -364,7 +333,6 @@
 	desc = "A 14.5mm shell for use with PTR-7 heavy rifle. One shot, one kill, no luck, just skill."
 	item = /obj/item/ammo_casing/a145
 	cost = 2
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/rocket
@@ -372,7 +340,6 @@
 	desc = "A high explosive missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket
 	cost = 10
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/ammo/rocket_emp
@@ -380,7 +347,6 @@
 	desc = "A EMP missile for Goliath launcher."
 	item = /obj/item/ammo_casing/caseless/rocket/emp
 	cost = 10
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
 // STEALTHY WEAPONS
@@ -426,7 +392,6 @@
 	desc = "Just add water to make your very own hostile to everything space carp. It looks just like a plushie."
 	item = /obj/item/toy/carpplushie/dehy_carp
 	cost = 2
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 /*
 /datum/uplink_item/stealthy_weapons/silencer
@@ -467,7 +432,6 @@
 	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces."
 	item = /obj/item/clothing/shoes/syndigaloshes
 	cost = 1
-	excludefrom = list(/datum/game_mode/nuclear)
 	excludefrom_uplinks = list("nuclear")
 
 /datum/uplink_item/stealthy_tools/agent_card
@@ -671,7 +635,6 @@
 	You can wrench the bomb down to prevent removal. The crew may attempt to defuse the bomb."
 	item = /obj/item/device/radio/beacon/syndicate_bomb
 	cost = 12
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/device_tools/syndicate_detonator
@@ -680,7 +643,6 @@
 	Useful for when speed matters or you wish to synchronize multiple bomb blasts. Be sure to stand clear of the blast radius before using the detonator."
 	item = /obj/item/device/syndicatedetonator
 	cost = 2
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/device_tools/shield
@@ -688,7 +650,6 @@
 	desc = "An incredibly useful personal shield projector, capable of reflecting energy projectiles and defending against other attacks."
 	item = /obj/item/weapon/shield/energy
 	cost = 16
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
 /datum/uplink_item/device_tools/traitor_caller
@@ -696,7 +657,6 @@
 	desc = "Allows you to request an additional agent selected from the stealthy traitors."
 	item = /obj/item/device/traitor_caller
 	cost = 55
-	gamemodes = list(/datum/game_mode/nuclear)
 	uplink_types = list("nuclear")
 
 // IMPLANTS
@@ -740,7 +700,6 @@
 	desc = "Syndicate Bundles are specialised groups of items that arrive in a plain box. These items are collectively worth more than 10 telecrystals, but you do not know which specialisation you will receive."
 	item = /obj/item/weapon/storage/box/syndicate
 	cost = 20
-	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/badass/merch
 	name = "Syndicate Merchandise"
