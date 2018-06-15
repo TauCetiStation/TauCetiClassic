@@ -769,7 +769,7 @@
 
 /datum/uplink_item/badass/random/spawn_item(turf/loc, obj/item/device/uplink/U)
 
-	var/list/buyable_items = get_uplink_items()
+	var/list/buyable_items = get_uplink_items(U)
 	var/list/possible_items = list()
 
 	for(var/category in buyable_items)
