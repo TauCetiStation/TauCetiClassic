@@ -15,12 +15,8 @@
 				continue
 			if(I.uplink_types.len && !(uplink.uplink_type in I.uplink_types))
 				continue
-			if(I.excludefrom_uplinks.len && (uplink.uplink_type in I.excludefrom_uplinks))
-				continue
-		/*	if(I.gamemodes.len && ticker && !(ticker.mode.type in I.gamemodes))
-				continue
-			if(I.excludefrom.len && ticker && (ticker.mode.type in I.excludefrom))
-				continue */
+			/*if(I.excludefrom_uplinks.len && (uplink.uplink_type in I.excludefrom_uplinks))
+				continue*/
 			if(I.last)
 				last += I
 				continue
@@ -49,10 +45,8 @@
 	var/item = null
 	var/cost = 0
 	var/last = 0 // Appear last
-//	var/list/gamemodes = list() // Empty list means it is in all the gamemodes. Otherwise place the gamemode name here.
-//	var/list/excludefrom = list()//Empty list does nothing. Place the name of gamemode you don't want this item to be available in here. This is so you dont have to list EVERY mode to exclude something.
 	var/list/uplink_types = list() //Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
-	var/list/excludefrom_uplinks = list() //Empty list does nothing. Alias you will need to state the type of uplink, where the object won't be available.
+//	var/list/excludefrom_uplinks = list() //Empty list does nothing. Alias you will need to state the type of uplink, where the object won't be available.
 
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
@@ -132,7 +126,7 @@
 	desc = "A fully-loaded Scarborough Arms-developed submachine gun that fires 12mm automatic rounds with a 20-round magazine."
 	item = /obj/item/weapon/gun/projectile/automatic/c20r
 	cost = 7
-	gamemodes = list(/datum/game_mode/nuclear) */
+	uplink_types = list("nuclear") */
 
 /datum/uplink_item/dangerous/bulldog
 	name = "V15 Bulldog shotgun"
@@ -175,14 +169,14 @@
 	Its bolts stun enemies for short periods, and replenish automatically."
 	item = /obj/item/weapon/gun/energy/crossbow
 	cost = 7
-	excludefrom_uplinks = list("nuclear")
+	uplink_types = list("traitor")
 /*
 /datum/uplink_item/dangerous/flamethrower
 	name = "Flamethrower"
 	desc = "A flamethrower, fueled by a portion of highly flammable biotoxins stolen previously from Nanotrasen stations. Make a statement by roasting the filth in their own greed. Use with caution."
 	item = /obj/item/weapon/flamethrower/full/tank
 	cost = 6
-	gamemodes = list(/datum/game_mode/nuclear) */
+	uplink_types = list("nuclear") */
 
 /datum/uplink_item/dangerous/powerfist
 	name = "Power Fist"
@@ -225,7 +219,7 @@
 	Use with extreme caution, to prevent exposure to yourself and your fellow operatives."
 	item = /obj/item/weapon/reagent_containers/spray/chemsprayer/bioterror
 	cost = 10
-	gamemodes = list(/datum/game_mode/nuclear) */
+	uplink_types = list("nuclear") */
 
 /datum/uplink_item/dangerous/gygax
 	name = "Gygax Exosuit"
@@ -319,7 +313,7 @@
 	desc = "An additional 8-round 10mm magazine for use in the Stetchkin pistol."
 	item = /obj/item/ammo_box/magazine/m10mm
 	cost = 1
-	gamemodes = list(/datum/game_mode/nuclear) */
+	uplink_types = list("nuclear") */
 
 /datum/uplink_item/ammo/machinegun
 	name = "Ammo-7.62x51mm"
@@ -399,7 +393,7 @@
 	desc = "Fitted for use on the Stetchkin pistol, this silencer will make its shots quieter when equipped onto it."
 	item = /obj/item/weapon/silencer
 	cost = 2
-	gamemodes = list(/datum/game_mode/nuclear) */
+	uplink_types = list("nuclear") */
 
 // STEALTHY TOOLS
 
@@ -411,7 +405,6 @@
 	desc = "A set of clothes used to imitate the uniforms of Nanotrasen crewmembers."
 	item = /obj/item/weapon/storage/box/syndie_kit/chameleon
 	cost = 2
-//	excludefrom = list(/datum/game_mode/nuclear)
 
 /datum/uplink_item/stealthy_tools/chameleon_penstamp
 	name = "Fake Bureucracy Set"
@@ -432,7 +425,8 @@
 	desc = "These allow you to run on wet floors. They do not work on lubricated surfaces."
 	item = /obj/item/clothing/shoes/syndigaloshes
 	cost = 1
-	excludefrom_uplinks = list("nuclear")
+	uplink_types = list("traitor")
+//	excludefrom_uplinks = list("nuclear") //This is an example of how to use "excludefrom_uplinks"
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification card"
