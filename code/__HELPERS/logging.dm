@@ -116,3 +116,36 @@
 		return "[A.loc] [COORD(T)] ([A.loc.type])"
 	else if(A.loc)
 		return "[A.loc] (0, 0, 0) ([A.loc.type])"
+
+//Print a list of antagonists to the server log
+/proc/antagonist_announce()
+	var/text = "ANTAG LIST:\n"
+	var/objectives
+	var/temprole
+	var/list/total_antagonists = list()
+	//Look into all mobs in world, dead or alive
+	for(var/datum/mind/Mind in ticker.minds)
+		temprole = Mind.special_role
+		objectives = ""
+		if(temprole)							//if they are an antagonist of some sort.
+			if(Mind.objectives.len)
+				for(var/datum/objective/O in Mind.objectives)
+					if(length(objectives))
+						objectives += " | "
+					objectives += "[O.explanation_text]"
+				objectives = " \[[objectives]\]"
+
+			if(temprole in total_antagonists)	//If the role exists already, add the name to it
+				total_antagonists[temprole] += "\n, [Mind.name]([Mind.key])[objectives]"
+			else
+				total_antagonists.Add(temprole) //If the role doesnt exist in the list, create it and add the mob
+				total_antagonists[temprole] += ": [Mind.name]([Mind.key])[objectives]"
+
+	//Now print them all into the log!
+	if(total_antagonists.len)
+		for(var/i in total_antagonists)
+			text += "[i]s[total_antagonists[i]]."
+	else
+		text += "no antagonists this moment"
+
+	log_game(text)
