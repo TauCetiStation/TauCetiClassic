@@ -101,11 +101,17 @@
 			objectives_count--
 
 		switch(rand(1,120))
-			if(1 to 119)
+			if(1 to 60)
 				if (!(locate(/datum/objective/escape) in traitor.objectives))
 					var/datum/objective/escape/escape_objective = new
 					escape_objective.owner = traitor
 					traitor.objectives += escape_objective
+
+			if(61 to 119)
+				if (!(locate(/datum/objective/survive) in traitor.objectives))
+					var/datum/objective/survive/survive_objective = new
+					survive_objective.owner = traitor
+					traitor.objectives += survive_objective
 
 			else
 				if (!(locate(/datum/objective/hijack) in traitor.objectives))
