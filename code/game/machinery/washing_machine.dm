@@ -98,6 +98,7 @@
 					new_glove_fingerless_icon_state = G.icon_state
 					new_glove_fingerless_item_state = G.item_state
 					new_glove_fingerless_name = G.name
+					qdel(G)
 					break
 				qdel(G)
 			for(var/T in typesof(/obj/item/clothing/gloves))
@@ -106,6 +107,7 @@
 					new_glove_icon_state = G.icon_state
 					new_glove_item_state = G.item_state
 					new_glove_name = G.name
+					qdel(G)
 					break
 				qdel(G)
 			for(var/T in typesof(/obj/item/clothing/shoes))
