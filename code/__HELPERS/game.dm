@@ -172,6 +172,46 @@
 			L |= recursive_mob_check(A, L, recursion_limit - 1, client_check, sight_check, include_radio)
 	return L
 
+// Non recursive version of recursive_mob_check, used in morgue trays
+/proc/mob_check(atom/O,client_check=1,sight_check=1,include_radio=1)
+
+	var/list/processing_list = list(O)
+	var/list/processed_list = list()
+	var/list/found_mobs = list()
+
+	while(processing_list.len)
+
+		var/atom/A = processing_list[1]
+		var/passed = 0
+
+		if(ismob(A))
+			var/mob/A_tmp = A
+			passed=1
+
+			if(client_check && !A_tmp.client)
+				passed=0
+
+			if(sight_check && !isInSight(A_tmp, O))
+				passed=0
+
+		else if(include_radio && istype(A, /obj/item/radio))
+			passed=1
+
+			if(sight_check && !isInSight(A, O))
+				passed=0
+
+		if(passed)
+			found_mobs |= A
+
+		for(var/atom/B in A)
+			if(!processed_list[B])
+				processing_list |= B
+
+		processing_list.Cut(1, 2)
+		processed_list[A] = A
+
+	return found_mobs
+
 // The old system would loop through lists for a total of 5000 per function call, in an empty server.
 // This new system will loop at around 1000 in an empty server.
 
