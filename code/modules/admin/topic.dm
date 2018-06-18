@@ -2711,7 +2711,7 @@
 		usr << browse(entity_ja(content), "window=book")
 
 	else if(href_list["restorebook"])
-		if(!check_rights(R_DEBUG))
+		if(!check_rights(R_PERMISSIONS))
 			return
 
 		if(alert(usr, "Confirm restoring?", "Message", "Yes", "No") != "Yes")
@@ -2739,7 +2739,7 @@
 		message_admins("[key_name_admin(usr)] restored [title] from the recycle bin")
 
 	else if(href_list["deletebook"])
-		if(!check_rights(R_DEBUG))
+		if(!check_rights(R_PERMISSIONS))
 			return
 
 		if(alert(usr, "Confirm removal?", "Message", "Yes", "No") != "Yes")
