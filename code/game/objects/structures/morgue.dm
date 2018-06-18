@@ -28,61 +28,61 @@
 	return ..()
 
 /obj/structure/morgue/proc/update()
-	if (src.connected)
-		src.icon_state = "morgue0"
+	if (connected)
+		icon_state = "morgue0"
 	else
-		if (src.contents.len)
-			src.icon_state = "morgue2"
+		if (contents.len)
+			icon_state = "morgue2"
 		else
-			src.icon_state = "morgue1"
+			icon_state = "morgue1"
 	return
 
 /obj/structure/morgue/ex_act(severity)
 	switch(severity)
 		if(1.0)
 			for(var/atom/movable/A as mob|obj in src)
-				A.loc = src.loc
+				A.loc = loc
 				ex_act(severity)
 			qdel(src)
 			return
 		if(2.0)
 			if (prob(50))
 				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
+					A.loc = loc
 					ex_act(severity)
 				qdel(src)
 				return
 		if(3.0)
 			if (prob(5))
 				for(var/atom/movable/A as mob|obj in src)
-					A.loc = src.loc
+					A.loc = loc
 					ex_act(severity)
 				qdel(src)
 				return
 	return
 
 /obj/structure/morgue/alter_health()
-	return src.loc
+	return loc
 
 /obj/structure/morgue/attack_paw(mob/user)
-	return src.attack_hand(user)
+	return attack_hand(user)
 
 /obj/structure/morgue/proc/has_mobs()
-	var/list/compiled = mob_check(src, 0, 0) // Search for mobs in all contents.
+	var/list/compiled = mob_check(src, FALSE, FALSE) // Search for mobs in all contents.
 	if(!length(compiled)) // No mobs?
 		return FALSE
 	return TRUE
 
 /obj/structure/morgue/proc/has_clonable_bodies()
-	var/list/compiled = mob_check(src, 0, 0) // Search for mobs in all contents.
+	var/list/compiled = mob_check(src, TRUE, FALSE) // Search for mobs in all contents.
 	if(!length(compiled)) // No mobs?
 		return FALSE
 
 	for(var/mob/living/M in compiled)
-		if ((isnull(M)) || (!(ishuman(M))) || (!M.dna))
+		if(isnull(M) || !ishuman(M) || !M.dna)
 			continue
 		var/mob/living/carbon/human/H = M
-		if ((H.brain_op_stage == 4.0) || (H.suiciding == 1) || (!H.ckey) || (!H.client) || (NOCLONE in H.mutations))
+		if((H.brain_op_stage == 4.0) || H.suiciding || !H.ckey || (NOCLONE in H.mutations))
 			continue
 
 		return TRUE
@@ -147,7 +147,7 @@
 /obj/structure/morgue/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_INTERACT)
 	toggle()
-	src.add_fingerprint(user)
+	add_fingerprint(user)
 	return
 
 /obj/structure/morgue/attackby(P, mob/user)
@@ -156,7 +156,7 @@
 		var/t = sanitize_safe(input(user, "What would you like the label to be?", src.name, null)  as text, MAX_NAME_LEN)
 		if (user.get_active_hand() != P)
 			return
-		if ((!in_range(src, usr) && src.loc != user))
+		if ((!in_range(src, usr) && loc != user))
 			return
 		add_fingerprint(user)
 
@@ -170,19 +170,19 @@
 /obj/structure/morgue/relaymove(mob/user)
 	if (user.stat)
 		return
-	src.connected = new /obj/structure/m_tray( src.loc )
-	step(src.connected, src.dir)
+	src.connected = new /obj/structure/m_tray( loc )
+	step(connected, src.dir)
 	src.connected.layer = BELOW_CONTAINERS_LAYER
-	var/turf/T = get_step(src, src.dir)
-	if (T.contents.Find(src.connected))
+	var/turf/T = get_step(src, dir)
+	if (T.contents.Find(connected))
 		src.connected.connected = src
 		src.icon_state = "morgue0"
 		for(var/atom/movable/A as mob|obj in src)
-			A.loc = src.connected.loc
+			A.loc = connected.loc
 		src.connected.icon_state = "morguet"
 	else
-		qdel(src.connected)
-		src.connected = null
+		qdel(connected)
+		connected = null
 	return
 
 
