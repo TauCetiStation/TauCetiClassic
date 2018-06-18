@@ -173,7 +173,7 @@
 	return L
 
 // Non recursive version of recursive_mob_check, used in morgue trays
-/proc/mob_check(atom/O,client_check=1,sight_check=1,include_radio=1)
+/proc/mob_check(atom/O, client_check = TRUE, sight_check = TRUE)
 
 	var/list/processing_list = list(O)
 	var/list/processed_list = list()
@@ -182,33 +182,27 @@
 	while(processing_list.len)
 
 		var/atom/A = processing_list[1]
-		var/passed = 0
+		var/passed = FALSE
 
 		if(ismob(A))
 			var/mob/A_tmp = A
-			passed=1
+			passed = TRUE
 
 			if(client_check && !A_tmp.client)
-				passed=0
+				passed = FALSE
 
 			if(sight_check && !isInSight(A_tmp, O))
-				passed=0
-
-		else if(include_radio && istype(A, /obj/item/radio))
-			passed=1
-
-			if(sight_check && !isInSight(A, O))
-				passed=0
+				passed = FALSE
 
 		if(passed)
-			found_mobs |= A
+			found_mobs += A
 
 		for(var/atom/B in A)
 			if(!processed_list[B])
-				processing_list |= B
+				processing_list += B
 
 		processing_list.Cut(1, 2)
-		processed_list[A] = A
+		processed_list[A] = TRUE
 
 	return found_mobs
 
