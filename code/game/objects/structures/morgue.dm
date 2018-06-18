@@ -118,12 +118,12 @@
 
 /obj/structure/morgue/proc/open()
 	if (!connected)
-		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-		src.connected = new /obj/structure/m_tray( src.loc )
-		step(src.connected, src.dir)
-		src.connected.layer = BELOW_CONTAINERS_LAYER
-		var/turf/T = get_step(src, src.dir)
-		if (T.contents.Find(src.connected))
+		playsound(loc, 'sound/items/Deconstruct.ogg', 50, 1)
+		connected = new /obj/structure/m_tray( loc )
+		step(connected, dir)
+		connected.layer = BELOW_CONTAINERS_LAYER
+		var/turf/T = get_step(src, dir)
+		if (T.contents.Find(connected))
 			connected.connected = src
 			icon_state = "morgue0"
 			for(var/atom/movable/A as mob|obj in src)
@@ -139,7 +139,7 @@
 		update()
 
 /obj/structure/morgue/proc/toggle()
-	if (src.connected)
+	if (connected)
 		close()
 	else
 		open()
