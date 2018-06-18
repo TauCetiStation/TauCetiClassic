@@ -2736,6 +2736,7 @@
 			return
 
 		library_recycle_bin()
+		log_admin("[key_name_admin(usr)] restored [title] from the recycle bin")
 		message_admins("[key_name_admin(usr)] restored [title] from the recycle bin")
 
 	else if(href_list["deletebook"])
@@ -2766,6 +2767,7 @@
 			return
 
 		library_recycle_bin()
+		log_admin("[key_name_admin(usr)] restored [title] from the recycle bin")
 		message_admins("[key_name_admin(usr)] removed [title] from the library database")
 
 	else if(href_list["populate_inactive_customitems"])
