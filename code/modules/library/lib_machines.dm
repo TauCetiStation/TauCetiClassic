@@ -384,6 +384,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 	if(href_list["targetid"])
 		var/sqlid = sanitize_sql(href_list["targetid"])
+		if(!sqlid)
+			return
+			
 		establish_old_db_connection()
 		if(!dbcon_old.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
@@ -412,6 +415,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 	if(href_list["deleteid"])
 		var/sqlid = sanitize_sql(href_list["deleteid"])
+		if(!sqlid)
+			return
+			
 		establish_old_db_connection()
 		if(!dbcon_old.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
