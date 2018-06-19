@@ -20,6 +20,7 @@
 	var/tox_mod = 1                                      // Toxloss multiplier.
 	var/brain_mod = 1                                    // Brainloss multiplier.
 	var/speed_mod =  0                                   // How fast or slow specific specie.
+	var/siemens_coefficient = 1
 
 	var/primitive                     // Lesser form, if any (ie. monkey for humans)
 	var/tail                          // Name of tail image in species effects icon file.
@@ -146,6 +147,9 @@
 
 /datum/species/proc/regen(mob/living/carbon/human/H) // Perhaps others will regenerate in different ways?
 	return
+
+/datum/species/proc/examine_text(mob/living/carbon/human/H, t_He)
+	return ""
 
 /datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
 	if(flags[IS_SYNTHETIC])
@@ -490,7 +494,6 @@
 
 	H.visible_message("\red[H] splits apart with a wet slithering noise!")
 
-
 /datum/species/machine
 	name = IPC
 	icobase = 'icons/mob/human_races/r_machine.dmi'
@@ -606,9 +609,20 @@
 	var/miss_sound = 'sound/weapons/punchmiss.ogg'
 	var/sharp = 0
 	var/edge = 0
+	var/damage_type = BRUTE
 
 /datum/unarmed_attack/proc/damage_flags()
 	return (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
+
+/datum/unarmed_attack/proc/handle_effects(mob/living/carbon/human/attacker, mob/victim)
+	return
+
+/datum/unarmed_attack/slime
+	attack_verb = list("glomps", "garbles", "gorgles")
+	damage_type = TOX
+
+/datum/unarmed_attack/slime/handle_effects(mob/living/carbon/human/attacker, mob/victim)
+	attacker.apply_stored_shock_to(victim)
 
 /datum/unarmed_attack/punch
 	attack_verb = list("punch")
@@ -627,7 +641,7 @@
 
 /datum/unarmed_attack/claws/armalis
 	attack_verb = list("slash", "claw")
-	damage = 10	//they're huge! they should do a little more damage, i'd even go for 15-20 maybe...
+	damage = 10 //they're huge! they should do a little more damage, i'd even go for 15-20 maybe...
 
 /datum/species/shadowling
 	name = SHADOWLING
@@ -744,3 +758,168 @@
 				qdel(x)
 
 	return ..()
+
+/datum/species/limus
+	name = LIMUS
+	icobase = 'icons/mob/human_races/r_slime.dmi'
+	deform = 'icons/mob/human_races/r_slime.dmi'
+	language = "Bubblish"
+	unarmed_type = /datum/unarmed_attack/slime
+	dietflags = DIET_CARN
+	primitive = /mob/living/carbon/slime
+
+	// Squishy goodie, irresistant to everything, but regenerate quite quickly.
+	hazard_high_pressure = SLIME_HAZARD_HIGH_PRESSURE
+	warning_high_pressure = SLIME_WARNING_HIGH_PRESSURE
+	warning_low_pressure = SLIME_WARNING_LOW_PRESSURE
+	hazard_low_pressure = SLIME_HAZARD_LOW_PRESSURE
+
+	cold_level_1 = 280 //Default 260 - Lower is better
+	cold_level_2 = 220 //Default 200
+	cold_level_3 = 130 //Default 120
+
+	heat_level_1 = 330 //Default 360
+	heat_level_2 = 380 //Default 400
+	heat_level_3 = 800 //Default 1000
+
+	brain_mod = 2.5 // Pretty squishy
+	darksight = 3 // Those are quite some eyes.
+	eyes = "blank_eyes"
+	siemens_coefficient = -1
+
+	var/heal_rate = 0.5
+
+	butcher_drops = list()
+
+	flags = list(
+	 IS_WHITELISTED = TRUE
+	,NO_BREATHE = TRUE
+	,NO_SCAN = TRUE
+	,RAD_GLOW = TRUE
+	,NO_PAIN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,NO_EMBED = TRUE // Blorp-blorp.
+	,HAS_LIPS = TRUE
+	,HAS_SKIN_COLOR = TRUE
+	,HAS_HAIR = TRUE
+	,NO_FAT = TRUE
+	)
+
+	has_bodypart = list(
+		 BP_CHEST  = /obj/item/organ/external/chest/slime
+		,BP_GROIN  = /obj/item/organ/external/groin/slime
+		,BP_HEAD   = /obj/item/organ/external/head/slime
+		,BP_L_ARM  = /obj/item/organ/external/l_arm/slime
+		,BP_R_ARM  = /obj/item/organ/external/r_arm/slime
+		,BP_L_LEG  = /obj/item/organ/external/l_leg/slime
+		,BP_R_LEG  = /obj/item/organ/external/r_leg/slime
+		)
+
+	has_organ = list(
+		O_BRAIN   = /obj/item/organ/internal/brain/slime_core
+		,O_EYES   = /obj/item/organ/internal/eyes
+		)
+
+	blood_color = /datum/dirt_cover/slimy_goo
+	flesh_color = "#0064C8"
+	base_color = "#0064C8"
+
+	abilities = list(/mob/living/carbon/human/proc/shapeshifter_select_hair,
+	                 /mob/living/carbon/human/proc/shapeshifter_select_gender)
+
+/datum/species/limus/handle_death(mob/living/carbon/human/H)
+	H.gib()
+
+/datum/species/limus/regen(mob/living/carbon/human/H)
+	if(H.nutrition > 1) // If you can regen organs - do so.
+		for(var/obj/item/organ/internal/O in H.organs)
+			if(O.damage)
+				O.damage -= heal_rate
+				H.nutrition -= heal_rate * 2
+				return
+	if(H.nutrition > 150) // If you don't need to regen organs, regen bodyparts.
+		if(!H.regenerating_bodypart) // If there is none currently, go ahead, find it.
+			H.regenerating_bodypart = H.find_damaged_bodypart()
+		if(H.regenerating_bodypart) // If it did find one.
+			H.nutrition -= 3
+			H.regen_bodyparts(1, TRUE)
+			return
+	// If you don't need to regen bodyparts, fix up small things.
+	H.adjustBruteLoss(-(heal_rate * 6))
+	H.adjustFireLoss(-(heal_rate * 6))
+	H.adjustToxLoss(-(heal_rate * 6))
+	H.adjustOxyLoss(-(heal_rate * 6))
+
+/datum/species/limus/examine_text(mob/living/carbon/human/H, t_He)
+	switch(H.stored_shock)
+		if(1 to 10)
+			return "[t_He] is flickering gently with a little electrical activity.\n"
+		if(11 to 35)
+			return "[t_He] is glowing gently with moderate levels of electrical activity.\n"
+		if(36 to 70)
+			return "<span class='warning'>[t_He] is glowing brightly with high levels of electrical activity.</span>\n"
+		if(70 to INFINITY)
+			return "<span class='danger'>[t_He] is radiating massive levels of electrical activity!</span>\n"
+
+/datum/species/limus/handle_post_spawn(mob/living/carbon/human/H) //Handles anything not already covered by basic species assignment.
+	H.r_hair = H.r_skin
+	H.g_hair = H.g_skin
+	H.b_hair = H.b_skin
+	H.r_facial = H.r_skin
+	H.g_facial = H.g_skin
+	H.b_facial = H.b_skin
+	H.ventcrawler = 1 // Can vent crawl when nude.
+	H.update_hair()
+
+/mob/living/carbon/human/proc/shapeshifter_select_hair()
+	set name = "Select Hair"
+	set category = "Abilities"
+
+	var/mob/living/carbon/human/H = usr
+
+	if(H.stat || H.nutrition < 50)
+		return
+
+	var/list/valid_hair = list()
+	for(var/i in hair_styles_list)
+		var/datum/sprite_accessory/hair/tmp_hair = hair_styles_list[i]
+		if(H.species.name in tmp_hair.species_allowed)
+			valid_hair += i
+
+	var/list/valid_facial_hair = list()
+	for(var/i in facial_hair_styles_list)
+		var/datum/sprite_accessory/hair/tmp_hair = facial_hair_styles_list[i]
+		if(H.species.name in tmp_hair.species_allowed)
+			valid_facial_hair += i
+
+	H.visible_message("<span class='notice'>\The [H]'s form contorts subtly.</span>")
+
+	if(valid_hair.len)
+		var/new_hair = input("Select a hairstyle.", "Shapeshifter Hair") as null|anything in valid_hair
+		H.h_style = new_hair ? new_hair : "Bald"
+	if(valid_facial_hair.len)
+		var/new_hair = input("Select a facial hair style.", "Shapeshifter Hair") as null|anything in valid_facial_hair
+		H.f_style = new_hair ? new_hair : "Shaved"
+
+	H.nutrition -= 50
+	H.update_hair()
+
+/mob/living/carbon/human/proc/shapeshifter_select_gender()
+
+	set name = "Select Gender"
+	set category = "Abilities"
+
+	var/mob/living/carbon/human/H = usr
+
+	if(H.stat || H.nutrition < 50)
+		return
+
+	var/new_gender = input("Please select a gender.", "Shapeshifter Gender") as null|anything in list(FEMALE, MALE, NEUTER, PLURAL)
+
+	if(!new_gender)
+		return
+
+	H.visible_message("<span class='notice'>\The [H]'s form contorts subtly.</span>")
+	H.gender = new_gender
+	H.nutrition -= 50
+	H.update_body()

@@ -142,6 +142,17 @@
 	allowed_species = list(IPC, DIONA, SKRELL, UNATHI, TAJARAN)
 	syllables = list("tao","shi","tzu","yi","com","be","is","i","op","vi","ed","lec","mo","cle","te","dis","e")
 
+/datum/language/slime
+	name = "Bubblish"
+	desc = "The language of slimes. It's a mixture of bubbling noises and pops. Very difficult to speak without mechanical aid for humans."
+	speech_verb = "bubbles and pops"
+	ask_verb = "bubbles and pops"
+	exclaim_verb = "bubbles and pops"
+	colour = "slime"
+	allowed_species = list(IPC)
+	key = list("p", "ç")
+	syllables = list("blob","plop","pop","bop","boop")
+
 /datum/language/ipc
 	name = "Trinary"
 	desc = "A modified binary fuzzy logic based language spoken by IPC. Basically, is just a sequence of zeros, ones and twos."
@@ -149,7 +160,7 @@
 	ask_verb = "beeps"
 	exclaim_verb = "boops"
 	colour = "ipc"
-	key = list("x", "÷") //only "dfpz" left.
+	key = list("x", "÷") //only "dfz" left.
 	//need to find a way to resolve possesive macros
 	allowed_species = list(IPC)
 	syllables = list("000", "111", "222", "001", "010", "100", "002", "020", "200", "011", "101", "110", "022", "202", "220", "112", "121", "211", "122", "212", "221", "012", "021", "120", "210", "102", "201")

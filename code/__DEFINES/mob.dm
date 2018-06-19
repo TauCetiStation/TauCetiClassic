@@ -71,6 +71,7 @@
 #define SHADOWLING  "Shadowling"
 #define MONKEY      "Monkey"
 #define GOLEM       "Adamantine Golem"
+#define LIMUS  "Limus"
 
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
 

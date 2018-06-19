@@ -50,3 +50,5 @@
 
 	var/list/recent_tastes = list()
 	var/lasttaste = 0 // Prevent tastes spam
+
+	var/stored_shock = 0 // Used mostly for slime people.

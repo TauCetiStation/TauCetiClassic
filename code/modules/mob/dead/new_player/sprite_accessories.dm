@@ -27,7 +27,7 @@
 	var/gender = NEUTER
 
 	// Restrict some styles to specific species
-	var/list/species_allowed = list(HUMAN)
+	var/list/species_allowed = list(HUMAN, LIMUS)
 
 	// Whether or not the accessory can be affected by colouration
 	var/do_colouration = 1
@@ -775,7 +775,7 @@
 	name = "Shaved"
 	icon_state = "bald"
 	gender = NEUTER
-	species_allowed = list(HUMAN , UNATHI , TAJARAN , SKRELL , VOX , IPC, DIONA)
+	species_allowed = list(HUMAN , UNATHI , TAJARAN , SKRELL , VOX , IPC, DIONA, LIMUS)
 
 /datum/sprite_accessory/facial_hair/watson
 	name = "Watson Mustache"

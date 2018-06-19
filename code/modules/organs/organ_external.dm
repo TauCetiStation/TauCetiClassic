@@ -48,6 +48,9 @@
 	var/damage_msg = "\red You feel an intense pain"
 
 	var/regen_bodypart_penalty = 0 // This variable determines how much time it would take to regenerate a bodypart, and the cost of it's regeneration.
+	var/non_solid = FALSE // Is the organ even solid? If not, there's no bones or arteries.
+	var/solid_alpha = 255 // If the organ ain't solid, how not solid is it?
+	var/drop_limb_chance_modifier = 1 // This is kinda complex. But, let's say we have a slime. Slime's max damage on a limb is 10. So, it should drop when it reaches 10. BUT, there's a touch. prob(pure_brute) implies that it will drop only in 10% cases. Which would mean it would never drop, yet it should. Which leads up to this variable's existance.
 
 /obj/item/organ/external/insert_organ()
 	..()
@@ -177,13 +180,13 @@
 				else
 					edge_eligible = 1
 
-			if(edge_eligible && pure_brute >= max_damage / DROPLIMB_THRESHOLD_EDGE && prob(pure_brute))
+			if(edge_eligible && pure_brute >= max_damage / DROPLIMB_THRESHOLD_EDGE && prob(pure_brute * drop_limb_chance_modifier))
 				droplimb(null, null, DROPLIMB_EDGE)
-			else if(pure_burn >= max_damage / DROPLIMB_THRESHOLD_DESTROY && prob(pure_burn / 3))
+			else if(pure_burn >= max_damage / DROPLIMB_THRESHOLD_DESTROY && prob((pure_burn * drop_limb_chance_modifier) / 3))
 				droplimb(null, null, DROPLIMB_BURN)
-			else if(pure_brute >= max_damage / DROPLIMB_THRESHOLD_DESTROY && prob(pure_brute))
+			else if(pure_brute >= max_damage / DROPLIMB_THRESHOLD_DESTROY && prob(pure_burn * drop_limb_chance_modifier))
 				droplimb(null, null, DROPLIMB_BLUNT)
-			else if(pure_brute >= max_damage / DROPLIMB_THRESHOLD_TEAROFF && prob(pure_brute / 3))
+			else if(pure_brute >= max_damage / DROPLIMB_THRESHOLD_TEAROFF && prob((pure_burn * drop_limb_chance_modifier) / 3))
 				droplimb(null, null, DROPLIMB_EDGE)
 
 	if(update_damstate())
@@ -556,7 +559,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		status |= ORGAN_BLEEDING
 
 	//Bone fractures
-	if(brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT))
+	if(brute_dam > min_broken_damage * config.organ_health_multiplier && !(status & ORGAN_ROBOT) && !non_solid)
 		fracture()
 
 // new damage icon system
@@ -613,6 +616,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 
 	if(destspawn)
 		return
+
+	if(disintegrate == DROPLIMB_EDGE && non_solid)
+		disintegrate = DROPLIMB_BLUNT
 
 	status |= ORGAN_DESTROYED
 
@@ -779,7 +785,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 		owner.UpdateDamageIcon(src)
 
 /obj/item/organ/external/proc/sever_artery()
-	if(!(status & (ORGAN_ARTERY_CUT | ORGAN_ROBOT)) && owner.organs_by_name[O_HEART])
+	if(!(status & (ORGAN_ARTERY_CUT | ORGAN_ROBOT)) && !non_solid && owner.organs_by_name[O_HEART])
 		status |= ORGAN_ARTERY_CUT
 		return TRUE
 	return FALSE
@@ -1036,6 +1042,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	vital = TRUE
 	w_class = ITEM_SIZE_HUGE // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
 
+/obj/item/organ/external/chest/slime
+	max_damage = 15
+	non_solid = TRUE
+	solid_alpha = 185
+	regen_bodypart_penalty = 30
+	drop_limb_chance_modifier = 5 // Max_damage is 5 times lower. So drop chance is 5 times higher.
+
 
 /obj/item/organ/external/groin
 	name = "groin"
@@ -1054,6 +1067,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 	vital = TRUE
 	w_class = ITEM_SIZE_LARGE
 
+/obj/item/organ/external/groin/slime
+	max_damage = 10
+	non_solid = TRUE
+	solid_alpha = 185
+	regen_bodypart_penalty = 18
+	drop_limb_chance_modifier = 5
 
 /obj/item/organ/external/head
 	name = "head"
@@ -1071,6 +1090,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	w_class = ITEM_SIZE_NORMAL
 
 	var/disfigured = FALSE
+
+/obj/item/organ/external/head/slime
+	max_damage = 15
+	non_solid = TRUE
+	solid_alpha = 185
+	regen_bodypart_penalty = 20
+	drop_limb_chance_modifier = 5
 
 /obj/item/organ/external/head/diona
 	vital = FALSE
@@ -1093,6 +1119,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
+/obj/item/organ/external/l_arm/slime
+	max_damage = 10
+	non_solid = TRUE
+	solid_alpha = 185
+	regen_bodypart_penalty = 15
+	drop_limb_chance_modifier = 5
+
 /obj/item/organ/external/l_arm/process()
 	..()
 	process_grasp(owner.l_hand, "left hand")
@@ -1112,6 +1145,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
+
+/obj/item/organ/external/r_arm/slime
+	max_damage = 10
+	non_solid = TRUE
+	solid_alpha = 185
+	regen_bodypart_penalty = 15
+	drop_limb_chance_modifier = 5
 
 /obj/item/organ/external/r_arm/process()
 	..()
@@ -1133,6 +1173,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
+/obj/item/organ/external/l_leg/slime
+	max_damage = 10
+	non_solid = TRUE
+	solid_alpha = 185
+	regen_bodypart_penalty = 15
+	drop_limb_chance_modifier = 5
 
 /obj/item/organ/external/r_leg
 	name = "right leg"
@@ -1149,6 +1195,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
+
+/obj/item/organ/external/r_leg/slime
+	max_damage = 10
+	non_solid = TRUE
+	solid_alpha = 180
+	regen_bodypart_penalty = 15
+	drop_limb_chance_modifier = 5
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)
