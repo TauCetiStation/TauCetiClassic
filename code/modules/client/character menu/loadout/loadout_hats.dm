@@ -70,3 +70,13 @@
 	berets["black"] = /obj/item/clothing/head/beret/black
 	berets["purple"] = /obj/item/clothing/head/beret/purple
 	gear_tweaks += new/datum/gear_tweak/path(berets)
+
+/datum/gear/head/kitty_ears
+	display_name = "Kitty Ears"
+	path = /obj/item/clothing/head/kitty
+	cost = 2
+
+/datum/gear/head/bunny_ears
+	display_name = "Bunny Ears"
+	path = /obj/item/clothing/head/collectable/rabbitears
+	cost = 2
