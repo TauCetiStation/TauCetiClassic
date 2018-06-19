@@ -38,28 +38,22 @@
 	return
 
 /obj/structure/morgue/ex_act(severity)
+	var/chance = 0
 	switch(severity)
 		if(1.0)
-			for(var/atom/movable/A as mob|obj in src)
-				A.loc = loc
-				ex_act(severity)
-			qdel(src)
-			return
+			chance = 100
 		if(2.0)
-			if (prob(50))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = loc
-					ex_act(severity)
-				qdel(src)
-				return
+			chance = 50
 		if(3.0)
-			if (prob(5))
-				for(var/atom/movable/A as mob|obj in src)
-					A.loc = loc
-					ex_act(severity)
-				qdel(src)
-				return
-	return
+			chance = 5
+
+	if (prob(chance))
+		for(var/atom/movable/A in src)
+			if(!ismob(A) && !isobj(A))
+				continue
+			A.loc = loc
+			A.ex_act(severity)
+		qdel(src)
 
 /obj/structure/morgue/alter_health()
 	return loc
@@ -101,8 +95,10 @@
 
 /obj/structure/morgue/proc/close()
 	if (connected)
-		for(var/atom/movable/A as mob|obj in connected.loc)
-			if (!( A.anchored ))
+		for(var/atom/movable/A in connected.loc)
+			if(!ismob(A) && !isobj(A))
+				continue
+			if(!A.anchored)
 				A.loc = src
 				if(ismob(A))
 					var/mob/M = A
@@ -126,7 +122,9 @@
 		if (T.contents.Find(connected))
 			connected.connected = src
 			icon_state = "morgue0"
-			for(var/atom/movable/A as mob|obj in src)
+			for(var/atom/movable/A in src)
+				if(!ismob(A) && !isobj(A))
+					continue
 				A.loc = connected.loc
 				if(ismob(A))
 					var/mob/M = A
@@ -170,16 +168,18 @@
 /obj/structure/morgue/relaymove(mob/user)
 	if (user.stat)
 		return
-	src.connected = new /obj/structure/m_tray( loc )
-	step(connected, src.dir)
-	src.connected.layer = BELOW_CONTAINERS_LAYER
+	connected = new /obj/structure/m_tray( loc )
+	step(connected, dir)
+	connected.layer = BELOW_CONTAINERS_LAYER
 	var/turf/T = get_step(src, dir)
 	if (T.contents.Find(connected))
-		src.connected.connected = src
-		src.icon_state = "morgue0"
-		for(var/atom/movable/A as mob|obj in src)
+		connected.connected = src
+		icon_state = "morgue0"
+		for(var/atom/movable/A in src)
+			if(!ismob(A) && !isobj(A))
+				continue
 			A.loc = connected.loc
-		src.connected.icon_state = "morguet"
+		connected.icon_state = "morguet"
 	else
 		qdel(connected)
 		connected = null
