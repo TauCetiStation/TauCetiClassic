@@ -13,6 +13,8 @@
 	siemens_coefficient = 0.3
 	w_class = 3
 
+	rags_to_give = 0
+
 /obj/item/clothing/head/helmet/warden
 	name = "warden's hat"
 	desc = "It's a special helmet issued to the Warden of a security force. Protects the head from impacts."

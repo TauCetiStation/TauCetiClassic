@@ -12,6 +12,8 @@
 	body_parts_covered = 0
 	allowed = list (/obj/item/weapon/reagent_containers/spray/plantbgone,/obj/item/device/plant_analyzer,/obj/item/seeds,/obj/item/nutrient,/obj/item/weapon/minihoe)
 
+	rag_color_to_give = COLOR_BLUE
+
 //Captain
 /obj/item/clothing/suit/captunic
 	name = "captain's parade tunic"
@@ -21,6 +23,8 @@
 	body_parts_covered = UPPER_TORSO|ARMS
 	flags_inv = HIDEJUMPSUIT
 
+	rag_color_to_give = COLOR_WHITE
+
 /obj/item/clothing/suit/captunic/capjacket
 	name = "captain's uniform jacket"
 	desc = "A less formal jacket for everyday captain use."
@@ -28,6 +32,8 @@
 	item_state = "bio_suit"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
+
+	rag_color_to_give = COLOR_BLUE
 
 //Chaplain
 /obj/item/clothing/suit/chaplain_hoodie
@@ -38,6 +44,8 @@
 	body_parts_covered = UPPER_TORSO|ARMS
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/suit.dmi')
 
+	rag_color_to_give = COLOR_BLACK
+
 //Chaplain
 /obj/item/clothing/suit/nun
 	name = "nun robe"
@@ -46,6 +54,8 @@
 	item_state = "nun"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
+
+	rag_color_to_give = COLOR_BLACK
 
 //Chef
 /obj/item/clothing/suit/chef
@@ -58,7 +68,8 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 	allowed = list (/obj/item/weapon/kitchenknife,/obj/item/weapon/butch)
 
-//Chef
+	rag_color_to_give = COLOR_WHITE
+
 /obj/item/clothing/suit/chef/classic
 	name = "A classic chef's apron."
 	desc = "A basic, dull, white chef's apron."
@@ -78,6 +89,8 @@
 	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 50, bullet = 10, laser = 25, energy = 10, bomb = 0, bio = 0, rad = 0)
 
+	rags_to_give = 0
+
 /obj/item/clothing/suit/storage/det_suit/black
 	icon_state = "detective2"
 
@@ -89,6 +102,8 @@
 	allowed = list(/obj/item/weapon/tank/emergency_oxygen, /obj/item/device/flashlight,/obj/item/weapon/gun/energy,/obj/item/weapon/gun/projectile,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/device/detective_scanner,/obj/item/device/taperecorder)
 	body_parts_covered = UPPER_TORSO|ARMS
 	armor = list(melee = 10, bullet = 10, laser = 15, energy = 10, bomb = 0, bio = 0, rad = 0)
+
+	rags_to_give = 0
 
 /obj/item/clothing/suit/storage/forensics/red
 	name = "red jacket"
@@ -112,6 +127,8 @@
 	/obj/item/clothing/mask/gas, /obj/item/taperoll/engineering)
 	body_parts_covered = UPPER_TORSO
 
+	rags_to_give = 0
+
 //Lawyer
 /obj/item/clothing/suit/storage/lawyer/bluejacket
 	name = "blue suit jacket"
@@ -121,6 +138,8 @@
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
 
+	rag_color_to_give = COLOR_BLUE
+
 /obj/item/clothing/suit/storage/lawyer/purpjacket
 	name = "purple suit jacket"
 	desc = "A snappy dress jacket."
@@ -128,6 +147,8 @@
 	item_state = "suitjacket_purp"
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
+
+	rag_color_to_give = COLOR_PURPLE
 
 //Internal Affairs
 /obj/item/clothing/suit/storage/internalaffairs
@@ -137,6 +158,8 @@
 	item_state = "ia_jacket"
 	blood_overlay_type = "coat"
 	body_parts_covered = UPPER_TORSO|ARMS
+
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/suit/storage/internalaffairs/verb/toggle()
 	set name = "Toggle Coat Buttons"
@@ -169,6 +192,8 @@
 	/obj/item/device/healthanalyzer, /obj/item/device/flashlight, /obj/item/device/radio, /obj/item/weapon/tank/emergency_oxygen)
 	body_parts_covered = UPPER_TORSO|ARMS
 
+	rags_to_give = 0
+
 /obj/item/clothing/suit/storage/fr_jacket/verb/toggle()
 	set name = "Toggle Jacket Buttons"
 	set category = "Object"
@@ -195,16 +220,19 @@
 	blood_overlay_type = "armor" //it's the less thing that I can put here
 	body_parts_covered = 0
 
+	rag_color_to_give = COLOR_RED
+
 //Recycler
 /obj/item/clothing/suit/recyclervest
-    name = "recycler vest"
-    desc = "This is Recycler vest."
-    icon = 'icons/obj/clothing/suits.dmi'
-    icon_state = "recycler_vest_open"
-    item_state = "recycler_vest"
-    blood_overlay_type = "coat" //it's the less thing that I can put here
-    body_parts_covered = 0
-    action_button_name = "Toggle vest buttons"
+	name = "recycler vest"
+	desc = "This is Recycler vest."
+	icon_state = "recycler_vest_open"
+	item_state = "recycler_vest"
+	blood_overlay_type = "coat" //it's the less thing that I can put here
+	body_parts_covered = 0
+	action_button_name = "Toggle vest buttons"
+
+	rag_color_to_give = COLOR_GREY
 
 /obj/item/clothing/suit/recyclervest/ui_action_click()
     toggle()
@@ -232,3 +260,5 @@
 	allowed = list(/obj/item/stack/medical, /obj/item/weapon/reagent_containers/dropper, /obj/item/weapon/reagent_containers/hypospray, /obj/item/weapon/reagent_containers/syringe,
 	/obj/item/device/healthanalyzer, /obj/item/device/flashlight, /obj/item/device/radio, /obj/item/weapon/tank/emergency_oxygen,/obj/item/weapon/scalpel,/obj/item/weapon/retractor,/obj/item/weapon/hemostat,
 	/obj/item/weapon/cautery,/obj/item/weapon/bonegel,/obj/item/weapon/FixOVein)
+
+	rag_color_to_give = COLOR_BLUE

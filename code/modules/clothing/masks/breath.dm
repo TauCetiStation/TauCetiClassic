@@ -11,6 +11,8 @@
 	action_button_name = "Adjust mask"
 	var/hanging = 0
 
+	rags_to_give = 0
+
 /obj/item/clothing/mask/breath/attack_self()
 
 	if(usr.canmove && !usr.stat && !usr.restrained())

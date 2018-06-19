@@ -10,6 +10,8 @@
 	body_parts_covered = HEAD|FACE|EYES
 	siemens_coefficient = 0.4
 
+	rags_to_give = 0
+
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"
 	desc = "A suit that protects against biological contamination."
@@ -26,6 +28,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	siemens_coefficient = 0.4
 
+	rags_to_give = 0
 
 //Standard biosuit, orange stripe
 /obj/item/clothing/head/bio_hood/general

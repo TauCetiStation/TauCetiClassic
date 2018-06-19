@@ -8,6 +8,9 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 
+	rag_color_to_give = COLOR_BLACK
+	rags_to_give = 1
+
 //Monkeys can not take the muzzle off of themself! Call PETA!
 /obj/item/clothing/mask/muzzle/attack_paw(mob/user)
 	if (src == user.wear_mask)
@@ -15,7 +18,6 @@
 	else
 		..()
 	return
-
 
 /obj/item/clothing/mask/surgical
 	name = "sterile mask"
@@ -29,12 +31,16 @@
 	permeability_coefficient = 0.01
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 25, rad = 0)
 
+	rags_to_give = 0
+
 /obj/item/clothing/mask/fakemoustache
 	name = "fake moustache"
 	desc = "Warning: moustache is fake."
 	icon_state = "fake-moustache"
 	flags_inv = HIDEFACE
 	body_parts_covered = 0
+
+	rags_to_give = 0
 
 /obj/item/clothing/mask/fake_face
 	name = "fake face"
@@ -43,12 +49,16 @@
 	flags_inv = HIDEFACE
 	body_parts_covered = 0
 
+	rags_to_give = 0
+
 /obj/item/clothing/mask/snorkel
 	name = "snorkel"
 	desc = "For the Swimming Savant."
 	icon_state = "snorkel"
 	flags_inv = HIDEFACE
 	body_parts_covered = 0
+
+	rags_to_give = 0
 
 //scarves (fit in in mask slot)
 
@@ -63,6 +73,8 @@
 	action_button_name = "Adjust scarf"
 	var/hanging = 0
 
+	rag_color_to_give = COLOR_BLUE
+
 /obj/item/clothing/mask/scarf/blue
 	name = "blue neck scarf"
 	desc = "A blue neck scarf."
@@ -75,11 +87,15 @@
 	icon_state = "redscarf"
 	item_state = "redscarf"
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/mask/scarf/green
 	name = "green scarf"
 	desc = "A green neck scarf."
 	icon_state = "greenscarf"
 	item_state = "greenscarf"
+
+	rag_color_to_give = COLOR_GREEN
 
 /obj/item/clothing/mask/scarf/yellow
 	name = "yellow scarf"
@@ -87,11 +103,15 @@
 	icon_state = "yellowscarf"
 	item_state = "yellowscarf"
 
+	rag_color_to_give = COLOR_YELLOW
+
 /obj/item/clothing/mask/scarf/violet
 	name = "violet scarf"
 	desc = "A violet neck scarf."
 	icon_state = "violetscarf"
 	item_state = "violetscarf"
+
+	rag_color_to_give = COLOR_PURPLE
 
 /obj/item/clothing/mask/scarf/attack_self(mob/user)
 
@@ -113,9 +133,6 @@
 		to_chat(user, "You pull the scarf up to cover your face.")
 	user.update_inv_wear_mask()
 
-
-
-
 /obj/item/clothing/mask/scarf/ninja
 	name = "ninja scarf"
 	desc = "A stealthy, dark scarf."
@@ -125,6 +142,8 @@
 	w_class = 2
 	gas_transfer_coefficient = 0.90
 	siemens_coefficient = 0
+
+	rags_to_give = 0
 
 /obj/item/clothing/mask/pig
 	name = "pig mask"
@@ -136,6 +155,8 @@
 	w_class = 2
 	siemens_coefficient = 0.9
 	body_parts_covered = HEAD|FACE|EYES
+
+	rags_to_give = 0
 
 /obj/item/clothing/mask/pig/speechModification(message)
 	if(!canremove)
@@ -153,6 +174,8 @@
 	w_class = 2
 	siemens_coefficient = 0.9
 
+	rags_to_give = 0
+
 /obj/item/clothing/mask/horsehead/speechModification(message)
 	if(!canremove)
 		message = pick("NEEIIGGGHHHH!", "NEEEIIIIGHH!", "NEIIIGGHH!", "HAAWWWWW!", "HAAAWWW!")
@@ -168,6 +191,8 @@
 	body_parts_covered = HEAD|FACE|EYES
 	w_class = 2
 
+	rags_to_give = 0
+
 /obj/item/clothing/mask/cowmask/speechModification(message)
 	if(!canremove)
 		message = pick("Moooooooo!", "Moo!", "Moooo!")
@@ -182,12 +207,16 @@
 	icon_state = "bandbotany"
 	body_parts_covered = 0
 
+	rag_color_to_give = COLOR_YELLOW
+
 /obj/item/clothing/mask/chicken
 	name = "chicken suit head"
 	desc = "Bkaw!"
 	icon_state = "chickenmask"
 	flags = BLOCKHAIR
 	body_parts_covered = HEAD|FACE|EYES
+
+	rag_color_to_give = COLOR_YELLOW
 
 /obj/item/clothing/mask/chicken/speechModification(message)
 	if(!canremove)
@@ -221,25 +250,35 @@
 	desc = "A fine blue bandana with nanotech lining."
 	icon_state = "bandblue"
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/mask/bandana/green
 	name = "green bandana"
 	desc = "A fine green bandana with nanotech lining."
 	icon_state = "bandgreen"
+
+	rag_color_to_give = COLOR_GREEN
 
 /obj/item/clothing/mask/bandana/gold
 	name = "gold bandana"
 	desc = "A fine gold bandana with nanotech lining."
 	icon_state = "bandgold"
 
+	rag_color_to_give = COLOR_YELLOW
+
 /obj/item/clothing/mask/bandana/black
 	name = "black bandana"
 	desc = "A fine black bandana with nanotech lining."
 	icon_state = "bandblack"
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/mask/bandana/skull
 	name = "skull bandana"
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	icon_state = "bandskull"
+
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/mask/tie/collar
 	name = "silver collar"
@@ -247,8 +286,12 @@
 	icon_state = "collar"
 	body_parts_covered = 0
 
+	rags_to_give = 0
+
 /obj/item/clothing/mask/tie/collar2
 	name = "gold collar"
 	desc = "A common collar with gold covering"
 	icon_state = "collar2"
 	body_parts_covered = 0
+
+	rags_to_give = 0

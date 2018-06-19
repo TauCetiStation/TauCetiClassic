@@ -2,11 +2,16 @@
 	icon_state = "old_hazmat_white"
 	name = "hazmat helmet"
 	desc = "White colored and classic."
+
+	rags_to_give = 0
+
 /obj/item/clothing/suit/bio_suit/old_hazmat
 	icon_state = "old_hazmat_white"
 	item_state = "old_hazmat_white"
 	name = "hazmat suit"
 	desc = "White colored and classic."
+
+	rags_to_give = 0
 
 /obj/item/clothing/suit/bio_suit/old_hazmat/sec
 	icon_state = "old_hazmat_sec"

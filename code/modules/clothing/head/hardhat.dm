@@ -11,6 +11,8 @@
 	action_button_name = "Toggle Hardhat"
 	siemens_coefficient = 0.9
 
+	rags_to_give = 0
+
 /obj/item/clothing/head/hardhat/atom_init()
 	. = ..()
 	update_icon()

@@ -27,6 +27,8 @@
 	siemens_coefficient = 0.9
 	w_class = 3
 
+	rags_to_give = 0
+
 /obj/item/clothing/head/welding/attack_self()
 	toggle()
 
@@ -65,6 +67,8 @@
 	var/fire_resist = T0C+1300	//this is the max temp it can stand before you start to cook. although it might not burn away, you take damage
 	var/processing = 0 //I dont think this is used anywhere.
 	body_parts_covered = EYES
+
+	body_parts_covered = 0
 
 /obj/item/clothing/head/cakehat/process()
 	if(!onfire)
@@ -105,6 +109,8 @@
 	item_state = "ushankadown"
 	flags_inv = HIDEEARS
 
+	rag_color_to_give = COLOR_BROWN
+
 /obj/item/clothing/head/ushanka/attack_self(mob/user)
 	if(src.icon_state == "ushankadown")
 		src.icon_state = "ushankaup"
@@ -131,6 +137,8 @@
 	var/on = 0
 	w_class = 3
 
+	body_parts_covered = 0
+
 	attack_self(mob/user)
 		if(!isturf(user.loc))
 			to_chat(user, "You cannot turn the light on while in this [user.loc]")//To prevent some lighting anomalities.
@@ -153,6 +161,8 @@
 	var/icon/mob
 	var/icon/mob2
 	siemens_coefficient = 1.5
+
+	body_parts_covered = 0
 
 	update_icon(mob/living/carbon/human/user)
 		if(!istype(user)) return

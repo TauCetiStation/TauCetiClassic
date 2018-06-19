@@ -6,6 +6,8 @@
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
+	rag_color_to_give = COLOR_GREEN
+
 /obj/item/clothing/head/hairflower
 	name = "hair flower pin"
 	icon_state = "hairflower"
@@ -13,11 +15,15 @@
 	item_state = "hairflower"
 	body_parts_covered = 0
 
+	rags_to_give = 0
+
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
 	desc = "A powdered wig."
 	icon_state = "pwig"
 	item_state = "pwig"
+
+	rag_color_to_give = COLOR_WHITE
 
 /obj/item/clothing/head/that
 	name = "top-hat"
@@ -27,17 +33,23 @@
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/head/redcoat
 	name = "redcoat's hat"
 	icon_state = "redcoat"
 	desc = "<i>'I guess it's a redhead.'</i>"
 	body_parts_covered = 0
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/head/mailman
 	name = "mailman's hat"
 	icon_state = "mailman"
 	desc = "<i>'Right-on-time'</i> mail service head wear."
 	body_parts_covered = 0
+
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/head/plaguedoctorhat
 	name = "plague doctor's hat"
@@ -47,6 +59,8 @@
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
+	rags_to_give = 0
+
 /obj/item/clothing/head/hasturhood
 	name = "hastur's hood"
 	desc = "It's unspeakably stylish."
@@ -54,12 +68,16 @@
 	flags = HEADCOVERSEYES|BLOCKHAIR
 	body_parts_covered = HEAD|FACE|EYES
 
+	rag_color_to_give = COLOR_YELLOW
+
 /obj/item/clothing/head/nursehat
 	name = "nurse's hat"
 	desc = "It allows quick identification of trained medical personnel."
 	icon_state = "nursehat"
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
+
+	rag_color_to_give = COLOR_WHITE
 
 /obj/item/clothing/head/syndicatefake
 	name = "red space-helmet replica"
@@ -71,6 +89,8 @@
 	siemens_coefficient = 2.0
 	body_parts_covered = HEAD|FACE|EYES
 
+	rags_to_give = 0
+
 /obj/item/clothing/head/cueball
 	name = "cueball helmet"
 	desc = "A large, featureless white orb mean to be worn on your head. How do you even see out of this thing?"
@@ -79,6 +99,8 @@
 	item_state="cueball"
 	flags_inv = 0
 	body_parts_covered = HEAD|FACE|EYES
+
+	rags_to_give = 0
 
 /obj/item/clothing/head/cardborg
 	name = "cardborg helmet"
@@ -89,6 +111,8 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
 
+	rags_to_give = 0
+
 /obj/item/clothing/head/justice
 	name = "justice hat"
 	desc = "Fight for what's righteous!"
@@ -97,6 +121,8 @@
 	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
+
+	rags_to_give = 0
 
 /obj/item/clothing/head/justice/blue
 	icon_state = "justiceblue"
@@ -120,12 +146,15 @@
 	icon_state = "bunny"
 	body_parts_covered = 0
 
+	rags_to_give = 0
+
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
 	desc = "A working man's cap."
 	icon_state = "flat_cap"
 	item_state = "detective"
 	siemens_coefficient = 0.9
+	rag_color_to_give = COLOR_BROWN
 
 /obj/item/clothing/head/pirate
 	name = "pirate hat"
@@ -133,6 +162,7 @@
 	icon_state = "pirate"
 	item_state = "pirate"
 	body_parts_covered = 0
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/head/hgpiratecap
 	name = "pirate hat"
@@ -140,6 +170,7 @@
 	icon_state = "hgpiratecap"
 	item_state = "hgpiratecap"
 	body_parts_covered = 0
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/head/bandana
 	name = "pirate bandana"
@@ -147,12 +178,15 @@
 	icon_state = "bandana"
 	item_state = "bandana"
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/head/bowler
 	name = "bowler-hat"
 	desc = "Gentleman, elite aboard!"
 	icon_state = "bowler"
 	item_state = "bowler"
 	body_parts_covered = 0
+	rag_color_to_give = COLOR_BLACK
 
 //stylish bs12 hats
 
@@ -197,6 +231,8 @@
 	flags = BLOCKHAIR
 	siemens_coefficient = 2.0
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/head/chicken
 	name = "chicken suit head"
 	desc = "Bkaw!"
@@ -206,6 +242,8 @@
 	siemens_coefficient = 2.0
 	body_parts_covered = HEAD|FACE|EYES
 
+	rag_color_to_give = COLOR_YELLOW
+
 /obj/item/clothing/head/bearpelt
 	name = "bear pelt hat"
 	desc = "Fuzzy."
@@ -213,6 +251,8 @@
 	item_state = "bearpelt"
 	flags = BLOCKHAIR
 	siemens_coefficient = 2.0
+
+	rags_to_give = 0
 
 /obj/item/clothing/head/headscarf
 	name = "zhan headscarf"
@@ -222,6 +262,8 @@
 	body_parts_covered = 0
 	species_restricted = list(UNATHI , TAJARAN , HUMAN , DIONA , IPC)
 
+	rag_color_to_give = COLOR_WHITE
+
 /obj/item/clothing/head/skrell_headwear
 	name = "skrell yellow headwear"
 	icon_state = "skrell_yellow"
@@ -229,6 +271,8 @@
 	desc = "Just two pieces of yellow cloth"
 	body_parts_covered = 0
 	species_restricted = list(SKRELL)
+
+	rag_color_to_give = COLOR_YELLOW
 
 /obj/item/clothing/head/skrell_headwear/red
 	name = "skrell red headwear"
@@ -238,6 +282,8 @@
 	body_parts_covered = 0
 	species_restricted = list(SKRELL)
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/head/skrell_headwear/blue
 	name = "skrell blue headwear"
 	icon_state = "skrell_blue"
@@ -245,6 +291,8 @@
 	desc = "Just two pieces of blue cloth"
 	body_parts_covered = 0
 	species_restricted = list(SKRELL)
+
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/head/xenos
 	name = "xenos helmet"
@@ -256,12 +304,15 @@
 	siemens_coefficient = 2.0
 	body_parts_covered = HEAD|FACE|EYES
 
+	rags_to_give = 0
+
 /obj/item/clothing/head/fedora
 	name = "fedora"
 	icon_state = "fedora"
 	item_state = "fedora"
 	desc = "A really cool hat if you're a mobster. A really lame hat if you're not."
 	action_button_name = "Tip Fedora"
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/head/fedora/attack_self(mob/user)
 	fedoraproc(user)
@@ -287,11 +338,13 @@
 	name = "white fedora"
 	desc = "Someone wearing this definitely makes them cool."
 	icon_state = "hat_white"
+	rag_color_to_give = COLOR_WHITE
 
 /obj/item/clothing/head/fedora/brown
  	name = "brown fedora"
  	desc = "Someone wearing this definitely makes them cool."
  	icon_state = "hat_brown"
+ 	rag_color_to_give = COLOR_BROWN
 
 
 /obj/item/clothing/head/batman_helmet
@@ -303,10 +356,14 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	body_parts_covered = HEAD|FACE|EYES
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/head/beret/rosa
 	name = "white beret"
 	icon_state = "rosas_hat"
 	item_state = "helmet"
+
+	rag_color_to_give = COLOR_WHITE
 
 /obj/item/clothing/head/sombrero
 	name = "sombrero"
@@ -314,11 +371,15 @@
 	item_state = "helmet"
 	desc = "You feel mexican just wearing this."
 
+	rag_color_to_give = COLOR_BROWN
+
 /obj/item/clothing/head/sombrero/green
 	name = "green sombrero"
 	icon_state = "greensombrero"
 	item_state = "greensombrero"
 	desc = "As elegant as a dancing cactus."
+
+	rag_color_to_give = COLOR_GREEN
 
 /obj/item/clothing/head/sombrero/shamebrero
 	name = "shamebrero"
@@ -326,10 +387,14 @@
 	item_state = "shamebrero"
 	desc = "You never asked for this."
 
+	rag_color_to_give = COLOR_PURPLE
+
 /obj/item/clothing/head/western
 	name = "western hat"
 	icon_state = "western_hat"
 	item_state = "western_hat"
+
+	rag_color_to_give = COLOR_BROWN
 
 /obj/item/clothing/head/western/cowboy
 	name = "cowboy hat"
@@ -343,6 +408,8 @@
 	item_state = "indiana_hat"
 	desc = "Be aware of rolling boulders."
 
+	rag_color_to_give = COLOR_BROWN
+
 /obj/item/clothing/head/necromancer_hood
 	name = "necromancer's hood"
 	desc = "It's hood that covers the head."
@@ -351,13 +418,19 @@
 	flags = HEADCOVERSEYES|BLOCKHAIR
 	siemens_coefficient = 0.9
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/head/chaplain_hood/brown
 	name = "brown hood"
 	icon_state = "brown_hood"
 
+	rag_color_to_give = COLOR_BROWN
+
 /obj/item/clothing/head/chaplain_hood/green
 	name = "green hood"
 	icon_state = "green_hood"
+
+	rag_color_to_give = COLOR_GREEN
 
 /obj/item/clothing/head/beret/red
 	name = "red beret"
@@ -369,25 +442,35 @@
 	desc = "Bonjour, but in blue. Smells like baguette, pardon my French."
 	icon_state = "beret_blue"
 
+	rag_color_to_give = COLOR_BLUE
+
 /obj/item/clothing/head/beret/black
 	name = "black beret"
 	desc = "Bonjour, but in black. Smells like baguette, pardon my French."
 	icon_state = "beret_black"
+
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/head/beret/purple
 	name = "purple beret"
 	desc = "Bonjour, but in purple. Smells like baguette, pardon my French."
 	icon_state = "beret_purple"
 
+	rag_color_to_give = COLOR_PURPLE
+
 /obj/item/clothing/head/beret/centcom/officer
 	name = "officers beret"
 	desc = "A black beret adorned with the shield silver kite shield with an engraved sword of the NanoTrasen security forces, announcing to the world that the wearer is a defender of NanoTrasen."
 	icon_state = "centcomofficerberet"
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/head/beret/centcom/captain
 	name = "captains beret"
 	desc = "A white beret adorned with the shield cobalt kite shield with an engraved sword of the NanoTrasen security forces, worn only by those captaining a vessel of the NanoTrasen Navy."
 	icon_state = "centcomcaptain"
+
+	rag_color_to_give = COLOR_WHITE
 
 /obj/item/clothing/head/angel_nimb
 	name = "nimb"
@@ -402,9 +485,15 @@
 	cold_protection = HEAD
 	flags_inv = BLOCKHAIR|HIDEEARS
 
+	rags_to_give = 0
+	rag_color_to_give = "none"
+
 /obj/item/clothing/head/hooded/ian_hood
 	name = "corgi hood"
 	desc = "A hood that looks just like a corgi's head, it won't guarantee dog biscuits."
 	icon_state = "ian"
 	body_parts_covered = HEAD
 	flags_inv = BLOCKHAIR|HIDEEARS
+
+	rags_to_give = 0
+	rag_color_to_give = "none"

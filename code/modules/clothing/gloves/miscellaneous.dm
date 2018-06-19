@@ -9,12 +9,16 @@
 	heat_protection = ARMS
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 
+	rag_color_to_give = COLOR_BLUE
+
 /obj/item/clothing/gloves/cyborg
 	desc = "beep... boop... borp..."
 	name = "cyborg gloves"
 	icon_state = "black"
 	item_state = "r_hands"
 	siemens_coefficient = 1.0
+
+	rags_to_give = 0
 
 /obj/item/clothing/gloves/swat
 	desc = "These tactical gloves are somewhat fire and impact-resistant."
@@ -29,6 +33,8 @@
 	heat_protection = ARMS
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/gloves/combat //Combined effect of SWAT gloves and insulated gloves
 	desc = "These tactical gloves are somewhat fire and impact resistant."
 	name = "combat gloves"
@@ -41,6 +47,8 @@
 	heat_protection = ARMS
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/gloves/latex
 	name = "latex gloves"
 	desc = "Sterile latex gloves."
@@ -51,11 +59,15 @@
 	item_color="white"
 	germ_level = 0
 
+	rag_color_to_give = COLOR_WHITE
+
 /obj/item/clothing/gloves/latex/nitrile
 	name = "nitrile gloves"
 	desc = "Sterile nitrile gloves"
 	icon_state = "nitrile"
 	item_state = "ngloves"
+
+	rag_color_to_give = COLOR_CYAN
 
 /obj/item/clothing/gloves/botanic_leather
 	desc = "These leather gloves protect against thorns, barbs, prickles, spikes and other harmful objects of floral origin."
@@ -64,6 +76,8 @@
 	item_state = "ggloves"
 	permeability_coefficient = 0.9
 	siemens_coefficient = 0.9
+
+	rag_color_to_give = COLOR_BROWN
 
 /obj/item/clothing/gloves/security														//Sec gloves
 	desc = "Heavily padded heavy-duty red security gloves."
@@ -77,6 +91,8 @@
 	heat_protection = ARMS
 	max_heat_protection_temperature = GLOVES_MAX_HEAT_PROTECTION_TEMPERATURE
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/gloves/fingerless
 	desc = "A pair of gloves. They don't seem to have fingers."
 	name = "black fingerless gloves"
@@ -86,41 +102,55 @@
 	clipped = 1
 	species_restricted = list("exclude","stunglove")
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/gloves/fingerless/red
 	name = "red fingerless gloves"
 	icon_state = "fingerless_red"
 	item_state = "fingerless_red"
-	item_color="red"
+	item_color = "red"
+
+	rag_color_to_give = COLOR_RED
 
 /obj/item/clothing/gloves/fingerless/orange
 	name = "orange fingerless gloves"
 	icon_state = "fingerless_orange"
 	item_state = "fingerless_orange"
-	item_color="orange"
+	item_color = "orange"
+
+	rag_color_to_give = COLOR_ORANGE
 
 /obj/item/clothing/gloves/fingerless/green
 	name = "green fingerless gloves"
 	icon_state = "fingerless_green"
 	item_state = "fingerless_green"
-	item_color="green"
+	item_color = "green"
+
+	rag_color_to_give = COLOR_GREEN
 
 /obj/item/clothing/gloves/fingerless/blue
 	name = "blue fingerless gloves"
 	icon_state = "fingerless_blue"
 	item_state = "fingerless_blue"
-	item_color="blue"
+	item_color ="blue"
+
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/gloves/fingerless/purple
 	name = "purple fingerless gloves"
 	icon_state = "fingerless_purple"
 	item_state = "fingerless_purple"
-	item_color="purple"
+	item_color= "purple"
+
+	rag_color_to_give = COLOR_PURPLE
 
 /obj/item/clothing/gloves/fingerless/yellow
 	name = "yellow fingerless gloves"
 	icon_state = "fingerless_yellow"
 	item_state = "fingerless_yellow"
-	item_color="yellow"
+	item_color = "yellow"
+
+	rag_color_to_give = COLOR_YELLOW
 
 /obj/item/clothing/gloves/fingerless/rainbow
 	name = "rainbow fingerless gloves"
@@ -128,8 +158,13 @@
 	item_state = "fingerless_rainbow"
 	item_color="rainbow"
 
+	rags_to_give = 0
+	rag_color_to_give = "none"
+
 /obj/item/clothing/gloves/security/marinad
 	desc = "These were made to hold a full automatic gun."
 	name = "marine gloves"
 	icon_state = "marinad"
 	item_state = "bgloves"
+
+	rag_color_to_give = COLOR_BROWN

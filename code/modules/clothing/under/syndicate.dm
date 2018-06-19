@@ -9,6 +9,8 @@
 	siemens_coefficient = 0.9
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/under/syndicate/equipped(mob/M)
 	if(M.gender == "male")
 		item_color = "syndicate"

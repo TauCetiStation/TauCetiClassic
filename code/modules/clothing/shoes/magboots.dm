@@ -11,6 +11,8 @@
 	origin_tech = "materials=3;magnets=4;engineering=4"
 //	flags = NOSLIP //disabled by default
 
+	rags_to_give = 0
+
 /obj/item/clothing/shoes/magboots/attack_self(mob/user)
 	if(magpulse)
 		flags &= ~NOSLIP

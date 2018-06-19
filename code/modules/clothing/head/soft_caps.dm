@@ -9,6 +9,8 @@
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
+	rag_color_to_give = COLOR_YELLOW
+
 /obj/item/clothing/head/soft/dropped()
 	src.icon_state = "[item_color]soft"
 	src.flipped=0
@@ -34,11 +36,15 @@
 	icon_state = "redsoft"
 	item_color = "red"
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/head/soft/blue
 	name = "blue cap"
 	desc = "It's a baseball hat in a tasteless blue color."
 	icon_state = "bluesoft"
 	item_color = "blue"
+
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/head/soft/green
 	name = "green cap"
@@ -46,11 +52,15 @@
 	icon_state = "greensoft"
 	item_color = "green"
 
+	rag_color_to_give = COLOR_GREEN
+
 /obj/item/clothing/head/soft/yellow
 	name = "yellow cap"
 	desc = "It's a baseball hat in a tasteless yellow color."
 	icon_state = "yellowsoft"
 	item_color = "yellow"
+
+	rag_color_to_give = COLOR_YELLOW
 
 /obj/item/clothing/head/soft/grey
 	name = "grey cap"
@@ -58,11 +68,15 @@
 	icon_state = "greysoft"
 	item_color = "grey"
 
+	rag_color_to_give = COLOR_GREY
+
 /obj/item/clothing/head/soft/orange
 	name = "orange cap"
 	desc = "It's a baseball hat in a tasteless orange color."
 	icon_state = "orangesoft"
 	item_color = "orange"
+
+	rag_color_to_give = COLOR_ORANGE
 
 /obj/item/clothing/head/soft/mime
 	name = "white cap"
@@ -70,11 +84,15 @@
 	icon_state = "mimesoft"
 	item_color = "mime"
 
+	rag_color_to_give = COLOR_WHITE
+
 /obj/item/clothing/head/soft/purple
 	name = "purple cap"
 	desc = "It's a baseball hat in a tasteless purple color."
 	icon_state = "purplesoft"
 	item_color = "purple"
+
+	rag_color_to_give = COLOR_PURPLE
 
 /obj/item/clothing/head/soft/rainbow
 	name = "rainbow cap"
@@ -88,11 +106,15 @@
 	icon_state = "secsoft"
 	item_color = "sec"
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/head/soft/sec/corp
 	name = "corporate security cap"
 	desc = "It's baseball hat in corporate colors."
 	icon_state = "corpsoft"
 	item_color = "corp"
+
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/head/soft/trash
 	name = "trash cap"
@@ -100,8 +122,12 @@
 	icon_state = "trashsoft"
 	item_color = "trash"
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/head/soft/janitor
 	name = "janitor cap"
 	desc = "It's janitor hat."
 	icon_state = "janitorsoft"
 	item_color = "janitor"
+
+	rag_color_to_give = COLOR_PURPLE

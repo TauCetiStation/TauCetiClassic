@@ -675,5 +675,5 @@ By design, d1 is the smallest direction and d2 is the highest
 	color = COLOR_RED
 
 /obj/item/stack/cable_coil/random/atom_init()
-	color = pick(COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_PINK, COLOR_YELLOW, COLOR_ORANGE, COLOR_WHITE, COLOR_GRAY)
+	color = pick(COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_PINK, COLOR_YELLOW, COLOR_ORANGE, COLOR_WHITE, COLOR_GREY)
 	. = ..()

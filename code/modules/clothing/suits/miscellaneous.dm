@@ -18,6 +18,8 @@
 	allowed = list (/obj/item/weapon/gun/energy/laser/bluetag)
 	siemens_coefficient = 3.0
 
+	rags_to_give = 0
+
 /obj/item/clothing/suit/redtag
 	name = "red laser tag armour"
 	desc = "Reputed to go faster."
@@ -27,6 +29,8 @@
 	body_parts_covered = UPPER_TORSO
 	allowed = list (/obj/item/weapon/gun/energy/laser/redtag)
 	siemens_coefficient = 3.0
+
+	rags_to_give = 0
 
 /*
  * Costume
@@ -38,6 +42,7 @@
 	item_state = "pirate"
 	body_parts_covered = UPPER_TORSO|ARMS
 
+	rag_color_to_give = COLOR_BROWN
 
 /obj/item/clothing/suit/hgpirate
 	name = "pirate captain coat"
@@ -47,6 +52,7 @@
 	flags_inv = HIDEJUMPSUIT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/suit/cyborg_suit
 	name = "cyborg suit"
@@ -57,6 +63,7 @@
 	fire_resist = T0C+5200
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
+	rags_to_give = 0
 
 /obj/item/clothing/suit/greatcoat
 	name = "great coat"
@@ -64,13 +71,13 @@
 	icon_state = "nazi"
 	item_state = "nazi"
 
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/suit/johnny_coat
 	name = "johnny~~ coat"
 	desc = "Johnny~~"
 	icon_state = "johnny"
 	item_state = "johnny"
-
 
 /obj/item/clothing/suit/justice
 	name = "justice suit"
@@ -80,6 +87,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
+	rags_to_give = 0
 
 /obj/item/clothing/suit/judgerobe
 	name = "judge's robe"
@@ -90,6 +98,7 @@
 	allowed = list(/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/spacecash)
 	flags_inv = HIDEJUMPSUIT
 
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/suit/wcoat
 	name = "waistcoat"
@@ -99,6 +108,7 @@
 	blood_overlay_type = "armor"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/suit/apron/overalls
 	name = "coveralls"
@@ -107,6 +117,7 @@
 	item_state = "overalls"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/suit/syndicatefake
 	name = "red space suit replica"
@@ -118,6 +129,8 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
+	rags_to_give = 0
+
 /obj/item/clothing/suit/hastur
 	name = "Hastur's Robes"
 	desc = "Robes not meant to be worn by man."
@@ -126,6 +139,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 
+	rag_color_to_give = COLOR_YELLOW
 
 /obj/item/clothing/suit/imperium_monk
 	name = "imperium monk"
@@ -135,6 +149,7 @@
 	body_parts_covered = HEAD|UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
+	rag_color_to_give = COLOR_RED
 
 /obj/item/clothing/suit/chickensuit
 	name = "chicken suit"
@@ -145,6 +160,7 @@
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
 
+	rag_color_to_give = COLOR_YELLOW
 
 /obj/item/clothing/suit/monkeysuit
 	name = "monkey suit"
@@ -155,6 +171,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
 
+	rag_color_to_give = COLOR_BROWN
 
 /obj/item/clothing/suit/holidaypriest
 	name = "holiday priest"
@@ -164,6 +181,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEJUMPSUIT
 
+	rag_color_to_give = COLOR_WHITE
 
 /obj/item/clothing/suit/cardborg
 	name = "cardborg suit"
@@ -172,6 +190,8 @@
 	item_state = "cardborg"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 	flags_inv = HIDEJUMPSUIT
+
+	rags_to_give = 0
 
 /*
  * Misc
@@ -185,6 +205,9 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 
+	rags_to_give = 6
+	rag_color_to_give = COLOR_WHITE
+
 /obj/item/clothing/suit/ianshirt
 	name = "worn shirt"
 	desc = "A worn out, curiously comfortable t-shirt with a picture of Ian. You wouldn't go so far as to say it feels like being hugged when you wear it but it's pretty close. Good for sleeping in."
@@ -192,11 +215,15 @@
 	item_state = "ianshirt"
 	body_parts_covered = UPPER_TORSO|ARMS
 
+	rag_color_to_give = COLOR_BLUE
+
 /obj/item/clothing/suit/nerdshirt
 	name = "gamer shirt"
 	desc = "A baggy shirt with a vintage game character on it. Why would someone wear this?"
 	icon_state = "nerdshirt"
 	item_state = "nerdshirt"
+
+	rag_color_to_give = COLOR_WHITE
 
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"
@@ -205,11 +232,15 @@
 	item_state = "johnny"
 	allowed = list(/obj/item/device/flashlight,/obj/item/weapon/tank/emergency_oxygen,/obj/item/toy,/obj/item/weapon/storage/fancy/cigarettes,/obj/item/weapon/lighter)
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/suit/jacket/leather
 	name = "leather jacket"
 	desc = "Pompadour not included."
 	icon_state = "leatherjacket"
 	item_state = "hostrench"
+
+	rags_to_give = 0
 
 /obj/item/clothing/suit/jacket/leather/overcoat
 	name = "leather overcoat"
@@ -268,12 +299,16 @@
 	item_state = "blue_pyjamas"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
+	rag_color_to_give = COLOR_BLUE
+
 /obj/item/clothing/under/redpyjamas
 	name = "red pyjamas"
 	desc = "Slightly old-fashioned sleepwear."
 	icon_state = "red_pyjamas"
 	item_state = "red_pyjamas"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+	rag_color_to_give = COLOR_RED
 
 //coats
 
@@ -283,11 +318,15 @@
 	icon_state = "leathercoat"
 	item_state = "leathercoat"
 
+	rags_to_give = 0
+
 /obj/item/clothing/suit/browncoat
 	name = "brown leather coat"
 	desc = "A long, brown leather coat."
 	icon_state = "browncoat"
 	item_state = "browncoat"
+
+	rag_color_to_give = COLOR_BROWN
 
 /obj/item/clothing/suit/neocoat
 	name = "black coat"
@@ -295,11 +334,15 @@
 	icon_state = "neocoat"
 	item_state = "neocoat"
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/suit/serifcoat
 	name = "serif coat"
 	desc = "A old coat"
 	icon_state = "serif_coat"
 	item_state = "det_suit"
+
+	rag_color_to_give = COLOR_BROWN
 
 //stripper
 /obj/item/clothing/under/stripper
@@ -312,12 +355,16 @@
 	item_color = "stripper_p"
 	siemens_coefficient = 1
 
+	rag_color_to_give = COLOR_PINK
+
 /obj/item/clothing/under/stripper/stripper_green
 	name = "green swimsuit"
 	desc = "A rather skimpy green swimsuit."
 	icon_state = "stripper_g_under"
 	item_color = "stripper_g"
 	siemens_coefficient = 1
+
+	rag_color_to_give = COLOR_GREEN
 
 /obj/item/clothing/suit/stripper/stripper_pink
 	name = "pink skimpy dress"
@@ -326,6 +373,8 @@
 	item_state = "stripper_p"
 	siemens_coefficient = 1
 
+	rag_color_to_give = COLOR_PINK
+
 /obj/item/clothing/suit/stripper/stripper_green
 	name = "green skimpy dress"
 	desc = "A rather skimpy green dress."
@@ -333,12 +382,16 @@
 	item_state = "stripper_g"
 	siemens_coefficient = 1
 
+	rag_color_to_give = COLOR_GREEN
+
 /obj/item/clothing/under/stripper/mankini
 	name = "the mankini"
 	desc = "No honest man would wear this abomination"
 	icon_state = "mankini"
 	item_color = "mankini"
 	siemens_coefficient = 1
+
+	rag_color_to_give = COLOR_PINK
 
 /obj/item/clothing/suit/xenos
 	name = "xenos suit"
@@ -348,10 +401,15 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	siemens_coefficient = 2.0
+
+	rags_to_give = 0
+
 //swimsuit
 /obj/item/clothing/under/swimsuit/
 	siemens_coefficient = 1
 	body_parts_covered = 0
+
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/under/swimsuit/black
 	name = "black swimsuit"
@@ -360,12 +418,16 @@
 	item_color = "swim_black"
 	siemens_coefficient = 1
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/under/swimsuit/blue
 	name = "blue swimsuit"
 	desc = "An oldfashioned blue swimsuit."
 	icon_state = "swim_blue"
 	item_color = "swim_blue"
 	siemens_coefficient = 1
+
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/under/swimsuit/purple
 	name = "purple swimsuit"
@@ -374,6 +436,8 @@
 	item_color = "swim_purp"
 	siemens_coefficient = 1
 
+	rag_color_to_give = COLOR_PURPLE
+
 /obj/item/clothing/under/swimsuit/green
 	name = "green swimsuit"
 	desc = "An oldfashioned green swimsuit."
@@ -381,12 +445,16 @@
 	item_color = "swim_green"
 	siemens_coefficient = 1
 
+	rag_color_to_give = COLOR_GREEN
+
 /obj/item/clothing/under/swimsuit/red
 	name = "red swimsuit"
 	desc = "An oldfashioned red swimsuit."
 	icon_state = "swim_red"
 	item_color = "swim_red"
 	siemens_coefficient = 1
+
+	rag_color_to_give = COLOR_RED
 
 /obj/item/clothing/suit/batman
 	name = "Batman costume"
@@ -396,6 +464,8 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/suit/superman
 	name = "Superman costume"
 	desc = "Is it a bird? Is it a plane?"
@@ -404,6 +474,7 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
 
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/suit/storage/miljacket_army
 	name = "field jacket olive"
@@ -413,6 +484,8 @@
 	var/can_button_up = 1
 	var/is_button_up = 1
 	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS
+
+	rag_color_to_give = COLOR_GREEN
 
 /obj/item/clothing/suit/storage/miljacket_army/verb/toggle()
 	set name = "Toggle Jacket Buttons"
@@ -441,11 +514,15 @@
 	icon_state = "miljacket_ranger"
 	item_state = "miljacket_ranger"
 
+	rag_color_to_give = COLOR_BROWN
+
 /obj/item/clothing/suit/storage/miljacket_army/miljacket_navy
 	name = "field jacket navy"
 	desc = "Initially designed for the US military under the MIL-DTL-43455K standard, it is now also worn as a civilian item of clothing. Like a navy seal,"
 	icon_state = "miljacket_navy"
 	item_state = "miljacket_navy"
+
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/suit/poncho
 	name = "poncho"
@@ -453,11 +530,15 @@
 	icon_state = "classicponcho"
 	item_state = "classicponcho"
 
+	rag_color_to_give = COLOR_BROWN
+
 /obj/item/clothing/suit/poncho/green
 	name = "green poncho"
 	desc = "Your classic, non-racist poncho. This one is green."
 	icon_state = "greenponcho"
 	item_state = "greenponcho"
+
+	rag_color_to_give = COLOR_GREEN
 
 /obj/item/clothing/suit/poncho/rainbow
 	name = "green poncho"
@@ -465,17 +546,24 @@
 	icon_state = "rainbowponcho"
 	item_state = "rainbowponcho"
 
+	rag_color_to_give = "none"
+	rags_to_give = 0
+
 /obj/item/clothing/suit/poncho/red
 	name = "red poncho"
 	desc = "Your classic, non-racist poncho. This one is red."
 	icon_state = "redponcho"
 	item_state = "redponcho"
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/suit/poncho/ponchoshame
 	name = "poncho of shame"
 	desc = "Forced to live on your shameful acting as a fake mexican, you and your poncho have grown inseperable. Literally."
 	icon_state = "ponchoshame"
 	item_state = "ponchoshame"
+
+	rag_color_to_give = COLOR_PINK
 
 //Mafia
 /obj/item/clothing/suit/browntrenchcoat
@@ -484,15 +572,21 @@
 	icon_state = "trenchcoat_brown"
 	item_state = "trenchcoat_brown"
 
+	rag_color_to_give = COLOR_BROWN
+
 /obj/item/clothing/suit/blacktrenchcoat
 	name = "black trench coat"
 	desc = "That shade of black just makes you look a bit more evil. Good for those mafia types."
 	icon_state = "trenchcoat_black"
 	item_state = "trenchcoat_black"
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/suit/storage/det_suit/max_payne
 	desc = "An 20th-century multi-purpose trenchcoat. Someone who wears this means serious business."
 	icon_state = "maxcoat"
+
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/suit/necromancer_hoodie
 	name = "necromancer hoodie"
@@ -501,19 +595,27 @@
 	item_state = "necromancer"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/suit/chaplain_hoodie/brown
 	name = "brown robe"
 	icon_state = "brown_robe"
 	item_state = "brown_robe"
+
+	rag_color_to_give = COLOR_BROWN
 
 /obj/item/clothing/suit/chaplain_hoodie/green
 	name = "green robe"
 	icon_state = "green_robe"
 	item_state = "green_robe"
 
+	rag_color_to_give = COLOR_GREEN
+
 /obj/item/clothing/suit/chaplain_hoodie/black
 	name = "black robe"
 	icon_state = "black_robe"
+
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/suit/armor/vest/cuirass
 	name = "cuirass"
@@ -528,6 +630,8 @@
 	name = "brown jacket"
 	desc = "A good jacket for good men."
 	icon_state = "gmjacket"
+
+	rag_color_to_give = COLOR_BROWN
 
 /obj/item/clothing/suit/goodman_jacket/verb/toggle()
 	set name = "Toggle Jacket Buttons"
@@ -575,12 +679,16 @@
 	icon_state = "angela_suit"
 	hoodtype = /obj/item/clothing/head/angel_nimb
 
+	rag_color_to_give = COLOR_WHITE
+
 /obj/item/clothing/suit/student_jacket
 	name = "Student Jacket"
 	desc = "A Student's jacket from the eighties."
 	icon_state = "student_jacket"
 	action_button_name = "To Fasten"
 	var/fastened = TRUE
+
+	rag_color_to_give = COLOR_RED
 
 /obj/item/clothing/suit/student_jacket/ui_action_click()
 	if(fastened)
@@ -602,25 +710,35 @@
 	desc = "Stylish white satin jacket with a scorpion embroidered on the back."
 	icon_state = "atlas_jacket"
 
+	rag_color_to_give = COLOR_WHITE
+
 /obj/item/clothing/suit/shawl
 	name = "shawl"
 	desc = "A pink Shawl for Hindi Womans."
 	icon_state = "shawl"
+
+	rag_color_to_give = COLOR_PINK
 
 /obj/item/clothing/suit/sukeban_coat
 	name = "sukeban coat"
 	desc = "Just a Street Japanese coat"
 	icon_state = "sukeban_coat"
 
+	rag_color_to_give = COLOR_BLUE
+
 /obj/item/clothing/suit/plaid
 	name = "plaid"
 	desc = "Home warm plaid"
 	icon_state = "plaid"
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/suit/tuxedo
 	name = "tuxedo"
 	desc = "A semi-formal evening suit distinguished primarily by satin or grosgrain facings on the jacket's lapels"
 	icon_state = "tuxedo"
+
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/suit/syndieshirt
 	name = "red shirt"
@@ -628,3 +746,5 @@
 	icon_state = "syndieshirt"
 	item_state = "syndieshirt"
 	body_parts_covered = UPPER_TORSO|ARMS
+
+	rag_color_to_give = COLOR_RED

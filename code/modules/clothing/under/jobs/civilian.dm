@@ -8,6 +8,7 @@
 	item_color = "ba_suit"
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/under/rank/captain //Alright, technically not a 'civilian' but its better then giving a .dm file for a single define.
 	desc = "It's a blue jumpsuit with some gold markings denoting the rank of \"Captain\"."
@@ -17,6 +18,7 @@
 	item_color = "captain"
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/under/rank/cargo
 	name = "quartermaster's jumpsuit"
@@ -26,6 +28,7 @@
 	item_color = "qm"
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_BROWN
 
 /obj/item/clothing/under/rank/cargotech
 	name = "cargo technician's jumpsuit"
@@ -36,6 +39,8 @@
 	flags = ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
+	rag_color_to_give = COLOR_BROWN
+
 /obj/item/clothing/under/rank/recycler
 	name = "recycler's jumpsuit"
 	desc = "Stinks."
@@ -44,6 +49,8 @@
 	item_color = "recycler"
 	flags = ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+
+	rag_color_to_give = COLOR_GREY
 
 /obj/item/clothing/under/rank/recyclercasual
 	name = "recycler's casual jumpsuit"
@@ -54,6 +61,8 @@
 	flags = ONESIZEFITSALL
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO
 
+	rag_color_to_give = COLOR_GREY
+
 /obj/item/clothing/under/rank/chaplain
 	desc = "It's a black jumpsuit, often worn by religious folk."
 	name = "chaplain's jumpsuit"
@@ -62,6 +71,7 @@
 	item_color = "chapblack"
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/under/rank/chef
 	desc = "It's an apron which is given only to the most <b>hardcore</b> chefs in space."
@@ -70,6 +80,7 @@
 	item_color = "chef"
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_WHITE
 
 /obj/item/clothing/under/rank/clown
 	name = "clown suit"
@@ -78,7 +89,7 @@
 	item_state = "clown"
 	item_color = "clown"
 	flags = ONESIZEFITSALL
-
+	rags_to_give = 0
 
 /obj/item/clothing/under/rank/head_of_personnel
 	desc = "It's a jumpsuit worn by someone who works in the position of \"Head of Personnel\"."
@@ -88,6 +99,8 @@
 	item_color = "hop"
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_BLUE
+
 /obj/item/clothing/under/rank/head_of_personnel_whimsy
 	desc = "A blue jacket and red tie, with matching red cuffs! Snazzy. Wearing this makes you feel more important than your job title does."
 	name = "head of personnel's suit"
@@ -96,6 +109,7 @@
 	item_color = "hopwhimsy"
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/under/rank/hydroponics
 	desc = "It's a jumpsuit designed to protect against minor plant-related hazards."
@@ -106,6 +120,7 @@
 	permeability_coefficient = 0.50
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_GREEN
 
 /obj/item/clothing/under/rank/internalaffairs
 	desc = "The plain, professional attire of an Internal Affairs Agent. The collar is <i>immaculately</i> starched."
@@ -115,6 +130,7 @@
 	item_color = "internalaffairs"
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/under/rank/janitor
 	desc = "It's the official uniform of the station's janitor. It has minor protection from biohazards."
@@ -124,11 +140,13 @@
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 10, rad = 0)
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_PURPLE
 
 /obj/item/clothing/under/lawyer
 	desc = "Slick threads."
 	name = "lawyer suit"
 
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/under/lawyer/black
 	icon_state = "lawyer_black"
@@ -148,11 +166,15 @@
 	item_color = "lawyer_red"
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/under/lawyer/blue
 	icon_state = "lawyer_blue"
 	item_state = "lawyer_blue"
 	item_color = "lawyer_blue"
 	flags = ONESIZEFITSALL
+
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/under/lawyer/bluesuit
 	name = "blue suit"
@@ -162,12 +184,16 @@
 	item_color = "bluesuit"
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_BLUE
+
 /obj/item/clothing/under/lawyer/purpsuit
 	name = "purple suit"
 	icon_state = "lawyer_purp"
 	item_state = "lawyer_purp"
 	item_color = "lawyer_purp"
 	flags = ONESIZEFITSALL
+
+	rag_color_to_give = COLOR_PURPLE
 
 /obj/item/clothing/under/lawyer/oldman
 	name = "old man's suit"
@@ -177,6 +203,8 @@
 	item_color = "oldman"
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_BROWN
+
 /obj/item/clothing/under/librarian
 	name = "sensible suit"
 	desc = "It's very... sensible."
@@ -184,6 +212,8 @@
 	item_state = "red_suit"
 	item_color = "red_suit"
 	flags = ONESIZEFITSALL
+
+	rag_color_to_give = COLOR_BROWN
 
 /obj/item/clothing/under/mime
 	name = "mime's outfit"
@@ -193,6 +223,8 @@
 	item_color = "mimesuit"
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/under/rank/miner
 	desc = "It's a snappy jumpsuit with a sturdy set of overalls. It is very dirty."
 	name = "shaft miner's jumpsuit"
@@ -201,6 +233,8 @@
 	item_color = "miner"
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_BROWN
+
 /obj/item/clothing/under/rank/barber
 	desc = "A suit, that oozes fabulous."
 	name = "barber's uniform"
@@ -208,3 +242,5 @@
 	item_state = "barber"
 	item_color = "barber"
 	flags = ONESIZEFITSALL
+
+	rag_color_to_give = COLOR_BLACK

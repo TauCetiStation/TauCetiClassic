@@ -13,6 +13,8 @@
 	siemens_coefficient = 0.9
 	var/gas_filter_strength = 1			//For gas mask filters
 
+	rags_to_give = 0
+
 // **** Welding gas mask ****
 
 /obj/item/clothing/mask/gas/welding

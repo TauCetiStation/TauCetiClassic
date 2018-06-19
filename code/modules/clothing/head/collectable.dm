@@ -10,11 +10,15 @@
 	desc = "an ultra rare hat. It commands a certain respect."
 	icon_state = "petehat"
 
-/obj/item/clothing/head/collectable/slime
+	rag_color_to_give = COLOR_YELLOW
+
+/*/obj/item/clothing/head/collectable/slime
 	name = "collectable slime cap!"
 	desc = "It just latches right in place!"
 	icon_state = "slime"
 	body_parts_covered = 0
+
+	rag_color_to_give = COLOR_GREEN*/
 
 /obj/item/clothing/head/collectable/xenom
 	name = "collectable xenomorph helmet!"
@@ -22,17 +26,23 @@
 	icon_state = "xenom"
 	body_parts_covered = HEAD|FACE|EYES
 
+	rag_color_to_give = COLOR_BLUE
+
 /obj/item/clothing/head/collectable/chef
 	name = "collectable chef's hat"
 	desc = "A rare Chef's Hat meant for hat collectors!"
 	icon_state = "chef"
 	item_state = "chefhat"
 
+	rag_color_to_give = COLOR_WHITE
+
 /obj/item/clothing/head/collectable/paper
 	name = "collectable paper hat"
 	desc = "What looks like an ordinary paper hat, is actually a rare and valuable collector's edition paper hat. Keep away from water, fire and Librarians."
 	icon_state = "paper"
 	body_parts_covered = 0
+
+	rag_color_to_give = COLOR_WHITE
 
 /obj/item/clothing/head/collectable/tophat
 	name = "collectable top hat"
@@ -41,6 +51,8 @@
 	item_state = "that"
 	body_parts_covered = 0
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/head/collectable/captain
 	name = "collectable captain's hat"
 	desc = "A Collectable Hat that'll make you look just like a real comdom!"
@@ -48,17 +60,23 @@
 	item_state = "caphat"
 	body_parts_covered = 0
 
+	rag_color_to_give = COLOR_BLUE
+
 /obj/item/clothing/head/collectable/police
 	name = "collectable police officer's hat"
 	desc = "A Collectable Police Officer's Hat. This hat emphasizes that you are THE LAW."
 	icon_state = "policehelm"
 	body_parts_covered = 0
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/head/collectable/beret
 	name = "collectable beret"
 	desc = "A Collectable red Beret. It smells faintly of Garlic."
 	icon_state = "beret"
 	body_parts_covered = 0
+
+	rag_color_to_give = COLOR_RED
 
 /obj/item/clothing/head/collectable/welding
 	name = "collectable welding helmet"
@@ -67,17 +85,23 @@
 	item_state = "welding"
 	body_parts_covered = HEAD|FACE|EYES
 
+	rags_to_give = 0
+
 /obj/item/clothing/head/collectable/slime
 	name = "collectable slime hat"
 	desc = "Just like a real Brain Slug!"
 	icon_state = "headslime"
 	item_state = "headslime"
 
+	rag_color_to_give = COLOR_GREEN
+
 /obj/item/clothing/head/collectable/flatcap
 	name = "collectable flat cap"
 	desc = "A Collectible farmer's Flat Cap!"
 	icon_state = "flat_cap"
 	item_state = "detective"
+
+	rag_color_to_give = COLOR_BROWN
 
 /obj/item/clothing/head/collectable/pirate
 	name = "collectable pirate hat"
@@ -86,12 +110,16 @@
 	item_state = "pirate"
 	body_parts_covered = 0
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/head/collectable/kitty
 	name = "collectable kitty ears"
 	desc = "The fur feels.....a bit too realistic."
 	icon_state = "kitty"
 	item_state = "kitty"
 	body_parts_covered = 0
+
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/head/collectable/rabbitears
 	name = "collectable rabbit ears"
@@ -100,10 +128,14 @@
 	item_state = "bunny"
 	body_parts_covered = 0
 
+	rag_color_to_give = COLOR_WHITE
+
 /obj/item/clothing/head/collectable/wizard
 	name = "collectable wizard's hat"
 	desc = "NOTE:Any magical powers gained from wearing this hat are purely coincidental."
 	icon_state = "wizard"
+
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/head/collectable/hardhat
 	name = "collectable hard hat"
@@ -112,11 +144,15 @@
 	item_state = "hardhat0_yellow"
 	body_parts_covered = 0
 
+	rags_to_give = 0
+
 /obj/item/clothing/head/collectable/HoS
 	name = "collectable HoS hat"
 	desc = "Now you can beat prisoners, set silly sentences and arrest for no reason too!"
 	icon_state = "hoscap"
 	body_parts_covered = 0
+
+	rags_to_give = 0
 
 /obj/item/clothing/head/collectable/thunderdome
 	name = "collectable Thunderdome helmet"
@@ -124,8 +160,12 @@
 	icon_state = "thunderdome"
 	item_state = "thunderdome"
 
+	rags_to_give = 0
+
 /obj/item/clothing/head/collectable/swat
 	name = "collectable SWAT helmet"
 	desc = "Now you can be in the Deathsquad too!"
 	icon_state = "swat"
 	item_state = "swat"
+
+	rags_to_give = 0

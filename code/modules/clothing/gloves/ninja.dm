@@ -21,6 +21,8 @@
 	var/maxdrain = 400
 	species_restricted = null
 
+	rags_to_give = 0
+
 /*
 	This runs the gamut of what ninja gloves can do
 	The other option would be a dedicated ninja touch bullshit proc on everything

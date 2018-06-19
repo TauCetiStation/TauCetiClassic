@@ -11,9 +11,10 @@
 	heat_protection = LEGS
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/shoes/black/redcoat
 	item_color = "redcoat"	//Exists for washing machines. Is not different from black shoes in any way.
-
 
 /obj/item/clothing/shoes/brown
 	name = "brown shoes"
@@ -22,6 +23,8 @@
 	item_color = "brown"
 	item_state = "b_shoes"
 	clipped_status = CLIPPABLE
+
+	rag_color_to_give = COLOR_BROWN
 
 /obj/item/clothing/shoes/brown/captain
 	item_color = "captain"	//Exists for washing machines. Is not different from brown shoes in any way.
@@ -41,12 +44,13 @@
 /obj/item/clothing/shoes/brown/cmo
 	item_color = "cargo"		//Exists for washing machines. Is not different from brown shoes in any way.
 
-
 /obj/item/clothing/shoes/blue
 	name = "blue shoes"
 	icon_state = "blue"
 	item_color = "blue"
 	clipped_status = CLIPPABLE
+
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/shoes/green
 	name = "green shoes"
@@ -54,17 +58,23 @@
 	item_color = "green"
 	clipped_status = CLIPPABLE
 
+	rag_color_to_give = COLOR_GREEN
+
 /obj/item/clothing/shoes/yellow
 	name = "yellow shoes"
 	icon_state = "yellow"
 	item_color = "yellow"
 	clipped_status = CLIPPABLE
 
+	rag_color_to_give = COLOR_YELLOW
+
 /obj/item/clothing/shoes/purple
 	name = "purple shoes"
 	icon_state = "purple"
 	item_color = "purple"
 	clipped_status = CLIPPABLE
+
+	rag_color_to_give = COLOR_PURPLE
 
 /obj/item/clothing/shoes/red
 	name = "red shoes"
@@ -74,6 +84,8 @@
 	item_state = "r_shoes"
 	clipped_status = CLIPPABLE
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/shoes/white
 	name = "white shoes"
 	icon_state = "white"
@@ -82,12 +94,16 @@
 	item_state = "w_shoes"
 	clipped_status = CLIPPABLE
 
+	rag_color_to_give = COLOR_WHITE
+
 /obj/item/clothing/shoes/leather
 	name = "leather shoes"
 	desc = "A sturdy pair of leather shoes."
 	icon_state = "leather"
 	item_color = "leather"
 	clipped_status = CLIPPABLE
+
+	rags_to_give = 0
 
 /obj/item/clothing/shoes/rainbow
 	name = "rainbow shoes"
@@ -96,6 +112,8 @@
 	item_color = "rainbow"
 	clipped_status = CLIPPABLE
 
+	rags_to_give = 0
+
 /obj/item/clothing/shoes/orange
 	name = "orange shoes"
 	icon_state = "orange"
@@ -103,6 +121,8 @@
 	item_state = "o_shoes"
 	var/obj/item/weapon/handcuffs/chained = null
 	clipped_status = CLIPPABLE
+
+	rag_color_to_give = COLOR_ORANGE
 
 /obj/item/clothing/shoes/orange/proc/attach_cuffs(obj/item/weapon/handcuffs/cuffs, mob/user)
 	if (src.chained)

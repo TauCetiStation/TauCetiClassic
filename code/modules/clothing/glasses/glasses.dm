@@ -2,18 +2,20 @@
 /obj/item/clothing/glasses
 	name = "glasses"
 	icon = 'icons/obj/clothing/glasses.dmi'
-	//w_class = 2.0
-	//flags = GLASSESCOVERSEYES
-	//slot_flags = SLOT_EYES
-	//var/vision_flags = 0
-	//var/darkness_view = 0//Base human is 2
-	//var/invisa_view = 0
+	w_class = 2.0
+	flags = GLASSESCOVERSEYES
+	slot_flags = SLOT_EYES
+	var/vision_flags = 0
+	var/darkness_view = 0//Base human is 2
+	var/invisa_view = 0
+	sprite_sheets = list(VOX = 'icons/mob/species/vox/eyes.dmi')
 	var/prescription = 0
 	body_parts_covered = EYES
 	var/toggleable = 0
 	var/off_state = "degoggles"
 	var/active = 1
 	var/activation_sound = 'sound/items/buttonclick.ogg'
+	rags_to_give = 0 // No exception.
 
 /obj/item/clothing/glasses/attack_self(mob/user)
 	if(toggleable)

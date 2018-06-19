@@ -90,16 +90,20 @@
 #define MAX_STACK_AMOUNT_GLASS	50
 #define MAX_STACK_AMOUNT_RODS	60
 
-//some colors
-#define COLOR_RED 		"#FF0000"
-#define COLOR_GREEN 	"#00FF00"
-#define COLOR_BLUE 		"#0000FF"
-#define COLOR_CYAN 		"#00FFFF"
-#define COLOR_PINK 		"#FF00FF"
-#define COLOR_YELLOW 	"#FFFF00"
-#define COLOR_ORANGE 	"#FF9900"
-#define COLOR_WHITE 	"#FFFFFF"
-#define COLOR_GRAY      "#808080"
+//some colors, do not necessarily match with byond defines for "red", "green", "blue", etc
+#define COLOR_RED "#ff0000"
+#define COLOR_GREEN "#00ff00"
+#define COLOR_BLUE "#0000ff"
+#define COLOR_CYAN "#00ffff"
+#define COLOR_PINK "#ff00ff"
+#define COLOR_YELLOW "#ffff00"
+#define COLOR_ORANGE "#ff9900"
+#define COLOR_PURPLE "#800080"
+#define COLOR_BROWN "#996633"
+#define COLOR_WHITE "#ffffff"
+#define COLOR_GREY "#808080"
+#define COLOR_BLACK "#000000"
+#define COLOR_ADEQUATE_LIST list(COLOR_RED, COLOR_GREEN, COLOR_BLUE, COLOR_CYAN, COLOR_PINK, COLOR_YELLOW, COLOR_ORANGE, COLOR_PURPLE, COLOR_BROWN, COLOR_WHITE, COLOR_GREY, COLOR_BLACK) // Used in cloth code. We need to check whether item color is somewhere within these boundaries.
 
 //some arbitrary defines to be used by self-pruning global lists. (see master_controller)
 #define PROCESS_KILL 26	//Used to trigger removal from a processing list

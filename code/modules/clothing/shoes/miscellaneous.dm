@@ -10,11 +10,15 @@
 	siemens_coefficient = 0.8
 	species_restricted = null
 
+	rag_color_to_give = COLOR_BROWN
+
 /obj/item/clothing/shoes/mime
 	name = "mime shoes"
 	icon_state = "mime"
 	item_color = "mime"
 	clipped_status = CLIPPABLE
+
+	rag_color_to_give = COLOR_WHITE
 
 /obj/item/clothing/shoes/swat
 	name = "\improper SWAT shoes"
@@ -24,6 +28,8 @@
 	flags = NOSLIP
 	siemens_coefficient = 0.6
 	clipped_status = CLIPPABLE
+
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/shoes/combat //Basically SWAT shoes combined with galoshes.
 	name = "combat boots"
@@ -39,6 +45,8 @@
 	heat_protection = LEGS
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/shoes/space_ninja
 	name = "ninja shoes"
 	desc = "A pair of running shoes. Excellent for running and even better for smashing skulls."
@@ -53,6 +61,8 @@
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = null
 
+	rags_to_give = 0
+
 /obj/item/clothing/shoes/tourist
 	name = "flip-flops"
 	desc = "These cheap sandals don't look very comfortable."
@@ -61,6 +71,8 @@
 	species_restricted = null
 	w_class = 2
 
+	rags_to_give = 0
+
 /obj/item/clothing/shoes/sandal
 	desc = "A pair of rather plain, wooden sandals."
 	name = "sandals"
@@ -68,11 +80,16 @@
 	species_restricted = null
 	body_parts_covered = 0
 
+	rags_to_give = 0
+
 /obj/item/clothing/shoes/sandal/marisa
 	desc = "A pair of magic, black shoes."
 	name = "magic shoes"
 	icon_state = "black"
 	body_parts_covered = LEGS
+
+	rags_to_give = 2
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/shoes/galoshes
 	desc = "Rubber boots."
@@ -82,6 +99,8 @@
 	flags = NOSLIP
 	slowdown = SHOES_SLOWDOWN+1
 	species_restricted = null
+
+	rag_color_to_give = COLOR_YELLOW
 
 /obj/item/clothing/shoes/clown_shoes
 	desc = "The prankster's standard-issue clowning shoes. Damn they're huge!"
@@ -93,6 +112,8 @@
 //	var/footstep = 1	//used for squeeks whilst walking
 	species_restricted = null
 
+	rags_to_give = 0
+
 /obj/item/clothing/shoes/jackboots
 	name = "jackboots"
 	desc = "Nanotrasen-issue Security combat boots for combat scenarios or combat situations. All combat, all the time."
@@ -101,6 +122,8 @@
 	item_color = "hosred"
 	siemens_coefficient = 0.7
 	clipped_status = CLIPPABLE
+
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/shoes/cult
 	name = "boots"
@@ -116,10 +139,14 @@
 	max_heat_protection_temperature = SHOE_MAX_HEAT_PROTECTION_TEMPERATURE
 	species_restricted = null
 
+	rags_to_give = 0
+
 /obj/item/clothing/shoes/cyborg
 	name = "cyborg boots"
 	desc = "Shoes for a cyborg costume."
 	icon_state = "boots"
+
+	rags_to_give = 0
 
 /obj/item/clothing/shoes/slippers
 	name = "bunny slippers"
@@ -129,6 +156,8 @@
 	species_restricted = null
 	w_class = 2
 
+	rag_color_to_give = COLOR_WHITE
+
 /obj/item/clothing/shoes/slippers_worn
 	name = "worn bunny slippers"
 	desc = "Fluffy..."
@@ -136,11 +165,15 @@
 	item_state = "slippers_worn"
 	w_class = 2
 
+	rag_color_to_give = COLOR_WHITE
+
 /obj/item/clothing/shoes/laceup
 	name = "laceup shoes"
 	desc = "The height of fashion, and they're pre-polished!"
 	icon_state = "laceups"
 	clipped_status = CLIPPABLE
+
+	rags_to_give = 0
 
 /obj/item/clothing/shoes/swimmingfins
 	desc = "Help you swim good."
@@ -150,11 +183,15 @@
 	slowdown = SHOES_SLOWDOWN+1
 	species_restricted = null
 
+	rags_to_give = 0
+
 /obj/item/clothing/shoes/centcom
 	name = "dress shoes"
 	desc = "They appear impeccably polished."
 	icon_state = "laceups"
 	clipped_status = CLIPPABLE
+
+	rag_color_to_give = COLOR_BLACK
 
 /obj/item/clothing/shoes/rosas_shoes
 	name = "white shoes"
@@ -162,10 +199,14 @@
 	item_color = "rosas_shoes"
 	permeability_coefficient = 0.01
 
+	rag_color_to_give = COLOR_WHITE
+
 /obj/item/clothing/shoes/western
 	name = "western boots"
 	icon_state = "western_boots"
 	item_color = "western_boots"
+
+	rag_color_to_give = COLOR_BROWN
 
 /obj/item/clothing/shoes/magboots/syndie
 	desc = "Light-weighted magnetic boots that have a custom syndicate paintjob for use in combat."
@@ -174,6 +215,8 @@
 	magboot_state = "syndiemag"
 	slowdown_off = 1
 
+	rags_to_give = 0
+
 /obj/item/clothing/shoes/workboots
 	name = "work boots"
 	icon_state = "workboots"
@@ -181,15 +224,21 @@
 	item_state = "b_shoes"  // need sprites for this
 	clipped_status = CLIPPABLE
 
+	rag_color_to_give = COLOR_BROWN
+
 /obj/item/clothing/shoes/roman
 	name = "roman sandals"
 	desc = "Sandals with buckled leather straps on it."
 	icon_state = "roman"
 	item_state = "roman"
 
+	rags_to_give = 0
+
 /obj/item/clothing/shoes/heels
 	name = "Heels"
 	icon_state = "high_shoes"
+
+	rags_to_give = 0
 
 /obj/item/clothing/shoes/heels/alternate
 	icon_state = "high_shoes2"

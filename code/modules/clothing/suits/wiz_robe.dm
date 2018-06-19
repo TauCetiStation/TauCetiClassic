@@ -6,10 +6,14 @@
 	siemens_coefficient = 0.4
 	body_parts_covered = 0
 
+	rag_color_to_give = COLOR_BLUE
+
 /obj/item/clothing/head/wizard/red
 	name = "red wizard hat"
 	desc = "Strange-looking, red, hat-wear that most certainly belongs to a real magic user."
 	icon_state = "redwizard"
+
+	rag_color_to_give = COLOR_RED
 
 /obj/item/clothing/head/wizard/fake
 	name = "wizard hat"
@@ -22,6 +26,14 @@
 	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
 	icon_state = "marisa"
 
+	rag_color_to_give = COLOR_BLACK
+
+/obj/item/clothing/head/wizard/marisa/fake
+	name = "witch hat"
+	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
+	icon_state = "marisa"
+	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
 /obj/item/clothing/head/wizard/magus
 	name = "magus helm"
 	desc = "A mysterious helmet that hums with an unearthly power."
@@ -29,25 +41,37 @@
 	item_state = "magus"
 	body_parts_covered = HEAD|FACE|EYES
 
+	rag_color_to_give = "none"
+	rags_to_give = 0
+
 /obj/item/clothing/head/wizard/amp
 	name = "psychic amplifier"
 	desc = "A crown-of-thorns psychic amplifier. Kind of looks like a tiara having sex with an industrial robot."
 	icon_state = "amp"
+
+	rag_color_to_give = "none"
+	rags_to_give = 0
 
 /obj/item/clothing/head/wizard/cap
 	name = "gentlemans cap"
 	desc = "A checkered gray flat cap woven together with the rarest of threads."
 	icon_state = "gentcap"
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/head/wizard/redhood
 	name = "wizard hood"
 	desc = "A strange red gem-lined hoodie"
 	icon_state = "wiz_red_hood"
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/head/wizard/bluehood
 	name = "wizard hood"
 	desc = "A strange blue gem-lined hoodie."
 	icon_state = "wiz_blue_hood"
+
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/suit/wizrobe
 	name = "wizard robe"
@@ -68,17 +92,23 @@
 	icon_state = "mage_jacket_blue"
 	item_state = "mage_jacket_blue"
 
+	rag_color_to_give = COLOR_BLUE
+
 /obj/item/clothing/suit/wizrobe/wiz_red
 	name = "red jacket"
 	desc = "A stylish gem-lined jacket straight from deep space."
 	icon_state = "mage_jacket_red"
 	item_state = "mage_jacket_red"
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/suit/wizrobe/red
 	name = "red wizard robe"
 	desc = "A magnificant, red, gem-lined robe that seems to radiate power."
 	icon_state = "redwizard"
 	item_state = "redwizrobe"
+
+	rag_color_to_give = COLOR_RED
 
 
 /obj/item/clothing/suit/wizrobe/marisa
@@ -87,12 +117,17 @@
 	icon_state = "marisa"
 	item_state = "marisarobe"
 
+	rag_color_to_give = COLOR_BLUE
+
 /obj/item/clothing/suit/wizrobe/magusblue
 	name = "magus robe"
 	desc = "A set of armoured robes that seem to radiate a dark power."
 	icon_state = "magusblue"
 	item_state = "magusblue"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+	rag_color_to_give = "none"
+	rags_to_give = 0
 
 /obj/item/clothing/suit/wizrobe/magusred
 	name = "magus robe"
@@ -101,11 +136,16 @@
 	item_state = "magusred"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 
+	rag_color_to_give = "none"
+	rags_to_give = 0
+
 /obj/item/clothing/suit/wizrobe/psypurple
 	name = "purple robes"
 	desc = "Heavy, royal purple robes threaded with psychic amplifiers and weird, bulbous lenses. Do not machine wash."
 	icon_state = "psyamp"
 	item_state = "psyamp"
+
+	rag_color_to_give = COLOR_PURPLE
 
 /obj/item/clothing/suit/wizrobe/gentlecoat
 	name = "gentlemans coat"
@@ -114,6 +154,8 @@
 	item_state = "gentlecoat"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
 
+	rag_color_to_give = COLOR_GREY
+
 /obj/item/clothing/suit/wizrobe/fake
 	name = "wizard robe"
 	desc = "A rather dull, blue robe meant to mimick real wizard robes."
@@ -121,11 +163,7 @@
 	item_state = "wizrobe"
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
-/obj/item/clothing/head/wizard/marisa/fake
-	name = "witch hat"
-	desc = "Strange-looking hat-wear, makes you want to cast fireballs."
-	icon_state = "marisa"
-	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/suit/wizrobe/marisa/fake
 	name = "witch robe"
@@ -134,3 +172,5 @@
 	item_state = "marisarobe"
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
+
+	rag_color_to_give = COLOR_BLACK

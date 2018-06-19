@@ -17,7 +17,19 @@
 	lefthand_file = 'icons/mob/inhands/clothing_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/clothing_righthand.dmi'
 
+	var/rags_to_give = 0
+	var/rag_color_to_give = "none" // When giving color. Give "none", or consider checking _DEFINES/misc.dm for colors.
+
 //BS12: Species-restricted clothing check.
+/obj/item/clothing/attackby(obj/item/I, mob/user)
+	if(I.sharp && !ismob(loc) && rags_to_give && rag_color_to_give in COLOR_ADEQUATE_LIST) //you can cut only clothes lying on the floor
+		var/actual_amount = rand(1, rags_to_give)
+		for(var/i in 1 to actual_amount)
+			new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), null, FALSE, crit_fail, rag_color_to_give)
+		qdel(src)
+		return
+	..()
+
 /obj/item/clothing/mob_can_equip(M, slot)
 
 	//if we can't equip the item anyway, don't bother with species_restricted (cuts down on spam)
@@ -153,17 +165,6 @@
 	item_state = "earmuffs"
 	slot_flags = SLOT_EARS | SLOT_TWOEARS
 
-//Glasses
-/obj/item/clothing/glasses
-	name = "glasses"
-	icon = 'icons/obj/clothing/glasses.dmi'
-	w_class = 2.0
-	flags = GLASSESCOVERSEYES
-	slot_flags = SLOT_EYES
-	var/vision_flags = 0
-	var/darkness_view = 0//Base human is 2
-	var/invisa_view = 0
-	sprite_sheets = list(VOX = 'icons/mob/species/vox/eyes.dmi')
 /*
 SEE_SELF  // can see self, no matter what
 SEE_MOBS  // can see all mobs, no matter what
@@ -173,7 +174,6 @@ SEE_PIXELS// if an object is located on an unlit area, but some of its pixels ar
           // in a lit area (via pixel_x,y or smooth movement), can see those pixels
 BLIND     // can't see anything
 */
-
 
 //Gloves
 /obj/item/clothing/gloves
@@ -190,6 +190,7 @@ BLIND     // can't see anything
 	attack_verb = list("challenged")
 	species_restricted = list("exclude" , UNATHI , TAJARAN)
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/gloves.dmi')
+	rags_to_give = 1
 
 /obj/item/clothing/gloves/emp_act(severity)
 	if(cell)
@@ -214,6 +215,7 @@ BLIND     // can't see anything
 	w_class = 2.0
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/head.dmi')
 	var/blockTracking = 0
+	rags_to_give = 2
 
 
 //Mask
@@ -223,6 +225,7 @@ BLIND     // can't see anything
 	slot_flags = SLOT_MASK
 	body_parts_covered = FACE|EYES
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/masks.dmi')
+	rags_to_give = 2
 
 /obj/item/clothing/proc/speechModification(message)
 	return message
@@ -243,6 +246,7 @@ BLIND     // can't see anything
 	species_restricted = list("exclude" , UNATHI , TAJARAN)
 	var/footstep = 1	//used for squeeks whilst walking(tc)
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/shoes.dmi')
+	rags_to_give = 1
 
 //Cutting shoes
 /obj/item/clothing/shoes/attackby(obj/item/weapon/W, mob/user)
@@ -283,6 +287,7 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.9
 	w_class = 3
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/suit.dmi')
+	rags_to_give = 4
 
 /obj/item/clothing/proc/attack_reaction(mob/living/carbon/human/H, reaction_type, mob/living/carbon/human/T = null)
 	return
@@ -306,6 +311,7 @@ BLIND     // can't see anything
 	siemens_coefficient = 0.2
 	species_restricted = list("exclude" , DIONA , VOX)
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/head.dmi')
+	rags_to_give = 0
 
 /obj/item/clothing/suit/space
 	name = "space suit"
@@ -329,6 +335,8 @@ BLIND     // can't see anything
 	species_restricted = list("exclude" , DIONA , VOX)
 
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
+
+	rags_to_give = 0
 
 /obj/item/clothing/suit/space/equipped(mob/M)
 	check_limb_support()
@@ -380,6 +388,7 @@ BLIND     // can't see anything
 	var/rolled_down = 0
 	var/basecolor
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/uniform.dmi')
+	rags_to_give = 3
 
 /obj/item/clothing/under/emp_act(severity)
 	..()
@@ -429,12 +438,6 @@ BLIND     // can't see anything
 	remove_accessory(usr, A)
 
 /obj/item/clothing/under/attackby(obj/item/I, mob/user)
-	if(I.sharp && !ishuman(loc)) //you can cut only clothes lying on the floor
-		for (var/i in 1 to 3)
-			new /obj/item/stack/medical/bruise_pack/rags(get_turf(src), null, null, crit_fail)
-		qdel(src)
-		return
-
 	if(istype(I, /obj/item/clothing/accessory))
 		var/obj/item/clothing/accessory/A = I
 		if(can_attach_accessory(A))

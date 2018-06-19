@@ -18,6 +18,8 @@
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/under/rank/security
 	name = "security officer's jumpsuit"
 	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for robust protection."
@@ -27,6 +29,8 @@
 	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
+
+	rag_color_to_give = COLOR_RED
 
 /obj/item/clothing/under/rank/dispatch
 	name = "dispatcher's uniform"
@@ -38,6 +42,8 @@
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS
 	siemens_coefficient = 0.9
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/under/rank/security2
 	name = "security officer's uniform"
 	desc = "It's made of a slightly sturdier material, to allow for robust protection."
@@ -48,17 +54,23 @@
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/under/rank/security/corp
 	icon_state = "sec_corporate"
 	item_state = "sec_corporate"
 	item_color = "sec_corporate"
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_BLUE
+
 /obj/item/clothing/under/rank/warden/corp
 	icon_state = "warden_corporate"
 	item_state = "warden_corporate"
 	item_color = "warden_corporate"
 	flags = ONESIZEFITSALL
+
+	rag_color_to_give = COLOR_BLUE
 
 /obj/item/clothing/under/tactical
 	name = "tactical jumpsuit"
@@ -69,6 +81,8 @@
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
 
+	rag_color_to_give = COLOR_GREEN
+
 /obj/item/clothing/under/tactical/marinad
 	name = "marine jumpsuit"
 	desc = "Boots and Utes"
@@ -77,6 +91,8 @@
 	item_color = "marinad"
 	armor = list(melee = 10, bullet = 5, laser = 5,energy = 0, bomb = 0, bio = 0, rad = 0)
 	siemens_coefficient = 0.9
+
+	rag_color_to_give = COLOR_BROWN
 
 /*
  * Detective
@@ -91,15 +107,21 @@
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.9
 
+	rag_color_to_give = COLOR_BROWN
+
 /obj/item/clothing/under/det/black
 	icon_state = "detective2"
 	item_color = "detective2"
 	flags = ONESIZEFITSALL
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/under/det/slob
 	icon_state = "polsuit"
 	item_color = "polsuit"
 	flags = ONESIZEFITSALL
+
+	rag_color_to_give = COLOR_WHITE
 
 /obj/item/clothing/under/det/slob/verb/rollup()
 	set name = "Roll suit sleeves"
@@ -119,9 +141,12 @@
 	siemens_coefficient = 0.9
 	body_parts_covered = 0
 
+	rag_color_to_give = COLOR_BROWN
+
 /obj/item/clothing/head/det_hat/black
 	icon_state = "detective2"
 
+	rag_color_to_give = COLOR_BLACK
 
 /*
  * Head of Security
@@ -136,6 +161,8 @@
 	flags = ONESIZEFITSALL
 	siemens_coefficient = 0.8
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/under/rank/head_of_security/turtleneck
 	name = "head of security's turtleneck"
 	icon_state = "hos_turtleneck"
@@ -143,11 +170,15 @@
 	item_state = "hos_turtleneck"
 	flags = 0
 
+	rag_color_to_give = COLOR_RED
+
 /obj/item/clothing/under/rank/head_of_security/corp
 	icon_state = "hos_corporate"
 	item_state = "hos_corporate"
 	item_color = "hos_corporate"
 	flags = ONESIZEFITSALL
+
+	rag_color_to_give = COLOR_BLUE
 
 //Jensen cosplay gear
 /obj/item/clothing/under/rank/head_of_security/jensen
@@ -158,6 +189,8 @@
 	item_color = "jensen"
 	siemens_coefficient = 0.6
 
+	rag_color_to_give = COLOR_BLACK
+
 /obj/item/clothing/suit/armor/hos/jensen
 	name = "armored trenchcoat"
 	desc = "A trenchcoat augmented with a special alloy for some protection and style."
@@ -166,3 +199,5 @@
 	flags_inv = 0
 	siemens_coefficient = 0.6
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS|LEGS
+
+	rag_color_to_give = COLOR_BLACK

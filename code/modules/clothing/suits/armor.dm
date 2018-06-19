@@ -8,6 +8,8 @@
 	max_heat_protection_temperature = ARMOR_MAX_HEAT_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.4
 
+	rags_to_give = 0
+
 
 /obj/item/clothing/suit/armor/vest
 	name = "armor"

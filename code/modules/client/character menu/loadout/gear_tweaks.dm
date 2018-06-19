@@ -30,7 +30,7 @@ var/datum/gear_tweak/color/gear_tweak_free_color_choice = new()
 	return "Color: <font color='[metadata]'>&#9899;</font>"
 
 /datum/gear_tweak/color/get_default()
-	return valid_colors ? valid_colors[1] : COLOR_GRAY
+	return valid_colors ? valid_colors[1] : COLOR_GREY
 
 /datum/gear_tweak/color/get_metadata(user, metadata)
 	if(valid_colors)

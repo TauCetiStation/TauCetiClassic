@@ -3,6 +3,8 @@
 	name = "hazmat helmet"
 	desc = "White colored and from brand new collection. Unisex!"
 
+	rags_to_give = 0
+
 /obj/item/clothing/suit/bio_suit/new_hazmat
 	icon_state = "hazmat_white"
 	item_state = "hazmat_white"
@@ -11,6 +13,7 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDEEARS
 	flags = THICKMATERIAL | PHORONGUARD | BLOCKHAIR
 
+	rags_to_give = 0
 
 /obj/item/clothing/suit/bio_suit/new_hazmat/security
 	icon_state = "hazmat_sec"

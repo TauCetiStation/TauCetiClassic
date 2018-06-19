@@ -12,6 +12,8 @@
 	origin_tech = "syndicate=3"
 	var/list/clothing_choices = list()
 
+	rags_to_give = 0
+
 /obj/item/clothing/under/chameleon/atom_init()
 	. = ..()
 	var/blocked = list(/obj/item/clothing/under/chameleon, /obj/item/clothing/under/cloud,
