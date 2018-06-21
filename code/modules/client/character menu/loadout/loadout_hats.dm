@@ -78,5 +78,5 @@
 
 /datum/gear/head/bunny_ears
 	display_name = "Bunny Ears"
-	path = /obj/item/clothing/head/collectable/rabbitears
+	path = /obj/item/clothing/head/rabbitears
 	cost = 2
