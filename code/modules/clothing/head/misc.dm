@@ -63,8 +63,8 @@
 
 /obj/item/clothing/head/syndicatefake
 	name = "red space-helmet replica"
-	icon_state = "syndicate"
-	item_state = "syndicate"
+	icon_state = "syndicate-helm"
+	item_state = "syndicate-helm"
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
@@ -393,3 +393,18 @@
 	name = "nimb"
 	desc = "Just a Nimb"
 	icon_state = "nimb"
+
+/obj/item/clothing/head/hooded/carp_hood
+	name = "carp hood"
+	desc = "A hood attached to a carp costume."
+	icon_state = "carp_casual"
+	body_parts_covered = HEAD
+	cold_protection = HEAD
+	flags_inv = BLOCKHAIR|HIDEEARS
+
+/obj/item/clothing/head/hooded/ian_hood
+	name = "corgi hood"
+	desc = "A hood that looks just like a corgi's head, it won't guarantee dog biscuits."
+	icon_state = "ian"
+	body_parts_covered = HEAD
+	flags_inv = BLOCKHAIR|HIDEEARS
