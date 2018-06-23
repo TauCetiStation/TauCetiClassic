@@ -771,17 +771,6 @@
 			H.forceMove(get_turf(H))
 		return
 
-	if(ishuman(usr) && (!usr.incapacitated()))
-		var/mob/living/carbon/human/D = usr
-		if(D.get_species() == DIONA)
-			var/choices = list()
-			for(var/V in contents)
-				if(istype(V, /mob/living/carbon/monkey/diona))
-					choices += V
-			var/mob/living/carbon/monkey/diona/V = input(D,"Who do wish you to expel from within?") in null|choices
-			to_chat(D, "<span class='notice'>You wriggle [V] out of your insides.</span>")
-			V.splitting(D)
-
 	//Resisting control by an alien mind.
 	if(istype(src.loc,/mob/living/simple_animal/borer))
 		var/mob/living/simple_animal/borer/B = src.loc

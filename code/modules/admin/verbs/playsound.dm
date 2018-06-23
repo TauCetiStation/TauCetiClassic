@@ -41,9 +41,9 @@ var/global/list/sounds_cache = list()
 	set name = "Play Server Sound"
 	if(!check_rights(R_SOUNDS))	return
 
-	var/list/sounds = file2list("sound/list.txt");
+	var/list/sounds = file2list("sound/serversound_list.txt");
 	sounds += "--CANCEL--"
-	sounds += sounds_cache //i don't know, how long stored music on server. Hope, all round
+	sounds += sounds_cache
 
 	var/melody = input("Select a sound from the server to play", , "CANCEL") in sounds
 
