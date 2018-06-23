@@ -1746,8 +1746,8 @@ datum
 
 		phoron_special
 			name = "Toxins Special"
-			id = "phoronspecial"
-			result = "phoronspecial"
+			id = "toxins_special"
+			result = "toxins_special"
 			required_reagents = list("rum" = 2, "vermouth" = 1, "phoron" = 2)
 			result_amount = 5
 
@@ -2154,6 +2154,34 @@ datum
 			result = "suidream"
 			required_reagents = list("space_up" = 2, "bluecuracao" = 1, "melonliquor" = 1)
 			result_amount = 4
+
+		bacardi
+			name = "Bacardi"
+			id = "bacardi"
+			result = "bacardi"
+			required_reagents = list("rum" = 3, "grenadine" = 1, "limejuice" = 2)
+			result_amount = 5
+
+		bacardialoha
+			name = "Bacardi Aloha"
+			id = "bacardialoha"
+			result = "bacardialoha"
+			required_reagents = list("rum" = 1, "cognac" = 1, "limejuice" = 1, "martini" = 1, "gin" = 1)
+			result_amount = 5
+
+		bacardilemonade
+			name = "Bacardi Lemonade"
+			id = "bacardilemonade"
+			result = "bacardilemonade"
+			required_reagents = list("rum" = 2, "lemon_lime" = 2, "ice" = 1)
+			result_amount = 5
+
+		bacardilemonade2
+			name = "Bacardi Lemonade2"
+			id = "bacardilemonade2"
+			result = "bacardilemonade"
+			required_reagents = list("rum" = 2, "lemonade" = 2, "ice" = 1)
+			result_amount = 5
 
 //////////////////////////////////////////////
 //////////////New poisons/////////////////////

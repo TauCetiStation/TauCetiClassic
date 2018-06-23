@@ -4200,6 +4200,35 @@ datum
 	else if(data >= 115 && prob(33))
 		M.confused = max(M.confused + 15, 15)
 
+/datum/reagent/consumable/ethanol/bacardi
+	name = "Bacardi"
+	id = "bacardi"
+	description = "A soft light drink made of rum."
+	reagent_state = LIQUID
+	color = "#ffc0cb" // rgb: 255, 192, 203
+	boozepwr = 3
+	taste_message = "sweet alcohol"
+
+/datum/reagent/consumable/ethanol/bacardialoha
+	name = "Bacardi Aloha"
+	id = "bacardialoha"
+	description = "Sweet mixture of rum, martini and lime soda."
+	reagent_state = LIQUID
+	color = "#c5f415" // rgb: 197, 244, 21
+	boozepwr = 4
+	taste_message = "sweet alcohol"
+
+/datum/reagent/consumable/ethanol/bacardilemonade
+	name = "Bacardi Lemonade"
+	id = "bacardilemonade"
+	description = "Mixture of refreshing lemonade and sweet rum."
+	reagent_state = LIQUID
+	color = "#c5f415" // rgb: 197, 244, 21
+	boozepwr = 3
+	taste_message = "sweet alcohol"
+
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////// Chemlights ///////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
