@@ -140,7 +140,7 @@
 			var/turf/simulated/mineral/random/target_turf = get_step(src, trydir)
 			if(istype(target_turf, /turf/simulated/mineral/random/caves))
 				if(prob(2))
-					new/turf/simulated/floor/plating/airless/asteroid/cave(src)
+					ChangeTurf(/turf/simulated/floor/plating/airless/asteroid/cave)
 
 //Not even going to touch this pile of spaghetti
 /turf/simulated/mineral/attackby(obj/item/weapon/W, mob/user)
@@ -409,6 +409,8 @@
 			if(7)
 				new/obj/item/stack/sheet/mineral/uranium(src, rand(5,25))
 
+//this fucking caves works very badly with afterinit mapload
+//todo: move cavespread from atominit for side trigger?
 /turf/simulated/mineral/random
 	name = "Mineral deposit"
 	icon_state = "rock"
@@ -525,7 +527,8 @@
 		if(istype(tunnel))
 			// Small chance to have forks in our tunnel; otherwise dig our tunnel.
 			if(i > 3 && prob(20))
-				new src.type(tunnel, rand(10, 15), 0, dir)
+				var/list/arguments = list(tunnel, rand(10, 15), 0, dir)
+				ChangeTurf(src.type, arguments)
 			else
 				SpawnFloor(tunnel)
 		else //if(!istype(tunnel, src.parent)) // We hit space/normal/wall, stop our tunnel.
@@ -547,7 +550,7 @@
 		return
 
 	SpawnMonster(T)
-	var/turf/t = new basetype(T)
+	var/turf/t = T.ChangeTurf(basetype)
 	spawn(2)
 		t.fullUpdateMineralOverlays()
 

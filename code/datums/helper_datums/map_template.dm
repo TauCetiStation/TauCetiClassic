@@ -10,15 +10,17 @@
 /datum/map_template/New(path = null, map = null, rename = null)
 	if(path)
 		mappath = path
-	if(mappath)
-		preload_size(mappath)
 	if(map)
 		mapfile = map
+	if(mappath)
+		preload_size(mappath)
+	else if(mapfile)
+		preload_size(mapfile)
 	if(rename)
 		name = rename
 
 /datum/map_template/proc/preload_size(path)
-	loaded_stuff = maploader.load_map(file(path), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
+	loaded_stuff = maploader.load_map(get_file(), 1, 1, 1, cropMap=FALSE, measureOnly=TRUE)
 	if(loaded_stuff && loaded_stuff.len)
 		var/list/bounds = loaded_stuff["bounds"]
 		if(bounds && bounds.len)
