@@ -181,6 +181,9 @@
 /turf/proc/ChangeTurf(path, force_lighting_update, list/arguments = list())
 	if (!path)
 		return
+	/*if(istype(src, path))
+		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
+		return*/
 
 	// Back all this data up, so we can set it after the turf replace.
 	// If you're wondering how this proc'll keep running since the turf should be "deleted":
