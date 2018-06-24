@@ -178,7 +178,7 @@
 		qdel(L)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, force_lighting_update)
+/turf/proc/ChangeTurf(path, force_lighting_update, list/arguments = list())
 	if (!path)
 		return
 
@@ -211,7 +211,8 @@
 		if(S.zone)
 			S.zone.rebuild()
 
-	var/turf/W = new path(src)
+	arguments.Insert(0, src)
+	var/turf/W = new path(arglist(arguments))
 
 	W.has_resources = has_resources
 	W.resources = temp_res
