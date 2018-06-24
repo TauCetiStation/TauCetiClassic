@@ -926,6 +926,7 @@
 #include "code\modules\admin\verbs\debug.dm"
 #include "code\modules\admin\verbs\diagnostics.dm"
 #include "code\modules\admin\verbs\dice.dm"
+#include "code\modules\admin\verbs\drop_asteroid.dm"
 #include "code\modules\admin\verbs\epileptic_anomaly.dm"
 #include "code\modules\admin\verbs\fps.dm"
 #include "code\modules\admin\verbs\getlogs.dm"
