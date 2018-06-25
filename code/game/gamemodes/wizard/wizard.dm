@@ -68,22 +68,23 @@
 			kill_objective.find_target()
 			wizard.objectives += kill_objective
 
-			if (!(locate(/datum/objective/escape) in wizard.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = wizard
-				wizard.objectives += escape_objective
+			if (!(locate(/datum/objective/survive) in wizard.objectives))
+				var/datum/objective/survive/survive_objective = new
+				survive_objective.owner = wizard
+				wizard.objectives += survive_objective
+		
 		if(31 to 60)
 			var/datum/objective/steal/steal_objective = new
 			steal_objective.owner = wizard
 			steal_objective.find_target()
 			wizard.objectives += steal_objective
 
-			if (!(locate(/datum/objective/escape) in wizard.objectives))
-				var/datum/objective/escape/escape_objective = new
-				escape_objective.owner = wizard
-				wizard.objectives += escape_objective
+			if (!(locate(/datum/objective/survive) in wizard.objectives))
+				var/datum/objective/survive/survive_objective = new
+				survive_objective.owner = wizard
+				wizard.objectives += survive_objective
 
-		if(61 to 100)
+		if(61 to 99)
 			var/datum/objective/assassinate/kill_objective = new
 			kill_objective.owner = wizard
 			kill_objective.find_target()
