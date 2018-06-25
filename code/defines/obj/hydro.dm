@@ -1092,7 +1092,7 @@
 	mypath = "/obj/item/seeds/cocoapodseed"
 	hydroponictray_icon_path = 'icons/obj/hydroponics/growing_fruits.dmi'
 	species = "cocoapod"
-	plantname = "Cocao Tree" //SIC: see above
+	plantname = "Cocoa Tree" //SIC: see above
 	productname = "/obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod"
 	lifespan = 20
 	endurance = 15

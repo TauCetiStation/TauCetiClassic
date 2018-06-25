@@ -147,6 +147,9 @@
 /datum/species/proc/regen(mob/living/carbon/human/H) // Perhaps others will regenerate in different ways?
 	return
 
+/datum/species/proc/call_digest_proc(mob/living/M, datum/reagent/R) // Humans don't have a seperate proc, but need to return TRUE so general proc is called.
+	return TRUE
+
 /datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
 	if(flags[IS_SYNTHETIC])
  //H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
@@ -227,6 +230,9 @@
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), slot_shoes, 1)
 
+/datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_unathi_digest(M)
+
 /datum/species/tajaran
 	name = TAJARAN
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
@@ -269,6 +275,8 @@
 	..()
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), slot_shoes, 1)
 
+/datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_tajaran_digest(M)
 
 /datum/species/skrell
 	name = SKRELL
@@ -300,6 +308,9 @@
 	eyes = "skrell_eyes"
 	blood_color = /datum/dirt_cover/purple_blood
 	flesh_color = "#8CD7A3"
+
+/datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_skrell_digest(M)
 
 /datum/species/vox
 	name = VOX
@@ -346,6 +357,9 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_l_hand)
 		H.internal = H.l_hand
 	H.internals.icon_state = "internal1"
+
+/datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_vox_digest(M)
 
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
@@ -515,6 +529,9 @@
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), slot_in_backpack)
 
+/datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_diona_digest(M)
+
 /datum/species/diona/handle_death(mob/living/carbon/human/H)
 
 	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
@@ -620,6 +637,9 @@
 
 	return ..()
 
+/datum/species/abductor/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_abductor_digest(M)
+
 /datum/species/skeleton
 	name = SKELETON
 
@@ -641,6 +661,9 @@
 	H.gender = NEUTER
 
 	return ..()
+
+/datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_skeleton_digest(M)
 
 //Species unarmed attacks
 
@@ -716,6 +739,9 @@
 
 	return ..()
 
+/datum/species/shadowling/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_shadowling_digest(M)
+
 /datum/species/golem
 	name = GOLEM
 
@@ -789,3 +815,6 @@
 				qdel(x)
 
 	return ..()
+
+/datum/species/golem/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_golem_digest(M)

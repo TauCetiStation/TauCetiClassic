@@ -38,6 +38,7 @@
 
 	for(var/L in block(locate(bounds[MAP_MINX], bounds[MAP_MINY], bounds[MAP_MINZ]),
 	                   locate(bounds[MAP_MAXX], bounds[MAP_MAXY], bounds[MAP_MAXZ])))
+		atoms += L
 		var/turf/B = L
 		for(var/A in B)
 			atoms += A
