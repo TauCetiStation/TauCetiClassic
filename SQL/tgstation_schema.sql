@@ -75,7 +75,7 @@ CREATE  TABLE IF NOT EXISTS `tgstation`.`library` (
   `content` TEXT NOT NULL ,
   `category` TEXT NOT NULL ,
   `ckey` TEXT NOT NULL,
-  `deletereason` TINYTEXT NULL DEFAULT NULL,
+  `deletereason` TEXT NULL DEFAULT NULL,
   PRIMARY KEY (`id`) )
 ENGINE = MyISAM
 AUTO_INCREMENT = 184
