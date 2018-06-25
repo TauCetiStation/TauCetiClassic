@@ -2689,9 +2689,6 @@
 		src.access_news_network()
 
 	else if(href_list["readbook"])
-		if(!check_rights(R_ADMIN))
-			return
-
 		var/bookid = text2num(href_list["readbook"])
 
 		if(!isnum(bookid))
