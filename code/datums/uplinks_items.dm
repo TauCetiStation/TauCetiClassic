@@ -15,8 +15,6 @@
 				continue
 			if(I.uplink_types.len && !(uplink.uplink_type in I.uplink_types))
 				continue
-			/*if(I.excludefrom_uplinks.len && (uplink.uplink_type in I.excludefrom_uplinks))
-				continue*/
 			if(I.last)
 				last += I
 				continue
@@ -46,7 +44,6 @@
 	var/cost = 0
 	var/last = 0 // Appear last
 	var/list/uplink_types = list() //Empty list means that the object will be available in all types of uplinks. Alias you will need to state its type.
-//	var/list/excludefrom_uplinks = list() //Empty list does nothing. Alias you will need to state the type of uplink, where the object won't be available.
 
 
 /datum/uplink_item/proc/spawn_item(turf/loc, obj/item/device/uplink/U)
@@ -426,7 +423,7 @@
 	item = /obj/item/clothing/shoes/syndigaloshes
 	cost = 1
 	uplink_types = list("traitor")
-//	excludefrom_uplinks = list("nuclear") //This is an example of how to use "excludefrom_uplinks"
+
 
 /datum/uplink_item/stealthy_tools/agent_card
 	name = "Agent Identification card"
