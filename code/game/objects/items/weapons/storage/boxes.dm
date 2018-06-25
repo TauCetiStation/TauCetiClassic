@@ -38,11 +38,21 @@
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
-//Survival
+//Survival Humanlike
 /obj/item/weapon/storage/box/survival/atom_init()
 	. = ..()
 	new /obj/item/clothing/mask/breath(src)
 	new /obj/item/weapon/tank/emergency_oxygen(src)
+
+/obj/item/weapon/storage/box/diona_survival/atom_init()
+	. = ..()
+	new /obj/item/device/flashlight/flare(src)
+	new /obj/item/device/plant_analyzer(src)
+
+/obj/item/weapon/storage/box/ipc_survival/atom_init()
+	. = ..()
+	new /obj/item/weapon/stock_parts/cell/crap(src)
+	new /obj/item/device/robotanalyzer(src)
 
 //Engineer
 /obj/item/weapon/storage/box/engineer/atom_init()

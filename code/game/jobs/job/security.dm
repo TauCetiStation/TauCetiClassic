@@ -40,15 +40,13 @@
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/hos(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/heads/hos(H), slot_belt)
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_l_store)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
 	L.inject(H)
 	START_PROCESSING(SSobj, L)
-	return 1
+	return TRUE
 
 
 /datum/job/warden
@@ -87,16 +85,14 @@
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/warden(H), slot_belt)
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_l_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
 
 	var/obj/item/weapon/implant/mindshield/L = new(H)
 	L.inject(H)
 
-	return 1
+	return TRUE
 
 
 /datum/job/detective
@@ -133,15 +129,13 @@
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/detective(H), slot_belt)
 	if(H.backbag == 1)//Why cant some of these things spawn in his office?
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), slot_l_hand)
 		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_r_store)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 
 /datum/job/officer
@@ -176,16 +170,14 @@
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/security(H), slot_belt)
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_l_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
 
 	var/obj/item/weapon/implant/mindshield/L = new(H)
 	L.inject(H)
 
-	return 1
+	return TRUE
 
 /datum/job/forensic
 	title = "Forensic Technician"
@@ -218,12 +210,10 @@
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/forensic(H), slot_belt)
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), slot_l_hand)
 		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_r_store)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/evidence(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/device/detective_scanner(H), slot_in_backpack)
 
-	return 1
+	return TRUE

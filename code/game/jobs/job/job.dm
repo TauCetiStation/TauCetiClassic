@@ -45,7 +45,7 @@
 	var/list/restricted_species = list()
 
 /datum/job/proc/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	return 1
+	return TRUE
 
 /datum/job/proc/get_access()
 	return access.Copy()
