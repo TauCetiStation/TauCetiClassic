@@ -156,8 +156,6 @@
 		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
 		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
 	else
-		var/obj/item/weapon/storage/box/Barpack = new /obj/item/weapon/storage/box(H)
-		H.equip_to_slot_or_del(Barpack, slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
