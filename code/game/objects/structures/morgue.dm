@@ -64,7 +64,7 @@
 	return attack_hand(user)
 
 /obj/structure/morgue/proc/has_clonable_bodies()
-	var/list/compiled = recursive_mob_check(src, list(), 3, TRUE, FALSE, FALSE) // Search for mobs in all contents.
+	var/list/compiled = recursive_mob_check(src, sight_check = FALSE, include_radio = FALSE) // Search for mobs in all contents.
 	if(!length(compiled)) // No mobs?
 		return FALSE
 
