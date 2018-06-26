@@ -19,9 +19,13 @@
 	density = 1
 	var/obj/structure/m_tray/connected = null
 	anchored = 1.0
-	var/timerRunning = FALSE
+	var/check_delay = 0
+
+/obj/structure/morgue/atom_init()
+	START_PROCESSING(SSobj, src)
 
 /obj/structure/morgue/Destroy()
+	STOP_PROCESSING(SSobj, src)
 	if(connected)
 		qdel(connected)
 		connected = null
@@ -49,8 +53,6 @@
 
 	if (prob(chance))
 		for(var/atom/movable/A in src)
-			if(!ismob(A) && !isobj(A))
-				continue
 			A.loc = loc
 			A.ex_act(severity)
 		qdel(src)
@@ -61,43 +63,35 @@
 /obj/structure/morgue/attack_paw(mob/user)
 	return attack_hand(user)
 
-/obj/structure/morgue/proc/has_mobs()
-	var/list/compiled = mob_check(src, FALSE, FALSE) // Search for mobs in all contents.
-	if(!length(compiled)) // No mobs?
-		return FALSE
-	return TRUE
-
 /obj/structure/morgue/proc/has_clonable_bodies()
-	var/list/compiled = mob_check(src, TRUE, FALSE) // Search for mobs in all contents.
+	var/list/compiled = recursive_mob_check(src, list(), 3, TRUE, FALSE, FALSE) // Search for mobs in all contents.
 	if(!length(compiled)) // No mobs?
 		return FALSE
 
-	for(var/mob/living/M in compiled)
-		if(isnull(M) || !ishuman(M) || !M.dna)
-			continue
-		var/mob/living/carbon/human/H = M
-		if((H.brain_op_stage == 4.0) || H.suiciding || !H.ckey || (NOCLONE in H.mutations))
+	for(var/mob/living/carbon/human/H in compiled)
+		if((H.brain_op_stage == 4.0) || H.suiciding || !H.ckey)
 			continue
 
 		return TRUE
 	return FALSE
 
-/obj/structure/morgue/proc/update_check_clonable()
+/obj/structure/morgue/process()
+	if(check_delay > world.time)
+		return
+	check_delay = world.time + 10 // every second
+
+	if (!contents.len)
+		update()
+		return //nothing inside
+
 	if (has_clonable_bodies())
 		icon_state = "morgue3"
 	else
 		update()
 
-	if (has_mobs())
-		addtimer(CALLBACK(src, .proc/update_check_clonable), 10)
-	else
-		timerRunning = FALSE
-
 /obj/structure/morgue/proc/close()
 	if (connected)
 		for(var/atom/movable/A in connected.loc)
-			if(!ismob(A) && !isobj(A))
-				continue
 			if(!A.anchored)
 				A.loc = src
 				if(ismob(A))
@@ -107,10 +101,6 @@
 		qdel(connected)
 		connected = null
 		update()
-
-		if (!timerRunning && has_mobs())
-			addtimer(CALLBACK(src, .proc/update_check_clonable), 10)
-			timerRunning = TRUE
 
 /obj/structure/morgue/proc/open()
 	if (!connected)
@@ -123,8 +113,6 @@
 			connected.connected = src
 			icon_state = "morgue0"
 			for(var/atom/movable/A in src)
-				if(!ismob(A) && !isobj(A))
-					continue
 				A.loc = connected.loc
 				if(ismob(A))
 					var/mob/M = A
@@ -176,8 +164,6 @@
 		connected.connected = src
 		icon_state = "morgue0"
 		for(var/atom/movable/A in src)
-			if(!ismob(A) && !isobj(A))
-				continue
 			A.loc = connected.loc
 		connected.icon_state = "morguet"
 	else
