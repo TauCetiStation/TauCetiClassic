@@ -1850,7 +1850,7 @@
 		return
 
 	else if(href_list["secretsfun"])
-		if(!(check_rights(R_FUN) || check_rights(R_EVENT)))
+		if(!check_rights(R_FUN|R_EVENT))
 			return
 
 		var/ok = 0
