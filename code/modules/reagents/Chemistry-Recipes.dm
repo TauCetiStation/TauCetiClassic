@@ -2131,15 +2131,15 @@ datum
 			name = "Chocolate Milkshake"
 			id = "milkshake_chocolate"
 			result = "milkshake_chocolate"
-			required_reagents = list("cream" = 1, "ice" = 2, "milk" = 2, "hot_coco" = 1)
-			result_amount = 6
+			required_reagents = list("milkshake" = 1, "hot_coco" = 1)
+			result_amount = 2
 
 		strawberrymilkshake
 			name = "Strawberry Milkshake"
 			id = "milkshake_strawberry"
 			result = "milkshake_strawberry"
-			required_reagents = list("cream" = 1, "ice" = 2, "milk" = 2, "berryjuice" = 1)
-			result_amount = 6
+			required_reagents = list("milkshake" = 1, "berryjuice" = 1)
+			result_amount = 2
 
 		rewriter
 			name = "Rewriter"
