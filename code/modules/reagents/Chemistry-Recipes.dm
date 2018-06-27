@@ -2169,16 +2169,16 @@ datum
 			required_reagents = list("rum" = 1, "cognac" = 1, "limejuice" = 1, "martini" = 1, "gin" = 1)
 			result_amount = 5
 
-		bacardilemonade
-			name = "Bacardi Lemonade"
-			id = "bacardilemonade"
+		bacardilemonade_lime
+			name = "Bacardi Lemon Lime"
+			id = "bacardilemonade_lime"
 			result = "bacardilemonade"
 			required_reagents = list("rum" = 2, "lemon_lime" = 2, "ice" = 1)
 			result_amount = 5
 
-		bacardilemonade2
-			name = "Bacardi Lemonade2"
-			id = "bacardilemonade2"
+		bacardilemonade_lemon
+			name = "Bacardi Lemonade"
+			id = "bacardilemonade"
 			result = "bacardilemonade"
 			required_reagents = list("rum" = 2, "lemonade" = 2, "ice" = 1)
 			result_amount = 5
