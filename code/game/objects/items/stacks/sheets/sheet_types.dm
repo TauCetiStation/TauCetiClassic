@@ -36,6 +36,7 @@ var/global/list/datum/stack_recipe/metal_recipes = list (
 		new/datum/stack_recipe("teal comfy chair", /obj/structure/stool/bed/chair/comfy/teal, 2, one_per_turf = TRUE, on_floor = TRUE),
 		), 2),
 	null,
+	new/datum/stack_recipe("needle", /obj/item/weapon/needle, 1),
 	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts, 2),
 	new/datum/stack_recipe("rack parts", /obj/item/weapon/rack_parts),
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 15, one_per_turf = TRUE, on_floor = TRUE),
@@ -134,18 +135,19 @@ var/global/list/datum/stack_recipe/plasteel_recipes = list ( \
 /*
  * Wood
  */
-var/global/list/datum/stack_recipe/wood_recipes = list ( \
-	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1), \
-	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20), \
-	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/wood, 2), \
-	new/datum/stack_recipe("fancy table parts", /obj/item/weapon/table_parts/wood/fancy, 2), \
-	new/datum/stack_recipe("black fancy table parts", /obj/item/weapon/table_parts/wood/fancy/black, 2), \
-	new/datum/stack_recipe("wooden chair", /obj/structure/stool/bed/chair/wood/normal, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("crossbow frame", /obj/item/weapon/crossbowframe, 5, time = 25, one_per_turf = FALSE, on_floor = FALSE), \
-	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("bonfire", /obj/structure/bonfire, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE), \
-	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE), \
+var/global/list/datum/stack_recipe/wood_recipes = list (
+	new/datum/stack_recipe("wooden sandals", /obj/item/clothing/shoes/sandal, 1),
+	new/datum/stack_recipe("knitting neele", /obj/item/weapon/knitting_needle, 1, 2),
+	new/datum/stack_recipe("wood floor tile", /obj/item/stack/tile/wood, 1, 4, 20),
+	new/datum/stack_recipe("table parts", /obj/item/weapon/table_parts/wood, 2),
+	new/datum/stack_recipe("fancy table parts", /obj/item/weapon/table_parts/wood/fancy, 2),
+	new/datum/stack_recipe("black fancy table parts", /obj/item/weapon/table_parts/wood/fancy/black, 2),
+	new/datum/stack_recipe("wooden chair", /obj/structure/stool/bed/chair/wood/normal, 3, time = 10, one_per_turf = TRUE, on_floor = TRUE),
+	new/datum/stack_recipe("wooden barricade", /obj/structure/barricade/wooden, 5, time = 50, one_per_turf = TRUE, on_floor = TRUE),
+	new/datum/stack_recipe("crossbow frame", /obj/item/weapon/crossbowframe, 5, time = 25, one_per_turf = FALSE, on_floor = FALSE),
+	new/datum/stack_recipe("wooden door", /obj/structure/mineral_door/wood, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE),
+	new/datum/stack_recipe("bonfire", /obj/structure/bonfire, 10, time = 20, one_per_turf = TRUE, on_floor = TRUE),
+	new/datum/stack_recipe("coffin", /obj/structure/closet/coffin, 5, time = 15, one_per_turf = TRUE, on_floor = TRUE),
 //	new/datum/stack_recipe("apiary", /obj/item/apiary, 10, time = 25, one_per_turf = FALSE, on_floor = FALSE)
 	)
 
@@ -170,12 +172,89 @@ var/global/list/datum/stack_recipe/wood_recipes = list ( \
  * Cloth
  */
 /obj/item/stack/sheet/cloth
+	name = "unprocessed cloth"
+	desc = "This roll of cloth came straight from rags. It still needs lotsa work to do, before it becomes any good."
+	singular_name = "unprocessed cloth roll"
+	icon_state = "sheet-cloth"
+	origin_tech = "materials=1"
+	var/tied_together = FALSE
+	var/processed = FALSE
+
+/obj/item/stack/sheet/cloth/attackby(obj/item/I, mob/user)
+	if((istype(I, /obj/item/stack/stringed_needle) || istype(I, /obj/item/stack/cable_coil) || istype(I, /obj/item/stack/string)) && !tied_together)
+		var/obj/item/stack/STR = I
+		if(STR.amount < amount)
+			return
+		user.visible_message("<span class='notice'>[user] is tying together [src].</span>")
+		if(user.is_busy() || !do_after(user, amount * 5, target = user))
+			return
+		STR.use(amount)
+		tied_together = TRUE
+	else if(I.sharp && tied_together && !processed)
+		if(wet < 1)
+			user.visible_message("<span class='notice'>[user] is shaping [src] up.</span>")
+			if(user.is_busy() || !do_after(user, amount * 5, target = user))
+				return
+			var/obj/item/stack/sheet/cloth/cloth_processed/C = new(get_turf(src), amount, TRUE)
+			C.color = color
+			qdel(src)
+		else
+			to_chat(user, "<span class='notice'>Dry [src] out first</span>")
+	else
+		..()
+
+/obj/item/stack/sheet/cloth/change_stack(mob/user, amount)
+	var/obj/item/stack/sheet/cloth/S = ..()
+	S.color = color
+
+var/global/list/datum/stack_recipe/processed_cloth_recipes = list(
+	new/datum/stack_recipe("carpet", /obj/item/stack/tile/carpet, 2, 1, 50),
+	new/datum/stack_recipe("bruise pack", /obj/item/stack/medical/bruise_pack, 1, 1, 5),
+	new/datum/stack_recipe("damp rag", /obj/item/weapon/reagent_containers/glass/rag, 1),
+	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 1, 1, 1, 60),
+	new/datum/stack_recipe("straight jacket", /obj/item/clothing/suit/straight_jacket, 6, 1, 1, 60),
+	new/datum/stack_recipe("footwraps", /obj/item/clothing/shoes/footwraps, 1)
+	)
+
+/obj/item/stack/sheet/cloth/cloth_processed
 	name = "cloth"
-	desc = "This roll of cloth is made from only the finest chemicals and bunny rabbits."
+	desc = "This roll of cloth is made from only the finest chemicals and bunny rabbits. Or perhaps out of nicely polished rags."
 	singular_name = "cloth roll"
 	icon_state = "sheet-cloth"
 	origin_tech = "materials=2"
+	var/datum/tailoring_progress/tailoring
+	tied_together = TRUE
+	processed = TRUE
 
+/obj/item/stack/sheet/cloth/cloth_processed/atom_init()
+	. = ..()
+	recipes = processed_cloth_recipes
+	tailoring = new/datum/tailoring_progress(src)
+
+/obj/item/stack/sheet/cloth/cloth_processed/Destroy()
+	QDEL_NULL(tailoring)
+	return ..()
+
+/obj/item/stack/sheet/cloth/cloth_processed/attackby(obj/item/I, mob/user)
+	if(do_tailoring(user, I, src))
+		return
+	else
+		..()
+
+/obj/item/stack/sheet/cloth/cloth_processed/examine(mob/user)
+	..()
+	var/text_to_show = ""
+	for(var/A in tailoring.steps_made)
+		if(text_to_show)
+			text_to_show += ", [A]"
+		else
+			text_to_show += "It seems this piece of cloth has underwent [A]"
+	if(text_to_show)
+		to_chat(user, "[text_to_show]")
+
+/obj/item/stack/sheet/cloth/cloth_processed/random/atom_init()
+	. = ..()
+	color = pick(COLOR_ADEQUATE_LIST)
 /*
  * Cardboard
  */

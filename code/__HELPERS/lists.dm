@@ -719,6 +719,17 @@ datum/proc/dd_SortValue()
 		used_key_list[input_key] = 1
 	return input_key
 
+/proc/compare_lists(list/A, list/B) // Returns TRUE if lists are identical, and the order in them is the same.
+	if(!istype(A, /list) || !istype(B, /list))
+		return FALSE
+	if(A.len != B.len)
+		return FALSE
+	for(var/i in 1 to A.len)
+		if(A[i] != B[i])
+			return FALSE
+	return TRUE
+
+
 #define LAZYINITLIST(L) if (!L) L = list()
 #define UNSETEMPTY(L) if (L && !L.len) L = null
 #define LAZYADD(L, I) if(!L) { L = list(); } L += I;

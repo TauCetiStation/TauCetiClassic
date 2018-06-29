@@ -63,6 +63,14 @@
 		if(S.flags[IS_WHITELISTED])
 			whitelisted_species += S.name
 
+	// Initialising tailory stuff.
+	for(var/T in subtypesof(/datum/tailoring_step))
+		var/datum/tailoring_step/TS = new T
+		tailoring_steps += TS
+	for(var/T in subtypesof(/datum/tailoring_recipe))
+		var/datum/tailoring_recipe/TR = new T
+		tailoring_recipes += TR
+
 /* // Uncomment to debug chemical reaction list.
 /client/verb/debug_chemical_list()
 
