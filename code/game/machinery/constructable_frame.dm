@@ -234,6 +234,16 @@ Note: Once everything is added to the public areas, will add m_amt and g_amt to 
 to destroy them and players will be able to make replacements.
 */
 
+/obj/item/weapon/circuitboard/tailoring_machine
+	name = "circuit board (Tailoring Machine)"
+	build_path = /obj/machinery/tailoring_machine
+	board_type = "machine"
+	origin_tech = "engineering=3"
+	req_components = list(
+	                      /obj/item/weapon/stock_parts/matter_bin = 2,
+	                      /obj/item/weapon/stock_parts/manipulator = 2,
+	                      /obj/item/stack/cable_coil = 1)
+
 /obj/item/weapon/circuitboard/vendor
 	name = "circuit board (Booze-O-Mat Vendor)"
 	build_path = /obj/machinery/vending/boozeomat
