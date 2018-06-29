@@ -53,11 +53,17 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "gauze"
 
-/obj/item/stack/medical/bruise_pack/rags/atom_init(mapload, new_amount = null, merge = FALSE, old = 0)
+/obj/item/stack/medical/bruise_pack/rags/atom_init(mapload, new_amount = null, merge = FALSE, old = 0, colour = "ff0000")
 	. = ..()
 	if(prob(33) || old)
 		make_old()
+	color = colour
 
+/obj/item/stack/medical/bruise_pack/rags/make_wet()
+	var/obj/item/stack/sheet/cloth/C = new(get_turf(src), amount, TRUE)
+	C.make_wet()
+	C.color = color
+	qdel(src)
 
 //////SHITTY BONFIRE PORT///////
 

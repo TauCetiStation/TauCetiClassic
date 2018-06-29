@@ -294,6 +294,9 @@
 		var/obj/item/weapon/reagent_containers/food/snacks/monkeycube/cube = O
 		if(!cube.wrapped)
 			cube.Expand()
+	if(istype(O, /obj/item))
+		var/obj/item/I = O
+		I.make_wet()
 
 /datum/reagent/water/on_diona_digest(mob/living/M)
 	..()
