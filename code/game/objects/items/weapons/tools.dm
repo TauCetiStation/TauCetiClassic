@@ -264,11 +264,8 @@
 				src.icon_state = initial(src.icon_state)
 				src.welding = 0
 			set_light(0)
-			if (!istype(src, /obj/item/weapon/weldingtool/experimental)) 
+			if (!istype(src, /obj/item/weapon/weldingtool/experimental)||(get_fuel() == max_fuel)) 
 				STOP_PROCESSING(SSobj, src)
-			else 
-				if(get_fuel() == max_fuel)
-					STOP_PROCESSING(SSobj, src)
 			return
 		//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
@@ -494,16 +491,16 @@
 	m_amt = 70
 	g_amt = 120
 	origin_tech = "materials=4;engineering=4;bluespace=2;phorontech=3"
-	var/nextrefueltick = 0
+	var/next_refuel_tick = 0
 
 /obj/item/weapon/weldingtool/experimental/atom_init()
 	.=..()
-	nextrefueltick = (world.time + 25)
+	next_refuel_tick = (world.time + 25)
 
 /obj/item/weapon/weldingtool/experimental/process()
 	..()
-	if((get_fuel() < max_fuel) && (nextrefueltick < world.time) && (welding == 0))
-		nextrefueltick = world.time + 25
+	if((get_fuel() < max_fuel) && (next_refuel_tick < world.time) && !welding)
+		next_refuel_tick = world.time + 25
 		reagents.add_reagent("fuel", 1)
 
 /*
