@@ -266,6 +266,9 @@
 			set_light(0)
 			if (!istype(src, /obj/item/weapon/weldingtool/experimental)) 
 				STOP_PROCESSING(SSobj, src)
+			else 
+				if(get_fuel() == max_fuel)
+					STOP_PROCESSING(SSobj, src)
 			return
 		//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
@@ -368,8 +371,7 @@
 			src.force = 15
 			src.damtype = "fire"
 			src.icon_state = initial(src.icon_state) + "1"
-			if (!istype(src, /obj/item/weapon/weldingtool/experimental))
-				START_PROCESSING(SSobj, src)
+			START_PROCESSING(SSobj, src)
 		else
 			to_chat(usr, "<span class='info'>Need more fuel!</span>")
 			src.welding = 0
@@ -401,8 +403,7 @@
 			src.force = 15
 			src.damtype = "fire"
 			src.icon_state = initial(src.icon_state) + "1"
-			if (!istype(src, /obj/item/weapon/weldingtool/experimental))
-				START_PROCESSING(SSobj, src)
+			START_PROCESSING(SSobj, src)
 		else
 			to_chat(usr, "<span class='info'>Need more fuel!</span>")
 			src.welding = 0
@@ -498,7 +499,6 @@
 /obj/item/weapon/weldingtool/experimental/atom_init()
 	.=..()
 	nextrefueltick = (world.time + 25)
-	START_PROCESSING(SSobj, src)
 
 /obj/item/weapon/weldingtool/experimental/process()
 	..()
