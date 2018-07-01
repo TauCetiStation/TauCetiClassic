@@ -248,6 +248,7 @@
 
 /obj/item/weapon/storage/fancy/cigarettes
 	icon = 'icons/obj/cigarettes.dmi'
+	item_state = "cigpacket"
 	w_class = 1
 	throwforce = 2
 	slot_flags = SLOT_BELT
