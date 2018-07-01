@@ -46,6 +46,6 @@ var/global/list/special_roles = list(
 	ROLE_MEME = IS_MODE_COMPILED("meme"),                //13
 	ROLE_MUTINEER = IS_MODE_COMPILED("mutiny"),          //14
 	ROLE_SHADOWLING = IS_MODE_COMPILED("shadowling"),    //15
-	ROLE_ABDUCTOR = IS_MODE_COMPILED("abduction")        //16
-	ROLE_REV_HOS = IS_MODE_COMPILED("revolution"),       //17
+	ROLE_ABDUCTOR = IS_MODE_COMPILED("abduction"),       //16
+	ROLE_REV_HOS = IS_MODE_COMPILED("revolution")        //17
 )
