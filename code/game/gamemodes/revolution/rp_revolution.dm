@@ -33,7 +33,7 @@
 
 	var/head_check = 0
 	for(var/mob/dead/new_player/player in player_list)
-		if(player.mind.assigned_role in command_positions)
+		if((player.mind.assigned_role in command_positions) && (ROLE_REV_HOS in player.client.prefs.be_role)) //check is there any heads of staff that want to play rev
 			head_check = 1
 			break
 
