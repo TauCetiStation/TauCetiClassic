@@ -111,9 +111,11 @@
 	full_w_class = ITEM_SIZE_SMALL
 
 /obj/item/stack/string/update_icon()
-	if(amount <= (max_amount * (1 / 3)))
+	if(amount == 1)
 		icon_state = "string1"
-	else if (amount <= (max_amount * (2 / 3)))
+	else if(amount <= (max_amount * (1 / 3)))
 		icon_state = "string2"
-	else
+	else if (amount <= (max_amount * (2 / 3)))
 		icon_state = "string3"
+	else
+		icon_state = "string4"

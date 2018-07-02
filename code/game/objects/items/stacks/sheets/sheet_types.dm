@@ -223,8 +223,7 @@ var/global/list/datum/stack_recipe/processed_cloth_recipes = list(
 	icon_state = "sheet-cloth"
 	origin_tech = "materials=2"
 	var/datum/tailoring_progress/tailoring
-	tied_together = TRUE
-	processed = TRUE
+	merge_type = /obj/item/stack/sheet/cloth/cloth_processed
 
 /obj/item/stack/sheet/cloth/cloth_processed/atom_init()
 	. = ..()

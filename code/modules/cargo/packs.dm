@@ -516,6 +516,15 @@ datum/supply_pack/New()
 	crate_name = "Wooden planks crate"
 	group = "Engineering"
 
+/datum/supply_pack/cloth50
+	name = "50 random coloured cloth sheets"
+	contains = list(/obj/item/stack/sheet/cloth/cloth_processed/random)
+	amount = 50
+	cost = 1000
+	crate_type = /obj/structure/closet/crate/engi
+	crate_name = "Cloth sheets crate"
+	group = "Engineering"
+
 /datum/supply_pack/carpet50
 	name = "50 carpet tiles"
 	contains = list(/obj/item/stack/tile/carpet)
