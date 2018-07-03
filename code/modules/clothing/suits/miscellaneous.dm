@@ -550,6 +550,24 @@
 		return
 	usr.update_inv_wear_suit()
 
+/obj/item/clothing/suit/hooded/carp_costume
+	name = "carp costume"
+	desc = "A costume made from 'synthetic' carp scales, it smells."
+	icon_state = "carp_casual"
+	item_state = "labcoat"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	cold_protection = UPPER_TORSO|LOWER_TORSO|ARMS //Space carp like space, so you should too
+	allowed = list(/obj/item/weapon/tank/emergency_oxygen)
+	hoodtype = /obj/item/clothing/head/hooded/carp_hood
+
+/obj/item/clothing/suit/hooded/ian_costume	//It's Ian, rub his bell- oh god what happened to his inside parts?
+	name = "corgi costume"
+	desc = "A costume that looks like someone made a human-like corgi, it won't guarantee belly rubs."
+	icon_state = "ian"
+	item_state = "labcoat"
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|ARMS
+	allowed = list()
+	hoodtype = /obj/item/clothing/head/hooded/ian_hood
 
 /obj/item/clothing/suit/hooded/angel_suit
 	name = "Angel Suit"

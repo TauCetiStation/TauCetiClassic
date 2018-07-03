@@ -494,6 +494,18 @@
 					icon_state = "pwineglass"
 					name = "Glass of ???"
 					desc = "A black ichor with an oily purple sheer on top. Are you sure you should drink this?"
+				if("bacardi")
+					icon_state = "bacardiglass"
+					name = "Bacardi"
+					desc = "A soft light drink made of rum."
+				if("bacardialoha")
+					icon_state = "bacardialohaglass"
+					name = "Bacardi Aloha"
+					desc = "Sweet mixture of rum, martini and lime soda."
+				if("bacardilemonade")
+					icon_state = "bacardilemonadeglass"
+					name = "Bacardi Lemonade"
+					desc = "Mixture of refreshing lemonade and sweet rum."
 				else
 					icon_state ="glass_brown"
 					name = "Glass of ..what?"

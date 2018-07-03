@@ -82,8 +82,51 @@
 	name = "black fingerless gloves"
 	icon_state = "fingerless_black"
 	item_state = "fingerless_black"
+	item_color="black"
 	clipped = 1
 	species_restricted = list("exclude","stunglove")
+
+/obj/item/clothing/gloves/fingerless/red
+	name = "red fingerless gloves"
+	icon_state = "fingerless_red"
+	item_state = "fingerless_red"
+	item_color="red"
+
+/obj/item/clothing/gloves/fingerless/orange
+	name = "orange fingerless gloves"
+	icon_state = "fingerless_orange"
+	item_state = "fingerless_orange"
+	item_color="orange"
+
+/obj/item/clothing/gloves/fingerless/green
+	name = "green fingerless gloves"
+	icon_state = "fingerless_green"
+	item_state = "fingerless_green"
+	item_color="green"
+
+/obj/item/clothing/gloves/fingerless/blue
+	name = "blue fingerless gloves"
+	icon_state = "fingerless_blue"
+	item_state = "fingerless_blue"
+	item_color="blue"
+
+/obj/item/clothing/gloves/fingerless/purple
+	name = "purple fingerless gloves"
+	icon_state = "fingerless_purple"
+	item_state = "fingerless_purple"
+	item_color="purple"
+
+/obj/item/clothing/gloves/fingerless/yellow
+	name = "yellow fingerless gloves"
+	icon_state = "fingerless_yellow"
+	item_state = "fingerless_yellow"
+	item_color="yellow"
+
+/obj/item/clothing/gloves/fingerless/rainbow
+	name = "rainbow fingerless gloves"
+	icon_state = "fingerless_rainbow"
+	item_state = "fingerless_rainbow"
+	item_color="rainbow"
 
 /obj/item/clothing/gloves/security/marinad
 	desc = "These were made to hold a full automatic gun."

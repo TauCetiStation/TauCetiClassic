@@ -1,19 +1,17 @@
 
-datum/reagent/coolant
+/datum/reagent/coolant
 	name = "Coolant"
 	id = "coolant"
 	description = "Industrial cooling substance."
 	reagent_state = LIQUID
 	color = "#C8A5DC" // rgb: 200, 165, 220
 
-datum/chemical_reaction/coolant
+/datum/chemical_reaction/coolant
 	name = "Coolant"
 	id = "coolant"
 	result = "coolant"
 	required_reagents = list("tungsten" = 1, "oxygen" = 1, "water" = 1)
 	result_amount = 3
-
-
 
 /obj/structure/reagent_dispensers/coolanttank
 	name = "coolant tank"

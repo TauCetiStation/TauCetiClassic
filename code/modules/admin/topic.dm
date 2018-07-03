@@ -2688,6 +2688,85 @@
 		src.admincaster_signature = sanitize(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
 		src.access_news_network()
 
+	else if(href_list["readbook"])
+		var/bookid = text2num(href_list["readbook"])
+
+		if(!isnum(bookid))
+			return
+
+		var/DBQuery/query = dbcon_old.NewQuery("SELECT content FROM library WHERE id = '[bookid]'")
+
+		if(!query.Execute())
+			return
+
+		var/content
+		if(query.NextRow())
+			content = query.item[1]
+		else
+			return
+
+		usr << browse(entity_ja(content), "window=book")
+
+	else if(href_list["restorebook"])
+		if(!check_rights(R_PERMISSIONS))
+			return
+
+		if(alert(usr, "Confirm restoring?", "Message", "Yes", "No") != "Yes")
+			return
+		var/bookid = text2num(href_list["restorebook"])
+
+		if(!isnum(bookid))
+			return
+
+		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = '[bookid]'")
+		if(!query.Execute())
+			return
+
+		var/title
+		if(query.NextRow())
+			title = query.item[1]
+		else
+			return
+
+		query = dbcon_old.NewQuery("UPDATE library SET deletereason = NULL WHERE id = '[bookid]'")
+		if(!query.Execute())
+			return
+
+		library_recycle_bin()
+		log_admin("[key_name_admin(usr)] restored [title] from the recycle bin")
+		message_admins("[key_name_admin(usr)] restored [title] from the recycle bin")
+
+	else if(href_list["deletebook"])
+		if(!check_rights(R_PERMISSIONS))
+			return
+
+		if(alert(usr, "Confirm removal?", "Message", "Yes", "No") != "Yes")
+			return
+
+		var/bookid = text2num(href_list["deletebook"])
+
+		if(!isnum(bookid))
+			return
+
+		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = '[bookid]'")
+
+		if(!query.Execute())
+			return
+
+		var/title
+		if(query.NextRow())
+			title = query.item[1]
+		else
+			return
+
+		query = dbcon_old.NewQuery("DELETE FROM library WHERE id='[bookid]'")
+		if(!query.Execute())
+			return
+
+		library_recycle_bin()
+		log_admin("[key_name_admin(usr)] restored [title] from the recycle bin")
+		message_admins("[key_name_admin(usr)] removed [title] from the library database")
+
 	else if(href_list["populate_inactive_customitems"])
 		if(check_rights(R_ADMIN|R_SERVER))
 			populate_inactive_customitems_list(src.owner)
