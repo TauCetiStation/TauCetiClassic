@@ -66,8 +66,8 @@
 						prob(3);/obj/item/clothing/mask/cigarette/cigar/havana,\
 						prob(3);/obj/item/clothing/mask/cigarette/pipe,\
 						prob(5);/obj/item/clothing/mask/cigarette/pipe/cobpipe,\
-						prob(10);/obj/item/weapon/storage/fancy/cigarettes,\
-						prob(10);/obj/item/weapon/storage/fancy/cigarettes/dromedaryco,\
+						prob(10);/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_green,\
+						prob(10);/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_red,\
 						prob(1);/obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate\
 					)
 
