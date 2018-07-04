@@ -264,7 +264,7 @@
 				src.icon_state = initial(src.icon_state)
 				src.welding = 0
 			set_light(0)
-			if (!istype(src, /obj/item/weapon/weldingtool/experimental)||(get_fuel() == max_fuel)) 
+			if (!istype(src, /obj/item/weapon/weldingtool/experimental))
 				STOP_PROCESSING(SSobj, src)
 			return
 		//Welders left on now use up fuel, but lets not have them run out quite that fast
@@ -502,7 +502,8 @@
 	if((get_fuel() < max_fuel) && (next_refuel_tick < world.time) && !welding)
 		next_refuel_tick = world.time + 25
 		reagents.add_reagent("fuel", 1)
-
+	if(!welding && (get_fuel() == max_fuel))
+		STOP_PROCESSING(SSobj, src)
 /*
  * Crowbar
  */
