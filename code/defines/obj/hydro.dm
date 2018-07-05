@@ -1194,7 +1194,7 @@
 	if(istype(W, /obj/item/weapon/circular_saw) || istype(W, /obj/item/weapon/hatchet) || (istype(W, /obj/item/weapon/twohanded/fireaxe) && W:wielded) || istype(W, /obj/item/weapon/melee/energy))
 		user.show_message("<span class='notice'>You make planks out of \the [src]!</span>", 1)
 		for(var/i in 1 to 2)
-			new/obj/item/stack/sheet/wood(user.loc, megre = TRUE)//named arg, see code/game/objects/items/stacks/stack.dm
+			new/obj/item/stack/sheet/wood(user.loc)
 		qdel(src)
 
 
