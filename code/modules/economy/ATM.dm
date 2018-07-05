@@ -79,7 +79,7 @@ log transactions
 			//short out the machine, shoot sparks, spew money!
 			emagged = 1
 			spark_system.start()
-			check_money_stock(rand(100,500),src.loc)
+			print_money_stock(rand(100,500))
 			//we don't want to grief people by locking their id in an emagged ATM
 			release_held_id(user)
 
@@ -99,13 +99,13 @@ log transactions
 		if(istype(I,/obj/item/weapon/spacecash))
 			var/obj/item/weapon/spacecash/SC = I
 			//consume the money
-			authenticated_account.money += SC.worth
 			if(!istype(SC, /obj/item/weapon/spacecash/ewallet))
 				if((money_stock + SC.worth) > money_stock_max)
 					alert("Sorry, the ATM cash storage is full and can only hold $[money_stock_max]")
 					return
 				else
 					money_stock += SC.worth
+			authenticated_account.money += SC.worth
 			if(prob(50))
 				playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
 			else
@@ -336,7 +336,7 @@ log transactions
 						if(response == "Chip")
 							spawn_ewallet(amount,src.loc)
 						else
-							check_money_stock(amount, src.loc)
+							print_money_stock(amount)
 
 
 						//create an entry in the account transaction log
@@ -470,16 +470,16 @@ log transactions
 	E.worth = sum
 	E.owner_name = authenticated_account.owner_name
 
-/obj/machinery/atm/proc/check_money_stock(sum, spawnloc)
+/obj/machinery/atm/proc/print_money_stock(sum)
 	if (money_stock < sum)
 		if(money_stock)
 			sum = money_stock
 			money_stock = 0
-			alert("ATM don't have enough funds to give the full amount of money!")
-			spawn_money(sum, spawnloc)
+			alert("ATM doesn't have enough funds to give the full amount of money!")
+			spawn_money(sum, src.loc)
 		else
-			alert("ATM don't have enough funds to do that!")
+			alert("ATM doesn't have enough funds to do that!")
 			return
 	else
 		money_stock -= sum
-		spawn_money(sum, spawnloc)
+		spawn_money(sum, src.loc)
