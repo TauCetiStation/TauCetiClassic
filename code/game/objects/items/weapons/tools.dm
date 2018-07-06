@@ -494,13 +494,12 @@
 	var/next_refuel_tick = 0
 
 /obj/item/weapon/weldingtool/experimental/atom_init()
-	.=..()
-	next_refuel_tick = (world.time + 25)
+	. = ..()
 
 /obj/item/weapon/weldingtool/experimental/process()
 	..()
 	if((get_fuel() < max_fuel) && (next_refuel_tick < world.time) && !welding)
-		next_refuel_tick = world.time + 25
+		next_refuel_tick = world.time + 2.5 SECONDS
 		reagents.add_reagent("fuel", 1)
 	if(!welding && (get_fuel() == max_fuel))
 		STOP_PROCESSING(SSobj, src)
