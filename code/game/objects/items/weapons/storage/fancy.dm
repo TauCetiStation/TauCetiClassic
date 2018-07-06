@@ -246,10 +246,7 @@
 //CIG PACK//
 ////////////
 /obj/item/weapon/storage/fancy/cigarettes
-	name = "cigarette packet"
-	desc = "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
 	icon = 'icons/obj/cigarettes.dmi'
-	icon_state = "cigpacket"
 	item_state = "cigpacket"
 	w_class = 1
 	throwforce = 2
@@ -295,27 +292,32 @@
 	else
 		..()
 
-/obj/item/weapon/storage/fancy/cigarettes/dromedaryco
-	name = "\improper DromedaryCo packet"
-	desc = "A packet of six imported DromedaryCo cancer sticks. A label on the packaging reads, \"Wouldn't a slow death make a change?\""
-	icon_state = "Dpacket"
+/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_blue
+	name = "Ode to Viceroy Blue"
+	desc = "A lot of people assume that its a really nice cigarette, but its really just the shittiest one you can buy in Space, pretty much."
+	icon_state = "odetoviceroy_blue"
+
+/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_green
+	name = "Ode to Viceroy Menthol"
+	desc = "They just bought the copyright to the name, the licensing for the brand, and slapped it on the shittiest stuff. Those are menthol ones."
+	icon_state = "odetoviceroy_green"
+
+/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_red
+	name = "Ode to Viceroy Red"
+	desc = "Red colour implies that these are strong."
+	icon_state = "odetoviceroy_red"
 	item_state = "Dpacket"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate
-	name = "unknown"
+	name = "Syndie Smokes"
 	desc = "An obscure brand of cigarettes."
 	icon_state = "syndie"
+	item_state = "Dpacket"
 
 /obj/item/weapon/storage/fancy/cigarettes/cigpack_syndicate/atom_init()
 	. = ..()
 	for (var/i in 1 to storage_slots)
 		reagents.add_reagent("tricordrazine",15)
-	name = "cigarette packet"
-
-/obj/item/weapon/storage/fancy/cigarettes/menthol
-	name = "Uplit Cigs"
-	desc = "A packet of six menthol cigarettes."
-	icon_state = "ucig"
 
 /*
  * Vial Box
