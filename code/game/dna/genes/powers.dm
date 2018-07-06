@@ -255,14 +255,15 @@
 		else
 			Monster = new /mob/living/simple_animal/hulk/human(get_turf(M))
 
-	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
-	smoke.set_up(10, 0, M.loc)
-	smoke.start()
 	playsound(M.loc, 'sound/effects/bamf.ogg', 50, 2)
+
+	for(var/obj/item/W in M)
+		M.drop_from_inventory(W)
 
 	Monster.original_body = M
 	M.forceMove(Monster)
 	M.mind.transfer_to(Monster)
+	Monster.name = M.name
 
 	Monster.attack_log = M.attack_log
 	Monster.attack_log += "\[[time_stamp()]\]<font color='blue'> ======MONSTER LIFE======</font>"
