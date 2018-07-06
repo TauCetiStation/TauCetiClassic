@@ -629,5 +629,5 @@
 		new /obj/item/weapon/reagent_containers/food/drinks/bottle/tequilla(src)
 	else
 		new /obj/item/weapon/reagent_containers/food/drinks/bottle/vodka(src)
-		new /obj/item/weapon/storage/fancy/cigarettes(src)
+		new /obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_blue(src)
 		new /obj/item/weapon/lighter/random(src)
