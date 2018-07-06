@@ -28,6 +28,7 @@
 	var/attack_verb = "punch"         // Empty hand hurt intent verb.
 	var/punch_damage = 0              // Extra empty hand attack damage.
 	var/mutantrace                    // Safeguard due to old code.
+	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
 
 	var/breath_type = "oxygen"           // Non-oxygen gas breathed, if any.
 	var/poison_type = "phoron"           // Poisonous air.
@@ -410,6 +411,7 @@
 	speed_mod = 7
 
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
+	butcher_drops = list(/obj/item/stack/sheet/wood = 5)
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -515,6 +517,8 @@
 	brute_mod = 1.5
 	burn_mod = 1
 
+	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
+
 	flags = list(
 	 IS_WHITELISTED = TRUE
 	,NO_BREATHE = TRUE
@@ -554,6 +558,8 @@
 	darksight = 3
 	dietflags = DIET_OMNI
 
+	butcher_drops = list()
+
 	icobase = 'icons/mob/human_races/r_abductor.dmi'
 	deform = 'icons/mob/human_races/r_abductor.dmi'
 
@@ -579,11 +585,27 @@
 	damage_mask = FALSE
 	dietflags = 0
 
+	butcher_drops = list()
+
+	warning_low_pressure = 50
+	hazard_low_pressure = -1
+
+	cold_level_1 = 50
+	cold_level_2 = -1
+	cold_level_3 = -1
+
+	heat_level_1 = 2000
+	heat_level_2 = 3000
+	heat_level_3 = 4000
+
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
 	,NO_SCAN = TRUE
+	,NO_PAIN = TRUE
+	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,BIOHAZZARD_IMMUNE = TRUE
 	)
 
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
@@ -631,6 +653,8 @@
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
 
+	butcher_drops = list()
+
 	warning_low_pressure = 50
 	hazard_low_pressure = -1
 
@@ -669,6 +693,8 @@
 	icobase = 'icons/mob/human_races/r_golem.dmi'
 	deform = 'icons/mob/human_races/r_golem.dmi'
 	dietflags = 0 //this is ROCK
+
+	butcher_drops = list(/obj/item/weapon/ore/diamond = 1, /obj/item/weapon/ore/slag = 3)
 
 	total_health = 200
 	oxy_mod = 0
