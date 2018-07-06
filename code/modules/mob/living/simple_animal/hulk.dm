@@ -145,7 +145,6 @@
 	var/matrix/Mx = matrix()
 	Mx.Scale(1.5)
 	RH.transform = Mx
-
 	for(var/mob/M in contents)
 		M.loc = src.loc
 		if(istype(M, /mob/living))
