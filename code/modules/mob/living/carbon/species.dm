@@ -587,11 +587,25 @@
 
 	butcher_drops = list()
 
+	warning_low_pressure = 50
+	hazard_low_pressure = -1
+
+	cold_level_1 = 50
+	cold_level_2 = -1
+	cold_level_3 = -1
+
+	heat_level_1 = 2000
+	heat_level_2 = 3000
+	heat_level_3 = 4000
+
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
 	,NO_SCAN = TRUE
+	,NO_PAIN = TRUE
+	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,BIOHAZZARD_IMMUNE = TRUE
 	)
 
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
