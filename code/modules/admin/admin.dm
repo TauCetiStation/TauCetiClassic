@@ -660,6 +660,7 @@ var/global/BSACooldown = 0
 
 	if(check_rights(R_SERVER,0))
 		dat += "<A href='?src=\ref[src];secretsfun=togglebombcap'>Toggle bomb cap</A><BR>"
+		dat += "<A href='?src=\ref[src];secretsfun=togglehulks'>Toggle Hulks</A><BR>"
 
 	dat += "<BR>"
 
