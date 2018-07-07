@@ -64,3 +64,4 @@
 #define DEAF			4
 
 #define MUTCHK_FORCED        1
+#define MUTATION_FORCED 2
