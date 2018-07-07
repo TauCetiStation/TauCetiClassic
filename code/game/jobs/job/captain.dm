@@ -74,7 +74,6 @@
 		access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station,
 		access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler, access_detective, access_barber
 	)
-	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 
 /datum/job/hop/equip(mob/living/carbon/human/H, visualsOnly = FALSE)

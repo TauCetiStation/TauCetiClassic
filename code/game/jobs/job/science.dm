@@ -17,7 +17,6 @@
 	)
 	minimal_player_age = 7
 	minimal_player_ingame_minutes = 2400
-	restricted_species = list(UNATHI, TAJARAN, DIONA, IPC)
 
 /datum/job/rd/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -53,7 +52,6 @@
 	access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 	alt_titles = list("Phoron Researcher")
 	minimal_player_ingame_minutes = 1560
-	restricted_species = list(UNATHI, DIONA)
 
 /datum/job/scientist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
