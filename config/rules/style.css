@@ -1,0 +1,82 @@
+/* Нижний колонтитул (футер) */
+.footer {
+	text-align: center;
+	margin-top: 1%;
+	color: WHITE;
+}
+
+/* Гора текста под заголовком */
+.annotation {
+	text-align: center;
+	font-size: 0.9em;
+	letter-spacing:1px;
+	font-family: sans-serif;
+	color: #CCCCCC;
+	margin-bottom: 1%;
+	background-color: #494949;
+	padding: 10px;
+	
+	border: 5px solid black;
+}
+
+/* Содержимое страницы от заголовка "Правила сервера Tau Ceti Gamma" до нижнеего колонтитула (футера) */
+.content {	
+
+}
+
+/* Линии-разделители */
+.spliterator {
+	margin: 12px 0px 12px 0px;
+	align:center;
+	position:relative;
+	left:10%;
+	width:80%;
+}
+
+/* Заголовок "Правила сервера Tau Ceti Gamma" */
+.heading {
+	margin:5px;
+	
+	font-family: Arial;
+	text-align: center;
+	color: #CCCCCC;
+}
+
+/* Блоки с правилами */
+.rule {
+	background-color: WHITE;
+	color: BLACK;
+	
+	border: 5px solid black;
+	margin-bottom: 10px;
+	padding: 5px;
+	font-size: 1.3em;
+}
+
+.rule:hover {
+	background-color: BLACK;
+	color: WHITE;
+}
+
+/* Заголовки правил (их названия) */
+.rule_name {
+	margin: 2px;
+	
+	font-family: Arial;
+}
+
+.warning {
+	text-align: center;
+	color: WHITE;
+	font-style: Arial;
+	margin: 8px 0px 8px 0px;
+	color: #CCCCCC;
+}
+
+#leave {
+	color: Red;
+}
+
+body {
+	background-color: #696969; /* Общая внешняя окраска страницы */
+}
