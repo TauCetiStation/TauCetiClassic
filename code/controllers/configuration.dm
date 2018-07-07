@@ -80,6 +80,7 @@
 
 	var/usealienwhitelist = 0
 	var/use_alien_job_restriction = 0
+	var/disallow_gene_hulks = 0
 	var/limitalienplayers = 0
 	var/alien_to_human_ratio = 0.5
 	var/list/whitelisted_species_by_time = list()
@@ -468,6 +469,9 @@
 
 				if("use_alien_job_restriction")
 					config.use_alien_job_restriction = 1
+
+				if("disallow_gene_hulks")
+					config.disallow_gene_hulks = 1
 
 				if("alien_available_by_time") //totally not copypaste from probabilities
 					var/avail_time_sep = findtext(value, " ")
