@@ -17,7 +17,7 @@
 	)
 	minimal_player_age = 14
 	minimal_player_ingame_minutes = 2400
-	restricted_species = list(TAJARAN, DIONA, IPC)
+	restricted_species = list(TAJARAN, DIONA)
 
 /datum/job/hos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -62,7 +62,7 @@
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
 	minimal_player_age = 5
 	minimal_player_ingame_minutes = 1800
-	restricted_species = list(TAJARAN, DIONA, IPC)
+	restricted_species = list(TAJARAN, DIONA)
 
 /datum/job/warden/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -108,7 +108,7 @@
 	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_court)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
-	restricted_species = list(DIONA, IPC)
+	restricted_species = list(DIONA)
 
 /datum/job/detective/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -151,7 +151,7 @@
 	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
 	minimal_player_age = 3
 	minimal_player_ingame_minutes = 1560
-	restricted_species = list(DIONA, TAJARAN, IPC)
+	restricted_species = list(DIONA, TAJARAN)
 
 /datum/job/officer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
