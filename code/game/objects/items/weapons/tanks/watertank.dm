@@ -1,152 +1,137 @@
 //Hydroponics tank and base code
-/obj/item/weapon/watertank
+/obj/item/weapon/reagent_containers/watertank_backpack
 	name = "backpack water tank"
 	desc = "A S.U.N.S.H.I.N.E. brand watertank backpack with nozzle to water plants."
 	slot_flags = SLOT_BACK
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "waterbackpack"
 	item_state = "waterbackpack"
-	w_class = 4.0
+	flags = OPENCONTAINER
+	w_class = ITEM_SIZE_LARGE
 	action_button_name = "Toggle Mister"
 
-	var/obj/item/weapon/noz
-	var/on = 0
-	var/max_vol = 500
+	var/obj/item/weapon/reagent_containers/spray/mister/noz
+	volume = 500
 
-/obj/item/weapon/watertank/atom_init()
+/obj/item/weapon/reagent_containers/watertank_backpack/atom_init()
 	. = ..()
-	create_reagents(max_vol)
-	reagents.add_reagent("cleaner", src.max_vol)
+	reagents.add_reagent("water", volume)
+	if(ispath(noz))
+		noz = new noz(src, src)
+	else
+		noz = new(src, src)
 
-	noz = make_noz()
-
-/obj/item/weapon/watertank/ui_action_click()
+/obj/item/weapon/reagent_containers/watertank_backpack/ui_action_click()
 	toggle_mister()
 
-/obj/item/weapon/watertank/verb/toggle_mister()
+/obj/item/weapon/reagent_containers/watertank_backpack/verb/toggle_mister()
 	set name = "Toggle Mister"
 	set category = "Object"
+
 	var/mob/M = usr
-	if (M.back != src)
-		to_chat(usr, "<span class='warning'>The watertank must be worn properly to use!</span>")
+	if(M.back != src)
+		to_chat(usr, "<span class='warning'>The [src] must be worn properly to use!</span>")
 		return
-	on = !on
+
+	if(usr.incapacitated())
+		return
 
 	var/mob/living/carbon/human/user = usr
-	if(on)
-		if(noz == null)
-			noz = make_noz()
-
+	if(noz.loc == src)
 		//Detach the nozzle into the user's hands
 		if(!user.put_in_hands(noz))
-			on = 0
-			to_chat(user, "<span class='warning'>You need a free hand to hold the mister!</span>")
+			to_chat(user, "<span class='warning'>You need a free hand to hold the [noz]!</span>")
 			return
-		noz.loc = user
 	else
 		//Remove from their hands and put back "into" the tank
 		remove_noz()
-	return
 
-/obj/item/weapon/watertank/proc/make_noz()
-	return new /obj/item/weapon/reagent_containers/spray/mister(src)
-
-/obj/item/weapon/watertank/equipped(mob/user, slot)
-	if (slot != slot_back)
+/obj/item/weapon/reagent_containers/watertank_backpack/equipped(mob/user, slot)
+	..()
+	if(slot != SLOT_BACK)
 		remove_noz()
 
-/obj/item/weapon/watertank/proc/remove_noz()
+/obj/item/weapon/reagent_containers/watertank_backpack/proc/remove_noz()
+	if(!noz)
+		return
+
 	if(ismob(noz.loc))
 		var/mob/M = noz.loc
-		M.unEquip(noz, 1)
+		if(M.drop_from_inventory(noz, src))
+			to_chat(M, "<span class='notice'>\The [noz] snaps back into the [src].</span>")
+	else
+		noz.forceMove(src)
 	return
 
-/obj/item/weapon/watertank/Destroy()
-	if (on)
-		remove_noz()
-		qdel(noz)
-		noz = null
+/obj/item/weapon/reagent_containers/watertank_backpack/Destroy()
+	QDEL_NULL(noz)
 	return ..()
 
-/obj/item/weapon/watertank/attack_hand(mob/user)
-	if(src.loc == user)
+/obj/item/weapon/reagent_containers/watertank_backpack/attack_hand(mob/user)
+	if(loc == user)
 		ui_action_click()
 		return
 	..()
 
-/obj/item/weapon/watertank/MouseDrop(obj/over_object)
-	var/mob/H = src.loc
-	if(istype(H))
-		switch(over_object.name)
-			if("r_hand")
-				if(H.r_hand)
-					return
-				if(!H.unEquip(src))
-					return
-				H.put_in_r_hand(src)
-			if("l_hand")
-				if(H.l_hand)
-					return
-				if(!H.unEquip(src))
-					return
-				H.put_in_l_hand(src)
-	return
+/obj/item/weapon/reagent_containers/watertank_backpack/MouseDrop()
+	if(ismob(loc))
+		if(!CanMouseDrop(src))
+			return
+		var/mob/M = loc
+		if(!M.unEquip(src))
+			return
+		add_fingerprint(usr)
+		M.put_in_hands(src)
 
-/obj/item/weapon/watertank/attackby(obj/item/W, mob/user, params)
+/obj/item/weapon/reagent_containers/watertank_backpack/attackby(obj/item/W, mob/user, params)
 	if(W == noz)
 		remove_noz()
-		return
+	else
+		..()
+
+/obj/item/weapon/reagent_containers/watertank_backpack/dropped(mob/user)
 	..()
+	remove_noz()
 
-/mob/proc/getWatertankSlot()
-	return slot_back
-
-/obj/item/weapon/watertank/examine(mob/user)
-	..()
-	if(src in user)
-		to_chat(user, "[reagents.total_volume] units of liquid left!")
-
+// This mister item is intended as an extension of the watertank and always attached to it.
+// Therefore, it's designed to be "locked" to the player's hands or extended back onto
+// the watertank backpack. Allowing it to be placed elsewhere or created without a parent
+// watertank object will likely lead to weird behaviour or runtimes.
 /obj/item/weapon/reagent_containers/spray/mister
 	name = "water mister"
 	desc = "A mister nozzle attached to a water tank."
 	icon = 'icons/obj/hydroponics/equipment.dmi'
 	icon_state = "mister"
 	item_state = "mister"
-	w_class = 4
+	w_class = ITEM_SIZE_LARGE
 	throwforce = 0 //we shall not abuse
-	amount_per_transfer_from_this = 50
+	amount_per_transfer_from_this = 25
 	possible_transfer_amounts = list(25,50,100)
+	spray_size = 1
+	spray_sizes = list(1, 3, 5)
 	volume = 500
-	flags = OPENCONTAINER | NOBLUDGEON
+	slot_flags = null
 
-	var/obj/item/weapon/watertank/tank
+	var/obj/item/weapon/reagent_containers/watertank_backpack/tank
 
-/obj/item/weapon/reagent_containers/spray/mister/atom_init(mapload, parent_tank)
+/obj/item/weapon/reagent_containers/spray/mister/atom_init(mapload, source_tank)
 	. = ..()
-	if(check_tank_exists(parent_tank))
-		tank = parent_tank
-		reagents = tank.reagents	//This mister is really just a proxy for the tank's reagents
-		loc = tank
+	tank = source_tank
+	if(tank)
+		reagents = tank.reagents //This mister is really just a proxy for the tank's reagents
 
-// Here is some magic. Problems with drop, no problems with throw. Too wierd for me - Smalltasty
+/obj/item/weapon/reagent_containers/spray/mister/Destroy()
+	if(tank)
+		tank.noz = null
+		tank = null
+	return ..()
+
 /obj/item/weapon/reagent_containers/spray/mister/dropped(mob/user)
-	to_chat(user, "<span class='notice'>The mister snaps back onto the watertank.</span>")
-	tank.on = 0
-	spawn(1) loc = tank
-
-
-/obj/item/weapon/reagent_containers/spray/mister/attack_self()
-	return
-
-/obj/item/weapon/reagent_containers/spray/mister/proc/check_tank_exists(parent_tank)
-	if (!parent_tank || !istype(parent_tank, /obj/item/weapon/watertank))	//To avoid weird issues from admin spawns
-		if(ismob(loc))
-			var/mob/M = loc
-			M.unEquip(src)
-		qdel(src)
-		return 0
+	..()
+	if(tank)
+		tank.remove_noz()
 	else
-		return 1
+		qdel(src)
 
 /obj/item/weapon/reagent_containers/spray/mister/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc || target == tank) //Safety check so you don't fill your mister with mutagen or something and then blast yourself in the face with it putting it away
@@ -154,15 +139,17 @@
 	..()
 
 //Janitor tank
-/obj/item/weapon/watertank/janitor
+/obj/item/weapon/reagent_containers/watertank_backpack/janitor
 	name = "backpack water tank"
 	desc = "A janitorial watertank backpack with nozzle to clean dirt and graffiti."
 	icon_state = "waterbackpackjani"
 	item_state = "waterbackpackjani"
+	noz = /obj/item/weapon/reagent_containers/spray/mister/janitor
 
-/obj/item/weapon/watertank/janitor/atom_init()
+/obj/item/weapon/reagent_containers/watertank_backpack/janitor/atom_init()
 	. = ..()
-	reagents.add_reagent("cleaner", max_vol)
+	reagents.clear_reagents()
+	reagents.add_reagent("cleaner", volume)
 
 /obj/item/weapon/reagent_containers/spray/mister/janitor
 	name = "janitor spray nozzle"
@@ -171,11 +158,6 @@
 	icon_state = "misterjani"
 	item_state = "misterjani"
 	amount_per_transfer_from_this = 5
-	possible_transfer_amounts = list()
-
-/obj/item/weapon/watertank/janitor/make_noz()
-	return new /obj/item/weapon/reagent_containers/spray/mister/janitor(src)
-
-/obj/item/weapon/reagent_containers/spray/mister/janitor/attack_self(mob/user)
-	amount_per_transfer_from_this = (amount_per_transfer_from_this == 10 ? 5 : 10)
-	to_chat(user, "<span class='notice'>You [amount_per_transfer_from_this == 10 ? "remove" : "fix"] the nozzle. You'll now use [amount_per_transfer_from_this] units per spray.</span>")
+	possible_transfer_amounts = list(5, 10)
+	spray_size = 1
+	spray_sizes = list(1,3)
