@@ -50,7 +50,13 @@
 				t_his = "her"
 				t_him = "her"
 
-	msg += "<EM>[src.name]</EM>!\n"
+	msg += "<EM>[src.name]</EM>"
+	var/species_name = "\improper "
+	species_name += "[get_species()]"
+	if(!skipface || !skipjumpsuit)
+		msg += "<span class='bold'>, <font color='[species.flesh_color]'>\a [species_name]</font></span>"
+	msg += "!\n"
+
 
 	//uniform
 	if(w_uniform && !skipjumpsuit)
