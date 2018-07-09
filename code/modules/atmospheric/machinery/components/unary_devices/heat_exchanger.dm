@@ -28,8 +28,6 @@
 				partner.partner = src
 				break
 
-	..()
-
 /obj/machinery/atmospherics/components/unary/heat_exchanger/process_atmos()
 	last_power_draw = 0
 	last_flow_rate = 0
