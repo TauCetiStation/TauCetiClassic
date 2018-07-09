@@ -303,7 +303,7 @@
 						b_type = new_b_type
 
 				if("hair")
-					if(species == HUMAN || species == UNATHI || species == TAJARAN || species == SKRELL)
+					if(species in list(HUMAN, UNATHI, TAJARAN, SKRELL, IPC))
 						var/new_hair = input(user, "Choose your character's hair colour:", "Character Preference") as color|null
 						if(new_hair)
 							r_hair = hex2num(copytext(new_hair, 2, 4))
