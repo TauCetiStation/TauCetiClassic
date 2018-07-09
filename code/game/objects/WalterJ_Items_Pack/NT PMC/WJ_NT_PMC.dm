@@ -52,6 +52,7 @@
 	icon_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	name = "NT PMC Boots"
 	desc = "Private security boots. Now with extra grip."
+	flags = NOSLIP
 
 
 	icon_state = "boots"
@@ -64,6 +65,7 @@
 
 	name = "Lizard Boots"
 	desc = "Private security boots for Unathi."
+	flags = NOSLIP
 
 	icon_state = "Lizard_Boots"
 	item_state = "Lizard_Boots"
