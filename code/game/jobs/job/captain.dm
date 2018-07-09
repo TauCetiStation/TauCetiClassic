@@ -11,7 +11,7 @@
 	req_admin_notify = 1
 	access = list() 			//See get_access()
 	minimal_player_age = 14
-	minimal_player_ingame_minutes = 3900
+	minimal_player_ingame_minutes = 10000
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA, IPC)
 
 /datum/job/captain/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -65,7 +65,7 @@
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
 	minimal_player_age = 10
-	minimal_player_ingame_minutes = 2400
+	minimal_player_ingame_minutes = 7500
 	access = list(
 		access_security, access_sec_doors, access_brig, access_court, access_forensics_lockers,
 		access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,

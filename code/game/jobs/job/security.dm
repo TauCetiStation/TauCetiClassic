@@ -16,7 +16,7 @@
 		access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective
 	)
 	minimal_player_age = 14
-	minimal_player_ingame_minutes = 8400
+  minimal_player_ingame_minutes = 8000
 	restricted_species = list(TAJARAN, DIONA)
 
 /datum/job/hos/equip(mob/living/carbon/human/H, visualsOnly = FALSE)

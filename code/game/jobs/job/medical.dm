@@ -15,7 +15,7 @@
 		access_keycard_auth, access_sec_doors, access_psychiatrist, access_maint_tunnels
 	)
 	minimal_player_age = 10
-	minimal_player_ingame_minutes = 2400
+	minimal_player_ingame_minutes = 5000
 
 /datum/job/cmo/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

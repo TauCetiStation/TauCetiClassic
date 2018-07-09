@@ -10,8 +10,7 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargoGold
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
-	minimal_player_ingame_minutes = 1200
-	restricted_species = list(TAJARAN, DIONA)
+	minimal_player_ingame_minutes = 4000
 
 /datum/job/qm/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
