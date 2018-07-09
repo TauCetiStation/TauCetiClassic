@@ -2076,6 +2076,14 @@
 				var/range_low = MAX_EXPLOSION_RANGE
 				message_admins("\red <b> [key_name_admin(usr)] changed the bomb cap to [range_dev], [range_high], [range_low]</b>")
 				log_admin("[key_name_admin(usr)] changed the bomb cap to [MAX_EXPLOSION_RANGE]")
+			if("togglehulks")
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","TH")
+
+				config.disallow_gene_hulks = !config.disallow_gene_hulks
+				var/mes = "[config.disallow_gene_hulks ? "dis" : null]allowed hulks in this round"
+				message_admins("\red <b> [key_name_admin(usr)] [mes]</b>")
+				log_admin("[key_name_admin(usr)] [mes]")
 
 			if("flicklights")
 				feedback_inc("admin_secrets_fun_used",1)

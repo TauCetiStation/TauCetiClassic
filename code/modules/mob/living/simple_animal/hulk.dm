@@ -136,16 +136,6 @@
 	unmutate()
 
 /mob/living/simple_animal/hulk/proc/unmutate()
-	var/datum/effect/effect/system/smoke_spread/bad/smoke = new /datum/effect/effect/system/smoke_spread/bad()
-	smoke.set_up(10, 0, src.loc)
-	smoke.start()
-	playsound(src.loc, 'sound/effects/bamf.ogg', 50, 2)
-
-	var/obj/effect/decal/remains/human/RH = new /obj/effect/decal/remains/human(src.loc)
-	var/matrix/Mx = matrix()
-	Mx.Scale(1.5)
-	RH.transform = Mx
-
 	for(var/mob/M in contents)
 		M.loc = src.loc
 		if(istype(M, /mob/living))

@@ -882,95 +882,116 @@
 ///////////////////////////////////
 */
 
-/datum/sprite_accessory/hair/icp_screen_pink
+/datum/sprite_accessory/hair/ipc_screen_pink
 	name = "pink IPC screen"
 	icon_state = "ipc_pink"
 	species_allowed = list(IPC)
 	do_colouration = 0
 
-/datum/sprite_accessory/hair/icp_screen_red
+/datum/sprite_accessory/hair/ipc_screen_red
 	name = "red IPC screen"
 	icon_state = "ipc_red"
 	species_allowed = list(IPC)
 	do_colouration = 0
 
-/datum/sprite_accessory/hair/icp_screen_green
+/datum/sprite_accessory/hair/ipc_screen_green
 	name = "green IPC screen"
 	icon_state = "ipc_green"
 	species_allowed = list(IPC)
 	do_colouration = 0
 
-/datum/sprite_accessory/hair/icp_screen_blue
+/datum/sprite_accessory/hair/ipc_screen_blue
 	name = "blue IPC screen"
 	icon_state = "ipc_blue"
 	species_allowed = list(IPC)
 	do_colouration = 0
 
-/datum/sprite_accessory/hair/icp_screen_breakout
+/datum/sprite_accessory/hair/ipc_screen_breakout
 	name = "breakout IPC screen"
 	icon_state = "ipc_breakout"
 	species_allowed = list(IPC)
 	do_colouration = 0
 
-/datum/sprite_accessory/hair/icp_screen_eight
+/datum/sprite_accessory/hair/ipc_screen_eight
 	name = "eight IPC screen"
 	icon_state = "ipc_eight"
 	species_allowed = list(IPC)
 	do_colouration = 0
 
-/datum/sprite_accessory/hair/icp_screen_goggles
+/datum/sprite_accessory/hair/ipc_screen_goggles
 	name = "goggles IPC screen"
 	icon_state = "ipc_goggles"
 	species_allowed = list(IPC)
 	do_colouration = 0
 
-/datum/sprite_accessory/hair/icp_screen_heart
+/datum/sprite_accessory/hair/ipc_screen_heart
 	name = "heart IPC screen"
 	icon_state = "ipc_heart"
 	species_allowed = list(IPC)
 	do_colouration = 0
 
-/datum/sprite_accessory/hair/icp_screen_monoeye
+/datum/sprite_accessory/hair/ipc_screen_monoeye
 	name = "monoeye IPC screen"
 	icon_state = "ipc_monoeye"
 	species_allowed = list(IPC)
 	do_colouration = 0
 
-/datum/sprite_accessory/hair/icp_screen_nature
+/datum/sprite_accessory/hair/ipc_screen_nature
 	name = "nature IPC screen"
 	icon_state = "ipc_nature"
 	species_allowed = list(IPC)
 	do_colouration = 0
 
-/datum/sprite_accessory/hair/icp_screen_orange
+/datum/sprite_accessory/hair/ipc_screen_orange
 	name = "orange IPC screen"
 	icon_state = "ipc_orange"
 	species_allowed = list(IPC)
 	do_colouration = 0
 
-/datum/sprite_accessory/hair/icp_screen_purple
+/datum/sprite_accessory/hair/ipc_screen_purple
 	name = "purple IPC screen"
 	icon_state = "ipc_purple"
 	species_allowed = list(IPC)
 	do_colouration = 0
 
-/datum/sprite_accessory/hair/icp_screen_shower
+/datum/sprite_accessory/hair/ipc_screen_shower
 	name = "shower IPC screen"
 	icon_state = "ipc_shower"
 	species_allowed = list(IPC)
 	do_colouration = 0
 
-/datum/sprite_accessory/hair/icp_screen_static
+/datum/sprite_accessory/hair/ipc_screen_static
 	name = "static IPC screen"
 	icon_state = "ipc_static"
 	species_allowed = list(IPC)
 	do_colouration = 0
 
-/datum/sprite_accessory/hair/icp_screen_yellow
+/datum/sprite_accessory/hair/ipc_screen_yellow
 	name = "yellow IPC screen"
 	icon_state = "ipc_yellow"
 	species_allowed = list(IPC)
 	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_screen_dot
+	name = "dot IPC screen"
+	icon_state = "ipc_dot"
+	species_allowed = list(IPC)
+
+/datum/sprite_accessory/hair/ipc_screen_four
+	name = "four IPC screen"
+	icon_state = "ipc_four"
+	species_allowed = list(IPC)
+
+/datum/sprite_accessory/hair/ipc_screen_eye
+	name = "eye IPC screen"
+	icon_state = "ipc_eye"
+	species_allowed = list(IPC)
+
+/datum/sprite_accessory/hair/ipc_screen_eyes
+	name = "eyes IPC screen"
+	icon_state = "ipc_eyes"
+	species_allowed = list(IPC)
+
 
 /datum/sprite_accessory/hair/unathi_warrior_horns
 	name = "Warrior Horns"
