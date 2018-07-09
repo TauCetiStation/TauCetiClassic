@@ -972,6 +972,32 @@
 	species_allowed = list(IPC)
 	do_colouration = 0
 
+/datum/sprite_accessory/hair/icp_screen_dot
+	name = "dot IPC screen"
+	icon_state = "ipc_dot"
+	species_allowed = list(IPC)
+	do_colouration = 1
+
+/datum/sprite_accessory/hair/icp_screen_four
+	name = "four IPC screen"
+	icon_state = "ipc_four"
+	species_allowed = list(IPC)
+	do_colouration = 1
+
+/datum/sprite_accessory/hair/icp_screen_eye
+	name = "eye IPC screen"
+	icon_state = "ipc_eye"
+	species_allowed = list(IPC)
+	do_colouration = 1
+
+/datum/sprite_accessory/hair/icp_screen_eyes
+	name = "eyes IPC screen"
+	icon_state = "ipc_eyes"
+	species_allowed = list(IPC)
+	do_colouration = 1
+
+
+
 /datum/sprite_accessory/hair/unathi_warrior_horns
 	name = "Warrior Horns"
 	icon_state = "una_warrior_horns"
