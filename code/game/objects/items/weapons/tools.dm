@@ -493,9 +493,6 @@
 	origin_tech = "materials=4;engineering=4;bluespace=2;phorontech=3"
 	var/next_refuel_tick = 0
 
-/obj/item/weapon/weldingtool/experimental/atom_init()
-	. = ..()
-
 /obj/item/weapon/weldingtool/experimental/process()
 	..()
 	if((get_fuel() < max_fuel) && (next_refuel_tick < world.time) && !welding)
