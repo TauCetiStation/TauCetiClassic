@@ -9,6 +9,7 @@
 #define ROLE_WIZARD            "Wizard"
 #define ROLE_MALF              "Malf AI"
 #define ROLE_REV               "Revolutionary"
+#define ROLE_REV_HOS           "Head of Staff in Rev."
 #define ROLE_ALIEN             "Xenomorph"
 #define ROLE_PAI               "pAI"
 #define ROLE_CULTIST           "Cultist"
@@ -45,5 +46,6 @@ var/global/list/special_roles = list(
 	ROLE_MEME = IS_MODE_COMPILED("meme"),                //13
 	ROLE_MUTINEER = IS_MODE_COMPILED("mutiny"),          //14
 	ROLE_SHADOWLING = IS_MODE_COMPILED("shadowling"),    //15
-	ROLE_ABDUCTOR = IS_MODE_COMPILED("abduction")        //16
+	ROLE_ABDUCTOR = IS_MODE_COMPILED("abduction"),       //16
+	ROLE_REV_HOS = IS_MODE_COMPILED("revolution")        //17
 )
