@@ -16,7 +16,7 @@
 		access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch
 	)
 	minimal_player_age = 7
-	minimal_player_ingame_minutes = 2400
+	minimal_player_ingame_minutes = 5000
 
 /datum/job/rd/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
