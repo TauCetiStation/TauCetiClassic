@@ -110,7 +110,7 @@
 		return
 	if(!iscarbon(usr) && !isrobot(usr))
 		return
-	src.icon_state = "body_scanner_1"
+	icon_state = "body_scanner_1"
 	close_machine(target)
 
 /obj/machinery/bodyscanner/ex_act(severity)
