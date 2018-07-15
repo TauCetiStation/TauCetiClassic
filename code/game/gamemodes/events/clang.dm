@@ -20,7 +20,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	. = ..()
 	INVOKE_ASYNC(src, .proc/check_location, end)
 
-
 /obj/effect/immovablerod/proc/check_location(turf/end)
 	var/z_original = z
 	if(end && end.z == z_original)
@@ -34,11 +33,10 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/Bump(atom/clong)
 	if(istype(clong, /turf/simulated/shuttle) || clong == src) //Skip shuttles without actually deleting the rod
 		return
+	audible_message("CLANG", "You feel vibrations")
 	playsound(src, 'sound/effects/bang.ogg', 50, 1)
 	if((istype(clong, /turf/simulated) || isobj(clong)) && clong.density)
 		clong.ex_act(2)
-		for (var/mob/O in hearers(src, null))
-			O.show_message("CLANG", 2)
 	else if(isliving(clong))
 		var/mob/living/M = clong
 		M.adjustBruteLoss(rand(10,40))
@@ -47,8 +45,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 	else if (istype(clong, /obj))
 		if(clong.density)
 			clong.ex_act(2)
-			for (var/mob/O in hearers(src, null))
-				O.show_message("CLANG", 2)
 	else
 		qdel(src)
 	
