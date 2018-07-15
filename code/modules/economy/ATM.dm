@@ -33,6 +33,8 @@ log transactions
 	var/editing_security_level = 0
 	var/view_screen = NO_SCREEN
 	var/datum/effect/effect/system/spark_spread/spark_system
+	var/money_stock = 15000
+	var/money_stock_max = 25000
 
 /obj/machinery/atm/atom_init()
 	. = ..()
@@ -77,7 +79,7 @@ log transactions
 			//short out the machine, shoot sparks, spew money!
 			emagged = 1
 			spark_system.start()
-			spawn_money(rand(100,500),src.loc)
+			print_money_stock(rand(100,500))
 			//we don't want to grief people by locking their id in an emagged ATM
 			release_held_id(user)
 
@@ -95,8 +97,15 @@ log transactions
 				authenticated_account = null
 	else if(authenticated_account)
 		if(istype(I,/obj/item/weapon/spacecash))
+			var/obj/item/weapon/spacecash/SC = I
 			//consume the money
-			authenticated_account.money += I:worth
+			if(!istype(SC, /obj/item/weapon/spacecash/ewallet))
+				if((money_stock + SC.worth) > money_stock_max)
+					alert("Sorry, the ATM cash storage is full and can only hold $[money_stock_max]")
+					return
+				else
+					money_stock += SC.worth
+			authenticated_account.money += SC.worth
 			if(prob(50))
 				playsound(loc, 'sound/items/polaroid1.ogg', 50, 1)
 			else
@@ -106,7 +115,7 @@ log transactions
 			var/datum/transaction/T = new()
 			T.target_name = authenticated_account.owner_name
 			T.purpose = "Credit deposit"
-			T.amount = I:worth
+			T.amount = SC.worth
 			T.source_terminal = machine_id
 			T.date = current_date_string
 			T.time = worldtime2text()
@@ -197,6 +206,7 @@ log transactions
 					else
 						dat += "Welcome, <b>[authenticated_account.owner_name].</b><br/>"
 						dat += "<b>Account balance:</b> $[authenticated_account.money]"
+						dat += "<br><b>Stock of money in ATM:</b> $[money_stock]"
 						dat += "<form name='withdrawal' action='?src=\ref[src]' method='get'>"
 						dat += "<input type='hidden' name='src' value='\ref[src]'>"
 						dat += "<input type='hidden' name='choice' value='withdrawal'>"
@@ -326,7 +336,7 @@ log transactions
 						if(response == "Chip")
 							spawn_ewallet(amount,src.loc)
 						else
-							spawn_money(amount, src.loc)
+							print_money_stock(amount)
 
 
 						//create an entry in the account transaction log
@@ -459,3 +469,17 @@ log transactions
 	var/obj/item/weapon/spacecash/ewallet/E = new /obj/item/weapon/spacecash/ewallet(loc)
 	E.worth = sum
 	E.owner_name = authenticated_account.owner_name
+
+/obj/machinery/atm/proc/print_money_stock(sum)
+	if (money_stock < sum)
+		if(money_stock)
+			sum = money_stock
+			money_stock = 0
+			alert("ATM doesn't have enough funds to give the full amount of money!")
+			spawn_money(sum, src.loc)
+		else
+			alert("ATM doesn't have enough funds to do that!")
+			return
+	else
+		money_stock -= sum
+		spawn_money(sum, src.loc)

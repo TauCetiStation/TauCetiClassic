@@ -627,6 +627,7 @@ var/global/BSACooldown = 0
 			<A href='?src=\ref[src];secretsfun=ionstorm'>Spawn an Ion Storm</A><BR>
 			<A href='?src=\ref[src];secretsfun=spacevines'>Spawn Space-Vines</A><BR>
 			<A href='?src=\ref[src];secretsfun=comms_blackout'>Trigger a communication blackout</A><BR>
+			<A href='?src=\ref[src];secretsfun=drop_asteroid'>Drop asteroid</A><BR>
 			<BR>
 			<B>Fun Secrets</B><BR>
 			<BR>

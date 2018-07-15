@@ -55,6 +55,7 @@
 		to_chat(usr, "<span class = 'warning'>The safety is on!</span>")
 		return
 
+	user.SetNextMove(CLICK_CD_INTERACT * 2)
 	if(triple_shot)
 		Spray_at_Multiple_Tiles(A)
 	else
