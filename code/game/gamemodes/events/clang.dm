@@ -33,7 +33,7 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 /obj/effect/immovablerod/Bump(atom/clong)
 	if(istype(clong, /turf/simulated/shuttle) || clong == src) //Skip shuttles without actually deleting the rod
 		return
-	audible_message("CLANG", "You feel vibrations")
+	audible_message("<span class='danger'>CLANG</span>", "You feel vibrations")
 	playsound(src, 'sound/effects/bang.ogg', 50, 1)
 	if((istype(clong, /turf/simulated) || isobj(clong)) && clong.density)
 		clong.ex_act(2)
@@ -42,9 +42,6 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 		M.adjustBruteLoss(rand(10,40))
 		if(prob(60))
 			step(src, get_dir(src, M))
-	else if (istype(clong, /obj))
-		if(clong.density)
-			clong.ex_act(2)
 	else
 		qdel(src)
 	
