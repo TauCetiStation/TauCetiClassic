@@ -18,10 +18,10 @@ In my current plan for it, 'solid' will be defined as anything with density == 1
 
 /obj/effect/immovablerod/atom_init(mapload, turf/end)
 	. = ..()
-	INVOKE_ASYNC(src, .proc/check_location, mapload, end)
+	INVOKE_ASYNC(src, .proc/check_location, end)
 
 
-/obj/effect/immovablerod/proc/check_location(turf/start, turf/end)
+/obj/effect/immovablerod/proc/check_location(turf/end)
 	var/z_original = z
 	if(end && end.z == z_original)
 		walk_towards(src, end, 1)
