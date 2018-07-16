@@ -12,7 +12,7 @@
 	icon_state = "airbag_deployed"
 	anchored = TRUE
 	user.forceMove(src)
-	to_chat(user, "<span class='warning'>Your [src.name] deploys!</span>")
+	to_chat(user, "<span class='warning'>Your [src] deploys!</span>")
 	playsound(src, 'sound/effects/inflate.ogg', 100, 1)
 	sleep(50)
 	for(var/atom/movable/AM in contents)

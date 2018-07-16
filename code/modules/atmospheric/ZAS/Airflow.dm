@@ -287,12 +287,16 @@ Contains helper procs for airflow, handled in /connection_group.
 
 	var/b_loss = min(airflow_speed, (airborne_acceleration*2)) * vsc.airflow_damage
 
-	for(var/i in contents)
-		if(istype(i, /obj/item/airbag))
-			var/obj/item/airbag/airbag = i
+	var/I = /obj/item/airbag
+
+	var/list/L = src.get_contents()
+
+	for(var/obj/B in L)
+		if(B.type == I)
+			var/obj/item/airbag/airbag = B
 			airbag.deploy(src)
 			b_loss = 0
-			break
+			return
 
 	if(prob(33) && b_loss > 0)
 		loc:add_blood(src)
