@@ -1525,7 +1525,7 @@
 	description = "A highly addictive stimulant extracted from the tobacco plant."
 	reagent_state = LIQUID
 	color = "#181818" // rgb: 24, 24, 24
-	custom_metabolism = 0.01
+	custom_metabolism = 0.025
 
 /datum/reagent/ammonia
 	name = "Ammonia"
