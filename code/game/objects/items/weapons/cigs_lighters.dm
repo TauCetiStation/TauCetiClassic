@@ -70,8 +70,8 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/type_butt = /obj/item/weapon/cigbutt
 	var/lastHolder = null
 	var/smoketime = 300
-	var/chem_volume = 17
-	var/nicotine_volume = 2
+	var/chem_volume = 18
+	var/nicotine_volume = 3
 	body_parts_covered = 0
 
 /obj/item/clothing/mask/cigarette/atom_init()
@@ -220,7 +220,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "cigaroff"
 	smoketime = 1500
 	chem_volume = 20
-	nicotine_volume = 5
+	nicotine_volume = 7
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "\improper Cohiba Robusto cigar"
@@ -298,7 +298,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_on = "pipeon"  //Note - these are in masks.dmi
 	icon_off = "pipeoff"
 	smoketime = 100
-	nicotine_volume = 7
+	nicotine_volume = 2
 
 /obj/item/clothing/mask/cigarette/pipe/light(flavor_text = "[usr] lights the [name].")
 	if(!src.lit)
