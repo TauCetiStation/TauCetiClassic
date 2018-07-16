@@ -579,6 +579,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Internal Affairs"
 	icon_state = "law"
 
+/area/garden
+	name = "Garden"
+	icon_state = "garden"
+
 
 /area/holodeck
 	name = "Holodeck"
@@ -595,9 +599,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/holodeck/source_emptycourt
 	name = "Holodeck - Empty Court"
 
-/area/holodeck/source_boxingcourt
-	name = "Holodeck - Boxing Court"
-
 /area/holodeck/source_basketball
 	name = "Holodeck - Basketball Court"
 
@@ -612,8 +613,14 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Holodeck - Beach"
 	icon_state = "Holodeck" // Lazy.
 
-/area/holodeck/source_burntest
-	name = "Holodeck - Atmospheric Burn Test"
+/area/holodeck/source_school
+	name = "Holodeck - Anime School"
+
+/area/holodeck/source_spacechess
+	name = "Holodeck - Space Chess"
+
+/area/holodeck/source_firingrange
+	name = "Holodeck - Firing Range"
 
 /area/holodeck/source_wildlife
 	name = "Holodeck - Wildlife Simulation"
@@ -956,6 +963,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/rnd/telesci
 	name = "Telescience Lab"
 	icon_state = "toxmisc"
+
+/area/rnd/scibreak
+	name = "Science Break Room"
+	icon_state = "toxlab"
 
 /area/toxins/server
 	name = "Server Room"
