@@ -560,6 +560,9 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Bar"
 	icon_state = "bar"
 
+/area/crew_quarters/playroom
+	name = "Play Room"
+	icon_state = "fitness"
 
 /area/library
  	name = "Library"

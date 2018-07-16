@@ -21,7 +21,6 @@
 	var/datum/map_template/holoscene/current_scene = null
 	var/list/supported_programs = list( \
 	"Empty Court" = "emptycourt", \
-	"Basketball Court" = "basketball",	\
 	"Thunderdome Court" = "thunderdomecourt",	\
 	"Boxing Ring"="boxingcourt",	\
 	"Beach" = "beach",	\
