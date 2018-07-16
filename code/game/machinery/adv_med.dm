@@ -105,6 +105,14 @@
 	qdel(G)
 	return
 
+/obj/machinery/bodyscanner/MouseDrop_T(mob/target, mob/user)
+	if(user.stat || user.lying || !Adjacent(user) || !target.Adjacent(user) || !iscarbon(target) || target.buckled)
+		return
+	if(!iscarbon(usr) && !isrobot(usr))
+		return
+	icon_state = "body_scanner_1"
+	close_machine(target)
+
 /obj/machinery/bodyscanner/ex_act(severity)
 	switch(severity)
 		if(1.0)
