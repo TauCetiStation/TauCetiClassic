@@ -10,22 +10,18 @@
 "j" = (/obj/structure/rack/holorack,/obj/item/clothing/under/kilt,/obj/item/clothing/head/beret,/obj/item/clothing/under/pirate,/obj/item/clothing/suit/pirate,/obj/item/clothing/head/pirate,/obj/item/clothing/glasses/eyepatch,/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
 "k" = (/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_theatre)
 "l" = (/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/turf/simulated/floor/holofloor{icon_state = "siding1"; dir = 2},/area/holodeck/source_theatre)
-"m" = (/turf/simulated/floor/holofloor{icon_state = "rampbottom"; dir = 2},/area/holodeck/source_theatre)
+"m" = (/turf/simulated/floor/holofloor{icon_state = "quiltystair"; dir = 2},/area/holodeck/source_theatre)
 "n" = (/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/area/holodeck/source_theatre)
 "o" = (/turf/simulated/floor/holofloor{icon_state = "carpet6-2"; dir = 4},/area/holodeck/source_theatre)
 "p" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet14-10"; dir = 4},/area/holodeck/source_theatre)
 "q" = (/turf/simulated/floor/holofloor{icon_state = "carpet10-8"; dir = 4},/area/holodeck/source_theatre)
-"r" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet2-0"},/area/holodeck/source_theatre)
 "s" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet7-3"},/area/holodeck/source_theatre)
 "t" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet15-15"; dir = 4},/area/holodeck/source_theatre)
 "u" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet11-12"},/area/holodeck/source_theatre)
-"v" = (/turf/simulated/floor/holofloor{dir = 1; icon_state = "carpet3-0"},/area/holodeck/source_theatre)
 "w" = (/turf/simulated/floor/holofloor{icon_state = "carpet5-1"; dir = 4},/area/holodeck/source_theatre)
 "x" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet13-5"; dir = 4},/area/holodeck/source_theatre)
 "y" = (/turf/simulated/floor/holofloor{icon_state = "carpet9-4"; dir = 4},/area/holodeck/source_theatre)
-"z" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet1-0"},/area/holodeck/source_theatre)
 "A" = (/obj/structure/flora/pottedplant{icon_state = "plant-6"},/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/area/holodeck/source_theatre)
-"B" = (/turf/simulated/floor/holofloor{icon_state = "carpetsymbol"; dir = 6},/area/holodeck/source_theatre)
 
 (1,1,1) = {"
 abcdefghij
@@ -33,9 +29,9 @@ kkkkkkkkkk
 kkkkkkkkkk
 kkkkkkkkkk
 lllllllllm
-noppppppqr
-nsttttttuv
-nsttttttuv
-nwxxxxxxyz
-AnnnnnnnnB
+noppppppqn
+nsttttttun
+nsttttttun
+nwxxxxxxyn
+AnnnnnnnnA
 "}

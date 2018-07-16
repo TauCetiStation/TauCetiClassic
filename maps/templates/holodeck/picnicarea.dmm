@@ -4,16 +4,23 @@
 "d" = (/turf/simulated/floor/holofloor{icon_state = "asteroid"},/area/holodeck/source_picnicarea)
 "e" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "asteroid"},/area/holodeck/source_picnicarea)
 "f" = (/obj/structure/table/woodentable/holotable,/turf/simulated/floor/holofloor{icon_state = "asteroid"},/area/holodeck/source_picnicarea)
+"g" = (/obj/structure/flora/ausbushes/sunnybush,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
+"h" = (/obj/structure/flora/ausbushes/lavendergrass,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
+"i" = (/obj/structure/flora/tree/jungle,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
+"j" = (/obj/structure/flora/junglebush,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
+"k" = (/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
+"l" = (/obj/structure/flora/ausbushes/sparsegrass,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
+"m" = (/obj/structure/flora/ausbushes/genericbush,/turf/simulated/floor/holofloor/grass,/area/holodeck/source_picnicarea)
 
 (1,1,1) = {"
 aaaaaaaaaa
-bcbcbcbcbc
-cbcbcbcbcb
-bcbdeedcbc
-ddddffdbcb
-ddddffdbcb
-bcbdeedcbc
-cbcbcbcbcb
-bcbcbcbccb
-aaaaaaaaaa
+acbcgcbcha
+abibcbcbca
+ajkkhkicba
+acklkkbkca
+abkeffebca
+ahkeffecba
+abcddddlca
+akmddddkka
+akddddddha
 "}
