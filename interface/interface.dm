@@ -20,6 +20,14 @@
 
 	src << browse('config/rules/rules.html', "window=rules;size=800x600")
 
+/client/verb/banhub()
+	set name = "Banhub"
+	set desc = "Use our exclusive banhub!"
+	set hidden = 1
+
+	getFiles('html/dummyBanhub.html')
+
+	src << browse('html/dummyBanhub.html', "window=rules;size=800x600")
 /client/verb/hotkeys_help()
 	set name = "hotkeys-help"
 	set category = "OOC"
