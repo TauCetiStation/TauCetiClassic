@@ -281,23 +281,13 @@ Contains helper procs for airflow, handled in /connection_group.
 	return
 
 /mob/living/carbon/human/airflow_hit(atom/A)
-//	for(var/mob/M in hearers(src))
-//		M.show_message("<span class='danger'>[src] slams into [A]!</span>",1,"<span class='danger'>You hear a loud slam!</span>",2)
 	playsound(src.loc, "punch", 25, 1, -1)
+	var/obj/item/airbag/I = locate() in get_contents()
+	if(I)
+		I.deploy(src)
+		return
 
 	var/b_loss = min(airflow_speed, (airborne_acceleration*2)) * vsc.airflow_damage
-
-	var/I = /obj/item/airbag
-
-	var/list/L = src.get_contents()
-
-	for(var/obj/B in L)
-		if(B.type == I)
-			var/obj/item/airbag/airbag = B
-			airbag.deploy(src)
-			b_loss = 0
-			return
-
 	if(prob(33) && b_loss > 0)
 		loc:add_blood(src)
 		bloody_body(src)
