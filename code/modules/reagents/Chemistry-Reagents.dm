@@ -1525,7 +1525,22 @@
 	description = "A highly addictive stimulant extracted from the tobacco plant."
 	reagent_state = LIQUID
 	color = "#181818" // rgb: 24, 24, 24
-	custom_metabolism = 0.025
+	custom_metabolism = 0.005
+	restrict_species = list(IPC, DIONA)
+			
+	on_mob_life(mob/living/M)
+		if(!..())
+			return
+		if(volume >= 0.9)
+			if(prob(65))
+				M.adjustOxyLoss(1)
+				M.drowsyness += 3
+			if(prob(2))
+				M.AdjustWeakened(10)		
+		else
+			if(prob(10))
+				M.AdjustStunned(-1)
+				M.AdjustWeakened(-1)
 
 /datum/reagent/ammonia
 	name = "Ammonia"
