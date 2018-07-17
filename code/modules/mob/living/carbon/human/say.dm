@@ -147,31 +147,30 @@
 			return
 		if("changeling")
 			if(mind && mind.changeling)
-				var/n_message = message
-				log_say("Changeling Mind: [mind.changeling.changelingID]/[mind.name]/[key] : [n_message]")
+				var/n_message = "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [message]</span>"
+				log_say("Changeling Mind: [mind.changeling.changelingID]/[mind.name]/[key] : [message]")
 				for(var/mob/Changeling in mob_list)
 					if(Changeling.mind && Changeling.mind.changeling)
-						to_chat(Changeling, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+						to_chat(Changeling, n_message)
 						for(var/M in Changeling.mind.changeling.essences)
-							to_chat(M, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
-
+							to_chat(M, n_message)
 					else if(isobserver(Changeling))
-						to_chat(Changeling, "<span class='changeling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+						to_chat(Changeling, n_message)
 			return
 		if("alientalk")
 			if(mind && mind.changeling)
-				var/n_message = message
+				var/n_message = "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [message]</span>"
 				for(var/M in mind.changeling.essences)
-					to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+					to_chat(M, n_message)
 
 				for(var/mob/M in dead_mob_list)
 					if(!M.client || isnewplayer(M))
 						continue //skip monkeys, leavers and new players
 					if(M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_GHOSTEARS))
-						to_chat(M, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
+						to_chat(M, n_message)
 
-				to_chat(src, "<span class='shadowling'><b>[mind.changeling.changelingID]:</b> [n_message]</span>")
-				log_say("Changeling Mind: [mind.changeling.changelingID]/[mind.name]/[key] : [n_message]")
+				to_chat(src, n_message)
+				log_say("Changeling Mind: [mind.changeling.changelingID]/[mind.name]/[key] : [message]")
 			return
 		else
 			if(message_mode)
