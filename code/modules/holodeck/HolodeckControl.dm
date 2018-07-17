@@ -22,7 +22,6 @@
 	var/list/supported_programs = list( \
 	"Empty Court" = "emptycourt", \
 	"Thunderdome Court" = "thunderdomecourt",	\
-	"Boxing Ring"="boxingcourt",	\
 	"Beach" = "beach",	\
 	"Desert" = "desert",	\
 	"Space" = "space",	\

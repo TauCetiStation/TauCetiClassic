@@ -10,7 +10,7 @@
 
 /obj/structure/flora/plant/monkey
 	name = "monkeyplant"
-	desc = "Made by one mad scientist"
+	desc = "Made by one mad scientist."
 	icon_state = "monkeyplant"
 
 //trees
@@ -63,6 +63,10 @@
 	pixel_y = 0
 	pixel_x = -32
 	icon = 'icons/obj/flora/jungletreesmall.dmi'
+
+/obj/structure/flora/tree/jungle/small/atom_init()
+	. = ..()
+	icon_state = "[icon_state][rand(1, 6)]"
 
 //grass
 /obj/structure/flora/grass
