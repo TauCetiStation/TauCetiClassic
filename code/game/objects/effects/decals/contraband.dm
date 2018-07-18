@@ -99,7 +99,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	icon_state = "rolled_poster"
 	var/serial_number = 0
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
-	var/official = FALSE
+	var/official = 0 //0 for official, 1 for contraband, 2 for rev poster
 
 /obj/item/weapon/poster/contraband
 	name = "contraband poster"
@@ -107,13 +107,23 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	icon = 'icons/obj/contraband.dmi'
 	icon_state = "rolled_poster"
 
+/obj/item/weapon/poster/contraband/rev
+	name = "suspicious poster"
+	desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as opposed to Nanotrasen regime."
+	icon = 'icons/obj/contraband.dmi'
+	icon_state = "rolled_poster"
+	official = 2
+
 /obj/item/weapon/poster/legit
 	name = "motivational poster"
 	icon_state = "rolled_legit"
 	desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
-	official = TRUE
+	official = 1
 
 /obj/item/weapon/poster/atom_init(mapload, given_serial = 0)
+	if(official==2)
+		..()
+		return
 	if(!given_serial)
 		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)
 		resulting_poster = new(serial_number, official)
@@ -123,6 +133,15 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	name += " - No. [serial_number]"
 	. = ..()
 
+/obj/item/weapon/poster/contraband/rev/atom_init(mapload, given_serial = 0)
+	if(!given_serial)
+		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)
+		resulting_poster = new /obj/structure/sign/poster/contraband/rev/(serial_number, official)
+	else
+		serial_number = given_serial
+		//We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
+	name += " - No. [serial_number]"
+	. = ..()
 
 //############################## THE ACTUAL DECALS ###########################
 
@@ -133,12 +152,33 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	anchored = TRUE
 	var/serial_number	//Will hold the value of src.loc if nobody initialises it
 	var/ruined = FALSE
-	var/official = FALSE
+	var/official = 0
 	var/placespeed = 30 // don't change this, otherwise the animation will not sync to the progress bar
 
-
+/obj/structure/sign/poster/contraband/rev
+	name = "poster"
+	desc = "A large suspicious piece of space-resistant printed paper. "
+	icon = 'icons/obj/contraband.dmi'
+	official = 2
 
 /obj/structure/sign/poster/atom_init(mapload, rolled_official)
+
+	serial_number = loc
+	if(rolled_official)
+		official = rolled_official
+	if(serial_number == loc)
+		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)	//This is for the mappers that want individual posters without having to use rolled posters.
+	if(official)
+		icon_state = "poster[serial_number]_legit"
+		name += legitposters[serial_number][POSTERNAME]
+		desc += legitposters[serial_number][POSTERDESC]
+	else
+		icon_state = "poster[serial_number]"
+		name += contrabandposters[serial_number][POSTERNAME]
+		desc += contrabandposters[serial_number][POSTERDESC]
+	. = ..()
+
+/obj/structure/sign/poster/conraband/rev/atom_init(mapload, rolled_official)
 
 	serial_number = loc
 	if(rolled_official)
@@ -166,7 +206,6 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 			roll_and_drop(user.loc, official)
 		return
 
-
 /obj/structure/sign/poster/attack_hand(mob/user)
 	if(ruined)
 		return
@@ -185,17 +224,34 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		if("No")
 			return
 
+/obj/structure/sign/poster/contraband/rev/attack_hand(mob/user)
+	if(ruined)
+		return
+	var/temp_loc = user.loc
+	switch(alert("Your heart flames with rage as you read this. Would you like to join the revolution?","You think...","Yes","No"))
+		if("Yes")
+			if (ticker.mode.config_tag=="revolution")
+				ticker.mode.add_revolutionary(user.mind)
+		if("No")
+			..()
+
 /obj/structure/sign/poster/proc/roll_and_drop(turf/newloc, official)
-	if(official)
-		var/obj/item/weapon/poster/legit/P = new(src, serial_number)
-		P.resulting_poster = src
-		P.loc = newloc
-		src.loc = P
-	else
-		var/obj/item/weapon/poster/contraband/P = new(src, serial_number)
-		P.resulting_poster = src
-		P.loc = newloc
-		src.loc = P
+	switch(official)
+		if(0)
+			var/obj/item/weapon/poster/legit/P = new(src, serial_number)
+			P.resulting_poster = src
+			P.loc = newloc
+			src.loc = P
+		if(1)
+			var/obj/item/weapon/poster/contraband/P = new(src, serial_number)
+			P.resulting_poster = src
+			P.loc = newloc
+			src.loc = P
+		if(2)
+			var/obj/item/weapon/poster/contraband/rev/P = new(src, serial_number)
+			P.resulting_poster = src
+			P.loc = newloc
+			src.loc = P
 
 //separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/simulated/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
