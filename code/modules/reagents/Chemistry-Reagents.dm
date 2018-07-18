@@ -1528,25 +1528,26 @@
 	custom_metabolism = 0.005
 	restrict_species = list(IPC, DIONA)
 	var/alert_time = 0
-	on_mob_life(mob/living/M)
-		if(!..())
-			return
-		if(volume >= 0.85)
-			if(world.time > (alert_time + 3000))
-				to_chat(M, pick("<b><span class='warning'>You feel dizzy and weak</span></b>"))
-				alert_time = world.time
-			if(prob(50))
-				M.adjustOxyLoss(1)		
-		if(volume < 0.7)
-			if(prob(10))
-				M.AdjustStunned(-1)
-				M.AdjustWeakened(-1)
-		if(volume > 1)
-			if(prob(80))
-				M.adjustOxyLoss(1)
-				M.drowsyness += 2
-			if(prob(1))
-				M.AdjustWeakened(10)
+	
+/datum/reagent/nicotine/on_mob_life(mob/living/M)
+	if(!..())
+		return
+	if(volume >= 0.85)
+		if(world.time > (alert_time + 3000))
+			to_chat(M, pick("<b><span class='warning'>You feel dizzy and weak</span></b>"))
+			alert_time = world.time
+		if(prob(50))
+			M.adjustOxyLoss(1)
+	if(volume < 0.7)
+		if(prob(10))
+			M.AdjustStunned(-1)
+			M.AdjustWeakened(-1)
+	if(volume > 1)
+		if(prob(80))
+			M.adjustOxyLoss(1)
+			M.drowsyness += 2
+		if(prob(1))
+			M.AdjustWeakened(10)
 
 /datum/reagent/ammonia
 	name = "Ammonia"
