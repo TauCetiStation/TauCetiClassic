@@ -1543,7 +1543,7 @@
 				M.AdjustWeakened(-1)
 		if(volume > 1)
 			if(prob(80))
-				M.adjustOxyLoss(2)
+				M.adjustOxyLoss(1)
 				M.drowsyness += 2
 			if(prob(1))
 				H.AdjustWeakened(10)
