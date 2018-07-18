@@ -1536,7 +1536,7 @@
 		if(world.time > (alert_time + 3000))
 			to_chat(M, pick("<b><span class='warning'>You feel dizzy and weak</span></b>"))
 			alert_time = world.time
-		if(prob(50))
+		if(prob(55))
 			M.adjustOxyLoss(1)
 	if(volume < 0.7)
 		if(prob(10))
@@ -1545,9 +1545,9 @@
 	if(volume > 1)
 		if(prob(80))
 			M.adjustOxyLoss(1)
-			M.drowsyness += 2
-		if(prob(1))
-			M.AdjustWeakened(10)
+			if(M.drowsyness < 40)
+				M.drowsyness += 2
+	return TRUE
 
 /datum/reagent/ammonia
 	name = "Ammonia"
