@@ -25,9 +25,7 @@
 	set desc = "Use our exclusive banhub!"
 	set hidden = 1
 
-	getFiles('html/dummyBanhub.html')
-
-	src << browse('html/dummyBanhub.html', "window=rules;size=800x600")
+	link_with_alert(src, "http://5.9.12.156:9999/")
 /client/verb/hotkeys_help()
 	set name = "hotkeys-help"
 	set category = "OOC"
