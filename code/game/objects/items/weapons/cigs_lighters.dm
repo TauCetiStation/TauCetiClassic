@@ -175,24 +175,26 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 
 /obj/item/clothing/mask/cigarette/proc/smoking_reagents()
-	if(iscarbon(loc) && (src == loc:wear_mask)) // if it's in the human/monkey mouth, transfer reagents to the mob
-		if(istype(loc, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = loc
-			if(H.species.flags[IS_SYNTHETIC])
-				return
+	if(iscarbon(loc))
 		var/mob/living/carbon/C = loc
-		if(C.reagents.has_reagent("nicotine"))
-			C.reagents.add_reagent("nicotine", nicotine_per_smoketime)
-		else
-			C.reagents.add_reagent("nicotine", 0.2)
-		if(reagents && reagents.total_volume)
-			if(prob(15)) // so it's not an instarape in case of acid
-				reagents.reaction(C, INGEST)
-			reagents.trans_to(C, REAGENTS_METABOLISM)
-	else // else just remove some of the reagents
-		if(reagents && reagents.total_volume)
-			reagents.remove_any(REAGENTS_METABOLISM)
-
+		if(src == C.wear_mask)
+			if (C.stat != DEAD)
+				if(istype(loc, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = loc
+					if(H.species.flags[NO_BREATHE])
+						return
+				if(C.reagents.has_reagent("nicotine"))
+					C.reagents.add_reagent("nicotine", nicotine_per_smoketime)
+				else
+					C.reagents.add_reagent("nicotine", 0.2)
+				if(reagents.total_volume)
+					if(prob(15)) // so it's not an instarape in case of acid
+						reagents.reaction(C, INGEST)
+					reagents.trans_to(C, REAGENTS_METABOLISM)
+				return		
+	if(reagents.total_volume)
+		reagents.remove_any(REAGENTS_METABOLISM)
+	return
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
 	if(lit == 1)
@@ -227,7 +229,6 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	item_state = "cigaroff"
 	smoketime = 1500
 	chem_volume = 20
-	nicotine_per_smoketime = 0.007
 
 /obj/item/clothing/mask/cigarette/cigar/cohiba
 	name = "\improper Cohiba Robusto cigar"
