@@ -20,6 +20,12 @@
 
 	src << browse('config/rules/rules.html', "window=rules;size=800x600")
 
+/client/verb/banhub()
+	set name = "Banhub"
+	set desc = "Use our exclusive banhub!"
+	set hidden = 1
+
+	link_with_alert(src, "http://5.9.12.156:9999/")
 /client/verb/hotkeys_help()
 	set name = "hotkeys-help"
 	set category = "OOC"
