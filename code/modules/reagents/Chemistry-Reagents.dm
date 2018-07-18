@@ -1546,7 +1546,7 @@
 				M.adjustOxyLoss(1)
 				M.drowsyness += 2
 			if(prob(1))
-				H.AdjustWeakened(10)
+				M.AdjustWeakened(10)
 
 /datum/reagent/ammonia
 	name = "Ammonia"
