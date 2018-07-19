@@ -174,8 +174,8 @@
 	icon_state = "erthelmet_cmd"
 	item_state = "erthelmet_cmd"
 	armor = list(melee = 60, bullet = 65, laser = 55, energy = 30, bomb = 50, bio = 0, rad = 30)
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	flags = HEADCOVERSEYES|BLOCKHAIR
+	flags_inv = HIDEEARS|HIDEEYES
 	siemens_coefficient = 0.7
 
 /obj/item/clothing/head/helmet/erthelmet_sec
@@ -184,8 +184,8 @@
 	icon_state = "erthelmet_sec"
 	item_state = "erthelmet_sec"
 	armor = list(melee = 65, bullet = 55, laser = 55, energy = 25, bomb = 50, bio = 0, rad = 20)
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	flags = HEADCOVERSEYES|BLOCKHAIR
+	flags_inv = HIDEEARS|HIDEEYES
 	siemens_coefficient = 0.7
 
 /obj/item/clothing/head/helmet/erthelmet_med
@@ -194,8 +194,8 @@
 	icon_state = "erthelmet_med"
 	item_state = "erthelmet_med"
 	armor = list(melee = 55, bullet = 45, laser = 40, energy = 20, bomb = 50, bio = 20, rad = 50)
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	flags = HEADCOVERSEYES|BLOCKHAIR
+	flags_inv = HIDEEARS|HIDEEYES
 	siemens_coefficient = 0.7
 
 /obj/item/clothing/head/helmet/erthelmet_eng
@@ -204,6 +204,6 @@
 	icon_state = "erthelmet_eng"
 	item_state = "erthelmet_eng"
 	armor = list(melee = 55, bullet = 45, laser = 45, energy = 35, bomb = 50, bio = 0, rad = 80)
-	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	flags = HEADCOVERSEYES|BLOCKHAIR
+	flags_inv = HIDEEARS|HIDEEYES
 	siemens_coefficient = 0.7
