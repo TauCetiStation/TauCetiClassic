@@ -1544,7 +1544,7 @@
 			M.AdjustWeakened(-1)
 	if(volume > 1)
 		if(prob(80))
-			M.adjustOxyLoss(2)
+			M.adjustOxyLoss(1)
 			if(M.drowsyness < 40)
 				M.drowsyness += 2
 	return TRUE
