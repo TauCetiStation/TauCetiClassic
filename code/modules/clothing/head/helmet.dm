@@ -167,3 +167,43 @@
 	desc = "An ancient helmet made of bronze and leather. Has a red crest on top of it."
 	icon_state = "roman_c"
 	item_state = "roman_c"
+
+/obj/item/clothing/head/helmet/erthelmet_cmd
+	name = "emergency response team commander helmet"
+	desc = "A helmet worn by the commander of a NanoTrasen Emergency Response Team. Has blue highlights."
+	icon_state = "erthelmet_cmd"
+	item_state = "erthelmet_cmd"
+	armor = list(melee = 60, bullet = 65, laser = 55, energy = 30, bomb = 50, bio = 0, rad = 30)
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	siemens_coefficient = 0.7
+
+/obj/item/clothing/head/helmet/erthelmet_sec
+	name = "emergency response team security helmet"
+	desc = "A helmet worn by security members of a NanoTrasen Emergency Response Team. Has red highlights."
+	icon_state = "erthelmet_sec"
+	item_state = "erthelmet_sec"
+	armor = list(melee = 65, bullet = 55, laser = 55, energy = 25, bomb = 50, bio = 0, rad = 20)
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	siemens_coefficient = 0.7
+
+/obj/item/clothing/head/helmet/erthelmet_med
+	name = "emergency response team medical helmet"
+	desc = "A helmet worn by medical members of a NanoTrasen Emergency Response Team. Has white highlights."
+	icon_state = "erthelmet_med"
+	item_state = "erthelmet_med"
+	armor = list(melee = 55, bullet = 45, laser = 40, energy = 20, bomb = 50, bio = 20, rad = 50)
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	siemens_coefficient = 0.7
+
+/obj/item/clothing/head/helmet/erthelmet_eng
+	name = "emergency response team engineer helmet"
+	desc = "A helmet worn by engineering members of a NanoTrasen Emergency Response Team. Has orange highlights."
+	icon_state = "erthelmet_eng"
+	item_state = "erthelmet_eng"
+	armor = list(melee = 55, bullet = 45, laser = 45, energy = 35, bomb = 50, bio = 0, rad = 80)
+	flags = HEADCOVERSEYES|HEADCOVERSMOUTH|BLOCKHAIR
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
+	siemens_coefficient = 0.7
