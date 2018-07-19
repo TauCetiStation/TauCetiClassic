@@ -1536,7 +1536,7 @@
 		if(world.time > (alert_time + 3000))
 			to_chat(M, pick("<b><span class='warning'>You feel dizzy and weak</span></b>"))
 			alert_time = world.time
-		if(prob(55))
+		if(prob(60))
 			M.adjustOxyLoss(1)
 	if(volume < 0.7)
 		if(prob(10))
@@ -1544,7 +1544,7 @@
 			M.AdjustWeakened(-1)
 	if(volume > 1)
 		if(prob(80))
-			M.adjustOxyLoss(1)
+			M.adjustOxyLoss(2)
 			if(M.drowsyness < 40)
 				M.drowsyness += 2
 	return TRUE
