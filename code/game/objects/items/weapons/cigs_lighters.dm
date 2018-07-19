@@ -182,24 +182,22 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				if(prob(5))
 					C.drop_from_inventory(src, get_turf(C))
 					to_chat(C, "<span class='notice'>Your [name] fell out from your mouth.</span>")
-			else
-				if (C.stat != DEAD)
-					if(istype(loc, /mob/living/carbon/human))
-						var/mob/living/carbon/human/H = loc
-						if(H.species.flags[NO_BREATHE])
-							return
-					if(C.reagents.has_reagent("nicotine"))
-						C.reagents.add_reagent("nicotine", nicotine_per_smoketime)
-					else
-						C.reagents.add_reagent("nicotine", 0.2)
-					if(reagents.total_volume)
-						if(prob(15)) // so it's not an instarape in case of acid
-							reagents.reaction(C, INGEST)
-						reagents.trans_to(C, REAGENTS_METABOLISM)
-					return
+			if (C.stat != DEAD)
+				if(istype(loc, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = loc
+					if(H.species.flags[NO_BREATHE])
+						return
+				if(C.reagents.has_reagent("nicotine"))
+					C.reagents.add_reagent("nicotine", nicotine_per_smoketime)
+				else
+					C.reagents.add_reagent("nicotine", 0.2)
+				if(reagents.total_volume)
+					if(prob(15)) // so it's not an instarape in case of acid
+						reagents.reaction(C, INGEST)
+					reagents.trans_to(C, REAGENTS_METABOLISM)
+				return
 	if(reagents.total_volume)
 		reagents.remove_any(REAGENTS_METABOLISM)
-	return
 
 /obj/item/clothing/mask/cigarette/attack_self(mob/user)
 	if(lit == 1)
