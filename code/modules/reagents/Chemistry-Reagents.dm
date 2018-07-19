@@ -1520,14 +1520,14 @@
 	taste_message = null
 
 /datum/reagent/nicotine
-		name = "Nicotine"
-		id = "nicotine"
-		description = "A highly addictive stimulant extracted from the tobacco plant."
-		reagent_state = LIQUID
-		color = "#181818" // rgb: 24, 24, 24
-		custom_metabolism = 0.005
-		restrict_species = list(IPC, DIONA)
-		var/alert_time = 0
+	name = "Nicotine"
+	id = "nicotine"
+	description = "A highly addictive stimulant extracted from the tobacco plant."
+	reagent_state = LIQUID
+	color = "#181818" // rgb: 24, 24, 24
+	custom_metabolism = 0.005
+	restrict_species = list(IPC, DIONA)
+	var/alert_time = 0
 
 /datum/reagent/nicotine/on_mob_life(mob/living/M)
 	if(!..())
