@@ -970,11 +970,6 @@ var/list/airlock_overlays = list()
 		..()
 	return
 
-/obj/machinery/door/airlock/phoron/attackby(C, mob/user)
-	if(C)
-		ignite(is_hot(C))
-	..()
-
 /obj/machinery/door/airlock/proc/close_unsafe(bolt_after = FALSE)
 	var/temp = safe
 
