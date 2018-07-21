@@ -106,6 +106,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as contraband aboard Nanotrasen space facilities."
 	icon = 'icons/obj/contraband.dmi'
 	icon_state = "rolled_poster"
+	official = 1
 
 /obj/item/weapon/poster/contraband/rev
 	name = "suspicious poster"
@@ -118,15 +119,15 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	name = "motivational poster"
 	icon_state = "rolled_legit"
 	desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
-	official = 1
+	official = 0
 
 /obj/item/weapon/poster/atom_init(mapload, given_serial = 0)
 	if(official==2)
 		..()
 		return
 	if(!given_serial)
-		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)
-		resulting_poster = new(serial_number, official)
+		serial_number = rand(1, official ? contrabandposters.len : legitposters.len)
+		resulting_poster = new /obj/structure/sign/poster(0, serial_number, official)
 	else
 		serial_number = given_serial
 		//We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
@@ -134,14 +135,9 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	. = ..()
 
 /obj/item/weapon/poster/contraband/rev/atom_init(mapload, given_serial = 0)
-	if(!given_serial)
-		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)
-		resulting_poster = new /obj/structure/sign/poster/contraband/rev/(serial_number, official)
-	else
-		serial_number = given_serial
-		//We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
+	serial_number = pick(5, 6, 8, 18, 23, 32)
+	resulting_poster = new /obj/structure/sign/poster/contraband/rev(0, serial_number, official)
 	name += " - No. [serial_number]"
-	. = ..()
 
 //############################## THE ACTUAL DECALS ###########################
 
@@ -150,7 +146,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	desc = "A large piece of space-resistant printed paper. "
 	icon = 'icons/obj/contraband.dmi'
 	anchored = TRUE
-	var/serial_number	//Will hold the value of src.loc if nobody initialises it
+	var/serial_number = 4	//Will hold the value of src.loc if nobody initialises it
 	var/ruined = FALSE
 	var/official = 0
 	var/placespeed = 30 // don't change this, otherwise the animation will not sync to the progress bar
@@ -161,38 +157,22 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	icon = 'icons/obj/contraband.dmi'
 	official = 2
 
-/obj/structure/sign/poster/atom_init(mapload, rolled_official)
-
-	serial_number = loc
-	if(rolled_official)
-		official = rolled_official
-	if(serial_number == loc)
-		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)	//This is for the mappers that want individual posters without having to use rolled posters.
-	if(official)
-		icon_state = "poster[serial_number]_legit"
-		name += legitposters[serial_number][POSTERNAME]
-		desc += legitposters[serial_number][POSTERDESC]
-	else
-		icon_state = "poster[serial_number]"
-		name += contrabandposters[serial_number][POSTERNAME]
-		desc += contrabandposters[serial_number][POSTERDESC]
-	. = ..()
-
-/obj/structure/sign/poster/conraband/rev/atom_init(mapload, rolled_official)
-
-	serial_number = loc
-	if(rolled_official)
-		official = rolled_official
-	if(serial_number == loc)
-		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)	//This is for the mappers that want individual posters without having to use rolled posters.
-	if(official)
-		icon_state = "poster[serial_number]_legit"
-		name += legitposters[serial_number][POSTERNAME]
-		desc += legitposters[serial_number][POSTERDESC]
-	else
-		icon_state = "poster[serial_number]"
-		name += contrabandposters[serial_number][POSTERNAME]
-		desc += contrabandposters[serial_number][POSTERDESC]
+/obj/structure/sign/poster/atom_init(mapload, poster_number, rolled_official)
+	official = rolled_official
+	serial_number = poster_number
+	switch(official)
+		if(0)
+			icon_state = "poster[serial_number]_legit"
+			name += legitposters[serial_number][POSTERNAME]
+			desc += legitposters[serial_number][POSTERDESC]
+		if(1)
+			icon_state = "poster[serial_number]"
+			name += contrabandposters[serial_number][POSTERNAME]
+			desc += contrabandposters[serial_number][POSTERDESC]
+		if(2)
+			icon_state = "poster[serial_number]"
+			name += contrabandposters[serial_number][POSTERNAME]
+			desc += contrabandposters[serial_number][POSTERDESC]
 	. = ..()
 
 /obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
