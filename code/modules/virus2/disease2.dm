@@ -10,21 +10,73 @@
 	var/list/datum/disease2/effectholder/effects = list()
 	var/antigen = 0 // 16 bits describing the antigens, when one bit is set, a cure with that bit can dock here
 	var/max_stage = 4
+	var/min_symptoms = 2
+	var/max_symptoms = 6
+	var/cooldown_mul = 1
 	var/list/affected_species = list(HUMAN , UNATHI , SKRELL , TAJARAN)
 
 /datum/disease2/disease/New()
 	uniqueID = rand(0,10000)
 	..()
 
+/datum/disease2/disease/proc/haseffect(datum/disease2/effect/checkeffect)
+	for(var/datum/disease2/effectholder/e in effects)
+		if(e.effect.type == checkeffect.type)
+			return TRUE
+	return FALSE
+
+/datum/disease2/disease/proc/getrandomeffect(minlevel = 1, maxlevel = 10)
+	var/list/datum/disease2/effect/list = list()
+	for(var/e in (typesof(/datum/disease2/effect) - /datum/disease2/effect))
+		var/datum/disease2/effect/f = new e
+		if (f.level > maxlevel)	//we don't want such strong effects
+			continue
+		if (f.level < minlevel)
+			continue
+		if(haseffect(f))
+			continue
+		//if(f.stage == src.stage)
+		//	list += f
+		list += f
+	if(list.len == 0)
+		return null
+
+	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
+	holder.effect = pick(list)
+	holder.chance = rand(holder.effect.chance_minm,holder.effect.chance_maxm)
+	return holder
+
+/datum/disease2/disease/proc/addeffect(var/datum/disease2/effectholder/holder)
+	if(holder == null)
+		return
+	if(effects.len < max_symptoms)
+		effects += holder
+
+/datum/disease2/disease/proc/radiate()
+	effects = shuffle(effects)
+
+/datum/disease2/disease/proc/reactfood()
+	addeffect(getrandomeffect(1,1))
+
+/datum/disease2/disease/proc/reacttoxin()
+	addeffect(getrandomeffect(2,2))
+
+/datum/disease2/disease/proc/reactsynaptizine()
+	addeffect(getrandomeffect(3,3))
+
+/datum/disease2/disease/proc/reactphoron()
+	addeffect(getrandomeffect(4,4))
+
+/datum/disease2/disease/proc/reactsleeptoxin()
+	if(effects.len > min_symptoms)
+		effects -= pick(effects) //remove random effect
+
 /datum/disease2/disease/proc/makerandom(greater=0)
 	for(var/i=1 ; i <= max_stage ; i++ )
-		var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
-		holder.stage = i
 		if(greater)
-			holder.getrandomeffect(2)
+			addeffect(getrandomeffect(i, 4))
 		else
-			holder.getrandomeffect()
-		effects += holder
+			addeffect(getrandomeffect(1, 2))
 	uniqueID = rand(0,10000)
 	infectionchance = rand(30,60)
 	antigen |= text2num(pick(ANTIGENS))
@@ -39,7 +91,7 @@
 	var/list/res = list()
 	for (var/specie in all_species)
 		var/datum/species/S = all_species[specie]
-		if(!S.flags[VIRUS_IMMUNE])
+		if(!S.flags[VIRUS_IMMUNE] && S.name)
 			meat += S.name
 	if(meat.len)
 		var/num = rand(1,meat.len)
@@ -60,9 +112,9 @@
 		if(prob(5))
 			mob.antibodies |= antigen // 20% immunity is a good chance IMO, because it allows finding an immune person easily
 
-	if(mob.radiation > 50)
+	/*if(mob.radiation > 50)
 		if(prob(1))
-			majormutate()
+			majormutate()*/
 
 	//Space antibiotics stop disease completely
 	if(mob.reagents.has_reagent("spaceacillin"))
@@ -76,47 +128,49 @@
 		clicks += 10
 
 	//Moving to the next stage
-	if(clicks > stage*100 && prob(10))
-		if(stage == max_stage)
+	if(clicks > stage*100 && prob(10) && stage<effects.len)
+		/*if(stage == max_stage)
 			src.cure(mob)
-			mob.antibodies |= src.antigen
+			mob.antibodies |= src.antigen*/
 		stage++
-		clicks = 0
+		//clicks = 0
+
+	//to_chat(mob, "update")
 	//Do nasty effects
-	for(var/datum/disease2/effectholder/e in effects)
-		e.runeffect(mob,stage)
+	var/savedstage = stage // it could be overwrited inside effect
+	for(var/i=1 ; i <= effects.len ; i++)
+		var/datum/disease2/effectholder/e = effects[i]
+		if(i <= savedstage)
+			e.runeffect(mob, src)
+
+	//for(var/datum/disease2/effectholder/e in effects)
+	//	if(stage >= e.stage)
+	//		e.runeffect(mob,stage)
 
 	//Short airborne spread
-	if(src.spreadtype == "Airborne")
-		for(var/mob/living/carbon/M in oview(1,mob))
-			if(airborne_can_reach(get_turf(mob), get_turf(M)))
-				infect_virus2(M,src)
+	//if(src.spreadtype == "Airborne")
+	//	spread(mob, 1)
 
 	//fever
-	mob.bodytemperature = max(mob.bodytemperature, min(310+5*stage ,mob.bodytemperature+5*stage))
+	mob.bodytemperature = max(mob.bodytemperature, min(310+5*stage ,mob.bodytemperature+2*stage))
 	clicks+=speed
+
+/datum/disease2/disease/proc/advance_stage()
+	if(stage<effects.len)
+		clicks = stage*100
+		stage++
+
+/datum/disease2/disease/proc/spread(mob/living/carbon/mob, radius = 1)
+	for(var/mob/living/carbon/M in oview(1,mob))
+		if(airborne_can_reach(get_turf(mob), get_turf(M)))
+			//log_debug("Infecting [M]")
+			infect_virus2(M,src)
 
 /datum/disease2/disease/proc/cure(mob/living/carbon/mob)
 	for(var/datum/disease2/effectholder/e in effects)
 		e.effect.deactivate(mob)
 	mob.virus2.Remove("[uniqueID]")
 	mob.hud_updateflag |= 1 << STATUS_HUD
-
-/datum/disease2/disease/proc/minormutate()
-	//uniqueID = rand(0,10000)
-	var/datum/disease2/effectholder/holder = pick(effects)
-	holder.minormutate()
-	infectionchance = min(50,infectionchance + rand(0,10))
-
-/datum/disease2/disease/proc/majormutate()
-	uniqueID = rand(0,10000)
-	var/datum/disease2/effectholder/holder = pick(effects)
-	holder.majormutate()
-	if (prob(5))
-		antigen = text2num(pick(ANTIGENS))
-		antigen |= text2num(pick(ANTIGENS))
-	if (prob(5) && all_species.len)
-		affected_species = get_infectable_species()
 
 /datum/disease2/disease/proc/getcopy()
 	var/datum/disease2/disease/disease = new /datum/disease2/disease
@@ -130,10 +184,8 @@
 		var/datum/disease2/effectholder/newholder = new /datum/disease2/effectholder
 		newholder.effect = new holder.effect.type
 		newholder.chance = holder.chance
-		newholder.cure = holder.cure
 		newholder.multiplier = holder.multiplier
-		newholder.happensonce = holder.happensonce
-		newholder.stage = holder.stage
+		//newholder.stage = holder.stage
 		disease.effects += newholder
 	return disease
 
