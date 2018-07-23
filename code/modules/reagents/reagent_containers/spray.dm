@@ -13,7 +13,6 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(5,10) //Set to null instead of list, if there is only one.
 	var/spray_size = 3
-	var/spray_size_max = 3 // Used in Spray_at_Multiple_Tiles sprays, to determine what is the furthest the sprayed substanced will go.
 	var/list/spray_sizes = list(1,3) // When building this list, take into considiration what's written above.
 	volume = 250
 	var/safety = FALSE
@@ -36,7 +35,7 @@
 
 	if(istype(A, /obj/structure/reagent_dispensers) && get_dist(src,A) <= 1) //this block copypasted from reagent_containers/glass, for lack of a better solution
 		if(!A.reagents.total_volume && A.reagents)
-			to_chat(user, "<span class='notice'>\The [A] is empty.</span>")
+			to_chat(user, "<span class='notice'>[A] does not have enough liquids.</span>")
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
@@ -55,12 +54,6 @@
 		to_chat(usr, "<span class = 'warning'>The safety is on!</span>")
 		return
 
-	user.SetNextMove(CLICK_CD_INTERACT * 2)
-	if(triple_shot)
-		Spray_at_Multiple_Tiles(A)
-	else
-		Spray_at(A)
-
 	playsound(src.loc, 'sound/effects/spray2.ogg', 50, 1, -6)
 
 	if(reagents.has_reagent("sacid"))
@@ -72,7 +65,21 @@
 	if(reagents.has_reagent("lube"))
 		message_admins("[key_name_admin(user)] fired Space lube from \a [src]. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 		log_game("[key_name(user)] fired Space lube from \a [src].")
-	return
+
+	user.SetNextMove(CLICK_CD_INTERACT * 2)
+
+	var/turf/T = get_turf(A) // BS12 edit, with the wall spraying.
+
+	if(triple_shot && reagents.total_volume >= amount_per_transfer_from_this * 3) // If it doesn't have triple the amount of reagents, but it passed the previous check, make it shoot just one tiny spray.
+		var/direction = get_dir(src, A)
+		var/turf/T1 = get_step(T, turn(direction, 90))
+		var/turf/T2 = get_step(T, turn(direction, -90))
+
+		INVOKE_ASYNC(src, .proc/Spray_at, T)
+		INVOKE_ASYNC(src, .proc/Spray_at, T1)
+		INVOKE_ASYNC(src, .proc/Spray_at, T2)
+	else
+		INVOKE_ASYNC(src, .proc/Spray_at, T)
 
 /obj/item/weapon/reagent_containers/spray/proc/Spray_at(atom/A)
 	var/spray_size_current = spray_size // This ensures, that a player doesn't switch to another mode mid-fly.
@@ -81,18 +88,16 @@
 	reagents.trans_to(D, amount_per_transfer_from_this, 1/spray_size)
 	D.icon += mix_color_from_reagents(D.reagents.reagent_list)
 
-	var/turf/A_turf = get_turf(A)//BS12
-
 	for(var/i in 0 to spray_size_current)
-		step_towards(D,A)
+		step_towards(D, A)
 		D.reagents.reaction(get_turf(D))
 		for(var/atom/T in get_turf(D))
 			D.reagents.reaction(T)
 
 			// When spraying against the wall, also react with the wall, but
 			// not its contents. BS12
-			if(get_dist(D, A_turf) == 1 && A_turf.density)
-				D.reagents.reaction(A_turf)
+			if(get_dist(D, A) == 1 && A.density)
+				D.reagents.reaction(A)
 			sleep(2)
 		sleep(3)
 	qdel(D)
@@ -365,49 +370,8 @@
 	volume = 600
 	origin_tech = "combat=3;materials=3;engineering=3"
 	triple_shot = TRUE
-	spray_size = 6
-	spray_size_max = 8
-
-//hey, now this is a seperate proc, which can be used elsewhere!
-/obj/item/weapon/reagent_containers/spray/proc/Spray_at_Multiple_Tiles(atom/A)
-	var/spray_size_current = spray_size
-	var/spray_size_max_current = spray_size_max
-	var/Sprays[3]
-	for(var/i in 1 to 3) // intialize sprays
-		if(reagents.total_volume < 1)
-			break
-		var/obj/effect/decal/chempuff/D = new/obj/effect/decal/chempuff(get_turf(src))
-		D.create_reagents(amount_per_transfer_from_this)
-		reagents.trans_to(D, amount_per_transfer_from_this)
-
-		D.icon += mix_color_from_reagents(D.reagents.reagent_list)
-
-		Sprays[i] = D
-
-	var/direction = get_dir(src, A)
-	var/turf/T = get_turf(A)
-	var/turf/T1 = get_step(T,turn(direction, 90))
-	var/turf/T2 = get_step(T,turn(direction, -90))
-	var/list/the_targets = list(T,T1,T2)
-
-	for(var/i in 1 to Sprays.len)
-		spawn()
-			var/obj/effect/decal/chempuff/D = Sprays[i]
-			if(!D)
-				continue
-
-			// Spreads the sprays a little bit
-			var/turf/my_target = pick(the_targets)
-			the_targets -= my_target
-
-			var/max_distance_random = rand(spray_size_current, spray_size_max_current)
-			for(var/j in 1 to max_distance_random)
-				step_towards(D, my_target)
-				D.reagents.reaction(get_turf(D))
-				for(var/atom/t in get_turf(D))
-					D.reagents.reaction(t)
-				sleep(2)
-			qdel(D)
+	spray_size = 7
+	spray_sizes = list(7)
 
 // Plant-B-Gone
 /obj/item/weapon/reagent_containers/spray/plantbgone // -- Skie
