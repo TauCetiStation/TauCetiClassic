@@ -56,11 +56,11 @@
 						if(prob(75))
 							block = TRUE
 
-					chance = chance * 100
+				chance = chance * 100
 
-					if(prob(chance) && !block)
-						if(M.reagents)
-							M.reagents.add_reagent(self.id,self.volume/2)
+				if(prob(chance) && !block)
+					if(M.reagents)
+						M.reagents.add_reagent(self.id,self.volume/2)
 	return TRUE
 
 /datum/reagent/proc/reaction_obj(obj/O, volume) //By default we transfer a small part of the reagent to the object
