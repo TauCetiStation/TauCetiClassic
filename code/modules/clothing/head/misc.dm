@@ -63,8 +63,8 @@
 
 /obj/item/clothing/head/syndicatefake
 	name = "red space-helmet replica"
-	icon_state = "syndicate"
-	item_state = "syndicate"
+	icon_state = "syndicate-helmet"
+	item_state = "syndicate-helmet"
 	desc = "A plastic replica of a syndicate agent's space helmet, you'll look just like a real murderous syndicate agent in this! This is a toy, it is not made for use in space!"
 	flags = BLOCKHAIR
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
