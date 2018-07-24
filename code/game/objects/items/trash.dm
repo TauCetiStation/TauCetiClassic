@@ -52,6 +52,23 @@
 	liquidfood
 		name = "\improper \"LiquidFood\" ration"
 		icon_state = "liquidfood"
+	fries
+		name = "Space Fries"
+		icon_state = "fries"
+	chinese1
+		name = "chow mein"
+		icon_state = "chinese1"
+	chinese2
+		name = "Admiral Yamamoto carp"
+		icon_state = "chinese2"
+	chinese3
+		name = "chinese newdles"
+		icon_state = "chinese3"
+	chinese4
+		name = "fried rice"
+		icon_state = "chinese4"
+
+
 
 /obj/item/trash/candle/ghost
 	icon_state = "gcandle4"

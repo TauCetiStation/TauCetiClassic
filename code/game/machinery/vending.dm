@@ -1194,3 +1194,27 @@
 					/obj/item/clothing/mask/fake_face = 2, /obj/item/clothing/suit/hooded/ian_costume = 1, /obj/item/clothing/suit/hooded/carp_costume = 1)
 	prices = list(/obj/item/clothing/head/xenos = 100, /obj/item/clothing/suit/xenos = 200, /obj/item/clothing/suit/monkeysuit = 200, /obj/item/clothing/suit/hooded/carp_costume = 200)
 	contraband = list(/obj/item/clothing/mask/gas/fawkes = 2)
+
+/obj/machinery/vending/junkfood
+	name = "McNuffin's Fast Food"
+	desc = "Fastest food on the station, unhealthiest yet."
+	product_slogans = "I'm lovin it!;You deserve a break today!;Nobody can do it like McNuffin's can" //mcdonald's slogans adapted
+	product_ads = "One Two Three Four... Big Bite burger!;I'm lovin it!;Two meaty cutlets, special sauce, cheese -- everything on a bland bun. Right, it's a Big Bite!"
+	icon_state = "junkfood"
+	products = list(/obj/item/weapon/reagent_containers/food/snacks/monkeyburger = 6,
+					/obj/item/weapon/reagent_containers/food/snacks/cheeseburger = 4,
+					/obj/item/weapon/reagent_containers/food/snacks/fries/cardboard = 6,
+					/obj/item/weapon/reagent_containers/food/snacks/cheesyfries/cardboard = 4,
+					/obj/item/weapon/reagent_containers/food/snacks/hotdog = 5,
+					/obj/item/weapon/reagent_containers/food/drinks/cans/cola = 5,
+					/obj/item/weapon/reagent_containers/food/drinks/cans/space_up = 5,
+					/obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb = 5)
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/monkeyburger = 8,
+				  /obj/item/weapon/reagent_containers/food/snacks/cheeseburger = 12,
+				  /obj/item/weapon/reagent_containers/food/snacks/fries/cardboard = 6,
+				  /obj/item/weapon/reagent_containers/food/snacks/cheesyfries/cardboard = 9,
+				  /obj/item/weapon/reagent_containers/food/snacks/hotdog = 9,
+				  /obj/item/weapon/reagent_containers/food/drinks/cans/cola = 1,
+				  /obj/item/weapon/reagent_containers/food/drinks/cans/space_up = 1,
+				  /obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb = 1)
+	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/fishfingers = 2)
