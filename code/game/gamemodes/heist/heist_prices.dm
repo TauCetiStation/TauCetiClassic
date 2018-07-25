@@ -80,7 +80,7 @@
 /obj/item/clothing/glasses/price = 250
 /obj/item/clothing/glasses/chameleon/price = 350
 /obj/item/clothing/glasses/hud/price = 278
-/obj/item/clothing/glasses/hud/security/jensenshades/price = 14000
+/obj/item/clothing/glasses/hud/security/sun/jensenshades/price = 14000
 /obj/item/clothing/glasses/meson/price = 489
 /obj/item/clothing/glasses/night/price = 6500
 /obj/item/clothing/glasses/thermal/price = 10000

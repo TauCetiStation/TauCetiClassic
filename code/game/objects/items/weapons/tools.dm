@@ -422,26 +422,27 @@
 //Decides whether or not to damage a player's eyes based on what they're wearing as protection
 //Note: This should probably be moved to mob
 /obj/item/weapon/weldingtool/proc/eyecheck(mob/user)
-	if(!iscarbon(user))	return 1
-	var/safety = user:eyecheck()
-	if(istype(user, /mob/living/carbon/human))
+	if(!iscarbon(user))
+		return 0
+	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
+		var/safety = H.eyecheck()
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
 		if(H.species.flags[IS_SYNTHETIC])
 			return
 		switch(safety)
 			if(1)
-				to_chat(usr, "<span class='warning'>Your eyes sting a little.</span>")
+				to_chat(user, "<span class='warning'>Your eyes sting a little.</span>")
 				IO.damage += rand(1, 2)
 				if(IO.damage > 12)
 					user.eye_blurry += rand(3,6)
 			if(0)
-				to_chat(usr, "<span class='warning'>Your eyes burn.</span>")
+				to_chat(user, "<span class='warning'>Your eyes burn.</span>")
 				IO.damage += rand(2, 4)
 				if(IO.damage > 10)
 					IO.damage += rand(4,10)
 			if(-1)
-				to_chat(usr, "<span class='danger'>Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>")
+				to_chat(user, "<span class='danger'>Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>")
 				user.eye_blurry += rand(12,20)
 				IO.damage += rand(12, 16)
 		if(safety<2)
@@ -459,7 +460,6 @@
 				user.disabilities |= NEARSIGHTED
 				spawn(100)
 					user.disabilities &= ~NEARSIGHTED
-	return
 
 
 /obj/item/weapon/weldingtool/largetank

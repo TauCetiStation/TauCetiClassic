@@ -235,7 +235,25 @@
 				to_chat(M, "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>")
 				log_say("Shadowling Hivemind: [key_name(usr)] : [text]")
 
+/obj/effect/proc_holder/spell/targeted/thrall_sight
+	name = "Dark Sight"
+	desc = "Allows you to see through the darkness."
+	panel = "Shadowling Abilities"
+	charge_max = 100
+	clothes_req = 0
+	range = -1
+	include_user = 1
+	var/activated = FALSE
 
+/obj/effect/proc_holder/spell/targeted/thrall_sight/cast(list/targets)
+	var/mob/living/carbon/human/user = usr
+	activated = !activated
+	if(activated)
+		user.overlays |= shadowling_eyes
+		user.seer = TRUE
+	else
+		user.overlays -= shadowling_eyes
+		user.seer = FALSE
 
 /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
 	name = "Regenerate Chitin"

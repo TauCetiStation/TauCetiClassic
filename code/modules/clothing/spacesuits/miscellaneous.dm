@@ -37,6 +37,7 @@
 	item_state = "assaulthelmet_b"
 	armor = list(melee = 50, bullet = 60, laser = 45, energy = 70, bomb = 50, bio = 0, rad = 50)
 	siemens_coefficient = 0.2
+	flash_protection = 2
 
 /obj/item/clothing/head/helmet/syndiassault/alternate
 	icon_state = "assaulthelmet"

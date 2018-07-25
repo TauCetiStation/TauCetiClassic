@@ -13,6 +13,7 @@
 	var/toggleable = 0
 	var/off_state = "degoggles"
 	var/active = 1
+	var/flash_protection = 0
 	var/activation_sound = 'sound/items/buttonclick.ogg'
 
 /obj/item/clothing/glasses/attack_self(mob/user)
@@ -154,6 +155,7 @@
 	icon_state = "sun"
 	item_state = "sunglasses"
 	darkness_view = -1
+	flash_protection = 2
 
 /obj/item/clothing/glasses/welding
 	name = "welding goggles"
@@ -161,6 +163,7 @@
 	icon_state = "welding-g"
 	item_state = "welding-g"
 	action_button_name = "Flip Welding Goggles"
+	flash_protection = 2
 	var/up = 0
 
 /obj/item/clothing/glasses/welding/attack_self()
@@ -178,6 +181,7 @@
 			src.flags |= GLASSESCOVERSEYES
 			flags_inv |= HIDEEYES
 			body_parts_covered |= EYES
+			flash_protection = 2
 			icon_state = initial(icon_state)
 			to_chat(usr, "You flip \the [src] down to protect your eyes.")
 		else
@@ -185,6 +189,7 @@
 			src.flags &= ~HEADCOVERSEYES
 			flags_inv &= ~HIDEEYES
 			body_parts_covered &= ~EYES
+			flash_protection = 0
 			icon_state = "[initial(icon_state)]up"
 			to_chat(usr, "You push \the [src] up out of your face.")
 
@@ -212,21 +217,6 @@
 	icon_state = "bigsunglasses"
 	item_state = "bigsunglasses"
 
-/obj/item/clothing/glasses/sunglasses/sechud
-	name = "HUDsunglasses"
-	desc = "Sunglasses with a HUD."
-	icon_state = "sunhud"
-	var/obj/item/clothing/glasses/hud/security/hud = null
-
-/obj/item/clothing/glasses/sunglasses/sechud/atom_init()
-	. = ..()
-	hud = new/obj/item/clothing/glasses/hud/security(src)
-
-/obj/item/clothing/glasses/sunglasses/sechud/tactical
-	name = "tactical HUD"
-	desc = "Flash-resistant goggles with inbuilt combat and security information."
-	icon_state = "swatgoggles"
-
 /obj/item/clothing/glasses/thermal
 	name = "optical thermal scanner"
 	desc = "Thermals in the shape of glasses."
@@ -236,6 +226,7 @@
 	vision_flags = SEE_MOBS
 	invisa_view = 2
 	toggleable = 1
+	flash_protection = -2
 	action_button_name = "Toggle Goggles"
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
@@ -316,17 +307,12 @@
 	toggleable = 0
 	action_button_name = null
 
-/obj/item/clothing/glasses/sunglasses/sechud/gar
-	name = "gar HUDsunglasses"
-	icon_state = "gars"
-	item_state = "gars"
-
 /obj/item/clothing/glasses/sunglasses/gar/super
 	name = "supergar sunglasses"
 	icon_state = "supergarb"
 	item_state = "supergarb"
 
-/obj/item/clothing/glasses/sunglasses/sechud/gar/super
+/obj/item/clothing/glasses/hud/security/sun/gar/super
 	name = "supergar HUDSunglasses"
 	icon_state = "supergars"
 	item_state = "supergars"

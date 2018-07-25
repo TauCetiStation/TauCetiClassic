@@ -31,7 +31,7 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_security(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
-	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), slot_glasses)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/security/sun(H), slot_glasses)
 	H.equip_to_slot_or_del(new /obj/item/weapon/gun/energy/gun(H), slot_s_store)
 
 	if(visualsOnly)
@@ -78,7 +78,7 @@
 		H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
-	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses/sechud(H), slot_glasses)
+	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/hud/security/sun(H), slot_glasses)
 	H.equip_to_slot_or_del(new /obj/item/device/flash(H), slot_l_store)
 
 	if(visualsOnly)

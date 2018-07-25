@@ -51,13 +51,11 @@
 	error = pick(-1,1)
 
 /obj/item/clothing/glasses/hud/mining/process_hud(mob/M)
-	if(!M)	return
-	if(!M.client)	return
+	if(!M || !!M.client)
+		return
 	var/client/C = M.client
 	var/icon/hudMineral = 'icons/obj/mining/geoscanner.dmi'
 	for(var/turf/simulated/mineral/rock in view(get_turf(M)))
-		if(!C) return
-
 		if(rock.finds && rock.finds.len || rock.artifact_find)
 			C.images += image(hudMineral,rock,"hudanomaly")
 		else if (rock.mineral)
