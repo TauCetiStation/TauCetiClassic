@@ -456,6 +456,11 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(species.name == SHADOWLING && head)
 		standing += shadowling_eyes
 
+	if(iszombie(src) && stat != DEAD)
+		var/image/eyes = image(species.icobase, null, "zombie_ms_s", LIGHTING_LAYER + 1)
+		eyes.plane = LIGHTING_PLANE + 1
+		standing += eyes
+
 	if(!dna || !(dna.mutantrace == "golem"))
 		update_body()
 

@@ -117,7 +117,7 @@
 			majormutate()*/
 
 	//Space antibiotics stop disease completely
-	if(mob.reagents.has_reagent("spaceacillin"))
+	if(!mob.is_infected_with_zombie_virus() && mob.reagents.has_reagent("spaceacillin"))
 		if(stage == 1 && prob(20))
 			src.cure(mob)
 		return
@@ -152,7 +152,7 @@
 	//	spread(mob, 1)
 
 	//fever
-	mob.bodytemperature = max(mob.bodytemperature, min(310+5*stage ,mob.bodytemperature+2*stage))
+	mob.bodytemperature = max(mob.bodytemperature, min(310+2*stage ,mob.bodytemperature+2*stage))
 	clicks+=speed
 
 /datum/disease2/disease/proc/advance_stage()
@@ -185,6 +185,7 @@
 		newholder.effect = new holder.effect.type
 		newholder.chance = holder.chance
 		newholder.multiplier = holder.multiplier
+		newholder.effect.copy(holder, newholder, holder.effect)
 		//newholder.stage = holder.stage
 		disease.effects += newholder
 	return disease

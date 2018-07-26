@@ -9,6 +9,7 @@
 #define ORGAN_DEAD       128
 #define ORGAN_MUTATED    256
 #define ORGAN_ARTERY_CUT 512
+#define ORGAN_ZOMBIE     1024
 
 #define DROPLIMB_EDGE  0
 #define DROPLIMB_BLUNT 1
@@ -58,19 +59,23 @@
 #define GETPULSE_TOOL	1	//more accurate (med scanner, sleeper, etc)
 
 // Species Names (keep in mind, that whitelist and preferences DB depends on this names too, and if anything is renamed, update MYSQL tables or is_alien_whitelisted() proc and preferences).
-#define HUMAN       "Human"
-#define UNATHI      "Unathi"
-#define TAJARAN     "Tajaran"
-#define SKRELL      "Skrell"
-#define DIONA       "Diona"
-#define IPC         "Machine"
-#define VOX         "Vox"
-#define VOX_ARMALIS "Vox Armalis"
-#define ABDUCTOR    "Abductor"
-#define SKELETON    "Skeleton"
-#define SHADOWLING  "Shadowling"
-#define MONKEY      "Monkey"
-#define GOLEM       "Adamantine Golem"
+#define HUMAN          "Human"
+#define UNATHI         "Unathi"
+#define TAJARAN        "Tajaran"
+#define SKRELL         "Skrell"
+#define DIONA          "Diona"
+#define IPC            "Machine"
+#define VOX            "Vox"
+#define VOX_ARMALIS    "Vox Armalis"
+#define ABDUCTOR       "Abductor"
+#define SKELETON       "Skeleton"
+#define SHADOWLING     "Shadowling"
+#define MONKEY         "Monkey"
+#define GOLEM          "Adamantine Golem"
+#define ZOMBIE         "Zombie"
+#define ZOMBIE_TAJARAN "Zombie Tajaran"
+#define ZOMBIE_SKRELL  "Zombie Skrell"
+#define ZOMBIE_UNATHI  "Zombie Unathi"
 
 #define HUMAN_STRIP_DELAY 40 //takes 40ds = 4s to strip someone.
 
