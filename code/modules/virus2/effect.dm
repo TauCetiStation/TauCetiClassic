@@ -1,4 +1,3 @@
-
 /datum/disease2/effectholder
 	var/name = "Holder"
 	var/datum/disease2/effect/effect
@@ -12,12 +11,12 @@
 	if(cooldownticks > 0)
 		cooldownticks -= 1*disease.cooldown_mul
 	if(prob(chance))
-		ticks+=1
 		if(ticks > stage*10 && prob(50) && stage < effect.max_stage)
 			stage++
 		if(cooldownticks <= 0)
 			cooldownticks = effect.cooldown
 			effect.activate(mob, src, disease)
+		ticks+=1
 
 ////////////////////////////////////////////////////////////////
 ////////////////////////EFFECTS/////////////////////////////////
@@ -33,12 +32,89 @@
 	var/cooldown = 0
 	proc/activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 	proc/deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+	proc/copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
 
 /datum/disease2/effect/invisible
 	name = "Waiting Syndrome"
 	level = 0 // can't get this one
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 		return
+
+/datum/disease2/effect/zombie
+	name = "Green Flu"
+	desc = "Unknown."
+	level = 5
+	max_stage = 10
+	cooldown = 10
+	chance_minm = 20
+	chance_maxm = 20
+	var/activated = FALSE
+	var/obj/item/organ/external/infected_organ = null //if infected part is removed, destroys itself
+	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+		if(ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			if(iszombie(H))
+				disease.dead = TRUE
+				return
+
+			if(!(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL)))
+				return
+
+			if(infected_organ == null && holder.ticks == 0)
+				var/list/organs = list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG) // Organs that you can actually cut off are checked first to give a chance
+				organs = shuffle(organs) + shuffle(list(BP_CHEST, BP_GROIN, BP_HEAD))
+
+				for(var/o in organs)
+					var/obj/item/organ/external/BP = H.get_bodypart(o)
+					if(BP && !(BP.status & ORGAN_ROBOT) && BP.is_usable())
+						infected_organ = BP
+						break
+
+			if(!infected_organ || (infected_organ.status & ORGAN_ROBOT) || (infected_organ.status & ORGAN_DESTROYED))
+				disease.dead = TRUE
+				to_chat(H, "<span class='notice'>You suddenly feel better.</span>")
+				return
+
+			switch(holder.stage)
+				if(1,2,3) //increased hunger
+					H.nutrition = max(H.nutrition - 20, 0)
+					if(prob(1)) //might never happen and its fine
+						to_chat(H, "<span class='notice'>[pick("You feel an odd gurgle in your stomach.", "You are hungry for something.", "You suddenly feel better.", "You suddenly feel worse.")]</span>")
+				if(4,5,6) //some random stuff
+					H.adjustToxLoss(1)
+					if(prob(70))
+						mob.emote(pick("twitch","drool","sneeze","sniff","cough","shiver","giggle","laugh","gasp"))
+					else
+						to_chat(H, "<span class='warning'>[pick("Your [infected_organ.name] seems to become more green...", "Your [infected_organ.name] hurts...")]</span>")
+				if(7,8) //pain
+					to_chat(H, "<span class='danger'>[pick("Your brain hurts.", "Your [infected_organ.name] hurts a lot.", "Your muscles ache.", "Your muscles are sore.")]</span>")
+					H.apply_effect(20,AGONY,0)
+					H.adjustBrainLoss(5)
+					H.adjustToxLoss(3)
+				if(9) //IT HURTS
+					if(prob(33))
+						to_chat(H, "<span class='danger'>[pick("IT HURTS", "You feel a sharp pain across your whole body!")]</span>")
+						H.adjustBruteLoss(rand(2,5))
+						H.apply_effect(50,AGONY,0)
+					else if(prob(33) && H.stat == CONSCIOUS)
+						to_chat(H, "<span class='danger'>[pick("Your heart stop for a second.", "It's hard for you to breathe.")]</span>")
+						H.adjustOxyLoss(rand(10,40))
+					else
+						to_chat(H, "<span class='danger'>[pick("Your body is paralyzed.")]</span>")
+						H.Stun(4)
+				if(10) //rip
+					if(!activated)
+						activated = TRUE
+						H.visible_message("<span class='danger'>[H] suddenly closes \his eyes. \His body falls lifeless and stops moving. \He seems to stop breathing.</span>")
+						H.sleeping = 600
+						//addtimer(CALLBACK(null, .proc/revive_zombie, H), rand(60,100))
+						handle_infected_death(H)
+						H.update_canmove()
+						disease.dead = TRUE
+
+	copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
+		var/datum/disease2/effect/zombie/Z = effect_old
+		infected_organ = Z.infected_organ
 
 /datum/disease2/effect/beard
 	name = "Facial Hypertrichosis"

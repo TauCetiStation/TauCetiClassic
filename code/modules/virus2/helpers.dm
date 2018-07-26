@@ -44,6 +44,19 @@ proc/get_infection_chance(mob/living/carbon/M, vector = "Airborne")
 //	log_debug("Infection got through")
 	return 1
 
+proc/get_bite_infection_chance(mob/living/carbon/M, target_zone)
+	if (!istype(M) || !target_zone)
+		return 0
+
+	if(target_zone && istype(M, /mob/living/carbon/human))
+		var/mob/living/carbon/human/H = M
+
+		var/armor = H.getarmor(target_zone, "melee")
+		var/bioarmor = H.getarmor(target_zone, "bio")
+
+		return max((100 - max(armor, bioarmor/2)), 0)
+	return 100
+
 //Checks if table-passing table can reach target (5 tile radius)
 proc/airborne_can_reach(turf/source, turf/target)
 	var/obj/dummy = new(source)
