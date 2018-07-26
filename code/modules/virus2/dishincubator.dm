@@ -12,11 +12,11 @@
 	var/on = 0
 	var/power = 0
 
-	var/foodsupply = 100
-	var/toxinsupply = 100
-	var/synaptizinesupply = 100
-	var/phoronsupply = 100
-	var/sleeptoxinsupply = 100
+	var/foodsupply = 0
+	var/toxinsupply = 0
+	var/synaptizinesupply = 0
+	var/phoronsupply = 0
+	var/sleeptoxinsupply = 0
 
 	var/datum/disease2/effectholder/selected = null
 

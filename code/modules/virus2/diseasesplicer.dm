@@ -30,6 +30,7 @@
 		memorybank = I:effect
 		species_buffer = I:species
 		analysed = I:analysed
+		qdel(I)
 
 	src.attack_hand(user)
 
@@ -57,7 +58,7 @@
 				data["affected_species"] = dish.analysed ? jointext(dish.virus2.affected_species, ", ") : "Unknown"
 
 			var/list/effects[0]
-			for(var/i=1 ; i <= dish.virus2.effects.len ; i++)
+			for(var/i in 1 to dish.virus2.effects.len)
 				var/datum/disease2/effectholder/e = dish.virus2.effects[i]
 				effects.Add(list(list("name" = (dish.analysed ? e.effect.name : "Unknown"), "stage" = (i), "reference" = "\ref[e]")))
 			data["effects"] = effects
@@ -96,16 +97,20 @@
 				if (memorybank)
 					d.name = "[memorybank.effect.name] GNA disk"
 					d.effect = memorybank
+					memorybank = null
 				else if (species_buffer)
 					d.name = "[jointext(species_buffer, ", ")] GNA disk"
 					d.species = species_buffer
+					species_buffer = null
 			else
 				if (memorybank)
 					d.name = "Unknown GNA disk"
 					d.effect = memorybank
+					memorybank = null
 				else if (species_buffer)
 					d.name = "Unknown Species GNA disk"
 					d.species = species_buffer
+					species_buffer = null
 
 			ping("\The [src] pings, \"Backup disk saved.\"")
 			nanomanager.update_uis(src)
