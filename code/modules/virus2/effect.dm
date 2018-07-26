@@ -125,21 +125,22 @@
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
-			if(holder.stage	== 1)
-				to_chat(H, "<span class='warning'>Your chin itches.</span>")
-				if(H.f_style == "Shaved" && prob(30))
-					H.f_style = "Jensen Beard"
-					H.update_hair()
-			else if(holder.stage == 2)
-				if(!(H.f_style == "Dwarf Beard") && !(H.f_style == "Very Long Beard") && !(H.f_style == "Full Beard"))
-					to_chat(H, "<span class='warning'>You feel tough.</span>")
-					H.f_style = "Full Beard"
-					H.update_hair()
-			else if(holder.stage == 3)
-				if(!(H.f_style == "Dwarf Beard") && !(H.f_style == "Very Long Beard"))
-					to_chat(H, "<span class='warning'>You feel manly!</span>")
-					H.f_style = pick("Dwarf Beard", "Very Long Beard")
-					H.update_hair()
+			switch(holder.stage)
+				if(1)
+					to_chat(H, "<span class='warning'>Your chin itches.</span>")
+					if(H.f_style == "Shaved" && prob(30))
+						H.f_style = "Jensen Beard"
+						H.update_hair()
+				if(2)
+					if(!(H.f_style == "Dwarf Beard") && !(H.f_style == "Very Long Beard") && !(H.f_style == "Full Beard"))
+						to_chat(H, "<span class='warning'>You feel tough.</span>")
+						H.f_style = "Full Beard"
+						H.update_hair()
+				if(3)
+					if(!(H.f_style == "Dwarf Beard") && !(H.f_style == "Very Long Beard"))
+						to_chat(H, "<span class='warning'>You feel manly!</span>")
+						H.f_style = pick("Dwarf Beard", "Very Long Beard")
+						H.update_hair()
 
 /datum/disease2/effect/fire
 	name = "Spontaneous Combustion"
@@ -499,15 +500,16 @@
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 		if(istype(mob,/mob/living/carbon/human))
 			var/mob/living/carbon/human/h = mob
-			if(holder.stage >= 1 && holder.stage <= 3)
-				to_chat(mob, "<span class='notice'>[pick("You want bananas.", "You feel very primitive.", "Is that a banana?")]</span>")
-			else if(holder.stage >= 4 && holder.stage <= 7)
-				if(holder.stage == 7 && prob(20))
-					h.say(pick("Bananas?", "Do you have some bananas?", "Ooh-ooh-ooh-eee-eee","Ooh ooh ooh eee eee eee aah aah aah", "Eeek! Eeek!"))
-				else
-					to_chat(mob, "<span class='danger'>[pick("You really want some bananas.", "You feel yourself slowly degrading.", "You become smaller.", "Fur appears on your skin.")]</span>")
-			else if(holder.stage == 8)
-				h.monkeyize()
+			switch(holder.stage)
+				if(1,2,3)
+					to_chat(mob, "<span class='notice'>[pick("You want bananas.", "You feel very primitive.", "Is that a banana?")]</span>")
+				if(4,5,6,7)
+					if(holder.stage == 7 && prob(20))
+						h.say(pick("Bananas?", "Do you have some bananas?", "Ooh-ooh-ooh-eee-eee","Ooh ooh ooh eee eee eee aah aah aah", "Eeek! Eeek!"))
+					else
+						to_chat(mob, "<span class='danger'>[pick("You really want some bananas.", "You feel yourself slowly degrading.", "You become smaller.", "Fur appears on your skin.")]</span>")
+				if(8)
+					h.monkeyize()
 
 /datum/disease2/effect/suicide
 	name = "Suicidal Syndrome"
@@ -604,16 +606,17 @@
 	max_stage = 8
 	cooldown = 60
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		if(holder.stage	>= 1 && holder.stage <= 4)
-			to_chat(mob, "<span class='notice'>[pick("You seem less agile.", "You move more jaggy than usual.")]</span>")
-		if(holder.stage	>= 5 && holder.stage <= 7)
-			to_chat(mob, "<span class='notice'>[pick("You feel like something is wrong with your bones.", "Your bones creak when you move.")]</span>")
-		if(holder.stage	== 8)
-			if(istype(mob, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = mob
-				var/obj/item/organ/external/BP = pick(H.bodyparts)
-				BP.min_broken_damage = max(10, initial(BP.min_broken_damage) - 30)
-				to_chat(mob, "<span class='notice'>You feel like your [BP.name] is not as strong as it was before..</span>")
+		switch(holder.stage)
+			if(1,2,3,4)
+				to_chat(mob, "<span class='notice'>[pick("You seem less agile.", "You move more jaggy than usual.")]</span>")
+			if(5,6,7)
+				to_chat(mob, "<span class='notice'>[pick("You feel like something is wrong with your bones.", "Your bones creak when you move.")]</span>")
+			if(8)
+				if(istype(mob, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = mob
+					var/obj/item/organ/external/BP = pick(H.bodyparts)
+					BP.min_broken_damage = max(10, initial(BP.min_broken_damage) - 30)
+					to_chat(mob, "<span class='notice'>You feel like your [BP.name] is not as strong as it was before..</span>")
 
 	deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 		if(istype(mob, /mob/living/carbon/human))
@@ -644,14 +647,15 @@
 	max_stage = 3
 	cooldown = 60
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		if(holder.stage	== 1)
-			to_chat(mob, "<span class='notice'>[pick("You heard something.", "Random thoughts are appearing inside your mind.", "Something is not right.")]</span>")
-		else if(holder.stage == 2)
-			to_chat(mob, "<span class='warning'>[pick("You panic hearing so much random words.", "You can't understand what is going on with your head.")]</span>")
-		else if(holder.stage == 3)
-			mob.dna.check_integrity()
-			mob.dna.SetSEState(REMOTETALKBLOCK,1)
-			domutcheck(mob, null)
+		switch(holder.stage)
+			if(1)
+				to_chat(mob, "<span class='notice'>[pick("You heard something.", "Random thoughts are appearing inside your mind.", "Something is not right.")]</span>")
+			if(2)
+				to_chat(mob, "<span class='warning'>[pick("You panic hearing so much random words.", "You can't understand what is going on with your head.")]</span>")
+			if(3)
+				mob.dna.check_integrity()
+				mob.dna.SetSEState(REMOTETALKBLOCK,1)
+				domutcheck(mob, null)
 
 /datum/disease2/effect/mind
 	name = "Lazy Mind Syndrome"
@@ -867,13 +871,14 @@
 	var/target_nutrition = 400
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 		var/speed = 0
-		if(holder.stage	== 1)
-			speed = 5
-		else if(holder.stage == 2)
-			speed = 10
-		else if(holder.stage == 3)
-			speed = 30
-			mob.overeatduration = 0
+		switch(holder.stage)
+			if(1)
+				speed = 5
+			if(2)
+				speed = 10
+			if(3)
+				speed = 30
+				mob.overeatduration = 0
 
 		var/delta = target_nutrition - mob.nutrition
 		delta = min(delta, speed)
@@ -934,22 +939,24 @@
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 		if(istype(mob, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = mob
-			if(holder.stage >= 1 && holder.stage <= 3)
-				to_chat(mob, "<span class='warning'>[pick("Your scalp itches.", "Your skin feels flakey.")]</span>")
+
 			if((is_face_bald(H) && is_bald(H)) || !is_race_valid(H.species.name))
 				return
-			if(holder.stage >= 4 && holder.stage <= 6)
-				to_chat(mob, "<span class='warning'>[pick("Random hairs start to fall out.", "You feel more bald with every second.")]</span>")
-			if(holder.stage == 7)
-				if(!is_face_bald(H))
-					to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
-					spawn(50)
-						shed(H, TRUE)
-			if(holder.stage == 8)
-				if(!is_face_bald(H) || !is_bald(H))
-					to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
-					spawn(50)
-						shed(H, FALSE)
+			switch(holder.stage)
+				if(1,2,3)
+					to_chat(mob, "<span class='warning'>[pick("Your scalp itches.", "Your skin feels flakey.")]</span>")
+				if(4,5,6)
+					to_chat(mob, "<span class='warning'>[pick("Random hairs start to fall out.", "You feel more bald with every second.")]</span>")
+				if(7)
+					if(!is_face_bald(H))
+						to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
+						spawn(50)
+							shed(H, TRUE)
+				if(8)
+					if(!is_face_bald(H) || !is_bald(H))
+						to_chat(H, "<span class='danger'>Your hair starts to fall out in clumps...</span>")
+						spawn(50)
+							shed(H, FALSE)
 
 /datum/disease2/effect/hair/proc/is_race_valid(race)
 	if(race == HUMAN || race == TAJARAN)
