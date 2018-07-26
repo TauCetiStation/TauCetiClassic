@@ -134,7 +134,7 @@
 			/area/comms
 			)
 	if(!areas)
-		areas = teleportlocs
+		areas = teleportlocs.Copy()
 		for(var/i in areas)
 			if(is_type_in_list(areas[i], black_list_areas))
 				areas -= i
