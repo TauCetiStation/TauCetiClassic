@@ -2,7 +2,7 @@
   <div class="itemContent">
     {{:helper.link('Close', 'gear', {'close' : '1'}, null, 'fixedLeft')}}
 	{{if data.symptomdesc}}
-		{{:helper.link('Back', 'gear', {'back' : '1'}, null, 'fixedLeft')}}
+		{{:helper.link('Back', 'arrowreturnthick-1-w', {'back' : '1'}, null, 'fixedLeft')}}
 	{{/if}}
   </div>
 </div>
@@ -34,15 +34,15 @@
 		</div>
 		<div class='item'>
 		  {{:helper.link('Irradiate', 'radiation', {'rad' : 1})}}
-		  {{:helper.link('Inject sleep-toxin', 'trash', {'sleeptoxin' : 1}, data.sleeptoxinsupply > 0 ? null : 'disabled')}}
+		  {{:helper.link('Inject sleep-toxin', 'circle-minus', {'sleeptoxin' : 1}, data.sleeptoxinsupply > 0 ? null : 'disabled')}}
 		</div>
 		<div class='item'>
-		  {{:helper.link('Inject food', 'trash', {'food' : 1}, data.food_supply > 0 ? null : 'disabled')}}
-		  {{:helper.link('Inject toxin', 'trash', {'toxin' : 1}, data.toxinsupply > 0 ? null : 'disabled')}}
+		  {{:helper.link('Inject food', 'circle-plus', {'food' : 1}, data.food_supply > 0 ? null : 'disabled')}}
+		  {{:helper.link('Inject toxin', 'circle-plus', {'toxin' : 1}, data.toxinsupply > 0 ? null : 'disabled')}}
 		</div>
 		<div class='item'>
-		  {{:helper.link('Inject synaptizine', 'trash', {'synaptizine' : 1}, data.synaptizinesupply > 0 ? null : 'disabled')}}
-		  {{:helper.link('Inject phoron', 'trash', {'phoron' : 1}, data.phoronsupply > 0 ? null : 'disabled')}}
+		  {{:helper.link('Inject synaptizine', 'alert', {'synaptizine' : 1}, data.synaptizinesupply > 0 ? null : 'disabled')}}
+		  {{:helper.link('Inject phoron', 'alert', {'phoron' : 1}, data.phoronsupply > 0 ? null : 'disabled')}}
 		</div>
 
 		<div class="statusDisplay" style="height: 120px; overflow: auto;">
@@ -171,7 +171,7 @@
 					</div>
 				
 					<div>
-						{{:helper.link('Info', 'trash', {'symptominfo' : value.reference})}}
+						{{:helper.link('Info', 'help', {'symptominfo' : value.reference})}}
 					</div>
 				</div>
 				{{/for}}
