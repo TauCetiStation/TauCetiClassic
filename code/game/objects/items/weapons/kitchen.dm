@@ -47,12 +47,56 @@
 	if(contents.len)
 		var/obj/item/weapon/reagent_containers/food/snacks/toEat = contents[1]
 		if(istype(toEat))
-			if(CanEat(user, M, toEat, "eat"))
-				toEat.On_Consume(M, user)
-				if(toEat)
-					qdel(toEat)
-				overlays.Cut()
+			if(!CanEat(user, M, toEat, "eat"))
 				return
+			if(istype(M, /mob/living/carbon))
+				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
+				if(M == user)								//If you're eating it yourself
+					if (fullness <= 50)
+						to_chat(M, "<span class='rose'>You hungrily swallow food from [src]!</span>")
+					if (fullness > 50 && fullness <= 150)
+						to_chat(M, "<span class='notice'>You hungrily begin to chow food from [src].</span>")
+					if (fullness > 150 && fullness <= 350)
+						to_chat(M, "<span class='notice'>You eat food from [src].</span>")
+					if (fullness > 350 && fullness <= 550)
+						to_chat(M, "<span class='notice'>You unwillingly put in your mouth food from [src].</span>")
+					if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
+						to_chat(M, "<span class='rose'>You cannot force any more of [src] contents to go down your throat.</span>")
+						return 0
+				else
+					if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
+
+						if (fullness <= (550 * (1 + M.overeatduration / 1000)))
+							for(var/mob/O in viewers(world.view, user))
+								O.show_message("<span class='rose'>[user] attempts to feed [M] food from [src].</span>", 1)
+						else
+							for(var/mob/O in viewers(world.view, user))
+								O.show_message("<span class='rose'>[user] cannot force anymore of food from [src] down [M]'s throat.</span>", 1)
+								return 0
+
+						if(!do_mob(user, M)) return
+
+						M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed contents of [src.name] by [user.name] ([user.ckey])</font>")
+						user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed contents of [src.name] by [M.name] ([M.ckey])</font>")
+						msg_admin_attack("[key_name(user)] fed [key_name(M)] with contents of [src.name] (INTENT: [uppertext(user.a_intent)])")
+
+						for(var/mob/O in viewers(world.view, user))
+							O.show_message("<span class='rose'>[user] feeds [M] from [src].</span>", 1)
+
+					else
+						to_chat(user, "This creature does not seem to have a mouth!</span>")
+						return
+				if(toEat.reagents)								//Handle ingestion of the reagent.
+					toEat.On_Consume(M)
+					playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+					toEat.reagents.trans_to_ingest(M, toEat.reagents.total_volume)
+			if(toEat)
+				qdel(toEat)
+			overlays.Cut()
+
+
+
+		return
 
 /*
  * Spoons
@@ -95,23 +139,11 @@
 	force = 2
 	icon_state = "sticks"
 
-/obj/item/weapon/kitchen/utensil/pfork
+/obj/item/weapon/kitchen/utensil/fork/pfork
 	name = "plastic fork"
 	desc = "Yay, no washing up to do."
 	icon_state = "pfork"
 	force = 0
-
-
-/obj/item/weapon/kitchen/utensil/pfork/afterattack(atom/target, mob/user, proximity)  //make them useful or some slow soap for plastic. Just copy-paste from usual fork
-	if(istype(target,/obj/item/weapon/reagent_containers/food/snacks))	return // fork is not only for cleanning
-	if(!proximity) return
-	//I couldn't feasibly  fix the overlay bugs caused by cleaning items we are wearing.
-	//So this is a workaround. This also makes more sense from an IC standpoint. ~Carn
-	if(istype(target,/obj/effect/decal/cleanable) && !user.is_busy(target))
-		user.visible_message("<span class='warning'>[user] begins to clean \the [target.name].</span>","<span class='notice'>You begin to clean \the [target.name].</span>")
-		if(do_after(user, 60, target = target))
-			user.visible_message("<span class='warning'>[user] scrub \the [target.name] out.</span>","<span class='notice'>You scrub \the [target.name] out.</span>")
-			qdel(target)
 
 /*
  * Kitchen knives

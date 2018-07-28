@@ -210,6 +210,12 @@
 /proc/CanEat(user, mob, food, eatverb = "consume")
 	if(ishuman(mob))
 		var/mob/living/carbon/human/Feeded = mob
+		if(Feeded.species.flags[IS_SYNTHETIC])
+			if(Feeded == user)
+				to_chat(Feeded, "<span class='rose'>You have a monitor for a head, where do you think you're going to put that?</span>")
+			else
+				to_chat(Feeded, "<span class='rose'>They have a monitor for a head, where do you think you're going to put that?</span>")
+			return FALSE
 		if(Feeded.head)
 			var/obj/item/Head = Feeded.head
 			if(Head.flags & HEADCOVERSMOUTH)

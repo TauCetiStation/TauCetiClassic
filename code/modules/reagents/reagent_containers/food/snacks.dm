@@ -50,11 +50,6 @@
 	if(istype(M, /mob/living/carbon))
 		var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 		if(M == user)								//If you're eating it yourself
-			if(istype(M,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if(H.species.flags[IS_SYNTHETIC])
-					to_chat(H, "<span class='rose'>You have a monitor for a head, where do you think you're going to put that?</span>")
-					return
 			if (fullness <= 50)
 				to_chat(M, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
 			if (fullness > 50 && fullness <= 150)
@@ -67,12 +62,6 @@
 				to_chat(M, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
 				return 0
 		else
-			if(istype(M,/mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if(H.species.flags[IS_SYNTHETIC])
-					to_chat(H, "<span class='rose'>They have a monitor for a head, where do you think you're going to put that?</span>")
-					return
-
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
 				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
