@@ -298,6 +298,7 @@
 
 /obj/item/clothing/suit/armor/syndiassault
 	name = "assault armor"
+	desc = "Standard Security gear. Protects body from impacts."
 	icon_state = "assaultarmor"
 	item_state = "assaultarmor"
 	flags = THICKMATERIAL
@@ -308,3 +309,50 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDETAIL
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
+
+/obj/item/clothing/suit/armor/ertarmor_cmd
+	name = "emergency response team commander armor"
+	desc = "A armor worn by the commander of a NanoTrasen Emergency Response Team. Has blue highlights."
+	icon_state = "ertarmor_cmd"
+	item_state = "ertarmor_cmd"
+	flags = THICKMATERIAL
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	slowdown = 0.5
+	armor = list(melee = 60, bullet = 65, laser = 55, energy = 30, bomb = 50, bio = 0, rad = 30)
+	siemens_coefficient = 0.2
+	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/armor/ertarmor_sec
+	name = "emergency response team security armor"
+	desc = "A armor worn by security members of a NanoTrasen Emergency Response Team. Has red highlights."
+	icon_state = "ertarmor_sec"
+	item_state = "ertarmor_sec"
+	flags = THICKMATERIAL
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	slowdown = 0.5
+	armor = list(melee = 65, bullet = 55, laser = 55, energy = 25, bomb = 50, bio = 0, rad = 20)
+	siemens_coefficient = 0.2
+	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/armor/ertarmor_med
+	name = "emergency response team medical armor"
+	desc = "A armor worn by medical members of a NanoTrasen Emergency Response Team. Has white highlights."
+	icon_state = "ertarmor_med"
+	item_state = "ertarmor_med"
+	flags = THICKMATERIAL
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	armor = list(melee = 55, bullet = 45, laser = 40, energy = 20, bomb = 50, bio = 20, rad = 50)
+	siemens_coefficient = 0.2
+	flags_inv = HIDEJUMPSUIT
+
+/obj/item/clothing/suit/armor/ertarmor_eng
+	name = "emergency response team engineer armor"
+	desc = "A suit worn by the engineering of a NanoTrasen Emergency Response Team. Has orange highlights."
+	icon_state = "ertarmor_eng"
+	item_state = "ertarmor_eng"
+	flags = THICKMATERIAL
+	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
+	slowdown = 0.5
+	armor = list(melee = 55, bullet = 45, laser = 45, energy = 35, bomb = 50, bio = 0, rad = 80)
+	siemens_coefficient = 0.2
+	flags_inv = HIDEJUMPSUIT

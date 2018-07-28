@@ -98,7 +98,7 @@
 
 	if(!gibbed)
 		emote("deathgasp") //let the world KNOW WE ARE DEAD
-
+		overlays -= shadowling_eyes
 		update_canmove()
 
 	tod = worldtime2text()		//weasellos time of death patch

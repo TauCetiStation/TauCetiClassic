@@ -85,7 +85,7 @@
 
 /obj/item/borg/sight/hud/sec/atom_init()
 	. = ..()
-	hud = new /obj/item/clothing/glasses/hud/security(src)
+	hud = new /obj/item/clothing/glasses/hud/security/sun(src)
 
 
 /obj/item/borg/sight/hud/miner

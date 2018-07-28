@@ -82,3 +82,10 @@ var/list/ignore_vision_inside = list(
 	)
 
 var/SHIT_TOGGLED = 0 //Глобальный переключатель непотребства
+
+/var/global/image/shadowling_eyes = generate_ling_eyes()
+
+/proc/generate_ling_eyes()
+	var/image/i = image('icons/mob/shadowling.dmi', null, "shadowling_ms_s", LIGHTING_LAYER + 1)
+	i.plane = LIGHTING_PLANE + 1
+	return i

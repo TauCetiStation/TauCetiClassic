@@ -223,28 +223,6 @@
 /obj/structure/mineral_door/transparent/phoron
 	mineralType = "phoron"
 
-/obj/structure/mineral_door/transparent/phoron/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/weldingtool))
-		var/obj/item/weapon/weldingtool/WT = W
-		if(WT.remove_fuel(0, user))
-			TemperatureAct(100)
-	..()
-
-/obj/structure/mineral_door/transparent/phoron/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if(exposed_temperature > 300)
-		TemperatureAct(exposed_temperature)
-
-/obj/structure/mineral_door/transparent/phoron/proc/TemperatureAct(temperature)
-	for(var/turf/simulated/floor/target_tile in range(2,loc))
-
-		var/phoronToDeduce = temperature/10
-
-		target_tile.assume_gas("phoron", phoronToDeduce)
-		target_tile.hotspot_expose(temperature, 400)
-
-		health -= phoronToDeduce/100
-		CheckHealth()
-
 /obj/structure/mineral_door/transparent/diamond
 	mineralType = "diamond"
 	health = 1000

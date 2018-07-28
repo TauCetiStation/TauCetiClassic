@@ -884,25 +884,20 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 ///Returns a number between -1 to 2
 /mob/living/carbon/human/eyecheck()
 	var/number = 0
-	if(istype(src.head, /obj/item/clothing/head/welding))
-		if(!src.head:up)
-			number += 2
-	if(istype(src.head, /obj/item/clothing/head/helmet/space) && !istype(src.head, /obj/item/clothing/head/helmet/space/sk))
-		number += 2
-	if(istype(src.glasses, /obj/item/clothing/glasses/thermal))
-		number -= 1
-	if(istype(src.glasses, /obj/item/clothing/glasses/sunglasses))
-		number += 1
-	if(istype(src.wear_mask, /obj/item/clothing/mask/gas/welding))
-		var/obj/item/clothing/mask/gas/welding/W = src.wear_mask
+	if(head)
+		var/obj/item/clothing/head/h = head
+		number += h.flash_protection
+	if(glasses)
+		var/obj/item/clothing/glasses/g = glasses
+		number += g.flash_protection
+	if(istype(wear_mask, /obj/item/clothing/mask/gas/welding))
+		var/obj/item/clothing/mask/gas/welding/W = wear_mask
 		if(!W.up)
 			number += 2
-	if(istype(src.glasses, /obj/item/clothing/glasses/welding))
-		var/obj/item/clothing/glasses/welding/W = src.glasses
+	if(istype(head, /obj/item/clothing/head/welding))
+		var/obj/item/clothing/head/welding/W = head
 		if(!W.up)
 			number += 2
-	if(istype(src.glasses, /obj/item/clothing/glasses/night/shadowling))
-		number -= 1
 	return number
 
 

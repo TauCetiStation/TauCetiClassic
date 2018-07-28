@@ -207,12 +207,18 @@
 	else
 		C.drop_item()
 
+/obj/item/weapon/magic/arcane_barrage/dropped(mob/user)
+	if(drop_activate_recharge && Spell && uses != initial(uses))
+		Spell.charge_counter = Spell.charge_max / initial(uses) * uses
+	return ..()
+
 /obj/item/projectile/magic/Arcane_barrage
 	name = "arcane barrage"
 	icon_state = "arcane_bolt"
 	damage = 20
-	damage_type = BURN
 	nodamage = 0
+	flag = "laser"
+	damage_type = BURN
 
 //////////////////////////////////////////////////////////////
 
