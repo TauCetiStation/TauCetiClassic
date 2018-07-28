@@ -41,12 +41,24 @@
 	check_integrity()
 	process_med_hud(M, 1, crit_fail = crit_fail)
 
+/obj/item/clothing/glasses/hud/health/prescription
+	name = "prescription health scanner HUD"
+	desc = "Medical HUD with prescription lenses."
+	icon_state = "med_prescription"
+	prescription = 1
+
 /obj/item/clothing/glasses/hud/security
 	name = "security HUD"
 	desc = "A heads-up display that scans the humans in view and provides accurate data about their ID status and security records."
 	icon_state = "securityhud"
 	body_parts_covered = 0
 	var/global/list/jobs[0]
+
+/obj/item/clothing/glasses/hud/security/prescription
+	name = "prescription security HUD"
+	desc = "Security HUD with prescriptin lenses."
+	icon_state = "sec_prescription"
+	prescription = 1
 
 /obj/item/clothing/glasses/hud/security/jensenshades
 	name = "augmented shades"
