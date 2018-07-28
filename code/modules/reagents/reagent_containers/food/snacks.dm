@@ -48,23 +48,23 @@
 	if(!CanEat(user, M, src, "eat")) return	//tc code
 
 	if(istype(M, /mob/living/carbon))
-		var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
+		var/M.nutrition = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 		if(M == user)								//If you're eating it yourself
-			if (fullness <= 50)
+			if (M.nutrition <= 50)
 				to_chat(M, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
-			if (fullness > 50 && fullness <= 150)
+			if (M.nutrition > 50 && M.nutrition <= 150)
 				to_chat(M, "<span class='notice'>You hungrily begin to eat [src].</span>")
-			if (fullness > 150 && fullness <= 350)
+			if (M.nutrition > 150 && M.nutrition <= 350)
 				to_chat(M, "<span class='notice'>You take a bite of [src].</span>")
-			if (fullness > 350 && fullness <= 550)
+			if (M.nutrition > 350 && M.nutrition <= 550)
 				to_chat(M, "<span class='notice'>You unwillingly chew a bit of [src].</span>")
-			if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
+			if (M.nutrition > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				to_chat(M, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
 				return 0
 		else
 			if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
-				if (fullness <= (550 * (1 + M.overeatduration / 1000)))
+				if (M.nutrition <= (550 * (1 + M.overeatduration / 1000)))
 					for(var/mob/O in viewers(world.view, user))
 						O.show_message("<span class='rose'>[user] attempts to feed [M] [src].</span>", 1)
 				else

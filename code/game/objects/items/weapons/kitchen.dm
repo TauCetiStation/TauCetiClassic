@@ -50,23 +50,22 @@
 			if(!CanEat(user, M, toEat, "eat"))
 				return
 			if(istype(M, /mob/living/carbon))
-				var/fullness = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 				if(M == user)								//If you're eating it yourself
-					if (fullness <= 50)
+					if (M.nutrition <= 50)
 						to_chat(M, "<span class='rose'>You hungrily swallow food from [src]!</span>")
-					if (fullness > 50 && fullness <= 150)
+					if (M.nutrition > 50 && M.nutrition <= 150)
 						to_chat(M, "<span class='notice'>You hungrily begin to chow food from [src].</span>")
-					if (fullness > 150 && fullness <= 350)
+					if (M.nutrition > 150 && M.nutrition <= 350)
 						to_chat(M, "<span class='notice'>You eat food from [src].</span>")
-					if (fullness > 350 && fullness <= 550)
+					if (M.nutrition > 350 && M.nutrition <= 550)
 						to_chat(M, "<span class='notice'>You unwillingly put in your mouth food from [src].</span>")
-					if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
+					if (M.nutrition > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 						to_chat(M, "<span class='rose'>You cannot force any more of [src] contents to go down your throat.</span>")
 						return 0
 				else
 					if(!istype(M, /mob/living/carbon/slime))		//If you're feeding it to someone else.
 
-						if (fullness <= (550 * (1 + M.overeatduration / 1000)))
+						if (M.nutrition <= (550 * (1 + M.overeatduration / 1000)))
 							for(var/mob/O in viewers(world.view, user))
 								O.show_message("<span class='rose'>[user] attempts to feed [M] food from [src].</span>", 1)
 						else
@@ -74,14 +73,14 @@
 								O.show_message("<span class='rose'>[user] cannot force anymore of food from [src] down [M]'s throat.</span>", 1)
 								return 0
 
-						if(!do_mob(user, M)) return
+						if(!do_mob(user, M))
+							return
 
 						M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed contents of [src.name] by [user.name] ([user.ckey])</font>")
 						user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed contents of [src.name] by [M.name] ([M.ckey])</font>")
 						msg_admin_attack("[key_name(user)] fed [key_name(M)] with contents of [src.name] (INTENT: [uppertext(user.a_intent)])")
 
-						for(var/mob/O in viewers(world.view, user))
-							O.show_message("<span class='rose'>[user] feeds [M] from [src].</span>", 1)
+						M.visible_message("<span class='rose'>[user] feeds [M] from [src].</span>", 1)
 
 					else
 						to_chat(user, "This creature does not seem to have a mouth!</span>")
