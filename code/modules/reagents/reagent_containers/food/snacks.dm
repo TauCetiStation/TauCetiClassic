@@ -48,7 +48,6 @@
 	if(!CanEat(user, M, src, "eat")) return	//tc code
 
 	if(istype(M, /mob/living/carbon))
-		var/M.nutrition = M.nutrition + (M.reagents.get_reagent_amount("nutriment") * 25)
 		if(M == user)								//If you're eating it yourself
 			if (M.nutrition <= 50)
 				to_chat(M, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
