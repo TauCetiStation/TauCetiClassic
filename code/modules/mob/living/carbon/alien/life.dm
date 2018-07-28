@@ -51,10 +51,6 @@
 	for(var/obj/item/weapon/grab/G in src)
 		G.process()
 
-	if(client)
-		handle_regular_hud_updates()
-
-
 /mob/living/carbon/alien
 	proc/breathe()
 		if(reagents)
