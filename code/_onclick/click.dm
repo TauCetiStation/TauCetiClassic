@@ -277,7 +277,6 @@
 		playsound(usr.loc, 'sound/weapons/taser2.ogg', 75, 1)
 		LE.Fire(A, src)
 		nutrition = max(nutrition - rand(10, 40), 0)
-		handle_regular_hud_updates()
 	else
 		to_chat(src, "<span class='red'> You're out of energy!  You need food!</span>")
 
