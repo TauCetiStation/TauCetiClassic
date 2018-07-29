@@ -55,7 +55,7 @@
 	return TRUE
 
 /obj/machinery/bodyscanner/attackby(obj/item/weapon/grab/G, mob/user)
-	if(!istype(G, /obj/item/weapon/grab))
+	if(!istype(G))
 		return
 	if(!move_inside_checks(G.affecting, user))
 		return
