@@ -315,7 +315,7 @@ var/global/list/frozen_items = list()
 	time_entered = world.time
 	set_med_status("*SSD*")
 
-/obj/machinery/cryopod/proc/set_med_status(var/mes as text)
+/obj/machinery/cryopod/proc/set_med_status(mes)
 	for(var/datum/data/record/R in data_core.general)
 		if(R.fields["name"] == occupant.real_name)
 			R.fields["p_stat"] = mes
@@ -359,7 +359,7 @@ var/global/list/frozen_items = list()
 	if(usr.is_busy())
 		return
 	visible_message("[usr] starts climbing into the cryo pod.", 3)
-	if(do_after(usr, 20, target = src) && usr)
+	if(do_after(usr, 20, target = src))
 		if(occupant)
 			to_chat(usr, "<span class='notice'><B>The cryo pod is in use.</B></span>")
 			return
