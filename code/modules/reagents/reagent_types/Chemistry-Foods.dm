@@ -7,15 +7,16 @@
 /datum/reagent/consumable/on_general_digest(mob/living/M)
 	..()
 	if(volume > last_volume)
-		last_volume = volume
-		var/to_add = rand(0, volume) * nutriment_factor
-		M.reagents.add_reagent("nutriment", (volume * nutriment_factor) - to_add)
-		if(diet_flags & DIET_CARN|DIET_HERB)
+		var/to_add = rand(0, volume - last_volume) * nutriment_factor * custom_metabolism
+		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * custom_metabolism) - to_add)
+		if(diet_flags & DIET_MEAT|DIET_PLANT|DIET_DAIRY)
 			M.reagents.add_reagent("nutriment", to_add)
-		else if(diet_flags & DIET_CARN)
+		else if(diet_flags & DIET_MEAT)
 			M.reagents.add_reagent("protein", to_add)
-		else if(diet_flags & DIET_HERB)
+		else if(diet_flags & DIET_MEAT)
 			M.reagents.add_reagent("plantmatter", to_add)
+		else if(diet_flags & DIET_DAIRY)
+			M.reagents.add_reagent("dairy", to_add)
 	return TRUE
 
 /datum/reagent/nutriment
@@ -44,10 +45,10 @@
 	name = "Protein"
 	id = "protein"
 	description = "Various essential proteins and fats commonly found in animal flesh and blood."
-	diet_flags = DIET_CARN | DIET_OMNI
+	diet_flags = DIET_MEAT
 	taste_message = "meat"
 
-/datum/reagent/nutriment/protein/on_skrell_digest(mob/living/M, alien)
+/datum/reagent/nutriment/protein/on_skrell_digest(mob/living/M)
 	..()
 	M.adjustToxLoss(2 * REM)
 	return FALSE
@@ -56,8 +57,20 @@
 	name = "Plant-matter"
 	id = "plantmatter"
 	description = "Vitamin-rich fibers and natural sugars commonly found in fresh produce."
-	diet_flags = DIET_HERB | DIET_OMNI
+	diet_flags = DIET_MEAT
 	taste_message = "plant matter"
+
+/datum/reagent/consumable/nutriment/dairy // Milk-based biomatter.
+	name = "dairy"
+	id = "dairy"
+	description = "A tasty substance that comes out of cows who eat lotsa grass"
+	diet_flags = DIET_DAIRY
+	taste_message = "dairy"
+
+/datum/reagent/nutriment/dairy/on_skrell_digest(mob/living/M) // Is not as poisonous to skrell.
+	..()
+	M.adjustToxLoss(1 * REM)
+	return FALSE
 
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
@@ -67,7 +80,7 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300" // rgb: 121, 35, 0
 	taste_message = "salt"
-	diet_flags = DIET_CARN | DIET_OMNI
+	diet_flags = DIET_MEAT
 
 /datum/reagent/consumable/ketchup
 	name = "Ketchup"
@@ -77,7 +90,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#731008" // rgb: 115, 16, 8
 	taste_message = "ketchup"
-	diet_flags = DIET_HERB | DIET_OMNI
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/flour
 	name = "Flour"
@@ -87,7 +100,7 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#F5EAEA" // rgb: 245, 234, 234
 	taste_message = "flour"
-	diet_flags = DIET_HERB | DIET_OMNI
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/capsaicin
 	name = "Capsaicin Oil"
@@ -190,7 +203,7 @@
 	color = "#B31008" // rgb: 139, 166, 233
 	custom_metabolism = FOOD_METABOLISM
 	taste_message = "<font color='lightblue'>cold</span>"
-	diet_flags = DIET_HERB | DIET_OMNI
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/frostoil/on_general_digest(mob/living/M)
 	..()
@@ -222,7 +235,7 @@
 	reagent_state = SOLID
 	// no color (ie, black)
 	taste_message = "pepper"
-	diet_flags = DIET_HERB | DIET_OMNI
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/coco
 	name = "Coco Powder"
@@ -232,7 +245,7 @@
 	nutriment_factor = 10 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "cocoa"
-	diet_flags = DIET_HERB | DIET_OMNI
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Chocolate"
@@ -242,7 +255,7 @@
 	nutriment_factor = 4 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
 	taste_message = "chocolate"
-	diet_flags = DIET_HERB | DIET_OMNI
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M)
 	..()
@@ -333,7 +346,7 @@
 	nutriment_factor = 40 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "oil"
-	diet_flags = DIET_HERB | DIET_OMNI
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
 	if (!istype(T)) return
@@ -401,7 +414,7 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_message = "rice"
-	diet_flags = DIET_HERB | DIET_OMNI
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
@@ -411,7 +424,7 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#801E28" // rgb: 128, 30, 40
 	taste_message = "cherry jelly"
-	diet_flags = DIET_HERB | DIET_OMNI
+	diet_flags = DIET_PLANT
 
 /datum/reagent/consumable/egg
 	name = "Egg"
@@ -420,7 +433,7 @@
 	reagent_state = LIQUID
 	color = "#F0C814"
 	taste_message = "eggs"
-	diet_flags = DIET_CARN | DIET_OMNI
+	diet_flags = DIET_MEAT
 
 /datum/reagent/consumable/cheese
 	name = "Cheese"
@@ -429,7 +442,7 @@
 	reagent_state = SOLID
 	color = "#FFFF00"
 	taste_message = "cheese"
-	diet_flags = DIET_CARN | DIET_OMNI
+	diet_flags = DIET_DAIRY
 
 /datum/reagent/consumable/beans
 	name = "Refried beans"
@@ -438,7 +451,7 @@
 	reagent_state = LIQUID
 	color = "#684435"
 	taste_message = "burritos"
-	diet_flags = DIET_CARN | DIET_OMNI
+	diet_flags = DIET_MEAT
 
 /datum/reagent/consumable/bread
 	name = "Bread"
@@ -447,4 +460,4 @@
 	reagent_state = SOLID
 	color = "#9C5013"
 	taste_message = "bread"
-	diet_flags = DIET_HERB | DIET_OMNI
+	diet_flags = DIET_PLANT

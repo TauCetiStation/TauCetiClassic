@@ -153,7 +153,7 @@
 	description = "An opaque white liquid produced by the mammary glands of mammals."
 	color = "#DFDFDF" // rgb: 223, 223, 223
 	taste_message = "milk"
-	diet_flags = DIET_CARN | DIET_OMNI
+	diet_flags = DIET_DAIRY
 
 /datum/reagent/consumable/drink/milk/on_general_digest(mob/living/M)
 	..()
@@ -384,7 +384,7 @@
 	color = "#AEE5E4" // rgb" 174, 229, 228
 	adj_temp = -9
 	taste_message = "milkshake"
-	diet_flags = DIET_CARN | DIET_OMNI
+	diet_flags = DIET_DAIRY
 
 /datum/reagent/consumable/drink/cold/milkshake/on_general_digest(mob/living/M)
 	..()
