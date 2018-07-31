@@ -2257,3 +2257,66 @@ datum
 	var/turf/T = get_turf(holder.my_atom)
 	if(istype(T))
 		new /obj/item/stack/sheet/mineral/deuterium(T, created_volume)
+
+/datum/chemical_reaction/hair_dye
+	name = "Hair Dye"
+	id = "whitehairdye"
+	result = "whitehairdye"
+	required_reagents = list("lube" = 1, "sodiumchloride" = 1)
+	result_amount = 2
+
+/datum/chemical_reaction/hair_dye/red
+	name = "Red Hair Dye"
+	id = "redhairdye"
+	result = "redhairdye"
+	required_reagents = list("hairdye" = 1, "iron" = 1)
+	result_amount = 1 // They don't mix, instead they react.
+
+/datum/chemical_reaction/hair_dye/blue
+	name = "Blue Hair Dye"
+	id = "bluehairdye"
+	result = "bluehairdye"
+	required_reagents = list("hairdye" = 1, "copper" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye/green
+	name = "Green Hair Dye"
+	id = "greenhairdye"
+	result = "greenhairdye"
+	required_reagents = list("hairdye" = 1, "chlorine" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye/black
+	name = "Black Hair Dye"
+	id = "blackhairdye"
+	result = "blackhairdye"
+	required_reagents = list("hairdye" = 1, "carbon" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye/brown
+	name = "Brown Hair Dye"
+	id = "brownhairdye"
+	result = "brownhairdye"
+	required_reagents = list("hairdye" = 1, "sulfur" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye/blond
+	name = "Blond Hair Dye"
+	id = "blondhairdye"
+	result = "blondhairdye"
+	required_reagents = list("hairdye" = 1, "sugar" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/unholywater
+	name = "Unholy Water"
+	id = "unholywater"
+	result = "unholywater"
+	required_reagents = list("water" = 1, "ectoplasm" = 1)
+	result_amount = 1 // Because rules of logic shouldn't apply here either.
+
+/datum/chemical_reaction/hair_growth_accelerator
+	name = "Hair Growth Accelerator"
+	id = "hair_growth_accelerator"
+	result = "hair_growth_accelerator"
+	required_reagents = list("ryetalyn" = 1, "anti_toxin" = 1, "sugar" = 1)
+	result_amount = 3
