@@ -11,7 +11,7 @@
 			H.nutrition += nutriment_factor	// For hunger and fatness
 	return TRUE
 
-/datum/reagent/consumable/nutriment
+/datum/reagent/nutriment
 	name = "Nutriment"
 	id = "nutriment"
 	description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
@@ -20,13 +20,15 @@
 	color = "#664330" // rgb: 102, 67, 48
 	taste_message = "bland food"
 
-/datum/reagent/consumable/nutriment/on_general_digest(mob/living/M)
+/datum/reagent/nutriment/on_general_digest(mob/living/M)
 	..()
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.can_eat(diet_flags))
-			if(prob(50))
-				M.adjustBruteLoss(-1)
+	if(istype(M))
+		M.nutrition += nutriment_factor
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(H.can_eat(diet_flags))
+				if(prob(50))
+					M.adjustBruteLoss(-1)
 
 /*
 				// If overeaten - vomit and fall down
@@ -42,15 +44,14 @@
 					M.updatehealth()
 */
 
-
-/datum/reagent/consumable/nutriment/protein // Meat-based protein, digestable by carnivores and omnivores, worthless to herbivores
+/datum/reagent/nutriment/protein // Meat-based protein, digestable by carnivores and omnivores, worthless to herbivores
 	name = "Protein"
 	id = "protein"
 	description = "Various essential proteins and fats commonly found in animal flesh and blood."
 	diet_flags = DIET_CARN | DIET_OMNI
 	taste_message = "meat"
 
-/datum/reagent/consumable/nutriment/protein/on_skrell_digest(mob/living/M, alien)
+/datum/reagent/nutriment/protein/on_skrell_digest(mob/living/M, alien)
 	..()
 	M.adjustToxLoss(2 * REM)
 	return FALSE
@@ -264,20 +265,16 @@
 	id = "coco"
 	description = "A fatty, bitter paste made from coco beans."
 	reagent_state = SOLID
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 10 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "cocoa"
-
-/datum/reagent/consumable/coco/on_general_digest(mob/living/M)
-	..()
-	M.nutrition += nutriment_factor
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Chocolate"
 	id = "hot_coco"
 	description = "Made with love! And cocoa beans."
 	reagent_state = LIQUID
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 4 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
 	taste_message = "chocolate"
 
@@ -285,7 +282,6 @@
 	..()
 	if (M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (5 * TEMPERATURE_DAMAGE_COEFFICIENT))
-	M.nutrition += nutriment_factor
 
 /datum/reagent/consumable/psilocybin
 	name = "Psilocybin"
@@ -330,14 +326,13 @@
 	name = "Sprinkles"
 	id = "sprinkles"
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
-	nutriment_factor = 1 * REAGENTS_METABOLISM
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#FF00FF" // rgb: 255, 0, 255
 	taste_message = "sweetness"
 
-/datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
+/*/datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
 	..()
-	M.nutrition += nutriment_factor
-	/*if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden")) //if we want some FUN and FEATURES we should uncomment it
+	if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden")) //if we want some FUN and FEATURES we should uncomment it
 		if(!M) M = holder.my_atom
 		M.heal_bodypart_damage(1, 1)
 		M.nutrition += nutriment_factor
@@ -369,13 +364,9 @@
 	id = "cornoil"
 	description = "An oil derived from various types of corn."
 	reagent_state = LIQUID
-	nutriment_factor = 20 * REAGENTS_METABOLISM
+	nutriment_factor = 40 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "oil"
-
-/datum/reagent/consumable/cornoil/on_general_digest(mob/living/M)
-	..()
-	M.nutrition += nutriment_factor
 
 /datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
 	if (!istype(T)) return
@@ -404,27 +395,22 @@
 	id = "dry_ramen"
 	description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
 	reagent_state = SOLID
-	nutriment_factor = 1 * REAGENTS_METABOLISM
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen coated with what might just be your tears"
-
-/datum/reagent/consumable/dry_ramen/on_general_digest(mob/living/M)
-	..()
-	M.nutrition += nutriment_factor
 
 /datum/reagent/consumable/hot_ramen
 	name = "Hot Ramen"
 	id = "hot_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 10 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
 /datum/reagent/consumable/hot_ramen/on_general_digest(mob/living/M)
 	..()
-	M.nutrition += nutriment_factor
-	if (M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
+	if(M.bodytemperature < BODYTEMP_NORMAL)//310 is the normal bodytemp. 310.055
 		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (10 * TEMPERATURE_DAMAGE_COEFFICIENT))
 
 /datum/reagent/consumable/hell_ramen
@@ -432,13 +418,12 @@
 	id = "hell_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 10 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
 /datum/reagent/consumable/hell_ramen/on_general_digest(mob/living/M)
 	..()
-	M.nutrition += nutriment_factor
 	M.bodytemperature += 10 * TEMPERATURE_DAMAGE_COEFFICIENT
 
 /datum/reagent/consumable/rice
@@ -446,26 +431,18 @@
 	id = "rice"
 	description = "Enjoy the great taste of nothing."
 	reagent_state = SOLID
-	nutriment_factor = 1 * REAGENTS_METABOLISM
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_message = "rice"
-
-/datum/reagent/consumable/rice/on_general_digest(mob/living/M)
-	..()
-	M.nutrition += nutriment_factor
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
 	id = "cherryjelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	reagent_state = LIQUID
-	nutriment_factor = 1 * REAGENTS_METABOLISM
+	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#801E28" // rgb: 128, 30, 40
 	taste_message = "cherry jelly"
-
-/datum/reagent/consumable/cherryjelly/on_general_digest(mob/living/M)
-	..()
-	M.nutrition += nutriment_factor
 
 /datum/reagent/consumable/egg
 	name = "Egg"
