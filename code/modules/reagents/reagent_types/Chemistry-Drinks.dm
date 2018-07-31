@@ -3,7 +3,6 @@
 	id = "drink"
 	description = "Uh, some kind of drink."
 	reagent_state = LIQUID
-	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#E78108" // rgb: 231, 129, 8
 	custom_metabolism = DRINK_METABOLISM
 	var/adj_dizzy = 0
@@ -13,7 +12,6 @@
 
 /datum/reagent/consumable/drink/on_general_digest(mob/living/M)
 	..()
-	M.nutrition += nutriment_factor
 	if(adj_dizzy)
 		M.dizziness = max(0,M.dizziness + adj_dizzy)
 	if(adj_drowsy)
@@ -155,6 +153,7 @@
 	description = "An opaque white liquid produced by the mammary glands of mammals."
 	color = "#DFDFDF" // rgb: 223, 223, 223
 	taste_message = "milk"
+	diet_flags = DIET_CARN | DIET_OMNI
 
 /datum/reagent/consumable/drink/milk/on_general_digest(mob/living/M)
 	..()
@@ -163,20 +162,13 @@
 	if(holder.has_reagent("capsaicin"))
 		holder.remove_reagent("capsaicin", 10 * REAGENTS_METABOLISM)
 
-/datum/reagent/consumable/drink/milk/on_skrell_digest(mob/living/M)
-	..()
-	M.adjustToxLoss(2 * REM)
-	return FALSE
-
 /datum/reagent/consumable/drink/milk/soymilk
 	name = "Soy Milk"
 	id = "soymilk"
 	description = "An opaque white liquid made from soybeans."
 	color = "#DFDFC7" // rgb: 223, 223, 199
 	taste_message = "fake milk"
-
-/datum/reagent/consumable/drink/milk/soymilk/on_skrell_digest(mob/living/M) // Can't digest milk, but soy milk isn't quite milk.
-	return TRUE
+	diet_flags = DIET_ALL
 
 /datum/reagent/consumable/drink/milk/cream
 	name = "Cream"
@@ -392,6 +384,7 @@
 	color = "#AEE5E4" // rgb" 174, 229, 228
 	adj_temp = -9
 	taste_message = "milkshake"
+	diet_flags = DIET_CARN | DIET_OMNI
 
 /datum/reagent/consumable/drink/cold/milkshake/on_general_digest(mob/living/M)
 	..()
@@ -415,11 +408,6 @@
 			if(istype(M, /mob/living/carbon/slime))
 				M.bodytemperature -= rand(15,20)
 	data++
-
-/datum/reagent/consumable/drink/cold/milkshake/on_skrell_digest(mob/living/M)
-	..()
-	M.adjustToxLoss(2 * REM)
-	return FALSE
 
 /datum/reagent/consumable/drink/cold/milkshake/chocolate
 	name = "Chocolate Milkshake"

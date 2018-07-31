@@ -19,7 +19,7 @@
 	var/list/data = null
 	var/volume = 0
 	var/nutriment_factor = 1 * REAGENTS_METABOLISM
-	var/diet_flags = DIET_OMNI | DIET_HERB | DIET_CARN
+	var/diet_flags = DIET_ALL
 	var/custom_metabolism = REAGENTS_METABOLISM
 	var/taste_strength = 1 //how easy it is to taste - the more the easier
 	var/taste_message = "bitterness" //life's bitter by default. Cool points for using a span class for when you're tasting <span class='userdanger'>LIQUID FUCKING DEATH</span>
@@ -87,6 +87,8 @@
 /datum/reagent/proc/on_move(mob/M)
 	return
 
+// This doesn't even work, start EUGH
+
 // Called after add_reagents creates a new reagent.
 /datum/reagent/proc/on_new(data)
 	return
@@ -97,6 +99,8 @@
 
 /datum/reagent/proc/on_update(atom/A)
 	return
+
+/// Everything under now does. end EUGH
 
 /datum/reagent/proc/check_digesting(mob/living/M, alien)
 	if(restrict_species)
@@ -156,6 +160,3 @@
 		result += "[R.name], [R.volume] | "
 
 	return result
-
-// Undefine the alias for REAGENTS_EFFECT_MULTIPLER
-#undef REM

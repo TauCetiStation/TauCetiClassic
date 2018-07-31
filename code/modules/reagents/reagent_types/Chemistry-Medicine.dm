@@ -143,7 +143,9 @@
 	if(M.bodytemperature > BODYTEMP_NORMAL)
 		M.bodytemperature = max(BODYTEMP_NORMAL, M.bodytemperature - (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
 	else if(M.bodytemperature < 311)
-		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))/datum/reagent/kelotane
+		M.bodytemperature = min(BODYTEMP_NORMAL, M.bodytemperature + (40 * TEMPERATURE_DAMAGE_COEFFICIENT))
+
+/datum/reagent/kelotane
 	name = "Kelotane"
 	id = "kelotane"
 	description = "Kelotane is a drug used to treat burns."
@@ -541,3 +543,40 @@
 	M.stuttering = 0
 	M.confused = 0
 	M.reagents.remove_all_type(/datum/reagent/consumable/ethanol, 1 * REM, 0, 1)
+
+/datum/reagent/vitamin //Helps to regen blood and hunger(but doesn't really regen hunger because of the commented code below).
+	name = "Vitamin"
+	id = "vitamin"
+	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
+	reagent_state = SOLID
+	color = "#664330" // rgb: 102, 67, 48
+	taste_message = null
+
+/datum/reagent/vitamin/on_general_digest(mob/living/M)
+	..()
+	if(prob(50))
+		M.adjustBruteLoss(-1)
+		M.adjustFireLoss(-1)
+	/*if(M.nutrition < NUTRITION_LEVEL_WELL_FED) //we are making him WELL FED
+		M.nutrition += 30*/  //will remain commented until we can deal with fat
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/blood_volume = H.vessel.get_reagent_amount("blood")
+		if(!(NO_BLOOD in H.species.flags))//do not restore blood on things with no blood by nature.
+			if(blood_volume < BLOOD_VOLUME_NORMAL && blood_volume)
+				var/datum/reagent/blood/B = locate() in H.vessel.reagent_list
+				B.volume += 0.5
+
+/datum/reagent/lipozine
+	name = "Lipozine" // The anti-nutriment.
+	id = "lipozine"
+	description = "A chemical compound that causes a powerful fat-burning reaction."
+	reagent_state = LIQUID
+	nutriment_factor = 10 * REAGENTS_METABOLISM
+	color = "#BBEDA4" // rgb: 187, 237, 164
+	overdose = REAGENTS_OVERDOSE
+
+/datum/reagent/lipozine/on_general_digest(mob/living/M)
+	..()
+	M.nutrition = max(M.nutrition - nutriment_factor, 0)
+	M.overeatduration = 0

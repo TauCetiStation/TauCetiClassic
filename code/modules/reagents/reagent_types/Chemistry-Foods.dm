@@ -2,13 +2,20 @@
 	name = "Consumable"
 	id = "consumable"
 	taste_message = null
+	var/last_volume = 0 // Check digestion code below.
 
 /datum/reagent/consumable/on_general_digest(mob/living/M)
 	..()
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		if(H.can_eat(diet_flags))	//Make sure the species has it's dietflag set, otherwise it can't digest any nutrients
-			H.nutrition += nutriment_factor	// For hunger and fatness
+	if(volume > last_volume)
+		last_volume = volume
+		var/to_add = rand(0, volume) * nutriment_factor
+		M.reagents.add_reagent("nutriment", (volume * nutriment_factor) - to_add)
+		if(diet_flags & DIET_CARN|DIET_HERB)
+			M.reagents.add_reagent("nutriment", to_add)
+		else if(diet_flags & DIET_CARN)
+			M.reagents.add_reagent("protein", to_add)
+		else if(diet_flags & DIET_HERB)
+			M.reagents.add_reagent("plantmatter", to_add)
 	return TRUE
 
 /datum/reagent/nutriment
@@ -23,26 +30,15 @@
 /datum/reagent/nutriment/on_general_digest(mob/living/M)
 	..()
 	if(istype(M))
-		M.nutrition += nutriment_factor
-		if(ishuman(C))
-			var/mob/living/carbon/human/H = C
-			if(H.can_eat(diet_flags))
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			if(C.can_eat(diet_flags))
+				C.nutrition += nutriment_factor
 				if(prob(50))
-					M.adjustBruteLoss(-1)
-
-/*
-				// If overeaten - vomit and fall down
-				// Makes you feel bad but removes reagents and some effect
-				// from your body
-				if (M.nutrition > 650)
-					M.nutrition = rand (250, 400)
-					M.weakened += rand(2, 10)
-					M.jitteriness += rand(0, 5)
-					M.dizziness = max (0, (M.dizziness - rand(0, 15)))
-					M.druggy = max (0, (M.druggy - rand(0, 15)))
-					M.adjustToxLoss(rand(-15, -5)))
-					M.updatehealth()
-*/
+					C.adjustBruteLoss(-1)
+		else
+			M.nutrition += nutriment_factor
+	return TRUE
 
 /datum/reagent/nutriment/protein // Meat-based protein, digestable by carnivores and omnivores, worthless to herbivores
 	name = "Protein"
@@ -63,43 +59,6 @@
 	diet_flags = DIET_HERB | DIET_OMNI
 	taste_message = "plant matter"
 
-/datum/reagent/consumable/vitamin //Helps to regen blood and hunger
-	name = "Vitamin"
-	id = "vitamin"
-	description = "All the best vitamins, minerals, and carbohydrates the body needs in pure form."
-	reagent_state = SOLID
-	color = "#664330" // rgb: 102, 67, 48
-	taste_message = null
-
-/datum/reagent/consumable/vitamin/on_general_digest(mob/living/M)
-	..()
-	if(prob(50))
-		M.adjustBruteLoss(-1)
-		M.adjustFireLoss(-1)
-	/*if(M.nutrition < NUTRITION_LEVEL_WELL_FED) //we are making him WELL FED
-		M.nutrition += 30*/  //will remain commented until we can deal with fat
-	if(ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/blood_volume = H.vessel.get_reagent_amount("blood")
-		if(!(NO_BLOOD in H.species.flags))//do not restore blood on things with no blood by nature.
-			if(blood_volume < BLOOD_VOLUME_NORMAL && blood_volume)
-				var/datum/reagent/blood/B = locate() in H.vessel.reagent_list
-				B.volume += 0.5
-
-/datum/reagent/consumable/lipozine
-	name = "Lipozine" // The anti-nutriment.
-	id = "lipozine"
-	description = "A chemical compound that causes a powerful fat-burning reaction."
-	reagent_state = LIQUID
-	nutriment_factor = 10 * REAGENTS_METABOLISM
-	color = "#BBEDA4" // rgb: 187, 237, 164
-	overdose = REAGENTS_OVERDOSE
-
-/datum/reagent/consumable/lipozine/on_general_digest(mob/living/M)
-	..()
-	M.nutrition = max(M.nutrition - nutriment_factor, 0)
-	M.overeatduration = 0
-
 /datum/reagent/consumable/soysauce
 	name = "Soysauce"
 	id = "soysauce"
@@ -108,6 +67,7 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#792300" // rgb: 121, 35, 0
 	taste_message = "salt"
+	diet_flags = DIET_CARN | DIET_OMNI
 
 /datum/reagent/consumable/ketchup
 	name = "Ketchup"
@@ -117,6 +77,7 @@
 	nutriment_factor = 5 * REAGENTS_METABOLISM
 	color = "#731008" // rgb: 115, 16, 8
 	taste_message = "ketchup"
+	diet_flags = DIET_HERB | DIET_OMNI
 
 /datum/reagent/consumable/flour
 	name = "Flour"
@@ -126,6 +87,7 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#F5EAEA" // rgb: 245, 234, 234
 	taste_message = "flour"
+	diet_flags = DIET_HERB | DIET_OMNI
 
 /datum/reagent/consumable/capsaicin
 	name = "Capsaicin Oil"
@@ -228,6 +190,7 @@
 	color = "#B31008" // rgb: 139, 166, 233
 	custom_metabolism = FOOD_METABOLISM
 	taste_message = "<font color='lightblue'>cold</span>"
+	diet_flags = DIET_HERB | DIET_OMNI
 
 /datum/reagent/consumable/frostoil/on_general_digest(mob/living/M)
 	..()
@@ -259,6 +222,7 @@
 	reagent_state = SOLID
 	// no color (ie, black)
 	taste_message = "pepper"
+	diet_flags = DIET_HERB | DIET_OMNI
 
 /datum/reagent/consumable/coco
 	name = "Coco Powder"
@@ -268,6 +232,7 @@
 	nutriment_factor = 10 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "cocoa"
+	diet_flags = DIET_HERB | DIET_OMNI
 
 /datum/reagent/consumable/hot_coco
 	name = "Hot Chocolate"
@@ -277,6 +242,7 @@
 	nutriment_factor = 4 * REAGENTS_METABOLISM
 	color = "#403010" // rgb: 64, 48, 16
 	taste_message = "chocolate"
+	diet_flags = DIET_HERB | DIET_OMNI
 
 /datum/reagent/consumable/hot_coco/on_general_digest(mob/living/M)
 	..()
@@ -367,6 +333,7 @@
 	nutriment_factor = 40 * REAGENTS_METABOLISM
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "oil"
+	diet_flags = DIET_HERB | DIET_OMNI
 
 /datum/reagent/consumable/cornoil/reaction_turf(var/turf/simulated/T, var/volume)
 	if (!istype(T)) return
@@ -434,6 +401,7 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_message = "rice"
+	diet_flags = DIET_HERB | DIET_OMNI
 
 /datum/reagent/consumable/cherryjelly
 	name = "Cherry Jelly"
@@ -443,6 +411,7 @@
 	nutriment_factor = 2 * REAGENTS_METABOLISM
 	color = "#801E28" // rgb: 128, 30, 40
 	taste_message = "cherry jelly"
+	diet_flags = DIET_HERB | DIET_OMNI
 
 /datum/reagent/consumable/egg
 	name = "Egg"
@@ -451,11 +420,7 @@
 	reagent_state = LIQUID
 	color = "#F0C814"
 	taste_message = "eggs"
-
-/datum/reagent/consumable/egg/on_skrell_digest(mob/living/M)
-	..()
-	M.adjustToxLoss(2 * REM)
-	return FALSE
+	diet_flags = DIET_CARN | DIET_OMNI
 
 /datum/reagent/consumable/cheese
 	name = "Cheese"
@@ -464,6 +429,7 @@
 	reagent_state = SOLID
 	color = "#FFFF00"
 	taste_message = "cheese"
+	diet_flags = DIET_CARN | DIET_OMNI
 
 /datum/reagent/consumable/beans
 	name = "Refried beans"
@@ -472,6 +438,7 @@
 	reagent_state = LIQUID
 	color = "#684435"
 	taste_message = "burritos"
+	diet_flags = DIET_CARN | DIET_OMNI
 
 /datum/reagent/consumable/bread
 	name = "Bread"
@@ -480,3 +447,4 @@
 	reagent_state = SOLID
 	color = "#9C5013"
 	taste_message = "bread"
+	diet_flags = DIET_HERB | DIET_OMNI
