@@ -103,9 +103,6 @@
 	return
 
 /obj/machinery/computer/security/attack_hand(mob/user)
-	if (src.z > ZLEVEL_EMPTY)
-		to_chat(user, "\red <b>Unable to establish a connection</b>: \black You're too far away from the station!")
-		return
 	if (!network)
 		world.log << "A computer lacks a network at [x],[y],[z]."
 		return
