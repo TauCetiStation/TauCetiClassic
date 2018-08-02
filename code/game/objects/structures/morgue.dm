@@ -76,7 +76,7 @@
 /obj/structure/morgue/process()
 	if(check_delay > world.time)
 		return
-	check_delay = world.time + 100 // every 10 seconds
+	check_delay = world.time + 10 SECONDS
 
 	if (!contents.len)
 		update()
