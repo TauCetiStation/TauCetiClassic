@@ -31,7 +31,6 @@
 	return 1
 
 /obj/machinery/computer/security/ui_interact(mob/user, ui_key = "main", datum/nanoui/ui = null, force_open = 1)
-	if(src.z > ZLEVEL_EMPTY) return
 	if(stat & (NOPOWER|BROKEN)) return
 	if(user.stat) return
 
