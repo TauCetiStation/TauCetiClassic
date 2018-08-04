@@ -1558,6 +1558,28 @@ datum
 			description = "A highly addictive stimulant extracted from the tobacco plant."
 			reagent_state = LIQUID
 			color = "#181818" // rgb: 24, 24, 24
+			custom_metabolism = 0.005
+			restrict_species = list(IPC, DIONA)
+			var/alert_time = 0
+
+			on_mob_life(mob/living/M)
+				if(!..())
+					return
+				if(volume >= 0.85)
+					if(world.time > (alert_time + 90 SECONDS))
+						to_chat(M, pick("<span class='danger'>You feel dizzy and weak</span>"))
+						alert_time = world.time
+					if(prob(60))
+						M.adjustOxyLoss(1)
+				if(volume < 0.7)
+					if(prob(10))
+						M.AdjustStunned(-1)
+						M.AdjustWeakened(-1)
+				if(volume > 1)
+					if(prob(80))
+						M.adjustOxyLoss(1)
+						M.drowsyness = min(40, (M.drowsyness + 2))
+				return TRUE
 
 		ammonia
 			name = "Ammonia"
