@@ -3728,7 +3728,7 @@ datum
 
 /datum/reagent/consumable/ethanol/toxins_special
 	name = "Toxins Special"
-	id = "toxinsspecial"
+	id = "toxins_special"
 	description = "This thing is ON FIRE! CALL THE DAMN SHUTTLE!"
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0

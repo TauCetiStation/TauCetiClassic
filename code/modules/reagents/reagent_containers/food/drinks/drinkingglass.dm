@@ -162,8 +162,8 @@
 					icon_state = "tequillasunriseglass"
 					name = "Tequilla Sunrise"
 					desc = "Oh great, now you feel nostalgic about sunrises back on Terra..."
-				if("phoronspecial")
-					icon_state = "phoronspecialglass"
+				if("toxins_special")
+					icon_state = "toxinsspecialglass"
 					name = "Toxins Special"
 					desc = "Whoah, this thing is on FIRE"
 				if("beepskysmash")
