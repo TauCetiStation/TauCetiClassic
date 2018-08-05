@@ -200,7 +200,7 @@
 	chance_maxm = 100
 	var/passive_message = "" //random message to infected but not actively healing people
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		if(holder.stage == 2 && istype(mob, /mob/living/carbon/human))
+		if(holder.stage == 2 && ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			var/effectiveness = can_heal(H, disease)
 			if(!effectiveness)
@@ -245,9 +245,7 @@
 	if(!parts.len)
 		return
 
-	for(var/obj/item/organ/external/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len))
-			M.updatehealth()
+	M.heal_bodypart_damage(heal_amt, heal_amt)
 	return 1
 
 /datum/disease2/effect/heal/starlight/passive_message_condition(mob/living/carbon/human/M,datum/disease2/disease/disease)
@@ -312,9 +310,7 @@
 	if(prob(5))
 		to_chat(M, "<span class='notice'>The darkness soothes and mends your wounds.</span>")
 
-	for(var/obj/item/organ/external/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5)) //more effective on brute
-			M.updatehealth()
+	M.heal_bodypart_damage(heal_amt, heal_amt * 0.5) //more effective on brute
 	return 1
 
 /datum/disease2/effect/heal/darkness/passive_message_condition(mob/living/carbon/human/M,datum/disease2/disease/disease)
@@ -364,9 +360,7 @@
 	if(!parts.len)
 		return
 
-	for(var/obj/item/organ/external/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len))
-			M.updatehealth()
+	M.heal_bodypart_damage(heal_amt, heal_amt)
 
 	if(active_coma && M.getBruteLoss() + M.getFireLoss() == 0)
 		uncoma(M)
@@ -467,24 +461,62 @@
 			disease.advance_stage()
 			to_chat(mob, "<span class='notice'>You feel smarter.</span>")
 
+	copy(datum/disease2/effectholder/holder_old, datum/disease2/effectholder/holder_new, datum/disease2/effect/effect_old)
+		var/datum/disease2/effect/chance_boost/Z = effect_old
+		activated = Z.activated
+
 ////////////////////////STAGE 4/////////////////////////////////
 
-/*/datum/disease2/effect/gibbingtons
+/datum/disease2/effect/gibbingtons
 	name = "Gibbingtons Syndrome"
-	stage = 4
-	level = 7
+	desc = "The virus synthesizes hydrogen sulphide in the bloodstream, damaging host's veins and arteries. In extreme cases, overdose of hydrogen sulphide may also cause host to explode in a shower of gore."
+	level = 4
+	max_stage = 14
+	cooldown = 30
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		mob.gib()
+		switch(holder.stage)
+			if(1,2,3,4,5)
+				to_chat(mob, "<span class='notice'>[pick("You feel angry for some reason.", "Your skin feels flakey.", "Your skin burns.", "Random small wounds are appearing on your skin.")]</span>")
+			if(6,7,8,9)
+				if(prob(70))
+					mob.reagents.add_reagent("potassium", 10)
+					mob.reagents.add_reagent("water", 10)
+				else
+					to_chat(mob, "<span class='warning'>[pick("You feel chemical reactions inside your body.", "Your skin turns into bubbles that explode after a few seconds.", "Blood appears on your skin. Something is ripping you appart!", "Wounds on your body become worse.", "You feel small explosions inside of you.")]</span>")
+			if(10,11,12,13)
+				if(prob(10) && ishuman(mob))
+					var/mob/living/carbon/human/H = mob
+					var/bodypart = pick(list(BP_R_ARM , BP_L_ARM , BP_R_LEG , BP_L_LEG))
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
+					if (BP && !(BP.status & ORGAN_DESTROYED))
+						mob.emote("scream",,, 1)
+						BP.droplimb(no_explode = FALSE, clean = FALSE, disintegrate = DROPLIMB_BLUNT)
+				else
+					to_chat(mob, "<span class='userdanger'>[pick("Something is ripping you appart!", "IT HURTS!")]</span>")
+					mob.adjustBruteLoss(rand(2,10))
+			if(14)
+				mob.emote("scream",,, 1)
+				mob.apply_effect(5, WEAKEN)
+				mob.make_jittery(50)
+				addtimer(CALLBACK(mob, /mob/.proc/gib), 50)
 
 /datum/disease2/effect/radian
 	name = "Radian's Syndrome"
-	stage = 4
-	level = 7
-	maxm = 3
+	desc = "The virus mutates host's skin cells, increasing exposure to radiation."
+	level = 3
+	max_stage = 3
+	cooldown = 10
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		mob.radiation += (2*holder.multiplier)
+		switch(holder.stage)
+			if(1)
+				to_chat(mob, "<span class='notice'>[pick("You feel warmth.", "You feel weak.")]</span>")
+			if(2)
+				to_chat(mob, "<span class='warning'>[pick("Your skin is flaking.", "You have a headache.")]</span>")
+				mob.apply_effect(5, IRRADIATE, 0)
+			if(3)
+				mob.apply_effect(20, IRRADIATE, 0)
 
-/datum/disease2/effect/deaf
+/*/datum/disease2/effect/deaf
 	name = "Dead Ear Syndrome"
 	stage = 4
 	level = 7
@@ -519,56 +551,85 @@
 	cooldown = 50
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
 		if((holder.stage >= 1 && holder.stage <= 7) || prob(70))
-			to_chat(mob, "<span class='notice'>[pick("You feel very bad, thinking that there are people in the world who drown little tajaras.", "You are useless.", "Why do you exist?", "The world would be better without you.", "If suicide isn't an exit, then what is?", "Maybe they were right after all...", "I wish I hadn't been born.", "I wish I were dead.", "I feel so alone...", "Maybe I should end all of this.", "Everything I do is wrong.", "I am just an unfunny joke.", "Why should I disappoint everyone again?")]</span>")
+			to_chat(mob, "<span class='notice'>[pick("You feel very bad, thinking that there are people in the world who drown little tajaras.", "You are useless.", "Why do you exist?", "The world would be better without you.", "If suicide isn't an exit, then what is?", "Maybe they were right after all...", "I wish I hadn't been born.", "I wish I was dead.", "I feel so alone...", "Maybe I should end all of this.", "Everything I do is wrong.", "I am just an unfunny joke.", "Why should I disappoint everyone again?")]</span>")
 		else if(holder.stage == 8 && mob.stat == CONSCIOUS)
-			if(istype(mob, /mob/living/carbon/human))
+			if(ishuman(mob))
 				var/mob/living/carbon/human/H = mob
-				var/gender = (H.get_visible_gender() == MALE ? "his" : H.get_visible_gender() == FEMALE ? "her" : "their")
-				var/gender2 = (H.get_visible_gender() == MALE ? "he" : H.get_visible_gender() == FEMALE ? "she" : "he")
 				if(prob(90))
 					H.emote("gasp")
-					H.visible_message("<span class='danger'>[H.name] tried to hold [gender] breath but couldn't.</span>")
+					H.visible_message("<span class='danger'>[H] tried to hold \his breath but couldn't.</span>")
 					H.adjustOxyLoss(60)
 				else
-					H.visible_message("<span class='danger'>[H.name] is holding [gender] breath. It looks like [gender2] is trying to commit suicide.</span>")
+					H.visible_message("<span class='danger'>[H] is holding \his breath. It looks like \he is trying to commit suicide.</span>")
 					H.adjustOxyLoss(175 - H.getToxLoss() - H.getFireLoss() - H.getBruteLoss() - H.getOxyLoss())
 				H.updatehealth()
 
-/*/datum/disease2/effect/killertoxins
+/datum/disease2/effect/killertoxins
 	name = "Toxification Syndrome"
-	stage = 4
-	level = 7
+	desc = "The virus causes nausea and irritates the stomach, causing intoxication and occasional vomit."
+	level = 3
+	max_stage = 3
+	cooldown = 10
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		mob.adjustToxLoss(15*holder.multiplier)*/
+		if(prob(20) || holder.stage	== 1)
+			to_chat(mob, "<span class='warning'>[pick("You feel nauseated.", "You feel like you're going to throw up!")]</span>")
+		else if(prob(20) || holder.stage == 2)
+			if(ishuman(mob))
+				var/mob/living/carbon/human/H = mob
+				H.vomit()
+		else if(holder.stage == 3)
+			to_chat(mob, "<span class='userdanger'>[pick("Your stomach hurts.", "You feel a sharp abdominal pain.")]</span>")
+			mob.reagents.add_reagent(pick("plasticide", "toxin", "amatoxin", "phoron", "lexorin", "carpotoxin", "mindbreaker", "plantbgone", "fluorine"), round(rand(1,3), 1)) // some random toxin
 
-/*/datum/disease2/effect/dna
+
+/datum/disease2/effect/dna
 	name = "Reverse Pattern Syndrome"
-	stage = 4
-	level = 7
+	desc = "The virus bonds with the DNA of the host, causing damaging mutations until removed."
+	level = 4
+	max_stage = 3
+	cooldown = 10
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		mob.bodytemperature = max(mob.bodytemperature, 350)
-		scramble(0,mob,10)
-		mob.apply_damage(10, CLONE)
+		if(prob(20) || holder.stage	== 1)
+			to_chat(mob, "<span class='notice'>[pick("For some reason you feel different.", "Your skin feels itchy.", "You feel light headed.")]</span>")
+		else if(prob(20) || holder.stage == 2)
+			to_chat(mob, "<span class='warning'>[pick("Something is changing inside you.", "Your head hurts.")]</span>")
+		else if(holder.stage == 3)
+			scramble(0,mob,10)
+
+	deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
+		mob.remove_any_mutations()
 
 /datum/disease2/effect/organs
 	name = "Shutdown Syndrome"
-	stage = 4
-	level = 7
+	desc = "The virus damages bones and muscle tissue, slowly destroying host's external organs. Very lethal."
+	level = 4
+	max_stage = 7
+	cooldown = 20
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		if(istype(mob, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = mob
-			var/bodypart = pick(list(BP_R_ARM , BP_L_ARM , BP_R_LEG , BP_L_LEG))
-			var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
-			if (!(BP.status & ORGAN_DEAD))
-				BP.status |= ORGAN_DEAD
-				to_chat(H, "<span class='notice'>You can't feel your [BP.name] anymore...</span>")
-				for (var/obj/item/organ/external/CHILD in BP.children)
-					CHILD.status |= ORGAN_DEAD
-			H.update_body()
-		mob.adjustToxLoss(15)
+		switch(holder.stage)
+			if(1,2,3)
+				to_chat(mob, "<span class='notice'>[pick("Your skin feels itchy.", "You feel weaker.")]</span>")
+			if(4,5,6)
+				mob.adjustToxLoss(3)
+				to_chat(mob, "<span class='warning'>[pick("Your arm hurts.", "Your leg hurts.")]</span>")
+			if(7)
+				if(ishuman(mob) && prob(40))
+					var/mob/living/carbon/human/H = mob
+					var/bodypart = pick(list(BP_R_ARM , BP_L_ARM , BP_R_LEG , BP_L_LEG))
+					var/obj/item/organ/external/BP = H.bodyparts_by_name[bodypart]
+					if (!(BP.status & ORGAN_DEAD))
+						BP.status |= ORGAN_DEAD
+						to_chat(H, "<span class='warning'>You can't feel your [BP.name] anymore...</span>")
+						for (var/obj/item/organ/external/CHILD in BP.children)
+							CHILD.status |= ORGAN_DEAD
+					H.update_body()
+				else
+					to_chat(mob, "<span class='userdanger'>[pick("Your hands are trembling and badly hurt.", "You feel your body break apart.")]</span>")
+					mob.apply_effect(20,AGONY,0)
+					mob.adjustBruteLoss(rand(5,15))
 
 	deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		if(istype(mob, /mob/living/carbon/human))
+		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			for (var/obj/item/organ/external/BP in H.bodyparts)
 				BP.status &= ~ORGAN_DEAD
@@ -576,7 +637,7 @@
 					CHILD.status &= ~ORGAN_DEAD
 			H.update_body()
 
-/datum/disease2/effect/immortal
+/*/datum/disease2/effect/immortal
 	name = "Longevity Syndrome"
 	stage = 4
 	level = 7
@@ -612,27 +673,37 @@
 			if(5,6,7)
 				to_chat(mob, "<span class='notice'>[pick("You feel like something is wrong with your bones.", "Your bones creak when you move.")]</span>")
 			if(8)
-				if(istype(mob, /mob/living/carbon/human))
+				if(ishuman(mob))
 					var/mob/living/carbon/human/H = mob
 					var/obj/item/organ/external/BP = pick(H.bodyparts)
 					BP.min_broken_damage = max(10, initial(BP.min_broken_damage) - 30)
 					to_chat(mob, "<span class='notice'>You feel like your [BP.name] is not as strong as it was before..</span>")
 
 	deactivate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		if(istype(mob, /mob/living/carbon/human))
+		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 			for (var/obj/item/organ/external/BP in H.bodyparts)
 				BP.min_broken_damage = initial(BP.min_broken_damage)
 
-/*/datum/disease2/effect/toxins
+/datum/disease2/effect/toxins
 	name = "Hyperacidity"
-	stage = 3
-	level = 6
-	maxm = 3
+	desc = "The virus damages host's stomach, forcing it to produce a lot of acids, causing intoxication."
+	level = 3
+	max_stage = 3
+	cooldown = 20
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		mob.adjustToxLoss((2*holder.multiplier))
+		switch(holder.stage)
+			if(1)
+				to_chat(mob, "<span class='notice'>[pick("You feel an odd gurgle in your stomach.", "You feel nauseated.")]</span>")
+			if(2)
+				to_chat(mob, "<span class='warning'>[pick("Your stomach hurts.", "You feel a nasty pain inside your throat.")]</span>")
+				mob.adjustToxLoss(5)
+			if(3)
+				to_chat(mob, "<span class='warning'>[pick("Your stomach hurts a lot.", "Your skin seems to become more pale.", "You feel confused.", "Your breathing is hot and irregular.")]</span>")
+				mob.adjustToxLoss(10)
+		
 
-/datum/disease2/effect/shakey
+/*/datum/disease2/effect/shakey
 	name = "World Shaking Syndrome"
 	stage = 3
 	level = 6
@@ -671,7 +742,7 @@
 			mob.adjustBrainLoss(5)
 		else if(holder.stage == 3)
 			to_chat(mob, "<span class='userdanger'>[pick("You forgot how to breathe for a moment.", "Who am I?", "You feel very dumb.")]</span>")
-			if(istype(mob, /mob/living/carbon/human) && prob(10))
+			if(ishuman(mob) && prob(10))
 				var/mob/living/carbon/human/H = mob
 				var/obj/item/organ/internal/brain/IO = H.organs_by_name[O_BRAIN]
 				if (IO.damage < IO.min_broken_damage)
@@ -856,7 +927,7 @@
 			mob.eye_blind = max(mob.eye_blind, 2)
 			to_chat(mob, "<span class='userdanger'>[pick("Your eyes burn!", "Your eyes hurt!")]</span>")
 
-			if(istype(mob, /mob/living/carbon/human))
+			if(ishuman(mob))
 				var/mob/living/carbon/human/H = mob
 				var/obj/item/organ/internal/eyes/E = H.organs_by_name[O_EYES]
 				if(E)
@@ -937,7 +1008,7 @@
 	max_stage = 8
 	cooldown = 60
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		if(istype(mob, /mob/living/carbon/human))
+		if(ishuman(mob))
 			var/mob/living/carbon/human/H = mob
 
 			if((is_face_bald(H) && is_bald(H)) || !is_race_valid(H.species.name))

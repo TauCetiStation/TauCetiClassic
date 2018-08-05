@@ -591,26 +591,57 @@ var/list/admin_verbs_hideable = list(
 
 	var/datum/disease2/disease/D = new /datum/disease2/disease()
 
-	var/greater = ((input("Is this a lesser or greater disease?", "Give Disease") in list("Lesser", "Greater")) == "Greater")
+	var/disease_type = input("Is this a lesser or greater disease?", "Give Disease") in list("Lesser", "Greater", "Custom")
+	var/greater = (disease_type == "Greater")
 
-	D.makerandom(greater)
-	if (!greater)
-		D.infectionchance = 1
+	if(disease_type == "Custom")
+		D.uniqueID = rand(0,10000)
+		D.antigen |= text2num(pick(ANTIGENS))
+		D.antigen |= text2num(pick(ANTIGENS))
+
+		while(TRUE)
+			var/command = input("Disease menu, ([D.effects.len] symptoms)", "Make custom disease") in list("Add symptom", "Remove symptom", "Done")
+			if(command == "Add symptom")
+				if(D.effects.len < D.max_symptoms)
+					var/list/datum/disease2/effect/possible_effects = list()
+					for(var/e in (typesof(/datum/disease2/effect) - /datum/disease2/effect))
+						var/datum/disease2/effect/f = new e
+						if (f.level > 4)	//we don't want such strong effects
+							continue
+						if (f.level < 1)
+							continue
+						if(D.haseffect(f))
+							continue
+						possible_effects += f
+					if(!possible_effects.len)
+						continue
+					var/effect = input("Add symptom", "Select symptom") as null|anything in possible_effects
+					if(effect)
+						var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
+						holder.effect = effect
+						holder.name = holder.effect.name
+						holder.chance = rand(holder.effect.chance_minm,holder.effect.chance_maxm)
+						D.addeffect(holder)
+			if(command == "Remove symptom")
+				if(D.effects.len > 0)
+					var/holder = input("Remove symptom", "Select symptom to remove") as null|anything in D.effects
+					D.effects-=holder
+
+			if(command == "Done")
+				break
+		disease_type = "[disease_type] ([jointext(D.effects, ", ")])"
+	else
+		D.makerandom(greater)
+		if (!greater)
+			D.infectionchance = 1
 
 	D.infectionchance = input("How virulent is this disease? (1-100)", "Give Disease", D.infectionchance) as num
 
-	if(istype(T,/mob/living/carbon/human))
-		var/mob/living/carbon/human/H = T
-		if (H.species)
-			D.affected_species = list(H.species.name)
-	if(istype(T,/mob/living/carbon/monkey))
-		var/mob/living/carbon/monkey/M = T
-		D.affected_species = list(M.greaterform)
 	infect_virus2(T,D,1)
 
 	feedback_add_details("admin_verb","GD2") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-	log_admin("[key_name(usr)] gave [key_name(T)] a [(greater)? "greater":"lesser"] disease2 with infection chance [D.infectionchance].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] a [(greater)? "greater":"lesser"] disease2 with infection chance [D.infectionchance].")
+	log_admin("[key_name(usr)] gave [key_name(T)] a [disease_type] disease2 with infection chance [D.infectionchance].")
+	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] a [disease_type] disease2 with infection chance [D.infectionchance].")
 
 /client/proc/make_sound(obj/O in world) // -- TLE
 	set category = "Special Verbs"
