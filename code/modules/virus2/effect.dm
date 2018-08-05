@@ -985,7 +985,6 @@
 	max_stage = 3
 	cooldown = 20
 	activate(mob/living/carbon/mob,datum/disease2/effectholder/holder,datum/disease2/disease/disease)
-		mob.emote("shiver")
 		if(prob(20) || holder.stage	== 1)
 			to_chat(mob, "<span class = 'notice'>[pick("You feel cold.", "You shiver.")]</span>")
 		else if(prob(20) || holder.stage == 2)
