@@ -156,6 +156,9 @@
 			H.update_hair()
 	return
 
+/datum/species/proc/on_life(mob/living/carbon/human/H)
+	return
+
 /datum/species/human
 	name = HUMAN
 	language = "Sol Common"
