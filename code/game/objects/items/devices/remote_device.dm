@@ -32,6 +32,9 @@
 		to_chat(user, "This device now can electrify doors")
 
 /obj/item/device/remote_device/attack_self(mob/user)
+	if(!user.IsAdvancedToolUser())
+		to_chat(user, "<span class='red'>You don't have the dexterity to do this!</span>")
+		return
 	if(mode == REMOTE_OPEN)
 		if(emagged)
 			mode = REMOTE_ELECT
@@ -45,7 +48,7 @@
 	to_chat(user, "Now in mode: [mode].")
 
 /obj/item/device/remote_device/afterattack(obj/machinery/door/airlock/D, mob/user)
-	if(!istype(D) || disabled || user.client.eye != user.client.mob)
+	if(!istype(D) || disabled || user.client.eye != user.client.mob || !user.IsAdvancedToolUser())
 		return
 	if(!D.hasPower())
 		to_chat(user, "<span class='danger'>[D] has no power!</span>")
