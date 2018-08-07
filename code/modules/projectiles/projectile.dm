@@ -249,9 +249,10 @@
 		return 1
 
 
-/obj/item/projectile/process()
+/obj/item/projectile/process(turf/fintargloc)
 	var/first_step = 1
-
+	if(fintargloc)
+		original = fintargloc
 	//plot the initial trajectory
 	setup_trajectory()
 
