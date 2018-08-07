@@ -33,7 +33,7 @@
 
 	var/p_x = 16
 	var/p_y = 16 // the pixel location of the tile that the player clicked. Default is the center
-
+	var/point_blank = FALSE
 	var/damage = 10
 	var/damage_type = BRUTE //BRUTE, BURN, TOX, OXY, CLONE are the only things that should be in here
 	var/nodamage = 0 //Determines if the projectile will skip any damage inflictions
@@ -251,7 +251,7 @@
 
 /obj/item/projectile/process(turf/fintargloc)
 	var/first_step = 1
-	if(fintargloc)
+	if(fintargloc && !point_blank)
 		original = fintargloc
 	//plot the initial trajectory
 	setup_trajectory()
