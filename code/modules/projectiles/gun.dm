@@ -73,7 +73,7 @@
 	chambered = null
 	return ..()
 
-/obj/item/weapon/gun/afterattack(atom/A, mob/living/user, flag, params)
+/obj/item/weapon/gun/afterattack(atom/A, mob/living/user, flag, params,point_blank)
 	if(flag)	return //It's adjacent, is the user, or is on the user's person
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 	if(user && user.client && user.client.gun_mode && !(A in target))
@@ -213,6 +213,7 @@
 		if(user.a_intent == "hurt")
 			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
 			chambered.BB.damage *= 1.3
+			chambered.BB.point_blank = TRUE
 			Fire(M,user)
 			return
 		else if(target && M in target)
