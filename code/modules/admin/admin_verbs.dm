@@ -600,33 +600,36 @@ var/list/admin_verbs_hideable = list(
 		D.antigen |= text2num(pick(ANTIGENS))
 		D.antigen |= text2num(pick(ANTIGENS))
 
+		var/list/datum/disease2/effect/possible_effects = list()
+		for(var/e in subtypesof(/datum/disease2/effect))
+			var/datum/disease2/effect/f = new e
+			if (f.level > 4) //we don't want such strong effects
+				continue
+			if (f.level < 1)
+				continue
+			possible_effects += f
+
 		while(TRUE)
 			var/command = input("Disease menu, ([D.effects.len] symptoms)", "Make custom disease") in list("Add symptom", "Remove symptom", "Done")
-			if(command == "Add symptom")
-				if(D.effects.len < D.max_symptoms)
-					var/list/datum/disease2/effect/possible_effects = list()
-					for(var/e in (typesof(/datum/disease2/effect) - /datum/disease2/effect))
-						var/datum/disease2/effect/f = new e
-						if (f.level > 4)	//we don't want such strong effects
-							continue
-						if (f.level < 1)
-							continue
-						if(D.haseffect(f))
-							continue
-						possible_effects += f
-					if(!possible_effects.len)
-						continue
-					var/effect = input("Add symptom", "Select symptom") as null|anything in possible_effects
-					if(effect)
-						var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
-						holder.effect = effect
-						holder.name = holder.effect.name
-						holder.chance = rand(holder.effect.chance_minm,holder.effect.chance_maxm)
-						D.addeffect(holder)
-			if(command == "Remove symptom")
-				if(D.effects.len > 0)
-					var/holder = input("Remove symptom", "Select symptom to remove") as null|anything in D.effects
-					D.effects-=holder
+			if(command == "Add symptom" && D.effects.len < D.max_symptoms)
+				if(!possible_effects.len)
+					continue
+				var/effect = input("Add symptom", "Select symptom") as null|anything in possible_effects
+				if(!effect)
+					continue
+				possible_effects -= effect
+				var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
+				holder.effect = effect
+				holder.name = holder.effect.name
+				holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
+				D.addeffect(holder)
+			if(command == "Remove symptom" && D.effects.len > 0)
+				var/datum/disease2/effectholder/holder = input("Remove symptom", "Select symptom to remove") as null|anything in D.effects
+				if(!holder)
+					continue
+				possible_effects += holder.effect
+				D.effects -= holder
+				qdel(holder)
 
 			if(command == "Done")
 				break
@@ -642,7 +645,7 @@ var/list/admin_verbs_hideable = list(
 
 	feedback_add_details("admin_verb","GD2") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 	log_admin("[key_name(usr)] gave [key_name(T)] a [disease_type] disease2 with infection chance [D.infectionchance].")
-	message_admins("\blue [key_name_admin(usr)] gave [key_name(T)] a [disease_type] disease2 with infection chance [D.infectionchance].")
+	message_admins("[key_name_admin(usr)] gave [key_name(T)] a [disease_type] disease2 with infection chance [D.infectionchance].")
 
 /client/proc/make_sound(obj/O in world) // -- TLE
 	set category = "Special Verbs"
