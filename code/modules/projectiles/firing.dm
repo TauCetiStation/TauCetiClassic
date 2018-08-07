@@ -46,7 +46,7 @@
 		if(mouse_control["icon-y"])
 			BB.p_y = text2num(mouse_control["icon-y"])
 	if(BB)
-		BB.process()
+		BB.process(targloc)
 	BB = null
 	return 1
 
