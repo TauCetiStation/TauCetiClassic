@@ -20,10 +20,6 @@
 /obj/item/weapon/melee/zombie_hand/right
 	icon_state = "bloodhand_right"
 
-/obj/item/weapon/melee/zombie_hand/dropped(mob/user)
-	if(!QDELETED(src))
-		qdel(src)
-
 /obj/item/weapon/melee/zombie_hand/afterattack(atom/target, mob/user, proximity)
 	if(!proximity)
 		return
@@ -46,7 +42,7 @@
 		else
 			opendoor(user, A)
 
-	if(istype(target, /obj))
+	if(isobj(target))
 		var/obj/O = target
 		if(O.can_buckle && O.buckled_mob)
 			O.user_unbuckle_mob(user)
@@ -59,12 +55,16 @@
 							 "<span class='warning'>You start forcing the door to open.</span>",\
 							 "<span class='warning'>You hear metal strain.</span>")
 		playsound(A.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
-		if(do_after(user,70,target = A))
-			user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>", "<span class='warning'>You force the door to open.</span>", "<span class='warning'>You hear a metal screeching sound.</span>")
-			A.open(1)
+		if(do_after(user, 70, target = A))
+			if(A.density && in_range(A, user))
+				user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>",\
+									 "<span class='warning'>You force the door to open.</span>",\
+									 "<span class='warning'>You hear a metal screeching sound.</span>")
+				A.open(1)
 
 /obj/item/weapon/melee/zombie_hand/attack(mob/M, mob/user)
-	if(..() && ishuman(M))
+	. = ..()
+	if(. && ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if(!iszombie(H))
 			var/target_zone = user.zone_sel.selecting
@@ -76,7 +76,7 @@
 
 			H.infect_zombie_virus(target_zone)
 
-proc/iszombie(mob/living/M)
+/proc/iszombie(mob/living/M)
 	if(!ishuman(M))
 		return FALSE
 	var/mob/living/carbon/human/H = M
@@ -85,33 +85,33 @@ proc/iszombie(mob/living/M)
 	return FALSE
 
 /datum/species/zombie/on_life(mob/living/carbon/human/H)
-	if(H.life_tick % 3)
-		for(var/obj/item/organ/external/organ in H.bodyparts)
-			if(!(organ.status & ORGAN_ZOMBIE))
-				organ.status |= ORGAN_ZOMBIE
-		var/obj/item/organ/external/LArm = H.bodyparts_by_name[BP_L_ARM]
-		var/obj/item/organ/external/RArm = H.bodyparts_by_name[BP_R_ARM]
+	if(!H.life_tick % 3)
+		return
+	for(var/obj/item/organ/external/organ in H.bodyparts)
+		if(!(organ.status & ORGAN_ZOMBIE))
+			organ.status |= ORGAN_ZOMBIE
+	var/obj/item/organ/external/LArm = H.bodyparts_by_name[BP_L_ARM]
+	var/obj/item/organ/external/RArm = H.bodyparts_by_name[BP_R_ARM]
 
-		if(LArm && !(LArm.status & ORGAN_DESTROYED) && !istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
-			H.drop_l_hand()
-			H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, slot_l_hand)
-		if(RArm && !(RArm.status & ORGAN_DESTROYED) && !istype(H.r_hand, /obj/item/weapon/melee/zombie_hand/right))
-			H.drop_r_hand()
-			H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, slot_r_hand)
+	if(LArm && !(LArm.status & ORGAN_DESTROYED) && !istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
+		H.drop_l_hand()
+		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, slot_l_hand)
+	if(RArm && !(RArm.status & ORGAN_DESTROYED) && !istype(H.r_hand, /obj/item/weapon/melee/zombie_hand/right))
+		H.drop_r_hand()
+		H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, slot_r_hand)
 
-		if(H.stat != DEAD && prob(20))
-			playsound(H, pick(spooks), 50, 1)
-		H.silent = 5
+	if(H.stat != DEAD && prob(10))
+		playsound(H, pick(spooks), 50, 1)
 
 /datum/species/zombie/handle_death(mob/living/carbon/human/H)
 	addtimer(CALLBACK(null, .proc/prerevive_zombie, H), rand(600,700))
 	H.update_mutantrace()
 
-proc/handle_infected_death(mob/living/carbon/human/H)
+/proc/handle_infected_death(mob/living/carbon/human/H)
 	if(H.species.name in list(HUMAN, UNATHI, TAJARAN, SKRELL))
 		addtimer(CALLBACK(null, .proc/prerevive_zombie, H), rand(600,700))
 
-proc/prerevive_zombie(mob/living/carbon/human/H)
+/proc/prerevive_zombie(mob/living/carbon/human/H)
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
 	if(H.organs_by_name[O_BRAIN] && BP && !(BP.status & ORGAN_DESTROYED))
 		if(!H.key && H.mind)
@@ -124,43 +124,44 @@ proc/prerevive_zombie(mob/living/carbon/human/H)
 		H.visible_message("<span class='danger'>[H]'s body starts to move!</span>")
 		addtimer(CALLBACK(null, .proc/revive_zombie, H), 40)
 
-proc/revive_zombie(mob/living/carbon/human/H)
+/proc/revive_zombie(mob/living/carbon/human/H)
 	var/obj/item/organ/external/BP = H.bodyparts_by_name[BP_HEAD]
-	if(H.organs_by_name[O_BRAIN] && BP && !(BP.status & ORGAN_DESTROYED))
-		if(!iszombie(H))
-			H.zombify()
-		//H.rejuvenate()
-		H.setToxLoss(0)
-		H.setOxyLoss(0)
-		H.setCloneLoss(0)
-		H.setBrainLoss(0)
-		H.setHalLoss(0)
-		H.SetParalysis(0)
-		H.SetStunned(0)
-		H.SetWeakened(0)
-		H.nutrition = 400
-		H.sleeping = 0
-		H.radiation = 0
+	if(!H.organs_by_name[O_BRAIN] || !BP || BP.status & ORGAN_DESTROYED)
+		return
+	if(!iszombie(H))
+		H.zombify()
+	//H.rejuvenate()
+	H.setToxLoss(0)
+	H.setOxyLoss(0)
+	H.setCloneLoss(0)
+	H.setBrainLoss(0)
+	H.setHalLoss(0)
+	H.SetParalysis(0)
+	H.SetStunned(0)
+	H.SetWeakened(0)
+	H.nutrition = 400
+	H.sleeping = 0
+	H.radiation = 0
 
-		H.heal_overall_damage(H.getBruteLoss(), H.getFireLoss())
-		H.restore_blood()
+	H.heal_overall_damage(H.getBruteLoss(), H.getFireLoss())
+	H.restore_blood()
 
-		// remove the character from the list of the dead
-		if(H.stat == DEAD)
-			dead_mob_list -= H
-			living_mob_list += H
-			H.tod = null
-			H.timeofdeath = 0
-		H.stat = CONSCIOUS
-		H.update_canmove()
-		H.regenerate_icons()
-		H.update_health_hud()
+	// remove the character from the list of the dead
+	if(H.stat == DEAD)
+		dead_mob_list -= H
+		living_mob_list += H
+		H.tod = null
+		H.timeofdeath = 0
+	H.stat = CONSCIOUS
+	H.update_canmove()
+	H.regenerate_icons()
+	H.update_health_hud()
 
-		playsound(H, pick(list('sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')), 50, 1)
-		to_chat(H, "<span class='danger'>Somehow you wake up and your hunger is still outrageous!</span>")
-		H.visible_message("<span class='danger'>[H] suddenly wakes up!</span>")
+	playsound(H, pick(list('sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')), 50, 1)
+	to_chat(H, "<span class='danger'>Somehow you wake up and your hunger is still outrageous!</span>")
+	H.visible_message("<span class='danger'>[H] suddenly wakes up!</span>")
 
-mob/living/carbon/proc/is_infected_with_zombie_virus()
+/mob/living/carbon/proc/is_infected_with_zombie_virus()
 	for(var/ID in virus2)
 		var/datum/disease2/disease/V = virus2[ID]
 		for(var/datum/disease2/effectholder/e in V.effects)
@@ -187,7 +188,7 @@ mob/living/carbon/proc/is_infected_with_zombie_virus()
 		//visible_message("[target_zone]")
 		Z.infected_organ = get_bodypart(target_zone)
 	holder.effect = Z
-	holder.chance = rand(holder.effect.chance_minm,holder.effect.chance_maxm)
+	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
 	if(fast)
 		holder.chance = 100
 	D.addeffect(holder)
@@ -196,17 +197,18 @@ mob/living/carbon/proc/is_infected_with_zombie_virus()
 	D.antigen |= ANTIGEN_Z
 	D.spreadtype = "Blood" // not airborn and not contact, because spreading zombie virus through air or hugs is silly
 
-	infect_virus2(src,D,TRUE)
+	infect_virus2(src, D, TRUE)
 
 /mob/living/carbon/human/proc/zombify()
 	if(iszombie(src))
 		return
 
-	if(species.name == TAJARAN)
-		set_species(ZOMBIE_TAJARAN, FALSE, TRUE)
-	else if(species.name == SKRELL)
-		set_species(ZOMBIE_SKRELL, FALSE, TRUE)
-	else if(species.name == UNATHI)
-		set_species(ZOMBIE_UNATHI, FALSE, TRUE)
-	else
-		set_species(ZOMBIE, FALSE, TRUE)
+	switch(species.name)
+		if(TAJARAN)
+			set_species(ZOMBIE_TAJARAN, FALSE, TRUE)
+		if(SKRELL)
+			set_species(ZOMBIE_SKRELL, FALSE, TRUE)
+		if(UNATHI)
+			set_species(ZOMBIE_UNATHI, FALSE, TRUE)
+		else
+			set_species(ZOMBIE, FALSE, TRUE)

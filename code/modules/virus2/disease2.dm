@@ -26,7 +26,7 @@
 
 /datum/disease2/disease/proc/getrandomeffect(minlevel = 1, maxlevel = 4)
 	var/list/datum/disease2/effect/possible_effects = list()
-	for(var/e in (typesof(/datum/disease2/effect) - /datum/disease2/effect))
+	for(var/e in subtypesof(/datum/disease2/effect))
 		var/datum/disease2/effect/f = new e
 		if (f.level > maxlevel)	//we don't want such strong effects
 			continue
@@ -40,7 +40,7 @@
 
 	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
 	holder.effect = pick(possible_effects)
-	holder.chance = rand(holder.effect.chance_minm,holder.effect.chance_maxm)
+	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
 	return holder
 
 /datum/disease2/disease/proc/addeffect(var/datum/disease2/effectholder/holder)

@@ -217,7 +217,7 @@ var/list/slot_equipment_priority = list(
 	if(istype(l_hand, /obj/item))
 		var/obj/item/W = l_hand
 		if(W.flags & NODROP)
-			return 0
+			return FALSE
 	return drop_from_inventory(l_hand, Target)
 
 //Drops the item in our right hand
@@ -225,7 +225,7 @@ var/list/slot_equipment_priority = list(
 	if(istype(r_hand, /obj/item))
 		var/obj/item/W = r_hand
 		if(W.flags & NODROP)
-			return 0
+			return FALSE
 	return drop_from_inventory(r_hand, Target)
 
 //Drops the item in our active hand.

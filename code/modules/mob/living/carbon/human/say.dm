@@ -9,7 +9,7 @@
 			return
 
 	//Meme stuff
-	if((!speech_allowed && usr == src) || miming)
+	if((!speech_allowed && usr == src) || miming || iszombie(src))
 		to_chat(usr, "<span class='userdange'>You can't speak.</span>")
 		return
 

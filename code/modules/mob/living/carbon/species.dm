@@ -794,8 +794,8 @@
 /datum/species/zombie/on_gain(mob/living/carbon/human/H)
 	H.status_flags &= ~(CANSTUN  | CANPARALYSE) //CANWEAKEN
 
-	H.drop_from_inventory(H.get_active_hand())
-	H.drop_from_inventory(H.get_inactive_hand())
+	H.drop_l_hand()
+	H.drop_r_hand()
 
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, slot_l_hand)
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, slot_r_hand)
@@ -808,13 +808,11 @@
 /datum/species/zombie/on_loose(mob/living/carbon/human/H)
 	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
 
-	if(H && istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
+	if(istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
 		qdel(H.l_hand)
-		H.l_hand = null
 
-	if(H && istype(H.r_hand, /obj/item/weapon/melee/zombie_hand))
+	if(istype(H.r_hand, /obj/item/weapon/melee/zombie_hand))
 		qdel(H.r_hand)
-		H.r_hand = null
 
 	for(var/obj/item/organ/external/organ in H.bodyparts)
 		organ.status &= ~ORGAN_ZOMBIE
