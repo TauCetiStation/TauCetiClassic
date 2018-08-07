@@ -73,7 +73,7 @@
 	chambered = null
 	return ..()
 
-/obj/item/weapon/gun/afterattack(atom/A, mob/living/user, flag, params,point_blank)
+/obj/item/weapon/gun/afterattack(atom/A, mob/living/user, flag, params)
 	if(flag)	return //It's adjacent, is the user, or is on the user's person
 	if(istype(target, /obj/machinery/recharger) && istype(src, /obj/item/weapon/gun/energy))	return//Shouldnt flag take care of this?
 	if(user && user.client && user.client.gun_mode && !(A in target))
