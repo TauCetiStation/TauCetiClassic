@@ -1119,7 +1119,7 @@
 	if(holder.has_reagent("lexorin"))
 		holder.remove_reagent("lexorin", 2 * REM)
 
-/datum/reagent/dexalin/on_general_digest(mob/living/M, alien) // Now dexalin does not remove lexarin from Voxes. For the better or the worse.
+/datum/reagent/dexalin/on_vox_digest(mob/living/M) // Now dexalin does not remove lexarin from Vox. For the better or the worse.
 	..()
 	M.adjustToxLoss(2 * REM)
 	return FALSE
@@ -1141,9 +1141,9 @@
 	if(holder.has_reagent("lexorin"))
 		holder.remove_reagent("lexorin", 2 * REM)
 
-/datum/reagent/dexalinp/on_vox_digest(mob/living/M) // Now dexalin plus does not remove lexarin from Voxes. For the better or the worse.
+/datum/reagent/dexalinp/on_vox_digest(mob/living/M) // Now dexalin plus does not remove lexarin from Vox. For the better or the worse.
 	..()
-	M.adjustOxyLoss(6 * REM) // Let's just say it's thrice as poisonous.
+	M.adjustToxLoss(6 * REM) // Let's just say it's thrice as poisonous.
 	return FALSE
 
 /datum/reagent/tricordrazine
