@@ -894,10 +894,6 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		var/obj/item/clothing/mask/gas/welding/W = wear_mask
 		if(!W.up)
 			number += 2
-	if(istype(head, /obj/item/clothing/head/welding))
-		var/obj/item/clothing/head/welding/W = head
-		if(!W.up)
-			number += 2
 	return number
 
 

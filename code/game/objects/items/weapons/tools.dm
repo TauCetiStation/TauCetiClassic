@@ -436,6 +436,8 @@
 		var/obj/item/clothing/head/welding/W = H.head
 		if(!W.up)
 			return
+	if(istype(H.head, /obj/item/clothing/head/helmet/space/rig))
+		return
 	if(istype(H.glasses, /obj/item/clothing/glasses/welding))
 		var/obj/item/clothing/glasses/welding/W = H.glasses
 		if(!W.up)
