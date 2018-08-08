@@ -82,8 +82,6 @@
 		return
 
 	if(href_list["switchTo"])
-		if(src.z > 6)
-			return FALSE
 		if(usr.blinded)
 			return FALSE
 		var/obj/machinery/camera/C = locate(href_list["switchTo"]) in cameranet.cameras
@@ -91,8 +89,6 @@
 			return FALSE
 		switch_to_camera(usr, C)
 	else if(href_list["reset"])
-		if(src.z > 6)
-			return FALSE
 		if(usr.blinded)
 			return FALSE
 		reset_current()
