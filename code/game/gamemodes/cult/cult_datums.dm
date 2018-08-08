@@ -238,31 +238,9 @@ var/list/cult_runes = list()
 	if(!istype(ticker.mode, /datum/game_mode/cult))
 		return
 	var/datum/game_mode/cult/cur_mode = ticker.mode
-	for(var/objective in cur_mode.objectives)
-		if(objective == "eldergod")
-			ticker.mode.nar_sie_has_risen = TRUE
-			cur_mode.eldergod = FALSE
-			new /obj/singularity/narsie/large(get_turf(holder))
-			return
-	cur_mode.eldertry += 1
-	switch(cur_mode.eldertry)
-		if(1)
-			for(var/mob/living/carbon/C in acolytes)
-				to_chat(C, "<font size='3'><span class='danger'>I have no interest in coming to your world.</span></font>")
-		if(5)
-			for(var/mob/living/carbon/C in acolytes)
-				C.apply_effect(80, AGONY, 0)
-				to_chat(C, "<font size='4'><span class='danger'>I SAID NO!!</span></font>")
-		if(10)
-			for(var/mob/living/carbon/C in acolytes)
-				C.apply_effect(80, AGONY, 0)
-				to_chat(C, "<font size='5'><span class='danger'>LAST WARNING.</span></font>")
-		if(15 to 100)
-			for(var/mob/living/carbon/C in acolytes)
-				C.gib()
-			to_chat(world, "<font size='15'><span class='danger'>FUCK YOU!!!</span></font>")
-			cur_mode.eldertry = 0
-
+	ticker.mode.nar_sie_has_risen = TRUE
+	cur_mode.eldergod = FALSE
+	new /obj/singularity/narsie/large(get_turf(holder))
 
 /datum/cult/emp
 	word1 = "destroy"
@@ -776,10 +754,6 @@ var/list/cult_runes = list()
 		if(sacrifice_target && sacrifice_target == H.mind)
 			var/datum/game_mode/cult/cur_mode = ticker.mode // we checked our mode earlier
 			cur_mode.sacrificed += H.mind
-			if(isrobot(H))
-				H.dust() //To prevent the MMI from remaining
-			else
-				H.gib()
 			to_chat(user, "<span class='cult'>The Geometer of Blood accepts this sacrifice, your objective is now complete.</span>")
 
 		else
@@ -789,11 +763,6 @@ var/list/cult_runes = list()
 				ticker.mode.grant_runeword(user)
 			else
 				to_chat(user, "<span class='cult'>However, this soul was not enough to gain His favor.</span>")
-
-			if(isrobot(H))
-				H.dust() //To prevent the MMI from remaining
-			else
-				H.gib()
 
 /datum/cult/communicate
 	word1 = "self"
