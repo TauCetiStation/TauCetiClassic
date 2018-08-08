@@ -17,8 +17,7 @@
 
 	handle_actions()
 
-	if(client)
-		handle_regular_hud_updates()
+	handle_regular_hud_updates()
 
 /mob/living/proc/handle_actions()
 	//Pretty bad, i'd use picked/dropped instead but the parent calls in these are nonexistent
