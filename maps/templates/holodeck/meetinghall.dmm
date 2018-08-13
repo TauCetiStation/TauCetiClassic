@@ -1,14 +1,15 @@
-"a" = (/turf/simulated/floor/holofloor{icon_state = "wooden"; dir = 2},/area/holodeck/source_meetinghall)
-"b" = (/obj/structure/flora/pottedplant{icon_state = "plant-6"},/turf/simulated/floor/holofloor{icon_state = "wooden"; dir = 2},/area/holodeck/source_meetinghall)
+"a" = (/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/area/holodeck/source_meetinghall)
+"b" = (/obj/structure/flora/pottedplant{icon_state = "plant-6"},/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/area/holodeck/source_meetinghall)
 "c" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet4-0"},/area/holodeck/source_meetinghall)
 "d" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet8-0"},/area/holodeck/source_meetinghall)
 "e" = (/turf/simulated/floor/holofloor{icon_state = "carpetsymbol"; dir = 6},/area/holodeck/source_meetinghall)
 "f" = (/turf/simulated/floor/holofloor{icon_state = "grimy"; dir = 2},/turf/simulated/floor/holofloor{icon_state = "siding1"; dir = 2},/area/holodeck/source_meetinghall)
-"g" = (/turf/simulated/floor/holofloor{icon_state = "wood_stairs2"; dir = 2},/area/holodeck/source_meetinghall)
+"g" = (/turf/simulated/floor/holofloor{icon_state = "rampbottom"; dir = 2},/area/holodeck/source_meetinghall)
 "h" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet10-8"; dir = 4},/area/holodeck/source_meetinghall)
 "i" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet11-12"; dir = 4},/area/holodeck/source_meetinghall)
 "j" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet9-4"; dir = 4},/area/holodeck/source_meetinghall)
 "k" = (/turf/simulated/floor/holofloor{icon_state = "grimy"; dir = 2},/area/holodeck/source_meetinghall)
+"l" = (/turf/simulated/floor/holofloor{icon_state = "cult"; dir = 2},/area/holodeck/source_meetinghall)
 "m" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet14-10"; dir = 4},/area/holodeck/source_meetinghall)
 "n" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet15-15"; dir = 4},/area/holodeck/source_meetinghall)
 "o" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet13-5"; dir = 4},/area/holodeck/source_meetinghall)
@@ -21,10 +22,10 @@ aaaaaaaaab
 aacdecdaaa
 aaaaaaaaaa
 fffffffffg
-kpmmmmmhkk
-kqnnnnnikk
-kqnnnnnikk
-kqnnnnnikk
-krooooojkk
-kkekkkkekk
+epmmmmmhkl
+eqnnnnnikl
+kqnnnnnikl
+kqnnnnnikl
+krooooojkl
+kkkkkkkkkl
 "}
