@@ -57,16 +57,12 @@
 
 /obj/structure/flora/tree/jungle/atom_init()
 	. = ..()
-	icon_state = "[icon_state][rand(1, 10)]"
+	icon_state = pick(icon_states(icon))
 
 /obj/structure/flora/tree/jungle/small
 	pixel_y = 0
 	pixel_x = -32
 	icon = 'icons/obj/flora/jungletreesmall.dmi'
-
-/obj/structure/flora/tree/jungle/small/atom_init()
-	. = ..()
-	icon_state = "[icon_state][rand(1, 6)]"
 
 //grass
 /obj/structure/flora/grass
