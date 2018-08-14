@@ -118,6 +118,8 @@
 	handle_fire()
 	if(on_fire && fire_stacks > 0)
 		fire_stacks -= 0.5
+
+	handle_regular_status_updates()
 	update_canmove()
 
 /mob/living/carbon/ian/handle_regular_hud_updates()

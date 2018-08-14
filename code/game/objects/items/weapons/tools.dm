@@ -264,7 +264,8 @@
 				src.icon_state = initial(src.icon_state)
 				src.welding = 0
 			set_light(0)
-			STOP_PROCESSING(SSobj, src)
+			if (!istype(src, /obj/item/weapon/weldingtool/experimental))
+				STOP_PROCESSING(SSobj, src)
 			return
 		//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
@@ -435,6 +436,8 @@
 		var/obj/item/clothing/head/welding/W = H.head
 		if(!W.up)
 			return
+	if(istype(H.head, /obj/item/clothing/head/helmet/space/rig))
+		return
 	if(istype(H.glasses, /obj/item/clothing/glasses/welding))
 		var/obj/item/clothing/glasses/welding/W = H.glasses
 		if(!W.up)
@@ -482,15 +485,15 @@
 	m_amt = 70
 	g_amt = 120
 	origin_tech = "materials=4;engineering=4;bluespace=2;phorontech=3"
-	var/last_gen = 0
+var/next_refuel_tick = 0
 
-
-
-/obj/item/weapon/weldingtool/experimental/proc/fuel_gen()//Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
-	var/gen_amount = ((world.time-last_gen)/25)
-	reagents += (gen_amount)
-	if(reagents > max_fuel)
-		reagents = max_fuel
+/obj/item/weapon/weldingtool/experimental/process()
+	..()
+	if((get_fuel() < max_fuel) && (next_refuel_tick < world.time) && !welding)
+		next_refuel_tick = world.time + 2.5 SECONDS
+		reagents.add_reagent("fuel", 1)
+	if(!welding && (get_fuel() == max_fuel))
+		STOP_PROCESSING(SSobj, src)
 
 /*
  * Crowbar

@@ -57,6 +57,7 @@
 /obj/item/weapon/reagent_containers/hypospray/autoinjector/atom_init()
 	. = ..()
 	reagents.add_reagent("inaprovaline", 5)
+	flags &= ~OPENCONTAINER
 	amount_per_transfer_from_this = volume
 	update_icon()
 

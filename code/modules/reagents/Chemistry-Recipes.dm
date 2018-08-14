@@ -1746,8 +1746,8 @@ datum
 
 		phoron_special
 			name = "Toxins Special"
-			id = "phoronspecial"
-			result = "phoronspecial"
+			id = "toxins_special"
+			result = "toxins_special"
 			required_reagents = list("rum" = 2, "vermouth" = 1, "phoron" = 2)
 			result_amount = 5
 
@@ -2131,15 +2131,15 @@ datum
 			name = "Chocolate Milkshake"
 			id = "milkshake_chocolate"
 			result = "milkshake_chocolate"
-			required_reagents = list("cream" = 1, "ice" = 2, "milk" = 2, "hot_coco" = 1)
-			result_amount = 6
+			required_reagents = list("milkshake" = 1, "hot_coco" = 1)
+			result_amount = 2
 
 		strawberrymilkshake
 			name = "Strawberry Milkshake"
 			id = "milkshake_strawberry"
 			result = "milkshake_strawberry"
-			required_reagents = list("cream" = 1, "ice" = 2, "milk" = 2, "berryjuice" = 1)
-			result_amount = 6
+			required_reagents = list("milkshake" = 1, "berryjuice" = 1)
+			result_amount = 2
 
 		rewriter
 			name = "Rewriter"
@@ -2154,6 +2154,31 @@ datum
 			result = "suidream"
 			required_reagents = list("space_up" = 2, "bluecuracao" = 1, "melonliquor" = 1)
 			result_amount = 4
+
+		bacardi
+			name = "Bacardi"
+			id = "bacardi"
+			result = "bacardi"
+			required_reagents = list("rum" = 3, "grenadine" = 1, "limejuice" = 2)
+			result_amount = 5
+ 		bacardialoha
+			name = "Bacardi Aloha"
+			id = "bacardialoha"
+			result = "bacardialoha"
+			required_reagents = list("rum" = 1, "cognac" = 1, "limejuice" = 1, "martini" = 1, "gin" = 1)
+			result_amount = 5
+ 		bacardilemonade_lime
+			name = "Bacardi Lemon Lime"
+			id = "bacardilemonade_lime"
+			result = "bacardilemonade"
+			required_reagents = list("rum" = 2, "lemon_lime" = 2, "ice" = 1)
+			result_amount = 5
+ 		bacardilemonade_lemon
+			name = "Bacardi Lemonade"
+			id = "bacardilemonade"
+			result = "bacardilemonade"
+			required_reagents = list("rum" = 2, "lemonade" = 2, "ice" = 1)
+			result_amount = 5
 
 //////////////////////////////////////////////
 //////////////New poisons/////////////////////
