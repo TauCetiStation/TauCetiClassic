@@ -264,6 +264,30 @@
 	desc = "Twoooo!"
 	icon_state = "owl"
 
+/obj/item/clothing/mask/gas/chains_mask
+	name = "chains mask"
+	desc = "Great robbers used to wear this mask"
+	icon_state = "chains"
+	item_state = "chains_mask"
+
+/obj/item/clothing/mask/gas/hoxton_mask
+	name = "hoxton mask"
+	desc = "Great robbers used to wear this mask"
+	icon_state = "hoxton"
+	item_state = "hoxton_mask"
+
+/obj/item/clothing/mask/gas/wolf_mask
+	name = "wolf mask"
+	desc = "Great robbers used to wear this mask"
+	icon_state = "wolf"
+	item_state = "wolf_mask"
+
+/obj/item/clothing/mask/gas/dallas_mask
+	name = "dallas mask"
+	desc = "Great robbers used to wear this mask"
+	icon_state = "dallas"
+	item_state = "dallas_mask"
+
 /obj/item/clothing/mask/gas/coloured
 	icon_state = "gas_mask_orange"
 
