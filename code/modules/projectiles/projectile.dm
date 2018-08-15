@@ -197,7 +197,7 @@
 		forcedodge = A.bullet_act(src, def_zone) // searches for return value
 
 		if(M)
-			add_logs(M,silenced,forcedodge,F)
+			add_logs(M,forcedodge,F)
 
 	if(forcedodge == PROJECTILE_FORCE_MISS) // the bullet passes through a dense object!
 		if(M)
@@ -226,7 +226,7 @@
 	qdel(src)
 	return 1
 
-/obj/item/projectile/proc/add_logs(mob/M, silenced=0, forcedodge,mob/firer)
+/obj/item/projectile/proc/add_logs(mob/M, forcedodge,mob/firer)
 	if(silenced)
 		to_chat(M, "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
 	else
