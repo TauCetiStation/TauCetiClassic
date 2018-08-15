@@ -1204,4 +1204,4 @@
 					/obj/item/clothing/suit/tuxedo = 3,/obj/item/clothing/under/popking = 1, /obj/item/clothing/under/popking/alternate = 1, /obj/item/clothing/suit/hooded/angel_suit = 1,
 					/obj/item/clothing/mask/fake_face = 2, /obj/item/clothing/suit/hooded/ian_costume = 1, /obj/item/clothing/suit/hooded/carp_costume = 1)
 	prices = list(/obj/item/clothing/head/xenos = 100, /obj/item/clothing/suit/xenos = 200, /obj/item/clothing/suit/monkeysuit = 200, /obj/item/clothing/suit/hooded/carp_costume = 200)
-	contraband = list(/obj/item/clothing/mask/gas/fawkes = 2)
+	contraband = list(/obj/item/clothing/mask/gas/fawkes = 2, /obj/item/clothing/mask/gas/hoxton_mask = 1, /obj/item/clothing/mask/gas/chains_mask = 1, /obj/item/clothing/mask/gas/dallas_mask = 1,/obj/item/clothing/mask/gas/wolf_mask = 1)
