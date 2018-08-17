@@ -167,7 +167,6 @@
 
 	var/forcedodge = 0 // force the projectile to pass
 	var/mob/M = ismob(A) ? A : null
-	var/mob/F = firer
 	bumped = 1
 	if(firer && M)
 		if(!istype(A, /mob/living))
@@ -193,16 +192,15 @@
 		if(M && ishuman(M))
 			M = check_living_shield(A)
 			A = M
-
 		forcedodge = A.bullet_act(src, def_zone) // searches for return value
 
 		if(M)
-			add_logs(M,forcedodge,F)
+			add_logs(M,0)
 
 	if(forcedodge == PROJECTILE_FORCE_MISS) // the bullet passes through a dense object!
 		if(M)
 			visible_message("<span class = 'notice'>\The [src] misses [M] narrowly!</span>")
-
+			add_logs(M,1)
 		if(istype(A, /turf))
 			loc = A
 		else
@@ -226,14 +224,14 @@
 	qdel(src)
 	return 1
 
-/obj/item/projectile/proc/add_logs(mob/M, forcedodge,mob/firer)
+/obj/item/projectile/proc/add_logs(mob/M, miss)
 	if(silenced)
 		to_chat(M, "<span class='userdanger'>You've been shot in the [parse_zone(def_zone)] by the [src.name]!</span>")
 	else
 		M.visible_message("<span class='userdanger'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
 
 	if(firer)
-		if(forcedodge == PROJECTILE_FORCE_MISS)
+		if(miss)
 			M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> tried to shot <b>[M]/[M.ckey]</b> with a <b>[src.type] but MISSED</b>"
 			firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> tried to shot <b>[M]/[M.ckey]</b> with a <b>[src.type] but MISSED</b>"
 			if(!fake)
