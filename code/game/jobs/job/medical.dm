@@ -109,7 +109,7 @@
 	supervisors = "the chief medical officer"
 	selection_color = "#ffeef0"
 	idtype = /obj/item/weapon/card/id/med
-	access = list(access_medical, access_morgue, access_paramedic, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_engine_equip, access_research, access_mailsorting)
+	access = list(access_medical, access_morgue, access_paramedic, access_surgery, access_maint_tunnels, access_external_airlocks, access_sec_doors, access_engine_equip, access_research, access_mailsorting)
 	minimal_player_ingame_minutes = 1500 //they have too much access, so you have to play more to unlock it
 	restricted_species = list(IPC, DIONA)
 
