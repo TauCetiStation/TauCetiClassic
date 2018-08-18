@@ -222,15 +222,18 @@
 			return 0
 		return ..(M,flags)*/
 
-/datum/dna/gene/basic/hulk/activate(mob/M, connected, flags)
+/datum/dna/gene/basic/hulk/can_activate(mob/M, flags)
 	if(!M.mind)
-		return
+		return FALSE
 	if(M.mind.hulkizing)
-		return
+		return FALSE
+	if(config.disallow_gene_hulks && !(flags & MUTATION_FORCED))
+		return FALSE
+	return TRUE
+
+/datum/dna/gene/basic/hulk/activate(mob/M, connected, flags)
 	M.mind.hulkizing = 1
-
-	..(M,connected,flags)
-
+	..()
 	addtimer(CALLBACK(src, .proc/mutate_user, M), rand(600, 900), TIMER_UNIQUE)
 
 /datum/dna/gene/basic/hulk/proc/mutate_user(mob/M)
