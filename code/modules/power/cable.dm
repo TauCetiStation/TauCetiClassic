@@ -402,6 +402,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	full_w_class = ITEM_SIZE_SMALL
 
 /obj/item/stack/cable_coil/cyborg
+	merge_type = /obj/item/stack/cable_coil
 	max_amount = 50
 	m_amt = 0
 	g_amt = 0
