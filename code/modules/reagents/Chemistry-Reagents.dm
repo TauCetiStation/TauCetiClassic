@@ -2425,7 +2425,7 @@
 /datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
 	..()
 	M.nutrition += nutriment_factor
-	if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain")) //if we want some FUN and FEATURES we should uncomment it 
+	if(ishuman(M) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain")) //if we want some FUN and FEATURES we should uncomment it 
 		M.heal_bodypart_damage(1, 1)
 		M.nutrition += nutriment_factor
 
@@ -2436,10 +2436,10 @@
 	nutriment_factor = 1 * REAGENTS_METABOLISM
 	color = "#AB7878" // rgb: 171, 120, 120
 
-/datum/reagent/consumable/sprinkles/on_general_digest(var/mob/living/M)
+/datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
 	..()
 	M.nutrition += nutriment_factor
-	if(istype(M, /mob/living/carbon/human) && M.mind && M.mind.special_role)
+	if(ishuman(M) && M.mind && M.mind.special_role)
 		M.heal_bodypart_damage(1, 1)
 		M.nutrition += nutriment_factor
 
