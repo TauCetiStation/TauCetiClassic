@@ -612,7 +612,7 @@
 	blood_color = "#1F181F"
 	flesh_color = "#575757"
 
-/datum/species/ipc/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+/datum/species/machine/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), slot_r_hand)
 	else
