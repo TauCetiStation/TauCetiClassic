@@ -45,11 +45,11 @@
 			LE.grabber = TRUE
 		if(I_DISARM)
 			if(prob(65))
-				LE.weaken = 2.5
+				LE.disarmer = TRUE
 		if(I_HURT)
 			LE.damage = 30
-		else
-			LE.agony = 15
+		else if(I_HELP)
+			LE.stunner = TRUE
 	LE.host = user
 	LE.Fire(A, user)
 
@@ -62,6 +62,8 @@
 	damage_type = BRUTE
 	flag = "bullet"
 	var/grabber = FALSE
+	var/disarmer = FALSE
+	var/stunner = FALSE
 	var/mob/living/carbon/human/host
 	tracer_list = list()
 	muzzle_type = /obj/effect/projectile/changeling/muzzle
@@ -81,6 +83,14 @@
 			grab_chance = 90
 		if(!T.anchored && prob(grab_chance))
 			T.throw_at(host, get_dist(host, T) - 1, 1, spin = FALSE, callback = CALLBACK(src, .proc/end_whipping, T))
+	if(disarmer)
+		if(isliving(T))
+			var/mob/living/L = T
+			L.Weaken(2.5)
+	if(stunner)
+		if(isliving(T))
+			var/mob/living/L = T
+			L.adjustHalLoss(15)
 	 return ..()
 
 /obj/item/projectile/changeling_whip/proc/end_whipping(atom/movable/T)
