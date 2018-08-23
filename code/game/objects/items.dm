@@ -465,14 +465,18 @@
 //If you are making custom procs but would like to retain partial or complete functionality of this one, include a 'return ..()' to where you want this to happen.
 //Set disable_warning to 1 if you wish it to not give you outputs.
 /obj/item/proc/mob_can_equip(M, slot, disable_warning = 0)
-	if(!slot) return 0
-	if(!M) return 0
+	if(!slot)
+		return FALSE
+	if(!M)
+		return FALSE
 
 	if(ishuman(M))
 		//START HUMAN
 		var/mob/living/carbon/human/H = M
 		if(!H.has_bodypart_for_slot(slot))
-			return 0
+			return FALSE
+		if(!H.specie_has_slot(slot))
+			return FALSE
 		//fat mutation
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
 			if(FAT in H.mutations)
