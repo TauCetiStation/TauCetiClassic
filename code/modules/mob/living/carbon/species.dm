@@ -20,6 +20,7 @@
 	var/tox_mod = 1                                      // Toxloss multiplier.
 	var/brain_mod = 1                                    // Brainloss multiplier.
 	var/speed_mod =  0                                   // How fast or slow specific specie.
+	var/siemens_coefficient = 1                          // How conductive is the specie.
 
 	var/primitive                     // Lesser form, if any (ie. monkey for humans)
 	var/tail                          // Name of tail image in species effects icon file.
@@ -291,6 +292,8 @@
 	metabolism_mod = SKRELL_METABOLISM_FACTOR
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
+	siemens_coefficient = 1.3 // Because they are wet and slimy.
+
 	flags = list(
 	 IS_WHITELISTED = TRUE
 	,HAS_LIPS = TRUE
@@ -449,6 +452,8 @@
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 	primitive = /mob/living/carbon/monkey/diona
 
+	siemens_coefficient = 0.8 // Because they are plants and stuff.
+
 	hazard_low_pressure = DIONA_HAZARD_LOW_PRESSURE
 
 	cold_level_1 = 50
@@ -575,6 +580,7 @@
 
 	brute_mod = 1.5
 	burn_mod = 1
+	siemens_coefficient = 1.3 // ROBUTT.
 
 	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
 
@@ -650,6 +656,8 @@
 	damage_mask = FALSE
 	dietflags = 0
 
+	siemens_coefficient = 0
+
 	butcher_drops = list()
 
 	flags = list(
@@ -709,6 +717,8 @@
 
 	warning_low_pressure = 50
 	hazard_low_pressure = -1
+
+	siemens_coefficient = 0 // Spooky shadows don't need to be hurt by your pesky electricity.
 
 	cold_level_1 = 50
 	cold_level_2 = -1
