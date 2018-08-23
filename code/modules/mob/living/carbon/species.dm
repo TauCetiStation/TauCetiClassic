@@ -727,6 +727,8 @@
 
 	butcher_drops = list() // They are just shadows. Why should they drop anything?
 
+	restricted_inventory_slots = list(slot_belt, slot_wear_id, slot_l_ear, slot_r_ear, slot_back, slot_l_store, slot_r_store)
+
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE

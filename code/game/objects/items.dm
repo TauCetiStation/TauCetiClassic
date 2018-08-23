@@ -476,6 +476,8 @@
 		if(!H.has_bodypart_for_slot(slot))
 			return FALSE
 		if(!H.specie_has_slot(slot))
+			if(!disable_warning)
+				to_chat(H, "<span class='warning'>Your species can not wear clothing of this type.</span>")
 			return FALSE
 		//fat mutation
 		if(istype(src, /obj/item/clothing/under) || istype(src, /obj/item/clothing/suit))
