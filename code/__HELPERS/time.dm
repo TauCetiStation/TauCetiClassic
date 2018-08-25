@@ -11,6 +11,27 @@ proc/worldtime2text(time = world.time)
 proc/time_stamp()
 	return time2text(world.timeofday, "hh:mm:ss")
 
+var/next_duration_update = 0
+var/last_round_duration = 0
+
+/proc/roundduration2text()
+	if(!round_start_time)
+		return "00:00"
+	if(last_round_duration && world.time < next_duration_update)
+		return last_round_duration
+
+	var/mills = round_start_time ? world.time - round_start_time : 0
+	//var/secs = ((mills % 36000) % 600) / 10 //Not really needed, but I'll leave it here for refrence.. or something
+	var/mins = round((mills % 36000) / 600)
+	var/hours = round(mills / 36000)
+
+	mins = mins < 10 ? add_zero(mins, 1) : mins
+	hours = hours < 10 ? add_zero(hours, 1) : hours
+
+	last_round_duration = "[hours]:[mins]"
+	next_duration_update = world.time + 1 MINUTES
+	return last_round_duration
+
 /* Preserving this so future generations can see how fucking retarded some people are
 proc/time_stamp()
 	var/hh = text2num(time2text(world.timeofday, "hh")) // Set the hour
