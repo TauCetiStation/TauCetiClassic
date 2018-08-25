@@ -247,7 +247,6 @@
 					prob(33);/obj/random/structures/generators,\
 					prob(33);/obj/random/structures/vendings,\
 					prob(20);/obj/random/mecha/wreckage,\
-					prob(13);/obj/random/structures/proffessions_heads_crates,\
 					prob(7);/obj/random/structures/rare_crates,\
 					prob(2);/obj/random/mecha/working\
 				)
