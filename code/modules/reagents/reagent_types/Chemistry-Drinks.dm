@@ -143,7 +143,7 @@
 	name = "Potato Juice"
 	id = "potato"
 	description = "Juice of the potato. Bleh."
-	nutriment_factor = 2 * FOOD_METABOLISM
+	nutriment_factor = 2
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "puke, you're pretty sure"
 
@@ -176,6 +176,7 @@
 	description = "The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?"
 	color = "#DFD7AF" // rgb: 223, 215, 175
 	taste_message = "cream"
+	diet_flags = DIET_DAIRY
 
 /datum/reagent/consumable/drink/grenadine
 	name = "Grenadine Syrup"
@@ -188,7 +189,7 @@
 	name = "Hot Chocolate"
 	id = "hot_coco"
 	description = "Made with love! And cocoa beans."
-	nutriment_factor = 2 * FOOD_METABOLISM
+	nutriment_factor = 2
 	color = "#403010" // rgb: 64, 48, 16
 	adj_temp = 5
 	taste_message = "chocolate"
@@ -239,6 +240,7 @@
 	color = "#664300" // rgb: 102, 67, 0
 	adj_sleepy = 0
 	adj_temp = 5
+	diet_flags = DIET_DAIRY
 
 /datum/reagent/consumable/drink/coffee/cafe_latte/on_general_digest(mob/living/M)
 	..()
@@ -443,12 +445,11 @@
 	reagent_state = LIQUID
 	color = "#FF8CFF" // rgb: 255, 140, 255
 	custom_metabolism = FOOD_METABOLISM
-	nutriment_factor = 1 * FOOD_METABOLISM
+	nutriment_factor = 1
 	taste_message = "healthy dietary choices"
 
 /datum/reagent/consumable/doctor_delight/on_general_digest(mob/living/M)
 	..()
-	M.nutrition += nutriment_factor
 	if(M.getOxyLoss() && prob(50))
 		M.adjustOxyLoss(-2)
 	if(M.getBruteLoss() && prob(60))
@@ -627,8 +628,6 @@
 	if(!..())
 		return
 
-	M.nutrition += nutriment_factor
-
 	if(adj_drowsy)
 		M.drowsyness = max(0,M.drowsyness + adj_drowsy)
 	if(adj_sleepy)
@@ -701,7 +700,7 @@
 	description = "An alcoholic beverage made from malted grains, hops, yeast, and water."
 	color = "#FBBF0D" // rgb: 251, 191, 13
 	boozepwr = 1
-	nutriment_factor = 1 * FOOD_METABOLISM
+	nutriment_factor = 1
 	taste_message = "beer"
 
 /datum/reagent/consumable/ethanol/beer/on_general_digest(mob/living/M)
@@ -746,7 +745,7 @@
 	description = "A potent mixture of caffeine and alcohol."
 	color = "#102000" // rgb: 16, 32, 0
 	boozepwr = 2
-	nutriment_factor = 1 * FOOD_METABOLISM
+	nutriment_factor = 1
 	taste_message = "party"
 
 /datum/reagent/consumable/ethanol/thirteenloko/on_general_digest(mob/living/M)
@@ -773,7 +772,7 @@
 	description = "This appears to be beer mixed with milk. Disgusting."
 	color = "#895C4C" // rgb: 137, 92, 76
 	boozepwr = 1
-	nutriment_factor = 2 * FOOD_METABOLISM
+	nutriment_factor = 2
 	taste_message = "bilk"
 
 /datum/reagent/consumable/ethanol/threemileisland
@@ -1332,7 +1331,7 @@
 	reagent_state = LIQUID
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 1.5
-	nutriment_factor = 1 * FOOD_METABOLISM
+	nutriment_factor = 1
 	taste_message = "sweet alcohol"
 
 /datum/reagent/consumable/ethanol/iced_beer
@@ -1437,7 +1436,7 @@
 	name = "Driest Martini"
 	id = "driestmartini"
 	description = "Only for the experienced. You think you see sand floating in the glass."
-	nutriment_factor = 1 * FOOD_METABOLISM
+	nutriment_factor = 1
 	color = "#2E6671" // rgb: 46, 102, 113
 	boozepwr = 4
 	taste_message = "bitter alcohol"
@@ -1446,7 +1445,7 @@
 	name = "Banana Mama"
 	id = "bananahonk"
 	description = "A drink from Clown Heaven."
-	nutriment_factor = 1 * REAGENTS_METABOLISM
+	nutriment_factor = 1
 	color = "#FFFF91" // rgb: 255, 255, 140
 	boozepwr = 4
 	taste_message = "honks"
@@ -1455,7 +1454,7 @@
 	name = "Silencer"
 	id = "silencer"
 	description = "A drink from Mime Heaven."
-	nutriment_factor = 1 * FOOD_METABOLISM
+	nutriment_factor = 1
 	color = "#664300" // rgb: 102, 67, 0
 	boozepwr = 4
 	taste_message = "mphhhh"

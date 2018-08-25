@@ -1,22 +1,28 @@
 /datum/reagent/consumable
 	name = "Consumable"
 	id = "consumable"
+	custom_metabolism = FOOD_METABOLISM
 	taste_message = null
 	var/last_volume = 0 // Check digestion code below.
 
 /datum/reagent/consumable/on_general_digest(mob/living/M)
 	..()
+	var/mob_met_factor = 1
+	if(iscarbon(M))
+		var/mob/living/carbon/C = M
+		mob_met_factor = C.metabolism_factor
 	if(volume > last_volume)
-		var/to_add = rand(0, volume - last_volume) * nutriment_factor * custom_metabolism
-		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * custom_metabolism) - to_add)
-		if(diet_flags & DIET_MEAT|DIET_PLANT|DIET_DAIRY)
+		var/to_add = rand(0, volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor
+		M.reagents.add_reagent("nutriment", ((volume - last_volume) * nutriment_factor * custom_metabolism * mob_met_factor) - to_add)
+		if(diet_flags & DIET_ALL)
 			M.reagents.add_reagent("nutriment", to_add)
 		else if(diet_flags & DIET_MEAT)
 			M.reagents.add_reagent("protein", to_add)
-		else if(diet_flags & DIET_MEAT)
+		else if(diet_flags & DIET_PLANT)
 			M.reagents.add_reagent("plantmatter", to_add)
 		else if(diet_flags & DIET_DAIRY)
 			M.reagents.add_reagent("dairy", to_add)
+		last_volume = volume
 	return TRUE
 
 /datum/reagent/nutriment
@@ -24,7 +30,8 @@
 	id = "nutriment"
 	description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
-	nutriment_factor = 15 * REAGENTS_METABOLISM
+	nutriment_factor = 1 // 1 nutriment reagent should be 2.5 nutrition, see custom metabolism below.
+	custom_metabolism = FOOD_METABOLISM
 	color = "#664330" // rgb: 102, 67, 48
 	taste_message = "bland food"
 
@@ -50,17 +57,17 @@
 
 /datum/reagent/nutriment/protein/on_skrell_digest(mob/living/M)
 	..()
-	M.adjustToxLoss(2 * REM)
+	M.adjustToxLoss(2 * FOOD_METABOLISM)
 	return FALSE
 
-/datum/reagent/consumable/nutriment/plantmatter // Plant-based biomatter, digestable by herbivores and omnivores, worthless to carnivores
+/datum/reagent/nutriment/plantmatter // Plant-based biomatter, digestable by herbivores and omnivores, worthless to carnivores
 	name = "Plant-matter"
 	id = "plantmatter"
 	description = "Vitamin-rich fibers and natural sugars commonly found in fresh produce."
-	diet_flags = DIET_MEAT
+	diet_flags = DIET_PLANT
 	taste_message = "plant matter"
 
-/datum/reagent/consumable/nutriment/dairy // Milk-based biomatter.
+/datum/reagent/nutriment/dairy // Milk-based biomatter.
 	name = "dairy"
 	id = "dairy"
 	description = "A tasty substance that comes out of cows who eat lotsa grass"
@@ -69,7 +76,7 @@
 
 /datum/reagent/nutriment/dairy/on_skrell_digest(mob/living/M) // Is not as poisonous to skrell.
 	..()
-	M.adjustToxLoss(1 * REM)
+	M.adjustToxLoss(1 * FOOD_METABOLISM)
 	return FALSE
 
 /datum/reagent/consumable/soysauce
@@ -77,7 +84,7 @@
 	id = "soysauce"
 	description = "A salty sauce made from the soy plant."
 	reagent_state = LIQUID
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	color = "#792300" // rgb: 121, 35, 0
 	taste_message = "salt"
 	diet_flags = DIET_MEAT
@@ -87,7 +94,7 @@
 	id = "ketchup"
 	description = "Ketchup, catsup, whatever. It's tomato paste."
 	reagent_state = LIQUID
-	nutriment_factor = 5 * REAGENTS_METABOLISM
+	nutriment_factor = 5
 	color = "#731008" // rgb: 115, 16, 8
 	taste_message = "ketchup"
 	diet_flags = DIET_PLANT
@@ -97,7 +104,7 @@
 	id = "flour"
 	description = "This is what you rub all over yourself to pretend to be a ghost."
 	reagent_state = LIQUID
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	color = "#F5EAEA" // rgb: 245, 234, 234
 	taste_message = "flour"
 	diet_flags = DIET_PLANT
@@ -108,7 +115,6 @@
 	description = "This is what makes chilis hot."
 	reagent_state = LIQUID
 	color = "#B31008" // rgb: 179, 16, 8
-	custom_metabolism = FOOD_METABOLISM
 	taste_message = "<span class='warning'>HOTNESS</span>"
 
 /datum/reagent/consumable/capsaicin/on_general_digest(mob/living/M)
@@ -201,7 +207,6 @@
 	description = "A special oil that noticably chills the body. Extracted from Ice Peppers."
 	reagent_state = LIQUID
 	color = "#B31008" // rgb: 139, 166, 233
-	custom_metabolism = FOOD_METABOLISM
 	taste_message = "<font color='lightblue'>cold</span>"
 	diet_flags = DIET_PLANT
 
@@ -242,7 +247,7 @@
 	id = "coco"
 	description = "A fatty, bitter paste made from coco beans."
 	reagent_state = SOLID
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 10
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "cocoa"
 	diet_flags = DIET_PLANT
@@ -252,7 +257,7 @@
 	id = "hot_coco"
 	description = "Made with love! And cocoa beans."
 	reagent_state = LIQUID
-	nutriment_factor = 4 * REAGENTS_METABOLISM
+	nutriment_factor = 4
 	color = "#403010" // rgb: 64, 48, 16
 	taste_message = "chocolate"
 	diet_flags = DIET_PLANT
@@ -305,7 +310,7 @@
 	name = "Sprinkles"
 	id = "sprinkles"
 	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	color = "#FF00FF" // rgb: 255, 0, 255
 	taste_message = "sweetness"
 
@@ -343,7 +348,7 @@
 	id = "cornoil"
 	description = "An oil derived from various types of corn."
 	reagent_state = LIQUID
-	nutriment_factor = 40 * REAGENTS_METABOLISM
+	nutriment_factor = 40
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "oil"
 	diet_flags = DIET_PLANT
@@ -375,7 +380,7 @@
 	id = "dry_ramen"
 	description = "Space age food, since August 25, 1958. Contains dried noodles, vegetables, and chemicals that boil in contact with water."
 	reagent_state = SOLID
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "dry ramen coated with what might just be your tears"
 
@@ -384,7 +389,7 @@
 	id = "hot_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 10
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "ramen"
 
@@ -398,7 +403,7 @@
 	id = "hell_ramen"
 	description = "The noodles are boiled, the flavors are artificial, just like being back in school."
 	reagent_state = LIQUID
-	nutriment_factor = 10 * REAGENTS_METABOLISM
+	nutriment_factor = 10
 	color = "#302000" // rgb: 48, 32, 0
 	taste_message = "SPICY ramen"
 
@@ -411,7 +416,7 @@
 	id = "rice"
 	description = "Enjoy the great taste of nothing."
 	reagent_state = SOLID
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	color = "#FFFFFF" // rgb: 0, 0, 0
 	taste_message = "rice"
 	diet_flags = DIET_PLANT
@@ -421,7 +426,7 @@
 	id = "cherryjelly"
 	description = "Totally the best. Only to be spread on foods with excellent lateral symmetry."
 	reagent_state = LIQUID
-	nutriment_factor = 2 * REAGENTS_METABOLISM
+	nutriment_factor = 2
 	color = "#801E28" // rgb: 128, 30, 40
 	taste_message = "cherry jelly"
 	diet_flags = DIET_PLANT

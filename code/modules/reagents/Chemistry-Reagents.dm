@@ -18,7 +18,7 @@
 	var/reagent_state = SOLID
 	var/list/data = null
 	var/volume = 0
-	var/nutriment_factor = 1 * REAGENTS_METABOLISM
+	var/nutriment_factor = 0
 	var/diet_flags = DIET_ALL
 	var/custom_metabolism = REAGENTS_METABOLISM
 	var/taste_strength = 1 //how easy it is to taste - the more the easier
