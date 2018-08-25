@@ -32,6 +32,8 @@
 	var/mutantrace                    // Safeguard due to old code.
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
 
+	var/list/restricted_inventory_slots = list() // Slots that the race does not have due to biological differences.
+
 	var/breath_type = "oxygen"           // Non-oxygen gas breathed, if any.
 	var/poison_type = "phoron"           // Poisonous air.
 	var/exhale_type = "carbon_dioxide"   // Exhaled gas type.
@@ -467,6 +469,8 @@
 	burn_mod = 1.3
 	speed_mod = 7
 
+	restricted_inventory_slots = list(slot_wear_mask, slot_glasses, slot_gloves, slot_shoes) // These are trees. Not people. Deal with the fact that they don't have these.
+
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
 	butcher_drops = list(/obj/item/stack/sheet/wood = 5)
 
@@ -732,6 +736,8 @@
 	darksight = 8
 
 	butcher_drops = list() // They are just shadows. Why should they drop anything?
+
+	restricted_inventory_slots = list(slot_belt, slot_wear_id, slot_l_ear, slot_r_ear, slot_back, slot_l_store, slot_r_store)
 
 	flags = list(
 	 NO_BREATHE = TRUE
