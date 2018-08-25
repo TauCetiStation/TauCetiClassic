@@ -26,8 +26,9 @@
 /obj/item/weapon/storage/bag/fossils
 	name = "Fossil Satchel"
 	desc = "Transports delicate fossils in suspension so they don't break during transit."
-	icon = 'icons/obj/mining.dmi'
-	icon_state = "satchel"
+	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon_state = "fossil_satchel"
+	item_state = "fossil_satchel"
 	slot_flags = SLOT_BELT | SLOT_POCKET
 	w_class = 3
 	storage_slots = 50

@@ -4,7 +4,7 @@
 	desc = "Aids in triangulation of exotic particles."
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "flashgun"
-	item_state = "lampgreen"
+	item_state = "Alden-Saraspova counter"
 	w_class = 2.0
 	slot_flags = SLOT_BELT
 	var/nearest_artifact_id = "unknown"
