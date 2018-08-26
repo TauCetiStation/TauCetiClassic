@@ -60,12 +60,12 @@
 /obj/structure/closet/secure_closet/xenoarchaeologist
 	name = "Xenoarchaeologist Locker"
 	req_access = list(access_xenoarch)
-	icon_state = "secureres1"
-	icon_closed = "secureres"
-	icon_locked = "secureres1"
-	icon_opened = "secureresopen"
-	icon_broken = "secureresbroken"
-	icon_off = "secureresoff"
+	icon_state = "securerexenoarch1"
+	icon_closed = "securerexenoarch"
+	icon_locked = "securerexenoarch1"
+	icon_opened = "securerexenoarchopen"
+	icon_broken = "securerexenoarchbroken"
+	icon_off = "securerexenoarchoff"
 
 /obj/structure/closet/secure_closet/xenoarchaeologist/PopulateContents()
 	new /obj/item/clothing/under/rank/scientist(src)
@@ -77,14 +77,14 @@
 	new /obj/item/weapon/storage/box/excavation(src)
 
 /obj/structure/closet/secure_closet/xenoarchaeologist_tools
-	name = "Xenoarchaeologist Tool Locker"
+	name = "Xenoarchaeologist Locker"
 	req_access = list(access_xenoarch)
-	icon_state = "secureres1"
-	icon_closed = "secureres"
-	icon_locked = "secureres1"
-	icon_opened = "secureresopen"
-	icon_broken = "secureresbroken"
-	icon_off = "secureresoff"
+	icon_state = "securerexenoarch1"
+	icon_closed = "securerexenoarch"
+	icon_locked = "securerexenoarch1"
+	icon_opened = "securerexenoarchopen"
+	icon_broken = "securerexenoarchbroken"
+	icon_off = "securerexenoarchoff"
 
 /obj/structure/closet/secure_closet/xenoarchaeologist_tools/PopulateContents()
 	new /obj/item/weapon/storage/box/excavation(src)
