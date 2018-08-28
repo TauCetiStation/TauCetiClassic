@@ -82,13 +82,15 @@
 		Fire(A,user,params) //Otherwise, fire normally.
 
 /mob/living/carbon/AltClickOn(atom/A)
-	var/obj/item/I = get_active_hand()
-	if(istype(I, /obj/item/weapon/gun))
-		var/obj/item/weapon/gun/G = I
-		if(A in G.target)
-			G.stop_aim()
-		else
-			G.PreFire(A, src)
+	if(isliving(A))
+		var/mob/living/M = A
+		var/obj/item/I = get_active_hand()
+		if(istype(I, /obj/item/weapon/gun))
+			var/obj/item/weapon/gun/G = I
+			if(M in G.target)
+				M.NotTargeted(G)
+			else
+				G.PreFire(M, src)
 
 /obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0)//TODO: go over this
 	//Exclude lasertag guns from the CLUMSY check.
