@@ -126,6 +126,8 @@ var/world_topic_spam_protect_time = world.timeofday
 		s["host"] = host ? host : null
 		s["players"] = list()
 		s["stationtime"] = worldtime2text()
+		s["gamestate"] = ticker.current_state
+		s["roundduration"] = roundduration2text()
 		var/n = 0
 		var/admins = 0
 

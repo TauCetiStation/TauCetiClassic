@@ -196,8 +196,10 @@
 
 /obj/item/organ/internal/liver/ipc
 	name = "accumulator"
-	var/obj/item/weapon/stock_parts/cell/crap/B = new()
-	B.forceMove(src)
+
+/obj/item/organ/internal/liver/ipc/atom_init()
+	. = ..()
+	new/obj/item/weapon/stock_parts/cell/crap/(src)
 
 /obj/item/organ/internal/liver/process()
 	..()
@@ -238,16 +240,17 @@
 					owner.adjustToxLoss(0.3 * process_accuracy)
 
 /obj/item/organ/internal/liver/ipc/process()
-	if(damage)
-		if(locate(/obj/item/weapon/stock_parts/cell, src))
-			for(var/obj/item/weapon/stock_parts/cell/crap/B in src)
-				B.charge = owner.nutrition
-				if(owner.nutrition > (B.maxcharge - damage*5))
-					owner.nutrition = B.maxcharge - damage*5
-		else
-			if(owner.is_bruised_organ(O_KIDNEYS) && prob(2))
-				to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
-			owner.stat = UNCONSCIOUS
+	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in src
+	if(damage && C)
+		C.charge = owner.nutrition
+		if(owner.nutrition > (C.maxcharge - damage * 5))
+			owner.nutrition = C.maxcharge - damage * 5
+	else if(!C)
+		if(!owner.is_bruised_organ(O_KIDNEYS) && prob(2))
+			to_chat(owner, "<span class='warning bold'>%ACCUMULATOR% DAMAGED BEYOND FUNCTION. SHUTTING DOWN.</span>")
+		owner.SetParalysis(5)
+		owner.eye_blurry = 5
+		owner.silent = 5
 
 /obj/item/organ/internal/kidneys
 	name = "kidneys"

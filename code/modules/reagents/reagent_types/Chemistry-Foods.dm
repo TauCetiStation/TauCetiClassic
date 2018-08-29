@@ -2,6 +2,7 @@
 	name = "Consumable"
 	id = "consumable"
 	custom_metabolism = FOOD_METABOLISM
+	nutriment_factor = 1
 	taste_message = null
 	var/last_volume = 0 // Check digestion code below.
 
@@ -73,6 +74,29 @@
 	description = "A tasty substance that comes out of cows who eat lotsa grass"
 	diet_flags = DIET_DAIRY
 	taste_message = "dairy"
+
+/datum/reagent/consumable/sprinkles
+	name = "Sprinkles"
+	id = "sprinkles"
+	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
+	color = "#FF00FF" // rgb: 255, 0, 255
+	taste_message = "sweetness"
+
+/datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
+	..()
+	if(ishuman(M) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden", "Captain"))
+		M.heal_bodypart_damage(1, 1)
+
+/datum/reagent/consumable/syndicream
+	name = "Cream filling"
+	id = "syndicream"
+	description = "Delicious cream filling of a mysterious origin. Tastes criminally good."
+	color = "#AB7878" // rgb: 171, 120, 120
+
+/datum/reagent/consumable/syndicream/on_general_digest(mob/living/M)
+	..()
+	if(ishuman(M) && M.mind && M.mind.special_role)
+		M.heal_bodypart_damage(1, 1)
 
 /datum/reagent/nutriment/dairy/on_skrell_digest(mob/living/M) // Is not as poisonous to skrell.
 	..()

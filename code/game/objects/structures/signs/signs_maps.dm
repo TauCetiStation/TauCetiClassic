@@ -45,6 +45,11 @@
 	desc = "A direction sign, pointing out which way the Command department is."
 	icon_state = "direction_bridge"
 
+/obj/structure/sign/directions/holodeck
+	name = "holodeck"
+	desc = "A direction sign, pointing out which way the Holodeck is."
+	icon_state = "direction_holodeck"
+
 /obj/structure/sign/deck/bridge
 	name = "\improper Bridge Deck"
 	icon_state = "deck-b"

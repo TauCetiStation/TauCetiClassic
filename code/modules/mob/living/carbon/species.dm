@@ -20,6 +20,7 @@
 	var/tox_mod = 1                                      // Toxloss multiplier.
 	var/brain_mod = 1                                    // Brainloss multiplier.
 	var/speed_mod =  0                                   // How fast or slow specific specie.
+	var/siemens_coefficient = 1                          // How conductive is the specie.
 
 	var/primitive                     // Lesser form, if any (ie. monkey for humans)
 	var/tail                          // Name of tail image in species effects icon file.
@@ -30,6 +31,8 @@
 	var/punch_damage = 0              // Extra empty hand attack damage.
 	var/mutantrace                    // Safeguard due to old code.
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
+
+	var/list/restricted_inventory_slots = list() // Slots that the race does not have due to biological differences.
 
 	var/breath_type = "oxygen"           // Non-oxygen gas breathed, if any.
 	var/poison_type = "phoron"           // Poisonous air.
@@ -291,6 +294,8 @@
 	metabolism_mod = SKRELL_METABOLISM_FACTOR
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
+	siemens_coefficient = 1.3 // Because they are wet and slimy.
+
 	flags = list(
 	 IS_WHITELISTED = TRUE
 	,HAS_LIPS = TRUE
@@ -449,6 +454,8 @@
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 	primitive = /mob/living/carbon/monkey/diona
 
+	siemens_coefficient = 0.8 // Because they are plants and stuff.
+
 	hazard_low_pressure = DIONA_HAZARD_LOW_PRESSURE
 
 	cold_level_1 = 50
@@ -461,6 +468,8 @@
 
 	burn_mod = 1.3
 	speed_mod = 7
+
+	restricted_inventory_slots = list(slot_wear_mask, slot_glasses, slot_gloves, slot_shoes) // These are trees. Not people. Deal with the fact that they don't have these.
 
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
 	butcher_drops = list(/obj/item/stack/sheet/wood = 5)
@@ -575,6 +584,7 @@
 
 	brute_mod = 1.5
 	burn_mod = 1
+	siemens_coefficient = 1.3 // ROBUTT.
 
 	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
 
@@ -611,7 +621,7 @@
 	blood_color = /datum/dirt_cover/oil
 	flesh_color = "#575757"
 
-/datum/species/ipc/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+/datum/species/machine/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), slot_r_hand)
 	else
@@ -649,6 +659,8 @@
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
 	dietflags = 0
+
+	siemens_coefficient = 0
 
 	butcher_drops = list()
 
@@ -710,6 +722,8 @@
 	warning_low_pressure = 50
 	hazard_low_pressure = -1
 
+	siemens_coefficient = 0 // Spooky shadows don't need to be hurt by your pesky electricity.
+
 	cold_level_1 = 50
 	cold_level_2 = -1
 	cold_level_3 = -1
@@ -722,6 +736,8 @@
 	darksight = 8
 
 	butcher_drops = list() // They are just shadows. Why should they drop anything?
+
+	restricted_inventory_slots = list(slot_belt, slot_wear_id, slot_l_ear, slot_r_ear, slot_back, slot_l_store, slot_r_store)
 
 	flags = list(
 	 NO_BREATHE = TRUE

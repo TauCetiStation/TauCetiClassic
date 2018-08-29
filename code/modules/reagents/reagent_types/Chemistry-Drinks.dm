@@ -5,6 +5,7 @@
 	reagent_state = LIQUID
 	color = "#E78108" // rgb: 231, 129, 8
 	custom_metabolism = DRINK_METABOLISM
+	nutriment_factor = 0
 	var/adj_dizzy = 0
 	var/adj_drowsy = 0
 	var/adj_sleepy = 0

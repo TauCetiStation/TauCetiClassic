@@ -10,7 +10,7 @@
 
 	blood_overlay_type = "armor"
 
-	armor = list(melee = 12, bullet = 40, laser = 12, energy = 12, bomb = 0, bio = 0, rad = 0)
+	armor = list(melee = 60, bullet = 80, laser = 40, energy = 50, bomb = 25, bio = 0, rad = 0)
 	siemens_coefficient = 0.7
 
 /obj/item/clothing/under/nt_pmc_uniform
@@ -52,6 +52,7 @@
 	icon_custom = 'code/game/objects/WalterJ_Items_Pack/NT PMC/WJ_NT_PMC.dmi'
 	name = "NT PMC Boots"
 	desc = "Private security boots. Now with extra grip."
+	flags = NOSLIP
 
 
 	icon_state = "boots"
@@ -64,6 +65,7 @@
 
 	name = "Lizard Boots"
 	desc = "Private security boots for Unathi."
+	flags = NOSLIP
 
 	icon_state = "Lizard_Boots"
 	item_state = "Lizard_Boots"
