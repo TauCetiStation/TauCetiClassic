@@ -330,43 +330,6 @@
 				M.emote(pick("twitch","giggle"))
 	data++
 
-/datum/reagent/consumable/sprinkles
-	name = "Sprinkles"
-	id = "sprinkles"
-	description = "Multi-colored little bits of sugar, commonly found on donuts. Loved by cops."
-	nutriment_factor = 2
-	color = "#FF00FF" // rgb: 255, 0, 255
-	taste_message = "sweetness"
-
-/*/datum/reagent/consumable/sprinkles/on_general_digest(mob/living/M)
-	..()
-	if(istype(M, /mob/living/carbon/human) && M.job in list("Security Officer", "Head of Security", "Detective", "Warden")) //if we want some FUN and FEATURES we should uncomment it
-		if(!M) M = holder.my_atom
-		M.heal_bodypart_damage(1, 1)
-		M.nutrition += nutriment_factor
-		..()
-		return
-	*/
-
-/*//removed because of meta bullshit. this is why we can't have nice things.
-/datum/reagent/consumable/syndicream
-	name = "Cream filling"
-	id = "syndicream"
-	description = "Delicious cream filling of a mysterious origin. Tastes criminally good."
-	nutriment_factor = 1 * REAGENTS_METABOLISM
-	color = "#AB7878" // rgb: 171, 120, 120
-
-	on_general_digest(var/mob/living/M as mob)
-		M.nutrition += nutriment_factor
-		if(istype(M, /mob/living/carbon/human) && M.mind)
-		if(M.mind.special_role)
-			if(!M) M = holder.my_atom
-				M.heal_bodypart_damage(1, 1)
-				M.nutrition += nutriment_factor
-				..()
-				return
-		..()
-*/
 /datum/reagent/consumable/cornoil
 	name = "Corn Oil"
 	id = "cornoil"
