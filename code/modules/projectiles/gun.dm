@@ -91,8 +91,8 @@
 				M.NotTargeted(G)
 			else
 				G.PreFire(M, src)
-		else
-			..()
+			return
+	..()
 
 /obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0)//TODO: go over this
 	//Exclude lasertag guns from the CLUMSY check.
