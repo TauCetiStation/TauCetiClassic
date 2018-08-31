@@ -10,18 +10,15 @@
 	data = 0
 	restrict_species = list(IPC, DIONA)
 
-	on_mob_life(mob/living/M, alien)
-		if(!M)
-			M = holder.my_atom
-		if(src.volume <= 0.1) if(data != -1)
-			data = -1
-			to_chat(M, "\red You lose focus..")
-		else
-			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
-				data = world.time
-				to_chat(M, "\blue Your mind feels focused and undivided.")
-		..()
-		return
+/datum/reagent/antidepressant/methylphenidate/on_general_digest(mob/living/M)
+	..()
+	if(volume <= 0.1 && data != -1)
+		data = -1
+		to_chat(M, "<span class='warning'>You lose focus..</span>")
+	else
+		if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
+			data = world.time
+			to_chat(M, "<span class='notice'>Your mind feels focused and undivided.</span>")
 
 /datum/chemical_reaction/methylphenidate
 	name = "Methylphenidate"
@@ -40,18 +37,15 @@
 	data = 0
 	restrict_species = list(IPC, DIONA)
 
-	on_mob_life(mob/living/M, alien)
-		if(!M)
-			M = holder.my_atom
-		if(src.volume <= 0.1) if(data != -1)
-			data = -1
-			to_chat(M, "\red Your mind feels a little less stable..")
-		else
-			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
-				data = world.time
-				to_chat(M, "\blue Your mind feels stable.. a little stable.")
-		..()
-		return
+/datum/reagent/antidepressant/citalopram/on_general_digest(mob/living/M)
+	..()
+	if(volume <= 0.1 && data != -1)
+		data = -1
+		to_chat(M, "<span class='warning'>Your mind feels a little less stable.</span>")
+	else
+		if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
+			data = world.time
+			to_chat(M, "<span class='notice'>Your mind feels stable.. a little stable.</span>")
 
 /datum/chemical_reaction/citalopram
 	name = "Citalopram"
@@ -59,7 +53,6 @@
 	result = "citalopram"
 	required_reagents = list("mindbreaker" = 1, "carbon" = 1)
 	result_amount = 3
-
 
 /datum/reagent/antidepressant/paroxetine
 	name = "Paroxetine"
@@ -71,22 +64,19 @@
 	data = 0
 	restrict_species = list(IPC, DIONA)
 
-	on_mob_life(mob/living/M, alien)
-		if(!M)
-			M = holder.my_atom
-		if(src.volume <= 0.1) if(data != -1)
-			data = -1
-			to_chat(M, "\red Your mind feels much less stable..")
-		else
-			if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
-				data = world.time
-				if(prob(90))
-					to_chat(M, "\blue Your mind feels much more stable.")
-				else
-					to_chat(M, "\red Your mind breaks apart..")
-					M.hallucination += 200
-		..()
-		return
+/datum/reagent/antidepressant/paroxetine/on_general_digest(mob/living/M)
+	..()
+	if(volume <= 0.1 && data != -1)
+		data = -1
+		to_chat(M, "<span class='warning'>Your mind feels much less stable.</span>")
+	else
+		if(world.time > data + ANTIDEPRESSANT_MESSAGE_DELAY)
+			data = world.time
+			if(prob(90))
+				to_chat(M, "<span class='notice'>Your mind feels much more stable.</span>")
+			else
+				to_chat(M, "<span class='warning'>Your mind breaks apart.</span>")
+				M.hallucination += 200
 
 /datum/chemical_reaction/paroxetine
 	name = "Paroxetine"

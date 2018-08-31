@@ -26,12 +26,8 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/quartermaster(H), slot_belt)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 
 /datum/job/cargo_tech
@@ -58,12 +54,8 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/cargo(H), slot_belt)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 
 /datum/job/mining
@@ -95,12 +87,8 @@
 	H.equip_to_slot_or_del(new /obj/item/device/pda/shaftminer(H), slot_belt)
 	H.equip_to_slot_or_del(new /obj/item/weapon/mining_voucher(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/weapon/survivalcapsule(H), slot_in_backpack)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 
 /datum/job/recycler
@@ -127,12 +115,8 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/cargo(H), slot_belt)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 //Food
 /datum/job/bartender
@@ -165,20 +149,19 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/bar(H), slot_belt)
 	if(H.backbag == 1)
-		var/obj/item/weapon/storage/box/survival/Barpack = new /obj/item/weapon/storage/box/survival(H)
+		var/obj/item/weapon/storage/box/Barpack = new /obj/item/weapon/storage/box(H)
 		H.equip_to_slot_or_del(Barpack, slot_r_hand)
 		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
 		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
 		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
 		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 
 /datum/job/chef
@@ -204,12 +187,8 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/chef(H), slot_belt)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 
 /datum/job/hydro
@@ -242,10 +221,9 @@
 	if(visualsOnly)
 		return
 
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/botanist(H), slot_belt)
 
-	return 1
+	return TRUE
 
 
 /datum/job/janitor
@@ -275,7 +253,7 @@
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 
 //More or less assistants
@@ -311,10 +289,6 @@
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/purpsuit(H), slot_w_uniform)
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/barber(H), slot_belt)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
 	return TRUE
 
@@ -342,12 +316,7 @@
 	if(visualsOnly)
 		return
 
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-
-	return 1
+	return TRUE
 
 
 //var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
@@ -382,14 +351,11 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/lawyer(H), slot_belt)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
 	L.inject(H)
 	START_PROCESSING(SSobj, L)
-	return 1
+	return TRUE
 
 
 /datum/job/clown
@@ -416,7 +382,6 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/clown(H), slot_belt)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/weapon/stamp/clown(H), slot_in_backpack)
@@ -424,7 +389,7 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/fancy/crayons(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/toy/waterflower(H), slot_in_backpack)
 	H.mutations.Add(CLUMSY)
-	return 1
+	return TRUE
 
 
 /datum/job/mime
@@ -457,11 +422,9 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/mime(H), slot_belt)
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), slot_l_store)
 		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_l_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_in_backpack)
 	H.verbs += /client/proc/mimespeak
@@ -469,4 +432,4 @@
 	H.mind.special_verbs += /client/proc/mimespeak
 	H.mind.special_verbs += /client/proc/mimewall
 	H.miming = 1
-	return 1
+	return TRUE

@@ -1103,7 +1103,15 @@
 /obj/machinery/vending/eva
 	name = "Hardsuit Kits"
 	desc = "Conversion kits for your alien hardsuit needs."
-	products = list(/obj/item/device/modkit/engineering/tajaran = 5, /obj/item/device/modkit/engineering/unathi = 5, /obj/item/device/modkit/engineering/skrell = 5, /obj/item/device/modkit/engineering/chief/skrell = 1, /obj/item/device/modkit/atmos/tajaran = 5, /obj/item/device/modkit/atmos/unathi = 5, /obj/item/device/modkit/atmos/skrell = 5, /obj/item/device/modkit/med/tajaran = 5, /obj/item/device/modkit/med/unathi = 5, /obj/item/device/modkit/med/skrell = 5, /obj/item/device/modkit/sec/tajaran = 5, /obj/item/device/modkit/sec/unathi = 5, /obj/item/device/modkit/sec/skrell = 5, /obj/item/device/modkit/mining/tajaran = 5, /obj/item/device/modkit/mining/unathi = 5, /obj/item/device/modkit/mining/skrell = 5, /obj/item/device/modkit = 10)
+	products = list(/obj/item/device/modkit/engineering/tajaran = 5, /obj/item/device/modkit/engineering/unathi = 5, /obj/item/device/modkit/engineering/skrell = 5,
+					/obj/item/device/modkit/atmos/tajaran = 5, /obj/item/device/modkit/atmos/unathi = 5, /obj/item/device/modkit/atmos/skrell = 5,
+					/obj/item/device/modkit/med/tajaran = 5, /obj/item/device/modkit/med/unathi = 5, /obj/item/device/modkit/med/skrell = 5,
+					/obj/item/device/modkit/sec/tajaran = 5, /obj/item/device/modkit/sec/unathi = 5, /obj/item/device/modkit/sec/skrell = 5,
+					/obj/item/device/modkit/mining/tajaran = 5, /obj/item/device/modkit/mining/unathi = 5, /obj/item/device/modkit/mining/skrell = 5,
+					/obj/item/device/modkit/engineering/chief/tajaran = 1, /obj/item/device/modkit/engineering/chief/unathi = 1, /obj/item/device/modkit/engineering/chief/skrell = 1,
+					/obj/item/device/modkit/med/cmo/tajaran = 1, /obj/item/device/modkit/med/cmo/unathi = 1, /obj/item/device/modkit/med/cmo/skrell = 1,
+					/obj/item/device/modkit/sec/hos/tajaran = 1, /obj/item/device/modkit/sec/hos/unathi = 1, /obj/item/device/modkit/sec/hos/skrell = 1,
+					/obj/item/device/modkit = 10)
 
 /obj/machinery/vending/eva/mining
 	name = "Mining Hardsuit Kits"
@@ -1115,7 +1123,10 @@
 	name = "Engineering Hardsuit Kits"
 	desc = "Conversion kits for your alien engineering and atmos hardsuits."
 	icon_state = "evaengi"
-	products = list(/obj/item/device/modkit/engineering/tajaran = 3, /obj/item/device/modkit/engineering/unathi = 3, /obj/item/device/modkit/engineering/skrell = 3, /obj/item/device/modkit/engineering/chief/skrell = 1, /obj/item/device/modkit/atmos/tajaran = 3, /obj/item/device/modkit/atmos/unathi = 3, /obj/item/device/modkit/atmos/skrell = 3, /obj/item/device/modkit = 6)
+	products = list(/obj/item/device/modkit/engineering/tajaran = 3, /obj/item/device/modkit/engineering/unathi = 3, /obj/item/device/modkit/engineering/skrell = 3,
+					/obj/item/device/modkit/atmos/tajaran = 3, /obj/item/device/modkit/atmos/unathi = 3, /obj/item/device/modkit/atmos/skrell = 3,
+					/obj/item/device/modkit/engineering/chief/tajaran = 1, /obj/item/device/modkit/engineering/chief/unathi = 1, /obj/item/device/modkit/engineering/chief/skrell = 1,
+					/obj/item/device/modkit = 6)
 
 
 //from old nanotrasen
@@ -1175,4 +1186,4 @@
 					/obj/item/clothing/suit/tuxedo = 3,/obj/item/clothing/under/popking = 1, /obj/item/clothing/under/popking/alternate = 1, /obj/item/clothing/suit/hooded/angel_suit = 1,
 					/obj/item/clothing/mask/fake_face = 2,)
 	prices = list(/obj/item/clothing/head/xenos = 100, /obj/item/clothing/suit/xenos = 200, /obj/item/clothing/suit/monkeysuit = 200)
-	contraband = list(/obj/item/clothing/mask/gas/fawkes = 2)
+	contraband = list(/obj/item/clothing/mask/gas/fawkes = 2, /obj/item/clothing/mask/gas/hoxton_mask = 1, /obj/item/clothing/mask/gas/chains_mask = 1, /obj/item/clothing/mask/gas/dallas_mask = 1,/obj/item/clothing/mask/gas/wolf_mask = 1)

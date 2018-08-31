@@ -123,7 +123,7 @@
 				miss_chance = 60
 		if(prob(max(miss_chance + miss_chance_mod, 0)))
 			if(prob(max(20, (miss_chance/2))))
-				return null
+				return 0
 			else
 				var/t = rand(1, 100)
 				switch(t)
