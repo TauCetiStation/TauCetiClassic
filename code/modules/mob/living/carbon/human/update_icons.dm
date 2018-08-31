@@ -745,7 +745,7 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing.color = head.color
 		overlays_standing[HEAD_LAYER]	= standing
 
-		if(istype(head,/obj/item/clothing/head/helmet/band))
+		if(istype(head, /obj/item/clothing/head/helmet/band))
 			var/obj/item/clothing/head/helmet/band/H = head
 			if(H.on_helmet_overlay)
 				standing.overlays += H.on_helmet_overlay

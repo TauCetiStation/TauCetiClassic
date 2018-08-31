@@ -31,21 +31,22 @@
 	if(on_helmet)
 		to_chat(user, "<span class='notice'>There is already something on [src].</span>")
 		return
-	for(var/i in can_hold)
-		if(istype(W, text2path(i)))
-			user.drop_from_inventory(W) //This is because we need to drop it from the inventory first, and then forceMove. If u know better way of doing that - advise plz.
-			W.forceMove(src)
-			on_helmet = W
-			to_chat(user, "<span class='notice'>You put [W] on [src].</span>")
-			make_overlay_icon(text2path(i))
-			break
+	world.log << text2path(W)
+	if(is_type_in_list(text2path(W), can_hold))
+		user.drop_from_inventory(W) //This is because we need to drop it from the inventory first, and then forceMove. If u know better way of doing that - advise plz.
+		W.forceMove(src)
+		on_helmet = W
+		to_chat(user, "<span class='notice'>You put [W] on [src].</span>")
+		make_overlay_icon(text2path(W))
+	else
+		to_chat(user, "<span class='notice'>[src] can't hold [W].</span>")
 
 /obj/item/clothing/head/helmet/band/verb/remove_on_helmet()
 	set category = "Object"
 	set name = "Remove object from helmet"
 	set src in usr
 
-	if(!usr.canmove && usr.stat && usr.restrained())
+	if(!usr.canmove && usr.stat && usr.incapacitated())
 		return
 	if(!on_helmet)
 		return
@@ -55,11 +56,13 @@
 	usr.update_inv_head()
 
 /obj/item/clothing/head/helmet/band/proc/make_overlay_icon(var/obj_path)
-	world.log << obj_path
 	var/overlay_name = "band_[obj_path]"
-	world.log << overlay_name
 	on_helmet_overlay = image('icons/mob/helmet_bands.dmi', overlay_name)
 	usr.update_inv_head()
+
+/obj/item/clothing/head/helmet/band/emp_act(severity)
+	on_helmet.emp_act(severity)
+	return ..()
 
 /obj/item/clothing/head/helmet/band/Destroy()
 	QDEL_NULL(on_helmet)
