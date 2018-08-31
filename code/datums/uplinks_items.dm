@@ -624,6 +624,12 @@
 	item = /obj/item/weapon/storage/box/syndie_kit/posters
 	cost = 1
 
+/datum/uplink_item/device_tools/rev_poster_kit
+	name = "Revolutionary posters kit"
+	desc = "Box of revolutionary posters. (Useless unless it`s revolution)"
+	item = /obj/item/weapon/storage/box/syndie_kit/rev_posters
+	cost = 3
+
 /datum/uplink_item/device_tools/headcan
 	name = "Biogel can"
 	desc = "Sophisticated device for sustaining life in head for a long period"
