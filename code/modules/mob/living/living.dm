@@ -1114,14 +1114,14 @@
 	floating = 0
 
 /mob/living/proc/attempt_harvest(obj/item/I, mob/user)
-	if(stat == DEAD && !isnull(butcher_results) && !ishuman(src)) //can we butcher it?
-		if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/butch))
-			if(user.is_busy()) return
-			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-			if(do_mob(user, src, 80))
-				harvest(user)
-			return TRUE
+	if(stat == DEAD && butcher_results && istype(buckled, /obj/structure/kitchenspike)) //can we butcher it? Mob must be buckled to a meatspike to butcher it
+		if(user.is_busy())
+			return
+		to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
+		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+		if(do_mob(user, src, 80))
+			harvest(user)
+		return TRUE
 
 /mob/living/proc/harvest(mob/user)
 	if(QDELETED(src))
