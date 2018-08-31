@@ -5,6 +5,19 @@
 
 #define POSTERDESC "desc"
 
+#define POSTERLEGIT 0
+#define POSTERCONTRABAND 1
+#define POSTERREV 2
+
+var/global/list/revposters = list(
+list(name = "- Kill Police", desc = " Poster with a bloody secyrity helmet on it."),
+list(name = "- To The Brig", desc = " Unite, comrades! Destroy Brig!"),
+list(name = "- Grey Tide", desc = " Grey bald-hair. He looks lost."),
+list(name = "- We Need You", desc = " That`s a very suspicious poster."),
+list(name = "- Commie Poster", desc = " This one is a great good ol` days propaganda."),
+list(name = "- NO HEADS", desc = " Very simple message. Remove Heads."),
+)
+
 var/global/list/contrabandposters = list(
 
 list(name = "- Free Tonto", desc = " A salvaged shred of a much larger flag, colors bled together and faded from age."),
@@ -99,30 +112,30 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	icon_state = "rolled_poster"
 	var/serial_number = 0
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
-	var/official = 0 //0 for official, 1 for contraband, 2 for rev poster
+	var/official = POSTERLEGIT
 
 /obj/item/weapon/poster/contraband
 	name = "contraband poster"
 	desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as contraband aboard Nanotrasen space facilities."
 	icon = 'icons/obj/contraband.dmi'
 	icon_state = "rolled_poster"
-	official = 1
+	official = POSTERCONTRABAND
 
 /obj/item/weapon/poster/contraband/rev
 	name = "suspicious poster"
 	desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as opposed to Nanotrasen regime."
 	icon = 'icons/obj/contraband.dmi'
 	icon_state = "rolled_poster"
-	official = 2
+	official = POSTERREV
 
 /obj/item/weapon/poster/legit
 	name = "motivational poster"
 	icon_state = "rolled_legit"
 	desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
-	official = 0
+	official = POSTERLEGIT
 
 /obj/item/weapon/poster/atom_init(mapload, given_serial = 0)
-	if(official==2)
+	if(official==POSTERREV)
 		..()
 		return
 	if(!given_serial)
@@ -135,7 +148,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	. = ..()
 
 /obj/item/weapon/poster/contraband/rev/atom_init(mapload, given_serial = 0)
-	serial_number = pick(5, 6, 8, 18, 23, 32)
+	serial_number = rand(1, revposters.len)
 	resulting_poster = new /obj/structure/sign/poster/contraband/rev(0, serial_number, official)
 	name += " - No. [serial_number]"
 
@@ -148,28 +161,28 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	anchored = TRUE
 	var/serial_number = 4	//Will hold the value of src.loc if nobody initialises it
 	var/ruined = FALSE
-	var/official = 0
+	var/official = POSTERLEGIT
 	var/placespeed = 30 // don't change this, otherwise the animation will not sync to the progress bar
 
 /obj/structure/sign/poster/contraband/rev
 	name = "poster"
 	desc = "A large suspicious piece of space-resistant printed paper. "
 	icon = 'icons/obj/contraband.dmi'
-	official = 2
+	official = POSTERREV
 
 /obj/structure/sign/poster/atom_init(mapload, poster_number, rolled_official)
 	official = rolled_official
 	serial_number = poster_number
 	switch(official)
-		if(0)
+		if(POSTERLEGIT)
 			icon_state = "poster[serial_number]_legit"
 			name += legitposters[serial_number][POSTERNAME]
 			desc += legitposters[serial_number][POSTERDESC]
-		if(1)
+		if(POSTERCONTRABAND)
 			icon_state = "poster[serial_number]"
 			name += contrabandposters[serial_number][POSTERNAME]
 			desc += contrabandposters[serial_number][POSTERDESC]
-		if(2)
+		if(POSTERREV)
 			icon_state = "poster[serial_number]"
 			name += contrabandposters[serial_number][POSTERNAME]
 			desc += contrabandposters[serial_number][POSTERDESC]
@@ -207,7 +220,6 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 /obj/structure/sign/poster/contraband/rev/attack_hand(mob/user)
 	if(ruined)
 		return
-	var/temp_loc = user.loc
 	switch(alert("Your heart flames with rage as you read this. Would you like to join the revolution?","You think...","Yes","No"))
 		if("Yes")
 			if (ticker.mode.config_tag=="revolution")
@@ -217,17 +229,17 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 
 /obj/structure/sign/poster/proc/roll_and_drop(turf/newloc, official)
 	switch(official)
-		if(0)
+		if(POSTERLEGIT)
 			var/obj/item/weapon/poster/legit/P = new(src, serial_number)
 			P.resulting_poster = src
 			P.loc = newloc
 			src.loc = P
-		if(1)
+		if(POSTERCONTRABAND)
 			var/obj/item/weapon/poster/contraband/P = new(src, serial_number)
 			P.resulting_poster = src
 			P.loc = newloc
 			src.loc = P
-		if(2)
+		if(POSTERREV)
 			var/obj/item/weapon/poster/contraband/rev/P = new(src, serial_number)
 			P.resulting_poster = src
 			P.loc = newloc
