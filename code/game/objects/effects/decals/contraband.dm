@@ -135,19 +135,24 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	official = POSTERLEGIT
 
 /obj/item/weapon/poster/atom_init(mapload, given_serial = 0)
-	if(official==POSTERREV)
-		..()
-		return
 	if(!given_serial)
-		serial_number = rand(1, official ? contrabandposters.len : legitposters.len)
-		resulting_poster = new /obj/structure/sign/poster(0, serial_number, official)
+		generate_first_time()
 	else
 		serial_number = given_serial
-		//We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
-	name += " - No. [serial_number]"
+		name += " - No. [serial_number]"
 	. = ..()
 
-/obj/item/weapon/poster/contraband/rev/atom_init(mapload, given_serial = 0)
+/obj/item/weapon/poster/proc/generate_first_time() //this method is used to generate number of your poster when it`s initialized
+	serial_number = rand(1, legitposters.len)
+	resulting_poster = new /obj/structure/sign/poster(0, serial_number, official)
+	name += " - No. [serial_number]"
+
+/obj/item/weapon/poster/contraband/generate_first_time()
+	serial_number = rand(1, contrabandposters.len)
+	resulting_poster = new /obj/structure/sign/poster/contraband(0, serial_number, official)
+	name += " - No. [serial_number]"
+
+/obj/item/weapon/poster/contraband/rev/generate_first_time()
 	serial_number = rand(1, revposters.len)
 	resulting_poster = new /obj/structure/sign/poster/contraband/rev(0, serial_number, official)
 	name += " - No. [serial_number]"
@@ -164,28 +169,37 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	var/official = POSTERLEGIT
 	var/placespeed = 30 // don't change this, otherwise the animation will not sync to the progress bar
 
+/obj/structure/sign/poster/proc/pick_state(poster_number)
+	serial_number = poster_number ? poster_number : rand(1, legitposters.len)
+	icon_state = "poster[serial_number]_legit"
+	name += legitposters[serial_number][POSTERNAME]
+	desc += legitposters[serial_number][POSTERDESC]
+
+/obj/structure/sign/poster/contraband
+
+/obj/structure/sign/poster/contraband/pick_state(poster_number)
+	serial_number = poster_number ? poster_number : rand(1, contrabandposters.len)
+	icon_state = "poster[serial_number]"
+	name += contrabandposters[serial_number][POSTERNAME]
+	desc += contrabandposters[serial_number][POSTERDESC]
+
 /obj/structure/sign/poster/contraband/rev
 	name = "poster"
 	desc = "A large suspicious piece of space-resistant printed paper. "
 	icon = 'icons/obj/contraband.dmi'
 	official = POSTERREV
 
+/obj/structure/sign/poster/contraband/rev/pick_state(poster_number)
+	serial_number = poster_number ? poster_number : rand(1, revposters.len)
+	icon_state = "poster[serial_number]_rev"
+	name += revposters[serial_number][POSTERNAME]
+	desc += revposters[serial_number][POSTERDESC]
+
 /obj/structure/sign/poster/atom_init(mapload, poster_number, rolled_official)
 	official = rolled_official
-	serial_number = poster_number
-	switch(official)
-		if(POSTERLEGIT)
-			icon_state = "poster[serial_number]_legit"
-			name += legitposters[serial_number][POSTERNAME]
-			desc += legitposters[serial_number][POSTERDESC]
-		if(POSTERCONTRABAND)
-			icon_state = "poster[serial_number]"
-			name += contrabandposters[serial_number][POSTERNAME]
-			desc += contrabandposters[serial_number][POSTERDESC]
-		if(POSTERREV)
-			icon_state = "poster[serial_number]"
-			name += contrabandposters[serial_number][POSTERNAME]
-			desc += contrabandposters[serial_number][POSTERDESC]
+
+	pick_state(poster_number)
+
 	. = ..()
 
 /obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
@@ -232,18 +246,18 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		if(POSTERLEGIT)
 			var/obj/item/weapon/poster/legit/P = new(src, serial_number)
 			P.resulting_poster = src
-			P.loc = newloc
-			src.loc = P
+			P.forceMove(newloc)
+			forceMove(P)
 		if(POSTERCONTRABAND)
 			var/obj/item/weapon/poster/contraband/P = new(src, serial_number)
 			P.resulting_poster = src
-			P.loc = newloc
-			src.loc = P
+			P.forceMove(newloc)
+			forceMove(P)
 		if(POSTERREV)
 			var/obj/item/weapon/poster/contraband/rev/P = new(src, serial_number)
 			P.resulting_poster = src
-			P.loc = newloc
-			src.loc = P
+			P.forceMove(newloc)
+			forceMove(P)
 
 //separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/simulated/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
@@ -265,7 +279,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 
 	var/temp_loc = user.loc
 	flick("poster_being_set", D)
-	D.loc = user.loc
+	D.forceMove(user.loc)
 	D.pixel_x = (x - D.x) * D.bound_width
 	D.pixel_y = (y - D.y) * D.bound_height
 	D.official = P.official
