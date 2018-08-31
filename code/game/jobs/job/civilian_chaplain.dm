@@ -24,10 +24,6 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/chaplain(H), slot_belt)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
 	spawn(0)
 		var/religion_name = "Christianity"
@@ -156,4 +152,4 @@
 			ticker.Bible_deity_name = B.deity_name
 		feedback_set_details("religion_deity","[new_deity]")
 		feedback_set_details("religion_book","[new_book_style]")
-	return 1
+	return TRUE
