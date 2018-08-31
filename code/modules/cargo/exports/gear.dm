@@ -7,7 +7,7 @@
 	cost = 100
 	include_subtypes = FALSE
 	unit_name = "helmet"
-	export_types = list(/obj/item/clothing/head/helmet)
+	export_types = list(/obj/item/clothing/head/helmet/band)
 
 /datum/export/gear/sec_armor
 	cost = 100
@@ -21,7 +21,7 @@
 /datum/export/gear/riot_helmet
 	cost = 250
 	unit_name = "riot helmet"
-	export_types = list(/obj/item/clothing/head/helmet/riot)
+	export_types = list(/obj/item/clothing/head/helmet/band/riot)
 
 /datum/export/gear/riot_armor
 	cost = 250

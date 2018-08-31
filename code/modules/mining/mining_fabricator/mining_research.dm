@@ -376,7 +376,7 @@
 	id = "riot_helmet"
 	build_type = MINEFAB
 	req_tech = list("combat" = 3, "materials" = 3, "engineering" = 2)
-	build_path = /obj/item/clothing/head/helmet/riot
+	build_path = /obj/item/clothing/head/helmet/band/riot
 	materials = list(MAT_METAL=2000,MAT_GLASS=500,MAT_PLASTIC=1000)
 	construction_time = 300
 	category = list("Misc")
