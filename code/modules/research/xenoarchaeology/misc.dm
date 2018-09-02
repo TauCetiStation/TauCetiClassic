@@ -89,7 +89,7 @@
 /obj/structure/closet/secure_closet/xenoarchaeologist_tools/PopulateContents()
 	new /obj/item/weapon/storage/box/excavation(src)
 	new /obj/item/device/flashlight/lantern(src)
-	new /obj/item/device/ano_scanner(src)
+	new /obj/item/device/wave_scanner_backpack(src)
 	new /obj/item/device/depth_scanner(src)
 	new /obj/item/device/core_sampler(src)
 	new /obj/item/device/gps/science(src)
