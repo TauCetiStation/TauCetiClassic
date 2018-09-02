@@ -31,15 +31,13 @@
 		to_chat(user, "<span class='notice'>There is already something on [src].</span>")
 		return
 
-	var/d = can_hold.Find(W)
-	world.log << d
 	for(var/i in can_hold)
 		if(istype(W, i))
 			user.drop_from_inventory(W)
 			W.forceMove(src)
 			on_helmet = W
 			to_chat(user, "<span class='notice'>You put [W] on [src].</span>")
-			on_helmet_overlay = image('icons/mob/helmet_bands.dmi', can_hold[text2path(W.type)])
+			on_helmet_overlay = image('icons/mob/helmet_bands.dmi', can_hold[i])
 			usr.update_inv_head()
 			break
 
