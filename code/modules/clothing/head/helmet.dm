@@ -15,15 +15,14 @@
 
 /obj/item/clothing/head/helmet/band
 	var/list/can_hold = list(
-		"/obj/item/stack/medical/bruise_pack",
-		"/obj/item/weapon/lighter/zippo",
-		"/obj/item/weapon/lighter",
-		"/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_green",
-		"/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_blue",
-		"/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_red",
-		"/obj/item/weapon/reagent_containers/food/snacks/chocolatebar",
-		"/obj/item/toy/singlecard"
-		)
+		/obj/item/weapon/lighter/zippo = "band_zippo",
+		/obj/item/weapon/lighter = "band_lighter",
+		/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_green = "band_odetoviceroy_green",
+		/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_blue = "band_odetoviceroy_blue",
+		/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_red = "band_odetoviceroy_red",
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = "band_chocolatebar",
+		/obj/item/toy/singlecard = "band_singlecard",
+		/obj/item/stack/medical/bruise_pack = "band_bruise_pack")
 	var/obj/item/on_helmet
 	var/on_helmet_overlay
 
@@ -31,15 +30,18 @@
 	if(on_helmet)
 		to_chat(user, "<span class='notice'>There is already something on [src].</span>")
 		return
-	world.log << text2path(W)
-	if(is_type_in_list(text2path(W), can_hold))
-		user.drop_from_inventory(W) //This is because we need to drop it from the inventory first, and then forceMove. If u know better way of doing that - advise plz.
-		W.forceMove(src)
-		on_helmet = W
-		to_chat(user, "<span class='notice'>You put [W] on [src].</span>")
-		make_overlay_icon(text2path(W))
-	else
-		to_chat(user, "<span class='notice'>[src] can't hold [W].</span>")
+
+	var/d = can_hold.Find(W)
+	world.log << d
+	for(var/i in can_hold)
+		if(istype(W, i))
+			user.drop_from_inventory(W)
+			W.forceMove(src)
+			on_helmet = W
+			to_chat(user, "<span class='notice'>You put [W] on [src].</span>")
+			on_helmet_overlay = image('icons/mob/helmet_bands.dmi', can_hold[text2path(W.type)])
+			usr.update_inv_head()
+			break
 
 /obj/item/clothing/head/helmet/band/verb/remove_on_helmet()
 	set category = "Object"
@@ -53,11 +55,6 @@
 	on_helmet.forceMove(usr.loc)
 	on_helmet = null
 	QDEL_NULL(on_helmet_overlay)
-	usr.update_inv_head()
-
-/obj/item/clothing/head/helmet/band/proc/make_overlay_icon(var/obj_path)
-	var/overlay_name = "band_[obj_path]"
-	on_helmet_overlay = image('icons/mob/helmet_bands.dmi', overlay_name)
 	usr.update_inv_head()
 
 /obj/item/clothing/head/helmet/band/emp_act(severity)
