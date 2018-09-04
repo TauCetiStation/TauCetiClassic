@@ -1,6 +1,6 @@
 # Tau Ceti Classic
 
-[![tauceti.ru](https://img.shields.io/badge/site-tauceti.ru-blue.svg)](http://tauceti.ru/)
+[![taucetistation.org](https://img.shields.io/badge/site-taucetistation.org-blue.svg)](http://taucetistation.org/)
 [![Discord](https://img.shields.io/badge/dynamic/json.svg?label=Discord&uri=https%3A%2F%2Fdiscordapp.com%2Fapi%2Fguilds%2F401030271417188353%2Fwidget.json&query=members.length&colorB=%237289db&suffix=%20online&logo=discord)](https://discord.gg/YCWRjkb)
 
 https://github.com/TauCetiStation/TauCetiClassic/
