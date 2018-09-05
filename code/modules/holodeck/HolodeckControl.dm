@@ -220,11 +220,10 @@
 		return
 
 	if(isobj(obj))
-		var/turf/T = get_turf(obj)
-		for(var/atom/movable/AM in obj) // these should be derezed if they were generated
-			AM.forceMove(T)
-			if(ismob(AM))
-				silent = FALSE
+		var/mob/M = obj.loc
+		if(ismob(M))
+			M.remove_from_mob(obj)
+			M.update_icons()	//so their overlays update
 
 	if(!silent)
 		var/obj/oldobj = obj
