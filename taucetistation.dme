@@ -488,6 +488,7 @@
 #include "code\game\machinery\teleporter.dm"
 #include "code\game\machinery\turret_control.dm"
 #include "code\game\machinery\vending.dm"
+#include "code\game\machinery\vendshop.dm"
 #include "code\game\machinery\washing_machine.dm"
 #include "code\game\machinery\wishgranter.dm"
 #include "code\game\machinery\bots\bots.dm"
