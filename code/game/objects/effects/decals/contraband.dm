@@ -196,7 +196,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	desc += revposters[serial_number][POSTERDESC]
 
 /obj/structure/sign/poster/atom_init(mapload, poster_number, rolled_official)
-	official = rolled_official
+	official = rolled_official ? rolled_official : 0
 
 	pick_state(poster_number)
 
@@ -236,8 +236,8 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		return
 	switch(alert("Your heart flames with rage as you read this. Would you like to join the revolution?","You think...","Yes","No"))
 		if("Yes")
-			if (ticker.mode.config_tag=="revolution")
-				ticker.mode.add_revolutionary(user.mind)
+			if (ticker.mode.config_tag=="revolution" || ticker.mode.config_tag=="rp-revolution" )
+				ticker.mode:add_revolutionary(user.mind)
 		if("No")
 			..()
 
