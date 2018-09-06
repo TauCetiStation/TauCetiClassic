@@ -20,9 +20,7 @@ Alma
 Alysha
 Alyssia
 Amaryllis
-Ambrosine
 Amos
-Angel
 Anjelica
 Anne
 Arabella
@@ -117,7 +115,6 @@ Denholm
 Denys
 Desmond
 Devin
-Diamond
 Dina
 Dolores
 Dominic
@@ -154,13 +151,11 @@ Flick
 Floella
 Flora
 Flossie
-Fortune
 Francis
 Frankie
 Fulton
 Garret
 Gaye
-Gaylord
 Genette
 Georgene
 Geraldine
@@ -184,7 +179,6 @@ Haidee
 Hailey
 Hal
 Haleigh
-Happy
 Hartley
 Hayley
 Heather
@@ -195,14 +189,12 @@ Hepsie
 Hervey
 Holden
 Homer
-Hope
 Horatio
 Hortensia
 Huffie
 Hugo
 Iantha
 Ileen
-Innocent
 Irene
 Irvine
 Jacaline
@@ -287,7 +279,7 @@ Leeann
 Leia
 Leland
 Lennox
-Leroi
+Leroy
 Lessie
 Leta
 Lexia
@@ -346,7 +338,6 @@ Muriel
 Mya
 Myriam
 Myrtie
-Nan
 Nathaniel
 Nelle
 Nena
@@ -426,7 +417,6 @@ Shana
 Shanika
 Shannah
 Shannon
-Shantae
 Sharalyn
 Sharla
 Sheri
@@ -435,12 +425,9 @@ Sherill
 Sherri
 Shiloh
 Simon
-Sissy
 Sloan
 Sophie
 Sorrel
-Spike
-Star
 Steph
 Stephany
 Sue
@@ -457,14 +444,13 @@ Tamika
 Tamsin
 Tania
 Tansy
-Tatyanna
+Tatyana
 Taylor
 Tel
 Terrell
 Tiffany
-Tod
+Todd
 Tolly
-Topaz
 Tori
 Tracee
 Tracey
@@ -498,7 +484,6 @@ Yolanda
 Ysabel
 Zack
 Zeke
-Zelda
 Zune
 Jacob
 Michael
@@ -535,7 +520,6 @@ Jackson
 Brandon
 Caleb
 Mason
-Angel
 Isaac
 Evan
 Jack
@@ -578,7 +562,6 @@ Liam
 Hayden
 Nathaniel
 Henry
-Jesus
 Ian
 Tristan
 Bryan
@@ -746,13 +729,11 @@ Devon
 Drew
 Lukas
 Johnny
-Ty
 Pedro
 Tyson
 Caiden
 Mateo
 Braylon
-Cash
 Aden
 Chance
 Taylor
@@ -779,7 +760,6 @@ Payton
 Brock
 Frank
 Enrique
-Quinn
 Emilio
 Malik
 Grady
@@ -792,7 +772,6 @@ Corey
 Gerardo
 Dante
 Ezra
-Armando
 Allen
 Theodore
 Gael
@@ -886,7 +865,6 @@ Everett
 Jayce
 Darren
 Elliott
-Uriel
 Alfredo
 Hugo
 Alec
@@ -899,8 +877,6 @@ Lance
 Beau
 Ali
 Landyn
-Yahir
-Phoenix
 Nickolas
 Kobe
 Bryant
@@ -953,8 +929,7 @@ Johan
 Byron
 Jasper
 Jonathon
-Chad
-Marc
+Mark
 Kelvin
 Chandler
 Sam
@@ -970,7 +945,6 @@ Franklin
 Noel
 Alijah
 Guillermo
-Gunner
 Damon
 Jadon
 Emerson
@@ -1041,13 +1015,9 @@ Avery
 Riley
 Julia
 Leah
-Aubrey
 Jasmine
 Audrey
 Katherine
-Morgan
-Brooklyn
-Destiny
 Sydney
 Alexa
 Kylie
@@ -1064,7 +1034,6 @@ Alexandra
 Claire
 Madelyn
 Maria
-Mackenzie
 Arianna
 Jocelyn
 Amelia
@@ -1094,7 +1063,6 @@ Faith
 Sara
 Isabelle
 Caroline
-Genesis
 Isabel
 Mary
 Zoey
@@ -1110,11 +1078,9 @@ Jenna
 Natalia
 Sadie
 Jada
-Serenity
 Lucy
 Ruby
 Eva
-Kennedy
 Rylee
 Jayla
 Naomi
@@ -1140,7 +1106,6 @@ Diana
 Amanda
 Kate
 Laila
-Reagan
 Jordyn
 Kylee
 Danielle
@@ -1150,18 +1115,14 @@ Leslie
 Kendall
 Catherine
 Liliana
-Mckenzie
 Jacqueline
 Ashlyn
 Reese
 Marissa
-London
 Juliana
 Shelby
 Cheyenne
-Angel
 Daisy
-Makenzie
 Miranda
 Erin
 Amber
@@ -1175,15 +1136,13 @@ Piper
 Adrianna
 Jillian
 Sierra
-Jayden
 Sienna
 Alicia
 Lila
 Margaret
 Alivia
-Brooklynn
 Karen
-Violet
+Violette
 Sabrina
 Stella
 Aniyah
@@ -1224,7 +1183,6 @@ Chelsea
 Lyla
 Alaina
 Jasmin
-Hope
 Leila
 Caitlyn
 Cassidy
@@ -1238,7 +1196,6 @@ Caitlin
 Kendra
 Karina
 Kyra
-Kayleigh
 Addyson
 Kiara
 Jazmine
@@ -1251,7 +1208,6 @@ Kelly
 Fatima
 Tiffany
 Kira
-Crystal
 Mallory
 Esmeralda
 Alejandra
@@ -1263,7 +1219,6 @@ Kara
 Veronica
 Carmen
 Jamie
-Ryleigh
 Valentina
 Allyson
 Dakota
@@ -1313,9 +1268,7 @@ Cynthia
 Rihanna
 Georgia
 Rylie
-Harmony
 Kiera
-Kyleigh
 Monica
 Bethany
 Kaylie
@@ -1336,7 +1289,6 @@ April
 Marely
 Julie
 Danica
-Presley
 Brielle
 Julissa
 Angie
@@ -1362,12 +1314,9 @@ Janiya
 Anastasia
 Adeline
 Ruth
-Sasha
-Denise
 Holly
 Madisyn
 Hanna
-Tatum
 Marlee
 Nataly
 Helen
@@ -1380,12 +1329,9 @@ Kaylin
 Jazlyn
 Nancy
 Lindsay
-Desiree
 Hayley
-Itzel
 Imani
 Madelynn
-Asia
 Kadence
 Madyson
 Talia
@@ -1394,7 +1340,6 @@ Kayden
 Annie
 Amari
 Bridget
-Raegan
 Jadyn
 Celeste
 Jimena
@@ -1403,7 +1348,6 @@ Yasmin
 Emilia
 Annika
 Estrella
-Sarai
 Lacey
 Ayla
 Alessandra
@@ -1448,7 +1392,6 @@ Meredith
 Kailyn
 Lesly
 Johanna
-Diamond
 Evangeline
 Juliet
 Kathleen
@@ -1459,12 +1402,10 @@ Hailee
 Rosa
 Wendy
 Emilee
-Sage
 Alanna
 Elaina
 Cara
 Nia
-Paris
 Casey
 Dana
 Emery
@@ -1483,7 +1424,6 @@ Alyson
 Rachael
 Shannon
 Aileen
-Miracle
 Lillie
 Danika
 Heather
@@ -1499,4 +1439,3 @@ Cheyanne
 Haylie
 Patricia
 Anne
-Samara
