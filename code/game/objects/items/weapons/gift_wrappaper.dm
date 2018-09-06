@@ -140,6 +140,8 @@
 			else
 				if(istype(W, /obj/item/smallDelivery) || istype(W, /obj/item/weapon/gift)) //No gift wrapping gifts!
 					return
+				if(W.flags_2 & HOLOGRAM_2)
+					return
 
 				src.amount -= a_used
 				user.drop_item()
