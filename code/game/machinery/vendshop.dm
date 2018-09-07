@@ -9,7 +9,7 @@
 	desc = "A generic shop."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "generic"
-	var/icon_deny
+	var/icon_deny = "generic-off"
 
 	layer = 2.9
 	anchored = 1
@@ -23,12 +23,14 @@
 	var/station_tax = 10
 	var/head_tax = 10
 	var/datum/data/shop_product/buying_product = null
-	var/head_earning = 0
+	var/department_earning = 0
 	var/list/earnings = list()
+	var/department = "Civilian"
 
 	var/user_name = null
 	var/user_cansell = FALSE
 	var/user_hasfullaccess = FALSE
+	var/datum/money_account/user_account = null
 	var/auto_logout = 0
 	var/auto_logout_time = 60
 
@@ -37,6 +39,7 @@
 	var/list/access_fullaccess = list(access_qm)
 	var/list/whitelist = list()
 	var/list/blacklist = list()
+	var/list/global_blacklist = list(/obj/item/weapon/grab, /obj/item/weapon/holder, /obj/item/device/pda, /obj/item/weapon/paper)
 
 /obj/machinery/vendshop/atom_init()
 	. = ..()
@@ -94,19 +97,6 @@
 		if(shock(user, 100))
 			return
 
-
-	/*var/dat
-	dat += "<h3>Select an item</h3>"
-	dat += "<div class='statusDisplay'>"
-
-	dat += "<font color = 'red'>No product loaded!</font>"
-
-	dat += "</div>"
-
-	var/datum/browser/popup = new(user, "window=vending", "[name]", 450, 500)
-	popup.set_content(dat)
-	popup.open()*/
-
 	var/data[0]
 	data["user_name"] = user_name
 	data["user_cansell"] = user_cansell
@@ -115,27 +105,12 @@
 	data["buying_product"] = null
 	if(buying_product)
 		data["buying_product"] = buying_product.name
-	data["head_earning"] = head_earning
+	data["department_earning"] = department_earning
 	data["station_tax"] = station_tax
 	data["head_tax"] = head_tax
 	data["earnings"] = 0
 	if(earnings[user_name])
 		data["earnings"] = earnings[user_name]
-	/*data["contents"] = null
-	data["electrified"] = seconds_electrified > 0
-	data["shoot_inventory"] = shoot_inventory
-	data["locked"] = locked
-	data["secure"] = is_secure
-
-	var/list/items[0]
-	for (var/i=1 to length(item_quants))
-		var/K = item_quants[i]
-		var/count = item_quants[K]
-		if (count > 0)
-			items.Add(list(list("display_name" = html_encode(capitalize(K)), "vend" = i, "quantity" = count)))
-
-	if (items.len > 0)
-		data["contents"] = items*/
 	var/list/items[0]
 	for(var/datum/data/shop_product/product in products)
 		items += list(list("display_name" = capitalize(product.name), "owner" = product.owner, "price" = product.price, "quantity" = product.objects.len, "reference" = "\ref[product]"))
@@ -168,6 +143,7 @@
 		user_name = null
 		user_cansell = FALSE
 		user_hasfullaccess = FALSE
+		user_account = null
 		return TRUE
 
 	if (href_list["vend"] && vend_ready)
@@ -177,29 +153,33 @@
 
 	if (href_list["buy"] && vend_ready)
 		var/datum/data/shop_product/selected_product = locate(href_list["buy"])
-		buying_product = selected_product
+		if(selected_product.price <= 0)
+			vend_product(selected_product)
+		else
+			buying_product = selected_product
 		return TRUE
 
 	if (href_list["cancelbuying"])
 		buying_product = null
 		return TRUE
 
-	if (href_list["cashout"])
-		if(user_name && user_cansell && earnings[user_name]>0)
+	if (href_list["transfer"])
+		if(user_name && user_cansell && earnings[user_name]>0 && user_account)
 			playsound(src, 'sound/machines/chime.ogg', 50, 1)
-			var/obj/item/weapon/spacecash/ewallet/E = new /obj/item/weapon/spacecash/ewallet(loc)
-			E.worth = earnings[user_name]
-			E.owner_name = user_name
-			earnings[user_name] = 0
-		return TRUE
+			visible_message("<span class='info'>[src] beeps.</span>")
 
-	if (href_list["cashouthead"])
-		if(user_name && user_hasfullaccess && head_earning>0)
-			playsound(src, 'sound/machines/chime.ogg', 50, 1)
-			var/obj/item/weapon/spacecash/ewallet/E = new /obj/item/weapon/spacecash/ewallet(loc)
-			E.worth = head_earning
-			E.owner_name = user_name
-			head_earning = 0
+			user_account.money += earnings[user_name]
+
+			var/datum/transaction/T = new()
+			T.target_name = "[user_name]"
+			T.purpose = "Profits transfer"
+			T.amount = "[earnings[user_name]]"
+			T.source_terminal = src.name
+			T.date = current_date_string
+			T.time = worldtime2text()
+			user_account.transaction_log.Add(T)
+
+			earnings[user_name] = 0
 		return TRUE
 
 	if (href_list["changeheadtax"])
@@ -259,6 +239,7 @@
 			user_name = null
 			user_cansell = FALSE
 			user_hasfullaccess = FALSE
+			user_account = null
 			nanomanager.update_uis(src)
 
 	return
@@ -273,7 +254,7 @@
 		if(!found)
 			return FALSE
 
-	for(var/X in blacklist)
+	for(var/X in (blacklist + global_blacklist))
 		if(istype(O,X))
 			return FALSE
 	return TRUE
@@ -294,9 +275,11 @@
 	else if(accept_check(O))
 		if(!user_name)
 			to_chat(user, "<span class='notice'>\The [src] beeps and a message 'Authentication required' shows up.</span>")
+			flick(icon_deny, src)
 			return
 		if(!user_cansell)
 			to_chat(user, "<span class='notice'>\The [src] beeps and a message 'Access denied' shows up.</span>")
+			flick(icon_deny, src)
 			return
 
 		var/price
@@ -313,12 +296,14 @@
 		if(!in_range(user, src) || O.loc != user)
 			return
 		user.remove_from_mob(O)
+		if(!O)
+			return
 		add_shop_item(O, user_name, price)
 		user.visible_message("<span class='notice'>[user] has added \the [O] to \the [src].", \
 						     "<span class='notice'>You add \the [O] to \the [src].")
 		nanomanager.update_uis(src)
 	else
-		to_chat(user, "<span class='notice'>\The [src] smartly refuses [O].</span>")
+		to_chat(user, "<span class='notice'>\The [src] refuses [O].</span>")
 		return
 
 /obj/machinery/vendshop/proc/scan_card(obj/item/weapon/card/I)
@@ -329,17 +314,23 @@
 		var/obj/item/weapon/card/id/ID = I
 
 		if(!buying_product)
+			var/datum/money_account/D = get_account(ID.associated_account_number)
+			if(!D)
+				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to find your money account!</span>")
+				return
+
 			visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 			user_name = ID.registered_name
 			user_cansell = FALSE
 			user_hasfullaccess = FALSE
+			user_account = D
 			auto_logout = auto_logout_time
 
 			req_one_access = access_cansell
-			if(check_access(I))
+			if(check_access(I) || !access_cansell.len)
 				user_cansell = TRUE
 			req_one_access = access_fullaccess
-			if(check_access(I))
+			if(check_access(I) || !access_fullaccess.len)
 				user_hasfullaccess = TRUE
 				user_cansell = TRUE
 			req_one_access = null
@@ -349,64 +340,71 @@
 			visible_message("<span class='info'>[usr] swipes a card through [src].</span>")
 			var/station_cut = round(buying_product.price * (station_tax / 100))
 			var/money_left = buying_product.price - station_cut
-			var/head_cut = round(money_left * (head_tax / 100))
-			money_left = money_left - head_cut
+			var/department_cut = round(money_left * (head_tax / 100))
+			money_left = money_left - department_cut
 
-			head_earning += head_cut
+			department_earning += department_cut
 			if(!earnings[buying_product.owner])
 				earnings[buying_product.owner] = 0
 			earnings[buying_product.owner] += money_left
 
-			if(vendor_account)
-				var/datum/money_account/D = get_account(ID.associated_account_number)
-				var/attempt_pin = 0
-				if(D)
-					if(D.security_level > 0)
-						attempt_pin = input("Enter pin code", "Vendor transaction") as num
-					if(attempt_pin)
-						D = attempt_account_access(ID.associated_account_number, attempt_pin, 2)
-					if(D)
-						var/transaction_amount = station_cut
-						if(buying_product.price <= D.money)
-
-							//transfer the money
-							D.money -= buying_product.price
-							vendor_account.money += transaction_amount
-
-							//create entries in the two account transaction logs
-							var/datum/transaction/T = new()
-							T.target_name = "[vendor_account.owner_name] (via [src.name])"
-							T.purpose = "Purchase of [buying_product.name] from [buying_product.owner]"
-							if(transaction_amount > 0)
-								T.amount = "([transaction_amount])"
-							else
-								T.amount = "[transaction_amount]"
-							T.source_terminal = src.name
-							T.date = current_date_string
-							T.time = worldtime2text()
-							D.transaction_log.Add(T)
-							//
-							T = new()
-							T.target_name = D.owner_name
-							T.purpose = "Purchase of [buying_product.name] from [buying_product.owner]"
-							T.amount = "[transaction_amount]"
-							T.source_terminal = src.name
-							T.date = current_date_string
-							T.time = worldtime2text()
-							vendor_account.transaction_log.Add(T)
-
-							// Vend the item
-							vend_product(buying_product)
-							buying_product = null
-							nanomanager.update_uis(src)
-						else
-							to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
-					else
-						to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
-				else
-					to_chat(usr, "[bicon(src)]<span class='warning'>Unable to find your money account!</span>")
-			else
+			if(!station_account)
 				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to access account. Check security settings and try again.</span>")
+				return
+			var/datum/money_account/D = get_account(ID.associated_account_number)
+			if(!D)
+				to_chat(usr, "[bicon(src)]<span class='warning'>Unable to find your money account!</span>")
+				return
+
+			var/attempt_pin = 0
+			if(D.security_level > 0)
+				attempt_pin = input("Enter pin code", "Vendor transaction") as num
+			if(attempt_pin)
+				D = attempt_account_access(ID.associated_account_number, attempt_pin, 2)
+			if(!D)
+				to_chat(usr, "[bicon(src)]<span class='warning'>You entered wrong account PIN!</span>")
+				return
+			if(buying_product.price > D.money)
+				to_chat(usr, "[bicon(src)]<span class='warning'>You don't have that much money!</span>")
+				return
+
+			//transfer the money
+			D.money -= buying_product.price
+			station_account.money += station_cut
+			department_accounts[department].money += department_cut
+
+			//create entries in the account transaction logs
+			var/datum/transaction/T = new()
+			T.target_name = "[station_account.owner_name] (via [src.name])"
+			T.purpose = "Purchase of [buying_product.name]"
+			T.amount = "([buying_product.price])"
+			T.source_terminal = src.name
+			T.date = current_date_string
+			T.time = worldtime2text()
+			D.transaction_log.Add(T)
+			//
+			T = new()
+			T.target_name = D.owner_name
+			T.purpose = "Purchase of [buying_product.name]"
+			T.amount = "[station_cut]"
+			T.source_terminal = src.name
+			T.date = current_date_string
+			T.time = worldtime2text()
+			station_account.transaction_log.Add(T)
+			//
+			T = new()
+			T.target_name = D.owner_name
+			T.purpose = "Purchase of [buying_product.name]"
+			T.amount = "[department_cut]"
+			T.source_terminal = src.name
+			T.date = current_date_string
+			T.time = worldtime2text()
+			department_accounts[department].transaction_log.Add(T)
+
+			// Vend the item
+			vend_product(buying_product)
+			buying_product = null
+			nanomanager.update_uis(src)
 
 /obj/machinery/vendshop/proc/add_shop_item(obj/item/O, seller_name, price = 100)
 	if(!seller_name || !O)
@@ -435,14 +433,15 @@
 	return FALSE
 
 
-
+// Requires medbey access, can sell only medical items
 /obj/machinery/vendshop/med
-	name = "Medical Shop"
+	name = "Medbay Shop"
 	desc = "A generic shop."
 	icon_state = "med"
 	icon_deny = "med-deny"
 	light_color = "#e6fff2"
 
+	department = "Medical"
 	access_cansell = list(access_medical)
 	access_fullaccess = list(access_cmo)
 	whitelist = list(/obj/item/weapon/reagent_containers/glass, /obj/item/weapon/storage/firstaid, /obj/item/roller,
@@ -453,4 +452,60 @@
 					 /obj/item/weapon/cane, /obj/item/clothing/accessory/stethoscope, /obj/item/clothing/mask/muzzle,
 					 /obj/item/clothing/glasses/regular, /obj/item/weapon/reagent_containers/glass/beaker,
 					 /obj/item/weapon/storage/pill_bottle, /obj/item/clothing/suit/storage/labcoat, /obj/item/weapon/grenade/chem_grenade)
+	blacklist = list()
+
+// Requires cargo access, can sell anything
+/obj/machinery/vendshop/cargo
+	name = "Cargo Shop"
+	desc = "A generic shop."
+	icon_state = "engivend"
+	icon_deny = "engivend-deny"
+	light_color = "#e6fff2"
+
+	department = "Cargo"
+	access_cansell = list(access_cargo)
+	access_fullaccess = list(access_hop)
+	whitelist = list()
+	blacklist = list()
+
+// Requires research access, can sell anything
+/obj/machinery/vendshop/science
+	name = "Science Shop"
+	desc = "A generic shop."
+	icon_state = "cart"
+	icon_deny = "cart-deny"
+	light_color = "#e6fff2"
+
+	department = "Science"
+	access_cansell = list(access_research)
+	access_fullaccess = list(access_rd)
+	whitelist = list()
+	blacklist = list()
+
+// Requires kitchen, bar or hydroponics access, can sell only food
+/obj/machinery/vendshop/food
+	name = "Food Shop"
+	desc = "A generic shop."
+	icon_state = "snack"
+	icon_deny = "snack-off"
+	light_color = "#e6fff2"
+
+	department = "Civilian"
+	access_cansell = list(access_kitchen, access_bar, access_hydroponics)
+	access_fullaccess = list(access_hop)
+	whitelist = list(/obj/item/weapon/reagent_containers/food, /obj/item/weapon/tray)
+	blacklist = list()
+
+// no access required, can sell anything
+/obj/machinery/vendshop/community
+	name = "Community Shop"
+	desc = "A generic shop."
+	icon_state = "generic"
+	icon_deny = "generic-off"
+	light_color = "#e6fff2"
+
+	department = "Civilian"
+	access_cansell = list()
+	access_fullaccess = list(access_hop)
+	whitelist = list()
 	blacklist = list()

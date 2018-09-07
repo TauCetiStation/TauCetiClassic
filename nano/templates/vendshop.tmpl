@@ -18,25 +18,28 @@
 			<div class="item">
 			  Your earnings: {{:data.earnings}}
 			  {{if data.earnings > 0}}
-				{{:helper.link('Cash out', 'circle-arrow-s', { "cashout" : 1 }, null, 'statusValue')}}
+				{{:helper.link('Transfer', 'circle-arrow-s', { "transfer" : 1 }, null, 'statusValue')}}
 			  {{/if}}
 			</div>
 		{{/if}}
 		{{if data.user_hasfullaccess}}
 			<div class="item">
-			  Your earnings as a head: {{:data.head_earning}} (tax is {{:data.head_tax}}&#37;)
+			  Your department has earned from taxes: {{:data.department_earning}}
 			  {{:helper.link('Change tax', 'circle-arrow-s', { "changeheadtax" : 1 }, null, 'statusValue')}}
-			  {{if data.head_earning > 0}}
-				{{:helper.link('Cash out', 'circle-arrow-s', { "cashouthead" : 1 }, null, 'statusValue')}}
-			  {{/if}}
 			</div>
 		{{/if}}
+		
+	<div class="item">
+	  Station tax is {{:data.station_tax}}&#37; <br>
+	  Department tax is {{:data.head_tax}}&#37; <br>
+	  <span class='bad'>
+		Don't forget to logout
+	  </span>
+	</div>
 	{{/if}}
 
 	<div class="item">
-	  <h2>Shop</h2><br>
-	  Station tax is {{:data.station_tax}}&#37; <br>
-	  Head tax is {{:data.head_tax}}&#37;
+	  <h2>Shop</h2>
 	</div>
 	<div class='item'>
 	  {{if data.contents}}
