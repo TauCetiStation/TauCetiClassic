@@ -237,7 +237,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	switch(alert("Your heart flames with rage as you read this. Would you like to join the revolution?","You think...","Yes","No"))
 		if("Yes")
 			if (ticker.mode.config_tag=="revolution" || ticker.mode.config_tag=="rp-revolution" )
-				ticker.mode:add_revolutionary(user.mind)
+				ticker.mode.add_revolutionary(user.mind)
 		if("No")
 			..()
 
