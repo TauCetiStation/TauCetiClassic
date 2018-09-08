@@ -379,7 +379,7 @@ By design, d1 is the smallest direction and d2 is the highest
 ////////////////////////////////
 
 #define MAXCOIL 30
-
+var/global/list/datum/stack_recipe/cable_coil_recipes = list (new/datum/stack_recipe("cable restraints", /obj/item/weapon/handcuffs/cable, 15))
 /obj/item/stack/cable_coil
 	name = "cable coil"
 	icon = 'icons/obj/power.dmi'
@@ -408,6 +408,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	g_amt = 0
 
 /obj/item/stack/cable_coil/atom_init(mapload, new_amount = null, param_color = null)
+	recipes = cable_coil_recipes
 	. = ..()
 
 	if(param_color)
@@ -461,24 +462,6 @@ By design, d1 is the smallest direction and d2 is the highest
 	else
 		icon_state = "coil"
 		name = "cable coil"
-
-/obj/item/stack/cable_coil/verb/make_restraint()
-	set name = "Make Cable Restraints"
-	set category = "Object"
-	var/mob/M = usr
-
-	if(ishuman(M) && !M.restrained() && !M.stat && !M.paralysis && ! M.stunned)
-		if(!istype(usr.loc,/turf))
-			return
-		if(!src.use(15))
-			to_chat(usr, "<span class='warning'>You need at least 15 lengths to make restraints!</span>")
-			return
-		var/obj/item/weapon/handcuffs/cable/B = new /obj/item/weapon/handcuffs/cable(usr.loc)
-		B.color = color
-		to_chat(usr, "<span class='notice'>You wind some cable together to make some restraints.</span>")
-	else
-		to_chat(usr, "<span class='notice'>You cannot do that.</span>")
-	..()
 
 ///////////////////////////////////////////////
 // Cable laying procedures
