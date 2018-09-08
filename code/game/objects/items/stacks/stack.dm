@@ -184,6 +184,10 @@
 			for (var/obj/item/I in O)
 				qdel(I)
 		//BubbleWrap END
+		else if(istype(O, /obj/item/weapon/handcuffs/cable))
+			var/obj/item/weapon/handcuffs/cable/cuffs = O
+			cuffs.color = color
+			cuffs.update_icon()
 	if (src && usr.machine==src) //do not reopen closed window
 		INVOKE_ASYNC(src, .proc/interact, usr)
 		return
