@@ -7483,7 +7483,6 @@
 "sZb" = (/obj/structure/window/reinforced{dir = 1; pixel_y = 0},/obj/machinery/door/window{dir = 4; name = "AI Satellite"; req_access_txt = "66"},/turf/simulated/floor/plating,/area/aisat)
 "tab" = (/obj/structure/window/reinforced,/turf/simulated/floor/plating,/area/aisat)
 "tbb" = (/obj/structure/window/reinforced,/obj/machinery/door/window{dir = 4; name = "AI Satellite"; req_access_txt = "66"},/turf/simulated/floor/plating,/area/aisat)
-<<<<<<< HEAD
 "tcb" = (/obj/machinery/camera{c_tag = "Bedroom"; dir = 6; network = list("SS13","Prison")},/obj/structure/closet,/obj/item/weapon/storage/box/matches,/obj/machinery/light/small{dir = 1},/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_blue,/turf/simulated/floor,/area/security/prison)
 "tdb" = (/obj/structure/table/reinforced,/obj/machinery/computer/skills{icon_state = "medlaptop"},/obj/item/weapon/lighter/zippo,/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_red,/turf/simulated/floor,/area/engine/chiefs_office)
 "teb" = (/obj/structure/stool/bed/chair/metal,/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_blue,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
@@ -7494,7 +7493,6 @@
 "tcb" = (/obj/item/weapon/storage/box/beakers{pixel_x = -1; pixel_y = -1; pixel_x = 2; pixel_y = 2},/obj/item/weapon/storage/box/syringes,/obj/item/weapon/hand_labeler,/obj/structure/table/glass,/turf/simulated/floor{dir = 3; icon_state = "whitegreen"},/area/medical/virology)
 "tdb" = (/obj/structure/stool,/obj/effect/decal/remains/human,/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,/turf/simulated/floor/plating{icon_state = "platingdmg3"},/area/maintenance/fsmaint)
 "teb" = (/obj/structure/stool,/obj/effect/decal/cleanable/dirt,/obj/effect/decal/remains/human{desc = "This guy seemed to have died in terrible way! Half his remains are dust."; icon_state = "remains"; name = "Syndicate agent remains"},/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,/obj/item/clothing/glasses/regular/hipster,/turf/simulated/floor/plating,/area/maintenance/asmaint2)
->>>>>>> 86a7141c9... Съедобная эктоплазма.
 
 (1,1,1) = {"
 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
