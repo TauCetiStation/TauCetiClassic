@@ -43,7 +43,7 @@
 	for(var/A in photographed_names)
 		if(photographed_names[A] == /mob/dead/observer)
 			if(prob(10))
-				new /obj/item/weapon/ectoplasm(loc) // I mean, it is already dropped in the parent proc, so this is pretty safe to do.
+				new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(loc) // I mean, it is already dropped in the parent proc, so this is pretty safe to do.
 			break
 
 /obj/item/weapon/photo/attack_self(mob/user)
