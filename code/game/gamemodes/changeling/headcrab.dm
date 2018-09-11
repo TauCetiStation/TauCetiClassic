@@ -22,6 +22,15 @@
 		S.Weaken(3)
 
 	var/mob/living/simple_animal/headcrab/crab = new(get_turf(user))
+
+	var/obj/effect/proc_holder/changeling/revive/R = locate() in M.changeling.purchasedpowers		//Prevents having Regenerate verb after rebirth
+	if(R)
+		M.changeling.purchasedpowers -= R
+
+	if(M.changeling.instatis)
+		M.changeling.instatis = FALSE		//In case we did it out of stasis
+		user.fake_death = FALSE
+
 	crab.origin = M
 	M.transfer_to(crab)
 	for(var/mob/living/parasite/essence/E in user)
