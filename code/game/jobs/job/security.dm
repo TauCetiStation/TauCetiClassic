@@ -15,7 +15,7 @@
 		access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting,
 		access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective
 	)
-	minimal_player_age = 14
+	minimal_player_age = 30
 	minimal_player_ingame_minutes = 8000
 	restricted_species = list(TAJARAN, DIONA)
 
@@ -191,7 +191,7 @@
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)
 	minimal_player_age = 3
-	minimal_player_ingame_minutes = 1560
+	minimal_player_ingame_minutes = 560
 
 /datum/job/forensic/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

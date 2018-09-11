@@ -11,7 +11,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_morgue, access_chapel_office, access_crematorium)
 	alt_titles = list("Counselor")
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 180
 
 /datum/job/chaplain/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0

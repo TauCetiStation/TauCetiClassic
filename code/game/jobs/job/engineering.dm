@@ -16,7 +16,7 @@
 		access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload
 	)
 	minimal_player_age = 7
-	minimal_player_ingame_minutes = 2400
+	minimal_player_ingame_minutes = 1400
 
 /datum/job/chief_engineer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
