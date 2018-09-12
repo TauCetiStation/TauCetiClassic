@@ -134,7 +134,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 			//Uh oh this fucker has a history of playing on a banned account!!
 			if (found.len > 0)
 				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
-				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
+				message_admins("<em style=\"font-style: italic; font-weight: bold; color: #FF3333;\">[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])</em>")
 				log_admin("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 
 	cookieSent = 1
