@@ -353,13 +353,14 @@ datum/reagent/water/holywater
 	else if(istype(O, /obj/item/weapon/game_kit/chaplain))
 		var/obj/item/weapon/game_kit/chaplain/G = O
 		var/obj/item/weapon/game_kit/random/cleansed = new /obj/item/weapon/game_kit/random(G.loc)
+		cleansed.board_stat = G.board_stat
 		if(istype(O.loc, /mob/living))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(O)
 		qdel(O)
 	else if(istype(O, /obj/item/weapon/pen/ghost))
 		var/obj/item/weapon/pen/ghost/G = O
-		var/obj/item/weapon/pen/cleansed = new /obj/item/weapon/pen(G.loc)
+		new /obj/item/weapon/pen(G.loc)
 		if(istype(O.loc, /mob/living))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(O)
@@ -4670,7 +4671,7 @@ datum/reagent/toxin/acid/polyacid
 	src = null
 	if(istype(O, /obj/item/weapon/dice))
 		var/obj/item/weapon/dice/N = O
-		var/obj/item/weapon/dice/cursed = new N.accursed_type(N.loc)
+		new N.accursed_type(N.loc)
 		if(istype(N, /obj/item/weapon/dice/d00))
 			cursed.result = (N.result/10)+1
 		else
