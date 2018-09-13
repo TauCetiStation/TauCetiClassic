@@ -112,24 +112,15 @@
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang"
 	var/payload = /obj/item/weapon/grenade/flashbang/cluster
+	var/numspawned = 4
 
 /obj/item/weapon/grenade/clusterbuster/prime()
 	update_icon()
-	var/numspawned = rand(4,8)
-	var/again = 0
 
-	for(var/more = numspawned,more > 0,more--)
-		if(prob(35))
-			again++
-			numspawned--
-
-	while(again)
-		new /obj/item/weapon/grenade/clusterbuster/segment(loc, payload)//Creates 'segments' that launches a few more payloads
-		again--
-	new /obj/effect/payload_spawner(loc, payload, numspawned)//Launches payload
+	for(var/i in 1 to numspawned)
+		new /obj/item/weapon/grenade/clusterbuster/segment(loc, payload)	//Creates 'segments' that launches a few more payloads
 
 	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
-
 	qdel(src)
 
 
@@ -141,6 +132,7 @@
 	name = "clusterbang segment"
 	icon = 'icons/obj/grenade.dmi'
 	icon_state = "clusterbang_segment"
+	numspawned = 2
 
 /obj/item/weapon/grenade/clusterbuster/segment/atom_init(mapload, payload_type = /obj/item/weapon/grenade/flashbang/cluster)
 	. = ..()
@@ -151,21 +143,17 @@
 	addtimer(CALLBACK(src, .proc/prime), rand(15,60))
 
 /obj/item/weapon/grenade/clusterbuster/segment/prime()
-	new /obj/effect/payload_spawner(loc, payload, rand(4,8))
+	for(var/i in 1 to numspawned)
+		var/obj/item/weapon/grenade/P = new payload(src.loc)
+		P.active = 1
+		walk_away(P,loc,rand(1,4))
+		addtimer(CALLBACK(P, /obj/item/weapon/grenade.proc/prime), rand(15,60))
 	playsound(loc, 'sound/weapons/armbomb.ogg', 75, 1, -3)
 	qdel(src)
 
 //////////////////////////////////
 //The payload spawner effect
 /////////////////////////////////
-/obj/effect/payload_spawner/atom_init(type, numspawned)
-	. = ..()
-	for(var/loop = numspawned ,loop > 0, loop--)
-		var/obj/item/weapon/grenade/P = new type(loc)
-		P.active = 1
-		walk_away(P,loc,rand(1,4))
-		addtimer(CALLBACK(P, /obj/item/weapon/grenade.proc/prime), rand(15,60))
-	return INITIALIZE_HINT_QDEL
 
 /obj/item/weapon/grenade/flashbang/cluster
 	icon_state = "flashbang_active"
