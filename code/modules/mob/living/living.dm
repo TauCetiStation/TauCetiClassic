@@ -771,17 +771,6 @@
 			H.forceMove(get_turf(H))
 		return
 
-	if(ishuman(usr) && (!usr.incapacitated()))
-		var/mob/living/carbon/human/D = usr
-		if(D.get_species() == DIONA)
-			var/choices = list()
-			for(var/V in contents)
-				if(istype(V, /mob/living/carbon/monkey/diona))
-					choices += V
-			var/mob/living/carbon/monkey/diona/V = input(D,"Who do wish you to expel from within?") in null|choices
-			to_chat(D, "<span class='notice'>You wriggle [V] out of your insides.</span>")
-			V.splitting(D)
-
 	//Resisting control by an alien mind.
 	if(istype(src.loc,/mob/living/simple_animal/borer))
 		var/mob/living/simple_animal/borer/B = src.loc
@@ -1125,14 +1114,14 @@
 	floating = 0
 
 /mob/living/proc/attempt_harvest(obj/item/I, mob/user)
-	if(stat == DEAD && !isnull(butcher_results) && !ishuman(src)) //can we butcher it?
-		if(istype(I, /obj/item/weapon/kitchenknife) || istype(I, /obj/item/weapon/butch))
-			if(user.is_busy()) return
-			to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
-			playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
-			if(do_mob(user, src, 80))
-				harvest(user)
-			return TRUE
+	if(stat == DEAD && butcher_results && istype(buckled, /obj/structure/kitchenspike)) //can we butcher it? Mob must be buckled to a meatspike to butcher it
+		if(user.is_busy())
+			return
+		to_chat(user, "<span class='notice'>You begin to butcher [src]...</span>")
+		playsound(loc, 'sound/weapons/slice.ogg', 50, 1, -1)
+		if(do_mob(user, src, 80))
+			harvest(user)
+		return TRUE
 
 /mob/living/proc/harvest(mob/user)
 	if(QDELETED(src))

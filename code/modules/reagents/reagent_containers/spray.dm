@@ -144,6 +144,131 @@
 		icon_state = "hairspraywhite"
 	update_icon()
 
+//thurible
+/obj/item/weapon/reagent_containers/spray/thurible
+	name = "thurible"
+	desc = "Is used to burn incense. Or heretics. Both? Both is good."
+	icon = 'icons/obj/items.dmi'
+	icon_state = "thurible"
+	item_state = "thurible"
+	amount_per_transfer_from_this = 1
+	possible_transfer_amounts = list(1)
+	spray_size = 1
+	spray_sizes = list(1)
+	volume = 10 // People shouldn't be able to create giant gas clouds just this easily.
+	var/lit = FALSE
+	var/temperature = 0 // At 100, it all evaporates. Yes, even the dense metals. The name doesn't actually imply that this item's temperature is changing.
+	var/fuel = 300
+	safety = TRUE
+
+/obj/item/weapon/reagent_containers/spray/thurible/examine(mob/user)
+	..()
+	if(src in view(1, user))
+		var/temp_sight
+		var/is_fueled
+		switch(temperature)
+			if(-INFINITY to 0)
+				temp_sight = "blue"
+			if(0 to 30)
+				temp_sight = "normal"
+			if(30 to 60)
+				temp_sight = "yellow"
+			if(60 to 90)
+				temp_sight = "orange"
+			if(90 to INFINITY)
+				temp_sight = "<span class='warning'>boiling red</span>"
+		switch(fuel)
+			if(0)
+				is_fueled = "not fueled at all"
+			if(1 to 75)
+				is_fueled = "almost not fueled"
+			if(75 to 150)
+				is_fueled = "slightly fueled"
+			if(150 to 225)
+				is_fueled = "evenly fueled"
+			if(225 to 299)
+				is_fueled = "almost fueled"
+			if(300 to INFINITY)
+				is_fueled = "fully fueled"
+		to_chat(user, "The cap is [safety ? "on" : "off"]. The thurbile's surface is [temp_sight]. The canister in [src] is [is_fueled].")
+
+/obj/item/weapon/reagent_containers/spray/thurible/proc/light(mob/user, action_string = "lights up")
+	if(!lit)
+		lit = TRUE
+		user.visible_message("<span class='notice'>[user] [action_string] \the [src].</span>", "<span class='notice'>You light up \the [src].</span>")
+
+/obj/item/weapon/reagent_containers/spray/thurible/atom_init()
+	. = ..()
+	START_PROCESSING(SSobj, src)
+
+/obj/item/weapon/reagent_containers/spray/thurible/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/weapon/reagent_containers/spray/thurible/process()
+	if(lit && safety)
+		if(temperature >= 100)
+			var/evaporated_volume = 0
+			for(var/datum/reagent/A in reagents.reagent_list)
+				evaporated_volume += A.volume/5
+				A.volume -= A.volume/5
+			if(evaporated_volume)
+				var/location = get_turf(src)
+				var/datum/effect/effect/system/smoke_spread/chem/S = new /datum/effect/effect/system/smoke_spread/chem
+				S.attach(location)
+				S.set_up(reagents, evaporated_volume, 0, location)
+				playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+				S.start()
+			temperature -= rand(10,30) // Release the "hot" gas, and chill.
+		temperature++
+		fuel = max(fuel-1, 0)
+		if(fuel == 0)
+			temperature--
+		if(temperature <=0)
+			visible_message("<span class='notice'>The fire in [src] just went out.</span>")
+			lit = FALSE
+	else if(!lit && !safety)
+		for(var/datum/reagent/A in reagents.reagent_list)
+			if(!istype(A, /datum/reagent/toxin/phoron) && !istype(A, /datum/reagent/fuel))
+				continue
+			else
+				fuel = round(min(fuel + A.volume*0.6, 300)) // Basically, 1 point of fuel reagent is 3 fuel points of thurible. 100 - is max fuel.
+				A.volume -= A.volume*0.2
+
+/obj/item/weapon/reagent_containers/spray/thurible/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(!lit && safety) // You can't lit the fuel when the cap's off, cause then it wouldn't start to burn.
+		if(istype(W, /obj/item/weapon/weldingtool))
+			var/obj/item/weapon/weldingtool/WT = W
+			if(WT.isOn())
+				light(user, "casually lights")
+				fuel += 7
+		else if(istype(W, /obj/item/weapon/lighter))
+			var/obj/item/weapon/lighter/L = W
+			if(L.lit)
+				light(user)
+				fuel += 5
+		else if(istype(W, /obj/item/weapon/match))
+			var/obj/item/weapon/match/M = W
+			if(M.lit)
+				light(user)
+				fuel += 5
+		else if(istype(W, /obj/item/candle))
+			var/obj/item/candle/C = W
+			if(C.lit)
+				light(user)
+				fuel += 10 // Candles go out, so their "fuel" is the most precious to us.
+	else if(!safety)
+		to_chat(user, "Put the cap back on.")
+
+/obj/item/weapon/reagent_containers/spray/thurible/attack_self(mob/user)
+	if(lit) // You can't switch the cap, if the thing's burning.
+		user.visible_message("<span class='notice'>[user] extinguishes \the [src].</span>", "<span class='notice'>You extinguish \the [src].</span>")
+		lit = FALSE
+	else
+		safety = !safety
+		to_chat(user, "<span class='notice'>You [safety ? "put on" : "take off"] the cap of [src].</span>")
+
 //space cleaner
 /obj/item/weapon/reagent_containers/spray/cleaner
 	name = "space cleaner"

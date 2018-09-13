@@ -102,6 +102,8 @@
 	if(istype(target, /obj/item/smallDelivery) || istype(target,/obj/structure/bigDelivery) \
 	|| istype(target, /obj/item/weapon/gift) || istype(target, /obj/item/weapon/evidencebag))
 		return
+	if(target.flags_2 & HOLOGRAM_2)
+		return
 	if(target.anchored)
 		return
 	if(target in user)

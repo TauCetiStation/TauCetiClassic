@@ -20,15 +20,19 @@
 	var/tox_mod = 1                                      // Toxloss multiplier.
 	var/brain_mod = 1                                    // Brainloss multiplier.
 	var/speed_mod =  0                                   // How fast or slow specific specie.
+	var/siemens_coefficient = 1                          // How conductive is the specie.
 
 	var/primitive                     // Lesser form, if any (ie. monkey for humans)
 	var/tail                          // Name of tail image in species effects icon file.
 	var/language                      // Default racial language, if any.
+	var/list/additional_languages = list() // Additional languages, to the primary. These can not be the forced ones.
 	var/force_racial_language = FALSE // If TRUE, racial language will be forced by default when speaking.
 	var/attack_verb = "punch"         // Empty hand hurt intent verb.
 	var/punch_damage = 0              // Extra empty hand attack damage.
 	var/mutantrace                    // Safeguard due to old code.
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
+
+	var/list/restricted_inventory_slots = list() // Slots that the race does not have due to biological differences.
 
 	var/breath_type = "oxygen"           // Non-oxygen gas breathed, if any.
 	var/poison_type = "phoron"           // Poisonous air.
@@ -146,6 +150,9 @@
 /datum/species/proc/regen(mob/living/carbon/human/H, light_amount, External) // Perhaps others will regenerate in different ways?
 	return
 
+/datum/species/proc/call_digest_proc(mob/living/M, datum/reagent/R) // Humans don't have a seperate proc, but need to return TRUE so general proc is called.
+	return TRUE
+
 /datum/species/proc/handle_death(mob/living/carbon/human/H) //Handles any species-specific death events (such nymph spawns).
 	if(flags[IS_SYNTHETIC])
  //H.make_jittery(200) //S-s-s-s-sytem f-f-ai-i-i-i-i-lure-ure-ure-ure
@@ -155,6 +162,21 @@
 			//H.jitteriness = 0
 			H.update_hair()
 	return
+
+/datum/species/proc/before_job_equip(mob/living/carbon/human/H, datum/job/J) // Do we really need this proc? Perhaps.
+	return
+
+/datum/species/proc/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+	var/obj/item/weapon/storage/box/SK
+	if(J.title in list("Shaft Miner", "Chief Engineer", "Station Engineer", "Atmospheric Technician"))
+		SK = new /obj/item/weapon/storage/box/engineer(H)
+	else
+		SK = new /obj/item/weapon/storage/box/survival(H)
+
+	if(H.backbag == 1)
+		H.equip_to_slot_or_del(SK, slot_r_hand)
+	else
+		H.equip_to_slot_or_del(SK, slot_in_backpack)
 
 /datum/species/human
 	name = HUMAN
@@ -207,11 +229,19 @@
 	flesh_color = "#34AF10"
 	base_color = "#066000"
 
+/datum/species/unathi/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_unathi_digest(M)
+
+/datum/species/unathi/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+	..()
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), slot_shoes, 1)
+
 /datum/species/tajaran
 	name = TAJARAN
 	icobase = 'icons/mob/human_races/r_tajaran.dmi'
 	deform = 'icons/mob/human_races/r_def_tajaran.dmi'
 	language = "Siik'maas"
+	additional_languages = list("Siik'tajr")
 	tail = "tajtail"
 	unarmed_type = /datum/unarmed_attack/claws
 	dietflags = DIET_OMNI
@@ -245,6 +275,13 @@
 	flesh_color = "#AFA59E"
 	base_color = "#333333"
 
+/datum/species/tajaran/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_tajaran_digest(M)
+
+/datum/species/tajaran/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+	..()
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal(H), slot_shoes, 1)
+
 /datum/species/skrell
 	name = SKRELL
 	icobase = 'icons/mob/human_races/r_skrell.dmi'
@@ -254,6 +291,8 @@
 	unarmed_type = /datum/unarmed_attack/punch
 	dietflags = DIET_HERB
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
+
+	siemens_coefficient = 1.3 // Because they are wet and slimy.
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -274,6 +313,9 @@
 	eyes = "skrell_eyes"
 	blood_color = /datum/dirt_cover/purple_blood
 	flesh_color = "#8CD7A3"
+
+/datum/species/skrell/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_skrell_digest(M)
 
 /datum/species/vox
 	name = VOX
@@ -310,6 +352,19 @@
 		"feet" = 'icons/mob/species/vox/shoes.dmi',
 		"gloves" = 'icons/mob/species/vox/gloves.dmi'
 		)
+
+/datum/species/vox/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_vox_digest(M)
+
+/datum/species/vox/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+	H.equip_to_slot_or_del(new /obj/item/clothing/mask/breath/vox(src), slot_wear_mask)
+	if(!H.r_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_r_hand)
+		H.internal = H.r_hand
+	else if(!H.l_hand)
+		H.equip_to_slot_or_del(new /obj/item/weapon/tank/nitrogen(src), slot_l_hand)
+		H.internal = H.l_hand
+	H.internals.icon_state = "internal1"
 
 /datum/species/vox/on_gain(mob/living/carbon/human/H)
 	if(name != VOX_ARMALIS)
@@ -397,6 +452,8 @@
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 	primitive = /mob/living/carbon/monkey/diona
 
+	siemens_coefficient = 0.8 // Because they are plants and stuff.
+
 	hazard_low_pressure = DIONA_HAZARD_LOW_PRESSURE
 
 	cold_level_1 = 50
@@ -409,6 +466,8 @@
 
 	burn_mod = 1.3
 	speed_mod = 7
+
+	restricted_inventory_slots = list(slot_wear_mask, slot_glasses, slot_gloves, slot_shoes) // These are trees. Not people. Deal with the fact that they don't have these.
 
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
 	butcher_drops = list(/obj/item/stack/sheet/wood = 5)
@@ -474,6 +533,16 @@
 		H.adjustToxLoss(-(light_amount))
 		H.adjustOxyLoss(-(light_amount))
 
+
+/datum/species/diona/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_diona_digest(M)
+
+/datum/species/diona/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+	if(H.backbag == 1)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), slot_r_hand)
+	else
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/diona_survival(H), slot_in_backpack)
+
 /datum/species/diona/handle_death(mob/living/carbon/human/H)
 
 	var/mob/living/carbon/monkey/diona/S = new(get_turf(H))
@@ -488,7 +557,6 @@
 			qdel(D)
 
 	H.visible_message("\red[H] splits apart with a wet slithering noise!")
-
 
 /datum/species/machine
 	name = IPC
@@ -516,6 +584,7 @@
 
 	brute_mod = 1.5
 	burn_mod = 1
+	siemens_coefficient = 1.3 // ROBUTT.
 
 	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
 
@@ -553,6 +622,12 @@
 	blood_color = "#1F181F"
 	flesh_color = "#575757"
 
+/datum/species/machine/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+	if(H.backbag == 1)
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), slot_r_hand)
+	else
+		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), slot_in_backpack)
+
 /datum/species/abductor
 	name = ABDUCTOR
 	darksight = 3
@@ -577,6 +652,9 @@
 
 	return ..()
 
+/datum/species/abductor/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_abductor_digest(M)
+
 /datum/species/skeleton
 	name = SKELETON
 
@@ -584,6 +662,8 @@
 	deform = 'icons/mob/human_races/r_skeleton.dmi'
 	damage_mask = FALSE
 	dietflags = 0
+
+	siemens_coefficient = 0
 
 	butcher_drops = list()
 
@@ -612,6 +692,9 @@
 	H.gender = NEUTER
 
 	return ..()
+
+/datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_skeleton_digest(M)
 
 //Species unarmed attacks
 
@@ -658,6 +741,8 @@
 	warning_low_pressure = 50
 	hazard_low_pressure = -1
 
+	siemens_coefficient = 0 // Spooky shadows don't need to be hurt by your pesky electricity.
+
 	cold_level_1 = 50
 	cold_level_2 = -1
 	cold_level_3 = -1
@@ -668,6 +753,10 @@
 
 	blood_color = /datum/dirt_cover/black_blood
 	darksight = 8
+
+	butcher_drops = list() // They are just shadows. Why should they drop anything?
+
+	restricted_inventory_slots = list(slot_belt, slot_wear_id, slot_l_ear, slot_r_ear, slot_back, slot_l_store, slot_r_store)
 
 	flags = list(
 	 NO_BREATHE = TRUE
@@ -686,6 +775,9 @@
 	H.gender = NEUTER
 
 	return ..()
+
+/datum/species/shadowling/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_shadowling_digest(M)
 
 /datum/species/golem
 	name = GOLEM
@@ -760,3 +852,6 @@
 				qdel(x)
 
 	return ..()
+
+/datum/species/golem/call_digest_proc(mob/living/M, datum/reagent/R)
+	return R.on_golem_digest(M)

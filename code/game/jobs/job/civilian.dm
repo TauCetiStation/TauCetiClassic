@@ -10,7 +10,7 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargoGold
 	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
-	minimal_player_ingame_minutes = 4000
+	minimal_player_ingame_minutes = 1000
 
 /datum/job/qm/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -26,12 +26,8 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/quartermaster(H), slot_belt)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 
 /datum/job/cargo_tech
@@ -45,7 +41,7 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_maint_tunnels, access_cargo, access_cargo_bot, access_mailsorting)
-	minimal_player_ingame_minutes = 960
+	minimal_player_ingame_minutes = 360
 
 
 /datum/job/cargo_tech/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -58,12 +54,8 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/cargo(H), slot_belt)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 
 /datum/job/mining
@@ -77,7 +69,7 @@
 	selection_color = "#d7b088"
 	idtype = /obj/item/weapon/card/id/cargo
 	access = list(access_mining, access_mint, access_mining_station, access_mailsorting)
-	minimal_player_ingame_minutes = 960
+	minimal_player_ingame_minutes = 180
 
 /datum/job/mining/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -95,12 +87,8 @@
 	H.equip_to_slot_or_del(new /obj/item/device/pda/shaftminer(H), slot_belt)
 	H.equip_to_slot_or_del(new /obj/item/weapon/mining_voucher(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/weapon/survivalcapsule(H), slot_in_backpack)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/engineer(H.back), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 
 /datum/job/recycler
@@ -127,12 +115,8 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_cargo(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/cargo(H), slot_belt)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 //Food
 /datum/job/bartender
@@ -146,7 +130,7 @@
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_bar)
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 180
 
 /datum/job/bartender/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -165,20 +149,19 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/bar(H), slot_belt)
 	if(H.backbag == 1)
-		var/obj/item/weapon/storage/box/survival/Barpack = new /obj/item/weapon/storage/box/survival(H)
+		var/obj/item/weapon/storage/box/Barpack = new /obj/item/weapon/storage/box(H)
 		H.equip_to_slot_or_del(Barpack, slot_r_hand)
 		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
 		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
 		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
 		new /obj/item/ammo_casing/shotgun/beanbag(Barpack)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/ammo_casing/shotgun/beanbag(H), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 
 /datum/job/chef
@@ -193,7 +176,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_kitchen)
 	alt_titles = list("Cook")
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 180
 
 /datum/job/chef/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -204,12 +187,8 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/chef(H), slot_belt)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 
 /datum/job/hydro
@@ -224,7 +203,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_hydroponics) // Removed tox and chem access because STOP PISSING OFF THE CHEMIST GUYS // //Removed medical access because WHAT THE FUCK YOU AREN'T A DOCTOR YOU GROW WHEAT //Given Morgue access because they have a viable means of cloning.
 	alt_titles = list("Hydroponicist")
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 180
 
 /datum/job/hydro/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -242,10 +221,9 @@
 	if(visualsOnly)
 		return
 
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/botanist(H), slot_belt)
 
-	return 1
+	return TRUE
 
 
 /datum/job/janitor
@@ -259,7 +237,7 @@
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_janitor, access_maint_tunnels)
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 0
 
 /datum/job/janitor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -275,7 +253,7 @@
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
-	return 1
+	return TRUE
 
 
 //More or less assistants
@@ -291,7 +269,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_barber)
 	alt_titles = list("Stylist")
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 0
 
 /datum/job/barber/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)
@@ -311,10 +289,6 @@
 				H.equip_to_slot_or_del(new /obj/item/clothing/under/lawyer/purpsuit(H), slot_w_uniform)
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/barber(H), slot_belt)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 
 	return TRUE
 
@@ -330,7 +304,7 @@
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_library)
 	alt_titles = list("Journalist")
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 0
 
 /datum/job/librarian/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -342,12 +316,7 @@
 	if(visualsOnly)
 		return
 
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
-
-	return 1
+	return TRUE
 
 
 //var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
@@ -382,14 +351,11 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/lawyer(H), slot_belt)
-	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
-	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
+
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
 	L.inject(H)
 	START_PROCESSING(SSobj, L)
-	return 1
+	return TRUE
 
 
 /datum/job/clown
@@ -403,7 +369,7 @@
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/clown
 	access = list(access_clown, access_theatre)
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 180
 
 /datum/job/clown/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
@@ -416,7 +382,6 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/clown(H), slot_belt)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/snacks/grown/banana(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/weapon/bikehorn(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/weapon/stamp/clown(H), slot_in_backpack)
@@ -424,7 +389,7 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/fancy/crayons(H), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/toy/waterflower(H), slot_in_backpack)
 	H.mutations.Add(CLUMSY)
-	return 1
+	return TRUE
 
 
 /datum/job/mime
@@ -457,11 +422,9 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/mime(H), slot_belt)
 	if(H.backbag == 1)
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
 		H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), slot_l_store)
 		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_l_hand)
 	else
-		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/toy/crayon/mime(H), slot_in_backpack)
 		H.equip_to_slot_or_del(new /obj/item/weapon/reagent_containers/food/drinks/bottle/bottleofnothing(H), slot_in_backpack)
 	H.verbs += /client/proc/mimespeak
@@ -469,4 +432,4 @@
 	H.mind.special_verbs += /client/proc/mimespeak
 	H.mind.special_verbs += /client/proc/mimewall
 	H.miming = 1
-	return 1
+	return TRUE

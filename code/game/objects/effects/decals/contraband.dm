@@ -5,6 +5,19 @@
 
 #define POSTERDESC "desc"
 
+#define POSTERLEGIT 0
+#define POSTERCONTRABAND 1
+#define POSTERREV 2
+
+var/global/list/revposters = list(
+list(name = "- Kill Police", desc = " Poster with a bloody secyrity helmet on it."),
+list(name = "- To The Brig", desc = " Unite, comrades! Destroy Brig!"),
+list(name = "- Grey Tide", desc = " Grey bald-hair. He looks lost."),
+list(name = "- We Need You", desc = " That`s a very suspicious poster."),
+list(name = "- Commie Poster", desc = " This one is a great good ol` days propaganda."),
+list(name = "- NO HEADS", desc = " Very simple message. Remove Heads."),
+)
+
 var/global/list/contrabandposters = list(
 
 list(name = "- Free Tonto", desc = " A salvaged shred of a much larger flag, colors bled together and faded from age."),
@@ -99,30 +112,50 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	icon_state = "rolled_poster"
 	var/serial_number = 0
 	var/obj/structure/sign/poster/resulting_poster = null //The poster that will be created is initialised and stored through contraband/poster's constructor
-	var/official = FALSE
+	var/official = POSTERLEGIT
 
 /obj/item/weapon/poster/contraband
 	name = "contraband poster"
 	desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as contraband aboard Nanotrasen space facilities."
 	icon = 'icons/obj/contraband.dmi'
 	icon_state = "rolled_poster"
+	official = POSTERCONTRABAND
+
+/obj/item/weapon/poster/contraband/rev
+	name = "suspicious poster"
+	desc = "This poster comes with its own automatic adhesive mechanism, for easy pinning to any vertical surface. Its vulgar themes have marked it as opposed to Nanotrasen regime."
+	icon = 'icons/obj/contraband.dmi'
+	icon_state = "rolled_poster"
+	official = POSTERREV
 
 /obj/item/weapon/poster/legit
 	name = "motivational poster"
 	icon_state = "rolled_legit"
 	desc = "An official Nanotrasen-issued poster to foster a compliant and obedient workforce. It comes with state-of-the-art adhesive backing, for easy pinning to any vertical surface."
-	official = TRUE
+	official = POSTERLEGIT
 
 /obj/item/weapon/poster/atom_init(mapload, given_serial = 0)
 	if(!given_serial)
-		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)
-		resulting_poster = new(serial_number, official)
+		generate_first_time()
 	else
 		serial_number = given_serial
-		//We don't give it a resulting_poster because if we called it with a given_serial it means that we're rerolling an already used poster.
-	name += " - No. [serial_number]"
+		name += " - No. [serial_number]"
 	. = ..()
 
+/obj/item/weapon/poster/proc/generate_first_time() //this method is used to generate number of your poster when it`s initialized
+	serial_number = rand(1, legitposters.len)
+	resulting_poster = new /obj/structure/sign/poster(0, serial_number, official)
+	name += " - No. [serial_number]"
+
+/obj/item/weapon/poster/contraband/generate_first_time()
+	serial_number = rand(1, contrabandposters.len)
+	resulting_poster = new /obj/structure/sign/poster/contraband(0, serial_number, official)
+	name += " - No. [serial_number]"
+
+/obj/item/weapon/poster/contraband/rev/generate_first_time()
+	serial_number = rand(1, revposters.len)
+	resulting_poster = new /obj/structure/sign/poster/contraband/rev(0, serial_number, official)
+	name += " - No. [serial_number]"
 
 //############################## THE ACTUAL DECALS ###########################
 
@@ -131,28 +164,42 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 	desc = "A large piece of space-resistant printed paper. "
 	icon = 'icons/obj/contraband.dmi'
 	anchored = TRUE
-	var/serial_number	//Will hold the value of src.loc if nobody initialises it
+	var/serial_number = 4	//Will hold the value of src.loc if nobody initialises it
 	var/ruined = FALSE
-	var/official = FALSE
+	var/official = POSTERLEGIT
 	var/placespeed = 30 // don't change this, otherwise the animation will not sync to the progress bar
 
+/obj/structure/sign/poster/proc/pick_state(poster_number)
+	serial_number = poster_number ? poster_number : rand(1, legitposters.len)
+	icon_state = "poster[serial_number]_legit"
+	name += legitposters[serial_number][POSTERNAME]
+	desc += legitposters[serial_number][POSTERDESC]
 
+/obj/structure/sign/poster/contraband
 
-/obj/structure/sign/poster/atom_init(mapload, rolled_official)
+/obj/structure/sign/poster/contraband/pick_state(poster_number)
+	serial_number = poster_number ? poster_number : rand(1, contrabandposters.len)
+	icon_state = "poster[serial_number]"
+	name += contrabandposters[serial_number][POSTERNAME]
+	desc += contrabandposters[serial_number][POSTERDESC]
 
-	serial_number = loc
-	if(rolled_official)
-		official = rolled_official
-	if(serial_number == loc)
-		serial_number = rand(1, official ? legitposters.len : contrabandposters.len)	//This is for the mappers that want individual posters without having to use rolled posters.
-	if(official)
-		icon_state = "poster[serial_number]_legit"
-		name += legitposters[serial_number][POSTERNAME]
-		desc += legitposters[serial_number][POSTERDESC]
-	else
-		icon_state = "poster[serial_number]"
-		name += contrabandposters[serial_number][POSTERNAME]
-		desc += contrabandposters[serial_number][POSTERDESC]
+/obj/structure/sign/poster/contraband/rev
+	name = "poster"
+	desc = "A large suspicious piece of space-resistant printed paper. "
+	icon = 'icons/obj/contraband.dmi'
+	official = POSTERREV
+
+/obj/structure/sign/poster/contraband/rev/pick_state(poster_number)
+	serial_number = poster_number ? poster_number : rand(1, revposters.len)
+	icon_state = "poster[serial_number]_rev"
+	name += revposters[serial_number][POSTERNAME]
+	desc += revposters[serial_number][POSTERDESC]
+
+/obj/structure/sign/poster/atom_init(mapload, poster_number, rolled_official)
+	official = rolled_official ? rolled_official : 0
+
+	pick_state(poster_number)
+
 	. = ..()
 
 /obj/structure/sign/poster/attackby(obj/item/weapon/W, mob/user)
@@ -165,7 +212,6 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 			to_chat(user, "<span class='notice'>You carefully remove the poster from the wall.</span>")
 			roll_and_drop(user.loc, official)
 		return
-
 
 /obj/structure/sign/poster/attack_hand(mob/user)
 	if(ruined)
@@ -185,17 +231,33 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 		if("No")
 			return
 
+/obj/structure/sign/poster/contraband/rev/attack_hand(mob/user)
+	if(ruined)
+		return
+	switch(alert("Your heart flames with rage as you read this. Would you like to join the revolution?","You think...","Yes","No"))
+		if("Yes")
+			if (ticker.mode.config_tag=="revolution" || ticker.mode.config_tag=="rp-revolution" )
+				ticker.mode.add_revolutionary(user.mind)
+		if("No")
+			..()
+
 /obj/structure/sign/poster/proc/roll_and_drop(turf/newloc, official)
-	if(official)
-		var/obj/item/weapon/poster/legit/P = new(src, serial_number)
-		P.resulting_poster = src
-		P.loc = newloc
-		src.loc = P
-	else
-		var/obj/item/weapon/poster/contraband/P = new(src, serial_number)
-		P.resulting_poster = src
-		P.loc = newloc
-		src.loc = P
+	switch(official)
+		if(POSTERLEGIT)
+			var/obj/item/weapon/poster/legit/P = new(src, serial_number)
+			P.resulting_poster = src
+			P.forceMove(newloc)
+			forceMove(P)
+		if(POSTERCONTRABAND)
+			var/obj/item/weapon/poster/contraband/P = new(src, serial_number)
+			P.resulting_poster = src
+			P.forceMove(newloc)
+			forceMove(P)
+		if(POSTERREV)
+			var/obj/item/weapon/poster/contraband/rev/P = new(src, serial_number)
+			P.resulting_poster = src
+			P.forceMove(newloc)
+			forceMove(P)
 
 //separated to reduce code duplication. Moved here for ease of reference and to unclutter r_wall/attackby()
 /turf/simulated/wall/proc/place_poster(obj/item/weapon/poster/P, mob/user)
@@ -217,7 +279,7 @@ list(name = "- Carbon Dioxide", desc = " This informational poster teaches the v
 
 	var/temp_loc = user.loc
 	flick("poster_being_set", D)
-	D.loc = user.loc
+	D.forceMove(user.loc)
 	D.pixel_x = (x - D.x) * D.bound_width
 	D.pixel_y = (y - D.y) * D.bound_height
 	D.official = P.official

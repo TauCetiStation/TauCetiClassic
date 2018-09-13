@@ -32,7 +32,7 @@
 	Life()
 		..()
 		if(stat == DEAD)
-			new /obj/item/weapon/ectoplasm (src.loc)
+			new /obj/item/weapon/reagent_containers/food/snacks/ectoplasm(loc)
 			for(var/mob/M in viewers(src, null))
 				if((M.client && !( M.blinded )))
 					M.show_message("\red [src] lets out a contented sigh as their form unwinds. ")
