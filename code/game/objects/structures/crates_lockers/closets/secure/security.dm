@@ -23,6 +23,7 @@
 	new /obj/item/clothing/shoes/brown(src)
 	new /obj/item/device/radio/headset/heads/captain(src)
 	new /obj/item/clothing/gloves/captain(src)
+	new /obj/item/clothing/accessory/holster/waist(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/clothing/suit/armor/captain(src)
 	new /obj/item/weapon/melee/telebaton(src)
@@ -57,6 +58,7 @@
 	for (var/i in 1 to 2)
 		new /obj/item/weapon/storage/box/ids(src)
 
+	new /obj/item/clothing/accessory/holster/waist(src)
 	new /obj/item/weapon/gun/energy/gun(src)
 	new /obj/item/device/flash(src)
 	new /obj/item/airbag(src)
