@@ -24,7 +24,8 @@
 	INVOKE_ASYNC(src, .proc/attack_self, user)
 
 /obj/item/device/radio/intercom/attack_paw(mob/user)
-	return src.attack_hand(user)
+	to_chat(user, "<span class='info'>The console controls are far too complicated for your tiny brain!</span>")
+	return
 
 
 /obj/item/device/radio/intercom/attack_hand(mob/user)

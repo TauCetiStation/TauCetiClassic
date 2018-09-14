@@ -560,5 +560,5 @@
 
 
 /obj/machinery/suit_storage_unit/attack_paw(mob/user)
-	to_chat(user, "<font color='blue'>The console controls are far too complicated for your tiny brain!</font>")
+	to_chat(user, "<span class='info'>The console controls are far too complicated for your tiny brain!</span>")
 	return
