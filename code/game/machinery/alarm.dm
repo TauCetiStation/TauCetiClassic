@@ -44,6 +44,7 @@
 	req_one_access = list(access_atmospherics, access_engine_equip)
 	frequency = 1439
 	allowed_checks = ALLOWED_CHECK_NONE
+	unacidable = TRUE
 
 	var/breach_detection = TRUE // Whether to use automatic breach detection or not
 	//var/skipprocess = 0 //Experimenting
@@ -771,6 +772,10 @@
 			apply_mode()
 			return FALSE
 
+
+/obj/machinery/alarm/attack_alien(mob/living/carbon/alien/humanoid/user)
+	user.show_message("You don't want to break these things", 1);
+	return
 
 /obj/machinery/alarm/attackby(obj/item/W, mob/user)
 
