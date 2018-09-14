@@ -357,6 +357,7 @@
 	if(visualsOnly)
 		return
 
+	H.equip_to_slot_or_del(new /obj/item/device/flash(H), slot_r_store)
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/lawyer(H), slot_belt)
 
