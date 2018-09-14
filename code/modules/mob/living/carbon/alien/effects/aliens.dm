@@ -437,6 +437,7 @@
 
 /obj/effect/alien/egg/atom_init()
 	. = ..()
+	START_PROCESSING(SSobj, src)
 	addtimer(CALLBACK(src, .proc/Grow), rand(MIN_GROWTH_TIME,MAX_GROWTH_TIME))
 
 /obj/effect/alien/egg/attack_paw(mob/user)
@@ -499,6 +500,16 @@
 	healthcheck()
 	return
 
+/obj/effect/alien/egg/process()
+	if(prob(10))
+		var/turf/T = get_turf(src);
+		var/datum/gas_mixture/environment = T.return_air()
+		var/pressure = environment.return_pressure()
+		if(pressure < WARNING_LOW_PRESSURE)
+			if(prob(25))
+				audible_message("<span class='warning'>\The [src] is cracking!</span>")
+			health -= 5
+			healthcheck()
 
 /obj/effect/alien/egg/attackby(obj/item/weapon/W, mob/user)
 	if(health <= 0)
