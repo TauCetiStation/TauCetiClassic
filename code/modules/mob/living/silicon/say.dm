@@ -36,6 +36,10 @@
 
 	message = sanitize(message)
 
+	if(emojicheck(message))
+		to_chat(src, "<span class='warning'>IC messages containing emojis are forbidden.</span>")
+		return
+
 	if (stat == DEAD)
 		return say_dead(message)
 
