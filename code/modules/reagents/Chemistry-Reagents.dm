@@ -353,7 +353,7 @@ datum/reagent/water/holywater
 	else if(istype(O, /obj/item/weapon/game_kit/chaplain))
 		var/obj/item/weapon/game_kit/chaplain/G = O
 		var/obj/item/weapon/game_kit/random/cleansed = new /obj/item/weapon/game_kit/random(G.loc)
-		cleansed.boardstat = G.boardstat
+		cleansed.board_stat = G.board_stat
 		if(istype(O.loc, /mob/living))
 			var/mob/living/M = O.loc
 			M.drop_from_inventory(O)
