@@ -72,32 +72,11 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 				qdel(N)
 			usr.visible_message("<span class='warning'>The chrysalis explodes in a shower of purple flesh and fluid!</span>")
 
-			var/mob/living/carbon/human/H = new /mob/living/carbon/human(usr.loc)
+			var/mob/living/carbon/human/shadowling/H = new /mob/living/carbon/human/shadowling(usr.loc)
 
-			var/newNameId = pick(possibleShadowlingNames)
-			possibleShadowlingNames.Remove(newNameId)
-			H.real_name = newNameId
-			H.name = usr.real_name
-
-			H.underwear = 0
-			H.undershirt = 0
-			H.faction = "faithless"
-			H.set_species(SHADOWLING)
-			H.dna.mutantrace = "shadowling"
-			H.update_mutantrace()
-			H.regenerate_icons()
 			usr.mind.transfer_to(H)
 			ticker.mode.update_all_shadows_icons()
-
-			to_chat(H, "<span class='shadowling'><b><i>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</b></i></span>")
-			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
-			H.spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
-			H.spell_list += new /obj/effect/proc_holder/spell/targeted/glare
-			H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/veil
-			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadow_walk
-			H.spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
-			H.spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind
-			H.spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
+			to_chat(H, "<span class='shadowling bold italic'>Your powers are awoken. You may now live to your fullest extent. Remember your goal. Cooperate with your thralls and allies.</span>")
 
 			qdel(usr)
 
