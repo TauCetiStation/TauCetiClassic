@@ -16,7 +16,7 @@
 #define WEED_WEST_EDGING  4
 #define WEED_EAST_EDGING  8
 
-/obj/effect/alien
+/obj/effect/alien //why the hell it's EFFECT??
 	name = "alien thing"
 	desc = "theres something alien about this."
 	icon = 'icons/mob/xenomorph.dmi'
@@ -347,7 +347,6 @@
 
 #undef NODERANGE
 
-
 /*
  * Acid
  */
@@ -465,12 +464,14 @@
 	new /obj/item/clothing/mask/facehugger(src)
 
 /obj/effect/alien/egg/proc/Burst()
+	STOP_PROCESSING(SSobj, src)
 	if(status == GROWN || status == GROWING)
 		icon_state = "egg_hatched"
 		flick("egg_opening", src)
 		status = BURSTING
 		spawn(15)
 			status = BURST
+
 
 /obj/effect/alien/egg/attack_ghost(mob/living/user)
 	if(!(src in view()))
@@ -537,6 +538,70 @@
 		Burst()
 
 /obj/effect/alien/egg/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	if(exposed_temperature > 500)
+		health -= 5
+		healthcheck()
+
+
+/*
+ * Air generator
+ */
+/obj/effect/alien/air_plant
+	name = "strange plant"
+	desc = "Air restoring plant. Progressive aliens technologies..."
+	icon_state = "air_plant"
+
+	density = 0
+	anchored = 1
+
+	var/health = 15
+	var/restoring_moles = MOLES_CELLSTANDARD/4
+
+/obj/effect/alien/air_plant/atom_init()
+	START_PROCESSING(SSobj, src)
+	set_light(2, 1, "#24C1FF")
+
+/obj/effect/alien/air_plant/process()
+	if(prob(25))
+		var/turf/T = get_turf(src)
+
+		if(istype(T, /turf/space) || istype(T, /turf/unsimulated))
+			qdel(src)
+
+		var/datum/gas_mixture/environment = T.return_air()
+		var/pressure = environment.return_pressure()
+
+		//So aliens can detect dangerous pressure level for eggs
+		if(pressure < WARNING_LOW_PRESSURE)
+			if(light_color != "#ff6224")
+				set_light(2, 1, "#ff6224")
+		else if(light_color != "#24C1FF")
+			set_light(2, 1, "#24C1FF")
+
+		//actually restoring air
+		if(pressure < (ONE_ATMOSPHERE*0.90))//it's pretty sloppy, but never mind
+			environment.adjust_multi_temp("oxygen", restoring_moles*O2STANDARD, T20C, "nitrogen", restoring_moles*N2STANDARD, T20C)
+
+/obj/effect/alien/air_plant/proc/healthcheck()
+	if(health <= 0)
+		qdel(src)
+
+/obj/effect/alien/air_plant/attackby(obj/item/weapon/W, mob/user)
+	var/aforce = W.force
+	user.SetNextMove(CLICK_CD_MELEE)
+	health = max(0, health - aforce)
+	playsound(loc, 'sound/effects/attackblob.ogg', 100, 1)
+	healthcheck()
+	..()
+	return
+
+/obj/effect/alien/air_plant/bullet_act(obj/item/projectile/Proj)
+	health -= Proj.damage
+	..()
+	healthcheck()
+	return
+
+/obj/effect/alien/air_plant/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(exposed_temperature > 500)
 		health -= 5
 		healthcheck()
