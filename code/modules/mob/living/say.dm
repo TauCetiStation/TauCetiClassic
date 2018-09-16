@@ -106,7 +106,7 @@ var/list/department_radio_keys = list(
 		if(dongle.translate_binary)
 			return 1
 
-/mob/living/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=FALSE, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = TRUE, message_mode = FALSE, memeprotection = TRUE)
+/mob/living/say(message, datum/language/speaking = null, verb="says", alt_name="", italics=FALSE, message_range = world.view, list/used_radios = list(), sound/speech_sound, sound_vol, sanitize = TRUE, message_mode = FALSE)
 	if (src.client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
@@ -117,11 +117,9 @@ var/list/department_radio_keys = list(
 	if(sanitize)
 		message = sanitize(message)
 
-	if(memeprotection)
-		var/static/regex/AntiPeka = new/regex(":\[^ ]+:")
-		if(AntiPeka.Find(message))
-			to_chat(src, "<span class='warning'>IC messages containing emojis are forbidden.</span>")
-			return
+	if(emojicheck(message))
+		to_chat(src, "<span class='warning'>IC messages containing emojis are forbidden.</span>")
+		return
 
 	var/turf/T = get_turf(src)
 
