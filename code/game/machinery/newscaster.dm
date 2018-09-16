@@ -742,11 +742,11 @@ var/list/obj/machinery/newscaster/allCasters = list() //Global list that will co
 						O.show_message("[user.name] forcefully slams the [src.name] with the [I.name]!" )
 					playsound(src.loc, 'sound/effects/Glasshit.ogg', 100, 1)
 		else
-			to_chat(user, "<FONT COLOR='blue'>This does nothing.</FONT>")
+			to_chat(user, "<span class='info'>This does nothing.</span>")
 	src.update_icon()
 
 /obj/machinery/newscaster/attack_paw(mob/user)
-	to_chat(user, "<font color='blue'>The newscaster controls are far too complicated for your tiny brain!</font>")
+	to_chat(user, "<span class='info'>The newscaster controls are far too complicated for your tiny brain!</span>")
 	return
 
 /obj/machinery/newscaster/proc/AttachPhoto(mob/user)
