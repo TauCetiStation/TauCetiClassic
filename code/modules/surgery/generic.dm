@@ -31,8 +31,8 @@
 	)
 
 	priority = 2
-	min_duration = 90
-	max_duration = 110
+	min_duration = 70
+	max_duration = 90
 
 /datum/surgery_step/generic/cut_with_laser/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
