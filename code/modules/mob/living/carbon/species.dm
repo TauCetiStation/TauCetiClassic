@@ -742,6 +742,8 @@
 
 	restricted_inventory_slots = list(slot_belt, slot_wear_id, slot_l_ear, slot_r_ear, slot_back, slot_l_store, slot_r_store)
 
+	has_organ = list(O_HEART = /obj/item/organ/internal/heart) // A huge buff to be honest.
+
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
@@ -752,6 +754,7 @@
 	)
 
 	burn_mod = 2
+	brain_mod = 0
 
 	has_gendered_icons = FALSE
 
