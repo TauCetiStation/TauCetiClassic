@@ -30,6 +30,7 @@
 	/obj/item/weapon/melee/energy/sword = 5
 	)
 
+	priority = 2
 	min_duration = 90
 	max_duration = 110
 
@@ -70,6 +71,7 @@
 	/obj/item/weapon/scalpel/manager = 100
 	)
 
+	priority = 2
 	min_duration = 80
 	max_duration = 120
 
