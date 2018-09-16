@@ -50,12 +50,10 @@
 	var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 	user.visible_message("\blue [user] has made a bloodless incision on [target]'s [BP.name] with \the [tool].", \
 	"\blue You have made a bloodless incision on [target]'s [BP.name] with \the [tool].",)
-	//Could be cleaner ...
 	BP.open = 1
-	BP.status |= ORGAN_BLEEDING
 	BP.createwound(CUT, 1)
+	BP.createwound(BURN, 1)
 	BP.clamp()
-	spread_germs_to_organ(BP, user)
 	if (target_zone == BP_HEAD)
 		target.brain_op_stage = 1
 
