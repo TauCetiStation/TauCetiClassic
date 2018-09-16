@@ -30,6 +30,10 @@
 
 	message = sanitize(message)	//made consistent with say
 
+	if(emojicheck(message))
+		to_chat(src, "<span class='warning'>IC messages containing emojis are forbidden.</span>")
+		return
+
 	if(name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"
 
