@@ -452,7 +452,7 @@
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 	primitive = /mob/living/carbon/monkey/diona
 
-	siemens_coefficient = 0.8 // Because they are plants and stuff.
+	siemens_coefficient = 0.5 // Because they are plants and stuff.
 
 	hazard_low_pressure = DIONA_HAZARD_LOW_PRESSURE
 
@@ -481,6 +481,7 @@
 	,RAD_ABSORB = TRUE
 	,NO_BLOOD = TRUE
 	,NO_PAIN = TRUE
+	,NO_FINGERPRINT = TRUE
 	)
 
 	blood_color = /datum/dirt_cover/green_blood
@@ -597,6 +598,7 @@
 	,IS_SYNTHETIC = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,BIOHAZZARD_IMMUNE = TRUE
+	,NO_FINGERPRINT = TRUE
 	)
 
 	blood_color = /datum/dirt_cover/oil
@@ -686,6 +688,7 @@
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,BIOHAZZARD_IMMUNE = TRUE
+	,NO_FINGERPRINT = TRUE
 	)
 
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
@@ -764,6 +767,7 @@
 	,NO_EMBED = TRUE
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_FINGERPRINT = TRUE
 	)
 
 	burn_mod = 2
@@ -806,6 +810,7 @@
 		RAD_IMMUNE = TRUE,
 		VIRUS_IMMUNE = TRUE,
 		BIOHAZZARD_IMMUNE = TRUE,
+		NO_FINGERPRINT = TRUE
 		)
 
 	has_organ = list(

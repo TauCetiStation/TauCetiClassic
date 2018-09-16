@@ -308,6 +308,12 @@
 			return 0		//Now, lets get to the dirty work.
 		//First, make sure their DNA makes sense.
 		var/mob/living/carbon/human/H = M
+
+		if(H.species.flags[NO_FINGERPRINT]) // They don't leave readable fingerprints, but admins gotta know.
+			fingerprintshidden += "(Specie has no fingerprints) Real name: [H.real_name], Key: [H.key]"
+			fingerprintslast = H.key
+			return 0
+
 		if (!istype(H.dna, /datum/dna) || !H.dna.uni_identity || (length(H.dna.uni_identity) != 32))
 			if(!istype(H.dna, /datum/dna))
 				H.dna = new /datum/dna(null)
