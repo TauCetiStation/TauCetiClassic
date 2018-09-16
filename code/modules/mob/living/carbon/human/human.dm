@@ -613,6 +613,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	if(.)
 		if(species && species.flags[IS_SYNTHETIC])
 			nutrition += . // Electrocute act returns it's shock_damage value.
+		if(species.flags[NO_PAIN]) // Because for all intents and purposes, if the mob feels no pain, he was not shocked.
+			. = 0
 		electrocution_animation(40)
 
 /mob/living/carbon/human/Topic(href, href_list)
