@@ -13,10 +13,10 @@
 
 /obj/item/device/ano_scanner/atom_init()
 	. = ..()
-	scan() // ?why?
+	scan()
 
 /obj/item/device/ano_scanner/attack_self(mob/user)
-	return src.interact(user)
+	return interact(user)
 
 /obj/item/device/ano_scanner/interact(mob/user)
 	var/message = "Background radiation levels detected."
@@ -53,7 +53,6 @@
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "wave_scanner"
 	item_state = "wave_scanner"
-	flags = OPENCONTAINER
 	w_class = ITEM_SIZE_LARGE
 	action_button_name = "Toggle Searcher"
 
@@ -70,24 +69,22 @@
 	set name = "Toggle Searcher"
 	set category = "Object"
 
+	if(usr.incapacitated())
+		return
+
 	var/mob/M = usr
 	if(M.back != src)
 		to_chat(usr, "<span class='warning'>The [src] must be worn properly to use!</span>")
 		return
 
-	if(usr.incapacitated())
-		return
-
-	var/mob/living/carbon/human/user = usr
 	if(array.loc == src)
 		//Detach an array into the user's hands
-		if(!user.put_in_hands(array))
-			to_chat(user, "<span class='warning'>You need a free hand to hold the [array]!</span>")
+		if(!M.put_in_hands(array))
+			to_chat(M, "<span class='warning'>You need a free hand to hold the [array]!</span>")
 			return
 	else
 		//Remove from their hands and put back "into" the backpack
 		remove_array()
-	return
 
 /obj/item/device/wave_scanner_backpack/equipped(mob/user, slot)
 	..()
@@ -104,7 +101,6 @@
 			to_chat(M, "<span class='notice'>\The [array] snaps back into the [src].</span>")
 	else
 		array.forceMove(src)
-	return
 
 /obj/item/device/wave_scanner_backpack/Destroy()
 	QDEL_NULL(array)
@@ -150,35 +146,35 @@
 	var/last_scan_time = 0
 	var/scan_delay = 25
 
-	var/obj/item/device/wave_scanner_backpack/tank
+	var/obj/item/device/wave_scanner_backpack/wavescanner
 
-/obj/item/device/scanner/atom_init(mapload, source_tank)
+/obj/item/device/scanner/atom_init(mapload, source_wavescanner)
 	. = ..()
-	tank = source_tank
+	wavescanner = source_wavescanner
 
 /obj/item/device/scanner/Destroy()
-	if(tank)
-		tank.array = null
+	if(wavescanner)
+		wavescanner.array = null
 	return ..()
 
 /obj/item/device/scanner/dropped(mob/user)
 	..()
-	if(tank)
-		tank.remove_array()
+	if(wavescanner)
+		wavescanner.remove_array()
 	else
 		qdel(src)
 
 /obj/item/device/scanner/afterattack(obj/target, mob/user, proximity)
-	if(target.loc == loc || target == tank)
+	if(target.loc == loc || target == wavescanner)
 		return
 	..()
 
 /obj/item/device/scanner/atom_init()
 	. = ..()
-	scan() // ?why?
+	scan()
 
 /obj/item/device/scanner/attack_self(mob/user)
-	return src.interact(user)
+	return interact(user)
 
 /obj/item/device/scanner/interact(mob/user)
 	var/message = "Background radiation levels detected."
