@@ -57,7 +57,7 @@
 
 /obj/structure/flora/tree/jungle/atom_init()
 	. = ..()
-	icon_state = "[icon_state][rand(1, 10)]"
+	icon_state = pick(icon_states(icon))
 
 /obj/structure/flora/tree/jungle/small
 	pixel_y = 0
