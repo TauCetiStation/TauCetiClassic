@@ -26,9 +26,7 @@
 
 /obj/structure/morgue/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	if(connected)
-		qdel(connected)
-		connected = null
+	QDEL_NULL(connected)
 	return ..()
 
 /obj/structure/morgue/proc/update()
@@ -53,7 +51,7 @@
 
 	if (prob(chance))
 		for(var/atom/movable/A in src)
-			A.loc = loc
+			A.forceMove(loc)
 			A.ex_act(severity)
 		qdel(src)
 
@@ -78,7 +76,7 @@
 /obj/structure/morgue/process()
 	if(check_delay > world.time)
 		return
-	check_delay = world.time + 10 // every second
+	check_delay = world.time + 10 SECONDS
 
 	if (!contents.len)
 		update()
@@ -113,7 +111,7 @@
 			connected.connected = src
 			icon_state = "morgue0"
 			for(var/atom/movable/A in src)
-				A.loc = connected.loc
+				A.forceMove(connected.loc)
 				if(ismob(A))
 					var/mob/M = A
 					M.instant_vision_update(0)

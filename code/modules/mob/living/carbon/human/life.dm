@@ -621,8 +621,9 @@
 	//Moved pressure calculations here for use in skip-processing check.
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = calculate_affecting_pressure(pressure)
+	var/is_in_space = istype(get_turf(src), /turf/space)
 
-	if(!istype(get_turf(src), /turf/space)) //space is not meant to change your body temperature.
+	if(!is_in_space) //space is not meant to change your body temperature.
 		var/loc_temp = get_temperature(environment)
 
 		if(adjusted_pressure < species.warning_high_pressure && adjusted_pressure > species.warning_low_pressure && abs(loc_temp - bodytemperature) < 20 && bodytemperature < species.heat_level_1 && bodytemperature > species.cold_level_1)
@@ -651,7 +652,7 @@
 			//world << "Environment: [loc_temp], [src]: [bodytemperature], Adjusting: [temp_adj]"
 			bodytemperature += temp_adj
 
-	else if(istype(get_turf(src), /turf/space) && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
+	else if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
 		if(istype(loc, /obj/mecha))
 			return
 		if(istype(loc, /obj/structure/transit_tube_pod))
@@ -712,7 +713,7 @@
 		throw_alert("pressure","lowpressure",1)
 	else
 		throw_alert("pressure","lowpressure",2)
-		apply_effect(15, AGONY, 0)
+		apply_effect(is_in_space ? 15 : 7, AGONY, 0)
 		take_overall_damage(burn=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 
 

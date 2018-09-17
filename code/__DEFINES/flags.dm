@@ -57,12 +57,14 @@
 #define VIRUS_IMMUNE       "virus_immune"
 #define BIOHAZZARD_IMMUNE  "biohazzard_immune"
 #define HAS_HAIR           "has_hair"
+#define NO_FINGERPRINT     "no_fingerprint"
 
 //Species Diet Flags
-#define DIET_CARN		1 //meat
-#define DIET_OMNI		2 //everything
-#define DIET_HERB		4 // VEGANS!
-#define DIET_ALL		255
+#define DIET_MEAT		1 // Meat.
+#define DIET_PLANT		2 // Vegans!
+#define DIET_DAIRY		4 // Milk, everything made out of milk.
+#define DIET_OMNI       7 // Everything.
+#define DIET_ALL		DIET_OMNI
 
 //bitflags for door switches.
 #define OPEN     1

@@ -273,8 +273,8 @@ Doesn't work on other aliens/AI.*/
 	set desc = "Secrete tough malleable resin."
 	set category = "Alien"
 
-	if((locate(/obj/effect/alien/egg) in get_turf(src)) || (locate(/obj/structure/mineral_door/resin) in get_turf(src)) || (locate( /obj/effect/alien/resin/wall) in get_turf(src)) || (locate(/obj/effect/alien/resin/membrane) in get_turf(src)) || (locate(/obj/structure/stool/bed/nest) in get_turf(src)))
-		to_chat (src, "There is already a resin structure there.")
+	if((locate(/obj/effect/alien/air_plant) in get_turf(src)) || (locate(/obj/effect/alien/egg) in get_turf(src)) || (locate(/obj/structure/mineral_door/resin) in get_turf(src)) || (locate( /obj/effect/alien/resin/wall) in get_turf(src)) || (locate(/obj/effect/alien/resin/membrane) in get_turf(src)) || (locate(/obj/structure/stool/bed/nest) in get_turf(src)))
+		to_chat (src, "There is already a structure there.")
 		return
 
 	if(powerc(75))
@@ -309,4 +309,16 @@ Doesn't work on other aliens/AI.*/
 					//M.update_pipe_vision()
 					//Paralyse(10)
 			src.visible_message("\green <B>[src] hurls out the contents of their stomach!</B>")
+	return
+
+/mob/living/carbon/alien/humanoid/verb/air_plant()
+	set name = "Plant Air Generator (250)"
+	set desc = "Plants some alien weeds."
+	set category = "Alien"
+
+	if(powerc(250,1))
+		adjustToxLoss(-250)
+		for(var/mob/O in viewers(src, null))
+			O.show_message(text("\green <B>[src] has planted some alien weeds!</B>"), 1)
+		new /obj/effect/alien/air_plant(loc)
 	return

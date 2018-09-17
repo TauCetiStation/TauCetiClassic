@@ -201,7 +201,7 @@ update_flag
 		take_damage(5)
 
 /obj/machinery/portable_atmospherics/canister/proc/take_damage(amount)
-	if((flags & BROKEN) || (flags & NODECONSTRUCT))
+	if((stat & BROKEN) || (flags & NODECONSTRUCT))
 		return
 
 	health = Clamp(health - amount, 0, initial(health))
