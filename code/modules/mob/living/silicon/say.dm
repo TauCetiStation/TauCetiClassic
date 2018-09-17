@@ -36,6 +36,10 @@
 
 	message = sanitize(message)
 
+	if(emojicheck(message))
+		to_chat(src, "<span class='warning'>IC messages containing emojis are forbidden.</span>")
+		return
+
 	if (stat == DEAD)
 		return say_dead(message)
 
@@ -84,16 +88,18 @@
 		verb = speaking.speech_verb
 		message = trim(copytext(message,2+length(speaking.key)))
 
+	var/area/A = get_area(src)
+
 	switch(message_mode)
 		if("department")
 			switch(bot_type)
 				if(IS_AI)
 					return AI.holopad_talk(message, verb, speaking)
 				if(IS_ROBOT)
-					log_say("[key_name(src)] : [message]")
+					log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]: [message]")
 					R.radio.talk_into(src,message,message_mode,verb,speaking)
 				if(IS_PAI)
-					log_say("[key_name(src)] : [message]")
+					log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 					P.radio.talk_into(src,message,message_mode,verb,speaking)
 			return 1
 
@@ -120,13 +126,13 @@
 						to_chat(src, "\red System Error - Transceiver Disabled")
 						return
 					else
-						log_say("[key_name(src)] : [message]")
+						log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 						AI.aiRadio.talk_into(src,message,null,verb,speaking)
 				if(IS_ROBOT)
-					log_say("[key_name(src)] : [message]")
+					log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 					R.radio.talk_into(src,message,null,verb,speaking)
 				if(IS_PAI)
-					log_say("[key_name(src)] : [message]")
+					log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 					P.radio.talk_into(src,message,null,verb,speaking)
 			return 1
 
@@ -138,13 +144,13 @@
 							to_chat(src, "\red System Error - Transceiver Disabled")
 							return
 						else
-							log_say("[key_name(src)] : [message]")
+							log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 							AI.aiRadio.talk_into(src,message,message_mode,verb,speaking)
 					if(IS_ROBOT)
-						log_say("[key_name(src)] : [message]")
+						log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 						R.radio.talk_into(src,message,message_mode,verb,speaking)
 					if(IS_PAI)
-						log_say("[key_name(src)] : [message]")
+						log_say("[name]/[key] : \[[A.name][message_mode?"/[message_mode]":""]\]]: [message]")
 						P.radio.talk_into(src,message,message_mode,verb,speaking)
 				return 1
 
@@ -192,12 +198,13 @@
 
 /mob/living/proc/robot_talk(message)
 
-	log_say("[key_name(src)] : [message]")
-
 	message = trim(message)
 
 	if (!message)
 		return
+
+	var/area/A = get_area(src)
+	log_say("[name]/[key] : \[[A.name]/binary\]: [message]")
 
 	var/verb = say_quote(message)
 

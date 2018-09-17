@@ -119,8 +119,6 @@
 	//Update our name based on whether our face is obscured/disfigured
 	name = get_visible_name()
 
-	handle_regular_hud_updates()
-
 	//Updates the number of stored chemicals for powers and essentials
 	handle_changeling()
 
@@ -1226,14 +1224,10 @@
 	return 1
 
 /mob/living/carbon/human/handle_regular_hud_updates()
-	if(hud_updateflag)//? Below ?
+	if(hud_updateflag)
 		handle_hud_list()
-
 	if(!client)
 		return 0
-
-	if(hud_updateflag)//Is there any reason for 2nd check? ~Zve
-		handle_hud_list()
 
 	for(var/image/hud in client.images)
 		if(copytext(hud.icon_state,1,4) == "hud") //ugly, but icon comparison is worse, I believe

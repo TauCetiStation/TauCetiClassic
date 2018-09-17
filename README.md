@@ -1,6 +1,5 @@
 # Gamma Station
 
-[![tauceti.ru](https://img.shields.io/badge/site-tauceti.ru-blue.svg)](http://tauceti.ru/)
 [![Discord](https://img.shields.io/badge/dynamic/json.svg?label=Discord&uri=https%3A%2F%2Fdiscordapp.com%2Fapi%2Fguilds%2F401030271417188353%2Fwidget.json&query=members.length&colorB=%237289db&suffix=%20online&logo=discord)](https://discord.gg/V92ZHwY)
 
 ---
@@ -22,7 +21,7 @@
 
 ### ВНЕСТИ ВКЛАД (CONTRIBUTING)
 
-Обязательно прочитайте [CONTRIBUTING.md](https://github.com/TauCetiStation/TauCetiClassic/blob/master/CONTRIBUTING.md).
+Обязательно прочитайте [CONTRIBUTING.md](https://github.com/GammaStation/Gamma-Station/blob/master/CONTRIBUTING.md).
 
 ---
 

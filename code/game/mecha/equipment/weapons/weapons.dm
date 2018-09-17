@@ -63,7 +63,10 @@
 		P.def_zone = check_zone(chassis.occupant.zone_sel.selecting)
 	P.yo = aimloc.y - P.loc.y
 	P.xo = aimloc.x - P.loc.x
-	P.process()
+	if(aimloc != get_turf(target))
+		P.process(aimloc)
+	else
+		P.process()
 
 /obj/item/mecha_parts/mecha_equipment/weapon/energy
 	name = "General Energy Weapon"

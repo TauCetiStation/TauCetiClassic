@@ -17,7 +17,7 @@
 	var/sanitized_text = replacetext(t, "'", "\\'")
 	sanitized_text = replacetext(sanitized_text, "\"", "\\\"")
 	return sanitized_text
-	
+
 // Sanitize inputs to avoid SQL injection attacks
 proc/sql_sanitize_text(text)
 	text = replacetext(text, "'", "''")
@@ -393,3 +393,7 @@ proc/sql_sanitize_text(text)
 		p++
 
 	return new_text
+
+/proc/emojicheck(var/text)
+	var/static/regex/AntiPeka = new/regex(":\[^ ]+:")
+	return	AntiPeka.Find(text)

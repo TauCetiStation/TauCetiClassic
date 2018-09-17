@@ -423,6 +423,19 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return TRUE
 	return 0
 
+/mob/living/carbon/human/resist()
+	..()
+	if(usr && !usr.incapacitated())
+		var/mob/living/carbon/human/D = usr
+		if(D.get_species() == DIONA)
+			var/list/choices = list()
+			for(var/mob/living/carbon/monkey/diona/V in contents)
+				if(istype(V) && V.gestalt == src)
+					choices += V
+			var/mob/living/carbon/monkey/diona/V = input(D,"Who do wish you to expel from within?") in null|choices
+			if(V)
+				to_chat(D, "<span class='notice'>You wriggle [V] out of your insides.</span>")
+				V.splitting(D)
 
 /mob/living/carbon/human/show_inv(mob/user)
 	var/obj/item/clothing/under/suit = null
@@ -560,8 +573,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default
 /mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
-	if(status_flags & GODMODE)	return 0	//godmode
-	if(NO_SHOCK in src.mutations)	return 0 //#Z2 no shock with that mutation.
+	if(status_flags & GODMODE)
+		return 0	//godmode
+	if(NO_SHOCK in src.mutations)
+		return 0 //#Z2 no shock with that mutation.
 
 	if(!def_zone)
 		def_zone = pick(BP_L_ARM , BP_R_ARM)
@@ -582,8 +597,15 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	else
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
 
+	if(species)
+		siemens_coeff *= species.siemens_coefficient
+
 	. = ..(shock_damage, source, siemens_coeff, def_zone, tesla_shock)
 	if(.)
+		if(species && species.flags[IS_SYNTHETIC])
+			nutrition += . // Electrocute act returns it's shock_damage value.
+		if(species.flags[NO_PAIN]) // Because for all intents and purposes, if the mob feels no pain, he was not shocked.
+			. = 0
 		electrocution_animation(40)
 
 /mob/living/carbon/human/Topic(href, href_list)
@@ -891,7 +913,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		var/obj/item/clothing/glasses/g = glasses
 		number += g.flash_protection
 	if(istype(wear_mask, /obj/item/clothing/mask/gas/welding))
-		var/obj/item/clothing/mask/gas/welding/W = src.wear_mask
+		var/obj/item/clothing/mask/gas/welding/W = wear_mask
 		if(!W.up)
 			number += 2
 	return number
@@ -1323,6 +1345,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(species.language)
 		add_language(species.language)
+
+	if(species.additional_languages)
+		for(var/A in species.additional_languages)
+			add_language(A)
 
 	if(species.base_color && default_colour)
 		//Apply colour.

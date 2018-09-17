@@ -51,7 +51,7 @@
 	error = pick(-1,1)
 
 /obj/item/clothing/glasses/hud/mining/process_hud(mob/M)
-	if(!M || !!M.client)
+	if(!M || !M.client)
 		return
 	var/client/C = M.client
 	var/icon/hudMineral = 'icons/obj/mining/geoscanner.dmi'

@@ -35,7 +35,6 @@
 	if(visualsOnly)
 		return
 
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/captain(H), slot_belt)
 	if(H.backbag == 1)
@@ -47,7 +46,7 @@
 	L.inject(H)
 	START_PROCESSING(SSobj, L)
 	to_chat(world, "<b>[H.real_name] is the captain!</b>")
-	return 1
+	return TRUE
 
 /datum/job/captain/get_access()
 	return get_all_accesses()
@@ -64,8 +63,8 @@
 	selection_color = "#ddddff"
 	idtype = /obj/item/weapon/card/id/silver
 	req_admin_notify = 1
-	minimal_player_age = 10
-	minimal_player_ingame_minutes = 7500
+	minimal_player_age = 30
+	minimal_player_ingame_minutes = 4500
 	access = list(
 		access_security, access_sec_doors, access_brig, access_court, access_forensics_lockers,
 		access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads,
@@ -82,7 +81,6 @@
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), slot_back)
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
-	H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H.back), slot_in_backpack)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/head_of_personnel(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 
@@ -95,4 +93,5 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H), slot_r_hand)
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ids(H.back), slot_in_backpack)
-	return 1
+
+	return TRUE

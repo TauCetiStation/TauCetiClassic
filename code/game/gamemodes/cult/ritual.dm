@@ -292,6 +292,14 @@ var/list/cult_datums = list()
 	M.visible_message("<span class='danger'>[user] beats [M] with the arcane tome!</span>")
 	to_chat(M, "<span class='danger'You feel searing heat inside!</span>")
 
+/obj/item/weapon/book/tome/afterattack(atom/A, mob/user, proximity)
+	if(!proximity)
+		return
+	if(iscultist(user) && A.reagents && A.reagents.has_reagent("water"))
+		var/water2convert = A.reagents.get_reagent_amount("water")
+		A.reagents.del_reagent("water")
+		to_chat(user, "<span class='warning'>You curse [A].</span>")
+		A.reagents.add_reagent("unholywater",water2convert)
 
 /obj/item/weapon/book/tome/attack_self(mob/living/carbon/human/user)
 	if(!istype(user) || !user.canmove || user.stat || user.incapacitated())

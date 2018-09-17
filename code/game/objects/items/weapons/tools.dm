@@ -264,7 +264,8 @@
 				src.icon_state = initial(src.icon_state)
 				src.welding = 0
 			set_light(0)
-			STOP_PROCESSING(SSobj, src)
+			if (!istype(src, /obj/item/weapon/weldingtool/experimental))
+				STOP_PROCESSING(SSobj, src)
 			return
 		//Welders left on now use up fuel, but lets not have them run out quite that fast
 		if(1)
@@ -422,44 +423,38 @@
 //Decides whether or not to damage a player's eyes based on what they're wearing as protection
 //Note: This should probably be moved to mob
 /obj/item/weapon/weldingtool/proc/eyecheck(mob/user)
-	if(!iscarbon(user))
-		return 0
-	if(ishuman(user))
-		var/mob/living/carbon/human/H = user
-		var/safety = H.eyecheck()
-		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
-		if(H.species.flags[IS_SYNTHETIC])
+	if(!ishuman(user))
+		return
+	var/mob/living/carbon/human/H = user
+	if(H.species.flags[IS_SYNTHETIC])
+		return
+	if(istype(H.wear_mask, /obj/item/clothing/mask/gas/welding))
+		var/obj/item/clothing/mask/gas/welding/W = H.wear_mask
+		if(!W.up)
 			return
-		switch(safety)
-			if(1)
-				to_chat(user, "<span class='warning'>Your eyes sting a little.</span>")
-				IO.damage += rand(1, 2)
-				if(IO.damage > 12)
-					user.eye_blurry += rand(3,6)
-			if(0)
-				to_chat(user, "<span class='warning'>Your eyes burn.</span>")
-				IO.damage += rand(2, 4)
-				if(IO.damage > 10)
-					IO.damage += rand(4,10)
-			if(-1)
-				to_chat(user, "<span class='danger'>Your thermals intensify the welder's glow. Your eyes itch and burn severely.</span>")
-				user.eye_blurry += rand(12,20)
-				IO.damage += rand(12, 16)
-		if(safety<2)
-
-			if(IO.damage > 10)
-				to_chat(user, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
-
-			if (IO.damage >= IO.min_broken_damage)
-				to_chat(user, "<span class='danger'>You go blind!</span>")
-				user.sdisabilities |= BLIND
-			else if (IO.damage >= IO.min_bruised_damage)
-				to_chat(user, "<span class='danger'>You go blind!</span>")
-				user.eye_blind = 5
-				user.eye_blurry = 5
-				user.disabilities |= NEARSIGHTED
-				spawn(100)
-					user.disabilities &= ~NEARSIGHTED
+	if(istype(H.head, /obj/item/clothing/head/welding))
+		var/obj/item/clothing/head/welding/W = H.head
+		if(!W.up)
+			return
+	if(istype(H.head, /obj/item/clothing/head/helmet/space/rig))
+		return
+	if(istype(H.glasses, /obj/item/clothing/glasses/welding))
+		var/obj/item/clothing/glasses/welding/W = H.glasses
+		if(!W.up)
+			return
+	to_chat(user, "<span class='warning'>Your eyes burn.</span>")
+	var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+	IO.damage += rand(2, 4)
+	if(IO.damage > 10)
+		IO.damage += rand(4,10)
+		to_chat(user, "<span class='warning'>Your eyes are really starting to hurt. This can't be good for you!</span>")
+		if (IO.damage >= IO.min_broken_damage)
+			to_chat(user, "<span class='danger'>You go blind!</span>")
+			user.sdisabilities |= BLIND
+		else if (IO.damage >= IO.min_bruised_damage)
+			to_chat(user, "<span class='danger'>You go blind!</span>")
+			user.eye_blind = 5
+			user.eye_blurry = 5
 
 
 /obj/item/weapon/weldingtool/largetank
@@ -490,15 +485,15 @@
 	m_amt = 70
 	g_amt = 120
 	origin_tech = "materials=4;engineering=4;bluespace=2;phorontech=3"
-	var/last_gen = 0
+var/next_refuel_tick = 0
 
-
-
-/obj/item/weapon/weldingtool/experimental/proc/fuel_gen()//Proc to make the experimental welder generate fuel, optimized as fuck -Sieve
-	var/gen_amount = ((world.time-last_gen)/25)
-	reagents += (gen_amount)
-	if(reagents > max_fuel)
-		reagents = max_fuel
+/obj/item/weapon/weldingtool/experimental/process()
+	..()
+	if((get_fuel() < max_fuel) && (next_refuel_tick < world.time) && !welding)
+		next_refuel_tick = world.time + 2.5 SECONDS
+		reagents.add_reagent("fuel", 1)
+	if(!welding && (get_fuel() == max_fuel))
+		STOP_PROCESSING(SSobj, src)
 
 /*
  * Crowbar

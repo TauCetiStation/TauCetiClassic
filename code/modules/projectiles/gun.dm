@@ -81,6 +81,19 @@
 	else
 		Fire(A,user,params) //Otherwise, fire normally.
 
+/mob/living/carbon/AltClickOn(atom/A)
+	if(isliving(A))
+		var/mob/living/M = A
+		var/obj/item/I = get_active_hand()
+		if(istype(I, /obj/item/weapon/gun))
+			var/obj/item/weapon/gun/G = I
+			if(M in G.target)
+				M.NotTargeted(G)
+			else
+				G.PreFire(M, src)
+			return
+	..()
+
 /obj/item/weapon/gun/proc/Fire(atom/target, mob/living/user, params, reflex = 0)//TODO: go over this
 	//Exclude lasertag guns from the CLUMSY check.
 	if(!user.IsAdvancedToolUser())
@@ -213,6 +226,7 @@
 		if(user.a_intent == "hurt")
 			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
 			chambered.BB.damage *= 1.3
+			chambered.BB.point_blank = TRUE
 			Fire(M,user)
 			return
 		else if(target && M in target)

@@ -179,7 +179,7 @@
 	breakouttime = 35 //easy to apply, easy to break out of
 	origin_tech = "engineering=3;combat=1"
 	throw_speed = 5
-	var/weaken = 2
+	var/weaken = 0.8
 
 /obj/item/weapon/legcuffs/bola/after_throw(datum/callback/callback)
 	..()
@@ -860,13 +860,6 @@
 	desc = "A large piece of equipment used to open a window into the subspace dimension."
 	origin_tech = "magnets=5;materials=5;bluespace=3"
 	m_amt = 50
-
-/obj/item/weapon/ectoplasm
-	name = "ectoplasm"
-	desc = "Spooky!"
-	gender = PLURAL
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "ectoplasm"
 
 /obj/item/weapon/research//Makes testing much less of a pain -Sieve
 	name = "research"
