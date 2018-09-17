@@ -9,7 +9,7 @@
 			return
 
 	//Meme stuff
-	if((!speech_allowed && usr == src) || miming || iszombie(src))
+	if((!speech_allowed && usr == src) || miming)
 		to_chat(usr, "<span class='userdange'>You can't speak.</span>")
 		return
 
@@ -77,6 +77,8 @@
 				return ""
 
 	message = capitalize(trim(message))
+	if(iszombie(src))
+		message = zombie_talk(message)
 
 	var/ending = copytext(message, length(message))
 	if (speaking)

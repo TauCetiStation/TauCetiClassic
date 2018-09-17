@@ -4,7 +4,6 @@
 			humans, butchering all other living things to \
 			sustain the zombie, smashing open airlock doors and opening \
 			child-safe caps on bottles."
-	canremove = 0
 	flags = NODROP | ABSTRACT | DROPDEL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
@@ -51,13 +50,13 @@
 	if(!A.density)
 		return
 	else if(!user.is_busy(A))
-		user.visible_message("<span class='warning'>[user] starts to force the door to open with \his [src]!</span>",\
+		user.visible_message("<span class='warning'>[user] starts to force the door to open with [src]!</span>",\
 							 "<span class='warning'>You start forcing the door to open.</span>",\
 							 "<span class='warning'>You hear metal strain.</span>")
 		playsound(A.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
 		if(do_after(user, 70, target = A))
 			if(A.density && in_range(A, user))
-				user.visible_message("<span class='warning'>[user] forces the door to open with \his [src]!</span>",\
+				user.visible_message("<span class='warning'>[user] forces the door to open with [src]!</span>",\
 									 "<span class='warning'>You force the door to open.</span>",\
 									 "<span class='warning'>You hear a metal screeching sound.</span>")
 				A.open(1)
@@ -76,10 +75,7 @@
 
 			H.infect_zombie_virus(target_zone)
 
-/proc/iszombie(mob/living/M)
-	if(!ishuman(M))
-		return FALSE
-	var/mob/living/carbon/human/H = M
+/proc/iszombie(mob/living/carbon/human/H)
 	if(istype(H.species, /datum/species/zombie))
 		return TRUE
 	return FALSE
@@ -185,7 +181,6 @@
 	var/datum/disease2/effectholder/holder = new /datum/disease2/effectholder
 	var/datum/disease2/effect/zombie/Z = new /datum/disease2/effect/zombie
 	if(target_zone)
-		//visible_message("[target_zone]")
 		Z.infected_organ = get_bodypart(target_zone)
 	holder.effect = Z
 	holder.chance = rand(holder.effect.chance_minm, holder.effect.chance_maxm)
@@ -212,3 +207,25 @@
 			set_species(ZOMBIE_UNATHI, FALSE, TRUE)
 		else
 			set_species(ZOMBIE, FALSE, TRUE)
+
+/proc/zombie_talk(var/message)
+	var/list/message_list = splittext(message, " ")
+	var/maxchanges = max(round(message_list.len / 1.5), 2)
+
+	for(var/i = rand(maxchanges / 2, maxchanges), i > 0, i--)
+		var/insertpos = rand(1, message_list.len)
+		message_list.Insert(insertpos, "[pick("ÌÎÇÃÈ", "Ìîçãè", "Ìîîçãèèè", "ÌÎÎÎÇÃÈÈÈÈ", "ÁÎËÜÍÎ", "ÁÎËÜ", "ÏÎÌÎÃÈ", "ĞÀÀÀÀ", "ÀÀÀÀ", "ÀĞĞÕ", "ÎÒÊĞÎÉÒÅ", "ÎÒÊĞÎÉ")]...")
+
+	for(var/i = 1, i <= message_list.len, i++)
+		if(prob(50) && !(copytext(message_list[i], length(message_list[i]) - 2) == "..."))
+			message_list[i] = message_list[i] + "..."
+
+		if(prob(60))
+			message_list[i] = stutter(message_list[i])
+
+		message_list[i] = stars(message_list[i], 80)
+
+		if(prob(60))
+			message_list[i] = slur(message_list[i])
+
+	return jointext(message_list, " ")

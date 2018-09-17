@@ -107,8 +107,8 @@
 
 /obj/machinery/disease2/incubator/process()
 	if(working > 0)
-		working -= 1
-		if (working == 0)
+		working--
+		if (!working)
 			nanomanager.update_uis(src)
 			icon_state = "incubator"
 		if(!powered(EQUIP))
@@ -163,11 +163,11 @@
 		return TRUE
 
 	if (href_list["rad"])
-		//radiation += 10
 		if (dish)
 			dish.virus2.radiate()
 
 		working = 1
+		icon_state = "incubator_on"
 		return TRUE
 
 	if (href_list["food"])
