@@ -107,7 +107,6 @@
 						activated = TRUE
 						H.visible_message("<span class='danger'>[H] suddenly closes \his eyes. \His body falls lifeless and stops moving. \He seems to stop breathing.</span>")
 						H.sleeping = 600
-						//addtimer(CALLBACK(null, .proc/revive_zombie, H), rand(60,100))
 						handle_infected_death(H)
 						H.update_canmove()
 						disease.dead = TRUE
@@ -701,7 +700,7 @@
 			if(3)
 				to_chat(mob, "<span class='warning'>[pick("Your stomach hurts a lot.", "Your skin seems to become more pale.", "You feel confused.", "Your breathing is hot and irregular.")]</span>")
 				mob.adjustToxLoss(10)
-		
+
 
 /*/datum/disease2/effect/shakey
 	name = "World Shaking Syndrome"

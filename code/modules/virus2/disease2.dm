@@ -51,6 +51,7 @@
 
 /datum/disease2/disease/proc/radiate()
 	effects = shuffle(effects)
+	affected_species = get_infectable_species()
 
 /datum/disease2/disease/proc/reactfood()
 	addeffect(getrandomeffect(1,1))
@@ -218,8 +219,8 @@ var/global/list/virusDB = list()
 
 	r += "<u>Symptoms:</u><br>"
 	for(var/datum/disease2/effectholder/E in effects)
-		r += "([E.stage]) [E.effect.name]    "
-		r += "<small><u>Strength:</u> [E.multiplier >= 3 ? "Severe" : E.multiplier > 1 ? "Above Average" : "Average"]    "
+		r += "[E.effect.name]    "
+		r += "<small><u>Strength:</u> [E.effect.level >= 3 ? "Severe" : E.effect.level > 1 ? "Above Average" : "Average"]    "
 		r += "<u>Verosity:</u> [E.chance * 15]</small><br>"
 
 	return r
