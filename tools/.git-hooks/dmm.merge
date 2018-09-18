@@ -1,2 +1,2 @@
 maps merge driver
-./tools/dmmtool/scripts/mapmerge.{OS_EXT} %O %A %B
+./tools/dmm-merge-tool/scripts/mapmerge.{OS_EXT} %O %A %B

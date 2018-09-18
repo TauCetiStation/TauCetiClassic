@@ -4,7 +4,7 @@ import org.eclipse.jgit.treewalk.TreeWalk
 
 import java.nio.file.Files
 
-JTGMERGE = 'java -jar ./tools/dmmtool/JTGMerge.jar'
+JTGMERGE = 'java -jar ./tools/dmm-merge-tool/JTGMerge.jar'
 
 def git = Git.open(new File('.'))
 def currentStatus = git.status().call()
