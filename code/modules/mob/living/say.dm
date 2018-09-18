@@ -117,6 +117,10 @@ var/list/department_radio_keys = list(
 	if(sanitize)
 		message = sanitize(message)
 
+	if(emojicheck(message))
+		to_chat(src, "<span class='warning'>IC messages containing emojis are forbidden.</span>")
+		return
+
 	var/turf/T = get_turf(src)
 
 	//handle nonverbal and sign languages here
