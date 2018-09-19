@@ -42,6 +42,7 @@
 	var/list/sacrificed = list()
 
 	var/eldergod = 1 //for the summon god objective
+	var/eldertry = 0
 
 	var/const/acolytes_needed = 5 //for the survive objective
 	var/acolytes_survived = 0
