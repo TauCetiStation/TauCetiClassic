@@ -13,7 +13,14 @@
 	var/power = 0
 
 	var/foodsupply = 0
-	var/toxins = 0
+	var/toxinsupply = 0
+	var/synaptizinesupply = 0
+	var/phoronsupply = 0
+	var/sleeptoxinsupply = 0
+
+	var/datum/disease2/effectholder/selected = null
+
+	var/working = 0
 
 /obj/machinery/disease2/incubator/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/reagent_containers/glass) || istype(O,/obj/item/weapon/reagent_containers/syringe))
@@ -53,17 +60,32 @@
 	data["dish_inserted"] = !!dish
 	data["food_supply"] = foodsupply
 	data["radiation"] = radiation
-	data["toxins"] = min(toxins, 100)
+	data["toxinsupply"] = toxinsupply
+	data["synaptizinesupply"] = synaptizinesupply
+	data["phoronsupply"] = phoronsupply
+	data["sleeptoxinsupply"] = sleeptoxinsupply
 	data["on"] = on
-	data["system_in_use"] = foodsupply > 0 || radiation > 0 || toxins > 0
+	data["system_in_use"] = foodsupply > 0 || radiation > 0
 	data["chemical_volume"] = beaker ? beaker.reagents.total_volume : 0
 	data["max_chemical_volume"] = beaker ? beaker.volume : 1
 	data["virus"] = dish ? dish.virus2 : null
-	data["growth"] = dish ? min(dish.growth, 100) : 0
 	data["infection_rate"] = dish && dish.virus2 ? dish.virus2.infectionchance * 10 : 0
 	data["analysed"] = dish && dish.analysed ? 1 : 0
 	data["can_breed_virus"] = null
 	data["blood_already_infected"] = null
+	data["working"] = working
+	data["effects"] = null
+	data["symptomdesc"] = null
+	data["symptomname"] = null
+	if(selected != null)
+		data["symptomdesc"] = selected.effect.desc
+		data["symptomname"] = selected.effect.name
+	if(dish && dish.virus2)
+		var/list/effects[0]
+		for (var/datum/disease2/effectholder/e in dish.virus2.effects)
+			effects.Add(list(list("name" = (e.effect.name), "stage" = (e.stage), "reference" = "\ref[e]")))
+		data["effects"] = effects
+		data["affected_species"] = jointext(dish.virus2.affected_species, ", ")
 
 	if (beaker)
 		var/datum/reagent/blood/B = locate(/datum/reagent/blood) in beaker.reagents.reagent_list
@@ -84,55 +106,30 @@
 		ui.open()
 
 /obj/machinery/disease2/incubator/process()
-	if(dish && on && dish.virus2)
-		use_power(50,EQUIP)
+	if(working > 0)
+		working--
+		if (!working)
+			nanomanager.update_uis(src)
+			icon_state = "incubator"
 		if(!powered(EQUIP))
-			on = 0
 			icon_state = "incubator"
 
-		if(foodsupply)
-			if(dish.growth + 3 >= 100 && dish.growth < 100)
-				ping("\The [src] pings, \"Sufficient viral growth density achieved.\"")
-
-			foodsupply -= 1
-			dish.growth += 3
-			nanomanager.update_uis(src)
-
-		if(radiation)
-			if(radiation > 50 & prob(5))
-				dish.virus2.majormutate()
-				if(dish.info)
-					dish.info = "OUTDATED : [dish.info]"
-					dish.analysed = 0
-				ping("\The [src] pings, \"Mutant viral strain detected.\"")
-			else if(prob(5))
-				dish.virus2.minormutate()
-			radiation -= 1
-			nanomanager.update_uis(src)
-		if(toxins && prob(5))
-			dish.virus2.infectionchance -= 1
-			nanomanager.update_uis(src)
-		if(toxins > 50)
-			dish.growth = 0
-			dish.virus2 = null
-			nanomanager.update_uis(src)
-	else if(!dish)
-		on = 0
-		icon_state = "incubator"
-		nanomanager.update_uis(src)
-
 	if(beaker)
-		if(beaker.reagents.get_reagent_amount("virusfood"))
-			foodsupply += (min(beaker.reagents.get_reagent_amount("virusfood"), 5))*2
-			beaker.reagents.remove_reagent("virusfood", 5)
+		var/vol = beaker.reagents.total_volume
+		foodsupply += drain_reagent_from_beaker("virusfood")
+		toxinsupply += drain_reagent_from_beaker("toxin")
+		sleeptoxinsupply += drain_reagent_from_beaker("stoxin")
+		synaptizinesupply += drain_reagent_from_beaker("synaptizine")
+		phoronsupply += drain_reagent_from_beaker("phoron")
+		if(beaker.reagents.total_volume != vol)
 			nanomanager.update_uis(src)
 
-
-		if (locate(/datum/reagent/toxin) in beaker.reagents.reagent_list)
-			for(var/datum/reagent/toxin/T in beaker.reagents.reagent_list)
-				toxins += max(T.toxpwr,1)
-				beaker.reagents.remove_reagent(T.id,1)
-			nanomanager.update_uis(src)
+/obj/machinery/disease2/incubator/proc/drain_reagent_from_beaker(reagent)
+	if(beaker.reagents.get_reagent_amount(reagent))
+		var/ammount = (min(beaker.reagents.get_reagent_amount(reagent), 5))
+		beaker.reagents.remove_reagent(reagent, 5)
+		return ammount
+	return 0
 
 /obj/machinery/disease2/incubator/Topic(href, href_list)
 	var/mob/user = usr
@@ -166,13 +163,59 @@
 		return TRUE
 
 	if (href_list["rad"])
-		radiation += 10
+		if (dish)
+			dish.virus2.radiate()
+
+		working = 1
+		icon_state = "incubator_on"
 		return TRUE
 
-	if (href_list["flush"])
-		radiation = 0
-		toxins = 0
-		foodsupply = 0
+	if (href_list["food"])
+		if (dish && foodsupply>0)
+			dish.virus2.reactfood()
+			foodsupply-=1
+		working = 1
+		icon_state = "incubator_on"
+		return TRUE
+
+	if (href_list["toxin"])
+		if (dish && toxinsupply>0)
+			dish.virus2.reacttoxin()
+			toxinsupply-=1
+		working = 1
+		icon_state = "incubator_on"
+		return TRUE
+
+	if (href_list["sleeptoxin"])
+		if (dish && sleeptoxinsupply>0)
+			dish.virus2.reactsleeptoxin()
+			sleeptoxinsupply-=1
+		working = 1
+		icon_state = "incubator_on"
+		return TRUE
+
+	if (href_list["synaptizine"])
+		if (dish && synaptizinesupply>0)
+			dish.virus2.reactsynaptizine()
+			synaptizinesupply-=1
+		working = 1
+		icon_state = "incubator_on"
+		return TRUE
+
+	if (href_list["phoron"])
+		if (dish && phoronsupply>0)
+			dish.virus2.reactphoron()
+			phoronsupply-=1
+		working = 1
+		icon_state = "incubator_on"
+		return TRUE
+
+	if (href_list["symptominfo"])
+		selected = locate(href_list["symptominfo"])
+		return TRUE
+
+	if (href_list["back"])
+		selected = null
 		return TRUE
 
 	if (href_list["virus"])

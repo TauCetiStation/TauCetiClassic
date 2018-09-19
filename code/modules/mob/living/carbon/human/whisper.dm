@@ -29,6 +29,8 @@
 		return
 
 	message = sanitize(message)	//made consistent with say
+	if(iszombie(src))
+		message = zombie_talk(message)
 
 	if(emojicheck(message))
 		to_chat(src, "<span class='warning'>IC messages containing emojis are forbidden.</span>")
