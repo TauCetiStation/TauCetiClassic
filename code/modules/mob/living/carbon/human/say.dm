@@ -20,10 +20,6 @@
 			return
 		return say_dead(message)
 
-	if(emojicheck(message))
-		to_chat(src, "<span class='warning'>IC messages containing emojis are forbidden.</span>")
-		return
-
 	var/message_mode = parse_message_mode(message, "headset")
 
 	if (istype(wear_mask, /obj/item/clothing/mask/muzzle) && !(message_mode == "changeling" || message_mode == "alientalk"))  //Todo:  Add this to speech_problem_flag checks.

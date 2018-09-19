@@ -5,10 +5,6 @@
 
 	message = sanitize(message)
 
-	if(emojicheck(message))				//To prevent hissing sound
-		to_chat(src, "<span class='warning'>IC messages containing emojis are forbidden.</span>")
-		return
-
 	if (length(message) >= 2)
 		if (department_radio_keys[copytext(message, 1, 3)] == "alientalk")
 			message = copytext(message, 3)
