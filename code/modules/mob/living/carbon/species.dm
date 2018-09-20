@@ -179,6 +179,9 @@
 	else
 		H.equip_to_slot_or_del(SK, slot_in_backpack)
 
+/datum/species/proc/on_life(mob/living/carbon/human/H)
+	return
+
 /datum/species/human
 	name = HUMAN
 	language = "Sol Common"
@@ -844,3 +847,120 @@
 
 /datum/species/golem/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_golem_digest(M)
+
+/datum/species/zombie
+	name = ZOMBIE
+	darksight = 8
+	nighteyes = 1
+	dietflags = DIET_OMNI
+
+	icobase = 'icons/mob/human_races/r_zombie.dmi'
+	deform = 'icons/mob/human_races/r_zombie.dmi'
+
+	flags = list(
+	NO_BREATHE = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,NO_SCAN = TRUE
+	,NO_PAIN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	)
+
+	brute_mod = 2
+	burn_mod = 1
+	speed_mod = -0.2
+
+	var/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
+
+/datum/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
+	return ..()
+
+/datum/species/zombie/on_gain(mob/living/carbon/human/H)
+	H.status_flags &= ~(CANSTUN  | CANPARALYSE) //CANWEAKEN
+
+	H.drop_l_hand()
+	H.drop_r_hand()
+
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, slot_l_hand)
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, slot_r_hand)
+
+	for(var/obj/item/organ/external/organ in H.bodyparts)
+		organ.status |= ORGAN_ZOMBIE
+
+	return ..()
+
+/datum/species/zombie/on_loose(mob/living/carbon/human/H)
+	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
+
+	if(istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
+		qdel(H.l_hand)
+
+	if(istype(H.r_hand, /obj/item/weapon/melee/zombie_hand))
+		qdel(H.r_hand)
+
+	for(var/obj/item/organ/external/organ in H.bodyparts)
+		organ.status &= ~ORGAN_ZOMBIE
+
+	return ..()
+
+
+/datum/species/zombie/tajaran
+	name = ZOMBIE_TAJARAN
+
+	icobase = 'icons/mob/human_races/r_zombie_tajaran.dmi'
+	deform = 'icons/mob/human_races/r_zombie_tajaran.dmi'
+
+	brute_mod = 2.2
+	burn_mod = 1.2
+	speed_mod = -0.8
+
+	tail = "zombie_tajtail"
+
+	flesh_color = "#AFA59E"
+	base_color = "#000000"
+
+	flags = list(
+	NO_BREATHE = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,NO_SCAN = TRUE
+	,NO_PAIN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,HAS_TAIL = TRUE
+	)
+
+/datum/species/zombie/skrell
+	name = ZOMBIE_SKRELL
+
+	icobase = 'icons/mob/human_races/r_zombie_skrell.dmi'
+	deform = 'icons/mob/human_races/r_zombie_skrell.dmi'
+
+	eyes = "skrell_eyes"
+	blood_color = /datum/dirt_cover/purple_blood
+	flesh_color = "#8CD7A3"
+	base_color = "#000000"
+
+/datum/species/zombie/unathi
+	name = ZOMBIE_UNATHI
+
+	icobase = 'icons/mob/human_races/r_zombie_lizard.dmi'
+	deform = 'icons/mob/human_races/r_zombie_lizard.dmi'
+
+	brute_mod = 1.80
+	burn_mod = 0.90
+	speed_mod = 0.5
+
+	tail = "zombie_sogtail"
+
+	flesh_color = "#34AF10"
+	base_color = "#000000"
+
+	flags = list(
+	NO_BREATHE = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,NO_SCAN = TRUE
+	,NO_PAIN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,HAS_TAIL = TRUE
+	)

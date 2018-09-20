@@ -968,6 +968,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if (!c_hand)
 		return
 
+	if(status & ORGAN_ZOMBIE)
+		return
+
 	if(is_broken())
 		owner.drop_from_inventory(c_hand)
 		var/emote_scream = pick("screams in pain and", "lets out a sharp cry and", "cries out and")

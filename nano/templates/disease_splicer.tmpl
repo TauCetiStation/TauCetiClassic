@@ -20,15 +20,6 @@
     {{:helper.link('Eject Dish', 'eject', { 'eject' : 1 }, data.dish_inserted ? null : 'disabled')}}
   </div>
 
-  <div class="item">
-    <div class="itemLabel">
-      <b>Growth Density:</b>
-    </div>
-    <div class="itemContent">
-      {{:helper.displayBar(data.growth, 0, 100, (data.growth >= 50) ? 'good' : data.growth >= 25 ? 'average' : 'bad', data.growth + '%' )}}
-    </div>
-  </div>
-
   <div class="statusDisplay" style="height: 145px; overflow: auto;">
     <div class='item'>
       {{if !data.info}}
@@ -93,7 +84,7 @@
     </div>
     <div class='itemContent'>
       {{if data.buffer}}
-		{{:data.buffer.name}} ({{:data.buffer.stage}})
+		{{:data.buffer.name}}
       {{else}}
         {{if data.species_buffer}}
           {{:data.species_buffer}}
@@ -107,10 +98,7 @@
   {{if data.species_buffer}}
     {{:helper.link('Splice Species', 'pencil', { 'splice' : 5 }, (data.species_buffer && !data.info) ? null : 'disabled')}}
   {{else data.buffer}}
-	{{:helper.link('Splice #1', 'pencil', { 'splice' : 1 }, data.buffer.stage > 1 ? 'disabled' : null)}}
-	{{:helper.link('Splice #2', 'pencil', { 'splice' : 2 }, data.buffer.stage > 2 ? 'disabled' : null)}}
-	{{:helper.link('Splice #3', 'pencil', { 'splice' : 3 }, data.buffer.stage > 3 ? 'disabled' : null)}}
-	{{:helper.link('Splice #4', 'pencil', { 'splice' : 4 }, data.buffer.stage > 4 ? 'disabled' : null)}}
+	{{:helper.link('Splice Symptom', 'pencil', { 'splice' : 1 }, (data.buffer && data.can_splice) ? null : 'disabled')}}
   {{/if}}
 {{/if}}
 
