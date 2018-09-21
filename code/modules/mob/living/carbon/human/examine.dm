@@ -223,9 +223,9 @@
 	var/distance = get_dist(user,src)
 	if(istype(user, /mob/dead/observer) || user.stat == DEAD) // ghosts can see anything
 		distance = 1
-	if (src.stat)
+	if (src.stat || (iszombie(src) && (crawling || lying || resting)))
 		msg += "<span class='warning'>[t_He] [t_is]n't responding to anything around [t_him] and seems to be asleep.</span>\n"
-		if((stat == DEAD || src.losebreath) && distance <= 3)
+		if((stat == DEAD || src.losebreath || iszombie(src)) && distance <= 3)
 			msg += "<span class='warning'>[t_He] does not appear to be breathing.</span>\n"
 		if(istype(user, /mob/living/carbon/human) && !user.stat && distance <= 1)
 			for(var/mob/O in viewers(user.loc, null))
