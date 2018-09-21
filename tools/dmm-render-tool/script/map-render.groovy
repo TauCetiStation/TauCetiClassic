@@ -47,7 +47,7 @@ new SwingBuilder().edt {
         dialogTitle: 'Choose a dmm file',
         fileSelectionMode: JFileChooser.FILES_ONLY,
         fileFilter: [
-            getDescription: { '*.dmm and *.dmm.backup' },
+            getDescription: { 'DMM Files (*.dmm or *.dmm.backup)' },
             accept: { file -> file.name.endsWith('.dmm') || file.name.endsWith('.dmm.backup') || file.isDirectory() }
         ] as FileFilter,
         currentDirectory: new File('../../maps')
