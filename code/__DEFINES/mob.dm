@@ -9,7 +9,6 @@
 #define ORGAN_DEAD       128
 #define ORGAN_MUTATED    256
 #define ORGAN_ARTERY_CUT 512
-#define ORGAN_ZOMBIE     1024
 
 #define DROPLIMB_EDGE  0
 #define DROPLIMB_BLUNT 1

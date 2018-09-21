@@ -7,7 +7,7 @@
 	flags = NODROP | ABSTRACT | DROPDEL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
-	force = 10
+	force = 20
 	w_class = 5.0
 	throwforce = 0
 	throw_range = 0
@@ -27,8 +27,7 @@
 		var/obj/machinery/door/airlock/A = target
 
 		if(A.welded || A.locked)
-			to_chat(user, "<span class='warning'>The door is sealed, it cannot be pried open.</span>")
-			return
+			breakairlock(user, A)
 		else
 			opendoor(user, A)
 
@@ -36,8 +35,7 @@
 		var/obj/machinery/door/firedoor/A = target
 
 		if(A.blocked)
-			to_chat(user, "<span class='warning'>The door is sealed, it cannot be pried open.</span>")
-			return
+			breakfiredoor(user, A)
 		else
 			opendoor(user, A)
 
@@ -59,6 +57,47 @@
 				user.visible_message("<span class='warning'>[user] forces the door to open with [src]!</span>",\
 									 "<span class='warning'>You force the door to open.</span>",\
 									 "<span class='warning'>You hear a metal screeching sound.</span>")
+				A.open(1)
+
+/obj/item/weapon/melee/zombie_hand/proc/breakairlock(mob/user, var/obj/machinery/door/airlock/A)
+	if(!A.density)
+		return
+	else if(!user.is_busy(A))
+		var/attempts = 0
+		while(A)
+			user.visible_message("<span class='warning'>[user] attempts to break open the airlock with [src]!</span>",\
+								 "<span class='warning'>You attempt to break open the airlock.</span>",\
+								 "<span class='warning'>You hear metal strain.</span>")
+			playsound(A.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
+			if(do_after(user, 100, target = A))
+				if(A && A.density && in_range(A, user))
+					if(attempts >= 2 && prob(attempts*10))
+						user.visible_message("<span class='warning'>[user] broke the airlock with [src]!</span>",\
+											 "<span class='warning'>You break the airlock.</span>",\
+											 "<span class='warning'>You hear a metal screeching sound.</span>")
+						A.door_rupture(user)
+						playsound(loc, pick('sound/effects/explosion1.ogg', 'sound/effects/explosion2.ogg'), 50, 1)
+						return
+				else
+					return
+				attempts++
+			else
+				return
+
+/obj/item/weapon/melee/zombie_hand/proc/breakfiredoor(mob/user, var/obj/machinery/door/firedoor/A)
+	if(!A.density)
+		return
+	else if(!user.is_busy(A))
+		user.visible_message("<span class='warning'>[user] attempts to break open the emergency shutter with [src]!</span>",\
+							 "<span class='warning'>You attempt to break open the emergency shutter.</span>",\
+							 "<span class='warning'>You hear metal strain.</span>")
+		playsound(A.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
+		if(do_after(user, 200, target = A))
+			if(A.density && in_range(A, user))
+				user.visible_message("<span class='warning'>[user] broke the emergency shutter with [src]!</span>",\
+									 "<span class='warning'>You break the emergency shutter.</span>",\
+									 "<span class='warning'>You hear a metal screeching sound.</span>")
+				A.blocked = FALSE
 				A.open(1)
 
 /obj/item/weapon/melee/zombie_hand/attack(mob/M, mob/user)
@@ -83,9 +122,6 @@
 /datum/species/zombie/on_life(mob/living/carbon/human/H)
 	if(!H.life_tick % 3)
 		return
-	for(var/obj/item/organ/external/organ in H.bodyparts)
-		if(!(organ.status & ORGAN_ZOMBIE))
-			organ.status |= ORGAN_ZOMBIE
 	var/obj/item/organ/external/LArm = H.bodyparts_by_name[BP_L_ARM]
 	var/obj/item/organ/external/RArm = H.bodyparts_by_name[BP_R_ARM]
 
@@ -127,8 +163,6 @@
 	if(!iszombie(H))
 		H.zombify()
 	//H.rejuvenate()
-	H.setToxLoss(0)
-	H.setOxyLoss(0)
 	H.setCloneLoss(0)
 	H.setBrainLoss(0)
 	H.setHalLoss(0)
@@ -138,6 +172,12 @@
 	H.nutrition = 400
 	H.sleeping = 0
 	H.radiation = 0
+
+	var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+	if(istype(IO))
+		IO.damage = 0
+		H.eye_blurry = 0
+		H.eye_blind = 0
 
 	H.heal_overall_damage(H.getBruteLoss(), H.getFireLoss())
 	H.restore_blood()
@@ -229,3 +269,68 @@
 			message_list[i] = slur(message_list[i])
 
 	return jointext(message_list, " ")
+
+/mob/living/carbon/human/proc/zombie_movement_delay()
+	if(!has_gravity(src))
+		return -1
+
+	var/tally = species.speed_mod
+	if(crawling)
+		tally += 7
+	else
+		var/has_leg = FALSE
+		for(var/bodypart_name in list(BP_L_LEG , BP_R_LEG))
+			var/obj/item/organ/external/BP = bodyparts_by_name[bodypart_name]
+			if(BP && !(BP.status & ORGAN_DESTROYED))
+				has_leg = TRUE
+		if(!has_leg)
+			tally += 10
+
+	if(embedded_flag)
+		handle_embedded_objects()
+
+	if(buckled)
+		tally += 5.5
+
+	if(pull_debuff)
+		tally += pull_debuff
+
+	if(wear_suit)
+		tally += wear_suit.slowdown
+
+	if(back)
+		tally += back.slowdown
+
+	if(shoes)
+		tally += shoes.slowdown
+
+	if(health <= 0)
+		tally += 0.5
+	if(health <= -50)
+		tally += 0.5
+
+	return (tally + config.human_delay)
+
+var/list/zombie_list = list()
+
+/proc/add_zombie(mob/living/carbon/human/H)
+	zombie_list += H
+	update_all_zombie_icons()
+
+/proc/remove_zombie(mob/living/carbon/human/H)
+	zombie_list -= H
+	update_all_zombie_icons()
+
+/proc/update_all_zombie_icons()
+	spawn(0)
+		for(var/mob/living/carbon/human/H in zombie_list)
+			if(H.client)
+				for(var/image/I in H.client.images)
+					if(I.icon_state == "zombie_hud")
+						qdel(I)
+
+		for(var/mob/living/carbon/human/H in zombie_list)
+			if(H.client)
+				for(var/mob/living/carbon/human/Z in zombie_list)
+					var/I = image('icons/mob/human_races/r_zombie.dmi', loc = Z, icon_state = "zombie_hud")
+					H.client.images += I
