@@ -121,6 +121,10 @@
 	//Updates the number of stored chemicals for powers and essentials
 	handle_changeling()
 
+	//Species-specific update.
+	if(species)
+		species.on_life(src)
+
 	pulse = handle_pulse()
 
 	// Grabbing
@@ -1576,9 +1580,9 @@
 	if(bodytemperature > 406)
 		for(var/datum/disease/D in viruses)
 			D.cure()
-		for (var/ID in virus2)
-			var/datum/disease2/disease/V = virus2[ID]
-			V.cure(src)
+		//for (var/ID in virus2) //disabled because of symptom that randomly ignites a mob, which triggers this
+		//	var/datum/disease2/disease/V = virus2[ID]
+		//	V.cure(src)
 	if(life_tick % 3) //don't spam checks over all objects in view every tick.
 		for(var/obj/effect/decal/cleanable/O in view(1,src))
 			if(istype(O,/obj/effect/decal/cleanable/blood))
@@ -1586,14 +1590,16 @@
 				if(B && B.virus2 && B.virus2.len)
 					for (var/ID in B.virus2)
 						var/datum/disease2/disease/V = B.virus2[ID]
-						infect_virus2(src,V.getcopy())
+						if(V.spreadtype == "Contact")
+							infect_virus2(src,V.getcopy())
 
 			else if(istype(O,/obj/effect/decal/cleanable/mucus))
 				var/obj/effect/decal/cleanable/mucus/M = O
 				if(M && M.virus2 && M.virus2.len)
 					for (var/ID in M.virus2)
 						var/datum/disease2/disease/V = M.virus2[ID]
-						infect_virus2(src,V.getcopy())
+						if(V.spreadtype == "Contact")
+							infect_virus2(src,V.getcopy())
 
 
 	if(virus2.len)

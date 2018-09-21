@@ -52915,7 +52915,6 @@
 /area/quartermaster/storage)
 "cbK" = (
 /obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
@@ -77798,6 +77797,8 @@
 	pixel_x = -28;
 	pixel_y = 0
 	},
+/obj/item/weapon/reagent_containers/glass/bottle/synaptizine,
+/obj/item/weapon/reagent_containers/glass/bottle/phoron,
 /turf/simulated/floor{
 	dir = 10;
 	icon_state = "whitegreen"

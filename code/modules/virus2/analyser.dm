@@ -52,8 +52,7 @@
 			src.state("\The [src] prints a sheet of paper.")
 
 	else if(dish && !scanning && !pause)
-		if(dish.virus2 && dish.growth > 50)
-			dish.growth -= 10
+		if(dish.virus2)
 			scanning = 5
 			icon_state = "analyser_processing"
 		else

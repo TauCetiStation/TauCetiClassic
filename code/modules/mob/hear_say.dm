@@ -32,6 +32,16 @@
 		var/mob/living/carbon/human/H = speaker
 		speaker_name = H.GetVoice()
 
+	if(ishuman(src)) //zombie logic
+		var/mob/living/carbon/human/ME = src
+		if(iszombie(ME))
+			if(!ishuman(speaker))
+				message = stars(message, 40)
+			else
+				var/mob/living/carbon/human/H = speaker
+				if(!iszombie(H))
+					message = stars(message, 40)
+
 	if(italics)
 		message = "<i>[message]</i>"
 
@@ -104,6 +114,16 @@
 		var/mob/living/carbon/human/H = speaker
 		if(H.voice)
 			speaker_name = H.voice
+
+	if(ishuman(src)) //zombie logic
+		var/mob/living/carbon/human/ME = src
+		if(iszombie(ME))
+			if(!ishuman(speaker))
+				message = stars(message, 40)
+			else
+				var/mob/living/carbon/human/H = speaker
+				if(!iszombie(H))
+					message = stars(message, 40)
 
 	if(hard_to_hear)
 		speaker_name = "unknown"
