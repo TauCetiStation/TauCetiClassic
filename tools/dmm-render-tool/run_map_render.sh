@@ -13,4 +13,4 @@ echo "   Values should be separated by space. (example: '5 10' or '5 10 7 12')"
 echo " - Types to filter: types used during filtration."
 echo "   Should be separated by space or new line. (example: '/area /obj/item')"
 
-exec java -jar ../.groovy-shell/groovy-shell.jar ./script/map-render.groovy
+exec java -Xms256m -Xmx768m -jar ../.groovy-shell/groovy-shell.jar ./script/map-render.groovy

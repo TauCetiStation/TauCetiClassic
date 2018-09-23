@@ -112,6 +112,8 @@ new SwingBuilder().edt {
         MODEL.parsedDme = DmeParser.parse(new File('../../taucetistation.dme'))
         MODEL.isRenderEnabled = true
 
+        System.gc()
+
         setReadyStatus()
     }
 }
@@ -147,6 +149,8 @@ void renderDmm() {
         def image = DmmRender.render(dmm, mapRegion, filterMode, typesToFilter)
         def file = new File("map_images/${MODEL.mapFile.name}_${System.currentTimeMillis()}.png")
         ImageIO.write(image, 'png', file)
+
+        System.gc()
 
         MODEL.isRenderEnabled = true
         MODEL.isSelectEnabled = true
