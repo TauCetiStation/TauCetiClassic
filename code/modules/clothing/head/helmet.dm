@@ -13,7 +13,58 @@
 	siemens_coefficient = 0.3
 	w_class = 3
 
-/obj/item/clothing/head/helmet/warden
+/obj/item/clothing/head/helmet/band
+	var/list/can_hold = list(
+		/obj/item/weapon/lighter/zippo = "band_zippo",
+		/obj/item/weapon/lighter = "band_lighter",
+		/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_green = "band_odetoviceroy_green",
+		/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_blue = "band_odetoviceroy_blue",
+		/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_red = "band_odetoviceroy_red",
+		/obj/item/weapon/reagent_containers/food/snacks/chocolatebar = "band_chocolatebar",
+		/obj/item/toy/singlecard = "band_singlecard",
+		/obj/item/stack/medical/bruise_pack = "band_bruise_pack")
+	var/obj/item/on_helmet
+	var/on_helmet_overlay
+
+/obj/item/clothing/head/helmet/band/attackby(obj/item/W, mob/user)
+	if(on_helmet)
+		to_chat(user, "<span class='notice'>There is already something on [src].</span>")
+		return
+
+	for(var/i in can_hold)
+		if(istype(W, i))
+			user.drop_from_inventory(W)
+			W.forceMove(src)
+			on_helmet = W
+			to_chat(user, "<span class='notice'>You put [W] on [src].</span>")
+			on_helmet_overlay = image('icons/mob/helmet_bands.dmi', can_hold[i])
+			user.update_inv_head()
+			break
+
+/obj/item/clothing/head/helmet/band/verb/remove_on_helmet()
+	set category = "Object"
+	set name = "Remove object from helmet"
+	set src in usr
+
+	if(!usr.incapacitated())
+		return
+	if(!on_helmet)
+		return
+	on_helmet.forceMove(usr.loc)
+	on_helmet = null
+	QDEL_NULL(on_helmet_overlay)
+	usr.update_inv_head()
+
+/obj/item/clothing/head/helmet/band/emp_act(severity)
+	on_helmet.emp_act(severity)
+	return ..()
+
+/obj/item/clothing/head/helmet/band/Destroy()
+	QDEL_NULL(on_helmet)
+	QDEL_NULL(on_helmet_overlay)
+	return ..()
+
+/obj/item/clothing/head/helmet/band/warden
 	name = "warden's hat"
 	desc = "It's a special helmet issued to the Warden of a security force. Protects the head from impacts."
 	icon_state = "helmet_warden"
@@ -36,7 +87,7 @@
 	siemens_coefficient = 0.6
 	body_parts_covered = 1
 
-/obj/item/clothing/head/helmet/riot
+/obj/item/clothing/head/helmet/band/riot
 	name = "riot helmet"
 	desc = "It's a helmet specifically designed to protect against close range attacks."
 	icon_state = "riot"
@@ -48,10 +99,10 @@
 	action_button_name = "Adjust helmet visor"
 	var/up = 0
 
-/obj/item/clothing/head/helmet/riot/attack_self()
+/obj/item/clothing/head/helmet/band/riot/attack_self()
 	toggle()
 
-/obj/item/clothing/head/helmet/riot/verb/toggle()
+/obj/item/clothing/head/helmet/band/riot/verb/toggle()
 	set category = "Object"
 	set name = "Adjust helmet visor"
 	set src in usr
@@ -149,7 +200,7 @@
 	icon_state = "shitcuritron_[on]"
 	user.update_inv_head()
 
-/obj/item/clothing/head/helmet/warden/blue
+/obj/item/clothing/head/helmet/band/warden/blue
 	name = "warden's hat"
 	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
 	icon_state = "oldwardenhelm"
