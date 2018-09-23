@@ -46,7 +46,7 @@
 	set name = "Remove object from helmet"
 	set src in usr
 
-	if(!usr.canmove && usr.stat && usr.incapacitated())
+	if(!usr.incapacitated())
 		return
 	if(!on_helmet)
 		return
