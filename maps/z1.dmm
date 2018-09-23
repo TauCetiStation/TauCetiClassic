@@ -1789,7 +1789,7 @@
 	},
 /obj/item/weapon/melee/baton,
 /obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/band/riot,
 /obj/item/weapon/shield/riot,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -1897,6 +1897,22 @@
 "adf" = (
 /obj/structure/rack,
 /obj/structure/window/reinforced,
+/obj/machinery/door/window/brigdoor{
+	dir = 1;
+	name = "Weapons locker";
+	req_access_txt = "3"
+	},
+/obj/item/weapon/melee/baton,
+/obj/item/clothing/suit/armor/riot,
+/obj/item/clothing/head/helmet/band/riot,
+/obj/item/weapon/shield/riot,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/security/armoury)
+"adg" = (
+/obj/structure/rack,
+/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 4
 	},
@@ -1907,23 +1923,7 @@
 	},
 /obj/item/weapon/melee/baton,
 /obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/weapon/shield/riot,
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/security/armoury)
-"adg" = (
-/obj/structure/rack,
-/obj/structure/window/reinforced,
-/obj/machinery/door/window/brigdoor{
-	dir = 1;
-	name = "Weapons locker";
-	req_access_txt = "3"
-	},
-/obj/item/weapon/melee/baton,
-/obj/item/clothing/suit/armor/riot,
-/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/band/riot,
 /obj/item/weapon/shield/riot,
 /turf/simulated/floor{
 	icon_state = "dark"
@@ -110407,7 +110407,7 @@ abl
 abR
 dFb
 acg
-adg
+adf
 abl
 adY
 aer
@@ -110664,7 +110664,7 @@ abl
 abN
 dFb
 acj
-adf
+adg
 abl
 adL
 aep

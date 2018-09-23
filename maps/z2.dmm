@@ -4876,11 +4876,12 @@
 /area/centcom/arrival)
 "asD" = (
 /obj/structure/rack,
-/obj/structure/window/reinforced{
-	dir = 1
-	},
+/obj/structure/window/reinforced,
 /obj/structure/window/reinforced{
 	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 4;
@@ -4889,7 +4890,7 @@
 	},
 /obj/item/clothing/suit/armor/riot,
 /obj/item/weapon/shield/riot,
-/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/band/riot,
 /obj/item/weapon/gun/energy/laser,
 /turf/unsimulated/floor{
 	dir = 8;
@@ -4985,7 +4986,7 @@
 	},
 /obj/item/clothing/suit/armor/riot,
 /obj/item/weapon/shield/riot,
-/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/band/riot,
 /obj/item/weapon/gun/energy/laser,
 /turf/unsimulated/floor{
 	dir = 8;
@@ -5053,12 +5054,11 @@
 /area/centcom/arrival)
 "atg" = (
 /obj/structure/rack,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
 /obj/structure/window/reinforced{
 	dir = 1
+	},
+/obj/structure/window/reinforced{
+	dir = 8
 	},
 /obj/machinery/door/window/brigdoor{
 	dir = 4;
@@ -5067,7 +5067,7 @@
 	},
 /obj/item/clothing/suit/armor/riot,
 /obj/item/weapon/shield/riot,
-/obj/item/clothing/head/helmet/riot,
+/obj/item/clothing/head/helmet/band/riot,
 /obj/item/weapon/gun/energy/laser,
 /turf/unsimulated/floor{
 	dir = 8;
@@ -72087,9 +72087,9 @@ cIb
 cLb
 cGb
 aoo
-asD
-asQ
 atg
+asQ
+asD
 ats
 aoo
 atK

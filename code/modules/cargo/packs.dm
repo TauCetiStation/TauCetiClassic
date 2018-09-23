@@ -138,8 +138,8 @@ datum/supply_pack/New()
 
 /datum/supply_pack/armor
 	name = "Armor crate"
-	contains = list(/obj/item/clothing/head/helmet,
-					/obj/item/clothing/head/helmet,
+	contains = list(/obj/item/clothing/head/helmet/band,
+					/obj/item/clothing/head/helmet/band,
 					/obj/item/clothing/suit/storage/flak,
 					/obj/item/clothing/suit/storage/flak)
 	cost = 1500
@@ -162,11 +162,11 @@ datum/supply_pack/New()
 					/obj/item/weapon/handcuffs,
 					/obj/item/weapon/handcuffs,
 					/obj/item/weapon/handcuffs,
-					/obj/item/clothing/head/helmet/riot,
+					/obj/item/clothing/head/helmet/band/riot,
 					/obj/item/clothing/suit/armor/riot,
-					/obj/item/clothing/head/helmet/riot,
+					/obj/item/clothing/head/helmet/band/riot,
 					/obj/item/clothing/suit/armor/riot,
-					/obj/item/clothing/head/helmet/riot,
+					/obj/item/clothing/head/helmet/band/riot,
 					/obj/item/clothing/suit/armor/riot)
 	cost = 6000
 	crate_type = /obj/structure/closet/crate/secure
@@ -286,7 +286,7 @@ datum/supply_pack/New()
 					/obj/item/clothing/head/helmet/laserproof,
 					/obj/item/clothing/suit/storage/flak/bulletproof,
 					/obj/item/clothing/head/helmet/bulletproof,
-					/obj/item/clothing/head/helmet/riot,
+					/obj/item/clothing/head/helmet/band/riot,
 					/obj/item/clothing/suit/armor/riot)
 	cost = 3500
 	crate_type = /obj/structure/closet/crate/secure
