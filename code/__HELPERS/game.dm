@@ -508,6 +508,35 @@ proc/isInSight(atom/A, atom/B)
 
 		message_admins(msg)
 
+// Better get_dir proc
+/proc/get_general_dir(atom/Loc1, atom/Loc2)
+	var/dir = get_dir(Loc1, Loc2)
+	switch(dir)
+		if(NORTH, EAST, SOUTH, WEST)
+			return dir
+
+		if(NORTHEAST, SOUTHWEST)
+			var/abs_x = abs(Loc2.x - Loc1.x)
+			var/abs_y = abs(Loc2.y - Loc1.y)
+
+			if(abs_y > (2*abs_x))
+				return turn(dir,45)
+			else if(abs_x > (2*abs_y))
+				return turn(dir,-45)
+			else
+				return dir
+
+		if(NORTHWEST, SOUTHEAST)
+			var/abs_x = abs(Loc2.x - Loc1.x)
+			var/abs_y = abs(Loc2.y - Loc1.y)
+
+			if(abs_y > (2*abs_x))
+				return turn(dir,-45)
+			else if(abs_x > (2*abs_y))
+				return turn(dir,45)
+			else
+				return dir
+
 //============VG PORTS============
 /proc/recursive_type_check(atom/O, type = /atom)
 	var/list/processing_list = list(O)
