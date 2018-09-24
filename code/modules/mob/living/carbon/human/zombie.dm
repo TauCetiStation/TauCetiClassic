@@ -7,7 +7,7 @@
 	flags = NODROP | ABSTRACT | DROPDEL
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "bloodhand_left"
-	force = 20
+	force = 16
 	w_class = 5.0
 	throwforce = 0
 	throw_range = 0
@@ -71,7 +71,7 @@
 			playsound(A.loc, 'sound/effects/metal_creaking.ogg', 50, 0)
 			if(do_after(user, 100, target = A))
 				if(A && A.density && in_range(A, user))
-					if(attempts >= 2 && prob(attempts*10))
+					if(attempts >= 2 && prob(attempts*5))
 						user.visible_message("<span class='warning'>[user] broke the airlock with [src]!</span>",\
 											 "<span class='warning'>You break the airlock.</span>",\
 											 "<span class='warning'>You hear a metal screeching sound.</span>")
@@ -232,7 +232,7 @@
 	D.antigen |= ANTIGEN_Z
 	D.spreadtype = "Blood" // not airborn and not contact, because spreading zombie virus through air or hugs is silly
 
-	infect_virus2(src, D, TRUE)
+	infect_virus2(src, D, forced = TRUE, ignore_antibiotics = TRUE)
 
 /mob/living/carbon/human/proc/zombify()
 	if(iszombie(src))
@@ -314,10 +314,15 @@
 var/list/zombie_list = list()
 
 /proc/add_zombie(mob/living/carbon/human/H)
+	H.AddSpell(new /obj/effect/proc_holder/spell/targeted/zombie_findbrains)
 	zombie_list += H
 	update_all_zombie_icons()
 
 /proc/remove_zombie(mob/living/carbon/human/H)
+	var/obj/effect/proc_holder/spell/targeted/zombie_findbrains/spell = locate() in H.spell_list
+	H.spell_list -= spell
+	H.mind.spell_list -= spell
+	qdel(spell)
 	zombie_list -= H
 	update_all_zombie_icons()
 
@@ -334,3 +339,49 @@ var/list/zombie_list = list()
 				for(var/mob/living/carbon/human/Z in zombie_list)
 					var/I = image('icons/mob/human_races/r_zombie.dmi', loc = Z, icon_state = "zombie_hud")
 					H.client.images += I
+
+/obj/effect/proc_holder/spell/targeted/zombie_findbrains
+	name = "Find brains"
+	desc = "Allows you to sense alive humans."
+	panel = "Zombie"
+	charge_max = 300
+	clothes_req = 0
+	range = -1
+	include_user = 1
+
+/obj/effect/proc_holder/spell/targeted/zombie_findbrains/cast(list/targets)
+	var/mob/living/carbon/human/user = usr
+	var/turf/self_turf = get_turf(user)
+	var/mob/living/carbon/human/target = null
+	var/min_dist = 999
+
+	for(var/mob/living/carbon/human/H in mob_list)
+		if(H.stat == DEAD || iszombie(H) || H.z != user.z)
+			continue
+		var/turf/target_turf = get_turf(H)
+		var/target_dist = get_dist(target_turf, self_turf)
+		if(target_dist < min_dist)
+			min_dist = target_dist
+			target = H
+
+	if(!target)
+		to_chat(user, "<span class='warning'>You don't sense any brains around</span>")
+		return
+
+	var/distance_text = "very close"
+	if(min_dist > 100)
+		distance_text = "very far"
+	else if(min_dist > 40)
+		distance_text = "pretty far"
+	else if(min_dist > 20)
+		distance_text = "not far"
+	else if(min_dist > 10)
+		distance_text = "close"
+	to_chat(user, "<span class='warning'>The brains are [distance_text]</span>")
+
+	var/dir = get_general_dir(self_turf, target)
+	var/I = image('icons/mob/human_races/r_zombie.dmi', loc = get_step(self_turf, dir), icon_state = "arrow", dir = dir)
+	user.client.images += I
+	spawn(50)
+		if(user && user.client)
+			user.client.images -= I
