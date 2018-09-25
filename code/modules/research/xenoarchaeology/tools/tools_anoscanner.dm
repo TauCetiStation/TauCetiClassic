@@ -56,16 +56,16 @@
 	w_class = ITEM_SIZE_LARGE
 	action_button_name = "Toggle Searcher"
 
-	var/obj/item/device/scanner/array
+	var/obj/item/device/searcher/processor
 
 /obj/item/device/wave_scanner_backpack/atom_init()
 	. = ..()
-	array = new(src, src)
+	processor = new(src, src)
 
 /obj/item/device/wave_scanner_backpack/ui_action_click()
-	toggle_scanner()
+	toggle_searcher()
 
-/obj/item/device/wave_scanner_backpack/verb/toggle_scanner()
+/obj/item/device/wave_scanner_backpack/verb/toggle_searcher()
 	set name = "Toggle Searcher"
 	set category = "Object"
 
@@ -77,33 +77,33 @@
 		to_chat(usr, "<span class='warning'>The [src] must be worn properly to use!</span>")
 		return
 
-	if(array.loc == src)
-		//Detach an array into the user's hands
-		if(!M.put_in_hands(array))
-			to_chat(M, "<span class='warning'>You need a free hand to hold the [array]!</span>")
+	if(processor.loc == src)
+		//Detach the searcher into the user's hands
+		if(!M.put_in_hands(processor))
+			to_chat(M, "<span class='warning'>You need a free hand to hold the [processor]!</span>")
 			return
 	else
 		//Remove from their hands and put back "into" the backpack
-		remove_array()
+		remove_processor()
 
 /obj/item/device/wave_scanner_backpack/equipped(mob/user, slot)
 	..()
 	if(slot != SLOT_BACK)
-		remove_array()
+		remove_processor()
 
-/obj/item/device/wave_scanner_backpack/proc/remove_array()
-	if(!array)
+/obj/item/device/wave_scanner_backpack/proc/remove_processor()
+	if(!processor)
 		return
 
-	if(ismob(array.loc))
-		var/mob/M = array.loc
-		if(M.drop_from_inventory(array, src))
-			to_chat(M, "<span class='notice'>\The [array] snaps back into the [src].</span>")
+	if(ismob(processor.loc))
+		var/mob/M = processor.loc
+		if(M.drop_from_inventory(processor, src))
+			to_chat(M, "<span class='notice'>\The [processor] snaps back into the [src].</span>")
 	else
-		array.forceMove(src)
+		processor.forceMove(src)
 
 /obj/item/device/wave_scanner_backpack/Destroy()
-	QDEL_NULL(array)
+	QDEL_NULL(processor)
 	return ..()
 
 /obj/item/device/wave_scanner_backpack/attack_hand(mob/user)
@@ -123,16 +123,16 @@
 		M.put_in_hands(src)
 
 /obj/item/device/wave_scanner_backpack/attackby(obj/item/W, mob/user, params)
-	if(W == array)
-		remove_array()
+	if(W == processor)
+		remove_processor()
 	else
 		..()
 
 /obj/item/device/wave_scanner_backpack/dropped(mob/user)
 	..()
-	remove_array()
+	remove_processor()
 
-/obj/item/device/scanner
+/obj/item/device/searcher
 	name = "exotic wave searcher"
 	desc = "Searches for exotic waves."
 	icon = 'icons/obj/xenoarchaeology.dmi'
@@ -148,35 +148,35 @@
 
 	var/obj/item/device/wave_scanner_backpack/wavescanner
 
-/obj/item/device/scanner/atom_init(mapload, source_wavescanner)
+/obj/item/device/searcher/atom_init(mapload, source_wavescanner)
 	. = ..()
 	wavescanner = source_wavescanner
 
-/obj/item/device/scanner/Destroy()
+/obj/item/device/searcher/Destroy()
 	if(wavescanner)
-		wavescanner.array = null
+		wavescanner.processor = null
 	return ..()
 
-/obj/item/device/scanner/dropped(mob/user)
+/obj/item/device/searcher/dropped(mob/user)
 	..()
 	if(wavescanner)
-		wavescanner.remove_array()
+		wavescanner.remove_processor()
 	else
 		qdel(src)
 
-/obj/item/device/scanner/afterattack(obj/target, mob/user, proximity)
+/obj/item/device/searcher/afterattack(obj/target, mob/user, proximity)
 	if(target.loc == loc || target == wavescanner)
 		return
 	..()
 
-/obj/item/device/scanner/atom_init()
+/obj/item/device/searcher/atom_init
 	. = ..()
 	scan()
 
-/obj/item/device/scanner/attack_self(mob/user)
+/obj/item/device/searcher/attack_self(mob/user)
 	return interact(user)
 
-/obj/item/device/scanner/interact(mob/user)
+/obj/item/device/searcher/interact(mob/user)
 	var/message = "Background radiation levels detected."
 	if(world.time - last_scan_time >= scan_delay)
 		INVOKE_ASYNC(src, .proc/scan)
@@ -187,7 +187,7 @@
 
 	to_chat(user, "<span class='info'>[message]</span>")
 
-/obj/item/device/scanner/proc/scan()
+/obj/item/device/searcher/proc/scan()
 	//set background = 1
 
 	last_scan_time = world.time
