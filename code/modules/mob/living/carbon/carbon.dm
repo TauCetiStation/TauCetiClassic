@@ -130,8 +130,10 @@
 		F.electrocute_act(shock_damage)
 
 	shock_damage *= siemens_coeff
+
 	if(shock_damage<1)
 		return 0
+
 	apply_damage(shock_damage, BURN, def_zone, used_weapon="Electrocution")
 	playsound(loc, "sparks", 50, 1, -1)
 	if(shock_damage > 10)

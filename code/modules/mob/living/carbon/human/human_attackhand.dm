@@ -136,37 +136,43 @@
 
 		if("hurt")
 			M.do_attack_animation(src)
-			var/datum/unarmed_attack/attack = M.species.unarmed
+			var/datum/unarmed_attack/attack = M.unarmed
 
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[pick(attack.attack_verb)]ed [src.name] ([src.ckey])</font>")
 			src.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [pick(attack.attack_verb)]ed by [M.name] ([M.ckey])</font>")
 			msg_admin_attack("[key_name(M)] [pick(attack.attack_verb)]ed [key_name(src)]")
 
-			var/damage = rand(0, 5)//BS12 EDIT
-			if(!damage)
-				playsound(loc, attack.miss_sound, 25, 1, -1)
-				visible_message("\red <B>[M] tried to [pick(attack.attack_verb)] [src]!</B>")
-				return 0
+			var/zone = M.zone_sel.selecting
+			if(!(zone in attack.hit_scope) && prob(attack.none_scope_miss_chance))
+				zone = pick(attack.hit_scope)
 
-
-
-			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(M.zone_sel.selecting)]
+			var/obj/item/organ/external/BP = bodyparts_by_name[ran_zone(zone)]
 			var/armor_block = run_armor_check(BP, "melee")
 
-			if(HULK in M.mutations)			damage += 5
+			if(!attack.check_requirements(src, M, BP)) // for example our mouth is covered yet we try to bite.
+				return 0
 
+			var/damage = rand(0, 5)//BS12 EDIT
+			if(!damage || prob(attack.miss_chance))
+				playsound(loc, attack.miss_sound, 25, 1, -1)
+				visible_message("<span class='warning bold'>[M] tried to [pick(attack.attack_verb)] [src]!</span>")
+				return 0
+
+			if(HULK in M.mutations)
+				damage += 5
 
 			playsound(loc, attack.attack_sound, 25, 1, -1)
 
-			visible_message("\red <B>[M] [pick(attack.attack_verb)]ed [src]!</B>")
-			//Rearranged, so claws don't increase weaken chance.
-			if(damage >= 5 && prob(50))
-				visible_message("\red <B>[M] has weakened [src]!</B>")
+			visible_message(attack.get_message(src, M))
+
+			//Rearranged, so weaken chance depends on the chance given by the attack.
+			if(damage >= 5 && prob(attack.weaken_chance))
+				visible_message("<span class='warning bold'>[M] has weakened [src]!</span>")
 				apply_effect(2, WEAKEN, armor_block)
 
 			damage += attack.damage
-			apply_damage(damage, BRUTE, BP, armor_block, attack.damage_flags())
-
+			apply_damage(damage, attack.dam_type, BP, armor_block, attack.damage_flags())
+			attack.after_attack_effects(src, M, BP, damage)
 
 		if("disarm")
 			M.do_attack_animation(src)

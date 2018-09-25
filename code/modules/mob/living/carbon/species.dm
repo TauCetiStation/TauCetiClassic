@@ -12,8 +12,6 @@
 
 	// Combat vars.
 	var/total_health = 100                               // Point at which the mob will enter crit.
-	var/unarmed                                          // For empty hand harm-intent attack
-	var/unarmed_type = /datum/unarmed_attack
 	var/brute_mod = 1                                    // Physical damage multiplier (0 == immunity).
 	var/burn_mod = 1                                     // Burn damage multiplier.
 	var/oxy_mod = 1                                      // Oxyloss multiplier.
@@ -27,10 +25,11 @@
 	var/language                      // Default racial language, if any.
 	var/list/additional_languages = list() // Additional languages, to the primary. These can not be the forced ones.
 	var/force_racial_language = FALSE // If TRUE, racial language will be forced by default when speaking.
-	var/attack_verb = "punch"         // Empty hand hurt intent verb.
-	var/punch_damage = 0              // Extra empty hand attack damage.
 	var/mutantrace                    // Safeguard due to old code.
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
+
+	var/list/unarmed_attacks = list()          // For empty hand harm-intent attack
+	var/list/unarmed_attack_types = list(/datum/unarmed_attack)
 
 	var/list/restricted_inventory_slots = list() // Slots that the race does not have due to biological differences.
 
@@ -115,7 +114,8 @@
 	var/has_gendered_icons = TRUE // if TRUE = use icon_state with _f or _m for respective gender (see get_icon() external organ proc).
 
 /datum/species/New()
-	unarmed = new unarmed_type()
+	for(var/type in unarmed_attack_types)
+		unarmed_attacks += new type()
 
 	if(!has_organ[O_HEART])
 		flags[NO_BLOOD] = TRUE // this status also uncaps vital body parts damage, since such species otherwise will be very hard to kill.
@@ -185,7 +185,7 @@
 	name = HUMAN
 	language = "Sol Common"
 	primitive = /mob/living/carbon/monkey
-	unarmed_type = /datum/unarmed_attack/punch
+	unarmed_attack_types = list(/datum/unarmed_attack/punch, /datum/unarmed_attack/kick, /datum/unarmed_attack/bite)
 	dietflags = DIET_OMNI
 
 	flags = list(
@@ -204,7 +204,7 @@
 	deform = 'icons/mob/human_races/r_def_lizard.dmi'
 	language = "Sinta'unathi"
 	tail = "sogtail"
-	unarmed_type = /datum/unarmed_attack/claws
+	unarmed_attack_types = list(/datum/unarmed_attack/punch, /datum/unarmed_attack/punch/claws, /datum/unarmed_attack/kick, /datum/unarmed_attack/bite/unathi)
 	dietflags = DIET_CARN
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
@@ -246,7 +246,7 @@
 	language = "Siik'maas"
 	additional_languages = list("Siik'tajr")
 	tail = "tajtail"
-	unarmed_type = /datum/unarmed_attack/claws
+	unarmed_attack_types = list(/datum/unarmed_attack/punch, /datum/unarmed_attack/punch/claws, /datum/unarmed_attack/kick, /datum/unarmed_attack/bite)
 	dietflags = DIET_OMNI
 	taste_sensitivity = TASTE_SENSITIVITY_SHARP
 	darksight = 8
@@ -291,7 +291,7 @@
 	deform = 'icons/mob/human_races/r_def_skrell.dmi'
 	language = "Skrellian"
 	primitive = /mob/living/carbon/monkey/skrell
-	unarmed_type = /datum/unarmed_attack/punch
+	unarmed_attack_types = list(/datum/unarmed_attack/punch, /datum/unarmed_attack/kick, /datum/unarmed_attack/bite)
 	dietflags = DIET_HERB
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
 
@@ -326,7 +326,7 @@
 	deform = 'icons/mob/human_races/r_def_vox.dmi'
 	language = "Vox-pidgin"
 	force_racial_language = TRUE
-	unarmed_type = /datum/unarmed_attack/claws	//I dont think it will hurt to give vox claws too.
+	unarmed_attack_types = list(/datum/unarmed_attack/punch, /datum/unarmed_attack/punch/claws, /datum/unarmed_attack/kick, /datum/unarmed_attack/bite) //I dont think it will hurt to give vox claws too.
 	dietflags = DIET_OMNI
 
 	warning_low_pressure = 50
@@ -404,7 +404,7 @@
 	deform = 'icons/mob/human_races/r_armalis.dmi'
 	damage_mask = FALSE
 	language = "Vox-pidgin"
-	unarmed_type = /datum/unarmed_attack/claws/armalis
+	unarmed_attack_types = list(/datum/unarmed_attack/punch, /datum/unarmed_attack/punch/claws/armalis, /datum/unarmed_attack/kick, /datum/unarmed_attack/bite)
 	dietflags = DIET_OMNI	//should inherit this from vox, this is here just in case
 
 	warning_low_pressure = 50
@@ -450,7 +450,7 @@
 	icobase = 'icons/mob/human_races/r_diona.dmi'
 	deform = 'icons/mob/human_races/r_def_plant.dmi'
 	language = "Rootspeak"
-	unarmed_type = /datum/unarmed_attack/diona
+	unarmed_attack_types = list(/datum/unarmed_attack/punch/diona, /datum/unarmed_attack/kick)
 	dietflags = 0		//Diona regenerate nutrition in light, no diet necessary
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 	primitive = /mob/living/carbon/monkey/diona
@@ -567,7 +567,7 @@
 	icobase = 'icons/mob/human_races/r_machine.dmi'
 	deform = 'icons/mob/human_races/r_machine.dmi'
 	language = "Trinary"
-	unarmed_type = /datum/unarmed_attack/punch
+	unarmed_attack_types = list(/datum/unarmed_attack/punch, /datum/unarmed_attack/punch/ipc, /datum/unarmed_attack/kick)
 	dietflags = 0		//IPCs can't eat, so no diet
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 
@@ -640,6 +640,8 @@
 
 	butcher_drops = list()
 
+	unarmed_attack_types = list(/datum/unarmed_attack/punch, /datum/unarmed_attack/kick)
+
 	icobase = 'icons/mob/human_races/r_abductor.dmi'
 	deform = 'icons/mob/human_races/r_abductor.dmi'
 
@@ -694,6 +696,8 @@
 	,NO_FINGERPRINT = TRUE
 	)
 
+	unarmed_attack_types = list(/datum/unarmed_attack/punch, /datum/unarmed_attack/kick)
+
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
 	H.gender = NEUTER
 
@@ -702,44 +706,12 @@
 /datum/species/skeleton/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_skeleton_digest(M)
 
-//Species unarmed attacks
-
-/datum/unarmed_attack
-	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
-	var/damage = 0						// Extra empty hand attack damage.
-	var/attack_sound = "punch"
-	var/miss_sound = 'sound/weapons/punchmiss.ogg'
-	var/sharp = 0
-	var/edge = 0
-
-/datum/unarmed_attack/proc/damage_flags()
-	return (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
-
-/datum/unarmed_attack/punch
-	attack_verb = list("punch")
-
-/datum/unarmed_attack/diona
-	attack_verb = list("lash", "bludgeon")
-	damage = 5
-
-/datum/unarmed_attack/claws
-	attack_verb = list("scratch", "claw")
-	attack_sound = 'sound/weapons/slice.ogg'
-	miss_sound = 'sound/weapons/slashmiss.ogg'
-	damage = 5
-	sharp = 1
-	edge = 1
-
-/datum/unarmed_attack/claws/armalis
-	attack_verb = list("slash", "claw")
-	damage = 10	//they're huge! they should do a little more damage, i'd even go for 15-20 maybe...
-
 /datum/species/shadowling
 	name = SHADOWLING
 	icobase = 'icons/mob/human_races/r_shadowling.dmi'
 	deform = 'icons/mob/human_races/r_shadowling.dmi'
 	language = "Sol Common"
-	unarmed_type = /datum/unarmed_attack/claws
+	unarmed_attack_types = list(/datum/unarmed_attack/punch/claws, /datum/unarmed_attack/hypnosis)
 	dietflags = DIET_OMNI
 
 	butcher_drops = list()
@@ -825,6 +797,8 @@
 
 	has_gendered_icons = FALSE
 
+	unarmed_attack_types = list(/datum/unarmed_attack/punch, /datum/unarmed_attack/kick)
+
 /datum/species/golem/on_gain(mob/living/carbon/human/H)
 	H.status_flags &= ~(CANSTUN | CANWEAKEN | CANPARALYSE)
 	H.dna.mutantrace = "adamantine"
@@ -888,6 +862,8 @@
 	brute_mod = 2
 	burn_mod = 1
 	speed_mod = -0.2
+
+	unarmed_attack_types = list(/datum/unarmed_attack/punch, /datum/unarmed_attack/kick, /datum/unarmed_attack/bite)// This could be made into something interesting.
 
 	var/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
 
@@ -983,3 +959,229 @@
 	,VIRUS_IMMUNE = TRUE
 	,HAS_TAIL = TRUE
 	)
+
+//Species unarmed attacks
+
+/datum/unarmed_attack
+	var/name = ""
+
+	var/attack_verb = list("attack")	// Empty hand hurt intent verb.
+	var/damage = 0						// Extra empty hand attack damage.
+	var/dam_type = BRUTE                // Empty hand damage type. W-o-a-h.
+	var/attack_sound = "punch"
+	var/weaken_chance = 0
+	var/override_in_hand_attack = TRUE     // If TRUE, this attack will override, even if user has something in his hand.
+
+	var/body_zone_required = null  // If this is specified, check whether this body zone is not broken.
+	var/require_zone_naked = FALSE // If TRUE, check if above body zone is covered with clothing. If it is, don't do the attack.
+
+	var/list/hit_scope = list()    // I mean, it's much harder to bite a leg, than to bite a hand.
+	var/none_scope_miss_chance = 0 // A chance to hit another bodypart, if target is not in hit_scope.
+	var/miss_chance = 0            // Some attacks have additional miss chance.
+
+	var/miss_sound = 'sound/weapons/punchmiss.ogg'
+	var/sharp = FALSE
+	var/edge = FALSE
+
+	var/overlay_icon
+
+/datum/unarmed_attack/proc/damage_flags()
+	return (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
+
+/datum/unarmed_attack/proc/get_message(mob/living/victim, mob/living/carbon/human/predator)
+	return "<span class='warning bold'>[predator] [pick(attack_verb)]ed [victim]!</span>"
+
+/datum/unarmed_attack/proc/check_requirements(mob/victim, mob/living/carbon/human/predator, obj/item/organ/external/BP)
+	if(!body_zone_required)
+		return TRUE
+
+	var/obj/item/organ/external/BP_pred
+
+	var/check_this_zone
+	if(body_zone_required == ARMS)
+		if(predator.hand)
+			BP_pred = predator.get_bodypart(BP_L_ARM)
+			check_this_zone = BP.body_part
+		else
+			BP_pred = predator.get_bodypart(BP_R_ARM)
+	else if(body_zone_required == LEGS)
+		if(predator.hand)
+			BP_pred = predator.get_bodypart(BP_L_LEG)
+		else
+			BP_pred = predator.get_bodypart(BP_R_LEG)
+	else
+		BP_pred = predator.get_bodypart(body_zone_required)
+
+	if(body_zone_required == O_MOUTH) // Mouth has no organ, and no bodypart. A sad reality of bootlegs.
+		check_this_zone = FACE
+	else if(body_zone_required == O_EYES) // I don't know, perhaps we will have a specie that will freeze with it's eyes.
+		check_this_zone = EYES
+	else
+		check_this_zone = BP_pred.body_part
+
+	// Bodypart usability check.
+	if(!BP_pred || !BP_pred.is_usable())
+		return FALSE
+
+	// Bodypart cloth coverage check.
+	var/list/body_parts = list(predator.head, predator.wear_mask, predator.wear_suit, predator.w_uniform, predator.gloves, predator.shoes)
+	if(require_zone_naked)
+		for(var/slot in body_parts)
+			if(istype(slot, /obj/item/clothing))
+				var/obj/item/clothing/C = slot
+				if(C.body_parts_covered & check_this_zone)
+					if(C.flags & THICKMATERIAL)
+						to_chat(predator, "<span class='warning'>[C] is blocking the attempts to [pick(attack_verb)]!</span>")
+						return FALSE
+					if(C.slowdown >= 1)
+						to_chat(predator, "<span class='warning'>With [C] on me, I am too slow to perform [pick(attack_verb)]!</span>")
+						return FALSE
+	return TRUE
+
+/datum/unarmed_attack/proc/after_attack_effects(mob/victim, mob/living/carbon/human/predator, obj/item/organ/external/BP, damage)
+
+/datum/unarmed_attack/punch
+	name = "punch"
+	overlay_icon = "punch"
+	attack_verb = list("punch")
+	weaken_chance = 50
+	damage = 1
+
+	override_in_hand_attack = FALSE
+
+	body_zone_required = ARMS
+
+/datum/unarmed_attack/punch/diona
+	name = "lash"
+	overlay_icon = "lash"
+	attack_verb = list("lash", "bludgeon")
+	weaken_chance = 75
+	damage = 5
+
+/datum/unarmed_attack/punch/ipc
+	name = "electrify"
+	overlay_icon = "lash"
+	attack_verb = list("stir", "jolt")
+	weaken_chance = 100
+	dam_type = BURN
+
+/datum/unarmed_attack/punch/ipc/check_requirements(mob/victim, mob/living/carbon/human/predator, obj/item/organ/external/BP)
+	. = ..()
+	if(predator.nutrition <= 0)
+		to_chat(predator, "<span class='warning'>You do not have enough charge to perform [pick(attack_verb)]!</span>")
+		return FALSE
+
+/datum/unarmed_attack/punch/ipc/after_attack_effects(mob/living/victim, mob/living/carbon/human/predator, obj/item/organ/external/BP, damage)
+	if(iscarbon(victim))
+		var/mob/living/carbon/C = victim
+		C.electrocute_act(damage, src, predator.species.siemens_coefficient, BP.body_zone)
+	// Yes, we remove nutriments, even if we did not actually ELECTRIFY the mob. I mean we did do burn damage.
+	predator.nutrition = max(predator.nutrition -= damage * 30, 0) // * 20 is RANDOMLY CHOSEN. Yes it is a magic number, but we need to consume huge amounts of energy for... BALANCE(TM)
+
+/datum/unarmed_attack/punch/claws
+	name = "scratch"
+	overlay_icon = "scratch"
+	attack_verb = list("scratch", "claw")
+	attack_sound = 'sound/weapons/slice.ogg'
+	miss_sound = 'sound/weapons/slashmiss.ogg'
+
+	damage = 5
+	sharp = TRUE
+	edge = TRUE
+
+	require_zone_naked = TRUE
+
+/datum/unarmed_attack/punch/claws/armalis
+	attack_verb = list("slash", "claw")
+	damage = 10	//they're huge! they should do a little more damage, i'd even go for 15-20 maybe...
+
+/datum/unarmed_attack/kick
+	name = "kick"
+	overlay_icon = "kick"
+	attack_verb = list("kick")
+	weaken_chance = 75
+
+	hit_scope = list(BP_L_LEG, BP_R_LEG, BP_GROIN)
+	none_scope_miss_chance = 75
+	miss_chance = 15
+
+	body_zone_required = LEGS
+
+/datum/unarmed_attack/kick/get_message(mob/living/victim, mob/living/carbon/human/predator)
+	if(victim.weakened || victim.lying || victim.crawling)
+		return "<span class='warning bold'>[predator] stomped on [victim]!</span>"
+	else
+		return ..()
+
+/datum/unarmed_attack/kick/check_requirements(mob/living/victim, mob/living/carbon/human/predator, obj/item/organ/external/BP)
+	. = ..()
+	if(predator.legcuffed)
+		to_chat(predator, "<span class='warning'>You can not [pick(attack_verb)] with [predator.legcuffed] on you!</span>")
+		return FALSE
+
+/datum/unarmed_attack/kick/after_attack_effects(mob/living/victim, mob/living/carbon/human/predator, obj/item/organ/external/BP)
+	if(victim.weakened || victim.lying || victim.crawling)
+		victim.apply_damage(damage, HALLOSS, BP)
+
+/datum/unarmed_attack/bite
+	name = "bite"
+	overlay_icon = "bite"
+	attack_verb = list("chew", "chaw")
+	attack_sound = 'sound/items/eatfood.ogg'
+	miss_sound = 'sound/items/eatfood.ogg'
+	weaken_chance = 0
+	item_in_hand_attack = TRUE
+
+	hit_scope = list(BP_L_ARM, BP_R_ARM, BP_HEAD)
+	none_scope_miss_chance = 75
+	miss_chance = 25
+
+	body_zone_required = O_MOUTH
+	require_zone_naked = TRUE
+
+	sharp = TRUE
+
+/datum/unarmed_attack/bite/check_requirements(mob/victim, mob/living/carbon/human/predator, obj/item/organ/external/BP)
+	. = ..()
+	if(BP.status & ORGAN_ROBOT)
+		to_chat(predator, "<span class='warning'>You can not bite a robotic limb!</span>")
+		var/obj/item/organ/external/head/head_ = predator.get_bodypart(BP_HEAD)
+		if(head_)
+			predator.apply_damage(2, BRUTE, head_)
+		else
+			predator.adjustBruteLoss(2)
+		return FALSE
+
+/datum/unarmed_attack/bite/unathi
+
+/datum/unarmed_attack/bite/unathi/after_attack_effects(mob/victim, mob/living/carbon/human/predator, obj/item/organ/external/BP, damage)
+	if(ishuman(victim))
+		var/mob/living/carbon/human/H  = victim
+
+		var/armor = H.getarmor(BP.body_zone, "melee")
+		var/bioarmor = H.getarmor(BP.body_zone, "bio")
+
+		if(prob(max(100 - max(armor, bioarmor / 2), 0)))
+			for(var/datum/wound/W in BP.wounds)
+				if (W.infection_check())
+					W.germ_level++
+
+/datum/unarmed_attack/hypnosis
+	name = "bite"
+	overlay_icon = "lash" // Placeholder, but it does give the message.
+	attack_verb = list("charm", "drug")
+	attack_sound = null
+	miss_sound = null
+
+	weaken_chance = 0
+	miss_chance = 0
+
+/datum/unarmed_attack/hypnosis/after_attack_effects(mob/living/victim, mob/living/carbon/human/predator, obj/item/organ/external/BP, damage)
+	victim.adjustBrainLoss(damage)
+	victim.hallucination = min(victim.hallucination + 10, 50)
+	var/list/creepyasssounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',
+                                    'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',
+                                    'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',
+                                    'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',
+                                    'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
+	victim << pick(creepyasssounds)

@@ -380,17 +380,20 @@
 			un_equip_or_action(M, "CPR")
 		if ("hurt")
 			M.do_attack_animation(src)
+			var/datum/unarmed_attack/attack = M.unarmed
 			if(is_armored(M, 35))
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				playsound(loc, attack.miss_sound, 25, 1, -1)
 				return
 
-			var/datum/unarmed_attack/attack = M.species.unarmed
 			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[response_harm] [src.name] ([src.ckey])</font>")
 			attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [pick(attack.attack_verb)]ed by [M.name] ([M.ckey])</font>")
 			msg_admin_attack("[key_name(M)] [response_harm] [key_name(src)]")
 
+			if(!attack.check_requirements(src, M)) // for example our mouth is covered yet we try to bite.
+				return
+
 			var/damage = rand(0, 5)
-			if(!damage)
+			if(!damage || prob(attack.miss_chance))
 				playsound(loc, attack.miss_sound, 25, 1, -1)
 				visible_message("<span class='danger'>[M] has attempted to [response_harm] [src]!</span>")
 				return
@@ -400,12 +403,13 @@
 
 			playsound(loc, attack.attack_sound, 25, 1, -1)
 
-			if(damage >= 5 && prob(15))
+			if(damage >= 5 && prob(attack.weaken_chance))
 				visible_message("<span class='danger'>[M] has weakened [src]!</span>")
 				Paralyse(3)
 
 			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
-			adjustBruteLoss(damage)
+			apply_damage(damage, attack.dam_type)
+			attack.after_attack_effects(src, M, , damage)
 			updatehealth()
 
 		if("grab")

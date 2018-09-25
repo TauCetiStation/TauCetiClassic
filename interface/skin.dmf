@@ -137,52 +137,52 @@ macro "macro"
 
 macro "hotkeymode"
 	elem "HKMODE-TAB"
-		name = "TAB"
+		name = "Tab"
 		command = ".winset \"mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true\""
 	elem "HKMODE-CENTER+REP"
-		name = "CENTER+REP"
+		name = "Center+REP"
 		command = ".center"
 	elem "HKMODE-NORTHEAST"
-		name = "NORTHEAST"
+		name = "Northeast"
 		command = ".northeast"
 	elem "HKMODE-SOUTHEAST"
-		name = "SOUTHEAST"
+		name = "Southeast"
 		command = ".southeast"
 	elem "HKMODE-SOUTHWEST"
-		name = "SOUTHWEST"
+		name = "Southwest"
 		command = ".southwest"
 	elem "HKMODE-NORTHWEST"
-		name = "NORTHWEST"
+		name = "Northwest"
 		command = ".northwest"
 	elem "HKMODE-CTRL+WEST"
-		name = "CTRL+WEST"
+		name = "CTRL+West"
 		command = "westface"
 	elem "HKMODE-WEST+REP"
-		name = "WEST+REP"
+		name = "West+REP"
 		command = ".west"
 	elem "HKMODE-CTRL+NORTH"
-		name = "CTRL+NORTH"
+		name = "CTRL+North"
 		command = "northface"
 	elem "HKMODE-NORTH+REP"
-		name = "NORTH+REP"
+		name = "North+REP"
 		command = ".north"
 	elem "HKMODE-CTRL+EAST"
-		name = "CTRL+EAST"
+		name = "CTRL+East"
 		command = "eastface"
 	elem "HKMODE-EAST+REP"
-		name = "EAST+REP"
+		name = "East+REP"
 		command = ".east"
 	elem "HKMODE-CTRL+SOUTH"
-		name = "CTRL+SOUTH"
+		name = "CTRL+South"
 		command = "southface"
 	elem "HKMODE-SOUTH+REP"
-		name = "SOUTH+REP"
+		name = "South+REP"
 		command = ".south"
 	elem "HKMODE-INSERT"
-		name = "INSERT"
+		name = "Insert"
 		command = "a-intent right"
 	elem "HKMODE-DELETE"
-		name = "DELETE"
+		name = "Delete"
 		command = "delete-key-pressed"
 	elem "HKMODE-1"
 		name = "1"
@@ -214,6 +214,9 @@ macro "hotkeymode"
 	elem "HKMODE-CTRL+A+REP"
 		name = "CTRL+A+REP"
 		command = ".west"
+	elem "HKMODE-C"
+		name = "C"
+		command = "next_unarmed_sel"
 	elem "HKMODE-D+REP"
 		name = "D+REP"
 		command = ".east"
@@ -664,7 +667,6 @@ window "rpane"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "rpanewindow"
@@ -673,7 +675,6 @@ window "rpane"
 		size = 638x475
 		anchor1 = 0,0
 		anchor2 = 100,100
-		background-color = none
 		saved-params = "splitter"
 		right = "outputwindow"
 		is-vert = false
@@ -697,7 +698,6 @@ window "rpane"
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		saved-params = "is-checked"
 		text = "Rules"
 		command = "rules"
@@ -708,7 +708,6 @@ window "rpane"
 		size = 1x1
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		saved-params = ""
 	elem "changelog"
 		type = BUTTON
@@ -716,7 +715,6 @@ window "rpane"
 		size = 67x16
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "Changelog"
@@ -740,7 +738,6 @@ window "rpane"
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
@@ -751,7 +748,6 @@ window "rpane"
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
@@ -762,7 +758,6 @@ window "rpane"
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		is-visible = false
 		saved-params = "is-checked"
 		text = "Text"
@@ -776,7 +771,6 @@ window "rpane"
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		is-visible = false
 		saved-params = "is-checked"
 		text = "Browser"
@@ -789,7 +783,6 @@ window "rpane"
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
-		background-color = none
 		is-visible = false
 		saved-params = "is-checked"
 		text = "Info"

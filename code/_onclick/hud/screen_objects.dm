@@ -103,6 +103,28 @@
 		screen_loc = ui_gun_select
 		//dir = 1
 
+/obj/screen/unarmed_sel
+	name = "select unarmed mode"
+	icon = 'icons/mob/screen1_action.dmi'
+	icon_state = "unarmed"
+	screen_loc = "EAST-4:6,SOUTH:5"
+
+	var/overlay_icon = ""
+
+/obj/screen/unarmed_sel/Click()
+	if(ishuman(usr))
+		var/mob/living/carbon/human/predator = usr
+		predator.unarmed = next_in_list(predator.unarmed, predator.species.unarmed_attacks)
+		overlay_icon = predator.unarmed.overlay_icon
+		update_icon()
+	else
+		qdel(src)
+
+/obj/screen/unarmed_sel/update_icon()
+	..()
+	overlays.Cut()
+	overlays += icon('icons/mob/unarmed_sel.dmi', overlay_icon)
+
 /obj/screen/zone_sel
 	name = "damage zone"
 	icon_state = "zone_sel"

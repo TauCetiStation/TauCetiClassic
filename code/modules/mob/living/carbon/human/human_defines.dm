@@ -74,6 +74,9 @@
 	var/mob/remoteview_target = null
 	var/datum/dirt_cover/hand_dirt_color
 
+	// Combat.
+	var/datum/unarmed_attack/unarmed
+
 	//Golem stuff
 	var/my_master = 0
 	var/my_golems = list()
