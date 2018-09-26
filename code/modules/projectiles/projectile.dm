@@ -80,7 +80,7 @@
 
 /obj/item/projectile/Destroy()
 	QDEL_LIST(tracer_list)
-	firer = null
+	//firer = null
 	starting = null
 	original = null
 	shot_from = null
