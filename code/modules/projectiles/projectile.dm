@@ -80,7 +80,7 @@
 
 /obj/item/projectile/Destroy()
 	QDEL_LIST(tracer_list)
-	//firer = null
+	firer = null
 	starting = null
 	original = null
 	shot_from = null
@@ -167,6 +167,7 @@
 
 	var/forcedodge = 0 // force the projectile to pass
 	var/mob/M = ismob(A) ? A : null
+	var/mob/old_firer = firer
 	bumped = 1
 	if(firer && M)
 		if(!istype(A, /mob/living))
@@ -214,11 +215,11 @@
 		else
 			M.visible_message("<span class='userdanger'>[M.name] is hit by the [src.name] in the [parse_zone(def_zone)]!</span>")
 			//X has fired Y is now given by the guns so you cant tell who shot you if you could not see the shooter
-		if(firer)
-			M.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
-			firer.attack_log += "\[[time_stamp()]\] <b>[firer]/[firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
+		if(old_firer)
+			M.attack_log += "\[[time_stamp()]\] <b>[old_firer]/[old_firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
+			old_firer.attack_log += "\[[time_stamp()]\] <b>[old_firer]/[old_firer.ckey]</b> shot <b>[M]/[M.ckey]</b> with a <b>[src.type]</b>"
 			if(!fake)
-				msg_admin_attack("[firer.name] ([firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(firer)] [ADMIN_FLW(firer)]") //BS12 EDIT ALG
+				msg_admin_attack("[old_firer.name] ([old_firer.ckey]) shot [M.name] ([M.ckey]) with a [src] [ADMIN_JMP(old_firer)] [ADMIN_FLW(old_firer)]") //BS12 EDIT ALG
 		else
 			M.attack_log += "\[[time_stamp()]\] <b>UNKNOWN SUBJECT</b> shot <b>[M]/[M.ckey]</b> with a <b>[src]</b>"
 			if(!fake)
