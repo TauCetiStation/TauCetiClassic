@@ -964,7 +964,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if (!c_hand)
 		return
 
-	if(status & ORGAN_ZOMBIE)
+	if(iszombie(owner))
 		return
 
 	if(is_broken())

@@ -48,13 +48,13 @@ proc/get_bite_infection_chance(mob/living/carbon/M, target_zone)
 	if (!istype(M) || !target_zone)
 		return 0
 
-	if(target_zone && istype(M, /mob/living/carbon/human))
+	if(target_zone && ishuman(M))
 		var/mob/living/carbon/human/H = M
 
 		var/armor = H.getarmor(target_zone, "melee")
 		var/bioarmor = H.getarmor(target_zone, "bio")
 
-		return max((100 - max(armor, bioarmor/2)), 0)
+		return max((100 - max(armor, bioarmor/2)), 0) / 2
 	return 100
 
 //Checks if table-passing table can reach target (5 tile radius)
@@ -70,7 +70,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	return rval
 
 //Attemptes to infect mob M with virus. Set forced to 1 to ignore protective clothnig
-/proc/infect_virus2(mob/living/carbon/M,datum/disease2/disease/disease,forced = 0)
+/proc/infect_virus2(mob/living/carbon/M,datum/disease2/disease/disease, forced = FALSE, ignore_antibiotics = FALSE)
 	if(!istype(disease))
 //		log_debug("Bad virus")
 		return
@@ -82,7 +82,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	// if one of the antibodies in the mob's body matches one of the disease's antigens, don't infect
 	if((M.antibodies & disease.antigen) != 0)
 		return
-	if(M.reagents.has_reagent("spaceacillin"))
+	if(M.reagents.has_reagent("spaceacillin") && !ignore_antibiotics)
 		return
 
 	if(istype(M,/mob/living/carbon/monkey))

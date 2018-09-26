@@ -887,6 +887,8 @@
 
 	brute_mod = 2
 	burn_mod = 1
+	oxy_mod = 0
+	tox_mod = 0
 	speed_mod = -0.2
 
 	var/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
@@ -903,8 +905,7 @@
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, slot_l_hand)
 	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, slot_r_hand)
 
-	for(var/obj/item/organ/external/organ in H.bodyparts)
-		organ.status |= ORGAN_ZOMBIE
+	add_zombie(H)
 
 	return ..()
 
@@ -917,8 +918,7 @@
 	if(istype(H.r_hand, /obj/item/weapon/melee/zombie_hand))
 		qdel(H.r_hand)
 
-	for(var/obj/item/organ/external/organ in H.bodyparts)
-		organ.status &= ~ORGAN_ZOMBIE
+	remove_zombie(H)
 
 	return ..()
 
@@ -967,7 +967,7 @@
 
 	brute_mod = 1.80
 	burn_mod = 0.90
-	speed_mod = 0.5
+	speed_mod = -0.2
 
 	tail = "zombie_sogtail"
 

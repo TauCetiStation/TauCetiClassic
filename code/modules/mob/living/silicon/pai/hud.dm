@@ -78,7 +78,7 @@
 				holder.icon_state = "huddead"
 			else if(patient.status_flags & XENO_HOST)
 				holder.icon_state = "hudxeno"
-			else if(foundVirus)
+			else if(foundVirus || iszombie(patient))
 				holder.icon_state = "hudill"
 			else if(patient.has_brain_worms())
 				var/mob/living/simple_animal/borer/B = patient.has_brain_worms()
