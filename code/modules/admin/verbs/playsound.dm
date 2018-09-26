@@ -5,23 +5,33 @@ var/global/list/sounds_cache = list()
 	set name = "Play Global Sound"
 	if(!check_rights(R_SOUNDS))	return
 
-	var/sound/uploaded_sound = sound(S, repeat = 0, wait = 1, channel = 777)
+	var/sound/uploaded_sound = new()//sound(S, repeat = 0, wait = 1, channel = CHANNEL_ADMIN)
+	uploaded_sound.file = S
 	uploaded_sound.priority = 250
+	uploaded_sound.channel = CHANNEL_ADMIN
+	uploaded_sound.wait = 0//1
+	uploaded_sound.repeat = 0
+	uploaded_sound.status = SOUND_UPDATE
+	uploaded_sound.volume = 100
 
 	sounds_cache += S
 
-	switch(alert("Do you ready?\nSong: [S]",,"Play", "Play forced(don't overuse)", "Cancel"))
-		if("Play")
-			log_admin("[key_name(src)] played sound [S]")
-			message_admins("[key_name_admin(src)] played sound [S]")
-			for(var/mob/M in player_list)
-				if(M.client.prefs.toggles & SOUND_MIDI)
-					M << uploaded_sound
-		if("Play forced(don't overuse)")
-			log_admin("[key_name(src)] played sound [S] FORCED")
-			message_admins("[key_name_admin(src)] played sound [S] FORCED")
-			for(var/mob/M in player_list)
-				M << uploaded_sound
+	var/forced = FALSE
+
+	switch(alert("Do you ready?\nSong: [S]\nDon't overuse forced play (or UNPEDALITY)! This is only for sound effects.",,"Play", "Forced", "Cancel"))
+		if("Forced")
+			forced = TRUE
+		if("Cancel")
+			return
+
+	log_admin("[key_name(src)] played sound [S] [forced ? "FORCED" : ""]")
+	message_admins("[key_name_admin(src)] played sound [S] [forced ? "FORCED" : ""]")
+
+	for(var/mob/M in player_list)
+		if(forced || M.client.prefs.toggles & SOUND_MIDI)
+			M.client.adminSound = uploaded_sound
+			M.client.adminSound.volume = M.client.adminSoundVolume
+			M.client << uploaded_sound
 
 	feedback_add_details("admin_verb","PGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
@@ -56,7 +66,7 @@ var/global/list/sounds_cache = list()
 	set name = "Stop Global Sound"
 	if(!check_rights(R_SOUNDS))
 		return
-	var/sound/sound = sound(null, repeat = 0, wait = 0, channel = 777)
+	var/sound/sound = sound(null, repeat = 0, wait = 0, channel = CHANNEL_ADMIN)
 	for(var/mob/M in player_list)
 		M << sound
 	log_admin("[key_name(src)] has stopped the global sound.")
