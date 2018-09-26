@@ -1,4 +1,4 @@
-@Grab(group = 'io.github.spair', module = 'byond-dmm-util', version = '0.2.1')
+@Grab(group = 'io.github.spair', module = 'byond-dmm-util', version = '0.2.2')
 
 import io.github.spair.byond.dmm.MapRegion
 import io.github.spair.byond.dmm.parser.DmmParser
