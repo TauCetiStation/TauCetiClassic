@@ -46,7 +46,10 @@
 		if(mouse_control["icon-y"])
 			BB.p_y = text2num(mouse_control["icon-y"])
 	if(BB)
-		BB.process()
+		if(targloc != get_turf(target))
+			BB.process(targloc)
+		else
+			BB.process()
 	BB = null
 	return 1
 

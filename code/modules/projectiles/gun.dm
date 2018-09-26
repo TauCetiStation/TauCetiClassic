@@ -213,6 +213,7 @@
 		if(user.a_intent == "hurt")
 			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
 			chambered.BB.damage *= 1.3
+			chambered.BB.point_blank = TRUE
 			Fire(M,user)
 			return
 		else if(target && M in target)
