@@ -47,7 +47,7 @@
 	var/limb_layer = 0
 	var/damage_msg = "\red You feel an intense pain"
 
-	var/repair_cost = 0
+	var/regen_bodypart_penalty = 0 // This variable determines how much time it would take to regenerate a bodypart, and the cost of it's regeneration.
 
 /obj/item/organ/external/insert_organ()
 	..()
@@ -257,6 +257,10 @@ This function completely restores a damaged organ to perfect condition.
 
 	owner.updatehealth()
 
+/obj/item/organ/external/head/rejuvenate()
+	..()
+	owner.client.perspective = MOB_PERSPECTIVE
+	owner.client.eye = owner // Deheading species that do not need a head causes them to view the world from a perspective of their head.
 
 /obj/item/organ/external/proc/createwound(type = CUT, damage)
 	if(damage == 0)
@@ -1026,7 +1030,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	body_part = UPPER_TORSO
 	body_zone = BP_CHEST
 	limb_layer = LIMB_TORSO_LAYER
-	repair_cost = 150
+	regen_bodypart_penalty = 150
 
 	cannot_amputate = TRUE
 
@@ -1044,7 +1048,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	body_zone = BP_GROIN
 	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_GROIN_LAYER
-	repair_cost = 90
+	regen_bodypart_penalty = 90
 
 	cannot_amputate = TRUE
 
@@ -1062,7 +1066,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	body_zone = BP_HEAD
 	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_HEAD_LAYER
-	repair_cost = 100
+	regen_bodypart_penalty = 100
 
 	max_damage = 75
 	min_broken_damage = 35
@@ -1085,7 +1089,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	body_zone = BP_L_ARM
 	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_L_ARM_LAYER
-	repair_cost = 75
+	regen_bodypart_penalty = 75
 
 	arterial_bleed_severity = 0.75
 	max_damage = 50
@@ -1105,7 +1109,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	body_zone = BP_R_ARM
 	parent_bodypart = BP_CHEST
 	limb_layer = LIMB_R_ARM_LAYER
-	repair_cost = 75
+	regen_bodypart_penalty = 75
 
 	arterial_bleed_severity = 0.75
 	max_damage = 50
@@ -1125,7 +1129,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	parent_bodypart = BP_GROIN
 	limb_layer = LIMB_L_LEG_LAYER
 	icon_position = LEFT
-	repair_cost = 75
+	regen_bodypart_penalty = 75
 
 	arterial_bleed_severity = 0.75
 	max_damage = 50
@@ -1142,7 +1146,7 @@ Note that amputating the affected organ does in fact remove the infection from t
 	parent_bodypart = BP_GROIN
 	limb_layer = LIMB_R_LEG_LAYER
 	icon_position = RIGHT
-	repair_cost = 75
+	regen_bodypart_penalty = 75
 
 	arterial_bleed_severity = 0.75
 	max_damage = 50
@@ -1294,12 +1298,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 						crab.sting_action(brainmob)
 						H.gib()
 	else
-		var/obj/item/organ/internal/eyes/E = H.organs_by_name[O_EYES]
-		if(E)
-			H.organs -= E
-			H.organs_by_name -= O_EYES
-			H.h_style = "Bald"
-			H.f_style = "Shaved"
+		H.h_style = "Bald"
+		H.f_style = "Shaved"
 	H.update_body()
 	H.update_hair()
 

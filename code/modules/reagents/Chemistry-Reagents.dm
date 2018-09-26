@@ -1417,11 +1417,13 @@ datum/reagent/kyphotorin
 		volume += 0.07
 		return
 	H.jitteriness = max(0,H.jitteriness - 100)
-	External = H.find_damaged_bodypart(External)
-	H.nutrition -= 3
-	H.apply_effect(3, WEAKEN)
-	H.apply_damages(0,0,1,4,0,5)
-	H.regen_bodyparts(External, FALSE)
+	if(!H.regenerating_bodypart)
+		H.regenerating_bodypart = H.find_damaged_bodypart()
+	if(H.regenerating_bodypart)
+		H.nutrition -= 3
+		H.apply_effect(3, WEAKEN)
+		H.apply_damages(0,0,1,4,0,5)
+		H.regen_bodyparts(4, FALSE)
 
 datum/reagent/bicaridine
 	name = "Bicaridine"
