@@ -254,12 +254,8 @@
 
 		if("hurt", "disarm")
 			M.do_attack_animation(src)
-			adjustBruteLoss(harm_intent_damage)
-			for(var/mob/O in viewers(src, null))
-				if ((O.client && !( O.blinded )))
-					O.show_message("\red [M] [response_harm] [src]")
-
-	return
+			var/datum/unarmed_attack/attack = M.unarmed
+			return attack.on_harm_intent(src, M)
 
 /mob/living/simple_animal/attack_alien(mob/living/carbon/alien/humanoid/M)
 

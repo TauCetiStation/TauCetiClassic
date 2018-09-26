@@ -972,12 +972,13 @@
 	var/weaken_chance = 0
 	var/override_in_hand_attack = TRUE     // If TRUE, this attack will override, even if user has something in his hand.
 
-	var/body_zone_required = null  // If this is specified, check whether this body zone is not broken.
-	var/require_zone_naked = FALSE // If TRUE, check if above body zone is covered with clothing. If it is, don't do the attack.
+	var/body_zone_required = null    // If this is specified, check whether this body zone is not broken.
+	var/restrained_zone_check = null // Check this zone when we check in RestrainedClickOn()
+	var/require_zone_naked = FALSE   // If TRUE, check if above body zone is covered with clothing. If it is, don't do the attack.
 
-	var/list/hit_scope = list()    // I mean, it's much harder to bite a leg, than to bite a hand.
-	var/none_scope_miss_chance = 0 // A chance to hit another bodypart, if target is not in hit_scope.
-	var/miss_chance = 0            // Some attacks have additional miss chance.
+	var/list/hit_scope = list()      // I mean, it's much harder to bite a leg, than to bite a hand.
+	var/none_scope_miss_chance = 0   // A chance to hit another bodypart, if target is not in hit_scope.
+	var/miss_chance = 0              // Some attacks have additional miss chance.
 
 	var/miss_sound = 'sound/weapons/punchmiss.ogg'
 	var/sharp = FALSE
@@ -988,6 +989,49 @@
 /datum/unarmed_attack/proc/damage_flags()
 	return (sharp ? DAM_SHARP : 0) | (edge ? DAM_EDGE : 0)
 
+/datum/unarmed_attack/proc/on_harm_intent(mob/living/victim, mob/living/carbon/human/predator, weaken_chance_multi = 1.0)
+	predator.attack_log += text("\[[time_stamp()]\] <font color='red'>[pick(attack_verb)]ed [victim] ([victim.ckey])</font>")
+	victim.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [pick(attack_verb)]ed by [predator.name] ([predator.ckey])</font>")
+	msg_admin_attack("[key_name(predator)] [pick(attack_verb)]ed [key_name(victim)]")
+
+	var/obj/item/organ/external/BP = zone_parsing(predator.zone_sel.selecting, victim)
+	var/armor_block = victim.run_armor_check(BP, "melee")
+
+	if(!check_requirements(victim, predator, BP)) // for example our mouth is covered yet we try to bite.
+		return FALSE
+
+	var/damage = rand(0, 5)//BS12 EDIT
+	if(!damage || prob(miss_chance))
+		playsound(victim.loc, miss_sound, 25, 1, -1)
+		victim.visible_message("<span class='warning bold'>[predator] tried to [pick(attack_verb)] [victim]!</span>")
+		return FALSE
+
+	if(HULK in predator.mutations)
+		damage += 5
+
+	playsound(victim.loc, attack_sound, 25, 1, -1)
+
+	victim.visible_message(get_message(victim, predator))
+
+	//Rearranged, so weaken chance depends on the chance given by the attack.
+	if(damage >= 5 && prob(weaken_chance * weaken_chance_multi))
+		victim.visible_message("<span class='warning bold'>[predator] has weakened [victim]!</span>")
+		victim.apply_effect(2, WEAKEN, armor_block)
+
+	damage += src.damage
+	victim.apply_damage(damage, dam_type, BP, armor_block, damage_flags())
+	after_attack_effects(victim, predator, BP, damage)
+	return TRUE
+
+/datum/unarmed_attack/proc/zone_parsing(zone, mob/living/victim)
+	if(!(zone in hit_scope) && prob(none_scope_miss_chance))
+		zone = pick(hit_scope)
+
+	if(ishuman(victim))
+		var/mob/living/carbon/human/H = victim
+		return H.bodyparts_by_name[ran_zone(zone)]
+	return BP_CHEST
+
 /datum/unarmed_attack/proc/get_message(mob/living/victim, mob/living/carbon/human/predator)
 	return "<span class='warning bold'>[predator] [pick(attack_verb)]ed [victim]!</span>"
 
@@ -996,8 +1040,8 @@
 		return TRUE
 
 	var/obj/item/organ/external/BP_pred
-
 	var/check_this_zone
+
 	if(body_zone_required == ARMS)
 		if(predator.hand)
 			BP_pred = predator.get_bodypart(BP_L_ARM)
@@ -1050,6 +1094,7 @@
 	override_in_hand_attack = FALSE
 
 	body_zone_required = ARMS
+	restrained_zone_check = ARMS
 
 /datum/unarmed_attack/punch/diona
 	name = "lash"
@@ -1060,7 +1105,7 @@
 
 /datum/unarmed_attack/punch/ipc
 	name = "electrify"
-	overlay_icon = "lash"
+	overlay_icon = "shock"
 	attack_verb = list("stir", "jolt")
 	weaken_chance = 100
 	dam_type = BURN
@@ -1099,13 +1144,29 @@
 	name = "kick"
 	overlay_icon = "kick"
 	attack_verb = list("kick")
+	attack_sound = 'sound/weapons/genhit.ogg'
 	weaken_chance = 75
 
 	hit_scope = list(BP_L_LEG, BP_R_LEG, BP_GROIN)
 	none_scope_miss_chance = 75
 	miss_chance = 15
+	//var/push_chance = 10 // A chance to push the opponent one tile. See lower.
 
 	body_zone_required = LEGS
+	restrained_zone_check = LEGS
+
+/* Uncomment this when it will be done.
+/datum/unarmed_attack/kick/on_disarm_intent(mob/living/victim, mob/living/carbon/human/predator)
+	if(prob(push_chance))
+		step(victim, predator.dir) */
+
+/datum/unarmed_attack/kick/zone_parsing(zone, mob/living/victim, mob/living/carbon/human/predator)
+	if(victim.weakened ||victim.lying || victim.crawling)
+		if(ishuman(victim))
+			var/mob/living/carbon/human/H = victim
+			return H.bodyparts_by_name[ran_zone(zone)]
+		return BP_CHEST
+	return ..()
 
 /datum/unarmed_attack/kick/get_message(mob/living/victim, mob/living/carbon/human/predator)
 	if(victim.weakened || victim.lying || victim.crawling)
@@ -1121,7 +1182,11 @@
 
 /datum/unarmed_attack/kick/after_attack_effects(mob/living/victim, mob/living/carbon/human/predator, obj/item/organ/external/BP)
 	if(victim.weakened || victim.lying || victim.crawling)
-		victim.apply_damage(damage, HALLOSS, BP)
+		victim.adjustHalLoss(damage)
+		victim.updatehealth()
+	else if(!(predator.zone_sel.selecting in hit_scope) && prob(miss_chance)) // A chance that we will slip and fall.
+		to_chat(predator, "<span class='warning'>You aimed so high, that you slipped up and fell!</span>")
+		predator.slip(null, 3, 2)
 
 /datum/unarmed_attack/bite
 	name = "bite"
@@ -1130,7 +1195,6 @@
 	attack_sound = 'sound/items/eatfood.ogg'
 	miss_sound = 'sound/items/eatfood.ogg'
 	weaken_chance = 0
-	item_in_hand_attack = TRUE
 
 	hit_scope = list(BP_L_ARM, BP_R_ARM, BP_HEAD)
 	none_scope_miss_chance = 75
@@ -1143,32 +1207,38 @@
 
 /datum/unarmed_attack/bite/check_requirements(mob/victim, mob/living/carbon/human/predator, obj/item/organ/external/BP)
 	. = ..()
-	if(BP.status & ORGAN_ROBOT)
-		to_chat(predator, "<span class='warning'>You can not bite a robotic limb!</span>")
-		var/obj/item/organ/external/head/head_ = predator.get_bodypart(BP_HEAD)
-		if(head_)
-			predator.apply_damage(2, BRUTE, head_)
-		else
-			predator.adjustBruteLoss(2)
-		return FALSE
+	if(ishuman(victim))
+		if(BP.status & ORGAN_ROBOT)
+			to_chat(predator, "<span class='warning'>You can not bite a robotic limb!</span>")
+			var/obj/item/organ/external/head/head_ = predator.get_bodypart(BP_HEAD)
+			if(head_)
+				predator.apply_damage(2, BRUTE, head_)
+			else
+				predator.adjustBruteLoss(2)
+			return FALSE
 
 /datum/unarmed_attack/bite/unathi
 
 /datum/unarmed_attack/bite/unathi/after_attack_effects(mob/victim, mob/living/carbon/human/predator, obj/item/organ/external/BP, damage)
-	if(ishuman(victim))
-		var/mob/living/carbon/human/H  = victim
+	if(iscarbon(victim))
+		var/mob/living/carbon/C = victim
+		C.spread_disease_to(predator, "Contact")
+		predator.spread_disease_to(C, "Contact")
 
-		var/armor = H.getarmor(BP.body_zone, "melee")
-		var/bioarmor = H.getarmor(BP.body_zone, "bio")
+		if(ishuman(victim))
+			var/mob/living/carbon/human/H  = C
 
-		if(prob(max(100 - max(armor, bioarmor / 2), 0)))
-			for(var/datum/wound/W in BP.wounds)
-				if (W.infection_check())
-					W.germ_level++
+			var/armor = H.getarmor(BP.body_zone, "melee")
+			var/bioarmor = H.getarmor(BP.body_zone, "bio")
+
+			if(prob(max(100 - max(armor, bioarmor / 2), 0)))
+				for(var/datum/wound/W in BP.wounds)
+					if (W.infection_check())
+						W.germ_level++
 
 /datum/unarmed_attack/hypnosis
 	name = "bite"
-	overlay_icon = "lash" // Placeholder, but it does give the message.
+	overlay_icon = "hypnotize" // Placeholder, but it does give the message.
 	attack_verb = list("charm", "drug")
 	attack_sound = null
 	miss_sound = null

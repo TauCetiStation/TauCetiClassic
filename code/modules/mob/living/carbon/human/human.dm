@@ -437,15 +437,13 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			update_body()
 
 /mob/living/carbon/human/restrained(check_type = ARMS)
-	if ((check_type & ARMS) && handcuffed)
+	if ((check_type & ARMS) && (handcuffed || istype(wear_suit, /obj/item/clothing/suit/straight_jacket)))
 		return TRUE
 	if ((check_type & LEGS) && legcuffed)
 		return TRUE
-	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-		return TRUE
 	if (istype(buckled, /obj/structure/stool/bed/nest))
 		return TRUE
-	return 0
+	return FALSE
 
 /mob/living/carbon/human/resist()
 	..()
@@ -1767,8 +1765,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	else
 		return 1
 
+/mob/living/carbon/human/RestrainedClickOn(A)
+	if(!restrained(unarmed.body_zone_required) && Adjacent(A))
+		UnarmedAttack(A)
+
 /mob/living/carbon/human/item_attack_override()
-	return unarmed.override_in_hand_attack
+	return unarmed.override_in_hand_attack && a_intent == I_HELP
 
 /mob/living/carbon/human/verb/next_unarmed_sel()
 	set name = "next_unarmed_sel"

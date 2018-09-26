@@ -94,9 +94,14 @@
 	else
 		..()
 
-/mob/living/carbon/attack_hand(mob/M)
-	if(!iscarbon(M))
-		return
+/mob/living/carbon/attack_hand(mob/living/carbon/human/M)
+	if (!ticker.mode)
+		to_chat(M, "You cannot attack people before the game has started.")
+		return 0
+
+	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+		to_chat(M, "No attacking people at spawn, you jackass.")
+		return 0
 
 	for(var/datum/disease/D in viruses)
 		if(D.spread_by_touch())
@@ -505,11 +510,12 @@
 	if(alert(src, "You sure you want to sleep for a while?","Sleep","Yes","No") == "Yes")
 		sleeping = 20 //Short nap
 
-/mob/living/carbon/slip(slipped_on, stun_duration=4, weaken_duration=2)
+/mob/living/carbon/slip(slipped_on = null, stun_duration=4, weaken_duration=2)
 	if(buckled || sleeping || weakened || paralysis || stunned || resting || crawling)
 		return FALSE
 	stop_pulling()
-	to_chat(src, "<span class='warning'>You slipped on [slipped_on]!</span>")
+	if(slipped_on)
+		to_chat(src, "<span class='warning'>You slipped on [slipped_on]!</span>")
 	playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
 	if (stun_duration > 0)
 		Stun(stun_duration)

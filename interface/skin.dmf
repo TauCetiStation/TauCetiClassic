@@ -137,52 +137,52 @@ macro "macro"
 
 macro "hotkeymode"
 	elem "HKMODE-TAB"
-		name = "Tab"
+		name = "TAB"
 		command = ".winset \"mainwindow.macro=macro hotkey_toggle.is-checked=false input.focus=true\""
 	elem "HKMODE-CENTER+REP"
-		name = "Center+REP"
+		name = "CENTER+REP"
 		command = ".center"
 	elem "HKMODE-NORTHEAST"
-		name = "Northeast"
+		name = "NORTHEAST"
 		command = ".northeast"
 	elem "HKMODE-SOUTHEAST"
-		name = "Southeast"
+		name = "SOUTHEAST"
 		command = ".southeast"
 	elem "HKMODE-SOUTHWEST"
-		name = "Southwest"
+		name = "SOUTHWEST"
 		command = ".southwest"
 	elem "HKMODE-NORTHWEST"
-		name = "Northwest"
+		name = "NORTHWEST"
 		command = ".northwest"
 	elem "HKMODE-CTRL+WEST"
-		name = "CTRL+West"
+		name = "CTRL+WEST"
 		command = "westface"
 	elem "HKMODE-WEST+REP"
-		name = "West+REP"
+		name = "WEST+REP"
 		command = ".west"
 	elem "HKMODE-CTRL+NORTH"
-		name = "CTRL+North"
+		name = "CTRL+NORTH"
 		command = "northface"
 	elem "HKMODE-NORTH+REP"
-		name = "North+REP"
+		name = "NORTH+REP"
 		command = ".north"
 	elem "HKMODE-CTRL+EAST"
-		name = "CTRL+East"
+		name = "CTRL+EAST"
 		command = "eastface"
 	elem "HKMODE-EAST+REP"
-		name = "East+REP"
+		name = "EAST+REP"
 		command = ".east"
 	elem "HKMODE-CTRL+SOUTH"
-		name = "CTRL+South"
+		name = "CTRL+SOUTH"
 		command = "southface"
 	elem "HKMODE-SOUTH+REP"
-		name = "South+REP"
+		name = "SOUTH+REP"
 		command = ".south"
 	elem "HKMODE-INSERT"
-		name = "Insert"
+		name = "INSERT"
 		command = "a-intent right"
 	elem "HKMODE-DELETE"
-		name = "Delete"
+		name = "DELETE"
 		command = "delete-key-pressed"
 	elem "HKMODE-1"
 		name = "1"
@@ -667,6 +667,7 @@ window "rpane"
 		size = 640x480
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		saved-params = "pos;size;is-minimized;is-maximized"
 		is-pane = true
 	elem "rpanewindow"
@@ -675,6 +676,7 @@ window "rpane"
 		size = 638x475
 		anchor1 = 0,0
 		anchor2 = 100,100
+		background-color = none
 		saved-params = "splitter"
 		right = "outputwindow"
 		is-vert = false
@@ -698,6 +700,7 @@ window "rpane"
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		saved-params = "is-checked"
 		text = "Rules"
 		command = "rules"
@@ -708,6 +711,7 @@ window "rpane"
 		size = 1x1
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		saved-params = ""
 	elem "changelog"
 		type = BUTTON
@@ -715,6 +719,7 @@ window "rpane"
 		size = 67x16
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		saved-params = "is-checked"
 		text = "Changelog"
 		command = "Changelog"
@@ -738,6 +743,7 @@ window "rpane"
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		saved-params = "is-checked"
 		text = "Forum"
 		command = "forum"
@@ -748,6 +754,7 @@ window "rpane"
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		saved-params = "is-checked"
 		text = "Wiki"
 		command = "wiki"
@@ -758,6 +765,7 @@ window "rpane"
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		is-visible = false
 		saved-params = "is-checked"
 		text = "Text"
@@ -771,6 +779,7 @@ window "rpane"
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		is-visible = false
 		saved-params = "is-checked"
 		text = "Browser"
@@ -783,6 +792,7 @@ window "rpane"
 		size = 60x16
 		anchor1 = none
 		anchor2 = none
+		background-color = none
 		is-visible = false
 		saved-params = "is-checked"
 		text = "Info"
@@ -834,4 +844,3 @@ window "infowindow"
 		allow-html = false
 		on-show = ".winset\"rpane.infob.is-visible=true;rpane.browseb.is-visible=true?rpane.infob.pos=130,0:rpane.infob.pos=65,0 rpane.textb.is-visible=true rpane.infob.is-checked=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=infowindow\""
 		on-hide = ".winset\"rpane.infob.is-visible=false;rpane.browseb.is-visible=true?rpane.browseb.is-checked=true rpane.rpanewindow.left=browserwindow:rpane.textb.is-visible=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=\""
-
