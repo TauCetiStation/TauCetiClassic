@@ -25,7 +25,10 @@
 		else
 			to_chat(user, "<span class='notice'>All [R]'s systems are nominal.</span>")
 
-	if (ishuman(M))		//Repairing robolimbs
+	else if(ishuman(M))		//Repairing robolimbs
+		if(can_operate(H) && do_surgery(H, user, src))
+			return 0
+
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/external/BP = H.get_bodypart(def_zone)
 
@@ -40,10 +43,3 @@
 				"<span class='notice'>You apply some nanite paste at [user == M ? "your" : "[M]'s"] [BP.name].</span>")
 			else
 				to_chat(user, "<span class='notice'>Nothing to fix here.</span>")
-
-		else
-			if (can_operate(H))
-				if (do_surgery(H,user,src))
-					return
-			else
-				to_chat(user, "<span class='notice'>Nothing to fix in here.</span>")

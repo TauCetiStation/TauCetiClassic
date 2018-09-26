@@ -143,11 +143,10 @@
 
 /datum/surgery_step/limb/attach/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
-		if(istype(tool, /obj/item/weapon/organ/head/posi) && !target.get_species() == IPC)
-			return
-		else if(istype(tool, /obj/item/weapon/organ/head/posi))
+		if(istype(tool, /obj/item/weapon/organ/head/posi) && target.get_species() == IPC)
 			var/obj/item/organ/external/BP = target.get_bodypart(target_zone)
 			return (BP.status & ORGAN_ATTACHABLE)
+
 		var/obj/item/robot_parts/p = tool
 		if (target_zone != p.part)
 			to_chat(user, "<span class='userdanger'>This is inappropriate part for [parse_zone(target_zone)]!</span>")
@@ -171,9 +170,6 @@
 		BP.sabotaged = TRUE
 	else
 		BP.sabotaged = FALSE
-	if(target_zone == BP_HEAD && !target.has_eyes())
-		target.organs += E
-		target.organs_by_name += O_EYES
 	target.update_body()
 	target.updatehealth()
 	target.UpdateDamageIcon(BP)
@@ -207,7 +203,6 @@
 		if (BP.parent.status & ORGAN_DESTROYED)
 			return FALSE
 	return BP.body_zone != BP_CHEST
-
 
 /datum/surgery_step/ipc_limb/cut_wires
 	allowed_tools = list(
