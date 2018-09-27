@@ -2511,8 +2511,8 @@
 "gG" = (
 /obj/structure/bookcase,
 /obj/item/weapon/book/manual/barman_recipes,
-/obj/item/weapon/book/manual/security_space_law,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor/wood,
 /area/awaymission/academy/classrooms)
 "gH" = (

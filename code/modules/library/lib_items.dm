@@ -134,6 +134,7 @@
 	var/unique = 0   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 	var/title		 // The real name of the book.
 	var/carved = 0	 // Has the book been hollowed out for use as a secret storage item?
+	var/window_size
 	var/obj/item/store	//What's in the book?
 
 /obj/item/weapon/book/attack_self(mob/user)
@@ -147,7 +148,7 @@
 			to_chat(user, "<span class='notice'>The pages of [title] have been cut out!</span>")
 			return
 	if(src.dat)
-		user << browse(entity_ja("<TT><I>Penned by [author].</I></TT> <BR>[dat]"), "window=book")
+		user << browse(entity_ja("<TT><I>Penned by [author].</I></TT> <BR>[dat]"), "window=book[window_size != null ? ";size=[window_size]" : ""]")
 		user.visible_message("[user] opens a book titled \"[src.title]\" and begins reading intently.")
 		onclose(user, "book")
 	else

@@ -6,6 +6,43 @@
 	due_date = 0 // Game time in 1/10th seconds
 	unique = 1   // 0 - Normal book, 1 - Should not be treated as normal book, unable to be copied, unable to be modified
 
+/obj/item/weapon/book/manual/wiki
+	var/wiki_page = ""
+	window_size = "970x710"
+
+/obj/item/weapon/book/manual/wiki/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/weapon/book/manual/wiki/atom_init_late()
+	if(config.wikiurl)
+		dat = {"
+
+			<html><head>
+			<style>
+				html, body, iframe {
+					padding: 0px; margin: 0px;
+				}
+				iframe {
+					display: none;
+				}
+			</style>
+			</head>
+			<body>
+			<script type="text/javascript">
+				function pageloaded(myframe) {
+					document.getElementById("loading").style.display = "none";
+					myframe.style.display = "inline";
+    			}
+			</script>
+			<p id='loading'>You start skimming through the manual...</p>
+			<iframe width='100%' height='97%' onload="pageloaded(this)" src="[config.wikiurl]/[wiki_page]?printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
+			</body>
+
+			</html>
+
+			"}
+	return ..()
 
 /obj/item/weapon/book/manual/engineering_construction
 	name = "Station Repairs and Construction"
@@ -736,26 +773,13 @@
 		"}
 
 
-/obj/item/weapon/book/manual/security_space_law
+/obj/item/weapon/book/manual/wiki/security_space_law
 	name = "Space Law"
 	desc = "A set of NanoTrasen guidelines for keeping law and order on their space stations."
 	icon_state = "bookSpaceLaw"
 	author = "NanoTrasen"
 	title = "Space Law"
-
-	dat = {"
-
-		<html><head>
-		</head>
-
-		<body>
-		<iframe width='100%' height='95%' src="http://tauceti.ru/w/index.php?title=Space_Law&printable=yes&remove_links=1" frameborder="0" id="main_frame"></iframe>
-		</body>
-
-		</html>
-
-		"}
-
+	wiki_page = "Space Law"
 
 
 /obj/item/weapon/book/manual/medical_diagnostics_manual
