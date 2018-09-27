@@ -32,6 +32,16 @@
 		var/mob/living/carbon/human/H = speaker
 		speaker_name = H.GetVoice()
 
+	if(ishuman(src)) //zombie logic
+		var/mob/living/carbon/human/ME = src
+		if(iszombie(ME))
+			if(!ishuman(speaker))
+				message = stars(message, 40)
+			else
+				var/mob/living/carbon/human/H = speaker
+				if(!iszombie(H))
+					message = stars(message, 40)
+
 	if(italics)
 		message = "<i>[message]</i>"
 
@@ -73,9 +83,11 @@
 	var/track = null
 
 	//non-verbal languages are garbled if you can't see the speaker. Yes, this includes if they are inside a closet.
-	if (language && (language.flags & NONVERBAL))
-		if (!speaker || (src.sdisabilities & BLIND || src.blinded) || !(speaker in view(src)))
+	if(language)
+		if(language.flags & NONVERBAL && (!speaker || (sdisabilities & BLIND || blinded) || !(speaker in view(src))))
 			message = stars(message)
+		else if(language.flags & SIGNLANG)
+			return
 
 	if(!say_understands(speaker,language))
 		if(isanimal(speaker))
@@ -102,6 +114,16 @@
 		var/mob/living/carbon/human/H = speaker
 		if(H.voice)
 			speaker_name = H.voice
+
+	if(ishuman(src)) //zombie logic
+		var/mob/living/carbon/human/ME = src
+		if(iszombie(ME))
+			if(!ishuman(speaker))
+				message = stars(message, 40)
+			else
+				var/mob/living/carbon/human/H = speaker
+				if(!iszombie(H))
+					message = stars(message, 40)
 
 	if(hard_to_hear)
 		speaker_name = "unknown"
@@ -174,14 +196,14 @@
 		return
 
 	if(say_understands(speaker, language))
-		message = "<B>[src]</B> [verb], \"[message]\""
+		message = "<B>[src]</B> [verb], \"[language.format_message(message)]\""
 	else
 		message = "<B>[src]</B> [verb]."
 
 	if(src.status_flags & PASSEMOTES)
 		for(var/obj/item/weapon/holder/H in src.contents)
 			H.show_message(message)
-	src.show_message(message)
+	show_message(message)
 
 /mob/proc/hear_sleep(message)
 	var/heard = ""

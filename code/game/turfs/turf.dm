@@ -178,9 +178,12 @@
 		qdel(L)
 
 //Creates a new turf
-/turf/proc/ChangeTurf(path, force_lighting_update)
+/turf/proc/ChangeTurf(path, force_lighting_update, list/arguments = list())
 	if (!path)
 		return
+	/*if(istype(src, path))
+		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
+		return*/
 
 	// Back all this data up, so we can set it after the turf replace.
 	// If you're wondering how this proc'll keep running since the turf should be "deleted":
@@ -211,7 +214,8 @@
 		if(S.zone)
 			S.zone.rebuild()
 
-	var/turf/W = new path(src)
+	arguments.Insert(0, src)
+	var/turf/W = new path(arglist(arguments))
 
 	W.has_resources = has_resources
 	W.resources = temp_res

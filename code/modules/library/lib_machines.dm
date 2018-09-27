@@ -215,9 +215,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			else
 				dat += {"<A href='?src=\ref[src];orderbyid=1'>(Order book by SS<sup>13</sup>BN)</A>([page] - [page + LIBRETURNLIMIT])<BR><BR>
 				<table>
-				<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td></tr>"}
+				<tr><td>AUTHOR</td><td>TITLE</td><td>CATEGORY</td><td></td><td></td></tr>"}
 
-				var/DBQuery/query = dbcon_old.NewQuery("SELECT id, author, title, category FROM library LIMIT [page], [LIBRETURNLIMIT]")
+				var/DBQuery/query = dbcon_old.NewQuery("SELECT id, author, title, category, deletereason FROM library LIMIT [page], [LIBRETURNLIMIT]")
 				query.Execute()
 
 				while(query.NextRow())
@@ -225,7 +225,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 					var/author = query.item[2]
 					var/title = query.item[3]
 					var/category = query.item[4]
-					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[id]'>\[Order\]</A></td></tr>"
+					var/deletereason = query.item[5]
+					dat += "<tr><td>[author]</td><td>[title]</td><td>[category]</td><td><A href='?src=\ref[src];targetid=[id]'>\[Order\]</A></td><td>[(deletereason == null) ? "<A href='?src=\ref[src];deleteid=[id]'>\[Send removal request\]</A>" : "<font color=red>MARKED FOR REMOVAL</font>"]</td></tr>"
 				dat += "</table>"
 			dat += {"
 			<BR><A href='?src=\ref[src];switchscreen=0'>(Return to main menu)</A>
@@ -344,7 +345,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		var/obj/item/weapon/book/b = locate(href_list["delbook"])
 		inventory.Remove(b)
 	if(href_list["setauthor"])
-		var/newauthor = sanitize(input("Enter the author's name: ") as text|null, MAX_NAME_LEN)	
+		var/newauthor = sanitize(input("Enter the author's name: ") as text|null, MAX_NAME_LEN)
 		if(newauthor)
 			scanner.cache.author = newauthor
 	if(href_list["setcategory"])
@@ -373,7 +374,8 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 							var/sqlauthor = sanitize_sql(scanner.cache.author)
 							var/sqlcontent = sanitize_sql(scanner.cache.dat)
 							var/sqlcategory = sanitize_sql(upload_category)
-							var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO library (author, title, content, category) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]')")
+							var/sqlckey = sanitize_sql(usr.ckey)
+							var/DBQuery/query = dbcon_old.NewQuery("INSERT INTO library (author, title, content, category, ckey) VALUES ('[sqlauthor]', '[sqltitle]', '[sqlcontent]', '[sqlcategory]', '[sqlckey]')")
 							if(!query.Execute())
 								to_chat(usr, query.ErrorMsg())
 							else
@@ -382,6 +384,9 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 
 	if(href_list["targetid"])
 		var/sqlid = sanitize_sql(href_list["targetid"])
+		if(!sqlid)
+			return
+			
 		establish_old_db_connection()
 		if(!dbcon_old.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
@@ -392,7 +397,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 			bibledelay = 1
 			spawn(60)
 				bibledelay = 0
-			var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM library WHERE id=[sqlid]")
+			var/DBQuery/query = dbcon_old.NewQuery("SELECT * FROM library WHERE id='[sqlid]'")
 			query.Execute()
 
 			while(query.NextRow())
@@ -407,6 +412,43 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 				B.icon_state = "book[rand(1,7)]"
 				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
+
+	if(href_list["deleteid"])
+		var/sqlid = sanitize_sql(href_list["deleteid"])
+		if(!sqlid)
+			return
+			
+		establish_old_db_connection()
+		if(!dbcon_old.IsConnected())
+			alert("Connection to Archive has been severed. Aborting.")
+			return
+
+		var/DBQuery/query = dbcon_old.NewQuery("SELECT title, deletereason FROM library WHERE id='[sqlid]'")
+		if(!query.Execute())
+			return
+
+
+		var/title
+		if(query.NextRow())
+			title = query.item[1]
+			if(query.item[2] != null)
+				return
+
+		var/reason = sanitize_sql(sanitize(input(usr,"Reason for removal","Enter reason (max 60 characters)") as text))
+		if(length(reason) > 60)
+			alert("The reason is more than 60 characters long")
+			return
+
+		if(!reason)
+			return
+
+		query = dbcon_old.NewQuery("UPDATE library SET deletereason = '[reason]' WHERE id = '[sqlid]'")
+		query.Execute()
+
+		message_admins("[usr.name]/[usr.ckey] requested removal of [title] from the library database")
+
+		alert("Delete request sent.")
+
 	if(href_list["orderbyid"])
 		var/orderid = input("Enter your order:") as num|null
 		if(orderid)
@@ -438,8 +480,11 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 	else
 		dat += "No data stored in memory.<BR>"
 	dat += "<A href='?src=\ref[src];scan=1'>\[Scan\]</A>"
+	if(contents.len)
+		dat += "       <A href='?src=\ref[src];eject=1'>\[Remove Book\]</A><BR>"
+
 	if(cache)
-		dat += "       <A href='?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR><BR><A href='?src=\ref[src];eject=1'>\[Remove Book\]</A>"
+		dat += "       <A href='?src=\ref[src];clear=1'>\[Clear Memory\]</A><BR>"
 	else
 		dat += "<BR>"
 	user << browse(entity_ja(dat), "window=scanner")

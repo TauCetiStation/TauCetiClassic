@@ -1,3 +1,6 @@
+#define LOG_CLEANING(text) \
+  replace_characters(text, list("\proper"="","\improper"="", JA_CODE=JA_PLACEHOLDER, JA_CODE_ASCII=JA_PLACEHOLDER, JA_CHARACTER=JA_PLACEHOLDER))
+
 //print an error message to world.log
 
 
@@ -24,7 +27,7 @@
 /proc/log_admin(text)
 	admin_log.Add(text)
 	if (config.log_admin)
-		diary << "\[[time_stamp()]]ADMIN: [reset_ja(text)][log_end]"
+		diary << "\[[time_stamp()]]ADMIN: [LOG_CLEANING(text)][log_end]"
 
 
 /proc/log_debug(text)
@@ -42,7 +45,7 @@
 
 /proc/log_vote(text)
 	if (config.log_vote)
-		diary << "\[[time_stamp()]]VOTE: [reset_ja(text)][log_end]"
+		diary << "\[[time_stamp()]]VOTE: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_access(text)
 	if (config.log_access)
@@ -50,19 +53,19 @@
 
 /proc/log_say(text)
 	if (config.log_say)
-		diary << "\[[time_stamp()]]SAY: [reset_ja(text)][log_end]"
+		diary << "\[[time_stamp()]]SAY: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_ooc(text)
 	if (config.log_ooc)
-		diary << "\[[time_stamp()]]OOC: [reset_ja(text)][log_end]"
+		diary << "\[[time_stamp()]]OOC: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_whisper(text)
 	if (config.log_whisper)
-		diary << "\[[time_stamp()]]WHISPER: [reset_ja(text)][log_end]"
+		diary << "\[[time_stamp()]]WHISPER: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_emote(text)
 	if (config.log_emote)
-		diary << "\[[time_stamp()]]EMOTE: [reset_ja(text)][log_end]"
+		diary << "\[[time_stamp()]]EMOTE: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_attack(text)
 	if (config.log_attack)
@@ -71,15 +74,15 @@
 /proc/log_adminsay(text, say_type)
 	admin_log.Add(text)
 	if (config.log_adminchat)
-		diary << "\[[time_stamp()]][say_type]: [reset_ja(text)][log_end]"
+		diary << "\[[time_stamp()]][say_type]: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_adminwarn(text)
 	if (config.log_adminwarn)
-		diary << "\[[time_stamp()]]ADMINWARN: [reset_ja(text)][log_end]"
+		diary << "\[[time_stamp()]]ADMINWARN: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_pda(text)
 	if (config.log_pda)
-		diary << "\[[time_stamp()]]PDA: [reset_ja(text)][log_end]"
+		diary << "\[[time_stamp()]]PDA: [LOG_CLEANING(text)][log_end]"
 
 /proc/log_misc(text)
 	diary << "\[[time_stamp()]]MISC: [text][log_end]"
@@ -98,7 +101,7 @@
 
 /proc/log_fax(text)
 	if (config.log_fax)
-		diary << "\[[time_stamp()]]FAX: [reset_ja(text)][log_end]"
+		diary << "\[[time_stamp()]]FAX: [LOG_CLEANING(text)][log_end]"
 
 /proc/datum_info_line(datum/D)
 	if(!istype(D))
@@ -116,3 +119,38 @@
 		return "[A.loc] [COORD(T)] ([A.loc.type])"
 	else if(A.loc)
 		return "[A.loc] (0, 0, 0) ([A.loc.type])"
+
+//Print a list of antagonists to the server log
+/proc/antagonist_announce()
+	var/text = "ANTAG LIST:\n"
+	var/objectives
+	var/temprole
+	var/list/total_antagonists = list()
+	//Look into all mobs in world, dead or alive
+	for(var/datum/mind/Mind in ticker.minds)
+		temprole = Mind.special_role
+		objectives = ""
+		if(temprole)							//if they are an antagonist of some sort.
+			if(Mind.objectives.len)
+				for(var/datum/objective/O in Mind.objectives)
+					if(length(objectives))
+						objectives += " | "
+					objectives += "[O.explanation_text]"
+				objectives = " \[[objectives]\]"
+
+			if(temprole in total_antagonists)	//If the role exists already, add the name to it
+				total_antagonists[temprole] += "\n, [Mind.name]([Mind.key])[objectives]"
+			else
+				total_antagonists.Add(temprole) //If the role doesnt exist in the list, create it and add the mob
+				total_antagonists[temprole] += ": [Mind.name]([Mind.key])[objectives]"
+
+	//Now print them all into the log!
+	if(total_antagonists.len)
+		for(var/i in total_antagonists)
+			text += "[i]s[total_antagonists[i]]."
+	else
+		text += "no antagonists this moment"
+
+	log_game(text)
+
+#undef LOG_CLEANING

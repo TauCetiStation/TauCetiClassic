@@ -30,8 +30,9 @@
 	/obj/item/weapon/melee/energy/sword = 5
 	)
 
-	min_duration = 90
-	max_duration = 110
+	priority = 2
+	min_duration = 70
+	max_duration = 90
 
 /datum/surgery_step/generic/cut_with_laser/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	if(..())
@@ -51,10 +52,9 @@
 	"\blue You have made a bloodless incision on [target]'s [BP.name] with \the [tool].",)
 	//Could be cleaner ...
 	BP.open = 1
-	BP.status |= ORGAN_BLEEDING
 	BP.createwound(CUT, 1)
+	BP.createwound(BURN, 1)
 	BP.clamp()
-	spread_germs_to_organ(BP, user)
 	if (target_zone == BP_HEAD)
 		target.brain_op_stage = 1
 
@@ -70,6 +70,7 @@
 	/obj/item/weapon/scalpel/manager = 100
 	)
 
+	priority = 2
 	min_duration = 80
 	max_duration = 120
 

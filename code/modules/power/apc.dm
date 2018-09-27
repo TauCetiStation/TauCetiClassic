@@ -47,6 +47,7 @@
 	use_power = 0
 	req_access = list(access_engine_equip)
 	allowed_checks = ALLOWED_CHECK_NONE
+	unacidable = TRUE
 	var/area/area
 	var/areastring = null
 	var/obj/item/weapon/stock_parts/cell/cell
@@ -647,24 +648,7 @@
 	..()
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
-	if(!user)
-		return
-	user.do_attack_animation(src)
-	user.SetNextMove(CLICK_CD_MELEE)
-	user.visible_message("\red [user.name] slashes at the [src.name]!", "\blue You slash at the [src.name]!")
-	playsound(src.loc, 'sound/weapons/slash.ogg', 100, 1)
-
-	if(beenhit >= pick(3, 4) && wiresexposed != 1)
-		wiresexposed = 1
-		src.update_icon()
-		src.visible_message("\red The [src.name]'s cover flies open, exposing the wires!")
-
-	else if(wiresexposed && !wires.is_all_cut())
-		wires.cut_all()
-		src.update_icon()
-		src.visible_message("\red The [src.name]'s wires are shredded!")
-	else
-		beenhit += 1
+	user.show_message("You don't want to break these things", 1);
 	return
 
 /obj/machinery/power/apc/proc/get_malf_status(mob/user)

@@ -1850,7 +1850,8 @@
 		return
 
 	else if(href_list["secretsfun"])
-		if(!check_rights(R_FUN))	return
+		if(!check_rights(R_FUN|R_EVENT))
+			return
 
 		var/ok = 0
 		switch(href_list["secretsfun"])
@@ -2332,6 +2333,13 @@
 				feedback_add_details("admin_secrets_fun_used","OO")
 				usr.client.only_one()
 				message_admins("[key_name_admin(usr)] has triggered a battle to the death (only one)")
+			if("drop_asteroid")
+				if(!check_rights(R_EVENT))
+					to_chat(usr, "<span class='warning'>You don't have permissions for this</span>")
+					return
+				feedback_inc("admin_secrets_fun_used",1)
+				feedback_add_details("admin_secrets_fun_used","ASTEROID")
+				usr.client.drop_asteroid()
 		if(usr)
 			log_admin("[key_name(usr)] used secret [href_list["secretsfun"]]")
 			if (ok)
@@ -2687,6 +2695,85 @@
 	else if(href_list["ac_set_signature"])
 		src.admincaster_signature = sanitize(input(usr, "Provide your desired signature", "Network Identity Handler", ""))
 		src.access_news_network()
+
+	else if(href_list["readbook"])
+		var/bookid = text2num(href_list["readbook"])
+
+		if(!isnum(bookid))
+			return
+
+		var/DBQuery/query = dbcon_old.NewQuery("SELECT content FROM library WHERE id = '[bookid]'")
+
+		if(!query.Execute())
+			return
+
+		var/content
+		if(query.NextRow())
+			content = query.item[1]
+		else
+			return
+
+		usr << browse(entity_ja(content), "window=book")
+
+	else if(href_list["restorebook"])
+		if(!check_rights(R_PERMISSIONS))
+			return
+
+		if(alert(usr, "Confirm restoring?", "Message", "Yes", "No") != "Yes")
+			return
+		var/bookid = text2num(href_list["restorebook"])
+
+		if(!isnum(bookid))
+			return
+
+		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = '[bookid]'")
+		if(!query.Execute())
+			return
+
+		var/title
+		if(query.NextRow())
+			title = query.item[1]
+		else
+			return
+
+		query = dbcon_old.NewQuery("UPDATE library SET deletereason = NULL WHERE id = '[bookid]'")
+		if(!query.Execute())
+			return
+
+		library_recycle_bin()
+		log_admin("[key_name_admin(usr)] restored [title] from the recycle bin")
+		message_admins("[key_name_admin(usr)] restored [title] from the recycle bin")
+
+	else if(href_list["deletebook"])
+		if(!check_rights(R_PERMISSIONS))
+			return
+
+		if(alert(usr, "Confirm removal?", "Message", "Yes", "No") != "Yes")
+			return
+
+		var/bookid = text2num(href_list["deletebook"])
+
+		if(!isnum(bookid))
+			return
+
+		var/DBQuery/query = dbcon_old.NewQuery("SELECT title FROM library WHERE id = '[bookid]'")
+
+		if(!query.Execute())
+			return
+
+		var/title
+		if(query.NextRow())
+			title = query.item[1]
+		else
+			return
+
+		query = dbcon_old.NewQuery("DELETE FROM library WHERE id='[bookid]'")
+		if(!query.Execute())
+			return
+
+		library_recycle_bin()
+		log_admin("[key_name_admin(usr)] restored [title] from the recycle bin")
+		message_admins("[key_name_admin(usr)] removed [title] from the library database")
 
 	else if(href_list["populate_inactive_customitems"])
 		if(check_rights(R_ADMIN|R_SERVER))

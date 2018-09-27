@@ -73,6 +73,8 @@
 				return ""
 
 	message = capitalize(trim(message))
+	if(iszombie(src))
+		message = zombie_talk(message)
 
 	var/ending = copytext(message, length(message))
 	if (speaking)
@@ -189,7 +191,7 @@
 		speech_sound = sound('sound/voice/shriek1.ogg')
 		sound_vol = 50
 
-	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = 0)	//ohgod we should really be passing a datum here.
+	..(message, speaking, verb, alt_name, italics, message_range, used_radios, speech_sound, sound_vol, sanitize = FALSE, message_mode = message_mode)	//ohgod we should really be passing a datum here.
 
 /mob/living/carbon/human/say_understands(mob/other,datum/language/speaking = null)
 

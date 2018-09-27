@@ -1746,8 +1746,8 @@ datum
 
 		phoron_special
 			name = "Toxins Special"
-			id = "phoronspecial"
-			result = "phoronspecial"
+			id = "toxins_special"
+			result = "toxins_special"
 			required_reagents = list("rum" = 2, "vermouth" = 1, "phoron" = 2)
 			result_amount = 5
 
@@ -2131,15 +2131,15 @@ datum
 			name = "Chocolate Milkshake"
 			id = "milkshake_chocolate"
 			result = "milkshake_chocolate"
-			required_reagents = list("cream" = 1, "ice" = 2, "milk" = 2, "hot_coco" = 1)
-			result_amount = 6
+			required_reagents = list("milkshake" = 1, "hot_coco" = 1)
+			result_amount = 2
 
 		strawberrymilkshake
 			name = "Strawberry Milkshake"
 			id = "milkshake_strawberry"
 			result = "milkshake_strawberry"
-			required_reagents = list("cream" = 1, "ice" = 2, "milk" = 2, "berryjuice" = 1)
-			result_amount = 6
+			required_reagents = list("milkshake" = 1, "berryjuice" = 1)
+			result_amount = 2
 
 		rewriter
 			name = "Rewriter"
@@ -2154,6 +2154,34 @@ datum
 			result = "suidream"
 			required_reagents = list("space_up" = 2, "bluecuracao" = 1, "melonliquor" = 1)
 			result_amount = 4
+
+		bacardi
+			name = "Bacardi"
+			id = "bacardi"
+			result = "bacardi"
+			required_reagents = list("rum" = 3, "grenadine" = 1, "limejuice" = 2)
+			result_amount = 5
+
+		bacardialoha
+			name = "Bacardi Aloha"
+			id = "bacardialoha"
+			result = "bacardialoha"
+			required_reagents = list("rum" = 1, "cognac" = 1, "limejuice" = 1, "martini" = 1, "gin" = 1)
+			result_amount = 5
+
+		bacardilemonade_lime
+			name = "Bacardi Lemon Lime"
+			id = "bacardilemonade_lime"
+			result = "bacardilemonade"
+			required_reagents = list("rum" = 2, "lemon_lime" = 2, "ice" = 1)
+			result_amount = 5
+
+		bacardilemonade_lemon
+			name = "Bacardi Lemonade"
+			id = "bacardilemonade"
+			result = "bacardilemonade"
+			required_reagents = list("rum" = 2, "lemonade" = 2, "ice" = 1)
+			result_amount = 5
 
 //////////////////////////////////////////////
 //////////////New poisons/////////////////////
@@ -2229,3 +2257,66 @@ datum
 	var/turf/T = get_turf(holder.my_atom)
 	if(istype(T))
 		new /obj/item/stack/sheet/mineral/deuterium(T, created_volume)
+
+/datum/chemical_reaction/hair_dye
+	name = "Hair Dye"
+	id = "whitehairdye"
+	result = "whitehairdye"
+	required_reagents = list("lube" = 1, "sodiumchloride" = 1)
+	result_amount = 2
+
+/datum/chemical_reaction/hair_dye/red
+	name = "Red Hair Dye"
+	id = "redhairdye"
+	result = "redhairdye"
+	required_reagents = list("hairdye" = 1, "iron" = 1)
+	result_amount = 1 // They don't mix, instead they react.
+
+/datum/chemical_reaction/hair_dye/blue
+	name = "Blue Hair Dye"
+	id = "bluehairdye"
+	result = "bluehairdye"
+	required_reagents = list("hairdye" = 1, "copper" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye/green
+	name = "Green Hair Dye"
+	id = "greenhairdye"
+	result = "greenhairdye"
+	required_reagents = list("hairdye" = 1, "chlorine" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye/black
+	name = "Black Hair Dye"
+	id = "blackhairdye"
+	result = "blackhairdye"
+	required_reagents = list("hairdye" = 1, "carbon" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye/brown
+	name = "Brown Hair Dye"
+	id = "brownhairdye"
+	result = "brownhairdye"
+	required_reagents = list("hairdye" = 1, "sulfur" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/hair_dye/blond
+	name = "Blond Hair Dye"
+	id = "blondhairdye"
+	result = "blondhairdye"
+	required_reagents = list("hairdye" = 1, "sugar" = 1)
+	result_amount = 1
+
+/datum/chemical_reaction/unholywater
+	name = "Unholy Water"
+	id = "unholywater"
+	result = "unholywater"
+	required_reagents = list("water" = 1, "ectoplasm" = 1)
+	result_amount = 1 // Because rules of logic shouldn't apply here either.
+
+/datum/chemical_reaction/hair_growth_accelerator
+	name = "Hair Growth Accelerator"
+	id = "hair_growth_accelerator"
+	result = "hair_growth_accelerator"
+	required_reagents = list("ryetalyn" = 1, "anti_toxin" = 1, "sugar" = 1)
+	result_amount = 3

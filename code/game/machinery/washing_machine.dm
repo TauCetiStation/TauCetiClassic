@@ -68,8 +68,11 @@
 			var/new_jumpsuit_icon_state = ""
 			var/new_jumpsuit_item_state = ""
 			var/new_jumpsuit_name = ""
-			var/new_glove_icon_state = ""
+			var/new_glove_fingerless_item_state = ""
+			var/new_glove_fingerless_icon_state = ""
+			var/new_glove_fingerless_name = ""
 			var/new_glove_item_state = ""
+			var/new_glove_icon_state = ""
 			var/new_glove_name = ""
 			var/new_shoe_icon_state = ""
 			var/new_shoe_name = ""
@@ -89,15 +92,22 @@
 					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
 				qdel(J)
+			for(var/T in typesof(/obj/item/clothing/gloves/fingerless))
+				var/obj/item/clothing/gloves/fingerless/G = new T
+				if(wash_color == G.item_color)
+					new_glove_fingerless_icon_state = G.icon_state
+					new_glove_fingerless_item_state = G.item_state
+					new_glove_fingerless_name = G.name
+					qdel(G)
+					break
+				qdel(G)
 			for(var/T in typesof(/obj/item/clothing/gloves))
 				var/obj/item/clothing/gloves/G = new T
-				//world << "DEBUG: [color] == [J.color]"
 				if(wash_color == G.item_color)
 					new_glove_icon_state = G.icon_state
 					new_glove_item_state = G.item_state
 					new_glove_name = G.name
 					qdel(G)
-					//world << "DEBUG: YUP! [new_icon_state] and [new_item_state]"
 					break
 				qdel(G)
 			for(var/T in typesof(/obj/item/clothing/shoes))
@@ -138,14 +148,22 @@
 					J.item_color = wash_color
 					J.name = new_jumpsuit_name
 					J.desc = new_desc
-			if(new_glove_icon_state && new_glove_item_state && new_glove_name)
+			if(new_glove_name && new_glove_item_state && new_glove_icon_state||new_glove_fingerless_name && new_glove_fingerless_item_state && new_glove_fingerless_icon_state)
 				for(var/obj/item/clothing/gloves/G in contents)
-					//world << "DEBUG: YUP! FOUND IT!"
-					G.item_state = new_glove_item_state
-					G.icon_state = new_glove_icon_state
-					G.item_color = wash_color
-					G.name = new_glove_name
-					G.desc = new_desc
+					if(istype(G, /obj/item/clothing/gloves/fingerless))
+						if(new_glove_fingerless_name && new_glove_fingerless_item_state && new_glove_fingerless_icon_state)
+							G.item_state = new_glove_fingerless_item_state
+							G.icon_state = new_glove_fingerless_icon_state
+							G.item_color = wash_color
+							G.name = new_glove_fingerless_name
+							G.desc = new_desc
+					else
+						if (new_glove_name && new_glove_item_state && new_glove_icon_state)
+							G.item_state = new_glove_item_state
+							G.icon_state = new_glove_icon_state
+							G.item_color = wash_color
+							G.name = new_glove_name
+							G.desc = new_desc
 			if(new_shoe_icon_state && new_shoe_name)
 				for(var/obj/item/clothing/shoes/S in contents)
 					//world << "DEBUG: YUP! FOUND IT!"
