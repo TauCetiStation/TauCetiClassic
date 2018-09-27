@@ -40,7 +40,7 @@
 	icon = 'icons/obj/items.dmi'
 	icon_state = "implantcase-b"
 	var/datum/disease2/disease/virus2 = null
-	var/growth = 0
+	//var/growth = 0
 	var/info = 0
 	var/analysed = 0
 
@@ -51,7 +51,7 @@
 	. = ..()
 	virus2 = new /datum/disease2/disease
 	virus2.makerandom()
-	growth = rand(5, 50)
+	//growth = 100//rand(5, 50)
 
 /obj/item/weapon/virusdish/attackby(obj/item/weapon/W,mob/living/carbon/user)
 	if(istype(W,/obj/item/weapon/hand_labeler) || istype(W,/obj/item/weapon/reagent_containers/syringe))

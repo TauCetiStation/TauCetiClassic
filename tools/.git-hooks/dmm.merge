@@ -1,2 +1,0 @@
-maps merge driver
-./tools/dmmtool/scripts/mapmerge.{OS_EXT} %O %A %B

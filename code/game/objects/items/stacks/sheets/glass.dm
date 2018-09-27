@@ -51,10 +51,14 @@
 			return
 
 		var/obj/item/stack/sheet/rglass/RG = new (user.loc)
-		RG.add_fingerprint(user)
-		var/replace = user.get_inactive_hand() == src
-		if(QDELETED(src) && replace)
-			user.put_in_hands(RG)
+		RG.add_fingerprint(user)	
+		for(var/obj/item/stack/sheet/rglass/G in user.loc)
+			if(G==RG)
+				continue
+			if(G.get_amount() >= G.max_amount)
+				continue
+			G.attackby(RG, user)
+			to_chat(usr, "You add the reinforced glass to the stack. It now contains [RG.get_amount()] sheets.")
 	else
 		return ..()
 
