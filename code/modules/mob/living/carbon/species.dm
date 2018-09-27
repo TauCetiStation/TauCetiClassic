@@ -20,6 +20,7 @@
 	var/tox_mod = 1                                      // Toxloss multiplier.
 	var/brain_mod = 1                                    // Brainloss multiplier.
 	var/speed_mod =  0                                   // How fast or slow specific specie.
+	var/siemens_coefficient = 1                          // How conductive is the specie.
 
 	var/primitive                     // Lesser form, if any (ie. monkey for humans)
 	var/tail                          // Name of tail image in species effects icon file.
@@ -30,6 +31,8 @@
 	var/punch_damage = 0              // Extra empty hand attack damage.
 	var/mutantrace                    // Safeguard due to old code.
 	var/list/butcher_drops = list(/obj/item/weapon/reagent_containers/food/snacks/meat/human = 5)
+
+	var/list/restricted_inventory_slots = list() // Slots that the race does not have due to biological differences.
 
 	var/breath_type = "oxygen"           // Non-oxygen gas breathed, if any.
 	var/poison_type = "phoron"           // Poisonous air.
@@ -176,6 +179,9 @@
 	else
 		H.equip_to_slot_or_del(SK, slot_in_backpack)
 
+/datum/species/proc/on_life(mob/living/carbon/human/H)
+	return
+
 /datum/species/human
 	name = HUMAN
 	language = "Sol Common"
@@ -200,7 +206,7 @@
 	language = "Sinta'unathi"
 	tail = "sogtail"
 	unarmed_type = /datum/unarmed_attack/claws
-	dietflags = DIET_CARN
+	dietflags = DIET_MEAT | DIET_DAIRY
 	primitive = /mob/living/carbon/monkey/unathi
 	darksight = 3
 
@@ -287,9 +293,11 @@
 	language = "Skrellian"
 	primitive = /mob/living/carbon/monkey/skrell
 	unarmed_type = /datum/unarmed_attack/punch
-	dietflags = DIET_HERB
+	dietflags = DIET_PLANT
 	metabolism_mod = SKRELL_METABOLISM_FACTOR
 	taste_sensitivity = TASTE_SENSITIVITY_DULL
+
+	siemens_coefficient = 1.3 // Because they are wet and slimy.
 
 	flags = list(
 	 IS_WHITELISTED = TRUE
@@ -449,6 +457,8 @@
 	taste_sensitivity = TASTE_SENSITIVITY_NO_TASTE
 	primitive = /mob/living/carbon/monkey/diona
 
+	siemens_coefficient = 0.5 // Because they are plants and stuff.
+
 	hazard_low_pressure = DIONA_HAZARD_LOW_PRESSURE
 
 	cold_level_1 = 50
@@ -462,6 +472,8 @@
 	burn_mod = 1.3
 	speed_mod = 7
 
+	restricted_inventory_slots = list(slot_wear_mask, slot_glasses, slot_gloves, slot_shoes) // These are trees. Not people. Deal with the fact that they don't have these.
+
 	body_temperature = T0C + 15		//make the plant people have a bit lower body temperature, why not
 	butcher_drops = list(/obj/item/stack/sheet/wood = 5)
 
@@ -474,6 +486,7 @@
 	,RAD_ABSORB = TRUE
 	,NO_BLOOD = TRUE
 	,NO_PAIN = TRUE
+	,NO_FINGERPRINT = TRUE
 	)
 
 	has_bodypart = list(
@@ -575,6 +588,7 @@
 
 	brute_mod = 1.5
 	burn_mod = 1
+	siemens_coefficient = 1.3 // ROBUTT.
 
 	butcher_drops = list(/obj/item/stack/sheet/plasteel = 3)
 
@@ -587,6 +601,7 @@
 	,IS_SYNTHETIC = TRUE
 	,VIRUS_IMMUNE = TRUE
 	,BIOHAZZARD_IMMUNE = TRUE
+	,NO_FINGERPRINT = TRUE
 	)
 
 	has_bodypart = list(
@@ -611,7 +626,7 @@
 	blood_color = /datum/dirt_cover/oil
 	flesh_color = "#575757"
 
-/datum/species/ipc/after_job_equip(mob/living/carbon/human/H, datum/job/J)
+/datum/species/machine/after_job_equip(mob/living/carbon/human/H, datum/job/J)
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/ipc_survival(H), slot_r_hand)
 	else
@@ -650,6 +665,8 @@
 	damage_mask = FALSE
 	dietflags = 0
 
+	siemens_coefficient = 0
+
 	butcher_drops = list()
 
 	flags = list(
@@ -657,6 +674,7 @@
 	,NO_BLOOD = TRUE
 	,NO_SCAN = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_FINGERPRINT = TRUE
 	)
 
 /datum/species/skeleton/handle_post_spawn(mob/living/carbon/human/H)
@@ -710,6 +728,8 @@
 	warning_low_pressure = 50
 	hazard_low_pressure = -1
 
+	siemens_coefficient = 0 // Spooky shadows don't need to be hurt by your pesky electricity.
+
 	cold_level_1 = 50
 	cold_level_2 = -1
 	cold_level_3 = -1
@@ -723,15 +743,21 @@
 
 	butcher_drops = list() // They are just shadows. Why should they drop anything?
 
+	restricted_inventory_slots = list(slot_belt, slot_wear_id, slot_l_ear, slot_r_ear, slot_back, slot_l_store, slot_r_store)
+
+	has_organ = list(O_HEART = /obj/item/organ/internal/heart) // A huge buff to be honest.
+
 	flags = list(
 	 NO_BREATHE = TRUE
 	,NO_BLOOD = TRUE
 	,NO_EMBED = TRUE
 	,RAD_IMMUNE = TRUE
 	,VIRUS_IMMUNE = TRUE
+	,NO_FINGERPRINT = TRUE
 	)
 
 	burn_mod = 2
+	brain_mod = 0
 
 	has_gendered_icons = FALSE
 
@@ -771,6 +797,7 @@
 		RAD_IMMUNE = TRUE,
 		VIRUS_IMMUNE = TRUE,
 		BIOHAZZARD_IMMUNE = TRUE,
+		NO_FINGERPRINT = TRUE
 		)
 
 	has_organ = list(
@@ -820,3 +847,120 @@
 
 /datum/species/golem/call_digest_proc(mob/living/M, datum/reagent/R)
 	return R.on_golem_digest(M)
+
+/datum/species/zombie
+	name = ZOMBIE
+	darksight = 8
+	nighteyes = 1
+	dietflags = DIET_OMNI
+
+	icobase = 'icons/mob/human_races/r_zombie.dmi'
+	deform = 'icons/mob/human_races/r_zombie.dmi'
+
+	flags = list(
+	NO_BREATHE = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,NO_SCAN = TRUE
+	,NO_PAIN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	)
+
+	brute_mod = 2
+	burn_mod = 1
+	speed_mod = -0.2
+
+	var/list/spooks = list('sound/hallucinations/growl1.ogg','sound/hallucinations/growl2.ogg','sound/hallucinations/growl3.ogg','sound/hallucinations/veryfar_noise.ogg','sound/hallucinations/wail.ogg')
+
+/datum/species/zombie/handle_post_spawn(mob/living/carbon/human/H)
+	return ..()
+
+/datum/species/zombie/on_gain(mob/living/carbon/human/H)
+	H.status_flags &= ~(CANSTUN  | CANPARALYSE) //CANWEAKEN
+
+	H.drop_l_hand()
+	H.drop_r_hand()
+
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand, slot_l_hand)
+	H.equip_to_slot_or_del(new /obj/item/weapon/melee/zombie_hand/right, slot_r_hand)
+
+	for(var/obj/item/organ/external/organ in H.bodyparts)
+		organ.status |= ORGAN_ZOMBIE
+
+	return ..()
+
+/datum/species/zombie/on_loose(mob/living/carbon/human/H)
+	H.status_flags |= MOB_STATUS_FLAGS_DEFAULT
+
+	if(istype(H.l_hand, /obj/item/weapon/melee/zombie_hand))
+		qdel(H.l_hand)
+
+	if(istype(H.r_hand, /obj/item/weapon/melee/zombie_hand))
+		qdel(H.r_hand)
+
+	for(var/obj/item/organ/external/organ in H.bodyparts)
+		organ.status &= ~ORGAN_ZOMBIE
+
+	return ..()
+
+
+/datum/species/zombie/tajaran
+	name = ZOMBIE_TAJARAN
+
+	icobase = 'icons/mob/human_races/r_zombie_tajaran.dmi'
+	deform = 'icons/mob/human_races/r_zombie_tajaran.dmi'
+
+	brute_mod = 2.2
+	burn_mod = 1.2
+	speed_mod = -0.8
+
+	tail = "zombie_tajtail"
+
+	flesh_color = "#AFA59E"
+	base_color = "#000000"
+
+	flags = list(
+	NO_BREATHE = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,NO_SCAN = TRUE
+	,NO_PAIN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,HAS_TAIL = TRUE
+	)
+
+/datum/species/zombie/skrell
+	name = ZOMBIE_SKRELL
+
+	icobase = 'icons/mob/human_races/r_zombie_skrell.dmi'
+	deform = 'icons/mob/human_races/r_zombie_skrell.dmi'
+
+	eyes = "skrell_eyes"
+	blood_color = /datum/dirt_cover/purple_blood
+	flesh_color = "#8CD7A3"
+	base_color = "#000000"
+
+/datum/species/zombie/unathi
+	name = ZOMBIE_UNATHI
+
+	icobase = 'icons/mob/human_races/r_zombie_lizard.dmi'
+	deform = 'icons/mob/human_races/r_zombie_lizard.dmi'
+
+	brute_mod = 1.80
+	burn_mod = 0.90
+	speed_mod = 0.5
+
+	tail = "zombie_sogtail"
+
+	flesh_color = "#34AF10"
+	base_color = "#000000"
+
+	flags = list(
+	NO_BREATHE = TRUE
+	,HAS_LIPS = TRUE
+	,HAS_UNDERWEAR = TRUE
+	,NO_SCAN = TRUE
+	,NO_PAIN = TRUE
+	,VIRUS_IMMUNE = TRUE
+	,HAS_TAIL = TRUE
+	)

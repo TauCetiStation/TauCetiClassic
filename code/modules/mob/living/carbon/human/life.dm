@@ -121,6 +121,10 @@
 	//Updates the number of stored chemicals for powers and essentials
 	handle_changeling()
 
+	//Species-specific update.
+	if(species)
+		species.on_life(src)
+
 	pulse = handle_pulse()
 
 	// Grabbing
@@ -617,8 +621,9 @@
 	//Moved pressure calculations here for use in skip-processing check.
 	var/pressure = environment.return_pressure()
 	var/adjusted_pressure = calculate_affecting_pressure(pressure)
+	var/is_in_space = istype(get_turf(src), /turf/space)
 
-	if(!istype(get_turf(src), /turf/space)) //space is not meant to change your body temperature.
+	if(!is_in_space) //space is not meant to change your body temperature.
 		var/loc_temp = get_temperature(environment)
 
 		if(adjusted_pressure < species.warning_high_pressure && adjusted_pressure > species.warning_low_pressure && abs(loc_temp - bodytemperature) < 20 && bodytemperature < species.heat_level_1 && bodytemperature > species.cold_level_1)
@@ -647,7 +652,7 @@
 			//world << "Environment: [loc_temp], [src]: [bodytemperature], Adjusting: [temp_adj]"
 			bodytemperature += temp_adj
 
-	else if(istype(get_turf(src), /turf/space) && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
+	else if(!species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
 		if(istype(loc, /obj/mecha))
 			return
 		if(istype(loc, /obj/structure/transit_tube_pod))
@@ -708,7 +713,7 @@
 		throw_alert("pressure","lowpressure",1)
 	else
 		throw_alert("pressure","lowpressure",2)
-		apply_effect(15, AGONY, 0)
+		apply_effect(is_in_space ? 15 : 7, AGONY, 0)
 		take_overall_damage(burn=LOW_PRESSURE_DAMAGE, used_weapon = "Low Pressure")
 
 
@@ -1575,9 +1580,9 @@
 	if(bodytemperature > 406)
 		for(var/datum/disease/D in viruses)
 			D.cure()
-		for (var/ID in virus2)
-			var/datum/disease2/disease/V = virus2[ID]
-			V.cure(src)
+		//for (var/ID in virus2) //disabled because of symptom that randomly ignites a mob, which triggers this
+		//	var/datum/disease2/disease/V = virus2[ID]
+		//	V.cure(src)
 	if(life_tick % 3) //don't spam checks over all objects in view every tick.
 		for(var/obj/effect/decal/cleanable/O in view(1,src))
 			if(istype(O,/obj/effect/decal/cleanable/blood))
@@ -1585,14 +1590,16 @@
 				if(B && B.virus2 && B.virus2.len)
 					for (var/ID in B.virus2)
 						var/datum/disease2/disease/V = B.virus2[ID]
-						infect_virus2(src,V.getcopy())
+						if(V.spreadtype == "Contact")
+							infect_virus2(src,V.getcopy())
 
 			else if(istype(O,/obj/effect/decal/cleanable/mucus))
 				var/obj/effect/decal/cleanable/mucus/M = O
 				if(M && M.virus2 && M.virus2.len)
 					for (var/ID in M.virus2)
 						var/datum/disease2/disease/V = M.virus2[ID]
-						infect_virus2(src,V.getcopy())
+						if(V.spreadtype == "Contact")
+							infect_virus2(src,V.getcopy())
 
 
 	if(virus2.len)

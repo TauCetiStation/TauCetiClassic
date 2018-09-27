@@ -686,7 +686,8 @@
 	max_duration = 80
 
 /datum/surgery_step/ipc_ribcage/take_accumulator/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(!locate(/obj/item/weapon/stock_parts/cell, target))
+	var/obj/item/organ/internal/accum = target.organs_by_name[O_LIVER] // IPC's liver, as of now is an accumulator.
+	if(!locate(/obj/item/weapon/stock_parts/cell) in accum)
 		return
 	return ..() && target.op_stage.ribcage == 2
 
@@ -698,10 +699,11 @@
 /datum/surgery_step/ipc_ribcage/take_accumulator/end_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='notice'>[user] unscrewed [target]'s accumulator with \the [tool].</span>",
 	"<span class='notice'>You unscrewed [target]'s accumulator with \the [tool].</span>")
-	for(var/obj/item/weapon/stock_parts/cell/A in target)
-		A.forceMove(get_turf(target))
-		if(!target.is_bruised_organ(O_KIDNEYS))
-			to_chat(target, "<span class='warning italics'>%SHUTTING DOWN%</span>")
+	var/obj/item/organ/internal/accum = target.organs_by_name[O_LIVER]
+	var/obj/item/weapon/stock_parts/cell/C = locate(/obj/item/weapon/stock_parts/cell) in accum
+	C.forceMove(get_turf(target))
+	if(!target.is_bruised_organ(O_KIDNEYS))
+		to_chat(target, "<span class='warning italics'>%SHUTTING DOWN%</span>")
 
 /datum/surgery_step/ipc_ribcage/take_accumulator/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("<span class='warning>[user]'s hand slips, scratching [target]'s accumulator with \the [tool]!</span>",
@@ -721,7 +723,8 @@
 	max_duration = 70
 
 /datum/surgery_step/ipc_ribcage/put_accumulator/can_use(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
-	if(locate(/obj/item/weapon/stock_parts/cell, target))
+	var/obj/item/organ/internal/accum = target.organs_by_name[O_LIVER] // IPC's liver, as of now is an accumulator.
+	if(locate(/obj/item/weapon/stock_parts/cell) in accum)
 		return
 	return ..() && target.op_stage.ribcage == 2
 
@@ -735,5 +738,5 @@
 	"<span class='notice'>You have put in \the [tool] into [target]'s accumulator slot.</span>")
 
 	user.drop_item()
-	tool.forceMove(target)
-
+	var/obj/item/organ/internal/accum = target.organs_by_name[O_LIVER]
+	tool.forceMove(accum)

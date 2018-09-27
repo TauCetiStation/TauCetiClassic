@@ -1831,7 +1831,7 @@ datum/design/scalpel_laser2
 	id = "scalpel_laser2"
 	req_tech = list("biotech" = 3, "materials" = 4, "magnets" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500, MAT_SILVER = 2500)
+	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500)
 	build_path = /obj/item/weapon/scalpel/laser2
 
 datum/design/scalpel_laser3
@@ -2521,6 +2521,15 @@ datum/design/body_warp
 	materials = list(MAT_METAL = 4500, MAT_SILVER = 1500, MAT_GOLD = 2500)
 	build_path = /obj/item/clothing/shoes/magboots
 	category = list("Equipment")
+
+/datum/design/airbag
+	name = "Personal airbag"
+	desc = "One-use protection from high-speed collisions"
+	id = "airbag"
+	req_tech = list("biotech" = 2, "bluespace" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 500, MAT_SILVER = 500)
+	build_path = /obj/item/airbag
 
 /////////////////////////////////////////
 ////////////Janitor Designs//////////////

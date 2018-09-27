@@ -37,6 +37,7 @@
 	if(visualsOnly)
 		return
 
+	H.equip_to_slot_or_del(new /obj/item/device/flash(H), slot_r_store)
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/hos(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/heads/hos(H), slot_belt)
 	if(H.backbag == 1)
