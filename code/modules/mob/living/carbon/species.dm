@@ -971,6 +971,7 @@
 	var/attack_sound = "punch"
 	var/weaken_chance = 0
 	var/override_in_hand_attack = TRUE     // If TRUE, this attack will override, even if user has something in his hand.
+	var/no_damage = FALSE
 
 	var/body_zone_required = null    // If this is specified, check whether this body zone is not broken.
 	var/restrained_zone_check = null // Check this zone when we check in RestrainedClickOn()
@@ -1019,7 +1020,8 @@
 		victim.apply_effect(2, WEAKEN, armor_block)
 
 	damage += src.damage
-	victim.apply_damage(damage, dam_type, BP, armor_block, damage_flags())
+	if(!no_damage)
+		victim.apply_damage(damage, dam_type, BP, armor_block, damage_flags())
 	after_attack_effects(victim, predator, BP, damage)
 	return TRUE
 
@@ -1185,15 +1187,26 @@
 		victim.adjustHalLoss(damage)
 		victim.updatehealth()
 	else if(!(predator.zone_sel.selecting in hit_scope) && prob(miss_chance)) // A chance that we will slip and fall.
-		to_chat(predator, "<span class='warning'>You aimed so high, that you slipped up and fell!</span>")
+		predator.visible_message("<span class='notice'>[predator] aimed high and slipped up</span>", "<span class='warning'>You aimed so high, that you slipped up and fell!</span>")
+		predator.slip(null, 3, 2)
+
+	// Punching a restrained idiot makes him fall easier.
+	if((victim.restrained(LEGS) || victim.restrained(ARMS)) && !victim.weakened && damage >= 3 && prob(weaken_chance)) // Baystation12 edition 2.0
+		var/armor_block = victim.run_armor_check(BP, "melee")
+		victim.visible_message("<span class='warning bold'>[predator] has weakened [victim]!</span>")
+		victim.apply_effect(2, WEAKEN, armor_block)
+
+	// Punching while restrained makes you an idiot.
+	if((predator.restrained(LEGS) || predator.restrained(ARMS)) && prob(50))
+		predator.visible_message("<span class='notice'>[predator] lost balance while trying to [pick(attack_verb)].</span>", "<span class='warning'>You lose balance, as you try to [pick(attack_verb)]")
 		predator.slip(null, 3, 2)
 
 /datum/unarmed_attack/bite
 	name = "bite"
 	overlay_icon = "bite"
 	attack_verb = list("chew", "chaw")
-	attack_sound = 'sound/items/eatfood.ogg'
-	miss_sound = 'sound/items/eatfood.ogg'
+	attack_sound = 'sound/weapons/bite.ogg'
+	miss_sound = 'sound/machines/click.ogg'
 	weaken_chance = 0
 
 	hit_scope = list(BP_L_ARM, BP_R_ARM, BP_HEAD)
@@ -1201,6 +1214,7 @@
 	miss_chance = 25
 
 	body_zone_required = O_MOUTH
+	restrained_zone_check = ARMS // Because we just can't have good things :(.
 	require_zone_naked = TRUE
 
 	sharp = TRUE
@@ -1218,6 +1232,7 @@
 			return FALSE
 
 /datum/unarmed_attack/bite/unathi
+	restrained_zone_check = null // Because Unathi can still have great things..
 
 /datum/unarmed_attack/bite/unathi/after_attack_effects(mob/victim, mob/living/carbon/human/predator, obj/item/organ/external/BP, damage)
 	if(iscarbon(victim))
@@ -1242,6 +1257,7 @@
 	attack_verb = list("charm", "drug")
 	attack_sound = null
 	miss_sound = null
+	no_damage = TRUE
 
 	weaken_chance = 0
 	miss_chance = 0
