@@ -34,7 +34,7 @@
 
 	usr.show_message(t, 1)
 
-/mob/proc/show_message(msg, type, alt, alt_type)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
+/mob/proc/show_message(msg, type, alt, alt_type, flag)//Message, type of message (1 or 2), alternative message, alt message type (1 or 2)
 
 	if(!client)
 		return FALSE
@@ -57,7 +57,7 @@
 	// Added voice muffling for Issue 41.
 	if(stat == UNCONSCIOUS || sleeping > 0)
 		msg = "<I>... You can almost hear someone talking ...</I>"
-	to_chat(src, msg)
+	to_chat(src, msg, flag)
 	return msg
 
 /mob/living/carbon/show_message(msg, type, alt, alt_type)

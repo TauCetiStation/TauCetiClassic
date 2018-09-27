@@ -219,9 +219,11 @@ function output(message, flag) {
 	}
 
 	//Url stuff
-	if (message.length && flag != 'preventLink') {
-		message = emojify(message);
-		message = linkify(message);
+	if (message.length) {
+		if(flag == 'emojiAllowed')
+			message = emojify(message);
+		if(flag != 'preventLink')
+			message = linkify(message);
 	}
 
 	//fix for "я"
