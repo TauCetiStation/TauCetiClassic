@@ -169,7 +169,7 @@
 		return
 	..()
 
-/obj/item/device/searcher/atom_init
+/obj/item/device/searcher/atom_init()
 	. = ..()
 	scan()
 
