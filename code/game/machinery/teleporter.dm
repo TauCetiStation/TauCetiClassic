@@ -296,6 +296,9 @@
 	if (!com.target)
 		visible_message("<span class='notice'>Cannot authenticate locked on coordinates. Please reinstate coordinate matrix.</span>")
 		return
+	if(com.target.z == ZLEVEL_CENTCOMM || com.target.z > 7)
+		visible_message("<span class='notice'>Unknown coordinates. Please reinstate coordinate matrix.</span>")
+		return
 	if (istype(M, /atom/movable))
 		if(do_teleport(M, com.target))
 			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
