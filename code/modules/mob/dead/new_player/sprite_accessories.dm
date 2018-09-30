@@ -674,14 +674,6 @@
 	name = "Blunt Bangs"
 	icon_state = "hair_bluntbangs"
 
-/datum/sprite_accessory/hair/whispybangshigh
-	name = "Whispy Bangish"
-	icon_state = "hair_whispybangshigh"
-
-/datum/sprite_accessory/hair/whispybangs
-	name = "Whispy Bangs"
-	icon_state = "hair_whispybangs"
-
 /datum/sprite_accessory/hair/combedbob
 	name = "Combed Bob"
 	icon_state = "hair_combedbob"
