@@ -710,7 +710,133 @@
 	name = "Chub"
 	icon_state = "hair_chub"
 
+/datum/sprite_accessory/hair/ponytail6
+	name = "Ponytail female"
+	icon_state = "hair_ponytailf"
+	gender = FEMALE
 
+ /datum/sprite_accessory/hair/wisp
+	name = "Wisp"
+	icon_state = "hair_wisp"
+	gender = FEMALE
+
+ /datum/sprite_accessory/hair/halfshaved
+	name = "Half-Shaved Emo"
+	icon_state = "hair_halfshaved2"
+
+ /datum/sprite_accessory/hair/longeralt2
+	name = "Long Hair Alt 2"
+	icon_state = "hair_longeralt2"
+
+ /datum/sprite_accessory/hair/bun4
+	name = "Bun 4"
+	icon_state = "hair_bun4"
+
+ /datum/sprite_accessory/hair/doublebun
+	name = "Double-Bun"
+	icon_state = "hair_doublebun"
+
+ /datum/sprite_accessory/hair/rows
+	name = "Rows"
+	icon_state = "hair_rows1"
+
+ /datum/sprite_accessory/hair/rows2
+	name = "Rows 2"
+	icon_state = "hair_rows2"
+
+ /datum/sprite_accessory/hair/twintail
+	name = "Twintail"
+	icon_state = "hair_twintail"
+
+ /datum/sprite_accessory/hair/coffeehouse
+	name = "Coffee House Cut"
+	icon_state = "hair_coffeehouse"
+
+	gender = MALE
+ /datum/sprite_accessory/hair/veryshortovereye
+	name = "Overeye Very Short"
+	icon_state = "hair_veryshortovereye"
+
+ /datum/sprite_accessory/hair/oxton
+	name = "Oxton"
+	icon_state = "hair_oxton"
+
+ /datum/sprite_accessory/hair/zieglertail
+	name = "Zieglertail"
+	icon_state = "hair_ziegler"
+
+ /datum/sprite_accessory/hair/fringeemo
+	name = "Emo Fringe"
+	icon_state = "hair_emofringe"
+
+ /datum/sprite_accessory/hair/poofy2
+	name = "Poofy2"
+	icon_state = "hair_poofy2"
+
+ /datum/sprite_accessory/hair/fringetail
+	name = "Fringetail"
+	icon_state = "hair_fringetail"
+
+ /datum/sprite_accessory/hair/bun3
+	name = "Bun 3"
+	icon_state = "hair_bun3"
+
+ /datum/sprite_accessory/hair/veryshortovereyealternate
+	name = "Overeye Very Short, Alternate"
+	icon_state = "hair_veryshortovereyealternate"
+
+ /datum/sprite_accessory/hair/undercut2
+	name = "Undercut Swept Right"
+	icon_state = "hair_undercut2"
+	gender = MALE
+
+ /datum/sprite_accessory/hair/spikyponytail
+	name = "Spiky Ponytail"
+	icon_state = "hair_spikyponytail"
+
+ /datum/sprite_accessory/hair/grandebraid
+	name = "Grande Braid"
+	icon_state = "hair_grande"
+
+ /datum/sprite_accessory/hair/fringetail
+	name = "Fringetail"
+	icon_state = "hair_fringetail"
+
+ /datum/sprite_accessory/hair/rowbun
+	name = "Row Bun"
+	icon_state = "hair_rowbun"
+
+ /datum/sprite_accessory/hair/rowdualbraid
+	name = "Row Dual Braid"
+	icon_state = "hair_rowdualtail"
+
+ /datum/sprite_accessory/hair/rowbraid
+	name = "Row Braid"
+	icon_state = "hair_rowbraid"
+
+ /datum/sprite_accessory/hair/regulationmohawk
+	name = "Regulation Mohawk"
+	icon_state = "hair_shavedmohawk"
+
+ /datum/sprite_accessory/hair/topknot
+	name = "Topknot"
+	icon_state = "hair_topknot"
+
+ /datum/sprite_accessory/hair/ronin
+	name = "Ronin"
+	icon_state = "hair_ronin"
+
+ /datum/sprite_accessory/hair/bowlcut2
+	name = "Bowl 2"
+	icon_state = "hair_bowlcut2"
+
+ /datum/sprite_accessory/hair/manbun
+	name = "Manbun"
+	icon_state = "hair_manbun"
+
+ /datum/sprite_accessory/hair/country
+	name = "Country"
+	icon_state = "hair_country"
 
 //datum/sprite_accessory/hair/modern
 //	name = "Modern"
