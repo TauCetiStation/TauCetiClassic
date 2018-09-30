@@ -722,7 +722,7 @@
 
 /datum/sprite_accessory/hair/halfshaved
 	name = "Half-Shaved Emo"
-	icon_state = "hair_halfshaved"
+	icon_state = "hair_halfshaved2"
 
 /datum/sprite_accessory/hair/longeralt2
 	name = "Long Hair Alt 2"
