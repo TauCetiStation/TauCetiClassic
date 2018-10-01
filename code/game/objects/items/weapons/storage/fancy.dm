@@ -64,7 +64,6 @@
 	icon_type = "egg"
 	name = "egg box"
 	storage_slots = 12
-	max_combined_w_class = 24
 	can_hold = list("/obj/item/weapon/reagent_containers/food/snacks/egg")
 
 /obj/item/weapon/storage/fancy/egg_box/atom_init()
@@ -345,7 +344,6 @@
 	item_state = "syringe_kit"
 	max_w_class = 3
 	can_hold = list("/obj/item/weapon/reagent_containers/glass/beaker/vial")
-	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
 	storage_slots = 6
 	req_access = list(access_virology)
 
