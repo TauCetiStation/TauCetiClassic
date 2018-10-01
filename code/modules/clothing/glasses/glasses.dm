@@ -51,7 +51,7 @@
 
 /obj/item/clothing/glasses/science
 	name = "science goggles"
-	desc = "The goggles do nothing!"
+	desc = "Special goggles with built-in reagent and atmospheric scanner"
 	icon_state = "purple"
 	item_state = "glasses"
 	action_button_name = "Toggle Goggles"

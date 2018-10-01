@@ -2199,6 +2199,15 @@ datum/design/mining_hud
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/hud/mining
 
+datum/design/science_goggles
+	name = "science goggles"
+	desc = "Special goggles with built-in reagent and atmospheric scanner"
+	id = "science_goggles"
+	req_tech = list("phorontech" = 2, "materials" = 2, "engineering" = 2)
+	build_type = PROTOLATHE
+	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	build_path = /obj/item/clothing/glasses/science
+
 /////////////////////////////////////////
 //////////////////Test///////////////////
 /////////////////////////////////////////

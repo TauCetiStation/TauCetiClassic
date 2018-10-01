@@ -224,13 +224,18 @@
 	if(reagents && is_open_container()) //is_open_container() isn't really the right proc for this, but w/e
 		to_chat(user, "It contains:")
 		if(reagents.reagent_list.len)
-			if(istype(src, /obj/structure/reagent_dispensers)) //watertanks, fueltanks
+			if(istype(src, /obj/structure/reagent_dispensers) || hasHUD(user,"science")) //watertanks, fueltanks. Also, science goggles can scan reagents
 				for(var/datum/reagent/R in reagents.reagent_list)
 					to_chat(user, "<span class='info'>[R.volume] units of [R.name]</span>")
 			else
 				to_chat(user, "<span class='info'>[reagents.total_volume] units of liquid.</span>")
 		else
 			to_chat(user, "Nothing.")
+
+		return    //So you won't get useless atmos data of the turf, on which your scanned beaker is located
+
+	if(hasHUD(user,"science"))
+		print_atmos_analysis(user, atmosanalyzer_scan(src))
 
 	return distance == -1 || isobserver(user) || (get_dist(src, user) <= distance)
 
