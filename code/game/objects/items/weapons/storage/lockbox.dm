@@ -7,8 +7,7 @@
 	item_state = "syringe_kit"
 	w_class = 4
 	max_w_class = 3
-	max_combined_w_class = 14 //The sum of the w_classes of all the items in this storage item.
-	storage_slots = 4
+	max_storage_space = 32 //The sum of the w_classes of all the items in this storage item.
 	req_access = list(access_armory)
 	var/locked = 1
 	var/broken = 0
@@ -17,53 +16,53 @@
 	var/icon_broken = "lockbox+b"
 
 
-	attackby(obj/item/weapon/W, mob/user)
-		if (istype(W, /obj/item/weapon/card/id))
-			if(src.broken)
-				to_chat(user, "\red It appears to be broken.")
+/obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W, mob/user)
+	if (istype(W, /obj/item/weapon/card/id))
+		if(src.broken)
+			to_chat(user, "\red It appears to be broken.")
+			return
+		if(src.allowed(user))
+			src.locked = !( src.locked )
+			if(src.locked)
+				src.icon_state = src.icon_locked
+				to_chat(user, "\red You lock the [src.name]!")
 				return
-			if(src.allowed(user))
-				src.locked = !( src.locked )
-				if(src.locked)
-					src.icon_state = src.icon_locked
-					to_chat(user, "\red You lock the [src.name]!")
-					return
-				else
-					src.icon_state = src.icon_closed
-					to_chat(user, "\red You unlock the [src.name]!")
-					return
 			else
-				to_chat(user, "\red Access Denied")
-		else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
-			broken = 1
-			locked = 0
-			desc = "It appears to be broken."
-			icon_state = src.icon_broken
-			if(istype(W, /obj/item/weapon/melee/energy/blade))
-				var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-				spark_system.set_up(5, 0, src.loc)
-				spark_system.start()
-				playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-				playsound(src.loc, "sparks", 50, 1)
-				for(var/mob/O in viewers(user, 3))
-					O.show_message(text("\blue The locker has been sliced open by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
-			else
-				for(var/mob/O in viewers(user, 3))
-					O.show_message(text("\blue The locker has been broken by [] with an electromagnetic card!", user), 1, text("You hear a faint electrical spark."), 2)
-
-		if(!locked)
-			..()
+				src.icon_state = src.icon_closed
+				to_chat(user, "\red You unlock the [src.name]!")
+				return
 		else
-			to_chat(user, "\red Its locked!")
-		return
-
-
-	show_to(mob/user)
-		if(locked)
-			to_chat(user, "\red Its locked!")
+			to_chat(user, "\red Access Denied")
+	else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
+		broken = 1
+		locked = 0
+		desc = "It appears to be broken."
+		icon_state = src.icon_broken
+		if(istype(W, /obj/item/weapon/melee/energy/blade))
+			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+			spark_system.set_up(5, 0, src.loc)
+			spark_system.start()
+			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(src.loc, "sparks", 50, 1)
+			for(var/mob/O in viewers(user, 3))
+				O.show_message(text("\blue The locker has been sliced open by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
 		else
-			..()
-		return
+			for(var/mob/O in viewers(user, 3))
+				O.show_message(text("\blue The locker has been broken by [] with an electromagnetic card!", user), 1, text("You hear a faint electrical spark."), 2)
+
+	if(!locked)
+		..()
+	else
+		to_chat(user, "\red Its locked!")
+	return
+
+
+/obj/item/weapon/storage/lockbox/open(mob/user)
+	if(locked)
+		to_chat(user, "\red Its locked!")
+	else
+		..()
+	return
 
 
 /obj/item/weapon/storage/lockbox/mind_shields
