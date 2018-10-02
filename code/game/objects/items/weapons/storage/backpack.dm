@@ -78,7 +78,7 @@
 	item_state = "giftbag"
 	w_class = ITEM_SIZE_LARGE
 	max_w_class = ITEM_SIZE_NORMAL
-	max_storage_space = 400 // can store a ton of shit!
+	max_storage_space = 80 // can store a ton of shit!
 
 /obj/item/weapon/storage/backpack/cultpack
 	name = "trophy rack"

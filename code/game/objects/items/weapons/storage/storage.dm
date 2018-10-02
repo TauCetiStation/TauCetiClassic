@@ -128,75 +128,67 @@
 
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
-/obj/item/weapon/storage/proc/can_be_inserted(obj/item/W, stop_messages = 0)
+/obj/item/weapon/storage/proc/can_be_inserted(obj/item/W, stop_messages = FALSE)
 	if(!istype(W) || (W.flags & ABSTRACT)) return //Not an item
 
 	if(loc == W)
-		return 0 //Means the item is already in the storage item
+		return FALSE //Means the item is already in the storage item
 
 	if(storage_slots != null && contents.len >= storage_slots)
 		if(!stop_messages)
 			to_chat(usr, "<span class='notice'>[src] is full, make some space.</span>")
-		return 0 //Storage item is full
+		return FALSE //Storage item is full
 
 	if(can_hold.len)
-		var/ok = 0
+		var/ok = FALSE
 		for(var/A in can_hold)
 			if(istype(W, text2path(A) ))
-				ok = 1
+				ok = TRUE
 				break
 		if(!ok)
 			if(!stop_messages)
 				if (istype(W, /obj/item/weapon/hand_labeler))
-					return 0
+					return FALSE
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
-			return 0
+			return FALSE
 
 	for(var/A in cant_hold) //Check for specific items which this container can't hold.
 		if(istype(W, text2path(A) ))
 			if(!stop_messages)
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W].</span>")
-			return 0
+			return FALSE
 
 	if (max_w_class != null && W.w_class > max_w_class)
 		if(!stop_messages)
 			to_chat(usr, "<span class='notice'>[W] is too big for this [src].</span>")
-		return 0
-
-	/*var/sum_w_class = W.w_class
-	for(var/obj/item/I in contents)
-		sum_w_class += I.w_class //Adds up the combined w_classes which will be in the storage item if the item is added to it.
-
-	if(sum_w_class > max_combined_w_class)
-		if(!stop_messages)
-			to_chat(usr, "<span class='notice'>[src] is full, make some space.</span>")
-		return 0*/
+		return FALSE
 
 	if(W.w_class >= src.w_class && (istype(W, /obj/item/weapon/storage)))
 		if(!istype(src, /obj/item/weapon/storage/backpack/holding))	//bohs should be able to hold backpacks again. The override for putting a boh in a boh is in backpack.dm.
 			if(!stop_messages)
 				to_chat(usr, "<span class='notice'>[src] cannot hold [W] as it's a storage item of the same size.</span>")
-			return 0 //To prevent the stacking of same sized storage items.
+			return FALSE //To prevent the stacking of same sized storage items.
 
 	var/total_storage_space = W.get_storage_cost()
 	if(total_storage_space == ITEM_SIZE_NO_CONTAINER)
 		if(!stop_messages)
 			to_chat(usr, "<span class='notice'>\The [W] cannot be placed in [src].</span>")
-		return 0
+		return FALSE
 
 	total_storage_space += storage_space_used() //Adds up the combined w_classes which will be in the storage item if the item is added to it.
 	if(total_storage_space > max_storage_space)
 		if(!stop_messages)
 			to_chat(usr, "<span class='notice'>\The [src] is too full, make some space.</span>")
-		return 0
+		return FALSE
 
-	return 1
+	return TRUE
 
 //This proc handles items being inserted. It does not perform any checks of whether an item can or can't be inserted. That's done by can_be_inserted()
 //The stop_warning parameter will stop the insertion message from being displayed. It is intended for cases where you are inserting multiple items at once,
 //such as when picking up all the items on a tile with one click.
 /obj/item/weapon/storage/proc/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return FALSE
 	if(usr)
 		usr.remove_from_mob(W)
 		usr.update_icons()	//update our overlays
@@ -221,7 +213,7 @@
 		if(!NoUpdate)
 			update_ui_after_item_insertion()
 	update_icon()
-	return 1
+	return TRUE
 
 /obj/item/weapon/storage/proc/update_ui_after_item_insertion()
 	prepare_ui()
@@ -235,7 +227,8 @@
 
 //Call this proc to handle the removal of an item from the storage item. The item will be moved to the atom sent as new_target
 /obj/item/weapon/storage/proc/remove_from_storage(obj/item/W, atom/new_location, var/NoUpdate = FALSE)
-	if(!istype(W)) return 0
+	if(!istype(W))
+		return FALSE
 
 	if(istype(src, /obj/item/weapon/storage/fancy))
 		var/obj/item/weapon/storage/fancy/F = src
@@ -265,7 +258,7 @@
 	W.on_exit_storage(src)
 	if(!NoUpdate)
 		update_icon()
-	return 1
+	return TRUE
 
 //Run once after using remove_from_storage with NoUpdate = 1
 /obj/item/weapon/storage/proc/finish_bulk_removal()

@@ -238,11 +238,11 @@
 	var/obj/item/sample_object
 	var/number
 
-	New(obj/item/sample)
-		if(!istype(sample))
-			qdel(src)
-		sample_object = sample
-		number = 1
+/datum/numbered_display/New(obj/item/sample)
+	if(!istype(sample))
+		qdel(src)
+	sample_object = sample
+	number = 1
 
 /datum/storage_ui/default/proc/space_orient_objs()
 
