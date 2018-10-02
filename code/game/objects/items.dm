@@ -393,8 +393,8 @@
 		var/obj/item/weapon/storage/S = W
 		if(S.use_to_pickup)
 			if(S.collection_mode) //Mode is set to collect all items on a tile and we clicked on a valid one.
-				if(isturf(src.loc))
-					S.gather_all(src.loc, user)
+				if(isturf(loc))
+					S.gather_all(loc, user)
 			else if(S.can_be_inserted(src))
 				S.handle_item_insertion(src)
 	return FALSE
@@ -618,7 +618,7 @@
 			if(slot_in_backpack)
 				if (H.back && istype(H.back, /obj/item/weapon/storage/backpack))
 					var/obj/item/weapon/storage/backpack/B = H.back
-					if(B.can_be_inserted(src,M,1))
+					if(B.can_be_inserted(src, M, 1))
 						return 1
 				return 0
 			if(slot_tie)

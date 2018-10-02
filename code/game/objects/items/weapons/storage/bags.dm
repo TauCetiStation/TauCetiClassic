@@ -39,22 +39,22 @@
 	can_hold = list() // any
 	cant_hold = list("/obj/item/weapon/disk/nuclear")
 
-/obj/item/weapon/storage/bag/trash/handle_item_insertion(obj/item/W as obj, prevent_warning = FALSE, NoUpdate = FALSE)
+/obj/item/weapon/storage/bag/trash/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
 	. = ..()
 	if(.)
 		update_w_class()
 
-/obj/item/weapon/storage/bag/trash/remove_from_storage(obj/item/W as obj, atom/new_location, NoUpdate = FALSE)
+/obj/item/weapon/storage/bag/trash/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
 	. = ..()
 	if(.)
 		update_w_class()
 
-/obj/item/weapon/storage/bag/trash/can_be_inserted(obj/item/W, mob/user, stop_messages = 0)
-	if(istype(src.loc, /obj/item/weapon/storage))
+/obj/item/weapon/storage/bag/trash/can_be_inserted(obj/item/W, mob/user, stop_messages = FALSE)
+	if(istype(loc, /obj/item/weapon/storage))
 		if(!stop_messages)
-			to_chat(user, "<span class='notice'>Take [src] out of [src.loc] first.</span>")
-		return 0 //causes problems if the bag expands and becomes larger than src.loc can hold, so disallow it
-	. = ..()
+			to_chat(user, "<span class='notice'>Take [src] out of [loc] first.</span>")
+		return FALSE //causes problems if the bag expands and becomes larger than loc can hold, so disallow it
+	return ..()
 
 /obj/item/weapon/storage/bag/trash/proc/update_w_class()
 	w_class = initial(w_class)
@@ -73,10 +73,14 @@
 
 /obj/item/weapon/storage/bag/trash/update_icon()
 	switch(w_class)
-		if(2) icon_state = "[initial(icon_state)]"
-		if(3) icon_state = "[initial(icon_state)]1"
-		if(4) icon_state = "[initial(icon_state)]2"
-		if(5 to INFINITY) icon_state = "[initial(icon_state)]3"
+		if(2)
+			icon_state = "[initial(icon_state)]"
+		if(3)
+			icon_state = "[initial(icon_state)]1"
+		if(4)
+			icon_state = "[initial(icon_state)]2"
+		if(5 to INFINITY)
+			icon_state = "[initial(icon_state)]3"
 
 /obj/item/weapon/storage/bag/trash/bluespace
 	name = "trash bag of holding"
@@ -96,7 +100,7 @@
 	icon_state = "plasticbag"
 	item_state = "plasticbag"
 
-	w_class = ITEM_SIZE_TINY
+	w_class = ITEM_SIZE_LARGE
 	max_w_class = ITEM_SIZE_NORMAL
 	max_storage_space = DEFAULT_BOX_STORAGE
 	can_hold = list() // any
@@ -113,13 +117,13 @@
 	icon_state = "satchel"
 	slot_flags = SLOT_BELT | SLOT_POCKET
 	w_class = ITEM_SIZE_NORMAL
-	max_storage_space = 200
+	max_storage_space = 100
 	can_hold = list("/obj/item/weapon/ore", "/obj/item/bluespace_crystal")
 
 /obj/item/weapon/storage/bag/ore/holding
 	name = "Mining satchel of holding"
 	desc = "A revolution in convenience, this satchel allows for huge amounts of ore storage. It's been outfitted with anti-malfunction safety measures."
-	max_storage_space = 600
+	max_storage_space = 300
 	origin_tech = "bluespace=4;materials=3;engineering=3"
 	icon_state = "satchel_bspace"
 

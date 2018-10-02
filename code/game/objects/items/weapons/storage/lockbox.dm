@@ -5,12 +5,12 @@
 	desc = "A locked box."
 	icon_state = "lockbox+l"
 	item_state = "syringe_kit"
-	w_class = 4
-	max_w_class = 3
-	max_storage_space = 32 //The sum of the w_classes of all the items in this storage item.
+	w_class = ITEM_SIZE_LARGE
+	max_w_class = ITEM_SIZE_NORMAL
+	max_storage_space = 10 //The sum of the w_classes of all the items in this storage item.
 	req_access = list(access_armory)
-	var/locked = 1
-	var/broken = 0
+	var/locked = TRUE
+	var/broken = FALSE
 	var/icon_locked = "lockbox+l"
 	var/icon_closed = "lockbox"
 	var/icon_broken = "lockbox+b"
@@ -18,48 +18,48 @@
 
 /obj/item/weapon/storage/lockbox/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/id))
-		if(src.broken)
-			to_chat(user, "\red It appears to be broken.")
+		if(broken)
+			to_chat(user, "<span class='warning'>It appears to be broken.</span>")
 			return
-		if(src.allowed(user))
-			src.locked = !( src.locked )
-			if(src.locked)
-				src.icon_state = src.icon_locked
-				to_chat(user, "\red You lock the [src.name]!")
+		if(allowed(user))
+			locked = !( locked )
+			if(locked)
+				icon_state = icon_locked
+				to_chat(user, "<span class='warning'>You lock the [src]!</span>")
 				return
 			else
-				src.icon_state = src.icon_closed
-				to_chat(user, "\red You unlock the [src.name]!")
+				icon_state = icon_closed
+				to_chat(user, "<span class='warning'>You unlock the [src]!</span>")
 				return
 		else
-			to_chat(user, "\red Access Denied")
-	else if((istype(W, /obj/item/weapon/card/emag)||istype(W, /obj/item/weapon/melee/energy/blade)) && !src.broken)
-		broken = 1
-		locked = 0
+			to_chat(user, "<span class='warning'>Access Denied</span>")
+	else if((istype(W, /obj/item/weapon/card/emag) || istype(W, /obj/item/weapon/melee/energy/blade)) && !broken)
+		broken = TRUE
+		locked = FALSE
 		desc = "It appears to be broken."
-		icon_state = src.icon_broken
+		icon_state = icon_broken
 		if(istype(W, /obj/item/weapon/melee/energy/blade))
 			var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
-			spark_system.set_up(5, 0, src.loc)
+			spark_system.set_up(5, 0, loc)
 			spark_system.start()
-			playsound(src.loc, 'sound/weapons/blade1.ogg', 50, 1)
-			playsound(src.loc, "sparks", 50, 1)
+			playsound(loc, 'sound/weapons/blade1.ogg', 50, 1)
+			playsound(loc, "sparks", 50, 1)
 			for(var/mob/O in viewers(user, 3))
-				O.show_message(text("\blue The locker has been sliced open by [] with an energy blade!", user), 1, text("\red You hear metal being sliced and sparks flying."), 2)
+				O.show_message(text("<span class='warning'>The locker has been sliced open by [] with an energy blade!</span>", user), 1, text("<span class='warning'>You hear metal being sliced and sparks flying.</span>"), 2)
 		else
 			for(var/mob/O in viewers(user, 3))
-				O.show_message(text("\blue The locker has been broken by [] with an electromagnetic card!", user), 1, text("You hear a faint electrical spark."), 2)
+				O.show_message(text("<span class='warning'>The locker has been broken by [] with an electromagnetic card!</span>", user), 1, text("<span class='warning'>You hear a faint electrical spark.</span>"), 2)
 
 	if(!locked)
 		..()
 	else
-		to_chat(user, "\red Its locked!")
+		to_chat(user, "<span class='warning'>Its locked!</span>")
 	return
 
 
 /obj/item/weapon/storage/lockbox/open(mob/user)
 	if(locked)
-		to_chat(user, "\red Its locked!")
+		to_chat(user, "<span class='warning'>Its locked!</span>")
 	else
 		..()
 	return
