@@ -57,7 +57,7 @@
 /obj/structure/closet/attack_ghost(mob/ghost)
 	if(ghost.client && ghost.client.inquisitive_ghost)
 		ghost.examinate(src)
-		if (!src.opened)
+		if (!opened)
 			to_chat(ghost, "It contains: [english_list(contents)].")
 
 /obj/structure/closet/proc/dump_contents()
