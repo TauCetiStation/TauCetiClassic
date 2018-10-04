@@ -105,8 +105,8 @@ var/list/ghostteleportlocs = list()
 
 	. = ..()
 
-	if(dynamic_lighting)
-		luminosity = FALSE
+	//if(dynamic_lighting)
+	//	luminosity = FALSE
 
 	power_change() // all machines set to current power level, also updates lighting icon
 

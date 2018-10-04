@@ -29,6 +29,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	power_equip = 0
 	power_environ = 0
 	valid_territory = 0
+	luminosity = 1
 
 
 //These are shuttle areas, they must contain two areas in a subgroup if you want to move a shuttle from one
@@ -193,7 +194,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "start area"
 	icon_state = "start"
 	requires_power = 0
-	dynamic_lighting = 0
+	//dynamic_lighting = 0
 	has_gravity = 1
 
 // === end remove
@@ -590,7 +591,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/holodeck
 	name = "Holodeck"
 	icon_state = "Holodeck"
-	dynamic_lighting = 0
+	//dynamic_lighting = 0
 
 /area/holodeck/alphadeck
 	name = "Holodeck Alpha"
@@ -1262,7 +1263,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/awaymission/beach
 	name = "Beach"
 	icon_state = "null"
-	dynamic_lighting = 0
+	//dynamic_lighting = 0
 	requires_power = 0
 	var/sound/mysound = null
 /* hello copypasta of area/beach (this idea with this area is Eeeeuuuuuwwww)
@@ -1379,7 +1380,7 @@ var/list/the_station_areas = list (
 /area/beach
 	name = "Keelin's private beach"
 	icon_state = "null"
-	dynamic_lighting = 0
+	//dynamic_lighting = 0
 	requires_power = 0
 	var/sound/mysound = null
 /* hello copypasta of area/away_mission/beach

@@ -6,8 +6,6 @@
 	return ..()
 
 /mob/atom_init()
-	spawn()
-		if(client) animate(client, color = null, time = 0)
 	mob_list += src
 	if(stat == DEAD)
 		dead_mob_list += src
@@ -768,7 +766,7 @@ note dizziness decrements automatically in the mob's Life() proc.
 /mob/proc/facedir(ndir)
 	if(!canface())
 		return 0
-	dir = ndir
+	set_dir(ndir)
 	if(buckled && buckled.buckle_movable)
 		buckled.dir = ndir
 		buckled.handle_rotation()
@@ -1060,6 +1058,13 @@ mob/proc/yank_out_object()
 		animate(client, color = CM.matrix, time = transition_time)
 	else
 		animate(client, color = null, time = transition_time)
+
+	if(preset == "nvg")
+		dark_plane.alpha = 65
+	else if(see_in_dark <= 2)
+		dark_plane.alpha = initial(dark_plane.alpha)
+	else
+		dark_plane.alpha = min(65, see_in_dark * 10)
 
 /mob/proc/instant_vision_update(state=null, atom/A)
 	if(!client || isnull(state))

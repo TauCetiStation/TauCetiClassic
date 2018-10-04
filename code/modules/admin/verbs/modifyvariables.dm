@@ -128,7 +128,7 @@ var/list/forbidden_varedit_object_types = list(
 	if(!islist(L))
 		to_chat(usr, "Still not a list")
 		return
-		
+
 
 	var/list/locked = list("vars", "key", "ckey", "client", "virus", "viruses", "icon", "icon_state")
 	var/list/names = sortList(L)
@@ -471,11 +471,17 @@ var/list/forbidden_varedit_object_types = list(
 			return .(O.vars[variable])
 
 		if("text")
-			var/var_new = sanitize(input("Enter new text:", "Text", O.vars[variable])) as null|text
-			if(isnull(var_new))
-				return
-			O.vars[variable] = var_new
-
+			switch(variable)
+				if("light_color")
+					var/var_new = input("Enter new number:", "Text", O.vars[variable]) as null|color
+					if(isnull(var_new) || !istext(var_new))
+						return
+					O.set_light(null, null, var_new)
+				else
+					var/var_new = sanitize(input("Enter new text:", "Text", O.vars[variable])) as null|text
+					if(isnull(var_new))
+						return
+					O.vars[variable] = var_new
 		if("num")
 			switch(variable)
 				if("light_range")
@@ -483,6 +489,11 @@ var/list/forbidden_varedit_object_types = list(
 					if(isnull(var_new))
 						return
 					O.set_light(var_new)
+				if("light_power")
+					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
+					if(isnull(var_new))
+						return
+					O.set_light(null, var_new)
 				if("player_ingame_age")
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new) || var_new < 0)
@@ -515,6 +526,11 @@ var/list/forbidden_varedit_object_types = list(
 					message_admins("[key_name_admin(src)] modified [original_name]'s [variable] to [O.resize]")
 					log_handled = TRUE
 					O.update_transform()
+				if("opacity")
+					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
+					if(isnull(var_new))
+						return
+					O.set_opacity(var_new)
 				else
 					var/var_new = input("Enter new number:", "Num", O.vars[variable]) as null|num
 					if(isnull(var_new))

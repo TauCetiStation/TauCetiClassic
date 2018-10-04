@@ -62,10 +62,14 @@ What is the naming convention for planes or layers?
 
 #define CLICKCATCHER_PLANE   -99
 
+#ifndef KILL_PARALLAX
 #define PLANE_SPACE            -95
 #define PLANE_SPACE_PARALLAX   -90
+#endif
 
-#define GAME_PLANE   0
+#define DARK_PLANE   -50
+
+#define GAME_PLANE   -1
 
 #define LIGHTING_PLANE         15
 #define LIGHTING_LAYER         15

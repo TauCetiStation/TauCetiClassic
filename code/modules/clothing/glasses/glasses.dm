@@ -31,7 +31,7 @@
 				to_chat(usr, "You activate the optical matrix on the [src].")
 			playsound(src.loc, activation_sound, 10, 0)
 			H.update_inv_glasses()
-			H.update_sight()
+			H.handle_regular_hud_updates()
 
 /obj/item/clothing/glasses/meson
 	name = "optical meson scanner"

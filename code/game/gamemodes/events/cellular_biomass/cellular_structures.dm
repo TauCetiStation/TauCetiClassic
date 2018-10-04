@@ -103,14 +103,13 @@
 /obj/structure/cellular_biomass/core
 	layer = 3
 	health = 120
-	luminosity = 3
 	light_color = "#710F8C"
 	icon_state = "light_1"
 
 /obj/structure/cellular_biomass/core/atom_init()
 	. = ..()
 	icon_state = "light_[pick(1,2)]"
-	set_light(luminosity)
+	set_light()
 
 /obj/structure/cellular_biomass/core/process()
 	health = max(120, health + 1)

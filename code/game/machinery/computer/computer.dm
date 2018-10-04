@@ -10,7 +10,7 @@
 	var/obj/item/weapon/circuitboard/circuit = null //if circuit==null, computer can't disassembly
 	var/processing = 0
 
-	var/light_range_on = 1.5
+	var/light_range_on = 1
 	var/light_power_on = 3
 
 /obj/machinery/computer/atom_init(mapload, obj/item/weapon/circuitboard/C)
@@ -93,7 +93,7 @@
 	..()
 	update_icon()
 	if(stat & NOPOWER)
-		set_light(0)
+		kill_light()
 	else
 		set_light(light_range_on, light_power_on)
 	return
@@ -129,7 +129,7 @@
 				A.icon_state = "3"
 			else
 				to_chat(user, "\blue You disconnect the monitor.")
-				set_light(0)
+				kill_light()
 				A.state = 4
 				A.icon_state = "4"
 			qdel(src)

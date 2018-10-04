@@ -3,11 +3,12 @@
 	icon_state = "bolt"
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
+	light_shadows = FALSE
 	var/time_to_live = 3
 
 /obj/effect/projectile/atom_init()
 	. = ..()
-	if(light_color)
+	if(light_special_on)
 		set_light(light_range,light_power,light_color)
 
 /obj/effect/projectile/proc/set_transform(matrix/M)
@@ -23,7 +24,8 @@
 //----------------------------
 /obj/effect/projectile/laser/tracer
 	icon_state = "beam"
-	light_range = 1.5
+	light_special_on = TRUE
+	light_range = 2
 	light_power = 2
 	light_color = "#ff0000"
 
@@ -38,7 +40,8 @@
 //----------------------------
 /obj/effect/projectile/laser_blue/tracer
 	icon_state = "beam_blue"
-	light_range = 1.5
+	light_special_on = TRUE
+	light_range = 2
 	light_power = 2
 	light_color = "#0000ff"
 
@@ -53,7 +56,8 @@
 //----------------------------
 /obj/effect/projectile/laser_omni/tracer
 	icon_state = "beam_omni"
-	light_range = 1.5
+	light_special_on = TRUE
+	light_range = 2
 	light_power = 2
 	light_color = "#00ffff"
 
@@ -68,7 +72,8 @@
 //----------------------------
 /obj/effect/projectile/xray/tracer
 	icon_state = "xray"
-	light_range = 1.5
+	light_special_on = TRUE
+	light_range = 2
 	light_power = 2
 	light_color = "#00ff00"
 
@@ -83,6 +88,7 @@
 //----------------------------
 /obj/effect/projectile/laser_heavy/tracer
 	icon_state = "beam_heavy"
+	light_special_on = TRUE
 	light_range = 2
 	light_power = 3
 	light_color = "#ff0000"
@@ -98,7 +104,8 @@
 //----------------------------
 /obj/effect/projectile/laser_pulse/tracer
 	icon_state = "u_laser"
-	light_range = 1.5
+	light_special_on = TRUE
+	light_range = 2
 	light_power = 2
 	light_color = "#0000ff"
 
@@ -113,7 +120,8 @@
 //----------------------------
 /obj/effect/projectile/pulse/muzzle
 	icon_state = "muzzle_pulse"
-	light_range = 1.5
+	light_special_on = TRUE
+	light_range = 2
 	light_power = 2
 	light_color = "#0000ff"
 
@@ -137,7 +145,8 @@
 //----------------------------
 /obj/effect/projectile/stun/tracer
 	icon_state = "stun"
-	light_range = 1.5
+	light_special_on = TRUE
+	light_range = 2
 	light_power = 2
 	light_color = "#f2f5a9"
 
@@ -155,6 +164,7 @@
 
 /obj/effect/projectile/bullet/muzzle
 	icon_state = "muzzle_bullet"
+	light_special_on = TRUE
 	light_range = 3
 	light_power = 2
 	light_color = "#f2f5a9"
@@ -167,6 +177,7 @@
 //----------------------------
 /obj/effect/projectile/energy/muzzle
 	icon_state = "muzzle_energy"
+	light_special_on = TRUE
 	light_range = 2
 	light_power = 2
 	light_color = "#2be4b8"

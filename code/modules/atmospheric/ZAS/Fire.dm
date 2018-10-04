@@ -218,7 +218,7 @@ If it gains pressure too slowly, it may leak or just rupture instead of explodin
 /obj/fire/proc/RemoveFire()
 	var/turf/T = loc
 	if (istype(T))
-		set_light(0)
+		kill_light()
 
 		T.fire = null
 		loc = null

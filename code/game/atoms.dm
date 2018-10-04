@@ -69,12 +69,12 @@
 		stack_trace("Warning: [src]([type]) initialized multiple times!")
 	initialized = TRUE
 
-	if(light_power && light_range)
-		update_light()
+	//if(light_power && light_range)
+	//	update_light()
 
-	if(opacity && isturf(src.loc))
-		var/turf/T = src.loc
-		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
+//	if(opacity && isturf(src.loc))
+//		var/turf/T = src.loc
+//		T.has_opaque_atom = TRUE // No need to recalculate it in this case, it's guaranteed to be on afterwards anyways.
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -88,9 +88,8 @@
 
 	LAZYCLEARLIST(overlays)
 
-	if(light)
-		light.destroy()
-		light = null
+	if(light_obj)
+		QDEL_NULL(light_obj)
 
 	return ..()
 
@@ -512,6 +511,7 @@
 	stoplag()
 
 /atom/proc/update_transform()
+	..()
 	var/matrix/ntransform = matrix(transform)
 	var/changed = 0
 

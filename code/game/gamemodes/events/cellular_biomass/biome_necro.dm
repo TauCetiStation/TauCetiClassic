@@ -54,7 +54,7 @@
 /obj/structure/cellular_biomass/core/necro/atom_init()
 	. = ..()
 	icon_state = "core"
-	set_light(luminosity)
+	set_light()
 
 /obj/structure/cellular_biomass/lair/necro/atom_init()
 	new /mob/living/simple_animal/hostile/cellular/necro/(loc)

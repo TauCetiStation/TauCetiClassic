@@ -287,12 +287,16 @@
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
 	. = ..()
 	update_icon(1)
-	set_light(1.5)
+	//set_light(0)
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
 	underlays.Cut()
 	var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
+#ifndef KILL_PARALLAX
 	I.plane = PLANE_SPACE
+#else
+	I.plane = GAME_PLANE
+#endif
 	underlays += I
 
 	var/dirs = 0

@@ -635,10 +635,10 @@
 		var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 		if(gestalt && isturf(gestalt.loc))
 			var/turf/T = gestalt.loc
-			light_amount = round((T.get_lumcount()*10)-5)
+			light_amount = T.check_lumcount()
 		else if(isturf(loc)) //else, there's considered to be no light
 			var/turf/T = loc
-			light_amount = round((T.get_lumcount()*10)-5)
+			light_amount = T.check_lumcount()
 
 		nutrition += light_amount
 		traumatic_shock -= light_amount

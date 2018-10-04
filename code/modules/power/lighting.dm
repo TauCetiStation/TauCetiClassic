@@ -208,7 +208,7 @@
 	var/brightness_color = null
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = 0
-	var/light_type = /obj/item/weapon/light/tube		// the type of light item
+	var/lamp_type = /obj/item/weapon/light/tube		// the type of light item
 	var/fitting = "tube"
 	var/switchcount = 0			// count of number of times switched on/off
 								// this is used to calc the probability the light burns out
@@ -225,7 +225,7 @@
 	brightness_power = 2
 	brightness_color = "#a0a080"
 	desc = "A small lighting fixture."
-	light_type = /obj/item/weapon/light/bulb
+	lamp_type = /obj/item/weapon/light/bulb
 
 /obj/machinery/light/small/emergency
 	brightness_range = 6
@@ -235,7 +235,7 @@
 /obj/machinery/light/spot
 	name = "spotlight"
 	fitting = "large tube"
-	light_type = /obj/item/weapon/light/tube/large
+	lamp_type = /obj/item/weapon/light/tube/large
 	brightness_range = 12
 	brightness_power = 4
 
@@ -308,13 +308,13 @@
 					status = LIGHT_BURNED
 					icon_state = "[base_state]-burned"
 					on = 0
-					set_light(0)
+					kill_light()
 			else
 				use_power = 2
 				set_light(brightness_range, brightness_power, brightness_color)
 	else
 		use_power = 1
-		set_light(0)
+		kill_light()
 
 	active_power_usage = ((light_range + light_power) * 10)
 	if(on != on_gs)
@@ -369,7 +369,7 @@
 		else
 			src.add_fingerprint(user)
 			var/obj/item/weapon/light/L = W
-			if(istype(L, light_type))
+			if(istype(L, lamp_type))
 				status = L.status
 				to_chat(user, "You insert the [L.name].")
 				switchcount = L.switchcount
@@ -535,7 +535,7 @@
 		to_chat(user, "You remove the light [fitting].")
 
 	// create a light tube/bulb item and put it in the user's hand
-	var/obj/item/weapon/light/L = new light_type()
+	var/obj/item/weapon/light/L = new lamp_type()
 	L.status = status
 	L.rigged = rigged
 	L.brightness_range = brightness_range
@@ -563,7 +563,7 @@
 
 	to_chat(user, "You telekinetically remove the light [fitting].")
 	// create a light tube/bulb item and put it in the user's hand
-	var/obj/item/weapon/light/L = new light_type()
+	var/obj/item/weapon/light/L = new lamp_type()
 	L.status = status
 	L.rigged = rigged
 	L.brightness_range = brightness_range

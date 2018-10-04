@@ -28,7 +28,7 @@
 		else
 			on = 0
 			updateicon()
-			set_light(0)
+			kill_light()
 			src.visible_message("<span class='warning'>[src] shuts down due to lack of power!</span>")
 			return
 
@@ -57,7 +57,7 @@
 	if(on)
 		on = 0
 		to_chat(user, "\blue You turn off the light")
-		set_light(0)
+		kill_light()
 	else
 		if(!cell)
 			return

@@ -50,7 +50,7 @@
 				for(var/mob/M in viewers(user))
 					if(M == user) continue
 					to_chat(M, "[user] detaches the power sink from the cable.")
-				set_light(0)
+				kill_light()
 				icon_state = "powersink0"
 
 				return
@@ -85,7 +85,7 @@
 					if(M == user) continue
 					to_chat(M, "[user] deactivates the power sink!")
 				mode = 1
-				set_light(0)
+				kill_light()
 				icon_state = "powersink0"
 				STOP_PROCESSING(SSobj, src)
 

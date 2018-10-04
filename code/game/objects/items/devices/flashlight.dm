@@ -10,25 +10,29 @@
 	m_amt = 50
 	g_amt = 20
 	action_button_name = "Toggle Flashlight"
+
+	light_power = 6
+	light_range = 4
+	light_color = COLOUR_LTEMP_HALOGEN
+
 	var/on = 0
-	var/brightness_on = 5 //luminosity when on
 
 /obj/item/device/flashlight/atom_init()
 	. = ..()
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		set_light(brightness_on)
+		set_light()
 	else
 		icon_state = initial(icon_state)
-		set_light(0)
+		kill_light()
 
 /obj/item/device/flashlight/proc/update_brightness(mob/user = null)
 	if(on)
 		icon_state = "[initial(icon_state)]-on"
-		set_light(brightness_on)
+		set_light()
 	else
 		icon_state = initial(icon_state)
-		set_light(0)
+		kill_light()
 
 /obj/item/device/flashlight/attack_self(mob/user)
 	if(!isturf(user.loc))
@@ -41,7 +45,7 @@
 
 /obj/item/device/flashlight/Destroy()
 	if(on)
-		set_light(0)
+		kill_light()
 	return ..()
 
 
@@ -101,7 +105,7 @@
 	icon_state = "penlight"
 	item_state = ""
 	flags = CONDUCT
-	brightness_on = 2
+	light_range = 2
 	w_class = 1
 
 /obj/item/device/flashlight/drone
@@ -110,7 +114,7 @@
 	icon_state = "penlight"
 	item_state = ""
 	flags = CONDUCT
-	brightness_on = 2
+	light_range = 3
 	w_class = 1
 
 
@@ -120,7 +124,7 @@
 	desc = "A desk lamp with an adjustable mount."
 	icon_state = "lamp"
 	item_state = "lamp"
-	brightness_on = 4
+	light_range = 4
 	w_class = 4
 	flags = CONDUCT
 	m_amt = 0
@@ -133,7 +137,7 @@
 	desc = "A classic green-shaded desk lamp."
 	icon_state = "lampgreen"
 	item_state = "lampgreen"
-	brightness_on = 4
+	light_color = "#FFC58F"
 
 
 /obj/item/device/flashlight/lamp/verb/toggle_light()
@@ -150,15 +154,14 @@
 	name = "flare"
 	desc = "A red Nanotrasen issued flare. There are instructions on the side, it reads 'pull cord, make light'."
 	w_class = 2.0
-	brightness_on = 4
+	light_range = 5 // Pretty bright.
+	light_color = "#e58775"
 	icon_state = "flare"
 	item_state = "flare"
 	action_button_name = null //just pull it manually, neckbeard.
 	var/fuel = 0
 	var/on_damage = 7
 	var/produce_heat = 1500
-	light_color = "#ff0000"
-	light_power = 2
 	action_button_name = "Toggle Flare"
 
 
@@ -220,7 +223,7 @@
 	w_class = 1
 	m_amt = 0
 	g_amt = 0
-	brightness_on = 6
+	light_range = 5
 	on = 1 //Bio-luminesence has one setting, on.
 
 /obj/item/device/flashlight/slime/atom_init()

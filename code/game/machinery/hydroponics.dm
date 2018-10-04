@@ -256,7 +256,7 @@
 	if(istype(myseed,/obj/item/seeds/glowshroom))
 		set_light(round(myseed.potency/10))
 	else
-		set_light(0)
+		kill_light()
 
 	return
 
@@ -996,11 +996,10 @@ obj/machinery/hydroponics/proc/mutatespecie() // Mutagent produced a new plant!
 		else
 			overlays += image(icon = myseed.hydroponictray_icon_path, icon_state="[myseed.species]-grow[myseed.growthstages]")
 
-	if(!luminosity)
-		if(istype(myseed,/obj/item/seeds/glowshroom))
-			set_light(round(myseed.potency/10))
+	if(istype(myseed,/obj/item/seeds/glowshroom))
+		set_light(round(myseed.potency/10))
 	else
-		set_light(0)
+		kill_light()
 	return
 
 /obj/machinery/hydroponics/soil/attackby(obj/item/O, mob/user)

@@ -1,6 +1,7 @@
 /obj/item/projectile/ion
 	name = "ion bolt"
 	icon_state = "ion"
+	light_special_on = TRUE
 	light_color = "#a9e2f3"
 	light_power = 2
 	light_range = 2
@@ -32,6 +33,7 @@
 /obj/item/projectile/temp
 	name = "freeze beam"
 	icon_state = "ice_2"
+	light_special_on = TRUE
 	light_color = "#00ffff"
 	light_power = 2
 	light_range = 2
@@ -58,6 +60,7 @@
 	name = "meteor"
 	icon = 'icons/obj/meteor.dmi'
 	icon_state = "smallf"
+	light_special_on = TRUE
 	light_color = "#ffffff"
 	light_power = 2
 	light_range = 2
@@ -167,6 +170,7 @@
 /obj/item/projectile/missile
 	name ="rocket"
 	icon_state= "rocket"
+	light_special_on = TRUE
 	light_color = "#ffffff"
 	light_power = 2
 	light_range = 2

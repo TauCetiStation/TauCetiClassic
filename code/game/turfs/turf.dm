@@ -34,11 +34,11 @@
 	for(var/atom/movable/AM in src)
 		Entered(AM)
 
-	if(light_power && light_range)
-		update_light()
+	//if(light_power && light_range)
+	//	update_light()
 
-	if(opacity)
-		has_opaque_atom = TRUE
+//	if(opacity)
+//		has_opaque_atom = TRUE
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -124,9 +124,9 @@
 	..()
 
 	// If an opaque movable atom moves around we need to potentially update visibility.
-	if(AM.opacity)
-		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
-		reconsider_lights()
+//	if(AM.opacity)
+//		has_opaque_atom = TRUE // Make sure to do this before reconsider_lights(), incase we're on instant updates. Guaranteed to be on in this case.
+//		reconsider_lights()
 
 	var/objects = 0
 	for(var/atom/O as mob|obj|turf|area in range(1))
@@ -181,6 +181,7 @@
 /turf/proc/ChangeTurf(path, force_lighting_update, list/arguments = list())
 	if (!path)
 		return
+
 	/*if(istype(src, path))
 		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
 		return*/
@@ -189,11 +190,12 @@
 	// If you're wondering how this proc'll keep running since the turf should be "deleted":
 	// BYOND never deletes turfs, when you "delete" a turf, it actually morphs the turf into a new one.
 	// Running procs do NOT get stopped due to this.
-	var/old_opacity = opacity
-	var/old_dynamic_lighting = dynamic_lighting
+	//var/old_opacity = opacity
 	var/list/old_affecting_lights = affecting_lights
-	var/old_lighting_overlay = lighting_overlay // Not even a need to cast this, honestly.
-	var/list/old_lighting_corners = corners
+	for(var/thing in affecting_lights)
+		if(thing)
+			var/obj/effect/light/L = thing
+			L.affecting_turfs -= src
 
 	var/old_basetype = basetype
 	var/old_flooded = flooded
@@ -229,31 +231,12 @@
 
 	W.levelupdate()
 
-	if(SSlighting.initialized)
-		lighting_overlay = old_lighting_overlay
-		affecting_lights = old_affecting_lights
-		corners = old_lighting_corners
-		basetype = old_basetype
+	basetype = old_basetype
 
-		for(var/atom/A in contents)
-			if(A.light)
-				A.light.force_update = 1
-
-		for(var/i = 1 to 4)//Generate more light corners when needed. If removed - pitch black shuttles will come for your soul!
-			if(corners[i]) // Already have a corner on this direction.
-				continue
-			corners[i] = new/datum/lighting_corner(src, LIGHTING_CORNER_DIAGONAL[i])
-
-		if((old_opacity != opacity) || (dynamic_lighting != old_dynamic_lighting) || force_lighting_update)
-			reconsider_lights()
-		if(dynamic_lighting != old_dynamic_lighting)
-			if(dynamic_lighting)
-				lighting_build_overlay()
-			else
-				lighting_clear_overlay()
-
-		for(var/turf/space/S in RANGE_TURFS(1, src))
-			S.update_starlight()
+	//affecting_lights = old_affecting_lights
+	for(var/thing in old_affecting_lights)
+		var/obj/effect/light/L = thing
+		L.qupdate()
 
 	if(F)
 		F.forceMove(src)

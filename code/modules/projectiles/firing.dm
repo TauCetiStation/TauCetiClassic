@@ -39,6 +39,9 @@
 	BB.yo = targloc.y - curloc.y
 	BB.xo = targloc.x - curloc.x
 
+	if(BB.light_special_on)
+		BB.set_light()
+
 	if(params)
 		var/list/mouse_control = params2list(params)
 		if(mouse_control["icon-x"])

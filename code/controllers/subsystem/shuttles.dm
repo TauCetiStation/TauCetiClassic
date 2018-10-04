@@ -85,6 +85,7 @@ var/datum/subsystem/shuttle/SSshuttle
 		if(SHUTTLE_IN_TRANSIT)
 			/* --- Shuttle is in transit to Central Command from SS13 --- */
 			if(direction == 2)
+#ifndef KILL_PARALLAX
 				if(timeleft < PARALLAX_LOOP_TIME / 10)
 					var/area/stop_parallax = locate(/area/shuttle/escape/transit)
 					stop_parallax.parallax_slowdown()
@@ -96,6 +97,7 @@ var/datum/subsystem/shuttle/SSshuttle
 					stop_parallax.parallax_slowdown()
 					stop_parallax = locate(/area/shuttle/escape_pod5/transit)
 					stop_parallax.parallax_slowdown()
+#endif
 				if(timeleft > 0)
 					return 0
 
@@ -559,8 +561,6 @@ var/datum/subsystem/shuttle/SSshuttle
 			continue
 		var/contcount
 		for(var/atom/A in T.contents)
-			if(istype(A,/atom/movable/lighting_overlay))
-				continue
 			if(istype(A,/obj/machinery/light))
 				continue
 			contcount++

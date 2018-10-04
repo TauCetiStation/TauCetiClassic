@@ -461,7 +461,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 				user.visible_message("<span class='notice'>[user] quietly shuts off the [src].")
 				playsound(src, 'sound/items/lighter.ogg', 20, 1, 1)
 
-			set_light(0)
+			kill_light()
 			STOP_PROCESSING(SSobj, src)
 	else
 		return ..()

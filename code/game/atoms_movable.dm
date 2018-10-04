@@ -19,17 +19,18 @@
 	var/inertia_moving = 0
 	var/inertia_next_move = 0
 	var/inertia_move_delay = 5
-
+#ifndef KILL_PARALLAX
 	var/list/client_mobs_in_contents
+#endif
 	var/freeze_movement = FALSE
 
 /atom/movable/Destroy()
 	//If we have opacity, make sure to tell (potentially) affected light sources.
-	var/turf/T = loc
-	if(opacity && istype(T))
-		opacity = 0
-		T.recalc_atom_opacity()
-		T.reconsider_lights()
+	if(opacity && isturf(loc))
+		var/turf/T = loc
+		for(var/thing in T.affecting_lights)
+			var/obj/effect/light/L = thing
+			L.qupdate()
 
 	unbuckle_mob()
 
@@ -48,6 +49,7 @@
 		return FALSE
 
 	var/atom/oldloc = loc
+	var/olddir = dir
 
 	if(loc != newloc)
 		if (!(direct & (direct - 1))) //Cardinal move
@@ -80,6 +82,10 @@
 		last_move = 0
 		return FALSE
 
+	if(direct != olddir)
+		dir = olddir
+		set_dir(direct)
+
 	src.move_speed = world.time - src.l_move_time
 	src.l_move_time = world.time
 
@@ -95,9 +101,10 @@
 	if (!inertia_moving)
 		inertia_next_move = world.time + inertia_move_delay
 		newtonian_move(Dir)
+#ifndef KILL_PARALLAX
 	if(length(client_mobs_in_contents))
 		update_parallax_contents()
-
+#endif
 	if (orbiters)
 		for (var/thing in orbiters)
 			var/datum/orbit/O = thing

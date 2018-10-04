@@ -4,8 +4,9 @@
 	icon = 'icons/mob/blob.dmi'
 	icon_state = "marker"
 
+	sight = SEE_SELF
 	see_in_dark = 8
-	see_invisible = SEE_INVISIBLE_MINIMUM
+	see_invisible = SEE_INVISIBLE_LIVING
 	invisibility = INVISIBILITY_OBSERVER
 
 	pass_flags = PASSBLOB
@@ -23,6 +24,7 @@
 
 /mob/camera/blob/Login()
 	..()
+	dark_plane.alpha = 0
 	sync_mind()
 	to_chat(src, "<span class='notice'>You are the overmind!</span>")
 	to_chat(src, "You are the overmind and can control the blob! You can expand, which will attack people, and place new blob pieces such as...")
@@ -36,6 +38,8 @@
 /mob/camera/blob/proc/add_points(points)
 	if(points != 0)
 		blob_points = Clamp(blob_points + points, 0, max_blob_points)
+		dark_plane.alpha = blob_points
+
 /mob/camera/blob/say(var/message)
 	if (!message)
 		return

@@ -164,9 +164,9 @@ var/list/wood_icons = list("wood","wood-broken")
 					set_light(5)
 				if(LIGHTFLOOR_STATE_BROKEN)
 					icon_state = "light_off"
-					set_light(0)
+					kill_light()
 		else
-			set_light(0)
+			kill_light()
 			icon_state = "light_off"
 	else if(is_grass_floor())
 		if(!broken && !burnt)
@@ -371,7 +371,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	if(!floor_type)
 		return
 	icon_plating = "plating"
-	set_light(0)
+	kill_light()
 	floor_type = null
 	intact = 0
 	broken = 0
@@ -387,7 +387,7 @@ var/list/wood_icons = list("wood","wood-broken")
 	broken = 0
 	burnt = 0
 	intact = 1
-	set_light(0)
+	kill_light()
 	if(T)
 		if(istype(T,/obj/item/stack/tile/plasteel))
 			floor_type = T.type

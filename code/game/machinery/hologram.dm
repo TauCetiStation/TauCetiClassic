@@ -156,13 +156,13 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	hologram.desc = "Hologram of cute space carp... Wait, WHAT?"
 
 /obj/machinery/hologram/holopad/proc/clear_holo()
-//	hologram.set_light(0)//Clear lighting.	//handled by the lighting controller when its ower is deleted
+//	hologram.kill_light()//Clear lighting.	//handled by the lighting controller when its ower is deleted
 	qdel(hologram)//Get rid of hologram.
 	hologram = null
 	if(master.holo == src)
 		master.holo = null
 	master = null//Null the master, since no-one is using it now.
-	set_light(0)			//pad lighting (hologram lighting will be handled automatically since its owner was deleted)
+	kill_light()			//pad lighting (hologram lighting will be handled automatically since its owner was deleted)
 	icon_state = "holopad0"
 	use_power = 1//Passive power usage.
 	return 1

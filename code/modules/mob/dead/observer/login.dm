@@ -8,7 +8,7 @@
 		ghostimage.icon_state = src.icon_state
 	ghost_orbit = client.prefs.ghost_orbit
 
-	updateghostimages()
+	updateghostsight()
 
 	if(client.media)
 		client.media.stop_music()

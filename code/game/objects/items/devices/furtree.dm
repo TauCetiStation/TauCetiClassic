@@ -6,7 +6,6 @@
 	icon = 'icons/obj/furtree.dmi'
 	desc = "Goodbye, happy holidays..."
 	icon_state = "tree"
-	brightness_on = 5
 	anchored = 1
 	layer = 4.1
 

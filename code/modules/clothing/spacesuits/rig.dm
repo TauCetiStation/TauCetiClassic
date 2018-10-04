@@ -37,7 +37,7 @@
 	usr.update_inv_head()
 
 	if(on)	set_light(brightness_on)
-	else	set_light(0)
+	else	kill_light()
 
 	if(istype(user,/mob/living/carbon/human))
 		var/mob/living/carbon/human/H = user
@@ -330,11 +330,13 @@
 
 /obj/item/clothing/head/helmet/space/rig/syndi/proc/checklight()
 	if(on)
+		light_type = LIGHT_DIRECTIONAL
 		set_light(l_range = brightness_on, l_color = light_color)
 	else if(combat_mode)
-		set_light(l_range = 1.23) // Minimal possible light_range that'll make helm lights visible in full dark from distance. Most likely going to break if somebody will touch lightning formulae.
+		light_type = LIGHT_SOFT
+		set_light(l_range = 1) // Minimal possible light_range that'll make helm lights visible in full dark from distance. Most likely going to break if somebody will touch lightning formulae.
 	else
-		set_light(0)
+		kill_light()
 
 /obj/item/clothing/head/helmet/space/rig/syndi/update_icon(mob/user)
 	user.overlays -= lamp

@@ -220,7 +220,7 @@ var/list/blacklisted_builds = list(
 	if (config.allow_donators && (ckey in donators) || config.allow_byond_membership && IsByondMember())
 		supporter = 1
 		to_chat(src, "<span class='info bold'>Hello [key]! Thanks for supporting [(ckey in donators) ? "us" : "Byond"]! You are awesome! You have access to all the additional supporters-only features this month.</span>")
-		
+
 	log_client_to_db(tdata)
 
 	send_resources()
@@ -260,9 +260,11 @@ var/list/blacklisted_builds = list(
 	directory -= ckey
 	mentors -= src
 	clients -= src
+#ifndef KILL_PARALLAX
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
 		UNSETEMPTY(movingmob.client_mobs_in_contents)
+#endif
 	return ..()
 
 

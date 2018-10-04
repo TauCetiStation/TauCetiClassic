@@ -18,8 +18,7 @@
 	name = "jungle"
 	icon = 'code/modules/jungle/jungle.dmi'
 	icon_state = "area"
-	dynamic_lighting = 0
-	luminosity = 1
+//	dynamic_lighting = 0
 
 //randomly spawns, will create paths around the map
 /obj/effect/landmark/path_waypoint

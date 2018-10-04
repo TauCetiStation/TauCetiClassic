@@ -208,7 +208,7 @@
 				if (!(src.anchored & powered()))
 					src.icon_state = "[initial(icon_state)]-off"
 					stat |= NOPOWER
-					set_light(0)
+					kill_light()
 				else
 					icon_state = initial(icon_state)
 					stat &= ~NOPOWER
@@ -544,7 +544,7 @@
 /obj/machinery/vending/power_change()
 	if(stat & BROKEN)
 		icon_state = "[initial(icon_state)]-broken"
-		set_light(0)
+		kill_light()
 	else
 		if( powered() & src.anchored )
 			icon_state = initial(icon_state)
@@ -554,7 +554,7 @@
 			spawn(rand(0, 15))
 				src.icon_state = "[initial(icon_state)]-off"
 				stat |= NOPOWER
-				set_light(0)
+				kill_light()
 
 //Oh no we're malfunctioning!  Dump out some product and break.
 /obj/machinery/vending/proc/malfunction()

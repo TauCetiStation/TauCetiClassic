@@ -970,7 +970,7 @@
 		var/light_amount = 0 //how much light there is in the place, affects receiving nutrition and healing
 		if(isturf(loc)) //else, there's considered to be no light
 			var/turf/T = loc
-			light_amount = round((T.get_lumcount()*10)-5)
+			light_amount = T.check_lumcount()
 
 		if(is_type_organ(O_LIVER, /obj/item/organ/internal/liver/diona) && !is_bruised_organ(O_LIVER)) // Specie may require light, but only plants, with chlorophyllic plasts can produce nutrition out of light!
 			nutrition += light_amount
@@ -988,7 +988,7 @@
 		var/light_amount = 0
 		if(isturf(loc))
 			var/turf/T = loc
-			light_amount = round(T.get_lumcount()*10)
+			light_amount = T.check_lumcount()
 
 		if(light_amount > 2) //if there's enough light, start dying
 			take_overall_damage(1,1)
@@ -1000,7 +1000,7 @@
 		nutrition = 450 //i aint never get hongry
 		if(isturf(loc))
 			var/turf/T = loc
-			light_amount = round(T.get_lumcount()*10)
+			light_amount = T.check_lumcount()
 
 		if(light_amount > LIGHT_DAM_THRESHOLD)
 			take_overall_damage(0,LIGHT_DAMAGE_TAKEN)
@@ -1325,7 +1325,8 @@
 		if(glasses)
 			var/obj/item/clothing/glasses/G = glasses
 			if(istype(G))
-				see_in_dark += G.darkness_view
+				if(G.active)
+					see_in_dark += G.darkness_view
 				if(G.vision_flags)		// MESONS
 					sight |= G.vision_flags
 					if(!druggy)
@@ -1550,17 +1551,8 @@
 		else if(istype(glasses, /obj/item/clothing/glasses/science))
 			sightglassesmod = "sci"
 
-	if(species.nighteyes)
-		if(sightglassesmod)
-			sightglassesmod = "nightsight_glasses"
-		else
-			var/light_amount = 0
-			var/turf/T = get_turf(src)
-			light_amount = round(T.get_lumcount()*10)
-			if(light_amount > 1)
-				sightglassesmod = null
-			else
-				sightglassesmod = "nightsight"
+	if(species.nighteyes && sightglassesmod)
+		sightglassesmod = "nightsight_glasses"
 	set_EyesVision(sightglassesmod)
 
 /mob/living/carbon/human/proc/handle_random_events()
@@ -1572,7 +1564,7 @@
 	//0.1% chance of playing a scary sound to someone who's in complete darkness
 	if(isturf(loc) && rand(1,1000) == 1)
 		var/turf/T = loc
-		if(T.lighting_overlay && T.lighting_overlay.luminosity == 0)
+		if(!T.check_lumcount())
 			playsound_local(src,pick(scarySounds),50, 1, -1)
 
 /mob/living/carbon/human/proc/handle_virus_updates()

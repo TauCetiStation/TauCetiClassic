@@ -46,7 +46,7 @@
 /obj/structure/cellular_biomass/core/meat/atom_init()
 	. = ..()
 	icon_state = "light_[pick(1,2)]"
-	set_light(luminosity)
+	set_light()
 
 /obj/structure/cellular_biomass/lair/meat/atom_init(mapload)
 	icon_state = "lair"

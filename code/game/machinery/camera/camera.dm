@@ -223,7 +223,7 @@
 	if(can_use())
 		cameranet.addCamera(src)
 	else
-		set_light(0)
+		kill_light()
 		cameranet.removeCamera(src)
 
 	if(user)

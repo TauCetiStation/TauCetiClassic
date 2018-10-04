@@ -1,6 +1,7 @@
 /obj/item/projectile/change
 	name = "bolt of change"
 	icon_state = "ice_1"
+	light_special_on = TRUE
 	light_color = "#00bfff"
 	light_power = 2
 	light_range = 2

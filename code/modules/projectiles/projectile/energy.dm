@@ -8,6 +8,7 @@
 /obj/item/projectile/energy/electrode
 	name = "electrode"
 	icon_state = "spark"
+	light_special_on = TRUE
 	light_color = "#f2f5a9"
 	light_power = 2
 	light_range = 2
@@ -23,6 +24,7 @@
 /obj/item/projectile/energy/declone
 	name = "declone"
 	icon_state = "declone"
+	light_special_on = TRUE
 	light_color = "#00ff00"
 	light_power = 2
 	light_range = 2
@@ -36,6 +38,7 @@
 /obj/item/projectile/energy/dart
 	name = "dart"
 	icon_state = "toxin"
+	light_special_on = TRUE
 	light_color = "#00ff00"
 	light_power = 2
 	light_range = 2
@@ -68,6 +71,7 @@
 /obj/item/projectile/energy/phoron
 	name = "phoron bolt"
 	icon_state = "energy"
+	light_special_on = TRUE
 	light_color = "#00ff00"
 	light_power = 2
 	light_range = 2
@@ -78,6 +82,7 @@
 /obj/item/projectile/energy/laser
 	name = "laser"
 	icon_state = "laser"
+	light_special_on = TRUE
 	light_color = "red"
 	light_power = 2
 	light_range = 2

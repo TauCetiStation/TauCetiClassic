@@ -140,7 +140,7 @@
 		item_state = "hardhat[on]_[item_color]"
 
 		if(on)	set_light(brightness_on)
-		else	set_light(0)
+		else	kill_light()
 
 /*
  * Kitty ears

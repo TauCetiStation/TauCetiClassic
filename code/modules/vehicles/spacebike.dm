@@ -3,6 +3,7 @@
 	desc = "Space wheelies! Woo! "
 	icon_state = "bike_off"
 	dir = SOUTH
+	light_type = LIGHT_DIRECTIONAL
 
 	load_item_visible = 1
 	mob_offset_y = 5

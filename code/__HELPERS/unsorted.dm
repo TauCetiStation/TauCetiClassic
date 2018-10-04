@@ -840,13 +840,16 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 							continue
 						if(!istype(O,/obj)) continue
 						O.loc = X
+#ifndef KILL_PARALLAX
 						if (length(O.client_mobs_in_contents))
 							O.update_parallax_contents()
+#endif
 					for(var/mob/M in T)
 						if(!istype(M,/mob) || istype(M, /mob/camera)) continue // If we need to check for more mobs, I'll add a variable
 						M.loc = X
+#ifndef KILL_PARALLAX
 						M.update_parallax_contents()
-
+#endif
 //					var/area/AR = X.loc
 
 //					if(AR.lighting_use_dynamic)							//TODO: rewrite this code so it's not messed by lighting ~Carn

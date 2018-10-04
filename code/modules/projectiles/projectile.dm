@@ -19,6 +19,7 @@
 	pass_flags = PASSTABLE
 	mouse_opacity = 0
 	appearance_flags = 0
+	light_shadows = FALSE
 	var/bumped = 0		//Prevents it from hitting more than one guy at once
 	var/def_zone = ""	//Aiming at
 	var/mob/firer = null//Who shot it
@@ -74,9 +75,7 @@
 		var/obj/effect/timestop/T = locate() in loc
 		if(T)
 			T.timestop(src)
-	. = ..()
-	if(light_color)
-		set_light(light_range,light_power,light_color)
+	return ..()
 
 /obj/item/projectile/Destroy()
 	QDEL_LIST(tracer_list)

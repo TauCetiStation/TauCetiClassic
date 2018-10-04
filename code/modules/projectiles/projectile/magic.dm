@@ -11,6 +11,7 @@
 /obj/item/projectile/magic/change
 	name = "bolt of change"
 	icon_state = "ice_1"
+	light_special_on = TRUE
 	light_color = "#00bfff"
 	light_power = 2
 	light_range = 2
@@ -133,6 +134,7 @@
 /obj/item/projectile/magic/animate
 	name = "bolt of animation"
 	icon_state = "red_1"
+	light_special_on = TRUE
 	light_color = "#ff0000"
 	light_power = 2
 	light_range = 2

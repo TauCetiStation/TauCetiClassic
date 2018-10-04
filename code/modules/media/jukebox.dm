@@ -65,7 +65,6 @@ var/global/loopModeNames=list(
 	density = 1
 
 	anchored = 1
-	luminosity = 4 // Why was this 16
 	playing = 0
 
 	var/loop_mode = JUKEMODE_SHUFFLE

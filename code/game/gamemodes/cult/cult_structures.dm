@@ -17,6 +17,10 @@
 	light_power = 2
 	light_range = 3
 
+/obj/structure/cult/forge/atom_init()
+	. = ..()
+	set_light()
+
 /obj/structure/cult/pylon
 	name = "Pylon"
 	desc = "A floating crystal that hums with an unearthly energy."
@@ -25,6 +29,10 @@
 	light_power = 2
 	light_range = 6
 //	luminosity = 5
+
+/obj/structure/cult/pylon/atom_init()
+	. = ..()
+	set_light()
 
 /obj/structure/cult/tome
 	name = "Desk"

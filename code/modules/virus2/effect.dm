@@ -299,7 +299,7 @@
 		return 0
 	if(isturf(M.loc))
 		var/turf/T = M.loc
-		light_amount = min(1,T.get_lumcount())
+		light_amount = T.check_lumcount()
 		if(light_amount < 0.7)
 			return 1
 		else

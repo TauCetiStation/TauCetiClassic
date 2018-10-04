@@ -50,7 +50,7 @@
 		set_light(start_brightness)
 	else
 		icon_state = "glowstick_[colourName]"
-		set_light(0)
+		kill_light()
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick/proc/turn_off()
 	on = 0

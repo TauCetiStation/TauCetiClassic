@@ -39,13 +39,16 @@
 
 	var/obj/screen/movable/action_button/hide_toggle/hide_actions_toggle
 	var/action_buttons_hidden = 0
+#ifndef KILL_PARALLAX
 	var/list/obj/screen/plane_master/plane_masters = list() // see "appearance_flags" in the ref, assoc list of "[plane]" = object
-
+#endif
 /datum/hud/New(mob/owner)
 	mymob = owner
+#ifndef KILL_PARALLAX
 	for(var/mytype in subtypesof(/obj/screen/plane_master))
 		var/obj/screen/plane_master/instance = new mytype()
 		plane_masters["[instance.plane]"] = instance
+#endif
 	instantiate()
 	..()
 
@@ -66,10 +69,12 @@
 	hotkeybuttons = null
 	hide_actions_toggle = null
 	mymob = null
+#ifndef KILL_PARALLAX
 	if(plane_masters.len)
 		for(var/thing in plane_masters)
 			qdel(plane_masters[thing])
 		plane_masters.Cut()
+#endif
 	return ..()
 
 /datum/hud/proc/hidden_inventory_update()
@@ -161,12 +166,12 @@
 
 	if(istype(mymob.loc,/obj/mecha))
 		show_hud(HUD_STYLE_REDUCED)
-
+#ifndef KILL_PARALLAX
 	if(plane_masters.len)
 		for(var/thing in plane_masters)
 			mymob.client.screen += plane_masters[thing]
 	create_parallax()
-
+#endif
 //Version denotes which style should be displayed. blank or 0 means "next version"
 /datum/hud/proc/show_hud(version = 0)
 	if(!ismob(mymob))
@@ -248,11 +253,13 @@
 			persistant_inventory_update()
 			mymob.update_action_buttons()
 			reorganize_alerts()
+#ifndef KILL_PARALLAX
 	if(plane_masters.len)
 		for(var/thing in plane_masters)
 			mymob.client.screen += plane_masters[thing]
 	hud_version = display_hud_version
 	create_parallax()
+#endif
 //Triggered when F12 is pressed (Unless someone changed something in the DMF)
 /mob/verb/button_pressed_F12(var/full = 0 as null)
 	set name = "F12"

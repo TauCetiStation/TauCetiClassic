@@ -191,3 +191,8 @@
 
 //Error handler defines
 #define ERROR_USEFUL_LEN 2
+
+//Lighting types
+#define LIGHT_SOFT             "soft"
+#define LIGHT_DIRECTIONAL      "directional"
+#define LIGHT_SOFT_FLICKER     "soft-flicker"

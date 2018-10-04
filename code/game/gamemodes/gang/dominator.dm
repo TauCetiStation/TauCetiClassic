@@ -110,7 +110,7 @@
 
 		ticker.mode.message_gangtools(((gang=="A") ? ticker.mode.A_tools : ticker.mode.B_tools),"Hostile takeover cancelled: Dominator is no longer operational.",1,1)
 
-	set_light(0)
+	kill_light()
 	icon_state = "dominator-broken"
 	operating = -1
 	STOP_PROCESSING(SSmachine, src)

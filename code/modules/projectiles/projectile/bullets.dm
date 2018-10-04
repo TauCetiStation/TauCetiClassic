@@ -184,6 +184,7 @@
 	icon_state = "l10"
 	layer = ABOVE_HUD_LAYER
 	plane = ABOVE_HUD_PLANE
+	light_special_on = TRUE
 	light_color = "#2be4b8"
 	light_power = 2
 	light_range = 2
@@ -203,7 +204,9 @@
 	name = "flare"
 	icon_state= "bolter"
 	damage = 5
-	luminosity = 8
+	light_special_on = TRUE
+	light_range = 5
+	light_shadows = TRUE
 
 /obj/item/projectile/bullet/flare/on_hit(atom/target, blocked = 0)
 	if(istype(target, /mob/living/carbon))

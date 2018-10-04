@@ -11,7 +11,7 @@
 		if(prob(70))
 			light_power = light_power / pick(1.5, 2, 2.5)
 		if(prob(70))
-			light_range = light_range / pick(1.5, 2, 2.5)
+			light_range = round(light_range / pick(1.5, 2, 2.5))
 		if(prob(15))
 			light_range = 0
 			light_power = 0
@@ -195,12 +195,12 @@
 /obj/item/device/flashlight/make_old()
 	..()
 	if(prob(75))
-		brightness_on = brightness_on / 2
+		light_range = round(light_range / 2)
 
 /obj/machinery/floodlight/make_old()
 	..()
 	if(prob(75))
-		brightness_on = brightness_on / 2
+		light_range = round(light_range / 2)
 
 /obj/machinery/make_old()
 	..()

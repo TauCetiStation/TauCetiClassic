@@ -53,7 +53,9 @@
 		return
 
 	orbiter.loc = targetloc
+#ifndef KILL_PARALLAX
 	orbiter.update_parallax_contents()
+#endif
 	lastloc = orbiter.loc
 
 

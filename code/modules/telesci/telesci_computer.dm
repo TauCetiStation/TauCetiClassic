@@ -63,12 +63,12 @@
 /obj/machinery/computer/telescience/update_icon()
 	if(stat & BROKEN)
 		icon_state = "telescib"
-		set_light(0)
+		kill_light()
 	else
 		if(stat & NOPOWER)
 			src.icon_state = "teleport0"
 			stat |= NOPOWER
-			set_light(0)
+			kill_light()
 		else
 			icon_state = initial(icon_state)
 			stat &= ~NOPOWER

@@ -96,7 +96,11 @@
 
 /turf/simulated/shuttle/wall/atom_init()
 	var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
+#ifndef KILL_PARALLAX
 	I.plane = PLANE_SPACE
+#else
+	I.plane = GAME_PLANE
+#endif
 	underlays += I
 	. = ..()
 

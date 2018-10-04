@@ -315,15 +315,15 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/Destroy()
 	if(istype(loc,/mob))
-		loc.set_light(0)
+		loc.kill_light()
 	return ..()
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/pickup(mob/user)
-	src.set_light(0)
+	src.kill_light()
 	user.set_light(2,1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/glowberries/dropped(mob/user)
-	user.set_light(0)
+	user.kill_light()
 	src.set_light(2,1)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/cocoapod
@@ -955,11 +955,6 @@
 	qdel(src)
 
 	to_chat(user, "<span class='notice'>You plant the glowshroom.</span>")
-
-/obj/item/weapon/reagent_containers/food/snacks/grown/mushroom/glowshroom/Destroy()
-	if(istype(loc,/mob))
-		loc.set_light(round(loc.luminosity - potency/10,1))
-	return ..()
 
 // *************************************
 // Complex Grown Object Defines -

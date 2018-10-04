@@ -2,11 +2,16 @@
 	icon = 'icons/turf/space.dmi'
 	name = "\proper space"
 	icon_state = "0"
-	dynamic_lighting = 0
+//	dynamic_lighting = 0
+	luminosity = 1
 
 	temperature = TCMB
 	thermal_conductivity = OPEN_HEAT_TRANSFER_COEFFICIENT
+#ifndef KILL_PARALLAX
 	plane = PLANE_SPACE
+#else
+	plane = GAME_PLANE
+#endif
 //	heat_capacity = 700000 No.
 
 /turf/space/atom_init()
@@ -17,11 +22,13 @@
 	if(!istype(src, /turf/space/transit))
 		icon_state = SPACE_ICON_STATE
 
-	if(light_power && light_range)
-		update_light()
+	set_darkness_disabler()
 
-	if(opacity)
-		has_opaque_atom = TRUE
+//	if(light_power && light_range)
+//		update_light()
+
+//	if(opacity)
+//		has_opaque_atom = TRUE
 
 	return INITIALIZE_HINT_NORMAL
 
@@ -32,7 +39,7 @@
 	for(var/turf/simulated/T in RANGE_TURFS(1,src)) //RANGE_TURFS is in code\__HELPERS\game.dm
 		set_light(2,2)
 		return
-	set_light(0)
+	kill_light()
 
 /turf/space/attack_paw(mob/user)
 	return src.attack_hand(user)

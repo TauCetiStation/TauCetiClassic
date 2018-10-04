@@ -9,6 +9,7 @@
 // BEGIN_PREFERENCES
 #define DEBUG
 // END_PREFERENCES
+#define KILL_PARALLAX
 // BEGIN_INCLUDE
 #include "code\_compile_options.dm"
 #include "code\_compile_options_cyrillic.dm"
@@ -114,8 +115,6 @@
 #include "code\_onclick\hud\monkey.dm"
 #include "code\_onclick\hud\movable_screen_objects.dm"
 #include "code\_onclick\hud\other_mobs.dm"
-#include "code\_onclick\hud\parallax.dm"
-#include "code\_onclick\hud\plane_master.dm"
 #include "code\_onclick\hud\robot.dm"
 #include "code\_onclick\hud\screen_objects.dm"
 #include "code\controllers\admin.dm"
@@ -140,7 +139,6 @@
 #include "code\controllers\subsystem\nanoui.dm"
 #include "code\controllers\subsystem\objects.dm"
 #include "code\controllers\subsystem\orbit.dm"
-#include "code\controllers\subsystem\parallax.dm"
 #include "code\controllers\subsystem\shuttles.dm"
 #include "code\controllers\subsystem\spacedrift.dm"
 #include "code\controllers\subsystem\sun.dm"
@@ -1214,14 +1212,6 @@
 #include "code\modules\library\lib_items.dm"
 #include "code\modules\library\lib_machines.dm"
 #include "code\modules\library\lib_readme.dm"
-#include "code\modules\lighting\_lighting_defines.dm"
-#include "code\modules\lighting\lighting_area.dm"
-#include "code\modules\lighting\lighting_atom.dm"
-#include "code\modules\lighting\lighting_corner.dm"
-#include "code\modules\lighting\lighting_overlay.dm"
-#include "code\modules\lighting\lighting_source.dm"
-#include "code\modules\lighting\lighting_turf.dm"
-#include "code\modules\lighting\~lighting_undefs.dm"
 #include "code\modules\liquid\splash_simulation.dm"
 #include "code\modules\locations\centcomm\displays.dm"
 #include "code\modules\locations\centcomm\monorail.dm"
@@ -1550,6 +1540,16 @@
 #include "code\modules\paperwork\photography.dm"
 #include "code\modules\paperwork\silicon_photography.dm"
 #include "code\modules\paperwork\stamps.dm"
+#include "code\modules\planar_lighting\_lighting.dm"
+#include "code\modules\planar_lighting\light_atom.dm"
+#include "code\modules\planar_lighting\light_atom_set.dm"
+#include "code\modules\planar_lighting\light_effect.dm"
+#include "code\modules\planar_lighting\light_effect_cast.dm"
+#include "code\modules\planar_lighting\light_item.dm"
+#include "code\modules\planar_lighting\light_mob.dm"
+#include "code\modules\planar_lighting\light_obj_types.dm"
+#include "code\modules\planar_lighting\light_planes.dm"
+#include "code\modules\planar_lighting\light_turf.dm"
 #include "code\modules\power\apc.dm"
 #include "code\modules\power\cable.dm"
 #include "code\modules\power\cable_heavyduty.dm"
@@ -1837,3 +1837,9 @@
 #include "maps\z6.dmm"
 #include "maps\z7.dmm"
 // END_INCLUDE
+
+#ifndef KILL_PARALLAX
+#include "code\_onclick\hud\parallax.dm"
+#include "code\_onclick\hud\plane_master.dm"
+#include "code\controllers\subsystem\parallax.dm"
+#endif

@@ -40,8 +40,9 @@
 	// Otherwise jump
 	else
 		loc = get_turf(A)
+#ifndef KILL_PARALLAX
 		update_parallax_contents()
-
+#endif
 /mob/dead/observer/ClickOn(atom/A, params)
 	if(world.time <= next_click)
 		return

@@ -81,7 +81,7 @@
 			if(istype(T,/turf/space)) continue
 			turfs_around += T
 			for(var/obj/item/F in T.contents)
-				F.set_light(0)
+				F.kill_light()
 			for(var/obj/machinery/L in T.contents)
 				if(istype(L, /obj/machinery/power/apc))
 					var/obj/machinery/power/apc/apc = L
@@ -91,21 +91,21 @@
 					Light.on = 0
 					Light.update(0)
 				else
-					L.set_light(0)
+					L.kill_light()
 			for(var/obj/effect/glowshroom/G in T.contents) //Very small radius
 				qdel(G)
 			for(var/mob/living/carbon/human/H in T.contents)
 				for(var/obj/item/F in H)
-					F.set_light(0)
+					F.kill_light()
 					if(istype(F, /obj/item/device/flashlight)) //More survival!
 						var/obj/item/device/flashlight/FL = F
 						if(FL.on)
 							H.drop_from_inventory(FL)
 							if(prob(45)) //Poooof
 								qdel(FL)
-				H.set_light(0) //This is required with the object-based lighting
+				H.kill_light() //This is required with the object-based lighting
 			for(var/mob/living/silicon/robot/R in T.contents)
-				R.set_light(0)
+				R.kill_light()
 
 	for(var/mob/living/L in view(7,src))
 		if(L == src) continue
@@ -113,7 +113,7 @@
 		if(istype(T,/turf/space)) continue
 
 		var/light_amount = 0
-		light_amount = round(T.get_lumcount()*10)
+		light_amount = T.check_lumcount()
 
 		if(light_amount <= 3)
 			if(prob(max(1,L.scp_mark * 4)))
@@ -171,7 +171,7 @@
 	var/turf/T = get_turf(src)
 
 	var/light_amount = 0
-	light_amount = round(T.get_lumcount()*10)
+	light_amount = T.check_lumcount()
 
 	if(isliving(user))
 		var/mob/living/L = user

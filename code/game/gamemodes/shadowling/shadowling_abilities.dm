@@ -45,7 +45,7 @@
 			if(is_type_in_list(F, blacklisted_lights))
 				F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
 				return
-			F.set_light(0)
+			F.kill_light()
 		for(var/obj/machinery/light/L in T.contents)
 			L.on = 0
 			L.visible_message("<span class='danger'>[L] flickers and falls dark.</span>")
@@ -58,8 +58,8 @@
 				if(is_type_in_list(F, blacklisted_lights))
 					F.visible_message("<span class='danger'>[F] goes slightly dim for a moment.</span>")
 					return
-				F.set_light(0)
-			H.set_light(0) //This is required with the object-based lighting
+				F.kill_light()
+			H.kill_light() //This is required with the object-based lighting
 
 
 

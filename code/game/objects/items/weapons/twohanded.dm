@@ -260,7 +260,7 @@
 	..()
 
 /obj/item/weapon/twohanded/dualsaber/unwield()
-	set_light(0)
+	kill_light()
 	w_class = initial(w_class)
 	return ..()
 

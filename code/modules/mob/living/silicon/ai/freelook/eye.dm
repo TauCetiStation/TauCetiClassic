@@ -62,7 +62,9 @@
 		cameranet.visibility(src)
 		if(master.client)
 			master.client.eye = src
+#ifndef KILL_PARALLAX
 		update_parallax_contents()
+#endif
 		return 1
 
 /mob/camera/Eye/ai/setLoc(T)

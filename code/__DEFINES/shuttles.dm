@@ -1,2 +1,4 @@
+#ifndef KILL_PARALLAX
 #define PARALLAX_LOOP_TIME 25
+#endif
 #define SYNDICATE_CHALLENGE_TIMER 15000 //20 minutes

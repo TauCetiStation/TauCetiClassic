@@ -15,7 +15,7 @@
 	if(!(stat & (BROKEN|NOPOWER)))
 		set_light(2)
 	else
-		set_light(0)
+		kill_light()
 
 /obj/machinery/bodyscanner/relaymove(mob/user)
 	if(!user.stat)

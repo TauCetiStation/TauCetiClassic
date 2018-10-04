@@ -246,7 +246,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		loc = NewLoc
 		for(var/obj/effect/step_trigger/S in NewLoc)
 			S.Crossed(src)
+#ifndef KILL_PARALLAX
 		update_parallax_contents()
+#endif
 		return
 	loc = get_turf(src) //Get out of closets and such as a ghost
 	if((direct & NORTH) && y < world.maxy)
@@ -352,8 +354,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		to_chat(usr, "<span class='warning'>No area available.</span>")
 
 	usr.forceMove(pick(L))
+#ifndef KILL_PARALLAX
 	update_parallax_contents()
-
+#endif
 /mob/dead/observer/verb/follow()
 	set category = "Ghost"
 	set name = "Orbit" // "Haunt"
@@ -425,7 +428,9 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 			if(T && isturf(T))	//Make sure the turf exists, then move the source to that destination.
 				A.forceMove(T)
+#ifndef KILL_PARALLAX
 				A.update_parallax_contents()
+#endif
 			else
 				to_chat(A, "This mob is not located in the game world.")
 
@@ -649,11 +654,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 /mob/dead/observer/proc/updateghostsight()
 	if (!seedarkness)
-		see_invisible = SEE_INVISIBLE_OBSERVER_NOLIGHTING
+		client.screen -= dark_plane
+		client.screen -= master_plane
 	else
-		see_invisible = SEE_INVISIBLE_OBSERVER
-		if (!ghostvision)
-			see_invisible = SEE_INVISIBLE_LIVING;
+		client.screen |= dark_plane
+		client.screen |= master_plane
 	updateghostimages()
 
 /proc/updateallghostimages()

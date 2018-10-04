@@ -1,5 +1,5 @@
 var/datum/subsystem/lighting/SSlighting
-
+var/list/init_lights = list()
 /datum/subsystem/lighting
 	name = "Lighting"
 
@@ -8,7 +8,7 @@ var/datum/subsystem/lighting/SSlighting
 	wait          = SS_WAIT_LIGHTING
 	display_order = SS_DISPLAY_LIGHTING
 
-	flags = SS_POST_FIRE_TIMING
+	flags = SS_NO_FIRE
 
 	var/initialized = FALSE
 	var/list/changed_lights = list()		//list of all datum/light_source that need updating
@@ -26,48 +26,17 @@ var/datum/subsystem/lighting/SSlighting
 
 //Does not loop. Should be run prior to process() being called for the first time.
 /datum/subsystem/lighting/Initialize(timeofday)
-	if(!initialized)
-		var/list/turfs_to_init = block(locate(1, 1, 1), locate(world.maxx, world.maxy, world.maxz))
-
-		for(var/thing in turfs_to_init)
-			var/turf/T = thing
-			if(!T.dynamic_lighting)
-				continue
-			else
-				var/area/A = T.loc
-				if(!A.dynamic_lighting)
-					continue
-			T.init_lighting_overlays()
-			T.init_lighting_corners()
-			CHECK_TICK
-
-		var/list/changed_lights = src.changed_lights
-		while (changed_lights.len)
-			var/datum/light_source/LS = changed_lights[changed_lights.len]
-			changed_lights.len--
-			if(LS.check() || LS.destroyed || LS.force_update)
-				LS.remove_lum()
-				if(!LS.destroyed)
-					LS.apply_lum()
-
-			else if(LS.vis_update)	// We smartly update only tiles that became (in) visible to use.
-				LS.smart_vis_update()
-
-			LS.vis_update   = FALSE
-			LS.force_update = FALSE
-			LS.needs_update = FALSE
-			CHECK_TICK
-
-		var/list/changed_overlays = src.changed_overlays
-		while (changed_overlays.len)
-			var/atom/movable/lighting_overlay/LO = changed_overlays[changed_overlays.len]
-			changed_overlays.len--
-			LO.update_overlay()
-			LO.needs_update = FALSE
-			CHECK_TICK
-
-		initialized = TRUE
-
+	var/count = 0
+	message_admins("<span class='danger'>Casting lights.</span>")
+	for(var/thing in init_lights)
+		var/datum/D = thing
+		if(!QDELETED(D))
+			D:cast_light(force_cast = 1)
+			count++
+		CHECK_TICK
+	init_lights.Cut()
+	lights_initialized = TRUE
+	message_admins("<span class='danger'>Cast [count] light\s</span>")
 	..()
 
 //Workhorse of lighting. It cycles through each light that needs updating. It updates their
@@ -75,7 +44,7 @@ var/datum/subsystem/lighting/SSlighting
 //Any light that returns 1 in check() deletes itself
 //By using queues we are ensuring we don't perform more updates than are necessary
 /datum/subsystem/lighting/fire(resumed = 0)
-	var/list/changed_lights = src.changed_lights
+/*	var/list/changed_lights = src.changed_lights
 
 	if (!resumed)
 		changed_lights_workload = MC_AVERAGE(changed_lights_workload, changed_lights.len)
@@ -167,3 +136,4 @@ var/datum/subsystem/lighting/SSlighting
 					varval2 = "/list([length(varval2)])"
 				msg += "\t [varname] = [varval1] -> [varval2]\n"
 	world.log << msg
+*/

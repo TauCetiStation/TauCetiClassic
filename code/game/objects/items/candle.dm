@@ -141,7 +141,7 @@ var/global/list/obj/item/candle/ghost/ghost_candles = list()
 	if(lit)
 		lit = FALSE
 		update_icon()
-		set_light(0)
+		kill_light()
 
 /obj/item/candle/ghost/attack_self(mob/user)
 	if(lit)

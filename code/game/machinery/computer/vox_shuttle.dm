@@ -83,9 +83,10 @@ var/global/announce_vox_departure = FALSE // Stealth systems - give an announcem
 		curr_location.move_contents_to(transit_location)
 		curr_location = transit_location
 		sleep(VOX_SHUTTLE_MOVE_TIME)
+#ifndef KILL_PARALLAX
 		curr_location.parallax_slowdown()
 		sleep(PARALLAX_LOOP_TIME)
-
+#endif
 	curr_location.move_contents_to(dest_location)
 	curr_location = dest_location
 	if(istype(dest_location, /area/shuttle/vox/station))

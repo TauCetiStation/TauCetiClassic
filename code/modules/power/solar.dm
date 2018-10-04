@@ -300,12 +300,12 @@
 /obj/machinery/power/solar_control/update_icon()
 	if(stat & BROKEN)
 		icon_state = "broken"
-		set_light(0)
+		kill_light()
 		overlays.Cut()
 		return
 	if(stat & NOPOWER)
 		icon_state = "c_unpowered"
-		set_light(0)
+		kill_light()
 		overlays.Cut()
 		return
 	icon_state = "solar"

@@ -267,7 +267,7 @@
 				src.damtype = "brute"
 				src.icon_state = initial(src.icon_state)
 				src.welding = 0
-			set_light(0)
+			kill_light()
 			if (!istype(src, /obj/item/weapon/weldingtool/experimental))
 				STOP_PROCESSING(SSobj, src)
 			return

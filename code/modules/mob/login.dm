@@ -28,6 +28,7 @@
 	update_Login_details()
 	world.update_status()
 
+	client.color = null
 	client.images = null				//remove the images such as AIs being unable to see runes
 	client.screen = list()				//remove hud items just in case
 	if(hud_used)
@@ -45,20 +46,6 @@
 	else
 		client.eye = src
 		client.perspective = MOB_PERSPECTIVE
-
-	//Some weird magic to block users who cant see lighting normally
-	var/obj/screen/blocker = new /obj/screen()
-	blocker.screen_loc = "WEST,SOUTH to EAST,NORTH"
-	blocker.icon = 'icons/effects/chaos.dmi'
-	blocker.icon_state = "8"
-	blocker.blend_mode = BLEND_MULTIPLY
-	blocker.color = list(1,1,1,0,1,1,1,0,1,1,1,0,0,0,0,1,0,0,0,1)
-	blocker.alpha = 255
-	blocker.layer = ABOVE_HUD_LAYER
-	blocker.plane = ABOVE_HUD_PLANE
-	blocker.mouse_opacity = 0
-
-	client.screen += blocker
 
 	//Clear ability list and update from mob.
 	client.verbs -= ability_verbs
