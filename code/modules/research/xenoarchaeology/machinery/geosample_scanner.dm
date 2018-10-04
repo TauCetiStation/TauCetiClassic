@@ -158,6 +158,7 @@
 
 /obj/machinery/radiocarbon_spectrometer/process()
 	if(scanning)
+		icon_state = "analyser_processing"
 		if(!scanned_item || scanned_item.loc != src)
 			scanned_item = null
 			stop_scanning()
@@ -242,6 +243,7 @@
 	last_process_worldtime = world.time
 
 /obj/machinery/radiocarbon_spectrometer/proc/stop_scanning()
+	icon_state = "analyser"
 	scanning = 0
 	scanner_rpm_dir = 1
 	scanner_rpm = 0
