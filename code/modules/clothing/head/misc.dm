@@ -379,12 +379,12 @@
 	desc = "Bonjour, but in purple. Smells like baguette, pardon my French."
 	icon_state = "beret_purple"
 
-/obj/item/clothing/head/beret/centcom/officer
+/obj/item/clothing/head/beret/centcomofficer
 	name = "officers beret"
 	desc = "A black beret adorned with the shield silver kite shield with an engraved sword of the NanoTrasen security forces, announcing to the world that the wearer is a defender of NanoTrasen."
 	icon_state = "centcomofficerberet"
 
-/obj/item/clothing/head/beret/centcom/captain
+/obj/item/clothing/head/beret/centcomcaptain
 	name = "captains beret"
 	desc = "A white beret adorned with the shield cobalt kite shield with an engraved sword of the NanoTrasen security forces, worn only by those captaining a vessel of the NanoTrasen Navy."
 	icon_state = "centcomcaptain"
