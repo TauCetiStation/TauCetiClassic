@@ -1,7 +1,7 @@
 @echo off
 echo Running Map Merger...
 
-set command="java -jar ./tools/dmmtool/JTGMerge.jar"
+set command="java -jar ./tools/dmm-merge-tool/JTGMerge.jar"
 
 start "Map Merger" /wait "%command%" merge %1 %2 %3
 

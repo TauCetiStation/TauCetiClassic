@@ -23,7 +23,7 @@
 	},
 /area/holodeck/source_picnicarea)
 "f" = (
-/obj/structure/table/woodentable/holotable,
+/obj/structure/table/holotable/wooden,
 /turf/simulated/floor/holofloor{
 	icon_state = "asteroid"
 	},

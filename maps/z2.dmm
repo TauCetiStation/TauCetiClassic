@@ -15795,7 +15795,7 @@
 /area/wizard_station)
 "bax" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -23560,7 +23560,7 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/shuttle/floor4,
 /area/shuttle/escape/centcom)
 "pub" = (

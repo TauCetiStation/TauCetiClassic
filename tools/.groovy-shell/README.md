@@ -20,18 +20,6 @@ Groovy предоставляет весьма удобный синтаксис
 #### Что внутри
 
 `groovy-shell.jar` был собран со следующими зависимостями:
-
-```
-<dependencies>
-    <dependency>
-        <groupId>org.codehaus.groovy</groupId>
-        <artifactId>groovy-jsr223</artifactId>
-        <version>2.5.2</version>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.ivy</groupId>
-        <artifactId>ivy</artifactId>
-        <version>2.4.0</version>
-    </dependency>
-</dependencies>
-```
+ - **groupId:** org.codehaus.groovy, **artifactId:** groovy-jsr223, **version:** 2.5.2
+ - **groupId:** org.codehaus.groovy, **artifactId:** groovy-swing, **version:** 2.5.2
+ - **groupId:** org.apache.ivy, **artifactId:** ivy, **version:** 2.4.0

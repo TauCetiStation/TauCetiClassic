@@ -4,7 +4,7 @@ import org.eclipse.jgit.treewalk.TreeWalk
 
 import java.nio.file.Files
 
-JTGMERGE = 'java -jar ./tools/dmmtool/JTGMerge.jar'
+JTGMERGE = 'java -jar ./tools/dmm-merge-tool/JTGMerge.jar'
 
 def git = Git.open(new File('.'))
 def currentStatus = git.status().call()
@@ -20,13 +20,16 @@ if (git.repository.resolve('MERGE_HEAD')) {
     System.exit(0)
 }
 
+def modifiedMaps = []
+
 currentStatus.added.each { filePath ->
     if (!filePath.endsWith('.dmm'))
         return
 
     println "Converting new map to TGM: $filePath"
     /$JTGMERGE convert "$filePath" -f tgm/.execute().waitFor()
-    git.add().addFilepattern(filePath).call()
+
+    modifiedMaps << filePath
 }
 
 def lastCommitId = git.repository.resolve("$git.repository.fullBranch^{tree}")
@@ -44,11 +47,28 @@ currentStatus.changed.each { filePath ->
 
     println "Cleaning map: $filePath"
     /$JTGMERGE clean "$tmpMap.path" "$filePath"/.execute().waitFor()
-    git.add().addFilepattern(filePath).call()
 
     tmpMap.delete()
     treeWalk.close()
+
+    modifiedMaps << filePath
 }
 
 objReader.close()
+
+modifiedMaps.each {
+    def mapFile = new File(it)
+    def mapText = mapFile.text
+
+    mapText = mapText.replace(System.lineSeparator(), '\n')
+
+    if (mapText[-1] != '\n') {
+        mapText += '\n'
+    }
+
+    mapFile.text = mapText
+
+    git.add().addFilepattern(it).call()
+}
+
 git.close()

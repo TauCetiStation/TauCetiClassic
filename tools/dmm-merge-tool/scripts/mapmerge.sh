@@ -1,7 +1,7 @@
 #!/bin/sh
 echo "Running Map Merger..."
 
-command="java -jar tools/dmmtool/JTGMerge.jar"
+command="java -jar tools/dmm-merge-tool/JTGMerge.jar"
 
 $command merge $1 $2 $3
 

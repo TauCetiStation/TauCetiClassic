@@ -70,7 +70,9 @@
 		"/obj/item/clothing/mask/surgical",
 		"/obj/item/clothing/gloves/latex",
 	    "/obj/item/weapon/reagent_containers/hypospray",
-	    "/obj/item/device/sensor_device"
+	    "/obj/item/device/sensor_device",
+	    "/obj/item/device/mass_spectrometer",
+	    "/obj/item/device/reagent_scanner"
 	    )
 /obj/item/weapon/storage/belt/medical/surg
 	name = "Surgery belt"

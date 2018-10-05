@@ -1831,7 +1831,7 @@ datum/design/scalpel_laser2
 	id = "scalpel_laser2"
 	req_tech = list("biotech" = 3, "materials" = 4, "magnets" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500, MAT_SILVER = 2500)
+	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500)
 	build_path = /obj/item/weapon/scalpel/laser2
 
 datum/design/scalpel_laser3
