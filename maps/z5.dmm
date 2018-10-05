@@ -724,42 +724,6 @@
 	icon_state = "white"
 	},
 /area/research_outpost/sample)
-"bT" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/obj/machinery/door/airlock/research/glass{
-	name = "Expedition Prep";
-	req_access_txt = "65"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/research_outpost/entry)
-"bU" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door/airlock/research/glass{
-	name = "Expedition Prep";
-	req_access_txt = "65"
-	},
-/turf/simulated/floor,
-/area/research_outpost/entry)
 "bV" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/solution_trays,
@@ -1173,10 +1137,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost/atmos)
-"cL" = (
-/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
-/turf/simulated/floor,
-/area/research_outpost/gearstore)
 "cM" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1287,26 +1247,6 @@
 	icon_state = "cafeteria"
 	},
 /area/research_outpost/hallway)
-"da" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/door/airlock/research/glass{
-	name = "Expedition Prep";
-	req_access_txt = "65"
-	},
-/turf/simulated/floor,
-/area/research_outpost/tempstorage)
 "db" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1529,13 +1469,6 @@
 	icon_state = "white"
 	},
 /area/research_outpost/anomaly)
-"du" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
-/turf/simulated/floor,
-/area/research_outpost/gearstore)
 "dv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -2004,17 +1937,6 @@
 	icon_state = "whitegreen"
 	},
 /area/research_outpost/hallway)
-"eq" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
-/turf/simulated/floor,
-/area/research_outpost/gearstore)
 "er" = (
 /obj/machinery/firealarm{
 	dir = 2;
@@ -2058,19 +1980,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost/power)
-"ew" = (
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/obj/machinery/door/airlock/research/glass{
-	name = "Equipment storage";
-	req_access_txt = "65"
-	},
-/turf/simulated/floor,
-/area/research_outpost/gearstore)
 "ex" = (
 /obj/structure/stool,
 /turf/simulated/floor{
@@ -3599,6 +3508,17 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor,
 /area/research_outpost/entry)
+"hL" = (
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
+/turf/simulated/floor,
+/area/research_outpost/gearstore)
 "hM" = (
 /obj/machinery/driver_button{
 	id = "research";
@@ -4940,6 +4860,13 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/harvesting)
+"kt" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
+/turf/simulated/floor,
+/area/research_outpost/gearstore)
 "ku" = (
 /obj/machinery/door/airlock/research{
 	name = "Temporary Storage Loading";
@@ -5251,6 +5178,10 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
+"kZ" = (
+/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
+/turf/simulated/floor,
+/area/research_outpost/gearstore)
 "la" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -5;
@@ -5552,6 +5483,26 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
+"lF" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/machinery/door/airlock/research/glass{
+	name = "Expedition Prep";
+	req_access_txt = "65"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/research_outpost/entry)
 "lG" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -5864,6 +5815,19 @@
 "mp" = (
 /turf/simulated/wall,
 /area/research_outpost/gearstore)
+"mq" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/airlock/research/glass{
+	name = "Equipment storage";
+	req_access_txt = "65"
+	},
+/turf/simulated/floor,
+/area/research_outpost/gearstore)
 "mr" = (
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
@@ -5876,6 +5840,42 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
+"mt" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/obj/machinery/door/airlock/research/glass{
+	name = "Expedition Prep";
+	req_access_txt = "65"
+	},
+/turf/simulated/floor,
+/area/research_outpost/entry)
+"mu" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/obj/machinery/door/airlock/research/glass{
+	name = "Expedition Prep";
+	req_access_txt = "65"
+	},
+/turf/simulated/floor,
+/area/research_outpost/tempstorage)
 "mv" = (
 /obj/structure/rack,
 /obj/item/weapon/storage/box/monkeycubes,
@@ -50043,9 +50043,9 @@ id
 jZ
 kf
 hp
-cL
-du
-eq
+kZ
+kt
+hL
 mr
 pb
 mp
@@ -50553,7 +50553,7 @@ aa
 ar
 bL
 bL
-bT
+lF
 bL
 bL
 hp
@@ -50816,7 +50816,7 @@ kj
 hp
 pD
 pE
-ew
+mq
 pD
 pE
 mp
@@ -51070,7 +51070,7 @@ gZ
 hZ
 ji
 kk
-bU
+mt
 kY
 lH
 my
@@ -51842,7 +51842,7 @@ ie
 jj
 lb
 bh
-da
+mu
 nl
 nP
 ol
