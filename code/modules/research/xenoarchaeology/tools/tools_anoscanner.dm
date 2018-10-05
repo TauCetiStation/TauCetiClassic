@@ -150,7 +150,6 @@
 
 /obj/item/device/searcher/atom_init(mapload, source_wavescanner)
 	. = ..()
-	scan()
 	wavescanner = source_wavescanner
 
 /obj/item/device/searcher/Destroy()
@@ -169,6 +168,10 @@
 	if(target.loc == loc || target == wavescanner)
 		return
 	..()
+
+/obj/item/device/searcher/atom_init()
+	. = ..()
+	scan()
 
 /obj/item/device/searcher/attack_self(mob/user)
 	return interact(user)
