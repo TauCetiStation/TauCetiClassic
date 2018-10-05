@@ -462,6 +462,7 @@
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 	storage_slots = 21
+	max_storage_space = 42
 	can_hold = list("/obj/item/weapon/light/tube", "/obj/item/weapon/light/bulb")
 	use_to_pickup = 1 // for picking up broken bulbs, not that most people will try
 

@@ -88,10 +88,9 @@
 		M.s_active.show_to(M)
 
 /datum/storage_ui/default/on_pre_remove(var/mob/user, var/obj/item/W)
-	for(var/mob/M in range(1, storage.loc))
-		if (M.s_active == storage)
-			if (M.client)
-				M.client.screen -= W
+	for(var/mob/M in can_see_contents())
+		if(M.client)
+			M.client.screen -= W
 
 /datum/storage_ui/default/on_post_remove(var/mob/user)
 	if(user.s_active)
