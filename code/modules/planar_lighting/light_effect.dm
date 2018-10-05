@@ -88,6 +88,17 @@
 		follow_holder_dir()
 		cast_light()
 
+/obj/effect/light/forceMove(atom/destination)
+	if(!destination)
+		return FALSE
+
+	if(!isturf(destination))
+		loc = null
+	else
+		loc = destination
+
+	return TRUE
+
 /obj/effect/light/proc/is_directional_light()
 	return (holder.light_type == LIGHT_DIRECTIONAL)
 
