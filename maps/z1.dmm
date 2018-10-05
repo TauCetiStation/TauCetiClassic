@@ -24055,6 +24055,16 @@
 	icon_state = "bot"
 	},
 /area/crew_quarters/locker)
+"aQl" = (
+/obj/structure/table/glass,
+/obj/item/weapon/paper{
+	layer = 3
+	},
+/obj/item/weapon/pen,
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/toxins/brainstorm_center)
 "aQm" = (
 /obj/machinery/requests_console{
 	department = "Locker Room";
@@ -118144,9 +118154,9 @@ aHT
 aJe
 aKV
 cjL
-fwb
+aQl
 bWK
-fwb
+bSx
 bWc
 aSN
 aSN
