@@ -131,7 +131,7 @@
 	message += "[OX] | [TX] | [BU] | [BR]<br>"
 	if(istype(M, /mob/living/carbon))
 		var/mob/living/carbon/C = M
-		if(C.reagents.total_volume)
+		if(C.reagents.total_volume || C.is_infected_with_zombie_virus())
 			message += "<span class='warning'>Warning: Unknown substance detected in subject's blood.</span><br>"
 		if(C.virus2.len)
 			for (var/ID in C.virus2)

@@ -201,7 +201,7 @@
 			return
 		if(isrobot(user))
 			return
-		if(!W.canremove)
+		if(!W.canremove || W.flags & NODROP)
 			return
 		usr.drop_item()
 		if(W)

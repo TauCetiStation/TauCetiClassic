@@ -106,15 +106,19 @@
 
 	if(mob.stat == DEAD)
 		return
-	if(stage <= 1 && clicks == 0) 	// with a certain chance, the mob may become immune to the disease before it starts properly
+	if(stage <= 1 && clicks == 0 && !mob.is_infected_with_zombie_virus()) 	// with a certain chance, the mob may become immune to the disease before it starts properly
 		if(prob(5))
 			mob.antibodies |= antigen // 20% immunity is a good chance IMO, because it allows finding an immune person easily
 
 	//Space antibiotics stop disease completely
-	if(!mob.is_infected_with_zombie_virus() && mob.reagents.has_reagent("spaceacillin"))
-		if(stage == 1 && prob(20))
-			src.cure(mob)
-		return
+	if(mob.reagents.has_reagent("spaceacillin"))
+		if(!mob.is_infected_with_zombie_virus())
+			if(stage == 1 && prob(20))
+				src.cure(mob)
+			return
+		else
+			if(prob(50)) //Antibiotics slow down zombie virus progression but dont stop it completely
+				return
 
 	//Virus food speeds up disease progress
 	if(mob.reagents.has_reagent("virusfood"))
