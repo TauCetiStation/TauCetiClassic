@@ -1,9 +1,7 @@
 
-var/global/list/space_surprises = list(		/obj/item/clothing/mask/facehugger				=4,
-											/obj/item/weapon/pickaxe/silver					=4,
+var/global/list/space_surprises = list(		/obj/item/weapon/pickaxe/silver					=4,
 											/obj/item/weapon/pickaxe/drill					=4,
 											/obj/item/weapon/pickaxe/drill/jackhammer		=4,
-											//mob/living/simple_animal/hostile/carp			=3,
 											/obj/item/weapon/pickaxe/diamond				=3,
 											/obj/item/weapon/pickaxe/drill/diamond_drill	=3,
 											/obj/item/weapon/pickaxe/gold					=3,

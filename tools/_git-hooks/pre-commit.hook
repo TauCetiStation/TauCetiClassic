@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Run script for map cleaning
+exec java -jar tools/.groovy-shell/groovy-shell.jar tools/dmm-merge-tool/scripts/precommit.groovy 2>/dev/null

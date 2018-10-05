@@ -57,6 +57,29 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/golem/atom_init(mapload)
 	. = ..(mapload, GOLEM)
 
+/mob/living/carbon/human/shadowling/atom_init(mapload)
+	. = ..(mapload, SHADOWLING)
+	var/newNameId = pick(possibleShadowlingNames)
+	possibleShadowlingNames.Remove(newNameId)
+	real_name = newNameId
+	name = real_name
+
+	underwear = 0
+	undershirt = 0
+	faction = "faithless"
+	dna.mutantrace = "shadowling"
+	update_mutantrace()
+	regenerate_icons()
+
+	spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_hivemind
+	spell_list += new /obj/effect/proc_holder/spell/targeted/enthrall
+	spell_list += new /obj/effect/proc_holder/spell/targeted/glare
+	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/veil
+	spell_list += new /obj/effect/proc_holder/spell/targeted/shadow_walk
+	spell_list += new /obj/effect/proc_holder/spell/aoe_turf/flashfreeze
+	spell_list += new /obj/effect/proc_holder/spell/targeted/collective_mind
+	spell_list += new /obj/effect/proc_holder/spell/targeted/shadowling_regenarmor
+
 /mob/living/carbon/human/atom_init(mapload, new_species)
 
 	dna = new
@@ -582,8 +605,10 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 //Removed the horrible safety parameter. It was only being used by ninja code anyways.
 //Now checks siemens_coefficient of the affected area by default
 /mob/living/carbon/human/electrocute_act(shock_damage, obj/source, siemens_coeff = 1.0, def_zone = null, tesla_shock = 0)
-	if(status_flags & GODMODE)	return 0	//godmode
-	if(NO_SHOCK in src.mutations)	return 0 //#Z2 no shock with that mutation.
+	if(status_flags & GODMODE)
+		return 0	//godmode
+	if(NO_SHOCK in src.mutations)
+		return 0 //#Z2 no shock with that mutation.
 
 	if(!def_zone)
 		def_zone = pick(BP_L_ARM , BP_R_ARM)
@@ -604,8 +629,15 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	else
 		siemens_coeff *= get_siemens_coefficient_organ(BP)
 
+	if(species)
+		siemens_coeff *= species.siemens_coefficient
+
 	. = ..(shock_damage, source, siemens_coeff, def_zone, tesla_shock)
 	if(.)
+		if(species && species.flags[IS_SYNTHETIC])
+			nutrition += . // Electrocute act returns it's shock_damage value.
+		if(species.flags[NO_PAIN]) // Because for all intents and purposes, if the mob feels no pain, he was not shocked.
+			. = 0
 		electrocution_animation(40)
 
 /mob/living/carbon/human/Topic(href, href_list)

@@ -119,6 +119,14 @@
 	name = "Skrellian chief-engineers hardsuit modification kit"
 	target_species = SKRELL
 
+/obj/item/device/modkit/engineering/chief/tajaran
+	name = "Tajaran chief-engineers hardsuit modification kit"
+	target_species = TAJARAN
+
+/obj/item/device/modkit/engineering/chief/unathi
+	name = "Unathi chief-engineers hardsuit modification kit"
+	target_species = UNATHI
+
 
 /obj/item/device/modkit/atmos
 	name = "Atmospherics hardsuit modification kit"
@@ -146,6 +154,10 @@
 		/obj/item/clothing/head/helmet/space/rig/medical,
 		/obj/item/clothing/suit/space/rig/medical
 		)
+	forbidden_type = list(
+		/obj/item/clothing/head/helmet/space/rig/medical/cmo,
+		/obj/item/clothing/suit/space/rig/medical/cmo
+	)
 
 /obj/item/device/modkit/med/tajaran
 	name = "Tajaran medical hardsuit modification kit"
@@ -160,12 +172,33 @@
 	target_species = SKRELL
 
 
+/obj/item/device/modkit/med/cmo
+	name = "CMO hardsuit modification kit"
+	forbidden_type = list()
+
+/obj/item/device/modkit/med/cmo/skrell
+	name = "Skrellian CMO hardsuit modification kit"
+	target_species = SKRELL
+
+/obj/item/device/modkit/med/cmo/tajaran
+	name = "Tajaran CMO hardsuit modification kit"
+	target_species = TAJARAN
+
+/obj/item/device/modkit/med/cmo/unathi
+	name = "Unathi CMO hardsuit modification kit"
+	target_species = UNATHI
+
+
 /obj/item/device/modkit/sec
 	name = "Security hardsuit modification kit"
 	permitted_types = list(
 		/obj/item/clothing/head/helmet/space/rig/security,
 		/obj/item/clothing/suit/space/rig/security
 		)
+	forbidden_type = list(
+		/obj/item/clothing/head/helmet/space/rig/security/hos,
+		/obj/item/clothing/suit/space/rig/security/hos
+	)
 
 /obj/item/device/modkit/sec/tajaran
 	name = "Tajaran security hardsuit modification kit"
@@ -178,6 +211,23 @@
 /obj/item/device/modkit/sec/skrell
 	name = "Skrellian security hardsuit modification kit"
 	target_species = SKRELL
+
+
+/obj/item/device/modkit/sec/hos
+	name = "HoS hardsuit modification kit"
+	forbidden_type = list()
+
+/obj/item/device/modkit/sec/hos/skrell
+	name = "Skrellian HoS hardsuit modification kit"
+	target_species = SKRELL
+
+/obj/item/device/modkit/sec/hos/tajaran
+	name = "Tajaran HoS hardsuit modification kit"
+	target_species = TAJARAN
+
+/obj/item/device/modkit/sec/hos/unathi
+	name = "Unathi HoS hardsuit modification kit"
+	target_species = UNATHI
 
 
 /obj/item/device/modkit/mining

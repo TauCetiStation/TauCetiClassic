@@ -73,7 +73,7 @@ turf/simulated/floor/holofloor/update_icon()
 
 	..()
 
-/obj/structure/table/woodentable/holotable
+/obj/structure/table/holotable/wooden
 	name = "table"
 	desc = "A square piece of wood standing on four wooden legs. It can not move."
 	icon = 'icons/obj/tables.dmi'
