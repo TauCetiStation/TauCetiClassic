@@ -1545,7 +1545,6 @@
 #include "code\modules\planar_lighting\light_atom_set.dm"
 #include "code\modules\planar_lighting\light_effect.dm"
 #include "code\modules\planar_lighting\light_effect_cast.dm"
-#include "code\modules\planar_lighting\light_item.dm"
 #include "code\modules\planar_lighting\light_mob.dm"
 #include "code\modules\planar_lighting\light_obj_types.dm"
 #include "code\modules\planar_lighting\light_planes.dm"
