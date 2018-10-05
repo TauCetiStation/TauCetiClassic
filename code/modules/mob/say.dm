@@ -64,12 +64,11 @@
 		if(M.client && M.stat == DEAD && (M.client.prefs.chat_toggles & CHAT_DEAD))
 			if(M.fake_death) //Our changeling with fake_death status must not hear dead chat!!
 				continue
-			to_chat(M, rendered)
+			to_chat(M, rendered, "emojiAllowed")
 			continue
 
 		if(M.client && M.client.holder && (M.client.prefs.chat_toggles & CHAT_DEAD) ) // Show the message to admins with deadchat toggled on
-			to_chat(M, rendered)//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
-
+			to_chat(M, rendered, "emojiAllowed")//Admins can hear deadchat, if they choose to, no matter if they're blind/deaf or not.
 
 	return
 

@@ -193,7 +193,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 
 	return "<img [class] src='data:image/png;base64,[bicon_cache[key]]'>"
 
-/proc/to_chat(target, message)
+/proc/to_chat(target, message, flag)
 	if(!target) //shitty fix, but it's works
 		return
 
@@ -216,7 +216,7 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 			message = replacetext(message, "\proper", "")
 
 		//message = entity_ja(message)//moved to js
-		
+
 		var/client/C
 		if(istype(target, /client))
 			C = target
@@ -232,4 +232,5 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 				C.chatOutput.messageQueue.Add(message)
 				return
 
-		target << output(url_encode(message), "browseroutput:output")
+
+		target << output(list2params(list(message,flag)), "browseroutput:output")
