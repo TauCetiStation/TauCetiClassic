@@ -211,6 +211,7 @@
 			return
 		usr.drop_item()
 		if(W)
+			W.do_putdown_animation(src)
 			W.forceMove(src.loc)
 
 	else if(istype(W, /obj/item/weapon/packageWrap) || istype(W, /obj/item/weapon/extraction_pack))
