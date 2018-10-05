@@ -574,7 +574,6 @@
 	collection_mode = 1
 	display_contents_with_number = 1
 	max_w_class = 3
-	max_combined_w_class = 100
 	var/works_from_distance = 0
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
@@ -594,7 +593,6 @@
 	w_class = 3
 	storage_slots = 400
 	max_w_class = 3
-	max_combined_w_class = 800
 	works_from_distance = 1
 	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/PSHOOM.ogg'
 	alt_sound = 'sound/items/PSHOOM_2.ogg'

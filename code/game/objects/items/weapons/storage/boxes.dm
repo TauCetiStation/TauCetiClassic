@@ -36,6 +36,7 @@
 	desc = "It's just an ordinary box."
 	icon_state = "box"
 	item_state = "syringe_kit"
+	max_storage_space = DEFAULT_BOX_STORAGE
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
 //Survival Humanlike
@@ -449,7 +450,7 @@
 
 /obj/item/weapon/storage/box/autoinjectors/atom_init()
 	. = ..()
-	for(var/i in 1 to storage_slots)
+	for(var/i in 1 to 7)
 		new /obj/item/weapon/reagent_containers/hypospray/autoinjector(src)
 
 //Replacement bulbs
@@ -461,8 +462,8 @@
 	item_state = "syringe_kit"
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 	storage_slots = 21
+	max_storage_space = 42
 	can_hold = list("/obj/item/weapon/light/tube", "/obj/item/weapon/light/bulb")
-	max_combined_w_class = 42	//holds 21 items of w_class 2
 	use_to_pickup = 1 // for picking up broken bulbs, not that most people will try
 
 /obj/item/weapon/storage/box/lights/bulbs/atom_init()
@@ -563,7 +564,6 @@
 	foldable = /obj/item/stack/sheet/cardboard
 	storage_slots = 16
 	can_hold = list("/obj/item/ammo_casing/shotgun")
-	max_combined_w_class = 16
 
 
 /obj/item/weapon/storage/box/shotgun/slug

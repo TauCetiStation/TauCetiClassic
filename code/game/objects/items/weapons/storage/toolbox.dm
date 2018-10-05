@@ -9,7 +9,8 @@
 	throwforce = 10.0
 	throw_speed = 1
 	throw_range = 7
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
+	max_storage_space = DEFAULT_LARGEBOX_STORAGE
 	origin_tech = "combat=1"
 	attack_verb = list("robusted")
 
