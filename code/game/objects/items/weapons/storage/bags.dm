@@ -65,6 +65,8 @@
 	while(base_storage_capacity(w_class) < cur_storage_space)
 		w_class++
 
+	w_class = min(ITEM_SIZE_HUGE, w_class)
+
 	update_icon()
 
 /obj/item/weapon/storage/bag/trash/get_storage_cost()

@@ -200,7 +200,7 @@
 	force = 15.0
 
 /obj/item/weapon/storage/secure/briefcase/syndie/atom_init()
-	for (var/i in 1 to (storage_slots - 3))
+	for (var/i in 1 to 4)
 		new /obj/item/weapon/spacecash/c1000(src)
 	. = ..()
 
