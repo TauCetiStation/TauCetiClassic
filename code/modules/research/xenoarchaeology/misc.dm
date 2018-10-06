@@ -60,12 +60,12 @@
 /obj/structure/closet/secure_closet/xenoarchaeologist
 	name = "Xenoarchaeologist Locker"
 	req_access = list(access_xenoarch)
-	icon_state = "secureres1"
-	icon_closed = "secureres"
-	icon_locked = "secureres1"
-	icon_opened = "secureresopen"
-	icon_broken = "secureresbroken"
-	icon_off = "secureresoff"
+	icon_state = "securerexenoarch1"
+	icon_closed = "securerexenoarch"
+	icon_locked = "securerexenoarch1"
+	icon_opened = "securerexenoarchopen"
+	icon_broken = "securerexenoarchbroken"
+	icon_off = "securerexenoarchoff"
 
 /obj/structure/closet/secure_closet/xenoarchaeologist/PopulateContents()
 	new /obj/item/clothing/under/rank/scientist(src)
@@ -76,26 +76,30 @@
 	new /obj/item/weapon/storage/belt/archaeology(src)
 	new /obj/item/weapon/storage/box/excavation(src)
 
-/obj/structure/closet/excavation
-	name = "Excavation tools"
-	icon_state = "toolcloset"
-	icon_closed = "toolcloset"
-	icon_opened = "toolclosetopen"
+/obj/structure/closet/secure_closet/xenoarchaeologist_tools
+	name = "Xenoarchaeologist Locker"
+	req_access = list(access_xenoarch)
+	icon_state = "securerexenoarch1"
+	icon_closed = "securerexenoarch"
+	icon_locked = "securerexenoarch1"
+	icon_opened = "securerexenoarchopen"
+	icon_broken = "securerexenoarchbroken"
+	icon_off = "securerexenoarchoff"
 
-/obj/structure/closet/excavation/PopulateContents()
-	new /obj/item/weapon/storage/belt/archaeology(src)
+/obj/structure/closet/secure_closet/xenoarchaeologist_tools/PopulateContents()
 	new /obj/item/weapon/storage/box/excavation(src)
 	new /obj/item/device/flashlight/lantern(src)
-	new /obj/item/device/ano_scanner(src)
+	new /obj/item/device/wave_scanner_backpack(src)
 	new /obj/item/device/depth_scanner(src)
 	new /obj/item/device/core_sampler(src)
-	new /obj/item/device/gps(src)
+	new /obj/item/device/gps/science(src)
 	new /obj/item/device/beacon_locator(src)
 	new /obj/item/device/radio/beacon(src)
 	new /obj/item/clothing/glasses/hud/mining(src)
 	new /obj/item/device/measuring_tape(src)
 	new /obj/item/weapon/pickaxe/hand(src)
 	new /obj/item/weapon/storage/bag/fossils(src)
+	new /obj/item/weapon/storage/belt/archaeology(src)
 
 //---- Isolation room air alarms
 

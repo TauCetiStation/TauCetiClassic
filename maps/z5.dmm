@@ -724,6 +724,24 @@
 	icon_state = "white"
 	},
 /area/research_outpost/sample)
+"bT" = (
+/obj/structure/closet/excavation,
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/research_outpost/gearstore)
+"bU" = (
+/obj/structure/closet/excavation,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/research_outpost/gearstore)
 "bV" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/solution_trays,
@@ -1137,6 +1155,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost/atmos)
+"cL" = (
+/obj/structure/closet/excavation,
+/turf/simulated/floor,
+/area/research_outpost/gearstore)
 "cM" = (
 /obj/structure/window/reinforced{
 	dir = 4
@@ -1247,6 +1269,26 @@
 	icon_state = "cafeteria"
 	},
 /area/research_outpost/hallway)
+"da" = (
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_x = 0
+	},
+/obj/machinery/door/airlock/research/glass{
+	name = "Research Shuttle Dock";
+	req_access_txt = "65"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/research_outpost/entry)
 "db" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1469,6 +1511,19 @@
 	icon_state = "white"
 	},
 /area/research_outpost/anomaly)
+"du" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Equipment storage";
+	req_access_txt = "65"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/research_outpost/gearstore)
 "dv" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -1937,6 +1992,22 @@
 	icon_state = "whitegreen"
 	},
 /area/research_outpost/hallway)
+"eq" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
+	},
+/obj/machinery/door/airlock/mining/glass{
+	name = "Expedition Prep";
+	req_access_txt = "65"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/plating,
+/area/research_outpost/entry)
 "er" = (
 /obj/machinery/firealarm{
 	dir = 2;
@@ -1980,6 +2051,26 @@
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost/power)
+"ew" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Loading area";
+	req_access_txt = "65"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/research_outpost/tempstorage)
 "ex" = (
 /obj/structure/stool,
 /turf/simulated/floor{
@@ -3508,26 +3599,6 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers,
 /turf/simulated/floor,
 /area/research_outpost/entry)
-"hL" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
-	},
-/obj/machinery/door/airlock/research/glass{
-	name = "Research Shuttle Dock";
-	req_access_txt = "65"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/research_outpost/entry)
 "hM" = (
 /obj/machinery/driver_button{
 	id = "research";
@@ -4869,22 +4940,6 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/harvesting)
-"kt" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/machinery/door/airlock/mining/glass{
-	name = "Expedition Prep";
-	req_access_txt = "65"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/turf/simulated/floor/plating,
-/area/research_outpost/entry)
 "ku" = (
 /obj/machinery/door/airlock/research{
 	name = "Temporary Storage Loading";
@@ -5196,26 +5251,6 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
-"kZ" = (
-/obj/machinery/door/airlock/mining/glass{
-	name = "Loading area";
-	req_access_txt = "65"
-	},
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_y = 0
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/research_outpost/tempstorage)
 "la" = (
 /obj/structure/extinguisher_cabinet{
 	pixel_x = -5;
@@ -5514,13 +5549,6 @@
 "lE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
-	},
-/turf/simulated/floor,
-/area/research_outpost/gearstore)
-"lF" = (
-/obj/structure/closet/excavation,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
 	},
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
@@ -5836,10 +5864,6 @@
 "mp" = (
 /turf/simulated/wall,
 /area/research_outpost/gearstore)
-"mq" = (
-/obj/structure/closet/excavation,
-/turf/simulated/floor,
-/area/research_outpost/gearstore)
 "mr" = (
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
@@ -5849,30 +5873,6 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
-	},
-/turf/simulated/floor,
-/area/research_outpost/gearstore)
-"mt" = (
-/obj/structure/closet/excavation,
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/research_outpost/gearstore)
-"mu" = (
-/obj/machinery/door/airlock/mining/glass{
-	name = "Equipment storage";
-	req_access_txt = "65"
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
-	dir = 4
 	},
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
@@ -50043,9 +50043,9 @@ id
 jZ
 kf
 hp
-mq
-lF
-mt
+cL
+bU
+bT
 mr
 pb
 mp
@@ -50553,7 +50553,7 @@ aa
 ar
 bL
 bL
-hL
+da
 bL
 bL
 hp
@@ -50816,7 +50816,7 @@ kj
 hp
 pD
 pE
-mu
+du
 pD
 pE
 mp
@@ -51070,7 +51070,7 @@ gZ
 hZ
 ji
 kk
-kt
+eq
 kY
 lH
 my
@@ -51842,7 +51842,7 @@ ie
 jj
 lb
 bh
-kZ
+ew
 nl
 nP
 ol
