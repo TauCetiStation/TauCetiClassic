@@ -35977,10 +35977,7 @@
 /area/rnd/lab)
 "bqC" = (
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/pen,
-/obj/item/weapon/packageWrap,
-/obj/item/weapon/packageWrap,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -35989,6 +35986,11 @@
 	dir = 2;
 	network = list("SS13","Research")
 	},
+/obj/item/taperoll/science,
+/obj/item/taperoll/science,
+/obj/item/weapon/hand_labeler,
+/obj/item/weapon/packageWrap,
+/obj/item/weapon/packageWrap,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
@@ -48653,6 +48655,10 @@
 /area/rnd/misc_lab)
 "bSk" = (
 /obj/structure/table/reinforced,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/taperoll/science,
 /obj/item/clothing/glasses/science{
 	pixel_x = 2;
 	pixel_y = 6
@@ -48661,9 +48667,6 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/clothing/mask/gas/coloured,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"

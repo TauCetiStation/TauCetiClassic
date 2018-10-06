@@ -725,41 +725,23 @@
 	},
 /area/research_outpost/sample)
 "bT" = (
-/obj/structure/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8";
-	pixel_x = 0
+/obj/structure/closet/excavation,
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1"
 	},
-/obj/machinery/door/airlock/research/glass{
-	name = "Expedition Prep";
-	req_access_txt = "65"
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/research_outpost/entry)
+/area/research_outpost/gearstore)
 "bU" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2";
-	pixel_y = 0
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/machinery/door/airlock/research/glass{
-	name = "Expedition Prep";
-	req_access_txt = "65"
+/obj/structure/closet/excavation,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
 	},
 /turf/simulated/floor,
-/area/research_outpost/entry)
+/area/research_outpost/gearstore)
 "bV" = (
 /obj/structure/table,
 /obj/item/weapon/storage/box/solution_trays,
@@ -1174,7 +1156,7 @@
 /turf/simulated/floor/plating,
 /area/research_outpost/atmos)
 "cL" = (
-/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
+/obj/structure/closet/excavation,
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
 "cM" = (
@@ -1292,7 +1274,11 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8";
-	pixel_y = 0
+	pixel_x = 0
+	},
+/obj/machinery/door/airlock/research/glass{
+	name = "Research Shuttle Dock";
+	req_access_txt = "65"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -1301,12 +1287,8 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/airlock/research/glass{
-	name = "Expedition Prep";
-	req_access_txt = "65"
-	},
 /turf/simulated/floor,
-/area/research_outpost/tempstorage)
+/area/research_outpost/entry)
 "db" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -1530,10 +1512,16 @@
 	},
 /area/research_outpost/anomaly)
 "du" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/machinery/door/airlock/mining/glass{
+	name = "Equipment storage";
+	req_access_txt = "65"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
 "dv" = (
@@ -2005,16 +1993,21 @@
 	},
 /area/research_outpost/hallway)
 "eq" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2";
+	pixel_y = 0
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
+/obj/machinery/door/airlock/mining/glass{
+	name = "Expedition Prep";
+	req_access_txt = "65"
 	},
-/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
-/turf/simulated/floor,
-/area/research_outpost/gearstore)
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/simple/hidden/supply,
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/simulated/floor/plating,
+/area/research_outpost/entry)
 "er" = (
 /obj/machinery/firealarm{
 	dir = 2;
@@ -2059,18 +2052,25 @@
 /turf/simulated/floor/plating,
 /area/research_outpost/power)
 "ew" = (
+/obj/machinery/door/airlock/mining/glass{
+	name = "Loading area";
+	req_access_txt = "65"
+	},
+/obj/structure/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8";
+	pixel_y = 0
+	},
+/obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/machinery/door/airlock/research/glass{
-	name = "Equipment storage";
-	req_access_txt = "65"
-	},
 /turf/simulated/floor,
-/area/research_outpost/gearstore)
+/area/research_outpost/tempstorage)
 "ex" = (
 /obj/structure/stool,
 /turf/simulated/floor{
@@ -50044,8 +50044,8 @@ jZ
 kf
 hp
 cL
-du
-eq
+bU
+bT
 mr
 pb
 mp
@@ -50553,7 +50553,7 @@ aa
 ar
 bL
 bL
-bT
+da
 bL
 bL
 hp
@@ -50816,7 +50816,7 @@ kj
 hp
 pD
 pE
-ew
+du
 pD
 pE
 mp
@@ -51070,7 +51070,7 @@ gZ
 hZ
 ji
 kk
-bU
+eq
 kY
 lH
 my
@@ -51842,7 +51842,7 @@ ie
 jj
 lb
 bh
-da
+ew
 nl
 nP
 ol
