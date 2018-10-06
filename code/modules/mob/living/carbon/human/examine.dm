@@ -500,6 +500,10 @@
 					var/obj/item/clothing/glasses/science/S = H.glasses
 					if(S.active)
 						return 1
+				else if(istype(H.glasses, /obj/item/clothing/glasses/welding/superior))
+					var/obj/item/clothing/glasses/welding/superior/S = H.glasses
+					if(!S.up)
+						return 1
 			else
 				return 0
 	else if(isrobot(M))
