@@ -5,11 +5,17 @@
 	amount = 5
 	max_amount = 5
 	w_class = ITEM_SIZE_TINY
-	full_w_class = ITEM_SIZE_TINY
+	full_w_class = ITEM_SIZE_SMALL
 	throw_speed = 4
 	throw_range = 20
 	var/heal_brute = 0
 	var/heal_burn = 0
+
+/obj/item/stack/medical/update_weight()
+	if(amount < 3)
+		w_class = initial(w_class)
+	else
+		w_class = full_w_class
 
 /obj/item/stack/medical/attack(mob/living/carbon/M, mob/user, def_zone)
 	if(!istype(M))
@@ -287,6 +293,8 @@
 	icon_state = "splint"
 	amount = 5
 	max_amount = 5
+	w_class = ITEM_SIZE_SMALL
+	full_w_class = ITEM_SIZE_SMALL
 
 /obj/item/stack/medical/splint/attack(mob/living/carbon/M, mob/user, def_zone)
 	if(..())

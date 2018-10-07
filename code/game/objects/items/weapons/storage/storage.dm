@@ -429,6 +429,22 @@
 			var/obj/O = A
 			O.hear_talk(M, text, verb, speaking)
 
+/obj/item/weapon/storage/proc/make_exact_fit(use_slots = FALSE)
+	if(use_slots)
+		storage_slots = contents.len
+	else
+		storage_slots = null
+
+	can_hold.Cut()
+	max_w_class = 0
+	max_storage_space = 0
+	for(var/obj/item/I in src)
+		var/texttype = "[I.type]"
+		if(!(texttype in can_hold))
+			can_hold += texttype
+		max_w_class = max(I.w_class, max_w_class)
+		max_storage_space += I.get_storage_cost()
+
 //Returns the storage depth of an atom. This is the number of storage items the atom is contained in before reaching toplevel (the area).
 //Returns -1 if the atom was not found on container.
 /atom/proc/storage_depth(atom/container)
