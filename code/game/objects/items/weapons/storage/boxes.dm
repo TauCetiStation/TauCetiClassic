@@ -562,7 +562,6 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "shotgun_ammo_slug"
 	foldable = /obj/item/stack/sheet/cardboard
-	storage_slots = 16
 	can_hold = list("/obj/item/ammo_casing/shotgun")
 
 
@@ -574,6 +573,7 @@
 	. = ..()
 	for(var/i in 1 to 16)
 		new /obj/item/ammo_casing/shotgun(src)
+	make_exact_fit()
 
 
 /obj/item/weapon/storage/box/shotgun/buckshot
@@ -584,6 +584,7 @@
 	. = ..()
 	for(var/i in 1 to 16)
 		new /obj/item/ammo_casing/shotgun/buckshot(src)
+	make_exact_fit()
 
 
 /obj/item/weapon/storage/box/shotgun/beanbag
@@ -594,6 +595,7 @@
 	. = ..()
 	for(var/i in 1 to 16)
 		new /obj/item/ammo_casing/shotgun/beanbag(src)
+	make_exact_fit()
 
 //Hair sprays
 /obj/item/weapon/storage/box/hairdyes

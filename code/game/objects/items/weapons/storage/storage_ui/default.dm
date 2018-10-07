@@ -181,6 +181,8 @@
 //This proc determins the size of the inventory to be displayed. Please touch it only if you know what you're doing.
 /datum/storage_ui/default/proc/slot_orient_objs()
 	var/adjusted_contents = storage.contents.len
+	click_border_start.Cut()
+	click_border_end.Cut()
 
 	//Numbered contents display
 	var/list/datum/numbered_display/numbered_contents
@@ -250,6 +252,8 @@
 	var/stored_cap_width = 4 //length of sprite for start and end of the box representing the stored item
 	var/storage_width = min( round( 224 * storage.max_storage_space/baseline_max_storage_space ,1) ,284) //length of sprite for the box representing total storage space
 
+	click_border_start.Cut()
+	click_border_end.Cut()
 	storage_start.overlays.Cut()
 
 	var/matrix/M = matrix()
@@ -257,7 +261,7 @@
 	storage_continue.transform = M
 
 	storage_start.screen_loc = "4:16,2:16"
-	storage_continue.screen_loc = "4:[storage_cap_width+(storage_width-storage_cap_width*2)/2+2],2:16"
+	storage_continue.screen_loc = "4:[round(storage_cap_width+(storage_width-storage_cap_width*2)/2+2)],2:16"
 	storage_end.screen_loc = "4:[19+storage_width-storage_cap_width],2:16"
 
 	var/startpoint = 0
@@ -267,11 +271,14 @@
 		startpoint = endpoint + 1
 		endpoint += storage_width * O.get_storage_cost()/storage.max_storage_space
 
+		click_border_start.Add(startpoint)
+		click_border_end.Add(endpoint)
+
 		var/matrix/M_start = matrix()
 		var/matrix/M_continue = matrix()
 		var/matrix/M_end = matrix()
 		M_start.Translate(startpoint,0)
-		M_continue.Scale((endpoint-startpoint-stored_cap_width*2)/32,1)
+		M_continue.Scale(ceil(endpoint-startpoint-stored_cap_width*2)/32,1)
 		M_continue.Translate(startpoint+stored_cap_width+(endpoint-startpoint-stored_cap_width*2)/2 - 16,0)
 		M_end.Translate(endpoint-stored_cap_width,0)
 		stored_start.transform = M_start
@@ -283,8 +290,7 @@
 
 		O.screen_loc = "4:[round((startpoint+endpoint)/2)+2],2:16"
 		O.maptext = ""
-		//O.hud_layerise()
 		O.layer = ABOVE_HUD_LAYER
-		O.plane = ABOVE_HUD_PLANE
+		O.plane = HUD_PLANE
 
 	closer.screen_loc = "4:[storage_width+19],2:16"
