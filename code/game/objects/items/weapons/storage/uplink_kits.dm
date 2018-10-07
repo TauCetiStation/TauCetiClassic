@@ -225,6 +225,7 @@
 	. = ..()
 	for(var/i in 0 to 6)
 		new /obj/item/weapon/poster/contraband/rev(src)
+	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/posters
 	name = "box (P)"
