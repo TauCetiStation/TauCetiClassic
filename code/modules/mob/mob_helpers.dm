@@ -299,13 +299,20 @@ It's fairly easy to fix if dealing with single letters but not so much with comp
 	return sanitize(t)
 
 /proc/shake_camera(mob/M, duration, strength=1)
-	if(!M || !M.client || !strength) return
-	spawn()
-		strength *= 32
-		for(var/i=0; i<duration, i++)
-			animate(M.client, pixel_x = rand(-strength,strength), pixel_y = rand(-strength,strength), time = 2)
-			sleep(2)
-		animate(M.client, pixel_x = 0, pixel_y = 0, time = 0)
+	if(!M || !M.client || duration < 1)
+		return
+	var/client/C = M.client
+	var/oldx = C.pixel_x
+	var/oldy = C.pixel_y
+	var/max = strength*world.icon_size
+	var/min = -(strength*world.icon_size)
+
+	for(var/i in 0 to duration-1)
+		if (i == 0)
+			animate(C, pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
+		else
+			animate(pixel_x=rand(min,max), pixel_y=rand(min,max), time=1)
+	animate(pixel_x=oldx, pixel_y=oldy, time=1)
 
 
 /proc/findname(msg)
