@@ -83,6 +83,8 @@
 	if(holder && holder.loc)
 		if(holder.loc.loc && ismob(holder.loc))
 			forceMove(holder.loc.loc)
+		else if(isturf(holder))
+			forceMove(holder)
 		else
 			forceMove(holder.loc)
 		follow_holder_dir()
