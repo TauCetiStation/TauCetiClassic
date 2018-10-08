@@ -16,7 +16,6 @@
 #define ROLE_NINJA             "Ninja"
 #define ROLE_RAIDER            "Raider"
 #define ROLE_PLANT             "Diona"
-#define ROLE_MEME              "Meme"
 #define ROLE_MUTINEER          "Mutineer"
 #define ROLE_SHADOWLING        "Shadowling"
 #define ROLE_ABDUCTOR          "Abductor"
@@ -42,8 +41,7 @@ var/global/list/special_roles = list(
 	ROLE_NINJA = 1,                                      //10
 	ROLE_RAIDER = IS_MODE_COMPILED("heist"),             //11
 	ROLE_PLANT = 1,                                      //12
-	ROLE_MEME = IS_MODE_COMPILED("meme"),                //13
-	ROLE_MUTINEER = IS_MODE_COMPILED("mutiny"),          //14
-	ROLE_SHADOWLING = IS_MODE_COMPILED("shadowling"),    //15
-	ROLE_ABDUCTOR = IS_MODE_COMPILED("abduction")        //16
+	ROLE_MUTINEER = IS_MODE_COMPILED("mutiny"),          //13
+	ROLE_SHADOWLING = IS_MODE_COMPILED("shadowling"),    //14
+	ROLE_ABDUCTOR = IS_MODE_COMPILED("abduction")        //15
 )
