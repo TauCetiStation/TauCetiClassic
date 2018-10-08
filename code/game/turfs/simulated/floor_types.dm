@@ -287,6 +287,7 @@
 /turf/simulated/floor/plating/airless/catwalk/atom_init()
 	. = ..()
 	update_icon(1)
+	set_darkness_disabler()
 	//set_light(0)
 
 /turf/simulated/floor/plating/airless/catwalk/update_icon(propogate=1)
