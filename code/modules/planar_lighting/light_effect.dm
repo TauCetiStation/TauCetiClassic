@@ -37,6 +37,8 @@
 		light_color = A.light_color
 		light_power = A.light_power
 		color = light_color
+		if(is_directional_light())
+			animate_movement = 3
 	..(get_turf(holder))
 
 /obj/effect/light/Destroy()
