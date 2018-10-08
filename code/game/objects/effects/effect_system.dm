@@ -197,7 +197,7 @@ steam.start() -- spawns the effect
 /obj/effect/effect/smoke
 	name = "smoke"
 	icon_state = "smoke"
-	opacity = 1
+	opacity = 0
 	anchored = 0.0
 	mouse_opacity = 0
 	var/amount = 6.0
@@ -207,6 +207,7 @@ steam.start() -- spawns the effect
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
+	layer = FLY_LAYER
 
 /obj/effect/effect/smoke/atom_init()
 	. = ..()
