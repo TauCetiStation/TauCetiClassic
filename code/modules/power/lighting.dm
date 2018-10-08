@@ -294,7 +294,7 @@
 
 	update_icon()
 	if(on)
-		if(light_range != brightness_range || light_power != brightness_power || light_color != brightness_color)
+		if(light_range != brightness_range || light_power != brightness_power || light_color != brightness_color || !light_obj)
 			switchcount++
 			if(rigged)
 				if(status == LIGHT_OK && trigger)
