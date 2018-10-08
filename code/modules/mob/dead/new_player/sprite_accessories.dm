@@ -1110,6 +1110,113 @@
 	icon_state = "ipc_eyes"
 	species_allowed = list(IPC)
 
+/datum/sprite_accessory/hair/ipc_mask
+	name = "Mask"
+	icon_state = "ipc_mask"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_maskblue
+	name = "Blue Mask"
+	icon_state = "ipc_maskblue"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_maskgreen
+	name = "Green Mask"
+	icon_state = "ipc_maskgreen"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_maskorange
+	name = "Orange Mask"
+	icon_state = "ipc_maskorange"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_maskpink
+	name = "Pink Mask"
+	icon_state = "ipc_maskpink"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_maskred
+	name = "Red Mask"
+	icon_state = "ipc_maskred"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_helm
+	name = "Helmet"
+	icon_state = "ipc_helm"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_helmblue
+	name = "Blue Helmet"
+	icon_state = "ipc_helmblue"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_helmgreen
+	name = "Green Helmet"
+	icon_state = "ipc_helmgreen"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_helmorange
+	name = "Orange Helmet"
+	icon_state = "ipc_helmorange"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_helmpink
+	name = "Pink Helmet"
+	icon_state = "ipc_helmpink"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_helmred
+	name = "Red Helmet"
+	icon_state = "ipc_helmred"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_globouse
+	name = "Globouse"
+	icon_state = "ipc_globouse"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_globouseblue
+	name = "Blue Globouse"
+	icon_state = "ipc_globouseblue"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_globousegreen
+	name = "Green Globouse"
+	icon_state = "ipc_globousegreen"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_globouseorange
+	name = "Orange Globouse"
+	icon_state = "ipc_globouseorange"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_globousepink
+	name = "Pink Globouse"
+	icon_state = "ipc_globousepink"
+	species_allowed = list(IPC)
+	do_colouration = 0
+
+/datum/sprite_accessory/hair/ipc_globousered
+	name = "Red Globouse"
+	icon_state = "ipc_globousered"
+	species_allowed = list(IPC)
+	do_colouration = 0
 
 /datum/sprite_accessory/hair/unathi_warrior_horns
 	name = "Warrior Horns"
