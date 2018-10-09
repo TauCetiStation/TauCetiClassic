@@ -121,8 +121,7 @@
 			for (var/mob/V in viewers(usr))
 				V.show_message("<span class='red'>[usr] starts putting [GM.name] into the disposal.</span>", 3)
 			if(do_after(usr, 20, target = src))
-				GM.simple_move_animation(src)
-				GM.forceMove(src)
+				GM.loc = src
 				GM.instant_vision_update(1,src)
 				for (var/mob/C in viewers(src))
 					C.show_message("<span class='danger'>[GM.name] has been placed in the [src] by [user].</span>", 3)
@@ -136,8 +135,7 @@
 		return
 	user.drop_item()
 	if(I)
-		I.do_putdown_animation(src)
-		I.forceMove(src)
+		I.loc = src
 
 	to_chat(user, "<span class='notice'>You place \the [I] into the [src].</span>")
 	for(var/mob/M in viewers(src))
@@ -187,8 +185,7 @@
 	else
 		return
 
-	target.simple_move_animation(src)
-	target.forceMove(src)
+	target.loc = src
 	target.instant_vision_update(1,src)
 
 	for (var/mob/C in viewers(src))
@@ -230,8 +227,7 @@
 		//target.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been placed in disposals by [user.name] ([user.ckey])</font>")
 		//msg_admin_attack("[user] ([user.ckey]) placed [target] ([target.ckey]) in a disposals unit. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
 
-		target.simple_move_animation(src)
-		target.forceMove(src)
+		target.loc = src
 
 		for (var/mob/C in viewers(src))
 			if(C == user)
