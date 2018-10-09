@@ -3,6 +3,7 @@
  *		Camera
  *		Camera Film
  *		Photos
+ *		Picture Frames
  *		Photo Albums
  */
 
@@ -65,13 +66,13 @@
 				break
 	..()
 
-/obj/item/weapon/photo/examine()
-	set src in oview(1)
-	if(in_range(usr, src))
-		show(usr)
-		to_chat(usr, desc)
+/obj/item/weapon/photo/examine(mob/user)
+	..()
+
+	if(in_range(src, user))
+		show(user)
 	else
-		to_chat(usr, "<span class='notice'>It is too far away.</span>")
+		to_chat(user, "<span class='warning'>You need to get closer to get a good look at this photo!</span>")
 
 /obj/item/weapon/photo/proc/show(mob/user)
 	user << browse_rsc(img, "tmp_photo.png")
@@ -334,8 +335,8 @@
 	var/icon/pc = icon('icons/obj/bureaucracy.dmi', "photo")
 	small_img.Scale(8, 8)
 	tiny_img.Scale(4, 4)
-	ic.Blend(small_img,ICON_OVERLAY, 10, 13)
-	pc.Blend(tiny_img,ICON_OVERLAY, 12, 19)
+	ic.Blend(small_img,ICON_OVERLAY, 13, 13)
+	pc.Blend(tiny_img,ICON_OVERLAY, 13, 13)
 
 	var/datum/picture/P = new()
 	P.fields["author"] = user
@@ -409,3 +410,172 @@
 	photographed_names = P.fields["mob_names"]
 	pixel_x = P.fields["pixel_x"]
 	pixel_y = P.fields["pixel_y"]
+
+/****************
+* picture frame *
+****************/
+
+/obj/item/weapon/picture_frame
+	name = "picture frame"
+	desc = "The perfect showcase for your favorite memories."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "wooden_frame_item"
+	var/obj/item/weapon/photo/displayed
+	var/frame_type = 0 //metal = 1; wooden = 0
+
+/obj/item/weapon/picture_frame/wooden
+	name = "wooden picture frame"
+
+/obj/item/weapon/picture_frame/metal
+	name = "metal picture frame"
+	desc = "The perfect shiny showcase for your favorite memories."
+	icon_state = "metal_frame_item"
+	frame_type = 1
+
+/obj/item/weapon/picture_frame/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/photo))
+		if(!displayed)
+			var/obj/item/weapon/photo/Photo = I
+			user.unEquip(Photo)
+			Photo.forceMove(src)
+			displayed = Photo
+			update_icon()
+		else
+			to_chat(user,"<span class=notice>\The [src] already contains a photo.</span>")
+		return
+	..()
+
+/obj/item/weapon/picture_frame/attack_hand(mob/user)
+	if(contents.len && (user.r_hand == src || user.l_hand == src))
+		var/obj/item/I = pick(contents)
+		user.put_in_hands(I)
+		to_chat(user,"<span class='notice'>You carefully remove the photo from \the [src].</span>")
+		displayed = null
+		update_icon()
+		return
+	..()
+
+/obj/item/weapon/picture_frame/attack_self(mob/user)
+	user.examinate(src)
+
+/obj/item/weapon/picture_frame/examine(mob/user)
+	if((user.r_hand == src || user.l_hand == src) && displayed)
+		displayed.show(user)
+	else
+		..()
+
+/obj/item/weapon/picture_frame/update_icon()
+	overlays.Cut()
+	var/icon/frame_glass = icon('icons/obj/bureaucracy.dmi',"frame_glass")
+	if(displayed)
+		src.icon_state = "[src.icon_state]1"
+		overlays |= getFlatIcon(displayed)
+		overlays |= frame_glass
+	else
+		icon_state = initial(icon_state)
+
+
+/obj/item/weapon/picture_frame/afterattack(atom/target, mob/user, proximity)
+	var/turf/T = target
+	if(!iswallturf(T))
+		return
+	user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>", \
+						 "<span class='notice'>You attach [src] to [T].</span>")
+	playsound(T, 'sound/items/Deconstruct.ogg', 50, 1)
+	if(frame_type == 0)
+		var/obj/structure/sign/picture_frame/wooden/PF = new /obj/structure/sign/picture_frame/wooden(T)
+		PF.overlays = overlays.Copy()
+		if(displayed)
+			PF.framed = displayed
+		if(contents.len)
+			var/obj/item/I = pick(contents)
+			I.forceMove(PF)
+		qdel(src)
+	if(frame_type == 1)
+		var/obj/structure/sign/picture_frame/metal/PF = new /obj/structure/sign/picture_frame/metal(T)
+		PF.overlays = overlays.Copy()
+		if(displayed)
+			PF.framed = displayed
+		if(contents.len)
+			var/obj/item/I = pick(contents)
+			I.forceMove(PF)
+		qdel(src)
+
+/obj/structure/sign/picture_frame
+	name = "picture frame"
+	desc = "Every time you look it makes you laugh."
+	icon = 'icons/obj/bureaucracy.dmi'
+	icon_state = "wooden_frame_sign"
+	var/obj/item/weapon/photo/framed
+	var/frame_type = 0 //metal = 1; wooden = 0
+
+/obj/structure/sign/picture_frame/wooden
+	name = "wooden picture frame"
+
+/obj/structure/sign/picture_frame/metal
+	name = "metal picture frame"
+	icon_state = "metal_frame_sign"
+	frame_type = 1
+
+/obj/structure/sign/picture_frame/examine(mob/user)
+	if(in_range(src, user) && framed)
+		framed.show(user)
+	else
+		..()
+
+/obj/structure/sign/picture_frame/attackby(obj/item/O, mob/user, params)
+	if(istype(O, /obj/item/weapon/screwdriver))
+		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
+							 "<span class='notice'>You start unfastening [src].</span>")
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		if(!do_after(user, 30*O.toolspeed, target = src))
+			return
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] unfastens [src].</span>", \
+							 "<span class='notice'>You unfasten [src].</span>")
+		if(frame_type == 0)
+			var/obj/item/weapon/picture_frame/F = new /obj/item/weapon/picture_frame/wooden(get_turf(user))
+			if(framed)
+				F.displayed = framed
+				framed = null
+			if(contents.len)
+				var/obj/item/I = pick(contents)
+				I.forceMove(F)
+			F.update_icon()
+			qdel(src)
+		if(frame_type == 1)
+			var/obj/item/weapon/picture_frame/F = new /obj/item/weapon/picture_frame/metal(get_turf(user))
+			if(framed)
+				F.displayed = framed
+				framed = null
+			if(contents.len)
+				var/obj/item/I = pick(contents)
+				I.forceMove(F)
+			F.update_icon()
+			qdel(src)
+		return
+	if(istype(O, /obj/item/weapon/photo))
+		if(!framed)
+			var/obj/item/weapon/photo/Photo = O
+			user.unEquip(Photo)
+			Photo.forceMove(src)
+			framed = Photo
+			update_icon()
+		else
+			to_chat(user,"<span class=notice>\The [src] already contains a photo.</span>")
+		return
+	..()
+
+/obj/structure/sign/picture_frame/attack_hand(mob/user)
+	if(framed)
+		framed.show()
+
+/obj/structure/sign/picture_frame/update_icon()
+	overlays.Cut()
+	var/icon/frame_glass = icon('icons/obj/bureaucracy.dmi',"frame_glass")
+	if(framed)
+		src.icon_state = "[src.icon_state]1"
+		overlays |= getFlatIcon(framed)
+		overlays |= frame_glass
+	else
+		icon_state = initial(icon_state)

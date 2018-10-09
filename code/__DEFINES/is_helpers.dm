@@ -75,6 +75,14 @@
 
 #define isnewplayer(A) (istype(A, /mob/dead/new_player))
 
+// TURFS
+
+#define isspaceturf(A) (istype(A, /turf/space))
+
+#define isfloorturf(A) (istype(A, /turf/simulated/floor))
+
+#define iswallturf(A) (istype(A, /turf/simulated/wall))
+
 // ELSE
 
 #define isbodypart(A) (istype(A, /obj/item/organ/external))

@@ -13,7 +13,7 @@
 	icon_state = "backing"
 
 /obj/structure/sign/attackby(obj/item/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/wrench) && buildable_sign)
+	if(istype(W, /obj/item/weapon/wrench) && buildable_sign && !istype(/obj/structure/sign/picture_frame))
 		if(user.is_busy())
 			return
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>",
@@ -28,7 +28,7 @@
 			SB.sign_path = type
 			qdel(src)
 		return
-	else if(istype(W, /obj/item/weapon/airlock_painter) && buildable_sign)
+	else if(istype(W, /obj/item/weapon/airlock_painter) && buildable_sign && !istype(/obj/structure/sign/picture_frame))
 		if(user.is_busy())
 			return
 		var/list/sign_types = list("Secure Area", "Biohazard", "High Voltage", "Radiation", "Hard Vacuum Ahead", "Disposal: Leads To Space", "Danger: Fire", "No Smoking", "Medbay", "Science", "Chemistry", \
@@ -107,7 +107,7 @@
 	if(isturf(target) && proximity)
 		var/turf/T = target
 		user.visible_message("<span class='notice'>[user] fastens [src] to [T].</span>",
-							 "<span class='notice'>You attach the sign to [T].</span>")
+							 "<span class='notice'>You attach \the [src] to [T].</span>")
 		playsound(T, 'sound/items/deconstruct.ogg', 50, 1)
 		new sign_path(T)
 		qdel(src)
