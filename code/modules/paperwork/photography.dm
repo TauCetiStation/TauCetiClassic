@@ -523,7 +523,7 @@
 	else
 		..()
 
-/obj/structure/sign/picture_frame/attackby(obj/item/O, mob/user, params)
+/obj/structure/sign/picture_frame/attackby(obj/item/weapon/O, mob/user, params)
 	if(istype(O, /obj/item/weapon/screwdriver))
 		user.visible_message("<span class='notice'>[user] starts removing [src]...</span>", \
 							 "<span class='notice'>You start unfastening [src].</span>")
@@ -554,7 +554,7 @@
 			F.update_icon()
 			qdel(src)
 		return
-	if(istype(O, /obj/item/weapon/photo))
+	else if(istype(O, /obj/item/weapon/photo))
 		if(!framed)
 			var/obj/item/weapon/photo/Photo = O
 			user.unEquip(Photo)
@@ -564,7 +564,18 @@
 		else
 			to_chat(user,"<span class=notice>\The [src] already contains a photo.</span>")
 		return
-	..()
+	else
+		switch(O.damtype)
+			if("fire")
+				playsound(loc, 'sound/items/welder.ogg', 80, 1)
+				src.health -= O.force * 1
+			if("brute")
+				playsound(loc, 'sound/weapons/slash.ogg', 80, 1)
+				src.health -= O.force * 0.75
+			else
+		if (src.health <= 0)
+			visible_message("<span class='warning'>[user] smashed [src] apart!</span>")
+			qdel(src)
 
 /obj/structure/sign/picture_frame/attack_hand(mob/user)
 	if(framed)
