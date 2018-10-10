@@ -756,12 +756,12 @@
 		switch(type_of_selection)
 			if("bs12")
 				switch(M.config_tag)
-					if("traitorchan","traitor","blob","gang","heist","infestation","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
+					if("traitorchan","traitor","blob","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
 						qdel(M)
 						continue
 			if("tau classic")
 				switch(M.config_tag)
-					if("traitor","blob","extended","gang","heist","infestation","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
+					if("traitor","blob","extended","gang","heist","infestation","meme","meteor","mutiny","ninja","rp-revolution","revolution","shadowling")
 						qdel(M)
 						continue
 		if (M.can_start())
