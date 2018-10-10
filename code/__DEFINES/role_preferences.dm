@@ -29,21 +29,21 @@
 //Pay attention to 'IS_MODE_COMPILED' parametr.
 //If there will be link to non-existent mode or any typo mistake, mode wouldn't be visible in prefs.
 var/global/list/special_roles = list(
-	ROLE_TRAITOR = IS_MODE_COMPILED("traitor"),          //0
-	ROLE_OPERATIVE = IS_MODE_COMPILED("nuclear"),        //1
-	ROLE_CHANGELING = IS_MODE_COMPILED("changeling"),    //2
-	ROLE_WIZARD = IS_MODE_COMPILED("wizard"),            //3
-	ROLE_MALF = IS_MODE_COMPILED("malfunction"),         //4
-	ROLE_REV = IS_MODE_COMPILED("revolution"),           //5
-	ROLE_ALIEN = 1,                                      //6
-	ROLE_PAI = 1,                                        //7
-	ROLE_CULTIST = IS_MODE_COMPILED("cult"),             //8
-	ROLE_BLOB =  IS_MODE_COMPILED("blob"),               //9
-	ROLE_NINJA = 1,                                      //10
-	ROLE_RAIDER = IS_MODE_COMPILED("heist"),             //11
-	ROLE_PLANT = 1,                                      //12
-	ROLE_MEME = IS_MODE_COMPILED("meme"),                //13
-	ROLE_MUTINEER = IS_MODE_COMPILED("mutiny"),          //14
-	ROLE_SHADOWLING = IS_MODE_COMPILED("shadowling"),    //15
-	ROLE_ABDUCTOR = IS_MODE_COMPILED("abduction")        //16
+	ROLE_TRAITOR = 1, //IS_MODE_COMPILED("traitor"),          //0
+	ROLE_OPERATIVE = 1, //IS_MODE_COMPILED("nuclear"),        //1
+	ROLE_CHANGELING = 1, //IS_MODE_COMPILED("changeling"),    //2
+	ROLE_WIZARD = 1, //IS_MODE_COMPILED("wizard"),            //3
+	ROLE_MALF = 1, //IS_MODE_COMPILED("malfunction"),         //4
+	ROLE_REV = 1, //IS_MODE_COMPILED("revolution"),           //5
+	ROLE_ALIEN = 1,                                           //6
+	ROLE_PAI = 1,                                             //7
+	ROLE_CULTIST = 1, //IS_MODE_COMPILED("cult"),             //8
+	ROLE_BLOB = 1,  //IS_MODE_COMPILED("blob"),               //9
+	ROLE_NINJA = 1,                                           //10
+	ROLE_RAIDER = 1, //IS_MODE_COMPILED("heist"),             //11
+	ROLE_PLANT = 1,                                           //12
+	ROLE_MEME = 1, //IS_MODE_COMPILED("meme"),                //13
+	ROLE_MUTINEER = 1, //IS_MODE_COMPILED("mutiny"),          //14
+	ROLE_SHADOWLING = 1, //IS_MODE_COMPILED("shadowling"),    //15
+	ROLE_ABDUCTOR = 1, //IS_MODE_COMPILED("abduction")        //16
 )
