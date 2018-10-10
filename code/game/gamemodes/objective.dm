@@ -758,20 +758,6 @@ datum/objective/absorb
 					return 0
 /*-------ENDOF CULTIST------*/
 */
-//Meme objectives
-datum/objective/meme_attune
-	proc/gen_amount_goal(lowbound = 4, highbound = 6)
-		target_amount = rand (lowbound,highbound)
-		explanation_text = "Attune [target_amount] humanoid brains."
-		return target_amount
-
-	check_completion()
-		if(owner && owner.current && istype(owner.current,/mob/living/parasite/meme) && (owner.current:indoctrinated.len >= target_amount))
-			return 1
-		else
-			return 0
-
-
 //Vox heist objectives.
 
 /datum/objective/heist/proc/choose_target()
