@@ -1,5 +1,9 @@
 var/global/list/citizenship_choices = list(
-	"Earth",
+	"Venus",
+	"Luna",
+	"Pluto",
+	"Bimna",
+	"New Gibson",
 	"Mars",
 	"Moghes",
 	"Ahdomai",
@@ -11,7 +15,9 @@ var/global/list/home_system_choices = list(
 	"Nyx",
 	"Tau Ceti",
 	"Epsilon Ursae Majoris",
-	"S'randarr"
+	"S'randarr",
+	"Qerr'valis",
+	"Uueoa-Esa"
 	)
 
 var/global/list/faction_choices = list(
@@ -26,7 +32,8 @@ var/global/list/faction_choices = list(
 	"Grayson Manufactories Ltd.",
 	"Aether Atmospherics",
 	"Zeng-Hu Pharmaceuticals",
-	"Hesphaistos Industries"
+	"Hesphaistos Industries",
+	"Freelancer Union"
 	)
 
 var/global/list/religion_choices = list(
