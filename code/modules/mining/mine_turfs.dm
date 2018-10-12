@@ -35,6 +35,12 @@
 	geologic_data = new(src)
 	return INITIALIZE_HINT_LATELOAD
 
+
+/turf/simulated/mineral/atom_init_late()
+	MineralSpread()
+	check_sides()
+
+
 /turf/simulated/mineral/proc/check_sides()
 	var/turf/T
 	if((istype(get_step(src, NORTH), /turf/simulated/floor)) || (istype(get_step(src, NORTH), /turf/space)) || (istype(get_step(src, NORTH), /turf/simulated/shuttle/floor)))
@@ -61,10 +67,6 @@
 			var/image/I = image('icons/turf/asteroid.dmi', "rock_side_e", layer=6)
 			I.plane = 6
 			T.overlays += I
-
-/turf/simulated/mineral/atom_init_late()
-	MineralSpread()
-	check_sides()
 
 /turf/simulated/mineral/ex_act(severity)
 	switch(severity)
