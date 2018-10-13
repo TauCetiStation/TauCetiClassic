@@ -5518,8 +5518,12 @@
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
 "lF" = (
-/obj/structure/closet/excavation,
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
+/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1"
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -5837,7 +5841,10 @@
 /turf/simulated/wall,
 /area/research_outpost/gearstore)
 "mq" = (
-/obj/structure/closet/excavation,
+/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
 "mr" = (
@@ -5853,14 +5860,7 @@
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
 "mt" = (
-/obj/structure/closet/excavation,
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
-	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 4
-	},
+/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
 "mu" = (
@@ -50043,9 +50043,9 @@ id
 jZ
 kf
 hp
+mt
 mq
 lF
-mt
 mr
 pb
 mp
