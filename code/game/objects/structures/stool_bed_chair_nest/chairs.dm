@@ -142,6 +142,10 @@
 			to_chat(M, "<span class='warning'>Tried buckle you to \the [src].</span>")
 	else
 		..()
+	if((src.dir == NORTH)&&(buckled_mob))
+		src.layer = FLY_LAYER
+	else
+		src.layer = OBJ_LAYER
 
 /obj/structure/stool/bed/chair/attack_tk(mob/user)
 	if(buckled_mob)
@@ -284,6 +288,11 @@
 	anchored = 0
 	buckle_movable = 1
 	can_flipped = 1
+	var/behind
+
+/obj/structure/stool/bed/chair/office/atom_init()
+	behind = "[src.icon_state]_behind"
+	. = ..()
 
 /obj/structure/stool/bed/chair/office/Move()
 	..()
@@ -322,3 +331,9 @@
 
 /obj/structure/stool/bed/chair/office/dark
 	icon_state = "officechair_dark"
+
+/obj/structure/stool/bed/chair/office/post_buckle_mob(mob/living/M)
+	if(buckled_mob)
+		icon_state = behind
+	else
+		icon_state = initial(icon_state)

@@ -10,5 +10,22 @@
 	icon = 'code/modules/locations/shuttles/bench.dmi'
 	icon_state = "bench_1"
 
+/obj/structure/stool/bed/chair/schair/wagon/bench/atom_init()
+	. = ..()
+	if(src.dir == NORTH)
+		src.layer = OBJ_LAYER
+		var/image/behind
+		behind = image(src.icon, "[src.icon_state]_behind")
+		behind.layer = FLY_LAYER
+		overlays += behind
+
+/obj/structure/stool/bed/chair/atom_init_late()
+	return
+
 /obj/structure/stool/bed/chair/schair/wagon/bench/rotate()
 	return
+
+/obj/structure/stool/bed/chair/user_buckle_mob(mob/living/M, mob/user)
+	..()
+	if(src.dir == NORTH)
+		src.layer = OBJ_LAYER
