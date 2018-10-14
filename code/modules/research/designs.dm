@@ -2169,7 +2169,7 @@ datum/design/health_hud
 	id = "health_hud"
 	req_tech = list("biotech" = 2, "magnets" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	materials = list(MAT_GLASS = 500, MAT_GOLD = 200)
 	build_path = /obj/item/clothing/glasses/hud/health
 
 datum/design/security_hud
@@ -2198,6 +2198,15 @@ datum/design/mining_hud
 	build_type = PROTOLATHE
 	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
 	build_path = /obj/item/clothing/glasses/hud/mining
+
+datum/design/science_goggles
+	name = "science goggles"
+	desc = "Special goggles with built-in reagent and atmospheric scanner"
+	id = "science_goggles"
+	req_tech = list("phorontech" = 3, "materials" = 4, "engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_PHORON = 200, MAT_SILVER = 200)
+	build_path = /obj/item/clothing/glasses/science
 
 /////////////////////////////////////////
 //////////////////Test///////////////////

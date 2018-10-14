@@ -51,7 +51,7 @@
 
 /obj/item/clothing/glasses/science
 	name = "science goggles"
-	desc = "The goggles do nothing!"
+	desc = "Special goggles with built-in reagent and atmospheric scanner"
 	icon_state = "purple"
 	item_state = "glasses"
 	action_button_name = "Toggle Goggles"
@@ -197,7 +197,7 @@
 
 /obj/item/clothing/glasses/welding/superior
 	name = "superior welding goggles"
-	desc = "Welding goggles made from more expensive materials, strangely smells like potatoes."
+	desc = "Modified welding goggles with built-in reagent and atmospheric scanner. They smell like potatoes, for some reason."
 	icon_state = "rwelding-g"
 	item_state = "rwelding-g"
 
