@@ -113,7 +113,7 @@
 	if(A == loc || (A in loc) || (sdepth != -1 && sdepth <= 1))
 
 		// No adjacency needed
-		if(W)
+		if(W && !item_attack_override())
 
 			var/resolved = A.attackby(W,src,params)
 			if(!resolved && A && W)
@@ -130,7 +130,7 @@
 	if(isturf(A) || isturf(A.loc) || (sdepth != -1 && sdepth <= 1))
 
 		if(A.Adjacent(src)) // see adjacent.dm
-			if(W)
+			if(W && !item_attack_override())
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
 				var/resolved = A.attackby(W, src, params)
 				if(!resolved && A && W)

@@ -355,15 +355,7 @@
 
 
 /mob/living/carbon/slime/attack_hand(mob/living/carbon/human/M)
-	if (!ticker)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
-	..()
+	. = ..()
 
 	if(Victim)
 		if(Victim == M)

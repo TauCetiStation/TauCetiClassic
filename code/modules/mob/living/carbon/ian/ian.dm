@@ -338,14 +338,7 @@
 	..()
 
 /mob/living/carbon/ian/attack_hand(mob/living/carbon/human/M)
-	if (!ticker.mode)
-		to_chat(M, "You cannot attack people before the game has started.")
-		return
-
-	if (istype(loc, /turf) && istype(loc.loc, /area/start))
-		to_chat(M, "No attacking people at spawn, you jackass.")
-		return
-
+	. = ..()
 	if (M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
 		if(G.cell)
@@ -361,7 +354,7 @@
 					s.set_up(3, 1, src)
 					s.start()
 					M.do_attack_animation(src)
-					return
+					return 0
 				else
 					to_chat(M, "<span class='red'>Not enough charge!</span>")
 					return
@@ -380,33 +373,11 @@
 			un_equip_or_action(M, "CPR")
 		if ("hurt")
 			M.do_attack_animation(src)
+			var/datum/unarmed_attack/attack = M.unarmed
 			if(is_armored(M, 35))
-				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
-				return
-
-			var/datum/unarmed_attack/attack = M.species.unarmed
-			M.attack_log += text("\[[time_stamp()]\] <font color='red'>[response_harm] [src.name] ([src.ckey])</font>")
-			attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been [pick(attack.attack_verb)]ed by [M.name] ([M.ckey])</font>")
-			msg_admin_attack("[key_name(M)] [response_harm] [key_name(src)]")
-
-			var/damage = rand(0, 5)
-			if(!damage)
 				playsound(loc, attack.miss_sound, 25, 1, -1)
-				visible_message("<span class='danger'>[M] has attempted to [response_harm] [src]!</span>")
 				return
-
-			if(HULK in M.mutations)
-				damage += 5
-
-			playsound(loc, attack.attack_sound, 25, 1, -1)
-
-			if(damage >= 5 && prob(15))
-				visible_message("<span class='danger'>[M] has weakened [src]!</span>")
-				Paralyse(3)
-
-			visible_message("<span class='danger'>[M] [response_harm] [src]!</span>")
-			adjustBruteLoss(damage)
-			updatehealth()
+			return attack.on_harm_intent(src, M)
 
 		if("grab")
 			if(M == src || anchored || M.lying)

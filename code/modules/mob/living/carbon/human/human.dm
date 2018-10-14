@@ -92,6 +92,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	if(species) // For safety, we put it seperately.
 		butcher_results = species.butcher_drops
+		unarmed = species.unarmed_attacks[1]
 
 	dna.species = species.name
 
@@ -436,15 +437,13 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 			update_body()
 
 /mob/living/carbon/human/restrained(check_type = ARMS)
-	if ((check_type & ARMS) && handcuffed)
+	if ((check_type & ARMS) && (handcuffed || istype(wear_suit, /obj/item/clothing/suit/straight_jacket)))
 		return TRUE
 	if ((check_type & LEGS) && legcuffed)
 		return TRUE
-	if (istype(wear_suit, /obj/item/clothing/suit/straight_jacket))
-		return TRUE
 	if (istype(buckled, /obj/structure/stool/bed/nest))
 		return TRUE
-	return 0
+	return FALSE
 
 /mob/living/carbon/human/resist()
 	..()
@@ -1661,6 +1660,17 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 #undef MAX_LEAP_DIST
 
+/mob/living/carbon/human/verb/change_unarmed_sel()
+	set category = "IC"
+	set name = "Change attack mode"
+	set desc = "Change your attack mode for cases when you want to kick with legs, or bite with your mouth!"
+
+	var/datum/unarmed_attack/UA = input(src, "What attack mode what you like?", "Pick attack mode") in null|species.unarmed_attacks
+	if(UA)
+		unarmed = UA
+		unarmed_sel.overlay_icon = unarmed.overlay_icon
+		unarmed_sel.update_icon()
+
 /mob/living/carbon/human/proc/gut()
 	set category = "IC"
 	set name = "Gut"
@@ -1754,3 +1764,18 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return species.taste_sensitivity
 	else
 		return 1
+
+/mob/living/carbon/human/RestrainedClickOn(A)
+	if(!restrained(unarmed.body_zone_required) && Adjacent(A))
+		UnarmedAttack(A)
+
+/mob/living/carbon/human/item_attack_override()
+	return unarmed.override_in_hand_attack && a_intent == I_HELP
+
+/mob/living/carbon/human/verb/next_unarmed_sel()
+	set name = "next_unarmed_sel"
+	set hidden = TRUE
+
+	unarmed = next_in_list(unarmed, species.unarmed_attacks)
+	unarmed_sel.overlay_icon = unarmed.overlay_icon
+	unarmed_sel.update_icon()
