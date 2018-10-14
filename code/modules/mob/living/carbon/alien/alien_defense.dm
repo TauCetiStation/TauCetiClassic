@@ -2,7 +2,15 @@
 This is what happens, when we attack aliens.
 ----------------------------------------*/
 /mob/living/carbon/alien/attack_hand(mob/living/carbon/human/M)
-	. = ..()
+	if (!ticker)
+		to_chat(M, "You cannot attack people before the game has started.")
+		return
+
+	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+		to_chat(M, "No attacking people at spawn, you jackass.")
+		return
+
+	..()
 
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
@@ -48,19 +56,31 @@ This is what happens, when we attack aliens.
 					O.show_message(text("\red [] has grabbed [] passively!", M, src), 1)
 
 		if ("hurt")
-			var/datum/unarmed_attack/attack = M.unarmed
+			var/damage = rand(1, 9)
 			if (prob(90))
-				if(HULK in M.mutations)//HULK SMASH
-					adjustBruteLoss(15) // Before we had a number 1 to 9 + 14. I think giving it just 15 is fair enough.
+				if (HULK in M.mutations)//HULK SMASH
+					damage += 14
 					spawn(0)
-						Weaken(15) // Why can a hulk knock an alien out but not knock out a human? Damage is robust enough.
+						Weaken(damage) // Why can a hulk knock an alien out but not knock out a human? Damage is robust enough.
 						step_away(src,M,15)
 						sleep(3)
 						step_away(src,M,15)
-				attack.on_harm_intent(src, M, 0.1) // 0.1 is the weaken multiplier. Humans have a very low chance to weaken an alien.
+				playsound(loc, "punch", 25, 1, -1)
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[] has punched []!</B>", M, src), 1)
+				if (damage > 9||prob(5))//Regular humans have a very small chance of weakening an alien.
+					Weaken(1,5)
+					for(var/mob/O in viewers(M, null))
+						if ((O.client && !( O.blinded )))
+							O.show_message(text("\red <B>[] has weakened []!</B>", M, src), 1, "\red You hear someone fall.", 2)
+				adjustBruteLoss(damage)
+				updatehealth()
 			else
-				playsound(loc, attack.miss_sound, 25, 1, -1)
-				visible_message("<span class='warning bold'>[M] has attempted to punch[src]</span>")
+				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[] has attempted to punch []!</B>", M, src), 1)
 
 		if ("disarm")
 			if (!lying)

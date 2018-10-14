@@ -73,16 +73,6 @@
 
 //end intent small hud objects
 
-	if(ishuman(mymob))
-		var/mob/living/carbon/human/H = mymob
-		var/obj/screen/unarmed_sel/S = new /obj/screen/unarmed_sel()
-		S.overlay_icon = H.unarmed.overlay_icon
-		S.color = ui_color
-		S.alpha = ui_alpha
-		S.update_icon()
-		mymob.unarmed_sel = S
-		adding += S
-
 	using = new /obj/screen()
 	using.name = "mov_intent"
 	using.icon = ui_style
