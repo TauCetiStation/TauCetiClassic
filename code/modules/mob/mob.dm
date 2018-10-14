@@ -1107,10 +1107,6 @@ mob/proc/yank_out_object()
 /mob/proc/can_unbuckle(mob/user)
 	return 1
 
-/mob/proc/item_attack_override()
-	/* Return TRUE if for any reason, you want the mob that has something in the hand, to do UnarmedAttack instead of the normal item attack*/
-	return FALSE
-
 /*
 /mob/living/on_varedit(modified_var)
 	switch(modified_var)

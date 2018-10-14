@@ -199,7 +199,13 @@
 	return
 
 /mob/living/carbon/monkey/attack_hand(mob/living/carbon/human/M)
-	. = ..()
+	if (!ticker)
+		to_chat(M, "You cannot attack people before the game has started.")
+		return
+
+	if (istype(loc, /turf) && istype(loc.loc, /area/start))
+		to_chat(M, "No attacking people at spawn, you jackass.")
+		return
 
 	if(M.gloves && istype(M.gloves,/obj/item/clothing/gloves))
 		var/obj/item/clothing/gloves/G = M.gloves
@@ -222,46 +228,67 @@
 					to_chat(M, "\red Not enough charge! ")
 					return
 
-	switch(M.a_intent)
-		if(I_HELP)
-			help_shake_act(M)
-			get_scooped(M)
-
-		if(I_HURT)
+	if (M.a_intent == "help")
+		help_shake_act(M)
+		get_scooped(M)
+	else
+		if (M.a_intent == "hurt")
 			M.do_attack_animation(src)
-			var/datum/unarmed_attack/attack = M.unarmed
-			return attack.on_harm_intent(src, M)
+			if ((prob(75) && health > 0))
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[] has punched [name]!</B>", M), 1)
 
-		if(I_GRAB)
-			if (M == src || anchored || M.lying)
-				return
+				playsound(loc, "punch", 25, 1, -1)
+				var/damage = rand(5, 10)
+				if (prob(40))
+					damage = rand(10, 15)
+					if (paralysis < 5)
+						Paralyse(rand(10, 15))
+						spawn( 0 )
+							for(var/mob/O in viewers(src, null))
+								if ((O.client && !( O.blinded )))
+									O.show_message(text("\red <B>[] has knocked out [name]!</B>", M), 1)
+							return
+				adjustBruteLoss(damage)
+				updatehealth()
+			else
+				playsound(loc, 'sound/weapons/punchmiss.ogg', 25, 1, -1)
+				for(var/mob/O in viewers(src, null))
+					if ((O.client && !( O.blinded )))
+						O.show_message(text("\red <B>[] has attempted to punch [name]!</B>", M), 1)
+		else
+			if (M.a_intent == "grab")
+				if (M == src || anchored || M.lying)
+					return
 
-			var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
+				var/obj/item/weapon/grab/G = new /obj/item/weapon/grab(M, src)
 
-			M.put_in_active_hand(G)
+				M.put_in_active_hand(G)
 
-			grabbed_by += G
-			G.synch()
+				grabbed_by += G
+				G.synch()
 
-			LAssailant = M
+				LAssailant = M
 
-			playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-			for(var/mob/O in viewers(src, null))
-				O.show_message(text("\red [] has grabbed [name] passively!", M), 1)
-		if(I_DISARM)
-			if(!( paralysis ))
-				if (prob(25))
-					Paralyse(2)
-					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has pushed down [name]!</B>", M), 1)
-				else
-					drop_item()
-					playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
-					for(var/mob/O in viewers(src, null))
-						if ((O.client && !( O.blinded )))
-							O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
+				playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+				for(var/mob/O in viewers(src, null))
+					O.show_message(text("\red [] has grabbed [name] passively!", M), 1)
+			else
+				if (!( paralysis ))
+					if (prob(25))
+						Paralyse(2)
+						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+						for(var/mob/O in viewers(src, null))
+							if ((O.client && !( O.blinded )))
+								O.show_message(text("\red <B>[] has pushed down [name]!</B>", M), 1)
+					else
+						drop_item()
+						playsound(loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
+						for(var/mob/O in viewers(src, null))
+							if ((O.client && !( O.blinded )))
+								O.show_message(text("\red <B>[] has disarmed [name]!</B>", M), 1)
+	return
 
 /mob/living/carbon/monkey/attack_alien(mob/living/carbon/alien/humanoid/M)
 	if (!ticker)
