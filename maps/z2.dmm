@@ -22905,7 +22905,7 @@
 /area/wizard_station)
 "nOb" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/robotics_cyborgs,
+/obj/item/weapon/book/manual/wiki/guide_to_robotics,
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"

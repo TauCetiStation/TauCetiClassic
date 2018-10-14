@@ -47,6 +47,7 @@
 
 /obj/structure/bookcase/manuals/xenoarchaeology/atom_init()
 	. = ..()
+	new /obj/item/weapon/book/manual/wiki/new_excavation(src)
 	new /obj/item/weapon/book/manual/excavation(src)
 	new /obj/item/weapon/book/manual/mass_spectrometry(src)
 	new /obj/item/weapon/book/manual/materials_chemistry_analysis(src)
