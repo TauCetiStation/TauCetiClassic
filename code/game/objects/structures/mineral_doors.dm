@@ -69,6 +69,7 @@
 		SwitchState()
 
 /obj/structure/mineral_door/proc/SwitchState()
+	add_fingerprint(usr)
 	if(state)
 		Close()
 	else
