@@ -981,6 +981,13 @@ datum/supply_pack/New()
 	crate_name = "Corgi crate"
 	group = "Hydroponics"
 
+/datum/supply_pack/shiba
+	name = "Shiba crate"
+	cost = 4000
+	crate_type = /obj/structure/closet/critter/shiba
+	crate_name = "Shiba crate"
+	group = "Hydroponics"
+
 /datum/supply_pack/cat
 	name = "Cat crate"
 	cost = 4000
