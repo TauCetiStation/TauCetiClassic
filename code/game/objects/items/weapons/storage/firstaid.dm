@@ -13,6 +13,7 @@
 	icon_state = "firstaid"
 	throw_speed = 2
 	throw_range = 8
+	max_storage_space = DEFAULT_BOX_STORAGE
 	var/empty = 0
 
 
@@ -115,7 +116,7 @@
 	can_hold = list("/obj/item/weapon/reagent_containers/pill","/obj/item/weapon/dice","/obj/item/weapon/paper")
 	allow_quick_gather = 1
 	use_to_pickup = 1
-	storage_slots = 14
+	max_storage_space = 21
 	use_sound = null
 
 /obj/item/weapon/storage/pill_bottle/kelotane

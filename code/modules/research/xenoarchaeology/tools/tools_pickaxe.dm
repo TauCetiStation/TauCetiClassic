@@ -106,7 +106,7 @@
 	icon = 'icons/obj/storage.dmi'
 	icon_state = "excavation"
 	desc = "A set of picks for excavation."
-	item_state = "syringe_kit"
+	item_state = "excavation"
 	foldable = /obj/item/stack/sheet/cardboard //BubbleWrap
 	storage_slots = 7
 	w_class = 2
@@ -117,7 +117,6 @@
 	"/obj/item/weapon/pickaxe/four_pick",\
 	"/obj/item/weapon/pickaxe/five_pick",\
 	"/obj/item/weapon/pickaxe/six_pick")
-	max_combined_w_class = 17
 	max_w_class = 4
 	use_to_pickup = 1 // for picking up broken bulbs, not that most people will try
 
