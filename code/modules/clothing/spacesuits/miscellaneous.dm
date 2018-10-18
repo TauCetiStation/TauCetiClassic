@@ -10,10 +10,7 @@
 	name = "special operations officer's beret"
 	desc = "An armored beret commonly used by special operations officers."
 	icon_state = "beret_badge"
-	armor = list(melee = 80, bullet = 70, laser = 60,energy = 10, bomb = 25, bio = 10, rad = 0)
-	cold_protection = HEAD
-	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
-	siemens_coefficient = 0.9
+	armor = list(melee = 10, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 0, rad = 0)
 
 //Space santa outfit suit
 /obj/item/clothing/head/helmet/space/santahat
