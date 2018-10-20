@@ -114,7 +114,7 @@
 	rpm = max(0, rpm - (rpm*rpm)/(COMPFRICTION*efficiency))
 
 	if(starter && !(stat & NOPOWER))
-		use_power(2800)
+		use_power(10000)
 		if(rpm<1000)
 			rpmtarget = 1000
 	else
@@ -288,8 +288,6 @@
 	icon_state = "airtunnel0e"
 	circuit = /obj/item/weapon/circuitboard/turbine_computer
 	var/obj/machinery/power/compressor/compressor
-	var/list/obj/machinery/door/poddoor/doors
-	var/door_status = 0
 	var/id = 0
 
 /obj/machinery/computer/turbine_computer/atom_init()
@@ -304,9 +302,6 @@
 		for(var/obj/machinery/power/compressor/C in machines)
 			if(C.comp_id == id)
 				compressor = C
-		for(var/obj/machinery/door/poddoor/D in doors)
-			if(D.id == id)
-				doors += D
 	else
 		compressor = locate(/obj/machinery/power/compressor) in range(5, src)
 
@@ -319,7 +314,6 @@
 		\nTurbine speed: [compressor.rpm]rpm<BR>
 		\nPower currently being generated: [compressor.turbine.lastgen]W<BR>
 		\nInternal gas temperature: [compressor.gas_contained.temperature]K<BR>
-		\nVent doors: [ src.door_status ? "<A href='?src=\ref[src];doors=1'>Closed</A> <B>Open</B>" : "<B>Closed</B> <A href='?src=\ref[src];doors=1'>Open</A>"]
 		\n</PRE><HR><A href='?src=\ref[src];view=1'>View</A>
 		\n</PRE><HR><A href='?src=\ref[src];close=1'>Close</A>
 		\n<BR>
@@ -341,14 +335,6 @@
 		usr.client.eye = compressor
 	else if( href_list["str"] )
 		compressor.starter = !compressor.starter
-	else if (href_list["doors"])
-		for(var/obj/machinery/door/poddoor/D in doors)
-			if (door_status == 0)
-				D.open()
-				door_status = 1
-			else
-				D.close()
-				door_status = 0
 	else if( href_list["close"] )
 		usr << browse(null, "window=computer")
 		usr.machine = null
