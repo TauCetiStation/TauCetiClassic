@@ -12,85 +12,92 @@
 
 	//Revised. Brainmob is now contained directly within object of transfer. MMI in this case.
 
-	var/locked = 0
+	var/locked = FALSE
 	var/mob/living/carbon/brain/brainmob = null//The current occupant.
 	var/mob/living/silicon/robot = null//Appears unused.
 	var/obj/mecha = null//This does not appear to be used outside of reference in mecha.dm.
 
 /obj/item/device/mmi/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/brain) && !brainmob) //Time to stick a brain in it --NEO
-		if(!O:brainmob)
-			to_chat(user, "\red You aren't sure where this brain came from, but you're pretty sure it's a useless brain.")
+		var/obj/item/brain/B = O
+		if(!B.brainmob)
+			to_chat(user, "<span class='warning'>You aren't sure where this brain came from, but you're pretty sure it's a useless brain.</span>")
 			return
 		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
 
-		brainmob = O:brainmob
-		O:brainmob = null
-		brainmob.loc = src
+		brainmob = B.brainmob
+		B.brainmob = null
+		brainmob.forceMove(src)
 		brainmob.container = src
 		brainmob.stat = CONSCIOUS
 		dead_mob_list -= brainmob//Update dem lists
 		living_mob_list += brainmob
 
-		user.drop_item()
-		qdel(O)
-
 		name = "Man-Machine Interface: [brainmob.real_name]"
 		icon_state = "mmi_full"
 
-		locked = 1
+		locked = TRUE
 
-		feedback_inc("cyborg_mmis_filled",1)
-
+		feedback_inc("cyborg_mmis_filled", 1)
+		qdel(O)
 		return
 
-	if(istype(O,/obj/item/weapon/holder/diona) && !brainmob)
+	else if(istype(O, /obj/item/weapon/holder/diona) && !brainmob)
 		visible_message("<span class='notice'>[user] sticks \a [O] into \the [src].</span>")
 
-		for(var/mob/living/carbon/monkey/diona/V in O.contents)
-			if(!V.mind || !V.key)
-				to_chat(user, "<span class='warning'>It would appear [V] is void of consciousness, defeats MMI's purpose.</span>")
-				return
-			transfer_nymph(V)
-
-		qdel(O)
+		var/mob/living/carbon/monkey/diona/D = locate(/mob/living/carbon/monkey/diona) in O
+		if(!D)
+			world.log << "This is seriously really wrong, and I would like to keep a message for this case."
+		if(!D.mind || !D.key)
+			to_chat(user, "<span class='warning'>It would appear [D] is void of consciousness, defeats MMI's purpose.</span>")
+			return
+		transfer_nymph(D)
 
 		feedback_inc("cyborg_mmis_filled",1)
-
+		qdel(O)
 		return
 
-	if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
+	else if((istype(O,/obj/item/weapon/card/id)||istype(O,/obj/item/device/pda)) && brainmob)
 		if(allowed(user))
 			locked = !locked
 			to_chat(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the brain holder.</span>")
 		else
 			to_chat(user, "<span class='warning'>Access denied.</span>")
 		return
-	if(brainmob)
+
+	else if(brainmob)
 		O.attack(brainmob, user)//Oh noooeeeee
 		return
+
 	..()
 
 /obj/item/device/mmi/attack_self(mob/user)
 	if(!brainmob)
 		to_chat(user, "<span class='warning'>You upend the MMI, but there's nothing in it.</span>")
+		return
 	else if(locked)
 		to_chat(user, "<span class='warning'>You upend the MMI, but the brain is clamped into place.</span>")
+		return
+	var/mob/living/carbon/monkey/diona/D = locate(/mob/living/carbon/monkey/diona) in brainmob
+	icon_state = "mmi_empty"
+	name = "Man-Machine Interface"
+	if(D)
+		to_chat(user, "<span class='notice'>You uppend the MMI, dropping [brainmob.real_name] onto the floor.</span>")
+		D.forceMove(user.loc)
+		if(brainmob.mind)
+			brainmob.mind.transfer_to(D)
+		brainmob = null
+		qdel(brainmob)
+		return
 	else
-		for(var/mob/living/carbon/monkey/diona/V in brainmob.contents)
-			icon_state = "mmi_empty"
-			name = "Man-Machine Interface"
-			to_chat(user, "<span class='notice'>You uppend the MMI, dropping [brainmob.real_name] onto the floor.</span>")
-			V.loc = user.loc
-			QDEL_NULL(brainmob)
-			return
 		to_chat(user, "<span class='notice'>You upend the MMI, spilling the brain onto the floor.</span>")
 		var/obj/item/brain/brain = new(user.loc)
 		brainmob.container = null//Reset brainmob mmi var.
 		brainmob.loc = brain//Throw mob into brain.
 		living_mob_list -= brainmob//Get outta here
 		brain.brainmob = brainmob//Set the brain to use the brainmob
-		QDEL_NULL(brainmob)
+		brainmob = null
+		qdel(brainmob)
 
 /obj/item/device/mmi/MouseDrop_T(mob/living/carbon/monkey/diona/target, mob/user)
 	if(user.incapacitated() || !istype(target))
@@ -124,14 +131,18 @@
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	icon_state = "mmi_full"
-	locked = 1
+	locked = TRUE
 
-/obj/item/device/mmi/proc/transfer_nymph(mob/living/carbon/monkey/diona/H)
+/obj/item/device/mmi/proc/transfer_nymph(mob/living/carbon/monkey/diona/D)
 	brainmob = new(src)
-	if(H.mind)
-		H.mind.transfer_to(brainmob)
-		brainmob.stat = CONSCIOUS
-	H.forceMove(brainmob)
+	brainmob.name = D.real_name
+	brainmob.real_name = D.real_name
+	brainmob.dna = D.dna
+	brainmob.container = src
+	brainmob.stat = CONSCIOUS
+	if(D.mind)
+		D.mind.transfer_to(brainmob)
+	D.forceMove(brainmob)
 
 	name = "Man-Machine Interface: [brainmob.real_name]"
 	icon_state = "mmi_fullnymph"

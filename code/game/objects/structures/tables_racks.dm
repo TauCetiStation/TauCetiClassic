@@ -792,7 +792,7 @@
 			return
 	if(isrobot(user))
 		return
-	if(!W.canremove || W.flags & NODROP)
+	if(!W.canremove || W.flags & NODROP || W.flags & ABSTRACT)
 		return
 	user.drop_item()
 	if(W && W.loc)	W.loc = src.loc
