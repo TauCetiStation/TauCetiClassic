@@ -303,7 +303,7 @@
 			if(C.comp_id == id)
 				compressor = C
 	else
-		compressor = locate(/obj/machinery/power/compressor) in range(5, src)
+		compressor = locate(/obj/machinery/power/compressor) in range(10, src)
 
 /obj/machinery/computer/turbine_computer/ui_interact(mob/user)
 	var/dat
