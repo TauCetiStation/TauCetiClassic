@@ -550,9 +550,9 @@
 /obj/item/weapon/reagent_containers/food/drinks/drinkingglass/after_throw(datum/callback/callback)
 	..()
 	playsound(src, "shatter", 70, 1)
-	new /obj/item/weapon/shard(src.loc)
-	if(reagents.total_volume)
-		spawn_fluid(loc, 5)
+	new /obj/item/weapon/shard
+	if(icon_state != "glass_empty")
+		spawn_fluid(loc, reagents.total_volume)
 	qdel(src)
 
 // for /obj/machinery/vending/sovietsoda
