@@ -21,6 +21,7 @@
 	var/throw_message = "bounces off of"
 	var/icon_aggro = null // for swapping to when we get aggressive
 	weather_immunities = list("ash", "acid")
+	stat_attack = 1
 
 /mob/living/simple_animal/hostile/asteroid/Aggro()
 	..()
@@ -158,6 +159,7 @@
 	a_intent = "help"
 	throw_message = "sinks in slowly, before being pushed out of "
 	status_flags = CANPUSH
+	stat_attack = 0
 	search_objects = 1
 	wanted_objects = list(/obj/item/weapon/ore/diamond, /obj/item/weapon/ore/gold, /obj/item/weapon/ore/silver, /obj/item/weapon/ore/phoron,
 						  /obj/item/weapon/ore/uranium, /obj/item/weapon/ore/iron, /obj/item/weapon/ore/clown)

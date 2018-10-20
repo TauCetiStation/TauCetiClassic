@@ -495,6 +495,15 @@
 				return istype(H.glasses, /obj/item/clothing/glasses/hud/security) || istype(H.glasses, /obj/item/clothing/glasses/hud/secmed)
 			if("medical")
 				return istype(H.glasses, /obj/item/clothing/glasses/hud/health) || istype(H.glasses, /obj/item/clothing/glasses/hud/secmed)
+			if("science")
+				if(istype(H.glasses, /obj/item/clothing/glasses/science))
+					var/obj/item/clothing/glasses/science/S = H.glasses
+					if(S.active)
+						return 1
+				else if(istype(H.glasses, /obj/item/clothing/glasses/welding/superior))
+					var/obj/item/clothing/glasses/welding/superior/S = H.glasses
+					if(!S.up)
+						return 1
 			else
 				return 0
 	else if(isrobot(M))
@@ -504,6 +513,8 @@
 				return istype(R.module_state_1, /obj/item/borg/sight/hud/sec) || istype(R.module_state_2, /obj/item/borg/sight/hud/sec) || istype(R.module_state_3, /obj/item/borg/sight/hud/sec)
 			if("medical")
 				return istype(R.module_state_1, /obj/item/borg/sight/hud/med) || istype(R.module_state_2, /obj/item/borg/sight/hud/med) || istype(R.module_state_3, /obj/item/borg/sight/hud/med)
+			if("science")
+				return istype(R.module_state_1, /obj/item/borg/sight/science) || istype(R.module_state_2, /obj/item/borg/sight/science) || istype(R.module_state_3, /obj/item/borg/sight/science)
 			else
 				return 0
 	else

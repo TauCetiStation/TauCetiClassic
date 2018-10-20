@@ -77,6 +77,7 @@
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/device/healthanalyzer(src)
+	modules += new /obj/item/borg/sight/science(src)
 	emag = new /obj/item/weapon/melee/energy/sword(src)
 
 /obj/item/weapon/robot_module/standard/respawn_consumable(mob/living/silicon/robot/R)
@@ -364,6 +365,7 @@
 	modules += new /obj/item/device/analyzer(src)
 	modules += new /obj/item/device/assembly/signaler(src)
 	modules += new /obj/item/device/ano_scanner(src)
+	modules += new /obj/item/borg/sight/science(src)
 
 //To fuck anomalies up
 
