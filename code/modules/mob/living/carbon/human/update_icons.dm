@@ -456,6 +456,11 @@ Please contact me on #coderbus IRC. ~Carn x
 	if(species.name == SHADOWLING && head)
 		standing += shadowling_eyes
 
+	if(iszombie(src) && stat != DEAD)
+		var/image/eyes = image(species.icobase, null, "zombie_ms_s", LIGHTING_LAYER + 1)
+		eyes.plane = LIGHTING_PLANE + 1
+		standing += eyes
+
 	if(!dna || !(dna.mutantrace == "golem"))
 		update_body()
 
@@ -744,6 +749,11 @@ Please contact me on #coderbus IRC. ~Carn x
 				standing = image("icon"=head:icon_custom, "icon_state"="[head.icon_state]_mob", "layer"=-HEAD_LAYER)
 		standing.color = head.color
 		overlays_standing[HEAD_LAYER]	= standing
+
+		if(istype(head, /obj/item/clothing/head/helmet/band))
+			var/obj/item/clothing/head/helmet/band/H = head
+			if(H.on_helmet_overlay)
+				standing.overlays += H.on_helmet_overlay
 
 		if(head.dirt_overlay)
 			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="helmetblood")

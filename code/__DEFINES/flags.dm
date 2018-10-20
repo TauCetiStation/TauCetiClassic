@@ -30,6 +30,7 @@
 #define ONESIZEFITSALL          2048
 #define PHORONGUARD             4096    // Does not get contaminated by phoron.
 #define DROPDEL                 8192    // When dropped, it calls qdel on itself
+#define NODROP                 16384    // User can't drop this item
 
 #define	NOREACT  4096    //Reagents dont' react inside this container.
 
@@ -56,6 +57,8 @@
 #define VIRUS_IMMUNE       "virus_immune"
 #define BIOHAZZARD_IMMUNE  "biohazzard_immune"
 #define HAS_HAIR           "has_hair"
+#define NO_FINGERPRINT     "no_fingerprint"
+#define NO_MINORCUTS	   "no_minorcuts"
 
 //Species Diet Flags
 #define DIET_CARN		1 //meat

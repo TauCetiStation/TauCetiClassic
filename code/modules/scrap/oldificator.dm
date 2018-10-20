@@ -35,7 +35,7 @@
 	if(prob(75))
 		storage_slots = max(contents.len, max(0, storage_slots - pick(2, 2, 2, 3, 3, 4)))
 	if(prob(75))
-		max_combined_w_class = max_combined_w_class / 2
+		max_storage_space = max_storage_space / 2
 	..()
 
 /obj/item/weapon/reagent_containers/make_old()

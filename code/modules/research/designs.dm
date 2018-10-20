@@ -1831,7 +1831,7 @@ datum/design/scalpel_laser2
 	id = "scalpel_laser2"
 	req_tech = list("biotech" = 3, "materials" = 4, "magnets" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500, MAT_SILVER = 2500)
+	materials = list(MAT_METAL = 12500, MAT_GLASS = 7500)
 	build_path = /obj/item/weapon/scalpel/laser2
 
 datum/design/scalpel_laser3
@@ -2089,7 +2089,7 @@ datum/design/mesons
 	id = "mesons"
 	req_tech = list("magnets" = 2, "engineering" = 2)
 	build_type = PROTOLATHE | MINEFAB
-	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	materials = list(MAT_METAL = 100, MAT_GLASS = 1000)
 	build_path = /obj/item/clothing/glasses/meson
 	construction_time=100
 	category = list("Tools")
@@ -2169,7 +2169,7 @@ datum/design/health_hud
 	id = "health_hud"
 	req_tech = list("biotech" = 2, "magnets" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	materials = list(MAT_GLASS = 500, MAT_GOLD = 200)
 	build_path = /obj/item/clothing/glasses/hud/health
 
 datum/design/security_hud
@@ -2178,7 +2178,7 @@ datum/design/security_hud
 	id = "security_hud"
 	req_tech = list("magnets" = 3, "combat" = 2)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	materials = list(MAT_METAL = 100, MAT_GLASS = 500, MAT_DIAMOND = 200)
 	build_path = /obj/item/clothing/glasses/hud/security
 
 datum/design/secmed_hud
@@ -2187,7 +2187,7 @@ datum/design/secmed_hud
 	id = "secmed_hud"
 	req_tech = list("magnets" = 4, "combat" = 3, "biotech" = 3)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	materials = list(MAT_METAL = 100, MAT_GLASS = 500, MAT_GOLD = 100, MAT_DIAMOND = 100)
 	build_path = /obj/item/clothing/glasses/hud/secmed
 
 datum/design/mining_hud
@@ -2196,8 +2196,17 @@ datum/design/mining_hud
 	id = "mining_hud"
 	req_tech = list("materials" = 4, "magnets" = 4)
 	build_type = PROTOLATHE
-	materials = list(MAT_METAL = 50, MAT_GLASS = 50)
+	materials = list(MAT_METAL = 300, MAT_GLASS = 500)
 	build_path = /obj/item/clothing/glasses/hud/mining
+
+datum/design/science_goggles
+	name = "science goggles"
+	desc = "Special goggles with built-in reagent and atmospheric scanner"
+	id = "science_goggles"
+	req_tech = list("phorontech" = 3, "materials" = 4, "engineering" = 4)
+	build_type = PROTOLATHE
+	materials = list(MAT_GLASS = 500, MAT_PHORON = 200, MAT_SILVER = 200)
+	build_path = /obj/item/clothing/glasses/science
 
 /////////////////////////////////////////
 //////////////////Test///////////////////

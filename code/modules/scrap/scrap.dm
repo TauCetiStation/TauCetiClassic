@@ -111,7 +111,7 @@ var/global/list/scrap_base_cache = list()
 	for(var/obj/item/loot in contents)
 		if(prob(66)) loot.make_old()
 	loot = new(src)
-	loot.max_w_class = 5
+	loot.set_slots(slots = 7, slot_size = ITEM_SIZE_HUGE)
 	shuffle_loot()
 
 /obj/structure/scrap/Destroy()
@@ -203,9 +203,13 @@ var/global/list/scrap_base_cache = list()
 			return 0
 		if(BP.status & ORGAN_ROBOT)
 			return 0
+		if(victim.species.flags[NO_MINORCUTS])
+			return 0
 		to_chat(user, "<span class='danger'>Ouch! You cut yourself while picking through \the [src].</span>")
 		BP.take_damage(5, null, DAM_SHARP | DAM_EDGE, "Sharp debris")
 		victim.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
+		if(victim.species.flags[NO_PAIN]) // So we still take damage, but actually dig through.
+			return 0
 		return 1
 	return 0
 

@@ -50,7 +50,7 @@
 	new /obj/item/device/remote_device/head_of_personal(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/clothing/suit/armor/vest(src)
-	new /obj/item/clothing/head/helmet(src)
+	new /obj/item/clothing/head/helmet/band(src)
 	new /obj/item/weapon/cartridge/hop(src)
 	new /obj/item/device/radio/headset/heads/hop(src)
 
@@ -155,7 +155,7 @@
 	else
 		new /obj/item/weapon/storage/backpack/satchel/sec(src)
 
-	new /obj/item/clothing/head/helmet/warden(src)
+	new /obj/item/clothing/head/helmet/band/warden(src)
 	new /obj/item/clothing/head/beret/sec/warden(src)
 	new /obj/item/clothing/under/rank/warden(src)
 	new /obj/item/clothing/under/rank/warden_fem(src)
@@ -198,7 +198,7 @@
 
 	new /obj/item/clothing/gloves/security(src)
 	new /obj/item/clothing/suit/storage/flak(src)
-	new /obj/item/clothing/head/helmet(src)
+	new /obj/item/clothing/head/helmet/band(src)
 	new /obj/item/weapon/storage/belt/security(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/weapon/gun/energy/taser(src)
