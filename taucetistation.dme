@@ -1193,6 +1193,8 @@
 #include "code\modules\food\recipes_oven.dm"
 #include "code\modules\genetics\side_effects.dm"
 #include "code\modules\goonchat\browserOutput.dm"
+#include "code\modules\halloween\items.dm"
+#include "code\modules\halloween\mob.dm"
 #include "code\modules\holidays\new_year\clothing.dm"
 #include "code\modules\holodeck\HolodeckControl.dm"
 #include "code\modules\holodeck\HolodeckObjects.dm"
