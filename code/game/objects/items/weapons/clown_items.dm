@@ -50,3 +50,10 @@
 		spawn(20)
 			spam_flag = 0
 	return
+
+/obj/item/weapon/bikehorn/dogtoy
+	name = "dog toy"
+	desc = "This adorable toy is made with super soft plush and has a squeaker inside for added entertainment."	//Woof!
+	icon = 'icons/obj/items.dmi'
+	icon_state = "dogtoy"
+	item_state = "dogtoy"

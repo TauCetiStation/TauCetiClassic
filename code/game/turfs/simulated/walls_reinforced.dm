@@ -13,6 +13,13 @@
 
 	var/d_state = 0
 
+/turf/simulated/wall/r_wall/atom_init()
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/turf/simulated/wall/r_wall/atom_init_late()
+	relativewall_overlays()
+
 /turf/simulated/wall/r_wall/attack_hand(mob/user)
 	user.SetNextMove(CLICK_CD_MELEE)
 	if(HULK in user.mutations) //#Z2
