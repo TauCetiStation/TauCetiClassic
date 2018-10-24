@@ -35,7 +35,7 @@
 #define ARCHAEO_REMAINS_XENO 34
 #define ARCHAEO_GASMASK 35
 #define ARCHAEO_STRANGETOOL 36
-#define MAX_ARCHAEO 35
+#define MAX_ARCHAEO 36
 //eggs
 //droppings
 //footprints
