@@ -141,6 +141,68 @@
 	wall.icon_state = "[wall.walltype][junction]"
 	return
 
+/turf/simulated/wall/r_wall/relativewall()
+	if(istype(src,/turf/simulated/wall/vault)) //HACK!!!
+		return
+
+	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
+
+	for(var/turf/simulated/wall/W in orange(src,1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+			if(src.mineral == W.mineral)//Only 'like' walls connect -Sieve
+				junction |= get_dir(src,W)
+				if((istype(get_step(src, NORTH), /turf/simulated/wall)) && !(istype(get_step(src, NORTH), /turf/simulated/wall/r_wall)))
+					var/image/I = image('icons/turf/walls.dmi', "rwall_overlay-n", layer=2.08)
+					overlays += I
+				if((istype(get_step(src, SOUTH), /turf/simulated/wall)) && !(istype(get_step(src, SOUTH), /turf/simulated/wall/r_wall)))
+					var/image/I = image('icons/turf/walls.dmi', "rwall_overlay-s", layer=2.08)
+					overlays += I
+				if((istype(get_step(src, EAST), /turf/simulated/wall)) && !(istype(get_step(src, EAST), /turf/simulated/wall/r_wall)))
+					var/image/I = image('icons/turf/walls.dmi', "rwall_overlay-e", layer=2.08)
+					overlays += I
+				if((istype(get_step(src, WEST), /turf/simulated/wall)) && !(istype(get_step(src, WEST), /turf/simulated/wall/r_wall)))
+					var/image/I = image('icons/turf/walls.dmi', "rwall_overlay-w", layer=2.08)
+					overlays += I
+	for(var/obj/structure/falsewall/W in orange(src,1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+			if(src.mineral == W.mineral)
+				junction |= get_dir(src,W)
+				if((istype(get_step(src, NORTH), /obj/structure/falsewall)))
+					var/image/I = image('icons/turf/walls.dmi', "rwall_overlay-n", layer=2.08)
+					overlays += I
+				if((istype(get_step(src, SOUTH), /obj/structure/falsewall)))
+					var/image/I = image('icons/turf/walls.dmi', "rwall_overlay-s", layer=2.08)
+					overlays += I
+				if((istype(get_step(src, EAST), /obj/structure/falsewall)))
+					var/image/I = image('icons/turf/walls.dmi', "rwall_overlay-e", layer=2.08)
+					overlays += I
+				if((istype(get_step(src, WEST), /obj/structure/falsewall)))
+					var/image/I = image('icons/turf/walls.dmi', "rwall_overlay-w", layer=2.08)
+					overlays += I
+	for(var/turf/simulated/wall/r_wall/W in orange(src,1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+			if(src.mineral == W.mineral)//Only 'like' walls connect -Sieve
+				junction |= get_dir(src,W)
+	for(var/obj/structure/falserwall/W in orange(src,1))
+		if(abs(src.x-W.x)-abs(src.y-W.y)) //doesn't count diagonal walls
+			if(src.mineral == W.mineral)
+				junction |= get_dir(src,W)
+	var/turf/simulated/wall/r_wall/wall = src
+	wall.icon_state = "[wall.walltype][junction]"
+	if(!(istype(get_step(src, NORTH), /turf/simulated/wall)) && !(istype(get_step(src, NORTH), /turf/simulated/wall/r_wall)) && !(istype(get_step(src, NORTH), /obj/structure/falserwall)) && !(istype(get_step(src, NORTH), /obj/structure/falsewall)))
+		var/image/I = image('icons/turf/walls.dmi', "rwall_overlay-n-after", layer=2.08)
+		overlays += I
+	if(!(istype(get_step(src, SOUTH), /turf/simulated/wall)) && !(istype(get_step(src, SOUTH), /turf/simulated/wall/r_wall)) && !(istype(get_step(src, SOUTH), /obj/structure/falserwall)) && !(istype(get_step(src, SOUTH), /obj/structure/falsewall)))
+		var/image/I = image('icons/turf/walls.dmi', "rwall_overlay-s-after", layer=2.08)
+		overlays += I
+	if(!(istype(get_step(src, EAST), /turf/simulated/wall)) && !(istype(get_step(src, EAST), /turf/simulated/wall/r_wall)) && !(istype(get_step(src, EAST), /obj/structure/falserwall)) && !(istype(get_step(src, EAST), /obj/structure/falsewall)))
+		var/image/I = image('icons/turf/walls.dmi', "rwall_overlay-e-after", layer=2.08)
+		overlays += I
+	if(!(istype(get_step(src, WEST), /turf/simulated/wall)) && !(istype(get_step(src, WEST), /turf/simulated/wall/r_wall)) && !(istype(get_step(src, WEST), /obj/structure/falserwall)) && !(istype(get_step(src, WEST), /obj/structure/falsewall)))
+		var/image/I = image('icons/turf/walls.dmi', "rwall_overlay-w-after", layer=2.08)
+		overlays += I
+	return
+
 /obj/effect/alien/resin/relativewall()
 
 	var/junction = 0 //will be used to determine from which side the wall is connected to other walls
