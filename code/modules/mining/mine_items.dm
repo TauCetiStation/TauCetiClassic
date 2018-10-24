@@ -167,7 +167,7 @@ proc/move_mining_shuttle()
 /*****************************Pickaxe********************************/
 /obj/item/weapon/pickaxe
 	name = "pickaxe"
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/mining/hand_tools.dmi'
 	icon_state = "pickaxe"
 	flags = CONDUCT
 //	slot_flags = SLOT_BELT
@@ -185,7 +185,7 @@ proc/move_mining_shuttle()
 
 	var/excavation_amount = 100
 
-/obj/item/weapon/pickaxe/hammer
+/obj/item/weapon/pickaxe/hammer		//DEAD ITEM
 	name = "sledgehammer"
 	//icon_state = "sledgehammer" Waiting on sprite
 	desc = "A mining hammer made of reinforced metal. You feel like smashing your boss in the face with this."
@@ -230,7 +230,7 @@ proc/move_mining_shuttle()
 /obj/item/weapon/shovel
 	name = "shovel"
 	desc = "A large tool for digging and moving dirt."
-	icon = 'icons/obj/items.dmi'
+	icon = 'icons/obj/tools.dmi'
 	icon_state = "shovel"
 	flags = CONDUCT
 	slot_flags = SLOT_BELT
