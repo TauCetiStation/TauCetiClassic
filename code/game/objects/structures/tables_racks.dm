@@ -4,6 +4,7 @@
  *		Wooden tables
  *		Reinforced tables
  *		Racks
+ *		Surgical tray
  */
 
 
@@ -275,7 +276,12 @@
 		visible_message("<span class='danger'>[user] smashes [src] apart!</span>")
 		destroy()
 
+/obj/structure/table/do_climb(mob/user)
+	. = ..()
+	item_placed(user)
 
+/obj/structure/table/proc/item_placed(item)
+	return
 
 /obj/structure/table/attack_hand(mob/user)
 	if(HULK in user.mutations)
@@ -424,6 +430,7 @@
 				return
 			W.pixel_x = Clamp(text2num(click_params["icon-x"]) - 16, -(world.icon_size/2), world.icon_size/2)
 			W.pixel_y = Clamp(text2num(click_params["icon-y"]) - 16, -(world.icon_size/2), world.icon_size/2)
+			item_placed(W)
 	return
 
 /obj/structure/table/proc/slam(var/mob/living/A, var/mob/living/M, var/obj/item/weapon/grab/G)
@@ -834,3 +841,63 @@
 
 /obj/structure/rack/attack_tk() // no telehulk sorry
 	return
+
+/*
+ * Surgical tray
+ */
+
+/obj/structure/table/tray
+	name = "surgical tray"
+	density = 1
+	throwpass = 1	//You can throw objects over this, despite it's density.")
+	climbable = 1
+	desc = "A small metal tray with wheels."
+	anchored = FALSE
+	icon = 'icons/obj/surgery.dmi'
+	icon_state = "surgical tray"
+	var/list/typecache_can_hold = list(/mob, /obj/item)
+	var/list/held_items = list()
+	parts = /obj/item/stack/sheet/metal
+
+/obj/structure/table/tray/atom_init()
+	. = ..()
+	verbs -= /obj/structure/table/verb/do_flip
+	typecache_can_hold = typecacheof(typecache_can_hold)
+	for(var/atom/movable/held in get_turf(src))
+		if(is_type_in_typecache(held, typecache_can_hold))
+			held_items += held.UID()
+
+/obj/structure/table/tray/Move(NewLoc, direct)
+	var/atom/OldLoc = loc
+
+	. = ..()
+	if(!.) // ..() will return 0 if we didn't actually move anywhere.
+		return .
+
+	if(direct & (direct - 1)) // This represents a diagonal movement, which is split into multiple cardinal movements. We'll handle moving the items on the cardinals only.
+		return .
+
+	var/atom/movable/held
+	for(var/held_uid in held_items)
+		held = locateUID(held_uid)
+		if(!held)
+			held_items -= held_uid
+			continue
+		if(OldLoc != held.loc)
+			held_items -= held_uid
+			continue
+		held.forceMove(NewLoc)
+
+/obj/structure/table/tray/item_placed(atom/movable/item)
+	. = ..()
+	if(is_type_in_typecache(item, typecache_can_hold))
+		held_items += item.UID()
+
+/obj/structure/table/tray/flip()
+	return 0
+
+/obj/structure/table/attackby(obj/item/W, mob/user, params)
+	. = TRUE
+	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user) < 2)
+		return
+	..()
