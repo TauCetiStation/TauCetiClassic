@@ -195,28 +195,28 @@
 			if (MED_HUD)
 				process_med_hud(src,0)
 
-	if (src.healths)
-		if (src.stat != DEAD)
-			if(src.health >= 0)
-				var/T = src.health / src.maxHealth
+	if (healths)
+		if (stat != DEAD)
+			if(health >= 0)
+				var/T = health / maxHealth
 				switch(T)
 					if(1 to INFINITY)
-						src.healths.icon_state = "health0"
+						healths.icon_state = "health0"
 					if(0.75 to 1)
-						src.healths.icon_state = "health1"
+						healths.icon_state = "health1"
 					if(0.5 to 0.75)
-						src.healths.icon_state = "health2"
+						healths.icon_state = "health2"
 					if(0.25 to 0.5)
-						src.healths.icon_state = "health3"
+						healths.icon_state = "health3"
 					if(0 to 0.25)
-						src.healths.icon_state = "health4"
+						healths.icon_state = "health4"
 			else
-				if(src.health > src.health_threshold_dead)
-					src.healths.icon_state = "health5"
+				if(health > health_threshold_dead)
+					healths.icon_state = "health5"
 				else
-					src.healths.icon_state = "health6"
+					healths.icon_state = "health6"
 		else
-			src.healths.icon_state = "health7"
+			healths.icon_state = "health7"
 
 	if (src.syndicate && src.client)
 		if(ticker.mode.name == "traitor")
