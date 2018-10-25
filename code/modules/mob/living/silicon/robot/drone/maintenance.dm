@@ -105,10 +105,9 @@
 	to_chat(src, "<b>Don't invade their worksites, don't steal their resources, don't tell them about the changeling in the toilets.</b>")
 	to_chat(src, "<b>If a crewmember has noticed you, <i>you are probably breaking your third law</i></b>.")
 
-/mob/living/silicon/robot/drone/maintenance/start_pulling(atom/movable/AM)
-
+/mob/living/silicon/robot/drone/maintenance/can_pull(atom/movable/AM)
 	if(istype(AM,/obj/item/pipe) || istype(AM,/obj/structure/disposalconstruct))
-		..()
+		return TRUE
 	..()
 
 //Putting the decompiler here to avoid doing list checks every tick.

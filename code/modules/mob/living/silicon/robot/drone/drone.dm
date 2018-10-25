@@ -245,14 +245,17 @@
 	if(!(O in can_bump))
 		return 0
 
-/mob/living/silicon/robot/drone/start_pulling(atom/movable/AM)
+/mob/living/silicon/robot/drone/proc/can_pull(atom/movable/AM)
 	if(istype(AM,/obj/item))
 		var/obj/item/O = AM
 		if(O.w_class > 2)
-			to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
-			return
+			return FALSE
 		else
-			..()
+			return TRUE
+
+/mob/living/silicon/robot/drone/start_pulling(atom/movable/AM)
+	if(can_pull(AM))
+		..()
 	else
 		to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
 		return
