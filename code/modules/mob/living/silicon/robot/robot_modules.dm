@@ -391,7 +391,7 @@
 
 	emag.name = "Hand tele"
 
-/obj/item/weapon/robot_module/drone
+/obj/item/weapon/robot_module/maintdrone
 	name = "drone module"
 	stacktypes = list(
 		/obj/item/stack/sheet/wood/cyborg = 1,

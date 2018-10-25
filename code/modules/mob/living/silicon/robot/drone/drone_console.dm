@@ -13,7 +13,7 @@
 	var/obj/machinery/drone_fabricator/dronefab
 
 /obj/machinery/computer/drone_control/interact(user)
-	if(istype(user, /mob/living/silicon/robot/drone))
+	if(istype(user, /mob/living/silicon/robot/drone/maintaince))
 		to_chat(user, "<span class='warning'>Access Denied.</span>")
 	else
 		..()
@@ -22,7 +22,7 @@
 	var/dat
 	dat += "<B>Maintenance Units</B><BR>"
 
-	for(var/mob/living/silicon/robot/drone/D in mob_list)
+	for(var/mob/living/silicon/robot/drone/maintaince/D in mob_list)
 		dat += "<BR>[D.real_name] ([D.stat == DEAD ? "<font color='red'>INACTIVE" : "<font color='green'>ACTIVE"]</FONT>)"
 		dat += "<font dize = 9><BR>Cell charge: [D.cell.charge]/[D.cell.maxcharge]."
 		dat += "<BR>Currently located in: [get_area(D)]."
@@ -59,13 +59,13 @@
 	else if (href_list["ping"])
 
 		to_chat(usr, "\blue You issue a maintenance request for all active drones, highlighting [drone_call_area].")
-		for(var/mob/living/silicon/robot/drone/D in world)
+		for(var/mob/living/silicon/robot/drone/maintaince/D in world)
 			if(D.client && D.stat == CONSCIOUS)
 				to_chat(D, "-- Maintenance drone presence requested in: [drone_call_area].")
 
 	else if (href_list["resync"])
 
-		var/mob/living/silicon/robot/drone/D = locate(href_list["resync"])
+		var/mob/living/silicon/robot/drone/maintaince/D = locate(href_list["resync"])
 
 		if(D.stat != DEAD)
 			to_chat(usr, "\red You issue a law synchronization directive for the drone.")
@@ -73,7 +73,7 @@
 
 	else if (href_list["shutdown"])
 
-		var/mob/living/silicon/robot/drone/D = locate(href_list["shutdown"])
+		var/mob/living/silicon/robot/drone/maintaince/D = locate(href_list["shutdown"])
 
 		if(D.stat != DEAD)
 			to_chat(usr, "\red You issue a kill command for the unfortunate drone.")
