@@ -1,7 +1,7 @@
 /obj/item/weapon/storage/wallet
 	name = "wallet"
 	desc = "It can hold a few small and personal things."
-	storage_slots = 10
+	max_storage_space = 10
 	icon_state = "wallet"
 	w_class = 2
 	can_hold = list(

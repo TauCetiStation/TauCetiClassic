@@ -123,3 +123,4 @@
 	. = ..()
 	for (var/i in 1 to 7)
 		new /obj/item/mecha_parts/mecha_tracking(src)
+	make_exact_fit()
