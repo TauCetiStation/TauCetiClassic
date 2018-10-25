@@ -63,7 +63,7 @@
 			var/tabledirs = 0
 			for(var/direction in list(turn(dir,90), turn(dir,-90)) )
 				var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
-				if (canconnect && T && T.flipped && T.canconnect && T.dir == src.dir)
+				if (canconnect && T && T.flipped && T.canconnect && T.dir == src.dir && !(istype(T, /obj/structure/table/tray)))
 					type++
 					tabledirs |= direction
 			var/base = "table"
@@ -113,7 +113,7 @@
 					continue
 			if(!skip_sum) //means there is a window between the two tiles in this direction
 				var/obj/structure/table/T = locate(/obj/structure/table,get_step(src,direction))
-				if(T && !T.flipped && T.canconnect && canconnect)
+				if(T && !T.flipped && T.canconnect && canconnect && !(istype(T, /obj/structure/table/tray)))
 					if(direction <5)
 						dir_sum += direction
 					else
@@ -140,7 +140,7 @@
 				dir_sum = 4
 		if(dir_sum%16 in list(5,6,9,10))
 			var/obj/structure/table/T = locate(/obj/structure/table,get_step(src.loc,dir_sum%16))
-			if(T && T.canconnect && canconnect)
+			if(T && T.canconnect && canconnect && !(istype(T, /obj/structure/table/tray)))
 				table_type = 3 //full table (not the 1 tile thick one, but one of the 'tabledir' tables)
 			else
 				table_type = 2 //1 tile thick, corner table (treated the same as streight tables in code later on)
@@ -896,8 +896,14 @@
 /obj/structure/table/tray/flip()
 	return 0
 
-/obj/structure/table/attackby(obj/item/W, mob/user, params)
+/obj/structure/table/tray/attackby(obj/item/W, mob/user, params)
 	. = TRUE
 	if (istype(W, /obj/item/weapon/grab) && get_dist(src,user) < 2)
 		return
 	..()
+
+/obj/structure/table/tray/update_icon()
+	return
+
+/obj/structure/table/tray/update_adjacent()
+	return
