@@ -1,4 +1,4 @@
-/mob/living/silicon/robot/drone/maintaince
+/mob/living/silicon/robot/drone/maintenance
 
 	// We need to keep track of a few module items so we don't need to do list operations
 	// every time we need them. These get set in New() after the module is chosen.
@@ -9,7 +9,7 @@
 	var/obj/item/weapon/matter_decompiler/decompiler = null
 
 
-/mob/living/silicon/robot/drone/maintaince/atom_init()
+/mob/living/silicon/robot/drone/maintenance/atom_init()
 
 	..()
 
@@ -28,19 +28,19 @@
 	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
 	updateicon()
 
-/mob/living/silicon/robot/drone/maintaince/init()
+/mob/living/silicon/robot/drone/maintenance/init()
 	laws = new /datum/ai_laws/drone()
 	connected_ai = null
 
 	..()
 
-/mob/living/silicon/robot/drone/maintaince/updatename()
+/mob/living/silicon/robot/drone/maintenance/updatename()
 	real_name = "maintenance drone ([rand(100,999)])"
 	name = real_name
 
 //Drones can only use binary and say emotes. NOTHING else.
 //TBD, fix up boilerplate. ~ Z
-/mob/living/silicon/robot/drone/maintaince/say(var/message)
+/mob/living/silicon/robot/drone/maintenance/say(var/message)
 
 	if (!message)
 		return
@@ -91,11 +91,11 @@
 					if(M.client)
 						to_chat(M, "<b>[src]</b> transmits, \"[message]\"")
 
-/mob/living/silicon/robot/drone/maintaince/full_law_reset()
+/mob/living/silicon/robot/drone/maintenance/full_law_reset()
 	..()
 	laws = new /datum/ai_laws/drone
 
-/mob/living/silicon/robot/drone/maintaince/transfer_personality(client/player)
+/mob/living/silicon/robot/drone/maintenance/transfer_personality(client/player)
 	..()
 	to_chat(src, "<b>Systems rebooted</b>. Loading base pattern maintenance protocol... <b>loaded</b>.")
 	to_chat(src, "<br><b>You are a maintenance drone, a tiny-brained robotic repair machine</b>.")
@@ -105,14 +105,14 @@
 	to_chat(src, "<b>Don't invade their worksites, don't steal their resources, don't tell them about the changeling in the toilets.</b>")
 	to_chat(src, "<b>If a crewmember has noticed you, <i>you are probably breaking your third law</i></b>.")
 
-/mob/living/silicon/robot/drone/maintaince/start_pulling(atom/movable/AM)
+/mob/living/silicon/robot/drone/maintenance/start_pulling(atom/movable/AM)
 
 	if(istype(AM,/obj/item/pipe) || istype(AM,/obj/structure/disposalconstruct))
 		..()
 	..()
 
 //Putting the decompiler here to avoid doing list checks every tick.
-/mob/living/silicon/robot/drone/maintaince/use_power()
+/mob/living/silicon/robot/drone/maintenance/use_power()
 
 	..()
 	if(!src.has_power || !decompiler)
