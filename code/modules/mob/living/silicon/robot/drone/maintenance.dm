@@ -11,18 +11,18 @@
 
 /mob/living/silicon/robot/drone/maintenance/atom_init()
 
-	..()
+	. = ..()
 
 	module = new /obj/item/weapon/robot_module/maintdrone(src)
 
 	//Grab stacks.
-	stack_metal = locate(/obj/item/stack/sheet/metal/cyborg) in src.module
-	stack_wood = locate(/obj/item/stack/sheet/wood/cyborg) in src.module
-	stack_glass = locate(/obj/item/stack/sheet/glass/cyborg) in src.module
-	stack_plastic = locate(/obj/item/stack/sheet/mineral/plastic/cyborg) in src.module
+	stack_metal = locate(/obj/item/stack/sheet/metal/cyborg) in module
+	stack_wood = locate(/obj/item/stack/sheet/wood/cyborg) in module
+	stack_glass = locate(/obj/item/stack/sheet/glass/cyborg) in module
+	stack_plastic = locate(/obj/item/stack/sheet/mineral/plastic/cyborg) in module
 
 	//Grab decompiler.
-	decompiler = locate(/obj/item/weapon/matter_decompiler) in src.module
+	decompiler = locate(/obj/item/weapon/matter_decompiler) in module
 
 	//Some tidying-up.
 	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
@@ -45,11 +45,11 @@
 	if (!message)
 		return
 
-	if (src.client)
+	if (client)
 		if(client.prefs.muted & MUTE_IC)
 			to_chat(src, "You cannot send IC messages (muted).")
 			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
+		if (client.handle_spam_prevention(message,MUTE_IC))
 			return
 
 	message = sanitize(message)
@@ -114,7 +114,7 @@
 /mob/living/silicon/robot/drone/maintenance/use_power()
 
 	..()
-	if(!src.has_power || !decompiler)
+	if(!has_power || !decompiler)
 		return
 
 	//The decompiler replenishes drone stores from hoovered-up junk each tick.

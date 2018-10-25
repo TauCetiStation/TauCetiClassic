@@ -42,7 +42,7 @@
 
 /mob/living/silicon/robot/drone/init()
 	aiCamera = new/obj/item/device/camera/siliconcam/drone_camera(src)
-	playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 0)
+	playsound(loc, 'sound/machines/twobeep.ogg', 50, 0)
 
 //Redefining some robot procs...
 /mob/living/silicon/robot/drone/updatename()
@@ -161,7 +161,7 @@
 //Drones killed by damage will gib.
 /mob/living/silicon/robot/drone/handle_regular_status_updates()
 
-	if(health <= health_threshold_dead && src.stat != DEAD)
+	if(health <= health_threshold_dead && stat != DEAD)
 		timeofdeath = world.time
 		death() //Possibly redundant, having trouble making death() cooperate.
 		gib()
@@ -228,7 +228,7 @@
 
 	if(!player) return
 
-	src.ckey = player.ckey
+	ckey = player.ckey
 
 	if(player.mob && player.mob.mind)
 		player.mob.mind.transfer_to(src)
