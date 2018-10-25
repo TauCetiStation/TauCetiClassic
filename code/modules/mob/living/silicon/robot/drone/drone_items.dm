@@ -306,7 +306,7 @@
 		return
 
 	if(!module)
-		module = new /obj/item/weapon/robot_module/drone(src)
+		module = new /obj/item/weapon/robot_module/maintdrone(src)
 
 	var/dat = "<HEAD><TITLE>Drone modules</TITLE></HEAD><BODY>\n"
 	dat += {"
