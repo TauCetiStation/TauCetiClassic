@@ -47177,9 +47177,6 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/structure/table/tray{
-	dir = 4
-	},
 /turf/simulated/floor,
 /area/medical/chemistry)
 "bPw" = (
@@ -76482,7 +76479,9 @@
 	pixel_x = 5;
 	pixel_y = -2
 	},
-/obj/structure/table/glass,
+/obj/structure/table/tray{
+	dir = 4
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteyellow"
