@@ -730,6 +730,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rack"
 	density = 1
+	climbable = 1
 	anchored = 1.0
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.
@@ -747,6 +748,20 @@
 			if(prob(25))
 				qdel(src)
 				new /obj/item/weapon/rack_parts(src.loc)
+
+/obj/structure/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
+	..()
+	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
+		return
+	if(isessence(usr) || isrobot(usr))
+		return
+	var/obj/item/weapon/W = O
+	if(!W.canremove || W.flags & NODROP)
+		return
+	user.drop_item()
+	if (O.loc != src.loc)
+		step(O, get_dir(O, src))
+	return
 
 /obj/structure/rack/blob_act()
 	if(prob(75))
@@ -855,14 +870,16 @@
 	anchored = FALSE
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "surgical tray"
-	var/list/typecache_can_hold = list(/mob, /obj/item)
+	var/static/list/typecache_can_hold = typecacheof(list(
+		/obj/item,
+		/mob)
+		)
 	var/list/held_items = list()
 	parts = /obj/item/stack/sheet/metal
 
 /obj/structure/table/tray/atom_init()
 	. = ..()
 	verbs -= /obj/structure/table/verb/do_flip
-	typecache_can_hold = typecacheof(typecache_can_hold)
 	for(var/atom/movable/held in get_turf(src))
 		if(is_type_in_typecache(held, typecache_can_hold))
 			held_items += held.UID()
