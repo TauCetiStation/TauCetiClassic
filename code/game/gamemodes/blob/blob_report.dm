@@ -10,10 +10,10 @@
 		if(1)
 			interceptname = "Biohazard Alert"
 			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"
-			intercepttext += "Reports indicate the probable transfer of a biohazardous agent onto NSS Exodus during the last crew deployment cycle.<BR>"
+			intercepttext += "Reports indicate the probable transfer of a biohazardous agent onto NFS Gamma during the last crew deployment cycle.<BR>"
 			intercepttext += "Preliminary analysis of the organism classifies it as a level 5 biohazard. Its origin is unknown.<BR>"
-			intercepttext += "NanoTrasen has issued a directive 7-10 for NSS Exodus. The station is to be considered quarantined.<BR>"
-			intercepttext += "Orders for all NSS Exodus personnel follows:<BR>"
+			intercepttext += "NanoTrasen has issued a directive 7-10 for NFS Gamma. The station is to be considered quarantined.<BR>"
+			intercepttext += "Orders for all NFS Gamma personnel follows:<BR>"
 			intercepttext += " 1. Do not leave the quarantine area.<BR>"
 			intercepttext += " 2. Locate any outbreaks of the organism on the station.<BR>"
 			intercepttext += " 3. If found, use any neccesary means to contain the organism.<BR>"
@@ -28,7 +28,7 @@
 						nukecode = bomb.r_code
 			interceptname = "Directive 7-12"
 			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"
-			intercepttext += "Directive 7-12 has been issued for NSS Exodus.<BR>"
+			intercepttext += "Directive 7-12 has been issued for NFS Gamma.<BR>"
 			intercepttext += "The biohazard has grown out of control and will soon reach critical mass.<BR>"
 			intercepttext += "Your orders are as follows:<BR>"
 			intercepttext += "1. Secure the Nuclear Authentication Disk.<BR>"

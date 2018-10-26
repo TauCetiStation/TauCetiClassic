@@ -7,7 +7,7 @@
 
 /obj/machinery/computer/stockexchange/atom_init()
 	. = ..()
-	logged_in = "[world.name] Cargo Department"
+	logged_in = "[station_name()] Cargo Department"
 
 /obj/machinery/computer/stockexchange/proc/balance()
 	if(!logged_in)

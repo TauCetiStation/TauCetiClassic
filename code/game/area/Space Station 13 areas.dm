@@ -43,7 +43,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Arrival Shuttle"
 
 /area/shuttle/arrival/pre_game
-	name = "Tau Ceti Transfer Station 13"
+	name = "Gamma Andromedae Transfer Station 13"
 	icon_state = "shuttle2"
 
 /area/shuttle/arrival/transit
@@ -51,7 +51,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	parallax_movedir = EAST
 
 /area/shuttle/arrival/station
-	name = "NSS Exodus"
+	name = "NFS Gamma"
 	icon_state = "shuttle"
 
 /area/shuttle/escape

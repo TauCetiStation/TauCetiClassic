@@ -2,7 +2,7 @@
 #define ARRIVAL_SHUTTLE_COOLDOWN 650
 
 
-var/location = 0 // 0 - Start 2 - NSS Exodus 1 - transit
+var/location = 0 // 0 - Start 2 - NFS Gamma 1 - transit
 var/moving = 0
 var/area/curr_location
 var/lastMove = 0
@@ -11,8 +11,8 @@ var/lastMove = 0
 	name = "Arrival Shuttle Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "wagon"
-	var/arrival_note = "Arrival shuttle docked with the NSS Exodus."
-	var/department_note = "Arrival shuttle left the NSS Exodus."
+	var/arrival_note = "Arrival shuttle docked with the NFS Gamma."
+	var/department_note = "Arrival shuttle left the NFS Gamma."
 	var/obj/item/device/radio/intercom/radio
 
 
