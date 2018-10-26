@@ -61,7 +61,7 @@
 
 /obj/item/clothing/head/beret/sec/warden
 	name = "security beret"
-	desc = "A beret with the gold security insignia emblazoned on it. For wardens that are more inclined towards style than safety."
+	desc = "A beret with the gold security insignia emblazoned on it. For Star Vigil Sergeants that are more inclined towards style than safety."
 	icon_state = "beret_warden"
 
 /obj/item/clothing/head/beret/eng

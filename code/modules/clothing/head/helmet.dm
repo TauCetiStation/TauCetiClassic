@@ -65,8 +65,8 @@
 	return ..()
 
 /obj/item/clothing/head/helmet/band/warden
-	name = "warden's hat"
-	desc = "It's a special helmet issued to the Warden of a security force. Protects the head from impacts."
+	name = "Star Vigil Sergeant's hat"
+	desc = "It's a special helmet issued to the Star Vigil Sergeant of a security force. Protects the head from impacts."
 	icon_state = "helmet_warden"
 
 /obj/item/clothing/head/helmet/HoS
@@ -201,8 +201,8 @@
 	user.update_inv_head()
 
 /obj/item/clothing/head/helmet/band/warden/blue
-	name = "warden's hat"
-	desc = "It's a special helmet issued to the Warden of a securiy force. Protects the head from impacts."
+	name = "Star Vigil Sergeant's hat"
+	desc = "It's a special helmet issued to the Star Vigil Sergeant of a securiy force. Protects the head from impacts."
 	icon_state = "oldwardenhelm"
 	item_state = "helmet"
 

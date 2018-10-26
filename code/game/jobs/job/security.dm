@@ -50,7 +50,7 @@
 
 
 /datum/job/warden
-	title = "Warden"
+	title = "Star Vigil Sergeant"
 	flag = WARDEN
 	department_flag = ENGSEC
 	faction = "Station"
@@ -139,7 +139,7 @@
 
 
 /datum/job/officer
-	title = "Security Officer"
+	title = "Star Vigil Officer"
 	flag = OFFICER
 	department_flag = ENGSEC
 	faction = "Station"

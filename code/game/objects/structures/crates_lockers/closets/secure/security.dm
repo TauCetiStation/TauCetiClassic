@@ -140,7 +140,7 @@
 	#endif
 
 /obj/structure/closet/secure_closet/warden
-	name = "Warden's Locker"
+	name = "Star Vigil Sergeant's Locker"
 	req_access = list(access_armory)
 	icon_state = "wardensecure1"
 	icon_closed = "wardensecure"
@@ -181,7 +181,7 @@
 	#endif
 
 /obj/structure/closet/secure_closet/security
-	name = "Security Officer's Locker"
+	name = "Star Vigil Officer's Locker"
 	req_access = list(access_brig)
 	icon_state = "sec1"
 	icon_closed = "sec"

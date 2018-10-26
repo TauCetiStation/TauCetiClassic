@@ -30,7 +30,7 @@
 	var/required_enemies = 0
 	var/recommended_enemies = 0
 	var/list/datum/mind/antag_candidates = list()	// List of possible starting antags goes here
-	var/list/restricted_jobs_autotraitor = list("Cyborg", "Security Officer", "Warden")
+	var/list/restricted_jobs_autotraitor = list("Cyborg", "Star Vigil Officer", "Star Vigil Sergeant")
 	var/autotraitor_delay = 15 MINUTES // how often to try to add new traitors.
 	var/role_type = null
 	var/newscaster_announcements = null

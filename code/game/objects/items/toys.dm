@@ -793,7 +793,7 @@
 	toysay = "Get that fucking disk!"
 
 /obj/item/toy/figure/secofficer
-	name = "Security Officer action figure"
+	name = "Star Vigil Officer action figure"
 	icon_state = "secofficer"
 	toysay = "I am the law!"
 
@@ -803,7 +803,7 @@
 	toysay = "The cure is potassium!"
 
 /obj/item/toy/figure/warden
-	name = "Warden action figure"
+	name = "Star Vigil Sergeant action figure"
 	icon_state = "warden"
 	toysay = "Seventeen minutes for coughing at an officer!"
 

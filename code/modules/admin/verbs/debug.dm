@@ -613,8 +613,8 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"cmo",
 		"rd",
 		"ce",
-		"warden",
-		"security officer",
+		"Star Vigil Sergeant",
+		"Star Vigil Officer",
 		"detective",
 		"doctor",
 		"paramedic",
@@ -1154,7 +1154,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			            access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
-		if("warden")
+		if("Star Vigil Sergeant")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/warden(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(M), slot_gloves)
@@ -1163,17 +1163,17 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/device/pda/warden/pda = new(M)
 			pda.owner = M.real_name
-			pda.ownjob = "Warden"
+			pda.ownjob = "Star Vigil Sergeant"
 			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
 			M.equip_to_slot_or_del(pda, slot_l_store)
 
 			var/obj/item/weapon/card/id/sec/W = new(M)
-			W.assignment = "Warden"
+			W.assignment = "Star Vigil Sergeant"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
-		if("security officer")
+		if("Star Vigil Officer")
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/security(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(M), slot_r_store)
@@ -1182,12 +1182,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/device/pda/security/pda = new(M)
 			pda.owner = M.real_name
-			pda.ownjob = "Security Officer"
+			pda.ownjob = "Star Vigil Officer"
 			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
 			M.equip_to_slot_or_del(pda, slot_l_store)
 
 			var/obj/item/weapon/card/id/sec/W = new(M)
-			W.assignment = "Security Officer"
+			W.assignment = "Star Vigil Officer"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
 			W.registered_name = M.real_name

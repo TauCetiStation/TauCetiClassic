@@ -537,7 +537,7 @@
 	siemens_coefficient = 0.8
 
 /obj/item/clothing/under/rank/warden_fem
-	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for more robust protection. It has the word \"Warden\" written on the shoulders."
+	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for more robust protection. It has the words \"Star Vigil Sergeant\" written on the shoulders."
 	name = "warden's dress"
 	icon_state = "warden_f"
 	item_state = "r_suit"

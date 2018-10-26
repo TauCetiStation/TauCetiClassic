@@ -90,4 +90,4 @@ datum/gear/zippo
 	display_name = "Holster"
 	path = /obj/item/clothing/accessory/holster/armpit
 	cost = 2
-	allowed_roles = list("Captain", "Head of Security", "Head of Personnel", "Warden", "Security Officer", "Detective")
+	allowed_roles = list("Captain", "Head of Security", "Head of Personnel", "Star Vigil Sergeant", "Star Vigil Officer", "Detective")

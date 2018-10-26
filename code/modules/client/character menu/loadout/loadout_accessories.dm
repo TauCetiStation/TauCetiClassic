@@ -71,7 +71,7 @@
 /datum/gear/accessory/armband
 	display_name = "Armband selection"
 	path = /obj/item/clothing/accessory/armband
-	allowed_roles = list("Security Officer")
+	allowed_roles = list("Star Vigil Officer")
 
 /datum/gear/accessory/armband/New()
 	..()
