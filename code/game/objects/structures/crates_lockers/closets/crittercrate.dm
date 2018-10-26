@@ -21,17 +21,17 @@
 		return ..()
 	var/mob/living/to_die
 	if(content_mob != null && already_opened == 0)
-		if(content_mob == /mob/living/simple_animal/shiba)
+		if(istype(content_mob, /mob/living/simple_animal/dog))//Comes with a toy!
 			new/obj/item/weapon/bikehorn/dogtoy(src)
 		if(content_mob == /mob/living/simple_animal/chick)
 			var/num = rand(4, 6)
 			for(var/i = 0, i < num, i++)
 				to_die = new content_mob(loc)
 				to_die.health = to_die.health * (!crit_fail)
-		else if(content_mob == /mob/living/simple_animal/corgi)
+		else if(content_mob == /mob/living/simple_animal/dog/corgi)
 			var/num = rand(0, 1)
 			if(num) //No more matriarchy for cargo
-				content_mob = /mob/living/simple_animal/corgi/Lisa
+				content_mob = /mob/living/simple_animal/dog/corgi/Lisa
 			to_die = new content_mob(loc)
 			to_die.health = to_die.health * (!crit_fail)
 		else
@@ -58,7 +58,7 @@
 
 /obj/structure/closet/critter/corgi
 	name = "corgi crate"
-	content_mob = /mob/living/simple_animal/corgi //This statement is (not) false. See above.
+	content_mob = /mob/living/simple_animal/dog/corgi //This statement is (not) false. See above.
 
 /obj/structure/closet/critter/cow
 	name = "cow crate"
@@ -76,13 +76,21 @@
 	name = "cat crate"
 	content_mob = /mob/living/simple_animal/cat
 
+/obj/structure/closet/critter/tamaskan
+	name = "tamaskan crate"
+	content_mob = /mob/living/simple_animal/dog/tamaskan
+
+/obj/structure/closet/critter/german_shepherd
+	name = "german shepherd crate"
+	content_mob = /mob/living/simple_animal/dog/german_shepherd
+
 /obj/structure/closet/critter/pug
 	name = "pug crate"
-	content_mob = /mob/living/simple_animal/pug
+	content_mob = /mob/living/simple_animal/dog/pug
 
 /obj/structure/closet/critter/shiba
 	name = "shiba crate"
-	content_mob = /mob/living/simple_animal/shiba
+	content_mob = /mob/living/simple_animal/dog/shiba
 
 /obj/structure/closet/critter/pig
 	name = "pig crate"

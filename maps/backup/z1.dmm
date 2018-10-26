@@ -4358,7 +4358,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 5
 	},
-/mob/living/simple_animal/dog/corgi/borgi,
+/mob/living/simple_animal/corgi/borgi,
 /turf/simulated/floor/carpet,
 /area/security/hos)
 "ahl" = (
@@ -76057,7 +76057,6 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/mob/living/simple_animal/dog/german_shepherd/columbo,
 /turf/simulated/floor/carpet,
 /area/security/detectives_office)
 "ppb" = (

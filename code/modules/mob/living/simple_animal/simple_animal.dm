@@ -98,6 +98,8 @@
 	//Speaking
 	if(!client && speak_chance)
 		if(rand(0,200) < speak_chance)
+			if((istype(src, /mob/living/simple_animal/dog)) && !(istype(src, /mob/living/simple_animal/dog/corgi/Lisa)) && !(istype(src, /mob/living/simple_animal/dog/corgi/puppy)))
+				playsound(src,'sound/voice/dogs/bark.ogg', 50, 1, -3)
 			if(speak && speak.len)
 				if((emote_hear && emote_hear.len) || (emote_see && emote_see.len))
 					var/length = speak.len

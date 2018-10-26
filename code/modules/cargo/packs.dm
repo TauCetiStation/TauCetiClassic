@@ -1002,6 +1002,20 @@ datum/supply_pack/New()
 	crate_name = "Pug crate"
 	group = "Hydroponics"
 
+/datum/supply_pack/german_shepherd
+	name = "German Shepherd crate"
+	cost = 6000
+	crate_type = /obj/structure/closet/critter/german_shepherd
+	crate_name = "German Shepherd crate"
+	group = "Hydroponics"
+
+/datum/supply_pack/tamaskan
+	name = "Tamaskan crate"
+	cost = 6000
+	crate_type = /obj/structure/closet/critter/tamaskan
+	crate_name = "Tamaskan crate"
+	group = "Hydroponics"
+
 /datum/supply_pack/pig
 	name = "Pig crate"
 	cost = 3000

@@ -101,7 +101,7 @@
 					var/animal = pick("parrot","corgi","crab","cat","mouse","chicken","cow","lizard","chick")
 					switch(animal)
 						if("parrot")	new_mob = new /mob/living/simple_animal/parrot(M.loc)
-						if("corgi")		new_mob = new /mob/living/simple_animal/corgi(M.loc)
+						if("corgi")		new_mob = new /mob/living/simple_animal/dog/corgi(M.loc)
 						if("crab")		new_mob = new /mob/living/simple_animal/crab(M.loc)
 						if("cat")		new_mob = new /mob/living/simple_animal/cat(M.loc)
 						if("mouse")		new_mob = new /mob/living/simple_animal/mouse(M.loc)

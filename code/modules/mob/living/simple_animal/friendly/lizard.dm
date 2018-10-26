@@ -17,3 +17,7 @@
 	response_disarm = "shoos"
 	response_harm   = "stomps on"
 	ventcrawler = 2
+
+/mob/living/simple_animal/lizard/death()
+	. = ..()
+	desc = "It doesn't hiss anymore."

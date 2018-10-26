@@ -57,7 +57,7 @@ This is modified grab mechanic for facehugger
 			else
 				to_chat(FH, "\red looks dead.")
 
-/mob/living/simple_animal/corgi/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
+/mob/living/simple_animal/dog/corgi/attack_facehugger(mob/living/carbon/alien/facehugger/FH)
 	switch(FH.a_intent)
 		if("grab")
 			if(src.stat != DEAD)
@@ -197,7 +197,7 @@ This is chestburster mechanic for damaging
 			playsound(loc, 'sound/weapons/bite.ogg', 50, 1, -1)
 			M.Weaken(8)
 	else if(iscorgi(affecting))
-		var/mob/living/simple_animal/corgi/C = affecting
+		var/mob/living/simple_animal/dog/corgi/C = affecting
 		if(C.stat == DEAD)
 			chestburster.loc = get_turf(C)
 			chestburster.visible_message("<span class='danger'>[chestburster] bursts thru [C]'s butt!</span>")
@@ -446,7 +446,7 @@ This is facehugger Attach procs
 		if(ismonkey(L)) // wtf is there in monkeys equip proc, that they need this?! ~zve
 			target.contents += src // Monkey sanity check - Snapshot
 	else if(iscorgi(L))
-		var/mob/living/simple_animal/corgi/C = L
+		var/mob/living/simple_animal/dog/corgi/C = L
 		src.loc = C
 		C.facehugger = src
 		C.wear_mask = src
@@ -489,7 +489,7 @@ This is facehugger Attach procs
 		icon_state = "[initial(icon_state)]_impregnated"
 
 		if(iscorgi(target))
-			var/mob/living/simple_animal/corgi/C = target
+			var/mob/living/simple_animal/dog/corgi/C = target
 			src.loc = get_turf(C)
 			C.facehugger = null
 	else

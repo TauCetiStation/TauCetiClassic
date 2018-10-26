@@ -72,7 +72,7 @@
 /mob/living/simple_animal/hostile/carp/dog
 	name = "REX"
 	desc = "That's a cute little doge... WAIT, WHAT???!!"
-	icon = 'icons/mob/doge.dmi'
+	icon = 'icons/mob/dogs.dmi'
 	icon_state = "shepherd"
 	maxHealth = 9001
 	health = 9001
@@ -89,7 +89,7 @@
 
 	var/idle_snd_chance = 5
 
-	attack_sound = 'sound/weapons/polkan_atk.ogg'
+	attack_sound = 'sound/voice/dogs/attacks.ogg'
 
 /mob/living/simple_animal/hostile/carp/dog/polkan
 	name = "POLKAN"
@@ -101,5 +101,5 @@
 		return 0
 
 	if(rand(0,100) < idle_snd_chance)
-		var/list/idle_snd = list('sound/voice/polkan/idle1.ogg','sound/voice/polkan/idle2.ogg')
+		var/list/idle_snd = list('sound/voice/dogs/breathes1.ogg','sound/voice/dogs/breathes2.ogg')
 		playsound(src, pick(idle_snd), 50, 1, -3)

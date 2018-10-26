@@ -47,7 +47,7 @@
 
 // LIVING
 
-#define iscorgi(A) (istype(A, /mob/living/simple_animal/corgi))
+#define iscorgi(A) (istype(A, /mob/living/simple_animal/dog/corgi))
 
 #define iscrab(A) (istype(A, /mob/living/simple_animal/crab))
 

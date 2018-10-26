@@ -12,7 +12,7 @@
 	pass_flags = PASSTABLE
 	small = 1
 	speak_chance = 1
-	turns_per_move = 5
+	turns_per_move = 8
 	see_in_dark = 6
 	maxHealth = 5
 	health = 5
