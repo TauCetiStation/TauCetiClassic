@@ -233,7 +233,7 @@
 		for(var/mob/M in mob_list)
 			if(is_shadow_or_thrall(M) || isobserver(M))
 				to_chat(M, "<span class='shadowling'><b>\[Hive Chat\]</b><i> [usr.real_name]</i>: [text]</span>")
-				log_say("Shadowling Hivemind: [key_name(usr)] : [text]")
+		log_say("Shadowling Hivemind: [key_name(usr)] : [text]")
 
 /obj/effect/proc_holder/spell/targeted/thrall_sight
 	name = "Dark Sight"
