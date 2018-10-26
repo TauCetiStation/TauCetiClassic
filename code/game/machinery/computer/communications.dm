@@ -69,7 +69,7 @@
 				if (I && istype(I))
 					if(src.check_access(I))
 						authenticated = 1
-					if(20 in I.access || 57 in I.access || 58 in I.access)//cap, hop, hos
+					if(20 in I.access || 57 in I.access || 58 in I.access)//cap, hop, SVC
 						authenticated = 2
 		if("logout")
 			authenticated = 0
@@ -110,7 +110,7 @@
 				var/input = sanitize(input(usr, "Please choose a message to announce to the station crew.", "What?"), extra = FALSE)
 				if(!input || !(usr in view(1,src)))
 					return
-				captain_announce(input)//This should really tell who is, IE HoP, CE, HoS, RD, Captain
+				captain_announce(input)//This should really tell who is, IE HoP, CE, SVC, RD, Captain
 				log_say("[key_name(usr)] has made a captain announcement: [input]")
 				message_admins("[key_name_admin(usr)] has made a captain announcement. (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>)")
 				message_cooldown = 1

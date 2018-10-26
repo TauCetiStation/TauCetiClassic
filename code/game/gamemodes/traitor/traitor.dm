@@ -7,7 +7,7 @@
 	config_tag = "traitor"
 	role_type = ROLE_TRAITOR
 	restricted_jobs = list("Cyborg")//They are part of the AI if he is traitor so are they, they use to get double chances
-	protected_jobs = list("Internal Affairs Agent", "Star Vigil Officer", "Star Vigil Sergeant", "Detective", "Head of Security", "Captain")//AI", Currently out of the list as malf does not work for shit
+	protected_jobs = list("Internal Affairs Agent", "Star Vigil Officer", "Star Vigil Sergeant", "Detective", "Star Vigil Commander", "Captain")//AI", Currently out of the list as malf does not work for shit
 	required_players = 1
 	required_enemies = 1
 	required_players_secret = 1

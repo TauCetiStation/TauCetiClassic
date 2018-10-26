@@ -113,7 +113,7 @@
 	body_parts_covered = 0
 
 /obj/item/clothing/head/collectable/HoS
-	name = "collectable HoS hat"
+	name = "collectable SVC hat"
 	desc = "Now you can beat prisoners, set silly sentences and arrest for no reason too!"
 	icon_state = "hoscap"
 	body_parts_covered = 0

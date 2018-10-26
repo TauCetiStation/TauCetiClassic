@@ -723,7 +723,7 @@
 	toysay = "Giving out all access!"
 
 /obj/item/toy/figure/hos
-	name = "Head of Security action figure"
+	name = "Star Vigil Commander action figure"
 	icon_state = "hos"
 	toysay = "Get the justice chamber ready, I think we got a joker here."
 

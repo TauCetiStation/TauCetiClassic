@@ -2,7 +2,7 @@
  * Contains:
  *		Security
  *		Detective
- *		Head of Security
+ *		Star Vigil Commander
  */
 
 /*
@@ -124,11 +124,11 @@
 
 
 /*
- * Head of Security
+ * Star Vigil Commander
  */
 /obj/item/clothing/under/rank/head_of_security
-	desc = "It's a jumpsuit worn by those few with the dedication to achieve the position of \"Head of Security\". It has additional armor to protect the wearer."
-	name = "head of security's jumpsuit"
+	desc = "It's a jumpsuit worn by those few with the dedication to achieve the position of \"Star Vigil Commander\". It has additional armor to protect the wearer."
+	name = "Star Vigil Commander's jumpsuit"
 	icon_state = "hos"
 	item_state = "r_suit"
 	item_color = "hosred"
@@ -137,7 +137,7 @@
 	siemens_coefficient = 0.8
 
 /obj/item/clothing/under/rank/head_of_security/turtleneck
-	name = "head of security's turtleneck"
+	name = "Star Vigil Commander's turtleneck"
 	icon_state = "hos_turtleneck"
 	item_color = "hos_turtleneck"
 	item_state = "hos_turtleneck"
@@ -152,7 +152,7 @@
 //Jensen cosplay gear
 /obj/item/clothing/under/rank/head_of_security/jensen
 	desc = "You never asked for anything that stylish."
-	name = "head of security's jumpsuit"
+	name = "Star Vigil Commander's jumpsuit"
 	icon_state = "jensen"
 	item_state = "jensen"
 	item_color = "jensen"

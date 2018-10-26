@@ -23,7 +23,7 @@
 		&& !jobban_isbanned(player, ROLE_TRAITOR) && !role_available_in_minutes(player, ROLE_TRAITOR) && !isloyal(player))
 
 			possible_traitors += player
-			for(var/job in list("Internal Affairs Agent", "Star Vigil Officer", "Star Vigil Sergeant", "Detective", "Head of Security", "Captain"))
+			for(var/job in list("Internal Affairs Agent", "Star Vigil Officer", "Star Vigil Sergeant", "Detective", "Star Vigil Commander", "Captain"))
 				if(player.mind.assigned_role == job)
 					possible_traitors -= player
 

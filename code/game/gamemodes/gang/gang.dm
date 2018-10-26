@@ -22,7 +22,7 @@
 	name = "gang war"
 	config_tag = "gang"
 	role_type = ROLE_REV
-	restricted_jobs = list("Star Vigil Officer", "Star Vigil Sergeant", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
+	restricted_jobs = list("Star Vigil Officer", "Star Vigil Sergeant", "Star Vigil Commander", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer")
 	required_players = 15
 	required_players_secret = 15
 	required_enemies = 2

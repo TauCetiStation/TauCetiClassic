@@ -516,7 +516,7 @@
 	breach_threshold = 20
 	slowdown = 1.4
 
-//HoS Rig
+//SVC Rig
 /obj/item/clothing/head/helmet/space/rig/security/hos
 	name = "advanced security hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."

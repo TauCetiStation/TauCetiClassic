@@ -56,7 +56,7 @@ var/list/assistant_occupations = list(
 var/list/command_positions = list(
 	"Captain",
 	"Head of Personnel",
-	"Head of Security",
+	"Star Vigil Commander",
 	"Chief Engineer",
 	"Research Director",
 	"Chief Medical Officer"
@@ -111,7 +111,7 @@ var/list/civilian_positions = list(
 )
 
 var/list/security_positions = list(
-	"Head of Security",
+	"Star Vigil Commander",
 	"Star Vigil Sergeant",
 	"Detective",
 	"Star Vigil Officer",

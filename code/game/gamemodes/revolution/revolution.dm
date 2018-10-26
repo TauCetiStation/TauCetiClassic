@@ -15,7 +15,7 @@
 	name = "revolution"
 	config_tag = "revolution"
 	role_type = ROLE_REV
-	restricted_jobs = list("Star Vigil Officer", "Star Vigil Sergeant", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Head of Security", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
+	restricted_jobs = list("Star Vigil Officer", "Star Vigil Sergeant", "Detective", "AI", "Cyborg","Captain", "Head of Personnel", "Star Vigil Commander", "Chief Engineer", "Research Director", "Chief Medical Officer", "Internal Affairs Agent")
 	required_players = 4
 	required_players_secret = 15
 	required_enemies = 3
@@ -36,7 +36,7 @@
 ///////////////////////////
 /datum/game_mode/revolution/announce()
 	to_chat(world, "<B>The current game mode is - Revolution!</B>")
-	to_chat(world, "<B>Some crewmembers are attempting to start a revolution!<BR>\nRevolutionaries - Kill the Captain, HoP, HoS, CE, RD and CMO. Convert other crewmembers (excluding the heads of staff, and Star Vigil Officer) to your cause by flashing them. Protect your leaders.<BR>\nPersonnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by beating them in the head).</B>")
+	to_chat(world, "<B>Some crewmembers are attempting to start a revolution!<BR>\nRevolutionaries - Kill the Captain, HoP, SVC, CE, RD and CMO. Convert other crewmembers (excluding the heads of staff, and Star Vigil Officer) to your cause by flashing them. Protect your leaders.<BR>\nPersonnel - Protect the heads of staff. Kill the leaders of the revolution, and brainwash the other revolutionaries (by beating them in the head).</B>")
 
 
 ///////////////////////////////////////////////////////////////////////////////
