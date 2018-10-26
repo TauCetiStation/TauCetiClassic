@@ -39,7 +39,7 @@
 	var/efficiency
 
 /obj/machinery/power/compressor/atom_init()
-	..()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/power_compressor(null)
 	component_parts += new /obj/item/weapon/stock_parts/manipulator(null)
@@ -147,7 +147,7 @@
 	var/productivity = 1
 
 /obj/machinery/power/turbine/atom_init()
-	..()
+	. = ..()
 	component_parts = list()
 	component_parts += new /obj/item/weapon/circuitboard/power_turbine(src)
 	component_parts += new /obj/item/weapon/stock_parts/capacitor(src)
@@ -291,7 +291,7 @@
 	var/id = 0
 
 /obj/machinery/computer/turbine_computer/atom_init()
-	. = ..()
+	..()
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/turbine_computer/atom_init_late()
