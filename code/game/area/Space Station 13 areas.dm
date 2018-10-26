@@ -412,7 +412,7 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "fsmaint"
 
 /area/maintenance/fsmaint2
-	name = "Chapel Maintenance"
+	name = "Star Vigil Maintance"
 	icon_state = "fsmaint"
 
 /area/maintenance/asmaint
@@ -463,6 +463,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/hallway/primary/central
 	name = "Central Primary Hallway"
+	icon_state = "hallC"
+
+/area/hallway/primary/bridgehall
+	name = "Bridge Primary Hallway"
 	icon_state = "hallC"
 
 /area/hallway/secondary/exit
@@ -525,6 +529,21 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/crew_quarters/male
 	name = "Male Dorm"
 
+/area/crew_quarters/dormone
+	name = "First Dorm Room"
+
+/area/crew_quarters/dormtwo
+	name = "Second Dorm Room"
+
+/area/crew_quarters/dormthree
+	name = "Third Dorm Room"
+
+/area/crew_quarters/dormfour
+	name = "Fourth Dorm Room"
+
+/area/crew_quarters/dormfive
+	name = "Fifth Dorm Room"
+
 /area/crew_quarters/female
 	name = "Female Dorm"
 
@@ -558,6 +577,10 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 
 /area/crew_quarters/bar
 	name = "Bar"
+	icon_state = "bar"
+
+/area/crew_quarters/theater
+	name = "Theater"
 	icon_state = "bar"
 
 
@@ -843,15 +866,19 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "sec_prison"
 
 /area/security/warden
-	name = "Warden"
+	name = "Sergeant"
 	icon_state = "Warden"
 
 /area/security/armoury
 	name = "Armory"
 	icon_state = "Warden"
 
+/area/security/secconfhall
+	name = "Security Conference Hall"
+	icon_state = "security"
+
 /area/security/hos
-	name = "Head of Security's Office"
+	name = "Commander Office"
 	icon_state = "sec_hos"
 
 /area/security/detectives_office

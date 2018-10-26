@@ -1,10 +1,10 @@
 "a" = (/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/area/holodeck/source_meetinghall)
 "b" = (/obj/structure/flora/pottedplant{icon_state = "plant-6"},/turf/simulated/floor/holofloor{icon_state = "wood"; dir = 4},/area/holodeck/source_meetinghall)
-"c" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet4-0"},/area/holodeck/source_meetinghall)
-"d" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet8-0"},/area/holodeck/source_meetinghall)
+"c" = (/turf/simulated/floor/holofloor{icon_state = "grimy"; dir = 2},/turf/simulated/floor/holofloor{dir = 2; icon_state = "siding4"},/area/holodeck/source_meetinghall)
+"d" = (/turf/simulated/floor/holofloor{icon_state = "carpet2-0"; dir = 2},/area/holodeck/source_meetinghall)
 "e" = (/turf/simulated/floor/holofloor{icon_state = "carpetsymbol"; dir = 6},/area/holodeck/source_meetinghall)
-"f" = (/turf/simulated/floor/holofloor{icon_state = "grimy"; dir = 2},/turf/simulated/floor/holofloor{icon_state = "siding1"; dir = 2},/area/holodeck/source_meetinghall)
-"g" = (/turf/simulated/floor/holofloor{icon_state = "rampbottom"; dir = 2},/area/holodeck/source_meetinghall)
+"f" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "carpet1-0"},/area/holodeck/source_meetinghall)
+"g" = (/turf/simulated/floor/holofloor{icon_state = "rampbottom"; dir = 8},/area/holodeck/source_meetinghall)
 "h" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet10-8"; dir = 4},/area/holodeck/source_meetinghall)
 "i" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet11-12"; dir = 4},/area/holodeck/source_meetinghall)
 "j" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet9-4"; dir = 4},/area/holodeck/source_meetinghall)
@@ -18,14 +18,14 @@
 "r" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{icon_state = "carpet5-1"; dir = 4},/area/holodeck/source_meetinghall)
 
 (1,1,1) = {"
-aaaaaaaaab
-aacdecdaaa
-aaaaaaaaaa
-fffffffffg
-epmmmmmhkl
-eqnnnnnikl
-kqnnnnnikl
-kqnnnnnikl
-krooooojkl
-kkkkkkkkkl
+kkkkeecaaa
+kpmmmhcaaa
+kqnnnicada
+kqnnnicafa
+kqnnnicaea
+kqnnnicada
+kqnnnicafa
+krooojcaaa
+kkkkkkcaaa
+llllllgaab
 "}

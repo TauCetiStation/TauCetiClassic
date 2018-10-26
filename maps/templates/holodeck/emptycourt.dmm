@@ -1,26 +1,32 @@
-"a" = (/turf/simulated/floor/holofloor{icon_state = "dark"},/area/holodeck/source_emptycourt)
-"b" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{dir = 5; icon_state = "vault"},/area/holodeck/source_emptycourt)
-"c" = (/turf/simulated/floor/holofloor{dir = 9; icon_state = "red"},/area/holodeck/source_emptycourt)
-"d" = (/turf/simulated/floor/holofloor{dir = 1; icon_state = "red"},/area/holodeck/source_emptycourt)
-"e" = (/turf/simulated/floor/holofloor{dir = 5; icon_state = "red"},/area/holodeck/source_emptycourt)
-"f" = (/turf/simulated/floor/holofloor{dir = 8; icon_state = "red"},/area/holodeck/source_emptycourt)
-"g" = (/turf/simulated/floor/holofloor,/area/holodeck/source_emptycourt)
-"h" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "red"},/area/holodeck/source_emptycourt)
-"i" = (/turf/simulated/floor/holofloor{dir = 8; icon_state = "green"},/area/holodeck/source_emptycourt)
-"j" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "green"},/area/holodeck/source_emptycourt)
-"k" = (/turf/simulated/floor/holofloor{dir = 10; icon_state = "green"},/area/holodeck/source_emptycourt)
-"l" = (/turf/simulated/floor/holofloor{dir = 2; icon_state = "green"},/area/holodeck/source_emptycourt)
-"m" = (/turf/simulated/floor/holofloor{dir = 6; icon_state = "green"},/area/holodeck/source_emptycourt)
+"b" = (/turf/simulated/floor/holofloor{icon_state = "dark"},/area/space)
+"c" = (/obj/structure/holostool,/turf/simulated/floor/holofloor{dir = 5; icon_state = "vault"},/area/space)
+"d" = (/turf/simulated/floor/holofloor{dir = 9; icon_state = "green"},/area/space)
+"e" = (/turf/simulated/floor/holofloor{dir = 1; icon_state = "green"},/area/space)
+"f" = (/turf/simulated/floor/holofloor{dir = 5; icon_state = "green"},/area/space)
+"g" = (/turf/simulated/floor/holofloor{dir = 9; icon_state = "red"},/area/space)
+"h" = (/turf/simulated/floor/holofloor{dir = 1; icon_state = "red"},/area/space)
+"i" = (/turf/simulated/floor/holofloor{dir = 5; icon_state = "red"},/area/space)
+"j" = (/turf/simulated/floor/holofloor{dir = 8; icon_state = "green"},/area/space)
+"k" = (/turf/simulated/floor/holofloor,/area/space)
+"l" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "green"},/area/space)
+"m" = (/turf/simulated/floor/holofloor{dir = 8; icon_state = "red"},/area/space)
+"n" = (/turf/simulated/floor/holofloor{dir = 4; icon_state = "red"},/area/space)
+"o" = (/turf/simulated/floor/holofloor{dir = 10; icon_state = "green"},/area/space)
+"p" = (/turf/simulated/floor/holofloor{dir = 2; icon_state = "green"},/area/space)
+"q" = (/turf/simulated/floor/holofloor{dir = 6; icon_state = "green"},/area/space)
+"r" = (/turf/simulated/floor/holofloor{dir = 10; icon_state = "red"},/area/space)
+"s" = (/turf/simulated/floor/holofloor{dir = 2; icon_state = "red"},/area/space)
+"t" = (/turf/simulated/floor/holofloor{dir = 6; icon_state = "red"},/area/space)
 
 (1,1,1) = {"
-abbcddddde
-abbfgggggh
-aaafgggggh
-abbfgggggh
-abbfgggggh
-abbigggggj
-abbigggggj
-aaaigggggj
-abbigggggj
-abbklllllm
+bbbbbbbbbb
+ccbccccbcc
+ccbccccbcc
+deeefghhhi
+jkkklmkkkn
+jkkklmkkkn
+jkkklmkkkn
+jkkklmkkkn
+jkkklmkkkn
+opppqrssst
 "}
