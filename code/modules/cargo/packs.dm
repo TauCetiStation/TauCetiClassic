@@ -641,7 +641,7 @@ datum/supply_pack/New()
 
 /datum/supply_pack/mecha_ripley
 	name = "Circuit Crate (\"Ripley\" APLU)"
-	contains = list(/obj/item/weapon/book/manual/ripley_build_and_repair,
+	contains = list(/obj/item/weapon/book/manual/wiki/guide_to_exosuits,
 					/obj/item/weapon/circuitboard/mecha/ripley/main, //TEMPORARY due to lack of circuitboard printer
 					/obj/item/weapon/circuitboard/mecha/ripley/peripherals) //TEMPORARY due to lack of circuitboard printer
 	cost = 3000
@@ -979,6 +979,13 @@ datum/supply_pack/New()
 	cost = 5000
 	crate_type = /obj/structure/closet/critter/corgi
 	crate_name = "Corgi crate"
+	group = "Hydroponics"
+
+/datum/supply_pack/shiba
+	name = "Shiba crate"
+	cost = 4000
+	crate_type = /obj/structure/closet/critter/shiba
+	crate_name = "Shiba crate"
 	group = "Hydroponics"
 
 /datum/supply_pack/cat

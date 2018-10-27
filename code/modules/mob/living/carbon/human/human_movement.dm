@@ -1,5 +1,6 @@
 /mob/living/carbon/human/movement_delay()
-
+	if(iszombie(src))
+		return src.zombie_movement_delay()
 	if(mind && mind.changeling && mind.changeling.strained_muscles)
 		if(!has_gravity(src))
 			return -3   // speed boost in space.

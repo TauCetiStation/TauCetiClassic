@@ -625,7 +625,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 		"atmos-tech",
 		"scientist",
 		"xenobiologist",
-		"xenoarcheologist",
+		"xenoarchaeologist",
 		"roboticist",
 		"geneticist",
 		"janitor",
@@ -879,7 +879,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/centcom(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/white(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(M), slot_l_ear)
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/centcom/officer(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/centcomofficer(M), slot_head)
 
 			var/obj/item/device/pda/heads/pda = new(M)
 			pda.owner = M.real_name
@@ -905,7 +905,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/centcom(M), slot_shoes)
 			M.equip_to_slot_or_del(new /obj/item/clothing/gloves/white(M), slot_gloves)
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/heads/captain(M), slot_l_ear)
-			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/centcom/captain(M), slot_head)
+			M.equip_to_slot_or_del(new /obj/item/clothing/head/beret/centcomcaptain(M), slot_head)
 
 			var/obj/item/device/pda/heads/pda = new(M)
 			pda.owner = M.real_name
@@ -1359,7 +1359,7 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 			W.access = list(access_tox, access_tox_storage, access_research, access_xenoarch)
 			W.registered_name = M.real_name
 			M.equip_to_slot_or_del(W, slot_wear_id)
-		if("xenoarcheologist")
+		if("xenoarchaeologist")
 			M.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(M), slot_l_ear)
 			M.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist(M), slot_w_uniform)
 			M.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(M), slot_shoes)
@@ -1367,12 +1367,12 @@ But you can call procs that are of type /mob/living/carbon/human/proc/ for that 
 
 			var/obj/item/device/pda/science/pda = new(M)
 			pda.owner = M.real_name
-			pda.ownjob = "Xenoarcheologist"
+			pda.ownjob = "Xenoarchaeologist"
 			pda.name = "PDA-[M.real_name] ([pda.ownjob])"
 			M.equip_to_slot_or_del(pda, slot_belt)
 
 			var/obj/item/weapon/card/id/sci/W = new(M)
-			W.assignment = "Xenoarcheologist"
+			W.assignment = "Xenoarchaeologist"
 			W.name = "[M.real_name]'s ID Card ([W.assignment])"
 			W.access = list(access_research, access_xenoarch)
 			W.registered_name = M.real_name

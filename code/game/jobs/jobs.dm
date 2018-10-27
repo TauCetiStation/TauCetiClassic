@@ -29,8 +29,11 @@ var/const/ROBOTICIST		=(1<<8)
 var/const/XENOBIOLOGIST		=(1<<9)
 var/const/PARAMEDIC			=(1<<10)
 var/const/XENOARCHAEOLOGIST	=(1<<11)
+<<<<<<< HEAD
 var/const/INTERN			=(1<<12)
 var/const/RESEARCHASSISTANT	=(1<<13)
+=======
+>>>>>>> upstream/master
 
 
 var/const/CIVILIAN			=(1<<2)

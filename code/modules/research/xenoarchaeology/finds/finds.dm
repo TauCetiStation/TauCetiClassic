@@ -91,7 +91,7 @@
 	if(new_item_type)
 		find_type = new_item_type
 	else
-		find_type = rand(1,35)	//update this when you add new find types
+		find_type = rand(1,36)	//update this when you add new find types
 
 	var/item_type = "object"
 	icon_state = "unknown[rand(1,4)]"
@@ -115,8 +115,9 @@
 	switch(find_type)
 		if(1)
 			item_type = "bowl"
-			if(prob(33))
+			if(prob(50))
 				new_item = new /obj/item/weapon/reagent_containers/glass/replenishing(src.loc)
+				additional_desc = "You feel as if [src] is slowly filling up..."
 			else
 				new_item = new /obj/item/weapon/reagent_containers/glass/beaker(src.loc)
 			new_item.icon = 'icons/obj/xenoarchaeology.dmi'
@@ -126,8 +127,9 @@
 				additional_desc = "There appear to be [pick("dark","faintly glowing","pungent","bright")] [pick("red","purple","green","blue")] stains inside."
 		if(2)
 			item_type = "urn"
-			if(prob(33))
+			if(prob(50))
 				new_item = new /obj/item/weapon/reagent_containers/glass/replenishing(src.loc)
+				additional_desc = "You feel as if [src] is slowly filling up..."
 			else
 				new_item = new /obj/item/weapon/reagent_containers/glass/beaker(src.loc)
 			new_item.icon = 'icons/obj/xenoarchaeology.dmi'
@@ -153,7 +155,7 @@
 			additional_desc = "It depicts a [pick("small","ferocious","wild","pleasing","hulking")] \
 			[pick("alien figure","rodent-like creature","reptilian alien","primate","unidentifiable object")] \
 			[pick("performing unspeakable acts","posing heroically","in a fetal position","cheering","sobbing","making a plaintive gesture","making a rude gesture")]."
-			if(prob(25))
+			if(prob(50))
 				new_item = new /obj/item/weapon/vampiric(src.loc)
 		if(5)
 			item_type = "instrument"
@@ -207,7 +209,7 @@
 			new_item.icon_state = "box"
 			var/obj/item/weapon/storage/box/new_box = new_item
 			new_box.max_w_class = pick(1,2,2,3,3,3,4,4)
-			new_box.max_combined_w_class = rand(new_box.max_w_class, new_box.max_w_class * 10)
+			new_box.max_storage_space = rand(new_box.max_w_class, new_box.max_w_class * 10)
 			if(prob(30))
 				apply_image_decorations = 1
 		if(12)
@@ -267,7 +269,7 @@
 				icon_state = "changerock"
 			else
 				item_type = "smooth red crystal"
-				icon_state = "ore"
+				icon_state = "changerock"
 			additional_desc = pick("It shines faintly as it catches the light.","It appears to have a faint inner glow.","It seems to draw you inward as you look it at.","Something twinkles faintly as you look at it.","It's mesmerizing to behold.")
 
 			apply_material_decorations = 0
@@ -454,8 +456,8 @@
 			//robot remains
 			apply_prefix = 0
 			item_type = "[pick("mechanical","robotic","cyborg")] [pick("remains","chassis","debris")]"
-			icon = 'icons/effects/blood.dmi'
-			icon_state = "remainsrobot"
+			icon = 'icons/mob/robots.dmi'
+			icon_state = "gib[rand(1,6)]"
 			additional_desc = pick("Almost mistakeable for the remains of a modern cyborg.",\
 			"They are barely recognisable as anything other than a pile of waste metals.",\
 			"It looks like the battered remains of an ancient robot chassis.",\
@@ -487,6 +489,13 @@
 				new_item = new /obj/item/clothing/mask/gas/poltergeist(src.loc)
 			else
 				new_item = new /obj/item/clothing/mask/gas(src.loc)
+		if(36)
+			apply_prefix = 0
+			item_type = "strange device"
+			new_item = new /obj/item/weapon/strangetool(src.loc)
+			additional_desc = "This device is made of metal, emits a strange purple formation of unknown origin."
+			apply_image_decorations = 0
+			apply_material_decorations = 0
 	var/decorations = ""
 	if(apply_material_decorations)
 		source_material = pick("cordite","quadrinium","steel","titanium","aluminium","ferritic-alloy","plasteel","duranium")
