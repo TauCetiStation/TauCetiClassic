@@ -38,7 +38,7 @@
 	max_w_class = ITEM_SIZE_NORMAL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	w_class = ITEM_SIZE_LARGE //Bigger than a book because physics
-	can_hold = list("/obj/item/weapon/book", "/obj/item/weapon/storage/bible", "/obj/item/weapon/book/tome", "/obj/item/weapon/spellbook")
+	can_hold = list("/obj/item/weapon/book", "/obj/item/weapon/storage/bible", "/obj/item/weapon/spellbook")
 
 // -----------------------------
 //          Trash bag
