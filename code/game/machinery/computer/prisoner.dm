@@ -113,9 +113,9 @@
 			var/mob/living/carbon/R = I.imp_in
 			message_admins("\blue [key_name_admin(usr)] (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[usr.x];Y=[usr.y];Z=[usr.z]'>JMP</a>) detonated [R.name]! (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[R.x];Y=[R.y];Z=[R.z]'>JMP</a>)")
 			log_game("\blue [key_name_admin(usr)] detonated [R.name]!")
-			playsound(src.loc, 'sound/items/countdown.ogg', 75, 1, -3)
+			playsound(R, 'sound/items/countdown.ogg', 75, 1, -3)
 			sleep(37)
-			playsound(src.loc, 'sound/items/Explosion_Small3.ogg', 75, 1, -3)
+			playsound(R, 'sound/items/Explosion_Small3.ogg', 75, 1, -3)
 			R.gib()
 	else if(href_list["lock"])
 		if(src.allowed(usr))
