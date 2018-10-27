@@ -72993,6 +72993,24 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
+"job" = (
+/obj/effect/landmark/start{
+	name = "Security Cadet"
+	},
+/turf/simulated/floor,
+/area/security/lobby)
+"jpb" = (
+/obj/effect/landmark/start{
+	name = "Lawyer"
+	},
+/turf/simulated/floor/wood,
+/area/security/vacantoffice)
+"jqb" = (
+/obj/effect/landmark/start{
+	name = "Private Eye"
+	},
+/turf/simulated/floor/wood,
+/area/security/vacantoffice)
 "jrb" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
@@ -73189,6 +73207,12 @@
 	icon_state = "bluefull"
 	},
 /area/medical/reception)
+"jRb" = (
+/obj/effect/landmark/start{
+	name = "Paranormal Investigator"
+	},
+/turf/simulated/floor/carpet,
+/area/chapel/main)
 "jSb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -73246,6 +73270,14 @@
 	icon_state = "freezerfloor2"
 	},
 /area/crew_quarters/captain)
+"jXb" = (
+/obj/effect/landmark/start{
+	name = "Waiter"
+	},
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/crew_quarters/bar)
 "jYb" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
@@ -73347,12 +73379,27 @@
 	},
 /turf/simulated/floor/plating,
 /area/hallway/secondary/entry)
+"kgb" = (
+/obj/effect/landmark/start{
+	name = "Research Assistant"
+	},
+/turf/simulated/floor,
+/area/hallway/primary/starboard)
 "khb" = (
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "brown"
 	},
 /area/quartermaster/office)
+"kib" = (
+/obj/effect/landmark/start{
+	name = "Research Assistant"
+	},
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "purplecorner"
+	},
+/area/hallway/primary/starboard)
 "kjb" = (
 /obj/structure/stool,
 /obj/effect/decal/remains/human,
@@ -73477,6 +73524,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/asmaint)
+"krb" = (
+/obj/effect/landmark/start{
+	name = "Medical Intern"
+	},
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "whitegreencorner"
+	},
+/area/medical/reception)
 "ksb" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Teleporter Maintenance";
@@ -73690,6 +73746,15 @@
 	icon_state = "platingdmg1"
 	},
 /area/maintenance/asmaint)
+"kNb" = (
+/obj/effect/landmark/start{
+	name = "Medical Intern"
+	},
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitegreencorner"
+	},
+/area/medical/reception)
 "kOb" = (
 /obj/structure/sign/warning/securearea{
 	pixel_y = 32
@@ -73700,6 +73765,21 @@
 	icon_state = "bluecorner"
 	},
 /area/hallway/primary/central)
+"kPb" = (
+/obj/effect/landmark/start{
+	name = "Technical Assistant"
+	},
+/turf/simulated/floor{
+	dir = 2;
+	icon_state = "yellowcorner"
+	},
+/area/hallway/primary/aft)
+"kQb" = (
+/obj/effect/landmark/start{
+	name = "Technical Assistant"
+	},
+/turf/simulated/floor,
+/area/hallway/primary/aft)
 "kRb" = (
 /obj/structure/sign/departments/medbay/alt,
 /turf/simulated/wall,
@@ -96850,7 +96930,7 @@ bzi
 bEn
 bzi
 bLb
-bzi
+jXb
 bOO
 bzi
 bUO
@@ -105068,11 +105148,11 @@ bgE
 aWW
 biP
 aZw
-aZw
+jpb
 aZw
 bnA
 bxh
-aZw
+jqb
 aVt
 bEL
 aSP
@@ -105326,11 +105406,11 @@ aWW
 biW
 aZw
 bop
-aZw
+jpb
 bsZ
 bxv
 aZw
-aZw
+jqb
 bEO
 aSP
 aUu
@@ -110943,7 +111023,7 @@ ajX
 amQ
 alc
 aqy
-amo
+job
 amU
 aqT
 anU
@@ -111029,7 +111109,7 @@ czu
 cki
 bXz
 bYq
-clt
+kQb
 cHn
 bIZ
 cat
@@ -111457,7 +111537,7 @@ ajX
 amQ
 alc
 aqy
-amo
+job
 amo
 amo
 amo
@@ -111541,7 +111621,7 @@ cAH
 cFL
 bVG
 clt
-cos
+kPb
 cGJ
 cHa
 bZu
@@ -117930,7 +118010,7 @@ bhQ
 baG
 bjo
 bjo
-bjo
+krb
 bjo
 bro
 kbb
@@ -118181,7 +118261,7 @@ bjy
 bjy
 bjy
 bLH
-bcb
+kgb
 bbG
 bhQ
 jCb
@@ -118952,7 +119032,7 @@ awu
 awS
 bIs
 bLM
-bNd
+kib
 bic
 bhQ
 bVg
@@ -120500,7 +120580,7 @@ bhQ
 baG
 bjp
 bjp
-bjp
+kNb
 bjp
 ccr
 kdb
@@ -127174,7 +127254,7 @@ aVp
 aVp
 bCN
 bHm
-aVp
+jRb
 bMd
 byZ
 bPV
