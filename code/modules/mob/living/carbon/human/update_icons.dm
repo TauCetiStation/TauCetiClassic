@@ -778,7 +778,21 @@ Please contact me on #coderbus IRC. ~Carn x
 		standing.color = belt.color
 		overlays_standing[BELT_LAYER] = standing
 	apply_overlay(BELT_LAYER)
+	if(belt && istype(belt, /obj/item/weapon/storage/bag/bookbag))
+		belt.screen_loc = ui_belt
+		if(client && hud_used)
+			client.screen += belt
 
+		var/t_state = belt.item_state
+		if(!t_state)	t_state = belt.icon_state
+		var/image/standing
+		if(!belt:icon_custom || belt.icon_override || species.sprite_sheets["belt"])
+			standing = image("icon"=((belt.icon_override) ? belt.icon_override : (species.sprite_sheets["belt"] ? species.sprite_sheets["belt"] : 'icons/mob/belt.dmi')), "icon_state"="[t_state]", "layer"=-COLLAR_LAYER)
+		else
+			standing = image("icon"=belt:icon_custom, "icon_state"="[belt.icon_state]_mob", "layer"=-COLLAR_LAYER)
+		standing.color = belt.color
+		overlays_standing[COLLAR_LAYER] = standing
+		apply_overlay(COLLAR_LAYER)
 
 /mob/living/carbon/human/update_inv_wear_suit()
 	remove_overlay(SUIT_LAYER)
