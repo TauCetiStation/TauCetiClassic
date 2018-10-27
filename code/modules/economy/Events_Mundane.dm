@@ -152,7 +152,7 @@
 	"[affected_dest.name] clerk first person able to pronounce '@*$%!'.",\
 	"[affected_dest.name] delis serving boiled paperback dictionaries, 'Adjectives chewy' customers declare.",\
 	"[affected_dest.name] weather deemed 'boring'; meteors and rad storms to be imported.",\
-	"Most [affected_dest.name] security officers prefer cream over sugar.",\
+	"Most [affected_dest.name] Star Vigil Officers prefer cream over sugar.",\
 	"Palindrome speakers conference in [affected_dest.name]; 'Wow!' says Otto.",\
 	"Question mark worshipped as deity by ancient [affected_dest.name] dwellers.",\
 	"Spilled milk causes whole [affected_dest.name] populace to cry.",\

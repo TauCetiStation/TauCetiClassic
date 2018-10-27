@@ -1,5 +1,5 @@
 /datum/job/hos
-	title = "Head of Security"
+	title = "Star Vigil Commander"
 	flag = HOS
 	department_flag = ENGSEC
 	faction = "Station"
@@ -50,13 +50,13 @@
 
 
 /datum/job/warden
-	title = "Warden"
+	title = "Star Vigil Sergeant"
 	flag = WARDEN
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of security"
+	supervisors = "the Star Vigil Commander"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_maint_tunnels)
@@ -102,7 +102,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of security"
+	supervisors = "the Star Vigil Commander"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_security, access_sec_doors, access_detective, access_maint_tunnels, access_court)
@@ -139,13 +139,13 @@
 
 
 /datum/job/officer
-	title = "Security Officer"
+	title = "Star Vigil Officer"
 	flag = OFFICER
 	department_flag = ENGSEC
 	faction = "Station"
 	total_positions = 5
 	spawn_positions = 5
-	supervisors = "the head of security"
+	supervisors = "the Star Vigil Commander"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_security, access_sec_doors, access_brig, access_court, access_maint_tunnels)
@@ -186,7 +186,7 @@
 	faction = "Station"
 	total_positions = 1
 	spawn_positions = 1
-	supervisors = "the head of security"
+	supervisors = "the Star Vigil Commander"
 	selection_color = "#ffeeee"
 	idtype = /obj/item/weapon/card/id/sec
 	access = list(access_sec_doors, access_forensics_lockers, access_morgue, access_maint_tunnels, access_court)

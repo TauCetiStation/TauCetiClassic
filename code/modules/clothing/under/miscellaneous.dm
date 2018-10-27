@@ -528,8 +528,8 @@
 	item_color = "qm_f"
 
 /obj/item/clothing/under/rank/head_of_security_fem
-	desc = "It's a jumpsuit worn by those few with the dedication to achieve the position of \"Head of Security\". It has additional armor to protect the wearer."
-	name = "head of security's dress"
+	desc = "It's a jumpsuit worn by those few with the dedication to achieve the position of \"Star Vigil Commander\". It has additional armor to protect the wearer."
+	name = "Star Vigil Commander's dress"
 	icon_state = "hos_f"
 	item_state = "r_suit"
 	item_color = "hos_f"
@@ -537,7 +537,7 @@
 	siemens_coefficient = 0.8
 
 /obj/item/clothing/under/rank/warden_fem
-	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for more robust protection. It has the word \"Warden\" written on the shoulders."
+	desc = "It's made of a slightly sturdier material than standard jumpsuits, to allow for more robust protection. It has the words \"Star Vigil Sergeant\" written on the shoulders."
 	name = "warden's dress"
 	icon_state = "warden_f"
 	item_state = "r_suit"

@@ -214,19 +214,19 @@
 
 
 /obj/item/device/modkit/sec/hos
-	name = "HoS hardsuit modification kit"
+	name = "SVC hardsuit modification kit"
 	forbidden_type = list()
 
 /obj/item/device/modkit/sec/hos/skrell
-	name = "Skrellian HoS hardsuit modification kit"
+	name = "Skrellian SVC hardsuit modification kit"
 	target_species = SKRELL
 
 /obj/item/device/modkit/sec/hos/tajaran
-	name = "Tajaran HoS hardsuit modification kit"
+	name = "Tajaran SVC hardsuit modification kit"
 	target_species = TAJARAN
 
 /obj/item/device/modkit/sec/hos/unathi
-	name = "Unathi HoS hardsuit modification kit"
+	name = "Unathi SVC hardsuit modification kit"
 	target_species = UNATHI
 
 

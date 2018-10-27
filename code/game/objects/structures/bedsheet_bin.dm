@@ -90,7 +90,7 @@ LINEN BINS
 	item_color = "medical"
 
 /obj/item/weapon/bedsheet/hos
-	name = "head of security's bedsheet"
+	name = "Star Vigil Commander's bedsheet"
 	desc = "It is decorated with a shield emblem.  While crime doesn't sleep, you do, but you are still THE LAW!"
 	icon_state = "sheethos"
 	item_color = "hosred"

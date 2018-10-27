@@ -150,7 +150,7 @@
 	grid = TRUE
 
 /obj/item/device/radio/headset/heads/hos
-	name = "head of security's headset"
+	name = "Star Vigil Commander's headset"
 	desc = "The headset of the man who protects your worthless lifes. To access the security channel, use :s. For command, use :c."
 	icon = 'icons/obj/radio.dmi'
 	icon_state = "hos_headset"
