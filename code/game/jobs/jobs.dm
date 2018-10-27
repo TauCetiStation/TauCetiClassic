@@ -15,7 +15,6 @@ var/const/FORENSIC			=(1<<10)
 var/const/CADET             =(1<<11)
 var/const/TECHNICASSISTANT	=(1<<12)
 
-
 var/const/MEDSCI			=(1<<1)
 
 var/const/RD				=(1<<0)
@@ -29,10 +28,9 @@ var/const/PSYCHIATRIST		=(1<<7)
 var/const/ROBOTICIST		=(1<<8)
 var/const/XENOBIOLOGIST		=(1<<9)
 var/const/PARAMEDIC			=(1<<10)
-var/const/XENOARCHEOLOGIST	=(1<<11)
+var/const/XENOARCHAEOLOGIST	=(1<<11)
 var/const/INTERN			=(1<<12)
 var/const/RESEARCHASSISTANT	=(1<<13)
-
 
 
 var/const/CIVILIAN			=(1<<2)
