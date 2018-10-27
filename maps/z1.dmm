@@ -24409,16 +24409,20 @@
 	},
 /area/storage/primary)
 "aQU" = (
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	name = "Station Intercom (General)";
-	pixel_y = 20
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "shutter0";
+	id = "Bar";
+	name = "Bar Shutters";
+	opacity = 0
 	},
+/obj/item/weapon/storage/box/trick_o_treat,
 /turf/simulated/floor{
-	dir = 1;
-	icon_state = "neutral"
+	icon_state = "grimy"
 	},
-/area/storage/primary)
+/area/crew_quarters/bar)
 "aQV" = (
 /obj/machinery/vending/tool,
 /turf/simulated/floor{
@@ -25167,10 +25171,12 @@
 	},
 /area/chapel/main)
 "aSB" = (
-/obj/item/device/paicard,
-/obj/structure/table/woodentable/poker,
-/turf/simulated/floor,
-/area/crew_quarters/playroom)
+/obj/machinery/vending/spooky,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "warndark"
+	},
+/area/hallway/secondary/entry)
 "aSC" = (
 /turf/simulated/floor{
 	dir = 8;
@@ -27983,12 +27989,16 @@
 	},
 /area/hallway/secondary/entry)
 "aYQ" = (
-/obj/machinery/vending/cigarette,
-/turf/simulated/floor{
-	dir = 9;
-	icon_state = "warndark"
+/obj/structure/table/woodentable,
+/obj/item/weapon/kitchen/utensil/spoon,
+/obj/item/weapon/kitchen/utensil/fork{
+	pixel_x = 8
 	},
-/area/hallway/secondary/entry)
+/obj/item/weapon/storage/box/trick_o_treat,
+/turf/simulated/floor{
+	icon_state = "dark"
+	},
+/area/crew_quarters/bar)
 "aYR" = (
 /turf/simulated/floor{
 	icon_state = "Stairs_wide"
@@ -31726,9 +31736,17 @@
 	},
 /area/crew_quarters/locker)
 "bgN" = (
-/obj/structure/table,
-/turf/simulated/floor,
-/area/crew_quarters/locker)
+/obj/item/device/radio/intercom{
+	broadcasting = 0;
+	name = "Station Intercom (General)";
+	pixel_y = 20
+	},
+/obj/machinery/vending/spooky,
+/turf/simulated/floor{
+	dir = 1;
+	icon_state = "neutral"
+	},
+/area/storage/primary)
 "bgO" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
@@ -43806,15 +43824,11 @@
 /turf/simulated/floor/carpet,
 /area/medical/patients_rooms)
 "bHU" = (
-/obj/structure/table/woodentable,
-/obj/item/weapon/kitchen/utensil/spoon,
-/obj/item/weapon/kitchen/utensil/fork{
-	pixel_x = 8
-	},
-/turf/simulated/floor{
-	icon_state = "dark"
-	},
-/area/crew_quarters/bar)
+/obj/item/device/paicard,
+/obj/structure/table/woodentable/poker,
+/obj/item/weapon/storage/box/trick_o_treat,
+/turf/simulated/floor,
+/area/crew_quarters/playroom)
 "bHV" = (
 /obj/machinery/computer/security/telescreen/entertainment{
 	pixel_x = 32
@@ -46123,19 +46137,10 @@
 	},
 /area/crew_quarters/bar)
 "bMZ" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "shutter0";
-	id = "Bar";
-	name = "Bar Shutters";
-	opacity = 0
-	},
-/turf/simulated/floor{
-	icon_state = "grimy"
-	},
-/area/crew_quarters/bar)
+/obj/structure/table,
+/obj/item/weapon/storage/box/trick_o_treat,
+/turf/simulated/floor,
+/area/crew_quarters/locker)
 "bNa" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/maintenance{
@@ -72993,6 +72998,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
+"job" = (
+/mob/living/simple_animal/hostile/skellington,
+/turf/simulated/floor/plating,
+/area/maintenance/asmaint)
 "jrb" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
@@ -96066,7 +96075,7 @@ aGy
 aGy
 aaa
 aEb
-aYQ
+aSB
 bbt
 bdC
 aEL
@@ -96079,7 +96088,7 @@ bzf
 aGn
 bHJ
 bKU
-bMZ
+aQU
 bOL
 bRB
 aGn
@@ -97362,7 +97371,7 @@ aGn
 bwd
 bzi
 bEq
-bHU
+aYQ
 bLc
 bzi
 bEl
@@ -101458,7 +101467,7 @@ hpb
 hpb
 hpb
 aFL
-aQU
+bgN
 aJk
 aJk
 aVo
@@ -103001,7 +103010,7 @@ aNp
 aOz
 aQe
 ake
-aSB
+bHU
 aTU
 aVv
 aWY
@@ -105591,7 +105600,7 @@ aZw
 aYf
 aSP
 beJ
-bgN
+bMZ
 brx
 baq
 aUs
@@ -125402,7 +125411,7 @@ jFb
 cak
 lvb
 mlb
-cak
+job
 mVb
 nWb
 mub

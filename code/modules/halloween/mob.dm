@@ -294,3 +294,26 @@
 	if(prob(55))
 		visible_message("<b>[src]</b> blows apart!")
 		new /obj/effect/gibspawner/generic(src.loc)
+
+/mob/living/simple_animal/hostile/skellington
+	name = "skellington"
+	desc = "A skeleton, held together by scraps of skin and muscle. It sppears to be feral."
+	icon = 'code/modules/halloween/halloween.dmi'
+	icon_state = "skellington"
+	melee_damage_lower = 2
+	melee_damage_upper = 5
+	attacktext = "punches"
+	maxHealth = 50
+	health = 50
+	min_oxy = 0
+	max_oxy = 0
+	min_tox = 0
+	max_tox = 0
+	min_co2 = 0
+	max_co2 = 0
+	min_n2 = 0
+	max_n2 = 0
+
+/mob/living/simple_animal/hostile/skellington/death()
+	..()
+	qdel(src)
