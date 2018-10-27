@@ -280,3 +280,36 @@
 	H.equip_to_slot_or_del(new /obj/item/device/pda/medical(H), slot_belt)
 
 	return TRUE
+
+
+
+/datum/job/intern
+	title = "Medical Intern"
+	flag = INTERN
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "the chief medical officer"
+	selection_color = "#ffeef0"
+	idtype = /obj/item/weapon/card/id/med
+	access = list(access_medical)
+	minimal_player_ingame_minutes = 300
+
+/datum/job/intern/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)	return 0
+	switch(H.backbag)
+		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), slot_back)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
+
+	if(visualsOnly)
+		return
+
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_med(H), slot_l_ear)
+	H.equip_to_slot_or_del(new /obj/item/device/pda, slot_belt)
+
+
+	return TRUE

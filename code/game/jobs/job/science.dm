@@ -177,3 +177,36 @@
 	H.equip_to_slot_or_del(new /obj/item/device/pda/roboticist(H), slot_belt)
 
 	return TRUE
+
+
+/datum/job/research_assistant
+	title = "Research Assistant"
+	flag = RESEARCHASSISTANT
+	department_flag = MEDSCI
+	faction = "Station"
+	total_positions = 2
+	spawn_positions = 2
+	supervisors = "research director"
+	selection_color = "#ffeeff"
+	idtype = /obj/item/weapon/card/id/sci
+	access = list(access_research)
+	minimal_player_ingame_minutes = 400
+
+/datum/job/research_assistant/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+	if(!H)	return 0
+	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist_new(H), slot_w_uniform)
+	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
+
+	if(visualsOnly)
+		return
+
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sci(H), slot_l_ear)
+	H.equip_to_slot_or_del(new /obj/item/device/pda, slot_belt)
+
+	switch(H.backbag)
+		if(1) H.equip_to_slot_or_del(new /obj/item/weapon/storage/box/survival(H), slot_r_hand)
+		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/backpack_tox(H), slot_back)
+		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/tox(H), slot_back)
+		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
+
+	return TRUE
