@@ -8,9 +8,7 @@
 	var/list/hud_list[9]
 	var/list/speech_synthesizer_langs = list()	//which languages can be vocalized by the speech synthesizer
 	var/obj/item/device/pda/silicon/pda = null
-
-
-
+	var/health_threshold_dead = -100 //replacement for config.health_threshold_dead
 
 
 

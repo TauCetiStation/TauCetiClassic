@@ -306,7 +306,7 @@
 		return
 
 	if(!module)
-		module = new /obj/item/weapon/robot_module/drone(src)
+		module = new /obj/item/weapon/robot_module/maintdrone(src)
 
 	var/dat = "<HEAD><TITLE>Drone modules</TITLE></HEAD><BODY>\n"
 	dat += {"
@@ -351,35 +351,3 @@
 	dat += resources
 
 	src << browse(entity_ja(dat), "window=robotmod")
-
-//Putting the decompiler here to avoid doing list checks every tick.
-/mob/living/silicon/robot/drone/use_power()
-
-	..()
-	if(!src.has_power || !decompiler)
-		return
-
-	//The decompiler replenishes drone stores from hoovered-up junk each tick.
-	for(var/type in decompiler.stored_comms)
-		if(decompiler.stored_comms[type] > 0)
-			var/obj/item/stack/sheet/stack
-			switch(type)
-				if("metal")
-					if(!stack_metal)
-						stack_metal = new (module, 1)
-					stack = stack_metal
-				if("glass")
-					if(!stack_glass)
-						stack_glass = new (module, 1)
-					stack = stack_glass
-				if("wood")
-					if(!stack_wood)
-						stack_wood = new (module, 1)
-					stack = stack_wood
-				if("plastic")
-					if(!stack_plastic)
-						stack_plastic = new (module, 1)
-					stack = stack_plastic
-
-			stack.add(1)
-			decompiler.stored_comms[type]--;
