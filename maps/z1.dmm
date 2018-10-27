@@ -76057,7 +76057,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/mob/living/simple_animal/dog/german_shepherd/columbo,
+/mob/living/simple_animal/dog/german_shepherd/muhtar,
 /turf/simulated/floor/carpet,
 /area/security/detectives_office)
 "ppb" = (

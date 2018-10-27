@@ -3,7 +3,7 @@
 //
 //TO DO:
 //*Commanded dogs from Bay
-//*Allow Lt. Columbo find all the crooks!(Beepsky mechanics)
+//*Allow Muhtar find all the crooks!(Beepsky mechanics)
 //*Give your dog junk food - there will be consequences
 //*Eating many food should make them sleepy. Well, pugs are always sleepy. Theres should be a sleeping mechanics
 //
@@ -380,20 +380,22 @@
 	icon_dead = "german_shepherd_dead"
 	strong_dog = 1	//If TRUE then dog will be defending itself when delt damage
 
-/mob/living/simple_animal/dog/german_shepherd/columbo
-	name = "Lt. Columbo"
-	real_name = "Columbo"
+/mob/living/simple_animal/dog/german_shepherd/muhtar
+	name = "Muhtar"
+	real_name = "Muhtar"
 	desc = "A dog trained to listen and obey its owner commands. This one looks about three days from retirement."
 	melee_damage_lower = 10
 	melee_damage_upper = 30
+	health = 110
+	maxHealth = 110
 	speak_chance = 5
-	icon_state = "columbo"
-	icon_living = "columbo"
-	icon_dead = "columbo_dead"
+	icon_state = "muhtar"
+	icon_living = "muhtar"
+	icon_dead = "muhtar_dead"
 	will_play = 0//He's only about working. What a dog.
 
 /*
-	Lt. Columbo will find all the crooks!
+	Muhtar will find all the crooks!
 	var/oldtarget_name = 0
 	var/last_found = 0
 
@@ -401,7 +403,7 @@
 	var/check_records = TRUE
 	var/check_weapons = TRUE
 
-/mob/living/simple_animal/dog/german_shepherd/columbo/Life()
+/mob/living/simple_animal/dog/german_shepherd/muhtar/Life()
 	..()
 	if(prob(70))
 		for(var/mob/living/L in view(7, src)) //Let's find us a criminal
@@ -423,7 +425,7 @@
 				src.emote("me",1,"[src.name] barks at [oldtarget_name]! He is a criminal!")
 				src.last_found = world.time
 
-/mob/living/simple_animal/dog/german_shepherd/columbo/assess_perp(mob/living/carbon/human/H)
+/mob/living/simple_animal/dog/german_shepherd/muhtar/assess_perp(mob/living/carbon/human/H)
 	if(!H || !istype(H))
 		return FALSE
 
@@ -440,4 +442,6 @@
 	icon_state = "tamaskan"
 	icon_living = "tamaskan"
 	icon_dead = "tamaskan_dead"
+	health = 90
+	maxHealth = 90
 	strong_dog = 1	//If TRUE then dog will be defending itself when delt damage
