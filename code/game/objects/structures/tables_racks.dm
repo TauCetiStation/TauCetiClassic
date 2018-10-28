@@ -778,21 +778,11 @@
 		return 1
 	if(istype(mover) && mover.checkpass(PASSTABLE))
 		return 1
+	if(locate(/obj/structure/rack) in get_turf(mover))
+		return 1
 	else
 		return 0
 
-/obj/structure/rack/MouseDrop_T(obj/O, mob/user)
-	if ((!( istype(O, /obj/item/weapon) ) || user.get_active_hand() != O))
-		return
-	if(isrobot(user) || isessence(user))
-		return
-	var/obj/item/weapon/W = O
-	if(!W.canremove || W.flags & NODROP)
-		return
-	user.drop_item()
-	if (O.loc != src.loc)
-		step(O, get_dir(O, src))
-	return
 
 /obj/structure/rack/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/wrench))
