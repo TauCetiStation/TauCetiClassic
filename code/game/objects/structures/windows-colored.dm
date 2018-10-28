@@ -13,7 +13,7 @@ var/global/wcDw
 
 //replaces color in some area
 /proc/color_windows_init()
-	var/list/brig = list("#4169e1", "#4169e1", "#4169e1", "#4169e1")
+	var/list/brig = list("#418ee1", "#418ee1", "#418ee1", "#418ee1")
 	var/list/bar = list("#0d8395", "#58b5c3", "#58c366", "#90d79a", "#3399ff", "#00ffff", "#ff6600", "#ffffff")
 	var/list/dw = list("#993300", "#ff6600", "#ffcc00", "#ff9933")
 
