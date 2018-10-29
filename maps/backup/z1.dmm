@@ -26783,7 +26783,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
-/mob/living/simple_animal/det5,
+/mob/living/simple_animal/robot_rd/DeT5,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
