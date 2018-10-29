@@ -12,7 +12,8 @@
 	minimal_player_ingame_minutes = 2400
 
 /datum/job/ai/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 
 	if(visualsOnly)
 		return
@@ -37,7 +38,8 @@
 	minimal_player_ingame_minutes = 1800
 
 /datum/job/cyborg/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 
 	if(visualsOnly)
 		return
