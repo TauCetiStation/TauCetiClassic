@@ -13397,7 +13397,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/mob/living/simple_animal/robot_rd,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
