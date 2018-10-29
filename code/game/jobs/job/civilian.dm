@@ -317,12 +317,13 @@
 /datum/job/librarian/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/red(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), slot_belt)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), slot_l_hand)
 
 	if(visualsOnly)
 		return
+
+	H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), slot_l_hand)
+	H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), slot_belt)
 
 	return TRUE
 
@@ -342,7 +343,7 @@
 	minimal_player_ingame_minutes = 1560
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
-/datum/job/lawyer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/internal_affairs_agent/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
@@ -392,7 +393,6 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/pda/lawyer2(H), slot_belt)
 
-
 	return TRUE
 
 
@@ -416,11 +416,11 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/gloves/black(H), slot_gloves)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/leathercoat(H), slot_wear_suit)
 	H.equip_to_slot_or_del(new /obj/item/clothing/glasses/sunglasses(H), slot_glasses)
-	H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), slot_l_store)
 
 	if(visualsOnly)
 		return
 
+	H.equip_to_slot_or_del(new /obj/item/weapon/lighter/zippo(H), slot_l_store)
 
 	return TRUE
 
@@ -444,7 +444,6 @@
 	if(visualsOnly)
 		return
 
-
 	return TRUE
 
 /datum/job/paranormal_investigator
@@ -464,13 +463,12 @@
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/fluff/indiana	(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/brown(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/head/indiana(H), slot_head)
-	H.equip_to_slot_or_del(new /obj/item/device/occult_scanner(H), slot_l_store)
-	H.equip_to_slot_or_del(new /obj/item/weapon/occult_pinpointer(H), slot_r_store)
-
 
 	if(visualsOnly)
 		return
 
+	H.equip_to_slot_or_del(new /obj/item/device/occult_scanner(H), slot_l_store)
+	H.equip_to_slot_or_del(new /obj/item/weapon/occult_pinpointer(H), slot_r_store)
 
 	return TRUE
 

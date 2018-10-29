@@ -139,7 +139,8 @@
 
 	if(visualsOnly)
 		return
-  	H.equip_to_slot_or_del(new /obj/item/device/pda, slot_belt)
+
+	H.equip_to_slot_or_del(new /obj/item/device/pda, slot_belt)
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_eng(H), slot_l_ear)
 
 	return TRUE
