@@ -243,8 +243,6 @@
 		if(4) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel(H), slot_back)
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/cadet(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/jackboots(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_s_store)
-	H.equip_to_slot_or_del(new /obj/item/device/flash(H), slot_l_store)
 	H.equip_to_slot_or_del(new /obj/item/weapon/book/manual/wiki/security_space_law, slot_r_hand)
 
 	if(visualsOnly)
@@ -257,6 +255,8 @@
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_l_hand)
 	else
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_in_backpack)
+	H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_s_store)
+	H.equip_to_slot_or_del(new /obj/item/device/flash(H), slot_l_store)
 
 	var/obj/item/weapon/implant/mindshield/L = new(H)
 	L.inject(H)
