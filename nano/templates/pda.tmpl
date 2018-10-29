@@ -25,7 +25,17 @@ Used In File(s): \code\game\objects\items\devices\PDA\PDA.dm
 		</div>
 	</div>
 	<br>
-
+    {{if data.shuttle_eta}}
+    <div class="item">
+		<div class="itemLabelNarrow">
+			<b>Shuttle ETA</b>:
+		</div>
+		<div class="itemContent">
+			<span class="average">{{:data.shuttle_eta}}</span>
+		</div>
+	</div>
+	<br>
+    {{/if}}
 
 	{{if data.mode == 0}} <!-- Main Menu -->
         <div class="item">

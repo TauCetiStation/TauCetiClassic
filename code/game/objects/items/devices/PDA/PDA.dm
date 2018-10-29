@@ -429,6 +429,9 @@ var/global/list/obj/item/device/pda/PDAs = list()
 		data["cartridge"] = cartdata
 
 	data["stationTime"] = worldtime2text()
+	if (SSshuttle.online)
+		var/timeleft = SSshuttle.timeleft()
+		data["shuttle_eta"] = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
 	data["new_Message"] = newmessage
 
 	if(mode==2)
