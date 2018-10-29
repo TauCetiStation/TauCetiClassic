@@ -41907,7 +41907,7 @@
 "bDC" = (
 /obj/machinery/door/window/eastleft{
 	name = "Medical Delivery";
-	req_access_txt = "5"
+	req_access_txt = "72"
 	},
 /obj/structure/window/reinforced,
 /turf/simulated/floor{
@@ -44308,7 +44308,7 @@
 	dir = 4;
 	icon_state = "left";
 	name = "Engineering Desk";
-	req_access_txt = "32"
+	req_access_txt = "71"
 	},
 /turf/simulated/floor{
 	icon_state = "delivery";
@@ -49018,7 +49018,7 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
 	req_access_txt = "0";
-	req_one_access_txt = "11;24"
+	req_one_access_txt = "71"
 	},
 /obj/machinery/atmospherics/pipe/simple/visible/red{
 	dir = 9
@@ -49446,7 +49446,7 @@
 	dir = 4;
 	icon_state = "left";
 	name = "Engineering Moniter Station";
-	req_access_txt = "32"
+	req_access_txt = "71"
 	},
 /turf/simulated/floor{
 	icon_state = "delivery"
@@ -50174,7 +50174,7 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
 	req_access_txt = "0";
-	req_one_access_txt = "11;24"
+	req_one_access_txt = "71"
 	},
 /obj/structure/cable{
 	d1 = 4;
@@ -51615,7 +51615,7 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
 	req_access_txt = "0";
-	req_one_access_txt = "11;24"
+	req_one_access_txt = "71"
 	},
 /turf/simulated/floor,
 /area/engine/break_room)
@@ -51950,7 +51950,7 @@
 /obj/machinery/door/airlock/engineering/glass{
 	name = "Engineering";
 	req_access_txt = "0";
-	req_one_access_txt = "11;24"
+	req_one_access_txt = "71"
 	},
 /obj/structure/cable{
 	d1 = 1;
@@ -73625,7 +73625,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Medbay Storage";
-	req_access_txt = "5"
+	req_access_txt = "72"
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
@@ -73716,7 +73716,7 @@
 /obj/machinery/door/airlock/medical/glass{
 	id_tag = null;
 	name = "Medbay Storage";
-	req_access_txt = "5"
+	req_access_txt = "72"
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -78308,8 +78308,8 @@
 /obj/machinery/atmospherics/pipe/simple/visible,
 /obj/machinery/door/airlock/medical{
 	name = "Cooling Room";
-	req_access = 5;
-	req_access_txt = "5"
+	req_access = 72;
+	req_access_txt = "72"
 	},
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,

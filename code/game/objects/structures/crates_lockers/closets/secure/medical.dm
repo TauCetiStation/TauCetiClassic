@@ -21,6 +21,8 @@
 		new /obj/item/weapon/reagent_containers/glass/bottle/inaprovaline(src)
 	for (var/i in 1 to 2)
 		new /obj/item/weapon/reagent_containers/glass/bottle/antitoxin(src)
+	for (var/i in 1 to 2)
+		new /obj/item/device/healthanalyzer(src)
 
 /obj/structure/closet/secure_closet/medical2
 	name = "Anesthetic"
