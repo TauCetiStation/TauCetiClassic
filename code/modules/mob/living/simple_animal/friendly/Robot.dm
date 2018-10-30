@@ -5,7 +5,7 @@
 	icon_living = "robot_rd"
 	icon_dead = "robot_rd_died"
 	desc = "Its a robot with shiny wheels. Sometimes sparks fly out of its hull."
-	speak = list("Beep", "Beep-beep", "Beeeepski", "One...two...three...more...", "Z-z-z-zero", "One...null...Beep", "Analyzing...", "Successfully", "...this is a joke")
+	speak = list("Beep", "Beep-beep", "Beeeepski", "One...two...three...more...", "Z-z-z-zero", "One...null...Beep", "Analyzing...", "Successfully", "...this is a joke", "La la la...beep", "Death...", "Boom...")
 	speak_emote = list("beeps", "rang out")
 	emote_hear = list("raises manipulators","twists the scanner")
 	emote_see = list("spinning around", "shakes antenna", "turns the indicator on and off")
@@ -32,8 +32,8 @@
 /mob/living/simple_animal/det5/death()
 	..()
 	visible_message("<b>[src]</b> rang out 'd-d-d-data received...d-d-d-destruction'")
-	new /obj/item/stack/sheet/mineral/diamond(src.loc)
-	new /obj/effect/decal/cleanable/blood/gibs/robot(src.loc)
+	new /obj/item/stack/sheet/mineral/diamond(src.loc)//drop diamond
+	new /obj/effect/decal/cleanable/blood/gibs/robot(src.loc)//drob blood robots
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
