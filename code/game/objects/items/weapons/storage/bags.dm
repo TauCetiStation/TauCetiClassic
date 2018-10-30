@@ -5,6 +5,7 @@
  *	re-implemented in other classes.
  *
  *	Contains:
+ *		Book bag
  *		Trash Bag
  *		Bluespace trash bag
  *		Mining Satchel
@@ -22,6 +23,22 @@
 	display_contents_with_number = 0 // UNStABLE AS FuCK, turn on when it stops crashing clients
 	use_to_pickup = 1
 	slot_flags = SLOT_BELT
+
+// -----------------------------
+//           Book bag
+// -----------------------------
+/obj/item/weapon/storage/bag/bookbag
+	name = "book bag"
+	desc = "A bag for knowledge."
+	icon = 'icons/obj/library.dmi'
+	icon_state = "bookbag"
+	item_state = "bookbag"
+	display_contents_with_number = 0 //This would look really stupid otherwise
+	storage_slots = 7
+	max_w_class = ITEM_SIZE_NORMAL
+	max_storage_space = DEFAULT_BACKPACK_STORAGE
+	w_class = ITEM_SIZE_LARGE //Bigger than a book because physics
+	can_hold = list("/obj/item/weapon/book", "/obj/item/weapon/storage/bible", "/obj/item/weapon/spellbook")
 
 // -----------------------------
 //          Trash bag
