@@ -82,7 +82,7 @@
 
 //Time to play!
 	if(prob(30) && will_play)
-		var/obj/item/weapon/bikehorn/dogtoy/histoy = locate(var/obj/item/weapon/bikehorn/dogtoy) in oview(src, 3)
+		var/obj/item/weapon/bikehorn/dogtoy/histoy = locate(/obj/item/weapon/bikehorn/dogtoy) in oview(src, 3)
  		if(histoy)
  			emote("me", 1, pick("barks!" ,"woofs loudly!" ,"eyes [histoy] joyfully."))
 
@@ -97,7 +97,7 @@
 			if(!movement_target || !(movement_target.loc in oview(src, 3)))
 				movement_target = null
 				stop_automated_movement = 0
-				var/obj/item/weapon/bikehorn/dogtoy/histoy = locate(var/obj/item/weapon/bikehorn/dogtoy) in oview(src, 3)
+				var/obj/item/weapon/bikehorn/dogtoy/histoy = locate(/obj/item/weapon/bikehorn/dogtoy) in oview(src, 3)
 				if(isturf(histoy.loc))
 					movement_target = histoy
 			if(movement_target)
@@ -105,7 +105,7 @@
 				walk_to(src, movement_target, 0,3)
 
 	if(prob(45) && will_play)
-		var/obj/item/weapon/bikehorn/dogtoy/histoy = locate(var/obj/item/weapon/bikehorn/dogtoy) in oview(src, 1)
+		var/obj/item/weapon/bikehorn/dogtoy/histoy = locate(/obj/item/weapon/bikehorn/dogtoy) in oview(src, 1)
 		if(histoy)
 			src.visible_message(pick("[bicon(src)][src] joyfully plays with the toy!", "[bicon(src)][src] rolls the toy back and forth!", "[bicon(src)][src] happily twists and spins the toy!", "[bicon(src)][src] thoroughly sniffs the toy all around!"), 2)
 			BreatheHappily()
@@ -296,7 +296,7 @@
 
 /mob/living/simple_animal/dog/corgi/borgi/proc/explode()
 	for(var/mob/M in viewers(src, null))
-		if (M.client && !( G.blinded ))
+		if (M.client && !( M.blinded ))
 			M.show_message("\red [src] makes an odd whining noise.")
 	sleep(10)
 	explosion(get_turf(src), 0, 1, 4, 7)
