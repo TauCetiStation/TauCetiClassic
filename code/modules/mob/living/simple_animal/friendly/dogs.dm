@@ -83,7 +83,8 @@
 //Time to play!
 	if(prob(30) && will_play)
 		for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(src, 3))
- 			emote("me", 1, pick("barks!" ,"woofs loudly!" ,"eyes [histoy] joyfully."))
+ 			emote("me", 1, pick("barks!", "woofs loudly!", "eyes [histoy] joyfully."))
+ 			break
 
 	if(!stat && !resting && !buckled && will_play)
 		turns_since_scan++
@@ -99,6 +100,7 @@
 				for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(src, 3))
 				if(isturf(histoy.loc))
 					movement_target = histoy
+					break
 			if(movement_target)
 				stop_automated_movement = 1
 				walk_to(src, movement_target, 0,3)
@@ -110,6 +112,7 @@
 			for(var/i in list(1,2,4,8,4,2,1,2))
 				dir = i
 				sleep(1)
+			break
 
 	if(prob(15))//so food in the stomach is actually digesting
 		belly --
