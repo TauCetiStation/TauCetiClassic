@@ -331,8 +331,13 @@
 	if(visualsOnly)
 		return
 
+
 	H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), slot_l_hand)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), slot_belt)
+
+	H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/bookbag(H), slot_belt)
+	H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), slot_r_store)
+
 
 	return TRUE
 

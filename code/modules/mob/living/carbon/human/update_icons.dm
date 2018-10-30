@@ -779,7 +779,6 @@ Please contact me on #coderbus IRC. ~Carn x
 		overlays_standing[BELT_LAYER] = standing
 	apply_overlay(BELT_LAYER)
 
-
 /mob/living/carbon/human/update_inv_wear_suit()
 	remove_overlay(SUIT_LAYER)
 

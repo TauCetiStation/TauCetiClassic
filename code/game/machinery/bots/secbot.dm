@@ -220,7 +220,7 @@
 				forgetCurrentTarget()
 
 			if(target)		// make sure target exists
-				if(Adjacent(target))		// if right next to perp
+				if(Adjacent(target) && istype(target.loc, /turf))
 					if(iscarbon(target))
 						playsound(loc, 'sound/weapons/Egloves.ogg', 50, 1, -1)
 						icon_state = "[lasercolor][icon_state_arrest]"
