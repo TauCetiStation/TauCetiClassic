@@ -395,9 +395,6 @@
 	..()
 	if(prob(7))
 		emote("me", 1, "farts")
-		for(var/mob/G in viewers(M, null))
-			if ((G.client && !( G.blinded )))
-				to_chat(G, pick("<span class='warning'>Oh my god! the smell!</span>", "<span class='warning'>Smells horrible.</span>", "<span class='warning'>This dog is a demon...</span>"))
 		var/datum/effect/effect/system/smoke_spread/mustard/dog_fart/F = new
 		F.set_up(1, 0, loc, 0)
 		F.start()
