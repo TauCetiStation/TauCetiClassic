@@ -98,9 +98,9 @@
 				movement_target = null
 				stop_automated_movement = 0
 				for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(src, 3))
-				if(isturf(histoy.loc))
-					movement_target = histoy
-					break
+					if(isturf(histoy.loc))
+						movement_target = histoy
+						break
 			if(movement_target)
 				stop_automated_movement = 1
 				walk_to(src, movement_target, 0,3)
