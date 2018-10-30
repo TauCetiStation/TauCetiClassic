@@ -38,7 +38,7 @@
 /mob/living/carbon/human/price = 27841
 /mob/living/carbon/human/tajaran/price = 50000
 /mob/living/simple_animal/price = 50
-/mob/living/simple_animal/corgi/price = 225
+/mob/living/simple_animal/dog/price = 225
 /mob/living/carbon/ian/price = 65000
 /mob/living/simple_animal/cat/Runtime/price = 55000
 
