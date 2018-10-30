@@ -583,7 +583,7 @@
 	playsound(src, 'sound/items/wash.ogg', 50, 1, 1)
 	to_chat(user, "\blue You start washing your hands.")
 	busy = 1
-	if(do_after(user,50,target = src))
+	if(do_after(user, 30, target = src))
 		busy = 0
 		user.clean_blood()
 		if(ishuman(user))
@@ -632,7 +632,7 @@
 
 	playsound(src, 'sound/items/wash.ogg', 50, 1, 1)
 	busy = 1
-	if(do_after(user,50,target = src))
+	if(do_after(user, 30, target = src))
 		busy = 0
 
 		if(user.loc != location) return				//User has moved
