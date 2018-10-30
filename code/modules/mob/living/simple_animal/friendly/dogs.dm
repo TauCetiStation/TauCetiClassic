@@ -1,22 +1,21 @@
-//
-//	Template
-//
 //TO DO:
 //*Commanded dogs from Bay
 //*Allow Muhtar find all the crooks!(Beepsky mechanics)
 //*Give your dog junk food - there will be consequences
 //*Eating many food should make them sleepy. Well, pugs are always sleepy. Theres should be a sleeping mechanics
 //
-
+//
+//	Template
+//
 /mob/living/simple_animal/dog
 	name = "a dog"
 	icon = 'icons/mob/dogs.dmi'
 	health = 75
 	maxHealth = 75
-	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU","AwooOOOoo!")
+	speak = list("YAP", "Woof!", "Bark!", "AUUUUUU", "AwooOOOoo!")
 	speak_emote = list("barks", "woofs")
-	emote_hear = list("barks", "woofs", "yaps","pants")
-	emote_see = list("shakes its head", "shivers", "looks cute","chases its tail")
+	emote_hear = list("barks", "woofs", "yaps", "pants")
+	emote_see = list("shakes its head", "shivers", "looks cute", "chases its tail")
 	speak_chance = 13
 	turns_per_move = 6
 	stop_automated_movement_when_pulled = 1	//so people can drag the dog around
@@ -30,12 +29,14 @@
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 	var/facehugger
 
+	var/belly	//Using it to find out does it want more food
+
 	var/will_play = 1	//If TRUE then dog will be playing with a toy
 	var/turns_since_scan = 0
 	var/mob/living/simple_animal/mouse/movement_target
 
 	var/strong_dog = 0	//If TRUE then dog will be defending itself when delt damage
-	var/dogs_anger = 0	//rrrrrRRRRRR!!! dog's patience counter
+	var/dogs_anger = 0	// dog's patience counter
 	var/bad_guy = null
 	melee_damage_lower = 5
 	melee_damage_upper = 15
@@ -50,16 +51,17 @@
 
 //Begs for food
 /mob/living/simple_animal/dog/proc/beg(var/atom/thing, var/atom/holder)
-	emote("me",1,"stares at the [thing] that [holder] has with sad puppy eyes.")
+	emote("me", 1, "stares at the [thing] that [holder] has with sad puppy eyes.")
 
 /mob/living/simple_animal/dog/Life()
 	..()
-//Making sure
-	if(stat == DEAD)
-		return
-//Doggo stuff
-	if(!stat && !resting && !buckled && will_play)
-		if(prob(3))
+
+//Making sure its not DEAD
+	if(health <= 0) return
+
+//You Spin Me Round
+	if(prob(3))
+		if(!stat && !resting && !buckled && will_play)
 			emote("me",1,pick("dances around","chases its tail"))
 			spawn(0)
 				BreatheHappily()
@@ -68,7 +70,7 @@
 					sleep(1)
 
 //FOOOOD!
-	if(prob(40))
+	if(prob(30))
 		for(var/mob/living/carbon/human/H in oview(src, 5))
 			var/obj/item/weapon/reagent_containers/food/snacks/F = null
 			if(istype(H.l_hand, /obj/item/weapon/reagent_containers/food/snacks))
@@ -79,10 +81,10 @@
 				src.beg(F, H)
 
 //Time to play!
-	for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(src, 3))
-		if(prob(30) && will_play)
-			emote("me",1,pick("barks!","woofs loudly!","eyes [histoy] joyfully."))
-		break
+	if(prob(30) && will_play)
+		var/obj/item/weapon/bikehorn/dogtoy/histoy = locate(var/obj/item/weapon/bikehorn/dogtoy) in oview(src, 3)
+ 		if(histoy)
+ 			emote("me", 1, pick("barks!" ,"woofs loudly!" ,"eyes [histoy] joyfully."))
 
 	if(!stat && !resting && !buckled && will_play)
 		turns_since_scan++
@@ -92,48 +94,60 @@
 			if((movement_target) && !(isturf(movement_target.loc) || ishuman(movement_target.loc) ))
 				movement_target = null
 				stop_automated_movement = 0
-			if( !movement_target || !(movement_target.loc in oview(src, 3)) )
+			if(!movement_target || !(movement_target.loc in oview(src, 3)))
 				movement_target = null
 				stop_automated_movement = 0
-				for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(src,3))
-					if(isturf(histoy.loc))
-						movement_target = histoy
-						break
+				var/obj/item/weapon/bikehorn/dogtoy/histoy = locate(var/obj/item/weapon/bikehorn/dogtoy) in oview(src, 3)
+				if(isturf(histoy.loc))
+					movement_target = histoy
 			if(movement_target)
 				stop_automated_movement = 1
-				walk_to(src,movement_target,0,3)
-	for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(1,src))
-		if(prob(45) && will_play)
-			src.visible_message(pick("[bicon(src)][src] joyfully plays with the toy!","[bicon(src)][src] rolls the toy back and forth!","[bicon(src)][src] happily twists and spins the toy!","[bicon(src)][src] thoroughly sniffs the toy all around!"), 2)
+				walk_to(src, movement_target, 0,3)
+
+	if(prob(45) && will_play)
+		var/obj/item/weapon/bikehorn/dogtoy/histoy = locate(var/obj/item/weapon/bikehorn/dogtoy) in oview(src, 1)
+		if(histoy)
+			src.visible_message(pick("[bicon(src)][src] joyfully plays with the toy!", "[bicon(src)][src] rolls the toy back and forth!", "[bicon(src)][src] happily twists and spins the toy!", "[bicon(src)][src] thoroughly sniffs the toy all around!"), 2)
 			BreatheHappily()
 			for(var/i in list(1,2,4,8,4,2,1,2))
 				dir = i
 				sleep(1)
 
+	if(prob(15))//so food in the stomach is actually digesting
+		belly --
 
 /mob/living/simple_animal/dog/regenerate_icons()
 	overlays.Cut()
 	if(facehugger)
 		if(istype(src, /mob/living/simple_animal/dog/corgi/puppy))
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgipuppy")
+			overlays += image('icons/mob/mask.dmi', "facehugger_corgipuppy")
 		else
-			overlays += image('icons/mob/mask.dmi',"facehugger_corgi")
+			overlays += image('icons/mob/mask.dmi', "facehugger_corgi")
 
 /mob/living/simple_animal/dog/attackby(obj/item/O, mob/living/M)
-	var/did_we_lost_health = src.health
+
+	var/did_we_lost_health = src.health//We will need it later
+
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))//Yeah, it can consume EVERY SNACK. These dogs...
 		M.SetNextMove(CLICK_CD_MELEE)
 		if(!stat)
+			if(belly >= 10)
+				for(var/mob/G in viewers(M, null))
+					if ((G.client && !( G.blinded )))
+						G.show_message("\red [M.name] tries to feed [O] to the [name], but [name]'s belly is already full!")
+				return
 			for(var/mob/G in viewers(M, null))
 				if ((G.client && !( G.blinded )))
 					G.show_message("\blue [M.name] feeds [O] to the [name]")
 			BreatheHappily()
 			qdel(O)
 			playsound(src, 'sound/items/eatfood.ogg', 50, 1, -3)
+			belly ++
 			spawn(0)
 				for(var/i in list(1,2,4,8,4,2,1,2))
 					dir = i
 					sleep(1)
+
 	if(istype(O, /obj/item/weapon/newspaper))
 		M.SetNextMove(CLICK_CD_MELEE)
 		if(!stat)
@@ -146,39 +160,41 @@
 					sleep(1)
 	else
 		..()
-	if((did_we_lost_health > src.health) && strong_dog)
+
+	if((did_we_lost_health > src.health) && strong_dog)//rrrrrRRRRR!
 		if(!(stat == DEAD))
-//rrrrrRRRRR!
 			dogs_anger ++
-			emote("me",1,pick("barks!","woofs loudly!","eyes [M.name] angrily."))
+			emote("me", 1, pick("barks!", "woofs loudly!", "eyes [M.name] angrily."))
 			if(prob(70))
 				playsound(src, 'sound/voice/dogs/bark.ogg', 50, 1, -3)
 			if(dogs_anger >= 2 && (M in oview(src, 2)))
 				bad_guy = M
 				BiteTarget()
 				dogs_anger = 0
-				spawn(2)
-					bad_guy = null
+				sleep(20)
+				bad_guy = null
 	else
-		if(!(stat == DEAD))
-			emote("me",1,pick("whines sadly.","woofs!","eyes [M.name] plaintively."))//How could you...
+		if((did_we_lost_health > src.health) && !(stat == DEAD))
+			emote("me", 1, pick("whines sadly.", "woofs!","eyes [M.name] plaintively."))//How could you...
 
-/mob/living/simple_animal/dog/proc/BiteTarget()
+/mob/living/simple_animal/dog/proc/BiteTarget()//Time to fuck those bad guys BACK!
 	if(isliving(bad_guy))
 		if(ishuman(bad_guy))
 			var/mob/living/carbon/human/H = bad_guy
 			var/dam_zone = pick(BP_CHEST , BP_L_ARM , BP_R_ARM , BP_L_LEG , BP_R_LEG)
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[ran_zone(dam_zone)]
 			H.apply_damage(rand(melee_damage_lower,melee_damage_upper), BRUTE, BP, H.run_armor_check(BP, "melee"), DAM_SHARP | DAM_EDGE)
-			to_chat(H,"<span class='danger'>[name] bites [H.name]!")
+			H.Weaken(3)
+			H.visible_message("<span class='danger'>[name] bites \the [H.name]!</span>")
 		else
 			var/mob/living/H = bad_guy
 			H.adjustBruteLoss(rand(melee_damage_lower,melee_damage_upper))
-			to_chat(H,"<span class='danger'>[name] bites [H.name]!")
+			H.Weaken(3)
+			H.visible_message("<span class='danger'>[name] bites \the [H.name]!</span>")
 		playsound(src, 'sound/voice/dogs/attacks.ogg', 50, 1, -3)
 
 /mob/living/simple_animal/dog/proc/BreatheHappily()
-	var/list/breathe_snd = list('sound/voice/dogs/breathes1.ogg','sound/voice/dogs/breathes2.ogg')
+	var/list/breathe_snd = list('sound/voice/dogs/breathes1.ogg', 'sound/voice/dogs/breathes2.ogg')
 	playsound(src, pick(breathe_snd), 50, 1, -3)
 
 //
@@ -275,12 +291,12 @@
 	if(!emagged)
 		emagged = 1
 		visible_message("<span class='warning'>[user] swipes a card through [src].</span>", "<span class='notice'>You overload [src]s internal reactor.</span>")
-		spawn (1000)
-			src.explode()
+		sleep(1000)
+		src.explode()
 
 /mob/living/simple_animal/dog/corgi/borgi/proc/explode()
 	for(var/mob/M in viewers(src, null))
-		if (M.client)
+		if (M.client && !( G.blinded ))
 			M.show_message("\red [src] makes an odd whining noise.")
 	sleep(10)
 	explosion(get_turf(src), 0, 1, 4, 7)
@@ -300,13 +316,13 @@
 	A.starting = T
 	A.yo = U.y - T.y
 	A.xo = U.x - T.x
-	spawn( 0 )
+	spawn(0)
 		A.process()
 	return
 
 /mob/living/simple_animal/dog/corgi/borgi/Life()
 	..()
-	if(health <= 0) return
+
 	if(emagged && prob(25))
 		var/mob/living/carbon/target = locate() in view(10,src)
 		if (target)
@@ -346,9 +362,32 @@
 
 /mob/living/simple_animal/dog/pug/Life()
 	..()
+	if(prob(15))
+		emote("me", 1, "farts")
+		new	/obj/effect/effect/smoke/mustard/dog_fart(src.loc)
 	if(prob(10))
-		emote("me",1,pick("farts","sneezes"))
+		emote("me", 1, "sneezes")
 //What a life
+
+/obj/effect/effect/smoke/mustard/dog_fart
+	name = "fart cloud"
+	icon_state = "dog_fart"
+	time_to_live = 30
+
+/obj/effect/effect/smoke/mustard/dog_fart/affect(mob/living/carbon/human/R)
+	if (!..())
+		return 0
+	if (R.wear_suit != null)
+		return 0
+	to_chat(R, pick("<span class='warning'>Oh my god! the smell!</span>", "<span class='warning'>Smells horrible.</span>", "<span class='warning'>This dog is a demon...</span>"))
+	R.burn_skin(0.75)
+	if (R.coughedtime != 1)
+		R.coughedtime = 1
+		R.emote("gasp")
+		sleep(20)
+		R.coughedtime = 0
+	R.updatehealth()
+	return
 
 //
 //	Shiba
