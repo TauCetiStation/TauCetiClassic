@@ -29,7 +29,7 @@
 	maxbodytemp = 323	//Above 50 Degrees Celcius
 	var/facehugger
 
-	var/belly	//Using it to find out does it want more food
+	var/belly = 0	//Using it to find out does it want more food
 
 	var/will_play = 1	//If TRUE then dog will be playing with a toy
 	var/turns_since_scan = 0
@@ -70,7 +70,7 @@
 					sleep(1)
 
 //FOOOOD!
-	if(prob(30))
+	if(prob(20) && (belly < 5))
 		for(var/mob/living/carbon/human/H in oview(src, 5))
 			var/obj/item/weapon/reagent_containers/food/snacks/F = null
 			if(istype(H.l_hand, /obj/item/weapon/reagent_containers/food/snacks))
@@ -114,8 +114,12 @@
 				sleep(1)
 			break
 
-	if(prob(15))//so food in the stomach is actually digesting
+	if(prob(2) && belly > 0)//so food in the stomach is actually digesting
 		belly --
+
+	if(prob(5) && belly >= 4)//food is good!
+		if(health < maxHealth)
+			adjustBruteLoss(-20)
 
 /mob/living/simple_animal/dog/regenerate_icons()
 	overlays.Cut()
@@ -132,7 +136,7 @@
 	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))//Yeah, it can consume EVERY SNACK. These dogs...
 		M.SetNextMove(CLICK_CD_MELEE)
 		if(!stat)
-			if(belly >= 10)
+			if(belly >= 5)
 				for(var/mob/G in viewers(M, null))
 					if ((G.client && !( G.blinded )))
 						G.show_message("\red [M.name] tries to feed [O] to the [name], but [name]'s belly is already full!")
@@ -164,7 +168,8 @@
 
 	if((did_we_lost_health > src.health) && strong_dog)//rrrrrRRRRR!
 		if(!(stat == DEAD))
-			dogs_anger ++
+			if(prob(75))
+				dogs_anger ++
 			emote("me", 1, pick("barks!", "woofs loudly!", "eyes [M.name] angrily."))
 			if(prob(70))
 				playsound(src, 'sound/voice/dogs/bark.ogg', 50, 1, -3)
@@ -177,6 +182,31 @@
 	else
 		if((did_we_lost_health > src.health) && !(stat == DEAD))
 			emote("me", 1, pick("whines sadly.", "woofs!","eyes [M.name] plaintively."))//How could you...
+
+/mob/living/simple_animal/dog/attack_hand(mob/living/carbon/human/M)
+
+	var/did_we_lost_health = src.health//We will need it later
+
+	..()
+
+	if((did_we_lost_health > src.health) && strong_dog)//rrrrrRRRRR!
+		if(!(stat == DEAD))
+			if(prob(75))
+				dogs_anger ++
+			emote("me", 1, pick("barks!", "woofs loudly!", "eyes [M.name] angrily."))
+			if(prob(70))
+				playsound(src, 'sound/voice/dogs/bark.ogg', 50, 1, -3)
+			if(dogs_anger >= 2 && (M in oview(src, 2)))
+				bad_guy = M
+				BiteTarget()
+				dogs_anger = 0
+				sleep(20)
+				bad_guy = null
+	else
+		if((did_we_lost_health > src.health) && !(stat == DEAD))
+			emote("me", 1, pick("whines sadly.", "woofs!","eyes [M.name] plaintively."))//How could you...
+
+
 
 /mob/living/simple_animal/dog/proc/BiteTarget()//Time to fuck those bad guys BACK!
 	if(isliving(bad_guy))
@@ -363,32 +393,30 @@
 
 /mob/living/simple_animal/dog/pug/Life()
 	..()
-	if(prob(15))
+	if(prob(7))
 		emote("me", 1, "farts")
-		new	/obj/effect/effect/smoke/mustard/dog_fart(src.loc)
-	if(prob(10))
+		for(var/mob/G in viewers(M, null))
+			if ((G.client && !( G.blinded )))
+				to_chat(G, pick("<span class='warning'>Oh my god! the smell!</span>", "<span class='warning'>Smells horrible.</span>", "<span class='warning'>This dog is a demon...</span>"))
+		var/datum/effect/effect/system/smoke_spread/mustard/dog_fart/F = new
+		F.set_up(1, 0, loc, 0)
+		F.start()
+		playsound(src, 'sound/effects/bubble_pop.ogg', 50, 1, -3)
+	if(prob(3))
 		emote("me", 1, "sneezes")
 //What a life
 
 /obj/effect/effect/smoke/mustard/dog_fart
 	name = "fart cloud"
+	icon = 'icons/effects/effects.dmi'
 	icon_state = "dog_fart"
-	time_to_live = 30
+	time_to_live = 20
+	layer = 6
+	pixel_x = 0
+	pixel_y = 0
 
-/obj/effect/effect/smoke/mustard/dog_fart/affect(mob/living/carbon/human/R)
-	if (!..())
-		return 0
-	if (R.wear_suit != null)
-		return 0
-	to_chat(R, pick("<span class='warning'>Oh my god! the smell!</span>", "<span class='warning'>Smells horrible.</span>", "<span class='warning'>This dog is a demon...</span>"))
-	R.burn_skin(0.75)
-	if (R.coughedtime != 1)
-		R.coughedtime = 1
-		R.emote("gasp")
-		sleep(20)
-		R.coughedtime = 0
-	R.updatehealth()
-	return
+/datum/effect/effect/system/smoke_spread/mustard/dog_fart
+	smoke_type = /obj/effect/effect/smoke/mustard/dog_fart
 
 //
 //	Shiba
