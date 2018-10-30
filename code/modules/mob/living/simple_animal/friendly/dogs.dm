@@ -22,7 +22,7 @@
 	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/meat/dog = 2)
 	response_help  = "pets the"
 	response_disarm = "bops the"
-	response_harm   = "kicks the"
+	response_harm = "kicks the"
 	see_in_dark = 6
 	min_oxy = 16	//Require atleast 16kPA oxygen
 	minbodytemp = 223	//Below -50 Degrees Celcius
@@ -81,10 +81,10 @@
 				src.beg(F, H)
 
 //Time to play!
-	if(prob(30) && will_play)
+	if(prob(30)	&&	will_play)
 		for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(src, 3))
- 			emote("me", 1, pick("barks!", "woofs loudly!", "eyes [histoy] joyfully."))
- 			break
+			emote("me", 1, pick("barks!", "woofs loudly!", "eyes [histoy] joyfully."))
+			break
 
 	if(!stat && !resting && !buckled && will_play)
 		turns_since_scan++
