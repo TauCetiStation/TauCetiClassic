@@ -105,7 +105,7 @@
 				stop_automated_movement = 1
 				walk_to(src, movement_target, 0,3)
 
-	if(prob(45) && will_play)
+	if(prob(30) && will_play)
 		for(var/obj/item/weapon/bikehorn/dogtoy/histoy in oview(src, 1))
 			src.visible_message(pick("[bicon(src)][src] joyfully plays with the toy!", "[bicon(src)][src] rolls the toy back and forth!", "[bicon(src)][src] happily twists and spins the toy!", "[bicon(src)][src] thoroughly sniffs the toy all around!"), 2)
 			BreatheHappily()
@@ -117,7 +117,7 @@
 	if(prob(2) && belly > 0)//so food in the stomach is actually digesting
 		belly --
 
-	if(prob(5) && belly >= 4)//food is good!
+	if(prob(8) && belly >= 3)//food is good!
 		if(health < maxHealth)
 			adjustBruteLoss(-20)
 
