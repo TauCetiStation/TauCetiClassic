@@ -323,19 +323,18 @@
 	minimal_player_ingame_minutes = 480
 
 /datum/job/librarian/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	
+	if(!H)
 		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/suit_jacket/red(H), slot_w_uniform)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), slot_belt)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/black(H), slot_shoes)
-	H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), slot_l_hand)
- 	if(visualsOnly)
+
+	if(visualsOnly)
 		return
-		
- 	H.equip_to_slot_or_del(new /obj/item/weapon/storage/bag/bookbag(H), slot_belt)
-	H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), slot_r_store)
-	
- 	return TRUE
+
+	H.equip_to_slot_or_del(new /obj/item/weapon/barcodescanner(H), slot_l_hand)
+	H.equip_to_slot_or_del(new /obj/item/device/pda/librarian(H), slot_belt)
+
+	return TRUE
 
 
 //var/global/lawyer = 0//Checks for another lawyer //This changed clothes on 2nd lawyer, both IA get the same dreds.
