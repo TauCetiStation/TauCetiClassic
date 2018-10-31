@@ -10,9 +10,9 @@
 		if(1)
 			interceptname = "Biohazard Alert"
 			intercepttext += "<FONT size = 3><B>NanoTrasen Update</B>: Biohazard Alert.</FONT><HR>"
-			intercepttext += "Reports indicate the probable transfer of a biohazardous agent onto NFS Gamma during the last crew deployment cycle.<BR>"
+			intercepttext += "Reports indicate the probable transfer of a biohazardous agent onto [station_name()] during the last crew deployment cycle.<BR>"
 			intercepttext += "Preliminary analysis of the organism classifies it as a level 5 biohazard. Its origin is unknown.<BR>"
-			intercepttext += "NanoTrasen has issued a directive 7-10 for NFS Gamma. The station is to be considered quarantined.<BR>"
+			intercepttext += "NanoTrasen has issued a directive 7-10 for [station_name()]. The station is to be considered quarantined.<BR>"
 			intercepttext += "Orders for all NFS Gamma personnel follows:<BR>"
 			intercepttext += " 1. Do not leave the quarantine area.<BR>"
 			intercepttext += " 2. Locate any outbreaks of the organism on the station.<BR>"
