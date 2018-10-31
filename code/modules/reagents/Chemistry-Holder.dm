@@ -411,6 +411,11 @@ var/const/INGEST = 2
 						INVOKE_ASYNC(R, /datum/reagent.proc/reaction_obj, A, R.volume+volume_modifier)
 	return
 
+/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null) // Like add_reagent but you can enter a list. Format it like this: list("toxin" = 10, "beer" = 15)
+	for(var/r_id in list_reagents)
+		var/amt = list_reagents[r_id]
+		add_reagent(r_id, amt, data)
+
 /datum/reagents/proc/add_reagent(reagent, amount, list/data=null, safety = 0)
 	if(!isnum(amount)) return 1
 	if(amount < 0) return 0

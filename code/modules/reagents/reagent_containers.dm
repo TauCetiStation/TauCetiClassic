@@ -8,6 +8,7 @@
 	w_class = 2
 	var/amount_per_transfer_from_this = 5
 	var/possible_transfer_amounts = list(5,10,15,25,30)
+	var/list/list_reagents = null
 	var/volume = 30
 
 /obj/item/weapon/reagent_containers/verb/set_APTFT() //set amount_per_transfer_from_this
@@ -25,6 +26,8 @@
 	var/datum/reagents/R = new/datum/reagents(volume)
 	reagents = R
 	R.my_atom = src
+	if(list_reagents)
+		reagents.add_reagent_list(list_reagents)
 
 /obj/item/weapon/reagent_containers/attack_self(mob/user)
 	return

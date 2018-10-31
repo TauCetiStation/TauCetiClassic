@@ -11,185 +11,206 @@
 	name = "Condiment Container"
 	desc = "Just your average condiment container."
 	icon = 'icons/obj/food_and_drinks/condiments.dmi'
-	icon_state = "emptycondiment"
+	icon_state = "condiment"
 	flags = OPENCONTAINER
 	possible_transfer_amounts = list(1,5,10)
 	volume = 50
+	var/empty = null//Empty icon
 
-	attackby(obj/item/weapon/W, mob/user)
+/obj/item/weapon/reagent_containers/food/condiment/attackby(obj/item/weapon/W, mob/user)
+	return
 
-		return
-	attack_self(mob/user)
-		return
-	attack(mob/M, mob/user, def_zone)
+/obj/item/weapon/reagent_containers/food/condiment/attack_self(mob/user)
+	return
 
-		if(!CanEat(user, M, src, "swallow")) return
+/obj/item/weapon/reagent_containers/food/condiment/attack(mob/M, mob/user, def_zone)
+	if(!CanEat(user, M, src, "swallow")) return
 
-		var/datum/reagents/R = src.reagents
+	var/datum/reagents/R = src.reagents
 
-		if(!R || !R.total_volume)
-			to_chat(user, "\red None of [src] left, oh no!")
-			return 0
-
-		if(isliving(M))
-			var/mob/living/L = M
-			if(taste)
-				L.taste_reagents(reagents)
-		if(M == user)
-			to_chat(M, "\blue You swallow some of contents of the [src].")
-			if(reagents.total_volume)
-				reagents.trans_to_ingest(M, 10)
-
-			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-			return 1
-		else
-
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] attempts to feed [M] [src].", 1)
-			if(!do_mob(user, M)) return
-			for(var/mob/O in viewers(world.view, user))
-				O.show_message("\red [user] feeds [M] [src].", 1)
-
-			M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
-			user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
-			msg_admin_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
-
-			if(reagents.total_volume)
-				reagents.trans_to_ingest(M, 10)
-
-			playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
-			return 1
+	if(!R || !R.total_volume)
+		to_chat(user, "\red None of [src] left, oh no!")
 		return 0
 
-	attackby(obj/item/I, mob/user)
+	if(isliving(M))
+		var/mob/living/L = M
+		if(taste)
+			L.taste_reagents(reagents)
+	if(M == user)
+		to_chat(M, "\blue You swallow some of contents of the [src].")
+		if(reagents.total_volume)
+			reagents.trans_to_ingest(M, 10)
 
+		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+		return 1
+	else
+
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message("\red [user] attempts to feed [M] [src].", 1)
+		if(!do_mob(user, M)) return
+		for(var/mob/O in viewers(world.view, user))
+			O.show_message("\red [user] feeds [M] [src].", 1)
+
+		M.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been fed [src.name] by [user.name] ([user.ckey]) Reagents: [reagentlist(src)]</font>")
+		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Fed [src.name] by [M.name] ([M.ckey]) Reagents: [reagentlist(src)]</font>")
+		msg_admin_attack("[user.name] ([user.ckey]) fed [M.name] ([M.ckey]) with [src.name] (INTENT: [uppertext(user.a_intent)]) (<A HREF='?_src_=holder;adminplayerobservecoodjump=1;X=[user.x];Y=[user.y];Z=[user.z]'>JMP</a>)")
+
+		if(reagents.total_volume)
+			reagents.trans_to_ingest(M, 10)
+
+		playsound(M.loc,'sound/items/drink.ogg', rand(10,50), 1)
+		return 1
+	return 0
+
+/obj/item/weapon/reagent_containers/food/condiment/attackby(obj/item/I, mob/user)
 		return
 
-	afterattack(obj/target, mob/user , flag)
-		if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+/obj/item/weapon/reagent_containers/food/condiment/afterattack(obj/target, mob/user , flag)
+	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
-			if(!target.reagents.total_volume)
-				to_chat(user, "\red [target] is empty.")
-				return
-
-			if(reagents.total_volume >= reagents.maximum_volume)
-				to_chat(user, "\red [src] is full.")
-				return
-
-			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-			to_chat(user, "\blue You fill [src] with [trans] units of the contents of [target].")
-
-		//Something like a glass or a food item. Player probably wants to transfer TO it.
-		else if(target.is_open_container() || istype(target, /obj/item/weapon/reagent_containers/food/snacks))
-			if(!reagents.total_volume)
-				to_chat(user, "\red [src] is empty.")
-				return
-			if(target.reagents.total_volume >= target.reagents.maximum_volume)
-				to_chat(user, "\red you can't add anymore to [target].")
-				return
-			var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-			to_chat(user, "\blue You transfer [trans] units of the condiment to [target].")
-
-	on_reagent_change()
-		if(icon_state == "saltshakersmall" || icon_state == "peppermillsmall")
+		if(!target.reagents.total_volume)
+			to_chat(user, "\red [target] is empty.")
 			return
-		if(reagents.reagent_list.len > 0)
-			switch(reagents.get_master_reagent_id())
-				if("ketchup")
-					name = "ketchup"
-					desc = "You feel more American already."
-					icon_state = "ketchup"
-				if("capsaicin")
-					name = "hotsauce"
-					desc = "You can almost TASTE the stomach ulcers now!"
-					icon_state = "hotsauce"
-				if("enzyme")
-					name = "universal Enzyme"
-					desc = "Used in cooking various dishes."
-					icon_state = "enzyme"
-				if("soysauce")
-					name = "soy sauce"
-					desc = "A salty soy-based flavoring."
-					icon_state = "soysauce"
-				if("frostoil")
-					name = "coldsauce"
-					desc = "Leaves the tongue numb in its passage."
-					icon_state = "coldsauce"
-				if("sodiumchloride")
-					name = "salt shaker"
-					desc = "Salt. From space oceans, presumably."
-					icon_state = "saltshakersmall"
-				if("rice")
-					name = "rice sack"
-					desc = "Salt. From space oceans, presumably."
-					icon_state = "rice"
-				if("blackpepper")
-					name = "pepper mill"
-					desc = "Often used to flavor food or make people sneeze."
-					icon_state = "peppermillsmall"
-				if("cornoil")
-					name = "corn oil"
-					desc = "A delicious oil used in cooking. Made from corn."
-					icon_state = "oliveoil"
-				if("flour")
-					name = "flour"
-					desc = "A small bag filled with some flour."
-					icon_state = "flour"
-				if("sugar")
-					name = "sugar"
-					desc = "Tastey space sugar!"
-					icon_state = "sugar"
+
+		if(reagents.total_volume >= reagents.maximum_volume)
+			to_chat(user, "\red [src] is full.")
+			return
+
+		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
+		to_chat(user, "\blue You fill [src] with [trans] units of the contents of [target].")
+
+	//Something like a glass or a food item. Player probably wants to transfer TO it.
+	else if(target.is_open_container() || istype(target, /obj/item/weapon/reagent_containers/food/snacks))
+		if(!reagents.total_volume)
+			to_chat(user, "\red [src] is empty.")
+			return
+		if(target.reagents.total_volume >= target.reagents.maximum_volume)
+			to_chat(user, "\red you can't add anymore to [target].")
+			return
+		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
+		to_chat(user, "\blue You transfer [trans] units of the condiment to [target].")
+
+/obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
+	if(reagents.reagent_list.len == 0 && empty)
+		icon_state = empty
+		desc = "An empty [src.name].[initial(desc)]"
+		return
+
+	if(reagents.reagent_list.len > 0)
+		switch(reagents.get_master_reagent_id())
+			if("ketchup")
+				return
+			if("capsaicin")
+				return
+			if("enzyme")
+				return
+			if("soysauce")
+				return
+			if("frostoil")
+				return
+			if("sodiumchloride")
+				return
+			if("rice")
+				return
+			if("blackpepper")
+				return
+			if("cornoil")
+				return
+			if("flour")
+				return
+			if("sugar")
+				return
+			else
+				if (reagents.reagent_list.len==1)
+					desc = "Looks like it is [reagents.get_master_reagent_name()], but you are not sure."
 				else
-					name = "misc condiment bottle"
-					if (reagents.reagent_list.len==1)
-						desc = "Looks like it is [reagents.get_master_reagent_name()], but you are not sure."
-					else
-						desc = "A mixture of various condiments. [reagents.get_master_reagent_name()] is one of them."
-					icon_state = "mixedcondiments"
-		else
-			icon_state = "emptycondiment"
-			name = "Condiment Bottle"
-			desc = "An empty condiment bottle."
-			return
+					desc = "A mixture of various condiments. [reagents.get_master_reagent_name()] is one of them."
+
+//////////////////////
+//LIST OF CONDIMENTS//
+//////////////////////
+
+//SACKS
+
+/obj/item/weapon/reagent_containers/food/condiment/flour
+	name = "flour sack"
+	desc = "A small bag filled with some flour."
+	icon_state = "flour"
+	item_state = "flour"
+	empty = "flour_empty"
+	list_reagents = list("flour" = 30)
+
+/obj/item/weapon/reagent_containers/food/condiment/sugar
+	name = "sugar sack"
+	desc = "Tastey space sugar!"
+	icon_state = "sugar"
+	item_state = "sugar"
+	empty = "sugar_empty"
+	list_reagents = list("sugar" = 40)
+
+/obj/item/weapon/reagent_containers/food/condiment/rice
+	name = "rice sack"
+	desc = "Salt. From space oceans, presumably. Good for cooking!"
+	icon_state = "rice"
+	item_state = "rice"
+	empty = "rice_empty"
+	list_reagents = list("rice" = 30)
+
+//SAUCES
+
+/obj/item/weapon/reagent_containers/food/condiment/soysauce
+	name = "soy sauce"
+	desc = "A salty soy-based flavoring."
+	icon_state = "soysauce"
+	empty = "soysauce_empty"
+	list_reagents = list("soysauce" = 50)
+
+/obj/item/weapon/reagent_containers/food/condiment/hotsauce
+	name = "hotsauce"
+	desc = "You can almost TASTE the stomach ulcers now!"
+	icon_state = "hotsauce"
+	empty = "hotsauce_empty"
+	list_reagents = list("capsaicin" = 50)
+
+/obj/item/weapon/reagent_containers/food/condiment/ketchup
+	name = "ketchup"
+	desc = "You feel more American already."
+	icon_state = "ketchup"
+	empty = "ketchup_empty"
+	list_reagents = list("ketchup" = 50)
+
+/obj/item/weapon/reagent_containers/food/condiment/coldsauce
+	name = "coldsauce"
+	desc = "Leaves the tongue numb in its passage."
+	icon_state = "coldsauce"
+	list_reagents = list("frostoil" = 50)
+
+/obj/item/weapon/reagent_containers/food/condiment/cornoil
+	name = "corn oil"
+	desc = "A delicious oil used in cooking. Made from corn."
+	icon_state = "cornoil"
+	empty = "cornoil_empty"
+	list_reagents = list("cornoil" = 50)
+
+//SUPPLEMENTS
 
 /obj/item/weapon/reagent_containers/food/condiment/enzyme
 	name = "universal enzyme"
 	desc = "Used in cooking various dishes."
 	icon_state = "enzyme"
-
-/obj/item/weapon/reagent_containers/food/condiment/enzyme/atom_init()
-	. = ..()
-	reagents.add_reagent("enzyme", 50)
-
-/obj/item/weapon/reagent_containers/food/condiment/flour
-	name = "flour"
-	desc = "A small bag filled with some flour."
-	icon_state = "flour"
-
-/obj/item/weapon/reagent_containers/food/condiment/flour/atom_init()
-	. = ..()
-	reagents.add_reagent("flour", 30)
-
-/obj/item/weapon/reagent_containers/food/condiment/sugar
-	name = "sugar"
-	desc = "Tastey space sugar!"
-	icon_state = "sugar"
-
-/obj/item/weapon/reagent_containers/food/condiment/sugar/atom_init()
-	. = ..()
-	reagents.add_reagent("sugar", 40)
+	item_state = "enzyme"
+	empty = "enzyme_empty"
+	list_reagents = list("enzyme" = 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/saltshaker		//Seperate from above since it's a small shaker rather then
 	name = "salt shaker"											//	a large one.
 	desc = "Salt. From space oceans, presumably."
 	icon_state = "saltshakersmall"
+	empty = "saltshakersmall_empty"
 	possible_transfer_amounts = list(1,20) //for clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
-
-/obj/item/weapon/reagent_containers/food/condiment/saltshaker/atom_init()
-	. = ..()
-	reagents.add_reagent("sodiumchloride", 20)
+	list_reagents = list("sodiumchloride" = 20)
 
 /obj/item/weapon/reagent_containers/food/condiment/peppermill
 	name = "pepper mill"
@@ -198,17 +219,4 @@
 	possible_transfer_amounts = list(1,20) //for clown turning the lid off
 	amount_per_transfer_from_this = 1
 	volume = 20
-
-/obj/item/weapon/reagent_containers/food/condiment/peppermill/atom_init()
-	. = ..()
-	reagents.add_reagent("blackpepper", 20)
-
-/obj/item/weapon/reagent_containers/food/condiment/rice
-	name = "rice sack"
-	desc = "A big bag of rice. Good for cooking!"
-	icon_state = "rice"
-	item_state = "flour"
-
-/obj/item/weapon/reagent_containers/food/condiment/rice/atom_init()
-	. = ..()
-	reagents.add_reagent("rice", 30)
+	list_reagents = list("blackpepper" = 20)
