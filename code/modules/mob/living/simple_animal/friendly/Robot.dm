@@ -7,7 +7,7 @@
 	desc = "Its a robot with shiny wheels. Sometimes sparks fly out of its hull."
 	speak = list("Beep", "Beep-beep", "Beeeepsky", "One...two...three...more...", "Z-z-z-zero", "One...null...Beep", "Analyzing...", "Successfully", "...this is a joke", "La la la...beep", "Boom...")
 	speak_emote = list("beeps", "rang out")
-	emote_hear = list("raises manipulators","twists the scanner")
+	emote_hear = list("raises manipulators", "twists the scanner")
 	emote_see = list("spinning around", "turns the indicator on and off")
 	speak_chance = 11
 	turns_per_move = 1
@@ -32,10 +32,10 @@
 /mob/living/simple_animal/det5/death()
 	..()
 	visible_message("<b>[src]</b> rang out 'd-d-d-data received...d-d-d-destruction'")
-	new /obj/item/stack/sheet/mineral/diamond(src.loc, 2)//drop diamond
-	new /obj/item/stack/sheet/mineral/silver(src.loc, 4)
-	new /obj/effect/decal/cleanable/blood/gibs/robot(src.loc)//drob blood robots
-	new /obj/effect/gibspawner/robot(src.loc)
+	new /obj/item/stack/sheet/mineral/diamond(loc, 2)//drop diamond
+	new /obj/item/stack/sheet/mineral/silver(loc, 4)
+	new /obj/effect/decal/cleanable/blood/gibs/robot(loc)//drob blood robots
+	new /obj/effect/gibspawner/robot(loc)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
