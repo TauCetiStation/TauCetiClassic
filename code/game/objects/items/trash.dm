@@ -34,7 +34,7 @@
 		name = "Plate"
 		icon_state = "plate"
 	snack_bowl
-		name = "Snack bowl"
+		name = "dirty bowl"
 		icon_state	= "snack_bowl"
 	pistachios
 		name = "Pistachios pack"

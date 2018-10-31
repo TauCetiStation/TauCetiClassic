@@ -68,7 +68,7 @@
 	diet_flags = DIET_PLANT
 	taste_message = "plant matter"
 
-/datum/reagent/nutriment/dairy // Milk-based biomatter.
+/datum/reagent/nutriment/dairy// Milk-based biomatter.
 	name = "dairy"
 	id = "dairy"
 	description = "A tasty substance that comes out of cows who eat lotsa grass"

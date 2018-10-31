@@ -1,4 +1,4 @@
-//Food items that are eaten normally and don't leave anything behind.
+
 /obj/item/weapon/reagent_containers/food/snacks/glowstick
 	name = "glowstick"
 	desc = ""
