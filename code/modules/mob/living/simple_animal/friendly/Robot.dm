@@ -17,7 +17,7 @@
 	speak_emote = list("beeps", "rang out")
 	emote_hear = list("raises manipulators", "twists the scanner")
 	emote_see = list("spinning around", "turns the indicator on and off")
-	speak_chance = 11
+	speak_chance = 15
 	turns_per_move = 1
 	see_in_dark = 6
 	health = 70
