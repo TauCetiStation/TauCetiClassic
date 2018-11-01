@@ -5,7 +5,7 @@
 	icon_living = "robot_rd"
 	icon_dead = "robot_rd_died"
 	desc = "Its a robot with shiny wheels. Sometimes sparks fly out of its hull."
-	speak = list("Beep", "Beep-beep", "Beeeepsky", "One...two...three...more...", "Z-z-z-zero", "One...null...Beep", "Analyzing...", "Successfully", "...this is a joke", "La la la...beep", "Boom...")
+	speak = list("Beep", "Beep-beep", "Beeeepsky", "One...two...three...more...", "Z-z-z-zero", "One...null...Beep", "Analyzing...", "Successfully", "...this is a joke", "La la la...beep", "Boom...", "Not enough time", "Science time", "ED-209 protect me")
 	speak_emote = list("beeps", "rang out")
 	emote_hear = list("raises manipulators", "twists the scanner")
 	emote_see = list("spinning around", "turns the indicator on and off")
