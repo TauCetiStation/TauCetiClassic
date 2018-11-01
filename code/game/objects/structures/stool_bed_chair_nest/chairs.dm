@@ -7,73 +7,42 @@
 	var/can_flipped = 0
 	var/flipped = 0
 	var/flip_angle = 0
-
-	var/propelled = 0 // Check for fire-extinguisher-driven chairs
-
-/obj/structure/stool/bed/chair/metal
-	icon_state = "chair_g"
-	can_flipped = 1
 	var/behind = null
 	var/behind_buckled = null
+
+	var/propelled = 0 // Check for fire-extinguisher-driven chairs
 
 /obj/structure/stool/bed/chair/barber
 	icon_state = "barber_chair"
 
+/obj/structure/stool/bed/chair/metal
+	icon_state = "chair_g"
+	can_flipped = 1
+	behind = "chair_behind_g"
+
 /obj/structure/stool/bed/chair/metal/blue
 	icon_state = "chair_blu"
+	behind = "chair_behind_blu"
 
 /obj/structure/stool/bed/chair/metal/yellow
 	icon_state = "chair_y"
+	behind = "chair_behind_y"
 
 /obj/structure/stool/bed/chair/metal/red
 	icon_state = "chair_r"
+	behind = "chair_behind_r"
 
 /obj/structure/stool/bed/chair/metal/green
 	icon_state = "chair_gr"
+	behind = "chair_behind_gr"
 
 /obj/structure/stool/bed/chair/metal/white
 	icon_state = "chair_w"
+	behind = "chair_behind_w"
 
 /obj/structure/stool/bed/chair/metal/black
 	icon_state = "chair_bla"
-
-/obj/structure/stool/bed/chair/metal/atom_init()
-	behind = "chair_behind_g"
-	. = ..()
-
-/obj/structure/stool/bed/chair/metal/blue/atom_init()
-	behind = "chair_behind_blu"
-	. = ..()
-
-/obj/structure/stool/bed/chair/metal/yellow/atom_init()
-	behind = "chair_behind_y"
-	. = ..()
-
-/obj/structure/stool/bed/chair/metal/red/atom_init()
-	behind = "chair_behind_r"
-	. = ..()
-
-/obj/structure/stool/bed/chair/metal/green/atom_init()
-	behind = "chair_behind_gr"
-	. = ..()
-
-/obj/structure/stool/bed/chair/metal/white/atom_init()
-	behind = "chair_behind_w"
-	. = ..()
-
-/obj/structure/stool/bed/chair/metal/black/atom_init()
 	behind = "chair_behind_bla"
-	. = ..()
-
-/obj/structure/stool/bed/chair/Move(atom/newloc, direct)
-	..()
-	handle_rotation()
-
-/obj/structure/stool/bed/chair/metal/post_buckle_mob(mob/living/M)
-	if(buckled_mob)
-		icon_state = behind
-	else
-		icon_state = initial(icon_state)
 
 /obj/structure/stool/bed/chair/schair
 	name = "shuttle chair"
@@ -98,6 +67,16 @@
 
 /obj/structure/stool/bed/chair/atom_init_late()
 	handle_rotation()
+
+/obj/structure/stool/bed/chair/Move(atom/newloc, direct)
+	..()
+	handle_rotation()
+
+/obj/structure/stool/bed/chair/metal/post_buckle_mob(mob/living/M)
+	if(buckled_mob && behind)
+		icon_state = behind
+	else
+		icon_state = initial(icon_state)
 
 /obj/structure/stool/bed/chair/attackby(obj/item/weapon/W, mob/user)
 	..()
@@ -151,10 +130,10 @@
 	return
 
 /obj/structure/stool/bed/chair/handle_rotation()	//making this into a seperate proc so office chairs can call it on Move()
-	if(src.dir == NORTH)
-		src.layer = FLY_LAYER
+	if(dir == NORTH)
+		layer = FLY_LAYER
 	else
-		src.layer = OBJ_LAYER
+		layer = OBJ_LAYER
 
 	if(buckled_mob)
 		buckled_mob.dir = dir
@@ -319,6 +298,35 @@
 
 /obj/structure/stool/bed/chair/office/light
 	icon_state = "officechair_white"
+	behind = "officechair_white_behind"
 
 /obj/structure/stool/bed/chair/office/dark
 	icon_state = "officechair_dark"
+	behind = "officechair_dark_behind"
+
+/obj/structure/stool/bed/chair/bench
+	name = "Bench"
+	desc = "You sit in this. Either by will or force."
+	icon_state = "bench_center"
+	var/back = null
+
+/obj/structure/stool/bed/chair/bench/atom_init()
+	back = image(icon, "[icon_state]_back", layer = FLY_LAYER)
+	. = ..()
+
+/obj/structure/stool/bed/chair/bench/post_buckle_mob(mob/living/M)
+	if(buckled_mob)
+		overlays += back
+	else
+		overlays -= back
+
+/obj/structure/stool/bed/chair/bench/handle_rotation()
+	if(buckled_mob)
+		buckled_mob.dir = dir
+		buckled_mob.update_canmove()
+
+/obj/structure/stool/bed/chair/bench/rotate()
+	return
+
+/obj/structure/stool/bed/chair/bench/blue
+	icon_state = "bl_bench_center"
