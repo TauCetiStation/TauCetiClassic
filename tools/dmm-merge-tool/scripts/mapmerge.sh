@@ -10,7 +10,5 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-$command clean --separator=NIX $1 $2
-
 echo "Map Merger successfully finished."
 exit 0
