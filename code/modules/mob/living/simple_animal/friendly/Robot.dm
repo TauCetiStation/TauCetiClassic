@@ -22,7 +22,8 @@
 
 /mob/living/simple_animal/det5/Life()
 	..()
-	if(health <= 0) return
+	if(health <= 0)
+		return
 	// spark for no reason
 	if(prob(5))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
