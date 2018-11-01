@@ -10,7 +10,5 @@ if %ERRORLEVEL% neq 0 (
     exit 1
 )
 
-cmd /c %command% clean --separator=NIX %1 %2
-
 echo Map Merger successfully finished.
 exit 0
