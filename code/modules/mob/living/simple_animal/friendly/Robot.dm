@@ -25,19 +25,19 @@
 	response_help  = "is played"
 	response_disarm = "gently pushes aside the"
 	response_harm   = "kicks the"
-	minbodytemp = 198		// Below -75 Degrees Celcius
+	minbodytemp = 198	// Below -75 Degrees Celcius
 	maxbodytemp = 423	// Above 150 Degrees Celcius
-	var/emagged = 0
-	var/cont = 0
-	var/targetexplode = 0
-	var/mob/living/simple_animal/mouse/movement_target
+	var/emagged = 0    // Trigger EMAG used
+	var/cont = 0	// Used command
+	var/targetexplode = 0	// Trigger explode
+	var/explosion_power = 1
 
 /mob/living/simple_animal/det5/Life()
 	..()
 	if(health <= 0)
 		return
 	// spark for no reason
-	cont = 0
+	cont = 0	// Clear
 	if(prob(5))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
@@ -58,35 +58,40 @@
 	return
 
 /mob/living/simple_animal/det5/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)
+	if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)	// Trigger EMAG
 		user.SetNextMove(CLICK_CD_MELEE)
 		Emag(user)
-	if (istype(W, /obj/item/device/det5controll))
+	if (istype(W, /obj/item/device/det5controll))	// Trigger Controller
 		user.SetNextMove(CLICK_CD_MELEE)
 		det5controll(user)
 	else
 		..()
-/mob/living/simple_animal/det5/HasProximity(atom/movable/AM)
+
+/mob/living/simple_animal/det5/HasProximity(atom/movable/AM)	// Trigger move
 	if(targetexplode == 1)
 		if(istype(AM, /mob/living/carbon))
+			targetexplode = 0
 			explode()
 
-mob/living/simple_animal/det5/proc/Emag(user)
+/mob/living/simple_animal/det5/proc/explode()	// explode
+	visible_message("<b>[src]</b> rang out 'The #xplosi@n is prep@red, @-a-activate'")
+	sleep(35)
+	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
+	death()
+
+mob/living/simple_animal/det5/proc/Emag(user)	// used EMAG
 	if(!emagged)
 		emagged = 1
 		visible_message("<b>[src]</b> rang out 'B-b-b-broken pro#oco%s %%ctivated'")
 
-/mob/living/simple_animal/det5/proc/explode()
-	visible_message("<b>[src]</b> rang out 'The #xplosi@n is prep@red, @-a-activate'")
-	sleep(20)
-	explosion(get_turf(src), 0, 1, 4, 7)
-	death()
-
-/mob/living/simple_animal/det5/proc/det5controll(user)
+/mob/living/simple_animal/det5/proc/det5controll(user)	// Used Controller (Input command)
 	if(health <=0)
 		return
 	else
-		cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start", , "Cancel")
+		if(emagged != 1)
+			cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start", , "Cancel")
+		else
+			cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Explode (50s). 4-Explode (targetmove)", , "Cancel")
 		if(cont == "1")
 			if(turns_per_move == 1)
 				turns_per_move = 100
