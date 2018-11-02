@@ -66,6 +66,10 @@
 		det5controll(user)
 	else
 		..()
+/mob/living/simple_animal/det5/HasProximity(atom/movable/AM)
+	if(targetexplode == 1)
+		if(istype(AM, /mob/living/carbon))
+			explode()
 
 mob/living/simple_animal/det5/proc/Emag(user)
 	if(!emagged)
@@ -74,7 +78,7 @@ mob/living/simple_animal/det5/proc/Emag(user)
 
 /mob/living/simple_animal/det5/proc/explode()
 	visible_message("<b>[src]</b> rang out 'The #xplosi@n is prep@red, @-a-activate'")
-	sleep(50)
+	sleep(20)
 	explosion(get_turf(src), 0, 1, 4, 7)
 	death()
 
