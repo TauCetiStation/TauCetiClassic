@@ -70595,6 +70595,13 @@
 	icon_state = "dark"
 	},
 /area/quartermaster/recycleroffice)
+"fhb" = (
+/obj/item/device/det5controll,
+/turf/simulated/floor{
+	dir = 5;
+	icon_state = "cafeteria"
+	},
+/area/crew_quarters/hor)
 "fib" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -120222,7 +120229,7 @@ aPa
 aQu
 aRr
 aST
-aST
+fhb
 aVW
 aXs
 aZO
