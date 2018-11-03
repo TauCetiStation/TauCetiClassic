@@ -112,12 +112,11 @@
 			health -= W.force
 			CheckHealth()
 			return ..()
-		else
-			var/obj/item/weapon/pickaxe/digTool = W
-			to_chat(user, "You start digging the [name].")
-			if(do_after(user, digTool.digspeed, target = src) && src)
-				to_chat(user, "You finished digging!")
-				Dismantle()
+		var/obj/item/weapon/pickaxe/digTool = W
+		to_chat(user, "You start digging the [name].")
+		if(do_after(user, digTool.digspeed, target = src) && src)
+			to_chat(user, "You finished digging!")
+			Dismantle()
 
 	else if(istype(W, /obj/item/weapon/wrench))
 		if(user.is_busy())
