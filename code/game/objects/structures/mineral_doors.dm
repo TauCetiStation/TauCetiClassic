@@ -29,7 +29,7 @@
 			if(AllChecks(user))
 				add_fingerprint(user)
 				Open()
-		else if(istype(M, /obj/mecha) && !isSwitchingStates && !anchored)
+		else if(istype(M, /obj/mecha) && !isSwitchingStates && anchored)
 			Open()
 
 /obj/structure/mineral_door/attack_ai(mob/user)
@@ -50,7 +50,7 @@
 		add_fingerprint(user)
 		SwitchState()
 
-/obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/obj/structure/mineral_door/CanPass(atom/movable/mover, turf/target, height = 0, air_group = 0)
 	if(air_group)
 		return FALSE
 	if(istype(mover, /obj/effect/beam))
@@ -105,7 +105,7 @@
 		icon_state = "[icon_state]open"
 
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/pickaxe))
+	if(istype(W, /obj/item/weapon/pickaxe))
 		if(user.is_busy())
 			return
 		if(istype(src, /obj/structure/mineral_door/wood) || istype(src, /obj/structure/mineral_door/metal))
@@ -113,9 +113,9 @@
 			CheckHealth()
 			return ..()
 		var/obj/item/weapon/pickaxe/digTool = W
-		to_chat(user, "You start digging the [name].")
-		if(do_after(user, digTool.digspeed, target = src) && src)
-			to_chat(user, "You finished digging!")
+		to_chat(user, "<span class='notice'>You start digging the [name].</span>")
+		if(do_after(user, digTool.digspeed, target = src))
+			to_chat(user, "<span class='notice'>You finished digging!</span>")
 			Dismantle()
 
 	else if(istype(W, /obj/item/weapon/wrench))
@@ -127,7 +127,7 @@
 			return ..()
 		playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
 		if(anchored)
-			to_chat(user, "<span class='notice'>'You start dissassembling the [name].</span>")
+			to_chat(user, "<span class='notice'>You start dissassembling the [name].</span>")
 			if(do_after(user, 40, target = src))
 				to_chat(user, "<span class='notice'>You dissassembled the [name]!</span>")
 				anchored = FALSE
@@ -137,7 +137,7 @@
 				density = FALSE
 				set_opacity(FALSE)
 		else
-			to_chat(user, "<span class='notice'>'You start assembling the [name]!</span>")
+			to_chat(user, "<span class='notice'>You start assembling the [name]!</span>")
 			if(do_after(user, 40, target = src))
 				to_chat(user, "<span class='notice'>You assembled the [name]!</span>")
 				anchored = TRUE
@@ -188,18 +188,18 @@
 	sheetType = /obj/item/stack/sheet/metal
 
 /obj/structure/mineral_door/metal/attackby(obj/item/weapon/W, mob/user)
-	if (istype(W, /obj/item/weapon/weldingtool))
+	if(istype(W, /obj/item/weapon/weldingtool))
 		if(user.is_busy())
 			return
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.isOn())
-			to_chat(user, "<span class='notice'>The welding tool needs to be on to start this task!</span>")
+			to_chat(user, "<span class='warning'>The welding tool needs to be on to start this task!</span>")
 			return
 		if(WT.remove_fuel(0, user))
 			playsound(src, 'sound/items/Welder2.ogg', 100, 1)
-			to_chat(user, "<span class='notice'>'You start dissassembling the [name] to the metal sheets.</span>")
+			to_chat(user, "<span class='notice'>You start dissassembling the [name] to the metal sheets.</span>")
 			if(do_after(user, 60, target = src))
-				to_chat(user, "<span class='warning'>You dissassembled the [name] to the metal sheets!</span>")
+				to_chat(user, "<span class='notice'>You dissassembled the [name] to the metal sheets!</span>")
 				Dismantle()
 		else
 			to_chat(user, "<span class='warning'>You need more welding fuel!</span>")
