@@ -44102,6 +44102,7 @@
 	pixel_x = -27;
 	pixel_y = 0
 	},
+/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
