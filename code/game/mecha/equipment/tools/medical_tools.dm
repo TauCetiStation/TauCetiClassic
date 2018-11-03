@@ -35,6 +35,29 @@
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/Exit(atom/movable/O)
 	return 0
 
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/putin(mob/living/carbon/target)
+	var/C = chassis.loc
+	var/T = target.loc
+	if(do_after_cooldown(target))
+		if(chassis.loc!=C || target.loc!=T)
+			return
+		if(occupant)
+			occupant_message("<font color=\"red\"><B>The sleeper is already occupied!</B></font>")
+			return
+		target.forceMove(src)
+		occupant = target
+		target.reset_view(src)
+		/*
+		if(target.client)
+		target.client.perspective = EYE_PERSPECTIVE
+		target.client.eye = chassis
+		*/
+		set_ready_state(0)
+		pr_mech_sleeper.start()
+		occupant_message("<font color='blue'>[target] successfully loaded into [src]. Life support functions engaged.</font>")
+		chassis.visible_message("[chassis] loads [target] into [src].")
+		log_message("[target] loaded. Life support functions engaged.")
+
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/action(mob/living/carbon/target)
 	if(!action_checks(target))
 		return
@@ -56,33 +79,15 @@
 
 	occupant_message("You are trying to put [target] into [src].")
 	chassis.visible_message("[chassis] is trying to put [target] into the [src].")
-
-	switch(alert(target,"[src] is trying to put you in a sleeper",,"Yes","No"))
-		if("Yes")
-			var/C = chassis.loc
-			var/T = target.loc
-			if(do_after_cooldown(target))
-				if(chassis.loc!=C || target.loc!=T)
-					return
-				if(occupant)
-					occupant_message("<font color=\"red\"><B>The sleeper is already occupied!</B></font>")
-					return
-				target.forceMove(src)
-				occupant = target
-				target.reset_view(src)
-				/*
-				if(target.client)
-					target.client.perspective = EYE_PERSPECTIVE
-					target.client.eye = chassis
-				*/
-				set_ready_state(0)
-				pr_mech_sleeper.start()
-				occupant_message("<font color='blue'>[target] successfully loaded into [src]. Life support functions engaged.</font>")
-				chassis.visible_message("[chassis] loads [target] into [src].")
-				log_message("[target] loaded. Life support functions engaged.")
-		if("No")
-			occupant_message("[target] rejects your offer!")
-	return
+	if(target.stat == UNCONSCIOUS || target.restrained() || !target.canmove)
+		putin(target)
+	else
+		switch(alert(target,"[src] is trying to put you in a sleeper",,"Yes","No"))
+			if("Yes")
+				putin(target)
+			if("No")
+				occupant_message("[target] rejects your offer!")
+		return
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/go_out()
 	if(!occupant)
@@ -101,6 +106,7 @@
 	pr_mech_sleeper.stop()
 	set_ready_state(1)
 	return
+
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/detach()
 	if(occupant)
