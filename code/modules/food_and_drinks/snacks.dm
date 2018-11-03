@@ -52,12 +52,27 @@
 	var/needs_fork = FALSE
 //																			//
 //--------------------------------------------------------------------------//
+//--------------------------------------------------------------------------//
+//								Raw Food is BAD								//
+//				Eating raw food is a bad idea, to be honest.				//
+	var/raw = FALSE
+//																			//
+//--------------------------------------------------------------------------//
+//--------------------------------------------------------------------------//
+//								Eatverb										//
+//	How do I eat thing ? (Note : Used for message, "bite", "chew", etc...)	//
+	var/eatverb
+//																			//
+//--------------------------------------------------------------------------//
 
 //Placeholder for effect that trigger on eating that aren't tied to reagents.
 /obj/item/weapon/reagent_containers/food/snacks/proc/On_Consume(mob/M)
 	if(!usr)	return
 	if(isliving(M))
 		var/mob/living/L = M
+		if(raw && prob(70))//raw food is bad for your stomach
+			L.adjustToxLoss(rand(1,5))
+			to_chat(L, "<span class='rose'>You can hear your belly purring loudly. Perhaps it was not worth eating raw [name]?</span>")
 		if(taste)
 			L.taste_reagents(reagents)
 
@@ -81,6 +96,8 @@
 	return
 
 /obj/item/weapon/reagent_containers/food/snacks/attack(mob/M, mob/user, def_zone)
+	if(!eatverb)
+		eatverb = pick("bite", "chew", "nibble", "gnaw", "gobble", "chomp")
 	if(!reagents || !reagents.total_volume)				//Shouldn't be needed but it checks to see if it has anything left in it.
 		to_chat(user, "<span class='rose'>None of [src] left, oh no!</span>")
 		M.drop_from_inventory(src)	//so icons update :[
@@ -98,13 +115,13 @@
 					to_chat(H, "<span class='rose'>You have a monitor for a head, where do you think you're going to put that?</span>")
 					return
 			if (fullness <= 50)
-				to_chat(M, "<span class='rose'>You hungrily chew out a piece of [src] and gobble it!</span>")
+				to_chat(M, "<span class='rose'>You hungrily [eatverb] a piece of \the [src] and gobble it!</span>")
 			if (fullness > 50 && fullness <= 150)
-				to_chat(M, "<span class='notice'>You hungrily begin to eat [src].</span>")
+				to_chat(M, "<span class='notice'>You hungrily [eatverb] \the [src].</span>")
 			if (fullness > 150 && fullness <= 350)
-				to_chat(M, "<span class='notice'>You take a bite of [src].</span>")
+				to_chat(M, "<span class='notice'>You [eatverb] \the [src].</span>")
 			if (fullness > 350 && fullness <= 550)
-				to_chat(M, "<span class='notice'>You unwillingly chew a bit of [src].</span>")
+				to_chat(M, "<span class='notice'>You unwillingly [eatverb] a bit of \the [src].</span>")
 			if (fullness > (550 * (1 + M.overeatduration / 2000)))	// The more you eat - the more you can eat
 				to_chat(M, "<span class='rose'>You cannot force any more of [src] to go down your throat.</span>")
 				return 0
@@ -797,162 +814,6 @@
 			src.reagents.del_reagent("tricordrazine")
 			src.name = "donk-pocket"
 	return
-
-/obj/item/weapon/reagent_containers/food/snacks/brainburger
-	name = "brainburger"
-	desc = "A strange looking burger. It looks almost sentient."
-	icon_state = "brainburger"
-	filling_color = "#F2B6EA"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/brainburger/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("alkysine", 6)
-
-/obj/item/weapon/reagent_containers/food/snacks/ghostburger
-	name = "Ghost Burger"
-	desc = "Spooky! It doesn't look very filling."
-	icon_state = "ghostburger"
-	filling_color = "#FFF2FF"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/ghostburger/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("ectoplasm", 1)
-
-
-/obj/item/weapon/reagent_containers/food/snacks/human
-	var/hname = ""
-	var/job = null
-	filling_color = "#D63C3C"
-
-/obj/item/weapon/reagent_containers/food/snacks/human/burger
-	name = "-burger"
-	desc = "A bloody burger."
-	icon_state = "hburger"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/human/burger/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/cheeseburger
-	name = "cheeseburger"
-	desc = "The cheese adds a good flavor."
-	icon_state = "cheeseburger"
-
-/obj/item/weapon/reagent_containers/food/snacks/cheeseburger/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 1)
-
-
-/obj/item/weapon/reagent_containers/food/snacks/monkeyburger
-	name = "burger"
-	desc = "The cornerstone of every nutritious breakfast."
-	icon_state = "hburger"
-	filling_color = "#D63C3C"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/monkeyburger/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/fishburger
-	name = "Fillet -o- Carp Sandwich"
-	desc = "Almost like a carp is yelling somewhere... Give me back that fillet -o- carp, give me that carp."
-	icon_state = "fishburger"
-	filling_color = "#FFDEFE"
-	bitesize = 3
-
-/obj/item/weapon/reagent_containers/food/snacks/fishburger/atom_init()
-	. = ..()
-	reagents.add_reagent("protein", 6)
-	reagents.add_reagent("carpotoxin", 3)
-
-/obj/item/weapon/reagent_containers/food/snacks/tofuburger
-	name = "Tofu Burger"
-	desc = "What.. is that meat?"
-	icon_state = "tofuburger"
-	filling_color = "#FFFEE0"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/tofuburger/atom_init()
-	. = ..()
-	reagents.add_reagent("plantmatter", 6)
-	reagents.add_reagent("vitamin", 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/roburger
-	name = "roburger"
-	desc = "The lettuce is the only organic component. Beep."
-	icon_state = "roburger"
-	filling_color = "#CCCCCC"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/roburger/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	if(prob(5))
-		reagents.add_reagent("nanites", 2)
-		reagents.add_reagent("vitamin", 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/roburgerbig
-	name = "roburger"
-	desc = "This massive patty looks like poison. Beep."
-	icon_state = "roburger"
-	filling_color = "#CCCCCC"
-	volume = 100
-	bitesize = 0.1
-
-/obj/item/weapon/reagent_containers/food/snacks/roburgerbig/atom_init()
-	. = ..()
-	reagents.add_reagent("nanites", 100)
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 5)
-
-/obj/item/weapon/reagent_containers/food/snacks/xenoburger
-	name = "xenoburger"
-	desc = "Smells caustic. Tastes like heresy."
-	icon_state = "xburger"
-	filling_color = "#43DE18"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/xenoburger/atom_init()
-	. = ..()
-	reagents.add_reagent("protein", 6)
-	reagents.add_reagent("vitamin", 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/clownburger
-	name = "Clown Burger"
-	desc = "This tastes funny..."
-	icon_state = "clownburger"
-	filling_color = "#FF00FF"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/clownburger/atom_init()
-	. = ..()
-/*
-	var/datum/disease/F = new /datum/disease/pierrot_throat(0)
-	var/list/data = list("viruses"= list(F))
-	reagents.add_reagent("blood", 4, data)
-*/
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/mimeburger
-	name = "Mime Burger"
-	desc = "Its taste defies language."
-	icon_state = "mimeburger"
-	filling_color = "#FFFFFF"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/mimeburger/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/omelette
 	name = "Omelette Du Fromage"
@@ -3068,187 +2929,6 @@
 	reagents.add_reagent("nutriment", 6)
 	bitesize = 4
 
-///////////////////////////////////////////
-// new old food stuff from bs12
-///////////////////////////////////////////
-
-/* Egg + flour = dough
-/obj/item/weapon/reagent_containers/food/snacks/egg/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/flour))
-		new /obj/item/weapon/reagent_containers/food/snacks/dough(src)
-		to_chat(user, "<span class='notice'>You make some dough.</span>")
-		qdel(W)
-		qdel(src) */
-
-/obj/item/weapon/reagent_containers/food/snacks/dough
-	name = "dough"
-	desc = "A piece of dough."
-	icon = 'icons/obj/food_ingredients.dmi'
-	icon_state = "dough"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/dough/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 6)
-
-// Dough + rolling pin = flat dough
-/obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/kitchen/rollingpin))
-		new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(src)
-		to_chat(user, "<span class='notice'>You flatten the dough.</span>")
-		qdel(src)
-
-// slicable into 3xdoughslices
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough
-	name = "flat dough"
-	desc = "A flattened dough."
-	icon = 'icons/obj/food_ingredients.dmi'
-	icon_state = "flat dough"
-	slice_path = /obj/item/weapon/reagent_containers/food/snacks/doughslice
-	slices_num = 3
-
-/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 6)
-
-/obj/item/weapon/reagent_containers/food/snacks/doughslice
-	name = "dough slice"
-	desc = "A building block of an impressive dish."
-	icon = 'icons/obj/food_ingredients.dmi'
-	icon_state = "doughslice"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/doughslice/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/bun
-	name = "bun"
-	desc = "A base for any self-respecting burger."
-	icon = 'icons/obj/food_ingredients.dmi'
-	icon_state = "bun"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/bun/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/bun/attackby(obj/item/weapon/W, mob/user)
-	// Bun + meatball = burger
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/meatball))
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeyburger(src)
-		to_chat(user, "<span class='notice'>You make a burger.</span>")
-		qdel(W)
-		qdel(src)
-
-	// Bun + cutlet = hamburger
-	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/cutlet))
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeyburger(src)
-		to_chat(user, "<span class='notice'>You make a burger.</span>")
-		qdel(W)
-		qdel(src)
-
-	// Bun + sausage = hotdog
-	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/sausage))
-		new /obj/item/weapon/reagent_containers/food/snacks/hotdog(src)
-		to_chat(user, "<span class='notice'>You make a hotdog.</span>")
-		qdel(W)
-		qdel(src)
-
-// Burger + cheese wedge = cheeseburger
-/obj/item/weapon/reagent_containers/food/snacks/monkeyburger/attackby(obj/item/weapon/reagent_containers/food/snacks/cheesewedge/W, mob/user)
-	if(istype(W))// && !istype(src,/obj/item/weapon/reagent_containers/food/snacks/cheesewedge))
-		new /obj/item/weapon/reagent_containers/food/snacks/cheeseburger(src)
-		to_chat(user, "<span class='notice'>You make a cheeseburger.</span>")
-		qdel(W)
-		qdel(src)
-		return
-	else
-		..()
-
-// Human Burger + cheese wedge = cheeseburger
-/obj/item/weapon/reagent_containers/food/snacks/human/burger/attackby(obj/item/weapon/reagent_containers/food/snacks/cheesewedge/W, mob/user)
-	if(istype(W))
-		new /obj/item/weapon/reagent_containers/food/snacks/cheeseburger(src)
-		to_chat(user, "<span class='notice'>You make a cheeseburger.</span>")
-		qdel(W)
-		qdel(src)
-		return
-	else
-		..()
-
-/obj/item/weapon/reagent_containers/food/snacks/taco
-	name = "taco"
-	desc = "Take a bite!"
-	icon_state = "taco"
-	bitesize = 3
-
-/obj/item/weapon/reagent_containers/food/snacks/taco/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 7)
-	reagents.add_reagent("vitamin", 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/rawcutlet
-	name = "raw cutlet"
-	desc = "A thin piece of raw meat."
-	icon = 'icons/obj/food_ingredients.dmi'
-	icon_state = "rawcutlet"
-	bitesize = 1
-
-/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/cutlet
-	name = "cutlet"
-	desc = "A tasty meat slice."
-	icon = 'icons/obj/food_ingredients.dmi'
-	icon_state = "cutlet"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/cutlet/atom_init()
-	. = ..()
-	reagents.add_reagent("protein", 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/kitchenknife))
-		new /obj/item/weapon/reagent_containers/food/snacks/raw_bacon(src)
-		to_chat(user, "<span class='notice'>You make a bacon.</span>")
-		qdel(src)
-
-/obj/item/weapon/reagent_containers/food/snacks/cutlet
-	name = "cutlet"
-	desc = "A tasty meat slice."
-	icon = 'icons/obj/food_ingredients.dmi'
-	icon_state = "cutlet"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/cutlet/atom_init()
-	. = ..()
-	reagents.add_reagent("protein", 2)
-
-/obj/item/weapon/reagent_containers/food/snacks/deepfryholder
-	name = "Deep Fried Foods Holder Obj"
-	desc = "If you can see this description the code for the deep fryer fucked up."
-	icon_state = "deepfried_holder_icon"
-	filling_color = "#FFAD33"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/deepfryholder/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 3)
-
-/obj/item/weapon/reagent_containers/food/snacks/rawmeatball
-	name = "raw meatball"
-	desc = "A raw meatball."
-	icon = 'icons/obj/food_ingredients.dmi'
-	icon_state = "rawmeatball"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/rawmeatball/atom_init()
-	. = ..()
-	reagents.add_reagent("protein", 2)
-
 /obj/item/weapon/reagent_containers/food/snacks/hotdog
 	name = "hotdog"
 	desc = "Unrelated to dogs, maybe."
@@ -3258,38 +2938,6 @@
 /obj/item/weapon/reagent_containers/food/snacks/hotdog/atom_init()
 	. = ..()
 	reagents.add_reagent("protein", 6)
-
-/obj/item/weapon/reagent_containers/food/snacks/flatbread
-	name = "flatbread"
-	desc = "Bland but filling."
-	icon = 'icons/obj/food_ingredients.dmi'
-	icon_state = "flatbread"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/flatbread/atom_init()
-	. = ..()
-	reagents.add_reagent("plantmatter", 3)
-	reagents.add_reagent("vitamin", 1)
-
-// potato + knife = raw sticks
-/obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/kitchenknife))
-		new /obj/item/weapon/reagent_containers/food/snacks/rawsticks(src)
-		to_chat(user, "You cut the potato.")
-		qdel(src)
-	else
-		..()
-
-/obj/item/weapon/reagent_containers/food/snacks/rawsticks
-	name = "raw potato sticks"
-	desc = "Raw fries, not very tasty."
-	icon = 'icons/obj/food_ingredients.dmi'
-	icon_state = "rawsticks"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/rawsticks/atom_init()
-	. = ..()
-	reagents.add_reagent("plantmatter", 3)
 
 ////////////////////////////////FOOD ADDITIONS////////////////////////////////////////////
 
@@ -3403,6 +3051,17 @@
 	trash = /obj/item/trash/plate
 	filling_color = "#B97A57"
 	bitesize = 2
+
+/obj/item/weapon/reagent_containers/food/snacks/taco
+	name = "taco"
+	desc = "Take a bite!"
+	icon_state = "taco"
+	bitesize = 3
+
+/obj/item/weapon/reagent_containers/food/snacks/taco/atom_init()
+	. = ..()
+	reagents.add_reagent("nutriment", 7)
+	reagents.add_reagent("vitamin", 1)
 
 /obj/item/weapon/reagent_containers/food/snacks/burrito
 	name = "Burrito"
@@ -4267,17 +3926,3 @@
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/wtf/atom_init()
 	. = ..()
 	reagents.add_reagent("space_drugs", 2)
-
-///////////////////////////////////////////
-// Ectoplasm o.O
-///////////////////////////////////////////
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm
-	name = "ectoplasm"
-	desc = "Spooky! Do not consume under any circumstances."
-	gender = PLURAL
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "ectoplasm"
-
-/obj/item/weapon/reagent_containers/food/snacks/ectoplasm/atom_init()
-	. = ..()
-	reagents.add_reagent("ectoplasm", 5)

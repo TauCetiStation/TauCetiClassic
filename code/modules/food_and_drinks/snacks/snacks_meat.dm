@@ -1,3 +1,12 @@
+
+///-----------------------------------------------------//
+///														//
+///						Meat							//
+///			Animal flesh that is eaten as food.			//
+///			Contains protein.							//
+///														//
+///-----------------------------------------------------//
+
 /obj/item/weapon/reagent_containers/food/snacks/meat
 	name = "meat"
 	desc = "A slab of meat."
@@ -5,10 +14,7 @@
 	health = 180
 	filling_color = "#FF1C1C"
 	bitesize = 3
-
-/obj/item/weapon/reagent_containers/food/snacks/meat/atom_init()
-	. = ..()
-	reagents.add_reagent("protein", 3)
+	list_reagents = list("protein" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/kitchenknife))
@@ -26,8 +32,6 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/human
 	name = "meat"
-	var/subjectname = ""
-	var/subjectjob = null
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/slab/meatproduct
 	name = "meat product"

@@ -16,7 +16,7 @@
 
 	name = "consumable object"
 
-	icon = 'icons/obj/food_and_drinks/food.dmi'
+	icon = 'icons/obj/food_and_drinks/snacks.dmi'
 	lefthand_file = 'icons/mob/inhands/food_n_drinks/food_n_drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/food_n_drinks/food_n_drinks_righthand.dmi'
 

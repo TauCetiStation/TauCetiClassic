@@ -1,11 +1,12 @@
 
+///-----------------------------------------------------//
+///														//
+///					Grown Food							//
+///		Foods that are produced from hydroponics		//
+///	Data from the seeds carry over to these grown foods	//
+///														//
+///-----------------------------------------------------//
 
-// ***********************************************************
-// Foods that are produced from hydroponics ~~~~~~~~~~
-// Data from the seeds carry over to these grown foods
-// ***********************************************************
-
-//Grown foods
 //Subclass so we can pass on values
 /obj/item/weapon/reagent_containers/food/snacks/grown
 	var/seed = ""
@@ -25,8 +26,6 @@
 	if (!isnull(newpotency))
 		potency = newpotency
 	. = ..()
-	pixel_x = rand(-5.0, 5)
-	pixel_y = rand(-5.0, 5)
 
 /obj/item/weapon/reagent_containers/food/snacks/grown/attackby(obj/item/O, mob/user)
 	..()

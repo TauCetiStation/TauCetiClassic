@@ -6,6 +6,30 @@
 //The condiments food-subtype is for stuff you don't actually eat but you use to modify existing food. They all
 //leave empty containers when used up and can be filled/re-filled with other items. Formatting for first section is identical
 //to mixed-drinks code. If you want an object that starts pre-loaded, you need to make it in addition to the other code.
+//
+//			LIST:
+//
+//	*Condiment Shelf
+//
+//	Sacks
+//	*Flour sack
+//	*Sugar sack
+//	*Rice sack
+//
+//	Sauces
+//	*Soy sauce
+//	*Hot sauce
+//	*Ketchup
+//	*Cold sauce
+//	*Corn oil
+//
+//	Supplements(topics)
+//	*Universal enzyme
+//	*Salt shaker
+//	*Pepper mill
+//	*Honey pot
+//
+///-----------------------------------------------------//
 
 /obj/item/weapon/reagent_containers/food/condiment
 	name = "Condiment Container"
@@ -91,13 +115,17 @@
 		to_chat(user, "\blue You transfer [trans] units of the condiment to [target].")
 
 /obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
-	if(reagents.reagent_list.len == 0 && empty)
+	if(reagents.reagent_list.len == 0 && empty)//If its empty we change the sprite and desc
 		icon_state = empty
 		desc = "An empty [src.name].[initial(desc)]"
 		return
 
-	if(reagents.reagent_list.len > 0)
+	if(reagents.reagent_list.len > 0)//So here we change the desc if condiment contains multiple reagents
 		switch(reagents.get_master_reagent_id())
+			if("sodiumchloride")
+				return
+			if("blackpepper")
+				return
 			if("ketchup")
 				return
 			if("capsaicin")
@@ -120,11 +148,113 @@
 				return
 			if("sugar")
 				return
+			if("honey")
+				return
 			else
 				if (reagents.reagent_list.len==1)
 					desc = "Looks like it is [reagents.get_master_reagent_name()], but you are not sure."
 				else
 					desc = "A mixture of various condiments. [reagents.get_master_reagent_name()] is one of them."
+
+///////////////////
+//Condiment Shelf//
+///////////////////
+//Placed in the kitchen
+
+/obj/structure/condiment_shelf
+	name = "condiment shelf"
+	desc = "Its a small wooden shelf for spices and seasonings. Buon appetito!"
+	icon = 'icons/obj/food_and_drinks/cond_shelf.dmi'
+	icon_state = "cond_shelf"
+	anchored = 1
+	density = 1
+	opacity = 1
+	var/input_shelf = null
+	var/list/can_be_placed = = list(/obj/item/weapon/reagent_containers/food/condiment,//Stuff that we can put on the shelf
+					/obj/item/weapon/reagent_containers/food/condiment/sugar,
+					/obj/item/weapon/reagent_containers/food/condiment/rice,
+					/obj/item/weapon/reagent_containers/food/condiment/soysauce,
+					/obj/item/weapon/reagent_containers/food/condiment/hotsauce,
+					/obj/item/weapon/reagent_containers/food/condiment/ketchup,
+					/obj/item/weapon/reagent_containers/food/condiment/coldsauce,
+					/obj/item/weapon/reagent_containers/food/condiment/cornoil,
+					/obj/item/weapon/reagent_containers/food/condiment/enzyme,
+					/obj/item/weapon/reagent_containers/food/condiment/saltshaker,
+					/obj/item/weapon/reagent_containers/food/condiment/peppermill,)
+
+/obj/structure/condiment_shelf/atom_init()
+	. = ..()
+	new /obj/item/weapon/reagent_containers/food/condiment/sugar(src)
+	new /obj/item/weapon/reagent_containers/food/condiment/rice(src)
+	new /obj/item/weapon/reagent_containers/food/condiment/ketchup(src)
+	new /obj/item/weapon/reagent_containers/food/condiment/enzyme(src)
+	new /obj/item/weapon/reagent_containers/food/condiment/saltshaker(src)
+	new /obj/item/weapon/reagent_containers/food/condiment/peppermill(src)
+	for(var/obj/item/I in loc)
+		if(I == can_be_placed)
+			I.loc = src
+	update_icon()
+
+/obj/structure/condiment_shelf/attackby(obj/O, mob/user)
+	if(O == can_be_placed)
+		if(contents.len < 7)
+			user.drop_item()
+			O.loc = src
+			input_shelf = O
+			update_icon()
+		else
+			to_chat(user, "<span class='rose'>[src] is full!</span>")
+	else
+		to_chat(user, "<span class='rose'>What? This shelf is only for spices and sauces!</span>")
+		..()
+
+/obj/structure/condiment_shelf/attack_hand(mob/user)
+	if(contents.len)
+		var/obj/item/weapon/reagent_containers/food/condiment/choice = input("Which condiment would you like to remove from the shelf?") in contents as obj|null
+		if(choice)
+			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
+				return
+			if(ishuman(user))
+				if(!user.get_active_hand())
+					user.put_in_hands(choice)
+			else
+				choice.loc = get_turf(src)
+			update_icon()
+
+/obj/structure/condiment_shelf/ex_act(severity)
+	switch(severity)
+		if(1.0)
+			for(var/obj/item/weapon/reagent_containers/food/condiment/b in contents)
+				qdel(b)
+			qdel(src)
+			return
+		if(2.0)
+			for(var/obj/item/weapon/reagent_containers/food/condiment/b in contents)
+				if (prob(50)) b.loc = (get_turf(src))
+				else del(b)
+			qdel(src)
+			return
+		if(3.0)
+			if (prob(50))
+				for(var/obj/item/weapon/reagent_containers/food/condiment/b in contents)
+					b.loc = (get_turf(src))
+				qdel(src)
+			return
+		else
+	return
+
+/obj/structure/condiment_shelf/update_icon()
+	overlays.cut()
+	if(contents.len == 0)
+		return
+	var/number = 0
+	for(var/obj/item/F in contents)
+		if(F == can_be_placed)
+			var/icon/condiment = icon('icons/obj/food_and_drinks/cond_shelf.dmi',"[F.icon_state]")
+			var/icon/main_icon = getFlatIcon(src)
+			main_icon.Blend(condiment, ICON_OVERLAY, 0, number)
+			number ++
+	number = 0
 
 //////////////////////
 //LIST OF CONDIMENTS//
@@ -163,14 +293,14 @@
 	desc = "A salty soy-based flavoring."
 	icon_state = "soysauce"
 	empty = "soysauce_empty"
-	list_reagents = list("soysauce" = 50)
+	list_reagents = list("soysauce" = 40)
 
 /obj/item/weapon/reagent_containers/food/condiment/hotsauce
 	name = "hotsauce"
 	desc = "You can almost TASTE the stomach ulcers now!"
 	icon_state = "hotsauce"
 	empty = "hotsauce_empty"
-	list_reagents = list("capsaicin" = 50)
+	list_reagents = list("capsaicin" = 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/ketchup
 	name = "ketchup"
@@ -180,17 +310,17 @@
 	list_reagents = list("ketchup" = 50)
 
 /obj/item/weapon/reagent_containers/food/condiment/coldsauce
-	name = "coldsauce"
+	name = "cold sauce"
 	desc = "Leaves the tongue numb in its passage."
 	icon_state = "coldsauce"
-	list_reagents = list("frostoil" = 50)
+	list_reagents = list("frostoil" = 30)
 
 /obj/item/weapon/reagent_containers/food/condiment/cornoil
 	name = "corn oil"
 	desc = "A delicious oil used in cooking. Made from corn."
 	icon_state = "cornoil"
 	empty = "cornoil_empty"
-	list_reagents = list("cornoil" = 50)
+	list_reagents = list("cornoil" = 40)
 
 //SUPPLEMENTS
 
@@ -220,3 +350,9 @@
 	amount_per_transfer_from_this = 1
 	volume = 20
 	list_reagents = list("blackpepper" = 20)
+
+/obj/item/weapon/reagent_containers/food/condiment/honey
+	name = "honey pot"
+	desc = "Sweet and healthy!"
+	icon_state = "honey"
+	list_reagents = list("honey" = 40)

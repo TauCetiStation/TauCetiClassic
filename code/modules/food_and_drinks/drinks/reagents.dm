@@ -464,6 +464,30 @@
 	if(M.confused !=0)
 		M.confused = max(0, M.confused - 5)
 
+/datum/reagent/consumable/honey
+	name = "Honey"
+	id = "Honey"
+	description = "A golden yellow syrup, loaded with sugary sweetness."
+	reagent_state = LIQUID
+	color = "#FEAE00"
+	nutriment_factor = 15 * REAGENTS_METABOLISM
+	taste_message = "honey"
+
+/datum/reagent/consumable/honey/on_general_digest(mob/living/M)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(!holder)
+			return
+		H.nutrition += 15
+		if(H.getBruteLoss() && prob(60))
+			H.heal_organ_damage(2, 0)
+		if(H.getFireLoss() && prob(50))
+			H.heal_organ_damage(0, 2)
+		if(H.getToxLoss() && prob(50))
+			H.adjustToxLoss(-2)
+	..()
+
+
 //////////////////////////////////////////////The ten friggen million reagents that get you drunk//////////////////////////////////////////////
 
 /datum/reagent/consumable/atomicbomb
