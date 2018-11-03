@@ -29,15 +29,18 @@
 	maxbodytemp = 423	// Above 150 Degrees Celcius
 	var/emagged = 0    // Trigger EMAG used
 	var/cont = 0	// Used command
+	var/cont2 = 0
+	var/trigger = 0
 	var/targetexplode = 0	// Trigger explode
 	var/explosion_power = 1
+	var/act_emag
+	var/toinv
 
 /mob/living/simple_animal/det5/Life()
 	..()
 	if(health <= 0)
 		return
 	// spark for no reason
-	cont = 0	// Clear
 	if(prob(5))
 		var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 		s.set_up(3, 1, src)
@@ -60,16 +63,22 @@
 /mob/living/simple_animal/det5/attackby(obj/item/weapon/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)	// Trigger EMAG
 		user.SetNextMove(CLICK_CD_MELEE)
+		act_emag = user.name	   // Emag user saved
 		Emag(user)
 	if (istype(W, /obj/item/device/det5controll))	// Trigger Controller
 		user.SetNextMove(CLICK_CD_MELEE)
 		det5controll(user)
+	if(istype(W, /obj/item/weapon/paper))
+		user.drop_item()
+		toinv = W
+		W.loc = src
+		trigger = 1
 	else
 		..()
 
 /mob/living/simple_animal/det5/HasProximity(atom/movable/AM)	// Trigger move
 	if(targetexplode == 1)
-		if(istype(AM, /mob/living/carbon))
+		if(istype(AM, /mob/living/carbon) && !(AM.name == act_emag))	//do not explode EMAG USER
 			targetexplode = 0
 			explode()
 
@@ -79,7 +88,7 @@
 	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
 	death()
 
-mob/living/simple_animal/det5/proc/Emag(user)	// used EMAG
+/mob/living/simple_animal/det5/proc/Emag(user)	// used EMAG
 	if(!emagged)
 		emagged = 1
 		visible_message("<b>[src]</b> rang out 'B-b-b-broken pro#oco%s %%ctivated'")
@@ -89,33 +98,41 @@ mob/living/simple_animal/det5/proc/Emag(user)	// used EMAG
 		return
 	else
 		if(emagged != 1)
-			cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start", , "Cancel")
+			cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports).", , "Cancel")
 		else
-			cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Explode (50s). 4-Explode (targetmove)", , "Cancel")
+			cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports). 4-Explode (50s). 5-Explode using motion sensor", , "Cancel")
 		if(cont == "1")
 			if(turns_per_move == 1)
 				turns_per_move = 100
-				visible_message("<b>[src]</b> rang out 'Movement stopped'")
+				visible_message("<b>[src]</b> rang out 'Moving mode is off'")
+				cont = 0
 			else
 				turns_per_move = 1
-				visible_message("<b>[src]</b> rang out 'Motion activated'")
+				visible_message("<b>[src]</b> rang out 'Moving mode is on'")
+				cont = 0
 		if(cont == "2")
 			if(speak_chance == 15)
 				speak_chance = 0
-				visible_message("<b>[src]</b> rang out 'Talk stopped'")
+				visible_message("<b>[src]</b> rang out 'Speech mode is off'")
+				cont = 0
 			else
 				speak_chance = 15
-				visible_message("<b>[src]</b> rang out 'Talk activated'")
+				visible_message("<b>[src]</b> rang out 'Speech mode is on'")
+				cont = 0
 		if(cont == "3")
-			if(emagged != 1)
-				visible_message("<b>[src]</b> rang out 'Unknown command'")
-			else
-				visible_message("<b>[src]</b> rang out 'Self-d#str@ct pr@t@col a-a-a-activated'")
-				spawn (500)
-					src.explode()
+
+			cont = 0
 		if(cont == "4")
-			if(emagged != 1)
-				visible_message("<b>[src]</b> rang out 'Unknown command'")
-			else
+			if(emagged == 1)
+				visible_message("<b>[src]</b> rang out 'Self-d#str@ct pr@t@col a-a-a-activated'")
+				sleep(500)
+				src.explode()
+				cont = 0
+		if(cont == "5")
+			if(emagged == 1)
 				visible_message("<b>[src]</b> rang out 'Self-d##struct m@de with t@rget @ctiv@t#d'")
 				targetexplode = 1
+				cont = 0
+		if((cont != 1) && (cont != 2) && (cont != 3) && (cont != 4))
+			visible_message("<b>[src]</b> rang out 'Unknown command'")
+			cont = 0
