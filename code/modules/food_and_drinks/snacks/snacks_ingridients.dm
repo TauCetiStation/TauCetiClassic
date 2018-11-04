@@ -56,28 +56,6 @@
 	bitesize = 2
 	list_reagents = list("nutriment" = 6)
 
-// Monkey Burger + cheese wedge = cheeseburger
-/obj/item/weapon/reagent_containers/food/snacks/monkeyburger/attackby(obj/item/weapon/reagent_containers/food/snacks/cheesewedge/W, mob/user)
-	if(istype(W))// && !istype(src,/obj/item/weapon/reagent_containers/food/snacks/cheesewedge))
-		new /obj/item/weapon/reagent_containers/food/snacks/cheeseburger(src)
-		to_chat(user, "<span class='notice'>You make a cheeseburger.</span>")
-		qdel(W)
-		qdel(src)
-		return
-	else
-		..()
-
-// Human Burger + cheese wedge = cheeseburger
-/obj/item/weapon/reagent_containers/food/snacks/human/burger/attackby(obj/item/weapon/reagent_containers/food/snacks/cheesewedge/W, mob/user)
-	if(istype(W))
-		new /obj/item/weapon/reagent_containers/food/snacks/cheeseburger(src)
-		to_chat(user, "<span class='notice'>You make a cheeseburger.</span>")
-		qdel(W)
-		qdel(src)
-		return
-	else
-		..()
-
 /obj/item/weapon/reagent_containers/food/snacks/flatbread
 	name = "flatbread"
 	desc = "Bland but filling."
@@ -108,12 +86,6 @@
 	bitesize = 2
 	list_reagents = list("protein" = 2)
 
-/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/kitchenknife))
-		new /obj/item/weapon/reagent_containers/food/snacks/raw_bacon(src)
-		to_chat(user, "<span class='notice'>You make a bacon.</span>")
-		qdel(src)
-
 /obj/item/weapon/reagent_containers/food/snacks/rawmeatball
 	name = "raw meatball"
 	desc = "A raw meatball."
@@ -127,21 +99,19 @@
 // Potato stuff	//
 //////////////////
 
-// potato + knife = raw sticks
-/obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/kitchenknife))
-		new /obj/item/weapon/reagent_containers/food/snacks/rawsticks(src)
-		to_chat(user, "You cut the potato.")
-		qdel(src)
-	else
-		..()
+/obj/item/weapon/reagent_containers/food/snacks/cleanedpotato
+	name = "cleaned potato"
+	desc = "Raw potato. Guilty cadet's best friend."
+	icon = 'icons/obj/food_and_drinks/ingredients.dmi'
+	icon_state = "cleanedpotato"
+	bitesize = 2
+	list_reagents = list("plantmatter" = 3)
 
 /obj/item/weapon/reagent_containers/food/snacks/rawsticks
 	name = "raw potato sticks"
 	desc = "Raw fries, not very tasty."
 	icon = 'icons/obj/food_and_drinks/ingredients.dmi'
 	icon_state = "rawsticks"
-	raw = TRUE
 	bitesize = 2
 	list_reagents = list("plantmatter" = 3)
 

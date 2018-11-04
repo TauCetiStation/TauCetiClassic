@@ -14,63 +14,112 @@
 		qdel(W)
 		qdel(src) 			NO. Use bowl and spoon*/
 
+//MEAT//
+//raw cutlet + knife = bacon
+/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W,/obj/item/weapon/kitchenknife))
+		var/obj/item/weapon/reagent_containers/food/snacks/raw_bacon/F = new /obj/item/weapon/reagent_containers/food/snacks/raw_bacon(src)
+		if(user.l_hand == src || user.r_hand == src)
+			qdel(src)
+			user.put_in_hands(F)
+		else
+			qdel(src)
+		to_chat(user, "<span class='notice'>You make a bacon.</span>")
 
+// Burger + cheese wedge = cheeseburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/attackby(obj/item/weapon/reagent_containers/food/snacks/cheesewedge/W, mob/user)
+	if(istype(W))// && !istype(src,/obj/item/weapon/reagent_containers/food/snacks/cheesewedge))
+		new /obj/item/weapon/reagent_containers/food/snacks/burger/cheeseburger(src)
+		to_chat(user, "<span class='notice'>You make a cheeseburger.</span>")
+		qdel(W)
+		qdel(src)
+		return
+	else
+		..()
+
+// Human Burger + cheese wedge = cheeseburger
+/obj/item/weapon/reagent_containers/food/snacks/burger/human/burger/attackby(obj/item/weapon/reagent_containers/food/snacks/cheesewedge/W, mob/user)
+	if(istype(W))
+		new /obj/item/weapon/reagent_containers/food/snacks/burger/cheeseburger(src)
+		to_chat(user, "<span class='notice'>You make a cheeseburger.</span>")
+		qdel(W)
+		qdel(src)
+		return
+	else
+		..()
+
+//VEGETABLES//
+//Potato + cable coil = potato cell
+/obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W, mob/user)
+	..()
+	if(istype(W, /obj/item/stack/cable_coil))
+		var/obj/item/stack/cable_coil/C = W
+		if(C.use(5))
+			to_chat(user, "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>")
+			var/obj/item/weapon/stock_parts/cell/potato/pocell = new /obj/item/weapon/stock_parts/cell/potato(user.loc)
+			pocell.maxcharge = src.potency * 10
+			pocell.charge = pocell.maxcharge
+			qdel(src)
+			return
+
+// potato + knife = cleaned potato
+/obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W,/obj/item/weapon/kitchenknife))
+		var/obj/item/weapon/reagent_containers/food/snacks/cleanedpotato/P = new /obj/item/weapon/reagent_containers/food/snacks/cleanedpotato(src)
+		if(user.l_hand == src || user.r_hand == src)
+			qdel(src)
+			user.put_in_hands(P)
+		else
+			qdel(src)
+		to_chat(user, "<span class='notice'>You clean the potato.</span>")
+
+	else
+		..()
+
+// cleaned potato + knife = raw sticks
+/obj/item/weapon/reagent_containers/food/snacks/cleanedpotato/attackby(obj/item/weapon/W, mob/user)
+	if(istype(W,/obj/item/weapon/kitchenknife))
+		var/obj/item/weapon/reagent_containers/food/snacks/rawsticks/P = new /obj/item/weapon/reagent_containers/food/snacks/rawsticks(src)
+		if(user.l_hand == src || user.r_hand == src)
+			qdel(src)
+			user.put_in_hands(P)
+		else
+			qdel(src)
+		to_chat(user, "<span class='notice'>You cut the potato.</span>")
+	else
+		..()
+
+//DOUGH//
 // Dough + rolling pin = flat dough
 /obj/item/weapon/reagent_containers/food/snacks/dough/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/kitchen/rollingpin))
-		new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(src)
+		var/obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough/F = new /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough(src)
+		if(user.l_hand == src || user.r_hand == src)
+			qdel(src)
+			user.put_in_hands(F)
+		else
+			qdel(src)
 		to_chat(user, "<span class='notice'>You flatten the dough.</span>")
-		qdel(src)
 
 /obj/item/weapon/reagent_containers/food/snacks/bun/attackby(obj/item/weapon/W, mob/user)
-	// Bun + meatball = borglar
-	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/meatball))
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeyburger(src)
-		to_chat(user, "<span class='notice'>You make a burger.</span>")
-		qdel(W)
-		qdel(src)
-
 	// Bun + cutlet = borglar
-	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/cutlet))
-		new /obj/item/weapon/reagent_containers/food/snacks/monkeyburger(src)
+	if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/cutlet))
+		var/obj/item/weapon/reagent_containers/food/snacks/burger/F = new /obj/item/weapon/reagent_containers/food/snacks/burger(src)
+		if(user.l_hand == src || user.r_hand == src)
+			qdel(src)
+			user.put_in_hands(F)
+		else
+			qdel(src)
 		to_chat(user, "<span class='notice'>You make a burger.</span>")
 		qdel(W)
-		qdel(src)
 
 	// Bun + sausage = hotdog
 	else if(istype(W,/obj/item/weapon/reagent_containers/food/snacks/sausage))
-		new /obj/item/weapon/reagent_containers/food/snacks/hotdog(src)
+		var/obj/item/weapon/reagent_containers/food/snacks/hotdog/F = new /obj/item/weapon/reagent_containers/food/snacks/hotdog(src)
+		if(user.l_hand == src || user.r_hand == src)
+			qdel(src)
+			user.put_in_hands(F)
+		else
+			qdel(src)
 		to_chat(user, "<span class='notice'>You make a hotdog.</span>")
 		qdel(W)
-		qdel(src)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

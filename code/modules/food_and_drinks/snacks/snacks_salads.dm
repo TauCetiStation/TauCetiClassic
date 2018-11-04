@@ -7,7 +7,7 @@
 ///														//
 ///-----------------------------------------------------//
 
-//Salad Bowl
+//Bowl
 
 /obj/item/weapon/bowl
 	name = "kitchen bowl"
@@ -79,8 +79,14 @@
 
 
 //Dirty bowl
-/obj/item/trash/snack_bowl/salad_bowl
+/obj/item/weapon/dirty_bowl
+	name = "dirty bowl"
 	desc = "You gotta clean it up if you want to continue working with it."
+	icon = 'icons/obj/food_and_drinks/tools.dmi'
+	icon_state = "dirty_bowl"
+	w_class = 3
+	throw_speed = 3
+	throw_range = 3
 
 /obj/item/trash/snack_bowl/salad_bowl/attackby(obj/O, mob/user)
 	if(istype(O, /obj/item/weapon/soap))
@@ -95,14 +101,14 @@
 
 //Salad as snack type
 /obj/item/weapon/reagent_containers/food/snacks/salad
-	icon = 'icons/obj/food_and_drinks/salads.dmi'
-	trash = /obj/item/trash/snack_bowl
+	icon = 'icons/obj/food_and_drinks/soups_salads.dmi'
+	trash = /obj/item/weapon/dirty_bowl
+	w_class = 3
+	eatverb = pick("slurp","sip","suck","inhale")
 
-
-
-
-
-
+/obj/item/weapon/reagent_containers/food/snacks/salad/atom_init()
+	.=..()
+	eatverb = pick("slurp","sip","suck","inhale")
 
 
 

@@ -175,18 +175,6 @@
 	reagents.add_reagent("nutriment", 1+round((potency / 10), 1))
 	bitesize = reagents.total_volume
 
-/obj/item/weapon/reagent_containers/food/snacks/grown/potato/attackby(obj/item/weapon/W, mob/user)
-	..()
-	if(istype(W, /obj/item/stack/cable_coil))
-		var/obj/item/stack/cable_coil/C = W
-		if(C.use(5))
-			to_chat(user, "<span class='notice'>You add some cable to the potato and slide it inside the battery encasing.</span>")
-			var/obj/item/weapon/stock_parts/cell/potato/pocell = new /obj/item/weapon/stock_parts/cell/potato(user.loc)
-			pocell.maxcharge = src.potency * 10
-			pocell.charge = pocell.maxcharge
-			qdel(src)
-			return
-
 /obj/item/weapon/reagent_containers/food/snacks/grown/grapes
 	seed = "/obj/item/seeds/grapeseed"
 	name = "bunch of grapes"

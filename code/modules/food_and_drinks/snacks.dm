@@ -1613,31 +1613,6 @@
 	name = "neaera cube"
 	monkey_type = /mob/living/carbon/monkey/skrell
 
-
-/obj/item/weapon/reagent_containers/food/snacks/spellburger
-	name = "Spell Burger"
-	desc = "This is absolutely Ei Nath."
-	icon_state = "spellburger"
-	filling_color = "#D505FF"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/spellburger/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 1)
-
-/obj/item/weapon/reagent_containers/food/snacks/bigbiteburger
-	name = "Big Bite Burger"
-	desc = "Forget the Big Mac. THIS is the future!"
-	icon_state = "bigbiteburger"
-	filling_color = "#E3D681"
-	bitesize = 3
-
-/obj/item/weapon/reagent_containers/food/snacks/bigbiteburger/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 14)
-	reagents.add_reagent("vitamin", 2)
-
 /obj/item/weapon/reagent_containers/food/snacks/enchiladas
 	name = "Enchiladas"
 	desc = "Viva La Mexico!"
@@ -1813,29 +1788,6 @@
 	. = ..()
 	reagents.add_reagent("slimejelly", 5)
 
-/obj/item/weapon/reagent_containers/food/snacks/jellyburger
-	name = "Jelly Burger"
-	desc = "Culinary delight..?"
-	icon_state = "jellyburger"
-	filling_color = "#B572AB"
-
-/obj/item/weapon/reagent_containers/food/snacks/jellyburger/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 5)
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/jellyburger/slime
-
-/obj/item/weapon/reagent_containers/food/snacks/jellyburger/slime/atom_init()
-	. = ..()
-	reagents.add_reagent("slimejelly", 5)
-
-/obj/item/weapon/reagent_containers/food/snacks/jellyburger/cherry
-
-/obj/item/weapon/reagent_containers/food/snacks/jellyburger/cherry/atom_init()
-	. = ..()
-	reagents.add_reagent("cherryjelly", 5)
-
 /obj/item/weapon/reagent_containers/food/snacks/milosoup
 	name = "Milosoup"
 	desc = "The universes best soup! Yum!!!"
@@ -1975,18 +1927,6 @@
 	reagents.add_reagent("imidazoline", 3)
 	reagents.add_reagent("vitamin", 2)
 	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/superbiteburger
-	name = "Super Bite Burger"
-	desc = "This is a mountain of a burger. FOOD!"
-	icon_state = "superbiteburger"
-	filling_color = "#CCA26A"
-
-/obj/item/weapon/reagent_containers/food/snacks/superbiteburger/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 50)
-	reagents.add_reagent("vitamin", 5)
-	bitesize = 10
 
 /obj/item/weapon/reagent_containers/food/snacks/candiedapple
 	name = "Candied Apple"
