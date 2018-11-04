@@ -632,12 +632,25 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 
 		if(1.1) //Research viewer
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A>"
+			dat += "<A href='?src=\ref[src];menu=1.11'>Print</A><BR>"
 			dat += "<h3>Current Research Levels:</h3><BR><div class='statusDisplay'>"
 			for(var/datum/tech/T in files.known_tech)
 				dat += "[T.name]<BR>"
 				dat +=  "* Level: [T.level]<BR>"
 				dat +=  "* Summary: [T.desc]<HR>"
 			dat += "</div>"
+
+		if(1.11)
+			var/obj/item/weapon/paper/P = new /obj/item/weapon/paper(get_turf(src))
+			var/t1
+			for(var/datum/tech/T in files.known_tech)
+				t1 += "[T.name]<BR>"
+				t1 +=  "* Level: [T.level]<BR>"
+				t1 +=  "* Summary: [T.desc]<HR>"
+			t1 += "</div>"
+			P.info = t1
+			screen = 1.0
+			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
 
 		if(1.2) //Technology Disk Menu
 

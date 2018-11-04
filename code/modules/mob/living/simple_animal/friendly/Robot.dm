@@ -35,6 +35,7 @@
 	var/explosion_power = 1
 	var/act_emag
 	var/toinv
+	var/datum/research/files
 
 /mob/living/simple_animal/det5/Life()
 	..()
@@ -49,8 +50,6 @@
 /mob/living/simple_animal/det5/death()
 	..()
 	visible_message("<b>[src]</b> rang out 'd-d-d-data received...d-d-d-destruction'")
-	new /obj/item/stack/sheet/mineral/diamond(loc, 2)// drop diamond (2)
-	new /obj/item/stack/sheet/mineral/silver(loc, 4)// drop silver (4)
 	new /obj/effect/decal/cleanable/blood/gibs/robot(loc)// drob blood robots
 	new /obj/effect/gibspawner/robot(loc)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
@@ -65,9 +64,6 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		act_emag = user.name	   // Emag user saved
 		Emag(user)
-	if (istype(W, /obj/item/device/det5controll))	// Trigger Controller
-		user.SetNextMove(CLICK_CD_MELEE)
-		det5controll(user)
 	if(istype(W, /obj/item/weapon/paper))
 		user.drop_item()
 		toinv = W
@@ -75,6 +71,9 @@
 		trigger = 1
 	else
 		..()
+
+/mob/living/simple_animal/det5/attack_hand(mob/living/user)
+	det5controll(user)
 
 /mob/living/simple_animal/det5/HasProximity(atom/movable/AM)	// Trigger move
 	if(targetexplode == 1)
@@ -101,6 +100,7 @@
 			cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports).", , "Cancel")
 		else
 			cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports). 4-Explode (50s). 5-Explode using motion sensor", , "Cancel")
+
 		if(cont == "1")
 			if(turns_per_move == 1)
 				turns_per_move = 100
@@ -120,7 +120,6 @@
 				visible_message("<b>[src]</b> rang out 'Speech mode is on'")
 				cont = 0
 		if(cont == "3")
-
 			cont = 0
 		if(cont == "4")
 			if(emagged == 1)
@@ -133,6 +132,3 @@
 				visible_message("<b>[src]</b> rang out 'Self-d##struct m@de with t@rget @ctiv@t#d'")
 				targetexplode = 1
 				cont = 0
-		if((cont != 1) && (cont != 2) && (cont != 3) && (cont != 4))
-			visible_message("<b>[src]</b> rang out 'Unknown command'")
-			cont = 0
