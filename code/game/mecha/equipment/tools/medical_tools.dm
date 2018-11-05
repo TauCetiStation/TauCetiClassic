@@ -107,6 +107,17 @@
 	set_ready_state(1)
 	return
 
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/container_resist(mob/user)
+	if(istype(loc, /obj/mecha/medical/odysseus))
+		var/obj/mecha/medical/odysseus/M = loc
+		if(user.is_busy(null, FALSE)) // prevents spam too.
+			return
+
+		to_chat(user, "<span class='notice'>You struggle inside the mounted sleeper, kicking the release with your foot... (This will take around 30 seconds.)</span>")
+		to_chat(M.occupant, "<span class='notice'>You hear a thump from [src].</span>")
+		if(do_after(user, 300, target = M, can_move = TRUE))
+			if(occupant == user) // Check they're still here.
+				go_out()
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/detach()
 	if(occupant)
@@ -221,9 +232,6 @@
 		return 1
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/container_resist()
-	go_out()
-
 /datum/global_iterator/mech_sleeper/process(var/obj/item/mecha_parts/mecha_equipment/tool/sleeper/S)
 	if(!S.chassis)
 		S.set_ready_state(1)
@@ -239,12 +247,6 @@
 	if(M.health > 0)
 		M.adjustOxyLoss(-1)
 		M.updatehealth()
-	M.AdjustStunned(-4)
-	M.AdjustWeakened(-4)
-	M.AdjustStunned(-4)
-	M.Paralyse(2)
-	M.Weaken(2)
-	M.Stun(2)
 	if(M.reagents.get_reagent_amount("inaprovaline") < 5)
 		M.reagents.add_reagent("inaprovaline", 5)
 	S.chassis.use_power(S.energy_drain)
