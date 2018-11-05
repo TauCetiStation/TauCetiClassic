@@ -103,7 +103,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 /obj/machinery/computer/rdconsole/Destroy()
 	det5 = null
 
-/obj/machinery/computer/rdconsole/proc/print()
+/obj/machinery/computer/rdconsole/proc/print() //proc print det5 robot
 	var/obj/item/weapon/paper/O = new /obj/item/weapon/paper(get_turf(det5))
 	var/pap
 	for(var/datum/tech/T in files.known_tech)

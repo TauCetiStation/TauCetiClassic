@@ -90,10 +90,10 @@
 			explode()
 
 /mob/living/simple_animal/det5/proc/printer()
-	if(rdconsoled)
-		rdconsoled.print()
-	else
+	if(!rdconsoled)
 		visible_message("<b>[src]</b> rang out 'Console not found'")
+	else
+		rdconsoled.print()
 
 /mob/living/simple_animal/det5/proc/explode()	// explode
 	visible_message("<b>[src]</b> rang out 'The #xplosi@n is prep@red, @-a-activate'")
@@ -113,7 +113,7 @@
 		if(emagged != 1)
 			cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports).", , "Cancel")
 		else
-			cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports). 4-Explode (50s). 5-Explode using motion sensor", , "Cancel")
+			cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports). 4-Explode (50s). 5-Explode (using motion sensor)", , "Cancel")
 
 		if(cont == "1")
 			if(turns_per_move == 1)
