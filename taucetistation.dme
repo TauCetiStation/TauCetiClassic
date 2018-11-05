@@ -650,7 +650,6 @@
 #include "code\game\objects\items\devices\cardboard.dm"
 #include "code\game\objects\items\devices\chameleonproj.dm"
 #include "code\game\objects\items\devices\debugger.dm"
-#include "code\game\objects\items\devices\det5_remote_device.dm"
 #include "code\game\objects\items\devices\flash.dm"
 #include "code\game\objects\items\devices\flashlight.dm"
 #include "code\game\objects\items\devices\furtree.dm"

@@ -57,6 +57,8 @@
 	s.start()
 	//respawnable_list += src
 	qdel(src)
+	rdconsoled = null
+	rdconsoled.det5 = null
 	return
 
 /mob/living/simple_animal/det5/attackby(obj/item/W, mob/user)
