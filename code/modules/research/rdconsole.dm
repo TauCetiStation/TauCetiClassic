@@ -36,6 +36,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	icon_state = "rdcomp"
 	light_color = "#a97faa"
 	circuit = /obj/item/weapon/circuitboard/rdconsole
+	var/obj/machinery/computer/rdconsole/det5
 	var/datum/research/files							//Stores all the collected research data.
 	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
 	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
@@ -99,6 +100,16 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				break
 	return return_name
 
+/obj/machinery/computer/rdconsole/proc/print()
+	var/obj/item/weapon/paper/O = new /obj/item/weapon/paper(get_turf(det5))
+	var/pap
+	for(var/datum/tech/T in files.known_tech)
+		pap += "[T.name]<BR>"
+		pap +=  "* Level: [T.level]<BR>"
+		pap +=  "* Summary: [T.desc]<HR>"
+	pap += "</div>"
+	O.info = pap
+
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/r_n_d/D in oview(3,src))
 		if(D.linked_console != null || D.disabled || D.panel_open)
@@ -144,7 +155,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	griefProtection()
 */
 
-/obj/machinery/computer/rdconsole/attackby(obj/item/weapon/D, mob/user)
+/obj/machinery/computer/rdconsole/attackby(obj/item/D, mob/user)
 	//Loading a disk into it.
 	if(istype(D, /obj/item/weapon/disk))
 		if(t_disk || d_disk)
@@ -167,6 +178,10 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 		emagged = 1
 		user.SetNextMove(CLICK_CD_INTERACT)
 		to_chat(user, "\blue You you disable the security protocols")
+	else if(istype(D, /obj/item/device/multitool))
+		var/obj/item/device/multitool/M = D
+		M.buffer = src
+		to_chat(user, "<span class='notice'>You save the data in the [D.name]'s buffer.</span>")
 	else
 		//The construction/deconstruction of the console code.
 		..()
@@ -650,6 +665,7 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 			t1 += "</div>"
 			P.info = t1
 			screen = 1.0
+			src.updateUsrDialog()
 			dat += "<A href='?src=\ref[src];menu=1.0'>Main Menu</A><HR>"
 
 		if(1.2) //Technology Disk Menu

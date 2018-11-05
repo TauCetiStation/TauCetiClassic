@@ -35,7 +35,7 @@
 	var/explosion_power = 1
 	var/act_emag
 	var/toinv
-	var/datum/research/files
+	var/obj/machinery/computer/rdconsole/rdconsoled = null
 
 /mob/living/simple_animal/det5/Life()
 	..()
@@ -59,17 +59,23 @@
 	qdel(src)
 	return
 
-/mob/living/simple_animal/det5/attackby(obj/item/weapon/W, mob/user)
+/mob/living/simple_animal/det5/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/weapon/card/emag) && emagged < 2)	// Trigger EMAG
 		user.SetNextMove(CLICK_CD_MELEE)
 		act_emag = user.name	   // Emag user saved
 		Emag(user)
-	if(istype(W, /obj/item/weapon/paper))
+	else if(istype(W, /obj/item/weapon/paper))
 		user.drop_item()
 		toinv = W
 		W.loc = src
 		trigger = 1
-	else
+	else if(istype(W, /obj/item/device/multitool))
+		var/obj/item/device/multitool/M = W
+		if(M.buffer && istype(M.buffer, /obj/machinery/computer/rdconsole))
+			rdconsoled = M.buffer
+			rdconsoled.det5 = src
+			M.buffer = null
+			to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
 		..()
 
 /mob/living/simple_animal/det5/attack_hand(mob/living/user)
@@ -80,6 +86,12 @@
 		if(istype(AM, /mob/living/carbon) && !(AM.name == act_emag))	//do not explode EMAG USER
 			targetexplode = 0
 			explode()
+
+/mob/living/simple_animal/det5/proc/printer()
+	if(rdconsoled)
+		rdconsoled.print()
+	else
+		visible_message("<b>[src]</b> rang out 'Console not found'")
 
 /mob/living/simple_animal/det5/proc/explode()	// explode
 	visible_message("<b>[src]</b> rang out 'The #xplosi@n is prep@red, @-a-activate'")
@@ -120,6 +132,7 @@
 				visible_message("<b>[src]</b> rang out 'Speech mode is on'")
 				cont = 0
 		if(cont == "3")
+			printer()
 			cont = 0
 		if(cont == "4")
 			if(emagged == 1)
