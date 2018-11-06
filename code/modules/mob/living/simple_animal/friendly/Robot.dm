@@ -123,7 +123,7 @@
 		if(rdconsoled == null)
 			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Console not found</span>")
 		else
-			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Printing</span>")
+			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Print report</span>")
 			rdconsoled.print()
 		cont = 0
 	if(cont == "4")
