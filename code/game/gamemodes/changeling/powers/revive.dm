@@ -30,6 +30,7 @@
 		user.mind.changeling.purchasedpowers -= src //We dont need that power from now anyway.
 		return
 	if(user.stat < 2)//We are alive when using this... Why do we need to keep this ability and even rejuvenate, if revive must used from dead state?
-		to_chat(user, "<span class='notice'>We ready to regenerate, but we need to stop any life activity in our body.</span>")
+		user.mind.changeling.purchasedpowers -= src		//If we somehow acquired it, remove upon clicking, to prevent stasis breaking
+		to_chat(user, "<span class='notice'>We need to stop any life activity in our body.</span>")
 		return
 	return ..()

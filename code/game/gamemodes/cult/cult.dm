@@ -20,7 +20,7 @@
 	name = "cult"
 	config_tag = "cult"
 	role_type = ROLE_CULTIST
-	restricted_jobs = list("Chaplain","AI", "Cyborg", "Security Officer", "Warden", "Detective", "Head of Security", "Captain", "Internal Affairs Agent")
+	restricted_jobs = list("Chaplain","AI", "Cyborg", "Star Vigil Officer", "Star Vigil Sergeant", "Detective", "Star Vigil Commander", "Captain", "Internal Affairs Agent")
 	protected_jobs = list()
 	required_players = 5
 	required_players_secret = 15
@@ -42,6 +42,7 @@
 	var/list/sacrificed = list()
 
 	var/eldergod = 1 //for the summon god objective
+	var/eldertry = 0
 
 	var/const/acolytes_needed = 5 //for the survive objective
 	var/acolytes_survived = 0

@@ -262,7 +262,7 @@
 		return
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(!H.gloves && !(H.dna && H.dna.mutantrace == "adamantine")) //specflags please..
+		if(!H.gloves && !H.species.flags[NO_MINORCUTS]) //specflags please..
 			to_chat(H, "<span class='warning'>[src] cuts into your hand!</span>")
 			var/obj/item/organ/external/BP = H.bodyparts_by_name[H.hand ? BP_L_ARM : BP_R_ARM]
 			BP.take_damage(force / 2, null, damage_flags())
@@ -574,7 +574,6 @@
 	collection_mode = 1
 	display_contents_with_number = 1
 	max_w_class = 3
-	max_combined_w_class = 100
 	var/works_from_distance = 0
 	var/pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/rped.ogg'
 	var/alt_sound = null
@@ -594,7 +593,6 @@
 	w_class = 3
 	storage_slots = 400
 	max_w_class = 3
-	max_combined_w_class = 800
 	works_from_distance = 1
 	pshoom_or_beepboopblorpzingshadashwoosh = 'sound/items/PSHOOM.ogg'
 	alt_sound = 'sound/items/PSHOOM_2.ogg'
@@ -860,13 +858,6 @@
 	desc = "A large piece of equipment used to open a window into the subspace dimension."
 	origin_tech = "magnets=5;materials=5;bluespace=3"
 	m_amt = 50
-
-/obj/item/weapon/ectoplasm
-	name = "ectoplasm"
-	desc = "Spooky!"
-	gender = PLURAL
-	icon = 'icons/obj/wizard.dmi'
-	icon_state = "ectoplasm"
 
 /obj/item/weapon/research//Makes testing much less of a pain -Sieve
 	name = "research"

@@ -134,9 +134,6 @@
 	name = "Circuit board (Arcade)"
 	build_path = /obj/machinery/computer/arcade
 	origin_tech = "programming=1"
-/obj/item/weapon/circuitboard/turbine_control
-	name = "Circuit board (Turbine control)"
-	build_path = /obj/machinery/computer/turbine_computer
 /obj/item/weapon/circuitboard/solar_control
 	name = "Circuit board (Solar Control)"  //name fixed 250810
 	build_path = /obj/machinery/power/solar_control

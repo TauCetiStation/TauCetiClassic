@@ -6,14 +6,14 @@
 "f" = (/obj/structure/table/woodentable/holotable,/turf/simulated/floor/holofloor{icon_state = "asteroid"},/area/holodeck/source_picnicarea)
 
 (1,1,1) = {"
-aaaaaaaaaa
-bcbcbcbcbc
-cbcbcbcbcb
-bcbdeedcbc
-ddddffdbcb
-ddddffdbcb
-bcbdeedcbc
-cbcbcbcbcb
-bcbcbcbccb
-aaaaaaaaaa
+abcbddcbca
+acbcddbcba
+abcbddcbca
+acbddddcba
+abceffebca
+acbeffebca
+acbddddcba
+abcbcbcbca
+acbcbcbcca
+abcbcbcbca
 "}

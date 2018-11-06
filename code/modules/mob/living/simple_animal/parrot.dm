@@ -780,7 +780,7 @@
 	speak_chance = 20
 	status_flags = GODMODE
 	incorporeal_move = 1
-	butcher_results = list(/obj/item/weapon/ectoplasm = 1)
+	butcher_results = list(/obj/item/weapon/reagent_containers/food/snacks/ectoplasm = 1)
 
 /mob/living/simple_animal/parrot/Poly/ghost/atom_init()
 	memory_saved = 1 //At this point nothing is saved

@@ -44,6 +44,19 @@ proc/get_infection_chance(mob/living/carbon/M, vector = "Airborne")
 //	log_debug("Infection got through")
 	return 1
 
+proc/get_bite_infection_chance(mob/living/carbon/M, target_zone)
+	if (!istype(M) || !target_zone)
+		return 0
+
+	if(target_zone && ishuman(M))
+		var/mob/living/carbon/human/H = M
+
+		var/armor = H.getarmor(target_zone, "melee")
+		var/bioarmor = H.getarmor(target_zone, "bio")
+
+		return max((100 - max(armor, bioarmor/2)), 0) / 2
+	return 100
+
 //Checks if table-passing table can reach target (5 tile radius)
 proc/airborne_can_reach(turf/source, turf/target)
 	var/obj/dummy = new(source)
@@ -57,7 +70,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	return rval
 
 //Attemptes to infect mob M with virus. Set forced to 1 to ignore protective clothnig
-/proc/infect_virus2(mob/living/carbon/M,datum/disease2/disease/disease,forced = 0)
+/proc/infect_virus2(mob/living/carbon/M,datum/disease2/disease/disease, forced = FALSE, ignore_antibiotics = FALSE)
 	if(!istype(disease))
 //		log_debug("Bad virus")
 		return
@@ -69,7 +82,7 @@ proc/airborne_can_reach(turf/source, turf/target)
 	// if one of the antibodies in the mob's body matches one of the disease's antigens, don't infect
 	if((M.antibodies & disease.antigen) != 0)
 		return
-	if(M.reagents.has_reagent("spaceacillin"))
+	if(M.reagents.has_reagent("spaceacillin") && !ignore_antibiotics)
 		return
 
 	if(istype(M,/mob/living/carbon/monkey))
@@ -90,7 +103,6 @@ proc/airborne_can_reach(turf/source, turf/target)
 			return
 
 		var/datum/disease2/disease/D = disease.getcopy()
-		D.minormutate()
 //		log_debug("Adding virus")
 		M.virus2["[D.uniqueID]"] = D
 		M.hud_updateflag |= 1 << STATUS_HUD
@@ -142,11 +154,11 @@ proc/airborne_can_reach(turf/source, turf/target)
 //		log_debug("Spreading [vector] diseases from [victim] to [src]")
 		var/nudity = 1
 
-		if (ishuman(victim))
+		if (ishuman(victim) && zone_sel)
 			var/mob/living/carbon/human/H = victim
 			var/obj/item/organ/external/BP = H.get_bodypart(zone_sel.selecting)
 			var/list/clothes = list(H.head, H.wear_mask, H.wear_suit, H.w_uniform, H.gloves, H.shoes)
-			for(var/obj/item/clothing/C in clothes )
+			for(var/obj/item/clothing/C in clothes)
 				if(C && istype(C))
 					if(C.body_parts_covered & BP.body_part)
 						nudity = 0

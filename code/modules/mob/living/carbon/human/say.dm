@@ -73,6 +73,8 @@
 				return ""
 
 	message = capitalize(trim(message))
+	if(iszombie(src))
+		message = zombie_talk(message)
 
 	var/ending = copytext(message, length(message))
 	if (speaking)

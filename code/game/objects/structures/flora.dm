@@ -47,118 +47,22 @@
 	. = ..()
 	icon_state = "tree_[rand(1, 6)]"
 
-//jungle tree
-
-/obj/structure/flora/tree/jungletree
-	name = "jungle tree"
-	icon = 'icons/obj/flora/jungletrees.dmi'
-	icon_state = "tree"
-
-/obj/structure/flora/tree/jungletree/tree1
-	name = "jungle tree"
-	icon = 'icons/obj/flora/jungletrees.dmi'
-	icon_state = "tree1"
-
-/obj/structure/flora/tree/jungletree/tree2
-	name = "jungle tree"
-	icon = 'icons/obj/flora/jungletrees.dmi'
-	icon_state = "tree2"
-
-/obj/structure/flora/tree/jungletree/tree3
-	name = "jungle tree"
-	icon = 'icons/obj/flora/jungletrees.dmi'
-	icon_state = "tree3"
-
-/obj/structure/flora/tree/jungletree/tree4
-	name = "jungle tree"
-	icon = 'icons/obj/flora/jungletrees.dmi'
-	icon_state = "tree4"
-
-/obj/structure/flora/tree/jungletree/tree5
-	name = "jungle tree"
-	icon = 'icons/obj/flora/jungletrees.dmi'
-	icon_state = "tree5"
-
-/obj/structure/flora/tree/jungletree/tree6
-	name = "jungle tree"
-	icon = 'icons/obj/flora/jungletrees.dmi'
-	icon_state = "tree6"
-
-/obj/structure/flora/tree/jungletree/tree7
-	name = "jungle tree"
-	icon = 'icons/obj/flora/jungletrees.dmi'
-	icon_state = "tree7"
-
-/obj/structure/flora/tree/jungletree/tree8
-	name = "jungle tree"
-	icon = 'icons/obj/flora/jungletrees.dmi'
-	icon_state = "tree8"
-
-/obj/structure/flora/tree/jungletree/tree9
-	name = "jungle tree"
-	icon = 'icons/obj/flora/jungletrees.dmi'
-	icon_state = "tree9"
-
-/obj/structure/flora/tree/jungletree/tree10
-	name = "jungle tree"
-	icon = 'icons/obj/flora/jungletrees.dmi'
-	icon_state = "tree10"
-
-//jungle tree small
-
-/obj/structure/flora/jungletreesmall
+/obj/structure/flora/tree/jungle
 	name = "tree"
-	icon = 'icons/obj/flora/jungletreesmall.dmi'
 	icon_state = "tree"
+	desc = "It's seriously hampering your view of the jungle."
+	icon = 'icons/obj/flora/jungletrees.dmi'
+	pixel_x = -48
+	pixel_y = -20
 
-/obj/structure/flora/jungletreesmall/jungtree1
-	icon_state = "tree1"
+/obj/structure/flora/tree/jungle/atom_init()
+	. = ..()
+	icon_state = pick(icon_states(icon))
 
-/obj/structure/flora/jungletreesmall/jungtree2
-	icon_state = "tree2"
-
-/obj/structure/flora/jungletreesmall/jungtree3
-	icon_state = "tree3"
-
-/obj/structure/flora/jungletreesmall/jungtree4
-	icon_state = "tree4"
-
-/obj/structure/flora/jungletreesmall/jungtree5
-	icon_state = "tree5"
-
-/obj/structure/flora/jungletreesmall/jungtree6
-	icon_state = "tree6"
-
-//large jungle bushes
-
-/obj/structure/flora/largejungleflora
-	name = "bush"
-	icon = 'icons/obj/flora/largejungleflora.dmi'
-	icon_state = "bush0"
-
-/obj/structure/flora/largejungleflora/jungbush
-	icon_state = "bush1"
-
-/obj/structure/flora/largejungleflora/jungbush1
-	icon_state = "bush1"
-
-/obj/structure/flora/largejungleflora/jungbush2
-	icon_state = "bush2"
-
-/obj/structure/flora/largejungleflora/jungbush3
-	icon_state = "bush3"
-
-/obj/structure/flora/largejungleflora/jungrock
-	icon_state = "rocks"
-
-/obj/structure/flora/largejungleflora/jungrock1
-	icon_state = "rocks1"
-
-/obj/structure/flora/largejungleflora/jungrock2
-	icon_state = "rocks2"
-
-/obj/structure/flora/largejungleflora/jungrock3
-	icon_state = "rocks3"
+/obj/structure/flora/tree/jungle/small
+	pixel_y = 0
+	pixel_x = -32
+	icon = 'icons/obj/flora/jungletreesmall.dmi'
 
 //grass
 /obj/structure/flora/grass
@@ -321,3 +225,53 @@
 /obj/structure/flora/ausbushes/fullgrass/atom_init()
 	. = ..()
 	icon_state = "fullgrass_[rand(1, 3)]"
+
+//Jungle rocks
+
+/obj/structure/flora/rock/jungle
+	icon_state = "pile of rocks"
+	desc = "A pile of rocks."
+	icon_state = "rock"
+	icon = 'icons/obj/flora/jungleflora.dmi'
+	density = FALSE
+
+/obj/structure/flora/rock/jungle/atom_init()
+	. = ..()
+	icon_state = "[initial(icon_state)][rand(1,5)]"
+
+//Jungle bushes
+
+/obj/structure/flora/junglebush
+	name = "bush"
+	desc = "A wild plant that is found in jungles."
+	icon = 'icons/obj/flora/jungleflora.dmi'
+	icon_state = "busha"
+
+/obj/structure/flora/junglebush/atom_init()
+	. = ..()
+	icon_state = "[icon_state][rand(1, 3)]"
+
+/obj/structure/flora/junglebush/b
+	icon_state = "bushb"
+
+/obj/structure/flora/junglebush/c
+	icon_state = "bushc"
+
+/obj/structure/flora/junglebush/large
+	icon_state = "bush"
+	icon = 'icons/obj/flora/largejungleflora.dmi'
+	pixel_x = -16
+	pixel_y = -12
+	layer = 9
+
+/obj/structure/flora/rock/pile/largejungle
+	name = "rocks"
+	icon_state = "rocks"
+	icon = 'icons/obj/flora/largejungleflora.dmi'
+	density = 1
+	pixel_x = -16
+	pixel_y = -16
+
+/obj/structure/flora/rock/pile/largejungle/atom_init()
+	. = ..()
+	icon_state = "[initial(icon_state)][rand(1,3)]"

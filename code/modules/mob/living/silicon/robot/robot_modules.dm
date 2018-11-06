@@ -77,6 +77,7 @@
 	modules += new /obj/item/weapon/wrench(src)
 	modules += new /obj/item/weapon/crowbar(src)
 	modules += new /obj/item/device/healthanalyzer(src)
+	modules += new /obj/item/borg/sight/science(src)
 	emag = new /obj/item/weapon/melee/energy/sword(src)
 
 /obj/item/weapon/robot_module/standard/respawn_consumable(mob/living/silicon/robot/R)
@@ -364,6 +365,7 @@
 	modules += new /obj/item/device/analyzer(src)
 	modules += new /obj/item/device/assembly/signaler(src)
 	modules += new /obj/item/device/ano_scanner(src)
+	modules += new /obj/item/borg/sight/science(src)
 
 //To fuck anomalies up
 
@@ -389,7 +391,7 @@
 
 	emag.name = "Hand tele"
 
-/obj/item/weapon/robot_module/drone
+/obj/item/weapon/robot_module/maintdrone
 	name = "drone module"
 	stacktypes = list(
 		/obj/item/stack/sheet/wood/cyborg = 1,
@@ -403,7 +405,7 @@
 		/obj/item/stack/cable_coil/cyborg = 30
 		)
 
-/obj/item/weapon/robot_module/drone/atom_init()
+/obj/item/weapon/robot_module/maintdrone/atom_init()
 	. = ..()
 	modules += new /obj/item/weapon/weldingtool(src)
 	modules += new /obj/item/weapon/screwdriver(src)
@@ -424,10 +426,10 @@
 		W.set_amount(stacktypes[T])
 		modules += W
 
-/obj/item/weapon/robot_module/drone/add_languages(mob/living/silicon/robot/R)
+/obj/item/weapon/robot_module/maintdrone/add_languages(mob/living/silicon/robot/R)
 	return	//not much ROM to spare in that tiny microprocessor!
 
-/obj/item/weapon/robot_module/drone/respawn_consumable(mob/living/silicon/robot/R)
+/obj/item/weapon/robot_module/maintdrone/respawn_consumable(mob/living/silicon/robot/R)
 	var/obj/item/weapon/reagent_containers/spray/cleaner/C = locate() in src.modules
 	C.reagents.add_reagent("cleaner", 3)
 

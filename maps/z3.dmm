@@ -118,7 +118,7 @@
 "Ib" = (/turf/simulated/floor{icon_state = "dark"},/turf/simulated/shuttle/wall{icon_state = "swall_f5"; dir = 2},/area/derelict/ship)
 "Jb" = (/obj/machinery/light_construct/small{dir = 4},/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
 "Kb" = (/obj/machinery/light/small{dir = 4},/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
-"Lb" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/obj/item/weapon/ectoplasm,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
+"Lb" = (/obj/structure/stool/bed,/obj/item/weapon/bedsheet,/obj/structure/window/reinforced{dir = 8},/obj/structure/window/reinforced,/obj/item/weapon/reagent_containers/food/snacks/ectoplasm,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
 "Mb" = (/obj/machinery/door/window,/obj/effect/decal/cleanable/cobweb2,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
 "Nb" = (/obj/item/weapon/soap,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)
 "Ob" = (/obj/machinery/washing_machine,/turf/simulated/floor{icon_state = "dark"},/area/derelict/ship)

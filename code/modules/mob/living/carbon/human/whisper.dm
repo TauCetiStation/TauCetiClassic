@@ -29,6 +29,8 @@
 		return
 
 	message = sanitize(message)	//made consistent with say
+	if(iszombie(src))
+		message = zombie_talk(message)
 
 	if(name != GetVoice())
 		alt_name = "(as [get_id_name("Unknown")])"

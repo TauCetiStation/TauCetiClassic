@@ -670,7 +670,7 @@ var/global/BSACooldown = 0
 			<BR>
 			<A href='?src=\ref[src];secretscoder=maint_access_engiebrig'>Change all maintenance doors to engie/brig access only</A><BR>
 			<A href='?src=\ref[src];secretscoder=maint_access_brig'>Change all maintenance doors to brig access only</A><BR>
-			<A href='?src=\ref[src];secretscoder=infinite_sec'>Remove cap on security officers</A><BR>
+			<A href='?src=\ref[src];secretscoder=infinite_sec'>Remove cap on Star Vigil Officers</A><BR>
 			<BR>
 			<B>Coder Secrets</B><BR>
 			<BR>

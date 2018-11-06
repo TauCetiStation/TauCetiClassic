@@ -3,14 +3,14 @@
 #define NOT_DREAMING 0
 
 var/list/dreams = list(
-	"an ID card","a bottle","a familiar face","a crewmember","a toolbox","a security officer","the captain",
+	"an ID card","a bottle","a familiar face","a crewmember","a toolbox","a Star Vigil Officer","the captain",
 	"voices from all around","deep space","a doctor","the engine","a traitor","an ally","darkness",
 	"light","a scientist","a monkey","a catastrophe","a loved one","a gun","warmth","freezing","the sun",
 	"a hat","the Luna","a ruined station","a planet","phoron","air","the medical bay","the bridge","blinking lights",
 	"a blue light","an abandoned laboratory","Nanotrasen","The Syndicate","blood","healing","power","respect",
 	"riches","space","a crash","happiness","pride","a fall","water","flames","ice","melons","flying","the eggs","money",
-	"the head of personnel","the head of security","a chief engineer","a research director","a chief medical officer",
-	"the detective","the warden","a member of the internal affairs","a station engineer","the janitor","atmospheric technician",
+	"the head of personnel","the Star Vigil Commander","a chief engineer","a research director","a chief medical officer",
+	"the detective","the Star Vigil Sergeant","a member of the internal affairs","a station engineer","the janitor","atmospheric technician",
 	"the quartermaster","a cargo technician","the botanist","a shaft miner","the psychologist","the chemist","the geneticist",
 	"the virologist","the roboticist","the chef","the barber","the bartender","the chaplain","the librarian","a mouse","an ert member",
 	"a beach","the holodeck","a smokey room","a voice","the cold","a mouse","an operating table","the bar","the rain","a skrell",
@@ -27,20 +27,38 @@ var/list/nightmares = list(
 
 /mob/living/carbon/proc/dream()
 	dreaming = IS_DREAMING
+	if(reagents.has_reagent("unholywater"))
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if(!(H.species && H.species.flags[NO_BLOOD]))
+				dreaming = IS_NIGHTMARE
+		else
+			dreaming = IS_NIGHTMARE
 	for(var/obj/item/candle/ghost/CG in range(4, src))
-		dreaming = IS_NIGHTMARE
+		if(CG.lit)
+			dreaming = IS_NIGHTMARE
+			break
 	var/i = rand(1,4)
 	while(i)
 		if(dreaming == 2)
-			to_chat(src, "<span class='warning italics'>... [pick(nightmares)] ...</span>")
+			to_chat(src, "<span class='warning'>... [pick(nightmares)] ...</span>")
+			adjustHalLoss(4) // Nightmares are quite agonizing. Since just sleeping remove 3 HalLoss, adding 4 here would in total give just 1 haldamage/life tick.
+			if(prob(10))
+				var/list/creepysounds = list('sound/effects/ghost.ogg', 'sound/effects/ghost2.ogg', 'sound/effects/Heart Beat.ogg', 'sound/effects/screech.ogg',
+				'sound/hallucinations/behind_you1.ogg', 'sound/hallucinations/behind_you2.ogg', 'sound/hallucinations/far_noise.ogg', 'sound/hallucinations/growl1.ogg', 'sound/hallucinations/growl2.ogg',
+				'sound/hallucinations/growl3.ogg', 'sound/hallucinations/im_here1.ogg', 'sound/hallucinations/im_here2.ogg', 'sound/hallucinations/i_see_you1.ogg', 'sound/hallucinations/i_see_you2.ogg',
+				'sound/hallucinations/look_up1.ogg', 'sound/hallucinations/look_up2.ogg', 'sound/hallucinations/over_here1.ogg', 'sound/hallucinations/over_here2.ogg', 'sound/hallucinations/over_here3.ogg',
+				'sound/hallucinations/turn_around1.ogg', 'sound/hallucinations/turn_around2.ogg', 'sound/hallucinations/veryfar_noise.ogg', 'sound/hallucinations/wail.ogg')
+				src << pick(creepysounds)
+			to_chat(src, "<span class='warning italic'>... [pick(nightmares)] ...</span>")
 		else
-			to_chat(src, "<span class='notice italics'>... [pick(dreams)] ...</span>")
+			to_chat(src, "<span class='notice italic'>... [pick(dreams)] ...</span>")
 		sleep(rand(40,70))
 		if(paralysis <= 0)
 			dreaming = NOT_DREAMING
 			return FALSE
 		i--
-	dreaming = 0
+	dreaming = NOT_DREAMING
 	return TRUE
 
 /mob/living/carbon/proc/handle_dreams()

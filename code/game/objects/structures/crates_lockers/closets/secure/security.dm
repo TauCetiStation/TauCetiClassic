@@ -50,7 +50,7 @@
 	new /obj/item/device/remote_device/head_of_personal(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/clothing/suit/armor/vest(src)
-	new /obj/item/clothing/head/helmet(src)
+	new /obj/item/clothing/head/helmet/band(src)
 	new /obj/item/weapon/cartridge/hop(src)
 	new /obj/item/device/radio/headset/heads/hop(src)
 
@@ -90,7 +90,7 @@
 	new /obj/item/airbag(src)
 
 /obj/structure/closet/secure_closet/hos
-	name = "Head of Security's Locker"
+	name = "Star Vigil Commander's Locker"
 	req_access = list(access_hos)
 	icon_state = "hossecure1"
 	icon_closed = "hossecure"
@@ -140,7 +140,7 @@
 	#endif
 
 /obj/structure/closet/secure_closet/warden
-	name = "Warden's Locker"
+	name = "Star Vigil Sergeant's Locker"
 	req_access = list(access_armory)
 	icon_state = "wardensecure1"
 	icon_closed = "wardensecure"
@@ -155,7 +155,7 @@
 	else
 		new /obj/item/weapon/storage/backpack/satchel/sec(src)
 
-	new /obj/item/clothing/head/helmet/warden(src)
+	new /obj/item/clothing/head/helmet/band/warden(src)
 	new /obj/item/clothing/head/beret/sec/warden(src)
 	new /obj/item/clothing/under/rank/warden(src)
 	new /obj/item/clothing/under/rank/warden_fem(src)
@@ -181,7 +181,7 @@
 	#endif
 
 /obj/structure/closet/secure_closet/security
-	name = "Security Officer's Locker"
+	name = "Star Vigil Officer's Locker"
 	req_access = list(access_brig)
 	icon_state = "sec1"
 	icon_closed = "sec"
@@ -198,7 +198,7 @@
 
 	new /obj/item/clothing/gloves/security(src)
 	new /obj/item/clothing/suit/storage/flak(src)
-	new /obj/item/clothing/head/helmet(src)
+	new /obj/item/clothing/head/helmet/band(src)
 	new /obj/item/weapon/storage/belt/security(src)
 	new /obj/item/clothing/accessory/holster/armpit(src)
 	new /obj/item/weapon/gun/energy/taser(src)

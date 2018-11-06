@@ -236,6 +236,9 @@
 		N.overlays -= image('icons/effects/Nuke_sprays.dmi', N.spray_icon_state)
 		N.overlays += image('icons/effects/Nuke_sprays.dmi', choice)
 		N.spray_icon_state = choice
+	else if((istype(target, /obj/mecha) || istype(target, /mob/living/silicon/robot)) && uses - 10 >= 0)
+		uses -= 10
+		target.color = colour
 	playsound(user.loc, 'sound/effects/spray.ogg', 5, 1, 5)
 	..()
 

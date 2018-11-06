@@ -819,7 +819,7 @@
 /obj/item/weapon/reagent_containers/food/snacks/ghostburger/atom_init()
 	. = ..()
 	reagents.add_reagent("nutriment", 6)
-	reagents.add_reagent("vitamin", 1)
+	reagents.add_reagent("ectoplasm", 1)
 
 
 /obj/item/weapon/reagent_containers/food/snacks/human
@@ -4331,3 +4331,17 @@
 /obj/item/weapon/reagent_containers/food/snacks/candy/gummyworm/wtf/atom_init()
 	. = ..()
 	reagents.add_reagent("space_drugs", 2)
+
+///////////////////////////////////////////
+// Ectoplasm o.O
+///////////////////////////////////////////
+/obj/item/weapon/reagent_containers/food/snacks/ectoplasm
+	name = "ectoplasm"
+	desc = "Spooky! Do not consume under any circumstances."
+	gender = PLURAL
+	icon = 'icons/obj/wizard.dmi'
+	icon_state = "ectoplasm"
+
+/obj/item/weapon/reagent_containers/food/snacks/ectoplasm/atom_init()
+	. = ..()
+	reagents.add_reagent("ectoplasm", 5)

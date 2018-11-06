@@ -682,7 +682,7 @@
 	vend_delay = 34
 	products = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25,/obj/item/weapon/reagent_containers/food/drinks/tea = 25,/obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 25)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/ice = 10)
-	prices = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 25, /obj/item/weapon/reagent_containers/food/drinks/tea = 25, /obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 25)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/coffee = 75, /obj/item/weapon/reagent_containers/food/drinks/tea = 65, /obj/item/weapon/reagent_containers/food/drinks/h_chocolate = 75)
 	refill_canister = /obj/item/weapon/vending_refill/coffee
 
 
@@ -698,9 +698,9 @@
 					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 6,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 6,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 6)
 	contraband = list(/obj/item/weapon/reagent_containers/food/snacks/syndicake = 6)
-	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 1,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 5,/obj/item/weapon/reagent_containers/food/snacks/chips = 1,
-					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 2,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 1,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 1,
-					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 1)
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/candy/candybar = 70,/obj/item/weapon/reagent_containers/food/drinks/dry_ramen = 120,/obj/item/weapon/reagent_containers/food/snacks/chips = 60,
+					/obj/item/weapon/reagent_containers/food/snacks/sosjerky = 100,/obj/item/weapon/reagent_containers/food/snacks/no_raisin = 70,/obj/item/weapon/reagent_containers/food/snacks/spacetwinkie = 65,
+					/obj/item/weapon/reagent_containers/food/snacks/cheesiehonkers = 70)
 	refill_canister = /obj/item/weapon/vending_refill/snack
 
 /obj/machinery/vending/chinese
@@ -711,8 +711,8 @@
 	light_color = "#d00023"
 	products = list(/obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein = 6, /obj/item/weapon/reagent_containers/food/snacks/chinese/tao = 6, /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball = 6, /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles = 6,
 					/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 6, /obj/item/weapon/kitchen/utensil/fork/sticks = 18)
-	prices = list(/obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein = 50, /obj/item/weapon/reagent_containers/food/snacks/chinese/tao = 50, /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball = 50, /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles = 50,
-					/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 50, /obj/item/weapon/kitchen/utensil/fork/sticks = 1)
+	prices = list(/obj/item/weapon/reagent_containers/food/snacks/chinese/chowmein = 150, /obj/item/weapon/reagent_containers/food/snacks/chinese/tao = 150, /obj/item/weapon/reagent_containers/food/snacks/chinese/sweetsourchickenball = 150, /obj/item/weapon/reagent_containers/food/snacks/chinese/newdles = 150,
+					/obj/item/weapon/reagent_containers/food/snacks/chinese/rice = 150, /obj/item/weapon/kitchen/utensil/fork/sticks = 1)
 	refill_canister = /obj/item/weapon/vending_refill/snack
 
 /obj/machinery/vending/cola
@@ -727,10 +727,10 @@
 					/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle = 10,/obj/item/weapon/reagent_containers/food/drinks/cans/space_up = 10,
 					/obj/item/weapon/reagent_containers/food/drinks/cans/iced_tea = 10, /obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice = 10)
 	contraband = list(/obj/item/weapon/reagent_containers/food/drinks/cans/thirteenloko = 5)
-	prices = list(/obj/item/weapon/reagent_containers/food/drinks/cans/cola = 1,/obj/item/weapon/reagent_containers/food/drinks/cans/space_mountain_wind = 1,
-					/obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb = 1,/obj/item/weapon/reagent_containers/food/drinks/cans/starkist = 1,
-					/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle = 2,/obj/item/weapon/reagent_containers/food/drinks/cans/space_up = 1,
-					/obj/item/weapon/reagent_containers/food/drinks/cans/iced_tea = 1,/obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice = 1)
+	prices = list(/obj/item/weapon/reagent_containers/food/drinks/cans/cola = 60,/obj/item/weapon/reagent_containers/food/drinks/cans/space_mountain_wind = 65,
+					/obj/item/weapon/reagent_containers/food/drinks/cans/dr_gibb = 70,/obj/item/weapon/reagent_containers/food/drinks/cans/starkist = 70,
+					/obj/item/weapon/reagent_containers/food/drinks/cans/waterbottle = 50,/obj/item/weapon/reagent_containers/food/drinks/cans/space_up = 65,
+					/obj/item/weapon/reagent_containers/food/drinks/cans/iced_tea = 70,/obj/item/weapon/reagent_containers/food/drinks/cans/grape_juice = 50)
 
 //This one's from bay12
 /obj/machinery/vending/cart
@@ -756,7 +756,7 @@
 	products = list(/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_blue = 10,/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_green = 5,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 4)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
 	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
-	prices = list(/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_blue = 15,/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_green = 20,/obj/item/weapon/storage/box/matches = 1,/obj/item/weapon/lighter/random = 2)
+	prices = list(/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_blue = 120,/obj/item/weapon/storage/fancy/cigarettes/odetoviceroy_green = 150,/obj/item/weapon/storage/box/matches = 60,/obj/item/weapon/lighter/random = 80)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
 
 /obj/machinery/vending/medical
@@ -873,8 +873,26 @@
 	icon_state = "MagiVend"
 	light_color = "#97429a"
 	products = list(/obj/item/weapon/occult_pinpointer = 3,
-		/obj/item/device/occult_scanner = 3)
-	contraband = list(/obj/item/weapon/nullrod = 1)
+		/obj/item/device/occult_scanner = 3,
+		/obj/item/clothing/mask/gas/owl_mask = 3,
+		/obj/item/clothing/mask/pig = 3,
+		/obj/item/clothing/mask/horsehead = 3,
+		/obj/item/clothing/mask/cowmask = 3,
+		/obj/item/clothing/mask/chicken = 3,
+		/obj/item/weapon/kitchenknife/plastic = 3)
+	prices = list(/obj/item/weapon/occult_pinpointer = 400,
+		/obj/item/device/occult_scanner = 400,
+		/obj/item/clothing/mask/gas/owl_mask = 250,
+		/obj/item/clothing/mask/pig = 250,
+		/obj/item/clothing/mask/horsehead = 250,
+		/obj/item/clothing/mask/cowmask = 250,
+		/obj/item/clothing/mask/chicken = 250,
+		/obj/item/weapon/kitchenknife/plastic = 300)
+	contraband = list(/obj/item/weapon/nullrod = 1,
+		/obj/item/weapon/kitchenknife/ritual = 1)
+	premium = list(/obj/item/clothing/glasses/gglasses = 1,
+		/obj/item/toy/figure/wizard = 1,
+		/obj/item/weapon/storage/fancy/crayons = 1)
 	product_slogans = "Amicitiae nostrae memoriam spero sempiternam fore;Aequam memento rebus in arduis servare mentem;Vitanda est improba siren desidia;Serva me, servabo te;Faber est suae quisque fortunae"
 	vend_reply = "Have fun! No returns!"
 	product_ads = "Occult is magic;Knowledge is magic;All the magic!;None to spook us;The dice has been cast"
@@ -884,7 +902,7 @@
 		var/obj/item/device/occult_scanner/OS = I
 		OS.scanned_type = src.type
 		to_chat(user, "<span class='notice'>[src] has been succesfully scanned by [OS]</span>")
-	if(istype(I, /obj/item/weapon/ectoplasm))
+	if(istype(I, /obj/item/weapon/reagent_containers/food/snacks/ectoplasm))
 		RedeemEctoplasm(I, user)
 		return
 	..()
@@ -1047,7 +1065,7 @@
 	/obj/item/clothing/under/sukeban_dress=2,/obj/item/clothing/suit/sukeban_coat=4,/obj/item/clothing/under/pinkpolo=3,/obj/item/clothing/under/pretty_dress=1,
 	/obj/item/clothing/under/dress/dress_summer=2,/obj/item/clothing/under/dress/dress_vintage=2,/obj/item/clothing/under/dress/dress_evening=2,/obj/item/clothing/under/dress/dress_party=2)
 
-	contraband = list(/obj/item/clothing/under/syndicate/tacticool=2,/obj/item/clothing/mask/balaclava=2,/obj/item/clothing/head/ushanka=2,/obj/item/clothing/under/soviet=2,/obj/item/clothing/mask/gas/fawkes = 6)
+	contraband = list(/obj/item/clothing/under/syndicate/tacticool=2,/obj/item/clothing/mask/balaclava=2,/obj/item/clothing/head/ushanka=2,/obj/item/clothing/under/soviet=2,/obj/item/clothing/mask/gas/fawkes=6,/obj/item/clothing/glasses/sunglasses=2)
 
 	premium = list(/obj/item/clothing/under/suit_jacket/checkered=2,/obj/item/clothing/head/mailman=2,/obj/item/clothing/under/rank/mailman=2,/obj/item/clothing/suit/jacket/leather=2,
 	/obj/item/clothing/suit/jacket/leather/overcoat=2,/obj/item/clothing/under/pants/mustangjeans=2)

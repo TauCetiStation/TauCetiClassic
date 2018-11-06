@@ -5,6 +5,7 @@
 	icon_state = "repairbot"
 	maxHealth = 15
 	health = 15
+	health_threshold_dead = -15
 	universal_speak = 0
 	universal_understand = 1
 	gender = NEUTER
@@ -14,14 +15,6 @@
 	density = 0
 	req_access = list(access_engine, access_robotics)
 	ventcrawler = 2
-
-	// We need to keep track of a few module items so we don't need to do list operations
-	// every time we need them. These get set in New() after the module is chosen.
-	var/obj/item/stack/sheet/metal/cyborg/stack_metal = null
-	var/obj/item/stack/sheet/wood/cyborg/stack_wood = null
-	var/obj/item/stack/sheet/glass/cyborg/stack_glass = null
-	var/obj/item/stack/sheet/mineral/plastic/cyborg/stack_plastic = null
-	var/obj/item/weapon/matter_decompiler/decompiler = null
 
 	//Used for self-mailing.
 	var/mail_destination = ""
@@ -47,31 +40,13 @@
 		var/datum/robot_component/C = components[V]
 		C.max_damage = 10
 
-	module = new /obj/item/weapon/robot_module/drone(src)
-
-	//Grab stacks.
-	stack_metal = locate(/obj/item/stack/sheet/metal/cyborg) in src.module
-	stack_wood = locate(/obj/item/stack/sheet/wood/cyborg) in src.module
-	stack_glass = locate(/obj/item/stack/sheet/glass/cyborg) in src.module
-	stack_plastic = locate(/obj/item/stack/sheet/mineral/plastic/cyborg) in src.module
-
-	//Grab decompiler.
-	decompiler = locate(/obj/item/weapon/matter_decompiler) in src.module
-
-	//Some tidying-up.
-	flavor_text = "It's a tiny little repair drone. The casing is stamped with an NT logo and the subscript: 'NanoTrasen Recursive Repair Systems: Fixing Tomorrow's Problem, Today!'"
-	updateicon()
-
 /mob/living/silicon/robot/drone/init()
-	laws = new /datum/ai_laws/drone()
-	connected_ai = null
-
 	aiCamera = new/obj/item/device/camera/siliconcam/drone_camera(src)
-	playsound(src.loc, 'sound/machines/twobeep.ogg', 50, 0)
+	playsound(loc, 'sound/machines/twobeep.ogg', 50, 0)
 
 //Redefining some robot procs...
 /mob/living/silicon/robot/drone/updatename()
-	real_name = "maintenance drone ([rand(100,999)])"
+	real_name = "drone ([rand(100,999)])"
 	name = real_name
 
 /mob/living/silicon/robot/drone/updateicon()
@@ -87,59 +62,6 @@
 
 /mob/living/silicon/robot/drone/pick_module()
 	return
-
-//Drones can only use binary and say emotes. NOTHING else.
-//TBD, fix up boilerplate. ~ Z
-/mob/living/silicon/robot/drone/say(var/message)
-
-	if (!message)
-		return
-
-	if (src.client)
-		if(client.prefs.muted & MUTE_IC)
-			to_chat(src, "You cannot send IC messages (muted).")
-			return
-		if (src.client.handle_spam_prevention(message,MUTE_IC))
-			return
-
-	message = sanitize(message)
-
-	if (stat == DEAD)
-		return say_dead(message)
-
-	if(copytext(message,1,2) == "*")
-		return emote(copytext(message,2))
-	else if(length(message) >= 2)
-
-		if(parse_message_mode(message, "NONE") == "dronechat")
-
-			if(!is_component_functioning("radio"))
-				to_chat(src, "\red Your radio transmitter isn't functional.")
-				return
-
-			for (var/mob/living/S in living_mob_list)
-				if(isdrone(S))
-					to_chat(S, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>")
-
-			for (var/mob/M in dead_mob_list)
-				if(!isnewplayer(M) && !isbrain(M))
-					to_chat(M, "<i><span class='game say'>Drone Talk, <span class='name'>[name]</span><span class='message'> transmits, \"[trim(copytext(message,3))]\"</span></span></i>")
-
-		else
-
-			var/list/listeners = hearers(5,src)
-			listeners |= src
-
-			for(var/mob/living/silicon/robot/drone/D in listeners)
-				if(D.client)
-					to_chat(D, "<b>[src]</b> transmits, \"[message]\"")
-
-			for(var/mob/M in player_list)
-				if(isnewplayer(M))
-					continue
-				else if(M.stat == DEAD &&  M.client.prefs.chat_toggles & CHAT_GHOSTEARS)
-					if(M.client)
-						to_chat(M, "<b>[src]</b> transmits, \"[message]\"")
 
 //Drones cannot be upgraded with borg modules so we need to catch some items before they get used in ..().
 /mob/living/silicon/robot/drone/attackby(obj/item/weapon/W, mob/user)
@@ -231,7 +153,7 @@
 		health = maxHealth
 		stat = CONSCIOUS
 		return
-	health = 15 - (getBruteLoss() + getFireLoss())
+	health = maxHealth - (getBruteLoss() + getFireLoss())
 	return
 
 //Easiest to check this here, then check again in the robot proc.
@@ -239,7 +161,7 @@
 //Drones killed by damage will gib.
 /mob/living/silicon/robot/drone/handle_regular_status_updates()
 
-	if(health <= -10 && src.stat != DEAD)
+	if(health <= health_threshold_dead && stat != DEAD)
 		timeofdeath = world.time
 		death() //Possibly redundant, having trouble making death() cooperate.
 		gib()
@@ -276,7 +198,6 @@
 	clear_supplied_laws()
 	clear_inherent_laws()
 	clear_ion_laws()
-	laws = new /datum/ai_laws/drone
 
 //Reboot procs.
 
@@ -295,7 +216,7 @@
 	spawn(0)
 		if(!C || !C.mob || jobban_isbanned(C.mob, ROLE_DRONE) || role_available_in_minutes(C.mob, ROLE_DRONE))//Not sure if we need jobban check, since proc from above do that too.
 			return
-		var/response = alert(C, "Someone is attempting to reboot a maintenance drone. Would you like to play as one?", "Maintenance drone reboot", "No", "Yes", "Never for this round.")
+		var/response = alert(C, "Someone is attempting to reboot a drone. Would you like to play as one?", "Drone reboot", "No", "Yes", "Never for this round.")
 		if(!C || ckey)
 			return
 		if(response == "Yes")
@@ -307,20 +228,13 @@
 
 	if(!player) return
 
-	src.ckey = player.ckey
+	ckey = player.ckey
 
 	if(player.mob && player.mob.mind)
 		player.mob.mind.transfer_to(src)
 
 	lawupdate = 0
-	to_chat(src, "<b>Systems rebooted</b>. Loading base pattern maintenance protocol... <b>loaded</b>.")
 	full_law_reset()
-	to_chat(src, "<br><b>You are a maintenance drone, a tiny-brained robotic repair machine</b>.")
-	to_chat(src, "You have no individual will, no personality, and no drives or urges other than your laws.")
-	to_chat(src, "Use <b>:d</b> to talk to other drones and <b>say</b> to speak silently to your nearby fellows.")
-	to_chat(src, "Remember,  you are <b>lawed against interference with the crew</b>. Also remember, <b>you DO NOT take orders from the AI.</b>")
-	to_chat(src, "<b>Don't invade their worksites, don't steal their resources, don't tell them about the changeling in the toilets.</b>")
-	to_chat(src, "<b>If a crewmember has noticed you, <i>you are probably breaking your third law</i></b>.")
 
 /mob/living/silicon/robot/drone/ObjBump(obj/O)
 	var/list/can_bump = list(/obj/machinery/door,
@@ -331,17 +245,17 @@
 	if(!(O in can_bump))
 		return 0
 
-/mob/living/silicon/robot/drone/start_pulling(atom/movable/AM)
-
-	if(istype(AM,/obj/item/pipe) || istype(AM,/obj/structure/disposalconstruct))
-		..()
-	else if(istype(AM,/obj/item))
+/mob/living/silicon/robot/drone/proc/can_pull(atom/movable/AM)
+	if(istype(AM,/obj/item))
 		var/obj/item/O = AM
 		if(O.w_class > 2)
-			to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
-			return
+			return FALSE
 		else
-			..()
+			return TRUE
+
+/mob/living/silicon/robot/drone/start_pulling(atom/movable/AM)
+	if(can_pull(AM))
+		..()
 	else
 		to_chat(src, "<span class='warning'>You are too small to pull that.</span>")
 		return

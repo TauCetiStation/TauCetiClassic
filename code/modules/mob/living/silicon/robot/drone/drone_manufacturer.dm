@@ -49,7 +49,7 @@
 
 /obj/machinery/drone_fabricator/proc/count_drones()
 	var/drones = 0
-	for(var/mob/living/silicon/robot/drone/D in mob_list)
+	for(var/mob/living/silicon/robot/drone/maintenance/D in mob_list)
 		if(D.key && D.client)
 			drones++
 	return drones
@@ -69,7 +69,7 @@
 	flick("h_lathe_leave",src)
 
 	time_last_drone = world.time
-	var/mob/living/silicon/robot/drone/new_drone = new(get_turf(src))
+	var/mob/living/silicon/robot/drone/maintenance/new_drone = new(get_turf(src))
 	new_drone.transfer_personality(player)
 
 	drone_progress = 0

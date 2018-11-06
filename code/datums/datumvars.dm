@@ -279,6 +279,7 @@ datum/proc/on_varedit(modified_var) //called whenever a var is edited
 			body += "<option value='?_src_=vars;makemonkey=\ref[D]'>Make monkey</option>"
 			body += "<option value='?_src_=vars;makealien=\ref[D]'>Make alien</option>"
 			body += "<option value='?_src_=vars;makeslime=\ref[D]'>Make slime</option>"
+			body += "<option value='?_src_=vars;makezombie=\ref[D]'>Make zombie</option>"
 		body += "<option value>---</option>"
 		body += "<option value='?_src_=vars;gib=\ref[D]'>Gib</option>"
 	if(isatom(D))
@@ -757,6 +758,49 @@ body
 			to_chat(usr, "Mob doesn't exist anymore")
 			return
 		holder.Topic(href, list("makeslime"=href_list["makeslime"]))
+
+	else if(href_list["makezombie"])
+		if(!check_rights(R_SPAWN))
+			return
+
+		var/mob/living/carbon/human/H = locate(href_list["makezombie"])
+		if(!istype(H))
+			to_chat(usr, "This can only be done to instances of type /mob/living/carbon/human")
+			return
+
+		switch(input("Zombie menu", "Select action", "Cancel") in list("Turn into zombie instantly", "Infect with slow zombie virus (10-20 min)", "Infect with fast zombie virus (~3 min)", "Make immune to zombie virus", "Make vulnerable to zombie virus", "Cancel"))
+			if("Turn into zombie instantly")
+				if(H)
+					H.zombify()
+					to_chat(usr, "[H] is now a zombie")
+					log_admin("[key_name(usr)] turned [key_name(H)] into a zombie.")
+					message_admins("[key_name_admin(usr)] turned [key_name(H)] into a zombie.")
+			if("Infect with slow zombie virus (10-20 min)")
+				if(H)
+					H.infect_zombie_virus(target_zone = null, forced = TRUE, fast = FALSE)
+					to_chat(usr, "[H] is now infected with slow zombie virus")
+					log_admin("[key_name(usr)] infected [key_name(H)] with slow zombie virus.")
+					message_admins("[key_name_admin(usr)] infected [key_name(H)] with slow zombie virus.")
+			if("Infect with fast zombie virus (~3 min)")
+				if(H)
+					H.infect_zombie_virus(target_zone = null, forced = TRUE, fast = TRUE)
+					to_chat(usr, "[H] is now infected with fast zombie virus")
+					log_admin("[key_name(usr)] infected [key_name(H)] with fast zombie virus.")
+					message_admins("[key_name_admin(usr)] infected [key_name(H)] with fast zombie virus.")
+			if("Make immune to zombie virus")
+				if(H)
+					H.antibodies |= ANTIGEN_Z
+					to_chat(usr, "[H] is now immune to zombie virus")
+					log_admin("[key_name(usr)] made [key_name(H)] immune to zombie virus.")
+					message_admins("[key_name_admin(usr)] made [key_name(H)] immune to zombie virus.")
+			if("Make vulnerable to zombie virus")
+				if(H)
+					H.antibodies &= ~ANTIGEN_Z
+					to_chat(usr, "[H] is now vulnerable to zombie virus")
+					log_admin("[key_name(usr)] made [key_name(H)] vulnerable to zombie virus.")
+					message_admins("[key_name_admin(usr)] made [key_name(H)] vulnerable to zombie virus.")
+
+		holder.Topic(href, list("makezombie"=href_list["makezombie"]))
 
 	else if(href_list["makeai"])
 		if(!check_rights(R_SPAWN))

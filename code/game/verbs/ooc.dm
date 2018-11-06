@@ -65,8 +65,7 @@ var/global/normal_ooc_colour = "#002eb8"
 
 			if(config.allow_donators && donator && prefs.ooccolor)
 				display_name = "<span style='color: [prefs.ooccolor]'>[display_name]</span>"
-
-			to_chat(C, "<font color='[display_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
+			to_chat(C, "<font color='[display_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>","emojiAllowed")
 
 			/*
 			if(holder)
@@ -95,7 +94,7 @@ var/global/normal_ooc_colour = "#002eb8"
 /client/verb/set_name_ooc()
 	set name = "Set Name OOC Colour"
 	set category = "OOC"
-	
+
 	if(!config.allow_donators)
 		to_chat(usr, "<span class='warning'>Currently disabled by config.</span>")
 		return
@@ -174,11 +173,11 @@ var/global/normal_ooc_colour = "#002eb8"
 		if(C.prefs.chat_toggles & CHAT_LOOC)
 			if(is_fake_key && C.holder)
 				display_name = "[holder.fakekey]/([key])"
-			to_chat(C, "<font color='#6699CC'><span class='ooc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
+			to_chat(C, "<font color='#6699CC'><span class='ooc'><span class='prefix'>LOOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>","emojiAllowed")
 
 	for(var/client/C in admins)
 		if(C.prefs.chat_toggles & CHAT_LOOC)
 			var/prefix = "(R)LOOC"
 			if (C.mob in heard)
 				prefix = "LOOC"
-			to_chat(C, "<font color='#6699CC'><span class='ooc'><span class='prefix'>[prefix]:</span> <EM>[mob.name]/([key]):</EM> <span class='message'>[msg]</span></span></font>")
+			to_chat(C, "<font color='#6699CC'><span class='ooc'><span class='prefix'>[prefix]:</span> <EM>[mob.name]/([key]):</EM> <span class='message'>[msg]</span></span></font>","emojiAllowed")

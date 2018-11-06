@@ -4,9 +4,7 @@
 /obj/item/clothing/suit/storage/atom_init()
 	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
-	pockets.storage_slots = 2	//two slots
-	pockets.max_w_class = 2		//fit only pocket sized items
-	pockets.max_combined_w_class = 4
+	pockets.set_slots(slots = 2, slot_size = 2) //two slots, fit only pocket sized items
 
 /obj/item/clothing/suit/storage/Destroy()
 	qdel(pockets)

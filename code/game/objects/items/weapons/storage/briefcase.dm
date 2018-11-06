@@ -7,9 +7,9 @@
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 4.0
-	max_w_class = 3
-	max_combined_w_class = 16
+	w_class = ITEM_SIZE_LARGE
+	max_w_class = ITEM_SIZE_NORMAL
+	max_storage_space = DEFAULT_BACKPACK_STORAGE
 
 /obj/item/weapon/storage/briefcase/attack(mob/living/M, mob/living/user)
 	//..()

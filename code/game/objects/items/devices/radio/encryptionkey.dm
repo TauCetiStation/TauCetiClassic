@@ -82,7 +82,7 @@
 	channels = list("Science" = 1, "Command" = 1)
 
 /obj/item/device/encryptionkey/heads/hos
-	name = "Head of Security's Encryption Key"
+	name = "Star Vigil Commander's Encryption Key"
 	desc = "An encyption key for a radio headset.  Contains cypherkeys."
 	icon_state = "hos_cypherkey"
 	channels = list("Security" = 1, "Command" = 1)

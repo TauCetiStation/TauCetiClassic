@@ -494,7 +494,6 @@ the implant may become unstable and either pre-maturely inject the subject or si
 	///////////////////////////////////////////////////////////
 /obj/item/weapon/storage/internal/imp
 	name = "bluespace pocket"
-	max_combined_w_class = 6
 	max_w_class = 3
 	storage_slots = 2
 	cant_hold = list(/obj/item/weapon/disk/nuclear)

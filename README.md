@@ -21,7 +21,7 @@
 
 ### ВНЕСТИ ВКЛАД (CONTRIBUTING)
 
-Обязательно прочитайте [CONTRIBUTING.md](https://github.com/TauCetiStation/TauCetiClassic/blob/master/CONTRIBUTING.md).
+Обязательно прочитайте [CONTRIBUTING.md](https://github.com/GammaStation/Gamma-Station/blob/master/CONTRIBUTING.md).
 
 ---
 

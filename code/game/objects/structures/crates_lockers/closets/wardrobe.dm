@@ -17,7 +17,7 @@
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/soft/sec(src)
 	for (var/i in 1 to 2)
-		new /obj/item/clothing/mask/bandana/red(src)
+		new /obj/item/clothing/mask/bandana/blue(src)
 	for (var/i in 1 to 3)
 		new /obj/item/clothing/head/beret/sec(src)
 	#ifdef NEWYEARCONTENT

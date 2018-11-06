@@ -9,7 +9,7 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	config_tag = "changeling"
 	role_type = ROLE_CHANGELING
 	restricted_jobs = list("AI", "Cyborg")
-	protected_jobs = list("Security Officer", "Warden", "Detective", "Head of Security", "Captain")
+	protected_jobs = list("Star Vigil Officer", "Star Vigil Sergeant", "Detective", "Star Vigil Commander", "Captain")
 	required_players = 2
 	required_players_secret = 10
 	required_enemies = 1
@@ -286,8 +286,6 @@ var/list/possible_changeling_IDs = list("Alpha","Beta","Gamma","Delta","Epsilon"
 	else					honorific = "Mr."
 	if(possible_changeling_IDs.len)
 		changelingID = pick(possible_changeling_IDs)
-		if(changelingID == "Tau") // yeah, cuz we can
-			geneticpoints++
 		possible_changeling_IDs -= changelingID
 		changelingID = "[honorific] [changelingID]"
 	else
