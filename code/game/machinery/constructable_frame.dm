@@ -256,6 +256,28 @@ to destroy them and players will be able to make replacements.
 		to_chat(user, "<span class='notice'>You set the board to [names[build_path]].</span>")
 		req_components = list(text2path("/obj/item/weapon/vending_refill/[copytext("[build_path]", 24)]") = 3)       //Never before has i used a method as horrible as this one, im so sorry
 
+/obj/item/weapon/circuitboard/vendshop
+	name = "circuit board (Community Shop)"
+	build_path = /obj/machinery/vendshop/community
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list()
+
+/obj/item/weapon/circuitboard/vendshop/attackby(obj/item/I, mob/user)
+	if(istype(I, /obj/item/weapon/screwdriver))
+		var/list/names = list("Community Shop" = /obj/machinery/vendshop/community,
+							"Food Shop" = /obj/machinery/vendshop/food,
+							"Science Shop" = /obj/machinery/vendshop/science,
+							"Cargo Shop" = /obj/machinery/vendshop/cargo,
+							"Medbay Shop" = /obj/machinery/vendshop/med)
+
+		var/userchoise = input("Select board type", "Select board type", "Community Shop") in names
+		if(!userchoise)
+			return
+		build_path = names[userchoise]
+		name = "circuit board ([userchoise])"
+		to_chat(user, "<span class='notice'>You set the board to [userchoise].</span>")
+
 /obj/item/weapon/circuitboard/smes
 	name = "circuit board (SMES)"
 	build_path = /obj/machinery/power/smes
