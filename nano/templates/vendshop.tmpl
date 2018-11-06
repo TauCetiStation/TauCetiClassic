@@ -7,7 +7,7 @@
 {{if data.buying_product}}
 	<div class="item">
 		<b>You have selected {{:data.buying_product}}.<br>Please swipe your ID to pay for the article.</b><br>
-		{{:helper.link('Cancel', 'circle-arrow-s', { "cancelbuying" : 1 }, null, 'statusValue')}}
+		{{:helper.link('Cancel', 'cancel', { "cancelbuying" : 1 }, null, 'statusValue')}}
 	</div>
 {{else}}
 	{{if data.user_name}}
@@ -18,14 +18,19 @@
 			<div class="item">
 			  Your earnings: {{:data.earnings}}
 			  {{if data.earnings > 0}}
-				{{:helper.link('Transfer', 'circle-arrow-s', { "transfer" : 1 }, null, 'statusValue')}}
+				{{:helper.link('Transfer', 'arrowreturn-1-s', { "transfer" : 1 }, null, 'statusValue')}}
 			  {{/if}}
 			</div>
 		{{/if}}
 		{{if data.user_hasfullaccess}}
 			<div class="item">
 			  Your department has earned from taxes: {{:data.department_earning}}
-			  {{:helper.link('Change tax', 'circle-arrow-s', { "changeheadtax" : 1 }, null, 'statusValue')}}
+			  {{:helper.link('Change tax', 'scissors', { "changeheadtax" : 1 }, null, 'statusValue')}}
+			  {{if data.maintenance_protocols}}
+				{{:helper.link('Forbid maintenance protocols', 'wrench', { "togglemaintenance" : 1 }, null, 'statusValue')}}
+			  {{else}}
+				{{:helper.link('Permit maintenance protocols', 'wrench', { "togglemaintenance" : 1 }, null, 'statusValue')}}
+			  {{/if}}
 			</div>
 		{{/if}}
 		
@@ -49,10 +54,10 @@
 			Seller: {{:value.owner}}<br>
 			Price: {{:value.price}}<br>
 			
-			{{:helper.link('Buy', 'circle-arrow-s', { "buy" : value.reference }, null, 'statusValue')}}
+			{{:helper.link('Buy', 'cart', { "buy" : value.reference }, null, 'statusValue')}}
 			{{if ((data.user_name == value.owner && data.user_cansell) || data.user_hasfullaccess)}}
-				{{:helper.link('Vend', 'circle-arrow-s', { "vend" : value.reference }, null, 'statusValue')}}
-				{{:helper.link('Change price', 'circle-arrow-s', { "changeprice" : value.reference }, null, 'statusValue')}}
+				{{:helper.link('Vend', 'arrowreturn-1-s', { "vend" : value.reference }, null, 'statusValue')}}
+				{{:helper.link('Change price', 'tag', { "changeprice" : value.reference }, null, 'statusValue')}}
 			{{/if}}
 		  </div>
 		{{/for}}

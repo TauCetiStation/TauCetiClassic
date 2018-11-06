@@ -249,6 +249,7 @@
 #include "code\datums\wires\smartfridge.dm"
 #include "code\datums\wires\syndicatebomb.dm"
 #include "code\datums\wires\vending.dm"
+#include "code\datums\wires\vendshop.dm"
 #include "code\defines\obj.dm"
 #include "code\defines\obj\hydro.dm"
 #include "code\defines\obj\weapon.dm"
