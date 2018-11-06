@@ -100,18 +100,15 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				break
 	return return_name
 
-/obj/machinery/computer/rdconsole/Destroy()
-	det5 = null
-
 /obj/machinery/computer/rdconsole/proc/print() //proc print det5 robot
 	var/obj/item/weapon/paper/O = new /obj/item/weapon/paper(get_turf(det5))
-	var/pap
+	var/dat
 	for(var/datum/tech/T in files.known_tech)
-		pap += "[T.name]<BR>"
-		pap +=  "* Level: [T.level]<BR>"
-		pap +=  "* Summary: [T.desc]<HR>"
-	pap += "</div>"
-	O.info = pap
+		dat += "[T.name]<BR>"
+		dat +=  "* Level: [T.level]<BR>"
+		dat +=  "* Summary: [T.desc]<HR>"
+	dat += "</div>"
+	O.info = dat
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/r_n_d/D in oview(3,src))

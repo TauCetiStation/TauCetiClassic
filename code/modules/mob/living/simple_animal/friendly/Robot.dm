@@ -1,4 +1,3 @@
-//robot
 /mob/living/simple_animal/det5
 	name = "DET5"
 	icon_state = "robot_rd"
@@ -49,13 +48,12 @@
 
 /mob/living/simple_animal/det5/death()
 	..()
-	visible_message("<b>[src]</b> rang out 'd-d-d-data received...d-d-d-destruction'")
+	visible_message("<span class='bold'>[src]</span> rang out <span class='bold'>d-d-d-data received...d-d-d-destruction</span>")
 	new /obj/effect/decal/cleanable/blood/gibs/robot(loc)// drob blood robots
 	new /obj/effect/gibspawner/robot(loc)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
-	//respawnable_list += src
 	qdel(src)
 	rdconsoled = null
 	rdconsoled.det5 = null
@@ -89,14 +87,8 @@
 			targetexplode = 0
 			explode()
 
-/mob/living/simple_animal/det5/proc/printer()
-	if(!rdconsoled)
-		visible_message("<b>[src]</b> rang out 'Console not found'")
-	else
-		rdconsoled.print()
-
 /mob/living/simple_animal/det5/proc/explode()	// explode
-	visible_message("<b>[src]</b> rang out 'The #xplosi@n is prep@red, @-a-activate'")
+	visible_message("<span class='bold'>[src]</span> rang out <span class='userdanger'>The #xplosi@n is prep@red, @-a-activate</span>")
 	sleep(35)
 	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
 	death()
@@ -104,7 +96,7 @@
 /mob/living/simple_animal/det5/proc/Emag(user)	// used EMAG
 	if(!emagged)
 		emagged = 1
-		visible_message("<b>[src]</b> rang out 'B-b-b-broken pro#oco%s %%ctivated'")
+		to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>B-b-b-broken pro#oco%s %%ctivated</span>")
 
 /mob/living/simple_animal/det5/proc/det5controll(user)	// Used Controller (Input command)
 	if(health <=0)
@@ -118,32 +110,36 @@
 		if(cont == "1")
 			if(turns_per_move == 1)
 				turns_per_move = 100
-				visible_message("<b>[src]</b> rang out 'Moving mode is off'")
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Moving mode is off</span>")
 				cont = 0
 			else
 				turns_per_move = 1
-				visible_message("<b>[src]</b> rang out 'Moving mode is on'")
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Moving mode is on</span>")
 				cont = 0
 		if(cont == "2")
 			if(speak_chance == 15)
 				speak_chance = 0
-				visible_message("<b>[src]</b> rang out 'Speech mode is off'")
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Speech mode is off</span>")
 				cont = 0
 			else
 				speak_chance = 15
-				visible_message("<b>[src]</b> rang out 'Speech mode is on'")
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Speech mode is on</span>")
 				cont = 0
 		if(cont == "3")
-			printer()
+			if(rdconsoled == null)
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Console not found</span>")
+			else
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Printing</span>")
+				rdconsoled.print()
 			cont = 0
 		if(cont == "4")
 			if(emagged == 1)
-				visible_message("<b>[src]</b> rang out 'Self-d#str@ct pr@t@col a-a-a-activated'")
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d#str@ct pr@t@col a-a-a-activated</span>")
 				sleep(500)
 				src.explode()
 				cont = 0
 		if(cont == "5")
 			if(emagged == 1)
-				visible_message("<b>[src]</b> rang out 'Self-d##struct m@de with t@rget @ctiv@t#d'")
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d##struct m@de with t@rget @ctiv@t#d</span>")
 				targetexplode = 1
 				cont = 0
