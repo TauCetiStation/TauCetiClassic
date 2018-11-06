@@ -32696,11 +32696,14 @@
 "bja" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = 32;
-	pixel_y = 5
+	pixel_x = 39;
+	pixel_y = 1
 	},
 /obj/item/weapon/pinpointer/advpinpointer,
 /obj/item/weapon/disk/nuclear,
+/obj/structure/bobross{
+	pixel_x = 32
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain)
 "bjb" = (
