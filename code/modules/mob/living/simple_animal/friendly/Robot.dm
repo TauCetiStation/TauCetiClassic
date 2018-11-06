@@ -64,11 +64,6 @@
 		user.SetNextMove(CLICK_CD_MELEE)
 		act_emag = user.name	   // Emag user saved
 		Emag(user)
-	else if(istype(W, /obj/item/weapon/paper))
-		user.drop_item()
-		toinv = W
-		W.loc = src
-		trigger = 1
 	else if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/computer/rdconsole))
