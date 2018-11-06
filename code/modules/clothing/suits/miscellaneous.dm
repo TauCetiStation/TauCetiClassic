@@ -198,6 +198,30 @@
 	icon_state = "nerdshirt"
 	item_state = "nerdshirt"
 
+/obj/item/clothing/suit/blueshirt
+	name = "blue shirt"
+	desc = "A blue shirt with some strange symbols. Look out for aliens!"
+	icon_state = "blueshirt"
+	item_state = "blueshirt"
+
+/obj/item/clothing/suit/chemshirt
+	name = "chemistry shirt"
+	desc = "A nice orange shirt made from a special fabric that hides any reagent stains. Has a drawn beaker with some glowy acid inside. Wanna cook?"
+	icon_state = "chemshirt"
+	item_state = "chemshirt"
+
+/obj/item/clothing/suit/roundshirt
+	name = "science shirt"
+	desc = "A purple, sciency t-shirt with a picture of a burning star. Save the Earth! Oh wait, already too late for that"
+	icon_state = "roundshirt"
+	item_state = "roundshirt"
+
+/obj/item/clothing/suit/catshirt
+	name = "cat shirt"
+	desc = "Very comfy, grey t-shirt with a picture of a cute kitty. And the best part: any cat or tajaran hair blends into the design very well!"
+	icon_state = "catshirt"
+	item_state = "catshirt"
+
 /obj/item/clothing/suit/jacket
 	name = "bomber jacket"
 	desc = "Aviators not included."
