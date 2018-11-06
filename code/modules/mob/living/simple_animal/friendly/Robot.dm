@@ -96,45 +96,44 @@
 /mob/living/simple_animal/det5/proc/det5controll(user)	// Used Controller (Input command)
 	if(health <=0)
 		return
+	if(emagged != 1)
+		cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports).", , "Cancel")
 	else
-		if(emagged != 1)
-			cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports).", , "Cancel")
-		else
-			cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports). 4-Explode (50s). 5-Explode (using motion sensor)", , "Cancel")
+		cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports). 4-Explode (50s). 5-Explode (using motion sensor)", , "Cancel")
 
-		if(cont == "1")
-			if(turns_per_move == 1)
-				turns_per_move = 100
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Moving mode is off</span>")
-				cont = 0
-			else
-				turns_per_move = 1
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Moving mode is on</span>")
-				cont = 0
-		if(cont == "2")
-			if(speak_chance == 15)
-				speak_chance = 0
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Speech mode is off</span>")
-				cont = 0
-			else
-				speak_chance = 15
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Speech mode is on</span>")
-				cont = 0
-		if(cont == "3")
-			if(rdconsoled == null)
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Console not found</span>")
-			else
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Printing</span>")
-				rdconsoled.print()
+	if(cont == "1")
+		if(turns_per_move == 1)
+			turns_per_move = 100
+			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Moving mode is off</span>")
 			cont = 0
-		if(cont == "4")
-			if(emagged == 1)
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d#str@ct pr@t@col a-a-a-activated</span>")
-				sleep(500)
-				src.explode()
-				cont = 0
-		if(cont == "5")
-			if(emagged == 1)
-				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d##struct m@de with t@rget @ctiv@t#d</span>")
-				targetexplode = 1
-				cont = 0
+		else
+			turns_per_move = 1
+			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Moving mode is on</span>")
+			cont = 0
+	if(cont == "2")
+		if(speak_chance == 15)
+			speak_chance = 0
+			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Speech mode is off</span>")
+			cont = 0
+		else
+			speak_chance = 15
+			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Speech mode is on</span>")
+			cont = 0
+	if(cont == "3")
+		if(rdconsoled == null)
+			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Console not found</span>")
+		else
+			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Printing</span>")
+			rdconsoled.print()
+		cont = 0
+	if(cont == "4")
+		if(emagged == 1)
+			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d#str@ct pr@t@col a-a-a-activated</span>")
+			sleep(500)
+			src.explode()
+			cont = 0
+	if(cont == "5")
+		if(emagged == 1)
+			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d##struct m@de with t@rget @ctiv@t#d</span>")
+			targetexplode = 1
+			cont = 0
