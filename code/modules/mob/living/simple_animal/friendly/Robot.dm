@@ -115,20 +115,20 @@
 			speak_chance = 15
 			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Speech mode is on</span>")
 			commandtrigger = 0
-	if(cont == "3")
+	if(commandtrigger == "3")
 		if(rdconsoled == null)
 			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Console not found</span>")
 		else
 			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Print report</span>")
 			rdconsoled.print()
 		commandtrigger = 0
-	if(cont == "4")
+	if(commandtrigger == "4")
 		if(emagged == 1)
 			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d#str@ct pr@t@col a-a-a-activated</span>")
 			sleep(500)
 			src.explode()
 			commandtrigger = 0
-	if(cont == "5")
+	if(commandtrigger == "5")
 		if(emagged == 1)
 			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d##struct m@de with t@rget @ctiv@t#d</span>")
 			searchfortarget = 1
