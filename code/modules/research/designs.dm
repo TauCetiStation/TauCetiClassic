@@ -1347,6 +1347,15 @@ datum/design/hydroponics
 	materials = list(MAT_GLASS = 2000, "sacid" = 20)
 	build_path = /obj/item/weapon/circuitboard/oven
 
+/datum/design/stove
+	name = "Stove Board"
+	desc = "The circuit board for a stove."
+	id = "stove"
+	req_tech = list("programming" = 1)
+	build_type = IMPRINTER
+	materials = list(MAT_GLASS = 2000, "sacid" = 20)
+	build_path = /obj/item/weapon/circuitboard/stove
+
 /datum/design/grill
 	name = "Grill Board"
 	desc = "The circuit board for a grill."

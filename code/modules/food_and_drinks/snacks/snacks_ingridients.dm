@@ -53,6 +53,7 @@
 	desc = "A base for any self-respecting burger."
 	icon = 'icons/obj/food_and_drinks/ingredients.dmi'
 	icon_state = "bun"
+	filling_color = "#EDDD00"
 	bitesize = 2
 	list_reagents = list("nutriment" = 6)
 
@@ -61,8 +62,27 @@
 	desc = "Bland but filling."
 	icon = 'icons/obj/food_and_drinks/ingredients.dmi'
 	icon_state = "flatbread"
+	filling_color = "#EDDD00"
 	bitesize = 2
 	list_reagents = list("plantmatter" = 3, "vitamin" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/spagetti
+	name = "spaghetti"
+	desc = "A bundle of raw spaghetti."
+	icon = 'icons/obj/food_and_drinks/ingredients.dmi'
+	icon_state = "spagetti"
+	filling_color = "#EDDD00"
+	bitesize = 1
+	list_reagents = list("nutriment" = 1, "vitamin" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/macaroni
+	name = "macaroni twists"
+	desc = "These are little twists of raw macaroni."
+	icon = 'icons/obj/food_and_drinks/ingredients.dmi'
+	icon_state = "macaroni"
+	filling_color = "#EDDD00"
+	bitesize = 1
+	list_reagents = list("nutriment" = 1, "vitamin" = 1)
 
 //////////////////
 // Meat stuff	//
@@ -75,16 +95,31 @@
 	icon_state = "rawcutlet"
 	bitesize = 1
 	raw = TRUE
-	list_reagents = list("protein" = 2)
+	list_reagents = list("protein" = 3)
 
+/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/attack_self(mob/user)
+	if(src != /obj/item/weapon/reagent_containers/food/snacks/rawcutlet/human)
+		var/obj/item/weapon/reagent_containers/food/snacks/rawmeatball/F = new/obj/item/weapon/reagent_containers/food/snacks/rawmeatball(src)
+	else
+		var/obj/item/weapon/reagent_containers/food/snacks/rawmeatball/human/F = new/obj/item/weapon/reagent_containers/food/snacks/rawmeatball/human(src)
+	if(user.l_hand == src || user.r_hand == src)
+				user.put_in_hands(F)
+	to_chat(user, "<span class='notice'>You roll [src] into a [F.name]</span>")
+	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/human
+	desc = "A thin piece of... Something is wrong with that cutlet."
 
 /obj/item/weapon/reagent_containers/food/snacks/cutlet
 	name = "cutlet"
 	desc = "A tasty meat slice."
-	icon = 'icons/obj/food_and_drinks/ingredients.dmi'
 	icon_state = "cutlet"
+	filling_color = "#DB0000"
 	bitesize = 2
-	list_reagents = list("protein" = 2)
+	list_reagents = list("protein" = 3, "vitamin" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/cutlet/human
+	desc = "A tasty meat... Something is wrong with that cutlet."
 
 /obj/item/weapon/reagent_containers/food/snacks/rawmeatball
 	name = "raw meatball"
@@ -93,7 +128,40 @@
 	icon_state = "rawmeatball"
 	raw = TRUE
 	bitesize = 2
-	list_reagents = list("protein" = 2)
+	list_reagents = list("protein" = 3)
+
+/obj/item/weapon/reagent_containers/food/snacks/rawmeatball/attack_self(mob/user)
+	if(src != /obj/item/weapon/reagent_containers/food/snacks/rawcutlet/human)
+		var/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/F = new/obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
+	else
+		var/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/human/F = new/obj/item/weapon/reagent_containers/food/snacks/rawcutlet/human(src)
+	if(user.l_hand == src || user.r_hand == src)
+				user.put_in_hands(F)
+	to_chat(user, "<span class='notice'>You roll [src] into a [F.name]</span>")
+	qdel(src)
+
+/obj/item/weapon/reagent_containers/food/snacks/rawmeatball/human
+	desc = "A raw meatball... Something is wrong with that thing."
+
+/obj/item/weapon/reagent_containers/food/snacks/meatball
+	name = "meatball"
+	desc = "A great meal all round."
+	icon_state = "meatball"
+	filling_color = "#DB0000"
+	bitesize = 2
+	list_reagents = list("protein" = 3, "vitamin" = 1)
+
+/obj/item/weapon/reagent_containers/food/snacks/meatball/human
+	desc = "A great meal all round... Something is wrong with that thing."
+
+/obj/item/weapon/reagent_containers/food/snacks/raw_bacon
+	name = "raw bacon"
+	desc = "It's fleshy and pink!"
+	icon = 'icons/obj/food_and_drinks/ingredients.dmi'
+	icon_state = "raw_bacon"
+	bitesize = 3
+	raw = TRUE
+	list_reagents = list("protein" = 1)
 
 //////////////////
 // Potato stuff	//

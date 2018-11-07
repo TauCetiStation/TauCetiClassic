@@ -3,219 +3,102 @@
 ///														//
 ///						Salads							//
 ///		Food items made mixing ingridients in bowls.	//
-///		For example - raw meat isn't snack.				//
 ///														//
 ///-----------------------------------------------------//
 
-//Bowl
-
-/obj/item/weapon/bowl
-	name = "kitchen bowl"
-	desc = "It's a large deep pot, usually is used to make salads.
-	icon = 'icons/obj/food_and_drinks/tools.dmi'
-	icon_state = "bowl"
-	w_class = 3
-	throw_speed = 1
-	throw_range = 3
-	var/new_ingridient = null
-
-/obj/item/weapon/bowl/attackby(obj/O, mob/user)
-	if(istype(O, /obj/item/weapon/reagent_containers/food/snacks))
-		user.drop_item()
-		O.loc = src
-		update_icon()
-	else
-		..()
-
-/obj/item/weapon/bowl/attack_hand(mob/user)
-	if(contents.len)
-		var/obj/item/weapon/reagent_containers/food/snacks/choice = input("Which ingridient would you like to remove from the bowl?") in contents as obj|null
-		if(choice)
-			if(!usr.canmove || usr.stat || usr.restrained() || !in_range(loc, usr))
-				return
-			if(ishuman(user))
-				if(!user.get_active_hand())
-					user.put_in_hands(choice)
-			else
-				choice.loc = get_turf(src)
-			update_icon()
-
-/obj/item/weapon/bowl/ex_act(severity)
-	switch(severity)
-		if(1.0)
-			for(var/obj/item/weapon/reagent_containers/food/snacks/b in contents)
-				qdel(b)
-			qdel(src)
-			return
-		if(2.0)
-			for(var/obj/item/weapon/reagent_containers/food/snacks/b in contents)
-				if (prob(50)) b.loc = (get_turf(src))
-				else del(b)
-			qdel(src)
-			return
-		if(3.0)
-			if (prob(50))
-				for(var/obj/item/weapon/reagent_containers/food/snacks/b in contents)
-					b.loc = (get_turf(src))
-				qdel(src)
-			return
-		else
-	return
-
-/obj/item/weapon/bowl/update_icon()
-	if(contents.len == 0)
-		overlays.cut()
-		icon_state = "bowl"
-	else
-		var/icon/bowl_natural = getFlatIcon(src)
-		var/icon/Ingridient = icon(new_ingridient.icon, new_ingridient.icon_state)
-		var/icon/bowl_overlay = icon('icons/obj/food_and_drinks/tools.dmi', "bowl_overlay")
-		Ingridient.Scale(8, 8)
-		bowl_natural.Blend(Ingridient,ICON_OVERLAY, 10, 13)
-		overlays += bowl_overlay
-
-
-
-
-
-//Dirty bowl
-/obj/item/weapon/dirty_bowl
-	name = "dirty bowl"
-	desc = "You gotta clean it up if you want to continue working with it."
-	icon = 'icons/obj/food_and_drinks/tools.dmi'
-	icon_state = "dirty_bowl"
-	w_class = 3
-	throw_speed = 3
-	throw_range = 3
-
-/obj/item/trash/snack_bowl/salad_bowl/attackby(obj/O, mob/user)
-	if(istype(O, /obj/item/weapon/soap))
-		if(do_after(user, 10, target = src) && O)
-			for(var/mob/V in viewers(user, null))
-				V.show_message("\blue [user] washes [src] hands using the soap.")
-			var/obj/item/weapon/bowl/B = new /obj/item/weapon/bowl
-			B.loc = src.loc
-			qdel(src)
-	else
-		..()
 
 //Salad as snack type
 /obj/item/weapon/reagent_containers/food/snacks/salad
+	name = "Just a template"
 	icon = 'icons/obj/food_and_drinks/soups_salads.dmi'
-	trash = /obj/item/weapon/dirty_bowl
+	trash = /obj/item/weapon/kitchen/dirty_bowl
+	filling_color = "#76B87F"
 	w_class = 3
-	eatverb = pick("slurp","sip","suck","inhale")
+	bitesize = 3
+	cant_be_put_on_plate = 1
 
-/obj/item/weapon/reagent_containers/food/snacks/salad/atom_init()
-	.=..()
-	eatverb = pick("slurp","sip","suck","inhale")
+//////////////////
+//LIST OF SALADS//
+//////////////////
 
-
-
-////////////////////////////////////////////////////////
-//LIST OF SALADS//Please keep it in alphabetical order//
-////////////////////////////////////////////////////////
-
-/obj/item/weapon/reagent_containers/food/snacks/aesirsalad
+/obj/item/weapon/reagent_containers/food/snacks/salad/aesirsalad
 	name = "Aesir salad"
 	desc = "Probably too incredible for mortal men to fully enjoy."
 	icon_state = "aesirsalad"
 	filling_color = "#468C00"
-	bitesize = 3
-
-/obj/item/weapon/reagent_containers/food/snacks/aesirsalad/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 8)
-	reagents.add_reagent("doctorsdelight", 8)
-	reagents.add_reagent("vitamin", 6)
+	list_reagents = list("nutriment" = 8, "doctorsdelight" = 8, "vitamin" = 6)
 
 ///////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/herbsalad
+/obj/item/weapon/reagent_containers/food/snacks/salad/fruitsalad
+	name = "fruit salad"
+	desc = "Popular among cargo technicians who break into fruit crates."
+	icon_state = "fruitsalad"
+	filling_color = "#468C00"
+	list_reagents = list("nutriment" = 8, "vitamin" = 8)
+
+///////////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/salad/herbsalad
 	name = "herb salad"
 	desc = "A tasty salad with apples on top."
 	icon_state = "herbsalad"
 	filling_color = "#76B87F"
-	bitesize = 3
-
-/obj/item/weapon/reagent_containers/food/snacks/herbsalad/atom_init()
-	. = ..()
-	reagents.add_reagent("nutriment", 8)
+	list_reagents = list("nutriment" = 8)
 
 ///////////////////////////////////////////////
 
-///////////////////////////////////////////////
-
-
-///////////////////////////////////////////////
-
-///////////////////////////////////////////////
-
-///////////////////////////////////////////////
+/obj/item/weapon/reagent_containers/food/snacks/salad/potatosalad
+	name = "Potato Salad"
+	desc = "With 21st century technology, it could take as long as three days to make this."
+	icon_state = "potatosalad"
+	filling_color = "#76B87F"
+	list_reagents = list("nutriment" = 10, "plantmatter" = 5, "vitamin" = 1)
 
 ///////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff
+/obj/item/weapon/reagent_containers/food/snacks/salad/orzosalad
+	name = "orzo salad"
+	desc = "A minty, exotic salad originating in Space Greece. Makes you feel slippery enough to escape denbts."
+	icon_state = "orzosalad"
+	bitesize = 4
+	list_reagents = list("nutriment" = 2, "lube" = 14)
+
+///////////////////////////////////////////////
+
+/obj/item/weapon/reagent_containers/food/snacks/salad/spacylibertyduff
 	name = "Spacy Liberty Duff"
 	desc = "Jello gelatin, from Alfred Hubbard's cookbook."
 	icon_state = "spacylibertyduff"
-	trash = /obj/item/trash/snack_bowl
 	filling_color = "#42B873"
-	bitesize = 3
-
-/obj/item/weapon/reagent_containers/food/snacks/spacylibertyduff/atom_init()
-	. = ..()
-	reagents.add_reagent("plantmatter", 6)
-	reagents.add_reagent("psilocybin", 6)
+	list_reagents = list("plantmatter" = 6, "psilocybin" = 6)
 
 ///////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/tossedsalad
+/obj/item/weapon/reagent_containers/food/snacks/salad/tossedsalad
 	name = "tossed salad"
 	desc = "A proper salad, basic and simple, with little bits of carrot, tomato and apple intermingled. Vegan!"
 	icon_state = "herbsalad"
 	filling_color = "#76B87F"
-	bitesize = 3
-
-/obj/item/weapon/reagent_containers/food/snacks/tossedsalad/atom_init()
-	. = ..()
-	reagents.add_reagent("plantmatter", 8)
-	reagents.add_reagent("vitamin", 1)
+	list_reagents = list("plantmatter" = 8, "vitamin" = 1)
 
 ///////////////////////////////////////////////
 
-///////////////////////////////////////////////
-
-///////////////////////////////////////////////
-
-///////////////////////////////////////////////
-
-/obj/item/weapon/reagent_containers/food/snacks/validsalad
+/obj/item/weapon/reagent_containers/food/snacks/salad/validsalad
 	name = "valid salad"
 	desc = "It's just a salad of questionable 'herbs' with meatballs and fried potato slices. Nothing suspicious about it."
 	icon_state = "validsalad"
 	filling_color = "#76B87F"
-	bitesize = 3
-
-/obj/item/weapon/reagent_containers/food/snacks/validsalad/atom_init()
-	. = ..()
-	reagents.add_reagent("plantmatter", 8)
-	reagents.add_reagent("vitamin", 2)
+	list_reagents = list("plantmatter" = 8, "vitamin" = 2)
 
 ///////////////////////////////////////////////
 
-/obj/item/weapon/reagent_containers/food/snacks/wingfangchu
+/obj/item/weapon/reagent_containers/food/snacks/salad/wingfangchu
 	name = "Wing Fang Chu"
 	desc = "A savory dish of alien wing wang in soy."
 	icon_state = "wingfangchu"
-	trash = /obj/item/trash/snack_bowl
 	filling_color = "#43DE18"
-	bitesize = 2
-
-/obj/item/weapon/reagent_containers/food/snacks/wingfangchu/atom_init()
-	. = ..()
-	reagents.add_reagent("protein", 6)
-	reagents.add_reagent("vitamin", 2)
+	list_reagents = list("protein" = 6, "vitamin" = 2)
 
 ///////////////////////////////////////////////
 

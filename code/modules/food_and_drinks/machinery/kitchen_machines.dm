@@ -20,6 +20,7 @@
 	var/list/acceptable_reagents // List of the reagents you can put in
 	var/max_n_of_items = 10
 	//Icon states
+	icon = 'icons/obj/food_and_drinks/kitchenware.dmi'
 	var/off_icon
 	var/on_icon
 	var/broken_icon
@@ -148,7 +149,7 @@
 		return 1
 	else if(is_type_in_list(O,acceptable_items))
 		if (contents.len>=max_n_of_items)
-			to_chat(user, "<span class='danger'>Tihs [src] is full of ingredients, you cannot put more.</span>")
+			to_chat(user, "<span class='danger'>This [src] is full of ingredients, you cannot put more.</span>")
 			return 1
 		var/obj/item/stack/S = O
 		if (istype(S) && S.get_amount() > 1)
@@ -267,7 +268,7 @@
 		stop()
 		return
 
-	var/datum/recipe/recipe = select_recipe(available_recipes,src)
+	var/datum/recipe/recipe = select_recipe(available_recipes, src)
 	var/obj/cooked
 	var/obj/byproduct
 	if (!recipe)
@@ -429,19 +430,18 @@
 	updateUsrDialog()
 
 /*******************
-*   Microwave
+*   Machines
 ********************/
 
 /obj/machinery/kitchen_machine/microwave
 	name = "microwave"
 	desc = "A microwave, perfect for reheating things with radiation."
-	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "mw"
 	recipe_type = /datum/recipe/microwave
 	off_icon = "mw"
 	on_icon = "mw1"
 	broken_icon = "mwb"
-	dirty_icon = "mwbloody"
+	dirty_icon = "mw_dirty"
 	open_icon = "mw-o"
 
 /obj/machinery/kitchen_machine/microwave/atom_init()
@@ -457,7 +457,6 @@
 /obj/machinery/kitchen_machine/oven
 	name = "oven"
 	desc = "Cookies are ready, dear."
-	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "oven_off"
 	recipe_type = /datum/recipe/oven
 	off_icon = "oven_off"
@@ -479,7 +478,6 @@
 /obj/machinery/kitchen_machine/grill
 	name = "grill"
 	desc = "Backyard grilling, IN SPACE."
-	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grill_off"
 	recipe_type = /datum/recipe/grill
 	off_icon = "grill_off"
@@ -501,7 +499,6 @@
 /obj/machinery/kitchen_machine/candymaker
 	name = "candy machine"
 	desc = "The stuff of nightmares for a dentist."
-	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "candymaker_off"
 	recipe_type = /datum/recipe/candy
 	off_icon = "candymaker_off"

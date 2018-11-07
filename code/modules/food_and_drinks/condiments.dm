@@ -39,7 +39,7 @@
 	flags = OPENCONTAINER
 	possible_transfer_amounts = list(1,5,10)
 	volume = 50
-	var/empty = null//Empty icon
+	var/empty = icon_state//Empty state icon
 
 /obj/item/weapon/reagent_containers/food/condiment/attackby(obj/item/weapon/W, mob/user)
 	return
@@ -113,6 +113,11 @@
 			return
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "\blue You transfer [trans] units of the condiment to [target].")
+		if(istype(target, /obj/item/weapon/reagent_containers/food/snacks))
+			if(target.sauced_icon && target.icon_state == target.initial(icon_state))
+				if((target.get_reagent_amount("ketchup") > 1) || (target.get_reagent_amount("capsaicin") > 1))
+					target.icon_state = target.sauced_icon
+					target.desc = "[target.desc]<br><span class='rose'>It has [src] on it</span>"
 
 /obj/item/weapon/reagent_containers/food/condiment/on_reagent_change()
 	if(reagents.reagent_list.len == 0 && empty)//If its empty we change the sprite and desc
@@ -296,7 +301,7 @@
 	list_reagents = list("soysauce" = 40)
 
 /obj/item/weapon/reagent_containers/food/condiment/hotsauce
-	name = "hotsauce"
+	name = "hot sauce"
 	desc = "You can almost TASTE the stomach ulcers now!"
 	icon_state = "hotsauce"
 	empty = "hotsauce_empty"

@@ -438,6 +438,17 @@ obj/item/weapon/circuitboard/biogenerator
 							/obj/item/stack/cable_coil = 2,
 							/obj/item/weapon/stock_parts/console_screen = 1)
 
+/obj/item/weapon/circuitboard/stove
+	name = "circuit board (Stove)"
+	build_path = /obj/machinery/kitchen_machine/stove
+	board_type = "machine"
+	origin_tech = "programming=1"
+	req_components = list(
+							/obj/item/weapon/stock_parts/micro_laser = 1,
+							/obj/item/weapon/stock_parts/matter_bin = 1,
+							/obj/item/stack/cable_coil = 2,
+							/obj/item/weapon/stock_parts/console_screen = 1)
+
 /obj/item/weapon/circuitboard/grill
 	name = "circuit board (Grill)"
 	build_path = /obj/machinery/kitchen_machine/grill

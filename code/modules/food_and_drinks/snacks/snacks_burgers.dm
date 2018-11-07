@@ -14,14 +14,7 @@
 	filling_color = "#D63C3C"
 	bitesize = 3
 	list_reagents = list("nutriment" = 6, "protein" = 3, "vitamin" = 1)
-	var/sauced_icon = "sauced_borglar"//= icon with ketchup on it
-
-/obj/item/weapon/reagent_containers/food/snacks/burger/attackby(obj/item/weapon/W, mob/user)
-	. = ..()
-	if(sauced_icon && icon_state == initial(icon_state))
-		if((get_reagent_amount("ketchup") > 1) || (get_reagent_amount("capsaicin") > 1))
-			icon_state = sauced_icon
-			desc = "[desc]<br><span class='rose'>It has [W] on it</span>"
+	sauced_icon = "sauced_borglar"//= icon with ketchup on it
 
 ///////////////////////////////////////////////////////////
 
@@ -48,13 +41,9 @@
 	reagents.add_reagent("ectoplasm", 2)
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/human
-	var/hname = ""
-	var/job = null
+	name = "burger"
+	desc = "A bloody burger. Something is wrong here."
 	filling_color = "#D63C3C"
-
-/obj/item/weapon/reagent_containers/food/snacks/burger/human/burger
-	name = "-burger"
-	desc = "A bloody burger."
 	icon_state = "borglar"
 	sauced_icon = "sauced_borglar"
 

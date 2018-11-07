@@ -40,7 +40,7 @@
 	id = "tomatojuice"
 	description = "Tomatoes made into juice. What a waste of big, juicy tomatoes, huh?"
 	color = "#731008" // rgb: 115, 16, 8
-	taste_message = "tomato juice"
+	taste_message = "tomato"
 
 /datum/reagent/consumable/drink/tomatojuice/on_general_digest(mob/living/M)
 	..()

@@ -14,14 +14,16 @@
 	health = 180
 	filling_color = "#FF1C1C"
 	bitesize = 3
+	raw = TRUE
 	list_reagents = list("protein" = 6)
 
 /obj/item/weapon/reagent_containers/food/snacks/meat/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/kitchenknife))
-		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
-		new /obj/item/weapon/reagent_containers/food/snacks/rawcutlet(src)
-		to_chat(user, "You cut the meat in thin strips.")
+		new /obj/item/weapon/reagent_containers/food/snacks/raw_bacon(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/raw_bacon(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/raw_bacon(src)
+		new /obj/item/weapon/reagent_containers/food/snacks/raw_bacon(src)
+		to_chat(user, "You cut the meat into thin strips.")
 		qdel(src)
 	else
 		..()

@@ -40,16 +40,23 @@
 		qdel(what)
 
 	/* objs */
+/datum/food_processor_process/humanmeat
+	input = /obj/item/weapon/reagent_containers/food/snacks/meat/human
+	output = pick(/obj/item/weapon/reagent_containers/food/snacks/rawmeatball/human, /obj/item/weapon/reagent_containers/food/snacks/rawcutlet/human)
+
 /datum/food_processor_process/meat
 	input = /obj/item/weapon/reagent_containers/food/snacks/meat
-	output = /obj/item/weapon/reagent_containers/food/snacks/rawmeatball
+	output = pick(/obj/item/weapon/reagent_containers/food/snacks/rawmeatball, /obj/item/weapon/reagent_containers/food/snacks/rawcutlet)
 
 /datum/food_processor_process/meat2
 	input = /obj/item/weapon/syntiflesh
-	output = /obj/item/weapon/reagent_containers/food/snacks/rawmeatball
+	output =  = list(
+		pick(/obj/item/weapon/reagent_containers/food/snacks/rawmeatball, /obj/item/weapon/reagent_containers/food/snacks/rawcutlet),
+		pick(/obj/item/weapon/reagent_containers/food/snacks/rawmeatball, /obj/item/weapon/reagent_containers/food/snacks/rawcutlet),
+	)
 
 /datum/food_processor_process/potato
-	input = /obj/item/weapon/reagent_containers/food/snacks/grown/potato
+	input = /obj/item/weapon/reagent_containers/food/snacks/grown/clenedpotato
 	output = /obj/item/weapon/reagent_containers/food/snacks/rawsticks
 
 /datum/food_processor_process/carrot
@@ -64,9 +71,13 @@
 	input = /obj/item/weapon/reagent_containers/food/snacks/grown/wheat
 	output = /obj/item/weapon/reagent_containers/food/condiment/flour
 
-/datum/food_processor_process/spaghetti
+/datum/food_processor_process/macaroni
 	input = /obj/item/weapon/reagent_containers/food/snacks/dough
-	output = /obj/item/weapon/reagent_containers/food/snacks/spagetti
+	output = /obj/item/weapon/reagent_containers/food/snacks/macaroni
+
+/datum/food_processor_process/spaghetti
+	input = /obj/item/weapon/reagent_containers/food/snacks/sliceable/flatdough
+	output = /obj/item/weapon/reagent_containers/food/snacks/spaghetti
 
 	/* mobs */
 /datum/food_processor_process/mob/process_food(loc, what, processor)

@@ -26,6 +26,13 @@
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/friedegg
 
+/datum/recipe/grill/humanmeatsteak
+	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
+	items = list(
+		/obj/item/weapon/reagent_containers/food/snacks/meat/human
+	)
+	result = /obj/item/weapon/reagent_containers/food/snacks/meatsteak/human
+
 /datum/recipe/grill/meatsteak
 	reagents = list("sodiumchloride" = 1, "blackpepper" = 1)
 	items = list(
@@ -73,8 +80,8 @@
 
 /datum/recipe/grill/sausage
 	items = list(
-		/obj/item/weapon/reagent_containers/food/snacks/meatball,
-		/obj/item/weapon/reagent_containers/food/snacks/cutlet,
+		/obj/item/weapon/reagent_containers/food/snacks/rawmeatball,
+		/obj/item/weapon/reagent_containers/food/snacks/rawcutlet,
 	)
 	result = /obj/item/weapon/reagent_containers/food/snacks/sausage
 
@@ -106,7 +113,7 @@
 	items = list(
 		/obj/item/weapon/reagent_containers/food/snacks/xenomeat,
 	)
-	result = /obj/item/weapon/reagent_containers/food/snacks/wingfangchu
+	result = /obj/item/weapon/reagent_containers/food/snacks/salad/wingfangchu
 
 /datum/recipe/grill/human/kabob
 	items = list(
