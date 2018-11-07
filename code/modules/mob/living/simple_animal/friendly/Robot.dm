@@ -27,13 +27,9 @@
 	minbodytemp = 198	// Below -75 Degrees Celcius
 	maxbodytemp = 423	// Above 150 Degrees Celcius
 	var/emagged = 0    // Trigger EMAG used
-	var/cont = 0	// Used command
-	var/cont2 = 0
-	var/trigger = 0
-	var/targetexplode = 0	// Trigger explode
-	var/explosion_power = 1
+	var/commandtrigger = 0    // Used command
+	var/searchfortarget = 0	   //  if this is TRUE, robot will be searching for target to explode.
 	var/act_emag
-	var/toinv
 	var/obj/machinery/computer/rdconsole/rdconsoled = null
 
 /mob/living/simple_animal/det5/Life()
@@ -77,15 +73,15 @@
 	det5controll(user)
 
 /mob/living/simple_animal/det5/HasProximity(atom/movable/AM)	// Trigger move
-	if(targetexplode == 1)
+	if(searchfortarget == 1)
 		if(istype(AM, /mob/living/carbon) && !(AM.name == act_emag))	//do not explode EMAG USER
-			targetexplode = 0
+			searchfortarget = 0
 			explode()
 
 /mob/living/simple_animal/det5/proc/explode()	// explode
 	visible_message("<span class='bold'>[src]</span> rang out <span class='userdanger'>The #xplosi@n is prep@red, @-a-activate</span>")
 	sleep(35)
-	explosion(get_turf(src), explosion_power, explosion_power * 2, explosion_power * 3, explosion_power * 4, 1)
+	explosion(get_turf(src), 1, 2, 3, 4, 1)
 	death()
 
 /mob/living/simple_animal/det5/proc/Emag(user)	// used EMAG
@@ -97,43 +93,43 @@
 	if(health <=0)
 		return
 	if(emagged != 1)
-		cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports).", , "Cancel")
+		commandtrigger = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports).", , "Cancel")
 	else
-		cont = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports). 4-Explode (50s). 5-Explode (using motion sensor)", , "Cancel")
+		commandtrigger = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports). 4-Explode (50s). 5-Explode (using motion sensor)", , "Cancel")
 
-	if(cont == "1")
+	if(commandtrigger == "1")
 		if(turns_per_move == 1)
 			turns_per_move = 100
 			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Moving mode is off</span>")
-			cont = 0
+			commandtrigger = 0
 		else
 			turns_per_move = 1
 			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Moving mode is on</span>")
-			cont = 0
-	if(cont == "2")
+			commandtrigger = 0
+	if(commandtrigger == "2")
 		if(speak_chance == 15)
 			speak_chance = 0
 			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Speech mode is off</span>")
-			cont = 0
+			commandtrigger = 0
 		else
 			speak_chance = 15
 			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Speech mode is on</span>")
-			cont = 0
+			commandtrigger = 0
 	if(cont == "3")
 		if(rdconsoled == null)
 			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Console not found</span>")
 		else
 			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Print report</span>")
 			rdconsoled.print()
-		cont = 0
+		commandtrigger = 0
 	if(cont == "4")
 		if(emagged == 1)
 			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d#str@ct pr@t@col a-a-a-activated</span>")
 			sleep(500)
 			src.explode()
-			cont = 0
+			commandtrigger = 0
 	if(cont == "5")
 		if(emagged == 1)
 			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d##struct m@de with t@rget @ctiv@t#d</span>")
-			targetexplode = 1
-			cont = 0
+			searchfortarget = 1
+			commandtrigger = 0
