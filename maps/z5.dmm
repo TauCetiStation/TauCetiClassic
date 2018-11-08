@@ -6035,10 +6035,10 @@
 /turf/simulated/wall,
 /area/research_outpost/gearstore)
 "mq" = (
-/obj/structure/closet/secure_closet/xenoarchaeologist,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -6057,7 +6057,7 @@
 /turf/simulated/floor,
 /area/research_outpost/gearstore)
 "mt" = (
-/obj/structure/closet/secure_closet/xenoarchaeologist,
+/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
@@ -6183,7 +6183,6 @@
 	},
 /area/research_outpost/iso1)
 "mI" = (
-/obj/structure/closet/secure_closet/xenoarchaeologist,
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube1"
@@ -6191,6 +6190,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
+/obj/structure/closet/secure_closet/xenoarchaeologist_tools,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "bot"
