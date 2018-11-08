@@ -106,3 +106,11 @@
 	icon_off = "secureveloff"
 
 /obj/structure/object_wall/velocity
+
+/obj/structure/space_barrier
+	name = "Invisible wall"
+	anchored = 1
+	density = 1
+	invisibility = 101
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "x2"
