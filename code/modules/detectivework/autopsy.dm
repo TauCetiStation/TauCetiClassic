@@ -6,7 +6,7 @@
 	name = "autopsy scanner"
 	desc = "Extracts information on wounds."
 	icon = 'icons/obj/autopsy_scanner.dmi'
-	icon_state = "autopsy_green"
+	icon_state = "autopsy_main"
 	item_state = "autopsy"
 	flags = CONDUCT
 	w_class = 2.0
@@ -81,7 +81,7 @@
 	set category = "Object"
 	set src in view(usr, 1)
 	set name = "Print Data"
-	flick("autopsy_blue",src)
+	flick("autopsy_printing",src)
 	playsound(src, 'sound/items/polaroid1.ogg', 50, 1)
 	if(usr.stat || !(istype(usr,/mob/living/carbon/human)))
 		to_chat(usr, "No.")
@@ -208,5 +208,5 @@
 	playsound(src, 'sound/machines/twobeep.ogg', 50, 1)
 	to_chat(user, "[bicon(src)]<span class='notice'>Scanning completed!</span>")
 	src.add_data(BP)
-	flick("autopsy_red",src)
+	flick("autopsy_scanning",src)
 	return 1
