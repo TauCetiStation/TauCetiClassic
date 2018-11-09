@@ -16,7 +16,7 @@
 	speak_emote = list("beeps", "rang out")
 	emote_hear = list("raises manipulators", "twists the scanner")
 	emote_see = list("spinning around", "turns the indicator on and off")
-	speak_chance = 15
+	speak_chance = 10
 	turns_per_move = 1
 	see_in_dark = 6
 	health = 70
@@ -81,7 +81,7 @@
 /mob/living/simple_animal/det5/proc/explode()	// explode
 	visible_message("<span class='bold'>[src]</span> rang out <span class='userdanger'>The #xplosi@n is prep@red, @-a-activate</span>")
 	sleep(35)
-	explosion(get_turf(src), 1, 2, 3, 4, 1)
+	explosion(get_turf(src), 0, 2, 2, 2, 1)
 	death()
 
 /mob/living/simple_animal/det5/proc/Emag(user)	// used EMAG
