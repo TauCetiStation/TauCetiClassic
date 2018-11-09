@@ -1255,7 +1255,7 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(user.is_busy()) return
 		if(W.remove_fuel(0,user))
-			if(src.linked != null)
+			if(linked != null)
 				to_chat(user, "<span class='warning'> Something is attached on disposal pipe!</span>")
 			else
 				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
@@ -1339,7 +1339,7 @@
 
 /obj/structure/disposaloutlet/Destroy()
 
-	var/obj/structure/disposalpipe/trunk/T = locate() in src.loc
+	var/obj/structure/disposalpipe/trunk/T = locate() in loc
 	T.linked = null
 	return ..()
 
