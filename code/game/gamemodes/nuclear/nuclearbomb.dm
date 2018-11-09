@@ -83,7 +83,7 @@ var/bomb_set
 			flick("nuclearbombc", src)
 
 		return
-	if (is_wire_tool(O) && opened)
+	if (is_wire_tool(O) && opened && removal_stage == 5)
 		if(wires.interact(user))
 			return
 
