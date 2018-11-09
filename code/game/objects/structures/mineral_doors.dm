@@ -26,27 +26,21 @@
 	if(close_state)
 		if(ismob(M))
 			var/mob/user = M
-			if(AllChecks(user))
+			if(DoorChecks() && MobChecks(user))
 				add_fingerprint(user)
 				Open()
-		else if(istype(M, /obj/mecha) && !isSwitchingStates && anchored)
+		else if(istype(M, /obj/mecha) && DoorChecks())
 			Open()
 
 /obj/structure/mineral_door/attack_ai(mob/user)
-	if(isAI(user)) //the AI can't open it
-		return
-	else if(isrobot(user)) //but cyborgs can
-		if(get_dist(user, src) <= 1 && AllChecks(user)) //not remotely though
-			add_fingerprint(user)
-			SwitchState()
+	if(isrobot(user) && get_dist(user, src) <= 1)
+		return attack_hand(user)
 
 /obj/structure/mineral_door/attack_paw(mob/user)
-	if(AllChecks(user))
-		add_fingerprint(user)
-		SwitchState()
+	return attack_hand(user)
 
 /obj/structure/mineral_door/attack_hand(mob/user)
-	if(AllChecks(user))
+	if(DoorChecks() && MobChecks(user))
 		add_fingerprint(user)
 		SwitchState()
 
@@ -57,10 +51,11 @@
 		return !opacity
 	return !density
 
-/obj/structure/mineral_door/proc/AllChecks(mob/user)
-	if(isSwitchingStates || world.time - user.last_bumped <= 60 || !anchored)
-		return FALSE
-	if(user.client && !user.small)
+/obj/structure/mineral_door/proc/DoorChecks()
+	return (!isSwitchingStates && anchored)
+
+/obj/structure/mineral_door/proc/MobChecks(mob/user)
+	if(!user.small)
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
 			if(!C.handcuffed)
@@ -77,7 +72,7 @@
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = TRUE
 	playsound(src, operating_sound, 100, 1)
-	flick("[icon_state]opening", src)
+	flick("[initial(icon_state)]opening", src)
 	sleep(10)
 	density = FALSE
 	set_opacity(FALSE)
@@ -102,29 +97,21 @@
 	if(close_state)
 		icon_state = initial(icon_state)
 	else
-		icon_state = "[icon_state]open"
+		icon_state = "[initial(icon_state)]open"
 
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W, /obj/item/weapon/pickaxe))
+	if(istype(W, /obj/item/weapon/pickaxe) && !(istype(src, /obj/structure/mineral_door/wood) || istype(src, /obj/structure/mineral_door/metal)))
 		if(user.is_busy())
 			return
-		if(istype(src, /obj/structure/mineral_door/wood) || istype(src, /obj/structure/mineral_door/metal))
-			health -= W.force
-			CheckHealth()
-			return ..()
 		var/obj/item/weapon/pickaxe/digTool = W
 		to_chat(user, "<span class='notice'>You start digging the [name].</span>")
 		if(do_after(user, digTool.digspeed, target = src))
 			to_chat(user, "<span class='notice'>You finished digging!</span>")
 			Dismantle()
 
-	else if(istype(W, /obj/item/weapon/wrench))
+	else if(istype(W, /obj/item/weapon/wrench) && !istype(src, /obj/structure/mineral_door/resin))
 		if(user.is_busy())
 			return
-		if(istype(src, /obj/structure/mineral_door/resin))
-			health -= W.force
-			CheckHealth()
-			return ..()
 		playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
 		if(anchored)
 			to_chat(user, "<span class='notice'>You start dissassembling the [name].</span>")
@@ -203,6 +190,7 @@
 				Dismantle()
 		else
 			to_chat(user, "<span class='warning'>You need more welding fuel!</span>")
+		return
 	..()
 
 /obj/structure/mineral_door/silver
@@ -284,6 +272,7 @@
 		if(do_after(user, 40, target = src))
 			to_chat(user, "<span class='notice'>You finished cutting the [name]!</span>")
 			Dismantle()
+		return
 	..()
 
 /obj/structure/mineral_door/resin
@@ -305,7 +294,7 @@
 		T.blocks_air = FALSE
 	return ..()
 
-/obj/structure/mineral_door/resin/AllChecks(mob/user)
+/obj/structure/mineral_door/resin/MobChecks(mob/user)
 	if(isalien(user))
 		return ..()
 
@@ -340,4 +329,4 @@
 			user.visible_message("<span class='danger'>[user] claws at the resin!</span>")
 		CheckHealth()
 	else
-		return ..()
+		return attack_hand(user)
