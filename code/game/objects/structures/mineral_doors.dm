@@ -72,7 +72,7 @@
 /obj/structure/mineral_door/proc/Open()
 	isSwitchingStates = TRUE
 	playsound(src, operating_sound, 100, 1)
-	flick("[initial(icon_state)]opening", src)
+	flick("[initial(icon_state)]_opening", src)
 	sleep(10)
 	density = FALSE
 	set_opacity(FALSE)
@@ -84,7 +84,7 @@
 /obj/structure/mineral_door/proc/Close()
 	isSwitchingStates = TRUE
 	playsound(src, operating_sound, 100, 1)
-	flick("[initial(icon_state)]closing", src)
+	flick("[initial(icon_state)]_closing", src)
 	sleep(10)
 	density = TRUE
 	set_opacity(TRUE)
@@ -97,7 +97,7 @@
 	if(close_state)
 		icon_state = initial(icon_state)
 	else
-		icon_state = "[initial(icon_state)]open"
+		icon_state = "[initial(icon_state)]_open"
 
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/weapon/pickaxe) && !(istype(src, /obj/structure/mineral_door/wood) || istype(src, /obj/structure/mineral_door/metal)))
