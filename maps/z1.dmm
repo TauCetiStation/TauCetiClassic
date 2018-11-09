@@ -4488,26 +4488,26 @@
 	},
 /area/hallway/secondary/exit)
 "ahx" = (
-/obj/structure/disposalpipe/segment,
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 8
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
-	},
-/obj/structure/grille,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 2;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "Patients";
 	name = "Privacy Shutters";
 	opacity = 0
 	},
-/obj/structure/curtain/blinds,
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 0
+	},
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/medical/patients_rooms)
 "ahy" = (
@@ -7860,7 +7860,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/structure/curtain/blinds,
+/obj/structure/curtain/blinds/wooden,
 /turf/simulated/floor/plating,
 /area/security/detectives_office)
 "amv" = (
@@ -8109,10 +8109,6 @@
 	},
 /area/security/brig)
 "amN" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Detective";
-	req_access_txt = "68"
-	},
 /obj/machinery/door/firedoor,
 /obj/structure/cable{
 	d1 = 2;
@@ -8128,6 +8124,11 @@
 	d1 = 4;
 	d2 = 8;
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/security{
+	name = "Detective";
+	req_access = null;
+	req_access_txt = "68"
 	},
 /turf/simulated/floor,
 /area/security/detectives_office)
@@ -8913,7 +8914,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/cable,
-/obj/structure/curtain/blinds,
+/obj/structure/curtain/blinds/wooden,
 /turf/simulated/floor/plating,
 /area/security/detectives_office)
 "aoa" = (
@@ -8951,7 +8952,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/structure/curtain/blinds,
+/obj/structure/curtain/blinds/wooden,
 /turf/simulated/floor/plating,
 /area/security/detectives_office)
 "aoc" = (
@@ -9728,25 +9729,23 @@
 	},
 /area/security/brig)
 "apB" = (
-/obj/structure/window/reinforced,
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
-	},
-/obj/structure/grille,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/poddoor/shutters{
 	density = 0;
-	dir = 2;
+	dir = 4;
 	icon_state = "shutter0";
 	id = "Patients";
 	name = "Privacy Shutters";
 	opacity = 0
 	},
-/obj/structure/curtain/blinds,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/grille,
 /turf/simulated/floor/plating,
 /area/medical/patients_rooms)
 "apD" = (
@@ -9755,6 +9754,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/structure/stool/bed/chair/metal/red,
 /turf/simulated/floor/carpet,
 /area/security/detectives_office)
 "apE" = (
@@ -38595,7 +38595,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/curtain/blinds,
 /turf/simulated/floor/plating,
 /area/medical/psych)
 "bwh" = (
@@ -39995,7 +39994,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/curtain/blinds,
 /turf/simulated/floor/plating,
 /area/medical/psych)
 "bzm" = (
@@ -40164,7 +40162,6 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/obj/structure/curtain/blinds,
 /turf/simulated/floor/plating,
 /area/medical/psych)
 "bzG" = (
@@ -40548,7 +40545,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/curtain/blinds,
+/obj/structure/curtain/blinds/wooden,
 /turf/simulated/floor/plating,
 /area/security/detectives_office)
 "bAz" = (
@@ -42484,29 +42481,20 @@
 /turf/simulated/floor/plating,
 /area/maintenance/asmaint)
 "bER" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "shutter0";
-	id = "Patients";
-	name = "Privacy Shutters";
-	opacity = 0
-	},
-/obj/structure/window/reinforced{
-	dir = 1;
-	pixel_y = 0
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
+/obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/grille,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/structure/curtain/blinds,
 /turf/simulated/floor/plating,
-/area/medical/patients_rooms)
+/area/medical/psych)
 "bES" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -42995,26 +42983,18 @@
 	},
 /area/medical/hallway/outbranch)
 "bGf" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "shutter0";
-	id = "Patients";
-	name = "Privacy Shutters";
-	opacity = 0
-	},
-/obj/structure/window/reinforced{
-	dir = 4
-	},
-/obj/structure/window/reinforced,
+/obj/structure/grille,
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/structure/grille,
+/obj/structure/window/reinforced,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
 /obj/structure/curtain/blinds,
 /turf/simulated/floor/plating,
-/area/medical/patients_rooms)
+/area/medical/psych)
 "bGg" = (
 /obj/machinery/door/airlock/medical{
 	name = "Psychiatric Office";
@@ -73007,6 +72987,49 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
+"job" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 8
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	dir = 2;
+	icon_state = "shutter0";
+	id = "Patients";
+	name = "Privacy Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/medical/patients_rooms)
+"jpb" = (
+/obj/structure/window/reinforced,
+/obj/structure/window/reinforced{
+	dir = 4
+	},
+/obj/structure/window/reinforced{
+	dir = 1;
+	pixel_y = 0
+	},
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	dir = 2;
+	icon_state = "shutter0";
+	id = "Patients";
+	name = "Privacy Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/medical/patients_rooms)
 "jrb" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
@@ -116421,7 +116444,7 @@ bHP
 qTb
 bLg
 czZ
-ahx
+job
 bST
 bRV
 bRN
@@ -116678,7 +116701,7 @@ bCf
 bHQ
 bHQ
 cAb
-apB
+jpb
 mab
 bTY
 bxi
@@ -117444,11 +117467,11 @@ bxi
 bxi
 bxi
 bDV
-bER
-bGf
+ahx
+apB
 bDV
-bER
-bGf
+ahx
+apB
 bDV
 bUi
 bUh
@@ -122582,8 +122605,8 @@ dkb
 dXb
 bqm
 bMF
-bwg
-bzF
+bER
+bGf
 bMF
 bJm
 bJm

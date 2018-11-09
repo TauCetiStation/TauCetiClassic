@@ -74,13 +74,13 @@
 	color = "#aa0000"
 
 //BLINDS//
-//white ones
+//plastic ones
 /obj/structure/curtain/blinds
 	name = "plastic blinds"
 	desc = "Who's that peekin' though the blinds?"
 	icon = 'icons/obj/blinds/blinds_plastic.dmi'
 	icon_state = "closed"
-	var/chain_of_icon_update = 0
+	var/list/has_been_checked
 
 /obj/structure/curtain/blinds/atom_init()
 	. = ..()
@@ -89,21 +89,10 @@
 		B.icon_update()
 
 /obj/structure/curtain/blinds/proc/icon_update()
-	if(chain_of_icon_update == 1)
-		for(var/obj/structure/curtain/blinds/B in range (2, src))
-			if(B != src)
-				B.chain_of_icon_update = 1
-				B.set_opacity(src.opacity)
-				B.icon_update()
-				if(B.opacity)//Are they closed?
-					B.verbs +=/obj/structure/curtain/blinds/verb/peek
-				else
-					B.verbs -=/obj/structure/curtain/blinds/verb/peek
-		chain_of_icon_update = 0
-	if((icon_state == "closed_right_peekin") || (icon_state == "closed_peekin") || (icon_state == "closed") || (icon_state == "opened") || (icon_state == "left_closed") || (icon_state == "left_opened"))
-		verbs += verb/toggle_blinds
+	if((icon_state == "closed_right_peekin") || (icon_state == "closed_peekin") || (icon_state == "closed") || (icon_state == "opened") || (icon_state == "closed_left") || (icon_state == "opened_left"))
+		verbs += /obj/structure/curtain/blinds/verb/toggle_blinds
 	else
-		verbs -= verb/toggle_blinds
+		verbs -= /obj/structure/curtain/blinds/verb/toggle_blinds
 	var/position
 	var/isitopened
 	if(opacity)//Are they closed?
@@ -129,15 +118,7 @@
 		set_opacity(!opacity)
 		playsound(get_turf(loc), 'sound/effects/curtain.ogg', 15, 1, -5)
 		icon_update()
-		for(var/obj/structure/curtain/blinds/B in range (2, src))
-			if(B != src)
-				B.chain_of_icon_update = 1
-				B.set_opacity(src.opacity)
-				B.icon_update()
-				if(B.opacity)//Are they closed?
-					B.verbs +=/obj/structure/curtain/blinds/verb/peek
-				else
-					B.verbs -=/obj/structure/curtain/blinds/verb/peek
+		check_sides()
 		if(opacity)//Are they closed?
 			verbs +=/obj/structure/curtain/blinds/verb/peek
 		else
@@ -150,7 +131,7 @@
 	set category = "Object"
 	set src in oview(1)
 	usr.visible_message("<span class='notice'>[usr] peeks through \the [src]...</span>")
-	if((icon_state == "closed") || (icon_state == "center_closed") || (icon_state == "left_closed") || (icon_state == "right_closed"))
+	if((icon_state == "closed") || (icon_state == "closed_center") || (icon_state == "closed_left") || (icon_state == "closed_right"))
 		icon_state = "[icon_state]_peekin"
 		opacity = FALSE
 	return
@@ -161,9 +142,83 @@
 	for(var/obj/structure/curtain/blinds/B in range (2, src))
 		B.icon_update()
 
+/obj/structure/curtain/blinds/proc/check_sides()
+	has_been_checked += src
+	for(var/obj/structure/curtain/blinds/B in range (1, src))
+		if(!(B in has_been_checked))
+			B.set_opacity(src.opacity)
+			B.icon_update()
+			B.check_sides()
+			if(B.opacity)//Are they closed?
+				B.verbs +=/obj/structure/curtain/blinds/verb/peek
+			else
+				B.verbs -=/obj/structure/curtain/blinds/verb/peek
+	spawn(5)
+		has_been_checked = null
+
 //Wooden blinds//
 /obj/structure/curtain/blinds/wooden
 	name = "wooden blinds"
 	desc = "Who's that peekin' though the blinds?"
 	icon = 'icons/obj/blinds/blinds_wooden.dmi'
 
+/obj/structure/curtain/blinds/wooden/icon_update()
+	if((icon_state == "closed_right_peekin") || (icon_state == "closed_peekin") || (icon_state == "closed") || (icon_state == "opened") || (icon_state == "closed_left") || (icon_state == "opened_left"))
+		verbs += /obj/structure/curtain/blinds/wooden/verb/wooden_toggle_blinds
+	else
+		verbs -= /obj/structure/curtain/blinds/wooden/verb/wooden_toggle_blinds
+	var/position
+	var/isitopened
+	if(opacity)//Are they closed?
+		isitopened = "closed"
+	else
+		isitopened = "opened"
+	if(locate(/obj/structure/curtain/blinds, get_step(src, WEST)))
+		position = "_right"
+	if(locate(/obj/structure/curtain/blinds, get_step(src, EAST)))
+		position = "_left"
+	if((locate(/obj/structure/curtain/blinds, get_step(src, SOUTH))) || ( locate(/obj/structure/curtain/blinds, get_step(src, EAST)) && locate(/obj/structure/curtain/blinds, get_step(src, WEST))))
+		position = "_center"
+	icon_state = "[isitopened][position]"
+
+/obj/structure/curtain/blinds/wooden/verb/wooden_peek()
+	set name = "Peek through"
+	set desc = "The occupation of the real detective"
+	set category = "Object"
+	set src in oview(1)
+	usr.visible_message("<span class='notice'>[usr] peeks through \the [src]...</span>")
+	if((icon_state == "closed") || (icon_state == "closed_center") || (icon_state == "closed_left") || (icon_state == "closed_right"))
+		icon_state = "[icon_state]_peekin"
+		opacity = FALSE
+	return
+
+/obj/structure/curtain/blinds/wooden/verb/wooden_toggle_blinds()
+	set name = "Toggle"
+	set desc = ""
+	set category = "Object"
+	set src in oview(1)
+	if((icon_state == "closed_right_peekin") || (icon_state == "closed_peekin") || (icon_state == "closed") || (icon_state == "opened") || (icon_state == "left_closed") || (icon_state == "left_opened"))
+		set_opacity(!opacity)
+		playsound(get_turf(loc), 'sound/effects/curtain.ogg', 15, 1, -5)
+		icon_update()
+		check_sides()
+		if(opacity)//Are they closed?
+			verbs +=/obj/structure/curtain/blinds/wooden/verb/wooden_peek
+		else
+			verbs -=/obj/structure/curtain/blinds/wooden/verb/wooden_peek
+	return
+
+
+/obj/structure/curtain/blinds/wooden/check_sides()
+	has_been_checked += src
+	for(var/obj/structure/curtain/blinds/wooden/B in range (1, src))
+		if(!(B in has_been_checked))
+			B.set_opacity(src.opacity)
+			B.icon_update()
+			B.check_sides()
+			if(B.opacity)//Are they closed?
+				B.verbs +=/obj/structure/curtain/blinds/wooden/verb/wooden_peek
+			else
+				B.verbs -=/obj/structure/curtain/blinds/wooden/verb/wooden_peek
+	spawn(5)
+		has_been_checked = null
