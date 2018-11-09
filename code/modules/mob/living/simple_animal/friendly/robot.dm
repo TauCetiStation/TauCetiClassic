@@ -80,7 +80,6 @@
 
 /mob/living/simple_animal/det5/proc/explode()	// explode
 	visible_message("<span class='bold'>[src]</span> rang out <span class='userdanger'>The #xplosi@n is prep@red, @-a-activate</span>")
-	sleep(35)
 	explosion(get_turf(src), 0, 2, 2, 2, 1)
 	death()
 
