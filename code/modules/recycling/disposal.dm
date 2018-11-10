@@ -1255,15 +1255,18 @@
 		var/obj/item/weapon/weldingtool/W = I
 		if(user.is_busy()) return
 		if(W.remove_fuel(0,user))
-			playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
-			// check if anything changed over 2 seconds
-			to_chat(user, "You start slicing the disposal pipe.")
-			if(do_after(user, 30, target = src))
-				if(!W.isOn()) return
-				to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
-				welded()
+			if(linked)
+				to_chat(user, "<span class='warning'> Something is attached on disposal pipe!</span>")
 			else
-				to_chat(user, "<span class='warning'>You must stay still while welding the pipe.</span>")
+				playsound(src.loc, 'sound/items/Welder2.ogg', 100, 1)
+				// check if anything changed over 2 seconds
+				to_chat(user, "You start slicing the disposal pipe.")
+				if(do_after(user, 30, target = src))
+					if(!W.isOn()) return
+					to_chat(user, "<span class='notice'>You sliced the disposal pipe.</span>")
+					welded()
+				else
+					to_chat(user, "<span class='warning'>You must stay still while welding the pipe.</span>")
 		else
 			to_chat(user, "<span class='warning'>You need more welding fuel to cut the pipe.</span>")
 			return
@@ -1333,6 +1336,12 @@
 /obj/structure/disposaloutlet/atom_init()
 	..()
 	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/disposaloutlet/Destroy()
+
+	var/obj/structure/disposalpipe/trunk/T = locate() in loc
+	T.linked = null
+	return ..()
 
 /obj/structure/disposaloutlet/atom_init_late()
 	target = get_ranged_target_turf(src, dir, 10)
