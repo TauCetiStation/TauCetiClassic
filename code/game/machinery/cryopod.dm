@@ -168,7 +168,7 @@ var/global/list/frozen_items = list()
 		if(world.time - time_entered < time_till_despawn)
 			return
 
-		if(!occupant.client && occupant.stat != DEAD) //Occupant is living and has no client.
+		if(!occupant.client && occupant.stat != DEAD && occupant.mind.special_role != "thrall") //Occupant is living, has no client, and not the thrall.
 
 			//Drop all items into the pod.
 			for(var/obj/item/W in occupant)
