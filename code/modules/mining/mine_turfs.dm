@@ -42,6 +42,16 @@
 
 
 /turf/simulated/mineral/proc/check_sides()
+	overlays.Cut()
+	overlays += excav_overlay
+	overlays += archaeo_overlay
+	if(ore_amount >= 8)
+		name = "\improper [mineral.display_name] rich deposit"
+		overlays.Cut()
+		overlays += "rock_[mineral.name]"
+	else
+		name = "\improper Rock"
+		icon_state = "rock"
 	var/turf/T
 	if((istype(get_step(src, NORTH), /turf/simulated/floor)) || (istype(get_step(src, NORTH), /turf/space)) || (istype(get_step(src, NORTH), /turf/simulated/shuttle/floor)))
 		T = get_step(src, NORTH)
@@ -348,12 +358,8 @@
 			M.apply_effect(25, IRRADIATE)
 	var/turf/N = ChangeTurf(basetype)
 	N.fullUpdateMineralOverlays()
-	for(var/turf/simulated/floor/plating/airless/asteroid/V in range(src, 0))
-		V.check_sides()
 	for(var/turf/simulated/floor/plating/airless/asteroid/D in range(src, 1))
 		D.check_sides()
-	for(var/turf/simulated/mineral/F in range(src, 1))
-		F.check_sides()
 	for(var/turf/simulated/mineral/F in range(src, 2))
 		F.check_sides()
 
@@ -626,6 +632,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/simulated/floor/plating/airless/asteroid/proc/check_sides()
+	updateMineralOverlays()
 	if((istype(get_step(src, NORTH), /turf/space)))
 		var/image/I = image('icons/turf/asteroid.dmi', "asteroid_edge_n")
 		src.overlays += I
@@ -640,8 +647,6 @@
 		src.overlays += I
 
 /turf/simulated/floor/plating/airless/asteroid/atom_init_late()
-	overlays.Cut()
-	updateMineralOverlays()
 	check_sides()
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
