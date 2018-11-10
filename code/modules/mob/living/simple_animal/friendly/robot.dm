@@ -3,7 +3,7 @@
 	icon_state = "robot_rd"
 	icon_living = "robot_rd"
 	icon_dead = "robot_rd_died"
-	desc = "Its a robot with shiny wheels. Sometimes sparks fly out of its hull."
+	desc = "Digital Explorer Theory - 5. Its a robot with shiny wheels. Sometimes sparks fly out of its hull."
 
 	speak = list("Beep", "Beep-beep", "Beeeepsky",
 				 "One...two...three...more...",
@@ -30,7 +30,7 @@
 	var/commandtrigger = 0    // Used command
 	var/searchfortarget = 0	   //  if this is TRUE, robot will be searching for target to explode.
 	var/act_emag
-	var/obj/machinery/computer/rdconsole/rdconsoled = null
+	var/obj/machinery/computer/rdconsole/rdconsole = null
 
 /mob/living/simple_animal/det5/Life()
 	..()
@@ -42,6 +42,16 @@
 		s.set_up(3, 1, src)
 		s.start()
 
+/mob/living/simple_animal/det5/proc/print() //proc print det5 robot
+    var/obj/item/weapon/paper/O = new /obj/item/weapon/paper(get_turf(src))
+    var/dat
+    for(var/datum/tech/T in rdconsole.files.known_tech)
+        dat += "[T.name]<BR>"
+        dat +=  "* Level: [T.level]<BR>"
+        dat +=  "* Summary: [T.desc]<HR>"
+    dat += "</div>"
+    O.info = dat
+
 /mob/living/simple_animal/det5/death()
 	..()
 	visible_message("<span class='bold'>[src]</span> rang out <span class='bold'>d-d-d-data received...d-d-d-destruction</span>")
@@ -50,9 +60,8 @@
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
+	rdconsole = null
 	qdel(src)
-	rdconsoled = null
-	rdconsoled.det5 = null
 	return
 
 /mob/living/simple_animal/det5/attackby(obj/item/W, mob/user)
@@ -63,8 +72,7 @@
 	else if(istype(W, /obj/item/device/multitool))
 		var/obj/item/device/multitool/M = W
 		if(M.buffer && istype(M.buffer, /obj/machinery/computer/rdconsole))
-			rdconsoled = M.buffer
-			rdconsoled.det5 = src
+			rdconsole = M.buffer
 			M.buffer = null
 			to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
 		..()
@@ -92,43 +100,44 @@
 	if(health <=0)
 		return
 	if(emagged != 1)
-		commandtrigger = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports).", , "Cancel")
+		commandtrigger = input("Enter the command.", , "Cancel") in list("Moving stop/start", "Speak stop/start", "Secretary (preparation of reports)", "Cancel")
 	else
-		commandtrigger = input("Enter the command. 1-Moving stop/start. 2-Speak stop/start. 3-Secretary (preparation of reports). 4-Explode (50s). 5-Explode (using motion sensor)", , "Cancel")
+		commandtrigger = input("Enter the command.", , "Cancel") in list("Moving stop/start", "Speak stop/start", "Secretary (preparation of reports)", "Explode (50s)", "Explode (using motion sensor)", "Cancel")
 
-	if(commandtrigger == "1")
-		if(turns_per_move == 1)
-			turns_per_move = 100
-			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Moving mode is off</span>")
+	switch(commandtrigger)
+		if("Moving stop/start")
+			if(turns_per_move == 1)
+				turns_per_move = 100
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Moving mode is off</span>")
+				commandtrigger = 0
+			else
+				turns_per_move = 1
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Moving mode is on</span>")
+				commandtrigger = 0
+		if("Speak stop/start")
+			if(speak_chance == 15)
+				speak_chance = 0
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Speech mode is off</span>")
+				commandtrigger = 0
+			else
+				speak_chance = 15
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Speech mode is on</span>")
+				commandtrigger = 0
+		if("Secretary (preparation of reports)")
+			if(rdconsole == null)
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Console not found</span>")
+			else
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Print report</span>")
+				print()
 			commandtrigger = 0
-		else
-			turns_per_move = 1
-			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Moving mode is on</span>")
-			commandtrigger = 0
-	if(commandtrigger == "2")
-		if(speak_chance == 15)
-			speak_chance = 0
-			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Speech mode is off</span>")
-			commandtrigger = 0
-		else
-			speak_chance = 15
-			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Speech mode is on</span>")
-			commandtrigger = 0
-	if(commandtrigger == "3")
-		if(rdconsoled == null)
-			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Console not found</span>")
-		else
-			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='bold'>Print report</span>")
-			rdconsoled.print()
-		commandtrigger = 0
-	if(commandtrigger == "4")
-		if(emagged == 1)
-			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d#str@ct pr@t@col a-a-a-activated</span>")
-			sleep(500)
-			src.explode()
-			commandtrigger = 0
-	if(commandtrigger == "5")
-		if(emagged == 1)
-			to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d##struct m@de with t@rget @ctiv@t#d</span>")
-			searchfortarget = 1
-			commandtrigger = 0
+		if("Explode (50s)")
+			if(emagged == 1)
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d#str@ct pr@t@col a-a-a-activated</span>")
+				sleep(500)
+				src.explode()
+				commandtrigger = 0
+		if("Explode (using motion sensor)")
+			if(emagged == 1)
+				to_chat(user, "<span class='bold'>[src]</span> rang out <span class='userdanger'>Self-d##struct m@de with t@rget @ctiv@t#d</span>")
+				searchfortarget = 1
+				commandtrigger = 0

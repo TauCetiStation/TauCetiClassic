@@ -36,7 +36,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 	icon_state = "rdcomp"
 	light_color = "#a97faa"
 	circuit = /obj/item/weapon/circuitboard/rdconsole
-	var/obj/machinery/computer/rdconsole/det5
 	var/datum/research/files							//Stores all the collected research data.
 	var/obj/item/weapon/disk/tech_disk/t_disk = null	//Stores the technology disk.
 	var/obj/item/weapon/disk/design_disk/d_disk = null	//Stores the design disk.
@@ -99,16 +98,6 @@ won't update every console in existence) but it's more of a hassle to do. Also, 
 				temp_reagent = null
 				break
 	return return_name
-
-/obj/machinery/computer/rdconsole/proc/print() //proc print det5 robot
-	var/obj/item/weapon/paper/O = new /obj/item/weapon/paper(get_turf(det5))
-	var/dat
-	for(var/datum/tech/T in files.known_tech)
-		dat += "[T.name]<BR>"
-		dat +=  "* Level: [T.level]<BR>"
-		dat +=  "* Summary: [T.desc]<HR>"
-	dat += "</div>"
-	O.info = dat
 
 /obj/machinery/computer/rdconsole/proc/SyncRDevices() //Makes sure it is properly sync'ed up with the devices attached to it (if any).
 	for(var/obj/machinery/r_n_d/D in oview(3,src))
