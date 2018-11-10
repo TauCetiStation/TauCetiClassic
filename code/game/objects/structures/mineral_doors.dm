@@ -62,6 +62,7 @@
 				return TRUE
 		else
 			return TRUE
+	return FALSE
 
 /obj/structure/mineral_door/proc/SwitchState()
 	if(close_state)
