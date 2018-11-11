@@ -35,27 +35,7 @@
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/Exit(atom/movable/O)
 	return 0
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/action(mob/living/carbon/target)
-	if(!action_checks(target))
-		return
-	if(!istype(target))
-		return
-	if(target.buckled)
-		occupant_message("[target] will not fit into the sleeper because they are buckled to [target.buckled].")
-		return
-	if(occupant)
-		occupant_message("The sleeper is already occupied")
-		return
-	if(istype(target, /mob/living/carbon/alien))
-		occupant_message("Warning! Unauthorized life form detected!")
-		return
-	for(var/mob/living/carbon/slime/M in range(1,target))
-		if(M.Victim == target)
-			occupant_message("[target] will not fit into the sleeper because they have a slime latched onto their head.")
-			return
-
-	occupant_message("You start putting [target] into [src].")
-	chassis.visible_message("[chassis] starts putting [target] into the [src].")
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/putin(mob/living/carbon/target)
 	var/C = chassis.loc
 	var/T = target.loc
 	if(do_after_cooldown(target))
@@ -77,7 +57,43 @@
 		occupant_message("<font color='blue'>[target] successfully loaded into [src]. Life support functions engaged.</font>")
 		chassis.visible_message("[chassis] loads [target] into [src].")
 		log_message("[target] loaded. Life support functions engaged.")
-	return
+
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/action(mob/living/carbon/target)
+	if(!action_checks(target))
+		return
+	if(!istype(target))
+		return
+	if(target.buckled)
+		occupant_message("[target] will not fit into the sleeper because they are buckled to [target.buckled].")
+		return
+	if(occupant)
+		occupant_message("The sleeper is already occupied")
+		return
+	if(istype(target, /mob/living/carbon/alien))
+		occupant_message("Warning! Unauthorized life form detected!")
+		return
+	for(var/mob/living/carbon/slime/M in range(1,target))
+		if(M.Victim == target)
+			occupant_message("[target] will not fit into the sleeper because they have a slime latched onto their head.")
+			return
+
+	occupant_message("You are trying to put [target] into [src].")
+	chassis.visible_message("[chassis] is trying to put [target] into the [src].")
+	if(target.incapacitated())
+		if(do_after(chassis.occupant, 60, target = chassis.loc))
+			putin(target)
+	else
+		if(!chassis.occupant.is_busy() && do_after(chassis.occupant, 20, target = chassis.loc))
+			switch(alert(target,"[src] is trying to put you in [src]",,"Yes","No"))
+				if("Yes")
+					target.visible_message(\
+					"<span class='notice'>[target.name] starts climbing into the [src].</span>",\
+					"<span class='notice'>You start climbing into the [src].</span>")
+					if(do_after(chassis.occupant, 20, target = chassis.loc))
+						putin(target)
+				if("No")
+					occupant_message("[target] rejects your offer!")
+			return
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/go_out()
 	if(!occupant)
@@ -96,6 +112,18 @@
 	pr_mech_sleeper.stop()
 	set_ready_state(1)
 	return
+
+/obj/item/mecha_parts/mecha_equipment/tool/sleeper/container_resist(mob/user)
+	if(istype(loc, /obj/mecha/medical/odysseus))
+		var/obj/mecha/medical/odysseus/M = loc
+		if(user.is_busy(null, FALSE)) // prevents spam too.
+			return
+
+		to_chat(user, "<span class='notice'>You struggle inside the mounted sleeper, kicking the release with your foot... (This will take around 30 seconds.)</span>")
+		to_chat(M.occupant, "<span class='notice'>You hear a thump from [src].</span>")
+		if(do_after(user, 300, target = user))
+			if(occupant == user) // Check they're still here.
+				go_out()
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/detach()
 	if(occupant)
@@ -210,9 +238,6 @@
 		return 1
 	return
 
-/obj/item/mecha_parts/mecha_equipment/tool/sleeper/container_resist()
-	go_out()
-
 /datum/global_iterator/mech_sleeper/process(var/obj/item/mecha_parts/mecha_equipment/tool/sleeper/S)
 	if(!S.chassis)
 		S.set_ready_state(1)
@@ -228,12 +253,6 @@
 	if(M.health > 0)
 		M.adjustOxyLoss(-1)
 		M.updatehealth()
-	M.AdjustStunned(-4)
-	M.AdjustWeakened(-4)
-	M.AdjustStunned(-4)
-	M.Paralyse(2)
-	M.Weaken(2)
-	M.Stun(2)
 	if(M.reagents.get_reagent_amount("inaprovaline") < 5)
 		M.reagents.add_reagent("inaprovaline", 5)
 	S.chassis.use_power(S.energy_drain)
