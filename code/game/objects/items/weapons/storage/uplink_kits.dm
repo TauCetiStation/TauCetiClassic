@@ -1,4 +1,5 @@
-/obj/item/weapon/storage/box/syndicate/
+/obj/item/weapon/storage/box/syndicate
+	icon_state = "doom_box"
 
 /obj/item/weapon/storage/box/syndicate/atom_init()
 	. = ..()
@@ -103,7 +104,7 @@
 /obj/item/weapon/storage/box/syndie_kit
 	name = "box"
 	desc = "A sleek, sturdy box."
-	icon_state = "box_of_doom"
+	icon_state = "doom_box"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
 	name = "boxed freedom implant (with injector)"
@@ -230,6 +231,7 @@
 /obj/item/weapon/storage/box/syndie_kit/merch
 	name = "box (M)"
 	desc = "Box containing some Syndicate merchandise for real agents!"
+	icon_state = "syndie_box"
 
 /obj/item/weapon/storage/box/syndie_kit/merch/atom_init()
 	. = ..()

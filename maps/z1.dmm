@@ -72997,6 +72997,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
+"job" = (
+/obj/structure/table,
+/obj/item/weapon/soap,
+/turf/simulated/floor/plating,
+/area/maintenance/fsmaint2)
+"jpb" = (
+/obj/item/weapon/storage/box/ians_box,
+/obj/effect/decal/cleanable/blood/oil,
+/obj/structure/stool/bed/chair/metal{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/maintenance/fsmaint2)
 "jrb" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
@@ -127921,7 +127934,7 @@ cbD
 aaa
 aah
 aup
-axj
+job
 axj
 aAL
 aup
@@ -128178,7 +128191,7 @@ cbD
 aaa
 aah
 aup
-axj
+jpb
 aCS
 aye
 aup
