@@ -1011,7 +1011,7 @@ FIRE ALARM
 					to_chat(user, "You wire \the [src]!")
 					update_icon()
 
-				else if(istype(W, /obj/item/weapon/crowbar))
+				else if(istype(W, /obj/item/weapon/crowbar) && !user.is_busy())
 					to_chat(user, "You start prying out the circuit.")
 					playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
 					if(do_after(user,20,target = src))
