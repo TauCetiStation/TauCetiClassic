@@ -284,3 +284,15 @@
 /obj/structure/reagent_dispensers/acid/atom_init()
 	. = ..()
 	reagents.add_reagent("sacid", 1000)
+
+/obj/structure/reagent_dispensers/spacecleaner
+	name = "Space Cleaner Dispenser"
+	desc = "A dispenser of space cleaner."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "sctank"
+	amount_per_transfer_from_this = 10
+	anchored = 1
+
+/obj/structure/reagent_dispensers/spacecleaner/atom_init()
+	. = ..()
+	reagents.add_reagent("cleaner", 250)
