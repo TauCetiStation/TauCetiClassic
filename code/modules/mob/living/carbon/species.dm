@@ -488,7 +488,6 @@
 	,NO_FINGERPRINT = TRUE
 	)
 
-	blood_color = /datum/dirt_cover/green_blood
 	has_bodypart = list(
 		 BP_CHEST  = /obj/item/organ/external/chest
 		,BP_GROIN  = /obj/item/organ/external/groin
@@ -508,7 +507,7 @@
 		O_KIDNEYS = /obj/item/organ/internal/kidneys/diona
 		)
 
-	blood_color = "#004400"
+	blood_color = /datum/dirt_cover/green_blood
 	flesh_color = "#907E4A"
 
 	has_gendered_icons = FALSE
@@ -606,7 +605,6 @@
 	,NO_MINORCUTS = TRUE
 	)
 
-	blood_color = /datum/dirt_cover/oil
 	has_bodypart = list(
 		 BP_CHEST  = /obj/item/organ/external/chest
 		,BP_GROIN  = /obj/item/organ/external/groin
@@ -626,7 +624,7 @@
 		,O_KIDNEYS = /obj/item/organ/internal/kidneys/ipc
 		)
 
-	blood_color = "#1F181F"
+	blood_color = /datum/dirt_cover/oil
 	flesh_color = "#575757"
 
 /datum/species/machine/after_job_equip(mob/living/carbon/human/H, datum/job/J)
