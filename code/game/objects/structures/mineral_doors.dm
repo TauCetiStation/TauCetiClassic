@@ -295,9 +295,10 @@
 		T.blocks_air = FALSE
 	return ..()
 
-/obj/structure/mineral_door/resin/MobChecks(mob/user)
-	if(isalien(user))
-		return ..()
+/obj/structure/mineral_door/resin/Bumped(atom/M)
+	if(isalien(M) && !isSwitchingStates)
+		add_fingerprint(M)
+		Open()
 
 /obj/structure/mineral_door/resin/Open()
 	..()
@@ -319,7 +320,7 @@
 	..()
 	CheckHealth()
 
-/obj/structure/mineral_door/resin/attack_paw(mob/user)
+/obj/structure/mineral_door/resin/attack_hand(mob/user)
 	if(isalienadult(user) && user.a_intent == "hurt")
 		user.do_attack_animation(src)
 		user.SetNextMove(CLICK_CD_MELEE)
@@ -329,5 +330,6 @@
 		else
 			user.visible_message("<span class='danger'>[user] claws at the resin!</span>")
 		CheckHealth()
-	else
-		return attack_hand(user)
+	else if(isalien(user) && !isSwitchingStates)
+		add_fingerprint(user)
+		SwitchState()
