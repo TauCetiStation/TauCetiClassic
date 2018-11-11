@@ -29,7 +29,7 @@
 
 /obj/item/weapon/reagent_containers/glass/rag/attack(atom/target, mob/user , flag)
 	if(ismob(target) && target.reagents && reagents.total_volume)
-		user.visible_message("\red \The [target] has been smothered with \the [src] by \the [user]!", "\red You smother \the [target] with \the [src]!", "You hear some struggling and muffled cries of surprise")
+		user.visible_message("<span class='warning'>The [target] has been smothered with the [src] by the [user]!</span>", "<span class='warning'> You smother the [target] with the [src]!</span>", "You hear some struggling and muffled cries of surprise")
 		src.reagents.reaction(target, TOUCH)
 		spawn(5) src.reagents.clear_reagents()
 		return
@@ -39,11 +39,11 @@
 /obj/item/weapon/reagent_containers/glass/rag/afterattack(atom/A, mob/user, proximity)
 	if(!proximity) return
 	if(user.is_busy()) return
-	if(user.client && (A in user.client.screen))
+	if(!istype(A, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass) && A in user.client.screen)
 		to_chat(user, "<span class='notice'>You need to take that [A] off before cleaning it.</span>")
 	else if(istype(A) && src in user)
 		user.visible_message("[user] starts to wipe down [A] with [src]!")
-		if(do_after(user,30,target = A))
+		if((istype(A, /obj/item/weapon/reagent_containers/food/drinks/drinkingglass) && do_after(user,30,target = user)) || (!istype(A,/obj/item/weapon/reagent_containers/food/drinks/drinkingglass) && do_after(user,30,target = A)))
 			user.visible_message("[user] finishes wiping off the [A]!")
 			A.clean_blood()
 	return
