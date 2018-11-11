@@ -678,6 +678,12 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 /area/engine/break_room
 	name = "Engineering Break Room"
 
+/area/engine/monitoring
+	name = "Engineering Monitoring Room"
+
+/area/engine/equip
+	name = "Engineering Equipment Storage"
+
 /area/engine/chiefs_office
 	name = "Chief Engineer's office"
 	icon_state = "engine_control"
