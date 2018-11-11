@@ -17,7 +17,7 @@
 	emote_hear = list("raises manipulators", "twists the scanner")
 	emote_see = list("spinning around", "turns the indicator on and off")
 	speak_chance = 10
-	turns_per_move = 1
+	turns_per_move = 3
 	see_in_dark = 6
 	health = 70
 	maxHealth = 70
