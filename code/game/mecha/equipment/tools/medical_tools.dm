@@ -49,8 +49,8 @@
 		target.reset_view(src)
 		/*
 		if(target.client)
-		target.client.perspective = EYE_PERSPECTIVE
-		target.client.eye = chassis
+			target.client.perspective = EYE_PERSPECTIVE
+			target.client.eye = chassis
 		*/
 		set_ready_state(0)
 		pr_mech_sleeper.start()
@@ -79,15 +79,21 @@
 
 	occupant_message("You are trying to put [target] into [src].")
 	chassis.visible_message("[chassis] is trying to put [target] into the [src].")
-	if(target.stat == UNCONSCIOUS || target.restrained() || !target.canmove)
-		putin(target)
+	if(target.incapacitated())
+		if(do_after(chassis.occupant, 60, target = chassis.loc))
+			putin(target)
 	else
-		switch(alert(target,"[src] is trying to put you in a sleeper",,"Yes","No"))
-			if("Yes")
-				putin(target)
-			if("No")
-				occupant_message("[target] rejects your offer!")
-		return
+		if(!chassis.occupant.is_busy() && do_after(chassis.occupant, 20, target = chassis.loc))
+			switch(alert(target,"[src] is trying to put you in [src]",,"Yes","No"))
+				if("Yes")
+					target.visible_message(\
+					"<span class='notice'>[target.name] starts climbing into the [src].</span>",\
+					"<span class='notice'>You start climbing into the [src].</span>")
+					if(do_after(chassis.occupant, 20, target = chassis.loc))
+						putin(target)
+				if("No")
+					occupant_message("[target] rejects your offer!")
+			return
 
 /obj/item/mecha_parts/mecha_equipment/tool/sleeper/proc/go_out()
 	if(!occupant)
@@ -115,7 +121,7 @@
 
 		to_chat(user, "<span class='notice'>You struggle inside the mounted sleeper, kicking the release with your foot... (This will take around 30 seconds.)</span>")
 		to_chat(M.occupant, "<span class='notice'>You hear a thump from [src].</span>")
-		if(do_after(user, 300, target = M, can_move = TRUE))
+		if(do_after(user, 300, target = user))
 			if(occupant == user) // Check they're still here.
 				go_out()
 
