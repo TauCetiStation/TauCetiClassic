@@ -16,7 +16,6 @@
 #define ROLE_NINJA             "Ninja"
 #define ROLE_RAIDER            "Raider"
 #define ROLE_PLANT             "Diona"
-#define ROLE_MEME              "Meme"
 #define ROLE_MUTINEER          "Mutineer"
 #define ROLE_SHADOWLING        "Shadowling"
 #define ROLE_ABDUCTOR          "Abductor"
@@ -29,6 +28,7 @@
 //Pay attention to 'IS_MODE_COMPILED' parametr.
 //If there will be link to non-existent mode or any typo mistake, mode wouldn't be visible in prefs.
 var/global/list/special_roles = list(
+
 	ROLE_TRAITOR = 1, //IS_MODE_COMPILED("traitor"),          //0
 	ROLE_OPERATIVE = 1, //IS_MODE_COMPILED("nuclear"),        //1
 	ROLE_CHANGELING = 1, //IS_MODE_COMPILED("changeling"),    //2
@@ -42,8 +42,7 @@ var/global/list/special_roles = list(
 	ROLE_NINJA = 1,                                           //10
 	ROLE_RAIDER = 1, //IS_MODE_COMPILED("heist"),             //11
 	ROLE_PLANT = 1,                                           //12
-	ROLE_MEME = 1, //IS_MODE_COMPILED("meme"),                //13
-	ROLE_MUTINEER = 1, //IS_MODE_COMPILED("mutiny"),          //14
-	ROLE_SHADOWLING = 1, //IS_MODE_COMPILED("shadowling"),    //15
-	ROLE_ABDUCTOR = 1, //IS_MODE_COMPILED("abduction")        //16
+	ROLE_MUTINEER = 1, //IS_MODE_COMPILED("mutiny"),          //13
+	ROLE_SHADOWLING = 1, //IS_MODE_COMPILED("shadowling"),    //14
+	ROLE_ABDUCTOR = 1, //IS_MODE_COMPILED("abduction")        //15
 )
