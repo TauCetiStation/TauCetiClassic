@@ -58,7 +58,11 @@ var/global/list/obj/item/device/pda/PDAs = list()
 /obj/item/device/pda/examine(mob/user)
 	..()
 	if(src in user)
-		to_chat(user, "The time [worldtime2text()] is displayed in the corner of the screen.")
+		if (SSshuttle.online)
+			to_chat(user, "The time [worldtime2text()] and shuttle ETA [shuttleeta2text()] are displayed in the corner of the screen.")
+		else
+			to_chat(user, "The time [worldtime2text()] is displayed in the corner of the screen.")
+
 
 /obj/item/device/pda/medical
 	default_cartridge = /obj/item/weapon/cartridge/medical
@@ -431,8 +435,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	data["stationTime"] = worldtime2text()
 	data["new_Message"] = newmessage
 	if (SSshuttle.online)
-		var/timeleft = SSshuttle.timeleft()
-		data["shuttle_eta"] = "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
+		data["shuttle_eta"] = shuttleeta2text()
 
 	if(mode==2)
 		var/convopdas[0]

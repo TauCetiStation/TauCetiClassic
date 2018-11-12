@@ -11,6 +11,12 @@ proc/worldtime2text(time = world.time)
 proc/time_stamp()
 	return time2text(world.timeofday, "hh:mm:ss")
 
+/proc/shuttleeta2text()
+	var/timeleft = SSshuttle.timeleft()
+	if (timeleft < 0)
+		timeleft = 0
+	return "[(timeleft / 60) % 60]:[add_zero(num2text(timeleft % 60), 2)]"
+
 var/next_duration_update = 0
 var/last_round_duration = 0
 
