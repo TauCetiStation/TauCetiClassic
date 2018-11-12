@@ -139,6 +139,8 @@ var/list/slot_equipment_priority = list(
 	if(!istype(W))		return 0
 	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!l_hand)
+		if(m_intent == "run" && Adjacent(W) && (istype(W.loc, /turf) || istype(W.loc.loc, /turf)))
+			W.do_pickup_animation(src)
 		W.loc = src		//TODO: move to equipped?
 		l_hand = W
 		W.layer = ABOVE_HUD_LAYER	//TODO: move to equipped?
@@ -160,6 +162,8 @@ var/list/slot_equipment_priority = list(
 	if(!istype(W))		return 0
 	if(W.anchored)		return 0	//Anchored things shouldn't be picked up because they... anchored?!
 	if(!r_hand)
+		if(m_intent == "run" && Adjacent(W) && (istype(W.loc, /turf) || istype(W.loc.loc, /turf)))
+			W.do_pickup_animation(src)
 		W.loc = src
 		r_hand = W
 		W.layer = ABOVE_HUD_LAYER
@@ -283,6 +287,8 @@ var/list/slot_equipment_priority = list(
 	if(istype(O, /obj/item))
 		var/obj/item/I = O
 		if(target)
+			if(Adjacent(target))
+				I.do_putdown_animation(target)
 			I.forceMove(target)
 		else
 			I.forceMove(loc)
