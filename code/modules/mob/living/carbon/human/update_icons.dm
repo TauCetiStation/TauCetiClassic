@@ -710,6 +710,8 @@ Please contact me on #coderbus IRC. ~Carn x
 			var/image/bloodsies = image("icon"='icons/effects/blood.dmi', "icon_state"="shoeblood")
 			bloodsies.color = feet_dirt_color.color
 			overlays_standing[SHOES_LAYER] = bloodsies
+		else
+			overlays_standing[SHOES_LAYER] = null
 
 	apply_overlay(SHOES_LAYER)
 

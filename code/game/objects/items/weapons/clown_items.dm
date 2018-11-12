@@ -37,6 +37,12 @@
 	if(target && user && ishuman(target) && ishuman(user) && !target.stat && !user.stat && user.zone_sel && def_zone == O_MOUTH)
 		user.visible_message("<span class='red'>\the [user] washes \the [target]'s mouth out with soap!</span>")
 		return
+	if(target && user && ishuman(target) && !target.stat && !user.stat && user.zone_sel && ((def_zone == BP_L_LEG) || (def_zone == BP_R_LEG)))
+		if(target == user)
+			user.visible_message("<span class='notice'>\the [user] washes legs with a soap.</span>")
+		else
+			user.visible_message("<span class='notice'>\the [user] washes \the [target]'s legs out with soap.</span>")
+		return
 	..()
 
 /*
