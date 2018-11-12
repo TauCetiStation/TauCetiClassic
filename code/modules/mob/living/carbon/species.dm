@@ -147,7 +147,7 @@
 /datum/species/proc/on_loose(mob/living/carbon/human/H)
 	return
 
-/datum/species/proc/regen(mob/living/carbon/human/H, light_amount, External) // Perhaps others will regenerate in different ways?
+/datum/species/proc/regen(mob/living/carbon/human/H, light_amount) // Perhaps others will regenerate in different ways?
 	return
 
 /datum/species/proc/call_digest_proc(mob/living/M, datum/reagent/R) // Humans don't have a seperate proc, but need to return TRUE so general proc is called.
@@ -517,20 +517,20 @@
 
 	return ..()
 
-/datum/species/diona/regen(mob/living/carbon/human/H, light_amount, External)
-	if(light_amount >=5) // If you can regen organs - do so.
+/datum/species/diona/regen(mob/living/carbon/human/H, light_amount)
+	if(light_amount >= 5) // If you can regen organs - do so.
 		for(var/obj/item/organ/internal/O in H.organs)
 			if(O.damage)
-				O.damage -= light_amount/10
+				O.damage -= light_amount/5
 				H.nutrition -= light_amount
 				return
-			continue
 	if(H.nutrition > 350 && light_amount >= 4) // If you don't need to regen organs, regen bodyparts.
-		External = H.find_damaged_bodypart(External)
-		if(External)
+		if(!H.regenerating_bodypart) // If there is none currently, go ahead, find it.
+			H.regenerating_bodypart = H.find_damaged_bodypart()
+		if(H.regenerating_bodypart) // If it did find one.
 			H.nutrition -= 1
 			H.apply_damages(0,0,1,1,0,0)
-			H.regen_bodyparts(External, TRUE)
+			H.regen_bodyparts(0, TRUE)
 			return
 	if(light_amount >= 3) // If you don't need to regen bodyparts, fix up small things.
 		H.adjustBruteLoss(-(light_amount))

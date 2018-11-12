@@ -63,6 +63,7 @@
 			modules += O
 
 /obj/item/weapon/robot_module/proc/add_languages(mob/living/silicon/robot/R)
+	R.add_language("Tradeband", 1)
 	R.add_language("Trinary", 1)
 	R.add_language("Sol Common", 1)
 

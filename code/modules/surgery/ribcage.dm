@@ -549,7 +549,7 @@
 /datum/surgery_step/ipc_ribcage/wrench_sec/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] begins to loosen bolts on [target]'s security panel with \the [tool].",
 	"You begin to loosen bolts on [target]'s maintenance panel with \the [tool].")
-	if(!target.is_damaged_organ(O_KIDNEYS))
+	if(!target.is_bruised_organ(O_KIDNEYS))
 		to_chat(target, "%MAIN SECURITY PANEL% UNATHORISED ACCESS ATTEMPT DETECTED!")
 	..()
 
@@ -583,7 +583,7 @@
 /datum/surgery_step/ipc_ribcage/pry_sec/begin_step(mob/user, mob/living/carbon/human/target, target_zone, obj/item/tool)
 	user.visible_message("[user] starts to pry open the security panel in [target]'s torso with \the [tool].",
 	"You start to pry open the security panel in [target]'s torso with \the [tool].")
-	if(!target.is_damaged_organ(O_KIDNEYS))
+	if(!target.is_bruised_organ(O_KIDNEYS))
 		to_chat(target, "<span class='warning italics'>%MAIN SECURITY PANEL% DAMAGE DETECTED. CEASE APPLIED DAMAGE.</span>")
 	..()
 
@@ -700,7 +700,7 @@
 	"<span class='notice'>You unscrewed [target]'s accumulator with \the [tool].</span>")
 	for(var/obj/item/weapon/stock_parts/cell/A in target)
 		A.forceMove(get_turf(target))
-		if(!target.is_damaged_organ(O_KIDNEYS))
+		if(!target.is_bruised_organ(O_KIDNEYS))
 			to_chat(target, "<span class='warning italics'>%SHUTTING DOWN%</span>")
 
 /datum/surgery_step/ipc_ribcage/take_accumulator/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool)

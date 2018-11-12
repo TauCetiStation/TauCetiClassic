@@ -194,7 +194,7 @@
 	user.visible_message("<span class='notice'>[user] unscrewed [target]'s camera panels with \the [tool].</span>" ,
 	"<span class='notice'>You unscrewed [target]'s camera panels with \the [tool].</span>")
 	target.op_stage.eyes = 1
-	if(!target.is_damaged_organ(O_KIDNEYS))
+	if(!target.is_bruised_organ(O_KIDNEYS))
 		to_chat(target, "<span class='warning italics'>%VISUALS DENIED%. REQUESTING ADDITIONAL PERSPECTION REACTIONS.</span>")
 	target.blinded += 1.5
 
@@ -244,7 +244,7 @@
 		BP.createwound(CUT, 5)
 
 	IO.take_damage(dam_amt,0)
-	if(!target.is_damaged_organ(O_KIDNEYS))
+	if(!target.is_bruised_organ(O_KIDNEYS))
 		to_chat(target, "<span class='warning italics'>SEVERE VISUAL SENSOR DAMAGE DETECTED. %REACTION_OVERLOAD%.</span>")
 	target.blinded += 3.0
 
