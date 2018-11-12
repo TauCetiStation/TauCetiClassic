@@ -38,6 +38,13 @@
 		user.visible_message("<span class='red'>\the [user] washes \the [target]'s mouth out with soap!</span>")
 		return
 	if(target && user && ishuman(target) && !target.stat && !user.stat && user.zone_sel && ((def_zone == BP_L_LEG) || (def_zone == BP_R_LEG)))
+		var/mob/living/carbon/human/H = target
+		var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
+		var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
+		if((l_foot || !(l_foot.status & ORGAN_DESTROYED)) && (r_foot || !(r_foot.status & ORGAN_DESTROYED)))
+			H.feet_blood_DNA = null
+			H.feet_dirt_color = null
+			H.update_inv_shoes()
 		if(target == user)
 			user.visible_message("<span class='notice'>\the [user] washes legs with a soap.</span>")
 		else
