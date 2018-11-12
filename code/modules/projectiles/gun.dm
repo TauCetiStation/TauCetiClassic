@@ -223,7 +223,7 @@
 
 	if (can_fire())
 		//Point blank shooting if on harm intent or target we were targeting.
-		if(M.mind.special_role == "Wizard")
+		if(!special_check(user, target))
 			return
 		if(user.a_intent == "hurt")
 			user.visible_message("<span class='red'><b> \The [user] fires \the [src] point blank at [M]!</b></span>")
