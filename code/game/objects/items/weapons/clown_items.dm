@@ -46,9 +46,12 @@
 			H.feet_dirt_color = null
 			H.update_inv_shoes()
 		if(target == user)
-			user.visible_message("<span class='notice'>\the [user] washes legs with a soap.</span>")
+			if(H.gender == MALE)
+				user.visible_message("<span class='notice'>\the [user] cleans his legs with a soap.</span>")
+			if(H.gender == FEMALE)
+				user.visible_message("<span class='notice'>\the [user] cleans her legs with a soap.</span>")
 		else
-			user.visible_message("<span class='notice'>\the [user] washes \the [target]'s legs out with soap.</span>")
+			user.visible_message("<span class='notice'>\the [user] rubs \the [target]'s legs out with a soap.</span>")
 		return
 	..()
 
