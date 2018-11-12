@@ -638,11 +638,14 @@
 					if(src.cell.charge < 0) src.cell.charge = 0
 					if(H.nutrition > 500) H.nutrition = 500
 					src.charging = 1
+					return
 
 				else
 					to_chat(user, "<span class='notice'>You are already fully charged.</span>")
+					return
 			else
 				to_chat(user, "There is no charge to draw from that APC.")
+				return
 
 	if(opened && !issilicon(user) && !isobserver(user))
 		if(cell)
