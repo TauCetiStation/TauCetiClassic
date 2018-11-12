@@ -10,7 +10,6 @@
 	explosion_resistance = 5
 	var/health = 10
 	var/destroyed = 0
-	var/damaged = 0
 
 
 /obj/structure/grille/ex_act(severity)
@@ -191,10 +190,6 @@
 
 
 /obj/structure/grille/proc/healthcheck()
-	if(health <= 5)
-		if(!destroyed && !damaged)
-			icon_state = "grille_damaged_[rand(0,4)]"
-			damaged = 1
 	if(health <= 0)
 		if(!destroyed)
 			icon_state = "brokengrille"
