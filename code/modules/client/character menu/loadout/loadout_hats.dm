@@ -37,9 +37,21 @@
 	display_name = "Fedora"
 	path = /obj/item/clothing/head/fedora
 
-/datum/gear/head/orangebandana
-	display_name = "Orange bandana"
+/datum/gear/head/bandana
+	display_name = "Bandana selection"
 	path = /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
+
+datum/gear/head/bandana/New()
+	..()
+	var/bandana_colors = list()
+	bandana_colors["orange"] = /obj/item/clothing/head/helmet/greenbandana/fluff/taryn_kifer_1
+	bandana_colors["red"] = /obj/item/clothing/mask/bandana/red
+	bandana_colors["blue"] = /obj/item/clothing/mask/bandana/blue
+	bandana_colors["green"] = /obj/item/clothing/mask/bandana/green
+	bandana_colors["gold"] = /obj/item/clothing/mask/bandana/gold
+	bandana_colors["black"] = /obj/item/clothing/mask/bandana/black
+	bandana_colors["skull"] = /obj/item/clothing/mask/bandana/skull
+	gear_tweaks += new/datum/gear_tweak/path(bandana_colors)
 
 /datum/gear/head/fez
 	display_name =  "Fez"
