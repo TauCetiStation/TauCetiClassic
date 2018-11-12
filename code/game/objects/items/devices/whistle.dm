@@ -25,7 +25,14 @@
 	else
 		playsound(get_turf(src), 'sound/voice/halt.ogg', 100, 1, vary = 0)
 		user.show_message("<span class='warning'>[user]'s [name] rasps, \"Halt! Security!\"</span>",1)
-
+	if(user)
+		var/list/halt_recipients = list()
+		for(var/mob/M in viewers(user, null))
+			if ((M.client && !( M.blinded )))
+					halt_recipients.Add(M.client)
+		var/image/I = image('icons/mob/talk.dmi', user, "halt", MOB_LAYER+1)
+		I.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
+		flick_overlay(I, halt_recipients, 14)
 	spamcheck = 1
 	spawn(20)
 		spamcheck = 0
