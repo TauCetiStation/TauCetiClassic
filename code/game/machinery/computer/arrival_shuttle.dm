@@ -67,7 +67,7 @@ var/lastMove = 0
 		L.color = "#00ff00"
 		L.update(0)
 
-	sleep(140)
+	sleep(100)
 
 	lock_doors(fromArea)
 
@@ -78,7 +78,7 @@ var/lastMove = 0
 		L.color = initial(L.color)
 		L.update(0)
 
-	sleep(50)
+	sleep(30)
 
 	toArea.parallax_movedir = WEST
 	fromArea.move_contents_to(toArea, null, WEST)
@@ -88,6 +88,8 @@ var/lastMove = 0
 	curr_location = toArea
 	fromArea = toArea
 	toArea = destArea
+	if(!istype(src, /obj/machinery/computer/arrival_shuttle/dock))
+		playsound(src, 'sound/effects/shuttle_flying.ogg', 100, 1)
 	sleep(ARRIVAL_SHUTTLE_MOVE_TIME)
 	curr_location.parallax_slowdown()
 	sleep(PARALLAX_LOOP_TIME)
@@ -129,7 +131,7 @@ var/lastMove = 0
 					shake_camera(M, 2, 1)
 				else
 					shake_camera(M, 4, 2)
-		M.Weaken(4)
+					M.Weaken(4)
 		if(isliving(M) && !M.buckled)
 			var/mob/living/L = M
 			if(isturf(L.loc))
