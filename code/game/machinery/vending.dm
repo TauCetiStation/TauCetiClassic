@@ -1074,7 +1074,7 @@
 	/obj/item/clothing/suit/jacket=299, /obj/item/clothing/suit/jacket/puffer/vest=239, /obj/item/clothing/suit/jacket/puffer=219,
 	/obj/item/clothing/under/suit_jacket/navy=119,/obj/item/clothing/under/suit_jacket/really_black=119,/obj/item/clothing/under/suit_jacket/burgundy=119,
 	/obj/item/clothing/under/suit_jacket/charcoal=119, /obj/item/clothing/under/suit_jacket/white=119,/obj/item/clothing/under/kilt=85,/obj/item/clothing/under/overalls=85,
-	/obj/item/clothing/under/suit_jacket/really_black=142,/obj/item/clothing/under/suit_jacket/rouge =248,/obj/item/clothing/under/pants/jeans=142,
+	/obj/item/clothing/under/suit_jacket/really_black=142,/obj/item/clothing/under/suit_jacket/rogue =248,/obj/item/clothing/under/pants/jeans=142,
 	/obj/item/clothing/under/pants/classicjeans=142,/obj/item/clothing/under/pants/camo = 142,/obj/item/clothing/under/pants/blackjeans=142,/obj/item/clothing/under/pants/khaki=142,
 	/obj/item/clothing/under/pants/white=142,/obj/item/clothing/under/pants/red=142,/obj/item/clothing/under/pants/black=142,
 	/obj/item/clothing/under/pants/tan=142,/obj/item/clothing/under/pants/blue=142,/obj/item/clothing/under/pants/track=142,
