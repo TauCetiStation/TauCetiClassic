@@ -260,7 +260,7 @@
 	item_state = "white_suit"
 	item_color = "white_suit"
 
-/obj/item/clothing/under/suit_jacket/rouge
+/obj/item/clothing/under/suit_jacket/rogue
 	name = "rogue jacket"
 	desc = "A  suit and jacket with a jeans. For the bad guy!"
 	icon_state = "rogue_jacket"
