@@ -67,7 +67,7 @@ var/lastMove = 0
 		L.color = "#00ff00"
 		L.update(0)
 
-	sleep(100)
+	sleep(140)
 
 	lock_doors(fromArea)
 
@@ -78,7 +78,7 @@ var/lastMove = 0
 		L.color = initial(L.color)
 		L.update(0)
 
-	sleep(30)
+	sleep(50)
 
 	toArea.parallax_movedir = WEST
 	fromArea.move_contents_to(toArea, null, WEST)
