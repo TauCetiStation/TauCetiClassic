@@ -143,7 +143,7 @@ var/datum/subsystem/vote/SSvote
 		if(!SSshuttle.online && SSshuttle.location == 0)
 			SSshuttle.shuttlealert(1)
 			SSshuttle.incall()
-			captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+			captain_announce("A crew transfer has been initiated. The shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 			message_admins("A crew transfer vote has passed, calling the shuttle.")
 			log_admin("A crew transfer vote has passed, calling the shuttle.")
 
