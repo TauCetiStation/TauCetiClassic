@@ -176,8 +176,11 @@ var/list/same_wires = list()
 	..()
 
 	if(!can_use(usr) || href_list["close"])
-		usr << browse(null, "window=wires")
-		usr.unset_machine(holder)
+		if(!usr) //STOP FCK RUNTIME
+			return
+		else
+			usr << browse(null, "window=wires")
+			usr.unset_machine(holder)
 		return
 
 	if(in_range(holder, usr) && isliving(usr))
