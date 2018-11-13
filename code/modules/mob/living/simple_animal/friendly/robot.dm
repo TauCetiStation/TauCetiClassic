@@ -75,7 +75,8 @@
 			rdconsole = M.buffer
 			M.buffer = null
 			to_chat(user, "<span class='notice'>You upload the data from the [W.name]'s buffer.</span>")
-	..()
+	else
+		..()
 
 /mob/living/simple_animal/det5/attack_hand(mob/living/user)
 	det5controll(user)
