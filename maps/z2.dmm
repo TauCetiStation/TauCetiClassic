@@ -15899,7 +15899,7 @@
 	},
 /area/wizard_station)
 "baK" = (
-/obj/structure/mineral_door/iron,
+/obj/structure/mineral_door/metal,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
