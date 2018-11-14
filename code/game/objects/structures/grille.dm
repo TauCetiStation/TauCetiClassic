@@ -10,7 +10,7 @@
 	explosion_resistance = 5
 	var/health = 10
 	var/destroyed = 0
-
+	var/damaged = FALSE
 
 /obj/structure/grille/ex_act(severity)
 	qdel(src)
@@ -190,6 +190,10 @@
 
 
 /obj/structure/grille/proc/healthcheck()
+	if(health <= 5)
+		if(!destroyed && !damaged)
+			icon_state = "grille_damaged_[rand(0,4)]"
+			damaged = 1
 	if(health <= 0)
 		if(!destroyed)
 			icon_state = "brokengrille"

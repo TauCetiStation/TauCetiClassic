@@ -2035,7 +2035,7 @@
 /area/security/main)
 "adq" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor,
 /area/security/main)
 "adr" = (
@@ -5364,7 +5364,7 @@
 	pixel_y = 0
 	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/security_space_law{
+/obj/item/weapon/book/manual/wiki/security_space_law{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -5416,7 +5416,7 @@
 /area/security/main)
 "aiX" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor{
 	icon_state = "dark"
 	},
@@ -7887,7 +7887,7 @@
 /area/maintenance/aft)
 "amA" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/item/weapon/storage/briefcase,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 1
@@ -10949,7 +10949,7 @@
 /area/security/prison)
 "arL" = (
 /obj/structure/table,
-/obj/item/weapon/book/manual/security_space_law{
+/obj/item/weapon/book/manual/wiki/security_space_law{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -12586,7 +12586,7 @@
 /obj/machinery/light_switch{
 	pixel_y = 28
 	},
-/obj/item/weapon/book/manual/security_space_law{
+/obj/item/weapon/book/manual/wiki/security_space_law{
 	pixel_x = -3;
 	pixel_y = 5
 	},
@@ -13623,19 +13623,22 @@
 /turf/simulated/floor/plating,
 /area/maintenance/fsmaint)
 "awO" = (
-/obj/structure/table,
-/obj/item/weapon/storage/box/syringes,
-/obj/machinery/camera{
-	c_tag = "Xenobiology Module SW";
-	dir = 4;
-	network = list("SS13","Research");
-	pixel_x = 0
+/obj/item/weapon/book/manual/hydroponics_beekeeping,
+/obj/item/device/eftpos{
+	eftpos_name = "Botany EFTPOS scanner"
 	},
+/obj/item/weapon/paper/hydroponics,
+/obj/machinery/light_switch{
+	pixel_x = -23;
+	pixel_y = 0
+	},
+/obj/structure/table/glass,
+/obj/item/weapon/book/manual/wiki/hydroponics,
 /turf/simulated/floor{
-	dir = 8;
-	icon_state = "whitepurple"
+	dir = 1;
+	icon_state = "green"
 	},
-/area/rnd/xenobiology)
+/area/hydroponics)
 "awP" = (
 /obj/item/stack/sheet/mineral/phoron{
 	amount = 5;
@@ -24074,13 +24077,13 @@
 /turf/simulated/floor,
 /area/crew_quarters/locker)
 "aQn" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
-	dir = 8
-	},
+/obj/structure/table,
+/obj/item/weapon/book/manual/wiki/chefs_recipes,
 /turf/simulated/floor{
-	icon_state = "white"
+	dir = 5;
+	icon_state = "cafeteria"
 	},
-/area/toxins/brainstorm_center)
+/area/crew_quarters/kitchen)
 "aQo" = (
 /obj/machinery/newscaster{
 	pixel_y = 32
@@ -29218,7 +29221,7 @@
 	},
 /area/hallway/secondary/entry)
 "bbx" = (
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/structure/table/woodentable,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
@@ -31310,7 +31313,7 @@
 /area/rnd/hallway)
 "bfS" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
@@ -32693,11 +32696,14 @@
 "bja" = (
 /obj/structure/table/woodentable,
 /obj/item/weapon/storage/secure/safe{
-	pixel_x = 32;
-	pixel_y = 5
+	pixel_x = 39;
+	pixel_y = 1
 	},
 /obj/item/weapon/pinpointer/advpinpointer,
 /obj/item/weapon/disk/nuclear,
+/obj/structure/bobross{
+	pixel_x = 32
+	},
 /turf/simulated/floor/wood,
 /area/crew_quarters/captain)
 "bjb" = (
@@ -33739,18 +33745,25 @@
 	},
 /area/rnd/hallway)
 "bls" = (
-/obj/structure/table,
-/obj/item/weapon/book/manual/robotics_cyborgs{
-	pixel_x = 2;
-	pixel_y = 5
+/obj/structure/closet/gmcloset{
+	icon_closed = "black";
+	icon_state = "black";
+	name = "formal wardrobe"
 	},
-/obj/item/weapon/storage/belt/utility,
-/obj/item/weapon/storage/belt/utility,
-/obj/item/weapon/reagent_containers/glass/beaker/large,
-/turf/simulated/floor{
-	icon_state = "delivery"
+/obj/item/weapon/book/manual/wiki/barman_recipes{
+	pixel_y = 10
 	},
-/area/assembly/robotics)
+/obj/item/device/eftpos{
+	eftpos_name = "Bar EFTPOS scanner"
+	},
+/obj/item/device/radio/intercom{
+	pixel_x = -25
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 4
+	},
+/turf/simulated/floor/carpet,
+/area/crew_quarters/bar)
 "blu" = (
 /turf/simulated/floor{
 	dir = 1;
@@ -35974,10 +35987,7 @@
 /area/rnd/lab)
 "bqC" = (
 /obj/structure/table,
-/obj/item/weapon/hand_labeler,
 /obj/item/weapon/pen,
-/obj/item/weapon/packageWrap,
-/obj/item/weapon/packageWrap,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -35986,6 +35996,11 @@
 	dir = 2;
 	network = list("SS13","Research")
 	},
+/obj/item/taperoll/science,
+/obj/item/taperoll/science,
+/obj/item/weapon/hand_labeler,
+/obj/item/weapon/packageWrap,
+/obj/item/weapon/packageWrap,
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "warning"
@@ -36943,7 +36958,7 @@
 	pixel_y = 0
 	},
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/structure/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -41812,7 +41827,7 @@
 	pixel_x = -3;
 	pixel_y = 7
 	},
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/floor/wood,
 /area/security/vacantoffice)
 "bDt" = (
@@ -44090,6 +44105,7 @@
 	pixel_x = -27;
 	pixel_y = 0
 	},
+/obj/item/weapon/storage/box/cups,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -48535,6 +48551,7 @@
 /obj/structure/table,
 /obj/item/toy/cards,
 /obj/item/weapon/storage/toolbox/mechanical,
+/obj/item/weapon/book/manual/wiki/supply_crates,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "brown"
@@ -48641,6 +48658,10 @@
 /area/rnd/misc_lab)
 "bSk" = (
 /obj/structure/table/reinforced,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/clothing/mask/gas/coloured,
+/obj/item/taperoll/science,
 /obj/item/clothing/glasses/science{
 	pixel_x = 2;
 	pixel_y = 6
@@ -48649,9 +48670,6 @@
 	pixel_x = 2;
 	pixel_y = 6
 	},
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/clothing/mask/gas/coloured,
-/obj/item/clothing/mask/gas/coloured,
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "warning"
@@ -51866,21 +51884,21 @@
 /turf/simulated/floor/plating,
 /area/medical/surgery2)
 "bZJ" = (
-/obj/item/weapon/book/manual/hydroponics_beekeeping,
-/obj/item/device/eftpos{
-	eftpos_name = "Botany EFTPOS scanner"
+/obj/machinery/requests_console{
+	announcementConsole = 0;
+	department = "Engineering";
+	departmentType = 4;
+	name = "Engineering RC";
+	pixel_y = 30
 	},
-/obj/item/weapon/paper/hydroponics,
-/obj/machinery/light_switch{
-	pixel_x = -23;
-	pixel_y = 0
+/obj/structure/table,
+/obj/item/weapon/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
 	},
-/obj/structure/table/glass,
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "green"
-	},
-/area/hydroponics)
+/obj/item/weapon/pen,
+/turf/simulated/floor,
+/area/engine/engineering)
 "bZK" = (
 /obj/structure/closet/wardrobe/atmospherics_yellow,
 /turf/simulated/floor,
@@ -52885,24 +52903,7 @@
 /turf/simulated/floor/plating,
 /area/storage/emergency)
 "cbM" = (
-/obj/machinery/requests_console{
-	announcementConsole = 0;
-	department = "Engineering";
-	departmentType = 4;
-	name = "Engineering RC";
-	pixel_y = 30
-	},
-/obj/structure/table,
-/obj/item/weapon/book/manual/engineering_guide,
-/obj/item/weapon/book/manual/engineering_particle_accelerator{
-	pixel_y = 6
-	},
-/obj/item/weapon/book/manual/engineering_singularity_safety,
-/obj/item/weapon/book/manual/engineering_hacking{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/weapon/book/manual/engineering_construction,
+/obj/structure/bookcase/manuals/engineering,
 /turf/simulated/floor,
 /area/engine/engineering)
 "cbN" = (
@@ -54040,25 +54041,12 @@
 /turf/simulated/floor,
 /area/crew_quarters/kitchen)
 "ceU" = (
-/obj/structure/closet/gmcloset{
-	icon_closed = "black";
-	icon_state = "black";
-	name = "formal wardrobe"
+/obj/structure/bookcase/manuals/security,
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "redcorner"
 	},
-/obj/item/weapon/book/manual/barman_recipes{
-	pixel_y = 10
-	},
-/obj/item/device/eftpos{
-	eftpos_name = "Bar EFTPOS scanner"
-	},
-/obj/item/device/radio/intercom{
-	pixel_x = -25
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 4
-	},
-/turf/simulated/floor/carpet,
-/area/crew_quarters/bar)
+/area/security/lobby)
 "ceV" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -60691,14 +60679,36 @@
 	},
 /area/tcommsat/chamber)
 "csO" = (
+/obj/machinery/camera{
+	c_tag = "Security Lobby";
+	dir = 8;
+	pixel_x = 0;
+	pixel_y = -22
+	},
+/obj/item/device/radio/intercom{
+	broadcasting = 0;
+	freerange = 0;
+	frequency = 1475;
+	listening = 1;
+	name = "Station Intercom (Security)";
+	pixel_x = 30;
+	pixel_y = 4
+	},
 /obj/structure/table,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/weapon/newspaper,
 /obj/item/weapon/paper_bin{
 	pixel_x = -3;
 	pixel_y = 7
 	},
 /obj/item/weapon/pen,
-/turf/simulated/floor,
-/area/engine/engineering)
+/turf/simulated/floor{
+	dir = 6;
+	icon_state = "redcorner"
+	},
+/area/security/lobby)
 "csP" = (
 /obj/structure/cable{
 	d1 = 4;
@@ -63266,10 +63276,7 @@
 	},
 /area/hallway/primary/aft)
 "czf" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/obj/structure/flora/plant/random,
+/obj/structure/bookcase/manuals/research_and_development,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "whitepurple"
@@ -69924,13 +69931,16 @@
 	},
 /area/medical/genetics_cloning)
 "dWb" = (
-/obj/structure/table,
-/obj/item/weapon/book/manual/chef_recipes,
-/turf/simulated/floor{
-	dir = 5;
-	icon_state = "cafeteria"
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 8
 	},
-/area/crew_quarters/kitchen)
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor{
+	icon_state = "white"
+	},
+/area/toxins/brainstorm_center)
 "dXb" = (
 /obj/machinery/door/firedoor,
 /obj/structure/grille,
@@ -71537,34 +71547,19 @@
 /turf/simulated/floor/engine/vacuum,
 /area/maintenance/incinerator)
 "gKb" = (
-/obj/machinery/camera{
-	c_tag = "Security Lobby";
-	dir = 8;
-	pixel_x = 0;
-	pixel_y = -22
-	},
-/obj/item/device/radio/intercom{
-	broadcasting = 0;
-	freerange = 0;
-	frequency = 1475;
-	listening = 1;
-	name = "Station Intercom (Security)";
-	pixel_x = 30;
-	pixel_y = 4
-	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/security_space_law{
-	pixel_x = -3;
+/obj/item/weapon/book/manual/wiki/guide_to_robotics{
+	pixel_x = 2;
 	pixel_y = 5
 	},
-/obj/machinery/light{
-	dir = 4
-	},
+/obj/item/weapon/storage/belt/utility,
+/obj/item/weapon/storage/belt/utility,
+/obj/item/weapon/reagent_containers/glass/beaker/large,
+/obj/item/weapon/book/manual/wiki/guide_to_exosuits,
 /turf/simulated/floor{
-	dir = 6;
-	icon_state = "redcorner"
+	icon_state = "delivery"
 	},
-/area/security/lobby)
+/area/assembly/robotics)
 "gLb" = (
 /obj/structure/stool/bed/chair/metal/red{
 	dir = 8
@@ -72694,6 +72689,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
+"iNb" = (
+/obj/structure/table,
+/obj/machinery/camera{
+	c_tag = "Xenobiology Module SW";
+	dir = 4;
+	network = list("SS13","Research");
+	pixel_x = 0
+	},
+/obj/item/weapon/book/manual/wiki/guide_to_xenobiology,
+/obj/item/weapon/storage/box/syringes,
+/turf/simulated/floor{
+	dir = 8;
+	icon_state = "whitepurple"
+	},
+/area/rnd/xenobiology)
 "iOb" = (
 /obj/machinery/alarm{
 	dir = 8;
@@ -92737,7 +92747,7 @@ bOD
 bQD
 bTE
 bWC
-bZJ
+awO
 bOD
 cmm
 aVg
@@ -93499,7 +93509,7 @@ bmn
 aWx
 bsI
 bvB
-dWb
+aQn
 bDv
 ayX
 bJP
@@ -95308,7 +95318,7 @@ bRz
 bUj
 aGn
 caz
-ceU
+bls
 cnn
 aGn
 cvB
@@ -108201,7 +108211,7 @@ coo
 chV
 cfX
 crH
-cbM
+bZJ
 cuj
 cuf
 cuf
@@ -108458,7 +108468,7 @@ com
 chV
 cMx
 crH
-csO
+cbM
 cuf
 cuf
 cuf
@@ -111967,11 +111977,11 @@ adM
 alN
 alW
 fIb
-gKb
+csO
 gLb
 gLb
 gLb
-gLb
+ceU
 aqX
 gOb
 arx
@@ -118927,7 +118937,7 @@ bSx
 aMq
 aNy
 aOZ
-aQn
+dWb
 czf
 aSO
 buH
@@ -119451,7 +119461,7 @@ aZB
 bqe
 boO
 biD
-bls
+gKb
 boI
 aTI
 bus
@@ -124822,7 +124832,7 @@ cbD
 axp
 axZ
 ayB
-awO
+iNb
 azg
 cbD
 azW

@@ -24,9 +24,9 @@
 	var/l_hacking = 0
 	var/emagged = 0
 	var/open = 0
-	w_class = 3.0
-	max_w_class = 2
-	max_combined_w_class = 14
+	w_class = ITEM_SIZE_NORMAL
+	max_w_class = ITEM_SIZE_SMALL
+	max_storage_space = DEFAULT_BOX_STORAGE
 
 	examine(mob/user)
 		..()
@@ -157,7 +157,7 @@
 	force = 8.0
 	throw_speed = 1
 	throw_range = 4
-	w_class = 4.0
+	w_class = ITEM_SIZE_LARGE
 
 /obj/item/weapon/storage/secure/briefcase/atom_init()
 	. = ..()
@@ -200,7 +200,7 @@
 	force = 15.0
 
 /obj/item/weapon/storage/secure/briefcase/syndie/atom_init()
-	for (var/i in 1 to (storage_slots - 3))
+	for (var/i in 1 to 4)
 		new /obj/item/weapon/spacecash/c1000(src)
 	. = ..()
 

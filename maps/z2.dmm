@@ -15795,7 +15795,7 @@
 /area/wizard_station)
 "bax" = (
 /obj/structure/table/woodentable,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -15899,7 +15899,7 @@
 	},
 /area/wizard_station)
 "baK" = (
-/obj/structure/mineral_door/iron,
+/obj/structure/mineral_door/metal,
 /turf/unsimulated/floor{
 	icon_state = "engine"
 	},
@@ -22905,7 +22905,7 @@
 /area/wizard_station)
 "nOb" = (
 /obj/structure/table/reinforced,
-/obj/item/weapon/book/manual/robotics_cyborgs,
+/obj/item/weapon/book/manual/wiki/guide_to_robotics,
 /turf/unsimulated/floor{
 	icon_state = "cult";
 	name = "plating"
@@ -23560,7 +23560,7 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/item/weapon/book/manual/security_space_law,
+/obj/item/weapon/book/manual/wiki/security_space_law,
 /turf/simulated/shuttle/floor4,
 /area/shuttle/escape/centcom)
 "pub" = (

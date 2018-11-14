@@ -25,12 +25,13 @@ currentStatus.added.each { filePath ->
         return
 
     println "Converting new map to TGM: $filePath"
-    /$JTGMERGE convert "$filePath" -f tgm/.execute().waitFor()
+    /$JTGMERGE convert --separator=NIX "$filePath" -f tgm/.execute().waitFor()
+
     git.add().addFilepattern(filePath).call()
 }
 
-def lastCommitId = git.repository.resolve("$git.repository.fullBranch^{tree}")
 def objReader = git.repository.newObjectReader()
+def lastCommitId = git.repository.resolve("${git.repository.fullBranch}^{tree}")
 
 currentStatus.changed.each { filePath ->
     if (!filePath.endsWith('.dmm'))
@@ -40,14 +41,16 @@ currentStatus.changed.each { filePath ->
     def blobId = treeWalk.getObjectId(0)
 
     def tmpMap = Files.createTempFile('dmm.', null).toFile()
+    tmpMap.deleteOnExit()
     tmpMap << objReader.open(blobId).bytes
 
     println "Cleaning map: $filePath"
-    /$JTGMERGE clean "$tmpMap.path" "$filePath"/.execute().waitFor()
-    git.add().addFilepattern(filePath).call()
+    /$JTGMERGE clean --separator=NIX "${tmpMap.path}" "$filePath"/.execute().waitFor()
 
     tmpMap.delete()
     treeWalk.close()
+
+    git.add().addFilepattern(filePath).call()
 }
 
 objReader.close()

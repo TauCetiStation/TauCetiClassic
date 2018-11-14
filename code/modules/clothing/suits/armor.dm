@@ -43,7 +43,7 @@
 /obj/item/clothing/suit/storage/flak/atom_init()
 	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
-	pockets.storage_slots = 4
+	pockets.set_slots(slots = 4, slot_size = ITEM_SIZE_SMALL)
 
 /obj/item/clothing/suit/storage/flak/marinad
 	name = "marine armor"
@@ -115,7 +115,7 @@
 /obj/item/clothing/suit/storage/flak/bulletproof/atom_init()
 	. = ..()
 	pockets = new/obj/item/weapon/storage/internal(src)
-	pockets.storage_slots = 5
+	pockets.set_slots(slots = 5, slot_size = ITEM_SIZE_SMALL)
 
 /obj/item/clothing/suit/armor/laserproof
 	name = "ablative armor vest"

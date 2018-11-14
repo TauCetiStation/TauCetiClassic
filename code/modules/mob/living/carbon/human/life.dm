@@ -1443,7 +1443,7 @@
 					if(icon_num)
 						healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
 
-		switch(nutrition)
+		switch(get_nutrition())
 			if(NUTRITION_LEVEL_FULL to INFINITY)
 				throw_alert("nutrition","fat")
 			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)
@@ -1775,7 +1775,7 @@
 		else if(status_flags & XENO_HOST)
 			holder.icon_state = "hudxeno"
 			holder2.icon_state = "hudxeno"
-		else if(foundVirus)
+		else if(foundVirus || iszombie(src))
 			holder.icon_state = "hudill"
 		else if(has_brain_worms())
 			var/mob/living/simple_animal/borer/B = has_brain_worms()

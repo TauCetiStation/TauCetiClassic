@@ -257,7 +257,7 @@
 			var/datum/objective/objective = team_objectives[team_number]
 			if (con.experiment.points >= objective.target_amount)
 				SSshuttle.incall(0.5)
-				captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 				world << sound('sound/AI/shuttlecalled.ogg')
 				finished = 1
 				return ..()

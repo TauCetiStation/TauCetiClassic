@@ -79,9 +79,9 @@
 
 	return TRUE
 
-/datum/job/xenoarcheologist
-	title = "Xenoarcheologist"
-	flag = XENOARCHEOLOGIST
+/datum/job/xenoarchaeologist
+	title = "Xenoarchaeologist"
+	flag = XENOARCHAEOLOGIST
 	department_flag = MEDSCI
 	faction = "Station"
 	total_positions = 2
@@ -92,7 +92,7 @@
 	access = list(access_research, access_xenoarch)
 	minimal_player_ingame_minutes = 1400
 
-/datum/job/xenoarcheologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/job/xenoarchaeologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/scientist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)

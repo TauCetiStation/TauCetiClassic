@@ -386,7 +386,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		var/sqlid = sanitize_sql(href_list["targetid"])
 		if(!sqlid)
 			return
-			
+
 		establish_old_db_connection()
 		if(!dbcon_old.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
@@ -409,7 +409,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 				B.title = title
 				B.author = author
 				B.dat = content
-				B.icon_state = "book[rand(1,7)]"
+				B.icon_state = "book[rand(1,10)]"
 				src.visible_message("[src]'s printer hums as it produces a completely bound book. How did it do that?")
 				break
 
@@ -417,7 +417,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		var/sqlid = sanitize_sql(href_list["deleteid"])
 		if(!sqlid)
 			return
-			
+
 		establish_old_db_connection()
 		if(!dbcon_old.IsConnected())
 			alert("Connection to Archive has been severed. Aborting.")
@@ -528,7 +528,7 @@ datum/borrowbook // Datum used to keep track of who has borrowed what when and f
 		var/obj/item/weapon/book/b = new(src.loc)
 		b.dat = O:info
 		b.name = "Print Job #" + "[rand(100, 999)]"
-		b.icon_state = "book[rand(1,7)]"
+		b.icon_state = "book[rand(1,10)]"
 		qdel(O)
 	else
 		..()

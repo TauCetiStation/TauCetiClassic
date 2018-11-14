@@ -1175,3 +1175,12 @@
 
 		to_chat(src, "<span class='notice'>You can taste [english_list(final_taste_list)].</span>")
 		lasttaste = world.time
+
+/mob/living/proc/get_nutrition()
+	// This proc gets nutrition value with all possible alters.
+	// E.g. see how in carbon nutriment, plant matter, meat reagents are accounted.
+	// The difference between this and just nutrition, is that this proc shows how much nutrition a mob has
+	// even counting in the nutriments that are not digested yet. You don't feel hunger if you are digesting
+	// food, so this proc is used in walk penalty, etc. But you don't see fat of a person if the person is just
+	// digesting the giant pizza they ate, so we don't use this in examine code.
+	return nutrition

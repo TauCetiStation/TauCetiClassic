@@ -6,7 +6,7 @@ The easiest way to do merging is to install the merge driver. For this, open `.g
 
 [merge "merge-dmi"]
 	name = iconfile merge driver
-	driver = ./tools/dmitool/dmimerge.sh %O %A %B
+	driver = ./tools/dmi-merge-tool/dmimerge.sh %O %A %B
 
 You may optionally instead run git_merge_installer.bat or git_merge_installer.sh which should automatically insert these lines for you at the appropriate location.
     
