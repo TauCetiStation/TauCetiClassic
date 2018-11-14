@@ -11,7 +11,7 @@
 				 "Analyzing...", "Successfully",
 				 "...this is a joke", "La la la...beep",
 				 "Boom...", "Not enough time",
-				 "Science time", "ED-209 protect me", "Director, there is researches?")
+				 "Science time", "ED-209 protect me", "Director, where is researches?")
 
 	speak_emote = list("beeps", "rang out")
 	emote_hear = list("raises manipulators", "twists the scanner")
