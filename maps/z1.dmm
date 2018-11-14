@@ -6894,13 +6894,13 @@
 	name = "Kitchen Shutters";
 	opacity = 0
 	},
-/obj/item/weapon/reagent_containers/food/snacks/pie,
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window{
 	dir = 4;
 	name = "Kitchen";
-	req_access_txt = "28"
+	req_access_txt = "0"
 	},
+/obj/item/weapon/bell,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -7001,6 +7001,7 @@
 	dir = 4
 	},
 /obj/structure/window/reinforced,
+/obj/item/weapon/reagent_containers/food/snacks/pie,
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "cafeteria"
@@ -7577,6 +7578,7 @@
 /obj/structure/table/reinforced{
 	icon_state = "table_vertical"
 	},
+/obj/item/weapon/bell,
 /turf/simulated/floor/plating,
 /area/security/lobby)
 "alX" = (
@@ -24962,6 +24964,7 @@
 	name = "Cargo Desk";
 	req_access_txt = "50"
 	},
+/obj/item/weapon/bell,
 /turf/simulated/floor,
 /area/quartermaster/office)
 "aSb" = (
@@ -29077,6 +29080,7 @@
 	name = "Chemistry Desk";
 	req_access_txt = "33"
 	},
+/obj/item/weapon/bell,
 /turf/simulated/floor/plating,
 /area/medical/chemistry)
 "bbk" = (
@@ -44314,6 +44318,7 @@
 	name = "Engineering Desk";
 	req_access_txt = "32"
 	},
+/obj/item/weapon/bell,
 /turf/simulated/floor{
 	icon_state = "delivery";
 	name = "floor"
