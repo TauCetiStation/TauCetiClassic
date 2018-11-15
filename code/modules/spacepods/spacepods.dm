@@ -31,7 +31,7 @@
 
 	var/datum/spacepod/equipment/equipment_system
 
-	var/battery_type = "/obj/item/weapon/stock_parts/cell/high"
+	var/battery_type = "/obj/item/weapon/stock_parts/cell"
 	var/obj/item/weapon/stock_parts/cell/battery
 
 	var/datum/gas_mixture/cabin_air
@@ -112,7 +112,7 @@
 	bound_width = 64
 	bound_height = 64
 	dir = EAST
-	battery = new battery_type(src)
+	battery = new /obj/item/weapon/stock_parts/cell/high
 	add_cabin()
 	add_airtank()
 	ion_trail = new
@@ -122,7 +122,6 @@
 	pr_int_temp_processor = new /datum/global_iterator/pod_preserve_temp(list(src))
 	pr_give_air = new/datum/global_iterator/pod_tank_give_air(list(src))
 	equipment_system = new(src)
-	equipment_system.installed_modules += battery
 	spacepods_list += src
 	cargo_hold = new/obj/item/weapon/storage/internal(src)
 	cargo_hold.w_class = 5	//so you can put bags in
@@ -329,7 +328,7 @@ obj/spacepod/proc/play_sound_to_riders(mysound)
 			else
 				to_chat(user, "<span class='warning'>The hatch is locked shut!</span>")
 			return
-		if(istype(W, /obj/item/weapon/stock_parts/cell))
+		if(istype(W, battery_type))
 			if(!hatch_open)
 				to_chat(user, "<span class='warning'>The maintenance hatch is closed!</span>")
 				return
@@ -432,7 +431,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 		cargo_hold.storage_slots += SPE.storage_mod["slots"]
 		cargo_hold.max_combined_w_class += SPE.storage_mod["w_class"]
 
-/obj/spacepod/attack_hand(mob/user as mob)
+/obj/spacepod/attack_hand(mob/user)
 	if(user.a_intent == "grab" && unlocked)
 		var/mob/target
 		if(pilot)
@@ -527,22 +526,17 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 		return
 	to_chat(user, "<span class='warning'>You need an open hand to do that.</span>")
 
-/*
-/obj/spacepod/proc/return_inv()
+/obj/spacepod/proc/click_action(atom/target, mob/user)
 
-	var/list/L = list(  )
-
-	L += src.contents
-
-	for(var/obj/item/weapon/storage/S in src)
-		L += S.return_inv()
-	for(var/obj/item/weapon/gift/G in src)
-		L += G.gift
-		if(istype(G.gift, /obj/item/weapon/storage))
-			var/obj/item/storage/inv = G.gift
-			L += inv.return_inv()
-	return L
-*/
+	if(!src.pilot || src.pilot != user ) return
+	if(user.stat) return
+	if(src == target) return
+	var/dir_to_target = get_dir(src,target)
+	if(dir_to_target && !(dir_to_target & src.dir))//wrong direction
+		return
+	if(!target.Adjacent(src))
+		if(equipment_system.weapon_system)
+			equipment_system.weapon_system.action(target)
 
 /obj/spacepod/civilian
 	icon_state = "pod_civ"
@@ -573,32 +567,6 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 
 /obj/spacepod/syndi/unlocked
 	unlocked = TRUE
-
-/obj/spacepod/sec/New()
-	..()
-	var/obj/item/spacepod_equipment/weaponry/burst_taser/T = new /obj/item/spacepod_equipment/weaponry/taser
-	T.loc = equipment_system
-	equipment_system.weapon_system = T
-	equipment_system.weapon_system.my_atom = src
-	equipment_system.installed_modules += T
-	var/obj/item/spacepod_equipment/misc/tracker/L = new /obj/item/spacepod_equipment/misc/tracker
-	L.loc = equipment_system
-	equipment_system.misc_system = L
-	equipment_system.misc_system.my_atom = src
-	equipment_system.misc_system.enabled = 1
-	equipment_system.installed_modules += L
-	var/obj/item/spacepod_equipment/sec_cargo/chair/C = new /obj/item/spacepod_equipment/sec_cargo/chair
-	C.loc = equipment_system
-	equipment_system.sec_cargo_system = C
-	equipment_system.sec_cargo_system.my_atom = src
-	equipment_system.installed_modules += C
-	max_passengers = 1
-	var/obj/item/spacepod_equipment/lock/keyed/K = new /obj/item/spacepod_equipment/lock/keyed
-	K.loc = equipment_system
-	equipment_system.lock_system = K
-	equipment_system.lock_system.my_atom = src
-	equipment_system.lock_system.id = 100000
-	equipment_system.installed_modules += K
 
 /obj/spacepod/random/New()
 	..()
@@ -743,6 +711,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 
 	if(usr == pilot || usr == passengers)
 		return
+
 	enter_pod(usr)
 
 /obj/spacepod/proc/enter_pod(mob/user)
@@ -793,9 +762,10 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 				user.forceMove(src)
 				add_fingerprint(user)
 				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
-				sleep(19)
-				for(var/obj/screen/fullscreen/blind/B in user.client.screen)
-					B.alpha = 0
+				if(equipment_system.weapon_system)
+					user.client.mouse_pointer_icon = file("icons/mecha/mecha_mouse.dmi")
+				sleep(18)
+				user.screens["blind"].alpha = 0
 				return
 			if(passengers.len < max_passengers)
 				user.stop_pulling()
@@ -803,9 +773,8 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 				user.forceMove(src)
 				add_fingerprint(user)
 				playsound(src, 'sound/machines/windowdoor.ogg', 50, 1)
-				sleep(19)
-				for(var/obj/screen/fullscreen/blind/B in user.client.screen)
-					B.alpha = 0
+				sleep(18)
+				user.screens["blind"].alpha = 0
 			else
 				to_chat(user, "<span class='notice'>You were too slow. Try better next time, loser.</span>")
 		else
@@ -855,6 +824,8 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 		user.forceMove(get_turf(src))
 		pilot = null
 		to_chat(user, "<span class='notice'>You climb out of [src].</span>")
+		if(equipment_system.weapon_system)
+			user.client.mouse_pointer_icon = initial(user.client.mouse_pointer_icon)
 	if(user in passengers)
 		user.forceMove(get_turf(src))
 		passengers -= user
@@ -914,7 +885,8 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 
 	to_chat(usr, "<span class='warning'>You are not close to any pod doors.</span>")
 
-/*/obj/spacepod/verb/fireWeapon()
+/*
+/obj/spacepod/verb/fireWeapon()
 	set name = "Fire Pod Weapons"
 	set desc = "Fire the weapons."
 	set category = "Spacepod"
@@ -931,6 +903,7 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 		return
 	equipment_system.weapon_system.fire_weapons()
 */
+
 /obj/spacepod/verb/unload()
 	set name = "Unload Cargo"
 	set desc = "Unloads the cargo"

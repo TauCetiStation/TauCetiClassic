@@ -1,48 +1,3 @@
-/obj/item/spacepod_equipment/weaponry/proc/fire_weapons()
-	if(my_atom.next_firetime > world.time)
-		to_chat(usr, "<span class='warning'>Your weapons are recharging.</span>")
-		return
-	my_atom.next_firetime = world.time + fire_delay
-	var/turf/firstloc
-	var/turf/secondloc
-	if(!my_atom.equipment_system || !my_atom.equipment_system.weapon_system)
-		to_chat(usr, "<span class='warning'>Missing equipment or weapons.</span>")
-		my_atom.verbs -= text2path("[type]/proc/fire_weapons")
-		return
-	if(!my_atom.battery.use(shot_cost))
-		to_chat(usr, "<span class='warning'>Insufficient charge to fire the weapons</span>")
-		return
-	var/olddir
-	for(var/i = 0; i < shots_per; i++)
-		if(olddir != my_atom.dir)
-			switch(my_atom.dir)
-				if(NORTH)
-					firstloc = get_step(my_atom, NORTH)
-					secondloc = get_step(firstloc,EAST)
-				if(SOUTH)
-					firstloc = get_turf(my_atom)
-					secondloc = get_step(firstloc,EAST)
-				if(EAST)
-					firstloc = get_step(my_atom, EAST)
-					secondloc = get_step(firstloc,NORTH)
-				if(WEST)
-					firstloc = get_turf(my_atom)
-					secondloc = get_step(firstloc,NORTH)
-		olddir = dir
-		var/obj/item/projectile/projone = new projectile_type(firstloc)
-		var/obj/item/projectile/projtwo = new projectile_type(secondloc)
-		projone.starting = get_turf(my_atom)
-		projone.firer = usr
-		projone.def_zone = "chest"
-		projtwo.starting = get_turf(my_atom)
-		projtwo.firer = usr
-		projtwo.def_zone = "chest"
-		spawn()
-			playsound(src, fire_sound, 50, 1)
-			projone.Fire(my_atom.dir)
-			projtwo.Fire(my_atom.dir)
-		sleep(2)
-
 /datum/spacepod/equipment
 	var/obj/spacepod/my_atom
 	var/list/obj/item/spacepod_equipment/installed_modules = list() // holds an easy to access list of installed modules
@@ -60,6 +15,7 @@
 
 /obj/item/spacepod_equipment
 	name = "equipment"
+	var/use_charge = 0 //Use charge battery for work
 	var/obj/spacepod/my_atom
 	var/occupant_mod = 0	// so any module can modify occupancy
 	var/list/storage_mod = list("slots" = 0, "w_class" = 0)		// so any module can modify storage slots
@@ -67,6 +23,17 @@
 /obj/item/spacepod_equipment/proc/removed(var/mob/user) // So that you can unload cargo when you remove the module
 	return
 
+/obj/item/spacepod_equipment/proc/action(atom/target)
+	return
+
+/obj/item/spacepod_equipment/proc/action_checks(atom/target)
+	if(!target)
+		return 0
+	if(!my_atom)
+		return 0
+	if(!my_atom.battery.charge)
+		return 0
+	return 1
 /*
 ///////////////////////////////////////
 /////////Weapon System///////////////////
@@ -79,25 +46,107 @@
 	icon = 'icons/vehicles/spacepod.dmi'
 	icon_state = "blank"
 	var/obj/item/projectile/projectile_type
-	var/shot_cost = 0
+	var/shots_proj = 1
 	var/shots_per = 1
+	var/shots_deviation = 0
 	var/fire_sound
 	var/fire_delay = 15
+	var/fire_stop = FALSE
+	var/auto_rel = 0
+
+/obj/item/spacepod_equipment/weaponry/action(atom/target)
+	if(!action_checks(target))
+		return
+
+	var/turf/curloc = my_atom.loc
+	var/turf/targloc = get_turf(target)
+	var/turf/firstloc
+	var/turf/secondloc
+
+	if(my_atom.dir == NORTH)
+		firstloc = get_step(my_atom.loc, NORTH)
+		secondloc = get_step(firstloc,EAST)
+	if(my_atom.dir == SOUTH)
+		firstloc = get_turf(my_atom)
+		secondloc = get_step(firstloc,EAST)
+	if(my_atom.dir == EAST)
+		firstloc = get_step(my_atom.loc, EAST)
+		secondloc = get_step(firstloc,NORTH)
+	if(my_atom.dir == WEST)
+		firstloc = get_turf(my_atom)
+		secondloc = get_step(firstloc,NORTH)
+
+	if(!curloc || !targloc)
+		return
+
+	if(my_atom.battery.charge < use_charge)
+		playsound(my_atom, 'sound/weapons/empty.ogg', 50, 1)
+		to_chat(my_atom.pilot, "<span class='warning'> Battery in [my_atom] is empty</span>")
+		return
+
+	if(fire_stop)
+		to_chat(my_atom.pilot,"<span class='notice'> [src] is not ready to fire</span>")
+		return
+
+	my_atom.battery.charge -= use_charge
+	my_atom.visible_message("<span class='warning'>[my_atom] fires [src]!</span>")
+	to_chat(my_atom.pilot, "<span class='warning'>You fire [src]!</span>")
+	for(var/i = 1 to min(shots_proj, shots_per))
+		var/turf/aimloc = targloc
+		var/P1
+		var/P2
+		if(shots_deviation)
+			aimloc = locate(targloc.x+GaussRandRound(shots_deviation,1),targloc.y+GaussRandRound(shots_deviation,1),targloc.z)
+		if(!aimloc || aimloc == curloc)
+			break
+		playsound(my_atom, fire_sound, 50, 1)
+		P1 = new projectile_type(firstloc)
+		P2 = new projectile_type(secondloc)
+		FireWeapon(P1, target, aimloc)
+		FireWeapon(P2, target, aimloc)
+
+	if(auto_rel)
+		shots_proj = shots_per
+	if(!fire_stop)
+		fire_stop = TRUE
+		sleep(fire_delay)
+		fire_stop = FALSE
+
+
+
+/obj/item/spacepod_equipment/weaponry/proc/FireWeapon(atom/A, atom/target, turf/aimloc)
+	var/obj/item/projectile/P = A
+	P.shot_from = src
+	P.original = target
+	P.starting = P.loc
+	P.current = P.loc
+	P.firer = my_atom.pilot
+	if(isbrain(my_atom.pilot))
+		P.def_zone = ran_zone()
+	else
+		P.def_zone = check_zone(my_atom.pilot.zone_sel.selecting)
+	P.yo = aimloc.y - P.loc.y
+	P.xo = aimloc.x - P.loc.x
+	if(aimloc != get_turf(target))
+		P.process(aimloc)
+	else
+		P.process()
+
 
 /obj/item/spacepod_equipment/weaponry/taser
 	name = "disabler system"
 	desc = "A weak taser system for space pods, fires disabler beams."
 	icon_state = "weapon_taser"
-	projectile_type = /obj/item/projectile/beam/stun
-	shot_cost = 400
+	projectile_type = /obj/item/projectile/energy/electrode
+	use_charge = 400
 	fire_sound = 'sound/weapons/Taser.ogg'
 
 /obj/item/spacepod_equipment/weaponry/burst_taser
 	name = "burst taser system"
 	desc = "A weak taser system for space pods, this one fires 3 at a time."
 	icon_state = "weapon_burst_taser"
-	projectile_type = /obj/item/projectile/beam/stun
-	shot_cost = 1200
+	projectile_type = /obj/item/projectile/energy/electrode
+	use_charge = 1200
 	shots_per = 3
 	fire_sound = 'sound/weapons/Taser.ogg'
 	fire_delay = 30
@@ -106,9 +155,10 @@
 	name = "laser system"
 	desc = "A weak laser system for space pods, fires concentrated bursts of energy."
 	icon_state = "weapon_laser"
-	projectile_type = /obj/item/projectile/beam
-	shot_cost = 600
+	projectile_type = /obj/item/projectile/energy/laser
+	use_charge = 600
 	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_delay = 25
 
 // MINING LASERS
 /obj/item/spacepod_equipment/weaponry/mining_laser_basic
@@ -117,8 +167,8 @@
 	icon = 'icons/goonstation/pods/ship.dmi'
 	icon_state = "pod_taser"
 	projectile_type = /obj/item/projectile/kinetic/pod
-	shot_cost = 300
-	fire_delay = 14
+	use_charge = 300
+	fire_delay = 10
 	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
 
 /*
