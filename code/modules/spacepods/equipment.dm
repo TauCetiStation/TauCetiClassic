@@ -46,9 +46,9 @@
 	icon = 'icons/vehicles/spacepod.dmi'
 	icon_state = "blank"
 	var/obj/item/projectile/projectile_type
-	var/shots_proj = 1
-	var/shots_per = 1
+	var/shots_per = 1 //Don't set very high number. Or byond say you "Hello"
 	var/shots_deviation = 0
+	var/fuse = TRUE
 	var/fire_sound
 	var/fire_delay = 15
 	var/fire_stop = FALSE
@@ -75,15 +75,16 @@
 	if(my_atom.dir == WEST)
 		firstloc = get_turf(my_atom)
 		secondloc = get_step(firstloc,NORTH)
-
 	if(!curloc || !targloc)
 		return
-
 	if(my_atom.battery.charge < use_charge)
 		playsound(my_atom, 'sound/weapons/empty.ogg', 50, 1)
 		to_chat(my_atom.pilot, "<span class='warning'> Battery in [my_atom] is empty</span>")
 		return
-
+	if(fuse)
+		playsound(my_atom, 'sound/weapons/empty.ogg', 50, 1)
+		to_chat(my_atom.pilot, "<span class='notice'>Weapon fuse is toggle. Turn it off before shooting</span>")
+		return
 	if(fire_stop)
 		to_chat(my_atom.pilot,"<span class='notice'> [src] is not ready to fire</span>")
 		return
@@ -91,7 +92,7 @@
 	my_atom.battery.charge -= use_charge
 	my_atom.visible_message("<span class='warning'>[my_atom] fires [src]!</span>")
 	to_chat(my_atom.pilot, "<span class='warning'>You fire [src]!</span>")
-	for(var/i = 1 to min(shots_proj, shots_per))
+	for(var/i = 0, i < shots_per, i++)
 		var/turf/aimloc = targloc
 		var/P1
 		var/P2
@@ -104,9 +105,8 @@
 		P2 = new projectile_type(secondloc)
 		FireWeapon(P1, target, aimloc)
 		FireWeapon(P2, target, aimloc)
+		sleep(2)
 
-	if(auto_rel)
-		shots_proj = shots_per
 	if(!fire_stop)
 		fire_stop = TRUE
 		sleep(fire_delay)
@@ -140,16 +140,17 @@
 	projectile_type = /obj/item/projectile/energy/electrode
 	use_charge = 400
 	fire_sound = 'sound/weapons/Taser.ogg'
+	fire_delay = 5
 
 /obj/item/spacepod_equipment/weaponry/burst_taser
 	name = "burst taser system"
-	desc = "A weak taser system for space pods, this one fires 3 at a time."
+	desc = "A weak taser system for space pods, This one fires 4 at a time."
 	icon_state = "weapon_burst_taser"
 	projectile_type = /obj/item/projectile/energy/electrode
-	use_charge = 1200
-	shots_per = 3
+	use_charge = 1600
+	shots_per = 4
 	fire_sound = 'sound/weapons/Taser.ogg'
-	fire_delay = 30
+	fire_delay = 20
 
 /obj/item/spacepod_equipment/weaponry/laser
 	name = "laser system"
@@ -158,6 +159,35 @@
 	projectile_type = /obj/item/projectile/energy/laser
 	use_charge = 600
 	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_delay = 20
+
+/obj/item/spacepod_equipment/weaponry/burst_laser
+	name = "burst laser system"
+	desc = "A weak laser system for space pods, fires concentrated bursts of energy. This one fires 4 at a time"
+	icon_state = "weapon_burst_laser"
+	projectile_type = /obj/item/projectile/energy/laser
+	use_charge = 2400
+	shots_per = 4
+	fire_sound = 'sound/weapons/Laser.ogg'
+	fire_delay = 30
+
+/obj/item/spacepod_equipment/weaponry/automate
+	name = "automate bullet system"
+	desc = "A average automate bullet system for space pods, fires bullets rifle callibre."
+	icon_state = "weapon_automate"
+	projectile_type = /obj/item/projectile/bullet/rifle3
+	use_charge = 150
+	fire_sound = 'sound/weapons/Gunshot.ogg'
+	fire_delay = 10
+
+/obj/item/spacepod_equipment/weaponry/burst_automate
+	name = "burst automate bullet system"
+	desc = "A average automate bullet system for space pods, fires bullets rifle callibre. This one fires 4 at a time"
+	icon_state = "weapon_burst_automate"
+	projectile_type = /obj/item/projectile/bullet/rifle3
+	use_charge = 600
+	shots_per = 4
+	fire_sound = 'sound/weapons/Gunshot.ogg'
 	fire_delay = 25
 
 // MINING LASERS
@@ -289,6 +319,8 @@
 	desc = "A locking system to stop podjacking. This version uses a standalone key."
 	icon_state = "lock_tumbler"
 	var/static/id_source = 0
+	var/terminated = FALSE
+
 
 /obj/item/spacepod_equipment/lock/keyed/New()
 	..()

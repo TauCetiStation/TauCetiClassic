@@ -249,6 +249,7 @@
 					var/mob/living/L = M
 					L.adjustBruteLoss(300)
 			explosion(loc, 0, 0, 2)
+			pilot.client.mouse_pointer_icon = initial(pilot.client.mouse_pointer_icon)
 			robogibs(loc)
 			robogibs(loc)
 			qdel(src)
@@ -359,9 +360,14 @@ obj/spacepod/proc/play_sound_to_riders(mysound)
 			if(istype(W, /obj/item/spacepod_equipment/sec_cargo))
 				add_equipment(user, W, "sec_cargo_system")
 				return
-			if(istype(W, /obj/item/spacepod_equipment/lock))
-				add_equipment(user, W, "lock_system")
-				return
+			if(istype(W, /obj/item/spacepod_equipment/lock/keyed))
+				var/obj/item/spacepod_equipment/lock/keyed/K = W
+				if(K.terminated)
+					to_chat(user, "<span class='warning'> [K.name] is totaly terminated. Now it can't be installed </span>")
+					return
+				else
+					add_equipment(user, W, "lock_system")
+					return
 
 		if(istype(W, /obj/item/spacepod_key) && istype(equipment_system.lock_system, /obj/item/spacepod_equipment/lock/keyed))
 			var/obj/item/spacepod_key/key = W
@@ -639,15 +645,14 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 		if(t_air)
 			. = t_air.return_pressure()
 
-/*/obj/spacepod/proc/return_temperature()
+/obj/spacepod/proc/return_temperature()
 	. = 0
 	if(use_internal_tank)
-		. = cabin_air.return_temperature()
+		. = cabin_air.temperature
 	else
 		var/datum/gas_mixture/t_air = get_turf_air()
 		if(t_air)
-			. = t_air.return_temperature()
-*/
+			. = t_air.temperature
 
 /obj/spacepod/proc/moved_other_inside(var/mob/living/carbon/human/H as mob)
 	occupant_sanity_check()
@@ -683,7 +688,6 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 		if(M == user)
 			enter_pod(user)
 			return
-
 	if(istype(A, /obj/structure/ore_box) && equipment_system.cargo_system && istype(equipment_system.cargo_system,/obj/item/spacepod_equipment/cargo/ore)) // For loading ore boxes
 		load_cargo(user, A)
 		return
@@ -885,10 +889,10 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 
 	to_chat(usr, "<span class='warning'>You are not close to any pod doors.</span>")
 
-/*
-/obj/spacepod/verb/fireWeapon()
-	set name = "Fire Pod Weapons"
-	set desc = "Fire the weapons."
+
+/obj/spacepod/verb/fuseWeapon()
+	set name = "Fuse Weapon Mod"
+	set desc = "Toggle fuse weapon mode"
 	set category = "Spacepod"
 	set src = usr.loc
 
@@ -901,8 +905,13 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 	if(!equipment_system.weapon_system)
 		to_chat(usr, "<span class='warning'>[src] has no weapons!</span>")
 		return
-	equipment_system.weapon_system.fire_weapons()
-*/
+
+	if(equipment_system.weapon_system.fuse)
+		to_chat(pilot, "Weapon fuse is deactivate. You can fire")
+		equipment_system.weapon_system.fuse = FALSE
+	else
+		to_chat(pilot, "Weapon fuse is activate. You will can't fire more")
+		equipment_system.weapon_system.fuse = TRUE
 
 /obj/spacepod/verb/unload()
 	set name = "Unload Cargo"
@@ -968,6 +977,19 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 			to_chat(user, "<span class='notice'>You fail to find anything of value.</span>")
 	else
 		to_chat(user, "<span class='notice'>You decide against searching the [src]</span>")
+
+/obj/spacepod/verb/ResetCam()
+	set name = "Reset Blind Camera"
+	set category = "OOC"
+	set src = usr.loc
+	var/mob/user = usr
+
+	if(user.incapacitated())
+		return
+
+	if(user in src.contents)
+		user.screens["blind"].alpha = 0
+		return
 
 /obj/spacepod/proc/enter_after(delay as num, var/mob/user as mob, var/numticks = 5)
 	var/delayfraction = delay/numticks
