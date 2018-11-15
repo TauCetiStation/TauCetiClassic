@@ -2,6 +2,7 @@
 //Types that use this should consider overriding emp_act() and hear_talk(), unless they shield their contents somehow.
 /obj/item/weapon/storage/internal
 	var/obj/item/master_item
+	var/max_combined_w_class
 
 /obj/item/weapon/storage/internal/atom_init()
 	master_item = loc
