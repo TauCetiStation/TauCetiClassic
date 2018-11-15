@@ -87,6 +87,12 @@
 		var/obj/mecha/M = loc
 		return M.click_action(A, src)
 
+	if(istype(loc,/obj/spacepod))
+		if(!locate(/turf) in list(A, A.loc))
+			return
+		var/obj/spacepod/M = loc
+		return M.click_action(A, src)
+
 	if(restrained())
 		RestrainedClickOn(A)
 		return
