@@ -492,6 +492,9 @@ proc/move_mining_shuttle()
 	var/range = 3
 	var/power = 4
 
+/obj/item/projectile/kinetic/pod
+	range = 5
+
 obj/item/projectile/kinetic/atom_init()
 	var/turf/proj_turf = get_turf(src)
 	if(!istype(proj_turf, /turf))
