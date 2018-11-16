@@ -43,6 +43,29 @@
 	flags_inv = HIDEFACE
 	body_parts_covered = 0
 
+/obj/item/clothing/mask/clownnose
+	name = "clown nose"
+	desc = "Take center ring at your carnival party with this red clown nose. These clown nose are made of lightweight foam and have a slit down the middle for a comfortable fit."
+	icon_state = "clownnose"
+	item_state = "clownnose"
+	action_button_name = "HONK!"
+	var/cooldown = 0
+
+/obj/item/clothing/mask/clownnose/attack_self()
+	honk()
+
+/obj/item/clothing/mask/clownnose/verb/honk()
+	set category = "Object"
+	set name = "HONK!"
+	set src in usr
+
+	if(!istype(usr, /mob/living)) return
+	if(usr.stat) return
+	if(cooldown < world.time - 10)
+		playsound(src.loc, 'sound/items/bikehorn.ogg', 50, 1)
+		cooldown = world.time
+	return
+
 /obj/item/clothing/mask/snorkel
 	name = "snorkel"
 	desc = "For the Swimming Savant."
@@ -181,6 +204,13 @@
 	action_button_name = "Adjust Bandana"
 	icon_state = "bandbotany"
 	body_parts_covered = 0
+
+/obj/item/clothing/mask/dealwithit
+	name = "ultracool sunglasses"
+	desc = "This station is too easy for you, deal with it."
+	icon_state = "dealwithit"
+	flags_inv = HIDEFACE
+	body_parts_covered = FACE|EYES
 
 /obj/item/clothing/mask/chicken
 	name = "chicken suit head"
