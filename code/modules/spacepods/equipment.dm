@@ -57,61 +57,66 @@
 /obj/item/spacepod_equipment/weaponry/action(atom/target)
 	if(!action_checks(target))
 		return
-
-	var/turf/curloc = my_atom.loc
-	var/turf/targloc = get_turf(target)
-	var/turf/firstloc
-	var/turf/secondloc
-
-	if(my_atom.dir == NORTH)
-		firstloc = get_step(my_atom.loc, NORTH)
-		secondloc = get_step(firstloc,EAST)
-	if(my_atom.dir == SOUTH)
-		firstloc = get_turf(my_atom)
-		secondloc = get_step(firstloc,EAST)
-	if(my_atom.dir == EAST)
-		firstloc = get_step(my_atom.loc, EAST)
-		secondloc = get_step(firstloc,NORTH)
-	if(my_atom.dir == WEST)
-		firstloc = get_turf(my_atom)
-		secondloc = get_step(firstloc,NORTH)
-	if(!curloc || !targloc)
-		return
-	if(my_atom.battery.charge < use_charge)
-		playsound(my_atom, 'sound/weapons/empty.ogg', 50, 1)
-		to_chat(my_atom.pilot, "<span class='warning'> Battery in [my_atom] is empty</span>")
-		return
-	if(fuse)
-		playsound(my_atom, 'sound/weapons/empty.ogg', 50, 1)
-		to_chat(my_atom.pilot, "<span class='notice'>Weapon fuse is toggle. Turn it off before shooting</span>")
-		return
-	if(fire_stop)
-		to_chat(my_atom.pilot,"<span class='notice'> [src] is not ready to fire</span>")
-		return
-
-	my_atom.battery.charge -= use_charge
-	my_atom.visible_message("<span class='warning'>[my_atom] fires [src]!</span>")
-	to_chat(my_atom.pilot, "<span class='warning'>You fire [src]!</span>")
-	for(var/i = 0, i < shots_per, i++)
-		var/turf/aimloc = targloc
-		var/P1
-		var/P2
-		if(shots_deviation)
-			aimloc = locate(targloc.x+GaussRandRound(shots_deviation,1),targloc.y+GaussRandRound(shots_deviation,1),targloc.z)
-		if(!aimloc || aimloc == curloc)
-			break
-		playsound(my_atom, fire_sound, 50, 1)
-		P1 = new projectile_type(firstloc)
-		P2 = new projectile_type(secondloc)
-		FireWeapon(P1, target, aimloc)
-		FireWeapon(P2, target, aimloc)
-		sleep(2)
-
 	if(!fire_stop)
+		var/turf/curloc = my_atom.loc
+		var/turf/targloc = get_turf(target)
+		var/turf/firstloc
+		var/turf/secondloc
+
+		if(!curloc || !targloc)
+			return
+		if(my_atom.battery.charge < use_charge)
+			playsound(my_atom, 'sound/weapons/empty.ogg', 50, 1)
+			to_chat(my_atom.pilot, "<span class='warning'> Battery in [my_atom] is empty</span>")
+			return
+		if(fuse)
+			playsound(my_atom, 'sound/weapons/empty.ogg', 50, 1)
+			to_chat(my_atom.pilot, "<span class='notice'>Weapon fuse is toggle. Turn it off before shooting</span>")
+			return
 		fire_stop = TRUE
+		my_atom.battery.charge -= use_charge
+		my_atom.visible_message("<span class='warning'>[my_atom] fires [src]!</span>")
+		to_chat(my_atom.pilot, "<span class='warning'>You fire [src]!</span>")
+		for(var/i = 0, i < shots_per, i++)
+			if(my_atom.dir == NORTH)
+				firstloc = get_step(my_atom.loc, NORTH)
+				secondloc = get_step(firstloc,EAST)
+				secondloc = get_step(secondloc,EAST)
+				firstloc = get_step(firstloc, NORTH)
+			if(my_atom.dir == SOUTH)
+				firstloc = get_step(my_atom.loc, my_atom.dir)
+				secondloc = get_step(firstloc,EAST)
+				secondloc = get_step(secondloc,EAST)
+				firstloc = get_step(firstloc, my_atom.dir)
+			if(my_atom.dir == EAST)
+				firstloc = get_step(my_atom.loc, EAST)
+				secondloc = get_step(firstloc,NORTH)
+				secondloc = get_step(secondloc,NORTH)
+				firstloc = get_step(firstloc, EAST)
+			if(my_atom.dir == WEST)
+				firstloc = get_step(my_atom.loc, my_atom.dir)
+				secondloc = get_step(firstloc,NORTH)
+				secondloc = get_step(secondloc,NORTH)
+				firstloc = get_step(firstloc, my_atom.dir)
+			var/turf/aimloc = targloc
+			var/P1
+			var/P2
+			if(shots_deviation)
+				aimloc = locate(targloc.x+GaussRandRound(shots_deviation,1),targloc.y+GaussRandRound(shots_deviation,1),targloc.z)
+			if(!aimloc || aimloc == curloc)
+				break
+			playsound(my_atom, fire_sound, 50, 1)
+			P1 = new projectile_type(firstloc)
+			P2 = new projectile_type(secondloc)
+			FireWeapon(P1, target, aimloc)
+			FireWeapon(P2, target, aimloc)
+			sleep(2)
+
 		sleep(fire_delay)
 		fire_stop = FALSE
-
+	else
+		to_chat(my_atom.pilot,"<span class='notice'> [src] is not ready to fire</span>")
+		return
 
 
 /obj/item/spacepod_equipment/weaponry/proc/FireWeapon(atom/A, atom/target, turf/aimloc)
@@ -140,7 +145,7 @@
 	projectile_type = /obj/item/projectile/energy/electrode
 	use_charge = 400
 	fire_sound = 'sound/weapons/Taser.ogg'
-	fire_delay = 5
+	fire_delay = 10
 
 /obj/item/spacepod_equipment/weaponry/burst_taser
 	name = "burst taser system"
@@ -150,7 +155,7 @@
 	use_charge = 1600
 	shots_per = 4
 	fire_sound = 'sound/weapons/Taser.ogg'
-	fire_delay = 20
+	fire_delay = 15
 
 /obj/item/spacepod_equipment/weaponry/laser
 	name = "laser system"
@@ -178,7 +183,7 @@
 	projectile_type = /obj/item/projectile/bullet/rifle3
 	use_charge = 150
 	fire_sound = 'sound/weapons/Gunshot.ogg'
-	fire_delay = 10
+	fire_delay = 15
 
 /obj/item/spacepod_equipment/weaponry/burst_automate
 	name = "burst automate bullet system"
@@ -188,7 +193,7 @@
 	use_charge = 600
 	shots_per = 4
 	fire_sound = 'sound/weapons/Gunshot.ogg'
-	fire_delay = 25
+	fire_delay = 20
 
 // MINING LASERS
 /obj/item/spacepod_equipment/weaponry/mining_laser_basic
@@ -198,7 +203,6 @@
 	icon_state = "pod_taser"
 	projectile_type = /obj/item/projectile/kinetic/pod
 	use_charge = 300
-	fire_delay = 10
 	fire_sound = 'sound/weapons/Kenetic_accel.ogg'
 
 /*

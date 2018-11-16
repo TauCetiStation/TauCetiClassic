@@ -2,7 +2,7 @@
 	name = "blast door"
 	desc = "A heavy duty blast door that opens mechanically."
 	icon = 'icons/obj/doors/blast_door.dmi'
-	icon_state = "pdoor1"
+	icon_state = "closed"
 	layer = BLASTDOOR_LAYER
 	var/closingLayer = CLOSED_BLASTDOOR_LAYER
 	var/safe = FALSE
@@ -29,17 +29,17 @@
 /obj/machinery/door/spacepoddoor/do_animate(animation)
 	switch(animation)
 		if("opening")
-			flick("pdoorc0", src)
+			flick("opening", src)
 			playsound(src, 'sound/machines/blast_door.ogg', 30, 1)
 		if("closing")
-			flick("pdoorc1", src)
+			flick("closing", src)
 			playsound(src, 'sound/machines/blast_door.ogg', 30, 1)
 
 /obj/machinery/door/spacepoddoor/update_icon()
 	if(density)
-		icon_state = "pdoor0"
+		icon_state = "open"
 	else
-		icon_state = "pdoor1"
+		icon_state = "closed"
 
 /*
 /obj/machinery/door/spacepoddoor/interact(mob/user)
