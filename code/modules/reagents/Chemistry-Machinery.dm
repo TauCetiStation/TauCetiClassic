@@ -1,7 +1,7 @@
 #define SOLID 1
 #define LIQUID 2
 #define GAS 3
-#define MAX_PILL_SPRITE 20
+#define MAX_PILL_SPRITE 24
 #define MAX_BOTTLE_SPRITE 3
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
@@ -350,7 +350,7 @@
 	var/bottlesprite = 1
 	var/pillsprite = 1
 	var/client/has_sprites = list()
-	var/max_pill_count = 20
+	var/max_pill_count = 24
 
 
 /obj/machinery/chem_master/atom_init()
