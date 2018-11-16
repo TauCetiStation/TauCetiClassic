@@ -266,25 +266,25 @@
 
 /obj/item/clothing/mask/gas/chains_mask
 	name = "chains mask"
-	desc = "Great robbers used to wear this mask"
+	desc = "Replica of the mask which used by legendary clown robbers team. «Asses are for kicking, not for sitting, now get up!»"
 	icon_state = "chains"
 	item_state = "chains_mask"
 
 /obj/item/clothing/mask/gas/hoxton_mask
 	name = "hoxton mask"
-	desc = "Great robbers used to wear this mask"
+	desc = "Replica of the mask which used by legendary clown robbers team. «Time to rock and roll...»"
 	icon_state = "hoxton"
 	item_state = "hoxton_mask"
 
 /obj/item/clothing/mask/gas/wolf_mask
 	name = "wolf mask"
-	desc = "Great robbers used to wear this mask"
+	desc = "Replica of the mask which used by legendary clown robbers team. «Alright, let's get rich.»"
 	icon_state = "wolf"
 	item_state = "wolf_mask"
 
 /obj/item/clothing/mask/gas/dallas_mask
 	name = "dallas mask"
-	desc = "Great robbers used to wear this mask"
+	desc = "Replica of the mask which used by legendary clown robbers team. «Let's make that money.»"
 	icon_state = "dallas"
 	item_state = "dallas_mask"
 
