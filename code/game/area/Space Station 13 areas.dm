@@ -732,13 +732,6 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	name = "Mech Bay"
 	icon_state = "mechbay"
 
-/area/assembly/sppodconstr
-	name = "Space Pod Construction Site"
-	icon_state = "mechbay"
-	power_equip = 0
-	power_light = 0
-	power_environ = 0
-
 /area/assembly/robotics
 	name = "Robotics Lab"
 	icon_state = "ass_line"
