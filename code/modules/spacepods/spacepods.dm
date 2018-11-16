@@ -48,12 +48,11 @@
 
 	var/has_paint = 0
 
-	var/global/spacepods_list
 	var/list/pod_overlays
 	var/list/pod_paint_effect
 	var/list/colors = new/list(4)
 	var/list/processing_objects
-	var/health = 250
+	var/health = 600
 	var/empcounter = 0 //Used for disabling movement when hit by an EMP
 
 	var/lights = 0
@@ -73,7 +72,7 @@
 	var/internal_tank_valve = ONE_ATMOSPHERE
 	var/last_user_hud = 1
 
-/obj/spacepod/proc/apply_paint(mob/user as mob)
+/obj/spacepod/proc/apply_paint(mob/user)
 	var/part_type
 	if(!can_paint)
 		to_chat(user, "<span class='warning'>You can't repaint this type of pod!</span>")
@@ -116,13 +115,12 @@
 	add_cabin()
 	add_airtank()
 	ion_trail = new
-	src.ion_trail.set_up(src)
-	src.ion_trail.start()
-	src.use_internal_tank = 1
+	ion_trail.set_up(src)
+	ion_trail.start()
+	use_internal_tank = 1
 	pr_int_temp_processor = new /datum/global_iterator/pod_preserve_temp(list(src))
 	pr_give_air = new/datum/global_iterator/pod_tank_give_air(list(src))
 	equipment_system = new(src)
-	spacepods_list += src
 	cargo_hold = new/obj/item/weapon/storage/internal(src)
 	cargo_hold.w_class = 5	//so you can put bags in
 	cargo_hold.storage_slots = 0	//You need to install cargo modules to use it.
@@ -148,7 +146,6 @@
 		for(var/mob/M in passengers)
 			M.forceMove(get_turf(src))
 			passengers -= M
-	spacepods_list -= src
 	return ..()
 
 /obj/spacepod/process()
@@ -237,6 +234,8 @@
 	if(oldhealth > health && !health)
 		playsound(loc,'sound/effects/engine_alert1.ogg',50,1)
 	if(!health)
+		if(equipment_system.weapon_system)
+			pilot.client.mouse_pointer_icon = initial(pilot.client.mouse_pointer_icon)
 		spawn(0)
 			message_to_riders("<span class='userdanger'>Critical damage to the vessel detected, core explosion imminent!</span>")
 			for(var/i in 1 to 3)
@@ -249,7 +248,6 @@
 					var/mob/living/L = M
 					L.adjustBruteLoss(300)
 			explosion(loc, 0, 0, 2)
-			pilot.client.mouse_pointer_icon = initial(pilot.client.mouse_pointer_icon)
 			robogibs(loc)
 			robogibs(loc)
 			qdel(src)
@@ -298,18 +296,6 @@
 		if(2)
 			message_to_riders("<span class='warning'>The pod console flashes 'EMP WAVE DETECTED'.</span>")
 
-/*
-obj/spacepod/proc/play_sound_to_riders(mysound)
-	if(length(passengers | pilot) == 0)
-		return
-	var/sound/S = sound(mysound)
-	S.wait = 0 //No queue
-	S.channel = open_sound_channel()
-	S.volume = 50
-	for(var/mob/M in passengers | pilot)
-		M << S
-*/ //for future
-
 /obj/spacepod/proc/message_to_riders(mymessage)
 	if(length(passengers | pilot) == 0)
 		return
@@ -329,7 +315,7 @@ obj/spacepod/proc/play_sound_to_riders(mysound)
 			else
 				to_chat(user, "<span class='warning'>The hatch is locked shut!</span>")
 			return
-		if(istype(W, battery_type))
+		if(istype(W, /obj/item/weapon/stock_parts/cell))
 			if(!hatch_open)
 				to_chat(user, "<span class='warning'>The maintenance hatch is closed!</span>")
 				return
@@ -562,13 +548,13 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 	name = "\improper security spacepod"
 	desc = "An armed security spacepod with reinforced armor plating."
 	icon_state = "pod_mil"
-	health = 400
+	health = 1200
 
 /obj/spacepod/syndi
 	name = "syndicate spacepod"
 	desc = "A spacepod painted in syndicate colors."
 	icon_state = "pod_synd"
-	health = 400
+	health = 1200
 	unlocked = FALSE
 
 /obj/spacepod/syndi/unlocked
