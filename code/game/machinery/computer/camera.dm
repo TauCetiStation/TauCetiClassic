@@ -11,7 +11,7 @@
 	desc = "Used to access the various cameras on the station."
 	icon_state = "cameras"
 	circuit = /obj/item/weapon/circuitboard/security
-	light_color = "#a91515"
+	light_color = "#00008b"
 	var/obj/machinery/camera/current = null
 	var/last_pic = 1.0
 	var/list/network = list("SS13")
