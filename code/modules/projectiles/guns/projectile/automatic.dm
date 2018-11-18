@@ -389,25 +389,6 @@
 	mag_type = /obj/item/ammo_box/magazine/c45m
 	mag_type2 = /obj/item/ammo_box/magazine/c45r
 
-/obj/item/weapon/gun/projectile/automatic/colt1911/detective
-	desc = "A single-action, semi-automatic, magazine-fed, recoil-operated pistol chambered for the .45 ACP cartridge."
-	name = "\improper Colt M1911"
-	mag_type = /obj/item/ammo_box/magazine/c45m
-	mag_type2 = /obj/item/ammo_box/magazine/c45r
-
-/obj/item/weapon/gun/projectile/automatic/colt1911/detective/verb/rename_gun()
-	set name = "Name Gun"
-	set category = "Object"
-	set desc = "Click to rename your gun."
-
-	var/mob/M = usr
-	var/input = sanitize_safe(input(M,"What do you want to name the gun?"), MAX_NAME_LEN)
-
-	if(src && input && !M.stat && in_range(M,src))
-		name = input
-		to_chat(M, "You name the gun [input]. Say hello to your new friend.")
-		return 1
-
 /obj/item/weapon/gun/projectile/automatic/borg
 	name = "Robot SMG"
 	icon_state = "borg_smg"
