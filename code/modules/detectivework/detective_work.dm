@@ -54,7 +54,7 @@ var/const/FINGERPRINT_COMPLETE = 6	//This is the output of the stringpercent(pri
 /obj/machinery/computer/forensic_scanning
 	name = "\improper High-Res Forensic Scanning Computer"
 	icon_state = "forensic"
-	light_color = "#a91515"
+	light_color = "#00008b"
 	allowed_checks = ALLOWED_CHECK_NONE
 	var/obj/item/scanning
 	var/temp = ""

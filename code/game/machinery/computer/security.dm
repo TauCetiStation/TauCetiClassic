@@ -4,7 +4,7 @@
 	name = "Security Records"
 	desc = "Used to view and edit personnel's security records."
 	icon_state = "security"
-	light_color = "#a91515"
+	light_color = "#00008b"
 	req_one_access = list(access_security, access_forensics_lockers)
 	circuit = /obj/item/weapon/circuitboard/secure_data
 	allowed_checks = ALLOWED_CHECK_NONE
