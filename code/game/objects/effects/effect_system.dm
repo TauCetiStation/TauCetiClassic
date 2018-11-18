@@ -427,7 +427,7 @@ steam.start() -- spawns the effect
 /datum/effect/effect/system/ion_trail_follow_x64/set_up(atom/atom)
 	attach(atom)
 
-/datum/effect/effect/system/ion_trail_follow_x64/start() //Whoever is responsible for this abomination of code should become an hero
+/datum/effect/effect/system/ion_trail_follow_x64/start()
 	if(!src.on)
 		src.on = 1
 		src.processing = 1
