@@ -40,7 +40,7 @@
 	var/datum/global_iterator/pr_int_temp_processor //normalizes internal air mixture temperature
 	var/datum/global_iterator/pr_give_air //moves air from tank to cabin
 
-	var/datum/effect/effect/system/ion_trail_follow/ion_trail
+	var/datum/effect/effect/system/ion_trail_follow_x64/ion_trail
 
 	var/hatch_open = 0
 
@@ -53,6 +53,7 @@
 	var/list/colors = new/list(4)
 	var/list/processing_objects
 	var/health = 600
+	var/maxhealth = 600
 	var/empcounter = 0 //Used for disabling movement when hit by an EMP
 
 	var/lights = 0
@@ -66,11 +67,12 @@
 
 	var/unlocked = TRUE
 
-	var/move_delay = 2
+	var/move_delay = 1
+	var/can_dir = TRUE
+	var/last_dir
 	var/next_move = 0
 	var/can_paint = TRUE
 	var/internal_tank_valve = ONE_ATMOSPHERE
-	var/last_user_hud = 1
 
 /obj/spacepod/proc/apply_paint(mob/user)
 	var/part_type
@@ -549,12 +551,14 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 	desc = "An armed security spacepod with reinforced armor plating."
 	icon_state = "pod_mil"
 	health = 1200
+	maxhealth = 1200
 
 /obj/spacepod/syndi
 	name = "syndicate spacepod"
 	desc = "A spacepod painted in syndicate colors."
 	icon_state = "pod_synd"
 	health = 1200
+	maxhealth = 1200
 	unlocked = FALSE
 
 /obj/spacepod/syndi/unlocked
@@ -1064,7 +1068,6 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 				for(var/turf/T in locs)
 					for(var/obj/item/I in T.contents)
 						equipment_system.cargo_system.passover(I)
-
 	else
 		if(!battery)
 			to_chat(user, "<span class='warning'>No energy cell detected.</span>")
@@ -1077,6 +1080,15 @@ obj/spacepod/proc/add_equipment(mob/user, var/obj/item/spacepod_equipment/SPE, v
 		else
 			to_chat(user, "<span class='warning'>Unknown error has occurred, yell at the coders.</span>")
 		return 0
+
+	if(!can_dir)
+		src.dir = last_dir
+
+	if(has_gravity(src))
+		move_delay = 8
+	else
+		move_delay = 1
+
 	battery.charge = max(0, battery.charge - 1)
 	next_move = world.time + move_delay
 

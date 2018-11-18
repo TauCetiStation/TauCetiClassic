@@ -1,8 +1,9 @@
 /obj/machinery/door/spacepoddoor
 	name = "blast door"
 	desc = "A heavy duty blast door that opens mechanically."
-	icon = 'icons/obj/doors/blast_door.dmi'
+	icon = 'icons/obj/doors/spacepod_blast_doors/blast_door.dmi'
 	icon_state = "closed"
+	density = 1
 	layer = BLASTDOOR_LAYER
 	var/closingLayer = CLOSED_BLASTDOOR_LAYER
 	var/safe = FALSE
@@ -16,7 +17,7 @@
 
 /obj/machinery/door/spacepoddoor/Bumped(atom/AM)
 	if(density)
-		return
+		return 1
 	else
 		return 0
 
@@ -41,10 +42,10 @@
 	else
 		icon_state = "closed"
 
-/*
+
 /obj/machinery/door/spacepoddoor/interact(mob/user)
  	return
- */
+
 
 /obj/machinery/door/spacepoddoor/attackby(obj/item/I, mob/user)
 	if(iscrowbar(I) && !hasPower() && do_after(user,20, target = src) && !user.is_busy())
@@ -56,21 +57,58 @@
 	name = "large pod door"
 	layer = CLOSED_DOOR_LAYER
 	closingLayer = CLOSED_DOOR_LAYER
+	var/list/multtile = list() // Don't touch this
+	var/type_bd // And this
+	var/width = 0
 
 /obj/machinery/door/spacepoddoor/multi_tile/New()
 	. = ..()
 	apply_opacity_to_my_turfs(opacity)
+	var/obj/machinery/door/spacepoddoor/newmultidoor
+	if(type_bd == "4BV" || type_bd == "3BV")
+		var/turf/newturfmulti = get_step(src.loc, NORTH)
+		for(var/i = 0, i < width - 1, i++)
+			newmultidoor = new /obj/machinery/door/spacepoddoor(newturfmulti)
+			multtile.Add(newmultidoor)
+			newmultidoor.alpha = 0
+			newturfmulti = get_step(newmultidoor.loc, NORTH)
+	else if(type_bd == "2BV")
+		var/turf/newturfmulti = get_step(src.loc, NORTH)
+		newmultidoor = new /obj/machinery/door/spacepoddoor(newturfmulti)
+		multtile.Add(newmultidoor)
+		newmultidoor.alpha = 0
+	else if(type_bd == "4B" || type_bd == "3B")
+		var/turf/newturfmulti = get_step(src.loc, EAST)
+		for(var/i = 0, i <= width - 1, i++)
+			newmultidoor = new /obj/machinery/door/spacepoddoor(newturfmulti)
+			multtile.Add(newmultidoor)
+			newmultidoor.alpha = 0
+			newturfmulti = get_step(newmultidoor.loc, EAST)
+	else if(type_bd == "2B")
+		var/turf/newturfmulti = get_step(src.loc, EAST)
+		newmultidoor = new /obj/machinery/door/spacepoddoor(newturfmulti)
+		multtile.Add(newmultidoor)
+		newmultidoor.alpha = 0
 
 /obj/machinery/door/spacepoddoor/multi_tile/open()
 	if(..())
 		apply_opacity_to_my_turfs(opacity)
+		density = 0
+		for(var/obj/machinery/door/spacepoddoor/SD in src.multtile)
+			SD.density = 0
+
 
 
 /obj/machinery/door/spacepoddoor/multi_tile/close()
 	if(..())
 		apply_opacity_to_my_turfs(opacity)
+		density = 1
+		for(var/obj/machinery/door/spacepoddoor/SD in src.multtile)
+			SD.density = 1
 
-/obj/machinery/doors/spacepoddoor/multi_tile/Destroy()
+/obj/machinery/door/spacepoddoor/multi_tile/Destroy()
+	for(var/obj/machinery/door/spacepoddoor/SD in src.multtile)
+		QDEL_NULL(SD)
 	return ..()
 
 //Multi-tile poddoors don't turn invisible automatically, so we change the opacity of the turfs below instead one by one.
@@ -85,32 +123,38 @@
 	if(!glass && cameranet)
 		cameranet.updateVisibility(src, 0)
 
-/obj/machinery/doorr/spacepoddoor/multi_tile/four_tile_ver/
-	icon = 'icons/obj/doors/1x4blast_vert.dmi'
-	var/width = 4
+/obj/machinery/door/spacepoddoor/multi_tile/four_tile_ver/
+	icon = 'icons/obj/doors/spacepod_blast_doors/1x4blast_vert.dmi'
+	width = 4
 	dir = NORTH
+	type_bd = "4BV"
 
 /obj/machinery/door/spacepoddoor/multi_tile/three_tile_ver/
-	icon = 'icons/obj/doors/1x3blast_vert.dmi'
-	var/width = 3
+	icon = 'icons/obj/doors/spacepod_blast_doors/1x3blast_vert.dmi'
+	width = 3
 	dir = NORTH
+	type_bd = "3BV"
 
 /obj/machinery/door/spacepoddoor/multi_tile/two_tile_ver/
-	icon = 'icons/obj/doors/1x2blast_vert.dmi'
-	var/width = 2
+	icon = 'icons/obj/doors/spacepod_blast_doors/1x2blast_vert.dmi'
+	width = 2
 	dir = NORTH
+	type_bd = "2BV"
 
 /obj/machinery/door/spacepoddoor/multi_tile/four_tile_hor/
-	icon = 'icons/obj/doors/1x4blast_hor.dmi'
-	var/width = 4
+	icon = 'icons/obj/doors/spacepod_blast_doors/1x4blast_hor.dmi'
+	width = 4
 	dir = EAST
+	type_bd = "4B"
 
 /obj/machinery/door/spacepoddoor/multi_tile/three_tile_hor/
-	icon = 'icons/obj/doors/1x3blast_hor.dmi'
-	var/width = 3
+	icon = 'icons/obj/doors/spacepod_blast_doors/1x3blast_hor.dmi'
+	width = 3
 	dir = EAST
+	type_bd = "3B"
 
 /obj/machinery/door/spacepoddoor/multi_tile/two_tile_hor/
-	icon = 'icons/obj/doors/1x2blast_hor.dmi'
-	var/width = 2
+	icon = 'icons/obj/doors/spacepod_blast_doors/1x2blast_hor.dmi'
+	width = 2
 	dir = EAST
+	type_bd = "2B"
