@@ -1082,7 +1082,7 @@ datum/design/basic_cell
 	desc = "A basic power cell that holds 1000 units of energy"
 	id = "basic_cell"
 	req_tech = list("powerstorage" = 1)
-	build_type = PROTOLATHE | AUTOLATHE |MECHFAB
+	build_type = PROTOLATHE | AUTOLATHE |MECHFAB | PODFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 50)
 	build_path = /obj/item/weapon/stock_parts/cell
 	construction_time=100
@@ -1093,7 +1093,7 @@ datum/design/high_cell
 	desc = "A power cell that holds 10000 units of energy"
 	id = "high_cell"
 	req_tech = list("powerstorage" = 2)
-	build_type = PROTOLATHE | AUTOLATHE | MECHFAB
+	build_type = PROTOLATHE | AUTOLATHE | MECHFAB | PODFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 60)
 	build_path = /obj/item/weapon/stock_parts/cell/high
 	construction_time=100
@@ -1105,7 +1105,7 @@ datum/design/super_cell
 	id = "super_cell"
 	req_tech = list("powerstorage" = 3, "materials" = 2)
 	reliability = 75
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | MECHFAB | PODFAB
 	materials = list(MAT_METAL = 700, MAT_GLASS = 70)
 	build_path = /obj/item/weapon/stock_parts/cell/super
 	construction_time=100
@@ -1117,7 +1117,7 @@ datum/design/hyper_cell
 	id = "hyper_cell"
 	req_tech = list("powerstorage" = 5, "materials" = 4)
 	reliability = 70
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | MECHFAB | PODFAB
 	materials = list(MAT_METAL = 400, MAT_GLASS = 70, MAT_SILVER = 150, MAT_GOLD = 150)
 	build_path = /obj/item/weapon/stock_parts/cell/hyper
 	construction_time=100
@@ -1129,7 +1129,7 @@ datum/design/hyper_cell
 	id = "bluespace_cell"
 	req_tech = list("powerstorage" = 6, "materials" = 5)
 	reliability = 70
-	build_type = PROTOLATHE | MECHFAB
+	build_type = PROTOLATHE | MECHFAB | PODFAB
 	materials = list(MAT_METAL = 800, MAT_GLASS = 160, MAT_SILVER = 300, MAT_GOLD = 300, MAT_DIAMOND = 160)
 //	construction_time=100
 	build_path = /obj/item/weapon/stock_parts/cell/bluespace

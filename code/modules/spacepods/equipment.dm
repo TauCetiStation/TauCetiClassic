@@ -74,6 +74,8 @@
 			to_chat(my_atom.pilot, "<span class='notice'>Weapon fuse is toggle. Turn it off before shooting</span>")
 			return
 		fire_stop = TRUE
+		my_atom.last_dir = my_atom.dir
+		my_atom.can_dir = FALSE
 		my_atom.battery.charge -= use_charge
 		my_atom.visible_message("<span class='warning'>[my_atom] fires [src]!</span>")
 		to_chat(my_atom.pilot, "<span class='warning'>You fire [src]!</span>")
@@ -81,23 +83,15 @@
 			if(my_atom.dir == NORTH)
 				firstloc = get_step(my_atom.loc, NORTH)
 				secondloc = get_step(firstloc,EAST)
-				secondloc = get_step(secondloc,EAST)
-				firstloc = get_step(firstloc, NORTH)
 			if(my_atom.dir == SOUTH)
-				firstloc = get_step(my_atom.loc, my_atom.dir)
+				firstloc = get_turf(my_atom)
 				secondloc = get_step(firstloc,EAST)
-				secondloc = get_step(secondloc,EAST)
-				firstloc = get_step(firstloc, my_atom.dir)
 			if(my_atom.dir == EAST)
 				firstloc = get_step(my_atom.loc, EAST)
 				secondloc = get_step(firstloc,NORTH)
-				secondloc = get_step(secondloc,NORTH)
-				firstloc = get_step(firstloc, EAST)
 			if(my_atom.dir == WEST)
-				firstloc = get_step(my_atom.loc, my_atom.dir)
+				firstloc = get_turf(my_atom)
 				secondloc = get_step(firstloc,NORTH)
-				secondloc = get_step(secondloc,NORTH)
-				firstloc = get_step(firstloc, my_atom.dir)
 			var/turf/aimloc = targloc
 			var/P1
 			var/P2
@@ -111,7 +105,7 @@
 			FireWeapon(P1, target, aimloc)
 			FireWeapon(P2, target, aimloc)
 			sleep(2)
-
+		my_atom.can_dir = TRUE
 		sleep(fire_delay)
 		fire_stop = FALSE
 	else
@@ -271,6 +265,7 @@
 	if(storage && istype(I,/obj/item/stack/ore))
 		I.forceMove(storage)
 */
+
 // Crate System
 /obj/item/spacepod_equipment/cargo/crate
 	name = "spacepod crate storage system"
