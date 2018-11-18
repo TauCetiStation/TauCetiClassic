@@ -371,10 +371,22 @@ steam.start() -- spawns the effect
 	icon_state = "ion_trails"
 	anchored = 1
 
+/obj/effect/effect/ion_trails_x64
+	name = "ion trails x64"
+	icon = 'icons/effects/ion_effect_x64.dmi'
+	icon_state = "ion_trails"
+	anchored = 1
+
 /datum/effect/effect/system/ion_trail_follow
 	var/turf/oldposition
 	var/processing = 1
 	var/on = 1
+
+/datum/effect/effect/system/ion_trail_follow_x64
+	var/turf/oldposition
+	var/processing = 1
+	var/on = 1
+
 
 /datum/effect/effect/system/ion_trail_follow/Destroy()
 	oldposition = null
@@ -404,6 +416,38 @@ steam.start() -- spawns the effect
 				src.start()
 
 /datum/effect/effect/system/ion_trail_follow/proc/stop()
+	src.processing = 0
+	src.on = 0
+	oldposition = null
+
+/datum/effect/effect/system/ion_trail_follow_x64/Destroy()
+	oldposition = null
+	return ..()
+
+/datum/effect/effect/system/ion_trail_follow_x64/set_up(atom/atom)
+	attach(atom)
+
+/datum/effect/effect/system/ion_trail_follow_x64/start() //Whoever is responsible for this abomination of code should become an hero
+	if(!src.on)
+		src.on = 1
+		src.processing = 1
+	if(src.processing)
+		src.processing = 0
+		var/turf/T = get_turf(src.holder)
+		if(T != src.oldposition)
+			if(!has_gravity(T))
+				var/obj/effect/effect/ion_trails/I = new /obj/effect/effect/ion_trails_x64(src.oldposition)
+				I.dir = src.holder.dir
+				flick("ion_fade", I)
+				I.icon_state = "blank"
+				QDEL_IN(I, 20)
+			src.oldposition = T
+		spawn(2)
+			if(src.on)
+				src.processing = 1
+				src.start()
+
+/datum/effect/effect/system/ion_trail_follow_x64/proc/stop()
 	src.processing = 0
 	src.on = 0
 	oldposition = null
