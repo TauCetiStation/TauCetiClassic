@@ -67,7 +67,7 @@
 	var/obj/machinery/door/spacepoddoor/newmultidoor
 	if(type_bd == "4BV" || type_bd == "3BV")
 		var/turf/newturfmulti = get_step(src.loc, NORTH)
-		for(var/i = 0, i < width - 1, i++)
+		for(var/i = 0, i < width, i++)
 			newmultidoor = new /obj/machinery/door/spacepoddoor(newturfmulti)
 			multtile.Add(newmultidoor)
 			newmultidoor.alpha = 0
@@ -79,7 +79,7 @@
 		newmultidoor.alpha = 0
 	else if(type_bd == "4B" || type_bd == "3B")
 		var/turf/newturfmulti = get_step(src.loc, EAST)
-		for(var/i = 0, i <= width - 1, i++)
+		for(var/i = 0, i <= width, i++)
 			newmultidoor = new /obj/machinery/door/spacepoddoor(newturfmulti)
 			multtile.Add(newmultidoor)
 			newmultidoor.alpha = 0
@@ -108,7 +108,7 @@
 
 /obj/machinery/door/spacepoddoor/multi_tile/Destroy()
 	for(var/obj/machinery/door/spacepoddoor/SD in src.multtile)
-		QDEL_NULL(SD)
+		qdel(SD)
 	return ..()
 
 //Multi-tile poddoors don't turn invisible automatically, so we change the opacity of the turfs below instead one by one.
@@ -125,36 +125,36 @@
 
 /obj/machinery/door/spacepoddoor/multi_tile/four_tile_ver/
 	icon = 'icons/obj/doors/spacepod_blast_doors/1x4blast_vert.dmi'
-	width = 4
+	width = 3
 	dir = NORTH
 	type_bd = "4BV"
 
 /obj/machinery/door/spacepoddoor/multi_tile/three_tile_ver/
 	icon = 'icons/obj/doors/spacepod_blast_doors/1x3blast_vert.dmi'
-	width = 3
+	width = 2
 	dir = NORTH
 	type_bd = "3BV"
 
 /obj/machinery/door/spacepoddoor/multi_tile/two_tile_ver/
 	icon = 'icons/obj/doors/spacepod_blast_doors/1x2blast_vert.dmi'
-	width = 2
+	width = 1
 	dir = NORTH
 	type_bd = "2BV"
 
 /obj/machinery/door/spacepoddoor/multi_tile/four_tile_hor/
 	icon = 'icons/obj/doors/spacepod_blast_doors/1x4blast_hor.dmi'
-	width = 4
+	width = 3
 	dir = EAST
 	type_bd = "4B"
 
 /obj/machinery/door/spacepoddoor/multi_tile/three_tile_hor/
 	icon = 'icons/obj/doors/spacepod_blast_doors/1x3blast_hor.dmi'
-	width = 3
+	width = 2
 	dir = EAST
 	type_bd = "3B"
 
 /obj/machinery/door/spacepoddoor/multi_tile/two_tile_hor/
 	icon = 'icons/obj/doors/spacepod_blast_doors/1x2blast_hor.dmi'
-	width = 2
+	width = 1
 	dir = EAST
 	type_bd = "2B"
