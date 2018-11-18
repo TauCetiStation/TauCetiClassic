@@ -50,6 +50,10 @@
 	..()
 	to_chat(user, "[get_ammo(0,0)] of those are live rounds.")
 
+/obj/item/weapon/gun/projectile/revolver/traitor
+	desc = "Looks almost like the real thing! Ages 8 and up. Please recycle in an autolathe when you're out of caps!"
+	name = "cap gun"
+
 /obj/item/weapon/gun/projectile/revolver/detective
 	desc = "A cheap Martian knock-off of a Smith & Wesson Model 10. Uses .38-Special rounds."
 	name = "revolver"

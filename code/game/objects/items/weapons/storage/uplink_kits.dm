@@ -1,4 +1,5 @@
 /obj/item/weapon/storage/box/syndicate/
+	name = "box"
 
 /obj/item/weapon/storage/box/syndicate/atom_init()
 	. = ..()
@@ -101,12 +102,10 @@
 
 
 /obj/item/weapon/storage/box/syndie_kit
-	name = "box"
 	desc = "A sleek, sturdy box."
 	icon_state = "box_of_doom"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom
-	name = "boxed freedom implant (with injector)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_freedom/atom_init()
 	. = ..()
@@ -115,21 +114,18 @@
 	O.update()
 
 /obj/item/weapon/storage/box/syndie_kit/imp_compress
-	name = "box (C)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_compress/atom_init()
 	new /obj/item/weapon/implanter/compressed(src)
 	. = ..()
 
 /obj/item/weapon/storage/box/syndie_kit/imp_explosive
-	name = "box (E)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_explosive/atom_init()
 	new /obj/item/weapon/implanter/explosive(src)
 	. = ..()
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink
-	name = "boxed uplink implant (with injector)"
 
 /obj/item/weapon/storage/box/syndie_kit/imp_uplink/atom_init()
 	. = ..()
@@ -138,7 +134,6 @@
 	O.update()
 
 /obj/item/weapon/storage/box/syndie_kit/space
-	name = "boxed space suit and helmet"
 
 /obj/item/weapon/storage/box/syndie_kit/space/atom_init()
 	. = ..()
@@ -149,7 +144,6 @@
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/chameleon
-	name = "Chameleon Kit"
 	desc = "Comes with all the clothes you need to impersonate most people.  Acting lessons sold seperately."
 
 /obj/item/weapon/storage/box/syndie_kit/chameleon/atom_init()
@@ -167,7 +161,6 @@
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/throwing_weapon
-	name = "box (F)"
 
 /obj/item/weapon/storage/box/syndie_kit/throwing_weapon/atom_init()
 	. = ..()
@@ -178,7 +171,6 @@
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/cutouts
-	name = "box (G)"
 
 /obj/item/weapon/storage/box/syndie_kit/cutouts/atom_init()
 	. = ..()
@@ -188,7 +180,6 @@
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/rig
-	name = "box (J)"
 
 /obj/item/weapon/storage/box/syndie_kit/rig/atom_init()
 	. = ..()
@@ -198,7 +189,6 @@
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/armor
-	name = "box (K)"
 
 /obj/item/weapon/storage/box/syndie_kit/armor/atom_init()
 	. = ..()
@@ -210,7 +200,6 @@
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/fake
-	name = "box (B)"
 	desc = "This set allows you to forge various documents at the station."
 
 /obj/item/weapon/storage/box/syndie_kit/fake/atom_init()
@@ -219,7 +208,6 @@
 	new /obj/item/weapon/stamp/chameleon(src)
 
 /obj/item/weapon/storage/box/syndie_kit/rev_posters
-	name = "box (PR)"
 
 /obj/item/weapon/storage/box/syndie_kit/rev_posters/atom_init()
 	. = ..()
@@ -228,7 +216,6 @@
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/posters
-	name = "box (P)"
 
 /obj/item/weapon/storage/box/syndie_kit/posters/atom_init()
 	. = ..()
@@ -237,7 +224,6 @@
 	make_exact_fit()
 
 /obj/item/weapon/storage/box/syndie_kit/merch
-	name = "box (M)"
 	desc = "Box containing some Syndicate merchandise for real agents!"
 
 /obj/item/weapon/storage/box/syndie_kit/merch/atom_init()
