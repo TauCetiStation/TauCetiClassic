@@ -629,8 +629,7 @@
 "bA" = (
 /obj/structure/reagent_dispensers/coolanttank,
 /turf/simulated/floor{
-	dir = 2;
-	icon_state = "whitepurplefull"
+	icon_state = "whitebluefull"
 	},
 /area/research_outpost/spectro)
 "bB" = (
@@ -705,7 +704,7 @@
 /obj/structure/rack,
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "whitepurple"
+	icon_state = "whiteblue_ex"
 	},
 /area/research_outpost/spectro)
 "bI" = (
@@ -778,7 +777,7 @@
 "bQ" = (
 /turf/simulated/floor{
 	dir = 5;
-	icon_state = "whitepurple"
+	icon_state = "whiteblue_ex"
 	},
 /area/research_outpost/spectro)
 "bR" = (
@@ -788,7 +787,7 @@
 	},
 /obj/machinery/door/firedoor,
 /turf/simulated/floor{
-	icon_state = "white"
+	icon_state = "whitebluefull"
 	},
 /area/research_outpost/spectro)
 "bS" = (
@@ -892,9 +891,9 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on{
 	dir = 4
 	},
-/obj/item/weapon/folder/purple,
-/obj/item/weapon/folder/purple,
 /obj/item/weapon/pen,
+/obj/item/weapon/folder/blue,
+/obj/item/weapon/folder/blue,
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "warnwhite"
@@ -969,7 +968,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "whitepurple"
+	icon_state = "whiteblue"
 	},
 /area/research_outpost/spectro)
 "cl" = (
@@ -1468,7 +1467,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "whitepurple"
+	icon_state = "whiteblue"
 	},
 /area/research_outpost/spectro)
 "do" = (
@@ -1763,7 +1762,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 6;
-	icon_state = "whitepurple"
+	icon_state = "whiteblue_ex"
 	},
 /area/research_outpost/spectro)
 "dO" = (
@@ -2062,7 +2061,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "whitepurple"
+	icon_state = "whiteblue"
 	},
 /area/research_outpost/hallway)
 "er" = (
@@ -2082,7 +2081,7 @@
 /obj/machinery/hologram/holopad,
 /turf/simulated/floor{
 	dir = 1;
-	icon_state = "whitepurplecorner"
+	icon_state = "whitebluecorner"
 	},
 /area/research_outpost/hallway)
 "et" = (
@@ -3019,7 +3018,7 @@
 /area/research_outpost/hallway)
 "gh" = (
 /obj/structure/table,
-/obj/item/weapon/folder/purple,
+/obj/item/weapon/folder,
 /turf/simulated/floor/wood,
 /area/research_outpost/hallway)
 "gi" = (
@@ -13567,7 +13566,7 @@
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "whitepurple"
+	icon_state = "whiteblue"
 	},
 /area/research_outpost/spectro)
 "Wc" = (
@@ -13604,15 +13603,12 @@
 /area/mine/production)
 "Xb" = (
 /obj/structure/sign/departments/science{
-	desc = "A warning sign which reads 'MASS SPECTROMETRY'";
-	icon_state = "science1_purple";
-	name = "\improper MASS SPECTROMETRY";
-	pixel_x = 0;
+	icon_state = "science2";
 	pixel_y = 32
 	},
 /turf/simulated/floor{
 	dir = 4;
-	icon_state = "purplecorner"
+	icon_state = "bluecorner"
 	},
 /area/research_outpost/hallway)
 "Xc" = (
