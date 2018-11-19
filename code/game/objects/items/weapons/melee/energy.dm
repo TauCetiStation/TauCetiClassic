@@ -73,6 +73,10 @@
 	desc = "Arrrr matey."
 	icon_state = "cutlass0"
 
+/obj/item/weapon/melee/energy/sword/traitor
+	name = "toy sword"
+	desc = "A cheap, plastic replica of an energy sword. Realistic sounds! Ages 8 and up."
+
 /obj/item/weapon/melee/energy/sword/pirate/attackby()
 	return
 

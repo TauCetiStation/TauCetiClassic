@@ -130,3 +130,105 @@
 	icon = 'icons/obj/module.dmi'
 	icon_state = "mainboard"
 	desc = "A space pod frame component. This is the aft port component."
+
+//Datum parts for fabricator//
+
+/datum/design/c_pod
+	name = "Space pod pircuitboard"
+	id = "Space pod circuitboard"
+	build_type = PODFAB
+	req_tech = list("programming" = 5, "engineering" = 3)
+	build_path = /obj/item/weapon/circuitboard/mecha/pod
+	materials = list(MAT_METAL=1000,MAT_GLASS=5000)
+	construction_time = 400
+	category = list("Pod Parts")
+
+/datum/design/pod_armor
+	name = "Space pod armor"
+	id = "Space pod armor"
+	build_type = PODFAB
+	req_tech = list("materials"=5, "engineering" = 5)
+	build_path = /obj/item/pod_parts/armor
+	materials = list(MAT_METAL=40000,MAT_DIAMOND=12000,MAT_SILVER=5000,MAT_GOLD = 5000)
+	construction_time = 900
+	category = list("Pod Parts")
+
+/datum/design/pod_core
+	name = "Space pod core"
+	id = "Space pod core"
+	build_type = PODFAB
+	req_tech = list("materials"=5, "engineering" = 5, "powerstorage"=5, "magnets"=5, "bluespace"=3)
+	build_path = /obj/item/pod_parts/core
+	materials = list(MAT_METAL=50000,MAT_GLASS=15000,MAT_DIAMOND=15000,MAT_SILVER=15000,MAT_GOLD = 15000,MAT_URANIUM=25000)
+	construction_time = 900
+	category = list("Pod Parts")
+
+/datum/design/pod_frame_fp
+	name = "fore port pod frame"
+	id = "fore port pod frame"
+	build_type = PODFAB
+	req_tech = list("materials"=3)
+	build_path = /obj/item/pod_parts/pod_frame/fore_port
+	materials = list(MAT_METAL=25000)
+	construction_time = 300
+	category = list("Pod Frames")
+
+/datum/design/pod_frame_fs
+	name = "fore starboard pod frame"
+	id = "fore starboard pod frame"
+	build_type = PODFAB
+	req_tech = list("materials"=3)
+	build_path = /obj/item/pod_parts/pod_frame/fore_starboard
+	materials = list(MAT_METAL=25000)
+	construction_time = 300
+	category = list("Pod Frames")
+
+/datum/design/pod_frame_ap
+	name = "aft port pod frame"
+	id = "aft port pod frame"
+	build_type = PODFAB
+	req_tech = list("materials"=3)
+	build_path = /obj/item/pod_parts/pod_frame/aft_port
+	materials = list(MAT_METAL=25000)
+	construction_time = 300
+	category = list("Pod Frames")
+
+/datum/design/pod_frame_as
+	name = "aft starboard pod frame"
+	id = "aft starboard pod frame"
+	build_type = PODFAB
+	req_tech = list("materials"=3)
+	build_path = /obj/item/pod_parts/pod_frame/aft_starboard
+	materials = list(MAT_METAL=25000)
+	construction_time = 300
+	category = list("Pod Frames")
+
+/datum/design/pod_passenger
+	name = "passenger seat"
+	id = "passenger seat"
+	build_type = PODFAB
+	req_tech = list("materials"=3, "engineering"=3)
+	build_path = /obj/item/spacepod_equipment/sec_cargo/chair
+	materials = list(MAT_METAL=10000)
+	construction_time = 100
+	category = list("Pod Modules")
+
+/datum/design/pod_keylock
+	name = "spacepod tumbler lock"
+	id = "spacepod tumbler lock"
+	build_type = PODFAB
+	req_tech = list("materials"=3, "engineering"=3,"magnets"=4,"powerstorage"=3)
+	build_path = /obj/item/spacepod_equipment/lock/keyed
+	materials = list(MAT_METAL=10000,MAT_GOLD=6000)
+	construction_time = 100
+	category = list("Pod Modules")
+
+/datum/design/pod_key
+	name = "spacepod key"
+	id = "spacepod key"
+	build_type = PODFAB
+	req_tech = list("materials"=2, "engineering"=2)
+	build_path = /obj/item/spacepod_key
+	materials = list(MAT_METAL=5000)
+	construction_time = 50
+	category = list("Pod Modules")

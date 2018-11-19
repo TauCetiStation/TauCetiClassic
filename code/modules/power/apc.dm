@@ -819,6 +819,9 @@
 	if(!can_use(usr, 1))
 		return
 
+	else if(href_list["toggleaccess"])
+		locked = !locked
+
 	else if (href_list["lock"])
 		coverlocked = !coverlocked
 
