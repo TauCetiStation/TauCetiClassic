@@ -4,8 +4,8 @@
 	desc = "A specialised, complex scanner for gleaning information on all manner of small things."
 	anchored = 1
 	density = 1
-	icon = 'icons/obj/virology.dmi'
-	icon_state = "analyser"
+	icon = 'icons/obj/xenoarchaeology.dmi'
+	icon_state = "spectrometer"
 
 	use_power = 1			//1 = idle, 2 = active
 	idle_power_usage = 20
@@ -158,7 +158,7 @@
 
 /obj/machinery/radiocarbon_spectrometer/process()
 	if(scanning)
-		icon_state = "analyser_processing"
+		icon_state = "spectrometer_processing"
 		if(!scanned_item || scanned_item.loc != src)
 			scanned_item = null
 			stop_scanning()
@@ -243,7 +243,7 @@
 	last_process_worldtime = world.time
 
 /obj/machinery/radiocarbon_spectrometer/proc/stop_scanning()
-	icon_state = "analyser"
+	icon_state = "spectrometer"
 	scanning = 0
 	scanner_rpm_dir = 1
 	scanner_rpm = 0

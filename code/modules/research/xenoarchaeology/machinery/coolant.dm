@@ -17,7 +17,7 @@
 	name = "coolant tank"
 	desc = "A tank of industrial coolant."
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "coolanttank"
+	icon_state = "coolanttank_xenoarch"
 	amount_per_transfer_from_this = 10
 
 /obj/structure/reagent_dispensers/coolanttank/atom_init()

@@ -2,7 +2,7 @@
 	name = "suspension field generator"
 	desc = "It has stubby legs bolted up against it's body for stabilising."
 	icon = 'icons/obj/xenoarchaeology.dmi'
-	icon_state = "suspension2"
+	icon_state = "suspension2-b"
 	density = 1
 	var/obj/item/weapon/stock_parts/cell/cell
 	var/locked = 1
@@ -34,7 +34,7 @@
 					else
 						open = 1
 					to_chat(user, "<span class='info'>You crowbar the battery panel [open ? "open" : "in place"].</span>")
-					icon_state = "suspension[open ? (cell ? "1" : "0") : "2"]"
+					icon_state = "suspension[anchored ? (open ? (cell ? "1" : "0") : "2") : (open ? (cell ? "1-b" : "0-b") : "2-b")]"
 				else
 					to_chat(user, "<span class='warning'>[src]'s safety locks are engaged, shut it down first.</span>")
 			else
@@ -47,6 +47,7 @@
 				anchored = 0
 			else
 				anchored = 1
+			icon_state = "suspension[anchored ? (open ? (cell ? "1" : "0") : "2") : (open ? (cell ? "1-b" : "0-b") : "2-b")]"
 			to_chat(user, "<span class='info'>You wrench the stabilising legs [anchored ? "into place" : "up against the body"].</span>")
 			if(anchored)
 				desc = "It is resting securely on four stubby legs."
@@ -63,7 +64,10 @@
 				W.loc = src
 				cell = W
 				to_chat(user, "<span class='info'>You insert the power cell.</span>")
-				icon_state = "suspension1"
+				if(anchored)
+					icon_state = "suspension1"
+				else
+					icon_state = "suspension1-b"
 	else if(istype(W, /obj/item/weapon/card/id))
 		var/obj/item/weapon/card/id/sci = W
 		if(access_xenoarch in sci.access)
@@ -164,7 +168,7 @@
 	. = ..()
 	if(!.)
 		return
-	
+
 	if(locked)
 		to_chat(usr, "<span class='warning'>Console locked!</span>")
 		return
@@ -194,7 +198,10 @@
 		cell.add_fingerprint(user)
 		cell.updateicon()
 
-		icon_state = "suspension0"
+		if(anchored)
+			icon_state = "suspension0"
+		else
+			icon_state = "suspension0-b"
 		cell = null
 		to_chat(user, "<span class='info'>You remove the power cell</span>")
 

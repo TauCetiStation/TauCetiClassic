@@ -143,6 +143,7 @@
 	item_state = "wave_searcher"
 	w_class = ITEM_SIZE_LARGE
 	throwforce = 0 //we shall not abuse
+	throw_range = 0
 	slot_flags = null
 	var/nearest_artifact_id = "unknown"
 	var/nearest_artifact_distance = -1
@@ -172,6 +173,13 @@
 	if(target.loc == loc || target == wavescanner)
 		return
 	..()
+
+/obj/item/device/searcher/after_throw(datum/callback/callback)
+	if(wavescanner)
+		wavescanner.remove_processor()
+	else
+		qdel(src)
+	return
 
 /obj/item/device/searcher/attack_self(mob/user)
 	return interact(user)

@@ -2047,6 +2047,27 @@ datum/design/drill
 	construction_time=100
 	category = list("Tools")
 
+datum/design/excavation_drill
+	name = "Excavation Drill"
+	desc = "Basic archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision."
+	id = "excavation_drill"
+	req_tech = list("materials" = 2, "powerstorage" = 2, "bluespace" = 1)
+	build_type = PROTOLATHE | MINEFAB
+	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000)
+	build_path = /obj/item/weapon/pickaxe/excavationdrill
+	construction_time=100
+	category = list("Tools")
+
+datum/design/excavation_drill_diamond
+	name = "Diamond Excavation Drill"
+	desc = "Advanced archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision."
+	id = "excavation_drill_diamond"
+	req_tech = list("materials" = 5, "powerstorage" = 3, "bluespace" = 2)
+	build_type = PROTOLATHE | MINEFAB
+	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_DIAMOND = 3750)
+	build_path = /obj/item/weapon/pickaxe/excavationdrill/adv
+	construction_time=200
+	category = list("Tools")
 
 datum/design/plasmacutter
 	name = "Plasma Cutter"
@@ -2059,7 +2080,6 @@ datum/design/plasmacutter
 	build_path = /obj/item/weapon/pickaxe/plasmacutter
 	construction_time=300
 	category = list("Tools")
-
 
 datum/design/pick_diamond
 	name = "Diamond Pickaxe"

@@ -21,6 +21,10 @@
 	desc = "A white folder."
 	icon_state = "folder_white"
 
+/obj/item/weapon/folder/purple
+	desc = "A purple folder."
+	icon_state = "folder_purple"
+
 /obj/item/weapon/folder/update_icon()
 	overlays.Cut()
 	if(contents.len)

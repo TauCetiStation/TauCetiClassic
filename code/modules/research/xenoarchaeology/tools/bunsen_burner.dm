@@ -5,6 +5,7 @@
 	icon = 'icons/obj/device.dmi'
 	icon_state = "bunsen0"
 	interact_offline = TRUE
+	anchored = 1
 	var/heating = 0		//whether the bunsen is turned on
 	var/heated = 0		//whether the bunsen has been on long enough to let stuff react
 	var/obj/item/weapon/reagent_containers/held_container
@@ -18,9 +19,11 @@
 			user.drop_item(src)
 			held_container = W
 			held_container.loc = src
-			to_chat(user, "\blue You put the [held_container] onto the [src].")
-			var/image/I = image("icon"=W, "layer"=FLOAT_LAYER)
-			underlays += I
+			to_chat(user, "<span class='notice'>You put \the [held_container] onto \the [src].</span>")
+			var/image/I = image("icon"=W, "layer"=FLOAT_LAYER, "pixel_y" = 13 * PIXEL_MULTIPLIER)
+			var/image/I2 = image("icon"=src.icon, icon_state ="bunsen_prong", "layer"=FLOAT_LAYER)
+			overlays += I
+			overlays += I2
 			if(heating)
 				spawn(heat_time)
 					try_heating()
@@ -40,7 +43,7 @@
 		to_chat(user, "\red There is nothing on the [src].")
 		return 1
 
-	underlays = null
+	overlays = null
 	to_chat(user, "\blue You remove the [held_container] from the [src].")
 	held_container.loc = src.loc
 	held_container.attack_hand(user)
@@ -50,6 +53,12 @@
 	src.visible_message("\blue [bicon(src)] [src] hisses.")
 	if(held_container && heating)
 		heated = 1
+		if(istype(held_container, /obj/item/weapon/reagent_containers/food/snacks/meat))
+			src.visible_message("<span class='notice'> [bicon(held_container)] [held_container] was successfully fried on the [src].</span>")
+			new /obj/item/weapon/reagent_containers/food/snacks/meatsteak(get_turf(src))
+			held_container = 0
+			overlays = null
+			return
 		held_container.reagents.handle_reactions()
 		heated = 0
 		spawn(heat_time)
