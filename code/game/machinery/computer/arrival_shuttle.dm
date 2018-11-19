@@ -88,8 +88,9 @@ var/lastMove = 0
 	curr_location = toArea
 	fromArea = toArea
 	toArea = destArea
-	if(!istype(src, /obj/machinery/computer/arrival_shuttle/dock))
-		playsound(src, 'sound/effects/shuttle_flying.ogg', 100, 1)
+	for(var/turf/T in get_area_turfs(/area/shuttle/arrival/transit))
+		for(var/mob/living/M in T)
+			M << sound('sound/effects/shuttle_flying.ogg')
 	sleep(ARRIVAL_SHUTTLE_MOVE_TIME)
 	curr_location.parallax_slowdown()
 	sleep(PARALLAX_LOOP_TIME)
