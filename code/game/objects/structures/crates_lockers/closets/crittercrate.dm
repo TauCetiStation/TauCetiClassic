@@ -21,7 +21,7 @@
 		return ..()
 	var/mob/living/to_die
 	if(content_mob != null && already_opened == 0)
-		if(istype(content_mob, /mob/living/simple_animal/dog))//Comes with a toy!
+		if((content_mob == /mob/living/simple_animal/dog/shiba) || (content_mob == /mob/living/simple_animal/dog/tamaskan) || (content_mob == /mob/living/simple_animal/dog/pug) || (content_mob == /mob/living/simple_animal/dog/german_shepherd) || (content_mob == /mob/living/simple_animal/dog/corgi))//Comes with a toy!
 			new/obj/item/weapon/bikehorn/dogtoy(src)
 		if(content_mob == /mob/living/simple_animal/chick)
 			var/num = rand(4, 6)
