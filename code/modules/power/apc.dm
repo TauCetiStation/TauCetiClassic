@@ -646,20 +646,22 @@
 			else
 				to_chat(user, "There is no charge to draw from that APC.")
 				return
+	// do APC interaction
+	..()
 
+/obj/machinery/power/apc/attack_hand(mob/user)
 	if(opened && !issilicon(user) && !isobserver(user))
 		if(cell)
 			user.put_in_hands(cell)
 			cell.add_fingerprint(user)
 			cell.updateicon()
-			src.cell = null
+			cell = null
 			user.visible_message("<span class='warning'> [user.name] removes the power cell from [src.name]!</span>", "You remove the power cell.")
 			//user << "You remove the power cell."
 			charging = 0
 			src.update_icon()
-		return
-	// do APC interaction
-	..()
+	.=..()
+
 
 /obj/machinery/power/apc/attack_alien(mob/living/carbon/alien/humanoid/user)
 	if(!user)
