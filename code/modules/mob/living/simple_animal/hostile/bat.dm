@@ -32,5 +32,4 @@
 	minbodytemp = 0
 
 /mob/living/simple_animal/hostile/scarybat/Process_Spacemove(movement_dir = 0)
-	return 1	//No drifting in space for space carp!	//original comments do not steal
-
+	return 1
