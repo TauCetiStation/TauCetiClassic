@@ -1037,7 +1037,7 @@
 	},
 /area/research_outpost/sample)
 "ct" = (
-/obj/structure/stool/bed/chair/metal/blue{
+/obj/structure/stool/bed/chair/office/light{
 	dir = 8
 	},
 /turf/simulated/floor{
@@ -2461,9 +2461,11 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -13346,15 +13348,6 @@
 	oxygen = 0.01
 	},
 /area/mine/production)
-"Sb" = (
-/obj/structure/stool/bed/chair/metal/blue{
-	dir = 4;
-	icon_state = "chair_blu"
-	},
-/turf/simulated/floor{
-	icon_state = "white"
-	},
-/area/research_outpost/sample)
 "Sc" = (
 /obj/machinery/alarm{
 	dir = 1;
@@ -54918,7 +54911,7 @@ ba
 bo
 au
 bO
-Sb
+bS
 bS
 dp
 bB
