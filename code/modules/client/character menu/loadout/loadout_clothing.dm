@@ -138,6 +138,7 @@
 	jackets["charcoal"] = /obj/item/clothing/under/suit_jacket/charcoal
 	jackets["white"] = /obj/item/clothing/under/suit_jacket/white
 	jackets["amish"] = /obj/item/clothing/under/sl_suit
+	jackets["rogue"] = /obj/item/clothing/under/suit_jacket/rogue
 	gear_tweaks += new/datum/gear_tweak/path(jackets)
 
 /datum/gear/under/pants
@@ -167,11 +168,6 @@
 /datum/gear/under/kilt
 	display_name = "Kilt"
 	path = /obj/item/clothing/under/kilt
-
-/datum/gear/under/suit_jacket/rogue
-	display_name = "Rogue Jacket"
-	path = /obj/item/clothing/under/suit_jacket/rogue
-	cost = 1
 
 /datum/gear/under/kung
 	display_name = "Kung under"
