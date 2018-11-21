@@ -90,8 +90,8 @@
 /obj/structure/sign/velocity_overlay/reklama
 	layer = 4
 	icon = 'code/modules/locations/centcomm/reklama.dmi'
-	name = "\improper Object"
-	desc = "Just object."
+	name = "\improper advertisement"
+	desc = "Old and dusty advertisement of space beer. You're almost feeling thirsty from looking at it."
 	icon_state = "SpaceBeer_Anim"
 
 /obj/structure/closet/secure_closet/velocity_security
