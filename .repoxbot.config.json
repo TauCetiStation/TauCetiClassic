@@ -1,0 +1,20 @@
+{
+    "changelogPath": "html/changelog.html",
+    "changelogClasses": {
+        "rscadd": "Feature",
+        "rscdel": "Revert / Removal",
+        "performance": "Performance",
+        "balance": "Balance",
+        "experiment": "Experimental",
+        "spellcheck": "",
+        "tweak": "Tweak",
+        "sound": "",
+        "image": "Sprites",
+        "bugfix": "Fix",
+        "map": "Map Edit"
+    },
+    "diffPathsLabels": {
+        "^diff.+/maps/.+\\.dmm$": "Map Edit",
+        "^diff.+/tools/.+$": "Tools"
+    }
+}
