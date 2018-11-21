@@ -8,7 +8,7 @@
 #define ARCHAEO_COIN 7
 #define ARCHAEO_HANDCUFFS 8
 #define ARCHAEO_BEARTRAP 9
-#define ARCHAEO_LIGHTER 10
+#define ARCHAEO_PIPBOY 10
 #define ARCHAEO_BOX 11
 #define ARCHAEO_GASTANK 12
 #define ARCHAEO_TOOL 13
@@ -71,7 +71,7 @@
 			return "mercury"
 		if(ARCHAEO_BEARTRAP)
 			return "mercury"
-		if(ARCHAEO_LIGHTER)
+		if(ARCHAEO_PIPBOY)
 			return "mercury"
 		if(ARCHAEO_BOX)
 			return "mercury"
@@ -157,7 +157,7 @@
 			100;ARCHAEO_STATUETTE,\
 			100;ARCHAEO_INSTRUMENT,\
 			100;ARCHAEO_PEN,\
-			100;ARCHAEO_LIGHTER,\
+			100;ARCHAEO_PIPBOY,\
 			100;ARCHAEO_BOX,\
 			75;ARCHAEO_GASMASK,\
 			75;ARCHAEO_COIN,\
@@ -249,7 +249,7 @@ var/list/finds_as_strings = list( \
 #undef ARCHAEO_COIN
 #undef ARCHAEO_HANDCUFFS
 #undef ARCHAEO_BEARTRAP
-#undef ARCHAEO_LIGHTER
+#undef ARCHAEO_PIPBOY
 #undef ARCHAEO_BOX
 #undef ARCHAEO_GASTANK
 #undef ARCHAEO_TOOL

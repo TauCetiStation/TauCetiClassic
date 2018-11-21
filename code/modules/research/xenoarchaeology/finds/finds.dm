@@ -197,11 +197,17 @@
 			"Could be some kind of animal trap",\
 			"There appear to be [pick("dark red","dark purple","dark green","dark blue")] stains along part of it")]."
 		if(10)
-			item_type = "[pick("cylinder","tank","chamber")]"
-			new_item = new /obj/item/weapon/lighter(src.loc)
-			additional_desc = "There is a tiny device attached."
-			if(prob(30))
-				apply_image_decorations = 1
+			apply_prefix = 0
+			var/pickpipboy = pick(1,2,3)
+			switch(pickpipboy)
+				if(1)
+					new_item = new /obj/item/clothing/gloves/pipboy(src.loc)
+				if(2)
+					new_item = new /obj/item/clothing/gloves/pipboy/pimpboy3billion(src.loc)
+				if(3)
+					new_item = new /obj/item/clothing/gloves/pipboy/pipboy3000mark4(src.loc)
+			apply_image_decorations = 0
+			apply_material_decorations = 0
 		if(11)
 			item_type = "box"
 			new_item = new /obj/item/weapon/storage/box(src.loc)
