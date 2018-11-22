@@ -269,7 +269,7 @@
 	for(var/t in bodyparts)	//this really should not be necessary
 		qdel(t)
 
-	var/mob/living/simple_animal/dog/corgi/new_corgi = new /mob/living/simple_animal/dog/corgi (loc)
+	var/mob/living/simple_animal/dog/corgi/new_corgi = new /mob/living/simple_animal/dog/corgi(loc)
 	new_corgi.a_intent = "hurt"
 	new_corgi.key = key
 

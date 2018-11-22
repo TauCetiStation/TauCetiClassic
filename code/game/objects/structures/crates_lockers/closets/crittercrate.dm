@@ -16,12 +16,12 @@
 	if(!can_open())
 		return 0
 
-	if(content_mob == null) //making sure we don't spawn anything too eldritch
+	if(content_mob == null) // making sure we don't spawn anything too eldritch
 		already_opened = 1
 		return ..()
 	var/mob/living/to_die
 	if(content_mob != null && already_opened == 0)
-		if((content_mob == /mob/living/simple_animal/dog/shiba) || (content_mob == /mob/living/simple_animal/dog/tamaskan) || (content_mob == /mob/living/simple_animal/dog/pug) || (content_mob == /mob/living/simple_animal/dog/german_shepherd) || (content_mob == /mob/living/simple_animal/dog/corgi))//Comes with a toy!
+		if((content_mob == /mob/living/simple_animal/dog/shiba) || (content_mob == /mob/living/simple_animal/dog/tamaskan) || (content_mob == /mob/living/simple_animal/dog/pug) || (content_mob == /mob/living/simple_animal/dog/german_shepherd) || (content_mob == /mob/living/simple_animal/dog/corgi)) // Comes with a toy!
 			new/obj/item/weapon/bikehorn/dogtoy(src)
 		if(content_mob == /mob/living/simple_animal/chick)
 			var/num = rand(4, 6)
@@ -30,7 +30,7 @@
 				to_die.health = to_die.health * (!crit_fail)
 		else if(content_mob == /mob/living/simple_animal/dog/corgi)
 			var/num = rand(0, 1)
-			if(num) //No more matriarchy for cargo
+			if(num) // No more matriarchy for cargo
 				content_mob = /mob/living/simple_animal/dog/corgi/Lisa
 			to_die = new content_mob(loc)
 			to_die.health = to_die.health * (!crit_fail)
@@ -58,7 +58,7 @@
 
 /obj/structure/closet/critter/corgi
 	name = "corgi crate"
-	content_mob = /mob/living/simple_animal/dog/corgi //This statement is (not) false. See above.
+	content_mob = /mob/living/simple_animal/dog/corgi // This statement is (not) false. See above.
 
 /obj/structure/closet/critter/cow
 	name = "cow crate"
