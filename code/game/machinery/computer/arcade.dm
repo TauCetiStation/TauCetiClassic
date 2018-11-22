@@ -1,3 +1,46 @@
+
+//ARCADE TICKETS//
+/obj/item/arcade_tickets
+	name = "5 arcade tickets"
+	desc = "It's a small oblong piece of red card with white writing and an arcade symbol on the front. It seems like you can win those playing the arcade machine."
+
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "tickets_5"
+	item_state = "tickets"
+
+	throwforce = 0
+	throw_speed = 4
+	throw_range = 20
+	force = 0
+
+	var/t_amount = 5 // Amount of tickets in this item
+
+/obj/item/arcade_tickets/proc/change_amount(amount_of_tickets) // So we can easily manipulate with theyre amount
+	t_amount = amount_of_tickets
+	name = "[t_amount] arcade tickets"
+	switch(t_amount)
+		if(5)
+			icon_state = "tickets_5"
+			return
+		if(10)
+			icon_state = "tickets_10"
+			return
+		if(15)
+			icon_state = "tickets_15"
+			return
+	icon_state = "tickets_20"
+
+/obj/item/arcade_tickets/attackby(obj/item/I, mob/user)
+	. = ..()
+	if(istype(I, /obj/item/arcade_tickets))
+		var/obj/item/arcade_tickets/AT = I
+		var/new_t_amount = t_amount + AT.t_amount
+		change_amount(new_t_amount)
+		qdel(AT)
+		to_chat(user, "<span class='notice'>You stack tickets into one pile.</span>")
+		playsound(src, 'sound/items/cardshuffle.ogg', 50, 1)
+		return
+
 /obj/machinery/computer/arcade
 	name = "arcade machine"
 	desc = "Does not support Pin ball."
@@ -12,80 +55,6 @@
 	var/enemy_mp = 20
 	var/gameover = 0
 	var/blocked = 0 //Player cannot attack/heal while set
-	var/list/prizes = list(	/obj/item/weapon/storage/box/snappops			= 2,
-							/obj/item/toy/blink								= 2,
-							/obj/item/clothing/under/syndicate/tacticool	= 2,
-							/obj/item/toy/sword								= 2,
-							/obj/item/toy/gun								= 2,
-							/obj/item/toy/crossbow							= 2,
-							/obj/item/clothing/suit/syndicatefake			= 2,
-							/obj/item/weapon/storage/fancy/crayons			= 2,
-							/obj/item/toy/spinningtoy						= 2,
-							/obj/item/toy/prize/ripley						= 1,
-							/obj/item/toy/prize/fireripley					= 1,
-							/obj/item/toy/prize/deathripley					= 1,
-							/obj/item/toy/prize/gygax						= 1,
-							/obj/item/toy/prize/durand						= 1,
-							/obj/item/toy/prize/honk						= 1,
-							/obj/item/toy/prize/marauder					= 1,
-							/obj/item/toy/prize/seraph						= 1,
-							/obj/item/toy/prize/mauler						= 1,
-							/obj/item/toy/prize/odysseus					= 1,
-							/obj/item/toy/prize/phazon						= 1,
-							/obj/item/toy/waterflower						= 1,
-							/obj/item/toy/nuke								= 1,
-							/obj/item/toy/minimeteor						= 2,
-							/obj/item/toy/carpplushie						= 2,
-							/obj/item/toy/owl								= 2,
-							/obj/item/toy/griffin							= 2,
-							/obj/item/toy/figure/cmo						= 1,
-							/obj/item/toy/figure/assistant					= 1,
-							/obj/item/toy/figure/atmos						= 1,
-							/obj/item/toy/figure/bartender					= 1,
-							/obj/item/toy/figure/borg						= 1,
-							/obj/item/toy/figure/botanist					= 1,
-							/obj/item/toy/figure/captain					= 1,
-							/obj/item/toy/figure/cargotech					= 1,
-							/obj/item/toy/figure/ce							= 1,
-							/obj/item/toy/figure/chaplain					= 1,
-							/obj/item/toy/figure/chef						= 1,
-							/obj/item/toy/figure/chemist					= 1,
-							/obj/item/toy/figure/clown						= 1,
-							/obj/item/toy/figure/ian						= 1,
-							/obj/item/toy/figure/detective					= 1,
-							/obj/item/toy/figure/dsquad						= 1,
-							/obj/item/toy/figure/engineer					= 1,
-							/obj/item/toy/figure/geneticist					= 1,
-							/obj/item/toy/figure/hop						= 1,
-							/obj/item/toy/figure/hos						= 1,
-							/obj/item/toy/figure/qm							= 1,
-							/obj/item/toy/figure/janitor					= 1,
-							/obj/item/toy/figure/lawyer						= 1,
-							/obj/item/toy/figure/librarian					= 1,
-							/obj/item/toy/figure/md							= 1,
-							/obj/item/toy/figure/mime						= 1,
-							/obj/item/toy/figure/ninja						= 1,
-							/obj/item/toy/figure/wizard						= 1,
-							/obj/item/toy/figure/rd							= 1,
-							/obj/item/toy/figure/roboticist					= 1,
-							/obj/item/toy/figure/scientist					= 1,
-							/obj/item/toy/figure/syndie						= 1,
-							/obj/item/toy/figure/secofficer					= 1,
-							/obj/item/toy/figure/virologist					= 1,
-							/obj/item/toy/figure/warden						= 1,
-							/obj/item/toy/prize/poly/polyclassic			= 1,
-							/obj/item/toy/prize/poly/polypink				= 1,
-							/obj/item/toy/prize/poly/polydark				= 1,
-							/obj/item/toy/prize/poly/polywhite				= 1,
-							/obj/item/toy/prize/poly/polyalien				= 1,
-							/obj/item/toy/prize/poly/polyjungle				= 1,
-							/obj/item/toy/prize/poly/polyfury				= 1,
-							/obj/item/toy/prize/poly/polysky				= 1,
-							/obj/item/toy/prize/poly/polysec				= 1,
-							/obj/item/toy/prize/poly/polycompanion			= 1,
-							/obj/item/toy/prize/poly/polygold				= 1,
-							/obj/item/toy/prize/poly/polyspecial			= 1
-							)
 
 	light_color = "#00ff00"
 
@@ -204,22 +173,13 @@
 				log_game("[key_name_admin(usr)] has outbombed Cuban Pete and been awarded a bomb.")
 				src.New()
 				emagged = 0
-			else if(!contents.len)
-				feedback_inc("arcade_win_normal")
-				var/prizeselect = pickweight(prizes)
-				new prizeselect(src.loc)
-
-				if(istype(prizeselect, /obj/item/toy/gun)) //Ammo comes with the gun
-					new /obj/item/toy/ammo/gun(src.loc)
-
-				else if(istype(prizeselect, /obj/item/clothing/suit/syndicatefake)) //Helmet is part of the suit
-					new	/obj/item/clothing/head/syndicatefake(src.loc)
-
 			else
 				feedback_inc("arcade_win_normal")
-				var/atom/movable/prize = pick(contents)
-				prize.loc = src.loc
-
+				var/obj/item/arcade_tickets/T = new /obj/item/arcade_tickets(get_turf(src)) // Spawns 5 tickets
+				if(player_hp > 15) // Player did well. We'll spawn 10 tickets then.
+					T.change_amount(10)
+				if(player_hp > 25) // NOW THATS EPIC
+					T.change_amount(15)
 	else if (emagged && (turtle >= 4))
 		var/boomamt = rand(5,10)
 		src.temp = "[src.enemy_name] throws a bomb, exploding you for [boomamt] damage!"
@@ -297,7 +257,7 @@
 		if(2)
 			num_of_prizes = rand(0,2)
 	for(num_of_prizes; num_of_prizes > 0; num_of_prizes--)
-		empprize = pickweight(prizes)
+		empprize = /obj/item/arcade_tickets
 		new empprize(src.loc)
 
 	..(severity)

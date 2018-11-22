@@ -1301,7 +1301,7 @@ Owl & Griffin toys
 
 /obj/item/toy/carpplushie/attack(mob/M, mob/user)
 	. = ..()
-	playsound(loc, bitesound, 20, 1)
+	playsound(src, bitesound, 20, 1)
 
 /obj/item/toy/carpplushie/attack_self(mob/user)
 	playsound(src.loc, bitesound, 20, 1)
@@ -1320,15 +1320,15 @@ Owl & Griffin toys
 
 /obj/item/toy/plushie/attack(mob/M, mob/user)
 	. = ..()
-	playsound(loc, poof_sound, 20, 1) // Play the whoosh sound in local area
+	playsound(src, poof_sound, 20, 1) // Play the whoosh sound in local area
 
 /obj/item/toy/plushie/attack_self(mob/user)
 	var/cuddle_verb = pick("hugs", "cuddles", "snugs")
 	user.visible_message("<span class='notice'>[user] [cuddle_verb] the [src].</span>")
-	playsound(get_turf(src), poof_sound, 50, 1, -1)
+	playsound(src, poof_sound, 50, 1, -1)
 
 /obj/random/plushie
-	name = "Random Plushie"
+	name = "plushie"
 	desc = "This is a random plushie"
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "redfox"
@@ -1425,6 +1425,97 @@ Owl & Griffin toys
 	icon_state = "tuxedocat"
 
 //////////////////////////////////////////////////////
+//				Random figures						//
+//////////////////////////////////////////////////////
+
+/obj/random/randomfigure
+	name = "action figure"
+	desc = "This is a random figure"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "random_toy"
+
+/obj/random/randomfigure/item_to_spawn()
+	var/list/figures = list(	/obj/item/toy/prize/ripley						= 1,
+							/obj/item/toy/prize/fireripley					= 1,
+							/obj/item/toy/prize/deathripley					= 1,
+							/obj/item/toy/prize/gygax						= 1,
+							/obj/item/toy/prize/durand						= 1,
+							/obj/item/toy/prize/honk						= 1,
+							/obj/item/toy/prize/marauder					= 1,
+							/obj/item/toy/prize/seraph						= 1,
+							/obj/item/toy/prize/mauler						= 1,
+							/obj/item/toy/prize/odysseus					= 1,
+							/obj/item/toy/prize/phazon						= 1,
+							/obj/item/toy/waterflower						= 1,
+							/obj/item/toy/nuke								= 1,
+							/obj/item/toy/minimeteor						= 2,
+							/obj/item/toy/carpplushie						= 2,
+							/obj/item/toy/owl								= 2,
+							/obj/item/toy/griffin							= 2,
+							/obj/item/toy/figure/cmo						= 1,
+							/obj/item/toy/figure/assistant					= 1,
+							/obj/item/toy/figure/atmos						= 1,
+							/obj/item/toy/figure/bartender					= 1,
+							/obj/item/toy/figure/borg						= 1,
+							/obj/item/toy/figure/botanist					= 1,
+							/obj/item/toy/figure/captain					= 1,
+							/obj/item/toy/figure/cargotech					= 1,
+							/obj/item/toy/figure/ce							= 1,
+							/obj/item/toy/figure/chaplain					= 1,
+							/obj/item/toy/figure/chef						= 1,
+							/obj/item/toy/figure/chemist					= 1,
+							/obj/item/toy/figure/clown						= 1,
+							/obj/item/toy/figure/ian						= 1,
+							/obj/item/toy/figure/detective					= 1,
+							/obj/item/toy/figure/dsquad						= 1,
+							/obj/item/toy/figure/engineer					= 1,
+							/obj/item/toy/figure/geneticist					= 1,
+							/obj/item/toy/figure/hop						= 1,
+							/obj/item/toy/figure/hos						= 1,
+							/obj/item/toy/figure/qm							= 1,
+							/obj/item/toy/figure/janitor					= 1,
+							/obj/item/toy/figure/lawyer						= 1,
+							/obj/item/toy/figure/librarian					= 1,
+							/obj/item/toy/figure/md							= 1,
+							/obj/item/toy/figure/mime						= 1,
+							/obj/item/toy/figure/ninja						= 1,
+							/obj/item/toy/figure/wizard						= 1,
+							/obj/item/toy/figure/rd							= 1,
+							/obj/item/toy/figure/roboticist					= 1,
+							/obj/item/toy/figure/scientist					= 1,
+							/obj/item/toy/figure/syndie						= 1,
+							/obj/item/toy/figure/secofficer					= 1,
+							/obj/item/toy/figure/virologist					= 1,
+							/obj/item/toy/figure/warden						= 1,
+							/obj/item/toy/prize/poly/polyclassic			= 1,
+							/obj/item/toy/prize/poly/polypink				= 1,
+							/obj/item/toy/prize/poly/polydark				= 1,
+							/obj/item/toy/prize/poly/polywhite				= 1,
+							/obj/item/toy/prize/poly/polyalien				= 1,
+							/obj/item/toy/prize/poly/polyjungle				= 1,
+							/obj/item/toy/prize/poly/polyfury				= 1,
+							/obj/item/toy/prize/poly/polysky				= 1,
+							/obj/item/toy/prize/poly/polysec				= 1,
+							/obj/item/toy/prize/poly/polycompanion			= 1,
+							/obj/item/toy/prize/poly/polygold				= 1,
+							/obj/item/toy/prize/poly/polyspecial			= 1
+							)
+	return pick(figures)
+
+//////////////////////////////////////////////////////
+//				Random Toys							//
+//////////////////////////////////////////////////////
+
+/obj/random/randomtoy
+	name = "random toy"
+	desc = "This is a random toy"
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "random_toy"
+
+/obj/random/randomtoy/item_to_spawn()
+	return pick(subtypesof(/obj/item/toy)) // exclude the base type.
+
+//////////////////////////////////////////////////////
 //				Magic 8-Ball / Conch				//
 //////////////////////////////////////////////////////
 
@@ -1440,12 +1531,13 @@ Owl & Griffin toys
 
 /obj/item/toy/eight_ball/attack_self(mob/user)
 	if(last_time_used < world.time)
+		last_time_used = world.time + 30
 		var/answer = pick(possible_answers)
 		user.visible_message("<span class='notice'>[user] focuses on their question and [use_action]...</span>")
 		sleep(10)
 		user.visible_message("<span class='notice'>[bicon(src)] The [src] says \"[answer]\"</span>")
-		playsound(src.loc, answer_sound, 20, 1)
-		last_time_used = world.time + 30
+		if(answer_sound)
+			playsound(src, answer_sound, 20, 1)
 		return
 	else
 		to_chat(user, "<span class='notice'>[src] doesn't seem to answer...</span>")
@@ -1457,4 +1549,9 @@ Owl & Griffin toys
 	icon_state = "conch"
 	use_action = "pulls the string"
 	possible_answers = list("Yes.", "No.", "Try asking again.", "Nothing.", "I don't think so.", "Neither.", "Maybe someday.")
-	answer_sound = 'sound/items/polaroid2.ogg'
+	answer_sound = null
+
+/obj/item/toy/eight_ball/conch/attack_self(mob/user)
+	. = ..()
+	flick("conch_use",src)
+	playsound(src, 'sound/items/polaroid2.ogg', 20, 1)

@@ -27983,12 +27983,9 @@
 	},
 /area/hallway/secondary/entry)
 "aYQ" = (
-/obj/machinery/vending/cigarette,
-/turf/simulated/floor{
-	dir = 9;
-	icon_state = "warndark"
-	},
-/area/hallway/secondary/entry)
+/obj/machinery/vending/toys,
+/turf/simulated/floor,
+/area/security/prison)
 "aYR" = (
 /turf/simulated/floor{
 	icon_state = "Stairs_wide"
@@ -65847,10 +65844,12 @@
 /turf/simulated/floor/whitegreed,
 /area/turret_protected/ai)
 "cEG" = (
-/obj/effect/decal/cleanable/blood,
-/obj/item/weapon/shard,
-/turf/simulated/floor/plating,
-/area/maintenance/aft)
+/obj/machinery/vending/toys,
+/turf/simulated/floor{
+	dir = 9;
+	icon_state = "warndark"
+	},
+/area/hallway/secondary/entry)
 "cEH" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -72997,6 +72996,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/maintenance/disposal)
+"job" = (
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/vending/toys,
+/turf/simulated/floor/plating,
+/area/maintenance/aft)
+"jpb" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/weapon/shard,
+/turf/simulated/floor/plating,
+/area/maintenance/aft)
 "jrb" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
@@ -96070,7 +96079,7 @@ aGy
 aGy
 aaa
 aEb
-aYQ
+cEG
 bbt
 bdC
 aEL
@@ -104090,8 +104099,8 @@ aaa
 aaa
 aaa
 bIZ
-cEG
-coV
+job
+jpb
 cES
 cJz
 gjb
@@ -114296,7 +114305,7 @@ anQ
 aoX
 aoo
 are
-arL
+aYQ
 apc
 atp
 amB
@@ -115320,7 +115329,7 @@ amx
 amx
 anS
 aou
-aot
+arL
 ang
 aiF
 amx
