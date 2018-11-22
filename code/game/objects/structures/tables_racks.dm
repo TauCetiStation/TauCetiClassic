@@ -727,6 +727,7 @@
 	layer = CONTAINER_STRUCTURE_LAYER
 	throwpass = 1	//You can throw objects over this, despite it's density.
 	var/parts = /obj/item/weapon/rack_parts
+	climbable = 1
 
 /obj/structure/rack/ex_act(severity)
 	switch(severity)
