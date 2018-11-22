@@ -5,6 +5,7 @@
 
 // Child of carpplushie because this should do everything the toy does and more
 /obj/item/toy/carpplushie/dehy_carp
+	icon_state = "carpplushie"
 	var/mob/owner = null	// Carp doesn't attack owner, set when using in hand
 	var/owned = 1	// Boolean, no owner to begin with
 
