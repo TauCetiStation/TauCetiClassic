@@ -1316,14 +1316,14 @@ Owl & Griffin toys
 	desc = "An adorable, soft, and cuddly plushie."
 	icon = 'icons/obj/toy.dmi'
 	var/poof_sound = 'sound/weapons/thudswoosh.ogg'
-	attack_verb = list("poofed", "bopped", "whapped","cuddled","fluffed")
+	attack_verb = list("poofed", "bopped", "whapped", "cuddled", "fluffed")
 
 /obj/item/toy/plushie/attack(mob/M, mob/user)
 	. = ..()
 	playsound(loc, poof_sound, 20, 1) // Play the whoosh sound in local area
 
 /obj/item/toy/plushie/attack_self(mob/user)
-	var/cuddle_verb = pick("hugs","cuddles","snugs")
+	var/cuddle_verb = pick("hugs", "cuddles", "snugs")
 	user.visible_message("<span class='notice'>[user] [cuddle_verb] the [src].</span>")
 	playsound(get_turf(src), poof_sound, 50, 1, -1)
 
@@ -1334,9 +1334,9 @@ Owl & Griffin toys
 	icon_state = "redfox"
 
 /obj/random/plushie/item_to_spawn()
-	return pick(subtypesof(/obj/item/toy/plushie)) //exclude the base type.
+	return pick(subtypesof(/obj/item/toy/plushie)) // exclude the base type.
 
-/obj/item/toy/plushie/corgi
+/obj/item/toy/plushie/corgi // dogs are basically the best
 	name = "corgi plushie"
 	icon_state = "corgi"
 
@@ -1355,8 +1355,6 @@ Owl & Griffin toys
 /obj/item/toy/plushie/face_hugger
 	name = "facehugger plushie"
 	icon_state = "huggable"
-
-//foxes are basically the best
 
 /obj/item/toy/plushie/red_fox
 	name = "red fox plushie"
@@ -1459,4 +1457,4 @@ Owl & Griffin toys
 	icon_state = "conch"
 	use_action = "pulls the string"
 	possible_answers = list("Yes.", "No.", "Try asking again.", "Nothing.", "I don't think so.", "Neither.", "Maybe someday.")
-	answer_sound = 'sound/effects/polaroid2.ogg'
+	answer_sound = 'sound/items/polaroid2.ogg'
