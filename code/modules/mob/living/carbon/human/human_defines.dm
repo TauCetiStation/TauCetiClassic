@@ -89,3 +89,7 @@
 	var/robolimb_count = 0 // Number of robot limbs.
 	var/sightglassesmod = null
 	var/datum/personal_crafting/handcrafting
+
+	//Tycheon stuff.
+	var/metal_bending = FALSE
+	var/falling = 0 // Their alternative to WEAKEN. Flying mob whose falling stat is higher than 0 is not counted as flying.

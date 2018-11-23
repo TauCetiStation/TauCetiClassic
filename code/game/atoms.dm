@@ -274,6 +274,10 @@
 /atom/proc/add_hiddenprint(mob/living/M)
 	if(!M || !M.key)
 		return
+	if(!in_range(M, src)) // No Telekinetic fingerprint leaving!
+		fingerprintshidden += text("\[[]\]Real name: [], Key: []",time_stamp(), M.real_name, M.key) // So we, adming still know the TRUTH.
+		fingerprintslast = M.key
+		return
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
 		if (!istype(H.dna, /datum/dna))
@@ -426,10 +430,11 @@
 
 //returns 1 if made bloody, returns 0 otherwise
 /atom/proc/add_blood(mob/living/carbon/human/M,dirt_datum)
-	if(flags & NOBLOODY) return 0
-	.=1
+	if(flags & NOBLOODY)
+		return FALSE
+	. = TRUE
 	if (!( istype(M, /mob/living/carbon/human) ))
-		return 0
+		return FALSE
 	if (!istype(M.dna, /datum/dna))
 		M.dna = new /datum/dna(null)
 		M.dna.real_name = M.real_name
@@ -443,7 +448,6 @@
 //	blood_color = "#A10808"
 //	if (M.species)
 //		blood_color = M.species.blood_color
-	return
 
 /atom/proc/add_dirt_cover(dirt_datum)
 	if(flags & NOBLOODY) return 0

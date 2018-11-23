@@ -79,6 +79,10 @@
 //			log_debug("No gloves, [M] is truing to infect [src]")
 			M.spread_disease_to(src, "Contact")
 
+	if(species.flags[IS_FLYING] && !falling)
+		if(prob((10 - movement_delay()) * 5)) // Tycheon's default dodge - 45%
+			visible_message("<span class='notice'>[M] attempted to touch [src], missing narrowly.</span>")
+			return
 
 	switch(M.a_intent)
 		if("help")

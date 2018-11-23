@@ -35,6 +35,8 @@
 	*/
 	var/obj/screen/zone_sel/zone_sel = null
 	var/obj/screen/leap/leap_icon = null
+	var/obj/screen/tycheon_ability/metal_bend_icon = null // HUDs are a mess. kill me
+	var/obj/screen/tycheon_ability/toggle_sphere_icon = null
 	var/obj/screen/neurotoxin_icon = null
 	var/obj/screen/healthdoll = null
 
@@ -229,3 +231,7 @@
 	var/busy_with_action = FALSE // do_after() and do_mob() sets this to TRUE while in progress, use is_busy() before anything if you want to prevent user to do multiple actions.
 
 	var/list/weather_immunities = list()
+
+	// Telepathy for dummies.
+	var/list/remote_hearers = list() // A list of people that are listening to you.
+	var/remote_listen_count = 0      // A number of people you are listening to.

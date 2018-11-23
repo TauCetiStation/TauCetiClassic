@@ -466,7 +466,7 @@
 	siemens_coefficient = 0.30
 	permeability_coefficient = 0.01
 	item_color="white"
-	species_restricted = list("exclude" , UNATHI)
+	species_restricted = list("exclude" , UNATHI , TYCHEON)
 
 /obj/item/clothing/gloves/fluff/walter_brooks_1 //botanistpower: Walter Brooks
 	name = "mittens"

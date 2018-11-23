@@ -476,13 +476,13 @@
 						return 1
 		return 0
 
-/mob/MouseDrop(mob/M as mob)
+/mob/MouseDrop(mob/M)
 	..()
 	if(M != usr)
 		return
 	if(usr == src)
 		return
-	if(!Adjacent(usr))
+	if(!Adjacent(usr) && !(TK in M.mutations))
 		return
 	if(isAI(M))
 		return
@@ -1078,6 +1078,15 @@ mob/proc/yank_out_object()
 			if(A)
 				client.perspective = EYE_PERSPECTIVE
 				client.eye = A
+
+/mob/proc/do_telepathy(dist) // Handles telepathy in different mobs.
+	return TRUE
+
+/mob/proc/do_telekinesis(dist) // Handles telekinesis in different mobs. Hunger removal, etc, etc. Return TRUE if can do, FALSE if can't.
+	if(dist > tk_maxrange)
+		to_chat(src, "<span class='notice'>Your mind won't reach that far.</span>")
+		return FALSE
+	return TRUE
 
 //You can buckle on mobs if you're next to them since most are dense
 /mob/buckle_mob(mob/living/M)

@@ -6,7 +6,7 @@
 	allowed = list(/obj/item/weapon/stock_parts/cell)
 	armor = list(melee = 60, bullet = 50, laser = 60,energy = 45, bomb = 50, bio = 100, rad = 50)
 	flags = MASKCOVERSMOUTH
-	species_restricted = null
+	species_restricted = list("exclude", TYCHEON)
 	body_parts_covered = HEAD|FACE
 	blockTracking = 1
 
@@ -18,7 +18,7 @@
 	allowed = list(/obj/item/weapon/gun,/obj/item/ammo_box/magazine,/obj/item/ammo_casing,/obj/item/weapon/melee/baton,/obj/item/weapon/handcuffs,/obj/item/weapon/tank,/obj/item/device/suit_cooling_unit,/obj/item/weapon/stock_parts/cell)
 	slowdown = 0
 	armor = list(melee = 60, bullet = 50, laser = 60,energy = 45, bomb = 30, bio = 100, rad = 50)
-	species_restricted = null //Workaround for spawning alien ninja without internals.
+	species_restricted = list("exclude", TYCHEON) //Workaround for spawning alien ninja without internals.
 	body_parts_covered = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	supporting_limbs = list()
 

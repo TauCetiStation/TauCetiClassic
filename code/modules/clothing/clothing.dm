@@ -1,7 +1,7 @@
 
 /obj/item/clothing
 	name = "clothing"
-	var/list/species_restricted = null //Only these species can wear this kit.
+	var/list/species_restricted = list("exclude", TYCHEON) //Only these species can wear this kit.
 	var/equip_time = 0
 	var/equipping = 0
 	var/rig_restrict_helmet = 0 // Stops the user from equipping a rig helmet without attaching it to the suit first.
@@ -51,7 +51,7 @@
 	//Set species_restricted list
 	switch(target_species)
 		if(HUMAN , SKRELL)	//humanoid bodytypes
-			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX)
+			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX , TYCHEON)
 		else
 			species_restricted = list(target_species)
 
@@ -71,9 +71,9 @@
 	//Set species_restricted list
 	switch(target_species)
 		if(SKRELL)
-			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX)
+			species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX , TYCHEON)
 		if(HUMAN)
-			species_restricted = list("exclude" , SKRELL , UNATHI , TAJARAN , DIONA , VOX)
+			species_restricted = list("exclude" , SKRELL , UNATHI , TAJARAN , DIONA , VOX , TYCHEON)
 		else
 			species_restricted = list(target_species)
 
@@ -188,7 +188,7 @@ BLIND     // can't see anything
 	body_parts_covered = ARMS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
-	species_restricted = list("exclude" , UNATHI , TAJARAN)
+	species_restricted = list("exclude" , UNATHI , TAJARAN , TYCHEON)
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/gloves.dmi')
 
 /obj/item/clothing/gloves/emp_act(severity)
@@ -241,7 +241,7 @@ BLIND     // can't see anything
 
 	permeability_coefficient = 0.50
 	slowdown = SHOES_SLOWDOWN
-	species_restricted = list("exclude" , UNATHI , TAJARAN)
+	species_restricted = list("exclude" , UNATHI , TAJARAN , TYCHEON)
 	var/footstep = 1	//used for squeeks whilst walking(tc)
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/shoes.dmi')
 
@@ -305,7 +305,7 @@ BLIND     // can't see anything
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELMET_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
-	species_restricted = list("exclude" , DIONA , VOX)
+	species_restricted = list("exclude" , DIONA , VOX , TYCHEON)
 	sprite_sheets = list(VOX = 'icons/mob/species/vox/head.dmi')
 	flash_protection = 2
 
@@ -328,7 +328,7 @@ BLIND     // can't see anything
 	cold_protection = UPPER_TORSO | LOWER_TORSO | LEGS | ARMS
 	min_cold_protection_temperature = SPACE_SUIT_MIN_COLD_PROTECTION_TEMPERATURE
 	siemens_coefficient = 0.2
-	species_restricted = list("exclude" , DIONA , VOX)
+	species_restricted = list("exclude" , DIONA , VOX , TYCHEON)
 
 	var/list/supporting_limbs //If not-null, automatically splints breaks. Checked when removing the suit.
 

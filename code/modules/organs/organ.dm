@@ -128,6 +128,11 @@
 /mob/living/carbon/human/proc/handle_stance()
 	// Don't need to process any of this if they aren't standing anyways
 	// unless their stance is damaged, and we want to check if they should stay down
+	if(species.flags[IS_FLYING])
+		if(falling) // So they will be slowly restoring unless something is continiously making them fall.
+			falling = max(0, falling - 1)
+		return
+
 	if(!stance_damage && (lying || resting) && (life_tick % 4) != 0)
 		return
 

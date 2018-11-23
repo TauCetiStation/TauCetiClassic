@@ -3,7 +3,7 @@
 	name = "magboots"
 	icon_state = "magboots0"
 	item_state = "magboots"
-	species_restricted = null
+	species_restricted = list("exclude", TYCHEON)
 	var/magpulse = 0
 	var/magboot_state = "magboots"
 	var/slowdown_off = 2

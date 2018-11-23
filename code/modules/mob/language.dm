@@ -144,7 +144,7 @@
 	flags = SIGNLANG // For all intents and purposes, this is basically a sign language.
 
 /datum/language/diona_space/format_message(message, verb)
-	return "<span class='message'><span class='[colour]'>\"[capitalize(message)]\"</span></span>"
+	return "<span class='[colour]'>[capitalize(message)]</span>"
 
 /datum/language/human
 	name = "Sol Common"
@@ -161,10 +161,22 @@
 	ask_verb = "beeps"
 	exclaim_verb = "boops"
 	colour = "ipc"
-	key = list("x", "÷") //only "dpz" left.
+	key = list("x", "÷") //only "pz" left.
 	//need to find a way to resolve possesive macros
 	allowed_species = list(IPC)
 	syllables = list("000", "111", "222", "001", "010", "100", "002", "020", "200", "011", "101", "110", "022", "202", "220", "112", "121", "211", "122", "212", "221", "012", "021", "120", "210", "102", "201")
+
+/datum/language/void
+	name = "The Gaping Maw"
+	desc = "A series of thoughts that reverberate through the minds of the Tycheon, and all other Tycheons around."
+	allowed_species = list(TYCHEON)
+	colour = "void"
+	key = list("d", "â")
+	signlang_verb = list("pulses his core")
+	flags = SIGNLANG // For all intents and purposes, this is basically a sign language.
+
+/datum/language/void/format_message(message, verb)
+	return "<span class='[colour]'>[capitalize(message)]</span>"
 
 // Galactic common languages (systemwide accepted standards).
 /datum/language/trader

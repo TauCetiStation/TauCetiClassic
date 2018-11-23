@@ -76,7 +76,29 @@
 	if (!silent)
 		owner.custom_pain("Something inside your [BP.name] hurts a lot.", 1)
 
-/obj/item/organ/internal/emp_act(severity)
+/obj/item/organ/internal/emp_act(severity) // I am not criticizing people who coded this. But I feel like there is no way to get severity 3 emp_act.~Luduk.
+	if(severity == 3)
+		world.log << "It seems there has been an emp severity 3 act. Please contact Luduk personally and tell him it happened. [src]"
+
+	if(owner.species.flags[EMP_HEAL]) // EMP healing is a Tycheon mechanic. Take what you see below with a pinch of salt.
+		var/list/list_of_metal = list()
+		for(var/obj/item/stack/sheet/metal/M in view(1, owner))
+			list_of_metal += M
+		if(!list_of_metal.len)
+			return
+		var/obj/item/stack/sheet/metal/M = pick(list_of_metal)
+		if(M)
+			switch(severity)
+				if(1.0)
+					take_damage(-5, 0)
+				if(2.0)
+					take_damage(-1, 0)
+			new /obj/effect/effect/sparks(M.loc)
+			M.use(1)
+			if(M.get_amount() == 0)
+				list_of_metal -= M
+		return // If robutt has EMP_HEAL. Let him heal, not hurt.
+
 	switch(robotic)
 		if(0)
 			return
@@ -286,6 +308,15 @@
 /obj/item/organ/internal/brain/ipc
 	name = "positronic brain"
 	parent_bodypart = BP_CHEST
+
+/obj/item/organ/internal/brain/tycheon
+	name = "core"
+	parent_bodypart = BP_CHEST
+
+/obj/item/organ/internal/brain/void/process()
+	if(owner.life_tick % 10 == 0) // Update once per 10 ticks.
+		if(is_bruised())
+			owner.falling = min(30, owner.falling + 3)
 
 /obj/item/organ/internal/eyes
 	name = "eyes"

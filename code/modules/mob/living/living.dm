@@ -541,7 +541,8 @@
 
 /mob/living/carbon/human/rejuvenate()
 	var/obj/item/organ/external/head/BP = bodyparts_by_name[BP_HEAD]
-	BP.disfigured = FALSE
+	if(BP)
+		BP.disfigured = FALSE
 
 	for (var/obj/item/weapon/organ/head/H in world) // damn son, where'd you get this?
 		if(H.brainmob)

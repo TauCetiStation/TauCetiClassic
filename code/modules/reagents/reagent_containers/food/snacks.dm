@@ -306,6 +306,16 @@
 	reagents.add_reagent("doctorsdelight", 8)
 	reagents.add_reagent("vitamin", 6)
 
+/obj/item/weapon/reagent_containers/food/snacks/tycheon_core
+	name = "weird orb"
+	desc = "It probably dropped out of creature that looks like a fart."
+	icon = 'icons/obj/food.dmi'
+	icon_state = "boiledrorocore"
+
+/obj/item/weapon/reagent_containers/food/snacks/tycheon_core/atom_init()
+	. = ..()
+	reagents.add_reagent("iron", 10)
+
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
 	desc = "Nougat, love it or hate it."

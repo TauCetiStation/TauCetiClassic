@@ -429,45 +429,40 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	icon_state = icon_off
 
 /obj/item/weapon/lighter/attack_self(mob/living/user)
-	if(user.r_hand == src || user.l_hand == src)
-		if(!lit)
-			lit = 1
-			icon_state = icon_on
-			item_state = icon_on
-			if(istype(src, /obj/item/weapon/lighter/zippo) )
-				playsound(src, 'sound/items/zippo.ogg', 20, 1, 1)
-				user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
-			else
-				playsound(src, 'sound/items/lighter.ogg', 20, 1, 1)
-				if(prob(95))
-					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src].</span>")
-				else
-					to_chat(user, "<span class='warning'>You burn yourself while lighting the lighter.</span>")
-					if (user.l_hand == src)
-						user.apply_damage(2, BURN, BP_L_ARM)
-					else
-						user.apply_damage(2, BURN, BP_R_ARM)
-					user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
-
-			set_light(2)
-			START_PROCESSING(SSobj, src)
+	if(!lit)
+		lit = 1
+		icon_state = icon_on
+		item_state = icon_on
+		if(istype(src, /obj/item/weapon/lighter/zippo) )
+			playsound(src, 'sound/items/zippo.ogg', 20, 1, 1)
+			user.visible_message("<span class='rose'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 		else
-			lit = 0
-			icon_state = icon_off
-			item_state = icon_off
-			if(istype(src, /obj/item/weapon/lighter/zippo) )
-				playsound(src, 'sound/items/zippo.ogg', 20, 1, 1)
-				user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing.")
+			playsound(src, 'sound/items/lighter.ogg', 20, 1, 1)
+			if(prob(95))
+				user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src].</span>")
 			else
-				user.visible_message("<span class='notice'>[user] quietly shuts off the [src].")
-				playsound(src, 'sound/items/lighter.ogg', 20, 1, 1)
+				to_chat(user, "<span class='warning'>You burn yourself while lighting the lighter.</span>")
+				if (user.l_hand == src)
+					user.apply_damage(2, BURN, BP_L_ARM)
+				else
+					user.apply_damage(2, BURN, BP_R_ARM)
+				user.visible_message("<span class='notice'>After a few attempts, [user] manages to light the [src], they however burn their finger in the process.</span>")
 
-			set_light(0)
-			STOP_PROCESSING(SSobj, src)
+		set_light(2)
+		START_PROCESSING(SSobj, src)
 	else
-		return ..()
-	return
+		lit = 0
+		icon_state = icon_off
+		item_state = icon_off
+		if(istype(src, /obj/item/weapon/lighter/zippo) )
+			playsound(src, 'sound/items/zippo.ogg', 20, 1, 1)
+			user.visible_message("<span class='rose'>You hear a quiet click, as [user] shuts off [src] without even looking at what they're doing.")
+		else
+			user.visible_message("<span class='notice'>[user] quietly shuts off the [src].")
+			playsound(src, 'sound/items/lighter.ogg', 20, 1, 1)
 
+		set_light(0)
+		STOP_PROCESSING(SSobj, src)
 
 /obj/item/weapon/lighter/attack(mob/living/carbon/M, mob/living/carbon/user, def_zone)
 	if(!istype(M, /mob))

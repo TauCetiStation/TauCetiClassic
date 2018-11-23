@@ -122,7 +122,7 @@
 	if(!can_build(M, over_this_saved, get_turf(M)))
 		return
 
-	if(over_this_saved && get_dist(M, over_this_saved) <= 1)
+	if(over_this_saved)
 		playsound(M, 'sound/effects/grillehit.ogg', 50, 1)//Yes, 2nd time with timed recipe.
 		var/atom/A = new from_recipe.result_type(over_this_saved)
 		A.dir = build_direction
@@ -138,8 +138,9 @@
 			usr.client.cob.remove_build_overlay(usr.client)
 			return
 		var/turf/T = src
-		if(get_dist(usr, src) > 0)
-			var/direction = get_dir(usr, src)
+		var/turf/source = get_turf(usr.client.cob.using_this)
+		if(get_dist(source, src) > 0)
+			var/direction = get_dir(source, src)
 			switch(direction)
 				if(NORTHEAST)
 					direction = EAST
@@ -150,7 +151,7 @@
 				if(NORTHWEST)
 					direction = NORTH
 
-			T = get_step(usr, direction)
+			T = get_step(source, direction)
 			if(!T)
 				return
 

@@ -159,7 +159,7 @@
 			else
 				to_chat(usr, "\red You haven't got enough [src] to build \the [R.title]!")
 			return
-		if (R.one_per_turf && (locate(R.result_type) in usr.loc))
+		if(R.one_per_turf && (locate(R.result_type) in get_turf(src)))
 			to_chat(usr, "\red There is another [R.title] here!")
 			return
 		if (R.on_floor)
@@ -173,7 +173,7 @@
 				return
 		if(!src.use(R.req_amount*multiplier))
 			return
-		var/atom/O = new R.result_type( usr.loc )
+		var/atom/O = new R.result_type(get_turf(src))
 		O.dir = usr.dir
 		if (R.max_res_amount>1)
 			var/obj/item/stack/new_item = O

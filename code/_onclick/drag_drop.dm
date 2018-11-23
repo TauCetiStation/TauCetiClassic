@@ -10,15 +10,13 @@
 		return FALSE
 	if(user.incapacitated())
 		return FALSE
+	if((TK in user.mutations) && Adjacent(over)) // So we don't check if we're near, if we are doing telekinesis.
+		return TRUE
 	if(!src.Adjacent(user) || !over.Adjacent(user))
 		return FALSE // should stop you from dragging through windows
-	return TRUE
-
 
 /atom/MouseDrop(atom/over)
-	if(!usr || !over)
-		return
-	if(!Adjacent(usr) || !over.Adjacent(usr))
+	if(!CanMouseDrop(over, usr))
 		return // should stop you from dragging through windows
 
 	INVOKE_ASYNC(over, /atom.proc/MouseDrop_T, src, usr)

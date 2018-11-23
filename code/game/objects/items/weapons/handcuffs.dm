@@ -43,6 +43,8 @@
 
 	if (ishuman(target))
 		var/mob/living/carbon/human/H = target
+		if(H.species.flags[IS_IMMATERIAL])
+			return
 		H.attack_log += text("\[[time_stamp()]\] <font color='orange'>Has been handcuffed (attempt) by [user.name] ([user.ckey])</font>")
 		user.attack_log += text("\[[time_stamp()]\] <font color='red'>Attempted to handcuff [H.name] ([H.ckey])</font>")
 		msg_admin_attack("[key_name(user)] attempted to handcuff [key_name(H)]")

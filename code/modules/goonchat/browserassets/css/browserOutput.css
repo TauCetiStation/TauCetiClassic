@@ -316,6 +316,7 @@ h1.alert, h2.alert		{color: #000000;}
 .rough					{font-family: "Trebuchet MS", cursive, sans-serif;}
 .say_quote				{font-family: Georgia, Verdana, sans-serif;}
 .ipc					{color: #505050;	font-weight: bold;	font-family: "Times New Roman", Times, serif;}
+.void                   {color: #1F1F1F;	font-weight: bold;	font-family: Palatino, serif;}
 
 .interface				{color: #330033;}
 

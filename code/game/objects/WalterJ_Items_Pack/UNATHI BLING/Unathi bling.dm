@@ -9,7 +9,7 @@
 	item_state = "brown-cut"
 	item_color = "brown-cut"
 
-	species_restricted = null
+	species_restricted = list("exclude", TYCHEON)
 
 /obj/item/clothing/shoes/footwraps
 	icon = 'code/game/objects/WalterJ_Items_Pack/UNATHI BLING/Unathi bling.dmi'
@@ -22,7 +22,7 @@
 	item_state = "footwraps"
 	item_color = "footwraps"
 
-	species_restricted = null
+	species_restricted = list("exclude", TYCHEON)
 
 /obj/item/clothing/shoes/sandal/brown
 	icon = 'code/game/objects/WalterJ_Items_Pack/UNATHI BLING/Unathi bling.dmi'
@@ -35,7 +35,7 @@
 	item_state = "sandals-brown"
 	item_color = "sandals-brown"
 
-	species_restricted = null
+	species_restricted = list("exclude", TYCHEON)
 
 /obj/item/clothing/shoes/sandal/pink
 	icon = 'code/game/objects/WalterJ_Items_Pack/UNATHI BLING/Unathi bling.dmi'
@@ -48,7 +48,7 @@
 	item_state = "sandals-pink"
 	item_color = "sandals-pink"
 
-	species_restricted = null
+	species_restricted = list("exclude", TYCHEON)
 
 
 /obj/item/clothing/head/helmet/space/rig/security/unathi_wj

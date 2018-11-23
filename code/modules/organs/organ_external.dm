@@ -68,7 +68,26 @@
 
 
 /obj/item/organ/external/emp_act(severity)
-	if(!(status & ORGAN_ROBOT)) // meatbags do not care about EMP
+	if(owner.species.flags[EMP_HEAL]) // Tycheon mechanic. Take what you see below with a pinch of salt.
+		var/list/list_of_metal = list()
+		for(var/obj/item/stack/sheet/metal/M in view(1, owner))
+			list_of_metal += M
+		if(!list_of_metal.len)
+			return
+		var/obj/item/stack/sheet/metal/M = pick(list_of_metal)
+		if(M)
+			switch(severity)
+				if(1.0)
+					heal_damage(-5, -5)
+				if(2.0)
+					heal_damage(-1, -1)
+			new /obj/effect/effect/sparks(M.loc)
+			M.use(1)
+			if(M.get_amount() == 0)
+				list_of_metal -= M
+		return // If robutt wanna heal with EMP. Let him.
+
+	if(!(status & ORGAN_ROBOT)) // meatbags do not care about EMP, except when they do, look up.
 		return
 
 	var/burn_damage = 0
@@ -393,6 +412,8 @@ INFECTION_LEVEL_THREE	above this germ level the player will take additional toxi
 Note that amputating the affected organ does in fact remove the infection from the player's body.
 */
 /obj/item/organ/external/proc/update_germs()
+	if(owner.species.flags[IS_IMMATERIAL])
+		return
 
 	if((status & (ORGAN_ROBOT|ORGAN_DESTROYED)) || (owner.species && owner.species.flags[IS_PLANT])) //Robotic limbs shouldn't be infected, nor should nonexistant limbs.
 		germ_level = 0
@@ -488,6 +509,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 		for(var/datum/wound/W in wounds) //Repaired wounds disappear though
 			if(W.damage <= 0)  //and they disappear right away
 				wounds -= W    //TODO: robot wounds for robot limbs
+		return
+
+	if(owner.species.flags[IS_IMMATERIAL]) // These wounds, they do not heal.
 		return
 
 	for(var/datum/wound/W in wounds)
@@ -658,78 +682,80 @@ Note that amputating the affected organ does in fact remove the infection from t
 			parent.sever_artery()
 
 	destspawn = TRUE
-	switch(disintegrate)
-		if(DROPLIMB_EDGE)
-			var/obj/bodypart // Dropped limb object
-			add_blood(owner)
+	if(!owner.species.flags[IS_IMMATERIAL])
+		switch(disintegrate)
+			if(DROPLIMB_EDGE)
+				var/obj/bodypart // Dropped limb object
+				add_blood(owner)
 
-			switch(body_zone)
-				if(BP_HEAD)
-					if(owner.species.flags[IS_SYNTHETIC])
-						bodypart = new /obj/item/weapon/organ/head/posi(owner.loc, owner)
-					else
-						bodypart = new /obj/item/weapon/organ/head(owner.loc, owner)
-				if(BP_R_ARM)
-					if(status & ORGAN_ROBOT)
-						bodypart = new /obj/item/robot_parts/r_arm(owner.loc)
-					else
-						bodypart = new /obj/item/weapon/organ/r_arm(owner.loc, owner)
-				if(BP_L_ARM)
-					if(status & ORGAN_ROBOT)
-						bodypart = new /obj/item/robot_parts/l_arm(owner.loc)
-					else
-						bodypart = new /obj/item/weapon/organ/l_arm(owner.loc, owner)
-				if(BP_R_LEG)
-					if(status & ORGAN_ROBOT)
-						bodypart = new /obj/item/robot_parts/r_leg(owner.loc)
-					else
-						bodypart = new /obj/item/weapon/organ/r_leg(owner.loc, owner)
-				if(BP_L_LEG)
-					if(status & ORGAN_ROBOT)
-						bodypart = new /obj/item/robot_parts/l_leg(owner.loc)
-					else
-						bodypart = new /obj/item/weapon/organ/l_leg(owner.loc, owner)
+				switch(body_zone)
+					if(BP_HEAD)
+						if(owner.species.flags[IS_SYNTHETIC])
+							bodypart = new /obj/item/weapon/organ/head/posi(owner.loc, owner)
+						else
+							bodypart = new /obj/item/weapon/organ/head(owner.loc, owner)
+					if(BP_R_ARM)
+						if(status & ORGAN_ROBOT)
+							bodypart = new /obj/item/robot_parts/r_arm(owner.loc)
+						else
+							bodypart = new /obj/item/weapon/organ/r_arm(owner.loc, owner)
+					if(BP_L_ARM)
+						if(status & ORGAN_ROBOT)
+							bodypart = new /obj/item/robot_parts/l_arm(owner.loc)
+						else
+							bodypart = new /obj/item/weapon/organ/l_arm(owner.loc, owner)
+					if(BP_R_LEG)
+						if(status & ORGAN_ROBOT)
+							bodypart = new /obj/item/robot_parts/r_leg(owner.loc)
+						else
+							bodypart = new /obj/item/weapon/organ/r_leg(owner.loc, owner)
+					if(BP_L_LEG)
+						if(status & ORGAN_ROBOT)
+							bodypart = new /obj/item/robot_parts/l_leg(owner.loc)
+						else
+							bodypart = new /obj/item/weapon/organ/l_leg(owner.loc, owner)
 
-			if(bodypart)
-				//Robotic limbs explode if sabotaged.
-				if(status & ORGAN_ROBOT && !no_explode && sabotaged)
-					explosion(get_turf(owner), -1, -1, 2, 3)
-					var/datum/effect/effect/system/spark_spread/spark_system = new
-					spark_system.set_up(5, 0, owner)
-					spark_system.attach(owner)
-					spark_system.start()
-					spawn(10)
-						qdel(spark_system)
+				if(bodypart)
+					//Robotic limbs explode if sabotaged.
+					if(status & ORGAN_ROBOT && !no_explode && sabotaged)
+						explosion(get_turf(owner), -1, -1, 2, 3)
+						var/datum/effect/effect/system/spark_spread/spark_system = new
+						spark_system.set_up(5, 0, owner)
+						spark_system.attach(owner)
+						spark_system.start()
+						spawn(10)
+							qdel(spark_system)
 
-				var/matrix/M = matrix()
-				M.Turn(rand(180))
-				bodypart.transform = M
+					var/matrix/M = matrix()
+					M.Turn(rand(180))
+					bodypart.transform = M
 
-				if(!clean)
-					// Throw limb around.
-					if(isturf(bodypart.loc))
-						bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), rand(1, 3), throw_speed)
-					dir = 2
-		if(DROPLIMB_BURN)
-			new /obj/effect/decal/cleanable/ash(get_turf(owner))
-			for(var/obj/item/I in src)
-				if(I.w_class > ITEM_SIZE_SMALL && !istype(I, /obj/item/organ))
+					if(!clean)
+						// Throw limb around.
+						if(isturf(bodypart.loc))
+							bodypart.throw_at(get_edge_target_turf(bodypart.loc, pick(alldirs)), rand(1, 3), throw_speed)
+						dir = 2
+			if(DROPLIMB_BURN)
+				new /obj/effect/decal/cleanable/ash(get_turf(owner))
+				for(var/obj/item/I in src)
+					if(I.w_class > ITEM_SIZE_SMALL && !istype(I, /obj/item/organ))
+						I.loc = get_turf(src)
+			if(DROPLIMB_BLUNT)
+				var/obj/effect/decal/cleanable/blood/gibs/gore
+				if(status & ORGAN_ROBOT)
+					gore = new /obj/effect/decal/cleanable/blood/gibs/robot(get_turf(owner))
+				else
+					gore = new /obj/effect/decal/cleanable/blood/gibs(get_turf(owner))
+					gore.fleshcolor = owner.species.flesh_color
+					gore.basedatum =  new/datum/dirt_cover(owner.species.blood_color)
+					gore.update_icon()
+
+				gore.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), throw_speed)
+
+				for(var/obj/item/I in src)
 					I.loc = get_turf(src)
-		if(DROPLIMB_BLUNT)
-			var/obj/effect/decal/cleanable/blood/gibs/gore
-			if(status & ORGAN_ROBOT)
-				gore = new /obj/effect/decal/cleanable/blood/gibs/robot(get_turf(owner))
-			else
-				gore = new /obj/effect/decal/cleanable/blood/gibs(get_turf(owner))
-				gore.fleshcolor = owner.species.flesh_color
-				gore.basedatum =  new/datum/dirt_cover(owner.species.blood_color)
-				gore.update_icon()
+					I.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), throw_speed)
 
-			gore.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), throw_speed)
-
-			for(var/obj/item/I in src)
-				I.loc = get_turf(src)
-				I.throw_at(get_edge_target_turf(owner, pick(alldirs)), rand(1, 3), throw_speed)
 	switch(body_zone)
 		if(BP_HEAD)
 			if(disintegrate == DROPLIMB_EDGE)
@@ -779,6 +805,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 		owner.UpdateDamageIcon(src)
 
 /obj/item/organ/external/proc/sever_artery()
+	if(owner.species.flags[IS_IMMATERIAL])
+		return
+
 	if(!(status & (ORGAN_ARTERY_CUT | ORGAN_ROBOT)) && owner.organs_by_name[O_HEART])
 		status |= ORGAN_ARTERY_CUT
 		return TRUE
@@ -861,6 +890,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 		return
 
 	if(status & ORGAN_BROKEN)
+		return
+
+	if(owner.species.flags[IS_IMMATERIAL])
 		return
 
 	owner.visible_message(\
@@ -989,6 +1021,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	if(owner.species.flags[NO_EMBED])
 		return
 
+	if(owner.species.flags[IS_IMMATERIAL])
+		return
+
 	if(!silent)
 		if(supplied_message)
 			owner.visible_message("<span class='danger'>[supplied_message]</span>")
@@ -1039,6 +1074,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	vital = TRUE
 	w_class = ITEM_SIZE_HUGE // Used for dismembering thresholds, in addition to storage. Humans are w_class 6, so it makes sense that chest is w_class 5.
 
+/obj/item/organ/external/chest/tycheon
+	name = "body"
 
 /obj/item/organ/external/groin
 	name = "groin"
@@ -1096,10 +1133,12 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
+/obj/item/organ/external/l_arm/tycheon
+	name = "tendril"
+
 /obj/item/organ/external/l_arm/process()
 	..()
 	process_grasp(owner.l_hand, "left hand")
-
 
 /obj/item/organ/external/r_arm
 	name = "right arm"
@@ -1115,6 +1154,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
+
+/obj/item/organ/external/r_arm/tycheon
+	name = "tendril"
 
 /obj/item/organ/external/r_arm/process()
 	..()
@@ -1136,6 +1178,8 @@ Note that amputating the affected organ does in fact remove the infection from t
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
 
+/obj/item/organ/external/l_leg/tycheon
+	name = "tendril"
 
 /obj/item/organ/external/r_leg
 	name = "right leg"
@@ -1152,6 +1196,9 @@ Note that amputating the affected organ does in fact remove the infection from t
 	max_damage = 50
 	min_broken_damage = 30
 	w_class = ITEM_SIZE_NORMAL
+
+/obj/item/organ/external/r_leg/tycheon
+	name = "tendril"
 
 /obj/item/organ/external/head/take_damage(brute, burn, damage_flags, used_weapon)
 	if(!disfigured)

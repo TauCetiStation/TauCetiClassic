@@ -57,6 +57,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/golem/atom_init(mapload)
 	. = ..(mapload, GOLEM)
 
+/mob/living/carbon/human/tycheon/atom_init(mapload)
+	. = ..(mapload, TYCHEON)
+
 /mob/living/carbon/human/shadowling/atom_init(mapload)
 	. = ..(mapload, SHADOWLING)
 	var/newNameId = pick(possibleShadowlingNames)
@@ -649,8 +652,14 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		unset_machine()
 		src << browse(null, t1)
 
-	if ((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && in_range(src, usr) && ticker)) //if game hasn't started, can't make an equip_e
-		var/obj/item/item = usr.get_active_hand()
+	var/range_check = in_range(src, usr)
+	var/obj/item/item = usr.get_active_hand()
+
+	if(TK in usr.mutations)
+		if(!item || in_range(item, src))
+			range_check = TRUE
+
+	if((href_list["item"] && !( usr.stat ) && usr.canmove && !( usr.restrained() ) && range_check && ticker)) //if game hasn't started, can't make an equip_e
 		if(item && (item.flags & (ABSTRACT | DROPDEL)))
 			return
 		var/obj/effect/equip_e/human/O = new /obj/effect/equip_e/human(  )
@@ -992,8 +1001,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/proc/vomit()
 
-	if(species.flags[IS_SYNTHETIC])
-		return //Machines don't throw up.
+	if(species.flags[IS_SYNTHETIC] || species.flags[IS_IMMATERIAL])
+		return //Machines don't throw up. Neither do beings out of this plane of existance... (If more flags seem to pile up here, add NO_VOMIT flag instead) ~Luduk.
 
 	if(!lastpuke)
 		lastpuke = 1
@@ -1265,6 +1274,8 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /mob/living/carbon/human/add_blood(mob/living/carbon/human/M)
 	if (!..())
+		return 0
+	if(!species.flags[IS_IMMATERIAL]) // Can't touch this.
 		return 0
 	//if this blood isn't already in the list, add it
 	if(blood_DNA[M.dna.unique_enzymes])
@@ -1548,6 +1559,63 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 	return TRUE
 
+/obj/screen/tycheon_ability
+	icon = 'icons/mob/screen1_action.dmi'
+	icon_state = "void_action"
+	var/clicked_on = FALSE
+	var/owner_metal_bending = FALSE
+
+/obj/screen/tycheon_ability/update_icon()
+	icon_state = "[initial(icon_state)]_[clicked_on ? "2" : !owner_metal_bending]" // 2 is for the "yellow button" which means that we are currently doing this ability.
+
+/obj/screen/tycheon_ability/Click()
+	if(ishuman(usr) && !owner_metal_bending)
+		var/mob/living/carbon/human/H = usr
+		clicked_on = TRUE
+		if(H.hud_used)
+			for(var/obj/screen/tycheon_ability/V in H.hud_used.adding)
+				V.owner_metal_bending = TRUE
+				V.update_icon()
+		Click_Action(H)
+		clicked_on = FALSE
+		if(H.hud_used)
+			for(var/obj/screen/tycheon_ability/V in H.hud_used.adding)
+				V.owner_metal_bending = FALSE
+				V.update_icon()
+
+	else if(ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+		Click_Action(H) // We want to use our new ability god damn!!! The void abilities should be able to quit out of themselves on second call. All of them.
+		if(H.hud_used)
+			for(var/obj/screen/tycheon_ability/V in H.hud_used.adding)
+				V.owner_metal_bending = FALSE
+				V.update_icon()
+
+/obj/screen/tycheon_ability/proc/Click_Action(mob/living/carbon/human/user)
+	return
+
+/obj/screen/tycheon_ability/toggle_sphere
+	name = "toggle sphere"
+
+/obj/screen/tycheon_ability/toggle_sphere/atom_init()
+	. = ..()
+	overlays += image(icon, "sphere")
+	update_icon()
+
+/obj/screen/tycheon_ability/toggle_sphere/Click_Action(mob/living/carbon/human/user)
+	user.toggle_sphere()
+
+/obj/screen/tycheon_ability/bend_metal
+	name = "bend metal"
+
+/obj/screen/tycheon_ability/bend_metal/atom_init()
+	. = ..()
+	overlays += image(icon, "bend")
+	update_icon()
+
+/obj/screen/tycheon_ability/bend_metal/Click_Action(mob/living/carbon/human/user)
+	user.metal_bend()
+
 /obj/screen/leap
 	name = "toggle leap"
 	icon = 'icons/mob/screen1_action.dmi'
@@ -1762,3 +1830,30 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 		return species.taste_sensitivity
 	else
 		return 1
+
+/mob/living/carbon/human/start_pulling(atom/movable/AM)
+	if(species.flags[IS_IMMATERIAL])
+		return
+	..()
+
+/mob/living/carbon/human/do_telekinesis(dist) // As a general reminder, do look where this is used, how, and when.
+	. = ..()
+	if(.)
+		if(get_species() == TYCHEON)
+			var/calc_max_tk_range = 0
+			for(var/BP_type in list(BP_L_ARM, BP_R_ARM, BP_L_LEG, BP_R_LEG))
+				var/obj/item/organ/external/EO = bodyparts_by_name[BP_type]
+				if(EO && EO.is_usable())
+					calc_max_tk_range += 2.5
+			if(istype(wear_suit, /obj/item/clothing/suit/space/rig/tycheon))
+				calc_max_tk_range *= 1.5
+			calc_max_tk_range = min(tk_maxrange, calc_max_tk_range)
+			if(dist > calc_max_tk_range)
+				to_chat(src, "<span class='notice'>Your mind won't reach that far.</span>")
+				return
+		//if(species.flags[STATICALLY_CHARGED]) // Statically charged species use static electricity for telekinesis. Don't question it!
+			if(nutrition >= 200 + (dist * 2))
+				nutrition -= dist * 2 // DON'T QUESTION THIS EITHER. The only Statically Charged specie is Tycheon, and they use nutrition as static charge.
+			else
+				to_chat(src, "<span class='warning'>Not enough static charge.</span>")
+				return FALSE

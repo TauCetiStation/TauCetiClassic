@@ -423,6 +423,11 @@
 	if(mymob.leap_icon)
 		src.adding += mymob.leap_icon
 
+	if(mymob.toggle_sphere_icon)
+		adding += mymob.toggle_sphere_icon
+	if(mymob.metal_bend_icon)
+		adding += mymob.metal_bend_icon
+
 	//Handle the gun settings buttons
 	mymob.gun_setting_icon = new /obj/screen/gun/mode(null)
 	if (mymob.client)

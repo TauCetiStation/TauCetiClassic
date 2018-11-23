@@ -4,6 +4,10 @@
 	if(!has_bodypart(def_zone))
 		return PROJECTILE_FORCE_MISS //if they don't have the body part in question then the projectile just passes by.
 
+	if(species.flags[IS_FLYING] && !falling)
+		if(prob((10 - movement_delay()) * 5)) // Tycheon's default dodge - 45%
+			return PROJECTILE_FORCE_MISS
+
 	if(P.impact_force)
 		for(var/i=1, i<=P.impact_force, i++)
 			step_to(src, get_step(loc, P.dir))
@@ -244,6 +248,9 @@
 		if(!O)
 			continue
 		O.emp_act(severity)
+
+	species.on_emp_act(src, severity)
+
 	for(var/obj/item/organ/external/BP in bodyparts)
 		if(BP.status & ORGAN_DESTROYED)
 			continue
@@ -258,6 +265,11 @@
 /mob/living/carbon/human/proc/attacked_by(obj/item/I, mob/living/user, def_zone)
 	if(!I || !user)
 		return FALSE
+
+	if(species.flags[IS_FLYING] && !falling)
+		if(prob((10 - movement_delay()) * 5)) // Tycheon's default dodge - 45%
+			visible_message("<span class='notice'>[src] attempted to touch [src], missing narrowly.</span>")
+			return
 
 	var/target_zone = def_zone? check_zone(def_zone) : get_zone_with_miss_chance(user.zone_sel.selecting, src)
 
@@ -442,3 +454,10 @@
 	var/penetrated_dam = max(0, min(50, (damage * reduction_dam) / 1.5)) // - SS.damage)) - Consider uncommenting this if suits seem too hardy on dev.
 
 	if(penetrated_dam) SS.create_breaches(damtype, penetrated_dam)
+
+/mob/living/carbon/human/hitby(atom/movable/AM)
+	if(species.flags[IS_FLYING] && !falling)
+		if(prob((10 - movement_delay()) * 5)) // Tycheon's default dodge - 45%
+			visible_message("<span class='notice'>\The [AM] misses [src] narrowly!</span>")
+			return
+	..()

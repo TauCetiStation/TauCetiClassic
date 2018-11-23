@@ -15,7 +15,7 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
 	//Species-specific stuff.
-	species_restricted = list("exclude", UNATHI, TAJARAN, SKRELL, DIONA, VOX)
+	species_restricted = list("exclude", UNATHI, TAJARAN, SKRELL, DIONA, VOX ,TYCHEON)
 	sprite_sheets_refit = list(
 		UNATHI = 'icons/mob/species/unathi/helmet.dmi',
 		TAJARAN = 'icons/mob/species/tajaran/helmet.dmi',
@@ -54,7 +54,7 @@
 	heat_protection = UPPER_TORSO|LOWER_TORSO|LEGS|ARMS
 	max_heat_protection_temperature = SPACE_SUIT_MAX_HEAT_PROTECTION_TEMPERATURE
 
-	species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX)
+	species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA , VOX , TYCHEON)
 	sprite_sheets_refit = list(
 		UNATHI = 'icons/mob/species/unathi/suit.dmi',
 		TAJARAN = 'icons/mob/species/tajaran/suit.dmi',
@@ -310,7 +310,7 @@
 	armor = list(melee = 60, bullet = 55, laser = 30,energy = 30, bomb = 50, bio = 100, rad = 60)
 	var/obj/machinery/camera/camera
 	var/combat_mode = FALSE
-	species_restricted = list("exclude" , SKRELL , DIONA, VOX)
+	species_restricted = list("exclude" , SKRELL , DIONA, VOX , TYCHEON)
 	var/image/lamp = null
 	var/equipped_on_head = FALSE
 	flags = BLOCKHAIR | THICKMATERIAL | PHORONGUARD
@@ -412,7 +412,7 @@
 	               /obj/item/weapon/melee/baton,
 	               /obj/item/weapon/melee/energy/sword,
 	               /obj/item/weapon/handcuffs)
-	species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA, VOX)
+	species_restricted = list("exclude" , UNATHI , TAJARAN , DIONA, VOX , TYCHEON)
 	action_button_name = "Toggle space suit mode"
 	var/combat_mode = FALSE
 

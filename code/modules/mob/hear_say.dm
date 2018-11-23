@@ -64,9 +64,14 @@
 			to_chat(src, "<span class='name'>[speaker_name]</span>[alt_name] talks but you cannot hear \him.")
 	else
 		if(language)
-			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>")
+			message = "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][language.format_message(message, verb)]</span>"
 		else
-			to_chat(src, "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>")
+			message = "<span class='game say'><span class='name'>[speaker_name]</span>[alt_name] [track][verb], <span class='message'><span class='body'>\"[message]\"</span></span></span>"
+
+		to_chat(src, message)
+
+		telepathy_hear("has heard", message, speaker)
+
 		if (speech_sound && (get_dist(speaker, src) <= world.view && src.z == speaker.z))
 			var/turf/source = speaker? get_turf(speaker) : get_turf(src)
 			src.playsound_local(source, speech_sound, sound_vol, 1)
@@ -191,6 +196,8 @@
 	else
 		to_chat(src, "[part_a][speaker_name][part_b][formatted]</span></span>")
 
+	telepathy_hear("has heard", "[speaker_name][formatted]", speaker)
+
 /mob/proc/hear_signlang(message, verb = "gestures", datum/language/language, mob/speaker = null)
 	if(!client)
 		return
@@ -204,6 +211,8 @@
 		for(var/obj/item/weapon/holder/H in src.contents)
 			H.show_message(message)
 	show_message(message)
+
+	telepathy_hear("has seen", message, speaker)
 
 /mob/proc/hear_sleep(message)
 	var/heard = ""
@@ -222,3 +231,5 @@
 		heard = "<span class = 'game_say'>...<i>You almost hear someone talking</i>...</span>"
 
 	to_chat(src, heard)
+
+	telepathy_hear(pick("has seen", "has heard"), heard)

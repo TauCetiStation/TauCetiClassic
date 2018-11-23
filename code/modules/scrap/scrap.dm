@@ -122,23 +122,28 @@ var/global/list/scrap_base_cache = list()
 	return ..()
 
 //stupid shard copypaste
-/obj/structure/scrap/Crossed(AM as mob|obj)
+/obj/structure/scrap/Crossed(atom/movable/AM)
 	if(ismob(AM))
 		var/mob/M = AM
 		playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(H.species.flags[IS_SYNTHETIC])
+				playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
+				return
+			if(H.species.flags[IS_FLYING] && !H.falling) // No sound here. Just cruiiisng by.
 				return
 			if( !H.shoes && ( !H.wear_suit || !(H.wear_suit.body_parts_covered & LEGS) ) )
 				var/obj/item/organ/external/BP = H.bodyparts_by_name[pick(BP_L_LEG , BP_R_LEG)]
 				if(BP.status & ORGAN_ROBOT)
+					playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
 					return
 				to_chat(M, "<span class='danger'>You step on the sharp debris!</span>")
 				H.Weaken(3)
 				BP.take_damage(5, 0)
 				H.reagents.add_reagent("toxin", pick(prob(50);0,prob(50);5,prob(10);10,prob(1);25))
 				H.updatehealth()
+			playsound(src.loc, 'sound/effects/glass_step.ogg', 50, 1)
 	..()
 
 /obj/structure/scrap/proc/shuffle_loot()
@@ -196,6 +201,10 @@ var/global/list/scrap_base_cache = list()
 		var/mob/living/carbon/human/victim = user
 		if(victim.species.flags[IS_SYNTHETIC])
 			return 0
+		if(!in_range(src, user)) // telekinesis for dummies.
+			return 0
+		if(victim.species.flags[IS_IMMATERIAL])
+			return FALSE
 		if(victim.gloves)
 			return 0
 		var/obj/item/organ/external/BP = victim.bodyparts_by_name[pick(BP_L_ARM , BP_R_ARM)]

@@ -60,7 +60,10 @@
 	if(!ticker)
 		to_chat(user, "<span class='warning'>You can't buckle anyone in before the game starts.</span>")
 
-	if(!user.Adjacent(M) || user.incapacitated() || user.lying || ispAI(user) || ismouse(user))
+	if(!user.Adjacent(M) && !(TK in user.mutations))
+		return
+
+	if(user.incapacitated() || user.lying || ispAI(user) || ismouse(user))
 		return
 
 	if(istype(M, /mob/living/simple_animal/construct))

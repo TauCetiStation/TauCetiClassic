@@ -272,6 +272,13 @@
 		for (var/obj/item/weapon/grab/G in mob.grabbed_by)
 			G.adjust_position()
 
+		if(ishuman(mob))
+			var/mob/living/carbon/human/H = mob
+			if(H.species.flags[STATICALLY_CHARGED] && !istype(get_turf(mob), /turf/space)) // The only to use this is Voidan. And their nutrition is static charge.
+				if(prob(5))
+					new /obj/effect/effect/sparks(H.loc)
+				H.nutrition = max(500, H.nutrition + 1)
+
 		moving = 0
 		if(mob && .)
 			mob.throwing = 0

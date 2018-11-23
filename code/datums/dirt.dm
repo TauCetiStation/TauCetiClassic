@@ -32,6 +32,10 @@
 	name = "green blood"
 	color = "#004400"
 
+/datum/dirt_cover/tycheon_blood
+	name = "strange liquid"
+	color = "#1F1F1F"
+
 /datum/dirt_cover/gray_blood
 	name = "gray blood"
 	color = "#BCBCBC"

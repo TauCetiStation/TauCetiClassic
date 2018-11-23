@@ -7,7 +7,7 @@
 	var/list/allowed_tools = null
 	// type paths referencing mutantraces that this step applies to.
 	var/list/allowed_species = null
-	var/list/disallowed_species = list(IPC)
+	var/list/disallowed_species = list(IPC, TYCHEON)
 
 	// duration of the step
 	var/min_duration = 0

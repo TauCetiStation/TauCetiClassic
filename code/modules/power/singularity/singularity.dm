@@ -357,3 +357,6 @@
 	explosion(src.loc,(dist),(dist*2),(dist*4))
 	qdel(src)
 	return(gain)
+
+/obj/singularity/attack_tk(mob/user) // No gibbing by telekinesis.
+	return

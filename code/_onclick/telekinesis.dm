@@ -11,9 +11,58 @@ var/const/tk_maxrange = 15
 	By default, emulate the user's unarmed attack
 */
 /atom/proc/attack_tk(mob/user)
-	if(user.stat) return
+	if(user.stat)
+		return
 	user.UnarmedAttack(src,0) // attack_hand, attack_paw, etc
-	return
+
+/obj/attack_tk(mob/user)
+	if(user.stat)
+		return
+	if(istype(loc, /mob))
+		if(user.a_intent == I_HELP)
+			var/mob/M = loc
+			M.drop_from_inventory(src, M.loc)
+			return
+	else if(istype(loc, /obj/item/weapon/storage))
+		var/obj/item/weapon/storage/S = loc
+		S.remove_from_storage(src, get_turf(src))
+		return
+	switch(user.a_intent)
+		if(I_HELP)
+			if(istype(src, /obj/item) && Adjacent(user)) // Even telekinesis requires being near clothing to put it on.
+				user.equip_to_appropriate_slot(src)
+			else
+				user.UnarmedAttack(src, 0)
+		if(I_GRAB)
+			var/obj/item/tk_grab/O = new(src)
+			user.put_in_active_hand(O)
+			O.host = user
+			O.focus_object(src)
+		else
+			user.UnarmedAttack(src, 0)
+
+/mob/living/attack_tk(mob/user)
+	if(user.stat)
+		return
+	var/psy_resist_chance = 50 + (get_dist(src, user) * 2)// A chance that our target will not be affected.
+
+	if(a_intent == I_HELP)
+		psy_resist_chance = 0
+	else if(stat)
+		psy_resist_chance = 0
+	if(!prob(psy_resist_chance))
+		switch(user.a_intent)
+			if(I_DISARM)
+				drop_item(loc)
+			if(I_GRAB)
+				var/obj/item/tk_grab/O = new(src)
+				user.put_in_active_hand(O)
+				O.host = user
+				O.focus_object(src)
+			if(I_HURT)
+				apply_effect(3, PARALYZE)
+	else
+		to_chat(host, "<span class='notice'>[src] is resisting your efforts.</span>")
 
 /*
 	This is similar to item attack_self, but applies to anything
@@ -23,34 +72,24 @@ var/const/tk_maxrange = 15
 	There are not a lot of defaults at this time, add more where appropriate.
 */
 /atom/proc/attack_self_tk(mob/user)
-	return
+	return user.do_telekinesis(get_dist(src, user))
 
-/obj/attack_tk(mob/user)
-	if(user.stat) return
-	if(anchored)
-		..()
-		return
+/obj/item/attack_self_tk(mob/user)
+	. = ..()
+	if(.)
+		attack_self(user)
 
-	var/obj/item/tk_grab/O = new(src)
-	user.put_in_active_hand(O)
-	O.host = user
-	O.focus_object(src)
-	return
+/mob/attack_self_tk(mob/user)
+	. = ..()
+	if(.)
+		var/obj/item/I
+		if(user.hand)
+			I = l_hand
+		else
+			I = r_hand
 
-/obj/item/attack_tk(mob/user)
-	if(user.stat || !isturf(loc)) return
-	if((TK in user.mutations) && !user.get_active_hand()) // both should already be true to get here
-		var/obj/item/tk_grab/O = new(src)
-		user.put_in_active_hand(O)
-		O.host = user
-		O.focus_object(src)
-	else
-		warning("Strange attack_tk(): TK([TK in user.mutations]) empty hand([!user.get_active_hand()])")
-	return
-
-
-/mob/attack_tk(mob/user)
-	return // needs more thinking about
+		if(I)
+			I.attack_self(user)
 
 /*
 	TK Grab Item (the workhorse of old TK)
@@ -75,106 +114,176 @@ var/const/tk_maxrange = 15
 	var/atom/movable/focus = null
 	var/mob/living/host = null
 
-
 /obj/item/tk_grab/dropped(mob/user)
 	if(focus && user && loc != user && loc != user.loc) // drop_item() gets called when you tk-attack a table/closet with an item
 		if(focus.Adjacent(loc))
 			focus.loc = loc
 
 	qdel(src)
-	return
-
 
 	//stops TK grabs being equipped anywhere but into hands
 /obj/item/tk_grab/equipped(mob/user, slot)
-	if( (slot == slot_l_hand) || (slot== slot_r_hand) )	return
+	if((slot == slot_l_hand) || (slot == slot_r_hand))
+		return
 	qdel(src)
-	return
-
 
 /obj/item/tk_grab/attack_self(mob/user)
-	if(focus)
+	if(focus && !QDELING(focus))
+		apply_focus_overlay()
 		focus.attack_self_tk(user)
 
+/obj/item/tk_grab/attack_hand(mob/user)
+	if(focus && !QDELING(focus))
+		apply_focus_overlay()
+		focus.attack_hand(user)
+
+// Since we ourselves can telekinetically do this, this is useless.
+/*
+/obj/item/tk_grab/MouseDrop_T(atom/A)
+	if(istype(A, /obj/item/tk_grab))
+		var/obj/item/tk_grab/T = A
+		if(focus && T.focus)
+			focus.MouseDrop_T(T.focus, host)
+	else if(focus)
+		focus.MouseDrop_T(A, host)
+*/
+
 /obj/item/tk_grab/afterattack(atom/target, mob/living/user, proximity, params)//TODO: go over this
-	if(!target || !user)	return
-	if(last_throw+3 > world.time)	return
+	if(!target || !user)
+		return
+	if(last_throw + 5 > world.time)
+		return
 	if(!host || host != user)
 		qdel(src)
 		return
 	if(!(TK in host.mutations))
 		qdel(src)
 		return
-	if(isobj(target) && !isturf(target.loc))
-		return
 
 	var/d = get_dist(user, target)
-	if(focus) d = max(d,get_dist(user,focus)) // whichever is further
+	if(focus)
+		d = max(d, get_dist(user,focus) + get_dist(target, focus)) // whichever is further
 	switch(d)
 		if(0)
 			;
 		if(1 to 5) // not adjacent may mean blocked by window
 			if(!proximity)
-				user.next_move += 2
+				host.SetNextMove(2)
 		if(5 to 7)
-			user.next_move += 5
+			host.SetNextMove(5)
 		if(8 to tk_maxrange)
-			user.next_move += 10
+			host.SetNextMove(10)
 		else
-			to_chat(user, "\blue Your mind won't reach that far.")
+			to_chat(user, "<span class='notice'>Your mind won't reach that far.</span>")
 			return
+
+	if(!host.do_telekinesis(d))
+		return
 
 	if(!focus)
 		focus_object(target, user)
 		return
 
-	if(target == focus)
-		target.attack_self_tk(user)
-		return // todo: something like attack_self not laden with assumptions inherent to attack_self
+	apply_focus_overlay()
 
 
-	if(!istype(target, /turf) && istype(focus,/obj/item) && target.Adjacent(focus))
-		var/obj/item/I = focus
-		var/resolved = target.attackby(I, user, params)
-		if(!resolved && target && I)
-			I.afterattack(target,user,1) // for splashing with beakers
+	if(isliving(focus))
+		var/mob/living/M = focus
+		user.nutrition -= 10 // Manipulating living beings is TOUGH!
 
+		var/psy_resist_chance = 50 + (d * 2) // A chance that our poor mob might resist our efforts to make him beat something up.
+		if(target == M)
+			psy_resist_chance += 30 // Resisting yourself being beaten up is kinda easier.
+		if(M.a_intent == I_HELP)
+			psy_resist_chance = 0
+		else if(M.stat)
+			psy_resist_chance = 0
+		else if(M == host) // Tis' a feature.
+			psy_resist_chance = 0
 
-	else
-		apply_focus_overlay()
+		if(prob(psy_resist_chance))
+			to_chat(host, "<span class='notice'>[M] is resisting our efforts.</span>")
+			return
+
+		switch(host.a_intent)
+			if(I_DISARM)
+				M.drop_item()
+			if(I_GRAB)
+				step_towards(M, target)
+			if(I_HURT)
+				var/obj/item/I
+				if(host.hand)
+					I = M.l_hand
+				else
+					I = M.r_hand
+
+				var/old_zone_sel = M.zone_sel
+				M.zone_sel = host.zone_sel
+
+				if(target.Adjacent(M))
+					if(I)
+						var/resolved = target.attackby(I, M, params)
+						if(!resolved && target && I)
+							I.afterattack(target, M, 1)
+					else
+						M.UnarmedAttack(target, 0)
+				else
+					if(I)
+						I.afterattack(target, M, 0)
+				M.zone_sel = old_zone_sel
+		last_throw = world.time // So we don't allow them to spam.
+		return
+
+	else if(istype(focus, /obj/item))
+		if(!istype(target, /turf) || host.a_intent == I_HURT)
+			var/obj/item/I = focus
+			if(target.Adjacent(focus))
+				var/resolved = target.attackby(I, user, params)
+				if(!resolved && target && I)
+					I.afterattack(target, user, 1)
+			else
+				I.afterattack(target, user, 0)
+			last_throw = world.time // So we don't allow them to spam.
+			return
+
+	if(!focus.anchored)
 		focus.throw_at(target, 10, 1, user)
 		last_throw = world.time
-	return
 
 /obj/item/tk_grab/attack(mob/living/M, mob/living/user, def_zone)
 	return
 
 
-/obj/item/tk_grab/proc/focus_object(obj/target, mob/living/user)
-	if(!istype(target,/obj))	return//Cant throw non objects atm might let it do mobs later
-	if(target.anchored || !isturf(target.loc))
-		qdel(src)
+/obj/item/tk_grab/proc/focus_object(atom/movable/target, mob/living/user)
+	if(!istype(target, /atom/movable))
 		return
 	focus = target
 	update_icon()
 	apply_focus_overlay()
-	return
-
 
 /obj/item/tk_grab/proc/apply_focus_overlay()
-	if(!focus)	return
-	var/obj/effect/overlay/O = new /obj/effect/overlay(locate(focus.x,focus.y,focus.z))
+	if(!focus)
+		return
+	var/obj/effect/overlay/O = new /obj/effect/overlay(get_turf(focus))
 	O.name = "sparkles"
-	O.anchored = 1
-	O.density = 0
+	O.anchored = TRUE
+	O.density = FALSE
 	O.layer = FLY_LAYER
 	O.dir = pick(cardinal)
 	O.icon = 'icons/effects/effects.dmi'
 	O.icon_state = "nothing"
-	flick("empdisable",O)
+	flick("empdisable", O)
 	QDEL_IN(O, 5)
-	return
-
+	var/obj/effect/overlay/O2 = new /obj/effect/overlay(get_turf(host))
+	O2.name = "sparkles"
+	O2.anchored = TRUE
+	O2.density = FALSE
+	O2.layer = FLY_LAYER
+	O2.dir = pick(cardinal)
+	O2.icon = 'icons/effects/effects.dmi'
+	O2.icon_state = "nothing"
+	flick("empdisable", O2)
+	QDEL_IN(O2, 5)
 
 /obj/item/tk_grab/update_icon()
 	overlays.Cut()

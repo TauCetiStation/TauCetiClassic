@@ -97,6 +97,16 @@ var/const/FALLOFF_SOUNDS = 0.5
 		S.environment = 2
 	src << S
 
+	for(var/mob/M in remote_hearers)
+		var/dist = get_dist(src, M)
+		if(dist > MAX_TELEPATHY_RANGE)
+			S.volume = max(S.volume - (dist - MAX_TELEPATHY_RANGE) * 2, 0)
+		if(M.remote_listen_count > 3)
+			S.volume = max(S.volume - (M.remote_listen_count * 2), 0)
+		if(S.volume <= 0)
+			continue // No volume - no sound.
+ 		M << S
+
 /mob/living/parasite/playsound_local(turf/turf_source, soundin, vol, vary, frequency, falloff, channel = 0, is_global)
 	if(!host || host.ear_deaf > 0)
 		return FALSE

@@ -269,6 +269,11 @@
 	if (!user || anchored)
 		return
 
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if(H.species.flags[IS_IMMATERIAL])
+			return
+
 	if(HULK in user.mutations)//#Z2 Hulk nerfz!
 		if(istype(src, /obj/item/weapon/melee/))
 			if(src.w_class < 4)
@@ -335,8 +340,6 @@
 	src.pickup(user)
 	add_fingerprint(user)
 	user.put_in_active_hand(src)
-	return
-
 
 /obj/item/attack_paw(mob/user)
 	if (!user || anchored)
@@ -511,7 +514,7 @@
 			if(slot_belt)
 				if(H.belt)
 					return 0
-				if(!H.w_uniform)
+				if(!H.w_uniform && !H.species.flags[IS_IMMATERIAL]) // Bootleg. Allows voidians to equip the ID card no matter what. Hue. Boot-leg.
 					if(!disable_warning)
 						to_chat(H, "\red You need a jumpsuit before you can attach this [name].")
 					return 0
@@ -794,6 +797,8 @@
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
 		var/obj/item/organ/internal/eyes/IO = H.organs_by_name[O_EYES]
+		if(!IO) // Can't damage what doesn't exist.
+			return
 		IO.damage += rand(3,4)
 		if(IO.damage >= IO.min_bruised_damage)
 			if(H.stat != DEAD)

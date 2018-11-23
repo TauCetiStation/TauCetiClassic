@@ -137,7 +137,7 @@
 /mob/living/carbon/human/proc/get_pressure_protection(pressure_check = STOPS_PRESSUREDMAGE)
 	var/pressure_adjustment_coefficient = 1	//Determins how much the clothing you are wearing protects you in percent.
 
-	if((head && (head.flags_pressure & pressure_check))&&(wear_suit && (wear_suit.flags_pressure & pressure_check)))
+	if(((head && (head.flags_pressure & pressure_check)) || !(BP_HEAD in species.has_bodypart)) && (wear_suit && (wear_suit.flags_pressure & pressure_check)))
 		pressure_adjustment_coefficient = 0
 
 		//Handles breaches in your space suit. 10 suit damage equals a 100% loss of pressure reduction.
@@ -953,6 +953,57 @@
 
 /mob/living/carbon/human/proc/handle_chemicals_in_body()
 
+	if(get_species() == TYCHEON)  // Shut up and truuuust thiiis! Come up with a flag if you ever need it elsewhere.
+		var/owner_color = uppertext_(rgb(r_skin, g_skin, b_skin))
+		var/mix_color = mix_color_from_reagents(reagents.reagent_list)
+		if(!istype(wear_suit, /obj/item/clothing/suit/space/rig/tycheon))
+			var/list/range_mobs = orange(1, src)
+			for(var/mob/living/carbon/human/H in range_mobs) // Gas mixing color, AND reagents with each other.
+				if(H.get_species() == TYCHEON)
+					for(var/datum/reagent/R in reagents.reagent_list) // They split it all by half, since they are gas and pass it to each other.
+						if(reagents.get_reagent_amount(R.id) > H.reagents.get_reagent_amount(R.id))
+							H.reagents.add_reagent(R.id, 1, R.data)
+							reagents.remove_reagent(R.id, 1)
+					var/other_tycheon_color = uppertext_(rgb(H.r_skin, H.g_skin, H.b_skin))
+					if(mix_color != other_tycheon_color)
+						mix_color = other_tycheon_color
+				else
+					for(var/datum/reagent/R in reagents.reagent_list) // They just give everything they have.
+						H.reagents.add_reagent(R.id, 1, R.data)
+						reagents.remove_reagent(R.id, 1)
+		if((mix_color != 0) && owner_color != mix_color) // Why change our color if we already achieved the result.
+			var/redcolor = hex2num(copytext(mix_color, 2, 4)) // "Complex" math. Trust me, it works.
+			var/greencolor = hex2num(copytext(mix_color, 4, 6))
+			var/bluecolor = hex2num(copytext(mix_color, 6, 8))
+			var/r_tweak = 0.15
+			var/g_tweak = 0.15
+			var/b_tweak = 0.15
+			if(redcolor == 0)
+				if(r_skin <= 1)
+					r_tweak = 1
+			else
+				if(((r_skin / redcolor) >= 0.8) && ((r_skin / redcolor) <= 1.2))
+					r_tweak = 1
+			if(greencolor == 0)
+				if(g_skin <= 1)
+					g_tweak = 1
+			else
+				if(((g_skin / greencolor) >= 0.8) && ((g_skin / greencolor) <= 1.2))
+					g_tweak = 1
+			if(bluecolor == 0)
+				if(b_skin <= 1)
+					b_tweak = 1
+			else
+				if(((b_skin / bluecolor) >= 0.8) && ((b_skin / bluecolor) <= 1.2))
+					b_tweak = 1
+			var/r_base = 1 - r_tweak
+			var/g_base = 1 - g_tweak
+			var/b_base = 1 - b_tweak
+			r_skin = Clamp(round((r_skin * r_base) + (redcolor * r_tweak)), 0, 255)
+			g_skin = Clamp(round((g_skin * g_base) + (greencolor * g_tweak)), 0, 255)
+			b_skin = Clamp(round((b_skin * b_base) + (bluecolor * b_tweak)), 0, 255)
+			update_body()
+
 	if(reagents && !species.flags[IS_SYNTHETIC]) //Synths don't process reagents.
 		var/alien = null
 		if(species)
@@ -1027,7 +1078,7 @@
 			update_inv_w_uniform()
 			update_inv_wear_suit()
 	else
-		if(overeatduration > 500 && !species.flags[IS_SYNTHETIC] && !species.flags[IS_PLANT])
+		if(overeatduration > 500 && !species.flags[NO_FAT])
 			mutations.Add(FAT)
 			update_body()
 			update_mutantrace()

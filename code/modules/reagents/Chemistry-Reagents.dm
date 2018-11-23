@@ -145,6 +145,9 @@ datum/reagent/proc/on_update(atom/A)
 /datum/reagent/proc/on_golem_digest(mob/living/M)
 	return TRUE
 
+/datum/reagent/proc/on_tycheon_digest(mob/living/M)
+	return FALSE // Do not call general digestion proc.
+
 datum/reagent/blood
 	data = new/list("donor"=null,"viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null, "antibodies" = null)
 	name = "Blood"

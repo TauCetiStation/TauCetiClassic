@@ -140,18 +140,6 @@
 			src.icon_state = text("fireaxe[][][][]closing", !!fireaxe, localopened, hitstaken, smashed)
 			addtimer(CALLBACK(src, .proc/update_icon), 10)
 
-/obj/structure/closet/fireaxecabinet/attack_tk(mob/user)
-	if(user.is_busy(src))
-		return
-
-	if(localopened && fireaxe)
-		fireaxe.forceMove(loc)
-		to_chat(user, "<span class='notice'>You telekinetically remove the fire axe.</span>")
-		fireaxe = null
-		update_icon()
-		return
-	attack_hand(user)
-
 /obj/structure/closet/fireaxecabinet/attack_paw(mob/user)
 	attack_hand(user)
 

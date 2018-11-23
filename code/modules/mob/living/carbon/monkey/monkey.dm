@@ -143,8 +143,15 @@
 		var/t1 = text("window=[]", href_list["mach_close"])
 		unset_machine()
 		src << browse(null, t1)
-	if ((href_list["item"] && !( usr.stat ) && !( usr.restrained() ) && in_range(src, usr) ))
-		var/obj/item/item = usr.get_active_hand()
+
+	var/range_check = in_range(src, usr)
+	var/obj/item/item = usr.get_active_hand()
+
+	if(TK in usr.mutations)
+		if(!item || in_range(item, src))
+			range_check = TRUE
+
+	if((href_list["item"] && !( usr.stat ) && !( usr.restrained() ) && range_check ))
 		if(item && (item.flags & (ABSTRACT | DROPDEL)))
 			return
 		var/obj/effect/equip_e/monkey/O = new /obj/effect/equip_e/monkey(  )
