@@ -1304,7 +1304,7 @@ Owl & Griffin toys
 	playsound(src, bitesound, 20, 1)
 
 /obj/item/toy/carpplushie/attack_self(mob/user)
-	playsound(src.loc, bitesound, 20, 1)
+	playsound(src, bitesound, 20, 1)
 	to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
 
 /*
@@ -1339,6 +1339,10 @@ Owl & Griffin toys
 /obj/item/toy/plushie/corgi // dogs are basically the best
 	name = "corgi plushie"
 	icon_state = "corgi"
+
+/obj/item/toy/plushie/space_whale
+	name = "space whale"
+	icon_state = "tau_kit"
 
 /obj/item/toy/plushie/girly_corgi
 	name = "corgi plushie"

@@ -1249,7 +1249,6 @@
 	)
 
 /obj/machinery/vending/toys/attackby(obj/item/I, mob/user)
-	. = ..()
 	if(istype(I, /obj/item/arcade_tickets))
 		var/obj/item/arcade_tickets/AT = I
 		amount_of_tickets += AT.t_amount
@@ -1257,6 +1256,8 @@
 		playsound(src, 'sound/items/crumple.ogg', 50, 1)
 		qdel(AT)
 		return
+	else
+		..()
 
 /obj/machinery/vending/toys/ui_interact(mob/user)
 	if(seconds_electrified && !issilicon(user) && !isobserver(user))
@@ -1317,7 +1318,7 @@
 		if(R.price)
 			dat += " <b>(Price: [R.price])</b>"
 		if(R.tickets)
-			dat += " <b>(Price: [R.tickets] Tickets)</b>"
+			dat += " <b>    (Price: [R.tickets] Tickets)</b>"
 		dat += "</li>"
 	return dat
 

@@ -63367,13 +63367,10 @@
 /turf/simulated/floor,
 /area/quartermaster/storage)
 "czq" = (
-/obj/structure/table/woodentable,
-/obj/item/device/flashlight/lamp/green,
-/turf/simulated/floor{
-	dir = 4;
-	icon_state = "arcade_carpet"
-	},
-/area/crew_quarters/captain)
+/obj/effect/decal/cleanable/blood/oil,
+/obj/item/toy/plushie/black_cat,
+/turf/simulated/floor/plating,
+/area/maintenance/fsmaint2)
 "czr" = (
 /obj/structure/stool/bed/chair/comfy/brown{
 	dir = 4
@@ -73006,6 +73003,32 @@
 /obj/item/weapon/shard,
 /turf/simulated/floor/plating,
 /area/maintenance/aft)
+"jqb" = (
+/obj/item/weapon/reagent_containers/syringe,
+/obj/item/weapon/reagent_containers/pill/methylphenidate,
+/obj/item/weapon/reagent_containers/pill/citalopram,
+/obj/item/weapon/reagent_containers/pill/citalopram,
+/obj/item/weapon/reagent_containers/pill/methylphenidate,
+/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
+/obj/item/clothing/suit/straight_jacket{
+	layer = 3
+	},
+/obj/structure/closet/secure_closet{
+	name = "Psychiatrist's Locker";
+	req_access = null;
+	req_access_txt = "64"
+	},
+/obj/item/weapon/storage/box/cups,
+/obj/machinery/camera{
+	c_tag = "Psychiatric Office";
+	dir = 8;
+	network = list("SS13","Medical");
+	pixel_x = 0;
+	pixel_y = -22
+	},
+/obj/item/toy/plushie/tuxedo_cat,
+/turf/simulated/floor/carpet,
+/area/medical/psych)
 "jrb" = (
 /obj/structure/stool/bed/chair{
 	dir = 4
@@ -77329,30 +77352,14 @@
 /turf/simulated/floor/carpet,
 /area/medical/psych)
 "qRb" = (
-/obj/item/weapon/reagent_containers/syringe,
-/obj/item/weapon/reagent_containers/pill/methylphenidate,
-/obj/item/weapon/reagent_containers/pill/citalopram,
-/obj/item/weapon/reagent_containers/pill/citalopram,
-/obj/item/weapon/reagent_containers/pill/methylphenidate,
-/obj/item/weapon/reagent_containers/glass/bottle/stoxin,
-/obj/item/clothing/suit/straight_jacket{
-	layer = 3
+/obj/structure/table/woodentable,
+/obj/item/toy/plushie/space_whale,
+/obj/item/device/flashlight/lamp/green,
+/turf/simulated/floor{
+	dir = 4;
+	icon_state = "arcade_carpet"
 	},
-/obj/structure/closet/secure_closet{
-	name = "Psychiatrist's Locker";
-	req_access = null;
-	req_access_txt = "64"
-	},
-/obj/item/weapon/storage/box/cups,
-/obj/machinery/camera{
-	c_tag = "Psychiatric Office";
-	dir = 8;
-	network = list("SS13","Medical");
-	pixel_x = 0;
-	pixel_y = -22
-	},
-/turf/simulated/floor/carpet,
-/area/medical/psych)
+/area/crew_quarters/captain)
 "qSb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -113064,7 +113071,7 @@ bnY
 bpL
 ctE
 cwz
-czq
+qRb
 byE
 bpH
 byF
@@ -122324,7 +122331,7 @@ cLr
 dib
 dVb
 bvR
-qRb
+jqb
 bEi
 bFn
 qQb
@@ -129216,7 +129223,7 @@ aaa
 aah
 aup
 azB
-axk
+czq
 aup
 axj
 att

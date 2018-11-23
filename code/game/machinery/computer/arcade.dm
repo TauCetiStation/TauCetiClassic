@@ -176,9 +176,10 @@
 			else
 				feedback_inc("arcade_win_normal")
 				var/obj/item/arcade_tickets/T = new /obj/item/arcade_tickets(get_turf(src)) // Spawns 5 tickets
-				if(player_hp > 15) // Player did well. We'll spawn 10 tickets then.
+				playsound(src, 'sound/items/crumple.ogg', 50, 1, 1)
+				if(player_hp > 10) // Player did well. We'll spawn 10 tickets then.
 					T.change_amount(10)
-				if(player_hp > 25) // NOW THATS EPIC
+				if(player_hp > 20) // NOW THATS EPIC
 					T.change_amount(15)
 	else if (emagged && (turtle >= 4))
 		var/boomamt = rand(5,10)
