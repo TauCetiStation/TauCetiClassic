@@ -1,5 +1,5 @@
 
-//ARCADE TICKETS//
+ // ARCADE TICKETS //
 /obj/item/arcade_tickets
 	name = "5 arcade tickets"
 	desc = "It's a small oblong piece of red card with white writing and an arcade symbol on the front. It seems like you can win those playing the arcade machine."

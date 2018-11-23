@@ -1336,7 +1336,7 @@
 		R.max_amount = amount
 		R.price = price
 		R.tickets = tickets
-		R.display_color = pick("red","orange","green")
+		R.display_color = pick("red", "orange", "green")
 
 		if(hidden)
 			hidden_records += R
@@ -1347,5 +1347,4 @@
 
 		var/atom/temp = typepath
 		R.product_name = initial(temp.name)
-//		world << "Added: [R.product_name]] - [R.amount] - [R.product_path]"
 	return
