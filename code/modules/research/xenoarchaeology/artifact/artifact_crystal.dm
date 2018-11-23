@@ -1,12 +1,12 @@
 
 /obj/machinery/power/crystal
-	var/power_produced = 50000
+	var/power_produced = 100000
 	var/working = 0
 	invisibility = 70
 
 /obj/machinery/power/crystal/process()
 	if(working)
-		add_avail(power_produced*2)
+		add_avail(power_produced)
 	return
 
 /obj/machinery/power/crystal/proc/generate_power()
@@ -32,7 +32,7 @@
 		Generator.loc = loc
 		Generator.connect_to_network()
 
-	icon_custom_crystal = pick("ano70","ano80")
+	icon_custom_crystal = pick("ano70", "ano80")
 	icon_state = icon_custom_crystal
 
 	desc = pick(\
@@ -42,7 +42,7 @@
 	"Something twinkles faintly as you look at it.",\
 	"It's mesmerizing to behold.")
 
-/obj/structure/crystal/Destroy()
+/obj/structure/crystal/Destroy() // Isn't used anywhere right now.
 	qdel(Generator)
 	src.visible_message("\red<b>[src] shatters!</b>")
 	if(prob(75))
@@ -116,7 +116,7 @@
 		overlays.Cut()
 	return
 
-//laser_act
+// laser_act
 /obj/structure/crystal/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \

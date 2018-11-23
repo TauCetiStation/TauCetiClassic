@@ -29,13 +29,10 @@
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = "strange"
 	var/obj/item/weapon/inside
-	var/method = 0// 0 = fire, 1 = brush, 2 = pick
 	origin_tech = "materials=5"
 
 /obj/item/weapon/ore/strangerock/atom_init(mapload, inside_item_type = 0)
 	. = ..()
-
-	//method = rand(0,2)
 	if(inside_item_type)
 		new/obj/item/weapon/archaeological_find(src, inside_item_type)
 		inside = locate() in contents
@@ -45,25 +42,37 @@
 		src.visible_message("The [src] crumbles away, leaving some dust and gravel behind.")*/
 
 /obj/item/weapon/ore/strangerock/attackby(obj/item/weapon/W, mob/user)
-	if(istype(W,/obj/item/weapon/weldingtool/))
-		var/obj/item/weapon/weldingtool/w = W
-		user.SetNextMove(CLICK_CD_INTERACT)
-		if(w.isOn())
-			if(w.get_fuel() >= 4 && !src.method)
-				if(inside)
-					inside.loc = get_turf(src)
-					for(var/mob/M in viewers(world.view, user))
-						M.show_message("<span class='info'>[src] burns away revealing [inside].</span>",1)
+	if(istype(W, /obj/item/weapon/pickaxe/brush))
+		if(do_after(user, 20, target = src) && W)
+			if(inside)
+				inside.forceMove(get_turf(src))
+				visible_message("<span class='notice'>\The [src] is brushed away revealing \the [inside].</span>")
+				inside = null
+			else
+				visible_message("<span class='warning'>\The [src] reveals nothing!</span>")
+			qdel(src)
+			return
+
+	if(istype(W, /obj/item/weapon/weldingtool/))
+		var/obj/item/weapon/weldingtool/WT = W
+		if(do_after(user, 20, target = src) && WT && WT.isOn())
+			user.SetNextMove(CLICK_CD_INTERACT)
+			if(WT.isOn())
+				if(WT.get_fuel() >= 4)
+					if(inside)
+						inside.forceMove(get_turf(src))
+						for(var/mob/M in viewers(world.view, user))
+							M.show_message("<span class='info'>[src] burns away revealing [inside].</span>",1)
+					else
+						for(var/mob/M in viewers(world.view, user))
+							M.show_message("<span class='info'>[src] burns away into nothing.</span>",1)
+					qdel(src)
+					WT.remove_fuel(4)
 				else
 					for(var/mob/M in viewers(world.view, user))
-						M.show_message("<span class='info'>[src] burns away into nothing.</span>",1)
-				qdel(src)
-				w.remove_fuel(4)
-			else
-				for(var/mob/M in viewers(world.view, user))
-					M.show_message("<span class='info'>A few sparks fly off [src], but nothing else happens.</span>",1)
-				w.remove_fuel(1)
-			return
+						M.show_message("<span class='info'>A few sparks fly off [src], but nothing else happens.</span>",1)
+					WT.remove_fuel(1)
+		return
 
 	else if(istype(W,/obj/item/device/core_sampler/))
 		var/obj/item/device/core_sampler/S = W
@@ -198,7 +207,7 @@
 			"There appear to be [pick("dark red","dark purple","dark green","dark blue")] stains along part of it")]."
 		if(10)
 			apply_prefix = 0
-			var/pickpipboy = pick(1,2,3)
+			var/pickpipboy = pick(1, 2, 3)
 			switch(pickpipboy)
 				if(1)
 					new_item = new /obj/item/clothing/gloves/pipboy(src.loc)

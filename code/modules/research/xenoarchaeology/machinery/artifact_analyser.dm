@@ -122,7 +122,7 @@
 					scan_completion_time = world.time + scan_duration
 					src.visible_message("<b>[name]</b> states, \"Scanning begun.\"")
 					owned_scanner.icon_state = "xenoarch_scanner_scanning"
-					flick("xenoarch_console_working",src)
+					flick("xenoarch_console_working", src)
 				break
 			if(!scanned_object)
 				src.visible_message("<b>[name]</b> states, \"Unable to isolate scan target.\"")

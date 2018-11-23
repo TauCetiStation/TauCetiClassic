@@ -55,32 +55,32 @@
 	hitsound = 'sound/weapons/circsawhit.ogg'
 
 /obj/item/weapon/pickaxe/excavationdrill/attack_self(mob/user)
-	var/depth = input("Put the desired depth (1-30 centimeters).", "Set Depth", excavation_amount*2)
-	if(depth>30 || depth<1)
+	var/depth = input("Put the desired depth (1-30 centimeters).", "Set Depth", excavation_amount * 2)
+	if(depth > 30 || depth < 1)
 		to_chat(user, "<span class='notice'>Invalid depth.</span>")
 		return
-	excavation_amount = depth/2
+	excavation_amount = depth / 2
 	to_chat(user, "<span class='notice'>You set the depth to [depth]cm.</span>")
-	if (depth<4)
+	if (depth < 4)
 		icon_state = "excavationdrill0"
-	else if (depth >=4 && depth <8)
+	else if (depth >= 4 && depth < 8)
 		icon_state = "excavationdrill1"
-	else if (depth >=8 && depth <12)
+	else if (depth >= 8 && depth < 12)
 		icon_state = "excavationdrill2"
-	else if (depth >=12 && depth <16)
+	else if (depth >= 12 && depth < 16)
 		icon_state = "excavationdrill3"
-	else if (depth >=16 && depth <20)
+	else if (depth >= 16 && depth < 20)
 		icon_state = "excavationdrill4"
-	else if (depth >=20 && depth <24)
+	else if (depth >= 20 && depth < 24)
 		icon_state = "excavationdrill5"
-	else if (depth >=24 && depth <28)
+	else if (depth >= 24 && depth < 28)
 		icon_state = "excavationdrill6"
 	else
 		icon_state = "excavationdrill7"
 
 /obj/item/weapon/pickaxe/excavationdrill/examine(mob/user)
 	..()
-	var/depth = excavation_amount*2
+	var/depth = excavation_amount * 2
 	to_chat(user, "<span class='info'>It is currently set at [depth]cm.</span>")
 
 /obj/item/weapon/pickaxe/excavationdrill/adv
@@ -92,25 +92,25 @@
 	desc = "Advanced archaeological drill combining ultrasonic excitation and bluespace manipulation to provide extreme precision. The diamond tip is adjustable from 1 to 100 cms."
 
 /obj/item/weapon/pickaxe/excavationdrill/adv/attack_self(mob/user)
-	var/depth = input("Put the desired depth (1-100 centimeters).", "Set Depth", excavation_amount*2)
-	if(depth>100 || depth<1)
+	var/depth = input("Put the desired depth (1-100 centimeters).", "Set Depth", excavation_amount * 2)
+	if(depth > 100 || depth < 1)
 		to_chat(user, "<span class='notice'>Invalid depth.</span>")
 		return
-	excavation_amount = depth/2
+	excavation_amount = depth / 2
 	to_chat(user, "<span class='notice'>You set the depth to [depth]cm.</span>")
-	if (depth<12)
+	if (depth < 12)
 		icon_state = "Dexcavationdrill0"
-	else if (depth >=12 && depth <24)
+	else if (depth >= 12 && depth < 24)
 		icon_state = "Dexcavationdrill1"
-	else if (depth >=24 && depth <36)
+	else if (depth >= 24 && depth < 36)
 		icon_state = "Dexcavationdrill2"
-	else if (depth >=36 && depth <48)
+	else if (depth >= 36 && depth < 48)
 		icon_state = "Dexcavationdrill3"
-	else if (depth >=48 && depth <60)
+	else if (depth >= 48 && depth < 60)
 		icon_state = "Dexcavationdrill4"
-	else if (depth >=60 && depth <72)
+	else if (depth >= 60 && depth < 72)
 		icon_state = "Dexcavationdrill5"
-	else if (depth >=72 && depth <84)
+	else if (depth >= 72 && depth < 84)
 		icon_state = "Dexcavationdrill6"
 	else
 		icon_state = "Dexcavationdrill7"

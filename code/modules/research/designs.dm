@@ -2055,7 +2055,7 @@ datum/design/excavation_drill
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 5000, MAT_GLASS = 1000)
 	build_path = /obj/item/weapon/pickaxe/excavationdrill
-	construction_time=100
+	construction_time = 100
 	category = list("Tools")
 
 datum/design/excavation_drill_diamond
@@ -2066,7 +2066,7 @@ datum/design/excavation_drill_diamond
 	build_type = PROTOLATHE | MINEFAB
 	materials = list(MAT_METAL = 3000, MAT_GLASS = 1000, MAT_DIAMOND = 3750)
 	build_path = /obj/item/weapon/pickaxe/excavationdrill/adv
-	construction_time=200
+	construction_time = 200
 	category = list("Tools")
 
 datum/design/plasmacutter

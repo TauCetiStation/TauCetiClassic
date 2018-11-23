@@ -252,7 +252,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 		to_chat(user, "<span class='notice'><font color='red'>[bicon(src)]Divice blinks faintly.</font></span>")
 
 
-//Fallout Pip-Boy!
+// Fallout Pip-Boy!
 /obj/item/clothing/gloves/pipboy
 	name = "\improper Pip-Boy 3000"
 	desc = "It's a strange looking device with a screen. Seems like it's worn on the arm. This thing clearly has seen better days."
@@ -262,26 +262,41 @@ var/list/bad_messages = list("Never take me off, please!",\
 	slot_flags = SLOT_BELT | SLOT_GLOVES
 	action_button_name = "Toggle Pip-Boy"
 	species_restricted = null
-	var/on = 1//is it on
-	var/profile_name = null
-	var/screen = 1//Which screen is currently showing.
-	var/alarm_1 = "-1752000:00"
+
+	var/on = 1 // Is it on.
+	var/profile_name = null // Master's name.
+	var/screen = 1 // Which screen is currently showing.
+
+	var/alarm_1 = "Expired: 200 years"
 	var/alarm_2 = null
 	var/alarm_3 = null
 	var/alarm_4 = null
+	var/alarm_playing = 0 // So they can't abuse alarm's sound
 
 /obj/item/clothing/gloves/pipboy/atom_init()
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	icon_state = "[initial(icon_state)]_off"
 	on = 0
-	verbs -=/obj/item/clothing/gloves/pipboy/verb/switch_off
+	verbs -= /obj/item/clothing/gloves/pipboy/verb/switch_off
 
 
 /obj/item/clothing/gloves/pipboy/process()
+	if(alarm_playing == 1)
+		return
 	if(("[worldtime2text()]" == alarm_1) || ("[worldtime2text()]" == alarm_2) || ("[worldtime2text()]" == alarm_3) || ("[worldtime2text()]" == alarm_4))
+		var/turf/T = get_turf(src)
+		for(var/mob/M in T)
+			for(var/obj/item/clothing/gloves/pipboy/P in M.contents)
+				if(P == src)
+					M.visible_message("<span class='warning'>[bicon(src)][src] rings loudly!</span>")
+					alarm_playing = 1
 		playsound(src, 'sound/weapons/ring.ogg',50, 1)
-		src.visible_message("<span class='warning'>[bicon(src)][src] rings loudly!</span>")
+		if(alarm_playing != 1)
+			src.visible_message("<span class='warning'>[bicon(src)][src] rings loudly!</span>")
+			alarm_playing = 1
+		sleep(60)
+		alarm_playing = 0
 
 /obj/item/clothing/gloves/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil) || istype(W, /obj/item/weapon/stock_parts/cell) || istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
@@ -307,7 +322,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 	playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
 	on = 0
 	set_light(0)
-	verbs -=/obj/item/clothing/gloves/pipboy/verb/switch_off
+	verbs -= /obj/item/clothing/gloves/pipboy/verb/switch_off
 
 /obj/item/clothing/gloves/pipboy/attack_self(mob/user)
 	return src.interact(user)
@@ -316,7 +331,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 	if(on)
 		if(profile_name)
 			playsound(src, 'sound/items/buttonclick.ogg', 50, 1)
-			var/dat = "<body link='#21ed21' alink='white' bgcolor='#045207'>[name]<font color='white'><br>"
+			var/dat = "<body link='#30CC30' alink='white' bgcolor='#1A351A'><font color='#30CC30'>[name]<br>"
 			switch(screen)
 				if(1)
 					dat += "Hello, [profile_name]!<br>"
@@ -389,7 +404,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 		to_chat(user, "<span class='notice'>[bicon(src)]You blow the dust off the [name]'s screen and twist the power button. A small screen happily lights up. This device is now on.</span>")
 		set_light(2, 1, "#59f65f")
 		on = 1
-		verbs +=/obj/item/clothing/gloves/pipboy/verb/switch_off
+		verbs += /obj/item/clothing/gloves/pipboy/verb/switch_off
 		playsound(src, 'sound/mecha/powerup.ogg', 30, 1)
 		return
 
@@ -397,7 +412,7 @@ var/list/bad_messages = list("Never take me off, please!",\
 	..()
 	usr.set_machine(src)
 
-	if(href_list["menu"]) //Switches menu screens. Converts a sent text string into a number. Saves a LOT of code.
+	if(href_list["menu"]) // Switches menu screens. Converts a sent text string into a number. Saves a LOT of code.
 		screen = text2num(href_list["menu"])
 
 	if(href_list["close"])

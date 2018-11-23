@@ -31,7 +31,7 @@
 
 /obj/item/weapon/fossil/bone/atom_init()
 	. = ..()
-	icon_state = "bone[rand(1,3)]"
+	icon_state = "bone[rand(1, 3)]"
 
 /obj/item/weapon/fossil/skull
 	name = "Fossilised skull"
@@ -40,7 +40,7 @@
 
 /obj/item/weapon/fossil/skull/atom_init()
 	. = ..()
-	icon_state = "skull[rand(1,3)]"
+	icon_state = "skull[rand(1, 3)]"
 
 /obj/item/weapon/fossil/skull/horned
 	icon_state = "hskull"
@@ -48,7 +48,7 @@
 
 /obj/item/weapon/fossil/skull/horned/atom_init()
 	. = ..()
-	icon_state = "horned_skull[rand(1,2)]"
+	icon_state = "horned_skull[rand(1, 2)]"
 
 /obj/item/weapon/fossil/skull/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W,/obj/item/weapon/fossil/bone))
@@ -114,7 +114,7 @@
 
 /obj/item/weapon/fossil/shell/atom_init()
 	. = ..()
-	icon_state = "shell[rand(1,2)]"
+	icon_state = "shell[rand(1, 2)]"
 
 /obj/item/weapon/fossil/plant
 	name = "Fossilised plant"
@@ -124,4 +124,4 @@
 
 /obj/item/weapon/fossil/plant/atom_init()
 	. = ..()
-	icon_state = "plant[rand(1,4)]"
+	icon_state = "plant[rand(1, 4)]"
