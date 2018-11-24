@@ -101,5 +101,5 @@
 		return 0
 
 	if(rand(0,100) < idle_snd_chance)
-		var/list/idle_snd = list('sound/voice/dogs/breathes1.ogg','sound/voice/dogs/breathes2.ogg')
+		var/list/idle_snd = list('sound/voice/dogs/breathes1.ogg', 'sound/voice/dogs/breathes2.ogg')
 		playsound(src, pick(idle_snd), 50, 1, -3)
