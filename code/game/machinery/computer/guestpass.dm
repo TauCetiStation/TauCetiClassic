@@ -8,12 +8,28 @@
 	light_color = "#0099ff"
 	customizable_view = FORDBIDDEN_VIEW
 
-	var/temp_access = list() //to prevent agent cards stealing access as permanent
-	var/expiration_time = 0
+	var/temp_access = list() // to prevent agent cards stealing access as permanent
 	var/reason = "NOT SPECIFIED"
 
+	var/expiration_time = 0
+	var/is_expired = 0
+
+/obj/item/weapon/card/id/guest/proc/count_until_expired()
+	var/time_until_remind = (expiration_time - world.time) - 200
+	addtimer(CALLBACK(src, .proc/expire), time_until_remind)
+	return
+
+/obj/item/weapon/card/id/guest/proc/expire()
+	var/turf/T = get_turf(src)
+	T.visible_message("<span class='warning'>[bicon(src)] Your pass will be expired soon! Hurry up.</span>")
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
+	sleep(200)
+	is_expired = 1
+	icon_state = "guest_expired"
+	return
+
 /obj/item/weapon/card/id/guest/GetAccess()
-	if (world.time > expiration_time)
+	if(is_expired)
 		return access
 	else
 		return temp_access
@@ -44,6 +60,7 @@
 /obj/machinery/computer/guestpass
 	name = "guest pass terminal"
 	icon_state = "guest"
+	desc = "It's a wall-mounted  console that allows you to issue temporary access. Be careful when issuing guest passes. Maximum guest pass card time - one hour."
 	density = 0
 
 
@@ -157,7 +174,7 @@
 					dat += "[entry]<br><hr>"
 				//usr << "Printing the log, standby..."
 				//sleep(50)
-				var/obj/item/weapon/paper/P = new/obj/item/weapon/paper( loc )
+				var/obj/item/weapon/paper/P = new/obj/item/weapon/paper(loc)
 				P.name = "activity log"
 				P.info = dat
 
@@ -179,7 +196,12 @@
 					pass.expiration_time = world.time + duration*10*60
 					pass.reason = reason
 					pass.name = "guest pass #[number]"
+					pass.count_until_expired()
 				else
 					to_chat(usr, "\red Cannot issue pass without issuing ID.")
 
 	updateUsrDialog()
+
+/obj/machinery/computer/guestpass/dark // The darkest sprite verison of guest pass term. Did it just for mappers to use.
+	name = "guest pass terminal"
+	icon_state = "guest_dark"
