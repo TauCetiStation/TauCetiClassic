@@ -15,7 +15,7 @@
 	var/is_expired = 0
 
 /obj/item/weapon/card/id/guest/proc/count_until_expired()
-	var/time_until_remind = (expiration_time - world.time) - 200
+	var/time_until_remind = (expiration_time - world.time) - 10*60*3 // 10 ticks in a second, 60 secs in a minute, 3 minutes before expiration
 	addtimer(CALLBACK(src, .proc/expire), time_until_remind)
 	return
 
@@ -23,7 +23,7 @@
 	var/turf/T = get_turf(src)
 	T.visible_message("<span class='warning'>[bicon(src)] Your pass will be expired soon! Hurry up.</span>")
 	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
-	sleep(200)
+	sleep(10*60*3)
 	is_expired = 1
 	icon_state = "guest_expired"
 	return
@@ -60,7 +60,7 @@
 /obj/machinery/computer/guestpass
 	name = "guest pass terminal"
 	icon_state = "guest"
-	desc = "It's a wall-mounted  console that allows you to issue temporary access. Be careful when issuing guest passes. Maximum guest pass card time - one hour."
+	desc = "It's a wall-mounted console that allows you to issue temporary access. Be careful when issuing guest passes. Maximum guest pass card time - one hour."
 	density = 0
 
 
@@ -202,6 +202,6 @@
 
 	updateUsrDialog()
 
-/obj/machinery/computer/guestpass/dark // The darkest sprite verison of guest pass term. Did it just for mappers to use.
+/obj/machinery/computer/guestpass/dark // The darker sprite verison of a guest pass term. Did it just for mappers to use.
 	name = "guest pass terminal"
 	icon_state = "guest_dark"
