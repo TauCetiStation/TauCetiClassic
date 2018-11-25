@@ -35,7 +35,7 @@
 	name = "box"
 	desc = "It's just an ordinary box. Nothing special."
 	icon_state = "box"
-	item_state = "box_grey"
+	item_state = "syringe_kit"
 	max_storage_space = DEFAULT_BOX_STORAGE
 	foldable = /obj/item/stack/sheet/cardboard	//BubbleWrap
 
