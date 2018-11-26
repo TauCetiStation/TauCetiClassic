@@ -358,9 +358,9 @@
 			M.apply_effect(25, IRRADIATE)
 	var/turf/N = ChangeTurf(basetype)
 	N.fullUpdateMineralOverlays()
-	for(var/turf/simulated/floor/plating/airless/asteroid/D in range(src, 1))
+	for(var/turf/simulated/floor/plating/airless/asteroid/D in RANGE_TURFS(1, src))
 		D.check_sides()
-	for(var/turf/simulated/mineral/F in range(src, 2))
+	for(var/turf/simulated/mineral/F in RANGE_TURFS(2, src))
 		F.check_sides()
 
 
