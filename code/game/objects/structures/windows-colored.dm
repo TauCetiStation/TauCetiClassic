@@ -1,6 +1,10 @@
-var/global/wcBrig
-var/global/wcBar
 var/global/wcCommon
+var/global/wcRed
+var/global/wcPurple
+var/global/wcBrown
+var/global/wcGreen
+var/global/wcBlue
+var/global/wcBar
 var/global/wcDw
 
 
@@ -13,16 +17,24 @@ var/global/wcDw
 
 //replaces color in some area
 /proc/color_windows_init()
-	var/list/brig = list("#aa0808", "#7f0606", "#ff0000", "#ff0000")
+	var/list/red = list("#aa0808", "#990707", "#e50909", "#e50909")
 	var/list/bar = list("#0d8395", "#58b5c3", "#58c366", "#90d79a", "#3399ff", "#00ffff", "#ff6600", "#ffffff")
 	var/list/dw = list("#993300", "#ff6600", "#ffcc00", "#ff9933")
+	var/list/purple = list("#bda2ba", "#bc58b2", "#a54f9e", "#b549d1")
+	var/list/brown = list("#9e5312", "#99761e", "#a56b00", "#d87f2b")
+	var/list/green = list("#aed18b", "#7bce23", "#5a9619", "#709348")
+	var/list/blue = list("#8dbdd7", "#299bd8", "#1e719e", "#2bb8ff")
 
-	wcBrig = pick(brig)
+	wcRed = pick(red)
+	wcPurple = pick(purple)
+	wcBrown = pick(brown)
+	wcGreen = pick(green)
+	wcBlue = pick(blue)
 	wcBar = pick(bar)
 	wcDw = pick(dw)
 
-	//BRIG
-	var/wsBrigList = list(
+	//RED (Only sec stuff honestly)
+	var/wsRedList = list(
 		/area/security/armoury,
 		/area/security/brig,
 		/area/security/detectives_office,
@@ -32,14 +44,113 @@ var/global/wcDw
 		/area/security/prison,
 		/area/security/warden,
 		/area/security/range,
-		/area/security/forensic_office
+		/area/security/forensic_office,
+		/area/security/checkpoint
 		)
 
-	for(var/A in wsBrigList)
+	for(var/A in wsRedList)
 		for(var/obj/structure/window/W in locate(A))
-			W.color = wcBrig
+			W.color = wcRed
 		for(var/obj/machinery/door/window/D in locate(A))
-			D.color = wcBrig
+			D.color = wcRed
+
+	//PURPLE (RnD + Research outpost)
+	var/wsPurpleList = list(
+		/area/rnd/lab,
+		/area/crew_quarters/hor,
+		/area/rnd/hallway,
+		/area/rnd/xenobiology,
+		/area/rnd/storage,
+		/area/rnd/test_area,
+		/area/rnd/mixing,
+		/area/rnd/misc_lab,
+		/area/rnd/telesci,
+		/area/rnd/scibreak,
+		/area/toxins/server,
+		/area/assembly/chargebay,
+		/area/assembly/robotics,
+		/area/toxins/brainstorm_center,
+		/area/research_outpost/hallway,
+		/area/research_outpost/gearstore,
+		/area/research_outpost/maint,
+		/area/research_outpost/iso1,
+		/area/research_outpost/iso2,
+		/area/research_outpost/harvesting,
+		/area/research_outpost/outpost_misc_lab,
+		/area/research_outpost/anomaly,
+		/area/research_outpost/med,
+		/area/research_outpost/entry,
+		/area/research_outpost/longtermstorage,
+		/area/research_outpost/tempstorage,
+		/area/research_outpost/maintstore2
+		)
+
+	for(var/A in wsPurpleList)
+		for(var/obj/structure/window/W in locate(A))
+			W.color = wcPurple
+		for(var/obj/machinery/door/window/D in locate(A))
+			D.color = wcPurple
+
+	//BROWN (Mining + Cargo)
+	var/wsBrownList = list(
+		/area/quartermaster/office,
+		/area/quartermaster/storage,
+		/area/quartermaster/qm,
+		/area/quartermaster/recycler,
+		/area/quartermaster/recycleroffice,
+		/area/quartermaster/miningbreaktime,
+		/area/quartermaster/miningoffice,
+		/area/mine/production,
+		/area/mine/eva,
+		/area/mine/living_quarters,
+		/area/mine/maintenance,
+		/area/mine/west_outpost
+		)
+
+	for(var/A in wsBrownList)
+		for(var/obj/structure/window/W in locate(A))
+			W.color = wcBrown
+		for(var/obj/machinery/door/window/D in locate(A))
+			D.color = wcBrown
+
+	//GREEN (Some of Medbay areas and Hydro)
+	var/wsGreenList = list(
+		/area/medical/psych,
+		/area/medical/patients_rooms,
+		/area/medical/patient_a,
+		/area/medical/patient_b,
+		/area/medical/medbreak,
+		/area/medical/surgeryobs,
+		/area/medical/surgery,
+		/area/medical/surgery2,
+		/area/medical/hallway/outbranch,
+		/area/medical/virology,
+		/area/hydroponics,
+		/area/research_outpost/maintstore1,
+		/area/research_outpost/sample
+		)
+
+	for(var/A in wsGreenList)
+		for(var/obj/structure/window/W in locate(A))
+			W.color = wcGreen
+		for(var/obj/machinery/door/window/D in locate(A))
+			D.color = wcGreen
+
+	//BLUE (Some of Medbay areas)
+	var/wsBlueList = list(
+		/area/medical/reception,
+		/area/medical/morgue,
+		/area/medical/hallway,
+		/area/medical/genetics_cloning,
+		/area/medical/genetics,
+		/area/medical/cmo
+		)
+
+	for(var/A in wsBlueList)
+		for(var/obj/structure/window/W in locate(A))
+			W.color = wcBlue
+		for(var/obj/machinery/door/window/D in locate(A))
+			D.color = wcBlue
 
 	//BAR
 	for(var/obj/structure/window/W in locate(/area/crew_quarters/bar))
