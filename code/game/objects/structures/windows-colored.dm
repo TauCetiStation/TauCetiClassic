@@ -20,7 +20,7 @@ var/global/wcDw
 	var/list/red = list("#aa0808", "#990707", "#e50909", "#e50909")
 	var/list/bar = list("#0d8395", "#58b5c3", "#58c366", "#90d79a", "#3399ff", "#00ffff", "#ff6600", "#ffffff")
 	var/list/dw = list("#993300", "#ff6600", "#ffcc00", "#ff9933")
-	var/list/purple = list("#bda2ba", "#bc58b2", "#a54f9e", "#b549d1")
+	var/list/purple = list("#ba62b1", "#Ba3fad", "#a54f9e", "#b549d1")
 	var/list/brown = list("#9e5312", "#99761e", "#a56b00", "#d87f2b")
 	var/list/green = list("#aed18b", "#7bce23", "#5a9619", "#709348")
 	var/list/blue = list("#8dbdd7", "#299bd8", "#1e719e", "#2bb8ff")
