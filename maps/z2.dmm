@@ -266,7 +266,8 @@
 /area/shuttle/arrival/pre_game)
 "acV" = (
 /obj/structure/object_wall/wagon{
-	icon_state = "6,4"
+	icon_state = "6,4";
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/arrival/pre_game)
@@ -349,7 +350,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "6,0";
 	name = "shuttle wall";
-	opacity = 1
+	opacity = 0
 	},
 /turf/space,
 /area/shuttle/arrival/pre_game)
