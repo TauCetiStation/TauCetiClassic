@@ -843,13 +843,6 @@
 	gas_transfer_coefficient = 0.90
 */
 
-/obj/item/clothing/mask/mara_kilpatrick_1 //staghorn: Mara Kilpatrick
-	name = "shamrock pendant"
-	desc = "A silver and emerald shamrock pendant. It has the initials \"M.K.\" engraved on the back."
-	icon = 'icons/obj/custom_items.dmi'
-	icon_state = "mara_kilpatrick_1"
-	w_class = 2
-
 ////// Small locket - Altair An-Nasaqan - Serithi
 
 /obj/item/clothing/accessory/fluff/altair_locket

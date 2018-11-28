@@ -156,25 +156,6 @@
 
 //stylish bs12 hats
 
-/obj/item/clothing/head/bowlerhat
-	name = "bowler hat"
-	icon_state = "bowler_hat"
-	item_state = "bowler_hat"
-	desc = "For the gentleman of distinction."
-	body_parts_covered = 0
-
-/obj/item/clothing/head/beaverhat
-	name = "beaver hat"
-	icon_state = "beaver_hat"
-	item_state = "beaver_hat"
-	desc = "Soft felt makes this hat both comfortable and elegant."
-
-/obj/item/clothing/head/boaterhat
-	name = "boater hat"
-	icon_state = "boater_hat"
-	item_state = "boater_hat"
-	desc = "The ultimate in summer fashion."
-
 /obj/item/clothing/head/feathertrilby
 	name = "\improper feather trilby"
 	icon_state = "feather_trilby"
