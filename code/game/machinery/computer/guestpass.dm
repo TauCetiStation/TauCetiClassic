@@ -40,7 +40,7 @@
 /obj/item/weapon/card/id/guest/examine(mob/user)
 	..()
 	if (world.time < expiration_time)
-		var/time_until_expiration = (expiration_time - world.time) / 600 // Sould be in minutes.
+		var/time_until_expiration = ceil((expiration_time - world.time) / 600) // Sould be in minutes.
 		to_chat(user, "<span class='notice'>This pass expires at [worldtime2text(expiration_time)].<br>There is [time_until_expiration] minutes left.</span>")
 	else
 		to_chat(user, "<span class='warning'>It expired at [worldtime2text(expiration_time)].</span>")
