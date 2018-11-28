@@ -15,15 +15,18 @@
 	var/is_expired = 0
 
 /obj/item/weapon/card/id/guest/proc/count_until_expired()
-	var/time_until_remind = (expiration_time - world.time) - 10*60*3 // 10 ticks in a second, 60 secs in a minute, 3 minutes before expiration
+	var/time_until_remind = expiration_time - world.time
+	addtimer(CALLBACK(src, .proc/expire_warn), time_until_remind - 3 MINUTES)
 	addtimer(CALLBACK(src, .proc/expire), time_until_remind)
 	return
 
+/obj/item/weapon/card/id/guest/proc/expire_warn()
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 20, 1)
+	flick("guest_warn", src)
+	return
+
 /obj/item/weapon/card/id/guest/proc/expire()
-	var/turf/T = get_turf(src)
-	T.visible_message("<span class='warning'>[bicon(src)] Your pass will be expired soon! Hurry up.</span>")
-	playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
-	sleep(10*60*3)
+	playsound(src, 'sound/machines/buzz-sigh.ogg', 20, 1)
 	is_expired = 1
 	icon_state = "guest_expired"
 	return
@@ -37,7 +40,8 @@
 /obj/item/weapon/card/id/guest/examine(mob/user)
 	..()
 	if (world.time < expiration_time)
-		to_chat(user, "<span class='notice'>This pass expires at [worldtime2text(expiration_time)].</span>")
+		var/time_until_expiration = (expiration_time - world.time) / 600 // Sould be in minutes.
+		to_chat(user, "<span class='notice'>This pass expires at [worldtime2text(expiration_time)].<br>There is [time_until_expiration] minutes left.</span>")
 	else
 		to_chat(user, "<span class='warning'>It expired at [worldtime2text(expiration_time)].</span>")
 
