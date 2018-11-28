@@ -243,7 +243,7 @@
 	update_icon()
 
 // Instead of removing
-/obj/item/weapon/storage/bag/sheetsnatcher/remove_from_storage(obj/item/W, atom/new_location, var/NoUpdate = FALSE)
+/obj/item/weapon/storage/bag/sheetsnatcher/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
 	var/obj/item/stack/sheet/S = W
 	if(!istype(S))
 		return 0
