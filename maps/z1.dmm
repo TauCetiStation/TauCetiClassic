@@ -27982,10 +27982,6 @@
 	icon_state = "warndark"
 	},
 /area/hallway/secondary/entry)
-"aYQ" = (
-/obj/machinery/vending/toys,
-/turf/simulated/floor,
-/area/security/prison)
 "aYR" = (
 /turf/simulated/floor{
 	icon_state = "Stairs_wide"
@@ -65841,7 +65837,7 @@
 /turf/simulated/floor/whitegreed,
 /area/turret_protected/ai)
 "cEG" = (
-/obj/machinery/vending/toys,
+/obj/machinery/vending/cola,
 /turf/simulated/floor{
 	dir = 9;
 	icon_state = "warndark"
@@ -72995,7 +72991,7 @@
 /area/maintenance/disposal)
 "job" = (
 /obj/effect/decal/cleanable/blood,
-/obj/machinery/vending/toys,
+/obj/machinery/vending/cola,
 /turf/simulated/floor/plating,
 /area/maintenance/aft)
 "jpb" = (
@@ -114312,7 +114308,7 @@ anQ
 aoX
 aoo
 are
-aYQ
+anQ
 apc
 atp
 amB

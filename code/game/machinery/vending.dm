@@ -5,7 +5,6 @@
 	var/max_amount = 0
 	var/price = 0
 	var/display_color = "blue"
-	var/tickets = 0
 
 
 
@@ -441,15 +440,6 @@
 		var/datum/data/vending_product/R = locate(href_list["vend"])
 		if (!R || !istype(R) || !R.product_path || R.amount <= 0)
 			return FALSE
-		if(R.tickets != null) // Toys vend stuff, ignore
-			if(istype(src, /obj/machinery/vending/toys))
-				var/obj/machinery/vending/toys/src_toys_vend = src
-				if(src_toys_vend.amount_of_tickets >= R.tickets)
-					src_toys_vend.amount_of_tickets -= R.tickets
-					src.vend(R, usr)
-				else
-					to_chat(usr, "<span class='warning'>Please insert more tickets!</span>")
-			return
 
 		if(R.price == null || isobserver(usr)) //Centcomm buys somethin at himself? Nope, because they can just take this
 			src.vend(R, usr)
@@ -1215,136 +1205,3 @@
 					/obj/item/clothing/mask/fake_face = 2, /obj/item/clothing/suit/hooded/ian_costume = 1, /obj/item/clothing/suit/hooded/carp_costume = 1)
 	prices = list(/obj/item/clothing/head/xenos = 100, /obj/item/clothing/suit/xenos = 200, /obj/item/clothing/suit/monkeysuit = 200, /obj/item/clothing/suit/hooded/carp_costume = 200)
 	contraband = list(/obj/item/clothing/mask/gas/fawkes = 2)
-
-/obj/machinery/vending/toys
-	name = "Toys-o-mat"
-	desc = "NanoTrasen provides FUN and HAPPINESS for its workers!"
-	product_slogans = "Play arcade - buy toys!;Fun, fun, fun!"
-	product_ads = "Fun, fun, fun!;Bring your tickets here, boy!;Toys for tickets!;New plushies!;Toys here!;Collect them all!;Play arcade!"
-	icon_state = "toys"
-	var/amount_of_tickets = 0 // that vend. contains
-
-	products = list(
-		/obj/random/randomtoy = 20,
-		/obj/random/randomfigure = 20,
-		/obj/random/plushie = 20,
-		/obj/item/toy/carpplushie = 15,
-		/obj/item/weapon/storage/fancy/crayons = 5,
-		/obj/item/weapon/storage/box/snappops = 8,
-		/obj/item/toy/eight_ball = 3,
-		/obj/item/toy/eight_ball/conch = 2,
-		/obj/item/toy/balloon = 5
-	)
-
-	var/list/tickets_price = list(
-		/obj/random/randomtoy = 10,
-		/obj/random/randomfigure = 5,
-		/obj/random/plushie = 15,
-		/obj/item/toy/carpplushie = 15,
-		/obj/item/weapon/storage/fancy/crayons = 15,
-		/obj/item/weapon/storage/box/snappops = 15,
-		/obj/item/toy/eight_ball = 10,
-		/obj/item/toy/eight_ball/conch = 15,
-		/obj/item/toy/balloon = 5
-	)
-
-/obj/machinery/vending/toys/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/arcade_tickets))
-		var/obj/item/arcade_tickets/AT = I
-		amount_of_tickets += AT.t_amount
-		to_chat(user, "<span class='green'>You insert a stack of [AT.t_amount] tickets into the machine.</span>")
-		playsound(src, 'sound/items/crumple.ogg', 50, 1)
-		qdel(AT)
-		return
-	else
-		..()
-
-/obj/machinery/vending/toys/ui_interact(mob/user)
-	if(seconds_electrified && !issilicon(user) && !isobserver(user))
-		if(shock(user, 100))
-			return
-
-	var/vendorname = name  //import the machine's name
-
-	if(currently_vending)
-		var/dat
-		dat += "<b>You have selected [currently_vending.product_name].<br>Please swipe your ID to pay for the article.</b><br>"
-		dat += "<a href='byond://?src=\ref[src];cancel_buying=1'>Cancel</a>"
-		var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 400, 550)
-		popup.set_content(dat)
-		popup.open()
-		return
-
-	var/dat
-	dat += "<h3>Select an item</h3>"
-	dat += "<div class='statusDisplay'>"
-	dat += "<h3>Amount of Arcade Tickets: [amount_of_tickets]</h3>"
-
-	if (product_records.len == 0)
-		dat += "<font color = 'red'>No product loaded!</font>"
-
-	else
-		dat += "<ul>"
-
-		dat += print_recors(product_records)
-		if(extended_inventory)
-			dat += print_recors(hidden_records)
-		if(coin)
-			dat += print_recors(coin_records)
-
-		dat += "</ul>"
-	dat += "</div>"
-
-	if (premium.len > 0)
-		dat += "<b>Coin slot:</b> [coin ? coin : "No coin inserted"] <a href='byond://?src=\ref[src];remove_coin=1'>Remove</A><br>"
-
-	if (ewallet)
-		dat += "<b>Charge card's credits:</b> [ewallet ? ewallet.worth : "No charge card inserted"] (<a href='byond://?src=\ref[src];remove_ewallet=1'>Remove</A>)<br><br>"
-
-	var/datum/browser/popup = new(user, "window=vending", "[vendorname]", 450, 500)
-	popup.set_content(dat)
-	popup.open()
-
-/obj/machinery/vending/toys/print_recors(list/record)
-	var/dat
-	for (var/datum/data/vending_product/R in record)
-		dat += "<li>"
-		if (R.amount > 0)
-			dat += " <a href='byond://?src=\ref[src];vend=\ref[R]'>Vend</A>"
-		else
-			dat += " <font color = 'red'>SOLD OUT</font>"
-		dat += "<font color = '[R.display_color]'><B>[R.product_name]</B>:"
-		dat += " <b>[R.amount]</b> </font>"
-		if(R.price)
-			dat += " <b>(Price: [R.price])</b>"
-		if(R.tickets)
-			dat += " <b>    (Price: [R.tickets] Tickets)</b>"
-		dat += "</li>"
-	return dat
-
-/obj/machinery/vending/toys/build_inventory(list/productlist,hidden=0,req_coin=0)
-	for(var/typepath in productlist)
-		var/amount = productlist[typepath]
-		var/price = prices[typepath]
-		var/tickets = tickets_price[typepath]
-		if(isnull(amount)) amount = 1
-
-		var/datum/data/vending_product/R = new /datum/data/vending_product()
-
-		R.product_path = typepath
-		R.amount = amount
-		R.max_amount = amount
-		R.price = price
-		R.tickets = tickets
-		R.display_color = pick("red", "orange", "green")
-
-		if(hidden)
-			hidden_records += R
-		else if(req_coin)
-			coin_records += R
-		else
-			product_records += R
-
-		var/atom/temp = typepath
-		R.product_name = initial(temp.name)
-	return
