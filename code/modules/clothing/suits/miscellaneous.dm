@@ -260,28 +260,6 @@
 	cold_protection = UPPER_TORSO|LOWER_TORSO
 	armor = list(melee = 0, bullet = 0, laser = 0,energy = 0, bomb = 0, bio = 30, rad = 0)
 
-//Blue suit jacket toggle
-/obj/item/clothing/suit/suit/verb/toggle()
-	set name = "Toggle Jacket Buttons"
-	set category = "Object"
-	set src in usr
-
-	if(!usr.canmove || usr.stat || usr.restrained())
-		return 0
-
-	if(src.icon_state == "suitjacket_blue_open")
-		src.icon_state = "suitjacket_blue"
-		src.item_state = "suitjacket_blue"
-		to_chat(usr, "You button up the suit jacket.")
-	else if(src.icon_state == "suitjacket_blue")
-		src.icon_state = "suitjacket_blue_open"
-		src.item_state = "suitjacket_blue_open"
-		to_chat(usr, "You unbutton the suit jacket.")
-	else
-		to_chat(usr, "You button-up some imaginary buttons on your [src].")
-		return
-	usr.update_inv_wear_suit()
-
 //pyjamas
 //originally intended to be pinstripes >.>
 
@@ -307,18 +285,6 @@
 	icon_state = "leathercoat"
 	item_state = "leathercoat"
 
-/obj/item/clothing/suit/browncoat
-	name = "brown leather coat"
-	desc = "A long, brown leather coat."
-	icon_state = "browncoat"
-	item_state = "browncoat"
-
-/obj/item/clothing/suit/neocoat
-	name = "black coat"
-	desc = "A flowing, black coat."
-	icon_state = "neocoat"
-	item_state = "neocoat"
-
 /obj/item/clothing/suit/serifcoat
 	name = "serif coat"
 	desc = "A old coat"
@@ -332,28 +298,28 @@
 /obj/item/clothing/under/stripper/stripper_pink
 	name = "pink swimsuit"
 	desc = "A rather skimpy pink swimsuit."
-	icon_state = "stripper_p_under"
+	icon_state = "stripper_p"
 	item_color = "stripper_p"
 	siemens_coefficient = 1
 
 /obj/item/clothing/under/stripper/stripper_green
 	name = "green swimsuit"
 	desc = "A rather skimpy green swimsuit."
-	icon_state = "stripper_g_under"
+	icon_state = "stripper_g"
 	item_color = "stripper_g"
 	siemens_coefficient = 1
 
-/obj/item/clothing/suit/stripper/stripper_pink
+/obj/item/clothing/suit/stripper_pink
 	name = "pink skimpy dress"
 	desc = "A rather skimpy pink dress."
-	icon_state = "stripper_p_over"
+	icon_state = "stripper_p"
 	item_state = "stripper_p"
 	siemens_coefficient = 1
 
-/obj/item/clothing/suit/stripper/stripper_green
+/obj/item/clothing/suit/stripper_green
 	name = "green skimpy dress"
 	desc = "A rather skimpy green dress."
-	icon_state = "stripper_g_over"
+	icon_state = "stripper_g"
 	item_state = "stripper_g"
 	siemens_coefficient = 1
 

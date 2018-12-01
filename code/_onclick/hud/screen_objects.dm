@@ -90,7 +90,7 @@
 			if (S.storage_ui.click_border_start[i] <= click_x && click_x <= S.storage_ui.click_border_end[i] && i <= S.contents.len)
 				I = S.contents[i]
 				if (I)
-					I.attack_hand(usr)
+					I.Click(location, control, params)
 					return 1
 	return 1
 
