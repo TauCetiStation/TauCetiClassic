@@ -70593,7 +70593,7 @@
 /area/quartermaster/recycleroffice)
 "fhb" = (
 /obj/effect/decal/cleanable/blood,
-/obj/machinery/vending/cola,
+/obj/item/weapon/shard,
 /turf/simulated/floor/plating,
 /area/maintenance/aft)
 "fib" = (
@@ -73243,11 +73243,6 @@
 	icon_state = "bluefull"
 	},
 /area/medical/reception)
-"jRb" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/weapon/shard,
-/turf/simulated/floor/plating,
-/area/maintenance/aft)
 "jSb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -104117,7 +104112,7 @@ aaa
 aaa
 bIZ
 fhb
-jRb
+coV
 cES
 cJz
 gjb
@@ -114322,7 +114317,7 @@ anQ
 aoX
 aoo
 are
-anQ
+arL
 apc
 atp
 amB
@@ -115346,7 +115341,7 @@ amx
 amx
 anS
 aou
-arL
+aot
 ang
 aiF
 amx
