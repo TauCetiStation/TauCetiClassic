@@ -6156,6 +6156,10 @@
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 1
 	},
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "redcorner"
@@ -6625,15 +6629,6 @@
 "akE" = (
 /turf/simulated/floor/plating/airless/catwalk,
 /area/solar/auxport)
-"akF" = (
-/obj/machinery/computer/guestpass{
-	pixel_y = -28
-	},
-/obj/machinery/atmospherics/components/unary/vent_pump/on{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/security/brig)
 "akG" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -32178,6 +32173,10 @@
 	dir = 2;
 	network = list("SS13","Research")
 	},
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	icon_state = "white"
 	},
@@ -35844,10 +35843,6 @@
 /turf/simulated/floor/carpet,
 /area/crew_quarters/bar)
 "bqi" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube1"
@@ -37171,6 +37166,10 @@
 	pixel_y = 4
 	},
 /obj/item/device/assembly/signaler,
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "darkblue"
@@ -42308,13 +42307,14 @@
 	},
 /area/bridge)
 "bEz" = (
-/obj/machinery/computer/guestpass{
-	pixel_y = -28
-	},
 /obj/machinery/light,
 /obj/structure/rack,
 /obj/item/weapon/wrench,
 /obj/item/weapon/storage/toolbox/emergency,
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
 /turf/simulated/floor{
 	dir = 6;
 	icon_state = "darkblue"
@@ -46235,9 +46235,6 @@
 	},
 /area/hallway/primary/starboard)
 "bNj" = (
-/obj/machinery/computer/guestpass{
-	pixel_y = 28
-	},
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -46290,12 +46287,13 @@
 /turf/simulated/floor,
 /area/hallway/primary/aft)
 "bNq" = (
-/obj/machinery/computer/guestpass{
-	pixel_x = -28
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
+	},
+/obj/machinery/computer/guestpass{
+	dir = 8;
+	pixel_x = -28
 	},
 /turf/simulated/floor,
 /area/engine/break_room)
@@ -69205,7 +69203,8 @@
 "cNb" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
 /obj/machinery/computer/guestpass{
-	pixel_y = 32
+	dir = 1;
+	pixel_y = 28
 	},
 /turf/simulated/floor{
 	dir = 1;
@@ -76530,6 +76529,10 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/machinery/computer/guestpass{
+	dir = 1;
+	pixel_y = 28
+	},
 /turf/simulated/floor{
 	dir = 1;
 	icon_state = "blue"
@@ -79244,10 +79247,6 @@
 /turf/simulated/wall,
 /area/quartermaster/storage)
 "uGb" = (
-/obj/machinery/computer/guestpass{
-	pixel_x = -28;
-	pixel_y = 0
-	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 5
 	},
@@ -79256,6 +79255,10 @@
 	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
+	},
+/obj/machinery/computer/guestpass{
+	dir = 8;
+	pixel_x = -28
 	},
 /turf/simulated/floor,
 /area/quartermaster/office)
@@ -110444,7 +110447,7 @@ aik
 aeq
 aeq
 aka
-akF
+aiy
 afp
 afp
 afp
