@@ -261,11 +261,10 @@
 	throw_speed = 0.5
 	w_class = 1
 	body_parts_covered = null
-	var/busy = 0
+	var/last_time_used = 0
 
 /obj/item/clothing/mask/ecig/attack_self(mob/user)
-	if(!busy)
-		busy = 1
+	if(world.time > last_time_used + 20)
 		if(icon_state == "ecig")
 			icon_state = "ecig_on"
 			item_state = "ecig_on"
@@ -274,6 +273,5 @@
 			icon_state = "ecig"
 			item_state = "ecig"
 			to_chat(user, "<span class='notice'>You turn the [src] off</span>")
-		sleep(10)
-		busy = 0
+		last_time_used = world.time
 	return
