@@ -185,6 +185,7 @@ BLIND     // can't see anything
 	var/wired = 0
 	var/obj/item/weapon/stock_parts/cell/cell = 0
 	var/clipped = 0
+	var/protect_fingers = 1 // Are we gonna get hurt when searching in the trash piles
 	body_parts_covered = ARMS
 	slot_flags = SLOT_GLOVES
 	attack_verb = list("challenged")
