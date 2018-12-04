@@ -227,7 +227,7 @@
 	if(D.density)
 		to_chat(src, "<span class='userdanger'>You force your fingers between \
 		 the doors and begin to pry them open...</span>")
-		playsound(D, 'sound/machines/electric_door_open.ogg', 15, 1, -4)
+		playsound(D, 'sound/machines/electric_door_open.ogg', 30, 1, -4)
 		if (!is_busy() && do_after(src, 40, target = D) && D)
 			D.open(1)
 
