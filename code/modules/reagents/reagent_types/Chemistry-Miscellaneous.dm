@@ -282,8 +282,6 @@
 					H.feet_blood_DNA = null
 					H.feet_dirt_color = null
 					H.update_inv_shoes()
-				H.clean_blood(1)
-				return
 		M.clean_blood()
 
 /datum/reagent/xenomicrobes

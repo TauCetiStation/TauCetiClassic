@@ -508,7 +508,7 @@
 				H.belt.make_wet(1) //<= wet
 				if(H.belt.clean_blood())
 					H.update_inv_belt()
-			H.clean_blood(washshoes)
+			H.clean_blood()
 		else
 			if(M.wear_mask)						//if the mob is not human, it cleans the mask without asking for bitflags
 				if(M.wear_mask.clean_blood())
