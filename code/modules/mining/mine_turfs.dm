@@ -349,7 +349,7 @@
 	for(var/turf/simulated/floor/plating/airless/asteroid/D in RANGE_TURFS(1, src))
 		D.check_sides()
 	for(var/turf/simulated/mineral/F in RANGE_TURFS(2, src))
-		F.full_check_sides()
+		F.check_sides()
 
 
 	if(rand(1,500) == 1)
@@ -632,6 +632,9 @@
 	if(istype(get_step(src, WEST), /turf/simulated/mineral))
 		overlays += image('icons/turf/asteroid.dmi', "rock_side_4", layer=6)
 
+
+/turf/simulated/floor/plating/airless/asteroid/check_sides()
+	..()
 	var/turf/T
 	for(var/direction_to_check in cardinal)
 		T = get_step(src, direction_to_check)
@@ -646,7 +649,7 @@
 
 /turf/proc/full_check_sides()
 	var/turf/A
-	for(var/newdir in alldirs)
+	for(var/newdir in cardinal)
 		A = get_step(src, newdir)
 		A.check_sides()
 	check_sides()
