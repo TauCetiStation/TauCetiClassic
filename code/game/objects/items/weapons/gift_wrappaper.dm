@@ -60,7 +60,7 @@
 	qdel(src)
 
 /obj/item/weapon/a_gift/attack_self(mob/M)
-	var/gift_type = pick(/obj/item/weapon/sord,
+	var/gift_type = pick(
 		/obj/item/weapon/storage/wallet,
 		/obj/item/weapon/storage/photo_album,
 		/obj/item/weapon/storage/box/snappops,
@@ -106,9 +106,15 @@
 		/obj/item/weapon/storage/belt/utility/full,
 		/obj/item/clothing/accessory/tie/horrible,
 		/obj/item/clothing/suit/jacket/leather,
-		/obj/item/clothing/suit/jacket/leather/overcoat)
+		/obj/item/clothing/suit/jacket/leather/overcoat,
+		/obj/item/toy/carpplushie,
+		/obj/random/plushie,
+		/obj/item/toy/eight_ball,
+		/obj/item/toy/eight_ball/conch,
+		)
 
-	if(!ispath(gift_type,/obj/item))	return
+	if(!ispath(gift_type, /obj/item))
+		return
 
 	var/obj/item/I = new gift_type(M)
 	M.remove_from_mob(src)

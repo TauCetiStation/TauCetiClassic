@@ -675,7 +675,7 @@
 	new /obj/item/weapon/reagent_containers/food/snacks/cookie(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/cookie(src)
 	new /obj/item/weapon/reagent_containers/food/snacks/cookie(src)
-	new /obj/item/weapon/reagent_containers/food/snacks/cookie(src)
+	new /obj/item/toy/plushie/girly_corgi(src)
 
 //NOT USED ANYWHERE
 /obj/item/weapon/storage/box/syndielogo_box
