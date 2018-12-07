@@ -753,10 +753,10 @@
 	vend_delay = 34
 	icon_state = "cigs"
 	light_color = "#dddddd"
-	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10,/obj/item/weapon/storage/fancy/cigarettes/menthol = 5,/obj/item/weapon/storage/box/matches = 10,/obj/item/weapon/lighter/random = 4)
+	products = list(/obj/item/weapon/storage/fancy/cigarettes = 10, /obj/item/weapon/storage/fancy/cigarettes/menthol = 5, /obj/item/weapon/storage/box/matches = 10, /obj/item/weapon/lighter/random = 4, /obj/item/clothing/mask/ecig = 4)
 	contraband = list(/obj/item/weapon/lighter/zippo = 4)
 	premium = list(/obj/item/clothing/mask/cigarette/cigar/havana = 2)
-	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 15,/obj/item/weapon/storage/fancy/cigarettes/menthol = 25,/obj/item/weapon/storage/box/matches = 1,/obj/item/weapon/lighter/random = 2)
+	prices = list(/obj/item/weapon/storage/fancy/cigarettes = 20, /obj/item/weapon/storage/fancy/cigarettes/menthol = 30, /obj/item/weapon/storage/box/matches = 10, /obj/item/weapon/lighter/random = 15, /obj/item/clothing/mask/ecig = 40)
 	refill_canister = /obj/item/weapon/vending_refill/cigarette
 
 /obj/machinery/vending/medical

@@ -8,7 +8,8 @@
 	var/driving = 0
 	var/mob/living/pulling = null
 	var/bloodiness
-
+	var/brake = 0
+	var/alert = 0
 
 /obj/structure/stool/bed/chair/wheelchair/handle_rotation()
 	overlays = null
@@ -17,7 +18,37 @@
 	if(buckled_mob)
 		buckled_mob.dir = dir
 
+/obj/structure/stool/bed/chair/wheelchair/post_buckle_mob(mob/living/M)
+	. = ..()
+	if(!buckled_mob && alert)
+		M.clear_alert("brake")
+		alert = 0
+
+/obj/structure/stool/bed/chair/wheelchair/verb/toggle_brake()
+	set name = "Toggle brake"
+	set category = "Object"
+	set src in oview(1)
+
+	brake = !brake
+
+	if(isliving(usr))
+		var/mob/living/M = usr
+		if(buckled_mob == M)
+			if(brake)
+				M.throw_alert("brake")
+				alert = 1
+			else
+				M.clear_alert("brake")
+				alert = 0
+	if(brake)
+		to_chat(usr, "<span class='notice'>You turn the brake on.</span>")
+	else
+		to_chat(usr, "<span class='notice'>You turn the brake off.</span>")
+
 /obj/structure/stool/bed/chair/wheelchair/relaymove(mob/user, direction)
+	if(brake)
+		to_chat(user, "<span class='red'>You cannot drive while brake is on.</span>")
+		return
 	if(user.stat || user.stunned || user.weakened || user.paralysis || user.lying || user.restrained())
 		if(user==pulling)
 			pulling = null
@@ -75,6 +106,8 @@
 	driving = 0
 
 /obj/structure/stool/bed/chair/wheelchair/Move()
+	if(brake)
+		return
 	..()
 	if(buckled_mob)
 		var/mob/living/occupant = buckled_mob
@@ -130,6 +163,8 @@
 		return
 
 /obj/structure/stool/bed/chair/wheelchair/Bump(atom/A)
+	if(brake)
+		return
 	..()
 	if(!buckled_mob)	return
 

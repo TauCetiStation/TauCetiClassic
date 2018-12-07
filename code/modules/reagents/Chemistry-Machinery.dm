@@ -93,8 +93,8 @@
 	data["maxEnergy"] = max_energy
 	data["isBeakerLoaded"] = beaker ? 1 : 0
 	data["glass"] = accept_glass
-	var beakerContents[0]
-	var beakerCurrentVolume = 0
+	var/beakerContents[0]
+	var/beakerCurrentVolume = 0
 	if(beaker && beaker:reagents && beaker:reagents.reagent_list.len)
 		for(var/datum/reagent/R in beaker:reagents.reagent_list)
 			beakerContents.Add(list(list("name" = R.name, "volume" = R.volume))) // list in a list because Byond merges the first list...
@@ -108,7 +108,7 @@
 		data["beakerCurrentVolume"] = null
 		data["beakerMaxVolume"] = null
 
-	var chemicals[0]
+	var/chemicals[0]
 	for (var/re in dispensable_reagents)
 		var/datum/reagent/temp = chemical_reagents_list[re]
 		if(temp)
@@ -1314,7 +1314,7 @@
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+	playsound(src.loc, 'sound/machines/blender.ogg', 35, 1)
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	inuse = 1

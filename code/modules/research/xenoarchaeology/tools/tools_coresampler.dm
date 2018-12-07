@@ -3,6 +3,7 @@
 /obj/item/weapon/storage/box/samplebags
 	name = "sample bag box"
 	desc = "A box claiming to contain sample bags."
+	icon_state = "evidence_box"
 
 /obj/item/weapon/storage/box/samplebags/atom_init()
 	for (var/i in 1 to 7)

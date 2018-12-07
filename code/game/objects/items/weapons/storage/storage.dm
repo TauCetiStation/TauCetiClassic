@@ -129,7 +129,8 @@
 //This proc return 1 if the item can be picked up and 0 if it can't.
 //Set the stop_messages to stop it from printing messages
 /obj/item/weapon/storage/proc/can_be_inserted(obj/item/W, stop_messages = FALSE)
-	if(!istype(W) || (W.flags & ABSTRACT)) return //Not an item
+	if(!istype(W) || (W.flags & ABSTRACT) || W.anchored)
+		return FALSE//Not an item
 
 	if(loc == W)
 		return FALSE //Means the item is already in the storage item
