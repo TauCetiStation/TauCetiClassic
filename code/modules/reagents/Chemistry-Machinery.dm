@@ -1314,7 +1314,7 @@
 		return
 	if (!beaker || (beaker && beaker.reagents.total_volume >= beaker.reagents.maximum_volume))
 		return
-	playsound(src.loc, 'sound/machines/blender.ogg', 50, 1)
+	playsound(src.loc, 'sound/machines/blender.ogg', 35, 1)
 	var/offset = prob(50) ? -2 : 2
 	animate(src, pixel_x = pixel_x + offset, time = 0.2, loop = 200) //start shaking
 	inuse = 1
