@@ -37,9 +37,9 @@
 
 /turf/simulated/mineral/atom_init_late()
 	MineralSpread()
-	check_sides()
+	update_overlays()
 
-/turf/simulated/mineral/check_sides()
+/turf/simulated/mineral/update_overlays()
 	overlays.Cut()
 	if(!mineral)
 		name = "\improper Rock"
@@ -341,11 +341,11 @@
 					M.Stun(5)
 			M.apply_effect(25, IRRADIATE)
 	var/turf/N = ChangeTurf(basetype)
-	N.full_check_sides()
+	N.update_overlays_full()
 	for(var/turf/simulated/floor/plating/airless/asteroid/D in RANGE_TURFS(1, src))
-		D.check_sides()
+		D.update_overlays()
 	for(var/turf/simulated/mineral/F in RANGE_TURFS(2, src))
-		F.check_sides()
+		F.update_overlays()
 
 
 	if(rand(1,500) == 1)
@@ -564,7 +564,7 @@
 	else
 		t = T.ChangeTurf(basetype)
 	spawn(2)
-		t.full_check_sides()
+		t.update_overlays_full()
 
 /turf/simulated/floor/plating/airless/asteroid/cave/proc/SpawnMonster(turf/T)
 	if(prob(30))
@@ -614,20 +614,25 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/turf/proc/check_sides()
+/turf/proc/update_overlays()
 
 	overlays.Cut()
 
-	if(istype(get_step(src, NORTH), /turf/simulated/mineral))
-		overlays += image('icons/turf/asteroid.dmi', "rock_side_2", layer=6)
-	if(istype(get_step(src, SOUTH), /turf/simulated/mineral))
-		overlays += image('icons/turf/asteroid.dmi', "rock_side_1", layer=6)
-	if(istype(get_step(src, EAST), /turf/simulated/mineral))
-		overlays += image('icons/turf/asteroid.dmi', "rock_side_8", layer=6)
-	if(istype(get_step(src, WEST), /turf/simulated/mineral))
-		overlays += image('icons/turf/asteroid.dmi', "rock_side_4", layer=6)
+	for(var/direction_to_check in cardinal)
+		if(istype(get_step(src, direction_to_check), /turf/simulated/mineral))
+			var/overlay_name = null
+			switch(direction_to_check)
+				if(1)
+					overlay_name = "rock_side_2"
+				if(2)
+					overlay_name = "rock_side_1"
+				if(4)
+					overlay_name = "rock_side_8"
+				if(8)
+					overlay_name = "rock_side_4"
+			overlays += image('icons/turf/asteroid.dmi', "[overlay_name]", layer=6)
 
-/turf/simulated/floor/plating/airless/asteroid/check_sides()
+/turf/simulated/floor/plating/airless/asteroid/update_overlays()
 	..()
 	var/turf/T
 	for(var/direction_to_check in cardinal)
@@ -641,15 +646,15 @@
 				var/image/I = image('icons/turf/asteroid.dmi', "asteroid_edge_[direction_to_check]")
 				src.overlays += I
 
-/turf/proc/full_check_sides()
+/turf/proc/update_overlays_full()
 	var/turf/A
 	for(var/newdir in cardinal)
 		A = get_step(src, newdir)
-		A.check_sides()
-	check_sides()
+		A.update_overlays()
+	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/atom_init_late()
-	check_sides()
+	update_overlays()
 
 /turf/simulated/floor/plating/airless/asteroid/ex_act(severity)
 	switch(severity)
