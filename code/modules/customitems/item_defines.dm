@@ -726,6 +726,7 @@
 	icon_state = "indiana"
 	item_state = "indiana"
 	item_color = "indiana"
+	flags = ONESIZEFITSALL
 
 /obj/item/clothing/under/fluff/cowboy
 	name = "western suit"
