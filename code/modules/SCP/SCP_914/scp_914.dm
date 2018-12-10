@@ -119,7 +119,7 @@
 				"degrade" = list("clothes")
 			),
 		"clothes" = list(
-				"types" = typesof(/obj/item/clothing/under) - list(/obj/item/clothing/under/chameleon, /obj/item/clothing/under/cloud, /obj/item/clothing/under/golem, /obj/item/clothing/under/gimmick),
+				"types" = typesof(/obj/item/clothing/under) - list(/obj/item/clothing/under/chameleon, /obj/item/clothing/under/golem, /obj/item/clothing/under/gimmick),
 				"upgrade" = list("labcoats", "teir1glasses", "teir1gloves", "teir1hat", "teir1mask", "teir1shoes", "teir1suit"),
 				"degrade" = list("trash")
 			),
