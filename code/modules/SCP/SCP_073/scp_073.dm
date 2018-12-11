@@ -45,7 +45,7 @@
 	if(ishuman(P.firer) && P.firer != src)
 		var/mob/living/carbon/human/H = P.firer
 		if(H != src)
-			apply_effect(P.damage / 3 + P.agony / 3,AGONY,0)
+			apply_effect(P.damage / 3 + P.agony / 3, AGONY, 0)
 		return H.bullet_act(P, def_zone)
 	else
 		. = ..(P, def_zone)
@@ -55,7 +55,7 @@
 		var/mob/living/carbon/human/H = user
 		H.do_attack_animation(src)
 		if(H != src)
-			apply_effect(I.force,AGONY,0)
+			apply_effect(I.force, AGONY, 0)
 		return H.attacked_by(I, user, def_zone)
 	else
 		. = ..(I, user, def_zone)
@@ -65,7 +65,7 @@
 		M.attack_hand(M)
 		M.do_attack_animation(src)
 		if(M != src)
-			apply_effect(5,AGONY,0)
+			apply_effect(5, AGONY, 0)
 	else
 		. = ..(M)
 
@@ -83,7 +83,7 @@
 			var/damage = rand(M.melee_damage_lower, M.melee_damage_upper)
 			M.adjustBruteLoss(damage)
 			M.do_attack_animation(src)
-			apply_effect(damage,AGONY,0)
+			apply_effect(damage, AGONY, 0)
 			return TRUE
 		return FALSE
 	else
@@ -92,7 +92,7 @@
 /mob/living/carbon/human/scp073/Life()
 	. = ..()
 
-	for(var/obj/item/I in list(l_hand,r_hand))
+	for(var/obj/item/I in list(l_hand, r_hand))
 		if(istype(I, /obj/item/weapon/paper) || istype(I, /obj/item/weapon/reagent_containers/food/snacks/grown))
 			visible_message("<span class='rose'>[I] burns when it touches [src]'s hand, turning into ash. It flutters through the air before settling on the floor in a heap.</span>")
 			drop_from_inventory(I)
