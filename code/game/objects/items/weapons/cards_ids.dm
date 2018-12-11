@@ -193,18 +193,21 @@
 	desc = "A silver card which shows honour and dedication."
 	icon_state = "silver"
 	item_state = "silver_id"
+	access = list(access_security, access_sec_doors, access_brig, access_court, access_forensics_lockers, access_medical, access_engine, access_change_ids, access_ai_upload, access_eva, access_heads, access_all_personal_lockers, access_maint_tunnels, access_bar, access_janitor, access_construction, access_morgue, access_crematorium, access_kitchen, access_cargo, access_cargo_bot, access_mailsorting, access_qm, access_hydroponics, access_lawyer, access_theatre, access_chapel_office, access_library, access_research, access_mining, access_heads_vault, access_mining_station, access_clown, access_mime, access_hop, access_RC_announce, access_keycard_auth, access_gateway, access_recycler, access_detective, access_barber)
 
 /obj/item/weapon/card/id/gold
 	name = "identification card"
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
 	item_state = "gold_id"
+	access = list()
 
 /obj/item/weapon/card/id/civ
 	name = "identification card"
 	desc = "A card issued to civilian staff."
 	icon_state = "civ"
 	item_state = "civ_id"
+	access = list(access_court,access_maint_tunnels, access_bar, access_janitor, access_kitchen, access_hydroponics, access_lawyer, access_theatre, access_chapel_office, access_library, access_clown, access_barber)
 
 /obj/item/weapon/card/id/civGold //This is not the HoP. There's no position that uses this right now.
 	name = "identification card"
@@ -223,78 +226,91 @@
 	desc = "A card which represents honor and protection."
 	icon_state = "secGold"
 	item_state = "secGold_id"
+	access = list(access_security, access_sec_doors, access_brig, access_armory, access_court, access_forensics_lockers, access_morgue, access_maint_tunnels, access_all_personal_lockers, access_research, access_engine, access_mining, access_medical, access_construction, access_mailsorting, access_heads, access_hos, access_RC_announce, access_keycard_auth, access_gateway, access_detective)
 
 /obj/item/weapon/card/id/eng
 	name = "identification card"
 	desc = "A card issued to engineering staff."
 	icon_state = "eng"
 	item_state = "eng_id"
+	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva, access_construction, access_sec_doors, access_minisat)
 
 /obj/item/weapon/card/id/engGold
 	name = "identification card"
 	desc = "A card which represents creativity and ingenuity."
 	icon_state = "engGold"
 	item_state = "engGold_id"
+	access = list(access_engine, access_engine_equip, access_tech_storage, access_maint_tunnels, access_teleporter, access_external_airlocks, access_atmospherics, access_emergency_storage, access_eva, access_heads, access_construction, access_sec_doors, access_minisat, access_ce, access_RC_announce, access_keycard_auth, access_tcomsat, access_ai_upload)
 
 /obj/item/weapon/card/id/med
 	name = "identification card"
 	desc = "A card issued to medical staff."
 	icon_state = "med"
 	item_state = "med_id"
+	access = list(access_medical, access_morgue, access_paramedic, access_genetics, access_chemistry, access_virology, access_surgery, access_psychiatrist, access_maint_tunnels)
 
 /obj/item/weapon/card/id/medGold
 	name = "identification card"
 	desc = "A card which represents care and compassion."
 	icon_state = "medGold"
 	item_state = "medGold_id"
+	access = list(access_medical, access_morgue, access_paramedic, access_genetics, access_heads, access_chemistry, access_virology, access_cmo, access_surgery, access_RC_announce, access_keycard_auth, access_sec_doors, access_psychiatrist, access_maint_tunnels)
 
 /obj/item/weapon/card/id/sci
 	name = "identification card"
 	desc = "A card issued to science staff."
 	icon_state = "sci"
 	item_state = "sci_id"
+	access = list(access_tox, access_genetics, access_morgue, access_tox_storage, access_research, access_robotics, access_xenobiology, access_xenoarch, access_maint_tunnels)
 
 /obj/item/weapon/card/id/sciGold
 	name = "identification card"
 	desc = "A card which represents knowledge and reasoning."
 	icon_state = "sciGold"
 	item_state = "sciGold_id"
+	access = list(access_rd, access_heads, access_tox, access_genetics, access_morgue, access_tox_storage, access_teleporter, access_sec_doors, access_minisat, access_research, access_robotics, access_xenobiology, access_ai_upload, access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway, access_xenoarch, access_maint_tunnels)
 
 /obj/item/weapon/card/id/clown
 	name = "identification card"
 	desc = "A card which represents laugh and robust."
 	icon_state = "clown"
 	item_state = "clown_id"
+	access = list(access_clown, access_theatre)
 
 /obj/item/weapon/card/id/clownGold //not in use
 	name = "identification card"
 	desc = "A golden card which represents laugh and robust."
 	icon_state = "clownGold"
 	item_state = "clownGold_id"
+	access = list(access_clown, access_theatre)
 
 /obj/item/weapon/card/id/mime
 	name = "identification card"
 	desc = "A card which represents tears and silence."
 	icon_state = "mime"
 	item_state = "mime_id"
+	access = list(access_mime, access_theatre)
 
 /obj/item/weapon/card/id/mimeGold //not in use
 	name = "identification card"
 	desc = "A golden card which represents tears and silence."
 	icon_state = "mimeGold"
 	item_state = "mimeGold_id"
+	access = list(access_mime, access_theatre)
 
 /obj/item/weapon/card/id/cargo
 	name = "identification card"
 	desc = "A card issued to cargo staff."
 	icon_state = "cargo"
 	item_state = "cargo_id"
+	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_mint, access_mining, access_mining_station, access_recycler)
 
 /obj/item/weapon/card/id/cargoGold
 	name = "identification card"
 	desc = "A card which represents service and planning."
 	icon_state = "cargoGold"
 	item_state = "cargoGold_id"
+	access = list(access_maint_tunnels, access_mailsorting, access_cargo, access_cargo_bot, access_qm, access_mint, access_mining, access_mining_station, access_recycler)
 
 /obj/item/weapon/card/id/syndicate
 	name = "agent card"
@@ -329,13 +345,13 @@
 /obj/item/weapon/card/id/syndicate/attack_self(mob/user)
 	if(!src.registered_name)
 		//Stop giving the players unsanitized unputs! You are giving ways for players to intentionally crash clients! -Nodrak
-		var/t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
+		var t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
 		if(!t) //Same as mob/dead/new_player/prefrences.dm
 			alert("Invalid name.")
 			return
 		src.registered_name = t
 
-		var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Agent"))
+		var u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Agent"))
 		if(!u)
 			alert("Invalid assignment.")
 			src.registered_name = ""
@@ -350,13 +366,13 @@
 
 		switch(alert("Would you like to display the ID, change its look, or retitle it?","Choose.","Rename", "Change look","Show"))
 			if("Rename")
-				var/t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
+				var t = sanitize_name(input(user, "What name would you like to put on this card?", "Agent card name", input_default(ishuman(user) ? user.real_name : user.name)))
 				if(!t) //Same as mob/dead/new_player/prefrences.dm
 					alert("Invalid name.")
 					return
 				src.registered_name = t
 
-				var/u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Test Subject"))
+				var u = sanitize_safe(input(user, "What occupation would you like to put on this card?\nNote: This will not grant any access levels other than Maintenance.", "Agent card job assignment", "Test Subject"))
 				if(!u)
 					alert("Invalid assignment.")
 					return
