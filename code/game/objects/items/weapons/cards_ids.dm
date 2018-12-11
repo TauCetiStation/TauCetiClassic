@@ -200,7 +200,7 @@
 	desc = "A golden card which shows power and might."
 	icon_state = "gold"
 	item_state = "gold_id"
-	access = list()
+	access = list(access_security, access_brig, access_armory, access_forensics_lockers, access_medical, access_morgue, access_tox, access_tox_storage, access_genetics, access_engine, access_engine_equip, access_maint_tunnels, access_external_airlocks, access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_all_personal_lockers, access_chapel_office, access_tech_storage, access_atmospherics, access_bar, access_janitor, access_crematorium, access_kitchen, access_robotics, access_rd, access_cargo, access_construction, access_chemistry, access_cargo_bot, access_hydroponics, access_manufacturing, access_library, access_lawyer, access_virology, access_cmo, access_qm, access_court , access_clown, access_mime, access_surgery, access_theatre, access_research, access_mining, access_mining_office, access_mailsorting, access_mint, access_mint_vault, access_heads_vault, access_mining_station, access_xenobiology, access_ce, access_hop, access_hos, access_RC_announce, access_keycard_auth, access_tcomsat, access_gateway , access_sec_doors, access_psychiatrist, access_xenoarch, access_minisat, access_recycler, access_detective, access_barber, access_paramedic)
 
 /obj/item/weapon/card/id/civ
 	name = "identification card"
