@@ -218,6 +218,12 @@
 	icon_state = "sec"
 	item_state = "sec_id"
 
+/obj/item/weapon/card/id/int
+	name = "identification card"
+	desc = "A card issued to internal affairs agent."
+	icon_state = "int"
+	item_state = "int_id"
+
 /obj/item/weapon/card/id/secGold
 	name = "identification card"
 	desc = "A card which represents honor and protection."
