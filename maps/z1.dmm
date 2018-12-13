@@ -29098,6 +29098,13 @@
 	name = "Chemistry Desk";
 	req_access_txt = "33"
 	},
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Chem";
+	name = "Chemistry Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/medical/chemistry)
 "bbk" = (
@@ -45885,6 +45892,9 @@
 /area/construction)
 "bMu" = (
 /obj/machinery/door/firedoor,
+/obj/structure/sign/departments/chemistry{
+	pixel_y = -32
+	},
 /turf/simulated/floor{
 	dir = 2;
 	icon_state = "neutralcorner"
@@ -70326,6 +70336,13 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Chem";
+	name = "Chemistry Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/medical/reception)
 "eKb" = (
@@ -70384,6 +70401,13 @@
 	dir = 8
 	},
 /obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters{
+	density = 0;
+	icon_state = "shutter0";
+	id = "Chem";
+	name = "Chemistry Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/medical/reception)
 "eQb" = (
@@ -73153,9 +73177,6 @@
 	},
 /area/hallway/primary/central)
 "jBb" = (
-/obj/structure/sign/departments/chemistry{
-	pixel_y = -32
-	},
 /turf/simulated/floor{
 	icon_state = "bot"
 	},
@@ -76521,6 +76542,16 @@
 	pixel_y = -2
 	},
 /obj/structure/table/glass,
+/obj/machinery/door_control{
+	desc = "A remote control switch for the medbay foyer.";
+	id = "Chem";
+	name = "Chemistry Shutters Control";
+	normaldoorcontrol = 1;
+	pixel_x = -8;
+	pixel_y = 24;
+	range = 8;
+	req_access_txt = 0
+	},
 /turf/simulated/floor{
 	dir = 5;
 	icon_state = "whiteyellow"
