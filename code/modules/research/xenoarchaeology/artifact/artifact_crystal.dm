@@ -1,7 +1,7 @@
 
 /obj/machinery/power/crystal
 	var/power_produced = 100000
-	var/working = 0
+	var/working = FALSE
 	invisibility = 70
 
 /obj/machinery/power/crystal/process()
@@ -10,10 +10,10 @@
 	return
 
 /obj/machinery/power/crystal/proc/generate_power()
-	working = 1
+	working = TRUE
 
 /obj/machinery/power/crystal/proc/generate_power_stop()
-	working = 0
+	working = FALSE
 
 /obj/structure/crystal
 	name = "large crystal"
@@ -21,7 +21,7 @@
 	icon_state = ""
 	density = 1
 	var/obj/machinery/power/crystal/Generator = null
-	var/wired = 0
+	var/wired = FALSE
 	var/icon_custom_crystal = null
 
 /obj/structure/crystal/atom_init()
@@ -42,8 +42,8 @@
 	"Something twinkles faintly as you look at it.",\
 	"It's mesmerizing to behold.")
 
-/obj/structure/crystal/Destroy() // Isn't used anywhere right now.
-	qdel(Generator)
+/obj/structure/crystal/Destroy()
+	QDEL_NULL(Generator)
 	src.visible_message("\red<b>[src] shatters!</b>")
 	if(prob(75))
 		new /obj/item/weapon/shard/phoron(src.loc)
@@ -82,7 +82,7 @@
 					"<span class='notice'>[user] cuts off the wiring of the [src].</span>", \
 					"<span class='notice'>You cut off the wiring of the [src].</span>" \
 				)
-				wired = 0
+				wired = FALSE
 				update_crystal()
 				return
 		else
@@ -94,7 +94,7 @@
 			if(!CC.use(2))
 				to_chat(user, "<span class='red'>There's not enough wire to finish the task.</span>")
 				return
-			wired = 1
+			wired = TRUE
 			update_crystal()
 			to_chat(user, "<span class='notice'>You put the wires all across the [src]</span>")
 			return

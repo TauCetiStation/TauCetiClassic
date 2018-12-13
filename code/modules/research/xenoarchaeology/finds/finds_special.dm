@@ -223,10 +223,10 @@ var/list/bad_messages = list("Never take me off, please!",\
 
 /obj/item/weapon/strangetool/attack_self(mob/user)
 	if(last_time_used + 50 < world.time)
-		to_chat(user, "<span class='notice'><font color='purple'>[bicon(src)]Divice blinks brightly.</font></span>")
+		to_chat(user, "<span class='notice'><font color='purple'>[bicon(src)]Device blinks brightly.</font></span>")
 		if(iscarbon(user))
 			var/mob/living/carbon/C = user
-			to_chat(C, "\blue You feel a soothing energy invigorate you.")
+			to_chat(C, "<span class='notice'><font color='blue'>You feel a soothing energy invigorate you.</font></span>")
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				for(var/obj/item/organ/external/BP in H.bodyparts)
@@ -247,4 +247,4 @@ var/list/bad_messages = list("Never take me off, please!",\
 			C.regenerate_icons()
 		last_time_used = world.time
 	else
-		to_chat(user, "<span class='notice'><font color='red'>[bicon(src)]Divice blinks faintly.</font></span>")
+		to_chat(user, "<span class='notice'><font color='red'>[bicon(src)]Device blinks faintly.</font></span>")
