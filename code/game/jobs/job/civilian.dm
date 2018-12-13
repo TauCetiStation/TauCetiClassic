@@ -337,7 +337,7 @@
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "The NanoTrasen"
+	supervisors = "The Central Command"
 	selection_color = "#2b2b2b"
 	idtype = /obj/item/weapon/card/id/int
 	access = list(access_lawyer, access_court, access_sec_doors, access_medical, access_research, access_mailsorting, access_engine, access_engine_equip)
