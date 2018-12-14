@@ -38,9 +38,11 @@
 	density = 1
 	pixel_x = -16
 	layer = 9
+	var/can_be_cut_tree = FALSE
 
 /obj/structure/flora/tree/attackby(obj/item/W, mob/user)
-	if((istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/hatchet)) && can_be_cut)
+	. = ..()
+	if((istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/hatchet)) && can_be_cut_tree)
 		playsound(src, 'sound/items/Axe.ogg', 50, 1)
 		visible_message("<span class='warning'>[user] smashes the [src] with his [W]!</span>")
 		damage_dealt ++
@@ -75,7 +77,7 @@
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	icon_state = "tree_1"
-	can_be_cut = TRUE
+	can_be_cut_tree = TRUE
 
 /obj/structure/flora/tree/dead/atom_init()
 	. = ..()
@@ -88,7 +90,7 @@
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	pixel_x = -48
 	pixel_y = -20
-	can_be_cut = TRUE
+	can_be_cut_tree = TRUE
 
 /obj/structure/flora/tree/jungle/atom_init()
 	. = ..()
