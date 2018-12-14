@@ -9,7 +9,7 @@
 /obj/structure/flora/attackby(obj/item/W, mob/user)
 	. = ..()
 	if(can_be_cut)
-		if(istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/wirecutters))
+		if(istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/katana))
 			playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
 			damage_dealt ++
 			if(damage_dealt == 5)
@@ -40,17 +40,17 @@
 	layer = 9
 
 /obj/structure/flora/tree/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/twohanded/fireaxe) && can_be_cut)
+	if((istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/hatchet)) && can_be_cut)
 		playsound(src, 'sound/items/Axe.ogg', 50, 1)
+		visible_message("<span class='warning'>[user] smashes the [src] with his [W]!</span>")
 		damage_dealt ++
 		if(damage_dealt == 8)
 			playsound(src, 'sound/effects/bamf.ogg', 50, 1)
 			visible_message("<span class='warning'>[src] is hacked into pieces!</span>")
-			new /obj/item/stack/sheet/wood(get_turf(src))
-			new /obj/item/stack/sheet/wood(get_turf(src))
-			new /obj/item/stack/sheet/wood(get_turf(src))
-			new /obj/item/stack/sheet/wood(get_turf(src))
-			new /obj/item/stack/sheet/wood(get_turf(src))
+			new /obj/item/weapon/grown/log(get_turf(src))
+			new /obj/item/weapon/grown/log(get_turf(src))
+			new /obj/item/weapon/grown/log(get_turf(src))
+			new /obj/item/weapon/grown/log(get_turf(src))
 			qdel(src)
 		return
 
