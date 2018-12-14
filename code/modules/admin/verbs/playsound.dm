@@ -9,9 +9,8 @@ var/global/list/sounds_cache = list()
 	uploaded_sound.file = S
 	uploaded_sound.priority = 250
 	uploaded_sound.channel = CHANNEL_ADMIN
-	uploaded_sound.wait = 0//1
-	uploaded_sound.repeat = 0
-	uploaded_sound.status = SOUND_UPDATE
+	uploaded_sound.wait = 1
+	uploaded_sound.status = SOUND_STREAM
 	uploaded_sound.volume = 100
 
 	sounds_cache += S
@@ -29,8 +28,7 @@ var/global/list/sounds_cache = list()
 
 	for(var/mob/M in player_list)
 		if(forced || M.client.prefs.toggles & SOUND_MIDI)
-			M.client.adminSound = uploaded_sound
-			M.client.adminSound.volume = M.client.adminSoundVolume
+			uploaded_sound.volume = M.client.adminSoundVolume
 			M.client << uploaded_sound
 
 	feedback_add_details("admin_verb","PGS") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!

@@ -117,10 +117,11 @@ var/emojiJson = file2text("code/modules/goonchat/browserassets/js/emojiList.json
 /datum/chatOutput/proc/setAdminSoundVolume(volume = "")
 	owner.adminSoundVolume = Clamp(text2num(volume), 0, 100)
 	
-	if(owner.adminSound)
-		owner.adminSound.volume = owner.adminSoundVolume
-		owner.adminSound.status |= SOUND_UPDATE
-		owner << owner.adminSound
+	var/sound/S = new()
+	S.channel = CHANNEL_ADMIN
+	S.volume = owner.adminSoundVolume
+	S.status = SOUND_UPDATE | SOUND_STREAM
+	owner << S
 
 /datum/chatOutput/proc/sendClientData()
 	var/list/deets = list("clientData" = list())
