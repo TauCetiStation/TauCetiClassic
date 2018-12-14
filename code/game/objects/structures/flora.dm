@@ -1,4 +1,22 @@
 //random plants
+/obj/structure/flora
+	name = "Flora"
+	icon = 'icons/obj/flora/plants.dmi'
+	icon_state = "plant-10"
+	var/can_be_cut = FALSE
+	var/damage_dealt = 0
+
+/obj/structure/flora/attackby(obj/item/W, mob/user)
+	. = ..()
+	if(can_be_cut)
+		if(istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/wirecutters))
+			playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
+			damage_dealt ++
+			if(damage_dealt == 5)
+				visible_message("<span class='warning'>[src] is hacked into pieces!</span>")
+				qdel(src)
+			return
+
 /obj/structure/flora/plant
 	name = "marvelous potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
@@ -21,6 +39,21 @@
 	pixel_x = -16
 	layer = 9
 
+/obj/structure/flora/tree/attackby(obj/item/W, mob/user)
+	if(istype(W, /obj/item/weapon/twohanded/fireaxe) && can_be_cut)
+		playsound(src, 'sound/items/Axe.ogg', 50, 1)
+		damage_dealt ++
+		if(damage_dealt == 8)
+			playsound(src, 'sound/effects/bamf.ogg', 50, 1)
+			visible_message("<span class='warning'>[src] is hacked into pieces!</span>")
+			new /obj/item/stack/sheet/wood(get_turf(src))
+			new /obj/item/stack/sheet/wood(get_turf(src))
+			new /obj/item/stack/sheet/wood(get_turf(src))
+			new /obj/item/stack/sheet/wood(get_turf(src))
+			new /obj/item/stack/sheet/wood(get_turf(src))
+			qdel(src)
+		return
+
 /obj/structure/flora/tree/pine
 	name = "pine tree"
 	icon = 'icons/obj/flora/pinetrees.dmi'
@@ -42,6 +75,7 @@
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	icon_state = "tree_1"
+	can_be_cut = TRUE
 
 /obj/structure/flora/tree/dead/atom_init()
 	. = ..()
@@ -54,6 +88,7 @@
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	pixel_x = -48
 	pixel_y = -20
+	can_be_cut = TRUE
 
 /obj/structure/flora/tree/jungle/atom_init()
 	. = ..()
@@ -69,6 +104,7 @@
 	name = "grass"
 	icon = 'icons/obj/flora/snowflora.dmi'
 	anchored = 1
+	can_be_cut = TRUE
 
 /obj/structure/flora/grass/brown
 	icon_state = "snowgrass1bb"
@@ -99,6 +135,7 @@
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
 	anchored = 1
+	can_be_cut = TRUE
 
 /obj/structure/flora/bush/atom_init()
 	. = ..()
@@ -116,6 +153,7 @@
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "firstbush_1"
 	anchored = 1
+	can_be_cut = TRUE
 
 /obj/structure/flora/ausbushes/atom_init()
 	. = ..()
@@ -234,6 +272,7 @@
 	icon_state = "rock"
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	density = FALSE
+	can_be_cut = TRUE
 
 /obj/structure/flora/rock/jungle/atom_init()
 	. = ..()
@@ -247,6 +286,7 @@
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "busha"
 	anchored = 1
+	can_be_cut = TRUE
 
 /obj/structure/flora/junglebush/atom_init()
 	. = ..()
