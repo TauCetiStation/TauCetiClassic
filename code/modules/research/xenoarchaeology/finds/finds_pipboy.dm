@@ -9,7 +9,8 @@
 	slot_flags = SLOT_BELT | SLOT_GLOVES
 	action_button_name = "Toggle Pip-Boy"
 	species_restricted = null
-	protect_fingers = 0
+	protect_fingers = FALSE
+	clipped = TRUE
 
 	var/on = 1 // Is it on.
 	var/profile_name = null // Master's name.
@@ -46,7 +47,7 @@
 		sleep(60)
 		alarm_playing = 0
 
-/obj/item/clothing/gloves/attackby(obj/item/weapon/W, mob/user)
+/obj/item/clothing/gloves/pipboy/attackby(obj/item/weapon/W, mob/user)
 	if(istype(W, /obj/item/stack/cable_coil) || istype(W, /obj/item/weapon/stock_parts/cell) || istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/scalpel))
 		return
 	..()

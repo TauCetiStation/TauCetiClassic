@@ -78,14 +78,6 @@
 /obj/effect/glowshroom,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mine/unexplored)
-"ao" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/machinery/door/firedoor,
-/turf/simulated/floor/plating,
-/area/mine/unexplored)
 "ap" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced{
@@ -94,15 +86,6 @@
 /obj/machinery/door/firedoor,
 /turf/simulated/floor/plating,
 /area/research_outpost/hallway)
-"aq" = (
-/obj/structure/grille,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/transit_tube,
-/turf/simulated/floor/plating,
-/area/mine/unexplored)
 "ar" = (
 /obj/structure/lattice,
 /turf/space,
@@ -57474,8 +57457,8 @@ aa
 aa
 aa
 aa
-ao
-aq
+ap
+aB
 aR
 bh
 bw

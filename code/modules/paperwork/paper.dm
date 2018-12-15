@@ -8,7 +8,6 @@
 	gender = PLURAL
 	icon = 'icons/obj/bureaucracy.dmi'
 	icon_state = "paper"
-	item_state = "paper"
 	throwforce = 0
 	w_class = 1.0
 	throw_range = 1
