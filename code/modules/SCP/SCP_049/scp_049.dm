@@ -5,8 +5,6 @@
 	attack_sound = 'sound/weapons/slice.ogg'
 	miss_sound = 'sound/weapons/slashmiss.ogg'
 	damage = 40
-	sharp = 0
-	edge = 0
 
 /datum/species/scp049
 	name = "SCP-049"
