@@ -76543,14 +76543,12 @@
 	},
 /obj/structure/table/glass,
 /obj/machinery/door_control{
-	desc = "A remote control switch for the medbay foyer.";
+	desc = "A remote control-switch for a shutters.";
 	id = "Chem";
 	name = "Chemistry Shutters Control";
-	normaldoorcontrol = 1;
-	pixel_x = -8;
-	pixel_y = 24;
-	range = 8;
-	req_access_txt = 0
+	pixel_x = -5;
+	pixel_y = 27;
+	req_access_txt = "33"
 	},
 /turf/simulated/floor{
 	dir = 5;
