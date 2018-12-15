@@ -25,6 +25,7 @@
 			else
 				screwed = 1
 			to_chat(user, "<span class='info'>You [screwed ? "screw" : "unscrew"] the battery panel.</span>")
+			playsound(src, 'sound/items/Screwdriver.ogg', 80, 1)
 	else if (istype(W, /obj/item/weapon/crowbar))
 		if(!locked)
 			if(!screwed)
@@ -34,6 +35,7 @@
 					else
 						open = 1
 					to_chat(user, "<span class='info'>You crowbar the battery panel [open ? "open" : "in place"].</span>")
+					playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
 					icon_state = "suspension_[open ? (cell ? "cell" : "no_cell") : "closed_panel"][anchored ? "_anchored" : ""]"
 				else
 					to_chat(user, "<span class='warning'>[src]'s safety locks are engaged, shut it down first.</span>")
@@ -49,6 +51,7 @@
 				anchored = 1
 			icon_state = "suspension_[open ? (cell ? "cell" : "no_cell") : "closed_panel"][anchored ? "_anchored" : ""]"
 			to_chat(user, "<span class='info'>You wrench the stabilising legs [anchored ? "into place" : "up against the body"].</span>")
+			playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
 			if(anchored)
 				desc = "It is resting securely on four stubby legs."
 			else
@@ -64,6 +67,7 @@
 				W.loc = src
 				cell = W
 				to_chat(user, "<span class='info'>You insert the power cell.</span>")
+				playsound(src, 'sound/items/Screwdriver2.ogg', 80, 1)
 				if(anchored)
 					icon_state = "suspension_cell_anchored"
 				else
@@ -178,6 +182,7 @@
 			if(cell.charge > 0)
 				if(anchored)
 					activate()
+					playsound(src, 'sound/items/penclick.ogg', 80, 1)
 				else
 					to_chat(usr, "<span class='warning'>You are unable to activate [src] until it is properly secured on the ground.</span>")
 		else
@@ -208,6 +213,7 @@
 //checks for whether the machine can be activated or not should already have occurred by this point
 /obj/machinery/suspension_gen/proc/activate()
 	//depending on the field type, we might pickup certain items
+	playsound(src, 'sound/machines/defib_zap.ogg', 80, 1)
 	var/turf/T = get_turf(get_step(src,dir))
 	var/success = 0
 	var/collected = 0
