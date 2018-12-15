@@ -149,12 +149,12 @@
 		if(X == C || X == src)
 			continue
 		if(X.key != key && X.key != C.key && X.holder.rights & R_ADMIN)
-			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> \blue [msg]</font>")//inform X
+			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0)]-&gt;[key_name(C, X, 0)]:</B> <span class='emojify linkify'>[msg]</span></font>")//inform X
 	for(var/client/X in mentors)
 		if(X == C || X == src)
 			continue
 		if(X.key != key && X.key != C.key && !C.holder && !src.holder)
-			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0, 0)]-&gt;[key_name(C, X, 0, 0)]:</B> \blue [msg]</font>")//inform X
+			to_chat(X, "<B><font color='blue'>PM: [key_name(src, X, 0, 0)]-&gt;[key_name(C, X, 0, 0)]:</B> <span class='emojify linkify'>[msg]</span></font>")//inform X
 
 /client/proc/cmd_admin_irc_pm()
 	if(prefs.muted & MUTE_ADMINHELP)

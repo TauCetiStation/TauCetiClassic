@@ -81,7 +81,7 @@ client/proc/staffhelp(msg, help_type = null)
 		msg += "[original_word] "
 
 	var/ref_mob = "\ref[mob]"
-	msg = "\blue <b><font color=[colour]>[prefix]: </font>[get_options_bar(mob, 2, 1, 1, TRUE)][ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</b> <span class='emojify linkify'>[msg]</span>"
+	msg = "<font color=blue><b><font color=[colour]>[prefix]: </font>[get_options_bar(mob, 2, 1, 1, TRUE)][ai_found ? " (<A HREF='?_src_=holder;adminchecklaws=[ref_mob]'>CL</A>)" : ""]:</b> <span class='emojify linkify'>[msg]</span></font>"
 
 	//send this msg to all admins
 	var/admin_number_afk = 0
