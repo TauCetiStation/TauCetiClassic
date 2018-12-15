@@ -150,7 +150,7 @@ function linkify_fallback(text) {
 
 //:peka:
 function emojify(node) {
-	var rex = /:[^(\s|:)]+:/g;
+	var rex = /:[\w\d\-_]+:/g;
 	node.innerHTML = node.innerHTML.replace(rex, function ($0) {
 		return '<i class="em em-'+$0.substring(1, $0.length-1)+'">'+$0+'</i>';
 	});
