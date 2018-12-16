@@ -17517,6 +17517,14 @@
 	icon_state = "brown"
 	},
 /area/centcom/arrival)
+"cab" = (
+/obj/effect/landmark/start{
+	name = "Fallback-Start"
+	},
+/turf/unsimulated/floor{
+	icon_state = "white"
+	},
+/area/centcom/arrival)
 "cbb" = (
 /turf/unsimulated/floor{
 	dir = 5;
@@ -71320,7 +71328,7 @@ asq
 asB
 aoo
 atf
-atq
+cab
 atx
 atq
 atq
