@@ -1132,6 +1132,8 @@
 #include "code\modules\clothing\under\jobs\security.dm"
 #include "code\modules\crafting\craft.dm"
 #include "code\modules\crafting\recipes.dm"
+#include "code\modules\custom_events\dead_space.dm"
+#include "code\modules\custom_events\star_wars.dm"
 #include "code\modules\customitems\item_defines.dm"
 #include "code\modules\customitems\item_spawning.dm"
 #include "code\modules\destilery\main.dm"
