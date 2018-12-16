@@ -73263,6 +73263,15 @@
 	icon_state = "bluefull"
 	},
 /area/medical/reception)
+"jRb" = (
+/obj/structure/stool/bed/chair/office/light{
+	dir = 4
+	},
+/obj/effect/landmark/start{
+	name = "Paramedic"
+	},
+/turf/simulated/floor,
+/area/medical/reception)
 "jSb" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -73320,6 +73329,15 @@
 	icon_state = "freezerfloor2"
 	},
 /area/crew_quarters/captain)
+"jXb" = (
+/obj/structure/stool/bed/chair/office/light{
+	dir = 8
+	},
+/obj/effect/landmark/start{
+	name = "Paramedic"
+	},
+/turf/simulated/floor,
+/area/medical/reception)
 "jYb" = (
 /obj/effect/decal/cleanable/blood/oil,
 /turf/simulated/floor/plating,
@@ -119016,7 +119034,7 @@ bVg
 nwb
 eKb
 jNb
-eKb
+jXb
 bAT
 bfa
 bur
@@ -119528,7 +119546,7 @@ bcb
 bhQ
 bVa
 nAb
-eMb
+jRb
 jNb
 eMb
 caT
