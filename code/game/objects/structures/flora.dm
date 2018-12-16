@@ -1,4 +1,5 @@
-//random plants
+// random plants
+
 /obj/structure/flora
 	name = "bush"
 	icon = 'icons/obj/flora/plants.dmi'
@@ -36,7 +37,7 @@
 	desc = "Made by one mad scientist."
 	icon_state = "monkeyplant"
 
-//trees
+// trees
 /obj/structure/flora/tree
 	name = "tree"
 	anchored = 1
@@ -94,7 +95,8 @@
 	pixel_x = -32
 	icon = 'icons/obj/flora/jungletreesmall.dmi'
 
-//grass
+// grass
+
 /obj/structure/flora/grass
 	name = "grass"
 	icon = 'icons/obj/flora/snowflora.dmi'
@@ -125,7 +127,8 @@
 	icon_state = "snowgrassall[rand(1, 3)]"
 
 
-//bushes
+// bushes
+
 /obj/structure/flora/bush
 	name = "bush"
 	icon = 'icons/obj/flora/snowflora.dmi'
@@ -143,7 +146,7 @@
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-26"
 
-//newbushes
+// newbushes
 
 /obj/structure/flora/ausbushes
 	name = "bush"
@@ -262,7 +265,7 @@
 	. = ..()
 	icon_state = "fullgrass_[rand(1, 3)]"
 
-//Jungle rocks
+// Jungle rocks
 
 /obj/structure/flora/rock/jungle
 	icon_state = "pile of rocks"
@@ -277,7 +280,7 @@
 	. = ..()
 	icon_state = "[initial(icon_state)][rand(1,5)]"
 
-//Jungle bushes
+// Jungle bushes
 
 /obj/structure/flora/junglebush
 	name = "bush"
