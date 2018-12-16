@@ -1,21 +1,22 @@
 //random plants
 /obj/structure/flora
-	name = "Flora"
+	name = "bush"
 	icon = 'icons/obj/flora/plants.dmi'
 	icon_state = "plant-10"
 	var/can_be_cut = FALSE
-	var/damage_dealt = 0
+	var/health_flora = 40
+	var/damage_threshhold = 5
+	var/cutting_sound = 'sound/weapons/bladeslice.ogg'
 
-/obj/structure/flora/attackby(obj/item/W, mob/user)
+/obj/structure/flora/attackby(obj/item/weapon/W, mob/user)
 	. = ..()
-	if(can_be_cut)
-		if(istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/hatchet) || istype(W, /obj/item/weapon/kitchenknife) || istype(W, /obj/item/weapon/wirecutters) || istype(W, /obj/item/weapon/katana))
-			playsound(src, 'sound/weapons/bladeslice.ogg', 50, 1)
-			damage_dealt ++
-			if(damage_dealt == 5)
-				visible_message("<span class='warning'>[src] is hacked into pieces!</span>")
-				qdel(src)
-			return
+	if(can_be_cut && is_sharp(W) && W.force >= damage_threshhold)
+		playsound(src, cutting_sound, 50, 1)
+		health_flora -= W.force
+		if(health_flora <= 0)
+			visible_message("<span class='warning'>[src] is hacked into pieces!</span>")
+			qdel(src)
+		return
 
 /obj/structure/flora/plant
 	name = "marvelous potted plant"
@@ -38,23 +39,9 @@
 	density = 1
 	pixel_x = -16
 	layer = 9
-	var/can_be_cut_tree = FALSE
-
-/obj/structure/flora/tree/attackby(obj/item/W, mob/user)
-	. = ..()
-	if((istype(W, /obj/item/weapon/twohanded/fireaxe) || istype(W, /obj/item/weapon/hatchet)) && can_be_cut_tree)
-		playsound(src, 'sound/items/Axe.ogg', 50, 1)
-		visible_message("<span class='warning'>[user] smashes the [src] with his [W]!</span>")
-		damage_dealt ++
-		if(damage_dealt == 8)
-			playsound(src, 'sound/effects/bamf.ogg', 50, 1)
-			visible_message("<span class='warning'>[src] is hacked into pieces!</span>")
-			new /obj/item/weapon/grown/log(get_turf(src))
-			new /obj/item/weapon/grown/log(get_turf(src))
-			new /obj/item/weapon/grown/log(get_turf(src))
-			new /obj/item/weapon/grown/log(get_turf(src))
-			qdel(src)
-		return
+	health_flora = 150
+	damage_threshhold = 15
+	cutting_sound = 'sound/items/Axe.ogg'
 
 /obj/structure/flora/tree/pine
 	name = "pine tree"
@@ -77,7 +64,7 @@
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	icon_state = "tree_1"
-	can_be_cut_tree = TRUE
+	can_be_cut = TRUE
 
 /obj/structure/flora/tree/dead/atom_init()
 	. = ..()
@@ -90,7 +77,7 @@
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	pixel_x = -48
 	pixel_y = -20
-	can_be_cut_tree = TRUE
+	can_be_cut = TRUE
 
 /obj/structure/flora/tree/jungle/atom_init()
 	. = ..()
@@ -107,6 +94,7 @@
 	icon = 'icons/obj/flora/snowflora.dmi'
 	anchored = 1
 	can_be_cut = TRUE
+	health_flora = 60
 
 /obj/structure/flora/grass/brown
 	icon_state = "snowgrass1bb"
@@ -138,6 +126,7 @@
 	icon_state = "snowbush1"
 	anchored = 1
 	can_be_cut = TRUE
+	health_flora = 50
 
 /obj/structure/flora/bush/atom_init()
 	. = ..()
@@ -156,6 +145,7 @@
 	icon_state = "firstbush_1"
 	anchored = 1
 	can_be_cut = TRUE
+	health_flora = 50
 
 /obj/structure/flora/ausbushes/atom_init()
 	. = ..()
@@ -275,6 +265,7 @@
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	density = FALSE
 	can_be_cut = TRUE
+	health_flora = 50
 
 /obj/structure/flora/rock/jungle/atom_init()
 	. = ..()
@@ -289,6 +280,7 @@
 	icon_state = "busha"
 	anchored = 1
 	can_be_cut = TRUE
+	health_flora = 40
 
 /obj/structure/flora/junglebush/atom_init()
 	. = ..()
