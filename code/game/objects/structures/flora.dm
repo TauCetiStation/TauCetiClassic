@@ -7,6 +7,7 @@
 	var/health_flora = 40
 	var/damage_threshhold = 5
 	var/cutting_sound = 'sound/weapons/bladeslice.ogg'
+	var/list/drop_on_destroy = list()
 
 /obj/structure/flora/attackby(obj/item/weapon/W, mob/user)
 	. = ..()
@@ -15,6 +16,9 @@
 		health_flora -= W.force
 		if(health_flora <= 0)
 			visible_message("<span class='warning'>[src] is hacked into pieces!</span>")
+			if(drop_on_destroy.len)
+				for(var/type_drop in drop_on_destroy)
+					new type_drop(get_turf(src))
 			qdel(src)
 		return
 
@@ -42,6 +46,8 @@
 	health_flora = 150
 	damage_threshhold = 15
 	cutting_sound = 'sound/items/Axe.ogg'
+	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log)
+
 
 /obj/structure/flora/tree/pine
 	name = "pine tree"
