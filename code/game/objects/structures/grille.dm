@@ -192,7 +192,7 @@
 /obj/structure/grille/proc/healthcheck()
 	if(health <= 5)
 		if(!destroyed && !damaged)
-			icon_state = "grille_damaged_[rand(0,4)]"
+			icon_state = "grille_damaged_[rand(1, 4)]"
 			damaged = 1
 	if(health <= 0)
 		if(!destroyed)

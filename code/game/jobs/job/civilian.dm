@@ -337,10 +337,10 @@
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the captain"
-	selection_color = "#dddddd"
-	idtype = /obj/item/weapon/card/id/civ
-	access = list(access_lawyer, access_court, access_sec_doors)
+	supervisors = "The Central Command"
+	selection_color = "#2b2b2b"
+	idtype = /obj/item/weapon/card/id/int
+	access = list(access_lawyer, access_court, access_sec_doors, access_medical, access_research, access_mailsorting, access_engine, access_engine_equip)
 	minimal_player_ingame_minutes = 1560
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
@@ -360,7 +360,7 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/flash(H), slot_r_store)
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_int(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/lawyer(H), slot_belt)
 
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)

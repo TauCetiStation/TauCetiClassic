@@ -11460,12 +11460,12 @@
 /turf/simulated/floor,
 /area/mine/production)
 "zg" = (
-/obj/machinery/artifact_scanpad,
-/obj/structure/window/reinforced{
-	dir = 1
+/obj/structure/stool/bed/chair/metal,
+/obj/effect/landmark/start{
+	name = "Xenoarchaeologist"
 	},
-/turf/simulated/floor/engine,
-/area/research_outpost/iso2)
+/turf/simulated/floor/wood,
+/area/research_outpost/hallway)
 "zh" = (
 /obj/structure/disposalpipe/junction{
 	dir = 4;
@@ -12121,6 +12121,9 @@
 "AJ" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
+	},
+/obj/effect/landmark/start{
+	name = "Xenoarchaeologist"
 	},
 /turf/simulated/floor/wood,
 /area/research_outpost/hallway)
@@ -13331,6 +13334,13 @@
 	oxygen = 0.01
 	},
 /area/mine/production)
+"Sb" = (
+/obj/machinery/artifact_scanpad,
+/obj/structure/window/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/research_outpost/iso2)
 "Sc" = (
 /obj/machinery/alarm{
 	dir = 1;
@@ -54130,7 +54140,7 @@ aX
 es
 eT
 fD
-gi
+zg
 gh
 aR
 he
@@ -58510,7 +58520,7 @@ lT
 lo
 mQ
 oO
-zg
+Sb
 Hg
 Mg
 pl
