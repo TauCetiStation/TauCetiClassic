@@ -720,7 +720,7 @@ var/global/BSACooldown = 0
 	var/message = sanitize(input("Global message to send:", "Admin Announce", null, null)  as message, 500, extra = 0)
 
 	if(message)
-		to_chat(world, "\blue <b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n [message]")
+		to_chat(world, "<b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>\n <span class='tabulated italic emojify linkify'>[message]</span>")
 		log_admin("Announce: [key_name(usr)] : [message]")
 		feedback_add_details("admin_verb","A") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
