@@ -11302,6 +11302,13 @@
 	},
 /turf/simulated/floor,
 /area/mine/production)
+"zg" = (
+/obj/structure/stool/bed/chair/metal,
+/obj/effect/landmark/start{
+	name = "Xenoarchaeologist"
+	},
+/turf/simulated/floor/wood,
+/area/research_outpost/hallway)
 "zh" = (
 /obj/structure/disposalpipe/junction{
 	dir = 4;
@@ -11958,6 +11965,9 @@
 "AJ" = (
 /obj/structure/stool/bed/chair/metal{
 	dir = 8
+	},
+/obj/effect/landmark/start{
+	name = "Xenoarchaeologist"
 	},
 /turf/simulated/floor/wood,
 /area/research_outpost/hallway)
@@ -53922,7 +53932,7 @@ aX
 es
 eT
 fD
-gi
+zg
 gh
 aR
 he
