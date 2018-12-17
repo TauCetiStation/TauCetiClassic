@@ -487,6 +487,9 @@ var/datum/subsystem/job/SSjob
 						new /obj/item/weapon/storage/box/survival(BPK)
 						H.equip_to_slot_or_del(BPK, slot_back,1)
 
+	//Give custom items
+	give_custom_items(H, job)
+
 	//Deferred item spawning.
 	for(var/thing in spawn_in_storage)
 		var/datum/gear/G = gear_datums[thing]

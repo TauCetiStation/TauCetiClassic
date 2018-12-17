@@ -1186,6 +1186,8 @@
 #include "code\modules\ext_scripts\python.dm"
 #include "code\modules\ext_scripts\slack.dm"
 #include "code\modules\ext_scripts\slack_admin_call.dm"
+#include "code\modules\fluff\customitems.dm"
+#include "code\modules\fluff\fluffmenu.dm"
 #include "code\modules\flufftext\Dreaming.dm"
 #include "code\modules\flufftext\Hallucination.dm"
 #include "code\modules\food\recipes_candymaker.dm"
