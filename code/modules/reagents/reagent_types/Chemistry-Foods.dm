@@ -31,8 +31,8 @@
 	id = "nutriment"
 	description = "All the vitamins, minerals, and carbohydrates the body needs in pure form."
 	reagent_state = SOLID
-	nutriment_factor = 1 // 1 nutriment reagent should be 2.5 nutrition, see custom metabolism below.
-	custom_metabolism = FOOD_METABOLISM
+	nutriment_factor = 2 // 1 nutriment reagent is 2.5 nutrition actually, which is confusing, but it works.
+	custom_metabolism = FOOD_METABOLISM * 2 // It's balanced so you gain the nutrition, but slightly faster.
 	color = "#664330" // rgb: 102, 67, 48
 	taste_message = "bland food"
 

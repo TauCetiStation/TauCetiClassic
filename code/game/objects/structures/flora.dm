@@ -246,6 +246,7 @@
 	desc = "A wild plant that is found in jungles."
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "busha"
+	anchored = 1
 
 /obj/structure/flora/junglebush/atom_init()
 	. = ..()

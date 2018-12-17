@@ -161,7 +161,7 @@ var/list/possibleShadowlingNames = list("U'ruan", "Y`shej", "Nex", "Hel-uae", "N
 			sleep(50)
 			if(!ticker.mode.shadowling_ascended)
 				SSshuttle.incall(0.3)
-				captain_announce("The emergency shuttle has been called. It will arrive in [round(SSshuttle.timeleft()/60)] minutes.")
+				captain_announce("The emergency shuttle has been called. It will arrive in [shuttleminutes2text()] minutes.")
 				world << sound('sound/AI/shuttlecalled.ogg')
 			ticker.mode.shadowling_ascended = 1
 			qdel(usr)
