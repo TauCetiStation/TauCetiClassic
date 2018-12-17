@@ -106,3 +106,9 @@
 	icon_off = "secureveloff"
 
 /obj/structure/object_wall/velocity
+
+/obj/structure/sign/velocity_overlay/reklama/soda_ad
+	name = "\improper Space Cola Advertisement"
+	desc = "Buy Space Cola! Or die of dehydration in space, because there is no soda cooler than Space Cola within a radius of 3 million kilometers!"
+	icon = 'code/modules/locations/centcomm/soda_ad.dmi'
+	icon_state = "soda"

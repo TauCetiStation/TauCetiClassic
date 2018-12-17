@@ -23073,6 +23073,13 @@
 "ogb" = (
 /turf/space,
 /area/shuttle/escape_pod5/transit)
+"ohb" = (
+/obj/structure/sign/velocity_overlay/reklama/soda_ad{
+	pixel_x = 3;
+	pixel_y = 12
+	},
+/turf/unsimulated/wall,
+/area/centcom/arrival)
 "oib" = (
 /turf/space,
 /area/shuttle/arrival/transit)
@@ -71855,7 +71862,7 @@ dYb
 aoo
 awm
 aoo
-aoo
+ohb
 awm
 aoo
 eHb
