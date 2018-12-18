@@ -1577,7 +1577,7 @@ Owl & Griffin toys
 	var/cooldown = 0
 
 /obj/item/toy/moocan/attack_self(mob/user)
-	if(!cooldown) //for the sanity of everyone
+	if(!cooldown)
 		var/message = pick("Moooooo!")
 		to_chat(user, "<span class='notice'>You flip the moo can [src].</span>")
 		playsound(user, 'sound/items/moo.ogg', 20, 1)
