@@ -1195,6 +1195,8 @@
 #include "code\modules\genetics\side_effects.dm"
 #include "code\modules\goonchat\browserOutput.dm"
 #include "code\modules\holidays\new_year\clothing.dm"
+#include "code\modules\holidays\new_year\decorations.dm"
+#include "code\modules\holidays\new_year\presents.dm"
 #include "code\modules\holodeck\HolodeckControl.dm"
 #include "code\modules\holodeck\HolodeckObjects.dm"
 #include "code\modules\holodeck\HolodeckTemplate.dm"
