@@ -5,6 +5,7 @@
  *	re-implemented in other classes.
  *
  *	Contains:
+ *		Book bag
  *		Trash Bag
  *		Bluespace trash bag
  *		Mining Satchel
@@ -24,6 +25,22 @@
 	slot_flags = SLOT_BELT
 
 // -----------------------------
+//           Book bag
+// -----------------------------
+/obj/item/weapon/storage/bag/bookbag
+	name = "book bag"
+	desc = "A bag for knowledge."
+	icon = 'icons/obj/library.dmi'
+	icon_state = "bookbag"
+	item_state = "bookbag"
+	display_contents_with_number = 0 //This would look really stupid otherwise
+	storage_slots = 7
+	max_w_class = ITEM_SIZE_NORMAL
+	max_storage_space = DEFAULT_BACKPACK_STORAGE
+	w_class = ITEM_SIZE_LARGE //Bigger than a book because physics
+	can_hold = list("/obj/item/weapon/book", "/obj/item/weapon/storage/bible", "/obj/item/weapon/spellbook")
+
+// -----------------------------
 //          Trash bag
 // -----------------------------
 /obj/item/weapon/storage/bag/trash
@@ -34,7 +51,7 @@
 	item_state = "trashbag"
 
 	w_class = ITEM_SIZE_SMALL
-	max_w_class = ITEM_SIZE_HUGE
+	max_w_class = ITEM_SIZE_NORMAL
 	max_storage_space = DEFAULT_BACKPACK_STORAGE
 	can_hold = list() // any
 	cant_hold = list("/obj/item/weapon/disk/nuclear")
@@ -177,7 +194,7 @@
 
 
 // Modified handle_item_insertion.  Would prefer not to, but...
-/obj/item/weapon/storage/bag/sheetsnatcher/handle_item_insertion(obj/item/W, prevent_warning = 0)
+/obj/item/weapon/storage/bag/sheetsnatcher/handle_item_insertion(obj/item/W, prevent_warning = FALSE, NoUpdate = FALSE)
 	var/obj/item/stack/sheet/S = W
 	if(!istype(S)) return 0
 
@@ -206,7 +223,8 @@
 		else
 			S.loc = src
 
-	update_ui_after_item_insertion()
+	if(!NoUpdate)
+		update_ui_after_item_insertion()
 	update_icon()
 	return 1
 
@@ -225,7 +243,7 @@
 	update_icon()
 
 // Instead of removing
-/obj/item/weapon/storage/bag/sheetsnatcher/remove_from_storage(obj/item/W, atom/new_location)
+/obj/item/weapon/storage/bag/sheetsnatcher/remove_from_storage(obj/item/W, atom/new_location, NoUpdate = FALSE)
 	var/obj/item/stack/sheet/S = W
 	if(!istype(S))
 		return 0
@@ -240,7 +258,7 @@
 		temp.amount = S.get_amount() - S.max_amount
 		S.amount = S.max_amount
 
-	return ..(S,new_location)
+	return ..(S, new_location, NoUpdate)
 
 // -----------------------------
 //    Sheet Snatcher (Cyborg)

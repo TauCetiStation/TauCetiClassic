@@ -20,7 +20,8 @@
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/cmo/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/med(H), slot_back)
@@ -56,7 +57,8 @@
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/doctor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/medic(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/med(H), slot_back)
@@ -115,7 +117,8 @@
 	restricted_species = list(IPC, DIONA)
 
 /datum/job/paramedic/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/medical(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/fr_jacket(H), slot_wear_suit)
@@ -151,7 +154,8 @@
 	minimal_player_ingame_minutes = 960
 
 /datum/job/chemist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/chemist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/chemist(H), slot_wear_suit)
@@ -185,7 +189,8 @@
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/geneticist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/geneticist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
 	H.equip_to_slot_or_del(new /obj/item/clothing/suit/storage/labcoat/genetics(H), slot_wear_suit)
@@ -221,7 +226,8 @@
 	restricted_species = list(SKRELL, UNATHI, TAJARAN, DIONA)
 
 /datum/job/virologist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	H.equip_to_slot_or_del(new /obj/item/clothing/under/rank/virologist(H), slot_w_uniform)
 	H.equip_to_slot_or_del(new /obj/item/clothing/mask/surgical(H), slot_wear_mask)
 	H.equip_to_slot_or_del(new /obj/item/clothing/shoes/white(H), slot_shoes)
@@ -257,7 +263,8 @@
 	restricted_species = list(UNATHI)
 
 /datum/job/psychiatrist/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), slot_back)
@@ -298,7 +305,8 @@
 	minimal_player_ingame_minutes = 300
 
 /datum/job/intern/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)	return 0
+	if(!H)
+		return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), slot_back)

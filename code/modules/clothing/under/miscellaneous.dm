@@ -143,12 +143,6 @@
 	item_color = "rainbow"
 	flags = ONESIZEFITSALL
 
-/obj/item/clothing/under/cloud
-	name = "cloud"
-	desc = "cloud"
-	icon_state = "cloud"
-	item_color = "cloud"
-
 /obj/item/clothing/under/psysuit
 	name = "dark undersuit"
 	desc = "A thick, layered grey undersuit lined with power cables. Feels a little like wearing an electrical storm."

@@ -243,11 +243,15 @@
 	if(QDELETED(S) || QDELETED(src) || S == src) //amusingly this can cause a stack to consume itself, let's not allow that.
 		return
 	var/transfer = get_amount()
+	var/old_loc = loc
 	transfer = min(transfer, S.max_amount - S.amount)
 	if(pulledby)
 		pulledby.start_pulling(S)
 	S.copy_evidences(src)
 	use(transfer, TRUE)
+	if (istype(old_loc, /obj/item/weapon/storage) && amount < 1 && !is_cyborg())
+		var/obj/item/weapon/storage/s = old_loc
+		s.update_ui_after_item_removal()
 	S.add(transfer)
 
 /obj/item/stack/attack_hand(mob/user)

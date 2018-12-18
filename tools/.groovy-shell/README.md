@@ -22,4 +22,6 @@ Groovy предоставляет весьма удобный синтаксис
 `groovy-shell.jar` был собран со следующими зависимостями:
  - **groupId:** org.codehaus.groovy, **artifactId:** groovy-jsr223, **version:** 2.5.2
  - **groupId:** org.codehaus.groovy, **artifactId:** groovy-swing, **version:** 2.5.2
+ - **groupId:** org.codehaus.groovy, **artifactId:** groovy-xml, **version:** 2.5.2
+ - **groupId:** org.codehaus.groovy, **artifactId:** groovy-json, **version:** 2.5.2
  - **groupId:** org.apache.ivy, **artifactId:** ivy, **version:** 2.4.0

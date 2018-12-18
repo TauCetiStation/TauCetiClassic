@@ -431,7 +431,7 @@
 		if((!in_range(src, usr) && loc != usr && !( istype(loc, /obj/item/weapon/clipboard) ) && loc.loc != usr && usr.get_active_hand() != i)) // Some check to see if he's allowed to write
 			return
 
-		var last_fields_value = fields
+		var/last_fields_value = fields
 
 		t = replacetext(t, "\n", "<BR>")
 		t = parsepencode(t, i, usr, iscrayon) // Encode everything from pencode to html
@@ -478,7 +478,8 @@
 				to_chat(user, "<span class='notice'>Take off the carbon copy first.</span>")
 				add_fingerprint(user)
 				return
-		var/obj/item/weapon/paper_bundle/B = new(src.loc)
+		var/old_loc = loc
+		var/obj/item/weapon/paper_bundle/B = new(loc)
 		if (name != "paper")
 			B.name = name
 		else if (P.name != "paper" && P.name != "photo")
@@ -509,7 +510,7 @@
 			else if (h_user.head == src)
 				h_user.u_equip(src)
 				h_user.put_in_hands(B)
-			else if (!istype(src.loc, /turf))
+			else if (!istype(loc, /turf))
 				src.loc = get_turf(h_user)
 				if(h_user.client)	h_user.client.screen -= src
 				h_user.put_in_hands(B)
@@ -518,6 +519,9 @@
 		P.loc = B
 		B.amount++
 		B.update_icon()
+		if (istype(old_loc, /obj/item/weapon/storage))
+			var/obj/item/weapon/storage/s = old_loc
+			s.update_ui_after_item_removal()
 
 	else if(istype(P, /obj/item/weapon/pen) || istype(P, /obj/item/toy/crayon))
 		if ( istype(P, /obj/item/weapon/pen/robopen) && P:mode == 2 )

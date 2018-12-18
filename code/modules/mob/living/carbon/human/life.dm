@@ -1443,7 +1443,7 @@
 					if(icon_num)
 						healthdoll.overlays += image('icons/mob/screen_gen.dmi',"[BP.body_zone][icon_num]")
 
-		switch(nutrition)
+		switch(get_nutrition())
 			if(NUTRITION_LEVEL_FULL to INFINITY)
 				throw_alert("nutrition","fat")
 			if(NUTRITION_LEVEL_HUNGRY to NUTRITION_LEVEL_FULL)

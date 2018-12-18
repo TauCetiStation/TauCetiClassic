@@ -10,3 +10,4 @@ Thumbs.db
 data/
 .vscode
 map_images/
+**/test-merge-changelog/token

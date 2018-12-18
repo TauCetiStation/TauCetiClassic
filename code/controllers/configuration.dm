@@ -160,6 +160,7 @@
 	var/check_randomizer = 0
 
 	var/allow_donators = 0
+	var/allow_byond_membership = 0
 	var/donate_info_url = 0
 
 	// The object used for the clickable stat() button.
@@ -568,6 +569,9 @@
 
 				if("allow_donators")
 					config.allow_donators = 1
+
+				if("allow_byond_membership")
+					config.allow_byond_membership = 1
 
 				if("donate_info_url")
 					config.donate_info_url = value

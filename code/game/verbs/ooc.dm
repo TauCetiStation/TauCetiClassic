@@ -63,7 +63,7 @@ var/global/normal_ooc_colour = "#002eb8"
 					else
 						display_name = holder.fakekey
 
-			if(config.allow_donators && donator && prefs.ooccolor)
+			if(supporter && prefs.ooccolor)
 				display_name = "<span style='color: [prefs.ooccolor]'>[display_name]</span>"
 
 			to_chat(C, "<font color='[display_colour]'><span class='ooc'><span class='prefix'>OOC:</span> <EM>[display_name]:</EM> <span class='message'>[msg]</span></span></font>")
@@ -96,14 +96,8 @@ var/global/normal_ooc_colour = "#002eb8"
 	set name = "Set Name OOC Colour"
 	set category = "OOC"
 	
-	if(!config.allow_donators)
-		to_chat(usr, "<span class='warning'>Currently disabled by config.</span>")
-		return
-	if(!donator)
-		if(config.donate_info_url)
-			to_chat(usr, "<span class='warning'>This only for donators, more info <a href='[config.donate_info_url]' target='_blank'>here</a>.</span>")
-		else
-			to_chat(usr, "<span class='warning'>This only for donators, sorry.</span>")
+	if(!supporter)
+		to_chat(usr, "<span class='warning'>This is only for [config.donate_info_url ? "<a href='[config.donate_info_url]'>supporters</a>" : "supporters"][config.allow_byond_membership ? " <a href='http://www.byond.com/membership'>and Byond Members</a>" : ""].</span>")
 		return
 
 	var/new_ooccolor = input(src, "Please select your OOC colour.", "OOC colour") as color|null
