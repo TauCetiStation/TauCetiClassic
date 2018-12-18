@@ -1583,6 +1583,6 @@ Owl & Griffin toys
 		playsound(user, 'sound/items/moo.ogg', 20, 1)
 		src.loc.visible_message("<span class='danger'>[bicon(src)] [message]</span>")
 		cooldown = 1
-		spawn(30) cooldown = 0
+		spawn(30) cooldown = FALSE
 		return
 	..()
