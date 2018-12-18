@@ -250,6 +250,7 @@ var/const/MAX_SAVE_SLOTS = 10
 
 		if("fluff")
 			process_link_fluff(user, href_list)
+			return 1
 
 	ShowChoices(user)
 	return 1

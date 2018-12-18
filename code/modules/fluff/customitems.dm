@@ -7,6 +7,16 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	icon_state = "candle"
 	item_state = "candle"
 
+/datum/custom_item
+	var/item_type // normal, lighter
+	var/name
+	var/desc
+	var/icon
+	var/icon_state
+
+	var/status // submitted accepted rejected
+	var/moderator_message
+
 /client/proc/get_custom_items_slot_count()
 	customItemsCache.cd = "/"
 	var/list/slots = null
@@ -14,7 +24,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	if(!slots)
 		slots = list()
 
-	var/ammount = 10 // will be 0
+	var/ammount = 0
 
 	if(ckey in slots)
 		ammount += slots[ckey]
@@ -25,23 +35,7 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 
 	return ammount
 
-/client/proc/add_custom_item_slot(ammount = 1)
-	customItemsCache.cd = "/"
-	var/list/slots = null
-	customItemsCache["slots"] >> slots
-	if(!slots)
-		slots = list()
-
-	if(!(ckey in slots))
-		slots[ckey] = 0
-
-	slots[ckey] += ammount
-	if(slots[ckey] < 0)
-		slots[ckey] = 0
-
-	customItemsCache["slots"] << slots
-
-/client/proc/add_custom_item(item_name, item_desc, item_icon, item_iconname)
+/client/proc/add_custom_item(datum/custom_item/item)
 	var/itemCount = 0
 	var/slotCount = get_custom_items_slot_count()
 
@@ -53,16 +47,11 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	itemCount = items.len
 
 	if(slotCount <= itemCount) // can't create, we have too much custom items
-		return
+		return FALSE
 
-	var/item = list()
-	item["name"] = item_name
-	item["desc"] = item_desc
-	item["icon"] = item_icon
-	item["iconname"] = item_iconname
-
-	items += list(item)
+	items += item
 	customItemsCache["items"] << items
+	return TRUE
 
 /client/proc/get_custom_items()
 	customItemsCache.cd = "/items/[ckey]"
@@ -71,6 +60,32 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	if(!items)
 		items = list()
 	return items
+
+/proc/get_custom_item(ckey, itemname)
+	customItemsCache.cd = "/items/[ckey]"
+	var/list/items = null
+	customItemsCache["items"] >> items
+	if(!items)
+		items = list()
+
+	for(var/datum/custom_item/item in items)
+		if(item.name == itemname)
+			return item
+	return null
+
+/proc/custom_item_changestatus(ckey, itemname, status, moderator_message = "")
+	customItemsCache.cd = "/items/[ckey]"
+	var/list/items = null
+	customItemsCache["items"] >> items
+	if(!items)
+		items = list()
+
+	for(var/datum/custom_item/item in items)
+		if(item.name == itemname)
+			item.status = status
+			item.moderator_message = moderator_message
+			break
+	customItemsCache["items"] << items
 
 /datum/preferences/proc/toggle_custom_item(mob/user, item_name)
 	if(item_name in custom_items)
@@ -87,21 +102,23 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	var/list/custom_items = H.client.prefs.custom_items
 	var/list/all_my_custom_items = H.client.get_custom_items()
 	for(var/thing in custom_items)
-		var/custom_item_info = null
-		for(var/info in all_my_custom_items)
-			if(thing == info["name"])
+		var/datum/custom_item/custom_item_info = null
+		for(var/datum/custom_item/info in all_my_custom_items)
+			if(thing == info.name)
 				custom_item_info = info
 				break
 		if(!custom_item_info)
 			continue
+		if(custom_item_info.status != "accepted")
+			continue
 
 		//item spawning
 		var/obj/item/customitem/item = new /obj/item/customitem(null)
-		item.name = custom_item_info["name"]
-		item.desc = custom_item_info["desc"]
-		item.icon = custom_item_info["icon"]
-		item.icon_state = custom_item_info["iconname"]
-		item.item_state = custom_item_info["iconname"]
+		item.name = custom_item_info.name
+		item.desc = custom_item_info.desc
+		item.icon = custom_item_info.icon
+		item.icon_state = custom_item_info.icon_state
+		item.item_state = custom_item_info.icon_state
 
 		var/atom/placed_in = H.equip_or_collect(item)
 		if(placed_in)

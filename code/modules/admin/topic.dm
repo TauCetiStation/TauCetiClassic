@@ -194,6 +194,47 @@
 			if("edit_reason")
 				whitelist_edit(target_ckey, role)
 
+	else if(href_list["custom_items"])
+		if(!check_rights(R_ADMIN))
+			return
+
+		var/target_ckey = ckey(href_list["ckey"])
+		var/task = href_list["custom_items"]
+		var/index = href_list["index"]
+		if(!task)
+			return
+
+		switch(task)
+			if("add")
+				customs_items_add()
+			if("addckey")
+				customs_items_add(target_ckey)
+			if("history")
+				customs_items_history(target_ckey)
+			if("history_remove")
+				index = text2num(index)
+				customs_items_remove(target_ckey, index)
+			if("moderation_view")
+				var/itemname = href_list["itemname"]
+				editing_item = get_custom_item(target_ckey, itemname)
+				if(editing_item)
+					edit_custom_item_panel(null, usr, readonly = TRUE)
+			if("moderation_accept")
+				var/itemname = href_list["itemname"]
+				custom_item_premoderation_accept(target_ckey, itemname)
+				customitemspremoderation_panel()
+			if("moderation_reject")
+				var/itemname = href_list["itemname"]
+
+				var/reason = ""
+				if(alert(usr, "Attach reason?", "Attach reason?", "Yes", "No") == "Yes")
+					reason = sanitize(input("Write reason for item rejection","Text") as null|text)
+					if(!reason)
+						return
+
+				custom_item_premoderation_reject(target_ckey, itemname, reason)
+				customitemspremoderation_panel()
+
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))
 			return
