@@ -12479,6 +12479,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/simple/visible,
 /turf/simulated/floor/plating,
 /area/research_outpost/iso2)
 "Db" = (
