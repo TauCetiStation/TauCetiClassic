@@ -1581,7 +1581,7 @@ Owl & Griffin toys
 		var/message = pick("Moooooo!","Mooo","Moo?","MOOOO!")
 		to_chat(user, "<span class='notice'>You flip the moo can [src].</span>")
 		playsound(user, 'sound/items/moo.ogg', 20, 1)
-		loc.visible_message("<span class='danger'>[bicon(src)] Moooooo!</span>")
+		loc.visible_message("<span class='danger'>[bicon(src)] [message]</span>")
 		cooldown = TRUE
 		spawn(30) cooldown = FALSE
 		return
