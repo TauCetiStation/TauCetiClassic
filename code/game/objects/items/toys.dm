@@ -1574,7 +1574,7 @@ Owl & Griffin toys
 	icon = 'icons/obj/toy.dmi'
 	icon_state = "mooo"
 	w_class = 2
-	var/cooldown = 0
+	var/cooldown = FALSE
 
 /obj/item/toy/moocan/attack_self(mob/user)
 	if(!cooldown)
