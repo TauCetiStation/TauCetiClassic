@@ -2,7 +2,7 @@
 	var/item_name
 	var/author_ckey
 
-/proc/custom_item_premoderation_add(player_ckey, datum/custom_item/item)
+/proc/custom_item_premoderation_add(player_ckey, itemname)
 	customItemsCache.cd = "/"
 	var/list/moderation_items = null
 	customItemsCache["premoderation"] >> moderation_items
@@ -10,11 +10,11 @@
 		moderation_items = list()
 
 	for(var/datum/premoderation_item/entry in moderation_items)
-		if(entry.item_name == item.name && ckey(player_ckey) == entry.author_ckey)
+		if(entry.item_name == itemname && ckey(player_ckey) == entry.author_ckey)
 			return
 
 	var/datum/premoderation_item/new_entry = new /datum/premoderation_item()
-	new_entry.item_name = item.name
+	new_entry.item_name = itemname
 	new_entry.author_ckey = ckey(player_ckey)
 	moderation_items += new_entry
 
@@ -62,7 +62,7 @@
 
 /datum/admins/proc/customitemspremoderation_panel()
 	set category = "Server"
-	set name = "Whitelist Items Premoderation"
+	set name = "Whitelist Custom Items"
 	set desc = "Allows you to review and accept custom items."
 
 	src = usr.client.holder

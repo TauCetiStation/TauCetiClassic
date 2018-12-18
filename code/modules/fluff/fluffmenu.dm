@@ -7,17 +7,18 @@
 
 	for(var/datum/custom_item/item in custom_items)
 		if(item.status == "submitted")
-			. += "<tr><td colspan=3><center>[item.name] <font color='#E67300'>(Awating premoderation)</font></center></td></tr>"
+			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[item.name]'>[item.name]</a> <font color='#E67300'>(Awating premoderation)</font></center></td></tr>"
 		if(item.status == "accepted")
-			. += "<tr><td colspan=3><center>[item.name] <font color='#267F00'>(Accepted)</font></center></td></tr>"
+			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[item.name]'>[item.name]</a> <font color='#267F00'>(Accepted)</font></center></td></tr>"
 		if(item.status == "rejected")
-			. += "<tr><td colspan=3><center>[item.name] <font color='#FF0000'>(Rejected)</font>[item.moderator_message? " <a href='?_src_=prefs;preference=fluff;read_reason=[item.name]'>Reason</a>" : ""]</center></td></tr>"
+			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[item.name]'>[item.name]</a> <font color='#FF0000'>(Rejected)</font>[item.moderator_message? " <a href='?_src_=prefs;preference=fluff;read_reason=[item.name]'>Reason</a>" : ""]</center></td></tr>"
 
 	. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;add_item=1'>Create new</a></center></td></tr>"
 
 	. += "</table>"
 
 var/datum/custom_item/editing_item = null
+var/editing_item_oldname = null
 /proc/edit_custom_item_panel(datum/preferences/prefs, mob/user, readonly = FALSE)
 	if(!user)
 		return
@@ -27,17 +28,32 @@ var/datum/custom_item/editing_item = null
 	dat += "<style>body{background-color: #F5ECDD}</style>"
 	//dat += "<style>.main_menu{margin-left:150px;margin-top:135px}</style>"
 
-	if(!editing_item)
-		editing_item = new /datum/custom_item()
-		editing_item.name = "new item"
-		editing_item.desc = "description"
-		editing_item.icon_state = ""
-		editing_item.item_type = "normal"
+	var/icon/preview_icon = icon('icons/effects/effects.dmi', "nothing")
+	preview_icon.Scale(150, 70)
+	if(editing_item.icon && editing_item.icon_state)
+		var/icon/I = new(editing_item.icon,icon_state = editing_item.icon_state,dir = SOUTH)
+		preview_icon.Blend(I, ICON_OVERLAY, 13, 22)
 
-		editing_item.status = "submitted"
-		editing_item.moderator_message = ""
+		I = new(editing_item.icon,icon_state = editing_item.icon_state,dir = NORTH)
+		preview_icon.Blend(I, ICON_OVERLAY, 109, 19)
 
-	dat += "<div id='main'><table cellspacing='0' width='100%'>"
+		I = new(editing_item.icon,icon_state = editing_item.icon_state,dir = WEST)
+		preview_icon.Blend(I, ICON_OVERLAY, 60, 18)
+	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2)
+	user << browse_rsc(preview_icon, "itempreviewicon.png")
+	user << browse_rsc('html/prefs/dossier_photos.png')
+
+	dat += "<div id='main'>"
+	dat += "<table cellspacing='0' width='100%'>"
+	dat += "<tr>"
+	dat += "<td>"
+	dat += "<td background='dossier_photos.png' style='background-repeat: no-repeat'>"
+	dat += "<img src=itempreviewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]>"
+	dat += "</td>"
+	dat += "</tr>"
+	dat += "</table>"
+
+	dat += "<table cellspacing='0' width='100%'>"
 	dat += "<tr>"
 	dat += "<td>Type</td>"
 	dat += "<td>[readonly?"<b>[editing_item.item_type]</b>":"<a class='small' href='?src=\ref[prefs];asd=asd;'>[editing_item.item_type]</a>"]</td>"
@@ -65,6 +81,9 @@ var/datum/custom_item/editing_item = null
 		dat += "<br><b><font color='#FF4444'>Your item will be pre-moderated by admins before you can use it</font></b><br>"
 		dat += "<a class='small' href='?_src_=prefs;preference=fluff;submit=1'>Submit</a>"
 
+		if(editing_item_oldname)
+			dat += " <a class='small' href='?_src_=prefs;preference=fluff;delete=1'>Delete</a>"
+
 	dat += "</body></html>"
 	user << browse(entity_ja(dat), "window=edit_custom_item;size=400x500;can_minimize=0;can_maximize=0;can_resize=0")
 
@@ -85,30 +104,33 @@ var/datum/custom_item/editing_item = null
 				to_chat(user, "Server is not configured, go annoy admins")
 
 	if(href_list["add_item"])
+		var/itemCount = user.client.get_custom_items().len
+		var/slotCount = user.client.get_custom_items_slot_count()
+		if(slotCount <= itemCount) // can't create, we have too much custom items
+			alert(user, "You don't have free custom item slots", "Info", "OK")
+			return
+
+		editing_item_oldname = null
+
+		editing_item = new /datum/custom_item()
+		editing_item.name = "new item"
+		editing_item.desc = "description"
+		editing_item.icon_state = ""
+		editing_item.item_type = "normal"
+
+		editing_item.status = "submitted"
+		editing_item.moderator_message = ""
+
 		edit_custom_item_panel(src, user)
 		return
 
-		var/new_item_name = sanitize(input("Enter item name:","Text") as null|text)
-		if(!new_item_name)
-			return
-		var/new_item_desc = sanitize(input("Enter item desc:","Text") as null|text)
-		if(!new_item_desc)
-			return
-		var/new_item_icon = input("Pick icon:","Icon") as null|icon
-		if(!new_item_icon)
-			return
-		var/new_item_iconname = sanitize(input("Enter iconstate name:","Text") as null|text)
-		if(!new_item_iconname)
-			return
+	if(href_list["edit_item"])
+		editing_item_oldname = href_list["edit_item"]
 
-		var/datum/custom_item/item = new /datum/custom_item()
-		item.item_type = "normal"
-		item.name = new_item_name
-		item.desc = new_item_desc
-		item.icon = new_item_icon
-		item.icon_state = new_item_iconname
-		if(!user.client.add_custom_item(item))
-			qdel(item)
+		editing_item = get_custom_item(user.client.ckey, editing_item_oldname)
+		if(editing_item)
+			edit_custom_item_panel(src, user)
+			return
 
 	if(href_list["change_name"])
 		var/new_item_name = sanitize(input("Enter item name:", "Text")  as text|null)
@@ -130,12 +152,35 @@ var/datum/custom_item/editing_item = null
 		if(!editing_item || !editing_item.icon || !editing_item.icon_state)
 			return
 
-		editing_item.status = "submitted"
-		user.client.add_custom_item(editing_item)
-		custom_item_premoderation_add(user.client.ckey, editing_item)
-		qdel(editing_item)
-		user << browse(null, "window=edit_custom_item")
-		//return
+		if(editing_item_oldname) //editing
+			editing_item.status = "submitted"
+			editing_item.moderator_message = ""
+			custom_item_premoderation_reject(user.client.ckey, editing_item_oldname, "") //remove old one from premoderation
+			user.client.edit_custom_item(editing_item, editing_item_oldname)
+			custom_item_premoderation_add(user.client.ckey, editing_item.name)
+			qdel(editing_item)
+			user << browse(null, "window=edit_custom_item")
+		else //adding new
+			var/datum/custom_item/old_item = get_custom_item(user.client.ckey, editing_item.name)
+			if(old_item)
+				to_chat(user, "<span class='alert'>You already have an item with name [editing_item.name]</span>")
+				return
+
+			editing_item.status = "submitted"
+			user.client.add_custom_item(editing_item)
+			custom_item_premoderation_add(user.client.ckey, editing_item.name)
+			qdel(editing_item)
+			user << browse(null, "window=edit_custom_item")
+			//return
+
+	if(href_list["delete"])
+		if(!editing_item || !editing_item.icon || !editing_item.icon_state || !editing_item_oldname)
+			return
+
+		if(alert(usr, "Are you sure?", "Item deletion confirmation", "Yes", "No") == "Yes")
+			custom_item_premoderation_reject(user.client.ckey, editing_item_oldname, "")
+			user.client.remove_custom_item(editing_item_oldname)
+			user << browse(null, "window=edit_custom_item")
 
 	if(href_list["upload_icon"])
 		var/new_item_icon = input("Pick icon:","Icon") as null|icon
@@ -177,7 +222,7 @@ var/datum/custom_item/editing_item = null
 
 /datum/admins/proc/customitems_panel()
 	set category = "Server"
-	set name = "Whitelist Custom Items"
+	set name = "Whitelist Item Slots"
 	set desc = "Allows you to add custom items slots to people."
 
 	src = usr.client.holder

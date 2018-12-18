@@ -53,6 +53,42 @@ var/savefile/customItemsCache = new /savefile("data/customItemsCache.sav")
 	customItemsCache["items"] << items
 	return TRUE
 
+/client/proc/remove_custom_item(itemname)
+	customItemsCache.cd = "/items/[ckey]"
+	var/list/items = null
+	customItemsCache["items"] >> items
+	if(!items)
+		items = list()
+
+	for(var/datum/custom_item/item in items)
+		if(itemname == item.name)
+			items -= item
+			break
+
+	customItemsCache["items"] << items
+
+/client/proc/edit_custom_item(datum/custom_item/newitem, oldname)
+	customItemsCache.cd = "/items/[ckey]"
+	var/list/items = null
+	customItemsCache["items"] >> items
+	if(!items)
+		items = list()
+
+	for(var/datum/custom_item/item in items)
+		if(oldname == item.name)
+			item.name = newitem.name
+			item.item_type = newitem.item_type
+			item.desc = newitem.desc
+			item.icon = newitem.icon
+			item.icon_state = newitem.icon_state
+
+			item.status = newitem.status
+			item.moderator_message = newitem.moderator_message
+			break
+
+	customItemsCache["items"] << items
+	return TRUE
+
 /client/proc/get_custom_items()
 	customItemsCache.cd = "/items/[ckey]"
 	var/list/items = null
