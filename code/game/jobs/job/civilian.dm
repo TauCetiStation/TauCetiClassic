@@ -251,7 +251,7 @@
 	selection_color = "#bbe291"
 	idtype = /obj/item/weapon/card/id/civ
 	access = list(access_janitor, access_maint_tunnels)
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 240
 	restricted_species = list(SKRELL)
 
 /datum/job/janitor/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -387,12 +387,12 @@
 	flag = LAWYER
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 240
 
 
 /datum/job/lawyer/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -417,12 +417,12 @@
 	flag = PRIVATEEYE
 	department_flag = CIVILIAN
 	faction = "Station"
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 1
+	spawn_positions = 1
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 240
 	access = list(access_maint_tunnels)
 
 /datum/job/private_eye/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
@@ -451,7 +451,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 240
 
 /datum/job/waiter/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)
@@ -474,7 +474,7 @@
 	supervisors = "the head of personnel"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
-	minimal_player_ingame_minutes = 480
+	minimal_player_ingame_minutes = 240
 
 /datum/job/paranormal_investigator/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(!H)	return 0
