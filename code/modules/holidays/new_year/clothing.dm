@@ -1,3 +1,4 @@
+
 //////////////////////////////////////////////
 ////////////Santa suit & hat//////////////////
 //////////////////////////////////////////////
@@ -157,7 +158,7 @@
 		to_chat(user, "You lower the ear flaps on the ushanka.")
 
 /obj/item/clothing/head/santa
-	name = "Ded moroz hat"
+	name = "christmas hat"
 	desc = "Perfect for hot winter in Siberia, da?"
 	icon = 'code/modules/holidays/new_year/winter_suits.dmi'
 	icon_custom = 'code/modules/holidays/new_year/winter_suits.dmi'
@@ -167,7 +168,7 @@
 	cold_protection = HEAD
 
 /obj/item/clothing/under/sexy_santa
-	name = "Sexy santa suit"
+	name = "sexy santa suit"
 	desc = "Prepare to jingle all the bells."
 	icon_state = "sexy_santa"
 	item_state = "sexy_santa"

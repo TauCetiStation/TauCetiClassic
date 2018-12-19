@@ -38,10 +38,7 @@
 
 	var/mob/living/carbon/C = usr
 	on = !on
-	var/is_it_on = "on"
-	if(!on)
-		is_it_on = "off"
-	C.visible_message("<span class='notice'>[C] turns \the [src] [is_it_on].</span>", "<span class='notice'>You turn \the [src] [is_it_on].</span>")
+	C.visible_message("<span class='notice'>[C] turns \the [src] [on ? "on" : "off"].</span>", "<span class='notice'>You turn \the [src] [on ? "on" : "off"].</span>")
 	update_garland()
 
 // Tinsels
@@ -131,7 +128,7 @@
 	if(iscarbon(C))
 		if(!gifts_dealt || ((world.time - gifts_dealt) > 3000))
 
-			C.visible_message("[C] shakes [src].","<span class='notice'>You shake [src].</span>")
+			C.visible_message("<span class='notice'>[C] shakes [src].</span>","<span class='notice'>You shake [src].</span>")
 
 			var/bad_boy
 			for(var/datum/job/job in SSjob.occupations)
@@ -161,7 +158,7 @@
 				new /obj/item/weapon/present(src.loc)
 			gifts_dealt = world.time
 		else
-			C.visible_message("[C] shakes [src].", "<span class='notice'>You shake [src] but nothing happens.</span>")
+			C.visible_message("<span class='notice'>[C] shakes [src].</span>", "<span class='notice'>You shake [src] but nothing happens.</span>")
 
 	if(decals.len && (C.a_intent != "help"))
 		for(var/item in decals)
@@ -180,3 +177,26 @@
 /obj/item/device/flashlight/lamp/fir/special/alternative
 	icon = 'icons/obj/flora/pinetrees.dmi'
 	icon_state = "pine_c"
+
+/obj/structure/snowman
+	name = "snowman"
+	desc = "That's a snowman. He is staring at you. Where is his hat, though?"
+	icon = 'code/modules/holidays/new_year/decorations.dmi'
+	icon_state = "snowman_s"
+	anchored = FALSE
+	var/health = 50
+
+/obj/structure/snowman/attackby(obj/item/W, mob/user)
+	. = ..()
+	if(W.force > 4)
+		health -= W.force
+		if(health <= 0)
+			visible_message("<span class='warning'>[src] is destroyed!</span>")
+			new /obj/item/snowball(get_turf(src))
+			new /obj/item/snowball(get_turf(src))
+			new /obj/item/snowball(get_turf(src))
+			new /obj/item/snowball(get_turf(src))
+			new /obj/item/snowball(get_turf(src))
+			qdel(src)
+		else
+			visible_message("<span class='notice'>[src] is damaged!</span>")
