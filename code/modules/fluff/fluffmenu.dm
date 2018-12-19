@@ -1,11 +1,12 @@
 /datum/preferences/proc/ShowFluffMenu(mob/user)
-	var/list/custom_items = user.client.get_custom_items()
+	var/list/custom_items = get_custom_items(user.client.ckey)
 	//to_chat(user, "[custom_items.len]")
 
 	. += "<table align='center' width='570px'>"
 	. += "<tr><td colspan=3><center><b>Custom items slots: <font color='#E67300'>[user.client.get_custom_items_slot_count()]</font></b> \[<a href='?_src_=prefs;preference=fluff;show_info=1'>How to get more</a>\]</center></td></tr>"
 
-	for(var/datum/custom_item/item in custom_items)
+	for(var/item_name in custom_items)
+		var/datum/custom_item/item = custom_items[item_name]
 		if(item.status == "submitted")
 			. += "<tr><td colspan=3><center><a href='?_src_=prefs;preference=fluff;edit_item=[item.name]'>[item.name]</a> <font color='#E67300'>(Awating premoderation)</font></center></td></tr>"
 		if(item.status == "accepted")
@@ -17,11 +18,16 @@
 
 	. += "</table>"
 
-var/datum/custom_item/editing_item = null
-var/editing_item_oldname = null
+//var/datum/custom_item/editing_item = null
+//var/editing_item_oldname = null
+var/list/editing_item_list = list()
+var/list/editing_item_oldname_list = list()
 /proc/edit_custom_item_panel(datum/preferences/prefs, mob/user, readonly = FALSE)
 	if(!user)
 		return
+	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
+	var/editing_item_oldname = editing_item_oldname_list[user.client.ckey]
+
 	var/dat = "<html><body link='#045EBE' vlink='045EBE' alink='045EBE'>"
 	dat += "<style type='text/css'><!--A{text-decoration:none}--></style>"
 	dat += "<style type='text/css'>a.white, a.white:link, a.white:visited, a.white:active{color: #40628a;text-decoration: none;background: #ffffff;border: 1px solid #161616;padding: 1px 4px 1px 4px;margin: 0 2px 0 0;cursor:default;}</style>"
@@ -29,6 +35,7 @@ var/editing_item_oldname = null
 	//dat += "<style>.main_menu{margin-left:150px;margin-top:135px}</style>"
 
 	var/icon/preview_icon = icon('icons/effects/effects.dmi', "nothing")
+	var/icon/preview_icon_mob = null
 	preview_icon.Scale(150, 70)
 	if(editing_item.icon && editing_item.icon_state)
 		var/icon/I = new(editing_item.icon,icon_state = editing_item.icon_state,dir = SOUTH)
@@ -39,9 +46,43 @@ var/editing_item_oldname = null
 
 		I = new(editing_item.icon,icon_state = editing_item.icon_state,dir = WEST)
 		preview_icon.Blend(I, ICON_OVERLAY, 60, 18)
+
+		if("[editing_item.icon_state]_mob" in icon_states(editing_item.icon))
+			var/mob_icon_state = "[editing_item.icon_state]_mob"
+			var/mob/living/carbon/human/dummy/mannequin = new(null, HUMAN)
+
+			preview_icon_mob = icon('icons/effects/effects.dmi', "nothing")
+			preview_icon_mob.Scale(150, 70)
+
+			mannequin.dir = SOUTH
+			var/icon/stamp = getFlatIcon(mannequin)
+			preview_icon_mob.Blend(stamp, ICON_OVERLAY, 13, 22)
+
+			mannequin.dir = NORTH
+			stamp = getFlatIcon(mannequin)
+			preview_icon_mob.Blend(stamp, ICON_OVERLAY, 109, 19)
+
+			mannequin.dir = WEST
+			stamp = getFlatIcon(mannequin)
+			preview_icon_mob.Blend(stamp, ICON_OVERLAY, 60, 18)
+
+			I = new(editing_item.icon,icon_state = mob_icon_state,dir = SOUTH)
+			preview_icon_mob.Blend(I, ICON_OVERLAY, 13, 22)
+
+			I = new(editing_item.icon,icon_state = mob_icon_state,dir = NORTH)
+			preview_icon_mob.Blend(I, ICON_OVERLAY, 109, 19)
+
+			I = new(editing_item.icon,icon_state = mob_icon_state,dir = WEST)
+			preview_icon_mob.Blend(I, ICON_OVERLAY, 60, 18)
+
+			preview_icon_mob.Scale(preview_icon_mob.Width() * 2, preview_icon_mob.Height() * 2)
+			qdel(mannequin)
+
 	preview_icon.Scale(preview_icon.Width() * 2, preview_icon.Height() * 2)
 	user << browse_rsc(preview_icon, "itempreviewicon.png")
 	user << browse_rsc('html/prefs/dossier_photos.png')
+	if(preview_icon_mob)
+		user << browse_rsc(preview_icon_mob, "itempreviewicon2.png")
 
 	dat += "<div id='main'>"
 	dat += "<table cellspacing='0' width='100%'>"
@@ -51,12 +92,19 @@ var/editing_item_oldname = null
 	dat += "<img src=itempreviewicon.png width=[preview_icon.Width()] height=[preview_icon.Height()]>"
 	dat += "</td>"
 	dat += "</tr>"
+	if(preview_icon_mob)
+		dat += "<tr>"
+		dat += "<td>"
+		dat += "<td background='dossier_photos.png' style='background-repeat: no-repeat'>"
+		dat += "<img src=itempreviewicon2.png width=[preview_icon_mob.Width()] height=[preview_icon_mob.Height()]>"
+		dat += "</td>"
+		dat += "</tr>"
 	dat += "</table>"
 
 	dat += "<table cellspacing='0' width='100%'>"
 	dat += "<tr>"
 	dat += "<td>Type</td>"
-	dat += "<td>[readonly?"<b>[editing_item.item_type]</b>":"<a class='small' href='?src=\ref[prefs];asd=asd;'>[editing_item.item_type]</a>"]</td>"
+	dat += "<td>[readonly?"<b>[editing_item.item_type]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_type=1'>[editing_item.item_type]</a>"]</td>"
 	dat += "</tr>"
 	dat += "<tr>"
 	dat += "<td>Name</td>"
@@ -73,7 +121,7 @@ var/editing_item_oldname = null
 		dat += "</tr>"
 	dat += "<tr>"
 	dat += "<td>Icon name</td>"
-	dat += "<td>[readonly?"<b>[editing_item.icon_state]</b>":"<a class='small' href='?src=\ref[prefs];asd=asd;'>[editing_item.icon_state]</a>"]</td>"
+	dat += "<td>[readonly?"<b>[editing_item.icon_state]</b>":"<a class='small' href='?_src_=prefs;preference=fluff;change_iconname=1'>[editing_item.icon_state]</a>"]</td>"
 	dat += "</tr>"
 	dat += "</table></div>"
 
@@ -88,6 +136,9 @@ var/editing_item_oldname = null
 	user << browse(entity_ja(dat), "window=edit_custom_item;size=400x500;can_minimize=0;can_maximize=0;can_resize=0")
 
 /datum/preferences/proc/process_link_fluff(mob/user, list/href_list)
+	var/datum/custom_item/editing_item = editing_item_list[user.client.ckey]
+	var/editing_item_oldname = editing_item_oldname_list[user.client.ckey]
+
 	if(href_list["read_reason"])
 		var/itemname = href_list["read_reason"]
 		var/datum/custom_item/item = get_custom_item(user.client.ckey, itemname)
@@ -104,13 +155,13 @@ var/editing_item_oldname = null
 				to_chat(user, "Server is not configured, go annoy admins")
 
 	if(href_list["add_item"])
-		var/itemCount = user.client.get_custom_items().len
+		var/itemCount = get_custom_items(user.client.ckey).len
 		var/slotCount = user.client.get_custom_items_slot_count()
 		if(slotCount <= itemCount) // can't create, we have too much custom items
 			alert(user, "You don't have free custom item slots", "Info", "OK")
 			return
 
-		editing_item_oldname = null
+		editing_item_oldname_list[user.client.ckey] = null
 
 		editing_item = new /datum/custom_item()
 		editing_item.name = "new item"
@@ -120,14 +171,17 @@ var/editing_item_oldname = null
 
 		editing_item.status = "submitted"
 		editing_item.moderator_message = ""
+		editing_item_list[user.client.ckey] = editing_item
 
 		edit_custom_item_panel(src, user)
 		return
 
 	if(href_list["edit_item"])
 		editing_item_oldname = href_list["edit_item"]
+		editing_item_oldname_list[user.client.ckey] = editing_item_oldname
 
 		editing_item = get_custom_item(user.client.ckey, editing_item_oldname)
+		editing_item_list[user.client.ckey] = editing_item
 		if(editing_item)
 			edit_custom_item_panel(src, user)
 			return
@@ -145,6 +199,24 @@ var/editing_item_oldname = null
 		if(!editing_item || !new_item_desc || length(new_item_desc) <= 2 || length(new_item_desc) > 100)
 			return
 		editing_item.desc = new_item_desc
+		edit_custom_item_panel(src, user)
+		return
+
+	if(href_list["change_iconname"])
+		if(!editing_item.icon || !icon_states(editing_item.icon).len)
+			return
+		var/new_iconname = sanitize(input("Select Main icon name", "Text")  as null|anything in icon_states(editing_item.icon))
+		if(!editing_item || !new_iconname)
+			return
+		editing_item.icon_state = new_iconname
+		edit_custom_item_panel(src, user)
+		return
+
+	if(href_list["change_type"])
+		var/new_type = sanitize(input("Select item type", "Text")  as null|anything in list("normal", "small", "lighter", "hat", "uniform", "suit", "mask", "glasses", "gloves", "shoes"))
+		if(!editing_item || !new_type)
+			return
+		editing_item.item_type = new_type
 		edit_custom_item_panel(src, user)
 		return
 
@@ -191,7 +263,7 @@ var/editing_item_oldname = null
 		if(icon_states.len == 0)
 			to_chat(user, "This icon has no states")
 			return
-		if(icon_states.len > 3)
+		if(icon_states.len > 6)
 			to_chat(user, "This icon has too many states")
 			return
 		if(I.Width() != 32 || I.Height() != 32)
@@ -209,11 +281,12 @@ var/editing_item_oldname = null
 	. += "<tr><td colspan=3><b><center>Custom items</center></b></td></tr>"
 	. += "<tr><td colspan=3><hr></td></tr>"
 
-	var/list/all_custom_items = user.client.get_custom_items()
-	for(var/datum/custom_item/item in all_custom_items)
+	var/list/all_custom_items = get_custom_items(user.client.ckey)
+	for(var/item_name in all_custom_items)
+		var/datum/custom_item/item = all_custom_items[item_name]
 		var/ticked = (item.name in custom_items)
 		. += "<tr style='vertical-align:top;'><td width=15%><a style='white-space:normal;' [ticked ? "style='font-weight:bold' " : ""]href='?_src_=prefs;preference=loadout;toggle_custom_gear=[item.name]'>[item.name]</a></td>"
-		. += "<td width = 5% style='vertical-align:top'>1</td>"
+		. += "<td width = 5% style='vertical-align:top'>0</td>"
 		. += "<td><font size=2><i>[item.desc]</i></font></td>"
 		. += "</tr>"
 
@@ -316,7 +389,7 @@ var/editing_item_oldname = null
 		output += "<tr>"
 		output += "<td style='text-align:center;'><a class='small' href='?src=\ref[src];custom_items=history_remove;ckey=[user_ckey];index=[i]'>DELETE</a></td>"
 		output += "<td style='text-align:center;'>[entry.ammount]</td>"
-		output += "<td style='text-align:center;'>[entry.reason]</td>"
+		output += "<td style='text-align:center;'>[sanitize(entry.reason)]</td>"
 		output += "<td style='text-align:center;'>[entry.admin_ckey]</td>"
 		output += "</tr>"
 		i++

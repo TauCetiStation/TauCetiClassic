@@ -216,13 +216,16 @@
 				customs_items_remove(target_ckey, index)
 			if("moderation_view")
 				var/itemname = href_list["itemname"]
-				editing_item = get_custom_item(target_ckey, itemname)
-				if(editing_item)
+				editing_item_list[usr.ckey] = get_custom_item(target_ckey, itemname)
+				if(editing_item_list[usr.ckey])
 					edit_custom_item_panel(null, usr, readonly = TRUE)
 			if("moderation_accept")
 				var/itemname = href_list["itemname"]
 				custom_item_premoderation_accept(target_ckey, itemname)
-				customitemspremoderation_panel()
+				if(href_list["viewthis"])
+					customitemsview_panel(target_ckey)
+				else
+					customitemspremoderation_panel()
 			if("moderation_reject")
 				var/itemname = href_list["itemname"]
 
@@ -233,6 +236,15 @@
 						return
 
 				custom_item_premoderation_reject(target_ckey, itemname, reason)
+				if(href_list["viewthis"])
+					customitemsview_panel(target_ckey)
+				else
+					customitemspremoderation_panel()
+			if("moderation_viewbyckey")
+				var/viewckey = sanitize(input("Enter player ckey","Text") as null|text)
+				if(viewckey)
+					customitemsview_panel(viewckey)
+			if("moderation_viewpremoderation")
 				customitemspremoderation_panel()
 
 	else if(href_list["call_shuttle"])
