@@ -2,7 +2,7 @@
 ////////////////NewYearMate!//////////////////
 //////////////////////////////////////////////
 
-/obj/machinery/vending/clothing
+/obj/machinery/vending/newyearmate
 	name = "NewYearMate"
 	desc = "A vending machine for new year clothing and decorations!"
 	icon = 'code/modules/holidays/new_year/new_year_mate.dmi'
