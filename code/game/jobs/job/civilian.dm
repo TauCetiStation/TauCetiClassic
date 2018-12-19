@@ -350,16 +350,15 @@
 	faction = "Station"
 	total_positions = 2
 	spawn_positions = 2
-	supervisors = "the captain"
+	supervisors = "The Central Command"
 	selection_color = "#dddddd"
 	idtype = /obj/item/weapon/card/id/civ
-	access = list(access_lawyer, access_court, access_sec_doors)
+	access = list(access_lawyer, access_court, access_sec_doors, access_medical, access_research, access_mailsorting, access_engineering_lobby)
 	minimal_player_ingame_minutes = 1560
 	restricted_species = list(UNATHI, TAJARAN, DIONA)
 
 /datum/job/internal_affairs_agent/equip(mob/living/carbon/human/H, visualsOnly = FALSE)
-	if(!H)
-		return 0
+	if(!H)	return 0
 	switch(H.backbag)
 		if(2) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack(H), slot_back)
 		if(3) H.equip_to_slot_or_del(new /obj/item/weapon/storage/backpack/satchel/norm(H), slot_back)
@@ -374,7 +373,7 @@
 		return
 
 	H.equip_to_slot_or_del(new /obj/item/device/flash(H), slot_r_store)
-	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
+	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_int(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda/lawyer(H), slot_belt)
 
 	var/obj/item/weapon/implant/mindshield/loyalty/L = new(H)
