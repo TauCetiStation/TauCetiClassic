@@ -256,7 +256,6 @@
 
 	H.equip_to_slot_or_del(new /obj/item/device/radio/headset/headset_sec(H), slot_l_ear)
 	H.equip_to_slot_or_del(new /obj/item/device/pda(H), slot_belt)
-	, slot_belt)
 	if(H.backbag == 1)
 		H.equip_to_slot_or_del(new /obj/item/weapon/handcuffs(H), slot_l_hand)
 	else
