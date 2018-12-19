@@ -1,7 +1,28 @@
-//potted plants credit: Flashkirby
-//potted plants 27-30: Cajoes
+// random plants
 
-//random plants
+/obj/structure/flora
+	name = "bush"
+	icon = 'icons/obj/flora/plants.dmi'
+	icon_state = "plant-10"
+	var/can_be_cut = FALSE
+	var/health_flora = 40
+	var/damage_threshhold = 5
+	var/cutting_sound = 'sound/weapons/bladeslice.ogg'
+	var/list/drop_on_destroy = list()
+
+/obj/structure/flora/attackby(obj/item/weapon/W, mob/user)
+	. = ..()
+	if(can_be_cut && is_sharp(W) && W.force >= damage_threshhold)
+		playsound(src, cutting_sound, 50, 1)
+		health_flora -= W.force
+		if(health_flora <= 0)
+			visible_message("<span class='warning'>[src] is hacked into pieces!</span>")
+			if(drop_on_destroy.len)
+				for(var/type_drop in drop_on_destroy)
+					new type_drop(get_turf(src))
+			qdel(src)
+		return
+
 /obj/structure/flora/plant
 	name = "marvelous potted plant"
 	icon = 'icons/obj/flora/plants.dmi'
@@ -9,53 +30,55 @@
 
 /obj/structure/flora/plant/random/atom_init()
 	. = ..()
-	icon_state = "plant-[rand(1, 30)]"
+	var/newtype = pick(subtypesof(/obj/structure/flora/pottedplant))
+	new newtype(get_turf(src))
+	return INITIALIZE_HINT_QDEL
 
 /obj/structure/flora/pottedplant
 	name = "potted plant"
 	desc = "Really brings the room together."
 	icon = 'icons/obj/flora/plants.dmi'
-	icon_state = "plant-01"
+	icon_state = "plant-1"
 
 /obj/structure/flora/pottedplant/fern
 	name = "potted fern"
 	desc = "This is an ordinary looking fern. It looks like it could do with some water."
-	icon_state = "plant-02"
+	icon_state = "plant-2"
 
 /obj/structure/flora/pottedplant/overgrown
 	name = "overgrown potted plants"
 	desc = "This is an assortment of colourful plants. Some parts are overgrown."
-	icon_state = "plant-03"
+	icon_state = "plant-3"
 
 /obj/structure/flora/pottedplant/bamboo
 	name = "potted bamboo"
 	desc = "These are bamboo shoots. The tops looks like they've been cut short."
-	icon_state = "plant-04"
+	icon_state = "plant-4"
 
 /obj/structure/flora/pottedplant/largebush
 	name = "large potted bush"
 	desc = "This is a large bush. The leaves stick upwards in an odd fashion."
-	icon_state = "plant-05"
+	icon_state = "plant-5"
 
 /obj/structure/flora/pottedplant/thinbush
 	name = "thin potted bush"
 	desc = "This is a thin bush. It appears to be flowering."
-	icon_state = "plant-06"
+	icon_state = "plant-6"
 
 /obj/structure/flora/pottedplant/mysterious
 	name = "mysterious potted bulbs"
 	desc = "This is a mysterious looking plant. Touching the bulbs cause them to shrink."
-	icon_state = "plant-07"
+	icon_state = "plant-7"
 
 /obj/structure/flora/pottedplant/smalltree
 	name = "small potted tree"
 	desc = "This is a small tree. It is rather pleasant."
-	icon_state = "plant-08"
+	icon_state = "plant-8"
 
 /obj/structure/flora/pottedplant/unusual
 	name = "unusual potted plant"
 	desc = "This is an unusual plant. It's bulbous ends emit a soft blue light."
-	icon_state = "plant-09"
+	icon_state = "plant-9"
 
 /obj/structure/flora/pottedplant/unusual/atom_init()
 	. = ..()
@@ -170,43 +193,48 @@
 	desc = "This is some kind of tropical plant. It has large smelly leaves without flowers."
 	icon_state = "plant-30"
 
-/obj/structure/flora/plant/monkey
-	name = "monkeyplant"
-	desc = "This is a monkey plant. Made by one mad scientist."
-	icon_state = "monkeyplant"
-
 /obj/structure/flora/pottedplant/decorative
 	name = "decorative potted plant"
 	desc = "This is a decorative shrub. It's been trimmed into the shape of an apple."
 	icon_state = "applebush"
 
-/obj/structure/flora/pottedplant/deskfern
+/obj/structure/flora/plant/monkey
+	name = "monkeyplant"
+	desc = "This is a monkey plant. Made by one mad scientist."
+	icon_state = "monkeyplant"
+
+/obj/structure/flora/plant/deskfern
 	name = "fancy ferny potted plant"
 	desc = "This leafy desk fern could do with a trim."
 	icon_state = "plant-31"
 
-/obj/structure/flora/pottedplant/floorleaf
+/obj/structure/flora/plant/floorleaf
 	name = "fancy leafy floor plant"
 	desc = "This plant has remarkably waxy leaves."
 	icon_state = "plant-32"
 
-/obj/structure/flora/pottedplant/deskleaf
+/obj/structure/flora/plant/deskleaf
 	name = "fancy leafy potted desk plant"
 	desc = "A tiny waxy leafed plant specimen."
 	icon_state = "plant-33"
 
-/obj/structure/flora/pottedplant/deskferntrim
+/obj/structure/flora/plant/deskferntrim
 	name = "fancy trimmed ferny potted plant"
 	desc = "This leafy desk fern seems to have been trimmed too much."
 	icon_state = "plant-34"
 
-//trees
+// trees
 /obj/structure/flora/tree
 	name = "tree"
 	anchored = 1
 	density = 1
 	pixel_x = -16
 	layer = 9
+	health_flora = 150
+	damage_threshhold = 15
+	cutting_sound = 'sound/items/Axe.ogg'
+	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log)
+
 
 /obj/structure/flora/tree/pine
 	name = "pine tree"
@@ -229,6 +257,7 @@
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	icon_state = "tree_1"
+	can_be_cut = TRUE
 
 /obj/structure/flora/tree/dead/atom_init()
 	. = ..()
@@ -241,6 +270,7 @@
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	pixel_x = -48
 	pixel_y = -20
+	can_be_cut = TRUE
 
 /obj/structure/flora/tree/jungle/atom_init()
 	. = ..()
@@ -251,11 +281,14 @@
 	pixel_x = -32
 	icon = 'icons/obj/flora/jungletreesmall.dmi'
 
-//grass
+// grass
+
 /obj/structure/flora/grass
 	name = "grass"
 	icon = 'icons/obj/flora/snowflora.dmi'
 	anchored = 1
+	can_be_cut = TRUE
+	health_flora = 60
 
 /obj/structure/flora/grass/brown
 	icon_state = "snowgrass1bb"
@@ -279,25 +312,29 @@
 	. = ..()
 	icon_state = "snowgrassall[rand(1, 3)]"
 
+// bushes
 
-//bushes
 /obj/structure/flora/bush
 	name = "bush"
 	icon = 'icons/obj/flora/snowflora.dmi'
 	icon_state = "snowbush1"
 	anchored = 1
+	can_be_cut = TRUE
+	health_flora = 50
 
 /obj/structure/flora/bush/atom_init()
 	. = ..()
 	icon_state = "snowbush[rand(1, 6)]"
 
-//newbushes
+// newbushes
 
 /obj/structure/flora/ausbushes
 	name = "bush"
 	icon = 'icons/obj/flora/ausflora.dmi'
 	icon_state = "firstbush_1"
 	anchored = 1
+	can_be_cut = TRUE
+	health_flora = 50
 
 /obj/structure/flora/ausbushes/atom_init()
 	. = ..()
@@ -408,7 +445,7 @@
 	. = ..()
 	icon_state = "fullgrass_[rand(1, 3)]"
 
-//Jungle rocks
+// Jungle rocks
 
 /obj/structure/flora/rock/jungle
 	icon_state = "pile of rocks"
@@ -416,12 +453,14 @@
 	icon_state = "rock"
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	density = FALSE
+	can_be_cut = TRUE
+	health_flora = 50
 
 /obj/structure/flora/rock/jungle/atom_init()
 	. = ..()
 	icon_state = "[initial(icon_state)][rand(1,5)]"
 
-//Jungle bushes
+// Jungle bushes
 
 /obj/structure/flora/junglebush
 	name = "bush"
@@ -429,6 +468,8 @@
 	icon = 'icons/obj/flora/jungleflora.dmi'
 	icon_state = "busha"
 	anchored = 1
+	can_be_cut = TRUE
+	health_flora = 40
 
 /obj/structure/flora/junglebush/atom_init()
 	. = ..()

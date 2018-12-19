@@ -188,6 +188,12 @@
 
 		if(!(lying || resting))
 			if(species && !species.flags[NO_PAIN])
-				emote("scream", auto = TRUE)
+				var/turf/T = get_turf(src)
+				var/do_we_scream = 1
+				for(var/obj/O in T.contents)
+					if(!(istype(O, /obj/structure/stool/bed/chair)))
+						do_we_scream = 0
+				if(do_we_scream)
+					emote("scream", auto = TRUE)
 			emote("collapse")
 		Weaken(5) //can't emote while weakened, apparently.
