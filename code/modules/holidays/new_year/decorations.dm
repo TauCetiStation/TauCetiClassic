@@ -126,7 +126,7 @@
 	var/mob/living/carbon/C = usr
 
 	if(iscarbon(C))
-		if(!gifts_dealt || ((world.time - gifts_dealt) > 3000))
+		if(!gifts_dealt || ((world.time - gifts_dealt) > 5000))
 
 			C.visible_message("<span class='notice'>[C] shakes [src].</span>","<span class='notice'>You shake [src].</span>")
 
