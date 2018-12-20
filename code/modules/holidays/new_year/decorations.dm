@@ -136,9 +136,9 @@
 					bad_boy += 1
 			if(!bad_boy)
 				to_chat(C, "<span class='notice'>You understand that this year you was good boy!</span>")
-				C.adjustBruteLoss(-10)
-				C.adjustToxLoss(-10)
-				C.adjustFireLoss(-10)
+				C.adjustBruteLoss(-1)
+				C.adjustToxLoss(-1)
+				C.adjustFireLoss(-1)
 			if(bad_boy >= 5)
 				to_chat(C, "<span class='notice'>You understand that this year you was bad boy!</span>")
 				C.adjustBruteLoss(10)
@@ -192,11 +192,8 @@
 		health -= W.force
 		if(health <= 0)
 			visible_message("<span class='warning'>[src] is destroyed!</span>")
-			new /obj/item/snowball(get_turf(src))
-			new /obj/item/snowball(get_turf(src))
-			new /obj/item/snowball(get_turf(src))
-			new /obj/item/snowball(get_turf(src))
-			new /obj/item/snowball(get_turf(src))
+			for(var/i = 0 to 6)
+				new /obj/item/snowball(get_turf(src))
 			qdel(src)
 		else
 			visible_message("<span class='notice'>[src] is damaged!</span>")
