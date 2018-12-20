@@ -88,7 +88,7 @@
 // Xmas tree
 /obj/item/device/flashlight/lamp/fir/special
 	name = "present xmas tree"
-	desc = "Hello, happy holidays, we have got presents... (Click on the tree to get presents)"
+	desc = "Hello, happy holidays, we have got presents..."
 
 	layer = 5
 	var/gifts_dealt = 0
