@@ -15,8 +15,9 @@
 	name = "garland"
 	desc = "Beautiful lights! Shinee!"
 	icon_state = "garland_on"
+	var/brightness_power = 0.9
 	var/on = TRUE
-	var/brightness = 2
+	var/brightness = 4
 
 /obj/item/decoration/garland/proc/update_garland()
 	if(on)

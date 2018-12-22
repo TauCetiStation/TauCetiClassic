@@ -204,7 +204,7 @@
 	var/on_gs = 0
 	var/static_power_used = 0
 	var/brightness_range = 7	// luminosity when on, also used in power calculation
-	var/brightness_power = 2
+	var/brightness_power = 1.5
 	var/brightness_color = null
 	var/status = LIGHT_OK		// LIGHT_OK, _EMPTY, _BURNED or _BROKEN
 	var/flickering = 0
@@ -222,7 +222,7 @@
 	base_state = "bulb"
 	fitting = "bulb"
 	brightness_range = 4
-	brightness_power = 2
+	brightness_power = 1.5
 	brightness_color = "#a0a080"
 	desc = "A small lighting fixture."
 	light_type = /obj/item/weapon/light/bulb
