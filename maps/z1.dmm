@@ -6673,6 +6673,18 @@
 "akE" = (
 /turf/simulated/floor/plating/airless/catwalk,
 /area/solar/auxport)
+"akF" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 5
+	},
+/obj/item/decoration/snowflake,
+/turf/simulated/floor/plating,
+/area/atmos)
 "akG" = (
 /obj/structure/cable{
 	d1 = 1;
@@ -21155,6 +21167,18 @@
 	icon_state = "purple"
 	},
 /area/maintenance/asmaint2)
+"aJz" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 10
+	},
+/obj/item/decoration/garland,
+/turf/simulated/floor/plating,
+/area/atmos)
 "aJA" = (
 /obj/structure/rack,
 /obj/item/device/radio/off,
@@ -21397,6 +21421,18 @@
 	icon_state = "freezerfloor"
 	},
 /area/crew_quarters/fitness)
+"aJY" = (
+/obj/structure/grille,
+/obj/machinery/door/firedoor,
+/obj/structure/window/reinforced{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/visible/cyan{
+	dir = 10
+	},
+/obj/item/decoration/snowflake,
+/turf/simulated/floor/plating,
+/area/atmos)
 "aJZ" = (
 /obj/structure/toilet{
 	dir = 1;
@@ -21513,6 +21549,26 @@
 	icon_state = "wooden-2"
 	},
 /area/crew_quarters/gym)
+"aKi" = (
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "Singularity";
+	layer = 2.8;
+	name = "Singularity Shutters";
+	opacity = 0
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/cable/yellow{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/item/decoration/tinsel,
+/turf/simulated/floor{
+	icon_state = "delivery"
+	},
+/area/engine/engineering)
 "aKj" = (
 /obj/machinery/door/firedoor,
 /turf/simulated/floor,
@@ -21946,6 +22002,26 @@
 	},
 /turf/simulated/floor,
 /area/storage/tools)
+"aLa" = (
+/obj/structure/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	icon_state = "closed";
+	id_tag = "engineering_west_inner";
+	locked = 1;
+	name = "Engineering External Access";
+	req_access = null;
+	req_access_txt = "10;13"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/plating,
+/area/engine/engineering)
 "aLb" = (
 /obj/structure/grille,
 /obj/machinery/door/firedoor,
@@ -22314,6 +22390,21 @@
 	icon_state = "neutral"
 	},
 /area/crew_quarters/fitness)
+"aLJ" = (
+/obj/machinery/door/airlock/external{
+	frequency = 1379;
+	icon_state = "closed";
+	id_tag = "engineering_east_inner";
+	locked = 1;
+	name = "Engineering External Access";
+	req_access = null;
+	req_access_txt = "10;13"
+	},
+/obj/machinery/atmospherics/pipe/simple/visible,
+/obj/machinery/door/firedoor,
+/obj/item/decoration/tinsel,
+/turf/simulated/floor/plating,
+/area/engine/engineering)
 "aLK" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window{
@@ -81885,97 +81976,6 @@
 /obj/item/decoration/garland,
 /turf/simulated/floor/plating,
 /area/atmos)
-"ynb" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/cyan{
-	dir = 5
-	},
-/obj/item/decoration/snowflake,
-/turf/simulated/floor/plating,
-/area/atmos)
-"yob" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/cyan{
-	dir = 10
-	},
-/obj/item/decoration/garland,
-/turf/simulated/floor/plating,
-/area/atmos)
-"ypb" = (
-/obj/structure/grille,
-/obj/machinery/door/firedoor,
-/obj/structure/window/reinforced{
-	dir = 5
-	},
-/obj/machinery/atmospherics/pipe/simple/visible/cyan{
-	dir = 10
-	},
-/obj/item/decoration/snowflake,
-/turf/simulated/floor/plating,
-/area/atmos)
-"yqb" = (
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "Singularity";
-	layer = 2.8;
-	name = "Singularity Shutters";
-	opacity = 0
-	},
-/obj/machinery/door/firedoor,
-/obj/structure/cable/yellow{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/item/decoration/tinsel,
-/turf/simulated/floor{
-	icon_state = "delivery"
-	},
-/area/engine/engineering)
-"yrb" = (
-/obj/structure/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	icon_state = "closed";
-	id_tag = "engineering_west_inner";
-	locked = 1;
-	name = "Engineering External Access";
-	req_access = null;
-	req_access_txt = "10;13"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible,
-/obj/machinery/door/firedoor,
-/obj/item/decoration/tinsel,
-/turf/simulated/floor/plating,
-/area/engine/engineering)
-"ysb" = (
-/obj/machinery/door/airlock/external{
-	frequency = 1379;
-	icon_state = "closed";
-	id_tag = "engineering_east_inner";
-	locked = 1;
-	name = "Engineering External Access";
-	req_access = null;
-	req_access_txt = "10;13"
-	},
-/obj/machinery/atmospherics/pipe/simple/visible,
-/obj/machinery/door/firedoor,
-/obj/item/decoration/tinsel,
-/turf/simulated/floor/plating,
-/area/engine/engineering)
 
 (1,1,1) = {"
 aaa
@@ -110176,7 +110176,7 @@ cgG
 chl
 chJ
 cir
-yrb
+aLa
 cjB
 cMr
 cBK
@@ -111716,7 +111716,7 @@ cff
 cyg
 ogb
 crH
-yqb
+aKi
 crH
 crH
 baP
@@ -113258,7 +113258,7 @@ oeb
 cfW
 ogb
 crH
-yqb
+aKi
 crH
 crH
 baP
@@ -114802,7 +114802,7 @@ cCj
 bUd
 chR
 cJr
-ysb
+aLJ
 cjE
 czk
 cBW
@@ -117882,7 +117882,7 @@ bSb
 coB
 cfV
 cqG
-ynb
+akF
 aah
 bVI
 bVI
@@ -118139,7 +118139,7 @@ cep
 cef
 cgf
 cqH
-yob
+aJz
 ctl
 chU
 ciU
@@ -118653,7 +118653,7 @@ bWd
 wEb
 cgh
 bRe
-ypb
+aJY
 cEm
 chW
 ciV
