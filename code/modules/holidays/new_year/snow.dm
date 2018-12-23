@@ -15,17 +15,16 @@
 		O.check_overlay()
 
 /obj/structure/snow/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/shovel))
-		if(user.is_busy())
-			return
+	if(user.is_busy())
+		return
+	if(istype(W, /obj/item/weapon/shovel) && !user.is_busy())
 		visible_message("<span class='notice'>[user] starts digging \the [src] with \the [W].</span>")
 		if(do_after(user, 30, target = src))
 			for(var/i = 0 to 4)
 				new /obj/item/snowball(get_turf(src))
 			health -= 5
 			health_check()
-	else
-		return
+	return
 
 /obj/structure/snow/attack_hand(mob/user)
 	if(user.is_busy())
@@ -40,7 +39,6 @@
 /obj/structure/snow/proc/health_check()
 	if(health <= 0)
 		visible_message("<span class='notice'>[src] is cleared.</span>")
-		check_overlay()
 		for(var/obj/structure/snow/O in range(1, src))
 			O.check_overlay()
 		qdel(src)
@@ -52,13 +50,13 @@
 			var/image/snow_side = image('icons/turf/snow.dmi', "[direction_to_check]")
 			snow_side.layer = LOW_OBJ_LAYER
 			switch(direction_to_check)
-				if(1)
+				if(NORTH)
 					snow_side.pixel_y += 32
-				if(2)
+				if(SOUTH)
 					snow_side.pixel_y += -32
-				if(4)
+				if(EAST)
 					snow_side.pixel_x += 32
-				if(8)
+				if(WEST)
 					snow_side.pixel_x += -32
 			overlays += snow_side
 
@@ -68,6 +66,12 @@
 	force = 0
 	throwforce = 10
 	icon_state = "snowball"
+
+/obj/item/snowball/attack_hand(mob/user)
+	. = ..()
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.throw_mode_on()
 
 /obj/item/snowball/throw_impact(atom/target)
 	..()
