@@ -67,6 +67,12 @@
 	throwforce = 10
 	icon_state = "snowball"
 
+/obj/item/snowball/attack_hand(mob/user)
+	. = ..()
+	if(iscarbon(user))
+		var/mob/living/carbon/C = user
+		C.throw_mode_on()
+
 /obj/item/snowball/throw_impact(atom/target)
 	..()
 	qdel(src)
