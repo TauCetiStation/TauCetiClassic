@@ -1199,7 +1199,7 @@
 #include "code\modules\holidays\new_year\decorations.dm"
 #include "code\modules\holidays\new_year\new_year_mate.dm"
 #include "code\modules\holidays\new_year\presents.dm"
-#include "code\modules\holidays\new_year\snowball.dm"
+#include "code\modules\holidays\new_year\snow.dm"
 #include "code\modules\holodeck\HolodeckControl.dm"
 #include "code\modules\holodeck\HolodeckObjects.dm"
 #include "code\modules\holodeck\HolodeckTemplate.dm"
