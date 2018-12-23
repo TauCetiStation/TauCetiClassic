@@ -50,13 +50,13 @@
 			var/image/snow_side = image('icons/turf/snow.dmi', "[direction_to_check]")
 			snow_side.layer = LOW_OBJ_LAYER
 			switch(direction_to_check)
-				if(1)
+				if(NORTH)
 					snow_side.pixel_y += 32
-				if(2)
+				if(SOUTH)
 					snow_side.pixel_y += -32
-				if(4)
+				if(EAST)
 					snow_side.pixel_x += 32
-				if(8)
+				if(WEST)
 					snow_side.pixel_x += -32
 			overlays += snow_side
 
