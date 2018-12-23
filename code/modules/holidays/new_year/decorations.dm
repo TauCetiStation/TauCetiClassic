@@ -6,16 +6,10 @@
 	layer = 4.1
 
 /obj/item/decoration/attack_hand(mob/user)
-	var/choice = input("Do you want to take \the [src]?") in list("Yes", "No", "Happy New Year!")
+	var/choice = input("Do you want to take \the [src]?") in list("Yes", "Cancel")
 	switch(choice)
 		if("Yes")
 			..()
-		if("No")
-			return
-		if("Happy New Year!")
-			to_chat(user, "<span class='notice'>Happy New Year to you too!</span>")
-			return
-	return
 
 /obj/item/decoration/afterattack(atom/target, mob/living/user, flag, params)
 	if(istype(target,/turf/simulated/wall))

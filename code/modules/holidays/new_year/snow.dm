@@ -15,17 +15,16 @@
 		O.check_overlay()
 
 /obj/structure/snow/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/weapon/shovel))
-		if(user.is_busy())
-			return
+	if(user.is_busy())
+		return
+	if(istype(W, /obj/item/weapon/shovel) && !user.is_busy())
 		visible_message("<span class='notice'>[user] starts digging \the [src] with \the [W].</span>")
 		if(do_after(user, 30, target = src))
 			for(var/i = 0 to 4)
 				new /obj/item/snowball(get_turf(src))
 			health -= 5
 			health_check()
-	else
-		return
+	return
 
 /obj/structure/snow/attack_hand(mob/user)
 	if(user.is_busy())
