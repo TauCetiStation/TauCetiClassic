@@ -39,7 +39,6 @@
 /obj/structure/snow/proc/health_check()
 	if(health <= 0)
 		visible_message("<span class='notice'>[src] is cleared.</span>")
-		check_overlay()
 		for(var/obj/structure/snow/O in range(1, src))
 			O.check_overlay()
 		qdel(src)
