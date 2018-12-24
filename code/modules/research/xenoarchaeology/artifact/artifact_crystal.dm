@@ -3,7 +3,8 @@
 	name = "large crystal"
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = ""
-	density = 1
+	density = TRUE
+	anchored = FALSE
 
 	var/power_produced = 100000
 	var/working = FALSE
