@@ -160,7 +160,7 @@
 		if(/obj/machinery/replicator)
 			return "Automated construction unit - Item appears to be able to synthesize synthetic items, some with simple internal circuitry. Method unknown, \
 			phasing suggested?"
-		if(/obj/structure/crystal)
+		if(/obj/machinery/power/crystal)
 			return "Crystal formation - Pseudo organic crystalline matrix, unlikely to have formed naturally. No known technology exists to synthesize this exact composition. \
 			Attention: energetic excitement is noticed. The appearance of current is possible. Connect the crystal to the network, using wrench and wires on it."
 		if(/obj/machinery/artifact)

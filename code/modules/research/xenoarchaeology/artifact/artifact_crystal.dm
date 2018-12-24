@@ -1,36 +1,21 @@
 
 /obj/machinery/power/crystal
-	var/power_produced = 100000
-	var/working = FALSE
-	invisibility = 70
-
-/obj/machinery/power/crystal/process()
-	if(working)
-		add_avail(power_produced)
-	return
-
-/obj/machinery/power/crystal/proc/generate_power()
-	working = TRUE
-
-/obj/machinery/power/crystal/proc/generate_power_stop()
-	working = FALSE
-
-/obj/structure/crystal
 	name = "large crystal"
 	icon = 'icons/obj/xenoarchaeology.dmi'
 	icon_state = ""
 	density = 1
-	var/obj/machinery/power/crystal/Generator = null
+
+	var/power_produced = 100000
+	var/working = FALSE
+
 	var/wired = FALSE
 	var/icon_custom_crystal = null
 
-/obj/structure/crystal/atom_init()
+/obj/machinery/power/crystal/atom_init()
 	. = ..()
 
-	Generator = new /obj/machinery/power/crystal(src)
 	if(anchored)
-		Generator.loc = loc
-		Generator.connect_to_network()
+		connect_to_network()
 
 	icon_custom_crystal = pick("ano70", "ano80")
 	icon_state = icon_custom_crystal
@@ -42,32 +27,13 @@
 	"Something twinkles faintly as you look at it.",\
 	"It's mesmerizing to behold.")
 
-/obj/structure/crystal/Destroy()
-	QDEL_NULL(Generator)
-	src.visible_message("\red<b>[src] shatters!</b>")
-	if(prob(75))
-		new /obj/item/weapon/shard/phoron(src.loc)
-	if(prob(50))
-		new /obj/item/weapon/shard/phoron(src.loc)
-	if(prob(25))
-		new /obj/item/weapon/shard/phoron(src.loc)
-	if(prob(75))
-		new /obj/item/weapon/shard(src.loc)
-	if(prob(50))
-		new /obj/item/weapon/shard(src.loc)
-	if(prob(25))
-		new /obj/item/weapon/shard(src.loc)
-	return ..()
-
-/obj/structure/crystal/attackby(obj/item/W, mob/user)
+/obj/machinery/power/crystal/attackby(obj/item/W, mob/user)
 	if(default_unfasten_wrench(user,W))
 		user.SetNextMove(CLICK_CD_INTERACT)
 		if(anchored)
-			Generator.loc = src.loc
-			Generator.connect_to_network()
+			connect_to_network()
 		else
-			Generator.disconnect_from_network()
-			Generator.loc = null
+			disconnect_from_network()
 		update_crystal()
 		return
 
@@ -101,15 +67,41 @@
 		else
 			to_chat(user, "<span class='red'>The [src] is already wired.</span>")
 			return
-	..()
 
-/obj/structure/crystal/proc/update_crystal()
+/obj/machinery/power/crystal/Destroy()
+	src.visible_message("<span class='warning'>[src] shatters!</span>")
+	if(prob(75))
+		new /obj/item/weapon/shard/phoron(src.loc)
+	if(prob(50))
+		new /obj/item/weapon/shard/phoron(src.loc)
+	if(prob(25))
+		new /obj/item/weapon/shard/phoron(src.loc)
+	if(prob(75))
+		new /obj/item/weapon/shard(src.loc)
+	if(prob(50))
+		new /obj/item/weapon/shard(src.loc)
+	if(prob(25))
+		new /obj/item/weapon/shard(src.loc)
+	return ..()
+
+/obj/machinery/power/crystal/process()
+	if(working)
+		add_avail(power_produced)
+	return
+
+/obj/machinery/power/crystal/proc/generate_power()
+	working = TRUE
+
+/obj/machinery/power/crystal/proc/generate_power_stop()
+	working = FALSE
+
+/obj/machinery/power/crystal/proc/update_crystal()
 	if(wired && anchored)
 		icon_state = "[icon_custom_crystal]_powered"
-		Generator.generate_power()
+		generate_power()
 	else
 		icon_state = icon_custom_crystal
-		Generator.generate_power_stop()
+		generate_power_stop()
 	if(wired)
 		src.overlays += image('icons/obj/xenoarchaeology.dmi', "crystal_overlay")
 	else
@@ -117,7 +109,7 @@
 	return
 
 // laser_act
-/obj/structure/crystal/bullet_act(obj/item/projectile/P)
+/obj/machinery/power/crystal/bullet_act(obj/item/projectile/P)
 	if(istype(P, /obj/item/projectile/energy) || istype(P, /obj/item/projectile/beam))
 		visible_message("<span class='danger'>The [P.name] gets reflected by [src]!</span>", \
 						"<span class='userdanger'>The [P.name] gets reflected by [src]!</span>")
@@ -129,4 +121,3 @@
 			// redirect the projectile
 			P.redirect(new_x, new_y, curloc, src)
 		return -1 // complete projectile permutation
-
