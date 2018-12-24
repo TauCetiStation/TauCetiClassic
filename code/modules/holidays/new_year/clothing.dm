@@ -28,11 +28,15 @@
 			return 1
 	return 0
 
-/obj/item/clothing/suit/wintercoat/attack_self() //Refactored function for using coat's hood by clicking on it
+/obj/item/clothing/suit/wintercoat/attack_self() // Refactored function for using coat's hood by clicking on it
 
 	if(!can_use(usr))
 		return 0
-
+	if(ishuman(usr))
+		var/mob/living/carbon/human/C = usr
+		if(C.head)
+			to_chat(C, "<span class='warning'>You're wearing something on your head!</span>")
+			return
 	src.hooded = !src.hooded
 
 	if(!src.hooded)
@@ -41,10 +45,9 @@
 	else
 		src.icon_state = "[initial(icon_state)]_t"
 		to_chat(usr, "You toggle on [src]'s hood.")
-
 	if(ishuman(usr))
 		var/mob/living/carbon/human/H = usr
-		H.update_hair(0)	//only human type has hair
+		H.update_hair(0) // only human type has hair
 	usr.update_inv_head(0)
 	usr.update_inv_wear_suit()
 
