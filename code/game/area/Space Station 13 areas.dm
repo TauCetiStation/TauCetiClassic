@@ -565,8 +565,8 @@ NOTE: there are two lists of areas in the end of this file: centcom and station 
 	icon_state = "fitness"
 
 /area/library
- 	name = "Library"
- 	icon_state = "library"
+	name = "Library"
+	icon_state = "library"
 
 
 /area/chapel/main
