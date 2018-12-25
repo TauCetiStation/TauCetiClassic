@@ -66,7 +66,9 @@
 			user.visible_message("<span class='notice'>\the [user] starts to clean \the [target]'s [body_part_name] out with soap.</span>")
 		if(do_after(user, 15, target = H) && src)
 			switch(body_part_name)
-//				if("mouth") TO DO: some silly mouth washing effect
+				if("mouth")
+					H.lip_style = null
+					H.update_body()
 				if("groin")
 					if(H.belt)
 						if(H.belt.clean_blood())
@@ -90,35 +92,25 @@
 						else
 							H.lip_style = null
 							H.update_body()
-						if(H.glasses && washglasses)
-							if(H.glasses.clean_blood())
-								H.update_inv_glasses()
-						if(H.l_ear && washears)
-							if(H.l_ear.clean_blood())
-								H.update_inv_ears()
-						if(H.r_ear && washears)
-							if(H.r_ear.clean_blood())
-								H.update_inv_ears()
+						if(H.glasses && washglasses && H.glasses.clean_blood())
+							H.update_inv_glasses()
+						if(H.l_ear && washears && H.l_ear.clean_blood())
+							H.update_inv_ears()
+						if(H.r_ear && washears && H.r_ear.clean_blood())
+							H.update_inv_ears()
 						if(H.head.clean_blood())
 							H.update_inv_head()
 				if("chest")
-					if(H.wear_suit)
-						if(H.wear_suit.clean_blood())
-							H.update_inv_wear_suit()
-					else if(H.w_uniform)
-						if(H.w_uniform.clean_blood())
-							H.update_inv_w_uniform()
-					if(H.belt)
-						if(H.belt.clean_blood())
-							H.update_inv_belt()
+					if(H.wear_suit && H.wear_suit.clean_blood())
+						H.update_inv_wear_suit()
+					else if(H.w_uniform && H.w_uniform.clean_blood())
+						H.update_inv_w_uniform()
+					if(H.belt && H.belt.clean_blood())
+						H.update_inv_belt()
 				if("eyes")
-					var/washglasses = 1
-					if(H.head)
-						washglasses = !(H.head.flags_inv & HIDEEYES)
-					if(washglasses)
-						if(H.glasses)
-							if(H.glasses.clean_blood())
-								H.update_inv_glasses()
+					if(H.head.flags_inv & HIDEEYES)
+						if(H.glasses && H.glasses.clean_blood())
+							H.update_inv_glasses()
 						else
 							H.eye_blurry = max(H.eye_blurry, 5)
 							H.eye_blind = max(H.eye_blind, 1)
@@ -126,10 +118,9 @@
 				if("legs")
 					var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
 					var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
-					if((l_foot || !(l_foot.status & ORGAN_DESTROYED)) && (r_foot || !(r_foot.status & ORGAN_DESTROYED)))
-						if(H.shoes)
-							if(H.shoes.clean_blood())
-								H.update_inv_shoes()
+					if((l_foot && !(l_foot.status & ORGAN_DESTROYED)) && (r_foot && !(r_foot.status & ORGAN_DESTROYED)))
+						if(H.shoes && H.shoes.clean_blood())
+							H.update_inv_shoes()
 						else
 							H.feet_blood_DNA = null
 							H.feet_dirt_color = null
@@ -140,10 +131,9 @@
 				if("arms")
 					var/obj/item/organ/external/r_hand = H.bodyparts_by_name[BP_L_ARM]
 					var/obj/item/organ/external/l_hand = H.bodyparts_by_name[BP_R_ARM]
-					if((l_hand || !(l_hand.status & ORGAN_DESTROYED)) && (r_hand || !(r_hand.status & ORGAN_DESTROYED)))
-						if(H.gloves)
-							if(H.gloves.clean_blood())
-								H.update_inv_gloves()
+					if((l_hand && !(l_hand.status & ORGAN_DESTROYED)) && (r_hand && !(r_hand.status & ORGAN_DESTROYED)))
+						if(H.gloves && H.gloves.clean_blood())
+							H.update_inv_gloves()
 							H.gloves.germ_level = 0
 						else
 							if(H.bloody_hands)
