@@ -14,8 +14,7 @@
 	. = ..()
 	if(src.dir == NORTH)
 		src.layer = OBJ_LAYER
-		var/image/behind
-		behind = image(src.icon, "[src.icon_state]_behind")
+		var/image/behind = image(src.icon, "[src.icon_state]_behind")
 		behind.layer = FLY_LAYER
 		overlays += behind
 
