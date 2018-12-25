@@ -301,16 +301,17 @@
 			if(!calibrated && prob(30 - ((accurate) * 10))) //oh dear a problem
 				if(ishuman(M))//don't remove people from the round randomly you jerks
 					var/mob/living/carbon/human/human = M
-					//Effects similar to mutagen.
-					randmuti(human)
-					randmutb(human)
-					domutcheck(human)
-					human.UpdateAppearance()
-			//		if(human.dna && human.dna.species.id == "human")
-			//			M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
-			//			human.set_species(/datum/species/fly)
+					// Effects similar to mutagen.
+					if(!(human.species && human.species.flags[IS_SYNTHETIC]))
+						randmuti(human)
+						randmutb(human)
+						domutcheck(human)
+						human.UpdateAppearance()
+				//		if(human.dna && human.dna.species.id == "human")
+				//			M  << "<span class='italics'>You hear a buzzing in your ears.</span>"
+				//			human.set_species(/datum/species/fly)
 
-					human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
+						human.apply_effect((rand(120 - accurate * 40, 180 - accurate * 60)), IRRADIATE, 0)
 			calibrated = 0
 	return
 
