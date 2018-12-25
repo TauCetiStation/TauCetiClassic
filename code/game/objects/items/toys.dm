@@ -1502,7 +1502,8 @@ Owl & Griffin toys
 							/obj/item/toy/prize/poly/polysec				= 1,
 							/obj/item/toy/prize/poly/polycompanion			= 1,
 							/obj/item/toy/prize/poly/polygold				= 1,
-							/obj/item/toy/prize/poly/polyspecial			= 1
+							/obj/item/toy/prize/poly/polyspecial			= 1,
+							/obj/item/toy/moocan                            = 1
 							)
 	return pick(figures)
 
@@ -1559,3 +1560,29 @@ Owl & Griffin toys
 	. = ..()
 	flick("conch_use",src)
 	playsound(src, 'sound/items/polaroid2.ogg', 20, 1)
+
+
+
+
+//////////////////////////////////////////////////////
+//			  	       Moo Can   				    //
+//////////////////////////////////////////////////////
+
+/obj/item/toy/moocan
+	name = "moo can"
+	desc = "A toy that makes 'mooo' when used."
+	icon = 'icons/obj/toy.dmi'
+	icon_state = "mooo"
+	w_class = 2
+	var/cooldown = FALSE
+
+/obj/item/toy/moocan/attack_self(mob/user)
+	if(!cooldown)
+		var/message = pick("Moooooo!", "Mooo", "Moo?", "MOOOO!")
+		to_chat(user, "<span class='notice'>You flip the moo can [src].</span>")
+		playsound(user, 'sound/items/moo.ogg', 20, 1)
+		loc.visible_message("<span class='danger'>[bicon(src)] [message]</span>")
+		cooldown = TRUE
+		spawn(30) cooldown = FALSE
+		return
+	..()
