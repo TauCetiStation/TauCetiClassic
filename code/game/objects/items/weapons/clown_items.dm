@@ -75,20 +75,11 @@
 							H.update_inv_belt()
 				if("head")
 					if(H.head)
-						var/washmask = 1
-						var/washears = 1
-						var/washglasses = 1
-						washmask = !(H.head.flags_inv & HIDEMASK)
-						washglasses = !(H.head.flags_inv & HIDEEYES)
-						washears = !(H.head.flags_inv & HIDEEARS)
-						if(H.wear_mask)
-							if(washmask)
-								if(H.wear_mask.clean_blood())
-									H.update_inv_wear_mask()
-							if (washears)
-								washears = !(H.wear_mask.flags_inv & HIDEEARS)
-							if (washglasses)
-								washglasses = !(H.wear_mask.flags_inv & HIDEEYES)
+						var/washmask = !(H.head.flags_inv & HIDEMASK)
+						var/washears = !((H.head.flags_inv & HIDEEARS) | (H.wear_mask && H.wear_mask.flags_inv & HIDEEARS))
+						var/washglasses = !((H.head.flags_inv & HIDEEYES) | (H.wear_mask && H.wear_mask.flags_inv & HIDEEYES))
+						if(washmask && H.wear_mask && H.wear_mask.clean_blood())
+							H.update_inv_wear_mask()
 						else
 							H.lip_style = null
 							H.update_body()
@@ -108,7 +99,7 @@
 					if(H.belt && H.belt.clean_blood())
 						H.update_inv_belt()
 				if("eyes")
-					if(H.head.flags_inv & HIDEEYES)
+					if(!(H.head.flags_inv & HIDEEYES))
 						if(H.glasses && H.glasses.clean_blood())
 							H.update_inv_glasses()
 						else
