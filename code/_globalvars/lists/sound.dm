@@ -126,6 +126,8 @@ var/global/list/footstep = list(
 		'sound/effects/mob/footstep/lava3.ogg'), 100, 0),
 	FOOTSTEP_WATER_SHALLOW = list(SOUNDIN_WATER_SHALLOW, 100, -1),
 	FOOTSTEP_WATER_DEEP = list(SOUNDIN_WATER_DEEP, 100, 0),
+	FOOTSTEP_SNOWSTEP = list(list('sound/effects/snowstep.ogg'), 100, 0),
+	FOOTSTEP_ICESTEP = list(list('sound/effects/icestep.ogg'), 100, 0),
 )
 
 //bare footsteps lists

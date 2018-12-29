@@ -47,6 +47,10 @@
 	var/heat_level_2 = 400  // Heat damage level 2 above this point.
 	var/heat_level_3 = 1000 // Heat damage level 3 above this point.
 
+	var/breath_cold_level_1 = 200
+	var/breath_cold_level_2 = 180
+	var/breath_cold_level_3 = 120
+
 	var/body_temperature = 310.15	//non-IS_SYNTHETIC species will try to stabilize at this temperature. (also affects temperature processing)
 	var/synth_temp_gain = 0			//IS_SYNTHETIC species will gain this much temperature every second
 
@@ -384,6 +388,10 @@
 	cold_level_2 = 50
 	cold_level_3 = 0
 
+	breath_cold_level_1 = 80
+	breath_cold_level_2 = 50
+	breath_cold_level_3 = 0
+
 	eyes = "vox_eyes"
 
 	breath_type = "nitrogen"
@@ -465,6 +473,10 @@
 	cold_level_2 = 50
 	cold_level_3 = 0
 
+	breath_cold_level_1 = 80
+	breath_cold_level_2 = 50
+	breath_cold_level_3 = 0
+
 	heat_level_1 = 2000
 	heat_level_2 = 3000
 	heat_level_3 = 4000
@@ -513,6 +525,10 @@
 	cold_level_1 = 50
 	cold_level_2 = -1
 	cold_level_3 = -1
+
+	breath_cold_level_1 = 50
+	breath_cold_level_2 = -1
+	breath_cold_level_3 = -1
 
 	heat_level_1 = 2000
 	heat_level_2 = 3000
@@ -631,6 +647,10 @@
 	cold_level_1 = 50
 	cold_level_2 = -1
 	cold_level_3 = -1
+
+	breath_cold_level_1 = 50
+	breath_cold_level_2 = -1
+	breath_cold_level_3 = -1
 
 	heat_level_1 = 500		//gives them about 25 seconds in space before taking damage
 	heat_level_2 = 1000
@@ -831,6 +851,10 @@
 	cold_level_1 = 50
 	cold_level_2 = -1
 	cold_level_3 = -1
+
+	breath_cold_level_1 = 50
+	breath_cold_level_2 = -1
+	breath_cold_level_3 = -1
 
 	heat_level_1 = 2000
 	heat_level_2 = 3000

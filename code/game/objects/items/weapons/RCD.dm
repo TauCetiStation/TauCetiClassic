@@ -96,7 +96,7 @@ RCD
 
 	switch(mode)
 		if(1)
-			if(istype(A, /turf/space))
+			if(is_type_in_list(A, list(/turf/space, /turf/simulated/snow)))
 				if(useResource(1, user))
 					to_chat(user, "Building Floor...")
 					activate()

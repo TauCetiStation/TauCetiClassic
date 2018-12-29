@@ -45,6 +45,7 @@ Class Procs:
 /zone/var/list/contents = list()
 /zone/var/list/fire_tiles = list()
 /zone/var/list/fuel_objs = list()
+/zone/var/list/frozen_objs = list()
 
 /zone/var/needs_update = FALSE
 
@@ -54,6 +55,7 @@ Class Procs:
 
 /zone/var/list/graphic_add = list()
 /zone/var/list/graphic_remove = list()
+/zone/var/z = 0
 
 /zone/New()
 	SSair.add_zone(src)
@@ -72,7 +74,11 @@ Class Procs:
 
 	add_tile_air(turf_air)
 	T.zone = src
+	z = T.z
 	contents.Add(T)
+
+	if(T.frozen_overlay)
+		frozen_objs += T.frozen_overlay
 
 	if(T.fire)
 		var/obj/effect/decal/cleanable/liquid_fuel/fuel = locate() in T
@@ -93,6 +99,9 @@ Class Procs:
 #endif
 	contents.Remove(T)
 	fire_tiles.Remove(T)
+
+	if(T.frozen_overlay)
+		frozen_objs -= T.frozen_overlay
 
 	if(T.fire)
 		var/obj/effect/decal/cleanable/liquid_fuel/fuel = locate() in T
@@ -115,6 +124,8 @@ Class Procs:
 #endif
 	c_invalidate()
 	for(var/turf/simulated/T in contents)
+		if(T.air_unsim)
+			continue
 		into.add(T)
 		T.update_graphic(graphic_remove = air.graphic)
 		#ifdef ZASDBG
@@ -141,10 +152,14 @@ Class Procs:
 		return //Short circuit for explosions where rebuild is called many times over.
 	c_invalidate()
 	for(var/turf/simulated/T in contents)
+		z = T.z
+		if(T.air_unsim)
+			continue
 		T.update_graphic(graphic_remove = air.graphic) //we need to remove the overlays so they're not doubled when the zone is rebuilt
 		//T.dbg(invalid_zone)
 		T.needs_air_update = FALSE //Reset the marker so that it will be added to the list.
 		SSair.mark_for_update(T)
+	update_frozen_state()
 
 /zone/proc/add_tile_air(datum/gas_mixture/tile_air)
 	//air.volume += CELL_VOLUME
@@ -160,8 +175,12 @@ Class Procs:
 		if(istype(T))
 			T.create_fire(vsc.fire_firelevel_multiplier)
 
+	update_frozen_state()
+
 	if(air.check_tile_graphic(graphic_add, graphic_remove))
 		for(var/turf/simulated/T in contents)
+			if(T.air_unsim)
+				continue
 			T.update_graphic(graphic_add, graphic_remove)
 		graphic_add.len = 0
 		graphic_remove.len = 0
@@ -169,6 +188,15 @@ Class Procs:
 	for(var/connection_edge/E in edges)
 		if(E.sleeping)
 			E.recheck()
+
+/zone/proc/update_frozen_state()
+	if(is_station_level(z))
+		if(air.temperature < T0C)
+			var/turf/simulated/T = pick(contents)
+			T.temperature_act(air.temperature)
+		else if(frozen_objs.len)
+			for(var/O in frozen_objs)
+				qdel(O)
 
 /zone/proc/dbg_data(mob/M)
 	to_chat(M, name)

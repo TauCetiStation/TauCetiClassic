@@ -593,18 +593,18 @@
 	//handle_temperature_effects(breath)
 
 	// Hot air hurts :(
-	if( (breath.temperature < species.cold_level_1 || breath.temperature > species.heat_level_1))
+	if( (breath.temperature < species.breath_cold_level_3 || breath.temperature > species.heat_level_1))
 	 // #Z2 Cold_resistance wont save us anymore, we have no_breath genetics power now @ZVe
 
 		if(status_flags & GODMODE)
 			return 1
 
 		switch(breath.temperature)
-			if(-INFINITY to species.cold_level_3)
+			if(-INFINITY to species.breath_cold_level_3)
 				apply_damage(COLD_GAS_DAMAGE_LEVEL_3, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-			if(species.cold_level_3 to species.cold_level_2)
+			if(species.breath_cold_level_3 to species.breath_cold_level_2)
 				apply_damage(COLD_GAS_DAMAGE_LEVEL_2, BURN, BP_HEAD, used_weapon = "Excessive Cold")
-			if(species.cold_level_2 to species.cold_level_1)
+			if(species.breath_cold_level_2 to species.breath_cold_level_1)
 				apply_damage(COLD_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Cold")
 			if(species.heat_level_1 to species.heat_level_2)
 				apply_damage(HEAT_GAS_DAMAGE_LEVEL_1, BURN, BP_HEAD, used_weapon = "Excessive Heat")
@@ -1315,6 +1315,7 @@
 
 	if( stat == DEAD )
 		sight |= (SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		sight &= ~SEE_BLACKNESS
 		see_in_dark = 8
 		if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 		if(healths)		healths.icon_state = "health7"	//DEAD healthmeter
@@ -1327,6 +1328,7 @@
 
 	else
 		sight &= ~(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		sight |= SEE_BLACKNESS
 		see_in_dark = species.darksight
 		see_invisible = see_in_dark>2 ? SEE_INVISIBLE_LEVEL_ONE : SEE_INVISIBLE_LIVING
 		if(dna)
@@ -1340,6 +1342,7 @@
 
 		if(XRAY in mutations)
 			sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+			sight &= ~SEE_BLACKNESS
 			see_in_dark = 8
 			if(!druggy)		see_invisible = SEE_INVISIBLE_LEVEL_TWO
 
@@ -1357,6 +1360,7 @@
 				see_in_dark += G.darkness_view
 				if(G.vision_flags)		// MESONS
 					sight |= G.vision_flags
+					sight &= ~SEE_BLACKNESS
 					if(!druggy)
 						see_invisible = SEE_INVISIBLE_MINIMUM
 			if(istype(G,/obj/item/clothing/glasses/night/shadowling))
@@ -1408,17 +1412,20 @@
 						see_invisible = SEE_INVISIBLE_MINIMUM
 				if(2)
 					sight |= SEE_MOBS
+					sight &= ~SEE_BLACKNESS
 					//client.screen += global_hud.thermal
 					if(!druggy)
 						see_invisible = SEE_INVISIBLE_LEVEL_TWO
 				if(3)
 					sight |= SEE_TURFS
+					sight &= ~SEE_BLACKNESS
 					//client.screen += global_hud.meson
 					if(!druggy)
 						see_invisible = SEE_INVISIBLE_MINIMUM
 
 		if(changeling_aug)
 			sight |= SEE_MOBS
+			sight &= ~SEE_BLACKNESS
 			see_in_dark = 8
 			see_invisible = SEE_INVISIBLE_MINIMUM
 

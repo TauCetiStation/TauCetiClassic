@@ -32,6 +32,13 @@
 	blend_mode = BLEND_MULTIPLY
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+/obj/screen/plane_master/master
+	plane = BLACKNESS_PLANE
+
+/obj/screen/plane_master/master/Click(location, control, params)
+	if(usr.client.void)
+		usr.client.void.Click(location, control, params)
+
 /obj/screen/plane_master/parallax
 	name = "parallax plane master"
 	plane = PLANE_SPACE_PARALLAX
