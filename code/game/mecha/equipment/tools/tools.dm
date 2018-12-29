@@ -345,7 +345,7 @@
 					playsound(target, 'sound/items/Deconstruct.ogg', 50, 1)
 					chassis.use_power(energy_drain)
 		if(1)
-			if(istype(target, /turf/space))
+			if(is_type_in_list(target, list(/turf/space, /turf/simulated/snow)))
 				occupant_message("Building Floor...")
 				set_ready_state(0)
 				if(do_after_cooldown(target))

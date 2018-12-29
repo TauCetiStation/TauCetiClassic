@@ -10,7 +10,7 @@
 
 /obj/structure/lattice/atom_init()
 	. = ..()
-	if(!istype(loc, /turf/space))
+	if(!is_type_in_list(loc, list(/turf/space, /turf/simulated/snow)))
 		return INITIALIZE_HINT_QDEL
 	for(var/obj/structure/lattice/LAT in loc)
 		if(LAT != src)

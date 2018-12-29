@@ -881,6 +881,7 @@
 #include "code\game\objects\WalterJ_Items_Pack\WERMAHT UNIFORMS\WJ_Wermaht_uniforms.dm"
 #include "code\game\turfs\simulated.dm"
 #include "code\game\turfs\turf.dm"
+#include "code\game\turfs\turf_snow.dm"
 #include "code\game\turfs\unsimulated.dm"
 #include "code\game\turfs\simulated\floor.dm"
 #include "code\game\turfs\simulated\floor_types.dm"

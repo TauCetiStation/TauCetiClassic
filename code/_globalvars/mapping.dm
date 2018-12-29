@@ -38,7 +38,7 @@ var/list/reverse_dir = list(2, 1, 3, 8, 10, 9, 11, 4, 6, 5, 7, 12, 14, 13, 15, 3
 	//away missions
 var/list/awaydestinations = list()	//a list of landmarks that the warpgate can take you to
 
-var/list/accessable_z_levels = list("1" = 5, "3" = 10, "4" = 15, "5" = 10, "6" = 60)
+var/list/accessable_z_levels = list("3" = 10, "4" = 15, "5" = 10, "6" = 60)
 //This list contains the z-level numbers which can be accessed via space travel and the percentile chances to get there.
 //(Exceptions: extended, sandbox and nuke) -Errorage
 //Was list("3" = 30, "4" = 70).

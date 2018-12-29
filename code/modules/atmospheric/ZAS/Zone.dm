@@ -115,6 +115,8 @@ Class Procs:
 #endif
 	c_invalidate()
 	for(var/turf/simulated/T in contents)
+		if(T.air_unsim)
+			continue
 		into.add(T)
 		T.update_graphic(graphic_remove = air.graphic)
 		#ifdef ZASDBG
@@ -141,6 +143,8 @@ Class Procs:
 		return //Short circuit for explosions where rebuild is called many times over.
 	c_invalidate()
 	for(var/turf/simulated/T in contents)
+		if(T.air_unsim)
+			continue
 		T.update_graphic(graphic_remove = air.graphic) //we need to remove the overlays so they're not doubled when the zone is rebuilt
 		//T.dbg(invalid_zone)
 		T.needs_air_update = FALSE //Reset the marker so that it will be added to the list.
@@ -162,6 +166,8 @@ Class Procs:
 
 	if(air.check_tile_graphic(graphic_add, graphic_remove))
 		for(var/turf/simulated/T in contents)
+			if(T.air_unsim)
+				continue
 			T.update_graphic(graphic_add, graphic_remove)
 		graphic_add.len = 0
 		graphic_remove.len = 0

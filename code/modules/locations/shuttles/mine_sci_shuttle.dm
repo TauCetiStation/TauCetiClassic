@@ -115,6 +115,8 @@ var/global/area/mine_sci_curr_location = null
 			// find the turf to move things to
 			var/turf/D = locate(throwx - 1, T.y, T.z)
 			for(var/atom/movable/AM as mob|obj in T)
+				if(!AM.simulated)
+					continue
 				AM.Move(D)
 
 			if(istype(T, /turf/simulated))

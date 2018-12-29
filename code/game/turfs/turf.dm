@@ -185,6 +185,9 @@
 		stack_trace("Warning: [src]([type]) changeTurf called for same turf!")
 		return*/
 
+	if(z == ZLEVEL_STATION && ispath(path, /turf/space))
+		path = /turf/simulated/snow
+
 	// Back all this data up, so we can set it after the turf replace.
 	// If you're wondering how this proc'll keep running since the turf should be "deleted":
 	// BYOND never deletes turfs, when you "delete" a turf, it actually morphs the turf into a new one.
@@ -195,7 +198,7 @@
 	var/old_lighting_overlay = lighting_overlay // Not even a need to cast this, honestly.
 	var/list/old_lighting_corners = corners
 
-	var/old_basetype = basetype
+	var/old_basetype = z == ZLEVEL_STATION ? (basetype == /turf/space ? /turf/simulated/snow : basetype) : (basetype == /turf/simulated/snow ? /turf/space : basetype)
 	var/old_flooded = flooded
 	var/obj/effect/fluid/F = locate() in src
 

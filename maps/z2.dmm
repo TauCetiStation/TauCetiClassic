@@ -52,25 +52,25 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "1,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acf" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "0,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acg" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "3,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "ach" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "2,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "aci" = (
 /obj/machinery/door/poddoor{
@@ -118,7 +118,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "9,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acn" = (
 /obj/structure/object_wall/wagon{
@@ -132,19 +132,19 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "11,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acp" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "10,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acq" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "12,4"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acr" = (
 /obj/structure/object_wall/wagon{
@@ -156,7 +156,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "0,3"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "act" = (
 /obj/structure/object_wall/wagon{
@@ -188,7 +188,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "12,3"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acD" = (
 /turf/simulated/shuttle/floor/wagon{
@@ -199,7 +199,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "0,2"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acF" = (
 /obj/machinery/door/airlock/wagon,
@@ -212,13 +212,13 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "12,2"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acI" = (
 /obj/structure/object_wall/wagon{
 	icon_state = "0,1"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acJ" = (
 /obj/structure/object_wall/wagon,
@@ -262,7 +262,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "12,1"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "acV" = (
 /obj/structure/object_wall/wagon{
@@ -290,7 +290,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "0,0"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "adk" = (
 /obj/structure/object_wall/wagon{
@@ -364,7 +364,7 @@
 /obj/structure/object_wall/wagon{
 	icon_state = "12,0"
 	},
-/turf/space/shuttle,
+/turf/space,
 /area/shuttle/arrival/pre_game)
 "adv" = (
 /obj/machinery/light{

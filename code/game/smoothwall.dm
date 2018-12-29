@@ -95,8 +95,12 @@
 	. = ..()
 
 /turf/simulated/shuttle/wall/atom_init()
-	var/image/I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
-	I.plane = PLANE_SPACE
+	var/image/I
+	if(z == ZLEVEL_STATION)
+		I = image('icons/turf/snow.dmi', "snow", layer=TURF_LAYER)
+	else
+		I = image('icons/turf/space.dmi', SPACE_ICON_STATE, layer=TURF_LAYER)
+		I.plane = PLANE_SPACE
 	underlays += I
 	. = ..()
 

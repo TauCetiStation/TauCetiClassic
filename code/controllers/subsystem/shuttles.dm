@@ -249,6 +249,8 @@ var/datum/subsystem/shuttle/SSshuttle
 					var/turf/D = locate(T.x, throwy - 1, 1)
 					//var/turf/E = get_step(D, SOUTH)
 					for(var/atom/movable/AM as mob|obj in T)
+						if(!AM.simulated)
+							continue
 						AM.Move(D)
 
 					if(istype(T, /turf/simulated) || T.is_catwalk())
