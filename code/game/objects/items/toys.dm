@@ -1294,7 +1294,7 @@ Owl & Griffin toys
 	w_class = 2
 	attack_verb = list("bitten", "eaten", "fin slapped")
 	var/bitesound = 'sound/weapons/bite.ogg'
-	var/cooldown = 0
+	var/next_hug = 0
 
 /obj/item/toy/carpplushie/atom_init()
 	. = ..()
@@ -1305,10 +1305,10 @@ Owl & Griffin toys
 	playsound(src, bitesound, 20, 1)
 
 /obj/item/toy/carpplushie/attack_self(mob/user)
-	if(cooldown < world.time - 8)
+	if(next_hug < world.time)
 		playsound(src, bitesound, 20, 1)
 		to_chat(user, "<span class='notice'>You pet [src]. D'awww.</span>")
-		cooldown = world.time
+		next_hug = world.time + 8
 
 /*
  * Plushie
@@ -1320,16 +1320,17 @@ Owl & Griffin toys
 	icon = 'icons/obj/toy.dmi'
 	var/poof_sound = 'sound/weapons/thudswoosh.ogg'
 	attack_verb = list("poofed", "bopped", "whapped", "cuddled", "fluffed")
-	var/cooldown = 0
+	var/next_hug = 0
+	var/list/cuddle_verbs = list("hugs", "cuddles", "snugs")
 
 /obj/item/toy/plushie/attack(mob/M, mob/user)
 	. = ..()
 	playsound(src, poof_sound, 20, 1) // Play the whoosh sound in local area
 
 /obj/item/toy/plushie/attack_self(mob/user)
-	if(cooldown < world.time - 8)
-		cooldown = world.time
-		var/cuddle_verb = pick("hugs", "cuddles", "snugs")
+	if(next_hug < world.time)
+		next_hug = world.time + 8
+		var/cuddle_verb = pick(cuddle_verbs)
 		user.visible_message("<span class='notice'>[user] [cuddle_verb] the [src].</span>")
 		playsound(src, poof_sound, 50, 1, -1)
 
