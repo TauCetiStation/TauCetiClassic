@@ -297,7 +297,7 @@
 	},
 /area/mine/explored)
 "R" = (
-/obj/machinery/gateway/centeraway,
+/obj/machinery/gateway/center,
 /turf/simulated/floor/airless{
 	icon_state = "gcircuit"
 	},

@@ -37,7 +37,10 @@
 /turf/unsimulated/beach/sand,
 /area/awaymission/beach)
 "h" = (
-/obj/machinery/gateway/centeraway,
+/obj/machinery/gateway/center{
+	name = "Beach Gateway",
+	active = 1
+	},
 /turf/unsimulated/beach/sand,
 /area/awaymission/beach)
 "i" = (
