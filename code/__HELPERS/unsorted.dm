@@ -788,6 +788,9 @@ proc/anim(turf/location,target,a_icon,a_icon_state,flick_anim,sleeptime = 0,dire
 					var/old_icon_state1 = T.icon_state
 					var/old_icon1 = T.icon
 
+					if(locate(/obj/structure/flora) in B.contents) // cleaning trees/bushes at LZ
+						for(var/obj/structure/flora/O in B.contents)
+							qdel(O)
 
 					var/turf/X = T.MoveTurf(B)
 
