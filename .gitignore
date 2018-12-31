@@ -9,5 +9,5 @@ taucetistation.dmb
 Thumbs.db
 data/
 .vscode
-map_images/
+**/MapFXDrawer/*.png
 **/test-merge-changelog/token
