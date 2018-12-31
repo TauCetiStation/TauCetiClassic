@@ -1210,6 +1210,7 @@
 #include "code\modules\food_and_drinks\snacks\snacks_glowsticks.dm"
 #include "code\modules\food_and_drinks\snacks\snacks_grown.dm"
 #include "code\modules\food_and_drinks\snacks\snacks_ingridients.dm"
+#include "code\modules\food_and_drinks\snacks\snacks_junkfood.dm"
 #include "code\modules\food_and_drinks\snacks\snacks_meat.dm"
 #include "code\modules\food_and_drinks\snacks\snacks_pasta.dm"
 #include "code\modules\food_and_drinks\snacks\snacks_salads.dm"
