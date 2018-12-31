@@ -52,7 +52,9 @@
 
 //Now applying sound
 		if((get_dist(M, T) <= 2 || src.loc == M.loc || src.loc == M))
-			if(ear_safety > 0)
+			if(ear_safety > 1)
+				M.Stun(1.5)
+			else if (ear_safety > 0)
 				M.Stun(2)
 				M.Weaken(1)
 			else
@@ -65,10 +67,13 @@
 					M.ear_deaf = max(M.ear_deaf,15)
 
 		else if(get_dist(M, T) <= 5)
-			if(!ear_safety)
+			if(ear_safety>1)
+
+			else if(!ear_safety)
 				M.Stun(8)
 				M.ear_damage += rand(0, 3)
 				M.ear_deaf = max(M.ear_deaf,10)
+
 
 		else if(!ear_safety)
 			M.Stun(4)
