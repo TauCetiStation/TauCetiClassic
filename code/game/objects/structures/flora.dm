@@ -270,7 +270,6 @@
 	icon = 'icons/obj/flora/jungletrees.dmi'
 	pixel_x = -48
 	pixel_y = -20
-	can_be_cut = TRUE
 
 /obj/structure/flora/tree/jungle/atom_init()
 	. = ..()
