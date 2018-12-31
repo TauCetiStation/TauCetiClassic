@@ -4010,8 +4010,8 @@
 /area/awaymission/academy/academygate)
 "kd" = (
 /obj/structure/cable,
-/obj/machinery/gateway/centeraway{
-	calibrated = 0
+/obj/machinery/gateway/center{
+	name = "Academy Gateway"
 	},
 /turf/simulated/floor/plating,
 /area/awaymission/academy/academygate)
