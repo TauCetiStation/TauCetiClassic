@@ -232,6 +232,7 @@
 	layer = 9
 	health_flora = 150
 	damage_threshhold = 15
+	can_be_cut = TRUE
 	cutting_sound = 'sound/items/Axe.ogg'
 	drop_on_destroy = list(/obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log, /obj/item/weapon/grown/log)
 
@@ -257,7 +258,6 @@
 /obj/structure/flora/tree/dead
 	icon = 'icons/obj/flora/deadtrees.dmi'
 	icon_state = "tree_1"
-	can_be_cut = TRUE
 
 /obj/structure/flora/tree/dead/atom_init()
 	. = ..()
