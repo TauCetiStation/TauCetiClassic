@@ -70,7 +70,7 @@ var/list/gateways_list = list()
 		icon_state += "_s"
 
 /obj/machinery/gateway/center/process()
-	if(stat & (NOPOWER) && active)
+	if((stat & NOPOWER) && active)
 		toggleoff()
 
 /obj/machinery/gateway/center/proc/detect() // now this checked only at the start. It's okay if it continues to work without some parts... right?
@@ -108,7 +108,7 @@ var/list/gateways_list = list()
 	update_icon()
 
 	use_power = 2
-	START_PROCESSING(SSobj, src)
+	START_PROCESSING(SSmachine, src)
 
 /obj/machinery/gateway/center/proc/toggleoff()
 	for(var/obj/machinery/gateway/G in linked)
@@ -119,7 +119,7 @@ var/list/gateways_list = list()
 	update_icon()
 
 	use_power = 1
-	STOP_PROCESSING(SSobj, src)
+	STOP_PROCESSING(SSmachine, src)
 
 /obj/machinery/gateway/center/proc/calibrate(user)
 	if(hacked)
@@ -231,7 +231,7 @@ var/list/gateways_list = list()
 
 /obj/machinery/gateway/center/station/process()
 	..()
-	if(!config.gateway_enabled)
+	if(active && !config.gateway_enabled)
 		toggleoff()
 
 /obj/machinery/gateway/center/station/calibrate(user)
