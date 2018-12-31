@@ -1,4 +1,3 @@
-
 ///-----------------------------------------------------//
 ///														//
 ///						Sweets							//
@@ -6,7 +5,7 @@
 ///														//
 ///-----------------------------------------------------//
 
-//Candy as snack type
+// Candy as snack type
 /obj/item/weapon/reagent_containers/food/snacks/candy
 	name = "candy"
 	icon = 'icons/obj/food_and_drinks/sweets.dmi'

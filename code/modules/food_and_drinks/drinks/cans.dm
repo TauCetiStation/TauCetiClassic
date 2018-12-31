@@ -56,7 +56,7 @@
 		if(reagents.total_volume)
 			reagents.trans_to_ingest(M, gulp_size)
 
-		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+		if(isrobot(user)) // Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			bro.cell.use(30)
 			var/refill = R.get_master_reagent_id()
@@ -71,7 +71,7 @@
 /obj/item/weapon/reagent_containers/food/drinks/cans/afterattack(obj/target, mob/user, proximity)
 	if(!proximity) return
 
-	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+	if(istype(target, /obj/structure/reagent_dispensers)) // A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
 			to_chat(user, "\red [target] is empty.")
@@ -84,7 +84,7 @@
 			var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
 			to_chat(user, "\blue You fill [src] with [trans] units of the contents of [target].")
 
-	else if(target.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
+	else if(target.is_open_container()) // Something like a glass. Player probably wants to transfer TO it.
 
 		if(!reagents.total_volume)
 			to_chat(user, "\red [src] is empty.")
@@ -105,7 +105,7 @@
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
 		to_chat(user, "\blue You transfer [trans] units of the solution to [target].")
 
-		if(isrobot(user)) //Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
+		if(isrobot(user)) // Cyborg modules that include drinks automatically refill themselves, but drain the borg's cell
 			var/mob/living/silicon/robot/bro = user
 			var/chargeAmount = max(30,4*trans)
 			bro.cell.use(chargeAmount)

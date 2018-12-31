@@ -1,4 +1,3 @@
-
 ///-----------------------------------------------------//
 ///														//
 ///						Soups							//
@@ -6,7 +5,7 @@
 ///														//
 ///-----------------------------------------------------//
 
-//Soup as snack type
+// Soup as snack type
 /obj/item/weapon/reagent_containers/food/snacks/soup
 	name = "Just a template"
 	icon = 'icons/obj/food_and_drinks/soups_salads.dmi'

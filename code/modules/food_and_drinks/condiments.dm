@@ -93,26 +93,26 @@
 	if(istype(target, /obj/structure/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
 
 		if(!target.reagents.total_volume)
-			to_chat(user, "\red [target] is empty.")
+			to_chat(user, "<span class='rose'> [target] is empty.</span>")
 			return
 
 		if(reagents.total_volume >= reagents.maximum_volume)
-			to_chat(user, "\red [src] is full.")
+			to_chat(user, "<span class='rose'> [src] is full.</span>")
 			return
 
 		var/trans = target.reagents.trans_to(src, target:amount_per_transfer_from_this)
-		to_chat(user, "\blue You fill [src] with [trans] units of the contents of [target].")
+		to_chat(user, "<span class='notice'> You fill [src] with [trans] units of the contents of [target].</span>")
 
 	//Something like a glass or a food item. Player probably wants to transfer TO it.
 	else if(target.is_open_container() || istype(target, /obj/item/weapon/reagent_containers/food/snacks))
 		if(!reagents.total_volume)
-			to_chat(user, "\red [src] is empty.")
+			to_chat(user, "<span class='rose'> [src] is empty.</span>")
 			return
 		if(target.reagents.total_volume >= target.reagents.maximum_volume)
-			to_chat(user, "\red you can't add anymore to [target].")
+			to_chat(user, "<span class='rose'> you can't add anymore to [target].</span>")
 			return
 		var/trans = src.reagents.trans_to(target, amount_per_transfer_from_this)
-		to_chat(user, "\blue You transfer [trans] units of the condiment to [target].")
+		to_chat(user, "<span class='notice'> You transfer [trans] units of the condiment to [target].</span>")
 		if(istype(target, /obj/item/weapon/reagent_containers/food/snacks))
 			if(target.sauced_icon && target.icon_state == target.initial(icon_state))
 				if((target.get_reagent_amount("ketchup") > 1) || (target.get_reagent_amount("capsaicin") > 1))

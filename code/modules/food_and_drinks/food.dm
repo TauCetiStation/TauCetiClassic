@@ -22,14 +22,14 @@
 
 	possible_transfer_amounts = null
 
-	volume = 50//Sets the default container amount for all food items.
+	volume = 50 // Sets the default container amount for all food items.
 
-	var/taste = TRUE//whether you can taste eating from this
-	var/filling_color = "#FFFFFF" //Used by sandwiches.
+	var/taste = TRUE // whether you can taste eating from this
+	var/filling_color = "#FFFFFF" // Used by sandwiches.
 
 /obj/item/weapon/reagent_containers/food/atom_init()
 	. = ..()
-	pixel_x = rand(-6.0, 6)//Randomizes postion
+	pixel_x = rand(-6.0, 6) // Randomizes postion
 	pixel_y = rand(-6.0, 6)
 
 

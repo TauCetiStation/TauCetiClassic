@@ -1,4 +1,3 @@
-
 ///-----------------------------------------------------//
 ///														//
 ///						Burgers							//
@@ -14,7 +13,7 @@
 	filling_color = "#D63C3C"
 	bitesize = 3
 	list_reagents = list("nutriment" = 6, "protein" = 3, "vitamin" = 1)
-	sauced_icon = "sauced_borglar"//= icon with ketchup on it
+	sauced_icon = "sauced_borglar" // = icon with ketchup on it
 
 ///////////////////////////////////////////////////////////
 
@@ -55,7 +54,7 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/cheeseburger/atom_init()
 	. = ..()
-	reagents.add_reagent("cheese", 3)//Reminder - some time there was no cheese reagent in cheeseburger...
+	reagents.add_reagent("cheese", 3) // Reminder - some time there was no cheese reagent in cheeseburger...
 
 /obj/item/weapon/reagent_containers/food/snacks/burger/fishburger
 	name = "Fillet -o- Carp Sandwich"

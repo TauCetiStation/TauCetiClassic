@@ -1,3 +1,8 @@
+///-----------------------------------------------------//
+///														//
+///					Glowsticks							//
+///														//
+///-----------------------------------------------------//
 
 /obj/item/weapon/reagent_containers/food/snacks/glowstick
 	name = "glowstick"

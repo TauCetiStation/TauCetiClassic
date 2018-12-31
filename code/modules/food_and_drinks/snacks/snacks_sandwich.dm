@@ -1,6 +1,12 @@
+///-----------------------------------------------------//
+///														//
+///						Sandwich						//
+///														//
+///-----------------------------------------------------//
+
 #define MIN_SANDWICH_LIMIT 4
 #define SANDWICH_GROWTH_BY_SLICE 4
-#define MAX_SANDWICH_LIMIT 124 //30 breadslices + 4 base size
+#define MAX_SANDWICH_LIMIT 124 // 30 breadslices + 4 base size
 
 /obj/item/weapon/reagent_containers/food/snacks/breadslice/attackby(obj/item/W, mob/user)
 
@@ -48,7 +54,7 @@
 	..()
 
 /obj/item/weapon/reagent_containers/food/snacks/csandwich/proc/update()
-	var/fullname = "" //We need to build this from the contents of the var.
+	var/fullname = "" // We need to build this from the contents of the var.
 	var/i = 0
 
 	overlays.Cut()

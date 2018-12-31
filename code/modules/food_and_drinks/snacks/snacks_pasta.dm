@@ -1,4 +1,3 @@
-
 ///-----------------------------------------------------//
 ///														//
 ///						Pasta							//
@@ -6,7 +5,7 @@
 ///														//
 ///-----------------------------------------------------//
 
-//Pasta as a snack type
+// Pasta as a snack type
 /obj/item/weapon/reagent_containers/food/snacks/pasta
 	name = "Just a template."
 	icon = 'icons/obj/food_and_drinks/pasta.dmi'
@@ -15,9 +14,9 @@
 
 /obj/item/weapon/reagent_containers/food/snacks/pasta/atom_init()
 	. = ..()
-	sauced_icon = "sauced_[initial(icon_state)]"//cause every pasta has it :)
+	sauced_icon = "sauced_[initial(icon_state)]" // cause every pasta has it :)
 
-//SPAGETTI
+// SPAGETTI
 /obj/item/weapon/reagent_containers/food/snacks/pasta/spagettiboiled
 	name = "boiled spaghetti"
 	desc = "A plain dish of noodles, this sucks."
@@ -52,7 +51,7 @@
 	icon_state = "spesslaw"
 	list_reagents = list("nutriment" = 5, "plantmatter" = 2, "protein" = 9, "vitamin" = 5)
 
-//MACARONI
+// MACARONI
 /obj/item/reagent_containers/food/snacks/pasta/macaroniboiled
 	name = "boiled macaroni"
 	desc = "Just a simple boring boiled noodles. But maybe adding a cutlet will change everything."

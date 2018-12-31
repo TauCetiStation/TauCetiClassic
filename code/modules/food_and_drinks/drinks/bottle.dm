@@ -8,14 +8,14 @@
 	amount_per_transfer_from_this = 10
 	volume = 100
 	icon = 'icons/obj/food_and_drinks/drinks.dmi'
-	item_state = "broken_beer" //Generic held-item sprite until unique ones are made.
-	var/const/duration = 13 //Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
-	var/is_glass = 1 //Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
-	var/is_transparent = 1 //Determines whether an overlay of liquid should be added to bottle when it fills
+	item_state = "broken_beer" // Generic held-item sprite until unique ones are made.
+	var/const/duration = 13 // Directly relates to the 'weaken' duration. Lowered by armor (i.e. helmets)
+	var/is_glass = 1 // Whether the 'bottle' is made of glass or not so that milk cartons dont shatter when someone gets hit by it
+	var/is_transparent = 1 // Determines whether an overlay of liquid should be added to bottle when it fills
 
 /obj/item/weapon/reagent_containers/food/drinks/bottle/proc/smash(mob/living/target, mob/living/user)
 
-	//Creates a shattering noise and replaces the bottle with a broken_bottle
+	// Creates a shattering noise and replaces the bottle with a broken_bottle
 	user.drop_item()
 	var/obj/item/weapon/broken_bottle/B = new /obj/item/weapon/broken_bottle(user.loc)
 	user.put_in_active_hand(B)
