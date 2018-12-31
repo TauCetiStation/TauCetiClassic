@@ -175,7 +175,7 @@
 	density = 1
 	opacity = 1
 	var/input_shelf = null
-	var/list/can_be_placed = = list(/obj/item/weapon/reagent_containers/food/condiment,//Stuff that we can put on the shelf
+	var/list/can_be_placed = list(/obj/item/weapon/reagent_containers/food/condiment, // Stuff that we can put on the shelf
 					/obj/item/weapon/reagent_containers/food/condiment/sugar,
 					/obj/item/weapon/reagent_containers/food/condiment/rice,
 					/obj/item/weapon/reagent_containers/food/condiment/soysauce,
