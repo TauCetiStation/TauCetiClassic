@@ -13,11 +13,14 @@
 
 	plane = GAME_PLANE
 
+	var/static/datum/dirt_cover/basedatum = /datum/dirt_cover/snow
+
 /turf/simulated/snow/atom_init(mapload)
 	. = ..()
 	if(mapload)
 		populate_flora()
-	return INITIALIZE_HINT_NORMAL
+	if(ispath(basedatum))
+		basedatum = new basedatum
 
 /turf/simulated/snow/Destroy()
 	return QDEL_HINT_LETMELIVE
@@ -82,6 +85,47 @@
 			return
 		else
 			to_chat(user, "\red The plating is going to need some support.")
+
+/turf/simulated/snow/Entered(atom/A, atom/OL)
+	if(movement_disabled && usr.ckey != movement_disabled_exception)
+		to_chat(usr, "\red Movement is admin-disabled.")//This is to identify lag problems
+		return
+
+	if(iscarbon(A))
+		var/mob/living/carbon/perp = A
+
+		var/amount = 7
+		var/hasfeet = TRUE
+		var/skip = FALSE
+		if (ishuman(perp))
+			var/mob/living/carbon/human/H = perp
+			var/obj/item/organ/external/l_foot = H.bodyparts_by_name[BP_L_LEG]
+			var/obj/item/organ/external/r_foot = H.bodyparts_by_name[BP_R_LEG]
+			if((!l_foot || l_foot.status & ORGAN_DESTROYED) && (!r_foot || r_foot.status & ORGAN_DESTROYED))
+				hasfeet = FALSE
+			if(perp.shoes && !perp.buckled)//Adding blood to shoes
+				var/obj/item/clothing/shoes/S = perp.shoes
+				if(istype(S))
+					if((dirt_overlay && dirt_overlay.color != basedatum.color) || (!dirt_overlay))
+						S.overlays.Cut()
+						S.add_dirt_cover(basedatum)
+					S.track_blood = max(amount,S.track_blood)
+					if(!S.blood_DNA)
+						S.blood_DNA = list()
+				skip = TRUE
+
+		if (hasfeet && !skip) // Or feet
+			if(perp.feet_dirt_color)
+				perp.feet_dirt_color.add_dirt(basedatum)
+			else
+				perp.feet_dirt_color = new/datum/dirt_cover(basedatum)
+			perp.track_blood = max(amount,perp.track_blood)
+			if(!perp.feet_blood_DNA)
+				perp.feet_blood_DNA = list()
+
+		perp.update_inv_shoes()
+
+	..()
 
 /turf/simulated/snow/ChangeTurf(path, force_lighting_update = 0)
 	return ..(path, TRUE)
