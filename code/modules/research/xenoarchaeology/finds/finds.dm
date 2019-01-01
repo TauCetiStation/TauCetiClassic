@@ -364,9 +364,6 @@
 			if(spawn_type)
 				var/obj/item/weapon/gun/energy/new_gun = new spawn_type(src.loc)
 				new_item = new_gun
-				if(spawn_type != /obj/item/weapon/gun/tesla/rifle)
-					new_item.icon_state = "egun[rand(1,4)]"
-					new_item.icon = 'icons/obj/xenoarchaeology.dmi'
 
 				//5% chance to explode when first fired
 				//10% chance to have an unchargeable cell
