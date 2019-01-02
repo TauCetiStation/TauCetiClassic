@@ -19,6 +19,8 @@ var/datum/subsystem/mapping/SSmapping
 	populate_distribution_map()
 	// Load templates
 	preloadTemplates()
+	if(!snow_map_noise)
+		snow_map_noise = new
 	..()
 
 /datum/subsystem/mapping/proc/make_mining_asteroid_secrets()
