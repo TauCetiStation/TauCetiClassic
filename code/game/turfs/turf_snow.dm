@@ -5,6 +5,8 @@
 	dynamic_lighting = TRUE
 
 	basetype = /turf/simulated/snow
+	footstep_sound = 'sound/effects/snowstep.ogg'
+	footstep_sound_priority = TRUE
 
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
@@ -148,6 +150,7 @@
 	icon_state = "ice"
 
 	basetype = /turf/simulated/snow/ice
+	footstep_sound = 'sound/effects/icestep.ogg'
 
 // Noise source: codepen.io/yutt/pen/rICHm
 var/datum/perlin/snow_map_noise
